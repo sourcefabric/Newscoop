@@ -52,6 +52,7 @@ B_BODY
 	todefnum('Article');
 	todefnum('move_up');
 	todefnum('move_down');
+	todefnum('art_pos');
 ?>dnl
 B_HEADER(<*Articles*>)
 B_HEADER_BUTTONS
@@ -68,8 +69,10 @@ E_HEADER
 		move_article_rel($Pub, $Language, $Issue, $Section, $Article, 'up');
 	if ($move_down > 0)
 		move_article_rel($Pub, $Language, $Issue, $Section, $Article, 'down');
-    if ($sLanguage == "")
-	$sLanguage= 0;
+	if ($art_pos > 0)
+		move_article_abs($Pub, $Language, $Issue, $Section, $Article, $art_pos);
+	if ($sLanguage == "")
+		$sLanguage= 0;
 
     query ("SELECT * FROM Sections WHERE IdPublication=$Pub AND NrIssue=$Issue AND IdLanguage=$Language AND Number=$Section", 'q_sect');
     if ($NUM_ROWS) {
@@ -134,7 +137,7 @@ E_CURRENT
     if ($ArtOffs < 0) $ArtOffs= 0;
     todefnum('lpp', 20);
 
-	$sql = "SELECT *, abs($Language - IdLanguage) as LangOrd FROM Articles WHERE IdPublication=$Pub AND NrIssue=$Issue AND NrSection=$Section $ll ORDER BY ArticleOrder ASC $oo LIMIT $ArtOffs, ".($lpp+1);
+	$sql = "SELECT *, abs($Language - IdLanguage) as LangOrd FROM Articles WHERE IdPublication=$Pub AND NrIssue=$Issue AND NrSection=$Section $ll ORDER BY Number, LangOrd asc, ArticleOrder ASC $oo LIMIT $ArtOffs, ".($lpp+1);
 	query($sql, 'q_art');
     if ($NUM_ROWS) {
 	$nr= $NUM_ROWS;
@@ -147,7 +150,7 @@ B_LIST
 		X_LIST_TH(<*Type*>, <*1%*>)
 		X_LIST_TH(<*Language*>, <*1%*>)
 		X_LIST_TH(<*Status*>, <*1%*>)
-		X_LIST_TH(<*Order*>, <*80*>)
+		X_LIST_TH(<*Order*>, <*90*>)
 		X_LIST_TH(<*Preview*>, <*1%*>)
 		X_LIST_TH(<*Translate*>, <*1%*>)
 <?php  if ($aaa != 0) { ?>dnl
@@ -169,7 +172,7 @@ B_LIST
 ?>dnl
 	B_LIST_TR
 		B_LIST_ITEM
-			<?php  if (getVar($q_art,'Number') == $kwdid) { ?>&nbsp;<?php  } ?><A HREF="X_ROOT/pub/issues/sections/articles/edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  pgetUVar($q_art,'Number'); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  pgetUVar($q_art,'IdLanguage'); ?>"><?php  pgetHVar($q_art,'Name'); ?>&nbsp;</A>
+			<?php  if (getVar($q_art,'Number') == $kwdid) { ?>&nbsp;&nbsp;&nbsp;&nbsp;<?php  } ?><A HREF="X_ROOT/pub/issues/sections/articles/edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  pgetUVar($q_art,'Number'); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  pgetUVar($q_art,'IdLanguage'); ?>"><?php  pgetHVar($q_art,'Name'); ?>&nbsp;</A>
 		E_LIST_ITEM
 		B_LIST_ITEM(<*RIGHT*>)
 			<?php  pgetHVar($q_art,'Type'); ?>
@@ -193,24 +196,24 @@ B_LIST
 		E_LIST_ITEM
 		B_LIST_ITEM(<*LEFT*>)
 <?php  if (getVar($q_art,'Number') != $kwdid) {
-			echo "<table border=\"0\"><tr><td>";
+			echo "<table cellspacing=\"0\" border=\"0\" cellpadding=\"0\"><tr><td>";
 			if (!$first_article) {
 ?>dnl
-				<A HREF="X_ROOT/pub/issues/sections/articles/index.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  pgetUVar($q_art,'Number'); ?>&Language=<?php  p($Language);?>&sLanguage=<?php  pgetUVar($q_art,'IdLanguage'); ?>&move_up=1&ArtOffs=<?php  p($ArtOffs); ?>"><img src="/priv/img/up.png" align="left" border="0"></A>
+<A HREF="X_ROOT/pub/issues/sections/articles/index.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  pgetUVar($q_art,'Number'); ?>&Language=<?php  p($Language);?>&sLanguage=<?php  p($sLanguage); ?>&move_up=1&ArtOffs=<?php  p($ArtOffs); ?>"><img src="/priv/img/up.png" align="left" border="0"></A>
 <?php		} else { ?>
-				<img src="/priv/img/empty.png" align="left" border="0">
+<img src="/priv/img/empty.png" align="left" border="0">
 <?php		} ?>
-</td><td>
-<A HREF="X_ROOT/pub/issues/sections/articles/order.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  pgetUVar($q_art,'Number'); ?>&Language=<?php  p($Language);?>&sLanguage=<?php  pgetUVar($q_art,'IdLanguage'); ?>&ArtOffs=<?php  p($ArtOffs); ?>"><B><?php echo $art_index; ?></B></A>
-</td><td>
+</td><td>&nbsp;
+<A HREF="X_ROOT/pub/issues/sections/articles/order.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  pgetUVar($q_art,'Number'); ?>&Language=<?php  p($Language);?>&sLanguage=<?php p($sLanguage); ?>&ArtOffs=<?php  p($ArtOffs); ?>"><B><?php echo $art_index; ?></B></A>
+&nbsp;&nbsp;</td><td>
 <?php		if (!$last_article) { ?>
-				<A HREF="X_ROOT/pub/issues/sections/articles/index.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  pgetUVar($q_art,'Number'); ?>&Language=<?php  p($Language);?>&sLanguage=<?php  pgetUVar($q_art,'IdLanguage'); ?>&move_down=1&ArtOffs=<?php  p($ArtOffs); ?>"><img src="/priv/img/down.png" align="left" border="0"></A>
+<A HREF="X_ROOT/pub/issues/sections/articles/index.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  pgetUVar($q_art,'Number'); ?>&Language=<?php  p($Language);?>&sLanguage=<?php  p($sLanguage); ?>&move_down=1&ArtOffs=<?php  p($ArtOffs); ?>"><img src="/priv/img/down.png" align="left" border="0"></A>
 <?php		} else { ?>
-				<img src="/priv/img/empty.png" align="left" border="0">
+<img src="/priv/img/empty.png" align="left" border="0">
 <?php		}
 			echo "</td></tr></table>\n";
 		} else { ?>dnl
-		&nbsp;
+&nbsp;
 <?php  } ?>dnl
 		E_LIST_ITEM
 		B_LIST_ITEM(<*CENTER*>)
