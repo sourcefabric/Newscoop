@@ -22,11 +22,6 @@ regGS("Updating subscription","Обновление подписки:ru");
 regGS("The subscription has been updated.","Подписка была обновлена.:ru");
 regGS("The subscription could not be updated.","Невозможно обновить подписку.:ru");
 regGS("Changing subscription","Изменение подписки:ru");
-regGS("Change paid status","Изменить статус оплаты:ru");
-regGS("Are you sure you want to change the subscription to the section $1 status to $2?","Вы уверены, что хотите изменить статус подписки на секцию $1 на $2?:ru");
-regGS("Change subscription paid status","Изменить статус оплаты подписки:ru");
-regGS("Not paid","Не оплачено:ru");
-regGS("Paid","Оплачено:ru");
 
 
 ?>

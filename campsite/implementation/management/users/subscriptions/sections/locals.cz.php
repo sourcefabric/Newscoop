@@ -22,11 +22,6 @@ regGS("Updating subscription","Obnovení předplatného");
 regGS("The subscription has been updated.","Předplatné bylo obnoveno");
 regGS("The subscription could not be updated.","Předplatné nemohlo být obnoveno");
 regGS("Changing subscription","Změna předplatného");
-regGS("Change paid status","Změnit stav platby");
-regGS("Are you sure you want to change the subscription to the section $1 status to $2?","Určitě chcete změnit stav předplatného z rubriky $1 na $2? ");
-regGS("Change subscription paid status","Změnit stav placeného předplatného");
-regGS("Not paid","Nezaplaceno");
-regGS("Paid","Zaplaceno");
 
 
 ?>

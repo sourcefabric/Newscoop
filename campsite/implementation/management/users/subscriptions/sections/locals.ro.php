@@ -22,11 +22,6 @@ regGS("Updating subscription","Actualizez subscrierea");
 regGS("The subscription has been updated.","Subscrierea a fost actualizată");
 regGS("The subscription could not be updated.","Subscrierea nu poate fi actualizată");
 regGS("Changing subscription","Modific subscrierea");
-regGS("Change paid status","Modifică starea plaţii");
-regGS("Are you sure you want to change the subscription to the section $1 status to $2?","Doriţi să schimbaţi starea subscrierii la secţiunea $1 la $2?");
-regGS("Change subscription paid status","Schimbă starea plăţii la subscriere");
-regGS("Not paid","Neplătit");
-regGS("Paid","Plătit");
 
 
 ?>
