@@ -74,6 +74,7 @@ CContext::CContext()
 	                                              = def_section_nr
 	                                                = def_article_nr
 	                                                  = -1;
+	m_nTopicId = m_nDefTopicId = -1;
 	lmode = LM_NORMAL;
 	stmode = STM_NORMAL;
 	do_subscribe = false;
@@ -107,6 +108,7 @@ int CContext::operator ==(const CContext& c) const
 	       && def_section_nr == c.def_section_nr
 	       && article_nr == c.article_nr
 	       && def_article_nr == c.def_article_nr
+	       && m_nTopicId == c.m_nDefTopicId
 	       && i_list_start == c.i_list_start
 	       && s_list_start == c.s_list_start
 	       && a_list_start == c.a_list_start
@@ -177,6 +179,8 @@ const CContext& CContext::operator =(const CContext& s)
 	def_section_nr = s.def_section_nr;
 	article_nr = s.article_nr;
 	def_article_nr = s.def_article_nr;
+	m_nTopicId = s.m_nTopicId;
+	m_nDefTopicId = s.m_nDefTopicId;
 	i_list_start = s.i_list_start;
 	s_list_start = s.s_list_start;
 	a_list_start = s.a_list_start;
