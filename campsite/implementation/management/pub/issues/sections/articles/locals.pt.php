@@ -1,6 +1,5 @@
 <?
 regGS("Delete article $1","Eliminar Artigo $1.");
-regGS("You do not have the right to add articles.","Não tem permissões para adicionar Artigos.");
 regGS("Show article on front page","Mostrar Artigo na 1ª Página");
 regGS("Show article on section page","Mostrar Artigo na página de Secção");
 regGS("Enter keywords, comma separated","Entre Palavras-Chave, separadas por virgulas");
