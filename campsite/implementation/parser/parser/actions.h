@@ -472,6 +472,44 @@ public:
 	virtual int takeAction(CContext& c, sockstream& fs);
 };
 
+// CActTopic: Topic action - corresponding to Topic statement (see manual)
+class CActTopic : public CAction
+{
+protected:
+	CParameter param;		// parameter
+
+public:
+	// constructor
+	// Parameters:
+	//		const CParameter& p - parameter
+	CActTopic(const CParameter& p) : param(p) {}
+	
+	// copy-constructor
+	CActTopic(const CActTopic& s) : param("") { *this = s; }
+	
+	// destructor
+	virtual ~CActTopic() {}
+
+	// assign operator
+	const CActTopic& operator =(const CActTopic& o)
+	{
+		param = o.param;
+		return *this;
+	}
+	
+	// action: return action identifier
+	virtual TAction action() const { return CMS_ACT_TOPIC; }
+
+	// clone this object
+	virtual CAction* clone() const { return new CActTopic(*this); }
+
+	// takeAction: performs the action
+	// Parametes:
+	//		CContext& c - current context (modified by action)
+	//		sockstream& fs - output stream (not used)
+	virtual int takeAction(CContext& c, sockstream& fs);
+};
+
 class CListModifiers : public set<int>
 {
 public:
