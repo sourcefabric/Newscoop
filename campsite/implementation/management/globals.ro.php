@@ -237,6 +237,6 @@ regGS("New field","Câmp nou");
 regGS("OK","OK");
 regGS("Save changes","Salvează modificările");
 regGS("Search","Caută");
-
+regGS("Add new field","Adaugă câmp nou");
 
 ?>

@@ -231,5 +231,6 @@ regGS("No articles","Keine Artikel");
 regGS("---Select article---","---Artikel auswählen---");
 regGS("Duplicate","Duplizieren");
 regGS("You do not have the right to add articles.","Keine Berechtigung Artikel hinzuzufügen");
+regGS("Add new field","Neues Feld hinzufügen");
 
 ?>
