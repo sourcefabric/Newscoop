@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ###########################################################
 ## General purpose functions
@@ -320,3 +320,34 @@ fi
 return 0
 }
 # END OF check4_file
+
+# FUNCTION: check4_symbol_and_prototype
+# Description: check for the existence of a symbol in a library, and also
+#              for a corresponding prototype in a header
+# Parameters:
+#	$1	- library to look in
+#	$2	- path(s) to library
+#	$3	- header to look in
+#	$4	- path(s) to header
+#	$5	- symbol to find
+#	
+# Variables set:
+#	output - error message (if any)
+check4_symbol_and_prototype()
+{
+check4_file $1 --file --path $2
+if [ $? -eq 0 ]; then
+	found=`strings $file_path | grep -w $5 2>/dev/null`
+	if [ $? -eq 0 ]; then
+		check4_file $3 --file --path $4
+		if [ $? -eq 0 ]; then
+			found=`grep -w $5 $file_path 2>/dev/null`
+			if [ $? -eq 0 ]; then
+				return 0;
+			fi
+		fi
+	fi
+fi
+return 1
+}
+# END OF check4_symbol_and_prototype
