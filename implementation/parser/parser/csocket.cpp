@@ -33,11 +33,239 @@ Implementation of the classes defined in csocket.h
 #include <errno.h>
 #include <ctype.h>
 #include <string.h>
+#include <pthread.h>
 
 #include "globals.h"
 
 #ifdef SOLARIS
 extern "C" int gethostname(char *name, int len);
+#endif
+
+/* platforms that don't have gethost*_r or getserv*_r, or that have them but
+   with a different interface, can use these functions. note these are thread
+   safe via a mutex lock, and are not truely threaded
+*/
+#if (!HAVE_GETHOSTBYADDR_R) || (!HAVE_GETHOSTBYNAME_R) || (!HAVE_GETSERVBYNAME_R)
+static pthread_mutex_t threadsafe_gethost_mutex = PTHREAD_MUTEX_INITIALIZER;
+
+#define ptrsize (sizeof(void*))
+#define ROUND_TO_PTR_BOUNDARY( buff, roundup, buflen ) 						\
+	if( (roundup = ptrsize - ((unsigned long)buff % ptrsize)) != ptrsize ){	\
+		buff = (char*)(unsigned long)buff + roundup;						\
+		if( (buflen -= roundup) < 0 )										\
+			return -1;														\
+	}
+#endif
+
+#if (!HAVE_GETHOSTBYADDR_R) || (!HAVE_GETHOSTBYNAME_R)
+int construct_hostent( struct hostent* result, struct hostent* host, char* buff, int buflen )
+{
+	int i,arraysize;
+	int strtotal=0;
+	char* pdata;
+	int roundup;
+
+	result->h_addrtype = host->h_addrtype;
+	result->h_length = host->h_length;
+
+	/* copy h_name if enough room */
+	if( (buflen -= (strtotal = strlen( host->h_name)+1 )) < 0 )
+		return -1;
+	strcpy( buff, host->h_name );
+	result->h_name = buff;
+	buff+=strtotal;
+
+	/* count aliases */
+	strtotal = 0;
+	for( arraysize=0; host->h_aliases[ arraysize ]; ++arraysize ){
+		strtotal += strlen( host->h_aliases[ arraysize ] )+1;
+	}
+	++arraysize; /* copy null too */
+
+	ROUND_TO_PTR_BOUNDARY( buff, roundup, buflen );
+
+	buflen -= strtotal + sizeof(char*) * arraysize;
+	if( buflen < 0 ){
+		return -1;
+	}
+
+	pdata = buff + (sizeof(char*) * (arraysize+1));
+
+	result->h_aliases = (char**)buff;
+	for( i=0; i < arraysize; ++i ){
+		if( host->h_aliases[i] != NULL ){
+			result->h_aliases[i] = pdata; 
+			strcpy( pdata, host->h_aliases[i] );
+			pdata+=strlen( host->h_aliases[i] ) + 1;
+		}else{
+			result->h_aliases[i] = NULL;
+		}
+	}
+	buff = pdata;
+	
+	/* count addresses */
+	for( arraysize=0; host->h_addr_list[ arraysize ]; ++arraysize );
+	++arraysize;	/* copy the null part too */
+
+	ROUND_TO_PTR_BOUNDARY( buff, roundup, buflen );
+
+	buflen -= ((host->h_length * arraysize) + (sizeof(char*) * arraysize));
+	if( buflen < 0 ){
+		return -1;
+	}
+
+	pdata = buff + (sizeof(char*) * arraysize);
+
+	result->h_addr_list = (char**)buff;
+	for( i=0; i < arraysize; ++i, pdata+=host->h_length ){
+		if( host->h_addr_list[i] != NULL ){
+			result->h_addr_list[i] = pdata; 
+			memcpy( pdata, host->h_addr_list[i], host->h_length );
+		}else{
+			result->h_addr_list[i] = NULL;
+		}
+	}
+	return 0;
+}
+#endif
+
+#if (!HAVE_GETSERVBYNAME_R)
+int construct_servent( struct servent* result, struct servent* host, char* buff, int buflen )
+{
+	int i,arraysize;
+	int strtotal=0;
+	char* pdata;
+	int roundup;
+
+	result->s_port = host->s_port;
+
+	result->s_name = buff;
+	buflen -= strlen( host->s_name )+1;
+	if( buflen < 0 )
+		return -1;
+	strcpy( buff, host->s_name );
+	buff += strlen( host->s_name )+1;
+
+	result->s_proto = buff;
+	buflen -= strlen( host->s_proto )+1;
+	if( buflen < 0 )
+		return -1;
+	strcpy( buff, host->s_proto );
+	buff += strlen( host->s_proto )+1;
+
+	/* count aliases */
+	for( arraysize=0; host->s_aliases[ arraysize ]; ++arraysize ){
+		strtotal += strlen( host->s_aliases[ arraysize ] )+1;
+	}
+
+	++arraysize; /* copy null too */
+	ROUND_TO_PTR_BOUNDARY( buff, roundup, buflen );
+
+	buflen -= strtotal + sizeof(char*) * arraysize;
+	if( buflen < 0 ){
+		return -1;
+	}
+
+	pdata = buff + (sizeof(char*) * (arraysize+1));
+
+	result->s_aliases = (char**)buff;
+	for( i=0; i < arraysize; ++i ){
+		if( host->s_aliases[i] != NULL ){
+			result->s_aliases[i] = pdata; 
+			strcpy( pdata, host->s_aliases[i] );
+			pdata+=strlen( host->s_aliases[i] ) + 1;
+		}else{
+			result->s_aliases[i] = NULL;
+		}
+	}
+	buff = pdata;
+	return 0;
+}
+#endif
+
+#if (!HAVE_GETHOSTBYADDR_R)
+struct hostent*
+gethostbyaddr_r( const char *addr, int length, int type, struct hostent *result, char *buffer, int buflen, int bufstart, int *h_errnop )
+{
+	struct hostent *host;
+	*h_errnop = 0;
+
+	pthread_mutex_lock( &threadsafe_gethost_mutex );
+
+	if( bufstart>=buflen )
+		return NULL;
+
+	buffer+=bufstart;
+	buflen-=bufstart;
+
+	if( (host = gethostbyaddr(addr, length, type)) == 0 ){
+		*h_errnop = h_errno;
+		result = NULL;
+	}else{
+		if( construct_hostent( result, host, buffer, buflen ) == -1 ){
+			result = NULL;
+		}
+	}
+
+	pthread_mutex_unlock( &threadsafe_gethost_mutex );
+	return result;
+}
+#endif
+
+#if (!HAVE_GETHOSTBYNAME_R)
+struct hostent *
+gethostbyname_r (const char *name, struct hostent *result, char *buffer, int buflen, int bufstart, int *h_errnop)
+{
+	struct hostent *host;
+	*h_errnop = 0;
+
+	pthread_mutex_lock( &threadsafe_gethost_mutex );
+
+	if( bufstart>=buflen )
+		return NULL;
+
+	buffer+=bufstart;
+	buflen-=bufstart;
+
+	if( (host = gethostbyname(name)) == 0 ){
+		*h_errnop = h_errno;
+		result = NULL;
+	}else{
+		if( construct_hostent( result, host, buffer, buflen ) == -1 ){
+			result = NULL;
+		}
+	}
+
+	pthread_mutex_unlock( &threadsafe_gethost_mutex );
+	return result;
+}
+#endif
+
+#if (!HAVE_GETSERVBYNAME_R)
+struct servent *
+getservbyname_r (const char *name, const char *proto, struct servent *result, char *buffer, int buflen, int bufstart )
+{
+	struct servent *serv;
+
+	pthread_mutex_lock( &threadsafe_gethost_mutex );
+
+	if( bufstart>=buflen )
+		return NULL;
+
+	buffer+=bufstart;
+	buflen-=bufstart;
+
+	if( (serv = getservbyname( name, proto ) ) == 0 ){
+		result = NULL;
+	}else{
+		if( construct_servent( result, serv, buffer, buflen ) == -1 ){
+			result = NULL;
+		}
+	}
+
+	pthread_mutex_unlock( &threadsafe_gethost_mutex );
+	return result;
+}
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////////
