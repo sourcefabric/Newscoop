@@ -1,4 +1,5 @@
 <?
+
 regGS("CAMPSITE","CAMPSITE");
 regGS("Home","Startseite");
 regGS("Logout","Ausloggen");
@@ -79,10 +80,12 @@ regGS("No such topic.","Thema existiert nicht");
 regGS("You must select a language.","Sprache muss gewählt werden");
 regGS("No such section.","Rubrik nicht vorhanden");
 regGS("No articles.","Keine Artikel");
+regGS("Access denied","Zugang verweigert");
 regGS("Add new article","Neuen Artikel hinzufügen");
 regGS("Status","Status");
 regGS("No such article.","Artikel nicht vorhanden");
 regGS("Published","Veröffentlicht");
+regGS("Not published","");
 regGS("Submitted","Eingepflegt");
 regGS("New","Neu");
 regGS("Article","Artikel");
@@ -183,6 +186,7 @@ regGS("The topic $1 could not be deleted.","Thema $1 konnte nicht gelöscht werd
 regGS("Yes","Ja");
 regGS("No","Nein");
 regGS("No issues.","Keine Ausgabe");
+regGS("Back to article details","Zurück zu Artikeldetails");
 regGS("Adding new topic","Neues Thema wird hinzugefügt");
 regGS("Topic $1 added","Thema $1 hinzugefügt");
 regGS("The topic could not be added.","Thema konnte nicht hinzugefügt werden");
@@ -208,6 +212,6 @@ regGS("Days","Tage");
 regGS("(YYYY-MM-DD)","(JJJJ-MM-TT)");
 regGS("The sections were added successfully.","Rubriken wurden erfolgreich hinzugefügt");
 regGS("The sections could not be added successfully. Some of them were already added !","Die Rubriken konnten nicht erfolgreich hinzugefügt werden. Einige waren bereits hinzugefügt worden");
-regGS("Back to article details","Zurück zu Artikeldetails");
+
 
 ?>

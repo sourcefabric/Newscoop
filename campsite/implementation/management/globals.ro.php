@@ -80,6 +80,7 @@ regGS("No such topic.","Topicul nu există");
 regGS("You must select a language.","Trebuie să selectaţi o limbă");
 regGS("No such section.","Secţiunea nu există");
 regGS("No articles.","Nu există articole");
+regGS("Access denied","Acces interzis");
 regGS("Add new article","Adaugă articol nou");
 regGS("Status","Stare");
 regGS("No such article.","Articolul nu există");

@@ -1,4 +1,5 @@
 <?
+
 regGS("CAMPSITE","CAMPSITE");
 regGS("Home","Glavna");
 regGS("Logout","Izlaz");
@@ -79,10 +80,12 @@ regGS("No such topic.","");
 regGS("You must select a language.","Morate odabrati jezik");
 regGS("No such section.","Takva rubrika ne postoji");
 regGS("No articles.","Nema članaka");
+regGS("Access denied","Zabranjen pristup");
 regGS("Add new article","Dodaj novi članak");
 regGS("Status","Status");
 regGS("No such article.","Nema tog članka");
 regGS("Published","Objavljen");
+regGS("Not published","");
 regGS("Submitted","Predat");
 regGS("New","Nov");
 regGS("Article","Članak");
@@ -183,6 +186,7 @@ regGS("The topic $1 could not be deleted.","");
 regGS("Yes","Da");
 regGS("No","Ne");
 regGS("No issues.","Nema nikakvih izdanja.");
+regGS("Back to article details","Vrati se na članak");
 regGS("Adding new topic","");
 regGS("Topic $1 added","");
 regGS("The topic could not be added.","");
@@ -208,6 +212,6 @@ regGS("Days","");
 regGS("(YYYY-MM-DD)","");
 regGS("The sections were added successfully.","");
 regGS("The sections could not be added successfully. Some of them were already added !","");
-regGS("Back to article details","Vrati se na članak");
+
 
 ?>
