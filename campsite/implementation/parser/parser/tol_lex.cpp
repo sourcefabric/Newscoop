@@ -806,7 +806,7 @@ const TOLLexem* TOLLex::GetLexem()
 		case 3: // after a start token; read campsite instruction
 			if (!m_bLexemStarted)		// didn't find an atom yet
 			{
-				if (m_chChar <= ' ')	// separator
+				if (m_chChar <= ' ' && m_chChar >= 0)	// separator
 				{
 					;
 				}
@@ -835,7 +835,7 @@ const TOLLexem* TOLLex::GetLexem()
 			}
 			else if (m_bQuotedLexem)		// lexem (atom) is delimited by quotes
 			{
-				if (m_chChar < ' ' || m_chChar == s_chTOLTokenEnd)
+				if ((m_chChar < ' ' && m_chChar >= 0) || m_chChar == s_chTOLTokenEnd)
 				{
 					m_bLexemStarted = false;
 					m_bQuotedLexem = false;
@@ -860,7 +860,7 @@ const TOLLexem* TOLLex::GetLexem()
 			}
 			else				// lexem is not delimited by quotes
 			{
-				if (m_chChar <= ' ' || m_chChar == s_chTOLTokenEnd)	// separator or end token
+				if ((m_chChar <= ' ' && m_chChar >= 0) || m_chChar == s_chTOLTokenEnd)	// separator or end token
 				{
 					FoundLexem = true;
 					m_bLexemStarted = false;
