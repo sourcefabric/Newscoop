@@ -4,6 +4,7 @@ load_common_include_files();
 require_once($_SERVER['DOCUMENT_ROOT'].'/priv/imagearchive/include.inc.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ImageSearch.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/priv/CampsiteInterface.php');
 
@@ -13,8 +14,9 @@ if (!$access) {
 	exit;
 }
 $ImageId = isset($_REQUEST['image_id'])?$_REQUEST['image_id']:0;
+$imageNav =& new ImageNav($_REQUEST, CAMPSITE_IMAGEARCHIVE_IMAGES_PER_PAGE, $_REQUEST['view']);
 if (!is_numeric($ImageId) || ($ImageId <= 0)) {
-	header('Location: '.CAMPSITE_IMAGEARCHIVE_DIR.'index.php?'.Image_GetSearchUrl($_REQUEST));
+	header('Location: index.php?'.$imageNav->getSearchLink());
 	exit;	
 }
 
@@ -26,7 +28,7 @@ if (!$User->hasPermission('DeleteImage')) {
 	exit;		
 }
 if ($imageObj->inUse()) {
-	header('Location: '.CAMPSITE_IMAGEARCHIVE_DIR.'index.php?'.Image_GetSearchUrl($_REQUEST));
+	header('Location: index.php?'.$imageNav->getSearchLink());
 	exit;
 }
 
@@ -46,6 +48,6 @@ if ($_REQUEST['image_offset'] < 0) {
 }
 
 // Go back to article image list.
-header('Location: '.CAMPSITE_IMAGEARCHIVE_DIR.'index.php?'.Image_GetSearchUrl($_REQUEST));
+header('Location: index.php?'.$imageNav->getSearchLink());
 exit;
 ?>
