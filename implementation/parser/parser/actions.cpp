@@ -1117,24 +1117,22 @@ int CActURLParameters::takeAction(CContext& c, sockstream& fs)
 		if (c.Language() < 0 && c.Publication() < 0 && c.Issue() < 0
 		        && c.Section() < 0 && c.Article() < 0)
 			return ERR_NOPARAM;
-		URLPrintParam(P_IDLANG, c.Language(), fs, first);
 	}
+	string coURL;
 	if (fromstart)
 	{
-		URLPrintParam(P_IDPUBL, c.DefPublication(), fs, first);
-		URLPrintParam(P_NRISSUE, c.DefIssue(), fs, first);
-		URLPrintParam(P_NRSECTION, c.DefSection(), fs, first);
-		URLPrintParam(P_NRARTICLE, c.DefArticle(), fs, first);
+		coURL = c.DefURL()->getQueryString();
+		fs << coURL;
 		URLPrintParam(P_TOPIC_ID, c.DefTopic(), fs, first);
 	}
 	else
 	{
-		URLPrintParam(P_IDPUBL, c.Publication(), fs, first);
-		URLPrintParam(P_NRISSUE, c.Issue(), fs, first);
-		URLPrintParam(P_NRSECTION, c.Section(), fs, first);
-		URLPrintParam(P_NRARTICLE, c.Article(), fs, first);
+		coURL = c.URL()->getQueryString();
+		fs << coURL;
 		URLPrintParam(P_TOPIC_ID, c.Topic(), fs, first);
 	}
+	if (coURL != "")
+		first = false;
 	if (c.SubsType() != ST_NONE)
 		fs << (first ? "" : "&") << P_SUBSTYPE << "="
 		<< (c.SubsType() == ST_TRIAL ? "trial" : "paid");
