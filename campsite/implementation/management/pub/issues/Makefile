@@ -1,24 +1,27 @@
-export INSTALL_DIR3=$(INSTALL_DIR2)/issues
+export PRIV_DIR3=$(PRIV_DIR2)/issues
+
+MY_TARGETS=index.php qadd.php add_new.php do_add_new.php add_prev.php do_add_prev.php del.php do_del.php set.php translate.php do_translate.php preview.php status.php do_status.php empty.php add_article.php edit.php do_edit.php
 
 subsystem: all
 	$(MAKE) -C sections
 
-all: index.xql qadd.xql add_new.xql do_add_new.xql add_prev.xql do_add_prev.xql del.xql do_del.xql set.xql translate.xql do_translate.xql preview.xql status.xql do_status.xql empty.xql add_article.xql edit.xql do_edit.xql
+all: $(MY_TARGETS)
 
-%.xql: %.m4 ../../macros.m4
+%.php: %.m4 ../../macros.m4
 	m4 ../../macros.m4 $< >$@
 
-install: all
-	mkdir -p $(INSTALL_DIR3)
-	cp *.xql $(INSTALL_DIR3)/
+install: $(ALL)
+	mkdir -p $(PRIV_DIR3)
+	cp -f *.php $(PRIV_DIR3)/
 	$(MAKE) -C sections install
 
 clean:
-	rm -f *.xql *~
+	rm -f *~
+	if [ "$(PACKAGE_TYPE)" = "source" ]; then rm -f $(MY_TARGETS); fi
 	$(MAKE) -C sections clean
 
-package: all
+package: $(ALL)
 	mkdir -p $(PACKAGE_DIR)/issues
 	cp -f Makefile $(PACKAGE_DIR)/issues
-	cp -f *.xql $(PACKAGE_DIR)/issues
+	cp -f *.php $(PACKAGE_DIR)/issues
 	$(MAKE) -C sections package PACKAGE_DIR=$(PACKAGE_DIR)/issues

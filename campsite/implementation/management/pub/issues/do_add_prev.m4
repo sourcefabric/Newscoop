@@ -1,73 +1,88 @@
 B_HTML
+INCLUDE_PHP_LIB(<*../..*>)
 B_DATABASE
 
 CHECK_BASIC_ACCESS
-CHECK_ACCESS({ManageIssue})
+CHECK_ACCESS(<*ManageIssue*>)
 
 B_HEAD
 	X_EXPIRES
-	X_TITLE({Copying Previous Issue})
-<!sql if $access == 0>dnl
-	X_AD({You do not have the right to add issues.})
-<!sql endif>dnl
-<!sql query "SELECT * FROM Issues WHERE 1=0" q_iss>dnl
-<!sql query "SELECT * FROM Sections WHERE 1=0" q_sect>dnl
+	X_TITLE(<*Copying previous issue*>)
+<? if ($access == 0) { ?>dnl
+	X_AD(<*You do not have the right to add issues.*>)
+<? }
+    query ("SELECT * FROM Issues WHERE 1=0", 'q_iss');
+    query ("SELECT * FROM Sections WHERE 1=0", 'q_sect');
+?>dnl
 E_HEAD
 
-<!sql if $access>dnl
+<? if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
 
-<!sql setdefault cOldNumber 0>dnl
-<!sql setdefault cNumber 0>dnl
-<!sql setdefault cPub 0>dnl
-B_HEADER({Copying Previous Issue})
+<?
+    todefnum('cOldNumber');
+    todefnum('cNumber');
+    todefnum('cPub');
+?>dnl
+B_HEADER(<*Copying previous issue*>)
 B_HEADER_BUTTONS
-X_HBUTTON({Issues}, {pub/issues/?Pub=<!sql print #cPub>})
-X_HBUTTON({Publications}, {pub/})
-X_HBUTTON({Home}, {home.xql})
-X_HBUTTON({Logout}, {logout.xql})
+X_HBUTTON(<*Issues*>, <*pub/issues/?Pub=<? pencURL($cPub); ?>*>)
+X_HBUTTON(<*Publications*>, <*pub/*>)
+X_HBUTTON(<*Home*>, <*home.php*>)
+X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<!sql set NUM_ROWS 0>dnl
-<!sql query "SELECT Name FROM Publications WHERE Id=?cPub" publ>dnl
-<!sql if $NUM_ROWS>dnl
+<?
+    query ("SELECT Name FROM Publications WHERE Id=$cPub", 'publ');
+    if ($NUM_ROWS) {
+	fetchRow($publ);
+?>dnl
 B_CURRENT
-X_CURRENT({Publication:}, {<B><!sql print ~publ.Name></B>})
+X_CURRENT(<*Publication*>, <*<B><? pgetHVar($publ,'Name'); ?></B>*>)
 E_CURRENT
 
 <P>
-B_MSGBOX({Copying previous issue})
-	X_MSGBOX_TEXT({
-<!sql query "SELECT * FROM Issues WHERE IdPublication=?cPub AND Number=?cOldNumber" q_iss>dnl
-<!sql print_loop q_iss>dnl
-	<!sql query "INSERT IGNORE INTO Issues SET IdPublication=?cPub, Number=?cNumber, IdLanguage=?q_iss.IdLanguage, Name='?q_iss.Name', FrontPage='?q_iss.FrontPage', SingleArticle='?q_iss.SingleArticle'">dnl
-	<!sql query "SELECT * FROM Sections WHERE IdPublication=?cPub AND NrIssue=?cOldNumber AND IdLanguage=?q_iss.IdLanguage" q_sect>dnl
-	<!sql print_loop q_sect>dnl
-		<!sql query "INSERT IGNORE INTO Sections SET IdPublication=?cPub, NrIssue=?cNumber, IdLanguage=?q_iss.IdLanguage, Number=?q_sect.Number, Name='?q_sect.Name'">dnl
-	<!sql done>dnl
-<!sql done>dnl
-X_AUDIT({11}, {New issue ?cNumber from ?cOldNumber in publication ?publ.Name})
-	<LI>Copying done.</LI>
-	})
+B_MSGBOX(<*Copying previous issue*>)
+	X_MSGBOX_TEXT(<*
+<?
+    query ("SELECT * FROM Issues WHERE IdPublication=$cPub AND Number=$cOldNumber", 'q_iss');
+    	//copy the whole structure; translated issues may exists
+    $nr=$NUM_ROWS;
+    for($loop=0;$loop<$nr;$loop++) {
+	fetchRow($q_iss);
+	$idlang=getVar($q_iss,'IdLanguage');
+
+	query ("INSERT IGNORE INTO Issues SET IdPublication=$cPub, Number=$cNumber, IdLanguage=$idlang, Name='".getSVar($q_iss,'Name')."', FrontPage='".getSVar($q_iss,'FrontPage')."', SingleArticle='".getSVar($q_iss,'SingleArticle')."'");
+	query ("SELECT * FROM Sections WHERE IdPublication=$cPub AND NrIssue=$cOldNumber AND IdLanguage=$idlang", 'q_sect');
+	$nr2=$NUM_ROWS;
+	for($loop2=0;$loop2<$nr2;$loop2++) {
+	    fetchRow($q_sect);
+	    query ("INSERT IGNORE INTO Sections SET IdPublication=$cPub, NrIssue=$cNumber, IdLanguage=$idlang, Number=".getSVar($q_sect,'Number').", Name='".getSVar($q_sect,'Name')."'");
+	}
+    }
+?>dnl
+X_AUDIT(<*11*>, <*getGS('New issue $1 from $2 in publication $3',$cNumber,$cOldNumber,getSVar($publ,'Name'))*>)
+	<LI><? putGS('Copying done.'); ?></LI>
+	*>)
 	B_MSGBOX_BUTTONS
-		<A HREF="X_ROOT/pub/issues/?Pub=<!sql print #cPub>"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
+		<A HREF="X_ROOT/pub/issues/?Pub=<? pencURL($cPub); ?>"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
 	E_MSGBOX_BUTTONS
 E_MSGBOX
 <P>
-<!sql else>dnl
+<? } else { ?>dnl
 <BLOCKQUOTE>
-	<LI>No such publication.</LI>
+	<LI><? putGS('No such publication.'); ?></LI>
 </BLOCKQUOTE>
-<!sql endif>dnl
+<? } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<!sql endif>dnl
+<? } ?>dnl
 
 E_DATABASE
 E_HTML

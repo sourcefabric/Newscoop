@@ -1,5 +1,5 @@
 B_HTML
-
+INCLUDE_PHP_LIB(<*..*>)
 B_HEAD
     <TITLE>None</TITLE>
 E_HEAD
@@ -7,12 +7,13 @@ E_HEAD
 B_STYLE
 E_STYLE
 
-<!sql setdefault bg 0>dnl
-<!sql if $bg>dnl
+<? 
+    todefnum('bg');
+    if ($bg) { ?>dnl
 B_PBODY1
-<!sql else>dnl
+<? } else { ?>dnl
 B_PBODY2
-<!sql endif>dnl
+<? } ?>dnl
 E_PBODY
 
 E_HTML

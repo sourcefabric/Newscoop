@@ -28,20 +28,20 @@
 
     /**
      * ColorFieldDocument is the Document class for the R,G,B JTextFields from the
-     * FontColorChooser frame. It checks if the resulted value (after an insert or a remove)
+     * FontColorFrame frame. It checks if the resulted value (after an insert or a remove)
      * is a valid decimal color code (0-255), and updates the sample JPanel from the 
-     * FontColorChooser frame.
+     * FontColorFrame frame.
      */
 
-import com.sun.java.swing.text.*;
-import com.sun.java.swing.*;
+import javax.swing.text.*;
+import javax.swing.*;
 
 class ColorFieldDocument extends PlainDocument{
     private JTextComponent tC;
-    FontColorChooser parent;
+    FontColorFrame parent;
     int col;
     
-    public ColorFieldDocument(JTextComponent tc,FontColorChooser p,int c){
+    public ColorFieldDocument(JTextComponent tc,FontColorFrame p,int c){
         tC=tc;
         parent=p;
         col=c;

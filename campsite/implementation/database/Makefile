@@ -1,23 +1,26 @@
-all:
+include ../../make.env
 
-install: all
+PACKAGE_DIR=$(BIN_PACKAGE_DIR)/implementation/database
+export DROP_DB=Y
+
+all: dummy
+
+install: dummy
 	@./install-db
 
-drop-db:
-	@echo -n "Dropping old database..."
-	@echo "y" | mysqladmin drop campsite -u root 1> /dev/null
-	@echo "done."
+drop-db: uninstall
 
-clean:
+clean: dummy
 
 uninstall: dummy
-	./uninstall
+	./uninstall-db
 
-package: all
-	mkdir -p $(PACKAGE_DIR)/database
-	cp -f Makefile $(PACKAGE_DIR)/database
-	cp -f install-db $(PACKAGE_DIR)/database
-	cp -f uninstall $(PACKAGE_DIR)/database
-	cp -f campsite-db.sql $(PACKAGE_DIR)/database
+package: dummy
+	@if [ "$(PACKAGE_TYPE)" = "binary" ]; then echo "This is a binary package"; exit 1; fi
+	mkdir -p $(PACKAGE_DIR)
+	cp -f Makefile $(PACKAGE_DIR)
+	cp -f install-db $(PACKAGE_DIR)
+	cp -f uninstall-db $(PACKAGE_DIR)
+	cp -f campsite-db.sql $(PACKAGE_DIR)
 
 dummy:

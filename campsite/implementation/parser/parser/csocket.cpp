@@ -1,39 +1,40 @@
 /******************************************************************************
- 
+
 CAMPSITE is a Unicode-enabled multilingual web content
 management system for news publications.
 CAMPFIRE is a Unicode-enabled java-based near WYSIWYG text editor.
 Copyright (C)2000,2001  Media Development Loan Fund
 contact: contact@campware.org - http://www.campware.org
 Campware encourages further development. Please let us know.
- 
+
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
 as published by the Free Software Foundation; either version 2
 of the License, or (at your option) any later version.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
- 
+
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- 
+
 ******************************************************************************/
 
 /******************************************************************************
- 
+
 Implementation of the classes defined in csocket.h
- 
+
 ******************************************************************************/
 
 #include "csocket.h"
 #include <errno.h>
 #include <ctype.h>
 #include <string.h>
-#include "global.h"
+
+#include "globals.h"
 
 #ifdef SOLARIS
 extern "C" int gethostname(char *name, int len);
@@ -93,7 +94,7 @@ const char* CSocket::LocalIP() EXCEPTION_DEF(throw(SocketException))
 #ifndef _EXCEPTIONS_
 	if (l == NULL)
 		return NULL;
-#endif 
+#endif
 	return inet_ntoa(l->sin_addr);
 }
 
@@ -110,7 +111,7 @@ const int CSocket::LocalPort() EXCEPTION_DEF(throw(SocketException))
 #ifndef _EXCEPTIONS_
 	if (l == NULL)
 		return -errno;
-#endif 
+#endif
 	return ntohs(l->sin_port);
 }
 
@@ -320,7 +321,7 @@ const char* CSocket::LocalHostName() EXCEPTION_DEF(throw())
 	gethostname((char*) name, sizeof(name));
 #else
 	gethostname((char*) name, sizeof(name));
-#endif 
+#endif
 	return (const char*) name;
 }
 
@@ -345,7 +346,7 @@ const struct sockaddr_in* CConnectedSocket::GetRemote() EXCEPTION_DEF(throw(Sock
 	    getpeername(sock, (struct sockaddr*) &remote, &len)
 #else
 	    getpeername(sock, (struct sockaddr*) &remote, &len)
-#endif 
+#endif
 	    == -1)
 	{
 		switch (errno)
@@ -375,7 +376,7 @@ char* CConnectedSocket::RemoteIP() EXCEPTION_DEF(throw(SocketErrorException))
 #ifndef _EXCEPTIONS_
 	if (l == NULL)
 		return NULL;
-#endif 
+#endif
 	return inet_ntoa(l->sin_addr);
 }
 
@@ -392,7 +393,7 @@ int CConnectedSocket::RemotePort() EXCEPTION_DEF(throw(SocketErrorException))
 #ifndef _EXCEPTIONS_
 	if (l == NULL)
 		return ( -errno);
-#endif 
+#endif
 	return ntohs(l->sin_port);
 }
 
@@ -415,7 +416,7 @@ int CConnectedSocket::IsConnected() EXCEPTION_DEF(throw(SocketErrorException))
 	{
 		return 0;
 	}
-#endif 
+#endif
 	return (l != NULL);
 }
 
@@ -431,7 +432,7 @@ EXCEPTION_DEF(throw(SocketErrorException))
 #ifdef _EXCEPTIONS_
 	if (n == -1)
 		throw SocketErrorException("Send error", errno);
-#endif 
+#endif
 	return n;
 }
 
@@ -447,7 +448,7 @@ EXCEPTION_DEF(throw(SocketErrorException))
 #ifdef _EXCEPTIONS_
 	if (n == -1)
 		throw SocketErrorException("Recv error", errno);
-#endif 
+#endif
 	return n;
 }
 
@@ -497,7 +498,7 @@ EXCEPTION_DEF(throw(SocketErrorException))
 ///////////////////////////////////////////////////////////////////////////////////
 // Connect() - connects the socket to the remote host and port (errno set on exit)
 // returns 1 if success or 0 in failure
-// throws Exception on failure to connect if network Unreachable or
+// throws SocketErrorException on failure to connect if network Unreachable or
 // if interrupted by a signal.
 // throws ConnectException if other cases of failure to connect !
 ///////////////////////////////////////////////////////////////////////////////////
@@ -624,7 +625,7 @@ EXCEPTION_DEF(throw(SocketErrorException))
 #ifdef _EXCEPTIONS_
 	if (n == -1)
 		throw SocketErrorException("SendTo error", errno);
-#endif 
+#endif
 	return n;
 }
 
@@ -688,7 +689,7 @@ EXCEPTION_DEF(throw(SocketErrorException)): CConnectedSocket(SOCK_DGRAM, PF_INET
 ///////////////////////////////////////////////////////////////////////////////////
 // Connect() - connects the socket to the remote host and port (errno set on exit)
 // returns 1 if success or 0 in failure
-// throws Exception on failure to connect if network Unreachable or
+// throws SocketErrorException on failure to connect if network Unreachable or
 // if interrupted by a signal.
 ///////////////////////////////////////////////////////////////////////////////////
 int CUDPConnSocket::Connect(const char* remote_addr, int port) EXCEPTION_DEF(throw(SocketErrorException))

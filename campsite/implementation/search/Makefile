@@ -1,37 +1,50 @@
-CC=gcc
-CFLAGS=-Wall -O3 -fomit-frame-pointer -pipe -mpentiumpro -malign-jumps=4 -malign-loops=4 -malign-functions=4
-LDLIBS=-L/usr/lib/mysql -lmysqlclient -lm -lz -lcrypt
+include ../../make.env
 
-all: gather
+PACKAGE_DIR=$(BIN_PACKAGE_DIR)/implementation
 
-gather: gather.o kwd.o
+CFLAGS=-Wall -O3 -fomit-frame-pointer -malign-jumps=4 -malign-loops=4 -malign-functions=4
+LDFLAGS=-L$(LIBMYSQLCLIENT_PATH)
+LDLIBS=-lmysqlclient -lm -lz -lcrypt
 
-broker: broker.o kwd.o
+LINKS=globals.h readconf.h readconf.cpp
 
-gather.o: gather.c kwd.h
+all: links gather
 
-kwd.o: kwd.c kwd.h
+links: dummy
+	for l in $(LINKS); do \
+	    if [ ! -L $$l ]; then ln -s ../parser/parser/$$l; fi; \
+	done
 
-broker.o: broker.c kwd.h broker.h
+gather: gather.o kwd.o readconf.o
+	g++ -o gather gather.o kwd.o readconf.o $(LDFLAGS) $(LDLIBS)
 
-clean:
-	-rm -f *.o gather broker *~
+broker: broker.o kwd.o readconf.o
+	g++ -o broker broker.o kwd.o readconf.o $(LDFLAGS) $(LDLIBS)
 
-install: all
-	mkdir -p $(UTIL_BIN)
-	cp -f gather $(UTIL_BIN)
-	chown root.$(HTTP_GROUP) $(UTIL_BIN) -R
-	chmod 750 $(UTIL_BIN) -R
-	cat /etc/crontab | grep -w gather > /dev/null || echo "0 0 * * * root $(UTIL_BIN)/gather" >> /etc/crontab
-	killall -1 crond
+gather.o: gather.cpp kwd.h configure.h readconf.h globals.h
+
+kwd.o: kwd.cpp kwd.h
+
+broker.o: broker.cpp kwd.h broker.h configure.h readconf.h globals.h
+
+readconf.o: readconf.cpp readconf.h globals.h
+
+clean: dummy
+	rm -f *.o *~ configure.h $(LINKS) .env_vars
+	if [ "$(PACKAGE_TYPE)" = "source" ]; then rm -f gather broker; fi
+
+install: $(ALL)
+	./install_search
 
 uninstall: dummy
-	./uninstall
+	./uninstall_search
 
-package: all
+package: $(ALL)
+	@if [ "$(PACKAGE_TYPE)" = "binary" ]; then echo "This is a binary package"; exit 1; fi
 	mkdir -p $(PACKAGE_DIR)/search
-	cp -f Makefile.inst $(PACKAGE_DIR)/search/Makefile
+	cp -f Makefile $(PACKAGE_DIR)/search
+	cp -f configure $(PACKAGE_DIR)/search
 	cp -f gather $(PACKAGE_DIR)/search
-	cp -f uninstall $(PACKAGE_DIR)/search
+	cp -f uninstall_search $(PACKAGE_DIR)/search
 
 dummy:

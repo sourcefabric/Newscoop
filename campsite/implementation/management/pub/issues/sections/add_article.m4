@@ -1,112 +1,124 @@
 B_HTML
+INCLUDE_PHP_LIB(<*../../..*>)
 B_DATABASE
 
-<!sql query "SELECT * FROM Sections WHERE 1=0" q_sect>dnl
+<? query ("SELECT * FROM Sections WHERE 1=0", 'q_sect'); ?>dnl
 CHECK_BASIC_ACCESS
 
 B_HEAD
 	X_EXPIRES
-	X_TITLE({Add New Article})
-<!sql if $access == 0>dnl
-	X_AD({You do not have the right to add articles.})
-<!sql endif>dnl
+	X_TITLE(<*Add new article*>)
+<? if ($access == 0) { ?>dnl
+	X_AD(<*You do not have the right to add articles.*>)
+<? } ?>dnl
 E_HEAD
 
-<!sql if $access>dnl
+<? if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
 
-<!sql setdefault Pub 0>dnl
-<!sql setdefault Issue 0>dnl
-<!sql setdefault Language 0>dnl
+<? 
+    todefnum('Pub');
+    todefnum('Issue');
+    todefnum('Language');
+?>dnl
 
-B_HEADER({Add New Article})
+B_HEADER(<*Add new article*>)
 B_HEADER_BUTTONS
-X_HBUTTON({Issues}, {pub/issues/add_article.xql?Pub=<!sql print #Pub>})
-X_HBUTTON({Publications}, {pub/add_article.xql})
-X_HBUTTON({Home}, {home.xql})
-X_HBUTTON({Logout}, {logout.xql})
+X_HBUTTON(<*Issues*>, <*pub/issues/add_article.php?Pub=<? p($Pub); ?>*>)
+X_HBUTTON(<*Publications*>, <*pub/add_article.php*>)
+X_HBUTTON(<*Home*>, <*home.php*>)
+X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<!sql set NUM_ROWS 0>dnl
-<!sql query "SELECT * FROM Issues WHERE IdPublication=?Pub AND Number=?Issue AND IdLanguage=?Language" q_iss>dnl
-<!sql if $NUM_ROWS>dnl
-<!sql set NUM_ROWS 0>dnl
-<!sql query "SELECT * FROM Publications WHERE Id=?q_iss.IdPublication" q_pub>dnl
-<!sql if $NUM_ROWS>dnl
-
-<!sql query "SELECT Name FROM Languages WHERE Id=?Language" q_language>dnl
+<?
+    query ("SELECT * FROM Issues WHERE IdPublication=$Pub AND Number=$Issue AND IdLanguage=$Language", 'q_iss');
+    if ($NUM_ROWS) {
+        fetchRow($q_iss);
+	query ("SELECT * FROM Publications WHERE Id=".getSVar($q_iss,'IdPublication'), 'q_pub');
+	if ($NUM_ROWS) { 
+	    query ("SELECT Name FROM Languages WHERE Id=$Language", 'q_language');
+	    fetchRow($q_language);
+	    fetchRow($q_pub);
+?>dnl
 B_CURRENT
-X_CURRENT({Publication:}, {<B><!sql print ~q_pub.Name></B>})
-X_CURRENT({Issue:}, {<B><!sql print ~q_iss.Number>. <!sql print ~q_iss.Name> (<!sql print ~q_language.Name>)</B>})
+X_CURRENT(<*Publication*>, <*<B><? pgetHVar($q_pub,'Name'); ?></B>*>)
+X_CURRENT(<*Issue*>, <*<B><? pgetHVar($q_iss,'Number'); ?>. <? pgetHVar($q_iss,'Name'); ?> (<? pgetHVar($q_language,'Name'); ?>)</B>*>)
 E_CURRENT
-<!sql free q_language>dnl
 
 <P>
-X_BULLET({Select the section:})
+X_BULLET(<*Select the section*>)
 
-<P><!sql setdefault SectOffs 0><!sql if $SectOffs < 0><!sql set SectOffs 0><!sql endif><!sql set NUM_ROWS 0>dnl
-<!sql query "SELECT * FROM Sections WHERE IdPublication=?Pub AND NrIssue=?Issue AND IdLanguage=?Language ORDER BY Number LIMIT $SectOffs, 11" q_sect>dnl
-<!sql if $NUM_ROWS>dnl
-<!sql set nr $NUM_ROWS>dnl
-<!sql set i 10>dnl
-<!sql set color 0>dnl
+<P><?
+    todefnum('SectOffs');
+    if ($SectOffs < 0)
+	$SectOffs= 0;
+        todefnum('lpp', 10);
+    
+    query ("SELECT * FROM Sections WHERE IdPublication=$Pub AND NrIssue=$Issue AND IdLanguage=$Language ORDER BY Number LIMIT $SectOffs, ".($lpp+1), 'q_sect');
+    if ($NUM_ROWS) {
+	$nr= $NUM_ROWS;
+	$i= $lpp;
+                        if($nr < $lpp)    $i = $nr;
+	$color= 0;
+?>dnl
 B_LIST
 	B_LIST_HEADER
-		X_LIST_TH({Nr}, {1%})
-		X_LIST_TH({Name<BR><SMALL>(click to add article)</SMALL>})
+		X_LIST_TH(<*Nr*>, <*1%*>)
+		X_LIST_TH(<*Name<BR><SMALL>(click to add article)</SMALL>*>)
 	E_LIST_HEADER
-<!sql print_loop q_sect>dnl
-<!sql if $i>dnl
+<?
+    for($loop=0;$loop<$i;$loop++) {
+	fetchRow($q_sect); ?>dnl
 	B_LIST_TR
-		B_LIST_ITEM({RIGHT})
-			<!sql print ~q_sect.Number>
+		B_LIST_ITEM(<*RIGHT*>)
+			<? pgetHVar($q_sect,'Number'); ?>
 		E_LIST_ITEM
 		B_LIST_ITEM
-			<A HREF="X_ROOT/pub/issues/sections/articles/add.xql?Pub=<!sql print #Pub>&Issue=<!sql print #q_sect.NrIssue>&Section=<!sql print #q_sect.Number>&Language=<!sql print #q_sect.IdLanguage>&Wiz=1"><!sql print ~q_sect.Name></A>
+			<A HREF="X_ROOT/pub/issues/sections/articles/add.php?Pub=<? p($Pub); ?>&Issue=<? pgetUVar($q_sect,'NrIssue'); ?>&Section=<? pgetUVar($q_sect,'Number'); ?>&Language=<? pgetUVar($q_sect,'IdLanguage'); ?>&Wiz=1"><? pgetHVar($q_sect,'Name'); ?></A>
 		E_LIST_ITEM
 	E_LIST_TR
-<!sql setexpr i ($i - 1)>dnl
-<!sql endif>dnl
-<!sql done>dnl
+<?
+}
+?>dnl
 	B_LIST_FOOTER
-<!sql if ($SectOffs <= 0)>dnl
+<? if ($SectOffs <= 0) { ?>dnl
 		X_PREV_I
-<!sql else>dnl
-		X_PREV_A({add_article.xql?Issue=<!sql print #Issue>&SectOffs=<!sql eval ($SectOffs - 10)>})
-<!sql endif>dnl
-<!sql if $nr < 11>dnl
+<? } else { ?>dnl
+                                   X_PREV_A(<*add_article.php?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>&SectOffs=<? p ($SectOffs - $lpp); ?>*>)
+<? } ?>dnl
+<? if ($nr < $lpp+1) { ?>dnl
 		X_NEXT_I
-<!sql else>dnl
-		X_NEXT_A({add_article.xql?Issue=<!sql print #Issue>&SectOffs=<!sql eval ($SectOffs + 10)>})
-<!sql endif>dnl
+<? } else { ?>dnl
+                                   X_NEXT_A(<*add_article.php?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>&SectOffs=<? p ($SectOffs + $lpp); ?>*>)
+<? } ?>dnl
 	E_LIST_FOOTER
 E_LIST
-<!sql else>dnl
+<? } else { ?>dnl
 <BLOCKQUOTE>
-	<LI>No sections.</LI>
+	<LI><? putGS('No sections.'); ?></LI>
 </BLOCKQUOTE>
-<!sql endif>dnl
+<? } ?>dnl
 
-<!sql else>dnl
+<? } else { ?>dnl
 <BLOCKQUOTE>
-	<LI>No such publication.</LI>
+	<LI><? putGS('No such publication.'); ?></LI>
 </BLOCKQUOTE>
-<!sql endif>dnl
+<? } ?>dnl
 
-<!sql else>dnl
+<? } else { ?>dnl
 <BLOCKQUOTE>
-	<LI>No such issue.</LI>
+	<LI><? putGS('No such issue.'); ?></LI>
 </BLOCKQUOTE>
-<!sql endif>dnl
+<? } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<!sql endif>dnl
+<? } ?>dnl
 
 E_DATABASE
 E_HTML

@@ -1,0 +1,47 @@
+<?
+regGS("No language.","");
+regGS("Delete language $1","");
+regGS("You do not have the right to add languages.","");
+regGS("Please enter the translation for time units.","");
+regGS("Adding new language","");
+regGS("The language $1 has been successfuly added.","");
+regGS("Please check if a language with the same name does not already exist.","");
+regGS("The language could not be added.","");
+regGS("Language $1 added","");
+regGS("Delete language","");
+regGS("You do not have the right to delete languages.","");
+regGS("Are you sure you want to delete the language $1?","");
+regGS("Deleting language","");
+regGS("The language $1 has been deleted.","");
+regGS("The language $1 could not be deleted.","");
+regGS("Language $1 deleted","");
+regGS("Edit language","");
+regGS("You do not have the right to edit languages.","");
+regGS("Please enter the translation for month names.","");
+regGS("Please enter the translation for week day names.","");
+regGS("Updating language information","");
+regGS("Language information has been successfuly updated.","");
+regGS("Language $1 modified","");
+regGS("Language information could not be updated.","");
+regGS("A language with the same name already exists.","");
+regGS("January","");
+regGS("February","");
+regGS("March","");
+regGS("April","");
+regGS("May","");
+regGS("June","");
+regGS("July","");
+regGS("August","");
+regGS("September","");
+regGS("October","");
+regGS("November","");
+regGS("December","");
+regGS("Monday","");
+regGS("Tuesday","");
+regGS("Wednesday","");
+regGS("Thursday","");
+regGS("Friday","");
+regGS("Saturday","");
+regGS("Sunday","");
+
+?>

@@ -1,86 +1,109 @@
 B_HTML
+INCLUDE_PHP_LIB(<*../../../..*>)
 B_DATABASE
 
 CHECK_BASIC_ACCESS
 
 B_HEAD
 	X_EXPIRES
-	X_TITLE({Change Article Status})
-<!sql if $access == 0>dnl
+	X_TITLE(<*Change article status*>)
+<? if ($access == 0) { ?>dnl
 	X_LOGOUT
-<!sql endif>dnl
+<? } ?>dnl
 E_HEAD
 
-<!sql if $access>dnl
+<? if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
 
-<!sql setdefault Pub 0>dnl
-<!sql setdefault Issue 0>dnl
-<!sql setdefault Section 0>dnl
-<!sql setdefault Article 0>dnl
-<!sql setdefault Language 0>dnl
-<!sql setdefault sLanguage 0>dnl
-B_HEADER({Change Article Status})
+<?
+    todefnum('Pub');
+    todefnum('Issue');
+    todefnum('Section');
+    todefnum('Article');
+    todefnum('Language');
+    todefnum('sLanguage');
+?>dnl
+B_HEADER(<*Change article status*>)
 B_HEADER_BUTTONS
-X_HBUTTON({Articles}, {pub/issues/sections/articles/?Pub=<!sql print #Pub>&Issue=<!sql print #Issue>&Language=<!sql print #Language>&Section=<!sql print #Section>})
-X_HBUTTON({Sections}, {pub/issues/sections/?Pub=<!sql print #Pub>&Issue=<!sql print #Issue>&Language=<!sql print #Language>})
-X_HBUTTON({Issues}, {pub/issues/?Pub=<!sql print #Pub>})
-X_HBUTTON({Publications}, {pub/})
-X_HBUTTON({Home}, {home.xql})
-X_HBUTTON({Logout}, {logout.xql})
+X_HBUTTON(<*Articles*>, <*pub/issues/sections/articles/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>&Section=<? p($Section); ?>*>)
+X_HBUTTON(<*Sections*>, <*pub/issues/sections/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>*>)
+X_HBUTTON(<*Issues*>, <*pub/issues/?Pub=<? p($Pub); ?>*>)
+X_HBUTTON(<*Publications*>, <*pub/*>)
+X_HBUTTON(<*Home*>, <*home.php*>)
+X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<!sql set NUM_ROWS 0>dnl
-<!sql query "SELECT * FROM Articles WHERE IdPublication=?Pub AND NrIssue=?Issue AND NrSection=?Section AND Number=?Article AND IdLanguage=?sLanguage" q_art>dnl
-<!sql if $NUM_ROWS>dnl
-<!sql set NUM_ROWS 0>dnl
-<!sql query "SELECT * FROM Sections WHERE IdPublication=?Pub AND NrIssue=?Issue AND IdLanguage=?Language AND Number=?Section" q_sect>dnl
-<!sql if $NUM_ROWS>dnl
-<!sql set NUM_ROWS 0>dnl
-<!sql query "SELECT * FROM Issues WHERE IdPublication=?Pub AND Number=?Issue AND IdLanguage=?Language" q_iss>dnl
-<!sql if $NUM_ROWS>dnl
-<!sql query "SELECT * FROM Publications WHERE Id=?Pub" q_pub>dnl
-<!sql if $NUM_ROWS>dnl
 
-<!sql query "SELECT Name FROM Languages WHERE Id=?Language" q_lang>dnl
-<!sql query "SELECT Name FROM Languages WHERE Id=?sLanguage" q_slang>dnl
+<?
+    query ("SELECT * FROM Articles WHERE IdPublication=$Pub AND NrIssue=$Issue AND NrSection=$Section AND Number=$Article AND IdLanguage=$sLanguage", 'q_art');
+    if ($NUM_ROWS) {
+	query ("SELECT * FROM Sections WHERE IdPublication=$Pub AND NrIssue=$Issue AND IdLanguage=$Language AND Number=$Section", 'q_sect');
+	if ($NUM_ROWS) {
+	    query ("SELECT * FROM Issues WHERE IdPublication=$Pub AND Number=$Issue AND IdLanguage=$Language", 'q_iss');
+	    if ($NUM_ROWS) {
+		query ("SELECT * FROM Publications WHERE Id=$Pub", 'q_pub');
+		if ($NUM_ROWS) {
+		    query ("SELECT Name FROM Languages WHERE Id=$Language", 'q_lang');
+		    query ("SELECT Name FROM Languages WHERE Id=$sLanguage", 'q_slang');
+
+		    fetchRow($q_art);
+		    fetchRow($q_sect);
+		    fetchRow($q_iss);
+		    fetchRow($q_pub);
+		    fetchRow($q_lang);
+		    fetchRow($q_slang);
+?>dnl
 B_CURRENT
-X_CURRENT({Publication:}, {<B><!sql print ~q_pub.Name></B>})
-X_CURRENT({Issue:}, {<B><!sql print ~q_iss.Number>. <!sql print ~q_iss.Name> (<!sql print ~q_lang.Name>)</B>})
-X_CURRENT({Section:}, {<B><!sql print ~q_sect.Number>. <!sql print ~q_sect.Name></B>})
+X_CURRENT(<*Publication*>, <*<B><? pgetHVar($q_pub,'Name'); ?></B>*>)
+X_CURRENT(<*Issue*>, <*<B><? pgetHVar($q_iss,'Number'); ?>. <? pgetHVar($q_iss,'Name'); ?> (<? pgetHVar($q_lang,'Name'); ?>)</B>*>)
+X_CURRENT(<*Section*>, <*<B><? pgetHVar($q_sect,'Number'); ?>. <? pgetHVar($q_sect,'Name'); ?></B>*>)
 E_CURRENT
 
-CHECK_XACCESS({ChangeArticle})
-<!sql query "SELECT (?xaccess != 0) or ((?q_art.IdUser = ?Usr.Id) and ('?q_art.Published' = 'N'))" q_xperm>dnl
-<!sql if @q_xperm.0>dnl
-<p>
-B_MSGBOX({Change article status})
-	X_MSGBOX_TEXT({<LI>Change the status of article <B><!sql print ~q_art.Name> (<!sql print ~q_slang.Name>)</B> from <B><!sql if @q_art.Published == "Y">Published<!sql elsif @q_art.Published == "S">Submitted<!sql else>New<!sql endif></B> to:</LI>})
-	B_MSGBOX_BUTTONS
-		<FORM METHOD="POST" ACTION="do_status.xql"><br>
-		<!sql set check 0>
-		<TABLE><!sql if @q_art.Published != "Y"><TR><TD ALIGN=LEFT><INPUT CHECKED TYPE="RADIO" NAME='Status' value='Y'> <B>Published</B></TD></TR> <!sql set check 1><!sql endif>
-		<!sql if @q_art.Published != "S"><TR><TD ALIGN=LEFT><INPUT <!sql if ?check == 0>CHECKED<!sql set check 1><!sql endif> TYPE="RADIO" NAME='Status' value='S'> <B>Submitted</B></TD></TR> <!sql endif>
-		<!sql if @q_art.Published != "N"><TR><TD ALIGN=LEFT><INPUT <!sql if ?check == 0>CHECKED<!sql set check 1><!sql endif> TYPE="RADIO" NAME='Status' value='N'> <B>New</B></TD></TR><!sql endif></TABLE>
+CHECK_XACCESS(<*ChangeArticle*>)
 
-		<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<!sql print ~Pub>">
-		<INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<!sql print ~Issue>">
-		<INPUT TYPE="HIDDEN" NAME="Section" VALUE="<!sql print ~Section>">
-		<INPUT TYPE="HIDDEN" NAME="Article" VALUE="<!sql print ~Article>">
-		<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<!sql print ~Language>">
-		<INPUT TYPE="HIDDEN" NAME="sLanguage" VALUE="<!sql print ~sLanguage>"><P>
+<?
+    query ("SELECT ($xaccess != 0) or ((".getVar($q_art,'IdUser')." = ".getVar($Usr,'Id').") and ('".getVar($q_art,'Published')."' = 'N'))", 'q_xperm');
+    fetchRowNum($q_xperm);
+    if (getNumVar($q_xperm,0)) { ?>dnl
+<p>
+B_MSGBOX(<*Change article status*>)
+	<?
+	    if (getVar($q_art,'Published') == "Y")
+		$stat=getGS('Published');
+	    elseif (getVar($q_art,'Published')== "S")
+		$stat=getGS('Submitted');
+	    else
+		$stat=getGS('New');
+	?>
+	X_MSGBOX_TEXT(<*<LI><? putGS('Change the status of article $1 ($2) from $3 to',':<B>'.getHVar($q_art,'Name'),getHVar($q_slang,'Name').'</B>',"<B>$stat</B>" ); ?></LI>*>)
+	B_MSGBOX_BUTTONS
+		<FORM METHOD="POST" ACTION="do_status.php"><br>
+		<? if (getVar($q_art,'Published') == "N") {
+			$check= 1;
+		}
+		else $check= 0; ?>
+		<TABLE><? if (getVar($q_art,'Published') != "Y") { ?><TR><TD ALIGN=LEFT><INPUT <? if ($check == 0) { ?>CHECKED <?  $check= 1;  }else $check=0; ?> TYPE="RADIO" NAME='Status' value='Y'> <B><? putGS('Published'); ?></B></TD></TR> <? } ?>
+		<? if (getVar($q_art,'Published') != "S") { ?><TR><TD ALIGN=LEFT><INPUT <? if ($check == 0) { ?>CHECKED<? $check= 1;  } ?> TYPE="RADIO" NAME='Status' value='S'> <B><? putGS('Submitted'); ?></B></TD></TR> <? } ?>
+		<? if (getVar($q_art,'Published') != "N") { ?><TR><TD ALIGN=LEFT><INPUT <? if ($check == 0) { ?>CHECKED<? $check= 1;  } ?> TYPE="RADIO" NAME='Status' value='N'> <B><? putGS('New'); ?></B></TD></TR><? } ?></TABLE>
+
+		<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<? p($Pub); ?>">
+		<INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<? p($Issue); ?>">
+		<INPUT TYPE="HIDDEN" NAME="Section" VALUE="<? p($Section); ?>">
+		<INPUT TYPE="HIDDEN" NAME="Article" VALUE="<? p($Article); ?>">
+		<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<? p($Language); ?>">
+		<INPUT TYPE="HIDDEN" NAME="sLanguage" VALUE="<? p($sLanguage); ?>"><P>
 		<INPUT TYPE="IMAGE" NAME="Yes" SRC="X_ROOT/img/button/save.gif" BORDER="0">
-<!sql setdefault Back "">dnl
-		<INPUT TYPE="HIDDEN" NAME="Back" VALUE="<!sql print ~Back>">
-<!sql if $Back != "">dnl
-		<A HREF="<!sql print $Back>"><IMG SRC="X_ROOT/img/button/cancel.gif" BORDER="0" ALT="Cancel"></A>
-<!sql else>dnl
-		<A HREF="X_ROOT/pub/issues/sections/articles/edit.xql?Pub=<!sql print #Pub>&Issue=<!sql print #Issue>&Language=<!sql print #Language>&Section=<!sql print #Section>&Article=<!sql print #Article>&sLanguage=<!sql print #sLanguage>"><IMG SRC="X_ROOT/img/button/cancel.gif" BORDER="0" ALT="Cancel"></A>
-<!sql endif>dnl
+<? todef('Back'); ?>dnl
+		<INPUT TYPE="HIDDEN" NAME="Back" VALUE="<? pencHTML($Back); ?>">
+<? if ($Back != "") { ?>dnl
+		<A HREF="<? p($Back); ?>"><IMG SRC="X_ROOT/img/button/cancel.gif" BORDER="0" ALT="Cancel"></A>
+<? } else { ?>dnl
+		<A HREF="X_ROOT/pub/issues/sections/articles/edit.php?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>&Section=<? p($Section); ?>&Article=<? p($Article); ?>&sLanguage=<? p($sLanguage); ?>"><IMG SRC="X_ROOT/img/button/cancel.gif" BORDER="0" ALT="Cancel"></A>
+<? } ?>dnl
 		</FORM>
 	E_MSGBOX_BUTTONS
 E_MSGBOX
@@ -88,38 +111,39 @@ E_MSGBOX
 
 
 <P>
-<!sql else>dnl
-    X_XAD({You do not have the right to change this article status.  You may only edit your own articles and once submitted an article can only changed by authorized users.}, {pub/issues/sections/articles/?Pub=<!sql print #Pub>&Issue=<!sql print #Issue>&Language=<!sql print #Language>&Section=<!sql print #Section>})
-<!sql endif>dnl
+<? } else { ?>dnl
+    X_XAD(<*You do not have the right to change this article status. Once submitted an article can only changed by authorized users.*>, <*pub/issues/sections/articles/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>&Section=<? p($Section); ?>*>)
+<? } ?>dnl
 
-<!sql else>dnl
+<? } else { ?>dnl
 <BLOCKQUOTE>
-	<LI>No such publication.</LI>
+	<LI><? putGS('No such publication.'); ?></LI>
 </BLOCKQUOTE>
-<!sql endif>dnl
+<? } ?>dnl
 
-<!sql else>dnl
+<? } else { ?>dnl
 <BLOCKQUOTE>
-	<LI>No such issue.</LI>
+	<LI><? putGS('No such issue.'); ?></LI>
 </BLOCKQUOTE>
-<!sql endif>dnl
+<? } ?>dnl
 
-<!sql else>dnl
+<? } else { ?>dnl
 <BLOCKQUOTE>
-	<LI>No such section.</LI>
+	<LI><? putGS('No such section.'); ?></LI>
 </BLOCKQUOTE>
-<!sql endif>dnl
+<? } ?>dnl
 
-<!sql else>dnl
+<? } else { ?>dnl
 <BLOCKQUOTE>
-	<LI>No such article.</LI>
+	<LI><? putGS('No such article.'); ?></LI>
 </BLOCKQUOTE>
-<!sql endif>dnl
+<? } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<!sql endif>dnl
+<? } ?>dnl
 
 E_DATABASE
 E_HTML
+

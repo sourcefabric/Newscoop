@@ -1,0 +1,48 @@
+<?
+regGS("Delete article $1","");
+regGS("You do not have the right to add articles.","");
+regGS("Show article on front page","");
+regGS("Show article on section page","");
+regGS("Enter keywords, comma separated","");
+regGS("Adding new article","");
+regGS("You must select an article type.","");
+regGS("The article $1 has been created","");
+regGS("The article $1 could not be created","");
+regGS("Do you want to edit the article?","");
+regGS("Article $1 added to $2. $3 from $4. $5 of $6","");
+regGS("Delete article","");
+regGS("You do not have the right to delete articles.","");
+regGS("Are you sure you want to delete the article $1 ($2)?","");
+regGS("Deleting article","");
+regGS("The article $1 ($2) has been deleted.","");
+regGS("The article $1 ($2) could not be deleted.","");
+regGS("Article $1 ($2) deleted from $3. $4 from $5. $6 ($7) of $8","");
+regGS("Change article status","");
+regGS("Change the status of article $1 ($2) from $3 to","");
+regGS("Changing article status","");
+regGS("Status of the article $1 ($2) has been changed from $3 to $4.","");
+regGS("Status of the article $1 ($2) could not be changed.","");
+regGS("You do not have the right to change this article status. Once submitted an article can only changed by authorized users.","");
+regGS("Article $1 status from $2. $3 from $4. $5 ($6) of $7 changed","");
+regGS("Translate article","");
+regGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only changed by authorized users.","");
+regGS("Edit article details","");
+regGS("Simple editor","");
+regGS("Advanced editor","");
+regGS("Allow users without subscriptions to view the article","");
+regGS("Unlocking article","");
+regGS("The article has been unlocked.","");
+regGS("The article could not be unlocked.","");
+regGS("You do not have the right to unlock the article. Once submitted an article can only changed by authorized users.","");
+regGS("Changing article details","");
+regGS("The article has been updated.","");
+regGS("The article cannot be updated or no changes have been made.","");
+regGS("Edit field: $1","");
+regGS("Preview article","");
+regGS("This article cannot be previewed. Please make sure it has a <B><I>single article</I></B> template selected.","");
+regGS("This article has been locked by $1 ($2) at","");
+regGS("Now is $1","");
+regGS("Are you sure you want to unlock it?","");
+regGS("Edit Article","");
+
+?>

@@ -1,0 +1,10 @@
+#!/bin/sh
+
+. ../../../.install_conf/check4_functions
+
+if [ "$PACKAGE_TYPE" = "source" ]; then
+    check4_gpp && check4_socket_h
+    [ $? -ne 0 ] && exit 1
+fi
+
+exit 0

@@ -27,7 +27,7 @@
 
 
     /**
-     * ImageCanvas represents the colorscale from the FontColorChooser frame.
+     * ImageCanvas represents the colorscale from the FontColorFrame frame.
      * It forwards the mouse actions (Click, Drag) to the colorchooser.
      */
 
@@ -39,8 +39,8 @@ import java.net.*;
 class ImageCanvas extends Canvas implements MouseListener,MouseMotionListener{
     Image i;
     int width,height;
-    FontColorChooser parent;
-    public ImageCanvas(URL u,int w,int h,Test p,FontColorChooser pa){
+    FontColorFrame parent;
+    public ImageCanvas(URL u,int w,int h,Campfire p,FontColorFrame pa){
         i=p.getImage(u);
         width=w;
         height=h;

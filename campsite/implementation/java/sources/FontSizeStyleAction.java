@@ -32,8 +32,8 @@
      * It is triggered by the corresponding menupoints
      */
 
-import com.sun.java.swing.text.*;
-import com.sun.java.swing.*;
+import javax.swing.text.*;
+import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
 
@@ -44,7 +44,6 @@ class FontSizeStyleAction extends StyledEditorKit.StyledTextAction{
         super(action);
         text=tp;
         size=new String(s);
-        //System.out.println("font style action "+s+">");
     }
     
     public void actionPerformed(ActionEvent e){

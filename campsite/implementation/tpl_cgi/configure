@@ -1,0 +1,7 @@
+#!/bin/sh
+
+cd tpl_cgi && ./configure
+result=$?
+cd ..
+exit $result
+ 

@@ -41,19 +41,21 @@
 
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.*;
 
 class DumperFrame extends Frame{
     
     TextArea t;
+    private JScrollPane scrollPane;
     Panel p=new Panel();
     Button close=new Button("Close");
     Button set=new Button("Set Text");
     Button get=new Button("Get Text");
     Button clear=new Button("Clear");
     Button insert=new Button("Insert");
-    Test parent;
+    Campfire parent;
     
-    public DumperFrame(Test par){
+    public DumperFrame(Campfire par){
         super("Clipboard operations");
         parent=par;
         setSize(400,300);
@@ -110,5 +112,6 @@ class DumperFrame extends Frame{
         public void setText(String s){
             t.setText(s);
         }
+        
     
 }

@@ -1,18 +1,23 @@
-export INSTALL_DIR2=$(INSTALL_DIR)/u_types
+export PRIV_DIR2=$(PRIV_DIR)/u_types
 
-all: index.xql add.xql do_add.xql del.xql do_del.xql access.xql do_access.xql
+MY_TARGETS=index.php add.php do_add.php del.php do_del.php access.php do_access.php
 
-%.xql: %.m4 ../macros.m4
+all: $(MY_TARGETS)
+
+%.php: %.m4 ../macros.m4
 	m4 ../macros.m4 $< >$@
 
-install: all
-	mkdir -p $(INSTALL_DIR2)
-	cp *.xql $(INSTALL_DIR2)/
+install: $(ALL)
+	mkdir -p $(PRIV_DIR2)
+	cp -f *.php $(PRIV_DIR2)/
 
 clean:
-	rm -f *.xql *~
+	rm -f *~
+	if [ "$(PACKAGE_TYPE)" = "source" ]; then rm -f $(MY_TARGETS); fi
 
-package: all
+package: $(ALL)
 	mkdir -p $(PACKAGE_DIR)/u_types
 	cp -f Makefile $(PACKAGE_DIR)/u_types
-	cp -f *.xql $(PACKAGE_DIR)/u_types
+	cp -f *.php $(PACKAGE_DIR)/u_types
+
+dummy:

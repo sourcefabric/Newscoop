@@ -1,100 +1,113 @@
 B_HTML
+INCLUDE_PHP_LIB(<*..*>)
 B_DATABASE
 
-<!sql query "SHOW TABLES LIKE 'XXYYZZ'" ATypes>dnl
+<? query ("SHOW TABLES LIKE 'XXYYZZ'", 'ATypes'); ?>dnl
 CHECK_BASIC_ACCESS
 
 B_HEAD
 	X_EXPIRES
-	X_TITLE({Article Types})
-<!sql if $access == 0>dnl
+	X_TITLE(<*Article Types*>)
+<? if ($access == 0) { ?>dnl
 	X_LOGOUT
-<!sql endif>dnl
+<? } ?>dnl
 E_HEAD
 
-<!sql if $access>dnl
+<? if ($access) {
 
-SET_ACCESS({mata}, {ManageArticleTypes})
-SET_ACCESS({data}, {DeleteArticleTypes})
+SET_ACCESS(<*mata*>, <*ManageArticleTypes*>)
+SET_ACCESS(<*data*>, <*DeleteArticleTypes*>)
+
+?>
 
 B_STYLE
 E_STYLE
 
 B_BODY
 
-B_HEADER({Article Types})
+B_HEADER(<*Article Types*>)
 B_HEADER_BUTTONS
-X_HBUTTON({Home}, {home.xql})
-X_HBUTTON({Logout}, {logout.xql})
+X_HBUTTON(<*Home*>, <*home.php*>)
+X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<!sql if $mata != 0>dnl
-<P>X_NEW_BUTTON({Add new article type}, {add.xql?Back=<!sql print #REQUEST_URI>})
-<!sql endif>dnl
+<? if ($mata != 0) { ?>dnl
+<P>X_NEW_BUTTON(<*Add new article type*>, <*add.php?Back=<? print encURL($REQUEST_URI); ?>*>)
+<? } ?>dnl
 
 <P>
-<!sql set NUM_ROWS 0>dnl
-<!sql query "SHOW TABLES LIKE 'X%'" ATypes>dnl
-<!sql if $NUM_ROWS>dnl
-<!sql setdefault ATOffs 0><!sql if ($ATOffs <= 0)><!sql set ATOffs 0><!sql endif>dnl
-<!sql setexpr be $ATOffs><!sql set en 0>dnl
-<!sql set color 0>dnl
+<?
+    query ("SHOW TABLES LIKE 'X%'", 'ATypes');
+    if ($NUM_ROWS) {
+	todefnum('ATOffs');
+	if ($ATOffs <= 0)  $ATOffs= 0;
+	todefnum('lpp', 20);
+	$be= $ATOffs;
+	$en= 0;
+	$color= 0;
+?>dnl
 B_LIST
 	B_LIST_HEADER
-		X_LIST_TH({Type})
-		X_LIST_TH({Fields}, {1%})
-<!sql if $data != 0>dnl
-		X_LIST_TH({Delete}, {1%})
-<!sql endif>dnl
+		X_LIST_TH(<*Type*>)
+		X_LIST_TH(<*Fields*>, <*1%*>)
+<? if ($data != 0) { ?>dnl
+		X_LIST_TH(<*Delete*>, <*1%*>)
+<? } ?>dnl
 	E_LIST_HEADER
-<!sql print_loop ATypes>dnl
-<!sql if (0 < $be)>dnl
-<!sql setexpr be ($be - 1)>dnl
-<!sql else>dnl
-<!sql if ($en < 10)>dnl
-<!sql query "SELECT SUBSTRING('?ATypes.0', 2)" s>dnl
+<?
+    $nr=$NUM_ROWS;
+    for($loop=0;$loop<$nr;$loop++) {
+	fetchRowNum($ATypes);
+	if (0 < $be)
+	    $be--;
+	else {
+	    if ($en < $lpp) {
+		$table=substr ( getNumVar($ATypes,0),1);
+	    ?>dnl
 	B_LIST_TR
 		B_LIST_ITEM
-			<!sql print ~s.0>&nbsp;
+			<? print encHTML($table); ?>&nbsp;
 		E_LIST_ITEM
-		B_LIST_ITEM({CENTER})
-			<A HREF="X_ROOT/a_types/fields/?AType=<!sql print #s.0>">Fields</A>
+		B_LIST_ITEM(<*CENTER*>)
+			<A HREF="X_ROOT/a_types/fields/?AType=<? print encURL($table); ?>"><? putGS('Fields'); ?></A>
 		E_LIST_ITEM
-<!sql if $data != 0>dnl
-		B_LIST_ITEM({CENTER})
-			X_BUTTON({Delete article type <!sql print ~s.0>}, {icon/x.gif}, {a_types/del.xql?AType=<!sql print #s.0>})
+<? if ($data != 0) { ?>dnl
+		B_LIST_ITEM(<*CENTER*>)
+			X_BUTTON(<*<? putGS('Delete article type $1', encHTML($table)); ?>*>, <*icon/x.gif*>, <*a_types/del.php?AType=<? print encURL($table); ?>*>)
 		E_LIST_ITEM
-<!sql endif>dnl
+<? } ?>dnl
 	E_LIST_TR
-<!sql free s>dnl
-<!sql endif>dnl
-<!sql setexpr en ($en + 1)>dnl
-<!sql endif>dnl
-<!sql done>dnl
+<? }
+    $en++;
+    }
+    } 
+    
+    ?>dnl
 	B_LIST_FOOTER
-<!sql if ($ATOffs <= 0)>dnl
+<? if ($ATOffs <= 0) { ?>dnl
 		X_PREV_I
-<!sql else>dnl
-		X_PREV_A({X_ROOT/a_types/?ATOffs=<!sql eval ($ATOffs - 10)>">})
-<!sql endif>dnl
-<!sql if (10 < $en)>dnl
-		X_NEXT_A({X_ROOT/a_types/?ATOffs=<!sql eval ($ATOffs + 10)>">})
-<!sql else>dnl
+<? } else { ?>dnl
+		X_PREV_A(<*X_ROOT/a_types/?ATOffs=<? print ($ATOffs - $lpp); ?>*>)
+<? }
+    if ($lpp < $en) { ?>dnl
+		X_NEXT_A(<*X_ROOT/a_types/?ATOffs=<? print ($ATOffs + $lpp); ?>*>)
+<? } else { ?>dnl
 		X_NEXT_I
-<!sql endif>dnl
+<? } ?>dnl
 	E_LIST_FOOTER
 E_LIST
-<!sql else>dnl
+<? } else { ?>dnl
 <BLOCKQUOTE>
-	<LI>No article types.</LI>
+	<LI><? putGS('No article types.'); ?></LI>
 </BLOCKQUOTE>
-<!sql endif>dnl
+<? } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<!sql endif>dnl
+<? } ?>dnl
 
 E_DATABASE
 E_HTML
+

@@ -1,70 +1,75 @@
 B_HTML
+INCLUDE_PHP_LIB(<*../..*>)
 B_DATABASE
 
 CHECK_BASIC_ACCESS
-CHECK_ACCESS({ManageIssue})
+CHECK_ACCESS(<*ManageIssue*>)
 
 B_HEAD
 	X_EXPIRES
-	X_TITLE({Add New Issue})
-<!sql if $access == 0>dnl
-	X_AD({You do not have the right to add issues.})
-<!sql endif>dnl
+	X_TITLE(<*Add new issue*>)
+<? if ($access == 0) { ?>dnl
+	X_AD(<*You do not have the right to add issues.*>)
+<? } ?>dnl
 E_HEAD
 
-<!sql if $access>dnl
+<? if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
 
-<!sql setdefault Pub 0>dnl
-B_HEADER({Add New Issue})
+<?
+    todefnum('Pub');
+?>dnl
+B_HEADER(<*Add new issue*>)
 B_HEADER_BUTTONS
-X_HBUTTON({Issues}, {pub/issues/?Pub=<!sql print #Pub>})
-X_HBUTTON({Publications}, {pub/})
-X_HBUTTON({Home}, {home.xql})
-X_HBUTTON({Logout}, {logout.xql})
+X_HBUTTON(<*Issues*>, <*pub/issues/?Pub=<? pencURL($Pub); ?>*>)
+X_HBUTTON(<*Publications*>, <*pub/*>)
+X_HBUTTON(<*Home*>, <*home.php*>)
+X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<!sql set NUM_ROWS 0>dnl
-<!sql query "SELECT Name FROM Publications WHERE Id=?Pub" publ>dnl
-<!sql if $NUM_ROWS>dnl
+<?
+    query ("SELECT Name FROM Publications WHERE Id=$Pub", 'publ');
+    if ($NUM_ROWS) { 
+	fetchRow($publ);
+?>dnl
 B_CURRENT
-X_CURRENT({Publication:}, {<B><!sql print ~publ.Name></B>})
+X_CURRENT(<*Publication*>, <*<B><? getHVar($publ,'Name'); ?></B>*>)
 E_CURRENT
 
 <P>
-B_HOME_MENU({99%})
+B_HOME_MENU(<*99%*>)
 	B_HOME_MENU_HEADER
-		X_HOME_MENU_TH({Use the structure of the previous issue}, {add_prev.xql?Pub=<!sql print #Pub>})
+		X_HOME_MENU_TH(<*<? putGS('Use the structure of the previous issue'); ?>*>, <*add_prev.php?Pub=<? pencURL($Pub); ?>*>)
 	E_HOME_MENU_HEADER
 	B_HOME_MENU_BODY
 		B_HOME_MENU_TD
-			X_HOME_MENU_ITEM({<LI>Copy the entire structure in all languages from the previous issue except for content.<LI>You may modify it later if you wish.</LI>})
+			X_HOME_MENU_ITEM(<*<LI><? putGS('Copy the entire structure in all languages from the previous issue except for content.'); ?><LI><? putGS('You may modify it later if you wish.'); ?></LI>*>)
 		E_HOME_MENU_TD
 	B_HOME_MENU_BODY
 	B_HOME_MENU_HEADER
-		X_HOME_MENU_TH({Create a new structure}, {add_new.xql?Pub=<!sql print #Pub>})
+		X_HOME_MENU_TH(<*<? putGS('Create a new structure'); ?>*>, <*add_new.php?Pub=<? pencURL($Pub); ?>*>)
 	E_HOME_MENU_HEADER
 	B_HOME_MENU_BODY
 		B_HOME_MENU_TD
-			X_HOME_MENU_ITEM({<LI>Create a complete new structure.<LI>You must define an issue type for each language and then sections for them.</LI>})
+			X_HOME_MENU_ITEM(<*<LI><? putGS('Create a complete new structure.'); ?><LI><? putGS('You must define an issue type for each language and then sections for them.'); ?></LI>*>)
 		E_HOME_MENU_TD
 	B_HOME_MENU_BODY
 E_HOME_MENU
 <P>
-<!sql else>dnl
+<? } else { ?>dnl
 <BLOCKQUOTE>
-	<LI>No such publication.</LI>
+	<LI><? putGS('No such publication.'); ?></LI>
 </BLOCKQUOTE>
-<!sql endif>dnl
+<? } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<!sql endif>dnl
+<? } ?>dnl
 
 E_DATABASE
 E_HTML

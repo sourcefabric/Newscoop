@@ -1,49 +1,47 @@
 B_HTML
+INCLUDE_PHP_LIB(<*..*>)
 B_DATABASE
 
 CHECK_BASIC_ACCESS
-CHECK_ACCESS({ManageUserTypes})
+CHECK_ACCESS(<*ManageUserTypes*>)
 
 B_HEAD
 	X_EXPIRES
-	X_TITLE({Deleting User Type})
-<!sql if $access == 0>dnl
-	X_AD({You do not have the right to delete user types.})
-<!sql endif>dnl
+	X_TITLE(<*Deleting user type*>)
+<? if ($access == 0) { ?>dnl
+	X_AD(<*You do not have the right to delete user types.*>)
+<? } ?>dnl
 E_HEAD
 
-<!sql if $access>dnl
+<? if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
 
-B_HEADER({Deleting User Type})
+B_HEADER(<*Deleting user type*>)
 B_HEADER_BUTTONS
-X_HBUTTON({User Types}, {u_types/})
-X_HBUTTON({Home}, {home.xql})
-X_HBUTTON({Logout}, {logout.xql})
+X_HBUTTON(<*User Types*>, <*u_types/*>)
+X_HBUTTON(<*Home*>, <*home.php*>)
+X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<!sql setdefault UType "">dnl
-
 <P>
-<!sql set AFFECTED_ROWS 0>dnl
-<!sql query "DELETE FROM UserTypes WHERE Name='?UType'">dnl
-B_MSGBOX({Deleting user type})
-<!sql if $AFFECTED_ROWS>
-	X_MSGBOX_TEXT({<LI>The user type has been deleted.</LI>})
-X_AUDIT({122}, {User type ~UType deleted})
-<!sql else>
-	X_MSGBOX_TEXT({<LI>The user type could not be deleted.</LI>})
-<!sql endif>
+<? query ("DELETE FROM UserTypes WHERE Name='$UType'"); ?>dnl
+B_MSGBOX(<*Deleting user type*>)
+<? if ($AFFECTED_ROWS > 0) { ?>
+	X_MSGBOX_TEXT(<*<LI><? putGS('The user type has been deleted.'); ?></LI>*>)
+X_AUDIT(<*122*>, <*getGS('User type $1 deleted',encHTML($UType))*>)
+<? } else { ?>
+	X_MSGBOX_TEXT(<*<LI><? putGS('The user type could not be deleted.'); ?></LI>*>)
+<? } ?>
 	B_MSGBOX_BUTTONS
-<!sql if $AFFECTED_ROWS>
+<? if ($AFFECTED_ROWS > 0) { ?>
 		<A HREF="X_ROOT/u_types/"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
-<!sql else>
+<? } else { ?>
 		<A HREF="X_ROOT/u_types/"><IMG SRC="X_ROOT/img/button/ok.gif" BORDER="0" ALT="OK"></A>
-<!sql endif>
+<? } ?>
 	E_MSGBOX_BUTTONS
 E_MSGBOX
 <P>
@@ -51,7 +49,8 @@ E_MSGBOX
 X_HR
 X_COPYRIGHT
 E_BODY
-<!sql endif>dnl
+<? } ?>dnl
 
 E_DATABASE
 E_HTML
+

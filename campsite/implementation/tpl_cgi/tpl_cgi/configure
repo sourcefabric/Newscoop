@@ -1,0 +1,35 @@
+#!/bin/sh
+
+[ "$CAMPSITE_PACKAGE_DIR" = "" ] && cd ../../.. && . ./configure --define_start_env && cd implementation/tpl_cgi/tpl_cgi
+. ${INSTALL_CONF}/conf_functions
+
+PACKAGE_TYPE=`cat $CAMPSITE_PACKAGE_DIR/.package_type`
+[ "$PACKAGE_TYPE" = "binary" ] && exit 0
+
+install_conf --set
+[ $? -ne 0 ] && echo "Error reading install configuration" && exit 1
+
+var_not_modified APP_NAME && [ -f tpl_cgi.h ] && exit 0
+save_var APP_NAME
+
+export CONF_DIR=/etc/campsite.d/${APP_NAME}
+
+echo -n -e "\tWriting tpl_cgi.h header..."
+cat > tpl_cgi.h << EOF
+/******************************************************************************
+
+Defines tpl_cgi defaults
+
+WARNING!!! This file is generated. Do not edit!
+
+******************************************************************************/
+
+#ifndef _TPL_CGI_H
+#define _TPL_CGI_H
+
+#define TPL_CGI_CONF_FILE "$CONF_DIR/tpl_cgi.conf"
+
+#endif
+EOF
+[ $? -ne 0 ] && echo "ERROR" && exit 1
+echo OK

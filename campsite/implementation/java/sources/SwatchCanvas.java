@@ -38,8 +38,9 @@ import java.net.*;
 
 class SwatchCanvas extends Canvas implements MouseListener,MouseMotionListener{
     int width,height;
-    FontColorChooser parent;
-    public SwatchCanvas(int w,int h,Test p,FontColorChooser pa){
+    FontColorFrame parent;
+
+    public SwatchCanvas(int w,int h,Campfire p,FontColorFrame pa){
         width=w;
         height=h;
         setSize(width,height);
@@ -49,9 +50,7 @@ class SwatchCanvas extends Canvas implements MouseListener,MouseMotionListener{
     }
     
     public void paint(Graphics g){
-//        g.setColor(Color.black);
-//        g.drawRect(0,0,width-1,height-1);
-	drawColors(g,8,51,2);
+    	drawColors(g,8,51,2);
     }
     
     public void mouseClicked(MouseEvent e){}
@@ -68,15 +67,13 @@ class SwatchCanvas extends Canvas implements MouseListener,MouseMotionListener{
     public void mouseMoved(MouseEvent e){}
 
 	public void drawColors(Graphics gr,int wi,int d,int sp){
-	for(int r=0;r<=255;r+=d)
-		for(int g=0;g<=255;g+=d)
-			for(int b=0;b<=255;b+=d)
-		{
-			gr.setColor(new Color(r,g,b));
-			gr.fillRect(b/d*(wi+sp),(r/d*6+g/d)*(wi+sp),wi,wi);
-			gr.setColor(Color.black);
-			gr.drawRect(b/d*(wi+sp),(r/d*6+g/d)*(wi+sp),wi,wi);
-			//System.out.println(" "+r+" "+g+" "+b);
-		}
-}
+    	for(int r=0;r<=255;r+=d)
+    		for(int g=0;g<=255;g+=d)
+    			for(int b=0;b<=255;b+=d){
+        			gr.setColor(new Color(r,g,b));
+        			gr.fillRect(b/d*(wi+sp),(r/d*6+g/d)*(wi+sp),wi,wi);
+        			gr.setColor(Color.black);
+        			gr.drawRect(b/d*(wi+sp),(r/d*6+g/d)*(wi+sp),wi,wi);
+                }
+    }
 }

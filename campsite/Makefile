@@ -1,63 +1,97 @@
-WWW_DIR=/var/www/
-REL_CGI_BIN=cgi-bin
-REL_HTML=html
-
-export HTTP_USER=apache
-export HTTP_GROUP=apache
-
-export CGI_BIN=$(WWW_DIR)/$(REL_CGI_BIN)
-export SCRIPT_BIN=$(WWW_DIR)/script
-export INSTALL_DIR=$(WWW_DIR)/$(REL_HTML)/priv
-export ROOT_DIR=$(WWW_DIR)/$(REL_HTML)
-export PUBLIC_DIR=$(WWW_DIR)/$(REL_HTML)/pub
-
-export UTIL_BIN=/usr/local/campsite
-
-export PACKAGE_DIR=$(shell echo `pwd`/.package/campsite)
-
-export CLASS_DIR=/usr/lib/netscape/java/classes
-export CDIRS=$(shell find . -maxdepth 1 -type d -print)
-
-export CAMPSITE_VERSION=$(shell echo `cat ./README | grep -w ^version | grep ":" | cut -f 2 -d ":"`)
-export PROCESSOR_TYPE=`uname -m`
-
+include ./make.env
 
 all:
 	$(MAKE) -C implementation all
 	$(MAKE) -C supplemental all
 
-install: all
+install: dummy
+	mkdir -p $(CONF_DIR)
+	chown $(ROOT_USER).$(HTTP_GROUP) $(CONF_DIR)
+	chmod 750 $(CONF_DIR)
+	echo "SERVER $(DATABASE_SERVER)" > $(CONF_DIR)/database.conf
+	echo "PORT $(DATABASE_PORT)" >> $(CONF_DIR)/database.conf
+	echo "USER $(DATABASE_USER)" >> $(CONF_DIR)/database.conf
+	echo "PASSWORD $(DATABASE_PASSWORD)" >> $(CONF_DIR)/database.conf
+	echo "NAME $(DATABASE_NAME)" >> $(CONF_DIR)/database.conf
+	chown $(ROOT_USER).$(HTTP_GROUP) $(CONF_DIR)/database.conf
+	chmod 640 $(CONF_DIR)/database.conf
+	mkdir -p $(CONF_DIR)/install
+	rm -f $(CONF_DIR)/install/.inst.modules
+	cp $(INSTALL_CONF)/.inst.modules $(CONF_DIR)/install
+	rm -f $(CONF_DIR)/install/.modules.conf
+	cp $(INSTALL_CONF)/.modules.conf $(CONF_DIR)/install
+	rm -f $(CONF_DIR)/install/.modules.desc
+	cp $(INSTALL_CONF)/.modules.desc $(CONF_DIR)/install
+	chown $(ROOT_USER).$(HTTP_GROUP) $(CONF_DIR)/install -R
+	chmod 750 $(CONF_DIR)/install
+	chmod 640 $(CONF_DIR)/install/.inst.modules
+	chmod 640 $(CONF_DIR)/install/.modules.conf
+	chmod 640 $(CONF_DIR)/install/.modules.desc
 	$(MAKE) -C implementation install
 	$(MAKE) -C supplemental install
+	if [ -d $(BIN_DIR) ]; then \
+	    chown $(ROOT_USER).$(HTTP_GROUP) $(BIN_DIR); \
+	    chmod 750 $(BIN_DIR); \
+	fi
+	if [ -d $(PRIV_DIR) ]; then \
+	    chown $(HTTP_USER).$(HTTP_GROUP) $(PRIV_DIR); \
+	    chmod 750 $(PRIV_DIR); \
+	fi
+	if [ -d $(SCRIPT_DIR) ]; then \
+	    chown $(ROOT_USER).$(HTTP_GROUP) $(SCRIPT_DIR); \
+	    chmod 750 $(SCRIPT_DIR); \
+	fi
+	if grep $(APP_NAME) $(CAMPSITE_REGISTER); then \
+	    cp -f $(CAMPSITE_REGISTER) $(CAMPSITE_REGISTER).bak; \
+	    grep -v -w $(APP_NAME) $(CAMPSITE_REGISTER).bak > $(CAMPSITE_REGISTER); \
+	    rm -f $(CAMPSITE_REGISTER).bak; \
+	fi
+	echo "$(APP_NAME) : $(CAMPSITE_VERSION)" >> $(CAMPSITE_REGISTER)
 
 clean:
 	$(MAKE) -C implementation clean
 	$(MAKE) -C supplemental clean
 	rm -f install_log uninstall_log
+	rm -fr .package
+
+distclean: clean
+	rm -f make.env
 
 uninstall: dummy
 	$(MAKE) -C implementation uninstall
 	$(MAKE) -C supplemental uninstall
-	if [ -d $(UTIL_BIN) ]; then rmdir $(UTIL_BIN); fi
-	if [ -d $(WWW_DIR)/script ]; then rmdir $(WWW_DIR)/script; fi
+	rm -f $(CONF_DIR)/database.conf
+	rm -f $(CONF_DIR)/install/.inst.modules
+	rm -f $(CONF_DIR)/install/.modules.conf
+	rm -f $(CONF_DIR)/install/.modules.desc
+	if [ -d $(CONF_DIR)/install ]; then rmdir $(CONF_DIR)/install; fi
+	if [ -d $(CONF_DIR) ]; then rmdir $(CONF_DIR); fi
+	if [ -d $(BIN_DIR) ]; then rmdir $(BIN_DIR); fi
+	if [ -d $(SCRIPT_DIR) ]; then rmdir $(SCRIPT_DIR); fi
+	if grep $(APP_NAME) $(CAMPSITE_REGISTER); then \
+	    grep -v $(APP_NAME) $(CAMPSITE_REGISTER) > .campsite.reg; \
+	    mv -f .campsite.reg $(CAMPSITE_REGISTER); \
+	fi
 
 package: dummy
-	rm -fr $(PACKAGE_DIR)
-	mkdir -p $(PACKAGE_DIR)
-	cp -f Makefile $(PACKAGE_DIR)
-	cp -f install $(PACKAGE_DIR)
-	cp -f .inst_components-package $(PACKAGE_DIR)/.inst_components
-	cp -f uninstall $(PACKAGE_DIR)
-	cp -f AUTHORS $(PACKAGE_DIR)
-	cp -f COPYING $(PACKAGE_DIR)
-	cp -f INSTALL $(PACKAGE_DIR)
-	cp -f README $(PACKAGE_DIR)
-	cp -f ChangeLog $(PACKAGE_DIR)
-	cp -f thisisacampsite.gif $(PACKAGE_DIR)
-	cp -fr ./documentation $(PACKAGE_DIR)
+	@if [ "$(PACKAGE_TYPE)" = "binary" ]; then echo "This is a binary package"; exit 1; fi
+	rm -fr $(BIN_PACKAGE_DIR)
+	mkdir -p $(BIN_PACKAGE_DIR)
+	echo "binary" > $(BIN_PACKAGE_DIR)/.package_type
+	cp -f configure $(BIN_PACKAGE_DIR)
+	cp -f Makefile $(BIN_PACKAGE_DIR)
+	cp -f install $(BIN_PACKAGE_DIR)
+	cp -f uninstall $(BIN_PACKAGE_DIR)
+	cp -f AUTHORS $(BIN_PACKAGE_DIR)
+	cp -f COPYING $(BIN_PACKAGE_DIR)
+	cp -f INSTALL $(BIN_PACKAGE_DIR)
+	cp -f README $(BIN_PACKAGE_DIR)
+	cp -f ChangeLog $(BIN_PACKAGE_DIR)
+	cp -f thisisacampsite.gif $(BIN_PACKAGE_DIR)
+	cp -fr ./documentation $(BIN_PACKAGE_DIR)
+	cp -fr ./.install_conf $(BIN_PACKAGE_DIR)
 	$(MAKE) -C implementation package
 	$(MAKE) -C supplemental package
-	echo "version: [$(CAMPSITE_VERSION)]"
 	cd .package; tar czf campsite-$(CAMPSITE_VERSION).$(PROCESSOR_TYPE).tar.gz campsite; mv campsite-*.tar.gz ..; cd ..; rm -fr .package
 	echo "Packge file built: campsite-$(CAMPSITE_VERSION).$(PROCESSOR_TYPE).tar.gz."
 

@@ -1,171 +1,210 @@
-
+INCLUDE_PHP_LIB(<*../../../../..*>)
 B_DATABASE
 
 CHECK_BASIC_ACCESS
 
 B_HEAD
 	X_EXPIRES
-	X_TITLE({Images})
-<!sql if $access == 0>dnl
+	X_TITLE(<*Images*>)
+<? if ($access == 0) { ?>dnl
 	X_LOGOUT
-<!sql endif>dnl
-<!sql query "SELECT * FROM Images WHERE 1=0" q_img>dnl
+<? }
+    query ("SELECT * FROM Images WHERE 1=0", 'q_img');
+?>dnl
 E_HEAD
 
-<!sql if $access>dnl
+<? if ($access) { 
 
-SET_ACCESS({aia}, {AddImage})
-SET_ACCESS({cia}, {ChangeImage})
-SET_ACCESS({dia}, {DeleteImage})
-
+SET_ACCESS(<*aia*>, <*AddImage*>)
+SET_ACCESS(<*cia*>, <*ChangeImage*>)
+SET_ACCESS(<*dia*>, <*DeleteImage*>)
+?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
-<!sql setdefault Pub 0>dnl
-<!sql setdefault Issue 0>dnl
-<!sql setdefault Section 0>dnl
-<!sql setdefault Article 0>dnl
-<!sql setdefault Language 0>dnl
-<!sql setdefault sLanguage 0>dnl
-B_HEADER({Images})
+<?
+    todefnum('Pub');
+    todefnum('Issue');
+    todefnum('Section');
+    todefnum('Article');
+    todefnum('Language');
+    todefnum('sLanguage');
+?>
+B_HEADER(<*Images*>)
 B_HEADER_BUTTONS
-X_HBUTTON({Articles}, {pub/issues/sections/articles/?Pub=<!sql print #Pub>&Issue=<!sql print #Issue>&Language=<!sql print #Language>&Section=<!sql print #Section>})
-X_HBUTTON({Sections}, {pub/issues/sections/?Pub=<!sql print #Pub>&Issue=<!sql print #Issue>&Language=<!sql print #Language>})
-X_HBUTTON({Issues}, {pub/issues/?Pub=<!sql print #Pub>})
-X_HBUTTON({Publications}, {pub/})
-X_HBUTTON({Home}, {home.xql})
-X_HBUTTON({Logout}, {logout.xql})
+X_HBUTTON(<*Articles*>, <*pub/issues/sections/articles/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>&Section=<? p($Section); ?>*>)
+X_HBUTTON(<*Sections*>, <*pub/issues/sections/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>*>)
+X_HBUTTON(<*Issues*>, <*pub/issues/?Pub=<? p($Pub); ?>*>)
+X_HBUTTON(<*Publications*>, <*pub/*>)
+X_HBUTTON(<*Home*>, <*home.php*>)
+X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
+<?
+    query ("SELECT * FROM Articles WHERE IdPublication=$Pub AND NrIssue=$Issue AND NrSection=$Section AND Number=$Article", 'q_art');
+    if ($NUM_ROWS) {
+	query ("SELECT * FROM Sections WHERE IdPublication=$Pub AND NrIssue=$Issue AND IdLanguage=$Language AND Number=$Section", 'q_sect');
+	if ($NUM_ROWS) {
+	    query ("SELECT * FROM Issues WHERE IdPublication=$Pub AND Number=$Issue AND IdLanguage=$Language", 'q_iss');
+	    if ($NUM_ROWS) {
+		query ("SELECT * FROM Publications WHERE Id=$Pub", 'q_pub');
+		if ($NUM_ROWS) {
+		    query ("SELECT Name FROM Languages WHERE Id=$Language", 'q_lang');
 
-<!sql set NUM_ROWS 0>dnl
-<!sql query "SELECT * FROM Articles WHERE IdPublication=?Pub AND NrIssue=?Issue AND NrSection=?Section AND Number=?Article" q_art>dnl
-<!sql if $NUM_ROWS>dnl
-<!sql set NUM_ROWS 0>dnl
-<!sql query "SELECT * FROM Sections WHERE IdPublication=?Pub AND NrIssue=?Issue AND IdLanguage=?Language AND Number=?Section" q_sect>dnl
-<!sql if $NUM_ROWS>dnl
-<!sql set NUM_ROWS 0>dnl
-<!sql query "SELECT * FROM Issues WHERE IdPublication=?Pub AND Number=?Issue AND IdLanguage=?Language" q_iss>dnl
-<!sql if $NUM_ROWS>dnl
-<!sql query "SELECT * FROM Publications WHERE Id=?Pub" q_pub>dnl
-<!sql if $NUM_ROWS>dnl
-
-<!sql query "SELECT Name FROM Languages WHERE Id=?Language" q_lang>dnl
+		    fetchRow($q_art);
+		    fetchRow($q_sect);
+		    fetchRow($q_iss);
+		    fetchRow($q_pub);
+		    fetchRow($q_lang);
+?>dnl
 B_CURRENT
-X_CURRENT({Publication:}, {<B><!sql print ~q_pub.Name></B>})
-X_CURRENT({Issue:}, {<B><!sql print ~q_iss.Number>. <!sql print ~q_iss.Name> (<!sql print ~q_lang.Name>)</B>})
-X_CURRENT({Section:}, {<B><!sql print ~q_sect.Number>. <!sql print ~q_sect.Name></B>})
-X_CURRENT({Article:}, {<B><!sql print ~q_art.Name></B>})
+X_CURRENT(<*Publication*>, <*<B><? pgetHVar($q_pub,'Name'); ?></B>*>)
+X_CURRENT(<*Issue*>, <*<B><? pgetHVar($q_iss,'Number'); ?>. <? pgetHVar($q_iss,'Name'); ?> (<? pgetHVar($q_lang,'Name'); ?>)</B>*>)
+X_CURRENT(<*Section*>, <*<B><? pgetHVar($q_sect,'Number'); ?>. <? pgetHVar($q_sect,'Name'); ?></B>*>)
+X_CURRENT(<*Article*>, <*<B><? pgetHVar($q_art,'Name'); ?></B>*>)
 E_CURRENT
-<!sql free q_lang>dnl
 
-X_NEW_BUTTON({Back to current article}, {./?Pub=<!sql print #Pub>&Issue=<!sql print #Issue>&Section=<!sql print #Section>&Article=<!sql print #Article>&Language=<!sql print #Language>&sLanguage=<!sql print #sLanguage>})
+<?
+	todef('sDescription');		$sDescription =  decURL($sDescription);
+	todef('sPhotographer');	$sPhotographer  = decURL($sPhotographer);
+	todef('sPlace');			$sPlace = decURL($sPlace);
+	todef('cIssue');
+	todefnum('ImgOffs');
+	if ($ImgOffs < 0) $ImgOffs= 0;
+	todefnum('lpp', 20);
+?>
 
-<P><!sql setdefault ImgOffs 0><!sql if $ImgOffs < 0><!sql set ImgOffs 0><!sql endif><!sql set NUM_ROWS 0>dnl
+X_NEW_BUTTON(<*Back to current article*>, <*./?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Article=<? p($Article); ?>&Language=<? p($Language); ?>&sLanguage=<? p($sLanguage); ?>&Section=<? p($Section); ?>*>)
 
-<!sql query "SELECT * FROM Images WHERE IdPublication=?Pub AND NrArticle != ?Article ORDER BY Number LIMIT $ImgOffs, 11" q_img>dnl
-<!sql if $NUM_ROWS>dnl
-<!sql set nr $NUM_ROWS>dnl
-<!sql set i 10>dnl
-<!sql set color 0>dnl
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" WIDTH="100%">
+<TR>
+	<TD></TD>
+	<TD ALIGN="RIGHT">
+	B_SEARCH_DIALOG(<*GET*>, <*select.php*>)
+		<TD><? putGS('Issue'); ?></TD>
+		<TD><INPUT TYPE="TEXT" NAME="cIssue" VALUE="<? p($cIssue); ?>" SIZE="4" MAXLENGTH="8"></TD>
+		<TD><? putGS('Description'); ?></TD>
+		<TD><INPUT TYPE="TEXT" NAME="sDescription" VALUE="<? pencHTML($sDescription); ?>" SIZE="16" MAXLENGTH="32"></TD>
+		<TD><? putGS('Photographer'); ?></TD>
+		<TD><INPUT TYPE="TEXT" NAME="sPhotographer" VALUE="<? pencHTML($sPhotographer); ?>" SIZE="8" MAXLENGTH="32"></TD>
+		<TD><? putGS('Place'); ?></TD>
+		<TD><INPUT TYPE="TEXT" NAME="sPlace" VALUE="<? pencHTML($sPlace); ?>" SIZE="16" MAXLENGTH="32"></TD>
+		<TD><INPUT TYPE="IMAGE" SRC="X_ROOT/img/button/search.gif" BORDER="0"></TD>
+		<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<? p($Pub); ?>">
+		<INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<? p($Issue); ?>">
+		<INPUT TYPE="HIDDEN" NAME="Article" VALUE="<? p($Article);?>">
+		<INPUT TYPE="HIDDEN" NAME="Section" VALUE="<? p($Section);?>">
+		<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<? p($Language); ?>">
+		<INPUT TYPE="HIDDEN" NAME="sLanguage" VALUE="<? p($sLanguage); ?>">
+	E_SEARCH_DIALOG
+	</TD>
+</TABLE>
+
+<?
+	$cIssue=trim($cIssue);
+	$sDescription = trim($sDescription);
+	$sPhotographer = trim($sPhotographer);
+	$sPlace = trim($sPlace);
+	
+	if(($cIssue == 0) || ($cIssue == '') || !is_numeric($cIssue)) {
+		// check if numeric !!!!
+		query ("SELECT * FROM Images WHERE IdPublication=$Pub AND NrArticle != $Article AND Description LIKE '%$sDescription%' AND Photographer LIKE '%$sPhotographer%' AND Place LIKE '%$sPlace%'  ORDER BY IdPublication, NrIssue, NrSection, NrArticle, Number LIMIT $ImgOffs, ".($lpp+1), 'q_img');
+	}
+	else query ("SELECT * FROM Images WHERE IdPublication=$Pub AND NrIssue=$cIssue AND NrArticle != $Article AND Description LIKE '%$sDescription%' AND Photographer LIKE '%$sPhotographer%' AND Place LIKE '%$sPlace%'  ORDER BY IdPublication, NrIssue, NrSection, NrArticle, Number LIMIT $ImgOffs, ".($lpp+1), 'q_img');
+	if ($NUM_ROWS) {
+		$nr= $NUM_ROWS;
+		$i=$lpp;
+		$color= 0;
+	?>dnl
+
 B_LIST
 	B_LIST_HEADER
-		X_LIST_TH({Publ. no.}, {1%})
-		X_LIST_TH({Issue no.}, {1%})
-		X_LIST_TH({Section no.}, {1%})
-		X_LIST_TH({Article}, {1%})
-		X_LIST_TH({Image number}, {1%})
-		X_LIST_TH({Click to view image})
-		X_LIST_TH({Photographer})
-		X_LIST_TH({Place})
-		X_LIST_TH({Date<BR><SMALL>(yyyy-mm-dd)</SMALL>})
-		X_LIST_TH({Add to current article}, {1%})
+		X_LIST_TH(<*Image number*>, <*1%*>)
+		X_LIST_TH(<*Click to view image*>)
+		X_LIST_TH(<*Photographer*>)
+		X_LIST_TH(<*Place*>)
+		X_LIST_TH(<*Date<BR><SMALL>(yyyy-mm-dd)</SMALL>*>)
+		X_LIST_TH(<*Add to current article*>, <*1%*>)
 	E_LIST_HEADER
-<!sql print_loop q_img>dnl
-<!sql if $i>dnl
+<?
+    for($loop=0;$loop<$nr;$loop++) {
+	fetchRow($q_img);
+	if ($i) { ?>dnl
 	B_LIST_TR
-		B_LIST_ITEM({LEFT})
-			<!sql print ~q_img.IdPublication>
-		E_LIST_ITEM
-		B_LIST_ITEM({LEFT})
-			<!sql print ~q_img.NrIssue>
-		E_LIST_ITEM
-		B_LIST_ITEM({Left})
-			<!sql print ~q_img.NrSection>
-		E_LIST_ITEM
-		B_LIST_ITEM({RIGHT})
-			<!sql print ~q_img.NrArticle>
-		E_LIST_ITEM
-		B_LIST_ITEM({RIGHT})
-			<!sql print ~q_img.Number>
+		B_LIST_ITEM(<*LEFT*>)
+			<? pgetHVar($q_img,'IdPublication'); ?>_<? pgetHVar($q_img,'NrIssue'); ?>_<? pgetHVar($q_img,'NrSection'); ?>_<? pgetHVar($q_img,'NrArticle'); ?>_<? pgetHVar($q_img,'Number'); ?>
 		E_LIST_ITEM
 		B_LIST_ITEM
-			<A HREF="X_ROOT/pub/issues/sections/articles/images/viewsel.xql?Pub=<!sql print ~q_img.IdPublication>&Issue=<!sql print ~q_img.NrIssue>&Section=<!sql print ~q_img.NrSection>&Article=<!sql print ~q_img.NrArticle>&Image=<!sql print #q_img.Number>&Language=<!sql print #Language>&sLanguage=<!sql print #sLanguage>"><!sql print ~q_img.Description></A>
+			<A HREF="X_ROOT/pub/issues/sections/articles/images/viewsel.php?Pub=<? pgetUVar($q_img,'IdPublication'); ?>&Issue=<? pgetUVar($q_img,'NrIssue'); ?>&Section=<? pgetUVar($q_img,'NrSection'); ?>&Article=<? pgetUVar($q_img,'NrArticle'); ?>&Image=<? pgetUVar($q_img,'Number'); ?>&Language=<? p($Language); ?>&sLanguage=<? p($sLanguage); ?>"><? pgetHVar($q_img,'Description'); ?></A>
 		E_LIST_ITEM
 		B_LIST_ITEM
-			<!sql print ~q_img.Photographer>&nbsp;
+			<? pgetHVar($q_img,'Photographer'); ?>&nbsp;
 		E_LIST_ITEM
 		B_LIST_ITEM
-			<!sql print ~q_img.Place>&nbsp;
+			<? pgetHVar($q_img,'Place'); ?>&nbsp;
 		E_LIST_ITEM
 		B_LIST_ITEM
-			<!sql print ~q_img.Date>
+			<? pgetHVar($q_img,'Date'); ?>
 		E_LIST_ITEM
 		B_LIST_ITEM
-			<A HREF="X_ROOT/pub/issues/sections/articles/images/do_sel.xql?Pub=<!sql print ?Pub>&Issue=<!sql print ?Issue>&Section=<!sql print ?Section>&Article=<!sql print ?Article>&Image=<!sql print #q_img.Number>&Pub1=<!sql print ~q_img.IdPublication>&Issue1=<!sql print ~q_img.NrIssue>&Section1=<!sql print ~q_img.NrSection>&Article1=<!sql print ~q_img.NrArticle>&Language=<!sql print #Language>&sLanguage=<!sql print #sLanguage>">Add now</A>
+			<A HREF="X_ROOT/pub/issues/sections/articles/images/do_sel.php?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Section=<? p($Section); ?>&Article=<? p($Article); ?>&Image=<? pgetUVar($q_img,'Number'); ?>&Pub1=<? pgetUVar($q_img,'IdPublication'); ?>&Issue1=<? pgetUVar($q_img,'NrIssue'); ?>&Section1=<? pgetUVar($q_img,'NrSection'); ?>&Article1=<? pgetUVar($q_img,'NrArticle'); ?>&Language=<? p($Language); ?>&sLanguage=<? p($sLanguage); ?>"><? putGS('Add now'); ?></A>
 		E_LIST_ITEM
 	E_LIST_TR
-<!sql setexpr i ($i - 1)>dnl
-<!sql endif>dnl
-<!sql done>dnl
+<? 
+    $i--;
+    }
+}
+?>dnl
 	B_LIST_FOOTER
-<!sql if ($ImgOffs <= 0)>dnl
+		<?	print "(<*Publ. no.*>_<*Issue no.*>_<*Section no.*>_<*Article*>_<*Image number*>)<br>"; ?>
+<? if ($ImgOffs <= 0) { ?>dnl
 		X_PREV_I
-<!sql else>dnl
-		X_PREV_A({select.xql?Pub=<!sql print #Pub>&Issue=<!sql print #Issue>&Section=<!sql print #Section>&Article=<!sql print #Article>&Language=<!sql print #Language>&sLanguage=<!sql print #sLanguage>&ImgOffs=<!sql eval ($ImgOffs - 10)>})
-<!sql endif>dnl
-<!sql if $nr < 11>dnl
+<? } else { ?>dnl
+		X_PREV_A(<*select.php?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Article=<? p($Article); ?>&Language=<? p($Language); ?>&sLanguage=<? p($sLanguage); ?>&Section=<? p($Section); ?>&sDescription=<? pencURL(encHTML($sDescription));?>&sPhotographer=<? pencURL(encHTML($sPhotographer));?>&sPlace=<? pencURL(encHTML($sPlace));?>&cIssue=<? p($cIssue); ?>&ImgOffs=<? p($ImgOffs - $lpp); ?>*>)
+<? } ?>dnl
+<? if ($nr < $lpp+1) { ?>dnl
 		X_NEXT_I
-<!sql else>dnl
-		X_NEXT_A({select.xql?Pub=<!sql print #Pub>&Issue=<!sql print #Issue>&Section=<!sql print #Section>&Article=<!sql print #Article>&Language=<!sql print #Language>&sLanguage=<!sql print #sLanguage>&ImgOffs=<!sql eval ($ImgOffs + 10)>})
-<!sql endif>dnl
+<? } else { ?>dnl
+		X_NEXT_A(<*select.php?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Article=<? p($Article); ?>&Language=<? p($Language); ?>&sLanguage=<? p($sLanguage); ?>&Section=<? p($Section); ?>&sDescription=<? pencURL(encHTML($sDescription));?>&sPhotographer=<? pencURL(encHTML($sPhotographer));?>&sPlace=<? pencURL(encHTML($sPlace));?>&cIssue=<? p($cIssue); ?>&ImgOffs=<? p($ImgOffs + $lpp); ?>*>)
+<? } ?>dnl
 	E_LIST_FOOTER
 E_LIST
-<!sql else>dnl
+<? } else { ?>dnl
 <BLOCKQUOTE>
-	<LI>No images.</LI>
+	<LI><? putGS('No images.'); ?></LI>
 </BLOCKQUOTE>
-<!sql endif>dnl
+<? } ?>dnl
 
-<!sql else>dnl
+<? } else { ?>dnl
 <BLOCKQUOTE>
-	<LI>No such publication.</LI>
+	<LI><? putGS('No such publication.'); ?></LI>
 </BLOCKQUOTE>
-<!sql endif>dnl
+<? } ?>dnl
 
-<!sql else>dnl
+<? } else { ?>dnl
 <BLOCKQUOTE>
-	<LI>No such issue.</LI>
+	<LI><? putGS('No such issue.'); ?></LI>
 </BLOCKQUOTE>
-<!sql endif>dnl
+<? } ?>dnl
 
-<!sql else>dnl
+<? } else { ?>dnl
 <BLOCKQUOTE>
-	<LI>No such section.</LI>
+	<LI><? putGS('No such section.'); ?></LI>
 </BLOCKQUOTE>
-<!sql endif>dnl
+<? } ?>dnl
 
-<!sql else>dnl
+<? } else { ?>dnl
 <BLOCKQUOTE>
-	<LI>No such article.</LI>
+	<LI><? putGS('No such article.'); ?></LI>
 </BLOCKQUOTE>
-<!sql endif>dnl
+<? } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<!sql endif>dnl
+<? } ?>dnl
 
 E_DATABASE
 E_HTML
+

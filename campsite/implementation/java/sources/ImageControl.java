@@ -33,128 +33,64 @@
      * The toString method is used when generating the html.
      */
 
-import com.sun.java.swing.*;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 
 class ImageControl extends JPanel{
     
-    JButton butt;
-    JComboBox combo;
-    JComboBox align;
-    Vector pseu;
-    Test parent;
-	String alt;
-    
-    public ImageControl(Test p){
-        setPreferredSize(new Dimension(50,50));
+    JLabel labl;
+    private ImageProperties myProperties= new ImageProperties();
+        
+    public ImageControl(CampToolbarIcon ico){
+        setPreferredSize(new Dimension(40,40));
+        setMaximumSize(new Dimension(40,40));
         setBorder(BorderFactory.createEtchedBorder());    
-        parent=p;
+        this.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        addIcon(ico);
     }
     
-    public void addIcon(String s){
-        butt=new JButton("");
-        butt.setIcon(new TolImageIcon("image.gif",parent.bigim,parent));
-        butt.setMargin(new Insets(1,1,1,1));
-        add(butt,"CENTER");
-        butt.setEnabled(true);
-		butt.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent ev){
-			openFrame();
-			}
-		});
+    private void addIcon(CampToolbarIcon ico){
+        labl=new JLabel("");
+        labl.setIcon(ico);
+        add(labl,"CENTER");
+        labl.setEnabled(true);
+        labl.addMouseListener(new MouseListener(){
+            public void mouseClicked(MouseEvent e){
+                if (e.getClickCount()==2 && SwingUtilities.isLeftMouseButton(e))
+                    editProperties();
+            }
+            public void mousePressed(MouseEvent e){}
+            public void mouseReleased(MouseEvent e){}
+            public void mouseEntered(MouseEvent e){}
+            public void mouseExited(MouseEvent e){}
+        }
+        );
+        
     }
 
-	public void openFrame(){
-		parent.openImageFrame(this);
+	private void editProperties(){
+		CampBroker.getImage().edit(this);
 	}
-/*    
-    public void addRemover(String s){
-        butt=new JButton("s");
-        butt.setIcon(new ImageIcon(s));
-        butt.setMargin(new Insets(1,1,1,1));
-        add(butt,"NORTHEAST");
-        //butt.setEnabled(false);
-        butt.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-                vala();
-            }
-            });
-    }
-    
-    public void vala(){
-        //setVisible(false);
-        this.dispose();
-    }
-  */  
-    public void addCombo(Vector v,Vector ps){
-        Vector al=new Vector();
-        pseu=ps;
-        combo=new JComboBox(v);
-      /*  add(combo,"CENTER");
-        combo.addItemListener(new ItemListener(){
-            public void itemStateChanged(ItemEvent a){
-                butt.setEnabled(true);
-            }
-            });
-         */
-   
-        al.addElement("align NONE");    
-        //al.addElement("TOP");    
-        //al.addElement("MIDDLE");    
-        //al.addElement("BOTTOM");    
-        al.addElement("RIGHT");    
-        al.addElement("LEFT");    
-        //al.addElement("ABSMIDDLE");    
-        //al.addElement("ABSBOTTOM");    
-        //al.addElement("TEXTTOP");    
-        //al.addElement("BASELINE");    
-        align=new JComboBox(al);
-/*        add(align,"SOUTH");*/
 
-        align.setSelectedIndex(0);
+    public void setProperties(ImageProperties props){
+        myProperties=props;
     }
 
-    
+    public ImageProperties getProperties(){
+        return myProperties;
+    }
 
-    
+
     public String toString(){
         String ali=new String();
-		String alti;
-		if ((alt==null)||(alt.equals(""))) alti=""; else alti=" ALT=\""+alt+"\"";
-        if (align.getSelectedIndex()!=0) ali=" ALIGN="+(String)align.getSelectedItem();
-        if (combo.getSelectedIndex()==-1) return "?";
-        else return (String)pseu.elementAt(combo.getSelectedIndex())+ali+alti;
+		String alti, subi;
+		if ((myProperties.altText==null)||(myProperties.altText.equals(""))) alti=""; else alti=" ALT=\""+myProperties.altText+"\"";
+		if ((myProperties.subTitle==null)||(myProperties.subTitle.equals(""))) subi=""; else subi=" SUB=\""+myProperties.subTitle+"\"";
+        if (myProperties.alignWay.length()!=0) ali=" ALIGN="+ myProperties.alignWay;
+        return "<!** Image " + myProperties.imageName+ali+alti+subi+">";
     }
     
-    public void setAlign(String s){
-        int i=s.toUpperCase().indexOf("ALIGN=");
-        if (i==-1) return;
-		int altidx=s.toUpperCase().indexOf("ALT=");
-		int toidx=s.length();
-		if (altidx!=-1) toidx=altidx-1;
-		String a=s.substring(i+6,toidx).toUpperCase();
-		
-        align.setSelectedItem(a);
-        //System.out.println("szai"+a);
-    }
-
-    public void setAlt(String s){
-        int i=s.toUpperCase().indexOf("ALT=");
-        if (i==-1) return;
-        String a=s.substring(i+5,s.indexOf("\"",i+5));
-		alt=a;
-    }
     
-    public void setImage(Test p,String s){
-        //System.out.println(s);
-        
-        if (s.equals("?")) return;
-        int sp=s.indexOf(" ");
-        if (sp==-1) sp=s.length();
-        int ind=p.vectorOfImagePseudos.indexOf(s.substring(0,sp));
-        if (ind!=-1) combo.setSelectedIndex(ind);
-        
-    }
 }

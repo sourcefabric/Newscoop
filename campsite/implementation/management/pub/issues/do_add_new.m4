@@ -1,97 +1,112 @@
 B_HTML
+INCLUDE_PHP_LIB(<*../..*>)
 B_DATABASE
 
 CHECK_BASIC_ACCESS
-CHECK_ACCESS({ManageIssue})
+CHECK_ACCESS(<*ManageIssue*>)
 
 B_HEAD
 	X_EXPIRES
-	X_TITLE({Adding New Issue})
-<!sql if $access == 0>dnl
-	X_AD({You do not have the right to add issues.})
-<!sql endif>dnl
+	X_TITLE(<*Adding new issue*>)
+<? if ($access == 0) { ?>dnl
+	X_AD(<*You do not have the right to add issues.*>)
+<? } ?>dnl
 E_HEAD
 
-<!sql if $access>dnl
+<? if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
 
-<!sql setdefault cName "">dnl
-<!sql setdefault cNumber 0>dnl
-<!sql setdefault cLang 0>dnl
-<!sql setdefault cPub 0>dnl
-B_HEADER({Adding New Issue})
+<?
+    todef('cName');
+    todefnum('cNumber');
+    todefnum('cLang');
+    todefnum('cPub');
+?>dnl
+B_HEADER(<*Adding new issue*>)
 B_HEADER_BUTTONS
-X_HBUTTON({Issues}, {pub/issues/?Pub=<!sql print #cPub>})
-X_HBUTTON({Publications}, {pub/})
-X_HBUTTON({Home}, {home.xql})
-X_HBUTTON({Logout}, {logout.xql})
+X_HBUTTON(<*Issues*>, <*pub/issues/?Pub=<? pencURL($cPub); ?>*>)
+X_HBUTTON(<*Publications*>, <*pub/*>)
+X_HBUTTON(<*Home*>, <*home.php*>)
+X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<!sql set NUM_ROWS 0>dnl
-<!sql query "SELECT Name FROM Publications WHERE Id=?cPub" publ>dnl
-<!sql if $NUM_ROWS>dnl
+<?
+    query ("SELECT Name FROM Publications WHERE Id=$cPub", 'publ');
+    if ($NUM_ROWS) {
+	fetchRow($publ);
+?>dnl
 B_CURRENT
-X_CURRENT({Publication:}, {<B><!sql print ~publ.Name></B>})
+X_CURRENT(<*Publication*>, <*<B><? pgetHVar($publ,'Name'); ?></B>*>)
 E_CURRENT
 
-<!sql set correct 1><!sql set created 0>dnl
+<?
+    $correct= 1;
+    $created= 0;
+?>dnl
 <P>
-B_MSGBOX({Adding new issue})
-	X_MSGBOX_TEXT({
-<!sql query "SELECT TRIM('?cName'), TRIM('?cNumber')" q_x>dnl
-<!sql if ($cLang = 0)>dnl
-<!sql set correct 0>dnl
-		<LI>You must select a language.</LI>
-<!sql endif>dnl
-<!sql if (@q_x.0 == "" || @q_x.0 == " ")>dnl
-<!sql set correct 0>dnl
-		<LI>You must complete the <B>Name</B> field.</LI>
-<!sql endif>dnl
-<!sql if (@q_x.1 == "" || @q_x.1 == " ")>dnl
-<!sql set correct 0>dnl
-		<LI>You must complete the <B>Number</B> field.</LI>
-<!sql endif>dnl
-<!sql if $correct>dnl
-<!sql set AFFECTED_ROWS 0>dnl
-<!sql query "INSERT IGNORE INTO Issues SET Name='?q_x.0', IdPublication=?cPub, IdLanguage=?cLang, Number=?q_x.1">dnl
-<!sql setexpr created ($AFFECTED_ROWS != 0)>dnl
-<!sql endif>dnl
-<!sql if $created>dnl
-		<LI>The issue <B><!sql print ~cName></B> has been successfuly added.</LI>
-X_AUDIT({11}, {Issue ?cName added in publication ?publ.Name})
-<!sql else>dnl
-<!sql if ($correct != 0)>dnl
-		<LI>The issue could not be added.</LI><LI>Please check if another issue with the same number/language does not already exist.</LI>
-<!sql endif>dnl
-<!sql endif>dnl
-		})
-<!sql if $correct && $created>dnl
+B_MSGBOX(<*Adding new issue*>)
+	X_MSGBOX_TEXT(<*
+<?
+    $cName=trim($cName);
+    $cNumber=trim($cNumber);
+    
+    if ($cLang == 0) {
+	$correct= 0; ?>dnl
+		<LI><? putGS('You must select a language.'); ?></LI>
+    <? }
+    
+    if ($cName == "" || $cName == " ") {
+	$correct= 0; ?>dnl
+		<LI><? putGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); ?></LI>
+    <? }
+    
+    if ($cNumber == "" || $cNumber == " ") {
+	$correct= 0; ?>dnl
+		<LI><? putGS('You must complete the $1 field.','<B>'.getGS('Number').'</B>'); ?></LI>
+    <? }
+    
+    if ($correct) {
+	query ("INSERT IGNORE INTO Issues SET Name='$cName', IdPublication=$cPub, IdLanguage=$cLang, Number=$cNumber");
+	$created= ($AFFECTED_ROWS > 0);
+    }
+    
+    if ($created) { ?>dnl
+		<LI><? putGS('The issue $1 has been successfuly added.','<B>'.encHTML(decS($cName)).'</B>'); ?></LI>
+X_AUDIT(<*11*>, <*getGS('Issue $1 added in publication $2',$cName,getVar($publ,'Name'))*>)
+<? } else {
+    if ($correct != 0) { ?>dnl
+		<LI><? putGS('The issue could not be added.'); ?></LI><LI><? putGS('Please check if another issue with the same number/language does not already exist.'); ?></LI>
+<? }
+}
+?>dnl
+		*>)
+<? if ($correct && $created) { ?>dnl
 	B_MSGBOX_BUTTONS
-		<A HREF="X_ROOT/pub/issues/add_new.xql?Pub=<!sql print #cPub>"><IMG SRC="X_ROOT/img/button/add_another.gif" BORDER="0" ALT="Add another issue"></A>
-		<A HREF="X_ROOT/pub/issues/?Pub=<!sql print #cPub>"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
+		<A HREF="X_ROOT/pub/issues/add_new.php?Pub=<? pencURL($cPub); ?>"><IMG SRC="X_ROOT/img/button/add_another.gif" BORDER="0" ALT="Add another issue"></A>
+		<A HREF="X_ROOT/pub/issues/?Pub=<? pencURL($cPub); ?>"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
 	E_MSGBOX_BUTTONS
-<!sql else>dnl
+<? } else { ?>dnl
 	B_MSGBOX_BUTTONS
-		<A HREF="X_ROOT/pub/issues/add_new.xql?Pub=<!sql print #cPub>"><IMG SRC="X_ROOT/img/button/ok.gif" BORDER="0" ALT="OK"></A>
+		<A HREF="X_ROOT/pub/issues/add_new.php?Pub=<? pencURL($cPub); ?>"><IMG SRC="X_ROOT/img/button/ok.gif" BORDER="0" ALT="OK"></A>
 	E_MSGBOX_BUTTONS
-<!sql endif>dnl
+<? } ?>dnl
 E_MSGBOX
 <P>
 
-<!sql else>dnl
+<? } else { ?>dnl
 <BLOCKQUOTE>
-	<LI>No such publication.</LI>
+	<LI><? putGS('No such publication.'); ?></LI>
 </BLOCKQUOTE>
-<!sql endif>dnl
+<? } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<!sql endif>dnl
+<? } ?>dnl
 
 E_DATABASE
 E_HTML
