@@ -726,26 +726,47 @@ if $USER_INSTALL; then
     return 0
 fi
 conf_files="${conf_path}/${conf_file} ${conf_path}/commonhttpd.conf ${conf_path}/common${apache_bin_name}.conf"
-user_line=`grep -h -w ^User ${conf_files} 2> /dev/null`
+
+user_line=`grep -h -w -m 1 ^User ${conf_files} 2> /dev/null`
 if [ "$user_line" = "" ]; then
     echo "Invalid apache configuration files. Aborting."
     return 1
 fi
 i=1
 for w in $user_line; do
-    [ $i -eq 2 ] && export APACHE_USER=$w && break
+    [ $i -eq 2 ] && apache_user=$w && break
     i=`expr $i + 1`
 done
-group_line=`grep -h -w ^Group ${conf_files} 2> /dev/null`
+if [ "$APACHE_USER" != "" ]; then
+    user_lines=`grep -h -w ^User ${conf_files} 2> /dev/null`
+    user_line=`echo "$user_lines" | grep -m 1 "$APACHE_USER" 2> /dev/null`
+    if [ "$user_line" = "" ]; then
+	echo "WARNING!!! The apache user '$APACHE_USER' is not valid; valid apache user is '$apache_user'";
+    fi
+else
+    export APACHE_USER=$apache_user
+fi
+
+group_line=`grep -h -w -m 1 ^Group ${conf_files} 2> /dev/null`
 if [ "$group_line" = "" ]; then
     echo "Invalid apache configuration files. Aborting."
     return 1
 fi
 i=1
 for w in $group_line; do
-    [ $i -eq 2 ] && export APACHE_GROUP=$w && break
+    [ $i -eq 2 ] && apache_group=$w && break
     i=`expr $i + 1`
 done
+if [ "$APACHE_GROUP" != "" ]; then
+    group_lines=`grep -h -w ^Group ${conf_files} 2> /dev/null`
+    group_line=`echo "$group_lines" | grep -m 1 "$APACHE_GROUP" 2> /dev/null`
+    if [ "$group_line" = "" ]; then
+	echo "WARNING!!! The apache group '$APACHE_GROUP' is not valid; valid apache group is '$apache_group'";
+    fi
+else
+    export APACHE_GROUP=$apache_group
+fi
+
 set_checked apache
 return 0
 }
@@ -892,22 +913,6 @@ return 0
 }
 # END OF check4_
 
-# FUNCTION: check4_
-# Description: check if  is installed
-# Parameters: none
-# Variables set:
-#	 -  full path
-#	output - error message (if any)
-#check4_()
-#{
-#is_checked  && return 0
-#check4_file  --file --path ""
-#result=$? && [ $result -ne 0 ] && return 1
-#export =$file_path
-#set_checked
-#return 0
-#}
-
 # FUNCTION: check4_libnsl
 # Description: 
 # Parameters: none
@@ -1018,3 +1023,55 @@ set_checked killall
 return 0
 }
 # END OF check4_make
+
+# FUNCTION: check4_pear
+# Description: check if pear is installed
+# Parameters: none
+# Variables set:
+#	PEAR - pear full path
+#	PEAR_DIR - pear directory
+#	output - error message (if any)
+check4_pear()
+{
+is_checked pear && return 0
+check4_file pear --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
+result=$? && [ $result -ne 0 ] && return 1
+pear_dir=`pear config-get php_dir | cut -f 2 -d "="`
+result=$? && [ $result -ne 0 ] && echo "$pear_dir" && return 1
+export PEAR=$file_path
+export PEAR_DIR=$pear_dir
+set_checked
+return 0
+}
+
+# FUNCTION: check4_php_cli
+# Description: check if php cli (command line interface) is installed
+# Parameters: none
+# Variables set:
+#	PHP - php full path
+#	output - error message (if any)
+check4_php_cli()
+{
+is_checked php_cli && return 0
+check4_file php --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
+result=$? && [ $result -ne 0 ] && return 1
+export PHP=$file_path
+set_checked
+return 0
+}
+
+# FUNCTION: check4_
+# Description: check if  is installed
+# Parameters: none
+# Variables set:
+#	 -  full path
+#	output - error message (if any)
+#check4_()
+#{
+#is_checked  && return 0
+#check4_file  --file --path ""
+#result=$? && [ $result -ne 0 ] && return 1
+#export =$file_path
+#set_checked
+#return 0
+#}
