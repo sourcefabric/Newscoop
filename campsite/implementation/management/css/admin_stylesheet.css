@@ -34,7 +34,6 @@ hr {
 .button {
 	font-family: Verdana, Arial, Helvetica, sans-serif; 
 	font-size: 10pt;
-	/*border: 1px solid #00008b; */
 	border: 1px solid grey; 
 	background-color: #EEEEEE; 
 	color: #333333; 
@@ -66,10 +65,11 @@ hr {
 
 .input_radio { }
 
-.input_select { }
+.input_select { 
+	background-color: #f0f0ff; 
+}
 
 .input_file {
-	border: 1px solid #00008b; 
 	background-color: #f0f0ff; 
 }
 
@@ -100,21 +100,19 @@ hr {
 
 .table_list_header {
 	background-color: #8baed1;
-	color: #FFF;
+	/*color: #FFF;*/
+	color: white;
 	font-weight: bold;	
-	/* background-color: #C0D0FF;*/
 }
 
 .list_row_odd {
 	color: #000;
 	background-color: #d5e2ee;
-	/* background-color: #C0C0C0; */
 }
 
 .list_row_even {
 	color: #000;
 	background-color: #f5f5f5;
-	/* background-color: #D0D0D0; */
 }
 
 .current_location_table {
@@ -128,4 +126,11 @@ hr {
 
 .current_location_content {
 	font-weight: bold;
+}
+
+.table_input {
+	/*background-color: #C0D0FF;*/
+	background-color: #d5e2ee;
+	border: 1px solid #8baed1;
+	/*background-color: #FFFFDD;*/
 }
