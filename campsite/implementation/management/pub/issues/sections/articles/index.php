@@ -277,7 +277,7 @@ if ($access) {
 		</TD>
 <?php  } ?>	<?php  if ($daa != 0) { ?>
 		<TD ALIGN="CENTER">
-			<A HREF="/priv/pub/issues/sections/articles/del.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  pgetUVar($q_art,'Number'); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  pgetUVar($q_art,'IdLanguage'); ?>&Back=<?php  pencURL($REQUEST_URI); ?>"><IMG SRC="/priv/img/icon/x.gif" BORDER="0" ALT="<?php  putGS('Delete article $1',getHVar($q_art,'Name')); ?>"></A>
+			<A HREF="/priv/pub/issues/sections/articles/del.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  pgetUVar($q_art,'Number'); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  pgetUVar($q_art,'IdLanguage'); ?>&Back=<?php  pencURL($REQUEST_URI); ?>"><IMG SRC="/priv/img/icon/delete.gif" BORDER="0" ALT="<?php  putGS('Delete article $1',getHVar($q_art,'Name')); ?>"></A>
 		</TD>
 	<?php  }
 		if (getVar($q_art,'Number') != $kwdid)
