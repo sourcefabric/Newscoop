@@ -3,6 +3,7 @@
 LANG=""
 FILE=""
 to_do="print_usage"
+params=""
 pn=1
 while [ "${!pn}" != "" ]; do
     case ${!pn} in
@@ -13,6 +14,7 @@ while [ "${!pn}" != "" ]; do
 	if [ "$LANG" = "" ]; then
 	    to_do=print_usage
 	fi
+	params="--make_package $LANG"
 	;;
     --install_package)
 	to_do=install
@@ -21,6 +23,7 @@ while [ "${!pn}" != "" ]; do
 	if [ "$FILE" = "" ]; then
 	    to_do=print_usage
 	fi
+	params="--install_package $FILE"
 	;;
     --user)
 	pn=`expr $pn + 1`
@@ -37,6 +40,7 @@ while [ "${!pn}" != "" ]; do
 	if [ "$LANG" = "" ]; then
 	    to_do=print_usage
 	fi
+	params="--add_trans_to_dist $LANG"
 	;;
 #    --) ;;
     esac
@@ -55,8 +59,6 @@ if [ "$to_do" = "print_usage" ]; then
     echo -e "		application install directory to the distribution directory."
     exit 2
 fi
-
-params="$to_do $LANG $FILE"
 
 if [ ! -x ./configure ]; then
     echo -e "Install script must be started from campsite directory!\nAborting..."
