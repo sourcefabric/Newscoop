@@ -2,7 +2,7 @@ WWWSQL_DIR=www-sql-0.5.7-patch
 
 all:
 	@if [ ! -f ./$(WWWSQL_DIR)/Makefile ]; then \
-	    (cd ./www-sql-0.5.7-patch; rm -f config.cache; ./configure --enable-apache-action-check --enable-unsafe; cd ..); \
+	    (cd ./www-sql-0.5.7-patch; rm -f config.cache; ./configure --enable-apache-action-check --enable-unsafe --with-mysql-libs; cd ..); \
 	fi
 	$(MAKE) -C $(WWWSQL_DIR) all
 
