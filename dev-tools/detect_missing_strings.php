@@ -25,6 +25,73 @@ if (sizeof($gErrors) > 0) {
 //    functions implementation
 
 
+function processDirScript($file, $langCode, &$missingStrings, &$errors)
+{
+	global $gStrings, $gLangCode;
+
+	$fileContent = file_get_contents($file);
+	$funcNames = array("getGS", "putGS");
+	foreach ($funcNames as $index=>$func) {
+		$text = $fileContent;
+		while (true) {
+			if (($getPos = strpos($text, $func)) === false) {
+				break;
+			}
+			$text = substr($text, $getPos + strlen($func));
+			if (($endBracket = strpos($text, ")")) === false)
+				continue;
+
+			// remove end bracket from temporary message string
+			$msg = substr($text, 0, $endBracket);
+			// copy remaining text
+			$text = substr($text, $endBracket + 1);
+			// search for first quote/double-quote
+			$quotePos = strcspn($msg, "\"'");
+			$quote = $msg[$quotePos]; // remember if it was quote or double-quote
+			$msg = substr($msg, 1 + $quotePos);
+			if ($msg == "")
+				continue; // if not found continue
+
+			$endMsg = false;
+			do {
+				// search for next (double-)quote (maybe the end of string?)
+				$tmpMsg = ($endMsg !== false) ? substr($msg, $endMsg) : $msg;
+				if (($nextEndMsg = strpos($tmpMsg, $quote)) === false)
+					break; // if not found exit this loop, continue in parent loop
+
+				// set the end of message to the position of (double-)quote
+				$nextEndMsg += (int)$endMsg;
+				$endMsg = $nextEndMsg;
+
+				// if the (double-)quote was not escaped exit the loop
+				if ($msg[$endMsg - 1] != "\\")
+					break;
+				$endMsg++; // set the end of the string past the last (double-)quote
+			} while (true);
+			if ($endMsg === false)
+				continue; // if end of message not set continue
+
+			$msg = stripslashes(substr($msg, 0, $endMsg));
+			if (!in_array($msg, $gStrings) && !in_array($msg, $missingStrings))
+				$missingStrings[] = $msg;
+		}
+	}
+}
+
+
+function printMissingStrings($target, $missingStrings)
+{
+	$header = false;
+	foreach ($missingStrings as $index=>$string) {
+		if (!$header) {
+			$header = true;
+			printMsg("Missing strings in $target");
+		}
+		printMsg($string, 1);
+	}
+}
+
+
 function processDirScripts($startDir, $gLangCode, $gErrors, $rootDir = "")
 {
 	global $gStrings, $gLangCode;
@@ -33,18 +100,19 @@ function processDirScripts($startDir, $gLangCode, $gErrors, $rootDir = "")
 		$errors[] = "Unable to open directory $startDir";
 		return;
 	}
-	if ($rootDir == "")
+	if ($rootDir == "") {
 		$rootDir = $startDir;
+		require_once("$rootDir/globals.$gLangCode.php");
+	}
 
-	if (is_file("$startDir/locals.$langCode.php")) {
-		$gStrings = array();
-		require_once("$rootDir/globals.$langCode.php");
-		require_once("$startDir/locals.$langCode.php");
+	if (is_file("$startDir/locals.$gLangCode.php")) {
+		require_once("$startDir/locals.$gLangCode.php");
 	}
 
 	$dirs = array();
+	$missingStrings = array();
 	while (false !== ($file = readdir($dirH))) {
-		if ($file == "." || $file == ".." || $file == "CVS")
+		if ($file == "." || $file == ".." || $file == "CVS" || $file == "lib_campsite.php")
 			continue;
 		if (is_dir("$startDir/$file")) {
 			$dirs[] = $file;
@@ -52,22 +120,24 @@ function processDirScripts($startDir, $gLangCode, $gErrors, $rootDir = "")
 		}
 		if (($dotPos = strrpos($file, ".")) === false)
 			continue;
-		$extension = substr($file, $dotPos + 1);
-		if ($extension != "m4" && $extension != "php")
+		if (($extension = substr($file, $dotPos + 1)) != "php")
 			continue;
-		if (strncmp($file, "locals.", strlen("locals.")) == 0 && $extension == "php")
+		if (strncmp($file, "locals.", strlen("locals.")) == 0)
+			continue;
+		if (strncmp($file, "globals.", strlen("globals.")) == 0)
 			continue;
 
-		$missingStrings = processDirScript("$startDir/$file", $langCode, $errors);
-		printMissingStrings($missingStrings);
+		if (is_file("$startDir/locals.$gLangCode.php"))
+			processDirScript("$startDir/$file", $gLangCode, $missingStrings, $errors);
 	}
 	closedir($dirH);
+	$localDir = substr($startDir, strlen($rootDir) + 1);
+	if ($localDir == "")
+		$localDir = "/";
+	printMissingStrings($localDir, $missingStrings);
 
-	if (sizeof($stringMatch) == 0)
-		return;
-	print_msg("Usage for directory $startDir");
-	foreach ($stringMatch as $key=>$useCount)
-		print_msg("$key:$langCode - $useCount", 1);
+	foreach ($dirs as $index=>$dirName)
+		processDirScripts("$startDir/$dirName", $gLangCode, $gErrors, $rootDir);
 }
 
 
