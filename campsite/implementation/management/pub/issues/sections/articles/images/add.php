@@ -101,7 +101,7 @@ fetchRowNum($q_now);
 	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS("Photographer"); ?>:</TD>
 		<TD>
-		<INPUT TYPE="TEXT" NAME="cPhotographer" VALUE="<?php  pgetHVar($Usr,'Name'); ?>" SIZE="32" MAXLENGTH="64">
+		<INPUT TYPE="TEXT" NAME="cPhotographer" SIZE="32" MAXLENGTH="64" VALUE="<?php echo $User->getName(); ?>">
 		</TD>
 	</TR>
 	<TR>
