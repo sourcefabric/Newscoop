@@ -53,6 +53,7 @@ using std::ios_base;
 
 
 char* ReadPOSTQuery();
+string& trim(string& p_rcoStr);
 int ReadParameters(char** p_ppchMsg, int* p_pnSize, const char** p_ppchErrMsg);
 
 
@@ -106,7 +107,6 @@ int main()
 	coMsg.setf(ios_base::hex, ios_base::basefield);
 	coMsg << nSize;
 	coMsg << " " << pchMsg;
-	cout << coMsg.str();
 	struct timeval tVal = { 0, 0 };
 	tVal.tv_sec = 60;
 	fd_set clSet;
@@ -116,7 +116,6 @@ int main()
 	{
 		coSock.Connect(coIP.c_str(), nPort);
 		coSock.Send(coMsg.str().c_str(), nSize+10);
-		return 0;
 		FD_SET((SOCKET)coSock, &clSet);
 		for (;;)
 		{
@@ -321,6 +320,10 @@ int ReadParameters(char** p_ppchMsg, int* p_pnSize, const char** p_ppchErrMsg)
 		nIndex = coCookies.find(";", nStart);
 		nIndex = nIndex == string::npos ? coCookies.size() : nIndex;
 		string coValue = coCookies.substr(nStart, nIndex - nStart);
+		trim(coCookie);
+		trim(coValue);
+		if (coValue == "")
+			continue;
 
 		CXMLTree::iterator coParamIt = coTree.newChild(coNodeIt, "Cookie", coValue.c_str());
 		coTree.addAttribute(coParamIt, "Name", coCookie.c_str());
@@ -334,6 +337,22 @@ int ReadParameters(char** p_ppchMsg, int* p_pnSize, const char** p_ppchErrMsg)
 	coTree.saveToMemory(p_ppchMsg, p_pnSize);
 
 	return 0;
+}
+
+
+string& trim(string& p_rcoStr)
+{
+	string::size_type nIndex;
+	for (nIndex = 0; nIndex < p_rcoStr.size() && p_rcoStr[nIndex] == ' ';)
+	{
+		p_rcoStr.erase(nIndex, 1);
+	}
+	for (nIndex = p_rcoStr.size() - 1; nIndex >= 0 && p_rcoStr[nIndex] == ' ';)
+	{
+		p_rcoStr.erase(nIndex, 1);
+		nIndex = p_rcoStr.size() - 1;
+	}
+	return p_rcoStr;
 }
 
 
