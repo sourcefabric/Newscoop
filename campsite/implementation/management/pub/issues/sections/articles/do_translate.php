@@ -13,42 +13,44 @@ $Issue = Input::get('Issue', 'int', 0);
 $Section = Input::get('Section', 'int', 0);
 $Language = Input::get('Language', 'int', 0);
 $sLanguage = Input::get('sLanguage', 'int', 0);
+$Article = Input::get('Article', 'int', 0);
+$ArticleLanguage = Input::get('ArticleLanguage', 'int', 0);
 $cName = trim(Input::get('cName'));
 $cLanguage = Input::get('cLanguage');
 $cKeywords = Input::get('cKeywords');
 $BackLink = Input::get('Back', 'string', "/$ADMIN/pub/issues/sections/articles/", true);
 
 if (!Input::isValid()) {
-	header("Location: /$ADMIN/logout.php");
+	CampsiteInterface::DisplayError(array('Invalid input: $1', Input::GetErrorString()), $BackLink);
 	exit;	
 }
 $languageObj =& new Language($cLanguage);
 if (!$languageObj->exists()) {
-	header("Location: /$ADMIN/ad.php?ADReason=".urlencode(getGS('You must select a language.')));
+	CampsiteInterface::DisplayError('You must select a language.', $BackLink);
 	exit;	
 }
 
 $publicationObj =& new Publication($Pub);
 if (!$publicationObj->exists()) {
-	header("Location: /$ADMIN/logout.php");
+	CampsiteInterface::DisplayError('No such publication.', $BackLink);
 	exit;	
 }
 
 $issueObj =& new Issue($Pub, $Language, $Issue);
 if (!$issueObj->exists()) {
-	header("Location: /$ADMIN/logout.php");
+	CampsiteInterface::DisplayError('No such issue.', $BackLink);
 	exit;	
 }
 
 $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
 if (!$sectionObj->exists()) {
-	header("Location: /$ADMIN/logout.php");
+	CampsiteInterface::DisplayError('No such section.', $BackLink);
 	exit;		
 }
 
-$articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
+$articleObj =& new Article($Pub, $Issue, $Section, $ArticleLanguage, $Article);
 if (!$articleObj->exists()) {
-	header("Location: /$ADMIN/ad.php?ADReason=".urlencode(getGS('Article does not exist.')));
+	CampsiteInterface::DisplayError('Article does not exist.', $BackLink);
 	exit;
 }
 
@@ -57,7 +59,8 @@ if ($User->hasPermission('ChangeArticle') || (($articleObj->getUserId() == $User
 	$access= true;
 }
 if (!$access) {
-	header("Location: /$ADMIN/ad.php?ADReason=".urlencode(getGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only changed by authorized users.")));
+	$errorStr = 'You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only changed by authorized users.';
+	CampsiteInterface::DisplayError($errorStr, $BackLink);
 	exit;	
 }
 
