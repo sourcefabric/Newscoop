@@ -38,7 +38,7 @@ regGS("Copy the entire structure in all languages from the previous issue except
 regGS("You may modify it later if you wish.","Puteţi să faceţi modificarea mai târziu");
 regGS("Create a new structure","Crează o structură nouă");
 regGS("Create a complete new structure.","Crează o structură nouă");
-regGS("You must define an issue type for each language and then sections for them.","");
+regGS("You must define an issue type for each language and then sections for them.","Trebuie să creaţi o ediţie pentru fiecare limbă şi adăugaţi după aceea secţiunile.");
 regGS("Copy previous issue","Copiază ediţia precedentă");
 regGS("No previous issue.","Nu există ediţie anterioară");
 regGS("Copy structure from issue nr $1","Copiază structura de la ediţia nr $1");

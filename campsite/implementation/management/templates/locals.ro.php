@@ -7,6 +7,7 @@ regGS("Create new folder","Creaza director");
 regGS("Upload template","Transferă şablon");
 regGS("Select the template for displaying the front page.","Selectează şablonul pentru afişarea paginii principale");
 regGS("Select the template for displaying a single article.","Selectează şablonul pentru afişarea articolelor");
+regGS("You do no have access to the $1 directory!","Nu aveţi acces la directorul $1!");
 regGS("Creating new folder","Crează director");
 regGS("You do not have the right to create new folders.","Nu aveţi dreptul să creaţi directoare");
 regGS("The folder $1 has been created","Directorul $1 a fost creat");
@@ -56,5 +57,6 @@ regGS("Error converting the template to UTF-8 charset.","Eroare la conversia şa
 regGS("Template charset","Setul de caractere al şablonului");
 regGS("Select a language/character set","Selectaţi limba/set de caractere");
 regGS("All languages","Toate limbile");
+
 
 ?>
