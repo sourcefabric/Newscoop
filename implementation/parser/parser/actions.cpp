@@ -1119,7 +1119,6 @@ int CActURLParameters::takeAction(CContext& c, sockstream& fs)
 		        && c.Section() < 0 && c.Article() < 0)
 			return ERR_NOPARAM;
 	}
-	string coURL;
 	CURL* pcoURL = NULL;
 	if (fromstart)
 		pcoURL = m_nPubLevel < CMS_PL_ARTICLE ? c.DefURL()->clone() : c.DefURL();
@@ -1135,17 +1134,20 @@ int CActURLParameters::takeAction(CContext& c, sockstream& fs)
 		pcoURL->deleteParameter(P_IDPUBL);
 	if (m_nPubLevel < CMS_PL_LANGUAGE)
 		pcoURL->deleteParameter(P_IDLANG);
-	coURL = pcoURL->getQueryString();
-	if (m_nPubLevel < CMS_PL_ARTICLE)
-		delete pcoURL;
+	string coURL = pcoURL->getQueryString();
 	fs << (first ? "" : "&") << coURL;
 	first = coURL == "";
+
 	URLPrintParam(P_TOPIC_ID, (fromstart ? c.DefTopic() : c.Topic()), fs, first);
-	URLPrintNParam(P_TEMPLATE_ID, m_coTemplate, fs, first);
+	if (pcoURL->needTemplateParameter())
+		URLPrintNParam(P_TEMPLATE_ID, m_coTemplate, fs, first);
 	if (m_nPubLevel > CMS_PL_ARTICLE)
 		PrintSubtitlesURL(c, fs, first);
+	if (m_nPubLevel < CMS_PL_ARTICLE)
+		delete pcoURL;
 	if (c.Level() == CLV_ROOT)
 		return RES_OK;
+
 	if (c.LMode() == LM_PREV)
 	{
 		if (c.Level() == CLV_ISSUE_LIST)
@@ -2766,6 +2768,8 @@ int CActURIPath::takeAction(CContext& c, sockstream& fs)
 			pcoURL->deleteParameter(P_NRISSUE);
 		if (m_nPubLevel <= CMS_PL_LANGUAGE)
 			pcoURL->deleteParameter(P_IDPUBL);
+		if (m_nPubLevel <= CMS_PL_ROOT)
+			pcoURL->deleteParameter(P_IDLANG);
 		fs << pcoURL->getURIPath();
 	}
 	else
