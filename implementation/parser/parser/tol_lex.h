@@ -188,6 +188,8 @@ private:
 	int m_nTempIndex;						// temporary buffer index of current character
 	int m_nAtomIdIndex;						// atom identifier index of current character
 	bool m_bLexemStarted;					// true if reading lexem
+	bool m_bQuotedLexem; 					// true if m_bLexemStarted is true and the new
+											// lexem is quoted
 	bool m_bIsEOF;							// true if end of text buffer
 	cpChar m_pchTextStart;					// html text start
 	cpChar m_pchInBuf;						// input text buffer

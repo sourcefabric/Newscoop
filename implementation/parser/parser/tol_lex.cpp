@@ -683,7 +683,7 @@ void TOLLex::Reset(cpChar i, ULInt bl)
 		m_pchTempBuff = new char[s_nTempBuffLen];
 	m_pchTempBuff[0] = 0;
 	m_nTempIndex = 0;
-	m_bLexemStarted = m_bIsEOF = false;
+	m_bLexemStarted = m_bIsEOF = m_bQuotedLexem = false;
 }
 
 // UpdateArticleTypes: update article types structure from database
@@ -717,7 +717,7 @@ const TOLLex& TOLLex::operator =(const TOLLex& s)
 		m_pchTempBuff = new char[s_nTempBuffLen];
 	m_pchTempBuff[0] = 0;
 	m_nTempIndex = 0;
-	m_bLexemStarted = m_bIsEOF = false;
+	m_bLexemStarted = m_bIsEOF = m_bQuotedLexem = false;
 	m_pchTextStart = 0;
 	return *this;
 }
@@ -725,14 +725,12 @@ const TOLLex& TOLLex::operator =(const TOLLex& s)
 // GetLexem: return next lexem
 const TOLLexem* TOLLex::GetLexem()
 {
-	bool FoundLexem;
-	bool QuotedLexem;
+	bool FoundLexem = false;
 	m_coLexem.m_pcoAtom = 0;
 	m_coLexem.m_DataType = TOL_DT_NUMBER;
 	m_coLexem.m_pchTextStart = 0;
 	m_coLexem.m_nTextLen = 0;
 	m_nAtomIdIndex = 0;
-	FoundLexem = QuotedLexem = false;
 	if (m_bIsEOF)
 	{
 		m_coLexem.m_Res = TOL_ERR_EOF;
@@ -821,17 +819,17 @@ const TOLLexem* TOLLex::GetLexem()
 				else		// atom found
 				{
 					m_bLexemStarted = true;
-					QuotedLexem = m_chChar == '\"';
-					if (!(QuotedLexem))
+					m_bQuotedLexem = m_chChar == '\"';
+					if (!m_bQuotedLexem)
 						AppendOnAtom();
 				}
 			}
-			else if (QuotedLexem)		// lexem (atom) is delimited by quotes
+			else if (m_bQuotedLexem)		// lexem (atom) is delimited by quotes
 			{
 				if (m_chChar < ' ' || m_chChar == s_chTOLTokenEnd)
 				{
 					m_bLexemStarted = false;
-					QuotedLexem = false;
+					m_bQuotedLexem = false;
 					if (m_chChar == s_chTOLTokenEnd)
 						m_nState = 4;
 					m_coLexem.m_Res = TOL_ERR_END_QUOTE_MISSING;
@@ -867,7 +865,7 @@ const TOLLexem* TOLLex::GetLexem()
 				{
 					FoundLexem = true;
 					m_bLexemStarted = true;
-					QuotedLexem = true;
+					m_bQuotedLexem = true;
 					return IdentifyAtom();
 				}
 				else		// append character to atom identifier
