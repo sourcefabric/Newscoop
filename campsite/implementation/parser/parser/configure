@@ -1,13 +1,12 @@
 #!/bin/bash
 
-cd ../../.. && . ./configure --define_start_env && cd implementation/parser/parser
+cd ../../..
+. ./make.env
+cd implementation/parser/parser
 . ${INSTALL_CONF}/conf_functions
 
-install_conf --set
-[ $? -ne 0 ] && echo "Error reading install configuration" && exit 1
-
 if [ ! -f campsite ]; then
-echo -n -e "\tWriting start/stop script..."
+echo -n -e "\t\tWriting start/stop script..."
 cat > campsite << EOF
 #!/bin/bash
 #
@@ -87,7 +86,7 @@ echo OK
 fi # end if [ ! -f campsite ]
 
 if ! var_not_modified BIN_DIR || [ ! -f campsitectl ]; then
-echo -n -e "\tWriting server control script..."
+echo -n -e "\t\tWriting server control script..."
 cat > campsitectl << EOF
 #!/bin/bash
 
@@ -172,7 +171,7 @@ fi # end if ! var_not_modified BIN_DIR || [ ! -f campsite ]
 [ -f srvdef.h ] && exit 0
 save_var BIN_DIR
 
-echo -n -e "\tWriting srvdef.h header..."
+echo -n -e "\t\tWriting srvdef.h header..."
 cat > srvdef.h << EOF
 /******************************************************************************
 
