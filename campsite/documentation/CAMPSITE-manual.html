@@ -5,12 +5,14 @@
 	<TITLE>CAMPSITE manual Version 2.1</TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.1.3  (Linux)">
 	<META NAME="CREATED" CONTENT="20020913;19124500">
-	<META NAME="CHANGED" CONTENT="20050209;15040100">
+	<META NAME="CHANGED" CONTENT="20050301;15093200">
 	<STYLE>
 	<!--
 		@page { size: 8.5in 11in }
 		P { margin-top: 0.2in; margin-bottom: 0in; color: #000000; page-break-before: auto }
-		P.western { font-family: "Nimbus Roman No9 L"; font-weight: medium }
+		P.western { font-family: "Nimbus Roman No9 L"; font-size: 11pt; font-weight: medium }
+		P.cjk { font-size: 11pt }
+		P.ctl { font-size: 11pt }
 		H1 { color: #000000; page-break-before: auto }
 		H1.western { font-family: "Times New Roman", serif }
 		H1.cjk { font-size: 12pt; font-weight: medium }
@@ -28,9 +30,13 @@
 		H4.cjk { font-family: "HG Mincho Light J"; font-weight: medium }
 		H4.ctl { font-family: "Arial Unicode MS"; font-weight: medium }
 		TD P { margin-bottom: 0in; color: #000000; page-break-before: auto }
-		TD P.western { font-family: "Times", serif; font-weight: medium }
+		TD P.western { font-family: "Times", serif; font-size: 11pt; font-weight: medium }
+		TD P.cjk { font-size: 11pt }
+		TD P.ctl { font-size: 11pt }
 		BLOCKQUOTE { color: #000000; page-break-before: auto }
-		BLOCKQUOTE.western { font-family: "Times", serif; font-weight: medium }
+		BLOCKQUOTE.western { font-family: "Times", serif; font-size: 11pt; font-weight: medium }
+		BLOCKQUOTE.cjk { font-size: 11pt }
+		BLOCKQUOTE.ctl { font-size: 11pt }
 		A:link { color: #0000ff }
 		A:visited { color: #000099 }
 		CITE.western { font-family: "Nimbus Roman No9 L"; font-style: normal }
@@ -43,10 +49,10 @@
 <P STYLE="margin-top: 0.17in; margin-bottom: 0.2in; page-break-after: avoid">
 <FONT FACE="Albany, sans-serif"><FONT SIZE=4>Web Automation Tool User
 Guide</FONT></FONT></P>
-<P CLASS="western">CAMPSITE version: 2.1.6 and newer versions</P>
+<P CLASS="western">CAMPSITE version: 2.1.7 and newer versions</P>
 <P CLASS="western">Maintained and distributed under GNU/GPL by
 CAMPWARE <A HREF="http://www.campware.org/">http://www.campware.org</A></P>
-<P CLASS="western">Manual version: February 9, 2005</P>
+<P CLASS="western">Manual version: March 4, 2005</P>
 <P CLASS="western">Language: English</P>
 <P CLASS="western">&copy;1999-2005 Media Development Loan Fund</P>
 <P CLASS="western"><A HREF="http://www.mdlf.org/" TARGET="_blank">http://www.mdlf.org</A>
@@ -2287,8 +2293,8 @@ selected by English name. From this statement on the language is the
 new chosen one. If the name supplied is not a valid one, this
 variable is not modified.</P>
 <P CLASS="western">Syntax:</P>
-<P CLASS="western"><FONT FACE="Courier New, Courier, mono">Language
-&lt;language_name&gt;</FONT></P>
+<P CLASS="western" STYLE="font-weight: medium; page-break-before: auto">
+<FONT FACE="Courier New, Courier, mono">Language &lt;language_name&gt;</FONT></P>
 <P CLASS="western">where</P>
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;language_name&gt;</FONT>
 is the English name of selected language.</P>
@@ -2469,36 +2475,34 @@ data. For details see <A HREF="#3_9_3_8">If List</A>.</P>
 may contain any statement except: &quot;Language&quot;,
 &quot;Publication&quot;, &quot;List Issue&quot;, &quot;Issue&quot;.</P>
 <TABLE WIDTH=703 BORDER=0 CELLPADDING=2 CELLSPACING=0>
-	<COL WIDTH=295>
-	<COL WIDTH=399>
+	<COL WIDTH=325>
+	<COL WIDTH=369>
 	<TR>
-		<TD WIDTH=295 VALIGN=TOP>
-			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;list_of_issue_constraints&gt;
-			=</FONT></P>
+		<TD WIDTH=325 VALIGN=TOP>
+			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;list_of_issue_constraints&gt;=</FONT></P>
 		</TD>
-		<TD WIDTH=399>
+		<TD WIDTH=369>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">[&lt;issue_constraint&gt;]
 			&lt;list_of_issue_constraints&gt; <BR>| &lt;issue_constraint&gt;</FONT></P>
 		</TD>
 	</TR>
 </TABLE>
-<TABLE WIDTH=694 BORDER=0 CELLPADDING=2 CELLSPACING=0>
-	<COL WIDTH=202>
-	<COL WIDTH=483>
+<TABLE WIDTH=703 BORDER=0 CELLPADDING=2 CELLSPACING=0>
+	<COL WIDTH=231>
+	<COL WIDTH=464>
 	<TR>
-		<TD WIDTH=202 VALIGN=TOP>
-			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;issue_constraint&gt;
-			=</FONT></P>
+		<TD WIDTH=231 VALIGN=TOP>
+			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;issue_constraint&gt;=</FONT></P>
 		</TD>
-		<TD WIDTH=483>
+		<TD WIDTH=464>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">number
 			</FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;integer_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
-			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;integer_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
-			<BR>|name </FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;string_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
+			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;integer_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono"><BR>|name
+			</FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;string_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
 			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;string_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
 			<BR>|publish_date </FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;date_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
-			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;date_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
-			<BR>|publish_year </FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;integer_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
+			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;date_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono"><BR>|publish_year
+			</FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;integer_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
 			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;integer_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono"><BR>|publish_month
 			</FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;integer_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
 			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;integer_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono"><BR>|publish_mday
@@ -2507,44 +2511,42 @@ may contain any statement except: &quot;Language&quot;,
 		</TD>
 	</TR>
 </TABLE>
-<TABLE WIDTH=648 BORDER=0 CELLPADDING=2 CELLSPACING=0>
-	<COL WIDTH=194>
-	<COL WIDTH=446>
+<TABLE WIDTH=699 BORDER=0 CELLPADDING=2 CELLSPACING=0>
+	<COL WIDTH=211>
+	<COL WIDTH=481>
 	<TR>
-		<TD WIDTH=194 VALIGN=TOP>
-			<P CLASS="western"><A NAME="date_constraint"></A><FONT FACE="Courier New, Courier, mono">&lt;date_constraint&gt;
-			=</FONT></P>
+		<TD WIDTH=211 VALIGN=TOP>
+			<P CLASS="western"><A NAME="date_constraint"></A><FONT FACE="Courier New, Courier, mono">&lt;date_constraint&gt;=</FONT></P>
 		</TD>
-		<TD WIDTH=446>
+		<TD WIDTH=481>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">year
 			</FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;integer_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
 			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;integer_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
 			<BR>|mon_nr </FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;integer_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
-			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;integer_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
-			<BR>|mday </FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;integer_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
-			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;integer_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
-			<BR>|yday </FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;integer_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
-			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;integer_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
-			<BR>|wday_nr </FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;integer_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
-			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;integer_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
-			<BR>|hour </FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;integer_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
-			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;integer_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
-			<BR>|min </FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;integer_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
-			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;integer_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
-			<BR>|sec </FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;integer_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
+			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;integer_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono"><BR>|mday
+			</FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;integer_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
+			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;integer_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono"><BR>|yday
+			</FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;integer_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
+			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;integer_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono"><BR>|wday_nr
+			</FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;integer_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
+			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;integer_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono"><BR>|hour
+			</FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;integer_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
+			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;integer_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono"><BR>|min
+			</FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;integer_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
+			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;integer_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono"><BR>|sec
+			</FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;integer_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
 			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;integer_value&gt;</FONT></A></P>
 		</TD>
 	</TR>
 </TABLE>
-<TABLE WIDTH=388 BORDER=0 CELLPADDING=2 CELLSPACING=0>
-	<COL WIDTH=194>
-	<COL WIDTH=186>
+<TABLE WIDTH=496 BORDER=0 CELLPADDING=2 CELLSPACING=0>
+	<COL WIDTH=211>
+	<COL WIDTH=277>
 	<TR>
-		<TD WIDTH=194 VALIGN=TOP>
-			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;order_condition&gt;
-			=</FONT></P>
+		<TD WIDTH=211 VALIGN=TOP>
+			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;order_condition&gt;=</FONT></P>
 		</TD>
-		<TD WIDTH=186>
+		<TD WIDTH=277>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">bydate
 			desc|asc <BR>|bynumber desc|asc</FONT></P>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">|byname
@@ -2618,32 +2620,30 @@ may contain any statement except: &quot;Language&quot;,
 &quot;Publication&quot;, &quot;List Issue&quot;, &quot;Issue&quot;,
 &quot;List Section&quot;, &quot;Section&quot;.</P>
 <TABLE WIDTH=703 BORDER=0 CELLPADDING=2 CELLSPACING=0>
-	<COL WIDTH=308>
-	<COL WIDTH=387>
+	<COL WIDTH=345>
+	<COL WIDTH=349>
 	<TR>
-		<TD WIDTH=308 VALIGN=TOP>
-			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;list_of_section_constraints&gt;
-			=</FONT></P>
+		<TD WIDTH=345 VALIGN=TOP>
+			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;list_of_section_constraints&gt;=</FONT></P>
 		</TD>
-		<TD WIDTH=387>
+		<TD WIDTH=349>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">[&lt;section_constraint&gt;]
 			&lt;list_of_section_constraints&gt; <BR>| &lt;section_constraint&gt;</FONT></P>
 		</TD>
 	</TR>
 </TABLE>
 <TABLE WIDTH=678 BORDER=0 CELLPADDING=2 CELLSPACING=0>
-	<COL WIDTH=230>
-	<COL WIDTH=440>
+	<COL WIDTH=248>
+	<COL WIDTH=422>
 	<TR>
-		<TD WIDTH=230 VALIGN=TOP>
-			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;section_constraint&gt;
-			=</FONT></P>
+		<TD WIDTH=248 VALIGN=TOP>
+			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;section_constraint&gt;=</FONT></P>
 		</TD>
-		<TD WIDTH=440>
+		<TD WIDTH=422>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">name
 			</FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;string_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
-			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;string_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
-			<BR>| number </FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;integer_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
+			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;string_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono"><BR>|
+			number </FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;integer_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
 			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;integer_value&gt;</FONT></A></P>
 		</TD>
 	</TR>
@@ -2655,8 +2655,9 @@ can only be used once.</P>
 by the constraints applied to the current section for every processed
 line. The data context is restored after the list processing.</P>
 <P CLASS="western">Constraints:</P>
-<P CLASS="western">Inside List Section the following statements are
-forbidden:</P>
+<P CLASS="western" STYLE="font-weight: medium; page-break-before: auto">
+<FONT FACE="Nimbus Roman No9 L">Inside List Section the following
+statements are forbidden:</FONT></P>
 <UL>
 	<LI><P CLASS="western" STYLE="margin-top: 0in">Language</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in">Publication</P>
@@ -2709,41 +2710,39 @@ may contain any statement except: &quot;Language&quot;,
 &quot;List Section&quot;, &quot;Section&quot;, &quot;List Article&quot;,
 &quot;Article&quot;.</P>
 <TABLE WIDTH=703 BORDER=0 CELLPADDING=2 CELLSPACING=0>
-	<COL WIDTH=307>
-	<COL WIDTH=388>
+	<COL WIDTH=352>
+	<COL WIDTH=343>
 	<TR>
-		<TD WIDTH=307 VALIGN=TOP>
-			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;list_of_article_constraints&gt;
-			=</FONT></P>
+		<TD WIDTH=352 VALIGN=TOP>
+			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;list_of_article_constraints&gt;=</FONT></P>
 		</TD>
-		<TD WIDTH=388>
+		<TD WIDTH=343>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">[&lt;article_constraint&gt;]
 			&lt;list_of_article_constraints&gt; <BR>| &lt;article_constraint&gt;</FONT></P>
 		</TD>
 	</TR>
 </TABLE>
 <TABLE WIDTH=703 BORDER=0 CELLPADDING=2 CELLSPACING=0>
-	<COL WIDTH=220>
-	<COL WIDTH=475>
+	<COL WIDTH=249>
+	<COL WIDTH=445>
 	<TR>
-		<TD WIDTH=220 VALIGN=TOP>
-			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;article_constraint&gt;
-			=</FONT></P>
+		<TD WIDTH=249 VALIGN=TOP>
+			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;article_constraint&gt;=</FONT></P>
 		</TD>
-		<TD WIDTH=475>
+		<TD WIDTH=445>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">name
 			</FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;string_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
 			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;string_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
 			<BR>|number </FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;integer_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
-			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;integer_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
-			<BR>|keyword </FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;string_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
-			<BR>|OnFrontPage [</FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;switch_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
-			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;switch_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">]
-			<BR>|OnSection [</FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;switch_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
+			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;integer_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono"><BR>|keyword
+			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;string_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono"><BR>|OnFrontPage
+			[</FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;switch_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
+			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;switch_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">]<BR>|OnSection
+			[</FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;switch_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
 			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;switch_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">]
 			<BR>|upload_date </FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;date_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
-			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;date_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
-			<BR>|public </FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;switch_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
+			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;date_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono"><BR>|public
+			</FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;switch_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
 			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;switch_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
 			<BR>|[&lt;article_type&gt;] &lt;article_type_attribute&gt;
 			&lt;attribute_type_operator&gt; &lt;attribute_type_value&gt;
@@ -2799,8 +2798,7 @@ the English language.</P>
 	<COL WIDTH=342>
 	<TR>
 		<TD WIDTH=353 VALIGN=TOP>
-			<P CLASS="western" STYLE="margin-left: 0in; margin-right: 0in"><FONT FACE="Courier New, Courier, mono">&lt;list_of_article_type_constraints&gt;
-			=</FONT></P>
+			<P CLASS="western" STYLE="margin-left: 0in; margin-right: 0in"><FONT FACE="Courier New, Courier, mono">&lt;list_of_article_type_constraints&gt;=</FONT></P>
 		</TD>
 		<TD WIDTH=342>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">[&lt;article_type_constraint&gt;]
@@ -2809,19 +2807,18 @@ the English language.</P>
 		</TD>
 	</TR>
 </TABLE>
-<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;article_type_constraint&gt;
-= type </FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;string_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
+<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;article_type_constraint&gt;=type
+</FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;string_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
 </FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;string_value&gt;</FONT></A>
 </P>
-<TABLE WIDTH=388 BORDER=0 CELLPADDING=2 CELLSPACING=0>
-	<COL WIDTH=194>
-	<COL WIDTH=186>
+<TABLE WIDTH=507 BORDER=0 CELLPADDING=2 CELLSPACING=0>
+	<COL WIDTH=213>
+	<COL WIDTH=287>
 	<TR>
-		<TD WIDTH=194 VALIGN=TOP>
-			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;order_condition&gt;
-			=</FONT></P>
+		<TD WIDTH=213 VALIGN=TOP>
+			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;order_condition&gt;=</FONT></P>
 		</TD>
-		<TD WIDTH=186>
+		<TD WIDTH=287>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">bydate
 			desc|asc <BR>|bynumber desc|asc</FONT></P>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">|byname
@@ -2944,15 +2941,14 @@ data. For details see <A HREF="#3_9_3_8">If List</A>.</P>
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;list_of_instructions&gt;</FONT>
 may contain any statement except: &quot;Language&quot;,
 &quot;Publication&quot;.</P>
-<TABLE WIDTH=388 BORDER=0 CELLPADDING=2 CELLSPACING=0>
-	<COL WIDTH=194>
-	<COL WIDTH=186>
+<TABLE WIDTH=547 BORDER=0 CELLPADDING=2 CELLSPACING=0>
+	<COL WIDTH=219>
+	<COL WIDTH=320>
 	<TR>
-		<TD WIDTH=194 VALIGN=TOP>
-			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;order_condition&gt;
-			=</FONT></P>
+		<TD WIDTH=219 VALIGN=TOP>
+			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;order_condition&gt;=</FONT></P>
 		</TD>
-		<TD WIDTH=186>
+		<TD WIDTH=320>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">bydate
 			desc|asc <BR>|bynumber desc|asc</FONT></P>
 		</TD>
@@ -3019,16 +3015,14 @@ from lists.</P>
 List &lt;condition&gt;<BR>&lt;list_of_instructions&gt;<BR>[Else
 [&lt;list_of_instructions&gt;]]<BR>EndIf [List]</FONT></P>
 <P CLASS="western">where</P>
-<TABLE WIDTH=428 BORDER=0 CELLPADDING=2 CELLSPACING=0>
-	<COL WIDTH=144>
-	<COL WIDTH=276>
+<TABLE WIDTH=500 BORDER=0 CELLPADDING=2 CELLSPACING=0>
+	<COL WIDTH=147>
+	<COL WIDTH=345>
 	<TR>
-		<TD WIDTH=144 VALIGN=TOP>
-			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;condition&gt;
-			= </FONT>
-			</P>
+		<TD WIDTH=147 VALIGN=TOP>
+			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;condition&gt;=</FONT></P>
 		</TD>
-		<TD WIDTH=276>
+		<TD WIDTH=345>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">row
 			&lt;table_item_values&gt; <BR>|column &lt;table_item_values&gt;<BR>|index
 			&lt;table_item_values&gt;<BR>|start <BR>|end</FONT></P>
@@ -3037,17 +3031,16 @@ List &lt;condition&gt;<BR>&lt;list_of_instructions&gt;<BR>[Else
 </TABLE>
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;table_item_values&gt;
 = odd|even|&lt;number_list&gt;</FONT></P>
-<TABLE WIDTH=488 BORDER=0 CELLPADDING=2 CELLSPACING=0>
-	<COL WIDTH=154>
-	<COL WIDTH=326>
+<TABLE WIDTH=599 BORDER=0 CELLPADDING=2 CELLSPACING=0>
+	<COL WIDTH=170>
+	<COL WIDTH=421>
 	<TR>
-		<TD WIDTH=154 VALIGN=TOP>
-			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;number_list&gt;
-			=</FONT></P>
+		<TD WIDTH=170 VALIGN=TOP>
+			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;number_list&gt;=</FONT></P>
 		</TD>
-		<TD WIDTH=326>
-			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">[</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;integer_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">]
-			&lt;number_list&gt; <BR>|</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;integer_value&gt;</FONT></A></P>
+		<TD WIDTH=421>
+			<P CLASS="western" STYLE="margin-right: -0.31in"><FONT FACE="Courier New, Courier, mono">[</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;integer_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">]
+			&lt;number_list&gt;<BR>|</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;integer_value&gt;</FONT></A></P>
 		</TD>
 	</TR>
 </TABLE>
@@ -3098,22 +3091,22 @@ publication.</P>
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">If [not]
 Publication &lt;condition&gt;</FONT><BR><FONT FACE="Courier New, Courier, mono">&lt;list_of_instructions&gt;</FONT><BR><FONT FACE="Courier New, Courier, mono">[Else
 [&lt;list_of_instructions&gt;]]<BR>EndIf [Publication]</FONT></P>
-<TABLE WIDTH=618 BORDER=0 CELLPADDING=2 CELLSPACING=0>
-	<COL WIDTH=144>
-	<COL WIDTH=466>
+<TABLE WIDTH=699 BORDER=0 CELLPADDING=2 CELLSPACING=0>
+	<COL WIDTH=149>
+	<COL WIDTH=543>
 	<TR>
-		<TD WIDTH=144 VALIGN=TOP>
-			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;condition&gt;
-			= </FONT>
+		<TD WIDTH=149 VALIGN=TOP>
+			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;condition&gt;=
+			</FONT>
 			</P>
 		</TD>
-		<TD WIDTH=466>
+		<TD WIDTH=543>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">name
 			</FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;string_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
-			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;string_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
-			<BR>|identifier </FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;integer_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
-			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;integer_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
-			<BR>|defined <BR>|fromstart</FONT></P>
+			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;string_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono"><BR>|identifier
+			</FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;integer_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
+			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;integer_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono"><BR>|defined
+			<BR>|fromstart</FONT></P>
 		</TD>
 	</TR>
 </TABLE>
@@ -3147,16 +3140,16 @@ Issue &lt;condition&gt;<BR>&lt;list_of_instructions&gt;<BR>[Else
 [&lt;list_of_instructions&gt;]]<BR>EndIf [Issue]</FONT></P>
 <P CLASS="western">where 
 </P>
-<TABLE WIDTH=588 BORDER=0 CELLPADDING=2 CELLSPACING=0>
-	<COL WIDTH=144>
-	<COL WIDTH=436>
+<TABLE WIDTH=699 BORDER=0 CELLPADDING=2 CELLSPACING=0>
+	<COL WIDTH=150>
+	<COL WIDTH=541>
 	<TR>
-		<TD WIDTH=144 VALIGN=TOP>
-			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;condition&gt;
-			= </FONT>
+		<TD WIDTH=150 VALIGN=TOP>
+			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;condition&gt;=
+			</FONT>
 			</P>
 		</TD>
-		<TD WIDTH=436>
+		<TD WIDTH=541>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">name
 			</FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;string_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
 			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;string_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
@@ -3211,16 +3204,15 @@ Section &lt;condition&gt;<BR>&lt;list_of_instructions&gt;<BR>[Else
 instruction allowed in the current context. If it is used inside a
 list, it must respect the constraints of the list (List Issue, List
 Section, List Article, List Subtitle, List SearchResult).</P>
-<TABLE WIDTH=563 BORDER=0 CELLPADDING=4 CELLSPACING=0>
-	<COL WIDTH=134>
-	<COL WIDTH=413>
+<TABLE WIDTH=651 BORDER=0 CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=147>
+	<COL WIDTH=489>
 	<THEAD>
 		<TR VALIGN=TOP>
-			<TD WIDTH=134>
-				<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;condition&gt;
-				=</FONT></P>
+			<TD WIDTH=147>
+				<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;condition&gt;=</FONT></P>
 			</TD>
-			<TD WIDTH=413>
+			<TD WIDTH=489>
 				<P CLASS="western"><FONT FACE="Courier, monospace">number
 				</FONT><A HREF="#operators"><FONT FACE="Courier, monospace">&lt;integer_operator&gt;</FONT></A><FONT FACE="Courier, monospace">
 				</FONT><A HREF="#attr_types"><FONT FACE="Courier, monospace">&lt;integer_value&gt;</FONT><FONT FACE="Courier New, Courier, mono"><BR></FONT></A><FONT FACE="Courier, monospace">|
@@ -3258,28 +3250,25 @@ information for different types of articles.</P>
 Article &lt;condition&gt;<BR>&lt;list_of_instructions&gt;<BR>[Else
 [&lt;list_of_instructions&gt;]]<BR>EndIf [Article]</FONT></P>
 <P CLASS="western">where</P>
-<TABLE WIDTH=703 BORDER=0 CELLPADDING=2 CELLSPACING=0>
-	<COL WIDTH=136>
-	<COL WIDTH=558>
+<TABLE WIDTH=705 BORDER=0 CELLPADDING=2 CELLSPACING=0>
+	<COL WIDTH=143>
+	<COL WIDTH=554>
 	<TR>
-		<TD WIDTH=136 VALIGN=TOP>
-			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;condition&gt;
-			= </FONT>
-			</P>
+		<TD WIDTH=143 VALIGN=TOP>
+			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;condition&gt;=</FONT></P>
 		</TD>
-		<TD WIDTH=558>
+		<TD WIDTH=554>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">type
-			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;string_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
-			<BR>|name </FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;string_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
-			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;string_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
-			<BR>|upload_date </FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;date_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
+			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;string_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono"><BR>|name
+			</FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;string_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
+			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;string_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono"><BR>|upload_date
+			</FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;date_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
 			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;date_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
-			<BR>|has_keyword </FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;string_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
-			<BR>|OnFrontPage </FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;switch_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
-			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;switch_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
-			<BR>|OnSection </FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;switch_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
-			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;switch_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
-			<BR>|public <BR>|defined <BR>|fromstart <BR>|translated_to
+			<BR>|has_keyword </FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;string_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono"><BR>|OnFrontPage
+			</FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;switch_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
+			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;switch_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono"><BR>|OnSection
+			</FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;switch_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
+			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;switch_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono"><BR>|public<BR>|defined<BR>|fromstart<BR>|translated_to
 			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;string_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
 			<BR>|[&lt;article_type&gt;] &lt;article_type_attribute&gt;
 			&lt;attribute_type_operator&gt; &lt;attribute_type_value&gt;</FONT></P>
@@ -3426,16 +3415,14 @@ in template. It is used to describe the subscription result.</P>
 User &lt;condition&gt;<BR>&lt;list_of_instructions&gt;<BR>[Else
 [&lt;list_of_instructions&gt;]]<BR>EndIf [User]</FONT></P>
 <P CLASS="western">where</P>
-<TABLE WIDTH=298 BORDER=0 CELLPADDING=2 CELLSPACING=0>
-	<COL WIDTH=144>
-	<COL WIDTH=146>
+<TABLE WIDTH=442 BORDER=0 CELLPADDING=2 CELLSPACING=0>
+	<COL WIDTH=145>
+	<COL WIDTH=289>
 	<TR>
-		<TD WIDTH=144 VALIGN=TOP>
-			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;condition&gt;
-			= </FONT>
-			</P>
+		<TD WIDTH=145 VALIGN=TOP>
+			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;condition&gt;=</FONT></P>
 		</TD>
-		<TD WIDTH=146>
+		<TD WIDTH=289>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">addok
 			<BR>|modifyok<BR>|adderror<BR>|modifyerror<BR>|defined<BR>|addaction<BR>|modifyaction
 			<BR>|loggedin</FONT></P>
@@ -3512,26 +3499,25 @@ Language &lt;condition&gt;<BR>&lt;list_of_instructions&gt;<BR>[Else
 [&lt;list_of_instructions&gt;]]<BR>EndIf [Language]</FONT></P>
 <P CLASS="western" STYLE="font-weight: medium; page-break-before: auto">
 where</P>
-<TABLE WIDTH=588 BORDER=0 CELLPADDING=2 CELLSPACING=0>
-	<COL WIDTH=144>
-	<COL WIDTH=436>
+<TABLE WIDTH=704 BORDER=0 CELLPADDING=2 CELLSPACING=0>
+	<COL WIDTH=147>
+	<COL WIDTH=549>
 	<TR>
-		<TD WIDTH=144 VALIGN=TOP>
-			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;condition&gt;
-			= </FONT>
+		<TD WIDTH=147 VALIGN=TOP>
+			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;condition&gt;=
+			</FONT>
 			</P>
 		</TD>
-		<TD WIDTH=436>
-			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">number
+		<TD WIDTH=549>
+			<P CLASS="western" STYLE="margin-left: -0.01in"><FONT FACE="Courier New, Courier, mono">number
 			</FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;integer_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
-			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;integer_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
-			<BR>|name </FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;string_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
-			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;string_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
-			<BR>|englname </FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;string_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
-			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;string_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
-			<BR>|code </FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;string_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
-			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;string_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
-			<BR>|defined<BR>|fromstart</FONT></P>
+			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;integer_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono"><BR>|name
+			</FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;string_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
+			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;string_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono"><BR>|englname
+			</FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;string_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
+			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;string_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono"><BR>|code
+			</FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;string_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
+			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;string_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono"><BR>|defined<BR>|fromstart</FONT></P>
 		</TD>
 	</TR>
 </TABLE>
@@ -3646,16 +3632,14 @@ be used anywhere in the template.</P>
 Topic &lt;condition&gt;<BR>&lt;list_of_instructions&gt;<BR>[Else
 [&lt;list_of_instructions&gt;]]<BR>EndIf [Topic]</FONT></P>
 <P CLASS="western">where</P>
-<TABLE WIDTH=703 BORDER=0 CELLPADDING=2 CELLSPACING=0>
-	<COL WIDTH=136>
-	<COL WIDTH=558>
+<TABLE WIDTH=603 BORDER=0 CELLPADDING=2 CELLSPACING=0>
+	<COL WIDTH=148>
+	<COL WIDTH=447>
 	<TR>
-		<TD WIDTH=136 VALIGN=TOP>
-			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;condition&gt;
-			= </FONT>
-			</P>
+		<TD WIDTH=148 VALIGN=TOP>
+			<P CLASS="western" STYLE="margin-right: -0.35in"><FONT FACE="Courier New, Courier, mono">&lt;condition&gt;=</FONT></P>
 		</TD>
-		<TD WIDTH=558>
+		<TD WIDTH=447>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">name
 			</FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;string_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
 			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;string_value&gt;</FONT></A></P>
@@ -3689,43 +3673,40 @@ parameters and can be used to create links.</P>
 [fromstart]</FONT></P>
 <P CLASS="western">where 
 </P>
-<TABLE WIDTH=588 BORDER=0 CELLPADDING=2 CELLSPACING=0>
-	<COL WIDTH=224>
-	<COL WIDTH=356>
+<TABLE WIDTH=667 BORDER=0 CELLPADDING=2 CELLSPACING=0>
+	<COL WIDTH=256>
+	<COL WIDTH=403>
 	<TR>
-		<TD WIDTH=224 VALIGN=TOP>
-			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;list_of_parameters&gt;
-			=</FONT></P>
+		<TD WIDTH=256 VALIGN=TOP>
+			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;list_of_parameters&gt;=</FONT></P>
 		</TD>
-		<TD WIDTH=356>
+		<TD WIDTH=403>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">[&lt;parameter&gt;]
-			&lt;list_of_parameters&gt; <BR>| &lt;parameter&gt;</FONT></P>
+			&lt;list_of_parameters&gt;<BR>| &lt;parameter&gt;</FONT></P>
 		</TD>
 	</TR>
 </TABLE>
-<TABLE WIDTH=368 BORDER=0 CELLPADDING=2 CELLSPACING=0>
-	<COL WIDTH=134>
-	<COL WIDTH=226>
+<TABLE WIDTH=442 BORDER=0 CELLPADDING=2 CELLSPACING=0>
+	<COL WIDTH=145>
+	<COL WIDTH=289>
 	<TR>
-		<TD WIDTH=134 VALIGN=TOP>
-			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;parameter&gt;
-			=</FONT></P>
+		<TD WIDTH=145 VALIGN=TOP>
+			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;parameter&gt;=</FONT></P>
 		</TD>
-		<TD WIDTH=226>
+		<TD WIDTH=289>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">allsubtitles
 			<BR>| fromstart<BR>| &lt;reset_list&gt;<BR>| image &lt;image_number&gt;</FONT></P>
 		</TD>
 	</TR>
 </TABLE>
-<TABLE WIDTH=418 BORDER=0 CELLPADDING=2 CELLSPACING=0>
-	<COL WIDTH=144>
-	<COL WIDTH=266>
+<TABLE WIDTH=480 BORDER=0 CELLPADDING=2 CELLSPACING=0>
+	<COL WIDTH=155>
+	<COL WIDTH=317>
 	<TR>
-		<TD WIDTH=144 VALIGN=TOP>
-			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;reset_list&gt;
-			=</FONT></P>
+		<TD WIDTH=155 VALIGN=TOP>
+			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;reset_list&gt;=</FONT></P>
 		</TD>
-		<TD WIDTH=266>
+		<TD WIDTH=317>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">reset_issue_list
 			<BR>| reset_section_list<BR>| reset_article_list<BR>|
 			reset_searchresult_list <BR>| reset_subtitle_list</FONT></P>
@@ -3784,15 +3765,14 @@ data context will be printed.</P>
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">Print
 &lt;expression&gt;</FONT></P>
 <P CLASS="western">where</P>
-<TABLE WIDTH=428 BORDER=0 CELLPADDING=2 CELLSPACING=0>
-	<COL WIDTH=144>
-	<COL WIDTH=276>
+<TABLE WIDTH=522 BORDER=0 CELLPADDING=2 CELLSPACING=0>
+	<COL WIDTH=157>
+	<COL WIDTH=357>
 	<TR>
-		<TD WIDTH=144 VALIGN=TOP>
-			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;expression&gt;
-			=</FONT></P>
+		<TD WIDTH=157 VALIGN=TOP>
+			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;expression&gt;=</FONT></P>
 		</TD>
-		<TD WIDTH=276>
+		<TD WIDTH=357>
 			<P CLASS="western"><A HREF="#p_lang_expr"><FONT FACE="Courier New, Courier, mono">&lt;language_expression&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
 			<BR>| </FONT><A HREF="#p_pub_expr"><FONT FACE="Courier New, Courier, mono">&lt;publication_expression&gt;</FONT></A><FONT FACE="Courier New, Courier, mono"><BR>|
 			</FONT><A HREF="#p_issue_expr"><FONT FACE="Courier New, Courier, mono">&lt;issue_expression&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
@@ -3866,15 +3846,13 @@ a new issue</A>.</P>
 new sections to an issue</A> 
 </P><A NAME="p_art_expr"></A>
 <TABLE WIDTH=703 BORDER=0 CELLPADDING=2 CELLSPACING=0>
-	<COL WIDTH=271>
-	<COL WIDTH=423>
+	<COL WIDTH=257>
+	<COL WIDTH=437>
 	<TR>
-		<TD WIDTH=271 VALIGN=TOP>
-			<P CLASS="western"><FONT FACE="Courier New"><FONT SIZE=2 STYLE="font-size: 11pt"><FONT FACE="Courier, monospace">&lt;article_expression&gt;
-			= Article</FONT> </FONT></FONT>
-			</P>
+		<TD WIDTH=257 VALIGN=TOP>
+			<P CLASS="western"><FONT FACE="Courier New"><FONT SIZE=2 STYLE="font-size: 11pt"><FONT FACE="Courier, monospace">&lt;article_expression&gt;=Article</FONT></FONT></FONT></P>
 		</TD>
-		<TD WIDTH=423>
+		<TD WIDTH=437>
 			<P CLASS="western"><FONT FACE="Courier, monospace"><FONT SIZE=2 STYLE="font-size: 11pt">name
 			|number |keywords |type |&lt;date_attribute&gt; |upload_date
 			[&lt;date_format&gt;] <BR>|[&lt;article_type&gt;]
@@ -3907,15 +3885,14 @@ new sections to an issue</A>
 <P CLASS="western">For details on article see <A HREF="#2_2_5">Creating
 articles within a section</A> and <A HREF="#2_2_6">Editing articles:
 Edit Article Details view.</A></P><A NAME="p_img_expr"></A>
-<TABLE WIDTH=798 BORDER=0 CELLPADDING=2 CELLSPACING=0>
-	<COL WIDTH=274>
-	<COL WIDTH=516>
+<TABLE WIDTH=643 BORDER=0 CELLPADDING=2 CELLSPACING=0>
+	<COL WIDTH=229>
+	<COL WIDTH=406>
 	<TR>
-		<TD WIDTH=274 VALIGN=TOP>
-			<P CLASS="western"><FONT FACE="Courier, monospace"><FONT SIZE=2 STYLE="font-size: 11pt">&lt;image_expression&gt;
-			= Image</FONT></FONT></P>
+		<TD WIDTH=229 VALIGN=TOP>
+			<P CLASS="western"><FONT SIZE=2 STYLE="font-size: 11pt"><FONT FACE="Courier, monospace">&lt;image_expression&gt;=Image</FONT></FONT></P>
 		</TD>
-		<TD WIDTH=516>
+		<TD WIDTH=406>
 			<P CLASS="western"><FONT FACE="Courier, monospace"><FONT SIZE=2 STYLE="font-size: 11pt"><FONT FACE="Courier New, Courier, mono">[&lt;image_number&gt;]
 			</FONT>photographer</FONT></FONT></P>
 			<P CLASS="western"><FONT FACE="Courier, monospace"><FONT SIZE=2 STYLE="font-size: 11pt">|<FONT FACE="Courier New, Courier, mono">[&lt;image_number&gt;]
@@ -3966,14 +3943,13 @@ number (1) is used if &lt;image_number&gt; was omitted.</P>
 </UL>
 <P CLASS="western">For details on list see <A HREF="#3_9_3_8">If List</A></P><A NAME="p_subs_expr"></A>
 <TABLE WIDTH=703 BORDER=0 CELLPADDING=2 CELLSPACING=0>
-	<COL WIDTH=365>
-	<COL WIDTH=330>
+	<COL WIDTH=348>
+	<COL WIDTH=347>
 	<TR>
-		<TD WIDTH=365 VALIGN=TOP>
-			<P CLASS="western"><FONT FACE="Courier, monospace"><FONT SIZE=2 STYLE="font-size: 11pt">&lt;subscription_expression&gt;
-			= Subscription</FONT></FONT></P>
+		<TD WIDTH=348 VALIGN=TOP>
+			<P CLASS="western"><FONT FACE="Courier, monospace"><FONT SIZE=2 STYLE="font-size: 11pt">&lt;subscription_expression&gt;=Subscription</FONT></FONT></P>
 		</TD>
-		<TD WIDTH=330>
+		<TD WIDTH=347>
 			<P CLASS="western"><FONT FACE="Courier, monospace"><FONT SIZE=2 STYLE="font-size: 11pt">expdate
 			[&lt;date_format&gt;] |unit |unitcost |currency |trialtime
 			|paidtime |totalcost |error</FONT></FONT></P>
@@ -3998,19 +3974,18 @@ THE SUBSCRIPTION MODULE</A></P>
 	error message (if there was an <SPAN LANG="en-US">error</SPAN>)</P>
 </UL><A NAME="p_user_expr"></A>
 <TABLE WIDTH=703 BORDER=0 CELLPADDING=2 CELLSPACING=0>
-	<COL WIDTH=226>
-	<COL WIDTH=468>
+	<COL WIDTH=204>
+	<COL WIDTH=491>
 	<TR>
-		<TD WIDTH=226 VALIGN=TOP>
-			<P CLASS="western"><FONT FACE="Courier, monospace"><FONT SIZE=2 STYLE="font-size: 11pt">&lt;user_expression&gt;
-			= User</FONT></FONT></P>
+		<TD WIDTH=204 VALIGN=TOP>
+			<P CLASS="western"><FONT FACE="Courier, monospace"><FONT SIZE=2 STYLE="font-size: 11pt">&lt;user_expression&gt;=User</FONT></FONT></P>
 		</TD>
-		<TD WIDTH=468>
+		<TD WIDTH=491>
 			<P CLASS="western"><FONT FACE="Courier, monospace"><FONT SIZE=2 STYLE="font-size: 11pt">adderror
-			|modifyerror |name |uname |email |city |straddress |state |country
-			|phone |fax |contact |phone2 |PostalCode |Employer |Position
-			|Interests |How |Languages |Improvements |Field1 |Field2 |Field3
-			|Field4 |Field5 |Text1 |Text2 |Text3 |Title |Age</FONT></FONT></P>
+			|modifyerror |identifier |name |uname |email |city |straddress
+			|state |country |phone |fax |contact |phone2 |PostalCode |Employer
+			|Position |Interests |How |Languages |Improvements |Field1 |Field2
+			|Field3 |Field4 |Field5 |Text1 |Text2 |Text3 |Title |Age</FONT></FONT></P>
 		</TD>
 	</TR>
 </TABLE>
@@ -4023,10 +3998,10 @@ prints the error message (if there was an <SPAN LANG="en-US">error</SPAN>)</P>
 		modify action took place (after submitting a user info form) it
 		prints the error message (if there was an <SPAN LANG="en-US">error</SPAN>)</P>
 		<LI><P CLASS="western" STYLE="margin-top: 0in">the other parameters
-		(name, uname, email, city...) are fields describing the user
-		information; they are self-explaining; Field1-Field5, Text1-Text3
-		are extra fields for storing some extra information; the
-		publication administrator sets their meaning</P>
+		(identifier, name, uname, email, city...) are fields describing the
+		user information; they are self-explaining; Field1-Field5,
+		Text1-Text3 are extra fields for storing some extra information;
+		the publication administrator sets their meaning</P>
 	</UL>
 </UL>
 <P CLASS="western"><A NAME="p_subt_expr"></A><FONT FACE="Courier, monospace">&lt;subtitle_expression&gt;
@@ -4049,11 +4024,13 @@ prints the error message (if there was an <SPAN LANG="en-US">error</SPAN>)</P>
 	</UL>
 </UL>
 <P CLASS="western"><A NAME="p_topic_expr"></A><FONT FACE="Courier, monospace">&lt;topic_expression&gt;
-= Topic name</FONT></P>
+= Topic name | identifier</FONT></P>
 <UL>
 	<UL>
 		<LI><P CLASS="western" STYLE="margin-top: 0in">name: print topic
 		name in the language of the environment</P>
+		<LI><P CLASS="western" STYLE="margin-top: 0in">identifier: print
+		topic identifier (integer)</P>
 	</UL>
 </UL>
 <P CLASS="western">Constraints:</P>
@@ -4071,16 +4048,14 @@ only a date attribute.</P>
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">Date
 &lt;date_attribute&gt;|&lt;date_format&gt;</FONT></P>
 <P CLASS="western">where</P><A NAME="date_attribute"></A>
-<TABLE WIDTH=308 BORDER=0 CELLPADDING=2 CELLSPACING=0>
-	<COL WIDTH=194>
-	<COL WIDTH=106>
+<TABLE WIDTH=398 BORDER=0 CELLPADDING=2 CELLSPACING=0>
+	<COL WIDTH=203>
+	<COL WIDTH=187>
 	<TR>
-		<TD WIDTH=194 VALIGN=TOP>
-			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;date_attribute&gt;
-			= </FONT>
-			</P>
+		<TD WIDTH=203 VALIGN=TOP>
+			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;date_attribute&gt;=</FONT></P>
 		</TD>
-		<TD WIDTH=106>
+		<TD WIDTH=187>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">year<BR>|mon_nr<BR>|mday<BR>|yday<BR>|wday_nr<BR>|hour<BR>|min<BR>|sec<BR>|mon_name<BR>|wday_name</FONT></P>
 		</TD>
 	</TR>
@@ -4244,15 +4219,15 @@ search).</P>
 <P CLASS="western">Generate the input text fields for subscription,
 user add/modify, login or search forms.</P>
 <P CLASS="western">Syntax:</P>
-<TABLE WIDTH=318 BORDER=0 CELLPADDING=2 CELLSPACING=0>
+<TABLE WIDTH=426 BORDER=0 CELLPADDING=2 CELLSPACING=0>
 	<COL WIDTH=54>
-	<COL WIDTH=256>
+	<COL WIDTH=364>
 	<TR>
 		<TD WIDTH=54 VALIGN=TOP>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">Edit </FONT>
 			</P>
 		</TD>
-		<TD WIDTH=256>
+		<TD WIDTH=364>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;subscription_expression&gt;<BR>|&lt;user_expression&gt;<BR>|&lt;login_expression&gt;<BR>|&lt;search_expression&gt;</FONT></P>
 		</TD>
 	</TR>
@@ -4262,15 +4237,13 @@ user add/modify, login or search forms.</P>
 <P CLASS="western">Generates an input field for editing the
 subscription time.</P>
 <TABLE WIDTH=703 BORDER=0 CELLPADDING=2 CELLSPACING=0>
-	<COL WIDTH=221>
-	<COL WIDTH=474>
+	<COL WIDTH=253>
+	<COL WIDTH=441>
 	<TR>
-		<TD WIDTH=221 VALIGN=TOP>
-			<P CLASS="western"><FONT FACE="Courier New, Courier, mono"><FONT SIZE=2 STYLE="font-size: 11pt">&lt;user_expression&gt;
-			= User </FONT></FONT>
-			</P>
+		<TD WIDTH=253 VALIGN=TOP>
+			<P CLASS="western"><FONT FACE="Courier New, Courier, mono"><FONT SIZE=2 STYLE="font-size: 11pt">&lt;user_expression&gt;=User</FONT></FONT></P>
 		</TD>
-		<TD WIDTH=474>
+		<TD WIDTH=441>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono"><FONT SIZE=2 STYLE="font-size: 11pt">name
 			|uname |password |passwordagain |email |city |straddress |state
 			|phone |fax |contact |phone2 |postalcode |employer |position
@@ -4309,15 +4282,14 @@ keywords.</P>
 button or<SPAN LANG="en-US"> check box </SPAN>for subscription, user
 or search forms.</P>
 <P CLASS="western">Syntax:</P>
-<TABLE WIDTH=338 BORDER=0 CELLPADDING=2 CELLSPACING=0>
-	<COL WIDTH=74>
-	<COL WIDTH=256>
+<TABLE WIDTH=433 BORDER=0 CELLPADDING=2 CELLSPACING=0>
+	<COL WIDTH=81>
+	<COL WIDTH=345>
 	<TR>
-		<TD WIDTH=74 VALIGN=TOP>
-			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">Select </FONT>
-			</P>
+		<TD WIDTH=81 VALIGN=TOP>
+			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">Select</FONT></P>
 		</TD>
-		<TD WIDTH=256>
+		<TD WIDTH=345>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;subscription_expression&gt;<BR>|&lt;user_expression&gt;<BR>|&lt;search_expression&gt;</FONT></P>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">|&lt;login_expression&gt;</FONT></P>
 		</TD>
@@ -4328,15 +4300,15 @@ or search forms.</P>
 <P CLASS="western">Generates a multiple select list for selecting
 sections in subscription form.</P>
 <TABLE WIDTH=703 BORDER=0 CELLPADDING=2 CELLSPACING=0>
-	<COL WIDTH=248>
-	<COL WIDTH=446>
+	<COL WIDTH=276>
+	<COL WIDTH=419>
 	<TR>
-		<TD WIDTH=248 VALIGN=TOP>
-			<P CLASS="western"><FONT FACE="Courier New, Courier, mono"><FONT SIZE=2 STYLE="font-size: 11pt"><FONT SIZE=3>&lt;user_expression&gt;
-			= User</FONT> </FONT></FONT>
+		<TD WIDTH=276 VALIGN=TOP>
+			<P CLASS="western"><FONT FACE="Courier New, Courier, mono"><FONT SIZE=2 STYLE="font-size: 11pt"><FONT SIZE=3>&lt;user_expression&gt;=User</FONT>
+			</FONT></FONT>
 			</P>
 		</TD>
-		<TD WIDTH=446>
+		<TD WIDTH=419>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono"><FONT SIZE=3>country
 			|title |gender |age |employertype |pref1 |pref2 |pref3 |pref4</FONT></FONT></P>
 		</TD>
