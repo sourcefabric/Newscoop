@@ -4,6 +4,7 @@ load_common_include_files();
 require_once($_SERVER['DOCUMENT_ROOT'].'/priv/imagearchive/include.inc.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ImageSearch.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/priv/CampsiteInterface.php');
 
@@ -13,8 +14,9 @@ if (!$access) {
 	exit;
 }
 $ImageId = isset($_REQUEST['image_id'])?$_REQUEST['image_id']:0;
+$imageNav =& new ImageNav($_REQUEST, CAMPSITE_IMAGEARCHIVE_IMAGES_PER_PAGE, $_REQUEST['view']);
 if (!is_numeric($ImageId) || ($ImageId <= 0)) {
-	header('Location: '.CAMPSITE_IMAGEARCHIVE_DIR.'index.php?'.Image_GetSearchUrl($_REQUEST));
+	header('Location: index.php?'.$imageNav->getSearchLink());
 	exit;	
 }
 
@@ -25,7 +27,7 @@ if (!$User->hasPermission('ChangeImage')) {
 }
 
 $imageObj =& new Image($ImageId);
-$articles =& $imageObj->getArticlesThatUseImage();
+$articles =& ArticleImage::GetArticlesThatUseImage($ImageId);
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
 	"http://www.w3.org/TR/REC-html40/loose.dtd">
@@ -50,7 +52,7 @@ $articles =& $imageObj->getArticlesThatUseImage();
 	<TR><TD ALIGN=RIGHT>
 	  <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
 		<TR>
-		  <TD><A HREF="<?php echo CAMPSITE_IMAGEARCHIVE_DIR; ?>" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Image Archive"); ?>"></A></TD><TD><A HREF="<?php echo CAMPSITE_IMAGEARCHIVE_DIR; ?>" ><B><?php  putGS("Image Archive");  ?></B></A></TD>
+		  <TD><A HREF="index.php?<?php echo $imageNav->getSearchLink() ?>" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Image archive"); ?>"></A></TD><TD><A HREF="index.php?<?php echo $imageNav->getSearchLink(); ?>" ><B><?php  putGS("Image archive");  ?></B></A></TD>
 		  <TD><A HREF="/priv/home.php" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Home"); ?>"></A></TD><TD><A HREF="/priv/home.php" ><B><?php  putGS("Home");  ?></B></A></TD>
 		  <TD><A HREF="/priv/logout.php" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Logout"); ?>"></A></TD><TD><A HREF="/priv/logout.php" ><B><?php  putGS("Logout");  ?></B></A></TD>
 		</TR>
@@ -60,7 +62,7 @@ $articles =& $imageObj->getArticlesThatUseImage();
 
 <CENTER><IMG SRC="<?php echo $imageObj->getImageUrl(); ?>" BORDER="0" ALT="<?php echo htmlspecialchars($imageObj->getDescription()); ?>"></CENTER>
 <P>
-<FORM NAME="dialog" METHOD="POST" ACTION="do_edit.php?<?php echo Image_GetSearchUrl($_REQUEST); ?>" ENCTYPE="multipart/form-data">
+<FORM NAME="dialog" METHOD="POST" ACTION="do_edit.php?<?php echo $imageNav->getSearchLink(); ?>" ENCTYPE="multipart/form-data">
 <CENTER><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" BGCOLOR="#C0D0FF" ALIGN="CENTER">
 	<TR>
 		<TD COLSPAN="2">
@@ -118,7 +120,7 @@ $articles =& $imageObj->getArticlesThatUseImage();
 		<DIV ALIGN="CENTER">
 		<INPUT TYPE="HIDDEN" NAME="image_id" VALUE="<?php echo $imageObj->getImageId(); ?>">
 		<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save changes'); ?>" class="button">
-		<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='<?php echo CAMPSITE_IMAGEARCHIVE_DIR; ?>index.php?<?php echo Image_GetSearchUrl($_REQUEST); ?>'" class="button">
+		<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='index.php?<?php echo $imageNav->getSearchLink(); ?>'" class="button">
 		</DIV>
 		</TD>
 	</TR>
