@@ -50,14 +50,14 @@ $allArticleLanguages =& Article::GetAllLanguages();
 
 if ($sLanguage) {
 	// Only show a specific language.
-	$allArticles = Article::GetArticles($Pub, $Issue, $Section, $sLanguage, $Language,
+	$allArticles = Article::GetArticles($Pub, $Issue, $Section, $sLanguage, null, $Language,
 		$ArticlesPerPage, $ArticleOffset);
 	$totalArticles = count(Article::GetArticles($Pub, $Issue, $Section, $sLanguage));
 	$numUniqueArticles = $totalArticles;
 	$numUniqueArticlesDisplayed = count($allArticles);
 } else {
 	// Show articles in all languages.
-	$allArticles =& Article::GetArticles($Pub, $Issue, $Section, null, $Language,
+	$allArticles =& Article::GetArticles($Pub, $Issue, $Section, null, null, $Language,
 		$ArticlesPerPage, $ArticleOffset, true);
 	$totalArticles = count(Article::GetArticles($Pub, $Issue, $Section, null));
 	$numUniqueArticles = Article::GetNumUniqueArticles($Pub, $Issue, $Section);
