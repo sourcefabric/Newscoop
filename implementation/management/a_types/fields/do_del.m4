@@ -38,8 +38,12 @@ E_CURRENT
 <P>
 <?php 
     query ("SHOW COLUMNS FROM X$AType LIKE 'F$Field'", 'c');
-    if ($NUM_ROWS)
-	query ("ALTER TABLE X$AType DROP COLUMN F$Field");
+	if ($NUM_ROWS) {
+		query ("ALTER TABLE X$AType DROP COLUMN F$Field");
+		$params = array($operation_attr=>$operation_modify, "article_type"=>"$AType");
+		$msg = build_reset_cache_msg($cache_type_article_types, $params);
+		send_message($SERVER_ADDRESS, server_port(), $msg, $err_msg);
+	}
 ?>dnl
 B_MSGBOX(<*Deleting field*>)
 	X_MSGBOX_TEXT(<*<LI><?php  putGS('The field $1 has been deleted.','<B>'.encHTML($Field).'</B>' ); ?></LI>*>)
