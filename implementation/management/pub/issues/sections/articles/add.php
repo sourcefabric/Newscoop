@@ -15,8 +15,11 @@ $Pub = Input::get('Pub', 'int', 0);
 $Issue = Input::get('Issue', 'int', 0);
 $Section = Input::get('Section', 'int', 0);
 $Language = Input::get('Language', 'int', 0);
-$Wiz = Input::get('Wiz', 'int', 0, true);
 $Back = Input::get('Back', 'string', 'index.php', true);
+$Wiz = Input::get('Wiz', 'int', 0, true);
+if ($Wiz != 0) {
+	$Back = "/priv/home.php";
+}
 
 if (!Input::isValid()) {
 	header("Location: /priv/logout.php");
@@ -50,14 +53,14 @@ if (function_exists ("incModFile")) {
 
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%">
 <TR>
-	<TD ROWSPAN="2" WIDTH="1%"><IMG SRC="/priv/img/sign_big.gif" BORDER="0"></TD>
-	<TD>
+	<!--<TD ROWSPAN="2" WIDTH="1%"><IMG SRC="/priv/img/sign_big.gif" BORDER="0"></TD>-->
+	<TD style="padding-left: 10px; padding-top: 10px;">
 	    <DIV STYLE="font-size: 12pt"><B><?php  putGS("Add new article"); ?></B></DIV>
-	    <HR NOSHADE SIZE="1" COLOR="BLACK">
+	    <!--<HR NOSHADE SIZE="1" COLOR="BLACK">-->
 	</TD>
-</TR>
+<!--</TR>
 <TR>
-	<TD ALIGN=RIGHT>
+-->	<TD ALIGN="RIGHT" style="padding-right: 10px; padding-top: 10px;">
 		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
 		<TR>
 			<?php if ($Wiz == 0) { ?>
@@ -70,15 +73,16 @@ if (function_exists ("incModFile")) {
 			<TD><A HREF="/priv/pub/issues/<?php  if ($Wiz) { ?>add_article.php<?php  } ?>?Pub=<?php  p($Pub); ?>" ><B><?php  putGS("Issues");  ?></B></A></TD>
 			<TD><A HREF="/priv/pub/<?php  if ($Wiz) { ?>add_article.php<?php  } ?>" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Publications"); ?>"></A></TD>
 			<TD><A HREF="/priv/pub/<?php  if ($Wiz) { ?>add_article.php<?php  } ?>" ><B><?php  putGS("Publications");  ?></B></A></TD>
-			<TD><A HREF="/priv/home.php" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Home"); ?>"></A></TD>
+			<!--<TD><A HREF="/priv/home.php" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Home"); ?>"></A></TD>
 			<TD><A HREF="/priv/home.php" ><B><?php  putGS("Home");  ?></B></A></TD>
 			<TD><A HREF="/priv/logout.php" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Logout"); ?>"></A></TD>
-			<TD><A HREF="/priv/logout.php" ><B><?php  putGS("Logout");  ?></B></A></TD>
+			<TD><A HREF="/priv/logout.php" ><B><?php  putGS("Logout");  ?></B></A></TD>-->
 		</TR>
 		</TABLE>
 	</TD>
 </TR>
 </TABLE>
+<HR NOSHADE SIZE="1" COLOR="BLACK">
 
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="1" WIDTH="100%">
 <TR>
