@@ -2783,7 +2783,7 @@ int CActURIPath::takeAction(CContext& c, sockstream& fs)
 // Parametes:
 //		CContext& c - current context
 //		sockstream& fs - output stream	
-int CActURL::takeAction(CContext& c, sockstream& fs)
+int CActURI::takeAction(CContext& c, sockstream& fs)
 {
 	m_coURIPath.takeAction(c, fs);
 	stringstream coURLParametersStr;
