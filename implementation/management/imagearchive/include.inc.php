@@ -116,18 +116,21 @@ class ImageSearch {
 				  	.' FROM Images as i'
 				  	.' LEFT JOIN ArticleImages AS a On i.Id=a.IdImage'
 				  	." WHERE 1 $this->m_whereQuery";
-		$query = $Campsite['db']->Execute($queryStr);
+		$rows = $Campsite['db']->GetAll($queryStr);
 		$this->m_numImagesFound = $Campsite['db']->GetOne($numImagesFoundQueryStr);
 		
 		// Create image templates
 		$this->m_imageData = array();
-		while ($row = $query->FetchRow()) {
-			$tmpImage =& new Image();
-			$tmpImage->fetch($row);
-			$template = $tmpImage->toTemplate();
-			$template['in_use'] = $row['inUse'];
-			$this->m_imageData[] = $template;
-		}	
+		if (is_array($rows)) {
+			foreach ($rows as $row) {
+				$tmpImage =& new Image();
+				$tmpImage->fetch($row);
+				$template = $tmpImage->toTemplate();
+				$template['in_use'] = $row['inUse'];
+				$this->m_imageData[] = $template;
+			}
+		}
+		return $this->m_imageData;
 	} // fn run
 	
 	function getImages() {
