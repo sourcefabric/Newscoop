@@ -2645,15 +2645,20 @@ int CActUser::takeAction(CContext& c, sockstream& fs)
 //		sockstream& fs - output stream	
 int CActLogin::takeAction(CContext& c, sockstream& fs)
 {
+	CURL* pcoURL = c.URL()->clone();
+	try {
+		pcoURL->setTemplate(tpl_file);
+	}
+	catch (InvalidValue& rcoEx)
+	{
+		return ERR_INVALID_FIELD;
+	}
 	CContext lc = c;
-	fs << "\n<form action=\"" << tpl_file << "\" method=POST>\n"
-	      "\t<input type=hidden name=\"" P_IDLANG "\" value=\"" << c.Language() << "\">\n"
-	      "\t<input type=hidden name=\"" P_IDPUBL "\" value=\"" << c.Publication() << "\">\n"
-	      "\t<input type=hidden name=\"" P_NRISSUE "\" value=\"" << c.Issue() << "\">\n"
-	      "\t<input type=hidden name=\"" P_NRSECTION "\" value=\"" << c.Section() << "\">\n"
-	      "\t<input type=hidden name=\"" P_NRARTICLE "\" value=\"" << c.Article() << "\">\n";
+	fs << "\n<form action=\"" << pcoURL->getURIPath() << "\" method=POST>\n";
+	fs << pcoURL->getFormString();
 	runActions(block, lc, fs);
 	fs << "\t<input type=submit name=\"" P_LOGIN "\" value=\"" << button_name << "\">\n</form>\n";
+	delete pcoURL;
 	return RES_OK;
 }
 
