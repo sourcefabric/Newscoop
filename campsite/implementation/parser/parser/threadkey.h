@@ -119,7 +119,7 @@ public:
 	}
 
 private:
-	static void destroyData(void* p_pData);
+	static void destroyData(void* p_pData) throw();
 
 	pthread_key_t m_Key;
 };

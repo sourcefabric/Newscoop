@@ -30,6 +30,8 @@ Implementation of the classes defined in thread.h
 ******************************************************************************/
 
 #include <signal.h>
+#include <iostream.h>
+#include <unistd.h>
 
 #include "thread.h"
 
@@ -64,10 +66,19 @@ void* CThread::startRoutine(void* p_pParam)
 {
 	if (p_pParam == NULL)
 		return NULL;
+	void* pResult;
 	CThread* pcoThread = (CThread*) p_pParam;
 	pcoThread->m_bRunning = true;
 	sem_post(&pcoThread->m_Semaphore);
-	void* pResult = pcoThread->run();
+try
+{
+	usleep(100);
+	pResult = pcoThread->run();
+}
+catch (...)
+{
+	cout << "Thread " << pcoThread->m_nThreadId << ": unknown exception on run" << endl;
+}
 	sem_wait(&pcoThread->m_Semaphore);
 	pcoThread->m_bRunning = false;
 	sem_post(&pcoThread->m_Semaphore);
