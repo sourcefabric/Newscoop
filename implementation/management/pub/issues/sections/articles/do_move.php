@@ -24,6 +24,7 @@ $MoveType = Input::get('move', 'string', 'up_rel');
 $sLanguage = Input::get('sLanguage', 'int', 0, true);
 $ArticleOffset = Input::get('ArtOffs', 'int', 0, true);
 $MoveToPosition = Input::get('pos', 'int', 1, true);
+$BackLink = Input::get('Back', 'string', "/$ADMIN/pub/issues/sections/articles/index.php?Pub=$Pub&Issue=$Issue&Section=$Section&Language=$Language&ArtOffs=$ArticleOffset&sLanguage=$sLanguage", true);
 
 if (!Input::isValid()) {
 	header("Location: /$ADMIN/logout.php");
@@ -75,6 +76,6 @@ if (function_exists ("incModFile")) {
 	incModFile();
 }
 
-header("Location: /$ADMIN/pub/issues/sections/articles/index.php?Pub=$Pub&Issue=$Issue&Section=$Section&Language=$Language&ArtOffs=$ArticleOffset&sLanguage=$sLanguage");
+header("Location: $BackLink");
 exit;
 ?>
