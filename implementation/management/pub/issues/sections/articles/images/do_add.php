@@ -20,33 +20,63 @@ if (!$User->hasPermission('AddImage')) {
 	header('Location: /priv/ad.php?ADReason='.encURL(getGS('You do not have the right to add images' ))); 
 	exit;
 }
-$Pub = isset($_REQUEST['Pub'])?$_REQUEST['Pub']:0;
-$Issue = isset($_REQUEST['Issue'])?$_REQUEST['Issue']:0;
-$Section = isset($_REQUEST['Section'])?$_REQUEST['Section']:0;
-$Language = isset($_REQUEST['Language'])?$_REQUEST['Language']:0;
-$sLanguage = isset($_REQUEST['sLanguage'])?$_REQUEST['sLanguage']:0;
-$Article = isset($_REQUEST['Article'])?$_REQUEST['Article']:0;
 
-$articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
-$publicationObj =& new Publication($Pub);
-$issueObj =& new Issue($Pub, $Language, $Issue);
-$languageObj =& new Language($Language);
-$sectionObj =& new Section($Pub, $Issue, $Language, $Section);
+if (!IsValidInput(array(
+	"PublicationId" => "int",
+	"IssueId" => "int",
+	"SectionId" => "int",
+	"InterfaceLanguageId" => "int",
+	"ArticleLanguageId" => "int",
+	"ArticleId" => "int",
+	"cNumber" => "int"))) {
+	header('Location: /priv/logout.php');
+	exit;		
+}
+	
+$PublicationId = array_get_value($_REQUEST, 'PublicationId', 0);
+$IssueId = array_get_value($_REQUEST, 'IssueId', 0);
+$SectionId = array_get_value($_REQUEST, 'SectionId', 0);
+$InterfaceLanguageId = array_get_value($_REQUEST, 'InterfaceLanguageId', 0);
+$ArticleLanguageId = array_get_value($_REQUEST, 'ArticleLanguageId', 0);
+$ArticleId = array_get_value($_REQUEST, 'ArticleId', 0);
+$ImageTemplateId = array_get_value($_REQUEST, 'cNumber', 0);
 
-$image =& new Image();
+$articleObj =& new Article($PublicationId, $IssueId, $SectionId, $ArticleLanguageId, $ArticleId);
+
+// If the template ID is in use, dont add the image.
+if (ArticleImage::TemplateIdInUse($ArticleId, $ImageTemplateId)) {
+	header('Location: '.CampsiteInterface::ArticleUrl($articleObj, $InterfaceLanguageId, 'images/index.php'));
+	exit;
+}
+
 $attributes = array();
 $attributes['Description'] = $_REQUEST['cDescription'];
 $attributes['Photographer'] = $_REQUEST['cPhotographer'];
 $attributes['Place'] = $_REQUEST['cPlace'];
 $attributes['Date'] = $_REQUEST['cDate'];
+if (!empty($_REQUEST['cURL'])) {
+	$image =& Image::OnAddRemoteImage($_REQUEST['cURL'], $attributes, $User->getId());
+}
+elseif (!empty($_REQUEST['cImage'])) {
+	$image =& Image::OnImageUpload($_FILES['cImage'], $attributes, $User->getId());
+}
+else {
+	header('Location: '.CampsiteInterface::ArticleUrl($articleObj, $InterfaceLanguageId, 'images/index.php'));
+	exit;
+}
 
-$image =& Image::OnImageUpload($_FILES['cImage'], $attributes);
+// Check if image was added successfully
+if (!is_object($image)) {
+	header('Location: '.CampsiteInterface::ArticleUrl($articleObj, $InterfaceLanguageId, 'images/index.php'));
+	exit;	
+}
+
 ArticleImage::AssociateImageWithArticle($image->getImageId(), $articleObj->getArticleId(), $ImageTemplateId);
 
 $logtext = getGS('The image $1 has been added.', $attributes['Description']);
 Log::Message($logtext, $User->getUserName(), 41);
 
 // Go back to article image list.
-header('Location: '.CampsiteInterface::ArticleUrl($articleObj, $sLanguage, 'images/'));
+header('Location: '.CampsiteInterface::ArticleUrl($articleObj, $InterfaceLanguageId, 'images/'));
 
 ?>
