@@ -72,16 +72,16 @@ $languageObj =& new Language($Language);
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="1" WIDTH="100%" class="current_location_table">
 <TR>
 	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php putGS('Publication'); ?>:</TD>
-	<TD VALIGN="TOP" class="current_location_content"><B><?php echo htmlspecialchars($publicationObj->getName()); ?></B></TD>
+	<TD VALIGN="TOP" class="current_location_content"><?php echo htmlspecialchars($publicationObj->getName()); ?></TD>
 
 	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php putGS('Issue'); ?>:</TD>
-	<TD VALIGN="TOP" class="current_location_content"><B><?php echo htmlspecialchars($issueObj->getIssueId()); ?>. <?php echo htmlspecialchars($issueObj->getName()); ?> (<?php echo htmlspecialchars($languageObj->getName()); ?>)</B></TD>
+	<TD VALIGN="TOP" class="current_location_content"><?php echo htmlspecialchars($issueObj->getIssueId()); ?>. <?php echo htmlspecialchars($issueObj->getName()); ?> (<?php echo htmlspecialchars($languageObj->getName()); ?>)</TD>
 
 	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php putGS('Section'); ?>:</TD>
-	<TD VALIGN="TOP" class="current_location_content"><B><?php echo htmlspecialchars($sectionObj->getSectionId()); ?>. <?php echo htmlspecialchars($sectionObj->getName()); ?></B></TD>
+	<TD VALIGN="TOP" class="current_location_content"><?php echo htmlspecialchars($sectionObj->getSectionId()); ?>. <?php echo htmlspecialchars($sectionObj->getName()); ?></TD>
 
 	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php putGS('Article'); ?>:</TD>
-	<TD VALIGN="TOP" class="current_location_content"><B><?php echo htmlspecialchars($articleObj->getTitle()); ?></B></TD>
+	<TD VALIGN="TOP" class="current_location_content"><?php echo htmlspecialchars($articleObj->getTitle()); ?></TD>
 </TR>
 </TABLE>
 
