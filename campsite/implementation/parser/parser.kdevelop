@@ -19,6 +19,7 @@
       <group pattern="*.cpp;*.c;*.cc;*.C;*.cxx;*.ec;*.ecpp;*.lxx;*.l++;*.ll;*.l" name="Sources" />
       <group pattern="*" name="Others" />
       <hidenonprojectfiles>false</hidenonprojectfiles>
+      <hidenonlocation>false</hidenonlocation>
     </groups>
     <tree>
       <hidepatterns>*.o,*.lo,CVS</hidepatterns>
@@ -37,8 +38,8 @@
   </kdevdoctreeview>
   <kdevcustomproject>
     <run>
-      <directoryradio>build</directoryradio>
-      <customdirectory>/</customdirectory>
+      <directoryradio>executable</directoryradio>
+      <customdirectory>/home/mugur/work/cms/2.1/campsite/implementation/parser/parser/</customdirectory>
       <mainprogram>parser/campsite_server</mainprogram>
       <programargs/>
       <terminal>false</terminal>
@@ -101,7 +102,7 @@
       <floatingtoolbar>false</floatingtoolbar>
     </general>
     <display>
-      <staticmembers>false</staticmembers>
+      <staticmembers>true</staticmembers>
       <demanglenames>true</demanglenames>
     </display>
   </kdevdebugger>

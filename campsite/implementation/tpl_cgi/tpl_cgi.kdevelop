@@ -6,12 +6,6 @@
     <projectmanagement>KDevCustomProject</projectmanagement>
     <primarylanguage>C++</primarylanguage>
     <keywords/>
-    <projectdirectory>.</projectdirectory>
-    <absoluteprojectpath>false</absoluteprojectpath>
-    <version/>
-    <description/>
-    <ignoreparts/>
-    <secondaryLanguages/>
   </general>
   <kdevfileview>
     <groups>
@@ -38,28 +32,8 @@
   </kdevdoctreeview>
   <kdevcustomproject>
     <run>
-      <directoryradio>custom</directoryradio>
-      <customdirectory>/home/mugur/work/cms/2.2/campsite/implementation/tpl_cgi/tpl_cgi/</customdirectory>
-      <mainprogram>/home/mugur/work/cms/2.2/campsite/implementation/tpl_cgi/tpl_cgi/tpl_cgi</mainprogram>
-      <programargs/>
-      <terminal>false</terminal>
-      <autocompile>true</autocompile>
-      <envvars/>
+      <directoryradio>executable</directoryradio>
     </run>
-    <build>
-      <buildtool>make</buildtool>
-      <builddir/>
-    </build>
-    <make>
-      <abortonerror>false</abortonerror>
-      <numberofjobs>1</numberofjobs>
-      <dontact>false</dontact>
-      <makebin/>
-      <selectedenvironment>default</selectedenvironment>
-      <environments>
-        <default/>
-      </environments>
-    </make>
   </kdevcustomproject>
   <kdevcvsservice>
     <recursivewhenupdate>true</recursivewhenupdate>
@@ -83,27 +57,4 @@
       <headerCompletionDelay>250</headerCompletionDelay>
     </codecompletion>
   </kdevcppsupport>
-  <cppsupportpart>
-    <filetemplates>
-      <interfacesuffix>.h</interfacesuffix>
-      <implementationsuffix>.cpp</implementationsuffix>
-    </filetemplates>
-  </cppsupportpart>
-  <kdevdebugger>
-    <general>
-      <programargs/>
-      <gdbpath/>
-      <dbgshell/>
-      <configGdbScript/>
-      <runShellScript/>
-      <runGdbScript/>
-      <breakonloadinglibs>true</breakonloadinglibs>
-      <separatetty>false</separatetty>
-      <floatingtoolbar>false</floatingtoolbar>
-    </general>
-    <display>
-      <staticmembers>false</staticmembers>
-      <demanglenames>true</demanglenames>
-    </display>
-  </kdevdebugger>
 </kdevelop>

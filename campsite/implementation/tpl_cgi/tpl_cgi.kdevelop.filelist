@@ -1,2 +1,17 @@
 # KDevelop Custom Project File List
-INVALID-FILENAME
+configure
+Makefile
+tpl_cgi.filelist
+tpl_cgi.kdevelop
+tpl_cgi.kdevprj
+tpl_cgi/configure
+tpl_cgi/main.cpp
+tpl_cgi/Makefile
+tpl_cgi/CVS/Entries
+tpl_cgi/CVS/Repository
+tpl_cgi/CVS/Root
+tpl_cgi/CVS/Tag
+CVS/Entries
+CVS/Repository
+CVS/Root
+CVS/Tag
