@@ -47,9 +47,39 @@ $showObsoleteMenu = ($User->hasPermission("ManageDictionary")
 	    ],
 	    _cmSplit,
 	    ['<img src="/<?php p($ADMIN); ?>/img/icon/actions.png" align="middle"  width="22" height="22"/>', ' <?php putGS('Actions'); ?>', '', '', '',
+	    	
 	    	<?php if ($User->hasPermission("AddArticle")) { ?>
 	    	['<img src="/<?php p($ADMIN); ?>/img/icon/add_article.png"  width="22" height="22"/>', '<?php putGS('Add new article'); ?>', '/<?php p($ADMIN); ?>/pub/add_article.php'],
 	    	<?php } ?>
+			
+			<?php  if ($User->hasPermission("ManageTempl")) { ?>	
+	    	['<img src="/<?php p($ADMIN); ?>/img/icon/upload_template.png"  width="22" height="22"/>', '<?php putGS("Upload new template"); ?>', '/<?php p($ADMIN); ?>/templates/upload_templ.php?Path=/look/&Back=<?php  print encURL ($REQUEST_URI); ?>'],
+			<?php  } ?>
+				
+	    	<?php  if ($User->hasPermission("ManagePub")) { ?>	
+	    	['<img src="/<?php p($ADMIN); ?>/img/icon/add_publication.png"  width="22" height="22"/>', '<?php putGS("Add new publication"); ?>', '/<?php p($ADMIN); ?>/pub/add.php?Back=<?php  print encURL ($REQUEST_URI); ?>'],
+			<?php  } ?>
+
+			<?php  if ($User->hasPermission("ManageUsers")) { ?>	
+	    	['<img src="/<?php p($ADMIN); ?>/img/icon/add_user.png"  width="22" height="22"/>', '<?php putGS("Add new user account"); ?>', '/<?php p($ADMIN); ?>/users/add.php?Back=<?php  print encURL ($REQUEST_URI); ?>'],
+			<?php  } ?>
+			
+			<?php  if ($User->hasPermission("ManageUserTypes")) { ?>	
+	    	['<img src="/<?php p($ADMIN); ?>/img/icon/add_user_type.png"  width="22" height="22"/>', '<?php putGS("Add new user type"); ?>', '/<?php p($ADMIN); ?>/u_types/add.php?Back=<?php  print encURL ($REQUEST_URI); ?>'],
+			<?php  } ?>
+
+			<?php  if ($User->hasPermission("ManageArticleTypes")) { ?>	
+	    	['<img src="/<?php p($ADMIN); ?>/img/icon/add_article_type.png"  width="22" height="22"/>', '<?php putGS("Add new article type"); ?>', '/<?php p($ADMIN); ?>/a_types/add.php?Back=<?php  print encURL ($REQUEST_URI); ?>'],
+			<?php  } ?>
+
+			<?php  if ($User->hasPermission("ManageCountries")) { ?>	
+	    	['<img src="/<?php p($ADMIN); ?>/img/icon/add_country.png"  width="22" height="22"/>', '<?php putGS("Add new country"); ?>', '/<?php p($ADMIN); ?>/country/add.php?Back=<?php  print encURL ($REQUEST_URI); ?>'],
+			<?php  } ?>
+		
+			<?php  if ($User->hasPermission("ManageLanguages")) { ?>	
+	    	['<img src="/<?php p($ADMIN); ?>/img/icon/add_language.png"  width="22" height="22"/>', '<?php putGS("Add new language"); ?>', '/<?php p($ADMIN); ?>/languages/add.php?Back=<?php  print encURL ($REQUEST_URI); ?>'],
+			<?php  } ?>
+			
 	    	['<img src="/<?php p($ADMIN); ?>/img/icon/change_password.png"  width="22" height="22"/>', '<?php putGS('Change your password'); ?>', '/<?php p($ADMIN); ?>/users/chpwd.php']
 	    ],
 	    <?php if ($showConfigureMenu) { ?>
