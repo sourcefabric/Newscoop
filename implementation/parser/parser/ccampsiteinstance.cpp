@@ -162,6 +162,11 @@ void CCampsiteInstance::RegisterInstance()
 	CCampsiteInstanceRegister::get().insert(*this);
 }
 
+void CCampsiteInstance::UnregisterInstance()
+{
+	CCampsiteInstanceRegister::get().erase(this->getName());
+}
+
 void CCampsiteInstance::VerifyDir(const string& p_rcoDir) throw (ConfException)
 {
 	DIR* pDir = opendir(p_rcoDir.c_str());
@@ -226,7 +231,7 @@ void CCampsiteInstanceRegister::erase(const string& p_rcoInstanceName)
 	delete pcoInstance;
 }
 
-const CCampsiteInstance* CCampsiteInstanceRegister::getCampsiteInstance(pid_t p_nInstancePID) const
+CCampsiteInstance* CCampsiteInstanceRegister::getCampsiteInstance(pid_t p_nInstancePID) const
 		throw (InvalidValue)
 {
 #ifdef _REENTRANT
@@ -239,7 +244,7 @@ const CCampsiteInstance* CCampsiteInstanceRegister::getCampsiteInstance(pid_t p_
 	return getCampsiteInstance((*coIt).second);
 }
 
-const CCampsiteInstance* CCampsiteInstanceRegister::getCampsiteInstance(const string& p_rcoInstanceName) const
+CCampsiteInstance* CCampsiteInstanceRegister::getCampsiteInstance(const string& p_rcoInstanceName) const
 		throw (InvalidValue)
 {
 #ifdef _REENTRANT
