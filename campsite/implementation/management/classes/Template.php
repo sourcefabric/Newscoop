@@ -1,4 +1,4 @@
-<?
+<?php
 
 class Template extends DatabaseObject {
 	var $m_dbTableName = 'Templates';

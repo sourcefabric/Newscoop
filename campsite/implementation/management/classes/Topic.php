@@ -1,4 +1,4 @@
-<?PHP
+<?php
 
 class Topic extends DatabaseObject {
 	var $m_keyColumnNames = array('Id', 'LanguageId');
