@@ -107,4 +107,30 @@ function clean_files()
 	exec_command("rm -f $backup_dir/*.tar.gz");
 }
 
+function connect_to_database($db_name = "")
+{
+	global $Campsite;
+
+	$db_user = $Campsite['DATABASE_USER'];
+	$db_password = $Campsite['DATABASE_PASSWORD'];
+	$res = mysql_connect($Campsite['DATABASE_SERVER_ADDRESS'] . ":"
+		. $Campsite['DATABASE_SERVER_PORT'], $db_user, $db_password);
+	if (!$res)
+		return "Unable to connect to database server";
+
+	if ($db_name != "" && !mysql_select_db($db_name))
+		return "Unable to select database $db_name";
+
+	return 0;
+}
+
+function database_exists($p_db_name)
+{
+	$res = mysql_list_dbs();
+	while ($row = mysql_fetch_object($res))
+		if ($row->Database == $p_db_name)
+			return true;
+	return false;
+}
+
 ?>
