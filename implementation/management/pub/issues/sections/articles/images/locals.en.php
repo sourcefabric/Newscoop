@@ -1,12 +1,20 @@
 <?php 
 
 // -- index.m4
-regGS("Add new image","Add new image:en");
+regGS("Article Image List","Article Image List:en");
+regGS("Back to Article Image List","Back to Article Image List:en");
+regGS("Add new image","Add New Image:en");
+regGS("Add an existing image","Add an Existing Image:en");
 regGS("Select an old image","Select an old image:en");
 regGS("Click to view image","Click to view image:en");
 regGS("Date<BR><SMALL>(yyyy-mm-dd)</SMALL>","Date<BR><SMALL>(yyyy-mm-dd)</SMALL>:en");
 regGS("Delete image $1","Delete image $1:en");
 regGS("No images.","No images.:en");
+regGS("Remove Image From Article","<nobr>Remove Image</nobr> <nobr>From Article</nobr>:en");
+regGS("Link Image to Article", "<nobr>Link Image to Article</nobr>:en");
+regGS("Please enter a number for the image.", "Please enter a number for the image.:en");
+regGS("Please enter a description for the image.", "Please enter a description for the image.:en");
+regGS("You must select an image file to upload.", "You must select an image file to upload.:en");
 
 // -- view.m4
 regGS("View image","View image:en");
