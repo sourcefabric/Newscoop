@@ -1,5 +1,5 @@
 LDLIBS=-lmysqlclient -lm -lz
-LDFLAGS=-L/usr/lib/mysql
+LDFLAGS=-L$(LIBMYSQLCLIENT_PATH)
 
 CFLAGS=-Wall
 
