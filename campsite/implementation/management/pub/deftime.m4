@@ -42,7 +42,7 @@ E_CURRENT
 <TABLE>
 <TR>
 	<TD>X_NEW_BUTTON(<*Add new country*>, <*countryadd.php?Pub=<?php  pencURL($Pub); ?>&Language=<?php  pencURL($Language); ?>*>)</TD>
-	<TD>X_NEW_BUTTON(<*Back to publication*>, <*edit.php?Pub=<?php  pencURL($Pub); ?>*>)</TD>
+	<TD>X_BACK_BUTTON(<*Back to publication*>, <*edit.php?Pub=<?php  pencURL($Pub); ?>*>)</TD>
 </TR>
 </TABLE>
 
@@ -82,7 +82,7 @@ B_LIST
 			<?php  pgetHVar($q_deft,'PaidTime'); ?>
 		E_LIST_ITEM
 		B_LIST_ITEM(<*CENTER*>)
-			X_BUTTON(<*<?php  putGS('Delete entry $1',getHVar($q_deft,'CountryCode')); ?>*>, <*icon/x.gif*>, <*pub/deldeftime.php?Pub=<?php  pencURL($Pub); ?>&CountryCode=<?php  pgetUVar($q_deft,'CountryCode'); ?>&Language=<?php  pencURL($Language); ?>*>)
+			X_BUTTON(<*<?php  putGS('Delete entry $1',getHVar($q_deft,'CountryCode')); ?>*>, <*icon/delete.png*>, <*pub/deldeftime.php?Pub=<?php  pencURL($Pub); ?>&CountryCode=<?php  pgetUVar($q_deft,'CountryCode'); ?>&Language=<?php  pencURL($Language); ?>*>)
 		E_LIST_ITEM
 	E_LIST_TR
 <?php 
