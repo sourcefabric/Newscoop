@@ -8,7 +8,7 @@
     of group; if user and group are not the same it fails)
     - Implemented subscription update feature: update subscriptions automatically
     when adding/deleting subscriptions to/from issues
-    - Improved the manual: detailed database conversion
+    - Improved the manual: detailed database conversion, corrections
     - Other bug fixes
 
 2.1.0
