@@ -26,6 +26,7 @@ B_BODY
     todefnum('Article');
     todefnum('Language');
     todefnum('sLanguage');
+    todef('Status');
 ?>dnl
 B_HEADER(<*Changing article status*>)
 B_HEADER_BUTTONS
