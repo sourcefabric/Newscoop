@@ -41,66 +41,66 @@ $showObsoleteMenu = ($User->hasPermission("ManageDictionary")
 	<SCRIPT LANGUAGE="JavaScript"><!--
 	var myMenu =
 	[
-	    ['<img src="/<?php p($ADMIN); ?>/img/icon/content.png" align="middle" style="padding-bottom: 3px;" />', ' <?php putGS('Content'); ?>', '', '', '',
-	    	['<img src="/<?php p($ADMIN); ?>/img/icon/publication.png" />', '<?php putGS('Publications'); ?>', '/<?php p($ADMIN); ?>/pub/index.php' ],
-	    	['<img src="/<?php p($ADMIN); ?>/img/icon/image_archive.png" />', '<?php putGS('Image archive'); ?>', '/<?php p($ADMIN); ?>/imagearchive/index.php' ]
+	    ['<img src="/<?php p($ADMIN); ?>/img/icon/content.png" align="middle" style="padding-bottom: 3px;" width="22" height="22" />', ' <?php putGS('Content'); ?>', '', '', '',
+	    	['<img src="/<?php p($ADMIN); ?>/img/icon/publication.png"  width="22" height="22"/>', '<?php putGS('Publications'); ?>', '/<?php p($ADMIN); ?>/pub/index.php' ],
+	    	['<img src="/<?php p($ADMIN); ?>/img/icon/image_archive.png"  width="22" height="22"/>', '<?php putGS('Image archive'); ?>', '/<?php p($ADMIN); ?>/imagearchive/index.php' ]
 	    ],
 	    _cmSplit,
-	    ['<img src="/<?php p($ADMIN); ?>/img/icon/actions.png" align="middle" />', ' <?php putGS('Actions'); ?>', '', '', '',
+	    ['<img src="/<?php p($ADMIN); ?>/img/icon/actions.png" align="middle"  width="22" height="22"/>', ' <?php putGS('Actions'); ?>', '', '', '',
 	    	<?php if ($User->hasPermission("AddArticle")) { ?>
-	    	['<img src="/<?php p($ADMIN); ?>/img/icon/add_article.png" />', '<?php putGS('Add new article'); ?>', '/<?php p($ADMIN); ?>/pub/add_article.php'],
+	    	['<img src="/<?php p($ADMIN); ?>/img/icon/add_article.png"  width="22" height="22"/>', '<?php putGS('Add new article'); ?>', '/<?php p($ADMIN); ?>/pub/add_article.php'],
 	    	<?php } ?>
-	    	['<img src="/<?php p($ADMIN); ?>/img/icon/change_password.png" />', '<?php putGS('Change your password'); ?>', '/<?php p($ADMIN); ?>/users/chpwd.php']
+	    	['<img src="/<?php p($ADMIN); ?>/img/icon/change_password.png"  width="22" height="22"/>', '<?php putGS('Change your password'); ?>', '/<?php p($ADMIN); ?>/users/chpwd.php']
 	    ],
 	    <?php if ($showConfigureMenu) { ?>
 	    _cmSplit,
-	    ['<img src="/<?php p($ADMIN); ?>/img/icon/configure.png" align="middle" />', ' <?php putGS('Configure'); ?>', '', '', '',
+	    ['<img src="/<?php p($ADMIN); ?>/img/icon/configure.png" align="middle"  width="22" height="22"/>', ' <?php putGS('Configure'); ?>', '', '', '',
 	    	<?php if ($showPublishingEnvironmentMenu) { ?>
-	    	['<img src="/<?php p($ADMIN); ?>/img/icon/publishing_environment.png" />', '<?php putGS('Publishing environment'); ?>', '', '', '',
+	    	['<img src="/<?php p($ADMIN); ?>/img/icon/publishing_environment.png"  width="22" height="22"/>', '<?php putGS('Publishing environment'); ?>', '', '', '',
 	    		<?php if ($User->hasPermission("ManageTempl") || $User->hasPermission("DeleteTempl")) { ?>
-	    		['<img src="/<?php p($ADMIN); ?>/img/icon/templates.png" />', '<?php putGS('Templates');?>', '/<?php p($ADMIN); ?>/templates/' ],
+	    		['<img src="/<?php p($ADMIN); ?>/img/icon/templates.png" width="22" height="22" />', '<?php putGS('Templates');?>', '/<?php p($ADMIN); ?>/templates/' ],
 	    		<?php } ?>
 	    		<?php if ($User->hasPermission("ManageArticleTypes") || $User->hasPermission("DeleteArticleTypes")) { ?>
-	    		['<img src="/<?php p($ADMIN); ?>/img/icon/article_types.png" />', '<?php putGS('Article Types'); ?>', '/<?php p($ADMIN); ?>/a_types/' ],
+	    		['<img src="/<?php p($ADMIN); ?>/img/icon/article_types.png" width="22" height="22" />', '<?php putGS('Article Types'); ?>', '/<?php p($ADMIN); ?>/a_types/' ],
 	    		<?php } ?>
 	    		<?php if ($User->hasPermission("ManageTopics")) { ?>
-	    		['<img src="/<?php p($ADMIN); ?>/img/icon/topics.png" />', '<?php putGS('Topics'); ?>', '/<?php p($ADMIN); ?>/topics/' ],
+	    		['<img src="/<?php p($ADMIN); ?>/img/icon/topics.png" width="22" height="22" />', '<?php putGS('Topics'); ?>', '/<?php p($ADMIN); ?>/topics/' ],
 	    		<?php } ?>
 	    		<?php if ($User->hasPermission("ManageLanguages") || $User->hasPermission("DeleteLanguages")) { ?>
-	    		['<img src="/<?php p($ADMIN); ?>/img/icon/languages.png" />', '<?php putGS('Languages'); ?>', '/<?php p($ADMIN); ?>/languages/' ],
+	    		['<img src="/<?php p($ADMIN); ?>/img/icon/languages.png" width="22" height="22" />', '<?php putGS('Languages'); ?>', '/<?php p($ADMIN); ?>/languages/' ],
 	    		<?php } ?>
 	    		<?php if ($User->hasPermission("ManageCountries") || $User->hasPermission("DeleteCountries")) { ?>
-	    		['<img src="/<?php p($ADMIN); ?>/img/icon/countries.png" />', '<?php putGS('Countries'); ?>', '/<?php p($ADMIN); ?>/country/' ],
+	    		['<img src="/<?php p($ADMIN); ?>/img/icon/countries.png" width="22" height="22" />', '<?php putGS('Countries'); ?>', '/<?php p($ADMIN); ?>/country/' ],
 	    		<?php } ?>
 	    	],
 	    	<?php } // if ($showPublishingEnvironmentMenu) ?>
 	    	<?php if ($User->hasPermission("ManageLocalizer")) { ?>
-	    	['<img src="/<?php p($ADMIN); ?>/img/icon/localizer.png" />', '<?php putGS('Localizer'); ?>', '/<?php p($ADMIN); ?>/localizer/',  ],
+	    	['<img src="/<?php p($ADMIN); ?>/img/icon/localizer.png" width="22" height="22" />', '<?php putGS('Localizer'); ?>', '/<?php p($ADMIN); ?>/localizer/',  ],
 	    	<?php } ?>
 	    	<?php if ($User->hasPermission("ViewLogs")) { ?>
-	    	['<img src="/<?php p($ADMIN); ?>/img/icon/logs.png" />', '<?php putGS('Logs'); ?>', 'logs/', ]
+	    	['<img src="/<?php p($ADMIN); ?>/img/icon/logs.png" width="22" height="22" />', '<?php putGS('Logs'); ?>', 'logs/', ]
 	    	<?php } ?>
 	    ],
 	    <?php } // if ($showConfigureMenu) ?>
 	    <?php if ($showUserMenu) { ?>
 	    _cmSplit,
-	    ['<img src="/<?php p($ADMIN); ?>/img/icon/users.png" align="middle" />', ' <?php putGS('Users'); ?>', '', '', '',
+	    ['<img src="/<?php p($ADMIN); ?>/img/icon/users.png" width="22" height="22" align="middle" />', ' <?php putGS('Users'); ?>', '', '', '',
 	    	<?php if ($User->hasPermission("ManageUsers") || $User->hasPermission("DeleteUsers") || $User->hasPermission("ManageSubscriptions")) { ?>
-	    	['<img src="/<?php p($ADMIN); ?>/img/icon/users.png" />', '<?php putGS('Users'); ?>', '/<?php p($ADMIN); ?>/users/' ], 
+	    	['<img src="/<?php p($ADMIN); ?>/img/icon/users.png" width="22" height="22" />', '<?php putGS('Users'); ?>', '/<?php p($ADMIN); ?>/users/' ], 
 	    	<?php } ?>
 	    	<?php if ($User->hasPermission("ManageUserTypes")) { ?>
-	    	['<img src="/<?php p($ADMIN); ?>/img/icon/user_types.png" />', '<?php putGS('User Types'); ?>', '/<?php p($ADMIN); ?>/u_types/' ], 
+	    	['<img src="/<?php p($ADMIN); ?>/img/icon/user_types.png" width="22" height="22" />', '<?php putGS('User Types'); ?>', '/<?php p($ADMIN); ?>/u_types/' ], 
 	    	<?php } ?>
 	    ],
 	    <?php } // if ($showUserMenu) ?>
 	    <?php if ($showObsoleteMenu)  { ?>
 	    _cmSplit,
-	    ['<img src="/<?php p($ADMIN); ?>/img/icon/obsolete.png" align="middle" />', ' <?php putGS('Obsolete'); ?>', '', '', '',
+	    ['<img src="/<?php p($ADMIN); ?>/img/icon/obsolete.png" width="22" height="22" align="middle" />', ' <?php putGS('Obsolete'); ?>', '', '', '',
 	    	<?php if ($User->hasPermission("ManageDictionary") || $User->hasPermission("DeleteDictionary")) { ?>
-	    	['<img src="/<?php p($ADMIN); ?>/img/icon/glossary.png" />', '<?php putGS('Glossary'); ?>', '/<?php p($ADMIN); ?>/glossary/' ], 
+	    	['<img src="/<?php p($ADMIN); ?>/img/icon/glossary.png" width="22" height="22" />', '<?php putGS('Glossary'); ?>', '/<?php p($ADMIN); ?>/glossary/' ], 
 	    	<?php } ?>
 	    	<?php if ($User->hasPermission("ManageClasses")) { ?>
-	    	['<img src="/<?php p($ADMIN); ?>/img/icon/infotypes.png" />', '<?php putGS('Infotype'); ?>', '/<?php p($ADMIN); ?>/infotype/' ], 
+	    	['<img src="/<?php p($ADMIN); ?>/img/icon/infotypes.png" width="22" height="22" />', '<?php putGS('Infotype'); ?>', '/<?php p($ADMIN); ?>/infotype/' ], 
 	    	<?php } ?>
 	    ]
 	    <?php } // if ($showObsoleteMenu) ?>
@@ -133,21 +133,21 @@ $showObsoleteMenu = ($User->hasPermission("ManageDictionary")
 		<table cellpadding="0" cellspacing="0">
 		<tr>
 			<td>
-				<A HREF="/<?php p($ADMIN); ?>/home.php"><img src="/<?php p($ADMIN); ?>/img/icon/home.png" border="0" alt="<?php putGS('Home'); ?>"></a>
+				<A HREF="/<?php p($ADMIN); ?>/home.php"><img src="/<?php p($ADMIN); ?>/img/icon/home.png" width="22" height="22" border="0" alt="<?php putGS('Home'); ?>"></a>
 			</td>
 			<td style="font-weight: bold; padding-left: 2px;">
 				<A HREF="/<?php p($ADMIN); ?>/home.php" style="color: black; text-decoration: none;"><?php putGS('Home'); ?></A>
 			</td>
 			
 			<td style="padding-left: 10px;">
-				<A HREF="" ONCLICK="window.open('/<?php p($ADMIN); ?>/popup/', 'fpopup', 'menu=no,width=500,height=410'); return false;"><img src="/<?php p($ADMIN); ?>/img/icon/quick_menu.png" border="0" alt="<?php putGS('Quick Menu'); ?>"></a>
+				<A HREF="" ONCLICK="window.open('/<?php p($ADMIN); ?>/popup/', 'fpopup', 'menu=no,width=500,height=410'); return false;"><img src="/<?php p($ADMIN); ?>/img/icon/quick_menu.png" width="22" height="22" border="0" alt="<?php putGS('Quick Menu'); ?>"></a>
 			</td>
 			<td style="font-weight: bold; padding-left: 2px;" nowrap>
 				<A HREF="" ONCLICK="window.open('/<?php p($ADMIN); ?>/popup/', 'fpopup', 'menu=no,width=500,height=410'); return false;" style="color: black; text-decoration: none;"><?php putGS('Quick Menu'); ?></a>
 			</td>
 			
 			<td style="padding-left: 10px;">
-				<A HREF="/<?php p($ADMIN); ?>/logout.php"><img src="/<?php p($ADMIN); ?>/img/icon/logout.png" border="0" alt="<?php putGS('Logout'); ?>"></a>
+				<A HREF="/<?php p($ADMIN); ?>/logout.php"><img src="/<?php p($ADMIN); ?>/img/icon/logout.png" width="22" height="22" border="0" alt="<?php putGS('Logout'); ?>"></a>
 			</td>
 			<td style="font-weight: bold; padding-left: 2px; padding-right: 10px;">
 				<A HREF="/<?php p($ADMIN); ?>/logout.php" style="color: black; text-decoration: none;"><?php putGS('Logout'); ?></a>
