@@ -35,7 +35,7 @@ backup_database()
     fi
     if [ "$confirm" = "Y" ] || [ "$confirm" = "y" ] || [ "$confirm" = "" ]; then
 	echo -n "Backing up the database..."
-	mysqldump -u root campsite > $$CAMPSITE-database.sql
+	mysqldump -u root "$APP_NAME" > $$CAMPSITE-database.sql
 	err_code=$?
 	if [ $err_code -ne 0 ]; then
 	    echo "ERROR"
@@ -43,9 +43,9 @@ backup_database()
 	    rm -f $$CAMPSITE-database.sql
 	    exit 1
 	fi
-	mv -f $$CAMPSITE-database.sql CAMPSITE-database.sql
+	mv -f $$CAMPSITE-database.sql "$APP_NAME-database.sql"
 	echo "done"
-	echo "Database was backed up to CAMPSITE-database.sql file."
+	echo "Database was backed up to $APP_NAME-database.sql file."
     else
 	echo "Skipped database backup."
     fi
