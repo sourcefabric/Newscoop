@@ -155,7 +155,7 @@ function todefradio($s)
 {
     if (!isset($GLOBALS[$s]))
  $GLOBALS[$s]='';
-    if ($GLOBALS[$s]=='on')
+    if ($_REQUEST[$s]=='on')
  $GLOBALS[$s]='Y';
     else
  $GLOBALS[$s]='N';
