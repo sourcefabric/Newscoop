@@ -736,6 +736,7 @@ protected:
 	CActionList block;		// first list of actions (condition is verified)
 	CActionList sec_block;	// second list of actions (condition is not verified)
 	bool m_bNegated;
+	bool m_bStrictType;
 
 	// AccessAllowed: return true if access to hidden content is allowed
 	// Parameters:
@@ -745,8 +746,9 @@ protected:
 
 public:
 	// constructor
-	CActIf(int m, const CParameter& p, bool p_bNegated = false) throw(InvalidModifier)
-		: param(p), modifier(m), m_bNegated(p_bNegated)
+	CActIf(int m, const CParameter& p, bool p_bNegated = false, bool p_bStrictType = false)
+		throw(InvalidModifier) : param(p), modifier(m), m_bNegated(p_bNegated),
+			m_bStrictType(p_bStrictType)
 	{
 		if (!s_coModifiers.validModifier(m))
 			throw InvalidModifier();

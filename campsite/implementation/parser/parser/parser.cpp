@@ -1237,6 +1237,7 @@ inline int CParser::HIf(CActionList& al, int lv, int sublv)
 {
 	CParameter param("");
 	IntSet rc_hash;
+	bool bStrictType = false;
 	bool bNegated = false;
 	RequireAtom(l);
 	if (case_comp(l->atom()->identifier(), "not") == 0)
@@ -1419,6 +1420,7 @@ inline int CParser::HIf(CActionList& al, int lv, int sublv)
 		string type;
 		if (st->findType(l->atom()->identifier()))
 		{
+			bStrictType = true;
 			type = l->atom()->identifier();
 			RequireAtom(l);
 		}
@@ -1480,7 +1482,7 @@ inline int CParser::HIf(CActionList& al, int lv, int sublv)
 	}
 	if (l->res() != CMS_LEX_END_STATEMENT)
 		WaitForStatementEnd(true);
-	SafeAutoPtr<CActIf> ai(new CActIf(st->id(), param, bNegated));
+	SafeAutoPtr<CActIf> ai(new CActIf(st->id(), param, bNegated, bStrictType));
 	ai->rc_hash = rc_hash;
 	int res;
 	if ((res = LevelParser(ai->block, lv, sublv)))
