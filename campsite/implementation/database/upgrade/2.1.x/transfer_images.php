@@ -1,5 +1,14 @@
 <?php
-
+/**
+ * This script is for upgrading from 2.1.X to 2.2.0.
+ * This will transfer all the images out of the database into the file system.
+ * Note: we do NOT want to use the Image class to do the work here, because
+ * the user may be upgrading from 2.1.X to something > 2.2, in which case the
+ * Image class might be changed since 2.2, which may cause this script to fail.
+ * So this script *re-implements* things in the Image class as they were in 2.2.
+ *
+ */
+ 
 require_once("database_conf.php");
 require_once("install_conf.php");
 if (!is_array($Campsite)) {
@@ -7,18 +16,20 @@ if (!is_array($Campsite)) {
 	exit(1);
 }
 
+//$db_name = "testcampsite";
+//$db_user = "root";
+//$db_passwd = "";
+//$db_host = "localhost";
+//$images_dir = "/home/paul/campsite/images";
+
 $db_name = $Campsite['DATABASE_NAME'];
 $db_user = $Campsite['DATABASE_USER'];
 $db_passwd = $Campsite['DATABASE_PASSWORD'];
 $db_host = $Campsite['DATABASE_SERVER_ADDRESS'];
-$images_dir = $Campsite['WWW_DIR'] . "/$db_name/html/images";
-$classes_dir = $Campsite['WWW_DIR'] . "/$db_name/html/classes";
+$images_dir = $Campsite['IMAGES_DIRECTORY'];
 
-// include Image class definition
-require_once("$classes_dir/Image.php");
-
-if ($argc > 1) {
-	$usage = "Usage: transfer_templates.php [-d <db_name>] [-u <user>]\n"
+if (isset($argc) && ($argc > 1)) {
+	$usage = "Usage: transfer_images.php [-d <db_name>] [-u <user>]\n"
 		. "\t[-p <passwd>] [-h <host>] [-i <images_dir>]\n";
 	$i = 1;
 	while ($i < $argc) {
@@ -51,52 +62,119 @@ if ($argc > 1) {
 	}
 }
 
-if (!is_dir($templates_dir))
-	die("ERROR! " . $templates_dir . " is not a directory.\n");
-
-if ($templates_dir[strlen($templates_dir) - 1] == '/') {
-	$len = strlen($templates_dir) - 1;
-	$templates_dir = substr($templates_dir, 0, $len);
+if (!is_dir($images_dir)) {
+	die("ERROR! " . $images_dir. " is not a directory.\n");
 }
 
-if (!mysql_connect($db_host, $db_user, $db_passwd))
+// Cut off trailing slash
+if ($images_dir[strlen($images_dir) - 1] == '/') {
+	$len = strlen($images_dir) - 1;
+	$images_dir = substr($images_dir, 0, $len);
+}
+
+if (!mysql_connect($db_host, $db_user, $db_passwd)) {
 	die("Unable to connect to the database.\n");
-if (!mysql_select_db($db_name))
+}
+if (!mysql_select_db($db_name)) {
 	die("Unable to use the database " . $db_name . ".\n");
+}
 
 transfer_images($images_dir);
+
+// Signal to our parent script that we ran successfully.
 $sql = "CREATE TABLE TransferImages(a int)";
 mysql_query($sql);
 echo "Images transfered successfuly\n";
 
 
-function transfer_images($dst_dir)
-{
-// *********************************************************************
-//
-// Following is the code from the old shell script; the idea is to dump
-// the image into a file using "select Image into dumpfile"
-//
-// *********************************************************************
-// mcommand="$mclient -u $muser -h $mserver -N"
-// if [ "$mpasswd" != "" ]; then
-// 	mcommand="$mcommand -p=\"$mpasswd\""
-// fi
-// mcommand="$mcommand $dbname"
-// 
-// sql="select Id from ImagesDup"
-// ids=`$mcommand -e "$sql"`
-// 
-// mkdir -p "$image_dir"
-// for id in $ids; do
-// 	image_file="/tmp/cms-image-$id"
-// 	rm -f "$image_file"
-// 	sql="select Image into dumpfile '$image_file' from ImagesDup where Id = $id"
-// 	$mcommand -e "$sql"
-// 	mv -f "$image_file" "$image_dir"
-// done
-// $mcommand -e "create table TransferImages(a int)"
-
-}
+function transfer_images($p_destDir) {
+	// TESTING STUFF
+	//	$dropTableQuery = "DROP TABLE IF EXISTS ImagesDup";
+//	mysql_query($dropTableQuery);
+//	$createTableQuery =
+//	"CREATE TABLE IF NOT EXISTS `ImagesDup` (
+//    `Id` int(10) unsigned NOT NULL auto_increment,
+//    `Description` varchar(255) NOT NULL default '',
+//    `Photographer` varchar(255) NOT NULL default '',
+//    `Place` varchar(255) NOT NULL default '',
+//    `Caption` varchar(255) NOT NULL default '',
+//    `Date` date NOT NULL default '0000-00-00',
+//    `ContentType` varchar(64) NOT NULL default '',
+//    `Location` enum('local','remote') NOT NULL default 'local',
+//    `URL` varchar(255) NOT NULL default '',
+//    `NrArticle` int(10) unsigned NOT NULL default '0',
+//    `Number` int(10) unsigned NOT NULL default '0',
+//    `Image` mediumblob NOT NULL,
+//    `ThumbnailFileName` varchar(50) NOT NULL default '',
+//    `ImageFileName` varchar(50) NOT NULL default '',
+//    `UploadedByUser` int(11) default NULL,
+//    `LastModified` timestamp(14) NOT NULL,
+//    `TimeCreated` timestamp(14) NOT NULL default '00000000000000',
+//    PRIMARY KEY (`Id`)
+//	)";
+//	mysql_query($createTableQuery);
+//	$transferQuery = "INSERT INTO ImagesDup (Description, Photographer, Place, Date, ContentType, Location, URL, NrArticle, Number, Image) SELECT Description, Photographer, Place, Date, ContentType, 'local', '', NrArticle, Number, Image FROM Images";
+//	mysql_query($transferQuery);
+	
+	$thumbnailCommand = 'convert -sample 64x64';
+	$queryStr = "SELECT Id FROM ImagesDup";
+	$query = mysql_query($queryStr);
+	//mkdir($p_destDir, 0755);
+	while ($row = mysql_fetch_assoc($query)) {
+		$imageFileName = 'cms-image-'.sprintf('%09d', $row['Id']);
+		$tmpImageFile = '/tmp/'.$imageFileName;
+		// Make sure that the file doesnt already exist.
+		if (file_exists($tmpImageFile)) {
+			@unlink($tmpImageFile);
+		}
+		$queryStr2 = "SELECT Image INTO dumpfile '$tmpImageFile' from ImagesDup where Id = ".$row['Id'];
+		mysql_query($queryStr2);
+		// Figure out the image type
+		$imageInfo = getimagesize($tmpImageFile);
+		switch($imageInfo[2]) {
+           case 1: $extension = 'gif'; break;
+           case 2: $extension = 'jpg'; break;
+           case 3: $extension = 'png'; break;
+           case 4: $extension = 'swf'; break;
+           case 5: $extension = 'psd'; break;
+           case 6: $extension = 'bmp'; break;
+           case 7: $extension = 'tiff'; break;
+           case 8: $extension = 'tiff'; break;
+           case 9: $extension = 'jpc'; break;
+           case 10: $extension = 'jp2'; break;
+           case 11: $extension = 'jpx'; break;
+           case 12: $extension = 'jb2'; break;
+           case 13: $extension = 'swc'; break;
+           case 14: $extension = 'aiff'; break;
+           case 15: $extension = 'wbmp'; break;
+           case 16: $extension = 'xbm'; break;
+        }
+        $destFileName = $imageFileName.'.'.$extension;
+		$destFilePath = $p_destDir.'/'.$destFileName;
+		copy($tmpImageFile, $destFilePath);
+		$contentType = "";
+		if (isset($imageInfo["mime"])) {
+			$contentType = ", ContentType='".$imageInfo["mime"]."'";
+		}
+		$queryStr3 = "UPDATE ImagesDup "
+			." SET TimeCreated=NULL, "
+			." LastModified=NULL, "
+			." ImageFileName='".$destFileName."' "
+			.$contentType
+			." WHERE Id=".$row["Id"];
+		mysql_query($queryStr3);
+		$thumbnailFileName = 'cms-thumb-'.sprintf('%09d', $row['Id']).'.'.$extension;
+		$thumbnailFilePath = $p_destDir.'/thumbnails/'.$thumbnailFileName;
+        $cmd = $thumbnailCommand.' '.$destFilePath.' '.$thumbnailFilePath;
+        system($cmd);
+        if (file_exists($thumbnailFilePath)) {
+        	chmod($thumbnailFilePath, 0644);
+			$queryStr4 = "UPDATE ImagesDup "
+				." SET ThumbnailFileName='".$thumbnailFileName."'"
+				." WHERE Id=".$row["Id"];
+			mysql_query($queryStr4);
+        }
+	} // while
+} // fn transfer_images
 
 ?>
