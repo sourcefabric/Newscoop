@@ -13,7 +13,10 @@ B_HEAD
     query ("SHOW COLUMNS FROM Articles LIKE 'XXYYZZ'", 'q_col'); ?>dnl
 E_HEAD
 
-<?php  if ($access) { 
+<?php
+
+todef('AType');
+if ($access) {
 
 SET_ACCESS(<*mata*>, <*ManageArticleTypes*>)
 
