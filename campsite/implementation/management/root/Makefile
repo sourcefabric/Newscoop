@@ -12,6 +12,6 @@ install: $(ALL)
 	cp -f *.php $(HTML_COMMON_DIR)/
 
 clean:
-	rm -f *~ config.php $(MY_TARGETS)
+	rm -f *~ $(MY_TARGETS)
 
 dummy:
