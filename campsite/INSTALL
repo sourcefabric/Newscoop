@@ -17,15 +17,20 @@ PREPARATION - applications you need to have installed
    Usually the make binary is located in /usr/bin directory.
    On rpm systems make package should be installed.
 
-2. m4 macro tool
+2. stat
+   Stat is a utility for displaying the file or filesystem status.
+   It is located in /bin directory. On RedHat, Suse stat package
+   must be installed. On Mandrake fileutils package must be installed.
+
+3. m4 macro tool
    Usually the m4 binary is located in /usr/bin directory.
    On rpm systems m4 package should be installed.
 
-3. g++ compiler
+4. g++ compiler
    Usually the g++ binary is located in /usr/bin directory.
    On rpm systems gcc-c++ package should be installed.
 
-4. MySQL server
+5. MySQL server
    On rpm systems, MySQL, MySQL-shared, MySQL-devel and
    MySQL-client packages should be installed.
    Check that mysqld daemon is started:
@@ -34,12 +39,12 @@ PREPARATION - applications you need to have installed
    three mysqld processes. If not, the mysqld daemon is not
    started. Start it typing safe_mysqld as root.
 
-5. Apache server
+6. Apache server
    On rpm systems, apache or http packages should be installed.
    Configure the Web server (see INSTALLATION 3.) and (re)start
    the httpd daemon.
 
-6. Cron daemon
+7. Cron daemon
    Usually the crond binary is located in /usr/sbin directory.
    On rpm systems vixie-cron package should be installed.
    Make sure the crond daemon is started:
