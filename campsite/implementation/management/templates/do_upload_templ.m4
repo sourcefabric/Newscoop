@@ -1,4 +1,3 @@
-B_HTML
 INCLUDE_PHP_LIB(<*$ADMIN_DIR/templates*>)
 <?php
     require('./lib_upload.php');
@@ -9,7 +8,6 @@ CHECK_BASIC_ACCESS
 CHECK_ACCESS(<*ManageTempl*>)
 
 B_HEAD
- X_EXPIRES
  X_TITLE(<*Uploading template*>)
 <?php  if ($access == 0) { ?>dnl
  X_AD(<*You do not have the right to upload templates.*>)
