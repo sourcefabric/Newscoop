@@ -75,5 +75,18 @@ class Section extends DatabaseObject {
 		return $this->getProperty('ShortName');
 	} // fn getShortName
 	
+	/**
+	 * @return int
+	 */
+	function getArticleTemplateId() {
+		return $this->getProperty('ArticleTplId');
+	} // fn getArticleTemplateId
+	
+	/**
+	 * @return int
+	 */
+	function getSectionTemplateId() {
+		return $this->getProperty('SectionTplId');
+	} // fn getSectionTemplateId
 } // class Section
 ?>
