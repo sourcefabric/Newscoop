@@ -25,15 +25,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
 #include <sstream>
-#include <iostream>
 
 
 #include "cpublication.h"
 #include "util.h"
-
-
-using std::cout;
-using std::endl;
 
 
 void CPublication::BuildFromDB(long p_nId, MYSQL* p_DBConn) throw(InvalidValue)

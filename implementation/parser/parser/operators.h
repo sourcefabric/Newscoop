@@ -44,10 +44,6 @@ public:
 	virtual const char* what () const throw() { return "invalid operator"; }
 };
 
-#include <iostream>
-
-using std::cout;
-using std::endl;
 
 class CCompOperator
 {
