@@ -4,6 +4,7 @@
     - Parser used to abort improperly when it couldn't resolve the allowed hosts
     name
     - Increased the maximum keyword length in the search engine
+    - Fixed memory leaks (used valgrind to detect them)
 
 2.1.2
     - Ported campsite to FreeBSD (thanks to Richard Airlie)
