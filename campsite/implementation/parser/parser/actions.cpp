@@ -351,13 +351,23 @@ int CActLanguage::takeAction(CContext& c, sockstream& fs)
 //		sockstream& fs - output stream
 int CActInclude::takeAction(CContext& c, sockstream& fs)
 {
-	CParser* pcoParser = CParser::map().find(tpl_path);
-	if (pcoParser == NULL)
-		pcoParser = new CParser(tpl_path);
-	pcoParser->setDebug(*m_coDebug);
-	pcoParser->parse();
-	pcoParser->setDebug(*m_coDebug);
-	return pcoParser->writeOutput(c, fs);
+	try
+	{
+		CParser* pcoParser = CParser::map().find(tpl_path);
+		if (pcoParser == NULL)
+			pcoParser = new CParser(tpl_path);
+			pcoParser->setDebug(*m_coDebug);
+			pcoParser->parse();
+			pcoParser->setDebug(*m_coDebug);
+			return pcoParser->writeOutput(c, fs);
+	}
+	catch (ExStat& rcoEx)
+	{
+		fs << endl << "<!-- INCLUDE FILE WARNING!!! -->" << endl;
+		fs << "<!-- Included file (" << tpl_path << ") does not exist. -->" << endl;
+		fs << "<!----------------------------->" << endl;
+		return ERR_NOHASHENT;
+	}
 }
 
 // takeAction: performs the action
