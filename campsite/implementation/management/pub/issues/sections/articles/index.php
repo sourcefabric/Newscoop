@@ -255,12 +255,12 @@ foreach ($allArticles as $articleObj) {
 					<tr>
 						<td width="22px">
 							<?php if (($ArticleOffset > 0) || ($uniqueArticleCounter != 1)) { ?>
-								<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/do_move.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($articleObj->getArticleId()); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php p($articleObj->getLanguageId()); ?>&move=up_rel&pos=1&ArtOffs=<?php p($ArticleOffset); ?>"><img src="/<?php echo $ADMIN; ?>/img/icon/up.png" width="16" height="16" border="0"></A>
+								<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/do_move.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($articleObj->getArticleId()); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php p($articleObj->getLanguageId()); ?>&ArticleLanguage=<?php p($articleObj->getLanguageId()); ?>&move=up_rel&pos=1&ArtOffs=<?php p($ArticleOffset); ?>&Back=<?php p(urlencode($_SERVER['REQUEST_URI'])); ?>"><img src="/<?php echo $ADMIN; ?>/img/icon/up.png" width="16" height="16" border="0"></A>
 							<?php } ?>
 						</td>
 						<td width="22px">
 							<?php if (($uniqueArticleCounter+$ArticleOffset) < $numUniqueArticles) { ?>
-								<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/do_move.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($articleObj->getArticleId()); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php p($articleObj->getLanguageId()); ?>&move=down_rel&pos=1&ArtOffs=<?php p($ArticleOffset); ?>"><img src="/<?php echo $ADMIN; ?>/img/icon/down.png" width="16" height="16" border="0" style="padding-left: 3px; padding-right: 3px;"></A>
+								<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/do_move.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($articleObj->getArticleId()); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php p($articleObj->getLanguageId()); ?>&ArticleLanguage=<?php p($articleObj->getLanguageId()); ?>&move=down_rel&pos=1&ArtOffs=<?php p($ArticleOffset); ?>&Back=<?php p(urlencode($_SERVER['REQUEST_URI'])); ?>"><img src="/<?php echo $ADMIN; ?>/img/icon/down.png" width="16" height="16" border="0" style="padding-left: 3px; padding-right: 3px;"></A>
 							<?php } ?>
 						</td>
 						<form method="GET" action="do_move.php">
@@ -272,6 +272,7 @@ foreach ($allArticles as $articleObj) {
 						<input type="hidden" name="ArticleLanguage" value="<?php p($articleObj->getLanguageId()); ?>">
 						<input type="hidden" name="Article" value="<?php p($articleObj->getArticleId()); ?>">
 						<input type="hidden" name="ArtOffs" value="<?php p($ArticleOffset); ?>">
+						<input type="hidden" name="Back" value="<?php p($_SERVER['REQUEST_URI']); ?>">
 						<input type="hidden" name="move" value="abs">
 						<td>
 							<select name="pos" onChange="this.form.submit();" class="input_select">
