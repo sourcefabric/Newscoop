@@ -1,0 +1,151 @@
+#!/bin/sh
+
+export ROOT_USER=root
+export ROOT_GROUP=root
+c_upgrade=""
+c_define_start_env=""
+root_only=false
+read_only=false
+while [ "$1" != "" ]; do
+    case $1 in
+    --define_start_env) c_define_start_env=--define_start_env ;;
+    --upgrade) c_upgrade=--upgrade ;;
+    --root_user) export ROOT_USER=$2; shift 1 ;;
+    --root_group) export ROOT_GROUP=$2; shift 1 ;;
+    --root_only) root_only=true ;;
+    --read_only) read_only=true ;;
+    esac
+    shift 1
+done
+
+export PACKAGE_TYPE=`cat ./.package_type`
+[ $? -ne 0 ] && echo "Error reading package type" && exit 1
+[ "$PACKAGE_TYPE" != "source" ] && [ "$PACKAGE_TYPE" != "binary" ] && echo "Invalid package type $PACKAGE_TYPE" && exit 1
+cdir=`pwd`
+[ $? -ne 0 ] && echo "Error reading campsite directory" && exit 1
+export CAMPSITE_PACKAGE_DIR=$cdir
+export INSTALL_LOG=${CAMPSITE_PACKAGE_DIR}/install_log
+export INSTALL_CONF=${CAMPSITE_PACKAGE_DIR}/.install_conf
+campsite_version=`cat ${CAMPSITE_PACKAGE_DIR}/README | grep -w ^version | grep ":" | cut -f 2 -d ":"`
+[ $? -ne 0 ] && echo "Error reading campsite version" && exit 1
+export CAMPSITE_VERSION=$campsite_version
+release_date=`cat ${CAMPSITE_PACKAGE_DIR}/README | grep -w ^release | grep ":" | cut -f 2 -d ":"`
+[ $? -ne 0 ] && echo "Error reading campsite release date" && exit 1
+export CAMPSITE_RELEASE_DATE=release_date
+export ROOT_BIN_DIR=/usr/local
+
+. ${INSTALL_CONF}/conf_functions
+
+if [ "$c_define_start_env" != "--define_start_env" ]; then
+
+if [ "$read_only" = "false" ]; then
+    do_install_full_config $c_define_start_env $c_upgrade
+    [ $? -ne 0 ] && exit 1
+    for sel_mod in $SELECTED_MODULES; do
+	do_module_full_config $sel_mod $c_define_start_env $c_upgrade
+	[ $? -ne 0 ] && exit 1
+    done
+else
+    check4_make
+    prepare_install_env
+    install_conf --set
+    for sel_mod in $SELECTED_MODULES; do
+	prepare_${sel_mod}_env
+    done
+    modules_conf --set $sel_mod
+    [ $? -ne 0 ] && exit 1
+fi
+
+rm -f make.env
+echo -n "Writing make.env file..."
+make_env=${CAMPSITE_PACKAGE_DIR}/make.env
+cat > $make_env << EOF
+export ROOT_USER=$ROOT_USER
+export ROOT_GROUP=$ROOT_GROUP
+export APP_NAME=$APP_NAME
+export PACKAGE_TYPE=$PACKAGE_TYPE
+export CGI_DIR=$ADMIN_INTERFACE_CGI_DIR
+export SCRIPT_DIR=$ADMIN_INTERFACE_SCRIPT_DIR
+export HTML_DIR=$ADMIN_INTERFACE_HTML_DIR
+export PRIV_DIR=${ADMIN_INTERFACE_HTML_DIR}/priv
+export PUBLIC_DIR=${ADMIN_INTERFACE_HTML_DIR}/pub
+export HTTP_USER=$APACHE_USER
+export HTTP_GROUP=$APACHE_GROUP
+export BIN_DIR=${ROOT_BIN_DIR}/$APP_NAME
+export CONF_DIR=/etc/campsite.d/$APP_NAME
+export BIN_PACKAGE_DIR=${CAMPSITE_PACKAGE_DIR}/.package/campsite
+export CAMPSITE_VERSION="$CAMPSITE_VERSION"
+export CLASS_DIR=/usr/lib/netscape/java/classes
+export PROCESSOR_TYPE=\`uname -m\`
+export MAKE=$MAKE
+export IMPLEMENTATION_PARTS=$IMPLEMENTATION_PARTS
+export SUPPLEMENTAL_PARTS=$SUPPLEMENTAL_PARTS
+export CAMPSITE_REGISTER=$CAMPSITE_REGISTER
+export INSTALL_CONF=${CAMPSITE_PACKAGE_DIR}/.install_conf
+EOF
+[ $? -ne 0 ] && echo "ERROR" && exit 1
+[ "$GPP" != "" ] && echo "export GPP=$GPP" >> $make_env
+[ "$LIBMYSQLCLIENT_PATH" != "" ] && echo "export LIBMYSQLCLIENT_PATH=$LIBMYSQLCLIENT_PATH" >> $make_env
+[ "$LIBPTHREAD_PATH" != "" ] && echo "export LIBPTHREAD_PATH=$LIBPTHREAD_PATH" >> $make_env
+written_modules=""
+for sel_mod in $SELECTED_MODULES; do
+    preconf_mod=`preconf_modules $sel_mod`
+    [ $? -ne 0 ] && echo $preconf_mod && exit 1
+    if [ "$preconf_mod" != "" ]; then
+	for pmod in $preconf_mod; do
+	    if ! in_list $pmod $written_modules; then
+		attr_list=`modules_conf "$pmod" | cut -f 1 -d "#"`
+		for a in $attr_list; do
+		    echo "export $a" >> $make_env
+		done
+		written_modules="$written_modules $pmod"
+	    fi
+	done
+    fi
+    if ! in_list $sel_mod $written_modules; then
+	attr_list=`modules_conf "$sel_mod" | cut -f 1 -d "#"`
+	for a in $attr_list; do
+	    echo "export $a" >> $make_env
+	done
+	written_modules="$written_modules $sel_mod"
+    fi
+done
+echo "done"
+if [ "$root_only" = "false" ]; then
+    for dir in implementation supplemental; do
+	if [ -x ${dir}/configure ]; then
+	    echo "Configuring $dir ..."
+	    cd $dir && ./configure
+	    result=$?
+	    cd ..
+	    [ $result -ne 0 ] && echo "ERROR configuring $dir" && exit 1
+	fi
+    done
+fi
+
+else # else if define start env
+
+    prepare_install_env
+    install_conf --set
+    modules_conf --set
+
+fi # end if define start env
+
+export CGI_DIR=$ADMIN_INTERFACE_CGI_DIR
+export SCRIPT_DIR=$ADMIN_INTERFACE_SCRIPT_DIR
+export HTML_DIR=$ADMIN_INTERFACE_HTML_DIR
+export PRIV_DIR=${ADMIN_INTERFACE_HTML_DIR}/priv
+export PUBLIC_DIR=${ADMIN_INTERFACE_HTML_DIR}/pub
+export HTTP_USER=$APACHE_USER
+export HTTP_GROUP=$APACHE_GROUP
+export BIN_DIR=${ROOT_BIN_DIR}/$APP_NAME
+export CONF_DIR=/etc/campsite.d/$APP_NAME
+export BIN_PACKAGE_DIR=${CAMPSITE_PACKAGE_DIR}/.package/campsite
+export CLASS_DIR=/usr/lib/netscape/java/classes
+export PROCESSOR_TYPE=`uname -m`
+export MAKE=$MAKE
+export IMPLEMENTATION_PARTS=$IMPLEMENTATION_PARTS
+export SUPPLEMENTAL_PARTS=$SUPPLEMENTAL_PARTS
+export CAMPSITE_REGISTER=/etc/campsite.reg
+
+echo "Configuration done"
