@@ -38,12 +38,12 @@ class CampsiteInterface {
     	foreach ($p_options as $key => $value) {
     		if ($p_valuesIncluded) {
     			?>
-    			<option value="<?php echo $key; ?>" <?php if (!is_null($p_selected) && ($p_selected == $key)) { echo "selected"; } ?>><?php echo $value; ?></option>
+    			<option value="<?php echo $key; ?>" <?php if (!is_null($p_selected) && ($p_selected == $key)) { echo "selected"; } ?>><?php echo htmlspecialchars($value); ?></option>
     			<?php
     		}
     		else {
     			?>
-    			<option <?php if (!is_null($p_selected) && ($p_selected == $value)) { echo "selected"; } ?>><?php echo $value; ?></option>
+    			<option <?php if (!is_null($p_selected) && ($p_selected == $value)) { echo "selected"; } ?>><?php echo htmlspecialchars($value); ?></option>
     			<?php    			
     		}
     	}
