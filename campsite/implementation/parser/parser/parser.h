@@ -375,6 +375,12 @@ private:	// private methods
 	//		int sublv - current sublevel
 	int HWith(CActionList& al, int lv, int sublv);
 	
+	// HURIPath: parse URIPath statement; add CActURIPath action to
+	// actions list (al)
+	// Parameters:
+	//		CActionList& al - reference to actions list
+	int HURIPath(CActionList& al);
+	
 	// LevelParser: read lexems until it finds a statement or reaches end of file
 	// Depending on read statement it calls on of HArticle, HDate, HEdit, HFormParameters,
 	// HIf, HInclude, HIssue, HLanguage, HList, HLocal, HLogin, HPrint, HPublication,
