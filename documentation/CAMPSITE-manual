@@ -1424,6 +1424,52 @@ The list of instructions may contain any instruction allowed in the current cont
 Constraints:
 None.
 
+3.9.1.26 If Language
+Purpose:
+Depending on the given condition, it runs the first or second list of instructions. It may be used anywhere in the template.
+
+Syntax:
+If Language condition
+ [list of instructions]
+[Else [list of instructions]]
+EndIf [Section]
+
+where
+condition= number is|not|greater|smaller<number_value>
+  |name is|not <string_value>
+  |englname is|not <string_value>
+  |code is|not <string_value>
+  |defined
+  |fromstart
+
+- defined: the if condition is true if language parameter is defined
+- fromstart: the if condition is true if actual value of language parameter is equal with the value from template start
+- number: the if condition is true if operation: language number <operator> <number_value> is true
+- name, englname, code: the if condition is true if operation: language name|englname|code <operator> <string_value> is true
+
+The list of instructions may contain any instruction allowed in the current context. If it is used inside a list it must respect the constraints of the list (List Issue, List Section, List Article, List Subtitle, List SearchResult).
+
+Constraints:
+None.
+
+Note:
+The If Image statement is valid only in 2.0.12 and newer versions. It won't work in 2.0.11 or older versions.
+
+3.9.1.27 With
+Purpose:
+Used to access a body field of a certain type of articles. When working with subtitles this statement is mandatory. See also List Subtitle, If PrevSubtitles, If NextSubtitles
+
+Syntax:
+With <article_type> <body_field>
+ list of instructions
+EndWith
+
+The list of instructions may contain any instruction allowed in the current context. If it is used inside a list it must respect the constraints of the list (List Issue, List Section, List Article, List Subtitle, List SearchResult).
+
+Constraints:
+None.
+
+
 3.9.2 Printable information
 3.9.2.1 URL, Form
 Purpose:

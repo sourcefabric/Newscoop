@@ -1749,9 +1749,9 @@ PrevSubtitles
   |fromstart</font></P>
 <ul>
   <li>defined: the if condition is true if issue parameter is defined</li>
-  <li>fromstart: the if condition is true if actual value of issue parameter is 
+  <li>fromstart: the if condition is true if actual value of issue parameter is
     equal with the value from template start</li>
-  <li>iscurrent: the if condition is true if actual issue is the current issue 
+  <li>iscurrent: the if condition is true if actual issue is the current issue
     (the last published issue)</li>
   <li>number: the if condition is true if actual issue number is &lt;value&gt;</li>
 </ul>
@@ -1759,23 +1759,23 @@ PrevSubtitles
 <P>&#9;<font face="Courier New, Courier, mono">&lt;!** If Issue number 1&gt;<br>
   This is Issue number 1<br>
   &lt;!** EndIf&gt;</font></P>
-<P>The list of instructions may contain any instruction allowed in the current 
-  context. If it is used inside a list, it must respect the constraints of the 
+<P>The list of instructions may contain any instruction allowed in the current
+  context. If it is used inside a list, it must respect the constraints of the
   list (List Issue, List Section, List Article, List Subtitle, List SearchResult).</P>
 <P>Constraints:</P>
 <P>None.</P>
 <P>3.9.1.17 <b>If Section <a name="3.9.1.17"></a></b></P>
 <P>Purpose:</P>
-<P>Depending on the given condition, it runs the first or second list of instructions. 
-  It may be used anywhere in the template. It is used when printing information 
+<P>Depending on the given condition, it runs the first or second list of instructions.
+  It may be used anywhere in the template. It is used when printing information
   for a certain section.</P>
 <P>Syntax:</P>
 <P><font face="Courier New, Courier, mono">If Section &lt;condition&gt;</font><br>
   <i>list of instructions</i><br>
   <font face="Courier New, Courier, mono">[Else [list of instructions]]<br>
   EndIf [Section]</font></P>
-<P>The list of instructions may contain any instruction allowed in the current 
-  context. If it is used inside a list, it must respect the constraints of the 
+<P>The list of instructions may contain any instruction allowed in the current
+  context. If it is used inside a list, it must respect the constraints of the
   list (List Issue, List Section, List Article, List Subtitle, List SearchResult).</P>
 <P><font face="Courier New, Courier, mono">&lt;condition&gt;=number &lt;value&gt;<br>
   |name &lt;value&gt;<br>
@@ -1783,7 +1783,7 @@ PrevSubtitles
   |fromstart</font></P>
 <ul>
   <li>defined: the if condition is true if section parameter is defined</li>
-  <li>fromstart: the if condition is true if actual value of section parameter 
+  <li>fromstart: the if condition is true if actual value of section parameter
     is equal with the value from template start</li>
   <li>number: the if condition is true if actual section number is &lt;value&gt;</li>
   <li>name: the if condition is true if actual section name is &lt;value&gt;</li>
@@ -1867,10 +1867,10 @@ PrevSubtitles
 <P>None.</P>
 <P>3.9.1.21 <b>If Login<a name="3.9.1.21"></a></b></P>
 <P>Purpose:</P>
-<P>Depending on the given condition, it runs the first, the second list of instructions 
-  or neither of them. If the login event did not occur, neither of the instructions 
-  list will be run. (This implies a certain order to be followed; that is, the 
-  template containing If Login must follow a template containing Login). It may 
+<P>Depending on the given condition, it runs the first, the second list of instructions
+  or neither of them. If the login event did not occur, neither of the instructions
+  list will be run. (This implies a certain order to be followed; that is, the
+  template containing If Login must follow a template containing Login). It may
   be used anywhere in the template. It is used to describe the subscription result.</P>
 <P>Syntax:</P>
 <P><font face="Courier New, Courier, mono">If Login &lt;condition&gt;</font><br>
@@ -1976,33 +1976,76 @@ list. It may be used anywhere in the template.</P>
   list (List Issue, List Section, List Article, List Subtitle, List SearchResult).</P>
 <P>Constraints:</P>
 <P>None.</P>
+<P>3.9.1.26 <b>If Language<a name="3.9.1.26"></a></b></P>
+<P>Purpose:</P>
+<P>Depending on the given condition, it runs the first or second list of instructions.
+  It may be used anywhere in the template.</P>
+<P>Syntax:</P>
+<P><font face="Courier New, Courier, mono">If Language&#9;condition</font><br>
+  <i>list of instructions</i><br>
+  <font face="Courier New, Courier, mono">[Else [list of instructions]]<br>
+  EndIf [Section]</font></P>
+<P>where </P>
+<P><font face="Courier New, Courier, mono">condition= number is|not|greater|smaller&lt;number_value&gt;
+<br>  |name is|not &lt;string_value&gt;
+<br>  |englname is|not &lt;string_value&gt;
+<br>  |code is|not &lt;string_value&gt;
+<br>  |defined<br>
+<br>  |fromstart</font></P>
+<ul>
+  <li>defined: the if condition is true if language parameter is defined</li>
+  <li>fromstart: the if condition is true if actual value of language parameter is
+    equal with the value from template start</li>
+  <li>number: the if condition is true if operation: <i>language number &lt;operator&gt; &lt;number_value&gt;</i> is true</li>
+  <li>name, englname, code: the if condition is true if operation: <i>language name|englname|code &lt;operator&gt; &lt;string_value&gt;</i> is true</li>
+</ul>
+<P>The list of instructions may contain any instruction allowed in the current
+  context. If it is used inside a list it must respect the constraints of the
+  list (List Issue, List Section, List Article, List Subtitle, List SearchResult).</P>
+<P>Constraints:</P>
+<P>None.</P>
+<P><b><font color="red" size=+1>Note:</font></b></P>
+<P>The If Image statement is valid only in 2.0.12 and newer versions. It won't work in 2.0.11 or older versions.
+<P>3.9.1.27 <b>With<a name="3.9.1.27"></a></b></P>
+<P>Purpose:</P>
+<P>Used to access a body field of a certain type of articles. When working with subtitles this statement is mandatory.
+  See also <a href="#3.9.1.9">List Subtitle</a>, <a href="#3.9.1.12">If PrevSubtitles, If NextSubtitles</a></P>
+<P>Syntax:</P>
+<P><font face="Courier New, Courier, mono">With &lt;article_type&gt; &lt;body_field&gt;</font><br>
+  <i>list of instructions</i><br>
+  <font face="Courier New, Courier, mono">EndWith</font></P>
+<P>The list of instructions may contain any instruction allowed in the current
+  context. If it is used inside a list it must respect the constraints of the
+  list (List Issue, List Section, List Article, List Subtitle, List SearchResult).</P>
+<P>Constraints:</P>
+<P>None.</P>
 <P>3.9.2 <b>Printable information<a name="3.9.2"></a></b></P>
 <P>3.9.2.1 <b>URL, Form<a name="3.9.2.1"></a></b></P>
 <P>Purpose:</P>
-<P>It prints the parameters in URL or Form mode. These instructions print only 
+<P>It prints the parameters in URL or Form mode. These instructions print only
   data context parameters and can be used to create links.</P>
-<P>In several cases (for site maps for example), local parameters are created 
-  with the same values as the original ones (from template start); within the 
+<P>In several cases (for site maps for example), local parameters are created
+  with the same values as the original ones (from template start); within the
   local block the original parameters may be needed.</P>
 <P>Syntax:</P>
 <P><font face="Courier New, Courier, mono">URLParameters [Image &lt;image_number&gt;]<br>
   |[allsubtitles]</font></P>
-<P>Print the current parameters, specifying eventually that the current article 
+<P>Print the current parameters, specifying eventually that the current article
   will be treated as a unit, instead of a group of paragraphs (allsubtitles).</P>
 <P><font face="Courier New, Courier, mono">URLParameters fromstart</font><br>
-  Prints the parameters received at the start of template (useful when building 
+  Prints the parameters received at the start of template (useful when building
   sitemaps).</P>
 <P><font face="Courier New, Courier, mono">FormParameters [fromstart]</font><br>
   Print the current/original parameters.</P>
-<P><font face="Courier New, Courier, mono">URLParameters reset_&lt;environment 
+<P><font face="Courier New, Courier, mono">URLParameters reset_&lt;environment
   level&gt;_list</font><br>
   Reset list counters for all level bellow the specified one.</P>
 <P>Examples:</P>
 <P><font face="Courier New, Courier, mono">URLParameters reset_issue_list</font><br>
-  - reset list counters for all the lists (issue, section, article, searchresult, 
+  - reset list counters for all the lists (issue, section, article, searchresult,
   subtitle)</P>
 <P><font face="Courier New, Courier, mono">URLParameters reset_section_list</font><br>
-  - reset list counters for the following lists: section, article, searchresult, 
+  - reset list counters for the following lists: section, article, searchresult,
   subtitle</P>
 <P><font face="Courier New, Courier, mono">URLParameters reset_article_list</font><br>
   - reset list counters for the following lists: article, searchresult, subtitle</P>
@@ -2010,20 +2053,20 @@ list. It may be used anywhere in the template.</P>
   - reset list counters for the following lists: searchresult, subtitle</P>
 <P><font face="Courier New, Courier, mono">URLParameters reset_subtitle_list</font><br>
   - reset list counters for the following lists: subtitle</P>
-<P>You can add the other valid parameters to URLParameters before or after these 
+<P>You can add the other valid parameters to URLParameters before or after these
   reset_*_list parameters.</P>
 <P>Example:</P>
-<P>Suppose the data context is set to Language 1 (identifier), Publication 2 (identifier), 
+<P>Suppose the data context is set to Language 1 (identifier), Publication 2 (identifier),
   Issue 3 (number), Section 6 (number). The string created for printing is:</P>
-<P><font face="Courier New, Courier, mono">IdLanguage=1&amp;IdPublication=2&amp;NrIssue=3&amp;NrSection=6 
+<P><font face="Courier New, Courier, mono">IdLanguage=1&amp;IdPublication=2&amp;NrIssue=3&amp;NrSection=6
   </font></P>
 <P>for URLParameters, and</P>
-<P><font face="Courier New, Courier, mono">&lt;input type=hidden name=IdPublication 
+<P><font face="Courier New, Courier, mono">&lt;input type=hidden name=IdPublication
   value="2"&gt;<br>
   &lt;input type=hidden name=NrIssue value="3"&gt;<br>
   &lt;input type=hidden name=NrSection value="6"&gt;</font></P>
 <P>for FormParameters respectively.</P>
-<P>If Image is specified on URLParameters, the parameters for &lt;image_number&gt; 
+<P>If Image is specified on URLParameters, the parameters for &lt;image_number&gt;
   of the article specified in the data context will be printed.</P>
 <P>Example: </P>
 <P><font face="Courier New, Courier, mono">IdPublication=2&amp;NrIssue=3&amp;NrSection=6&amp;NrArticle&amp;NrImage=4</font></P>
