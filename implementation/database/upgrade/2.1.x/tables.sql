@@ -217,7 +217,7 @@ INSERT INTO ImagesDup (Description, Photographer, Place, Date, ContentType, Loca
 
 
 -- Step 2: Run the 'transfer_images' script now!!!
-system ./transfer_images
+system php ./transfer_images.php
 
 -- Verify if the script ran without errors
 SELECT * FROM TransferImages;
