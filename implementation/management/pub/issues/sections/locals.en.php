@@ -5,7 +5,7 @@ regGS("Delete section from all subscriptions.","Delete section from all subscrip
 regGS("A total of $1 subscriptions were updated.","A total of $1 subscriptions were updated.:en");
 
 // -- index.m4
-regGS("Name<BR><SMALL>(click to see articles)</SMALL>","Name<BR><SMALL>(click to see articles)</SMALL>:en");
+regGS("Name<BR><SMALL>(click to see articles)</SMALL>","Name <SMALL>(click to see articles)</SMALL>:en");
 regGS("Delete section $1","Delete section $1:en");
 
 // -- do_add.m4
