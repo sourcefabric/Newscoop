@@ -11,11 +11,11 @@ regGS("Image is still attached to Article(s)","Image is still attached to Articl
 regGS("Add new image","Add new image:en");
 regGS("Select an old image","Select an old image:en");
 regGS("Click to view image","Click to view image:en");
-regGS("Date<BR><SMALL>(yyyy-mm-dd)</SMALL>","Date<BR><SMALL>(yyyy-mm-dd)</SMALL>:en");
+regGS("Date<BR><SMALL>(yyyy-mm-dd)</SMALL>","Date <SMALL>(yyyy-mm-dd)</SMALL>:en");
 regGS("Delete image $1","Delete image $1:en");
 regGS("No images.","No images.:en");
 regGS("Thumbnail", "Thumbnail:en");
-regGS("Description<BR><SMALL>(Click to view details)</SMALL>", "Description<BR><SMALL>(Click to view details)</SMALL>:en");
+regGS("Description<BR><SMALL>(Click to view details)</SMALL>", "Description <SMALL>(Click to view details)</SMALL>:en");
 regGS("In use", "In use:en");
 regGS("Gallery", "Gallery:en");
 regGS("Text only", "Text only:en");
@@ -39,7 +39,7 @@ regGS("Changed image properties of $1","Changed image properties of $1:en");
 // -- del.m4
 regGS("Delete image","Delete image:en");
 regGS("You do not have the right to delete images","You do not have the right to delete images:en");
-regGS("Are you sure you want to delete the image $1?","Are you sure you want to delete the image $1?:en");
+regGS("Are you sure you want to delete the image $1?","Are you sure you want to delete the image \\'$1\\'?:en");
 
 // -- do_del.m4
 regGS("Deleting image","Deleting image:en");

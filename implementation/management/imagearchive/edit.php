@@ -1,64 +1,44 @@
- <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+<?php  
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
+load_common_include_files();
+require_once($_SERVER['DOCUMENT_ROOT'].'/priv/imagearchive/include.inc.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/priv/CampsiteInterface.php');
+
+list($access, $User) = check_basic_access($_REQUEST);
+if (!$access) {
+	header('Location: /priv/logout.php');
+	exit;
+}
+$ImageId = isset($_REQUEST['image_id'])?$_REQUEST['image_id']:0;
+if (!is_numeric($ImageId) || ($ImageId <= 0)) {
+	header('Location: '.CAMPSITE_IMAGEARCHIVE_DIR.'index.php?'.Image_GetSearchUrl($_REQUEST));
+	exit;	
+}
+
+// This file can only be accessed if the user has the right to change images.
+if (!$User->hasPermission('ChangeImage')) {
+	header('Location: /priv/logout.php');
+	exit;		
+}
+
+$imageObj =& new Image($ImageId);
+$articles =& $imageObj->getArticlesThatUseImage();
+?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
 	"http://www.w3.org/TR/REC-html40/loose.dtd">
 <HTML>
-<?php
-	require_once("../lib_campsite.php");
-	require_once ("../languages.php");
-	require_once('include.inc.php');
-	require_once("$DOCUMENT_ROOT/db_connect.php");
-
-	$globalfile=selectLanguageFile('..','globals');
-	$localfile=selectLanguageFile('.','locals');
-	@include ($globalfile);
-	@include ($localfile);
-?>
-
-<?php 
-	todefnum('TOL_UserId');
-    todefnum('TOL_UserKey');
-    query ("SELECT * FROM Users WHERE Id=$TOL_UserId AND KeyId=$TOL_UserKey", 'Usr');
-    $access=($NUM_ROWS != 0);
-    if ($NUM_ROWS) {
-	fetchRow($Usr);
-	query ("SELECT * FROM UserPerm WHERE IdUser=".getVar($Usr,'Id'), 'XPerm');
-	 if ($NUM_ROWS){
-	 	fetchRow($XPerm);
-	 }
-	 else $access = 0;						//added lately; a non-admin can enter the administration area; he exists but doesn't have ANY rights
-	 $xpermrows= $NUM_ROWS;
-    }
-    else {
-	query ("SELECT * FROM UserPerm WHERE 1=0", 'XPerm');
-    }
-?>
-    
-
-
 <HEAD>
     <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 	<META HTTP-EQUIV="Expires" CONTENT="now">
 	<TITLE><?php  putGS("Change image information"); ?></TITLE>
-<?php  if ($access == 0) { ?>	<META HTTP-EQUIV="Refresh" CONTENT="0; URL=/priv/logout.php">
-<?php  } ?></HEAD>
-
-<?php  if ($access) { ?><STYLE>
-	BODY { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	SMALL { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 8pt; }
-	FORM { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	TH { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	TD { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	BLOCKQUOTE { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	UL { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	LI { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	A  { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; text-decoration: none; color: darkblue; }
-	ADDRESS { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 8pt; }
-</STYLE>
+	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['website_url'] ?>/css/admin_stylesheet.css">
+</HEAD>
 
 <BODY  BGCOLOR="WHITE" TEXT="BLACK" LINK="DARKBLUE" ALINK="RED" VLINK="DARKBLUE">
-<?php
-	todefnum('Id');
-?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%">
 	<TR>
 		<TD ROWSPAN="2" WIDTH="1%"><IMG SRC="/priv/img/sign_big.gif" BORDER="0"></TD>
@@ -78,22 +58,9 @@
 	</TD></TR>
 </TABLE>
 
-<?php 
-query ("SELECT Id, Description, Photographer, Place, Date, Location, URL, ContentType FROM Images WHERE Id = $Id", 'q_img');
-if ($NUM_ROWS) {
-	fetchRow($q_img);
-
-	$Link = cImgLink();
-
-	if (getVar($q_img, 'Location') == 'local') {
-		$imgSRC =  _IMG_PREFIX_.getVar($q_img, 'Id');
-	} else {
-		$imgSRC = getVAR($q_img, 'URL');
-	}
-?>
-<CENTER><IMG SRC="<?php echo $imgSRC ?>" BORDER="0" ALT="<?php  pgetHVar($q_img,'Description'); ?>"></CENTER>
+<CENTER><IMG SRC="<?php echo $imageObj->getImageUrl(); ?>" BORDER="0" ALT="<?php echo htmlspecialchars($imageObj->getDescription()); ?>"></CENTER>
 <P>
-<FORM NAME="dialog" METHOD="POST" ACTION="do_edit.php?<?php echo $Link['SO']; ?>" ENCTYPE="multipart/form-data">
+<FORM NAME="dialog" METHOD="POST" ACTION="do_edit.php?<?php echo Image_GetSearchUrl($_REQUEST); ?>" ENCTYPE="multipart/form-data">
 <CENTER><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" BGCOLOR="#C0D0FF" ALIGN="CENTER">
 	<TR>
 		<TD COLSPAN="2">
@@ -104,43 +71,43 @@ if ($NUM_ROWS) {
 	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS("Description"); ?>:</TD>
 		<TD align="left">
-		<INPUT TYPE="TEXT" NAME="cDescription" VALUE="<?php  pgetHVar($q_img,'Description'); ?>" SIZE="32" MAXLENGTH="128">
+		<INPUT TYPE="TEXT" NAME="cDescription" VALUE="<?php echo htmlspecialchars($imageObj->getDescription()); ?>" SIZE="32" MAXLENGTH="128" class="input_text">
 		</TD>
 	</TR>
 	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS("Photographer"); ?>:</TD>
 		<TD align="left">
-		<INPUT TYPE="TEXT" NAME="cPhotographer" VALUE="<?php  pgetHVar($q_img,'Photographer') ;?>" SIZE="32" MAXLENGTH="64">
+		<INPUT TYPE="TEXT" NAME="cPhotographer" VALUE="<?php echo htmlspecialchars($imageObj->getPhotographer());?>" SIZE="32" MAXLENGTH="64" class="input_text">
 		</TD>
 	</TR>
 	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS("Place"); ?>:</TD>
 		<TD align="left">
-		<INPUT TYPE="TEXT" NAME="cPlace" VALUE="<?php  pgetHVar($q_img,'Place'); ?>" SIZE="32" MAXLENGTH="64">
+		<INPUT TYPE="TEXT" NAME="cPlace" VALUE="<?php echo htmlspecialchars($imageObj->getPlace()); ?>" SIZE="32" MAXLENGTH="64" class="input_text">
 		</TD>
 	</TR>
 	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS("Date"); ?>:</TD>
 		<TD align="left">
-		<INPUT TYPE="TEXT" NAME="cDate" VALUE="<?php  pgetHVar($q_img,'Date'); ?>" SIZE="10" MAXLENGTH="10"><?php putGS('YYYY-MM-DD'); ?>
+		<INPUT TYPE="TEXT" NAME="cDate" VALUE="<?php echo htmlspecialchars($imageObj->getDate()); ?>" SIZE="11" MAXLENGTH="10" class="input_text"> <?php putGS('YYYY-MM-DD'); ?>
 		</TD>
 	</TR>
     <?php
-    if (getVar($q_img,'Location') == 'remote') {
+    if ($imageObj->getLocation() == 'remote') {
     ?>
 	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS("URL"); ?>:</TD>
 		<TD align="left">
-		<INPUT TYPE="TEXT" NAME="cURL" VALUE="<?php  pgetHVar($q_img,'URL') ;?>" SIZE="32">
+		<INPUT TYPE="TEXT" NAME="cURL" VALUE="<?php echo htmlspecialchars($imageObj->getUrl()); ?>" SIZE="32" class="input_text">
 		</TD>
 	</TR>
     <?php
     } else {
     ?>
 	<TR>
-		<TD ALIGN="RIGHT" ><?php  putGS("Image"); ?>:</TD>
+		<TD ALIGN="RIGHT"><?php  putGS("Image"); ?>:</TD>
 		<TD align="left">
-		<INPUT TYPE="TEXT" NAME="cImage" SIZE="32" MAXLENGTH="64" VALUE="<?php  echo _IMG_PREFIX_; pgetHVar($q_img,'Id'); ?>" DISABLED>
+		<INPUT TYPE="TEXT" NAME="cImage" SIZE="32" MAXLENGTH="64" VALUE="<?php echo basename($imageObj->getImageStorageLocation()); ?>" DISABLED class="input_text">
 		</TD>
 	</TR>
     <?php
@@ -149,9 +116,9 @@ if ($NUM_ROWS) {
 	<TR>
 		<TD COLSPAN="2">
 		<DIV ALIGN="CENTER">
-		<INPUT TYPE="HIDDEN" NAME="Id" VALUE="<?php  p($Id); ?>">
-		<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save changes'); ?>">
-		<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='<?php echo CAMPSITE_IMAGEARCHIVE_DIR; ?>index.php?<?php echo $Link['SO']; ?>'">
+		<INPUT TYPE="HIDDEN" NAME="image_id" VALUE="<?php echo $imageObj->getImageId(); ?>">
+		<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save changes'); ?>" class="button">
+		<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='<?php echo CAMPSITE_IMAGEARCHIVE_DIR; ?>index.php?<?php echo Image_GetSearchUrl($_REQUEST); ?>'" class="button">
 		</DIV>
 		</TD>
 	</TR>
@@ -159,42 +126,32 @@ if ($NUM_ROWS) {
 </FORM>
 <P>
 <?php
-		$query = "SELECT ai.NrArticle, a.Name, a.IdPublication, a.NrIssue, a.NrSection, a.Number, a.IdLanguage
-				  FROM ArticleImages AS ai, Images AS i, Articles AS a
-				  WHERE ai.IdImage = i.Id AND ai.NrArticle = a.Number AND i.Id = $Id
-				  ORDER BY ai.NrArticle";
-		query($query, 'q_art');
+if (count($articles) > 0) {
+	// image is in use //////////////////////////////////////////////////////////////////
+	?>
+	<center>
+	<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" bgcolor="white" width="50%">
+	  <tr><td bgcolor="#C0D0FF" colspan="2"><b><?php putGS('Previously used in Articles'); ?></b></td></tr>
+	<?php
+	$color = 0;
+	foreach ($articles as $article) {
+		echo '<tr ';
+		if ($color) { 
+			$color=0; 
+			echo 'BGCOLOR="#D0D0B0"';
+		} else { 
+			$color=1; 
+			echo 'BGCOLOR="#D0D0D0"';
+		} 
+		echo '><td>'.htmlspecialchars($article->getTitle()).'</td>
+			  <td width="10%" align="center"><a href="/priv/pub/issues/sections/articles/edit.php?Pub='.htmlspecialchars($article->getPublicationId()).'&Issue='.$article->getIssueId().'&Section='.$article->getSectionId().'&Article='.$article->getArticleId().'&Language='.$article->getLanguageId().'&sLanguage='.$article->getLanguageId().'">'.getGS('Edit').'</a></td>
+				   </tr>';
+	}
+	?>
+	</table>
+	</center>
+<?php
+}
 
-		if ($NUM_ROWS) {
-			// image is in use //////////////////////////////////////////////////////////////////
-			?>
-			<center>
-			<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" bgcolor="white" width="50%">
-			  <tr><td bgcolor="#C0D0FF" colspan="2"><b><?php putGS('Previously used in Articles'); ?></b></td></tr>
-			<?php
-			for($loop=0; $loop<$NUM_ROWS; $loop++) {
-				fetchRow($q_art);
-				echo '<tr '.trColor().'>
-							 <td>'.getHVar($q_art, 'Name').'</td>
-							 <td width="10%" align="center"><a href="/priv/pub/issues/sections/articles/edit.php?Pub='.getHVar($q_art, 'IdPublication').'&Issue='.getHVar($q_art, 'NrIssue').'&Section='.getHVar($q_art, 'NrSection').'&Article='.getHVar($q_art, 'Number').'&Language='.getHVar($q_art, 'IdLanguage').'&sLanguage='.getHVar($q_art, 'IdLanguage').'">'.getGS('Edit').'</a></td>
-						   </tr>';
-			}
-			?>
-			</table>
-			</center>
-		<?php
-		}
-
-
-
- } else { ?><BLOCKQUOTE>
-	<LI><?php  putGS('No such image.'); ?></LI>
-</BLOCKQUOTE>
-<?php  } ?>
-<HR NOSHADE SIZE="1" COLOR="BLACK">
-<a STYLE='font-size:8pt;color:#000000' href='http://www.campware.org' target='campware'>CAMPSITE  2.1.5 &copy 1999-2004 MDLF, maintained and distributed under GNU GPL by CAMPWARE</a>
-</BODY>
-<?php  } ?>
-
-</HTML>
-
+CampsiteInterface::CopyrightNotice();
+?>

@@ -1,15 +1,8 @@
 <?php
-//define(_IMG_PREFIX_, '/images/cms-image-');
-//define(_DIR_, '/priv/imagearchive/');
-define(CAMPSITE_IMAGEARCHIVE_DIR, '/priv/imagearchive/');
-//define(_IMAGEMAGICK_, TRUE);
-//define(_TUMB_CMD_, 'convert -sample 64x64');
-//define(_TUMB_PREFIX_, '/images/tumbnails/cms-tumb-');
-//define(_TMP_DIR_, '/tmp/');
+define('CAMPSITE_IMAGEARCHIVE_DIR', '/priv/imagearchive/');
+$ImagesPerPage = 5;
 
-
-function orE($p_input)
-{
+function orE($p_input) {
 	if (empty($p_input)) {
 		return 'unknown';
 	} else {
@@ -17,100 +10,175 @@ function orE($p_input)
 	}
 } // fn orE
 
-function trColor()
-{
-	global $color;
 
-	if ($color) {
-		$color = 0;
-		return 'BGCOLOR="#D0D0B0"';
-	} else {
-		$color = 1;
-		return 'BGCOLOR="#D0D0D0"';
+function array_get_value($p_array, $p_index, $p_defaultValue = null) {
+	if (isset($p_array[$p_index])) {
+		return $p_array[$p_index];
 	}
-}
+	else {
+		return $p_defaultValue;
+	}
+} // fn array_get_value
 
-class ImageLink {
+
+class ImageSearch {
 	var $m_isSearch;
 	var $m_orderBy;
 	var $m_orderDirection;
-	var $m_view;
 	var $m_imageOffset;
 	var $m_imagesPerPage;
 	var $m_searchDescription;
 	var $m_searchPhotographer;
 	var $m_searchDate;
+	var $m_searchPlace;
 	var $m_searchInUse;
-	
-	function ImageLink($p_request) {
-		$this->m_isSearch = isset($p_request['is_search'])?$p_request['is_search']:0;
-		$this->m_orderBy = isset($p_request['order_by'])?$p_request['order_by']:'id';
-		$this->m_rderDirection =
-			isset($p_request['order_direction'])?$p_request['order_direction']:'ASC';
-		$this->m_view = isset($p_request['view'])?$p_request['view']:'thumbnail';
-		$this->m_imageOffset = isset($p_request['image_offset'])?$p_request['image_offset']:0;
-		$this->m_imagesPerPage = 20;
+	var $m_imageData;
+	var $m_numImagesFound;
+	var $m_orderQuery;
+	var $m_whereQuery;
 		
-		$this->m_searchDescription = 
-			isset($p_request['search_description'])?$p_request['search_description']:null;
-		$this->m_searchPhotographer = 
-			isset($p_request['search_photographer'])?$p_request['search_photographer']:null;
-		$this->m_searchDate = isset($p_request['search_date'])?$p_request['search_date']:null;
-		$this->m_searchInUse = isset($p_request['search_inuse'])?$p_request['search_inuse']:null;
-	    
-		$searchKeywords = array('description' => $SearchDescription,
-								'photographer' => $SearchPhotographer,
-								'date' => $SearchDate,
-								'inuse' => $SearchInUse);
-		if (!is_null($p_searchKeywords)) {
-	    	$keywordSearch = false;
-	    	foreach ($p_searchKeywords as $fieldName => $keyword) {
-	    		if (!is_null($keyword)) {
-	    			$Link['search'] .= '&'.$fieldName.'='.urlencode($keyword);
-	    			$keywordSearch = true;
-	    		}
-	    	}
-	    	if ($keywordSearch) {
-		    	$Link['search'] .= '&is_search=1';		
-	    	}
-	    }
+	function ImageSearch($p_request) {
+		global $Campsite;
+		global $ImagesPerPage;
+		$this->m_imagesPerPage = $ImagesPerPage;
+		$this->m_orderBy = array_get_value($p_request, 'order_by', 'id');
+		$this->m_orderDirection = array_get_value($p_request, 'order_direction', 'ASC');
+		$this->m_imageOffset = array_get_value($p_request, 'image_offset', 0);		
+		$this->m_searchDescription = array_get_value($p_request, 'search_description', '');
+		$this->m_searchPhotographer = array_get_value($p_request, 'search_photographer', '');
+		$this->m_searchPlace = array_get_value($p_request, 'search_place', '');
+		$this->m_searchDate = array_get_value($p_request, 'search_date', '');
+		$this->m_searchInUse = array_get_value($p_request, 'search_inuse', '');
+		
+		$this->m_whereQuery = '';
+		if ($this->m_searchDescription || $this->m_searchPhotographer 
+			|| $this->m_searchPlace || $this->m_searchDate || $this->m_searchInUse) {
+			if ($this->m_searchDescription) {
+				$this->m_whereQuery .= " AND i.Description LIKE '%$this->m_searchDescription%'";
+			}
+			if ($this->m_searchPhotographer) {
+				$this->m_whereQuery .= " AND i.Photographer LIKE '%$this->m_searchPhotographer%'";
+			}
+			if ($this->m_searchPlace) {
+				$this->m_whereQuery .= " AND i.Place LIKE '%$this->m_searchPlace%'";
+			}
+			if ($this->m_searchDate) {
+				$this->m_whereQuery .= " AND i.Date LIKE '%$this->m_searchDate%'";
+			}
+			if ($this->m_searchInUse) {
+				if ($this->m_searchInUse) {
+		            $not = 'NOT';
+		        }
+		        $this->m_whereQuery .= " AND a.IdImage IS $not NULL";
+			}
+		}
+		switch ($this->m_orderBy) {
+		case 'description':
+			$this->m_orderQuery .= 'ORDER BY i.Description ';
+			break;
+		case 'photographer':
+			$this->m_orderQuery = 'ORDER BY i.Photographer ';
+			break;
+		case 'place':
+			$this->m_orderQuery = 'ORDER BY i.Place ';
+			break;
+		case 'date':
+			$this->m_orderQuery = 'ORDER BY i.Date ';
+			break;
+		case 'inuse':
+			$this->m_orderQuery = 'ORDER BY inUse ';
+			break;
+		case 'id':
+		default:
+			$this->m_orderQuery = 'ORDER BY i.Id ';
+			break;
+		}
+		if (!empty($this->m_orderQuery)) {
+			$this->m_orderQuery .= ' '.$this->m_orderDirection;
+		}
+	} // constructor
+	
+	function run() {
+		global $Campsite;
+		$tmpImage =& new Image();
+		foreach ($tmpImage->getColumnNames() as $columnName) {
+			$columnNames[] = 'i.'.$columnName;
+		}
+		$columnNames = implode(',', $columnNames);
+		$queryStr = 'SELECT '.$columnNames.', COUNT(a.IdImage) AS inUse'
+				  	.' FROM Images AS i'
+				  	.' LEFT JOIN ArticleImages AS a On i.Id=a.IdImage'
+				  	." WHERE 1 $this->m_whereQuery"
+				    .' GROUP BY i.Id'
+				    ." $this->m_orderQuery LIMIT $this->m_imageOffset, ".$this->m_imagesPerPage;
+				    
+		$numImagesFoundQueryStr = 'SELECT COUNT(i.Id)'
+				  	.' FROM Images as i'
+				  	.' LEFT JOIN ArticleImages AS a On i.Id=a.IdImage'
+				  	." WHERE 1 $this->m_whereQuery";
+		$query = $Campsite['db']->Execute($queryStr);
+		$this->m_numImagesFound = $Campsite['db']->GetOne($numImagesFoundQueryStr);
+		
+		// Create image templates
+		$this->m_imageData = array();
+		while ($row = $query->FetchRow()) {
+			$tmpImage =& new Image();
+			$tmpImage->fetch($row);
+			$template = $tmpImage->toTemplate();
+			$template['in_use'] = $row['inUse'];
+			$this->m_imageData[] = $template;
+		}	
+	} // fn run
+	
+	function getImages() {
+		return $this->m_imageData;
+	}
+	
+	function getNumImagesFound() {
+		return $this->m_numImagesFound;
+	}
+	
+	function getImagesPerPage() {
+		return $this->m_imagesPerPage;
+	}
+	
+	function setImagesPerPage($p_value) {
+		$this->m_imagesPerPage = $p_value;
+	}
+	
+} // class ImageSearch
+
+
+function Image_GetSearchUrl($p_request) {
+	$input = array(
+		'order_by' => array_get_value($p_request, 'order_by', 'id'),
+		'order_direction' => array_get_value($p_request, 'order_direction', 'ASC'),
+		'view' => array_get_value($p_request, 'view', 'thumbnail'),
+		'image_offset' => array_get_value($p_request, 'image_offset', 0),
+		'search_description' => array_get_value($p_request, 'search_description', null),
+		'search_photographer' => array_get_value($p_request, 'search_photographer', null),
+		'search_place' => array_get_value($p_request, 'search_place', null),
+		'search_date' => array_get_value($p_request, 'search_date', null),
+		'search_inuse' => array_get_value($p_request, 'search_inuse', null),
+		);
+	$url = array();
+	foreach ($input as $varName => $value) {
+		if (!is_null($value) && !empty($value)) {
+			$url[] = $varName.'='.urlencode($value);
+		}
 	}	
-	
-	function getOrderByLink($p_columnName) {
-		return CAMPSITE_IMAGEARCHIVE_DIR.'?order_by='.$p_columnName.$this->getSearchUrlPart()
-			.'&'.$p_columnName.'=0';
-	}
-	
-	function getOrderBy() {
-		return $this->m_orderBy;
-	}
-	
-	function getOrderDirection() {
-		return $this->m_orderDirection;	
-	}
-	
-	function getSearchUrlPart() {
-		
-	}
-	
-	function getOrderUrlPart() {
-		
-	}
-}
+	return implode('&', $url);
+} // fn Image_GetSearchUrl
 
 
-function cImgLink($p_searchKeywords = null, $p_orderBy = null, $p_orderDirection = null, $p_imageOffset = -1, $p_imagesPerPage = 20, $p_view)
+function CreateImageLinks($p_searchKeywords = null, $p_orderBy = null, $p_orderDirection = null, $p_imageOffset = -1, $p_imagesPerPage = 20, $p_view = "thumbnail")
 {
-	//global $S, $de, $ph, $da, $use, $O, $ImgOffs, $lpp, $D, $v;
-
-	// regarding parameters from search form or link //////////////////////
-//	todef('S');
-//	todef('de');
-//	todef('ph');
-//	todef('da');
-//	todef('use');
-//    todef('v');
-
+	$Link = array();
+	$Link['search'] = '';
+	$Link['order_by'] = '';
+	$Link['previous'] = '';
+	$Link['next'] = '';
+	
     if (!is_null($p_searchKeywords)) {
     	$keywordSearch = false;
     	foreach ($p_searchKeywords as $fieldName => $keyword) {
@@ -119,159 +187,23 @@ function cImgLink($p_searchKeywords = null, $p_orderBy = null, $p_orderDirection
     			$keywordSearch = true;
     		}
     	}
-    	if ($keywordSearch) {
-	    	$Link['search'] .= '&is_search=1';		
-    	}
     }
-//	if ($S && (isset($de) || isset($ph)  || isset($da)|| isset($use))) {
-//
-//		if (isset($de)) {
-//			$Link['S']   .= "&S=1&de=".urlencode($de);
-//		}
-//		if (isset($ph)) {
-//			$Link['S']   .= "&S=1&ph=".urlencode($ph);
-//		}
-//		if (isset($da)) {
-//			$Link['S']   .= "&S=1&da=".urlencode($da);
-//		}
-//		if (isset($use)) {   
-//			$Link['S']   .= "&S=1&use=".urlencode($use);
-//		}
-//
-//	}
-	////////////////////////////////////////////////////////////////////
 
 	// build the order statement ///////////////////////////////////////
-	//todef('O');
-	//todef('D');
-
-//	if ($D == 'ASC') {
-//		$HrefDir  = "ASC";
-//	} else {
-//		$HrefDir  = "DESC";
-//	}
-
 	if (!is_null($p_orderBy)) {
-		$Link['order_by'] .= '&order_by='.$p_orderBy.'&order_direction='.$p_orderDirection;
+		$Link['order_by'] = '&order_by='.$p_orderBy.'&order_direction='.$p_orderDirection;
 	}
-//	switch ($p_orderBy) {
-//	case 'de':
-//		$Link['O'] .= '&O=de&D='.$HrefDir;
-//		break;
-//
-//	case 'ph':
-//		$Link['O'] .= '&O=ph&D='.$HrefDir;
-//		break;
-//
-//	case 'da':
-//		$Link['O'] .= '&O=da&D='.$HrefDir;
-//		break;
-//
-//	case 'use':
-//		$Link['O'] .= '&O=use&D='.$HrefDir;
-//		break;
-//
-//	case 'id':
-//	default:
-//		$Link['O'] .= '&O=id&D='.$HrefDir;
-//		break;
-//	}
-	// calculationg offset
-//	todefnum('ImgOffs');
-//	todefnum('lpp', 20);
-//
 	if ($p_imageOffset < 0) {
 		$p_imageOffset = 0;
 	}
 
-//	// Prev/Next switch
+	// Prev/Next switch
 	$Link['previous'] = 'image_offset='.($p_imageOffset - $p_imagesPerPage).$Link['search'].$Link['order_by'].'&view='.$p_view;
 	$Link['next'] = 'image_offset='.($p_imageOffset + $p_imagesPerPage).$Link['search'].$Link['order_by'].'&view='.$p_view;
 
 	$Link['search'] .= '&image_offset='.$p_imageOffset.'&view='.$p_view;
-//	$Link['SO'] = $Link['S'].$Link['O'];
-
 	return $Link;
-}
-//function cImgLink()
-//{
-//	global $S, $de, $ph, $da, $use, $O, $ImgOffs, $lpp, $D, $v;
-//
-//	// regarding parameters from search form or link //////////////////////
-//	todef('S');
-//	todef('de');
-//	todef('ph');
-//	todef('da');
-//	todef('use');
-//    todef('v');
-//
-//	if ($S && (isset($de) || isset($ph)  || isset($da)|| isset($use))) {
-//
-//		if (isset($de)) {
-//			$Link['S']   .= "&S=1&de=".urlencode($de);
-//		}
-//		if (isset($ph)) {
-//			$Link['S']   .= "&S=1&ph=".urlencode($ph);
-//		}
-//		if (isset($da)) {
-//			$Link['S']   .= "&S=1&da=".urlencode($da);
-//		}
-//		if (isset($use)) {   
-//			$Link['S']   .= "&S=1&use=".urlencode($use);
-//		}
-//
-//	}
-//	////////////////////////////////////////////////////////////////////
-//
-//	// build the order statement ///////////////////////////////////////
-//	todef('O');
-//	todef('D');
-//
-//	if ($D == 'ASC') {
-//		$HrefDir  = "ASC";
-//	} else {
-//		$HrefDir  = "DESC";
-//	}
-//
-//	switch ($O) {
-//	case 'de':
-//		$Link['O'] .= '&O=de&D='.$HrefDir;
-//		break;
-//
-//	case 'ph':
-//		$Link['O'] .= '&O=ph&D='.$HrefDir;
-//		break;
-//
-//	case 'da':
-//		$Link['O'] .= '&O=da&D='.$HrefDir;
-//		break;
-//
-//	case 'use':
-//		$Link['O'] .= '&O=use&D='.$HrefDir;
-//		break;
-//
-//	case 'id':
-//	default:
-//		$Link['O'] .= '&O=id&D='.$HrefDir;
-//		break;
-//	}
-//	// calculationg offset
-//	todefnum('ImgOffs');
-//	todefnum('lpp', 20);
-//
-//	if ($ImgOffs < 0) {
-//		$ImgOffs= 0;
-//	}
-//
-//	// Prev/Next switch
-//	$Link['P'] = 'ImgOffs='.($ImgOffs - $lpp).$Link['S'].$Link['O'].'&v='.$v;
-//	$Link['N'] = 'ImgOffs='.($ImgOffs + $lpp).$Link['S'].$Link['O'].'&v='.$v;
-//
-//	$Link['S'] .= '&ImgOffs='.$ImgOffs.'&v='.$v;
-//	$Link['SO'] = $Link['S'].$Link['O'];
-//
-//	return $Link;
-//}
+} // fn cImgLink
 
 //function handleRemoteImg ($cDescription, $cPhotographer, $cPlace, $cDate, $cURL, $Id=0)
 //{
