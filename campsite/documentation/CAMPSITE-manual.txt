@@ -856,7 +856,7 @@ List Issue statement can not be used inside List Section, List Article, List Sub
 Purpose:
 Select the list of sections according to the given constraints and current environmental parameters. The Publication, Language, Issue, Section parameters may not be defined outside List Section statement; inside the statement however, all these parameters are defined. The code between "List .. Article.. " statement and "ForEmptyList" (if used) or "EndList" is repeated for every article in the list. When the list of article is empty the code in between "ForEmptyList" and "EndList" is executed once.
 Syntax:
-List [length <integer_value>] [column <integer_value>] 
+List [length <integer_value>] [columns <integer_value>] 
      Section [<list_of_section_constraints>] <list_of_instructions> 
 [ForEmptyList [<list_of_instructions>]]
 EndList [Section]
@@ -885,7 +885,7 @@ List Section statement cannot be used inside List Article, List Subtitle, List S
 Purpose:
 Select the list of articles according to the given constraints and current environmental parameters. The Publication, Language, Issue, Section, Article parameters may not be defined outside List Article statement; inside the statement however, all these parameters are defined. The code between "List .. Article.. " statement and "ForEmptyList" (if used) or "EndList" is repeated for every article in the list. When the list of article is empty the code in between "ForEmptyList" and "EndList" is executed once.
 Syntax:
-List [length <integer_value>] [column <integer_value>] 
+List [length <integer_value>] [columns <integer_value>] 
      Article [<list_of_article_constraints>] [<list_of_article_type_constraints>] 
         [order <order_condition>]
 <list_of_instructions>
@@ -942,7 +942,7 @@ List Article statement cannot be used inside List Subtitle, List SearchResult st
 Purpose:
 Select the list of subtitles according to the given constraints and current environmental parameters. The article if not specified somewhere else, is treated as group of paragraphs. The markup for a new paragraph is the subtitle. The code between "List ... Article ..." statement and "ForEmptyList" (if used) or "EndList" is repeated for every article in the list. When the list of article is empty the code in between "ForEmptyList" and "EndList" is executed once.
 Syntax:
-List [length <integer_value>] [column <integer_value>] 
+List [length <integer_value>] [columns <integer_value>] 
      Subtitle <list_of_instructions>
 [ForEmptyList [<list_of_instructions>]]
 EndList [Article]
@@ -965,7 +965,7 @@ Article
 Purpose:
 Select the list of articles after searching database for given keywords. The Publication, Language, Issue, Section, Article parameters may not be defined outside List SearchResult statement; inside the statement however, all these parameters are defined. The code between "List .. Article.. " statement and "ForEmptyList" (if used) or "EndList" is repeated for every article in the list. When the list of article is empty the code in between "ForEmptyList" and "EndList" is executed once.
 Syntax:
-List [length <integer_value>] [column <integer_value>] 
+List [length <integer_value>] [columns <integer_value>] 
     SearchResult [order <order_condition>]
 <list_of_instructions> [ForEmptyList [<list_of_instructions>]]
 EndList [SearchResult]
