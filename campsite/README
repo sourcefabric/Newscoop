@@ -1,0 +1,115 @@
+CAMPSITE / CAMPFIRE
+version       : 2.0.0
+release date  : 15 march 2001
+contact       : contact@campware.org
+url           : http://www.campware.org/campsite/
+copyright     : (c)1999-2001 Media Development Loan Fund
+support       : mailto:majordomo@campware.org
+                subject: subscribe campsite-list your@mail.org
+manual        : http://www.campware.org/documentation/
+
+INTRODUCTION
+
+CAMPSITE is a content management system with multi-lingual
+Unicode support, designed for medium to large sized online
+publications. Issues, back archives, as well as subscription
+management are fully implemented features. At the core of 
+management system sits the CAMPFIRE, a Java program supporting 
+Unicode fonts, allowing contributors and editors to control 
+layout online in their native font face. Style features can be
+assigned via buttons - similar to editors such as Wordpad - 
+meaning no HTML knowledge is necessary for formatting text.
+
+We encourage further development of this software and would 
+like to make any progress accessible to all other users. 
+Please contact us if you have or intend to developed this 
+software further.
+
+CAMPSITE offers... 
+-  support of managing article translations in different 
+   languages
+-  advanced editorial interface for remote article editing
+-  cut and paste formatting from other editors into the online
+-  Java Editor for HTML with near WYSIWYG feel (CAMPFIRE)
+-  its own customizable search-engine
+-  built-in subscription system
+-  management of dictionaries
+
+CREDITS
+
+The original CAMPSITE concept was developed by C@MP in
+collaboration with Transitions Online, who started using
+CAMPSITE in late 2000. Coding and further development was
+accomplished by DNT and Recognos.
+
+AUTHORS
+- see AUTHORS file
+
+INSTALLATION
+- see INSTALL file
+
+MANUAL
+- see documentation/CAMPSITE-manual or
+  documentation/CAMPSITE-manual.html
+
+If you intend to show the world you are running on CAMPSITE, you
+could include the little banner 'thisisacampsite.gif' provided
+with this tarball and link it to http://www.campware.org.
+
+TECH-SPECS
+
+Implementing CAMPSITE for your purposes requires the following
+technical set-up, nothing out of the ordinary.
+
+CAMPSITE server:
+- runs on a Linux server, tested with RedHat 5.2 release, but
+  has proven compatible with newer versions up to 7.0.
+- needs an Apache web to be running, and its virtual servers
+- configured by the administrator.
+- for data storage it is needed a MySQL database server for
+  Linux. The tests were made on MySQL v.3.22.27.
+
+CAMPSITE client:
+- tested on Netscape under Unix, Macintosh and Windows,
+  Internet Explorer under Windows.
+- has a client Editor interface implemented as a Java Applet
+  (browser-compatibility reason).
+- copy the file swingall.jar in the Java classes directory
+  (see http://www.campware.org).
+- unpack the file unicoded.zip in the same Java classes
+  directory (see http://www.campware.org).
+
+Note: Client site preparation will be made redundant with the
+evolution of browsers, since this module becomes native in
+built-in Java Virtual Machines. The file is distributed freely
+and native with the JDK 1.2 package.
+
+WORKING DEMO
+
+CAMPSITE in action can be seen at the Transitions Online
+website (http://www.tol.cz). However, there is a version
+implemented at campware for testing purposes. Contact us for
+login information: contact@campware.org
+
+COPYRIGHT
+
+CAMPSITE is a Unicode-enabled multilingual web content
+management system for news publications.
+CAMPFIRE is a Unicode-enabled java-based near WYSIWYG text editor.
+Copyright (C)1999-2001  Media Development Loan Fund.
+contact: contact@campware.org - http://www.campware.org
+Campware encourages further development. Please let us know.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.

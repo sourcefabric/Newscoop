@@ -1,0 +1,252 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<TITLE>article</TITLE>
+</HEAD>
+<BODY>
+
+
+<p>EXAMPLE TEMPLATES OF TRANSITIONS ONLINE</p>
+<p>
+
+The following templates were created by Aleksandar Brajanoski &lt;<a href="mailto:braja@ijt.cz">braja@ijt.cz</a>&gt;, webmaster of Transitions Online (<a href="http://www.tol.cz">http://www.tol.cz</a>) who are running their application on CAMPFIRE and helped developing the software. The templates supplied here as examples are meant to illustrate the functionality of the CAMPSITE parser. </p>
+<p>Templates were frozen on the 15th of March 2001. <br>
+  Developed for CAMPSITE V1.0 (<a href="http://www.campware.org">http://www.campware.org</a>)
+</p>
+<TABLE BORDER>
+  <TR>
+    <TD VALIGN="TOP">
+      FILE NAME
+    </TD>
+    <TD VALIGN="TOP">
+      DEPENDENCY
+    </TD>
+    <TD VALIGN="TOP">
+      DESCRIPTION
+    </TD>
+  </TR>
+  <TR>
+    <TD VALIGN="TOP">
+      article.tpl
+    </TD>
+    <TD VALIGN="TOP">
+      stand alone
+    </TD>
+    <TD VALIGN="TOP">
+      This template is the stand alone template for articles. It builds the navigation and includes the banner ad. Depending on what section you are in, it calls other templates to display the articles (such as letter.tpl or job.tpl).
+    </TD>
+  </TR>
+  <TR>
+    <TD VALIGN="TOP">
+      do_login.tpl
+    </TD>
+    <TD VALIGN="TOP">
+      stand alone
+    </TD>
+    <TD VALIGN="TOP">
+      Stand alone template for readers to log in. 
+    </TD>
+  </TR>
+  <TR>
+    <TD VALIGN="TOP">
+      emlist.tpl
+    </TD>
+    <TD VALIGN="TOP">
+
+      section.tpl
+    </TD>
+    <TD VALIGN="TOP">
+      Used on section pages. When a new issue is published but there was not enough time to include new material in one section, this template will display the message that there is no new material and generate a list of the articles of the last issue.
+    </TD>
+  </TR>
+  <TR>
+    <TD VALIGN="TOP">
+      home.tpl
+    </TD>
+    <TD VALIGN="TOP">
+      stand alone
+    </TD>
+    <TD VALIGN="TOP">
+      Displaying the home page as a stand alone template. It checks if there is some article in the first section with the article type 'homeintro' and displays just the newest one of this type. The layout of this article is done via this template (changed regularly and manually to avoid a too static appearance of the home page).
+    </TD>
+  </TR>
+  <TR>
+    <TD VALIGN="TOP">
+      job.tpl
+    </TD>
+    <TD VALIGN="TOP">
+      article.tpl
+    </TD>
+    <TD VALIGN="TOP">
+      Used by article.tpl to display a single job article.
+    </TD>
+  </TR>
+  <TR>
+    <TD VALIGN="TOP">
+      jobs.tpl
+    </TD>
+    <TD VALIGN="TOP">
+      section.tpl
+    </TD>
+    <TD VALIGN="TOP">
+      Template which the section template uses to display company, position and date on the job section home page.
+    </TD>
+  </TR>
+  <TR>
+    <TD VALIGN="TOP">
+      jobside.tpl
+    </TD>
+    <TD VALIGN="TOP">
+      article.tpl
+    </TD>
+    <TD VALIGN="TOP">
+      The template used by article.tpl for the display of the left, grey column to list other job ads.
+    </TD>
+  </TR>
+  <TR>
+    <TD VALIGN="TOP">
+      letter.tpl
+    </TD>
+    <TD VALIGN="TOP">
+      article.tpl
+    </TD>
+    <TD VALIGN="TOP">
+      Template which displays static sections on article level. Originally developed for the 'Letters to the editor' section and now also used for other static sections, such as 'about us'.
+    </TD>
+  </TR>
+  <TR>
+    <TD VALIGN="TOP">
+      login.tpl
+    </TD>
+    <TD VALIGN="TOP">
+      stand alone
+    </TD>
+    <TD VALIGN="TOP">
+      Stand alone template, called after you logged in via the do_login.tpl. It will check via the parser if the login was okay. Returns either 'okay' or the subscription (which is a static page, not using a template).
+    </TD>
+  </TR>
+  <TR>
+    <TD VALIGN="TOP">
+      mbs.tpl
+    </TD>
+    <TD VALIGN="TOP">
+      article.tpl
+    </TD>
+    <TD VALIGN="TOP">
+      'Media Bites' template. Used by article template to display in the media section the articles with the type 'mbites'.
+    </TD>
+  </TR>
+  <TR>
+    <TD VALIGN="TOP">
+      not_allowed.tpl
+    </TD>
+    <TD VALIGN="TOP">
+      article.tpl
+    </TD>
+    <TD VALIGN="TOP">
+      If the user is not allowed to access a protected article, the article template will pull this template to notify the user to either log in or subscribe.
+    </TD>
+  </TR>
+  <TR>
+    <TD VALIGN="TOP">
+      ourtake.tpl
+    </TD>
+    <TD VALIGN="TOP">
+      article.tpl
+    </TD>
+    <TD VALIGN="TOP">
+      Used by article.tpl to display articles with the type 'ourtake' in the section 'Our Take'.
+    </TD>
+  </TR>
+  <TR>
+    <TD VALIGN="TOP">
+      search.tpl
+    </TD>
+    <TD VALIGN="TOP">
+      stand alone
+    </TD>
+    <TD VALIGN="TOP">
+      Used to display the serach results. Stand alone template.
+    </TD>
+  </TR>
+  <TR>
+    <TD VALIGN="TOP">
+      secintro.tpl
+    </TD>
+    <TD VALIGN="TOP">
+      section.tpl
+    </TD>
+    <TD VALIGN="TOP">
+      Used by section template. When there is an introduction to the section (such as in 'Focus') then this is used to display the intro text. Uses article with the type 'sectionintro'.
+    </TD>
+  </TR>
+  <TR>
+    <TD VALIGN="TOP">
+
+      section.tpl
+    </TD>
+    <TD VALIGN="TOP">
+      stand alone
+    </TD>
+    <TD VALIGN="TOP">
+      Stand alone. Builds the navigation and banner and pulls other templates.
+    </TD>
+  </TR>
+  <TR>
+    <TD VALIGN="TOP">
+      tol.tpl
+    </TD>
+    <TD VALIGN="TOP">
+      article.tpl
+    </TD>
+    <TD VALIGN="TOP">
+      Used by article template to display the article which the type 'tol'. Such article types are used in many sections.
+    </TD>
+  </TR>
+  <TR>
+    <TD VALIGN="TOP">
+      tolprint.tpl
+    </TD>
+    <TD VALIGN="TOP">
+      stand alone
+    </TD>
+    <TD VALIGN="TOP">
+      Stand alone template to display the article in a printer friendly version, just including title, text, image and copyright notice.
+    </TD>
+  </TR>
+  <TR>
+    <TD VALIGN="TOP">
+      tolsec.tpl
+    </TD>
+    <TD VALIGN="TOP">
+      section.tpl
+    </TD>
+    <TD VALIGN="TOP">
+      Used by section template to display a list of articles on the section pages which are of the type 'tol'. This will display title, author, deck and date in the section listing. The title will be linked to the article itself.
+    </TD>
+  </TR>
+  <TR>
+    <TD VALIGN="TOP">
+      wirarticle.tpl
+    </TD>
+    <TD VALIGN="TOP">
+      article.tpl
+    </TD>
+    <TD VALIGN="TOP">
+      Used by the article template, to display article with the type 'wir' (Week in Review). See also tol.tpl, which is similar for different article type.
+    </TD>
+  </TR>
+  <TR>
+    <TD VALIGN="TOP">
+      wirsection.tpl
+    </TD>
+    <TD VALIGN="TOP">
+      section.tpl
+    </TD>
+    <TD VALIGN="TOP">
+      Used by the section template to display the listing of articles with the type 'wir' in one section. It displays the subheaders of the article and the name of the author.
+    </TD>
+  </TR>
+</TABLE>
+</BODY>
+</HTML>
