@@ -675,6 +675,29 @@ CREATE TABLE `UserPerm` (
   `ManageIndexer` enum('N','Y') NOT NULL default 'N',
   `Publish` enum('N','Y') NOT NULL default 'N',
   `ManageTopics` enum('N','Y') NOT NULL default 'N',
+  `EditorImage` enum('N','Y') NOT NULL default 'N',
+  `EditorTextAlignment` enum('N','Y') NOT NULL default 'N',
+  `EditorFontColor` enum('N','Y') NOT NULL default 'N',
+  `EditorFontSize` enum('N','Y') NOT NULL default 'N',
+  `EditorFontFace` enum('N','Y') NOT NULL default 'N',
+  `EditorTable` enum('N','Y') NOT NULL default 'N',
+  `EditorSuperscript` enum('N','Y') NOT NULL default 'N',
+  `EditorSubscript` enum('N','Y') NOT NULL default 'N',
+  `EditorStrikethrough` enum('N','Y') NOT NULL default 'N',
+  `EditorIndent` enum('N','Y') NOT NULL default 'N',
+  `EditorListBullet` enum('N','Y') NOT NULL default 'N',
+  `EditorListNumber` enum('N','Y') NOT NULL default 'N',
+  `EditorHorizontalRule` enum('N','Y') NOT NULL default 'N',
+  `EditorSourceView` enum('N','Y') NOT NULL default 'N',
+  `EditorEnlarge` enum('N','Y') NOT NULL default 'N',
+  `EditorTextDirection` enum('N','Y') NOT NULL default 'N',
+  `EditorLink` enum('N','Y') NOT NULL default 'N',
+  `EditorSubhead` enum('N','Y') NOT NULL default 'N',
+  `EditorBold` enum('N','Y') NOT NULL default 'N',
+  `EditorItalic` enum('N','Y') NOT NULL default 'N',
+  `EditorUnderline` enum('N','Y') NOT NULL default 'N',
+  `EditorUndoRedo` enum('N','Y') NOT NULL default 'N',
+  `EditorCopyCutPaste` enum('N','Y') NOT NULL default 'N',
   PRIMARY KEY  (`IdUser`)
 ) TYPE=MyISAM;
 
@@ -682,7 +705,7 @@ CREATE TABLE `UserPerm` (
 -- Dumping data for table `UserPerm`
 --
 
-INSERT INTO `UserPerm` (`IdUser`, `ManagePub`, `DeletePub`, `ManageIssue`, `DeleteIssue`, `ManageSection`, `DeleteSection`, `AddArticle`, `ChangeArticle`, `DeleteArticle`, `AddImage`, `ChangeImage`, `DeleteImage`, `ManageTempl`, `DeleteTempl`, `ManageUsers`, `ManageSubscriptions`, `DeleteUsers`, `ManageUserTypes`, `ManageArticleTypes`, `DeleteArticleTypes`, `ManageLanguages`, `DeleteLanguages`, `ManageDictionary`, `DeleteDictionary`, `ManageCountries`, `DeleteCountries`, `ManageClasses`, `MailNotify`, `ViewLogs`, `ManageLocalizer`, `ManageIndexer`, `Publish`, `ManageTopics`) VALUES (1,'Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','N','N','Y','Y','N','Y','Y','Y','Y','Y','Y');
+INSERT INTO `UserPerm` (`IdUser`, `ManagePub`, `DeletePub`, `ManageIssue`, `DeleteIssue`, `ManageSection`, `DeleteSection`, `AddArticle`, `ChangeArticle`, `DeleteArticle`, `AddImage`, `ChangeImage`, `DeleteImage`, `ManageTempl`, `DeleteTempl`, `ManageUsers`, `ManageSubscriptions`, `DeleteUsers`, `ManageUserTypes`, `ManageArticleTypes`, `DeleteArticleTypes`, `ManageLanguages`, `DeleteLanguages`, `ManageDictionary`, `DeleteDictionary`, `ManageCountries`, `DeleteCountries`, `ManageClasses`, `MailNotify`, `ViewLogs`, `ManageLocalizer`, `ManageIndexer`, `Publish`, `ManageTopics`, `EditorImage`, `EditorTextAlignment`, `EditorFontColor`, `EditorFontSize`, `EditorFontFace`, `EditorTable`, `EditorSuperscript`, `EditorSubscript`, `EditorStrikethrough`, `EditorIndent`, `EditorListBullet`, `EditorListNumber`, `EditorHorizontalRule`, `EditorSourceView`, `EditorEnlarge`, `EditorTextDirection`, `EditorLink`, `EditorSubhead`, `EditorBold`, `EditorItalic`, `EditorUnderline`, `EditorUndoRedo`, `EditorCopyCutPaste`) VALUES (1,'Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','N','N','Y','Y','N','Y','Y','Y','Y','Y','Y','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N');
 
 --
 -- Table structure for table `UserTypes`
@@ -725,6 +748,29 @@ CREATE TABLE `UserTypes` (
   `ManageIndexer` enum('N','Y') NOT NULL default 'N',
   `Publish` enum('N','Y') NOT NULL default 'N',
   `ManageTopics` enum('N','Y') NOT NULL default 'N',
+  `EditorImage` enum('N','Y') NOT NULL default 'N',
+  `EditorTextAlignment` enum('N','Y') NOT NULL default 'N',
+  `EditorFontColor` enum('N','Y') NOT NULL default 'N',
+  `EditorFontSize` enum('N','Y') NOT NULL default 'N',
+  `EditorFontFace` enum('N','Y') NOT NULL default 'N',
+  `EditorTable` enum('N','Y') NOT NULL default 'N',
+  `EditorSuperscript` enum('N','Y') NOT NULL default 'N',
+  `EditorSubscript` enum('N','Y') NOT NULL default 'N',
+  `EditorStrikethrough` enum('N','Y') NOT NULL default 'N',
+  `EditorIndent` enum('N','Y') NOT NULL default 'N',
+  `EditorListBullet` enum('N','Y') NOT NULL default 'N',
+  `EditorListNumber` enum('N','Y') NOT NULL default 'N',
+  `EditorHorizontalRule` enum('N','Y') NOT NULL default 'N',
+  `EditorSourceView` enum('N','Y') NOT NULL default 'N',
+  `EditorEnlarge` enum('N','Y') NOT NULL default 'N',
+  `EditorTextDirection` enum('N','Y') NOT NULL default 'N',
+  `EditorLink` enum('N','Y') NOT NULL default 'N',
+  `EditorSubhead` enum('N','Y') NOT NULL default 'N',
+  `EditorBold` enum('N','Y') NOT NULL default 'N',
+  `EditorItalic` enum('N','Y') NOT NULL default 'N',
+  `EditorUnderline` enum('N','Y') NOT NULL default 'N',
+  `EditorUndoRedo` enum('N','Y') NOT NULL default 'N',
+  `EditorCopyCutPaste` enum('N','Y') NOT NULL default 'N',
   PRIMARY KEY  (`Name`)
 ) TYPE=MyISAM;
 
@@ -732,7 +778,7 @@ CREATE TABLE `UserTypes` (
 -- Dumping data for table `UserTypes`
 --
 
-INSERT INTO `UserTypes` (`Name`, `Reader`, `ManagePub`, `DeletePub`, `ManageIssue`, `DeleteIssue`, `ManageSection`, `DeleteSection`, `AddArticle`, `ChangeArticle`, `DeleteArticle`, `AddImage`, `ChangeImage`, `DeleteImage`, `ManageTempl`, `DeleteTempl`, `ManageUsers`, `ManageSubscriptions`, `DeleteUsers`, `ManageUserTypes`, `ManageArticleTypes`, `DeleteArticleTypes`, `ManageLanguages`, `DeleteLanguages`, `ManageDictionary`, `DeleteDictionary`, `ManageCountries`, `DeleteCountries`, `ManageClasses`, `MailNotify`, `ViewLogs`, `ManageLocalizer`, `ManageIndexer`, `Publish`, `ManageTopics`) VALUES ('Reader','Y','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N'),('Administrator','N','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','N','N','Y','Y','N','N','Y','Y','N','Y','Y'),('Editor','N','N','N','N','N','N','N','Y','Y','Y','Y','Y','Y','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','Y','N','N','N','N','N'),('Chief Editor','N','N','N','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','N','N','N','N','Y','Y','N','N','N','N','N','N','N','N','Y','Y','Y','N','Y');
+INSERT INTO `UserTypes` (`Name`, `Reader`, `ManagePub`, `DeletePub`, `ManageIssue`, `DeleteIssue`, `ManageSection`, `DeleteSection`, `AddArticle`, `ChangeArticle`, `DeleteArticle`, `AddImage`, `ChangeImage`, `DeleteImage`, `ManageTempl`, `DeleteTempl`, `ManageUsers`, `ManageSubscriptions`, `DeleteUsers`, `ManageUserTypes`, `ManageArticleTypes`, `DeleteArticleTypes`, `ManageLanguages`, `DeleteLanguages`, `ManageDictionary`, `DeleteDictionary`, `ManageCountries`, `DeleteCountries`, `ManageClasses`, `MailNotify`, `ViewLogs`, `ManageLocalizer`, `ManageIndexer`, `Publish`, `ManageTopics`, `EditorImage`, `EditorTextAlignment`, `EditorFontColor`, `EditorFontSize`, `EditorFontFace`, `EditorTable`, `EditorSuperscript`, `EditorSubscript`, `EditorStrikethrough`, `EditorIndent`, `EditorListBullet`, `EditorListNumber`, `EditorHorizontalRule`, `EditorSourceView`, `EditorEnlarge`, `EditorTextDirection`, `EditorLink`, `EditorSubhead`, `EditorBold`, `EditorItalic`, `EditorUnderline`, `EditorUndoRedo`, `EditorCopyCutPaste`) VALUES ('Reader','Y','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N'),('Administrator','N','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','N','N','Y','Y','N','N','Y','Y','N','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y'),('Editor','N','N','N','N','N','N','N','Y','Y','Y','Y','Y','Y','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','Y','N','N','N','N','N','Y','Y','N','N','N','Y','Y','Y','N','Y','Y','Y','N','N','Y','Y','Y','Y','Y','Y','Y','Y','Y'),('Chief Editor','N','N','N','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','N','N','N','N','Y','Y','N','N','Y','Y','N','N','Y','N','Y','Y','N','Y','Y','Y','N','Y','N','N','Y','Y','Y','Y','Y','Y','Y','N','N','Y','Y','Y','Y','Y','Y','Y','Y','Y');
 
 --
 -- Table structure for table `Users`
