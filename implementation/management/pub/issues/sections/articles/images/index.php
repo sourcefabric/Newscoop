@@ -166,7 +166,7 @@ if (count($articleImages) > 0) {
 	foreach ($articleImages as $articleImage) {
 		$image =& $articleImage->getImage();
 	?>	
-	<TR <?php  if (($imageCount%2)==0) { ?>class="list_row_even"<?php  } else { ?>class="list_row_odd"<?php  } ?>>
+	<TR <?php  if (($imageCount%2)==0) { ?>class="list_row_odd"<?php  } else { ?>class="list_row_even"<?php  } ?>>
 		<TD ALIGN="center"><?php echo $articleImage->getTemplateId(); ?></td>
 		<TD ALIGN="center">
 			<a href="<?php echo CampsiteInterface::ArticleUrl($articleObj, $Language, "images/view.php") . "&ImageId=".$image->getImageId(); ?>">
