@@ -29,6 +29,20 @@ if ($access) {
 	}
 	else $access = 0;
 }
+
+todefnum('Pub');
+todefnum('Issue');
+todefnum('Language');
+todef('publish_time');
+
+if ($access) {
+	$AFFECTED_ROWS=0;
+	$sql = "DELETE FROM IssuePublish WHERE IdPublication = $Pub AND NrIssue = $Issue AND IdLanguage = $Language AND PublishTime = '$publish_time'";
+	query ($sql);
+	$del = $AFFECTED_ROWS > 0;
+	if ($del)
+		header("Location: /$ADMIN/pub/issues/autopublish.php?Pub=$Pub&Issue=$Issue&Language=$Language");
+}
 ?>
 
 <HEAD>
@@ -39,39 +53,23 @@ if ($access) {
 </HEAD>
 
 <?php if ($access) { ?>
-<STYLE>
-	BODY { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	SMALL { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 8pt; }
-	FORM { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	TH { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	TD { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	BLOCKQUOTE { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	UL { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	LI { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	A  { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; text-decoration: none; color: darkblue; }
-	ADDRESS { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 8pt; }
-</STYLE>
+
 <BODY  BGCOLOR="WHITE" TEXT="BLACK" LINK="DARKBLUE" ALINK="RED" VLINK="DARKBLUE">
 
-<?php
-	todefnum('Pub');
-	todefnum('Issue');
-	todefnum('Language');
-	todef('publish_time');
-?>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
 	<TR>
-		<TD ROWSPAN="2" WIDTH="1%"><IMG SRC="/<?php echo $ADMIN; ?>/img/sign_big.gif" BORDER="0"></TD>
-		<TD>
-		    <DIV STYLE="font-size: 12pt"><B><?php  putGS("Delete scheduled publish action"); ?></B></DIV>
-		    <HR NOSHADE SIZE="1" COLOR="BLACK">
+		<TD><?php  putGS("Delete scheduled publish action"); ?></TD>
+		<TD ALIGN=RIGHT>
+		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
+		<TR>
+			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/?Pub=<?php p($Pub); ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Issues"); ?>"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/?Pub=<?php p($Pub); ?>" ><B><?php  putGS("Issues");  ?></B></A></TD>
+			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Publications"); ?>"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/pub/" ><B><?php  putGS("Publications");  ?></B></A></TD>
+			<TD><A HREF="/<?php echo $ADMIN; ?>/home.php" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Home"); ?>"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/home.php" ><B><?php  putGS("Home");  ?></B></A></TD>
+			<TD><A HREF="/<?php echo $ADMIN; ?>/logout.php" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Logout"); ?>"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/logout.php" ><B><?php  putGS("Logout");  ?></B></A></TD>
+		</TR>
+		</TABLE>
 		</TD>
 	</TR>
-	<TR><TD ALIGN=RIGHT><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0"><TR><TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/?Pub=<?php p($Pub); ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Issues"); ?>"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/?Pub=<?php p($Pub); ?>" ><B><?php  putGS("Issues");  ?></B></A></TD>
-<TD><A HREF="/<?php echo $ADMIN; ?>/pub/" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Publications"); ?>"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/pub/" ><B><?php  putGS("Publications");  ?></B></A></TD>
-<TD><A HREF="/<?php echo $ADMIN; ?>/home.php" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Home"); ?>"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/home.php" ><B><?php  putGS("Home");  ?></B></A></TD>
-<TD><A HREF="/<?php echo $ADMIN; ?>/logout.php" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Logout"); ?>"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/logout.php" ><B><?php  putGS("Logout");  ?></B></A></TD>
-</TR></TABLE></TD></TR>
 </TABLE>
 
 <?php
@@ -101,10 +99,6 @@ if ($access) {
 	<TR>
 		<TD COLSPAN="2"><BLOCKQUOTE>
 <?php
-    $AFFECTED_ROWS=0;
-	$sql = "DELETE FROM IssuePublish WHERE IdPublication = $Pub AND NrIssue = $Issue AND IdLanguage = $Language AND PublishTime = '$publish_time'";
-	query ($sql);
-	$del = $AFFECTED_ROWS > 0;
 
 	if ($del) { ?>		<LI><?php putGS('The action scheduled on $1 has been deleted.','<B>'.$publish_time.'</B>' ); ?></LI>
 	<?php } else { ?>		<LI><?php putGS('The action scheduled on $1 could not be deleted.','<B>'.$publish_time.'</B>' ); ?></LI>
@@ -114,8 +108,8 @@ if ($access) {
 		<TD COLSPAN="2">
 		<DIV ALIGN="CENTER">
 <?php
-    if ($del) { ?>		<INPUT TYPE="button" NAME="Done" VALUE="<?php  putGS('Done'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/pub/issues/autopublish.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>'">
-<?php } else { ?>		<INPUT TYPE="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/pub/issues/autopublish.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>'">
+    if ($del) { ?>		<INPUT TYPE="button" class="button" NAME="Done" VALUE="<?php  putGS('Done'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/pub/issues/autopublish.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>'">
+<?php } else { ?>		<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/pub/issues/autopublish.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>'">
 <?php } ?>		</DIV>
 		</TD>
 	</TR>
