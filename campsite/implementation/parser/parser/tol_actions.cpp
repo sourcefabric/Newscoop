@@ -1916,6 +1916,31 @@ int TOLActIf::TakeAction(TOLContext& c, fstream& fs)
 			RunBlock(sec_block, c, fs);
 		return RES_OK;
 	}
+	if (strcasecmp(param.Attribute(), "number") == 0)
+	{
+		long int nVal = 0;
+		if (modifier == TOL_IMOD_ISSUE)
+			nVal = c.Issue();
+		else if (modifier == TOL_IMOD_SECTION)
+			nVal = c.Section();
+		else
+			return -1;
+		long int nComp = atol(param.Value());
+		switch (param.Operator())
+		{
+			case TOL_OP_IS: run_first = nVal == nComp; break;
+			case TOL_OP_IS_NOT: run_first = nVal != nComp; break;
+			case TOL_OP_GREATER: run_first = nVal > nComp; break;
+			case TOL_OP_SMALLER: run_first = nVal < nComp; break;
+			default: run_first = nVal == nComp;
+		}
+		run_first = m_bNegated ? !run_first : run_first;
+		if (run_first)
+			RunBlock(block, c, fs);
+		else
+			RunBlock(sec_block, c, fs);
+		return RES_OK;
+	}
 	if (c.Language() < 0 || c.Publication() < 0 || c.Issue() < 0)
 		return ERR_NOPARAM;
 	string w, field, tables, value;
@@ -1974,7 +1999,12 @@ int TOLActIf::TakeAction(TOLContext& c, fstream& fs)
 	StoreResult(&m_coSql, res);
 	CheckForRows(*res, 1);
 	FetchRow(*res, row);
-	run_first = value == row[0];
+	switch (param.Operator())
+	{
+		case TOL_OP_IS: run_first = value == row[0]; break;
+		case TOL_OP_IS_NOT: run_first = value != row[0]; break;
+		default: run_first = value == row[0];
+	}
 	run_first = m_bNegated ? !run_first : run_first;
 	if (run_first)
 		RunBlock(block, c, fs);

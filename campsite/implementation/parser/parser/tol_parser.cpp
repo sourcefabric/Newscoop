@@ -1242,10 +1242,10 @@ inline int TOLParser::HList(TOLPActionList& al, int level, int sublevel, const T
 				          lex.PrevLine(), lex.PrevColumn());
 			ah.insert_unique(*attr);
 			RequireAtom(l);
+			ValidateOperator(op_i, l, attr->DataType(), "");
+			RequireAtom(l);
 			if (attr->Class() != TOL_NORMAL_ATTR)
 			{
-				ValidateOperator(op_i, l, attr->DataType(), "");
-				RequireAtom(l);
 				TOLTypeAttributes* ta;
 				if ((ta = st->FindType(l->m_pcoAtom->Identifier())) == NULL)
 				{
@@ -1260,8 +1260,6 @@ inline int TOLParser::HList(TOLPActionList& al, int level, int sublevel, const T
 				DEBUGLexem("hlist2", l);
 				continue;
 			}
-			ValidateOperator(op_i, l, attr->DataType(), "");
-			RequireAtom(l);
 			ValidateDType(l, attr->DataType(), 1);
 			params.insert(params.end(),
 			              TOLParameter(attr->Attribute(), l->m_pcoAtom->Identifier(),
