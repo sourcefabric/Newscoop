@@ -90,4 +90,9 @@ regGS("The destination section is the same as the source section.", "The destina
 regGS("The article $1 has been duplicated as $2", "The article $1 has been duplicated as $2:en");
 regGS("The article $1 could not be duplicated", "The article $1 could not be duplicated:en");
 
+// order.m4
+regGS("Move article", "Move article:en");
+regGS("Move article \"$1\" from position $2", "Move article \"$1\" from position $2:en");
+regGS("To position", "To position:en");
+
 ?>
