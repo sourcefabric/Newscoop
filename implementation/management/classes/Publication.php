@@ -1,6 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/config.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DatabaseObject.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DbObjectArray.php');
 
 class Publication extends DatabaseObject {
 	var $m_dbTableName = 'Publications';
@@ -11,7 +12,6 @@ class Publication extends DatabaseObject {
 	function Publication($p_publicationId = null) {
 		parent::DatabaseObject($this->m_columnNames);
 		$this->setProperty('Id', $p_publicationId, false);
-		//$this->Id = $p_publicationId;
 		if (!is_null($p_publicationId)) {
 			$this->fetch();
 		}
@@ -27,16 +27,14 @@ class Publication extends DatabaseObject {
 		return $this->getProperty('Name');
 	} // fn getName
 
+	
+	/**
+	 * Return all publications as an array of Publication objects.
+	 * @return array
+	 */
 	function GetAllPublications() {
-		global $Campsite;
 		$queryStr = 'SELECT * FROM Publications ORDER BY Name';
-		$query = $Campsite['db']->Execute($queryStr);
-		$publications = array();
-		while ($row = $query->FetchRow()) {
-			$tmpPub =& new Publication();
-			$tmpPub->fetch($row);
-			$publications[] = $tmpPub;
-		}
+		$publications =& DbObjectArray::Create('Publication', $queryStr);
 		return $publications;
 	} // fn getAllPublications
 	
