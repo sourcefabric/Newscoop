@@ -35,7 +35,9 @@ install: dummy
 	cp -f "$(INSTALL_CONF)/vhost-template.conf" "$(ETC_DIR)"
 	cp -f "$(INSTALL_CONF)/parser_conf.php" "$(ETC_DIR)"
 	chown $(ROOT_USER):$(APACHE_GROUP) $(ETC_DIR)/*
-	chmod 644 $(ETC_DIR)/*
+	chmod -R u+rw $(ETC_DIR)/*
+	chmod -R g+rw $(ETC_DIR)/*
+	chmod -R o-rwx $(ETC_DIR)/*
 	$(MAKE) -C implementation install
 
 test_install:
