@@ -897,9 +897,13 @@ const CLexem* CLex::getLexem()
 		}
 		if (m_nState != 4)
 		{
-			if ((m_chChar >= 0 || m_chChar <= ' ') && !bValidText && m_pchTextStart != NULL
+			// if didn't find valid text yet and the current character is not valid set the
+			// text start pointer to the next character
+			// a valid text character is anything that is not between 0 and space
+			// characters between 0 and space are special characters, tab and space
+			if ((m_chChar > 0 && m_chChar <= ' ') && !bValidText && m_pchTextStart != NULL
 					&& m_nState < 2)
-				m_pchTextStart = m_pchInBuf + m_nIndex - 1;
+				m_pchTextStart = m_pchInBuf + m_nIndex;
 			m_nPrevLine = m_nLine;
 			m_nPrevColumn = m_nColumn;
 			if (m_chChar == '\n') // increment line and set column to 0 on new line character
