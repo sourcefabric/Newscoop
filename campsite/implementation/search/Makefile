@@ -33,7 +33,7 @@ readconf.o: readconf.cpp readconf.h globals.h
 clean: dummy
 	rm -f *.o *~ configure.h $(LINKS) gather broker
 
-install: $(ALL)
+install: all
 	./install_search
 
 uninstall: dummy

@@ -26,7 +26,7 @@ csocket.o: csocket.cpp csocket.h exceptions.h globals.h
 mutex.o: mutex.cpp mutex.h
 	g++ -c -o mutex.o $(CFLAGS) mutex.cpp
 
-install: $(ALL)
+install: all
 	mkdir -p $(BIN_DIR)
 	cp -f smtp_wrapper $(BIN_DIR)
 	chown $(ROOT_USER):$(ROOT_GROUP) $(BIN_DIR)/smtp_wrapper
