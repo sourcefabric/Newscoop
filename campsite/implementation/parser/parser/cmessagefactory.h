@@ -68,17 +68,6 @@ public:
 };
 
 
-class CURLServeMessageFactory : public CMessageFactory
-{
-public:
-	virtual CMessage* createMessage(char* p_pchMsgContent) const
-		throw (out_of_range, xml_parse_error, invalid_message_content, bad_alloc)
-		{ return new CMsgURLServe(p_pchMsgContent); }
-
-	virtual uint getMessageTypeId() const { return CMsgURLServe::messageTypeId(); }
-};
-
-
 class CMessageFactoryRegister
 {
 public:
