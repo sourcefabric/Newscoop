@@ -44,7 +44,7 @@ regGS("This article cannot be previewed. Please make sure it has a <B><I>single 
 regGS("This article has been locked by $1 ($2) at","Článek byl uzamknut $1 ($2) v ");
 regGS("Now is $1","Nyní je $1");
 regGS("Are you sure you want to unlock it?","Určitě ho chcete odemknout?");
-regGS("Edit Article","Editovat článek");
+regGS("Edit article","Editovat článek");
 
 
 ?>

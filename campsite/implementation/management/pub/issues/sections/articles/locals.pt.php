@@ -42,6 +42,6 @@ regGS("This article cannot be previewed. Please make sure it has a <B><I>single 
 regGS("This article has been locked by $1 ($2) at","Este Artigo foi bloqueado por $1 ($2) às");
 regGS("Now is $1","São agora $1");
 regGS("Are you sure you want to unlock it?","Confirme o desbloqueamento");
-regGS("Edit Article","Editar Artigo");
+regGS("Edit article","Editar Artigo");
 
 ?>
