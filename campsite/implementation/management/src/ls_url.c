@@ -44,10 +44,10 @@ main(int argc, char **argv)
 {
 	char *path, *p;
 	enum { FILES, DIRECTORIES } entry_type;
-	DIR *dir;
-	struct dirent *de;
+	struct dirent **de;
 	struct stat s;
-	
+	int de_nr, index;
+
 	if (argc < 4) {
 		fprintf(stderr, "ls_usl: called with wrong arguments\n");
 		return 1;
@@ -64,27 +64,28 @@ main(int argc, char **argv)
 	strcat(path, "/");
 	strcat(path, argv[3]);
 
-	dir = opendir(path);
-	if (!dir) {
-		perror("opendir");
+	de_nr = scandir(path, &de, 0, alphasort);
+	if (de_nr == -1) {
+		perror("scandir");
 		return 1;
 	}
 
-	while ((de = readdir(dir)) != 0) {
-		if (de->d_name[0] == '.')
+	index = -1;
+	while (++index < de_nr) {
+		if (de[index]->d_name[0] == '.')
 			continue;
 
-		p = malloc(strlen(path) + strlen(de->d_name) + 2);
+		p = malloc(strlen(path) + strlen(de[index]->d_name) + 2);
 		if (!p) {
 			errno=ENOMEM;
 			perror("malloc");
 			return 1;
 		}
-		
+
 		strcpy(p, path);
 		strcat(p, "/");
-		strcat(p, de->d_name);
-		
+		strcat(p, de[index]->d_name);
+
 		if (stat(p, &s) != 0) {
 			perror("stat");
 			return 1;
@@ -96,8 +97,8 @@ main(int argc, char **argv)
 		} else
 			if (entry_type == DIRECTORIES)
 				continue;
-		
-		printf("%s\n%s\n", de->d_name, escape_url(de->d_name));
+
+		printf("%s\n%s\n", de[index]->d_name, escape_url(de[index]->d_name));
 		fflush(stdout);
 	}
 
