@@ -1,19 +1,64 @@
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" WIDTH="100%" class="table_list">
 	<TR class="table_list_header">
 		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="5%">
-		  <table border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><B><a href="<?php echo $IdHref; ?>"><?php  putGS("Identifier"); ?></a></B></td><td align="left"><a href="<?php echo $IdHref; ?>"><?php echo $IdOrderIcon; ?></a></td></tr></table>
+		  <table border="0" cellspacing="0" cellpadding="0">
+		  <tr>
+		  	<td valign="top">
+		  		<B><a href="<?php echo $IdHref; ?>"><?php  putGS("Identifier"); ?></a></B>
+		  	</td>
+		  	<td align="left">
+		  		<a href="<?php echo $IdHref; ?>"><?php echo $IdOrderIcon; ?></a>
+		  	</td>
+		  </tr>
+		  </table>
 		</TD>
 		<TD ALIGN="LEFT" VALIGN="TOP" width="35%">
-		  <table border="0" cellspacing="0" cellpadding="0"><tr><td nowrap valign="top"><B><a href="<?php echo $DescriptionHref; ?>"><?php  putGS("Description<BR><SMALL>(Click to view details)</SMALL>"); ?></a></B></td><td align="left"><a href="<?php echo $DescriptionHref; ?>"><?php echo $DescriptionOrderIcon; ?></a></td></tr></table>
+		  <table border="0" cellspacing="0" cellpadding="0">
+		  <tr>
+		  	<td nowrap valign="top">
+		  		<B><a href="<?php echo $DescriptionHref; ?>"><?php  putGS("Description<BR><SMALL>(Click to view details)</SMALL>"); ?></a></B>
+		  	</td>
+		  	<td align="left">
+		  		<a href="<?php echo $DescriptionHref; ?>"><?php echo $DescriptionOrderIcon; ?></a>
+		  	</td>
+		  	</tr>
+		  	</table>
 		</TD>
 		<TD ALIGN="LEFT" VALIGN="TOP" width="35%">
-		  <table border="0" cellspacing="0" cellpadding="0"><tr><td valign="top"><B><a href="<?php echo $PhotographerHref; ?>"><?php  putGS("Photographer"); ?></a></B></td><td align="left"><a href="<?php echo $PhotographerHref; ?>"><?php echo $PhotographerOrderIcon; ?></a></td></tr></table>
+		  <table border="0" cellspacing="0" cellpadding="0">
+		  <tr>
+		  	<td valign="top">
+		  		<B><a href="<?php echo $PhotographerHref; ?>"><?php  putGS("Photographer"); ?></a></B>
+		  	</td>
+		  	<td align="left">
+		  		<a href="<?php echo $PhotographerHref; ?>"><?php echo $PhotographerOrderIcon; ?></a>
+		  	</td>
+		  </tr>
+		  </table>
 		</TD>
 		<TD ALIGN="LEFT" VALIGN="TOP" width="15%">
-		  <table border="0" cellspacing="0" cellpadding="0"><tr><td nowrap valign="top"><B><a href="<?php echo $DateHref; ?>"><?php  putGS("Date<BR><SMALL>(yyyy-mm-dd)</SMALL>"); ?></a></B></td><td align="left"><a href="<?php echo $DateHref; ?>"><?php echo $DateOrderIcon; ?></a></td></tr></table>
+		  <table border="0" cellspacing="0" cellpadding="0">
+		  <tr>
+		  	<td nowrap valign="top">
+		  		<B><a href="<?php echo $DateHref; ?>"><?php  putGS("Date<BR><SMALL>(yyyy-mm-dd)</SMALL>"); ?></a></B>
+		  	</td>
+		  	<td align="left">
+		  		<a href="<?php echo $DateHref; ?>"><?php echo $DateOrderIcon; ?></a>
+		  	</td>
+		  </tr>
+		  </table>
 		</TD>
 		<TD ALIGN="LEFT" VALIGN="TOP" width="5%">
-		  <table border="0" cellspacing="0" cellpadding="0"><tr><td nowrap valign="top" align="center"><B><a href="<?php echo $InUseHref; ?>"><?php  putGS("In use"); ?></a></B></td><td align="left"><a href="<?php echo $InUseHref; ?>"><?php echo $InUseOrderIcon; ?></a></td></tr></table>
+		  <table border="0" cellspacing="0" cellpadding="0">
+		  <tr>
+		  	<td nowrap valign="top" align="center">
+		  		<B><?php  putGS("In use"); ?></B>
+		  	</td>
+		  	<td align="left">
+		  		<a href="<?php echo $InUseHref; ?>"><?php echo $InUseOrderIcon; ?></a>
+		  	</td>
+		  </tr>
+		  </table>
 		</TD>
 		<?php
 		if ($User->hasPermission('DeleteImage')) { ?>
@@ -54,18 +99,19 @@
 				?>&nbsp;
 			</TD>
 			<?php
-			if ($User->hasPermission('DeleteImage') && !$image['in_use']) { ?>
-			  <TD ALIGN="CENTER">
-				<A HREF="do_del.php?image_id=<?php echo $image['id'].'&'.$imageNav->getSearchLink(); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the image $1?', '&quot'.htmlspecialchars($image['description'], ENT_QUOTES).'&quot'); ?>');"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/delete.png" BORDER="0" ALT="<?php  putGS('Delete image $1',htmlspecialchars($image['description'])); ?>"></A>
-			  </TD>
-			<?php
-			}
-			else {
-				?>
-				<TD ALIGN="CENTER">&nbsp;</TD> 
-				<?
-			}
-				
+			if ($User->hasPermission('DeleteImage')) {
+				if (!$image['in_use']) { ?>
+				  <TD ALIGN="CENTER">
+					<A HREF="do_del.php?image_id=<?php echo $image['id'].'&'.$imageNav->getSearchLink(); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the image $1?', '&quot'.htmlspecialchars($image['description'], ENT_QUOTES).'&quot'); ?>');"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/delete.png" BORDER="0" ALT="<?php  putGS('Delete image $1',htmlspecialchars($image['description'])); ?>"></A>
+				  </TD>
+				<?php
+				}
+				else {
+					?>
+					<TD ALIGN="CENTER">&nbsp;</TD> 
+					<?php
+				}
+			}				
 			?>
 		</TR>
     <?php
