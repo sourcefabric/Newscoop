@@ -37,7 +37,6 @@ regGS("Are you sure you want to delete the publication $1?","Are you sure you wa
 
 // -- do_del.m4
 regGS("Deleting publication","Deleting publication:en");
-regGS("There are $1 image(s) left.","There are $1 image(s) left.:en");
 regGS("There are $1 subscription(s) left.","There are $1 subscription(s) left.:en");
 regGS("The publication $1 has been deleted.","The publication $1 has been deleted.:en");
 regGS("The publication $1 could not be deleted.","The publication $1 could not be deleted.:en");

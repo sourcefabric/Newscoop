@@ -18,7 +18,6 @@ regGS("Delete publication","Apagar Publicação");
 regGS("You do not have the right to delete publications.","Não tem permissão para Apagar Publicações");
 regGS("Are you sure you want to delete the publication $1?","Confirma o apagamento da Publicação $1?");
 regGS("Deleting publication","Apagando Publicação");
-regGS("There are $1 image(s) left.","Existe(m) ainda $1 imagem(s).");
 regGS("There are $1 subscription(s) left.","Existe(m) ainda $1 Assinatura(s)");
 regGS("The publication $1 has been deleted.","A Publicação $1 foi Apagada");
 regGS("The publication $1 could not be deleted.","A Publicação $1 não pode ser Apagada");

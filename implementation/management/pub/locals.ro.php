@@ -18,7 +18,6 @@ regGS("Delete publication","Şterge publicaţia");
 regGS("You do not have the right to delete publications.","Nu aveti dreptul sa ştergeţi publicaţii");
 regGS("Are you sure you want to delete the publication $1?","Doriţi să ştergeţi publicaţia $1?");
 regGS("Deleting publication","Şterg publicaţia");
-regGS("There are $1 image(s) left.","Mai sunt $1 imagini");
 regGS("There are $1 subscription(s) left.","Mai sunt $1 subscrieri");
 regGS("The publication $1 has been deleted.","Publicaţia $1 a fost ştearsă");
 regGS("The publication $1 could not be deleted.","Publicaţia $1 nu poate fi ştearsă");

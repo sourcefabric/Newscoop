@@ -18,7 +18,6 @@ regGS("Delete publication","Borrar publicación");
 regGS("You do not have the right to delete publications.","No tiene derecho a borrar publicaciones");
 regGS("Are you sure you want to delete the publication $1?","¿Esta seguro que quiere borrar publicación $1?");
 regGS("Deleting publication","Borrando publicación");
-regGS("There are $1 image(s) left.","Hay $1 imagen(es) pendiente(s)");
 regGS("There are $1 subscription(s) left.","Hay $1 subscripcion(es) pendiente(s)");
 regGS("The publication $1 has been deleted.","La publicación $1 ha sido borrada");
 regGS("The publication $1 could not be deleted.","La publicación $1 no pudo ser borrada");

@@ -18,7 +18,6 @@ regGS("Delete publication","Smazat publikaci");
 regGS("You do not have the right to delete publications.","Nemáte právo mazat publikace");
 regGS("Are you sure you want to delete the publication $1?","Určitě chcete smazat publikaci $1?");
 regGS("Deleting publication","Mazání publikace");
-regGS("There are $1 image(s) left.","Zbývá obrázek $1");
 regGS("There are $1 subscription(s) left.","Zbývá předplatné $1");
 regGS("The publication $1 has been deleted.","Publikace $1 byla smazána");
 regGS("The publication $1 could not be deleted.","Publikace $1 nemohla být smazána");

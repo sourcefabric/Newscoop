@@ -17,7 +17,6 @@ regGS("Delete publication","删除出版物");
 regGS("You do not have the right to delete publications.","您无权删除出版物");
 regGS("Are you sure you want to delete the publication $1?","您确认要删除出版物$1？");
 regGS("Deleting publication","正在删除出版物");
-regGS("There are $1 image(s) left.","还有$1张图片");
 regGS("There are $1 subscription(s) left.","还有$1个订阅");
 regGS("The publication $1 has been deleted.","出版物$1已被删除");
 regGS("The publication $1 could not be deleted.","出版物$1不能被删除");
