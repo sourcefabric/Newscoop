@@ -9,6 +9,7 @@ regGS("Create new folder","Create new folder:en");
 regGS("Upload template","Upload template:en");
 regGS("Select the template for displaying the front page.","Select the template for displaying the front page.:en");
 regGS("Select the template for displaying a single article.","Select the template for displaying a single article.:en");
+regGS("You do no have access to the $1 directory!", "You do no have access to the $1 directory!:en");
 
 // -- do_new_dir.m4
 regGS("Creating new folder","Creating new folder:en");
