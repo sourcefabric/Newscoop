@@ -19,6 +19,7 @@
       <group pattern="*.cpp;*.c;*.cc;*.C;*.cxx;*.ec;*.ecpp;*.lxx;*.l++;*.ll;*.l" name="Sources" />
       <group pattern="*" name="Others" />
       <hidenonprojectfiles>false</hidenonprojectfiles>
+      <hidenonlocation>false</hidenonlocation>
     </groups>
     <tree>
       <hidepatterns>*.o,*.lo,CVS</hidepatterns>
