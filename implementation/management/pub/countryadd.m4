@@ -60,10 +60,10 @@ B_DIALOG(<*Add new country default subscription time*>, <*POST*>, <*do_countryad
 	    </SELECT>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Trial Period*>)
-		<INPUT TYPE="TEXT" NAME="cTrialTime" VALUE="1" SIZE="5" MAXLENGTH="5">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cTrialTime" VALUE="1" SIZE="5" MAXLENGTH="5">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Paid Period*>)
-		<INPUT TYPE="TEXT" NAME="cPaidTime" VALUE="1" SIZE="5" MAXLENGTH="5">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cPaidTime" VALUE="1" SIZE="5" MAXLENGTH="5">
 	E_DIALOG_INPUT
 	B_DIALOG_BUTTONS
 		SUBMIT(<*Save*>, <*Save changes*>)

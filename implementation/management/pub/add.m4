@@ -38,10 +38,10 @@ E_HEADER
 <P>
 B_DIALOG(<*Add new publication*>, <*POST*>, <*do_add.php*>)
 	B_DIALOG_INPUT(<*Name*>)
-		<INPUT TYPE="TEXT" NAME="cName" SIZE="32" MAXLENGTH="255">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cName" SIZE="32" MAXLENGTH="255">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Site*>)
-		<INPUT TYPE="TEXT" NAME="cSite" VALUE="<?php  pencHTML($HTTP_HOST); ?>" SIZE="32" MAXLENGTH="255">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cSite" VALUE="<?php  pencHTML($HTTP_HOST); ?>" SIZE="32" MAXLENGTH="255">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Default language*>)
 	    <SELECT NAME="cLanguage">
@@ -72,7 +72,7 @@ B_DIALOG(<*Add new publication*>, <*POST*>, <*do_add.php*>)
 	<tr><td colspan=2><HR NOSHADE SIZE="1" COLOR="BLACK"></td></tr>
 	<tr><td colspan=2><b><?php putGS("Subscriptions defaults"); ?></b></td></tr>
 	B_DIALOG_INPUT(<*Pay Period*>)
-		<INPUT TYPE="TEXT" NAME="cPayTime" VALUE="" SIZE="5" MAXLENGTH="5">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cPayTime" VALUE="" SIZE="5" MAXLENGTH="5">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Time Unit*>)
 	    <SELECT NAME="cTimeUnit">
@@ -93,16 +93,16 @@ B_DIALOG(<*Add new publication*>, <*POST*>, <*do_add.php*>)
 	    </SELECT>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Unit Cost*>)
-		<INPUT TYPE="TEXT" NAME="cUnitCost" VALUE="" SIZE="10" MAXLENGTH="10">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cUnitCost" VALUE="" SIZE="10" MAXLENGTH="10">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Currency*>)
-		<INPUT TYPE="TEXT" NAME="cCurrency" VALUE="" SIZE="10" MAXLENGTH="10">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cCurrency" VALUE="" SIZE="10" MAXLENGTH="10">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Paid Period*>)
-		<INPUT TYPE="TEXT" NAME="cPaid" VALUE="" SIZE="10" MAXLENGTH="10">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cPaid" VALUE="" SIZE="10" MAXLENGTH="10">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Trial Period*>)
-		<INPUT TYPE="TEXT" NAME="cTrial" VALUE="" SIZE="10" MAXLENGTH="10">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cTrial" VALUE="" SIZE="10" MAXLENGTH="10">
 	E_DIALOG_INPUT
 	B_DIALOG_BUTTONS
 		SUBMIT(<*Save*>, <*Save changes*>)

@@ -55,7 +55,7 @@ E_CURRENT
 <P>
 B_DIALOG(<*Configure section*>, <*POST*>, <*do_edit.php*>)
  B_DIALOG_INPUT(<*Name*>)
-  <INPUT TYPE="TEXT" NAME="cName" SIZE="32" MAXLENGTH="64" value="<?php  pgetHVar($q_sect,'Name'); ?>">
+  <INPUT TYPE="TEXT" class="input_text" NAME="cName" SIZE="32" MAXLENGTH="64" value="<?php  pgetHVar($q_sect,'Name'); ?>">
  E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Section Template*>)
 		<SELECT NAME="cSectionTplId">
@@ -84,7 +84,7 @@ B_DIALOG(<*Configure section*>, <*POST*>, <*do_edit.php*>)
 	    </SELECT>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Short Name*>)
-		<INPUT TYPE="TEXT" NAME="cShortName" SIZE="32" MAXLENGTH="32" value="<?php  pgetHVar($q_sect,'ShortName'); ?>">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cShortName" SIZE="32" MAXLENGTH="32" value="<?php  pgetHVar($q_sect,'ShortName'); ?>">
 	E_DIALOG_INPUT
  B_DIALOG_INPUT(<*Subscriptions*>)
   <SELECT NAME="cSubs">

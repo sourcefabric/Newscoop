@@ -51,7 +51,7 @@ E_CURRENT
 <P>
 B_DIALOG(<*Change issue details*>, <*POST*>, <*do_edit.php*>)
 	B_DIALOG_INPUT(<*Name*>)
-		<INPUT TYPE="TEXT" NAME="cName" SIZE="32" MAXLENGTH="64" value="<?php  pgetHVar($publ,'Name'); ?>">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cName" SIZE="32" MAXLENGTH="64" value="<?php  pgetHVar($publ,'Name'); ?>">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Language*>)
 	    <SELECT NAME="cLang">
@@ -69,7 +69,7 @@ B_DIALOG(<*Change issue details*>, <*POST*>, <*do_edit.php*>)
 	if (getVar($publ, 'Published') == 'Y') {
 ?>
 	B_DIALOG_INPUT(<*Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>*>)
-		<INPUT TYPE="TEXT" NAME="cPublicationDate" SIZE="10" MAXLENGTH="10" value="<?php  pgetHVar($publ,'PublicationDate'); ?>">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cPublicationDate" SIZE="10" MAXLENGTH="10" value="<?php  pgetHVar($publ,'PublicationDate'); ?>">
 	E_DIALOG_INPUT
 <?php
 	}
@@ -114,7 +114,7 @@ B_DIALOG(<*Change issue details*>, <*POST*>, <*do_edit.php*>)
 	    </SELECT>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Short Name*>)
-		<INPUT TYPE="TEXT" NAME="cShortName" SIZE="32" MAXLENGTH="32" value="<?php  pgetHVar($publ,'ShortName'); ?>">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cShortName" SIZE="32" MAXLENGTH="32" value="<?php  pgetHVar($publ,'ShortName'); ?>">
 	E_DIALOG_INPUT
 	B_DIALOG_BUTTONS
 		<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<?php  pencHTML($Pub); ?>">
