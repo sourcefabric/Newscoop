@@ -1,5 +1,7 @@
 <?php
 
+header("Content-type: text/html; charset=UTF-8");
+
 global $_SERVER;
 global $Campsite;
 global $DEBUG;
