@@ -48,21 +48,34 @@ $languageObj =& new Language($Language);
 
 <BODY  BGCOLOR="WHITE" TEXT="BLACK" LINK="DARKBLUE" ALINK="RED" VLINK="DARKBLUE">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%">
-	<TR>
-		<TD ROWSPAN="2" WIDTH="1%"><IMG SRC="/priv/img/sign_big.gif" BORDER="0"></TD>
-		<TD>
-		    <DIV STYLE="font-size: 12pt"><B><?php putGS('Article Image List'); ?></B></DIV>
-		    <HR NOSHADE SIZE="1" COLOR="BLACK">
-		</TD>
-	</TR>
-	<TR><TD ALIGN=RIGHT><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0"><TR><TD><A HREF="/priv/pub/issues/sections/articles/?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>&Section=<?php p($Section); ?>"><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php putGS('Articles'); ?>"></A></TD><TD><A HREF="/priv/pub/issues/sections/articles/?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>&Section=<?php p($Section); ?>"><B><?php putGS('Articles');  ?></B></A></TD>
-<TD><A HREF="/priv/pub/issues/sections/?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php  p($Language); ?>" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php putGS('Sections'); ?>"></A></TD><TD><A HREF="/priv/pub/issues/sections/?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>"><B><?php putGS('Sections'); ?></B></A></TD>
-<TD><A HREF="/priv/pub/issues/?Pub=<?php p($Pub); ?>"><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php putGS('Issues'); ?>"></A></TD><TD><A HREF="/priv/pub/issues/?Pub=<?php p($Pub); ?>" ><B><?php putGS('Issues'); ?></B></A></TD>
-<TD><A HREF="/priv/pub/" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php putGS('Publications'); ?>"></A></TD><TD><A HREF="/priv/pub/" ><B><?php putGS('Publications'); ?></B></A></TD>
-<TD><A HREF="/priv/home.php" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php putGS('Home'); ?>"></A></TD><TD><A HREF="/priv/home.php" ><B><?php putGS('Home'); ?></B></A></TD>
+<TR>
+	<!--<TD ROWSPAN="2" WIDTH="1%"><IMG SRC="/priv/img/sign_big.gif" BORDER="0"></TD>-->
+	<TD style="padding-left: 10px; padding-top: 10px;">
+	    <DIV STYLE="font-size: 12pt"><B><?php putGS('Article Image List'); ?></B></DIV>
+	    <!--<HR NOSHADE SIZE="1" COLOR="BLACK">-->
+	</TD>
+<!--</TR>
+<TR>
+-->	<TD style="padding-right: 10px; padding-top: 10px;" ALIGN=RIGHT>
+		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
+		<TR>
+			<TD><A HREF="/priv/pub/issues/sections/articles/?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>&Section=<?php p($Section); ?>"><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php putGS('Articles'); ?>"></A></TD>
+			<TD><A HREF="/priv/pub/issues/sections/articles/?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>&Section=<?php p($Section); ?>"><B><?php putGS('Articles');  ?></B></A></TD>
+			<TD><A HREF="/priv/pub/issues/sections/?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php  p($Language); ?>" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php putGS('Sections'); ?>"></A></TD>
+			<TD><A HREF="/priv/pub/issues/sections/?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>"><B><?php putGS('Sections'); ?></B></A></TD>
+			<TD><A HREF="/priv/pub/issues/?Pub=<?php p($Pub); ?>"><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php putGS('Issues'); ?>"></A></TD>
+			<TD><A HREF="/priv/pub/issues/?Pub=<?php p($Pub); ?>" ><B><?php putGS('Issues'); ?></B></A></TD>
+			<TD><A HREF="/priv/pub/" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php putGS('Publications'); ?>"></A></TD>
+			<TD><A HREF="/priv/pub/" ><B><?php putGS('Publications'); ?></B></A></TD>
+<!--<TD><A HREF="/priv/home.php" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php putGS('Home'); ?>"></A></TD><TD><A HREF="/priv/home.php" ><B><?php putGS('Home'); ?></B></A></TD>
 <TD><A HREF="/priv/logout.php" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS('Logout'); ?>"></A></TD><TD><A HREF="/priv/logout.php" ><B><?php  putGS('Logout');  ?></B></A></TD>
-</TR></TABLE></TD></TR>
+-->
+		</TR>
+		</TABLE>
+	</TD>
+</TR>
 </TABLE>
+<HR NOSHADE SIZE="1" COLOR="BLACK">
 
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="1" WIDTH="100%"><TR>
 <TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP">&nbsp;<?php putGS('Publication'); ?>:</TD><TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><?php echo htmlspecialchars($publicationObj->getName()); ?></B></TD>

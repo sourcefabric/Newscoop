@@ -18,36 +18,6 @@ if (!$access) {
 	exit;
 }
 
-//if (!IsValidInput(array(
-//	"Pub" => "int",
-//	"Issue" => "int",
-//	"Section" => "int",
-//	"Language" => "int",
-//	"sLanguage" => "int",
-//	"Article" => "int"))) {
-//	header('Location: /priv/logout.php');
-//	exit;		
-//}
-// Initialize input variables ///////////////////////////////////////////////////
-//$OrderBy = array_get_value($_REQUEST, 'order_by', 'id');
-//$OrderDirection = array_get_value($_REQUEST, 'order_direction', 'ASC');
-//$view = array_get_value($_REQUEST, 'view', 'thumbnail');
-//$ImageOffset = array_get_value($_REQUEST, 'image_offset', 0);
-//$SearchDescription = array_get_value($_REQUEST, 'search_description', '');
-//$SearchPhotographer = array_get_value($_REQUEST, 'search_photographer', '');
-//$SearchPlace = array_get_value($_REQUEST, 'search_place', '');
-//$SearchDate = array_get_value($_REQUEST, 'search_date', '');
-//$SearchInUse = array_get_value($_REQUEST, 'search_inuse', '');
-//$SearchUploadedBy = array_get_value($_REQUEST, 'search_uploadedby', '');
-//	
-//$PublicationId = array_get_value($_REQUEST, 'Pub', 0);
-//$IssueId = array_get_value($_REQUEST, 'Issue', 0);
-//$SectionId = array_get_value($_REQUEST, 'Section', 0);
-//$InterfaceLanguageId = array_get_value($_REQUEST, 'Language', 0);
-//$ArticleLanguageId = array_get_value($_REQUEST, 'sLanguage', 0);
-//$ArticleId = array_get_value($_REQUEST, 'Article', 0);
-//
-
 $OrderBy = Input::get('order_by', 'string', 'id', true);
 $OrderDirection = Input::get('order_direction', 'string', 'ASC', true);
 $view = Input::get('view', 'string', 'thumbnail', true);
@@ -173,15 +143,16 @@ $uploadedByUsers =& Image::GetUploadUsers();
 <BODY BGCOLOR="WHITE" TEXT="BLACK" LINK="DARKBLUE" ALINK="RED" VLINK="DARKBLUE">
 
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%">
-	<TR>
-		<TD ROWSPAN="2" WIDTH="1%"><IMG SRC="/priv/img/sign_big.gif" BORDER="0"></TD>
-		<TD>
-			<DIV STYLE="font-size: 12pt"><B><?php putGS('Link Image to Article'); ?></B></DIV>
-			<HR NOSHADE SIZE="1" COLOR="BLACK">
-		</TD>
-	</TR>
-	<TR><TD ALIGN=RIGHT>
-	  <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
+<TR>
+	<!--<TD ROWSPAN="2" WIDTH="1%"><IMG SRC="/priv/img/sign_big.gif" BORDER="0"></TD>-->
+	<TD style="padding-left: 10px; padding-top: 10px;">
+		<DIV STYLE="font-size: 12pt"><B><?php putGS('Link Image to Article'); ?></B></DIV>
+		<!--<HR NOSHADE SIZE="1" COLOR="BLACK">-->
+	</TD>
+<!--</TR>
+<TR>
+-->	<TD ALIGN="RIGHT" style="padding-right: 10px; padding-top: 10px;">
+	 	<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
 		<TR>
 			<TD><A HREF="/priv/pub/issues/sections/articles/images/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&Section=<?php  p($Section); ?>" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Images"); ?>"></A></TD>
 			<TD><A HREF="/priv/pub/issues/sections/articles/images/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&Section=<?php  p($Section); ?>" ><B><?php  putGS("Images");  ?></B></A></TD>
@@ -193,12 +164,14 @@ $uploadedByUsers =& Image::GetUploadUsers();
 			<TD><A HREF="/priv/pub/issues/?Pub=<?php  p($Pub); ?>" ><B><?php  putGS("Issues");  ?></B></A></TD>
 			<TD><A HREF="/priv/pub/" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Publications"); ?>"></A></TD>
 			<TD><A HREF="/priv/pub/" ><B><?php  putGS("Publications");  ?></B></A></TD>
-			<TD><A HREF="/priv/home.php" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS('Home'); ?>"></A></TD><TD><A HREF="/priv/home.php" ><B><?php putGS('Home');  ?></B></A></TD>
-			<TD><A HREF="/priv/logout.php" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS('Logout'); ?>"></A></TD><TD><A HREF="/priv/logout.php" ><B><?php putGS('Logout');  ?></B></A></TD>
+			<!--<TD><A HREF="/priv/home.php" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS('Home'); ?>"></A></TD><TD><A HREF="/priv/home.php" ><B><?php putGS('Home');  ?></B></A></TD>
+			<TD><A HREF="/priv/logout.php" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS('Logout'); ?>"></A></TD><TD><A HREF="/priv/logout.php" ><B><?php putGS('Logout');  ?></B></A></TD>-->
 		</TR>
 	</TABLE>
-  </TD></TR>
+	</TD>
+</TR>
 </TABLE>
+<HR NOSHADE SIZE="1" COLOR="BLACK">
 
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="1" WIDTH="100%"><TR>
 <TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP">&nbsp;<?php  putGS("Publication"); ?>:</TD><TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><?php echo htmlspecialchars($publicationObj->getName()); ?></B></TD>
