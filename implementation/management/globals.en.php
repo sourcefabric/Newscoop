@@ -140,6 +140,8 @@ regGS("Preview","Preview:en");
 regGS("You must complete the $1 field.","You must complete the $1 field.:en");
 
 // -- common errors
+regGS("Error","Error:en");
+regGS("Invalid input: $1","Invalid input: $1:en");
 regGS("No such language.","No such language.:en");
 regGS("No such infotype.","No such infotype.:en");
 regGS("No such keyword.","No such keyword.:en");
@@ -150,6 +152,7 @@ regGS("No such topic.","No such topic.:en");
 regGS("You must select a language.","You must select a language.:en");
 regGS("No such section.","No such section.:en");
 regGS("No articles.","No articles.:en");
+regGS("Article does not exist.","Article does not exist.:en");
 regGS("Access denied", "Access denied:en");
 
 // -- other errors
