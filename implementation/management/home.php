@@ -53,7 +53,7 @@ $sections = array();
 if ($showSections) {
 	foreach ($publications as $publication) {
 		foreach ($issues[$publication->getPublicationId()] as $issue) {
-			$sections[$issue->getIssueId()] = 
+			$sections[$publication->getPublicationId().'-'.$issue->getIssueId()] = 
 				Section::GetSectionsInIssue($issue->getPublicationId(), $issue->getIssueId(),
 					$issue->getLanguageId());
 		}
@@ -107,19 +107,21 @@ if ($showSections) {
 			</tr>
 			<?PHP
 			if (isset($issues[$publicationId])) {
-				foreach ($issues[$publicationId] as $issue) { ?>
+				foreach ($issues[$publicationId] as $issue) { 
+					$issueId = $issue->getIssueId();
+					?>
 					<tr <?php if (($count++%2)==1) {?> class="list_row_odd"<?php } else { ?>class="list_row_even"<?php } ?>>
-						<td style="padding-left: 25px;"><a href="/<?php echo $ADMIN; ?>/pub/issues/sections/?Pub=<?php p($publicationId); ?>&Issue=<?php  p($issue->getIssueId()); ?>&Language=<?php p($issue->getLanguageId()); ?>"><?php p(htmlspecialchars($issue->getName())); ?></a></td><?php if ($showSections) { ?><td>&nbsp;</td><?php } ?>
+						<td style="padding-left: 25px;"><a href="/<?php echo $ADMIN; ?>/pub/issues/sections/?Pub=<?php p($publicationId); ?>&Issue=<?php  p($issueId); ?>&Language=<?php p($issue->getLanguageId()); ?>"><?php p(htmlspecialchars($issue->getName())); ?></a></td><?php if ($showSections) { ?><td>&nbsp;</td><?php } ?>
 					</tr>
 					<?php 
-					if (isset($sections[$issue->getIssueId()])) {
-						foreach ($sections[$issue->getIssueId()] as $section) { ?>
+					if (isset($sections[$publicationId.'-'.$issueId])) {
+						foreach ($sections[$publicationId.'-'.$issueId] as $section) { ?>
 							<tr <?php if (($count++%2)==1) {?> class="list_row_odd"<?php } else { ?>class="list_row_even"<?php } ?>>
 								<td style="padding-left: 50px;">
-									<a href="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/?Pub=<?php p($publicationId); ?>&Issue=<?php  p($issue->getIssueId()); ?>&Section=<?php p($section->getSectionId()); ?>&Language=<?php p($section->getLanguageId()); ?>"><?php p(htmlspecialchars($section->getName())); ?></a>
+									<a href="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/?Pub=<?php p($publicationId); ?>&Issue=<?php  p($issueId); ?>&Section=<?php p($section->getSectionId()); ?>&Language=<?php p($section->getLanguageId()); ?>"><?php p(htmlspecialchars($section->getName())); ?></a>
 								</td>
 								<td align="center">
-									<a href="/<?php p($ADMIN); ?>/pub/issues/sections/articles/add.php?Pub=<?php p($section->getPublicationId());?>&Issue=<?php p($section->getIssueId()); ?>&Section=<?php p($section->getSectionId()); ?>&Language=<?php p($section->getLanguageId()); ?>&Wiz=1"><img src="/<?php p($ADMIN); ?>/img/icon/add_article.png" border="0" align="middle"></a>
+									<a href="/<?php p($ADMIN); ?>/pub/issues/sections/articles/add.php?Pub=<?php p($publicationId);?>&Issue=<?php p($issueId); ?>&Section=<?php p($section->getSectionId()); ?>&Language=<?php p($section->getLanguageId()); ?>&Wiz=1"><img src="/<?php p($ADMIN); ?>/img/icon/add_article.png" border="0" align="middle"></a>
 								</td>
 							</tr>
 							<?php
