@@ -154,6 +154,9 @@ regGS("No such section.","No such section.:en");
 regGS("No articles.","No articles.:en");
 regGS("Article does not exist.","Article does not exist.:en");
 regGS("Access denied", "Access denied:en");
+regGS("There was an error reading the language parameter.", "There was an error reading the language parameter.:en");
+regGS("There was an error reading the publication parameter.", "There was an error reading the publication parameter.:en");
+regGS("There was an error reading the issue parameter.", "There was an error reading the issue parameter.:en");
 
 // -- other errors
 regGS("Invalid article identifier", "Invalid article identifier:en");
@@ -195,6 +198,7 @@ regGS("Most Recently Added", "Most Recently Added:en");
 regGS("Most Recently Modified", "Most Recently Modified:en");
 regGS("$1 images found", "$1 images found:en");
 regGS("Reset search conditions","Reset search conditions");
+regGS("Preview issue","Preview issue:en");
 
 regGS("Publ. no.","Publ. no.:en");
 regGS("Issue no.","Issue no.:en");
@@ -287,6 +291,7 @@ regGS("The topic $1 could not be deleted.","The topic $1 could not be deleted.:e
 
 regGS("Yes","Yes:en");
 regGS("No","No:en");
+regGS("Close","Close:en");
 regGS("No issues.","No issues.:en");
 
 regGS("Back to article details","Back to Edit Article:en");
