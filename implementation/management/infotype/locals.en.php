@@ -1,4 +1,4 @@
-<?
+<?php 
 
 // -- index.m4
 regGS("Glossary infotypes","Glossary infotypes:en");

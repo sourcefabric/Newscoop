@@ -1,4 +1,4 @@
-<?
+<?php 
 regGS("Select template","Escolha um Modelo");
 regGS("Templates management","Gestor de Modelos");
 regGS("You do not have the right to change default templates.","Não tem permissões para alterar os Modelos por defeito");

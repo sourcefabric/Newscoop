@@ -1,4 +1,4 @@
-<?
+<?php 
 regGS("Add section to all subscriptions.","为所有订阅增加区");
 regGS("Delete section from all subscriptions.","删除所有订阅的区");
 regGS("A total of $1 subscriptions were updated.","全部$1订阅被更新");

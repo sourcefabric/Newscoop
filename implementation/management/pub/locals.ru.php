@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("Name<BR><SMALL>(click to see issues)</SMALL>","Название<BR><SMALL>(щелкните для просмотра выпуска)</SMALL>:ru");
 regGS("Delete publication $1","Удалить публикацию $1:ru");

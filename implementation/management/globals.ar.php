@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("CAMPSITE","كامبسايت");
 regGS("Home","الصفحة الرئيسية");

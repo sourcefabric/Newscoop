@@ -1,4 +1,4 @@
-<?
+<?php 
 regGS("Glossary infotypes","<i>Glossary infotypes</i>");
 regGS("Add new glossary infotype","Dodaj novi <i>glossary infotype</i>");
 regGS("Delete glossary infotype $1","Briši <i>glossary infotype</i> $1");

@@ -1,4 +1,4 @@
-<?
+<?php 
 regGS("Glossary infotypes","Informação-Tipo para Sinónimos");
 regGS("Add new glossary infotype","Adicionar Informação-Tipo para Sinónimo");
 regGS("Delete glossary infotype $1","Eliminar Informação-Tipo do Sinónimo $1");

@@ -1,4 +1,4 @@
-<?
+<?php 
 regGS("Add","增加");
 regGS("Delete topic $1 from article","从文章中删除主题$1");
 regGS("Article topics","文章主题");

@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("Name<BR><SMALL>(click to see issues)</SMALL>","Nume");
 regGS("Delete publication $1","Şterge publicaţia $1");
@@ -28,6 +28,7 @@ regGS("The publication could not be added.","Publicaţia nu poate fi adăugată"
 regGS("Select the publication","Selectaţi publicaţia");
 regGS("Add new country default subscription time","Adaugă timp implicit de subscriere la ţară");
 regGS("You do not have the right to manage publications.","Nu aveţi dreptul de a modifica publicaţii");
+regGS("Please check if another entry with the same country code exists already.","Verificaţi dacă există o alta înregistrare cu acelaş cod de ţară");
 regGS("Adding new country default subscription time","Adaug timp implicit de subscriere la ţară");
 regGS("You must select a country.","Trebuie să selectaţi o ţară");
 regGS("The default subscription time for $1 has been added.","Timpul implicit de subscriere la ţara $1 a fost adăugat");

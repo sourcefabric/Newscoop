@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("Subscribed sections","Rubrike u pretplati");
 regGS("Add new section to subscription","Dodaj novu rubriku za pretplatu");

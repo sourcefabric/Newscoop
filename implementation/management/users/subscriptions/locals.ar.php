@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("Publication<BR><SMALL>(click to see sections)</SMALL>","المنشور<br> (إضغط لترى المقاطع)");
 regGS("Left to pay","المبلغ المتبقي للدفع");

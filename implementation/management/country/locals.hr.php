@@ -1,4 +1,4 @@
-<?
+<?php 
 regGS("No countries.","Nema unesenih država.");
 regGS("You do not have the right to add countries.","Nemate pravo dodavati države.");
 regGS("Adding new country","Dodavenje nove države.");

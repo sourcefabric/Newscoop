@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("Glossary infotypes","أنواع معلومات الفهرس");
 regGS("Add new glossary infotype","أضف نوعا جديدا لمعلومات الفهرس ");

@@ -1,4 +1,4 @@
-<?
+<?php 
 
 // -- index.m4
 regGS("Article type fields","Article type fields:en");

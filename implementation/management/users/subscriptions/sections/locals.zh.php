@@ -1,4 +1,4 @@
-<?
+<?php 
 regGS("Subscribed sections","&#24050;&#35746;&#38405;&#21306;");
 regGS("Add new section to subscription","&#20026;&#35746;&#38405;&#22686;&#21152;&#26032;&#21306;");
 regGS("Start Date<BR><SMALL>(yyyy-mm-dd)</SMALL>","&#36215;&#22987;&#26085;&#26399;(yyyy-mm-dd)");

@@ -1,4 +1,4 @@
-<?
+<?php 
 regGS("Select template","选择模版");
 regGS("Templates management","模版管理");
 regGS("You do not have the right to change default templates.","您无权改变默认模版");

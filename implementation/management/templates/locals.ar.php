@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("Select template","إختر نموذجا");
 regGS("Templates management","إدارة النماذج");

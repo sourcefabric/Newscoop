@@ -1,4 +1,4 @@
-<?
+<?php 
 regGS("Add new image","Neues Bild hinzufügen");
 regGS("Select an old image","Altes Bild auswählen");
 regGS("Click to view image","Anklicken um Bild zu betrachten");

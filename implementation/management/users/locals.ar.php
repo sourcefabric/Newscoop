@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("User management","إدارة المستخدم");
 regGS("Set","مجموعة");

@@ -1,4 +1,4 @@
-<?
+<?php 
 regGS("Article type fields","Поля типов статей:ru");
 regGS("Article type","Тип статей:ru");
 regGS("No fields.","Нет полей.:ru");

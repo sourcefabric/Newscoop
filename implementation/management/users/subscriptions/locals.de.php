@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("Publication<BR><SMALL>(click to see sections)</SMALL>","Publikation (anklicken um Rubriken zu betrachten)");
 regGS("Left to pay","Noch zu zahlen");

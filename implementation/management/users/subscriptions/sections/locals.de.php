@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("Subscribed sections","Abonierte Rubriken");
 regGS("Add new section to subscription","Neue Rubriken zu Abonoment hinzufügen");

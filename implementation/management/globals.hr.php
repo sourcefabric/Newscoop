@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("CAMPSITE","CAMPSITE");
 regGS("Home","Glavna");

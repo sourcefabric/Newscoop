@@ -1,4 +1,4 @@
-<?
+<?php 
 regGS("Select template","Označi predložak");
 regGS("Templates management","Upravljanje predlošcima");
 regGS("You do not have the right to change default templates.","Nemate pravo mijenjati standardni predložak");

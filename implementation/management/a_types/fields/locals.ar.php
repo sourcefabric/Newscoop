@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("Article type fields","حقول أنواع المقال");
 regGS("Article type","نوع المقال");

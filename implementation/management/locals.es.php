@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("Please enter your user name and password","Por favor entre su nombre de usuario y clave");
 regGS("You do not have the right to access this page.","No tiene derecho para accesar esta pagina.");

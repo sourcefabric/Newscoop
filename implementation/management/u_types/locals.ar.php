@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("User types"," نماذج المستخدم");
 regGS("No user types.","لا نماذج للمستخدم");

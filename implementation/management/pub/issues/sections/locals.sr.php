@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("Add section to all subscriptions.","Додај рубрику у све претплате.");
 regGS("Delete section from all subscriptions.","Обриши рубрику из свих претплата.");

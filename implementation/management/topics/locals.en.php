@@ -1,4 +1,4 @@
-<?
+<?php 
 
 // -- index.m4
 regGS("You do not have the right to add topics.","You do not have the right to add topics.:en");

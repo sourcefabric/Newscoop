@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("Article type fields","Campos de tipo de archivo");
 regGS("Article type","Tipo de archivo");

@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("Publication<BR><SMALL>(click to see sections)</SMALL>","Публикация<BR><SMALL>(Щелкните для просмотра секций)</SMALL>:ru");
 regGS("Left to pay","Осталось оплатить:ru");
