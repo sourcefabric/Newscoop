@@ -8,6 +8,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/db_connect.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Publication.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Issue.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Template.php');
 
 // Check permissions
 list($access, $User) = check_basic_access($_REQUEST);
@@ -47,7 +48,25 @@ if ($errorStr != "") {
 if (($templateId = $issueObj->getIssueTemplateId()) == 0)
 	$errorStr = getGS('This issue cannot be previewed. Please make sure it has a $1 template selected.','<B><I>'.getGS('front page').'</I></B>');
 
+$urlType = $publicationObj->getProperty('IdURLType');
+if ($urlType == 1) {
+	$templateObj = & new Template($templateId);
+	$url = "/look/" . $templateObj->getName()
+		. "?IdLanguage=$Language&IdPublication=$Publication&NrIssue=$Issue";
+} else {
+	$url = "/" . $languageObj->getCode() . "/" . $issueObj->getShortName();
+}
+
 ?>
+
+<?php if ($errorStr == "") { ?>
+
+<FRAMESET ROWS="60%,*" BORDER="1">
+<FRAME SRC="<?php echo $url; ?>" NAME="body" FRAMEBORDER="1" MARGINWIDTH="0" MARGINHEIGHT="0">
+<FRAME NAME="e" SRC="empty.php" FRAMEBORDER="1" MARGINWIDTH="0" MARGINHEIGHT="0">
+</FRAMESET>
+
+<?php } else { ?>
 
 <HTML>
 <HEAD>
@@ -56,15 +75,6 @@ if (($templateId = $issueObj->getIssueTemplateId()) == 0)
 </HEAD>
 
 <BODY>
-
-<?php if ($errorStr == "") { ?>
-
-<FRAMESET ROWS="60%,*" BORDER="1">
-<FRAME SRC="<?php  pgetVar($q_iss,'IssueTplId'); ?>?IdPublication=<?php  pencURL($Pub); ?>&NrIssue=<?php  pencURL($Issue); ?>&IdLanguage=<?php  pencURL($Language); ?>" NAME="body" FRAMEBORDER="1" MARGINWIDTH="0" MARGINHEIGHT="0">
-<FRAME NAME="e" SRC="empty.php" FRAMEBORDER="1" MARGINWIDTH="0" MARGINHEIGHT="0">
-</FRAMESET>
-
-<?php } else { ?>
 
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
 	<TR>
@@ -104,6 +114,6 @@ if (($templateId = $issueObj->getIssueTemplateId()) == 0)
 <?php CampsiteInterface::CopyrightNotice(); ?>
 </BODY>
 
-<?php } ?>
-
 </HTML>
+
+<?php } ?>
