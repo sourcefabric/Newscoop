@@ -5,11 +5,12 @@
 function load_common_include_files() {
 	require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
 	require_once($_SERVER['DOCUMENT_ROOT'].'/priv/lib_campsite.php');
-	$globalfile=selectLanguageFile($_SERVER['DOCUMENT_ROOT'].'/priv','globals');
-	$localfile=selectLanguageFile('.','locals');
-	@include ($globalfile);
-	@include ($localfile);
-	include ($_SERVER['DOCUMENT_ROOT'].'/priv/languages.php');
+	$globalfile = selectLanguageFile($_SERVER['DOCUMENT_ROOT'].'/priv','globals');
+	$localfile = selectLanguageFile('.','locals');
+	require_once($globalfile);
+	require_once($localfile);
+	require_once($_SERVER['DOCUMENT_ROOT'].'/priv/languages.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/classes/config.php');
 } // fn load_common_include_files
 
 /**
