@@ -16,6 +16,7 @@ regGS("No images.","No images.:en");
 regGS("Description<BR><SMALL>(Click to view details)</SMALL>", "Description <SMALL>(Click to view details)</SMALL>:en");
 regGS("Gallery", "Gallery:en");
 regGS("Text only", "Text only:en");
+regGS("Used in articles", "Used in articles:en");
 
 // -- view.m4
 regGS("View image","View image:en");
