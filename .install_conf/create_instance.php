@@ -1,6 +1,7 @@
 <?php
 
 
+$info_messages = array();
 if (!create_instance($GLOBALS['argv'], $errors)) {
 	foreach($errors as $index=>$error)
 		echo "$error\n";
@@ -8,6 +9,8 @@ if (!create_instance($GLOBALS['argv'], $errors)) {
 	foreach($Campsite as $var_name=>$value)
 		echo "$var_name = $value\n";
 }
+foreach ($info_messages as $index=>$message)
+	echo "$message\n";
 
 
 function create_instance($p_arguments, &$p_errors)
@@ -342,6 +345,9 @@ function create_site($p_defined_parameters)
 			return "Unable to create symbolic link to $file";
 	}
 
+	if (!($res = create_virtual_host($p_defined_parameters)) == 0)
+		return $res;
+
 	$cp_cmd = "cp -f $common_cgi_dir/* $cgi_dir";
 	exec($cp_cmd);
 
@@ -350,6 +356,39 @@ function create_site($p_defined_parameters)
 	exec($cmd);
 	$cmd = "chmod ug+w \"$instance_www_dir\" -R";
 	exec($cmd);
+
+	return 0;
+}
+
+
+function create_virtual_host(&$p_defined_parameters)
+{
+	global $Campsite, $info_messages;
+
+	$etc_dir = $p_defined_parameters['--etc_dir'];
+	$instance_name = $p_defined_parameters['--db_name'];
+	$vhost_template = "$etc_dir/vhost-template.conf";
+	$instance_vhost = "$etc_dir/$instance_name/$instance_name-vhost.conf";
+
+	if (!is_file($vhost_template))
+		return "Virtual host template file does not exist";
+
+	$file_content = file_get_contents($vhost_template);
+
+	$html_dir = $Campsite['WWW_DIR'] . "/html";
+	$cgi_dir = $Campsite['WWW_DIR'] . "/cgi-bin";
+
+	$search = array('$INSTANCE_HTML_DIR', '$INSTANCE_CGI_DIR');
+	$replace = array($html_dir, $cgi_dir);
+	$new_file_content = str_replace($search, $replace, $file_content);
+
+	if (!$res = fopen($instance_vhost, "w"))
+		return "Can not create instance virtual host configuration file";
+	fwrite($res, $new_file_content);
+	fclose($res);
+
+	$info_messages[] = "The apache virtual host configuration file $instance_vhost was created.";
+	$info_messages[] = "Please edit it and replace \$SERVER_ADDRESS and \$SERVER_NAME with appropriate values.";
 
 	return 0;
 }
