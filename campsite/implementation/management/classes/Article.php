@@ -125,6 +125,7 @@ class Article extends DatabaseObject {
 			return;
 		}
 		$this->m_data['Number'] = $Campsite['db']->Insert_ID();
+		$this->m_data['ArticleOrder'] = $this->m_data['Number'];
 	
 		// Create the record
 		$values = array();
@@ -134,6 +135,7 @@ class Article extends DatabaseObject {
 		$values['ShortName'] = $this->m_data['Number'];
 		$values['Type'] = $p_articleType;
 		$values['Public'] = 'Y';
+		$values['ArticleOrder'] = $this->m_data['Number'];
 		$success = parent::create($values);
 		if (!$success) {
 			return;
