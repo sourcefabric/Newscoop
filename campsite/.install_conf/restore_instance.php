@@ -92,6 +92,8 @@ if (is_file($database_dump_file) && backup_file($database_dump_file, $output) !=
 }
 
 // backup the old database if exists
+if (($res = connect_to_database()) != 0)
+	exit_with_error($res);
 if (database_exists($instance_name)) {
 	backup_database($instance_name, $database_dump_file, $output);
 	if (backup_file($database_dump_file, $output) != 0)
@@ -132,15 +134,6 @@ function restore_database($p_db_name, $dump_file)
 	exec_command($cmd);
 
 	return 0;
-}
-
-function database_exists($p_db_name)
-{
-	$res = mysql_list_dbs();
-	while ($row = mysql_fetch_object($res))
-		if ($row->Database == $p_db_name)
-			return true;
-	return false;
 }
 
 ?>
