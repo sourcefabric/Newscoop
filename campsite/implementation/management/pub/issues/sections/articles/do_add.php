@@ -159,7 +159,12 @@
     
 	if ($correct) {
 		query ("UPDATE AutoId SET ArticleId=LAST_INSERT_ID(ArticleId + 1)");
-		query ("INSERT IGNORE INTO Articles SET IdPublication=$Pub, NrIssue=$Issue, NrSection = $Section, Number = LAST_INSERT_ID(), IdLanguage=$cLanguage, Type='$cType', Name='$cName', Keywords='$cKeywords', OnFrontPage='$cFrontPage', OnSection='$cSectionPage', UploadDate=NOW(), IdUser=".getVar($Usr,'Id').", Public='Y'");
+		query("select max(ArticleOrder) as ao from Articles where IdPublication = $Pub "
+		      . "and NrIssue = $Issue and NrSection = $Section", 'art_max_ord');
+		fetchRow($art_max_ord);
+		$ao = 1 + getVar($art_max_ord, 'ao');
+		$sql = "INSERT IGNORE INTO Articles SET IdPublication=$Pub, NrIssue=$Issue, NrSection = $Section, Number = LAST_INSERT_ID(), IdLanguage=$cLanguage, Type='$cType', Name='$cName', Keywords='$cKeywords', OnFrontPage='$cFrontPage', OnSection='$cSectionPage', UploadDate=NOW(), IdUser=".getVar($Usr,'Id').", Public='Y', ShortName=LAST_INSERT_ID(), ArticleOrder = $ao";
+		query($sql);
 		if ($AFFECTED_ROWS > 0) {
 
 			## added by sebastian
