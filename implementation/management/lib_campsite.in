@@ -440,7 +440,7 @@ function duplicate_article($article_no, $language_id, $user_id, $dst_pub, $dst_i
 	while (true) {
 		$sql = "select * from Articles where IdPublication = " . $dst_pub . " and NrIssue = " . $dst_issue
 		     . " and NrSection = " . $dst_section . " and IdLanguage = " . $language_id . " and Name = '"
-		     . $row_art['Name'] . "'";
+		     . mysql_real_escape_string($row_art['Name']) . "'";
 		$res_dup = mysql_query($sql);
 		if ($row_dup = mysql_fetch_assoc($res_dup)) {
 			$row_art['Name'] = $row_art['Name'] . " (duplicate)";
