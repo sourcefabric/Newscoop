@@ -61,12 +61,23 @@ if (!$access) {
 	header("Location: /priv/logout.php");
 	exit;
 }
-$Pub = isset($_REQUEST["Pub"])?$_REQUEST["Pub"]:0;
-$Issue = isset($_REQUEST["Issue"])?$_REQUEST["Issue"]:0;
-$Section = isset($_REQUEST["Section"])?$_REQUEST["Section"]:0;
-$Language = isset($_REQUEST["Language"])?$_REQUEST["Language"]:0;
-$sLanguage = isset($_REQUEST["sLanguage"])?$_REQUEST["sLanguage"]:0;
-$Article = isset($_REQUEST["Article"])?$_REQUEST["Article"]:0;
+$Pub = Input::get('Pub', 'int', 0);
+$Issue = Input::get('Issue', 'int', 0);
+$Section = Input::get('Section', 'int', 0);
+$Language = Input::get('Language', 'int', 0);
+$sLanguage = Input::get('sLanguage', 'int', 0);
+$Article = Input::get('Article', 'int', 0);
+
+if (!Input::isValid()) {
+	header("Location: /priv/logout.php");
+	exit;	
+}
+
+// Fetch article
+$articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
+if (!$articleObj->exists()) {
+	$errorStr = 'No such article.';
+}
 
 // If the user has the ability to change the article OR
 // the user created the article and it hasnt been published.
@@ -78,12 +89,6 @@ if ($User->hasPermission('ChangeArticle')
 }
 
 $errorStr = "";
-
-// Fetch article
-$articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
-if (!$articleObj->exists()) {
-	$errorStr = 'No such article.';
-}
     
 $languageObj =& new Language($Language);
 

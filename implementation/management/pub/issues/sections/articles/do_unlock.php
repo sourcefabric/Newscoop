@@ -6,12 +6,17 @@ if (!$access) {
 	header("Location: /priv/logout.php");
 	exit;
 }
-$PublicationId = array_get_value($_REQUEST, "Pub", 0);
-$IssueId  = array_get_value($_REQUEST, "Issue", 0);
-$SectionId = array_get_value($_REQUEST, "Section", 0);
-$InterfaceLanguageId = array_get_value($_REQUEST, "Language", 0);
-$ArticleLanguageId = array_get_value($_REQUEST, "sLanguage", 0);
-$ArticleId = array_get_value($_REQUEST, "Article", 0);
+$PublicationId = Input::get('Pub', 'int', 0);
+$IssueId  = Input::get('Issue', 'int', 0);
+$SectionId = Input::get('Section', 'int', 0);
+$InterfaceLanguageId = Input::get('Language', 'int', 0);
+$ArticleLanguageId = Input::get('sLanguage', 'int', 0);
+$ArticleId = Input::get('Article', 'int', 0);
+
+if (!Input::isValid()) {
+	header("Location: /priv/logout.php");
+	exit;	
+}
 
 $articleObj =& new Article($PublicationId, $IssueId, $SectionId, $ArticleLanguageId, $ArticleId);
 
