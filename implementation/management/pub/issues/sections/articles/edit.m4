@@ -5,6 +5,21 @@ B_DATABASE
 CHECK_BASIC_ACCESS
 
 B_HEAD
+<script>
+<!--
+/*
+A slightly modified version of "Break-out-of-frames script"
+By JavaScript Kit (http://javascriptkit.com)
+*/
+
+if (window != top.fmain && window != top) {
+	if (top.fmenu)
+		top.fmain.location.href=location.href
+	else
+		top.location.href=location.href
+}
+// -->
+</script>
 	X_EXPIRES
 	X_TITLE(<*Edit article details*>)
 <? if ($access == 0) { ?>dnl
@@ -21,6 +36,7 @@ B_STYLE
 E_STYLE
 
 <? if ($access) {
+SET_ACCESS(<*aaa*>, <*AddArticle*>)
 SET_ACCESS(<*dla*>, <*DeleteArticle*>)
 ?>dnl
 B_BODY
@@ -159,11 +175,18 @@ X_NEW_BUTTON(<*Preview*>,
 </TD>
 <TD>
 X_NEW_BUTTON(<*Translate*>, <*X_ROOT/pub/issues/sections/articles/translate.php?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Section=<? p($Section); ?>&Article=<? p($Article); ?>&Language=<? p($Language); ?>&Back=<? pencURL($REQUEST_URI); ?>*>)
+</TD>
 <? if ($dla) { ?>dnl
-</TD><TD>
+<TD>
 X_NEW_BUTTON(<*Delete*>, <*X_ROOT/pub/issues/sections/articles/del.php?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Section=<? p($Section); ?>&Article=<? p($Article); ?>&Language=<? p($Language); ?>&sLanguage=<? p($sLanguage); ?>&Back=<? pencURL($REQUEST_URI); ?>*>)
 <? } ?>dnl
-</TD></TR>
+</TD>
+<? if ($aaa) { ?>dnl
+<TD>
+X_NEW_BUTTON(<*Duplicate*>, <*X_ROOT/pub/issues/sections/articles/fduplicate.php?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Section=<? p($Section); ?>&Article=<? p($Article); ?>&Language=<? p($Language); ?>&sLanguage=<? p($sLanguage); ?>*>)
+</TD>
+<? } ?>dnl
+</TR>
 </TABLE>
 </TD><TD ALIGN="RIGHT">
 	B_SEARCH_DIALOG(<*GET*>, <*edit.php*>)
