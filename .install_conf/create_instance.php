@@ -264,7 +264,7 @@ function backup_database($p_db_name, $p_defined_parameters)
 	$cmd = "mysqldump -u " . $Campsite['DATABASE_USER'];
 	if ($Campsite['DATABASE_PASSWORD'] != "")
 		$cmd .= " --password=\"" . $Campsite['DATABASE_PASSWORD'] . "\"";
-	$cmd .= " $p_db_name > \"$backup_dir/$p_db_name-backup.sql\"";
+	$cmd .= " $p_db_name > \"$backup_dir/$p_db_name-database.sql\"";
 	exec($cmd, $output, $res);
 	if ($res != 0)
 		return implode("\n", $output);
@@ -277,7 +277,7 @@ function restore_database($p_db_name, $p_defined_parameters)
 {
 	global $Campsite, $CampsiteVars;
 
-	$backup_file = $Campsite['CAMPSITE_DIR'] . "/backup/$p_db_name/$p_db_name-backup.sql";
+	$backup_file = $Campsite['CAMPSITE_DIR'] . "/backup/$p_db_name/$p_db_name-database.sql";
 	if (!is_file($backup_file))
 		return "Can't restore database: backup file not found";
 
