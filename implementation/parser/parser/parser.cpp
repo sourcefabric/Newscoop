@@ -1918,6 +1918,17 @@ inline int CParser::HWith(CActionList& al, int lv, int sublv)
 	return 0;
 }
 
+// HURIPath: parse URIPath statement; add CActURIPath action to
+// actions list (al)
+// Parameters:
+//		CActionList& al - reference to actions list
+inline int CParser::HURIPath(CActionList& al)
+{
+	al.insert(al.end(), new CActURIPath());
+	WaitForStatementEnd(true);
+	return 0;
+}
+
 // LevelParser: read lexems until it finds a statement or reaches end of file
 // Depending on read statement it calls on of HArticle, HDate, HEdit, HFormParameters,
 // HIf, HInclude, HIssue, HLanguage, HList, HLocal, HLogin, HPrint, HPublication,
@@ -2021,6 +2032,10 @@ int CParser::LevelParser(CActionList& al, int level, int sublevel)
 			break;
 		case CMS_ST_WITH:
 			if ((res = HWith(al, level, sublevel)))
+				return res;
+			break;
+		case CMS_ST_URIPATH:
+			if ((res = HURIPath(al)))
 				return res;
 			break;
 		case CMS_ST_FOREMPTYLIST:
