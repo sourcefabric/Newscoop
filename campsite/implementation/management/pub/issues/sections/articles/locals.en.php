@@ -1,7 +1,14 @@
 <?php 
 
-// -- index.m4
+// -- index.php
 regGS("Delete article $1","Delete article $1:en");
+regGS("Order","Order:en");
+
+// -- move.php
+regGS("Moving article '$1' up one position...","Moving article '$1' up one position...:en");
+regGS("Moving article '$1' down one position...","Moving article '$1' down one position...:en");
+regGS("Moving article '$1' to position $2...","Moving article '$1' to position $2...:en");
+regGS("Back to article list","Back to article list:en");
 
 // -- add.m4
 regGS("Show article on front page","Show article on front page:en");
