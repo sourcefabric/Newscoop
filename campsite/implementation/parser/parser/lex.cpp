@@ -142,8 +142,13 @@ int CLex::AppendOnAtom()
 	return 1;
 }
 
-// InitStatements: initialise statements
 CStatementMap::CStatementMap()
+{
+	InitStatements();
+}
+
+// InitStatements: initialise statements
+int CStatementMap::InitStatements()
 {
 	OPEN_TRY
 	// register enum types
