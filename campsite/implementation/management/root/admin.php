@@ -2,11 +2,8 @@
 
 require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
 
-$no_menu_scripts = array('/login.php', '/do_login.php', '/popup/index.php',
-	'/popup/art.php', '/popup/empty.php', '/popup/i1.php', '/popup/i2.php',
-	'/popup/i3.php', '/popup/i4.php', '/popup/img.php', '/popup/index.php',
-	'/popup/iss.php', '/popup/lang.php', '/popup/pub.php', '/popup/sect.php'
-	);
+$no_menu_scripts = array('/login.php', '/do_login.php', '/pub/issues/preview.php',
+	'/pub/issues/empty.php', '/ad_popup.php');
 
 $request_uri = $_SERVER['REQUEST_URI'];
 $call_script = substr($request_uri, strlen("/$ADMIN"));
