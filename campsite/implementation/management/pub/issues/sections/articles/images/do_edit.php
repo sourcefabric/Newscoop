@@ -17,34 +17,6 @@ if (!$access) {
 	exit;
 }
 
-//if (!IsValidInput(array(
-//	'Pub' => 'int',
-//	'Issue' => 'int',
-//	'Section' => 'int',
-//	'Language' => 'int',
-//	'sLanguage' => 'int',
-//	'Article' => 'int',
-//	'Image' => 'int',
-//	'cDescription' => 'string',
-//	'cPhotographer' => 'string',
-//	'cPlace' => 'string',
-//	'cDate' => 'string'))) {
-//	header("Location: /$ADMIN/logout.php");
-//	exit;
-//}
-//$Pub = array_get_value($_REQUEST, 'Pub', 0);
-//$Issue = array_get_value($_REQUEST, 'Issue', 0);
-//$Section = array_get_value($_REQUEST, 'Section', 0);
-//$Language = array_get_value($_REQUEST, 'Language', 0);
-//$sLanguage = array_get_value($_REQUEST, 'sLanguage', 0);
-//$Article = array_get_value($_REQUEST, 'Article', 0);
-//$Image = array_get_value($_REQUEST, 'Image', 0);
-//$Description = array_get_value($_REQUEST, 'cDescription', 'None');
-//$Photographer = array_get_value($_REQUEST, 'cPhotographer', '');
-//$Place = array_get_value($_REQUEST, 'cPlace', '');
-//$Date = array_get_value($_REQUEST, 'cDate', '');
-//
-
 $Pub = Input::get('Pub', 'int', 0);
 $Issue = Input::get('Issue', 'int', 0);
 $Section = Input::get('Section', 'int', 0);
@@ -59,7 +31,7 @@ $Place = Input::get('cPlace', 'string', '', true);
 $Date = Input::get('cDate', 'string', '', true);
 
 if (!Input::isValid()) {
-	header("Location: /$ADMIN/logout.php");
+	CampsiteInterface::DisplayError(array('Invalid input: $1', Input::GetErrorString()));
 	exit;	
 }
 
@@ -71,9 +43,13 @@ $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
 
 // This file can only be accessed if the user has the right to change articles
 // or the user created this article and it hasnt been published yet.
-if (!$User->hasPermission('ChangeArticle') 
+$access = false;
+if ($User->hasPermission('ChangeArticle') 
 	|| (($articleObj->getUserId() == $User->getId()) && ($articleObj->getPublished() == 'N'))) {
-	header("Location: /$ADMIN/logout.php");
+	$access = true;
+}
+if (!$access) {	
+	CampsiteInterface::DisplayError('You do not have the right to change the article.');
 	exit;		
 }
 
