@@ -12,7 +12,7 @@ regGS("Updating image information","Modific datele imaginii");
 regGS("Edit image information","Editează datele imaginii");
 regGS("Image information has been updated.","Datele imaginii au fost salvate");
 regGS("Image information could not be updated.","Datele imaginii nu au fost salvate");
-regGS("Changed image properties of $1","");
+regGS("Changed image properties of $1","Datele imaginii $1 au fost modificate");
 regGS("Delete image","Şterge imaginea");
 regGS("You do not have the right to delete images","Nu aveţi dreptul să ştergeţi imaginea");
 regGS("Are you sure you want to delete the image $1?","Doriţi să ştergeţi imaginea $1 ?");
