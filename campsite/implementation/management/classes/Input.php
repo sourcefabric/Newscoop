@@ -72,7 +72,19 @@ class Input {
 		}
 	} // fn isValid
 	
-		
+	
+	/**
+	 * Return a default error string.
+	 * @return string
+	 */
+	function GetErrorString() {
+		global $g_inputErrors;
+		ob_start();
+		print_r($g_inputErrors);
+		$str = ob_get_clean();
+		return $str;
+	} // fn GetErrorString
+	
 } // class Input
 
 ?>
