@@ -641,6 +641,10 @@ CStatementMap::CStatementMap()
 	pcoCtx->insertAttr(new CAttribute("Password", "Password"));
 	pcoSt->insertCtx(pcoCtx);
 
+	pcoCtx = new CStatementContext(CMS_CT_SELECT);
+	pcoCtx->insertAttr(new CAttribute("RememberUser"));
+	pcoSt->insertCtx(pcoCtx);
+
 	this->insert(pcoSt);
 
 	// search statement
