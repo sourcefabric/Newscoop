@@ -1,4 +1,3 @@
-B_HTML
 INCLUDE_PHP_LIB(<*$ADMIN_DIR/users*>)
 B_DATABASE
 
@@ -6,7 +5,6 @@ CHECK_BASIC_ACCESS
 CHECK_ACCESS(<*ManageUsers*>)
 
 B_HEAD
-	X_EXPIRES
 	X_TITLE(<*Edit user account permissions*>)
 <?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to change user account permissions.*>)
