@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 [ "$CAMPSITE_PACKAGE_DIR" = "" ] && cd ../../.. && . ./configure --define_start_env && cd implementation/management/src
 . ${INSTALL_CONF}/conf_functions
@@ -30,6 +30,6 @@ EOF
 echo OK
 
 echo -n -e "\t\tWriting dir_conf.h header..."
-m4 ../macros.m4 dir_conf.m4 > dir_conf.h
+$M4 ../macros.m4 dir_conf.m4 > dir_conf.h
 [ $? -ne 0 ] && echo "ERROR" && exit 1
 echo OK
