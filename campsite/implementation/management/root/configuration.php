@@ -30,7 +30,7 @@ $Campsite['HOSTNAME'] = $_SERVER['SERVER_NAME'];
 $Campsite['WEBSITE_URL'] = $scheme.$Campsite['HOSTNAME'];
 unset($scheme);
 
-$Campsite['VERSION'] = '2.2.0-rc2';
+$Campsite['VERSION'] = '2.2.0-rc3';
 
 $Campsite['IMAGE_DIRECTORY'] = $Campsite['HTML_DIR'].'/images/';
 $Campsite['IMAGE_BASE_URL'] = $Campsite['WEBSITE_URL'].'/images/';
