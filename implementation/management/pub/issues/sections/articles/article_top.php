@@ -1,9 +1,8 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
-
 require_once($_SERVER['DOCUMENT_ROOT']."/priv/lib_campsite.php");
 
-function article_top($p_articleObj, $p_issueLanguageId, $p_title, $p_access) {
+function ArticleTop($p_articleObj, $p_issueLanguageId, $p_title, $p_access) {
 	global $Campsite;
 	
     // Fetch section
@@ -46,7 +45,7 @@ function article_top($p_articleObj, $p_issueLanguageId, $p_title, $p_access) {
 	// -->
 	</script>
 	<TITLE><?php putGS("Edit article details"); ?></TITLE>
-	<?php if (!$access) { ?>	
+	<?php if (!$p_access) { ?>	
 		<META HTTP-EQUIV="Refresh" CONTENT="0; URL=/priv/logout.php">
 	<?php  } ?>
 </HEAD>
