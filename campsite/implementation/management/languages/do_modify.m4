@@ -66,7 +66,7 @@ B_MSGBOX(<*Updating language information*>)
 	    if ($cCodePage != "")
 			query("REPLACE  INTO TimeUnits VALUES ('D', $Lang, '$D'), ('W', $Lang, '$W'), ('M', $Lang, '$M'), ('Y', $Lang, '$Y')");
 		query ("UPDATE Languages SET Name='$cName', CodePage='$cCodePage', Code='$cCode', OrigName='$cOrigName', Month1='$cMonth1', Month2='$cMonth2', Month3='$cMonth3', Month4='$cMonth4', Month5='$cMonth5', Month6='$cMonth6', Month7='$cMonth7', Month8='$cMonth8', Month9='$cMonth9', Month10='$cMonth10', Month11='$cMonth11', Month12='$cMonth12', WDay1='$cWDay1', WDay2='$cWDay2', WDay3='$cWDay3', WDay4='$cWDay4', WDay5='$cWDay5', WDay6='$cWDay6', WDay7='$cWDay7' WHERE Id=$Lang");
-    if ($AFFECTED_ROWS > 0) { ?>dnl
+    if ($AFFECTED_ROWS >= 0) { ?>dnl
 	X_MSGBOX_TEXT(<*<LI><? putGS('Language information has been successfuly updated.'); ?></LI>*>)
 X_AUDIT(<*103*>, <*getGS('Language $1 modified',$cName)*>)
 <? } else { ?>dnl
