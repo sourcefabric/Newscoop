@@ -133,7 +133,7 @@ else
     done
 fi
 echo ""
-choice_yn "Do you want to read the description of campsite modules?" Y
+choice_yn "Do you want to read the description of campsite modules?" N
 if [ "$choice" = "Y" ]; then
     clear
     echo "Campsite modules description:"
@@ -192,6 +192,7 @@ echo "Please wait while checking modules configuration..."
 for cc_mod in $SELECTED_MODULES; do
     check_module_deps $cc_mod $cc_interactive
     if [ $? -ne 0 ]; then
+	if [ "$output" != "" ]; then echo $output; fi
 	echo "There is a dependecy problem. Please read the previous message and"
 	echo "install the required program/package".
 	exit 1
