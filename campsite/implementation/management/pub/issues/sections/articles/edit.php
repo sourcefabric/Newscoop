@@ -92,7 +92,8 @@ if ($errorStr != "") {
 if (!$hasAccess) {
 	?>
 	<P>
-	<CENTER><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" BGCOLOR="#C0D0FF" ALIGN="CENTER">
+	<CENTER>
+	<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input" ALIGN="CENTER">
 		<TR>
 			<TD COLSPAN="2">
 				<B> <font color="red"><?php  putGS("Access denied"); ?> </font></B>
@@ -105,7 +106,7 @@ if (!$hasAccess) {
 		<TR>
 			<TD COLSPAN="2">
 			<DIV ALIGN="CENTER">
-			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>&Section=<?php  p($Section); ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/button/ok.gif" BORDER="0" ALT="OK"></A>
+			<INPUT TYPE="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" class="button" ONCLICK="location.href='/<?php echo $ADMIN; ?>/pub/issues/sections/articles?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>&Section=<?php  p($Section); ?>'">
 			</DIV>
 			</TD>
 		</TR>
@@ -119,7 +120,7 @@ if (!$hasAccess) {
 if ($hasAccess && !$edit_ok) {
 	?><P>
 	<CENTER>
-	<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" BGCOLOR="#C0D0FF" ALIGN="CENTER">
+	<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input" ALIGN="CENTER">
 	<TR>
 		<TD COLSPAN="2">
 			<B><?php  putGS("Article is locked"); ?> </B>
