@@ -24,7 +24,7 @@ B_BODY
 	todefnum('cPub');
 	todefnum('cName');
 	$correct = 1;
-	$created = 0;
+	$updated = 0;
 ?>
 
 B_HEADER(<*Editing alias*>)
@@ -71,14 +71,14 @@ B_MSGBOX(<*Editing alias*>)
 		$aliases = getHVar($q_count, 'alias_count');
 		if ($aliases == 0) {
 			query ("UPDATE Aliases SET Name = '$cName' WHERE Id = " . $cAlias);
-			$created = ($AFFECTED_ROWS > 0);
+			$updated = ($AFFECTED_ROWS >= 0);
 		}
 	}
 
-	if ($created) {
+	if ($updated) {
 ?>dnl
 		<LI><?php  putGS('The site alias for publication $1 has been modified to $2.', '<B>'.getHVar($q_pub,'Name').'</B>', '<B>'.$cName.'</B>'); ?></LI>
-		X_AUDIT(<*4*>, <*getGS('The site alias for publication $1 has been modified to $2.',getVar($q_pub,'Name'), $cName)*>)
+		X_AUDIT(<*153*>, <*getGS('The site alias for publication $1 has been modified to $2.',getVar($q_pub,'Name'), $cName)*>)
 <?php
 	} else {
 		if ($correct != 0) {
@@ -86,13 +86,13 @@ B_MSGBOX(<*Editing alias*>)
 				echo "<LI>"; putGS('Another alias with the same name exists already.'); echo "</LI>\n";
 			}
 			echo "<LI>";
-			putGS('The site alias $1 could not be added.', '<B>'.$cName.'</B>');
+			putGS('The site alias $1 could not be modified.', '<B>'.$cName.'</B>');
 			echo "</LI>\n";
 		}
 	}
 ?>dnl
 	*>)
-<?php  if ($correct && $created) { ?>dnl
+<?php  if ($correct && $updated) { ?>dnl
 	B_MSGBOX_BUTTONS
 		REDIRECT(<*new*>, <*Add another*>, <*X_ROOT/pub/add_alias.php?Pub=<?php  pencURL($cPub); ?>*>)
 		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/pub/aliases.php?Pub=<?php  pencURL($cPub); ?>*>)
