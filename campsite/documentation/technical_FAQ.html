@@ -190,6 +190,22 @@ DirectoryIndex index.html index.htm index.php /priv/templates/idx.php<br>
 <p>Note that "/priv/templates/idx.php" must be on the last position in
 the list! Also, the list must contain "index.php".<br>
 </p>
+<h4>1.8. Unable to upload templates ("File already exists. Old version
+deleted ! File already exists.")<br>
+</h4>
+<p>The file upload permission may have been deactivated in the php.ini
+file. Edit it, search for "file_uploads" directive and make sure it's
+"On". Also, search for "upload_max_filesize" directive and set it to an
+appropriate value: if your file is 2MB then the max limit should be 2MB
+or more.<br>
+</p>
+<h4>1.9. When selecting an old image I get the error: "The image
+budapest could not be added."</h4>
+Make sure the mysql user has the right to create files in /tmp
+directory. It's not enough that the /tmp directory is writable by
+everyone, check the extended attributes of the directory ("lsattr" in
+GNU/Linux systems and "lsextattr" in FreeBSD systems).<br>
+<p></p>
 <p> </p>
 <p> </p>
 <p style="font-weight: bold;"> </p>
