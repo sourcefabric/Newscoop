@@ -85,7 +85,7 @@ regGS("Add new article","Neuen Artikel hinzufügen");
 regGS("Status","Status");
 regGS("No such article.","Artikel nicht vorhanden");
 regGS("Published","Veröffentlicht");
-regGS("Not published","");
+regGS("Not published","Nicht veröffentlicht");
 regGS("Submitted","Eingepflegt");
 regGS("New","Neu");
 regGS("Article","Artikel");
@@ -212,6 +212,13 @@ regGS("Days","Tage");
 regGS("(YYYY-MM-DD)","(JJJJ-MM-TT)");
 regGS("The sections were added successfully.","Rubriken wurden erfolgreich hinzugefügt");
 regGS("The sections could not be added successfully. Some of them were already added !","Die Rubriken konnten nicht erfolgreich hinzugefügt werden. Einige waren bereits hinzugefügt worden");
+regGS("Add another","Weitere hinzufügen");
+regGS("Cancel","Abbruch");
+regGS("Done","Ausgeführt");
+regGS("New field","Neues Feld");
+regGS("OK","OK");
+regGS("Save changes","Veränderungen speichern");
+regGS("Search","Suche");
 
 
 ?>

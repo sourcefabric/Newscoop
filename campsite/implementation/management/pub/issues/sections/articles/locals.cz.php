@@ -1,4 +1,5 @@
 <?
+
 regGS("Delete article $1","Smazat článek $1");
 regGS("You do not have the right to add articles.","Nemáte právo přidat článek");
 regGS("Show article on front page","Zobrazit článek na titulní straně");
@@ -14,6 +15,7 @@ regGS("Delete article","Smazat článek");
 regGS("You do not have the right to delete articles.","Nemáte právo mazat články");
 regGS("Are you sure you want to delete the article $1 ($2)?","Určitě chcete smazat článek $1 ($2)?");
 regGS("Deleting article","Mazání článku");
+regGS("There are $1 image(s) left.","Zbývá obrázek $1");
 regGS("The article $1 ($2) has been deleted.","Článek $1 ($2) byl smazán");
 regGS("The article $1 ($2) could not be deleted.","Článek $1 ($2) nemohl být smazán");
 regGS("Article $1 ($2) deleted from $3. $4 from $5. $6 ($7) of $8","Článek $1 ($2) byl smazán z $3. 4$ z $5. $6 ($7) z $8");
@@ -44,5 +46,6 @@ regGS("This article has been locked by $1 ($2) at","Článek byl uzamknut $1 ($2
 regGS("Now is $1","Nyní je $1");
 regGS("Are you sure you want to unlock it?","Určitě ho chcete odemknout?");
 regGS("Edit Article","Editovat článek");
+
 
 ?>

@@ -1,4 +1,5 @@
 <?
+
 regGS("Select template","Vyberte šablonu");
 regGS("Templates management","Spáva šablon");
 regGS("You do not have the right to change default templates.","Nemáte právo měnit výchozí šablony");
@@ -6,6 +7,7 @@ regGS("Create new folder","Vytvořit novou složku");
 regGS("Upload template","Obnovit šablonu");
 regGS("Select the template for displaying the front page.","Vyberte šablonu pro zobrazení titulní strany");
 regGS("Select the template for displaying a single article.","Vyberte šablonu pro zobrazení článku");
+regGS("You do no have access to the $1 directory!","Nemáte přístup k adresáři $1!");
 regGS("Creating new folder","Vytváření nové složky");
 regGS("You do not have the right to create new folders.","Nemáte právo vytvářet nové složky");
 regGS("The folder $1 has been created","Složka $1 byla vytvořena");
@@ -51,5 +53,10 @@ regGS("The template $1 could not be created.","Šablona $1 nemohla být vytvoře
 regGS("Template $1 was changed","Šablona $1 byla změněna");
 regGS("New template $1 was created","Byla vytvořena nová šablona $1");
 regGS("Template $1 was duplicated into $2","Šablona $1 byla duplikována do $2");
+regGS("Error converting the template to UTF-8 charset.","Chyba při změně kódování šablony na UTF-8");
+regGS("Template charset","Kódová stránka šablony");
+regGS("Select a language/character set","Vyberte jazyk/kódové stránky");
+regGS("All languages","Všechny jazyky");
+
 
 ?>

@@ -1,9 +1,11 @@
 <?
+
 regGS("Subscribed sections","Předplacené rubriky");
 regGS("Add new section to subscription","Přidat novou rubriku do předplatného");
 regGS("Start Date<BR><SMALL>(yyyy-mm-dd)</SMALL>","Začátek (rrrr-mm-dd)");
 regGS("Delete subscription to section $1?","Smazat předplatné k rubrice $1?");
 regGS("No sections in the current subscription.","Předplatné neobsahuje žádnou rubriku");
+regGS("Change all sections","Změnit všechny rubriky");
 regGS("WARNING: If you subscribe to all sections, the periods for previously added sections will be overriden!","UPOZORNĚNÍ: Pokud si předplatíte všechny rubriky, bude období dříve přidaných rubrik přepsáno.");
 regGS("Adding sections","Přidání rubrik");
 regGS("Adding sections to subscription","Přidání rubrik do předplatného");
@@ -15,6 +17,7 @@ regGS("The subscription to the section $1 could not be deleted.","Předplatné k
 regGS("Change subscription","Změnit předplatné");
 regGS("You do not have the right to change subscriptions.","Nemáte právo měnit předplatné");
 regGS("Paid Days","Zaplacené dny");
+regGS("-- ALL SECTIONS --","-- VŠECHNY RUBRIKY --");
 regGS("Updating subscription","Obnovení předplatného");
 regGS("The subscription has been updated.","Předplatné bylo obnoveno");
 regGS("The subscription could not be updated.","Předplatné nemohlo být obnoveno");
@@ -24,5 +27,6 @@ regGS("Are you sure you want to change the subscription to the section $1 status
 regGS("Change subscription paid status","Změnit stav placeného předplatného");
 regGS("Not paid","Nezaplaceno");
 regGS("Paid","Zaplaceno");
+
 
 ?>

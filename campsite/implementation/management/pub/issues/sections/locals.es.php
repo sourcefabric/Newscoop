@@ -1,5 +1,8 @@
 <?
 
+regGS("Add section to all subscriptions.","Agregar secciones a todas las suscripciones.");
+regGS("Delete section from all subscriptions.","Eliminar la sección de todas las suscripciones.");
+regGS("A total of $1 subscriptions were updated.","Un total de $! suscripciones fueron actualizadas.");
 regGS("Name<BR><SMALL>(click to see articles)</SMALL>","Nombre");
 regGS("Delete section $1","Borrar sección $1");
 regGS("No sections.","Sin sección");
@@ -7,6 +10,7 @@ regGS("Adding new section","Agregando nuevas secciones");
 regGS("You do not have the right to add sections.","No tiene derecho a agregar nuevas secciones");
 regGS("The section $1 has been successfuly added.","La sección $1 ha sido agregada con éxito");
 regGS("Please check if another section with the same number does not already exist.","Favor revise si otra sección con el mismo número no existe ya");
+regGS("Select the section","Seleccionar la sección");
 regGS("Section $1 added to issue $2. $3 ($4) of $5","Sección $1 agregada a edición $2. $3 (4) de $5");
 regGS("Delete section","Borrar sección");
 regGS("You do not have the right to delete sections.","No tiene derecho a borrar secciones");

@@ -1,4 +1,5 @@
 <?
+
 regGS("CAMPSITE","CAMPSITE");
 regGS("Home","Inicio");
 regGS("Logout","Salir");
@@ -211,5 +212,13 @@ regGS("Days","Dias");
 regGS("(YYYY-MM-DD)","AAAA-MM-DD");
 regGS("The sections were added successfully.","Las secciones fueron agregadas con éxito");
 regGS("The sections could not be added successfully. Some of them were already added !","Las secciones no pudieron ser agregadas con éxito. Algunas de ellas fueron ya agregadas!");
+regGS("Add another","Agregar otro");
+regGS("Cancel","Cancelar");
+regGS("Done","Hecho");
+regGS("New field","Nuevo Campo");
+regGS("OK","OK");
+regGS("Save changes","Guardar Cambios");
+regGS("Search","Buscar");
+
 
 ?>

@@ -1,4 +1,5 @@
 <?
+
 regGS("Name<BR><SMALL>(click to see issues)</SMALL>","Name");
 regGS("Delete publication $1","Publikation $1 löschen");
 regGS("No publications.","Keine Publikationen");
@@ -24,6 +25,7 @@ regGS("The publication $1 could not be deleted.","Publikation $1 konnte nicht ge
 regGS("Publication $1 deleted","Publikation $1 wurde gelöscht");
 regGS("Adding new publication","Neue Publikatin hinzufügen");
 regGS("The publication could not be added.","Publikation konnte nicht hinzugefügt werden");
+regGS("Select the publication","Publikation auswählen");
 regGS("Add new country default subscription time","Neue Länderstandardzeit für Abonoments hinzufügen");
 regGS("You do not have the right to manage publications.","Keine Berechtigung, die Publikation zu verändern");
 regGS("Adding new country default subscription time","Hinzufügen von für Abonomentstandardzeit ");
@@ -45,5 +47,6 @@ regGS("Subscription default time for $1 deleted","Abonomentstandardzeit  für $1
 regGS("Name<BR><SMALL>(click to select the publication)</SMALL>","Name (Publikation auswählen, bitte anklicken)");
 regGS("The publication $1 has been successfuly added.","Publikation $1 wurde hinzugefügt");
 regGS("Publication $1 added","Publikation $1 wurde hinzugefügt");
+
 
 ?>

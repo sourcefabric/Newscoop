@@ -85,7 +85,7 @@ regGS("Add new article","Přidat nový článek");
 regGS("Status","Status");
 regGS("No such article.","Článek neexistuje");
 regGS("Published","Zveřejněno");
-regGS("Not published","");
+regGS("Not published","Nezveřejněno");
 regGS("Submitted","Podáno");
 regGS("New","Nový");
 regGS("Article","Článek");
@@ -212,6 +212,13 @@ regGS("Days","Dny");
 regGS("(YYYY-MM-DD)","(RRRR-MM-DD)");
 regGS("The sections were added successfully.","Rubriky byly úspěšně přidány");
 regGS("The sections could not be added successfully. Some of them were already added !","Rubriky nebyly úspěšně přidány. Některé již byly přidány! ");
+regGS("Add another","Přidat další");
+regGS("Cancel","Zrušit");
+regGS("Done","Hotovo");
+regGS("New field","Nové pole");
+regGS("OK","OK");
+regGS("Save changes","Uložit změny");
+regGS("Search","Hledej");
 
 
 ?>
