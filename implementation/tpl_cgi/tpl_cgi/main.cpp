@@ -176,13 +176,10 @@ int ReadParameters(char** p_ppchMsg, int* p_pnSize, const char** p_ppchErrMsg)
 	char* pchDocumentRoot = 0;
 	char* pchIP = 0;
 	char* pchPathTranslated = 0;
-	char* pchPathInfo = 0;
 	char* pchRequestMethod = 0;
 	char* pchRequestURI = 0;
 	char* pchQueryString = 0;
 	char* pchHttpCookie = 0;
-	char* pchParams = 0;
-	int nParamsBufSize = 0;
 	try
 	{
 		char* pchTmp;
@@ -210,11 +207,6 @@ int ReadParameters(char** p_ppchMsg, int* p_pnSize, const char** p_ppchErrMsg)
 		{
 			throw ExReadParams(-4, "Unable to parse from stdin");
 		}
-		if ((pchTmp = getenv("PATH_INFO")) == NULL)
-		{
-			throw ExReadParams(-6, "Can not obtain path info");
-		}
-		pchPathInfo = strdup(pchTmp);
 		if ((pchTmp = getenv("REQUEST_METHOD")) == NULL)
 		{
 			throw ExReadParams(-7, "Can not get REQUEST_METHOD");
@@ -243,16 +235,6 @@ int ReadParameters(char** p_ppchMsg, int* p_pnSize, const char** p_ppchErrMsg)
 		}
 		pchTmp = getenv("HTTP_COOKIE");
 		pchHttpCookie = strdup(pchTmp != NULL ? pchTmp : "");
-		nParamsBufSize = 4 + strlen(pchDocumentRoot) + 1 + strlen(pchIP) + 1
-						 + strlen(pchPathTranslated) + 1 + strlen(pchPathInfo) + 1
-						 + strlen(pchRequestMethod) + 1 + strlen(pchQueryString) + 1
-						 + strlen(pchHttpCookie) + 1;
-		if (pchDocumentRoot == NULL || pchIP == NULL || pchPathTranslated == NULL
-			|| pchPathInfo == NULL || pchRequestMethod == NULL || pchQueryString == NULL
-			|| pchHttpCookie == NULL || (pchParams = new char[nParamsBufSize]) == NULL)
-		{
-			throw ExReadParams(-10, "Internal error");
-		}
 	}
 	catch (ExReadParams& rcoEx)
 	{
@@ -264,8 +246,6 @@ int ReadParameters(char** p_ppchMsg, int* p_pnSize, const char** p_ppchErrMsg)
 			free(pchIP);
 		if (pchPathTranslated != NULL)
 			free(pchPathTranslated);
-		if (pchPathInfo != NULL)
-			free(pchPathInfo);
 		if (pchRequestMethod != NULL)
 			free(pchRequestMethod);
 		if (pchRequestURI != NULL)
@@ -287,7 +267,6 @@ int ReadParameters(char** p_ppchMsg, int* p_pnSize, const char** p_ppchErrMsg)
 	coTree.newChild(coRootIt, "DocumentRoot", pchDocumentRoot);
 	coTree.newChild(coRootIt, "RemoteAddress", pchIP);
 	coTree.newChild(coRootIt, "PathTranslated", pchPathTranslated);
-	coTree.newChild(coRootIt, "PathInfo", pchPathInfo);
 	coTree.newChild(coRootIt, "RequestMethod", pchRequestMethod);
 	coTree.newChild(coRootIt, "RequestURI", pchRequestURI);
 	CXMLTree::iterator coNodeIt;
