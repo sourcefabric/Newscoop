@@ -47,7 +47,7 @@ B_BODY(<*onbeforeunload="ismodified()"*>)
     todef('eField');
     $fldname=substr ( $eField, 1);
 ?>
-B_HEADER(<*Edit Article*>)
+B_HEADER(<*Edit article*>)
 B_HEADER_BUTTONS
 X_HBUTTON(<*Articles*>, <*pub/issues/sections/articles/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>&Section=<? p($Section); ?>*>)
 X_HBUTTON(<*Sections*>, <*pub/issues/sections/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>*>)
