@@ -106,7 +106,7 @@ function create_configuration_files($p_defined_parameters)
 		return $res;
 
 	$cmd = "chown \"" . $Campsite['APACHE_USER'] . ":" . $Campsite['APACHE_GROUP']
-		. "\" \"$instance_etc_dir\" -R";
+		. "\" \"$instance_etc_dir\" -R 2>&1";
 	exec($cmd, $output, $res);
 	if ($res != 0)
 		return implode("\n", $output);
@@ -140,32 +140,56 @@ function create_database($p_defined_parameters)
 	} else {
 		if (!mysql_query("CREATE DATABASE " . $db_name))
 			return "Unable to create the database " . $db_name;
+		$cmd = "mysql -u $db_user";
+		if ($db_password != "")
+			$cmd .= " --password=\"$db_password\"";
+		$cmd .= " $db_name < \"$db_dir/campsite-db.sql\" 2>&1";
+		exec($cmd, $output, $res);
+		if ($res != 0)
+			return implode("\n", $output);
 	}
-
-	$cmd = "mysql -u $db_user";
-	if ($db_password != "")
-		$cmd .= " -p \"$db_password\"";
-	$cmd .= " $db_name < \"$db_dir/campsite-db.sql\"";
-	exec($cmd, $output, $res);
-	if ($res != 0)
-		return implode("\n", $output);
 
 	return 0;
 }
 
 
-function backup_database($p_db_name, $p_defined_parameters)
+function upgrade_database($p_db_name, $p_defined_parameters)
 {
 	global $Campsite, $CampsiteVars;
+	$campsite_dir = $Campsite['CAMPSITE_DIR'];
+	$db_user = $p_defined_parameters['--db_user'];
+	$db_password = $p_defined_parameters['--db_password'];
 
 	if (!database_exists($p_db_name))
 		return "Can't upgrade database $p_db_name: it doesn't exist";
 
-	if (!($res = detect_database_version($p_db_name, $version)) == 0)
+	if (!($res = detect_database_version($p_db_name, $old_version)) == 0)
 		return $res;
+	echo "db version: $old_version\n";
 
-	if ($version == "2.0.x") {
+	$versions = array("2.0.x", "2.1.x");
+	foreach ($versions as $index=>$db_version) {
+		if ($old_version > $db_version)
+			continue;
+		echo "upgrading $db_version\n";
+
+		$upgrade_dir = $campsite_dir . "/instance/database/upgrade/$db_version/";
+		$cmd_prefix = "cd \"$upgrade_dir\"; mysql -u $db_user";
+		if ($db_password != "")
+			$cmd_prefix .= " --password=\"$db_password\"";
+		$cmd_prefix .= " $p_db_name < \"";
+		$sql_scripts = array("tables.sql", "data-required.sql", "data-optional.sql");
+		foreach ($sql_scripts as $index=>$script) {
+			if (!is_file($upgrade_dir . $script))
+				continue;
+			$cmd = $cmd_prefix . $script . "\" 2>&1";
+			exec($cmd, $output, $res);
+			if ($res != 0 && $script != "data-optional.sql")
+				return "$script: " . implode("\n", $output);
+		}
 	}
+
+	return 0;
 }
 
 
@@ -174,13 +198,16 @@ function detect_database_version($p_db_name, &$version)
 	if (!mysql_select_db($p_db_name))
 		return "Can't select the databae $p_db_name";
 
-	if (!$res = mysql_query("SHOW TABLES LIKE \"%Topics\""))
+	if (!$res = mysql_query("SHOW TABLES"))
 		return "Unable to query the database $p_db_name";
 
 	$version = "2.0.x";
-	while ($row = mysql_fetch_row($res))
-		if ($row[0] == "ArticleTopics" || $row[0] == "Topics")
-			$version = "2.1.x";
+	while ($row = mysql_fetch_row($res)) {
+		if (in_array($row[0], array("ArticleTopics", "Topics")))
+			$version = $version < "2.1.x" ? "2.1.x" : $version;
+		if (in_array($row[0], array("URLTypes", "TemplateTypes", "Templates", "Aliases")))
+			$version = "2.2.x";
+	}
 
 	return 0;
 }
@@ -209,14 +236,11 @@ function backup_database($p_db_name, $p_defined_parameters)
 
 	$cmd = "mysqldump -u " . $Campsite['DATABASE_USER'];
 	if ($Campsite['DATABASE_PASSWORD'] != "")
-		$cmd .= " -p \"" . $Campsite['DATABASE_PASSWORD'] . "\"";
+		$cmd .= " --password=\"" . $Campsite['DATABASE_PASSWORD'] . "\"";
 	$cmd .= " $p_db_name > \"$backup_dir/$p_db_name-backup.sql\"";
 	exec($cmd, $output, $res);
 	if ($res != 0)
 		return implode("\n", $output);
-
-	if (!mysql_query("DROP DATABASE $p_db_name"))
-		return "Unable to drop old database $p_db_name";
 
 	return 0;
 }
