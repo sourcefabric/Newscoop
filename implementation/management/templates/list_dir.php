@@ -1,7 +1,7 @@
 <? function isTpl($s){
 	$dotpos=strrpos($s,".");
 	$ext=substr($s,$dotpos+1);
-        return (($ext=='tpl') || ($ext=='TPL'));
+        return ($ext == 'tpl' || $ext=='TPL' || $ext == 'php' || $ext == 'htm' || $ext == 'html' || $ext == 'php3' || $ext == 'php4');
 }  ?>
 
 <TABLE BORDER="0" CELLSPACING="2" CELLPADDING="0" WIDTH="100%">
