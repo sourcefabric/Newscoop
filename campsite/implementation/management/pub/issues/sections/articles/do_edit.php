@@ -1,5 +1,6 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/pub/issues/sections/articles/article_common.php");
+require_once($_SERVER['DOCUMENT_ROOT']. "/classes/ArticleImage.php");
 
 // This is used in TransformSubheads() in order to figure out when
 // a SPAN tag closes.
@@ -34,26 +35,115 @@ function TransformSubheads($match) {
 	return $match[0];
 } // fn TransformSubheads
 
+
 /**
  * This function is a callback for preg_replace_callback().
  * It will replace <a href="campsite_internal_link?...">...</a>
  * with <!** Link Internal ...> ... <!** EndLink>
- *
+ * @param array p_match
+ * @return string
  */
-function TransformLinks($match) {
+function TransformInternalLinks($p_match) {
 	// This matches '</a>'
-	if (preg_match("/<\s*\/a\s*>/i", $match[0])) {
+	if (preg_match("/<\s*\/a\s*>/i", $p_match[0])) {
 		$retval = "<!** EndLink>";
 		return $retval;
 	}
 	// This matches '<a href="campsite_internal_link?IdPublication=1&..." ...>'
-	elseif (preg_match("/<\s*a\s*href=[\"']campsite_internal_link[?][\w&=]*[\"'][\s\w\"']*>/i", $match[0])) {
-		$url = split("\"", $match[0]);
+	elseif (preg_match("/<\s*a\s*href=[\"']campsite_internal_link[?][\w&=]*[\"'][\s\w\"']*>/i", $p_match[0])) {
+		$url = split("\"", $p_match[0]);
 		$parsedUrl = parse_url($url[1]);
 		$retval = "<!** Link Internal ".$parsedUrl["query"].">";
 		return $retval;
 	}	
-} // fn TransformLinks
+} // fn TransformInternalLinks
+
+
+/**
+ * This function is a callback for preg_replace_callback().
+ * It will replace <a href="http://xyz.com" target="_blank">...</a>
+ * with <!** Link external "http://xyz.com" TARGET "_blank"> ... <!** EndLink>
+ * @param array p_match
+ * @return string
+ */
+function TransformExternalLinks($p_match) {
+	// This matches '</a>'
+	if (preg_match("/<\s*\/a\s*>/i", $p_match[0])) {
+		$retval = "<!** EndLink>";
+		return $retval;
+	}
+	// This matches '<a href="xyz.com" ...>'
+	elseif (preg_match("/<\s*a\s*href=[\"'][^'\"]*[\"']\s*(target\s*=\s['\"][_\w]*['\"])?[\s\w\"']*>/i", $p_match[0])) {
+		$url = split("\"", $p_match[0]);
+		$link = $url[1];
+		$target = null;
+		if (isset($url[2]) && (stristr($url[2], 'target') !== false)) {
+			$target = $url[3];
+		}
+		$retval = '<!** Link external "'.$link.'"';
+		if (!is_null($target)) {
+			$retval .= 'target="'.$target.'"';
+		}
+		$retval .= '>';
+		return $retval;
+	}	
+} // fn TransformExternalLinks
+
+
+/**
+ * This function is a callback for preg_replace_callback().
+ * It will replace <img src="http://[hostname]/[image_dir]/cms-image-000000001.jpg" align="center" alt="alternate text" sub="caption text">
+ * with <!** Image [image_template_id] align=CENTER alt="alternate text" sub="caption text">
+ * @param array p_match
+ * @return string
+ */
+function TransformImageTags($p_match) {
+	global $Article;
+	array_shift($p_match);
+	$attrs = array();
+	foreach ($p_match as $attr) {
+		$attr = split('=', $attr);
+		$attrName = trim(strtolower($attr[0]));
+		$attrValue = $attr[1];
+		// Strip out the quotes
+		$attrValue = str_replace('"', '', $attrValue);
+		$attrValue = str_replace("'", '', $attrValue);
+		$attrs[$attrName] = $attrValue;
+	}	
+	if (!isset($attrs['src'])) {
+		return '';
+	}
+	else {
+		// Figure out if it is a local or remote image
+		if (strstr($attrs['src'], 'cms-image-')) {
+			// It is a local image
+			// Get the image ID.
+			preg_match_all("/[\w\/:]*cms-image-(\d*)[.\w]*/i", $attrs['src'], $srcParts);
+			// Lookup the image by ID
+			$articleImage =& new ArticleImage($Article, $srcParts[1][0]);
+			$templateId = $articleImage->getTemplateId();
+		}
+		else {
+			$image =& Image::GetByUrl($attrs['src']);
+			$articleImage =& new ArticleImage($Article, $image->getImageId());
+			$templateId = $articleImage->getTemplateId();
+		}
+	}
+	$alignTag = '';
+	if (isset($attrs['align'])) {
+		$alignTag = ' align='.$attrs['align'];
+	}
+	$altTag = '';
+	if (isset($attrs['alt'])) {
+		$altTag = ' alt="'.$attrs['alt'].'"';
+	}
+	$captionTag = '';
+	if (isset($attrs['sub'])) {
+		$captionTag = ' sub="'.$attrs['sub'].'"';
+	}
+	$imageTag = "<!** Image $templateId $alignTag $altTag $captionTag>";
+	return $imageTag;
+} // fn TransformImageTags
 
 
 list($access, $User) = check_basic_access($_REQUEST);
@@ -119,9 +209,24 @@ if (($errorStr == "") && $access && $hasAccess) {
 			// Replace <a href="campsite_internal_link?IdPublication=1&..." ...> ... </a>
 			// with <!** Link Internal IdPublication=1&...> ... <!** EndLink>
 			//
-			$text = preg_replace_callback("/(<\s*a\s*href=[\"']campsite_internal_link[?][\w&=]*[\"'][\s\w\"']*>)|(<\s*\/a\s*>)/i", "TransformLinks", $text);
-			$hasChanged |= $articleTypeObj->setProperty($dbColumn->getName(),
-													    $_REQUEST[$dbColumn->getName()]);
+			$text = preg_replace_callback("/(<\s*a\s*href=[\"']campsite_internal_link[?][\w&=]*[\"'][\s\w\"']*>)|(<\s*\/a\s*>)/i", "TransformInternalLinks", $text);
+			$hasChanged |= $articleTypeObj->setProperty($dbColumn->getName(), $text);
+
+			// Replace <a href="http://xyz.com" target="_blank"> ... </a>
+			// with <!** Link external "http://xyz.com" TARGET "_blank"> ... <!** EndLink>
+			//
+			$text = preg_replace_callback("/(<\s*a\s*href=[\"'][^\"']*[\"']\s*(target\s*=\s['\"][_\w]*['\"])?[\s\w\"']*>)|(<\s*\/a\s*>)/i", "TransformExternalLinks", $text);
+			$hasChanged |= $articleTypeObj->setProperty($dbColumn->getName(), $text);
+
+			// Replace <img src="A" align="B" alt="C" sub="D">
+			// with <!** Image [image_template_id] align=B alt="C" sub="D">
+			//
+			$srcAttr = "(src\s*=\s*[\"'][^'\"]*[\"'])";
+			$altAttr = "(alt\s*=\s*['\"][^'\"]*['\"])";
+			$alignAttr = "(align\s*=\s*['\"][^'\"]*['\"])";
+			$subAttr = "(sub\s*=\s*['\"][^'\"]*['\"])";
+			$text = preg_replace_callback("/<\s*img\s*(($srcAttr|$altAttr|$alignAttr|$subAttr)\s*)*[\s\w\"']*\/>/i", "TransformImageTags", $text);
+			$hasChanged |= $articleTypeObj->setProperty($dbColumn->getName(), $text);
 		}
 	}
 	
