@@ -26,7 +26,7 @@ $ImageId = Input::get('ImageId', 'int', 0);
 $ImageTemplateId = Input::get('ImageTemplateId', 'int', 0);
 
 if (!Input::isValid()) {
-	header("Location: /$ADMIN/logout.php");
+	CampsiteInterface::DisplayError(array('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
 	exit;	
 }
 
@@ -42,7 +42,7 @@ $imageObj =& new Image($ImageId);
 $userCreatedArticle = ($articleObj->getUserId() == $User->getId());
 $articleIsNew = ($articleObj->getPublished() == 'N');
 if (!($User->hasPermission('ChangeArticle') || ($userCreatedArticle && !$articleIsNew))) {
-	header("Location: /$ADMIN/ad.php?ADReason=".urlencode(getGS('You do not have the right to change the article.')));
+	CampsiteInterface::DisplayError('You do not have the right to change the article.', $_SERVER['REQUEST_URI']);
 	exit;		
 }
 ?>
