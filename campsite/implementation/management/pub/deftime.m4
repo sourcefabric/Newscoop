@@ -6,7 +6,7 @@ CHECK_BASIC_ACCESS
 
 B_HEAD
 	X_EXPIRES
-	X_TITLE(<*Subscription Default Time*>)
+	X_TITLE(<*Countries Subscription Default Time*>)
 <?php  if ($access == 0) { ?>dnl
 	X_LOGOUT
 <?php  } 
@@ -26,7 +26,7 @@ B_BODY
     todefnum('Language', 1);
     
 ?>dnl
-B_HEADER(<*Subscription Default Time*>)
+B_HEADER(<*Countries Subscription Default Time*>)
 B_HEADER_BUTTONS
 X_HBUTTON(<*Publications*>, <*pub/*>)
 X_HBUTTON(<*Home*>, <*home.php*>)
@@ -43,7 +43,12 @@ B_CURRENT
 X_CURRENT(<*Publication*>, <*<B><?php  pgetHVar($q_pub,'Name'); ?></B>*>)
 E_CURRENT
 
-<P>X_NEW_BUTTON(<*Add new country*>, <*countryadd.php?Pub=<?php  pencURL($Pub); ?>&Language=<?php  pencURL($Language); ?>*>)
+<TABLE>
+<TR>
+	<TD>X_NEW_BUTTON(<*Add new country*>, <*countryadd.php?Pub=<?php  pencURL($Pub); ?>&Language=<?php  pencURL($Language); ?>*>)</TD>
+	<TD>X_NEW_BUTTON(<*Back to publication*>, <*edit.php?Pub=<?php  pencURL($Pub); ?>*>)</TD>
+</TR>
+</TABLE>
 
 <P><?php 
     todefnum('ListOffs');
