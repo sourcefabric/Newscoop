@@ -5,44 +5,6 @@ require_once($_SERVER['DOCUMENT_ROOT']."/classes/DatabaseObject.php");
 class User extends DatabaseObject {
 	var $m_dbTableName = "Users";
 	var $m_primaryKeyColumnNames = array("Id");
-	var $m_columnNames = array("Id", 
-							   "KeyId",
-							   "Name",
-							   "UName",
-							   "Password",
-							   "Email",
-							   "Reader",
-							   "City",
-							   "StrAddress",
-							   "State",
-							   "CountryCode",
-							   "Phone",
-							   "Fax",
-							   "Contact",
-							   "Phone2",
-							   "Title",
-							   "Gender",
-							   "Age",
-							   "PostalCode",
-							   "Employer",
-							   "EmployerType",
-							   "Position",
-							   "Interests",
-							   "How",
-							   "Languages",
-							   "Improvements",
-							   "Pref1",
-							   "Pref2",
-							   "Pref3",
-							   "Pref4",
-							   "Field1",
-							   "Field2",
-							   "Field3",
-							   "Field4",
-							   "Field5",
-							   "Text1",
-							   "Text2",
-							   "Text3");
 	var $Id;
 	var $KeyId;
 	var $Name;
@@ -83,11 +45,20 @@ class User extends DatabaseObject {
 	var $Text3;
 	
 	function User($p_userId = null) {
+		parent::DatabaseObject();
 		$this->Id = $p_userId;
 		if (!is_null($p_userId) && ($p_userId > 0)) {
 			$this->fetch();
 		}
 	} // constructor
+	
+	function getId() {
+		return $this->Id;
+	} // fn getId
+	
+	function getKeyId() {
+		return $this->KeyId;
+	} // fn getKeyId
 	
 	function getName() {
 		return $this->Name;
@@ -96,7 +67,30 @@ class User extends DatabaseObject {
 	function getUName() {
 		return $this->UName;
 	} // fn getUName
-	
+
+	/**
+	 * This is a static function.
+	 */
+	function login($p_userName, $p_userPassword) {
+		global $Campsite;
+		$queryStr = "SELECT Id FROM Users "
+					." WHERE UName='$p_userName' "
+					." AND Password=PASSWORD('$p_userPassword') "
+					." AND Reader='N'";
+		$row = $Campsite["db"]->GetRow($queryStr);
+		if ($row) {
+			// Generate the Key ID
+			$queryStr2 = "UPDATE Users "
+						." SET KeyId=RAND()*1000000000+RAND()*1000000+RAND()*1000"
+						." WHERE Id=".$row["Id"];
+			$Campsite["db"]->Execute($queryStr2);
+			$user =& new User($row["Id"]);
+			return array(true, $user);
+		}
+		else {
+			return array(false, null);
+		}
+	} // fn login
 } // class User
 
 ?>
