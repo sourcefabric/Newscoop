@@ -27,11 +27,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "curl.h"
 
 
-// readQueryString(): internal method; reads the parameters from the query string
-void CURL::readQueryString(const string& p_rcoQueryString)
+// readQueryString(): static method; reads the parameters from the query string
+String2StringMMap* CURL::readQueryString(const string& p_rcoQueryString,
+                                         String2StringMMap* p_pcoParams)
 {
 	if (p_rcoQueryString == "")
-		return;
+		return p_pcoParams;
+
+	if (p_pcoParams == NULL)
+		p_pcoParams = new String2StringMMap;
 
 	string::size_type nStart = 0;
 	while (true)
@@ -49,7 +53,7 @@ void CURL::readQueryString(const string& p_rcoQueryString)
 		string coValue = p_rcoQueryString.substr(nStart, nIndex - nStart);
 
 		// set the parameter value in the parameter map
-		setValue(coParam, coValue);
+		p_pcoParams->insert(pair<string, string>(coParam, coValue));
 
 		// prepare for the next iteration
 		nStart = nIndex + 1;
