@@ -763,7 +763,7 @@ int CContext::StartSubtitle(const string& field)
 	return (*start_subtitle.find(actualField)).second;
 }
 
-// StartSubtitle: return the all_subtitles value for the given field (article
+// AllSubtitles: return the all_subtitles value for the given field (article
 //		content). If field is empty ("") perform the action for the current field
 // Parameters:
 //		const string& field - field (article content)
