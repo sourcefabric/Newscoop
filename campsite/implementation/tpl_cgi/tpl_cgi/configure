@@ -1,8 +1,6 @@
 #!/bin/bash
 
-cd ../../..
-. ./make.env
-cd implementation/tpl_cgi/tpl_cgi
+. ../../../make.env
 
 echo -n -e "\t\tWriting tpl_cgi.h header..."
 cat > tpl_cgi.h << EOF
