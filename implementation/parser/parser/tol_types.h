@@ -313,17 +313,17 @@ inline cpChar stringValue(const string& s)
 typedef hashtable < string, cpChar, cpChar_HASH, TstringValue, cpChar_EQUAL > StringHash;
 
 typedef CThreadKey < MYSQL > TK_MYSQL;
-inline void TK_MYSQL::destroyData(void* p_pData)
+inline void TK_MYSQL::destroyData(void* p_pData) throw()
 {}
 
 typedef CThreadKey < char > TK_char;
-inline void TK_char::destroyData(void* p_pData)
+inline void TK_char::destroyData(void* p_pData) throw()
 {
 	delete (pChar)p_pData;
 }
 
 typedef CThreadKey < bool > TK_bool;
-inline void TK_bool::destroyData(void* p_pData)
+inline void TK_bool::destroyData(void* p_pData) throw()
 {
 	delete (bool*)p_pData;
 }

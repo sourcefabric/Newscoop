@@ -2292,10 +2292,18 @@ TOLParser::TOLParser(const TOLParser& p)
 // destructor
 TOLParser::~TOLParser()
 {
-	m_coOpMutex.Lock();
-	Reset();
-	UnMapTpl();
-	m_coOpMutex.Unlock();
+	try
+	{
+		m_coOpMutex.Lock();
+		Reset();
+		UnMapTpl();
+		m_coOpMutex.Unlock();
+	}
+	catch (...)
+	{
+		Reset();
+		UnMapTpl();
+	}
 }
 
 // SetMYSQL: set MySQL connection

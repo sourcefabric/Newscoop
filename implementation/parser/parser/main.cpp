@@ -311,6 +311,12 @@ void ProcessArgs(int argc, char** argv, bool& p_rbRunAsDaemon, int& p_rnMaxThrea
 	}
 }
 
+void my_terminate()
+{
+	cout << "uncought exception. terminate." << endl;
+	abort();
+}
+
 // main: main function
 // Return 0 if no error encountered; error code otherwise
 // Parameters:
@@ -324,6 +330,7 @@ int main(int argc, char** argv)
 	ProcessArgs(argc, argv, bRunAsDaemon, nMaxThreads);
 	StartWatchDog(bRunAsDaemon);
 	signal(SIGTERM, SIG_DFL);
+	void (*old_terminate)() = set_terminate(my_terminate);
 	try
 	{
 		CServerSocket coServer("0.0.0.0", TOL_SRV_PORT);
@@ -370,6 +377,16 @@ int main(int argc, char** argv)
 	{
 		cout << rcoEx.Message() << endl;
 		return 3;
+	}
+	catch (exception& rcoEx)
+	{
+		cout << "exception: " << rcoEx.what() << endl;
+		return 4;
+	}
+	catch (...)
+	{
+		cout << "unknown exception" << endl;
+		return 5;
 	}
 	return 0;
 }

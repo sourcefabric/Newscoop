@@ -295,7 +295,13 @@ public:
 	// destructor
 	~TOLCParser()
 	{
-		Reset();
+		try
+		{
+			Reset();
+		}
+		catch (...)
+		{
+		}
 	}
 
 	// Reset: reset article content parser
