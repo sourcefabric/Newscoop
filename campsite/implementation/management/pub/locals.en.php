@@ -14,7 +14,7 @@ regGS("No entries defined.","No entries defined.:en");
 regGS("Back to publication","Back to publication:en");
 
 // -- edit.m4
-regGS("Change publication information","Change publication information:en");
+regGS("Configure publication","Configure publication:en");
 regGS("You do not have the right to edit publication information.","You do not have the right to edit publication information.:en");
 regGS("General attributes", "General attributes:en");
 regGS("Subscriptions defaults", "Subscriptions defaults:en");
@@ -121,5 +121,6 @@ regGS("Are you sure you want to delete the alias $1?", "Are you sure you want to
 regGS("Deleting alias", "Deleting alias:en");
 regGS("The alias $1 could not be deleted.", "The alias $1 could not be deleted.:en");
 regGS("The alias $1 has been deleted from publication $2.", "The alias $1 has been deleted from publication $2.:en");
+regGS("$1 is the default publication alias, it can not be deleted.", "$1 is the default publication alias, it can not be deleted.:en");
 
 ?>
