@@ -29,7 +29,7 @@ E_HEADER_BUTTONS
 E_HEADER
 
 <?php  if ($mata != 0) { ?>dnl
-<P>X_NEW_BUTTON(<*Add new article type*>, <*add.php?Back=<?php  print encURL($REQUEST_URI); ?>*>)
+<P>X_NEW_BUTTON(<*Add new article type*>, <*add.php?Back=<?php  print urlencode($_SERVER['REQUEST_URI']); ?>*>)
 <?php  } ?>dnl
 
 <P>

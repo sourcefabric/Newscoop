@@ -63,7 +63,7 @@ E_CURRENT
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" WIDTH="100%">
 <TR>
 <?php  if ($mca) { ?>dnl
-	<TD ALIGN="LEFT">X_NEW_BUTTON(<*Add new topic*>, <*add.php?IdCateg=<?php p($IdCateg);?>&Back=<?php  pencURL($REQUEST_URI); ?>*>)</TD>
+	<TD ALIGN="LEFT">X_NEW_BUTTON(<*Add new topic*>, <*add.php?IdCateg=<?php p($IdCateg);?>&Back=<?php p(urlencode($_SERVER['REQUEST_URI'])); ?>*>)</TD>
 <?php  } ?>
 	<TD ALIGN="RIGHT">
 	B_SEARCH_DIALOG(<*GET*>, <*index.php*>)

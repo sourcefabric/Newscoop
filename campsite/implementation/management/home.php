@@ -174,7 +174,7 @@ if ($showSections) {
 			
 			<TD width="1%" align="center">
 				<?php 
-				$changeStatusLink = CampsiteInterface::ArticleLink($YourArticle, $section->getLanguageId(), "status.php", $REQUEST_URI);
+				$changeStatusLink = CampsiteInterface::ArticleLink($YourArticle, $section->getLanguageId(), "status.php", $_SERVER['REQUEST_URI']);
 				if ($YourArticle->getPublished() == "Y") { 
 					if ($User->hasPermission('Publish')) {
 						echo $changeStatusLink;

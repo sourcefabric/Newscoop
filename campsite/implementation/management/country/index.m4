@@ -33,7 +33,7 @@ E_HEADER
 <P><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" WIDTH="100%">
 <TR>
 	<?php  if ($mca != 0) { ?>
-	<TD>X_NEW_BUTTON(<*Add new country*>, <*add.php?Back=<?php  print ($REQUEST_URI); ?>*>)</TD>
+	<TD>X_NEW_BUTTON(<*Add new country*>, <*add.php?Back=<?php print urlencode($_SERVER['REQUEST_URI']); ?>*>)</TD>
 	<?php  } ?>
 	<TD ALIGN="RIGHT">
 	B_SEARCH_DIALOG(<*GET*>, <*index.php*>)
