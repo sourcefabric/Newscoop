@@ -1,8 +1,13 @@
 <?php
 
-if (!create_instance($GLOBALS['argv'], $errors))
+
+if (!create_instance($GLOBALS['argv'], $errors)) {
 	foreach($errors as $index=>$error)
 		echo "$error\n";
+	echo "Campsite parameters:\n";
+	foreach($Campsite as $var_name=>$value)
+		echo "$var_name = $value\n";
+}
 
 
 function create_instance($p_arguments, &$p_errors)
@@ -54,8 +59,6 @@ function create_instance($p_arguments, &$p_errors)
 		return false;
 	}
 
-	foreach ($defined_parameters as $p_name=>$p_value)
-		echo "$p_name = $p_value\n";
 	return true;
 }
 
@@ -160,6 +163,7 @@ function upgrade_database($p_db_name, $p_defined_parameters)
 {
 	global $Campsite, $CampsiteVars;
 	$campsite_dir = $Campsite['CAMPSITE_DIR'];
+	$etc_dir = $Campsite['ETC_DIR'];
 	$db_user = $p_defined_parameters['--db_user'];
 	$db_password = $p_defined_parameters['--db_password'];
 
@@ -168,15 +172,24 @@ function upgrade_database($p_db_name, $p_defined_parameters)
 
 	if (!($res = detect_database_version($p_db_name, $old_version)) == 0)
 		return $res;
-	echo "db version: $old_version\n";
 
 	$versions = array("2.0.x", "2.1.x");
 	foreach ($versions as $index=>$db_version) {
 		if ($old_version > $db_version)
 			continue;
-		echo "upgrading $db_version\n";
-
+		$output = array();
+		// create symlinks to configuration files
 		$upgrade_dir = $campsite_dir . "/instance/database/upgrade/$db_version/";
+		$db_conf_file = $etc_dir . "/$p_db_name/database_conf.php";
+		$link = $upgrade_dir . "/database_conf.php";
+		if (!is_link($link) && !symlink($db_conf_file, $link))
+			return "Unable to create link to database configuration file";
+		$install_conf_file = $etc_dir . "/install_conf.php";
+		$link = $upgrade_dir . "/install_conf.php";
+		if (!is_link($link) && !symlink($install_conf_file, $link))
+			return "Unable to create link to install configuration file";
+
+		// run upgrade scripts
 		$cmd_prefix = "cd \"$upgrade_dir\"; mysql -u $db_user";
 		if ($db_password != "")
 			$cmd_prefix .= " --password=\"$db_password\"";
@@ -188,7 +201,7 @@ function upgrade_database($p_db_name, $p_defined_parameters)
 			$cmd = $cmd_prefix . $script . "\" 2>&1";
 			exec($cmd, $output, $res);
 			if ($res != 0 && $script != "data-optional.sql")
-				return "$script: " . implode("\n", $output);
+				return "$script ($db_version): " . implode("\n", $output);
 		}
 	}
 
@@ -275,7 +288,7 @@ function restore_database($p_db_name, $p_defined_parameters)
 
 function create_site($p_defined_parameters)
 {
-	global $Campsite, $CampsiteVars;
+	global $Campsite, $CampsiteVars, $CampsiteOld;
 
 	$db_name = $p_defined_parameters['--db_name'];
 	$etc_dir = $p_defined_parameters['--etc_dir'];
@@ -308,13 +321,23 @@ function create_site($p_defined_parameters)
 			return "Unable to create symbolic link to $file";
 	}
 
+	if ($CampsiteOld['.MODULES_HTML_DIR'] != "") {
+		$cmd = "cp -fr \"" . $CampsiteOld['.MODULES_HTML_DIR'] . "/look\" \"$html_dir\"";
+		exec($cmd);
+		$cmd = "chown " . $Campsite['APACHE_USER'] . ":" . $Campsite['APACHE_GROUP']
+			. " \"$html_dir/look\" -R";
+		exec($cmd);
+		$cmd = "chmod ug+w \"$html_dir/look\" -R";
+		exec($cmd);
+	}
+
 	return 0;
 }
 
 
 function fill_missing_parameters(&$p_defined_parameters)
 {
-	global $Campsite, $CampsiteVars;
+	global $Campsite, $CampsiteVars, $CampsiteOld;
 	global $g_instance_parameters, $g_mandatory_parameters, $g_parameters_defaults;
 	define_globals();
 
@@ -326,6 +349,28 @@ function fill_missing_parameters(&$p_defined_parameters)
 			}
 			$p_defined_parameters[$param_name] = $param_value;
 		}
+
+	// read old configuration
+	$db_name = $p_defined_parameters['--db_name'];
+	$old_conf_dir = "/etc/campsite.d/$db_name";
+
+	$CampsiteOld = array();
+	if (read_old_config($old_conf_dir, 'database', $CampsiteOld) == 0) {
+		$p_defined_parameters['--db_server_address'] = $CampsiteOld['DATABASE_SERVER'];
+		$p_defined_parameters['--db_server_port'] = $CampsiteOld['DATABASE_PORT'];
+		$p_defined_parameters['--db_user'] = $CampsiteOld['DATABASE_USER'];
+		$p_defined_parameters['--db_password'] = $CampsiteOld['DATABASE_PASSWORD'];
+	}
+	if (read_old_config($old_conf_dir, 'parser', $CampsiteOld) == 0) {
+		$p_defined_parameters['--parser_port'] = $CampsiteOld['PARSER_PORT'];
+		$p_defined_parameters['--parser_max_threads'] = $CampsiteOld['PARSER_THREADS'];
+	}
+	if (read_old_config($old_conf_dir, 'smtp', $CampsiteOld) == 0) {
+		$p_defined_parameters['--smtp_server_address'] = $CampsiteOld['SMTP_SERVER'];
+	}
+	if (read_old_config("$old_conf_dir/install", '.modules', $CampsiteOld) == 0) {
+		$p_defined_parameters['--smtp_server_address'] = $CampsiteOld['SMTP_SERVER'];
+	}
 }
 
 
@@ -389,5 +434,25 @@ function define_globals()
 		'--apache_group'=>'___APACHE_GROUP'
 	);
 }
+
+
+function read_old_config($conf_dir, $module_name, &$variables)
+{
+	$conf_file = "$conf_dir/$module_name.conf";
+	if (!$lines = file($conf_file))
+		return "Unable to read configuration file $conf_file";
+
+	$module_name = strtoupper($module_name);
+	foreach ($lines as $index=>$line) {
+		$ids = explode(" ", $line);
+		$var_name = trim($ids[0]);
+		$value = trim($ids[1]);
+		if ($res = strpos($value, "{"))
+			$value = trim(substr($value, 0, $res));
+		$variables[$module_name . "_" . $var_name] = $value;
+	}
+	return 0;
+}
+
 
 ?>
