@@ -26,6 +26,33 @@ class Issue extends DatabaseObject {
 		}
 	} // ctor
 
+	function getAllIssues() {
+		global $Campsite;
+		$queryStr = "SELECT * FROM Issues ";
+		$query = $Campsite["db"]->Execute($queryStr);
+		$issues = array();
+		while ($row = $query->FetchRow($queryStr)) {
+			$tmpIssue =& new Issue();
+			$tmpIssue->fetch($row);
+			$issues[] = $tmpIssue;
+		}
+		return $issues;		
+	} // fn getAllIssues
+	
+	function getIssuesInPublication($p_publicationId, $p_languageId) {
+		global $Campsite;
+		$queryStr = "SELECT * FROM Issues "
+					." WHERE IdPublication='".$p_publicationId."'"
+					." AND IdLanguage='".$p_languageId."'";
+		$query = $Campsite["db"]->Execute($queryStr);
+		$issues = array();
+		while ($row = $query->FetchRow()) {
+			$tmpIssue =& new Issue($row["IdPublication"], $row["IdLanguage"]);
+			$tmpIssue->fetch($row);
+			$issues[] = $tmpIssue;
+		}
+		return $issues;
+	} // fn getAllIssuesInPublication
 	
 	function getPublicationId() {
 		return $this->IdPublication;
