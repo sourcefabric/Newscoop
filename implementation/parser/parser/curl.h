@@ -129,6 +129,8 @@ public:
 
 	virtual string getFormString() const = 0;
 
+	virtual string setTemplate(const string& p_rcoTemplate) throw (InvalidValue) = 0;
+
 	virtual string getTemplate() const = 0;
 
 	// readQueryString(): static method; reads the parameters from the query string
