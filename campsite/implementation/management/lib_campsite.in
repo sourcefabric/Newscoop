@@ -581,4 +581,17 @@ function duplicate_article($article_no, $language_id, $user_id, $dst_pub, $dst_i
 	return $row_art['Number'];
 }
 
+function valid_field_name($name)
+{
+	if (strlen($name) == 0)
+		return false;
+	for ($i = 0; $i < strlen($name); $i++) {
+		$c = $name[$i];
+		$ok = ($c >= 'A' && $c <= 'Z') || ($c >= 'a' && $c <= 'z') || $c == '_';
+		if (!$ok)
+	    	return false;
+	}
+	return true;
+}
+
 ?>
