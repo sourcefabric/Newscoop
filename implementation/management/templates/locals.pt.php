@@ -38,7 +38,6 @@ regGS("The upload of $1 was successful !","A transferência de $1 foi concluida"
 regGS("Template $1 uploaded","O modelo $1 foi transferido");
 regGS("Create new template","Criar Modelo");
 regGS("Creating new template","Criando Modelo");
-regGS("Duplicate","Duplicar");
 regGS("Duplicate template","Duplicar Modelo");
 regGS("Edit template","Editar Modelo");
 regGS("Template","Modelo");

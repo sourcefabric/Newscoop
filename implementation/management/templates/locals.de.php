@@ -39,7 +39,6 @@ regGS("The upload of $1 was successful !","$1 erfolgreich hochgeladen");
 regGS("Template $1 uploaded","Template $1 hochgeladen");
 regGS("Create new template","Neues Template erstellen");
 regGS("Creating new template","Neues Template wird erstellt");
-regGS("Duplicate","Duplizieren");
 regGS("Duplicate template","Template Duplizieren");
 regGS("Edit template","Template Bearbeiten");
 regGS("Template","Template");

@@ -39,7 +39,6 @@ regGS("The upload of $1 was successful !","¡Subida de $1 fue con éxito!");
 regGS("Template $1 uploaded","Plantilla $1 subida");
 regGS("Create new template","Crear nueva plantilla");
 regGS("Creating new template","Creando nuevas plantillas");
-regGS("Duplicate","Duplicar");
 regGS("Duplicate template","Duplicar plantilla");
 regGS("Edit template","Editar plantilla");
 regGS("Template","Plantilla");
