@@ -41,7 +41,6 @@ if ($validUser) {
 	<TD ALIGN=RIGHT>
 		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
 		<TR>
-			<TD><A HREF="/<?php echo $ADMIN; ?>/login.php" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Login"); ?>"></A></TD>
 			<TD><A HREF="/<?php echo $ADMIN; ?>/login.php" ><B><?php  putGS("Login");  ?></B></A></TD>
 		</TR>
 		</TABLE>
