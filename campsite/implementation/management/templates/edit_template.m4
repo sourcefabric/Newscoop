@@ -24,18 +24,24 @@ B_HEAD
 ?>dnl
 E_HEAD
 
-<?php  if ($access) { 
+<?php
+todef('Path');
+todef('Name');
+if (strncmp($Path, "/look/", 6) != 0) {
+	$access = 0;
+?>
+	X_AD(<*You do not have the right to edit scripts outside the templates directory.*>)
+<?php
+}
 
-SET_ACCESS(<*mta*>, <*ManageTempl*>)
-SET_ACCESS(<*dta*>, <*DeleteTempl*>)
+if ($access) {
+	SET_ACCESS(<*mta*>, <*ManageTempl*>)
+	SET_ACCESS(<*dta*>, <*DeleteTempl*>)
 ?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
-
-<?php  todef('Path'); ?>dnl
-<?php  todef('Name'); ?>dnl
 
 B_HEADER(<*Edit template*>)
 B_HEADER_BUTTONS
