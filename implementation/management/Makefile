@@ -24,10 +24,10 @@ all: $(MY_TARGETS)
 	$(MAKE) -C localizer
 
 %.php: %.m4 macros.m4
-	m4 macros.m4 $< >$@
+	$(M4) macros.m4 $< >$@
 
 %.html: %.m4 macros.m4
-	m4 macros.m4 $< >$@
+	$(M4) macros.m4 $< >$@
 
 install: $(ALL)
 	mkdir -p $(CGI_DIR)
@@ -53,19 +53,19 @@ install: $(ALL)
 	$(MAKE) -C country install
 	$(MAKE) -C popup install
 	$(MAKE) -C localizer install
-	chown $(HTTP_USER).$(HTTP_GROUP) $(HTML_DIR)/*.php
-	chown $(HTTP_USER).$(HTTP_GROUP) $(HTML_DIR)/look -R
-	chown $(HTTP_USER).$(HTTP_GROUP) $(PRIV_DIR) -R
-	chown $(HTTP_USER).$(HTTP_GROUP) $(SCRIPT_DIR) -R
+	chown $(HTTP_USER):$(HTTP_GROUP) $(HTML_DIR)/*.php
+	chown -R $(HTTP_USER):$(HTTP_GROUP) $(HTML_DIR)/look
+	chown -R $(HTTP_USER):$(HTTP_GROUP) $(PRIV_DIR) 
+	chown -R $(HTTP_USER):$(HTTP_GROUP) $(SCRIPT_DIR)
 	chmod u+rw $(HTML_DIR)/*.php
 	chmod g+r $(HTML_DIR)/*.php
 	chmod o-rwx $(HTML_DIR)/*.php
-	chmod u+rw $(PRIV_DIR) -R
-	chmod g+rw $(PRIV_DIR) -R
-	chmod o-rwx $(PRIV_DIR) -R
-	chmod u+rw $(SCRIPT_DIR) -R
-	chmod g+r $(SCRIPT_DIR) -R
-	chmod o-rwx $(SCRIPT_DIR) -R
+	chmod -R u+rw $(PRIV_DIR)
+	chmod -R g+rw $(PRIV_DIR)
+	chmod -R o-rwx $(PRIV_DIR)
+	chmod -R u+rw $(SCRIPT_DIR)
+	chmod -R g+r $(SCRIPT_DIR)
+	chmod -R o-rwx $(SCRIPT_DIR)
 
 clean: dummy
 	rm -f *~ macros.m4 .env_vars lib_campsite.php
