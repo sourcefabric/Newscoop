@@ -623,11 +623,15 @@ function valid_short_name($name)
 }
 
 $cache_types = array();
-
 $cache_type_all = 'all';
 $cache_type_publications = 'publications';
 $cache_type_topics = 'topics';
 $cache_type_article_types = 'article_types';
+
+$operation_attr = 'operation';
+$operation_create = 'create';
+$operation_delete = 'delete';
+$operation_modify = 'modify';
 
 function build_reset_cache_msg($type, $parameters)
 {
