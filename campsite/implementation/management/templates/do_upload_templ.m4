@@ -21,11 +21,11 @@ B_HEAD
     ## added by sebastian ############################
     todef('Charset');
     todef('Path');
-    todef('File', $HTTP_POST_FILES[File][tmp_name]);
-    todef('File_name', $HTTP_POST_FILES[File][name]);
+    $GLOBALS['File'] = $HTTP_POST_FILES[File][tmp_name];
+    $GLOABLS['File_name'] = $HTTP_POST_FILES[File][name];
     todef('UNIQUE_ID');
     ##################################################
-    
+
     doUpload("File",$Charset,$DOCUMENT_ROOT.'/'.decS($Path));
 
 } ?>dnl
