@@ -136,14 +136,11 @@ if (!$cURL && !$cImageTemp) {
 		query($query);
 	} else {
 		// local file
-
-
 		$query = "INSERT INTO Images
 				  (Description, Photographer, Place, Date, ContentType, Location)
 				  VALUES
 				  ('$cDescription', '$cPhotographer', '$cPlace', '$cDate', '$cImageType', 'local')";
 		query($query);
-		echo $cImageTemp, $_SERVER[DOCUMENT_ROOT].$ImgPrefix.mysql_insert_id();
 		move_uploaded_file ($cImageTemp, $_SERVER[DOCUMENT_ROOT].$ImgPrefix.mysql_insert_id());
 	}
 
