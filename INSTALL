@@ -1,11 +1,10 @@
-INSTALLATION PROCEDURE FOR CAMPSITE V.2.1.x
+INSTALLATION PROCEDURE FOR CAMPSITE V.2.2.x
 http://www.campware.org
 
 CONTENTS:
    * PREPARATION - applications you need to have installed
    * INSTALLATION - the usual procedure
    * INSTALLATION of multiple instances
-   * IN DEPTH - example installation
 
 ####################################################################
 
@@ -45,6 +44,11 @@ PREPARATION - applications you need to have installed
    Configure the Web server (see INSTALLATION 3.) and (re)start
    the httpd daemon.
 
+7. PHP
+   Campsite requires PHP 4.3 or newer; the following PHP modules
+   must be installed: php-cli (command line), php-pear, php-adodb,
+   php-mysql.
+
 7. Cron daemon
    Usually the crond binary is located in /usr/sbin directory.
    On rpm systems vixie-cron package should be installed.
@@ -59,35 +63,7 @@ INSTALLATION - the usual procedure
 1. Unzip and Untar the campsite file. This will generate a
    folder named 'campsite'.
 
-2. Configure the Web server
-   The configuration file of Apache is usually called httpd.conf and
-   found in the /etc/httpd/conf/ folder. You need to:
-
-   - activate the DirectoryIndex directive and add the following at the end:
-        /priv/templates/idx.php
-   - activate the IndexIgnore directive and set it to
-        IndexIgnore *
-   - add the following lines:
-      AddHandler tpl_handler .tpl
-      Action tpl_handler /cgi-bin/tpl_cgi
-
-   [Make sure the server has the rights to read, write and execute the
-   folders and files used. Usually, user and group should be set to
-   'apache', the rights should be set as 'rwx' for the user and 'rw'
-   for the group. Furthermore, the Web server should have the UniqueID
-   option activated (the mod_unique_id should be loaded, simply un-comment
-   the LoadModule and AddModule lines)]
-
-3. Restart the httpd daemon. Try one of the three otpions:
-   a) killall httpd
-      {PATH}/httpd                           ...or...
-   b) /etc/rc.d/init.d/httpd restart         ...or...
-   c) kill -HUP `cat /var/run/httpd.pid`
-
-   [IMPORTANT: your httpd daemon might have a different name.
-   The standard apache installation might use apachectl.]
-
-4. Change into the 'campsite' directory.
+2. Change into the 'campsite' directory.
 
    IMPORTANT: If you have an old version of campsite and want to drop
    the old database type: "mysqladmin -u root drop campsite". The
@@ -95,7 +71,7 @@ INSTALLATION - the usual procedure
    If you want to upgrade campsite and keep the old database, continue
    with the next step. The installation will not delete the old database.
 
-6. Type ./install
+3. Type ./install
 
    If you are not already logged in as root the installer will prompt
    you for the root password when necessary. Without root access it
@@ -107,43 +83,24 @@ always be checked by the user. (This applies when installing Campsite on
 any architecture). You can change all necessary variables interactively in
 the installer.
 
-In particular, note that:
-	- PARSER_USER and PARSER_GROUP should be the same as the user and group
-	  you use for apache.
-	- ADMIN_INTERFACE_HTML_DIR and ADMIN_INTERFACE_CGI_DIR specify where you
-	  wish to install the campsite html and cgi files. On a machine with
-	  virtual hosts you will likely want to choose these directories carefully.
-
 ####################################################################
 
 INSTALLATION of multiple instances
 
-I would recommend to create a web directory for every instance:
-/var/www/INST01 and inside to create html and cgi-bin directories:
+Since 2.2.0 a new instance can be created without reinstalling Campsite. Just
+run:
 
-/var/www/INST01/html
-/var/www/INST01/cgi-bin
+/usr/local/campsite/bin/create_instance --db_name [instance_name]
 
-Also, you'll have to change the parser listening port for every instance; so 
-the final instance configuration should look like:
-
-CAMPSITE configuration:
-
-APP_NAME=INST01
-DATABASE_NAME=INST01 - must be the same as APP_NAME
-PARSER_PORT=2002 (2003, 2004... - increase the port number with every instance)
-ADMIN_INTERFACE_HTML_DIR=/var/www/INST01/html
-ADMIN_INTERFACE_CGI_DIR=/var/www/INST01/cgi-bin
-ADMIN_INTERFACE_PARSER_PORT=2002 (2003, 2004...) - must be the same as PARSER_PORT
-
+You'll also need to set up a new virtual host in apache for this instance.
 Apache configuration:
 
 <VirtualHost [virtual_host_address]>
-	DocumentRoot /var/www/INST01/html
-	ScriptAlias /cgi-bin/ /var/www/INST01/cgi-bin/
+	DocumentRoot /usr/local/campsite/www/[instance_name]/html
+	ScriptAlias /cgi-bin/ /usr/local/campsite/www/[instance_name]/cgi-bin/
 	ServerName INST01.mydom.com
-	DirectoryIndex index.php ... index.shtml /priv/templates/idx.php
-	<Directory /var/www/INST01/html>
+	DirectoryIndex index.php index.html
+	<Directory /usr/local/campsite/www/[instance_name]/html>
 		Options -Indexes FollowSymLinks MultiViews
 		AllowOverride All
 		<IfModule mod_access.c>
@@ -151,7 +108,7 @@ Apache configuration:
 			Allow from all
 		</IfModule>
 	</Directory>
-	<Directory /var/www/INST01/cgi-bin>
+	<Directory /usr/local/campsite/www/[instance_name]/cgi-bin/>
 		AllowOverride All
 		Options ExecCGI
 		<IfModule mod_access.c>
@@ -162,47 +119,3 @@ Apache configuration:
 	AddHandler tpl_handler .tpl
 	Action tpl_handler /cgi-bin/tpl_cgi
 </VirtualHost>
-
-
-####################################################################
-
-IN DEPTH - example installation
-
-    The following is a possible installation session,
-    which would install CAMPSITE on your server.
-    All text in square brackets is comment only, not
-    to be typed.
-
-localhost$ telnet youserverIP
-Red Hat Linux release 7.0 (Guiness)
-Kernel 2.2.16-22 onan i386
-login : user
-Password: userpwd
-Last login...
-yourserver# wget http://www.campware.org/look/campware/download/campsite-latest.tar.gz
-yourserver# gzip -df campsite-latest.tar.gz
-yourserver# tar -xf campsite-latest.tar
-	[Now you need to edit the httpd.conf file. Locate the file first by typing]
-yourserver$ su
-yourserver$ passowrd: pwdsu
-yourserver# updatedb [if you haven't generated the database for locating yet]
-yourserver# locate httpd.conf [Make a backup copy, always a good idea.]
-yourserver# cp /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf.bak
-	[the location might vary, depending on your configuration and system version]
-	[Now open and edit the config file, you can see the changes that need to be
-	done in the INSTALL file which is located in the campsite folder. Then you
-	need to restart the http daemon:]
-yourserver# kill -HUP `cat /var/run/httpd.pid`
-	[the `` need to be angled from top left to bottom right.]
-	[Check if mysql and httpd are running:]
-yourserver# ps -A | grep mysql
-	[this should return some lines with pid numbers for the mysqld. If not, start 
-	mysql manually]
-yourserver# ps -A | grep httpd
-	[this should return some lines with pid numbers for the httpd. If not, start 
-	httpd manually (see above)]
-yourserver# exit
-yourserver# cd campsite
-yourserver# install
-yourserver# exit
-[that's all...]

@@ -1,6 +1,6 @@
 CAMPSITE / CAMPFIRE
-version     : 2.2.0
-release date: January 31, 2005
+version     : 2.2.0-rc1
+release date: March 25, 2005
 contact     : contact@campware.org
 url         : http://www.campware.org
 copyright   : (c)1999-2005 Media Development Loan Fund
@@ -12,10 +12,10 @@ INTRODUCTION
 CAMPSITE is a content management system with multi-lingual Unicode support,
 designed for medium to large sized online publications. Issues, back archives,
 as well as subscription management are fully implemented features. At the core
-of management system sits the CAMPFIRE, a Java program supporting Unicode fonts,
-allowing contributors and editors to control layout online in their native font
-face. Style features can be assigned via buttons - similar to editors such as
-Wordpad - meaning no HTML knowledge is necessary for formatting text.
+of management system sits the article editor allowing contributors and editors
+to control layout online in their native font face. Style features can be
+assigned via buttons - similar to editors such as Wordpad - meaning no HTML
+knowledge is necessary for formatting text.
 
 We encourage further development of this software and would like to make any
 progress accessible to all other users. Please contact us if you have or intend
@@ -25,10 +25,10 @@ CAMPSITE offers...
 - support of managing article translations in different languages
 - advanced editorial interface for remote article editing
 - cut and paste formatting from other editors into the online
-- Java Editor for HTML with near WYSIWYG feel (CAMPFIRE)
+- article editor with near WYSIWYG feel
 - its own customizable search-engine
 - built-in subscription system
-- management of dictionaries
+- management of dictionaries (obsolete)
 
 CREDITS
 
@@ -52,29 +52,23 @@ Implementing CAMPSITE for your purposes requires the following technical set-up,
 nothing out of the ordinary.
 
 CAMPSITE server:
-- runs on a GNU/Linux server, tested with RedHat 7.0 and Mandrake 8.0 and has 
-proved compatible with RedHat 7.1, 7.2, 8.0, 9.0; Mandrake 8.1, 8.2, 9.0, 9.1, 
-9.2, 10.0 and Debian
+- runs on a GNU/Linux server, tested with Fedora 3.0 and Mandrake 10.1 and has
+proved compatible with RedHat 9.0, Mandrake 10.0 and Debian
 - needs an Apache web to be running, and its virtual servers configured by the
   administrator.
 - for data storage it is needed a MySQL database server for GNU/Linux. The tests
-  were made on MySQL v.3.23.xx.
+  were made on MySQL v.4.0.
+- requires PHP (version 4.0 and up) to be running
 
 CAMPSITE client:
-- tested on Netscape, Mozilla and Konqueror under GNU/Linux, Netscape and
-  Internet Explorer under Macintosh and Windows.
-- has a client Editor interface implemented as a Java Applet
-  (browser-compatibility reason).
-
-WORKING DEMO
-
-CAMPSITE in action can be seen at http://campware.esnahost.com/priv/
+-works in most modern Web browsers: Mozilla, Mozilla Firefox, MS Internet
+Explorer. No plugins are necessary as of version 2.2.
 
 COPYRIGHT
 
 CAMPSITE is a Unicode-enabled multilingual web content management system for
 news publications. CAMPFIRE is a Unicode-enabled java-based near WYSIWYG text
-editor. Copyright (C)1999-2004  Media Development Loan Fund.
+editor. Copyright (C)1999-2005  Media Development Loan Fund.
 contact: contact@campware.org - http://www.campware.org
 Campware encourages further development. Please let us know.
 
