@@ -74,7 +74,10 @@ B_MSGBOX(<*Adding new language*>)
 		$IdLang = getNumVar($lid,0);
 	query("INSERT IGNORE INTO TimeUnits VALUES ('D', $IdLang, '$D'), ('W', $IdLang, '$W'), ('M', $IdLang, '$M'), ('Y', $IdLang, '$Y')");
     }
-    if ($created) { ?>dnl
+    if ($created) {
+		require_once($_SERVER['DOCUMENT_ROOT'] . "/parser_utils.php");
+		create_language_links();
+?>dnl
 		<LI><?php  putGS('The language $1 has been successfuly added.','<B>'.decS($cName).'</B>'); ?></LI>
 X_AUDIT(<*101*>, <*getGS('Language $1 added',$cName)*>)
     <?php  } else {
