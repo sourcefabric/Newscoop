@@ -1,9 +1,10 @@
 #!/bin/bash
 
+cd ../../..
+. ./make.env
+cd implementation/management/src
 . ${INSTALL_CONF}/conf_functions
-cd ../../.. && . ./configure --define_start_env && cd implementation/management/src
 
-PACKAGE_TYPE=`cat $CAMPSITE_PACKAGE_DIR/.package_type`
 [ "$PACKAGE_TYPE" = "binary" ] && exit 0
 
 var_not_modified APP_NAME && [ -f configure.h ] && [ -f dir_conf.h ] && exit 0
