@@ -594,4 +594,8 @@ function valid_field_name($name)
 	return true;
 }
 
+## added by sebastian
+if (file_exists ("$DOCUMENT_ROOT/priv/modules/admin/priv_functions.php"))
+	include ("$DOCUMENT_ROOT/priv/modules/admin/priv_functions.php");
+
 ?>

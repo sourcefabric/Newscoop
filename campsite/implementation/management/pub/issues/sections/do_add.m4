@@ -66,19 +66,23 @@ B_MSGBOX(<*Adding new section*>)
 		<LI><? putGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); ?></LI>
     <? }
     
-    if ($cNumber == "") {
-	$correct= 0;
-	$cNumber= ($cNumber + 0); ?>dnl
+	if ($cNumber == "") {
+		$correct= 0;
+		$cNumber= ($cNumber + 0); ?>dnl
 		<LI><? putGS('You must complete the $1 field.','<B>'.getGS('Number').'</B>'); ?></LI>
-    <? }
+<? 
+	}
     
-    if ($correct) {
-	
-	query ("INSERT IGNORE INTO Sections SET Name='$cName', IdPublication=$Pub, NrIssue=$Issue, IdLanguage=$Language, Number=$cNumber");
-	$created= ($AFFECTED_ROWS > 0);
-    }
+	if ($correct) {
+		query ("INSERT IGNORE INTO Sections SET Name='$cName', IdPublication=$Pub, NrIssue=$Issue, IdLanguage=$Language, Number=$cNumber");
+		$created= ($AFFECTED_ROWS > 0);
+	}
     
-    if ($created) { ?>dnl
+	if ($created) {
+		## added by sebastian
+		if (function_exists ("incModFile"))
+			incModFile ();
+?>dnl
 		<LI><? putGS('The section $1 has been successfuly added.','<B>'.encHTML(decS($cName)).'</B>'); ?></LI>
 	<?	if ($cSubs != "") {
 			$add_subs_res = add_subs_section($Pub, $cNumber);

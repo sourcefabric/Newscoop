@@ -101,27 +101,32 @@ B_MSGBOX(<*Adding new article*>)
 	<LI><? putGS('You must select a language.'); ?></LI>
     <? }
     
-    if ($correct) {
-	query ("UPDATE AutoId SET ArticleId=LAST_INSERT_ID(ArticleId + 1)");
-	query ("INSERT IGNORE INTO Articles SET IdPublication=$Pub, NrIssue=$Issue, NrSection = $Section, Number = LAST_INSERT_ID(), IdLanguage=$cLanguage, Type='$cType', Name='$cName', Keywords='$cKeywords', OnFrontPage='$cFrontPage', OnSection='$cSectionPage', UploadDate=NOW(), IdUser=".getVar($Usr,'Id').", Public='Y'");
-	if ($AFFECTED_ROWS > 0) {
-	    query ("INSERT IGNORE INTO X$cType SET NrArticle=LAST_INSERT_ID(), IdLanguage=$cLanguage");
-	    if ($AFFECTED_ROWS > 0) {
-		query ("SELECT LAST_INSERT_ID()", 'lii');
-		fetchRowNum($lii);
-		$created= 1;
-	    }
-	}
-    }
+	if ($correct) {
+		query ("UPDATE AutoId SET ArticleId=LAST_INSERT_ID(ArticleId + 1)");
+		query ("INSERT IGNORE INTO Articles SET IdPublication=$Pub, NrIssue=$Issue, NrSection = $Section, Number = LAST_INSERT_ID(), IdLanguage=$cLanguage, Type='$cType', Name='$cName', Keywords='$cKeywords', OnFrontPage='$cFrontPage', OnSection='$cSectionPage', UploadDate=NOW(), IdUser=".getVar($Usr,'Id').", Public='Y'");
+		if ($AFFECTED_ROWS > 0) {
 
-    if ($correct) {
-	if ($created) { ?>dnl
-	<LI><? putGS('The article $1 has been created','<B>'.encHTML(decS($cName)).'</B>'); ?></LI>
-X_AUDIT(<*31*>, <*getGS('Article $1 added to $2. $3 from $4. $5 of $6',$cName,getHVar($q_sect,'Number'),getHVar($q_sect,'Name'),getHVar($q_iss,'Number'),getHVar($q_iss,'Name'),getHVar($q_pub,'Name') )*>)
-<? } else { ?>dnl
-	<LI><? putGS('The article $1 could not be created','<B>'.encHTML(decS($cName)).'</B>'); ?></LI>
-<? }
-}
+			## added by sebastian
+			if (function_exists ("incModFile"))
+				incModFile ();
+
+			query ("INSERT IGNORE INTO X$cType SET NrArticle=LAST_INSERT_ID(), IdLanguage=$cLanguage");
+			if ($AFFECTED_ROWS > 0) {
+				query ("SELECT LAST_INSERT_ID()", 'lii');
+				fetchRowNum($lii);
+				$created= 1;
+			}
+		}
+	}
+
+	if ($correct) {
+		if ($created) { ?>dnl
+		<LI><? putGS('The article $1 has been created','<B>'.encHTML(decS($cName)).'</B>'); ?></LI>
+		X_AUDIT(<*31*>, <*getGS('Article $1 added to $2. $3 from $4. $5 of $6',$cName,getHVar($q_sect,'Number'),getHVar($q_sect,'Name'),getHVar($q_iss,'Number'),getHVar($q_iss,'Name'),getHVar($q_pub,'Name') )*>)
+<?		} else { ?>dnl
+			<LI><? putGS('The article $1 could not be created','<B>'.encHTML(decS($cName)).'</B>'); ?></LI>
+<?		}
+	}
 ?>dnl
 	*>)
 <? if ($created) { ?>dnl

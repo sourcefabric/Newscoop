@@ -99,6 +99,11 @@ B_DIALOG(<*Add new article*>, <*POST*>, <*do_add.php*>)
 	B_DIALOG_INPUT(<*Keywords*>)
 		<INPUT TYPE="TEXT" NAME="cKeywords" SIZE="64" MAXLENGTH="255">
 	E_DIALOG_INPUT
+	<?
+	## added by sebastian
+	if (function_exists ("incModFile"))
+	incModFile ();
+	?>
 	B_DIALOG_BUTTONS
 		<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<? p($Pub); ?>">
 		<INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<? p($Issue); ?>">

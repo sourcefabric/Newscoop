@@ -68,6 +68,11 @@ B_MSGBOX(<*Updating section name*>)
     if ($correct) {
 		query ("UPDATE Sections SET Name='$cName' WHERE IdPublication=$Pub AND NrIssue=$Issue AND Number=$Section AND IdLanguage=$Language");
 		$created= ($AFFECTED_ROWS > 0);
+
+		## added by sebastian
+		if (function_exists ("incModFile"))
+			incModFile ();
+
 		if ($cSubs == "a") {
 			$add_subs_res = add_subs_section($Pub, $Section);
 			if ($add_subs_res == -1) { ?>

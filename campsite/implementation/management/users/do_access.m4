@@ -83,13 +83,17 @@ E_CURRENT
 B_MSGBOX(<*Updating user account permissions*>)
 <?
     query ("UPDATE UserPerm SET ManagePub='$cManagePub', DeletePub='$cDeletePub', ManageIssue='$cManageIssue', DeleteIssue='$cDeleteIssue', ManageSection='$cManageSection', DeleteSection='$cDeleteSection', AddArticle='$cAddArticle', ChangeArticle='$cChangeArticle', DeleteArticle='$cDeleteArticle', AddImage='$cAddImage', ChangeImage='$cChangeImage', DeleteImage='$cDeleteImage', ManageTempl='$cManageTempl', DeleteTempl='$cDeleteTempl', ManageUsers='$cManageUsers', ManageSubscriptions='$cManageSubscriptions', DeleteUsers='$cDeleteUsers', ManageUserTypes='$cManageUserTypes', ManageArticleTypes='$cManageArticleTypes', DeleteArticleTypes='$cDeleteArticleTypes', ManageLanguages='$cManageLanguages', DeleteLanguages='$cDeleteLanguages', MailNotify='$cMailNotify', ManageClasses='$cManageClasses', ManageDictionary='$cManageDictionary', DeleteDictionary='$cDeleteDictionary', ManageCountries='$cManageCountries', DeleteCountries='$cDeleteCountries', ViewLogs='$cViewLogs' , ManageLocalizer = '$cManageLocalizer', ManageIndexer = '$cManageIndexer', Publish = '$cPublish', ManageTopics= '$cManageTopics' WHERE IdUser=$User");
-    if ($AFFECTED_ROWS > 0) { ?>dnl
-X_AUDIT(<*55*>, <*getGS('Permissions for $1 changed',getHVar($uacc,'UName'))*>)
-	X_MSGBOX_TEXT(<*<LI><? putGS('User account permissions have been successfuly updated.'); ?></LI>*>)
-<? } else { ?>dnl
-	X_MSGBOX_TEXT(<*<LI><? putGS('User account permissions could not be updated.'); ?></LI>
-<? } ?>dnl
-	*>)
+
+	## added by sebastian
+	if (function_exists ("incModFile"))
+		incModFile ($User);
+
+	if ($AFFECTED_ROWS > 0) { ?>dnl
+		X_AUDIT(<*55*>, <*getGS('Permissions for $1 changed',getHVar($uacc,'UName'))*>)
+		X_MSGBOX_TEXT(<*<LI><? putGS('User account permissions have been successfuly updated.'); ?></LI>*>)
+<?	} else { ?>dnl
+		X_MSGBOX_TEXT(<*<LI><? putGS('User account permissions could not be updated.'); ?></LI>
+<?	} ?>*>)
 	B_MSGBOX_BUTTONS
 <?
     if ($AFFECTED_ROWS > 0) { ?>dnl
