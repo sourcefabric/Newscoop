@@ -1,16 +1,16 @@
-OBJ_FILES=main.o csocket.o readconf.o
+OBJ_FILES=main.o csocket.o readconf.o mutex.o
 
 LDFLAGS=
 LDLIBS=$(PTHREAD_LINK)
 
-DEPENDENCES=globals.h exceptions.h csocket.h srvdef.h readconf.h tpl_cgi.h
+DEPENDENCES=globals.h exceptions.h csocket.h srvdef.h readconf.h tpl_cgi.h mutex.h
 
 CFLAGS=-Wall
 # -D_DEBUG -g
 
 TPL_CGI=tpl_cgi
 
-LINKS=csocket.h csocket.cpp exceptions.h globals.h srvdef.h readconf.h readconf.cpp
+LINKS=csocket.h csocket.cpp exceptions.h globals.h srvdef.h readconf.h readconf.cpp mutex.cpp mutex.h
 
 all: links $(TPL_CGI)
 
@@ -36,6 +36,9 @@ csocket.o: csocket.cpp $(DEPENDENCES)
 
 readconf.o: readconf.cpp $(DEPENDENCES)
 	g++ -c -o readconf.o $(CFLAGS) readconf.cpp
+
+mutex.o: mutex.cpp $(DEPENDENCES)
+	g++ -c -o mutex.o $(CFLAGS) mutex.cpp
 
 install: $(ALL)
 	mkdir -p $(CGI_DIR)
