@@ -27,15 +27,62 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "curl.h"
 
 
+const string& CURL::getValue(const string& p_rcoParameter) const
+{
+	String2StringMMap::const_iterator coValIt;
+	String2MMapIt::iterator coIt = m_coParamIterators.find(p_rcoParameter);
+	if (coIt == m_coParamIterators.end())
+	{
+		coValIt = m_coParamMap.find(p_rcoParameter);
+		if (coValIt == m_coParamMap.end())
+			return String::emptyString;
+		m_coParamIterators[p_rcoParameter] = coValIt;
+		return (*coValIt).second;
+	}
+	if ((*coIt).second == m_coParamMap.end())
+		return String::emptyString;
+	return (*((*coIt).second)).second;
+}
+
+const string& CURL::getNextValue(const string& p_rcoParameter) const
+{
+	String2StringMMap::const_iterator coValIt;
+	String2MMapIt::iterator coIt = m_coParamIterators.find(p_rcoParameter);
+	if (coIt == m_coParamIterators.end())
+	{
+		coValIt = m_coParamMap.find(p_rcoParameter);
+		if (coValIt == m_coParamMap.end())
+			return String::emptyString;
+		m_coParamIterators[p_rcoParameter] = coValIt;
+		return (*coValIt).second;
+	}
+	if ((*coIt).second == m_coParamMap.end())
+		return String::emptyString;
+	++((*coIt).second);
+	if ((*((*coIt).second)).first != p_rcoParameter)
+	{
+		m_coParamIterators[p_rcoParameter] = m_coParamMap.end();
+		return String::emptyString;
+	}
+	return (*((*coIt).second)).second;
+}
+
+void CURL::resetParamValuesIndex(const string& p_rcoParameter) const
+{
+	if (p_rcoParameter != "")
+	{
+		m_coParamIterators.erase(p_rcoParameter);
+		return;
+	}
+	String2MMapIt::iterator coIt = m_coParamIterators.begin();
+	for (; coIt != m_coParamIterators.end(); ++coIt)
+		m_coParamIterators.erase(coIt);
+}
+
 void CURL::replaceValue(const string& p_rcoParameter, const string& p_rcoValue)
 {
 	PreSetValue(p_rcoParameter, p_rcoValue);
-	String2StringMMap::iterator coIt = m_coParamMap.find(p_rcoParameter);
-	while (coIt != m_coParamMap.end())
-	{
-		m_coParamMap.erase(coIt);
-		coIt = m_coParamMap.find(p_rcoParameter);
-	}
+	deleteParameter(p_rcoParameter);
 	m_coParamMap.insert(pair<string, string>(p_rcoParameter, p_rcoValue));
 	PostSetValue(p_rcoParameter, p_rcoValue);
 }
