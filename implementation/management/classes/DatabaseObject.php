@@ -1,11 +1,13 @@
 <?php
+require_once('PEAR.php');
+
 class DatabaseObject {
 	/**
 	 * The name of the database table.
 	 * Redefine this in the subclass.
 	 * @var string
 	 */
-	var $m_dbTableName = "";
+	var $m_dbTableName = '';
 
 	/**
 	 * The column names used for the key.
@@ -104,9 +106,9 @@ class DatabaseObject {
 	 * Set the key column names and optionally the values as well.
 	 * @param array p_columnNames
 	 *		Can be either:
-	 *		[0] => "column name 1", [1] => "column name 2", ...
+	 *		[0] => 'column name 1', [1] => 'column name 2', ...
 	 *		or:
-	 *		["column name 1"] => "value", ["column name 2"] => "value",...
+	 *		['column name 1'] => 'value', ['column name 2'] => 'value',...
 	 *
 	 * @return void
 	 */
@@ -136,16 +138,16 @@ class DatabaseObject {
 		global $Campsite;
 		
 		if (is_null($p_recordSet)) {
-			$queryStr = "SELECT ";
+			$queryStr = 'SELECT ';
 			$tmpColumnNames = array();
 			foreach ($this->getColumnNames() as $columnName) {
-				$tmpColumnNames[] = "`".$columnName."`";
+				$tmpColumnNames[] = '`'.$columnName.'`';
 			}
-			$queryStr .= implode(", ", $tmpColumnNames);
-			$queryStr .= " FROM " . $this->m_dbTableName;
-			$queryStr .= " WHERE " . $this->getKeyWhereClause();
-			$queryStr .= " LIMIT 1";
-			$resultSet =& $Campsite["db"]->GetRow($queryStr);
+			$queryStr .= implode(', ', $tmpColumnNames);
+			$queryStr .= ' FROM ' . $this->m_dbTableName;
+			$queryStr .= ' WHERE ' . $this->getKeyWhereClause();
+			$queryStr .= ' LIMIT 1';
+			$resultSet =& $Campsite['db']->GetRow($queryStr);
 			if ($resultSet) {
 				foreach ($this->getColumnNames() as $dbColumnName) {
 					$this->m_data[$dbColumnName] = $resultSet[$dbColumnName];
@@ -169,11 +171,11 @@ class DatabaseObject {
 	 */
 	function exists() {
 		global $Campsite;
-		$queryStr = "SELECT `".$this->m_keyColumnNames[0]."`";
-		$queryStr .= " FROM " . $this->m_dbTableName;
-		$queryStr .= " WHERE " . $this->getKeyWhereClause();
-		$queryStr .= " LIMIT 1";
-		$resultSet =& $Campsite["db"]->GetRow($queryStr);
+		$queryStr = 'SELECT `'.$this->m_keyColumnNames[0].'`';
+		$queryStr .= ' FROM ' . $this->m_dbTableName;
+		$queryStr .= ' WHERE ' . $this->getKeyWhereClause();
+		$queryStr .= ' LIMIT 1';
+		$resultSet =& $Campsite['db']->GetRow($queryStr);
 		return (count($resultSet) > 0);
 	} // fn exists
 	
@@ -186,9 +188,9 @@ class DatabaseObject {
 	function getKeyWhereClause() {
 		$whereParts = array();
 		foreach ($this->m_keyColumnNames as $columnName) {
-			$whereParts[] = "`" . $columnName . "`='". $this->m_data[$columnName] ."'";
+			$whereParts[] = '`' . $columnName . "`='". $this->m_data[$columnName] ."'";
 		}
-		return implode(" AND ", $whereParts);		
+		return implode(' AND ', $whereParts);		
 	} // fn getKeyWhereClause
 	
 	
@@ -220,7 +222,7 @@ class DatabaseObject {
 	 */
 	function create($p_values = null) {
 		global $Campsite;
-		$queryStr = "INSERT IGNORE INTO " . $this->m_dbTableName;
+		$queryStr = 'INSERT IGNORE INTO ' . $this->m_dbTableName;
 		
 		// Make sure we have the key required to create the row.
 		// If auto-increment is set, the database will create the key for us.
@@ -249,19 +251,19 @@ class DatabaseObject {
 			}
 		}
 
-		$queryStr .= "(" . implode(",", $columnNames) . ")";
-		$queryStr .= " VALUES (".implode(",", $columnValues) .")";
+		$queryStr .= '(' . implode(',', $columnNames) . ')';
+		$queryStr .= ' VALUES ('.implode(',', $columnValues) .')';
 
 		// Create the row.
-		$Campsite["db"]->Execute($queryStr);
-		$success = ($Campsite["db"]->Affected_Rows() > 0);
+		$Campsite['db']->Execute($queryStr);
+		$success = ($Campsite['db']->Affected_Rows() > 0);
 		
 		// Fetch the row ID if it is auto-increment
 		if ($this->m_keyIsAutoIncrement) {
 			// There should only be one key column because
 			// its an auto-increment key.
 			$this->m_data[$this->m_keyColumnNames[0]] = 
-				$Campsite["db"]->Insert_ID();
+				$Campsite['db']->Insert_ID();
 		}
 		return $success;
 	} // fn create
@@ -275,11 +277,11 @@ class DatabaseObject {
 	 */
 	function delete() {
 		global $Campsite;
-		$queryStr = "DELETE FROM " . $this->m_dbTableName
-					." WHERE " . $this->getKeyWhereClause()
-					." LIMIT 1";
-		$Campsite["db"]->Execute($queryStr);
-		return ($Campsite["db"]->Affected_Rows() > 0);
+		$queryStr = 'DELETE FROM ' . $this->m_dbTableName
+					.' WHERE ' . $this->getKeyWhereClause()
+					.' LIMIT 1';
+		$Campsite['db']->Execute($queryStr);
+		return ($Campsite['db']->Affected_Rows() > 0);
 	} // fn delete
 
 
@@ -300,16 +302,16 @@ class DatabaseObject {
 		global $Campsite;
 		if (array_key_exists($p_dbColumnName, $this->m_data)) {
 			if ($p_forceFetchFromDatabase) {
-				$queryStr = "SELECT ".$p_dbColumnName
-							." FROM ".$this->m_dbTableName
-							." WHERE ".$this->getKeyWhereClause()
-							." LIMIT 1";
-				$this->m_data[$p_dbColumnName] = $Campsite["db"]->GetOne($queryStr);
+				$queryStr = 'SELECT '.$p_dbColumnName
+							.' FROM '.$this->m_dbTableName
+							.' WHERE '.$this->getKeyWhereClause()
+							.' LIMIT 1';
+				$this->m_data[$p_dbColumnName] = $Campsite['db']->GetOne($queryStr);
 			}
 			return $this->m_data[$p_dbColumnName];
 		}
 		else {
-			return new PEAR_Error("Property " . $p_dbColumnName . " does not exist.");
+			return new PEAR_Error('Property \'' . $p_dbColumnName . '\' does not exist.');
 		}
 	} // fn getProperty
 	
@@ -363,12 +365,12 @@ class DatabaseObject {
 			if (!$p_isSql) {
 				$value = "'".$p_value."'";
 			}
-			$queryStr = "UPDATE ".$this->m_dbTableName
-						." SET `". $p_dbColumnName."`=".$value
-						." WHERE ".$this->getKeyWhereClause()
-						." LIMIT 1";
-			$Campsite["db"]->Execute($queryStr);
-			$databaseChanged = ($Campsite["db"]->Affected_Rows() > 0);
+			$queryStr = 'UPDATE '.$this->m_dbTableName
+						.' SET `'. $p_dbColumnName.'`='.$value
+						.' WHERE '.$this->getKeyWhereClause()
+						.' LIMIT 1';
+			$Campsite['db']->Execute($queryStr);
+			$databaseChanged = ($Campsite['db']->Affected_Rows() > 0);
 		}
 		// Store the value locally.
 		if (!$p_isSql) {
@@ -376,13 +378,13 @@ class DatabaseObject {
 		}
 		else {
 			// Fetch the data from the database.  This is for the
-			// case when the database execute some operation (e.g. "DATE")
+			// case when the database execute some operation (e.g. 'DATE')
 			// to create the new value.
-			$queryStr = "SELECT ".$p_dbColumnName
-						." FROM ".$this->m_dbTableName
-						." WHERE ".$this->getKeyWhereClause()
-						." LIMIT 1";
-			$this->m_data[$p_dbColumnName] = $Campsite["db"]->GetOne($queryStr);
+			$queryStr = 'SELECT '.$p_dbColumnName
+						.' FROM '.$this->m_dbTableName
+						.' WHERE '.$this->getKeyWhereClause()
+						.' LIMIT 1';
+			$this->m_data[$p_dbColumnName] = $Campsite['db']->GetOne($queryStr);
 		}
 		return $databaseChanged;
 	} // fn setProperty
@@ -402,22 +404,22 @@ class DatabaseObject {
 		if (is_null($p_columns)) {
 			return false;
 		}
-        $queryStr = "UPDATE " . $this->m_dbTableName
-        			." SET ";
+        $queryStr = 'UPDATE ' . $this->m_dbTableName
+        			.' SET ';
         $setColumns = array();
         foreach ($p_columns as $columnName => $columnValue) {
         	if (!array_key_exists($columnName, $this->m_data)) {
-        		//return new PEAR_Error("Column name ".$columnName." does not exist.");
+        		//return new PEAR_Error('Column name '.$columnName.' does not exist.');
         		return false;
         	}
         	$setColumns[] = $columnName . "='". $columnValue ."'";
         	$this->m_data[$columnName] = $columnValue;
         }
-        $queryStr .= implode(",", $setColumns);
-        $queryStr .= " WHERE " . $this->getKeyWhereClause();
-        $queryStr .= " LIMIT 1";
-        $Campsite["db"]->Execute($queryStr);
-		$databaseChanged = ($Campsite["db"]->Affected_Rows() > 0);
+        $queryStr .= implode(',', $setColumns);
+        $queryStr .= ' WHERE ' . $this->getKeyWhereClause();
+        $queryStr .= ' LIMIT 1';
+        $Campsite['db']->Execute($queryStr);
+		$databaseChanged = ($Campsite['db']->Affected_Rows() > 0);
 		return $databaseChanged;
 	} // fn update
 	
