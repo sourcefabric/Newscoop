@@ -39,6 +39,7 @@ Implementation of functions for client request processing
 #include "parser.h"
 #include "util.h"
 #include "auto_ptr.h"
+#include "curl.h"
 
 using std::stringstream;
 using std::endl;
@@ -55,11 +56,13 @@ using std::endl;
 // Return RES_OK if no errors occured, error code otherwise
 // Parameters:
 //		MYSQL* p_pSql - pointer to MySQL connection
-//		CGIParams* p_pParams - pointer to cgi environment structure
+//		CURL* p_pURL - pointer to the URL object
+//		const char* p_pchRemoteIP - pointer to string containing the client IP address
 //		sockstream& p_rOs - output stream
-int RunParser(MYSQL* p_pSQL, CGIParams* p_pParams, sockstream& p_rOs) throw(RunException, bad_alloc)
+int RunParser(MYSQL* p_pSQL, CURL* p_pcoURL, const char* p_pchRemoteIP, sockstream& p_rOs)
+	throw(RunException, bad_alloc)
 {
-	if (p_pParams == NULL)
+	if (p_pcoURL == NULL)
 		throw RunException("Invalid params");
 	if (p_pSQL == NULL)
 		throw RunException("MYSQL connection not initialised");
@@ -77,90 +80,89 @@ int RunParser(MYSQL* p_pSQL, CGIParams* p_pParams, sockstream& p_rOs) throw(RunE
 	        UERR_NO_NAME, UERR_NO_EMAIL, UERR_NO_COUNTRY, UERR_NO_UNAME,
 	        UERR_NO_PASSWORD, UERR_NO_PASSWORD_AGAIN
 	    };
-	SafeAutoPtr<CGI> pcoCgi(new CGI(p_pParams->m_pchRequestMethod, p_pParams->m_pchQueryString));
 	SafeAutoPtr<CContext> pcoCtx(new CContext);
-	const char* pchStr;
+	string coStr;
 	bool bDebug = false, bPreview = false, bTechDebug = false;
 	char pchBuf[300];
-	pcoCtx->SetIP(htonl(inet_addr(p_pParams->m_pchIP)));
-	if ((pchStr = pcoCgi->GetFirst(P_IDLANG)) != NULL)
+	pcoCtx->SetIP(htonl(inet_addr(p_pchRemoteIP)));
+	if ((coStr = p_pcoURL->getValue(P_IDLANG)) != "")
 	{
-		pcoCtx->SetLanguage(atol(pchStr));
-		pcoCtx->SetDefLanguage(atol(pchStr));
+		pcoCtx->SetLanguage(atol(coStr.c_str()));
+		pcoCtx->SetDefLanguage(atol(coStr.c_str()));
 	}
-	if ((pchStr = pcoCgi->GetFirst(P_IDPUBL)) != NULL)
+	if ((coStr = p_pcoURL->getValue(P_IDPUBL)) != "")
 	{
-		pcoCtx->SetPublication(atol(pchStr));
-		pcoCtx->SetDefPublication(atol(pchStr));
+		pcoCtx->SetPublication(atol(coStr.c_str()));
+		pcoCtx->SetDefPublication(atol(coStr.c_str()));
 	}
-	if ((pchStr = pcoCgi->GetFirst(P_NRISSUE)) != NULL)
+	if ((coStr = p_pcoURL->getValue(P_NRISSUE)) != "")
 	{
-		pcoCtx->SetIssue(atol(pchStr));
-		pcoCtx->SetDefIssue(atol(pchStr));
+		pcoCtx->SetIssue(atol(coStr.c_str()));
+		pcoCtx->SetDefIssue(atol(coStr.c_str()));
 	}
-	if ((pchStr = pcoCgi->GetFirst(P_NRSECTION)) != NULL)
+	if ((coStr = p_pcoURL->getValue(P_NRSECTION)) != "")
 	{
-		pcoCtx->SetSection(atol(pchStr));
-		pcoCtx->SetDefSection(atol(pchStr));
+		pcoCtx->SetSection(atol(coStr.c_str()));
+		pcoCtx->SetDefSection(atol(coStr.c_str()));
 	}
-	if ((pchStr = pcoCgi->GetFirst(P_NRARTICLE)) != NULL)
+	if ((coStr = p_pcoURL->getValue(P_NRARTICLE)) != "")
 	{
-		pcoCtx->SetArticle(atol(pchStr));
-		pcoCtx->SetDefArticle(atol(pchStr));
+		pcoCtx->SetArticle(atol(coStr.c_str()));
+		pcoCtx->SetDefArticle(atol(coStr.c_str()));
 	}
-	if ((pchStr = pcoCgi->GetFirst(P_TOPIC_ID)) != NULL)
+	if ((coStr = p_pcoURL->getValue(P_TOPIC_ID)) != "")
 	{
-		pcoCtx->SetTopic(atol(pchStr));
-		pcoCtx->SetDefTopic(atol(pchStr));
+		pcoCtx->SetTopic(atol(coStr.c_str()));
+		pcoCtx->SetDefTopic(atol(coStr.c_str()));
 	}
-	if ((pchStr = pcoCgi->GetFirst(P_ILSTART)) != NULL)
-		pcoCtx->SetIListStart(atol(pchStr));
-	if ((pchStr = pcoCgi->GetFirst(P_SLSTART)) != NULL)
-		pcoCtx->SetSListStart(atol(pchStr));
-	if ((pchStr = pcoCgi->GetFirst(P_ALSTART)) != NULL)
-		pcoCtx->SetAListStart(atol(pchStr));
-	if ((pchStr = pcoCgi->GetFirst(P_SRLSTART)) != NULL)
-		pcoCtx->SetSrListStart(atol(pchStr));
-	if ((pchStr = pcoCgi->GetFirst("ST_max")) != NULL)
+	if ((coStr = p_pcoURL->getValue(P_ILSTART)) != "")
+		pcoCtx->SetIListStart(atol(coStr.c_str()));
+	if ((coStr = p_pcoURL->getValue(P_SLSTART)) != "")
+		pcoCtx->SetSListStart(atol(coStr.c_str()));
+	if ((coStr = p_pcoURL->getValue(P_ALSTART)) != "")
+		pcoCtx->SetAListStart(atol(coStr.c_str()));
+	if ((coStr = p_pcoURL->getValue(P_SRLSTART)) != "")
+		pcoCtx->SetSrListStart(atol(coStr.c_str()));
+	if ((coStr = p_pcoURL->getValue("ST_max")) != "")
 	{
-		int st_max = atol(pchStr);
+		int st_max = atol(coStr.c_str());
 		for (int i = 1; i <= st_max; i++)
 		{
 			string coField, coArtType;
 			sprintf(pchBuf, "ST%d", i);
-			if ((pchStr = pcoCgi->GetFirst(pchBuf)))
-				coField = pchStr;
+			if ((coStr = p_pcoURL->getValue(pchBuf)) != "")
+				coField = coStr;
 			sprintf(pchBuf, "ST_T%d", i);
-			if ((pchStr = pcoCgi->GetFirst(pchBuf)))
-				coArtType = pchStr;
+			if ((coStr = p_pcoURL->getValue(pchBuf)) != "")
+				coArtType = coStr;
 			if (coField == "" || coArtType == "")
 				continue;
 			pcoCtx->SetField(coField, coArtType);
 			sprintf(pchBuf, "ST_LS%d", i);
-			if ((pchStr = pcoCgi->GetFirst(pchBuf)))
-				pcoCtx->SetStListStart(atol(pchStr), coField);
+			if ((coStr = p_pcoURL->getValue(pchBuf)) != "")
+				pcoCtx->SetStListStart(atol(coStr.c_str()), coField);
 			sprintf(pchBuf, "ST_PS%d", i);
-			if ((pchStr = pcoCgi->GetFirst(pchBuf)))
+			if ((coStr = p_pcoURL->getValue(pchBuf)) != "")
 			{
-				pcoCtx->SetStartSubtitle(atol(pchStr), coField);
-				pcoCtx->SetDefaultStartSubtitle(atol(pchStr), coField);
+				pcoCtx->SetStartSubtitle(atol(coStr.c_str()), coField);
+				pcoCtx->SetDefaultStartSubtitle(atol(coStr.c_str()), coField);
 			}
 			sprintf(pchBuf, "ST_AS%d", i);
-			if ((pchStr = pcoCgi->GetFirst(pchBuf)))
-				pcoCtx->SetAllSubtitles(atol(pchStr), coField);
+			if ((coStr = p_pcoURL->getValue(pchBuf)) != "")
+				pcoCtx->SetAllSubtitles(atol(coStr.c_str()), coField);
 		}
 	}
-	CheckUserInfo(*pcoCgi, *pcoCtx, ppchParams, PARAM_NR);
+	CheckUserInfo(p_pcoURL, *pcoCtx, ppchParams, PARAM_NR);
 	bool bAccessAll = false;
 	pcoCtx->SetReader(true);
-	if ((pchStr = pcoCgi->GetFirst(P_SEARCH)))
+	if ((coStr = p_pcoURL->getValue(P_SEARCH)) != "")
 	{
-		int nRes = Search(*pcoCtx, p_pSQL, *pcoCgi);
+		int nRes = Search(*pcoCtx, p_pSQL, p_pcoURL);
 		if (nRes < SRERR_INTERNAL && nRes != 0)
 			nRes = SRERR_INTERNAL;
 		pcoCtx->SetSearchRes(nRes);
 	}
-	if ((pchStr = pcoCgi->GetFirst(P_USERADD)))
+	if ((coStr = p_pcoURL->getValue(P_USERADD)) != "")
 	{
 		int nRes = AddUser((*pcoCtx), p_pSQL, ppchParams, PARAM_NR, errs, ERR_NR);
 		if (nRes < UERR_INTERNAL && nRes != 0)
@@ -172,16 +174,16 @@ int RunParser(MYSQL* p_pSQL, CGIParams* p_pParams, sockstream& p_rOs) throw(RunE
 			<< "<META HTTP-EQUIV=\"Set-Cookie\" CONTENT=\"TOL_UserKey="
 			<< pcoCtx->Key() << "; path=/\">\n";
 	}
-	else if ((pchStr = pcoCgi->GetFirst(P_LOGIN)))
+	else if ((coStr = p_pcoURL->getValue(P_LOGIN)) != "")
 	{
-		int nRes = Login((*pcoCgi), (*pcoCtx), p_pSQL);
+		int nRes = Login(p_pcoURL, (*pcoCtx), p_pSQL);
 		if (nRes < LERR_INTERNAL && nRes != 0)
 			nRes = LERR_INTERNAL;
 		pcoCtx->SetLoginRes(nRes);
 		if (nRes == 0)
 		{
 			string coExpires = "";
-			if ((pchStr = pcoCgi->GetFirst(P_REMEMBER_USER)))
+			if ((coStr = p_pcoURL->getValue(P_REMEMBER_USER)) != "")
 			{
 				coExpires = "; expires=Tuesday, 31-Dec-2069 00:00:00 GMT";
 			}
@@ -191,51 +193,36 @@ int RunParser(MYSQL* p_pSQL, CGIParams* p_pParams, sockstream& p_rOs) throw(RunE
 			<< pcoCtx->Key() << "; path=/" << coExpires << "\">\n";
 		}
 	}
-	else if ((pchStr = p_pParams->m_pchHttpCookie) != 0 && *pchStr != 0)
+	else if (p_pcoURL->getCookies().size() > 0)
 	{
-		while (1)
-		{
-			char* pchWord;
-			char* pchValue;
-			while (*pchStr <= ' ' && *pchStr != 0) pchStr++;
-			getword(&pchWord, &pchStr, '=');
-			if (pchWord[0] == 0)
-			{
-				free(pchWord);
-				break;
-			}
-			getword(&pchValue, &pchStr, ';');
-			if (strcmp(pchWord, "TOL_UserId") == 0)
-				pcoCtx->SetUser(atol(pchValue));
-			else if (strcmp(pchWord, "TOL_UserKey") == 0)
-				pcoCtx->SetKey(strtoul(pchValue, 0, 10));
-			else if (strcmp(pchWord, "TOL_Access") == 0)
-				bAccessAll = strcmp(pchValue, "all") == 0;
-			else if (strcmp(pchWord, "TOL_Preview") == 0)
-				bPreview = strcmp(pchValue, "on") == 0;
-			else if (strcmp(pchWord, "TOL_Debug") == 0)
-				bTechDebug = strcmp(pchValue, "on") == 0;
-			free(pchValue);
-			free(pchWord);
-		}
+		if ((coStr = p_pcoURL->getCookie("TOL_UserId")) != "")
+			pcoCtx->SetUser(atol(coStr.c_str()));
+		if ((coStr = p_pcoURL->getCookie("TOL_UserKey")) != "")
+			pcoCtx->SetKey(strtoul(coStr.c_str(), 0, 10));
+		if ((coStr = p_pcoURL->getCookie("TOL_Access")) != "")
+			bAccessAll = coStr == "all";
+		if ((coStr = p_pcoURL->getCookie("TOL_Preview")) != "")
+			bPreview = coStr == "on";
+		if ((coStr = p_pcoURL->getCookie("TOL_Debug")) != "")
+			bTechDebug = coStr == "on";
 	}
-	if ((pchStr = pcoCgi->GetFirst(P_USERMODIFY)))
+	if ((coStr = p_pcoURL->getValue(P_USERMODIFY)) != "")
 	{
 		int nRes = ModifyUser((*pcoCtx), p_pSQL, ppchParams, PARAM_NR, errs, ERR_NR);
 		if (nRes < UERR_INTERNAL && nRes != 0)
 			nRes = UERR_INTERNAL;
 		pcoCtx->SetModifyUserRes(nRes);
 	}
-	if ((pchStr = pcoCgi->GetFirst(P_SUBSTYPE)))
+	if ((coStr = p_pcoURL->getValue(P_SUBSTYPE)) != "")
 	{
-		if (strcasecmp(pchStr, "paid") == 0)
+		if (strcasecmp(coStr.c_str(), "paid") == 0)
 			pcoCtx->SetSubsType(ST_PAID);
-		if (strcasecmp(pchStr, "trial") == 0)
+		if (strcasecmp(coStr.c_str(), "trial") == 0)
 			pcoCtx->SetSubsType(ST_TRIAL);
 	}
-	if ((pchStr = pcoCgi->GetFirst(P_SUBSCRIBE)))
+	if ((coStr = p_pcoURL->getValue(P_SUBSCRIBE)) != "")
 	{
-		int nRes = DoSubscribe((*pcoCgi), (*pcoCtx), p_pSQL);
+		int nRes = DoSubscribe(p_pcoURL, (*pcoCtx), p_pSQL);
 		if (nRes < SERR_INTERNAL && nRes != 0)
 			nRes = SERR_INTERNAL;
 		pcoCtx->SetSubsRes(nRes);
@@ -303,8 +290,8 @@ int RunParser(MYSQL* p_pSQL, CGIParams* p_pParams, sockstream& p_rOs) throw(RunE
 	try
 	{
 		CParser::setMYSQL(p_pSQL);
-		CParser* p = CParser::parserOf(p_pParams->m_pchPathTranslated,
-			                           p_pParams->m_pchDocumentRoot);
+		CParser* p = CParser::parserOf(p_pcoURL->getPathTranslated().c_str(),
+			                           p_pcoURL->getDocumentRoot().c_str());
 		p->setDebug(bTechDebug);
 // no need to write the charset anymore: tpl_cgi will print it
 //		WriteCharset((*pcoCtx), p_pSQL, p_rOs);
@@ -365,18 +352,18 @@ int WriteCharset(CContext& c, MYSQL* pSql, sockstream& fs)
 
 // Login: perform login action: log user in
 // Parameters:
-//		CGI& cgi - cgi environment
+//		const CURL& url - url object
 //		CContext& c - current context
 //		MYSQL* pSql - pointer to MySQL connection
-int Login(CGI& cgi, CContext& c, MYSQL* pSql)
+int Login(const CURL* url, CContext& c, MYSQL* pSql)
 {
 	c.SetLogin(true);
-	const char* s;
+	string s;
 	string uname, password, q;
-	if ((s = cgi.GetFirst("LoginUName")) == 0 || s[0] == 0)
+	if ((s = url->getValue("LoginUName")) == "")
 		return LERR_NO_UNAME;
 	uname = s;
-	if ((s = cgi.GetFirst("LoginPassword")) == 0 || s[0] == 0)
+	if ((s = url->getValue("LoginPassword")) == "")
 		return LERR_NO_PASSWORD;
 	password = s;
 	q = "select Password, password(\"" + password + "\") from Users where UName "
@@ -407,11 +394,11 @@ int Login(CGI& cgi, CContext& c, MYSQL* pSql)
 
 // CheckUserInfo: read user informations from CGI parameters
 // Parameters:
-//		CGI& cgi - cgi environment
+//		const CURL* url - url object
 //		CContext& c - current context
 //		const char* ppchParams[] - parameters to read
 //		int param_nr - parameters number
-int CheckUserInfo(CGI& cgi, CContext& c, const char* ppchParams[], int param_nr)
+int CheckUserInfo(const CURL* url, CContext& c, const char* ppchParams[], int param_nr)
 {
 	string field_pref = "User";
 	int found = 0;
@@ -420,15 +407,15 @@ int CheckUserInfo(CGI& cgi, CContext& c, const char* ppchParams[], int param_nr)
 	{
 		stringstream coPref;
 		coPref << "HasPref" << k;
-		const char* p = cgi.GetFirst(coPref.str().c_str());
-		if (p != NULL)
+		string s = url->getValue(coPref.str());
+		if (s != "")
 			coPrefs.insert(coPref.str().substr(3));
 	}
 	for (int i = 0; i < param_nr; i++)
 	{
 		string fld = field_pref + ppchParams[i];
-		const char* s = cgi.GetFirst(fld.c_str());
-		if (s == 0)
+		string s = url->getValue(fld);
+		if (s == "")
 			continue;
 		c.SetUserInfo(string(ppchParams[i]), string(s));
 		if (strncasecmp(ppchParams[i], "Pref", 4) == 0)
@@ -570,10 +557,10 @@ int ModifyUser(CContext& c, MYSQL* pSql, const char* ppchParams[], int param_nr,
 
 // DoSubscribe: perform subscribe action (subscribe user to a certain publication)
 // Parameters:
-//		CGI& cgi - cgi environment
+//		const CURL* url - url object
 //		CContext& c - current context
 //		MYSQL* pSql - pointer to MySQL connection
-int DoSubscribe(CGI& cgi, CContext& c, MYSQL* pSql)
+int DoSubscribe(const CURL* url, CContext& c, MYSQL* pSql)
 {
 	if (c.SubsType() == ST_NONE)
 		return SERR_TYPE_NOT_SPECIFIED;
@@ -585,7 +572,7 @@ int DoSubscribe(CGI& cgi, CContext& c, MYSQL* pSql)
 		return SERR_USER_NOT_READER;
 	if (c.Publication() < 0)
 		return SERR_PUBL_NOT_SPECIFIED;
-	const char* s;
+	string s;
 	sprintf(pchBuf, "select TimeUnit, PayTime, UnitCost, Currency from Publications where "
 	        "Id = %ld", c.Publication());
 	SQLQuery(pSql, pchBuf);
@@ -643,7 +630,7 @@ int DoSubscribe(CGI& cgi, CContext& c, MYSQL* pSql)
 	}
 	bool by_publication = false;
 	double to_pay = 0;
-	if ((s = cgi.GetFirst("by")) != 0 && strcasecmp(s, "publication") == 0)
+	if ((s = url->getValue("by")) != "" && strcasecmp(s.c_str(), "publication") == 0)
 	{
 		by_publication = true;
 		sprintf(pchBuf, "select Number from Issues where IdPublication = %ld and "
@@ -689,17 +676,17 @@ int DoSubscribe(CGI& cgi, CContext& c, MYSQL* pSql)
 			to_pay += unit_cost * time_units;
 		}
 	}
-	if ((s = cgi.GetFirst(P_CB_SUBS)) && !by_publication)
-		while (s)
+	if ((s = url->getValue(P_CB_SUBS)) != "" && !by_publication)
+		while (s != "")
 		{
-			long int section = atol(s);
-			sprintf(pchBuf, "%s%s", P_TX_SUBS, s);
-			if ((s = cgi.GetFirst(pchBuf)) == 0)
+			long int section = atol(s.c_str());
+			sprintf(pchBuf, "%s%s", P_TX_SUBS, s.c_str());
+			if ((s = url->getValue(pchBuf)) == "")
 			{
-				s = cgi.GetNext(P_CB_SUBS);
+				s = url->getValue(P_CB_SUBS);
 				continue;
 			}
-			long int time_units = atol(s);
+			long int time_units = atol(s.c_str());
 			sprintf(pchBuf, "select TO_DAYS(ADDDATE(now(), INTERVAL %ld %s)) - TO_DAYS(now())",
 			        time_units, modifier);
 			SQLQuery(pSql, pchBuf);
@@ -734,7 +721,7 @@ int DoSubscribe(CGI& cgi, CContext& c, MYSQL* pSql)
 				        "StartDate, Days, PaidDays) values(%ld, %ld, now(), %ld, %ld)",
 				        id_subscription, section, req_days, paid_time);
 			SQLQuery(pSql, pchBuf);
-			s = cgi.GetNext(P_CB_SUBS);
+			s = url->getValue(P_CB_SUBS);
 		}
 	if (c.SubsType() != ST_TRIAL)
 	{
@@ -743,24 +730,6 @@ int DoSubscribe(CGI& cgi, CContext& c, MYSQL* pSql)
 		SQLQuery(pSql, pchBuf);
 	}
 	return 0;
-}
-
-// getword: read the next word from string of characters
-// Parameters:
-//		char** word - resulted word (dinamically allocated); must be deallocated with
-// free(*word)
-//		const char** line - pointer to string of characters; incremented after reading word
-//		char stop - stop character (word separator)
-void getword(char** word, const char** line, char stop)
-{
-	int x;
-	for (x = 0; ((*line && (*line)[x]) && ((*line)[x] != stop)); x++);
-	*word = (char*)malloc(x + 1);
-	if (*line)
-		strncpy(*word, *line, x);
-	(*word)[x] = 0;
-	if ((*line)[x]) (*line) ++;
-	*line += x;
 }
 
 // SetReaderAccess: update current context: set reader access to publication sections
@@ -810,20 +779,20 @@ void SetReaderAccess(CContext& c, MYSQL* pSql)
 // Parameters:
 //		CContext& c - current context
 //		MYSQL* pSql - pointer to MySQL connection
-//		CGI& cgi - cgi environment
-int Search(CContext& c, MYSQL* pSql, CGI& cgi)
+//		const CURL* p_pcoURL - pointer to the URL object
+int Search(CContext& c, MYSQL* pSql, const CURL* p_pcoURL)
 {
 	c.SetSearch(true);
-	const char* s;
-	if ((s = cgi.GetFirst("SearchKeywords")) == 0)
+	string s;
+	if ((s = p_pcoURL->getValue("SearchKeywords")) == "")
 		return SRERR_NO_KEYWORDS;
-	ParseKeywords(s, c);
-	c.SetStrKeywords(s);
-	if ((s = cgi.GetFirst("SearchMode")) && strcasecmp(s, "on") == 0)
+	ParseKeywords(s.c_str(), c);
+	c.SetStrKeywords(s.c_str());
+	if ((s = p_pcoURL->getValue("SearchMode")) != "" && strcasecmp(s.c_str(), "on") == 0)
 		c.SetSearchAnd(true);
 	int level = 0;
-	if ((s = cgi.GetFirst("SearchLevel")))
-		level = atol(s);
+	if ((s = p_pcoURL->getValue("SearchLevel")) != "")
+		level = atol(s.c_str());
 	if (level < 0 || level > 2)
 		return SRERR_INVALID_LEVEL;
 	c.SetSearchLevel(level);

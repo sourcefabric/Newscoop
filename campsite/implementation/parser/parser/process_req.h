@@ -36,7 +36,6 @@ Functions for processing client requests
 
 #include "globals.h"
 #include "context.h"
-#include "cgi.h"
 #include "cms_types.h"
 
 using std::bad_alloc;
@@ -98,9 +97,11 @@ public:
 // Return RES_OK if no errors occured, error code otherwise
 // Parameters:
 //		MYSQL* p_pSql - pointer to MySQL connection
-//		CGIParams* p_pParams - pointer to cgi environment structure
+//		CURL* p_pcoURL - pointer to the URL object
+//		const char* p_pchRemoteIP - pointer to string containing the client IP address
 //		sockstream& p_rOs - output stream
-int RunParser(MYSQL* p_pSQL, CGIParams* p_pParams, sockstream& p_rOs) throw(RunException, bad_alloc);
+int RunParser(MYSQL* p_pSQL, CURL* p_pcoURL, const char* p_pchRemoteIP, sockstream& p_rOs)
+	throw(RunException, bad_alloc);
 
 // WriteCharset: write http tag specifying the charset - according to current language
 // Parameters:
@@ -111,18 +112,18 @@ int WriteCharset(CContext& c, MYSQL* pSql, sockstream& fs);
 
 // Login: perform login action: log user in
 // Parameters:
-//		CGI& cgi - cgi environment
+//		const CURL* p_pcoURL - pointer to the URL object
 //		CContext& c - current context
 //		MYSQL* pSql - pointer to MySQL connection
-int Login(CGI& cgi, CContext& c, MYSQL* pSql);
+int Login(const CURL* p_pcoURL, CContext& c, MYSQL* pSql);
 
 // CheckUserInfo: read user informations from CGI parameters
 // Parameters:
-//		CGI& cgi - cgi environment
+//		const CURL* p_pcoURL - pointer to the URL object
 //		CContext& c - current context
 //		const char* ppchParams[] - parameters to read from cgi environment
 //		int param_nr - parameters number
-int CheckUserInfo(CGI& cgi, CContext& c, const char* ppchParams[], int param_nr);
+int CheckUserInfo(const CURL* p_pcoURL, CContext& c, const char* ppchParams[], int param_nr);
 
 // AddUser: perform add user action (add user to database); return error code
 // Parameters:
@@ -149,18 +150,10 @@ int ModifyUser(CContext& c, MYSQL* pSql, const char* ppchParams[], int param_nr,
 
 // DoSubscribe: perform subscribe action (subscribe user to a certain publication)
 // Parameters:
-//		CGI& cgi - cgi environment
+//		const CURL* p_pcoURL - pointer to the URL object
 //		CContext& c - current context
 //		MYSQL* pSql - pointer to MySQL connection
-int DoSubscribe(CGI& cgi, CContext& c, MYSQL* pSql);
-
-// getword: read the next word from string of characters
-// Parameters:
-//		char** word - resulted word (dinamically allocated); must be deallocated with
-// free(*word)
-//		const char** line - pointer to string of characters; incremented after reading word
-//		char stop - stop character (word separator)
-void getword(char** word, const char** line, char stop);
+int DoSubscribe(const CURL* p_pcoURL, CContext& c, MYSQL* pSql);
 
 // SetReaderAccess: update current context: set reader access to publication sections
 // according to user subscriptions.
@@ -174,8 +167,8 @@ void SetReaderAccess(CContext& c, MYSQL* pSql);
 // Parameters:
 //		CContext& c - current context
 //		MYSQL* pSql - pointer to MySQL connection
-//		CGI& cgi - cgi environment
-int Search(CContext& c, MYSQL* pSql, CGI& cgi);
+//		const CURL* p_pcoURL - pointer to the URL object
+int Search(CContext& c, MYSQL* pSql, const CURL* p_pcoURL);
 
 // ParseKeywords: read keywords from a string of keywords and add them to current context
 // Parameters:
