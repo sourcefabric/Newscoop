@@ -1,8 +1,6 @@
-<?php 
-## added by sebastian ##############################
-foreach (array_merge ($_POST, $_GET) as $key=>$val)
+<?php
+foreach ($_REQUEST as $key=>$val)
   $GLOBALS[$key] = $val;
-####################################################
 
 function regGS($key,$value){
     global $lang,$base,$trans;
