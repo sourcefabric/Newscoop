@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 cdirs=`find . -maxdepth 1 -type d -print | cut -f 2 -d "/"`
 for dir in $cdirs; do
