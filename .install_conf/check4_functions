@@ -612,10 +612,7 @@ apache_bin_path="$bin_path"
 if [ "$apache_conf_path" != "" ]; then
     conf_paths=$apache_conf_path
 else
-    case "$apache_bin_path" in
-    /usr/sbin | /sbin) conf_paths="/etc/${apache_bin_name}/conf /etc/${apache_bin_name}" ;;
-    *) conf_paths=`cut_last_dirs "${apache_bin_path}"`/conf ;;
-    esac
+    conf_paths="/etc/${apache_bin_name}/conf /etc/${apache_bin_name} "`cut_last_dirs "${apache_bin_path}"`/conf
 fi
 cf_path=""
 cf_paths=""
