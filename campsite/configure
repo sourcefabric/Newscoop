@@ -106,10 +106,22 @@ else
     modules_conf --set $mod || exit 1
 fi
 
-rm -f make.env
+echo -n "Writing create_instance script..."
+create_instance_script=${INSTALL_CONF}/create_instance
+rm -f "$create_instance_script"
+cat > "$create_instance_script" << EOF
+#!/bin/sh
+
+php "$BIN_DIR/create_instance.php" --etc_dir "$ETC_DIR" $*
+EOF
+[ $? -ne 0 ] && echo "ERROR" && exit 1
+chmod +x "$create_instance_script"
+echo "done"
+
 echo -n "Writing make.env file..."
 make_env=${CAMPSITE_PACKAGE_DIR}/make.env
-cat > $make_env << EOF
+rm -f "$make_env"
+cat > "$make_env" << EOF
 export ROOT_USER=$ROOT_USER
 export ROOT_GROUP=$ROOT_GROUP
 export APACHE_USER=$APACHE_USER
