@@ -1,11 +1,11 @@
 <?php  
-require_once($_SERVER['DOCUMENT_ROOT'].'/priv/pub/issues/sections/articles/article_common.php');
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/pub/issues/sections/articles/article_common.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Topic.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DbObjectArray.php');
 
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
-	header("Location: /priv/logout.php");
+	header("Location: /$ADMIN/logout.php");
 	exit;
 }
 
@@ -24,31 +24,31 @@ $TopicsPerPage = Input::get('lpp', 'int', 10, true);
 $searchTopicsString = trim(Input::get('search_topics_string', 'string', '', true));
 
 if (!Input::isValid()) {
-	header("Location: /priv/logout.php");
+	header("Location: /$ADMIN/logout.php");
 	exit;	
 }
 
 $publicationObj =& new Publication($Pub);
 if (!$publicationObj->exists()) {
-	header("Location: /priv/logout.php");
+	header("Location: /$ADMIN/logout.php");
 	exit;	
 }
 
 $issueObj =& new Issue($Pub, $Language, $Issue);
 if (!$issueObj->exists()) {
-	header("Location: /priv/logout.php");
+	header("Location: /$ADMIN/logout.php");
 	exit;	
 }
 
 $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
 if (!$sectionObj->exists()) {
-	header("Location: /priv/logout.php");
+	header("Location: /$ADMIN/logout.php");
 	exit;		
 }
 
 $articleObj =& new Article($Pub, $Issue, $Section, $Language, $Article);
 if (!$articleObj->exists()) {
-	header("Location: /priv/logout.php");
+	header("Location: /$ADMIN/logout.php");
 	exit;		
 }
 
@@ -88,7 +88,7 @@ ArticleTop($articleObj, $Language, "Article topics");
 <p>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 <TR>
-	<TD><A HREF="../edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>" ><IMG SRC="/priv/img/tol.gif" BORDER="0"></A></TD>
+	<TD><A HREF="../edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0"></A></TD>
 	<TD><A HREF="../edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>" ><B><?php  putGS("Back to article details"); ?></B></A></TD>
 </TR>
 </TABLE>
@@ -120,7 +120,7 @@ if (count($articleTopics) > 0) {
 			</TD>
 			<?php  if ($User->hasPermission('ChangeArticle')) { ?>
 			<TD ALIGN="CENTER">
-				<A HREF="/priv/pub/issues/sections/articles/topics/do_del.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&DelTopic=<?php p($topic->getTopicId()); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&IdCateg=<?php p($TopicId); ?>"><IMG SRC="/priv/img/icon/x.gif" BORDER="0" ALT="<?php  putGS('Delete topic $1 from article', htmlspecialchars($topic->getName())); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the topic $1?', htmlspecialchars($topic->getName())); ?>');"></A>
+				<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/topics/do_del.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&DelTopic=<?php p($topic->getTopicId()); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&IdCateg=<?php p($TopicId); ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/x.gif" BORDER="0" ALT="<?php  putGS('Delete topic $1 from article', htmlspecialchars($topic->getName())); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the topic $1?', htmlspecialchars($topic->getName())); ?>');"></A>
 			</TD>
 			<?php  } ?>
 		</TR>
@@ -196,7 +196,7 @@ if (count($subtopics) > 0) {
 		<?php 
 		if (!in_array($subtopic->getTopicId(), $articleTopicsIds)) {
 		?>
-			<A HREF="/priv/pub/issues/sections/articles/topics/do_add.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&IdCateg=<?php p($TopicId);?>&AddTopic=<?php p($subtopic->getTopicId()); ?>"><IMG SRC="/priv/img/icon/add_topic_to_article.gif" BORDER="0" ALT="<?php  putGS('Add topic $1 to article', htmlspecialchars($subtopic->getName())); ?>"></A>
+			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/topics/do_add.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&IdCateg=<?php p($TopicId);?>&AddTopic=<?php p($subtopic->getTopicId()); ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/add_topic_to_article.gif" BORDER="0" ALT="<?php  putGS('Add topic $1 to article', htmlspecialchars($subtopic->getName())); ?>"></A>
 		<?php 
 		} else {
 		    echo "&nbsp;";
