@@ -2177,6 +2177,8 @@ int CActIf::takeAction(CContext& c, sockstream& fs)
 	StoreResult(&m_coSql, res);
 	CheckForRows(*res, 1);
 	FetchRow(*res, row);
+	if (row[0] == NULL)
+		return ERR_NODATA;
 	if (modifier == CMS_ST_ARTICLE && param.attrType() != "" && !m_bStrictType)
 	{
 		field = param.attribute();
