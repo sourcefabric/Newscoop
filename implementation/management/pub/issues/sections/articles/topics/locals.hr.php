@@ -1,4 +1,5 @@
 <?php 
+
 regGS("Add","Dodaj");
 regGS("Delete topic $1 from article","Izbriši temu $1 iz članka");
 regGS("Article topics","Teme članka");
@@ -7,16 +8,9 @@ regGS("No article topics.","Članak nema temu");
 regGS("No topics.","Nema tema");
 regGS("Topic name","Ime teme");
 regGS("Add topic $1 to article","Dodaj temu $1 članku");
-regGS("Delete article topic","Izbriši temu članka");
-regGS("You do not have the right to delete article topics","Nemate pravo brisati teme članka");
 regGS("Are you sure you want to delete the topic $1?","Sigurno želite izbrisati temu $1?");
-regGS("Deleting article topic","Brisanje teme članka");
-regGS("The topic $1 has been successfully deleted.","Tema $1 je uspješno izbrisana");
 regGS("Article topic $1 deleted","Tema $1 članka je izbrisana");
-regGS("Adding new topic to article","Dodavanje nove teme članku");
-regGS("The topic $1 has been successfully added.","Tema $1 je uspješno dodana");
-regGS("You do not have the right to add topics to article","Nemate pravo dodavati teme člancima");
-regGS("Adding new topic...","Dodavanje nove teme");
 regGS("Topic $1 added to article","Tema $1 je dodana članku");
+
 
 ?>
