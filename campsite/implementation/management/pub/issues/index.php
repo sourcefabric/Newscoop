@@ -66,8 +66,7 @@ if ($access) {
 		<TD ALIGN=RIGHT>
 			<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
 			<TR>
-				<TD><A HREF="/<?php echo $ADMIN; ?>/pub/" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Publications"); ?>"></A></TD>
-				<TD><A HREF="/<?php echo $ADMIN; ?>/pub/" ><B><?php  putGS("Publications");  ?></B></A></TD>
+				<TD><A HREF="/<?php echo $ADMIN; ?>/pub/" class="breadcrumb"><?php  putGS("Publications");  ?></A></TD>
 			</TR>
 			</TABLE>
 		</TD>
