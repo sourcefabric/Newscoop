@@ -3,6 +3,8 @@ LDFLAGS=-L$(LIBMYSQLCLIENT_PATH)
 
 CFLAGS=-Wall
 
+INCLUDE_PATH=-I$(MYSQL_H_PATH)
+
 all: mysql_connect
 
 mysql_connect: mysql_connect.o
@@ -13,12 +15,12 @@ clean:
 	if [ "$(PACKAGE_TYPE)" = "source" ]; then rm -f mysql_connect; fi
 
 mysql_connect.o: mysql_connect.cpp
-	g++ -c -o mysql_connect.o $(CFLAGS) mysql_connect.cpp
+	g++ -c -o mysql_connect.o $(CFLAGS) $(INCLUDE_PATH) mysql_connect.cpp
 
 install: $(ALL)
 	mkdir -p $(BIN_DIR)
 	cp -f mysql_connect $(BIN_DIR)
-	chown $(ROOT_USER).$(HTTP_GROUP) $(BIN_DIR)/mysql_connect
+	chown $(ROOT_USER):$(HTTP_GROUP) $(BIN_DIR)/mysql_connect
 	chmod 755 $(BIN_DIR)/mysql_connect
 
 uninstall: dummy
