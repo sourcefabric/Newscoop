@@ -586,11 +586,12 @@ while [ "$1" != "" ]; do
     esac
     shift 1
 done
-[ "$bin_paths" = "" ] && bin_paths="/sbin /usr/sbin /usr/local/apache/bin /home/apache/bin /opt/apache/bin"
+[ "$bin_paths" = "" ] && bin_paths="/sbin /usr/sbin /usr/local/apache/bin /home/apache/bin /home/httpd/bin /opt/apache/bin"
 bin_names="apache httpd"
 for bn in $bin_names; do
     bin_path=`which "$bn" 2> /dev/null`
-    [ "$bin_path" != "" ] && apache_bin_name="$bn" && break
+    [ $? -eq 0 ] && apache_bin_name="$bn" && break
+    bin_path=""
 done
 if [ "$bin_path" = "" ]; then
     for bp in $bin_paths; do
@@ -626,19 +627,21 @@ while [ "$bin_path" = "" ]; do
 done
 apache_bin_path="$bin_path"
 if [ "$apache_conf_path" != "" ]; then
-    conf_path=$apache_conf_path
+    conf_paths=$apache_conf_path
 else
     case "$apache_bin_path" in
-    /usr/sbin | /sbin) conf_path="/etc/${apache_bin_name}/conf" ;;
-    *) conf_path=`cut_last_dirs "${apache_bin_path}"`/conf ;;
+    /usr/sbin | /sbin) conf_paths="/etc/${apache_bin_name}/conf /etc/${apache_bin_name}" ;;
+    *) conf_paths=`cut_last_dirs "${apache_bin_path}"`/conf ;;
     esac
 fi
 cf_path=""
 for bn in $bin_names; do
-    if [ -f "${conf_path}/${bn}.conf" ]; then
-	cf_path="${conf_path}/${bn}.conf"
-	break
-    fi
+    for conf_path in $conf_paths; do
+	if [ -f "${conf_path}/${bn}.conf" ]; then
+	    cf_path="${conf_path}/${bn}.conf"
+	    break
+	fi
+    done
 done
 if [ "$cf_path" = "" ]; then
     if $interactive; then
