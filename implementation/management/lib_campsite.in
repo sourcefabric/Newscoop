@@ -1,11 +1,9 @@
-## added by sebastian ###########################
 $DOCUMENT_ROOT = $_SERVER[DOCUMENT_ROOT];
-$_PARMS = array_merge ($_GET, $_POST, $_COOKIE);
-#################################################
 
 function query($qs,$r='',$setvars=true)
 {
-// print "query: $qs<br>";
+
+//print "query: $qs<br>";
     $a=mysql_query($qs);
 //     print "query res: $a<br>";
     $fl=strtoupper(substr($qs,0,1));
@@ -62,22 +60,19 @@ function pencHTML($s)
 //    print htmlentities($s);
 }
 
-## changed by sebastian #################################
-function todef($s,$v='') {
-  global $_PARMS;
-
-  if (!isset($_PARMS[$s])) {
+function todef($s,$v='')
+{
+  if (!isset($_REQUEST[$s])) {
       $GLOBALS[$s] = $v;
   }
   else {
-    $GLOBALS[$s] = $_PARMS[$s];
+    $GLOBALS[$s] = $_REQUEST[$s];
   }
 
   if (!get_magic_quotes_gpc()) {
     $GLOBALS[$s] = mysql_escape_string($GLOBALS[$s]);
   }
 }
-#########################################################
 
 function encSQL($s)
 {
@@ -86,18 +81,15 @@ function encSQL($s)
     return $s;
 }
 
-## changed by sebastian #################################
-function todefnum($s,$v=0) {
-  global $_PARMS;
-
-  if (!isset($_PARMS[$s])) {
+function todefnum($s,$v=0)
+{
+  if (!isset($_REQUEST[$s])) {
       $GLOBALS[$s] = $v;
   }
   else {
-    $GLOBALS[$s] = $_PARMS[$s];
+    $GLOBALS[$s] = $_REQUEST[$s];
   }
 }
-#########################################################
 
 function fetchRow($q)
 {
@@ -229,13 +221,13 @@ function getGS($s)
 
 function regGS($key,$value)
 {
-    global $gs,$PHP_SELF,$TOL_Language;
+    global $gs;
     if (isset($gs[$key])) {
  if ($key!='')
-  print "The global string is already set in $PHP_SELF: $key<BR>";
+  print "The global string is already set in $_SERVER[PHP_SELF]: $key<BR>";
     }
     else{
- if (substr($value,strlen($value)-3)==":$TOL_Language"){
+ if (substr($value,strlen($value)-3)==":$_COOKIE[TOL_Language]"){
      $value=substr($value,0,strlen($value)-3);
  }
  $gs[$key]=$value;
@@ -262,11 +254,14 @@ function ifYthenCHECKED($q,$f)
 function selectLanguageFile($path, $name)
 {
     global $TOL_Language;
-    if (!isset($TOL_Language)){
- $TOL_Language='en';
+
+    if (!isset($_COOKIE[TOL_Language])){
+      $TOL_Language='en';
     }
-    $loclang=$TOL_Language;
-    return "$path/$name.$loclang.php";
+    else {
+      $TOL_Language=$_COOKIE[TOL_Language];
+    }
+    return "$path/$name.$TOL_Language.php";
 }
 
 function pLanguageCode()
@@ -615,9 +610,6 @@ function valid_field_name($name)
  return true;
 }
 
-## added by sebastian ###############################################################
 if (file_exists ($_SERVER[DOCUMENT_ROOT].'/priv/modules/admin/priv_functions.php'))
   include ($_SERVER[DOCUMENT_ROOT].'/priv/modules/admin/priv_functions.php');
-#####################################################################################
-
 ?>
