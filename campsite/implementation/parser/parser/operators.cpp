@@ -25,16 +25,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "operators.h"
 
-const string g_coEQUAL = "is";
-const string g_coNOT_EQUAL = "not";
-const string g_coGREATER = "greater";
-const string g_coGREATER_EQUAL = "greater_equal";
-const string g_coLESS = "smaller";
-const string g_coLESS_EQUAL = "smaller_equal";
+string* CCompOperator::m_pcoEqual;
+string* CCompOperator::m_pcoNotEqual;
+string* CCompOperator::m_pcoGreater;
+string* CCompOperator::m_pcoGreaterEqual;
+string* CCompOperator::m_pcoLess;
+string* CCompOperator::m_pcoLessEqual;
 
-const string g_coEQUAL_Symbol = "=";
-const string g_coNOT_EQUAL_Symbol = "!=";
-const string g_coGREATER_Symbol = ">";
-const string g_coGREATER_EQUAL_Symbol = ">=";
-const string g_coLESS_Symbol = "<";
-const string g_coLESS_EQUAL_Symbol = "<=";
+string* CCompOperator::m_pcoEqualSymbol;
+string* CCompOperator::m_pcoNotEqualSymbol;
+string* CCompOperator::m_pcoGreaterSymbol;
+string* CCompOperator::m_pcoGreaterEqualSymbol;
+string* CCompOperator::m_pcoLessSymbol;
+string* CCompOperator::m_pcoLessEqualSymbol;

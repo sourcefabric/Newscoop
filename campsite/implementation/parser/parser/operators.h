@@ -37,20 +37,6 @@ Defines
 
 #include "globals.h"
 
-extern const string g_coEQUAL;
-extern const string g_coNOT_EQUAL;
-extern const string g_coGREATER;
-extern const string g_coGREATER_EQUAL;
-extern const string g_coLESS;
-extern const string g_coLESS_EQUAL;
-
-extern const string g_coEQUAL_Symbol;
-extern const string g_coNOT_EQUAL_Symbol;
-extern const string g_coGREATER_Symbol;
-extern const string g_coGREATER_EQUAL_Symbol;
-extern const string g_coLESS_Symbol;
-extern const string g_coLESS_EQUAL_Symbol;
-
 // exception classes thrown by CompOperand template instantiations
 class InvalidOperator : public exception
 {
@@ -58,9 +44,84 @@ public:
 	virtual const char* what () const throw() { return "invalid operator"; }
 };
 
+#include <iostream>
+
+using std::cout;
+using std::endl;
+
+class CCompOperator
+{
+public:
+	static string equal_op() { initStrings(); return *m_pcoEqual; }
+	static string not_equal_op() { initStrings(); return *m_pcoNotEqual; }
+	static string greater_op() { initStrings(); return *m_pcoGreater; }
+	static string greater_equal_op() { initStrings(); return *m_pcoGreaterEqual; }
+	static string less_op() { initStrings(); return *m_pcoLess; }
+	static string less_equal_op() { initStrings(); return *m_pcoLessEqual; }
+
+	static string equal_op_symbol() { initStrings(); return *m_pcoEqualSymbol; }
+	static string not_equal_op_symbol() { initStrings(); return *m_pcoNotEqualSymbol; }
+	static string greater_op_symbol() { initStrings(); return *m_pcoGreaterSymbol; }
+	static string greater_equal_op_symbol() { initStrings(); return *m_pcoGreaterEqualSymbol; }
+	static string less_op_symbol() { initStrings(); return *m_pcoLessSymbol; }
+	static string less_equal_op_symbol() { initStrings(); return *m_pcoLessEqualSymbol; }
+
+private:
+	static void initStrings();
+
+	static string* m_pcoEqual;
+	static string* m_pcoNotEqual;
+	static string* m_pcoGreater;
+	static string* m_pcoGreaterEqual;
+	static string* m_pcoLess;
+	static string* m_pcoLessEqual;
+
+	static string* m_pcoEqualSymbol;
+	static string* m_pcoNotEqualSymbol;
+	static string* m_pcoGreaterSymbol;
+	static string* m_pcoGreaterEqualSymbol;
+	static string* m_pcoLessSymbol;
+	static string* m_pcoLessEqualSymbol;
+};
+
+inline void CCompOperator::initStrings()
+{
+	if (m_pcoEqual != NULL)
+		return;
+
+	m_pcoEqual = new string("is");
+	m_pcoNotEqual = new string("not");
+	m_pcoGreater = new string("greater");
+	m_pcoGreaterEqual = new string("greater_equal");
+	m_pcoLess = new string("smaller");
+	m_pcoLessEqual = new string("smaller_equal");
+
+	m_pcoEqualSymbol = new string("==");
+	m_pcoNotEqualSymbol = new string("!=");
+	m_pcoGreaterSymbol = new string(">");
+	m_pcoGreaterEqualSymbol = new string(">=");
+	m_pcoLessSymbol = new string("<");
+	m_pcoLessEqualSymbol = new string("<=");
+}
+
+#define g_coEQUAL CCompOperator::equal_op()
+#define g_coNOT_EQUAL CCompOperator::not_equal_op()
+#define g_coGREATER CCompOperator::greater_op()
+#define g_coGREATER_EQUAL CCompOperator::greater_equal_op()
+#define g_coLESS CCompOperator::less_op()
+#define g_coLESS_EQUAL CCompOperator::less_equal_op()
+
+#define g_coEQUAL_Symbol CCompOperator::equal_op_symbol()
+#define g_coNOT_EQUAL_Symbol CCompOperator::not_equal_op_symbol()
+#define g_coGREATER_Symbol CCompOperator::greater_op_symbol()
+#define g_coGREATER_EQUAL_Symbol CCompOperator::greater_equal_op_symbol()
+#define g_coLESS_Symbol CCompOperator::less_op_symbol()
+#define g_coLESS_EQUAL_Symbol CCompOperator::less_equal_op_symbol()
+
+
 // CompOperator
 // template defining the comparation operator
-template <class DT> class CompOperator
+template <class DT> class CompOperator : public CCompOperator
 {
 	typedef bool (DT::*Operator)(const DT&) const;
 
