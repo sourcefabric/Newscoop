@@ -56,7 +56,7 @@ clean:
 	$(MAKE) -C implementation clean
 	$(MAKE) -C supplemental clean
 	rm -f install_log uninstall_log
-	rm -fr .package
+	rm -fr .package .old_version
 
 distclean: clean
 	rm -f make.env
