@@ -21,7 +21,11 @@ hr {
 }
 
 .button {
-	font-family: Tahoma, Arial, Helvetica, sans-serif; 
+	/*font-family: Arial, Helvetica, sans-serif; */
+	/*font-family: Courier New, Courier, mono; */
+	font-family: Verdana, Arial, Helvetica, sans-serif; 
+	/*font-family: Geneva, Arial, Helvetica, sans-serif; */
+	/*font-family: Times New Roman, Times, serif; */
 	font-size: 10pt;
 	/*border: 1px solid #00008b; */
 	border: 1px solid #ffffff; 
@@ -40,7 +44,18 @@ hr {
 
 .input_radio { }
 
+.input_select {
+	border: 1px solid #00008b; 
+}
+
 .input_file {
 	border: 1px solid #00008b; 
 	background-color: #f0f0ff; 
+}
+
+/** 
+ * This is for fValidate to color input boxes that failed validation.
+ */
+.errHilite {
+	background-color: #FFD4E4;
 }
