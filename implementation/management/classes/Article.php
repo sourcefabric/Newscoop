@@ -2,6 +2,9 @@
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/config.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DatabaseObject.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleType.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleImage.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleTopic.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleIndex.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
 
 class Article extends DatabaseObject {
@@ -60,8 +63,11 @@ class Article extends DatabaseObject {
 		'IsIndexed',
 		'LockUser',
 		'LockTime',
-		'ShortName');
+		'ShortName',
+		'ArticleOrder');
 		
+	var $m_languageName = null;
+	
 	/**
 	 * Construct by passing in the primary key to access the article in 
 	 * the database.
@@ -98,13 +104,12 @@ class Article extends DatabaseObject {
 	 * Create an article in the database.  Use the SET functions to
 	 * change individual values.
 	 *
-	 * @param string p_name
-	 * @param string p_shortName
 	 * @param string p_articleType
+	 * @param string p_name
 	 *
 	 * @return void
 	 */
-	function create($p_name, $p_shortName, $p_articleType) {
+	function create($p_articleType, $p_name = null) {
 		global $Campsite;
 		// Create the article ID.
 		$queryStr = 'UPDATE AutoId SET ArticleId=LAST_INSERT_ID(ArticleId + 1)';
@@ -114,30 +119,22 @@ class Article extends DatabaseObject {
 			return;
 		}
 		$this->m_data['Number'] = $Campsite['db']->Insert_ID();
-		
+	
 		// Create the record
-		$values = array('Name' => $p_name, 
-						'ShortName' => $p_shortName,
-						'Type' => $p_articleType,
-						'Public' => 'Y');
+		$values = array();
+		if (!is_null($p_name)) {
+			$values['Name'] = $p_name;
+		}
+		$values['ShortName'] = $this->m_data['Number'];
+		$values['Type'] = $p_articleType;
+		$values['Public'] = 'Y';
 		$success = parent::create($values);
 		if (!$success) {
 			return;
 		}
 		$this->setProperty('UploadDate', 'NOW()', true, true);
-//		$queryStr = 'UPDATE '.$this->m_dbTableName
-//					. ' SET UploadDate=NOW()'
-//					. ' WHERE ' . $this->getKeyWhereClause();
-//		$Campsite['db']->Execute($queryStr);
-		
 		$this->fetch();
 	
-		// Added by sebastian
-		// Paul asks: what does this do? 
-		if (function_exists ('incModFile')) {
-			incModFile ();
-		}
-
 		// Insert an entry into the article type table.
 		$articleData =& new ArticleType($this->m_data['Type'], 
 			$this->m_data['Number'], 
@@ -147,7 +144,93 @@ class Article extends DatabaseObject {
 
 	
 	/**
-	 * Delete article from database.
+	 * Create a copy of this article.
+	 *
+	 * @param int p_destPublication
+	 *		The destination publication ID.
+	 *
+	 * @param int p_destIssue
+	 *		The destination issue ID.
+	 *
+	 * @param int p_destSection
+	 * 		The destination section ID.
+	 *
+	 * @param int p_userId
+	 *		The user creating the copy.
+	 *
+	 * @return Article
+	 *		The copied Article object.
+	 */
+	function copy($p_destPublication, $p_destIssue, $p_destSection, $p_userId) {
+		global $Campsite;
+		// Create the duplicate article object.
+		$articleCopy =& new Article($p_destPublication, $p_destIssue, 
+			$p_destSection, $this->m_data['IdLanguage']);
+		$articleCopy->create($this->m_data['Type']);
+		
+		// Change some attributes
+		$articleCopy->m_data['IdUser'] = $p_userId;
+		$articleCopy->m_data['Published'] = 'N';
+		$articleCopy->m_data['IsIndexed'] = 'N';		
+		$articleCopy->m_data['LockUser'] = 0;
+		$articleCopy->m_data['LockTime'] = 0;
+		// Create a unique name for the new copy
+		$origNewName = $this->m_data['Name'] . " (duplicate";
+		$newName = $origNewName .")";
+		$count = 1;
+		while (true) {
+			$queryStr = 'SELECT * FROM Articles '
+						.' WHERE IdPublication = '.$p_destPublication
+						.' AND NrIssue = ' . $p_destIssue
+						.' AND NrSection = ' . $p_destSection
+						.' AND IdLanguage = ' . $this->m_data['IdLanguage']
+						." AND Name = '$newName'";
+			$row = $Campsite['db']->GetRow($queryStr);
+			if (count($row) > 0) {
+				$newName = $origNewName.' '.++$count.')';
+			}
+			else {
+				break;
+			}
+		}
+		$articleCopy->m_data['Name'] = $newName;
+		
+		// Copy some attributes
+		$articleCopy->m_data['OnFrontPage'] = $this->m_data['OnFrontPage'];
+		$articleCopy->m_data['OnSection'] = $this->m_data['OnFrontPage'];
+		$articleCopy->m_data['Keywords'] = $this->m_data['Keywords'];
+		$articleCopy->m_data['Public'] = $this->m_data['Public'];
+		$articleCopy->m_data['ArticleOrder'] = ($this->getMaxArticleOrder()+1);
+		
+		$articleCopy->commit();
+
+		$articleData =& $this->getArticleTypeObject();
+		$articleData->copyToExistingRecord($articleCopy->getArticleId());
+		
+		// Copy image pointers
+		ArticleImage::OnArticleCopy($this->m_data['Number'], $articleCopy->getArticleId());
+
+		// Copy topic pointers
+		ArticleTopic::OnArticleCopy($this->m_data['Number'], $articleCopy->getArticleId());
+		
+		return $articleCopy;
+	} // fn copy
+	
+
+	function getMaxArticleOrder() {
+		global $Campsite;
+		$queryStr = 'SELECT MAX(ArticleOrder) FROM Articles '
+					.' WHERE IdPublication='.$this->m_data['IdPublication']
+					.' AND NrIssue='.$this->m_data['NrIssue']
+					.' AND NrSection='.$this->m_data['NrSection']
+					.' AND IdLanguage='.$this->m_data['IdLanguage'];
+		return $Campsite['db']->GetOne($queryStr);
+	} // fn getMaxArticleOrder
+	
+	
+	/**
+	 * Delete article from database.  This will 
+	 * only delete one specific translation of the article.
 	 */
 	function delete() {
 		// Delete row from article type table.
@@ -156,9 +239,19 @@ class Article extends DatabaseObject {
 			$this->m_data['IdLanguage']);
 		$articleData->delete();
 		
-		// Delete image pointers
-		ArticleImage::OnArticleDelete($this->m_data['Number']);
-		
+		// is this the last translation?
+		if (count($this->getLanguages()) <= 1) {
+			// Delete image pointers
+			ArticleImage::OnArticleDelete($this->m_data['Number']);
+			
+			// Delete topics pointers
+			ArticleTopic::OnArticleDelete($this->m_data['Number']);
+			
+			// Delete indexes
+			ArticleIndex::OnArticleDelete($this->getPublicationId(), $this->getIssueId(),
+				$this->getSectionId(), $this->getLanguageId(), $this->getArticleId());
+		}
+					
 		// Delete row from Articles table.
 		parent::delete();
 	} // fn delete
@@ -246,15 +339,99 @@ class Article extends DatabaseObject {
 	
 	
 	/**
+	 * A simple way to get the name of the language the article is 
+	 * written in.  The value is cached in case there are multiple
+	 * calls to this function.
+	 *
+	 * @return string
+	 */
+	function getLanguageName() {
+		if (is_null($this->m_languageName)) {
+			$language =& new Language($this->m_data['IdLanguage']);
+			$this->m_languageName = $language->getName();
+		}
+		return $this->m_languageName;
+	} // fn getLanguageName
+	
+	
+	/**
+	 * Get the list of all languages that articles have been written in.
 	 * @return array
 	 */
-	function getArticlesInSection($p_publicationId, $p_issueId, $p_sectionId, $p_languageId) {
+	function GetAllLanguages() {
 		global $Campsite;
-		$queryStr = 'SELECT * FROM Articles'
-					." WHERE IdPublication='".$p_publicationId."'"
-					." AND NrIssue='".$p_issueId."'"
-					." AND NrSection='".$p_sectionId."'"
-					." AND IdLanguage='".$p_languageId."'";
+		$tmpLanguage =& new Language();
+		$languageColumns = $tmpLanguage->getColumnNames(true);
+		$languageColumns = implode(",", $languageColumns);
+	 	$queryStr = 'SELECT DISTINCT(IdLanguage), '.$languageColumns
+	 				.' FROM Articles, Languages '
+	 				.' WHERE Articles.IdLanguage = Languages.Id';
+	 	$rows = $Campsite['db']->GetAll($queryStr);
+	 	$languages = array();
+		foreach ($rows as $row) {
+			$tmpLanguage =& new Language();
+			$tmpLanguage->fetch($row);
+			$languages[] =& $tmpLanguage;
+		}
+		return $languages;		
+	} // fn GetAllLanguages
+	
+	
+	/**
+	 * Get a list of articles.  You can be as specific or as general as you
+	 * like with the parameters: e.g. specifying only p_publication will get
+	 * you all the articles in a particular publication.  Specifying all 
+	 * parameters will get you all the articles in a particular section with
+	 * the given language.
+	 *
+	 * @param int p_publicationId
+	 * @param int p_issueId
+	 * @param int p_sectionId
+	 * @param int p_languageId
+	 *
+	 * @param int p_preferredLanguage
+	 *		If specified, list this language before others.
+	 *
+	 * @param array p_sqlLimit
+	 *		Set the terms for the LIMIT clause.
+	 *
+	 * @return array
+	 *		Return an array of Article objects.
+	 */
+	function GetArticles($p_publicationId = null, $p_issueId = null, 
+						 $p_sectionId = null, $p_languageId = null, 
+						 $p_preferredLanguage = null, $p_sqlLimit = null) {
+		global $Campsite;
+		$queryStr = 'SELECT *';
+		if (!is_null($p_preferredLanguage)) {
+			$queryStr .= ", abs($p_preferredLanguage - IdLanguage) as LanguageOrder ";
+		}
+		$queryStr .= ' FROM Articles';
+		$whereClause = array();
+		if (!is_null($p_publicationId)) {
+			$whereClause[] = "IdPublication=$p_publicationId";			
+		}
+		if (!is_null($p_issueId)) {
+			$whereClause[] = "NrIssue=$p_issueId";
+		}
+		if (!is_null($p_sectionId)) {
+			$whereClause[] = "NrSection=$p_sectionId";
+		}
+		if (!is_null($p_languageId)) {
+			$whereClause[] = "IdLanguage='".$p_languageId."'";
+		}
+		if (count($whereClause) > 0) {
+			$queryStr .= ' WHERE ' . implode(' AND ', $whereClause);
+		}
+		$orderBy = ' ORDER BY ArticleOrder ASC, Number DESC ';
+		if (!is_null($p_preferredLanguage)) {
+			$orderBy .= ', LanguageOrder ASC, IdLanguage ASC';
+		}
+		$queryStr .= $orderBy;
+		if (!is_null($p_sqlLimit)) {
+			$queryStr .= ' LIMIT ' . $p_sqlLimit;
+		}
+		
 		$query = $Campsite['db']->Execute($queryStr);
 		$articles = array();
 		while ($row = $query->FetchRow()) {
@@ -264,7 +441,7 @@ class Article extends DatabaseObject {
 			$articles[] = $tmpArticle;
 		}
 		return $articles;
-	} // fn getArticlesInSection
+	} // fn GetArticles
 	
 	
 	/**
@@ -349,6 +526,14 @@ class Article extends DatabaseObject {
 	function getTitle() {
 		return $this->getProperty('Name');
 	} // fn getTitle
+	
+	
+	/**
+	 * @return string
+	 */
+	function getName() {
+		return $this->getProperty('Name');
+	} // fn getName
 	
 	
 	/**
@@ -556,15 +741,18 @@ class Article extends DatabaseObject {
 	
 	
 	/**
-	 * Return the articles written by the given user, within the given range.
+	 * Return an array of (array(Articles), int) where
+	 * the array of articles are those written by the given user, within the given range,
+	 * and the int is the total number of articles written by the user.
+	 *
 	 * @return array
 	 */
-	function GetArticlesByUser($p_userId, $p_lowerLimit = 0, $p_upperLimit = 20) {
+	function GetArticlesByUser($p_userId, $p_start = 0, $p_upperLimit = 20) {
 		global $Campsite;
 		$queryStr = 'SELECT * FROM Articles '
 					." WHERE IdUser=$p_userId"
 					.' ORDER BY Number DESC, IdLanguage '
-					." LIMIT $p_lowerLimit, $p_upperLimit";
+					." LIMIT $p_start, $p_upperLimit";
 		$query = $Campsite['db']->Execute($queryStr);
 		$articles = array();
 		while ($row = $query->FetchRow()) {
@@ -573,21 +761,31 @@ class Article extends DatabaseObject {
 			$tmpArticle->fetch($row);
 			$articles[] = $tmpArticle;
 		}
-		return $articles;
+		$queryStr = 'SELECT COUNT(*) FROM Articles '
+					." WHERE IdUser=$p_userId"
+					.' ORDER BY Number DESC, IdLanguage ';
+		$totalArticles = $Campsite['db']->GetOne($queryStr);
+		
+		return array($articles, $totalArticles);
 	} // fn GetArticlesByUser
 	
 
 	/**
+	 * Get a list of submitted articles.
+	 * Return an array of two elements: (array(Articles), int).
+	 * The first element is an array of submitted articles.
+	 * The second element is the total number of submitted articles.
+	 *
 	 * @param int p_lowerLimit
 	 * @param int p_upperLimit
 	 * @return array
 	 */
-	function GetSubmittedArticles($p_lowerLimit = 0, $p_upperLimit = 20) {
+	function GetSubmittedArticles($p_start = 0, $p_upperLimit = 20) {
 		global $Campsite;
 		$queryStr = 'SELECT * FROM Articles'
 	    			." WHERE Published = 'S' "
 	    			.' ORDER BY Number DESC, IdLanguage '
-	    			." LIMIT $p_lowerLimit, $p_upperLimit";
+	    			." LIMIT $p_start, $p_upperLimit";
 		$query = $Campsite['db']->Execute($queryStr);
 		$articles = array();
 		while ($row = $query->FetchRow()) {
@@ -596,9 +794,113 @@ class Article extends DatabaseObject {
 			$tmpArticle->fetch($row);
 			$articles[] = $tmpArticle;
 		}
-		return $articles;
+		$queryStr = 'SELECT COUNT(*) FROM Articles'
+	    			." WHERE Published = 'S' "
+	    			.' ORDER BY Number DESC, IdLanguage ';
+	    $totalArticles = $Campsite['db']->GetOne($queryStr);
+	    
+		return array($articles, $totalArticles);
 	} // fn GetSubmittedArticles
 	
+	
+	/**
+	 * Change the article's position in the order sequence
+	 * relative to its current position.
+	 *
+	 * @param string p_direction
+	 * 		Can be "up" or "down".
+	 *
+	 * @param int p_position
+	 *		The number of spaces to move the article.
+	 *
+	 * @return boolean
+	 */
+	function moveRelative($p_direction, $p_position = 1)	{
+		global $Campsite;
+		$comparison = ($p_direction == 'up') ? '<=' : '>=';
+		$order = ($p_direction == 'up') ? 'desc' : 'asc';
+		// Get the other articles
+		$queryStr = 'SELECT * FROM Articles '
+					.' WHERE IdPublication='.$this->m_data['IdPublication']
+					.' AND NrIssue='.$this->m_data['NrIssue']
+					.' AND NrSection='.$this->m_data['NrSection']
+					.' AND ArticleOrder '.$comparison.' '.$this->m_data['ArticleOrder']
+					.' AND IdLanguage='.$this->m_data['IdLanguage']
+					.' ORDER BY ArticleOrder ' . $order
+		     		.' LIMIT '.$p_position.', 1';
+		$row = $Campsite['db']->GetRow($queryStr);
+		if (!$row) {
+			return false;
+		}
+		// If we're moving up, keep the current article in place and
+		// move all the others down.
+		$prevOrder = $row['ArticleOrder'] + (($p_direction == 'up') ? 0 : 1);
+		$prevNumber = $row['Number'];
+		// Reorder all the other articles in this section
+		$queryStr = 'UPDATE Articles SET ArticleOrder = ArticleOrder + 1 '
+					.' WHERE IdPublication = '. $this->m_data['IdPublication']
+					.' AND NrIssue = ' . $this->m_data['NrIssue']
+					.' AND NrSection = ' . $this->m_data['NrSection']
+		     		.' AND ArticleOrder >= ' . $prevOrder;
+		$Campsite['db']->Execute($queryStr);
+		// Change position of this article
+		$queryStr = 'UPDATE Articles SET ArticleOrder = ' . $prevOrder 
+					.' WHERE IdPublication = '. $this->m_data['IdPublication']
+					.' AND NrIssue = ' . $this->m_data['NrIssue']
+					.' AND NrSection = ' . $this->m_data['NrSection']
+		     		.' AND Number = ' . $this->m_data['Number'];
+		$Campsite['db']->Execute($queryStr);
+		return true;
+	} // fn moveRelative
+	
+	
+	/**
+	 * 
+	 * @param int p_position
+	 * @return boolean
+	 */
+	function moveAbsolute($p_position = 1) {
+		global $Campsite;
+		$queryStr = 'SELECT * FROM Articles '
+					.' WHERE IdPublication='.$this->m_data['IdPublication']
+					.' AND NrIssue='.$this->m_data['NrIssue']
+					.' AND NrSection='.$this->m_data['NrSection']
+					.' AND IdLanguage='.$this->m_data['IdLanguage']
+		     		.' ORDER BY ArticleOrder ASC LIMIT '.($p_position - 1).', 1';
+		$row = $Campsite['db']->GetRow($queryStr);
+		if (!$row) {
+			return false;
+		}
+		$prevOrder = $row['ArticleOrder'];
+		$prevNumber = $row['Number'];
+		if ($prevOrder == $this->m_data['ArticleOrder']) {
+			return true;
+		}
+		if ($prevOrder > $this->m_data['ArticleOrder']) {
+			$comparison = ">";
+			$newOrder = $prevOrder + 1;
+		} else {
+			$comparison = ">=";
+			$newOrder = $prevOrder;
+		}
+		// Reorder all the other articles in this section
+		$queryStr = 'UPDATE Articles '
+					.' SET ArticleOrder = ArticleOrder + 1 '
+					.' WHERE IdPublication='.$this->m_data['IdPublication']
+					.' AND NrIssue='.$this->m_data['NrIssue']
+					.' AND NrSection='.$this->m_dataa['NrSection']
+		     		.' AND ArticleOrder '.$comparison.' '.$prevOrder;
+		$Campsite['db']->Execute($queryStr);
+		// Reposition this article.
+		$queryStr = 'UPDATE Articles '
+					.' SET ArticleOrder='.$newOrder
+					.' WHERE IdPublication='.$this->m_data['IdPublication']
+					.' AND NrIssue='.$this->m_data['NrIssue']
+					.' AND NrSection='.$this->m_data['NrSection']
+		     		.' AND Number='.$this->m_data['Number'];
+		$Campsite['db']->Execute($queryStr);
+		return true;
+	} // fn moveAbsolute
 	
 } // class Article
 
