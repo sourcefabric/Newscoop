@@ -3,7 +3,7 @@
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>","Nume");
 regGS("Front Page Template<BR><SMALL>(click to change)</SMALL>","Şablonul paginii principale");
 regGS("Single Article Template<BR><SMALL>(click to change)</SMALL>","Şablonul pentru afişarea articolelor");
-regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>","Publicat");
+regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>","Publicat<br><small>(aaaa-ll-zz)</small>");
 regGS("Delete issue $1","Şterge ediţia $1");
 regGS("Click here to set...","Apăsaţi aici pentru a salva...");
 regGS("Change issue status","Modifică starea ediţiei");
@@ -21,6 +21,7 @@ regGS("Please check if another issue with the same number/language does not alre
 regGS("Issue $1 added","Ediţia $1 a fost adăugată");
 regGS("Change issue details","Modifică ediţia");
 regGS("You do not have the right to change issue details.","Nu aveţi dreptul să modificaţi ediţia");
+regGS("Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>","Data publicării<br><small>(aaaa-ll-zz)</small>");
 regGS("Updating issue","Modific ediţia");
 regGS("Changing issue's details","Modific ediţia");
 regGS("The issue $1 has been successfuly changed.","Ediţia $1 a fost modificată cu succes");
