@@ -189,7 +189,7 @@ if ($edit_ok) { ?>
 			} 
 		} 
 		elseif ($articleObj->getPublished() == "N") { 
-			if ($articleObj->getUserId() == $User->getId()) {
+			if ($user->hasPermission("Publish") || ($articleObj->getUserId() == $User->getId())) {
 				?>
 				<TD class="action_link_container">
 					<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
