@@ -210,7 +210,7 @@ if ($access) {
             <?php echo $SearchReset; ?>
             <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
             <td><B><?php putGS('View', 'View'); ?>:</b></td>
-            <td><A HREF="<?php echo _DIR_; ?>index.php?<?php echo $Link['SO']; ?>&v=t"><IMG SRC="/priv/img/tol.gif" BORDER="0" alt="<?php  putGS("Tumbnail"); ?>"></A></TD><TD><A HREF="index.php?<?php echo $Link['SO']; ?>&v=t"><B><?php  putGS("Tumbnail"); ?></B></A></TD>
+            <td><A HREF="<?php echo _DIR_; ?>index.php?<?php echo $Link['SO']; ?>&v=t"><IMG SRC="/priv/img/tol.gif" BORDER="0" alt="<?php  putGS("Thumbnail"); ?>"></A></TD><TD><A HREF="index.php?<?php echo $Link['SO']; ?>&v=t"><B><?php  putGS("Thumbnail"); ?></B></A></TD>
             <td><A HREF="<?php echo _DIR_; ?>index.php?<?php echo $Link['SO']; ?>&v=g"><IMG SRC="/priv/img/tol.gif" BORDER="0" alt="<?php  putGS("Galery"); ?>"></A></TD><TD><A HREF="index.php?<?php echo $Link['SO']; ?>&v=g"><B><?php  putGS("Galery"); ?></B></A></TD>
             <td><A HREF="<?php echo _DIR_; ?>index.php?<?php echo $Link['SO']; ?>&v=f"><IMG SRC="/priv/img/tol.gif" BORDER="0" alt="<?php  putGS("Text only"); ?>"></A></TD><TD><A HREF="index.php?<?php echo $Link['SO']; ?>&v=f"><B><?php  putGS("Text only"); ?></B></A></TD>
           </tr>
