@@ -1,4 +1,5 @@
 <?
+
 regGS("Name<BR><SMALL>(click to see issues)</SMALL>","Nome (Carregue para ver Edições)");
 regGS("Delete publication $1","Apagar Publicação");
 regGS("No publications.","Não existem Publicações");
@@ -27,6 +28,7 @@ regGS("The publication could not be added.","A Publicação não pode ser Criada
 regGS("Select the publication","Escolha a Publicação");
 regGS("Add new country default subscription time","Adicionar tempo de Assinatura para Pais");
 regGS("You do not have the right to manage publications.","Não tem permissões para gerir Publicações");
+regGS("Please check if another entry with the same country code exists already.","Verifica se ja não existe registado um pais com o codigo que pretende.");
 regGS("Adding new country default subscription time","Adicionando novo tempo de Assinatura");
 regGS("You must select a country.","Tem de escolher um País");
 regGS("The default subscription time for $1 has been added.","Foi adiciondo um tempo de Assinatura para $1 ");
@@ -46,5 +48,6 @@ regGS("Subscription default time for $1 deleted","Tempo de Assinatura para $1 fo
 regGS("Name<BR><SMALL>(click to select the publication)</SMALL>","Nome (Carregue para selecionar Publicação)");
 regGS("The publication $1 has been successfuly added.","Foi Criada a Publicação $1");
 regGS("Publication $1 added","Foi Criada a Publicação $1");
+
 
 ?>
