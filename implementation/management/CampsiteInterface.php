@@ -12,7 +12,7 @@ class CampsiteInterface {
 		global $Campsite;
 		?>
 		<HR NOSHADE SIZE="1">
-		<a style='font-size:8pt;' 
+		<a style='font-size:8pt; color: black;' 
 		   href='http://www.campware.org' 
 		   target='campware'>
 		CAMPSITE  <?php echo $Campsite["version"] ?> &copy 1999-2005 MDLF, 
