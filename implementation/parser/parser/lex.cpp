@@ -395,6 +395,7 @@ CStatementMap::CStatementMap()
 	pcoSt = new CStatement(CMS_ST_IMAGE, ST_IMAGE);
 
 	pcoCtx = new CStatementContext(CMS_CT_PRINT);
+	pcoCtx->insertAttr(new CIntegerAttr("number", "Number"));
 	pcoCtx->insertAttr(new CAttribute("photographer", "Photographer"));
 	pcoCtx->insertAttr(new CAttribute("place", "Place"));
 	pcoCtx->insertAttr(new CAttribute("description", "Description"));
