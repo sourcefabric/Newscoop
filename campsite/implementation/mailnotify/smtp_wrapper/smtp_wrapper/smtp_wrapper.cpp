@@ -118,13 +118,13 @@ int main(int argc, char** argv)
 		int nBufLen = 0;
 		int nRecLen = 0;
 		nRecLen = Receive(coSock, &pchBuf, nBufLen);
-		coStr = string("mail from: ") + pchReplyAddress + "\n\r";
+		coStr = string("mail from: ") + pchReplyAddress + "\n";
 		coSock.Send(coStr.c_str(), strlen(coStr.c_str()));
 		nRecLen = Receive(coSock, &pchBuf, nBufLen);
 		CheckSMTPErrorCode(pchBuf);
 		for (int i = 0; i < nFirstFree; i++)
 		{
-			coStr = string("rcpt to: ") + ppchSendToList[i] + "\n\r";
+			coStr = string("rcpt to: ") + ppchSendToList[i] + "\n";
 			coSock.Send(coStr.c_str(), strlen(coStr.c_str()));
 			nRecLen = Receive(coSock, &pchBuf, nBufLen);
 			CheckSMTPErrorCode(pchBuf);
