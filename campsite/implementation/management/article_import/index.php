@@ -51,16 +51,24 @@ $issueLanguage =& new Language($sLanguage);
 	<LINK rel="stylesheet" type="text/css" href="stylesheet.css">
 </HEAD>
 
-<BODY BGCOLOR="WHITE" TEXT="BLACK" LINK="DARKBLUE" ALINK="RED" VLINK="DARKBLUE">
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%">
+<BODY>
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
 <TR>
-	<TD ROWSPAN="2" WIDTH="1%"><IMG SRC="<?php echo $rootDirectory ?>/img/sign_big.gif" BORDER="0"></TD>
-	<TD>
-	    <DIV STYLE="font-size: 12pt"><B>Article Import<?php //putGS("$1"); ?></B></DIV>
-	    <HR NOSHADE SIZE="1" COLOR="BLACK">
+	<TD class="page_title">
+	    <?php putGS("Article Import"); ?>
 	</TD>
 </TR>
-	<TR><TD ALIGN=RIGHT><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0"><TR><TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>&Section=<? p($Section); ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<? putGS("Articles"); ?>"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>&Section=<? p($Section); ?>" ><B><? putGS("Articles");  ?></B></A></TD>
+	<TR>
+		<TD ALIGN=RIGHT><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
+		<TR>
+			<TD>
+				<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>&Section=<? p($Section); ?>" >
+				<IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<? putGS("Articles"); ?>"></A>
+			</TD>
+			<TD>
+				<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>&Section=<? p($Section); ?>" >
+				<B><? putGS("Articles");  ?></B></A>
+			</TD>
 <TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<? putGS("Sections"); ?>"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>" ><B><? putGS("Sections");  ?></B></A></TD>
 <TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/?Pub=<? p($Pub); ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<? putGS("Issues"); ?>"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/?Pub=<? p($Pub); ?>" ><B><? putGS("Issues");  ?></B></A></TD>
 <TD><A HREF="/<?php echo $ADMIN; ?>/pub/" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<? putGS("Publications"); ?>"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/pub/" ><B><? putGS("Publications");  ?></B></A></TD>
