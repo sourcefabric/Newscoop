@@ -13,7 +13,7 @@ $Section = Input::Get('Section', 'int', 0);
 $Language = Input::Get('Language', 'int', 0);
 $sLanguage = Input::Get('sLanguage', 'int', 0);
 $Article = Input::Get('Article', 'int', 0);
-$Saved = Input::Get('saved', 'int', 0, true);
+$Saved = Input::Get('Saved', 'int', 0, true);
 $LockOk = Input::Get('LockOk', 'string', 0, true);
 
 if (!Input::IsValid()) {
@@ -147,16 +147,14 @@ if ($hasAccess && !$edit_ok) {
 				$hours = floor($diffSeconds/3600);
 				$diffSeconds -= $hours * 3600;
 				$minutes = floor($diffSeconds/60);
-				?>
-				<?php  
 				if ($hours > 0) {
-					putGS('This article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.',
+					putGS('The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.',
 						  '<B>'.htmlspecialchars($lockUserObj->getName()),
 						  htmlspecialchars($lockUserObj->getUserName()).'</B>',
 						  $hours, $minutes); 
 				}
 				else {
-					putGS('This article has been locked by $1 ($2) $3 minute(s) ago.',
+					putGS('The article has been locked by $1 ($2) $3 minute(s) ago.',
 						  '<B>'.htmlspecialchars($lockUserObj->getName()),
 						  htmlspecialchars($lockUserObj->getUserName()).'</B>',
 						  $minutes);
@@ -260,7 +258,8 @@ if ($edit_ok) { ?>
 				</TR>
 				</TABLE>
 			</TD>
-			
+
+		<?php if ($User->getId() == $articleObj->getLockedByUser()) { ?>
 			<TD class="action_link_container">
 				<!-- Unlock Link -->
 				<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
@@ -270,6 +269,7 @@ if ($edit_ok) { ?>
 				</TR>
 				</TABLE>
 			</TD>
+		<?php } ?>
 		</TR>		
 		
 		<TR>
@@ -359,7 +359,7 @@ if ($edit_ok) { ?>
 <?php if ($Saved > 0) { ?>
 <TABLE BORDER="0" cellpadding="0" cellspacing="0" align="center">
 <tr>
-	<td class="info_message" style="font-weight: bold; font-size: 14pt; color: #239f34;">
+	<td class="info_message">
 		<?php 
 		if ($Saved == 1) {
 			putGS('The article has been updated.'); 
