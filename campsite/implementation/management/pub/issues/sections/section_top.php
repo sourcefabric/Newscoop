@@ -62,16 +62,15 @@ if ($p_includeLinks) {
 		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
 		<TR>
 			<!-- "Sections" link -->
-			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/?Pub=<?php p($p_sectionObj->getPublicationId()); ?>&Issue=<?php p($p_sectionObj->getIssueId()); ?>&Language=<?php p($p_interfaceLanguageId); ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php putGS("Sections"); ?>"></A></TD>
-			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/?Pub=<?php p($p_sectionObj->getPublicationId()); ?>&Issue=<?php p($p_sectionObj->getIssueId()); ?>&Language=<?php p($p_interfaceLanguageId); ?>"><B><?php putGS("Sections"); ?></B></A></TD>
+			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/?Pub=<?php p($p_sectionObj->getPublicationId()); ?>&Issue=<?php p($p_sectionObj->getIssueId()); ?>&Language=<?php p($p_interfaceLanguageId); ?>" class="breadcrumb"><?php putGS("Sections"); ?></A></TD>
+			<td class="breadcrumb_separator">&nbsp;</td>
 			
 			<!-- "Issues" Link -->
-			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/?Pub=<?php p($p_sectionObj->getPublicationId()); ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php putGS("Issues"); ?>"></A></TD>
-			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/?Pub=<?php p($p_sectionObj->getPublicationId()); ?>"><B><?php putGS("Issues"); ?></B></A></TD>
+			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/?Pub=<?php p($p_sectionObj->getPublicationId()); ?>" class="breadcrumb"><?php putGS("Issues"); ?></A></TD>
+			<td class="breadcrumb_separator">&nbsp;</td>
 			
 			<!-- "Publications" Link -->
-			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Publications"); ?>"></A></TD>
-			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/" ><B><?php  putGS("Publications");  ?></B></A></TD>
+			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/"  class="breadcrumb"><?php  putGS("Publications");  ?></A></TD>
 			
 		</TR>
 		</TABLE>
