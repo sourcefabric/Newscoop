@@ -1,30 +1,32 @@
-<?php  function isTpl($s){
+<?php
+function isTpl($s)
+{
 	$dotpos=strrpos($s,".");
 	$ext=substr($s,$dotpos+1);
-        return ($ext == 'tpl' || $ext=='TPL' || $ext == 'php' || $ext == 'htm' || $ext == 'html' || $ext == 'php3' || $ext == 'php4');
-}  ?>
+	return ($ext == 'tpl' || $ext=='TPL' || $ext == 'php' || $ext == 'htm' || $ext == 'html' || $ext == 'php3' || $ext == 'php4' || $ext == 'txt');
+}
+?>
 
 <TABLE BORDER="0" CELLSPACING="2" CELLPADDING="0" WIDTH="100%">
 <TR BGCOLOR="WHITE"><TD WIDTH="30%" VALIGN="TOP">
-<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" WIDTH="100%">
+<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" WIDTH="100%" class="table_list">
 <TR BGCOLOR="#C0D0FF">
-<TD VALIGN="TOP"><B> <?php  putGS('Folders'); ?> </B></TD>
+<TD VALIGN="TOP"><B><?php  putGS('Folders'); ?> </B></TD>
 <?php 
-    if ( $dta != "0" ) {
+if ($dta != "0") {
 	echo '<TD WIDTH="1%" ><B> '.getGS('Delete').' </B></TD>';
-    }
+}
 ?>
 </TR>
 <?php 
-    $c="";
 	// once entered here, in the TemplateManagement, because the parameter What is 0 by default, even if the value set before is still set
 	// its meaning is lost, so we can use the variable to switch between file and folders; let's say 0 is for folders and 1 for files
 	// we only need it when deleting items
 
-	$basedir=$_SERVER['DOCUMENT_ROOT'].decURL($listbasedir);
+	$basedir=$_SERVER['DOCUMENT_ROOT']."/look/".decURL($listbasedir);
 
-    $handle=opendir($basedir);
-    while (($file = readdir($handle))!=false) {
+	$handle=opendir($basedir);
+	while (($file = readdir($handle))!=false) {
 	$full="$basedir/$file";
         $filetype=filetype($full);
         $isdir=false;
@@ -45,63 +47,68 @@
     }
     
 if (isset($dirs)) {
-    sort($dirs);
-    for($fi=0;$fi<count($dirs);$fi++) {
-	    $j= $dirs[$fi];
+	sort($dirs);
+	$color = 0;
+	for($fi=0;$fi<count($dirs);$fi++) {
+		$j= $dirs[$fi];
 
-	    if ($c == "#D0D0D0" )		//alternate the color lines in the table
-		$c="#D0D0B0";
-	    else
-		$c="#D0D0D0";
-	    
-	    print "<TR BGCOLOR='$c'><TD><TABLE BORDER='0' CELLSPACING='1' CELLPADDING='0'><TR><TD><IMG SRC='/$ADMIN/img/icon/dir.gif' BORDER='0'></TD><TD><A HREF='?Path=".encURL($j)."'>$j</A></TD></TR></TABLE></TD>";
+		$tr_class = "";
+		if ($color) {
+			$color=0;
+			$tr_class = "class=\"list_row_even\"";
+		} else {
+			$color = 1;
+			$tr_class = "class=\"list_row_odd\"";
+		}
+		print "<TR $tr_class><TD><TABLE BORDER='0' CELLSPACING='1' CELLPADDING='0'><TR><TD><IMG SRC='/$ADMIN/img/icon/dir.gif' BORDER='0'></TD><TD><A HREF='?Path=$listbasedir/".encURL($j)."'>$j</A></TD></TR></TABLE></TD>";
 
 		if ($dta != 0)
 			print "<TD ALIGN='CENTER'><A HREF='/$ADMIN/templates/del.php?What=0&Path=".encURL($listbasedir)."&Name=".encURL($j)."'><IMG SRC='/$ADMIN/img/icon/x.gif' BORDER='0' ALT='".getGS('Delete folder')."'></A></TD></TR>";
-		else echo '</TR>';
+		else
+			echo '</TR>';
     }
-}
-else{
-echo '<TR><TD COLSPAN="2">'.getGS('No folders.').'</TD></TR>' ;
+} else {
+	echo '<TR><TD COLSPAN="2">'.getGS('No folders.').'</TD></TR>' ;
 }
 ?>
 </TABLE>
 </TD><TD WIDTH="60%" VALIGN="TOP">
-<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" WIDTH="100%">
+<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" WIDTH="100%" class="table_list">
 <TR BGCOLOR="#C0D0FF">
 <TD  VALIGN="TOP"><B> <?php  putGS('Files'); ?> </B></TD>
 <?php 
-    if($dta!= "0") {
-    	echo '<TD  VALIGN="TOP" WIDTH="1%" ><B> '.getGS('Duplicate').' </B></TD>';
+if($dta!= "0") {
+	echo '<TD  VALIGN="TOP" WIDTH="1%" ><B> '.getGS('Duplicate').' </B></TD>';
 	echo '<TD  VALIGN="TOP" WIDTH="1%" ><B> '.getGS('Delete').' </B></TD>';
-	}
+}
 ?>
 </TR>
 <?php 
-    $c="";
-
 if (isset($files)) {
 	sort($files);
+	$color = 0;
 	for($fi=0;$fi<count($files);$fi++) {
 		$j=$files[$fi];
 
-		if ($c == "#D0D0D0" )
-			$c="#D0D0B0";
-		else
-			$c="#D0D0D0";
-	    
-		if(isTpl($j)) {
-			print "<TR BGCOLOR='$c'><TD><TABLE BORDER='0' CELLSPACING='1' CELLPADDING='0'><TR><TD><IMG SRC='/$ADMIN/img/icon/generic.gif' BORDER='0'></TD><TD><A HREF='/$ADMIN/templates/edit_template.php?Path=".encURL($listbasedir)."&Name=".encURL($j)."'>$j</A></TD></TR></TABLE></TD>";
+		$tr_class = "";
+		if ($color) {
+			$color=0;
+			$tr_class = "class=\"list_row_even\"";
+		} else {
+			$color = 1;
+			$tr_class = "class=\"list_row_odd\"";
 		}
-		else{
-			print "<TR BGCOLOR='$c'><TD><TABLE BORDER='0' CELLSPACING='1' CELLPADDING='0'><TR><TD><IMG SRC='/$ADMIN/img/icon/generic.gif' BORDER='0'></TD><TD>$j</TD></TR></TABLE></TD>";
+		if (isTpl($j)) {
+			print "<TR $tr_class><TD><IMG SRC='/$ADMIN/img/icon/generic.gif' BORDER='0'> <A HREF='/$ADMIN/templates/edit_template.php?Path=".encURL($listbasedir)."&Name=".encURL($j)."'>$j</A></TD>";
+		} else {
+			print "<TR $tr_class><TD><IMG SRC='/$ADMIN/img/icon/generic.gif' BORDER='0'> $j</TD>";
 		}
 		if ($dta != 0){
-			print "<TD ALIGN='CENTER'><A HREF='/$ADMIN/templates/dup.php?Path=".encURL($listbasedir)."&Name=".encURL($j)."'><IMG SRC='/$ADMIN/img/icon/dup.gif' BORDER='0' ALT='".getGS('Duplicate file')."'></A></TD>";
+			print "<TD ALIGN='CENTER'><A HREF='/$ADMIN/templates/dup.php?Path=".encURL($listbasedir)."&Name=".encURL($j)."'><IMG SRC='/$ADMIN/img/icon/duplicate.png' BORDER='0' ALT='".getGS('Duplicate file')."'></A></TD>";
 			print "<TD ALIGN='CENTER'><A HREF='/$ADMIN/templates/del.php?What=1&Path=".encURL($listbasedir)."&Name=".encURL($j)."'><IMG SRC='/$ADMIN/img/icon/x.gif' BORDER='0' ALT='".getGS('Delete file')."'></A></TD></TR>";
-		}		
-		else echo '<TD ALIGN="CENTER"></td></TR>';
-	    }
+		} else
+			echo '<TD ALIGN="CENTER"></td></TR>';
+	}
 }
 else{
 	echo '<TR><TD COLSPAN="2">'.getGS('No templates.').'</TD></TR>' ;
