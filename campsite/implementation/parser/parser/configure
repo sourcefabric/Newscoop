@@ -142,11 +142,11 @@ case "\$1" in
 	fi
 	;;
   stop)
-	output=\`${KILLALL} -c "\$CAMPSITE_SERVER"\`
+	output=\`${KILLALL} "\$CAMPSITE_SERVER"\`
 	[ \$? -ne 0 ] && echo \$output && exit 1
 	;;
   reload|restart)
-	${KILLALL} -c "\$CAMPSITE_SERVER" &> /dev/null
+	${KILLALL} "\$CAMPSITE_SERVER" &> /dev/null
 	\$0 start
 	;;
   status)
