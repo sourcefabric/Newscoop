@@ -93,11 +93,11 @@ if ($del)
 <P>
 
 <?php } else { ?><BLOCKQUOTE>
-	<LI>No such publication.</LI>
+	<LI><?php putGS("Publication does not exist."); ?></LI>
 </BLOCKQUOTE>
 <?php } ?>
 <?php } else { ?><BLOCKQUOTE>
-	<LI>No such issue.</LI>
+	<LI><?php putGS("No such issue."); ?></LI>
 </BLOCKQUOTE>
 <?php } ?>
 <?php CampsiteInterface::CopyrightNotice(); ?>
