@@ -59,6 +59,7 @@ B_CURRENT
 X_CURRENT({Publication:}, {<B><!sql print ~q_pub.Name></B>})
 X_CURRENT({Issue:}, {<B><!sql print ~q_iss.Number>. <!sql print ~q_iss.Name> (<!sql print ~q_lang.Name>)</B>})
 X_CURRENT({Section:}, {<B><!sql print ~q_sect.Number>. <!sql print ~q_sect.Name></B>})
+X_CURRENT({Article:}, {<B><!sql print ~q_art.Name> (<!sql print ~q_slang.Name>)</B>})
 E_CURRENT
 
 CHECK_XACCESS({ChangeArticle})
