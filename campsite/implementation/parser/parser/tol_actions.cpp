@@ -896,11 +896,11 @@ int TOLActList::TakeAction(TOLContext& c, fstream& fs)
 		WriteOrdParam(order);
 		WriteLimit(limit, lc);
 		if (modifier == TOL_LMOD_SEARCHRESULT)
-			fields = "select NrArticle, Articles.IdLanguage, Articles.IdPublication";
+			fields = "select NrArticle, MAX(Articles.IdLanguage), Articles.IdPublication";
 		else if (modifier == TOL_LMOD_ARTICLE)
-			fields = "select Number, Articles.IdLanguage, IdPublication";
+			fields = "select Number, MAX(Articles.IdLanguage), IdPublication";
 		else
-			fields = "select Number, IdLanguage, IdPublication";
+			fields = "select Number, MAX(IdLanguage), IdPublication";
 		if (modifier == TOL_LMOD_ARTICLE || modifier == TOL_LMOD_SEARCHRESULT)
 			fields += ", Articles.NrIssue, Articles.NrSection";
 		else if (modifier == TOL_LMOD_SECTION)

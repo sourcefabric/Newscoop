@@ -31,3 +31,8 @@ new in 2.0.8
 new in 2.0.9
     - Fixed incorrect timestamp update on event notify
     - Fixed mysqlclient library link problem on RedHat systems
+
+new in 2.0.10
+    - Fixed the 'Back to article details' bug
+    - Removed the weird message from 'Old images'
+    - Fixed the language selection in lists bug
