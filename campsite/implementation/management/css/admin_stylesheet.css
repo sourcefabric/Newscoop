@@ -79,3 +79,16 @@ hr {
 .errHilite {
 	background-color: #FFD4E4;
 }
+
+.page_title_container {
+	border-bottom: 1px solid black;
+	background-color: lightgrey;
+	margin-bottom: 3px;
+}
+
+.page_title {
+	font-weight: bold;
+	padding-top: 0px;
+	padding-left: 12px;
+	font-size: 12pt;
+}
