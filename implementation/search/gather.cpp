@@ -30,6 +30,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <unistd.h>
 #include <mysql/mysql.h>
 #include <iostream>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 #include "kwd.h"
 #include "readconf.h"
@@ -37,6 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ccampsiteinstance.h"
 
 using std::cout;
+using std::cerr;
 using std::endl;
 
 #define debug if(0) printf
@@ -153,7 +156,14 @@ int main(int argc, char **argv)
 	}
 	while (true)
 	{
-		sleep(1);
+		waitpid(-1, 0, 0);
+		for (coIt = rcoInstances.begin(); coIt != rcoInstances.end(); ++coIt)
+		{
+			if (!(*coIt).second->isRunning())
+			{
+				CCampsiteInstanceRegister::get().erase((*coIt).second->getName());
+			}
+		}
 		if (CCampsiteInstanceRegister::get().isEmpty())
 			break;
 	}
