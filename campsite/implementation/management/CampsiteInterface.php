@@ -54,9 +54,8 @@ class CampsiteInterface {
 	 * @param Article p_articleObj
 	 *		The article we want to display.
 	 *
-	 * @param int p_adminLanguageId
-	 *		The administration interface language ID. 
-	 *		(TODO: we should store this in the session!)
+	 * @param int p_sectionLanguageId
+	 *		The section language ID. 
 	 *
 	 * @param string p_targetFileName
 	 *		Which file in the "articles" directory to call.
@@ -64,9 +63,9 @@ class CampsiteInterface {
 	 * @param string p_backLink
 	 *		I'm not entirely sure what this is for.  I put it in for backward compatibility.
 	 */
-	function ArticleLink($p_articleObj, $p_adminLanguageId, $p_targetFileName = "", $p_backLink = "") {
+	function ArticleLink($p_articleObj, $p_sectionLanguageId, $p_targetFileName = "", $p_backLink = "") {
 		?>
-		<A HREF="/priv/pub/issues/sections/articles/<?php echo $p_targetFileName ?>?Pub=<?php  echo $p_articleObj->getPublicationId(); ?>&Issue=<?php echo $p_articleObj->getIssueId(); ?>&Section=<?php echo $p_articleObj->getSectionId(); ?>&Article=<?php echo $p_articleObj->getArticleId(); ?>&Language=<?php echo $p_adminLanguageId; ?>&sLanguage=<?php echo $p_articleObj->getLanguageId(); ?><?php if ($p_backLink != "") { ?>&Back=<?php echo urlencode($p_backLink); } ?>">
+		<A HREF="/priv/pub/issues/sections/articles/<?php echo $p_targetFileName ?>?Pub=<?php  echo $p_articleObj->getPublicationId(); ?>&Issue=<?php echo $p_articleObj->getIssueId(); ?>&Section=<?php echo $p_articleObj->getSectionId(); ?>&Article=<?php echo $p_articleObj->getArticleId(); ?>&Language=<?php echo $p_sectionLanguageId; ?>&sLanguage=<?php echo $p_articleObj->getLanguageId(); ?><?php if ($p_backLink != "") { ?>&Back=<?php echo urlencode($p_backLink); } ?>">
 		<?php
 	} // fn ArticleLink
 	
