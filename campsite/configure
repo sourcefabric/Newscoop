@@ -169,7 +169,7 @@ else # else if define start env
     prepare_install_env && [ $? -ne 0 ] && exit 1
     install_conf --set && [ $? -ne 0 ] && exit 1
     modules_conf --set && [ $? -ne 0 ] && exit 1
-    for m in apache gethostbyaddr_r gethostbyname_r getservbyname_r killall libpthread mysql_h libcrypt libnsl xml; do
+    for m in apache gethostbyaddr_r gethostbyname_r getservbyname_r killall libpthread mysql_h libcrypt libnsl; do
 	check4_${m}
     done
 
