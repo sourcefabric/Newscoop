@@ -2,7 +2,7 @@
 /**
  * Show a list of images in a long horizontal table.
  * @author $Author: paul $
- * @version $Id: images.php,v 1.1 2004/09/11 02:43:24 paul Exp $
+ * @version $Id: images.php,v 1.2 2004/11/14 01:42:32 paul Exp $
  * @package ImageManager
  */
 
@@ -55,7 +55,7 @@ function drawFiles($list, &$manager)
 		<td><table width="100" cellpadding="0" cellspacing="0"><tr><td class="block">
 		<a href="javascript:;" onclick="selectImage('<? echo $file['relative'];?>', '<? echo $entry; ?>', <? echo $file['image'][0];?>, <? echo $file['image'][1]; ?>);"title="<? echo $entry; ?> - <? echo Files::formatSize($file['stat']['size']); ?>"><img src="<? echo $manager->getThumbnail($file['relative']); ?>" alt="<? echo $entry; ?> - <? echo Files::formatSize($file['stat']['size']); ?>"/></a>
 		</td></tr><tr><td class="edit">
-			<a href="images.php?dir=<? echo $relative; ?>&amp;delf=<? echo rawurlencode($file['relative']);?>" title="Trash" onclick="return confirmDeleteFile('<? echo $entry; ?>');"><img src="img/edit_trash.gif" height="15" width="15" alt="Trash"/></a><a href="javascript:;" title="Edit" onclick="editImage('<? echo rawurlencode($file['relative']);?>');"><img src="img/edit_pencil.gif" height="15" width="15" alt="Edit"/></a>
+			<a href="images.php?dir=<? echo $relative; ?>&amp;delf=<? echo rawurlencode($file['relative']);?>" title="Trash" onclick="return confirmDeleteFile('<? echo $entry; ?>');"><img src="img/edit_trash.gif" height="15" width="15" alt="Trash"/></a><!--<a href="javascript:;" title="Edit" onclick="editImage('<? echo rawurlencode($file['relative']);?>');"><img src="img/edit_pencil.gif" height="15" width="15" alt="Edit"/></a>-->
 		<? if($file['image']){ echo $file['image'][0].'x'.$file['image'][1]; } else echo $entry;?>
 		</td></tr></table></td> 
 	  <? 
