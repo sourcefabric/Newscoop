@@ -11,31 +11,32 @@ todefnum('TOL_UserId');
 todefnum('TOL_UserKey');
 list($access, $User) = check_basic_access($_REQUEST);	
 
-// "What" means "what to display".
-// A value of "1" means "display Your Articles".
-// A value of "0" means "display Submitted Articles".
-if ($User->hasPermission("ChangeArticle")) {
-	todefnum('What',0);
+if ($access) {
+	// "What" means "what to display".
+	// A value of "1" means "display Your Articles".
+	// A value of "0" means "display Submitted Articles".
+	if ($User->hasPermission("ChangeArticle")) {
+		todefnum('What',0);
+	}
+	else {
+		todefnum('What',1);
+	}
+	todefnum('NArtOffs');
+	if ($NArtOffs<0) {
+		$NArtOffs=0;
+	}
+	todefnum('ArtOffs');
+	if ($ArtOffs < 0) {
+		$ArtOffs=0; 
+	}
+	$NumDisplayArticles=20;
+	$YourArticles = Article::GetArticlesByUser($User->getId(), $ArtOffs, 
+		$NumDisplayArticles+1);
+	$NumYourArticles = count($YourArticles);
+	
+	$SubmittedArticles = Article::GetSubmittedArticles($NArtOffs, $NumDisplayArticles+1);
+	$NumSubmittedArticles = count($SubmittedArticles);
 }
-else {
-	todefnum('What',1);
-}
-todefnum('NArtOffs');
-if ($NArtOffs<0) {
-	$NArtOffs=0;
-}
-todefnum('ArtOffs');
-if ($ArtOffs < 0) {
-	$ArtOffs=0; 
-}
-$NumDisplayArticles=20;
-$YourArticles = Article::GetArticlesByUser($User->getId(), $ArtOffs, 
-	$NumDisplayArticles+1);
-$NumYourArticles = count($YourArticles);
-
-$SubmittedArticles = Article::GetSubmittedArticles($NArtOffs, $NumDisplayArticles+1);
-$NumSubmittedArticles = count($SubmittedArticles);
-
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
 	"http://www.w3.org/TR/REC-html40/loose.dtd">
