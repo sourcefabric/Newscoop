@@ -37,8 +37,6 @@ object.
 
 ******************************************************************************/
 
-#include <pwd.h>
-#include <grp.h>
 #include <sys/time.h>
 #include <sys/types.h>
 #include <unistd.h>
@@ -47,6 +45,8 @@ object.
 #include <signal.h>
 #include <sys/wait.h>
 #include <exception>
+#include <pwd.h>
+#include <grp.h>
 
 #include "lex.h"
 #include "atoms.h"
@@ -56,7 +56,7 @@ object.
 #include "cms_types.h"
 #include "srvdef.h"
 #include "csocket.h"
-#include "readconf.h"
+#include "ccampsiteinstance.h"
 #include "thread.h"
 #include "process_req.h"
 #include "cpublication.h"
@@ -263,42 +263,20 @@ void SigHandler(int p_nSig)
 	exit(0);
 }
 
-// StartWatchDog: start watch dog
-// Parameters:
-//		bool p_bRunAsDaemon - if true, detach and run in background
-void StartWatchDog(bool p_bRunAsDaemon)
+// StartDaemon: run in background
+void StartDaemon()
 {
-	if (p_bRunAsDaemon)
-	{
-		if (fork() != 0)
-			exit(0);
-		setsid();
-	}
-	while (1)
-	{
-		nMainThreadPid = fork();
-		if (nMainThreadPid == -1)
-		{
-			sleep(10);
-			continue;
-		}
-		if (nMainThreadPid != 0)
-		{
-			signal(SIGTERM, SigHandler);
-			waitpid(nMainThreadPid, NULL, 0);
-			sleep(10);
-			continue;
-		}
-		return ; // nMainThreadPid == 0
-	}
+	if (fork() != 0)
+		exit(0);
+	setsid();
 }
 
 // ProcessArgs: process command line arguments
 //		int argc - arguments number
 //		char** argv - arguments list
 //		bool& p_rbRunAsDaemon - set by this function according to arguments
-//		int& p_rnMaxThreads - set by this function according to arguments
-void ProcessArgs(int argc, char** argv, bool& p_rbRunAsDaemon, int& p_rnMaxThreads)
+//		string& p_rcoConfDir - set by this function according to arguments
+void ProcessArgs(int argc, char** argv, bool& p_rbRunAsDaemon, string& p_rcoConfDir)
 {
 	if (argc < 2)
 		return ;
@@ -306,119 +284,26 @@ void ProcessArgs(int argc, char** argv, bool& p_rbRunAsDaemon, int& p_rnMaxThrea
 	{
 		if (strcmp(argv[i], "-d") == 0)
 			p_rbRunAsDaemon = false;
-		if (strcmp(argv[i], "-t") == 0)
+		if (strcmp(argv[i], "-c") == 0)
 		{
 			if (++i < argc)
 			{
-				int nReqMaxThreads = atoi(argv[i]);
-				if (nReqMaxThreads < 1)
-				{
-					cout << "Number of maximum threads must be at least 1. Running with "
-					<< p_rnMaxThreads << endl;
-				}
-				else
-					p_rnMaxThreads = nReqMaxThreads;
+				cout << "You did not specify the configuration directory.";
+				exit(1);
 			}
 			else
 			{
-				cout << "You did not specify the number of maximum threads. Running with "
-				<< p_rnMaxThreads << endl;
-				break;
+				p_rcoConfDir = atoi(argv[i]);
 			}
 		}
 		if (strcmp(argv[i], "-h") == 0)
 		{
-			cout << "Usage: tol_server [-d|-t <threads_nr>|-h]\n"
-			"where:\t-d: run in console (by default run as daemon)\n"
-			"\t-t <threads_nr>: set the maximum number of threads to start "
-			"(default: " << p_rnMaxThreads << ")\n"
-			"\t-h: print this help message\n";
+			cout << "Usage: campsite_server [-c <conf_dir>|-d|-h]\n"
+					"where:\t-d: run in console (by default run as daemon)\n"
+					"\t-c <conf_dir>: set the configuration directory\n"
+					"\t-h: print this help message" << endl;
 			exit(0);
 		}
-	}
-}
-
-// ResolveNames: resolve host names
-// Return -
-// Parameters:
-//		string& p_rcoAllowedHosts - allowed hosts
-//		string& p_rcoAllowedIPs - allowed ip addresses
-void ResolveNames(string& p_rcoAllowedHosts, StringSet& p_rcoAllowedIPs) throw (RunException)
-{
-	string coWord;
-	int nIndex = 0;
-	while ((coWord = ConfAttrValue::ReadWord(p_rcoAllowedHosts, nIndex)) != "")
-	{
-		struct hostent* pHost = gethostbyname(coWord.c_str());
-		if (pHost == NULL)
-		{
-			string errMsg = string("Unable to resolve name ") + coWord;
-			throw RunException(errMsg.c_str());
-		}
-		for (char** ppIP = pHost->h_addr_list; *ppIP != 0; ppIP++)
-		{
-			struct in_addr in;
-			memcpy(&in.s_addr, *ppIP, sizeof(struct in_addr));
-			char* pIP = inet_ntoa(in);
-			p_rcoAllowedIPs.insert(pIP);
-		}
-		nIndex++;
-	}
-}
-
-// ReadConf: read configuration
-// Return -
-// Parameters:
-//		int& p_rnThreads - maximum number of threads
-//		int& p_rnPort - port to bind to
-//		string& p_rcoAllowed - allowed host
-//		int& p_rnUserId - user id to run with
-//		int& p_rnGroupId - group id to run with
-void ReadConf(int& p_rnThreads, int& p_rnPort, StringSet& p_rcoAllowed, int& p_rnUserId,
-		int& p_rnGroupId)
-{
-	try
-	{
-		// read parser configuration
-		ConfAttrValue coConf(PARSER_CONF_FILE);
-		p_rnThreads = atoi(coConf.ValueOf("THREADS").c_str());
-		p_rnPort = atoi(coConf.ValueOf("PORT").c_str());
-		string coAllowed = coConf.ValueOf("ALLOWED_HOSTS");
-		ResolveNames(coAllowed, p_rcoAllowed);
-		if (p_rcoAllowed.empty())
-			throw RunException("Allowed hosts list is empty");
-		const char* pUser = coConf.ValueOf("USER").c_str();
-		struct passwd* pPwEnt = getpwnam(pUser);
-		if (pPwEnt == NULL)
-			throw RunException("Invalid user name in conf file");
-		p_rnUserId = pPwEnt->pw_uid;
-		const char* pGroup = coConf.ValueOf("GROUP").c_str();
-		struct group* pGrEnt = getgrnam(pGroup);
-		if (pGrEnt == NULL)
-			throw RunException("Invalid group name in conf file");
-		p_rnGroupId = pGrEnt->gr_gid;
-		// read database configuration
-		ConfAttrValue coDBConf(DATABASE_CONF_FILE);
-		SQL_SERVER = coDBConf.ValueOf("SERVER");
-		SQL_SRV_PORT = atoi(coDBConf.ValueOf("PORT").c_str());
-		SQL_USER = coDBConf.ValueOf("USER");
-		SQL_PASSWORD = coDBConf.ValueOf("PASSWORD");
-		SQL_DATABASE = coDBConf.ValueOf("NAME");
-	}
-	catch (ConfException& rcoEx)
-	{
-		cout << "Error starting server: " << rcoEx.what() << endl;
-		exit(1);
-	}
-	catch (SocketException& rcoEx)
-	{
-		cout << "Error starting server: " << rcoEx.Message() << endl;
-		exit(1);
-	}
-	catch (RunException& rcoEx)
-	{
-		cout << "Error starting server: " << rcoEx.what() << endl;
-		exit(1);
 	}
 }
 
@@ -434,8 +319,9 @@ CThreadPool* g_pcoThreadPool = NULL;
 
 void sigterm_handler(int p_nSigNum)
 {
+	cout << p_nSigNum << " signal received" << endl;
 #ifdef _DEBUG
-	cout << "TERM signal received" << endl;
+	cout << p_nSigNum << " signal received" << endl;
 #endif
 	if (g_pcoThreadPool == NULL)
 	{
@@ -479,6 +365,23 @@ void sigterm_handler(int p_nSigNum)
 	exit(0);
 }
 
+
+void parent_sig_handler(int p_nSigNum)
+{
+	const CCampsiteInstanceMap& rcoInstances =
+			CCampsiteInstanceRegister::get().getCampsiteInstances();
+	CCampsiteInstanceMap::const_iterator coIt = rcoInstances.begin();
+	for (; coIt != rcoInstances.end(); ++coIt)
+	{
+		cout << "stopping instance: " << (*coIt).second->getName() << endl;
+		(*coIt).second->stop();
+	}
+}
+
+
+int CampsiteInstanceFunc(const ConfAttrValue& p_rcoConfValues);
+
+
 // main: main function
 // Return 0 if no error encountered; error code otherwise
 // Parameters:
@@ -486,37 +389,108 @@ void sigterm_handler(int p_nSigNum)
 //		char** argv - arguments list
 int main(int argc, char** argv)
 {
+	bool bRunAsDaemon;
+	string coConfDir;
+	ProcessArgs(argc, argv, bRunAsDaemon, coConfDir);
+	if (bRunAsDaemon)
+		StartDaemon();
+
+	// mask most signals
+	sigset_t nSigMask;
+	sigaddset(&nSigMask, SIGPIPE);
+	sigaddset(&nSigMask, SIGALRM);
+	sigaddset(&nSigMask, SIGUSR1);
+	sigaddset(&nSigMask, SIGUSR2);
+	pthread_sigmask(SIG_SETMASK, &nSigMask, NULL);
+
+	// set the signal handler TERM
+	signal(SIGTERM, parent_sig_handler);
+	signal(SIGHUP, parent_sig_handler);
+	signal(SIGINT, parent_sig_handler);
+
+	if (coConfDir == "")
+		coConfDir = ETC_FILE;
+	const CCampsiteInstanceMap& rcoInstances =
+			CCampsiteInstance::readFromDirectory(coConfDir, CampsiteInstanceFunc);
+
+	CCampsiteInstanceMap::const_iterator coIt = rcoInstances.begin();
+	for (; coIt != rcoInstances.end(); ++coIt)
+	{
+		cout << "instance: " << (*coIt).second->getName() << endl;
+		(*coIt).second->run();
+	}
+	int nStatus;
+	pid_t nChildPID = waitpid(-1, &nStatus, 0);
+	cout << "child " << nChildPID << " exited with status " << nStatus << endl;
+	exit(0);
+}
+
+int CampsiteInstanceFunc(const ConfAttrValue& p_rcoConfValues)
+{
 	nMainThreadPid = 0;
-	bool bRunAsDaemon = true;
 	int nMaxThreads;
 	int nPort;
-	StringSet coAllowedHosts;
 	int nUserId;
 	int nGroupId;
-	ReadConf(nMaxThreads, nPort, coAllowedHosts, nUserId, nGroupId);
-	ProcessArgs(argc, argv, bRunAsDaemon, nMaxThreads);
-	nPort = nPort > 0 ? nPort : TOL_SRV_PORT;
-	nMaxThreads = nMaxThreads > 0 ? nMaxThreads : MAX_THREADS;
-	if (setuid(nUserId) != 0)
-	{
-		cout << "Error setting user id " << nUserId << endl;
-		exit (1);
-	}
-	if (setgid(nGroupId) != 0)
-	{
-		cout << "Error setting group id " << nGroupId << endl;
-		exit (1);
-	}
-	StartWatchDog(bRunAsDaemon);
 
-	// mask all signals except TERM signal
+	nMaxThreads = atoi(p_rcoConfValues.valueOf("PARSER_MAX_THREADS").c_str());
+	nPort = atoi(p_rcoConfValues.valueOf("PARSER_PORT").c_str());
+
+	const char* pUser = p_rcoConfValues.valueOf("APACHE_USER").c_str();
+	struct passwd* pPwEnt = getpwnam(pUser);
+	if (pPwEnt == NULL)
+	{
+		cerr << "Invalid user name in conf file";
+		exit(1);
+	}
+	nUserId = pPwEnt->pw_uid;
+	const char* pGroup = p_rcoConfValues.valueOf("APACHE_GROUP").c_str();
+	struct group* pGrEnt = getgrnam(pGroup);
+	if (pGrEnt == NULL)
+	{
+		cerr << "Invalid group name in conf file";
+		exit(1);
+	}
+	nGroupId = pGrEnt->gr_gid;
+
+	SQL_SERVER = p_rcoConfValues.valueOf("DATABASE_SERVER_ADDRESS");
+	SQL_SRV_PORT = atoi(p_rcoConfValues.valueOf("DATABASE_SERVER_PORT").c_str());
+	SQL_USER = p_rcoConfValues.valueOf("DATABASE_USER");
+	SQL_PASSWORD = p_rcoConfValues.valueOf("DATABASE_PASSWORD");
+	SQL_DATABASE = p_rcoConfValues.valueOf("DATABASE_NAME");
+
+	cout << "max threads: " << nMaxThreads << ", port: " << nPort << ", user id: "
+			<< nUserId << ", group id: " << nGroupId << endl;
+	cout << "sql server: " << SQL_SERVER << ", sql port: " << SQL_SRV_PORT
+			<< ", sql user: " << SQL_USER << ", sql password: " << SQL_PASSWORD
+			<< ", db name: " << SQL_DATABASE << endl;
+
+	nPort = nPort > 0 ? nPort : 2001;
+	nMaxThreads = nMaxThreads > 0 ? nMaxThreads : MAX_THREADS;
+// 	if (setuid(nUserId) != 0)
+// 	{
+// 		cout << "Error setting user id " << nUserId << endl;
+// 		exit (1);
+// 	}
+// 	if (setgid(nGroupId) != 0)
+// 	{
+// 		cout << "Error setting group id " << nGroupId << endl;
+// 		exit (1);
+// 	}
+
+	// mask most signals
 	sigset_t nSigMask;
-	sigfillset(&nSigMask);
-	sigdelset(&nSigMask, SIGTERM);
+	sigaddset(&nSigMask, SIGINT);
+	sigaddset(&nSigMask, SIGPIPE);
+	sigaddset(&nSigMask, SIGALRM);
+	sigaddset(&nSigMask, SIGUSR1);
+	sigaddset(&nSigMask, SIGUSR2);
 	pthread_sigmask(SIG_SETMASK, &nSigMask, NULL);
 
 	// set the signal handler TERM
 	signal(SIGTERM, sigterm_handler);
+	signal(SIGHUP, sigterm_handler);
+	signal(SIGINT, sigterm_handler);
 
 #if (__GNUC__ < 3)
 	set_terminate(my_terminate);
@@ -556,7 +530,7 @@ int main(int argc, char** argv)
 			{
 				pcoClSock = coServer.Accept();
 				char* pchRemoteIP = pcoClSock->RemoteIP();
-				if (coAllowedHosts.find(pchRemoteIP) == coAllowedHosts.end())
+				if (pchRemoteIP != "127.0.0.1")
 				{
 					cerr << "Not allowed host (" << pchRemoteIP << ") connected" << endl;
 					delete pcoClSock;
