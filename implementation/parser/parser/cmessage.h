@@ -277,6 +277,43 @@ inline const string& CMsgURLRequest::getCookie(const string& p_coCookie) const t
 class CMsgResetCache : public CMessage
 {
 public:
+	CMsgResetCache(char* p_pchContent)
+		throw (out_of_range, xml_parse_error, invalid_message_content)
+		: m_pchContent(NULL) { setContent(p_pchContent); }
+
+	void setContent(char* p_pchContent)
+		throw (out_of_range, xml_parse_error, invalid_message_content);
+
+	virtual pair<lint, const char*> getContent() const;
+
+	virtual string getMessageType() const { return s_coMessageType; }
+
+	virtual uint getMessageTypeId() const { return s_nMessageTypeId; }
+
+	static const string& messageType() { return s_coMessageType; }
+
+	static uint messageTypeId() { return s_nMessageTypeId; }
+
+	const string& getType() const { return m_coType; }
+
+private:
+	static const string s_coMessageType;
+	static const uint s_nMessageTypeId;
+
+private:
+	char* m_pchContent;
+	lint m_nContentSize;
+	string m_coType;
+};
+
+
+class CMsgRestartServer : public CMessage
+{
+public:
+	CMsgRestartServer(char* p_pchContent)
+		throw (out_of_range, xml_parse_error, invalid_message_content)
+		: m_pchContent(NULL) { setContent(p_pchContent); }
+
 	void setContent(char* p_pchContent)
 		throw (out_of_range, xml_parse_error, invalid_message_content);
 
@@ -295,7 +332,9 @@ private:
 	static const uint s_nMessageTypeId;
 
 private:
-	string m_coType;
+	char* m_pchContent;
+	lint m_nContentSize;
 };
+
 
 #endif // CMESSAGE_H
