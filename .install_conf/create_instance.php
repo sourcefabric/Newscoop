@@ -388,6 +388,40 @@ function fill_missing_parameters(&$p_defined_parameters)
 	if (read_old_config("$old_conf_dir/install", '.modules', $CampsiteOld)) {
 		$p_defined_parameters['--smtp_server_address'] = $CampsiteOld['SMTP_SERVER'];
 	}
+
+	if ($p_defined_parameters['--parser_port'] == 0) {
+		$p_defined_parameters['--parser_port'] = generate_parser_port($p_defined_parameters);
+	}
+}
+
+
+function generate_parser_port($p_defined_parameters)
+{
+	global $Campsite;
+
+	$etc_dir = $p_defined_parameters['--etc_dir'];
+	if (!is_dir($etc_dir))
+		die("Invalid directory $etc_dir");
+
+	$max_port_value = 0;
+	$parser_port = 0;
+	if (!$dh = opendir($etc_dir))
+		die("Can't open $etc_dir\n");
+	while (($file_name = readdir($dh)) !== false) {
+		if ($file_name == "." || $file_name == ".." || !is_dir("$etc_dir/$file_name")
+			|| $file_name == $p_defined_parameters['--db_name'])
+			continue;
+		require_once("$etc_dir/$file_name/parser_conf.php");
+		if ($max_port_value < $Campsite['PARSER_PORT'])
+			$max_port_value = $Campsite['PARSER_PORT'];
+	}
+	if ($max_port_value > 0) {
+		$parser_port = $max_port_value + 1;
+	} else {
+		require_once("$etc_dir/parser_conf.php");
+		$parser_port = $Campsite['PARSER_START_PORT'] + 1;
+	}
+	return $parser_port;
 }
 
 
