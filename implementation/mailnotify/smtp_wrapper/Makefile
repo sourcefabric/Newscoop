@@ -1,3 +1,4 @@
+include ../../../make.env
 
 all:
 	$(MAKE) -C smtp_wrapper
