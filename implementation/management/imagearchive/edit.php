@@ -15,11 +15,12 @@ if (!$access) {
 	exit;
 }
 $ImageId = Input::Get('image_id', 'int', 0);
+$view = Input::Get('view', 'string', 'thumbnail', true);
 if (!Input::IsValid()) {
 	header('Location: index.php?'.$imageNav->getSearchLink());
 	exit;	
 }
-$imageNav =& new ImageNav($_REQUEST, CAMPSITE_IMAGEARCHIVE_IMAGES_PER_PAGE, $_REQUEST['view']);
+$imageNav =& new ImageNav(CAMPSITE_IMAGEARCHIVE_IMAGES_PER_PAGE, $view);
 $imageObj =& new Image($ImageId);
 $articles =& ArticleImage::GetArticlesThatUseImage($ImageId);
 ?>
@@ -164,7 +165,7 @@ if (count($articles) > 0) {
 		else {
 			echo '<td>';
 		}
-		echo "<a href=\"/$ADMIN/pub/issues/sections/articles/edit.php?Pub=".htmlspecialchars($article->getPublicationId()).'&Issue='.$article->getIssueId().'&Section='.$article->getSectionId().'&Article='.$article->getArticleId().'&Language='.$article->getLanguageId().'&sLanguage='.$article->getLanguageId().'">'.htmlspecialchars($article->getTitle()).'</a></td></tr>';
+		echo "<a href=\"/$ADMIN/pub/issues/sections/articles/edit.php?Pub=".$article->getPublicationId().'&Issue='.$article->getIssueId().'&Section='.$article->getSectionId().'&Article='.$article->getArticleId().'&Language='.$article->getLanguageId().'&sLanguage='.$article->getLanguageId().'">'.htmlspecialchars($article->getTitle()).'</a></td></tr>';
 		$previousArticleId = $article->getArticleId();
 	}
 	?>
