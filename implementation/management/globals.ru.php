@@ -85,7 +85,7 @@ regGS("Add new article","Добавить новую статью:ru");
 regGS("Status","Статус:ru");
 regGS("No such article.","Нет такой статьи:ru");
 regGS("Published","Опубликовано:ru");
-regGS("Not published","");
+regGS("Not published","Не опубликовано");
 regGS("Submitted","Отправлено:ru");
 regGS("New","Новая:ru");
 regGS("Article","Статья:ru");
@@ -212,6 +212,13 @@ regGS("Days","Дней:ru");
 regGS("(YYYY-MM-DD)","(ГГГГ-ММ-ДД):ru");
 regGS("The sections were added successfully.","Секции были успешно добавлены.:ru");
 regGS("The sections could not be added successfully. Some of them were already added !","Секции не могут быть добавлены. Некоторые из них уже были добавлены !:ru");
+regGS("Add another","Добавить другую");
+regGS("Cancel","Отменить");
+regGS("Done","Выполнено");
+regGS("New field","Новое поле");
+regGS("OK","OK");
+regGS("Save changes","Сохранить изменения");
+regGS("Search","Поиск");
 
 
 ?>

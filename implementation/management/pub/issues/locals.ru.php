@@ -1,9 +1,11 @@
 <?
+
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>","Название<BR><SMALL>(щелкните для просмотра секций)</SMALL>:ru");
 regGS("Front Page Template<BR><SMALL>(click to change)</SMALL>","Шаблон титульной страницы<BR><SMALL>(щелкните для изменения)</SMALL>:ru");
 regGS("Single Article Template<BR><SMALL>(click to change)</SMALL>","Шаблон отдельной статьи<BR><SMALL>(щелкните для изменения)</SMALL>:ru");
 regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>","Опубликовано<BR><SMALL>(гггг-мм-дд)</SMALL>:ru");
 regGS("Delete issue $1","Удаление выпуска $1:ru");
+regGS("Click here to set...","Щелкните здесь, чтобы установить...");
 regGS("Change issue status","Изменить статус выпуска:ru");
 regGS("You do not have the right to change issues.","Вы не имеете права изменить выпуск.:ru");
 regGS("Are you sure you want to change the issue $1 status from $2 to $3?","Вы уверены, что хотите поменять статус выпуска $1 с $2 на $3?:ru");
@@ -43,6 +45,7 @@ regGS("No previous issue.","Нет предыдущего выпуска.:ru");
 regGS("Copy structure from issue nr $1","Скопировать структуру из выпуска №$1:ru");
 regGS("Copying previous issue","Копирование предыдущего выпуска:ru");
 regGS("Copying done.","Копирование завершено.:ru");
+regGS("Select the issue","Выберите выпуск");
 regGS("New issue $1 from $2 in publication $3","Новый выпуск $1 из $2 в публикации $3:ru");
 regGS("Adding new issue","Добавление нового выпуска:ru");
 regGS("Issue $1 added in publication $2","Выпуск $1 добавлен в публикацию $2:ru");
@@ -57,5 +60,6 @@ regGS("The template has been successfully changed.","Шаблон был усп�
 regGS("Issue template for publication $1 changed to $2","Шаблон выпуска для публикации $1 изменен на $2:ru");
 regGS("Issue template for single articles from $1 changed to $2","Шаблон выпуска для отдельной статьи изменен с $1 на $2:ru");
 regGS("The template could not be changed.","Не удалось изменить шаблон.:ru");
+
 
 ?>

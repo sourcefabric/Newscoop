@@ -1,14 +1,21 @@
 <?
+
 regGS("Publication<BR><SMALL>(click to see sections)</SMALL>","Публикация<BR><SMALL>(Щелкните для просмотра секций)</SMALL>:ru");
 regGS("Left to pay","Осталось оплатить:ru");
 regGS("Active","Активно:ru");
 regGS("Delete subscriptions to $1","Удалить подписку на $1:ru");
 regGS("No subscriptions.","Нет подписок.:ru");
+regGS("Paid subscription","Платная подписка");
+regGS("Trial subscription","Пробная подписка");
 regGS("Are you sure you want to delete the subscription to the publication $1?","Вы уверены, что хотите удалить подписку на публикацию $1?:ru");
 regGS("The subscription has been deleted.","Подписка была удалена:ru");
 regGS("The subscription could not be deleted.","Невозможно удалить подписку.:ru");
 regGS("Add sections now","Добавить секцию сейчас:ru");
 regGS("Add sections later","Добавить секцию позже:ru");
+regGS("Subscription Type","Тип подписки");
+regGS("Paid (payment will be confirmed later)","Платная (оплата будет подтверждена позже)");
+regGS("Paid (confirm payment now)","Платная (подтвердить оплату сейчас)");
+regGS("Trial","Пробная");
 regGS("The subscription has been added successfully.","Подписка была успешно добавлена.:ru");
 regGS("The subscription could not be added.","Невозможно добавить подписку.:ru");
 regGS("Please check if there isn't another subscription to the same publication.","Пожалуйста проверьте, что нет другой подписки на эту публикацию.:ru");
@@ -23,5 +30,6 @@ regGS("Subscription status could not be changed.","Невозможно изме
 regGS("Update payment","Обновление оплаты:ru");
 regGS("The subscription payment was updated.","Оплата подписки была обновлена.:ru");
 regGS("Subscription payment could not be changed.","Невозможно изменить оплату подписки.:ru");
+
 
 ?>

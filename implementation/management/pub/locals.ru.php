@@ -1,4 +1,5 @@
 <?
+
 regGS("Name<BR><SMALL>(click to see issues)</SMALL>","Название<BR><SMALL>(щелкните для просмотра выпуска)</SMALL>:ru");
 regGS("Delete publication $1","Удалить публикацию $1:ru");
 regGS("No publications.","Нет публикаций.:ru");
@@ -24,6 +25,7 @@ regGS("The publication $1 could not be deleted.","Не удалось удали
 regGS("Publication $1 deleted","Публикация $1 удалена:ru");
 regGS("Adding new publication","Добавление новой публикации:ru");
 regGS("The publication could not be added.","Не удалось добавить публикацию.:ru");
+regGS("Select the publication","Выберите публикацию");
 regGS("Add new country default subscription time","Добавить время подписки по умолчанию для новой страны:ru");
 regGS("You do not have the right to manage publications.","Вы не имеете права управления публикацией.:ru");
 regGS("Adding new country default subscription time","Добавление времени подписки по умолчанию для новой страны:ru");
@@ -45,5 +47,6 @@ regGS("Subscription default time for $1 deleted","Время подписки п
 regGS("Name<BR><SMALL>(click to select the publication)</SMALL>","Название<BR><SMALL>(щелкните для выбора выпуска)</SMALL>:ru");
 regGS("The publication $1 has been successfuly added.","Публикация $1 успешно добавлена:ru");
 regGS("Publication $1 added","Добавлен публикация $1:ru");
+
 
 ?>
