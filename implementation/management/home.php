@@ -84,7 +84,7 @@ list($SubmittedArticles, $NumSubmittedArticles) = Article::GetSubmittedArticles(
 		
 		<?php  if ($User->hasPermission("AddArticle")) { ?>	
 		<TR>
-			<TD ALIGN="RIGHT"><A HREF="pub/add_article.php"><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Add new article"); ?>"></A></TD><TD NOWRAP><A HREF="pub/add_article.php"><?php  putGS("Add new article"); ?></A></TD>
+			<TD ALIGN="RIGHT"><A HREF="pub/add_article.php?Back=/priv/home.php"><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Add new article"); ?>"></A></TD><TD NOWRAP><A HREF="pub/add_article.php?Back=/priv/home.php"><?php  putGS("Add new article"); ?></A></TD>
 		</TR>
 		<?php  } ?>
 		
@@ -147,11 +147,8 @@ list($SubmittedArticles, $NumSubmittedArticles) = Article::GetSubmittedArticles(
 
 		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3">
 		<TR>
-			<TD colspan="3">
-				<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
-					<TD><IMG SRC="/priv/img/tol.gif" BORDER="0"></TD>
-					<TD><b><?php  putGS("Your articles"); ?></b></TD>
-				</TABLE>
+			<TD colspan="3" style="font-weight: bold; font-size: 12pt;">
+				<?php  putGS("Your articles"); ?>
 			</TD>
 		</TR>
 		<TR BGCOLOR="#C0D0FF">
@@ -246,13 +243,8 @@ list($SubmittedArticles, $NumSubmittedArticles) = Article::GetSubmittedArticles(
 			?>
 		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3">
 		<tr>
-			<td colspan="2">
-				<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
-				<TR>
-					<TD><IMG SRC="/priv/img/tol.gif" BORDER="0"></TD>
-					<TD><b><?php putGS("Submitted articles"); ?></b></TD>
-				</TR>
-				</TABLE>			
+			<td colspan="2" style="font-weight: bold; font-size: 12pt;">
+				<?php putGS("Submitted articles"); ?>
 			</td>
 		</tr>
 		
