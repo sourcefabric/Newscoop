@@ -29,7 +29,7 @@ class Publication extends DatabaseObject {
 
 	function GetAllPublications() {
 		global $Campsite;
-		$queryStr = 'SELECT * FROM Publications';
+		$queryStr = 'SELECT * FROM Publications ORDER BY Name';
 		$query = $Campsite['db']->Execute($queryStr);
 		$publications = array();
 		while ($row = $query->FetchRow()) {
