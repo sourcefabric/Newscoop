@@ -110,16 +110,20 @@ else
     modules_conf --set $mod || exit 1
 fi
 
-echo -n "Writing create_instance script..."
-create_instance_script=${INSTALL_CONF}/create_instance
-rm -f "$create_instance_script"
-cat > "$create_instance_script" << EOF
+echo -n "Writing campsite_config script..."
+campsite_config_script=${INSTALL_CONF}/campsite_config
+rm -f "$campsite_config_script"
+cat > "$campsite_config_script" << EOF
 #!/bin/sh
 
-php "$BIN_DIR/create_instance.php" --etc_dir "$ETC_DIR" $*
+[ "\$1" = "--campsite_dir" ] && echo -n "$CAMPSITE_DIR"
+[ "\$1" = "--bin_dir" ] && echo -n "$BIN_DIR"
+[ "\$1" = "--etc_dir" ] && echo -n "$ETC_DIR"
+[ "\$1" = "--www_dir" ] && echo -n "$WWW_DIR"
+[ "\$1" = "--www_common_dir" ] && echo -n "$WWW_COMMON_DIR"
 EOF
 [ $? -ne 0 ] && echo "ERROR" && exit 1
-chmod +x "$create_instance_script"
+chmod +x "$campsite_config_script"
 echo "done"
 
 echo -n "Writing make.env file..."
