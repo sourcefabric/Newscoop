@@ -63,11 +63,14 @@ B_MSGBOX(<*Adding new translation*>)
 	query ("INSERT IGNORE INTO Issues SET Name='$cName', IdPublication=$cPub, IdLanguage=$cLang, Number=$cNumber");
 	$created= ($AFFECTED_ROWS > 0);
 	if($created){
-		query ("SELECT * FROM Sections WHERE IdPublication=$cPub AND NrIssue=$cNumber AND IdLanguage=$Language", 'q_sect');
+		$sql = "SELECT * FROM Sections WHERE IdPublication=$cPub AND NrIssue=$cNumber AND IdLanguage=$Language";
+		query($sql, 'q_sect');
 		$nr2=$NUM_ROWS;
 		for($loop2=0;$loop2<$nr2;$loop2++) {
 			fetchRow($q_sect);
-			query ("INSERT IGNORE INTO Sections SET IdPublication=$cPub, NrIssue=$cNumber, IdLanguage=$cLang, Number=".getSVar($q_sect,'Number').", Name='".getSVar($q_sect,'Name')."'");
+			$section = getSVar($q_sect,'Number');
+			$sql = "INSERT IGNORE INTO Sections SET IdPublication=$cPub, NrIssue=$cNumber, IdLanguage=$cLang, Number=$section, ShortName='$section', Name='".getSVar($q_sect,'Name')."'";
+			query($sql);
 		}
 	}
     }
