@@ -145,10 +145,10 @@ pthread_once_t TOLAction::m_InitControl = PTHREAD_ONCE_INIT;
 // Init: initialise operators map
 void TOLAction::Init()
 {
-	m_coOpMap.insert(Int2String::value_type((int)TOL_OP_IS, "="));
-	m_coOpMap.insert(Int2String::value_type((int)TOL_OP_IS_NOT, "!="));
-	m_coOpMap.insert(Int2String::value_type((int)TOL_OP_GREATER, ">"));
-	m_coOpMap.insert(Int2String::value_type((int)TOL_OP_SMALLER, "<"));
+	m_coOpMap[(int)TOL_OP_IS] = "=";
+	m_coOpMap[(int)TOL_OP_IS_NOT] = "!=";
+	m_coOpMap[(int)TOL_OP_GREATER] = ">";
+	m_coOpMap[(int)TOL_OP_SMALLER] = "<";
 }
 
 // DEBUGAct: print debug information

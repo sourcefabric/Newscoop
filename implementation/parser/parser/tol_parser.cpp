@@ -226,10 +226,10 @@ TK_MYSQL TOLParser::s_MYSQL(NULL);
 // OpMapInit: called only once to initialise the operators map
 void TOLParser::OpMapInit()
 {
-	op_map.insert(String2Int::value_type("is", (int)TOL_OP_IS));
-	op_map.insert(String2Int::value_type("not", (int)TOL_OP_IS_NOT));
-	op_map.insert(String2Int::value_type("greater", (int)TOL_OP_GREATER));
-	op_map.insert(String2Int::value_type("smaller", (int)TOL_OP_SMALLER));
+	op_map["is"] = (int)TOL_OP_IS;
+	op_map["not"] = (int)TOL_OP_IS_NOT;
+	op_map["greater"] = (int)TOL_OP_GREATER;
+	op_map["smaller"] = (int)TOL_OP_SMALLER;
 }
 
 // MapTpl: map template file to m_pchTplBuf buffer
