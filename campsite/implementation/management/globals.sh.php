@@ -85,7 +85,7 @@ regGS("Add new article","Dodaj novi članak");
 regGS("Status","Status");
 regGS("No such article.","Nema takvog članka");
 regGS("Published","Objavljen");
-regGS("Not published","");
+regGS("Not published","Neobjavljeno");
 regGS("Submitted","Poslat");
 regGS("New","Novi");
 regGS("Article","Članak");
@@ -212,6 +212,13 @@ regGS("Days","Dana");
 regGS("(YYYY-MM-DD)","(GGGG-MM-DD)");
 regGS("The sections were added successfully.","Rubrike su uspešno dodate");
 regGS("The sections could not be added successfully. Some of them were already added !","Rubrike ne mogu biti dodate. Neke od njih već postoje!");
+regGS("Add another","Nastavi sa dodavanjem");
+regGS("Cancel","Poništi");
+regGS("Done","Gotovo");
+regGS("New field","Novo polje");
+regGS("OK","OK");
+regGS("Save changes","Snimi izmene");
+regGS("Search","Traži");
 
 
 ?>

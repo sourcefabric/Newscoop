@@ -25,6 +25,7 @@ regGS("The publication $1 could not be deleted.","Publikacija $1 ne možebiti ob
 regGS("Publication $1 deleted","Publikacija $1 je obrisana");
 regGS("Adding new publication","Dodavanje nove publikacije");
 regGS("The publication could not be added.","Publikacija ne može biti dodata");
+regGS("Select the publication","Izaberite publikaciju");
 regGS("Add new country default subscription time","Dodaj novi osnovni period pretplate za državu");
 regGS("You do not have the right to manage publications.","Nemate pravo da administrirate publikacijama");
 regGS("Adding new country default subscription time","Dodavanje novog osnovnog perioda pretplate za državu");
