@@ -46,6 +46,7 @@ CActSearch, CActWith methods.
 #include "cparser.h"
 #include "data_types.h"
 #include "attributes_impl.h"
+#include "cpublication.h"
 
 using std::set;
 using std::cout;
@@ -1538,11 +1539,18 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 	{
 		if (c.Publication() < 0)
 			return ERR_NOPARAM;
-		table = "Publications";
-		SetNrField("Id", c.Publication(), buf, w);
+		table = "Publications as p, Aliases as a";
+		w = "p.IdDefaultAlias = a.Id";
+		SetNrField("p.Id", c.Publication(), buf, w);
 	}
 	else if (modifier == CMS_ST_ISSUE)
 	{
+		if (case_comp(field, "template") == 0)
+		{
+			fs << "/" << CPublication::getIssueTemplate(c.Language(), c.Publication(), 
+			                                            c.Issue(), &m_coSql);
+			return RES_OK;
+		}
 		table = "Issues";
 		if (c.Access() != A_ALL)
 			w = "Published = 'Y'";
@@ -1552,6 +1560,12 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 	}
 	else if (modifier == CMS_ST_SECTION)
 	{
+		if (case_comp(field, "template") == 0)
+		{
+			fs << "/" << CPublication::getSectionTemplate(c.Language(), c.Publication(), 
+			                                              c.Issue(), c.Section(), &m_coSql);
+			return RES_OK;
+		}
 		table = "Sections";
 		need_lang = true;
 		SetNrField("IdPublication", c.Publication(), buf, w);
@@ -1565,6 +1579,12 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 	}
 	else
 	{ // CMS_ST_ARTICLE
+		if (case_comp(field, "template") == 0)
+		{
+			fs << "/" << CPublication::getArticleTemplate(c.Language(), c.Publication(), 
+			                                              c.Issue(), c.Section(), &m_coSql);
+			return RES_OK;
+		}
 		table = "Articles";
 		if (type != "")
 			field = "Type, Number, IdLanguage";
