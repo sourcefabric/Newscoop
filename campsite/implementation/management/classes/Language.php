@@ -4,14 +4,13 @@ require_once($_SERVER['DOCUMENT_ROOT']."/classes/DatabaseObject.php");
 
 class Language extends DatabaseObject {
 	var $m_dbTableName = "Languages";
-	var $m_primaryKeyColumnNames = array("Id");
-	var $Id;
-	var $Name;
-	var $Code;
+	var $m_keyColumnNames = array("Id");
+	var $m_keyIsAutoIncrement = true;
+	var $m_columnNames = array("Id", "Name", "Code");
 	
 	function Language($p_languageId = null) {
-		parent::DatabaseObject();
-		$this->Id = $p_languageId;
+		parent::DatabaseObject($this->m_columnNames);
+		$this->setProperty("Id", $p_languageId, false);
 		if (!is_null($p_languageId)) {
 			$this->fetch();
 		}
@@ -31,16 +30,16 @@ class Language extends DatabaseObject {
 	} // fn getAllLanguages
 
 	function getLanguageId() {
-		return $this->Id;
+		return $this->getProperty("Id");
 	} // fn getLanguageId
 	
 	
 	function getName() {
-		return $this->Name;
+		return $this->getProperty("Name");
 	} // fn getName
 	
 	function getCode() {
-		return $this->Code;
+		return $this->getProperty("Code");
 	} // fn getCode
 	
 } // class Language

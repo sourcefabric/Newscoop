@@ -4,22 +4,14 @@ require_once($_SERVER['DOCUMENT_ROOT']."/classes/DatabaseObject.php");
 
 class Publication extends DatabaseObject {
 	var $m_dbTableName = "Publications";
-	var $m_primaryKeyColumnNames = array("Id");
-	var $Id;
-	var $Name;
-	var $IdDefaultLanguage;
-	var $PayTime;
-	var $TimeUnit;
-	var $UnitCost;
-   	var $Currency;
-	var $TrialTime;
-	var $PaidTime;
-	var $IdDefaultAlias;
-	var $IdURLType;
+	var $m_keyColumnNames = array("Id");
+	var $m_keyIsAutoIncrement = true;
+	var $m_columnNames = array("Id", "Name", "IdDefaultLanguage", "PayTime", "TimeUnit", "UnitCost", "Currency", "TrialTime", "PaidTime", "IdDefaultAlias", "IdURLType");
 	
 	function Publication($p_publicationId = null) {
-		parent::DatabaseObject();
-		$this->Id = $p_publicationId;
+		parent::DatabaseObject($this->m_columnNames);
+		$this->setProperty("Id", $p_publicationId, false);
+		//$this->Id = $p_publicationId;
 		if (!is_null($p_publicationId)) {
 			$this->fetch();
 		}
@@ -27,15 +19,15 @@ class Publication extends DatabaseObject {
 
 	
 	function getPublicationId() {
-		return $this->Id;
+		return $this->getProperty("Id");
 	} // fn getPublicationId
 	
 	
 	function getName() {
-		return $this->Name;
+		return $this->getProperty("Name");
 	} // fn getName
 
-	function getAllPublications() {
+	function GetAllPublications() {
 		global $Campsite;
 		$queryStr = "SELECT * FROM Publications";
 		$query = $Campsite["db"]->Execute($queryStr);
