@@ -10,33 +10,35 @@ load_common_include_files();
 todefnum('TOL_UserId');
 todefnum('TOL_UserKey');
 list($access, $User) = check_basic_access($_REQUEST);	
-
-if ($access) {
-	// "What" means "what to display".
-	// A value of "1" means "display Your Articles".
-	// A value of "0" means "display Submitted Articles".
-	if ($User->hasPermission("ChangeArticle")) {
-		todefnum('What',0);
-	}
-	else {
-		todefnum('What',1);
-	}
-	todefnum('NArtOffs');
-	if ($NArtOffs<0) {
-		$NArtOffs=0;
-	}
-	todefnum('ArtOffs');
-	if ($ArtOffs < 0) {
-		$ArtOffs=0; 
-	}
-	$NumDisplayArticles=20;
-	$YourArticles = Article::GetArticlesByUser($User->getId(), $ArtOffs, 
-		$NumDisplayArticles+1);
-	$NumYourArticles = count($YourArticles);
-	
-	$SubmittedArticles = Article::GetSubmittedArticles($NArtOffs, $NumDisplayArticles+1);
-	$NumSubmittedArticles = count($SubmittedArticles);
+if (!$access) {
+	header("Location: /priv/logout.php");
+	exit;
 }
+
+// "What" means "what to display".
+// A value of "1" means "display Your Articles".
+// A value of "0" means "display Submitted Articles".
+if ($User->hasPermission("ChangeArticle")) {
+	todefnum('What',0);
+}
+else {
+	todefnum('What',1);
+}
+todefnum('NArtOffs');
+if ($NArtOffs<0) {
+	$NArtOffs=0;
+}
+todefnum('ArtOffs');
+if ($ArtOffs < 0) {
+	$ArtOffs=0; 
+}
+$NumDisplayArticles=20;
+$YourArticles = Article::GetArticlesByUser($User->getId(), $ArtOffs, 
+	$NumDisplayArticles+1);
+$NumYourArticles = count($YourArticles);
+
+$SubmittedArticles = Article::GetSubmittedArticles($NArtOffs, $NumDisplayArticles+1);
+$NumSubmittedArticles = count($SubmittedArticles);
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
 	"http://www.w3.org/TR/REC-html40/loose.dtd">
@@ -44,7 +46,7 @@ if ($access) {
 <HEAD>
     <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<META HTTP-EQUIV="Expires" CONTENT="now">
-	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite["website_url"] ?>/stylesheet.css">
+	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite["website_url"] ?>/css/admin_stylesheet.css">
 	<script>
 	<!--
 	/*
@@ -61,16 +63,7 @@ if ($access) {
 	// -->
 	</script>
 	<TITLE><?php  putGS("Home"); ?></TITLE>
-	<?php  if (!$access) { ?>		
-	<META HTTP-EQUIV="Refresh" CONTENT="0; URL=/priv/logout.php">
-	<?php  } ?>
 </HEAD>
-<?php 
-if (!$access) {
-	CampsiteInterface::CopyrightNotice();
-	return;
-}
-?>
 <BODY  BGCOLOR="WHITE" TEXT="BLACK" LINK="DARKBLUE" ALINK="RED" VLINK="DARKBLUE">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%">
 <TR>
