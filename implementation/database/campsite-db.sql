@@ -268,7 +268,7 @@ CREATE TABLE `Images` (
   `UploadedByUser` int(11) default NULL,
   `LastModified` timestamp(14) NOT NULL,
   `TimeCreated` timestamp(14) NOT NULL default '00000000000000',
-  PRIMARY KEY (`Id`)
+  PRIMARY KEY  (`Id`)
 ) TYPE=MyISAM;
 
 --
@@ -786,5 +786,5 @@ CREATE TABLE `Users` (
 -- Dumping data for table `Users`
 --
 
-INSERT INTO `Users` (`Id`, `KeyId`, `Name`, `UName`, `Password`, `EMail`, `Reader`, `City`, `StrAddress`, `State`, `CountryCode`, `Phone`, `Fax`, `Contact`, `Phone2`, `Title`, `Gender`, `Age`, `PostalCode`, `Employer`, `EmployerType`, `Position`, `Interests`, `How`, `Languages`, `Improvements`, `Pref1`, `Pref2`, `Pref3`, `Pref4`, `Field1`, `Field2`, `Field3`, `Field4`, `Field5`, `Text1`, `Text2`, `Text3`) VALUES (1,745943461,'Administrator','admin','2c380f066e0e45d1','','N','','','','','','','','','Mr.','M','0-17','','','','','','','','','N','N','N','N','','','','','','','','');
+INSERT INTO `Users` (`Id`, `KeyId`, `Name`, `UName`, `Password`, `EMail`, `Reader`, `City`, `StrAddress`, `State`, `CountryCode`, `Phone`, `Fax`, `Contact`, `Phone2`, `Title`, `Gender`, `Age`, `PostalCode`, `Employer`, `EmployerType`, `Position`, `Interests`, `How`, `Languages`, `Improvements`, `Pref1`, `Pref2`, `Pref3`, `Pref4`, `Field1`, `Field2`, `Field3`, `Field4`, `Field5`, `Text1`, `Text2`, `Text3`) VALUES (1,NULL,'Administrator','admin','2c380f066e0e45d1','','N','','','','','','','','','Mr.','M','0-17','','','','','','','','','N','N','N','N','','','','','','','','');
 
