@@ -55,15 +55,9 @@ install: $(ALL)
 	$(MAKE) -C popup install
 	$(MAKE) -C localizer install
 	chown $(APACHE_USER):$(APACHE_GROUP) $(HTML_COMMON_DIR)/*.php
-	chown -R $(APACHE_USER):$(APACHE_GROUP) $(HTML_COMMON_DIR)/look
-	chown -R $(APACHE_USER):$(APACHE_GROUP) $(HTML_COMMON_DIR)/javascript
-	chown -R $(APACHE_USER):$(APACHE_GROUP) $(HTML_COMMON_DIR)/classes
-	chown -R $(APACHE_USER):$(APACHE_GROUP) $(HTML_COMMON_DIR)/css
-	chown -R $(APACHE_USER):$(APACHE_GROUP) $(HTML_COMMON_DIR)/include
-	chown -R $(APACHE_USER):$(APACHE_GROUP) $(PRIV_COMMON_DIR)/imagearchive
-	chown -R $(APACHE_USER):$(APACHE_GROUP) $(PRIV_COMMON_DIR) 
+	chown -R $(APACHE_USER):$(APACHE_GROUP) $(HTML_COMMON_DIR)/*
+	chown -R $(APACHE_USER):$(APACHE_GROUP) $(PRIV_COMMON_DIR)
 	chown -R $(APACHE_USER):$(APACHE_GROUP) $(SCRIPT_COMMON_DIR)
-	chown -R $(APACHE_USER):$(APACHE_GROUP) $(HTML_COMMON_DIR)/images
 	chmod u+rw $(HTML_COMMON_DIR)/*.php
 	chmod g+r $(HTML_COMMON_DIR)/*.php
 	chmod o-rwx $(HTML_COMMON_DIR)/*.php
