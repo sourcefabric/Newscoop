@@ -246,7 +246,7 @@ regGS("Yes","Yes:en");
 regGS("No","No:en");
 regGS("No issues.","No issues.:en");
 
-regGS("Back to article details","Back to article details:en");
+regGS("Back to article details","Back to Edit Article:en");
 regGS("Adding new topic","Adding new topic:en");
 regGS("Topic $1 added","Topic $1 added:en");
 regGS("The topic could not be added.","The topic could not be added.:en");
