@@ -33,6 +33,8 @@ regGS("Configure", "Configure:en");
 regGS("Image archive", "Image Archive:en");
 regGS("URL","URL");
 regGS("Order", "Order:en");
+regGS("Show Sections", "Show Sections:en");
+regGS("Hide Sections", "Hide Sections:en");
 
 regGS("Duplicate", "Duplicate:en");
 regGS("Select destination", "Select destination:en");
