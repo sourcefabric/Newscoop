@@ -46,16 +46,12 @@ if (function_exists ("incModFile")) {
 
 <BODY  BGCOLOR="WHITE" TEXT="BLACK" LINK="DARKBLUE" ALINK="RED" VLINK="DARKBLUE">
 
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
 <TR>
-	<!--<TD ROWSPAN="2" WIDTH="1%"><IMG SRC="/<?php echo $ADMIN; ?>/img/sign_big.gif" BORDER="0"></TD>-->
-	<TD style="padding-left: 10px; padding-top: 10px;">
-	    <DIV STYLE="font-size: 12pt"><B><?php  putGS("Add new article"); ?></B></DIV>
-	    <!--<HR NOSHADE SIZE="1" COLOR="BLACK">-->
+	<TD class="page_title">
+	    <?php  putGS("Add new article"); ?>
 	</TD>
-<!--</TR>
-<TR>
--->	<TD ALIGN="RIGHT" style="padding-right: 10px; padding-top: 10px;">
+	<TD ALIGN="RIGHT" style="padding-right: 10px; padding-top: 10px;">
 		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
 		<TR>
 			<?php if ($Wiz == 0) { ?>
@@ -73,18 +69,17 @@ if (function_exists ("incModFile")) {
 	</TD>
 </TR>
 </TABLE>
-<HR NOSHADE SIZE="1" COLOR="BLACK">
 
-<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="1" WIDTH="100%">
+<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="1" WIDTH="100%" class="current_location_table">
 <TR>
-	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP">&nbsp;<?php  putGS("Publication"); ?>:</TD>
-	<TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><?php p(htmlspecialchars($publicationObj->getName())); ?></B></TD>
+	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php  putGS("Publication"); ?>:</TD>
+	<TD VALIGN="TOP" class="current_location_content"><?php p(htmlspecialchars($publicationObj->getName())); ?></TD>
 
-	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP">&nbsp;<?php  putGS("Issue"); ?>:</TD>
-	<TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><?php p($issueObj->getIssueId()); ?>. <?php  p(htmlspecialchars($issueObj->getName())); ?> (<?php p(htmlspecialchars($languageObj->getName())); ?>)</B></TD>
+	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php  putGS("Issue"); ?>:</TD>
+	<TD VALIGN="TOP" class="current_location_content"><?php p($issueObj->getIssueId()); ?>. <?php  p(htmlspecialchars($issueObj->getName())); ?> (<?php p(htmlspecialchars($languageObj->getName())); ?>)</TD>
 
-	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP">&nbsp;<?php  putGS("Section"); ?>:</TD>
-	<TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><?php p($sectionObj->getSectionId()); ?>. <?php  p(htmlspecialchars($sectionObj->getName())); ?></B></TD>
+	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php  putGS("Section"); ?>:</TD>
+	<TD VALIGN="TOP" class="current_location_content"><?php p($sectionObj->getSectionId()); ?>. <?php  p(htmlspecialchars($sectionObj->getName())); ?></TD>
 </TR>
 </TABLE>
 
