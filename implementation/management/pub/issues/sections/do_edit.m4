@@ -20,10 +20,12 @@ E_STYLE
 B_BODY
 
 <?php 
-    todefnum('Pub');
-    todefnum('Issue');
-    todefnum('Section');
-    todefnum('Language');
+	todefnum('Pub');
+	todefnum('Issue');
+	todefnum('Section');
+	todefnum('Language');
+	todefnum('cSectionTplId');
+	todefnum('cArticleTplId');
 ?>dnl
 
 B_HEADER(<*Updating section name*>)
@@ -65,9 +67,13 @@ B_MSGBOX(<*Updating section name*>)
 		<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); ?></LI>
 <?php  }
 
-    if ($correct) {
-		query ("UPDATE Sections SET Name='$cName' WHERE IdPublication=$Pub AND NrIssue=$Issue AND Number=$Section AND IdLanguage=$Language");
-		$created= ($AFFECTED_ROWS > 0);
+	if ($correct) {
+		$sql = "UPDATE Sections SET Name='$cName'";
+		$sql .= ", SectionTplId = " . ($cSectionTplId > 0 ? $cSectionTplId : "NULL");
+		$sql .= ", ArticleTplId = " . ($cArticleTplId > 0 ? $cArticleTplId : "NULL");
+		$sql .= " WHERE IdPublication=$Pub AND NrIssue=$Issue AND Number=$Section AND IdLanguage=$Language";
+		query($sql);
+		$created= ($AFFECTED_ROWS >= 0);
 
 		## added by sebastian
 		if (function_exists ("incModFile"))

@@ -7,7 +7,7 @@ CHECK_ACCESS(<*ManageSection*>)
 
 B_HEAD
  X_EXPIRES
- X_TITLE(<*Change section name*>)
+ X_TITLE(<*Configure section*>)
 <?php  if ($access == 0) { ?>dnl
  X_AD(<*You do not have the right to change section details*>)
 <?php  } ?>dnl
@@ -25,10 +25,10 @@ B_BODY
     todefnum('Section');
     todefnum('Language');
 ?>dnl
-B_HEADER(<*Change section name*>)
+B_HEADER(<*Configure section*>)
 B_HEADER_BUTTONS
 X_HBUTTON(<*Sections*>, <*pub/issues/sections/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>*>)
-X_HBUTTON(<*Issues*>, <*pub/issues/?Pub=< ? p($Pub); ?>*>)
+X_HBUTTON(<*Issues*>, <*pub/issues/?Pub=<?php p($Pub); ?>*>)
 X_HBUTTON(<*Publications*>, <*pub/*>)
 X_HBUTTON(<*Home*>, <*home.php*>)
 X_HBUTTON(<*Logout*>, <*logout.php*>)
@@ -54,21 +54,37 @@ X_CURRENT(<*Issue*>, <*<B><?php  pgetHVar($q_iss,'Number'); ?>. <?php  pgetHVar(
 X_CURRENT(<*Section*>, <*<B><?php  pgetHVar($q_sect,'Number'); ?>. <?php  pgetHVar($q_sect,'Name'); ?></B>*>)
 E_CURRENT
 
-<?php
- query ("SELECT MAX(Number) + 1 FROM Sections WHERE IdPublication=$Pub AND NrIssue=$Issue AND IdLanguage=$Language", 'q_nr');
- fetchRowNum($q_nr);
- if (getNumVar($q_nr,0) == "") {
-  $nr= 1;
- }
- else {
-  $nr=getNumVar($q_nr,0);
- }
-?>dnl
 <P>
-B_DIALOG(<*Change section name*>, <*POST*>, <*do_edit.php*>)
+B_DIALOG(<*Configure section*>, <*POST*>, <*do_edit.php*>)
  B_DIALOG_INPUT(<*Name*>)
   <INPUT TYPE="TEXT" NAME="cName" SIZE="32" MAXLENGTH="64" value="<?php  pgetHVar($q_sect,'Name'); ?>">
  E_DIALOG_INPUT
+	B_DIALOG_INPUT(<*Section Template*>)
+		<SELECT NAME="cSectionTplId">
+			<OPTION VALUE="0">---</OPTION>
+<?php 
+	query ("SELECT Id, Name FROM Templates ORDER BY Level ASC, Name ASC", 'q_sect_tpl');
+	$nr=$NUM_ROWS;
+	for($loop=0;$loop<$nr;$loop++) {
+		fetchRow($q_sect_tpl);
+		pcomboVar(getVar($q_sect_tpl,'Id'),getVar($q_sect,'SectionTplId'),getVar($q_sect_tpl,'Name'));
+	}
+?>dnl
+	    </SELECT>
+	E_DIALOG_INPUT
+	B_DIALOG_INPUT(<*Article Template*>)
+		<SELECT NAME="cArticleTplId">
+			<OPTION VALUE="0">---</OPTION>
+<?php 
+	query ("SELECT Id, Name FROM Templates ORDER BY Level ASC, Name ASC", 'q_art_tpl');
+	$nr=$NUM_ROWS;
+	for($loop=0;$loop<$nr;$loop++) {
+		fetchRow($q_art_tpl);
+		pcomboVar(getVar($q_art_tpl,'Id'),getVar($q_sect,'ArticleTplId'),getVar($q_art_tpl,'Name'));
+	}
+?>dnl
+	    </SELECT>
+	E_DIALOG_INPUT
  B_DIALOG_INPUT(<*Subscriptions*>)
   <SELECT NAME="cSubs">
    <OPTION VALUE="n"> --- </OPTION>
