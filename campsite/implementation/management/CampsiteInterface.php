@@ -9,12 +9,13 @@ class CampsiteInterface {
 	 * Display the copyright notice and close the HTML page.
 	 */
 	function CopyrightNotice() {
+		global $Campsite;
 		?>
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
 		<a style='font-size:8pt;color:#000000' 
 		   href='http://www.campware.org' 
 		   target='campware'>
-		CAMPSITE  2.1.5 &copy 1999-2004 MDLF, 
+		CAMPSITE  <?php echo $Campsite["version"] ?> &copy 1999-2004 MDLF, 
 		maintained and distributed under GNU GPL by CAMPWARE
 		</a>
 		</BODY>
