@@ -14,10 +14,10 @@ if (!$User->hasPermission('ManageTempl')) {
 	exit;
 }
 
-$Path = Input::get('Path', 'string', '');
-$Charset = Input::get('Charset', 'string', '');
-$UNIQUE_ID = Input::get('UNIQUE_ID', 'string', '');
-$Id = Input::get('Id', 'int', 0);
+$Path = Input::Get('Path', 'string', '');
+$Charset = Input::Get('Charset', 'string', '');
+$UNIQUE_ID = Input::Get('UNIQUE_ID', 'string', '');
+$Id = Input::Get('Id', 'int', 0);
 todef('File', $HTTP_POST_FILES[File][tmp_name]);
 todef('File_name', $HTTP_POST_FILES[File][name]);
 

@@ -9,46 +9,46 @@ if (!$access) {
 	exit;
 }
 
-$Pub = Input::get('Pub', 'int', 0);
-$Issue = Input::get('Issue', 'int', 0);
-$Section = Input::get('Section', 'int', 0);
-$Language = Input::get('Language', 'int', 0);
-$sLanguage = Input::get('sLanguage', 'int', 0);
-$Article = Input::get('Article', 'int', 0);
-$TopicId = Input::get('IdCateg', 'int', 0, true);
-$TopicOffset = Input::get('CatOffs', 'int', 0, true);
+$Pub = Input::Get('Pub', 'int', 0);
+$Issue = Input::Get('Issue', 'int', 0);
+$Section = Input::Get('Section', 'int', 0);
+$Language = Input::Get('Language', 'int', 0);
+$sLanguage = Input::Get('sLanguage', 'int', 0);
+$Article = Input::Get('Article', 'int', 0);
+$TopicId = Input::Get('IdCateg', 'int', 0, true);
+$TopicOffset = Input::Get('CatOffs', 'int', 0, true);
 if ($TopicOffset < 0) {
 	$TopicOffset = 0;
 }
-$TopicsPerPage = Input::get('lpp', 'int', 10, true);
-$searchTopicsString = trim(Input::get('search_topics_string', 'string', '', true));
+$TopicsPerPage = Input::Get('lpp', 'int', 10, true);
+$searchTopicsString = trim(Input::Get('search_topics_string', 'string', '', true));
 
-if (!Input::isValid()) {
-	header("Location: /$ADMIN/logout.php");
+if (!Input::IsValid()) {
+	CampsiteInterface::DisplayError(array('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
 	exit;	
 }
 
 $publicationObj =& new Publication($Pub);
 if (!$publicationObj->exists()) {
-	header("Location: /$ADMIN/logout.php");
+	CampsiteInterface::DisplayError('Publication does not exist.');
 	exit;	
 }
 
 $issueObj =& new Issue($Pub, $Language, $Issue);
 if (!$issueObj->exists()) {
-	header("Location: /$ADMIN/logout.php");
+	CampsiteInterface::DisplayError('Issue does not exist.');
 	exit;	
 }
 
 $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
 if (!$sectionObj->exists()) {
-	header("Location: /$ADMIN/logout.php");
+	CampsiteInterface::DisplayError('Section does not exist.');
 	exit;		
 }
 
 $articleObj =& new Article($Pub, $Issue, $Section, $Language, $Article);
 if (!$articleObj->exists()) {
-	header("Location: /$ADMIN/logout.php");
+	CampsiteInterface::DisplayError('Article does not exist.');
 	exit;		
 }
 

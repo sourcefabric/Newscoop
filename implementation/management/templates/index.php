@@ -8,7 +8,7 @@ if (!$access) {
 	exit;
 }
 
-$path = Input::get('Path', 'string', '');
+$path = Input::Get('Path', 'string', '');
 $print_path = $path != "" ? $path : "/";
 register_templates($Campsite['HTML_DIR'] . "/look", $errors);
 verify_templates($Campsite['HTML_DIR'] . "/look", $mt, $dt, $errors);

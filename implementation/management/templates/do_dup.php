@@ -13,9 +13,9 @@ if (!$User->hasPermission('ManageTempl')) {
 	exit;
 }
 
-$cPath = Input::get('cPath', 'string', '');
-$cName = Input::get('cName', 'string', '');
-$Name = Input::get('Name', 'string', '');
+$cPath = Input::Get('cPath', 'string', '');
+$cName = Input::Get('cName', 'string', '');
+$Name = Input::Get('Name', 'string', '');
 
 $correct = trim($cName) != "";
 if ($correct) {

@@ -9,30 +9,44 @@ if (!$access) {
 	exit;
 }
 
-$Pub = Input::get('Pub', 'int', 0);
-$Issue = Input::get('Issue', 'int', 0);
-$Section = Input::get('Section', 'int', 0);
-$Language = Input::get('Language', 'int', 0);
-$Article = Input::get('Article', 'int', 0);
-$sLanguage = Input::get('sLanguage', 'int', 0);
-$Status = Input::get('Status', 'string', 'N');
-$Back = Input::get('Back', 'string', "/$ADMIN/pub/issues/sections/articles/index.php", true);
+$Pub = Input::Get('Pub', 'int', 0);
+$Issue = Input::Get('Issue', 'int', 0);
+$Section = Input::Get('Section', 'int', 0);
+$Language = Input::Get('Language', 'int', 0);
+$Article = Input::Get('Article', 'int', 0);
+$sLanguage = Input::Get('sLanguage', 'int', 0);
+$Status = strtoupper(Input::Get('Status', 'string', 'N'));
+$BackLink = Input::Get('Back', 'string', "/$ADMIN/pub/issues/sections/articles/index.php", true);
 
-if (!Input::isValid()) {
-	header("Location: /$ADMIN/logout.php");
+if (!Input::IsValid()) {
+	CampsiteInterface::DisplayError(array('Invalid input: $1', Input::GetErrorString()), $BackLink);
 	exit;	
 }
 
 if ( ($Status != 'N') && ($Status != 'S') && ($Status != 'Y')) {
-	header("Location: /$ADMIN/logout.php");
+	CampsiteInterface::DisplayError(array('Invalid input: $1', "Invalid status code:".$Status), $BackLink);
 	exit;		
 }
 
 $articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
+if (!$articleObj->exists()) {
+	CampsiteInterface::DisplayError('Article does not exist.', $BackLink);
+	exit;		
+}
 $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
+if (!$sectionObj->exists()) {
+	CampsiteInterface::DisplayError('Section does not exist.', $BackLink);	
+}
 $issueObj =& new Issue($Pub, $Language, $Issue);
-$languageObj =& new Language($Language);
+if (!$issueObj->exists()) {
+	CampsiteInterface::DisplayError('Issue does not exist.', $BackLink);	
+}
 $publicationObj =& new Publication($Pub);
+if (!$publicationObj->exists()) {
+	CampsiteInterface::DisplayError('Publication does not exist.', $BackLink);	
+}
+
+$languageObj =& new Language($Language);
 
 $userIsArticleOwner = ($User->getId() == $articleObj->getUserId());
 $articleIsNew = ($articleObj->getPublished() == 'N');
@@ -47,7 +61,8 @@ if ($User->hasPermission('Publish')
 	$access = true;
 }
 if (!$access) {
-	header("Location: /$ADMIN/ad.php?ADReason=".urlencode(getGS("You do not have the right to change this article status. Once submitted an article can only changed by authorized users." )));
+	$errorStr = "You do not have the right to change this article status. Once submitted an article can only changed by authorized users.";
+	CampsiteInterface::DisplayError($errorStr, $BackLink);
 	exit;	
 }
 
@@ -56,6 +71,6 @@ $articleObj->setPublished($Status);
 $logtext = getGS('Article $1 status from $2. $3 from $4. $5 ($6) of $7 changed', $articleObj->getTitle(), $sectionObj->getSectionId(), $sectionObj->getName(), $issueObj->getIssueId(), $issueObj->getName(), $languageObj->getName(), $publicationObj->getName() ); 
 Log::Message($logtext, $User->getUserName(), 35); 
 
-header('Location: '.$Back);
+header('Location: '.$BackLink);
 exit;
 ?>

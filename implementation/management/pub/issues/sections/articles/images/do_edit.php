@@ -17,20 +17,20 @@ if (!$access) {
 	exit;
 }
 
-$Pub = Input::get('Pub', 'int', 0);
-$Issue = Input::get('Issue', 'int', 0);
-$Section = Input::get('Section', 'int', 0);
-$Language = Input::get('Language', 'int', 0);
-$sLanguage = Input::get('sLanguage', 'int', 0);
-$Article = Input::get('Article', 'int', 0);
-$Image = Input::get('Image', 'int', 0);
-$ImageTemplateId = Input::get('cNumber', 'int', 0);
-$Description = Input::get('cDescription', 'string', 'None', true);
-$Photographer = Input::get('cPhotographer', 'string', '', true);
-$Place = Input::get('cPlace', 'string', '', true);
-$Date = Input::get('cDate', 'string', '', true);
+$Pub = Input::Get('Pub', 'int', 0);
+$Issue = Input::Get('Issue', 'int', 0);
+$Section = Input::Get('Section', 'int', 0);
+$Language = Input::Get('Language', 'int', 0);
+$sLanguage = Input::Get('sLanguage', 'int', 0);
+$Article = Input::Get('Article', 'int', 0);
+$Image = Input::Get('Image', 'int', 0);
+$ImageTemplateId = Input::Get('cNumber', 'int', 0);
+$Description = Input::Get('cDescription', 'string', 'None', true);
+$Photographer = Input::Get('cPhotographer', 'string', '', true);
+$Place = Input::Get('cPlace', 'string', '', true);
+$Date = Input::Get('cDate', 'string', '', true);
 
-if (!Input::isValid()) {
+if (!Input::IsValid()) {
 	CampsiteInterface::DisplayError(array('Invalid input: $1', Input::GetErrorString()));
 	exit;	
 }

@@ -9,7 +9,7 @@ class Input {
 	 * The default value is returned if the value is not defined in the $_REQUEST array,
 	 * or if the value does not match the required type.
 	 *
-	 * Use Input::isValid() to check if any errors were generated.
+	 * Use Input::IsValid() to check if any errors were generated.
 	 *
 	 * @param string p_varName
 	 *		The index into the $_REQUEST array.
@@ -27,7 +27,7 @@ class Input {
 	 *
 	 * @return mixed
 	 */
-	function get($p_varName, $p_type = 'string', $p_defaultValue = null, $p_errorsOk = false) {
+	function Get($p_varName, $p_type = 'string', $p_defaultValue = null, $p_errorsOk = false) {
 		global $g_inputErrors;
 		
 		if (!isset($_REQUEST[$p_varName])) {
@@ -59,10 +59,10 @@ class Input {
 	
 	
 	/**
-	 * Return FALSE if any calls to Input::get() resulted in an error.
+	 * Return FALSE if any calls to Input::Get() resulted in an error.
 	 * @return boolean
 	 */
-	function isValid() {
+	function IsValid() {
 		global $g_inputErrors;
 		if (count($g_inputErrors) > 0) {
 			return false;

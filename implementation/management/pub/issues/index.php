@@ -12,8 +12,8 @@ if (!$access) {
 	exit;
 }
 
-$Pub = Input::get('Pub', 'int', 0);
-$IssOffs = Input::get('IssOffs', 'int', 0);
+$Pub = Input::Get('Pub', 'int', 0);
+$IssOffs = Input::Get('IssOffs', 'int', 0);
 
 $mia = $User->hasPermission('ManageIssue');
 $dia = $User->hasPermission('DeleteIssue');

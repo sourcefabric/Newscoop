@@ -17,9 +17,9 @@ if (!$access) {
 	exit;
 }
 
-$Language = Input::get('Language', 'int', 0);
-$Pub = Input::get('Pub', 'int', 0);
-$Issue = Input::get('Issue', 'int', 0);
+$Language = Input::Get('Language', 'int', 0);
+$Pub = Input::Get('Pub', 'int', 0);
+$Issue = Input::Get('Issue', 'int', 0);
 
 $errorStr = "";
 $languageObj = & new Language($Language);

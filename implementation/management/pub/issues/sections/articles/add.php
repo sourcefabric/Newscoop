@@ -7,22 +7,22 @@ if (!$access) {
 	exit;
 }
 if (!$User->hasPermission('AddArticle')) {
-	header("Location: /$ADMIN/ad.php?ADReason=".urlencode(getGS("You do not have the right to add articles." )));
+	CampsiteInterface::DisplayError("You do not have the right to add articles.");
 	exit;
 }
 
-$Pub = Input::get('Pub', 'int', 0);
-$Issue = Input::get('Issue', 'int', 0);
-$Section = Input::get('Section', 'int', 0);
-$Language = Input::get('Language', 'int', 0);
-$Back = Input::get('Back', 'string', 'index.php', true);
-$Wiz = Input::get('Wiz', 'int', 0, true);
+$Pub = Input::Get('Pub', 'int', 0);
+$Issue = Input::Get('Issue', 'int', 0);
+$Section = Input::Get('Section', 'int', 0);
+$Language = Input::Get('Language', 'int', 0);
+$Back = Input::Get('Back', 'string', 'index.php', true);
+$Wiz = Input::Get('Wiz', 'int', 0, true);
 if ($Wiz != 0) {
 	$Back = "/$ADMIN/home.php";
 }
 
-if (!Input::isValid()) {
-	header("Location: /$ADMIN/logout.php");
+if (!Input::IsValid()) {
+	CampsiteInterface::DisplayError(array('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
 	exit;	
 }
 

@@ -9,16 +9,16 @@ if (!$access) {
 	exit;
 }
 
-$Pub = Input::get('Pub', 'int', 0);
-$Issue = Input::get('Issue', 'int', 0);
-$Section = Input::get('Section', 'int', 0);
-$Language = Input::get('Language', 'int', 0);
-$sLanguage = Input::get('sLanguage', 'int', 0, true);
-$ArticleOffset = Input::get('ArtOffs', 'int', 0, true);
-$ArticlesPerPage = Input::get('lpp', 'int', 10, true);
+$Pub = Input::Get('Pub', 'int', 0);
+$Issue = Input::Get('Issue', 'int', 0);
+$Section = Input::Get('Section', 'int', 0);
+$Language = Input::Get('Language', 'int', 0);
+$sLanguage = Input::Get('sLanguage', 'int', 0, true);
+$ArticleOffset = Input::Get('ArtOffs', 'int', 0, true);
+$ArticlesPerPage = Input::Get('lpp', 'int', 10, true);
 
-if (!Input::isValid()) {
-	header("Location: /$ADMIN/logout.php");
+if (!Input::IsValid()) {
+	CampsiteInterface::DisplayError(array('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
 	exit;	
 }
 
@@ -28,19 +28,19 @@ if ($ArticleOffset < 0) {
 
 $publicationObj =& new Publication($Pub);
 if (!$publicationObj->exists()) {
-	header("Location: /$ADMIN/logout.php");
+	CampsiteInterface::DisplayError('Publication does not exist.');
 	exit;	
 }
 
 $issueObj =& new Issue($Pub, $Language, $Issue);
 if (!$issueObj->exists()) {
-	header("Location: /$ADMIN/logout.php");
+	CampsiteInterface::DisplayError('Issue does not exist.');
 	exit;	
 }
 
 $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
 if (!$sectionObj->exists()) {
-	header("Location: /$ADMIN/logout.php");
+	CampsiteInterface::DisplayError('Section does not exist.', $BackLink);
 	exit;		
 }
 

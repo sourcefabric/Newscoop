@@ -13,8 +13,8 @@ if (!$User->hasPermission('ManageTempl')) {
 	exit;
 }
 
-$cPath = Input::get('cPath', 'string', '');
-$cName = Input::get('cName', 'string', '');
+$cPath = Input::Get('cPath', 'string', '');
+$cName = Input::Get('cName', 'string', '');
 $created = 0;
 $correct = trim($cName) != "";
 if ($correct) {

@@ -15,10 +15,10 @@ if (!$User->hasPermission('Publish')) {
 	exit;
 }
 
-$Pub = Input::get('Pub', 'int', 0);
-$Issue = Input::get('Issue', 'int', 0);
-$Language = Input::get('Language', 'int', 0);
-$publish_time = trim(Input::get('publish_time', 'string', ''));
+$Pub = Input::Get('Pub', 'int', 0);
+$Issue = Input::Get('Issue', 'int', 0);
+$Language = Input::Get('Language', 'int', 0);
+$publish_time = trim(Input::Get('publish_time', 'string', ''));
 
 $AFFECTED_ROWS=0;
 $sql = "DELETE FROM IssuePublish WHERE IdPublication = $Pub AND NrIssue = $Issue AND IdLanguage = $Language AND PublishTime = '$publish_time'";

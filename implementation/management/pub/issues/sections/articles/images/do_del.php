@@ -16,24 +16,17 @@ if (!$access) {
 	header("Location: /$ADMIN/logout.php");
 	exit;
 }
-//$PublicationId = array_get_value($_REQUEST, 'PublicationId', 0);
-//$IssueId = array_get_value($_REQUEST, 'IssueId', 0);
-//$SectionId = array_get_value($_REQUEST, 'SectionId', 0);
-//$ArticleLanguageId = array_get_value($_REQUEST, 'ArticleLanguageId', 0);
-//$ArticleId = array_get_value($_REQUEST, 'ArticleId', 0);
-//$ImageId = array_get_value($_REQUEST, 'ImageId', 0);
-//$InterfaceLanguageId = array_get_value($_REQUEST, 'InterfaceLanguageId', 0);
 
-$PublicationId = Input::get('PublicationId', 'int', 0);
-$IssueId = Input::get('IssueId', 'int', 0);
-$SectionId = Input::get('SectionId', 'int', 0);
-$ArticleLanguageId = Input::get('ArticleLanguageId','int', 0);
-$ArticleId = Input::get('ArticleId', 'int', 0);
-$ImageId = Input::get('ImageId', 'int', 0);
-$InterfaceLanguageId = Input::get('InterfaceLanguageId', 'int', 0);
+$PublicationId = Input::Get('PublicationId', 'int', 0);
+$IssueId = Input::Get('IssueId', 'int', 0);
+$SectionId = Input::Get('SectionId', 'int', 0);
+$ArticleLanguageId = Input::Get('ArticleLanguageId','int', 0);
+$ArticleId = Input::Get('ArticleId', 'int', 0);
+$ImageId = Input::Get('ImageId', 'int', 0);
+$InterfaceLanguageId = Input::Get('InterfaceLanguageId', 'int', 0);
 
-if (!Input::isValid()) {
-	header("Location: /$ADMIN/logout.php");
+if (!Input::IsValid()) {
+	CampsiteInterface::DisplayError(array('Invalid input: $1', Input::GetErrorString()));
 	exit;		
 }
 
@@ -41,9 +34,13 @@ $articleObj =& new Article($PublicationId, $IssueId, $SectionId, $ArticleLanguag
 
 // This file can only be accessed if the user has the right to change articles
 // or the user created this article and it hasnt been published yet.
-if (!$User->hasPermission('ChangeArticle') || !$User->hasPermission('DeleteImage')
+$access = false;
+if ($User->hasPermission('ChangeArticle') || $User->hasPermission('DeleteImage')
 	|| (($articleObj->getUserId() == $User->getId()) && ($articleObj->getPublished() == 'N'))) {
-	header("Location: /$ADMIN/logout.php");
+	$access = true;
+}
+if (!$access) {
+	CampsiteInterface::DisplayError("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only changed by authorized users.");	
 	exit;		
 }
 
