@@ -7,7 +7,7 @@ export BIN_DIR=""
 export ETC_DIR=""
 export WWW_DIR=""
 export WWW_COMMON_DIR=""
-export PARSER_START_PORT=2001
+export PARSER_START_PORT=2000
 
 if [ "`uname | grep BSD`" != "" ]; then
     export BSD=1
