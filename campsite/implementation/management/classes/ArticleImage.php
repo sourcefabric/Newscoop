@@ -11,27 +11,65 @@ class ArticleImage extends DatabaseObject {
 	
 	function ArticleImage() { }
 	
+	/**
+	 * @return int
+	 */
 	function getImageId() {
 		return $this->getProperty('IdImage');
-	}
+	} // fn getImageId
 	
+	
+	/**
+	 * @return int
+	 */
 	function getArticleId() {
 		return $this->getProperty('NrArticle');
-	}
+	} // fn getArticleId
 
+	
+	/**
+	 * @return int
+	 */
 	function getTemplateId() {
 		return $this->getProperty('Number');
-	}
+	} // fn getTemplateId
 	
+	
+	/**
+	 *
+	 */
 	function getImage() {
 		return $this->m_image;
 	}
+	
+
+	/**
+	 * Return true if article already is using the given template ID, false otherwise.
+	 *
+	 * @param int p_articleId
+	 * @param int p_templateId
+	 *
+	 * @return boolean
+	 */
+	function TemplateIdInUse($p_articleId, $p_templateId) {
+		global $Campsite;
+		$queryStr = "SELECT Number FROM ArticleImages"
+					." WHERE NrArticle=$p_articleId AND Number=$p_templateId";
+		$value = $Campsite['db']->GetOne($queryStr);
+		if ($value !== false) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	} // fn TemplateIdInUse
+	
 	
 	/**
 	 * Get all the images that belong to this article.
 	 * @return array
 	 */
-	function FetchImagesByArticleId($p_articleId) {
+	function GetImagesByArticleId($p_articleId) {
 		global $Campsite;
 		$tmpImage =& new Image();
 		$columnNames = implode(',', $tmpImage->getColumnNames());
@@ -40,7 +78,8 @@ class ArticleImage extends DatabaseObject {
 					.', ArticleImages.Number, ArticleImages.NrArticle, ArticleImages.IdImage'
 					.' FROM Images, ArticleImages'
 					.' WHERE ArticleImages.NrArticle='.$p_articleId
-					.' AND ArticleImages.IdImage=Images.Id';
+					.' AND ArticleImages.IdImage=Images.Id'
+					.' ORDER BY ArticleImages.Number';
 		$rows =& $Campsite['db']->GetAll($queryStr);
 		$returnArray = array();
 		if (is_array($rows)) {
@@ -57,6 +96,9 @@ class ArticleImage extends DatabaseObject {
 	
 	
 	/**
+	 * Link the given image with the given article.  The template ID
+	 * is the image's position in the template.
+	 *
 	 * @param int p_imageId
 	 * @param int p_articleId
 	 * @param int p_templateId
@@ -66,15 +108,18 @@ class ArticleImage extends DatabaseObject {
 	function AssociateImageWithArticle($p_imageId, $p_articleId, $p_templateId) {
 		global $Campsite;
 		$queryStr = 'INSERT IGNORE INTO ArticleImages(NrArticle, IdImage, Number)'
-					." VALUES('".$this->getArticleId()."', '".$p_imageId."','".$p_templateId."')";
+					." VALUES('".$p_articleId."', '".$p_imageId."','".$p_templateId."')";
 		$Campsite['db']->Execute($queryStr);
 	} // fn AssociateImageWithArticle
 
 	
 	/**
+	 * Remove the linkage between the given image and the given article.
+	 *
 	 * @param int p_imageId
 	 * @param int p_articleId
 	 * @param int p_templateId
+	 *
 	 * @return void
 	 */
 	function DisassociateImageFromArticle($p_imageId, $p_articleId, $p_templateId) {
@@ -101,6 +146,49 @@ class ArticleImage extends DatabaseObject {
 		$Campsite['db']->Execute($queryStr);
 	} // fn OnImageDelete
 	
+	
+	/**
+	 * Remove image pointers for the given article.
+	 * @param int p_articleId
+	 * @return void
+	 */
+	function OnArticleDelete($p_articleId) {
+		global $Campsite;
+		$queryStr = 'DELETE FROM ArticleImages'
+					." WHERE NrArticle='".$p_articleId."'";
+		$Campsite['db']->Execute($queryStr);		
+	} // fn OnArticleDelete
+	
+	
+	/**
+	 * Return an array of Article objects, all the articles
+	 * which use this image.
+	 *
+	 * @return array
+	 */
+	function GetArticlesThatUseImage($p_imageId) {
+		global $Campsite;
+		$article =& new Article();
+		$columnNames = $article->getColumnNames();
+		$columnQuery = array();
+		foreach ($columnNames as $columnName) {
+			$columnQuery[] = 'Articles.'.$columnName;
+		}
+		$columnQuery = implode(',', $columnQuery);
+		$queryStr = 'SELECT '.$columnQuery.' FROM Articles, ArticleImages '
+					.' WHERE ArticleImages.IdImage='.$p_imageId
+					.' AND ArticleImages.NrArticle=Articles.Number';
+		$rows =& $Campsite['db']->GetAll($queryStr);
+		$articles = array();
+		if (is_array($rows)) {
+			foreach ($rows as $row) {
+				$tmpArticle =& new Article();
+				$tmpArticle->fetch($row);
+				$articles[] =& $tmpArticle;
+			}
+		}
+		return $articles;
+	} // fn GetArticlesThatUseImage
 	
 } // class ArticleImages
 
