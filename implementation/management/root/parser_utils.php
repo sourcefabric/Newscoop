@@ -117,4 +117,31 @@ function read_cookies(&$cookies_string)
 	return $cookies;
 }
 
+function create_language_links($p_document_root = "")
+{
+	global $Campsite;
+
+	$document_root = $p_document_root != "" ? $p_document_root : $_SERVER['DOCUMENT_ROOT'];
+	require_once("$document_root/database_conf.php");
+
+	// connect to database to read the image file name
+	if (!mysql_connect($Campsite['DATABASE_SERVER_ADDRESS'], $Campsite['DATABASE_USER'],
+					$Campsite['DATABASE_PASSWORD']))
+		exit(0);
+	if (!mysql_select_db($Campsite['DATABASE_NAME']))
+		exit(0);
+
+	if (!$res = mysql_query("select Code from Languages"))
+		exit(0);
+	$index_file = "$document_root/index.php";
+	while ($row = mysql_fetch_array($res)) {
+		$lang_code = $row["Code"];
+		$link = "$document_root/$lang_code.php";
+		if (file_exists($link) && !is_link($link))
+			unlink($link);
+		if (!is_link($link))
+			symlink($index_file, $link);
+	}
+}
+
 ?>
