@@ -11,6 +11,7 @@ if (!$access) {
 $Pub = Input::get('Pub', 'int', 0);
 $Issue = Input::get('Issue', 'int', 0);
 $Section = Input::get('Section', 'int', 0);
+$Article = Input::get('Article', 'int', 0);
 $Language = Input::get('Language', 'int', 0);
 $sLanguage = Input::get('sLanguage', 'int', 0);
 $BackLink = Input::get('Back', 'string', "/$ADMIN/pub/issues/sections/articles/", true);
