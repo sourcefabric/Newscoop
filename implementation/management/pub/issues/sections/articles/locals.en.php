@@ -76,6 +76,7 @@ regGS("This article has been locked by $1 ($2) at","This article has been locked
 regGS("Now is $1","Now is $1:en");
 regGS("Are you sure you want to unlock it?","Are you sure you want to unlock it?:en");
 regGS("Edit article","Edit article:en");
+regGS("Article is locked", "Article is locked:en");
 
 // -- duplicate.m4
 regGS("Duplicate article", "Duplicate article");
