@@ -1,5 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']. "/priv/pub/issues/sections/articles/article_common.php");
+require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/pub/issues/sections/articles/article_common.php");
 
 // This is used in TransformSubheads() in order to figure out when
 // a SPAN tag closes.
@@ -58,7 +58,7 @@ function TransformLinks($match) {
 
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
-	header("Location: /priv/logout.php");
+	header("Location: /$ADMIN/logout.php");
 	exit;
 }
 $Pub = Input::get('Pub', 'int', 0);
@@ -69,7 +69,7 @@ $sLanguage = Input::get('sLanguage', 'int', 0);
 $Article = Input::get('Article', 'int', 0);
 
 if (!Input::isValid()) {
-	header("Location: /priv/logout.php");
+	header("Location: /$ADMIN/logout.php");
 	exit;	
 }
 
@@ -173,7 +173,7 @@ if ($hasAccess) {
 		<TR>
 			<TD COLSPAN="2">
 			<DIV ALIGN="CENTER">
-			<INPUT class="button" TYPE="button" NAME="Done" VALUE="<?php  putGS('Done'); ?>" ONCLICK="location.href='/priv/pub/issues/sections/articles/edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&sLanguage=<?php  p($sLanguage); ?>'">
+			<INPUT class="button" TYPE="button" NAME="Done" VALUE="<?php  putGS('Done'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/pub/issues/sections/articles/edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&sLanguage=<?php  p($sLanguage); ?>'">
 			</DIV>
 			</TD>
 		</TR>
@@ -196,7 +196,7 @@ else { ?>
 		<TR>
 			<TD COLSPAN="2">
 			<DIV ALIGN="CENTER">
-			<A HREF="/priv/pub/issues/sections/articles/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>&Section=<?php  p($Section); ?>"><IMG SRC="/priv/img/button/ok.gif" BORDER="0" ALT="OK" class="button"></A>
+			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>&Section=<?php  p($Section); ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/button/ok.gif" BORDER="0" ALT="OK" class="button"></A>
 			</DIV>
 			</TD>
 		</TR>

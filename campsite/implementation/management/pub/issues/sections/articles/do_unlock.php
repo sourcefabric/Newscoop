@@ -1,9 +1,9 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']. "/priv/pub/issues/sections/articles/article_common.php");
+require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/pub/issues/sections/articles/article_common.php");
 
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
-	header("Location: /priv/logout.php");
+	header("Location: /$ADMIN/logout.php");
 	exit;
 }
 $PublicationId = Input::get('Pub', 'int', 0);
@@ -14,7 +14,7 @@ $ArticleLanguageId = Input::get('sLanguage', 'int', 0);
 $ArticleId = Input::get('Article', 'int', 0);
 
 if (!Input::isValid()) {
-	header("Location: /priv/logout.php");
+	header("Location: /$ADMIN/logout.php");
 	exit;	
 }
 
@@ -25,7 +25,7 @@ $articleObj =& new Article($PublicationId, $IssueId, $SectionId, $ArticleLanguag
 if (!$User->hasPermission('ChangeArticle') 
 	&& (($articleObj->getUserId() != $User->getId()) 
 		|| ($articleObj->getPublished() != 'N'))) {
-	header("Location: /priv/logout.php");
+	header("Location: /$ADMIN/logout.php");
 	exit;	
 }
 

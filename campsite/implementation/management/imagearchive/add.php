@@ -1,18 +1,18 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
-load_common_include_files();
+load_common_include_files("$ADMIN_DIR/imagearchive");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ImageSearch.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/priv/CampsiteInterface.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/priv/imagearchive/include.inc.php');
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/imagearchive/include.inc.php");
 
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
-	header('Location: /priv/logout.php');
+	header("Location: /$ADMIN/logout.php");
 	exit;
 }
 if (!$User->hasPermission('AddImage')) {
-	header('Location: /priv/logout.php');
+	header("Location: /$ADMIN/logout.php");
 	exit;	
 }
 $view = isset($_REQUEST['view'])?$_REQUEST['view']:'thumbnail';
@@ -34,7 +34,7 @@ fetchRowNum($q_now);
 <BODY  BGCOLOR="WHITE" TEXT="BLACK" LINK="DARKBLUE" ALINK="RED" VLINK="DARKBLUE">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%">
 	<TR>
-		<TD ROWSPAN="2" WIDTH="1%"><IMG SRC="/priv/img/sign_big.gif" BORDER="0"></TD>
+		<TD ROWSPAN="2" WIDTH="1%"><IMG SRC="/<?php echo $ADMIN; ?>/img/sign_big.gif" BORDER="0"></TD>
 		<TD>
 		    <DIV STYLE="font-size: 12pt"><B><?php  putGS('Add new image'); ?></B></DIV>
 			<HR NOSHADE SIZE="1" COLOR="BLACK">
@@ -43,9 +43,9 @@ fetchRowNum($q_now);
 	<TR><TD ALIGN=RIGHT>
 	  <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
 		<TR>
-		  <TD><A HREF="index.php?<?php echo $imageNav->getSearchLink(); ?>" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS('Image archive'); ?>"></A></TD><TD><A HREF="index.php?<?php echo $imageNav->getSearchLink(); ?>" ><B><?php  putGS('Image archive');  ?></B></A></TD>
-		  <TD><A HREF="/priv/home.php" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS('Home'); ?>"></A></TD><TD><A HREF="/priv/home.php" ><B><?php  putGS('Home');  ?></B></A></TD>
-		  <TD><A HREF="/priv/logout.php" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS('Logout'); ?>"></A></TD><TD><A HREF="/priv/logout.php" ><B><?php  putGS('Logout');  ?></B></A></TD>
+		  <TD><A HREF="index.php?<?php echo $imageNav->getSearchLink(); ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS('Image archive'); ?>"></A></TD><TD><A HREF="index.php?<?php echo $imageNav->getSearchLink(); ?>" ><B><?php  putGS('Image archive');  ?></B></A></TD>
+		  <TD><A HREF="/<?php echo $ADMIN; ?>/home.php" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS('Home'); ?>"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/home.php" ><B><?php  putGS('Home');  ?></B></A></TD>
+		  <TD><A HREF="/<?php echo $ADMIN; ?>/logout.php" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS('Logout'); ?>"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/logout.php" ><B><?php  putGS('Logout');  ?></B></A></TD>
 		</TR>
 	  </TABLE>
 	</TD></TR>

@@ -8,7 +8,7 @@
  * 
  */
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/config.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/priv/CampsiteInterface.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Language.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Publication.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Issue.php");

@@ -1,11 +1,11 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']. "/priv/pub/issues/sections/articles/article_common.php");
+require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/pub/issues/sections/articles/article_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Log.php");
 
 // Check permissions
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
-	header("Location: /priv/logout.php");
+	header("Location: /$ADMIN/logout.php");
 	exit;
 }
 
@@ -16,15 +16,15 @@ $Language = Input::get('Language', 'int', 0);
 $Article = Input::get('Article', 'int', 0);
 $sLanguage = Input::get('sLanguage', 'int', 0);
 $Status = Input::get('Status', 'string', 'N');
-$Back = Input::get('Back', 'string', '/priv/pub/issues/sections/articles/index.php', true);
+$Back = Input::get('Back', 'string', "/$ADMIN/pub/issues/sections/articles/index.php", true);
 
 if (!Input::isValid()) {
-	header("Location: /priv/logout.php");
+	header("Location: /$ADMIN/logout.php");
 	exit;	
 }
 
 if ( ($Status != 'N') && ($Status != 'S') && ($Status != 'Y')) {
-	header("Location: /priv/logout.php");
+	header("Location: /$ADMIN/logout.php");
 	exit;		
 }
 
@@ -47,7 +47,7 @@ if ($User->hasPermission('Publish')
 	$access = true;
 }
 if (!$access) {
-	header("Location: /priv/ad.php?ADReason=".urlencode(getGS("You do not have the right to change this article status. Once submitted an article can only changed by authorized users." )));
+	header("Location: /$ADMIN/ad.php?ADReason=".urlencode(getGS("You do not have the right to change this article status. Once submitted an article can only changed by authorized users." )));
 	exit;	
 }
 

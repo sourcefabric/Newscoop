@@ -1,15 +1,15 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']. "/priv/pub/issues/sections/articles/article_common.php");
+require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/pub/issues/sections/articles/article_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Log.php");
 
 // Check permissions
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
-	header("Location: /priv/logout.php");
+	header("Location: /$ADMIN/logout.php");
 	exit;
 }
 if (!$User->hasPermission('AddArticle')) {
-	header("Location: /priv/ad.php?ADReason=".urlencode(getGS("You do not have the right to add articles." )));
+	header("Location: /$ADMIN/ad.php?ADReason=".urlencode(getGS("You do not have the right to add articles." )));
 	exit;
 }
 
@@ -27,40 +27,40 @@ $cKeywords = Input::get('cKeywords', 'string', '', true);
 
 // Check input
 if ($cName == "") {
-	header("Location: /priv/ad.php?ADReason=".urlencode(getGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>')));
+	header("Location: /$ADMIN/ad.php?ADReason=".urlencode(getGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>')));
 	exit;
 }
     
 if ($cType == "") {
-	header("Location: /priv/ad.php?ADReason=".urlencode(getGS('You must select an article type.')));
+	header("Location: /$ADMIN/ad.php?ADReason=".urlencode(getGS('You must select an article type.')));
 	exit;
 }
     
 if ($cLanguage == "") {
-	header("Location: /priv/ad.php?ADReason=".urlencode(getGS('You must select a language.')));
+	header("Location: /$ADMIN/ad.php?ADReason=".urlencode(getGS('You must select a language.')));
 	exit;
 }
 
 if (!Input::isValid()) {
-	header("Location: /priv/logout.php");
+	header("Location: /$ADMIN/logout.php");
 	exit;	
 }
 
 $publicationObj =& new Publication($Pub);
 if (!$publicationObj->exists()) {
-	header("Location: /priv/ad.php?ADReason=".urlencode(getGS('Publication does not exist.')));
+	header("Location: /$ADMIN/ad.php?ADReason=".urlencode(getGS('Publication does not exist.')));
 	exit;	
 }
 
 $issueObj =& new Issue($Pub, $Language, $Issue);
 if (!$issueObj->exists()) {
-	header("Location: /priv/ad.php?ADReason=".urlencode(getGS('Issue does not exist.')));
+	header("Location: /$ADMIN/ad.php?ADReason=".urlencode(getGS('Issue does not exist.')));
 	exit;	
 }
 
 $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
 if (!$sectionObj->exists()) {
-	header("Location: /priv/ad.php?ADReason=".urlencode(getGS('Section does not exist.')));
+	header("Location: /$ADMIN/ad.php?ADReason=".urlencode(getGS('Section does not exist.')));
 	exit;	
 }
 

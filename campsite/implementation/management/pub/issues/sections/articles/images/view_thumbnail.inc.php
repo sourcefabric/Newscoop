@@ -88,7 +88,7 @@
 				<input type="hidden" name="ArticleId" value="<?php p($ArticleId); ?>">
         		<input type="hidden" name="ImageId" value="<?php echo $image['id']; ?>">
             	<TD ALIGN="CENTER">
-					<input type="image" src="/priv/img/icon/link_image_to_article.gif"></td>
+					<input type="image" src="/<?php echo $ADMIN; ?>/img/icon/link_image_to_article.gif"></td>
               	</TD>
            		</form>
             	<?php
