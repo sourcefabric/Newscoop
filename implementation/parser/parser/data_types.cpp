@@ -627,8 +627,7 @@ public:
 	// destructor
 	~CTopicNameTable() { clear(); }
 
-	Topic* find(const string& p_rcoName, const string& p_rcoLang) const
-	{ return (*(map<TopicItem, Topic*>::find(TopicItem(p_rcoName, p_rcoLang)))).second; }
+	Topic* find(const string& p_rcoName, const string& p_rcoLang) const;
 
 	void insert(Topic*, const string&);
 
@@ -645,6 +644,15 @@ private:
 	// forbid assignment
 	const CTopicNameTable& operator =(const CTopicNameTable&);
 };
+
+inline Topic* CTopicNameTable::find(const string& p_rcoName, const string& p_rcoLang) const
+{
+	map<TopicItem, Topic*>::const_iterator coIt;
+	coIt = map<TopicItem, Topic*>::find(TopicItem(p_rcoName, p_rcoLang));
+	if (coIt == map<TopicItem, Topic*>::end())
+		return NULL;
+	return (*coIt).second;
+}
 
 inline void CTopicNameTable::insert(Topic* p_pcoTopic, const string& p_rcoLang)
 {
@@ -678,7 +686,7 @@ CTopicIdTable* Topic::s_pcoIdTopics = new CTopicIdTable();
 CTopicNameTable* Topic::s_pcoNameTopics = new CTopicNameTable();
 string Topic::empty_string = "";
 
-// name: return name of the topic
+// name: return name of the topic in the given language
 inline const string& Topic::name(const string& p_rcoLang) const
 {
 	CMutexHandler coH(&s_coOpMutex);
