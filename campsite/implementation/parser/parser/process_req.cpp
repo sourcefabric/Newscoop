@@ -33,12 +33,14 @@ Implementation of functions for client request processing
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <sstream>
 
 #include "process_req.h"
 #include "parser.h"
 #include "util.h"
 #include "auto_ptr.h"
 
+using std::stringstream;
 using std::endl;
 
 // RunParser:
@@ -413,6 +415,15 @@ int CheckUserInfo(CGI& cgi, CContext& c, const char* ppchParams[], int param_nr)
 {
 	string field_pref = "User";
 	int found = 0;
+	set <string, less<string> > coPrefs;
+	for (int k = 1; k <= 4; k++)
+	{
+		stringstream coPref;
+		coPref << "HasPref" << k;
+		const char* p = cgi.GetFirst(coPref.str().c_str());
+		if (p != NULL)
+			coPrefs.insert(coPref.str().substr(3));
+	}
 	for (int i = 0; i < param_nr; i++)
 	{
 		string fld = field_pref + ppchParams[i];
@@ -420,8 +431,13 @@ int CheckUserInfo(CGI& cgi, CContext& c, const char* ppchParams[], int param_nr)
 		if (s == 0)
 			continue;
 		c.SetUserInfo(string(ppchParams[i]), string(s));
+		if (strncasecmp(ppchParams[i], "Pref", 4) == 0)
+			coPrefs.erase(ppchParams[i]);
 		found ++;
 	}
+	set <string, less<string> >::const_iterator coIt = coPrefs.begin();
+	for (; coIt != coPrefs.end(); ++coIt)
+		c.SetUserInfo(*coIt, "off");
 	return found;
 }
 
