@@ -1,7 +1,6 @@
 <?
 regGS("Article type fields","Campo para este Tipo de Artigo");
 regGS("Article type","Tipo de Artigo");
-regGS("Add new field","Adicionar novo Campo");
 regGS("No fields.","Não existem Campos definidos");
 regGS("Delete field $1","Eliminar campo $1");
 regGS("Article body","Corpo do Artigo");

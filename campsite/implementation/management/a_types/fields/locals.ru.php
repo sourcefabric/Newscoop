@@ -1,7 +1,6 @@
 <?
 regGS("Article type fields","Поля типов статей:ru");
 regGS("Article type","Тип статей:ru");
-regGS("Add new field","Добавить новый тип:ru");
 regGS("No fields.","Нет полей.:ru");
 regGS("Delete field $1","Удалить поле $1:ru");
 regGS("Article body","Тело статьи:ru");

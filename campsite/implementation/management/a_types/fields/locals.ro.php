@@ -2,7 +2,6 @@
 
 regGS("Article type fields","Câmpurile tipului de articol");
 regGS("Article type","Tipul de articol");
-regGS("Add new field","Adaugă câmp nou");
 regGS("No fields.","Nu există câmpuri");
 regGS("Delete field $1","Şterge câmpul $1");
 regGS("Article body","Conţinut al articolului");
