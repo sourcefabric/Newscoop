@@ -28,5 +28,6 @@ regGS("The topic $1 has been successfully added.","The topic $1 has been success
 regGS("You do not have the right to add topics to article","You do not have the right to add topics to article:en");
 regGS("Adding new topic...","Adding new topic...:en");
 regGS("Topic $1 added to article","Topic $1 added to article:en");
+regGS("The topic $1 could not be added.","The topic $1 could not be added.");
 
 ?>
