@@ -484,7 +484,7 @@ int CActSection::takeAction(CContext& c, sockstream& fs)
 	stringstream buf;
 	SetNrField("IdLanguage", c.Language(), buf, w);
 	SetNrField("IdPublication", c.Publication(), buf, w);
-	SetNrField("NrIssue", c.Issue(), buf, w);
+	CheckFor("NrIssue", c.Issue(), buf, w);
 	coQuery += w;
 	DEBUGAct("takeAction()", coQuery.c_str(), fs);
 	SQLQuery(&m_coSql, coQuery.c_str());
@@ -523,8 +523,8 @@ int CActArticle::takeAction(CContext& c, sockstream& fs)
 	stringstream buf;
 	SetNrField("IdLanguage", c.Language(), buf, w);
 	SetNrField("IdPublication", c.Publication(), buf, w);
-	SetNrField("NrIssue", c.Issue(), buf, w);
-	SetNrField("NrSection", c.Section(), buf, w);
+	CheckFor("NrIssue", c.Issue(), buf, w);
+	CheckFor("NrSection", c.Section(), buf, w);
 	coQuery += w;
 	DEBUGAct("takeAction()", coQuery.c_str(), fs);
 	SQLQuery(&m_coSql, coQuery.c_str());
