@@ -246,7 +246,7 @@ function todefradio($s) {
 	if (!isset($GLOBALS[$s])) {
 		$GLOBALS[$s]='';
 	}
-	if ($_REQUEST[$s]=='on') {
+	if (isset($_REQUEST[$s]) && ($_REQUEST[$s]=='on')) {
 		$GLOBALS[$s]='Y';
 	}
 	else {
