@@ -35,6 +35,7 @@ install: $(ALL)
 	mkdir -p $(PRIV_DIR)/img
 	mkdir -p $(PRIV_DIR)/img/buttons
 	mkdir -p $(PRIV_DIR)/img/icons
+	cp -rf article_import $(PRIV_DIR)
 	mkdir -p $(SCRIPT_DIR)
 	cp -fr img/* $(PRIV_DIR)/img
 	cp -f *.php $(PRIV_DIR)/
