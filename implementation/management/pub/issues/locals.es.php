@@ -21,6 +21,7 @@ regGS("Please check if another issue with the same number/language does not alre
 regGS("Issue $1 added","Edición $1 agregada");
 regGS("Change issue details","Cambian detalles de edición");
 regGS("You do not have the right to change issue details.","No tiene derechos para cambiar detalles de edición");
+regGS("Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>","Fecha de Publicación");
 regGS("Updating issue","Actualizando edición");
 regGS("Changing issue's details","Cambiando detalles de edición");
 regGS("The issue $1 has been successfuly changed.","La edición $1 ha sido cambiada con éxito");
