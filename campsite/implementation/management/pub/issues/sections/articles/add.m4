@@ -27,6 +27,10 @@ B_BODY
     todefnum('Section');
     todefnum('Language');
     todefnum('Wiz');
+	todef('cName');
+	todef('cLanguage');
+	todef('cKeywords');
+	todef('cType');
 ?>dnl
 B_HEADER(<*Add new article*>)
 B_HEADER_BUTTONS
@@ -62,17 +66,19 @@ E_CURRENT
 <P>
 B_DIALOG(<*Add new article*>, <*POST*>, <*do_add.php*>)
 	B_DIALOG_INPUT(<*Name*>)
-		<INPUT TYPE="TEXT" NAME="cName" SIZE="64" MAXLENGTH="140">
+		<INPUT TYPE="TEXT" NAME="cName" VALUE="<?php echo $cName; ?>" SIZE="64" MAXLENGTH="140">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Type*>)
-			<SELECT NAME="cType">
+			<SELECT NAME="cType"><OPTION 
 <?php 
     query ("SHOW TABLES LIKE 'X%'", 'q_tbl');
     $nr=$NUM_ROWS;
 
 		for($loop=0;$loop<$nr;$loop++) { 
 			fetchRowNum($q_tbl);
-			print '<OPTION>'.encHTML ( substr ( getNumVar ($q_tbl,0) ,1 ) );
+			$art_type = encHTML ( substr ( getNumVar ($q_tbl,0) ,1 ) );
+			pcomboVar($art_type, $cType, $art_type);
+//			print '<OPTION >'.encHTML ( substr ( getNumVar ($q_tbl,0) ,1 ) );
 	        }
 		?>dnl
 			</SELECT>
@@ -84,7 +90,7 @@ B_DIALOG(<*Add new article*>, <*POST*>, <*do_add.php*>)
 	$nr=$NUM_ROWS;
 		for($loop=0;$loop<$nr;$loop++) { 
 			fetchRow($q_lng);
-			pcomboVar(getHVar($q_lng,'Id'), $Language,getHVar($q_lng,'Name'));
+			pcomboVar(getHVar($q_lng,'Id'), $cLanguage,getHVar($q_lng,'Name'));
 	        }
 ?>dnl
 			</SELECT>
@@ -97,7 +103,7 @@ B_DIALOG(<*Add new article*>, <*POST*>, <*do_add.php*>)
 	E_DIALOG_INPUT
 	X_DIALOG_TEXT(<* <?php putGS("Enter keywords, comma separated");?>*>)
 	B_DIALOG_INPUT(<*Keywords*>)
-		<INPUT TYPE="TEXT" NAME="cKeywords" SIZE="64" MAXLENGTH="255">
+		<INPUT TYPE="TEXT" NAME="cKeywords" VALUE="<?php echo $cKeywords; ?>" SIZE="64" MAXLENGTH="255">
 	E_DIALOG_INPUT
 	<?php 
 	## added by sebastian

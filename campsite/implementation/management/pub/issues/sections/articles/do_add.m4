@@ -138,7 +138,7 @@ B_MSGBOX(<*Adding new article*>)
 	REDIRECT(<*Yes*>, <*Yes*>, <*X_ROOT/pub/issues/sections/articles/edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  pgetNumVar($lii,0); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  pencURL($cLanguage); ?>*>)
 	REDIRECT(<*No*>, <*No*>, <*X_ROOT/pub/issues/sections/articles/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Language=<?php  p($Language); ?>*>)
 <?php  } else { ?>
-	REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/pub/issues/sections/articles/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  pgetNumVar($lii,0); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  pencURL($cLanguage); ?>*>)
+	REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/pub/issues/sections/articles/add.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  pgetNumVar($lii,0); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  pencURL($cLanguage); ?>&cName=<?php pencURL($cName); ?>&cLanguage=<?php pencURL($cLanguage); ?>&cKeywords=<?php pencURL($cKeywords); ?>&cType=<?php pencURL($cType); ?>*>)
 <?php 
 }
 ?>dnl
