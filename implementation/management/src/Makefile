@@ -50,21 +50,21 @@ clean:
 	rm -f *~ core $(OBJ) dir_conf.h $(LINKS) configure.h .env_vars $(TARGET)
 
 install: $(ALL)
-	cp -f get_img $(CGI_DIR)/
-	chown $(ROOT_USER):$(HTTP_GROUP) $(CGI_DIR)/get_img
-	chmod 750 $(CGI_DIR)/get_img
-	cp -f process_i $(SCRIPT_DIR)/
-	chown $(ROOT_USER):$(HTTP_GROUP) $(SCRIPT_DIR)/process_i
-	chmod 750 $(SCRIPT_DIR)/process_i
-	cp -f process_t $(SCRIPT_DIR)/
-	chown $(ROOT_USER):$(HTTP_GROUP) $(SCRIPT_DIR)/process_t
-	chmod 755 $(SCRIPT_DIR)/process_t
-	cp -f cleanb $(CGI_DIR)/
-	chown $(ROOT_USER):$(HTTP_GROUP) $(CGI_DIR)/cleanb
-	chmod 755 $(CGI_DIR)/cleanb
-	chmod u+s $(CGI_DIR)/cleanb
+	cp -f get_img $(CGI_COMMON_DIR)/
+	chown $(ROOT_USER):$(APACHE_GROUP) $(CGI_COMMON_DIR)/get_img
+	chmod 750 $(CGI_COMMON_DIR)/get_img
+	cp -f process_i $(SCRIPT_COMMON_DIR)/
+	chown $(ROOT_USER):$(APACHE_GROUP) $(SCRIPT_COMMON_DIR)/process_i
+	chmod 750 $(SCRIPT_COMMON_DIR)/process_i
+	cp -f process_t $(SCRIPT_COMMON_DIR)/
+	chown $(ROOT_USER):$(APACHE_GROUP) $(SCRIPT_COMMON_DIR)/process_t
+	chmod 755 $(SCRIPT_COMMON_DIR)/process_t
+	cp -f cleanb $(CGI_COMMON_DIR)/
+	chown $(ROOT_USER):$(APACHE_GROUP) $(CGI_COMMON_DIR)/cleanb
+	chmod 755 $(CGI_COMMON_DIR)/cleanb
+	chmod u+s $(CGI_COMMON_DIR)/cleanb
 
 uninstall:
-	rm -f $(CGI_DIR)/get_img $(SCRIPT_DIR)/process_i $(SCRIPT_DIR)/process_t $(CGI_DIR)/cleanb
+	rm -f $(CGI_COMMON_DIR)/get_img $(SCRIPT_COMMON_DIR)/process_i $(SCRIPT_COMMON_DIR)/process_t $(CGI_COMMON_DIR)/cleanb
 
 dummy:

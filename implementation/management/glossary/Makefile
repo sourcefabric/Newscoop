@@ -1,4 +1,4 @@
-export PRIV_DIR2=$(PRIV_DIR)/glossary
+export PRIV_DIR2=$(PRIV_COMMON_DIR)/glossary
 
 MY_TARGETS=index.php add.php do_add.php translate.php do_translate.php del.php do_del.php
 

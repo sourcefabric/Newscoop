@@ -1,4 +1,4 @@
-export PRIV_DIR2=$(PRIV_DIR)/logs
+export PRIV_DIR2=$(PRIV_COMMON_DIR)/logs
 
 MY_TARGETS=index.php
 

@@ -44,16 +44,16 @@ mutex.o: mutex.cpp $(DEPENDENCES)
 	g++ -c -o mutex.o $(CFLAGS) mutex.cpp
 
 install: $(ALL)
-	mkdir -p $(CGI_DIR)
-	cp -f $(TPL_CGI) $(CGI_DIR)
-	chown $(ROOT_USER):$(HTTP_GROUP) $(CGI_DIR)/$(TPL_CGI)
-	chmod 750 $(CGI_DIR)/$(TPL_CGI)
-	mkdir -p $(CONF_DIR)
-	echo -e "PARSER_IP $(ADMIN_INTERFACE_PARSER_IP)\nPARSER_PORT $(ADMIN_INTERFACE_PARSER_PORT)\n" > $(CONF_DIR)/tpl_cgi.conf
-	chown $(ROOT_USER):$(HTTP_GROUP) $(CONF_DIR)/tpl_cgi.conf
-	chmod 640 $(CONF_DIR)/tpl_cgi.conf
+	mkdir -p $(CGI_COMMON_DIR)
+	cp -f $(TPL_CGI) $(CGI_COMMON_DIR)
+	chown $(ROOT_USER):$(APACHE_GROUP) $(CGI_COMMON_DIR)/$(TPL_CGI)
+	chmod 750 $(CGI_COMMON_DIR)/$(TPL_CGI)
+	mkdir -p $(ETC_DIR)
+	echo -e "PARSER_IP $(ADMIN_INTERFACE_PARSER_IP)\nPARSER_PORT $(ADMIN_INTERFACE_PARSER_PORT)\n" > $(ETC_DIR)/tpl_cgi.conf
+	chown $(ROOT_USER):$(APACHE_GROUP) $(ETC_DIR)/tpl_cgi.conf
+	chmod 640 $(ETC_DIR)/tpl_cgi.conf
 
 uninstall: dummy
-	rm -f $(CGI_DIR)/$(TPL_CGI) $(CONF_DIR)/tpl_cgi.conf
+	rm -f $(CGI_COMMON_DIR)/$(TPL_CGI) $(ETC_DIR)/tpl_cgi.conf
 
 dummy:

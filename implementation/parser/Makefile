@@ -1,7 +1,5 @@
 include ../../make.env
 
-PACKAGE_DIR=$(BIN_PACKAGE_DIR)/implementation
-
 all:
 	$(MAKE) -C parser
 

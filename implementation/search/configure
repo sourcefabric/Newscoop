@@ -5,8 +5,7 @@
 
 install_conf --set
 
-var_not_modified APP_NAME && [ -f configure.h ] && exit 0
-save_var APP_NAME
+[ -f configure.h ] && exit 0
 
 echo -n -e "\tWriting configure.h header..."
 cat > configure.h << EOF
@@ -21,7 +20,7 @@ WARNING!!! This file is generated. Do not edit!
 #ifndef _CONFIGURE_H
 #define _CONFIGURE_H
 
-#define DATABASE_CONF_FILE "${CONF_DIR}/database.conf"
+#define ETC_DIR "$ETC_DIR"
 
 #endif
 EOF

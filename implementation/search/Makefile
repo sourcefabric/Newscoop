@@ -1,7 +1,5 @@
 include ../../make.env
 
-PACKAGE_DIR=$(BIN_PACKAGE_DIR)/implementation
-
 INCLUDE_PATH=-I$(MYSQL_H_PATH)
 
 CFLAGS=-Wall -O3 -fomit-frame-pointer -falign-jumps=4 -falign-loops=4 -falign-functions=4 $(INCLUDE_PATH)
