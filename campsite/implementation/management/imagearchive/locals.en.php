@@ -1,25 +1,10 @@
 <?php
 // added by sebastian
-regGS("Search for images", "Search for images");
-regGS("Reset search conditions", "Reset search conditions");
-regGS("Search conditions", "Search conditions");
-regGS("Description<BR><SMALL>(Click to view details)</SMALL>", "Description<BR><SMALL>(Click to view details)</SMALL>");
-regGS("Previously used in Articles", "Previously used in Articles");
-regGS('You cannot delete image $1', 'You cannot delete image $1');
-regGS('In use', 'In use');
-regGS('$1 Images found total', '$1 Images found total');
-regGS('You must select an image or type in an URL', 'You must select an image or type in an URL');
-regGS('URL <B>$1<B> have wrong content type: <B>$2</B>', 'URL <B>$1<B> have wrong content type: <B>$2</B>');
-regGS('Cannot create <B>$1</B>', 'Cannot create <B>$1</B>');
-regGS('Unable toread image from $1', 'Unable to read image from $1');
-regGS('Tumbnail', 'Tumbnail');
-regGS('Id', 'Id');
-regGS('Galery', 'Galery');
-regGS('Text only', 'Text only');
-regGS('URL','URL');
-regGS('Image <B>$1</B> has been successfully added','Image <B>$1</B> has been successfully added');
-regGS('Unable to move Image to $1', 'Unable to move Image to $1');
-regGS('URL <B>$1</B> have wrong content type <B>$2</B>', 'URL <B>$1</B> have wrong content type <B>$2</B>');
+regGS("Search for images","Search for images");
+regGS("Reset search conditions","Reset search conditions");
+regGS("Search conditions","Search conditions");
+regGS("You cannot delete image $1","You cannot delete image $1");
+regGS("Image is still attached to Article(s)","Image is still attached to Article(s)");
 
 
 // -- index.m4
