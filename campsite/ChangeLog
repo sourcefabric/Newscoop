@@ -1,3 +1,7 @@
+2.1.7
+    - Implemented "Print Topic Identifier" and "Print User Identifier"
+    - Many bug fixes
+
 2.1.6
     - Implemented new "Topic", "If Topic" and "Print Topic" statements
     - Added new environment attribute: topic; this affects articles lists and
