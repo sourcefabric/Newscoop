@@ -166,9 +166,9 @@ if [ "$to_do" = "install" ]; then
 	echo "invalid package file"
 	exit 2
     fi
-    chown "$HTTP_USER":"$HTTP_GROUP" globals.*.php
+    chown "$APACHE_USER":"$APACHE_GROUP" globals.*.php
     chmod 660 globals.*.php
-    find . -name locals.\*.php -exec chown "$HTTP_USER":"$HTTP_GROUP" {} \;
+    find . -name locals.\*.php -exec chown "$APACHE_USER":"$APACHE_GROUP" {} \;
     find . -name locals.\*.php -exec chmod 660 {} \;
     rm -f $FILE
 
