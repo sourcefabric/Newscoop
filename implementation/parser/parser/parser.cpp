@@ -569,7 +569,7 @@ int CParser::ValidDateForm(const char* df)
 {
 	if (df == NULL)
 		return 1;
-	static char valid_chars[] = "MWYymcdejD%";
+	static char valid_chars[] = "MWYywmcdejD%";
 	while (*df)
 	{
 		if (*df == '%' && strchr(valid_chars, *(++df)) == 0)
