@@ -98,7 +98,6 @@ X_AUDIT(<*101*>, <*getGS('Language $1 added',$cName)*>)
 E_MSGBOX
 <P>
 
-X_HR
 X_COPYRIGHT
 E_BODY
 <?php  } ?>dnl

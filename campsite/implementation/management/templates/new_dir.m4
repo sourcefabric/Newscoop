@@ -41,7 +41,6 @@ B_DIALOG(<*Create new folder*>, <*POST*>, <*do_new_dir.php*>)
 E_DIALOG
 <P>
 
-X_HR
 X_COPYRIGHT
 E_BODY
 <?php  } ?>dnl

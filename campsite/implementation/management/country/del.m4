@@ -55,7 +55,6 @@ E_MSGBOX
 </BLOCKQUOTE>
 <?php  } ?>dnl
 
-X_HR
 X_COPYRIGHT
 E_BODY
 <?php  } ?>dnl

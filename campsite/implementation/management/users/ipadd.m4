@@ -44,7 +44,6 @@ B_DIALOG(<*Add new IP address group*>, <*POST*>, <*do_ipadd.php*>)
 E_DIALOG
 <P>
 
-X_HR
 X_COPYRIGHT
 E_BODY
 <?php  } ?>dnl

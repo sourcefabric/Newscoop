@@ -66,7 +66,6 @@ X_AUDIT(<*53*>, <*getGS('User $1 changed his password',getHVar($Usr,'UName'))*>)
 E_MSGBOX
 <P>
 
-X_HR
 X_COPYRIGHT
 E_BODY
 <?php  } ?>dnl

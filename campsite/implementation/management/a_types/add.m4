@@ -41,7 +41,6 @@ B_DIALOG(<*Add new article type*>, <*POST*>, <*do_add.php*>)
 E_DIALOG
 <P>
 
-X_HR
 X_COPYRIGHT
 E_BODY
 <?php  } ?>dnl

@@ -66,7 +66,6 @@ X_AUDIT(<*81*>, <*getGS('Infotype $1 added', decS($cName))*>)
 E_MSGBOX
 <P>
 
-X_HR
 X_COPYRIGHT
 E_BODY
 <?php  } ?>dnl

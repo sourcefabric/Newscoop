@@ -80,7 +80,6 @@ E_MSGBOX
 </BLOCKQUOTE>
 <?php  } ?>
 
-X_HR
 X_COPYRIGHT
 E_BODY
 <?php  } ?>dnl

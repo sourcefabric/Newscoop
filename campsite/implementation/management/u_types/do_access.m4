@@ -180,7 +180,6 @@ X_AUDIT(<*123*>, <*getGS('User type $1 changed permissions',$cName)*>)
 E_MSGBOX
 <P>
 
-X_HR
 X_COPYRIGHT
 E_BODY
 <?php  } ?>dnl

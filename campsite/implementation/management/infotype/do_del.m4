@@ -49,7 +49,6 @@ X_AUDIT(<*82*>, <*getGS('Infotype $1 deleted',encHTML($cName))*>)
 E_MSGBOX
 <P>
 
-X_HR
 X_COPYRIGHT
 E_BODY
 <?php  } ?>dnl

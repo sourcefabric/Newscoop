@@ -68,7 +68,6 @@ X_AUDIT(<*91*>, <*getGS('Keyword $1 added',decS($cKeyword))*>)
 E_MSGBOX
 <P>
 
-X_HR
 X_COPYRIGHT
 E_BODY
 <?php  } ?>dnl

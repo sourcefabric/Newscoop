@@ -78,7 +78,6 @@ X_AUDIT(<*131*>, <*getGS('Country $1 added',$cName)*>)
 E_MSGBOX
 <P>
 
-X_HR
 X_COPYRIGHT
 E_BODY
 <?php  } ?>dnl

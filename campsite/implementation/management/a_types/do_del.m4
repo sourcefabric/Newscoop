@@ -61,7 +61,6 @@ X_AUDIT(<*62*>, <*getGS('The article type $1 has been deleted.',$AType)*>)
 E_MSGBOX
 <P>
 
-X_HR
 X_COPYRIGHT
 E_BODY
 <?php  } ?>dnl
