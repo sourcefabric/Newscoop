@@ -79,7 +79,7 @@ typedef enum _TCDataType {
     CMS_CDT_STRING = 2
 } TCDataType;
 
-#define ID_MAXLEN 80
+#define ID_MAXLEN 1024
 
 // The lexem returned by lex class
 class CCLexem
