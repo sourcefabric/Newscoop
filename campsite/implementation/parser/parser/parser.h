@@ -209,6 +209,9 @@ private:	// private methods
 	// ValidDateForm: return true if given string is a valid date format
 	int ValidDateForm(const char* df);
 
+	// IsTopicStatement: returns true if the given lexem is the topic statement
+	bool IsTopicStatement(const CLexem* p_pcoLexem) const;
+
 	// SetWriteErrors: set the parse_err_printed and write_err_printed members
 	// for this parser instance and for included templates
 	void SetWriteErrors(bool p_bWriteErrors);
@@ -253,6 +256,13 @@ private:	// private methods
 	//		int level - current level
 	//		int sublevel - current sublevel
 	int HArticle(CActionList& al, int level, int sublevel);
+	
+	// HTopic: parse topic statement; add CActTopic action to actions list (al)
+	// Parameters:
+	//		CActionList& al - reference to actions list
+	//		int level - current level
+	//		int sublevel - current sublevel
+	int HTopic(CActionList& al, int level, int sublevel);
 	
 	// HURLParameters: parse URLParameters statement; add CActURLParameters action to
 	// actions list (al)
