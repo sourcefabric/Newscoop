@@ -204,6 +204,9 @@ public:
 	void insert(CStatement* p_pcoSt) { (*this)[p_pcoSt->identifier()] = p_pcoSt; }
 
 	void clear();
+
+private:
+	int InitStatements();
 };
 
 // lex class; performs syntactic analysis
