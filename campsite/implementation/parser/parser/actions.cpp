@@ -2528,8 +2528,9 @@ int CActSelect::takeAction(CContext& c, sockstream& fs)
 		else if (strncasecmp(field.c_str(), "Pref", 4) == 0)
 		{
 			fs << "<input type=checkbox name=\"User" << field << "\"";
-			if (attrval == "on" || checked)
-				fs << " value=\"on\" checked>";
+			if (attrval == "Y" || checked)
+				fs << " value=\"on\" checked";
+			fs << "><input type=hidden name=HasPref" << field.substr(4) << " value=1>";
 			return RES_OK;
 		}
 		else
@@ -2579,12 +2580,12 @@ int CActUser::takeAction(CContext& c, sockstream& fs)
 {
 	TK_TRY
 	stringstream buf;
-	static const char *params[27] =
+	static const char *params[28] =
 	    {
 	        "Name", "UName", "EMail", "City", "StrAddress", "State", "CountryCode",
 	        "Phone", "Fax", "Contact", "Phone2", "Title", "Gender", "Age",
 	        "PostalCode", "Employer", "EmployerType", "Position", "Languages", "Pref1",
-	        "Pref2", "Pref3", "Field1", "Field2", "Field3", "Field4", "Field5"
+	        "Pref2", "Pref3", "Pref4", "Field1", "Field2", "Field3", "Field4", "Field5"
 	    };
 	if (c.Key() <= 0 && !add)
 		return ERR_NOKEY;
@@ -2599,7 +2600,7 @@ int CActUser::takeAction(CContext& c, sockstream& fs)
 	if (!add)
 	{
 		buf << "select " << params[0];
-		for (int i = 1; i < 27; i++)
+		for (int i = 1; i < 28; i++)
 			buf << ", " << params[i];
 		buf << " from Users where Id = " << c.User();
 		DEBUGAct("takeAction()", buf.str().c_str(), fs);
@@ -2607,7 +2608,7 @@ int CActUser::takeAction(CContext& c, sockstream& fs)
 		StoreResult(&m_coSql, res);
 		CheckForRows(*res, 1);
 		FetchRow(*res, row);
-		for (int i = 0; i < 27; i++)
+		for (int i = 0; i < 28; i++)
 			if (!lc.IsUserInfo(string(params[i])))
 				lc.SetUserInfo(string(params[i]), string(row[i]));
 	}
