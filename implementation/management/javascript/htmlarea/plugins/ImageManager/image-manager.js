@@ -1,7 +1,7 @@
 /**
  * The ImageManager plugin javascript.
  * @author $Author: paul $
- * @version $Id: image-manager.js,v 1.1 2004/09/11 02:43:24 paul Exp $
+ * @version $Id: image-manager.js,v 1.2 2005/03/20 17:08:28 paul Exp $
  * @package ImageManager
  */
 
@@ -56,7 +56,7 @@ HTMLArea.prototype._insertImage = function(image) {
 		f_height  : image.height
 	};
 
-	var manager = _editor_url + 'plugins/ImageManager/manager.php';
+	var manager = _editor_url + 'plugins/ImageManager/manager.php?article_id='+_campsite_article_id;
 
 	Dialog(manager, function(param) {
 		if (!param) {	// user must have pressed Cancel
