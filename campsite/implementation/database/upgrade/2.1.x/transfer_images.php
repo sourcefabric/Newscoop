@@ -15,6 +15,9 @@ if (!is_array($Campsite)) {
 	echo "Invalid configuration file(s)";
 	exit(1);
 }
+$_SERVER['DOCUMENT_ROOT'] = $Campsite['WWW_DIR'] . "/" . $Campsite['DATABASE_NAME'] . "/html";
+$DO_NOT_CONNECT_TO_DB = true;
+require_once($Campsite['WWW_COMMON_DIR'] . "/html/configuration.php");
 
 //$db_name = "testcampsite";
 //$db_user = "root";
@@ -26,7 +29,7 @@ $db_name = $Campsite['DATABASE_NAME'];
 $db_user = $Campsite['DATABASE_USER'];
 $db_passwd = $Campsite['DATABASE_PASSWORD'];
 $db_host = $Campsite['DATABASE_SERVER_ADDRESS'];
-$images_dir = $Campsite['IMAGES_DIRECTORY'];
+$images_dir = $Campsite['IMAGE_DIRECTORY'];
 
 if (isset($argc) && ($argc > 1)) {
 	$usage = "Usage: transfer_images.php [-d <db_name>] [-u <user>]\n"
