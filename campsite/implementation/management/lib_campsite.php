@@ -261,13 +261,22 @@ function checkedIfY($qh,$field) {
 }
 
 
-function pcomboVar($val, $actval, $toprint) {
-	print '<OPTION VALUE="'.encHTML($val).'"';
-	if (!strcmp($val,$actval)) {
+/**
+ * Create an HTML OPTION element.
+ *
+ * @param string p_value
+ * @param string p_selectedValue
+ * @param string p_printValue
+ * @return void
+ */
+function pcomboVar($p_value, $p_selectedValue, $p_printValue) {
+	print '<OPTION VALUE="'.encHTML($p_value).'"';
+	if (!strcmp($p_value, $p_selectedValue)) {
 		print ' SELECTED';
 	}
-	print '>'.encHTML($toprint);
-}
+	print '>'.encHTML($p_printValue);
+} // fn pcombovar
+
 
 function encS($s) {
     return addslashes($s);
