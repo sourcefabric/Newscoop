@@ -1,0 +1,19 @@
+<files>
+  <file name="*.{js,html,css,cgi}" />
+  <file name="license.txt" />
+  <file name="release-notes.html" masonize="yes" />
+  <file name="index.html" masonize="yes" />
+  <file name="ChangeLog" />
+
+  <dir name="lang" />
+  <dir name="plugins" />
+  <dir name="popups" />
+  <dir name="images" />
+  <dir name="examples" />
+
+  <shell dir="dest"><![CDATA[
+    find . -type d               -exec chmod 755 {} \; ;
+    find . -type f               -exec chmod 644 {} \; ;
+    find . -type f -name "*.cgi" -exec chmod 755 {} \; ;
+  ]]></shell>
+</files>

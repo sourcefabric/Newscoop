@@ -1,0 +1,29 @@
+<html> 
+<head> 
+	<script> 
+		function breakit(){ 
+			elem = document.getElementById('page1'); 
+			elem.style.display = 'none' 
+			elem.style.display = 'block'
+			if (HTMLArea.is_gecko) {
+				editor._doc.designMode = 'off';
+				editor._doc.designMode = 'on';
+				editor.focusEditor();
+			}
+		} 
+		_editor_url = '/htmlarea/';
+		_editor_lang = 'en';
+	</script> 
+	<script type="text/javascript" src="/htmlarea/htmlarea.js"></script> 
+</head> 
+<body> 
+	<button onclick='breakit();'>Break It</button> 
+	<div id="page1" class="pagetext"> 
+		<textarea class="inputbox" cols="50" rows="20" name="introtext" id="introtext"></textarea> 
+	</div> 
+	<script language="JavaScript1.2" defer="defer"> 
+		var editor = new HTMLArea("introtext");  
+		editor.generate('introtext'); 
+	</script> 
+</body> 
+</html>

@@ -1,0 +1,4 @@
+<project title="HTMLArea">
+  <version>3.0</version>
+  <release>rc1</release>
+</project>
