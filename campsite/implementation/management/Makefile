@@ -91,7 +91,7 @@ clean: dummy
 	$(MAKE) -C localizer clean
 
 uninstall: dummy
-	rm -fr $(WWW_COMMON_DIR)
+	rm -fr $(WWW_COMMON_DIR)/*
 	$(MAKE) -C cgi uninstall
 	$(MAKE) -C templates uninstall
 
