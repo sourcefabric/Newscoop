@@ -934,7 +934,7 @@ function template_is_used($template_name)
 }
 
 
-if (file_exists ($_SERVER['DOCUMENT_ROOT'].'/priv/modules/admin/priv_functions.php'))
-  include ($_SERVER['DOCUMENT_ROOT'].'/priv/modules/admin/priv_functions.php');
+if (file_exists($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/modules/admin/priv_functions.php"))
+	include ($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/modules/admin/priv_functions.php");
 
 ?>

@@ -1,10 +1,9 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/config.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
-load_common_include_files();
+require($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
+load_common_include_files($ADMIN_DIR);
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
-	header("Location: /priv/login.php");
+	header("Location: /$ADMIN/login.php");
 	return;
 }
 ?>
