@@ -66,27 +66,7 @@ if ($sLanguage) {
 $previousArticleId = 0;
 
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
-	"http://www.w3.org/TR/REC-html40/loose.dtd">
-<HTML>
 <HEAD>
-    <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<script>
-	<!--
-	/*
-	A slightly modified version of "Break-out-of-frames script"
-	By JavaScript Kit (http://javascriptkit.com)
-	*/
-	
-	if (window != top.fmain && window != top) {
-		if (top.fmenu)
-			top.fmain.location.href=location.href
-		else
-			top.location.href=location.href
-	}
-	// -->
-	</script>
-	<META HTTP-EQUIV="Expires" CONTENT="now">
 	<TITLE><?php  putGS("Articles"); ?></TITLE>
 	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite["website_url"] ?>/css/admin_stylesheet.css">	
 </HEAD>
