@@ -24,7 +24,7 @@ B_BODY
 <!sql setdefault cStartDate 0>dnl
 <!sql setdefault cSection 0>dnl
 <!sql setdefault cDays 0>dnl
-B_HEADER({Adding Subscription})
+B_HEADER({Adding Sections})
 B_HEADER_BUTTONS
 X_HBUTTON({Sections}, {users/subscriptions/sections/?User=<!sql print #User>&Pub=<!sql print #Pub>&Subs=<!sql print #Subs>})
 X_HBUTTON({Subscriptions}, {users/subscriptions/?User=<!sql print #User>})
@@ -50,9 +50,9 @@ E_CURRENT
 B_MSGBOX({Adding subscription})
 <!sql query "INSERT IGNORE INTO SubsSections SET IdSubscription=?Subs, SectionNumber='?cSection', StartDate='?cStartDate', Days='?cDays'">dnl
 <!sql if $AFFECTED_ROWS>dnl
-	X_MSGBOX_TEXT({<LI>The subscription has been added successfully.</LI>})
+	X_MSGBOX_TEXT({<LI>The section(s) has been added successfully.</LI>})
 <!sql else>dnl
-	X_MSGBOX_TEXT({<LI>The subscription could not be added.</LI><LI>Please check if there isn't another subscription with the same section.</LI>})
+	X_MSGBOX_TEXT({<LI>The section(s) could not be added.</LI><LI>Please check if there isn't another subscription with the same section.</LI>})
 <!sql endif>dnl
 	B_MSGBOX_BUTTONS
 <!sql if $AFFECTED_ROWS>dnl
