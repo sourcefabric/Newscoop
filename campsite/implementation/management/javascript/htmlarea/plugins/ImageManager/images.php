@@ -2,7 +2,7 @@
 /**
  * Show a list of images in a long horizontal table.
  * @author $Author: paul $
- * @version $Id: images.php,v 1.4 2005/03/20 17:10:51 paul Exp $
+ * @version $Id: images.php,v 1.5 2005/03/24 16:11:39 paul Exp $
  * @package ImageManager
  */
 
@@ -14,15 +14,15 @@ $relative = '/';
 $manager = new ImageManager($IMConfig);
 
 //process any file uploads
-$manager->processUploads();
+//$manager->processUploads();
 
-$manager->deleteFiles();
+//$manager->deleteFiles();
 
 $refreshDir = false;
 //process any directory functions
-if ($manager->deleteDirs() || $manager->processNewDir()) {
-	$refreshDir = true;
-}
+//if ($manager->deleteDirs() || $manager->processNewDir()) {
+//	$refreshDir = true;
+//}
 
 // Check for any sub-directory request.
 // Check that the requested sub-directory exists and valid.
