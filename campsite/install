@@ -115,7 +115,7 @@ if [ $my_id -ne 0 ]; then
     echo "can not be installed. You will be prompted later for root password."
 fi
 configure_campsite $upgrade $interactive
-do_configure $upgrade
+do_configure $upgrade --apache_conf_path "$apache_conf_path" --apache_bin_path "$apache_bin_path"
 compile_sources
 if [ $my_id -ne 0 ]; then
     echo -e "\nIt is time to login as root. Please supply password."
