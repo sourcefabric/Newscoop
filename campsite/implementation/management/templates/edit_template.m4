@@ -54,7 +54,6 @@ B_DIALOG(<*Edit template*>, <*POST*>, <*do_edit.php*>)
 		} else {
 			$contents = "";
 		}
-		echo "<p>I'm in";
 ?>
 
 	<TR><TD><TEXTAREA ROWS="25" COLS="85" NAME="cField" WRAP="NO"><?php  p(decS($contents)) ?></TEXTAREA></TD></TR>
