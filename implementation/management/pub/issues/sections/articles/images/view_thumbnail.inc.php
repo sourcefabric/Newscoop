@@ -123,6 +123,6 @@
         	<?php  
         } 
         ?></td>
-        <td colspan="3" style="color: #00008b;"><?php putGS('$1 images found', $NumImagesFound); ?></TD>
+        <td colspan="3"><?php putGS('$1 images found', $NumImagesFound); ?></TD>
     </TR>
 </TABLE>
