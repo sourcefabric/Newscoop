@@ -718,9 +718,15 @@ const TOLCLexem* TOLCParser::DoParse(TOLContext& p_rcoContext, fstream& p_rcoOut
 			}
 			if (mode == "internal")
 			{
+				CGI coCGI("GET", link.c_str());
+				cpChar pchLangId = coCGI.GetFirst(P_IDLANG);
+				cpChar pchPubId = coCGI.GetFirst(P_IDPUBL);
+				cpChar pchIssueId = coCGI.GetFirst(P_NRISSUE);
+				if (pchLangId == NULL || pchPubId == NULL || pchIssueId == NULL)
+					return l;
 				sprintf(pchTmpBuf, "select SingleArticle from Issues where IdPublication = %ld"
-						" and Number = %ld and IdLanguage = %ld", p_rcoContext.Publication(),
-				        p_rcoContext.Issue(), p_rcoContext.Language());
+						" and Number = %ld and IdLanguage = %ld", atol(pchPubId),
+				        atol(pchIssueId), atol(pchLangId));
 				if (mysql_query(p_SQL, pchTmpBuf) != 0)
 					return l;
 				CMYSQL_RES res = mysql_store_result(p_SQL);

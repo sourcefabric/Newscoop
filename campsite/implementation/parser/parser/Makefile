@@ -4,7 +4,7 @@ MY_INCLUDE_DIR=
 OBJ_FILES=main.o tol_lex.o tol_atoms.o tol_parser.o tol_actions.o tol_util.o\
  tol_error.o tol_context.o tol_cparser.o cgi.o csocket.o threadpool.o mutex.o
 
-LIBS=-lmysqlclient -lnsl -lm -lz -lcrypt -lpthread
+LIBS= -lnsl -lm -lz -lcrypt -lpthread -L/usr/lib/mysql -lmysqlclient
 
 DEPENDANCES= *.h
 

@@ -1046,7 +1046,7 @@ int DoSubscribe(CGI& cgi, TOLContext& c, MYSQL* pSql)
 		return SERR_USER_NOT_READER;
 	if (c.Publication() < 0)
 		return SERR_PUBL_NOT_SPECIFIED;
-	const char *s;
+	const char* s;
 	sprintf(pchBuf, "select TimeUnit, PayTime, UnitCost, Currency from Publications where "
 	        "Id = %ld", c.Publication());
 	SQLQuery(pSql, pchBuf);

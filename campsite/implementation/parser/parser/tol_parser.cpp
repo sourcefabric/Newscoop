@@ -167,7 +167,7 @@ return -1;\
 
 #define ValidateAttr(attr, st, lexem, context, rv)\
 const TOLAttribute* attr;\
-if ((attr = st->FindAttr(lexem->m_pcoAtom->Identifier, context)) == 0) {\
+if ((attr = st->FindAttr(lexem->m_pcoAtom->Identifier(), context)) == 0) {\
 string a_req;\
 st->PrintAttrs(a_req, context);\
 SetPError(parse_err, PERR_INVALID_ATTRIBUTE, MODE_PARSE, \
@@ -178,7 +178,7 @@ return rv;\
 
 #define ValidateOperator(op_i, lexem, dt, op_r)\
 {\
-if ((op_i = op_map.find(lexem->m_pcoAtom->Identifier)) == op_map.end()\
+if ((op_i = op_map.find(lexem->m_pcoAtom->Identifier())) == op_map.end()\
 || (TypeOperators(dt) & (TOperator)(*op_i).second) == 0) {\
 SetPError(parse_err, PERR_INVALID_OPERATOR, MODE_PARSE,\
 (strlen(op_r) ? op_r : DTOperators(dt)), lex.PrevLine(), lex.PrevColumn());\
@@ -226,10 +226,10 @@ TK_MYSQL TOLParser::s_MYSQL(NULL);
 // OpMapInit: called only once to initialise the operators map
 void TOLParser::OpMapInit()
 {
-	op_map.insert(String2Int::value_type("is", (int)TOL_OP_IS));
-	op_map.insert(String2Int::value_type("not", (int)TOL_OP_IS_NOT));
-	op_map.insert(String2Int::value_type("greater", (int)TOL_OP_GREATER));
-	op_map.insert(String2Int::value_type("smaller", (int)TOL_OP_SMALLER));
+	op_map["is"] = (int)TOL_OP_IS;
+	op_map["not"] = (int)TOL_OP_IS_NOT;
+	op_map["greater"] = (int)TOL_OP_GREATER;
+	op_map["smaller"] = (int)TOL_OP_SMALLER;
 }
 
 // MapTpl: map template file to m_pchTplBuf buffer
@@ -454,7 +454,7 @@ void TOLParser::DEBUGLexem(cpChar c, const TOLLexem* l)
 	{
 		cout << "<!-- @LEXEM " << c << ": " << (int)l->m_Res;
 		if (l->m_pcoAtom)
-			cout << " atom: " << l->m_pcoAtom->Identifier << ", " << l->m_pcoAtom->ClassName();
+			cout << " atom: " << l->m_pcoAtom->Identifier() << ", " << l->m_pcoAtom->ClassName();
 		if (l->m_pchTextStart)
 		{
 			cout << " text %";
@@ -668,26 +668,26 @@ int TOLParser::ValidDataType(const TOLLexem* l, TDataType dt)
 		return 0;
 	if (dt == TOL_DT_NUMBER_PARITY
 	        && (l->m_DataType == TOL_DT_NUMBER
-	            || strcasecmp(l->m_pcoAtom->Identifier, "odd") == 0
-	            || strcasecmp(l->m_pcoAtom->Identifier, "even") == 0))
+	            || strcasecmp(l->m_pcoAtom->Identifier(), "odd") == 0
+	            || strcasecmp(l->m_pcoAtom->Identifier(), "even") == 0))
 	{
 		return 1;
 	}
 	if (dt == TOL_DT_ORDER
-	        && (strcasecmp(l->m_pcoAtom->Identifier, "asc") == 0
-	            || strcasecmp(l->m_pcoAtom->Identifier, "desc") == 0))
+	        && (strcasecmp(l->m_pcoAtom->Identifier(), "asc") == 0
+	            || strcasecmp(l->m_pcoAtom->Identifier(), "desc") == 0))
 	{
 		return 1;
 	}
 	if (dt == TOL_DT_ON_OFF
-	        && (strcasecmp(l->m_pcoAtom->Identifier, "on") == 0
-	            || strcasecmp(l->m_pcoAtom->Identifier, "off") == 0))
+	        && (strcasecmp(l->m_pcoAtom->Identifier(), "on") == 0
+	            || strcasecmp(l->m_pcoAtom->Identifier(), "off") == 0))
 	{
 		return 1;
 	}
 	if (dt == TOL_DT_ART_POS
-	        && (strcasecmp(l->m_pcoAtom->Identifier, "FrontPage") == 0
-	            || strcasecmp(l->m_pcoAtom->Identifier, "Section") == 0))
+	        && (strcasecmp(l->m_pcoAtom->Identifier(), "FrontPage") == 0
+	            || strcasecmp(l->m_pcoAtom->Identifier(), "Section") == 0))
 	{
 		return 1;
 	}
@@ -744,7 +744,7 @@ inline int TOLParser::HLanguage(TOLPActionList& al, int lv, int sublv)
 	}
 	const TOLLexem* l;
 	RequireAtom(l);
-	al.insert(al.end(), new TOLActLanguage(l->m_pcoAtom->Identifier));
+	al.insert(al.end(), new TOLActLanguage(l->m_pcoAtom->Identifier()));
 	WaitForStatementEnd(true);
 	return 0;
 }
@@ -759,13 +759,13 @@ inline int TOLParser::HInclude(TOLPActionList& al)
 	CheckForAtomType(l->m_pcoAtom, CL_TOLATOM, PERR_NOT_VALUE, "",
 	                 lex.PrevLine(), lex.PrevColumn());
 	string itpl_name;
-	if ((l->m_pcoAtom->Identifier)[0] == '/')
-		itpl_name = document_root + l->m_pcoAtom->Identifier;
+	if ((l->m_pcoAtom->Identifier())[0] == '/')
+		itpl_name = document_root + l->m_pcoAtom->Identifier();
 	else
 	{
 		itpl_name = tpl;
 		itpl_name.erase(itpl_name.rfind('/'));
-		itpl_name += string("/") + l->m_pcoAtom->Identifier;
+		itpl_name += string("/") + l->m_pcoAtom->Identifier();
 	}
 	if (parent_tpl.find(itpl_name.c_str()) != parent_tpl.end())
 		FatalPError(parse_err, PERR_INCLUDE_CICLE, MODE_PARSE, "", lex.PrevLine(), lex.PrevColumn());
@@ -815,13 +815,13 @@ inline int TOLParser::HPublication(TOLPActionList& al, int level, int sublevel,
 	const TOLLexem* l;
 	RequireAtom(l);
 	ValidateAttr(attr, st, l, TOL_CT_DEFAULT, 0);
-	if (strcasecmp(l->m_pcoAtom->Identifier, "off") != 0
-	        && strcasecmp(l->m_pcoAtom->Identifier, "default") != 0)
+	if (strcasecmp(l->m_pcoAtom->Identifier(), "off") != 0
+	        && strcasecmp(l->m_pcoAtom->Identifier(), "default") != 0)
 	{
 		RequireAtom(l);
-		ValidateDType(l, attr->DType, 0);
+		ValidateDType(l, attr->DataType(), 0);
 		al.insert(al.end(), new TOLActPublication(TOLParameter(attr->Attribute(),
-	                                              l->m_pcoAtom->Identifier, TOL_OP_IS)));
+	                                              l->m_pcoAtom->Identifier(), TOL_OP_IS)));
 	}
 	else
 		al.insert(al.end(), new TOLActPublication(TOLParameter(attr->Attribute(), "",
@@ -843,17 +843,17 @@ inline int TOLParser::HIssue(TOLPActionList& al, int level, int sublevel, const 
 		CheckForLevel(level, LV_ROOT, lex.PrevLine(), lex.PrevColumn());
 		CheckNotLevel(sublevel, SUBLV_SEARCHRESULT, lex.PrevLine(), lex.PrevColumn());
 	}
-	TOLStatement* st = &(*lex.s_coStatements.find(l->m_pcoAtom->Identifier));
+	TOLStatement* st = &(*lex.s_coStatements.find(l->m_pcoAtom->Identifier()));
 	RequireAtom(l);
 	ValidateAttr(attr, st, l, TOL_CT_DEFAULT, 0);
-	if (strcasecmp(l->m_pcoAtom->Identifier, "off") != 0
-	        && strcasecmp(l->m_pcoAtom->Identifier, "default") != 0
-	        && strcasecmp(l->m_pcoAtom->Identifier, "current") != 0)
+	if (strcasecmp(l->m_pcoAtom->Identifier(), "off") != 0
+	        && strcasecmp(l->m_pcoAtom->Identifier(), "default") != 0
+	        && strcasecmp(l->m_pcoAtom->Identifier(), "current") != 0)
 	{
 		RequireAtom(l);
-		ValidateDType(l, attr->DType, 0);
+		ValidateDType(l, attr->DataType(), 0);
 		al.insert(al.end(), new TOLActIssue(TOLParameter(attr->Attribute(),
-		                                    l->m_pcoAtom->Identifier, TOL_OP_IS)));
+		                                    l->m_pcoAtom->Identifier(), TOL_OP_IS)));
 	}
 	else
 		al.insert(al.end(), new TOLActIssue(TOLParameter(attr->Attribute(), "", TOL_NO_OP)));
@@ -874,16 +874,16 @@ inline int TOLParser::HSection(TOLPActionList& al, int level, int sublevel, cons
 		CheckForLevel(level, LV_ROOT | LV_LISSUE, lex.PrevLine(), lex.PrevColumn());
 		CheckNotLevel(sublevel, SUBLV_SEARCHRESULT, lex.PrevLine(), lex.PrevColumn());
 	}
-	TOLStatement* st = &(*lex.s_coStatements.find(l->m_pcoAtom->Identifier));
+	TOLStatement* st = &(*lex.s_coStatements.find(l->m_pcoAtom->Identifier()));
 	RequireAtom(l);
 	ValidateAttr(attr, st, l, TOL_CT_DEFAULT, 0);
-	if (strcasecmp(l->m_pcoAtom->Identifier, "off") != 0
-	        && strcasecmp(l->m_pcoAtom->Identifier, "default") != 0)
+	if (strcasecmp(l->m_pcoAtom->Identifier(), "off") != 0
+	        && strcasecmp(l->m_pcoAtom->Identifier(), "default") != 0)
 	{
 		RequireAtom(l);
-		ValidateDType(l, attr->DType, 0);
+		ValidateDType(l, attr->DataType(), 0);
 		al.insert(al.end(), new TOLActSection(TOLParameter(attr->Attribute(),
-		                                      l->m_pcoAtom->Identifier, TOL_OP_IS)));
+		                                      l->m_pcoAtom->Identifier(), TOL_OP_IS)));
 	}
 	else
 		al.insert(al.end(), new TOLActSection(TOLParameter(attr->Attribute(), "", TOL_NO_OP)));
@@ -902,16 +902,16 @@ inline int TOLParser::HArticle(TOLPActionList& al, int level, int sublevel, cons
 	if ((sublevel & SUBLV_LOCAL) == 0)
 		CheckForLevel(level, LV_ROOT | LV_LISSUE | LV_LSECTION, lex.PrevLine(),
 					  lex.PrevColumn());
-	TOLStatement *st = &(*lex.s_coStatements.find(l->m_pcoAtom->Identifier));
+	TOLStatement *st = &(*lex.s_coStatements.find(l->m_pcoAtom->Identifier()));
 	RequireAtom(l);
 	ValidateAttr(attr, st, l, TOL_CT_DEFAULT, 0);
-	if (strcasecmp(l->m_pcoAtom->Identifier, "off") != 0
-	        && strcasecmp(l->m_pcoAtom->Identifier, "default") != 0)
+	if (strcasecmp(l->m_pcoAtom->Identifier(), "off") != 0
+	        && strcasecmp(l->m_pcoAtom->Identifier(), "default") != 0)
 	{
 		RequireAtom(l);
-		ValidateDType(l, attr->DType, 0);
+		ValidateDType(l, attr->DataType(), 0);
 		al.insert(al.end(), new TOLActArticle(TOLParameter(attr->Attribute(),
-		                                                   l->m_pcoAtom->Identifier, TOL_OP_IS)));
+		                                                   l->m_pcoAtom->Identifier(), TOL_OP_IS)));
 	}
 	else
 		al.insert(al.end(), new TOLActArticle(TOLParameter(attr->Attribute(), "", TOL_NO_OP)));
@@ -925,7 +925,7 @@ inline int TOLParser::HArticle(TOLPActionList& al, int level, int sublevel, cons
 //		const TOLLexem* l - pointer to last lexem
 inline int TOLParser::HURLParameters(TOLPActionList& al, const TOLLexem* l)
 {
-	TOLStatement *st = &(*lex.s_coStatements.find(l->m_pcoAtom->Identifier));
+	TOLStatement *st = &(*lex.s_coStatements.find(l->m_pcoAtom->Identifier()));
 	l = lex.GetLexem();
 	DEBUGLexem("urlparam", l);
 	long int img = -1;
@@ -939,39 +939,39 @@ inline int TOLParser::HURLParameters(TOLPActionList& al, const TOLLexem* l)
 			          lex.PrevLine(), lex.PrevColumn());
 			return 0;
 		}
-		if (strcasecmp(l->m_pcoAtom->Identifier, "fromstart") == 0)
+		if (strcasecmp(l->m_pcoAtom->Identifier(), "fromstart") == 0)
 		{
 			fromstart = true;
 		}
-		else if (strcasecmp(l->m_pcoAtom->Identifier, "allsubtitles") == 0)
+		else if (strcasecmp(l->m_pcoAtom->Identifier(), "allsubtitles") == 0)
 		{
 			allsubtitles = true;
 		}
-		else if (strcasecmp(l->m_pcoAtom->Identifier, "reset_issue_list") == 0)
+		else if (strcasecmp(l->m_pcoAtom->Identifier(), "reset_issue_list") == 0)
 		{
 			reset_from_list = CLV_ISSUE_LIST;
 		}
-		else if (strcasecmp(l->m_pcoAtom->Identifier, "reset_section_list") == 0)
+		else if (strcasecmp(l->m_pcoAtom->Identifier(), "reset_section_list") == 0)
 		{
 			reset_from_list = CLV_SECTION_LIST;
 		}
-		else if (strcasecmp(l->m_pcoAtom->Identifier, "reset_article_list") == 0)
+		else if (strcasecmp(l->m_pcoAtom->Identifier(), "reset_article_list") == 0)
 		{
 			reset_from_list = CLV_ARTICLE_LIST;
 		}
-		else if (strcasecmp(l->m_pcoAtom->Identifier, "reset_searchresult_list") == 0)
+		else if (strcasecmp(l->m_pcoAtom->Identifier(), "reset_searchresult_list") == 0)
 		{
 			reset_from_list = CLV_SEARCHRESULT_LIST;
 		}
-		else if (strcasecmp(l->m_pcoAtom->Identifier, "reset_subtitle_list") == 0)
+		else if (strcasecmp(l->m_pcoAtom->Identifier(), "reset_subtitle_list") == 0)
 		{
 			reset_from_list = CLV_SUBTITLE_LIST;
 		}
-		else if (strcasecmp(l->m_pcoAtom->Identifier, ST_IMAGE) == 0)
+		else if (strcasecmp(l->m_pcoAtom->Identifier(), ST_IMAGE) == 0)
 		{
 			RequireAtom(l);
 			ValidateDType(l, TOL_DT_NUMBER, 0);
-			img = strtol(l->m_pcoAtom->Identifier, 0, 10);
+			img = strtol(l->m_pcoAtom->Identifier(), 0, 10);
 		}
 		else
 		{
@@ -1002,7 +1002,7 @@ inline int TOLParser::HFormParameters(TOLPActionList& al)
 	DEBUGLexem("formparam", l);
 	bool fromstart = false;
 	if (l->m_Res != TOL_LEX_END_STATEMENT && l->m_pcoAtom
-	        && strcasecmp(l->m_pcoAtom->Identifier, "fromstart") == 0)
+	        && strcasecmp(l->m_pcoAtom->Identifier(), "fromstart") == 0)
 	{
 		fromstart = true;
 	}
@@ -1018,11 +1018,11 @@ inline int TOLParser::HFormParameters(TOLPActionList& al)
 //		const TOLLexem* l - pointer to last lexem
 inline int TOLParser::HDate(TOLPActionList& al, const TOLLexem* l)
 {
-	TOLStatement *st = &(*lex.s_coStatements.find(l->m_pcoAtom->Identifier));
+	TOLStatement *st = &(*lex.s_coStatements.find(l->m_pcoAtom->Identifier()));
 	RequireAtom(l);
 	const TOLAttribute* attr;
-	if ((attr = st->FindAttr(l->m_pcoAtom->Identifier, TOL_CT_DEFAULT)) == 0
-	        && !ValidDateForm(l->m_pcoAtom->Identifier))
+	if ((attr = st->FindAttr(l->m_pcoAtom->Identifier(), TOL_CT_DEFAULT)) == 0
+	        && !ValidDateForm(l->m_pcoAtom->Identifier()))
 	{
 		string a_req;
 		st->PrintAttrs(a_req, TOL_CT_DEFAULT);
@@ -1030,7 +1030,7 @@ inline int TOLParser::HDate(TOLPActionList& al, const TOLLexem* l)
 		FatalPError(parse_err, PERR_INVALID_ATTRIBUTE, MODE_PARSE,
 		            a_req.c_str(), lex.PrevLine(), lex.PrevColumn());
 	}
-	al.insert(al.end(), new TOLActDate(l->m_pcoAtom->Identifier));
+	al.insert(al.end(), new TOLActDate(l->m_pcoAtom->Identifier()));
 	WaitForStatementEnd(true);
 	return 0;
 }
@@ -1046,7 +1046,7 @@ inline int TOLParser::HPrint(TOLPActionList& al, int lv, int sublv)
 	RequireAtom(l);
 	CheckForAtomType(l->m_pcoAtom, CL_TOLSTATEMENT, PERR_ATOM_NOT_STATEMENT,
 	                 PrintStatements(lv, sublv), lex.PrevLine(), lex.PrevColumn());
-	TOLStatement *st = &(*lex.s_coStatements.find(l->m_pcoAtom->Identifier));
+	TOLStatement *st = &(*lex.s_coStatements.find(l->m_pcoAtom->Identifier()));
 	if (St2PMod(st->statement) == 0)
 	{
 		SetPError(parse_err, PERR_INVALID_STATEMENT, MODE_PARSE,
@@ -1074,9 +1074,9 @@ inline int TOLParser::HPrint(TOLPActionList& al, int lv, int sublv)
 	const TOLTypeAttributes* pTa = NULL;
 	const TOLTypeAttributes* pTa2 = NULL;
 	string a_req, format;
-	if ((attr = st->FindAttr(l->m_pcoAtom->Identifier, TOL_CT_PRINT)) == 0
-	    && (attr = st->FindTypeAttr(l->m_pcoAtom->Identifier, "", TOL_CT_PRINT, &pTa)) == 0
-	    && (pTa2 = st->FindType(l->m_pcoAtom->Identifier)) == 0)
+	if ((attr = st->FindAttr(l->m_pcoAtom->Identifier(), TOL_CT_PRINT)) == 0
+	    && (attr = st->FindTypeAttr(l->m_pcoAtom->Identifier(), "", TOL_CT_PRINT, &pTa)) == 0
+	    && (pTa2 = st->FindType(l->m_pcoAtom->Identifier())) == 0)
 	{
 		st->PrintAttrs(a_req, TOL_CT_PRINT);
 		st->PrintTypes(a_req);
@@ -1090,7 +1090,7 @@ inline int TOLParser::HPrint(TOLPActionList& al, int lv, int sublv)
 	{
 		RequireAtom(l);
 		const TOLTypeAttributes *pTa3 = 0;
-		if ((attr = st->FindTypeAttr(l->m_pcoAtom->Identifier, pTa2->type_value,
+		if ((attr = st->FindTypeAttr(l->m_pcoAtom->Identifier(), pTa2->type_value,
 		                             TOL_CT_PRINT, &pTa3)) == 0)
 		{
 			st->PrintTAttrs(a_req, pTa2->type_value, TOL_CT_PRINT);
@@ -1100,7 +1100,7 @@ inline int TOLParser::HPrint(TOLPActionList& al, int lv, int sublv)
 			return 0;
 		}
 	}
-	if (attr->DType == TOL_DT_DATE)
+	if (attr->DataType() == TOL_DT_DATE)
 	{
 		l = lex.GetLexem();
 		DEBUGLexem("print", l);
@@ -1108,8 +1108,8 @@ inline int TOLParser::HPrint(TOLPActionList& al, int lv, int sublv)
 		if (l->m_Res != TOL_LEX_END_STATEMENT)
 		{
 			CheckForAtom(l);
-			if (ValidDateForm(l->m_pcoAtom->Identifier))
-				format = l->m_pcoAtom->Identifier;
+			if (ValidDateForm(l->m_pcoAtom->Identifier()))
+				format = l->m_pcoAtom->Identifier();
 			else
 			{
 				SetPError(parse_err, PERR_INVALID_DATE_FORM, MODE_PARSE,
@@ -1119,13 +1119,12 @@ inline int TOLParser::HPrint(TOLPActionList& al, int lv, int sublv)
 			}
 		}
 	}
-	if (strcasecmp(attr->Identifier, "mon_name") == 0)
+	if (strcasecmp(attr->Identifier(), "mon_name") == 0)
 		format = "%M";
-	if (strcasecmp(attr->Identifier, "wday_name") == 0)
+	if (strcasecmp(attr->Identifier(), "wday_name") == 0)
 		format = "%W";
-	string a = strlen(attr->DBField) ? attr->DBField : attr->Identifier;
 	al.insert(al.end(),
-	          new TOLActPrint(a.c_str(), (TPrintModifier)St2PMod(st->statement),
+	          new TOLActPrint(attr->Attribute(), (TPrintModifier)St2PMod(st->statement),
 	                          pTa2 ? pTa2->type_value : (pTa ? pTa->type_value : 0), format));
 	if (l->m_Res != TOL_LEX_END_STATEMENT)
 		WaitForStatementEnd(true);
@@ -1146,25 +1145,25 @@ inline int TOLParser::HList(TOLPActionList& al, int level, int sublevel, const T
 		FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE,
 		            LARTICLE_STATEMENTS, lex.PrevLine(), lex.PrevColumn());
 	long int lines = 0, columns = 0;
-	TOLStatement *st = &(*lex.s_coStatements.find(l->m_pcoAtom->Identifier));
+	TOLStatement *st = &(*lex.s_coStatements.find(l->m_pcoAtom->Identifier()));
 	RequireAtom(l);
 	// check for List attributes
 	while (strcmp(l->m_pcoAtom->ClassName(), "TOLStatement"))
 	{
 		ValidateAttr(attr, st, l, TOL_CT_DEFAULT, 1);
-		if (strcasecmp(l->m_pcoAtom->Identifier, "length") == 0 && lines > 0)
+		if (strcasecmp(l->m_pcoAtom->Identifier(), "length") == 0 && lines > 0)
 			SetPError(parse_err, PERR_ATTRIBUTE_REDEF, MODE_PARSE, "",
 			          lex.PrevLine(), lex.PrevColumn());
-		if (strcasecmp(l->m_pcoAtom->Identifier, "columns") == 0 && columns > 0)
+		if (strcasecmp(l->m_pcoAtom->Identifier(), "columns") == 0 && columns > 0)
 			SetPError(parse_err, PERR_ATTRIBUTE_REDEF, MODE_PARSE, "",
 			          lex.PrevLine(), lex.PrevColumn());
-		string attr_name = l->m_pcoAtom->Identifier;
+		string attr_name = l->m_pcoAtom->Identifier();
 		RequireAtom(l);
 		ValidateDType(l, TOL_DT_NUMBER, 1);
 		if (strcasecmp(attr_name.c_str(), "length") == 0)
-			lines = strtol(l->m_pcoAtom->Identifier, 0, 10);
+			lines = strtol(l->m_pcoAtom->Identifier(), 0, 10);
 		else
-			columns = strtol(l->m_pcoAtom->Identifier, 0, 10);
+			columns = strtol(l->m_pcoAtom->Identifier(), 0, 10);
 		RequireAtom(l);
 	}
 	// check for modifier (Issue, Section, Article, SearchResult, Subtitle)
@@ -1213,56 +1212,60 @@ inline int TOLParser::HList(TOLPActionList& al, int level, int sublevel, const T
 		TOLAttributeHash ah(4, cpCharHashFn, cpCharEqual, TOLAttributeValue);
 		TOLAttributeHash::iterator ah_i;
 		StringHash keywords(4, cpCharHashFn, cpCharEqual, stringValue);
-		CheckForAtom(l);
 		String2Int::iterator op_i;
-		if (strcasecmp(l->m_pcoAtom->Identifier, "keyword")
-	        && strcasecmp(l->m_pcoAtom->Identifier, "IsOn")
-	        && strcasecmp(l->m_pcoAtom->Identifier, "IsNotOn"))
+		CheckForAtom(l);
+		ValidateAttr(attr, st, l, TOL_CT_LIST, 1);
+		if (strcasecmp(l->m_pcoAtom->Identifier(), "keyword")
+	        && strcasecmp(l->m_pcoAtom->Identifier(), "IsOn")
+	        && strcasecmp(l->m_pcoAtom->Identifier(), "IsNotOn"))
 		{
-			ValidateAttr(attr, st, l, TOL_CT_LIST, 1);
-			if ((ah_i = ah.find(l->m_pcoAtom->Identifier)) != ah.end())
+			if ((ah_i = ah.find(l->m_pcoAtom->Identifier())) != ah.end())
 				SetPError(parse_err, PERR_ATTRIBUTE_REDEF, MODE_PARSE, "",
 				          lex.PrevLine(), lex.PrevColumn());
 			ah.insert_unique(*attr);
 			RequireAtom(l);
-			if (attr->attr_class != TOL_NORMAL_ATTR)
+			if (attr->Class() != TOL_NORMAL_ATTR)
 			{
-				ValidateOperator(op_i, l, attr->DType, "");
+				ValidateOperator(op_i, l, attr->DataType(), "");
 				RequireAtom(l);
 				const TOLTypeAttributes* ta;
-				if ((ta = st->FindType(l->m_pcoAtom->Identifier)) == NULL)
+				if ((ta = st->FindType(l->m_pcoAtom->Identifier())) == NULL)
 					FatalPError(parse_err, PERR_INV_TYPE_VAL, MODE_PARSE, "",
 					            lex.PrevLine(), lex.PrevColumn());
 				params.insert(params.end(), TOLParameter(attr->Attribute(),
-				              l->m_pcoAtom->Identifier, (TOperator)(*op_i).second));
+				              l->m_pcoAtom->Identifier(), (TOperator)(*op_i).second));
 				l = lex.GetLexem();
 				DEBUGLexem("hlist2", l);
 				continue;
 			}
-			ValidateOperator(op_i, l, attr->DType, "");
+			ValidateOperator(op_i, l, attr->DataType(), "");
 			RequireAtom(l);
-			ValidateDType(l, attr->DType, 1);
+			ValidateDType(l, attr->DataType(), 1);
 			params.insert(params.end(),
-			              TOLParameter(attr->Attribute(), l->m_pcoAtom->Identifier,
+			              TOLParameter(attr->Attribute(), l->m_pcoAtom->Identifier(),
 			                           (TOperator)(*op_i).second));
 		}
 		else
 		{
-			string lattr = l->m_pcoAtom->Identifier;
 			RequireAtom(l);
-			if (lattr == "keyword"
-			    && keywords.find(l->m_pcoAtom->Identifier) == keywords.end())
+			if (strcasecmp(attr->Identifier(), "keyword") == 0)
 			{
-				params.insert(params.end(),
-				              TOLParameter("keyword", l->m_pcoAtom->Identifier, TOL_NO_OP));
+			    if (keywords.find(l->m_pcoAtom->Identifier()) == keywords.end())
+			    {
+			    	keywords.insert_unique(l->m_pcoAtom->Identifier());
+					params.insert(params.end(),
+				              TOLParameter("keyword", l->m_pcoAtom->Identifier(), TOL_NO_OP));
+				}
+				l = lex.GetLexem();
+				DEBUGLexem("hlist4", l);
 				continue;
 			}
 			TOperator op = TOL_OP_IS_NOT;
-			if (strcasecmp(lattr.c_str(), "IsOn") == 0)
+			if (strcasecmp(attr->Identifier(), "IsOn") == 0)
 				op = TOL_OP_IS;
 			ValidateDType(l, TOL_DT_ART_POS, 1);
 			string dbf = "OnSection";
-			if (strcasecmp(l->m_pcoAtom->Identifier, "FrontPage") == 0)
+			if (strcasecmp(l->m_pcoAtom->Identifier(), "FrontPage") == 0)
 				dbf = "OnFrontPage";
 			params.insert(params.end(), TOLParameter(dbf.c_str(), "Y", op));
 		}
@@ -1271,7 +1274,8 @@ inline int TOLParser::HList(TOLPActionList& al, int level, int sublevel, const T
 	}
 	// check for order params (Article)
 	TOLParameterList ord_params;
-	if (st->statement == TOL_ST_ARTICLE && l->m_Res == TOL_LEX_STATEMENT)
+	if ((st->statement == TOL_ST_ARTICLE || st->statement == TOL_ST_SEARCHRESULT)
+	    && l->m_Res == TOL_LEX_STATEMENT)
 	{
 		CheckForAtom(l);
 		CheckForAtomType(l->m_pcoAtom, CL_TOLSTATEMENT, PERR_ATOM_NOT_STATEMENT,
@@ -1281,7 +1285,7 @@ inline int TOLParser::HList(TOLPActionList& al, int level, int sublevel, const T
 			SetPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE, ST_ORDER,
 			          lex.PrevLine(), lex.PrevColumn());
 		}
-		TOLStatement* ost = &(*lex.s_coStatements.find(l->m_pcoAtom->Identifier));
+		TOLStatement* ost = &(*lex.s_coStatements.find(l->m_pcoAtom->Identifier()));
 		RequireAtom(l);
 		while (l->m_Res == TOL_LEX_IDENTIFIER)
 		{
@@ -1289,19 +1293,15 @@ inline int TOLParser::HList(TOLPActionList& al, int level, int sublevel, const T
 			TOLAttributeHash::iterator ah_i;
 			CheckForAtom(l);
 			ValidateAttr(attr, ost, l, TOL_CT_LIST, 1);
-			if ((ah_i = ah.find(l->m_pcoAtom->Identifier)) != ah.end())
+			if ((ah_i = ah.find(l->m_pcoAtom->Identifier())) != ah.end())
 				SetPError(parse_err, PERR_ATTRIBUTE_REDEF, MODE_PARSE, "",
 				          lex.PrevLine(), lex.PrevColumn());
 			ah.insert_unique(*attr);
 			RequireAtom(l);
-			ValidateDType(l, attr->DType, 1);
-			const char* param_name;
-			if (attr->DBField[0] != 0)
-				param_name = attr->DBField;
-			else
-				param_name = attr->Identifier;
+			ValidateDType(l, attr->DataType(), 1);
+			const char* param_name = attr->Attribute();
 			ord_params.insert(ord_params.end(),
-			                  TOLParameter(param_name, l->m_pcoAtom->Identifier, TOL_NO_OP));
+			                  TOLParameter(param_name, l->m_pcoAtom->Identifier(), TOL_NO_OP));
 			l = lex.GetLexem();
 			if (l->m_Res != TOL_LEX_IDENTIFIER)
 				break;
@@ -1309,7 +1309,7 @@ inline int TOLParser::HList(TOLPActionList& al, int level, int sublevel, const T
 	}
 	if (l->m_Res != TOL_LEX_END_STATEMENT)
 		WaitForStatementEnd(true);
-	TOLActList *lal = new TOLActList(mod, lines, columns, params, ord_params);
+	TOLActList* lal = new TOLActList(mod, lines, columns, params, ord_params);
 	if (lal == 0)
 		FatalPError(parse_err, ERR_NOMEM, MODE_PARSE, "", lex.PrevLine(), lex.PrevColumn());
 	int last_st, res;
@@ -1351,7 +1351,7 @@ inline int TOLParser::HList(TOLPActionList& al, int level, int sublevel, const T
 	DEBUGLexem("hlist4", l);
 	if (l->m_Res == TOL_LEX_END_STATEMENT)
 		return 0;
-	string req_s = string(st->Identifier) + ", >";
+	string req_s = string(st->Identifier()) + ", >";
 	CheckForStatement(l, req_s, lex.PrevLine(), lex.PrevColumn());
 	CheckForAtom(l);
 	CheckForAtomType(l->m_pcoAtom, CL_TOLSTATEMENT, PERR_ATOM_NOT_STATEMENT,
@@ -1379,7 +1379,7 @@ inline int TOLParser::HIf(TOLPActionList& al, int lv, int sublv, const TOLLexem*
 	RequireAtom(l);
 	CheckForAtomType(l->m_pcoAtom, CL_TOLSTATEMENT, PERR_ATOM_NOT_STATEMENT,
 	                 IfStatements(lv, sublv), lex.PrevLine(), lex.PrevColumn());
-	TOLStatement *ist = &(*lex.s_coStatements.find(l->m_pcoAtom->Identifier));
+	TOLStatement *ist = &(*lex.s_coStatements.find(l->m_pcoAtom->Identifier()));
 	if (ist->statement == TOL_ST_ALLOWED)
 	{
 		modifier = TOL_IMOD_ALLOWED;
@@ -1389,7 +1389,7 @@ inline int TOLParser::HIf(TOLPActionList& al, int lv, int sublv, const TOLLexem*
 	{
 		RequireAtom(l);
 		ValidateAttr(attr, ist, l, TOL_CT_IF, 1);
-		param = TOLParameter(l->m_pcoAtom->Identifier, "", TOL_NO_OP);
+		param = TOLParameter(l->m_pcoAtom->Identifier(), "", TOL_NO_OP);
 		modifier = TOL_IMOD_SUBSCRIPTION;
 	}
 	else if (ist->statement == TOL_ST_USER)
@@ -1401,7 +1401,7 @@ inline int TOLParser::HIf(TOLPActionList& al, int lv, int sublv, const TOLLexem*
 		}
 		RequireAtom(l);
 		ValidateAttr(attr, ist, l, TOL_CT_IF, 1);
-		param = TOLParameter(l->m_pcoAtom->Identifier, "", TOL_NO_OP);
+		param = TOLParameter(l->m_pcoAtom->Identifier(), "", TOL_NO_OP);
 		modifier = TOL_IMOD_USER;
 	}
 	else if (ist->statement == TOL_ST_LOGIN)
@@ -1413,7 +1413,7 @@ inline int TOLParser::HIf(TOLPActionList& al, int lv, int sublv, const TOLLexem*
 		}
 		RequireAtom(l);
 		ValidateAttr(attr, ist, l, TOL_CT_IF, 1);
-		param = TOLParameter(l->m_pcoAtom->Identifier, "", TOL_NO_OP);
+		param = TOLParameter(l->m_pcoAtom->Identifier(), "", TOL_NO_OP);
 		modifier = TOL_IMOD_LOGIN;
 	}
 	else if (ist->statement == TOL_ST_SEARCH)
@@ -1425,7 +1425,7 @@ inline int TOLParser::HIf(TOLPActionList& al, int lv, int sublv, const TOLLexem*
 		}
 		RequireAtom(l);
 		ValidateAttr(attr, ist, l, TOL_CT_IF, 1);
-		param = TOLParameter(l->m_pcoAtom->Identifier, "", TOL_NO_OP);
+		param = TOLParameter(l->m_pcoAtom->Identifier(), "", TOL_NO_OP);
 		modifier = TOL_IMOD_SEARCH;
 	}
 	else if (ist->statement == TOL_ST_PREVIOUSITEMS)
@@ -1480,8 +1480,8 @@ inline int TOLParser::HIf(TOLPActionList& al, int lv, int sublv, const TOLLexem*
 		RequireAtom(l);
 		ValidateAttr(attr, ist, l, TOL_CT_IF, 1);
 		RequireAtom(l);
-		ValidateDType(l, attr->DType, 1);
-		param = TOLParameter(attr->Identifier, l->m_pcoAtom->Identifier, TOL_OP_IS);
+		ValidateDType(l, attr->DataType(), 1);
+		param = TOLParameter(attr->Identifier(), l->m_pcoAtom->Identifier(), TOL_OP_IS);
 		modifier = TOL_IMOD_SUBTITLE;
 	}
 	else if (ist->statement == TOL_ST_LIST)
@@ -1496,12 +1496,12 @@ inline int TOLParser::HIf(TOLPActionList& al, int lv, int sublv, const TOLLexem*
 		ValidateAttr(attr, ist, l, TOL_CT_IF, 1);
 		sublv |= SUBLV_IFLIST;
 		modifier = TOL_IMOD_LIST;
-		param = TOLParameter(attr->Identifier, "", TOL_NO_OP);
+		param = TOLParameter(attr->Identifier(), "", TOL_NO_OP);
 		bool first = true;
 		do
 		{
-			if (strcasecmp(attr->Identifier, "start") == 0
-			        || strcasecmp(attr->Identifier, "end") == 0)
+			if (strcasecmp(attr->Identifier(), "start") == 0
+			        || strcasecmp(attr->Identifier(), "end") == 0)
 			{
 				break;
 			}
@@ -1511,20 +1511,20 @@ inline int TOLParser::HIf(TOLPActionList& al, int lv, int sublv, const TOLLexem*
 			{
 				if (first == true)
 					FatalPError(parse_err, PERR_IDENTIFIER_MISSING, MODE_PARSE,
-					            TypeName(attr->DType), lex.PrevLine(), lex.PrevColumn());
+					            TypeName(attr->DataType()), lex.PrevLine(), lex.PrevColumn());
 				break;
 			}
 			CheckForAtom(l);
-			ValidateDType(l, attr->DType, 1);
+			ValidateDType(l, attr->DataType(), 1);
 			if (l->m_DataType != TOL_DT_NUMBER)
 			{
 				if (strlen(param.Value()))
 					FatalPError(parse_err, PERR_INVALID_VALUE, MODE_PARSE,
 					            "number", lex.PrevLine(), lex.PrevColumn());
-				param = TOLParameter(attr->Identifier, l->m_pcoAtom->Identifier, TOL_NO_OP);
+				param = TOLParameter(attr->Identifier(), l->m_pcoAtom->Identifier(), TOL_NO_OP);
 			}
 			else
-				rc_hash.insert_unique(strtol(l->m_pcoAtom->Identifier, 0, 10));
+				rc_hash.insert_unique(strtol(l->m_pcoAtom->Identifier(), 0, 10));
 			first = false;
 		} while (1);
 	}
@@ -1532,7 +1532,7 @@ inline int TOLParser::HIf(TOLPActionList& al, int lv, int sublv, const TOLLexem*
 	{
 		RequireAtom(l);
 		ValidateAttr(attr, ist, l, TOL_CT_IF, 1);
-		param = TOLParameter(attr->Identifier, "", TOL_NO_OP);
+		param = TOLParameter(attr->Identifier(), "", TOL_NO_OP);
 		sublv |= SUBLV_IFPUBLICATION;
 		modifier = TOL_IMOD_PUBLICATION;
 	}
@@ -1540,16 +1540,16 @@ inline int TOLParser::HIf(TOLPActionList& al, int lv, int sublv, const TOLLexem*
 	{
 		RequireAtom(l);
 		ValidateAttr(attr, ist, l, TOL_CT_IF, 1);
-		if (strcasecmp(attr->Identifier, "iscurrent")
-		        && strcasecmp(attr->Identifier, "defined")
-		        && strcasecmp(attr->Identifier, "fromstart"))
+		if (strcasecmp(attr->Identifier(), "iscurrent")
+		        && strcasecmp(attr->Identifier(), "defined")
+		        && strcasecmp(attr->Identifier(), "fromstart"))
 		{
 			RequireAtom(l);
 			String2Int::iterator op_i;
-			ValidateOperator(op_i, l, attr->DType, "");
+			ValidateOperator(op_i, l, attr->DataType(), "");
 			RequireAtom(l);
-			ValidateDType(l, attr->DType, 1);
-			param = TOLParameter(attr->Attribute(), l->m_pcoAtom->Identifier,
+			ValidateDType(l, attr->DataType(), 1);
+			param = TOLParameter(attr->Attribute(), l->m_pcoAtom->Identifier(),
 			                     (TOperator)(*op_i).second);
 		}
 		else
@@ -1561,28 +1561,28 @@ inline int TOLParser::HIf(TOLPActionList& al, int lv, int sublv, const TOLLexem*
 	{
 		RequireAtom(l);
 		ValidateAttr(attr, ist, l, TOL_CT_IF, 1);
-		if (strcasecmp(attr->Identifier, "defined")
-		        && strcasecmp(attr->Identifier, "fromstart"))
+		if (strcasecmp(attr->Identifier(), "defined")
+		        && strcasecmp(attr->Identifier(), "fromstart"))
 		{
 			RequireAtom(l);
-			if (attr->attr_class == TOL_TYPE_ATTR)
+			if (attr->Class() == TOL_TYPE_ATTR)
 			{
-				if (ist->FindType(l->m_pcoAtom->Identifier) == 0)
+				if (ist->FindType(l->m_pcoAtom->Identifier()) == 0)
 				{
 					string t;
 					ist->PrintTypes(t);
 					FatalPError(parse_err, PERR_INV_TYPE_VAL, MODE_PARSE,
 					            t, lex.PrevLine(), lex.PrevColumn());
 				}
-				param = TOLParameter(attr->Attribute(), l->m_pcoAtom->Identifier, TOL_OP_IS);
+				param = TOLParameter(attr->Attribute(), l->m_pcoAtom->Identifier(), TOL_OP_IS);
 			}
 			else
 			{
 				String2Int::iterator op_i;
-				ValidateOperator(op_i, l, attr->DType, "");
+				ValidateOperator(op_i, l, attr->DataType(), "");
 				RequireAtom(l);
-				ValidateDType(l, attr->DType, 1);
-				param = TOLParameter(attr->Attribute(), l->m_pcoAtom->Identifier,
+				ValidateDType(l, attr->DataType(), 1);
+				param = TOLParameter(attr->Attribute(), l->m_pcoAtom->Identifier(),
 				                     (TOperator)(*op_i).second);
 			}
 		}
@@ -1692,7 +1692,7 @@ inline int TOLParser::HSubscription(TOLPActionList& al, int lv, int sublv)
 	bool by_publication;
 	const TOLLexem *l;
 	RequireAtom(l);
-	by = l->m_pcoAtom->Identifier;
+	by = l->m_pcoAtom->Identifier();
 	if (strcasecmp(by.c_str(), "by_publication") == 0)
 		by_publication = true;
 	else if (strcasecmp(by.c_str(), "by_section") == 0)
@@ -1701,18 +1701,18 @@ inline int TOLParser::HSubscription(TOLPActionList& al, int lv, int sublv)
 		FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE, "by_publication, "
 		            "by_section", lex.PrevLine(), lex.PrevColumn());
 	RequireAtom(l);
-	tpl_file = l->m_pcoAtom->Identifier;
+	tpl_file = l->m_pcoAtom->Identifier();
 	RequireAtom(l);
-	button_name = l->m_pcoAtom->Identifier;
+	button_name = l->m_pcoAtom->Identifier();
 	l = lex.GetLexem();
 	DEBUGLexem("hsubs atom", l);
 	CheckForEOF(l, PERR_EOS_MISSING);
 	if (l->m_Res != TOL_LEX_END_STATEMENT)
 	{
 		CheckForAtom(l);
-		total = l->m_pcoAtom->Identifier;
+		total = l->m_pcoAtom->Identifier();
 		RequireAtom(l);
-		evaluate = l->m_pcoAtom->Identifier;
+		evaluate = l->m_pcoAtom->Identifier();
 	}
 	int res, last_st;
 	if (l->m_Res != TOL_LEX_END_STATEMENT)
@@ -1747,7 +1747,7 @@ inline int TOLParser::HEdit(TOLPActionList& al, int lv, int sublv)
 	string size;
 	RequireAtom(l);
 	CheckForStatement(l, EditStatements(sublv), lex.PrevLine(), lex.PrevColumn());
-	TOLStatement *ist = &(*lex.s_coStatements.find(l->m_pcoAtom->Identifier));
+	TOLStatement *ist = &(*lex.s_coStatements.find(l->m_pcoAtom->Identifier()));
 	RequireAtom(l);
 	ValidateAttr(attr, ist, l, TOL_CT_EDIT, 1);
 	TEditModifier modifier;
@@ -1783,7 +1783,7 @@ inline int TOLParser::HEdit(TOLPActionList& al, int lv, int sublv)
 		{
 			CheckForAtom(l);
 			ValidateDType(l, TOL_DT_NUMBER, PERR_INVALID_VALUE);
-			size = l->m_pcoAtom->Identifier;
+			size = l->m_pcoAtom->Identifier();
 		}
 	}
 	else
@@ -1791,8 +1791,7 @@ inline int TOLParser::HEdit(TOLPActionList& al, int lv, int sublv)
 		FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE,
 		            EditStatements(sublv), lex.PrevLine(), lex.PrevColumn());
 	}
-	string field = strlen(attr->DBField) ? attr->DBField : attr->Identifier;
-	TOLActEdit* edit = new TOLActEdit(modifier, field, atol(size.c_str()));
+	TOLActEdit* edit = new TOLActEdit(modifier, attr->Attribute(), atol(size.c_str()));
 	al.insert(al.end(), edit);
 	if (l->m_Res != TOL_LEX_END_STATEMENT)
 		WaitForStatementEnd(true);
@@ -1812,7 +1811,7 @@ inline int TOLParser::HSelect(TOLPActionList& al, int lv, int sublv)
 	RequireAtom(l);
 	CheckForStatement(l, ST_SUBSCRIPTION ", " ST_USER ", " ST_SEARCH,
 	                  lex.PrevLine(), lex.PrevColumn());
-	TOLStatement *ist = &(*lex.s_coStatements.find(l->m_pcoAtom->Identifier));
+	TOLStatement *ist = &(*lex.s_coStatements.find(l->m_pcoAtom->Identifier()));
 	RequireAtom(l);
 	ValidateAttr(attr, ist, l, TOL_CT_SELECT, 1);
 	TSelectModifier modifier;
@@ -1829,21 +1828,21 @@ inline int TOLParser::HSelect(TOLPActionList& al, int lv, int sublv)
 			FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE,
 			            SelectStatements(sublv), lex.PrevLine(), lex.PrevColumn());
 		modifier = TOL_SMOD_USER;
-		if (strcasecmp(attr->Identifier, "Gender") == 0)
+		if (strcasecmp(attr->Identifier(), "Gender") == 0)
 		{
 			RequireAtom(l);
-			male_name = l->m_pcoAtom->Identifier;
+			male_name = l->m_pcoAtom->Identifier();
 			RequireAtom(l);
-			female_name = l->m_pcoAtom->Identifier;
+			female_name = l->m_pcoAtom->Identifier();
 		}
-		else if (strncasecmp(attr->Identifier, "Pref", 4) == 0)
+		else if (strncasecmp(attr->Identifier(), "Pref", 4) == 0)
 		{
 			l = lex.GetLexem();
 			CheckForEOF(l, PERR_EOS_MISSING);
 			if (l->m_Res != TOL_LEX_END_STATEMENT)
 			{
 				CheckForAtom(l);
-				if (strcasecmp(l->m_pcoAtom->Identifier, "checked") == 0)
+				if (strcasecmp(l->m_pcoAtom->Identifier(), "checked") == 0)
 					checked = true;
 			}
 		}
@@ -1858,8 +1857,7 @@ inline int TOLParser::HSelect(TOLPActionList& al, int lv, int sublv)
 	else
 		FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE, ST_SUBSCRIPTION,
 		            lex.PrevLine(), lex.PrevColumn());
-	string field = strlen(attr->DBField) ? attr->DBField : attr->Identifier;
-	TOLActSelect* select = new TOLActSelect(modifier, field, male_name, female_name, checked);
+	TOLActSelect* select = new TOLActSelect(modifier, attr->Attribute(), male_name, female_name, checked);
 	al.insert(al.end(), select);
 	if (l->m_Res != TOL_LEX_END_STATEMENT)
 		WaitForStatementEnd(true);
@@ -1882,11 +1880,11 @@ inline int TOLParser::HUser(TOLPActionList& al, int lv, int sublv)
 	}
 	const TOLLexem *l;
 	RequireAtom(l);
-	bool add = strcasecmp(l->m_pcoAtom->Identifier, "add") == 0;
+	bool add = strcasecmp(l->m_pcoAtom->Identifier(), "add") == 0;
 	RequireAtom(l);
-	string tpl_file = l->m_pcoAtom->Identifier;
+	string tpl_file = l->m_pcoAtom->Identifier();
 	RequireAtom(l);
-	string button_name = l->m_pcoAtom->Identifier;
+	string button_name = l->m_pcoAtom->Identifier();
 	int res, last_st;
 	WaitForStatementEnd(true);
 	TOLActUser *user = new TOLActUser(add, tpl_file, button_name);
@@ -1922,9 +1920,9 @@ inline int TOLParser::HLogin(TOLPActionList& al, int lv, int sublv)
 	}
 	const TOLLexem *l;
 	RequireAtom(l);
-	string tpl_file = l->m_pcoAtom->Identifier;
+	string tpl_file = l->m_pcoAtom->Identifier();
 	RequireAtom(l);
-	string button_name = l->m_pcoAtom->Identifier;
+	string button_name = l->m_pcoAtom->Identifier();
 	int res, last_st;
 	WaitForStatementEnd(true);
 	TOLActLogin *login = new TOLActLogin(tpl_file, button_name);
@@ -1960,9 +1958,9 @@ inline int TOLParser::HSearch(TOLPActionList& al, int lv, int sublv)
 	}
 	const TOLLexem *l;
 	RequireAtom(l);
-	string tpl_file = l->m_pcoAtom->Identifier;
+	string tpl_file = l->m_pcoAtom->Identifier();
 	RequireAtom(l);
-	string button_name = l->m_pcoAtom->Identifier;
+	string button_name = l->m_pcoAtom->Identifier();
 	int res, last_st;
 	WaitForStatementEnd(true);
 	TOLActSearch *search = new TOLActSearch(tpl_file, button_name);
@@ -1995,7 +1993,7 @@ inline int TOLParser::HWith(TOLPActionList& al, int lv, int sublv)
 	TOLStatement* ist = &(*lex.s_coStatements.find(ST_ARTICLE));
 	const TOLLexem* l;
 	RequireAtom(l);
-	const TOLTypeAttributes* ta = ist->FindType(l->m_pcoAtom->Identifier);
+	const TOLTypeAttributes* ta = ist->FindType(l->m_pcoAtom->Identifier());
 	if (ta == 0)
 	{
 		string what;
@@ -2003,9 +2001,9 @@ inline int TOLParser::HWith(TOLPActionList& al, int lv, int sublv)
 		FatalPError(parse_err, PERR_INV_TYPE_VAL, MODE_PARSE,
 		            what.c_str(), lex.PrevLine(), lex.PrevColumn());
 	}
-	string art_type = l->m_pcoAtom->Identifier;
+	string art_type = l->m_pcoAtom->Identifier();
 	RequireAtom(l);
-	const TOLAttribute* a = ist->FindTypeAttr(l->m_pcoAtom->Identifier, art_type.c_str(),
+	const TOLAttribute* a = ist->FindTypeAttr(l->m_pcoAtom->Identifier(), art_type.c_str(),
 	                        TOL_CT_WITH, &ta);
 	if (a == 0)
 	{
@@ -2014,7 +2012,7 @@ inline int TOLParser::HWith(TOLPActionList& al, int lv, int sublv)
 		FatalPError(parse_err, PERR_INVALID_ATTRIBUTE, MODE_PARSE,
 		            what.c_str(), lex.PrevLine(), lex.PrevColumn());
 	}
-	string field = l->m_pcoAtom->Identifier;
+	string field = l->m_pcoAtom->Identifier();
 	WaitForStatementEnd(true);
 	TOLActWith* aloc = new TOLActWith(art_type, field);
 	if ((res = LevelParser(aloc->block, lv, sublv | SUBLV_WITH, last_st)))
@@ -2454,7 +2452,7 @@ void TOLParser::TestLex()
 	{
 		if (c_lexem->m_pcoAtom)
 			cout << "*[" << c_lexem->m_pcoAtom->ClassName()
-			<< " \"" << c_lexem->m_pcoAtom->GetIdentifier()
+			<< " \"" << c_lexem->m_pcoAtom->Identifier()
 			<< "\" " << (int)(c_lexem->m_DataType) << "]\n";
 		else if (c_lexem->m_pchTextStart)
 		{

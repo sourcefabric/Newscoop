@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-Wall -O3 -fomit-frame-pointer -pipe -mpentiumpro -malign-jumps=4 -malign-loops=4 -malign-functions=4
-LDLIBS=-lmysqlclient -lm -lz -lcrypt
+LDLIBS=-L/usr/lib/mysql -lmysqlclient -lm -lz -lcrypt
 
 all: gather
 

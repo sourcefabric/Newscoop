@@ -38,14 +38,14 @@ methods
 const TOLAtom& TOLAtom::operator = (const TOLAtom& source)
 {
 	if (this != &source)
-		strcpy(Identifier, source.Identifier);
+		strcpy(m_pchIdentifier, source.m_pchIdentifier);
 	return *this;
 }
 
 // TOLAtom compare operator
 bool TOLAtom::operator ==(const TOLAtom& other) const
 {
-	return strcmp(Identifier, other.Identifier) == 0;
+	return strcmp(m_pchIdentifier, other.m_pchIdentifier) == 0;
 }
 
 // TOLAttribute constructor
@@ -68,7 +68,7 @@ const TOLAttribute& TOLAttribute::operator =(const TOLAttribute& source)
 {
 	if (this == &source)
 		return * this;
-	strcpy(Identifier, source.Identifier);
+	strcpy(m_pchIdentifier, source.m_pchIdentifier);
 	DType = source.DType;
 	attr_class = source.attr_class;
 	strcpy(DBField, source.DBField);
@@ -78,7 +78,7 @@ const TOLAttribute& TOLAttribute::operator =(const TOLAttribute& source)
 // TOLAttribute compare operator
 bool TOLAttribute::operator ==(const TOLAttribute& other) const
 {
-	return strcmp(Identifier, other.Identifier) == 0
+	return strcmp(m_pchIdentifier, other.m_pchIdentifier) == 0
 	       && DType == other.DType
 	       && attr_class == other.attr_class
 	       && strcmp(DBField, other.DBField) == 0;
@@ -124,7 +124,7 @@ const TOLStatement& TOLStatement::operator =(const TOLStatement& source)
 {
 	if (this == &source)
 		return * this;
-	strcpy(Identifier, source.Identifier);
+	strcpy(m_pchIdentifier, source.m_pchIdentifier);
 	statement = source.statement;
 	statement_context = source.statement_context;
 	type_attributes = source.type_attributes;
@@ -134,7 +134,7 @@ const TOLStatement& TOLStatement::operator =(const TOLStatement& source)
 // TOLStatement compare operator
 bool TOLStatement::operator ==(const TOLStatement& other) const
 {
-	return strcmp(Identifier, other.Identifier) == 0
+	return strcmp(m_pchIdentifier, other.m_pchIdentifier) == 0
 	       && statement == ((const TOLStatement&)other).statement
 	       && statement_context == ((const TOLStatement&)other).statement_context
 	       && type_attributes == ((const TOLStatement&)other).type_attributes;
@@ -152,9 +152,9 @@ void TOLStatement::PrintAttrs(string& p_rcoOutString, TContext p_Context)
 	TOLAttributeHash::iterator a_i;
 	for (a_i = (*sc_i).attributes.begin(); a_i != (*sc_i).attributes.end(); ++a_i)
 		if (strlen(p_rcoOutString.c_str()) == 0)
-			p_rcoOutString += (*a_i).Identifier;
+			p_rcoOutString += (*a_i).m_pchIdentifier;
 		else
-			p_rcoOutString += string(", ") + (*a_i).Identifier;
+			p_rcoOutString += string(", ") + (*a_i).m_pchIdentifier;
 }
 
 // PrintTAttrs: print type attributes for a given context; if attributes type
@@ -180,9 +180,9 @@ void TOLStatement::PrintTAttrs(string& p_rcoOutString, cpChar p_chType, TContext
 			return;
 		for (a_i = (*sc_i).attributes.begin(); a_i != (*sc_i).attributes.end(); ++a_i)
 			if (strlen(p_rcoOutString.c_str()) == 0)
-				p_rcoOutString += (*a_i).Identifier;
+				p_rcoOutString += (*a_i).m_pchIdentifier;
 			else
-				p_rcoOutString += string(", ") + (*a_i).Identifier;
+				p_rcoOutString += string(", ") + (*a_i).m_pchIdentifier;
 	}
 	else								// type is undefined
 	{									// print attributes of all types
@@ -193,9 +193,9 @@ void TOLStatement::PrintTAttrs(string& p_rcoOutString, cpChar p_chType, TContext
 				return;
 			for (a_i = (*sc_i).attributes.begin(); a_i != (*sc_i).attributes.end(); ++a_i)
 				if (strlen(p_rcoOutString.c_str()) == 0)
-					p_rcoOutString += (*a_i).Identifier;
+					p_rcoOutString += (*a_i).m_pchIdentifier;
 				else
-					p_rcoOutString += string(", ") + (*a_i).Identifier;
+					p_rcoOutString += string(", ") + (*a_i).m_pchIdentifier;
 		}
 	}
 }

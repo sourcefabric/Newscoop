@@ -3,8 +3,7 @@
 CAMPSITE / CAMPFIRE - Web Automation Tool
 User Guide
 
-version       : 2.0.0
-release date  : 15 March 2001
+release date  : May, 14th 2001
 contact       : contact@campware.org
 url           : http://www.campware.org/campsite/
 copyright     : (c)1999-2001 Media Development Loan Fund
@@ -12,8 +11,9 @@ support       : mailto:majordomo@campware.org
                 subject: subscribe campsite-list your@mail.org
 manual        : http://www.campware.org/documentation/
 
+###################################################
 
-COPYRIGHT###################################################
+COPYRIGHT
 
 CAMPSITE is a Unicode-enabled multilingual web content
 management system for news publications.
@@ -40,8 +40,8 @@ CAMPSITE - Web Automation Tool
 
 User Guide
 
-CAMPSITE version: 2.0.0
-Manual version: TXT 6 April 2001
+CAMPSITE version: 2.0.0 and newer versions
+Manual version: TXT May, 14th 2001
 
 ©1999-2001 Media Development Loan Fund
 http://www.mdlf.org
@@ -189,7 +189,7 @@ run: 'make install' as a root, and the application is up and running.
 1.2.3 The CAMPFIRE Java Editor
 At the heart of CAMPSITE's client interface, lies CAMPFIRE, a text editor implemented as a Java Applet. To enable this applet to work, you must copy install certain (still) non-standard Java classes on your local workstation(s). 
 
-The files you need to install locally are swingall.jar and unicoded.zip, both of which you should have created when you unpacked the campsite archive (campsite-2.0.0.tar.gz). Both of these files should be unpacked in the folders where Java classes are regularly stored. The breakdown according to browser/operating system is as follows:
+The files you need to install locally are swingall.jar and unicoded.zip, both of which you should have created when you unpacked the campsite archive (campsite-2.x.x.tar.gz). Both of these files should be unpacked in the folders where Java classes are regularly stored. The breakdown according to browser/operating system is as follows:
 
 a) Netscape under Unix:
 /usr/lib/netscape/java/classes
@@ -505,7 +505,7 @@ As the parser is going through the text, it will firstly find the marked keyword
 If the parser detects a keyword, but can not find the same word in the dictionary entry, no link will appear. However, once this keyword is added to the dictionary, the parser will generate a link. Marked keywords are like sleeping beauties. 
 
 2.3.5 Known Limitations of the Dictionary Module
-In its present incarnation (CAMPSITE version 2.0.0), the Dictionary module is functional, but its appearance is still, shall we say, rather sobering. We thus consider it as a feature under development, particularly regarding the lack of possibility for CAMPSITE administrators to alter the layout of the popup windows. In other words, you can use it, but you might want to see if the appearance of the pop-up window would not strongly conflict with your overall design. If you decide to continue the dictionary development, please inform us, so we can announce this on our support list.
+In its present incarnation (CAMPSITE version 2.x.x), the Dictionary module is functional, but its appearance is still, shall we say, rather sobering. We thus consider it as a feature under development, particularly regarding the lack of possibility for CAMPSITE administrators to alter the layout of the popup windows. In other words, you can use it, but you might want to see if the appearance of the pop-up window would not strongly conflict with your overall design. If you decide to continue the dictionary development, please inform us, so we can announce this on our support list.
 
 2.4. Configuring the Subscription Module
 CAMPSITE allows you to control access to your site in two ways: 
