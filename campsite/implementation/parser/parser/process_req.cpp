@@ -83,7 +83,6 @@ int RunParser(MYSQL* p_pSQL, CURL* p_pcoURL, const char* p_pchRemoteIP, sockstre
 	        UERR_NO_PASSWORD, UERR_NO_PASSWORD_AGAIN
 	    };
 	SafeAutoPtr<CContext> pcoCtx(new CContext);
-	pcoCtx->SetURL(p_pcoURL);
 	string coStr;
 	bool bDebug = false, bPreview = false, bTechDebug = false;
 	char pchBuf[300];
@@ -124,6 +123,8 @@ int RunParser(MYSQL* p_pSQL, CURL* p_pcoURL, const char* p_pchRemoteIP, sockstre
 	{
 		// do nothing
 	}
+	pcoCtx->SetURL(p_pcoURL);
+	pcoCtx->SetDefURL(p_pcoURL->clone());
 	pcoCtx->URL()->deleteParameter(P_TOPIC_ID);
 	pcoCtx->DefURL()->deleteParameter(P_TOPIC_ID);
 	if ((coStr = p_pcoURL->getValue(P_ILSTART)) != "")
@@ -369,6 +370,7 @@ int RunParser(MYSQL* p_pSQL, CURL* p_pcoURL, const char* p_pchRemoteIP, sockstre
 // no need to write the charset anymore: tpl_cgi will print it
 //		WriteCharset((*pcoCtx), p_pSQL, p_rOs);
 		p->writeOutput(*pcoCtx, p_rOs);
+		bPreview = true;
 		if (bPreview == true)
 		{
 			p_rOs << "<script LANGUAGE=\"JavaScript\">parent.e.document.open();\n"
