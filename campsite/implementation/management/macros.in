@@ -32,7 +32,7 @@ define(<*X_COOKIE*>, <*<META HTTP-EQUIV="Set-Cookie" CONTENT="$1; path=/">*>)dnl
 define(<*X_EXPIRES*>, <*<META HTTP-EQUIV="Expires" CONTENT="now">*>)dnl
 define(<*X_REFRESH*>, <*<META HTTP-EQUIV="Refresh" CONTENT="$1">*>)dnl
 define(<*X_LOGOUT*>, <*X_REFRESH(0; URL=X_ROOT/logout.php)*>)dnl
-define(<*X_AD*>, <*X_REFRESH(10; URL=X_ROOT/ad.php?ADReason=<? print encURL(getGS("$1" ifelse(<*$2*>, <**>, <**>, <*,$2*>))); ?>)*>)dnl
+define(<*X_AD*>, <*X_REFRESH(0; URL=X_ROOT/ad.php?ADReason=<? print encURL(getGS("$1" ifelse(<*$2*>, <**>, <**>, <*,$2*>))); ?>)*>)dnl
 define(<*B_STYLE*>, <*<STYLE>
 	BODY { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
 	SMALL { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 8pt; }
