@@ -140,4 +140,6 @@ regGS("Deleting IP Group","Deleting IP Group:en");
 regGS("The IP address group $1 has been deleted.","The IP address group $1 has been deleted.:en");
 regGS("The IP Group could not be deleted.","The IP Group could not be deleted.:en");
 
+regGS("No IP Group.", "No IP Group.:en");
+
 ?>
