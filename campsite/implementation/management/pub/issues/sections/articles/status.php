@@ -68,18 +68,18 @@ ArticleTop($articleObj, $Language, "Change article status");
 		<TABLE>
 		<TR>
 			<TD ALIGN=LEFT>
-				<INPUT TYPE="RADIO" NAME='Status' value='Y' class="input_radio" <?php if ($articleObj->getPublished() == "Y") { ?>CHECKED<?php } ?> <?php if (!$User->hasPermission('Publish')) { ?>disabled<?php } ?>><B><?php putGS('Published'); ?></B>
+				<INPUT TYPE="RADIO" NAME='Status' value='Y' class="input_radio" <?php if ($articleObj->getPublished() == 'S') { ?>CHECKED<?php } ?> <?php if (!$User->hasPermission('Publish')) { ?>disabled<?php } ?>><B><?php putGS('Published'); ?></B>
 			</TD>
 		</TR>
 		
 		<TR>
 			<TD ALIGN=LEFT>
-				<INPUT TYPE="RADIO" NAME='Status' value='S' class="input_radio" <?php if ($articleObj->getPublished() == 'S') { ?>CHECKED<?php } ?>><B><?php  putGS('Submitted'); ?></B>
+				<INPUT TYPE="RADIO" NAME='Status' value='S' class="input_radio" <?php if ($articleObj->getPublished() == 'N') { ?>CHECKED<?php } ?>><B><?php  putGS('Submitted'); ?></B>
 			</TD>
 		</TR> 
 		
 		<TR>
-			<TD ALIGN=LEFT><INPUT TYPE="RADIO" NAME='Status' value='N' class="input_radio" <?php if ($articleObj->getPublished() == 'N') { ?>CHECKED<?php } ?>> <B><?php  putGS('New'); ?></B>
+			<TD ALIGN=LEFT><INPUT TYPE="RADIO" NAME='Status' value='N' class="input_radio" <?php if ($articleObj->getPublished() == 'Y') { ?>CHECKED<?php } ?>> <B><?php  putGS('New'); ?></B>
 			</TD>
 		</TR>
 		</TABLE>
