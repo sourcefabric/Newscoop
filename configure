@@ -3,12 +3,12 @@
 export PREFIX=
 export USER_INSTALL=false
 
-if [ "`uname | grep BSD &> /dev/null`" != "" ]; then
+if [ "`uname | grep BSD`" != "" ]; then
     export BSD=1
 else
     export BSD=0
 fi;
-if [ "`uname | grep OpenBSD &> /dev/null`" != "" ]; then
+if [ "`uname | grep OpenBSD`" != "" ]; then
     export OPENBSD=1
 else
     export OPENBSD=0
