@@ -91,6 +91,8 @@ regGS("Add new issue","Add new issue:en");
 regGS("Add new topic","Add new topic:en");
 regGS("Delete topic","Delete topic:en");
 regGS("Edit languages","Edit languages:en");
+regGS("Section Template","Section Template:en");
+regGS("Article Template","Article Template:en");
 
 regGS("Default Language","Default Language:en");
 regGS("Countries Subscription Default Time","Countries Subscription Default Time:en");
