@@ -122,4 +122,6 @@ regGS("The alias $1 could not be deleted.", "The alias $1 could not be deleted.:
 regGS("The alias $1 has been deleted from publication $2.", "The alias $1 has been deleted from publication $2.:en");
 regGS("$1 is the default publication alias, it can not be deleted.", "$1 is the default publication alias, it can not be deleted.:en");
 
+regGS("You do not have the right to add publications.", "You do not have the right to add publications.:en");
+
 ?>
