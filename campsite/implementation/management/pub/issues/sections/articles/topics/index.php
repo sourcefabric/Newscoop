@@ -98,7 +98,7 @@ ArticleTop($articleObj, $Language, "Article topics");
 if (count($articleTopics) > 0) {
 	$color= 0;
 	?>
-	<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" WIDTH="100%">
+	<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" WIDTH="100%" class="table_list">
 	<TR BGCOLOR="#C0D0FF">
 		<TD ALIGN="LEFT" VALIGN="TOP" style="padding: 5px;"><B><?php  putGS("Topic name"); ?></B></TD>
 		<?php  if ($User->hasPermission('ChangeArticle')) { ?>
@@ -110,7 +110,7 @@ if (count($articleTopics) > 0) {
 	foreach ($articleTopics as $topic) { 
 		$topicPath =& $topic->getPath();
 		?>
-		<TR <?php  if ($color) { $color=0; ?>BGCOLOR="#D0D0B0"<?php  } else { $color=1; ?>BGCOLOR="#D0D0D0"<?php  } ?>>
+		<TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 			<TD style="padding-left: 8px;">
 				<?php 
 				foreach ($topicPath as $item) {
@@ -165,7 +165,7 @@ if (count($articleTopics) > 0) {
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="1" WIDTH="100%" style="padding-left: 10px; padding-right: 10px;">
 <TR>
 	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" >&nbsp;<?php  putGS("Topic"); ?>:</TD>
-	<TD BGCOLOR="#D0D0B0" VALIGN="TOP" style="padding-left: 5px;"><B><?php p($Path);?></B></TD>
+	<TD class="list_row_even" VALIGN="TOP" style="padding-left: 5px;"><B><?php p($Path);?></B></TD>
 </TR>
 </TABLE>
 <p>
@@ -173,7 +173,7 @@ if (count($articleTopics) > 0) {
 if (count($subtopics) > 0) {
 	$color= 0;
 	?>
-	<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" WIDTH="100%" style="padding-left: 10px; padding-right: 10px;">
+	<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" WIDTH="100%" class="table_list">
 	<TR BGCOLOR="#C0D0FF">
 		<TD ALIGN="LEFT" VALIGN="TOP"  style="padding: 5px;"><B><?php  putGS("Name"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" style="padding: 5px;" ><B><?php  putGS("Add"); ?></B></TD>
@@ -181,7 +181,7 @@ if (count($subtopics) > 0) {
 	<?php 
 	foreach ($subtopics as $subtopic) {
 		?>
-		<TR <?php  if ($color) { $color=0; ?>BGCOLOR="#D0D0B0"<?php  } else { $color=1; ?>BGCOLOR="#D0D0D0"<?php  } ?>>
+		<TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 		<TD style="padding-left: 8px;">
 			<?php if ($subtopic->hasSubtopics()) { ?>
 			<A HREF="index.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&IdCateg=<?php p($subtopic->getTopicId());?>">
