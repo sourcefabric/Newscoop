@@ -22,3 +22,4 @@ package: all
 	cp -f Makefile $(PACKAGE_DIR)/images
 	cp -f *.xql $(PACKAGE_DIR)/images
 	cp -f *.sh $(PACKAGE_DIR)/images
+
