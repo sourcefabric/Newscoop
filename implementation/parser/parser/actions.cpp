@@ -258,6 +258,13 @@ string CAction::dateFormat(const char* p_pchDate, const char* p_pchFormat, long 
 		nIndex++;
 		if (p_pchFormat[nIndex] == 0)
 			break;
+		if (p_pchFormat[nIndex] == 'w')
+		{
+			coQuery << (nParams > 0 ? ", " : "") << nWDay;
+			nStartFormat = nIndex + 1;
+			nParams++;
+			continue;
+		}
 		if (p_pchFormat[nIndex] != 'M' && p_pchFormat[nIndex] != 'W')
 			continue;
 		int nFormatLen = nIndex - nStartFormat - 1;
@@ -2084,7 +2091,7 @@ int CActDate::takeAction(CContext& c, sockstream& fs)
 	else if (case_comp(attr, "yday") == 0)
 		format = "%j";
 	else if (case_comp(attr, "wday_nr") == 0)
-		format = "%u";
+		format = "%w";
 	else if (case_comp(attr, "hour") == 0)
 		format = "%k";
 	else if (case_comp(attr, "min") == 0)
