@@ -1,0 +1,33 @@
+B_HTML
+B_HEAD
+	X_TITLE({Login})
+E_HEAD
+
+B_STYLE
+E_STYLE
+
+B_BODY
+
+B_HEADER({Login})
+X_HEADER_NO_BUTTONS
+E_HEADER
+
+<P>
+B_DIALOG({Login}, {POST}, {do_login.xql})
+	X_DIALOG_TEXT({Please enter your user name and password:})
+	B_DIALOG_INPUT({User name:})
+		<INPUT TYPE="TEXT" NAME="UserName" SIZE="32" MAXLENGTH="32">
+	E_DIALOG_INPUT
+	B_DIALOG_INPUT({Password:})
+		<INPUT TYPE="PASSWORD" NAME="UserPassword" SIZE="32" MAXLENGTH="32">
+	E_DIALOG_INPUT
+	B_DIALOG_BUTTONS
+		<INPUT TYPE="IMAGE" SRC="X_ROOT/img/button/login.gif" BORDER="0" NAME="Login">
+	E_DIALOG_BUTTONS
+E_DIALOG
+<P>
+
+X_HR
+X_COPYRIGHT
+E_BODY
+E_HTML

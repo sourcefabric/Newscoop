@@ -1,0 +1,3873 @@
+<HTML>
+<HEAD>
+<TITLE>CAMPSITE manual Version 2.0</TITLE>
+</HEAD>
+<BODY bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#000099" alink="#FF0000">
+<h2>CAMPSITE</h2>
+<h3><b> </b>Web Automation Tool <br>
+  User Guide <br clear=all>
+</h3>
+<p><br>
+  CAMPSITE version: 2.0.0<br>
+  Maintainged and distributed under GNU/GPL by CAMPWARE<br>
+  <a href="http://www.campware.org/campsite/" target="_blank">http://www.campware.org/campsite/</a> 
+  <br>
+  Manual version: HTML 9 April 2001<br>
+  &copy;1999-2001 Media Development Loan Fund<br>
+  <a href="http://www.mdlf.org" target="_blank">http://www.mdlf.org</a> - <a href="http://www.mdlf-camp.net" target="_blank">http://www.mdlf-camp.net</a> 
+</p>
+<hr noshade size="1">
+<P><b>Table of Contents</b></P>
+<P><a href="#introduction">INTRODUCTION</a><br>
+  <a href="#copyright">COPYRIGHT</a> </P>
+<P>1. <a href="#1.">INSTALLATION GUIDE</a></P>
+<blockquote> 
+  <p>1.1. <a href="#1.1.">REQUIREMENTS</a><br>
+    1.2. <a href="#1.2.">TODO</a></p>
+  <blockquote> 
+    <p>1.2.1 <a href="#1.2.1">Configure the Web server</a><br>
+      1.2.2 <a href="#1.2.2">Customize the application framework</a><br>
+      1.2.3 <a href="#1.2.3">The CAMPFIRE Java Editor</a><br>
+      1.2.4 <a href="#1.2.4">KNOWN LIMITATIONS: Apple Macintosh</a><br>
+      1.2.5 <a href="#1.2.5">KNOWN LIMITATIONS: MS Windows/Netscape</a><br>
+      1.2.6 <a href="#1.2.6">HOWTO</a></p>
+  </blockquote>
+</blockquote>
+<P>2. <a href="#2.">BRINGING YOUR PUBLICATIONS ONLINE WITH CAMPSITE</a></P>
+<blockquote> 
+  <p>2.1. <a href="#2.1.">CONFIGURING THE PUBLISHING ENVIRONMENT</a></p>
+  <blockquote> 
+    <p>2.1.1 <a href="#2.1.1">Languages</a><br>
+      2.1.2 <a href="#2.1.2">Countries</a><br>
+      2.1.3 <a href="#2.1.3">User Management</a></p>
+  </blockquote>
+  <p>2.2. <a href="#2.2.">CREATING PUBLICATIONS</a></p>
+  <blockquote> 
+    <p>2.2.1 <a href="#2.2.1">Creating a new publication</a><br>
+      2.2.2 <a href="#2.2.2">Creating a new issue</a><br>
+      2.2.3 <a href="#2.2.3">Add new sections to an issue</a><br>
+      2.2.4 <a href="#2.2.4">Defining article types</a><br>
+      2.2.5 <a href="#2.2.5">Creating articles within a section</a><br>
+      2.2.6 <a href="#2.2.6">Editing articles: Edit Article Details view</a><br>
+      2.2.7 <a href="#2.2.7">Editing body-type fields: Working with CAMPFIRE</a><br>
+      2.2.8 <a href="#2.2.8">Publishing articles</a><br>
+      2.2.9 <a href="#2.2.9">Setting the finalized publication live</a></p>
+  </blockquote>
+  <p>2.3. <a href="#2.3.">DICTIONARY</a></p>
+  <blockquote> 
+    <p>2.3.1 <a href="#2.3.1">Creating 'dictionary classes'</a><br>
+      2.3.2 <a href="#2.3.2">Adding keywords to the dictionary</a><br>
+      2.3.3 <a href="#2.3.3">Marking keywords in the articles</a><br>
+      2.3.4 <a href="#2.3.4">What pays the piper, will see the surfer</a><br>
+      2.3.5 <a href="#2.3.5">Known Limitations of the Dictionary Module</a></p>
+  </blockquote>
+  <p>2.4. <a href="#2.4.">CONFIGURING THE SUBSCRIPTION MODULE</a></p>
+  <blockquote>
+    <p>2.4.1 <a href="#2.4.1">Username:Password Access</a><br>
+      2.4.2 <a href="#2.4.2">Customizing Subscription Interface for Readers</a><br>
+      2.4.3 <a href="#2.4.3">IP Address-based Subscriptions</a></p>
+  </blockquote>
+</blockquote>
+<P>3. <a href="#3.">CREATING TEMPLATES FOR YOUR PUBLICATION</a></P>
+<blockquote>
+  <p>3.1. <a href="#3.1.">MODULAR STRUCTURE OF TEMPLATES</a><br>
+    3.2. <a href="#3.2.">FIXED FRAMEWORK: COMMUNICATING WITH YOUR DATABASE</a><br>
+    3.3. <a href="#3.3.">BUILDING AN ARTICLE TEMPLATE: ARTICLETEMPLATE.TPL</a><br>
+    3.4. <a href="#3.4.">GENERATING A NAVIGATION TEMPLATE: NAVIGATIONTEMPLATE.TPL</a><br>
+    3.5. <a href="#3.5.">BUILDING THE SECTION TEMPLATE: SECTIONTEMPLATE.TPL</a></p>
+  <blockquote> 
+    <p>3.5.1 <a href="#3.5.1">The 'Feature' article of the section</a><br>
+      3.5.2 <a href="#3.5.2">Displaying only the most recent feature article on 
+      a section page</a><br>
+      3.5.3 <a href="#3.5.3">Including Images in the Section Listing</a></p>
+  </blockquote>
+  <p>3.6. <a href="#3.6.">BUILDING THE HOME PAGE TEMPLATE: HOME.TPL</a><br>
+    3.7. <a href="#3.7.">SOME HINTS: POWERFUL LISTS AND ORDERING</a><br>
+    3.8. <a href="#3.8.">ENVIRONMENTAL CONTROL WITH CAMPSITE TEMPLATES</a></p>
+  <blockquote> 
+    <p>3.8.1 <a href="#3.8.1">Runtime given parameters</a><br>
+      3.8.2 <a href="#3.8.2">Other parameters</a></p>
+  </blockquote>
+  <p>3.9. <a href="#3.9.">STRUCTURE OF CAMPSITE TEMPLATES</a></p>
+  <blockquote> 
+    <p>3.9.1 <a href="#3.9.1">'Define-environment' instructions</a><br>
+      3.9.2 <a href="#3.9.2">Printable information</a></p>
+  </blockquote>
+</blockquote>
+<P>4. <a href="#4.">APENDIX I - ALPHABETIC LIST OF LANGUAGE STATEMENTS</a><br>
+  5. <a href="#5.">APPENDIX II - CHARACTER SETS AND LANGUAGES</a><br>
+  6. <a href="#6.">APPENDIX III - ISO 639 LANGUAGE CODES</a><br>
+  7. <a href="#7.">APPENDIX IV: INSTALLING CAMPSITE ON A STANDARD RED HAT 7.0 
+  SERVER</a><br>
+  8. <a href="#8.">APPENDIX V - BACKING UP DATABASES IN MYSQL</a></P>
+<hr noshade size="1">
+<p><b>INTRODUCTION<a name="introduction"></a></b></p>
+<P>CAMPSITE is a content management system with multilingual Unicode support, 
+  designed for medium-to-large-size online news publications. Issues, copy flow, 
+  back archives, as well as subscription management are fully implemented features. 
+  At the core of CAMPSITE is CAMPFIRE, the Java Editor supporting Unicode, which 
+  allows contributors and editors to publish content and control layout online 
+  in their native alphabets. Formatting can be altered in a similar way as in 
+  editors such as Wordpad, meaning that no HTML knowledge is necessary for formatting 
+  text.</P>
+<P>The original CAMPSITE concept was developed by Center for Advanced Media-Prague 
+  (<a href="http://www.mdlf-camp.net" target="_blank">C@MP</a>) in collaboration 
+  with Transitions Online, which started using CAMPSITE in late 2000. DNT-Cluj 
+  (<a href="http://www.dntcj.ro" target="_blank">http://www.dntcj.ro</a>) and 
+  Recognos (<a href="http://www.recognos.com" target="_blank">http://www.recognos.com</a>), 
+  software companies based in Cluj, Romania accomplished original coding and part 
+  of the further development. For a detailed revision history, click here. CAMPSITE 
+  in action can be seen at the Transitions Online web site (<a href="http://www.tol.cz" target="_blank">http://www.tol.cz</a>).</P>
+<P>You can test drive CAMPSITE at the campware project site (<a href="http://www.campware.org" target="_blank">http://www.campware.org</a>) 
+  and take a look at its features. Mail us for a login (<a href="mailto:contact@campware.org">contact@campware.org</a>).</P>
+<P>CAMPSITE tech specs in a nutshell:</P>
+<P>CAMPSITE server: </P>
+<ul>
+  <li> runs on a Linux server, originally tested on RedHat 5.2 release, but has 
+    proven compatible with newer versions up to 7.0. </li>
+  <li> requires an Apache web server to be running, and its virtual servers configured 
+    by the administrator.</li>
+  <li> needs a MySQL database server for Linux to be able to store data. The tests 
+    were made on MySQL v.3.22.27.</li>
+</ul>
+<P>CAMPSITE client side:</P>
+<ul>
+  <li> runs on Netscape under Unix, Windows (versions up to 4.7), and Macintosh 
+    (see known limitations for the Mac), and Internet Explorer under Windows.</li>
+  <li> requires local installation of customized Java-class packages (At the moment 
+    of the publishing of this manual, an installer is available for Windows 98, 
+    Me, and 2000). </li>
+</ul>
+<hr noshade size="1">
+<p><b>COPYRIGHT<a name="copyright"></a></b></p>
+<p>CAMPSITE is a Unicode-enabled multilingual web content management system for 
+  news publications. CAMPFIRE is a Unicode-enabled java-based near-WYSIWYG text 
+  editor. Copyright </p>
+<p>(C)1999-2001 Media Development Loan Fund. </p>
+<p>contact: <a href="http://www.campware.org">http://www.campware.org</a> Campware 
+  encourages further development. Please let us know. </p>
+<p>This program is free software; you can redistribute it and/or modify it under 
+  the terms of the GNU General Public License as published by the Free Software 
+  Foundation; either version 2 of the License, or (at your option) any later version. 
+  This program is distributed in the hope that it will be useful, but WITHOUT 
+  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
+  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.</p>
+<hr noshade size="1">
+<P>1. <b>INSTALLATION GUIDE</b><a name="1."></a></P>
+<P>1.1. <b>Requirements</b><a name="1.1."></a></P>
+<P>The server part of the application runs on a Linux computer. It was originally 
+  developed and tested on RedHat 5.2 release, but it is compatible with later 
+  versions up to 7.0. </P>
+<P>Before installing CAMPSITE, make sure you have two other applications up and 
+  running:</P>
+<P>1. Apache web server - your http daemon, serving your web site to the world</P>
+<P>&#9;<a href="http://www.apache.org" target="_blank">http://www.apache.org</a></P>
+<P>&#9;For installation instructions, see the Apache web site. Installing Apache 
+  will generate the httpd.conf file referred to further down. This file contains 
+  all relevant information for Apache to handle the content on your Linux server. 
+  The adjustments described below need to be made in order to tell Apache about 
+  the procedures for CAMPSITE files and templates.</P>
+<P>2. MySQL Database Server - this application handles the CAMPSITE database. 
+  The tests were made on MySQL v.3.22.27</P>
+<P>&#9;<a href="http://www.mysql.com">http://www.mysql.com</a></P>
+<P>Three components of MySQL are needed for CAMPSITE:</P>
+<ol>
+  <li> the server for i386 systems, </li>
+  <li>client programs for i386 systems and </li>
+  <li> files and libraries for development for i386 systems.</li>
+</ol>
+<P>All of those can be found on the MySQL website. </P>
+<P>When installing on Red Hat, try to find the section 'Standard Binary RPMs' 
+  which have been compiled especially for Red Hat and should cause the least hassle. 
+  You can install these filed on prompt level by typing 'rpm -t nameoffile.rpm' 
+  (without the '').</P>
+<P>1.2. <b>TODO</b><a name="1.2."></a></P>
+<P>Here is what you need to do. </P>
+<P>1.2.1 Configure the Web server<a name="1.2.1"></a></P>
+<P>First you need to change the behavior of the http daemon (the Web server). 
+  The configuration file, called httpd.conf, is normally found in the /etc/httpd/conf/ 
+  folder (N.B. non-standard installation of the Apache server can change the location 
+  of the file). The changes you have to apply to the file are:</P>
+<P>- activate the DirectoryIndex directive and add to it the following options:<br>
+  <font face="Courier New, Courier, mono">DirectoryIndex index.xql /priv/templates/idx.xql</font></P>
+<P>- activate the IndexIgnore directive and set it to<br>
+  <font face="Courier New, Courier, mono">IndexIgnore *</font></P>
+<P>- add the following lines:<br>
+  <font face="Courier New, Courier, mono">AddHandler www-sql .xql <br>
+  Action www-sql /cgi-bin/www-sql<br>
+  AddHandler parser .tpl<br>
+  Action parser /cgi-bin/parser</font></P>
+<P>- make sure that the server has the rights to read, write and execute in the 
+  folder where the file are stored and uploaded. Standardly, the user and group 
+  should be set as 'httpd'; the rights should be set as 'rwx' for the user and 
+  'rw' for the group. Consult the Linux Administration Guide for further information. 
+  Furthermore, the Web server should have activated the UniqueID option (the mod_unique_id 
+  should be loaded)</P>
+<P>- restart the httpd daemon:<br>
+  <font face="Courier New, Courier, mono">killall httpd<br>
+  {PATH}/httpd</font></P>
+<P><font face="Courier New, Courier, mono">(or /etc/rc.d/init.d/httpd restart)</font></P>
+<P>- a public free CGI, we used 'www-sql', must be configured to allow the 'exec' 
+  directive activated and to allow recursivity. The package we supply is well 
+  configured, but if you want to install a newer version of www-sql later (for 
+  further development and other purposes) make sure to compile it with these options.</P>
+<P>1.2.2 <b>Customize the application framework</b><a name="1.2.2"></a></P>
+<ol>
+  <li>Copy the CAMPSITE archive in a directory on the server.</li>
+  <li> Unarchive it using the command: tar xzvf &lt;campsite_archive&gt;</li>
+  <li>Enter campsite directory.</li>
+  <li>Edit the campsite/Makefile file to reflect your directory structure:<br>
+    CGI_BIN - cgi directory<br>
+    SCRIPT_BIN - the script folder (normally the same folder as CGI_BIN)<br>
+    ROOT_DIR - where the application's files are kept<br>
+    CLASS_DIR - the folder with the Java classes for the browser (where swingall.jar 
+    archive needed for the Java Editor and the Unicode charset translators will 
+    be kept)</li>
+  <li>run: 'make install' as a root, and the application is up and running.</li>
+</ol>
+<P>1.2.3 <b>The CAMPFIRE Java Editor</b><a name="1.2.3"></a></P>
+<P>At the heart of CAMPSITE's client interface, lies CAMPFIRE, a text editor implemented 
+  as a Java Applet. To enable this applet to work, you must copy install certain 
+  (still) non-standard Java classes on your local workstation(s). </P>
+<P>The files you need to install locally are swingall.jar and unicoded.zip, both 
+  of which you should have created when you unpacked the campsite archive (campsite-2.0.0.tar.gz). 
+  Both of these files should be unpacked in the folders where Java classes are 
+  regularly stored. The breakdown according to browser/operating system is as 
+  follows:</P>
+<ol>
+  <li> Netscape under Unix: /usr/lib/netscape/java/classes</li>
+  <li> Internet Explorer under Mac OS 9.x: see Known Limitations: Apple Macintosh 
+    below</li>
+  <li> Netscape under Windows (up to version 4.7): /Program Files/Netscape/Communicator/java/classes<br>
+    N.B. swingall.jar should not be unpacked, just drop it in the above folder</li>
+  <li> Internet Explorer under Windows (all versions): /Windows/java/classes <br>
+    z .B. An installer is currently available for Windows 98, Me, and 2000 (Not 
+    NT!!)</li>
+</ol>
+<P>TECH NOTE: The need to install Swing on workstations will disappear with the 
+  evolution of browsers, which will have this module native in their built-in 
+  Java Virtual Machines. The file is distributed freely and is native with the 
+  JDK 1.2 package.</P>
+<P>1.2.4 <b>KNOWN LIMITATIONS: Apple Macintosh</b><a name="1.2.4"></a></P>
+<P>Due to the limitations related to the length of file names under Mac OS (up 
+  to 9.x), the Java virtual machine doesn't act as it should (Java compiler generates 
+  long names for the so-called inner classes). Our tests have proven that the 
+  original installation kit for Swing, provided by Sun Microsystems and Apple 
+  doesn't install properly the libraries, while the .jar file format is not recognized 
+  by the Java Virtual Machine (called MRJ under Mac OS). Human interaction is 
+  required as follows:</P>
+<ol>
+  <li> install the MRJ file (version MRJ 2.2 is available at the time of publishing 
+    of this document; the latest version can be found at: <a href="http://developer.apple.com/java/download.html" target="_blank">http://developer.apple.com/java/download.html</a></li>
+  <li> install the Swing packet (Swing version 1.1.8 is currently available, but 
+    the latest version can be found at <a href="http://java.sun.com/products/jfc/download.html" target="_blank">http://java.sun.com/products/jfc/download.html</a></li>
+  <li> move the swingall.jar (which has been created by the Swing installation 
+    kit in step 2) to a PC computer and unpack it there, then re-pack it with 
+    a .zip extension (instead of .jar) an copy it back on the Mac. This will allow 
+    Swing-based applets to be run under Internet Explorer for Mac. The problem 
+    of loading classes from the local file system has not been solved yet, so 
+    the multilingual support feature does not work on the Mac. Hopefully System 
+    X should bring good news in this respect.</li>
+</ol>
+<P>1.2.5 <b>KNOWN LIMITATIONS: MS Windows/Netscape</b><a name="1.2.5"></a></P>
+<P>CAMPFIRE v. 1.0.0 works in Netscape versions up to 4.7. Although Netscape 6 
+  (Gecko) has native support for Swing, its makers have diverged from the original 
+  Sun Microsystems specification, so they are not compatible with CAMPFIRE. The 
+  simple installer provided for Windows (98, Me, and 2000), will thus not install 
+  the Swing classes for Netscape if version 6 is detected on the workstation. 
+  What's more, pre-Gecko versions do not support normal cut and paste (ctrl-C 
+  and ctrl-V) features for Java, so you have to use the special clipboard button 
+  on the browser in order to emulate this functionality.</P>
+<P>In short, if you are working under Windows and want to run CAMPFIRE with the 
+  least hassle, our advice is to stick to Internet Explorer. Not only is the cutting 
+  and pasting easier, but the applet runs faster, as it is able to use decompressed 
+  swing classes (instead of the swing.jar archive that Netscape accesses to run 
+  CAMPFIRE). </P>
+<P>1.2.6 <b>HOWTO</b><a name="1.2.6"></a></P>
+<P>The system's default administrator authentication is: admin:admn00. The interface 
+  of the application can be found at the address:<br>
+  <font face="Courier New, Courier, mono">http://&lt;servername&gt;/priv/</font></P>
+<P>The publication can be seen at the address name configured in the application:<br>
+  <font face="Courier New, Courier, mono">http://&lt;publication site name&gt;</font></P>
+<P>The parser runs automatically.</P>
+<hr noshade size="1">
+<P> </P>
+<P><b>PART II: PUBLISHING ONLINE WITH CAMPSITE</b><a name="part2"></a></P>
+<P>2. <b>BRINGING YOUR PUBLICATIONS ONLINE WITH CAMPSITE</b><a name="2."></a></P>
+<P>CAMPSITE enables you to publish (host) multiple multilingual publications (web 
+  sites) on the same server. The process can be roughly divided in four steps:</P>
+<ul>
+  <li>configuring the publishing environment (establishing access rights, country-relevant 
+    information, languages you intend to publish in, subscription, etc.)</li>
+  <li>establishing the structure of your publications</li>
+  <li>creating the templates which determine the look and feel of your publications</li>
+  <li>adding content and managing your publications</li>
+</ul>
+<P>2.1. <b>Configuring the publishing environment</b><a name="2.1."></a></P>
+<P>Your first step on the road to bringing your publications online with CAMPSITE 
+  is to configure the publishing environment. This involves setting up parameters 
+  such as languages that you are or will be publishing in, definition of typical 
+  user types, and the very structure of your publication(s). </P>
+<P>After you log in for the first time with the default user name (admin) and 
+  password (admn00) you will reach administrator's interface </P>
+<P>The left frame contains a list of modules that you can access, while the right 
+  frame displays the currently selected module. </P>
+<P>CAMPSITE appears differently to different users. Each user sees only the options 
+  that he or she has the right to access or alter. A typical back-end user (an 
+  editor or journalist) will get to see only a fraction of the options available 
+  to a fully authorized user (such as the default administrator).</P>
+<P>2.1.1 <b>Languages</b><a name="2.1.1"></a></P>
+<P>While CAMPSITE's default language is English, you are by no means limited to 
+  publishing in that language only. It's actually very much au contraire.</P>
+<P>The language module enables you to configure support for languages that you 
+  wish to publish in. If your tongues of choice happen to be absent from the list 
+  of CAMPSITE's pre-configured languages, you can configure your own languages.</P>
+<P>To do so, enter the Languages module and click on Add new language. You should 
+  enter the language name (both in English and in the language itself), its code 
+  (e.g. HR for Croatian), the code page you wish to use for that language (e.g. 
+  ISO-8859-4 for Baltic character sets), and the names of months and days of the 
+  week. </P>
+<P>For an extensive description of languages and code pages, see <a href="#5.">Appendix 
+  II</a>.</P>
+<P>2.1.2 <b>Countries</b><a name="2.1.2"></a></P>
+<P>This module determines how country lists will appear in user-profile forms. 
+  The module allows you to create country lists in different languages. </P>
+<P>When you click on Add new country, you will be prompted to enter the country's 
+  name in a language of your choice as well as the country's code. The language 
+  dropdown menu will contain as many languages as you have defined in the Languages 
+  module (see section <a href="#2.1.1">2.1.1</a>). </P>
+<P>N.B. The language you are asked to specify is the language in which you are 
+  entering a country's name, *NOT* the language spoken in the country!</P>
+<P>2.1.3 <b>User Management<a name="2.1.3"></a></b></P>
+<P>CAMPSITE's user management module allows you to control access to the backend 
+  and the front end of your publication(s). In other words, the module, which 
+  features a search option, allows you to define who will have the right to manage 
+  and edit content on your sight and who will be allowed to read it.</P>
+<P>2.1.3.1 <b>Backend Access: Creating User Types<a name="2.1.3.1"></a></b></P>
+<P>A user is generally defined by the list of the tasks he or she has and is allowed 
+  to do in a system. In CAMPSITE, this list of tasks ranges from creating, managing, 
+  and editing publications, sections, and articles, to template management and 
+  definition of the publishing environment. </P>
+<P>To simplify user management, CAMPSITE allows you to create generic user types, 
+  which can then be assigned to multiple users, instead of taking care of every 
+  single access right for every single user. </P>
+<P>CAMPSITE comes "out of the box" with three default user types:</P>
+<ul>
+  <li>Administrator - user with full authorization, i.e. all rights (normally 
+    reserved to webmasters)</li>
+  <li>Editor - standard backend user with rights limited to basic article management 
+    and editing (normally assigned to journalists and editors)</li>
+  <li>Reader - the profile limited to viewing the site, i.e. front end only. </li>
+</ul>
+<P>User-management module operations are straightforward: </P>
+<P>To create your custom user profiles, click on User types and then on Add new 
+  user type. To add a user, click on Users and choose Add new user account. </P>
+<P>You should specify the full name of the user, user name, password, and choose 
+  a predefined user type (i.e. one of the default types or your custom user types). 
+  If you would like to further fine tune the rights assigned to a particular user, 
+  go to Users and click on Rights in the same line with the user's name. </P>
+<P>2.1.3.2 <b>Front-End Access: Subscription</b><a name="2.1.3.2"></a> </P>
+<P>CAMPSITE allows you to control public access to your publication(s) through 
+  its built-in subscription module, about whose configuration you can read more 
+  in section <a href="#2.4.">2.4</a>)</P>
+<P>For now, you should know that all articles you create in your CAMPSITE publication(s) 
+  are by default available to subscribers only. Publication editors or administrators 
+  have the right to make an article accessible to non-subscribers. </P>
+<P>The way it works from readers' side is as follows:</P>
+<P>If a reader tries to access a non-public article, she is informed that she 
+  is not allowed to read the article but is provided with an option to subscribe 
+  immediately to that article or other articles or the whole publication. A temporary 
+  7-day subscription is activated immediately. During this period, the reader 
+  has a chance to effect the payment and consequently have her subscription extended 
+  by the administrator. </P>
+<P>The publication's administrator is automatically notified of all new subscriptions 
+  by e-mail. Subscribers also receive automatically generated e-mail reminders 
+  that their subscription is expiring four days before the event. </P>
+<P>2.2. <b>Creating publications<a name="2.2."></a></b></P>
+<P>CAMPSITE has a clear four-tier hierarchical structure, which conforms to the 
+  traditional structure of news publications. Each publication is thus made up 
+  of issues; each issue is in turn made up of sections, which are themselves comprised 
+  of articles. </P>
+<P>CAMPSITE's user interface is straightforward. A site map is present on every 
+  screen, which enables easy navigation from one level to another.</P>
+<P>Each module of the publication is associated to a level. By clicking on the 
+  name of the module, you enter the structure of the next level or you edit the 
+  current module, depending on its position.</P>
+<P>For example, after creating the "Prague Times" publication, by clicking on 
+  'Prague Times' in the list of publications, you enter the list of issues for 
+  "Prague Times". By clicking the name of an issue, you enter its list of sections. 
+  By clicking the name of a section you enter the article list. By clicking the 
+  article name you enter the article structure and can edit the different components 
+  (fields) of the article.</P>
+<P>2.2.1 <b>Creating a new publication<a name="2.2.1"></a></b></P>
+<P>To create a new publication, you need to enter the Publications module. Once 
+  you are there, click on Add new publication. </P>
+<P><font color="#000099">NOTE 1: If you are not the default administrator, you 
+  may not be able to see the Add new publication option. You may want to ask your 
+  site administrator to alter your access rights. Bear in mind, however, that 
+  a good administrator would be reluctant to hand over those rights to more than 
+  a handful of people. If you are not among those select few, your Publications 
+  view will only contain a list of publications hosted on this particular CAMPSITE 
+  server.</font></P>
+<P>At this point, you should specify the following:</P>
+<ul>
+  <li>Name of the publication (e.g. "Prague Times")</li>
+  <li>Site - the name of the server (or IP address) on which your publication 
+    will be hosted (e.g. www.praguetimes.net) and on which it will ultimately 
+    accessible to readers.</li>
+  <li>Language - the default language of the publication</li>
+  <li>Pay time - the period within which readers have to pay for their subscription, 
+    i.e. the length of free trial subscription. (See section <a href="#2.4">2.4</a> 
+    for more details.)</li>
+</ul>
+<P>Any of those parameters can be altered or fine-tuned at a later stage.</P>
+<P><font color="#000099">NOTE 2: CAMPSITE allows multiple publications to be hosted 
+  on the same server (computer), but to make different publications directly accessible 
+  to readers, you need to specify different virtual web servers. For example, 
+  if you want to add another publication (e.g. "Moldovan Contemporary Political 
+  Thought") onto the server on which you are hosting your "Prague Times" publication, 
+  you need to assign it a different virtual web server name (e.g. www.moldovanthought.com)</font></P>
+<P>If you have vhosts set up in your Apache configuration, you can start a new 
+  publication and specify the URL for this vhost, which will then allow the users 
+  to access your publication through that address.</P>
+<P>2.2.2 <b>Creating a new issue<a name="2.2.2"></a></b></P>
+<P>Once you have successfully created your first publication, click on its name 
+  (e.g. "Prague Times"). This will lead you to the Add new issue option, on which 
+  you should duly click to proceed with the creation of the structure of your 
+  publication. </P>
+<P>The options you will be presented with are Create a new structure and Use the 
+  structure of the previous issue. If you are creating a new publication from 
+  the ground up, the first option one is your only real choice. </P>
+<P>The second option will be the one to choose once you are ready to publish additional 
+  issues of your publication, because it allows you to automatically create a 
+  new issue with the same logical structure (sections) as the preceding one. Sections 
+  are created but are empty, so that you can begin to add articles immediately. 
+  You should possibly only change the name of the new issue, because it will otherwise 
+  remain the same as the last issue. The templates, however, are not copied, so 
+  the new issue must be linked to a template for the front page (see Note 3 for 
+  more details). </P>
+<P>You can introduce changes to the structure of the issue you just created, including 
+  adding or deleting sections or adding new article types, changing field lists 
+  within article types, etc.</P>
+<P><font color="#000099">NOTE 3: If you are copying the structure of an old issue, 
+  you need to connect the new issue to a front-page template (see Section 3 of 
+  this manual). If you are not bent on changing the look of your publication, 
+  just select the old template; If you wish to alter the visual layout of your 
+  publication, you should select a new template that you have meanwhile created. 
+  Regardless of your choice, old issues will keep their original layout (unless 
+  you go back and change their template associations manually for each of them).</font></P>
+<P>Whichever option you choose, be it to replicate the structure of the last issue 
+  or create a brand new structure, you will be able to change the name, the default 
+  language and the number of the issue. </P>
+<table border="1" bgcolor="#CCCCCC">
+  <tr> 
+    <td>TIP: While you can always go back and change the name and the default 
+      language of an issue at any time, the issue number cannot be changed once 
+      it is specified. If you are planning to add older issues of your newspaper/static-HTML 
+      site at a later stage to the same CAMPSITE publication, you may consider 
+      continuing the series. For example, if you just published issue 154 of Prague 
+      Times in static HTML before moving to CAMPSITE, you could assign number 
+      155 to the first issue you are creating within CAMPSITE.</td>
+  </tr>
+</table>
+<P>2.2.3 <b>Add new sections to an issue<a name="2.2.3"></a></b></P>
+<P>Entering the Sections view for an Issue, you can add new sections to the current 
+  issue by clicking on Add new section. You should specify the name and section 
+  number (within the issue). While you can come back later and change the name 
+  of the section, the section number can be chosen only at the time when the new 
+  section is added.</P>
+<P>2.2.4 <b>Defining article types<a name="2.2.4"></a></b></P>
+<P>The next step in setting up your publication is to define the types of articles 
+  that you intend to publish on your site. What you are actually doing at this 
+  stage is specifying the way articles will appear to the person who will be adding 
+  content to your publications. For example, a feature story is likely to have 
+  more components than a brief news item. </P>
+<P>To create an article type, click on Article types and then select Add new article 
+  type. First, you should pick a name for your article type (N.B. only letters 
+  are allowed, no spaces or special characters). Then you can start adding fields 
+  to the article type by clicking on 'New field' option (or proceed to add other 
+  article types by choosing 'Add another'). You will be requested to specify the 
+  name of the field (e.g. Author, Date, Deck, Body, AuthorBiography -- remember 
+  no spaces or special characters are allowed!). </P>
+<table border="1" bgcolor="#CCCCCC">
+  <tr> 
+    <td>TIP: Try to give intuitive names to your article types and fields within 
+      them, because chances are that you will not be the only person doing the 
+      publishing. For example, if you have an article type that you would like 
+      to use in your sports section, call it Sportsarticle, not Sp or Artic or 
+      anything equally cryptic. It will save you time and nerves when journalists 
+      and admin staff start doing all of the posting (and all of the consequent 
+      asking). Similarly, when creating an article type, try to make the sequence 
+      of fields logical, i.e. close to the way they will appear to the readers 
+      on the site (e.g. Author - Date -Deck - Articlebody - Bibliography). At 
+      this stage of development, CAMPSITE does not allow reordering of fields 
+      within article types.</td>
+  </tr>
+</table>
+<P>After you name the field, you have to specify its type. There are three options:</P>
+<ul>
+  <li> <b>Text</b> - this type of field can contain a maximum of 265 characters. 
+    It does not support HTML tags and it its appearance/formatting/character set 
+    is entirely determined by the template (see section 3 for more information 
+    on templates).</li>
+  <li> <b>Date</b> - this is a standard date field with a fixed syntax of YYYY-MM-DD</li>
+  <li> <b>Body</b> - this type of field can be up to 64KB in size (database space 
+    is, however, used optimally, as the database server adjusts the size on the 
+    disk to be sure the field fits, so there is no waste of space). More important, 
+    this type of field is edited with CAMPSITE's near-WYSIWYG Java editor -- CAMPFIRE. 
+    CAMPFIRE enables you to enter text in any character set or alphabet, and even 
+    in multiple alphabets. Text entered through CAMPFIRE is independent of the 
+    format and character set specified by the template. Moreover, CAMPFIRE allows 
+    you to insert images, links, and formatting tags, as well as special CAMPSITE 
+    Dictionary tags.</li>
+</ul>
+<P>After you have specified the field type, you can keep on adding fields to the 
+  article type or finish the operation. Anytime later you can add more fields 
+  to the article type without affecting the rest of the application or the database 
+  contents. You will not lose articles if you add fields to their particular article 
+  type. </P>
+<table border="1" bgcolor="#CCCCCC">
+  <tr> 
+    <td><b><font color="#CC0000">WARNING: While you can safely add article fields 
+      to a article types, deleting them may cause improper functioning of templates 
+      that refer to these fields. Article-type management is best left exclusively 
+      to expert users (e.g. administrators)</font></b></td>
+  </tr>
+</table>
+<P>2.2.5 <b>Creating articles within a section<a name="2.2.5"></a></b></P>
+<P>Once you are in the Articles view within a section (you get there by clicking 
+  on a section name), you can create new articles by selecting the Add new article 
+  option. (This is a recursive option that allows you to add any given number 
+  of articles to the current section.) </P>
+<P>Once you are in the Add new article view, you will see a dialog box with the 
+  following fields/options:</P>
+<ul>
+  <li> <b>Name</b>: This field is mandatory, because it determines how your article 
+    will be known to the database and appear in the Articles view. You, however, 
+    have the liberty of renaming the article at any time.</li>
+  <li><b>Type</b>: you have to select one of the available article types from 
+    the dropdown menu. The choice you make at this stage cannot be altered later.</li>
+  <li><b>Language</b>: select the language in which you want to create your article 
+    from the dropdown menu. The list of languages will contain the languages you 
+    have defined in the Languages module (see section<a href="#2.1.1"> 2.1.1</a>). 
+    The language choice you make at this stage is final, though you can always 
+    create a version in another language with the Translate option in the Articles 
+    view.</li>
+  <li><b>Show article on front page</b>: Tick this box if you would like the article 
+    to be displayed on your publication's front (home) page. You can alter this 
+    choice at any time.</li>
+  <li><b>Show article on section page</b>: Tick this box if you would like the 
+    article to be displayed on the main (home) page (a section "homepage") of 
+    the section within you have created the article. You can alter this choice 
+    at any time.</li>
+  <li><b>Keywords</b>: Specify the words that will help search engines find your 
+    article more easily. This field is optional and you can alter it at any stage.  
+  </li>
+</ul>
+<P>After you fill out the required fields and make your article-display choices, 
+  you should press the 'Save changes' button. You will have the option to either 
+  edit the article you just created (press YES) or go back to the Articles view 
+  (press NO). </P>
+<table border="1" bgcolor="#CCCCCC">
+  <tr> 
+    <td>TIP: You may write the article name in any alphabet, but bear in mind 
+      that if you are publishing a multilingual publication that includes two 
+      non-Western European (i.e. that use code pages different than ISO-8859-1) 
+      alphabets, say Hebrew and Russian, you will not be able to display article 
+      names in both languages correctly at the same time in the article view. 
+      This is because article name is a text-type field and it is affected by 
+      the encoding that is currently active in your browser. Therefore you may 
+      want to create a separate field for the actual title of the article while 
+      filling the name fields with characters that belong to code pages that can 
+      be correctly displayed together in the article list (e.g. ISO-8859-1 and 
+      ISO-8859-2, or ISO-8859-1 and ISO-8859-5; in both cases you should select 
+      the respective non-Western European encoding in your browser for viewing 
+      article lists.</td>
+  </tr>
+</table>
+<P>TECH NOTE: Name is the default field available for any article, no matter what 
+  type of article is selected. This was created both for testing purposes and 
+  for letting the webmaster define a default behavior of articles. For example, 
+  if a template doesn't provide a handler for a specific article type, or you 
+  don't know the list of fields of an article type, you can be sure that there 
+  is a field called 'name'!</P>
+<P>2.2.6 <b>Editing articles: Edit Article Details view<a name="2.2.6"></a></b></P>
+<P>If you choose to edit your newly created article right away you will be led 
+  to the Edit Article Details view. This is the main article-editing interface, 
+  to which you will also get when you click on a name of any article in the Articles 
+  view. This view shows how the article is stored in the database. Its look will 
+  depend on the article type you have assigned to that article when you created 
+  it. </P>
+<P>The fields you will see regardless of the type of article you are viewing are:</P>
+<ul>
+  <li><b>Name</b>, containing the name you had given to the article when you created 
+    it. This field is editable.</li>
+  <li><b>Type</b>, informs you which article type you had chosen for your article. 
+    You cannot alter this field </li>
+  <li><b>Uploaded</b>, showing the date the article was edited for the first time. 
+    You cannot change this field.</li>
+  <li><b>Keywords</b>, where you can add or delete the words that describe your 
+    article better to search engines. </li>
+</ul>
+<P>You will also see the two check boxes you saw when you created the article 
+  (Show article on front page and Show article on section page, respectively), 
+  plus another option: Allow users without subscriptions to view the article. 
+  You should tick the latter if you want to make your article visible to viewers 
+  who have not subscribed to your publication (see section <a href="#2.2.4">2.2.4</a>).</P>
+<P>In addition to these system-determined fields and options, you may see any 
+  number and combination of different fields that you had made when you created 
+  a given article type.</P>
+<P>As it was mentioned earlier in this manual (see section <a href="#2.2.4">2.2.4</a>), 
+  there are three types of fields: Text, Date, and Body. </P>
+<P>Usually there are several text-type fields, designed to contain shorter bits 
+  of text, such as article titles, short descriptions, author names, etc. There 
+  are rarely more than one date-type fields, which web designers normally use 
+  to provide the journalists with an option to specify the date the article was 
+  published (posted). </P>
+<P>Both text- and date-type fields can be edited directly in the Edit Article 
+  Details view.</P>
+<table border="1" bgcolor="#CCCCCC">
+  <tr> 
+    <td><b><font color="#CC0000">WARNING: Whenever you edit text- and date-type 
+      fields, you have to press the Submit changes button located at the bottom 
+      of the page before leaving the Edit Article Details view. Moreover, date-type 
+      fields have a fixed syntax of YYYY-MM-DD. If you enter data in any other 
+      way, you may get incorrect results.</font></b></td>
+  </tr>
+</table>
+<P>Body-type fields usually contain the bulk of an article's content (the main 
+  narrative part of the text, bibliographies, author biographies etc.). To edit 
+  them, you have to launch CAMPFIRE, CAMPSITE's Java editor. You can do so by 
+  clicking on the 'Edit' button near the left corner of each body-type field. 
+  You can edit one body-type field at a time.</P>
+<P>Above the article structure, you will always see the following six buttons:</P>
+<ul>
+  <li><b>Submit/Publish/Unpublish</b> (depending on the copy-flow status of your 
+    article)</li>
+  <li><b>Images</b> - lets you upload images that can be used within body-type 
+    fields of the article. </li>
+  <li><b>Unlock</b>, which you can use to withdraw your reservation of the article 
+    (e.g. when you are finished with your editing). The unlocking is in principle 
+    done automatically, but since CAMPSITE is a server-based application accessed 
+    through web browsers, a number of events (computer crashes, line falling, 
+    etc.) could prevent this from happening. </li>
+  <li><b>Preview</b>, which allows you to preview the article (see below for more 
+    detail</li>
+  <li><b>Translate</b>, which allows you to create a version of the article you 
+    are editing in another language. </li>
+  <li><b>Delete</b>, which is self-explanatory</li>
+</ul>
+<P>2.2.7 <b>Editing body-type fields: Working with CAMPFIRE<a name="2.2.7"></a></b></P>
+<P>CAMPFIRE allows contributors (journalists or editors) without any technical 
+  or HTML knowledge to perform extensive formatting procedures. </P>
+<P>Chances are that anyone who has ever worked with a text editor should find 
+  CAMPFIRE intuitive to use. CAMPFIRE features a toolbar with buttons from which 
+  main functions can be performed, while additional features can be accessed from 
+  pull-down menus. </P>
+<P>All text-formatting features are fully WYSIWYG, except align justify. The non-WYSIWYG 
+  features are insertion of images, links, subheads/page breaks and CAMPSITE Dictionary 
+  keywords. </P>
+<P>From left to right on the toolbar, in order of appearance, the buttons are:</P>
+<ul>
+  <li><b>New</b> - clears the editor; </li>
+  <li><b>Select all</b>;</li>
+  <li><b>Undo</b>, which allows you to undo multiple changes in the order you 
+    made them;</li>
+  <li><b>Redo</b>, which does exactly the opposite; </li>
+  <li><b>Clipboard operations</b>, which opens an extra window displaying the 
+    content of the clipboard and its standard functionality (this feature was 
+    mainly implemented to provide cut and paste functions to Netscape users; see 
+    section <a href="#1.2.5">1.2.5</a>);</li>
+  <li><b>Italic</b></li>
+  <li><b>Bold</b> </li>
+  <li><b>Underline</b></li>
+  <li><b>Align left</b></li>
+  <li><b>Align center</b></li>
+  <li><b>Align right</b></li>
+  <li><b>Choose font color</b></li>
+  <li><b>Clear attributes</b>, which will remove all formatting from the selected 
+    area. </li>
+  <li><b>Insert keyword</b>, will mark the selected word as Dictionary keyword 
+    (for more on Dictionary and keywords, see section 2.3 of this manual). </li>
+  <li><b>Insert subhead</b> allows subheads in your text to become page breaks. 
+    This command inserts a code around the subhead you select, which the parser 
+    will interpret as a page break and parse the subhead on a new page (N.B. This 
+    feature has to be enabled in your templates; see Part 3 of this manual for 
+    more details). </li>
+  <li><b>Insert image</b> inserts an image placeholder into the text. When you 
+    click on it, you are prompted to select one of the images you previously uploaded 
+    for that particular article. You can also specify the alignment and alt text 
+    (the text that shows up when you go over an image with a mouse within a browser).</li>
+  <li><b>External link</b> allows you to create an absolute link in the text. 
+    You do so by highlighting (selecting) the segment of the text that you would 
+    like to link to a web page (URL) of your choice and clicking on the External 
+    link button. This places green link markers on both sides of your selection; 
+    when you click on either of them, you are prompted to provide the URL and 
+    you can specify where you want the link to open (e.g. a new window).</li>
+  <li><b>Internal link</b> allows you to create links to other articles that you 
+    have already created within campsite. The actual procedure is analogous to 
+    the one with external links.</li>
+  <li><b>Save/Upload</b> does exactly that: it saves the changes by uploading 
+    the file into the CAMPSITE database. If you close the window without saving, 
+    you run the chance of losing your data (CAMPSITE will prompt you to save them 
+    before you leave the window, but the best policy is to save your edits regularly).</li>
+</ul>
+<P>All of these functions are also available from the dropdown menus. The menus 
+  feature three important extra options:</P>
+<ul>
+  <li><b>Font size</b>, which is self-explanatory </li>
+  <li><b>Insert keyword</b>, which allows you to mark a word as a Dictionary keyword 
+    (see section <a href="#2.3">2.3</a>)</li>
+  <li><b>Justify all</b> (checkbox in the Other Options dropdown menu) - when 
+    you check this box, the entire text within the editor becomes justified (see 
+    NOTE 4 for more information). Unlike other kinds of alignment, this one does 
+    not conform to the WYSIWYG standard and can only be seen in the Article Preview 
+    (see section <a href="#2.2.7.1">2.2.7.1</a>).</li>
+</ul>
+<P><font color="#000099">NOTE 4: Current browsers do not treat consistently the 
+  &lt;JUSTIFY&gt; option, and that is why We have chosen the HTML &lt;DIV&gt; 
+  directive to implement that kind of alignment. Generally, one chose a certain 
+  alignment for the whole page and then selects paragraphs with different alignments. 
+  This is why this feature in the Editor's consists of a checkbox only, having 
+  the meaning: align justified the whole document.</font></P>
+<P>2.2.7.1 <b>The Preview function<a name="2.2.7.1"></a></b></P>
+<P>Using CAMPFIRE, contributors can feed information into CAMPSITE's database. 
+  However, the appearance of the article for the general audience will be different 
+  than what you see as a contributor. The layout that readers will ultimately 
+  see when they visit your web site is controlled by templates, which is described 
+  in more detail in Part 3 of this manual.</P>
+<P><font color="#000099">NOTE 5: the preview function only works once you saved 
+  (uploaded) the text form the CAMPFIRE editor, because the preview will display 
+  the most recent material in the database.</font></P>
+<P>To use the preview function you need to have the templates created and properly 
+  configured, as they are displaying the information from the database to the 
+  audience, adding additional layout (navigation, banners, etc.) on the way. If 
+  for example you have used CAMPFIRE to add information in the field 'biography', 
+  but the template does not include the 'biography' in the final layout, the preview 
+  function will not display this information.</P>
+<P>2.2.7.2 <b>Previewing the publication<a name="2.2.7.2"></a></b></P>
+<P>Once all articles are entered and the appropriate templates uploaded, you can 
+  preview either the current issue or a single article. To preview the home page, 
+  choose the home template and then preview. </P>
+<P>The home page layout depends on a special stand-alone template that can be 
+  changed independently. All changes to the template can be previewed as soon 
+  as the template has been uploaded. </P>
+<P>Individual articles can be previewed from the 'Articles' area. Simply click 
+  'Preview' to open an extra window with the final page.</P>
+<P><font color="#000099">NOTE 6: At the bottom of the preview window, you can 
+  see information about the parser. If any problems occur while generating the 
+  site, the CAMPSITE parser will display error messages. These should help you 
+  to identify the problem in the template structure.</font></P>
+<P>2.2.8 <b>Publishing articles<a name="2.2.8"></a></b></P>
+<P>CAMPSITE's copy-flow control feature operates by means of assigning three statuses 
+  to an article: new, submitted, and published. </P>
+<P>When you create an article, it is set to 'New'. If you change the status to 
+  'Submit', then - via email - the editors will be informed to check the new submission. 
+  Editors will also be informed on new submissions when they login into CAMPSITE. 
+  Once the editors are happy with the way the article reads and appears, they 
+  can alter its status to 'Published'. Only then article becomes visible on your 
+  web site (provided that you have previously published the relevant issue of 
+  your publication). The whole process is fully reversible, so you can pull out 
+  articles from your site as easily as you can publish them. </P>
+<P><font color="#000099">NOTE 7: Only authorized users are allowed to publish 
+  articles, so you may not be able to access that option if your administrator 
+  has not granted you such rights.</font></P>
+<P>2.2.9 <b>Setting the finalized publication live<a name="2.2.9"></a></b></P>
+<P>All the above functions, such as adding articles, editing, previewing, can 
+  be done internally, without any material being available to the public.</P>
+<P>Once you decide that the time (or the deadline) has come to bring the new material 
+  online, you need to change the status of the issue, by selecting the Publish 
+  option from the Issues view. In addition, you can set that 'Public' flag on 
+  or off for each and every particular article, hiding it if necessary even if 
+  the issue is already published.</P>
+<P>2.3. <b>Dictionary<a name="2.3."></a></b></P>
+<P>The Dictionary module allows you to create and globally update short pieces 
+  of additional information for specific words. For example, some background information 
+  on a company or a person might be saved in the Dictionary. In any article where 
+  this company or person is marked as a keyword, a link will be displayed, showing 
+  additional information. To update this information, the editor only needs to 
+  go into the dictionary and update the information there. All changes will happen 
+  globally for the entire publication, including back issues.</P>
+<P>Depending on the context within which these keywords appear, different types 
+  of information can be saved separately. It might, for example, be interesting 
+  to know more about the location of a company in one context, in another case 
+  it might be crucial to know who is running it. To make such distinctions, the 
+  Dictionary module features 'classes', which can be chosen to be displayed. For 
+  example, I might decide to mark the name of a person in a political analysis 
+  as a keyword. And in this particular context, I wish to have a description of 
+  the political career as additional information (as opposed to the past three 
+  marriages, which might be interesting in another context). So I need to enter 
+  the person's name (e.g. Helmut Kohl) as a keyword in the Dictionary. Later, 
+  when writing the article, I can mark Helmut Kohl as a keyword, and then assign 
+  the appropriate class (e.g. 'private life' or 'political career') to that incidence 
+  of 'Helmut Kohl' in the text.</P>
+<P>To make use of the Dictionary function in your daily editing, you need to do 
+  the following: </P>
+<ul>
+  <li>define keywords (e.g. Helmut Kohl)</li>
+  <li>create classes (e.g. Love Life, Career, Hobbies) </li>
+</ul>
+<P>Once these steps have been taken you can mark keywords inside CAMPFIRE (the 
+  Java Editor). Later, when displaying the article, the parser will search the 
+  dictionary database for related entries. If such an entry is found, the parser 
+  will include a link, allowing the reader to access the additional explanation. 
+  If no such entry is found, the word is displayed regularly. </P>
+<P>Changes to the dictionary can happen at any time and will be dynamically included 
+  in the display. The marked keyword will always trigger the parser to search 
+  through the current version of the dictionary and display the most up to date 
+  information.</P>
+<P>2.3.1 <b>Creating 'dictionary classes'<a name="2.3.1"></a></b></P>
+<P>From the Home view, select 'Dictionary Classes' where you can add new classes. 
+  Here you can also translate the classes into any of the languages defined in 
+  CAMPSITE (see section <a href="#2.1.1">2.1.1</a>).</P>
+<P>2.3.2 <b>Adding keywords to the dictionary<a name="2.3.2"></a></b></P>
+<P>Choose Dictionary from the navigation bar on the left, then select 'Add new 
+  keyword'. You will be prompted to type the keyword and specify the language. 
+  When finished, the keyword will appear in the list of keywords. Now you have 
+  to assign a class to the keyword. Choose 'Classes' in the same line as the keyword 
+  to see all available classes. Mark the one you want to associate the keyword 
+  with and click 'Done'. You can repeat this process to associate the keyword 
+  with more than one class. </P>
+<P>You can also translate the keyword into other languages. This will generate 
+  a new keyword in the listing, using the same classes.</P>
+<P>2.3.3 <b>Marking keywords in the articles<a name="2.3.3"></a></b></P>
+<P>When writing or editing material in the CAMPFIRE editor, you select the word 
+  you want to make a keyword, choose 'Insert' from the pull-down menu and 'Create 
+  Keyword'. This will open a window, asking you to choose a class to be associated 
+  with the keyword. </P>
+<P>The marked keyword will not necessarily become an active link in the article. 
+  This will only happen if the same word has been defined as a keyword, as described 
+  above. Only then the parser will find the word in the keyword list and build 
+  the link, opening the pop-up window with further information.</P>
+<P>2.3.4 <b>What pays the piper, will see the surfer<a name="2.3.4"></a></b></P>
+<P>As the parser is going through the text, it will firstly find the marked keyword, 
+  then check in the dictionary if such a word has been defined. If this is the 
+  case, the parser will generate a link, opening a popup window, displaying the 
+  information of the class of the keyword marked. The other classes are also offered 
+  as further reading. </P>
+<P>If the parser detects a keyword, but can not find the same word in the dictionary 
+  entry, no link will appear. However, once this keyword is added to the dictionary, 
+  the parser will generate a link. Marked keywords are like sleeping beauties.  
+</P>
+<P>2.3.5 <b>Known Limitations of the Dictionary Module<a name="2.3.5"></a></b></P>
+<P>In its present incarnation (CAMPSITE version 2.0.0), the Dictionary module 
+  is functional, but its appearance is still, shall we say, rather sobering. We 
+  thus consider it as a feature under development, particularly regarding the 
+  lack of possibility for CAMPSITE administrators to alter the layout of the popup 
+  windows. In other words, you can use it, but you might want to see if the appearance 
+  of the pop-up window would not strongly conflict with your overall design. If 
+  you decide to continue the dictionary development, please inform us, so we can 
+  announce this on our support list.</P>
+<P>2.4. <b>Configuring the Subscription Module<a name="2.4."></a></b></P>
+<P>CAMPSITE allows you to control access to your site in two ways: </P>
+<ul>
+  <li>Standard UserName:Password pairs, which is suitable for individual users;</li>
+  <li>IP Address access, which most institutional subscribers (libraries, universities, 
+    NGOs, companies, etc.) tend to prefer</li>
+</ul>
+<P>As CAMPSITE handles subscriptions at publication level, all subscription-related 
+  variables are customizable from the Publications view. Columns 'Subscription 
+  default time' and 'Info' are relevant in this context.</P>
+<P>The 'Subscription default time' parameter allows you to set default trial-subscription 
+  duration (Trial time) and the default duration of paid subscription (Paid time) 
+  for individual countries. To do so, click on Change in the 'Subscription default 
+  time' column. You will then have the option to Add new country, i.e. create 
+  subscription preferences for a given country. </P>
+<P>If you click on Change in the 'Info' column, you will be able to specify the 
+  remainder of subscription parameters for your publication: </P>
+<ul>
+  <li>Pay Time - specifies the time within which the user has to pay for his subscription 
+    (in the meantime, he has immediate access to the site); </li>
+  <li>Time-unit - specifies the time unit you would like to use to measure the 
+    duration of subscriptions; you can select day, week, month, or year;</li>
+  <li>Unit cost - the price for a section for the selected time unit; </li>
+  <li>Currency - the publication's currency. Even if the subscription request 
+    is sent and the currency is changed meanwhile, the information about the user's 
+    debt is correctly recorded. </li>
+</ul>
+<P>2.4.1 <b>Username:Password Access<a name="2.4.1"></a></b></P>
+<P>CAMPSITE allows readers to subscribe to one publication at a time. Within a 
+  publication itself, the level of subscription is the section. The reader is 
+  able to select any section from the list of the publication's sections, and 
+  for each of them specify the period of time he would like to have a subscription 
+  for. </P>
+<P>Before submitting his request, the user (reader) can evaluate the cost of the 
+  subscription and change it. At any time later, he can subscribe to additional 
+  sections. Once the user has subscribed to a section, he can't increase the period 
+  of time for the subscription until payment is done for that section. </P>
+<P>Immediately after the completion of the subscription form, the reader has the 
+  right to view the site. By default, the reader has seven days to make a payment 
+  and have his subscription confirmed by the administrator or else the account 
+  is locked. </P>
+<P>The authorized person can confirm the payment, so that the subscription remains 
+  active after the first 7 days. There are two options in the administration module 
+  for that: change the value of the amount that the subscriber has to pay, or 
+  change the number of days the subscriber is allowed to surf the publication's 
+  site. By default, if this sum is set to 0 (zero), the number of paid days is 
+  automatically set to the number of requested days.</P>
+<P>The administrator (or any other user whose profile allows him to manage publications) 
+  has 7 days to confirm the payment. The confirmation is made from the main menu, 
+  by selecting User and then Subscriptions. The confirmation consists in changing 
+  the payment status (from 'no' to 'yes'). </P>
+<P>2.4.2 <b>Customizing Subscription Interface for Readers<a name="2.4.2"></a></b></P>
+<P>The subscription interface for the user is customizable. Depending on the user's 
+  status, several steps must be taken by a user in order to be able to read the 
+  publication. There are three possible scenarios:</P>
+<ul>
+  <li>the user has never subscribed; the user is served a subscription form (name, 
+    login, password, email etc); after the completion of this form, the user can 
+    start subscribing to any section</li>
+  <li>the user has already subscribed (i.e. is a known user to the system) but 
+    only to a few sections, and he wants to add more sections to the subscriptions 
+    he has already made, which might have expired; the user should be served a 
+    different subscription form (reflecting his status of a known user) </li>
+  <li>the user is not known to the system even though his subscriptions are active 
+    (e.g. the subscriber hasn't logged for a long time, even if his subscriptions 
+    are active; a login form must be supplied for such a user.</li>
+</ul>
+<P>Template designer can customize all those forms by means of CAMPSITE's description 
+  language (see Part 3 of this manual). </P>
+<P>2.4.3 <b>IP Address-based Subscriptions<a name="2.4.3"></a></b></P>
+<P>Subscriptions can also be created through the administration interface. This 
+  is normally done for two purposes: </P>
+<P>First, an administrator needs to be able to emulate the experience of a regular 
+  user in order to test the functionality. So he must be able to create a user 
+  identities with reading rights only. </P>
+<P>Second, IP address-based subscription has to be fully controlled by the administrator, 
+  as a reader could possibly grant access for 7 days for the whole Internet. </P>
+<P>To create an IP address-based subscription, the administrator first creates 
+  a regular UserId:Password account, to which then he adds IP based rights. The 
+  double authorization option was implemented because the administrator can't 
+  test the subscription from his computer if only the IP address-based authentication 
+  is active. He must enter in a different way (UserId:Password) and rights must 
+  be assigned as if he were coming from an appropriate IP address. It is not necessary 
+  to add anything to the templates or to inform the users who will be accessing 
+  the site through IP address authentication of the existence of this UserId:Password 
+  pair.</P>
+<P>3. <b>CREATING TEMPLATES FOR YOUR PUBLICATION<a name="3."></a></b></P>
+<P>When implementing CAMPSITE, chances are you will already have a rather clear 
+  outline of the structure of your publication online, or - even better - have 
+  a running web version already in HTML. Either way, to migrate your publication 
+  to CAMPSITE, you will have to generate customized templates for your content. 
+  Such templates will be incorporating the CAMPSITE tags used to pull information 
+  from the database into the HTML page readable by web browsers.</P>
+<P>The following sections will guide you step by step through the process of generating 
+  such templates. Before proceeding (step 0 if you like) would be the actual planning 
+  and layout work of your web site. This can be done with any HTML editor of your 
+  choice. However, the following will cover the transformation of an existing 
+  HTML design into templates and NOT web design itself... this ain't no web design 
+  lecture.</P>
+<P>One of the main goals of CAMPSITE is to offer a fully customizable layout for 
+  online publications and at the same time keep the content independent of the 
+  layout. This is done by means of templates. Those templates are nothing more 
+  than HTML files containing embedded CAMPSITE description-language tags, which 
+  creates the link between the view and the content.</P>
+<P>3.1. <b>Modular Structure of Templates<a name="3.1."></a></b></P>
+<P>A glance at all articles of an online publication reveals that generally there 
+  are many layout similarities even across different sections of the publication. 
+  Taking advantage of such similarities is what the template structure of CAMPSITE 
+  was meant to do. In other words: design features that remain the same for all 
+  articles only need to be specified once, e.g. the navigation from an article 
+  back to section and home, font type and size, background color and the like.  
+</P>
+<P>On the other hand, there are article components that vary between articles. 
+  For example, the top of the article might contain some specific logo to indicate 
+  which section it belongs to. In such a case, the templates are designed to work 
+  in a modular fashion, allowing you to call up templates within templates.</P>
+<P>The modular structure of the templates can be illustrated well by the following 
+  example: If background color, font size and type are the same for all articles, 
+  they will be specified as plain HTML in the template. But differences between 
+  sections will be indicated within the structure of the template (see below) 
+  indicating "if this article belongs to the politics section, insert such-and-such 
+  template here, if it is sports, insert such-and-such, else: just use the following."  
+</P>
+<P>Templates can be stacked within each other. A template can be made to call 
+  another template and include the layout information at the position where it 
+  was called in the main template. The easiest way to illustrate this modular 
+  structure is by looking at a usual tree structure of folders on a computer. 
+  Starting from general categories, the deeper the structure, the more precise 
+  and specific the folder names and information.</P>
+<P>The modular structure was introduced to keep redundancy to zero and therefore 
+  the layout work minimal. Any design changes need to be made only once in the 
+  templates, never even twice, if you make full use of this modularity potential.  
+</P>
+<P>3.2. <b>Fixed Framework: Communicating with Your Database<a name="3.2."></a></b></P>
+<P>Templates are in-between your content database and your audience on the web. 
+  Therefore they need to mediate between both. The database needs to understand 
+  what information is requested, and the user's browser needs to retrieve a finished 
+  HTML page. </P>
+<P>The template sets the stage, passing specific environmental information to 
+  the database query, such as: "list only articles from current issue and section 
+  'sports'." At the same time, it gives detailed instructions on how content should 
+  be displayed in HTML format. This distinction between environment and content 
+  is crucial for understanding and building templates. The template language was 
+  designed to be usable on different levels of dynamic features: one can make 
+  static templates for every issue, section, article or just a few customized 
+  templates that generate different views depending on the given parameters.</P>
+<P>The following will cover some examples on how to build templates. Further down 
+  you can find a complete list of available commands used by CAMPSITE templates.</P>
+<P>3.3. <b>Building an article template: articletemplate.tpl<a name="3.3."></a></b></P>
+<P>Building an article template is the easiest option. All you need to do is generate 
+  your HTML layout and substitute the dynamic sections (title, author, intro, 
+  text...) with the simple tag:</P>
+<P><font face="Courier New, Courier, mono">&lt;!** print article title&gt;</font></P>
+<P>The command is 'print article'; the 'title' part varies. This is the name of 
+  the variable that you assigned when building the Article Types. So it could 
+  also read:</P>
+<P><font face="Courier New, Courier, mono">&lt;!** print article sportsitemdeck&gt;</font></P>
+<P>As the rest of the HTML layout remains as it is, a simple template might look 
+  like this:</P>
+<P><font face="Courier New, Courier, mono">&lt;html&gt;&lt;title&gt;&lt;!** print 
+  article title&gt;&lt;/title&gt;&lt;/head&gt;<br>
+  &lt;body&gt;<br>
+  &lt;h1&gt;&lt;!** print article title&gt;&lt;/h1&gt;<br>
+  &lt;h3&gt;&lt;!** print article subtitle&gt;&lt;/h3&gt;<br>
+  &lt;i&gt;Written by &lt;!** print article authorname&gt; on the &lt;!**print 
+  article date&gt;&lt;/i&gt;&lt;p&gt;<br>
+  &lt;!** print article text&gt;<br>
+  &lt;/body&gt;<br>
+  &lt;/html&gt;</font></P>
+<P>The reason we can reduce the templates to such a simple solution is, because 
+  CAMPSITE will remember where it comes from and where it is. So by the time the 
+  user arrives at one particular article, CAMPSITE knows the publication, the 
+  issue, the section, and even the article ID and can simply generate the HTML 
+  page from the database by using the environmental variables together with the 
+  layout information in the template.</P>
+<P>Obviously, your design can be far more advanced than this page. And CAMPSITE 
+  can also perform far more advanced functions than this. In order to get a feel 
+  for this, let's jump into the next example, building the navigation. (A full 
+  list of tag commands can be found at the end of this chapter.)</P>
+<P>3.4. <b>Generating a Navigation Template: navigationtemplate.tpl<a name="3.4."></a></b></P>
+<P>As described above, the template structure can be nested, meaning one template 
+  can call another template. This, for example, makes a lot of sense for the navigation. 
+  To jump between sections, you might only need one navigation template that can 
+  be used by all other templates (article, section, home page). </P>
+<P>To nest another template within another, use the following CAMPSITE tag:</P>
+<P><font face="Courier New, Courier, mono">&lt;!** include navigationtemplate.tpl&gt;</font></P>
+<P>The 'include' command is CAMPSITE lingo; the name of the template needs to 
+  be adjusted to whatever you called it. Let's assume we add this tag in the article 
+  template we created earlier, and we can now go on and build the template.</P>
+<P>First thing to do when you are building something like the navigation is to 
+  take control over the environmental variables. Our navigation needs to follow 
+  some standard rules and should not be affected too much by the environmental 
+  setting of the current position of the user. </P>
+<P>In terms of CAMPSITE lingo, we need to introduce a 'local' tag, which allows 
+  us to specify some environmental variables for a local section inside the template. 
+  In other words, we can switch off the environmental variables, set our own and 
+  then switch them on again. In that way we can use the same template for the 
+  navigation for all articles, sections, even issues (not publications, obviously).  
+</P>
+<P>In order to make sure you enter the current issue in the navigation bar, set 
+  the environment variables to:</P>
+<P><font face="Courier New, Courier, mono">&lt;!** local&gt;&lt;!** issue current&gt;</font></P>
+<P>Here, 'local' allows you to set the parameters inside a template to the values 
+  you want to be specified. Once the parser finds the 'endlocal' tag, it will 
+  switch back to the environment variables it arrived with (for example a back 
+  issue).</P>
+<P>Then the issue parameter is set to 'current'. This is done in order to make 
+  sure that the navigation will always jump to the 'section' (or whatever you 
+  want) of the current issue. </P>
+<P>Then you would need to specify which section you would want to link to. This 
+  is done with the 'section number' tag.</P>
+<P><font face="Courier New, Courier, mono">&lt;!** section number 1&gt;</font></P>
+<P>The above tag would set the local section parameter to 1, which will be looked 
+  up in the CAMPSITE database under section entries (each section is assigned 
+  a number when it is created, see section <a href="#2.2.3">2.2.3</a> of this 
+  manual).</P>
+<P>Now we have set all necessary values for the link: we will link to section 
+  1 in the current issue. All we need to do now is create the link to the section, 
+  or - to be more precise - the template that is used to build section pages.</P>
+<P><font face="Courier New, Courier, mono">&lt;a href="sectiontemplate.tpl?&lt;!** 
+  urlparameters&gt;"&gt;NEWS&lt;/a&gt;</font></P>
+<P>This will create an ordinary link, using the anchor tag of HTML. This link 
+  will call the sectiontemplate.tpl (you need to substitute sectiontemplate.tpl 
+  with your template name). In our example, all templates are in the same folder. 
+  If they are in a different folder, you can use a relative link (e.g. look/reporter/logo.gif).</P>
+<P>Then we need to pass the parameters to the template, which allows the parser 
+  to fill the page with content from the database. So the template is followed 
+  by '?' (indicating that other variables are following) and then the CAMPSITE 
+  tag 'urlparameters' will include all the information (such as language, publication, 
+  etc.) but using the local settings we adjusted earlier (current issue and section 
+  1). Finally, we need to end the local parameters with the tag:</P>
+<P><font face="Courier New, Courier, mono">&lt;!** endlocal&gt;</font></P>
+<P>A complete navigation template could look like this:</P>
+<P><font face="Courier New, Courier, mono">&lt;!** local&gt;&lt;!** issue current&gt;&lt;!** 
+  section number 1&gt;<br>
+  &lt;a href="sectiontemplate.tpl?&lt;!** urlparameters&gt;"&gt;NEWS&lt;/a&gt;&lt;br&gt;<br>
+  &lt;!** endlocal&gt;<br>
+  &lt;!** local&gt;&lt;!** issue current&gt;&lt;!** section number 2&gt;<br>
+  &lt;a href="sectiontemplate.tpl?&lt;!** urlparameters&gt;"&gt;POLITICS&lt;/a&gt;&lt;br&gt;<br>
+  &lt;!** endlocal&gt;<br>
+  &lt;!** local&gt;&lt;!** issue current&gt;&lt;!** section number 3&gt;<br>
+  &lt;a href="sectiontemplate.tpl?&lt;!** urlparameters&gt;"&gt;SPORT&lt;/a&gt;&lt;br&gt;<br>
+  &lt;!** endlocal&gt;<br>
+  &lt;!** local&gt;&lt;!** issue current&gt;&lt;!** section number 4&gt;<br>
+  &lt;a href="sectiontemplate.tpl?&lt;!** urlparameters&gt;"&gt;CULTURE&lt;/a&gt;&lt;br&gt;<br>
+  &lt;!** endlocal&gt;<br>
+  &lt;!** local&gt;&lt;!** issue current&gt;&lt;!** section number 5&gt;<br>
+  &lt;a href="sectiontemplate.tpl?&lt;!** urlparameters&gt;"&gt;WEATHER&lt;/a&gt;&lt;br&gt;<br>
+  &lt;!** endlocal&gt;</font></P>
+<P>Make sure that the section numbers assigned correlate with the names of the 
+  sections, as you assigned them when building the publication in the first place.</P>
+<P>Now we can advance into a more conditional environment, the section pages.</P>
+<P>3.5. <b>Building the Section Template: sectiontemplate.tpl<a name="3.5."></a></b></P>
+<P>The main function of the section page is to provide a table of content for 
+  all articles in a section. Each section needs to have its own sectiontemplate.tpl 
+  specified. However, you can use one general section template, which will then 
+  call different sub-templates, depending on the environmental variables as described 
+  above. For example, you can have a different navigations for the sports and 
+  the politics sections.</P>
+<P>As mentioned before, the main aim of the sectiontemplate.tpl is the listing 
+  of all articles in this section, for this issue (and this publication). A very 
+  simple list could look like this:</P>
+<P><font face="Courier New, Courier, mono">&lt;!** list article&gt;<br>
+  &lt;a href="articletemplate.tpl?&lt;!** urlparameters&gt;"&gt;&lt;!** print 
+  article name&gt;&lt;/a&gt;<br>
+  &lt;!** endlist&gt;</font></P>
+<P>This will list all articles in the section. Remember that CAMPSITE will pass 
+  on its own environment variables, such as 'publication' and 'issue', to each 
+  template. The 'list article' command already knows what section to list. The 
+  second line will create the link, using the name of the article. </P>
+<P>Here you can add more information, using the 'print article' command. If you 
+  say:</P>
+<P><font face="Courier New, Courier, mono">&lt;font size=-1&gt;&lt;i&gt;&lt;!** 
+  print article deck&gt;&lt;/i&gt;&lt;/font&gt;&lt;hr&gt;</font></P>
+<P>... this will include the 'deck' component (field) of the article, in a smaller 
+  font and italics. All HTML remains just the way you always use it. Finally, 
+  a line (horizontal rule) is drawn underneath the deck.</P>
+<P>To close the listing, use the 'endlist' tag.</P>
+<P>This example will order the articles in no particular way. If you want to make 
+  sure the newest article is on the top of the list, you need to tell CAMPSITE 
+  to order the listing:</P>
+<P><font face="Courier New, Courier, mono">&lt;!** list article order bynumber 
+  desc&gt;</font></P>
+<P>3.5.1 <b>The 'Feature' article of the section<a name="3.5.1"></a></b></P>
+<P>Most likely, one or more articles are the main (feature) articles in each section. 
+  (Editors mark those articles as such by ticking the Show on section page box 
+  in Edit Article Details view; for more details see section 2.2.6) What we will 
+  do now, is build a listing for the section template, which will display the 
+  feature articles (marked with 'show on section page') first and then list the 
+  remaining articles.</P>
+<P>&lt;!** list article ison section order bynumber desc&gt;</P>
+<P>This will make sure that the only articles that will be used which have this 
+  feature switched on. They are also ordered by descending numbers, with the newest 
+  appearing on the top. This is followed by the variables you want to have listed 
+  and the HTML formatting used. In our example it may look like this:</P>
+<P><font face="Courier New, Courier, mono">&lt;a href="articletemplate.tpl?&lt;!** 
+  urlparameters&gt;"&gt;&lt;!** print article name&gt;&lt;/a&gt;</font></P>
+<P>We can then add more information from the database with the 'print article' 
+  command. HTML code goes in-between.</P>
+<P><font face="Courier New, Courier, mono">&lt;!** end list&gt;</font></P>
+<P>Then we need to end the listing with the 'end list' command. So here we will 
+  list all the ones which are marked. But what if the editors checked more than 
+  one article, but your design only works with ONE article on the top, not all 
+  of them? </P>
+<P>3.5.2 <b>Displaying only the most recent feature article on a section page<a name="3.5.2"></a></b></P>
+<P>To use just the most recent article from the 'feature' articles in the section, 
+  use the following tag:</P>
+<P><font face="Courier New, Courier, mono">&lt;!** list length 1 article ison 
+  section order bynumber desc&gt;<br>
+  &lt;a href="articletemplate.tpl?&lt;!** urlparameters&gt;"&gt;&lt;!** print 
+  article name&gt;&lt;/a&gt;<br>
+  &lt;!** end list&gt;</font></P>
+<P>This will create a list of articles (in our case only one, as the length is 
+  set to 1) of the articles marked as 'show on section'. The list will be ordered 
+  by descending numbers, the highest entry being featured on the top. As set in 
+  this example, this will result in only the most recent entry of "feature" articles 
+  within the section being shown.</P>
+<P>A link is then created, containing the name of the article (which is the title).</P>
+<table border="1" bgcolor="#CCCCCC">
+  <tr> 
+    <td><b><font color="#CC0000">WARNING: If you have built your list in the way 
+      described above, only the first article is included. Imagine you have three 
+      or four articles checked to 'show on section page', all but the most recent 
+      one will be swallowed. This might make sense in some cases, but it might 
+      be problematic for other designs.</font></b></td>
+  </tr>
+</table>
+<P>It might be better to make sure that we are printing the most recent marked 
+  one, then the other marked ones and finally the normal articles in the section. 
+  So we will keep the first command for our feature article in the section. Then 
+  we need to make a list of all articles that are also checked to be 'on section 
+  page'. But we need to exclude article number one.</P>
+<P><font face="Courier New, Courier, mono">&lt;** list article ison section order 
+  bynumber desc&gt;<br>
+  &lt;!** if list index 1&gt;&lt;!** else&gt;<br>
+  ...<br>
+  &lt;!** endif&gt;<br>
+  &lt;!** endlist&gt;</font></P>
+<P>This will build the list of all checked articles in the section. It will then 
+  look at the index of each article, once it has ordered them. So the newest article 
+  will have the index number one. The if condition will find this article and 
+  do nothing - because - it runs straight into the 'else' area. Above, where you 
+  can see the three dots, you can add your own listing, using the normal 'print 
+  article' tag and your HTML code.</P>
+<P>Finally, all we need to do is list the remaining articles. That's an easy task--simply 
+  exclude the marked ones and list the rest. There you go:</P>
+<P><font face="Courier New, Courier, mono">&lt;** list article isnoton section 
+  order bynumber desc&gt;<br>
+  ...<br>
+  &lt;!** endlist&gt;</font></P>
+<P>Again, include your HTML with the other variables in-between.</P>
+<P>3.5.3 <b>Including Images in the Section Listing<a name="3.5.3"></a></b></P>
+<P>As seen above, the sectiontemplate.tpl will always pull information out of 
+  the database and display it in a list format. If we have images included in 
+  the article, they will appear on the article page, but how can we display an 
+  individual, small image for one article in the section listing?</P>
+<P>The answer is quite simple. Create a body field in your Article Type that will 
+  only contain the image that goes into the section listing. Let's say we call 
+  this variable 'sectionimage'. Then all you need to add in the section listing 
+  to display the image is:</P>
+<P><font face="Courier New, Courier, mono">&lt;!** print article sectionimage&gt;</font></P>
+<P>This will then generate the HTML code as saved in the database. And in our 
+  case that means it will create the image tag including the image. You could 
+  even generate a little subtitle for the image in this field when entering the 
+  article text and images.</P>
+<P>3.6. <b>Building the home page template: home.tpl<a name="3.6."></a></b></P>
+<P>...is more or less the same, just needs some more practice, so this is your 
+  chance to practice...</P>
+<P>3.7. <b>Some hints: powerful lists and ordering<a name="3.7."></a></b></P>
+<P>Listing and ordering are two powerful functions in CAMPSITE lingo. In the following 
+  example we would like to automate an update for the sections 3, 4 and 5. Whenever 
+  an editor posts some new articles in either of these sections and publishes 
+  them, we want the home page to display a link to the newest article in the center 
+  column. Also, we want the second newest posting to be listed in the left column.</P>
+<P>In order to achieve this, our home page template needs to select sections 3, 
+  4 and 5, then order them from newest to oldest and take the top entry for the 
+  center and the second one for the left column.</P>
+<P>What do we need to do?</P>
+<P><font face="Courier New, Courier, mono">&lt;!** list length 3 section number 
+  greater 2&gt;</font></P>
+<P>This will select the sections 3, 4, and 5.</P>
+<P><font face="Courier New, Courier, mono">&lt;!** list length 1 article order 
+  bynumber desc&gt;</font></P>
+<P>This line orders the entries from newest to oldest and only returns the newest 
+  article, because the length of the list is set to one. </P>
+<P><font face="Courier New, Courier, mono">&lt;!** print section name&gt;<br>
+  &lt;!** print article title&gt;</font></P>
+<P>...to print the most recent for each section.</P>
+<P><font face="Courier New, Courier, mono">&lt;!** endlist&gt;<br>
+  &lt;!** endlist&gt;</font></P>
+<P>... to close the list again.</P>
+<P>So, now we need to take the second articles for each section to go into the 
+  column on the left. This can be done similar to the example above:</P>
+<P><font face="Courier New, Courier, mono">&lt;!** list length 3 section number 
+  greater 2&gt;<br>
+  &lt;!** list length 2 article order bynumber desc&gt;<br>
+  &lt;!** if list index 1&gt;&lt;!** else&gt;<br>
+  &lt;!** print section name&gt;<br>
+  &lt;!** print article title&gt;<br>
+  &lt;!** endlist&gt;<br>
+  &lt;!** endlist&gt;</font></P>
+<P>3.8. <b>Environmental control with CAMPSITE templates<a name="3.8."></a></b></P>
+<P>Instructions within CAMPSITE lingo fall into two categories: those that do 
+  not generate output but only select the environment for the rest of the instructions, 
+  and those that print a certain information from the database according to the 
+  environment set by the first type of instructions.</P>
+<P>3.8.1 <b>Runtime given parameters<a name="3.8.1"></a></b></P>
+<P>The information selected also depends on the runtime given parameters. These 
+  parameters are:</P>
+<ul>
+  <li>language identifier (IdLang) which sets the current language</li>
+  <li>publication identifier (IdPubl) which sets the current publication</li>
+  <li>issue number (NrIssue) which sets the current issue</li>
+  <li>section number (NrSection) which sets the current section</li>
+  <li>article number (NrArticle) which sets the article</li>
+</ul>
+<P>3.8.2 <b>Other parameters<a name="3.8.2"></a></b></P>
+<P>and also some special parameters:</P>
+<ul>
+  <li>the keywords parameter, which specifies that keywords will be used as filters 
+    in a List SearchResult statement; it is used for the local search engine</li>
+  <li>a list index start, that specifies the starting index for a each type of 
+    list: Issue (ILStart), Section (SLStart), Article (ALStart), Article search 
+    (SRLstart)</li>
+</ul>
+<P>All runtime parameters form the so-called "data context" within which each 
+  article is positioned.</P>
+<P>3.9. <b>Structure of CAMPSITE templates<a name="3.9."></a></b></P>
+<P>The structure of the CAMPSITE templates is simple. It is a continuous row of
+  either HTML language or the commands used by CAMPSITE to pull content out of
+  the database. Any template in its most simplified form looks like this:</P>
+<P><i>[HTML text] [CAMPSITE Instruction] [HTML text ] [CAMPSITE Instruction] ....</i></P>
+<P>The following example is an HTML beginning of a CAMPSITE template. In general,
+  the best way to go about making templates is to finish the HTML layout work,
+  then identify the chunks that do not need any changes and insert CAMPSITE tags
+  in-between to customize the layout. </P>
+<P><font face="Courier New, Courier, mono">&lt;html&gt;&lt;body&gt;&lt;h1&gt;template
+  1&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;</font></P>
+<P>This template does not contain CAMPSITE Instructions. Taking this example a
+  little bit further, the above example could be asked to display the day of the
+  month.</P>
+<P><font face="Courier New, Courier, mono">&lt;html&gt;&lt;body&gt; &lt;!** Date
+  mday&gt; &lt;/body&gt;&lt;/html&gt;</font></P>
+<P>This template is made of:</P>
+<P>HTML text: <font face="Courier New, Courier, mono">&lt;html&gt;&lt;body&gt;
+  </font></P>
+<P>CAMPSITE Instruction: <font face="Courier New, Courier, mono">&lt;!** Date
+  mday&gt; </font></P>
+<P>HTML text: <font face="Courier New, Courier, mono">&lt;/body&gt;&lt;/html&gt;</font></P>
+<P>...and will print the day of the month (numeric) for the current date. You
+  can see the most important format standard that will follow all work through
+  the pages to come, the CAMPSITE tag. Requests to CAMPSITE to replace a part
+  of the template with information from the database is always inside the &lt;!**
+  &gt; tag. </P>
+<P>Template 3:</P>
+<P><font face="Courier New, Courier, mono">&lt;html&gt;&lt;body&gt;<br>
+  &lt;!** List Article IsOn FrontPage&gt;<br>
+  &lt;p&gt; Article Name &lt;!** Print Article name&gt;<br>
+  &lt;!** EndList&gt;<br>
+  &lt;/body&gt;&lt;/html&gt;</font></P>
+<P>This template is made of:</P>
+<table border="1">
+  <tr>
+    <td>HTML text</td>
+    <td>&lt;html&gt;&lt;body&gt;</td>
+  </tr>
+  <tr>
+    <td>CAMPSITE Instruction</td>
+    <td>&lt;!** List Article IsOn FrontPage&gt;</td>
+  </tr>
+  <tr>
+    <td>HTML text</td>
+    <td>&lt;p&gt; Article Name </td>
+  </tr>
+  <tr>
+    <td>CAMPSITE Instruction</td>
+    <td>&lt;!** Print Article name&gt; </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&lt;!** EndList&gt;</td>
+  </tr>
+  <tr>
+    <td>HTML text</td>
+    <td>&lt;/body&gt;&lt;/html&gt;</td>
+  </tr>
+</table>
+<P>...and will print the names of articles that are on the front page, no matter
+  if they are protected or not by the subscription system.</P>
+<P>Beware that depending on the given runtime parameters this template will print
+  different information. For example, if only NrIssue parameter is specified,
+  this template will select all articles to be shown on the front page, for the
+  given issue number, for all publications.</P>
+<P>3.9.1 <b>'Define-environment' instructions<a name="3.9.1"></a></b></P>
+<P>The syntax of the language is as follows: All identifiers written between '&lt;'
+  and '&gt;' contain values. The '|' character is used to mark possible expression
+  and means the logical 'OR' between its operands. For example, one could write:
+  option1|option2|option3 meaning option1 or option2 or option3. Terms enclosed
+  by '[' and ']' means that the content doesn't need to appear. The syntax is
+  flexible.</P>
+<P>Here is the list of instructions:</P>
+<P>3.9.1.1 <b>Language<a name="3.9.1.1"></a></b></P>
+<P>Purpose:</P>
+<P>Selects the language by English name. From this statement the language is the
+  new chosen one. If the name supplied is not a valid one, this parameter is not
+  modified.</P>
+<P>Syntax:</P>
+<P><font face="Courier New, Courier, mono">Language &lt;language_name&gt;</font></P>
+<P>where</P>
+<P><font face="Courier New, Courier, mono">&lt;language_name&gt; is the English 
+  name of selected language.</font></P>
+<P>Constraints:</P>
+<P>Can not be used inside List statement.</P>
+<P>3.9.1.2 <b>Publication<a name="3.9.1.2"></a></b></P>
+<P>Purpose:</P>
+<P>Select/deselect publication. Changes publication parameter within the data 
+  context for the instructions to follow.</P>
+<P>Syntax:</P>
+<P><font face="Courier New, Courier, mono">Publication name &lt;publication_name&gt;<br>
+  </font>Select 
+  the publication having the specified name. If the name supplied is not a valid 
+  one, this parameter is not modified.</P>
+<P><font face="Courier New, Courier, mono">Publication identifier &lt;publication_identifier&gt;<br>
+  </font>Select 
+  the publication having the specified identifier. If the identifier supplied 
+  is not a valid one, this parameter is not modified.</P>
+<P><font face="Courier New, Courier, mono">Publication off<br>
+  </font>Deselect publication; 
+  the publication parameter is not defined after this instruction.</P>
+<P><font face="Courier New, Courier, mono">Publication default<br>
+  </font>The publication 
+  parameter is changed to the one provided on template start. If publication parameter 
+  was not defined on template start it's value from now on is undefined.</P>
+<P>Constraints:</P>
+<P>Cannot be used inside List statement.</P>
+<P>3.9.1.3 <b>Issue<a name="3.9.1.3"></a></b></P>
+<P>Purpose:</P>
+<P>Select/deselect issue. Changes the issue within the data context for the instructions 
+  to follow.</P>
+<P>Syntax:</P>
+<P><font face="Courier New, Courier, mono">Issue number &lt;issue_number&gt;<br>
+  </font>Select 
+  the Issue having the specified number. If number supplied is not valid this 
+  parameter is not changed.</P>
+<P><font face="Courier New, Courier, mono">Issue current</font><br>
+  Select the current issue (the last published issue).</P>
+<P><font face="Courier New, Courier, mono">Issue off</font><br>
+  Deselect Issue; the issue parameter is not defined after this instruction.</P>
+<P><font face="Courier New, Courier, mono">Issue default</font><br>
+  The issue parameter is changed to the one provided on template start. If issue 
+  parameter was not defined on template start it's value from now on is undefined.</P>
+<P>Constraints:</P>
+<P>Cannot be used inside List statement.</P>
+<P>3.9.1.4 <b>Section<a name="3.9.1.4"></a></b></P>
+<P>Purpose:</P>
+<P>Select/deselect section. Changes the section within the data context for the 
+  instructions to follow.</P>
+<P>Syntax:</P>
+<P><font face="Courier New, Courier, mono">Section name &lt;section_name&gt;<br>
+  </font>Select 
+  the section having the specified name; this has to be written in the language 
+  of the context. If the name supplied is not a valid one, this parameter is not 
+  modified.</P>
+<P><font face="Courier New, Courier, mono">Section number &lt;section_number&gt;<br>
+  </font>Select 
+  the section having the specified number; this is not dependent on context language. 
+  If the number supplied is not a valid one, this parameter is not modified.</P>
+<P><font face="Courier New, Courier, mono">Section off</font><br>
+  Deselect Section; this is not defined after this instruction.</P>
+<P><font face="Courier New, Courier, mono">Section default</font><br>
+  The Section selected is the one provided by the parameter from template start. 
+  If this parameter was not defined on template start it's value from now on is 
+  undefined.</P>
+<P>Constraints:</P>
+<P>It can't be used inside List Section | List Article statements.</P>
+<P>3.9.1.5 <b>Article<a name="3.9.1.5"></a></b></P>
+<P>Purpose:</P>
+<P>Select/deselect article. Changes the article within the data context for the 
+  instructions to follow.</P>
+<P>Syntax:</P>
+<P><font face="Courier New, Courier, mono">Article name &lt;article_name&gt;</font><br>
+  Select the article having the specified name. 
+  If the supplied name is not a valid one, this parameter is not modified.</P>
+<P><font face="Courier New, Courier, mono">Article off</font><br>
+  Deselect Article; the Article is not defined after this instruction.</P>
+<P><font face="Courier New, Courier, mono">Article default</font><br>
+  The article selected is the one provided by the parameter from template start. 
+  If this parameter was not defined on template start it's value from now on is 
+  undefined.</P>
+<P>Constraints:</P>
+<P>Cannot be used inside List Article statement.</P>
+<P>3.9.1.6 <b>List of Issues<a name="3.9.1.6"></a></b></P>
+<P>Purpose:</P>
+<P>Select the list of issues according to the given constraints and current environmental 
+  parameters. The Publication, Language, Issue parameters may not be defined outside 
+  List Issue statement; inside the statement however, all these parameters are 
+  defined.</P>
+<P>Syntax:</P>
+<P><font face="Courier New, Courier, mono">List [length &lt;value&gt;] [columns 
+  &lt;value&gt;] Issue [&lt;issue_constraint&gt;]<br>
+list of instructions
+  </font><i><br>
+  </i><font face="Courier New, Courier, mono">[ForEmptyList [list of instructions]]<br>
+  EndList [Issue]</font></P>
+<P>where</P>
+<P><font face="Courier New, Courier, mono">&lt;issue_constraint&gt; = number is|not|greater|smaller 
+  &lt;value&gt;<br>
+  | name is|not &lt;value&gt;<br>
+  | &lt;date_constraint&gt;</font></P>
+<P><font face="Courier New, Courier, mono"><br>
+  &lt;date_constraint&gt;=year is|not|greater|smaller <br>
+  |mon_nr is|not|greater|smaller <br>
+  |mday is|not|greater|smaller <br>
+  |yday is|not|greater|smaller <br>
+  |wday_nr is|not|greater|smaller <br>
+  |hour is|not|greater|smaller <br>
+  |min is|not|greater|smaller <br>
+  |sec is|not|greater|smaller</font></P>
+<P>where year stands for year, mon_nr for month number (1..12), mday for month 
+  day (1..31), yday for year day (1..365), wday for week day (1..7), hour for hour, 
+  min for minute and sec for second.</P>
+<P>Any parameter used in &lt;issue_constraint&gt; list can only be used once.</P>
+<P>Inside the List, the parameter context is defined by the constraints applied 
+  to the current issue for every processed line. The parameter context is restored 
+  after the list processing.</P>
+<P>Constraints:</P>
+<P>The list of forbidden statements inside List Issue:</P>
+<ul>
+  <li>Language</li>
+  <li>Publication</li>
+  <li>List Issue</li>
+  <li>Issue</li>
+</ul>
+<p>List Issue statement can not be used inside List Section, List Article, List
+Subtittle, List SearchResults statements.</p>
+<P>3.9.1.7 <b>List of Sections<a name="3.9.1.7"></a></b></P>
+<P>Purpose:</P>
+<P>Select the list of sections according to the given constraints and current 
+  environmental parameters. The Publication, Language, Issue, Section parameters 
+  may not be defined outside List Section statement; inside the statement however, 
+  all these parameters are defined.</P>
+<P>Syntax:</P>
+<P><font face="Courier New, Courier, mono">List [length &lt;value&gt;] [column 
+  &lt;value&gt;] Section [&lt;section_constraint&gt;]</font><br>
+<font face="Courier New, Courier, mono">list of instructions</font>
+  <i><br>
+  </i><font face="Courier New, Courier, mono">[ForEmptyList [list of instructions]]<br>
+  EndList [Section]</font></P>
+<P>where</P>
+<P><font face="Courier New, Courier, mono">&lt;section_constraint&gt; = name is|not 
+  &lt;section_name&gt;<br>
+  | number is|not|greater|smaller &lt;section_number&gt;</font></P>
+<P>Any parameter used in section_constraint list can only be used once.</P>
+<P>Inside the List, the data context is defined by the constraints applied to 
+  the current section for every processed line. The data context is restored after 
+  the list processing.</P>
+<P>Constraints:</P>
+<P>The list of forbidden statements inside List Issue:</P>
+<ul>
+  <li>Language</li>
+  <li>Publication</li>
+  <li>List Issue</li>
+  <li>Issue</li>
+  <li>List Section</li>
+  <li>Section</li>
+</ul>
+<p><span style="font-size:11.0pt;mso-bidi-font-size:10.0pt;
+font-family:&quot;Times New Roman&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;;
+mso-ansi-language:EN-US;mso-fareast-language:EN-US;mso-bidi-language:AR-SA">List
+Section statement cannot be used inside List Article, List Subtitle, List
+SearchResult statements.</span></p>
+<P>3.9.1.8 <b>List of Articles<a name="3.9.1.8"></a></b></P>
+<P>Purpose:</P>
+<P>Select the list of articles according to the given constraints and current 
+  environmental parameters. The Publication, Language, Issue, Section, Article 
+  parameters may not be defined outside List Article statement; inside the statement 
+  however, all these parameters are defined.</P>
+<P>Syntax:</P>
+<P><font face="Courier New, Courier, mono">List [length &lt;value&gt;] [column 
+  &lt;value&gt;] Article [&lt;article_constraint&gt;] [&lt;article_type_constraint&gt;]<br>
+  [order &lt;order_condition&gt;]</font><br>
+  <i>list of instructions<br>
+  </i><font face="Courier New, Courier, mono">[ForEmptyList [list of instructions]]<br>
+  EndList [Article]</font></P>
+<P>where</P>
+<P><font face="Courier New, Courier, mono">&lt;article_type_constraint&gt;=type 
+  is|not &lt;value&gt;</font></P>
+<P>and</P>
+<P><font face="Courier New, Courier, mono">&lt;article_constraint&gt;=name is|not 
+  &lt;value&gt;<br>
+  |number is|not|greater|smaller &lt;value&gt;<br>
+  |keyword &lt;value&gt;<br>
+  |IsOn|IsNotOn FrontPage|Section</font></P>
+<P>and</P>
+<P><font face="Courier New, Courier, mono">&lt;order_condition&gt;=bydate desc|asc<br>
+  |bynumber desc|asc</font></P>
+<P>Inside the List, the data context is defined by the constraints applied to 
+  the current article for every processed line. The data context is restored after 
+  the list processing.</P>
+<P>Constraints:</P>
+<P>The list of forbidden statements inside List Issue:</P>
+<ul>
+  <li>Language</li>
+  <li>Publication</li>
+  <li>List Issue</li>
+  <li>Issue</li>
+  <li>List Section</li>
+  <li>Section</li>
+  <li>List Article</li>
+  <li>Article</li>
+</ul>
+<p><span style="font-size:11.0pt;mso-bidi-font-size:10.0pt;
+font-family:&quot;Times New Roman&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;;
+mso-ansi-language:EN-US;mso-fareast-language:EN-US;mso-bidi-language:AR-SA">List
+Article statement cannot be used inside List Subtitle, List SearchResult
+statements.</span></p>
+<P>3.9.1.9 <b>List of Subtitles<a name="3.9.1.9"></a></b></P>
+<P>Purpose:</P>
+<P>Select the list of subtitles according to the given constraints and current 
+  environmental parameters. The article if not specified somewhere else, is treated 
+  as group of paragraphs. The markup for a new paragraph is the subtitle.</P>
+<P>Syntax:</P>
+<P><font face="Courier New, Courier, mono">List [length &lt;value&gt;] [column 
+  &lt;value&gt;] Subtitle</font><br>
+<font face="Courier New, Courier, mono">list of instructions</font>
+  <i><br>
+  </i><font face="Courier New, Courier, mono">[ForEmptyList [list of instructions]]<br>
+  EndList [Article]</font></P>
+<P>Inside the List, the data context is defined by the constraints applied to 
+  the current article for every processed line. The data context is restored after 
+  the list processing. Here it doesn't function the nextitems an previousitems 
+  in the expected manner, because they refer to the list of article, the most 
+  inner level for publication components. In the same template one can use list 
+  of articles which are treated as lists of paragraphs, so a new option was needed 
+  and is called nextsubtitle (and prevsubtitle respectively).</P>
+<P>Constraints:</P>
+<P>The list of forbidden statements inside List Issue:</P>
+<ul>
+  <li>Language</li>
+  <li>Publication</li>
+  <li>List Issue</li>
+  <li>Issue</li>
+  <li>List Section</li>
+  <li>Section</li>
+  <li>List Article</li>
+  <li>Article</li>
+</ul>
+<P>3.9.1.10 <b>List Search Result<a name="3.9.1.10"></a></b></P>
+<P>Purpose:</P>
+<P>Select the list of articles after searching database for given keywords. The 
+  Publication, Language, Issue, Section, Article parameters may not be defined 
+  outside List SearchResult statement; inside the statement however, all these 
+  parameters are defined.</P>
+<P>Syntax:</P>
+<P><font face="Courier New, Courier, mono">List [length &lt;value&gt;] [column 
+  &lt;value&gt;] SearchResult</font><br>
+<font face="Courier New, Courier, mono">list of instructions</font>
+  <i><br>
+  </i><font face="Courier New, Courier, mono">[ForEmptyList [list of instructions]]<br>
+  EndList [SearchResult]</font></P>
+<P>Inside the List, the data context is defined by the constraints applied to 
+  the current article for every processed line. The data context is restored after 
+  the list processing.</P>
+<P>Constraints:</P>
+<P>The list of forbidden statements inside List SearchResult:</P>
+<ul>
+  <li>Language</li>
+  <li>Publication</li>
+</ul>
+<P>3.9.1.11 <b>If NextItems | PrevItems<a name="3.9.1.11"></a></b></P>
+<P>Purpose:</P>
+<P>It runs the first or second list of instructions depending on existing articles 
+  in a limited length list after/before the end/start of the list. It can be used 
+  only inside List instructions, especially to validate Next | Previous buttons.</P>
+<P>Syntax:</P>
+<P><font face="Courier New, Courier, mono">If NextItems|PrevItems [list of instructions]<br>
+  [Else [list of instructions]]<br>
+  EndIf [NextItems|PrevItems]</font></P>
+<P>Constraints:</P>
+<P>Can be used only inside List statement. It can not be used inside ForEmptyList 
+  block of List statement. Also, If NextItems can not be used inside If PrevItems 
+  and viceversa.</P>
+<P>3.9.1.12 <b>If NextSubtitles | PrevSubtitles<a name="3.9.1.12"></a></b></P>
+<P>Purpose:</P>
+<P>It runs the first or second list of instructions depending on existing paragraphs 
+  (marked with their subtitles) in a limited length article subtitle list, after/before 
+  the end/start of the list. It can be used only inside List subtitles instructions, 
+  especially to validate Next | Previous buttons.</P>
+<P>Syntax:</P>
+<P><font face="Courier New, Courier, mono">If NextSubtitles | PrevSubtitles [list 
+  of instructions]<br>
+  [Else [list of instructions]]<br>
+  EndIf&#9;[NextSubtitles | PrevSubtitles]</font></P>
+<P>Constraints:</P>
+<P>Can be used only inside List statement. It can not be used inside ForEmptyList 
+  block of List statement. Also, If NextSubtitles can not be used inside If
+PrevSubtitles 
+  and vice versa.</P>
+<P>3.9.1.13 <b>If List<a name="3.9.1.13"></a></b></P>
+<P>Purpose:</P>
+<P>Depending on the given condition, it runs the first or second list of instructions. 
+  It can be used inside List instructions. It is used to build tables from lists.</P>
+<P>Syntax:</P>
+<P><font face="Courier New, Courier, mono">If List &lt;condition&gt;</font><br>
+  <i>list of instructions<br>
+  </i><font face="Courier New, Courier, mono">[Else [list of instructions]]<br>
+  EndIf [List]</font></P>
+<P>where</P>
+<P><font face="Courier New, Courier, mono">&lt;condition&gt;=row odd|even|&lt;number_list&gt;<br>
+  |column odd|even|&lt;number_list&gt;<br>
+  |index odd|even|&lt;number_list&gt;<br>
+  |start<br>
+  |end</font></P>
+<P>Example:</P>
+<P><font face="Courier New, Courier, mono">&lt;!** If List row odd&gt; <br>
+  &#9;Odd row<br>
+  &lt;!** Else&gt;<br>
+  Even row<br>
+  &lt;!** EndIf&gt;</font></P>
+<P><font face="Courier New, Courier, mono">&#9;&lt;!** If List row 1 4 5&gt;<br>
+  Row is 1, 4 or 5<br>
+  &lt;!** Else&gt;<br>
+  Row is 2, 3 or bigger than 5<br>
+  &lt;!** EndIf&gt;</font></P>
+<P><font face="Courier New, Courier, mono">&#9;&lt;!** If List start&gt;<br>
+  Draw table head<br>
+  &lt;!** Else&gt;<br>
+  Draw table row<br>
+  &lt;!** EndIf&gt;</font></P>
+<P>Constraints:</P>
+<P>Can only be used only inside List statement.</P>
+<P>3.9.1.14 <b>Include<a name="3.9.1.14"></a></b></P>
+<P>Purpose:</P>
+<P>Specify the text file to be included in a certain position of the current template. 
+  This instruction passes data context to the included template on runtime.</P>
+<P>Syntax:</P>
+<P><font face="Courier New, Courier, mono">Include template_path</font></P>
+<P>Notice: the template_path can be relative to the position of the current template, 
+  if the path starts with a letter, or relative to the server's document root, 
+  if the path starts with a '/'.</P>
+<P>Constraints:</P>
+<P>None.</P>
+<P>3.9.1.15 <b>If Publication<a name="3.9.1.15"></a></b></P>
+<P>Purpose:</P>
+<P>Depending on the given condition, it runs the first or second list of instructions. 
+  It may be used anywhere in the template. It is used when printing information 
+  for a certain publication.</P>
+<P>Syntax:</P>
+<P><font face="Courier New, Courier, mono">If Publication defined|fromstart</font><br>
+<font face="Courier New, Courier, mono">list of instructions</font><br>
+  <font face="Courier New, Courier, mono">[Else [list of instructions]]<br>
+  EndIf [Section]</font></P>
+<ul>
+  <li>defined: the if condition is true if publication parameter is defined</li>
+  <li>fromstart: the if condition is true if actual value of publication parameter 
+    is equal with the value from template start</li>
+</ul>
+<P>The list of instructions may contain any instruction allowed in the current 
+  context. If it is used inside a list, it must respect the constraints of the 
+  list (List Issue, List Section, List Article, List Subtitle, List SearchResult).</P>
+<P>Constraints:</P>
+<P>None.</P>
+<P>3.9.1.16 <b>If Issue<a name="3.9.1.16"></a></b></P>
+<P>Purpose:</P>
+<P>Depending on the given condition, it runs the first or second list of instructions. 
+  It may be used anywhere in the template. It is used when printing information 
+  for a certain issue.</P>
+<P>Syntax:</P>
+<P><font face="Courier New, Courier, mono">If Issue&#9;condition</font><br>
+  <i>list of instructions</i><br>
+  <font face="Courier New, Courier, mono">[Else [list of instructions]]<br>
+  EndIf [Section]</font></P>
+<P>where </P>
+<P><font face="Courier New, Courier, mono">condition= number &lt;value&gt;<br>
+  |iscurrent<br>
+  |defined<br>
+  |fromstart</font></P>
+<ul>
+  <li>defined: the if condition is true if issue parameter is defined</li>
+  <li>fromstart: the if condition is true if actual value of issue parameter is 
+    equal with the value from template start</li>
+  <li>iscurrent: the if condition is true if actual issue is the current issue 
+    (the last published issue)</li>
+  <li>number: the if condition is true if actual issue number is &lt;value&gt;</li>
+</ul>
+<P>Example:</P>
+<P>&#9;<font face="Courier New, Courier, mono">&lt;!** If Issue number 1&gt;<br>
+  This is Issue number 1<br>
+  &lt;!** EndIf&gt;</font></P>
+<P>The list of instructions may contain any instruction allowed in the current 
+  context. If it is used inside a list, it must respect the constraints of the 
+  list (List Issue, List Section, List Article, List Subtitle, List SearchResult).</P>
+<P>Constraints:</P>
+<P>None.</P>
+<P>3.9.1.17 <b>If Section <a name="3.9.1.17"></a></b></P>
+<P>Purpose:</P>
+<P>Depending on the given condition, it runs the first or second list of instructions. 
+  It may be used anywhere in the template. It is used when printing information 
+  for a certain section.</P>
+<P>Syntax:</P>
+<P><font face="Courier New, Courier, mono">If Section &lt;condition&gt;</font><br>
+  <i>list of instructions</i><br>
+  <font face="Courier New, Courier, mono">[Else [list of instructions]]<br>
+  EndIf [Section]</font></P>
+<P>The list of instructions may contain any instruction allowed in the current 
+  context. If it is used inside a list, it must respect the constraints of the 
+  list (List Issue, List Section, List Article, List Subtitle, List SearchResult).</P>
+<P><font face="Courier New, Courier, mono">&lt;condition&gt;=number &lt;value&gt;<br>
+  |name &lt;value&gt;<br>
+  |defined<br>
+  |fromstart</font></P>
+<ul>
+  <li>defined: the if condition is true if section parameter is defined</li>
+  <li>fromstart: the if condition is true if actual value of section parameter 
+    is equal with the value from template start</li>
+  <li>number: the if condition is true if actual section number is &lt;value&gt;</li>
+  <li>name: the if condition is true if actual section name is &lt;value&gt;</li>
+</ul>
+<P>Constraints:</P>
+<P>None.</P>
+<P>3.9.1.18 <b>If Article<a name="3.9.1.18"></a></b></P>
+<P>Purpose:</P>
+<P>Depending on the given condition, it runs the first or second list of instructions. 
+  It may be used anywhere in the template. It is used when printing information 
+  from different types of article.</P>
+<P>Syntax:</P>
+<P><font face="Courier New, Courier, mono">If Article &lt;condition&gt;</font><br>
+  <i>list of instructions</i><br>
+  <font face="Courier New, Courier, mono">[Else [list of instructions]]<br>
+  EndIf [Article]</font></P>
+<P>where</P>
+<P><font face="Courier New, Courier, mono">&lt;condition&gt;=type &lt;article_type&gt; 
+  <br>
+  |defined<br>
+  |fromstart</font></P>
+<ul>
+  <li>defined: the if condition is true if article parameter is defined</li>
+  <li>fromstart: the if condition is true if actual value of article parameter 
+    is equal with the value from template start</li>
+  <li>type: the if condition is true if actual article type is &lt;article_type&gt;</li>
+</ul>
+<P>The list of instructions may contain any instruction allowed in the current 
+  context. If it is used inside a list it must respect the constraints of the 
+  list (List Issue, List Section, List Article, List Subtitle, List SearchResult).</P>
+<P>Constraints:</P>
+<P>None.</P>
+<P>3.9.1.19 <b>If Allowed<a name="3.9.1.19"></a></b></P>
+<P>Purpose:</P>
+<P>Depending on the given condition it runs a list of instructions (or not). It 
+  may be used anywhere in the template. It is used when printing protected information.</P>
+<P>Syntax:</P>
+<P><font face="Courier New, Courier, mono">If Allowed</font><br>
+  <i>list of instructions</i><br>
+  <font face="Courier New, Courier, mono">[Else [list of instructions]]<br>
+  EndIf</font></P>
+<P>The list of instructions may contain any instruction allowed in current context. 
+  If it is used inside a list it must respect the constraints of the list (List 
+  Issue, List Section, List Article, List Subtitle, List SearchResult).</P>
+<P>Constraints:</P>
+<P>None.</P>
+<P>3.9.1.20 <b>If Subscription<a name="3.9.1.20"></a></b></P>
+<P>Purpose:</P>
+<P>Depending on the given condition, it runs the first, the second list of instructions 
+  or neither of them. If the subscription event did not occur, neither of the 
+  instructions list will be run. (This implies a certain order to be followed; 
+  that is, the template containing If Subscription must follow a template containing 
+  Subscription). It may be used anywhere in the template. It is used to describe 
+  the subscription result.</P>
+<P>Syntax:</P>
+<P><font face="Courier New, Courier, mono">If Subscription &lt;condition&gt;</font><br>
+  <i>list of instructions</i><br>
+  <font face="Courier New, Courier, mono">[Else [list of instructions]]<br>
+  EndIf</font></P>
+<P>where</P>
+<P><font face="Courier New, Courier, mono">&lt;condition&gt;= ok<br>
+  |error<br>
+  |trial<br>
+  |paid<br>
+  |action</font></P>
+<ul>
+  <li>ok: the if condition is true if subscription action was taken and its result 
+    is success</li>
+  <li>error: the if condition is true if subscription action was taken and its 
+    result is error</li>
+  <li>trial: the if condition is true if subscription action was taken and its 
+    type is trial</li>
+  <li>paid: the if condition is true if subscription action was taken and its 
+    type is paid</li>
+  <li>action: the if condition is true if subscription action was taken</li>
+</ul>
+<P>The list of instructions may contain any instruction allowed in current context. 
+  If it is used inside a list it must respect the constraints of the list (List 
+  Issue, List Section, List Article, List Subtitle, List SearchResult).</P>
+<P>Constraints:</P>
+<P>None.</P>
+<P>3.9.1.21 <b>If Login<a name="3.9.1.21"></a></b></P>
+<P>Purpose:</P>
+<P>Depending on the given condition, it runs the first, the second list of instructions 
+  or neither of them. If the login event did not occur, neither of the instructions 
+  list will be run. (This implies a certain order to be followed; that is, the 
+  template containing If Login must follow a template containing Login). It may 
+  be used anywhere in the template. It is used to describe the subscription result.</P>
+<P>Syntax:</P>
+<P><font face="Courier New, Courier, mono">If Login &lt;condition&gt;</font><br>
+<font face="Courier New, Courier, mono">list of instructions</font><br>
+  <font face="Courier New, Courier, mono">[Else [list of instructions]]<br>
+  EndIf</font></P>
+<P>where</P>
+<P><font face="Courier New, Courier, mono">&lt;condition&gt;= ok<br>
+  |error<br>
+  |action</font></P>
+<ul>
+  <li>ok: the if condition is true if login action was taken and its result is 
+    success</li>
+  <li>error: the if condition is true if login action was taken and its result 
+    is error</li>
+  <li>action: the if condition is true if login action was taken</li>
+</ul>
+<P>The list of instructions may contain any instruction allowed in current context. 
+  If it is used inside a list it must respect the constraints of the list (List 
+  Issue, List Section, List Article, List Subtitle, List SearchResult).</P>
+<P>Constraints:</P>
+<P>Cannot be used inside Login-EndLogin statement.</P>
+<P>3.9.1.22 <b>If User<a name="3.9.1.22"></a></b></P>
+<P>Purpose:</P>
+<P>Depending on given condition, it runs the first, the second list of instructions 
+  or none. If the User event didn't occur, none of the instructions list will 
+  be run. (It implies a certain order to be followed; that is, the template containing 
+  If User must follow a template containing User). It may be used anywhere in 
+  template. It is used to describe the subscription result.</P>
+<P>Syntax:</P>
+<P><font face="Courier New, Courier, mono">If User &lt;condition&gt;</font><br>
+  <i>list of instructions</i><br>
+  <font face="Courier New, Courier, mono">[Else [list of instructions]]<br>
+  EndIf</font></P>
+<P>where</P>
+<P><font face="Courier New, Courier, mono">&lt;condition&gt;=addok<br>
+  |modifyok<br>
+  |adderror<br>
+  |modifyerror<br>
+  |defined<br>
+  |addaction<br>
+  |modifyaction<br>
+  |loggedin</font></P>
+<ul>
+  <li>addok: the if condition is true if user add action was taken and its result 
+    is success</li>
+  <li>modifyok: the if condition is true if user modify action was taken and its 
+    result is success</li>
+  <li>adderror: the if condition is true if user add action was taken and its 
+    result is error</li>
+  <li>modifyerror: the if condition is true if user modify action was taken and 
+    its result is error</li>
+  <li>addaction: the if condition is true if user add action was taken</li>
+  <li>modifyaction: the if condition is true if user modify action was taken</li>
+  <li>defined: the if condition is true if user is defined (user cookie exists); 
+    this doesn't necessary mean that the user is properly logged in</li>
+  <li>loggedin: the if condition is true if user is properly logged in</li>
+</ul>
+<p>The list of instructions may contain any instruction allowed in the current 
+  context. If it is used inside a list it must respect the constraints of the 
+  list (List Issue, List Section, List Article, List Subtitle, List SearchResult).</p>
+<P>Constraints:</P>
+<P>Cannot be used inside User-EndUser statement.</P>
+<P>3.9.1.23 <b>If CurrentSubtitle<a name="3.9.1.23"></a></b></P>
+<P>Purpose:</P>
+<P>Depending on the given condition, it runs the first or second list of instructions. 
+  It may be used within the list of subtitle (while printing an article). It runs 
+  the first list of instructions when the index of subtitles list equals the number 
+  of the current subtitle (selected for printing).</P>
+<P>Syntax:</P>
+<P><font face="Courier New, Courier, mono">If CurrentSubtitle</font><br>
+  <i>list of instructions</i><br>
+  <font face="Courier New, Courier, mono">[Else [list of instructions]]<br>
+  EndIf [CurrentSubtitle]</font></P>
+<P>Constraints:</P>
+<P>Can be used only inside With and List Subtitles statements.</P>
+<P>3.9.1.24 <b>Local<a name="3.9.1.24"></a></b></P>
+<P>Purpose:</P>
+<P>Creating a temporary data context block for special conditions; the previous 
+  data context is restored outside the block.</P>
+<P>Syntax:</P>
+<P><font face="Courier New, Courier, mono">Local</font><br>
+  <i>list of instructions</i><br>
+  <font face="Courier New, Courier, mono">EndLocal</font></P>
+<P>The list of instructions may contain any instruction allowed in the current 
+  context. If it is used inside a list it must respect the constraints of the 
+  list (List Issue, List Section, List Article, List Subtitle, List SearchResult).</P>
+<P>Constraints:</P>
+<P>None.</P>
+<P>3.9.2 <b>Printable information<a name="3.9.2"></a></b></P>
+<P>3.9.2.1 <b>URL, Form<a name="3.9.2.1"></a></b></P>
+<P>Purpose:</P>
+<P>It prints the parameters in URL or Form mode. These instructions print only 
+  data context parameters and can be used to create links.</P>
+<P>In several cases (for site maps for example), local parameters are created 
+  with the same values as the original ones (from template start); within the 
+  local block the original parameters may be needed.</P>
+<P>Syntax:</P>
+<P><font face="Courier New, Courier, mono">URLParameters [Image &lt;image_number&gt;]<br>
+  |[allsubtitles]</font></P>
+<P>Print the current parameters, specifying eventually that the current article 
+  will be treated as a unit, instead of a group of paragraphs (allsubtitles).</P>
+<P><font face="Courier New, Courier, mono">URLParameters fromstart</font><br>
+  Prints the parameters received at the start of template (useful when building 
+  sitemaps).</P>
+<P><font face="Courier New, Courier, mono">FormParameters [fromstart]</font><br>
+  Print the current/original parameters.</P>
+<P><font face="Courier New, Courier, mono">URLParameters reset_&lt;environment 
+  level&gt;_list</font><br>
+  Reset list counters for all level bellow the specified one.</P>
+<P>Examples:</P>
+<P><font face="Courier New, Courier, mono">URLParameters reset_issue_list</font><br>
+  - reset list counters for all the lists (issue, section, article, searchresult, 
+  subtitle)</P>
+<P><font face="Courier New, Courier, mono">URLParameters reset_section_list</font><br>
+  - reset list counters for the following lists: section, article, searchresult, 
+  subtitle</P>
+<P><font face="Courier New, Courier, mono">URLParameters reset_article_list</font><br>
+  - reset list counters for the following lists: article, searchresult, subtitle</P>
+<P><font face="Courier New, Courier, mono">URLParameters reset_searchresult_list</font><br>
+  - reset list counters for the following lists: searchresult, subtitle</P>
+<P><font face="Courier New, Courier, mono">URLParameters reset_subtitle_list</font><br>
+  - reset list counters for the following lists: subtitle</P>
+<P>You can add the other valid parameters to URLParameters before or after these 
+  reset_*_list parameters.</P>
+<P>Example:</P>
+<P>Suppose the data context is set to Language 1 (identifier), Publication 2 (identifier), 
+  Issue 3 (number), Section 6 (number). The string created for printing is:</P>
+<P><font face="Courier New, Courier, mono">IdLanguage=1&amp;IdPublication=2&amp;NrIssue=3&amp;NrSection=6 
+  </font></P>
+<P>for URLParameters, and</P>
+<P><font face="Courier New, Courier, mono">&lt;input type=hidden name=IdPublication 
+  value="2"&gt;<br>
+  &lt;input type=hidden name=NrIssue value="3"&gt;<br>
+  &lt;input type=hidden name=NrSection value="6"&gt;</font></P>
+<P>for FormParameters respectively.</P>
+<P>If Image is specified on URLParameters, the parameters for &lt;image_number&gt; 
+  of the article specified in the data context will be printed.</P>
+<P>Example: </P>
+<P><font face="Courier New, Courier, mono">IdPublication=2&amp;NrIssue=3&amp;NrSection=6&amp;NrArticle&amp;NrImage=4</font></P>
+<P>Constraints:</P>
+<P>None.</P>
+<P>3.9.2.2 <b>Print<a name="3.9.2.2"></a></b></P>
+<P>Purpose:</P>
+<P>Print the selected information.</P>
+<P>Syntax:</P>
+<P><font face="Courier New, Courier, mono">Print expression</font></P>
+<P>where</P>
+<p><font face="Courier New">expression=Publication name|identifier<BR>
+&nbsp;&nbsp;&nbsp; |Issue number|name|&lt;date_attribute&gt;|date &lt;date_format&gt;<BR>
+&nbsp;&nbsp;&nbsp; |Section name|number<BR>
+&nbsp;&nbsp;&nbsp; |Article name|number|keywords|type|&lt;date_attribute&gt;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|upload_date [&lt;date_format&gt;]<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |[&lt;article_type&gt;] &lt;specific_attribute&gt; [&lt;date_format&gt;]<BR>
+&nbsp;&nbsp;&nbsp; |Image photographer|place|description|&lt;date_attribute&gt;|date [&lt;date_format&gt;]<BR>
+&nbsp;&nbsp;&nbsp; |List row|column|index<BR>
+&nbsp;&nbsp;&nbsp; |Subscription expdate [&lt;date_format&gt;]|unit|error|unitcost|currency<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|trialtime|paidtime|totalcost<BR>
+&nbsp;&nbsp;&nbsp; |Login error<BR>
+&nbsp;&nbsp;&nbsp; |User adderror|modifyerror|name|uname|email|city|straddress|state|country<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |phone|fax|contact|phone2|PostalCode|Employer|Position|Interests<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |How|Languages|Improvements|Field1|Field2|Field3|Field4|Field5<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |Text1|Text2|Text3|Title|Age<BR>
+&nbsp;&nbsp;&nbsp; |Language name|number|englname|code|codepage<BR>
+&nbsp;&nbsp;&nbsp; |Subtitle name</font></p>
+<P>&nbsp;where specific_attribute is dynamically defined and is a valid field of
+article type. &lt;date_format&gt; may be 
+  used on date type fields only.</P>
+<P>Constraints:</P>
+<ul>
+  <li> Print List can be used only inside List-EndList statement.</li>
+  <li>Print Login can be used only outside Login-EndLogin statement.</li>
+</ul>
+<P>3.9.2.3 <b>Date<a name="3.9.2.3"></a></b></P>
+<P>Purpose:</P>
+<P>Prints the current date attribute.</P>
+<P>Syntax:</P>
+<P><font face="Courier New, Courier, mono">Date &lt;date_attribute&gt;|&lt;date_format&gt;</font></P>
+<P>where</P>
+<P><font face="Courier New, Courier, mono">date_attribute=year<br>
+  |mon_nr<br>
+  |mday<br>
+  |yday<br>
+  |wday_nr<br>
+  |hour<br>
+  |min<br>
+  |sec<br>
+  |mon_name<br>
+  |wday_name</font></P>
+<P>The attributes have the following meanings:</P>
+<ul>
+  <li>year: year as number</li>
+  <li>mon_nr: month as number</li>
+  <li>mday: day of the month (number)</li>
+  <li>yday: day of the year (number)</li>
+  <li>wday_nr: day of the week (number)</li>
+  <li>hour: hour (0-23)</li>
+  <li>min: minute</li>
+  <li>sec: second</li>
+  <li>mon_name: name of the month (in the language set to the data context)</li>
+  <li>wday_name: name of the day of the week (in language set to the data context)</li>
+</ul>
+<P>date_format may contain any printable character except " and &gt;. The following 
+  groups of characters have special meaning:</P>
+<ul>
+  <li>%M - month name</li>
+  <li>%W - weekday name</li>
+  <li>%Y - year (4 digits)</li>
+  <li>%y - year (2 digits)</li>
+  <li>%m - month (01..12)</li>
+  <li>%c - month (1..12)</li>
+  <li>%d - day of the month (00..31)</li>
+  <li>%e - day of the month (0..31)</li>
+  <li>%j - day of the year (001..366)</li>
+  <li>%D - day of the month with English suffix (1st, 2nd, 3rd etc.)</li>
+</ul>
+<P>Constraints:</P>
+<P>None.</P>
+<P>3.9.2.4 <b>Subscription<a name="3.9.2.4"></a></b></P>
+<P>Purpose:</P>
+<P>Generate the form and default data fields for subscription. Inside this can 
+  be used Edit and Select statements to generate fields for every section on issue.</P>
+<P>Syntax:</P>
+<P><font face="Courier New, Courier, mono">Subscription &lt;template_name&gt; 
+  &lt;button_name&gt; [&lt;total_field_name&gt; &lt;evaluate_button_name&gt;]<BR>
+  list of instructions<BR>
+  EndSubscription</font></P>
+<ul>
+  <li>&lt;template_name&gt; is the name of the next template to be requested from 
+    subscription form.</li>
+  <li>&lt;button_name&gt; is the name of the button for submitting the form.</li>
+  <li>&lt;total_field_name&gt; is the name of the field where the total payment 
+    is written.</li>
+  <li>&lt;evaluate_button_name&gt; is the name of the evaluate button (when pressing 
+    this button the total payment is updated in the total field.</li>
+</ul>
+<P>Constraints:</P>
+<P>Cannot be used inside User-EndUser, Login-EndLogin statements. Can not be used 
+  within itself (ex.: subscription in subscription).</P>
+<P>3.9.2.5 <b>User<a name="3.9.2.5"></a></b></P>
+<P>Purpose:</P>
+<P>Generate the form and data fields for adding new user;</P>
+<P>Syntax:</P>
+<P><font face="Courier New, Courier, mono">User &lt;template_name&gt; &lt;button_name&gt;</font><br>
+<font face="Courier New, Courier, mono">
+  list of instructions</font><br>
+  <font face="Courier New, Courier, mono">EndUser</font></P>
+<ul>
+  <li>&lt;template_name&gt; is the name of the next template to be requested from 
+    user form.</li>
+  <li>&lt;button_name&gt; is the name of the button for submitting the form.</li>
+</ul>
+<P>Constraints:</P>
+<P>Can not be used inside Subscription-EndSubscription, Login-EndLogin statements. 
+  Can not be used within itself (ex.: user in user).</P>
+<P>3.9.2.6 <b>Login<a name="3.9.2.6"></a></b></P>
+<P>Purpose:</P>
+<P>Generate the form and data fields for logging in a user.</P>
+<P>Syntax:</P>
+<P><font face="Courier New, Courier, mono">Login &lt;template_name&gt; &lt;button_name&gt;</font><br>
+<font face="Courier New, Courier, mono">
+  list of instructions</font><br>
+  <font face="Courier New, Courier, mono">EndLogin</font></P>
+<ul>
+  <li>&lt;template_name&gt; is the name of the next template to be requested from 
+    login form.</li>
+  <li>&lt;button_name&gt; is the name of the button for submitting the form.</li>
+</ul>
+<P>Constraints:</P>
+<P>Can not be used inside Subscription-EndSubscription, User-EndUser statements. 
+  Cannot be used within itself (e.g. login in login).</P>
+<P>3.9.2.7 <b>Search<a name="3.9.2.7"></a></b></P>
+<P>Purpose:</P>
+<P>Generate the search form and data fields.</P>
+<P>Syntax:</P>
+<P><font face="Courier New, Courier, mono">Search &lt;template&gt; &lt;button_name&gt;</font><br>
+<font face="Courier New, Courier, mono">
+  list of instructions</font>
+  <i><br>
+  </i><font face="Courier New, Courier, mono">EndSearch</font></P>
+<ul>
+  <li>&lt;template_name&gt; is the name of the next template to be requested from 
+    search form.</li>
+  <li>&lt;button_name&gt; is the name of the button for submitting the form.</li>
+</ul>
+<P>The list of instructions may contain any instruction allowed in the current 
+  context. If it is used inside another list it must respect the constraints of 
+  the list (List Issue, List Section, List Article).</P>
+<P>Constraints:</P>
+<P>Can not be used within itself (e.g. search in search).</P>
+<P>3.9.2.8 <b>Edit<a name="3.9.2.8"></a></b></P>
+<P>Purpose:</P>
+<P>Generate the data fields for subscription, user or login, depending on parameters;</P>
+<P>Syntax:</P>
+<P><font face="Courier New, Courier, mono">Edit Subscription time<br>
+&nbsp;&nbsp;&nbsp; |User name|uname|password|passwordagain|email|city|straddress|state<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; |phone|fax|contact|phone2|postalcode|employer|position|interests<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; |how|languages|improvements|field1|field2|field3|field4|field5<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; |text1|text2|text3<br>
+&nbsp;&nbsp;&nbsp; |Login uname|password<br>
+&nbsp;&nbsp;&nbsp; |Search keywords</font></P>
+<P>Constraints:</P>
+<ul>
+  <li>Edit Subscription can be used inside Subscription-EndSubscription statement 
+    only.</li>
+  <li>Edit User can be used inside User-EndUser statement only.</li>
+  <li>Edit Login can be used inside Login-EndLogin statement only.</li>
+  <li>Edit Search can be used inside Search-EndSearch statement only.</li>
+</ul>
+<P>3.9.2.9 <b>Select<a name="3.9.2.9"></a></b></P>
+<P>Purpose:</P>
+<P>Generate the input data pop-ups, checkbox for subscription or user.</P>
+<P>Syntax:</P>
+<P><font face="Courier New, Courier, mono">Select&#9;Subscription section<br>
+  |User country|title|gender|age|employertype|pref1|pref2|pref3|pref4<br>
+  |Search Mode|Level</font></P>
+<P>Constraints:</P>
+<ul>
+  <li>Select Subscription can be used inside Subscription-EndSubscription statement 
+    only.</li>
+  <li>Select User can be used inside User-EndUser statement only.</li>
+  <li>Select Search can be used inside Search-EndSearch statement only.</li>
+</ul>
+<hr noshade size="1">
+<p>4. <b>APENDIX I - ALPHABETIC LIST OF LANGUAGE STATEMENTS<a name="4."></a></b></p>
+<ul>
+  <li>Statement</li>
+  <li>Article</li>
+  <li>Date</li>
+  <li>Edit</li>
+  <li>Edit Login</li>
+  <li>Edit Subscription</li>
+  <li>Edit User</li>
+  <li>FormParameters</li>
+  <li>If Allowed</li>
+  <li>If Article</li>
+  <li>If Issue</li>
+  <li>If List</li>
+  <li>If Login</li>
+  <li>If NextItems</li>
+  <li>If PreviousItems</li>
+  <li>If Publication</li>
+  <li>If Section</li>
+  <li>If Subscription</li>
+  <li>If User</li>
+  <li>Include</li>
+  <li>Issue</li>
+  <li>Language</li>
+  <li>List Article</li>
+  <li>List Issue</li>
+  <li>List SearchResult</li>
+  <li>List Section</li>
+  <li>Local EndLocal</li>
+  <li>Login EndLogin</li>
+  <li>Print Image</li>
+  <li>Print Issue</li>
+  <li>Print Language</li>
+  <li>Print List</li>
+  <li>Print Login</li>
+  <li>Print Publication</li>
+  <li>Print Section</li>
+  <li>Print Subscription</li>
+  <li>Print User</li>
+  <li>Publication</li>
+  <li>Search</li>
+  <li>Section</li>
+  <li>Select Subscription</li>
+  <li>Select User</li>
+  <li>Subscription EndSubscription</li>
+  <li>URLParameters</li>
+  <li>URLParameters Image</li>
+  <li>User EndUser</li>
+</ul>
+<P>5. <b>APPENDIX II - CHARACTER SETS AND LANGUAGES<a name="5."></a></b></P>
+<P>Covering non-ASCII character sets requires standards to make such special characters 
+  cross-platform compatible. Some standards have been set over the past years 
+  and are already implemented in most browsers. These are:</P>
+<P>Code Page&#9;Character Set</P>
+<ul>
+  <li>ISO-8859-1&#9;Latin 1 I</li>
+  <li>ISO-8859-2&#9;Latin 2</li>
+  <li>ISO-8859-3&#9;Latin 3</li>
+  <li>ISO-8859-4&#9;Baltic</li>
+  <li>ISO-8859-5&#9;Cyrillic</li>
+  <li>ISO-8859-6&#9;Arabic</li>
+  <li>ISO-8859-7&#9;Greek</li>
+  <li>ISO-8859-8&#9;Hebrew</li>
+  <li>ISO-8859-9&#9;Turkish</li>
+  <li>ISO-8859-15&#9;Latin 9 </li>
+</ul>
+<P>Multilingual support has been developed in various projects, independently 
+  from each other, resulting in some confusion and a lack of consistent standards. 
+  Recently those efforts have been channeled into a new universal standard called 
+  Unicode. Unicode tries to encapsulate all previously defined character sets, 
+  expanding the bytes used to represent each character. For more information on 
+  the Unicode project, see the official web site: http://www.unicode.org/</P>
+<P>Because different vendors had already created different versions of Unicode 
+  characters, we have endowed CAMPSITE with a generic translation table so that 
+  characters represented with one byte can be seen within this application without 
+  any special configurations on the client side.</P>
+<P>IMPORTANT: The configuration of your local machine must be set for multilingual 
+  support. </P>
+<P>Below you can find the best matches for individual languages and the appropriate 
+  character sets:</P>
+<P>Latin1 covers most West European languages, such as French (fr), Spanish (es), 
+  Catalan (ca), Basque (eu), Portuguese (pt), Italian (it), Albanian (sq), Rhaeto-Romanic 
+  (rm), Dutch (nl), German (de), Danish (da), Swedish (sv), Norwegian (no), Finnish 
+  (fi), Faroese (fo), Icelandic (is), Irish (ga), Scottish (gd), and English (en), 
+  incidentally also Afrikaans (af) and Swahili (sw), thus in effect also the entire 
+  American continent, Australia and much of Africa. The most notable exceptions 
+  are Zulu (zu) and other Bantu languages using Latin Extended-B letters, and 
+  of course Arabic in North Africa, and Guarani (gn) missing GEIUY with ~ tilde. 
+  The lack of the ligatures Dutch IJ, French OE and ,,German` quotation marks 
+  is considered tolerable. The lack of the new C=-resembling Euro currency symbol 
+  U+20AC has opened the discussion of a new Latin0. </P>
+<P>Latin1 has also been adopted as the first page of ISO 10646 (Unicode).</P>
+<P>Latin1 is HTML's base charset but HTML has now been globalized through RFC 
+  2070.</P>
+<P>Latin2 covers the languages of Central and Eastern Europe: Czech (cs), Hungarian 
+  (hu), Polish (pl), Romanian (ro), Croatian (hr), Slovak (sk), Slovenian (sl), 
+  Sorbian. For Romanian the S and T had better use commas instead of cedilla as 
+  in Turkish: the U+015F LATIN SMALL LETTER S WITH CEDILLA at =BA ought to be 
+  read as U+0219 LATIN SMALL LETTER S WITH COMMA BELOW etc. The German Umlaute 
+  &auml;&ouml;&uuml;&szlig; are found at exactly the same positions in Latin1, 
+  Latin2, Latin3, Latin4, Latin5, Latin6. Thus you can write German and Polish 
+  with Latin2 or German and Turkish with Latin5 but there is no 8bit charset to 
+  properly mix German and Russian, for instance. </P>
+<P>Latin3 is popular with authors of Esperanto (eo) and Maltese (mt), and it covered 
+  Turkish before the introduction of Latin5 in 1988. </P>
+<P>Latin4 introduced letters for Estonian (et), the Baltic languages Latvian (lv, 
+  Lettish) and Lithuanian (lt), Greenlandic (kl) and Lappish. Note that Latvian 
+  requires the cedilla on the =BB U+0123 LATIN SMALL LETTER G WITH CEDILLA to 
+  jump on top. Latin4 was followed by Latin6. </P>
+<P>Latin5: With these Cyrillic letters you can type Bulgarian (bg), Belarusian 
+  (be), Macedonian (mk), Russian (ru), Serbian (sr) and pre-1990 (no ghe with 
+  upturn) Ukrainian (uk). The ordering is based on the (incompatibly) revised 
+  GOST 19768 of 1987 with the Russian letters except for &euml; sorted by Russian 
+  alphabet (ABVGDE). Some still prefer to use in their applications the Ukrainian 
+  character set, KOI8-U.</P>
+<P>Latin6: This is the Arabic alphabet. Unfortunately the basic alphabet for Arabic 
+  (ar) does not containing the four extra letters for Persian (fa) nor the eight 
+  extra letters for Pakistani Urdu (ur). This fixed font is not well-suited for 
+  text display. Each Arabic letter occurs in up to four (2²) presentation forms: 
+  initial, medial, final or separate. To make Arabic text legible you'll need 
+  a display engine that analyses the context and combines the appropriate glyphs 
+  on top of a handler for the reverse writing direction shared with Hebrew. Introduced 
+  in 1992, Latin6 rearranged the Latin4 characters, dropped some symbols and the 
+  Latvian &amp;rcedil;, added the last missing Inuit (Greenlandic Eskimo) and 
+  non-Skolt Sami (Lappish) letters and reintroduced the Icelandic &eth;&yacute;&thorn; 
+  to cover the entire Nordic area. Skolt Sami still needs a few more accents. 
+  Note that RFC 1345 and GNU recode contain errors and use a preliminary and different 
+  latin6.</P>
+<P>6. <b>APPENDIX III - ISO 639 LANGUAGE CODES</b><a name="6."></a> </P>
+<P>ISO 639 LANGUAGE CODES SORTED BY LANGUAGE GROUP</P>
+<table border>
+  <tr> 
+    <td valign="TOP">LANGUAGE</td>
+    <td valign="TOP">CODE</td>
+    <td valign="TOP">LANGUAGE FAMILY</td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>AYMARA 
+    </td>
+    <td valign="TOP"> 
+      <p>AY 
+    </td>
+    <td valign="TOP"> 
+      <p>AMERINDIAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>GUARANI 
+    </td>
+    <td valign="TOP"> 
+      <p>GN 
+    </td>
+    <td valign="TOP"> 
+      <p>AMERINDIAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>QUECHUA 
+    </td>
+    <td valign="TOP"> 
+      <p>QU 
+    </td>
+    <td valign="TOP"> 
+      <p>AMERINDIAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>BHUTANI 
+    </td>
+    <td valign="TOP"> 
+      <p>DZ 
+    </td>
+    <td valign="TOP"> 
+      <p>ASIAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>BURMESE 
+    </td>
+    <td valign="TOP"> 
+      <p>MY 
+    </td>
+    <td valign="TOP"> 
+      <p>ASIAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>CAMBODIAN 
+    </td>
+    <td valign="TOP"> 
+      <p>KM 
+    </td>
+    <td valign="TOP"> 
+      <p>ASIAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>CHINESE 
+    </td>
+    <td valign="TOP"> 
+      <p>ZH 
+    </td>
+    <td valign="TOP"> 
+      <p>ASIAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>JAPANESE 
+    </td>
+    <td valign="TOP"> 
+      <p>JA 
+    </td>
+    <td valign="TOP"> 
+      <p>ASIAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>KOREAN 
+    </td>
+    <td valign="TOP"> 
+      <p>KO 
+    </td>
+    <td valign="TOP"> 
+      <p>ASIAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>LAOTHIAN 
+    </td>
+    <td valign="TOP"> 
+      <p>LO 
+    </td>
+    <td valign="TOP"> 
+      <p>ASIAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>THAI 
+    </td>
+    <td valign="TOP"> 
+      <p>TH 
+    </td>
+    <td valign="TOP"> 
+      <p>ASIAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>TIBETAN 
+    </td>
+    <td valign="TOP"> 
+      <p>BO 
+    </td>
+    <td valign="TOP"> 
+      <p>ASIAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>VIETNAMESE 
+    </td>
+    <td valign="TOP"> 
+      <p>VI 
+    </td>
+    <td valign="TOP"> 
+      <p>ASIAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>LATVIAN 
+    </td>
+    <td valign="TOP"> 
+      <p>LV 
+    </td>
+    <td valign="TOP"> 
+      <p>BALTIC LETTISH 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>LITHUANIAN 
+    </td>
+    <td valign="TOP"> 
+      <p>LT 
+    </td>
+    <td valign="TOP"> 
+      <p>BALTIC 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>BASQUE 
+    </td>
+    <td valign="TOP"> 
+      <p>EU 
+    </td>
+    <td valign="TOP"> 
+      <p>BASQUE 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>BRETON 
+    </td>
+    <td valign="TOP"> 
+      <p>BR 
+    </td>
+    <td valign="TOP"> 
+      <p>CELTIC 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>IRISH 
+    </td>
+    <td valign="TOP"> 
+      <p>GA 
+    </td>
+    <td valign="TOP"> 
+      <p>CELTIC 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>SCOTS GAELIC 
+    </td>
+    <td valign="TOP"> 
+      <p>GD 
+    </td>
+    <td valign="TOP"> 
+      <p>CELTIC 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>WELSH 
+    </td>
+    <td valign="TOP"> 
+      <p>CY 
+    </td>
+    <td valign="TOP"> 
+      <p>CELTIC 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>KANNADA 
+    </td>
+    <td valign="TOP"> 
+      <p>KN 
+    </td>
+    <td valign="TOP"> 
+      <p>DRAVIDIAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>MALAYALAM 
+    </td>
+    <td valign="TOP"> 
+      <p>ML 
+    </td>
+    <td valign="TOP"> 
+      <p>DRAVIDIAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>TAMIL 
+    </td>
+    <td valign="TOP"> 
+      <p>TA 
+    </td>
+    <td valign="TOP"> 
+      <p>DRAVIDIAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>TELUGU 
+    </td>
+    <td valign="TOP"> 
+      <p>TE 
+    </td>
+    <td valign="TOP"> 
+      <p>DRAVIDIAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>GREENLANDIC 
+    </td>
+    <td valign="TOP"> 
+      <p>KL 
+    </td>
+    <td valign="TOP"> 
+      <p>ESKIMO 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>INUPIAK 
+    </td>
+    <td valign="TOP"> 
+      <p>IK 
+    </td>
+    <td valign="TOP"> 
+      <p>ESKIMO 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>ESTONIAN 
+    </td>
+    <td valign="TOP"> 
+      <p>ET 
+    </td>
+    <td valign="TOP"> 
+      <p>FINNO-UGRIC 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>FINNISH 
+    </td>
+    <td valign="TOP"> 
+      <p>FI 
+    </td>
+    <td valign="TOP"> 
+      <p>FINNO-UGRIC 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>HUNGARIAN 
+    </td>
+    <td valign="TOP"> 
+      <p>HU 
+    </td>
+    <td valign="TOP"> 
+      <p>FINNO-UGRIC 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>AFRIKAANS 
+    </td>
+    <td valign="TOP"> 
+      <p>AF 
+    </td>
+    <td valign="TOP"> 
+      <p>GERMANIC 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>DANISH 
+    </td>
+    <td valign="TOP"> 
+      <p>DA 
+    </td>
+    <td valign="TOP"> 
+      <p>GERMANIC 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>DUTCH 
+    </td>
+    <td valign="TOP"> 
+      <p>NL 
+    </td>
+    <td valign="TOP"> 
+      <p>GERMANIC 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>ENGLISH 
+    </td>
+    <td valign="TOP"> 
+      <p>EN 
+    </td>
+    <td valign="TOP"> 
+      <p>GERMANIC 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>FAROESE 
+    </td>
+    <td valign="TOP"> 
+      <p>FO 
+    </td>
+    <td valign="TOP"> 
+      <p>GERMANIC 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>FRISIAN 
+    </td>
+    <td valign="TOP"> 
+      <p>FY 
+    </td>
+    <td valign="TOP"> 
+      <p>GERMANIC 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>GERMAN 
+    </td>
+    <td valign="TOP"> 
+      <p>DE 
+    </td>
+    <td valign="TOP"> 
+      <p>GERMANIC 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>ICELANDIC 
+    </td>
+    <td valign="TOP"> 
+      <p>IS 
+    </td>
+    <td valign="TOP"> 
+      <p>GERMANIC 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>NORWEGIAN 
+    </td>
+    <td valign="TOP"> 
+      <p>NO 
+    </td>
+    <td valign="TOP"> 
+      <p>GERMANIC 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>SWEDISH 
+    </td>
+    <td valign="TOP"> 
+      <p>SV 
+    </td>
+    <td valign="TOP"> 
+      <p>GERMANIC 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>YIDDISH 
+    </td>
+    <td valign="TOP"> 
+      <p>YI 
+    </td>
+    <td valign="TOP"> 
+      <p>GERMANIC 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>AFAN 
+    </td>
+    <td valign="TOP"> 
+      <p>OM 
+    </td>
+    <td valign="TOP"> 
+      <p>HAMITIC (OROMO) 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>AFAR 
+    </td>
+    <td valign="TOP"> 
+      <p>AA 
+    </td>
+    <td valign="TOP"> 
+      <p>HAMITIC 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>SOMALI 
+    </td>
+    <td valign="TOP"> 
+      <p>SO 
+    </td>
+    <td valign="TOP"> 
+      <p>HAMITIC 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>ABKHAZIAN 
+    </td>
+    <td valign="TOP"> 
+      <p>AB 
+    </td>
+    <td valign="TOP"> 
+      <p>IBERO-CAUCASIAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>GEORGIAN 
+    </td>
+    <td valign="TOP"> 
+      <p>KA 
+    </td>
+    <td valign="TOP"> 
+      <p>IBERO-CAUCASIAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>ASSAMESE 
+    </td>
+    <td valign="TOP"> 
+      <p>AS 
+    </td>
+    <td valign="TOP"> 
+      <p>INDIAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>BENGALI 
+    </td>
+    <td valign="TOP"> 
+      <p>BN 
+    </td>
+    <td valign="TOP"> 
+      <p>INDIAN BANGLA 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>BIHARI 
+    </td>
+    <td valign="TOP"> 
+      <p>BH 
+    </td>
+    <td valign="TOP"> 
+      <p>INDIAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>GUJARATI 
+    </td>
+    <td valign="TOP"> 
+      <p>GU 
+    </td>
+    <td valign="TOP"> 
+      <p>INDIAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>HINDI 
+    </td>
+    <td valign="TOP"> 
+      <p>HI 
+    </td>
+    <td valign="TOP"> 
+      <p>INDIAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>KASHMIRI 
+    </td>
+    <td valign="TOP"> 
+      <p>KS 
+    </td>
+    <td valign="TOP"> 
+      <p>INDIAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>MARATHI 
+    </td>
+    <td valign="TOP"> 
+      <p>MR 
+    </td>
+    <td valign="TOP"> 
+      <p>INDIAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>NEPALI 
+    </td>
+    <td valign="TOP"> 
+      <p>NE 
+    </td>
+    <td valign="TOP"> 
+      <p>INDIAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>ORIYA 
+    </td>
+    <td valign="TOP"> 
+      <p>OR 
+    </td>
+    <td valign="TOP"> 
+      <p>INDIAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>PUNJABI 
+    </td>
+    <td valign="TOP"> 
+      <p>PA 
+    </td>
+    <td valign="TOP"> 
+      <p>INDIAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>SANSKRIT 
+    </td>
+    <td valign="TOP"> 
+      <p>SA 
+    </td>
+    <td valign="TOP"> 
+      <p>INDIAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>SINDHI 
+    </td>
+    <td valign="TOP"> 
+      <p>SD 
+    </td>
+    <td valign="TOP"> 
+      <p>INDIAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>SINGHALESE 
+    </td>
+    <td valign="TOP"> 
+      <p>SI 
+    </td>
+    <td valign="TOP"> 
+      <p>INDIAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>URDU 
+    </td>
+    <td valign="TOP"> 
+      <p>UR 
+    </td>
+    <td valign="TOP"> 
+      <p>INDIAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>ALBANIAN 
+    </td>
+    <td valign="TOP"> 
+      <p>SQ 
+    </td>
+    <td valign="TOP"> 
+      <p>INDO-EUROPEAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>ARMENIAN 
+    </td>
+    <td valign="TOP"> 
+      <p>HY 
+    </td>
+    <td valign="TOP"> 
+      <p>INDO-EUROPEAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>ESPERANTO 
+    </td>
+    <td valign="TOP"> 
+      <p>EO 
+    </td>
+    <td valign="TOP"> 
+      <p>INTERNATIONAL 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>INTERLINGUA 
+    </td>
+    <td valign="TOP"> 
+      <p>IA 
+    </td>
+    <td valign="TOP"> 
+      <p>INTERNATIONAL 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>INTERLINGUE 
+    </td>
+    <td valign="TOP"> 
+      <p>IE 
+    </td>
+    <td valign="TOP"> 
+      <p>INTERNATIONAL 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>VOLAPUK 
+    </td>
+    <td valign="TOP"> 
+      <p>VO 
+    </td>
+    <td valign="TOP"> 
+      <p>INTERNATIONAL 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>KURDISH 
+    </td>
+    <td valign="TOP"> 
+      <p>KU 
+    </td>
+    <td valign="TOP"> 
+      <p>IRANIAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>PASHTO 
+    </td>
+    <td valign="TOP"> 
+      <p>PS 
+    </td>
+    <td valign="TOP"> 
+      <p>IRANIAN PUSHTO 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>PERSIAN 
+    </td>
+    <td valign="TOP"> 
+      <p>FA 
+    </td>
+    <td valign="TOP"> 
+      <p>IRANIAN (farsi) 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>TAJIK 
+    </td>
+    <td valign="TOP"> 
+      <p>TG 
+    </td>
+    <td valign="TOP"> 
+      <p>IRANIAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>GREEK 
+    </td>
+    <td valign="TOP"> 
+      <p>EL 
+    </td>
+    <td valign="TOP"> 
+      <p>LATIN/GREEK 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>LATIN 
+    </td>
+    <td valign="TOP"> 
+      <p>LA 
+    </td>
+    <td valign="TOP"> 
+      <p>LATIN/GREEK 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>HAUSA 
+    </td>
+    <td valign="TOP"> 
+      <p>HA 
+    </td>
+    <td valign="TOP"> 
+      <p>NEGRO-AFRICAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>KINYARWANDA 
+    </td>
+    <td valign="TOP"> 
+      <p>RW 
+    </td>
+    <td valign="TOP"> 
+      <p>NEGRO-AFRICAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>KURUNDI 
+    </td>
+    <td valign="TOP"> 
+      <p>RN 
+    </td>
+    <td valign="TOP"> 
+      <p>NEGRO-AFRICAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>LINGALA 
+    </td>
+    <td valign="TOP"> 
+      <p>LN 
+    </td>
+    <td valign="TOP"> 
+      <p>NEGRO-AFRICAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>SANGHO 
+    </td>
+    <td valign="TOP"> 
+      <p>SG 
+    </td>
+    <td valign="TOP"> 
+      <p>NEGRO-AFRICAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>SESOTHO 
+    </td>
+    <td valign="TOP"> 
+      <p>ST 
+    </td>
+    <td valign="TOP"> 
+      <p>NEGRO-AFRICAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>SETSWANA 
+    </td>
+    <td valign="TOP"> 
+      <p>TN 
+    </td>
+    <td valign="TOP"> 
+      <p>NEGRO-AFRICAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>SHONA 
+    </td>
+    <td valign="TOP"> 
+      <p>SN 
+    </td>
+    <td valign="TOP"> 
+      <p>NEGRO-AFRICAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>SISWATI 
+    </td>
+    <td valign="TOP"> 
+      <p>SS 
+    </td>
+    <td valign="TOP"> 
+      <p>NEGRO-AFRICAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>SWAHILI 
+    </td>
+    <td valign="TOP"> 
+      <p>SW 
+    </td>
+    <td valign="TOP"> 
+      <p>NEGRO-AFRICAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>TSONGA 
+    </td>
+    <td valign="TOP"> 
+      <p>TS 
+    </td>
+    <td valign="TOP"> 
+      <p>NEGRO-AFRICAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>TWI 
+    </td>
+    <td valign="TOP"> 
+      <p>TW 
+    </td>
+    <td valign="TOP"> 
+      <p>NEGRO-AFRICAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>WOLOF 
+    </td>
+    <td valign="TOP"> 
+      <p>WO 
+    </td>
+    <td valign="TOP"> 
+      <p>NEGRO-AFRICAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>XHOSA 
+    </td>
+    <td valign="TOP"> 
+      <p>XH 
+    </td>
+    <td valign="TOP"> 
+      <p>NEGRO-AFRICAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>YORUBA 
+    </td>
+    <td valign="TOP"> 
+      <p>YO 
+    </td>
+    <td valign="TOP"> 
+      <p>NEGRO-AFRICAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>ZULU 
+    </td>
+    <td valign="TOP"> 
+      <p>ZU 
+    </td>
+    <td valign="TOP"> 
+      <p>NEGRO-AFRICAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>FIJI 
+    </td>
+    <td valign="TOP"> 
+      <p>FJ 
+    </td>
+    <td valign="TOP"> 
+      <p>OCEANIC/INDONESIAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>INDONESIAN 
+    </td>
+    <td valign="TOP"> 
+      <p>ID 
+    </td>
+    <td valign="TOP"> 
+      <p>OCEANIC/INDONESIAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>JAVANESE 
+    </td>
+    <td valign="TOP"> 
+      <p>JV 
+    </td>
+    <td valign="TOP"> 
+      <p>OCEANIC/INDONESIAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>MALAGASY 
+    </td>
+    <td valign="TOP"> 
+      <p>MG 
+    </td>
+    <td valign="TOP"> 
+      <p>OCEANIC/INDONESIAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>MALAY 
+    </td>
+    <td valign="TOP"> 
+      <p>MS 
+    </td>
+    <td valign="TOP"> 
+      <p>OCEANIC/INDONESIAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>MAORI 
+    </td>
+    <td valign="TOP"> 
+      <p>MI 
+    </td>
+    <td valign="TOP"> 
+      <p>OCEANIC/INDONESIAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>SAMOAN 
+    </td>
+    <td valign="TOP"> 
+      <p>SM 
+    </td>
+    <td valign="TOP"> 
+      <p>OCEANIC/INDONESIAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>SUNDANESE 
+    </td>
+    <td valign="TOP"> 
+      <p>SU 
+    </td>
+    <td valign="TOP"> 
+      <p>OCEANIC/INDONESIAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>TAGALOG 
+    </td>
+    <td valign="TOP"> 
+      <p>TL 
+    </td>
+    <td valign="TOP"> 
+      <p>OCEANIC/INDONESIAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>TONGA 
+    </td>
+    <td valign="TOP"> 
+      <p>TO 
+    </td>
+    <td valign="TOP"> 
+      <p>OCEANIC/INDONESIAN 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>CATALAN 
+    </td>
+    <td valign="TOP"> 
+      <p>CA 
+    </td>
+    <td valign="TOP"> 
+      <p>ROMANCE 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>CORSICAN 
+    </td>
+    <td valign="TOP"> 
+      <p>CO 
+    </td>
+    <td valign="TOP"> 
+      <p>ROMANCE 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>FRENCH 
+    </td>
+    <td valign="TOP"> 
+      <p>FR 
+    </td>
+    <td valign="TOP"> 
+      <p>ROMANCE 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>GALICIAN 
+    </td>
+    <td valign="TOP"> 
+      <p>GL 
+    </td>
+    <td valign="TOP"> 
+      <p>ROMANCE 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>ITALIAN 
+    </td>
+    <td valign="TOP"> 
+      <p>IT 
+    </td>
+    <td valign="TOP"> 
+      <p>ROMANCE 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>MOLDAVIAN 
+    </td>
+    <td valign="TOP"> 
+      <p>MO 
+    </td>
+    <td valign="TOP"> 
+      <p>ROMANCE 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>OCCITAN 
+    </td>
+    <td valign="TOP"> 
+      <p>OC 
+    </td>
+    <td valign="TOP"> 
+      <p>ROMANCE 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>PORTUGUESE 
+    </td>
+    <td valign="TOP"> 
+      <p>PT 
+    </td>
+    <td valign="TOP"> 
+      <p>ROMANCE 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>RHAETO-ROMANCE 
+    </td>
+    <td valign="TOP"> 
+      <p>RM 
+    </td>
+    <td valign="TOP"> 
+      <p>ROMANCE 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>ROMANIAN 
+    </td>
+    <td valign="TOP"> 
+      <p>RO 
+    </td>
+    <td valign="TOP"> 
+      <p>ROMANCE 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>SPANISH 
+    </td>
+    <td valign="TOP"> 
+      <p>ES 
+    </td>
+    <td valign="TOP"> 
+      <p>ROMANCE 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>AMHARIC 
+    </td>
+    <td valign="TOP"> 
+      <p>AM 
+    </td>
+    <td valign="TOP"> 
+      <p>SEMITIC 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>ARABIC 
+    </td>
+    <td valign="TOP"> 
+      <p>AR 
+    </td>
+    <td valign="TOP"> 
+      <p>SEMITIC 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>HEBREW 
+    </td>
+    <td valign="TOP"> 
+      <p>HE 
+    </td>
+    <td valign="TOP"> 
+      <p>SEMITIC 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>MALTESE 
+    </td>
+    <td valign="TOP"> 
+      <p>MT 
+    </td>
+    <td valign="TOP"> 
+      <p>SEMITIC 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>TIGRINYA 
+    </td>
+    <td valign="TOP"> 
+      <p>TI 
+    </td>
+    <td valign="TOP"> 
+      <p>SEMITIC 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>BULGARIAN 
+    </td>
+    <td valign="TOP"> 
+      <p>BG 
+    </td>
+    <td valign="TOP"> 
+      <p>SLAVIC 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>BYELORUSSIAN 
+    </td>
+    <td valign="TOP"> 
+      <p>BE 
+    </td>
+    <td valign="TOP"> 
+      <p>SLAVIC 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>CROATIAN 
+    </td>
+    <td valign="TOP"> 
+      <p>HR 
+    </td>
+    <td valign="TOP"> 
+      <p>SLAVIC 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>CZECH 
+    </td>
+    <td valign="TOP"> 
+      <p>CS 
+    </td>
+    <td valign="TOP"> 
+      <p>SLAVIC 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>MACEDONIAN 
+    </td>
+    <td valign="TOP"> 
+      <p>MK 
+    </td>
+    <td valign="TOP"> 
+      <p>SLAVIC 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>POLISH 
+    </td>
+    <td valign="TOP"> 
+      <p>PL 
+    </td>
+    <td valign="TOP"> 
+      <p>SLAVIC 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>RUSSIAN 
+    </td>
+    <td valign="TOP"> 
+      <p>RU 
+    </td>
+    <td valign="TOP"> 
+      <p>SLAVIC 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>SERBIAN 
+    </td>
+    <td valign="TOP"> 
+      <p>SR 
+    </td>
+    <td valign="TOP"> 
+      <p>SLAVIC 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>SERBO-CROATIAN 
+    </td>
+    <td valign="TOP"> 
+      <p>SH 
+    </td>
+    <td valign="TOP"> 
+      <p>SLAVIC 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>SLOVAK 
+    </td>
+    <td valign="TOP"> 
+      <p>SK 
+    </td>
+    <td valign="TOP"> 
+      <p>SLAVIC 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>SLOVENIAN 
+    </td>
+    <td valign="TOP"> 
+      <p>SL 
+    </td>
+    <td valign="TOP"> 
+      <p>SLAVIC 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>UKRAINIAN 
+    </td>
+    <td valign="TOP"> 
+      <p>UK 
+    </td>
+    <td valign="TOP"> 
+      <p>SLAVIC 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>AZERBAIJANI 
+    </td>
+    <td valign="TOP"> 
+      <p>AZ 
+    </td>
+    <td valign="TOP"> 
+      <p>TURKIC/ALTAIC 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>BASHKIR 
+    </td>
+    <td valign="TOP"> 
+      <p>BA 
+    </td>
+    <td valign="TOP"> 
+      <p>TURKIC/ALTAIC 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>KAZAKH 
+    </td>
+    <td valign="TOP"> 
+      <p>KK 
+    </td>
+    <td valign="TOP"> 
+      <p>TURKIC/ALTAIC 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>KIRGHIZ 
+    </td>
+    <td valign="TOP"> 
+      <p>KY 
+    </td>
+    <td valign="TOP"> 
+      <p>TURKIC/ALTAIC 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>TATAR 
+    </td>
+    <td valign="TOP"> 
+      <p>TT 
+    </td>
+    <td valign="TOP"> 
+      <p>TURKIC/ALTAIC 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>TURKISH 
+    </td>
+    <td valign="TOP"> 
+      <p>TR 
+    </td>
+    <td valign="TOP"> 
+      <p>TURKIC/ALTAIC 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>TURKMEN 
+    </td>
+    <td valign="TOP"> 
+      <p>TK 
+    </td>
+    <td valign="TOP"> 
+      <p>TURKIC/ALTAIC 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP"> 
+      <p>UZBEK 
+    </td>
+    <td valign="TOP"> 
+      <p>UZ 
+    </td>
+    <td valign="TOP"> 
+      <p>TURKIC/ALTAIC 
+    </td>
+  </tr>
+  <tr> 
+    <td valign="TOP">BISLAMA</td>
+    <td valign="TOP">BI</td>
+    <td valign="TOP">&nbsp;</td>
+  </tr>
+  <tr> 
+    <td valign="TOP">MONGOLIAN</td>
+    <td valign="TOP">MN</td>
+    <td valign="TOP">&nbsp;</td>
+  </tr>
+  <tr> 
+    <td valign="TOP">NAURU</td>
+    <td valign="TOP">NA</td>
+    <td valign="TOP">&nbsp;</td>
+  </tr>
+</table>
+<p>7. <b>APPENDIX IV: INSTALLING CAMPSITE ON A STANDARD RED HAT 7.0 SERVER<a name="7."></a></b></p>
+<P>The following is a possible session, which would install CAMPSITE on your remote 
+  host. All text in square brackets is comment only, not to be typed.</P>
+<P><font face="Courier New, Courier, mono">localhost$ telnet youserverIP<br>
+  Red Hat Linux release 7.0 (Guiness)<br>
+  Kernel 2.2.16-22 onan i386<br>
+  login : user<br>
+  Password: userpwd<br>
+  Last login...<br>
+  yourserver$ su<br>
+  yourserver$ passowrd: pwdsu<br>
+  yourserver# cd /usr/local/ [or any other directory where you want to have the 
+  software installed]<br>
+  yourserver# ftp www.campware.org<br>
+  Connected to www.campware.org<br>
+  Name (...): anonymous<br>
+  Password: your@email.com<br>
+  ftp&gt; cd pub/campsite/source/campsite_V1/<br>
+  ftp&gt; get campsiteversion.tar.gz [change the file name to the one you want 
+  to get]<br>
+  ftp&gt; bye<br>
+  yourserver# gzip -df campsiteversion.tar.gz<br>
+  yourserver# tar -xf campsiteversion.tar<br>
+  [Now you need to edit the httpd.conf file. Locate the file first by typing]<br>
+  yourserver# updatedb [if you haven't generated the database for locating yet]<br>
+  yourserver# locate httpd.conf [Make a backup copy, always a good idea.]<br>
+  yourserver# cp /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf.bak [the 
+  location might vary, depending on your configuration and system version]<br>
+  [Now open and edit the config file, you can see the changes that need to be 
+  done in the INSTALL file which is located in the campsite folder. Then you need 
+  to restart the http daemon:]<br>
+  yourserver# kill -HUP `cat /var/run/httpd.pid` [the `` need to be angled from 
+  top left to bottom right.]<br>
+  [Check if mysql and httpd are running:]<br>
+  yourserver# ps -A | grep mysql [this should return some lines with pid numbers 
+  for the mysqld. If not, start mysql manually]<br>
+  yourserver# ps -A | grep httpd [this should return some lines with pid numbers 
+  for the httpd. If not, start httpd manually (see above)]<br>
+  yourserver# cd campsite<br>
+  [Edit the Makefile according to the folder location of the html and cgi-bin 
+  file, specified in the httpd.conf file (see above). Edit only in the first three 
+  lines of the Makefile - if necessary at all. Currently it should work fine for 
+  standard installattions of Red Hat 7.0 and Apache.]<br>
+  yourserver# make<br>
+  yourserver# make install<br>
+  yourserver# exit<br>
+  [that's all...]</font></P>
+<P>8. <b>APPENDIX V - BACKING UP DATABASES IN MYSQL</b><a name="8."></a> </P>
+<P>In order to make a backup of your CAMPSITE database, do the following:</P>
+<ol>
+  <li>change to superuser</li>
+  <li>type: <font face="Courier New, Courier, mono">mysqldump campsite &gt; yourname-db.sql</font></li>
+</ol>
+<P>In order to delete your CAMPSITE database from MySQL, do the following:</P>
+<ol>
+  <li>type: <font face="Courier New, Courier, mono">mysqladmin drop campsite</font></li>
+  <li>confirm with 'y'</li>
+</ol>
+<P>In order to load your backed up CAMPSITE database, do the following:</P>
+<ol>
+  <li>create the campsite database by typing: <font face="Courier New, Courier, mono">mysqladmin 
+    create campsite</font></li>
+  <li>edit the backup file you created and add the first line: <font face="Courier New, Courier, mono">use 
+    campsite;</font><br>
+    (make sure you finish the line with a semicolon and do not start the line 
+    with a hash, which would mean it is only a comment).</li>
+  <li>load the database by typing: <font face="Courier New, Courier, mono">mysql 
+    campsite &lt; yourname-db.sql</font></li>
+</ol>
+</BODY>
+</HTML>

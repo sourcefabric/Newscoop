@@ -1,0 +1,202 @@
+INSTALLATION PROCEDURE FOR CAMPSITE V.2.x
+http://www.campware.org - 15th March 2001
+
+CONTENTS:
+   * PREPARATION - applications you need to have installed
+   * INSTALLATION - the usual procedure
+   * IN DEPTH - example installation
+
+####################################################################
+
+PREPARATION - applications you need to have installed
+
+   (Most of the following should be installed with the default
+   distribution. But check for MySQL and Apache ...)
+
+1. make
+   Usually the make binary is located in /usr/bin directory.
+   On rpm systems make package should be installed.
+
+2. m4 macro tool
+   Usually the m4 binary is located in /usr/bin directory.
+   On rpm systems m4 package should be installed.
+
+3. mail program
+   Usually the mail binary is located in /bin directory.
+   On rpm systems mailx package should be installed.
+
+4. g++ compiler
+   Usually the g++ binary is located in /usr/bin directory.
+   On rpm systems gcc-c++ package should be installed.
+
+5. MySQL server
+   On rpm systems, MySQL, MySQL-shared, MySQL-devel and
+   MySQL-client packages should be installed.
+   Check that mysqld daemon is started:
+      type "ps ax | grep mysqld".
+   You should see one safe_mysqld process and at least
+   three mysqld processes. If not, the mysqld daemon is not
+   started. Start it typing safe_mysqld as root.
+
+6. Apache server
+   On rpm systems, apache or http packages should be installed.
+   Configure the Web server (see INSTALLATION 3.) and (re)start 
+   the httpd daemon.
+
+7. Cron daemon
+   Usually the crond binary is located in /usr/sbin directory.
+   On rpm systems vixie-cron package should be installed.
+   Make sure the crond daemon is started:
+      type "ps ax|grep crond"
+   You should see a crond process.
+  
+####################################################################
+
+INSTALLATION - the usual procedure
+
+1. Unzip and Untar the campsite file. This will generate a
+   folder named 'campsite'.
+
+2. Edit the Makefile in the 'campsite' folder. Change the first three
+   lines with WWW_DIR, REL_CGI_BIN, REL_HTML, HTTP_USER and HTTP_GROUP
+   to fit your directory structure and web server user/group.
+   You can find your settings in your Apache config file in the section
+   DocumentRoot and ScriptAlias. The Apache config file is usually
+   named httpd.conf
+       Default apache on RedHat 6.x systems:
+           WWW_DIR=/home/httpd
+	   HTTP_USER=httpd
+	   HTTP_GROUP=httpd
+       Default apache on RedHat 7.x systems:
+           WWW_DIR=/var/www
+	   HTTP_USER=apache
+	   HTTP_GROUP=apache
+       Default apache from source tar.gz:
+           WWW_DIR=/usr/local/apache
+	   HTTP_USER=nobody
+	   HTTP_GROUP=-1
+   (The default setting for campsite is following Red Hat 7.x)
+
+3. Configure the Web server
+   The configuration file of Apache is usually called httpd.conf and
+   found in the /etc/httpd/conf/ folder. You need to:
+
+   - activate the DirectoryIndex directive and add the following:
+        index.xql /priv/templates/idx.xql
+   - activate the IndexIgnore directive and set it to
+        IndexIgnore *
+   - add the following lines:
+      AddHandler xql_handler .xql
+      Action xql_handler /cgi-bin/www-sql
+      AddHandler tpl_handler .tpl
+      Action tpl_handler /cgi-bin/tpl_cgi
+   - check that web server User/Group correspond to HTTP_USER/HTTP_GROUP
+   variables in Makefile; if not modify Makefile accordingly
+
+   [Make sure the server has the rights to read, write and execute the
+   folders and files used. Usually, user and group should be set to
+   'apache', the rights should be set as 'rwx' for the user and 'rw'
+   for the group. Furthermore, the Web server should have the UniqueID
+   option activated (the mod_unique_id should be loaded, simply un-comment
+   the LoadModule and AddModule lines)]
+
+4. Restart the httpd daemon. Try one of the three otpions:
+   a) killall httpd
+      {PATH}/httpd                           ...or...
+   b) /etc/rc.d/init.d/httpd restart         ...or...
+   c) kill -HUP `cat /var/run/httpd.pid`
+   
+   [IMPORTANT: your httpd daemon might have a different name.
+   The standard apache installation might use apachectl.]
+   
+5. Change into the 'campsite' directory.
+
+   IMPORTANT: If you have an old version of campsite and want to drop
+   the old database type: "mysqladmin -u root drop campsite". The
+   installer will NOT install a new blank database over the old one.
+   If you want to upgrade campsite and keep the old database, continue
+   with the next step. The installation will not delete the old database.
+
+6. Type ./install
+
+   If you are not already logged in as root the installer will prompt
+   you for the root password when necessary. Without root access it
+   can not install the CAMPSITE application.
+
+   (The 'install' script was written to check for needed software before
+   installing CAMPSITE. Try to use ./install first. If this does not
+   work for you, type 'make' and then 'make install'. If that does not
+   work, check your Apache and MySQL configuration again, as well as
+   checking software versions as listed above.)
+
+####################################################################
+
+IN DEPTH - example installation
+
+    The following is a possible installation session,
+    which would install CAMPSITE on your server.
+    All text in square brackets is comment only, not
+    to be typed.
+
+localhost$ telnet yourserverIP
+Red Hat Linus release 7.0 (Guiness)
+Kernel 2.2.16-22 onan i386
+login : user
+Password: userpwd
+Last login...
+yourserver$ su -
+Password: rootpwd
+yourserver# cd my_directory
+    [or any other directory where you want to have the
+    software sources unpacked]
+
+yourserver# ftp www.campware.org
+Connected to www.campware.org
+Name (...): anonymous
+Password: your@email.com
+ftp> cd pub/campsite/source/campsite_V2/
+ftp> get campsiteversion.tar.gz
+    [change the file name to the one you want to get]
+ftp> bye
+
+yourserver# gzip -df campsiteversion.tar.gz
+yourserver# tar -xf campsiteversion.tar
+
+    [Now you need to edit the httpd.conf file. Locate the
+    file first by typing]
+yourserver# updatedb
+    [if you haven't generated the database for locating yet]
+yourserver# locate httpd.conf
+
+    [Make a backup copy, always a good idea.]
+yourserver# cp /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf.bak
+    [the location might vary, depending on your
+    configuration and system version]
+
+    [Now open and edit the config file, you can find the
+    changes that need to be done further up in this file under
+    the section '3. Configure the Web server'. Then you need to
+    restart the http daemon:]
+yourserver# kill -HUP `cat /var/run/httpd.pid`
+    [the `` need to be angled from top left to bottom
+    right.]
+
+    [Check if mysql and httpd are running:]
+yourserver# ps -A | grep mysql
+    [this should return some lines with pid numbers for
+    the mysqld. If not, start mysql manually by typing
+    'safe-mysql']
+
+yourserver# ps -A | grep httpd
+    [this should return some lines with pid numbers for
+    the httpd. If not, start httpd manually (see above)]
+    yourserver# cd campsite
+
+    [Edit the Makefile according to the folder location of
+    the html and cgi-bin file, specified in the httpd.conf
+    file (see above). Edit only in the first three lines
+    of the Makefile - if necessary at all. Currently it
+    should work fine for standard installattions of Red
+    Hat 7.0 and Apache.]
+yourserver# ./install
+yourserver# exit

@@ -1,0 +1,31 @@
+TARGET	= get_img ls_url process_i process_t cleanb
+
+all: $(TARGET)
+
+clean:
+	rm -f *~ core $(OBJ) $(TARGET) $(HEADERS)
+
+install: all
+	cp ls_url $(SCRIPT_BIN)/
+	chmod +x $(SCRIPT_BIN)/ls_url
+	cp get_img $(CGI_BIN)/
+	chmod 755 $(CGI_BIN)/get_img
+	cp process_i $(SCRIPT_BIN)/
+	chmod 755 $(SCRIPT_BIN)/process_i
+	cp process_t $(SCRIPT_BIN)/
+	chmod 755 $(SCRIPT_BIN)/process_t
+	cp cleanb $(CGI_BIN)/
+	chmod 755 $(CGI_BIN)/cleanb
+	chmod u+s $(CGI_BIN)/cleanb
+
+uninstall:
+	rm -f $(SCRIPT_BIN)/ls_url $(CGI_BIN)/get_img $(SCRIPT_BIN)/process_i $(SCRIPT_BIN)/process_t $(CGI_BIN)/cleanb
+
+package: all
+	mkdir -p $(PACKAGE_DIR)/src
+	cp -f Makefile $(PACKAGE_DIR)/src
+	cp -f ls_url $(PACKAGE_DIR)/src
+	cp -f get_img $(PACKAGE_DIR)/src
+	cp -f process_i $(PACKAGE_DIR)/src
+	cp -f process_t $(PACKAGE_DIR)/src
+	cp -f cleanb $(PACKAGE_DIR)/src
