@@ -554,16 +554,48 @@ class DatabaseObject {
 
 	
 	/**
+	 * This is used by subclasses to add extra SQL options to the end of a query.
 	 * 
 	 * @param string p_queryStr
+	 *		The current SQL query.
+	 *
 	 * @param array p_sqlOptions
 	 *		Available options:
-	 *		LIMIT => [max_rows_to_fetch]
-	 *		LIMIT => array('START'=>[Starting_index],'MAX_ROWS'=>[Max_rows_to_fetch]
+	 *		'LIMIT' => [max_rows_to_fetch]
+	 *		'LIMIT' => array('START'=>[Starting_index],'MAX_ROWS'=>[Max_rows_to_fetch]
+	 *		'ORDER BY' => [column_name]
+	 *		'ORDER BY' => array([column_name_1], [column_name_2], ...)
+	 *		'ORDER BY' => array([column_name_1]=>[ASC|DESC], [column_name_2]=>[ASC|DESC], ...)
+	 *
 	 * @return string
+	 *		Original SQL query with the options appended at the end.
 	 */
 	function ProcessOptions($p_queryStr, $p_sqlOptions) {
 		if (!is_null($p_sqlOptions)) {
+			if (isset($p_sqlOptions['ORDER BY'])) {
+				if (!is_array($p_sqlOptions['ORDER BY'])) {
+					$p_queryStr .= ' ORDER BY '.$p_sqlOptions['ORDER BY'];	
+				}
+				else {
+					$p_queryStr .= ' ORDER BY ';
+					$tmpItems = array();
+					foreach ($p_sqlOptions['ORDER BY'] as $key => $orderItem) {
+						// We assume here that the column name is not numeric
+						if (is_numeric($key)) {
+							// Not using the ASC/DESC option
+							$tmpItems[] = $orderItem;
+						}
+						else {
+							$orderItem = strtoupper($orderItem);
+							if (($orderItem == 'ASC') || ($orderItem == 'DESC')) {
+								// Using the ASC/DESC option
+								$tmpItems[] = $key.' '.$orderItem;
+							}
+						}
+					}
+					$p_queryStr .= implode(',', $tmpItems);
+				}
+			}
 			if (isset($p_sqlOptions['LIMIT'])) {
 				if (is_array($p_sqlOptions['LIMIT'])) {
 					$p_queryStr .= ' LIMIT '.$p_sqlOptions['LIMIT']['START']
@@ -572,7 +604,7 @@ class DatabaseObject {
 				else {
 					$p_queryStr .= ' LIMIT '.$p_sqlOptions['LIMIT'];					
 				}
-			}
+			}			
 		}
 		return $p_queryStr;
 	} // fn ProcessOptions
