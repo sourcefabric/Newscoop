@@ -937,7 +937,7 @@ protected:
 
 public:
 	// constructor
-	TOLActEdit(TEditModifier m, string &f, int s) : TOLAction(TOL_ACT_EDIT), field(f)
+	TOLActEdit(TEditModifier m, const string& f, int s) : TOLAction(TOL_ACT_EDIT), field(f)
 	{
 		modifier = m;
 		size = (s == 0 ? 10 : s);
@@ -983,7 +983,7 @@ protected:
 
 public:
 	// constructor
-	TOLActSelect(TSelectModifier m, string& f, string mn = "", string fn = "", bool ck = false)
+	TOLActSelect(TSelectModifier m, const string& f, string mn = "", string fn = "", bool ck = false)
 			: TOLAction(TOL_ACT_SELECT), field(f), male_name(mn), female_name(fn)
 	{
 		modifier = m;
