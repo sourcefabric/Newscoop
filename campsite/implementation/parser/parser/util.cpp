@@ -154,8 +154,8 @@ int GetArticleTypeAttributes(CTypeAttributesMap** ta_h) throw(bad_alloc)
 		if (mysql_query(sql, q.c_str()) != 0)
 			continue;
 
-		MYSQL_RES* tres = mysql_store_result(sql);
-		if (tres == NULL)
+		CMYSQL_RES tres = mysql_store_result(sql);
+		if (*tres == NULL)
 			continue;
 
 		CTypeAttributes* pcoType = new CTypeAttributes(row[0] + 1);		// new type
@@ -165,7 +165,7 @@ int GetArticleTypeAttributes(CTypeAttributesMap** ta_h) throw(bad_alloc)
 		CStatementContext* pcoCtxIf = new CStatementContext(CMS_CT_IF);
 
 		MYSQL_ROW trow;
-		while ((trow = mysql_fetch_row(tres)))
+		while ((trow = mysql_fetch_row(*tres)))
 		{
 			if (trow[0][0] != 'F')		// select only those fields whose name start with F
 				continue;
@@ -196,7 +196,6 @@ int GetArticleTypeAttributes(CTypeAttributesMap** ta_h) throw(bad_alloc)
 		// insert a new type into type-attributes map
 		// the type name is the table name having the X removed
 		pcoTypes->operator [](pcoType->name()) = pcoType;
-		mysql_free_result(tres);
 	}
 	*ta_h = pcoTypes.release();
 	return RES_OK;
@@ -253,7 +252,7 @@ const char* const EscapeURL(const char* src)
 	return dst;
 }
 
-// EscapeURL: return the given character string escaped for HTML
+// EscapeHTML: return the given character string escaped for HTML
 // Parameters: const char* src - pointer to const char; string to escape; must not be
 //		NULL
 // Returns: pointer to escaped string; this is dynamically allocated using new

@@ -8,15 +8,15 @@ B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Edit article*>)
 <SCRIPT LANGUAGE="JavaScript">
+
 function ismodified(){
- if(campeditor.ismodified()==1){
-  if(confirm("Do you want to save changes to article field?")){
-   campeditor.beforeunload()
+ if (campeditor.ismodified()==1){
+  if (confirm("Do you want to save changes made to article field?")){
+  campeditor.beforeunload()
   }
  }
 }
 </SCRIPT>
-
 <? if ($access == 0) { ?>dnl
 	X_LOGOUT
 <? }
@@ -27,14 +27,14 @@ function ismodified(){
 ?>dnl
 E_HEAD
 
-<? if ($access) {
+<? if ($access) { 
 SET_ACCESS(<*dla*>, <*DeleteArticle*>)
 ?>dnl
 
 B_STYLE
 E_STYLE
 
-B_BODY(<*onUnload="ismodified()"*>)
+B_BODY(<*onbeforeunload="ismodified()"*>)
 <?
     todefnum('Pub');
     todefnum('Issue');
@@ -165,14 +165,14 @@ X_NEW_BUTTON(<*Edit details*>, <*X_ROOT/pub/issues/sections/articles/edit.php?Pu
 	$table= substr ( getNumVar($q_fld1,0),1);
 	$posc=strpos(getNumVar($q_fld1,1),'char');
 	$posd=strpos(getNumVar($q_fld1,1),'date');
-
+	
 	if (!($posc === false))
 	    $type=0;
 	elseif (!($posd === false))
 	    $type=1;
 	else
 	    $type=2;
-
+	
 	$Field=$table;
 
 	if ($eField == "")
@@ -192,32 +192,37 @@ X_NEW_BUTTON(<*Edit details*>, <*X_ROOT/pub/issues/sections/articles/edit.php?Pu
 		fetchRowNum($q_fld);
 	?>
 <P ALIGN="CENTER">
-<TABLE BORDER="1" CELLSPACING="1" CELLPADDING="1" WIDTH="640">
+<TABLE BORDER="1" CELLSPACING="1" CELLPADDING="1" WIDTH="92%">
 <TR><TD BGCOLOR="#C0D0FF"><B>&nbsp;Campfire</B></TD>
 </TR>
 <TR>
 <TD>
-<EMBED id="campeditor" type="application/x-java-applet;version=1.4" width="660"
-height="420" align="baseline" code="Campfire.class" codebase="java/" archive="campfire.jar"
-model="models/HyaluronicAcid.xyz"
-pluginspage="http://java.sun.com/j2se/1.4.1/download.html"
-mayscript="true"
-port="<? p($SERVER_PORT); ?>"
-script="X_ROOT/pub/issues/sections/articles/upload.php"
-linkscript="http://<? pencHTML($SERVER_NAME); ?>:<? pencHTML($SERVER_PORT); ?>X_ROOT/pub/issues/sections/articles/list.php"
-clip=""
-LangCode="<? pLanguageCode(); ?>"
-UserId="<? pgetHVar($Usr,'Id'); ?>"
-UserKey="<? pgetHVar($Usr,'KeyId'); ?>"
-IdPublication="<? p($Pub); ?>"
-NrIssue="<? p($Issue); ?>"
-NrSection="<? p($Section); ?>"
-NrArticle="<? p($Article); ?>"
-IdLanguage="<? p($sLanguage); ?>"
-Field="<? p(encS($Field)); ?>"
+<APPLET name="campeditor" 
+    width="660" height="420" align="baseline"
+    >
+   <PARAM NAME="code" VALUE="Campfire.class">
+   <PARAM NAME="codebase" VALUE="java/">
+   <PARAM NAME="archive" VALUE="campfire.jar">
+    <PARAM NAME="type" VALUE="application/x-java-applet;version=1.3">
+    <PARAM NAME="model" VALUE="models/HyaluronicAcid.xyz">
+    <PARAM NAME="scriptable" VALUE="true">
+<PARAM NAME="port" VALUE="<? p($SERVER_PORT); ?>">
+<PARAM NAME="script" VALUE="X_ROOT/pub/issues/sections/articles/upload.php">
+<PARAM NAME="debug_" VALUE="">
+<PARAM NAME="linkscript" VALUE="http://<? pencHTML($SERVER_NAME); ?>:<? pencHTML($SERVER_PORT); ?>X_ROOT/pub/issues/sections/articles/list.php">
+<PARAM NAME="clip" VALUE="">
+<PARAM NAME="LangCode" VALUE="<? pLanguageCode(); ?>">
+<PARAM NAME="UserId" VALUE="<? pgetHVar($Usr,'Id'); ?>">
+<PARAM NAME="UserKey" VALUE="<? pgetHVar($Usr,'KeyId'); ?>">
+<PARAM NAME="IdPublication" VALUE="<? p($Pub); ?>">
+<PARAM NAME="NrIssue" VALUE="<? p($Issue); ?>">
+<PARAM NAME="NrSection" VALUE="<? p($Section); ?>">
+<PARAM NAME="NrArticle" VALUE="<? p($Article); ?>">
+<PARAM NAME="IdLanguage" VALUE="<? p($sLanguage); ?>">
+<PARAM NAME="Field" VALUE="<? p(encS($Field)); ?>">
 <? $idx++; ?>
-idx="<? p($idx); ?>"
-Content="<? pencParam(getNumVar($q_fld,0)); ?>"
+<PARAM NAME="idx" VALUE="<? p($idx); ?>">
+<PARAM NAME="Content" VALUE="<? pencParam(getNumVar($q_fld,0)); ?>">
 <?
     query ("SELECT Number, Description FROM Images WHERE IdPublication=$Pub AND NrIssue=$Issue AND NrSection=$Section AND NrArticle=$Article", 'q_img');
     $v_i= 0;
@@ -225,28 +230,22 @@ Content="<? pencParam(getNumVar($q_fld,0)); ?>"
     for($loop2=0;$loop2<$nr2;$loop2++) {
 	fetchRow($q_img);
 	if ($okf) {
-	    print ("image$v_i=\"".getVar($q_img,'Number').", ".encParam(getVar($q_img,'Description'))."\"\n");
+	    print ("<PARAM NAME=\"image$v_i\" VALUE=\"".getVar($q_img,'Number').", ".encParam(getVar($q_img,'Description'))."\">\n");
 	    $v_i++;
 	}
     }
-?>
-<?
+
     query ("SELECT Id, Name FROM Classes WHERE IdLanguage=$sLanguage ORDER BY Name", 'q_cls');
     $v_i= 0;
     $nr2=$NUM_ROWS;
     for($loop2=0;$loop2<$nr2;$loop2++) {
     fetchRow($q_cls);
         if ($okf) {
-	    print ("tol#$v_i=\"".encParam(getVar($q_cls,'Name'))."\"\n");
+	    print ("<PARAM NAME=\"tol#$v_i\" VALUE=\"".encParam(getVar($q_cls,'Name'))."\">\n");
 	    $v_i++;
 	}
     }
-?>
->
-<NOEMBED>
-     No Java 2 SDK, Standard Edition v 1.3 support for APPLET!!
-</NOEMBED>
-</EMBED>
+?></APPLET>
 </TD>
 </TR>
 </TABLE>

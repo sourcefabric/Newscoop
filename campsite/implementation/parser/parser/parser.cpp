@@ -1329,9 +1329,12 @@ inline int CParser::HIf(CActionList& al, int lv, int sublv)
 		RequireAtom(l);
 		attr = st->findAttr(l->atom()->identifier(), CMS_CT_IF);
 		RequireAtom(l);
+		ValidateOperator(l, attr);
+		string op = l->atom()->identifier();
+		RequireAtom(l);
 		ValidateDType(l, attr);
 		param = CParameter(attr->identifier(), "",
-		                   attr->compOperation(g_coEQUAL, l->atom()->identifier()));
+		                   attr->compOperation(op, l->atom()->identifier()));
 	}
 	else if (st->id() == CMS_ST_LIST)
 	{

@@ -221,7 +221,8 @@ check4_stat()
 {
 is_checked stat && return 0
 check4_file stat --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
-result=$? && [ $result -ne 0 ] && return 1
+result=$? && [ $result -ne 0 ] && \
+echo "Install fileutils package on Mandrake, stat package on RedHat, SuSE, Debian." && return 1
 export STAT=$file_path
 set_checked stat
 return 0

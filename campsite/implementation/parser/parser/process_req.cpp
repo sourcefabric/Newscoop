@@ -134,7 +134,10 @@ int RunParser(MYSQL* p_pSQL, CGIParams* p_pParams, sockstream& p_rOs) throw(RunE
 				pcoCtx->SetStListStart(atol(pchStr), coField);
 			sprintf(pchBuf, "ST_PS%d", i);
 			if ((pchStr = pcoCgi->GetFirst(pchBuf)))
+			{
 				pcoCtx->SetStartSubtitle(atol(pchStr), coField);
+				pcoCtx->SetDefaultStartSubtitle(atol(pchStr), coField);
+			}
 			sprintf(pchBuf, "ST_AS%d", i);
 			if ((pchStr = pcoCgi->GetFirst(pchBuf)))
 				pcoCtx->SetAllSubtitles(atol(pchStr), coField);
@@ -289,7 +292,8 @@ int RunParser(MYSQL* p_pSQL, CGIParams* p_pParams, sockstream& p_rOs) throw(RunE
 		CParser* p = CParser::parserOf(p_pParams->m_pchPathTranslated,
 			                           p_pParams->m_pchDocumentRoot);
 		p->setDebug(bTechDebug);
-		WriteCharset((*pcoCtx), p_pSQL, p_rOs);
+// no need to write the charset anymore: tpl_cgi will print it
+//		WriteCharset((*pcoCtx), p_pSQL, p_rOs);
 		p->writeOutput(*pcoCtx, p_rOs);
 		if (bPreview == true)
 		{

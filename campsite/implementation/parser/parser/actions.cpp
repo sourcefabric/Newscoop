@@ -333,7 +333,7 @@ int CActLanguage::takeAction(CContext& c, sockstream& fs)
 	if (pchLang == NULL)
 		return ERR_NOMEM;
 	string coQuery = string("select Id from Languages where Name = '") + pchLang + "'";
-	delete pchLang;
+	delete []pchLang;
 	DEBUGAct("takeAction()", coQuery.c_str(), fs);
 	SQLQuery(&m_coSql, coQuery.c_str());
 	StoreResult(&m_coSql, res);
@@ -382,7 +382,7 @@ int CActPublication::takeAction(CContext& c, sockstream& fs)
 	if (pchVal == NULL)
 		return ERR_NOMEM;
 	AppendConstraint(w, param.attribute(), param.opSymbol(), pchVal, "and");
-	delete pchVal;
+	delete []pchVal;
 	coQuery += w;
 	DEBUGAct("takeAction()", coQuery.c_str(), fs);
 	SQLQuery(&m_coSql, coQuery.c_str());
@@ -425,7 +425,7 @@ int CActIssue::takeAction(CContext& c, sockstream& fs)
 		if (pchVal == NULL)
 			return ERR_NOMEM;
 		AppendConstraint(w, param.attribute(), param.opSymbol(), pchVal, "and");
-		delete pchVal;
+		delete []pchVal;
 		SetNrField("IdLanguage", c.Language(), buf, w);
 	}
 	else
@@ -470,7 +470,7 @@ int CActSection::takeAction(CContext& c, sockstream& fs)
 	if (pchVal == NULL)
 		return ERR_NOMEM;
 	AppendConstraint(w, param.attribute(), param.opSymbol(), pchVal, "and");
-	delete pchVal;
+	delete []pchVal;
 	stringstream buf;
 	SetNrField("IdLanguage", c.Language(), buf, w);
 	SetNrField("IdPublication", c.Publication(), buf, w);
@@ -509,7 +509,7 @@ int CActArticle::takeAction(CContext& c, sockstream& fs)
 	if (pchVal == NULL)
 		return ERR_NOMEM;
 	AppendConstraint(w, param.attribute(), param.opSymbol(), pchVal, "and");
-	delete pchVal;
+	delete []pchVal;
 	stringstream buf;
 	SetNrField("IdLanguage", c.Language(), buf, w);
 	SetNrField("IdPublication", c.Publication(), buf, w);
@@ -560,7 +560,7 @@ int CActList::WriteModParam(string& s, CContext& c, string& table)
 		if (pchVal == NULL)
 			return ERR_NOMEM;
 		AppendConstraint(w, (*pl_i)->attribute(), (*pl_i)->opSymbol(), pchVal, "and");
-		delete pchVal;
+		delete []pchVal;
 	}
 	stringstream buf;
 	CheckFor("IdPublication", c.Publication(), buf, w);
@@ -607,7 +607,7 @@ int CActList::WriteArtParam(string& s, CContext& c, string& table)
 			if (pchVal == NULL)
 				return ERR_NOMEM;
 			AppendConstraint(w, "Keywords", "like", pchVal, "and");
-			delete pchVal;
+			delete []pchVal;
 		}
 		else if (case_comp((*pl_i)->attribute(), "OnSection") == 0
 		         || case_comp((*pl_i)->attribute(), "OnFrontPage") == 0
@@ -654,7 +654,7 @@ int CActList::WriteArtParam(string& s, CContext& c, string& table)
 				AppendConstraint(w, (*pl_i)->attribute(), (*pl_i)->opSymbol(), pchVal, "and")
 			else
 				AppendConstraint(types_w, (*pl_i)->attribute(), (*pl_i)->opSymbol(), pchVal, "or");
-			delete pchVal;
+			delete []pchVal;
 		}
 		else
 		{
@@ -662,7 +662,7 @@ int CActList::WriteArtParam(string& s, CContext& c, string& table)
 			if (pchVal == NULL)
 				return ERR_NOMEM;
 			AppendConstraint(w, (*pl_i)->attribute(), (*pl_i)->opSymbol(), pchVal, "and");
-			delete pchVal;
+			delete []pchVal;
 		}
 	}
 	CheckFor("IdPublication", c.Publication(), buf, w);
@@ -722,7 +722,7 @@ int CActList::WriteSrcParam(string& s, CContext& c, string& table)
 		}
 		else
 			w += string(" or Keyword = '") + pchVal + "'";
-		delete pchVal;
+		delete []pchVal;
 	}
 	if (w == "")
 		return -1;
@@ -943,6 +943,7 @@ int CActList::takeAction(CContext& c, sockstream& fs)
 		}
 		else
 		{
+			lc.SetStartSubtitle(i);
 			if ((st = lc.SelectSubtitle(i + lc.StListStart())) == "")
 				break;
 		}
@@ -1097,7 +1098,7 @@ int CActURLParameters::takeAction(CContext& c, sockstream& fs)
 		const char* pchEscKw = EscapeURL(c.StrKeywords());
 		fs << "search=search&SearchKeywords=" << pchEscKw
 		<< (c.SearchAnd() ? "&SearchMode=on" : "") << "&SearchLevel=" << c.SearchLevel();
-		delete pchEscKw;
+		delete []pchEscKw;
 	}
 	return RES_OK;
 	TK_CATCH_ERR
@@ -1323,7 +1324,7 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 			fs << dateFormat(pchData, format.c_str(), c.Language());
 		else
 			fs << pchData;
-		delete pchData;
+		delete []pchData;
 		return RES_OK;
 	}
 	if (modifier == CMS_ST_USER)
@@ -1345,7 +1346,7 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 		if ((pchData = EscapeHTML(pchData)) == NULL)
 			return ERR_NOMEM;
 		fs << pchData;
-		delete pchData;
+		delete []pchData;
 		return RES_OK;
 	}
 	if (modifier == CMS_ST_LOGIN)
@@ -1360,7 +1361,7 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 		if ((pchData = EscapeHTML(pchData)) == NULL)
 			return ERR_NOMEM;
 		fs << pchData;
-		delete pchData;
+		delete []pchData;
 		return RES_OK;
 	}
 	if (modifier == CMS_ST_SEARCH)
@@ -1380,7 +1381,7 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 		if ((pchData = EscapeHTML(pchData)) == NULL)
 			return ERR_NOMEM;
 		fs << pchData;
-		delete pchData;
+		delete []pchData;
 		return RES_OK;
 	}
 	if (modifier == CMS_ST_SUBTITLE)
@@ -1404,7 +1405,7 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 		if ((pchData = EscapeHTML(pchData)) == NULL)
 			return ERR_NOMEM;
 		fs << pchData;
-		delete pchData;
+		delete []pchData;
 		return RES_OK;
 	}
 	if (modifier == CMS_ST_ARTICLE && attr == "SingleArticle")
@@ -1521,14 +1522,14 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 	}
 	else
 	{
-		const char* pchData = row[0];
-		if ((pchData = EscapeHTML(pchData)) == NULL)
+		const char* pchData = EscapeHTML(row[0]);
+		if (pchData == NULL)
 			return ERR_NOMEM;
 		if (format != "")
 			fs << dateFormat(pchData, format.c_str(), c.Language());
 		else
 			fs << pchData;
-		delete pchData;
+		delete []pchData;
 	}
 	return RES_OK;
 	TK_CATCH_ERR
@@ -1814,7 +1815,9 @@ int CActIf::takeAction(CContext& c, sockstream& fs)
 	}
 	else if (modifier == CMS_ST_SUBTITLE)
 	{
-		run_first = (c.StartSubtitle() + 1) == atol(param.value().c_str()) && !c.AllSubtitles();
+		buf.str("");
+		buf << (c.StartSubtitle() + 1);
+		run_first = param.applyOp(buf.str().c_str());
 		run_first = m_bNegated ? !run_first : run_first;
 		if (run_first)
 			runActions(block, c, fs);
@@ -1824,7 +1827,7 @@ int CActIf::takeAction(CContext& c, sockstream& fs)
 	}
 	else if (modifier == CMS_ST_CURRENTSUBTITLE)
 	{
-		run_first = (c.StartSubtitle() ) == (c.ListIndex() - 1) && !c.AllSubtitles();
+		run_first = (c.DefaultStartSubtitle() ) == (c.ListIndex() - 1) && !c.AllSubtitles();
 		run_first = m_bNegated ? !run_first : run_first;
 		if (run_first)
 			runActions(block, c, fs);
@@ -2093,7 +2096,7 @@ int CActDate::takeAction(CContext& c, sockstream& fs)
 	if (pchVal == NULL)
 		return ERR_NOMEM;
 	fs << dateFormat(row[0], pchVal, c.Language());
-	delete pchVal;
+	delete []pchVal;
 	return RES_OK;
 }
 
@@ -2262,7 +2265,7 @@ int CActEdit::takeAction(CContext& c, sockstream& fs)
 			const char* pchEscKw = EscapeHTML(c.StrKeywords());
 			fs << "<input type=text name=\"Search" << field << "\" maxlength=255 "
 			"size=" << size << " value=\"" << pchEscKw << "\">";
-			delete pchEscKw;
+			delete []pchEscKw;
 		}
 	}
 	return RES_OK;
