@@ -186,6 +186,9 @@ private:
 	static const string emptystring;
 
 	void SetURLValue(const string& p_coParam, unsigned long int p_nValue);
+	void SetDefURLValue(const string& p_coParam, unsigned long int p_nValue);
+	void EraseURLParam(const string& p_coParam);
+	void EraseDefURLParam(const string& p_coParam);
 
 public:
 	// default constructor
@@ -227,37 +230,49 @@ public:
 	void SetLanguage(long int l)
 	{
 		SetURLValue(P_IDLANG, l);
+		EraseURLParam(P_NRARTICLE);
 		language_id = l;
 	}
 	void SetDefLanguage(long int l)
 	{
+		SetDefURLValue(P_IDLANG, l);
+		EraseDefURLParam(P_NRARTICLE);
 		def_language_id = l;
 	}
 	void SetPublication(long int p)
 	{
 		SetURLValue(P_IDPUBL, p);
+		EraseURLParam(P_NRARTICLE);
 		publication_id = p;
 	}
 	void SetDefPublication(long int p)
 	{
+		SetDefURLValue(P_IDPUBL, p);
+		EraseDefURLParam(P_NRARTICLE);
 		def_publication_id = p;
 	}
 	void SetIssue(long int i)
 	{
 		SetURLValue(P_NRISSUE, i);
+		EraseURLParam(P_NRARTICLE);
 		issue_nr = i;
 	}
 	void SetDefIssue(long int i)
 	{
+		SetDefURLValue(P_NRISSUE, i);
+		EraseDefURLParam(P_NRARTICLE);
 		def_issue_nr = i;
 	}
 	void SetSection(long int s)
 	{
 		SetURLValue(P_NRSECTION, s);
+		EraseURLParam(P_NRARTICLE);
 		section_nr = s;
 	}
 	void SetDefSection(long int s)
 	{
+		SetDefURLValue(P_NRSECTION, s);
+		EraseDefURLParam(P_NRARTICLE);
 		def_section_nr = s;
 	}
 	void SetArticle(long int a)
@@ -267,6 +282,7 @@ public:
 	}
 	void SetDefArticle(long int a)
 	{
+		SetDefURLValue(P_NRARTICLE, a);
 		def_article_nr = a;
 	}
 	void SetIListStart(long int i)
@@ -445,10 +461,10 @@ public:
 	void SetURL(CURL* p_pcoURL)
 	{
 		m_pcoURL = p_pcoURL;
-		if (p_pcoURL != NULL)
-			m_pcoDefURL = m_pcoURL->clone();
-		else
-			m_pcoDefURL = NULL;
+	}
+	void SetDefURL(CURL* p_pcoURL)
+	{
+		m_pcoDefURL = p_pcoURL;
 	}
 
 	const string& UserInfo(const string&);
@@ -729,6 +745,24 @@ inline void CContext::SetURLValue(const string& p_coParam, unsigned long int p_n
 {
 	if (m_pcoURL != NULL)
 		m_pcoURL->replaceValue(p_coParam, p_nValue);
+}
+
+inline void CContext::SetDefURLValue(const string& p_coParam, unsigned long int p_nValue)
+{
+	if (m_pcoDefURL != NULL)
+		m_pcoDefURL->replaceValue(p_coParam, p_nValue);
+}
+
+inline void CContext::EraseURLParam(const string& p_coParam)
+{
+	if (m_pcoURL != NULL)
+		m_pcoURL->deleteParameter(p_coParam);
+}
+
+inline void CContext::EraseDefURLParam(const string& p_coParam)
+{
+	if (m_pcoDefURL != NULL)
+		m_pcoDefURL->deleteParameter(p_coParam);
 }
 
 inline CContext::~CContext()
