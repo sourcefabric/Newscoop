@@ -6,7 +6,7 @@ OBJ_FILES=main.o lex.o atoms.o parser.o actions.o util.o error.o\
  cmessage.o cmessagefactory.o cpublication.o cpublicationsregister.o curl.o\
  curlshortnames.o curltype.o curltyperegister.o cxmlreader.o cxmltree.o\
  curltemplatepath.o ccampsiteinstance.o
- 
+
 
 CLEAN_XML_INCLUDE=$(shell echo -n "$(XML_INCLUDE)")
 CLEAN_XML_LINK=$(shell echo -n "$(XML_LINK)")
@@ -18,7 +18,7 @@ DEPENDENCES= *.h
 INCLUDE_PATH=-I$(MYSQL_H_PATH)
 
 CSOCKET_FLAGS=-DHAVE_GETHOSTBYADDR_R=$(HAVE_GETHOSTBYADDR_R) -DHAVE_GETHOSTBYNAME_R=$(HAVE_GETHOSTBYNAME_R) -DHAVE_GETSERVBYNAME_R=$(HAVE_GETSERVBYNAME_R)
-CFLAGS= -D_REENTRANT -Wall $(INCLUDE_PATH) $(CSOCKET_FLAGS) $(CLEAN_XML_INCLUDE)
+CFLAGS=-D_REENTRANT -Wall $(INCLUDE_PATH) $(CSOCKET_FLAGS) $(CLEAN_XML_INCLUDE)
 # -D_DEBUG_SOURCE -g
 # -D_DEBUG
 
@@ -37,7 +37,7 @@ scripts: dummy
 
 $(CAMPSITE_SERVER): $(OBJ_FILES)
 	g++ -o $(CAMPSITE_SERVER) $(OBJ_FILES) $(LDFLAGS) $(LIBS)
-	strip $(CAMPSITE_SERVER)
+	@if ! echo "$(CFLAGS)" | grep "_DEBUG" > /dev/null; then echo "stripping $(CAMPSITE_SERVER)"; strip $(CAMPSITE_SERVER); fi
 
 clean: dummy
 	rm -f *.o *~ configure.h $(CAMPSITECTL) $(CAMPSITEINIT) $(CAMPSITE_SERVER)
