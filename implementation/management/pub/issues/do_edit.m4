@@ -22,6 +22,7 @@ B_BODY
 <?
     todef('cName');
     todefnum('cLang');
+    todefnum('cPublicationDate');
     todefnum('Pub');
     todefnum('Issue');
     todefnum('Language');
@@ -76,7 +77,7 @@ B_MSGBOX(<*Changing issue's details*>)
     
     if ($correct) {
 	
-	query ("UPDATE Issues SET Name='$cName', IdLanguage=$cLang WHERE IdPublication=$Pub AND Number=$Issue");
+	query ("UPDATE Issues SET Name='$cName', IdLanguage=$cLang, PublicationDate='$cPublicationDate' WHERE IdPublication=$Pub AND Number=$Issue");
 	$created= ($AFFECTED_ROWS > 0);
     }
     
