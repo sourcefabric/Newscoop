@@ -9,6 +9,7 @@ if (!$access) {
 }
 
 $path = Input::get('Path', 'string', '');
+$print_path = $path != "" ? $path : "/";
 
 ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
@@ -25,7 +26,7 @@ $path = Input::get('Path', 'string', '');
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="1" WIDTH="100%" class="current_location_table">
 	<TR>
 		<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php  putGS("Path"); ?>:</TD>
-		<TD VALIGN="TOP" class="current_location_content"><B><?php  pencHTML(decURL($path)); ?></B></TD>
+		<TD VALIGN="TOP" class="current_location_content"><B><?php  pencHTML(decURL($print_path)); ?></B></TD>
 	</TR>
 </TABLE>
 <P>
@@ -44,18 +45,19 @@ if ($User->hasPermission('ManageTempl')) {
 		<TD><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1"><TR><TD><A HREF="/<?php echo $ADMIN; ?>/templates/new_dir.php?Path=<?php  pencURL($path); ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/templates/new_dir.php?Path=<?php  pencURL($path); ?>" ><B><?php  putGS("Create new folder"); ?></B></A></TD></TR></TABLE></TD>
 		<TD><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1"><TR><TD><A HREF="/<?php echo $ADMIN; ?>/templates/upload_templ.php?Path=<?php  pencURL($path); ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/templates/upload_templ.php?Path=<?php  pencURL($path); ?>" ><B><?php  putGS("Upload template"); ?></B></A></TD></TR></TABLE></TD>
 		<TD><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1"><TR><TD><A HREF="/<?php echo $ADMIN; ?>/templates/new_template.php?Path=<?php  pencURL($path); ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/templates/new_template.php?Path=<?php  pencURL($path); ?>" ><B><?php  putGS("Create new template"); ?></B></A></TD></TR></TABLE></TD>
-		<TD><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1"><TR><TD><A HREF="/<?php echo $ADMIN; ?>/templates/refresh.php?Path=<?php  pencURL($path); ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/templates/refresh.php?Path=<?php  pencURL($path); ?>" ><B><?php  putGS("Refresh templates directory"); ?></B></A></TD></TR></TABLE></TD>
   <?php  }
 ?>
 	</TR>
 </TABLE>
-<P>
 <?php
 
 $listbasedir = $path;
 $dta = $User->hasPermission('DeleteTempl');
 require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/templates/list_dir.php");
 
+?>
+<P>
+<?php
 CampsiteInterface::CopyrightNotice();
 ?>
 </HTML>
