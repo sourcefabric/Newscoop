@@ -9,7 +9,7 @@ all: $(MY_TARGETS)
 	$(M4) ../macros.m4 $< >$@
 
 install: $(ALL)
-	cp -f *.php $(HTML_DIR)/
+	cp -f *.php $(HTML_COMMON_DIR)/
 
 clean:
 	rm -f *~ db_connect.php config.php .env_vars $(MY_TARGETS)
