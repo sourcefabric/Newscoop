@@ -1120,22 +1120,30 @@ int CActURLParameters::takeAction(CContext& c, sockstream& fs)
 			return ERR_NOPARAM;
 	}
 	string coURL;
+	CURL* pcoURL = NULL;
 	if (fromstart)
-	{
-		coURL = c.DefURL()->getQueryString();
-		fs << coURL;
-		first = coURL == "";
-		URLPrintParam(P_TOPIC_ID, c.DefTopic(), fs, first);
-	}
+		pcoURL = m_nPubLevel < CMS_PL_ARTICLE ? c.DefURL()->clone() : c.DefURL();
 	else
-	{
-		coURL = c.URL()->getQueryString();
-		fs << coURL;
-		first = coURL == "";
-		URLPrintParam(P_TOPIC_ID, c.Topic(), fs, first);
-	}
+		pcoURL = m_nPubLevel < CMS_PL_ARTICLE ? c.URL()->clone() : c.URL();
+	if (m_nPubLevel < CMS_PL_ARTICLE)
+		pcoURL->deleteParameter(P_NRARTICLE);
+	if (m_nPubLevel < CMS_PL_SECTION)
+		pcoURL->deleteParameter(P_NRSECTION);
+	if (m_nPubLevel < CMS_PL_ISSUE)
+		pcoURL->deleteParameter(P_NRISSUE);
+	if (m_nPubLevel < CMS_PL_PUBLICATION)
+		pcoURL->deleteParameter(P_IDPUBL);
+	if (m_nPubLevel < CMS_PL_LANGUAGE)
+		pcoURL->deleteParameter(P_IDLANG);
+	coURL = pcoURL->getQueryString();
+	if (m_nPubLevel < CMS_PL_ARTICLE)
+		delete pcoURL;
+	fs << (first ? "" : "&") << coURL;
+	first = coURL == "";
+	URLPrintParam(P_TOPIC_ID, (fromstart ? c.DefTopic() : c.Topic()), fs, first);
 	URLPrintNParam(P_TEMPLATE_ID, m_coTemplate, fs, first);
-	PrintSubtitlesURL(c, fs, first);
+	if (m_nPubLevel > CMS_PL_ARTICLE)
+		PrintSubtitlesURL(c, fs, first);
 	if (c.Level() == CLV_ROOT)
 		return RES_OK;
 	if (c.LMode() == LM_PREV)
@@ -2743,38 +2751,40 @@ int CActWith::takeAction(CContext& c, sockstream& fs)
 //		sockstream& fs - output stream	
 int CActURIPath::takeAction(CContext& c, sockstream& fs)
 {
-	SafeAutoPtr<CURL> pcoURL;
-	if (!params.empty())
+	if (m_nTemplate > 0 || m_nPubLevel < CMS_PL_SUBTITLE)
 	{
-		pcoURL.reset(c.URL()->clone());
-		CParameterList::const_iterator coIt = params.begin();
-		for (; coIt != params.end(); ++ coIt)
-		{
-			if (case_comp((*coIt)->attribute(), "template") == 0)
-			{
-				pcoURL->setTemplate((*coIt)->value());
-			}
-			if (case_comp((*coIt)->attribute(), "issue") == 0)
-			{
-				pcoURL->deleteParameter(P_NRARTICLE);
-				pcoURL->deleteParameter(P_NRSECTION);
-				c.SetCurrentField("");
-			}
-			if (case_comp((*coIt)->attribute(), "section") == 0)
-			{
-				pcoURL->deleteParameter(P_NRARTICLE);
-				c.SetCurrentField("");
-			}
-			if (case_comp((*coIt)->attribute(), "article") == 0)
-			{
-				c.SetCurrentField("");
-			}
-		}
+		SafeAutoPtr<CURL> pcoURL(c.URL()->clone());
+		if (m_nTemplate > 0)
+			pcoURL->setTemplate(m_nTemplate);
+		if (m_nPubLevel <= CMS_PL_ARTICLE)
+			c.SetCurrentField("");
+		if (m_nPubLevel <= CMS_PL_SECTION)
+			pcoURL->deleteParameter(P_NRARTICLE);
+		if (m_nPubLevel <= CMS_PL_ISSUE)
+			pcoURL->deleteParameter(P_NRSECTION);
+		if (m_nPubLevel <= CMS_PL_PUBLICATION)
+			pcoURL->deleteParameter(P_NRISSUE);
+		if (m_nPubLevel <= CMS_PL_LANGUAGE)
+			pcoURL->deleteParameter(P_IDPUBL);
 		fs << pcoURL->getURIPath();
 	}
 	else
 	{
 		fs << c.URL()->getURIPath();
 	}
+	return RES_OK;
+}
+
+// takeAction: performs the action
+// Parametes:
+//		CContext& c - current context
+//		sockstream& fs - output stream	
+int CActURL::takeAction(CContext& c, sockstream& fs)
+{
+	m_coURIPath.takeAction(c, fs);
+	stringstream coURLParametersStr;
+	m_coURLParameters.takeAction(c, coURLParametersStr);
+	if (coURLParametersStr.str() != "")
+		fs << "?" << coURLParametersStr.str();
 	return RES_OK;
 }
