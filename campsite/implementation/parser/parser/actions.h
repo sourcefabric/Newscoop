@@ -1170,9 +1170,12 @@ public:
 // statement (see manual)
 class CActURIPath : public CAction
 {
+protected:
+	CParameterList params;
+
 public:
 	// constructor
-	CActURIPath() {}
+	CActURIPath(CParameterList& p) : params(p) {}
 	
 	// destructor
 	virtual ~CActURIPath() {}
