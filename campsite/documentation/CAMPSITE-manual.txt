@@ -1,8 +1,8 @@
 CAMPSITE
 Web Automation Tool User Guide
-CAMPSITE version: 2.1.2 and newer versions
+CAMPSITE version: 2.1.3 and newer versions
 Maintained and distributed under GNU/GPL by CAMPWARE http://www.campware.org
-Manual version: April 23, 2003
+Manual version: May xx, 2003
 Language: English
 ©1999-2003 Media Development Loan Fund
 http://www.mdlf.org - http://www.mdlf-camp.net
@@ -657,7 +657,7 @@ identifiers in between '<' and '>' must be replaced in the template according to
 spaces must be used as in the language description
 attributes names and values must not contain '"' and tab characters
 identifiers that are not in between '<' and '>' are language keywords and must be written as in the language description
-any language identifier can be written in between '"' character; identifiers containing spaces and must be written in between '"'
+any language identifier can be written in between "" character; identifiers containing spaces and must be written in between ""
 identifiers enclosed by '[' and ']' characters are not mandatory in the statement
 sequences of identifiers separated by '|' character describe a situation where all the identifiers are valid but only one can be used at a time
 The template language is composed out of:
@@ -822,7 +822,7 @@ columns <integer_value> where <integer_value> specifies columns_number sets an e
 <list_of_section_constraints> =
 [<section_constraint>] <list_of_section_constraints> 
 | <section_constraint>
-<section_constraint> = 
+<section_constraint> =
 name <string_operator> <string_value> 
 | number <integer_operator> <integer_value>
 Any parameter used in <list_of_section_constraints> can only be used once.
@@ -932,7 +932,7 @@ Constraints:
 Inside List SearchResult the following statements are forbidden:
 Language
 Publication
-Note!!! (This is valid only for 2.0.11 and newer versions.)
+Note for If statements
 All If statements can be negated by inserting "not" between If and its modifier (Publication, Issue etc.)
 Example:
   <**If Publication defined>
@@ -942,7 +942,8 @@ and the negated version:
 Purpose:
 It runs the first or second list of instructions depending on existing articles in a limited length list after/before the end/start of the list. It can be used only inside List statements, especially to validate Next | Previous buttons.
 Syntax:
-If [not] NextItems|PreviousItems [<list_of_instructions>]
+If [not] NextItems|PreviousItems
+[<list_of_instructions>]
 [Else [<list_of_instructions>]]
 EndIf [NextItems|PreviousItems]
 Constraints:
@@ -951,16 +952,17 @@ Can be used only inside List statement. It can not be used inside ForEmptyList b
 Purpose:
 It runs the first or second list of instructions depending on existing paragraphs (marked with their subtitles) in a With statement. It can be used only inside With statement, especially to validate Next | Previous buttons.
 Syntax:
-If NextSubtitles | PrevSubtitles [<list_of_instructions>]
+If [not] NextSubtitles | PrevSubtitles
+[<list_of_instructions>]
 [Else [<list_of_instructions>]]
-EndIf [NextSubtitles | PrevSubtitles]
+EndIf [NextSubtitles|PrevSubtitles]
 Constraints:
 Can be used only inside With statement. Also, If NextSubtitles can not be used inside If PrevSubtitles and vice versa.
 3.9.3.8 If List
 Purpose:
 Depending on the given condition, it runs the first or second list of instructions. It can be used inside List instructions. It is used to build tables from lists.
 Syntax:
-If List <condition>
+If [not] List <condition>
 <list_of_instructions>
 [Else [<list_of_instructions>]]
 EndIf [List]
@@ -1013,10 +1015,10 @@ None.
 Purpose:
 Depending on the given condition, it runs the first or second list of instructions. It may be used anywhere in the template. It is used when printing information for a certain publication.
 Syntax:
-If Publication <condition>
+If [not] Publication <condition>
 <list_of_instructions>
 [Else [<list_of_instructions>]]
-EndIf [Section]
+EndIf [Publication]
 <condition> = 
 name <string_operator> <string_value> 
 |identifier <integer_operator> <integer_value> 
@@ -1033,10 +1035,10 @@ None.
 Purpose:
 Depending on the given condition, it runs the first or second list of instructions. It may be used anywhere in the template. It is used when printing information for a certain issue.
 Syntax:
-If Issue <condition>
+If [not] Issue <condition>
 <list_of_instructions>
 [Else [<list_of_instructions>]]
-EndIf [Section]
+EndIf [Issue]
 where 
 <condition> = 
 name <string_operator> <string_value> 
@@ -1060,7 +1062,7 @@ None.
 Purpose:
 Depending on the given condition, it runs the first or second list of instructions. It may be used anywhere in the template. It is used when printing information for a certain section.
 Syntax:
-If Section <condition>
+If [not] Section <condition>
 <list_of_instructions>
 [Else [<list_of_instructions>]]
 EndIf [Section]
@@ -1080,7 +1082,7 @@ None.
 Purpose:
 Depending on the given condition, it runs the first (for true) or second (for false) list of instructions. It may be used anywhere in the template. It is used when printing information from different types of article.
 Syntax:
-If Article <condition>
+If [not] Article <condition>
 <list_of_instructions>
 [Else [<list_of_instructions>]]
 EndIf [Article]
@@ -1115,10 +1117,10 @@ None.
 Purpose:
 It is used when printing article protected information. It is true when the reader has access to the article referred to by the environment variables. If no article is referred to, the result is false. If true, runs the first list of instructions and the second list on false. It is true if the reader has an active subscription including the article section or the article is public.
 Syntax:
-If Allowed
+If [not] Allowed
 <list_of_instructions>
 [Else [<list_of_instructions>]]
-EndIf
+EndIf [Allowed]
 The list of instructions may contain any instruction allowed in current context. If it is used inside a list it must respect the constraints of the list (List Issue, List Section, List Article, List Subtitle, List SearchResult).
 Constraints:
 None.
@@ -1126,10 +1128,10 @@ None.
 Purpose:
 Depending on the given condition, it runs the first, the second list of instructions or neither of them. If the subscription event did not occur, neither of the instructions list will be run. (This implies a certain order to be followed; that is, the template containing If Subscription must follow a template containing Subscription). It may be used anywhere in the template. It is used to describe the subscription result.
 Syntax:
-If Subscription <condition>
+If [not] Subscription <condition>
 <list_of_instructions>
 [Else [<list_of_instructions>]]
-EndIf
+EndIf [Subscription]
 where
 <condition> = ok | error | trial | paid | action
 ok: the if condition is true if subscription action was taken and its result is success
@@ -1144,10 +1146,10 @@ None.
 Purpose:
 Depending on the given condition, it runs the first, the second list of instructions or neither of them. If the login event did not occur, neither of the instructions list will be run. (This implies a certain order to be followed; that is, the template containing If Login must follow a template containing Login). It may be used anywhere in the template. It is used to describe the subscription result.
 Syntax:
-If Login <condition>
+If [not] Login <condition>
 <list_of_instructions>
 [Else [<list_of_instructions>]]
-EndIf
+EndIf [Login]
 where
 <condition> = ok | error | action
 ok: the if condition is true if login action was taken and its result is success
@@ -1160,10 +1162,10 @@ Cannot be used inside Login-EndLogin statement.
 Purpose:
 Depending on given condition, it runs the first, the second list of instructions or none. If the User event didn't occur, none of the instructions list will be run. (It implies a certain order to be followed; that is, the template containing If User must follow a template containing User). It may be used anywhere in template. It is used to describe the subscription result.
 Syntax:
-If User <condition>
+If [not] User <condition>
 <list_of_instructions>
 [Else [<list_of_instructions>]]
-EndIf
+EndIf [User]
 where
 <condition> = 
 addok 
@@ -1189,7 +1191,7 @@ Cannot be used inside User-EndUser statement.
 Purpose:
 Depending on the given condition, it runs the first or second list of instructions. It may be used within the list of subtitle (while printing an article). It runs the first list of instructions when the index of subtitles list equals the number of the current subtitle (selected for printing).
 Syntax:
-If CurrentSubtitle
+If [not] CurrentSubtitle
 <list_of_instructions>
 [Else [<list_of_instructions>]]
 EndIf [CurrentSubtitle]
@@ -1199,23 +1201,21 @@ Can be used only inside With and List Subtitles statements.
 Purpose:
 If image exists, it runs the first list of instructions, otherwise the second list. It may be used anywhere in the template.
 Syntax:
-If Image <integer_value>
+If [not] Image <integer_value>
 <list_of_instructions>
 [Else [<list_of_instructions>]]
 EndIf [Image]
 The list of instructions may contain any instruction allowed in the current context. If it is used inside a list it must respect the constraints of the list (List Issue, List Section, List Article, List Subtitle, List SearchResult).
 Constraints:
 None.
-Note:
-The If Image statement is valid only in 2.0.11 and newer versions. It won't work in 2.0.10 or older versions.
 3.9.3.20 If Language
 Purpose:
 Depending on the given condition, it runs the first or second list of instructions. It may be used anywhere in the template.
 Syntax:
-If Language condition
+If [not] Language <condition>
 <list_of_instructions>
 [Else [<list_of_instructions>]]
-EndIf [Section]
+EndIf [Language]
 where
 <condition> = 
 number <integer_operator> <integer_value> 
@@ -1227,12 +1227,10 @@ number <integer_operator> <integer_value>
 defined: the if condition is true if language parameter is defined
 fromstart: the if condition is true if actual value of language parameter is equal with the value from template start
 number: the if condition is true if operation: number <integer_operator> <integer_value> is true
-name, englname, code: the if condition is true if operation: name|englname|code <string_operator> <string_value> is true
+name, englname, code: the if condition is true if operation: name|englname|code <string_operator> <string_value> is true where englname is the English name of the language, name is the original language name
 The list of instructions may contain any instruction allowed in the current context. If it is used inside a list it must respect the constraints of the list (List Issue, List Section, List Article, List Subtitle, List SearchResult).
 Constraints:
 None.
-Note:
-The If Language statement is valid only in 2.0.12 and newer versions. It won't work in 2.0.11 or older versions.
 3.9.3.21 With
 Purpose:
 Used to access a body field of a certain type of articles. When working with subtitles this statement is mandatory. See also List Subtitle, If PrevSubtitles, If NextSubtitles
@@ -1243,6 +1241,22 @@ EndWith
 where 
 <article_type> identifies a valid article type
 <body_field> identifies a valid field of the given article type
+The list of instructions may contain any instruction allowed in the current context. If it is used inside a list it must respect the constraints of the list (List Issue, List Section, List Article, List Subtitle, List SearchResult).
+Constraints:
+None.
+3.9.3.22 If Search
+Purpose:
+Depending on the given condition, it runs the first or second list of instructions. It may be used anywhere in the template.
+Syntax:
+If [not] Search <condition>
+<list_of_instructions>
+[Else [<list_of_instructions>]]
+EndIf [Search]
+where
+<condition> = ok | error | action
+ok: the if condition is true if search action was taken and its result is success
+error: the if condition is true if search action was taken and its result is error
+action: the if condition is true if search action was taken
 The list of instructions may contain any instruction allowed in the current context. If it is used inside a list it must respect the constraints of the list (List Issue, List Section, List Article, List Subtitle, List SearchResult).
 Constraints:
 None.
@@ -1310,6 +1324,7 @@ where
 | <login_expression> 
 | <user_expression>
 | <subtitle_expression>
+| <search_expression>
 <language_expression> = Language name |number |englname |code |codepage
 name: language name
 number: language identifier in the CAMPSITE database
@@ -1381,6 +1396,9 @@ modifyerror: if user modify action took place (after submitting a user info form
 the other parameters (name, uname, email, city...) are fields describing the user information; they are self-explaining; Field1-Field5, Text1-Text3 are extra fields for storing some extra information; the publication administrator sets their meaning
 <subtitle_expression> = Subtitle name
 name: print subtitle name (see also Editing body-type fields: Working with CAMPFIRE)
+<search_expression> = Search error | keywords
+error: print error message if the search action generated an error
+keywords: print the keywords the user inputted
 Constraints:
 Print List can be used only inside List-EndList statement.
 Print Login can be used only outside Login-EndLogin statement.
