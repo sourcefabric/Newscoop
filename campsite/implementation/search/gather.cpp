@@ -34,15 +34,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "kwd.h"
 #include "readconf.h"
 #include "configure.h"
+#include "ccampsiteinstance.h"
 
 using std::cout;
 using std::endl;
 
 #define debug if(0) printf
 
-string CONF_DIR;
-string SMTP_SERVER;
-string SMTP_WRAPPER;
 string SQL_SERVER;
 string SQL_USER;
 string SQL_PASSWORD;
@@ -119,36 +117,12 @@ static void build_kwd_list(MYSQL *mysql, struct article_t *a)
 	mysql_free_result(res);
 }
 
-void ReadConf()
-{
-	try
-	{
-		ConfAttrValue coDBConf(DATABASE_CONF_FILE);
-		SQL_SERVER = coDBConf.ValueOf("SERVER");
-		SQL_SRV_PORT = atoi(coDBConf.ValueOf("PORT").c_str());
-		SQL_USER = coDBConf.ValueOf("USER");
-		SQL_PASSWORD = coDBConf.ValueOf("PASSWORD");
-		SQL_DATABASE = coDBConf.ValueOf("NAME");
-	}
-	catch (ConfException& rcoEx)
-	{
-		cout << "Error reading configuration: " << rcoEx.what() << endl;
-		exit(1);
-	}
-}
+int GatherFunc(const ConfAttrValue& p_rcoConfValues);
 
 
 int main(int argc, char **argv)
 {
-	MYSQL mysql;
-	MYSQL_RES *res, *res1;
-	MYSQL_ROW row, row1;
-
-	unsigned nart, nword, nnew, kwd_id;
-	int h, i;
-	struct kwd_t *k;
-	struct article_t a;
-	char query[1024], *p;
+	string coConfDir;
 
 	/* Parse program name from command line */
 	prog_name = strrchr(argv[0], '/');
@@ -156,17 +130,54 @@ int main(int argc, char **argv)
 		prog_name++;
 	else
 		prog_name = argv[0];
-	ReadConf();
 
 	/* Parse parameters from command line */
-	for (i = 1; i < argc; i++) {
+	for (int i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "--conf_dir") == 0) {
 			if (!argv[++i])
 				die_usage();
-			CONF_DIR = argv[i];
+			coConfDir = argv[i];
 		} else
 			die_usage();
 	}
+
+	if (coConfDir == "")
+		coConfDir = ETC_DIR;
+	const CCampsiteInstanceMap& rcoInstances =
+			CCampsiteInstance::readFromDirectory(coConfDir, GatherFunc);
+
+	CCampsiteInstanceMap::const_iterator coIt = rcoInstances.begin();
+	for (; coIt != rcoInstances.end(); ++coIt)
+	{
+		(*coIt).second->run();
+	}
+	while (true)
+	{
+		sleep(1);
+		if (CCampsiteInstanceRegister::get().isEmpty())
+			break;
+	}
+
+	return 0;
+}
+
+int GatherFunc(const ConfAttrValue& p_rcoConfValues)
+{
+	MYSQL mysql;
+	MYSQL_RES *res, *res1;
+	MYSQL_ROW row, row1;
+
+	unsigned nart, nword, nnew, kwd_id;
+	int h;
+	struct kwd_t *k;
+	struct article_t a;
+	char query[1024], *p;
+
+	SQL_SERVER = p_rcoConfValues.valueOf("DATABASE_SERVER_ADDRESS");
+	SQL_SRV_PORT = atoi(p_rcoConfValues.valueOf("DATABASE_SERVER_PORT").c_str());
+	SQL_USER = p_rcoConfValues.valueOf("DATABASE_USER");
+	SQL_PASSWORD = p_rcoConfValues.valueOf("DATABASE_PASSWORD");
+	SQL_DATABASE = p_rcoConfValues.valueOf("DATABASE_NAME");
 
 	/* Connect to the MySQL server */
 	mysql_init(&mysql);
