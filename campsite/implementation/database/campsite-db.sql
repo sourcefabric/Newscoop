@@ -970,4 +970,4 @@ CREATE TABLE Users (
 # Dumping data for table 'Users'
 #
 
-INSERT INTO Users VALUES (1,849663625,'Administrator','admin','2c380f066e0e45d1','','N','','','','','','','','','Mr.','M','0-17','','','','','','','','','N','N','N','N','','','','','','','','');
+INSERT INTO Users VALUES (1,NULL,'Administrator','admin','2c380f066e0e45d1','','N','','','','','','','','','Mr.','M','0-17','','','','','','','','','N','N','N','N','','','','','','','','');
