@@ -272,7 +272,16 @@ pChar ReadPOSTQuery()
 			pChar pchNewQuery = (pChar) realloc(pchQuery, nQueryAlloc);
 			pchQuery = pchNewQuery;
 		}
-		pchQuery[nIndex++] = fgetc(stdin);
+		char chIn = fgetc(stdin);
+		if (chIn > 0)
+		{
+			pchQuery[nIndex++] = chIn;
+		}
+		else
+		{
+			pchQuery[nIndex] = 0;
+			break;
+		}
 	}
 	return pchQuery;
 }
