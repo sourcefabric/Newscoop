@@ -47,7 +47,7 @@ public:
 	// Needs a database connection pointer to read the publication parameters from
 	// the database.
 	CURLShortNames(const CMsgURLRequest& p_rcoURLMessage, MYSQL* p_pDBConn)
-		: m_coURI(""), m_pDBConn(p_pDBConn)
+		: m_pDBConn(p_pDBConn)
 		{ setURL(p_rcoURLMessage); }
 
 	// CURLShortNames(): copy constructor
@@ -56,10 +56,6 @@ public:
 	// clone(): create a clone
 	CURL* clone() const;
 
-	virtual void setValue(const string& p_rcoParameter, long p_nValue);
-
-	virtual void setValue(const string& p_rcoParameter, const string& p_rcoValue);
-
 	virtual bool equalTo(const CURL* p_pcoURL) const;
 
 	// setURL(): sets the URL object value
@@ -67,6 +63,9 @@ public:
 
 	// getURL(): returns the URL in string format
 	virtual string getURL() const { return m_coHTTPHost + getURI(); }
+
+	// getURI(): returns the path component of the URI in string format
+	virtual string getURIPath() const;
 
 	// getURI(): returns the URI in string format
 	virtual string getURI() const;
@@ -81,9 +80,13 @@ private:
 	// buildURI(): internal method; builds the URI string from object attributes
 	void buildURI() const;
 
+	virtual void PreSetValue(const string& p_rcoParameter, const string& p_rcoValue)
+	{ m_bValidURI = false; }
+
 private:
 	mutable bool m_bValidURI;
-	mutable string m_coURI;  // caches the URI string
+	mutable string m_coURIPath;  // caches the path component of the URI
+	mutable string m_coQueryString;  // caches the query string component of the URI
 	mutable MYSQL* m_pDBConn;  // caches the connection to the database
 
 private:
@@ -111,29 +114,26 @@ inline CURL* CURLShortNames::clone() const
 	return new CURLShortNames(*this);
 }
 
-inline void CURLShortNames::setValue(const string& p_rcoParameter, long p_nValue)
-{
-	CURL::setValue(p_rcoParameter, p_nValue);
-	m_bValidURI = false;
-}
-
-inline void CURLShortNames::setValue(const string& p_rcoParameter, const string& p_rcoValue)
-{
-	CURL::setValue(p_rcoParameter, p_rcoValue);
-	m_bValidURI = false;
-}
-
 inline bool CURLShortNames::equalTo(const CURL* p_pcoURL) const
 {
 	return this->getURLType() == p_pcoURL->getURLType() && CURL::equalTo(p_pcoURL)
 		&& m_coHTTPHost == ((const CURLShortNames*)p_pcoURL)->m_coHTTPHost;
 }
 
+inline string CURLShortNames::getURIPath() const
+{
+	if (!m_bValidURI)
+		buildURI();
+	return m_coURIPath;
+}
+
 inline string CURLShortNames::getURI() const
 {
 	if (!m_bValidURI)
 		buildURI();
-	return m_coURI;
+	if (m_coQueryString == "")
+		return m_coURIPath;
+	return m_coURIPath + "?" + m_coQueryString;
 }
 
 inline string CURLShortNames::getURLType() const
