@@ -276,8 +276,8 @@ if ($edit_ok) { ?>
 				<TD>
 					<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 					<TR>
-						<TD><A HREF="<?php echo CampsiteInterface::ArticleUrl($articleObj, $languageObj->getLanguageId(), "duplicate.php"); ?>&Back=edit.php"><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0"></A></TD>
-						<TD><A HREF="<?php echo CampsiteInterface::ArticleUrl($articleObj, $languageObj->getLanguageId(), "duplicate.php"); ?>&Back=edit.php"><B><?php  putGS("Duplicate"); ?></B></A></TD>
+						<TD><A HREF="<?php echo CampsiteInterface::ArticleUrl($articleObj, $languageObj->getLanguageId(), "duplicate.php"); ?>&Back=<?php p(urlencode($REQUEST_URI)); ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0"></A></TD>
+						<TD><A HREF="<?php echo CampsiteInterface::ArticleUrl($articleObj, $languageObj->getLanguageId(), "duplicate.php"); ?>&Back=<?php p(urlencode($REQUEST_URI)); ?>"><B><?php  putGS("Duplicate"); ?></B></A></TD>
 					</TR>
 					</TABLE>
 				</TD>
@@ -295,7 +295,7 @@ if ($edit_ok) { ?>
 		<INPUT TYPE="HIDDEN" NAME="Section" VALUE="<?php  p($Section); ?>">
 		<INPUT TYPE="HIDDEN" NAME="Article" VALUE="<?php  p($Article); ?>">
 		<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php  p($Language); ?>">
-		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="#C0D0FF">
+		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="3" class="table_input">
 		<TR>
 			<TD><?php  putGS('Language'); ?>:</TD>
 			<TD>
@@ -325,7 +325,7 @@ if ($edit_ok) { ?>
 <INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php  p($Language); ?>">
 <INPUT TYPE="HIDDEN" NAME="sLanguage" VALUE="<?php  p($sLanguage); ?>">
 
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" BGCOLOR="#C0D0FF" align="center">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" align="center" class="table_input">
 <TR>
 	<TD COLSPAN="2">
 		<table cellpadding="0" cellspacing="0" width="100%">
