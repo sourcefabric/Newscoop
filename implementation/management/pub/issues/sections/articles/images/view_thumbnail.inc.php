@@ -79,24 +79,18 @@
             </TD>
             <?php
             if ($User->hasPermission('ChangeArticle')) { ?>
+        		<form method="POST" action="do_link.php" onsubmit="return validateForm(this, 0, 0, 0, 1, 8);">
+				<input type="hidden" name="PublicationId" value="<?php p($PublicationId); ?>">
+				<input type="hidden" name="IssueId" value="<?php p($IssueId); ?>">
+				<input type="hidden" name="SectionId" value="<?php p($SectionId); ?>">
+				<input type="hidden" name="InterfaceLanguageId" value="<?php p($InterfaceLanguageId); ?>">
+				<input type="hidden" name="ArticleLanguageId" value="<?php p($ArticleLanguageId); ?>">
+				<input type="hidden" name="ArticleId" value="<?php p($ArticleId); ?>">
+        		<input type="hidden" name="ImageId" value="<?php echo $image['id']; ?>">
             	<TD ALIGN="CENTER">
-            		<table cellpadding="0" cellspacing="3">
-            		<form method="POST" action="do_link.php" onsubmit="return validateForm(this, 0, 0, 0, 1, 8);">
-					<input type="hidden" name="PublicationId" value="<?php p($PublicationId); ?>">
-					<input type="hidden" name="IssueId" value="<?php p($IssueId); ?>">
-					<input type="hidden" name="SectionId" value="<?php p($SectionId); ?>">
-					<input type="hidden" name="InterfaceLanguageId" value="<?php p($InterfaceLanguageId); ?>">
-					<input type="hidden" name="ArticleLanguageId" value="<?php p($ArticleLanguageId); ?>">
-					<input type="hidden" name="ArticleId" value="<?php p($ArticleId); ?>">
-            		<input type="hidden" name="ImageId" value="<?php echo $image['id']; ?>">
-            		<tr>
-            			<td>Number:</td>
-            			<td><input type="text" name="ImageTemplateId" value="" size="3" maxlength="4" class="input_text" style="font-size: 9pt; text-indent: 2px;" alt="number|0" emsg="<?php putGS('Please enter a number for the image.'); ?>"></td>
-            			<td valign="top"><input type="image" src="/priv/img/icon/link_image_to_article.gif"></td>
-            		</tr>
-            		</form>
-            		</table>
+					<input type="image" src="/priv/img/icon/link_image_to_article.gif"></td>
               	</TD>
+           		</form>
             	<?php
          	}
          	else {
