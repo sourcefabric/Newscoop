@@ -10,16 +10,7 @@ class ArticleImage extends DatabaseObject {
 	var $m_columnNames = array('NrArticle', 'IdImage', 'Number');
 	var $m_image = null;
 	
-	function ArticleImage($article_nr, $image_nr) {
-		global $Campsite;
-		// Get the highest template ID and add one.
-		$queryStr = "SELECT IdImage FROM ArticleImages WHERE NrArticle = $article_nr AND Number = $image_nr";
-		$image_id = $Campsite['db']->GetOne($queryStr);
-		if ($image_id) {
-			$this->setProperty("IdImage", $image_id, false);
-			$this->m_image = & new Image($image_id);
-		}
-	}
+	function ArticleImage() { }
 	
 	/**
 	 * @return int
