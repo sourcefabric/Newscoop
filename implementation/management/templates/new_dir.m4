@@ -1,4 +1,3 @@
-B_HTML
 INCLUDE_PHP_LIB(<*$ADMIN_DIR/templates*>)
 B_DATABASE
 
@@ -6,7 +5,6 @@ CHECK_BASIC_ACCESS
 CHECK_ACCESS(<*ManageTempl*>)
 
 B_HEAD
-	X_EXPIRES
 	X_TITLE(<*Create new folder*>)
 <?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to create folders.*>)
@@ -31,15 +29,14 @@ X_CURRENT(<*Path*>, <*<?php  pencHTML(decURL($Path)); ?>*>)
 E_CURRENT
 
 <P>
-
 B_DIALOG(<*Create new folder*>, <*POST*>, <*do_new_dir.php*>)
 	B_DIALOG_INPUT(<*Name*>)
-		<INPUT TYPE="TEXT" NAME="cName" SIZE="32" MAXLENGTH="32">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cName" SIZE="32" MAXLENGTH="32">
 	E_DIALOG_INPUT
 	B_DIALOG_BUTTONS
 		<INPUT TYPE="HIDDEN" NAME="cPath" VALUE="<?php  pencHTML(decS($Path)); ?>">
 		SUBMIT(<*Save*>, <*Save changes*>)
-		REDIRECT(<*Cancel*>, <*Cancel*>, <*<?php  pencHTML(decS($Path)); ?>*>)
+		REDIRECT(<*Cancel*>, <*Cancel*>, <*<?php echo "/$ADMIN/templates?Path=".encHTML(decS($Path)); ?>*>)
 	E_DIALOG_BUTTONS
 E_DIALOG
 <P>
