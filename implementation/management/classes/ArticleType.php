@@ -48,7 +48,30 @@ class ArticleType extends DatabaseObject {
 
 	function getColumnValue($p_columnName) {
 		return $this->$p_columnName;
-	}
+	} // fn getColumnValue
+	
+	
+	/**
+	 *
+	 * @param boolean p_refetch
+	 *		Set this to true if you are including SQL commands in the column value.
+	 *		This will cause a refetch of the row since there is no way to determine
+	 *		what value the column was set to. 
+	 */
+	function setColumnValue($p_columnName, $p_columnValue, $p_refetch = false) {
+		global $Campsite;
+		$queryStr = "UPDATE ".$this->m_dbTableName
+					." SET ".$p_columnName."=".$p_columnValue
+					." WHERE ".$this->getKeyWhereClause();
+		$Campsite["db"]->Execute($queryStr);
+		if ($p_refetch) {
+			$this->fetch();
+		}
+		else {
+			$this->$p_columnName = $p_columnValue;
+		}
+	} // fn setColumnValue
+	
 	
 	/**
 	 * Set the body of the article.
