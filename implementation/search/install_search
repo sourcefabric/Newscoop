@@ -1,9 +1,7 @@
 #!/bin/bash
 
 mkdir -p $BIN_DIR
-cp -f gather $BIN_DIR
-chown $ROOT_USER:$APACHE_GROUP $BIN_DIR/gather
-chmod 750 $BIN_DIR/gather
+install -C --owner=$ROOT_USER --group=$APACHE_GROUP --mode=750 gather $"$BIN_DIR"
 [ $? -ne 0 ] && exit 1
 
 if $USER_INSTALL; then exit 0; fi

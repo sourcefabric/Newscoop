@@ -28,9 +28,7 @@ mutex.o: mutex.cpp mutex.h
 
 install: all
 	mkdir -p "$(BIN_DIR)"
-	cp -f smtp_wrapper "$(BIN_DIR)"
-	chown $(ROOT_USER):$(ROOT_GROUP) "$(BIN_DIR)/smtp_wrapper"
-	chmod 755 "$(BIN_DIR)/smtp_wrapper"
+	install -C --owner=$(ROOT_USER) --group=$(APACHE_GROUP) --mode=755 smtp_wrapper "$(BIN_DIR)"
 
 uninstall: dummy
 	rm -f "$(BIN_DIR)/smtp_wrapper"
