@@ -28,6 +28,9 @@
     - Fixed parser bug: on Issue statement select the current issue according to
     access rights
     - Added more debug information on Local statement
+    - Fixed bug on template list: didn't print properly file names containg spaces
+    - Small enhancement on template list: print files/directories in alphabetical
+    order
 
 2.0.10
     - Fixed the 'Back to article details' bug
