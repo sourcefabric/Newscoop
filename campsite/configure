@@ -123,6 +123,8 @@ export LIBCRYPT_LINK=$LIBCRYPT_LINK
 export NSL_LINK=$NSL_LINK
 export KILLALL=$KILLALL
 export PARSER_DEFAULT_PORT=2001
+export XML_INCLUDE=$XML_INCLUDE
+export XML_LINK=$XML_LINK
 EOF
 [ $? -ne 0 ] && echo "ERROR" && exit 1
 [ "$GPP" != "" ] && echo "export GPP=$GPP" >> $make_env
@@ -169,6 +171,9 @@ else # else if define start env
     prepare_install_env && [ $? -ne 0 ] && exit 1
     install_conf --set && [ $? -ne 0 ] && exit 1
     modules_conf --set && [ $? -ne 0 ] && exit 1
+    for m in apache gethostbyaddr_r gethostbyname_r getservbyname_r killall libpthread mysql_h libcrypt libnsl xml; do
+	check4_${m}
+    done
 
 fi # end if define start env
 
@@ -198,5 +203,7 @@ export LIBCRYPT_LINK=$LIBCRYPT_LINK
 export NSL_LINK=$NSL_LINK
 export KILLALL=$KILLALL
 export PARSER_DEFAULT_PORT=2001
+export XML_INCLUDE=$XML_INCLUDE
+export XML_LINK=$XML_LINK
 
 echo "Configuration done"
