@@ -40,9 +40,11 @@ B_MSGBOX(<*Deleting article type*>)
 	$del= 0; ?>dnl
 	<LI><? putGS('There are $1 article(s) left.',encHTML(getNumVar($q_art,0))); ?></LI>
     <? }
-    
-    if ($del)
-	query ("DROP TABLE X$AType");
+
+    if ($del) {
+		$sql = "DROP TABLE X$AType";
+		query($sql);
+	}
     if ($del) { ?>dnl
 	<LI><? putGS('The article type $1 has been deleted.','<B>'.encHTML($AType).'</B>'); ?></LI>
 X_AUDIT(<*62*>, <*getGS('The article type $1 has been deleted.',$AType)*>)
