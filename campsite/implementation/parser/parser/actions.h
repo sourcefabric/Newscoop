@@ -626,6 +626,7 @@ protected:
 	bool fromstart;			// if true, print url parameters using template start parameters
 	bool allsubtitles;		// if true, print all subtitles parameter
 	CLevel reset_from_list;	// level from which to reset list start
+	long int m_coTemplate;	// specified a certain template to be used
 
 	// PrintSubtitlesURL: print url parameters for subtitle list/printing
 	// Parameters:
@@ -636,8 +637,9 @@ protected:
 
 public:
 	// constructor
-	CActURLParameters(bool fs = false, bool as = false, long int i = -1, CLevel r_fl = CLV_ROOT)
-		: image_nr(i), fromstart(fs), allsubtitles(as), reset_from_list(r_fl) {}
+	CActURLParameters(bool fs = false, bool as = false, long int i = -1, CLevel r_fl = CLV_ROOT,
+	                  long int tpl = -1)
+		: image_nr(i), fromstart(fs), allsubtitles(as), reset_from_list(r_fl), m_coTemplate(tpl) {}
 	
 	// destructor
 	virtual ~CActURLParameters() {}
@@ -917,7 +919,7 @@ class CActSubscription : public CAction
 
 protected:
 	bool by_publication;	// if true, subscribe on the whole publication
-	string tpl_file;		// template file to load on submit action
+	long int m_nTemplateId;		// identifier of the template to load on submit
 	string button_name;		// submit button name
 	string total;			// total field name
 	string evaluate;		// evaluate button name
@@ -925,8 +927,9 @@ protected:
 
 public:
 	// constructor
-	CActSubscription(bool bp, string tf, string bn, string t, string ev)
-		: by_publication(bp), tpl_file(tf), button_name(bn), total(t), evaluate(ev) {}
+	CActSubscription(bool bp, long int p_nTemplateId, string bn, string t, string ev)
+		: by_publication(bp), m_nTemplateId(p_nTemplateId), button_name(bn), total(t), evaluate(ev)
+	{}
 	
 	// destructor
 	virtual ~CActSubscription() {}
@@ -1052,12 +1055,13 @@ class CActUser : public CAction
 protected:
 	CActionList block;			// list of action between User - EndUser
 	bool add;					// if true, perform user add action
-	string tpl_file;			// template file to load on submit
+	long int m_nTemplateId;		// identifier of the template to load on submit
 	string button_name;			// submit button name
 
 public:
 	// constructor
-	CActUser(bool a, string &tf, string &bn) : add(a), tpl_file(tf), button_name(bn) {}
+	CActUser(bool a, long int p_nTemplateId, string &bn)
+		: add(a), m_nTemplateId(p_nTemplateId), button_name(bn) {}
 	
 	// destructor
 	virtual ~CActUser() {}
@@ -1082,12 +1086,13 @@ class CActLogin : public CAction
 
 protected:
 	CActionList block;	// actions between Login - EndLogin statements
-	string tpl_file;		// template file to load on submit
+	long int m_nTemplateId;		// identifier of the template to load on submit
 	string button_name;		// submit button name
 
 public:
 	// constructor
-	CActLogin(string &tf, string &bn) : tpl_file(tf), button_name(bn) {}
+	CActLogin(long int p_nTemplateId, const string &bn)
+		: m_nTemplateId(p_nTemplateId), button_name(bn) {}
 	
 	// destructor
 	virtual ~CActLogin() {}
@@ -1112,12 +1117,13 @@ class CActSearch : public CAction
 
 protected:
 	CActionList block;			// actions between Search - EndSearch statements
-	string tpl_file;			// template file to load on submit
+	long int m_nTemplateId;		// identifier of the template to load on submit
 	string button_name;			// submit button name
 
 public:
 	// constructor
-	CActSearch(const string& tf, const string& bn) : tpl_file(tf), button_name(bn) {}
+	CActSearch(long int p_nTemplateId, const string& bn)
+		: m_nTemplateId(p_nTemplateId), button_name(bn) {}
 	
 	// destructor
 	virtual ~CActSearch() {}
