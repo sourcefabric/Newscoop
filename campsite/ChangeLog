@@ -27,3 +27,7 @@ new in 2.0.8
     - Fixed internal links bug (select proper template according to link
     publication)
     - Fixed incorrect parsing of "list ... article ... keyword <keyword>" bug
+
+new in 2.0.9
+    - Fixed incorrect timestamp update on event notify
+    - Fixed mysqlclient library link problem on RedHat systems
