@@ -43,6 +43,18 @@ class ArticleImage extends DatabaseObject {
 	}
 	
 
+	function GetUnusedTemplateId($p_articleId) {
+		global $Campsite;
+		// Get the highest template ID and add one.
+		$queryStr = "SELECT MAX(Number)+1 FROM ArticleImages WHERE NrArticle=$p_articleId";
+		$templateId = $Campsite['db']->GetOne($queryStr);
+		if ($templateId === false) {
+			$templateId = 1;
+		}
+		return $templateId;
+	} // fn GetUnusedTemplateId
+	
+	
 	/**
 	 * Return true if article already is using the given template ID, false otherwise.
 	 *
@@ -100,18 +112,42 @@ class ArticleImage extends DatabaseObject {
 	 * is the image's position in the template.
 	 *
 	 * @param int p_imageId
+	 *
 	 * @param int p_articleId
+	 *
 	 * @param int p_templateId
+	 *		Optional.  If not specified, this will be the next highest number
+	 *		of the existing values.
 	 *
 	 * @return void
 	 */
-	function AssociateImageWithArticle($p_imageId, $p_articleId, $p_templateId) {
+	function AssociateImageWithArticle($p_imageId, $p_articleId, $p_templateId = null) {
 		global $Campsite;
+		if (is_null($p_templateId)) {
+			$p_templateId = ArticleImage::GetUnusedTemplateId($p_articleId);
+		}
 		$queryStr = 'INSERT IGNORE INTO ArticleImages(NrArticle, IdImage, Number)'
 					." VALUES('".$p_articleId."', '".$p_imageId."','".$p_templateId."')";
 		$Campsite['db']->Execute($queryStr);
 	} // fn AssociateImageWithArticle
 
+	
+	/**
+	 * This call will only work for entries that already exist.
+	 *
+	 * @param int p_articleId
+	 * @param int p_imageId
+	 * @param int p_templateId
+	 *
+	 * @return void
+	 */
+	function SetTemplateId($p_articleId, $p_imageId, $p_templateId) {
+		global $Campsite;
+		$queryStr = "UPDATE ArticleImages SET Number=$p_templateId"
+					." WHERE NrArticle=$p_articleId AND IdImage=$p_imageId";
+		$Campsite['db']->Execute($queryStr);
+	} // fn SetTemplateId
+	
 	
 	/**
 	 * Remove the linkage between the given image and the given article.
@@ -158,6 +194,24 @@ class ArticleImage extends DatabaseObject {
 					." WHERE NrArticle='".$p_articleId."'";
 		$Campsite['db']->Execute($queryStr);		
 	} // fn OnArticleDelete
+	
+
+	/**
+	 * Copy all the pointers for the given article.
+	 * @param int p_srcArticleId
+	 * @param int p_destArticleId
+	 * @return void
+	 */
+	function OnArticleCopy($p_srcArticleId, $p_destArticleId) {
+		global $Campsite;
+		$queryStr = 'SELECT * FROM ArticleImages WHERE NrArticle='.$p_srcArticleId;
+		$rows = $Campsite['db']->GetAll($queryStr);
+		foreach ($rows as $row) {
+			$queryStr = 'INSERT IGNORE INTO ArticleImages(NrArticle, IdImage, Number)'
+						." VALUES($p_destArticleId, ".$row['IdImage'].",".$row['Number'].")";
+			$Campsite['db']->Execute($queryStr);
+		}
+	} // fn OnArticleCopy
 	
 	
 	/**
