@@ -35,7 +35,7 @@ int SQLConnection(MYSQL **sql);
 
 int main()
 {
-  char buf[2000], text[10000], command[200], *last_tstamp;
+  char buf[2000], text[10000], command[200], *last_tstamp = 0;
   MYSQL *sql = 0;
   int result;
   if ((result = SQLConnection(&sql)) != RES_OK)
@@ -94,9 +94,12 @@ int main()
     }
   }
   mysql_free_result(res);
-  sprintf(buf, "update AutoId set LogTStamp = '%s'", last_tstamp);
-  mysql_query(sql, buf);
-  free(last_tstamp);
+  if (last_tstamp != 0 && last_tstamp[0] != 0)
+  {
+    sprintf(buf, "update AutoId set LogTStamp = '%s'", last_tstamp);
+    mysql_query(sql, buf);
+    free(last_tstamp);
+  }
   return 0;
 }
 
