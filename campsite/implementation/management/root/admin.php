@@ -27,7 +27,7 @@ if (($extension_start = strrpos($call_script, '.')) !== false) {
 if ($is_image) {
 	$extension = substr(strrchr($call_script, '.'), 1);
 	header("Content-type: image/$extension");
-	//header('Expires: now');
+	header("Cache-control: private");
 	readfile($Campsite['HTML_DIR'] . "/$ADMIN_DIR/$call_script");
 } 
 elseif (($extension == '.php') || ($extension == '')) {
