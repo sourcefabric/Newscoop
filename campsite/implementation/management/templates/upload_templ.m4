@@ -49,7 +49,7 @@ B_DIALOG(<*Upload template*>, <*POST*>, <*do_upload_templ.php*>, <*multipart/for
 ?>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*File*>)
-		<P><INPUT TYPE="FILE" NAME="File" SIZE="32" MAXLENGTH="128">
+		<P><INPUT TYPE="FILE" NAME="File" SIZE="32" MAXLENGTH="128" class="input_file">
 	E_DIALOG_INPUT
 	B_DIALOG_BUTTONS
 		SUBMIT(<*Save*>, <*Save changes*>)
