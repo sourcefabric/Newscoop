@@ -145,7 +145,8 @@ typedef enum _TIfModifier {
     TOL_IMOD_PREVSUBTITLES = 0x030d,
     TOL_IMOD_NEXTSUBTITLES = 0x030e,
     TOL_IMOD_SUBTITLE = 0x030f,
-    TOL_IMOD_CURRENTSUBTITLE = 0x0310
+    TOL_IMOD_CURRENTSUBTITLE = 0x0310,
+    TOL_IMOD_IMAGE = 0x311
 } TIfModifier;
 
 typedef enum _TPrintModifier {

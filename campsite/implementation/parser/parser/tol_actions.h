@@ -712,6 +712,7 @@ protected:
 	TIfModifier modifier;		// if modifier
 	TOLPActionList block;		// first list of actions (condition is verified)
 	TOLPActionList sec_block;	// second list of actions (condition is not verified)
+	bool m_bNegated;
 
 	// RunBlock: run actions in a list of actions
 	// Parameters:
@@ -728,10 +729,11 @@ protected:
 
 public:
 	// constructor
-	TOLActIf(TIfModifier m, const TOLParameter& p)
+	TOLActIf(TIfModifier m, const TOLParameter& p, bool p_bNegated = false)
 			: TOLAction(TOL_ACT_IF), param(p), rc_hash(4, intHashFn, intEqual, intValue)
 	{
 		modifier = m;
+		m_bNegated = p_bNegated;
 	}
 	
 	// copy-constructor
