@@ -55,14 +55,13 @@ $languageObj =& new Language($Language);
 	<TD style="padding-right: 10px; padding-top: 0px;" ALIGN=RIGHT>
 		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
 		<TR>
-			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>&Section=<?php p($Section); ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php putGS('Articles'); ?>"></A></TD>
-			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>&Section=<?php p($Section); ?>"><B><?php putGS('Articles');  ?></B></A></TD>
-			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php  p($Language); ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php putGS('Sections'); ?>"></A></TD>
-			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>"><B><?php putGS('Sections'); ?></B></A></TD>
-			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/?Pub=<?php p($Pub); ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php putGS('Issues'); ?>"></A></TD>
-			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/?Pub=<?php p($Pub); ?>" ><B><?php putGS('Issues'); ?></B></A></TD>
-			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php putGS('Publications'); ?>"></A></TD>
-			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/" ><B><?php putGS('Publications'); ?></B></A></TD>
+			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>&Section=<?php p($Section); ?>" class="breadcrumb"><?php putGS('Articles');  ?></A></TD>
+			<td class="breadcrumb_separator">&nbsp;</td>
+			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>" class="breadcrumb"><?php putGS('Sections'); ?></A></TD>
+			<td class="breadcrumb_separator">&nbsp;</td>
+			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/?Pub=<?php p($Pub); ?>" class="breadcrumb"><?php putGS('Issues'); ?></A></TD>
+			<td class="breadcrumb_separator">&nbsp;</td>
+			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/" class="breadcrumb"><?php putGS('Publications'); ?></A></TD>
 		</TR>
 		</TABLE>
 	</TD>
@@ -90,7 +89,7 @@ $languageObj =& new Language($Language);
 	<td>
 		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 		<TR>
-			<TD><A HREF="../edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0"></A></TD>
+			<TD><A HREF="../edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/back.png" BORDER="0"></A></TD>
 			<TD><A HREF="../edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>" ><B><?php  putGS('Back to article details'); ?></B></A></TD>
 		</TR>
 		</TABLE>
@@ -147,10 +146,7 @@ if (count($articleImages) > 0) {
 		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php putGS('Photographer'); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php putGS('Place'); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php putGS('Date<BR><SMALL>(yyyy-mm-dd)</SMALL>'); ?></B></TD>
-	<?php  if ($User->hasPermission('ChangeImage')) { ?>
-		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS('Edit'); ?></B></TD>
-	<?php  }
-	    
+	<?php    
 	if ($User->hasPermission('ChangeArticle')) { ?>
 		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php putGS('Remove Image From Article'); ?></B></TD>
 		<?php
@@ -168,8 +164,25 @@ if (count($articleImages) > 0) {
 	?>	
 	<TR <?php  if (($imageCount%2)==0) { ?>class="list_row_odd"<?php  } else { ?>class="list_row_even"<?php  } ?>>
 		<TD ALIGN="center"><?php echo $articleImage->getTemplateId(); ?></td>
+
+		<?php  
+		if ($User->hasPermission('ChangeImage')) { 	
+			$imageUrl = "/$ADMIN/pub/issues/sections/articles/images/edit.php?"
+				."PublicationId=$Pub"
+				."&IssueId=$Issue"
+				."&SectionId=$Section"
+				."&ArticleId=$Article"
+				."&ImageId=".$image->getImageId()
+				."&InterfaceLanguageId=$Language"
+				."&ArticleLanguageId=$sLanguage"
+				."&ImageTemplateId=".$articleImage->getTemplateId();
+		}
+		else {
+			$imageUrl = CampsiteInterface::ArticleUrl($articleObj, $Language, "images/view.php") .'&ImageId='.$image->getImageId();
+		}
+		?>
 		<TD ALIGN="center">
-			<a href="<?php echo CampsiteInterface::ArticleUrl($articleObj, $Language, "images/view.php") . "&ImageId=".$image->getImageId(); ?>">
+			<a href="<?php echo $imageUrl; ?>">
 			<?php if (file_exists($image->getThumbnailStorageLocation())) { ?>
 				<img src="<?php echo $image->getThumbnailUrl(); ?>" border="0">
 			<?php } else { ?>
@@ -177,8 +190,8 @@ if (count($articleImages) > 0) {
 			<?php } ?>				
 			</a>
 		</TD>
-		<TD >
-			<a href="<?php echo CampsiteInterface::ArticleUrl($articleObj, $Language, "images/view.php") .'&ImageId='.$image->getImageId(); ?>"><?php echo htmlspecialchars($image->getDescription()); ?></A>
+		<TD>
+			<a href="<?php echo $imageUrl; ?>"><?php echo htmlspecialchars($image->getDescription()); ?></A>
 		</TD>
 		<TD >
 			<?php echo htmlspecialchars($image->getPhotographer()); ?>&nbsp;
@@ -189,11 +202,7 @@ if (count($articleImages) > 0) {
 		<TD >
 			<?php echo htmlspecialchars($image->getDate()); ?>
 		</TD>
-	<?php  if ($User->hasPermission('ChangeImage')) { ?>
-		<TD ALIGN="CENTER">
-			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/images/edit.php?PublicationId=<?php  p($Pub); ?>&IssueId=<?php  p($Issue); ?>&SectionId=<?php  p($Section); ?>&ArticleId=<?php  p($Article); ?>&ImageId=<?php echo $image->getImageId(); ?>&InterfaceLanguageId=<?php  p($Language); ?>&ArticleLanguageId=<?php  p($sLanguage); ?>&ImageTemplateId=<?php p($articleImage->getTemplateId()); ?>"><img src="/<?php echo $ADMIN; ?>/img/icon/edit.png" alt="<?php  putGS('Change');?>" border="0"></A>
-		</TD>
-	<?php  }
+		<?php
 	    if ($User->hasPermission('ChangeArticle')) { ?>
 			<TD ALIGN="CENTER">
 				<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/images/do_unlink.php?PublicationId=<?php  p($Pub); ?>&IssueId=<?php  p($Issue); ?>&SectionId=<?php  p($Section); ?>&ArticleId=<?php  p($Article); ?>&ImageId=<?php echo $image->getImageId(); ?>&ImageTemplateId=<?php echo $articleImage->getTemplateId(); ?>&ArticleLanguageId=<?php  p($Language); ?>&InterfaceLanguageId=<?php  p($sLanguage); ?>" onclick="return confirm('<?php putGS('Are you sure you want to remove the image \\\'$1\\\' from the article?', htmlspecialchars($image->getDescription())); ?>');"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/unlink.gif" BORDER="0" ALT="<?php  putGS('Unlink image $1', $image->getDescription()); ?>"></A>
