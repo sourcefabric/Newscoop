@@ -60,6 +60,10 @@ long int Integer::string2int(const string& p_rcoVal) throw(InvalidValue)
 }
 
 
+// String implementation
+const string String::emptyString = "";
+
+
 // Switch implementation
 
 string Switch::s_coValName[2] = { "OFF", "ON" };
@@ -366,7 +370,15 @@ inline const string& CEnumMap::values(const string& p_rcoEnum) const throw(Inval
 }
 
 // initialise enums map
-CEnumMap* Enum::s_pcoEnums = new CEnumMap;
+CEnumMap* Enum::s_pcoEnums = NULL;
+
+void Enum::initMap()
+{
+	if (s_pcoEnums == NULL)
+	{
+		s_pcoEnums = new CEnumMap;
+	}
+}
 
 // Enum constructor: initialise it from a string (name) and a list of pair values; the list
 // must be ordered by the data type: long int; if the data value is -1 it is automatically
@@ -424,6 +436,7 @@ void Enum::registerEnum(const string& p_rcoName,
 	                    const list<pair<string, long int> >& p_rcoValues)
 	throw(InvalidValue, bad_alloc)
 {
+	initMap();
 	SafeAutoPtr<CValuesMap> pcoValues(new CValuesMap);
 	list<pair<string, long int> >::const_iterator coIt;
 	long int i = 1;
