@@ -83,8 +83,8 @@ CMessage* readMessage(CTCPSocket* p_pcoClSock, CMessageFactoryRegister& p_rcoMFR
 	uint nDataSize = strtol(pchContent + 5, NULL, 16);
 	char *pchMsg = new char[nDataSize + 10];
 	memcpy(pchMsg, pchContent, 10);
-	p_pcoClSock->Recv(pchMsg + 10, nDataSize, 0);
-	pchMsg[nDataSize + 10] = 0;
+	uint nReceived = p_pcoClSock->Recv(pchMsg + 10, nDataSize, 0);
+	pchMsg[nReceived + 10] = 0;
 
 	return p_rcoMFReg.createMessage(pchMsg);
 }
