@@ -2701,3 +2701,13 @@ int CActWith::takeAction(CContext& c, sockstream& fs)
 	return RES_OK;
 	TK_CATCH_ERR
 }
+
+// takeAction: performs the action
+// Parametes:
+//		CContext& c - current context
+//		sockstream& fs - output stream	
+int CActURIPath::takeAction(CContext& c, sockstream& fs)
+{
+	fs << c.URL()->getURIPath();
+	return RES_OK;
+}
