@@ -9,7 +9,7 @@ regGS("Text","Текст");
 regGS("Adding new field","Додавање новог поља");
 regGS("You do not have the right to add article type fields.","Немате право да додајете поља за тип чланка");
 regGS("The field $1 already exists.","Поље $1 већ постоји");
-regGS("The $1  must not be void and may only contain letters.","$1 не може остати непопуњено, а може садржати искључиво слова");
+regGS("The $1  must not be void and may only contain letters and underscore (_) character.","$1 не може остати непопуњено, а може садржати искључиво слова");
 regGS("Invalid field type.","Погрешан тип поља");
 regGS("The field $1 has been created.","Поље $1 је креирано");
 regGS("Article type field $1 created","Поље $1 за тип чланка креирано");

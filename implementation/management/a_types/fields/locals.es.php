@@ -9,7 +9,7 @@ regGS("Text","Texto");
 regGS("Adding new field","Agregar nuevo campo");
 regGS("You do not have the right to add article type fields.","No tiene derecho para agregar campos de tipo de articulo");
 regGS("The field $1 already exists.","El campo $1 ya existe");
-regGS("The $1  must not be void and may only contain letters.","El $1 no debe estar vacio y solo puede contener letras");
+regGS("The $1  must not be void and may only contain letters and underscore (_) character.","El $1 no debe estar vacio y solo puede contener letras");
 regGS("Invalid field type.","Tipo de campo inválido");
 regGS("The field $1 has been created.","El campo $1 ha sido creado");
 regGS("Article type field $1 created","Campo de tipo de artículo $1 creado");
