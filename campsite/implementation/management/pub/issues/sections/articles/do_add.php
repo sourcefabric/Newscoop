@@ -193,7 +193,7 @@
     if ($created) { ?>	<INPUT TYPE="button" NAME="Yes" VALUE="<?php  putGS('Yes'); ?>" ONCLICK="location.href='/priv/pub/issues/sections/articles/edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  pgetNumVar($lii,0); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  pencURL($cLanguage); ?>'">
 	<INPUT TYPE="button" NAME="No" VALUE="<?php  putGS('No'); ?>" ONCLICK="location.href='/priv/pub/issues/sections/articles/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Language=<?php  p($Language); ?>'">
 <?php  } else { ?>
-	<INPUT TYPE="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/priv/pub/issues/sections/articles/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  pgetNumVar($lii,0); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  pencURL($cLanguage); ?>'">
+	<INPUT TYPE="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/priv/pub/issues/sections/articles/add.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  pgetNumVar($lii,0); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  pencURL($cLanguage); ?>&cName=<?php p($cName); ?>&cType=<?php p($cType); ?>&cLanguage=<?php p($cLanguage); ?>&cKeywords=<?php p($cKeywords); ?>'">
 <?php 
 }
 ?>		</DIV>

@@ -73,6 +73,10 @@
     todefnum('Section');
     todefnum('Language');
     todefnum('Wiz');
+	todef('cName');
+	todef('cType');
+	todef('cLanguage');
+	todef('cKeywords');
 ?><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%">
 	<TR>
 		<TD ROWSPAN="2" WIDTH="1%"><IMG SRC="/priv/img/sign_big.gif" BORDER="0"></TD>
@@ -124,20 +128,22 @@
 	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
 		<TD>
-		<INPUT TYPE="TEXT" NAME="cName" SIZE="64" MAXLENGTH="140">
+		<INPUT TYPE="TEXT" NAME="cName" VALUE="<?php echo $cName; ?>" SIZE="64" MAXLENGTH="140">
 		</TD>
 	</TR>
 	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS("Type"); ?>:</TD>
 		<TD>
-			<SELECT NAME="cType">
+			<SELECT NAME="cType"><OPTION VALUE=""></OPTION>
 <?php 
     query ("SHOW TABLES LIKE 'X%'", 'q_tbl');
     $nr=$NUM_ROWS;
 
 		for($loop=0;$loop<$nr;$loop++) { 
 			fetchRowNum($q_tbl);
-			print '<OPTION>'.encHTML ( substr ( getNumVar ($q_tbl,0) ,1 ) );
+			$art_type = encHTML ( substr ( getNumVar ($q_tbl,0) ,1 ) );
+//			print '<OPTION>'.encHTML ( substr ( getNumVar ($q_tbl,0) ,1 ) );
+			pcomboVar($art_type, $cType, $art_type);
 	        }
 		?>			</SELECT>
 		</TD>
@@ -151,7 +157,7 @@
 	$nr=$NUM_ROWS;
 		for($loop=0;$loop<$nr;$loop++) { 
 			fetchRow($q_lng);
-			pcomboVar(getHVar($q_lng,'Id'), $Language,getHVar($q_lng,'Name'));
+			pcomboVar(getHVar($q_lng,'Id'), $cLanguage,getHVar($q_lng,'Name'));
 	        }
 ?>			</SELECT>
 		</TD>
@@ -174,7 +180,7 @@
 	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS("Keywords"); ?>:</TD>
 		<TD>
-		<INPUT TYPE="TEXT" NAME="cKeywords" SIZE="64" MAXLENGTH="255">
+		<INPUT TYPE="TEXT" NAME="cKeywords" VALUE="<?php echo $cKeywords; ?>" SIZE="64" MAXLENGTH="255">
 		</TD>
 	</TR>
 	<?php 
