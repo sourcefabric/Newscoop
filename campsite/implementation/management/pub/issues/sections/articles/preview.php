@@ -47,7 +47,8 @@ if ($urlType == 1) {
 		. "&IdPublication=$Publication&NrIssue=$Issue&NrSection=$Section"
 		. "&NrArticle=$Article";
 } else {
-	$url = "/" . $languageObj->getCode() . "/" . $issueObj->getShortName();
+	$url = "/" . $languageObj->getCode() . "/" . $issueObj->getShortName()
+		. "/" . $sectionObj->getShortName() . "/" . $articleObj->getShortName();
 }
 
 if ($User->hasPermission("ManageTempl") || $User->hasPermission("DeleteTempl")) {
