@@ -237,9 +237,9 @@ CStatementMap::CStatementMap()
 	pcoCtx->insertAttr(new CStringAttr("name", "Name"));
 	pcoCtx->insertAttr(new CIntegerAttr("number", "Number"));
 	pcoCtx->insertAttr(new CDateAttr("publish_date", "PublicationDate"));
-	pcoCtx->insertAttr(new CIntegerAttr("publish_date_year", "YEAR(PublicationDate)"));
-	pcoCtx->insertAttr(new CIntegerAttr("publish_date_month", "MONTH(PublicationDate)"));
-	pcoCtx->insertAttr(new CIntegerAttr("publish_date_mday", "DAYOFMONTH(PublicationDate)"));
+	pcoCtx->insertAttr(new CIntegerAttr("publish_year", "YEAR(PublicationDate)"));
+	pcoCtx->insertAttr(new CIntegerAttr("publish_month", "MONTH(PublicationDate)"));
+	pcoCtx->insertAttr(new CIntegerAttr("publish_mday", "DAYOFMONTH(PublicationDate)"));
 	pcoCtx->insertAttr(new CIntegerAttr("year", "YEAR(PublicationDate)"));
 	pcoCtx->insertAttr(new CIntegerAttr("mon_nr", "MONTH(PublicationDate)"));
 	pcoCtx->insertAttr(new CIntegerAttr("mday", "DAYOFMONTH(PublicationDate)"));
