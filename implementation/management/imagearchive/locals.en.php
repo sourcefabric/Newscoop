@@ -17,7 +17,7 @@ regGS("No images.","No images.:en");
 regGS("Thumbnail", "Thumbnail:en");
 regGS("Description<BR><SMALL>(Click to view details)</SMALL>", "Description<BR><SMALL>(Click to view details)</SMALL>:en");
 regGS("In use", "In use:en");
-regGS("Galery", "Galery:en");
+regGS("Gallery", "Gallery:en");
 regGS("Text only", "Text only:en");
 regGS("$1 images found", "$1 images found:en");
 regGS("Identifier", "Identifier:en");
