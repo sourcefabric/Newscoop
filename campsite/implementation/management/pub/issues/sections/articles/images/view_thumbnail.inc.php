@@ -15,37 +15,39 @@
         <TD ALIGN="LEFT" VALIGN="TOP" width="15%">
           <table border="0" cellspacing="0" cellpadding="0"><tr><td style="padding: 3px;" nowrap><B><a href="<?php echo $DateHref; ?>"><?php  putGS("Date<BR><SMALL>(yyyy-mm-dd)</SMALL>"); ?></a></B></td><td align="left"><a href="<?php echo $DateHref; ?>"><?php echo $DateOrderIcon; ?></a></td></tr></table>
         </TD>
-        <TD ALIGN="LEFT" VALIGN="TOP" width="5%">
-          <table border="0" cellspacing="0" cellpadding="0"><tr><td align="center" style="padding: 3px;" nowrap><B><a href="<?php echo $InUseHref; ?>"><?php  putGS("In use"); ?></a></B></td><td align="left"><a href="<?php echo $InUseHref; ?>"><?php echo $InUseOrderIcon; ?></a></td></tr></table>
+        <TD ALIGN="center" VALIGN="top" width="5%" style="padding: 3px;" nowrap>
+          <?php  putGS("In use"); ?>
         </TD>
-        <?php
-        if ($User->hasPermission('DeleteImage')) { ?>
-        <TD ALIGN="center" VALIGN="TOP" WIDTH="5%" style="padding: 3px;"><B><?php  putGS("Link Image to Article"); ?></B></TD>
-    <?php  } ?>
+        <?php if ($articleObj->userCanModify($User)) { ?>
+        <TD ALIGN="center" VALIGN="top" WIDTH="5%" style="padding: 3px;"><B><?php  putGS("Link Image to Article"); ?></B></TD>
+    	<?php } ?>
     </TR>  
     <?php
     $color = 0;
+    $articleUrlData = "&Pub=$Pub&Issue=$Issue&Section=$Section"
+    	."&Language=$Language&sLanguage=$sLanguage&Article=$Article";
     foreach ($imageData as $image) {
         ?>
         <TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
             <TD ALIGN="center">
                 <A HREF="<?php echo 
-                CampsiteInterface::ArticleUrl($articleObj, $InterfaceLanguageId, "images/view.php", $_SERVER['REQUEST_URI'])
+                CampsiteInterface::ArticleUrl($articleObj, $Language, "images/edit.php", $_SERVER['REQUEST_URI'])
                 .'&ImageId='.$image['id']
                 .'&'.$imageNav->getSearchLink(); ?>">
                   <img src="<?php echo $image['thumbnail_url']; ?>" border="0">
                 </a>
             </TD>
             <TD style="padding-left: 5px;">
-                <A HREF="<?php echo CampsiteInterface::ArticleUrl($articleObj, $InterfaceLanguageId, "images/view.php", $_SERVER['REQUEST_URI']) 
+                <A HREF="<?php echo CampsiteInterface::ArticleUrl($articleObj, $Language, "images/edit.php", $_SERVER['REQUEST_URI']) 
                 .'&ImageId='.$image['id']
-                .'&'.$imageNav->getSearchLink(); ?>"><?php echo htmlspecialchars($image['description']); ?></A>
+                .'&'.$imageNav->getSearchLink()
+                .$articleUrlData; ?>"><?php echo htmlspecialchars($image['description']); ?></A>
             </TD>
             <TD style="padding-left: 5px;">
                 <?php
                 $PhotographerLink = 'search.php?' 
                 	.'search_photographer='.urlencode($image['photographer'])
-                	.'&view='.$view;
+                	.$articleUrlData;
                 echo "<a href='$PhotographerLink'>"
                 	.orE(htmlspecialchars($image['photographer']))."</a>";
                 ?>&nbsp;
@@ -54,7 +56,7 @@
                 <?php
                 $PlaceLink = 'search.php?'
                 	.'search_place='.urlencode($image['place'])
-                	.'&view='.$view;
+                	.$articleUrlData;
                 echo "<a href='$PlaceLink'>"
                 	.orE(htmlspecialchars($image['place']))."</a>";
                 ?>&nbsp;
@@ -63,7 +65,7 @@
                 <?php
                 $DateLink = 'search.php?'
                 	.'search_date='.urlencode($image['date'])
-                	.'&view='.$view;
+                	.$articleUrlData;
                 echo "<a href='$DateLink'>".orE(htmlspecialchars($image['date']))."</a>";
                 ?>&nbsp;
             </TD>
@@ -73,14 +75,14 @@
                 ?>&nbsp;
             </TD>
             <?php
-            if ($User->hasPermission('ChangeArticle')) { ?>
-        		<form method="POST" action="do_link.php" onsubmit="return validateForm(this, 0, 0, 0, 1, 8);">
-				<input type="hidden" name="PublicationId" value="<?php p($PublicationId); ?>">
-				<input type="hidden" name="IssueId" value="<?php p($IssueId); ?>">
-				<input type="hidden" name="SectionId" value="<?php p($SectionId); ?>">
-				<input type="hidden" name="InterfaceLanguageId" value="<?php p($InterfaceLanguageId); ?>">
-				<input type="hidden" name="ArticleLanguageId" value="<?php p($ArticleLanguageId); ?>">
-				<input type="hidden" name="ArticleId" value="<?php p($ArticleId); ?>">
+            if ($articleObj->userCanModify($User)) { ?>
+        		<form method="POST" action="do_link.php">
+				<input type="hidden" name="Pub" value="<?php p($Pub); ?>">
+				<input type="hidden" name="Issue" value="<?php p($Issue); ?>">
+				<input type="hidden" name="Section" value="<?php p($Section); ?>">
+				<input type="hidden" name="Language" value="<?php p($Language); ?>">
+				<input type="hidden" name="sLanguage" value="<?php p($sLanguage); ?>">
+				<input type="hidden" name="Article" value="<?php p($Article); ?>">
         		<input type="hidden" name="ImageId" value="<?php echo $image['id']; ?>">
             	<TD ALIGN="CENTER">
 					<input type="image" src="/<?php echo $ADMIN; ?>/img/icon/add.png"></td>
@@ -105,7 +107,7 @@
         $previousLinkExists = false;
         if ($ImageOffset > 0) { 
         	?> 
-            <B><A HREF="<?php echo CampsiteInterface::ArticleUrl($articleObj, $InterfaceLanguageId, "images/search.php").'&'.$imageNav->getPreviousLink(); ?>">&lt;&lt; <?php  putGS('Previous'); ?></A></B>
+            <B><A HREF="<?php echo CampsiteInterface::ArticleUrl($articleObj, $Language, "images/search.php").'&'.$imageNav->getPreviousLink(); ?>">&lt;&lt; <?php  putGS('Previous'); ?></A></B>
         	<?php  
         	$previousLinkExists = true;
         } 
@@ -114,7 +116,7 @@
         		echo ' | ';
         	}
         	?>
-            <B><A HREF="<?php echo CampsiteInterface::ArticleUrl($articleObj, $InterfaceLanguageId, "images/search.php").'&'.$imageNav->getNextLink(); ?>"><?php  putGS('Next'); ?> &gt;&gt</A></B>
+            <B><A HREF="<?php echo CampsiteInterface::ArticleUrl($articleObj, $Language, "images/search.php").'&'.$imageNav->getNextLink(); ?>"><?php  putGS('Next'); ?> &gt;&gt</A></B>
         	<?php  
         } 
         ?></td>
