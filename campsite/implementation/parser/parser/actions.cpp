@@ -775,6 +775,8 @@ int CActList::WriteOrdParam(string& s)
 		if (modifier == CMS_ST_ARTICLE)
 			table = "Articles.";
 		s = string(" order by ") + table + "IdLanguage desc";
+		if (modifier == CMS_ST_SECTION)
+			s += string(", Number asc");
 		for (pl_i = ord_param.begin(); pl_i != ord_param.end(); ++pl_i)
 		{
 			string coAttribute = (*pl_i)->attribute();
