@@ -374,6 +374,7 @@ int CStatementMap::InitStatements()
 	pcoSt->insertCtx(pcoCtx);
 
 	pcoCtx = new CStatementContext(CMS_CT_PRINT);
+	pcoCtx->insertAttr(new CTopicAttr("identifier"));
 	pcoCtx->insertAttr(new CTopicAttr("name"));
 	pcoSt->insertCtx(pcoCtx);
 
@@ -586,6 +587,7 @@ int CStatementMap::InitStatements()
 	pcoCtx = new CStatementContext(CMS_CT_PRINT);
 	pcoCtx->insertAttr(new CAttribute("adderror"));
 	pcoCtx->insertAttr(new CAttribute("modifyerror"));
+	pcoCtx->insertAttr(new CAttribute("Identifier", "Id"));
 	pcoCtx->insertAttr(new CAttribute("Name", "Name"));
 	pcoCtx->insertAttr(new CAttribute("UName", "UName"));
 	pcoCtx->insertAttr(new CAttribute("EMail", "EMail"));
