@@ -259,14 +259,29 @@ installed search for libz.so.[version] in /usr/lib directory. [version]
 is a string like: 1.1.3, 1.1.4 etc. As root type the following command:</p>
 <p style="margin-bottom: 0.5cm;"><font face="Fixed, monospace">ln -s
 /usr/lib/libz.so.[version] /usr/lib/libz.so</font></p>
-<p style="margin-bottom: 0.5cm;"><font face="Nimbus Roman No9 L">where
-[version] must be replaced by the actual library version.</font></p>
+<p style="margin-bottom: 0.5cm; font-family: serif;">where
+[version] must be replaced by the actual library version.</p>
 <p style="margin-bottom: 0.5cm;">If zlib was already installed from
 sources in a non-standard directory you must edit the check4_functions
 file in the [campsite_source]/.install_conf directory and add the path
 to libz.so library to the path list in line 679:</p>
 <p style="margin-bottom: 0.5cm;">check4_file libz.so --file --path
 "[my_path]:/usr/lib:/usr/local/lib&#8221;</p>
+<h4>2.5 Invalid command 'Action'</h4>
+<p>Apache prints "Invalid command 'Action'" message when trying to
+start it: mod_actions module was not loaded. Edit the apache
+configuration file and add the following line:<br>
+</p>
+<p>LoadModule action_module /usr/lib/apache/mod_actions.so<br>
+</p>
+<p>The modules directory may be different on your system, you should
+try other options:<br>
+</p>
+<ul>
+  <li>/usr/lib/apache/1.3/mod_actions.so</li>
+  <li>/usr/lib/apache2/mod_actions.so</li>
+  <li>/usr/lib/apache/2.0/mod_actions.so</li>
+</ul>
 <p><br>
 </p>
 </body>
