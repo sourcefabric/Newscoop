@@ -32,8 +32,60 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
 string CPublication::getTemplate(long p_nLanguage, long p_nPublication, long p_nIssue,
-                                 long p_nSection, MYSQL* p_DBConn)
+                                 long p_nSection, long p_nArticle, MYSQL* p_DBConn,
+                                 bool p_bIsPublished)
 {
+	if (p_nArticle > 0)
+	{
+		if (p_nIssue <= 0 || p_nSection <= 0)
+		{
+			stringstream coSql;
+			coSql << "select NrIssue, NrSection from Issues where Number = "
+			      << p_nArticle << " and IdLanguage = " << p_nLanguage;
+			if (p_bIsPublished)
+				coSql << " and Published = 'Y'";
+			CMYSQL_RES coRes;
+			MYSQL_ROW qRow = QueryFetchRow(p_DBConn, coSql.str().c_str(), coRes);
+			if (qRow == NULL)
+				throw InvalidValue("article number", ((string)Integer(p_nArticle)).c_str());
+			p_nIssue = (p_nIssue > 0) ? p_nIssue : (long int)Integer(string(qRow[0]));
+			p_nSection = (p_nSection > 0) ? p_nSection : (long int)Integer(string(qRow[1]));
+		}
+		return getArticleTemplate(p_nLanguage, p_nPublication, p_nIssue, p_nSection, p_DBConn);
+	}
+	if (p_nSection > 0)
+	{
+		if (p_nIssue <= 0)
+		{
+			stringstream coSql;
+			coSql << "select max(i.Number) from Sections as s, Issues as i where "
+			      << "s.IdPublication = i.IdPublication and s.IdLanguage = i.IdLanguage "
+			      << "and s.IdPublication = " << p_nPublication << " and s.IdLanguage = "
+			      << p_nLanguage;
+			if (p_bIsPublished)
+				coSql << " and i.Published = 'Y'";
+			CMYSQL_RES coRes;
+			MYSQL_ROW qRow = QueryFetchRow(p_DBConn, coSql.str().c_str(), coRes);
+			if (qRow == NULL)
+				throw InvalidValue("section number", ((string)Integer(p_nSection)).c_str());
+			p_nIssue = (long int)Integer(string(qRow[0]));
+		}
+		return getSectionTemplate(p_nLanguage, p_nPublication, p_nIssue, p_nSection, p_DBConn);
+	}
+	if (p_nIssue <= 0)
+	{
+		stringstream coSql;
+		coSql << "select max(NrIssue) from Issues where IdPublication = " << p_nPublication
+		      << " and IdLanguage = " << p_nLanguage;
+			if (p_bIsPublished)
+				coSql << " and Published = 'Y'";
+		CMYSQL_RES coRes;
+		MYSQL_ROW qRow = QueryFetchRow(p_DBConn, coSql.str().c_str(), coRes);
+		if (qRow == NULL)
+			throw InvalidValue("publication number", ((string)Integer(p_nPublication)).c_str());
+		p_nIssue = (long int)Integer(string(qRow[0]));
+	}
+	return getIssueTemplate(p_nLanguage, p_nPublication, p_nIssue, p_DBConn);
 }
 
 
