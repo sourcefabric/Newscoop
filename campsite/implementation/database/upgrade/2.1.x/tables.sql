@@ -266,4 +266,28 @@ ADD `EditorUnderline` ENUM( 'N', 'Y' ) DEFAULT 'N' NOT NULL ,
 ADD `EditorUndoRedo` ENUM( 'N', 'Y' ) DEFAULT 'N' NOT NULL ,
 ADD `EditorCopyCutPaste` ENUM( 'N', 'Y' ) DEFAULT 'N' NOT NULL ;
 
+ALTER TABLE `UserTypes` ADD `EditorImage` ENUM( 'N', 'Y' ) DEFAULT 'N' NOT NULL ,
+ADD `EditorTextAlignment` ENUM( 'N', 'Y' ) DEFAULT 'N' NOT NULL ,
+ADD `EditorFontColor` ENUM( 'N', 'Y' ) DEFAULT 'N' NOT NULL ,
+ADD `EditorFontSize` ENUM( 'N', 'Y' ) DEFAULT 'N' NOT NULL ,
+ADD `EditorFontFace` ENUM( 'N', 'Y' ) DEFAULT 'N' NOT NULL ,
+ADD `EditorTable` ENUM( 'N', 'Y' ) DEFAULT 'N' NOT NULL ,
+ADD `EditorSuperscript` ENUM( 'N', 'Y' ) DEFAULT 'N' NOT NULL ,
+ADD `EditorSubscript` ENUM( 'N', 'Y' ) DEFAULT 'N' NOT NULL ,
+ADD `EditorStrikethrough` ENUM( 'N', 'Y' ) DEFAULT 'N' NOT NULL ,
+ADD `EditorIndent` ENUM( 'N', 'Y' ) DEFAULT 'N' NOT NULL ,
+ADD `EditorListBullet` ENUM( 'N', 'Y' ) DEFAULT 'N' NOT NULL ,
+ADD `EditorListNumber` ENUM( 'N', 'Y' ) DEFAULT 'N' NOT NULL ,
+ADD `EditorHorizontalRule` ENUM( 'N', 'Y' ) DEFAULT 'N' NOT NULL ,
+ADD `EditorSourceView` ENUM( 'N', 'Y' ) DEFAULT 'N' NOT NULL ,
+ADD `EditorEnlarge` ENUM( 'N', 'Y' ) DEFAULT 'N' NOT NULL ,
+ADD `EditorTextDirection` ENUM( 'N', 'Y' ) DEFAULT 'N' NOT NULL ,
+ADD `EditorLink` ENUM( 'N', 'Y' ) DEFAULT 'N' NOT NULL ,
+ADD `EditorSubhead` ENUM( 'N', 'Y' ) DEFAULT 'N' NOT NULL,
+ADD `EditorBold` ENUM( 'N', 'Y' ) DEFAULT 'N' NOT NULL ,
+ADD `EditorItalic` ENUM( 'N', 'Y' ) DEFAULT 'N' NOT NULL ,
+ADD `EditorUnderline` ENUM( 'N', 'Y' ) DEFAULT 'N' NOT NULL ,
+ADD `EditorUndoRedo` ENUM( 'N', 'Y' ) DEFAULT 'N' NOT NULL ,
+ADD `EditorCopyCutPaste` ENUM( 'N', 'Y' ) DEFAULT 'N' NOT NULL ;
+
 COMMIT;
