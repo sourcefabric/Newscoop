@@ -72,36 +72,6 @@ CParameterMap::~CParameterMap()
 	}
 }
 
-void CParameterMap::insert(const string& p_rcoParameter, const string& p_rcoValue)
-{
-	String2Value::iterator coIt = m_coParameters.find(p_rcoParameter);
-	if (coIt != m_coParameters.end())
-	{
-		CValue* pcoValue = (*coIt).second;
-		(*coIt).second = new CStringValue(p_rcoValue);
-		delete pcoValue;
-	}
-	else
-	{
-		m_coParameters[p_rcoParameter] = new CStringValue(p_rcoValue);
-	}
-}
-
-void CParameterMap::insert(const string& p_rcoParameter, pair<long, const char*> p_Value)
-{
-	String2Value::iterator coIt = m_coParameters.find(p_rcoParameter);
-	if (coIt != m_coParameters.end())
-	{
-		CValue* pcoValue = (*coIt).second;
-		(*coIt).second = new CBinaryStringValue(p_Value.first, p_Value.second);
-		delete pcoValue;
-	}
-	else
-	{
-		m_coParameters[p_rcoParameter] = new CBinaryStringValue(p_Value.first, p_Value.second);
-	}
-}
-
 const CValue* CParameterMap::valueOf(const string& p_rcoParameter) const throw(out_of_range)
 {
 	String2Value::const_iterator coIt = m_coParameters.find(p_rcoParameter);
