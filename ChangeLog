@@ -20,6 +20,8 @@
     - If statements in template language can be negated: If not
     - The parser server updates automatically the article types from the database
     (in case they were modified)
+    - Fixed event notify bug: mailnotify used to send all the emails to the event
+    originator
 
 2.0.10
     - Fixed the 'Back to article details' bug
