@@ -62,6 +62,29 @@ todefradio('cManageIndexer');
 todefradio('cPublish');
 todefradio('cManageTopics');
 
+todefradio('cEditorBold');
+todefradio('cEditorItalic');
+todefradio('cEditorUnderline');
+todefradio('cEditorUndoRedo');
+todefradio('cEditorCopyCutPaste');
+todefradio('cEditorImage');
+todefradio('cEditorTextAlignment');
+todefradio('cEditorFontColor');
+todefradio('cEditorFontSize');
+todefradio('cEditorFontFace');
+todefradio('cEditorTable');
+todefradio('cEditorSuperscript');
+todefradio('cEditorSubscript');
+todefradio('cEditorStrikethrough');
+todefradio('cEditorIndent');
+todefradio('cEditorListBullet');
+todefradio('cEditorListNumber');
+todefradio('cEditorHorizontalRule');
+todefradio('cEditorSourceView');
+todefradio('cEditorEnlarge');
+todefradio('cEditorTextDirection');
+todefradio('cEditorLink');
+todefradio('cEditorSubhead');
 ?>
 
 
@@ -76,7 +99,67 @@ B_MSGBOX(<*Updating user type permissions*>)
 	else
 		$ok= 1;
 	if ($ok) {
-		query ("UPDATE UserTypes SET Name='$cName', Reader='$cReader', ManagePub='$cManagePub', DeletePub='$cDeletePub', ManageIssue='$cManageIssue', DeleteIssue='$cDeleteIssue', ManageSection='$cManageSection', DeleteSection='$cDeleteSection', AddArticle='$cAddArticle', ChangeArticle='$cChangeArticle', DeleteArticle='$cDeleteArticle', AddImage='$cAddImage', ChangeImage='$cChangeImage', DeleteImage='$cDeleteImage', ManageTempl='$cManageTempl', DeleteTempl='$cDeleteTempl', ManageUsers='$cManageUsers', ManageSubscriptions='$cManageSubscriptions', DeleteUsers='$cDeleteUsers', ManageUserTypes='$cManageUserTypes', ManageArticleTypes='$cManageArticleTypes', DeleteArticleTypes='$cDeleteArticleTypes', ManageLanguages='$cManageLanguages', DeleteLanguages='$cDeleteLanguages', MailNotify='$cMailNotify', ManageClasses='$cManageClasses', ManageDictionary='$cManageDictionary', DeleteDictionary='$cDeleteDictionary', ManageCountries='$cManageCountries', DeleteCountries='$cDeleteCountries', ViewLogs='$cViewLogs', ManageLocalizer = '$cManageLocalizer', ManageIndexer = '$cManageIndexer', Publish = '$cPublish', ManageTopics= '$cManageTopics' WHERE Name='$UType'");
+		$queryStr = "UPDATE UserTypes SET "
+			." Name='$cName', "
+			." Reader='$cReader',"
+			." ManagePub='$cManagePub', "
+			." DeletePub='$cDeletePub',"
+			." ManageIssue='$cManageIssue',"
+			." DeleteIssue='$cDeleteIssue', "
+			." ManageSection='$cManageSection', "
+			." DeleteSection='$cDeleteSection', "
+			." AddArticle='$cAddArticle', "
+			." ChangeArticle='$cChangeArticle', "
+			." DeleteArticle='$cDeleteArticle', "
+			." AddImage='$cAddImage', "
+			." ChangeImage='$cChangeImage', "
+			." DeleteImage='$cDeleteImage', "
+			." ManageTempl='$cManageTempl', "
+			." DeleteTempl='$cDeleteTempl', "
+			." ManageUsers='$cManageUsers', "
+			." ManageSubscriptions='$cManageSubscriptions', "
+			." DeleteUsers='$cDeleteUsers', "
+			." ManageUserTypes='$cManageUserTypes', "
+			." ManageArticleTypes='$cManageArticleTypes', "
+			." DeleteArticleTypes='$cDeleteArticleTypes', "
+			." ManageLanguages='$cManageLanguages', "
+			." DeleteLanguages='$cDeleteLanguages', "
+			." MailNotify='$cMailNotify', "
+			." ManageClasses='$cManageClasses', "
+			." ManageDictionary='$cManageDictionary', "
+			." DeleteDictionary='$cDeleteDictionary', "
+			." ManageCountries='$cManageCountries', "
+			." DeleteCountries='$cDeleteCountries', "
+			." ViewLogs='$cViewLogs' , "
+			." ManageLocalizer = '$cManageLocalizer', "
+			." ManageIndexer = '$cManageIndexer', "
+			." Publish = '$cPublish', "
+			." ManageTopics= '$cManageTopics', "
+			." EditorImage='$cEditorImage', "
+			." EditorTextAlignment='$cEditorTextAlignment', "
+			." EditorFontColor='$cEditorFontColor', "
+			." EditorFontSize='$cEditorFontSize', "
+			." EditorFontFace='$cEditorFontFace', "
+			." EditorTable='$cEditorTable', "
+			." EditorSuperscript='$cEditorSuperscript', "
+			." EditorSubscript='$cEditorSubscript', "
+			." EditorStrikethrough='$cEditorStrikethrough', "
+			." EditorIndent='$cEditorIndent', "
+			." EditorListBullet='$cEditorListBullet', "
+			." EditorListNumber='$cEditorListNumber', "
+			." EditorHorizontalRule='$cEditorHorizontalRule', "
+			." EditorSourceView='$cEditorSourceView', "
+			." EditorEnlarge='$cEditorEnlarge', "
+			." EditorTextDirection='$cEditorTextDirection', "
+			." EditorLink='$cEditorLink', "
+			." EditorSubhead='$cEditorSubhead', "
+			." EditorBold='$cEditorBold',"
+			." EditorItalic='$cEditorItalic',"
+			." EditorUnderline='$cEditorUnderline',"
+			." EditorUndoRedo='$cEditorUndoRedo',"
+			." EditorCopyCutPaste='$cEditorCopyCutPaste'"
+			." WHERE Name='$UType'";
+		query($queryStr);
 		$ok= $AFFECTED_ROWS > 0;
 	}
 } else
