@@ -25,7 +25,7 @@ admin_vars="ADMIN_INTERFACE_SCRIPT_DIR ADMIN_INTERFACE_CGI_DIR"
 var_not_modified $database_vars $admin_vars CAMPSITE_VERSION && ! $in_modified && exit 0
 save_var $database_vars $admin_vars CAMPSITE_VERSION
 
-echo -n -e "\tWriting macros.m4..."
+echo -n -e "Writing macros.m4..."
 cat > macros.m4 << EOF
 changecom\`'dnl
 changequote(<*, *>)dnl
@@ -38,22 +38,10 @@ cat "./macros.in" >> macros.m4
 [ $? -ne 0 ] && echo "ERROR" && exit 1
 echo OK
 
-echo -n -e "\tWriting lib_campsite.php..."
-cat > lib_campsite.php << EOF
-<?php
-
-\$scriptBase='$ADMIN_INTERFACE_SCRIPT_DIR';
-
-EOF
-[ $? -ne 0 ] && echo "ERROR" && exit 1
-cat "./lib_campsite.in" >> lib_campsite.php
-[ $? -ne 0 ] && echo "ERROR" && exit 1
-echo OK
-
 cdirs=`find . -maxdepth 1 -type d -print | cut -f 2 -d "/"`
 for dir in $cdirs; do
     if [ -x ${dir}/configure ] && [ "$dir" != "." ]; then
-	echo -e "\t\tConfiguring implementation/management/$dir ..."
+	echo -e "\tConfiguring implementation/management/$dir ..."
 	cd $dir && ./configure
 	result=$?
 	cd ..
