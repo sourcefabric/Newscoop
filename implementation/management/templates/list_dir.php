@@ -3,14 +3,16 @@ function isTpl($s)
 {
 	$dotpos=strrpos($s,".");
 	$ext=substr($s,$dotpos+1);
-	return ($ext == 'tpl' || $ext=='TPL' || $ext == 'php' || $ext == 'htm' || $ext == 'html' || $ext == 'php3' || $ext == 'php4' || $ext == 'txt');
+	return ($ext == 'tpl' || $ext=='TPL' || $ext == 'php' || $ext == 'htm'
+		|| $ext == 'html' || $ext == 'php3' || $ext == 'php4' || $ext == 'txt'
+		|| $ext == 'css');
 }
 ?>
 
 <TABLE BORDER="0" CELLSPACING="2" CELLPADDING="0" WIDTH="100%">
 <TR BGCOLOR="WHITE"><TD WIDTH="30%" VALIGN="TOP">
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" WIDTH="100%" class="table_list">
-<TR BGCOLOR="#C0D0FF">
+<TR class="table_list_header">
 <TD VALIGN="TOP"><B><?php  putGS('Folders'); ?> </B></TD>
 <?php 
 if ($dta != "0") {
@@ -74,7 +76,7 @@ if (isset($dirs)) {
 </TABLE>
 </TD><TD WIDTH="60%" VALIGN="TOP">
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" WIDTH="100%" class="table_list">
-<TR BGCOLOR="#C0D0FF">
+<TR class="table_list_header">
 <TD  VALIGN="TOP"><B> <?php  putGS('Files'); ?> </B></TD>
 <?php 
 if($dta!= "0") {
