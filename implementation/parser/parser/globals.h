@@ -62,9 +62,13 @@ inline InvalidValue::InvalidValue(const char* p_pchName, const char* p_pchValue)
 {
 	m_coMsg = string("Invalid value");
 	if (p_pchValue != NULL)
-		m_coMsg += string(" \"") + p_pchValue + "\""; 
+		m_coMsg += string(" \"") + p_pchValue + "\"";
+	else
+		m_coMsg += string(" \"NULL\"");
 	if (p_pchName != NULL)
-		m_coMsg += string(" of \"") + p_pchName + "\""; 
+		m_coMsg += string(" of \"") + p_pchName + "\"";
+	else
+		m_coMsg += string(" \"NULL\"");
 }
 
 inline InvalidValue::InvalidValue(const string& p_rcoName, const string& p_rcoValue)
