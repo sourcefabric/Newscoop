@@ -729,7 +729,9 @@ function valid_short_name($name) {
 	return true;
 }
 
-$cache_types = array();
+global $cache_type_all, $cache_type_publications, $cache_type_topics, $cache_type_article_types;
+global $operation_attr, $operation_create, $operation_delete, $operation_modify;
+
 $cache_type_all = 'all';
 $cache_type_publications = 'publications';
 $cache_type_topics = 'topics';
@@ -753,6 +755,7 @@ function build_reset_cache_msg($type, $parameters)
 	$msg .= "</CampsiteMessage>\n";
 	$size = sprintf("%04x", strlen($msg));
 	$msg = "0002 " . $size . " " . $msg;
+//	echo "<pre>sending ".htmlentities($msg)."</pre>";
 	return $msg;
 }
 
