@@ -2,6 +2,12 @@
 
 . ../../make.env
 
+if [ -f "./configure.h" ]; then
+    if [ "./configure.h" -ot "../../make.env" ]; then
+	exit 0
+    fi
+fi
+
 echo -n -e "\t\tWriting configure.h header..."
 cat > configure.h << EOF
 /******************************************************************************
