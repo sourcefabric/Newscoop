@@ -96,7 +96,7 @@ B_MSGBOX(<*Changing article status*>)
 			X_MSGBOX_TEXT(<*<LI><? putGS('Status of the article $1 ($2) could not be changed.','<B>'.getHVar($q_art,'Name'),getHVar($q_slang,'Name').'</B>'); ?></LI>*>)
 		<?}
 	} else {?>dnl
-		X_MSGBOX_TEXT(<*You do not have the right to change this article status. Once submitted an article can only changed by authorized users.*>)
+		X_MSGBOX_TEXT(<*<? putGS('You do not have the right to change this article status. Once submitted an article can only changed by authorized users.'); ?>*>)
 	<? } ?>
 	B_MSGBOX_BUTTONS
 <?
