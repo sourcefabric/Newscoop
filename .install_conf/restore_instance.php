@@ -62,25 +62,77 @@ if ($type == "-i") {
 	exec_command($cmd);
 }
 
-// backup old database dump if exists
-//if (is_file("$backup_dir/$instance_name-database.sql")) {}
-
 // extract packages
 $html_dir = $Campsite['WWW_DIR'] . "/$instance_name/html";
 $packages = glob("$backup_dir/$instance_name-*.tar.gz");
 foreach ($packages as $index=>$package) {
 	$package_name = file_name($package);
 	switch ($package_name) {
-	case "$instance_name-database.tar.gz": $dest_dir = $backup_dir; break;
+	case "$instance_name-database.tar.gz": continue;
 	case "$instance_name-conf.tar.gz": $dest_dir = $etc_dir; break;
 	default: $dest_dir = $html_dir; break;
 	}
 	$cmd = "pushd " . escapeshellarg($dest_dir) . " && tar xzf "
-		. escapeshellarg($package) . "  && popd > /dev/null";
+		. escapeshellarg($package) . " && popd > /dev/null";
 	exec_command($cmd);
 }
 
+$database_dump_file = "$backup_dir/$instance_name-database.sql";
+require_once("$etc_dir/$instance_name/database_conf.php");
+
+// backup old database dump if exists
+if (is_file($database_dump_file) && backup_file($database_dump_file, $output) != 0) {
+	exit_with_error($output);
+}
+
+// backup the old database if exists
+if (database_exists($instance_name)) {
+	backup_database($instance_name, $database_dump_file, $output);
+	if (backup_file($database_dump_file, $output) != 0)
+		exit_with_error($output);
+}
+
+// extract the database dump file now
+$cmd = "pushd " . escapeshellarg($backup_dir) . " && tar xzf "
+	. escapeshellarg("$backup_dir/$instance_name-database.tar.gz") . " && popd > /dev/null";
+exec_command($cmd);
+
+// restore the database
+restore_database($instance_name, $database_dump_file);
+
 // remove packages
 exec_command("rm -f $backup_dir/*.tar.gz");
+exec_command("rm -f $backup_dir/$instance_name-database.sql");
+
+
+
+function restore_database($p_db_name, $dump_file)
+{
+	global $Campsite;
+
+	if (!is_file($dump_file))
+		return "Can't restore database: dump file not found";
+
+	if (database_exists($p_db_name))
+		mysql_query("DROP DATABASE $p_db_name");
+	mysql_query("CREATE DATABASE $p_db_name");
+
+	$cmd = "mysql -u " . $Campsite['DATABASE_USER'];
+	if ($Campsite['DATABASE_PASSWORD'] != "")
+		$cmd .= " --password=\"" . $Campsite['DATABASE_PASSWORD'] . "\"";
+	$cmd .= " $p_db_name < \"$dump_file\"";
+	exec_command($cmd);
+
+	return 0;
+}
+
+function database_exists($p_db_name)
+{
+	$res = mysql_list_dbs();
+	while ($row = mysql_fetch_object($res))
+		if ($row->Database == $p_db_name)
+			return true;
+	return false;
+}
 
 ?>
