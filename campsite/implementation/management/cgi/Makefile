@@ -1,4 +1,4 @@
-TARGETS=get_img get_img.php
+TARGETS=get_img get_img.php tpl_cgi tpl_cgi.php
 
 all: dummy
 
