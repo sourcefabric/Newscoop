@@ -9,7 +9,7 @@ database_vars="DATABASE_SERVER DATABASE_USER DATABASE_PASSWORD DATABASE_NAME"
 var_not_modified $database_vars && [ -f db_connect.php ] && exit 0
 save_var $database_vars
 
-echo -n -e "\tWriting db_connect.php..."
+echo -n -e "\t\tWriting db_connect.php..."
 cat > db_connect.php << EOF
 <?php
 mysql_connect("$DATABASE_SERVER", "$DATABASE_USER", "$DATABASE_PASSWORD");
