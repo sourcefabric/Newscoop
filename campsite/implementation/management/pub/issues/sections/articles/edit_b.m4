@@ -1,258 +1,296 @@
 B_HTML
+INCLUDE_PHP_LIB(<*../../../..*>)
 B_DATABASE
 
 CHECK_BASIC_ACCESS
 
 B_HEAD
 	X_EXPIRES
-	X_TITLE({Edit Article})
-<!sql if $access == 0>dnl
+	X_TITLE(<*Edit article*>)
+<SCRIPT LANGUAGE="JavaScript">
+
+function ismodified(){
+ if (campeditor.ismodified()==1){
+  if (confirm("Do you want to save changes made to article field?")){
+  campeditor.beforeunload()
+  }
+ }
+}
+</SCRIPT>
+<? if ($access == 0) { ?>dnl
 	X_LOGOUT
-<!sql endif>dnl
-<!sql query "SELECT Number, Description FROM Images WHERE 1=0" q_img>dnl
-<!sql query "SHOW COLUMNS FROM Articles LIKE 'XXYYZZ'" q_fld1>dnl
-<!sql query "SELECT Id, Name FROM Classes WHERE 1=0" q_cls>dnl
-<!sql set okf 0>dnl
+<? }
+    query ("SELECT Number, Description FROM Images WHERE 1=0", 'q_img');
+    query ("SHOW COLUMNS FROM Articles LIKE 'XXYYZZ'", 'q_fld1');
+    query ("SELECT Id, Name FROM Classes WHERE 1=0", 'q_cls');
+    $okf= 0;
+?>dnl
 E_HEAD
 
-<!sql if $access>dnl
-SET_ACCESS({dla}, {DeleteArticle})
+<? if ($access) { 
+SET_ACCESS(<*dla*>, <*DeleteArticle*>)
+?>dnl
 
 B_STYLE
 E_STYLE
 
-B_BODY
-
-<!sql setdefault Pub 0>dnl
-<!sql setdefault Issue 0>dnl
-<!sql setdefault Section 0>dnl
-<!sql setdefault Language 0>dnl
-<!sql setdefault sLanguage 0>dnl
-<!sql setdefault Article 0>dnl
-<!sql setdefault Field "">dnl
-<!sql setdefault eField "">dnl
-<!sql setdefault LockOk 0>dnl
-B_HEADER({Edit Article})
+B_BODY(<*onbeforeunload="ismodified()"*>)
+<?
+    todefnum('Pub');
+    todefnum('Issue');
+    todefnum('Section');
+    todefnum('Language');
+    todefnum('sLanguage');
+    todefnum('Article');
+    todefnum('LockOk');
+    todef('Field');
+    todef('eField');
+    $fldname=substr ( $eField, 1);
+?>
+B_HEADER(<*Edit Article*>)
 B_HEADER_BUTTONS
-X_HBUTTON({Articles}, {pub/issues/sections/articles/?Pub=<!sql print #Pub>&Issue=<!sql print #Issue>&Language=<!sql print #Language>&Section=<!sql print #Section>})
-X_HBUTTON({Sections}, {pub/issues/sections/?Pub=<!sql print #Pub>&Issue=<!sql print #Issue>&Language=<!sql print #Language>})
-X_HBUTTON({Issues}, {pub/issues/?Pub=<!sql print #Pub>})
-X_HBUTTON({Publications}, {pub/})
-X_HBUTTON({Home}, {home.xql})
-X_HBUTTON({Logout}, {logout.xql})
+X_HBUTTON(<*Articles*>, <*pub/issues/sections/articles/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>&Section=<? p($Section); ?>*>)
+X_HBUTTON(<*Sections*>, <*pub/issues/sections/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>*>)
+X_HBUTTON(<*Issues*>, <*pub/issues/?Pub=<? p($Pub); ?>*>)
+X_HBUTTON(<*Publications*>, <*pub/*>)
+X_HBUTTON(<*Home*>, <*home.php*>)
+X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<!sql set NUM_ROWS 0>dnl
-<!sql query "SELECT * FROM Articles WHERE IdPublication=?Pub AND NrIssue=?Issue AND NrSection=?Section AND IdLanguage=?sLanguage AND Number=?Article" q_art>dnl
-<!sql if $NUM_ROWS>dnl
-<!sql set NUM_ROWS 0>dnl
-<!sql query "SELECT * FROM Sections WHERE IdPublication=?Pub AND NrIssue=?Issue AND IdLanguage=?Language AND Number=?Section" q_sect>dnl
-<!sql if $NUM_ROWS>dnl
-<!sql set NUM_ROWS 0>dnl
-<!sql query "SELECT * FROM Issues WHERE IdPublication=?Pub AND Number=?Issue AND IdLanguage=?Language" q_iss>dnl
-<!sql if $NUM_ROWS>dnl
-<!sql query "SELECT * FROM Publications WHERE Id=?Pub" q_pub>dnl
-<!sql if $NUM_ROWS>dnl
+<?
+    query ("SELECT * FROM Articles WHERE IdPublication=$Pub AND NrIssue=$Issue AND NrSection=$Section AND Number=$Article AND IdLanguage=$sLanguage", 'q_art');
+    if ($NUM_ROWS) {
+	query ("SELECT * FROM Sections WHERE IdPublication=$Pub AND NrIssue=$Issue AND IdLanguage=$Language AND Number=$Section", 'q_sect');
+	if ($NUM_ROWS) {
+	    query ("SELECT * FROM Issues WHERE IdPublication=$Pub AND Number=$Issue AND IdLanguage=$Language", 'q_iss');
+	    if ($NUM_ROWS) {
+		query ("SELECT * FROM Publications WHERE Id=$Pub", 'q_pub');
+		if ($NUM_ROWS) {
+		    query ("SELECT Name FROM Languages WHERE Id=$Language", 'q_lang');
+		    query ("SELECT Name FROM Languages WHERE Id=$sLanguage", 'q_slang');
 
-<!sql query "SELECT Name FROM Languages WHERE Id=?Language" q_lang>dnl
-<!sql query "SELECT Name FROM Languages WHERE Id=?sLanguage" q_slang>dnl
+		    fetchRow($q_art);
+		    fetchRow($q_sect);
+		    fetchRow($q_iss);
+		    fetchRow($q_pub);
+		    fetchRow($q_lang);
+		    fetchRow($q_slang);
+?>dnl
 B_CURRENT
-X_CURRENT({Publication:}, {<B><!sql print ~q_pub.Name></B>})
-X_CURRENT({Issue:}, {<B><!sql print ~q_iss.Number>. <!sql print ~q_iss.Name> (<!sql print ~q_lang.Name>)</B>})
-X_CURRENT({Section:}, {<B><!sql print ~q_sect.Number>. <!sql print ~q_sect.Name></B>})
-X_CURRENT({Article:}, {<B><!sql print ~q_art.Name> (<!sql print ~q_slang.Name>)</B>})
-X_CURRENT({Field:}, {<B><!sql print ~eField></B>})
+X_CURRENT(<*Publication*>, <*<B><? pgetHVar($q_pub,'Name'); ?></B>*>)
+X_CURRENT(<*Issue*>, <*<B><? pgetHVar($q_iss,'Number'); ?>. <? pgetHVar($q_iss,'Name'); ?> (<? pgetHVar($q_lang,'Name'); ?>)</B>*>)
+X_CURRENT(<*Section*>, <*<B><? pgetHVar($q_sect,'Number'); ?>. <? pgetHVar($q_sect,'Name'); ?></B>*>)
+X_CURRENT(<*Article*>, <*<B><? pgetHVar($q_art,'Name'); ?> (<? pgetHVar($q_slang,'Name'); ?>)</B>*>)
+X_CURRENT(<*Field*>, <*<B><? p($fldname); ?></B>*>)
 E_CURRENT
-<!sql free q_lang>dnl
 
-CHECK_XACCESS({ChangeArticle})
-<!sql query "SELECT (?xaccess != 0) or ((?q_art.IdUser = ?Usr.Id) and ('?q_art.Published' = 'N'))" q_xperm>dnl
-<!sql if @q_xperm.0>dnl
+CHECK_XACCESS(<*ChangeArticle*>)
 
-<!sql set edit_ok 0>dnl
-<!sql if @q_art.LockUser == 0>dnl
-<!sql set LockOk 1>dnl
-<!sql endif>dnl
+<?
+    query ("SELECT ($xaccess != 0) or ((".getVar($q_art,'IdUser')." = ".getVar($Usr,'Id').") and ('".getVar($q_art,'Published')."' = 'N'))", 'q_xperm');
+    fetchRowNum($q_xperm);
+    if (getNumVar($q_xperm,0)) {
+	$edit_ok= 0;
+	if (getVar($q_art,'LockUser') == 0)
+	    $LockOk= 1;
 
-<!sql if $LockOk>dnl
-	<!sql query "UPDATE Articles SET LockUser=?Usr.Id, LockTime=NOW() WHERE IdPublication=?q_art.IdPublication AND NrIssue=?q_art.NrIssue AND NrSection=?q_art.NrSection AND Number=?q_art.Number AND IdLanguage=?q_art.IdLanguage">dnl
-	<!sql set edit_ok 1>dnl
-<!sql else>dnl
-	<!sql if @q_art.LockUser == @Usr.Id>dnl
-		<!sql query "UPDATE Articles SET LockTime=NOW() WHERE IdPublication=?q_art.IdPublication AND NrIssue=?q_art.NrIssue AND NrSection=?q_art.NrSection AND Number=?q_art.Number AND IdLanguage=?q_art.IdLanguage">dnl
-		<!sql set edit_ok 1>dnl
-	<!sql else>dnl
+	if ($LockOk) {
+	    query ("UPDATE Articles SET LockUser=".getVar($Usr,'Id').", LockTime=NOW() WHERE IdPublication=$Pub AND NrIssue=$Issue AND NrSection=$Section AND Number=$Article AND IdLanguage=$sLanguage");
+	    $edit_ok= 1;
+	} else {
+	    if (getVar($q_art,'LockUser') == getVar($Usr,'Id')) {
+		query ("UPDATE Articles SET LockTime=NOW() WHERE IdPublication=$Pub AND NrIssue=$Issue AND NrSection=$Section AND Number=$Article AND IdLanguage=$sLanguage");
+		$edit_ok= 1;
+	    } else {
+	    ?>dnl
 <P>
-B_MSGBOX({Article is locked})
-<!sql query "SELECT *, NOW() AS Now FROM Users WHERE Id=?q_art.LockUser" q_luser>dnl
-	X_MSGBOX_TEXT({<LI>This article has been locked by <B><!sql print ~q_luser.Name> (<!sql print ~q_luser.UName>)</B> at
-		<B><!sql print ~q_art.LockTime></B></LI>
-		<LI>Now is <B><!sql print ~q_luser.Now></B></LI>
-		<LI>Are you sure you want to unlock it?</LI>
-	})
+B_MSGBOX(<*Article is locked*>)
+<?
+    query ("SELECT *, NOW() AS Now FROM Users WHERE Id=".getVar($q_art,'LockUser'), 'q_luser');
+    fetchRow($q_luser);
+     ?>dnl
+	X_MSGBOX_TEXT(<*<LI><? putGS('This article has been locked by $1 ($2) at','<B>'.getHVar($q_luser,'Name'),getHVar($q_luser,'UName').'</B>' ); ?>
+		<B><? pgetHVar($q_art,'LockTime'); ?></B></LI>
+		<LI><? putGS('Now is $1','<B>'.getHVar($q_luser,'Now').'</B>'); ?></LI>
+		<LI><? putGS('Are you sure you want to unlock it?'); ?></LI>
+	*>)
 	B_MSGBOX_BUTTONS
-		<A HREF="<!sql print $REQUEST_URI>&LockOk=1"><IMG SRC="X_ROOT/img/button/yes.gif" BORDER="0" ALT="Yes"></A>
-		<A HREF="X_ROOT/pub/issues/sections/articles/?Pub=<!sql print #Pub>&Issue=<!sql print #Issue>&Language=<!sql print #Language>&Section=<!sql print #Section>"><IMG SRC="X_ROOT/img/button/no.gif" BORDER="0" ALT="No"></A>
+		<A HREF="<? p($REQUEST_URI); ?>&LockOk=1"><IMG SRC="X_ROOT/img/button/yes.gif" BORDER="0" ALT="Yes"></A>
+		<A HREF="X_ROOT/pub/issues/sections/articles/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>&Section=<? p($Section); ?>"><IMG SRC="X_ROOT/img/button/no.gif" BORDER="0" ALT="No"></A>
 	E_MSGBOX_BUTTONS
-<!sql free q_luser>dnl
 E_MSGBOX
 <P>
-	<!sql endif>dnl
-<!sql endif>dnl
+	<? }
+    }
 
-<!sql if $edit_ok>dnl
+    if ($edit_ok) { ?>dnl
 <P><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
 <TR><TD>
-<!sql if @q_art.Published == "Y">dnl
-X_NEW_BUTTON({Unpublish}, {X_ROOT/pub/issues/sections/articles/status.xql?Pub=<!sql print #Pub>&Issue=<!sql print #Issue>&Section=<!sql print #Section>&Article=<!sql print #q_art.Number>&Language=<!sql print #Language>&sLanguage=<!sql print #sLanguage>&Back=<!sql print #REQUEST_URI>})
-<!sql elsif @q_art.Published == "S">dnl
-X_NEW_BUTTON({Publish}, {X_ROOT/pub/issues/sections/articles/status.xql?Pub=<!sql print #Pub>&Issue=<!sql print #Issue>&Section=<!sql print #Section>&Article=<!sql print #q_art.Number>&Language=<!sql print #Language>&sLanguage=<!sql print #sLanguage>&Back=<!sql print #REQUEST_URI>})
-<!sql else>dnl
-X_NEW_BUTTON({Submit}, {X_ROOT/pub/issues/sections/articles/status.xql?Pub=<!sql print #Pub>&Issue=<!sql print #Issue>&Section=<!sql print #Section>&Article=<!sql print #q_art.Number>&Language=<!sql print #Language>&sLanguage=<!sql print #sLanguage>&Back=<!sql print #REQUEST_URI>})
-<!sql endif>dnl
+
+<? if (getVar($q_art,'Published') == "Y") { ?>dnl
+X_NEW_BUTTON(<*Unpublish*>, <*X_ROOT/pub/issues/sections/articles/status.php?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Section=<? p($Section); ?>&Article=<? p($Article); ?>&Language=<? p($Language); ?>&sLanguage=<? p($sLanguage); ?>&Back=<? pencURL($REQUEST_URI); ?>*>)
+<? } elseif (getVar($q_art,'Published') == "S") { ?>dnl
+X_NEW_BUTTON(<*Publish*>, <*X_ROOT/pub/issues/sections/articles/status.php?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Section=<? p($Section); ?>&Article=<? p($Article); ?>&Language=<? p($Language); ?>&sLanguage=<? p($sLanguage); ?>&Back=<? pencURL($REQUEST_URI); ?>*>)
+<? } else { ?>dnl
+X_NEW_BUTTON(<*Submit*>, <*X_ROOT/pub/issues/sections/articles/status.php?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Section=<? p($Section); ?>&Article=<? p($Article); ?>&Language=<? p($Language); ?>&sLanguage=<? p($sLanguage); ?>&Back=<? pencURL($REQUEST_URI); ?>*>)
+<? } ?>dnl
+</TD>
+<TD>
+X_NEW_BUTTON(<*Images*>, <*X_ROOT/pub/issues/sections/articles/images/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Section=<? p($Section); ?>&Article=<? p($Article); ?>&Language=<? p($Language); ?>&sLanguage=<? p($sLanguage); ?>*>)
 </TD><TD>
-X_NEW_BUTTON({Images}, {X_ROOT/pub/issues/sections/articles/images/?Pub=<!sql print #Pub>&Issue=<!sql print #Issue>&Section=<!sql print #Section>&Article=<!sql print #Article>&Language=<!sql print #Language>&sLanguage=<!sql print #sLanguage>})
-</TD><TD>
-X_NEW_BUTTON({Unlock}, {X_ROOT/pub/issues/sections/articles/do_unlock.xql?Pub=<!sql print #Pub>&Issue=<!sql print #Issue>&Section=<!sql print #Section>&Article=<!sql print #Article>&Language=<!sql print #Language>&sLanguage=<!sql print #sLanguage>})
+X_NEW_BUTTON(<*Unlock*>, <*X_ROOT/pub/issues/sections/articles/do_unlock.php?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Section=<? p($Section); ?>&Article=<? p($Article); ?>&Language=<? p($Language); ?>&sLanguage=<? p($sLanguage); ?>*>)
 </TD></TR>
 <TR><TD>
-X_NEW_BUTTON({Preview}, {javascript:void(window.open('X_ROOT/pub/issues/sections/articles/preview.xql?Pub=<!sql print #Pub>&Issue=<!sql print #Issue>&Section=<!sql print #Section>&Article=<!sql print #Article>&Language=<!sql print #Language>&sLanguage=<!sql print #sLanguage>', 'fpreview','resizable=yes,scrollbars=yes,toolbar=yes,width=680,height=560'))})
+X_NEW_BUTTON(<*Preview*>, <**>, <*window.open('X_ROOT/pub/issues/sections/articles/preview.php?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Section=<? p($Section); ?>&Article=<? p($Article); ?>&Language=<? p($Language); ?>&sLanguage=<? p($sLanguage); ?>', 'fpreview', PREVIEW_OPT); return false*>)
 </TD><TD>
-X_NEW_BUTTON({Translate}, {X_ROOT/pub/issues/sections/articles/translate.xql?Pub=<!sql print #Pub>&Issue=<!sql print #Issue>&Section=<!sql print #Section>&Article=<!sql print #q_art.Number>&Language=<!sql print #Language>&Back=<!sql print #REQUEST_URI>})
-<!sql if $dla>dnl
+X_NEW_BUTTON(<*Translate*>, <*X_ROOT/pub/issues/sections/articles/translate.php?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Section=<? p($Section); ?>&Article=<? p($Article); ?>&Language=<? p($Language); ?>&Back=<? pencURL($REQUEST_URI); ?>*>)
+<? if ($dla) { ?>dnl
 </TD><TD>
-X_NEW_BUTTON({Delete}, {X_ROOT/pub/issues/sections/articles/del.xql?Pub=<!sql print #Pub>&Issue=<!sql print #Issue>&Section=<!sql print #Section>&Article=<!sql print #Article>&Language=<!sql print #Language>&sLanguage=<!sql print #sLanguage>&Back=<!sql print #REQUEST_URI>})
+X_NEW_BUTTON(<*Delete*>, <*X_ROOT/pub/issues/sections/articles/del.php?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Section=<? p($Section); ?>&Article=<? p($Article); ?>&Language=<? p($Language); ?>&sLanguage=<? p($sLanguage); ?>&Back=<? pencURL($REQUEST_URI); ?>*>)
 </TD><TD>
-X_NEW_BUTTON({Edit details}, {X_ROOT/pub/issues/sections/articles/edit.xql?Pub=<!sql print #Pub>&Issue=<!sql print #Issue>&Section=<!sql print #Section>&Article=<!sql print #Article>&Language=<!sql print #Language>&sLanguage=<!sql print #sLanguage>})
+X_NEW_BUTTON(<*Edit details*>, <*X_ROOT/pub/issues/sections/articles/edit.php?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Section=<? p($Section); ?>&Article=<? p($Article); ?>&Language=<? p($Language); ?>&sLanguage=<? p($sLanguage); ?>*>)
 </TD><TD>
-<!sql endif>dnl
+<? } ?>dnl
 </TD></TR>
 </TABLE>
 
-<P><!sql query "SHOW COLUMNS FROM X?q_art.Type LIKE 'F%'" q_fld1>dnl
-<!sql set idx 0>
-<!sql print_loop q_fld1>dnl
+<P><?
+    query ("SHOW COLUMNS FROM X".getSVar($q_art,'Type')." LIKE 'F%'", 'q_fld1');
+    $idx= 0;
+    $nr=$NUM_ROWS;
+    for($loop=0;$loop<$nr;$loop++) {
+	fetchRowNum($q_fld1);
+	///	query ("SELECT SUBSTRING('?q_fld.0', 2), LOCATE('char', '?q_fld.1', 1), LOCATE('date', '?q_fld.1', 1)" q_substr
+	$table= substr ( getNumVar($q_fld1,0),1);
+	$posc=strpos(getNumVar($q_fld1,1),'char');
+	$posd=strpos(getNumVar($q_fld1,1),'date');
+	
+	if (!($posc === false))
+	    $type=0;
+	elseif (!($posd === false))
+	    $type=1;
+	else
+	    $type=2;
+	
+	$Field=$table;
 
-<!sql query "SELECT SUBSTRING('?q_fld1.0', 2), LOCATE('char', '?q_fld1.1', 1), LOCATE('date', '?q_fld1.1', 1)" q_xx>dnl
-<!sql if @q_xx.1 != 0>dnl
-	<!sql set type 0>dnl
-<!sql elsif @q_xx.2 != 0>dnl
-	<!sql set type 1>dnl
-<!sql else>dnl
-	<!sql set type 2>dnl
-<!sql endif>dnl
-<!sql set Field #q_xx.0>
+	if ($eField == "")
+	    $fedit_ok= 1;
+	else
+	    $fedit_ok= 0;
 
-<!sql if $eField == "">dnl
-<!sql set fedit_ok 1>dnl
-<!sql else>dnl
-<!sql set fedit_ok 0>dnl
-<!sql endif>dnl
+	if ($fedit_ok == 0) {
+	    if ($eField == "F$Field")
+		$fedit_ok= 1;
+	}
 
-<!sql if $fedit_ok == 0>dnl
-<!sql if $eField == "F$Field">dnl
-<!sql set fedit_ok 1>dnl
-<!sql endif>dnl
-<!sql endif>dnl
-
-<!sql if $fedit_ok>dnl
-<!sql if $type == 2>dnl
-<!sql set okf 1>dnl
-<!sql query "SELECT F?Field FROM X?q_art.Type WHERE NrArticle=?Article AND IdLanguage=?sLanguage" q_fld>
-<!--B_CURRENT-->
-<!--X_CURRENT({Field:}, {<B><!sql print ~Field></B>})-->
-<!--E_CURRENT-->
+	if ($fedit_ok) {
+	    if ($type == 2) {
+		$okf= 1;
+		query ("SELECT F$Field FROM X".getSVar($q_art,'Type')." WHERE NrArticle=$Article AND IdLanguage=$sLanguage", 'q_fld');
+		fetchRowNum($q_fld);
+	?>
 <P ALIGN="CENTER">
-<APPLET CODE="Test.class" CODEBASE="java/" ARCHIVE="test.jar" WIDTH="720" HEIGHT="420">
-<PARAM NAME="port" VALUE="<!sql print $SERVER_PORT>">
-<PARAM NAME="script" VALUE="X_ROOT/pub/issues/sections/articles/upload.xql">
+<TABLE BORDER="1" CELLSPACING="1" CELLPADDING="1" WIDTH="92%">
+<TR><TD BGCOLOR="#C0D0FF"><B>&nbsp;Campfire</B></TD>
+</TR>
+<TR>
+<TD>
+<OBJECT name="campeditor" classid="clsid:8AD9C840-044E-11D1-B3E9-00805F499D93"
+    width="100%" height="420" align="baseline"
+    codebase="http://java.sun.com/products/plugin/autodl/j2re-1_3_1_02-win.exe">
+   <PARAM NAME="code" VALUE="Campfire.class">
+   <PARAM NAME="codebase" VALUE="java/">
+   <PARAM NAME="archive" VALUE="campfire.jar">
+    <PARAM NAME="type" VALUE="application/x-java-applet;version=1.3">
+    <PARAM NAME="model" VALUE="models/HyaluronicAcid.xyz">
+    <PARAM NAME="scriptable" VALUE="true">
+<PARAM NAME="port" VALUE="<? p($SERVER_PORT); ?>">
+<PARAM NAME="script" VALUE="X_ROOT/pub/issues/sections/articles/upload.php">
 <PARAM NAME="debug_" VALUE="">
-<PARAM NAME="linkscript" VALUE="http://<!sql print ~SERVER_NAME>:<!sql print ~SERVER_PORT>X_ROOT/pub/issues/sections/articles/list.xql">
+<PARAM NAME="linkscript" VALUE="http://<? pencHTML($SERVER_NAME); ?>:<? pencHTML($SERVER_PORT); ?>X_ROOT/pub/issues/sections/articles/list.php">
 <PARAM NAME="clip" VALUE="">
-<!-- <SCRIPT Language="JavaScript">
-    if(navigator.appName.indexOf("Explorer") != -1) {{
-	document.writeln("<PARAM NAME=\"clip\" VALUE=\"Explorer\">");
-    }} else if(navigator.appName.indexOf("Netscape") != -1) {{
-	document.writeln("<PARAM NAME=\"clip\" VALUE=\"\">");
-    }} else {{
-	document.writeln("<PARAM NAME=\"clip\" VALUE=\"Unknown\">");
-    }}
-</SCRIPT> -->
-<PARAM NAME="clip" VALUE="">
-<PARAM NAME="UserId" VALUE="<!sql print ~Usr.Id>">
-<PARAM NAME="UserKey" VALUE="<!sql print ~Usr.KeyId>">
-<PARAM NAME="IdPublication" VALUE="<!sql print ~Pub>">
-<PARAM NAME="NrIssue" VALUE="<!sql print ~Issue>">
-<PARAM NAME="NrSection" VALUE="<!sql print ~Section>">
-<PARAM NAME="NrArticle" VALUE="<!sql print ~Article>">
-<PARAM NAME="IdLanguage" VALUE="<!sql print ~sLanguage>">
-<PARAM NAME="Field" VALUE="<!sql print ?Field>">
-<!sql setexpr idx ?idx+1>
-<PARAM NAME="idx" VALUE="<!sql print ?idx>">
-<PARAM NAME="Content" VALUE="<!sql print #q_fld.0>">
-<!sql free q_fld>dnl
-<!sql query "SELECT Number, Description FROM Images WHERE IdPublication=?Pub AND NrIssue=?Issue AND NrSection=?Section AND NrArticle=?Article" q_img>dnl
-<!sql set v_i 0>dnl
-<!sql print_loop q_img>dnl
-<!sql if $okf>dnl
-<!sql print "<PARAM NAME=\"image$v_i\" VALUE=\"@q_img.Number, @q_img.Description\">">
-<!sql setexpr v_i ($v_i + 1)>dnl
-<!sql endif>dnl
-<!sql done>dnl
-<!sql query "SELECT Id, Name FROM Classes WHERE IdLanguage=?sLanguage ORDER BY Name" q_cls>dnl
-<!sql set v_i 0>dnl
-<!sql print_loop q_cls>dnl
-<!sql if $okf>dnl
-<!sql print "<PARAM NAME=\"tol\#$v_i\" VALUE=\"@q_cls.Name\">">
-<!sql setexpr v_i ($v_i + 1)>dnl
-<!sql endif>dnl
-<!sql done>dnl
+<PARAM NAME="LangCode" VALUE="<? pLanguageCode(); ?>">
+<PARAM NAME="UserId" VALUE="<? pgetHVar($Usr,'Id'); ?>">
+<PARAM NAME="UserKey" VALUE="<? pgetHVar($Usr,'KeyId'); ?>">
+<PARAM NAME="IdPublication" VALUE="<? p($Pub); ?>">
+<PARAM NAME="NrIssue" VALUE="<? p($Issue); ?>">
+<PARAM NAME="NrSection" VALUE="<? p($Section); ?>">
+<PARAM NAME="NrArticle" VALUE="<? p($Article); ?>">
+<PARAM NAME="IdLanguage" VALUE="<? p($sLanguage); ?>">
+<PARAM NAME="Field" VALUE="<? p(encS($Field)); ?>">
+<? $idx++; ?>
+<PARAM NAME="idx" VALUE="<? p($idx); ?>">
+<PARAM NAME="Content" VALUE="<? pencParam(getNumVar($q_fld,0)); ?>">
+<?
+    query ("SELECT Number, Description FROM Images WHERE IdPublication=$Pub AND NrIssue=$Issue AND NrSection=$Section AND NrArticle=$Article", 'q_img');
+    $v_i= 0;
+    $nr2=$NUM_ROWS;
+    for($loop2=0;$loop2<$nr2;$loop2++) {
+	fetchRow($q_img);
+	if ($okf) {
+	    print ("<PARAM NAME=\"image$v_i\" VALUE=\"".getVar($q_img,'Number').", ".encParam(getVar($q_img,'Description'))."\">\n");
+	    $v_i++;
+	}
+    }
 
-</APPLET>
+    query ("SELECT Id, Name FROM Classes WHERE IdLanguage=$sLanguage ORDER BY Name", 'q_cls');
+    $v_i= 0;
+    $nr2=$NUM_ROWS;
+    for($loop2=0;$loop2<$nr2;$loop2++) {
+    fetchRow($q_cls);
+        if ($okf) {
+	    print ("<PARAM NAME=\"tol#$v_i\" VALUE=\"".encParam(getVar($q_cls,'Name'))."\">\n");
+	    $v_i++;
+	}
+    }
+?></OBJECT>
+</TD>
+</TR>
+</TABLE>
 <P>
-<!sql set okf 0>dnl
-<!sql endif>dnl
-<!sql endif>dnl
+<?
+    $okf= 0;
+    }
+    }
 
-<!sql free q_xx>dnl
-<!sql done>dnl
-<!sql free q_fld1>
+    }
 
-<!sql endif>dnl
+    }
 
-<!sql else>dnl
-    X_XAD({You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only changed by authorized users.}, {pub/issues/sections/articles/?Pub=<!sql print #Pub>&Issue=<!sql print #Issue>&Language=<!sql print #Language>&Section=<!sql print #Section>})
-<!sql endif>dnl
+} else { ?>dnl
+    X_XAD(<*You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only changed by authorized users.*>, <*pub/issues/sections/articles/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>&Section=<? p($Section); ?>*>)
+<? } ?>dnl
 
-<!sql else>dnl
+<? } else { ?>dnl
 <BLOCKQUOTE>
-	<LI>No such publication.</LI>
+	<LI><? putGS('No such publication.'); ?></LI>
 </BLOCKQUOTE>
-<!sql endif>dnl
+<? } ?>dnl
 
-<!sql else>dnl
+<? } else { ?>dnl
 <BLOCKQUOTE>
-	<LI>No such issue.</LI>
+	<LI><? putGS('No such issue.'); ?></LI>
 </BLOCKQUOTE>
-<!sql endif>dnl
+<? } ?>dnl
 
-<!sql else>dnl
+<? } else { ?>dnl
 <BLOCKQUOTE>
-	<LI>No such section.</LI>
+	<LI><? putGS('No such section.'); ?></LI>
 </BLOCKQUOTE>
-<!sql endif>dnl
+<? } ?>dnl
 
-<!sql else>dnl
+<? } else { ?>dnl
 <BLOCKQUOTE>
-	<LI>No such article.</LI>
+	<LI><? putGS('No such article.'); ?></LI>
 </BLOCKQUOTE>
-<!sql endif>dnl
+<? } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<!sql endif>dnl
+<? } ?>dnl
 
 E_DATABASE
 E_HTML

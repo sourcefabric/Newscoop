@@ -34,8 +34,11 @@ Implementation of functions for client request processing
 #include <arpa/inet.h>
 
 #include "process_req.h"
-#include "tol_parser.h"
-#include "tol_util.h"
+#include "parser.h"
+#include "util.h"
+#include "auto_ptr.h"
+
+using std::endl;
 
 // RunParser:
 //   - prepare the context: read cgi environment into context, read user subscriptions
@@ -50,13 +53,13 @@ Implementation of functions for client request processing
 // Parameters:
 //		MYSQL* p_pSql - pointer to MySQL connection
 //		CGIParams* p_pParams - pointer to cgi environment structure
-//		fstream& p_rOs - output stream
-int RunParser(MYSQL* p_pSQL, CGIParams* p_pParams, fstream& p_rOs) throw(Exception)
+//		sockstream& p_rOs - output stream
+int RunParser(MYSQL* p_pSQL, CGIParams* p_pParams, sockstream& p_rOs) throw(RunException, bad_alloc)
 {
 	if (p_pParams == NULL)
-		throw Exception("Invalid params");
+		throw RunException("Invalid params");
 	if (p_pSQL == NULL)
-		throw Exception("MYSQL connection not initialised");
+		throw RunException("MYSQL connection not initialised");
 	static const char* ppchParams[PARAM_NR] =
 	    {
 	        "Name", "EMail", "CountryCode", "UName", "Password", "PasswordAgain",
@@ -71,15 +74,8 @@ int RunParser(MYSQL* p_pSQL, CGIParams* p_pParams, fstream& p_rOs) throw(Excepti
 	        UERR_NO_NAME, UERR_NO_EMAIL, UERR_NO_COUNTRY, UERR_NO_UNAME,
 	        UERR_NO_PASSWORD, UERR_NO_PASSWORD_AGAIN
 	    };
-	CGI* pcoCgi = new CGI(p_pParams->m_pchRequestMethod, p_pParams->m_pchQueryString);
-	TOLContext* pcoCtx = new TOLContext;
-	if (pcoCgi == NULL || pcoCtx == NULL)
-	{
-		delete pcoCgi;
-		delete pcoCtx;
-		throw Exception("Alloc error");
-		return -1;
-	}
+	SafeAutoPtr<CGI> pcoCgi(new CGI(p_pParams->m_pchRequestMethod, p_pParams->m_pchQueryString));
+	SafeAutoPtr<CContext> pcoCtx(new CContext);
 	const char* pchStr;
 	bool bDebug = false, bPreview = false, bTechDebug = false;
 	char pchBuf[300];
@@ -181,7 +177,8 @@ int RunParser(MYSQL* p_pSQL, CGIParams* p_pParams, fstream& p_rOs) throw(Excepti
 	{
 		while (1)
 		{
-			pChar pchWord, pchValue;
+			char* pchWord;
+			char* pchValue;
 			while (*pchStr <= ' ' && *pchStr != 0) pchStr++;
 			getword(&pchWord, &pchStr, '=');
 			if (pchWord[0] == 0)
@@ -287,63 +284,41 @@ int RunParser(MYSQL* p_pSQL, CGIParams* p_pParams, fstream& p_rOs) throw(Excepti
 	}
 	try
 	{
-		TOLParser::SetMYSQL(p_pSQL);
-		TOLParser::LockHash();
-		TOLParserHash& coPHash = TOLParser::GetHash();
-		TOLParserHash::iterator ph_i = coPHash.find(p_pParams->m_pchPathTranslated);
-		if (ph_i == coPHash.end())
-			coPHash.insert_unique(new TOLParser(p_pParams->m_pchPathTranslated,
-			                                    p_pParams->m_pchDocumentRoot));
-		ph_i = coPHash.find(p_pParams->m_pchPathTranslated);
-		TOLParser::UnlockHash();
-		if (ph_i == coPHash.end())
-			throw Exception("Parser hash error");
-		(*ph_i)->SetDebug(bTechDebug);
-		int nParseRes = (*ph_i)->Parse();
+		CParser::setMYSQL(p_pSQL);
+		CParser* p = CParser::parserOf(p_pParams->m_pchPathTranslated,
+			                           p_pParams->m_pchDocumentRoot);
+		p->setDebug(bTechDebug);
 		WriteCharset((*pcoCtx), p_pSQL, p_rOs);
-		int nWriteRes = (*ph_i)->WriteOutput(*pcoCtx, p_rOs);
+		p->writeOutput(*pcoCtx, p_rOs);
 		if (bPreview == true)
 		{
 			p_rOs << "<script LANGUAGE=\"JavaScript\">parent.e.document.open();\n"
 			"parent.e.document.write(\"<html><head><title>Errors</title>"
 			"</head><body bgcolor=white text=black>\\\n<pre>\\\n";
-			if (bTechDebug == true)
-			{
-				p_rOs << "\\\nPARSE RESULT: " << nParseRes << "\\\n";
-			}
-			p_rOs << "\\\nParse errors:\\\n";
-			(*ph_i)->PrintParseErrors(p_rOs, true);
-			if (bTechDebug)
-			{
-				p_rOs << "\\\nWRITE RESULT:" << nWriteRes << "\\\n";
-			}
-			p_rOs << "\\\nWrite errors:\\\n";
-			(*ph_i)->PrintWriteErrors(p_rOs, true);
+			p_rOs << "\\\n<b>Parse errors:</b>\\\n";
+			p->printParseErrors(p_rOs, true);
 			p_rOs << "</pre></body></html>\\\n\");\nparent.e.document.close();\n</script>\n";
 		}
-		TOLParser::SetMYSQL(NULL);
-		delete pcoCgi;
-		delete pcoCtx;
+		CParser::setMYSQL(NULL);
 	}
 	catch (ExStat& rcoEx)
 	{
-		delete pcoCgi;
-		delete pcoCtx;
-		throw Exception("Error loading template file");
+		throw RunException("Error loading template file");
 		return -1;
 	}
-	catch (Exception& rcoEx)
+	catch (RunException& rcoEx)
 	{
-		delete pcoCgi;
-		delete pcoCtx;
 		throw rcoEx;
 		return -1;
 	}
 	catch (ExMutex& rcoEx)
 	{
-		delete pcoCgi;
-		delete pcoCtx;
-		throw Exception(rcoEx.Message());
+		throw RunException(rcoEx.Message());
+		return -1;
+	}
+	catch (bad_alloc& rcoEx)
+	{
+		throw RunException("bad alloc");
 		return -1;
 	}
 	return 0;
@@ -351,10 +326,10 @@ int RunParser(MYSQL* p_pSQL, CGIParams* p_pParams, fstream& p_rOs) throw(Excepti
 
 // WriteCharset: write http tag specifying the charset - according to current language
 // Parameters:
-//		TOLContext& c - current context
+//		CContext& c - current context
 //		MYSQL* pSql - pointer to MySQL connection
-//		fstream& fs - output stream
-int WriteCharset(TOLContext& c, MYSQL* pSql, fstream& fs)
+//		sockstream& fs - output stream
+int WriteCharset(CContext& c, MYSQL* pSql, sockstream& fs)
 {
 	if (c.Language() < 0)
 		return -1;
@@ -364,16 +339,17 @@ int WriteCharset(TOLContext& c, MYSQL* pSql, fstream& fs)
 	StoreResult(pSql, coSqlRes);
 	CheckForRows(*coSqlRes, 1);
 	FetchRow(*coSqlRes, row);
-	fs << "<META HTTP-EQUIV=\"Content-Type\" content=\"text/html; charset=" << row[0] << "\">" << endl;
+//	fs << "<META HTTP-EQUIV=\"Content-Type\" content=\"text/html; charset=" << row[0] << "\">" << endl;
+	fs << "<META HTTP-EQUIV=\"Content-Type\" content=\"text/html; charset=UTF-8\">" << endl;
 	return 0;
 }
 
 // Login: perform login action: log user in
 // Parameters:
 //		CGI& cgi - cgi environment
-//		TOLContext& c - current context
+//		CContext& c - current context
 //		MYSQL* pSql - pointer to MySQL connection
-int Login(CGI& cgi, TOLContext& c, MYSQL* pSql)
+int Login(CGI& cgi, CContext& c, MYSQL* pSql)
 {
 	c.SetLogin(true);
 	const char* s;
@@ -413,10 +389,10 @@ int Login(CGI& cgi, TOLContext& c, MYSQL* pSql)
 // CheckUserInfo: read user informations from CGI parameters
 // Parameters:
 //		CGI& cgi - cgi environment
-//		TOLContext& c - current context
+//		CContext& c - current context
 //		const char* ppchParams[] - parameters to read
 //		int param_nr - parameters number
-int CheckUserInfo(CGI& cgi, TOLContext& c, const char* ppchParams[], int param_nr)
+int CheckUserInfo(CGI& cgi, CContext& c, const char* ppchParams[], int param_nr)
 {
 	string field_pref = "User";
 	int found = 0;
@@ -434,13 +410,13 @@ int CheckUserInfo(CGI& cgi, TOLContext& c, const char* ppchParams[], int param_n
 
 // AddUser: perform add user action (add user to database); return error code
 // Parameters:
-//		TOLContext& c - current context
+//		CContext& c - current context
 //		MYSQL* pSql - pointer to MySQL connection
 //		const char* ppchParams[] - parameters to read from context (user information)
 //		int param_nr - parameters number
 //		const int errs[] - error codes
 //		int err_nr - errors number
-int AddUser(TOLContext& c, MYSQL* pSql, const char* ppchParams[], int param_nr,
+int AddUser(CContext& c, MYSQL* pSql, const char* ppchParams[], int param_nr,
             const int errs[], int err_nr)
 {
 	c.SetAddUser(true);
@@ -505,13 +481,13 @@ int AddUser(TOLContext& c, MYSQL* pSql, const char* ppchParams[], int param_nr,
 // ModifyUser: perform modify user action (modify user information in the database)
 // Return error code.
 // Parameters:
-//		TOLContext& c - current context
+//		CContext& c - current context
 //		MYSQL* pSql - pointer to MySQL connection
 //		const char* ppchParams[] - parameters to read from context (user information)
 //		int param_nr - parameters number
 //		const int errs[] - error list (errors codes)
 //		int err_nr - errors number
-int ModifyUser(TOLContext& c, MYSQL* pSql, const char* ppchParams[], int param_nr,
+int ModifyUser(CContext& c, MYSQL* pSql, const char* ppchParams[], int param_nr,
                const int errs[], int err_nr)
 {
 	char pchBuf[10000];
@@ -562,9 +538,9 @@ int ModifyUser(TOLContext& c, MYSQL* pSql, const char* ppchParams[], int param_n
 // DoSubscribe: perform subscribe action (subscribe user to a certain publication)
 // Parameters:
 //		CGI& cgi - cgi environment
-//		TOLContext& c - current context
+//		CContext& c - current context
 //		MYSQL* pSql - pointer to MySQL connection
-int DoSubscribe(CGI& cgi, TOLContext& c, MYSQL* pSql)
+int DoSubscribe(CGI& cgi, CContext& c, MYSQL* pSql)
 {
 	if (c.SubsType() == ST_NONE)
 		return SERR_TYPE_NOT_SPECIFIED;
@@ -583,7 +559,7 @@ int DoSubscribe(CGI& cgi, TOLContext& c, MYSQL* pSql)
 	StoreResult(pSql, coSqlRes);
 	CheckForRows(*coSqlRes, 1);
 	FetchRow(*coSqlRes, row);
-	cpChar modifier = "";
+	const char* modifier = "";
 	if (row[0][0] == 'D')
 		modifier = "DAY";
 	else if (row[0][0] == 'W')
@@ -645,14 +621,22 @@ int DoSubscribe(CGI& cgi, TOLContext& c, MYSQL* pSql)
 		CheckForRows(*coSqlRes, 1);
 		row = mysql_fetch_row(*coSqlRes);
 		c.SetIssue(atol(row[0]));
-		cpChar sel_time = c.SubsType() == ST_TRIAL ? "TrialTime" : "PaidTime";
+		const char* sel_time = c.SubsType() == ST_TRIAL ? "TrialTime" : "PaidTime";
 		sprintf(pchBuf, "select TO_DAYS(ADDDATE(now(), INTERVAL %s %s)) - TO_DAYS(now()), %s "
 		        "from SubsDefTime, Users where IdPublication = %ld and "
 		        "SubsDefTime.CountryCode = Users.CountryCode and Users.Id = %ld",
 		        sel_time, modifier, sel_time, c.Publication(), c.User());
 		SQLQuery(pSql, pchBuf);
 		coSqlRes = mysql_store_result(pSql);
-		CheckForRows(*coSqlRes, 1);
+		if (mysql_num_rows(*coSqlRes) < 1) {
+			sprintf(pchBuf, "select TO_DAYS(ADDDATE(now(), INTERVAL %s %s)) - TO_DAYS(now()), "
+			        "%s from Publications where Id = %ld", sel_time, modifier, sel_time,
+			        c.Publication());
+			SQLQuery(pSql, pchBuf);
+			coSqlRes = mysql_store_result(pSql);
+			if (mysql_num_rows(*coSqlRes) < 1)
+				return -1;
+		}
 		row = mysql_fetch_row(*coSqlRes);
 		long int subs_days = atol(row[0]);
 		long int time_units = atol(row[1]);
@@ -749,9 +733,9 @@ void getword(char** word, const char** line, char stop)
 // SetReaderAccess: update current context: set reader access to publication sections
 // according to user subscriptions.
 // Parameters:
-//		TOLContext& c - current context
+//		CContext& c - current context
 //		MYSQL* pSql - pointer to MySQL connection
-void SetReaderAccess(TOLContext& c, MYSQL* pSql)
+void SetReaderAccess(CContext& c, MYSQL* pSql)
 {
 	if (pSql == 0)
 		return ;
@@ -791,13 +775,13 @@ void SetReaderAccess(TOLContext& c, MYSQL* pSql)
 // Search: perform search action; search against the database for keywords retrieved from
 // cgi environment
 // Parameters:
-//		TOLContext& c - current context
+//		CContext& c - current context
 //		MYSQL* pSql - pointer to MySQL connection
 //		CGI& cgi - cgi environment
-int Search(TOLContext& c, MYSQL* pSql, CGI& cgi)
+int Search(CContext& c, MYSQL* pSql, CGI& cgi)
 {
 	c.SetSearch(true);
-	cpChar s;
+	const char* s;
 	if ((s = cgi.GetFirst("SearchKeywords")) == 0)
 		return SRERR_NO_KEYWORDS;
 	ParseKeywords(s, c);
@@ -816,11 +800,12 @@ int Search(TOLContext& c, MYSQL* pSql, CGI& cgi)
 // ParseKeywords: read keywords from a string of keywords and add them to current context
 // Parameters:
 //		const char* s - string of keywords
-//		TOLContext& c - current context
-void ParseKeywords(const char* s, TOLContext& c)
+//		CContext& c - current context
+void ParseKeywords(const char* s, CContext& c)
 {
 	// " \t\n\r,./\\<>?:;\"'{}[]~`!%^&*()+=\\|"
-	cpChar p, q;
+	const char* p;
+	const char* q;
 	char tmp[256];
 	int l;
 	if (s)

@@ -1,7 +1,39 @@
-2.0.13
-    - Correct the apache configuration in the manual
-    - Fix "pure virtual method" error in the parser
-    - Fix thread synchronization bug: return from the run method after the new thread start
+2.1.0
+    - The application is divided into modules that can be installed on
+    different systems (increased scalability)
+    - Multiple instances of campsite can be installed on the same system
+    - Campsite is more configurable: connection to database, install
+    directories, smtp server etc. can be configured by install scripts
+    - New, improved install scripts: detect necessary dependencies (libraries,
+    headers, binaries etc.), configure application, test configuration, select
+    modules etc.
+    - Ported the administration interface from www-sql to Php
+    - Use UTF-8 charset all over the application (database, admin interface, 
+    templates, parser, java editor)
+    - Added the localizer: a tool allowing the users to translate the admin
+    interface into different languages and select the language of the interface
+    at login time
+    - Improved template management module: create and edit files remotely,
+    duplicate them on the server, save them on the local system
+    - Improved image management module: add old image feature, search engine.
+    - Improved authorization and access system: fixed security bug, added new
+    user type
+    - Improved usability: ease the deletion of issues, add all sections to a
+    subscription at once, copy issue structure on translation etc.
+    - New module: topics. An article can have zero-more topics. Topics can be
+    structured in a hierarchy. E.g.: sport topic can have football, tennis,
+    basketball etc. as subtopics
+    - Other small enhancements and bug fixes on administration interface
+    - Template language improvements: more operators, more attributes added to
+    If and List statements, the possibility to use dynamic fields in If Article
+    and List Article statements etc.
+    - Set default subscription time per publication (independent of the
+    country)
+    - New, improved article editor: Campfire 2.0
+    - Administration interface translated into Russian, German, Romanian,
+    Serbo-Croatian and Czech languages
+    - Added an exhaustive list of countries to campsite database
+
 
 2.0.12
     - Set login username/password fields to size 10
@@ -31,7 +63,7 @@
     - If statements in template language can be negated: If not
     - The parser server updates automatically the article types from the database
     (in case they were modified)
-    - Fixed event notify bug: mailnotify used to send all the emails to the event
+    - Fixed event notify bug: mailnotify used to send all the email to the event
     originator
     - Order can be used now in Issue, SearchResult and Article lists
     - Fixed parser crash bug: when encountered invalid identifier for Language,
@@ -71,7 +103,7 @@
 
 2.0.6 (May, 14th 2001)
     - Fixed search list order bug. The parser did not list in the requested
-    order the list of searched articles.
+    order the list of searched articles
 
 2.0.1-2.0.5
     - Fixed install bugs
@@ -82,13 +114,13 @@
     - General:
         - Changed Makefiles in order to compile on Redhat 7.0
         implementation/parser:
-        - The parser is now campsite_server, a multithreaded daemon.
-        - Made campsitectl (start, stop, restart, show status) campsite_server.
+        - The parser is now campsite_server, a multithreaded daemon
+        - Made campsitectl (start, stop, restart, show status) campsite_server
         - Made campsite rc script for Sys V like systems (ex. RedHat)
         - Made install script to install campsitectl, campsite scripts for
-        automatic start of campsite_server on system startup.
+        automatic start of campsite_server on system startup
         - The parser prints formatted date, month name (mon_name) and weekday
-        name (wday_name) in current language (not in English only).
+        name (wday_name) in current language (not in English only)
     - documentation:
         - Updated campsite-guide (changes made on: URLParameters, Print Issue
         Article Image Subscription, Date)

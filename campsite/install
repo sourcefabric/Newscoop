@@ -1,78 +1,35 @@
 #!/bin/sh
 
-check_if_installed()
+do_configure()
 {
-    continue="N"
-    old_path=$PATH
-    program=$1
-    shift
-    while [ "$1" != "" ]; do
-        if [ "$1" = "--continue" ]; then
-	    continue="Y"
-	elif [ "$1" = "--path" ]; then
-	    shift
-	    if [ "$1" != "" ]; then
-		PATH=$PATH:$1
-	    fi
-        fi
-	shift
-    done
-    echo -n -e "\t$program ... "
-    which $program > /dev/null 2>&1
+    rm -f install_log
+    echo -e "\nSTEP 1"
+    echo -n "Configuring campsite (this may take a while, please wait)..."
+    echo -e "###############################################\n\tConfiguring campsite\n" >> install_log
+    ./configure $* >> install_log 2>&1
     err_code=$?
-    PATH=$old_path
     if [ $err_code -ne 0 ]; then
-        echo "NOT FOUND"
-	if [ "$continue" != "Y" ]; then
-	    echo "Could not find $program. Please install it or set proper path."
-	    echo "Read INSTALL file for more information."
-    	    exit 1
-	else
-	    echo "Could not find $program. It may not be installed or is not in your path."
-	    echo "You can go on installing but the application won't work without it."
-	    echo -n "Do you want to go on installing (Y/N) ? [Y]: "
-	    read yn
-	    if [ "$yn" = "" ]; then
-		yn="Y"
-	    fi
-	    if [ "${yn:0:1}" != "Y" ] && [ "${yn:0:1}" != "y" ]; then
-		echo "Aborting..."
-		exit 1
-	    fi
-	fi
-    else
-        echo "OK"
+	echo "ERROR."
+	echo "Read install_log for more information on configuration error."
+	echo "Please report bug to http://bugs.campware.org"
+	exit 1
     fi
-}
-
-check_components()
-{
-    if [ -f .inst_components ]; then
-        echo -e "\nSTEP 1\nChecking for installed components:"
-	components=`cat .inst_components`
-	for line in $components; do
-	    component=`echo $line | cut -f 1 -d "|"`
-	    cpath=`echo $line | cut -f 2 -d "|"`
-	    other_args=`echo $line | cut -f 3 -d "|"`
-	    check_if_installed $component --path $cpath $other_args
-	done
-    fi
+    echo "done"
 }
 
 compile_sources()
 {
-    rm -f install_log
-
     echo -e "\nSTEP 2"
+    [ "$PACKAGE_TYPE" = "binary" ] && echo "Binary package. Skipping compilation." && return 0
     echo -n "Compiling sources (this may take a while, please wait)..."
     echo -e "###############################################\n\tCompiling sources\n" >> install_log
     make all >> install_log 2>&1
     err_code=$?
     if [ $err_code -ne 0 ]; then
-        echo "ERROR."
-        echo "Read install_log for more information on compilation error."
-        echo "Please report bug to http://www.campware.org/campsite/bugs.htm"
-        exit 1
+	echo "ERROR."
+	echo "Read install_log for more information on compilation error."
+	echo "Please report bug to http://bugs.campware.org"
+	exit 1
     fi
     echo "done"
 }
@@ -84,18 +41,18 @@ install_campsite()
     echo -e "\n\n###############################################\n\tInstalling campsite\n" >> install_log
     make install >> install_log 2>&1
     err_code=$?
+    rm -f .old_version
     if [ $err_code -ne 0 ]; then
-        rm -f ./campsite_upgrade
-        echo "ERROR."
-        echo "Read install_log for more information on compilation error."
-        echo "Please report bug to http://www.campware.org/campsite/bugs.htm"
-        exit 1
+	rm -f ./campsite_upgrade
+	echo "ERROR."
+	echo "Read install_log for more information on installation error."
+	echo "Please report bug to http://bugs.campware.org"
+	exit 1
     fi
     echo -e "done\n\nCAMPSITE was installed successfully."
     echo "For a complete installation log read install_log file."
     echo -n -e "\nStarting campsite_server daemon..."
-    UTIL_BIN=`cat ./Makefile|grep UTIL_BIN|grep -w export|cut -f 2 -d "=" 2> /dev/null`
-    $UTIL_BIN/campsitectl restart
+    $BIN_DIR/${APP_NAME}ctl restart
     err_code=$?
     if [ $err_code -ne 0 ]; then
 	echo "ERROR"
@@ -119,34 +76,55 @@ install_campsite()
 
 
 # start execution
+if [ ! -x ./configure ]; then
+    echo -e "Install script must be started from campsite directory!\nAborting..."
+    exit 1
+fi
+go_to_install=false
+upgrade=""
+interactive="--interactive"
+while [ "$1" != "" ]; do
+    case $1 in
+    --go_to_install) go_to_install=true ;;
+    --upgrade) upgrade=--upgrade ;;
+    --not_interactive) interactive=""
+    esac
+    shift 1
+done
 my_id=`id -u`
-if [ "$1" = "go_to_install" ] && [ $my_id -eq 0 ]; then
+. ./configure --define_start_env
+if [ "$go_to_install" = "true" ] && [ $my_id -eq 0 ]; then
     install_campsite
     exit 0
 fi
-version=`cat ./README | grep -w ^version | grep ":" | cut -f 2 -d ":"`
-version=`echo $version`
-release_date=`cat ./README | grep -w ^release | grep ":" | cut -f 2 -d ":"`
-release_date=`echo $release_date`
+clear
+. ${INSTALL_CONF}/install_functions
+if [ $? -ne 0 ]; then
+    echo "Error reading install files."
+    echo "Please report bug to http://www.campware.org/bugs"
+    echo "Aborting..."
+    exit 1
+fi
 if [ "$1" = "--version" ]; then
-    echo -e "CAMPSITE $version, released on $release_date"
+    echo -e "CAMPSITE $CAMPSITE_VERSION, released on $CAMPSITE_RELEASE_DATE"
     exit 0
 fi
-echo -e "\nInstalling CAMPSITE $version"
+echo -e "\nInstalling CAMPSITE $CAMPSITE_VERSION"
 if [ $my_id -ne 0 ]; then
     echo -e "\nYou are not logged in as root. Without root access this application"
     echo "can not be installed. You will be prompted later for root password."
 fi
-check_components
+configure_campsite $upgrade $interactive
+do_configure $upgrade
 compile_sources
 if [ $my_id -ne 0 ]; then
     echo -e "\nIt is time to login as root. Please supply password."
     while true; do
 	echo -n "Root password: "
 	archive_path=`pwd`
-        su - --command="echo ""; cd $archive_path; ./install go_to_install" 2> /dev/null
-        err_code=$?
-        if [ $err_code -ne 0 ]; then
+	su - --command="echo \"\"; cd $archive_path; ./install --go_to_install" 2> /dev/null
+	err_code=$?
+	if [ $err_code -ne 0 ]; then
 	    echo -n -e "\nThe password was not correct. Try again (Y/N) ? [Y]: "
 	    read yn
 	    if [ "$yn" = "" ]; then
@@ -158,7 +136,7 @@ if [ $my_id -ne 0 ]; then
 	    fi
 	else
 	    exit 0
-        fi
+	fi
     done
 else
     install_campsite

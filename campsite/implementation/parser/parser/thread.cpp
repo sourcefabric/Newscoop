@@ -30,10 +30,14 @@ Implementation of the classes defined in thread.h
 ******************************************************************************/
 
 #include <signal.h>
-#include <iostream.h>
+#include <iostream>
 #include <unistd.h>
 
 #include "thread.h"
+
+using std::fstream;
+using std::cout;
+using std::endl;
 
 CThread::CThread()
 {

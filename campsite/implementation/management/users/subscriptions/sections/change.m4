@@ -1,101 +1,122 @@
 B_HTML
+INCLUDE_PHP_LIB(<*../../..*>)
 B_DATABASE
 
 CHECK_BASIC_ACCESS
-CHECK_ACCESS({ManageSubscriptions})
+CHECK_ACCESS(<*ManageSubscriptions*>)
 
 B_HEAD
 	X_EXPIRES
-	X_TITLE({Change Subscription})
-<!sql if $access == 0>dnl
-	X_AD({You do not have the right to change subscriptions.})
-<!sql endif>dnl
+	X_TITLE(<*Change subscription*>)
+<? if ($access == 0) { ?>dnl
+	X_AD(<*You do not have the right to change subscriptions.*>)
+<? } ?>dnl
 E_HEAD
 
-<!sql if $access>dnl
+<? if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
 
-<!sql setdefault Subs 0>dnl
-<!sql setdefault Sect 0>dnl
-<!sql setdefault Pub 0>dnl
-<!sql setdefault User 0>dnl
-B_HEADER({Change Subscription})
+<?
+    todefnum('Subs');
+    todefnum('Sect');
+    todefnum('Pub');
+    todefnum('User');
+?>dnl
+B_HEADER(<*Change subscription*>)
 B_HEADER_BUTTONS
-X_HBUTTON({Sections}, {users/subscriptions/sections/?User=<!sql print #User>&Pub=<!sql print #Pub>&Subs=<!sql print #Subs>})
-X_HBUTTON({Subscriptions}, {users/subscriptions/?User=<!sql print #User>})
-X_HBUTTON({Users}, {users/})
-X_HBUTTON({Home}, {home.xql})
-X_HBUTTON({Logout}, {logout.xql})
+X_HBUTTON(<*Sections*>, <*users/subscriptions/sections/?User=<? p($User); ?>&Pub=<? p($Pub); ?>&Subs=<? p($Subs); ?>*>)
+X_HBUTTON(<*Subscriptions*>, <*users/subscriptions/?User=<? p($User); ?>*>)
+X_HBUTTON(<*Users*>, <*users/*>)
+X_HBUTTON(<*Home*>, <*home.php*>)
+X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<!sql set NUM_ROWS 0>dnl
-<!sql query "SELECT UName FROM Users WHERE Id=?User" q_usr>dnl
-<!sql if $NUM_ROWS>dnl
-<!sql set NUM_ROWS 0>dnl
-<!sql query "SELECT Name FROM Publications WHERE Id=?Pub" q_pub>dnl
-<!sql if $NUM_ROWS>dnl
-<!sql set NUM_ROWS 0>dnl
-<!--sql query "SELECT * FROM SubsSections WHERE IdSubscription=?Subs AND SectionNumber=?Sect" q_ssub-->dnl
-<!sql query "SELECT DISTINCT Sub.*, Sec.Name FROM SubsSections as Sub, Sections as Sec WHERE IdSubscription=?Subs AND SectionNumber=?Sect AND Sub.SectionNumber = Sec.Number" q_ssub>dnl
-<!sql if $NUM_ROWS>dnl
+<?
+    query ("SELECT UName FROM Users WHERE Id=$User", 'q_usr');
+    if ($NUM_ROWS) {
+	query ("SELECT Name FROM Publications WHERE Id=$Pub", 'q_pub');
+	if ($NUM_ROWS) {
+	    query ("SELECT * FROM Subscriptions WHERE Id = $Subs", 'q_sub');
+	    if ($NUM_ROWS) {
+		$sectCond = "";
+		if ($Sect > 0)
+		    $sectCond = "SectionNumber = ".$Sect." AND";
+		query ("SELECT DISTINCT Sub.*, Sec.Name FROM SubsSections as Sub, Sections as Sec WHERE $sectCond IdSubscription=$Subs AND Sub.SectionNumber = Sec.Number", 'q_ssub');
+		if ($NUM_ROWS) {
+		    fetchRow($q_usr);
+		    fetchRow($q_pub);
+		    fetchRow($q_sub);
+		    fetchRow($q_ssub);
+		    $isPaid = 0;
+		    if (getHVar($q_sub, 'Type') == 'P')
+			$isPaid = 1;
+?>dnl
 
 B_CURRENT
-X_CURRENT({User account:}, {<B><!sql print ~q_usr.UName></B>})
-X_CURRENT({Publication:}, {<B><!sql print ~q_pub.Name></B>})
+X_CURRENT(<*User account*>, <*<B><? pgetHVar($q_usr,'UName'); ?></B>*>)
+X_CURRENT(<*Publication*>, <*<B><? pgetHVar($q_pub,'Name'); ?></B>*>)
 E_CURRENT
 
 <P>
-B_DIALOG({Change subscription}, {POST}, {do_change.xql})
+B_DIALOG(<*Change subscription*>, <*POST*>, <*do_change.php*>)
 
-	B_DIALOG_INPUT({Section:})
-		<!sql print ?q_ssub.Name>
+	B_DIALOG_INPUT(<*Section*>)
+		<? if ($Sect > 0) pgetHVar($q_ssub,'Name'); else putGS("-- ALL SECTIONS --"); ?>
 	E_DIALOG_INPUT
-	B_DIALOG_INPUT({Start:})
-		<INPUT TYPE="TEXT" NAME="cStartDate" SIZE="10" VALUE="<!sql print ~q_ssub.StartDate>" MAXLENGTH="10"> (YYYY-MM-DD)
+	B_DIALOG_INPUT(<*Start*>)
+		<INPUT TYPE="TEXT" NAME="cStartDate" SIZE="10" VALUE="<? pgetHVar($q_ssub,'StartDate'); ?>" MAXLENGTH="10"> <? putGS('(YYYY-MM-DD)'); ?>
 	E_DIALOG_INPUT
-	B_DIALOG_INPUT({Days:})
-		<INPUT TYPE="TEXT" NAME="cDays" SIZE="5" VALUE="<!sql print ~q_ssub.Days>"  MAXLENGTH="5">
+	B_DIALOG_INPUT(<*Days*>)
+		<INPUT TYPE="TEXT" NAME="cDays" SIZE="5" VALUE="<? pgetHVar($q_ssub,'Days'); ?>"  MAXLENGTH="5">
 	E_DIALOG_INPUT
-	B_DIALOG_INPUT({Paid Days:})
-		<INPUT TYPE="TEXT" NAME="cPaidDays" SIZE="5" VALUE="<!sql print ~q_ssub.PaidDays>"  MAXLENGTH="5">
+<? if ($isPaid) { ?>
+	B_DIALOG_INPUT(<*Paid Days*>)
+		<INPUT TYPE="TEXT" NAME="cPaidDays" SIZE="5" VALUE="<? pgetHVar($q_ssub,'PaidDays'); ?>"  MAXLENGTH="5">
 	E_DIALOG_INPUT
+<? } ?>
 	B_DIALOG_BUTTONS
-		<INPUT TYPE="HIDDEN" NAME="User" VALUE="<!sql print ~User>">
-		<INPUT TYPE="HIDDEN" NAME="Subs" VALUE="<!sql print ~Subs>">
-		<INPUT TYPE="HIDDEN" NAME="Sect" VALUE="<!sql print ~Sect>">
-		<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<!sql print ~Pub>">
+		<INPUT TYPE="HIDDEN" NAME="User" VALUE="<? p($User); ?>">
+		<INPUT TYPE="HIDDEN" NAME="Subs" VALUE="<? p($Subs); ?>">
+		<INPUT TYPE="HIDDEN" NAME="Sect" VALUE="<? p($Sect); ?>">
+		<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<? p($Pub); ?>">
 		<INPUT TYPE="IMAGE" NAME="OK" SRC="X_ROOT/img/button/save.gif" BORDER="0">
-		<A HREF="X_ROOT/users/subscriptions/sections/?Pub=<!sql print #Pub>&User=<!sql print #User>&Subs=<!sql print #Subs>"><IMG SRC="X_ROOT/img/button/cancel.gif" BORDER="0" ALT="Cancel"></A>
+		<A HREF="X_ROOT/users/subscriptions/sections/?Pub=<? p($Pub); ?>&User=<? p($User); ?>&Subs=<? p($Subs); ?>"><IMG SRC="X_ROOT/img/button/cancel.gif" BORDER="0" ALT="Cancel"></A>
 	E_DIALOG_BUTTONS
 E_DIALOG
 <P>
 
-<!sql else>dnl
+<? } else { ?>dnl
 <BLOCKQUOTE>
-	<LI>No such subscription.</LI>
+	<LI><? putGS('No sections in the current subscription.'); ?></LI>
 </BLOCKQUOTE>
-<!sql endif>dnl
+<? } ?>dnl
 
-<!sql else>dnl
+<? } else { ?>dnl
 <BLOCKQUOTE>
-	<LI>No such publication.</LI>
+	<LI><? putGS('No such subscription.'); ?></LI>
 </BLOCKQUOTE>
-<!sql endif>dnl
+<? } ?>dnl
 
-<!sql else>dnl
+<? } else { ?>dnl
 <BLOCKQUOTE>
-	<LI>No such user account.</LI>
+	<LI><? putGS('No such publication.'); ?></LI>
 </BLOCKQUOTE>
-<!sql endif>dnl
+<? } ?>dnl
+
+<? } else { ?>dnl
+<BLOCKQUOTE>
+	<LI><? putGS('No such user account.'); ?></LI>
+</BLOCKQUOTE>
+<? } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<!sql endif>dnl
+<? } ?>dnl
 
 E_DATABASE
 E_HTML
