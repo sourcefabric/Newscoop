@@ -9,6 +9,7 @@
     - Modified the subtitle printing behavior: printing the field inside the
     subtitle list will display the current subtitle in the list instead of the
     subtitle set at the beginning of the template
+    - Documented "If Subtitle" template language statement in the manual
 
 2.1.2
     - Ported campsite to FreeBSD (thanks to Richard Airlie)
