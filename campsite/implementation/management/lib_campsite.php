@@ -282,7 +282,7 @@ function regGS($key,$value) {
 } // fn regGS
 
 function dSystem($s) {
-    print ("<BR>Executing <BR>$s<BR>");
+//    print ("<BR>Executing <BR>$s<BR>");
     system($s);
 }
 
