@@ -91,11 +91,6 @@ regGS("Adding new issue","Adding new issue:en");
 // log
 regGS("Issue $1 added in publication $2","Issue $1 added in publication $2:en");
 
-// -- preview.m4
-regGS("This issue cannot be previewed. Please make sure it has a $1 template selected.","This issue cannot be previewed. Please make sure it has a $1 template selected.:en");
-regGS("front page","front page:en");
-
-
 // -- set.m4
 regGS("Changing issue template","Changing issue template:en");
 regGS("You do not have the right to change issue templates.","You do not have the right to change issue templates.:en");
