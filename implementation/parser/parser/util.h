@@ -89,8 +89,8 @@ class CMYSQL_RES
 {
 public:
 	// Constructor; initialises the pointer to MYSQL_RES
-	CMYSQL_RES(MYSQL_RES* p_pRes = NULL) : m_pRes(p_pRes)
-	{}
+	CMYSQL_RES(MYSQL_RES* p_pRes = NULL) : m_pRes(p_pRes) { }
+
 	// Destructor; deallocates the MYSQL_RES structure if necessary
 	~CMYSQL_RES()
 	{
@@ -104,6 +104,7 @@ public:
 	{
 		return m_pRes;
 	}
+
 	// operator =
 	const CMYSQL_RES& operator = (MYSQL_RES* p_pRes)
 	{
@@ -112,16 +113,19 @@ public:
 		m_pRes = p_pRes;
 		return *this;
 	}
+
 	// NumRows: return the number of result rows
 	my_ulonglong NumRows() const
 	{
 		return m_pRes != NULL ? mysql_num_rows(m_pRes) : 0;
 	}
+
 	// NumRows: return the number of result fields
 	unsigned int NumFields() const
 	{
 		return m_pRes != NULL ? mysql_num_fields(m_pRes) : 0;
 	}
+
 	// FetchRow: return the next row
 	MYSQL_ROW FetchRow()
 	{
@@ -132,6 +136,13 @@ private:
 	MYSQL_RES* m_pRes;
 };
 
+inline MYSQL_ROW QueryFetchRow(MYSQL* p_pDBConn, const string& p_rcoQuery, CMYSQL_RES& p_rcoQRes)
+{
+	if (mysql_query(p_pDBConn, p_rcoQuery.c_str()) != 0)
+		return NULL;
+	p_rcoQRes = mysql_store_result(p_pDBConn);
+	return mysql_fetch_row(*p_rcoQRes);
+}
 
 // Macros used on database operations
 
