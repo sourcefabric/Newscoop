@@ -1,0 +1,84 @@
+MULTIPLE INSTANCES
+
+Ondra's request
+
+First the points we need to work on multi site campsite:
+1) Each site has independent databáze
+2) Each sites has independent users
+3) Each site has independent parser (upgrade reasons)
+
+Second the wishes from administrator: To have only one instance of campsite
+for all sites.
+
+I would probably solve this by separating the parser and other stuff. Than
+if you install campsite, you can do full instalation, or just parser, or
+just the rest.
+The first instalation would install some kind of wrapper, that is directed
+to procede the .tpl extension and upon the request it chooses the proper
+parser and database.
+
+But I know there are questions of caching templates (which might be the
+interesting point at the moment you run many newspapers on one server) and
+the speed, in which case you have much more experiences.
+
+The advantages however would be huge, if you consider the ability to add a
+new site without further instalation of campsite (just generace the virtual
+host file and create an empty database), the easy switch to the latest
+version of campsite just by setting a different configuration in the
+wrapper.
+
+--------------------------------------------------------------------------------
+
+GENERAL ISSUES
+
+PREFIX will be set before installing campsite; this will apply to:
+- binaries directory (currently /usr/local/[campsite_instance_name])
+- configuration files directory (currently /etc)
+
+Note: The prefix will not apply to the HTML, CGI-BIN and SCRIPT directories.
+Note: The prefix will be automatically set to "/usr/local".
+
+Binaries will be installed in $PREFIX/campsite/[instance_name] directory.
+Configuration files will be installed in $PREFIX/etc/campsite/[instance_name]
+directory.
+
+In $PREFIX/campsite/ a campsitectl script will be created; this script will
+manage all campsite instances
+In $PREFIX/etc/ a campsite.reg file will be used to register installed campsite
+instances.
+
+All binary files will be compiled with the PREFIX path hardcoded inside; they
+will be able to detect the configuration files using the following algorithm:
+
+1. Detect instance name: read executable path (argument 0)
+	a. if it contains the whole or part of the path to the binary read the last
+	directory name before the binary name; this directory is the instance name
+	b. if it contains only the binary name read the current directory from the
+	environment; the last directory is the name of the instance
+2. Go to PREFIX/etc/[instance_name] directory
+
+ADMINISTRATIVE FEATURES
+
+The user will be able to start/stop the campsite server of the instance and view
+the server status. This user will have administration rights.
+
+A new campsite instance can be generated from the administration interface: the
+script will read:
+- the instance name
+- new HTML dir
+- new CGI-BIN dir
+- new SCRIPT dir
+- selection of the database: empty one or duplicate of this one
+- option to copy the templates to the new instance
+
+and will execute the following steps:
+
+- copy campsite files in HTML directory to the new one
+- copy campsite files in CGI-BIN directory to the new one
+- copy campsite files in SCRIPT directory to the new one
+- create a new database with the instance name from an empty on or from the
+current one according to the user selection
+- create the configuration files in PREFIX/etc/campsite/[new_instance_name]
+- create the PREFIX/campsite/[new_instance_name] directory and copy the binaries
+into the new directory
+- register the indexer and email notifiers as cron jobs
