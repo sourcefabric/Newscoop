@@ -15,6 +15,7 @@ class Topic extends DatabaseObject {
 	 * @param int p_languageId
 	 */
 	function Topic($p_id = null, $p_languageId = null) { 
+		parent::DatabaseObject($this->m_columnNames);
 		if (!is_null($p_id) && is_numeric($p_id)) {
 			$this->m_data['Id'] = $p_id;
 			$this->m_data['LanguageId'] = $p_languageId;

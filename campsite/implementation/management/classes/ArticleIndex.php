@@ -18,7 +18,9 @@ class ArticleIndex extends DatabaseObject {
 		'NrSection',
 		'NrArticle');
 	
-	function ArticleIndex() { }
+	function ArticleIndex() { 
+		parent::DatabaseObject($this->m_columnNames);
+	} // constructor
 	
 	/**
 	 * @return int
