@@ -161,12 +161,12 @@ fetchRowNum($q_now);
 <TR>
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">
-    <INPUT TYPE="HIDDEN" NAME="PublicationId" VALUE="<?php  p($Pub); ?>">
-    <INPUT TYPE="HIDDEN" NAME="IssueId" VALUE="<?php  p($Issue); ?>">
-    <INPUT TYPE="HIDDEN" NAME="SectionId" VALUE="<?php  p($Section); ?>">
-    <INPUT TYPE="HIDDEN" NAME="ArticleId" VALUE="<?php  p($Article); ?>">
-    <INPUT TYPE="HIDDEN" NAME="InterfaceLanguageId" VALUE="<?php  p($Language); ?>">
-    <INPUT TYPE="HIDDEN" NAME="ArticleLanguageId" VALUE="<?php  p($sLanguage); ?>">
+    <INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<?php  p($Pub); ?>">
+    <INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<?php  p($Issue); ?>">
+    <INPUT TYPE="HIDDEN" NAME="Section" VALUE="<?php  p($Section); ?>">
+    <INPUT TYPE="HIDDEN" NAME="Article" VALUE="<?php  p($Article); ?>">
+    <INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php  p($Language); ?>">
+    <INPUT TYPE="HIDDEN" NAME="sLanguage" VALUE="<?php  p($sLanguage); ?>">
 	<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save changes'); ?>" class="button">
 	<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>"  class="button" ONCLICK="location.href='/<?php echo $ADMIN; ?>/pub/issues/sections/articles/images/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&Section=<?php  p($Section); ?>'">
 	</DIV>

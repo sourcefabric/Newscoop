@@ -22,12 +22,12 @@ if (!$User->hasPermission('AddImage')) {
 	exit;
 }
 
-$PublicationId = Input::Get('PublicationId', 'int', 0);
-$IssueId = Input::Get('IssueId', 'int', 0);
-$SectionId = Input::Get('SectionId', 'int', 0);
-$InterfaceLanguageId = Input::Get('InterfaceLanguageId', 'int', 0);
-$ArticleLanguageId = Input::Get('ArticleLanguageId', 'int', 0);
-$ArticleId = Input::Get('ArticleId', 'int', 0);
+$Pub = Input::Get('Pub', 'int', 0);
+$Issue = Input::Get('Issue', 'int', 0);
+$Section = Input::Get('Section', 'int', 0);
+$Language = Input::Get('Language', 'int', 0);
+$sLanguage = Input::Get('sLanguage', 'int', 0);
+$Article = Input::Get('Article', 'int', 0);
 $ImageTemplateId = Input::Get('cNumber', 'int', 0);
 
 if (!Input::IsValid()) {
@@ -35,11 +35,11 @@ if (!Input::IsValid()) {
 	exit;			
 }
 
-$articleObj =& new Article($PublicationId, $IssueId, $SectionId, $ArticleLanguageId, $ArticleId);
+$articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
 
 // If the template ID is in use, dont add the image.
-if (ArticleImage::TemplateIdInUse($ArticleId, $ImageTemplateId)) {
-	header('Location: '.CampsiteInterface::ArticleUrl($articleObj, $InterfaceLanguageId, 'images/index.php'));
+if (ArticleImage::TemplateIdInUse($Article, $ImageTemplateId)) {
+	header('Location: '.CampsiteInterface::ArticleUrl($articleObj, $Language, 'images/index.php'));
 	exit;
 }
 
@@ -55,13 +55,13 @@ elseif (!empty($_FILES['cImage'])) {
 	$image =& Image::OnImageUpload($_FILES['cImage'], $attributes, $User->getId());
 }
 else {
-	header('Location: '.CampsiteInterface::ArticleUrl($articleObj, $InterfaceLanguageId, 'images/index.php'));
+	header('Location: '.CampsiteInterface::ArticleUrl($articleObj, $Language, 'images/index.php'));
 	exit;
 }
 
 // Check if image was added successfully
 if (!is_object($image)) {
-	header('Location: '.CampsiteInterface::ArticleUrl($articleObj, $InterfaceLanguageId, 'images/index.php'));
+	header('Location: '.CampsiteInterface::ArticleUrl($articleObj, $Language, 'images/index.php'));
 	exit;	
 }
 
@@ -71,6 +71,6 @@ $logtext = getGS('The image $1 has been added.', $attributes['Description']);
 Log::Message($logtext, $User->getUserName(), 41);
 
 // Go back to article image list.
-header('Location: '.CampsiteInterface::ArticleUrl($articleObj, $InterfaceLanguageId, 'images/'));
+header('Location: '.CampsiteInterface::ArticleUrl($articleObj, $Language, 'images/'));
 
 ?>
