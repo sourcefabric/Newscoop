@@ -80,7 +80,7 @@ public:
 private:
 	// buildURI(): internal method; builds the URI string from object attributes
 	void buildURI() const;
-	
+
 private:
 	mutable bool m_bValidURI;
 	mutable string m_coURI;  // caches the URI string
@@ -125,7 +125,7 @@ inline void CURLShortNames::setValue(const string& p_rcoParameter, const string&
 
 inline bool CURLShortNames::equalTo(const CURL* p_pcoURL) const
 {
-	return CURL::equalTo(p_pcoURL)
+	return this->getURLType() == p_pcoURL->getURLType() && CURL::equalTo(p_pcoURL)
 		&& m_coHTTPHost == ((const CURLShortNames*)p_pcoURL)->m_coHTTPHost;
 }
 
