@@ -149,16 +149,10 @@ INSERT INTO Countries VALUES ('AQ',1,'Antarctica');
 INSERT INTO Countries VALUES ('AI',1,'Anguilla');
 INSERT INTO Countries VALUES ('AO',1,'Angola');
 INSERT INTO Countries VALUES ('AD',1,'Andorra');
-INSERT INTO Countries VALUES ('DE',5,'Deutschland');
 INSERT INTO Countries VALUES ('AS',1,'American Samoa');
-INSERT INTO Countries VALUES ('AT',6,'Österreich');
 INSERT INTO Countries VALUES ('DZ',1,'Algeria');
-INSERT INTO Countries VALUES ('IT',14,'Italia');
 INSERT INTO Countries VALUES ('AL',1,'Albania');
-INSERT INTO Countries VALUES ('FR',12,'France');
-INSERT INTO Countries VALUES ('PT',9,'Portugal');
 INSERT INTO Countries VALUES ('AF',1,'Afghanistan');
-INSERT INTO Countries VALUES ('ES',13,'España');
 INSERT INTO Countries VALUES ('AM',1,'Armenia');
 INSERT INTO Countries VALUES ('AW',1,'Aruba');
 INSERT INTO Countries VALUES ('AU',1,'Australia');
@@ -339,6 +333,7 @@ INSERT INTO Countries VALUES ('SM',1,'San Marino');
 INSERT INTO Countries VALUES ('ST',1,'Sao Tome And Principe');
 INSERT INTO Countries VALUES ('SA',1,'Saudi Arabia');
 INSERT INTO Countries VALUES ('SN',1,'Senegal');
+INSERT INTO Countries VALUES ('CS',1,'Serbia and Montenegro');
 INSERT INTO Countries VALUES ('SC',1,'Seychelles');
 INSERT INTO Countries VALUES ('SL',1,'Sierra Leone');
 INSERT INTO Countries VALUES ('SG',1,'Singapore');
@@ -386,13 +381,8 @@ INSERT INTO Countries VALUES ('VI',1,'Virgin Islands, U.S.');
 INSERT INTO Countries VALUES ('WF',1,'Wallis And Futuna');
 INSERT INTO Countries VALUES ('EH',1,'Western Sahara');
 INSERT INTO Countries VALUES ('YE',1,'Yemen');
-INSERT INTO Countries VALUES ('YU',1,'Yugoslavia');
 INSERT INTO Countries VALUES ('ZM',1,'Zambia');
 INSERT INTO Countries VALUES ('ZW',1,'Zimbabwe');
-INSERT INTO Countries VALUES ('GB',2,'Marea Britanie');
-INSERT INTO Countries VALUES ('RO',2,'România');
-INSERT INTO Countries VALUES ('CZ',2,'Republica Cehă');
-INSERT INTO Countries VALUES ('YU',4,'Jugoslavija');
 
 #
 # Table structure for table 'Dictionary'
