@@ -77,16 +77,16 @@ B_MSGBOX(<*Edit template*>)
 	X_AUDIT(<*113*>, <*getGS('Template $1 was changed',encHTML(decS($Path)).encHTML(decS($Name)) )*>)	
 		B_MSGBOX_BUTTONS
 		<? if ($res > 0) { ?>dnl
-			<A HREF="<? pencHTML(decS($Path)); ?>"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
+			REDIRECT(<*Done*>, <*Done*>, <*<? pencHTML(decS($Path)); ?>*>)
 		<? } else { ?>dnl
-			<A HREF="<? pencHTML(decS($Path)); ?>"><IMG SRC="X_ROOT/img/button/ok.gif" BORDER="0" ALT="OK"></A>
+			REDIRECT(<*OK*>, <*OK*>, <*<? pencHTML(decS($Path)); ?>*>)
 		<? } ?>dnl
 		E_MSGBOX_BUTTONS
 	<?}
 	else{?>
 		X_MSGBOX_TEXT(<* <LI><?putGS('You do not have the right to modify templates.'); ?></LI> *>)
 		B_MSGBOX_BUTTONS
-			<A HREF="<? pencHTML(decS($Path)); ?>"><IMG SRC="X_ROOT/img/button/ok.gif" BORDER="0" ALT="OK"></A>
+			REDIRECT(<*OK*>, <*OK*>, <*<? pencHTML(decS($Path)); ?>*>)
 		E_MSGBOX_BUTTONS
 	<?}
 ?>dnl

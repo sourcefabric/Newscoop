@@ -34,7 +34,7 @@ B_DIALOG(<*Login*>, <*POST*>, <*do_login.php*>)
 		</select>
 	E_DIALOG_INPUT
 	B_DIALOG_BUTTONS
-		<INPUT TYPE="IMAGE" SRC="X_ROOT/img/button/login.gif" BORDER="0" NAME="Login">
+		SUBMIT(<*Login*>, <*Login*>)
 	E_DIALOG_BUTTONS
 E_DIALOG
 <P>

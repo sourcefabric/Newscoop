@@ -64,9 +64,9 @@ X_AUDIT(<*54*>, <*getGS('Password changed for $1',getHVar($users,'UName'))*>)
 	*>)
 	B_MSGBOX_BUTTONS
 <? if ($ok) { ?>dnl
-		<A HREF="X_ROOT/users/"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/users/*>)
 <? } else { ?>dnl
-		<A HREF="X_ROOT/users/"><IMG SRC="X_ROOT/img/button/ok.gif" BORDER="0" ALT="OK"></A>
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/users/*>)
 <? } ?>dnl
 	E_MSGBOX_BUTTONS
 E_MSGBOX

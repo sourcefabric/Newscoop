@@ -46,13 +46,13 @@ B_DIALOG(<*Add new country*>, <*POST*>, <*do_add.php*>)
 	E_DIALOG_INPUT
 	B_DIALOG_BUTTONS
 		<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<? todef('Language'); print encHTML($Language); ?>">
-		<INPUT TYPE="IMAGE" NAME="OK" SRC="X_ROOT/img/button/save.gif" BORDER="0">
+		SUBMIT(<*OK*>, <*Save changes*>)
 <? todef('Back'); ?>dnl
 		<INPUT TYPE="HIDDEN" NAME="Back" VALUE="<? print encHTML($Back); ?>">
 <? if ($Back != "") { ?>dnl
-		<A HREF="<? print $Back; ?>"><IMG SRC="X_ROOT/img/button/cancel.gif" BORDER="0" ALT="Cancel"></A>
+		REDIRECT(<*Cancel*>, <*Cancel*>, <*<? print $Back; ?>*>)
 <? } else { ?>dnl
-		<A HREF="X_ROOT/country/"><IMG SRC="X_ROOT/img/button/cancel.gif" BORDER="0" ALT="Cancel"></A>
+		REDIRECT(<*Cancel*>, <*Cancel*>, <*X_ROOT/country/*>)
 <? } ?>dnl
 	E_DIALOG_BUTTONS
 E_DIALOG

@@ -116,13 +116,13 @@ B_DIALOG(<*Translate article*>, <*POST*>, <*do_translate.php*>)
 		<INPUT TYPE="HIDDEN" NAME="cOnFrontPage" VALUE="<? pgetHVar($q_art,'OnFrontPage'); ?>">
 		<INPUT TYPE="HIDDEN" NAME="cOnSection" VALUE="<? pgetHVar($q_art,'OnSection'); ?>">
 		<INPUT TYPE="HIDDEN" NAME="cPublic" VALUE="<? pgetHVar($q_art,'Public'); ?>">
-		<INPUT TYPE="IMAGE" NAME="OK" SRC="X_ROOT/img/button/save.gif" BORDER="0">
+		SUBMIT(<*Save*>, <*Save changes*>)
 <? todef('Back'); ?>dnl
 		<INPUT TYPE="HIDDEN" NAME="Back" VALUE="<? pencHTML($Back); ?>">
 <? if ($Back != "") { ?>dnl
-		<A HREF="<? p($Back); ?>"><IMG SRC="X_ROOT/img/button/cancel.gif" BORDER="0" ALT="Cancel"></A>
+		REDIRECT(<*Cancel*>, <*Cancel*>, <*<? p($Back); ?>*>)
 <? } else { ?>dnl
-		<A HREF="X_ROOT/pub/issues/sections/articles/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>&Section=<? p($Section); ?>"><IMG SRC="X_ROOT/img/button/cancel.gif" BORDER="0" ALT="Cancel"></A>
+		REDIRECT(<*Cancel*>, <*Cancel*>, <*X_ROOT/pub/issues/sections/articles/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>&Section=<? p($Section); ?>*>)
 <? } ?>dnl
 	E_DIALOG_BUTTONS
 E_DIALOG

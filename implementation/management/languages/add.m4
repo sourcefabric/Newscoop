@@ -112,13 +112,13 @@ B_DIALOG(<*Add new language*>, <*POST*>, <*do_add.php*>)
 	<?} ?> dnl
 	
 	B_DIALOG_BUTTONS
-		<INPUT TYPE="IMAGE" NAME="OK" SRC="X_ROOT/img/button/save.gif" BORDER="0">
+		SUBMIT(<*Save*>, <*Save changes*>)
 <? todef('Back'); ?>dnl
 		<INPUT TYPE="HIDDEN" NAME="Back" VALUE="<? print encHTML($Back); ?>">
 <? if ($Back != "") { ?>dnl
-		<A HREF="<? print $Back; ?>"><IMG SRC="X_ROOT/img/button/cancel.gif" BORDER="0" ALT="Cancel"></A>
+		REDIRECT(<*Cancel*>, <*Cancel*>, <*<? print $Back; ?>*>)
 <? } else { ?>dnl
-		<A HREF="X_ROOT/languages/"><IMG SRC="X_ROOT/img/button/cancel.gif" BORDER="0" ALT="Cancel"></A>
+		REDIRECT(<*Cancel*>, <*Cancel*>, <*X_ROOT/languages/*>)
 <? } ?>dnl
 	E_DIALOG_BUTTONS
 E_DIALOG

@@ -81,7 +81,7 @@ X_AUDIT(<*36*>, <*getGS('Issue template for single articles from $1 changed to $
 <? } ?>dnl
 	*>)
 	B_DIALOG_BUTTONS
-	<A HREF="X_ROOT/pub/issues/?Pub=<? pencURL($Pub); ?>"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/pub/issues/?Pub=<? pencURL($Pub); ?>*>)
 	E_DIALOG_BUTTONS
 E_MSGBOX
 <P>

@@ -74,9 +74,9 @@ X_AUDIT(<*131*>, <*getGS('Country $1 added',$cName)*>)
 <? 
     todef('Back');
     if ($created) { ?>dnl
-		<A HREF="X_ROOT/country/"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/country/*>)
 <? } else { ?>dnl
-		<A HREF="X_ROOT/country/add.php<? if ($Back != "") { ?>?Back=<? print encURL($Back); } ?>"><IMG SRC="X_ROOT/img/button/ok.gif" BORDER="0" ALT="OK"></A>
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/country/add.php<? if ($Back != "") { ?>?Back=<? print encURL($Back); } ?>*>)
 <? } ?>dnl
 	E_MSGBOX_BUTTONS
 E_MSGBOX

@@ -86,7 +86,7 @@ B_MSGBOX(<*Deleting issue*>)
 *>)
 	
 	B_MSGBOX_BUTTONS
-		<A HREF="X_ROOT/pub/issues/?Pub=<? pencURL($Pub); ?>"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/pub/issues/?Pub=<? pencURL($Pub); ?>*>)
 	E_MSGBOX_BUTTONS
 E_MSGBOX
 <P>

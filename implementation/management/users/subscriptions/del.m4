@@ -56,8 +56,8 @@ B_MSGBOX(<*Delete subscription*>)
 		<FORM METHOD="POST" ACTION="do_del.php">
 		<INPUT TYPE="HIDDEN" NAME="User" VALUE="<? p($User); ?>">
 		<INPUT TYPE="HIDDEN" NAME="Subs" VALUE="<? p($Subs); ?>">
-		<INPUT TYPE="IMAGE" NAME="Yes" SRC="X_ROOT/img/button/yes.gif" BORDER="0">
-		<A HREF="X_ROOT/users/subscriptions/?User=<? p($User); ?>"><IMG SRC="X_ROOT/img/button/no.gif" BORDER="0" ALT="No"></A>
+		SUBMIT(<*Yes*>, <*Yes*>)
+		REDIRECT(<*No*>, <*No*>, <*X_ROOT/users/subscriptions/?User=<? p($User); ?>*>)
 		</FORM>
 	E_MSGBOX_BUTTONS
 E_MSGBOX

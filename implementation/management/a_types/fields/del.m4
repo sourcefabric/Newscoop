@@ -43,8 +43,8 @@ B_MSGBOX(<*Delete field*>)
 		<FORM METHOD="POST" ACTION="do_del.php">
 		<INPUT TYPE="HIDDEN" NAME="AType" VALUE="<? print encHTML($AType); ?>">
 		<INPUT TYPE="HIDDEN" NAME="Field" VALUE="<? print encHTML($Field); ?>">
-		<INPUT TYPE="IMAGE" NAME="Yes" SRC="X_ROOT/img/button/yes.gif" BORDER="0"></A>
-		<A HREF="X_ROOT/a_types/fields/?AType=<? print encURL($AType); ?>"><IMG SRC="X_ROOT/img/button/no.gif" BORDER="0" ALT="No"></A>
+		SUBMIT(<*Yes*>, <*Yes*>)
+		REDIRECT(<*No*>, <*No*>, <*X_ROOT/a_types/fields/?AType=<? print encURL($AType); ?>*>)
 		</FORM>
 	E_MSGBOX_BUTTONS
 E_MSGBOX

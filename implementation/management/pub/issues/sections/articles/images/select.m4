@@ -90,7 +90,7 @@ X_NEW_BUTTON(<*Back to current article*>, <*./?Pub=<? p($Pub); ?>&Issue=<? p($Is
 		<TD><INPUT TYPE="TEXT" NAME="sPhotographer" VALUE="<? pencHTML($sPhotographer); ?>" SIZE="8" MAXLENGTH="32"></TD>
 		<TD><? putGS('Place'); ?></TD>
 		<TD><INPUT TYPE="TEXT" NAME="sPlace" VALUE="<? pencHTML($sPlace); ?>" SIZE="16" MAXLENGTH="32"></TD>
-		<TD><INPUT TYPE="IMAGE" SRC="X_ROOT/img/button/search.gif" BORDER="0"></TD>
+		<TD>SUBMIT(<*Search*>, <*Search*>)</TD>
 		<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<? p($Pub); ?>">
 		<INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<? p($Issue); ?>">
 		<INPUT TYPE="HIDDEN" NAME="Article" VALUE="<? p($Article);?>">

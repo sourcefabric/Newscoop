@@ -86,7 +86,7 @@ E_CURRENT
 	        }
 		?>dnl
 		    </SELECT></TD>
-		<TD><INPUT TYPE="IMAGE" SRC="X_ROOT/img/button/search.gif" BORDER="0"></TD>
+		<TD>SUBMIT(<*Search*>, <*Search*>)</TD>
 		<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<? p($Pub); ?>">
 		<INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<? p($Issue); ?>">
 		<INPUT TYPE="HIDDEN" NAME="Section" VALUE="<? p($Section); ?>">

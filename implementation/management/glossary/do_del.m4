@@ -51,9 +51,9 @@ X_AUDIT(<*82*>, <*getGS('Keyword $1 deleted',getHVar($q_dic,'Keyword'))*>)
 <? } ?>
 	B_MSGBOX_BUTTONS
 <? if ($AFFECTED_ROWS > 0) { ?>
-		<A HREF="X_ROOT/glossary/"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/glossary/*>)
 <? } else { ?>
-		<A HREF="X_ROOT/glossary/"><IMG SRC="X_ROOT/img/button/ok.gif" BORDER="0" ALT="OK"></A>
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/glossary/*>)
 <? } ?>
 	E_MSGBOX_BUTTONS
 E_MSGBOX

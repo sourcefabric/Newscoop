@@ -61,9 +61,9 @@ X_AUDIT(<*52*>, <*getGS('The user account $1 has been deleted.',getHVar($uu,'UNa
 <? } ?>
 	B_MSGBOX_BUTTONS
 <? if ($del) { ?>
-		<A HREF="X_ROOT/users/"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/users/*>)
 <? } else { ?>
-		<A HREF="X_ROOT/users/"><IMG SRC="X_ROOT/img/button/ok.gif" BORDER="0" ALT="OK"></A>
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/users/*>)
 <? } ?>
 	E_MSGBOX_BUTTONS
 E_MSGBOX

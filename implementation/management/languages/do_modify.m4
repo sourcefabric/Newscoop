@@ -83,7 +83,7 @@ X_AUDIT(<*103*>, <*getGS('Language $1 modified',$cName)*>)
 	*>)
 <? } ?>dnl
 	B_MSGBOX_BUTTONS
-		<A HREF="X_ROOT/languages/"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/languages/*>)
 	E_MSGBOX_BUTTONS
 E_MSGBOX
 <P>
