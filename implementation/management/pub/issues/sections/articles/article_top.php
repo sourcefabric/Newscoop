@@ -54,19 +54,15 @@ function ArticleTop($p_articleObj, $p_interfaceLanguageId, $p_title, $p_includeL
 
 <BODY BGCOLOR="WHITE" TEXT="BLACK" LINK="DARKBLUE" ALINK="RED" VLINK="DARKBLUE">
 
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
 <TR>
-	<!--<TD ROWSPAN="2" WIDTH="1%"><IMG SRC="/<?php echo $ADMIN; ?>/img/sign_big.gif" BORDER="0"></TD>-->
-	<TD style="padding-left: 10px; padding-top: 10px;">
-	    <DIV STYLE="font-size: 12pt"><B><?php putGS($p_title); ?></B></DIV>
-	    <!--<HR NOSHADE SIZE="1" COLOR="BLACK">-->
+	<TD class="page_title">
+	    <?php putGS($p_title); ?>
 	</TD>
-<!--</TR>-->
 <?php 
 if ($p_includeLinks) {
 ?>
-<!--<TR>-->
-	<TD ALIGN="right" style="padding-right: 10px; padding-top: 10px;">
+	<TD ALIGN="right" style="padding-right: 10px; padding-top: 0px;">
 		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
 		<TR>
 			<!-- "Articles" Link -->
@@ -85,14 +81,7 @@ if ($p_includeLinks) {
 			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Publications"); ?>"></A></TD>
 			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/" ><B><?php  putGS("Publications");  ?></B></A></TD>
 			
-			<!-- "Home" Link -->
-<!--			<TD><A HREF="/<?php echo $ADMIN; ?>/home.php" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Home"); ?>"></A></TD>
-			<TD><A HREF="/<?php echo $ADMIN; ?>/home.php" ><B><?php putGS("Home"); ?></B></A></TD>
--->			
-			<!-- "Logout" Link -->
-<!--			<TD><A HREF="/<?php echo $ADMIN; ?>/logout.php" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php putGS("Logout"); ?>"></A></TD>
-			<TD><A HREF="/<?php echo $ADMIN; ?>/logout.php" ><B><?php putGS("Logout");  ?></B></A></TD>
--->		</TR>
+		</TR>
 		</TABLE>
 	</TD>
 <?php
@@ -100,7 +89,6 @@ if ($p_includeLinks) {
 ?>
 </TR>
 </TABLE>
-<HR NOSHADE SIZE="1" COLOR="BLACK">
 
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="1" WIDTH="100%">
 <TR>
