@@ -168,14 +168,7 @@ $showObsoleteMenu = ($User->hasPermission("ManageDictionary")
 			<td style="font-weight: bold; padding-left: 2px;">
 				<A HREF="/<?php p($ADMIN); ?>/home.php" style="color: black; text-decoration: none;"><?php putGS('Home'); ?></A>
 			</td>
-			
-			<td style="padding-left: 10px;">
-				<A HREF="" ONCLICK="window.open('/<?php p($ADMIN); ?>/popup/', 'fpopup', 'menu=no,width=500,height=410'); return false;"><img src="/<?php p($ADMIN); ?>/img/icon/quick_menu.png" width="22" height="22" border="0" alt="<?php putGS('Quick Menu'); ?>"></a>
-			</td>
-			<td style="font-weight: bold; padding-left: 2px;" nowrap>
-				<A HREF="" ONCLICK="window.open('/<?php p($ADMIN); ?>/popup/', 'fpopup', 'menu=no,width=500,height=410'); return false;" style="color: black; text-decoration: none;"><?php putGS('Quick Menu'); ?></a>
-			</td>
-			
+						
 			<td style="padding-left: 10px;">
 				<A HREF="/<?php p($ADMIN); ?>/logout.php"><img src="/<?php p($ADMIN); ?>/img/icon/logout.png" width="22" height="22" border="0" alt="<?php putGS('Logout'); ?>"></a>
 			</td>
