@@ -2,7 +2,6 @@ include ./make.env
 
 all:
 	$(MAKE) -C implementation all
-	$(MAKE) -C supplemental all
 
 install: dummy
 	mkdir -p "$(BIN_DIR)"
@@ -32,21 +31,18 @@ install: dummy
 	cp -f "$(INSTALL_CONF)/parser_conf.php" "$(ETC_DIR)"
 	chown $(ROOT_USER):$(APACHE_GROUP) "$(ETC_DIR)/parser_conf.php"
 	chmod 644 "$(ETC_DIR)/parser_conf.php"
-#	$(MAKE) -C implementation install
-#	$(MAKE) -C supplemental install
+	$(MAKE) -C implementation install
 
 clean:
 	$(MAKE) -C implementation clean
-	$(MAKE) -C supplemental clean
 	rm -f install_log uninstall_log
-	rm -fr .package .old_version
+	rm -fr .package
 
 distclean: clean
 	rm -f make.env
 
 uninstall: dummy
 	$(MAKE) -C implementation uninstall
-	$(MAKE) -C supplemental uninstall
 	rm -f "$(CAMPSITE_DIR)/database.conf"
 
 dummy:
