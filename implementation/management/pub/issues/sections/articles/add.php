@@ -51,7 +51,7 @@ if (function_exists ("incModFile")) {
 	<TD class="page_title">
 	    <?php  putGS("Add new article"); ?>
 	</TD>
-	<TD ALIGN="RIGHT" valign="middle" style="padding-right: 10px;">
+	<TD ALIGN="RIGHT" valign="middle">
 		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" >
 		<TR>
 			<?php if ($Wiz == 0) { ?>

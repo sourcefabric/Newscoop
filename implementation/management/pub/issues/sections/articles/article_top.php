@@ -62,7 +62,7 @@ function ArticleTop($p_articleObj, $p_interfaceLanguageId, $p_title, $p_includeL
 <?php 
 if ($p_includeLinks) {
 ?>
-	<TD ALIGN="right" style="padding-right: 10px; padding-top: 0px;">
+	<TD ALIGN="right">
 		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
 		<TR>
 			<!-- "Articles" Link -->
