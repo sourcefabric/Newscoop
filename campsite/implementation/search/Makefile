@@ -7,7 +7,8 @@ CXXFLAGS=$(CFLAGS)
 LDFLAGS=-L$(LIBMYSQLCLIENT_PATH)
 LDLIBS=-lmysqlclient -lm -lz $(LIBCRYPT_LINK)
 
-LINKS=globals.h readconf.h readconf.cpp cms_types.h threadkey.h
+LINKS=globals.h readconf.h readconf.cpp cms_types.h threadkey.h ccampsiteinstance.h \
+ ccampsiteinstance.cpp
 
 all: links gather
 
@@ -19,19 +20,14 @@ links: dummy
 gather: gather.o kwd.o readconf.o
 	g++ -o gather gather.o kwd.o readconf.o $(LDFLAGS) $(LDLIBS)
 
-broker: broker.o kwd.o readconf.o
-	g++ -o broker broker.o kwd.o readconf.o $(LDFLAGS) $(LDLIBS)
-
 gather.o: gather.cpp kwd.h configure.h readconf.h globals.h
 
 kwd.o: kwd.cpp kwd.h
 
-broker.o: broker.cpp kwd.h broker.h configure.h readconf.h globals.h
-
 readconf.o: readconf.cpp readconf.h globals.h
 
 clean: dummy
-	rm -f *.o *~ configure.h $(LINKS) gather broker
+	rm -f *.o *~ configure.h $(LINKS) gather
 
 install: all
 	./install_search
