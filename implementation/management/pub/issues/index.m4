@@ -38,7 +38,12 @@ X_CURRENT({Publication:}, {<B><!sql print ~q_pub.Name></B>})
 E_CURRENT
 
 <!sql if $mia != 0>
-<P>X_NEW_BUTTON({Add new issue}, {qadd.xql?Pub=<!sql print #Pub>})
+	<!sql query "SELECT MAX(Number) FROM Issues WHERE IdPublication=?Pub" q_nr>dnl
+	<!sql if @q_nr.0 == "">dnl
+	<P>X_NEW_BUTTON({Add new issue}, {add_new.xql?Pub=<!sql print #Pub>})
+	<!sql else>dnl
+	<P>X_NEW_BUTTON({Add new issue}, {qadd.xql?Pub=<!sql print #Pub>})
+	<!sql endif>dnl
 <!sql endif>
 
 <!sql set IssNr "xxxxxxxxx">dnl
