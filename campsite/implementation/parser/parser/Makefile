@@ -18,8 +18,7 @@ DEPENDENCES= *.h
 INCLUDE_PATH=-I$(MYSQL_H_PATH)
 
 CSOCKET_FLAGS=-DHAVE_GETHOSTBYADDR_R=$(HAVE_GETHOSTBYADDR_R) -DHAVE_GETHOSTBYNAME_R=$(HAVE_GETHOSTBYNAME_R) -DHAVE_GETSERVBYNAME_R=$(HAVE_GETSERVBYNAME_R)
-CFLAGS= -D_REENTRANT -Wall $(INCLUDE_PATH) $(CSOCKET_FLAGS) $(CLEAN_XML_INCLUDE)
-# -D_DEBUG_SOURCE -g
+CFLAGS= -D_REENTRANT -Wall $(INCLUDE_PATH) $(CSOCKET_FLAGS) $(CLEAN_XML_INCLUDE) -D_DEBUG_SOURCE -g
 # -D_DEBUG
 
 export CAMPSITE_SERVER=campsite_server
@@ -27,14 +26,21 @@ export CAMPSITECTL=campsitectl
 export CAMPSITEINIT=campsite
 export RC_INIT=/etc/init.d/
 
-all: $(CAMPSITE_SERVER)
+all: links scripts
+# $(CAMPSITE_SERVER)
+
+links: dummy
+	if [ ! -L "configure.h" ]; then ln -s "$(INSTALL_CONF)/configure.h"; fi
+
+scripts: dummy
+	./create_scripts
 
 $(CAMPSITE_SERVER): $(OBJ_FILES)
 	g++ -o $(CAMPSITE_SERVER) $(OBJ_FILES) $(LDFLAGS) $(LIBS)
 	strip $(CAMPSITE_SERVER)
 
 clean: dummy
-	rm -f *.o *~ srvdef.h $(CAMPSITECTL) $(CAMPSITEINIT) $(CAMPSITE_SERVER)
+	rm -f *.o *~ configure.h $(CAMPSITECTL) $(CAMPSITEINIT) $(CAMPSITE_SERVER)
 
 %.o: %.cpp $(DEPENDENCES)
 	g++ -c -o $@ $(CFLAGS) $<
