@@ -5,13 +5,13 @@ MY_TARGETS=index.php idx.php new_dir.php do_new_dir.php upload_templ.php del.php
 all: $(MY_TARGETS)
 
 %.php: %.m4 ../macros.m4
-	m4 ../macros.m4 $< > $@
+	$(M4) ../macros.m4 $< > $@
 
 %.sh: %.m4 ../macros.m4
-	m4 ../macros.m4 $< > $@
+	$(M4) ../macros.m4 $< > $@
 
 %.html: %.m4 ../macros.m4
-	m4 ../macros.m4 $< > $@
+	$(M4) ../macros.m4 $< > $@
 
 install: $(ALL)
 	mkdir -p $(PRIV_DIR2)

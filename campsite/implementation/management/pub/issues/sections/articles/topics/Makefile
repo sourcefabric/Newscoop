@@ -5,7 +5,7 @@ MY_TARGETS=del.php do_del.php do_add.php index.php
 all: $(MY_TARGETS)
 
 %.php: %.m4 ../../../../../macros.m4
-	m4 ../../../../../macros.m4 $< >$@
+	$(M4) ../../../../../macros.m4 $< >$@
 
 install: $(ALL)
 	mkdir -p $(PRIV_DIR6)
