@@ -2,15 +2,14 @@
 /**
  * Load include files.
  */
-function load_common_include_files() {
-	require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
-	require_once($_SERVER['DOCUMENT_ROOT'].'/priv/lib_campsite.php');
-	$globalfile = selectLanguageFile($_SERVER['DOCUMENT_ROOT'].'/priv','globals');
-	$localfile = selectLanguageFile('.','locals');
+function load_common_include_files($current_dir) {
+	require($_SERVER['DOCUMENT_ROOT']."/classes/config.php");
+	require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/lib_campsite.php");
+	$globalfile = selectLanguageFile($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR",'globals');
+	$localfile = selectLanguageFile($_SERVER['DOCUMENT_ROOT']."/$current_dir",'locals');
 	require_once($globalfile);
 	require_once($localfile);
-	require_once($_SERVER['DOCUMENT_ROOT'].'/priv/languages.php');
-	require_once($_SERVER['DOCUMENT_ROOT'].'/classes/config.php');
+	require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/languages.php");
 } // fn load_common_include_files
 
 /**
@@ -26,17 +25,17 @@ function check_basic_access($request) {
 	$user = array();
 	
 	// Check for required info.
-    if (!isset($request['TOL_UserId']) || !isset($request['TOL_UserKey'])) {
-    	return array($access, $user, $XPerm);
-    }
+	if (!isset($request['TOL_UserId']) || !isset($request['TOL_UserKey'])) {
+		return array($access, $user, $XPerm);
+	}
     
-    // Check if user exists in the table.
-    $queryStr = 'SELECT * FROM Users '
-    			.' WHERE Id='.$request['TOL_UserId']
-    			.' AND KeyId='.$request['TOL_UserKey'];
-    $query = mysql_query($queryStr);
-    if ($query && (mysql_num_rows($query) > 0)) {
-    	// User exists.
+	// Check if user exists in the table.
+	$queryStr = 'SELECT * FROM Users '
+				.' WHERE Id='.$request['TOL_UserId']
+				.' AND KeyId='.$request['TOL_UserKey'];
+	$query = mysql_query($queryStr);
+	if ($query && (mysql_num_rows($query) > 0)) {
+		// User exists.
 		$access = true;
 		$userRow = mysql_fetch_array($query,MYSQL_ASSOC);
 		$user =& new User();
