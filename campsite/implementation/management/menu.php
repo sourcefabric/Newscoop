@@ -11,14 +11,12 @@ $max_menu_items = 5;
 $counter_reset = false;
 $counter_resets = 0;
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
-	"http://www.w3.org/TR/REC-html40/loose.dtd">
-<HTML>
 <HEAD>
     <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<META HTTP-EQUIV="Expires" CONTENT="now">
 	<script language="JavaScript" src="<?php echo $Campsite["website_url"]; ?>/javascript/JSCookMenu/JSCookMenu.js" type="text/javascript"></script>
 	<LINK REL="stylesheet" HREF="<?php echo $Campsite["website_url"]; ?>/javascript/JSCookMenu/ThemeOffice/theme.css" TYPE="text/css">
+	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite["website_url"]; ?>/css/admin_stylesheet.css">
 <script language="JavaScript" src="<?php echo $Campsite["website_url"]; ?>/javascript/JSCookMenu/ThemeOffice/theme.js" type="text/javascript"></script>
 	<SCRIPT LANGUAGE="JavaScript"><!--
 	var myMenu =
@@ -64,13 +62,14 @@ $counter_resets = 0;
 <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border: 1px solid black;">
 <tr>
 	<td valign="top" align="left" width="100%" style="padding-top: 0px; ">
-    	<table border="0" cellpadding="0" cellspacing="0">
-    	<tr>
-	    	<td style="padding-left: 10px; padding-right: 20px; font-size: 14pt; font-weight: bold; color: black; font-style: Verdana;" align="left" valign="middle">
-	    		Campsite v<?php p($Campsite['version']); ?>
-	    	</td>
-	    	<td style="padding-left: 5px;">
-	    	<DIV ID="myMenuID"></DIV>
+		<table border="0" cellpadding="0" cellspacing="0">
+		<tr>
+			<td style="padding-left: 10px; padding-right: 20px; font-size: 14pt; font-weight: bold; color: black; font-style: Verdana;" align="left" valign="middle">
+				<IMG SRC="/admin/img/sign_big.gif" BORDER="0">
+				Campsite v<?php p($Campsite['version']); ?>
+			</td>
+			<td style="padding-left: 5px;">
+			<DIV ID="myMenuID"></DIV>
 			<SCRIPT LANGUAGE="JavaScript"><!--
 				cmDraw ('myMenuID', myMenu, 'hbr', cmThemeOffice, 'ThemeOffice');
 			--></SCRIPT>
