@@ -1,6 +1,6 @@
 <?php
 
-global $Campsite, $ADMIN_DIR, $ADMIN, $DO_NOT_CONNECT_TO_DB;
+global $Campsite, $ADMIN_DIR, $ADMIN;
 
 $configuration_files = array("install_conf.php", 
 							 "database_conf.php", 
@@ -22,9 +22,6 @@ $Campsite['CGI_DIR'] = $Campsite['WWW_DIR'].'/'.$Campsite['DATABASE_NAME'].'/cgi
 
 $ADMIN_DIR = "admin-files";
 $ADMIN = "admin";
-
-if (!$DO_NOT_CONNECT_TO_DB)
-	require($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
 
 $scheme = (substr($_SERVER['REQUEST_URI'], 0, 5) == 'https')?'https://':'http://';
 $Campsite['HOSTNAME'] = $_SERVER['SERVER_NAME'];
