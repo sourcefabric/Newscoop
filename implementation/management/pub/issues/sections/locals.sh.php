@@ -1,5 +1,8 @@
 <?
 
+regGS("Add section to all subscriptions.","Dodaj rubriku u sve pretplate.");
+regGS("Delete section from all subscriptions.","Obriši rubriku iz svih pretplata.");
+regGS("A total of $1 subscriptions were updated.","Ukupan broj izmenjenih pretplata: $1.");
 regGS("Name<BR><SMALL>(click to see articles)</SMALL>","Naziv<br><small>(kliknite za pregled članaka)</small>");
 regGS("Delete section $1","Obriši rubriku");
 regGS("No sections.","Nema rubrika");
@@ -7,6 +10,7 @@ regGS("Adding new section","Dodavanje nove rubrike");
 regGS("You do not have the right to add sections.","Nemate pravo da dodajete rubrike");
 regGS("The section $1 has been successfuly added.","Rubrika $1 je uspešno dodata");
 regGS("Please check if another section with the same number does not already exist.","Proverite da li već ne postoji rubrika pod istim brojem");
+regGS("Select the section","Izaberite rubriku");
 regGS("Section $1 added to issue $2. $3 ($4) of $5","Rubrika $1 je dodata u izdanje $2. $3 ($4) od $5");
 regGS("Delete section","Obriši rubriku");
 regGS("You do not have the right to delete sections.","Nemate pravo da brišete rubrike");

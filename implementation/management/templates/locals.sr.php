@@ -7,6 +7,7 @@ regGS("Create new folder","Направи нови фолдер");
 regGS("Upload template","Аплоудуј шаблон");
 regGS("Select the template for displaying the front page.","Изабери шаблон за приказивање почетне стране");
 regGS("Select the template for displaying a single article.","Изабери шаблон за приказивање стране са чланком");
+regGS("You do no have access to the $1 directory!","Немате право да приступате фолдеру $1!");
 regGS("Creating new folder","Прављење новог фолдера");
 regGS("You do not have the right to create new folders.","Немате право да правите нове фолдере");
 regGS("The folder $1 has been created","Фолдер $1 је направљен");
