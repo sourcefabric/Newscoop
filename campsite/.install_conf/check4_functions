@@ -445,23 +445,6 @@ return 0
 }
 # END OF check4_group
 
-# FUNCTION: check4_crontab
-# Description: check if crontab file is installed
-# Parameters: none
-# Variables set:
-#	CRONTAB - crontab full path
-#	output - error message (if any)
-check4_crontab()
-{
-is_checked crontab && return 0
-check4_file crontab --file --path "/etc"
-result=$? && [ $result -ne 0 ] && return 1
-export CRONTAB=$file_path
-set_checked crontab
-return 0
-}
-# END OF check4_crontab
-
 # FUNCTION: check4_mysql_h
 # Description: check if mysql.h file is installed
 # Parameters: none
