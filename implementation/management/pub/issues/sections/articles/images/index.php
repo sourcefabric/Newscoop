@@ -8,6 +8,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Issue.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Section.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Publication.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/priv/CampsiteInterface.php');
 
 list($access, $User) = check_basic_access($_REQUEST);
@@ -16,12 +17,17 @@ if (!$access) {
 	exit;
 }
 $maxId = Image::GetMaxId();
-$Pub = isset($_REQUEST['Pub'])?$_REQUEST['Pub']:0;
-$Issue = isset($_REQUEST['Issue'])?$_REQUEST['Issue']:0;
-$Section = isset($_REQUEST['Section'])?$_REQUEST['Section']:0;
-$Language = isset($_REQUEST['Language'])?$_REQUEST['Language']:0;
-$sLanguage = isset($_REQUEST['sLanguage'])?$_REQUEST['sLanguage']:0;
-$Article = isset($_REQUEST['Article'])?$_REQUEST['Article']:0;
+$Pub = Input::get('Pub', 'int', 0);
+$Issue = Input::get('Issue', 'int', 0);
+$Section = Input::get('Section', 'int', 0);
+$Language = Input::get('Language', 'int', 0);
+$sLanguage = Input::get('sLanguage', 'int', 0);
+$Article = Input::get('Article', 'int', 0);
+
+if (!Input::isValid()) {
+	header('Location: /priv/logout.php');
+	exit;	
+}
 
 $publicationObj =& new Publication($Pub);
 $issueObj =& new Issue($Pub, $Language, $Issue);
@@ -108,9 +114,14 @@ if (count($articleImages) <= 0) {
 	?>
 	
 	<table>
-	<tr><td style="padding-top: 10px; padding-bottom: 20px; padding-left: 30px;">
-	There are currently no images associated with this article.<br>
-	Click one of the "Add Image" links above to add one.
+	<tr>
+		<td style="padding-top: 10px; padding-bottom: 20px; padding-left: 30px;">
+			<?php putGS('There are currently no images associated with this article.'); ?><br>
+			<?php 
+			if ($User->hasPermission('AddImage')) {
+				putGS('Click one of the "Add Image" links above to add one.');
+			}
+			?>
 	</td></tr>
 	</table>
 	<?php
@@ -131,6 +142,9 @@ if (count($articleImages) > 0) {
 	    
 	if ($User->hasPermission('ChangeArticle')) { ?>
 		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php putGS('Remove Image From Article'); ?></B></TD>
+		<?php
+	}
+	if ($User->hasPermission('DeleteImage')) { ?>
 		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php putGS('Delete'); ?></B></TD>
 		<?php  
 	} 
@@ -173,6 +187,9 @@ if (count($articleImages) > 0) {
 			<TD ALIGN="CENTER">
 				<A HREF="/priv/pub/issues/sections/articles/images/do_unlink.php?PublicationId=<?php  p($Pub); ?>&IssueId=<?php  p($Issue); ?>&SectionId=<?php  p($Section); ?>&ArticleId=<?php  p($Article); ?>&ImageId=<?php echo $image->getImageId(); ?>&ImageTemplateId=<?php echo $articleImage->getTemplateId(); ?>&ArticleLanguageId=<?php  p($Language); ?>&InterfaceLanguageId=<?php  p($sLanguage); ?>" onclick="return confirm('<?php putGS('Are you sure you want to remove the image \\\'$1\\\' from the article?', htmlspecialchars($image->getDescription())); ?>');"><IMG SRC="/priv/img/icon/unlink.gif" BORDER="0" ALT="<?php  putGS('Unlink image $1', $image->getDescription()); ?>"></A>
 			</TD>
+		<?php
+	    }
+	    if ($User->hasPermission('DeleteImage')) { ?>
 			<td align="center">
 			<?php 
 			if (count(ArticleImage::GetArticlesThatUseImage($image->getImageId())) == 1) {
@@ -188,7 +205,8 @@ if (count($articleImages) > 0) {
 			?>
 			</td>
 			<?
-	    } ?>
+	    } // if $User->hasPermission('DeleteImage')
+	?>
 	</TR>
 <?php 
 		$imageCount++;
