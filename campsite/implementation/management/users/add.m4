@@ -1,4 +1,3 @@
-B_HTML
 INCLUDE_PHP_LIB(<*$ADMIN_DIR/users*>)
 B_DATABASE
 
@@ -6,7 +5,6 @@ CHECK_BASIC_ACCESS
 CHECK_ACCESS(<*ManageUsers*>)
 
 B_HEAD
-	X_EXPIRES
 	X_TITLE(<*Add new user account*>)
 <?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to create user accounts.*>)
@@ -61,7 +59,7 @@ define(<*X_CHKD*>, <*<?php  if ("$1" == $2) { ?>CHECKED<?php  } ?>*>)dnl
 <P>
 B_DIALOG(<*Add new user account*>, <*POST*>, <*do_add.php*>)
 	B_DIALOG_INPUT(<*Full Name*>)
-		<INPUT TYPE="TEXT" NAME="cName" SIZE="32" MAXLENGTH="64" VALUE="<?php  pencHTML($cName); ?>">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cName" SIZE="32" MAXLENGTH="64" VALUE="<?php  pencHTML($cName); ?>">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Title*>)
 		<SELECT NAME="cTitle">
@@ -86,28 +84,28 @@ B_DIALOG(<*Add new user account*>, <*POST*>, <*do_add.php*>)
 		</SELECT>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*User name*>)
-		<INPUT TYPE="TEXT" NAME="cUName" SIZE="32" MAXLENGTH="32" VALUE="<?php  pencHTML($cUName); ?>">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cUName" SIZE="32" MAXLENGTH="32" VALUE="<?php  pencHTML($cUName); ?>">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Password*>)
-		<INPUT TYPE="PASSWORD" NAME="cPass1" SIZE="32" MAXLENGTH="32" VALUE="<?php  pencHTML($cPass1); ?>">
+		<INPUT TYPE="PASSWORD" class="input_text" NAME="cPass1" SIZE="32" MAXLENGTH="32" VALUE="<?php  pencHTML($cPass1); ?>">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Confirm password*>)
-		<INPUT TYPE="PASSWORD" NAME="cPass2" SIZE="32" MAXLENGTH="32" VALUE="<?php  pencHTML($cPass2); ?>">
+		<INPUT TYPE="PASSWORD" class="input_text" NAME="cPass2" SIZE="32" MAXLENGTH="32" VALUE="<?php  pencHTML($cPass2); ?>">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*E-Mail*>)
-		<INPUT TYPE="TEXT" NAME="cEMail" SIZE="32" MAXLENGTH="128" VALUE="<?php  pencHTML($cEMail); ?>">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cEMail" SIZE="32" MAXLENGTH="128" VALUE="<?php  pencHTML($cEMail); ?>">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*City*>)
-		<INPUT TYPE="TEXT" NAME="cCity" SIZE="32" MAXLENGTH="60" VALUE="<?php  pencHTML($cCity); ?>">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cCity" SIZE="32" MAXLENGTH="60" VALUE="<?php  pencHTML($cCity); ?>">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Street Address*>)
-		<INPUT TYPE="TEXT" NAME="cStrAddress" SIZE="50" MAXLENGTH="255" VALUE="<?php  pencHTML($cStrAddress); ?>">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cStrAddress" SIZE="50" MAXLENGTH="255" VALUE="<?php  pencHTML($cStrAddress); ?>">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Postal Code*>)
-		<INPUT TYPE="TEXT" NAME="cPostalCode" SIZE="10" MAXLENGTH="10" VALUE="<?php  pencHTML($cPostalCode); ?>">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cPostalCode" SIZE="10" MAXLENGTH="10" VALUE="<?php  pencHTML($cPostalCode); ?>">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*State*>)
-		<INPUT TYPE="TEXT" NAME="cState" SIZE="32" MAXLENGTH="32" VALUE="<?php  pencHTML($cState); ?>">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cState" SIZE="32" MAXLENGTH="32" VALUE="<?php  pencHTML($cState); ?>">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Country*>)
 		<SELECT NAME="cCountryCode">
@@ -121,19 +119,19 @@ B_DIALOG(<*Add new user account*>, <*POST*>, <*do_add.php*>)
 		</SELECT>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Phone*>)
-		<INPUT TYPE="TEXT" NAME="cPhone" SIZE="20" MAXLENGTH="20" VALUE="<?php  pencHTML($cPhone); ?>">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cPhone" SIZE="20" MAXLENGTH="20" VALUE="<?php  pencHTML($cPhone); ?>">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Fax*>)
-		<INPUT TYPE="TEXT" NAME="cFax" SIZE="20" MAXLENGTH="20" VALUE="<?php  pencHTML($cFax); ?>">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cFax" SIZE="20" MAXLENGTH="20" VALUE="<?php  pencHTML($cFax); ?>">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Contact Person*>)
-		<INPUT TYPE="TEXT" NAME="cContact" SIZE="32" MAXLENGTH="64" VALUE="<?php  pencHTML($cContact); ?>">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cContact" SIZE="32" MAXLENGTH="64" VALUE="<?php  pencHTML($cContact); ?>">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Second Phone*>)
-		<INPUT TYPE="TEXT" NAME="cPhone2" SIZE="20" MAXLENGTH="20" VALUE="<?php  pencHTML($cPhone2); ?>">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cPhone2" SIZE="20" MAXLENGTH="20" VALUE="<?php  pencHTML($cPhone2); ?>">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Employer*>)
-		<INPUT TYPE="TEXT" NAME="cEmployer" SIZE="30" MAXLENGTH="30" VALUE="<?php  pencHTML($cEmployer); ?>">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cEmployer" SIZE="30" MAXLENGTH="30" VALUE="<?php  pencHTML($cEmployer); ?>">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Employer Type*>)
 		<SELECT NAME="cEmployerType">
@@ -146,7 +144,7 @@ B_DIALOG(<*Add new user account*>, <*POST*>, <*do_add.php*>)
 		</SELECT>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Position*>)
-		<INPUT TYPE="TEXT" NAME="cPosition" SIZE="30" MAXLENGTH="30" VALUE="<?php  pencHTML($cPosition); ?>">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cPosition" SIZE="30" MAXLENGTH="30" VALUE="<?php  pencHTML($cPosition); ?>">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Type*>)
 		<?php  

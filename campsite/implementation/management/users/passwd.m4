@@ -1,4 +1,3 @@
-B_HTML
 INCLUDE_PHP_LIB(<*$ADMIN_DIR/users*>)
 B_DATABASE
 
@@ -6,7 +5,6 @@ CHECK_BASIC_ACCESS
 CHECK_ACCESS(<*ManageUsers*>)
 
 B_HEAD
-	X_EXPIRES
 	X_TITLE(<*Change user password*>)
 <?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to change user passwords.*>)
@@ -41,10 +39,10 @@ E_CURRENT
 <P>
 B_DIALOG(<*Change user password*>, <*POST*>, <*do_passwd.php*>)
 	B_DIALOG_INPUT(<*Password*>)
-		<INPUT TYPE="PASSWORD" NAME="cPass1" SIZE="32" MAXLENGTH="32">
+		<INPUT TYPE="PASSWORD" class="input_text" NAME="cPass1" SIZE="32" MAXLENGTH="32">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Confirm password*>)
-		<INPUT TYPE="PASSWORD" NAME="cPass2" SIZE="32" MAXLENGTH="32">
+		<INPUT TYPE="PASSWORD" class="input_text" NAME="cPass2" SIZE="32" MAXLENGTH="32">
 	E_DIALOG_INPUT
 	B_DIALOG_BUTTONS
 		<INPUT TYPE="HIDDEN" NAME="User" VALUE="<?php  pencHTML($User); ?>">
