@@ -36,7 +36,8 @@ CURLShortNames::CURLShortNames(const CURLShortNames& p_rcoSrc)
 	: CURL(p_rcoSrc)
 {
 	m_bValidURI = p_rcoSrc.m_bValidURI;
-	m_coURI = p_rcoSrc.m_coURI;
+	m_coURIPath = p_rcoSrc.m_coURIPath;
+	m_coQueryString = p_rcoSrc.m_coQueryString;
 	m_pDBConn = p_rcoSrc.m_pDBConn;
 	m_coHTTPHost = p_rcoSrc.m_coHTTPHost;
 }
@@ -48,7 +49,7 @@ void CURLShortNames::setURL(const CMsgURLRequest& p_rcoURLMessage)
 	m_coDocumentRoot = p_rcoURLMessage.getDocumentRoot();
 	m_coPathTranslated = p_rcoURLMessage.getPathTranslated();
 	m_coHTTPHost = p_rcoURLMessage.getHTTPHost();
-	m_coURI = p_rcoURLMessage.getReqestURI();
+	string coURI = p_rcoURLMessage.getReqestURI();
 	m_bValidURI = true;
 
 	CMYSQL_RES coRes;
@@ -61,19 +62,20 @@ void CURLShortNames::setURL(const CMsgURLRequest& p_rcoURLMessage)
 	setPublication(nPublication);
 
 	// prepare the path string
-	string::size_type nQMark = m_coURI.find('?');
-	string coPath = (nQMark != string::npos) ? m_coURI.substr(0, nQMark) : m_coURI;
+	string::size_type nQMark = coURI.find('?');
+	m_coURIPath = (nQMark != string::npos) ? coURI.substr(0, nQMark) : coURI;
+	m_coQueryString = (nQMark != string::npos) ? coURI.substr(nQMark) : "";
 
 	// declare variables to store publication parameters found as short names in URI
 	string coLangCode, coIssue, coSection, coArticle;
 
 	// indexes in the URI string
-	string::size_type nCurrent = (coPath[0] == '/') ? 1 : 0;
-	string::size_type nNext = coPath.find('/', nCurrent);
-	nNext = nNext == string::npos ? coPath.size() + 1 : nNext;
+	string::size_type nCurrent = (m_coURIPath[0] == '/') ? 1 : 0;
+	string::size_type nNext = m_coURIPath.find('/', nCurrent);
+	nNext = nNext == string::npos ? m_coURIPath.size() + 1 : nNext;
 
 	// read the language code
-	coLangCode = coPath.substr(nCurrent, nNext - nCurrent);
+	coLangCode = m_coURIPath.substr(nCurrent, nNext - nCurrent);
 
 	// query the database for the language code
 	coQuery = string("select Id from Languages where Code = '") + coLangCode + "'";
@@ -85,9 +87,9 @@ void CURLShortNames::setURL(const CMsgURLRequest& p_rcoURLMessage)
 
 	// read the issue short name
 	nCurrent = nNext + 1;
-	nNext = coPath.find('/', nCurrent);
-	nNext = nNext == string::npos ? coPath.size() + 1 : nNext;
-	coIssue = coPath.substr(nCurrent, nNext - nCurrent);
+	nNext = m_coURIPath.find('/', nCurrent);
+	nNext = nNext == string::npos ? m_coURIPath.size() + 1 : nNext;
+	coIssue = m_coURIPath.substr(nCurrent, nNext - nCurrent);
 
 	long nIssue = -1;
 	// query the database for the issue
@@ -103,13 +105,13 @@ void CURLShortNames::setURL(const CMsgURLRequest& p_rcoURLMessage)
 		setIssue(nIssue);
 	}
 
-	if (nNext < (coPath.size() - 1))
+	if (nNext < (m_coURIPath.size() - 1))
 	{
 		// read the section short name
 		nCurrent = nNext + 1;
-		nNext = coPath.find('/', nCurrent);
-		nNext = nNext == string::npos ? coPath.size() + 1 : nNext;
-		coSection = coPath.substr(nCurrent, nNext - nCurrent);
+		nNext = m_coURIPath.find('/', nCurrent);
+		nNext = nNext == string::npos ? m_coURIPath.size() + 1 : nNext;
+		coSection = m_coURIPath.substr(nCurrent, nNext - nCurrent);
 	}
 
 	string coIssueCond = nIssue != -1 ? string(" and NrIssue = ") + getValue(P_NRISSUE) : "";
@@ -127,13 +129,13 @@ void CURLShortNames::setURL(const CMsgURLRequest& p_rcoURLMessage)
 		setSection(nSection);
 	}
 
-	if (nNext < (coPath.size() - 1))
+	if (nNext < (m_coURIPath.size() - 1))
 	{
 		// read the article short name
 		nCurrent = nNext + 1;
-		nNext = coPath.find('/', nCurrent);
-		nNext = nNext == string::npos ? coPath.size() + 1 : nNext;
-		coArticle = coPath.substr(nCurrent, nNext - nCurrent);
+		nNext = m_coURIPath.find('/', nCurrent);
+		nNext = nNext == string::npos ? m_coURIPath.size() + 1 : nNext;
+		coArticle = m_coURIPath.substr(nCurrent, nNext - nCurrent);
 	}
 
 	string coSectCond = nSection != -1 ? string(" and NrSection = ") + getValue(P_NRSECTION) : "";
@@ -197,7 +199,7 @@ void CURLShortNames::buildURI() const
 	MYSQL_ROW qRow = QueryFetchRow(m_pDBConn, coQuery.c_str(), coRes);
 	if (qRow == NULL)
 		throw InvalidValue("language identifier", getValue(P_IDLANG));
-	m_coURI = string("/") + qRow[0] + "/";
+	m_coURIPath = string("/") + qRow[0] + "/";
 
 	string coIssueSN, coSectionSN, coArticleSN, coLang = getValue(P_IDLANG);
 	string coPubCond, coIssueCond, coSectionCond, coArticleCond;
@@ -239,15 +241,12 @@ void CURLShortNames::buildURI() const
 			throw InvalidValue("article number", getValue(P_NRARTICLE));
 		coArticleSN = qRow[0];
 	}
-	m_coURI += coIssueSN + "/";
+	m_coURIPath += coIssueSN + "/";
 	if (coSectionSN != "" || coArticleSN != "")
-		m_coURI += coSectionSN + "/";
+		m_coURIPath += coSectionSN + "/";
 	if (coArticleSN != "")
-		m_coURI += coArticleSN + "/";
+		m_coURIPath += coArticleSN + "/";
 
-	string coQueryString = getQueryString();
-	if (coQueryString != "")
-		m_coURI += string("?") + coQueryString;
-
+	m_coQueryString = getQueryString();
 	m_bValidURI = true;
 }
