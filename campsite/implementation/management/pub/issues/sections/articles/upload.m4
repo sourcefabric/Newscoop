@@ -1,6 +1,6 @@
 INCLUDE_PHP_LIB(<*../../../..*>)dnl
 B_DATABASE()dnl
-<?
+<?php 
     todefnum('UserId');
     if ($UserId == "")
 	$UserId= 0;

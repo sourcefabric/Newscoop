@@ -8,32 +8,32 @@ CHECK_ACCESS(<*ManagePub*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Change subscription default time*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to edit publication information.*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
 
-<?
+<?php 
     todefnum('Pub');
     todefnum('Language');
     todef('CountryCode');
 ?>
 B_HEADER(<*Change subscription default time*>)
 B_HEADER_BUTTONS
-X_HBUTTON(<*Subscriptions*>, <*pub/deftime.php?Pub=<? pencURL($Pub); ?>*>)
+X_HBUTTON(<*Subscriptions*>, <*pub/deftime.php?Pub=<?php  pencURL($Pub); ?>*>)
 X_HBUTTON(<*Publications*>, <*pub/*>)
 X_HBUTTON(<*Home*>, <*home.php*>)
 X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<?
+<?php 
     query ("SELECT * FROM Publications WHERE Id=$Pub", 'q_pub');
     if ($NUM_ROWS) {
     
@@ -49,50 +49,50 @@ E_HEADER
 ?>dnl
 
 B_CURRENT
-X_CURRENT(<*Publication*>, <*<B><? pgetHVar($q_pub,'Name'); ?></B>*>)
-X_CURRENT(<*Country*>, <*<B><? pgetHVar($q_ctr,'Name'); ?></B>*>)
+X_CURRENT(<*Publication*>, <*<B><?php  pgetHVar($q_pub,'Name'); ?></B>*>)
+X_CURRENT(<*Country*>, <*<B><?php  pgetHVar($q_ctr,'Name'); ?></B>*>)
 E_CURRENT
 
 <P>
 B_DIALOG(<*Change subscription default time*>, <*POST*>, <*do_editdeftime.php*>)
-	<INPUT TYPE=HIDDEN NAME=cPub VALUE="<? pencURL($Pub); ?>">
-	<INPUT TYPE=HIDDEN NAME=cCountryCode VALUE="<? pencURL($CountryCode); ?>">
-	<INPUT TYPE=HIDDEN NAME=Language VALUE="<? pencURL($Language); ?>">
+	<INPUT TYPE=HIDDEN NAME=cPub VALUE="<?php  pencURL($Pub); ?>">
+	<INPUT TYPE=HIDDEN NAME=cCountryCode VALUE="<?php  pencURL($CountryCode); ?>">
+	<INPUT TYPE=HIDDEN NAME=Language VALUE="<?php  pencURL($Language); ?>">
 	B_DIALOG_INPUT(<*Trial Period*>)
-		<INPUT TYPE="TEXT" NAME="cTrialTime" VALUE="<? pgetHVar($q_deft,'TrialTime'); ?>" SIZE="5" MAXLENGTH="5">
+		<INPUT TYPE="TEXT" NAME="cTrialTime" VALUE="<?php  pgetHVar($q_deft,'TrialTime'); ?>" SIZE="5" MAXLENGTH="5">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Paid Period*>)
-		<INPUT TYPE="TEXT" NAME="cPaidTime" VALUE="<? pgetHVar($q_deft,'PaidTime'); ?>" SIZE="5" MAXLENGTH="5">
+		<INPUT TYPE="TEXT" NAME="cPaidTime" VALUE="<?php  pgetHVar($q_deft,'PaidTime'); ?>" SIZE="5" MAXLENGTH="5">
 	E_DIALOG_INPUT
 	B_DIALOG_BUTTONS
-		<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<? pencHTML($Pub); ?>">
+		<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<?php  pencHTML($Pub); ?>">
 		SUBMIT(<*Save*>, <*Save changes*>)
-		REDIRECT(<*Cancel*>, <*Cancel*>, <*X_ROOT/pub/deftime.php?Pub=<? pencURL($Pub); ?>&Language=<? pencURL($Language); ?>*>)
+		REDIRECT(<*Cancel*>, <*Cancel*>, <*X_ROOT/pub/deftime.php?Pub=<?php  pencURL($Pub); ?>&Language=<?php  pencURL($Language); ?>*>)
 	E_DIALOG_BUTTONS
 E_DIALOG
 <P>
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No default time entry for that country.'); ?></LI>
+	<LI><?php  putGS('No default time entry for that country.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such country.'); ?></LI>
+	<LI><?php  putGS('No such country.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such publication.'); ?></LI>
+	<LI><?php  putGS('No such publication.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

@@ -8,17 +8,17 @@ CHECK_ACCESS(<*AddImage*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Selecting image*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to add images*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
-<?
+<?php 
     todefnum('Pub');
     todefnum('Issue');
     todefnum('Section');
@@ -34,16 +34,16 @@ B_BODY
 ?>
 B_HEADER(<*Selecting image*>)
 B_HEADER_BUTTONS
-X_HBUTTON(<*Images*>, <*pub/issues/sections/articles/images/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Article=<? p($Article); ?>&Language=<? p($Language); ?>&sLanguage=<? p($sLanguage); ?>&Section=<? p($Section); ?>*>)
-X_HBUTTON(<*Articles*>, <*pub/issues/sections/articles/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>&Section=<? p($Section); ?>*>)
-X_HBUTTON(<*Sections*>, <*pub/issues/sections/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>*>)
-X_HBUTTON(<*Issues*>, <*pub/issues/?Pub=<? p($Pub); ?>*>)
+X_HBUTTON(<*Images*>, <*pub/issues/sections/articles/images/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&Section=<?php  p($Section); ?>*>)
+X_HBUTTON(<*Articles*>, <*pub/issues/sections/articles/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>&Section=<?php  p($Section); ?>*>)
+X_HBUTTON(<*Sections*>, <*pub/issues/sections/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>*>)
+X_HBUTTON(<*Issues*>, <*pub/issues/?Pub=<?php  p($Pub); ?>*>)
 X_HBUTTON(<*Publications*>, <*pub/*>)
 X_HBUTTON(<*Home*>, <*home.php*>)
 X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
-<?
+<?php 
 query ("SELECT Description, Photographer, Place, Date, ContentType FROM Images WHERE IdPublication=$Pub1 AND NrIssue=$Issue1 AND NrSection=$Section1 AND NrArticle=$Article1 AND Number=$Image", 'q_img');
 if ($NUM_ROWS) {
     query ("SELECT * FROM Articles WHERE IdPublication=$Pub AND NrIssue=$Issue AND NrSection=$Section AND Number=$Article", 'q_art');
@@ -64,16 +64,16 @@ if ($NUM_ROWS) {
 		    fetchRow($q_img);
 ?>dnl
 B_CURRENT
-X_CURRENT(<*Publication*>, <*<B><? pgetHVar($q_pub,'Name'); ?></B>*>)
-X_CURRENT(<*Issue*>, <*<B><? pgetHVar($q_iss,'Number'); ?>. <? pgetHVar($q_iss,'Name'); ?> (<? pgetHVar($q_lang,'Name'); ?>)</B>*>)
-X_CURRENT(<*Section*>, <*<B><? pgetHVar($q_sect,'Number'); ?>. <? pgetHVar($q_sect,'Name'); ?></B>*>)
-X_CURRENT(<*Article*>, <*<B><? pgetHVar($q_art,'Name'); ?></B>*>)
-X_CURRENT(<*Image*>, <*<B><? pgetHVar($q_img,'Description'); ?> (<? pgetHVar($q_img,'Photographer'); ?>, <? pgetHVar($q_img,'Place'); ?>, <? pgetHVar($q_img,'Date'); ?>)</B>*>)
+X_CURRENT(<*Publication*>, <*<B><?php  pgetHVar($q_pub,'Name'); ?></B>*>)
+X_CURRENT(<*Issue*>, <*<B><?php  pgetHVar($q_iss,'Number'); ?>. <?php  pgetHVar($q_iss,'Name'); ?> (<?php  pgetHVar($q_lang,'Name'); ?>)</B>*>)
+X_CURRENT(<*Section*>, <*<B><?php  pgetHVar($q_sect,'Number'); ?>. <?php  pgetHVar($q_sect,'Name'); ?></B>*>)
+X_CURRENT(<*Article*>, <*<B><?php  pgetHVar($q_art,'Name'); ?></B>*>)
+X_CURRENT(<*Image*>, <*<B><?php  pgetHVar($q_img,'Description'); ?> (<?php  pgetHVar($q_img,'Photographer'); ?>, <?php  pgetHVar($q_img,'Place'); ?>, <?php  pgetHVar($q_img,'Date'); ?>)</B>*>)
 E_CURRENT
 
 <P>
 B_MSGBOX(<*Selecting image*>)
-<?
+<?php 
 
     query ("SELECT Number FROM Images WHERE IdPublication=$Pub AND NrIssue=$Issue AND NrSection=$Section AND NrArticle=$Article", 'q0');
     if ($NUM_ROWS) {
@@ -95,59 +95,59 @@ B_MSGBOX(<*Selecting image*>)
 		$AFFECTED_ROWS = 0;
 ?>
 		X_MSGBOX_TEXT(<*<LI><font color=red>Make sure the mysql user has the right to create files in /tmp directory!!!</font></LI>*>)
-<?
+<?php 
 	}
 
     $ar= $AFFECTED_ROWS;
     query ("unlock tables");
 
     if ($ar) { ?>dnl
-	X_MSGBOX_TEXT(<*<LI><? putGS('The image $1 has been added.','<B>'.getHVar($q_img,'Description').'</B>'); ?></LI>*>)
+	X_MSGBOX_TEXT(<*<LI><?php  putGS('The image $1 has been added.','<B>'.getHVar($q_img,'Description').'</B>'); ?></LI>*>)
 X_AUDIT(<*42*>, <*getGS('The image $1 has been added.',getHVar($q_img,'Description'))*>)
-<? } else { ?>dnl
-	X_MSGBOX_TEXT(<*<LI><? putGS('The image $1 could not be added.','<B>'.getHVar($q_img,'Description').'</B>'); ?></LI>*>)
-<? } ?>dnl
+<?php  } else { ?>dnl
+	X_MSGBOX_TEXT(<*<LI><?php  putGS('The image $1 could not be added.','<B>'.getHVar($q_img,'Description').'</B>'); ?></LI>*>)
+<?php  } ?>dnl
 	B_MSGBOX_BUTTONS
-	REDIRECT(<*Done*>, <*Done*>, <*/cgi-bin/cleanb?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Section=<? p($Section); ?>&Article=<? p($Article); ?>&Language=<? p($Language); ?>&sLanguage=<? p($sLanguage); ?>&Number=<? p($Number); ?>&NrArticle=<? p($Article); ?>*>)
+	REDIRECT(<*Done*>, <*Done*>, <*/cgi-bin/cleanb?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&Number=<?php  p($Number); ?>&NrArticle=<?php  p($Article); ?>*>)
 		</FORM>
 	E_MSGBOX_BUTTONS
 E_MSGBOX
 <P>
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such publication.'); ?></LI>
+	<LI><?php  putGS('No such publication.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such issue.'); ?></LI>
+	<LI><?php  putGS('No such issue.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such section.'); ?></LI>
+	<LI><?php  putGS('No such section.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such article.'); ?></LI>
+	<LI><?php  putGS('No such article.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such image.'); ?></LI>
+	<LI><?php  putGS('No such image.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

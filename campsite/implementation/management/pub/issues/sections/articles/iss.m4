@@ -7,13 +7,13 @@ CHECK_BASIC_ACCESS
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Duplicate article*>)
-<? query ("SELECT Number, Name FROM Issues WHERE 1=0", 'q_iss'); ?>dnl
+<?php  query ("SELECT Number, Name FROM Issues WHERE 1=0", 'q_iss'); ?>dnl
 E_HEAD
 
 B_STYLE
 E_STYLE
 
-<?
+<?php 
 	todefnum('Language');
 	todefnum('Pub');
 	todefnum('Issue');
@@ -27,13 +27,13 @@ E_STYLE
 
 <DIV><TABLE BORDER="0">
 	<TR>
-		<TD VALIGN="TOP" ALIGN="RIGHT" WIDTH="150"><? putGS('Issue'); ?>: </TD>
+		<TD VALIGN="TOP" ALIGN="RIGHT" WIDTH="150"><?php  putGS('Issue'); ?>: </TD>
 		<TD ALIGN="LEFT">
 <FORM NAME="FORM_ISS" METHOD="GET">
-<? if ($NUM_ROWS) { ?>dnl
-<SELECT NAME="iss" ONCHANGE="var f = this.form.iss; var v = f.options[f.selectedIndex].value; var x = 'X_ROOT/pub/issues/sections/articles/i2.php?Language=<? pencURL($Language); ?>&Pub=<? pencURL($Pub); ?>&Issue=<? pencURL($Issue); ?>&Section=<? pencURL($Section); ?>&Article=<? pencURL($Article); ?>&dstPub=<? pencURL($dstPub); ?>&dstIssue=' + v; if (v != 0) { parent.frames[1].location.href = x; }">
-	<OPTION VALUE="0"><? putGS('---Select issue---'); ?>
-<?
+<?php  if ($NUM_ROWS) { ?>dnl
+<SELECT NAME="iss" ONCHANGE="var f = this.form.iss; var v = f.options[f.selectedIndex].value; var x = 'X_ROOT/pub/issues/sections/articles/i2.php?Language=<?php  pencURL($Language); ?>&Pub=<?php  pencURL($Pub); ?>&Issue=<?php  pencURL($Issue); ?>&Section=<?php  pencURL($Section); ?>&Article=<?php  pencURL($Article); ?>&dstPub=<?php  pencURL($dstPub); ?>&dstIssue=' + v; if (v != 0) { parent.frames[1].location.href = x; }">
+	<OPTION VALUE="0"><?php  putGS('---Select issue---'); ?>
+<?php 
 	$nr=$NUM_ROWS;
 	for($loop=0;$loop<$nr;$loop++) {
 		fetchRow($q_iss);
@@ -41,9 +41,9 @@ E_STYLE
 	}
 ?>
 </SELECT>
-<? } else { ?>dnl
-<SELECT DISABLED><OPTION><? putGS('No issues'); ?></SELECT>
-<? } ?>dnl
+<?php  } else { ?>dnl
+<SELECT DISABLED><OPTION><?php  putGS('No issues'); ?></SELECT>
+<?php  } ?>dnl
 </FORM>
 		</TD>
 	</TR>

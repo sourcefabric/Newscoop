@@ -8,31 +8,31 @@ CHECK_ACCESS(<*ManageTempl*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<* Duplicate template*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to create templates.*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
 
-<? todef('Path'); ?>dnl
-<? todef('Name'); ?>dnl
+<?php  todef('Path'); ?>dnl
+<?php  todef('Name'); ?>dnl
 
 B_HEADER(<*Duplicate template*>)
 B_HEADER_BUTTONS
-X_HBUTTON(<*Templates*>, <*templates/?Path=<? pencURL(decS($Path)); ?>*>)
+X_HBUTTON(<*Templates*>, <*templates/?Path=<?php  pencURL(decS($Path)); ?>*>)
 X_HBUTTON(<*Home*>, <*home.php*>)
 X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
 B_CURRENT
-X_CURRENT(<*Path*>, <*<B><? pencHTML(decURL($Path)); ?></B>*>)
- X_CURRENT(<*Template*>, <*<B><? pencHTML(decURL($Name)); ?></B>*>)
+X_CURRENT(<*Path*>, <*<B><?php  pencHTML(decURL($Path)); ?></B>*>)
+ X_CURRENT(<*Template*>, <*<B><?php  pencHTML(decURL($Name)); ?></B>*>)
 E_CURRENT
 
 B_DIALOG(<*Duplicate template*>, <*POST*>, <*do_dup.php*>)
@@ -40,10 +40,10 @@ B_DIALOG(<*Duplicate template*>, <*POST*>, <*do_dup.php*>)
 		<INPUT TYPE="TEXT" NAME="cName" SIZE="32" MAXLENGTH="32">
 	E_DIALOG_INPUT
 	B_DIALOG_BUTTONS
-		<INPUT TYPE="HIDDEN" NAME="cPath" VALUE="<? pencHTML(decS($Path)); ?>">
-		<INPUT TYPE="HIDDEN" NAME="Name" VALUE="<? pencHTML(decS($Name)); ?>">
+		<INPUT TYPE="HIDDEN" NAME="cPath" VALUE="<?php  pencHTML(decS($Path)); ?>">
+		<INPUT TYPE="HIDDEN" NAME="Name" VALUE="<?php  pencHTML(decS($Name)); ?>">
 		SUBMIT(<*Save*>, <*Save changes*>)
-		REDIRECT(<*Cancel*>, <*Cancel*>, <*<? pencHTML(decS($Path)); ?>*>)
+		REDIRECT(<*Cancel*>, <*Cancel*>, <*<?php  pencHTML(decS($Path)); ?>*>)
 	E_DIALOG_BUTTONS
 E_DIALOG
 <P>
@@ -51,7 +51,7 @@ E_DIALOG
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

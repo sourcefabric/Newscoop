@@ -8,12 +8,12 @@ CHECK_ACCESS(<*ManageClasses*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Add new infotype*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to add glossary infotypes.*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
@@ -33,8 +33,8 @@ B_DIALOG(<*Add new infotype*>, <*POST*>, <*do_add.php*>)
 		<INPUT TYPE="TEXT" NAME="cName" SIZE="32" MAXLENGTH="64">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Language*>)
-		<? query ("SELECT Id, Name FROM Languages ORDER BY Name", 'q'); ?>
-		<SELECT NAME="cLang"><?
+		<?php  query ("SELECT Id, Name FROM Languages ORDER BY Name", 'q'); ?>
+		<SELECT NAME="cLang"><?php 
 
 		    $nr=$NUM_ROWS;
 		    for($loop=0;$loop<$nr;$loop++) {
@@ -53,7 +53,7 @@ E_DIALOG
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

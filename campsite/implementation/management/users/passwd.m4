@@ -8,12 +8,12 @@ CHECK_ACCESS(<*ManageUsers*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Change user password*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to change user passwords.*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
@@ -27,7 +27,7 @@ X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<?
+<?php 
     todefnum('User');
     query ("SELECT UName FROM Users WHERE Id=$User", 'users');
     if ($NUM_ROWS) { 
@@ -35,7 +35,7 @@ E_HEADER
     ?>dnl
 
 B_CURRENT
-X_CURRENT(<*User account*>, <*<B><? pgetHVar($users,'UName'); ?></B>*>)
+X_CURRENT(<*User account*>, <*<B><?php  pgetHVar($users,'UName'); ?></B>*>)
 E_CURRENT
 
 <P>
@@ -47,23 +47,23 @@ B_DIALOG(<*Change user password*>, <*POST*>, <*do_passwd.php*>)
 		<INPUT TYPE="PASSWORD" NAME="cPass2" SIZE="32" MAXLENGTH="32">
 	E_DIALOG_INPUT
 	B_DIALOG_BUTTONS
-		<INPUT TYPE="HIDDEN" NAME="User" VALUE="<? pencHTML($User); ?>">
+		<INPUT TYPE="HIDDEN" NAME="User" VALUE="<?php  pencHTML($User); ?>">
 		SUBMIT(<*Save*>, <*Save changes*>)
 		REDIRECT(<*Cancel*>, <*Cancel*>, <*X_ROOT/users/*>)
 	E_DIALOG_BUTTONS
 E_DIALOG
 <P>
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such user account.'); ?></LI>
+	<LI><?php  putGS('No such user account.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

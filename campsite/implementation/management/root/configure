@@ -12,7 +12,7 @@ save_var $database_vars
 
 echo -n -e "\tWriting db_connect.php..."
 cat > db_connect.php << EOF
-<?
+<?php
 mysql_connect("$DATABASE_SERVER", "$DATABASE_USER", "$DATABASE_PASSWORD");
 mysql_select_db("$DATABASE_NAME");
 ?>

@@ -8,12 +8,12 @@ CHECK_ACCESS(<*ManageCountries*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Add New Country*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to add countries.*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
@@ -37,7 +37,7 @@ B_DIALOG(<*Add new country*>, <*POST*>, <*do_add.php*>)
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Language*>)
 			<SELECT NAME="cLanguage">
-<? query ("SELECT Id, Name FROM Languages ORDER BY Id", 'q_lng');
+<?php  query ("SELECT Id, Name FROM Languages ORDER BY Id", 'q_lng');
     for($loop=0;$loop<$NUM_ROWS;$loop++) {
 	fetchRow($q_lng);
 	print '<OPTION VALUE="'.getHVar($q_lng,'Id').'">'.getHVar($q_lng,'Name');
@@ -45,15 +45,15 @@ B_DIALOG(<*Add new country*>, <*POST*>, <*do_add.php*>)
 			</SELECT>
 	E_DIALOG_INPUT
 	B_DIALOG_BUTTONS
-		<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<? todef('Language'); print encHTML($Language); ?>">
+		<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php  todef('Language'); print encHTML($Language); ?>">
 		SUBMIT(<*OK*>, <*Save changes*>)
-<? todef('Back'); ?>dnl
-		<INPUT TYPE="HIDDEN" NAME="Back" VALUE="<? print encHTML($Back); ?>">
-<? if ($Back != "") { ?>dnl
-		REDIRECT(<*Cancel*>, <*Cancel*>, <*<? print $Back; ?>*>)
-<? } else { ?>dnl
+<?php  todef('Back'); ?>dnl
+		<INPUT TYPE="HIDDEN" NAME="Back" VALUE="<?php  print encHTML($Back); ?>">
+<?php  if ($Back != "") { ?>dnl
+		REDIRECT(<*Cancel*>, <*Cancel*>, <*<?php  print $Back; ?>*>)
+<?php  } else { ?>dnl
 		REDIRECT(<*Cancel*>, <*Cancel*>, <*X_ROOT/country/*>)
-<? } ?>dnl
+<?php  } ?>dnl
 	E_DIALOG_BUTTONS
 E_DIALOG
 <P>
@@ -61,7 +61,7 @@ E_DIALOG
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

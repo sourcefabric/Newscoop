@@ -8,12 +8,12 @@ CHECK_ACCESS(<*ManageUsers*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Changing user password*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to change user passwords.*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
@@ -27,7 +27,7 @@ X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<?
+<?php 
     todefnum('User');
     query ("SELECT UName FROM Users WHERE Id=$User", 'users');
     if ($NUM_ROWS) {
@@ -35,53 +35,53 @@ E_HEADER
     ?>dnl
 
 B_CURRENT
-X_CURRENT(<*User account*>, <*<B><? pgetHVar($users,'UName'); ?></B>*>)
+X_CURRENT(<*User account*>, <*<B><?php  pgetHVar($users,'UName'); ?></B>*>)
 E_CURRENT
 
-<? $ok= 1; ?>dnl
+<?php  $ok= 1; ?>dnl
 <P>
 B_MSGBOX(<*Changing user password*>)
 	X_MSGBOX_TEXT(<*
-<?
+<?php 
     if ($cPass1!=$cPass2 || strlen(decS($cPass1))<6) { ?>dnl
-	<LI><? putGS('The password must be at least 6 characters long and both passwords should match.'); ?></LI>
-<?
+	<LI><?php  putGS('The password must be at least 6 characters long and both passwords should match.'); ?></LI>
+<?php 
     $ok= 0;
     }
 
     if ($ok) {
 	query ("UPDATE Users SET Password=password('$cPass1') WHERE Id=$User");
 	if ($AFFECTED_ROWS <= 0) { ?>dnl
-	<LI><? putGS('The password could not be changed.'); ?></LI>
+	<LI><?php  putGS('The password could not be changed.'); ?></LI>
 X_AUDIT(<*54*>, <*getGS('Password changed for $1',getHVar($users,'UName'))*>)
-<?
+<?php 
     $ok= 0;
     } else { ?>dnl
-	<LI><? putGS('The password has been changed.'); ?></LI>
-<? }
+	<LI><?php  putGS('The password has been changed.'); ?></LI>
+<?php  }
     }
      ?>dnl
 	*>)
 	B_MSGBOX_BUTTONS
-<? if ($ok) { ?>dnl
+<?php  if ($ok) { ?>dnl
 		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/users/*>)
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/users/*>)
-<? } ?>dnl
+<?php  } ?>dnl
 	E_MSGBOX_BUTTONS
 E_MSGBOX
 <P>
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such user account.'); ?></LI>
+	<LI><?php  putGS('No such user account.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

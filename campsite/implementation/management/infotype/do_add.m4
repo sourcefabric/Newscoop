@@ -8,12 +8,12 @@ CHECK_ACCESS(<*ManageClasses*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Adding new infotype*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to add glossary infotypes.*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
@@ -27,7 +27,7 @@ X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<? todef('cName');
+<?php  todef('cName');
     todefnum('cLang', 0);
     $correct= 1;
     $created= 0;
@@ -35,16 +35,16 @@ E_HEADER
 <P>
 B_MSGBOX(<*Adding new keyword infotype*>)
 	X_MSGBOX_TEXT(<*
-<? if ($cName == "") {
+<?php  if ($cName == "") {
     $correct= 0; ?>
-		<LI><? putGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); ?></LI>
-<? 
+		<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); ?></LI>
+<?php  
     }
 
     if ($cLang == 0) {
 	$correct= 0; ?>
-		<LI><? putGS('You must select a language.'); ?></LI>
-<?
+		<LI><?php  putGS('You must select a language.'); ?></LI>
+<?php 
     }
     
     if ($correct) {
@@ -56,32 +56,32 @@ B_MSGBOX(<*Adding new keyword infotype*>)
 	}
     }
     if ($created) { ?>dnl
-		<LI><? putGS('The infotype $1 has been added.',"<B>".encHTML(decS($cName))."</B>"); ?></LI>
+		<LI><?php  putGS('The infotype $1 has been added.',"<B>".encHTML(decS($cName))."</B>"); ?></LI>
 X_AUDIT(<*81*>, <*getGS('Infotype $1 added', decS($cName))*>)
-<? } else {
+<?php  } else {
     if ($correct != 0) { ?>dnl
-		<LI><? putGS('The infotype could not be added.');print('</LI><LI>'); putGS('Please check if the infotype does not already exist.'); ?></LI>
-<?  }
+		<LI><?php  putGS('The infotype could not be added.');print('</LI><LI>'); putGS('Please check if the infotype does not already exist.'); ?></LI>
+<?php   }
 }
 ?>dnl
 		*>)
-<? if ($correct && $created) { ?>dnl
+<?php  if ($correct && $created) { ?>dnl
 	B_MSGBOX_BUTTONS
 		REDIRECT(<*New*>, <*Add another*>, <*X_ROOT/infotype/add.php*>)
 		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/infotype/*>)
 	E_MSGBOX_BUTTONS
-<? } else { ?>
+<?php  } else { ?>
 	B_MSGBOX_BUTTONS
 		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/infotype/add.php*>)
 	E_MSGBOX_BUTTONS
-<? } ?>dnl
+<?php  } ?>dnl
 E_MSGBOX
 <P>
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

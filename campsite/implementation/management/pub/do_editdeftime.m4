@@ -8,18 +8,18 @@ CHECK_ACCESS(<*ManagePub*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Changing default subscription time*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to change publication information.*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
 
-<?
+<?php 
     todefnum('cPub');
     todef('cCountryCode');
     todefnum('Language', 1);
@@ -28,14 +28,14 @@ B_BODY
 ?>dnl
 B_HEADER(<*Changing default subscription time*>)
 B_HEADER_BUTTONS
-X_HBUTTON(<*Subscriptions*>, <*pub/deftime.php?Pub=<? pencURL($Pub); ?>*>)
+X_HBUTTON(<*Subscriptions*>, <*pub/deftime.php?Pub=<?php  pencURL($Pub); ?>*>)
 X_HBUTTON(<*Publications*>, <*pub/*>)
 X_HBUTTON(<*Home*>, <*home.php*>)
 X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<?
+<?php 
     $created= 0;
     
     query ("SELECT * FROM Publications WHERE Id=$cPub", 'q_pub');
@@ -48,49 +48,49 @@ E_HEADER
 	    fetchRow($q_ctr);
 ?>dnl
 B_CURRENT
-X_CURRENT(<*Publication*>, <*<B><? pgetHVar($q_pub,'Name'); ?></B>*>)
-X_CURRENT(<*Country*>, <*<B><? pgetHVar($q_ctr,'Name'); ?></B>*>)
+X_CURRENT(<*Publication*>, <*<B><?php  pgetHVar($q_pub,'Name'); ?></B>*>)
+X_CURRENT(<*Country*>, <*<B><?php  pgetHVar($q_ctr,'Name'); ?></B>*>)
 E_CURRENT
 
 <P>
 B_MSGBOX(<*Changing default subscription time*>)
 	X_MSGBOX_TEXT(<*
-<?
+<?php 
     query ("UPDATE SubsDefTime SET TrialTime='$cTrialTime', PaidTime='$cPaidTime' WHERE CountryCode='$cCountryCode' AND IdPublication=$cPub");
     $created= ($AFFECTED_ROWS > 0);
 
     if ($created) { ?>dnl
-		<LI><? putGS('The default subscription time for $1 has been successfuly updated.','<B>'.getHVar($q_pub,'Name').':'.getHVar($q_ctr,'Name').'</B>'); ?></LI>
+		<LI><?php  putGS('The default subscription time for $1 has been successfuly updated.','<B>'.getHVar($q_pub,'Name').':'.getHVar($q_ctr,'Name').'</B>'); ?></LI>
 X_AUDIT(<*6*>, <*getGS('Default subscription time for $1 changed',getVar($q_pub,'Name').':'.$cCountryCode)*>)
-<? } else { ?>dnl
-		<LI><? putGS('The default subscription time could not be updated.'); ?></LI>
-<? } ?>dnl
+<?php  } else { ?>dnl
+		<LI><?php  putGS('The default subscription time could not be updated.'); ?></LI>
+<?php  } ?>dnl
 		*>)
 	B_MSGBOX_BUTTONS
-<? if ($created) { ?>dnl
-		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/pub/deftime.php?Pub=<? pencURL($Pub); ?>&Language=<? pencURL($Language); ?>*>)
-<? } else { ?>
-		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/pub/deftime.php?Pub=<? pencURL($Pub); ?>&Language=<? pencURL($Language); ?>*>)
-<? } ?>dnl
+<?php  if ($created) { ?>dnl
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/pub/deftime.php?Pub=<?php  pencURL($Pub); ?>&Language=<?php  pencURL($Language); ?>*>)
+<?php  } else { ?>
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/pub/deftime.php?Pub=<?php  pencURL($Pub); ?>&Language=<?php  pencURL($Language); ?>*>)
+<?php  } ?>dnl
 	E_MSGBOX_BUTTONS
 E_MSGBOX
 <P>
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such country.'); ?></LI>
+	<LI><?php  putGS('No such country.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such publication.'); ?></LI>
+	<LI><?php  putGS('No such publication.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

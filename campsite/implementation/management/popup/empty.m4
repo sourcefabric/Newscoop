@@ -7,13 +7,13 @@ E_HEAD
 B_STYLE
 E_STYLE
 
-<? 
+<?php  
     todefnum('bg');
     if ($bg) { ?>dnl
 B_PBODY1
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 B_PBODY2
-<? } ?>dnl
+<?php  } ?>dnl
 E_PBODY
 
 E_HTML

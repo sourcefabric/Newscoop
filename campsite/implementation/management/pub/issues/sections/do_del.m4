@@ -8,18 +8,18 @@ CHECK_ACCESS(<*DeleteSection*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Deleting section*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to add sections.*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
 
-<?
+<?php 
     todefnum('Pub');
     todefnum('Issue');
     todefnum('Language');
@@ -28,15 +28,15 @@ B_BODY
 ?>dnl
 B_HEADER(<*Deleting section*>)
 B_HEADER_BUTTONS
-X_HBUTTON(<*Sections*>, <*pub/issues/sections/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>*>)
-X_HBUTTON(<*Issues*>, <*pub/issues/?Pub=<? p($Pub); ?>*>)
+X_HBUTTON(<*Sections*>, <*pub/issues/sections/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>*>)
+X_HBUTTON(<*Issues*>, <*pub/issues/?Pub=<?php  p($Pub); ?>*>)
 X_HBUTTON(<*Publications*>, <*pub/*>)
 X_HBUTTON(<*Home*>, <*home.php*>)
 X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<?
+<?php 
     query ("SELECT * FROM Sections WHERE IdPublication=$Pub AND NrIssue=$Issue AND IdLanguage=$Language AND Number=$Section", 'q_sect');
     if ($NUM_ROWS) {
 	query ("SELECT * FROM Issues WHERE IdPublication=$Pub AND Number=$Issue AND IdLanguage=$Language", 'q_iss');
@@ -50,21 +50,21 @@ E_HEADER
 		fetchRow($q_lang);
 ?>dnl
 B_CURRENT
-X_CURRENT(<*Publication*>, <*<B><? pgetHVar($q_pub,'Name'); ?></B>*>)
-X_CURRENT(<*Issue*>, <*<B><? pgetHVar($q_iss,'Number'); ?>. <? pgetHVar($q_iss,'Name'); ?> (<? pgetHVar($q_lang,'Name'); ?>)</B>*>)
+X_CURRENT(<*Publication*>, <*<B><?php  pgetHVar($q_pub,'Name'); ?></B>*>)
+X_CURRENT(<*Issue*>, <*<B><?php  pgetHVar($q_iss,'Number'); ?>. <?php  pgetHVar($q_iss,'Name'); ?> (<?php  pgetHVar($q_lang,'Name'); ?>)</B>*>)
 E_CURRENT
 
 <P>
 B_MSGBOX(<*Deleting section*>)
 	X_MSGBOX_TEXT(<*
-<?
+<?php 
     $del= 1;
     query ("SELECT COUNT(*) FROM Articles WHERE IdPublication=$Pub AND NrIssue=$Issue AND NrSection=$Section AND IdLanguage=$Language", 'q_art');
 	fetchRowNum($q_art);
 	if (getNumVar($q_art,0) != 0) {
 		$del= 0; ?>dnl
-		<LI><? putGS('There are $1 article(s) left.',getNumVar($q_art,0) ); ?></LI>
-<?
+		<LI><?php  putGS('There are $1 article(s) left.',getNumVar($q_art,0) ); ?></LI>
+<?php 
 	}
 
 	if ($del)
@@ -76,54 +76,54 @@ B_MSGBOX(<*Deleting section*>)
 		if (function_exists ("incModFile"))
 			incModFile ();
 ?>dnl
-		<LI><? putGS('The section $1 has been deleted.','<B>'.gethVar($q_sect,'Name').'</B>'); ?></LI>
-	<?
+		<LI><?php  putGS('The section $1 has been deleted.','<B>'.gethVar($q_sect,'Name').'</B>'); ?></LI>
+	<?php 
 		if ($cSubs != "") {
 			$del_subs_res = del_subs_section($Pub, $Section);
 			if ($del_subs_res == -1) { ?>
-				<LI><? putGS('Error updating subscriptions.'); ?></LI>
-		<?	} else { ?>
-				<LI><? putGS('A total of $1 subscriptions were updated.','<B>'.encHTML(decS($del_subs_res)).'</B>'); ?></LI>
-	<?		}
+				<LI><?php  putGS('Error updating subscriptions.'); ?></LI>
+		<?php 	} else { ?>
+				<LI><?php  putGS('A total of $1 subscriptions were updated.','<B>'.encHTML(decS($del_subs_res)).'</B>'); ?></LI>
+	<?php 		}
 		}
 	?>
 		X_AUDIT(<*22*>, <*getGS('Section $1 deleted from issue $2. $3 $4 of $5',getHVar($q_sect,'Name'),getHVar($q_iss,'Number'),getHVar($q_iss,'Name'),getHVar($q_lang,'Name'),getHVar($q_pub,'Name')  )*>)
-<?	} else { ?>
-	<LI><? putGS('The section $1 could not be deleted.','<B>'.getHVar($q_sect,'Name').'</B>'); ?></LI>
-<?	} ?>dnl
+<?php 	} else { ?>
+	<LI><?php  putGS('The section $1 could not be deleted.','<B>'.getHVar($q_sect,'Name').'</B>'); ?></LI>
+<?php 	} ?>dnl
 	*>)
 	B_MSGBOX_BUTTONS
-<? if ($AFFECTED_ROWS > 0) { ?>dnl
-		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/pub/issues/sections/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>*>)
-<? } else { ?>dnl
-		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/pub/issues/sections/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>*>)
-<? } ?>dnl
+<?php  if ($AFFECTED_ROWS > 0) { ?>dnl
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/pub/issues/sections/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>*>)
+<?php  } else { ?>dnl
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/pub/issues/sections/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>*>)
+<?php  } ?>dnl
 	E_MSGBOX_BUTTONS
 E_MSGBOX
 <P>
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such publication.'); ?></LI>
+	<LI><?php  putGS('No such publication.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such issue.'); ?></LI>
+	<LI><?php  putGS('No such issue.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such section.'); ?></LI>
+	<LI><?php  putGS('No such section.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

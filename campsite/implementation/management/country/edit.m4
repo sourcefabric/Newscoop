@@ -8,9 +8,9 @@ CHECK_ACCESS(<*ManageCountries*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Edit country name*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to change country names.*>)
-<? }
+<?php  }
     query ("SELECT Name FROM Countries WHERE 1=0", 'q_clist');
     ?>dnl
 E_HEAD
@@ -18,10 +18,10 @@ E_HEAD
 B_STYLE
 E_STYLE
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_BODY
 
-<? 
+<?php  
     todef('Code');
     todefnum('Language');
 ?>dnl
@@ -33,7 +33,7 @@ X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<? 
+<?php  
     query ("SELECT * FROM Countries WHERE Code = '$Code' and IdLanguage = $Language", 'q_country');
     fetchRow($q_country);
     if ($NUM_ROWS) { ?>dnl
@@ -41,7 +41,7 @@ E_HEADER
 <P>
 B_DIALOG(<*Edit country name*>, <*POST*>, <*do_edit.php*>)
 	B_DIALOG_INPUT(<*Country*>)
-<?
+<?php 
    query ("SELECT Name FROM Countries WHERE Code='$Code'", 'q_clist');
    $comma= 0;
    $nr=$NUM_ROWS;
@@ -55,27 +55,27 @@ B_DIALOG(<*Edit country name*>, <*POST*>, <*do_edit.php*>)
     }
 ?>dnl
 	B_DIALOG_INPUT(<*Name*>)
-		<INPUT TYPE="TEXT" NAME="cName" SIZE="32" MAXLENGTH="64" VALUE="<? pgetHVar($q_country,'Name'); ?>">
+		<INPUT TYPE="TEXT" NAME="cName" SIZE="32" MAXLENGTH="64" VALUE="<?php  pgetHVar($q_country,'Name'); ?>">
 	E_DIALOG_INPUT
 	B_DIALOG_BUTTONS
-		<INPUT TYPE=HIDDEN NAME=Code VALUE="<? print encHTML(decS($Code)); ?>">
-		<INPUT TYPE=HIDDEN NAME=Language VALUE="<? print $Language; ?>">
+		<INPUT TYPE=HIDDEN NAME=Code VALUE="<?php  print encHTML(decS($Code)); ?>">
+		<INPUT TYPE=HIDDEN NAME=Language VALUE="<?php  print $Language; ?>">
 		SUBMIT(<*OK*>, <*Save changes*>)
 		REDIRECT(<*Cancel*>, <*Cancel*>, <*X_ROOT/country/*>)
 	E_DIALOG_BUTTONS
 E_DIALOG
 <P>
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such country name.'); ?></LI>
+	<LI><?php  putGS('No such country name.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

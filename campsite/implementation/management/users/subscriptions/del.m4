@@ -8,31 +8,31 @@ CHECK_ACCESS(<*ManageSubscriptions*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Delete subscription*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to delete subscriptions.*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
 
-<?
+<?php 
     todefnum('User');
     todefnum('Subs');
 ?>dnl
 B_HEADER(<*Delete subscription*>)
 B_HEADER_BUTTONS
-X_HBUTTON(<*Subscriptions*>, <*users/subscriptions/?User=<? p($User); ?>*>)
+X_HBUTTON(<*Subscriptions*>, <*users/subscriptions/?User=<?php  p($User); ?>*>)
 X_HBUTTON(<*Users*>, <*users/*>)
 X_HBUTTON(<*Home*>, <*home.php*>)
 X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<?
+<?php 
     query ("SELECT UName FROM Users WHERE Id=$User", 'q_usr');
     if ($NUM_ROWS) {
 	query ("SELECT Active, IdPublication FROM Subscriptions WHERE Id=$Subs", 'q_subs');
@@ -45,46 +45,46 @@ E_HEADER
 	?>dnl
 
 B_CURRENT
-X_CURRENT(<*User account*>, <*<B><? pgetHVar($q_usr,'UName'); ?></B>*>)
-X_CURRENT(<*Publication*>, <*<B><? pgetHVar($q_pub,'Name'); ?></B>*>)
+X_CURRENT(<*User account*>, <*<B><?php  pgetHVar($q_usr,'UName'); ?></B>*>)
+X_CURRENT(<*Publication*>, <*<B><?php  pgetHVar($q_pub,'Name'); ?></B>*>)
 E_CURRENT
 
 <P>
 B_MSGBOX(<*Delete subscription*>)
-	X_MSGBOX_TEXT(<*<LI><? putGS('Are you sure you want to delete the subscription to the publication $1?','<B>'.getHVar($q_pub,'Name').'</B>'); ?></LI>*>)
+	X_MSGBOX_TEXT(<*<LI><?php  putGS('Are you sure you want to delete the subscription to the publication $1?','<B>'.getHVar($q_pub,'Name').'</B>'); ?></LI>*>)
 	B_MSGBOX_BUTTONS
 		<FORM METHOD="POST" ACTION="do_del.php">
-		<INPUT TYPE="HIDDEN" NAME="User" VALUE="<? p($User); ?>">
-		<INPUT TYPE="HIDDEN" NAME="Subs" VALUE="<? p($Subs); ?>">
+		<INPUT TYPE="HIDDEN" NAME="User" VALUE="<?php  p($User); ?>">
+		<INPUT TYPE="HIDDEN" NAME="Subs" VALUE="<?php  p($Subs); ?>">
 		SUBMIT(<*Yes*>, <*Yes*>)
-		REDIRECT(<*No*>, <*No*>, <*X_ROOT/users/subscriptions/?User=<? p($User); ?>*>)
+		REDIRECT(<*No*>, <*No*>, <*X_ROOT/users/subscriptions/?User=<?php  p($User); ?>*>)
 		</FORM>
 	E_MSGBOX_BUTTONS
 E_MSGBOX
 <P>
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such publication.'); ?></LI>
+	<LI><?php  putGS('No such publication.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such subscription.'); ?></LI>
+	<LI><?php  putGS('No such subscription.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such user account.'); ?></LI>
+	<LI><?php  putGS('No such user account.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

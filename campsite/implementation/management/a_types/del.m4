@@ -8,12 +8,12 @@ CHECK_ACCESS(<*DeleteArticleTypes*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Delete article type*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to delete article types.*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
@@ -27,13 +27,13 @@ X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<? todef('AType'); ?>dnl
+<?php  todef('AType'); ?>dnl
 <P>
 B_MSGBOX(<*Delete article type*>)
-	X_MSGBOX_TEXT(<*<LI><? putGS('Are you sure you want to delete the article type $1?','<B>'.encHTML($AType).'</B>'); ?></LI>*>)
+	X_MSGBOX_TEXT(<*<LI><?php  putGS('Are you sure you want to delete the article type $1?','<B>'.encHTML($AType).'</B>'); ?></LI>*>)
 	B_MSGBOX_BUTTONS
 		<FORM METHOD="POST" ACTION="do_del.php">
-		<INPUT TYPE="HIDDEN" NAME="AType" VALUE="<? print encHTML($AType); ?>">
+		<INPUT TYPE="HIDDEN" NAME="AType" VALUE="<?php  print encHTML($AType); ?>">
 		SUBMIT(<*Yes*>, <*Yes*>)
 		REDIRECT(<*No*>, <*No*>, <*X_ROOT/a_types/*>)
 		</FORM>
@@ -44,7 +44,7 @@ E_MSGBOX
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

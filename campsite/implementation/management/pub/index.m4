@@ -22,9 +22,9 @@ if (window != top.fmain && window != top) {
 </script>
 	X_EXPIRES
 	X_TITLE(<*Publications*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_LOGOUT
-<? } 
+<?php  } 
 	query ("SELECT * FROM Publications WHERE 1=0", 'publ');
 	query("SELECT  Id as IdLang FROM Languages WHERE code='$TOL_Language'", 'q_lang');
 	if($NUM_ROWS == 0){
@@ -36,7 +36,7 @@ if (window != top.fmain && window != top) {
 ?>dnl
 E_HEAD
 
-<? if ($access) { 
+<?php  if ($access) { 
 SET_ACCESS(<*mpa*>, <*ManagePub*>)
 SET_ACCESS(<*dpa*>, <*DeletePub*>)
 ?>dnl
@@ -53,11 +53,11 @@ X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<? if ($mpa != 0) { ?>dnl
-	<P>X_NEW_BUTTON(<*Add new publication*>, <*add.php?Back=<? pencURL($REQUEST_URI); ?>*>)
-<? } ?>dnl 
+<?php  if ($mpa != 0) { ?>dnl
+	<P>X_NEW_BUTTON(<*Add new publication*>, <*add.php?Back=<?php  pencURL($REQUEST_URI); ?>*>)
+<?php  } ?>dnl 
 
-<P><?
+<P><?php 
     todefnum('PubOffs');
      if ($PubOffs < 0) $PubOffs= 0;
 	$lpp=20;
@@ -73,92 +73,92 @@ B_LIST
 		X_LIST_TH(<*Name<BR><SMALL>(click to see issues)</SMALL>*>)
 		X_LIST_TH(<*Site*>, <*20%*>)
 		X_LIST_TH(<*Default Language*>, <*20%*>)
-	<? if ($mpa != 0) { ?>dnl 
+	<?php  if ($mpa != 0) { ?>dnl 
 		X_LIST_TH(<*Subscription Default Time*>, <*10%*>)
 		X_LIST_TH(<*Pay Period*>, <*10%*>)
 		X_LIST_TH(<*Unit Cost*>, <*10%*>)
 		X_LIST_TH(<*Paid Period*>, <*10%*>)
 		X_LIST_TH(<*Trial Period*>, <*10%*>)
 		X_LIST_TH(<*Info*>, <*1%*>)
-	<? }
+	<?php  }
 	
 	if ($dpa != 0) { ?>dnl
 		X_LIST_TH(<*Delete*>, <*1%*>)
-	<? } ?>dnl 
+	<?php  } ?>dnl 
 	E_LIST_HEADER
-<?
+<?php 
     for($loop=0;$loop<$nr;$loop++) {
 	fetchRow($publ);
 	if ($i) { ?>dnl
 	B_LIST_TR
 		B_LIST_ITEM
-			<A HREF="X_ROOT/pub/issues/?Pub=<? pgetUVar($publ,'Id'); ?>"><? pgetHVar($publ,'Name'); ?></A>
+			<A HREF="X_ROOT/pub/issues/?Pub=<?php  pgetUVar($publ,'Id'); ?>"><?php  pgetHVar($publ,'Name'); ?></A>
 		E_LIST_ITEM
 		B_LIST_ITEM
-			<? pgetHVar($publ,'Site'); ?>&nbsp;
+			<?php  pgetHVar($publ,'Site'); ?>&nbsp;
 		E_LIST_ITEM
 		B_LIST_ITEM
-			<? query ("SELECT Name FROM Languages WHERE Id=".getVar($publ,'IdDefaultLanguage'), 'q_dlng');
+			<?php  query ("SELECT Name FROM Languages WHERE Id=".getVar($publ,'IdDefaultLanguage'), 'q_dlng');
 			fetchRow($q_dlng);
 			pgetHVar($q_dlng,'Name');
 			?>&nbsp;
 		E_LIST_ITEM
-<? if ($mpa != 0) { ?>dnl
+<?php  if ($mpa != 0) { ?>dnl
 		B_LIST_ITEM
-			<a href="deftime.php?Pub=<? pgetUVar($publ,'Id'); ?>"><? putGS("Change"); ?></A>
+			<a href="deftime.php?Pub=<?php  pgetUVar($publ,'Id'); ?>"><?php  putGS("Change"); ?></A>
 		E_LIST_ITEM
 		B_LIST_ITEM(<*RIGHT*>)
-			<? query ("SELECT Name FROM TimeUnits where Unit = '".getHVar($publ,'TimeUnit')."' and IdLanguage = ".($IdLang), 'tu');
+			<?php  query ("SELECT Name FROM TimeUnits where Unit = '".getHVar($publ,'TimeUnit')."' and IdLanguage = ".($IdLang), 'tu');
 			    fetchRow($tu);
 			 pgetHVar($publ,'PayTime'); p("&nbsp;"); pgetHVar($tu,'Name'); ?>
 		E_LIST_ITEM
 		B_LIST_ITEM
-			<? pgetHVar($publ,'UnitCost'); p("&nbsp;"); pgetHVar($publ,'Currency');
+			<?php  pgetHVar($publ,'UnitCost'); p("&nbsp;"); pgetHVar($publ,'Currency');
 			    ?>
 		E_LIST_ITEM
 		B_LIST_ITEM(<*CENTER*>)
-			<? pgetHVar($publ,'PaidTime'); p("&nbsp;"); pgetHVar($tu,'Name'); ?>&nbsp;
+			<?php  pgetHVar($publ,'PaidTime'); p("&nbsp;"); pgetHVar($tu,'Name'); ?>&nbsp;
 		E_LIST_ITEM
 		B_LIST_ITEM(<*CENTER*>)
-			<? pgetHVar($publ,'TrialTime'); p("&nbsp;"); pgetHVar($tu,'Name'); ?>&nbsp;
+			<?php  pgetHVar($publ,'TrialTime'); p("&nbsp;"); pgetHVar($tu,'Name'); ?>&nbsp;
 		E_LIST_ITEM
 		B_LIST_ITEM(<*CENTER*>)
-			<A HREF="X_ROOT/pub/edit.php?Pub=<? pgetUVar($publ,'Id'); ?>"><? putGS("Change"); ?></A>
+			<A HREF="X_ROOT/pub/edit.php?Pub=<?php  pgetUVar($publ,'Id'); ?>"><?php  putGS("Change"); ?></A>
 		E_LIST_ITEM
-<? }
+<?php  }
     if ($dpa != 0) { ?>dnl 
 		B_LIST_ITEM(<*CENTER*>)
-			X_BUTTON(<*<? putGS('Delete publication $1',getHVar($publ,'Name')); ?>*>, <*icon/x.gif*>, <*pub/del.php?Pub=<? pgetVar($publ,'Id'); ?>*>)
+			X_BUTTON(<*<?php  putGS('Delete publication $1',getHVar($publ,'Name')); ?>*>, <*icon/x.gif*>, <*pub/del.php?Pub=<?php  pgetVar($publ,'Id'); ?>*>)
 		E_LIST_ITEM
-<? } ?>dnl
+<?php  } ?>dnl
     E_LIST_TR
-<?
+<?php 
     $i--;
     }
 } ?>dnl
 	B_LIST_FOOTER
-<? if ($PubOffs <= 0) { ?>dnl
+<?php  if ($PubOffs <= 0) { ?>dnl
 		X_PREV_I
-<? } else { ?>dnl
-		X_PREV_A(<*index.php?PubOffs=<? print ($PubOffs - $lpp); ?>*>)
-<? } ?>dnl
-<? if ($nr < $lpp+1) { ?>dnl
+<?php  } else { ?>dnl
+		X_PREV_A(<*index.php?PubOffs=<?php  print ($PubOffs - $lpp); ?>*>)
+<?php  } ?>dnl
+<?php  if ($nr < $lpp+1) { ?>dnl
 		X_NEXT_I
-<? } else { ?>dnl
-		X_NEXT_A(<*index.php?PubOffs=<? print ($PubOffs + $lpp); ?>*>)
-<? } ?>dnl
+<?php  } else { ?>dnl
+		X_NEXT_A(<*index.php?PubOffs=<?php  print ($PubOffs + $lpp); ?>*>)
+<?php  } ?>dnl
 	E_LIST_FOOTER
 E_LIST
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No publications.'); ?></LI>
+	<LI><?php  putGS('No publications.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

@@ -8,31 +8,31 @@ CHECK_ACCESS(<*ManageTempl*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Creating new folder*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to create new folders.*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
 
-<? todef('cPath'); ?>dnl
+<?php  todef('cPath'); ?>dnl
 B_HEADER(<*Creating new folder*>)
 B_HEADER_BUTTONS
-X_HBUTTON(<*Templates*>, <*templates/?Path=<? pencURL(decS($cPath)); ?>*>)
+X_HBUTTON(<*Templates*>, <*templates/?Path=<?php  pencURL(decS($cPath)); ?>*>)
 X_HBUTTON(<*Home*>, <*home.php*>)
 X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
 B_CURRENT
-X_CURRENT(<*Path*>, <*<B><? pencHTML(decURL($cPath)); ?></B>*>)
+X_CURRENT(<*Path*>, <*<B><?php  pencHTML(decURL($cPath)); ?></B>*>)
 E_CURRENT
 
-<? 
+<?php  
     todef('cName');
     $correct= 1;
     $created= 0;
@@ -40,11 +40,11 @@ E_CURRENT
 <P>
 B_MSGBOX(<*Creating new folder*>)
 	X_MSGBOX_TEXT(<*
-<? 
+<?php  
     if ($cName == "") { 
 	$correct= 0; ?>dnl
-		<LI><? putGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); ?></LI>
-<? }
+		<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); ?></LI>
+<?php  }
 
     if ($correct) {
 	//	dSystem( "$scriptBase/make_dir '$cPath' '$cName' $DOCUMENT_ROOT");
@@ -78,12 +78,12 @@ B_MSGBOX(<*Creating new folder*>)
 ?>dnl
 		*>)
 	B_MSGBOX_BUTTONS
-<? if ($correct) { ?>dnl
-		REDIRECT(<*New*>, <*Add another*>, <*X_ROOT/templates/new_dir.php?Path=<? pencURL(decS($cPath)); ?>*>)
-		REDIRECT(<*Done*>, <*Done*>, <*<? p(decS($cPath)); ?>*>)
-<? } else { ?>
-		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/templates/new_dir.php?Path=<? pencURL(decS($cPath)); ?>*>)
-<? } ?>dnl
+<?php  if ($correct) { ?>dnl
+		REDIRECT(<*New*>, <*Add another*>, <*X_ROOT/templates/new_dir.php?Path=<?php  pencURL(decS($cPath)); ?>*>)
+		REDIRECT(<*Done*>, <*Done*>, <*<?php  p(decS($cPath)); ?>*>)
+<?php  } else { ?>
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/templates/new_dir.php?Path=<?php  pencURL(decS($cPath)); ?>*>)
+<?php  } ?>dnl
 	E_MSGBOX_BUTTONS
 E_MSGBOX
 <P>
@@ -91,7 +91,7 @@ E_MSGBOX
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

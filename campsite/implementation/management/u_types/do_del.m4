@@ -8,12 +8,12 @@ CHECK_ACCESS(<*ManageUserTypes*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Deleting user type*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to delete user types.*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
@@ -28,20 +28,20 @@ E_HEADER_BUTTONS
 E_HEADER
 
 <P>
-<? query ("DELETE FROM UserTypes WHERE Name='$UType'"); ?>dnl
+<?php  query ("DELETE FROM UserTypes WHERE Name='$UType'"); ?>dnl
 B_MSGBOX(<*Deleting user type*>)
-<? if ($AFFECTED_ROWS > 0) { ?>
-	X_MSGBOX_TEXT(<*<LI><? putGS('The user type has been deleted.'); ?></LI>*>)
+<?php  if ($AFFECTED_ROWS > 0) { ?>
+	X_MSGBOX_TEXT(<*<LI><?php  putGS('The user type has been deleted.'); ?></LI>*>)
 X_AUDIT(<*122*>, <*getGS('User type $1 deleted',encHTML($UType))*>)
-<? } else { ?>
-	X_MSGBOX_TEXT(<*<LI><? putGS('The user type could not be deleted.'); ?></LI>*>)
-<? } ?>
+<?php  } else { ?>
+	X_MSGBOX_TEXT(<*<LI><?php  putGS('The user type could not be deleted.'); ?></LI>*>)
+<?php  } ?>
 	B_MSGBOX_BUTTONS
-<? if ($AFFECTED_ROWS > 0) { ?>
+<?php  if ($AFFECTED_ROWS > 0) { ?>
 		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/u_types/*>)
-<? } else { ?>
+<?php  } else { ?>
 		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/u_types/*>)
-<? } ?>
+<?php  } ?>
 	E_MSGBOX_BUTTONS
 E_MSGBOX
 <P>
@@ -49,7 +49,7 @@ E_MSGBOX
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

@@ -1,4 +1,4 @@
-<?
+<?php 
 //	function bufferFilesystemResult($s,$level=0){
 //        global $FSresult,$FSbufferImgBase;
 //        $img="<img src=$FSbufferImgBase/result$level.gif>";

@@ -7,13 +7,13 @@ CHECK_BASIC_ACCESS
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Languages*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_LOGOUT
-<? } 
+<?php  } 
     query ("SELECT Id, Name, OrigName, CodePage, Code FROM Languages WHERE 1=0", 'Languages'); ?>dnl
 E_HEAD
 
-<? if ($access) {
+<?php  if ($access) {
 
 SET_ACCESS(<*mla*>, <*ManageLanguages*>)
 SET_ACCESS(<*dla*>, <*DeleteLanguages*>)
@@ -31,11 +31,11 @@ X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<? if ($mla != 0) { ?>
-<P>X_NEW_BUTTON(<*Add new language*>, <*add.php?Back=<? print encURL($REQUEST_URI); ?>*>)
-<? } ?>
+<?php  if ($mla != 0) { ?>
+<P>X_NEW_BUTTON(<*Add new language*>, <*add.php?Back=<?php  print encURL($REQUEST_URI); ?>*>)
+<?php  } ?>
 
-<P><?
+<P><?php 
     todefnum('LangOffs');
     if ($LangOffs < 0) $LangOffs= 0;
     $lpp = 20;
@@ -50,68 +50,68 @@ B_LIST
 		X_LIST_TH(<*Native name*>)
 		X_LIST_TH(<*Code*>)
 		X_LIST_TH(<*Code page*>)
-	<? if ($mla != 0) { ?>
+	<?php  if ($mla != 0) { ?>
 		X_LIST_TH(<*Edit*>, <*1%*>)
-	<? }
+	<?php  }
 	if ($dla != 0) { ?>
 		X_LIST_TH(<*Delete*>, <*1%*>)
-	<? } ?>
+	<?php  } ?>
 	E_LIST_HEADER
-<?
+<?php 
     for($loop=0;$loop<$nr;$loop++) {
 	fetchRow($Languages);
 	if ($i) { ?>dnl
 	B_LIST_TR
 		B_LIST_ITEM
-			<? pgetHVar($Languages,'Name'); ?>
+			<?php  pgetHVar($Languages,'Name'); ?>
 		E_LIST_ITEM
 		B_LIST_ITEM
-			<? pgetHVar($Languages,'OrigName'); ?>
+			<?php  pgetHVar($Languages,'OrigName'); ?>
 		E_LIST_ITEM
 		B_LIST_ITEM
-			<? pgetHVar($Languages,'Code'); ?>&nbsp;
+			<?php  pgetHVar($Languages,'Code'); ?>&nbsp;
 		E_LIST_ITEM
 		B_LIST_ITEM
-			<? pgetHVar($Languages,'CodePage'); ?>&nbsp;
+			<?php  pgetHVar($Languages,'CodePage'); ?>&nbsp;
 		E_LIST_ITEM
-	<? if ($mla != 0) { ?> 
+	<?php  if ($mla != 0) { ?> 
 		B_LIST_ITEM(<*CENTER*>)
-			<A HREF="modify.php?Lang=<? pgetVar($Languages,'Id'); ?>">Edit</A>
+			<A HREF="modify.php?Lang=<?php  pgetVar($Languages,'Id'); ?>">Edit</A>
 		E_LIST_ITEM
-	<? }
+	<?php  }
 	if ($dla != 0) { ?>
 		B_LIST_ITEM(<*CENTER*>)
-			X_BUTTON(<*<? putGS('Delete language $1',getHVar($Languages,'Name')); ?>*>, <*icon/x.gif*>, <*languages/del.php?Language=<? pgetVar($Languages,'Id'); ?>*>)
+			X_BUTTON(<*<?php  putGS('Delete language $1',getHVar($Languages,'Name')); ?>*>, <*icon/x.gif*>, <*languages/del.php?Language=<?php  pgetVar($Languages,'Id'); ?>*>)
 		E_LIST_ITEM
-	<? } ?>
+	<?php  } ?>
 	E_LIST_TR
-<?
+<?php 
     $i--;
         }
     } ?>
 	B_LIST_FOOTER
-<? if ($LangOffs <= 0) { ?>dnl
+<?php  if ($LangOffs <= 0) { ?>dnl
 		X_PREV_I
-<? } else { ?>dnl
-		X_PREV_A(<*index.php?LangOffs=<? print ($LangOffs - $lpp); ?>*>)
-<? }
+<?php  } else { ?>dnl
+		X_PREV_A(<*index.php?LangOffs=<?php  print ($LangOffs - $lpp); ?>*>)
+<?php  }
     if ($nr < $lpp+1) { ?>dnl
 		X_NEXT_I
-<? } else { ?>dnl
-		X_NEXT_A(<*index.php?LangOffs=<? print ($LangOffs + $lpp); ?>*>)
-<? } ?>dnl
+<?php  } else { ?>dnl
+		X_NEXT_A(<*index.php?LangOffs=<?php  print ($LangOffs + $lpp); ?>*>)
+<?php  } ?>dnl
 	E_LIST_FOOTER
 E_LIST
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No language.'); ?></LI>
+	<LI><?php  putGS('No language.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

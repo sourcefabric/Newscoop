@@ -8,12 +8,12 @@ CHECK_ACCESS(<*ManageUserTypes*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Updating user types permissions*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to change user type permissions.*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
@@ -26,7 +26,7 @@ X_HBUTTON(<*Home*>, <*home.php*>)
 X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
-<?
+<?php 
 todef('UType');
 
 todef('cName');
@@ -71,7 +71,7 @@ todefradio('cManageTopics');
 
 <P>
 B_MSGBOX(<*Updating user type permissions*>)
-<? if ($cName != "") {
+<?php  if ($cName != "") {
 	if ($UType != $cName) {
 		query ("SELECT COUNT(*) FROM UserTypes WHERE Name='$cName'", 'c');
 		fetchRowNum($c);
@@ -86,15 +86,15 @@ B_MSGBOX(<*Updating user type permissions*>)
 } else
 	$ok= 0;
 if ($ok) { ?>
-	X_MSGBOX_TEXT(<*<LI><? putGS('User type permissions have been successfuly updated.'); ?></LI>*>)
+	X_MSGBOX_TEXT(<*<LI><?php  putGS('User type permissions have been successfuly updated.'); ?></LI>*>)
 X_AUDIT(<*123*>, <*getGS('User type $1 changed permissions',$cName)*>)
-<? } else { ?>dnl
-	X_MSGBOX_TEXT(<*<LI><? putGS('User type permissions could not be updated.'); ?></LI>
-<? if ($cName == "") { ?>dnl
-	<LI><? putGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); ?><LI>
-<? } ?>dnl
+<?php  } else { ?>dnl
+	X_MSGBOX_TEXT(<*<LI><?php  putGS('User type permissions could not be updated.'); ?></LI>
+<?php  if ($cName == "") { ?>dnl
+	<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); ?><LI>
+<?php  } ?>dnl
 	*>)
-<? } ?>dnl
+<?php  } ?>dnl
 	B_MSGBOX_BUTTONS
 		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/u_types/*>)
 	E_MSGBOX_BUTTONS
@@ -104,7 +104,7 @@ E_MSGBOX
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

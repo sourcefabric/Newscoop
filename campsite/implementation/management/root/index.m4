@@ -3,7 +3,7 @@ INCLUDE_PHP_LIB(<*./priv*>)
     <HEAD>
         X_EXPIRES
 B_DATABASE<**>dnl
-<?
+<?php 
     query ("SELECT Id, IdDefaultLanguage FROM Publications WHERE Site='$HTTP_HOST'", 'q_pub');
     if ($NUM_ROWS) {
 	fetchRow($q_pub);
@@ -14,11 +14,11 @@ B_DATABASE<**>dnl
 	    fetchRow($q_iss);	    
 	}
 	if ($NUM_ROWS) { ?>dnl
-	X_REFRESH(<*0; URL=http://<? p( $HTTP_HOST); ?><? pgetVar($q_iss,'FrontPage'); ?>?IdLanguage=<? pgetUVar($q_iss,'IdLanguage'); ?>&IdPublication=<? pgetUVar($q_pub,'Id'); ?>&NrIssue=<? pgetUVar($q_iss,'Number'); ?>*>)dnl
-<? } else { ?>dnl
+	X_REFRESH(<*0; URL=http://<?php  p( $HTTP_HOST); ?><?php  pgetVar($q_iss,'FrontPage'); ?>?IdLanguage=<?php  pgetUVar($q_iss,'IdLanguage'); ?>&IdPublication=<?php  pgetUVar($q_pub,'Id'); ?>&NrIssue=<?php  pgetUVar($q_iss,'Number'); ?>*>)dnl
+<?php  } else { ?>dnl
 		Current issue not found.
-<? } ?>dnl
-<? } ?>
+<?php  } ?>dnl
+<?php  } ?>
 E_DATABASE<**>dnl
     </HEAD>
 </HTML>

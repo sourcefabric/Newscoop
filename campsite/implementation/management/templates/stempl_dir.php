@@ -2,9 +2,9 @@
 <TR BGCOLOR="WHITE"><TD WIDTH="30%" VALIGN="TOP">
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" WIDTH="100%">
 <TR BGCOLOR="#C0D0FF">
-<TD  ><B> <? putGS('Folders'); ?> </B></TD>
+<TD  ><B> <?php  putGS('Folders'); ?> </B></TD>
 </TR>
-<?
+<?php 
     $c="";
     
     $basedir=decURL("$DOCUMENT_ROOT$listbasedir");
@@ -52,10 +52,10 @@ echo '<TR><TD COLSPAN="2">'.getGS('No folders.').'</TD></TR>' ;
 </TD><TD WIDTH="60%" VALIGN="TOP">
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" WIDTH="100%">
 <TR BGCOLOR="#C0D0FF">
-<TD  ><B> <? putGS('Files'); ?> </B></TD>
-<TD WIDTH="1%" ><B> <? putGS('Select'); ?> </B></TD>
+<TD  ><B> <?php  putGS('Files'); ?> </B></TD>
+<TD WIDTH="1%" ><B> <?php  putGS('Select'); ?> </B></TD>
 </TR>
-<?
+<?php 
     $c="";
 
 if (isset($files)) {

@@ -8,12 +8,12 @@ CHECK_ACCESS(<*ManageLanguages*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Add new language*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to add languages.*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
@@ -27,7 +27,7 @@ X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<?	query ("SELECT * FROM TimeUnits WHERE IdLanguage=1", 'q_def_tu');
+<?php 	query ("SELECT * FROM TimeUnits WHERE IdLanguage=1", 'q_def_tu');
     	$def_tu=$NUM_ROWS;
     ?>
 
@@ -45,7 +45,7 @@ B_DIALOG(<*Add new language*>, <*POST*>, <*do_add.php*>)
 	B_DIALOG_INPUT(<*Code page*>)
 		<INPUT TYPE="TEXT" NAME="cCodePage" SIZE="32" MAXLENGTH="32">
 	E_DIALOG_INPUT
-	X_DIALOG_TEXT(<*<? putGS('Please enter the translation for month names.'); ?>*>)
+	X_DIALOG_TEXT(<*<?php  putGS('Please enter the translation for month names.'); ?>*>)
 	B_DIALOG_INPUT(<*January*>)
 		<INPUT TYPE="TEXT" NAME="cMonth1" SIZE="20" MAXLENGTH="20">
 	E_DIALOG_INPUT
@@ -82,7 +82,7 @@ B_DIALOG(<*Add new language*>, <*POST*>, <*do_add.php*>)
 	B_DIALOG_INPUT(<*December*>)
 		<INPUT TYPE="TEXT" NAME="cMonth12" SIZE="20" MAXLENGTH="20">
 	E_DIALOG_INPUT
-	X_DIALOG_TEXT(<*<? putGS('Please enter the translation for week day names.'); ?>*>)
+	X_DIALOG_TEXT(<*<?php  putGS('Please enter the translation for week day names.'); ?>*>)
 	B_DIALOG_INPUT(<*Sunday*>)
 		<INPUT TYPE="TEXT" NAME="cWDay1" SIZE="20" MAXLENGTH="20">
 	E_DIALOG_INPUT
@@ -105,21 +105,21 @@ B_DIALOG(<*Add new language*>, <*POST*>, <*do_add.php*>)
 		<INPUT TYPE="TEXT" NAME="cWDay7" SIZE="20" MAXLENGTH="20">
 	E_DIALOG_INPUT
 	
-	X_DIALOG_TEXT(<*<? putGS('Please enter the translation for time units.'); ?>*>)
-	<? for($i=0; $i<$def_tu; $i++){
+	X_DIALOG_TEXT(<*<?php  putGS('Please enter the translation for time units.'); ?>*>)
+	<?php  for($i=0; $i<$def_tu; $i++){
 		fetchRow($q_def_tu); ?>dnl
-		<TR><TD ALIGN="RIGHT"><?pgetHVar($q_def_tu, 'Name');?></TD><TD><INPUT TYPE="TEXT" NAME="<?pgetHVar($q_def_tu, 'Unit');?>" VALUE="" SIZE="20" MAXLENGTH="20"></TD></TR>
-	<?} ?> dnl
+		<TR><TD ALIGN="RIGHT"><?php pgetHVar($q_def_tu, 'Name');?></TD><TD><INPUT TYPE="TEXT" NAME="<?php pgetHVar($q_def_tu, 'Unit');?>" VALUE="" SIZE="20" MAXLENGTH="20"></TD></TR>
+	<?php } ?> dnl
 	
 	B_DIALOG_BUTTONS
 		SUBMIT(<*Save*>, <*Save changes*>)
-<? todef('Back'); ?>dnl
-		<INPUT TYPE="HIDDEN" NAME="Back" VALUE="<? print encHTML($Back); ?>">
-<? if ($Back != "") { ?>dnl
-		REDIRECT(<*Cancel*>, <*Cancel*>, <*<? print $Back; ?>*>)
-<? } else { ?>dnl
+<?php  todef('Back'); ?>dnl
+		<INPUT TYPE="HIDDEN" NAME="Back" VALUE="<?php  print encHTML($Back); ?>">
+<?php  if ($Back != "") { ?>dnl
+		REDIRECT(<*Cancel*>, <*Cancel*>, <*<?php  print $Back; ?>*>)
+<?php  } else { ?>dnl
 		REDIRECT(<*Cancel*>, <*Cancel*>, <*X_ROOT/languages/*>)
-<? } ?>dnl
+<?php  } ?>dnl
 	E_DIALOG_BUTTONS
 E_DIALOG
 <P>
@@ -127,7 +127,7 @@ E_DIALOG
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

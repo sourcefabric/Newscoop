@@ -22,11 +22,11 @@ if (window != top.fmain && window != top) {
 </script>
 	X_EXPIRES
 	X_TITLE(<*Home*>)
-<? if ($access==0) { ?>dnl
+<?php  if ($access==0) { ?>dnl
 		X_LOGOUT
-<? } ?>
+<?php  } ?>
 E_HEAD
-<?
+<?php 
     query ("SELECT * FROM Articles WHERE 1=0", 'q_art');
     if ($access) {
 SET_ACCESS(<*aaa*>, <*AddArticle*>)
@@ -47,7 +47,7 @@ E_STYLE
 
 B_BODY
 
-<?
+<?php 
     if ($caa)
 	todefnum('What',0);
     else
@@ -62,47 +62,47 @@ E_HEADER_BUTTONS
 E_HEADER
 
 <TABLE BORDER="0" CELLSPACING="4" CELLPADDING="2" WIDTH="100%">
-<TR><TD COLSPAN="2" BGCOLOR=#D0D0B0><? putGS('Welcome $1!','<B>'.getHVar($Usr,'Name').'</B>'); ?></TD></TR>
+<TR><TD COLSPAN="2" BGCOLOR=#D0D0B0><?php  putGS('Welcome $1!','<B>'.getHVar($Usr,'Name').'</B>'); ?></TD></TR>
 <TR>
     <TD VALIGN="TOP">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
-<? if ($aaa != 0) { ?>dnl
+<?php  if ($aaa != 0) { ?>dnl
 	X_HITEM(<*pub/add_article.php*>, <*Add new article*>)
-<? } ?>dnl
-<? if ($mpa != 0) { ?>dnl
-	X_HITEM(<*pub/add.php?Back=<? print encURL ($REQUEST_URI); ?>*>, <*Add new publication*>)
-<? } ?>dnl
-<? if ($mta != 0) { ?>dnl
-	X_HITEM(<*templates/upload_templ.php?Path=LOOK_PATH/&Back=<? print encURL ($REQUEST_URI); ?>*>, <*Upload new template*>)
-<? } ?>dnl
-<? if ($mua != 0) { ?>dnl
-	X_HITEM(<*users/add.php?Back=<? print encURL ($REQUEST_URI); ?>*>, <*Add new user account*>)
-<? } ?>dnl
-<? if ($muta != 0) { ?>dnl
-	X_HITEM(<*u_types/add.php?Back=<? print encURL ($REQUEST_URI); ?>*>, <*Add new user type*>)
-<? } ?>dnl
-<? if ($mata != 0) { ?>dnl
-	X_HITEM(<*a_types/add.php?Back=<? print encURL ($REQUEST_URI); ?>*>, <*Add new article type*>)
-<? } ?>dnl
-<? if ($mcoa != 0) { ?>dnl
-	X_HITEM(<*country/add.php?Back=<? print encURL ($REQUEST_URI); ?>*>, <*Add new country*>)
-<? } ?>dnl
-<? if ($mla != 0) { ?>dnl
-	X_HITEM(<*languages/add.php?Back=<? print encURL ($REQUEST_URI); ?>*>, <*Add new language*>)
-<? } ?>dnl
-<? if ($vla != 0) { ?>dnl
+<?php  } ?>dnl
+<?php  if ($mpa != 0) { ?>dnl
+	X_HITEM(<*pub/add.php?Back=<?php  print encURL ($REQUEST_URI); ?>*>, <*Add new publication*>)
+<?php  } ?>dnl
+<?php  if ($mta != 0) { ?>dnl
+	X_HITEM(<*templates/upload_templ.php?Path=LOOK_PATH/&Back=<?php  print encURL ($REQUEST_URI); ?>*>, <*Upload new template*>)
+<?php  } ?>dnl
+<?php  if ($mua != 0) { ?>dnl
+	X_HITEM(<*users/add.php?Back=<?php  print encURL ($REQUEST_URI); ?>*>, <*Add new user account*>)
+<?php  } ?>dnl
+<?php  if ($muta != 0) { ?>dnl
+	X_HITEM(<*u_types/add.php?Back=<?php  print encURL ($REQUEST_URI); ?>*>, <*Add new user type*>)
+<?php  } ?>dnl
+<?php  if ($mata != 0) { ?>dnl
+	X_HITEM(<*a_types/add.php?Back=<?php  print encURL ($REQUEST_URI); ?>*>, <*Add new article type*>)
+<?php  } ?>dnl
+<?php  if ($mcoa != 0) { ?>dnl
+	X_HITEM(<*country/add.php?Back=<?php  print encURL ($REQUEST_URI); ?>*>, <*Add new country*>)
+<?php  } ?>dnl
+<?php  if ($mla != 0) { ?>dnl
+	X_HITEM(<*languages/add.php?Back=<?php  print encURL ($REQUEST_URI); ?>*>, <*Add new language*>)
+<?php  } ?>dnl
+<?php  if ($vla != 0) { ?>dnl
 	X_HITEM(<*logs/*>, <*View logs*>)
-<? } ?>dnl
+<?php  } ?>dnl
 	X_HITEM(<*users/chpwd.php*>, <*Change your password*>)
 </TABLE>
 	</TD>
 	<TD VALIGN="TOP">
 
-<? if ($What) { ?>dnl
+<?php  if ($What) { ?>dnl
 
 X_BULLET(<*Your articles*>)
 
-<?
+<?php 
     todefnum('ArtOffs');
     if ($ArtOffs < 0) $ArtOffs=0;
     $lpp=20;
@@ -119,7 +119,7 @@ B_LIST
 		X_LIST_TH(<*Status*>, <*10%*>)
 	E_LIST_HEADER
 
-<?
+<?php 
     for($loop=0;$loop<$i;$loop++) {
 
 	    fetchRow($q_art);
@@ -130,47 +130,47 @@ B_LIST
  ?>
 	B_LIST_TR
 		B_LIST_ITEM
-			<A HREF="X_ROOT/pub/issues/sections/articles/edit.php?Pub=<? pgetUVar($q_art,'IdPublication');?>&Issue=<? pgetUVar($q_art,'NrIssue');?>&Section=<? pgetUVar($q_art,'NrSection');?>&Article=<? pgetUVar($q_art,'Number');?>&sLanguage=<? pgetUVar($q_art,'IdLanguage');?>&Language=<? pgetUVar($q_sect,'IdLanguage');?>"><? print pgetHVar($q_art,'Name');?></A>
+			<A HREF="X_ROOT/pub/issues/sections/articles/edit.php?Pub=<?php  pgetUVar($q_art,'IdPublication');?>&Issue=<?php  pgetUVar($q_art,'NrIssue');?>&Section=<?php  pgetUVar($q_art,'NrSection');?>&Article=<?php  pgetUVar($q_art,'Number');?>&sLanguage=<?php  pgetUVar($q_art,'IdLanguage');?>&Language=<?php  pgetUVar($q_sect,'IdLanguage');?>"><?php  print pgetHVar($q_art,'Name');?></A>
 		E_LIST_ITEM
-<? query ("SELECT Name FROM Languages WHERE Id=".getVar($q_art,'IdLanguage'), 'q_lang'); ?>dnl
+<?php  query ("SELECT Name FROM Languages WHERE Id=".getVar($q_art,'IdLanguage'), 'q_lang'); ?>dnl
 		B_LIST_ITEM
 
-			<? fetchRow ($q_lang); pgetHVar($q_lang,'Name'); ?>
+			<?php  fetchRow ($q_lang); pgetHVar($q_lang,'Name'); ?>
 		E_LIST_ITEM
 		B_LIST_ITEM
-<? if (getVar($q_art,'Published') == "Y") { ?>dnl
-			<A HREF="X_ROOT/pub/issues/sections/articles/status.php?Pub=<? pgetUVar($q_art,'IdPublication'); ?>&Issue=<? pgetUVar($q_art,'NrIssue'); ?>&Section=<? pgetUVar($q_art,'NrSection'); ?>&Article=<? pgetUVar($q_art,'Number'); ?>&Language=<? pgetUVar($q_sect,'IdLanguage'); ?>&sLanguage=<? pgetUVar($q_art,'IdLanguage'); ?>&Back=<? print encURL($REQUEST_URI); ?>"><? putGS('Published'); ?></A>
-<? } elseif (getVar($q_art,'Published') == "N") { ?>dnl
-			<A HREF="X_ROOT/pub/issues/sections/articles/status.php?Pub=<? pgetUVar($q_art,'IdPublication'); ?>&Issue=<? pgetUVar($q_art,'NrIssue'); ?>&Section=<? pgetUVar($q_art,'NrSection'); ?>&Article=<? pgetUVar($q_art,'Number'); ?>&Language=<? pgetUVar($q_sect,'IdLanguage'); ?>&sLanguage=<? pgetUVar($q_art,'IdLanguage'); ?>&Back=<? print encURL($REQUEST_URI); ?>"><? putGS('New'); ?></A>
-<? } else { ?>dnl
-			<A HREF="X_ROOT/pub/issues/sections/articles/status.php?Pub=<? pgetUVar($q_art,'IdPublication'); ?>&Issue=<? pgetUVar($q_art,'NrIssue'); ?>&Section=<? pgetUVar($q_art,'NrSection'); ?>&Article=<? pgetUVar($q_art,'Number'); ?>&Language=<? pgetUVar($q_sect,'IdLanguage'); ?>&sLanguage=<? pgetUVar($q_art,'IdLanguage'); ?>&Back=<? print encURL($REQUEST_URI); ?>"><? putGS('Submitted'); ?></A>
-<? } ?>dnl
+<?php  if (getVar($q_art,'Published') == "Y") { ?>dnl
+			<A HREF="X_ROOT/pub/issues/sections/articles/status.php?Pub=<?php  pgetUVar($q_art,'IdPublication'); ?>&Issue=<?php  pgetUVar($q_art,'NrIssue'); ?>&Section=<?php  pgetUVar($q_art,'NrSection'); ?>&Article=<?php  pgetUVar($q_art,'Number'); ?>&Language=<?php  pgetUVar($q_sect,'IdLanguage'); ?>&sLanguage=<?php  pgetUVar($q_art,'IdLanguage'); ?>&Back=<?php  print encURL($REQUEST_URI); ?>"><?php  putGS('Published'); ?></A>
+<?php  } elseif (getVar($q_art,'Published') == "N") { ?>dnl
+			<A HREF="X_ROOT/pub/issues/sections/articles/status.php?Pub=<?php  pgetUVar($q_art,'IdPublication'); ?>&Issue=<?php  pgetUVar($q_art,'NrIssue'); ?>&Section=<?php  pgetUVar($q_art,'NrSection'); ?>&Article=<?php  pgetUVar($q_art,'Number'); ?>&Language=<?php  pgetUVar($q_sect,'IdLanguage'); ?>&sLanguage=<?php  pgetUVar($q_art,'IdLanguage'); ?>&Back=<?php  print encURL($REQUEST_URI); ?>"><?php  putGS('New'); ?></A>
+<?php  } else { ?>dnl
+			<A HREF="X_ROOT/pub/issues/sections/articles/status.php?Pub=<?php  pgetUVar($q_art,'IdPublication'); ?>&Issue=<?php  pgetUVar($q_art,'NrIssue'); ?>&Section=<?php  pgetUVar($q_art,'NrSection'); ?>&Article=<?php  pgetUVar($q_art,'Number'); ?>&Language=<?php  pgetUVar($q_sect,'IdLanguage'); ?>&sLanguage=<?php  pgetUVar($q_art,'IdLanguage'); ?>&Back=<?php  print encURL($REQUEST_URI); ?>"><?php  putGS('Submitted'); ?></A>
+<?php  } ?>dnl
 		E_LIST_ITEM
 	E_LIST_TR
-<?
+<?php 
 
 }
     ?>dnl
 
 	B_LIST_FOOTER
-<? if ($ArtOffs<=0) { ?>dnl
+<?php  if ($ArtOffs<=0) { ?>dnl
 		X_PREV_I
-<? } else { ?>dnl
-		X_PREV_A(<*home.php?ArtOffs=<?print ($ArtOffs - $lpp); ?>&What=1*>)
-<? } ?>dnl
+<?php  } else { ?>dnl
+		X_PREV_A(<*home.php?ArtOffs=<?php print ($ArtOffs - $lpp); ?>&What=1*>)
+<?php  } ?>dnl
 
-<? if ($nr<$lpp+1) { ?>dnl
+<?php  if ($nr<$lpp+1) { ?>dnl
 		X_NEXT_I
-<? } else { ?>dnl
-		X_NEXT_A(<*home.php?ArtOffs=<? print ($ArtOffs + $lpp); ?>&What=1*>)
-<? } ?>dnl
+<?php  } else { ?>dnl
+		X_NEXT_A(<*home.php?ArtOffs=<?php  print ($ArtOffs + $lpp); ?>&What=1*>)
+<?php  } ?>dnl
 	E_LIST_FOOTER
 E_LIST
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 
 X_BULLET(<*Submitted articles*>)
-<?
+<?php 
     todefnum('NArtOffs');
     if ($NArtOffs<0) $NArtOffs=0;
     $lpp=20;
@@ -185,7 +185,7 @@ B_LIST
 		X_LIST_TH(<*Name<BR><SMALL>(click to edit article)</SMALL>*>)
 		X_LIST_TH(<*Language*>, <*10%*>)
 	E_LIST_HEADER
-<?
+<?php 
     for($loop=0;$loop<$i; $loop++) {
 	fetchRow($q_art);
 
@@ -197,48 +197,48 @@ B_LIST
 ?>dnl
 	B_LIST_TR
 		B_LIST_ITEM
-			<A HREF="X_ROOT/pub/issues/sections/articles/edit.php?Pub=<? pgetUVar($q_art,'IdPublication'); ?>&Issue=<? pgetUVar($q_art,'NrIssue'); ?>&Section=<? pgetUVar($q_art,'NrSection'); ?>&Article=<? pgetUVar($q_art,'Number'); ?>&sLanguage=<? pgetUVar($q_art,'IdLanguage'); ?>&Language=<? pgetUVar($q_sect,'IdLanguage'); ?>"><? pgetHVar($q_art,'Name'); ?></A>
+			<A HREF="X_ROOT/pub/issues/sections/articles/edit.php?Pub=<?php  pgetUVar($q_art,'IdPublication'); ?>&Issue=<?php  pgetUVar($q_art,'NrIssue'); ?>&Section=<?php  pgetUVar($q_art,'NrSection'); ?>&Article=<?php  pgetUVar($q_art,'Number'); ?>&sLanguage=<?php  pgetUVar($q_art,'IdLanguage'); ?>&Language=<?php  pgetUVar($q_sect,'IdLanguage'); ?>"><?php  pgetHVar($q_art,'Name'); ?></A>
 		E_LIST_ITEM
-<? query ("SELECT Name FROM Languages WHERE Id=".getVar($q_art,'IdLanguage'), 'q_lang');?>dnl
+<?php  query ("SELECT Name FROM Languages WHERE Id=".getVar($q_art,'IdLanguage'), 'q_lang');?>dnl
 		B_LIST_ITEM
-			<? fetchRow($q_lang); pgetHVar($q_lang,'Name'); ?>
+			<?php  fetchRow($q_lang); pgetHVar($q_lang,'Name'); ?>
 		E_LIST_ITEM
 	E_LIST_TR
-<?
+<?php 
 
 } ?>dnl
 	B_LIST_FOOTER
-<? if ($NArtOffs <= 0) { ?>dnl
+<?php  if ($NArtOffs <= 0) { ?>dnl
 		X_PREV_I
-<? } else { ?>dnl
-		X_PREV_A(<*home.php?NArtOffs=<? print ($NArtOffs - $lpp); ?>&What=0*>)
-<? 
+<?php  } else { ?>dnl
+		X_PREV_A(<*home.php?NArtOffs=<?php  print ($NArtOffs - $lpp); ?>&What=0*>)
+<?php  
     }
     if ($nr < $lpp+1) { ?>dnl
 		X_NEXT_I
-<? } else { ?>dnl
-		X_NEXT_A(<*home.php?NArtOffs=<? print ($NArtOffs + $lpp); ?>&What=0*>)
-<? } ?>dnl
+<?php  } else { ?>dnl
+		X_NEXT_A(<*home.php?NArtOffs=<?php  print ($NArtOffs + $lpp); ?>&What=0*>)
+<?php  } ?>dnl
 	E_LIST_FOOTER
 E_LIST
 
-<? } ?>dnl
+<?php  } ?>dnl
 
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 <TR>
-<?
+<?php 
     if ($What) {
 	if ($caa) { ?>dnl
 	<TD>
 		X_HITEM(<*home.php?What=0*>, <*Submitted articles*>)
 	</TD>
-<? } 
+<?php  } 
     }    
  else { ?>dnl
 	<TD>
 		X_HITEM(<*home.php?What=1*>, <*Your articles*>)
 	</TD>
-<? } ?>dnl
+<?php  } ?>dnl
 </TR>
 </TABLE>
 
@@ -249,7 +249,7 @@ E_LIST
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML
