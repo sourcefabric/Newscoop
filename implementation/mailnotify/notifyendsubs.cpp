@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <iostream>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <unistd.h>
 
 #include "sql_macros.h"
 #include "readconf.h"
@@ -50,6 +51,7 @@ string SQL_USER;
 string SQL_PASSWORD;
 string SQL_DATABASE;
 int SQL_SRV_PORT = 0;
+#define MAX_TRIES 5
 
 int SQLConnection(MYSQL **sql);
 int NotifyEndSubsFunc(const ConfAttrValue& p_rcoConfValues);
@@ -271,8 +273,10 @@ int SQLConnection(MYSQL **sql)
 {
 	if (*sql)
 		return RES_OK;
-	for (int i = 0; *sql == 0 && i < MAX_TRIES; i++)
+	for (int i = 0; *sql == 0 && i < MAX_TRIES; i++) {
 		*sql = mysql_init(*sql);
+		sleep(10);
+	}
 	if (*sql == 0)
 		return ERR_NOMEM;
 	if ((*sql = mysql_real_connect(*sql, SQL_SERVER.c_str(), SQL_USER.c_str(),
