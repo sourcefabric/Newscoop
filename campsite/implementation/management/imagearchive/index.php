@@ -31,10 +31,10 @@ $imageNav =& new ImageNav($_REQUEST, CAMPSITE_IMAGEARCHIVE_IMAGES_PER_PAGE, $vie
 // build the links for ordering (search results) //////////////////////
 if ($OrderDirection == 'DESC') {
 	$ReverseOrderDirection = "ASC";
-	$OrderSign = "<img src=\"/$ADMIN/img/icon/search_order_direction_down.gif\" border=\"0\">";
+	$OrderSign = "<img src=\"/$ADMIN/img/icon/search_order_direction_down.png\" border=\"0\">";
 } else {
 	$ReverseOrderDirection = "DESC";
-	$OrderSign = "<img src=\"/$ADMIN/img/icon/search_order_direction_up.gif\" border=\"0\">";
+	$OrderSign = "<img src=\"/$ADMIN/img/icon/search_order_direction_up.png\" border=\"0\">";
 }
 
 $IdHref  = 'index.php?order_by=id'
@@ -115,10 +115,10 @@ $uploadedByUsers =& Image::GetUploadUsers();
   <tr>
 <?php
 if ($User->hasPermission('AddImage')) { ?>
-    <td><A HREF="add.php?<?php echo $imageNav->getSearchLink(); ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" alt="<?php  putGS('Add new image'); ?>"></A></TD><TD><A HREF="add.php?<?php echo $imageNav->getSearchLink(); ?>"><B><?php  putGS('Add new image'); ?></B></A></TD>
+    <td><A HREF="add.php?<?php echo $imageNav->getSearchLink(); ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/add.png" BORDER="0" alt="<?php  putGS('Add new image'); ?>"></A></TD><TD><A HREF="add.php?<?php echo $imageNav->getSearchLink(); ?>"><B><?php  putGS('Add new image'); ?></B></A></TD>
 <?php } ?>
     
-    <td><a href="index.php?view=<?php echo $view; ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php putGS("Reset search conditions"); ?>"></a></td><td><a href="index.php?view=<?php echo $view; ?>"><b><?php echo putGS('Reset search conditions'); ?></b></a></td>
+    <td><a href="index.php?view=<?php echo $view; ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/reset.png" BORDER="0" ALT="<?php putGS("Reset search conditions"); ?>"></a></td><td><a href="index.php?view=<?php echo $view; ?>"><b><?php echo putGS('Reset search conditions'); ?></b></a></td>
 
     <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
     <td><B><?php putGS('View', 'View'); ?>:</b></td>
