@@ -297,14 +297,8 @@ B_DIALOG(<*Edit article details*>, <*POST*>, <*do_edit.php*>)
 <? }  ?>dnl
 
 	B_DIALOG_BUTTONS
-<SCRIPT>
-	function do_submit()
-	{
-		document.dialog.submit();
-	}
-</SCRIPT>
-		X_HR
-		<A HREF="javascript:void(do_submit())"><IMG SRC="X_ROOT/img/button/save.gif" BORDER="0" ALT="OK"></A>
+		SUBMIT(<*Save*>, <*Save changes*>)
+		REDIRECT(<*Cancel*>, <*Cancel*>, <*X_ROOT/pub/issues/sections/articles/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Section=<? p($Section); ?>&Language=<? p($Language); ?>*>)
 	E_DIALOG_BUTTONS
 E_DIALOG
 
