@@ -2,7 +2,27 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/priv/lib_campsite.php");
 
-function ArticleTop($p_articleObj, $p_issueLanguageId, $p_title, $p_access) {
+/**
+ * Common header for all article screens.
+ *
+ * @param Article p_articleObj
+ *		The article that is being displayed.
+ *
+ * @param int p_issueLanguageId
+ *		The language for the Issue that that article is contained within.
+ *
+ * @param string p_title
+ *		The title of the page.  This should have a translation in the language files.
+ *
+ * @param boolean p_access
+ *		Whether the user has access to this page.
+ *
+ * @param boolean p_includeLinks
+ *		Whether to include the links underneath the title or not.  Default TRUE.
+ *
+ * @return void
+ */
+function ArticleTop($p_articleObj, $p_issueLanguageId, $p_title, $p_access, $p_includeLinks = true) {
 	global $Campsite;
 	
     // Fetch section
@@ -44,7 +64,7 @@ function ArticleTop($p_articleObj, $p_issueLanguageId, $p_title, $p_access) {
 	}
 	// -->
 	</script>
-	<TITLE><?php putGS("Edit article details"); ?></TITLE>
+	<TITLE><?php putGS($p_title); ?></TITLE>
 	<?php if (!$p_access) { ?>	
 		<META HTTP-EQUIV="Refresh" CONTENT="0; URL=/priv/logout.php">
 	<?php  } ?>
@@ -60,6 +80,9 @@ function ArticleTop($p_articleObj, $p_issueLanguageId, $p_title, $p_access) {
 	    <HR NOSHADE SIZE="1" COLOR="BLACK">
 	</TD>
 </TR>
+<?php 
+if ($p_includeLinks) {
+?>
 <TR>
 	<TD ALIGN="right">
 		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
@@ -91,6 +114,9 @@ function ArticleTop($p_articleObj, $p_issueLanguageId, $p_title, $p_access) {
 		</TABLE>
 	</TD>
 </TR>
+<?php
+} // if ($p_includeLinks)
+?>
 </TABLE>
 
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="1" WIDTH="100%">
