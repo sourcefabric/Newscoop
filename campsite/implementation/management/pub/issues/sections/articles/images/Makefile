@@ -7,4 +7,3 @@ install: $(ALL)
 	cp -f *.php $(PRIV_DIR6)
 
 clean:
-	rm -f *~
