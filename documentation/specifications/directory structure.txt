@@ -1,0 +1,79 @@
+Campsite Directory Structure
+
+By default [prefix] is /usr/local and can be set to a different value by the user.
+
+
+Binaries:
+[prefix]/campsite/bin
+- all binaries are put here
+
+
+Configuration files:
+[prefix]/campsite/etc/campsite/
+- all common configuration files are put here
+
+[prefix]/campsite/etc/campsite/[instance_name]
+- campsite instance configuration files are put here
+
+
+WWW directories of campsite instances
+[prefix]/campsite/www
+contains the follwing subdirectories:
+
+[prefix]/campsite/www/[instance_name]/html
+- contains the following files:
+	* link to [prefix]/campsite/www-common/html/index.php
+	* link to [prefix]/campsite/www-common/html/priv.php
+	* link to [prefix]/campsite/etc/campsite/path_config.php
+	* link to [prefix]/campsite/etc/campsite/[instance_name]/database_config.php
+
+[prefix]/campsite/www/[instance_name]/cgi-bin
+[prefix]/campsite/www/[instance_name]/script
+[prefix]/campsite/www/[instance_name]/include
+
+
+Common WWW directory
+[prefix]/campsite/www-common
+[prefix]/campsite/www-common/html
+[prefix]/campsite/www-common/cgi-bin
+[prefix]/campsite/www-common/script
+[prefix]/campsite/www-common/include
+
+
+Description of database_config.php file
+
+- format:
+<?php
+define("DATABASE_NAME", "[database_name]");
+define("SERVER_ADDRESS", "[server_address]");
+define("SERVER_PORT", "[server_port]");
+define("DATABASE_USER", "[database_user]");
+define("DATABASE_PASSWORD", "[database_password]");
+?>
+
+- path:
+[prefix]/campsite/etc/campsite/[instance_name]/database_config.php
+
+- owner: [apache_user]:[apache_user]
+- rights: owner: read/write, group: read/write, other: none
+
+
+Description of path_config.php file
+
+- format:
+<?php
+define("PREFIX_DIR", "[prefix]");
+define("BIN_DIR", PREFIX_DIR . "/bin");
+define("ETC_DIR", PREFIX_DIR . "/etc");
+define("WWW_DIR", PREFIX_DIR . "/www");
+define("WWW_COMMON_DIR", PREFIX_DIR . "/www-common");
+define("HTML_TAIL", "html");
+define("CGI_BIN_TAIL", "cgi-bin");
+define("SCRIPT_TAIL", "script");
+?>
+
+- path:
+[prefix]/campsite/etc/campsite/path_config.php
+
+- owner: [apache_user]:[apache_user]
+- rights: owner: read/write, group: read/write, other: none
