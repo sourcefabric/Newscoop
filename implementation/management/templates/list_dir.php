@@ -11,7 +11,7 @@ function isTpl($s)
 
 <TABLE BORDER="0" CELLSPACING="2" CELLPADDING="0" WIDTH="100%">
 <TR BGCOLOR="WHITE"><TD WIDTH="30%" VALIGN="TOP">
-<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" WIDTH="100%" class="table_list">
+<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" WIDTH="100%" class="table_list">
 <TR class="table_list_header">
 <TD VALIGN="TOP"><B><?php  putGS('Folders'); ?> </B></TD>
 <?php 
@@ -62,10 +62,10 @@ if (isset($dirs)) {
 			$color = 1;
 			$tr_class = "class=\"list_row_odd\"";
 		}
-		print "<TR $tr_class><TD valign=\"center\"><IMG SRC='/$ADMIN/img/icon/dir.gif' BORDER='0'>&nbsp;<A HREF='?Path=$listbasedir/".encURL($j)."'>$j</A></TD>";
+		print "<TR $tr_class><TD valign=\"center\"><IMG SRC='/$ADMIN/img/icon/folder.png' BORDER='0'>&nbsp;<A HREF='?Path=$listbasedir/".encURL($j)."'>$j</A></TD>";
 
 		if ($dta != 0)
-			print "<TD ALIGN='CENTER'><A HREF='/$ADMIN/templates/del.php?What=0&Path=".encURL($listbasedir)."&Name=".encURL($j)."'><IMG SRC='/$ADMIN/img/icon/x.gif' BORDER='0' ALT='".getGS('Delete folder')."'></A></TD></TR>";
+			print "<TD ALIGN='CENTER'><A HREF='/$ADMIN/templates/del.php?What=0&Path=".encURL($listbasedir)."&Name=".encURL($j)."'><IMG SRC='/$ADMIN/img/icon/delete.png' BORDER='0' ALT='".getGS('Delete folder')."'></A></TD></TR>";
 		else
 			echo '</TR>';
     }
@@ -75,7 +75,7 @@ if (isset($dirs)) {
 ?>
 </TABLE>
 </TD><TD WIDTH="60%" VALIGN="TOP">
-<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" WIDTH="100%" class="table_list">
+<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" WIDTH="100%" class="table_list">
 <TR class="table_list_header">
 <TD  VALIGN="TOP"><B> <?php  putGS('Files'); ?> </B></TD>
 <?php 
@@ -107,7 +107,7 @@ if (isset($files)) {
 		}
 		if ($dta != 0){
 			print "<TD ALIGN='CENTER'><A HREF='/$ADMIN/templates/dup.php?Path=".encURL($listbasedir)."&Name=".encURL($j)."'><IMG SRC='/$ADMIN/img/icon/duplicate.png' BORDER='0' ALT='".getGS('Duplicate file')."'></A></TD>";
-			print "<TD ALIGN='CENTER'><A HREF='/$ADMIN/templates/del.php?What=1&Path=".encURL($listbasedir)."&Name=".encURL($j)."'><IMG SRC='/$ADMIN/img/icon/x.gif' BORDER='0' ALT='".getGS('Delete file')."'></A></TD></TR>";
+			print "<TD ALIGN='CENTER'><A HREF='/$ADMIN/templates/del.php?What=1&Path=".encURL($listbasedir)."&Name=".encURL($j)."'><IMG SRC='/$ADMIN/img/icon/delete.png' BORDER='0' ALT='".getGS('Delete file')."'></A></TD></TR>";
 		} else
 			echo '<TD ALIGN="CENTER"></td></TR>';
 	}

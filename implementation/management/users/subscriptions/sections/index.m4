@@ -62,7 +62,11 @@ E_CURRENT
     query ("SELECT DISTINCT Sub.*, Sec.Name, Scr.Type FROM SubsSections as Sub, Sections as Sec, Subscriptions as Scr WHERE Sub.IdSubscription=$Subs AND Scr.Id = $Subs AND Scr.IdPublication = Sec.IdPublication AND Sub.SectionNumber = Sec.Number ORDER BY SectionNumber LIMIT $SSectOffs, ".($lpp+1), 'q_ssect');
     if ($NUM_ROWS) {
 ?>
-<td valign=top>X_NEW_BUTTON(<*Change all sections*>, <*change.php?Subs=<?php  p($Subs); ?>&Pub=<?php  p($Pub); ?>&User=<?php  p($User); ?>*>)</td></tr></table>
+<td valign="top">
+	X_TOL_BUTTON(<*Change all sections*>, <*change.php?Subs=<?php  p($Subs); ?>&Pub=<?php  p($Pub); ?>&User=<?php  p($User); ?>*>)
+</td>
+</tr>
+</table>
 <?php 
 	$nr= $NUM_ROWS;
 	$i= $lpp;
@@ -106,7 +110,7 @@ B_LIST
 			<A HREF="X_ROOT/users/subscriptions/sections/change.php?User=<?php  p($User); ?>&Pub=<?php  p($Pub); ?>&Subs=<?php  p($Subs); ?>&Sect=<?php  pgetUVar($q_ssect,'SectionNumber'); ?>"><?php  putGS('Change'); ?></A>
 		E_LIST_ITEM
 		B_LIST_ITEM(<*CENTER*>)
-			X_BUTTON(<*<?php  putGS('Delete subscription to section $1?',getHVar($q_ssect,'SectionNumber')); ?>*>, <*icon/x.gif*>, <*users/subscriptions/sections/del.php?User=<?php  p($User); ?>&Pub=<?php  p($Pub); ?>&Subs=<?php  p($Subs); ?>&Sect=<?php  pgetUVar($q_ssect,'SectionNumber'); ?>*>)
+			X_BUTTON(<*<?php  putGS('Delete subscription to section $1?',getHVar($q_ssect,'SectionNumber')); ?>*>, <*icon/delete.png*>, <*users/subscriptions/sections/del.php?User=<?php  p($User); ?>&Pub=<?php  p($Pub); ?>&Subs=<?php  p($Subs); ?>&Sect=<?php  pgetUVar($q_ssect,'SectionNumber'); ?>*>)
 		E_LIST_ITEM
 	E_LIST_TR
 <?php 

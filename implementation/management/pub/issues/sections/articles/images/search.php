@@ -54,10 +54,10 @@ $ImagesPerPage = 8;
 // build the links for ordering (search results) //////////////////////
 if ($OrderDirection == 'DESC') {
 	$ReverseOrderDirection = "ASC";
-	$OrderSign = "<img src=\"/$ADMIN/img/icon/search_order_direction_down.gif\" border=\"0\">";
+	$OrderSign = "<img src=\"/$ADMIN/img/icon/search_order_direction_down.png\" border=\"0\">";
 } else {
 	$ReverseOrderDirection = "DESC";
-	$OrderSign = "<img src=\"/$ADMIN/img/icon/search_order_direction_up.gif\" border=\"0\">";
+	$OrderSign = "<img src=\"/$ADMIN/img/icon/search_order_direction_up.png\" border=\"0\">";
 }
 
 $IdHref  = 
@@ -147,7 +147,7 @@ $uploadedByUsers =& Image::GetUploadUsers();
 	<TD class="page_title">
 		<?php putGS('Link Image to Article'); ?>
 	</TD>
-	<TD ALIGN="RIGHT" style="padding-right: 10px; padding-top: 0px;">
+	<TD ALIGN="RIGHT">
 	 	<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
 		<TR>
 			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/images/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&Section=<?php  p($Section); ?>" class="breadcrumb"><?php  putGS("Images");  ?></A></TD>
@@ -189,7 +189,7 @@ $uploadedByUsers =& Image::GetUploadUsers();
     <td><?php echo CampsiteInterface::ArticleLink($articleObj, $InterfaceLanguageId, 'edit.php') ?><b><?php echo putGS('Back to article details'); ?></b></a></td>
 </tr>
 <tr>
-    <td><?php echo CampsiteInterface::ArticleLink($articleObj, $InterfaceLanguageId, 'images/search.php') ?><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php putGS("Reset search conditions"); ?>"></a></td>
+    <td><?php echo CampsiteInterface::ArticleLink($articleObj, $InterfaceLanguageId, 'images/search.php') ?><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/reset.png" BORDER="0" ALT="<?php putGS("Reset search conditions"); ?>"></a></td>
     <td colspan="3"><?php echo CampsiteInterface::ArticleLink($articleObj, $InterfaceLanguageId, 'images/search.php') ?><b><?php echo putGS('Reset search conditions'); ?></b></a></td>
 </tr>
 </table>

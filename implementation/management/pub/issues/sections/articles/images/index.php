@@ -52,7 +52,7 @@ $languageObj =& new Language($Language);
 	<TD class="page_title">
 	    <?php putGS('Article Image List'); ?>
 	</TD>
-	<TD style="padding-right: 10px; padding-top: 0px;" ALIGN=RIGHT>
+	<TD ALIGN="RIGHT">
 		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
 		<TR>
 			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>&Section=<?php p($Section); ?>" class="breadcrumb"><?php putGS('Articles');  ?></A></TD>
@@ -100,7 +100,7 @@ $languageObj =& new Language($Language);
 	<td>
 		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 		<TR>
-			<TD><A HREF="add.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0"></A></TD>
+			<TD><A HREF="add.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/add.png" BORDER="0"></A></TD>
 			<TD><A HREF="add.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>" ><B><?php  putGS('Add new image'); ?></B></A></TD>
 		</TR>
 		</TABLE>
@@ -108,7 +108,7 @@ $languageObj =& new Language($Language);
 	<td>
 		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 		<TR>
-			<TD><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0"></TD>
+			<TD><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/add.png" BORDER="0"></TD>
 			<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $Language, "images/search.php"); ?><B><?php  putGS('Add an existing image'); ?></B></A></TD>
 		</TR>
 		</TABLE>
@@ -205,7 +205,7 @@ if (count($articleImages) > 0) {
 		<?php
 	    if ($User->hasPermission('ChangeArticle')) { ?>
 			<TD ALIGN="CENTER">
-				<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/images/do_unlink.php?PublicationId=<?php  p($Pub); ?>&IssueId=<?php  p($Issue); ?>&SectionId=<?php  p($Section); ?>&ArticleId=<?php  p($Article); ?>&ImageId=<?php echo $image->getImageId(); ?>&ImageTemplateId=<?php echo $articleImage->getTemplateId(); ?>&ArticleLanguageId=<?php  p($Language); ?>&InterfaceLanguageId=<?php  p($sLanguage); ?>" onclick="return confirm('<?php putGS('Are you sure you want to remove the image \\\'$1\\\' from the article?', htmlspecialchars($image->getDescription())); ?>');"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/unlink.gif" BORDER="0" ALT="<?php  putGS('Unlink image $1', $image->getDescription()); ?>"></A>
+				<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/images/do_unlink.php?PublicationId=<?php  p($Pub); ?>&IssueId=<?php  p($Issue); ?>&SectionId=<?php  p($Section); ?>&ArticleId=<?php  p($Article); ?>&ImageId=<?php echo $image->getImageId(); ?>&ImageTemplateId=<?php echo $articleImage->getTemplateId(); ?>&ArticleLanguageId=<?php  p($Language); ?>&InterfaceLanguageId=<?php  p($sLanguage); ?>" onclick="return confirm('<?php putGS('Are you sure you want to remove the image \\\'$1\\\' from the article?', htmlspecialchars($image->getDescription())); ?>');"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/unlink.png" BORDER="0" ALT="<?php  putGS('Unlink image $1', $image->getDescription()); ?>"></A>
 			</TD>
 		<?php
 	    }
@@ -214,7 +214,7 @@ if (count($articleImages) > 0) {
 			<?php 
 			if (count(ArticleImage::GetArticlesThatUseImage($image->getImageId())) == 1) {
 				?>
-				<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/images/do_del.php?PublicationId=<?php  p($Pub); ?>&IssueId=<?php  p($Issue); ?>&SectionId=<?php  p($Section); ?>&ArticleId=<?php  p($Article); ?>&ImageId=<?php echo $image->getImageId(); ?>&ArticleLanguageId=<?php  p($sLanguage); ?>&InterfaceLanguageId=<?php p($Language); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the image \\\'$1\\\'?', htmlspecialchars($image->getDescription())); ?>');"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/delete.gif" BORDER="0" ALT="<?php  putGS('Delete image $1', $image->getDescription()); ?>"></A>
+				<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/images/do_del.php?PublicationId=<?php  p($Pub); ?>&IssueId=<?php  p($Issue); ?>&SectionId=<?php  p($Section); ?>&ArticleId=<?php  p($Article); ?>&ImageId=<?php echo $image->getImageId(); ?>&ArticleLanguageId=<?php  p($sLanguage); ?>&InterfaceLanguageId=<?php p($Language); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the image \\\'$1\\\'?', htmlspecialchars($image->getDescription())); ?>');"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/delete.png" BORDER="0" ALT="<?php  putGS('Delete image $1', $image->getDescription()); ?>"></A>
 				<?php
 			}
 			else {
@@ -224,7 +224,7 @@ if (count($articleImages) > 0) {
 			}
 			?>
 			</td>
-			<?
+			<?php
 	    } // if $User->hasPermission('DeleteImage')
 	?>
 	</TR>
