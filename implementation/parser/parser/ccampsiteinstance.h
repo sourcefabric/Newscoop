@@ -27,35 +27,161 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define _CMS_CAMPSITEINSTANCE
 
 #include <sys/types.h>
+#include <map>
 
 #include "readconf.h"
+#include "mutex.h"
+
+
+// some typedefs for future use
+
+class CCampsiteInstance;
 
 typedef int (*InstanceFunction) (const ConfAttrValue&);
+typedef map <string, CCampsiteInstance*, less<string> > CCampsiteInstanceMap;
+
+
+/**
+ * class CCampsiteInstance declaration
+ *
+ */
 
 class CCampsiteInstance
 {
-public:
-	CCampsiteInstance(const string& p_rcoConfDir, InstanceFunction p_pInstFunc = NULL)
-			throw (ConfException)
-	: m_coConfDir(p_rcoConfDir), m_pInstanceFunction(p_pInstFunc), m_coAttributes("")
-	{
-		m_coAttributes = ReadConf();
-	}
+	public:
+		CCampsiteInstance(const string& p_rcoConfDir, InstanceFunction p_pInstFunc)
+				throw (ConfException)
+		: m_nChildPID(0), m_coConfDir(p_rcoConfDir), m_pInstanceFunction(p_pInstFunc),
+		m_coAttributes(""), m_bRunning(false)
+		{
+			m_coAttributes = ReadConf();
+			RegisterInstance();
+		}
 
-	~CCampsiteInstance() { stop(); }
+		~CCampsiteInstance() { stop(); }
 
-	pid_t run(InstanceFunction p_pInstanceFunction) throw (RunException);
+		void setInstanceFunction(InstanceFunction p_pInstFunc) throw (RunException);
 
-	void stop();
+		pid_t getPID() const throw (RunException);
 
-private:
-	const ConfAttrValue& ReadConf() throw (ConfException);
+		const string& getName() const { return m_coName; }
 
-private:
-	pid_t m_nChildPID;
-	string m_coConfDir;
-	InstanceFunction m_pInstanceFunction;
-	ConfAttrValue m_coAttributes;
+		bool isRunning() const;
+
+		pid_t run() throw (RunException);
+
+		void stop();
+
+		static const CCampsiteInstanceMap& readFromDirectory(const string& p_rcoDir,
+				InstanceFunction p_pInstFunc) throw (ConfException);
+
+	private:
+		CCampsiteInstance(const CCampsiteInstance&); // do not allow copy
+
+		const ConfAttrValue& ReadConf() throw (ConfException);
+
+		void RegisterInstance();
+
+		static void VerifyDir(const string& p_rcoDir) throw (ConfException);
+
+	private:
+		pid_t m_nChildPID;
+		string m_coName;
+		string m_coConfDir;
+		InstanceFunction m_pInstanceFunction;
+		ConfAttrValue m_coAttributes;
+		bool m_bRunning;
 };
+
+
+inline void CCampsiteInstance::setInstanceFunction(InstanceFunction p_pInstFunc)
+		throw (RunException)
+{
+	if (m_bRunning)
+		throw RunException("Campsite instance is running, can't change the instance function");
+	m_pInstanceFunction = p_pInstFunc;
+}
+
+inline pid_t CCampsiteInstance::getPID() const throw (RunException)
+{
+	if (!m_bRunning)
+		throw RunException("Campsite instance not running, unable to return PID");
+	return m_nChildPID;
+}
+
+
+
+/**
+ * class CCampsiteInstanceRegister declaration
+ * stores all CCampsiteInstance objects; static object
+ */
+
+class CCampsiteInstanceRegister
+{
+	public:
+		CCampsiteInstanceRegister() {}
+
+		static CCampsiteInstanceRegister& get();
+
+		const CCampsiteInstanceMap& getCampsiteInstances() const;
+
+		void insert(CCampsiteInstance& p_rcoInstance);
+
+		void erase(pid_t p_nInstancePID);
+
+		void erase(const string& p_rcoInstanceName);
+
+		bool has(pid_t p_nInstancePID) const;
+
+		bool has(const string& p_rcoInstanceName) const;
+
+		const CCampsiteInstance* getCampsiteInstance(pid_t p_rcoInstancePID) const
+				throw (InvalidValue);
+
+		const CCampsiteInstance* getCampsiteInstance(const string& p_rcoInstanceName) const throw (InvalidValue);
+
+	private:
+		CCampsiteInstanceMap m_coCCampsiteInstances;
+		map < pid_t, string, less<pid_t> > m_coInstancePIDs;
+
+#ifdef _REENTRANT
+		mutable CMutex m_coMutex;
+#endif
+};
+
+
+// CCampsiteInstanceRegister inline methods
+
+inline const CCampsiteInstanceMap& CCampsiteInstanceRegister::getCampsiteInstances() const
+{
+	return m_coCCampsiteInstances;
+}
+
+inline void CCampsiteInstanceRegister::insert(CCampsiteInstance& p_rcoCampsiteInstance)
+{
+#ifdef _REENTRANT
+	CMutexHandler coLockHandler(&m_coMutex);
+#endif
+	const string& rcoName = p_rcoCampsiteInstance.getName();
+	m_coCCampsiteInstances[rcoName] = &p_rcoCampsiteInstance;
+	if (p_rcoCampsiteInstance.isRunning())
+		m_coInstancePIDs[p_rcoCampsiteInstance.getPID()] = rcoName;
+}
+
+inline bool CCampsiteInstanceRegister::has(pid_t p_nInstancePID) const
+{
+#ifdef _REENTRANT
+	CMutexHandler coLockHandler(&m_coMutex);
+#endif
+	return m_coInstancePIDs.find(p_nInstancePID) != m_coInstancePIDs.end();
+}
+
+inline bool CCampsiteInstanceRegister::has(const string& p_rcoInstanceName) const
+{
+#ifdef _REENTRANT
+	CMutexHandler coLockHandler(&m_coMutex);
+#endif
+	return m_coCCampsiteInstances.find(p_rcoInstanceName) != m_coCCampsiteInstances.end();
+}
 
 #endif
