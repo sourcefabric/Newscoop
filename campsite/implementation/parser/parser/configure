@@ -11,10 +11,11 @@ echo -n -e "\tWriting start/stop script..."
 cat > ${APP_NAME} << EOF
 #!/bin/bash
 #
-#	/etc/rc.d/init.d/campsite
+#	/etc/init.d/campsite
 #
 # Starts/stops the $APP_NAME daemon
 #
+# chkconfig: 2345 95 7
 
 ################################################################################
 #
@@ -43,7 +44,7 @@ cat > ${APP_NAME} << EOF
 
 # Source function library.
 
-CAMPSITECTL=$BIN_DIR/${APP_NAME}ctl
+export CAMPSITECTL=$BIN_DIR/${APP_NAME}ctl
 
 test -x \$CAMPSITECTL || exit 0
 
@@ -53,8 +54,8 @@ test -x \$CAMPSITECTL || exit 0
 case "\$1" in
   start)
 	# Check if atd is already running
-	THREADS=\`ps ax | grep ${APP_NAME}_server| grep -v grep | wc -l\`
-	if [ \$THREADS -gt 0 ]; then
+	procs=\`ps -C "${APP_NAME}_server" | grep -w "${APP_NAME}_server" | grep -v grep | wc -l\`
+	if [ \$procs -gt 0 ]; then
 	    echo "${APP_NAME} daemon is already started"
 	else
 	    echo -n 'Starting $APP_NAME daemon: '
@@ -69,13 +70,14 @@ case "\$1" in
 	;;
   reload|restart)
 	\$0 stop
+	/bin/sleep 1
 	\$0 start
 	;;
   status)
 	\$CAMPSITECTL status
 	;;
   *)
-	echo "Usage: /etc/rc.d/init.d/$APP_NAME {start|stop|restart|reload|status}"
+	echo "Usage: /etc/init.d/$APP_NAME {start|stop|restart|reload|status}"
 	exit 1
 esac
 exit 0
@@ -115,40 +117,41 @@ cat > ${APP_NAME}ctl << EOF
 #
 ################################################################################
 
-CAMPSITE_SERVER=$BIN_DIR/${APP_NAME}_server
+export CAMPSITE_SERVER=${APP_NAME}_server
+export CAMPSITE_SERVER_PATH=$BIN_DIR/${APP_NAME}_server
 
-test -x \$CAMPSITE_SERVER || exit 0
+test -x \$CAMPSITE_SERVER_PATH || exit 0
 
 #
 #	See how we were called.
 #
 case "\$1" in
   start)
-	srv_proc=\`ps ax|grep -w ${APP_NAME}_server|grep -v grep|wc -l\`
+	srv_proc=\`ps -C "\$CAMPSITE_SERVER" | grep -w "\$CAMPSITE_SERVER" | grep -v grep | wc -l\`
 	if [ \$srv_proc -ne 0 ]; then
 	    exit 0
 	fi
-	\$CAMPSITE_SERVER
+	\$CAMPSITE_SERVER_PATH
 	err_code=\$?
 	if [ \$err_code -ne 0 ]; then
 	    exit 1
 	fi
-	srv_proc=\`ps ax|grep -w ${APP_NAME}_server|grep -v grep|wc -l\`
+	srv_proc=\`ps -C "\$CAMPSITE_SERVER" | grep -w "\$CAMPSITE_SERVER" | grep -v grep | wc -l\`
 	if [ \$srv_proc -eq 0 ]; then
 	    exit 1
 	fi
 	;;
   stop)
-	output=\`${KILLALL} ${APP_NAME}_server\`
+	output=\`${KILLALL} "\$CAMPSITE_SERVER"\`
 	[ \$? -ne 0 ] && echo \$output && exit 1
 	;;
   reload|restart)
-	${KILLALL} ${APP_NAME}_server &> /dev/null
+	${KILLALL} "\$CAMPSITE_SERVER" &> /dev/null
 	\$0 start
 	;;
   status)
-	THREADS=\`ps ax | grep -w ${APP_NAME}_server| grep -v grep | wc -l\`
-	if [ \$THREADS -gt 0 ]; then
+	procs=\`ps -C "\$CAMPSITE_SERVER" | grep -w "\$CAMPSITE_SERVER" | grep -v grep | wc -l\`
+	if [ \$procs -gt 0 ]; then
 	    echo "${APP_NAME} server is running"
 	else
 	    echo "${APP_NAME} server is not running"
@@ -160,6 +163,8 @@ case "\$1" in
 esac
 exit 0
 EOF
+
+# done writing control file; check if ok
 [ $? -ne 0 ] && echo "ERROR" && exit 1
 echo OK
 save_var APP_NAME BIN_DIR
@@ -191,5 +196,7 @@ WARNING!!! This file is generated. Do not edit!
 
 #endif
 EOF
+
+# done writing srvdef.h; check if ok
 [ $? -ne 0 ] && echo "ERROR" && exit 1
 echo OK
