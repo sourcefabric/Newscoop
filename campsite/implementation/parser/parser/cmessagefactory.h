@@ -100,6 +100,8 @@ public:
 	CMessage* createMessage(char* p_pchMsgContent)
 		throw (out_of_range, xml_parse_error, invalid_message_content, bad_alloc);
 
+	static CMessageFactoryRegister& getInstance();
+
 private:
 	// private types
 	typedef map <uint, CMessageFactory*> MessageFactoryMap;
