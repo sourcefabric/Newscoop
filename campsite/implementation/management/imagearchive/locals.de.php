@@ -2,7 +2,7 @@
 regGS("Add new image","Neues Bild hinzufügen");
 regGS("Select an old image","Altes Bild auswählen");
 regGS("Click to view image","Anklicken um Bild zu betrachten");
-regGS("Date<BR><SMALL>(yyyy-mm-dd)</SMALL>","Datum (jjjj-mm-tt)");
+regGS("Date <SMALL>(yyyy-mm-dd)</SMALL>","Datum (jjjj-mm-tt)");
 regGS("Delete image $1","Bild $1 löschen");
 regGS("No images.","Keine Bilder");
 regGS("View image","Bild betrachten");

@@ -16,7 +16,7 @@
 		  <table border="0" cellspacing="0" cellpadding="0">
 		  <tr>
 		  	<td nowrap valign="top">
-		  		<B><a href="<?php echo $DescriptionHref; ?>"><?php  putGS("Description<BR><SMALL>(Click to view details)</SMALL>"); ?></a></B>
+		  		<B><a href="<?php echo $DescriptionHref; ?>"><?php  putGS("Description <SMALL>(Click to view details)</SMALL>"); ?></a></B>
 		  	</td>
 		  	<td align="left">
 		  		<a href="<?php echo $DescriptionHref; ?>"><?php echo $DescriptionOrderIcon; ?></a>
@@ -40,7 +40,7 @@
 		  <table border="0" cellspacing="0" cellpadding="0">
 		  <tr>
 		  	<td nowrap valign="top">
-		  		<B><a href="<?php echo $DateHref; ?>"><?php  putGS("Date<BR><SMALL>(yyyy-mm-dd)</SMALL>"); ?></a></B>
+		  		<B><a href="<?php echo $DateHref; ?>"><?php  putGS("Date <SMALL>(yyyy-mm-dd)</SMALL>"); ?></a></B>
 		  	</td>
 		  	<td align="left">
 		  		<a href="<?php echo $DateHref; ?>"><?php echo $DateOrderIcon; ?></a>

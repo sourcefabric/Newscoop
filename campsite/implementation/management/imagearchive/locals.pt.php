@@ -2,7 +2,7 @@
 regGS("Add new image","Adicionar Imagem");
 regGS("Select an old image","Selecionar imagem já existente");
 regGS("Click to view image","Carregue para ver imagem");
-regGS("Date<BR><SMALL>(yyyy-mm-dd)</SMALL>","Data (aaaa-mm-dd)");
+regGS("Date <SMALL>(yyyy-mm-dd)</SMALL>","Data (aaaa-mm-dd)");
 regGS("Delete image $1","Apagar imagem");
 regGS("No images.","Não existem imagens");
 regGS("View image","Ver imagem");

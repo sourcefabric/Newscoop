@@ -2,7 +2,7 @@
 regGS("Add new image","Přidat obrázek");
 regGS("Select an old image","Vybrat starý obrázek");
 regGS("Click to view image","Klikněte pro náhled obrázku");
-regGS("Date<BR><SMALL>(yyyy-mm-dd)</SMALL>","Datum (rrrr-mm-dd)");
+regGS("Date <SMALL>(yyyy-mm-dd)</SMALL>","Datum (rrrr-mm-dd)");
 regGS("Delete image $1","Stazat obrázek $1");
 regGS("No images.","Žádné obrázky");
 regGS("View image","Náhled obrázku");
