@@ -138,10 +138,10 @@ if (count($articles) > 0) {
 		echo '<tr ';
 		if ($color) { 
 			$color=0; 
-			echo 'BGCOLOR="#D0D0B0"';
+			echo 'class="list_row_even"';
 		} else { 
 			$color=1; 
-			echo 'BGCOLOR="#D0D0D0"';
+			echo 'class="list_row_odd"';
 		} 
 		echo '><td>'.htmlspecialchars($article->getTitle())."</td>
 			  <td width=\"10%\" align=\"center\"><a href=\"/$ADMIN/pub/issues/sections/articles/edit.php?Pub=".htmlspecialchars($article->getPublicationId()).'&Issue='.$article->getIssueId().'&Section='.$article->getSectionId().'&Article='.$article->getArticleId().'&Language='.$article->getLanguageId().'&sLanguage='.$article->getLanguageId().'">'.getGS('Edit').'</a></td>
