@@ -34,6 +34,7 @@ regGS("Issue $1 added","Issue $1 added:en");
 // -- edit.m4
 regGS("Change issue details","Change issue details:en");
 regGS("You do not have the right to change issue details.","You do not have the right to change issue details.:en");
+regGS("Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>","Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>:en");
 
 // -- do_edit.m4
 regGS("Updating issue","Updating issue:en");
