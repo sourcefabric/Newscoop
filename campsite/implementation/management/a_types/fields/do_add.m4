@@ -44,16 +44,8 @@ E_CURRENT
 B_MSGBOX(<*Adding new field*>)
 	X_MSGBOX_TEXT(<*
 <?
-    $j=strlen($cName);
-    $correct=1;
-    if ($j==0)
-	$correct=0;
-    for ($i=0;$i<$j;$i++) {
-	$c = ord ( strtolower ( substr ( $cName,$i,1 ) ) );
-	if ($c<97 || $c>122)
-	    $correct=0;
-    }
-    
+    $correct = valid_field_name($cName);
+
     if ($correct) {
 	query ("SHOW FIELDS FROM X$AType LIKE 'F$cName'", 'f');
 	if ($NUM_ROWS) { ?>dnl
@@ -61,7 +53,7 @@ B_MSGBOX(<*Adding new field*>)
 	<? $correct= 0;
         }
     } else { ?>dnl
-	<LI><? putGS('The $1  must not be void and may only contain letters.','<B>'.getGS('Name').'</B>'); ?></LI>
+	<LI><? putGS('The $1  must not be void and may only contain letters and underscore (_) character.','<B>'.getGS('Name').'</B>'); ?></LI>
     <? } 
 
     if ($correct) {
