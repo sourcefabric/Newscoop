@@ -28,6 +28,7 @@ all: $(MY_TARGETS)
 install: $(ALL)
 	mkdir -p $(CGI_COMMON_DIR)
 	mkdir -p $(HTML_COMMON_DIR)
+	mkdir -p $(HTML_COMMON_DIR)/look
 	mkdir -p $(PRIV_COMMON_DIR)/img
 	mkdir -p $(HTML_COMMON_DIR)/images/thumbnails
 	cp -rf article_import $(PRIV_COMMON_DIR)
