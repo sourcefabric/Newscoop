@@ -148,6 +148,11 @@ if ($hasAccess && !$edit_ok) {
 
 if ($edit_ok) { ?>
 <P>
+<STYLE>
+.action_link_container {
+	padding-left: 8px;
+}
+</STYLE>
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" WIDTH="100%">
 <TR>
 	<TD>
@@ -157,10 +162,10 @@ if ($edit_ok) { ?>
 		if ($articleObj->getPublished() == "Y") { 
 			if ($User->hasPermission('Publish')) { 
 				?>
-				<TD>
+				<TD class="action_link_container">
 					<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 					<TR>
-						<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $languageObj->getLanguageId(), "status.php", $REQUEST_URI); ?><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0"></A></TD>
+						<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $languageObj->getLanguageId(), "status.php", $REQUEST_URI); ?><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/unpublish.png" BORDER="0"></A></TD>
 						<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $languageObj->getLanguageId(), "status.php", $REQUEST_URI); ?><B><?php  putGS("Unpublish"); ?></B></A></TD>
 					</TR>
 					</TABLE>
@@ -171,10 +176,10 @@ if ($edit_ok) { ?>
 		elseif ($articleObj->getPublished() == "S") { 
 			if ($User->hasPermission('Publish')) { 
 				?>
-				<TD>
+				<TD class="action_link_container">
 					<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 					<TR>
-						<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $languageObj->getLanguageId(), "status.php", $REQUEST_URI); ?><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0"></A></TD>
+						<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $languageObj->getLanguageId(), "status.php", $REQUEST_URI); ?><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/publish.png" BORDER="0"></A></TD>
 						<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $languageObj->getLanguageId(), "status.php", $REQUEST_URI); ?><B><?php  putGS("Publish"); ?></B></A></TD>
 					</TR>
 					</TABLE>
@@ -185,11 +190,11 @@ if ($edit_ok) { ?>
 		elseif ($articleObj->getPublished() == "N") { 
 			if ($articleObj->getUserId() == $User->getId()) {
 				?>
-				<TD>
+				<TD class="action_link_container">
 					<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 					<TR>
 						<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $languageObj->getLanguageId(), "status.php", $REQUEST_URI); ?>
-						<IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0"></A></TD>
+						<IMG SRC="/<?php echo $ADMIN; ?>/img/icon/submit.png" BORDER="0"></A></TD>
 						<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $languageObj->getLanguageId(), "status.php", $REQUEST_URI); ?><B><?php  putGS("Submit"); ?></B></A></TD>
 					</TR>
 					</TABLE>
@@ -200,11 +205,11 @@ if ($edit_ok) { ?>
 		
 		if ($User->hasPermission('AddImage') || $User->hasPermission('DeleteImage') || $User->hasPermission('ChangeArticle') || $User->hasPermission('ChangeImage')) {
 		?>
-			<TD>
+			<TD class="action_link_container">
 				<!-- Images Link -->
 				<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 				<TR>
-					<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $Language, "images/"); ?><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0"></A></TD>
+					<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $Language, "images/"); ?><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/image_archive.png" BORDER="0"></A></TD>
 					<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $Language, "images/"); ?><B><?php  putGS("Images"); ?></B></A></TD>
 				</TR>
 				</TABLE>
@@ -212,21 +217,21 @@ if ($edit_ok) { ?>
 		<?php
 		}
 		?>
-			<TD>
+			<TD class="action_link_container">
 				<!-- Topics Link -->
 				<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 				<TR>
-					<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $languageObj->getLanguageId(), "topics/"); ?><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0"></A></TD>
+					<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $languageObj->getLanguageId(), "topics/"); ?><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/topics.png" BORDER="0"></A></TD>
 					<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $languageObj->getLanguageId(), "topics/"); ?><B><?php  putGS("Topics"); ?></B></A></TD>
 				</TR>
 				</TABLE>
 			</TD>
 			
-			<TD>
+			<TD class="action_link_container">
 				<!-- Unlock Link -->
 				<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 				<TR>
-					<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $languageObj->getLanguageId(), "do_unlock.php"); ?><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0"></A></TD>
+					<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $languageObj->getLanguageId(), "do_unlock.php"); ?><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/unlock.png" BORDER="0"></A></TD>
 					<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $languageObj->getLanguageId(), "do_unlock.php"); ?><B><?php  putGS("Unlock"); ?></B></A></TD>
 				</TR>
 				</TABLE>
@@ -234,11 +239,11 @@ if ($edit_ok) { ?>
 		</TR>		
 		
 		<TR>
-			<TD>
+			<TD class="action_link_container">
 				<!-- Preview Link -->
 				<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 				<TR>	
-					<TD><A HREF="" ONCLICK="window.open('/<?php echo $ADMIN; ?>/pub/issues/sections/articles/preview.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=no, width=680, height=560'); return false"><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0"></A></TD>
+					<TD><A HREF="" ONCLICK="window.open('/<?php echo $ADMIN; ?>/pub/issues/sections/articles/preview.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=no, width=680, height=560'); return false"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/preview.png" BORDER="0"></A></TD>
 					<TD><A HREF="" ONCLICK="window.open('/<?php echo $ADMIN; ?>/pub/issues/sections/articles/preview.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>', 'fpreview', 'resizable=yes, menubar=yes, toolbar=yes, width=680, height=560'); return false"><B><?php  putGS("Preview"); ?></B></A></TD>
 				</TR>
 				</TABLE>
@@ -247,10 +252,10 @@ if ($edit_ok) { ?>
 			<?php  
 			if ($User->hasPermission('AddArticle')) { 
 				?>
-				<TD>
+				<TD class="action_link_container">
 					<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 					<TR>
-						<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $languageObj->getLanguageId(), "translate.php", $REQUEST_URI); ?><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0"></A></TD>
+						<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $languageObj->getLanguageId(), "translate.php", $REQUEST_URI); ?><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/translate.png" BORDER="0"></A></TD>
 						<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $languageObj->getLanguageId(), "translate.php", $REQUEST_URI); ?><B><?php  putGS("Translate"); ?></B></A></TD>
 					</TR>
 					</TABLE>
@@ -260,11 +265,11 @@ if ($edit_ok) { ?>
 
 			if ($User->hasPermission('DeleteArticle')) { 
 				?>
-				<TD>
+				<TD class="action_link_container">
 					<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 					<TR>
-						<TD><a href="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/do_del.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php p($Section); ?>&Article=<?php p($Article); ?>&Language=<?php p($Language); ?>&sLanguage=<?php p($sLanguage); ?>" onclick="return confirm('<?php htmlspecialchars(putGS('Are you sure you want to delete the article $1 ($2)?', '&quot;'.htmlspecialchars($articleObj->getTitle(), ENT_QUOTES).'&quot;', htmlspecialchars($sLanguageObj->getName(), ENT_QUOTES) )); ?>');"><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0"></A></TD>
-						<TD><a href="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/do_del.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php p($Section); ?>&Article=<?php p($Article); ?>&Language=<?php p($Language); ?>&sLanguage=<?php p($sLanguage); ?>" onclick="return confirm('<?php htmlspecialchars(putGS('Are you sure you want to delete the article $1 ($2)?', '&quot;'.htmlspecialchars($articleObj->getTitle(), ENT_QUOTES).'&quot;', htmlspecialchars($sLanguageObj->getName(), ENT_QUOTES))); ?>');"><B><?php  putGS("Delete"); ?></B></A></TD>
+						<TD><a href="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/do_del.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php p($Section); ?>&Article=<?php p($Article); ?>&Language=<?php p($Language); ?>&sLanguage=<?php p($sLanguage); ?>" onclick="return confirm('<?php htmlspecialchars(putGS('Are you sure you want to delete the article $1 ($2)?', '&quot;'.htmlspecialchars($articleObj->getTitle(), ENT_QUOTES).'&quot;', htmlspecialchars($sLanguageObj->getName(), ENT_QUOTES) )); ?>');"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/delete.gif" BORDER="0"></A></TD>
+						<TD style="padding-left: 6px;"><a href="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/do_del.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php p($Section); ?>&Article=<?php p($Article); ?>&Language=<?php p($Language); ?>&sLanguage=<?php p($sLanguage); ?>" onclick="return confirm('<?php htmlspecialchars(putGS('Are you sure you want to delete the article $1 ($2)?', '&quot;'.htmlspecialchars($articleObj->getTitle(), ENT_QUOTES).'&quot;', htmlspecialchars($sLanguageObj->getName(), ENT_QUOTES))); ?>');"><B><?php  putGS("Delete"); ?></B></A></TD>
 					</TR>
 					</TABLE>
 				</TD>
@@ -273,10 +278,10 @@ if ($edit_ok) { ?>
 
 			if ($User->hasPermission('AddArticle')) { 
 				?>
-				<TD>
+				<TD class="action_link_container">
 					<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 					<TR>
-						<TD><A HREF="<?php echo CampsiteInterface::ArticleUrl($articleObj, $languageObj->getLanguageId(), "duplicate.php"); ?>&Back=<?php p(urlencode($REQUEST_URI)); ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0"></A></TD>
+						<TD><A HREF="<?php echo CampsiteInterface::ArticleUrl($articleObj, $languageObj->getLanguageId(), "duplicate.php"); ?>&Back=<?php p(urlencode($REQUEST_URI)); ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/duplicate.png" BORDER="0"></A></TD>
 						<TD><A HREF="<?php echo CampsiteInterface::ArticleUrl($articleObj, $languageObj->getLanguageId(), "duplicate.php"); ?>&Back=<?php p(urlencode($REQUEST_URI)); ?>"><B><?php  putGS("Duplicate"); ?></B></A></TD>
 					</TR>
 					</TABLE>
