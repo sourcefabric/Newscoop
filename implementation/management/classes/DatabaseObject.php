@@ -36,10 +36,10 @@ class DatabaseObject {
 	var $m_data = array();
 
 	/**
-	 * TRUE if the object exists in the database.
+	 * TRUE if the object exists in the database, FALSE if not, NULL if unknown.
 	 * @var boolean
 	 */
-	var $m_exists = false;
+	var $m_exists = null;
 	
 	/**
 	 * DatabaseObject represents a row in a database table.
@@ -207,8 +207,8 @@ class DatabaseObject {
 	 * @return boolean
 	 */
 	function exists() {
-		if ($this->m_exists) {
-			return true;
+		if (!is_null($this->m_exists)) {
+			return $this->m_exists;
 		}
 		global $Campsite;
 		$queryStr = 'SELECT `'.$this->m_keyColumnNames[0].'`';
@@ -351,14 +351,19 @@ class DatabaseObject {
 	 */
 	function getProperty($p_dbColumnName, $p_forceFetchFromDatabase = false) {
 		global $Campsite;
-		if (array_key_exists($p_dbColumnName, $this->m_data)) {
+		if (array_key_exists($p_dbColumnName, $this->m_columnNames)) {
 			if ($p_forceFetchFromDatabase) {
-				$queryStr = 'SELECT '.$p_dbColumnName
-							.' FROM '.$this->m_dbTableName
-							.' WHERE '.$this->getKeyWhereClause();
-				$this->m_data[$p_dbColumnName] = $Campsite['db']->GetOne($queryStr);
-				if ($this->m_data[$p_dbColumnName] !== false) {
-					$this->m_exists = true;
+				if ($this->keyValuesExist()) {
+					$queryStr = 'SELECT '.$p_dbColumnName
+								.' FROM '.$this->m_dbTableName
+								.' WHERE '.$this->getKeyWhereClause();
+					$this->m_data[$p_dbColumnName] = $Campsite['db']->GetOne($queryStr);
+					if ($this->m_data[$p_dbColumnName] !== false) {
+						$this->m_exists = true;
+					}
+				}
+				else {
+					return new PEAR_Error('Key values do not exist - cannot fetch row.');
 				}
 			}
 			return $this->m_data[$p_dbColumnName];
