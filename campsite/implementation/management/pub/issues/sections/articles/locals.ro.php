@@ -1,7 +1,6 @@
 <?
 
 regGS("Delete article $1","Şterge articolul $1");
-regGS("You do not have the right to add articles.","Nu aveţi dreptul să ştergeţi articole");
 regGS("Show article on front page","Afişează articolul în pagina principală");
 regGS("Show article on section page","Afişează articolul în pagina secţiunii");
 regGS("Enter keywords, comma separated","Introduceţi cuvintele cheie separate de virgulă");

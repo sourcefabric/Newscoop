@@ -1,7 +1,6 @@
 <?
 
 regGS("Delete article $1","Obriši članak $1");
-regGS("You do not have the right to add articles.","Nemate pravo da dodajete članke");
 regGS("Show article on front page","Prikaži članak na početnoj strani");
 regGS("Show article on section page","Prikaži članak na strani rubrike");
 regGS("Enter keywords, comma separated","Unesite ključne reči (razdvojene zarezima)");
