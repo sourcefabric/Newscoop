@@ -99,6 +99,21 @@ B_DIALOG({Add new language}, {POST}, {do_add.xql})
 	B_DIALOG_INPUT({Saturday:})
 		<INPUT TYPE="TEXT" NAME="cWDay7" SIZE="20" MAXLENGTH="20">
 	E_DIALOG_INPUT
+
+	X_DIALOG_TEXT({Please enter the translation for time units.})
+	B_DIALOG_INPUT({Days:})
+		<INPUT TYPE="TEXT" NAME="cDay" SIZE="20" MAXLENGTH="20">
+	E_DIALOG_INPUT
+	B_DIALOG_INPUT({Weeks:})
+		<INPUT TYPE="TEXT" NAME="cWeek" SIZE="20" MAXLENGTH="20">
+	E_DIALOG_INPUT
+	B_DIALOG_INPUT({Months:})
+		<INPUT TYPE="TEXT" NAME="cMonth" SIZE="20" MAXLENGTH="20">
+	E_DIALOG_INPUT
+	B_DIALOG_INPUT({Years:})
+		<INPUT TYPE="TEXT" NAME="cYear" SIZE="20" MAXLENGTH="20">
+	E_DIALOG_INPUT
+
 	B_DIALOG_BUTTONS
 		<INPUT TYPE="IMAGE" NAME="OK" SRC="X_ROOT/img/button/save.gif" BORDER="0">
 <!sql setdefault Back "">dnl

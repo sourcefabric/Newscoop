@@ -27,6 +27,7 @@ E_HEADER_BUTTONS
 E_HEADER
 
 <P>
+<!sql query "SELECT * FROM TimeUnits WHERE 1=0" q_tu>
 <!sql setdefault Lang 0>dnl
 <!sql set NUM_ROWS 0>
 <!sql query "SELECT * FROM Languages WHERE Id=?Lang" l>dnl
@@ -103,6 +104,47 @@ B_DIALOG({Edit language}, {POST}, {do_modify.xql})
 	B_DIALOG_INPUT({Saturday:})
 		<INPUT TYPE="TEXT" NAME="cWDay7" VALUE="<!sql print ~l.WDay7>" SIZE="20" MAXLENGTH="20">
 	E_DIALOG_INPUT
+
+<!sql query "SELECT * FROM TimeUnits WHERE IdLanguage=?Lang" q_tu>
+	X_DIALOG_TEXT({Please enter the translation for time units.})
+<!sql if $NUM_ROWS == 0>
+	<!sql query "SELECT * FROM TimeUnits where 1=0" q_tu>
+	B_DIALOG_INPUT({Years:})
+		<INPUT TYPE="TEXT" NAME="cYear" SIZE="20" MAXLENGTH="20">
+	E_DIALOG_INPUT
+	B_DIALOG_INPUT({Months:})
+		<INPUT TYPE="TEXT" NAME="cMonth" SIZE="20" MAXLENGTH="20">
+	E_DIALOG_INPUT
+	B_DIALOG_INPUT({Weeks:})
+		<INPUT TYPE="TEXT" NAME="cWeek" SIZE="20" MAXLENGTH="20">
+	E_DIALOG_INPUT
+	B_DIALOG_INPUT({Days:})
+		<INPUT TYPE="TEXT" NAME="cDay" SIZE="20" MAXLENGTH="20">
+	E_DIALOG_INPUT
+<!sql else>
+	<!sql print_loop q_tu>
+	<!sql if ~q_tu.0 == "D">
+	B_DIALOG_INPUT({Days:})
+		<INPUT TYPE="TEXT" NAME="cDay" SIZE="20" MAXLENGTH="20" VALUE="<!sql print ~q_tu.2>">
+	E_DIALOG_INPUT
+	<!sql endif>
+	<!sql if ~q_tu.0 == "W">
+	B_DIALOG_INPUT({Weeks:})
+		<INPUT TYPE="TEXT" NAME="cWeek" SIZE="20" MAXLENGTH="20" VALUE="<!sql print ~q_tu.2>">
+	E_DIALOG_INPUT
+	<!sql endif>
+	<!sql if ~q_tu.0 == "M">
+	B_DIALOG_INPUT({Months:})
+		<INPUT TYPE="TEXT" NAME="cMonth" SIZE="20" MAXLENGTH="20" VALUE="<!sql print ~q_tu.2>">
+	E_DIALOG_INPUT
+	<!sql endif>
+	<!sql if ~q_tu.0 == "Y">
+	B_DIALOG_INPUT({Years:})
+		<INPUT TYPE="TEXT" NAME="cYear" SIZE="20" MAXLENGTH="20" VALUE="<!sql print ~q_tu.2>">
+	E_DIALOG_INPUT
+	<!sql endif>
+	<!sql  done>
+<!sql endif>
 	B_DIALOG_BUTTONS
 		<INPUT TYPE="HIDDEN" NAME="Lang" VALUE="<!sql print ~Lang>">
 		<INPUT TYPE="IMAGE" NAME="OK" SRC="X_ROOT/img/button/save.gif" BORDER="0">

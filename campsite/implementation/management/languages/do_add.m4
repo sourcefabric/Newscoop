@@ -49,6 +49,11 @@ E_HEADER
 <!sql setdefault cWDay5 "">dnl
 <!sql setdefault cWDay6 "">dnl
 <!sql setdefault cWDay7 "">dnl
+<!sql setdefault cDay "">dnl
+<!sql setdefault cWeek "">dnl
+<!sql setdefault cMonth "">dnl
+<!sql setdefault cYear "">dnl
+
 
 <!sql set correct 1><!sql set created 0>dnl
 <P>
@@ -71,6 +76,19 @@ B_MSGBOX({Adding new language})
 <!sql query "INSERT IGNORE INTO Languages SET Name='?cName', CodePage='?cCodePage', Code='?cCode', OrigName='?cOrigName', Month1='?cMonth1', Month2='?cMonth2', Month3='?cMonth3', Month4='?cMonth4', Month5='?cMonth5', Month6='?cMonth6', Month7='?cMonth7', Month8='?cMonth8', Month9='?cMonth9', Month10='?cMonth10', Month11='?cMonth11', Month12='?cMonth12', WDay1='?cWDay1', WDay2='?cWDay2', WDay3='?cWDay3', WDay4='?cWDay4', WDay5='?cWDay5', WDay6='?cWDay6', WDay7='?cWDay7'">dnl
 <!sql setexpr created ($AFFECTED_ROWS != 0)>dnl
 <!sql endif>dnl
+
+<!sql if $created>
+	<!sql query "SELECT LAST_INSERT_ID()" lgid>
+	<!sql query "INSERT IGNORE INTO TimeUnits VALUES('D', ?lgid.0,'?cDay')">
+			<!sql setexpr created ($AFFECTED_ROWS != 0)>dnl
+	<!sql query "INSERT IGNORE INTO TimeUnits VALUES('W', ?lgid.0, '?cWeek')">
+		<!sql setexpr created ($AFFECTED_ROWS != 0)>dnl
+	<!sql query "INSERT IGNORE INTO TimeUnits VALUES('M', ?lgid.0, '?cMonth')">
+		<!sql setexpr created ($AFFECTED_ROWS != 0)>dnl
+	<!sql query "INSERT IGNORE INTO TimeUnits VALUES('Y', ?lgid.0, '?cYear')">
+		<!sql setexpr created ($AFFECTED_ROWS != 0)>dnl
+<!sql endif>
+
 <!sql if $created>dnl
 		<LI>The language <B><!sql print ~cName></B> has been successfuly added.</LI>
 X_AUDIT({101}, {Language ~cName added})

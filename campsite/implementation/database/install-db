@@ -30,13 +30,25 @@ if [ ! -f campsite-db.sql ]; then
     exit 1
 fi
 
-mysqladmin create campsite -u root
+[ "$CAMPSITE_PACKAGE_DIR" = "" ] && cd ../.. && export CAMPSITE_PACKAGE_DIR=`pwd` && cd implementation/database
+[ "$INSTALL_CONF" = "" ] && export INSTALL_CONF=${CAMPSITE_PACKAGE_DIR}/.install_conf
+. ${INSTALL_CONF}/conf_functions
+
+modules_conf --set DATABASE
+[ $? -ne 0 ] && exit 1
+password=""
+[ "$DATABASE_PASSWORD" != "" ] && password="-p $DATABASE_PASSWORD"
+
+mysqladmin create $DATABASE_NAME -h $DATABASE_SERVER -P $DATABASE_PORT -u $DATABASE_USER $password
 result=$?
 if [ "$result" != "0" ]; then
     touch ../../campsite_upgrade
     echo "Database alread exists. Type make drop-db to drop old database."
+    exit 0
 else
     echo -n "Creating campsite database..."
-    mysql campsite -u root < campsite-db.sql 1> /dev/null
+    mysql $DATABASE_NAME -h $DATABASE_SERVER -P $DATABASE_PORT -u $DATABASE_USER $password < campsite-db.sql 1> /dev/null
+    [ $? -ne 0 ] && exit 1
     echo "done."
 fi
+exit 0

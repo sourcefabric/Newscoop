@@ -59,7 +59,7 @@ B_DIALOG({Change publication information}, {POST}, {do_edit.xql})
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT({Time Unit:})
 	    <SELECT NAME="cTimeUnit">
-<!sql query "SELECT Unit, Name FROM TimeUnits" q_unit>dnl
+<!sql query "SELECT Unit, Name FROM TimeUnits WHERE IdLanguage=1" q_unit>dnl
 <!sql print_loop q_unit>dnl
 		<OPTION VALUE="<!sql print ~q_unit.Unit>"<!sql if (@q_unit.Unit == @q_pub.TimeUnit)> SELECTED<!sql endif>><!sql print ~q_unit.Name>
 <!sql done>dnl	

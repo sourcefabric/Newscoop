@@ -1,0 +1,41 @@
+#!/bin/sh
+
+[ "$CAMPSITE_PACKAGE_DIR" = "" ] && cd ../.. && . ./configure --define_start_env && cd implementation/management
+. ${INSTALL_CONF}/conf_functions
+
+PACKAGE_TYPE=`cat $CAMPSITE_PACKAGE_DIR/.package_type`
+[ "$PACKAGE_TYPE" = "binary" ] && exit 0
+
+modules_conf --set DATABASE
+[ $? -ne 0 ] && echo "Error reading DATABASE module configuration" && exit 1
+modules_conf --set ADMIN_INTERFACE
+[ $? -ne 0 ] && echo "Error reading ADMIN_INTERFACE module configuration" && exit 1
+
+database_vars="DATABASE_SERVER DATABASE_USER DATABASE_PASSWORD DATABASE_NAME"
+admin_vars="ADMIN_INTERFACE_SCRIPT_DIR ADMIN_INTERFACE_CGI_DIR"
+var_not_modified $database_vars $admin_vars CAMPSITE_VERSION && [ -f macros.m4 ] && exit 0
+save_var $database_vars $admin_vars CAMPSITE_VERSION
+
+echo -n -e "\tWriting macros.m4..."
+cat > macros.m4 << EOF
+changecom\`'dnl
+changequote({, })dnl
+define({X_SCRIPT_BIN}, {$ADMIN_INTERFACE_SCRIPT_DIR})dnl
+define({X_CGI_BIN}, {$ADMIN_INTERFACE_CGI_DIR})dnl
+define({X_COPYRIGHT}, {<a STYLE='font-size:8pt;color:#000000' href='http://www.campware.org' target='campware'>CAMPSITE $CAMPSITE_VERSION &copy 1999-2001 MDLF, maintained and distributed under GNU GPL by CAMPWARE</a>})dnl
+EOF
+[ $? -ne 0 ] && echo "ERROR" && exit 1
+cat "./macros.in" >> macros.m4
+[ $? -ne 0 ] && echo "ERROR" && exit 1
+echo OK
+
+cdirs=`find . -maxdepth 1 -type d -print | cut -f 2 -d "/"`
+for dir in $cdirs; do
+    if [ -x ${dir}/configure ] && [ "$dir" != "." ]; then
+	echo -e "\t\tConfiguring implementation/management/$dir ..."
+	cd $dir && ./configure
+	result=$?
+	cd ..
+	[ $result -ne 0 ] && exit 1
+    fi
+done

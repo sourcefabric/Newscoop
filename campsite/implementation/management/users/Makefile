@@ -1,4 +1,4 @@
-export INSTALL_DIR2=$(INSTALL_DIR)/users
+export PRIV_DIR2=$(PRIV_DIR)/users
 
 subsystem: all
 	$(MAKE) -C subscriptions
@@ -8,17 +8,20 @@ all: index.xql add.xql do_add.xql del.xql do_del.xql chpwd.xql do_chpwd.xql acce
 %.xql: %.m4 ../macros.m4
 	m4 ../macros.m4 $< >$@
 
-install: all
-	mkdir -p $(INSTALL_DIR2)
-	cp *.xql $(INSTALL_DIR2)/
+install: $(ALL)
+	mkdir -p $(PRIV_DIR2)
+	cp -f *.xql $(PRIV_DIR2)/
 	$(MAKE) -C subscriptions install
 
 clean:
-	rm -f *.xql *~
+	rm -f *~
+	if [ "$(PACKAGE_TYPE)" = "source" ]; then rm -f *.xql; fi
 	$(MAKE) -C subscriptions clean
 
-package: all
+package: $(ALL)
 	mkdir -p $(PACKAGE_DIR)/users
 	cp -f Makefile $(PACKAGE_DIR)/users
 	cp -f *.xql $(PACKAGE_DIR)/users
 	$(MAKE) -C subscriptions package PACKAGE_DIR=$(PACKAGE_DIR)/users
+
+dummy:

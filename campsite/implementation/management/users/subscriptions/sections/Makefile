@@ -1,4 +1,4 @@
-export INSTALL_DIR4=$(INSTALL_DIR3)/sections
+export PRIV_DIR4=$(PRIV_DIR3)/sections
 
 all: index.xql add.xql do_add.xql del.xql do_del.xql change.xql do_change.xql pay.xql do_pay.xql
 
@@ -6,11 +6,12 @@ all: index.xql add.xql do_add.xql del.xql do_del.xql change.xql do_change.xql pa
 	m4 ../../../macros.m4 $< >$@
 
 install: all
-	mkdir -p $(INSTALL_DIR4)
-	cp *.xql $(INSTALL_DIR4)/
+	mkdir -p $(PRIV_DIR4)
+	cp -f *.xql $(PRIV_DIR4)/
 
 clean:
-	rm -f *.xql *~
+	rm -f *~
+	if [ "$(PACKAGE_TYPE)" = "source" ]; then rm -f *.xql; fi
 
 package: all
 	mkdir -p $(PACKAGE_DIR)/sections

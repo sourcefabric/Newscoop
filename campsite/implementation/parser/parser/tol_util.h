@@ -33,9 +33,15 @@ General purpose functions
 #define _TOL_UTIL_H
 
 #include <mysql/mysql.h>
+#include <string>
 
 #include "tol_atoms.h"
 
+extern string SQL_SERVER;
+extern string SQL_USER;
+extern string SQL_PASSWORD;
+extern string SQL_DATABASE;
+extern int SQL_SRV_PORT;
 
 // SQLConnection: initialise connection to MySQL server
 // Parameters: none

@@ -53,10 +53,10 @@ B_DIALOG({Add new country default subscription time}, {POST}, {do_countryadd.xql
 	    </SELECT>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT({Trial Time:})
-		<INPUT TYPE="TEXT" NAME="cTrialTime" VALUE="1" SIZE="5" MAXLENGTH="5">
+		<INPUT TYPE="TEXT" NAME="cTrialTime" VALUE="1" SIZE="5" MAXLENGTH="5"> days
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT({Paid Time:})
-		<INPUT TYPE="TEXT" NAME="cPaidTime" VALUE="1" SIZE="5" MAXLENGTH="5">
+		<INPUT TYPE="TEXT" NAME="cPaidTime" VALUE="1" SIZE="5" MAXLENGTH="5"> days
 	E_DIALOG_INPUT
 	B_DIALOG_BUTTONS
 		<INPUT TYPE="IMAGE" NAME="OK" SRC="X_ROOT/img/button/save.gif" BORDER="0">

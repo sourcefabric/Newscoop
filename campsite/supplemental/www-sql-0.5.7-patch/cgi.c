@@ -235,7 +235,8 @@ char *escape_string(char *str) {
 FILE *cgi_fopen(const char *name) {
   extern FILE *yyout;
   FILE *f;
-  char fname[1024], *pathtrans, *slash;
+  char *fname, *pathtrans, *slash;
+  int pathlen;
 
 #ifndef ENABLE_UNSAFE
   if (strchr(name, '/')) {
@@ -245,17 +246,26 @@ FILE *cgi_fopen(const char *name) {
 #endif
 
   /* execution doesn't get this far if PATH_TRANSLATED isn't set */
-  pathtrans = getenv("PATH_TRANSLATED");
-  slash = strrchr(pathtrans, '/');
-  if (slash != NULL) {
-    strncpy(fname, pathtrans, (slash - pathtrans) + 1);
-    fname[slash - pathtrans + 1] = '\0';
-    strcat(fname, name);
+  slash = NULL;
+  if (name[0] == '/') {
+    pathtrans = getenv("DOCUMENT_ROOT");
+    pathlen = strlen(pathtrans);
   } else {
-    strcpy(fname, name);
+    pathtrans = getenv("PATH_TRANSLATED");
+    slash = strrchr(pathtrans, '/');
+    pathlen = slash == NULL ? strlen(pathtrans) : slash - pathtrans;
   }
+  fname = (char*) malloc(pathlen + strlen(name) + 2);
+  if (fname == NULL)
+    return NULL;
+  strncpy(fname, pathtrans, pathlen);
+  if (name[0] == '/')
+    sprintf(fname+pathlen, "%s", name);
+  else
+    sprintf(fname+pathlen, "/%s", name);
   f = fopen(fname, "r");
   if (f == NULL)
     fprintf(yyout, "<p><b>include</b> - can't open file %s</p>\n", fname);
+  free(fname);
   return f;
 }

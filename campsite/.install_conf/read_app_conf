@@ -1,0 +1,132 @@
+read_old_conf()
+{
+cdir=`pwd`
+cd $INSTALL_CONF
+st=`stat .modules.conf -t`
+f_uid=`echo $st | cut -f 5 -d " "`
+f_gid=`echo $st | cut -f 6 -d " "`
+cd $cdir
+mod_conf_file=$INSTALL_CONF/.modules.conf
+[ ! -f $CONF_DIR/database.conf ] && return 1
+read_database_conf < $CONF_DIR/database.conf
+if [ $? -eq 0 ]; then
+    set_module_config DATABASE < $mod_conf_file
+    chown ${f_uid}.${f_gid} $INSTALL_CONF/.modules.conf
+    [ $? -ne 0 ] && return 1
+else
+    return 1
+fi
+if in_list PARSER $NEED_CONFIG_MODULES; then
+    modules_conf --set PARSER
+    [ ! -f $CONF_DIR/parser.conf ] && return 1
+    read_parser_conf < $CONF_DIR/parser.conf
+    if [ $? -eq 0 ]; then
+	set_module_config PARSER < $mod_conf_file
+	chown ${f_uid}.${f_gid} $INSTALL_CONF/.modules.conf
+	[ $? -ne 0 ] && return 1
+    else
+	return 1
+    fi
+fi
+if in_list ADMIN_INTERFACE $NEED_CONFIG_MODULES; then
+    modules_conf --set ADMIN_INTERFACE
+    [ ! -f $CONF_DIR/tpl_cgi.conf ] && return 1
+    read_tpl_cgi_conf < $CONF_DIR/tpl_cgi.conf
+    if [ $? -eq 0 ]; then
+	set_module_config ADMIN_INTERFACE < $mod_conf_file
+	chown ${f_uid}.${f_gid} $INSTALL_CONF/.modules.conf
+	[ $? -ne 0 ] && return 1
+    else
+	return 1
+    fi
+fi
+if in_list EVENT_HANDLERS $NEED_CONFIG_MODULES; then
+    modules_conf --set EVENT_HANDLERS
+    [ ! -f $CONF_DIR/smtp.conf ] && return 1
+    read_smtp_conf < $CONF_DIR/smtp.conf
+    if [ $? -eq 0 ]; then
+	set_module_config EVENT_HANDLERS < $mod_conf_file
+	chown ${f_uid}.${f_gid} $INSTALL_CONF/.modules.conf
+	[ $? -ne 0 ] && return 1
+    else
+	return 1
+    fi
+fi
+return 0
+}
+
+read_database_conf()
+{
+while true; do
+    read dc_line
+    [ "$dc_line" = "" ] && return 0
+    dc_attr_name=`echo $dc_line | cut -f 1 -d " "`
+    let dc_start_char=${#dc_attr_name}+1
+    dc_attr_val=`echo $dc_line | cut -c ${dc_start_char}-`
+    export DATABASE_$dc_attr_name=`echo $dc_attr_val`
+done
+}
+
+read_parser_conf()
+{
+while true; do
+    read dc_line
+    [ "$dc_line" = "" ] && return 0
+    dc_attr_name=`echo $dc_line | cut -f 1 -d " "`
+    let dc_start_char=${#dc_attr_name}+1
+    dc_attr_val=`echo $dc_line | cut -c ${dc_start_char}-`
+    export PARSER_$dc_attr_name=`echo $dc_attr_val`
+done
+}
+
+read_tpl_cgi_conf()
+{
+while true; do
+    read dc_line
+    [ "$dc_line" = "" ] && return 0
+    dc_attr_name=`echo $dc_line | cut -f 1 -d " "`
+    let dc_start_char=${#dc_attr_name}+1
+    dc_attr_val=`echo $dc_line | cut -c ${dc_start_char}-`
+    export ADMIN_INTERFACE_$dc_attr_name=`echo $dc_attr_val`
+done
+}
+
+read_smtp_conf()
+{
+while true; do
+    read dc_line
+    [ "$dc_line" = "" ] && return 0
+    dc_attr_name=`echo $dc_line | cut -f 1 -d " "`
+    let dc_start_char=${#dc_attr_name}+1
+    dc_attr_val=`echo $dc_line | cut -c ${dc_start_char}-`
+    [ "$dc_attr_name" = "SERVER" ] && export EVENT_HANDLERS_SMTP_SERVER=`echo $dc_attr_val`
+done
+}
+
+my_id=`id -u`
+if [ $my_id -ne 0 ]; then
+    echo "Trying to read $APP_NAME configuration..."
+    echo -n "Please supply the root password. "
+    err_msg=`su --command="${INSTALL_CONF}/read_app_conf"`
+    err_code=$?
+    if [ $err_code -ne 0 ]; then
+	choince_yn "The password was not correct. Try again?" Y
+	if [ "$choice" = "N" ]; then
+	    echo "Give up reading $APP_NAME configuration"
+	    exit 1
+	fi
+    fi
+    if [ "$err_msg" != "" ]; then
+	echo "$err_msg"
+	exit 1
+    fi
+else
+    ./configure --define_start_env &> /dev/null
+    . $INSTALL_CONF/conf_functions &> /dev/null
+    read_old_conf
+    res=$?
+    if [ $res -ne 0 ]; then
+	echo "Error reading $APP_NAME configuration."
+	exit 1
+    fi
+fi

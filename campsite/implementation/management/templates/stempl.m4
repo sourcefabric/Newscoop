@@ -1,17 +1,13 @@
 #!/bin/sh
 
-PATH=/usr/bin
-
-echo '<TABLE BORDER="0" CELLSPACING="2" CELLPADDING="0" WIDTH="100%">'
-echo '<TR BGCOLOR="WHITE"><TD WIDTH="30%" VALIGN="TOP">'
-echo 'B_LIST'
-echo 'B_LIST_HEADER'
-echo 'X_LIST_TH({Folders})'
-echo 'E_LIST_HEADER'
+list_dirs()
+changequote([, ]){changequote({, })
 c=""
 x="0"
 v=0
-for i in $(X_SCRIPT_BIN/ls_url d "$DOCUMENT_ROOT" "$1"); do
+i=""
+while [ "$i" != "EOF" ]; do
+	read i
 	if [ "$x" = "0" ]; then
 		j=$i
 		x=1
@@ -27,17 +23,16 @@ for i in $(X_SCRIPT_BIN/ls_url d "$DOCUMENT_ROOT" "$1"); do
 	v=1
 done
 if [ "$v" = "0" ] ; then echo '<TR><TD>No folders.</TD></TR>' ; fi
-echo 'E_LIST'
-echo '</TD><TD WIDTH="60%" VALIGN="TOP">'
-echo 'B_LIST'
-echo 'B_LIST_HEADER'
-echo 'X_LIST_TH({Files})'
-echo 'X_LIST_TH({Select}, {1%})'
-echo 'E_LIST_HEADER'
+changequote([, ])}changequote({, })
+
+list_files()
+changequote([, ]){changequote({, })
 c=""
 x="0"
 v=0
-for i in $(X_SCRIPT_BIN/ls_url f "$DOCUMENT_ROOT" "$1"); do
+i=""
+while [ "$i" != "EOF" ]; do
+	read i
 	if [ "$x" = "0" ]; then
 		j=$i
 		x=1
@@ -54,6 +49,32 @@ for i in $(X_SCRIPT_BIN/ls_url f "$DOCUMENT_ROOT" "$1"); do
 	v=1
 done
 if [ "$v" = "0" ] ; then echo '<TR><TD COLSPAN="2">No templates.</TD></TR>' ; fi
+changequote([, ])}changequote({, })
+
+PATH=/bin:/usr/bin
+
+echo '<TABLE BORDER="0" CELLSPACING="2" CELLPADDING="0" WIDTH="100%">'
+echo '<TR BGCOLOR="WHITE"><TD WIDTH="30%" VALIGN="TOP">'
+echo 'B_LIST'
+echo 'B_LIST_HEADER'
+echo 'X_LIST_TH({Folders})'
+echo 'E_LIST_HEADER'
+tmpfile="/tmp/ls_url-$$"
+X_SCRIPT_BIN/ls_url d "$DOCUMENT_ROOT" "$1" > $tmpfile
+echo "EOF" >> $tmpfile
+cat $tmpfile | list_dirs $1 $2
+rm -f $tmpfile
+echo 'E_LIST'
+echo '</TD><TD WIDTH="60%" VALIGN="TOP">'
+echo 'B_LIST'
+echo 'B_LIST_HEADER'
+echo 'X_LIST_TH({Files})'
+echo 'X_LIST_TH({Select}, {1%})'
+echo 'E_LIST_HEADER'
+X_SCRIPT_BIN/ls_url f "$DOCUMENT_ROOT" "$1" > $tmpfile
+echo "EOF" >> $tmpfile
+cat $tmpfile | list_files $1 $2
+rm -f $tmpfile
 echo 'E_LIST'
 echo '</TD></TR>'
 echo '</TABLE>'

@@ -74,6 +74,11 @@ int main(int argc, char *argv[]) {
   initIfStack();
   initCGI();
 
+  if ((tmp = getenv("DOCUMENT_ROOT")) == NULL) {
+    printf("<html><head><title>WWW-Sql</title></head>\n");
+    printf("<body> Can not get document root path.</body></html>\n");
+    exit(0);
+  }
   if ((tmp = getenv("PATH_TRANSLATED")) == NULL) {
     printf("<html><head><title>WWW-Sql</title></head>\n");
     printf("<body> Can not translate path.</body></html>\n");

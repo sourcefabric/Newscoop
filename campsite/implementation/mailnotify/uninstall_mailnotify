@@ -1,0 +1,15 @@
+#!/bin/sh
+
+rm -f $BIN_DIR/notifyendsubs
+rm -f $BIN_DIR/notifyevents
+rm -f $CONF_DIR/smtp.conf
+unique_id=$$
+crontab_cp1=$unique_id-campsite-crontab1
+crontab_cp2=$unique_id-campsite-crontab2
+rm -fr /tmp/$crontab_cp1 /tmp/$crontab_cp2
+cp -f /etc/crontab /tmp/$crontab_cp1
+cat /tmp/$crontab_cp1 | grep -v "$BIN_DIR/notifyendsubs" > /tmp/$crontab_cp2
+cat /tmp/$crontab_cp2 | grep -v "$BIN_DIR/notifyevents" > /etc/crontab
+rm -f /tmp/$crontab_cp1 /tmp/$crontab_cp2
+killall -1 crond
+exit 0

@@ -1,5 +1,0 @@
-make|"/bin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin"
-mail|"/bin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin"
-mysql|"/bin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin"
-httpd|"/usr/local/apache/bin:/usr/sbin:/usr/local/sbin"|--continue
-crond|"/bin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin"

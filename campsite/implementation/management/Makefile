@@ -1,5 +1,10 @@
+include ../../make.env
 
-subsystem: all
+ALL=$(shell if [ "$(PACKAGE_TYPE)" = "source" ]; then echo all; else echo dummy; fi)
+
+PACKAGE_DIR=$(BIN_PACKAGE_DIR)/implementation
+
+all: index.xql ad.xql login.xql do_login.xql logout.xql menu.xql home.xql
 	$(MAKE) -C root
 	$(MAKE) -C src
 	$(MAKE) -C pub
@@ -14,28 +19,21 @@ subsystem: all
 	$(MAKE) -C country
 	$(MAKE) -C popup
 
-all: index.xql ad.xql login.xql do_login.xql logout.xql menu.xql home.xql
-
 %.xql: %.m4 macros.m4
 	m4 macros.m4 $< >$@
 
 %.html: %.m4 macros.m4
-	m4 macros.m4 $< >$@                      
+	m4 macros.m4 $< >$@
 
-macros.m4: macros.in
-	echo "define(\`X_SCRIPT_BIN', \`$(SCRIPT_BIN)')dnl" > macros.m4
-	echo "define(\`X_CGI_BIN', \`$(CGI_BIN)')dnl" >> macros.m4
-	cat macros.in >>macros.m4
-
-install: all
-	mkdir -p $(CGI_BIN)
-	mkdir -p $(ROOT_DIR)/look
-	mkdir -p $(INSTALL_DIR)/img
-	mkdir -p $(INSTALL_DIR)/img/buttons
-	mkdir -p $(INSTALL_DIR)/img/icons
-	mkdir -p $(SCRIPT_BIN)
-	cp -r img/* $(INSTALL_DIR)/img
-	cp *.xql $(INSTALL_DIR)/
+install: $(ALL)
+	mkdir -p $(CGI_DIR)
+	mkdir -p $(HTML_DIR)/look
+	mkdir -p $(PRIV_DIR)/img
+	mkdir -p $(PRIV_DIR)/img/buttons
+	mkdir -p $(PRIV_DIR)/img/icons
+	mkdir -p $(SCRIPT_DIR)
+	cp -fr img/* $(PRIV_DIR)/img
+	cp -f *.xql $(PRIV_DIR)/
 	$(MAKE) -C root install
 	$(MAKE) -C src install
 	$(MAKE) -C pub install
@@ -49,15 +47,23 @@ install: all
 	$(MAKE) -C logs install
 	$(MAKE) -C country install
 	$(MAKE) -C popup install
-	chown $(HTTP_USER).$(HTTP_GROUP) $(ROOT_DIR)/* -R
-	chmod 755 $(ROOT_DIR)
-	chmod 755 $(ROOT_DIR)/look
-	chmod 755 $(INSTALL_DIR)
-	chown $(HTTP_USER).$(HTTP_GROUP) $(SCRIPT_BIN) -R
-	chmod 750 $(SCRIPT_BIN)
+	chown $(HTTP_USER).$(HTTP_GROUP) $(HTML_DIR)/*.xql
+	chown $(HTTP_USER).$(HTTP_GROUP) $(HTML_DIR)/look -R
+	chown $(HTTP_USER).$(HTTP_GROUP) $(PRIV_DIR) -R
+	chown $(HTTP_USER).$(HTTP_GROUP) $(SCRIPT_DIR) -R
+	chmod u+rw $(HTML_DIR)/*.xql
+	chmod g+r $(HTML_DIR)/*.xql
+	chmod o-rwx $(HTML_DIR)/*.xql
+	chmod u+rw $(PRIV_DIR) -R
+	chmod g+r $(PRIV_DIR) -R
+	chmod o-rwx $(PRIV_DIR) -R
+	chmod u+rw $(SCRIPT_DIR) -R
+	chmod g+r $(SCRIPT_DIR) -R
+	chmod o-rwx $(SCRIPT_DIR) -R
 
-clean:
-	rm -f *.xql *~ macros.m4
+clean: dummy
+	rm -f *~ macros.m4 .env_vars
+	if [ "$(PACKAGE_TYPE)" = "source" ]; then rm -f *.xql; fi
 	$(MAKE) -C root clean
 	$(MAKE) -C src clean
 	$(MAKE) -C pub clean
@@ -73,15 +79,17 @@ clean:
 	$(MAKE) -C popup clean
 
 uninstall: dummy
-	rm -f $(INSTALL_DIR)/../*.xql
-	rm -fr $(INSTALL_DIR)
-	rm -f $(CGI_BIN)/upload_i
+	rm -f $(PRIV_DIR)/../*.xql
+	rm -fr $(PRIV_DIR)
+	rm -f $(CGI_DIR)/upload_i
 	$(MAKE) -C src uninstall
 	$(MAKE) -C templates uninstall
 
-package: all
+package: $(ALL)
+	@if [ "$(PACKAGE_TYPE)" = "binary" ]; then echo "This is a binary package"; exit 1; fi
 	mkdir -p $(PACKAGE_DIR)/management
 	cp -f Makefile $(PACKAGE_DIR)/management
+	cp -f configure $(PACKAGE_DIR)/management
 	cp -f *.xql $(PACKAGE_DIR)/management
 	cp -fr img $(PACKAGE_DIR)/management
 	$(MAKE) -C a_types package PACKAGE_DIR=$(PACKAGE_DIR)/management

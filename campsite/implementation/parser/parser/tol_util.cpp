@@ -38,11 +38,16 @@ Implementation of general purpose functions
 #include <string>
 #include <mysql/mysql.h>
 
-#include "sql_connect.h"
 #include "tol_util.h"
 #include "tol_atoms.h"
 #include "tol_types.h"
 #include "tol_error.h"
+
+string SQL_SERVER;
+string SQL_USER;
+string SQL_PASSWORD;
+string SQL_DATABASE;
+int SQL_SRV_PORT = 0;
 
 // SQLConnection: initialise connection to MySQL server
 // Parameters: none
@@ -58,8 +63,8 @@ MYSQL* MYSQLConnection()
 	MYSQL* pSQL = NULL;
 	if ((pSQL = mysql_init(pSQL)) == NULL)	// initialise connection to MySQL server
 		return NULL;
-	pSQL = mysql_real_connect(pSQL, SQL_SERVER, SQL_USER, SQL_PASSWORD, SQL_DATABASE,
-	                          SQL_SRV_PORT, 0, 0);	// connecto to MySQL server
+	pSQL = mysql_real_connect(pSQL, SQL_SERVER.c_str(), SQL_USER.c_str(), SQL_PASSWORD.c_str(),
+	                          SQL_DATABASE.c_str(), SQL_SRV_PORT, 0, 0);	// connecto to MySQL server
 	if (pSQL == NULL)						// unable to connect
 		return NULL;
 	coMySql = pSQL;							// set key variable value to MySQL connection

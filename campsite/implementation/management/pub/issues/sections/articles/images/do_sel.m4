@@ -83,7 +83,6 @@ B_MSGBOX({Selecting image})
 
 <!sql query "lock tables Images write">
 <!sql query "load data infile '/tmp/blob?Article?Number' INTO TABLE Images (Image)">
-<!sql print "UPDATE Images set IdPublication=?Pub,  NrIssue=?Issue, NrSection=?Section, NrArticle=?Article, Number=?Number, Description='@q0.Description', Photographer='@q0.Photographer', Place='@q0.Place', Date='@q0.Date', ContentType='@q0.ContentType' where Number=0"><hr>
 <!sql query "UPDATE Images set IdPublication=?Pub,  NrIssue=?Issue, NrSection=?Section, NrArticle=?Article, Number=?Number, Description='@q0.Description', Photographer='@q0.Photographer', Place='@q0.Place', Date='@q0.Date', ContentType='@q0.ContentType' where Number=0">
 <!sql set ar $AFFECTED_ROWS>
 <!sql query "unlock tables">

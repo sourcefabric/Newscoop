@@ -50,6 +50,11 @@ E_HEADER
 <!sql setdefault cWDay5 "">dnl
 <!sql setdefault cWDay6 "">dnl
 <!sql setdefault cWDay7 "">dnl
+<!sql setdefault cDay "">dnl
+<!sql setdefault cWeek "">dnl
+<!sql setdefault cMonth "">dnl
+<!sql setdefault cYear "">dnl
+<!sql setdefault updated 0>dnl
 
 <P>
 B_MSGBOX({Updating language information})
@@ -62,7 +67,18 @@ B_MSGBOX({Updating language information})
 <!sql endif>dnl
 <!sql endif>dnl
 <!sql endif>dnl
-<!sql if $AFFECTED_ROWS>dnl
+<!sql if $AFFECTED_ROWS><!sql set updated 1><!sql endif>dnl
+
+<!sql query "UPDATE TimeUnits SET Name='?cDay' WHERE Unit='D' AND IdLanguage=?Lang">
+<!sql if $AFFECTED_ROWS><!sql set updated 1><!sql endif>dnl 
+<!sql query "UPDATE TimeUnits SET Name='?cWeek' WHERE Unit='W' AND IdLanguage=?Lang">
+<!sql if $AFFECTED_ROWS><!sql set updated 1><!sql endif>dnl 
+<!sql query "UPDATE TimeUnits SET Name='?cMonth' WHERE Unit='M' AND IdLanguage=?Lang">
+<!sql if $AFFECTED_ROWS><!sql set updated 1><!sql endif>dnl 
+<!sql query "UPDATE TimeUnits SET Name='?cYear' WHERE Unit='Y' AND IdLanguage=?Lang">
+<!sql if $AFFECTED_ROWS><!sql set updated 1><!sql endif>dnl 
+
+<!sql if ?updated>
 	X_MSGBOX_TEXT({<LI>Language information has been successfuly updated.</LI>})
 X_AUDIT({103}, {Language ~cName modified})
 <!sql else>dnl

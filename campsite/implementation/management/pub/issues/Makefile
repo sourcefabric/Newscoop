@@ -1,4 +1,4 @@
-export INSTALL_DIR3=$(INSTALL_DIR2)/issues
+export PRIV_DIR3=$(PRIV_DIR2)/issues
 
 subsystem: all
 	$(MAKE) -C sections
@@ -8,16 +8,17 @@ all: index.xql qadd.xql add_new.xql do_add_new.xql add_prev.xql do_add_prev.xql 
 %.xql: %.m4 ../../macros.m4
 	m4 ../../macros.m4 $< >$@
 
-install: all
-	mkdir -p $(INSTALL_DIR3)
-	cp *.xql $(INSTALL_DIR3)/
+install: $(ALL)
+	mkdir -p $(PRIV_DIR3)
+	cp -f *.xql $(PRIV_DIR3)/
 	$(MAKE) -C sections install
 
 clean:
-	rm -f *.xql *~
+	rm -f *~
+	if [ "$(PACKAGE_TYPE)" = "source" ]; then rm -f *.xql; fi
 	$(MAKE) -C sections clean
 
-package: all
+package: $(ALL)
 	mkdir -p $(PACKAGE_DIR)/issues
 	cp -f Makefile $(PACKAGE_DIR)/issues
 	cp -f *.xql $(PACKAGE_DIR)/issues

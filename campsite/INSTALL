@@ -1,5 +1,5 @@
-INSTALLATION PROCEDURE FOR CAMPSITE V.2.x
-http://www.campware.org - 15th March 2001
+INSTALLATION PROCEDURE FOR CAMPSITE V.2.1.x
+http://www.campware.org - March, 15th 2001
 
 CONTENTS:
    * PREPARATION - applications you need to have installed
@@ -21,15 +21,11 @@ PREPARATION - applications you need to have installed
    Usually the m4 binary is located in /usr/bin directory.
    On rpm systems m4 package should be installed.
 
-3. mail program
-   Usually the mail binary is located in /bin directory.
-   On rpm systems mailx package should be installed.
-
-4. g++ compiler
+3. g++ compiler
    Usually the g++ binary is located in /usr/bin directory.
    On rpm systems gcc-c++ package should be installed.
 
-5. MySQL server
+4. MySQL server
    On rpm systems, MySQL, MySQL-shared, MySQL-devel and
    MySQL-client packages should be installed.
    Check that mysqld daemon is started:
@@ -38,18 +34,18 @@ PREPARATION - applications you need to have installed
    three mysqld processes. If not, the mysqld daemon is not
    started. Start it typing safe_mysqld as root.
 
-6. Apache server
+5. Apache server
    On rpm systems, apache or http packages should be installed.
-   Configure the Web server (see INSTALLATION 3.) and (re)start 
+   Configure the Web server (see INSTALLATION 3.) and (re)start
    the httpd daemon.
 
-7. Cron daemon
+6. Cron daemon
    Usually the crond binary is located in /usr/sbin directory.
    On rpm systems vixie-cron package should be installed.
    Make sure the crond daemon is started:
       type "ps ax|grep crond"
    You should see a crond process.
-  
+
 ####################################################################
 
 INSTALLATION - the usual procedure
@@ -57,27 +53,7 @@ INSTALLATION - the usual procedure
 1. Unzip and Untar the campsite file. This will generate a
    folder named 'campsite'.
 
-2. Edit the Makefile in the 'campsite' folder. Change the first three
-   lines with WWW_DIR, REL_CGI_BIN, REL_HTML, HTTP_USER and HTTP_GROUP
-   to fit your directory structure and web server user/group.
-   You can find your settings in your Apache config file in the section
-   DocumentRoot and ScriptAlias. The Apache config file is usually
-   named httpd.conf
-       Default apache on RedHat 6.x systems:
-           WWW_DIR=/home/httpd
-	   HTTP_USER=httpd
-	   HTTP_GROUP=httpd
-       Default apache on RedHat 7.x systems:
-           WWW_DIR=/var/www
-	   HTTP_USER=apache
-	   HTTP_GROUP=apache
-       Default apache from source tar.gz:
-           WWW_DIR=/usr/local/apache
-	   HTTP_USER=nobody
-	   HTTP_GROUP=-1
-   (The default setting for campsite is following Red Hat 7.x)
-
-3. Configure the Web server
+2. Configure the Web server
    The configuration file of Apache is usually called httpd.conf and
    found in the /etc/httpd/conf/ folder. You need to:
 
@@ -100,16 +76,16 @@ INSTALLATION - the usual procedure
    option activated (the mod_unique_id should be loaded, simply un-comment
    the LoadModule and AddModule lines)]
 
-4. Restart the httpd daemon. Try one of the three otpions:
+3. Restart the httpd daemon. Try one of the three otpions:
    a) killall httpd
       {PATH}/httpd                           ...or...
    b) /etc/rc.d/init.d/httpd restart         ...or...
    c) kill -HUP `cat /var/run/httpd.pid`
-   
+
    [IMPORTANT: your httpd daemon might have a different name.
    The standard apache installation might use apachectl.]
-   
-5. Change into the 'campsite' directory.
+
+4. Change into the 'campsite' directory.
 
    IMPORTANT: If you have an old version of campsite and want to drop
    the old database type: "mysqladmin -u root drop campsite". The
@@ -122,12 +98,6 @@ INSTALLATION - the usual procedure
    If you are not already logged in as root the installer will prompt
    you for the root password when necessary. Without root access it
    can not install the CAMPSITE application.
-
-   (The 'install' script was written to check for needed software before
-   installing CAMPSITE. Try to use ./install first. If this does not
-   work for you, type 'make' and then 'make install'. If that does not
-   work, check your Apache and MySQL configuration again, as well as
-   checking software versions as listed above.)
 
 ####################################################################
 

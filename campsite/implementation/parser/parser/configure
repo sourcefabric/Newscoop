@@ -1,0 +1,197 @@
+#!/bin/sh
+
+[ "$CAMPSITE_PACKAGE_DIR" = "" ] && cd ../../.. && . ./configure --define_start_env && cd implementation/parser/parser
+. ${INSTALL_CONF}/conf_functions
+
+install_conf --set
+[ $? -ne 0 ] && echo "Error reading install configuration" && exit 1
+
+export CONF_DIR=/etc/${APP_NAME}
+
+if ! var_not_modified APP_NAME || [ ! -f $APP_NAME ]; then
+echo -n -e "\tWriting start/stop script..."
+cat > ${APP_NAME} << EOF
+#!/bin/bash
+#
+#	/etc/rc.d/init.d/campsite
+#
+# Starts/stops the $APP_NAME daemon
+#
+
+################################################################################
+#
+# CAMPSITE is a Unicode-enabled multilingual web content
+# management system for news publications.
+# CAMPFIRE is a Unicode-enabled java-based near WYSIWYG text editor.
+# Copyright (C)2000,2001  Media Development Loan Fund
+# contact: contact@campware.org - http://www.campware.org
+# Campware encourages further development. Please let us know.
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+#
+################################################################################
+
+# Source function library.
+
+CAMPSITECTL=/usr/local/${APP_NAME}/${APP_NAME}ctl
+
+test -x \$CAMPSITECTL || exit 0
+
+#
+#	See how we were called.
+#
+case "\$1" in
+  start)
+	# Check if atd is already running
+	THREADS=\`ps ax | grep ${APP_NAME}_server| grep -v grep | wc -l\`
+	if [ \$THREADS -gt 0 ]; then
+	    echo "${APP_NAME} daemon is already started"
+	else
+	    echo -n 'Starting $APP_NAME daemon: '
+	    \$CAMPSITECTL start
+	    if [ \$? -ne 0 ]; then echo "ERROR"; else echo "OK"; fi
+	fi
+	;;
+  stop)
+	echo -n 'Stopping $APP_NAME daemon: '
+	\$CAMPSITECTL stop
+	if [ \$? -ne 0 ]; then echo "ERROR"; else echo "OK"; fi
+	;;
+  reload|restart)
+	\$0 stop
+	\$0 start
+	;;
+  status)
+	\$CAMPSITECTL status
+	;;
+  *)
+	echo "Usage: /etc/rc.d/init.d/$APP_NAME {start|stop|restart|reload|status}"
+	exit 1
+esac
+exit 0
+EOF
+[ $? -ne 0 ] && echo "ERROR" && exit 1
+echo OK
+save_var APP_NAME
+fi # end if ! var_not_modified APP_NAME || [ ! -f $APP_NAME ]
+
+if ! var_not_modified APP_NAME ROOT_BIN_DIR || [ ! -f ${APP_NAME}ctl ]; then
+echo -n -e "\tWriting server control script..."
+cat > ${APP_NAME}ctl << EOF
+#!/bin/bash
+
+################################################################################
+#
+# CAMPSITE is a Unicode-enabled multilingual web content
+# management system for news publications.
+# CAMPFIRE is a Unicode-enabled java-based near WYSIWYG text editor.
+# Copyright (C)2000,2001  Media Development Loan Fund
+# contact: contact@campware.org - http://www.campware.org
+# Campware encourages further development. Please let us know.
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+#
+################################################################################
+
+CAMPSITE_SERVER=${ROOT_BIN_DIR}/${APP_NAME}/${APP_NAME}_server
+
+test -x \$CAMPSITE_SERVER || exit 0
+
+#
+#	See how we were called.
+#
+case "\$1" in
+  start)
+	srv_proc=\`ps ax|grep -w ${APP_NAME}_server|grep -v grep|wc -l\`
+	if [ \$srv_proc -ne 0 ]; then
+	    exit 0
+	fi
+	\$CAMPSITE_SERVER
+	err_code=\$?
+	if [ \$err_code -ne 0 ]; then
+	    exit 1
+	fi
+	srv_proc=\`ps ax|grep -w ${APP_NAME}_server|grep -v grep|wc -l\`
+	if [ \$srv_proc -eq 0 ]; then
+	    exit 1
+	fi
+	;;
+  stop)
+	output=\`killall ${APP_NAME}_server\`
+	[ \$? -ne 0 ] && echo \$output && exit 1
+	;;
+  reload|restart)
+	killall ${APP_NAME}_server &> /dev/null
+	\$0 start
+	;;
+  status)
+	THREADS=\`ps ax | grep -w ${APP_NAME}_server| grep -v grep | wc -l\`
+	if [ \$THREADS -gt 0 ]; then
+	    echo "${APP_NAME} server is running"
+	else
+	    echo "${APP_NAME} server is not running"
+	fi
+	;;
+  *)
+	echo "Usage: \$0 {start|stop|restart|reload|status}"
+	exit 1
+esac
+exit 0
+EOF
+[ $? -ne 0 ] && echo "ERROR" && exit 1
+echo OK
+save_var APP_NAME ROOT_BIN_DIR
+fi # end if ! var_not_modified APP_NAME ROOT_BIN_DIR || [ ! -f $APP_NAME ]
+
+PACKAGE_TYPE=`cat $CAMPSITE_PACKAGE_DIR/.package_type`
+[ "$PACKAGE_TYPE" = "binary" ] && exit 0
+
+var_not_modified APP_NAME && [ -f tol_srvdef.h ] && exit 0
+save_var APP_NAME ROOT_BIN_DIR
+
+echo -n -e "\tWriting tol_srvdef.h header..."
+cat > tol_srvdef.h << EOF
+/******************************************************************************
+
+Defines server defaults
+
+WARNING!!! This file is generated. Do not edit!
+
+******************************************************************************/
+
+#ifndef _TOL_SRVDEF_H
+#define _TOL_SRVDEF_H
+
+#define DATABASE_CONF_FILE "$CONF_DIR/database.conf"
+#define PARSER_CONF_FILE "$CONF_DIR/parser.conf"
+#define TOL_SRV_PORT 2001
+#define MAX_THREADS 40
+
+#endif
+EOF
+[ $? -ne 0 ] && echo "ERROR" && exit 1
+echo OK

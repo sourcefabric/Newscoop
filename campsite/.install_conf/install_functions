@@ -1,0 +1,250 @@
+#!/bin/sh
+
+. ${INSTALL_CONF}/conf_functions
+
+select_modules()
+{
+modules_list=`modules_list`
+selected_modules=`selected_modules`
+err_msg=""
+saved=true
+clear
+[ "$1" != "" ] && echo $1
+while true; do
+    echo "Please select modules to be installed on this system."
+    echo "Modules marked with X are selected."
+    sm_index=1
+    for sm_mod in $modules_list; do
+	echo -n -e "\t$sm_index. ["
+	if in_list $sm_mod $selected_modules; then echo -n "X"
+	else echo -n " "; fi
+	echo "] $sm_mod"
+	let sm_index++
+    done
+    let sm_index--
+    echo -e "\nMenu"
+    echo -e "\t1. Select a module"
+    echo -e "\t2. Deselect a module"
+    echo -e -n "\t3. Save module selection"
+    $saved && echo " (already saved)"
+    ! $saved && echo " (not saved)"
+    echo -e -n "\t0. Exit module selection"
+    $saved && echo ""
+    ! $saved && echo " (without saving)"
+    echo "$err_msg"
+    echo -n "Select a choice: "
+    read choice
+    if [ "$choice" != "0" ] && [ "$choice" != "1" ] && [ "$choice" != "2" ] && [ "$choice" != "3" ]; then
+	err_msg="Invalid choice $choice"
+    else
+	err_msg=""
+	case $choice in
+	0) break ;;
+	1)
+	    read_string module_number
+	    let m_nr=$module_number
+	    if [ $m_nr -gt $sm_index ] || [ 0 -ge $m_nr ]; then
+		err_msg="Invalid module number $module_number"
+	    else
+		mod_name=`list_item $module_number $modules_list`
+		if in_list $mod_name $selected_modules; then
+		    err_msg="Module $mod_name already selected"
+		else
+		    sm_deps_on=`depends_on $mod_name`
+		    for sm_dep_on in $sm_deps_on; do
+			add_to_list_var $sm_dep_on selected_modules
+			err_msg="$mod_name depends on $sm_deps_on modules. They were selected too."
+		    done
+		    add_to_list_var $mod_name selected_modules
+		    saved=false
+		fi
+	    fi ;;
+	2)
+	    read_string module_number
+	    let m_nr=$module_number
+	    if [ $m_nr -gt $sm_index ] || [ 0 -ge $m_nr ]; then
+		err_msg="Invalid module number $module_number"
+	    else
+		mod_name=`list_item $module_number $modules_list`
+		if ! in_list $mod_name $selected_modules; then
+		    err_msg="Module $mod_name already deselected"
+		else
+		    sm_deps_on=`dependent_on $mod_name`
+		    for sm_dep_on in $sm_deps_on; do
+			rm_from_list_var $sm_dep_on selected_modules
+			err_msg="$sm_deps_on modules depend on $mod_name. They were deselected too."
+		    done
+		    rm_from_list_var $mod_name selected_modules
+		    saved=false
+		fi
+	    fi ;;
+	3)
+	    rm -f $INSTALL_CONF/.inst.modules
+	    for sm_mod in $selected_modules; do
+		echo $sm_mod >> $INSTALL_CONF/.inst.modules
+	    done
+	    err_msg="Module selection was saved succesfully."
+	    saved=true ;;
+	esac
+    fi
+    clear
+done
+export SELECTED_MODULES=`selected_modules`
+set_need_config_modules
+}
+
+configure_campsite()
+{
+cc_upgrade=""
+cc_interactive=""
+while [ "$1" != "" ]; do
+    case $1 in
+    --upgrade) cc_upgrade=$1 ;;
+    --interactive) cc_interactive=$1 ;;
+    esac
+    shift 1
+done
+echo -e "\nCampsite application can be installed in two ways:"
+echo " 1. single system: the whole application on a single system"
+echo -e " 2. multiple system: application can be devided on a few systems\n"
+while true; do
+    read_string install_type 1 "1 - single system, 2 - multiple system"
+    if [ $install_type -gt 2 ] || [ 1 -gt $install_type ]; then
+	echo "Invalid choice $install_type"
+    else
+	break
+    fi
+done
+inst_type_msg="single system"
+[ $install_type -eq 2 ] && inst_type_msg="multiple system"
+echo -e "\nCampsite application is composed out of modules. Before installing"
+echo "campsite they must be configured."
+if [ $install_type -eq 2 ]; then
+    echo -e "\nSelecting multiple system installation you will be able to select the"
+    echo "modules to install on this system. Keep in mind that in the end all"
+    echo "campsite modules must be installed."
+else
+    rm -fr $INSTALL_CONF/.inst.modules
+    for cc_mod in `modules_list`; do
+	echo $cc_mod >> $INSTALL_CONF/.inst.modules
+    done
+fi
+echo ""
+choice_yn "Do you want to read the description of campsite modules?" Y
+if [ "$choice" = "Y" ]; then
+    clear
+    echo "Campsite modules description:"
+    modules_desc
+    echo -n -e "\nPress ENTER when ready"
+    read
+    clear
+fi
+if [ $install_type -eq 2 ]; then
+    select_modules
+fi
+prepare_install_env
+check_install_config $cc_upgrade
+if [ $? -ne 0 ]; then
+    echo "There is another campsite application instance ($APP_NAME) already installed."
+    choice_yn "Do you want to upgrade the current installation?" Y
+    if [ "$choice" = "Y" ]; then
+	cc_upgrade=--upgrade
+	export upgrade=--upgrade
+	$INSTALL_CONF/read_app_conf
+	result=$?
+	if [ $result -ne 0 ]; then
+	    choice_yn "Error reading $APP_NAME configuration. Continue anyway?" Y
+	    if [ "$choice" = "N" ]; then
+		echo "Aborting..."
+		exit 1
+	    fi
+	fi
+	modules_conf --set
+    fi
+fi
+while true; do
+    configure_install
+    check_install_config $cc_upgrade &> /dev/null
+    [ $? -eq 0 ] && break
+    choice_yn "Install configuration is invalid. Try again?" Y
+    [ "$choice" = "N" ] && echo "Aborting..." && exit 1
+done
+echo "Please wait while checking modules configuration..."
+for cc_mod in $SELECTED_MODULES; do
+    check_module_deps $cc_mod $cc_interactive
+    if [ $? -ne 0 ]; then
+	echo "There is a dependecy problem. Please read the upper message and"
+	echo "install the required program/package".
+	exit 1
+    fi
+done
+for cc_mod in $NEED_CONFIG_MODULES; do
+    prepare_${cc_mod}_env
+    if [ $? -ne 0 ]; then
+	echo "Error preparing environment for $cc_mod module."
+	echo "Please report bug to http://www.campware.org/bugs"
+	echo "Aborting..."
+	exit 1
+    fi
+    check_${cc_mod}_config $cc_interactive
+done
+cc_err_msg=""
+while true; do
+    clear
+    echo "The forward list shows modules that need to be configured."
+    echo "Modules checked with X have a valid configuration."
+    let cc_index=1
+    all_ok=true
+    for cc_mod in $NEED_CONFIG_MODULES; do
+	echo -e -n "\t${cc_index}. ["
+	if in_list $cc_mod $CHECKED_MODULES; then echo -n "X"
+	else echo -n " "; all_ok=false; fi
+	echo "] $cc_mod"
+	let cc_index++
+    done
+    let cc_index--
+    echo -e "\nMenu\n\t1. Configure a module\n\t0. Exit module configuration"
+    echo -e -n "$cc_err_msg\nSelect a choice: "
+    read choice
+    if [ "$choice" != "0" ] && [ "$choice" != "1" ]; then
+	cc_err_msg="Invalid choice $choice"
+    else
+	case $choice in
+	1)
+	    read_string module_number
+	    let cc_m_nr=$module_number
+	    cc_err_msg=""
+	    if [ $cc_m_nr -gt $cc_index ] || [ 0 -ge $cc_m_nr ]; then
+		cc_err_msg="Invalid module number $module_number"
+	    else
+		cc_mod_name=`list_item $module_number $NEED_CONFIG_MODULES`
+		configure_module $cc_mod_name check_${cc_mod_name}_config
+	    fi ;;
+	0)
+	    cc_err_msg=""
+	    if $all_ok; then
+		break
+	    else
+		choice_yn "Not all modules are properly configured. Abort?" N
+		[ "$choice" = "Y" ] && echo "Aborting..." && exit 1
+	    fi ;;
+	esac
+    fi
+done
+choice_yn "\nCampsite configuration is completed. Do you want to review it?" Y
+if [ "$choice" = "Y" ]; then
+    clear
+    echo "Install configuration"
+    install_conf
+    echo -e "\nTo continue press ENTER"
+    read
+    for cc_mod in $NEED_CONFIG_MODULES; do
+	echo "$cc_mod configuration:"
+	modules_conf $cc_mod
+	echo -e "\nTo continue press ENTER"
+	read
+    done
+fi
+choice_yn "Proceed with installation?" Y
+[ "$choice" = "N" ] && echo "Aborting..." && exit 1
+}

@@ -73,8 +73,8 @@ B_LIST
 		B_LIST_ITEM
 			<!sql print ~publ.PayTime> days
 		E_LIST_ITEM
-			<!sql query "SELECT Name FROM TimeUnits where Unit = '~publ.TimeUnit' and IdLanguage = 1" tu>
-			<!--sql query "SELECT Name FROM TimeUnits where Unit = '~publ.TimeUnit' and IdLanguage = ?publ.IdDefaultLanguage" tu-->
+			<!--sql query "SELECT Name FROM TimeUnits where Unit = '~publ.TimeUnit' and IdLanguage = 1" tu-->
+			<!sql query "SELECT Name FROM TimeUnits where Unit = '~publ.TimeUnit' and IdLanguage = ?publ.IdDefaultLanguage" tu>
 		B_LIST_ITEM
 			<!sql print ~tu.Name>
 		E_LIST_ITEM

@@ -1,0 +1,20 @@
+#!/bin/sh
+
+[ "$CAMPSITE_PACKAGE_DIR" = "" ] && cd ../../.. && . ./configure --define_start_env && cd implementation/management/root
+. ${INSTALL_CONF}/conf_functions
+
+modules_conf --set DATABASE
+[ $? -ne 0 ] && echo "Error reading DATABASE module configuration" && exit 1
+
+database_vars="DATABASE_SERVER DATABASE_USER DATABASE_PASSWORD DATABASE_NAME"
+var_not_modified $database_vars && [ -f db_connect.xql ] && exit 0
+save_var $database_vars
+
+echo -n -e "\tWriting db_connect.xql..."
+cat > db_connect.xql << EOF
+<!sql connect "$DATABASE_SERVER" "$DATABASE_USER" "$DATABASE_PASSWORD">
+<!sql database "$DATABASE_NAME">
+EOF
+[ $? -ne 0 ] && echo "ERROR" && exit 1
+echo OK
+chmod o-rwx db_connect.xql

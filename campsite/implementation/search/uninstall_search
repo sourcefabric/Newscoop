@@ -1,0 +1,10 @@
+#!/bin/sh
+
+rm -f ${BIN_DIR}/gather
+unique_id=$$
+crontab_cp=$unique_id-campsite-crontab
+rm -fr /tmp/$crontab_cp
+cp /etc/crontab /tmp/$crontab_cp
+cat /tmp/$crontab_cp | grep -v -w gather > /etc/crontab
+killall -1 crond
+exit 0

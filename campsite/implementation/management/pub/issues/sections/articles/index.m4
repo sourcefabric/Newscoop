@@ -96,6 +96,7 @@ E_CURRENT
 B_LIST
 	B_LIST_HEADER
 		X_LIST_TH({Name<BR><SMALL>(click to edit)</SMALL>})
+		X_LIST_TH({Type}, {1%})
 		X_LIST_TH({Language}, {1%})
 		X_LIST_TH({Status}, {1%})
 		X_LIST_TH({Images}, {1%})
@@ -110,6 +111,9 @@ B_LIST
 	B_LIST_TR
 		B_LIST_ITEM
 			<!sql if @q_art.Number == $kwdid>&nbsp;<!sql endif><A HREF="X_ROOT/pub/issues/sections/articles/edit.xql?Pub=<!sql print #Pub>&Issue=<!sql print #Issue>&Section=<!sql print #Section>&Article=<!sql print #q_art.Number>&Language=<!sql print #Language>&sLanguage=<!sql print #q_art.IdLanguage>"><!sql print ~q_art.Name>&nbsp;</A>
+		E_LIST_ITEM
+		B_LIST_ITEM
+		<!sql print ~q_art.Type>
 		E_LIST_ITEM
 		B_LIST_ITEM
 <!sql query "SELECT Name FROM Languages WHERE Id=?q_art.IdLanguage" q_ail>dnl

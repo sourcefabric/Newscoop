@@ -76,8 +76,13 @@ B_MSGBOX({Deleting language})
 <!sql query "DELETE FROM Languages WHERE Id=?Language">dnl
 <!sql endif>dnl
 <!sql if $AFFECTED_ROWS>
+	<!sql query "DELETE FROM TimeUnits WHERE IdLanguage=?Language">
+	<!sql if $AFFECTED_ROWS = 0>
+		<LI>The language <B><!sql print ~q_lang.Name></B> could not be deleted.</LI>
+	<!sql else>
 		<LI>The language <B><!sql print ~q_lang.Name></B> has been deleted.</LI>
 X_AUDIT({102}, {Language ~q_lang.Name deleted})
+	<!sql endif>
 <!sql else>
 		<LI>The language <B><!sql print ~q_lang.Name></B> could not be deleted.</LI>
 <!sql endif>

@@ -53,10 +53,10 @@ B_DIALOG({Change subscription default time}, {POST}, {do_editdeftime.xql})
 	<INPUT TYPE=HIDDEN NAME=cCountryCode VALUE="<!sql print #CountryCode>">
 	<INPUT TYPE=HIDDEN NAME=Language VALUE="<!sql print #Language>">
 	B_DIALOG_INPUT({Trial time:})
-		<INPUT TYPE="TEXT" NAME="cTrialTime" VALUE="<!sql print ~q_deft.TrialTime>" SIZE="5" MAXLENGTH="5">
+		<INPUT TYPE="TEXT" NAME="cTrialTime" VALUE="<!sql print ~q_deft.TrialTime>" SIZE="5" MAXLENGTH="5"> days
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT({Paid time:})
-		<INPUT TYPE="TEXT" NAME="cPaidTime" VALUE="<!sql print ~q_deft.PaidTime>" SIZE="5" MAXLENGTH="5">
+		<INPUT TYPE="TEXT" NAME="cPaidTime" VALUE="<!sql print ~q_deft.PaidTime>" SIZE="5" MAXLENGTH="5"> days
 	E_DIALOG_INPUT
 	B_DIALOG_BUTTONS
 		<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<!sql print ~Pub>">

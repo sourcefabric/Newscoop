@@ -1,0 +1,12 @@
+#!/bin/sh
+
+. ../../.install_conf/check4_functions
+
+check4_libmysqlclient
+[ $? -ne 0 ] && exit 1
+if [ "$PACKAGE_TYPE" = "source" ]; then
+    check4_gpp && check4_socket_h && check4_mysql_h
+    [ $? -ne 0 ] && exit 1
+fi
+
+exit 0
