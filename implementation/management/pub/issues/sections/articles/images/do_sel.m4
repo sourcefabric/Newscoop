@@ -85,10 +85,18 @@ B_MSGBOX(<*Selecting image*>)
 	
     query ("SELECT * FROM Images WHERE IdPublication=$Pub1 AND NrIssue=$Issue1 AND NrSection=$Section1 AND NrArticle=$Article1 AND Number=$Image", 'q0');
     fetchRow($q0);
-    query ("SELECT Image FROM Images WHERE IdPublication=$Pub1 AND NrIssue=$Issue1 AND NrSection=$Section1 AND NrArticle=$Article1 AND Number=$Image into outfile '/tmp/blob$Article-$Number'",'',false);
-    query ("lock tables Images write");
-    query ("load data infile '/tmp/blob$Article-$Number' INTO TABLE Images (Image)");
-    query ("UPDATE Images set IdPublication=$Pub, NrIssue=$Issue, NrSection=$Section, NrArticle=$Article, Number=$Number, Description='".getSVar($q0,'Description')."', Photographer='".getSVar($q0,'Photographer')."', Place='".getSVar($q0,'Place')."', Date='".getSVar($q0,'Date')."', ContentType='".getSVar($q0,'ContentType')."' where Number=0");
+	$file_name = "/tmp/blob$Article-$Number";
+    query ("SELECT Image FROM Images WHERE IdPublication=$Pub1 AND NrIssue=$Issue1 AND NrSection=$Section1 AND NrArticle=$Article1 AND Number=$Image into outfile '$file_name'",'',false);
+	if (file_exists($file_name)) {
+		query ("lock tables Images write");
+		query ("load data infile '/tmp/blob$Article-$Number' INTO TABLE Images (Image)");
+		query ("UPDATE Images set IdPublication=$Pub, NrIssue=$Issue, NrSection=$Section, NrArticle=$Article, Number=$Number, Description='".getSVar($q0,'Description')."', Photographer='".getSVar($q0,'Photographer')."', Place='".getSVar($q0,'Place')."', Date='".getSVar($q0,'Date')."', ContentType='".getSVar($q0,'ContentType')."' where Number=0");
+	} else {
+		$AFFECTED_ROWS = 0;
+?>
+		X_MSGBOX_TEXT(<*<LI><font color=red>Make sure the mysql user has the right to create files in /tmp directory!!!</font></LI>*>)
+<?
+	}
 
     $ar= $AFFECTED_ROWS;
     query ("unlock tables");
