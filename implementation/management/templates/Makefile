@@ -1,6 +1,6 @@
 export PRIV_DIR2=$(PRIV_COMMON_DIR)/templates
 
-MY_TARGETS=index.php idx.php new_dir.php do_new_dir.php upload_templ.php del.php do_del.php do_upload_templ.php new_template.php dup.php do_new_templ.php edit_template.php do_edit.php do_dup.php refresh.php
+MY_TARGETS=index.php new_dir.php do_new_dir.php upload_templ.php del.php do_del.php do_upload_templ.php new_template.php dup.php do_new_templ.php edit_template.php do_edit.php do_dup.php refresh.php
 
 all: $(MY_TARGETS)
 
