@@ -45,6 +45,16 @@ foreach ($publications as $publication) {
 		Issue::GetIssuesInPublication($publication->getPublicationId(), null, 
 			array('LIMIT' => 5, 'ORDER BY' => array('Number' => 'DESC')));
 }
+$sections = array();
+if ((count($publications) + count($issues)) < 12) {
+	foreach ($publications as $publication) {
+		foreach ($issues[$publication->getPublicationId()] as $issue) {
+			$sections[$issue->getIssueId()] = 
+				Section::GetSectionsInIssue($issue->getPublicationId(), $issue->getIssueId(),
+					$issue->getLanguageId());
+		}
+	}
+}
 ?>
 <HEAD>
 	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite["website_url"] ?>/css/admin_stylesheet.css">
@@ -65,22 +75,34 @@ foreach ($publications as $publication) {
     <TD VALIGN="TOP" width="40%">
 		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="3" class="table_list" width="100%" style="padding: 0px;">
 		<tr class="table_list_header">
-			<td style="padding-left: 8px;"><?php putGS('Publication'); ?> / <?php putGS('Issue'); ?></td>
+			<td style="padding-left: 8px;"><?php putGS('Publication'); ?> / <?php putGS('Issue'); ?> <?php if (count($sections) > 0) { ?> / <?php putGS('Section');  } ?></td>
 		</tr>
 		<?php 
 		$count = 1;
-		foreach ($publications as $publication) { ?>
+		foreach ($publications as $publication) { 
+			$publicationId = $publication->getPublicationId();
+			?>
 			<tr <?php if (($count++%2)==1) {?> class="list_row_odd"<?php } else { ?>class="list_row_even"<?php } ?>>
-				<td style="padding-left: 8px;"><a href="/<?php echo $ADMIN; ?>/pub/issues/?Pub=<?php p($publication->getPublicationId()); ?>"><?php p(htmlspecialchars($publication->getName())); ?></a></td>
+				<td style="padding-left: 8px;"><a href="/<?php echo $ADMIN; ?>/pub/issues/?Pub=<?php p($publicationId); ?>"><?php p(htmlspecialchars($publication->getName())); ?></a></td>
 			</tr>
 			<?PHP
-			foreach ($issues[$publication->getPublicationId()] as $issue) { ?>
-				<tr <?php if (($count++%2)==1) {?> class="list_row_odd"<?php } else { ?>class="list_row_even"<?php } ?>>
-					<td style="padding-left: 25px;"><a href="/<?php echo $ADMIN; ?>/pub/issues/sections/?Pub=<?php p($issue->getPublicationId()); ?>&Issue=<?php  p($issue->getIssueId()); ?>&Language=<?php p($issue->getLanguageId()); ?>"><?php p(htmlspecialchars($issue->getName())); ?></a></td>
-				</tr>
-				<?php 
-			}
-		}
+			if (isset($issues[$publicationId])) {
+				foreach ($issues[$publicationId] as $issue) { ?>
+					<tr <?php if (($count++%2)==1) {?> class="list_row_odd"<?php } else { ?>class="list_row_even"<?php } ?>>
+						<td style="padding-left: 25px;"><a href="/<?php echo $ADMIN; ?>/pub/issues/sections/?Pub=<?php p($publicationId); ?>&Issue=<?php  p($issue->getIssueId()); ?>&Language=<?php p($issue->getLanguageId()); ?>"><?php p(htmlspecialchars($issue->getName())); ?></a></td>
+					</tr>
+					<?php 
+					if (isset($sections[$issue->getIssueId()])) {
+						foreach ($sections[$issue->getIssueId()] as $section) { ?>
+							<tr <?php if (($count++%2)==1) {?> class="list_row_odd"<?php } else { ?>class="list_row_even"<?php } ?>>
+								<td style="padding-left: 50px;"><a href="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/?Pub=<?php p($publicationId); ?>&Issue=<?php  p($issue->getIssueId()); ?>&Section=<?php p($section->getSectionId()); ?>&Language=<?php p($section->getLanguageId()); ?>"><?php p(htmlspecialchars($section->getName())); ?></a></td>
+							</tr>
+							<?php
+						} // foreach ($sections
+					}
+				} // foreach ($issues
+			} // if (isset($issues[$publicationId]))
+		} // foreach ($publications
 		?>		
 		</table>
 	</TD>
