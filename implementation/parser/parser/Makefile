@@ -34,7 +34,7 @@ clean: dummy
 %.o: %.cpp $(DEPENDENCES)
 	g++ -c -o $@ $(CFLAGS) $<
 
-install: $(ALL)
+install: all
 	./install_parser
 
 uninstall: dummy

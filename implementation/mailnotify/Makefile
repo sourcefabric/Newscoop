@@ -35,7 +35,7 @@ readconf.o: readconf.cpp readconf.h
 %.o: %.cpp $(DEPENDENCES) readconf.h globals.h
 	g++ -c -o $@ $(CFLAGS) $<
 
-install: $(ALL)
+install: all
 	mkdir -p $(ETC_DIR)
 	echo -e "SERVER $(EVENT_HANDLERS_SMTP_SERVER)\nWRAPPER $(BIN_DIR)/smtp_wrapper" > $(ETC_DIR)/smtp.conf
 	$(MAKE) -C smtp_wrapper install

@@ -43,7 +43,7 @@ cgi.o: cgi.cpp $(DEPENDENCES)
 mutex.o: mutex.cpp $(DEPENDENCES)
 	g++ -c -o mutex.o $(CFLAGS) mutex.cpp
 
-install: $(ALL)
+install: all
 	mkdir -p $(CGI_COMMON_DIR)
 	cp -f $(TPL_CGI) $(CGI_COMMON_DIR)
 	chown $(ROOT_USER):$(APACHE_GROUP) $(CGI_COMMON_DIR)/$(TPL_CGI)

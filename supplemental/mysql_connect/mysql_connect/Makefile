@@ -16,7 +16,7 @@ clean:
 mysql_connect.o: mysql_connect.cpp
 	g++ -c -o mysql_connect.o $(CFLAGS) $(INCLUDE_PATH) mysql_connect.cpp
 
-install: $(ALL)
+install: all
 	mkdir -p $(BIN_DIR)
 	cp -f mysql_connect $(BIN_DIR)
 	chown $(ROOT_USER):$(APACHE_GROUP) $(BIN_DIR)/mysql_connect
