@@ -405,6 +405,16 @@ public:
 	// getTpl: return template file name
 	const string& getTpl() const { return tpl; }
 
+	// getTemplatePath(): returns the template full path
+	// Parameters:
+	//		bool p_nAddTrailingSlash - if true add slash character to the end of the path
+	string getTemplatePath(bool p_nAddTrailingSlash = false) const;
+
+	// getTemplateInternalPath(): returns the template path inside the template directory
+	// Parameters:
+	//		bool p_nAddTrailingSlash - if true add slash character to the end of the path
+	string getTemplateInternalPath(bool p_nAddTrailingSlash = false) const;
+
 	// setMYSQL: set MySQL connection
 	// Parameters:
 	//		MYSQL* p_pMYSQL - pointer to MySQL server connection
