@@ -29,9 +29,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "data_types.h"
 #include "util.h"
 
-#include <iostream>
-using std::cout;
-using std::endl;
+
+// CURLShortNames(): copy constructor
+CURLShortNames::CURLShortNames(const CURLShortNames& p_rcoSrc)
+	: CURL(p_rcoSrc)
+{
+	m_bValidURI = p_rcoSrc.m_bValidURI;
+	m_coURI = p_rcoSrc.m_coURI;
+	m_pDBConn = p_rcoSrc.m_pDBConn;
+	m_coHTTPHost = p_rcoSrc.m_coHTTPHost;
+}
 
 
 // setURL(): sets the URL object value
