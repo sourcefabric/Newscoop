@@ -1,56 +1,54 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
 	"http://www.w3.org/TR/REC-html40/loose.dtd">
 <HTML>
-<?php  include ("../../../../lib_campsite.php");
-    $globalfile=selectLanguageFile('../../../..','globals');
-    $localfile=selectLanguageFile('.','locals');
-    @include ($globalfile);
-    @include ($localfile);
-    include ("../../../../languages.php");   ?>
-<?php  require_once("$DOCUMENT_ROOT/db_connect.php"); ?>
-
-
-<?php 
-    todefnum('TOL_UserId');
-    todefnum('TOL_UserKey');
-    query ("SELECT * FROM Users WHERE Id=$TOL_UserId AND KeyId=$TOL_UserKey", 'Usr');
-    $access=($NUM_ROWS != 0);
-    if ($NUM_ROWS) {
+<?php
+include ("../../../../lib_campsite.php");
+$globalfile=selectLanguageFile('../../../..','globals');
+$localfile=selectLanguageFile('.','locals');
+@include ($globalfile);
+@include ($localfile);
+include ("../../../../languages.php");
+require_once("$DOCUMENT_ROOT/db_connect.php");
+include($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/priv/CampsiteInterface.php");
+    
+todefnum('TOL_UserId');
+todefnum('TOL_UserKey');
+query ("SELECT * FROM Users WHERE Id=$TOL_UserId AND KeyId=$TOL_UserKey", 'Usr');
+$access=($NUM_ROWS != 0);
+if ($NUM_ROWS) {
 	fetchRow($Usr);
 	query ("SELECT * FROM UserPerm WHERE IdUser=".getVar($Usr,'Id'), 'XPerm');
-	 if ($NUM_ROWS){
-	 	fetchRow($XPerm);
-	 }
-	 else $access = 0;						//added lately; a non-admin can enter the administration area; he exists but doesn't have ANY rights
-	 $xpermrows= $NUM_ROWS;
-    }
-    else {
+	if ($NUM_ROWS){
+		fetchRow($XPerm);
+	} else {
+		$access = 0;  // added lately; a non-admin can enter the administration area;
+		              // he/she exists but doesn't have ANY rights
+	}
+	$xpermrows= $NUM_ROWS;
+} else {
 	query ("SELECT * FROM UserPerm WHERE 1=0", 'XPerm');
-    }
-?>
-    
+}
 
-
-    <?php  if ($access) {
+if ($access) {
 	query ("SELECT Publish FROM UserPerm WHERE IdUser=".getVar($Usr,'Id'), 'Perm');
-	 if ($NUM_ROWS) {
+	if ($NUM_ROWS) {
 		fetchRow($Perm);
 		$access = (getVar($Perm,'Publish') == "Y");
+	} else {
+		$access = 0;
 	}
-	else $access = 0;
-    } ?>
-    
- 
+}
+?>
 
 <HEAD>
-    <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<META HTTP-EQUIV="Expires" CONTENT="now">
 	<TITLE><?php  putGS("Scheduling a new publish action"); ?></TITLE>
-<? if ($access == 0) { ?>	<META HTTP-EQUIV="Refresh" CONTENT="0; URL=/priv/ad.php?ADReason=<?php  print encURL(getGS("You do not have the right to schedule issues or articles for automatic publishing." )); ?>">
-<? } ?></HEAD>
+<?php if ($access == 0) { ?>	<META HTTP-EQUIV="Refresh" CONTENT="0; URL=/priv/ad.php?ADReason=<?php  print encURL(getGS("You do not have the right to schedule issues or articles for automatic publishing." )); ?>">
+<?php } ?></HEAD>
 
-<? if ($access) { ?><STYLE>
+<?php if ($access) { ?><STYLE>
 	BODY { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
 	SMALL { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 8pt; }
 	FORM { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
@@ -65,14 +63,15 @@
 
 <BODY  BGCOLOR="WHITE" TEXT="BLACK" LINK="DARKBLUE" ALINK="RED" VLINK="DARKBLUE">
 
-<?
-    todefnum('Pub');
-    todefnum('Issue');
-    todefnum('Section');
-    todefnum('Article');
-    todefnum('Language');
-    todefnum('sLanguage');
-?><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%">
+<?php
+	todefnum('Pub');
+	todefnum('Issue');
+	todefnum('Section');
+	todefnum('Article');
+	todefnum('Language');
+	todefnum('sLanguage');
+?>
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%">
 	<TR>
 		<TD ROWSPAN="2" WIDTH="1%"><IMG SRC="/priv/img/sign_big.gif" BORDER="0"></TD>
 		<TD>
@@ -81,25 +80,25 @@
 		</TD>
 	</TR>
 	<TR><TD ALIGN=RIGHT><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0"><TR>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1"><TR><TD><A HREF="edit.php?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Section=<? p($Section); ?>&Article=<? p($Article); ?>&Language=<? p($Language); ?>&sLanguage=<? p($sLanguage); ?>" ><IMG SRC="/priv/img/tol.gif" BORDER="0"></A></TD><TD><A HREF="edit.php?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Section=<? p($Section); ?>&Article=<? p($Article); ?>&Language=<? p($Language); ?>&sLanguage=<? p($sLanguage); ?>" ><B><?php  putGS("Back to article details"); ?></B></A></TD></TR></TABLE>
-<TD><A HREF="/priv/pub/issues/sections/articles/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>&Section=<? p($Section); ?>" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Articles"); ?>"></A></TD><TD><A HREF="/priv/pub/issues/sections/articles/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>&Section=<? p($Section); ?>" ><B><?php  putGS("Articles");  ?></B></A></TD>
-<TD><A HREF="/priv/pub/issues/sections/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Sections"); ?>"></A></TD><TD><A HREF="/priv/pub/issues/sections/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>" ><B><?php  putGS("Sections");  ?></B></A></TD>
-<TD><A HREF="/priv/pub/issues/?Pub=<? p($Pub); ?>" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Issues"); ?>"></A></TD><TD><A HREF="/priv/pub/issues/?Pub=<? p($Pub); ?>" ><B><?php  putGS("Issues");  ?></B></A></TD>
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1"><TR><TD><A HREF="edit.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php p($Section); ?>&Article=<?php p($Article); ?>&Language=<?php p($Language); ?>&sLanguage=<?php p($sLanguage); ?>" ><IMG SRC="/priv/img/tol.gif" BORDER="0"></A></TD><TD><A HREF="edit.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php p($Section); ?>&Article=<?php p($Article); ?>&Language=<?php p($Language); ?>&sLanguage=<?php p($sLanguage); ?>" ><B><?php  putGS("Back to article details"); ?></B></A></TD></TR></TABLE>
+<TD><A HREF="/priv/pub/issues/sections/articles/?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>&Section=<?php p($Section); ?>" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Articles"); ?>"></A></TD><TD><A HREF="/priv/pub/issues/sections/articles/?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>&Section=<?php p($Section); ?>" ><B><?php  putGS("Articles");  ?></B></A></TD>
+<TD><A HREF="/priv/pub/issues/sections/?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Sections"); ?>"></A></TD><TD><A HREF="/priv/pub/issues/sections/?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>" ><B><?php  putGS("Sections");  ?></B></A></TD>
+<TD><A HREF="/priv/pub/issues/?Pub=<?php p($Pub); ?>" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Issues"); ?>"></A></TD><TD><A HREF="/priv/pub/issues/?Pub=<?php p($Pub); ?>" ><B><?php  putGS("Issues");  ?></B></A></TD>
 <TD><A HREF="/priv/pub/" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Publications"); ?>"></A></TD><TD><A HREF="/priv/pub/" ><B><?php  putGS("Publications");  ?></B></A></TD>
 <TD><A HREF="/priv/home.php" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Home"); ?>"></A></TD><TD><A HREF="/priv/home.php" ><B><?php  putGS("Home");  ?></B></A></TD>
 <TD><A HREF="/priv/logout.php" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Logout"); ?>"></A></TD><TD><A HREF="/priv/logout.php" ><B><?php  putGS("Logout");  ?></B></A></TD>
 </TR></TABLE></TD></TR>
 </TABLE>
 
-<?
-    query ("SELECT * FROM Articles WHERE IdPublication=$Pub AND NrIssue=$Issue AND NrSection=$Section AND Number=$Article", 'q_art');
-    if ($NUM_ROWS) {
+<?php
+	query ("SELECT * FROM Articles WHERE IdPublication=$Pub AND NrIssue=$Issue AND NrSection=$Section AND Number=$Article", 'q_art');
+	if ($NUM_ROWS) {
 	query ("SELECT * FROM Sections WHERE IdPublication=$Pub AND NrIssue=$Issue AND IdLanguage=$Language AND Number=$Section", 'q_sect');
 	if ($NUM_ROWS) {
 	query ("SELECT * FROM Issues WHERE IdPublication=$Pub AND Number=$Issue AND IdLanguage=$Language", 'q_iss');
 	if ($NUM_ROWS) {
-	    query ("SELECT * FROM Publications WHERE Id=$Pub", 'q_pub');
-	    if ($NUM_ROWS) {
+		query ("SELECT * FROM Publications WHERE Id=$Pub", 'q_pub');
+		if ($NUM_ROWS) {
 		query ("SELECT Name FROM Languages WHERE Id=$Language", 'q_lang');
 		fetchRow($q_art);
 		fetchRow($q_sect);
@@ -107,22 +106,24 @@
 		fetchRow($q_pub);
 		fetchRow($q_lang);
 ?><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="1" WIDTH="100%"><TR>
-<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP">&nbsp;<?php  putGS("Publication"); ?>:</TD><TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><? pgetHVar($q_pub,'Name'); ?></B></TD>
+<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP">&nbsp;<?php  putGS("Publication"); ?>:</TD><TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><?php pgetHVar($q_pub,'Name'); ?></B></TD>
 
-<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP">&nbsp;<?php  putGS("Issue"); ?>:</TD><TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><? pgetHVar($q_iss,'Number'); ?>. <? pgetHVar($q_iss,'Name'); ?> (<? pgetHVar($q_lang,'Name'); ?>)</B></TD>
+<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP">&nbsp;<?php  putGS("Issue"); ?>:</TD><TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><?php pgetHVar($q_iss,'Number'); ?>. <?php pgetHVar($q_iss,'Name'); ?> (<?php pgetHVar($q_lang,'Name'); ?>)</B></TD>
 
-<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP">&nbsp;<?php  putGS("Section"); ?>:</TD><TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><? pgetHVar($q_sect,'Number'); ?>. <? pgetHVar($q_sect,'Name'); ?></B></TD>
+<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP">&nbsp;<?php  putGS("Section"); ?>:</TD><TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><?php pgetHVar($q_sect,'Number'); ?>. <?php pgetHVar($q_sect,'Name'); ?></B></TD>
 
-<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP">&nbsp;<?php  putGS("Article"); ?>:</TD><TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><? pgetHVar($q_art,'Name'); ?></B></TD>
+<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP">&nbsp;<?php  putGS("Article"); ?>:</TD><TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><?php pgetHVar($q_art,'Name'); ?></B></TD>
 
 </TR></TABLE>
 
-<?
+<?php
 if (getVar($q_art,'Published') != 'N') {
 	todef('publish_date');
 	todefnum('publish_hour');
 	todefnum('publish_min');
 	todef('action');
+	todef('front_page');
+	todef('section_page');
 
 	$correct= 1;
 	$created= 0;
@@ -136,56 +137,79 @@ if (getVar($q_art,'Published') != 'N') {
 	</TR>
 	<TR>
 		<TD COLSPAN="2"><BLOCKQUOTE>
-<?
+<?php
 	$publish_date = trim($publish_date);
 	$publish_hour = trim($publish_hour);
 	$publish_min = trim($publish_min);
 
 	if ($publish_date == "" || $publish_date == " ") {
-	$correct= 0; ?>	<LI><? putGS('You must complete the $1 field.','<B>'.getGS('Date').'</B>' ); ?></LI>
-	<? }
+	$correct= 0; ?>	<LI><?php putGS('You must complete the $1 field.','<B>'.getGS('Date').'</B>' ); ?></LI>
+	<?php }
 
-    if ($publish_hour == "" || $publish_hour == " " || $publish_min == "" || $publish_min == " ") {
-	$correct= 0; ?>	<LI><? putGS('You must complete the $1 field.','<B>'.getGS('Time').'</B>' ); ?></LI>
-    <? }
+	if ($publish_hour == "" || $publish_hour == " " || $publish_min == "" || $publish_min == " ") {
+	$correct= 0; ?>	<LI><?php putGS('You must complete the $1 field.','<B>'.getGS('Time').'</B>' ); ?></LI>
+	<?php }
 
-	if ($action != "P" && $action != "U") {
-	$correct= 0; ?>	<LI><? putGS('You must select an action.'); ?></LI>
-    <? }
+	if ($action != "P" && $action != "U" && $front_page != "S" && $front_page != "R"
+		&& $section_page != "S" && $section_page != "R") {
+	$correct= 0; ?>	<LI><?php putGS('You must select an action.'); ?></LI>
+    <?php }
 
 	if ($correct) {
-		$action_str = $action == "P" ? "Publish" : "Unpublish";
+		if ($action == "P" || $action == "U") {
+			$set[] = "Publish = '" . $action . "'";
+			$actions[] = getGS($action == "P" ? "Publish" : "Unpublish");
+		}
+		if ($front_page == "S" || $front_page == "R") {
+			$set[] = "FrontPage = '" . $front_page . "'";
+			$actions[] = getGS($front_page == "S" ? "Show on front page" : "Remove from front page");
+		}
+		if ($section_page == "S" || $section_page == "R") {
+			$set[] = "SectionPage = '" . $section_page . "'";
+			$actions[] = getGS($section_page == "S" ? "Show on section page" : "Remove from section page");
+		}
+		$set_str = implode(', ', $set);
+		$action_str = implode(', ', $actions);
 		$publish_time = $publish_date . " " . $publish_hour . ":" . $publish_min . ":00";
 		$sql = "select * from ArticlePublish where NrArticle = $Article and IdLanguage=$sLanguage and PublishTime='$publish_time'";
 		query($sql, 'q_artp');
 		if ($NUM_ROWS > 0) {
-			$sql = "update ArticlePublish set Action = '$action' where NrArticle = $Article and IdLanguage=$sLanguage and PublishTime='$publish_time'";
+			$sql = "update ArticlePublish set " . $set_str . " where NrArticle = $Article and IdLanguage=$sLanguage and PublishTime='$publish_time'";
 			query($sql);
 			$created = 1;
 		} else {
-			query ("INSERT IGNORE INTO ArticlePublish SET NrArticle = $Article, IdLanguage=$sLanguage, PublishTime='$publish_time', Action='$action'");
+			$sql = "INSERT IGNORE INTO ArticlePublish SET NrArticle = $Article, IdLanguage=$sLanguage, PublishTime='$publish_time', " . $set_str;
+			query($sql);
 			$created = $AFFECTED_ROWS > 0;
 		}
-	}
 
-	if ($correct) {
-		if ($created) { ?>			<LI><? putGS('The $1 action has been scheduled on $2', getGS($action_str), $publish_time); ?></LI>
-		<? } else { ?>			<LI><? putGS('There was an error scheduling the $1 action on $2', getGS($action_str), $publish_time); ?></LI>
-	<? }
-}
+		if ($created) {
+			if (sizeof($actions) > 1) {
+?>
+			<LI><?php putGS('The $1 actions have been scheduled on $2', $action_str, $publish_time); ?></LI>
+<?php
+			} else {
+?>
+			<LI><?php putGS('The $1 action has been scheduled on $2', $action_str, $publish_time); ?></LI>
+<?php
+			}
+		} else { ?>
+			<LI><?php putGS('There was an error scheduling the $1 action on $2', getGS($action_str), $publish_time); ?></LI>
+<?php	}
+	}
 ?>	</BLOCKQUOTE></TD>
 	</TR>
 	<TR>
 		<TD COLSPAN="2">
 		<DIV ALIGN="CENTER">
-	<INPUT TYPE="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/priv/pub/issues/sections/articles/autopublish.php?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Section=<? p($Section); ?>&Article=<? p($Article); ?>&Language=<? p($Language); ?>&sLanguage=<? p($sLanguage); ?>'">
+	<INPUT TYPE="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/priv/pub/issues/sections/articles/autopublish.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php p($Section); ?>&Article=<?php p($Article); ?>&Language=<?php p($Language); ?>&sLanguage=<?php p($sLanguage); ?>'">
 		</DIV>
 		</TD>
 	</TR>
 </TABLE></CENTER>
 <P>
 
-<? } else { ?><BLOCKQUOTE>
+<?php } else { ?><BLOCKQUOTE>
 	<CENTER><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" BGCOLOR="#C0D0FF" ALIGN="CENTER">
 	<TR>
 		<TD COLSPAN="2">
@@ -199,32 +223,32 @@ if (getVar($q_art,'Published') != 'N') {
 	<TR>
 		<TD COLSPAN="2">
 		<DIV ALIGN="CENTER">
-	<INPUT TYPE="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/priv/pub/issues/sections/articles/edit.php?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Section=<? p($Section); ?>&Article=<? p($Article); ?>&Language=<? p($Language); ?>&sLanguage=<? p($sLanguage); ?>'">
+	<INPUT TYPE="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/priv/pub/issues/sections/articles/edit.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php p($Section); ?>&Article=<?php p($Article); ?>&Language=<?php p($Language); ?>&sLanguage=<?php p($sLanguage); ?>'">
 		</DIV>
 		</TD>
 	</TR>
 	</TABLE></CENTER>
 </BLOCKQUOTE>
-<? } ?>
-<? } else { ?><BLOCKQUOTE>
-	<LI><? putGS('No such publication.'); ?></LI>
+<?php } ?>
+<?php } else { ?><BLOCKQUOTE>
+	<LI><?php putGS('No such publication.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>
-<? } else { ?><BLOCKQUOTE>
-	<LI><? putGS('No such issue.'); ?></LI>
+<?php } ?>
+<?php } else { ?><BLOCKQUOTE>
+	<LI><?php putGS('No such issue.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>
-<? } else { ?><BLOCKQUOTE>
-	<LI><? putGS('No such section.'); ?></LI>
+<?php } ?>
+<?php } else { ?><BLOCKQUOTE>
+	<LI><?php putGS('No such section.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>
-<? } else { ?><BLOCKQUOTE>
-	<LI><? putGS('No such article.'); ?></LI>
+<?php } ?>
+<?php } else { ?><BLOCKQUOTE>
+	<LI><?php putGS('No such article.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>
-<HR NOSHADE SIZE="1" COLOR="BLACK">
-<a STYLE='font-size:8pt;color:#000000' href='http://www.campware.org' target='campware'>CAMPSITE  2.1.6-rc1 &copy 1999-2004 MDLF, maintained and distributed under GNU GPL by CAMPWARE</a>
+<?php } ?>
+<?php }
+CampsiteInterface::CopyrightNotice();
+?>
 </BODY>
-<? } ?>
 
 </HTML>
