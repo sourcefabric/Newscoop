@@ -36,6 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 using std::map;
 using std::out_of_range;
 using std::stringstream;
+using std::bad_alloc;
 
 
 #include "cmessage.h"
@@ -49,7 +50,8 @@ using std::stringstream;
 class CMessageFactory
 {
 public:
-	virtual CMessage* createMessage(char* p_pchMsgContent) const = 0;
+	virtual CMessage* createMessage(char* p_pchMsgContent) const 
+		throw (out_of_range, xml_parse_error, invalid_message_content, bad_alloc) = 0;
 
 	virtual uint getMessageTypeId() const = 0;
 };
@@ -59,6 +61,7 @@ class CURLRequestMessageFactory : public CMessageFactory
 {
 public:
 	virtual CMessage* createMessage(char* p_pchMsgContent) const
+		throw (out_of_range, xml_parse_error, invalid_message_content, bad_alloc)
 		{ return new CMsgURLRequest(p_pchMsgContent); }
 
 	virtual uint getMessageTypeId() const { return CMsgURLRequest::messageTypeId(); }
@@ -69,6 +72,7 @@ class CURLServeMessageFactory : public CMessageFactory
 {
 public:
 	virtual CMessage* createMessage(char* p_pchMsgContent) const
+		throw (out_of_range, xml_parse_error, invalid_message_content, bad_alloc)
 		{ return new CMsgURLServe(p_pchMsgContent); }
 
 	virtual uint getMessageTypeId() const { return CMsgURLServe::messageTypeId(); }
@@ -82,7 +86,8 @@ public:
 
 	void erase(uint p_nMessageFactoryType);
 
-	CMessage* createMessage(char* p_pchMsgContent);
+	CMessage* createMessage(char* p_pchMsgContent)
+		throw (out_of_range, xml_parse_error, invalid_message_content, bad_alloc);
 
 private:
 	// private types
