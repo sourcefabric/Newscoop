@@ -114,7 +114,7 @@ done
 }
 
 my_id=`id -u`
-if [ $my_id -ne 0 ]; then
+if [ $my_id -ne 0 ] && ! $USER_INSTALL; then
     echo "Trying to read $APP_NAME configuration..."
     echo -n "Please supply the root password. "
     su --command="${INSTALL_CONF}/read_app_conf"

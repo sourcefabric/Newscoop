@@ -642,6 +642,12 @@ if [ "$cf_path" = "" ]; then
     fi
 fi
 apache_conf_path=$conf_path
+if $USER_INSTALL; then
+    export APACHE_USER=$ROOT_USER
+    export APACHE_GROUP=$ROOT_GROUP
+    set_checked apache
+    return 0
+fi
 user_line=`grep -h -w ^User ${conf_path}/*.conf 2> /dev/null`
 if [ "$user_line" = "" ]; then
     echo "Invalid apache configuration files. Aborting."
