@@ -59,7 +59,7 @@ int main()
     return result;
 
   // read reply address
-  sprintf(buf, "select EMail from Users where Id = 1");
+  sprintf(buf, "select EMail from Users where UName = 'admin'");
   SQLQuery(sql, buf);
   StoreResult(sql, res);
   CheckForRows(res, 1);
