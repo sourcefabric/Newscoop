@@ -41,24 +41,22 @@ $articles =& ArticleImage::GetArticlesThatUseImage($ImageId);
 </HEAD>
 
 <BODY  BGCOLOR="WHITE" TEXT="BLACK" LINK="DARKBLUE" ALINK="RED" VLINK="DARKBLUE">
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%">
-	<TR>
-		<TD ROWSPAN="2" WIDTH="1%"><IMG SRC="/<?php echo $ADMIN; ?>/img/sign_big.gif" BORDER="0"></TD>
-		<TD>
-			<DIV STYLE="font-size: 12pt"><B><?php  putGS("Change image information"); ?></B></DIV>
-			<HR NOSHADE SIZE="1" COLOR="BLACK">
-		</TD>
-	</TR>
-	<TR><TD ALIGN=RIGHT>
-	  <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
+<TR>
+	<TD class="page_title">
+		<?php  putGS("Change image information"); ?>
+	</TD>
+	<TD ALIGN="RIGHT" style="padding-top: 0px; padding-right: 10px;">
+  		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
 		<TR>
-		  <TD><A HREF="index.php?<?php echo $imageNav->getSearchLink() ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Image archive"); ?>"></A></TD><TD><A HREF="index.php?<?php echo $imageNav->getSearchLink(); ?>" ><B><?php  putGS("Image archive");  ?></B></A></TD>
-		  <TD><A HREF="/<?php echo $ADMIN; ?>/home.php" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Home"); ?>"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/home.php" ><B><?php  putGS("Home");  ?></B></A></TD>
-		  <TD><A HREF="/<?php echo $ADMIN; ?>/logout.php" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Logout"); ?>"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/logout.php" ><B><?php  putGS("Logout");  ?></B></A></TD>
+	  		<TD><A HREF="index.php?<?php echo $imageNav->getSearchLink() ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Image archive"); ?>"></A></TD>
+	  		<TD><A HREF="index.php?<?php echo $imageNav->getSearchLink(); ?>" ><B><?php  putGS("Image archive");  ?></B></A></TD>
 		</TR>
-	  </TABLE>
-	</TD></TR>
+  		</TABLE>
+	</TD>
+</TR>
 </TABLE>
+<!--<HR NOSHADE SIZE="1" COLOR="BLACK">-->
 
 <CENTER><IMG SRC="<?php echo $imageObj->getImageUrl(); ?>" BORDER="0" ALT="<?php echo htmlspecialchars($imageObj->getDescription()); ?>"></CENTER>
 <P>
