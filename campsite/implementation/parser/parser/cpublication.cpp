@@ -35,7 +35,7 @@ string CPublication::getTemplate(long p_nLanguage, long p_nPublication, long p_n
                                  long p_nSection, long p_nArticle, MYSQL* p_DBConn,
                                  bool p_bIsPublished)
 {
-	if ((p_nArticle > 0 || p_nSection > 0 || p_nIssue <= 0) && p_nLanguage <= 0)
+	if (p_nLanguage <= 0)
 	{
 		stringstream coSql;
 		coSql << "select IdDefaultLanguage from Publications where Id = " << p_nPublication;
