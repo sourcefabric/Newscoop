@@ -683,13 +683,14 @@ function send_message($address, $server_port, $msg, &$err_msg, $socket = false, 
 	return $socket;
 }
 
-function verify_templates($templates_dir, &$missing_templates, &$deleted_templates, $errors)
+function verify_templates($templates_dir, &$missing_templates, &$deleted_templates, &$errors)
 {
 	$templates_dir = trim($templates_dir);
 	if (!is_dir($templates_dir))
 		return $templates_dir . "is not a valid directory";
 	if ($templates_dir[strlen($templates_dir) - 1] != '/')
 		$templates_dir .= '/';
+	$templates_dir = str_replace("//", "/", $templates_dir);
 
 	$sql = "select * from Templates order by Level, Name";
 	if (!($res = mysql_query($sql))) {
@@ -703,25 +704,8 @@ function verify_templates($templates_dir, &$missing_templates, &$deleted_templat
 		$file_path = $templates_dir . $name;
 		if (!is_file($file_path))
 		{
-			$sql = "select count(*) as nr from Issues where IssueTplId = " . $id
-				 . " or SectionTplId = " . $id . " or ArticleTplId = " . $id;
-			if (!($res_nr = mysql_query($sql))) {
-				$errors[] = "Unable to read from the database";
-				continue;
-			}
-			$row_nr = mysql_fetch_array($res_nr);
-			$used = 0 + $row_nr['nr'];
-
-			$sql = "select count(*) as nr from Sections where SectionTplId = " . $id
-				 . " or ArticleTplId = " . $id;
-			if (!($res_nr = mysql_query($sql))) {
-				$errors[] = "Unable to read from the database";
-				continue;
-			}
-			$row_nr = mysql_fetch_array($res_nr);
-			$used += $row_nr['nr'];
-
-			if ($used > 0) {
+			$used = template_is_used($name);
+			if ($used) {
 				$missing_templates[$id] = $name;
 			} else {
 				$sql = "delete from Templates where Id = " . $id;
@@ -736,10 +720,19 @@ function verify_templates($templates_dir, &$missing_templates, &$deleted_templat
 	return true;
 }
 
-function register_templates($dir, $root_dir, &$errors, $level = 0)
+function register_templates($dir, &$errors, $root_dir = "", $level = 0)
 {
+	if ($root_dir == "")
+		$root_dir = $dir;
+
 	$dir = trim($dir);
 	$root_dir = trim($root_dir);
+	$dir = str_replace("//", "/", $dir);
+	$root_dir = str_replace("//", "/", $root_dir);
+	if ($dir[strlen($dir)-1] == '/')
+		$dir = substr($dir, 0, strlen($dir) - 1);
+	if ($root_dir[strlen($root_dir)-1] == '/')
+		$root_dir = substr($root_dir, 0, strlen($root_dir) - 1);
 	if (!$dh = @opendir($dir)) {
 		$errors[] = "Unable to open directory " . $dir;
 		return -1;
@@ -753,7 +746,7 @@ function register_templates($dir, $root_dir, &$errors, $level = 0)
 		$full_path = $dir . "/" . $file;
 		$filetype = filetype($full_path);
 		if ($filetype == "dir") {
-			$count += register_templates($full_path, $root_dir, $errors, $level + 1);
+			$count += register_templates($full_path, $errors, $root_dir, $level + 1);
 			continue;
 		}
 
@@ -779,6 +772,56 @@ function register_templates($dir, $root_dir, &$errors, $level = 0)
 		$count++;
 	}
 	return $count;
+}
+
+function template_path($path, $name)
+{
+	$look_dir = "/look";
+
+	$path = str_replace("//", "/", $path);
+	$path = strstr($path, $look_dir);
+	if (strncmp($path, $look_dir, strlen($look_dir)) == 0)
+		$path = substr($path, strlen($look_dir));
+	if ($path[0] == '/')
+		$path = substr($path, 1);
+	if ($path[strlen($path) - 1] == '/')
+		$path = substr($path, 0, strlen($path) - 1);
+
+	$name = str_replace("//", "/", $name);
+	if ($name[0] == '/')
+		$name = substr($name, 1);
+
+	if ($path != "")
+		$template_path = $path . "/" . $name;
+	else
+		$template_path = $name;
+	return $template_path;
+}
+
+function template_is_used($template_name)
+{
+	$sql = "select * from Templates where Name = '" . $template_name . "'";
+	$res = mysql_query($sql);
+	$row = mysql_fetch_array($res);
+	if (!$row)
+		return false;
+	$id = $row['Id'];
+
+	$sql = "select count(*) as used_count from Issues where IssueTplId = " . $id
+	     . " or SectionTplId = " . $id . " or ArticleTplId = " . $id;
+	$res = mysql_query($sql);
+	$row = mysql_fetch_array($res);
+	if ($row['used_count'] > 0)
+		return true;
+
+	$sql = "select count(*) as used_count from Sections where SectionTplId = " . $id
+	     . " or ArticleTplId = " . $id;
+	$res = mysql_query($sql);
+	$row = mysql_fetch_array($res);
+	if ($row['used_count'] > 0)
+		return true;
+
+	return false;
 }
 
 if (file_exists ($_SERVER['DOCUMENT_ROOT'].'/priv/modules/admin/priv_functions.php'))
