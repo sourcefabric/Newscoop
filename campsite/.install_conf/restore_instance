@@ -9,4 +9,4 @@ else
 	ETC_DIR=`$bin_path/campsite_config --etc_dir`
 fi
 
-php "$script_call" "$ETC_DIR" $*
+php -q "$script_call" "$ETC_DIR" $*
