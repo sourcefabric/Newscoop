@@ -62,13 +62,14 @@ regGS("You do not have the right to unlock the article. Once submitted an articl
 // -- do_edit.m4
 regGS("Changing article details","Changing article details:en");
 regGS("The article has been updated.","The article has been updated.:en");
-regGS("The article cannot be updated or no changes have been made.","The article cannot be updated or no changes have been made.:en");
+//regGS("The article cannot be updated or no changes have been made.","The article cannot be updated or no changes have been made.:en");
+regGS("The article cannot be updated or no changes have been made.","No changes have been made, the article has not been updated.:en");
 
 // -- edit_t.m4
 regGS("Edit field: $1","Edit field: $1:en");
 
 // -- preview.m4
-regGS("Preview article","Preview article:en");
+regGS("Preview article","Preview Article:en");
 regGS("This article cannot be previewed. Please make sure it has a <B><I>single article</I></B> template selected.","This article cannot be previewed. Please make sure it has a <B><I>single article</I></B> template selected.:en");
 
 // -- edit_b.m4
