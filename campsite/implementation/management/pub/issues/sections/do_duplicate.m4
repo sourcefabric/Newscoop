@@ -105,7 +105,8 @@ B_MSGBOX(<*Duplicating section*>)
 			     . " and Number = " . $dstSection;
 		} else {
 			$sql = "insert into Sections (IdPublication, NrIssue, IdLanguage, Number, Name) values(" . $dstPub
-			     . ", " . $dstIssue . ", " . $Language . ", " . $dstSection . ", '" . $sect_name . "')";
+			     . ", " . $dstIssue . ", " . $Language . ", " . $dstSection . ", '"
+			     . mysql_escape_string($sect_name) . "')";
 		}
 		query($sql);
 		$sql = "select * from Articles where IdPublication = " . $Pub . " and NrIssue = " . $Issue
