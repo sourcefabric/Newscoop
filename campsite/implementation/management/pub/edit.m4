@@ -36,8 +36,6 @@ B_BODY
 B_HEADER(<*Configure publication*>)
 B_HEADER_BUTTONS
 X_HBUTTON(<*Publications*>, <*pub/*>)
-X_HBUTTON(<*Home*>, <*home.php*>)
-X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
@@ -47,7 +45,7 @@ E_HEADER
 	fetchRow($q_pub);
 ?>dnl
 B_CURRENT
-X_CURRENT(<*Publication*>, <*<B><?php  pgetHVar($q_pub,'Name'); ?></B>*>)
+X_CURRENT(<*Publication*>, <*<?php  pgetHVar($q_pub,'Name'); ?>*>)
 E_CURRENT
 	<?php query ("SELECT Unit, Name FROM TimeUnits WHERE (IdLanguage=$IdLang or IdLanguage = 1) and Unit='".getHVar($q_pub,'TimeUnit')."' order by IdLanguage desc", 'q_tunit');
 		fetchRow($q_tunit); $tunit =getVar($q_tunit,'Name'); ?>dnl

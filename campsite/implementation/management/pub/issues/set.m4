@@ -32,8 +32,6 @@ B_HEADER(<*Changing issue template*>)
 B_HEADER_BUTTONS
 X_HBUTTON(<*Issues*>, <*pub/issues/?Pub=<?php  pencURL($Pub); ?>*>)
 X_HBUTTON(<*Publications*>, <*pub/*>)
-X_HBUTTON(<*Home*>, <*home.php*>)
-X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
@@ -44,13 +42,13 @@ E_HEADER
     fetchRow($q_iss);
 ?>dnl
 B_CURRENT
-X_CURRENT(<*Publication*>, <*<B><?php  pgetHVar($q_pub,'Name'); ?></B>*>)
-X_CURRENT(<*Issue*>, <*<B><?php  pgetHVar($q_iss,'Name'); ?> (<?php
+X_CURRENT(<*Publication*>, <*<?php  pgetHVar($q_pub,'Name'); ?>*>)
+X_CURRENT(<*Issue*>, <*<?php  pgetHVar($q_iss,'Name'); ?> (<?php
     for($loop=0;$loop<$nr;$loop++) {
     fetchRow($q_languages);
     pgetHVar($q_languages,'Name');
     }
-    ?>)</B>*>)
+    ?>)*>)
 E_CURRENT
 
 <P>

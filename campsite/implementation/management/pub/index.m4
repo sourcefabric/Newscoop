@@ -31,8 +31,6 @@ B_BODY
 
 B_HEADER(<*Publications*>)
 B_HEADER_BUTTONS
-X_HBUTTON(<*Home*>, <*home.php*>)
-X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
@@ -87,7 +85,7 @@ B_LIST
             <?php  pgetHVar($publ,'URLType'); ?>&nbsp;
         E_LIST_ITEM
         B_LIST_ITEM
-            <A HREF="X_ROOT/pub/edit.php?Pub=<?php  pgetUVar($publ,'Id'); ?>"><?php  putGS("Configure"); ?></A>
+            <A HREF="X_ROOT/pub/edit.php?Pub=<?php  pgetUVar($publ,'Id'); ?>"><img src="/<?php echo $ADMIN; ?>/img/icon/configure.png" alt="<?php  putGS("Configure"); ?>" border="0"></A>
         E_LIST_ITEM
 <?php  }
     if ($dpa != 0) { ?>dnl
