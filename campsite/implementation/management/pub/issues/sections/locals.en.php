@@ -14,6 +14,10 @@ regGS("Adding new section","Adding new section:en");
 regGS("You do not have the right to add sections.","You do not have the right to add sections.:en");
 regGS("The section $1 has been successfuly added.","The section $1 has been successfuly added.:en");
 regGS("Please check if another section with the same number does not already exist.","Please check if another section with the same number does not already exist.:en");
+
+//add_article.m4
+regGS("Select the section","Select the section:en");
+
 // log
 regGS("Section $1 added to issue $2. $3 ($4) of $5","Section $1 added to issue $2. $3 ($4) of $5:en");
 

@@ -244,4 +244,15 @@ regGS("(YYYY-MM-DD)","(YYYY-MM-DD):en");
 regGS("The sections were added successfully.", "The sections were added successfully.:en");
 regGS("The sections could not be added successfully. Some of them were already added !", "The sections could not be added successfully. Some of them were already added !:en");
 
+// -- buttons
+ 
+regGS("Add another", "Add another:en");
+regGS("Cancel", "Cancel:en");
+regGS("Done", "Done:en");
+regGS("New field", "New field:en");
+regGS("OK", "OK:en");
+regGS("Save changes", "Save changes:en");
+regGS("Search", "Search:en");
+
+
 ?>

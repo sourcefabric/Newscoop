@@ -6,7 +6,7 @@ regGS("Front Page Template<BR><SMALL>(click to change)</SMALL>","Front Page Temp
 regGS("Single Article Template<BR><SMALL>(click to change)</SMALL>","Single Article Template<BR><SMALL>(click to change)</SMALL>:en");
 regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>","Published<BR><SMALL>(yyyy-mm-dd)</SMALL>:en");
 regGS("Delete issue $1","Delete issue $1:en");
-
+regGS("Click here to set...","Click here to set...:en");
 
 // -- status.m4
 regGS("Change issue status","Change issue status:en");
@@ -75,6 +75,10 @@ regGS("Copy structure from issue nr $1","Copy structure from issue nr $1:en");
 // -- do_add_prev.m4
 regGS("Copying previous issue","Copying previous issue:en");
 regGS("Copying done.","Copying done.:en");
+
+//add_article.m4
+regGS("Select the issue","Select the issue:en");
+
 // log
 regGS("New issue $1 from $2 in publication $3","New issue $1 from $2 in publication $3:en");
 

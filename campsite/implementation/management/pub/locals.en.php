@@ -43,6 +43,9 @@ regGS("Publication $1 deleted","Publication $1 deleted:en");
 regGS("Adding new publication","Adding new publication:en");
 regGS("The publication could not be added.","The publication could not be added.:en");
 
+//add_article.m4
+regGS("Select the publication","Select the publication:en");
+
 // -- countryadd.m4
 regGS("Add new country default subscription time","Add new country default subscription time:en");
 regGS("You do not have the right to manage publications.","You do not have the right to manage publications.:en");
