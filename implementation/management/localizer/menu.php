@@ -162,7 +162,7 @@ print '</PRE>';
 ?>
 <form action=# method=post>
 
-<SELECT NAME=newlang
+<SELECT NAME=newlang>
 <?
 
     $Languages=mysql_query ("SELECT Id, Name, OrigName, CodePage, Code FROM Languages ORDER BY Name");
