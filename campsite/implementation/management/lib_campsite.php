@@ -1,3 +1,7 @@
+<?php
+
+$scriptBase='/var/www/script';
+
 $DOCUMENT_ROOT = $_SERVER['DOCUMENT_ROOT'];
 
 function query($qs,$r='',$setvars=true)
