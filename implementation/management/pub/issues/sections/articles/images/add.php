@@ -72,7 +72,7 @@ fetchRowNum($q_now);
 	<TD class="page_title">
 	    <?php  putGS("Add new image"); ?>
 	</TD>
-	<TD ALIGN="RIGHT" style="padding-right: 10px; padding-top: 0px;">
+	<TD ALIGN="RIGHT">
 		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
 		<TR>
 			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/images/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&Section=<?php  p($Section); ?>" class="breadcrumb"><?php  putGS("Images");  ?></A></TD>
