@@ -841,6 +841,8 @@ int CActList::WriteOrdParam(string& s)
 			if ((*pl_i)->spec().length())
 				s += (*pl_i)->spec();
 		}
+		if (modifier == CMS_ST_ARTICLE)
+			s += string(", Articles.ArticleOrder asc");
 	}
 	else // modifier == CMS_ST_SEARCHRESULT
 	{
