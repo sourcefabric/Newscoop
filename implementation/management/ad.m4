@@ -1,5 +1,5 @@
 B_HTML
-INCLUDE_PHP_LIB(<*.*>)
+INCLUDE_PHP_LIB(<*$ADMIN_DIR*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Access denied*>)
