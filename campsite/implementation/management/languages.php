@@ -5,12 +5,14 @@ function registerLanguage($name,$code,$charset){
 	global $languages;
 	$languages["$code"]=array("name"=>$name,"charset"=>$charset);
 }
-
-registerLanguage('English','en','ISO-8859-1');
-registerLanguage('Russian','ru','ISO-8859-5');
-registerLanguage('German','de','ISO-8859-1');
-registerLanguage('Czech','cz','ISO-8859-2');
-registerLanguage('Romanian','ro','ISO-8859-2');
-registerLanguage('Croatian','hr','ISO-8859-2');
+registerLanguage('English','en','ISO_8859-1');
+registerLanguage('Bosnian','sh','ISO_8859-2');
+registerLanguage('Croatian','hr','ISO_8859-2');
+registerLanguage('Czech','cz','ISO_8859-2');
+registerLanguage('German','de','ISO_8859-1');
+registerLanguage('Romanian','ro','ISO_8859-2');
+registerLanguage('Russian','ru','ISO_8859-5');
+registerLanguage('Serbian (Cyrillic)','sr','ISO_8859-5');
+registerLanguage('Spanish','es','ISO_8859-1');
 
 ?>
