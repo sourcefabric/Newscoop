@@ -22,7 +22,7 @@ class Log extends DatabaseObject {
 	 */
 	function Message($p_text, $p_userName = '', $p_eventId = 0) {
 		global $Campsite;
-		$queryStr = "INSERT INTO Log SET TStamp=NOW(), IdEvent=$p_eventId, User='$p_userName', Text='$p_text'";
+		$queryStr = "INSERT INTO Log SET TStamp=NOW(), IdEvent=$p_eventId, User='$p_userName', Text='".addslashes($p_text)."'";
 		$Campsite['db']->Execute($queryStr);
 	} // fn Message
 	
