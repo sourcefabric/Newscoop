@@ -16,7 +16,6 @@ if (!is_array($Campsite)) {
 	exit(1);
 }
 $_SERVER['DOCUMENT_ROOT'] = $Campsite['WWW_DIR'] . "/" . $Campsite['DATABASE_NAME'] . "/html";
-$DO_NOT_CONNECT_TO_DB = true;
 require_once($Campsite['WWW_COMMON_DIR'] . "/html/configuration.php");
 
 //$db_name = "testcampsite";
