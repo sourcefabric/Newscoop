@@ -673,7 +673,7 @@ echo -n "Testing install configuration..."
 if [ -f "$OLD_CAMPSITE_REGISTER" ]; then
     is_installed=true
     if ! $ic_upgrade; then
-	echo -e "ERROR\nThe name is already used by another installation of campsite.\nUse --upgrade parameter for upgrade."
+	echo -e "ERROR\nThere is an older installation of campsite.\nUse --upgrade parameter for upgrade."
 	return 1
     fi
 fi
