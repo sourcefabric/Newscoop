@@ -1,11 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
 <HTML>
 <HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-15">
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-1">
 	<TITLE>CAMPSITE manual Version 2.1</TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.1  (Linux)">
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
 	<META NAME="CREATED" CONTENT="20020913;19124500">
-	<META NAME="CHANGED" CONTENT="20030401;19583800">
+	<META NAME="CHANGED" CONTENT="20030414;16332100">
 	<STYLE>
 	<!--
 		@page { size: 21.59cm 27.94cm }
@@ -17,15 +17,15 @@
 		H1.ctl { font-size: 12pt; font-weight: medium }
 		H2 { color: #000000; page-break-before: auto }
 		H2.western { font-family: "Times", serif }
-		H2.cjk { font-size: 12pt; font-weight: medium }
+		H2.cjk { font-family: "HG Mincho Light J"; font-size: 12pt; font-weight: medium }
 		H2.ctl { font-size: 12pt; font-weight: medium }
 		H3 { color: #000000; page-break-before: auto }
 		H3.western { font-family: "Times", serif }
-		H3.cjk { font-size: 12pt; font-weight: medium }
+		H3.cjk { font-family: "HG Mincho Light J"; font-size: 12pt; font-weight: medium }
 		H3.ctl { font-size: 12pt; font-weight: medium }
 		H4 { color: #000000; page-break-before: auto }
 		H4.western { font-family: "Times New Roman", serif }
-		H4.cjk { font-weight: medium }
+		H4.cjk { font-family: "HG Mincho Light J"; font-weight: medium }
 		H4.ctl { font-weight: medium }
 		TD P { margin-top: 0.5cm; margin-bottom: 0cm; color: #000000; page-break-before: auto }
 		TD P.western { font-family: "Times", serif; font-weight: medium }
@@ -210,28 +210,29 @@ Reporter (http://www.reporter-magazin.com).</P>
 campware project site (http://www.campware.org). Mail us for any
 related questions at contact@campware.org.</P>
 <P CLASS="western">CAMPSITE tech specs in a nutshell:</P>
-<P STYLE="margin-top: 0cm">CAMPSITE server: 
+<P CLASS="western" STYLE="margin-top: 0cm">CAMPSITE server: 
 </P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">runs on a Linux server, originally
-	tested on RedHat 7.0 and Mandrake 8.0 and has proven compatible with
-	RedHat 7.1, 7.2, 8.0, Mandrake 8.1, 8.2, 9.0 and Debian</P>
-	<LI><P STYLE="margin-top: 0cm">requires an Apache web server to be
-	running, and its virtual servers to be configured by the
-	administrator.</P>
-	<LI><P STYLE="margin-top: 0cm">needs a MySQL database server for
-	Linux to be able to store data. The tests were made on MySQL
-	v.3.23.36.</P>
-	<LI><P STYLE="margin-top: 0cm">requires PHP (version 3.0 and up) to
-	be running.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">runs on a Linux
+	server, originally tested on RedHat 7.0 and Mandrake 8.0 and has
+	proven compatible with RedHat 7.1, 7.2, 8.0, Mandrake 8.1, 8.2, 9.0
+	and Debian</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">requires an Apache
+	web server to be running, and its virtual servers to be configured
+	by the administrator.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">needs a MySQL
+	database server for Linux to be able to store data. The tests were
+	made on MySQL v.3.23.36.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">requires PHP (version
+	3.0 and up) to be running.</P>
 </UL>
 <P CLASS="western">CAMPSITE client side:</P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">runs on top of standard Java Virtual
-	Machine Plugin (plugin version 1.3.1 and up) in Netscape under Unix
-	(tested on version 6.2), Netscape under Windows (versions 6.2 and
-	up),and MS Internet Explorer (versions 5.0 and up). On Macintosh it
-	works in Internet Explorer under OS X.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">runs on top of
+	standard Java Virtual Machine Plugin (plugin version 1.3.1 and up)
+	in Netscape under Unix (tested on version 6.2), Netscape under
+	Windows (versions 6.2 and up),and MS Internet Explorer (versions 5.0
+	and up). On Macintosh it works in Internet Explorer under OS X.</P>
 </UL>
 <P CLASS="western"><A NAME="copyright"></A><FONT FACE="Times, serif"><B>COPYRIGHT</B></FONT></P>
 <P CLASS="western">CAMPSITE is a Unicode-based multilingual web
@@ -277,12 +278,13 @@ Server - this application handles the CAMPSITE database. You will
 need MySQL 3.23.x or newer (</FONT><A HREF="http://www.mysql.com/">http://www.mysql.com</A><FONT FACE="Nimbus Roman No9 L">).</FONT></P>
 <P CLASS="western">Three components of MySQL are needed for CAMPSITE:</P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">the server</P>
-	<LI><P STYLE="margin-top: 0cm">client programs</P>
-	<LI><P STYLE="margin-top: 0cm">files and libraries for development</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">the server</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">client programs</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">files and libraries
+	for development</P>
 </UL>
-<P STYLE="margin-top: 0cm">All of those can be found on the MySQL
-website.</P>
+<P CLASS="western" STYLE="margin-top: 0cm">All of those can be found
+on the MySQL website.</P>
 <P CLASS="western">When installing on Red Hat, look for the section
 'Standard Binary RPMs' which have been compiled especially for Red
 Hat and should cause the least hassle. You can install these files on
@@ -297,32 +299,34 @@ is normally found in the /etc/httpd/conf/ folder (N.B. non-standard
 installation of the Apache server can change the location of the
 file). The changes you have to apply to the file are:</P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">activate the DirectoryIndex directive
-	and add to it the following option:</P>
-	<P STYLE="margin-top: 0cm; font-weight: medium; page-break-before: auto">
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">activate the
+	DirectoryIndex directive and add to it the following option:</P>
+	<P CLASS="western" STYLE="margin-top: 0cm; font-weight: medium; page-break-before: auto">
 	/priv/templates/idx.php</P>
 </UL>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">activate the IndexIgnore directive
-	and set it to</P>
-	<P STYLE="margin-top: 0cm">IndexIgnore *</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">activate the
+	IndexIgnore directive and set it to</P>
+	<P CLASS="western" STYLE="margin-top: 0cm">IndexIgnore *</P>
 </UL>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">add the following lines:</P>
-	<P STYLE="margin-top: 0cm"><FONT FACE="Courier New, Courier, mono">AddHandler
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">add the following
+	lines:</P>
+	<P CLASS="western" STYLE="margin-top: 0cm"><FONT FACE="Courier New, Courier, mono">AddHandler
 	tpl_handler .tpl</FONT></P>
-	<P STYLE="margin-top: 0cm"><FONT FACE="Courier New, Courier, mono">Action
+	<P CLASS="western" STYLE="margin-top: 0cm"><FONT FACE="Courier New, Courier, mono">Action
 	tpl_handler /cgi-bin/tpl_cgi</FONT></P>
-	<LI><P STYLE="margin-top: 0cm">make sure that the server has the
-	rights to read, write and execute in the folder where the file are
-	stored and uploaded. Standardly, the user and group should be set as
-	'httpd'; the rights should be set as 'rwx' for the user and 'rw' for
-	the group. Consult the Linux Administration Guide for further
-	information. Furthermore, the Web server should have activated the
-	UniqueID option (the mod_unique_id should be loaded)</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">make sure that the
+	server has the rights to read, write and execute in the folder where
+	the file are stored and uploaded. Standardly, the user and group
+	should be set as 'httpd'; the rights should be set as 'rwx' for the
+	user and 'rw' for the group. Consult the Linux Administration Guide
+	for further information. Furthermore, the Web server should have
+	activated the UniqueID option (the mod_unique_id should be loaded)</P>
 </UL>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">restart the httpd daemon:</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">restart the httpd
+	daemon:</P>
 	<P CLASS="western" STYLE="margin-top: 0cm"><FONT FACE="Courier New, Courier, mono">killall
 	httpd</FONT></P>
 	<P CLASS="western" STYLE="margin-top: 0cm"><FONT FACE="Courier New, Courier, mono">{PATH}/httpd</FONT></P>
@@ -333,13 +337,15 @@ restart</FONT></P>
 <H3 CLASS="western"><A NAME="1.2.2"></A>1.2.2 Customize the
 application framework</H3>
 <OL>
-	<LI><P STYLE="margin-top: 0cm">Copy the CAMPSITE archive in a
-	directory on the server.</P>
-	<LI><P STYLE="margin-top: 0cm">Unarchive it using the command: tar
-	xzvf &lt;campsite_archive&gt;.</P>
-	<LI><P STYLE="margin-top: 0cm">Enter campsite directory.</P>
-	<LI><P STYLE="margin-top: 0cm">Run './install', answer the install
-	questions and wait for the application to be installed.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Copy the CAMPSITE
+	archive in a directory on the server.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Unarchive it using
+	the command: tar xzvf &lt;campsite_archive&gt;.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Enter campsite
+	directory.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Run './install',
+	answer the install questions and wait for the application to be
+	installed.</P>
 </OL>
 <H3 CLASS="western"><A NAME="1.2.3"></A>1.2.3 The CAMPFIRE Java
 Editor</H3>
@@ -373,15 +379,16 @@ stage. These are all known and documented problems and our
 development team will be resolving these issues in future releases.</P>
 <H2 CLASS="western"><A NAME="1.3."></A>1.3. UPGRADING FROM VERSIONS
 1.x or 2.0</H2>
-<P STYLE="margin-top: 0cm">Upgrading from 1.x or 2.0 versions of
-Campsite requires three actions to be performed before the
-installation:</P>
+<P CLASS="western" STYLE="margin-top: 0cm">Upgrading from 1.x or 2.0
+versions of Campsite requires three actions to be performed before
+the installation:</P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">database conversion to UTF-8
-	character set</P>
-	<LI><P STYLE="margin-top: 0cm">templates conversion to UTF-8
-	character set</P>
-	<LI><P STYLE="margin-top: 0cm">templates structure update</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">database conversion
+	to UTF-8 character set</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">templates conversion
+	to UTF-8 character set</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">templates structure
+	update</P>
 </UL>
 <P CLASS="western">While the templates structure update requires no
 special knowledge the database and templates conversion to UTF-8
@@ -399,12 +406,12 @@ iconv&rdquo;.</P>
 <P CLASS="western"><B>Converting the database</B> can be done in
 three steps:</P>
 <OL>
-	<LI><P STYLE="margin-top: 0cm">dumping the old database into
-	different files</P>
-	<LI><P STYLE="margin-top: 0cm">converting the files from their
-	character sets to UTF-8</P>
-	<LI><P STYLE="margin-top: 0cm">reconstructing the database from the
-	files</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">dumping the old
+	database into different files</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">converting the files
+	from their character sets to UTF-8</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">reconstructing the
+	database from the files</P>
 </OL>
 <P CLASS="western" STYLE="page-break-before: auto"><FONT COLOR="#dc2300">Important!!!
 The database upgrade must take place before CAMPSITE application
@@ -416,171 +423,181 @@ session and type all the following commands described below at the
 command prompt. S</FONT>hell commands are written in <I>italic</I>
 style.</P>
 <OL>
-	<LI><P STYLE="margin-top: 0cm">Dumping the old database into
-	different files</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Dumping the old
+	database into different files</P>
 </OL>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">Dump tables structure only:</P>
-	<P STYLE="margin-top: 0cm"><I>mysqldump ... -d [database] &gt;
-	tables.sql</I></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Dump tables structure
+	only:</P>
+	<P CLASS="western" STYLE="margin-top: 0cm"><I>mysqldump ... -d
+	[database] &gt; tables.sql</I></P>
 </UL>
-<P STYLE="margin-top: 0cm">where [database] should be replaced by the
-name of the CAMPSITE database and &ldquo;...&rdquo; with other needed
-parameters (user, host etc.)</P>
+<P CLASS="western" STYLE="margin-top: 0cm">where [database] should be
+replaced by the name of the CAMPSITE database and &ldquo;...&rdquo;
+with other needed parameters (user, host etc.)</P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">Dump data for tables that need not be
-	converted to UTF:</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Dump data for tables
+	that need not be converted to UTF:</P>
 	<UL>
-		<P STYLE="margin-top: 0cm"><I>mysqldump ... -t --tables [database]
-		ArticleIndex AutoId Events \</I></P>
+		<P CLASS="western" STYLE="margin-top: 0cm"><I>mysqldump ... -t
+		--tables [database] ArticleIndex AutoId Events \</I></P>
 		<UL>
-			<P STYLE="margin-top: 0cm"><I>Images KeywordIndex SubsByIP
-			SubsDefTime SubsSections Subscriptions \</I></P>
-			<P STYLE="margin-top: 0cm"><I>UserPerm UserTypes Users &gt;
-			data_nolang.sql</I></P>
+			<P CLASS="western" STYLE="margin-top: 0cm"><I>Images KeywordIndex
+			SubsByIP SubsDefTime SubsSections Subscriptions \</I></P>
+			<P CLASS="western" STYLE="margin-top: 0cm"><I>UserPerm UserTypes
+			Users &gt; data_nolang.sql</I></P>
 		</UL>
 	</UL>
 </UL>
-<P STYLE="margin-top: 0cm; font-style: normal">Don't forget to add
-&ldquo;ArticleTopics&rdquo; and &ldquo;Topics&rdquo; to the list of
-tables if CAMPSITE upgrade took place already.</P>
+<P CLASS="western" STYLE="margin-top: 0cm; font-style: normal">Don't
+forget to add &ldquo;ArticleTopics&rdquo; and &ldquo;Topics&rdquo; to
+the list of tables if CAMPSITE upgrade took place already.</P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">Dump data for tables that should be
-	converted to UTF</P>
-	<P STYLE="margin-top: 0cm">Group languages having the same character
-	set (see Languages in admin interface and read the following  note
-	below). For every character set used repeat the following steps:</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Dump data for tables
+	that should be converted to UTF</P>
+	<P CLASS="western" STYLE="margin-top: 0cm">Group languages having
+	the same character set (see Languages in admin interface and read
+	the following  note below). For every character set used repeat the
+	following steps:</P>
 </UL>
 <OL TYPE=a>
-	<LI><P STYLE="margin-top: 0cm">select all the languages in the
-	character set and compose the where clause:</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">select all the
+	languages in the character set and compose the where clause:</P>
 	<OL>
-		<P STYLE="margin-top: 0cm">&quot;IdLanguage = [l1] or IdLanguage =
-		[l2] ...&quot;</P>
+		<P CLASS="western" STYLE="margin-top: 0cm">&quot;IdLanguage = [l1]
+		or IdLanguage = [l2] ...&quot;</P>
 	</OL>
-	<P STYLE="margin-top: 0cm">where [l1], [l2] are the language
-	identifiers. In order to read the language identifiers and character
-	sets log in to CAMPSITE database and run the following sql: &ldquo;select
-	Name, Id, CodePage from Languages&rdquo;.</P>
-	<LI><P STYLE="margin-top: 0cm"><I>mysqldump ... -t &ndash;tables
-	--where=&quot;IdLanguage = [l1] or IdLanguage = [l2]...&quot; \</I></P>
+	<P CLASS="western" STYLE="margin-top: 0cm">where [l1], [l2] are the
+	language identifiers. In order to read the language identifiers and
+	character sets log in to CAMPSITE database and run the following
+	sql: &ldquo;select Name, Id, CodePage from Languages&rdquo;.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><I>mysqldump ... -t
+	&ndash;tables --where=&quot;IdLanguage = [l1] or IdLanguage =
+	[l2]...&quot; \</I></P>
 	<OL>
-		<P STYLE="margin-top: 0cm"><I>[database] Articles Classes Countries
-		Dictionary Errors Issues \</I></P>
-		<P STYLE="margin-top: 0cm"><I>KeywordClasses Sections TimeUnits &gt;
-		data_[charsetn]_1.sql</I></P>
+		<P CLASS="western" STYLE="margin-top: 0cm"><I>[database] Articles
+		Classes Countries Dictionary Errors Issues \</I></P>
+		<P CLASS="western" STYLE="margin-top: 0cm"><I>KeywordClasses
+		Sections TimeUnits &gt; data_[charsetn]_1.sql</I></P>
 	</OL>
-	<LI><P STYLE="margin-top: 0cm"><I>mysqldump ... [database] -t
-	--tables \</I></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><I>mysqldump ...
+	[database] -t --tables \</I></P>
 	<OL>
-		<P STYLE="margin-top: 0cm"><I>--where=&quot;IdDefaultLanguage =
-		[l1] or IdDefaultLanguage = [l2]...&quot; \</I></P>
-		<P STYLE="margin-top: 0cm"><I>Publications &gt;
+		<P CLASS="western" STYLE="margin-top: 0cm"><I>--where=&quot;IdDefaultLanguage
+		= [l1] or IdDefaultLanguage = [l2]...&quot; \</I></P>
+		<P CLASS="western" STYLE="margin-top: 0cm"><I>Publications &gt;
 		data_[charsetn]_2.sql</I></P>
 	</OL>
-	<LI><P STYLE="margin-top: 0cm"><I>mysqldump ... -t --tables
-	--where=&quot;Id = [l1] or Id = [l2]...&quot; [database] \</I></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><I>mysqldump ... -t
+	--tables --where=&quot;Id = [l1] or Id = [l2]...&quot; [database] \</I></P>
 	<OL>
-		<P STYLE="margin-top: 0cm"><I>Languages &gt; data_[charsetn]_3.sql</I></P>
+		<P CLASS="western" STYLE="margin-top: 0cm"><I>Languages &gt;
+		data_[charsetn]_3.sql</I></P>
 	</OL>
-	<LI><P STYLE="margin-top: 0cm">make a list of all X tables (tables
-	whose names start with X) and dump their data:</P>
-	<P STYLE="margin-top: 0cm"><I>mysqldump ... -t --tables
-	--where=&quot;IdLanguage = [l1] or IdLanguage = [l2]...&quot; \</I></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">make a list of all X
+	tables (tables whose names start with X) and dump their data:</P>
+	<P CLASS="western" STYLE="margin-top: 0cm"><I>mysqldump ... -t
+	--tables --where=&quot;IdLanguage = [l1] or IdLanguage = [l2]...&quot;
+	\</I></P>
 	<OL>
-		<P STYLE="margin-top: 0cm"><I>[database] [list_of_X_tables] &gt;
-		data_[charsetn]_4.sql</I></P>
+		<P CLASS="western" STYLE="margin-top: 0cm"><I>[database]
+		[list_of_X_tables] &gt; data_[charsetn]_4.sql</I></P>
 	</OL>
 </OL>
-<P STYLE="margin-top: 0cm">Replace [l1], [l2] with language
-identifiers, [database] with CAMPSITE database name, &ldquo;...&rdquo;
+<P CLASS="western" STYLE="margin-top: 0cm">Replace [l1], [l2] with
+language identifiers, [database] with CAMPSITE database name, &ldquo;...&rdquo;
 in mysqldump command with other needed parameters (user, host etc.),
 [charsetn] with the name of the character set (ISO-8859-1, 
 ISO-8859-2 etc.), [list_of_X_tables] with the list of tables whose
 names start with X; these are article content tables.</P>
-<P STYLE="margin-top: 0cm"><BR>
+<P CLASS="western" STYLE="margin-top: 0cm"><BR>
 </P>
-<P STYLE="margin-top: 0cm"><FONT COLOR="#0000ff">Note: In order to
-simplify the conversion all not used languages except English may be
-deleted. If only one language is used and it's character set is
-ISO-8859-1 there is no need to group languages by character set: just
-delete not used languages and perform the steps b-d described above
-and remove &ldquo;--where&rdquo; clause from commands.</FONT></P>
-<P STYLE="margin-top: 0cm"><BR>
+<P CLASS="western" STYLE="margin-top: 0cm"><FONT COLOR="#0000ff">Note:
+In order to simplify the conversion all not used languages except
+English may be deleted. If only one language is used and it's
+character set is ISO-8859-1 there is no need to group languages by
+character set: just delete not used languages and perform the steps
+b-d described above and remove &ldquo;--where&rdquo; clause from
+commands.</FONT></P>
+<P CLASS="western" STYLE="margin-top: 0cm"><BR>
 </P>
-<P STYLE="margin-top: 0cm">Select the character set for Log and dump
-Log table data:</P>
-<P STYLE="margin-top: 0cm">	<I>mysqldump ... -t --tables [database]
-Log &gt; data_log.sql</I></P>
-<P STYLE="margin-top: 0cm">Selecting the character set for Log table
-data: decide which language you use most often when logging in to
-CAMPSITE admin interface and read the character set of the language
-from Languages.</P>
-<P STYLE="margin-top: 0cm"><BR>
+<P CLASS="western" STYLE="margin-top: 0cm">Select the character set
+for Log and dump Log table data:</P>
+<P CLASS="western" STYLE="margin-top: 0cm">	<I>mysqldump ... -t
+--tables [database] Log &gt; data_log.sql</I></P>
+<P CLASS="western" STYLE="margin-top: 0cm">Selecting the character
+set for Log table data: decide which language you use most often when
+logging in to CAMPSITE admin interface and read the character set of
+the language from Languages.</P>
+<P CLASS="western" STYLE="margin-top: 0cm"><BR>
 </P>
 <OL START=2>
-	<LI><P STYLE="margin-top: 0cm">Convert files to UTF:</P>
-	<P STYLE="margin-top: 0cm">Convert tables.sql:</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Convert files to UTF:</P>
+	<P CLASS="western" STYLE="margin-top: 0cm">Convert tables.sql:</P>
 	<OL>
-		<P STYLE="margin-top: 0cm"><I>iconv -f ISO_8859-1 -t UTF8
-		tables.sql &gt; tables_utf.sql</I></P>
+		<P CLASS="western" STYLE="margin-top: 0cm"><I>iconv -f ISO_8859-1
+		-t UTF8 tables.sql &gt; tables_utf.sql</I></P>
 	</OL>
 </OL>
-<P STYLE="margin-top: 0cm"><SPAN STYLE="font-style: normal">Warning!!!
+<P CLASS="western" STYLE="margin-top: 0cm"><SPAN STYLE="font-style: normal">Warning!!!
 </SPAN><I>data_nolang.sql</I><SPAN STYLE="font-style: normal"> <B>must
 not</B> be converted to UTF8.</SPAN></P>
-<P STYLE="margin-top: 0cm">For every character set used repeat the
-following steps:</P>
+<P CLASS="western" STYLE="margin-top: 0cm">For every character set
+used repeat the following steps:</P>
 <OL TYPE=a>
-	<LI><P STYLE="margin-top: 0cm"><I>iconv -f [charsetn] -t UTF8
-	data_[charsetn]_1.sql &gt; data_[charsetn]_1_utf.sql</I></P>
-	<LI><P STYLE="margin-top: 0cm"><I>iconv -f [charsetn] -t UTF8
-	data_[charsetn]_2.sql &gt; data_[charsetn]_2_utf.sql</I></P>
-	<LI><P STYLE="margin-top: 0cm"><I>iconv -f [charsetn] -t UTF8
-	data_[charsetn]_3.sql &gt; data_[charsetn]_3_utf.sql</I></P>
-	<LI><P STYLE="margin-top: 0cm"><I>iconv -f [charsetn] -t UTF8
-	data_[charsetn]_4.sql &gt; data_[charsetn]_4_utf.sql</I></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><I>iconv -f
+	[charsetn] -t UTF8 data_[charsetn]_1.sql &gt;
+	data_[charsetn]_1_utf.sql</I></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><I>iconv -f
+	[charsetn] -t UTF8 data_[charsetn]_2.sql &gt;
+	data_[charsetn]_2_utf.sql</I></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><I>iconv -f
+	[charsetn] -t UTF8 data_[charsetn]_3.sql &gt;
+	data_[charsetn]_3_utf.sql</I></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><I>iconv -f
+	[charsetn] -t UTF8 data_[charsetn]_4.sql &gt;
+	data_[charsetn]_4_utf.sql</I></P>
 </OL>
-<P STYLE="margin-top: 0cm"><BR>
+<P CLASS="western" STYLE="margin-top: 0cm"><BR>
 </P>
-<P STYLE="margin-top: 0cm">Convert Log table data:</P>
-<P STYLE="margin-top: 0cm">	<I>iconv -f [log_charset] -t UTF8
-data_log.sql &gt; data_log_utf.sql</I></P>
-<P STYLE="margin-top: 0cm; font-style: normal">where [log_charset] is
-the character set selected for Log table.</P>
-<P STYLE="margin-top: 0cm"><BR>
+<P CLASS="western" STYLE="margin-top: 0cm">Convert Log table data:</P>
+<P CLASS="western" STYLE="margin-top: 0cm">	<I>iconv -f [log_charset]
+-t UTF8 data_log.sql &gt; data_log_utf.sql</I></P>
+<P CLASS="western" STYLE="margin-top: 0cm; font-style: normal">where
+[log_charset] is the character set selected for Log table.</P>
+<P CLASS="western" STYLE="margin-top: 0cm"><BR>
 </P>
 <OL START=3>
-	<LI><P STYLE="margin-top: 0cm">Restore the database:</P>
-	<P STYLE="margin-top: 0cm"><I>mysql ... [database] &lt;
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Restore the database:</P>
+	<P CLASS="western" STYLE="margin-top: 0cm"><I>mysql ... [database] &lt;
 	tables_utf.sql</I></P>
-	<P STYLE="margin-top: 0cm"><I>mysql ... [database] &lt;
+	<P CLASS="western" STYLE="margin-top: 0cm"><I>mysql ... [database] &lt;
 	data_nolang.sql</I></P>
 </OL>
-<P STYLE="margin-top: 0cm">For every character set used repeat the
-following steps:</P>
-<P STYLE="margin-top: 0cm"><I>	mysql ... [database] &lt;
+<P CLASS="western" STYLE="margin-top: 0cm">For every character set
+used repeat the following steps:</P>
+<P CLASS="western" STYLE="margin-top: 0cm"><I>	mysql ... [database] &lt;
 data_[charsetn]_1_utf.sql</I></P>
-<P STYLE="margin-top: 0cm"><I>	mysql ... [database] &lt;
+<P CLASS="western" STYLE="margin-top: 0cm"><I>	mysql ... [database] &lt;
 data_[charsetn]_2_utf.sql</I></P>
-<P STYLE="margin-top: 0cm"><I>	mysql ... [database] &lt;
+<P CLASS="western" STYLE="margin-top: 0cm"><I>	mysql ... [database] &lt;
 data_[charsetn]_3_utf.sql</I></P>
-<P STYLE="margin-top: 0cm"><I>	mysql ... [database] &lt;
+<P CLASS="western" STYLE="margin-top: 0cm"><I>	mysql ... [database] &lt;
 data_[charsetn]_4_utf.sql</I></P>
-<P STYLE="margin-top: 0cm"><BR>
+<P CLASS="western" STYLE="margin-top: 0cm"><BR>
 </P>
-<P STYLE="margin-top: 0cm">Restore Log table data:</P>
-<P STYLE="margin-top: 0cm"><I>	mysql ... [database] &lt;
+<P CLASS="western" STYLE="margin-top: 0cm">Restore Log table data:</P>
+<P CLASS="western" STYLE="margin-top: 0cm"><I>	mysql ... [database] &lt;
 data_log_utf.sql</I></P>
-<P STYLE="margin-top: 0cm"><BR>
+<P CLASS="western" STYLE="margin-top: 0cm"><BR>
 </P>
-<P STYLE="margin-top: 0cm"><B>Converting the templates</B> to UTF-8:
-issue the following commands for every template in the /look/
-directory:</P>
-<P STYLE="margin-top: 0cm">	<I>iconv -f [charset] -t UTF-8
-[template_name] &gt; [template_name].utf8</I></P>
-<P STYLE="margin-top: 0cm">	<I>mv -f [template_name].utf8
-[template_name]</I></P>
+<P CLASS="western" STYLE="margin-top: 0cm"><B>Converting the
+templates</B> to UTF-8: issue the following commands for every
+template in the /look/ directory:</P>
+<P CLASS="western" STYLE="margin-top: 0cm">	<I>iconv -f [charset] -t
+UTF-8 [template_name] &gt; [template_name].utf8</I></P>
+<P CLASS="western" STYLE="margin-top: 0cm">	<I>mv -f
+[template_name].utf8 [template_name]</I></P>
 <P CLASS="western">where [charset] must be replaced by the template
 character set and [template_name] by the template being processed.</P>
 <P CLASS="western"><B>Updating templates structure</B>: Some
@@ -647,17 +664,17 @@ ONLINE WITH CAMPSITE</H1>
 multilingual publications (web sites) on the same server. The process
 can be roughly divided in four steps:</P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">configuring the publishing
-	environment (establishing access rights, country-relevant
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">configuring the
+	publishing environment (establishing access rights, country-relevant
 	information, languages you intend to publish in, subscription,
 	etc.), and possibly localizing the user interface into the language
 	of your choice</P>
-	<LI><P STYLE="margin-top: 0cm">establishing the structure of your
-	publication(s)</P>
-	<LI><P STYLE="margin-top: 0cm">creating the templates which
-	determine the look and feel of your publications</P>
-	<LI><P STYLE="margin-top: 0cm">adding content and managing your
-	publications</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">establishing the
+	structure of your publication(s)</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">creating the
+	templates which determine the look and feel of your publications</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">adding content and
+	managing your publications</P>
 </UL>
 <H2 CLASS="western"><A NAME="2.1."></A><FONT FACE="Times, serif">2.1.
 Configuring the publishing environment</FONT></H2>
@@ -765,15 +782,17 @@ single user.</P>
 <P CLASS="western">CAMPSITE comes &quot;out of the box&quot; with
 three default user types:</P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">Administrator - user with full
-	authorization, i.e. all rights (normally reserved to webmasters)</P>
-	<LI><P STYLE="margin-top: 0cm">Chief Editor - user with higher
-	editorial rights (e.g. has a right to create and delete issues)</P>
-	<LI><P STYLE="margin-top: 0cm">Editor - standard backend user with
-	rights limited to basic article management and editing (normally
-	assigned to journalists and editors)</P>
-	<LI><P STYLE="margin-top: 0cm">Reader - the profile limited to
-	viewing the site, i.e. front end only.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Administrator - user
+	with full authorization, i.e. all rights (normally reserved to
+	webmasters)</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Chief Editor - user
+	with higher editorial rights (e.g. has a right to create and delete
+	issues)</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Editor - standard
+	backend user with rights limited to basic article management and
+	editing (normally assigned to journalists and editors)</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Reader - the profile
+	limited to viewing the site, i.e. front end only.</P>
 </UL>
 <P CLASS="western">To create your custom user profiles, click on
 'User types' and then on 'Add new user type'. Then proceed to select
@@ -861,14 +880,14 @@ not among those select few, your Publications view will only contain
 a list of publications hosted on this particular CAMPSITE server.]</P>
 <P CLASS="western">At this point, you should specify the following:</P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">Name of the publication (e.g. &quot;Prague
-	Times&quot;)</P>
-	<LI><P STYLE="margin-top: 0cm">Site - the name of the server (or IP
-	address) on which your publication will be hosted (e.g.
-	www.praguetimes.net) and on which it will ultimately be accessible
-	to readers.</P>
-	<LI><P STYLE="margin-top: 0cm">Language - the default language of
-	the publication</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Name of the
+	publication (e.g. &quot;Prague Times&quot;)</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Site - the name of
+	the server (or IP address) on which your publication will be hosted
+	(e.g. www.praguetimes.net) and on which it will ultimately be
+	accessible to readers.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Language - the
+	default language of the publication</P>
 </UL>
 <P CLASS="western">The rest of fields are related to subscriptions,
 and if you would like to leave the decisions on whether and how much
@@ -878,22 +897,23 @@ you read section <A HREF="#2.4">2.5</A> where subscription is covered
 in greater detail). But even at this stage, perhaps you'd like to
 know what they mean:</P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">Pay Period - time within which the
-	reader has to pay for his subscription, because his temporary
-	automatic subscription is expiring in that many days (If you don't
-	want to allow any automatic free access to your site, you will set
-	this value to &quot;0&quot;).</P>
-	<LI><P STYLE="margin-top: 0cm">Time unit - select the unit in which
-	you will measure the duration of trial or paid subscriptions to your
-	publication from the dropdown menu (days, weeks, months, years)</P>
-	<LI><P STYLE="margin-top: 0cm">Unit cost - the cost of each time
-	unit</P>
-	<LI><P STYLE="margin-top: 0cm">Currency - the monetary unit you will
-	be charging in for your publication</P>
-	<LI><P STYLE="margin-top: 0cm">Paid period - the default duration of
-	paid subscription</P>
-	<LI><P STYLE="margin-top: 0cm">Trial period - default duration of
-	trial subscriptions.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Pay Period - time
+	within which the reader has to pay for his subscription, because his
+	temporary automatic subscription is expiring in that many days (If
+	you don't want to allow any automatic free access to your site, you
+	will set this value to &quot;0&quot;).</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Time unit - select
+	the unit in which you will measure the duration of trial or paid
+	subscriptions to your publication from the dropdown menu (days,
+	weeks, months, years)</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Unit cost - the cost
+	of each time unit</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Currency - the
+	monetary unit you will be charging in for your publication</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Paid period - the
+	default duration of paid subscription</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Trial period -
+	default duration of trial subscriptions.</P>
 </UL>
 <P CLASS="western">Any of the data entered on this screen can be
 altered or fine-tuned at a later stage.</P>
@@ -1003,24 +1023,24 @@ fields within article types.]</P>
 <P CLASS="western">After you name the field, you have to specify its
 type. There are three options:</P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm"><B>Text</B> - this type of field can
-	contain a maximum of 265 characters. It does not support HTML tags
-	and it its appearance/formatting/character set is entirely
-	determined by the template (see section 3 for more information on
-	templates).</P>
-	<LI><P STYLE="margin-top: 0cm"><B>Date</B> - this is a standard date
-	field with a fixed syntax of YYYY-MM-DD</P>
-	<LI><P STYLE="margin-top: 0cm"><B>Body</B> - this type of field can
-	be up to 64KB in size (database space, however, is used optimally,
-	as the database server adjusts the size on the disk to be sure the
-	field fits, so there is no waste of space). More important, this
-	type of field is edited with CAMPSITE's near-WYSIWYG Java editor --
-	CAMPFIRE. CAMPFIRE enables you to enter text in any character set,
-	and even in multiple character sets. Text entered through CAMPFIRE
-	is independent of the format and character set specified by the
-	template. Moreover, CAMPFIRE allows you to insert images, links, and
-	formatting tags, as well as special CAMPSITE Glossary tags (for more
-	on Glossary, see section 2.3).</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><B>Text</B> - this
+	type of field can contain a maximum of 265 characters. It does not
+	support HTML tags and it its appearance/formatting/character set is
+	entirely determined by the template (see section 3 for more
+	information on templates).</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><B>Date</B> - this is
+	a standard date field with a fixed syntax of YYYY-MM-DD</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><B>Body</B> - this
+	type of field can be up to 64KB in size (database space, however, is
+	used optimally, as the database server adjusts the size on the disk
+	to be sure the field fits, so there is no waste of space). More
+	important, this type of field is edited with CAMPSITE's near-WYSIWYG
+	Java editor -- CAMPFIRE. CAMPFIRE enables you to enter text in any
+	character set, and even in multiple character sets. Text entered
+	through CAMPFIRE is independent of the format and character set
+	specified by the template. Moreover, CAMPFIRE allows you to insert
+	images, links, and formatting tags, as well as special CAMPSITE
+	Glossary tags (for more on Glossary, see section 2.3).</P>
 </UL>
 <P CLASS="western">After you have specified the field type, you can
 keep on adding fields to the article type or finish the operation.
@@ -1042,30 +1062,32 @@ to the current section.)</P>
 <P CLASS="western">Once you are in the Add new article view, you will
 see a dialog box with the following fields/options:</P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm"><B>Name</B>: This field is mandatory,
-	because it determines how your article will be known to the database
-	and appear in the Articles view. You, however, have the liberty of
-	renaming the article at any time. Type: you have to select one of
-	the available article types from the dropdown menu. The choice you
-	make at this stage CANNOT be altered later.</P>
-	<LI><P STYLE="margin-top: 0cm"><B>Language</B>: select the language
-	in which you want to create your article from the dropdown menu. The
-	list of languages will contain the languages you have defined in the
-	Languages module (see section 2.1.1). The language choice you make
-	at this stage is final, though you can always create a version in
-	another language with the Translate option in the Articles view.</P>
-	<LI><P STYLE="margin-top: 0cm"><B>Show article on front page</B>:
-	Tick this box if you would like the article to be displayed on your
-	publication's front (home) page. You can alter this choice at any
-	time.</P>
-	<LI><P STYLE="margin-top: 0cm"><B>Show article on section page</B>:
-	Tick this box if you would like the article to be displayed on the
-	main (home) page (a sort of a section homepage) of the section
-	within you have created the article. You can alter this choice at
-	any time.</P>
-	<LI><P STYLE="margin-top: 0cm"><B>Keywords</B>: Specify the words
-	that will help search engines find your article more easily. This
-	field is optional and you can edit it at any stage.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><B>Name</B>: This
+	field is mandatory, because it determines how your article will be
+	known to the database and appear in the Articles view. You, however,
+	have the liberty of renaming the article at any time. Type: you have
+	to select one of the available article types from the dropdown menu.
+	The choice you make at this stage CANNOT be altered later.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><B>Language</B>:
+	select the language in which you want to create your article from
+	the dropdown menu. The list of languages will contain the languages
+	you have defined in the Languages module (see section 2.1.1). The
+	language choice you make at this stage is final, though you can
+	always create a version in another language with the Translate
+	option in the Articles view.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><B>Show article on
+	front page</B>: Tick this box if you would like the article to be
+	displayed on your publication's front (home) page. You can alter
+	this choice at any time.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><B>Show article on
+	section page</B>: Tick this box if you would like the article to be
+	displayed on the main (home) page (a sort of a section homepage) of
+	the section within you have created the article. You can alter this
+	choice at any time.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><B>Keywords</B>:
+	Specify the words that will help search engines find your article
+	more easily. This field is optional and you can edit it at any
+	stage.</P>
 </UL>
 <P CLASS="western">After you fill out the required fields and make
 your article-display choices, you should press the 'Save changes'
@@ -1090,17 +1112,18 @@ created it.</P>
 <P CLASS="western">The fields you will see regardless of the type of
 article you are viewing are:</P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm"><B>Name</B>, containing the name you
-	had given to the article when you created it. This field is
-	editable.</P>
-	<LI><P STYLE="margin-top: 0cm"><B>Type</B>, informs you which
-	article type you had chosen for your article. You cannot alter this
-	field</P>
-	<LI><P STYLE="margin-top: 0cm"><B>Uploaded</B>, showing the date the
-	article was added for the first time. You cannot change this field.</P>
-	<LI><P STYLE="margin-top: 0cm"><B>Keywords</B>, where you can add or
-	delete the words that describe your article better to search
-	engines.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><B>Name</B>,
+	containing the name you had given to the article when you created
+	it. This field is editable.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><B>Type</B>, informs
+	you which article type you had chosen for your article. You cannot
+	alter this field</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><B>Uploaded</B>,
+	showing the date the article was added for the first time. You
+	cannot change this field.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><B>Keywords</B>,
+	where you can add or delete the words that describe your article
+	better to search engines.</P>
 </UL>
 <P CLASS="western">You will also see the two check boxes you saw when
 you created the article (Show article on front page and Show article
@@ -1128,32 +1151,35 @@ can edit one body-type field at a time.</P>
 <P CLASS="western">Above the article structure, you will always see
 the following seven buttons:</P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm"><B>Submit/Publish/Unpublish</B>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><B>Submit/Publish/Unpublish</B>
 	(depending on the copy-flow status of your article)</P>
-	<LI><P STYLE="margin-top: 0cm"><B>Images</B> - lets you upload
-	images that can be used within body-type fields of the article.</P>
-	<LI><P STYLE="margin-top: 0cm"><B>Topics </B>- this is an advanced
-	feature that lets you select from a list of topics and subtopics
-	predefined by your CAMPSITE administrator or high-ranking editor
-	(e.g. users with rights that correspond to the default Administrator
-	or Chief Editor user types that come &ldquo;out of the box&rdquo;
-	with CAMPSITE). Topics allow you to attach additional attributes to
-	your article, which may be used by the aforementioned power users on
-	your system to display articles in a certain way. If they have not
-	decided to make use of this feature, you may ignore this button. For
-	more information on topics, see section 2.4)</P>
-	<LI><P STYLE="margin-top: 0cm"><B>Unlock</B>, which you can use to
-	withdraw your reservation of the article (e.g. when you are finished
-	with your editing). The unlocking is in principle done
-	automatically, but since CAMPSITE is a server-based application
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><B>Images</B> - lets
+	you upload images that can be used within body-type fields of the
+	article.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><B>Topics </B>- this
+	is an advanced feature that lets you select from a list of topics
+	and subtopics predefined by your CAMPSITE administrator or
+	high-ranking editor (e.g. users with rights that correspond to the
+	default Administrator or Chief Editor user types that come &ldquo;out
+	of the box&rdquo; with CAMPSITE). Topics allow you to attach
+	additional attributes to your article, which may be used by the
+	aforementioned power users on your system to display articles in a
+	certain way. If they have not decided to make use of this feature,
+	you may ignore this button. For more information on topics, see
+	section 2.4)</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><B>Unlock</B>, which
+	you can use to withdraw your reservation of the article (e.g. when
+	you are finished with your editing). The unlocking is in principle
+	done automatically, but since CAMPSITE is a server-based application
 	accessed through web browsers, a number of events (computer crashes,
 	line falling, etc.) could prevent this from happening.</P>
-	<LI><P STYLE="margin-top: 0cm"><B>Preview</B>, which allows you to
-	preview the article (see below for more detail)</P>
-	<LI><P STYLE="margin-top: 0cm"><B>Translate</B>, which allows you to
-	create a version of the article you are editing in another language.</P>
-	<LI><P STYLE="margin-top: 0cm"><B>Delete</B>, which is
-	self-explanatory</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><B>Preview</B>, which
+	allows you to preview the article (see below for more detail)</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><B>Translate</B>,
+	which allows you to create a version of the article you are editing
+	in another language.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><B>Delete</B>, which
+	is self-explanatory</P>
 </UL>
 <H3 CLASS="western"><A NAME="2.2.7"></A><FONT FACE="Times, serif">2.2.7
 Editing body-type fields: Working with CAMPFIRE</FONT></H3>
@@ -1171,57 +1197,60 @@ section 2.3).</P>
 <P CLASS="western">From left to right on the toolbar, in order of
 appearance, the buttons are:</P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">New - clears the editor</P>
-	<LI><P STYLE="margin-top: 0cm">Save - which saves the article field
-	that is being edited</P>
-	<LI><P STYLE="margin-top: 0cm">Preview - allows you to preview the
-	whole article, not just the field you are editing</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">New - clears the
+	editor</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Save - which saves
+	the article field that is being edited</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Preview - allows you
+	to preview the whole article, not just the field you are editing</P>
 </UL>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">Cut</P>
-	<LI><P STYLE="margin-top: 0cm">Copy</P>
-	<LI><P STYLE="margin-top: 0cm">Paste</P>
-	<LI><P STYLE="margin-top: 0cm">Undo</P>
-	<LI><P STYLE="margin-top: 0cm">Redo</P>
-	<LI><P STYLE="margin-top: 0cm">Bold</P>
-	<LI><P STYLE="margin-top: 0cm">Italic</P>
-	<LI><P STYLE="margin-top: 0cm">Underline</P>
-	<LI><P STYLE="margin-top: 0cm">Align left</P>
-	<LI><P STYLE="margin-top: 0cm">Align center</P>
-	<LI><P STYLE="margin-top: 0cm">Align right</P>
-	<LI><P STYLE="margin-top: 0cm">Insert image - inserts an image
-	placeholder into the text. When you click on it, you are prompted to
-	select one of the images you previously uploaded for that particular
-	article. You can also specify the alignment (none, left, right,
-	centered), alt text (the text that shows up when you go over an
-	image with a mouse within a browser), and the caption for that will
-	appear under the image.</P>
-	<LI><P STYLE="margin-top: 0cm">Insert subhead allows subheads in
-	your text to become page breaks. This command inserts a code around
-	the subhead you select, which the parser will interpret as a page
-	break and parse the subhead on a new page (N.B. This feature has to
-	be enabled in your templates; see Part 3 of this manual for more
-	details).</P>
-	<LI><P STYLE="margin-top: 0cm">Internal link button allows you to
-	create links to other articles that you have already created within
-	CAMPSITE. The actual procedure is analogous to the one with external
-	links.</P>
-	<LI><P STYLE="margin-top: 0cm">External link allows you to create an
-	absolute link in the text. You do so by highlighting (selecting) the
-	segment of the text that you would like to link to a web page (URL)
-	of your choice and clicking on the External link button. This will
-	invoke a popup window that will prompt you to provide the URL and
-	you can specify where you want the link to open (e.g. a new window).
-	(N.B. you can use this feature to create mailto links as well).</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Cut</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Copy</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Paste</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Undo</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Redo</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Bold</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Italic</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Underline</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Align left</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Align center</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Align right</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Insert image -
+	inserts an image placeholder into the text. When you click on it,
+	you are prompted to select one of the images you previously uploaded
+	for that particular article. You can also specify the alignment
+	(none, left, right, centered), alt text (the text that shows up when
+	you go over an image with a mouse within a browser), and the caption
+	for that will appear under the image.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Insert subhead allows
+	subheads in your text to become page breaks. This command inserts a
+	code around the subhead you select, which the parser will interpret
+	as a page break and parse the subhead on a new page (N.B. This
+	feature has to be enabled in your templates; see Part 3 of this
+	manual for more details).</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Internal link button
+	allows you to create links to other articles that you have already
+	created within CAMPSITE. The actual procedure is analogous to the
+	one with external links.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">External link allows
+	you to create an absolute link in the text. You do so by
+	highlighting (selecting) the segment of the text that you would like
+	to link to a web page (URL) of your choice and clicking on the
+	External link button. This will invoke a popup window that will
+	prompt you to provide the URL and you can specify where you want the
+	link to open (e.g. a new window). (N.B. you can use this feature to
+	create mailto links as well).</P>
 </UL>
 <P CLASS="western">All of these functions are also available from the
 dropdown menus. The menus four five important extra options:</P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">Glossary keywords</P>
-	<LI><P STYLE="margin-top: 0cm">Font color</P>
-	<LI><P STYLE="margin-top: 0cm">Font size, which is self-explanatory</P>
-	<LI><P STYLE="margin-top: 0cm">Clear all attributes (which clears
-	all formatting and links from the selected text)</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Glossary keywords</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Font color</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Font size, which is
+	self-explanatory</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Clear all attributes
+	(which clears all formatting and links from the selected text)</P>
 </UL>
 <P CLASS="western">NOTE: CAMPFIRE only handles left, right, and
 centered alignment, because current browsers do not treat
@@ -1271,9 +1300,9 @@ Publishing articles</FONT></H3>
 means of assigning three statuses to an article: 
 </P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">- new</P>
-	<LI><P STYLE="margin-top: 0cm">- submitted</P>
-	<LI><P STYLE="margin-top: 0cm">- published</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">- new</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">- submitted</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">- published</P>
 </UL>
 <P CLASS="western">When you create an article, it is set to 'New'. If
 you change the status to 'Submit', then - via email - the editors
@@ -1342,9 +1371,10 @@ then assign the appropriate infotype (e.g. 'private life' or
 <P CLASS="western">To make use of the Glossary function in your daily
 editing, you need to do the following:</P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">- define keywords (e.g. Helmut Kohl)</P>
-	<LI><P STYLE="margin-top: 0cm">- create the related Infotypes (e.g.
-	Love Life, Career, Hobbies)</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">- define keywords
+	(e.g. Helmut Kohl)</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">- create the related
+	Infotypes (e.g. Love Life, Career, Hobbies)</P>
 </UL>
 <P CLASS="western">Once these steps have been taken, you will be able
 to mark different incidences of the keywords within CAMPFIRE. Later,
@@ -1435,11 +1465,11 @@ Configuring the Subscription Module</FONT></H2>
 <P CLASS="western">CAMPSITE allows you to control access to your site
 in two ways:</P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">Standard UserName:Password pairs,
-	which is suitable for individual users</P>
-	<LI><P STYLE="margin-top: 0cm">IP Address access, which most
-	institutional subscribers (libraries, universities, NGOs, companies,
-	etc.) tend to prefer</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Standard
+	UserName:Password pairs, which is suitable for individual users</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">IP Address access,
+	which most institutional subscribers (libraries, universities, NGOs,
+	companies, etc.) tend to prefer</P>
 </UL>
 <P CLASS="western">As CAMPSITE handles subscriptions at publication
 level, all subscription-related variables are customizable from the
@@ -1455,18 +1485,18 @@ create subscription preferences for a given country.</P>
 will be able to specify the remainder of subscription parameters for
 your publication:</P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">Pay Time - specifies the time within
-	which the user has to pay for his subscription (in the meantime, he
-	has immediate access to the site);</P>
-	<LI><P STYLE="margin-top: 0cm">Time-unit - specifies the time unit
-	you would like to use to measure the duration of subscriptions; you
-	can select day, week, month, or year;</P>
-	<LI><P STYLE="margin-top: 0cm">Unit cost - the price for a section
-	for the selected time unit;</P>
-	<LI><P STYLE="margin-top: 0cm">Currency - the publication's
-	currency. Even if the subscription request is sent and the currency
-	is changed meanwhile, the information about the user's debt is
-	correctly recorded.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Pay Time - specifies
+	the time within which the user has to pay for his subscription (in
+	the meantime, he has immediate access to the site);</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Time-unit - specifies
+	the time unit you would like to use to measure the duration of
+	subscriptions; you can select day, week, month, or year;</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Unit cost - the price
+	for a section for the selected time unit;</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Currency - the
+	publication's currency. Even if the subscription request is sent and
+	the currency is changed meanwhile, the information about the user's
+	debt is correctly recorded.</P>
 </UL>
 <H3 CLASS="western"><A NAME="2.5.1"></A><FONT FACE="Times, serif"><FONT COLOR="#000000">2.5.1</FONT>
 Username:Password Access</FONT></H3>
@@ -1504,19 +1534,20 @@ customizable. Depending on the user's status, several steps must be
 taken by a user in order to be able to read the publication. There
 are three possible scenarios:</P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">the user has never subscribed; the
-	user is served a subscription form (name, login, password, email
-	etc); after the completion of this form, the user can start
-	subscribing to any section</P>
-	<LI><P STYLE="margin-top: 0cm">the user has already subscribed (i.e.
-	is a known user to the system) but only to a few sections, and he
-	wants to add more sections to the subscriptions he has already made,
-	which might have expired; the user should be served a different
-	subscription form (reflecting his status of a known user)</P>
-	<LI><P STYLE="margin-top: 0cm">the user is not known to the system
-	even though his subscriptions are active (e.g. the subscriber hasn't
-	logged for a long time, even if his subscriptions are active; a
-	login form must be supplied for such a user.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">the user has never
+	subscribed; the user is served a subscription form (name, login,
+	password, email etc); after the completion of this form, the user
+	can start subscribing to any section</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">the user has already
+	subscribed (i.e. is a known user to the system) but only to a few
+	sections, and he wants to add more sections to the subscriptions he
+	has already made, which might have expired; the user should be
+	served a different subscription form (reflecting his status of a
+	known user)</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">the user is not known
+	to the system even though his subscriptions are active (e.g. the
+	subscriber hasn't logged for a long time, even if his subscriptions
+	are active; a login form must be supplied for such a user.</P>
 </UL>
 <P CLASS="western">Template designer can customize all those forms by
 means of CAMPSITE's description language (see Part 3 of this manual).</P>
@@ -1928,26 +1959,28 @@ set by the first type of instructions.</P>
 <P CLASS="western">The information selected also depends on the
 runtime parameters. These parameters are:</P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">language identifier (IdLang) which
-	sets the current language</P>
-	<LI><P STYLE="margin-top: 0cm">publication identifier (IdPubl) which
-	sets the current publication</P>
-	<LI><P STYLE="margin-top: 0cm">issue number (NrIssue) which sets the
-	current issue</P>
-	<LI><P STYLE="margin-top: 0cm">section number (NrSection) which sets
-	the current section</P>
-	<LI><P STYLE="margin-top: 0cm">article number (NrArticle) which sets
-	the article</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">language identifier
+	(IdLang) which sets the current language</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">publication
+	identifier (IdPubl) which sets the current publication</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">issue number
+	(NrIssue) which sets the current issue</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">section number
+	(NrSection) which sets the current section</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">article number
+	(NrArticle) which sets the article</P>
 </UL>
 <H3 CLASS="western"><A NAME="3.8.2"></A>3.8.2 Other parameters</H3>
 <P CLASS="western">and also some special parameters:</P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">the keywords parameter, which
-	specifies that keywords will be used as filters in a List
-	SearchResult statement; it is used for the local search engine</P>
-	<LI><P STYLE="margin-top: 0cm">a list index start, that specifies
-	the starting index for a each type of list: Issue (ILStart), Section
-	(SLStart), Article (ALStart), Article search (SRLstart)</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">the keywords
+	parameter, which specifies that keywords will be used as filters in
+	a List SearchResult statement; it is used for the local search
+	engine</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">a list index start,
+	that specifies the starting index for a each type of list: Issue
+	(ILStart), Section (SLStart), Article (ALStart), Article search
+	(SRLstart)</P>
 </UL>
 <P CLASS="western">All runtime parameters form the so-called &quot;data
 context&quot; within which each article is positioned.</P>
@@ -2056,82 +2089,89 @@ Conventions</H3>
 <P CLASS="western">In the following subchapters describing the
 template language we used the following conventions:</P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">identifiers in between '&lt;' and '&gt;'
-	must be replaced in the template according to their description</P>
-	<LI><P STYLE="margin-top: 0cm">spaces must be used as in the
-	language description</P>
-	<LI><P STYLE="margin-top: 0cm">attributes names and values must not
-	contain '&quot;' and tab characters</P>
-	<LI><P STYLE="margin-top: 0cm">identifiers that are not in between
-	'&lt;' and '&gt;' are language keywords and must be written as in
-	the language description</P>
-	<LI><P STYLE="margin-top: 0cm">any language identifier can be
-	written in between '&quot;' character; identifiers containing spaces
-	and must be written in between '&quot;'</P>
-	<LI><P STYLE="margin-top: 0cm">identifiers enclosed by '[' and ']'
-	characters are not mandatory in the statement</P>
-	<LI><P STYLE="margin-top: 0cm">sequences of identifiers separated by
-	'|' character describe a situation where all the identifiers are
-	valid but only one can be used at a time</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">identifiers in
+	between '&lt;' and '&gt;' must be replaced in the template according
+	to their description</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">spaces must be used
+	as in the language description</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">attributes names and
+	values must not contain '&quot;' and tab characters</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">identifiers that are
+	not in between '&lt;' and '&gt;' are language keywords and must be
+	written as in the language description</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">any language
+	identifier can be written in between '&quot;' character; identifiers
+	containing spaces and must be written in between '&quot;'</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">identifiers enclosed
+	by '[' and ']' characters are not mandatory in the statement</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">sequences of
+	identifiers separated by '|' character describe a situation where
+	all the identifiers are valid but only one can be used at a time</P>
 </UL>
 <P CLASS="western">The template language is composed out of:</P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">statements: they are keywords with a
-	special meaning that define actions taken by template parser; click
-	<A HREF="#4.">here</A> for a list of statements</P>
-	<LI><P STYLE="margin-top: 0cm">attributes: are keywords describing
-	statement features; they are used to specify statement constraints</P>
-	<LI><P STYLE="margin-top: 0cm">operators: are keywords used in
-	specifying constraints (comparison expressions)</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">statements: they are
+	keywords with a special meaning that define actions taken by
+	template parser; click <A HREF="#4.">here</A> for a list of
+	statements</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">attributes: are
+	keywords describing statement features; they are used to specify
+	statement constraints</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">operators: are
+	keywords used in specifying constraints (comparison expressions)</P>
 </UL>
 <P CLASS="western">Constraints are built in one of the following
 ways:</P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">comparison expressions: &lt;attribute&gt;
-	&lt;operator&gt; &lt;value&gt;</P>
-	<LI><P STYLE="margin-top: 0cm">list of values: &lt;attribute&gt;
-	&lt;value_list&gt;</P>
-	<LI><P STYLE="margin-top: 0cm">attributes without type: &lt;attribute&gt;</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">comparison
+	expressions: &lt;attribute&gt; &lt;operator&gt; &lt;value&gt;</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">list of values:
+	&lt;attribute&gt; &lt;value_list&gt;</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">attributes without
+	type: &lt;attribute&gt;</P>
 </UL>
 <P CLASS="western"><A NAME="attr_types"></A>Attributes may have no
 type or one of the following types:</P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">integer: signed, 10 digits number</P>
-	<LI><P STYLE="margin-top: 0cm">string of characters: may contain any
-	character except '&quot;'</P>
-	<LI><P STYLE="margin-top: 0cm">switch: has two values: &quot;on&quot;
-	and &quot;off&quot;</P>
-	<LI><P STYLE="margin-top: 0cm">date: year, month, day; where date
-	value is specified it must be written in &quot;yyyy-mm-dd&quot;
-	format</P>
-	<LI><P STYLE="margin-top: 0cm">time: hour, minute, second; where
-	time value is specified it must be written in &quot;hh:mm:ss&quot;
-	format</P>
-	<LI><P STYLE="margin-top: 0cm">datetime: year, month, day, hour,
-	minute, second; where datetime value is specified it must be written
-	in &quot;yyyy-mm-dd hh:mm:ss&quot; format</P>
-	<LI><P STYLE="margin-top: 0cm">topic: list of names defined by the
-	application user used for categorizing articles</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">integer: signed, 10
+	digits number</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">string of characters:
+	may contain any character except '&quot;'</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">switch: has two
+	values: &quot;on&quot; and &quot;off&quot;</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">date: year, month,
+	day; where date value is specified it must be written in
+	&quot;yyyy-mm-dd&quot; format</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">time: hour, minute,
+	second; where time value is specified it must be written in
+	&quot;hh:mm:ss&quot; format</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">datetime: year,
+	month, day, hour, minute, second; where datetime value is specified
+	it must be written in &quot;yyyy-mm-dd hh:mm:ss&quot; format</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">topic: list of names
+	defined by the application user used for categorizing articles</P>
 </UL>
 <P CLASS="western"><A NAME="operators"></A>Every type has a list of
 valid operators that can be used on attributes of that certain type.
 The operators list corresponding to defined types:</P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">integer: &lt;integer_operator&gt; =
-	is | not | greater | greater_equal | smaller | smaller_equal</P>
-	<LI><P STYLE="margin-top: 0cm">string of characters:
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">integer:
+	&lt;integer_operator&gt; = is | not | greater | greater_equal |
+	smaller | smaller_equal</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">string of characters:
 	&lt;string_operator&gt; = is | not | greater | greater_equal |
 	smaller | smaller_equal</P>
-	<LI><P STYLE="margin-top: 0cm">switch: &lt;switch_operator&gt; = is
-	| not</P>
-	<LI><P STYLE="margin-top: 0cm">date: &lt;date_operator&gt; = is |
-	not | greater | greater_equal | smaller | smaller_equal</P>
-	<LI><P STYLE="margin-top: 0cm">time: &lt;time_operator&gt; = is |
-	not | greater | greater_equal | smaller | smaller_equal</P>
-	<LI><P STYLE="margin-top: 0cm">datetime: &lt;datetime_operator&gt; =
-	is | not | greater | greater_equal | smaller | smaller_equal</P>
-	<LI><P STYLE="margin-top: 0cm">topic: &lt;topic_operator&gt; = is |
-	not</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">switch:
+	&lt;switch_operator&gt; = is | not</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">date: &lt;date_operator&gt;
+	= is | not | greater | greater_equal | smaller | smaller_equal</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">time: &lt;time_operator&gt;
+	= is | not | greater | greater_equal | smaller | smaller_equal</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">datetime:
+	&lt;datetime_operator&gt; = is | not | greater | greater_equal |
+	smaller | smaller_equal</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">topic:
+	&lt;topic_operator&gt; = is | not</P>
 </UL>
 <H3 CLASS="western"><A NAME="3.9.2"></A>3.9.2 'Define-environment'
 instructions</H3>
@@ -2390,21 +2430,21 @@ can only be used once.</P>
 <P CLASS="western">Inside the List the following environment
 variables are modified:</P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">language: if not defined before list
-	start</P>
-	<LI><P STYLE="margin-top: 0cm">publication: if not defined before
-	list start</P>
-	<LI><P STYLE="margin-top: 0cm">issue</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">language: if not
+	defined before list start</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">publication: if not
+	defined before list start</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">issue</P>
 </UL>
 <P CLASS="western">The environment is restored after the list ends.</P>
 <P CLASS="western">Constraints:</P>
 <P CLASS="western">Inside List Issue the following statements are
 forbidden:</P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">Language</P>
-	<LI><P STYLE="margin-top: 0cm">Publication</P>
-	<LI><P STYLE="margin-top: 0cm">List Issue</P>
-	<LI><P STYLE="margin-top: 0cm">Issue</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Language</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Publication</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">List Issue</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Issue</P>
 </UL>
 <P CLASS="western">List Issue statement can not be used inside List
 Section, List Article, List Subtittle, List SearchResults statements.</P>
@@ -2488,12 +2528,12 @@ line. The data context is restored after the list processing.</P>
 <P CLASS="western">Inside List Section the following statements are
 forbidden:</P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">Language</P>
-	<LI><P STYLE="margin-top: 0cm">Publication</P>
-	<LI><P STYLE="margin-top: 0cm">List Issue</P>
-	<LI><P STYLE="margin-top: 0cm">Issue</P>
-	<LI><P STYLE="margin-top: 0cm">List Section</P>
-	<LI><P STYLE="margin-top: 0cm">Section</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Language</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Publication</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">List Issue</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Issue</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">List Section</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Section</P>
 </UL>
 <P CLASS="western"><FONT FACE="Times New Roman"><FONT SIZE=2 STYLE="font-size: 11pt">List
 Section statement cannot be used inside List Article, List Subtitle,
@@ -2582,31 +2622,36 @@ may contain any statement except: &quot;Language&quot;,
 	</TR>
 </TABLE>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">name, number, upload_date are self
-	explaining article attributes</P>
-	<LI><P STYLE="margin-top: 0cm">keyword: all articles containing the
-	specified keyword (and respecting all the other constraints) will be
-	in the list</P>
-	<LI><P STYLE="margin-top: 0cm">OnFrontPage: articles having &quot;Show
-	article on front page&quot; flag in &lt;switch_operator&gt; relation
-	with &lt;switch_value&gt; will be selected; for details see <A HREF="#2.2.5">Creating
-	articles within a section</A></P>
-	<LI><P STYLE="margin-top: 0cm">OnSection: articles having &quot;Show
-	article on section page&quot; flag in &lt;switch_operator&gt;
-	relation with &lt;switch_value&gt; will be selected; for details see
-	<A HREF="#2.2.5">Creating articles within a section</A></P>
-	<LI><P STYLE="margin-top: 0cm">public: articles having &quot;Allow
-	users without subscription...&quot; flag in &lt;switch_operator&gt;
-	relation with &lt;switch_value&gt; will be selected</P>
-	<LI><P STYLE="margin-top: 0cm">... &lt;article_type_attribute&gt;
-	...: articles being of &lt;article_type&gt; and having
-	&lt;article_type_attribute&gt; in &lt;attribute_type_operator&gt;
-	relation with &lt;attribute_type_value&gt; will be selected; for
-	details see <A HREF="#2.2.4">Defining article types</A></P>
-	<LI><P STYLE="margin-top: 0cm">topic: if &quot;is&quot; operator is
-	used, articles having specified topic in their list of topics will
-	be selected; if &quot;not&quot; operator is uses articles not having
-	specified topic in their list of topics will be selected</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">name, number,
+	upload_date are self explaining article attributes</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">keyword: all articles
+	containing the specified keyword (and respecting all the other
+	constraints) will be in the list</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">OnFrontPage: articles
+	having &quot;Show article on front page&quot; flag in
+	&lt;switch_operator&gt; relation with &lt;switch_value&gt; will be
+	selected; for details see <A HREF="#2.2.5">Creating articles within
+	a section</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">OnSection: articles
+	having &quot;Show article on section page&quot; flag in
+	&lt;switch_operator&gt; relation with &lt;switch_value&gt; will be
+	selected; for details see <A HREF="#2.2.5">Creating articles within
+	a section</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">public: articles
+	having &quot;Allow users without subscription...&quot; flag in
+	&lt;switch_operator&gt; relation with &lt;switch_value&gt; will be
+	selected</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">...
+	&lt;article_type_attribute&gt; ...: articles being of &lt;article_type&gt;
+	and having &lt;article_type_attribute&gt; in
+	&lt;attribute_type_operator&gt; relation with &lt;attribute_type_value&gt;
+	will be selected; for details see <A HREF="#2.2.4">Defining article
+	types</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">topic: if &quot;is&quot;
+	operator is used, articles having specified topic in their list of
+	topics will be selected; if &quot;not&quot; operator is uses
+	articles not having specified topic in their list of topics will be
+	selected</P>
 </UL>
 <TABLE WIDTH=1008 BORDER=0 CELLPADDING=2 CELLSPACING=0>
 	<COL WIDTH=364>
@@ -2649,14 +2694,14 @@ line. The data context is restored after the list processing.</P>
 <P CLASS="western">Inside List Article the following statements are
 forbidden:</P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">Language</P>
-	<LI><P STYLE="margin-top: 0cm">Publication</P>
-	<LI><P STYLE="margin-top: 0cm">List Issue</P>
-	<LI><P STYLE="margin-top: 0cm">Issue</P>
-	<LI><P STYLE="margin-top: 0cm">List Section</P>
-	<LI><P STYLE="margin-top: 0cm">Section</P>
-	<LI><P STYLE="margin-top: 0cm">List Article</P>
-	<LI><P STYLE="margin-top: 0cm">Article</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Language</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Publication</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">List Issue</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Issue</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">List Section</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Section</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">List Article</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Article</P>
 </UL>
 <P CLASS="western"><FONT FACE="Times New Roman"><FONT SIZE=2 STYLE="font-size: 11pt">List
 Article statement cannot be used inside List Subtitle, List
@@ -2711,14 +2756,14 @@ paragraphs, so a new option was needed and is called NextSubtitle
 <P CLASS="western">Inside List Subtitle the following statements are
 forbidden:</P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">Language</P>
-	<LI><P STYLE="margin-top: 0cm">Publication</P>
-	<LI><P STYLE="margin-top: 0cm">List Issue</P>
-	<LI><P STYLE="margin-top: 0cm">Issue</P>
-	<LI><P STYLE="margin-top: 0cm">List Section</P>
-	<LI><P STYLE="margin-top: 0cm">Section</P>
-	<LI><P STYLE="margin-top: 0cm">List Article</P>
-	<LI><P STYLE="margin-top: 0cm">Article</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Language</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Publication</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">List Issue</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Issue</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">List Section</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Section</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">List Article</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Article</P>
 </UL>
 <H4 CLASS="western"><A NAME="3.9.3.5"></A>3.9.3.5 List Search Result</H4>
 <P CLASS="western">Purpose:</P>
@@ -2778,8 +2823,8 @@ line. The data context is restored after the list processing.</P>
 <P CLASS="western">Inside List SearchResult the following statements
 are forbidden:</P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">Language</P>
-	<LI><P STYLE="margin-top: 0cm">Publication</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Language</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Publication</P>
 </UL>
 <P CLASS="western"><B><FONT SIZE=4><FONT COLOR="#ff0000">Note!!!</FONT></FONT>
 (This is valid only for 2.0.11 and newer versions.)</B></P>
@@ -2929,16 +2974,17 @@ Publication &lt;condition&gt;</FONT><BR><FONT FACE="Courier New, Courier, mono">
 	</TR>
 </TABLE>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">name: the if condition is true if
-	actual publication name is in &lt;string_operator&gt; relation with
-	&lt;string_value&gt;</P>
-	<LI><P STYLE="margin-top: 0cm">identifier: the if condition is true
-	if actual publication identifier is &lt;integer_value&gt;</P>
-	<LI><P STYLE="margin-top: 0cm">defined: the if condition is true if
-	publication parameter is defined</P>
-	<LI><P STYLE="margin-top: 0cm">fromstart: the if condition is true
-	if actual value of publication parameter is equal with the value
-	from template start</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">name: the if
+	condition is true if actual publication name is in &lt;string_operator&gt;
+	relation with &lt;string_value&gt;</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">identifier: the if
+	condition is true if actual publication identifier is
+	&lt;integer_value&gt;</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">defined: the if
+	condition is true if publication parameter is defined</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">fromstart: the if
+	condition is true if actual value of publication parameter is equal
+	with the value from template start</P>
 </UL>
 <P CLASS="western">The list of instructions may contain any
 instruction allowed in the current context. If it is used inside a
@@ -2979,23 +3025,24 @@ template. It is used when printing information for a certain issue.</P>
 	</TR>
 </TABLE>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">name: the if condition is true if
-	actual issue name is in &lt;string_operator&gt; relation with
-	&lt;string_value&gt; 
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">name: the if
+	condition is true if actual issue name is in &lt;string_operator&gt;
+	relation with &lt;string_value&gt; 
 	</P>
-	<LI><P STYLE="margin-top: 0cm">number: the if condition is true if
-	actual issue number is in &lt;integer_operator&gt; relation with
-	&lt;integer_value&gt;</P>
-	<LI><P STYLE="margin-top: 0cm">publish_date: the if condition is
-	true if actual issue publish date is in &lt;date_operator&gt;
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">number: the if
+	condition is true if actual issue number is in &lt;integer_operator&gt;
+	relation with &lt;integer_value&gt;</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">publish_date: the if
+	condition is true if actual issue publish date is in &lt;date_operator&gt;
 	relation with &lt;date_value&gt;</P>
-	<LI><P STYLE="margin-top: 0cm">defined: the if condition is true if
-	issue parameter is defined</P>
-	<LI><P STYLE="margin-top: 0cm">fromstart: the if condition is true
-	if actual value of issue parameter is equal with the value from
-	template start</P>
-	<LI><P STYLE="margin-top: 0cm">iscurrent: the if condition is true
-	if actual issue is the current issue (the last published issue)</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">defined: the if
+	condition is true if issue parameter is defined</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">fromstart: the if
+	condition is true if actual value of issue parameter is equal with
+	the value from template start</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">iscurrent: the if
+	condition is true if actual issue is the current issue (the last
+	published issue)</P>
 </UL>
 <P CLASS="western">Example:</P>
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;!** If
@@ -3042,17 +3089,17 @@ Section, List Article, List Subtitle, List SearchResult).</P>
 	</THEAD>
 </TABLE>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">number: the if condition is true if
-	runtime section number is in &lt;integer_operator&gt; relation with
-	&lt;integer_value&gt;</P>
-	<LI><P STYLE="margin-top: 0cm">name: the if condition is true if
-	runtime section name is in &lt;string_operator&gt; relation with
-	&lt;string_value&gt;</P>
-	<LI><P STYLE="margin-top: 0cm">defined: the if condition is true if
-	section parameter is defined</P>
-	<LI><P STYLE="margin-top: 0cm">fromstart: the if condition is true
-	if actual value of section parameter is equal with the value from
-	template start</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">number: the if
+	condition is true if runtime section number is in &lt;integer_operator&gt;
+	relation with &lt;integer_value&gt;</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">name: the if
+	condition is true if runtime section name is in &lt;string_operator&gt;
+	relation with &lt;string_value&gt;</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">defined: the if
+	condition is true if section parameter is defined</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">fromstart: the if
+	condition is true if actual value of section parameter is equal with
+	the value from template start</P>
 </UL>
 <P CLASS="western">Constraints:</P>
 <P CLASS="western">None.</P>
@@ -3096,38 +3143,40 @@ information from different types of article.</P>
 	</TR>
 </TABLE>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">type: the condition is true if
-	article type is &lt;string_value&gt;</P>
-	<LI><P STYLE="margin-top: 0cm">name: the condition is true if
-	article name is in &lt;string_operator&gt; relation with
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">type: the condition
+	is true if article type is &lt;string_value&gt;</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">name: the condition
+	is true if article name is in &lt;string_operator&gt; relation with
 	&lt;string_value&gt;</P>
-	<LI><P STYLE="margin-top: 0cm">upload_date: the condition is true if
-	article upload date is in &lt;date_operator&gt; relation with
-	&lt;date_value&gt;</P>
-	<LI><P STYLE="margin-top: 0cm">has_keyword: the condition is true if
-	specified keyword is in article keywords list</P>
-	<LI><P STYLE="margin-top: 0cm">public: the condition is true if the
-	article is public (has the public flag set)</P>
-	<LI><P STYLE="margin-top: 0cm">OnFrontPage: the condition is true if
-	&quot;Show article on front page&quot; flag is in &lt;switch_operator&gt;
-	relation with &lt;switch_value&gt;</P>
-	<LI><P STYLE="margin-top: 0cm">OnSection: the condition is true if
-	&quot;Show article on section page&quot; flag is in
-	&lt;switch_operator&gt; relation with &lt;switch_value&gt;</P>
-	<LI><P STYLE="margin-top: 0cm">defined: the condition is true if
-	article parameter is defined</P>
-	<LI><P STYLE="margin-top: 0cm">fromstart: the condition is true if
-	actual value of article parameter is equal with the value from
-	template start</P>
-	<LI><P STYLE="margin-top: 0cm">translated_to: <A HREF="#attr_types">&lt;string_value&gt;</A>
-	must be a valid language code; the condition is true if the article
-	has a translation into the language specified by the language code</P>
-	<LI><P STYLE="margin-top: 0cm">... &lt;article_type_attribute&gt;
-	...: the condition is true if the article is of &lt;article_type&gt;
-	and &lt;article_type_attribute&gt; is in &lt;attribute_type_operator&gt;
-	relation with &lt;attribute_type_value&gt;. &lt;article_type_attribute&gt;
-	is an attribute specific to an article type; for details see
-	<A HREF="#2.2.4">Defining article types</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">upload_date: the
+	condition is true if article upload date is in &lt;date_operator&gt;
+	relation with &lt;date_value&gt;</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">has_keyword: the
+	condition is true if specified keyword is in article keywords list</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">public: the condition
+	is true if the article is public (has the public flag set)</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">OnFrontPage: the
+	condition is true if &quot;Show article on front page&quot; flag is
+	in &lt;switch_operator&gt; relation with &lt;switch_value&gt;</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">OnSection: the
+	condition is true if &quot;Show article on section page&quot; flag
+	is in &lt;switch_operator&gt; relation with &lt;switch_value&gt;</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">defined: the
+	condition is true if article parameter is defined</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">fromstart: the
+	condition is true if actual value of article parameter is equal with
+	the value from template start</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">translated_to:
+	<A HREF="#attr_types">&lt;string_value&gt;</A> must be a valid
+	language code; the condition is true if the article has a
+	translation into the language specified by the language code</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">...
+	&lt;article_type_attribute&gt; ...: the condition is true if the
+	article is of &lt;article_type&gt; and &lt;article_type_attribute&gt;
+	is in &lt;attribute_type_operator&gt; relation with
+	&lt;attribute_type_value&gt;. &lt;article_type_attribute&gt; is an
+	attribute specific to an article type; for details see <A HREF="#2.2.4">Defining
+	article types</A></P>
 </UL>
 <P CLASS="western">The list of instructions may contain any
 instruction allowed in the current context. If it is used inside a
@@ -3170,16 +3219,19 @@ Subscription &lt;condition&gt;<BR>&lt;list_of_instructions&gt;<BR>[Else
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;condition&gt;
 = ok | error | trial | paid | action</FONT></P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">ok: the if condition is true if
-	subscription action was taken and its result is success</P>
-	<LI><P STYLE="margin-top: 0cm">error: the if condition is true if
-	subscription action was taken and its result is error</P>
-	<LI><P STYLE="margin-top: 0cm">trial: the if condition is true if
-	subscription action was taken and its type is trial</P>
-	<LI><P STYLE="margin-top: 0cm">paid: the if condition is true if
-	subscription action was taken and its type is paid</P>
-	<LI><P STYLE="margin-top: 0cm">action: the if condition is true if
-	subscription action was taken</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">ok: the if condition
+	is true if subscription action was taken and its result is success</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">error: the if
+	condition is true if subscription action was taken and its result is
+	error</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">trial: the if
+	condition is true if subscription action was taken and its type is
+	trial</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">paid: the if
+	condition is true if subscription action was taken and its type is
+	paid</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">action: the if
+	condition is true if subscription action was taken</P>
 </UL>
 <P CLASS="western">The list of instructions may contain any
 instruction allowed in current context. If it is used inside a list
@@ -3204,12 +3256,12 @@ describe the subscription result.</P>
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;condition&gt;
 = ok | error | action</FONT></P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">ok: the if condition is true if login
-	action was taken and its result is success</P>
-	<LI><P STYLE="margin-top: 0cm">error: the if condition is true if
-	login action was taken and its result is error</P>
-	<LI><P STYLE="margin-top: 0cm">action: the if condition is true if
-	login action was taken</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">ok: the if condition
+	is true if login action was taken and its result is success</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">error: the if
+	condition is true if login action was taken and its result is error</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">action: the if
+	condition is true if login action was taken</P>
 </UL>
 <P CLASS="western">The list of instructions may contain any
 instruction allowed in current context. If it is used inside a list
@@ -3247,23 +3299,27 @@ in template. It is used to describe the subscription result.</P>
 	</TR>
 </TABLE>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">addok: the if condition is true if
-	user add action was taken and its result is success</P>
-	<LI><P STYLE="margin-top: 0cm">modifyok: the if condition is true if
-	user modify action was taken and its result is success</P>
-	<LI><P STYLE="margin-top: 0cm">adderror: the if condition is true if
-	user add action was taken and its result is error</P>
-	<LI><P STYLE="margin-top: 0cm">modifyerror: the if condition is true
-	if user modify action was taken and its result is error</P>
-	<LI><P STYLE="margin-top: 0cm">addaction: the if condition is true
-	if user add action was taken</P>
-	<LI><P STYLE="margin-top: 0cm">modifyaction: the if condition is
-	true if user modify action was taken</P>
-	<LI><P STYLE="margin-top: 0cm">defined: the if condition is true if
-	user is defined (user cookie exists); this doesn't necessary mean
-	that the user is properly logged in</P>
-	<LI><P STYLE="margin-top: 0cm">loggedin: the if condition is true if
-	user is properly logged in</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">addok: the if
+	condition is true if user add action was taken and its result is
+	success</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">modifyok: the if
+	condition is true if user modify action was taken and its result is
+	success</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">adderror: the if
+	condition is true if user add action was taken and its result is
+	error</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">modifyerror: the if
+	condition is true if user modify action was taken and its result is
+	error</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">addaction: the if
+	condition is true if user add action was taken</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">modifyaction: the if
+	condition is true if user modify action was taken</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">defined: the if
+	condition is true if user is defined (user cookie exists); this
+	doesn't necessary mean that the user is properly logged in</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">loggedin: the if
+	condition is true if user is properly logged in</P>
 </UL>
 <P CLASS="western">The list of instructions may contain any
 instruction allowed in the current context. If it is used inside a
@@ -3339,18 +3395,18 @@ where</P>
 	</TR>
 </TABLE>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">defined: the if condition is true if
-	language parameter is defined</P>
-	<LI><P STYLE="margin-top: 0cm">fromstart: the if condition is true
-	if actual value of language parameter is equal with the value from
-	template start</P>
-	<LI><P STYLE="margin-top: 0cm">number: the if condition is true if
-	operation: <FONT FACE="Courier New, Courier, mono">number
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">defined: the if
+	condition is true if language parameter is defined</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">fromstart: the if
+	condition is true if actual value of language parameter is equal
+	with the value from template start</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">number: the if
+	condition is true if operation: <FONT FACE="Courier New, Courier, mono">number
 	</FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;integer_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
 	</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;integer_value&gt;</FONT></A>
 	is true</P>
-	<LI><P STYLE="margin-top: 0cm">name, englname, code: the if
-	condition is true if operation: <FONT FACE="Courier New, Courier, mono">name|englname|code
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">name, englname, code:
+	the if condition is true if operation: <FONT FACE="Courier New, Courier, mono">name|englname|code
 	</FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;string_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
 	</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;string_value&gt;</FONT></A>
 	is true</P>
@@ -3448,24 +3504,27 @@ parameters and can be used to create links.</P>
 is an <A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;integer_value&gt;</FONT></A>
 representing a valid number of article image</P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">allsubtitles: following this link the
-	whole article will be printed, instead of one subtitle.</P>
-	<LI><P STYLE="margin-top: 0cm">fromstart: prints the parameters
-	received at the start of template, not the current ones (useful when
-	building sitemaps)</P>
-	<LI><P STYLE="margin-top: 0cm">reset_issue_list: reset list counters
-	for all the lists (issue, section, article, searchresult, subtitle)</P>
-	<LI><P STYLE="margin-top: 0cm">reset_section_list: reset list
-	counters for the following lists: section, article, searchresult,
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">allsubtitles:
+	following this link the whole article will be printed, instead of
+	one subtitle.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">fromstart: prints the
+	parameters received at the start of template, not the current ones
+	(useful when building sitemaps)</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">reset_issue_list:
+	reset list counters for all the lists (issue, section, article,
+	searchresult, subtitle)</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">reset_section_list:
+	reset list counters for the following lists: section, article,
+	searchresult, subtitle</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">reset_article_list:
+	reset list counters for the following lists: article, searchresult,
 	subtitle</P>
-	<LI><P STYLE="margin-top: 0cm">reset_article_list: reset list
-	counters for the following lists: article, searchresult, subtitle</P>
-	<LI><P STYLE="margin-top: 0cm">reset_searchresult_list: reset list
-	counters for the following lists: searchresult, subtitle</P>
-	<LI><P STYLE="margin-top: 0cm">reset_subtitle_list: reset list
-	counters for the following lists: subtitle</P>
-	<LI><P STYLE="margin-top: 0cm">image: print image parameters in
-	order to show an image in template</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">reset_searchresult_list:
+	reset list counters for the following lists: searchresult, subtitle</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">reset_subtitle_list:
+	reset list counters for the following lists: subtitle</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">image: print image
+	parameters in order to show an image in template</P>
 </UL>
 <P CLASS="western">Example:</P>
 <P CLASS="western">Suppose the data context is set to Language 1
@@ -3520,23 +3579,26 @@ data context will be printed.</P>
 <FONT FACE="Courier, monospace">&lt;language_expression&gt; =
 Language name |number |englname |code |codepage</FONT></P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">name: language name</P>
-	<LI><P STYLE="margin-top: 0cm">number: language identifier in the
-	CAMPSITE database</P>
-	<LI><P STYLE="margin-top: 0cm">englname: language name in English</P>
-	<LI><P STYLE="margin-top: 0cm">code: language international code</P>
-	<LI><P STYLE="margin-top: 0cm">codepage: page code corresponding to
-	the language</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">name: language name</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">number: language
+	identifier in the CAMPSITE database</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">englname: language
+	name in English</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">code: language
+	international code</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">codepage: page code
+	corresponding to the language</P>
 </UL>
 <P CLASS="western">For details on language see <A HREF="#2.1.1">languages</A>.</P>
 <P CLASS="western"><A NAME="p_pub_expr"></A><FONT FACE="Courier, monospace">&lt;publication_expression&gt;
 = Publication name |identifier |site</FONT></P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">name: publication name</P>
-	<LI><P STYLE="margin-top: 0cm">identifier: publication identifier in
-	the CAMPSITE database</P>
-	<LI><P STYLE="margin-top: 0cm">site: publication site (see also
-	<A HREF="#2.2.1">Creating a new publication</A>)</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">name: publication
+	name</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">identifier:
+	publication identifier in the CAMPSITE database</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">site: publication
+	site (see also <A HREF="#2.2.1">Creating a new publication</A>)</P>
 </UL>
 <P CLASS="western">For details on publication see <A HREF="#2.2.1">Creating
 a new publication</A>.</P>
@@ -3544,24 +3606,25 @@ a new publication</A>.</P>
 = Issue name |number |&lt;date_attribute&gt; |date &lt;date_format&gt;
 |templat</FONT><FONT FACE="Courier New">e</FONT></P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">name: issue name</P>
-	<LI><P STYLE="margin-top: 0cm">number: issue identifier in the
-	CAMPSITE database</P>
-	<LI><P STYLE="margin-top: 0cm">&lt;date_attribute&gt;: print an
-	issue publish date field (year, month, day etc.); see <A HREF="#date_attribute">details</A></P>
-	<LI><P STYLE="margin-top: 0cm">date &lt;date_format&gt;: print issue
-	publish date using the given format; see <A HREF="#date_format">details</A></P>
-	<LI><P STYLE="margin-top: 0cm">template: print the full path of the
-	issue template file</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">name: issue name</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">number: issue
+	identifier in the CAMPSITE database</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">&lt;date_attribute&gt;:
+	print an issue publish date field (year, month, day etc.); see
+	<A HREF="#date_attribute">details</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">date &lt;date_format&gt;:
+	print issue publish date using the given format; see <A HREF="#date_format">details</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">template: print the
+	full path of the issue template file</P>
 </UL>
 <P CLASS="western">For details on issue see <A HREF="#2.2.2">Creating
 a new issue</A>.</P>
 <P CLASS="western"><A NAME="p_sect_expr"></A><FONT FACE="Courier, monospace">&lt;section_expression&gt;
 = Section name |number</FONT></P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">name: section name</P>
-	<LI><P STYLE="margin-top: 0cm">number: section identifier in the
-	CAMPSITE database</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">name: section name</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">number: section
+	identifier in the CAMPSITE database</P>
 </UL>
 <P CLASS="western">For details on section see <A HREF="#2.2.3">Add
 new sections to an issue</A> 
@@ -3584,22 +3647,26 @@ new sections to an issue</A>
 	</TR>
 </TABLE>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">name: article name</P>
-	<LI><P STYLE="margin-top: 0cm">number: article identifier in the
-	CAMPSITE database</P>
-	<LI><P STYLE="margin-top: 0cm">keywords: article keywords</P>
-	<LI><P STYLE="margin-top: 0cm">type: article type (see <A HREF="#2.2.4">details</A>)</P>
-	<LI><P STYLE="margin-top: 0cm">&lt;date_attribute&gt;: print an
-	article upload date field (year, month, day etc.); see <A HREF="#date_attribute">details</A></P>
-	<LI><P STYLE="margin-top: 0cm">upload_date [&lt;date_format&gt;]:
-	print article upload date using the given format; see <A HREF="#date_format">details</A></P>
-	<LI><P STYLE="margin-top: 0cm">[&lt;article_type&gt;]
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">name: article name</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">number: article
+	identifier in the CAMPSITE database</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">keywords: article
+	keywords</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">type: article type
+	(see <A HREF="#2.2.4">details</A>)</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">&lt;date_attribute&gt;:
+	print an article upload date field (year, month, day etc.); see
+	<A HREF="#date_attribute">details</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">upload_date
+	[&lt;date_format&gt;]: print article upload date using the given
+	format; see <A HREF="#date_format">details</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">[&lt;article_type&gt;]
 	&lt;article_type_attribute&gt; [&lt;date_format&gt;]: print an
 	article field specific to a certain article type (see <A HREF="#2.2.4">Defining
 	article types</A>); if the field type is date a date format may be
 	specified; see <A HREF="#date_format">date format details</A></P>
-	<LI><P STYLE="margin-top: 0cm">template: print the full path of the
-	article template file</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">template: print the
+	full path of the article template file</P>
 </UL>
 <P CLASS="western">For details on article see <A HREF="#2.2.5">Creating
 articles within a section</A> and <A HREF="#2.2.6">Editing articles:
@@ -3613,40 +3680,45 @@ Edit Article Details view.</A></P><A NAME="p_img_expr"></A>
 			= Image</FONT></FONT></P>
 		</TD>
 		<TD WIDTH=516>
-			<P CLASS="western"><FONT FACE="Courier, monospace"><FONT SIZE=2 STYLE="font-size: 11pt">photographer
-			|place |description |&lt;date_attribute&gt; <BR>|date
-			[&lt;date_format&gt;]</FONT></FONT></P>
+			<P CLASS="western"><FONT FACE="Courier, monospace"><FONT SIZE=2 STYLE="font-size: 11pt"><FONT FACE="Courier New, Courier, mono">[&lt;image_number&gt;]
+			</FONT>photographer |place |description |&lt;date_attribute&gt;
+			|date [&lt;date_format&gt;]</FONT></FONT></P>
 		</TD>
 	</TR>
 </TABLE>
+<P CLASS="western" STYLE="margin-top: 0cm"><FONT FACE="Nimbus Roman No9 L">&lt;image_number&gt;
+is</FONT> an <A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;integer_value&gt;</FONT></A>
+representing a valid number of the article image; a default image
+number (1) is used if &lt;image_number&gt; was ommited.</P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">photographer, place, description are
-	fields describing the image</P>
-	<LI><P STYLE="margin-top: 0cm">&lt;date_attribute&gt;: see Date &ndash;
-	&lt;date_attribute&gt;</P>
-	<LI><P STYLE="margin-top: 0cm">date [&lt;date_format&gt;]: see Date
-	- &lt;date_format&gt;</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">photographer, place,
+	description are fields describing the image</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">&lt;date_attribute&gt;:
+	see Date &ndash; &lt;date_attribute&gt;</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">date [&lt;date_format&gt;]:
+	see Date - &lt;date_format&gt;</P>
 </UL>
 <P CLASS="western"><A NAME="p_list_expr"></A><FONT FACE="Courier, monospace">&lt;list_expression&gt;
 = List row |column |index</FONT></P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">row: list row; if column is not
-	specified in list statement or has value 1 row takes the value of
-	the element number in the list</P>
-	<LI><P STYLE="margin-top: 0cm">column: list column; if column is not
-	specified in list statement it will have a vallue of 1 for every
-	list element</P>
-	<LI><P STYLE="margin-top: 0cm">index: element number in the list; if
-	list length is specified index will take the value of list_length *
-	number_of_steps_from_list_start * elment_number where</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">row: list row; if
+	column is not specified in list statement or has value 1 row takes
+	the value of the element number in the list</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">column: list column;
+	if column is not specified in list statement it will have a vallue
+	of 1 for every list element</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">index: element number
+	in the list; if list length is specified index will take the value
+	of list_length * number_of_steps_from_list_start * elment_number
+	where</P>
 	<UL>
-		<LI><P STYLE="margin-top: 0cm">list_length is the maximum length of
-		the list</P>
-		<LI><P STYLE="margin-top: 0cm">number_of_steps_from_list_start is
-		how many steps the list start moved from the &quot;whole list&quot;
+		<LI><P CLASS="western" STYLE="margin-top: 0cm">list_length is the
+		maximum length of the list</P>
+		<LI><P CLASS="western" STYLE="margin-top: 0cm">number_of_steps_from_list_start
+		is how many steps the list start moved from the &quot;whole list&quot;
 		start</P>
-		<LI><P STYLE="margin-top: 0cm">elment_number is the number of the
-		element in the current list</P>
+		<LI><P CLASS="western" STYLE="margin-top: 0cm">elment_number is the
+		number of the element in the current list</P>
 	</UL>
 </UL>
 <P CLASS="western">For details on list see <A HREF="#3.9.3.8">If List</A></P><A NAME="p_subs_expr"></A>
@@ -3666,21 +3738,21 @@ Edit Article Details view.</A></P><A NAME="p_img_expr"></A>
 	</TR>
 </TABLE>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">expdate, unit, unitcost, currency,
-	trialtime, paidtime, totalcost are fields describing the publication
-	subscription</P>
-	<LI><P STYLE="margin-top: 0cm">error: if subscription action took
-	place (after submitting a subscription form) it prints the error
-	message (if there was an errror)</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">expdate, unit,
+	unitcost, currency, trialtime, paidtime, totalcost are fields
+	describing the publication subscription</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">error: if
+	subscription action took place (after submitting a subscription
+	form) it prints the error message (if there was an errror)</P>
 </UL>
 <P CLASS="western">For details on subscription see <A HREF="#2.4.">CONFIGURING
 THE SUBSCRIPTION MODULE</A></P>
 <P CLASS="western"><A NAME="p_login_expr"></A><FONT FACE="Courier, monospace">&lt;login_expression&gt;
 = Login error</FONT></P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">error: if login action took place
-	(after submitting a login form) it prints the error message (if
-	there was an errror)</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">error: if login
+	action took place (after submitting a login form) it prints the
+	error message (if there was an errror)</P>
 </UL><A NAME="p_user_expr"></A>
 <TABLE WIDTH=703 BORDER=0 CELLPADDING=2 CELLSPACING=0>
 	<COL WIDTH=226>
@@ -3699,31 +3771,32 @@ THE SUBSCRIPTION MODULE</A></P>
 		</TD>
 	</TR>
 </TABLE>
-<P STYLE="margin-top: 0cm">adderror: if user add action took place
-(after submitting a user subscription form) it prints the error
-message (if there was an errror)</P>
+<P CLASS="western" STYLE="margin-top: 0cm">adderror: if user add
+action took place (after submitting a user subscription form) it
+prints the error message (if there was an errror)</P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">modifyerror: if user modify action
-	took place (after submitting a user info form) it prints the error
-	message (if there was an errror)</P>
-	<LI><P STYLE="margin-top: 0cm">the other parameters (name, uname,
-	email, city...) are fields describing the user information; they are
-	self-explaining; Field1-Field5, Text1-Text3 are extra fields for
-	storing some extra information; the publication administrator sets
-	their meaning</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">modifyerror: if user
+	modify action took place (after submitting a user info form) it
+	prints the error message (if there was an errror)</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">the other parameters
+	(name, uname, email, city...) are fields describing the user
+	information; they are self-explaining; Field1-Field5, Text1-Text3
+	are extra fields for storing some extra information; the publication
+	administrator sets their meaning</P>
 </UL>
 <P CLASS="western"><A NAME="p_subt_expr"></A><FONT FACE="Courier, monospace">&lt;subtitle_expression&gt;
 = Subtitle name</FONT></P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">name: print subtitle name (see also
-	<A HREF="#2.2.7">Editing body-type fields: Working with CAMPFIRE</A>)</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">name: print subtitle
+	name (see also <A HREF="#2.2.7">Editing body-type fields: Working
+	with CAMPFIRE</A>)</P>
 </UL>
 <P CLASS="western">Constraints:</P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">Print List can be used only inside
-	List-EndList statement.</P>
-	<LI><P STYLE="margin-top: 0cm">Print Login can be used only outside
-	Login-EndLogin statement.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Print List can be
+	used only inside List-EndList statement.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Print Login can be
+	used only outside Login-EndLogin statement.</P>
 </UL>
 <H4 CLASS="western"><A NAME="3.9.4.3"></A>3.9.4.3 Date</H4>
 <P CLASS="western">Purpose:</P>
@@ -3749,27 +3822,31 @@ only a date attribute.</P>
 </TABLE>
 <P CLASS="western">The attributes have the following meanings:</P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">year: year as number 
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">year: year as number 
 	</P>
-	<LI><P STYLE="margin-top: 0cm">mon_nr: month as number 
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">mon_nr: month as
+	number 
 	</P>
-	<LI><P STYLE="margin-top: 0cm">mday: day of the month (number) 
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">mday: day of the
+	month (number) 
 	</P>
-	<LI><P STYLE="margin-top: 0cm">yday: day of the year (number) 
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">yday: day of the year
+	(number) 
 	</P>
-	<LI><P STYLE="margin-top: 0cm">wday_nr: day of the week (number) 
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">wday_nr: day of the
+	week (number) 
 	</P>
-	<LI><P STYLE="margin-top: 0cm">hour: hour (0-23) 
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">hour: hour (0-23) 
 	</P>
-	<LI><P STYLE="margin-top: 0cm">min: minute 
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">min: minute 
 	</P>
-	<LI><P STYLE="margin-top: 0cm">sec: second 
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">sec: second 
 	</P>
-	<LI><P STYLE="margin-top: 0cm">mon_name: name of the month (in the
-	language set to the data context) 
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">mon_name: name of the
+	month (in the language set to the data context) 
 	</P>
-	<LI><P STYLE="margin-top: 0cm">wday_name: name of the day of the
-	week (in language set to the data context) 
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">wday_name: name of
+	the day of the week (in language set to the data context) 
 	</P>
 </UL>
 <P CLASS="western"><A NAME="date_format"></A>&lt;date_format&gt; may
@@ -3778,26 +3855,29 @@ date format contains separators (space, end of line) it must be
 enclosed in &quot;&quot; characters. The following groups of
 characters have special meaning:</P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">%M - month name 
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">%M - month name 
 	</P>
-	<LI><P STYLE="margin-top: 0cm">%W - weekday name 
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">%W - weekday name 
 	</P>
-	<LI><P STYLE="margin-top: 0cm">%Y - year (4 digits) 
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">%Y - year (4 digits) 
 	</P>
-	<LI><P STYLE="margin-top: 0cm">%y - year (2 digits) 
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">%y - year (2 digits) 
 	</P>
-	<LI><P STYLE="margin-top: 0cm">%m - month (01..12) 
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">%m - month (01..12) 
 	</P>
-	<LI><P STYLE="margin-top: 0cm">%c - month (1..12) 
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">%c - month (1..12) 
 	</P>
-	<LI><P STYLE="margin-top: 0cm">%d - day of the month (00..31) 
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">%d - day of the month
+	(00..31) 
 	</P>
-	<LI><P STYLE="margin-top: 0cm">%e - day of the month (0..31) 
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">%e - day of the month
+	(0..31) 
 	</P>
-	<LI><P STYLE="margin-top: 0cm">%j - day of the year (001..366) 
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">%j - day of the year
+	(001..366) 
 	</P>
-	<LI><P STYLE="margin-top: 0cm">%D - day of the month with English
-	suffix (1st, 2nd, 3rd etc.) 
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">%D - day of the month
+	with English suffix (1st, 2nd, 3rd etc.) 
 	</P>
 </UL>
 <P CLASS="western">Constraints:</P>
@@ -3812,18 +3892,19 @@ generate fields for every section on issue.</P>
 &lt;template_name&gt; &lt;button_name&gt; [&lt;total_field_name&gt;
 &lt;evaluate_button_name&gt;]<BR>&lt;list_of_instructions&gt;<BR>EndSubscription</FONT></P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">&lt;template_name&gt; is the name of
-	the next template to be requested from subscription form. 
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">&lt;template_name&gt;
+	is the name of the next template to be requested from subscription
+	form. 
 	</P>
-	<LI><P STYLE="margin-top: 0cm">&lt;button_name&gt; is the name of
-	the button for submitting the form. 
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">&lt;button_name&gt;
+	is the name of the button for submitting the form. 
 	</P>
-	<LI><P STYLE="margin-top: 0cm">&lt;total_field_name&gt; is the name
-	of the field where the total payment is written. 
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">&lt;total_field_name&gt;
+	is the name of the field where the total payment is written. 
 	</P>
-	<LI><P STYLE="margin-top: 0cm">&lt;evaluate_button_name&gt; is the
-	name of the evaluate button (when pressing this button the total
-	payment is updated in the total field. 
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">&lt;evaluate_button_name&gt;
+	is the name of the evaluate button (when pressing this button the
+	total payment is updated in the total field. 
 	</P>
 </UL>
 <P CLASS="western">Constraints:</P>
@@ -3838,11 +3919,11 @@ user;</P>
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">User
 &lt;template_name&gt; &lt;button_name&gt;<BR>&lt;list_of_instructions&gt;<BR>EndUser</FONT></P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">&lt;template_name&gt; is the name of
-	the next template to be requested from user form. 
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">&lt;template_name&gt;
+	is the name of the next template to be requested from user form. 
 	</P>
-	<LI><P STYLE="margin-top: 0cm">&lt;button_name&gt; is the name of
-	the button for submitting the form. 
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">&lt;button_name&gt;
+	is the name of the button for submitting the form. 
 	</P>
 </UL>
 <P CLASS="western">Constraints:</P>
@@ -3857,11 +3938,11 @@ user.</P>
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">Login
 &lt;template_name&gt; &lt;button_name&gt;<BR>&lt;list_of_instructions&gt;<BR>EndLogin</FONT></P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">&lt;template_name&gt; is the name of
-	the next template to be requested from login form. 
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">&lt;template_name&gt;
+	is the name of the next template to be requested from login form. 
 	</P>
-	<LI><P STYLE="margin-top: 0cm">&lt;button_name&gt; is the name of
-	the button for submitting the form. 
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">&lt;button_name&gt;
+	is the name of the button for submitting the form. 
 	</P>
 </UL>
 <P CLASS="western">Constraints:</P>
@@ -3876,11 +3957,11 @@ within itself (e.g. login in login).</P>
 &lt;template_name&gt; &lt;button_name&gt;</FONT><BR><FONT FACE="Courier New, Courier, mono">&lt;list_of_instructions&gt;</FONT>
 <I><BR></I><FONT FACE="Courier New, Courier, mono">EndSearch</FONT></P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">&lt;template_name&gt; is the name of
-	the next template to be requested from search form. 
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">&lt;template_name&gt;
+	is the name of the next template to be requested from search form. 
 	</P>
-	<LI><P STYLE="margin-top: 0cm">&lt;button_name&gt; is the name of
-	the button for submitting the form. 
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">&lt;button_name&gt;
+	is the name of the button for submitting the form. 
 	</P>
 </UL>
 <P CLASS="western">The list of instructions may contain any
@@ -3945,14 +4026,14 @@ or password.</P>
 keywords.</P>
 <P CLASS="western">Constraints:</P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">Edit Subscription can be used inside
-	Subscription-EndSubscription statement only.</P>
-	<LI><P STYLE="margin-top: 0cm">Edit User can be used inside
-	User-EndUser statement only.</P>
-	<LI><P STYLE="margin-top: 0cm">Edit Login can be used inside
-	Login-EndLogin statement only.</P>
-	<LI><P STYLE="margin-top: 0cm">Edit Search can be used inside
-	Search-EndSearch statement only.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Edit Subscription can
+	be used inside Subscription-EndSubscription statement only.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Edit User can be used
+	inside User-EndUser statement only.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Edit Login can be
+	used inside Login-EndLogin statement only.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Edit Search can be
+	used inside Search-EndSearch statement only.</P>
 </UL>
 <H4 CLASS="western"><A NAME="3.9.4.9"></A>3.9.4.9 Select</H4>
 <P CLASS="western">Purpose:</P>
@@ -4002,112 +4083,125 @@ or radio-button for selecting values for the above fields.</P>
 (match one or all keywords).</P>
 <P CLASS="western">Constraints:</P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">Select Subscription can be used
-	inside Subscription-EndSubscription statement only.</P>
-	<LI><P STYLE="margin-top: 0cm">Select User can be used inside
-	User-EndUser statement only.</P>
-	<LI><P STYLE="margin-top: 0cm">Select Search can be used inside
-	Search-EndSearch statement only.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Select Subscription
+	can be used inside Subscription-EndSubscription statement only.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Select User can be
+	used inside User-EndUser statement only.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Select Search can be
+	used inside Search-EndSearch statement only.</P>
 </UL>
 <HR SIZE=1 NOSHADE>
 <H1 CLASS="western"><A NAME="4."></A>4. APENDIX I - ALPHABETIC LIST
 OF LANGUAGE STATEMENTS</H1>
 <UL>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.2.5">Article (3.9.2.5)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.4.3">Date (3.9.4.3)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.4.8">Edit Login
-	(3.9.4.8)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.4.8">Edit Search
-	(3.9.4.8)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.4.8">Edit Subscription
-	(3.9.4.8)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.4.8">Edit User
-	(3.9.4.8)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.4.1">Form (3.9.4.1)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.3.14">If Allowed
-	(3.9.3.14)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.3.13">If Article
-	(3.9.3.13)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.3.18">If
-	CurrentSubtitle (3.9.3.18)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.3.19">If Image
-	(3.9.3.19)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.3.11">If Issue
-	(3.9.3.11)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.3.20">If Language
-	(3.9.3.20)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.3.8">If List (3.9.3.8)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.3.16">If Login
-	(3.9.3.16)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.3.6">If NextItems
-	(3.9.3.6)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.3.7">If NextSubtitles
-	(3.9.3.7)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.3.6">If PreviousItems
-	(3.9.3.6)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.3.7">If PrevSubtitles
-	(3.9.3.7)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.3.10">If Publication
-	(3.9.3.10)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.3.12">If Section
-	(3.9.3.12)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.3.15">If Subscription
-	(3.9.3.15)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.3.17">If User
-	(3.9.3.17)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.3.9">Include (3.9.3.9)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.2.3">Issue (3.9.2.3)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.2.1">Language (3.9.2.1)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.3.3">List Article
-	(3.9.3.3)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.3.1">List Issue
-	(3.9.3.1)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.3.5">List SearchResult
-	(3.9.3.5)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.3.2">List Section
-	(3.9.3.2)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.3.4">List Subtitle
-	(3.9.3.4)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.2.6">Local (3.9.2.6)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.4.6">Login (3.9.4.6)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.4.2">Print Article
-	(3.9.4.2)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.4.2">Print Image
-	(3.9.4.2)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.4.2">Print Issue
-	(3.9.4.2)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.4.2">Print Language
-	(3.9.4.2)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.4.2">Print List
-	(3.9.4.2)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.4.2">Print Login
-	(3.9.4.2)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.4.2">Print Publication
-	(3.9.4.2)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.4.2">Print Section
-	(3.9.4.2)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.4.2">Print Subscription
-	(3.9.4.2)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.4.2">Print Subtitle
-	(3.9.4.2)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.4.2">Print User
-	(3.9.4.2)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.2.2">Publication
-	(3.9.2.2)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.4.7">Search (3.9.4.7)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.2.4">Section (3.9.2.4)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.4.9">Select Search
-	(3.9.4.9)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.4.9">Select
-	Subscription (3.9.4.9)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.4.9">Select User
-	(3.9.4.9)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.4.4">Subscription
-	(3.9.4.4)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.4.1">URLParameters
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.2.5">Article
+	(3.9.2.5)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.3">Date
+	(3.9.4.3)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.8">Edit
+	Login (3.9.4.8)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.8">Edit
+	Search (3.9.4.8)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.8">Edit
+	Subscription (3.9.4.8)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.8">Edit
+	User (3.9.4.8)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.1">Form
 	(3.9.4.1)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.4.5">User (3.9.4.5)</A></P>
-	<LI><P STYLE="margin-top: 0cm"><A HREF="#3.9.3.21">With (3.9.3.21)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.3.14">If
+	Allowed (3.9.3.14)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.3.13">If
+	Article (3.9.3.13)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.3.18">If
+	CurrentSubtitle (3.9.3.18)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.3.19">If
+	Image (3.9.3.19)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.3.11">If
+	Issue (3.9.3.11)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.3.20">If
+	Language (3.9.3.20)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.3.8">If
+	List (3.9.3.8)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.3.16">If
+	Login (3.9.3.16)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.3.6">If
+	NextItems (3.9.3.6)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.3.7">If
+	NextSubtitles (3.9.3.7)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.3.6">If
+	PreviousItems (3.9.3.6)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.3.7">If
+	PrevSubtitles (3.9.3.7)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.3.10">If
+	Publication (3.9.3.10)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.3.12">If
+	Section (3.9.3.12)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.3.15">If
+	Subscription (3.9.3.15)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.3.17">If
+	User (3.9.3.17)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.3.9">Include
+	(3.9.3.9)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.2.3">Issue
+	(3.9.2.3)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.2.1">Language
+	(3.9.2.1)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.3.3">List
+	Article (3.9.3.3)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.3.1">List
+	Issue (3.9.3.1)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.3.5">List
+	SearchResult (3.9.3.5)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.3.2">List
+	Section (3.9.3.2)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.3.4">List
+	Subtitle (3.9.3.4)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.2.6">Local
+	(3.9.2.6)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.6">Login
+	(3.9.4.6)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.2">Print
+	Article (3.9.4.2)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.2">Print
+	Image (3.9.4.2)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.2">Print
+	Issue (3.9.4.2)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.2">Print
+	Language (3.9.4.2)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.2">Print
+	List (3.9.4.2)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.2">Print
+	Login (3.9.4.2)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.2">Print
+	Publication (3.9.4.2)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.2">Print
+	Section (3.9.4.2)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.2">Print
+	Subscription (3.9.4.2)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.2">Print
+	Subtitle (3.9.4.2)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.2">Print
+	User (3.9.4.2)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.2.2">Publication
+	(3.9.2.2)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.7">Search
+	(3.9.4.7)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.2.4">Section
+	(3.9.2.4)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.9">Select
+	Search (3.9.4.9)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.9">Select
+	Subscription (3.9.4.9)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.9">Select
+	User (3.9.4.9)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.4">Subscription
+	(3.9.4.4)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.1">URLParameters
+	(3.9.4.1)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.5">User
+	(3.9.4.5)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.3.21">With
+	(3.9.3.21)</A></P>
 </UL>
 <H1 CLASS="western"><A NAME="5."></A>5. APPENDIX II - CHARACTER SETS
 AND LANGUAGES</H1>
@@ -4117,16 +4211,16 @@ Some standards have been set over the past years and are already
 implemented in most browsers. These are:</P>
 <P CLASS="western">Code Page Character Set</P>
 <UL>
-	<LI><P STYLE="margin-top: 0cm">ISO-8859-1 Latin 1 I</P>
-	<LI><P STYLE="margin-top: 0cm">ISO-8859-2 Latin 2</P>
-	<LI><P STYLE="margin-top: 0cm">ISO-8859-3 Latin 3</P>
-	<LI><P STYLE="margin-top: 0cm">ISO-8859-4 Baltic</P>
-	<LI><P STYLE="margin-top: 0cm">ISO-8859-5 Cyrillic</P>
-	<LI><P STYLE="margin-top: 0cm">ISO-8859-6 Arabic</P>
-	<LI><P STYLE="margin-top: 0cm">ISO-8859-7 Greek</P>
-	<LI><P STYLE="margin-top: 0cm">ISO-8859-8 Hebrew</P>
-	<LI><P STYLE="margin-top: 0cm">ISO-8859-9 Turkish</P>
-	<LI><P STYLE="margin-top: 0cm">ISO-8859-15 Latin 9</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">ISO-8859-1 Latin 1 I</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">ISO-8859-2 Latin 2</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">ISO-8859-3 Latin 3</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">ISO-8859-4 Baltic</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">ISO-8859-5 Cyrillic</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">ISO-8859-6 Arabic</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">ISO-8859-7 Greek</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">ISO-8859-8 Hebrew</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">ISO-8859-9 Turkish</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">ISO-8859-15 Latin 9</P>
 </UL>
 <P CLASS="western">Multilingual support has been developed in various
 projects, independently from each other, resulting in some confusion
@@ -4236,29 +4330,30 @@ all...]</FONT></P>
 <P CLASS="western">In order to make a backup of your CAMPSITE
 database, do the following:</P>
 <OL>
-	<LI><P STYLE="margin-top: 0cm">type: <FONT FACE="Courier New, Courier, mono">mysqldump
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">type: <FONT FACE="Courier New, Courier, mono">mysqldump
 	-u &lt;db_user&gt; -p &lt;password&gt; campsite &gt; yourname-db.sql</FONT></P>
 </OL>
 <P CLASS="western">In order to delete your CAMPSITE database from
 MySQL, do the following:</P>
 <OL>
-	<LI><P STYLE="margin-top: 0cm">type: <FONT FACE="Courier New, Courier, mono">mysqladmin
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">type: <FONT FACE="Courier New, Courier, mono">mysqladmin
 	-u &lt;db_user&gt; -p &lt;password&gt; drop campsite</FONT></P>
-	<LI><P STYLE="margin-top: 0cm">confirm with 'y'</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">confirm with 'y'</P>
 </OL>
 <P CLASS="western">In order to load your backed up CAMPSITE database,
 do the following:</P>
 <OL>
-	<LI><P STYLE="margin-top: 0cm">create the campsite database by
-	typing: <FONT FACE="Courier New, Courier, mono">mysqladmin -u
-	&lt;db_user&gt; -p &lt;password&gt; create campsite</FONT></P>
-	<LI><P STYLE="margin-top: 0cm">edit the backup file you created and
-	add the first line: <FONT FACE="Courier New, Courier, mono">use
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">create the campsite
+	database by typing: <FONT FACE="Courier New, Courier, mono">mysqladmin
+	-u &lt;db_user&gt; -p &lt;password&gt; create campsite</FONT></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">edit the backup file
+	you created and add the first line: <FONT FACE="Courier New, Courier, mono">use
 	campsite;</FONT><BR>(make sure you finish the line with a semicolon
 	and do not start the line with a hash, which would mean it is only a
 	comment).</P>
-	<LI><P STYLE="margin-top: 0cm">load the database by typing: <FONT FACE="Courier New, Courier, mono">mysql
-	-u &lt;db_user&gt; -p &lt;password&gt; campsite &lt; yourname-db.sql</FONT></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">load the database by
+	typing: <FONT FACE="Courier New, Courier, mono">mysql -u &lt;db_user&gt;
+	-p &lt;password&gt; campsite &lt; yourname-db.sql</FONT></P>
 </OL>
 </BODY>
 </HTML>

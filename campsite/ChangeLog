@@ -2,8 +2,10 @@
     - Ported campsite to FreeBSD (thanks to Richard Airlie)
     - Small bug fixes
     - Manual updates relative to the FreeBSD port
-    - Manual update: 2.1.4 User management: write about the admin user and it's 
+    - Manual update: 2.1.4 User management: write about the admin user and it's
     use in email notifiers
+    - Small template language improvement: ability to specify the image number
+    when printig image attributes (3.9.4.2 Print)
 
 2.1.1
     - Added new languages: Serbian (Cyrillic), Spanish, Bosnian and updated

@@ -1348,8 +1348,8 @@ template: print the full path of the article template file
 For details on article see Creating articles within a section and Editing articles: Edit Article Details view.
 
 <image_expression> = Image
-photographer |place |description |<date_attribute> 
-|date [<date_format>]
+[<image_number>] photographer |place |description |<date_attribute> |date [<date_format>]
+<image_number> is an <integer_value> representing a valid number of the article image; a default image number (1) is used if <image_number> was ommited.
 photographer, place, description are fields describing the image
 <date_attribute>: see Date - <date_attribute>
 date [<date_format>]: see Date - <date_format>
