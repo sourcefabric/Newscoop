@@ -71,7 +71,7 @@ private:
 	CPublicationsAliases m_coAliases;
 
 #ifdef _REENTRANT
-	CMutex m_coMutex;
+	mutable CMutex m_coMutex;
 #endif
 };
 
@@ -90,7 +90,7 @@ inline CPublicationsRegister& CPublicationsRegister::getInstance()
 inline void CPublicationsRegister::erase(long p_nPublicationId)
 {
 #ifdef _REENTRANT
-	CMutexHandler coLockHandler(m_coMutex);
+	CMutexHandler coLockHandler(&m_coMutex);
 #endif
 	m_coPublications.erase(p_nPublicationId);
 }
@@ -98,7 +98,7 @@ inline void CPublicationsRegister::erase(long p_nPublicationId)
 inline bool CPublicationsRegister::has(long p_nPublicationId) const
 {
 #ifdef _REENTRANT
-	CMutexHandler coLockHandler(m_coMutex);
+	CMutexHandler coLockHandler(&m_coMutex);
 #endif
 	return m_coPublications.find(p_nPublicationId) != m_coPublications.end();
 }
@@ -106,7 +106,7 @@ inline bool CPublicationsRegister::has(long p_nPublicationId) const
 inline const CPublication* CPublicationsRegister::getPublication(const string& p_rcoAlias) const
 {
 #ifdef _REENTRANT
-	CMutexHandler coLockHandler(m_coMutex);
+	CMutexHandler coLockHandler(&m_coMutex);
 #endif
 	CPublicationsAliases::const_iterator coIt = m_coAliases.find(p_rcoAlias);
 	if (coIt != m_coAliases.end())
