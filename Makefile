@@ -26,8 +26,11 @@ install: dummy
 	chown $(ROOT_USER):$(APACHE_GROUP) "$(BIN_DIR)/create_instance"
 	chmod 755 "$(BIN_DIR)/create_instance"
 	cp -f "$(INSTALL_CONF)/create_instance.php" "$(BIN_DIR)"
-	chown $(ROOT_USER):$(APACHE_GROUP) "$(BIN_DIR)/create_instance.php"
-	chmod 644 "$(BIN_DIR)/create_instance.php"
+	cp -f "$(INSTALL_CONF)/backup_instance.php" "$(BIN_DIR)"
+	cp -f "$(INSTALL_CONF)/restore_instance.php" "$(BIN_DIR)"
+	cp -f "$(INSTALL_CONF)/cli_script_lib.php" "$(BIN_DIR)"
+	chown $(ROOT_USER):$(APACHE_GROUP) $(BIN_DIR)/*.php
+	chmod 644 $(BIN_DIR)/*.php
 	cp -f "$(INSTALL_CONF)/campsite_config" "$(BIN_DIR)"
 	chown $(ROOT_USER):$(APACHE_GROUP) "$(BIN_DIR)/campsite_config"
 	chmod 755 "$(BIN_DIR)/campsite_config"
