@@ -59,6 +59,7 @@ private:
 private:
 	pthread_t m_nThreadId;
 	mutable sem_t m_Semaphore;	// semaphore used to lock access to members
+	mutable sem_t m_RunSem;		// semaphore used to syncronize thread start
 	bool m_bRunning;
 };
 
