@@ -1,4 +1,5 @@
 <?
+
 regGS("CAMPSITE","CAMPSITE");
 regGS("Home","Página Principal");
 regGS("Logout","Terminar Sessão");
@@ -24,6 +25,20 @@ regGS("Templates","Modelos");
 regGS("Topics","Temas");
 regGS("Path","Caminho");
 regGS("Go up","Nivél Acima");
+regGS("Duplicate","Duplicar");
+regGS("Select destination","Seleccionar destino");
+regGS("No languages","Não Existem Idiomas Definidos");
+regGS("---Select language---","--- Seleccione o Idioma ---");
+regGS("No publications","Não Existem Publicações Definidas");
+regGS("---Select publication---","--- Selecione a Publicação ---");
+regGS("No issues","Não Existem Numeros Definidos");
+regGS("---Select issue---","--- Seleccione o Numero ---");
+regGS("No sections","Não Existem Secções Definidas");
+regGS("---Select section---","--- Seleccione a Secção ---");
+regGS("No articles","Não Existem Artigos");
+regGS("---Select article---","--- Selecione o Artigo ---");
+regGS("Date/Time","Data/Hora");
+regGS("Time","Hora");
 regGS("Language","Idioma");
 regGS("Keyword infotype","Palavra-Chave para Informação-Tipo");
 regGS("Translation","Tradução");
@@ -80,6 +95,11 @@ regGS("You must select a language.","Seleccione o Idioma.");
 regGS("No such section.","Secção Desconhecida.");
 regGS("No articles.","Não existem Artigos");
 regGS("Access denied","Acesso negado");
+regGS("Invalid article identifier","Identificador de artigo inválido");
+regGS("Invalid destination section selected","Secção de destino inválida");
+regGS("Internal error: identifiers not initialized","Erro Interno: identificadores nao foram inicializados.");
+regGS("Internal database error","Erro interno na Base de Dados");
+regGS("Invalid parameters received","O parametro recebido é invalido");
 regGS("Add new article","Criar Artigo");
 regGS("Status","Estado");
 regGS("No such article.","Artigo Desconhecido.");
@@ -177,7 +197,7 @@ regGS("You do not have the right to add subscriptions.","Não tem permissão par
 regGS("Adding subscription","Criando Assinatura");
 regGS("The section could not be added.","Esta Secção não pode ser Adicionada.");
 regGS("Delete subscription","Apagar Assinatura");
-regGS("You do not have the right to delete subscriptions.","Não temp Permissão para 'Apagar Assinaturas'");
+regGS("You do not have the right to delete subscriptions.","Não tem Permissão para 'Apagar Assinaturas'");
 regGS("Deleting subscription","Apagando Assinatura");
 regGS("No such subscription.","Assinatura Desconhecida");
 regGS("The section $1 could not be deleted.","A Secção $1 não pode ser Apagada.");
@@ -206,6 +226,7 @@ regGS("The topic $1 has been successfuly updated.","O Tema $1 foi Alterado.");
 regGS("The topic $1 has been deleted.","O Tema $1 foi Apagado.");
 regGS("There are $1 articles using the topic.","Existe(m) $1 artigos usando este Tema.");
 regGS("You must fill in the $1 field.","O campo $1 tem de ser preenchido.");
+regGS("You do not have the right to add articles.","Não tem permissões para adicionar Artigos.");
 regGS("Start","Inicio");
 regGS("Days","Dias");
 regGS("(YYYY-MM-DD)","(AAAA-MM-DD)");
@@ -218,18 +239,6 @@ regGS("New field","Novo Campo");
 regGS("OK","OK");
 regGS("Save changes","Gravar alterações");
 regGS("Search","Procurar");
-regGS("No languages","Não Existem Idiomas Definidos");
-regGS("---Select language---","--- Seleccione o Idioma ---");
-regGS("No publications","Não Existem Publicações Definidas");
-regGS("---Select publication---","--- Selecione a Publicação ---");
-regGS("No issues","Não Existem Numeros Definidos");
-regGS("---Select issue---","--- Seleccione o Numero ---");
-regGS("No sections","Não Existem Secções Definidas");
-regGS("---Select section---","--- Seleccione a Secção ---");
-regGS("No articles","Não Existem Artigos");
-regGS("---Select article---","--- Selecione o Artigo ---");
-regGS("Duplicate","Duplicar");
-regGS("You do not have the right to add articles.","Não tem permissões para adicionar Artigos.");
-regGS("Add new field","Adicionar novo Campo");
+
 
 ?>
