@@ -92,7 +92,6 @@ regGS("Adding new issue","Adding new issue:en");
 regGS("Issue $1 added in publication $2","Issue $1 added in publication $2:en");
 
 // -- preview.m4
-regGS("Preview issue","Preview issue:en");
 regGS("This issue cannot be previewed. Please make sure it has a $1 template selected.","This issue cannot be previewed. Please make sure it has a $1 template selected.:en");
 regGS("front page","front page:en");
 
