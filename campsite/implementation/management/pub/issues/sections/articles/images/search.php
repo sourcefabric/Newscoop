@@ -41,7 +41,7 @@ if (!Input::IsValid()) {
 	exit;	
 }
 
-$imageNav =& new ImageNav($_REQUEST, CAMPSITE_IMAGEARCHIVE_IMAGES_PER_PAGE, $view);
+$imageNav =& new ImageNav(CAMPSITE_IMAGEARCHIVE_IMAGES_PER_PAGE, $view);
 $publicationObj =& new Publication($Pub);
 $issueObj =& new Issue($Pub, $Language, $Issue);
 $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
@@ -120,7 +120,7 @@ case 'id':
 ///////////////////////////////////////////////////////////////////////
 
 $TotalImages = Image::GetTotalImages();
-$imageSearch =& new ImageSearch($_REQUEST, CAMPSITE_IMAGEARCHIVE_IMAGES_PER_PAGE);
+$imageSearch =& new ImageSearch(CAMPSITE_IMAGEARCHIVE_IMAGES_PER_PAGE);
 $imageSearch->run();
 $imageData =& $imageSearch->getImages();
 $NumImagesFound = $imageSearch->getNumImagesFound();
