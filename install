@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 do_configure()
 {
@@ -23,7 +23,7 @@ compile_sources()
     [ "$PACKAGE_TYPE" = "binary" ] && echo "Binary package. Skipping compilation." && return 0
     echo -n "Compiling sources (this may take a while, please wait)..."
     echo -e "###############################################\n\tCompiling sources\n" >> install_log
-    make all >> install_log 2>&1
+    $MAKE all >> install_log 2>&1
     err_code=$?
     if [ $err_code -ne 0 ]; then
 	echo "ERROR."
@@ -39,7 +39,7 @@ install_campsite()
     echo -e "\nSTEP 3"
     echo -n "Installing CAMPSITE..."
     echo -e "\n\n###############################################\n\tInstalling campsite\n" >> install_log
-    make install >> install_log 2>&1
+    $MAKE install >> install_log 2>&1
     err_code=$?
     rm -f .old_version
     if [ $err_code -ne 0 ]; then
@@ -92,6 +92,11 @@ while [ "$1" != "" ]; do
     shift 1
 done
 my_id=`id -u`
+if [ "`uname | grep BSD`" != "" ]; then
+	export BSD=1
+else
+	export BSD=0
+fi;
 . ./configure --define_start_env
 if [ "$go_to_install" = "true" ] && [ $my_id -eq 0 ]; then
     install_campsite
