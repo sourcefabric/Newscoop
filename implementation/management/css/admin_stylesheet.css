@@ -7,7 +7,14 @@ Font families:
 	Verdana, Arial, Helvetica, sans-serif; 
 
 ******************************************************/
-BODY, TH, TD, FORM, BLOCKQUOTE, UL, LI { 
+BODY { 
+	font-family: Tahoma, Arial, Helvetica, sans-serif; 
+	font-size: 10pt; 
+	color: black;
+	background: white;
+}
+
+TH, TD, FORM, BLOCKQUOTE, UL, LI { 
 	font-family: Tahoma, Arial, Helvetica, sans-serif; 
 	font-size: 10pt; 
 	/* color: #00008b; */
@@ -24,6 +31,14 @@ A {
 	font-size: 10pt; 
 	text-decoration: none;
 	color: darkblue; 
+}
+
+A:active {
+	color: red;
+}
+
+A:visited {
+	color: darkblue;
 }
 
 hr {
