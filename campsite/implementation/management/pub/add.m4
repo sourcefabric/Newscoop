@@ -39,10 +39,10 @@ E_HEADER
 <P>
 B_DIALOG(<*Add new publication*>, <*POST*>, <*do_add.php*>)
 	B_DIALOG_INPUT(<*Name*>)
-		<INPUT TYPE="TEXT" NAME="cName" SIZE="32" MAXLENGTH="32">
+		<INPUT TYPE="TEXT" NAME="cName" SIZE="32" MAXLENGTH="255">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Site*>)
-		<INPUT TYPE="TEXT" NAME="cSite" VALUE="<? pencHTML($HTTP_HOST); ?>" SIZE="32" MAXLENGTH="128">
+		<INPUT TYPE="TEXT" NAME="cSite" VALUE="<? pencHTML($HTTP_HOST); ?>" SIZE="32" MAXLENGTH="255">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Default language*>)
 	    <SELECT NAME="cLanguage">
