@@ -15,7 +15,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/classes/Issue.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Section.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Article.php");
 
-$maxSelectLength = 80;
+$maxSelectLength = 60;
 ?>
 <html>
 <head>
@@ -82,7 +82,7 @@ function Init() {
 	__dlg_init();
 	//var param = window.dialogArguments;
 
-	window.resizeTo(400, 190);
+	window.resizeTo(500, 220);
 };
 
 function onOK() {
