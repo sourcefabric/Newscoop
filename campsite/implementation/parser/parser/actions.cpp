@@ -547,6 +547,29 @@ int CActArticle::takeAction(CContext& c, sockstream& fs)
 	return RES_OK;
 }
 
+// takeAction: performs the action
+// Parametes:
+//		CContext& c - current context (modified by action)
+//		sockstream& fs - output stream (not used)
+int CActTopic::takeAction(CContext& c, sockstream& fs)
+{
+	if (case_comp(param.attribute(), "off") == 0)
+	{
+		c.SetTopic( -1);
+		return RES_OK;
+	}
+	if (case_comp(param.attribute(), "default") == 0)
+	{
+		c.SetTopic(c.DefTopic());
+		return RES_OK;
+	}
+	const Topic* pcoTopic = Topic::topic(param.value());
+	if (pcoTopic == NULL)
+		return ERR_NODATA;
+	c.SetTopic(pcoTopic->id());
+	return RES_OK;
+}
+
 CListModifiers::CListModifiers()
 {
 	insert(CMS_ST_ISSUE);
@@ -684,6 +707,14 @@ int CActList::WriteArtParam(string& s, CContext& c, string& table)
 			AppendConstraint(w, (*pl_i)->attribute(), (*pl_i)->opSymbol(), pchVal, "and");
 			delete []pchVal;
 		}
+	}
+	if (c.Topic() > 0)
+	{
+		bTopic = true;
+		buf.str("");
+		buf << c.Topic();
+		AppendConstraint(topic_equal_op, "ArticleTopics.TopicId", g_coEQUAL_Symbol,
+		                 buf.str(), "or");
 	}
 	CheckFor("IdPublication", c.Publication(), buf, w);
 	CheckFor("NrIssue", c.Issue(), buf, w);
@@ -1093,6 +1124,7 @@ int CActURLParameters::takeAction(CContext& c, sockstream& fs)
 		URLPrintParam(P_NRISSUE, c.DefIssue(), fs, first);
 		URLPrintParam(P_NRSECTION, c.DefSection(), fs, first);
 		URLPrintParam(P_NRARTICLE, c.DefArticle(), fs, first);
+		URLPrintParam(P_TOPIC_ID, c.DefTopic(), fs, first);
 	}
 	else
 	{
@@ -1100,6 +1132,7 @@ int CActURLParameters::takeAction(CContext& c, sockstream& fs)
 		URLPrintParam(P_NRISSUE, c.Issue(), fs, first);
 		URLPrintParam(P_NRSECTION, c.Section(), fs, first);
 		URLPrintParam(P_NRARTICLE, c.Article(), fs, first);
+		URLPrintParam(P_TOPIC_ID, c.Topic(), fs, first);
 	}
 	if (c.SubsType() != ST_NONE)
 		fs << (first ? "" : "&") << P_SUBSTYPE << "="
@@ -1172,6 +1205,7 @@ int CActFormParameters::takeAction(CContext& c, sockstream& fs)
 		FormPrintParam(P_NRISSUE, c.DefIssue(), fs);
 		FormPrintParam(P_NRSECTION, c.DefSection(), fs);
 		FormPrintParam(P_NRARTICLE, c.DefArticle(), fs);
+		FormPrintParam(P_TOPIC_ID, c.DefTopic(), fs);
 	}
 	else
 	{
@@ -1179,6 +1213,7 @@ int CActFormParameters::takeAction(CContext& c, sockstream& fs)
 		FormPrintParam(P_NRISSUE, c.Issue(), fs);
 		FormPrintParam(P_NRSECTION, c.Section(), fs);
 		FormPrintParam(P_NRARTICLE, c.Article(), fs);
+		FormPrintParam(P_TOPIC_ID, c.Topic(), fs);
 	}
 	if (c.LMode() == LM_PREV)
 	{
@@ -1216,6 +1251,7 @@ CPrintModifiers::CPrintModifiers()
     insert(CMS_ST_LOGIN);
     insert(CMS_ST_SEARCH);
     insert(CMS_ST_SUBTITLE);
+    insert(CMS_ST_TOPIC);
 }
 
 CPrintModifiers CActPrint::s_coModifiers;
@@ -1459,6 +1495,20 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 		delete []pchData;
 		return RES_OK;
 	}
+	if (modifier == CMS_ST_TOPIC)
+	{
+		const Topic* pcoTopic = Topic::topic(c.Topic());
+		if (pcoTopic == NULL)
+			return ERR_NODATA;
+		buf.str("");
+		buf << "select Code from Languages where id = " << c.Language();
+		SQLQuery(&m_coSql, buf.str().c_str());
+		res = mysql_store_result(&m_coSql);
+		CheckForRows(*res, 1);
+		row = mysql_fetch_row(*res);
+		fs << pcoTopic->name(row[0]);
+		return RES_OK;
+	}
 	if (modifier == CMS_ST_ARTICLE && attr == "SingleArticle")
 	{
 		buf << "select " << attr
@@ -1606,6 +1656,7 @@ CIfModifiers::CIfModifiers()
     insert(CMS_ST_CURRENTSUBTITLE);
     insert(CMS_ST_IMAGE);
     insert(CMS_ST_LANGUAGE);
+    insert(CMS_ST_TOPIC);
 }
 
 CIfModifiers CActIf::s_coModifiers;
@@ -1899,6 +1950,30 @@ int CActIf::takeAction(CContext& c, sockstream& fs)
 		if (row[0] == NULL)
 			return -1;
 		run_first = atoi(row[0]) > 0;
+		run_first = m_bNegated ? !run_first : run_first;
+		if (run_first)
+			runActions(block, c, fs);
+		else
+			runActions(sec_block, c, fs);
+		return RES_OK;
+	}
+	else if (modifier == CMS_ST_TOPIC)
+	{
+		const Topic* pcoTopic = Topic::topic(c.Topic());
+		if (pcoTopic == NULL)
+		{
+			run_first = g_coNOT_EQUAL_Symbol == param.opSymbol();
+		}
+		else
+		{
+			const Topic* pcoCompTopic = Topic::topic(param.value());
+			if (NULL == pcoCompTopic)
+				return ERR_NODATA;
+			if (g_coEQUAL_Symbol == param.opSymbol())
+				run_first = pcoTopic->id() == pcoCompTopic->id();
+			else
+				run_first = pcoTopic->id() != pcoCompTopic->id();
+		}
 		run_first = m_bNegated ? !run_first : run_first;
 		if (run_first)
 			runActions(block, c, fs);
