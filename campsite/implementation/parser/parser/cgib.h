@@ -58,8 +58,8 @@ public:
 	}
 	~Item()
 	{
-		delete m_pchName;
-		delete m_pchVal;
+		delete []m_pchName;
+		delete []m_pchVal;
 	}
 
 	const char* GetName()
