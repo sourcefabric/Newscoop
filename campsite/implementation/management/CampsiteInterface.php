@@ -126,11 +126,12 @@ class CampsiteInterface {
 		} else {
 			$p_errorStr = getGS($p_errorStr);
 		}
-		$location = "/$ADMIN/$script?ADReason=".urlencode(getGS($p_errorStr));
+		$location = "/$ADMIN/$script?ADReason=".urlencode($p_errorStr);
 		if (!is_null($p_backLink)) {
-			$location .= '&Back='.$p_backLink;
+			$location .= '&Back='.urlencode($p_backLink);
 		}
 		header("Location: $location");
+		exit;
 	} // fn DisplayError
 	
 } // class CampsiteInterface
