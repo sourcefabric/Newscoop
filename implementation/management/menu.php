@@ -162,6 +162,9 @@ $showObsoleteMenu = ($User->hasPermission("ManageDictionary")
 	<td align="right">
 		<table cellpadding="0" cellspacing="0">
 		<tr>
+			<td align="center" style="padding-right: 25px;">
+				<?php putGS('Welcome'); ?>,<br><nobr><b><?php p($User->getName()); ?></b></nobr>
+			</td>
 			<td>
 				<A HREF="/<?php p($ADMIN); ?>/home.php"><img src="/<?php p($ADMIN); ?>/img/icon/home.png" width="22" height="22" border="0" alt="<?php putGS('Home'); ?>"></a>
 			</td>
