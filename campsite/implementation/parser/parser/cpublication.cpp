@@ -35,6 +35,16 @@ string CPublication::getTemplate(long p_nLanguage, long p_nPublication, long p_n
                                  long p_nSection, long p_nArticle, MYSQL* p_DBConn,
                                  bool p_bIsPublished)
 {
+	if ((p_nArticle > 0 || p_nSection > 0 || p_nIssue <= 0) && p_nLanguage <= 0)
+	{
+		stringstream coSql;
+		coSql << "select IdDefaultLanguage from Publications where Id = " << p_nPublication;
+		CMYSQL_RES coRes;
+		MYSQL_ROW qRow = QueryFetchRow(p_DBConn, coSql.str().c_str(), coRes);
+		if (qRow == NULL)
+			throw InvalidValue("publication number", ((string)Integer(p_nArticle)).c_str());
+		p_nLanguage = Integer(qRow[0]);
+	}
 	if (p_nArticle > 0)
 	{
 		if (p_nIssue <= 0 || p_nSection <= 0)
@@ -75,7 +85,7 @@ string CPublication::getTemplate(long p_nLanguage, long p_nPublication, long p_n
 	if (p_nIssue <= 0)
 	{
 		stringstream coSql;
-		coSql << "select max(NrIssue) from Issues where IdPublication = " << p_nPublication
+		coSql << "select max(Number) from Issues where IdPublication = " << p_nPublication
 		      << " and IdLanguage = " << p_nLanguage;
 			if (p_bIsPublished)
 				coSql << " and Published = 'Y'";
@@ -149,6 +159,18 @@ string CPublication::getArticleTemplate(long p_nLanguage, long p_nPublication, l
 	if (qRow == NULL)
 		throw InvalidValue("issue number", ((string)Integer(p_nSection)).c_str());
 	return string(qRow[0]);
+}
+
+
+long CPublication::getTemplateId(const string& p_rcoTemplate, MYSQL* p_DBConn) throw(InvalidValue)
+{
+	stringstream coSql;
+	coSql << "select Id from Templates where Name = '" << p_rcoTemplate << "'";
+	CMYSQL_RES coRes;
+	MYSQL_ROW qRow = QueryFetchRow(p_DBConn, coSql.str().c_str(), coRes);
+	if (qRow == NULL)
+		throw InvalidValue("template name", p_rcoTemplate);
+	return Integer(qRow[0]);
 }
 
 
