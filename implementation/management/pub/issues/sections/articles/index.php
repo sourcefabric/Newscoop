@@ -78,7 +78,7 @@ $previousArticleId = 0;
 	<TD class="page_title">
 	    <?php  putGS("Articles"); ?>
 	</TD>
-	<TD ALIGN="RIGHT" style="padding-right: 10px; padding-top: 0px;">
+	<TD ALIGN="RIGHT">
 		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
 		<TR>
 			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>" class="breadcrumb"><?php  putGS("Sections");  ?></A></TD>
@@ -328,7 +328,7 @@ foreach ($allArticles as $articleObj) {
 
 		<?php  if ($User->hasPermission('DeleteArticle')) { ?>
 		<TD ALIGN="CENTER">
-			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/do_del.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($articleObj->getArticleId()); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php p($articleObj->getLanguageId()); ?>" onclick="return confirm('<?php htmlspecialchars(putGS('Are you sure you want to delete the article $1 ($2)?', '&quot;'.htmlspecialchars($articleObj->getTitle(), ENT_QUOTES).'&quot', htmlspecialchars($articleObj->getLanguageName(), ENT_QUOTES))); ?>');"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/delete.gif" BORDER="0" ALT="<?php  putGS('Delete article $1', $articleObj->getTitle()); ?>" width="16" height="16"></A>
+			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/do_del.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($articleObj->getArticleId()); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php p($articleObj->getLanguageId()); ?>" onclick="return confirm('<?php htmlspecialchars(putGS('Are you sure you want to delete the article $1 ($2)?', '&quot;'.htmlspecialchars($articleObj->getTitle(), ENT_QUOTES).'&quot', htmlspecialchars($articleObj->getLanguageName(), ENT_QUOTES))); ?>');"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/delete.png" BORDER="0" ALT="<?php  putGS('Delete article $1', $articleObj->getTitle()); ?>" width="16" height="16"></A>
 		</TD>
 		<?php  }
 		if ($articleObj->getArticleId() != $previousArticleId)
