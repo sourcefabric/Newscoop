@@ -33,7 +33,6 @@ E_HEADER
 
 <?php 
 	$correct= 1;
-	$created= 0;
 	query ("SELECT * FROM Topics WHERE Id=$EdCateg AND LanguageId = 1", 'q_cat');
     if ($NUM_ROWS) {
 	fetchRow($q_cat);
@@ -55,10 +54,14 @@ B_MSGBOX(<*Changing topic name*>)
 
 	if ($correct) {
 		query ("UPDATE Topics SET Name='".decS($cName)."' WHERE Id=$EdCateg AND LanguageId = 1");
-		$created= ($AFFECTED_ROWS > 0);
+		$updated = ($AFFECTED_ROWS > 0);
 	}
 
-	if ($created) { ?>dnl
+	if ($updated) {
+		$params = array($operation_attr=>$operation_modify, "tpid"=>"$EdCateg");
+		$msg = build_reset_cache_msg($cache_type_topics, $params);
+		send_message($SERVER_ADDRESS, server_port(), $msg, $err_msg);
+?>dnl
 		<LI><?php  putGS('The topic $1 has been successfuly updated.',"<B>".encHTML(decS($cName))."</B>"); ?></LI>
 		X_AUDIT(<*143*>, <*getGS('Topic $1 updated',$cName)*>)
 	<?php  } else {
@@ -69,7 +72,7 @@ B_MSGBOX(<*Changing topic name*>)
     } ?>dnl
 *>)
 	B_MSGBOX_BUTTONS
-<?php  if ($correct && $created) { ?>dnl
+<?php  if ($correct) { ?>dnl
 		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/topics/index.php?IdCateg=<?php p($IdCateg);?>*>)
 <?php  } else { ?>
 		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/topics/edit.php?IdCateg=<?php  p($IdCateg); ?>&EdCateg=<?php  p($EdCateg); ?>*>)
