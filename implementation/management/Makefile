@@ -32,10 +32,12 @@ all: $(MY_TARGETS)
 install: $(ALL)
 	mkdir -p $(CGI_DIR)
 	mkdir -p $(HTML_DIR)/look
+	mkdir -p $(HTML_DIR)/javascript
 	mkdir -p $(PRIV_DIR)/img
 	mkdir -p $(PRIV_DIR)/img/buttons
 	mkdir -p $(PRIV_DIR)/img/icons
 	cp -rf article_import $(PRIV_DIR)
+	cp -rf javascript $(HTML_DIR)
 	mkdir -p $(SCRIPT_DIR)
 	cp -fr img/* $(PRIV_DIR)/img
 	cp -f *.php $(PRIV_DIR)/
@@ -56,11 +58,15 @@ install: $(ALL)
 	$(MAKE) -C localizer install
 	chown $(HTTP_USER):$(HTTP_GROUP) $(HTML_DIR)/*.php
 	chown -R $(HTTP_USER):$(HTTP_GROUP) $(HTML_DIR)/look
+	chown -R $(HTTP_USER):$(HTTP_GROUP) $(HTML_DIR)/javascript
 	chown -R $(HTTP_USER):$(HTTP_GROUP) $(PRIV_DIR) 
 	chown -R $(HTTP_USER):$(HTTP_GROUP) $(SCRIPT_DIR)
 	chmod u+rw $(HTML_DIR)/*.php
 	chmod g+r $(HTML_DIR)/*.php
 	chmod o-rwx $(HTML_DIR)/*.php
+	chmod -R u+rw $(HTML_DIR)/javascript
+	chmod -R g+r $(HTML_DIR)/javascript
+	chmod -R o-rwx $(HTML_DIR)/javascript
 	chmod -R u+rw $(PRIV_DIR)
 	chmod -R g+rw $(PRIV_DIR)
 	chmod -R o-rwx $(PRIV_DIR)
