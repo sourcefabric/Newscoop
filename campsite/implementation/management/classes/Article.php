@@ -709,10 +709,15 @@ class Article extends DatabaseObject {
 		if ( ($p_value != 'Y') && ($p_value != 'S') && ($p_value != 'N')) {
 			return false;
 		}
-		if ($this->getPublished() == 'Y' && $p_value != 'Y') {
+		// If the article is being unpublished
+		if ( ($this->getPublished() == 'Y') && ($p_value != 'Y') ) {
 			// Delete indexes
 			ArticleIndex::OnArticleDelete($this->getPublicationId(), $this->getIssueId(),
 				$this->getSectionId(), $this->getLanguageId(), $this->getArticleId());
+		}
+		// If the article is being published
+		elseif ( ($this->getPublished() != 'Y') && ($p_value == 'Y') ) {
+			//ArticleIndex::
 		}
 		$this->setIsIndexed(false);
 		return parent::setProperty('Published', $p_value);
@@ -990,6 +995,9 @@ class Article extends DatabaseObject {
 	 * @param int p_languageId
 	 *		The language ID.
 	 *
+	 * @param int p_articleId
+	 *		The article ID.
+	 *
 	 * @param int p_preferredLanguage
 	 *		If specified, list the articles in this language before others.
 	 *
@@ -1012,8 +1020,9 @@ class Article extends DatabaseObject {
 	 */
 	function GetArticles($p_publicationId = null, $p_issueId = null, 
 						 $p_sectionId = null, $p_languageId = null, 
-						 $p_preferredLanguage = null, $p_numRows = null,
-						 $p_startAt = '', $p_numRowsIsUniqueRows = false) {
+						 $p_articleId = null, $p_preferredLanguage = null, 
+						 $p_numRows = null, $p_startAt = '', 
+						 $p_numRowsIsUniqueRows = false) {
 		global $Campsite;
 		
 		$whereClause = array();
@@ -1028,6 +1037,9 @@ class Article extends DatabaseObject {
 		}
 		if (!is_null($p_languageId)) {
 			$whereClause[] = "IdLanguage=$p_languageId";
+		}
+		if (!is_null($p_articleId)) {
+			$whereClause[] = "Number=$p_articleId";
 		}
 
 		if ($p_numRowsIsUniqueRows) {
