@@ -11,7 +11,7 @@ regGS("Delete issue $1","Delete issue $1:en");
 // -- status.m4
 regGS("Change issue status","Change issue status:en");
 regGS("You do not have the right to change issues.","You do not have the right to change issues.:en");
-regGS("Are you sure you want to change the issue $1 status from $2 to $3?","Are you sure you want change the issue $1 status from $2 to $3?:en");
+regGS("Are you sure you want to change the issue $1 status from $2 to $3?","Are you sure you want to change the issue $1 status from $2 to $3?:en");
 
 // -- do_status.m4
 regGS("Changing issue status","Changing issue status:en");
