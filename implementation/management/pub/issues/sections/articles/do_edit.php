@@ -158,157 +158,99 @@ $Language = Input::Get('Language', 'int', 0);
 $sLanguage = Input::Get('sLanguage', 'int', 0);
 $Article = Input::Get('Article', 'int', 0);
 
+$BackLink = "/$ADMIN/pub/issues/sections/articles/index.php?Pub=$Pub&Issue=$Issue&Language=$Language&Section=$Section";
+
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(array('Invalid input: $1', Input::GetErrorString()));
+	CampsiteInterface::DisplayError(array('Invalid input: $1', Input::GetErrorString()), $BackLink);
 	exit;	
 }
 
 // Fetch article
 $articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
 if (!$articleObj->exists()) {
-	$errorStr = 'No such article.';
+	CampsiteInterface::DisplayError('No such article.', $BackLink);
 }
 
 // If the user has the ability to change the article OR
 // the user created the article and it hasnt been published.
-$hasAccess = false;
-if ($User->hasPermission('ChangeArticle')
-	|| (($articleObj->getUserId() == $User->getId()) 
-		&& ($articleObj->getPublished() == 'N'))) {
-	$hasAccess = true;
+if (!($User->hasPermission('ChangeArticle') || (($articleObj->getUserId() == $User->getId()) 
+		&& ($articleObj->getPublished() == 'N')))) {
+	$errorStr = "You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only changed by authorized users.";
+	CampsiteInterface::DisplayError($errorStr, $BackLink);
+}
+// Only users with a lock on the article can change it.
+if ($User->getId() != $articleObj->getLockedByUser()) {
+	$diffSeconds = time() - strtotime($articleObj->getLockTime());
+	$hours = floor($diffSeconds/3600);
+	$diffSeconds -= $hours * 3600;
+	$minutes = floor($diffSeconds/60);
+	$lockUser =& new User($articleObj->getLockedByUser());
+	$errorStr = 'Could not save the article.  It has been locked by $1 $2 hours and $3 minutes ago.';
+	$errorArray = array($errorStr, $lockUser->getName(), $hours, $minutes);
+	CampsiteInterface::DisplayError($errorArray, $BackLink);
+	exit;
 }
 
-$errorStr = "";
-    
 $languageObj =& new Language($Language);
 
 // Update the article
 $hasChanged = false;
-if (($errorStr == "") && $access && $hasAccess) {
-	$articleTypeObj =& $articleObj->getArticleTypeObject();
-	$dbColumns = $articleTypeObj->getUserDefinedColumns();
-	
-	// TODO: Verify the input
-	
-	// Update the article & check if it has been changed.
-	$hasChanged |= $articleObj->setOnFrontPage(isset($_REQUEST["cOnFrontPage"]));
-	$hasChanged |= $articleObj->setOnSection(isset($_REQUEST["cOnSection"]));
-	$hasChanged |= $articleObj->setIsPublic(isset($_REQUEST["cPublic"]));
-	$hasChanged |= $articleObj->setKeywords($_REQUEST['cKeywords']);
-	$hasChanged |= $articleObj->setTitle($_REQUEST["cName"]);
-	$hasChanged |= $articleObj->setIsIndexed(false);
-	foreach ($dbColumns as $dbColumn) {
-		if (isset($_REQUEST[$dbColumn->getName()])) {
-			$text = $_REQUEST[$dbColumn->getName()];
-			if (ini_get("magic_quotes_gpc")) {
-				$text = stripslashes($text);
-			}
-			// Replace <span class="subhead"> ... </span> with <!** Title> ... <!** EndTitle>
-			$text = preg_replace_callback("/(<\s*span[^>]*class\s*=\s*[\"']campsite_subhead[\"'][^>]*>|<\s*span|<\s*\/\s*span\s*>)/i", "TransformSubheads", $text);
-			
-			// Replace <a href="campsite_internal_link?IdPublication=1&..." ...> ... </a>
-			// with <!** Link Internal IdPublication=1&...> ... <!** EndLink>
-			//
-			$text = preg_replace_callback("/(<\s*a\s*href=[\"']campsite_internal_link[?][\w&=]*[\"'][\s\w\"']*>)|(<\s*\/a\s*>)/i", "TransformInternalLinks", $text);
-			$hasChanged |= $articleTypeObj->setProperty($dbColumn->getName(), $text);
+$articleTypeObj =& $articleObj->getArticleTypeObject();
+$dbColumns = $articleTypeObj->getUserDefinedColumns();
 
-			// Replace <a href="http://xyz.com" target="_blank"> ... </a>
-			// with <!** Link external "http://xyz.com" TARGET "_blank"> ... <!** EndLink>
-			//
-			$text = preg_replace_callback("/(<\s*a\s*href=[\"'][^\"']*[\"']\s*(target\s*=\s['\"][_\w]*['\"])?[\s\w\"']*>)|(<\s*\/a\s*>)/i", "TransformExternalLinks", $text);
-			$hasChanged |= $articleTypeObj->setProperty($dbColumn->getName(), $text);
+// TODO: Verify the input
 
-			// Replace <img src="A" align="B" alt="C" sub="D">
-			// with <!** Image [image_template_id] align=B alt="C" sub="D">
-			//
-			$srcAttr = "(src\s*=\s*[\"'][^'\"]*[\"'])";
-			$altAttr = "(alt\s*=\s*['\"][^'\"]*['\"])";
-			$alignAttr = "(align\s*=\s*['\"][^'\"]*['\"])";
-			$subAttr = "(sub\s*=\s*['\"][^'\"]*['\"])";
-			$text = preg_replace_callback("/<\s*img\s*(($srcAttr|$altAttr|$alignAttr|$subAttr)\s*)*[\s\w\"']*\/>/i", "TransformImageTags", $text);
-			$hasChanged |= $articleTypeObj->setProperty($dbColumn->getName(), $text);
+// Update the article & check if it has been changed.
+$hasChanged |= $articleObj->setOnFrontPage(isset($_REQUEST["cOnFrontPage"]));
+$hasChanged |= $articleObj->setOnSection(isset($_REQUEST["cOnSection"]));
+$hasChanged |= $articleObj->setIsPublic(isset($_REQUEST["cPublic"]));
+$hasChanged |= $articleObj->setKeywords($_REQUEST['cKeywords']);
+$hasChanged |= $articleObj->setTitle($_REQUEST["cName"]);
+$hasChanged |= $articleObj->setIsIndexed(false);
+foreach ($dbColumns as $dbColumn) {
+	if (isset($_REQUEST[$dbColumn->getName()])) {
+		$text = $_REQUEST[$dbColumn->getName()];
+		if (ini_get("magic_quotes_gpc")) {
+			$text = stripslashes($text);
 		}
+		// Replace <span class="subhead"> ... </span> with <!** Title> ... <!** EndTitle>
+		$text = preg_replace_callback("/(<\s*span[^>]*class\s*=\s*[\"']campsite_subhead[\"'][^>]*>|<\s*span|<\s*\/\s*span\s*>)/i", "TransformSubheads", $text);
+		
+		// Replace <a href="campsite_internal_link?IdPublication=1&..." ...> ... </a>
+		// with <!** Link Internal IdPublication=1&...> ... <!** EndLink>
+		//
+		$text = preg_replace_callback("/(<\s*a\s*href=[\"']campsite_internal_link[?][\w&=]*[\"'][\s\w\"']*>)|(<\s*\/a\s*>)/i", "TransformInternalLinks", $text);
+		$hasChanged |= $articleTypeObj->setProperty($dbColumn->getName(), $text);
+
+		// Replace <a href="http://xyz.com" target="_blank"> ... </a>
+		// with <!** Link external "http://xyz.com" TARGET "_blank"> ... <!** EndLink>
+		//
+		$text = preg_replace_callback("/(<\s*a\s*href=[\"'][^\"']*[\"']\s*(target\s*=\s['\"][_\w]*['\"])?[\s\w\"']*>)|(<\s*\/a\s*>)/i", "TransformExternalLinks", $text);
+		$hasChanged |= $articleTypeObj->setProperty($dbColumn->getName(), $text);
+
+		// Replace <img src="A" align="B" alt="C" sub="D">
+		// with <!** Image [image_template_id] align=B alt="C" sub="D">
+		//
+		$srcAttr = "(src\s*=\s*[\"'][^'\"]*[\"'])";
+		$altAttr = "(alt\s*=\s*['\"][^'\"]*['\"])";
+		$alignAttr = "(align\s*=\s*['\"][^'\"]*['\"])";
+		$subAttr = "(sub\s*=\s*['\"][^'\"]*['\"])";
+		$text = preg_replace_callback("/<\s*img\s*(($srcAttr|$altAttr|$alignAttr|$subAttr)\s*)*[\s\w\"']*\/>/i", "TransformImageTags", $text);
+		$hasChanged |= $articleTypeObj->setProperty($dbColumn->getName(), $text);
 	}
-	
-	## added by sebastian
-	if (function_exists ("incModFile")) {
-		incModFile ();
-	}
-}
-ArticleTop($articleObj, $languageObj->getLanguageId(), "Changing article details");
-
-if (!$access) { 
-	?>
-	</HTML>
-	<?PHP
-	return;
 }
 
-if ($errorStr != "") {
-	CampsiteInterface::DisplayError($errorStr);
-	return;
+if ($hasChanged) {
+	$Saved = 1;
+}
+else {
+	$Saved = 2;
 }
 
-if ($hasAccess) {
-	?><P>
-	<CENTER><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box" ALIGN="CENTER">
-		<TR>
-			<TD COLSPAN="2">
-				<B> <?php  putGS("Changing article details"); ?> </B>
-				<HR NOSHADE SIZE="1" COLOR="BLACK">
-			</TD>
-		</TR>
-		<TR>
-			<TD COLSPAN="2"><BLOCKQUOTE>
-			<?php 
-			    if ($hasChanged) { 
-			    	?>
-			    	<LI><?php putGS('The article has been updated.'); ?></LI>
-					<?php  
-			    } 
-			    else { 
-			    	?>
-			    	<LI><?php putGS('The article cannot be updated or no changes have been made.'); ?></LI>
-					<?php  
-			    } 
-			    ?>
-			    </BLOCKQUOTE>
-			</TD>
-		</TR>
-		<TR>
-			<TD COLSPAN="2">
-			<DIV ALIGN="CENTER">
-			<INPUT class="button" TYPE="button" NAME="Done" VALUE="<?php  putGS('Done'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/pub/issues/sections/articles/edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&sLanguage=<?php  p($sLanguage); ?>'">
-			</DIV>
-			</TD>
-		</TR>
-	</TABLE></CENTER>	
-	<P>
-	<?php  
-} 
-else { ?>    
-	<P>
-	<CENTER><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box" ALIGN="CENTER">
-		<TR>
-			<TD COLSPAN="2">
-				<B> <font color="red"><?php  putGS("Access denied"); ?> </font></B>
-				<HR NOSHADE SIZE="1" COLOR="BLACK">
-			</TD>
-		</TR>
-		<TR>
-			<TD COLSPAN="2"><BLOCKQUOTE><font color=red><li><?php  putGS("You do not have the right to change this article status. Once submitted an article can only changed by authorized users." ); ?></li></font></BLOCKQUOTE></TD>
-		</TR>
-		<TR>
-			<TD COLSPAN="2">
-			<DIV ALIGN="CENTER">
-			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>&Section=<?php  p($Section); ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/button/ok.gif" BORDER="0" ALT="OK" class="button"></A>
-			</DIV>
-			</TD>
-		</TR>
-	</TABLE></CENTER>
-	</FORM>
-	<P>
-	<?php  
-} 
-CampsiteInterface::CopyrightNotice();
+// added by sebastian
+if (function_exists ("incModFile")) {
+	incModFile ();
+}
+
+header("Location: ". CampsiteInterface::ArticleUrl($articleObj, $Language, 'edit.php')."&Saved=$Saved");
 ?>
