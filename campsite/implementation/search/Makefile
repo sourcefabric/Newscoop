@@ -4,7 +4,7 @@ PACKAGE_DIR=$(BIN_PACKAGE_DIR)/implementation
 
 INCLUDE_PATH=-I$(MYSQL_H_PATH)
 
-CFLAGS=-Wall -O3 -fomit-frame-pointer -malign-jumps=4 -malign-loops=4 -malign-functions=4 $(INCLUDE_PATH)
+CFLAGS=-Wall -O3 $(INCLUDE_PATH)
 CXXFLAGS=$(CFLAGS)
 LDFLAGS=-L$(LIBMYSQLCLIENT_PATH)
 LDLIBS=-lmysqlclient -lm -lz $(LIBCRYPT_LINK)
@@ -33,7 +33,7 @@ broker.o: broker.cpp kwd.h broker.h configure.h readconf.h globals.h
 readconf.o: readconf.cpp readconf.h globals.h
 
 clean: dummy
-	rm -f *.o *~ configure.h $(LINKS) .env_vars
+	rm -f *.o *~ configure.h $(LINKS)
 	if [ "$(PACKAGE_TYPE)" = "source" ]; then rm -f gather broker; fi
 
 install: $(ALL)

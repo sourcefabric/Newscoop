@@ -24,7 +24,7 @@ $(TPL_CGI): $(OBJ_FILES)
 	strip $(TPL_CGI)
 
 clean: dummy
-	rm -f *.o *~ tpl_cgi.h .env_vars
+	rm -f *.o *~ tpl_cgi.h
 	for l in $(LINKS); do rm -f $$l; done
 	if [ "$(PACKAGE_TYPE)" = "source" ]; then rm -f $(TPL_CGI); fi
 

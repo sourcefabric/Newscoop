@@ -13,7 +13,7 @@ install: $(ALL)
 	cp -f db_connect.php $(HTML_DIR)/
 
 clean:
-	rm -f *~ db_connect.php .env_vars
+	rm -f *~ db_connect.php
 	if [ "$(PACKAGE_TYPE)" = "source" ]; then rm -f $(MY_TARGETS); fi
 
 package: $(ALL)

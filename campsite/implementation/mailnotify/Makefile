@@ -30,7 +30,7 @@ notifyevents: notifyevents.o readconf.o
 	strip notifyevents
 
 clean: dummy
-	rm -f $(LINKS) .env_vars
+	rm -f $(LINKS)
 	$(MAKE) -C smtp_wrapper clean
 	rm -f *.o configure.h *~
 	if [ "$(PACKAGE_TYPE)" = "source" ]; then \

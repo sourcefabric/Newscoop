@@ -39,7 +39,7 @@ process_i.o: process_i.cpp parse_file.h dir_conf.h readconf.h globals.h
 cleanb.o: cleanb.cpp parse_file.h dir_conf.h
 
 clean:
-	rm -f *~ core $(OBJ) dir_conf.h $(LINKS) configure.h .env_vars
+	rm -f *~ core $(OBJ) dir_conf.h $(LINKS) configure.h
 	if [ "$(PACKAGE_TYPE)" = "source" ]; then rm -f $(TARGET); fi
 
 install: $(ALL)
