@@ -108,7 +108,7 @@ $languageObj =& new Language($Language);
 	<td>
 		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 		<TR>
-			<TD><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/add.png" BORDER="0"></TD>
+			<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $Language, "images/search.php"); ?><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/add.png" BORDER="0"></a></TD>
 			<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $Language, "images/search.php"); ?><B><?php  putGS('Add an existing image'); ?></B></A></TD>
 		</TR>
 		</TABLE>
