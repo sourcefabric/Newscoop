@@ -578,27 +578,31 @@ CTCPSocket* CServerSocket::Accept() EXCEPTION_DEF(throw(SocketErrorException))
 CUDPSocket::CUDPSocket(const char* local_ip, const int lport, int backlog)
 EXCEPTION_DEF(throw(SocketErrorException)): CSocket(SOCK_DGRAM, PF_INET)
 {
-	struct sockaddr_in s;
-	s.sin_family = AF_INET;
-	s.sin_port = htons(lport);
-	s.sin_addr.s_addr = inet_addr(local_ip);
-	if (bind(sock, (sockaddr*) &s, sizeof(s)) == -1)
+	unsigned long addr;
+	if ((addr = inet_addr(local_ip)) != INADDR_ANY || lport != 0)
 	{
-		switch (errno)
+		struct sockaddr_in s;
+		s.sin_family = AF_INET;
+		s.sin_port = htons(lport);
+		s.sin_addr.s_addr = inet_addr(local_ip);
+		if (bind(sock, (sockaddr*) &s, sizeof(s)) == -1)
 		{
-		case EACCES:
-			THROW_EX(throw SocketErrorException
-			         ("Bind: Permission denied.Reason: Address protected", EACCES));
-		case EADDRINUSE:
-			THROW_EX(throw AddressAlreadyInUse
-			         ("Bind: The local address is already in use", local_ip, lport));
-		case EADDRNOTAVAIL:
-			THROW_EX(throw SocketErrorException
-			         ("Bind: Local address is not available on the local machine", EADDRNOTAVAIL));
-		}
-		if (listen(sock, backlog) == -1)
-		{
-			THROW_EX(throw SocketErrorException("Listen error", errno));
+			switch (errno)
+			{
+			case EACCES:
+				THROW_EX(throw SocketErrorException
+				         ("Bind: Permission denied.Reason: Address protected", EACCES));
+			case EADDRINUSE:
+				THROW_EX(throw AddressAlreadyInUse
+				         ("Bind: The local address is already in use", local_ip, lport));
+			case EADDRNOTAVAIL:
+				THROW_EX(throw SocketErrorException
+				         ("Bind: Local address is not available on the local machine", EADDRNOTAVAIL));
+			}
+			if (listen(sock, backlog) == -1)
+			{
+				THROW_EX(throw SocketErrorException("Listen error", errno));
+			}
 		}
 	}
 }
