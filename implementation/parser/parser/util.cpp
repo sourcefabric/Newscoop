@@ -252,6 +252,46 @@ const char* const EscapeURL(const char* src)
 	return dst;
 }
 
+// UnescapeURL: return the given character string unescaped from URL format
+// Parameters: const char* src - pointer to const char; string to unescape; must not be
+//		NULL
+// Returns: pointer to escaped string; this is dynamically allocated using new
+//		operator; after use this must be deallocated using delete operator
+const char* const UnescapeURL(const char* src)
+{
+	// translates all sequences of form %xx corresponding characters
+	// %xx specifies the character ascii code in hexadecimal
+	if (src == NULL)
+		return NULL;
+	char* dst = (char*)new char[strlen(src) + 1];
+	if (dst == NULL)
+		return NULL;
+	int srcI;
+	int dstI;
+	char pchHex[3];
+	for (srcI = 0, dstI = 0; src[srcI] != 0; srcI = srcI + 1, dstI = dstI + 1)
+		switch (src[srcI])
+		{
+			case '+':
+				dst[dstI] = ' ';
+				break;
+			case '%':
+				if (src[++srcI] == '%')
+				{
+					dst[dstI] = '%';
+					break;
+				}
+				strncpy(pchHex, src + srcI++, 2);
+				pchHex[2] = 0;
+				dst[dstI] = (char)strtol(pchHex, NULL, 16);
+				break;
+			default:
+				dst[dstI] = src[srcI];
+		}
+	dst[dstI] = 0;
+	return dst;
+}
+
 // EscapeHTML: return the given character string escaped for HTML
 // Parameters: const char* src - pointer to const char; string to escape; must not be
 //		NULL
