@@ -48,7 +48,7 @@ E_CURRENT
 B_DIALOG(<*Copy previous issue*>, <*POST*>, <*do_add_prev.php*>)
 	X_DIALOG_TEXT(<*<?php  putGS('Copy structure from issue nr $1','<B>'.getNumVar($q_nr,0).'</B>'); ?>*>)
 	B_DIALOG_INPUT(<*Number*>)
-		<INPUT TYPE="TEXT" NAME="cNumber" VALUE="<?php  print (getNumVar($q_nr,0) + 1); ?>" SIZE="5" MAXLENGTH="5">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cNumber" VALUE="<?php  print (getNumVar($q_nr,0) + 1); ?>" SIZE="5" MAXLENGTH="5">
 	E_DIALOG_INPUT
 	B_DIALOG_BUTTONS
 		<INPUT TYPE="HIDDEN" NAME="cOldNumber" VALUE="<?php  pgetNumVar($q_nr,0); ?>">
