@@ -20,8 +20,8 @@
 	// once entered here, in the TemplateManagement, because the parameter What is 0 by default, even if the value set before is still set
 	// its meaning is lost, so we can use the variable to switch between file and folders; let's say 0 is for folders and 1 for files
 	// we only need it when deleting items
-	
-    $basedir="$DOCUMENT_ROOT".decURL($listbasedir);
+
+	$basedir=$_SERVER['DOCUMENT_ROOT'].decURL($listbasedir);
 
     $handle=opendir($basedir);
     while (($file = readdir($handle))!=false) {
@@ -47,14 +47,14 @@
 if (isset($dirs)) {
     sort($dirs);
     for($fi=0;$fi<count($dirs);$fi++) {
-	    $j=$dirs[$fi];
+	    $j= $dirs[$fi];
 
 	    if ($c == "#D0D0D0" )		//alternate the color lines in the table
 		$c="#D0D0B0";
 	    else
 		$c="#D0D0D0";
 	    
-	    print "<TR BGCOLOR='$c'><TD><TABLE BORDER='0' CELLSPACING='1' CELLPADDING='0'><TR><TD><IMG SRC='/$ADMIN/img/icon/dir.gif' BORDER='0'></TD><TD><A HREF='".encURL($j)."'>$j</A></TD></TR></TABLE></TD>";
+	    print "<TR BGCOLOR='$c'><TD><TABLE BORDER='0' CELLSPACING='1' CELLPADDING='0'><TR><TD><IMG SRC='/$ADMIN/img/icon/dir.gif' BORDER='0'></TD><TD><A HREF='?Path=".encURL($j)."'>$j</A></TD></TR></TABLE></TD>";
 
 		if ($dta != 0)
 			print "<TD ALIGN='CENTER'><A HREF='/$ADMIN/templates/del.php?What=0&Path=".encURL($listbasedir)."&Name=".encURL($j)."'><IMG SRC='/$ADMIN/img/icon/x.gif' BORDER='0' ALT='".getGS('Delete folder')."'></A></TD></TR>";
