@@ -5,6 +5,9 @@ load_common_include_files();
 todefnum('TOL_UserId');
 todefnum('TOL_UserKey');
 list($access, $User) = check_basic_access($_REQUEST);
+if (!$access) {
+	exit;
+}
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
 	"http://www.w3.org/TR/REC-html40/loose.dtd">
@@ -12,18 +15,10 @@ list($access, $User) = check_basic_access($_REQUEST);
 <HEAD>
     <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<META HTTP-EQUIV="Expires" CONTENT="now">
-	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite["website_url"] ?>/stylesheet.css">	
+	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite["website_url"] ?>/css/admin_stylesheet.css">	
 	<TITLE><?php  putGS("Menu"); ?></TITLE>
 </HEAD>
 
-<?php  
-if (!$access) { 
-	?>
-	</HTML>
-	<?php
-	return;
-}
-?>
 <BODY BGCOLOR="#D0D0B0" TEXT="BLACK" LINK="DARKBLUE" ALINK="RED" VLINK="DARKBLUE">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%">
     
