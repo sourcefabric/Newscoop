@@ -62,6 +62,11 @@ todefradio('cManageIndexer');
 todefradio('cPublish');
 todefradio('cManageTopics');
 
+todefradio('cEditorBold');
+todefradio('cEditorItalic');
+todefradio('cEditorUnderline');
+todefradio('cEditorUndoRedo');
+todefradio('cEditorCopyCutPaste');
 todefradio('cEditorImage');
 todefradio('cEditorTextAlignment');
 todefradio('cEditorFontColor');
@@ -148,7 +153,12 @@ $queryStr = "UPDATE UserPerm SET "
 	." EditorEnlarge='$cEditorEnlarge', "
 	." EditorTextDirection='$cEditorTextDirection', "
 	." EditorLink='$cEditorLink', "
-	." EditorSubhead='$cEditorSubhead'"
+	." EditorSubhead='$cEditorSubhead',"
+	." EditorBold='$cEditorBold',"
+	." EditorItalic='$cEditorItalic',"
+	." EditorUnderline='$cEditorUnderline',"
+	." EditorUndoRedo='$cEditorUndoRedo',"
+	." EditorCopyCutPaste='$cEditorCopyCutPaste'"
 	." WHERE IdUser=$User";
 query($queryStr);
 
