@@ -103,6 +103,46 @@
 	}
 	// -->
 	</script>
+
+	<!-- load the main HTMLArea file -->
+    <script type="text/javascript">
+    	//<![CDATA[
+	      _editor_url = "/javascript/htmlarea/";
+	      _editor_lang = "en";
+    	//]]>
+    </script>    
+    <script type="text/javascript" src="/javascript/htmlarea/htmlarea.js"></script>
+    <script type="text/javascript">
+    	//<![CDATA[
+    	HTMLArea.loadPlugin("ImageManager");
+     	initdocument = function () {
+     		<?php
+     		foreach ($dbColumns as $dbColumn) {
+     			if (stristr($dbColumn->getType(), "blob")) {
+     				?>
+        	var editor = new HTMLArea("<?php print $dbColumn->getName(); ?>");
+        	editor.generate();
+        			<?php
+     			}
+     		}
+     		?>
+      	}
+        function addEvent(obj, evType, fn) { 
+        	if (obj.addEventListener) { 
+        		obj.addEventListener(evType, fn, true); 
+        		return true; 
+        	} 
+            else if (obj.attachEvent) {  
+            	var r = obj.attachEvent("on"+evType, fn);  
+            	return r;  
+            } 
+            else {  
+            	return false; 
+            } 
+        } 
+        addEvent(window, 'load', initdocument);
+    	//]]>
+    </script>
 	<TITLE><?php putGS("Edit article details"); ?></TITLE>
 	<?php if (!$access) { ?>	
 		<META HTTP-EQUIV="Refresh" CONTENT="0; URL=/priv/logout.php">
@@ -281,7 +321,6 @@ if ($edit_ok) { ?>
 <CENTER><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" BGCOLOR="#C0D0FF" ALIGN="CENTER">
 	<TR>
 		<TD COLSPAN="2">
-			<!-- Paul Baranowski: BEGIN new code -->
 			<table cellpadding="0" cellspacing="0" width="100%">
 			<tr>
 				<td align="left">
@@ -291,6 +330,7 @@ if ($edit_ok) { ?>
 					<? 
 					if ($zipLibAvailable && $xsltLibAvailable && $xmlLibAvailable 
 						&& $introSupport && $bodySupport) {
+						// Article Import Link
 					?>
 					<b><a href="/priv/article_import/index.php?Pub=<?p($Pub);?>&Issue=<?p($Issue);?>&Section=<?p($Section);?>&Article=<?p($Article)?>&Language=<?p($Language);?>&sLanguage=<?p($sLanguage);?>">Import Article</a></b>
 					<?
@@ -300,7 +340,6 @@ if ($edit_ok) { ?>
 			</tr>
 			</table>
 			<HR NOSHADE SIZE="1" COLOR="BLACK"> 
-			<!-- Paul Baranowski: END new code -->
 		</TD>
 	</TR>
 	<TR>
@@ -367,92 +406,47 @@ if ($edit_ok) { ?>
 <INPUT TYPE="HIDDEN" NAME="query" VALUE="">
 
 <?php 
-//    $fld= "";
-//    $ftyp= "";
-?>
-
-<?php 
 	foreach ($dbColumns as $dbColumn) {
-//    query ("SHOW COLUMNS FROM X".$articleObj->getType()." LIKE 'F%'", 'q_fld');
-//    $nr3=$NUM_ROWS;
-//    for($loop3=0;$loop3<$nr3;$loop3++) {
-//	fetchRowNum($q_fld);
-//	}
-	
-	// table is column name
-	//$table= substr ( getNumVar($q_fld,0),1);
-	//$posc=strpos(getNumVar($q_fld,1),'char');
-	//$posd=strpos(getNumVar($q_fld,1),'date');
-
-	//if (!($posc === false))
-		// text
-	//    $type=0;
-	//elseif (!($posd === false))
-	//    $type=1;
-	    // date
-	//else
-		// blob
-	 //   $type=2;
-
-//	if ($type != 2) {
-//	    if ($fld != "")
-//		$fld= "$fld, \"F$table\"";
-//	    else
-//		$fld= "\"F$table\"";
-//
-//	    if ($ftyp != "")
-//		$ftyp= "$ftyp, $type";
-//	    else
-//		$ftyp= "$type";
-//	}
-
-	if (stristr($dbColumn->getType(), "char")) { ?>
-		<TR>
-		<TD ALIGN="RIGHT" ><?php pencHTML($dbColumn->getPrintName()); ?>:</TD>
-		<TD>
-		<?php  //query ("SELECT ".getNumVar($q_fld,0)." FROM X".$articleObj->getType()." WHERE NrArticle=$Article AND IdLanguage=$sLanguage", 'q_afld'); ?>			
-        <INPUT NAME="<?php pencHTML($dbColumn->getName()); ?>" TYPE="TEXT" VALUE="<?php print $articleType->getColumnValue($dbColumn->getName()) ?>" SIZE="64" MAXLENGTH="100">
-		<?php  
-	} elseif (stristr($dbColumn->getType(), "date")) { 
-		    //query ("SELECT F$table from X".$articleObj->getType()." where NrArticle=$Article AND IdLanguage=$sLanguage", 'q_vd');
-		    //fetchRowNum($q_vd);
-		    //if ($articleType->getColumnValue($dbColumn->getName()) == "0000-00-00") {
-			//query ("UPDATE X".$articleObj->getType()." SET F$table=curdate() WHERE NrArticle=$Article AND IdLanguage=$sLanguage");
-			//}
-		?>		<TR>
-		<TD ALIGN="RIGHT" ><?php pencHTML($dbColumn->getPrintName()); ?>:</TD>
-		<TD>
-		<?php  //query ("SELECT ".getNumVar($q_fld,0)." FROM X".$articleObj->getType()." WHERE NrArticle=$Article AND IdLanguage=$sLanguage", 'q_afld'); ?>
-		<INPUT NAME="<?php  pencHTML($dbColumn->getName()); ?>" TYPE="TEXT" VALUE="<?php pencHTML($articleType->getColumnValue($dbColumn->getName())); ?>" SIZE="10" MAXLENGTH="10"> 
-		<?php  
-		putGS('YYYY-MM-DD'); 
-	} elseif (stristr($dbColumn->getType(), "blob")) {
-		//query ("SELECT ".getNumVar($q_fld,0).", length(".getNumVar($q_fld,0).") FROM X".$articleObj->getType()." WHERE NrArticle=$Article AND IdLanguage=$sLanguage", 'q_afld');
-		//fetchRowNum($q_afld);   
-		?>
-		<TR>
-		<TD ALIGN="RIGHT" VALIGN="TOP"><BR><?php pencHTML($dbColumn->getPrintName()); ?>:<BR> 
-			<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
+		if (stristr($dbColumn->getType(), "char")) { ?>
 			<TR>
-				<TD><IMG SRC="/priv/img/tol.gif" BORDER="0"></A></TD>
-				<TD><B><?php  putGS("Edit"); ?></B></A></TD>
+				<TD ALIGN="RIGHT" ><?php pencHTML($dbColumn->getPrintName()); ?>:</TD>
+				<TD>
+		        <INPUT NAME="<?php pencHTML($dbColumn->getName()); ?>" TYPE="TEXT" VALUE="<?php print $articleType->getColumnValue($dbColumn->getName()) ?>" SIZE="64" MAXLENGTH="100">
+				</TD>
 			</TR>
-			</TABLE>
-		</TD>
-		<TD>
-			<HR NOSHADE SIZE="1" COLOR="BLACK">
-			<table width=100% border=2>
-			<tr bgcolor=LightBlue>
-				<td><?php print $articleType->getColumnValue($dbColumn->getName()); ?></td>
-			</tr>
-			</table>
-		<BR><P>
-		<?php  
-	} 
-	?>
+			<?php  
+		} elseif (stristr($dbColumn->getType(), "date")) { 
+			if ($articleType->getColumnValue($dbColumn->getName()) == "0000-00-00") {
+				$articleType->setColumnValue($dbColumn->getName(), "CURDATE()", true);
+			}
+			?>		
+			<TR>
+				<TD ALIGN="RIGHT" ><?php pencHTML($dbColumn->getPrintName()); ?>:</TD>
+				<TD>
+				<INPUT NAME="<?php  pencHTML($dbColumn->getName()); ?>" TYPE="TEXT" VALUE="<?php pencHTML($articleType->getColumnValue($dbColumn->getName())); ?>" SIZE="10" MAXLENGTH="10"> 
+				<?php  
+				putGS('YYYY-MM-DD'); 
+				?>
+				</TD>
+			</TR>
+			<?php
+		} elseif (stristr($dbColumn->getType(), "blob")) {
+			?>
+			<TR>
+			<TD ALIGN="RIGHT" VALIGN="TOP"><BR><?php pencHTML($dbColumn->getPrintName()); ?>:<BR> 
 			</TD>
-	</TR>
-	<?php  
+			<TD>
+				<HR NOSHADE SIZE="1" COLOR="BLACK">
+				<table width=100% border=2>
+				<tr bgcolor=LightBlue>
+					<td><textarea id="<?php print $dbColumn->getName() ?>" rows="20" cols="80" style="width: 100%;"><?php print $articleType->getColumnValue($dbColumn->getName()); ?></textarea></td>
+				</tr>
+				</table>
+			<BR><P>
+			</TD>
+			</TR>
+			<?php  
+		} 
 	} // foreach ($dbColumns as $dbColumn)  
 	?>
 	<TR>
