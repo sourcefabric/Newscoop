@@ -5,7 +5,6 @@ regGS("Front Page Template<BR><SMALL>(click to change)</SMALL>","Šablona tituln
 regGS("Single Article Template<BR><SMALL>(click to change)</SMALL>","Šablona článku (klikněte pro změnu)");
 regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>","Zveřejněno (rrrr-mm-dd)");
 regGS("Delete issue $1","Smazat vydání $1");
-regGS("Click here to set...","Klikněte zde pro výběr...");
 regGS("Change issue status","Změnit stav vydání");
 regGS("You do not have the right to change issues.","Nemáte právo měnit vydání");
 regGS("Are you sure you want to change the issue $1 status from $2 to $3?","Určitě chcete změnit stav vydání $1 z $2 na $3?");

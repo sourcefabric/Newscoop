@@ -5,7 +5,6 @@ regGS("Front Page Template<BR><SMALL>(click to change)</SMALL>","Šablon za prvu
 regGS("Single Article Template<BR><SMALL>(click to change)</SMALL>","Šablon za stranu sa člankom");
 regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>","Objavljen<br><small>(gggg-mm-dd)</small>");
 regGS("Delete issue $1","Obriši izdanje $1");
-regGS("Click here to set...","Kliknite ovde da postavite...");
 regGS("Change issue status","Promeni status izdanja");
 regGS("You do not have the right to change issues.","Nemate pravo da promenenite podatke o izdanju");
 regGS("Are you sure you want to change the issue $1 status from $2 to $3?","Da li ste sigurni da želite da promenite status izdanja $1 iz $2 u $3?");

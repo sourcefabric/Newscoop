@@ -4,7 +4,6 @@ regGS("Front Page Template<BR><SMALL>(click to change)</SMALL>","Modelo para a P
 regGS("Single Article Template<BR><SMALL>(click to change)</SMALL>","Modelo para Pagina de Artigo");
 regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>","Publicado<br>(aaaa-mm-dd)");
 regGS("Delete issue $1","Eliminar Número $1");
-regGS("Click here to set...","Carregue aqui para alterar");
 regGS("Change issue status","Alterar estado do Número");
 regGS("You do not have the right to change issues.","Não tem permissões para alterar Números");
 regGS("Are you sure you want to change the issue $1 status from $2 to $3?","Tem a certeza que deseja alterar a edição de $1 de $2 para $3?");

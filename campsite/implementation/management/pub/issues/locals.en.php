@@ -4,7 +4,6 @@
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>","Name<BR><SMALL>(click to see sections)</SMALL>:en");
 regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>","Published<BR><SMALL>(yyyy-mm-dd)</SMALL>:en");
 regGS("Delete issue $1","Delete issue $1:en");
-regGS("Click here to set...","Click here to set...:en");
 regGS("Publish articles","Publish articles:en");
 regGS("Issue automatic publishing schedule","Issue automatic publishing schedule:en");
 
@@ -102,4 +101,3 @@ regGS("Issue template for single articles from $1 changed to $2","Issue template
 regGS("The template could not be changed.","The template could not be changed.:en");
 
 ?>
-

@@ -5,7 +5,6 @@ regGS("Front Page Template<BR><SMALL>(click to change)</SMALL>","Şablonul pagin
 regGS("Single Article Template<BR><SMALL>(click to change)</SMALL>","Şablonul pentru afişarea articolelor");
 regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>","Publicat<br><small>(aaaa-ll-zz)</small>");
 regGS("Delete issue $1","Şterge ediţia $1");
-regGS("Click here to set...","Apăsaţi aici pentru a salva...");
 regGS("Change issue status","Modifică starea ediţiei");
 regGS("You do not have the right to change issues.","Nu aveţi dreptul de a modifica ediţia");
 regGS("Are you sure you want to change the issue $1 status from $2 to $3?","Doriţi să schimbaţi starea ediţiei $1 de la $2 la $3?");

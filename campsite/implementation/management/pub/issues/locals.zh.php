@@ -4,7 +4,6 @@ regGS("Front Page Template<BR><SMALL>(click to change)</SMALL>","首页模版");
 regGS("Single Article Template<BR><SMALL>(click to change)</SMALL>","单文章模版（单击进行修改）");
 regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>","已发布(yyyy-mm-dd)");
 regGS("Delete issue $1","删除议题$1");
-regGS("Click here to set...","单击此处进行设置");
 regGS("Change issue status","改变议题状态");
 regGS("You do not have the right to change issues.","您无权改变议题");
 regGS("Are you sure you want to change the issue $1 status from $2 to $3?","你确认要把议题$1的状态从$2改成$3?");
