@@ -74,7 +74,7 @@ ArticleTop($articleObj, $Language, "Translate article", true, true);
 <INPUT TYPE="HIDDEN" NAME="sLanguage" VALUE="<?php  p($articleObj->getLanguageId()); ?>">
 <INPUT TYPE="HIDDEN" NAME="Back" VALUE="<?php echo $BackLink; ?>">
 <CENTER>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" BGCOLOR="#C0D0FF" ALIGN="CENTER">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" ALIGN="CENTER" class="table_input">
 <TR>
 	<TD COLSPAN="2">
 		<B><?php  putGS("Translate article"); ?></B>

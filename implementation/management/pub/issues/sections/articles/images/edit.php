@@ -99,7 +99,7 @@ if (!$User->hasPermission('ChangeArticle')
 
 <P>
 <FORM NAME="dialog" METHOD="POST" ACTION="do_edit.php" >
-<CENTER><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" BGCOLOR="#C0D0FF" ALIGN="CENTER">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" ALIGN="CENTER" class="table_input">
 	<TR>
 		<TD COLSPAN="2">
 			<B><?php  putGS('Change image information'); ?></B>
@@ -151,7 +151,7 @@ if (!$User->hasPermission('ChangeArticle')
 		</DIV>
 		</TD>
 	</TR>
-</TABLE></CENTER>
+</TABLE>
 </FORM>
 <P>
 <?php CampsiteInterface::CopyrightNotice(); ?>
