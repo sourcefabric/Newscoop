@@ -1,6 +1,7 @@
 <?
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DatabaseObject.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleImage.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/include/Yahc.class.php');
 
 define('CAMPSITE_IMAGE_DIRECTORY', '/images/');
@@ -53,7 +54,7 @@ class Image extends DatabaseObject {
 	 */
 	function delete() {
 		// Delete all the references to this image.
-		Article::OnImageDelete($this->getImageId());
+		ArticleImage::OnImageDelete($this->getImageId());
 		
 		// Delete the record in the database
 		parent::delete();
