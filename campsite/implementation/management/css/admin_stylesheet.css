@@ -18,7 +18,6 @@ BODY {
 TH, TD, FORM, BLOCKQUOTE, UL, LI { 
 	font-family: Tahoma, Arial, Helvetica, sans-serif; 
 	font-size: 10pt; 
-	/* color: #00008b; */
 	color: black;
 }
 
@@ -30,8 +29,6 @@ SMALL, ADDRESS {
 A { 
 	font-family: Tahoma, Arial, Helvetica, sans-serif; 
 	font-size: 10pt; 
-	/*text-decoration: none;*/
-	/*color: darkblue;*/
 	color: black; 
 }
 
@@ -40,12 +37,10 @@ A:active {
 }
 
 A:visited {
-	/*color: darkblue;*/
 	color: black;
 }
 
 hr {
-	/* color: #00008b;	*/
 	color: black;
 }
 
@@ -109,7 +104,6 @@ hr {
 .page_title {
 	font-weight: bold;
 	padding-top: 0px;
-	/* padding-left: 12px; */
 	font-size: 12pt;
 }
 
@@ -152,13 +146,11 @@ hr {
 }
 
 .table_input {
-	/*background-color: #C0D0FF;*/
 	background-color: #d5e2ee;
 	border: 1px solid #8baed1;
 }
 
 .message_box {
-	/* background-color: #C0D0FF; */
 	background-color: #d5e2ee;
 	border: 1px solid #8baed1;
 }
