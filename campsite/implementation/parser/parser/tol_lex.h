@@ -223,12 +223,14 @@ public:
 
 	// Reset: reset lex
 	void Reset(cpChar = NULL, ULInt = 0);
+	// UpdateArticleTypes: update article types structure from database
+	static bool UpdateArticleTypes();
 	// assign operator
 	const TOLLex& operator =(const TOLLex&);
 	// GetLexem: return next lexem
 	const TOLLexem* GetLexem();
 	// PrintStatements: print known statements
-	void PrintStatements() const;
+	static void PrintStatements();
 	// Line: return current line
 	int Line() const
 	{
@@ -247,8 +249,8 @@ public:
 	// PrevColumn: return previous column
 	int PrevColumn() const
 	{
-		if (m_coLexem.m_pcoAtom && strlen((m_coLexem.m_pcoAtom)->Identifier) > 0)
-			return m_nPrevColumn - strlen((m_coLexem.m_pcoAtom)->Identifier) + 1;
+		if (m_coLexem.m_pcoAtom && strlen(m_coLexem.m_pcoAtom->Identifier()) > 0)
+			return m_nPrevColumn - strlen(m_coLexem.m_pcoAtom->Identifier()) + 1;
 		return m_nPrevColumn;
 	}
 

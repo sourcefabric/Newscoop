@@ -16,13 +16,14 @@ B_STYLE
 E_STYLE
 
 B_BODY
-
 <!sql setdefault Pub 0>dnl
 <!sql setdefault Issue 0>dnl
 <!sql setdefault Section 0>dnl
 <!sql setdefault Article 0>dnl
 <!sql setdefault Language 0>dnl
 <!sql setdefault sLanguage 0>dnl
+<!sql setdefault eField 0>dnl
+<!sql setdefault cField 0>dnl
 <!sql setdefault query 0>dnl
 <!sql setdefault cName "">dnl
 define({x_init}, {<!sql setdefault $1 ""><!sql if ~$1 == "on"><!sql set $1 "Y"><!sql else><!sql set $1 "N"><!sql endif>})dnl
@@ -60,6 +61,7 @@ X_CURRENT({Publication:}, {<B><!sql print ~q_pub.Name></B>})
 X_CURRENT({Issue:}, {<B><!sql print ~q_iss.Number>. <!sql print ~q_iss.Name> (<!sql print ~q_lang.Name>)</B>})
 X_CURRENT({Section:}, {<B><!sql print ~q_sect.Number>. <!sql print ~q_sect.Name></B>})
 X_CURRENT({Article:}, {<B><!sql print ~q_art.Name> (<!sql print ~q_slang.Name>)</B>})
+X_CURRENT({Field:}, {<B><!sql print ?eField></B>})
 E_CURRENT
 
 CHECK_XACCESS({ChangeArticle})
@@ -72,16 +74,9 @@ CHECK_XACCESS({ChangeArticle})
 B_MSGBOX({Changing article details})
 	X_MSGBOX_TEXT({
 <!sql set AFFECTED_ROWS 0>dnl
-<!sql query "UPDATE Articles SET Name='?cName', OnFrontPage='?cOnFrontPage', OnSection='?cOnSection', Keywords='?cKeywords', Public='?cPublic', IsIndexed='N' WHERE IdPublication=?Pub AND NrIssue=?Issue AND NrSection=?Section AND Number=?Article AND IdLanguage=?sLanguage">dnl
+<!sql query "UPDATE X?q_art.Type SET ?eField='?cField' WHERE NrArticle=?Article AND IdLanguage=?sLanguage">dnl
 <!sql if $AFFECTED_ROWS>dnl
 <!sql set chngd 1>dnl
-<!sql endif>dnl
-<!sql if $query != "">dnl
-<!sql set AFFECTED_ROWS 0>dnl
-<!sql query "UPDATE X?q_art.Type SET $query WHERE NrArticle=?Article AND IdLanguage=?sLanguage">dnl
-<!sql if $AFFECTED_ROWS>dnl
-<!sql set chngd 1>dnl
-<!sql endif>dnl
 <!sql endif>dnl
 
 <!sql if $chngd>dnl

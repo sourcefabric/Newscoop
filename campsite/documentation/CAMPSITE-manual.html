@@ -8,11 +8,11 @@
   User Guide <br clear=all>
 </h3>
 <p><br>
-  CAMPSITE version: 2.0.0<br>
+  CAMPSITE version: 2.0.0 and newer versions<br>
   Maintainged and distributed under GNU/GPL by CAMPWARE<br>
-  <a href="http://www.campware.org/campsite/" target="_blank">http://www.campware.org/campsite/</a> 
+  <a href="http://www.campware.org/campsite/" target="_blank">http://www.campware.org/campsite/</a>
   <br>
-  Manual version: HTML 9 April 2001<br>
+  Manual version: HTML May, 14th 2001<br>
   &copy;1999-2001 Media Development Loan Fund<br>
   <a href="http://www.mdlf.org" target="_blank">http://www.mdlf.org</a> - <a href="http://www.mdlf-camp.net" target="_blank">http://www.mdlf-camp.net</a> 
 </p>
@@ -34,7 +34,7 @@
   </blockquote>
 </blockquote>
 <P>2. <a href="#2.">BRINGING YOUR PUBLICATIONS ONLINE WITH CAMPSITE</a></P>
-<blockquote> 
+<blockquote>
   <p>2.1. <a href="#2.1.">CONFIGURING THE PUBLISHING ENVIRONMENT</a></p>
   <blockquote> 
     <p>2.1.1 <a href="#2.1.1">Languages</a><br>
@@ -75,9 +75,9 @@
     3.3. <a href="#3.3.">BUILDING AN ARTICLE TEMPLATE: ARTICLETEMPLATE.TPL</a><br>
     3.4. <a href="#3.4.">GENERATING A NAVIGATION TEMPLATE: NAVIGATIONTEMPLATE.TPL</a><br>
     3.5. <a href="#3.5.">BUILDING THE SECTION TEMPLATE: SECTIONTEMPLATE.TPL</a></p>
-  <blockquote> 
+  <blockquote>
     <p>3.5.1 <a href="#3.5.1">The 'Feature' article of the section</a><br>
-      3.5.2 <a href="#3.5.2">Displaying only the most recent feature article on 
+      3.5.2 <a href="#3.5.2">Displaying only the most recent feature article on
       a section page</a><br>
       3.5.3 <a href="#3.5.3">Including Images in the Section Listing</a></p>
   </blockquote>
@@ -102,73 +102,73 @@
   8. <a href="#8.">APPENDIX V - BACKING UP DATABASES IN MYSQL</a></P>
 <hr noshade size="1">
 <p><b>INTRODUCTION<a name="introduction"></a></b></p>
-<P>CAMPSITE is a content management system with multilingual Unicode support, 
-  designed for medium-to-large-size online news publications. Issues, copy flow, 
-  back archives, as well as subscription management are fully implemented features. 
-  At the core of CAMPSITE is CAMPFIRE, the Java Editor supporting Unicode, which 
-  allows contributors and editors to publish content and control layout online 
-  in their native alphabets. Formatting can be altered in a similar way as in 
-  editors such as Wordpad, meaning that no HTML knowledge is necessary for formatting 
+<P>CAMPSITE is a content management system with multilingual Unicode support,
+  designed for medium-to-large-size online news publications. Issues, copy flow,
+  back archives, as well as subscription management are fully implemented features.
+  At the core of CAMPSITE is CAMPFIRE, the Java Editor supporting Unicode, which
+  allows contributors and editors to publish content and control layout online
+  in their native alphabets. Formatting can be altered in a similar way as in
+  editors such as Wordpad, meaning that no HTML knowledge is necessary for formatting
   text.</P>
-<P>The original CAMPSITE concept was developed by Center for Advanced Media-Prague 
-  (<a href="http://www.mdlf-camp.net" target="_blank">C@MP</a>) in collaboration 
-  with Transitions Online, which started using CAMPSITE in late 2000. DNT-Cluj 
-  (<a href="http://www.dntcj.ro" target="_blank">http://www.dntcj.ro</a>) and 
-  Recognos (<a href="http://www.recognos.com" target="_blank">http://www.recognos.com</a>), 
-  software companies based in Cluj, Romania accomplished original coding and part 
-  of the further development. For a detailed revision history, click here. CAMPSITE 
+<P>The original CAMPSITE concept was developed by Center for Advanced Media-Prague
+  (<a href="http://www.mdlf-camp.net" target="_blank">C@MP</a>) in collaboration
+  with Transitions Online, which started using CAMPSITE in late 2000. DNT-Cluj
+  (<a href="http://www.dntcj.ro" target="_blank">http://www.dntcj.ro</a>) and
+  Recognos (<a href="http://www.recognos.com" target="_blank">http://www.recognos.com</a>),
+  software companies based in Cluj, Romania accomplished original coding and part
+  of the further development. For a detailed revision history, click here. CAMPSITE
   in action can be seen at the Transitions Online web site (<a href="http://www.tol.cz" target="_blank">http://www.tol.cz</a>).</P>
-<P>You can test drive CAMPSITE at the campware project site (<a href="http://www.campware.org" target="_blank">http://www.campware.org</a>) 
+<P>You can test drive CAMPSITE at the campware project site (<a href="http://www.campware.org" target="_blank">http://www.campware.org</a>)
   and take a look at its features. Mail us for a login (<a href="mailto:contact@campware.org">contact@campware.org</a>).</P>
 <P>CAMPSITE tech specs in a nutshell:</P>
-<P>CAMPSITE server: </P>
+<P>CAMPSITE server:</P>
 <ul>
-  <li> runs on a Linux server, originally tested on RedHat 5.2 release, but has 
-    proven compatible with newer versions up to 7.0. </li>
-  <li> requires an Apache web server to be running, and its virtual servers configured 
-    by the administrator.</li>
-  <li> needs a MySQL database server for Linux to be able to store data. The tests 
-    were made on MySQL v.3.22.27.</li>
+  <li> runs on a Linux server, originally tested on RedHat 7.0 release, and has proven
+  compatible with Mandrake 8.0.
+  <li> requires an Apache web server to be running, and its virtual servers configured
+  by the administrator.
+  <li> needs a MySQL database server for Linux to be able to store data. The tests were
+  made on MySQL v.3.23.36.
 </ul>
 <P>CAMPSITE client side:</P>
 <ul>
-  <li> runs on Netscape under Unix, Windows (versions up to 4.7), and Macintosh 
+  <li> runs on Netscape under Unix, Windows (versions up to 4.7), and Macintosh
     (see known limitations for the Mac), and Internet Explorer under Windows.</li>
-  <li> requires local installation of customized Java-class packages (At the moment 
-    of the publishing of this manual, an installer is available for Windows 98, 
+  <li> requires local installation of customized Java-class packages (At the moment
+    of the publishing of this manual, an installer is available for Windows 98,
     Me, and 2000). </li>
 </ul>
 <hr noshade size="1">
 <p><b>COPYRIGHT<a name="copyright"></a></b></p>
-<p>CAMPSITE is a Unicode-enabled multilingual web content management system for 
-  news publications. CAMPFIRE is a Unicode-enabled java-based near-WYSIWYG text 
+<p>CAMPSITE is a Unicode-enabled multilingual web content management system for
+  news publications. CAMPFIRE is a Unicode-enabled java-based near-WYSIWYG text
   editor. Copyright </p>
 <p>(C)1999-2001 Media Development Loan Fund. </p>
-<p>contact: <a href="http://www.campware.org">http://www.campware.org</a> Campware 
+<p>contact: <a href="http://www.campware.org">http://www.campware.org</a> Campware
   encourages further development. Please let us know. </p>
-<p>This program is free software; you can redistribute it and/or modify it under 
-  the terms of the GNU General Public License as published by the Free Software 
-  Foundation; either version 2 of the License, or (at your option) any later version. 
-  This program is distributed in the hope that it will be useful, but WITHOUT 
-  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
+<p>This program is free software; you can redistribute it and/or modify it under
+  the terms of the GNU General Public License as published by the Free Software
+  Foundation; either version 2 of the License, or (at your option) any later version.
+  This program is distributed in the hope that it will be useful, but WITHOUT
+  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
   FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.</p>
 <hr noshade size="1">
 <P>1. <b>INSTALLATION GUIDE</b><a name="1."></a></P>
 <P>1.1. <b>Requirements</b><a name="1.1."></a></P>
-<P>The server part of the application runs on a Linux computer. It was originally 
-  developed and tested on RedHat 5.2 release, but it is compatible with later 
-  versions up to 7.0. </P>
-<P>Before installing CAMPSITE, make sure you have two other applications up and 
+<P>The server part of the application runs on a Linux computer. It was originally
+  developed and tested on RedHat 7.0 release, and it has proven compatible with
+  Mandrake 8.0.</P>
+<P>Before installing CAMPSITE, make sure you have two other applications up and
   running:</P>
 <P>1. Apache web server - your http daemon, serving your web site to the world</P>
 <P>&#9;<a href="http://www.apache.org" target="_blank">http://www.apache.org</a></P>
-<P>&#9;For installation instructions, see the Apache web site. Installing Apache 
-  will generate the httpd.conf file referred to further down. This file contains 
-  all relevant information for Apache to handle the content on your Linux server. 
-  The adjustments described below need to be made in order to tell Apache about 
+<P>&#9;For installation instructions, see the Apache web site. Installing Apache
+  will generate the httpd.conf file referred to further down. This file contains
+  all relevant information for Apache to handle the content on your Linux server.
+  The adjustments described below need to be made in order to tell Apache about
   the procedures for CAMPSITE files and templates.</P>
-<P>2. MySQL Database Server - this application handles the CAMPSITE database. 
-  The tests were made on MySQL v.3.22.27</P>
+<P>2. MySQL Database Server - this application handles the CAMPSITE database. The
+  tests were made on MySQL v.3.23.36.</P>
 <P>&#9;<a href="http://www.mysql.com">http://www.mysql.com</a></P>
 <P>Three components of MySQL are needed for CAMPSITE:</P>
 <ol>
@@ -177,16 +177,16 @@
   <li> files and libraries for development for i386 systems.</li>
 </ol>
 <P>All of those can be found on the MySQL website. </P>
-<P>When installing on Red Hat, try to find the section 'Standard Binary RPMs' 
-  which have been compiled especially for Red Hat and should cause the least hassle. 
-  You can install these filed on prompt level by typing 'rpm -t nameoffile.rpm' 
+<P>When installing on Red Hat, try to find the section 'Standard Binary RPMs'
+  which have been compiled especially for Red Hat and should cause the least hassle.
+  You can install these filed on prompt level by typing 'rpm -t nameoffile.rpm'
   (without the '').</P>
 <P>1.2. <b>TODO</b><a name="1.2."></a></P>
 <P>Here is what you need to do. </P>
 <P>1.2.1 Configure the Web server<a name="1.2.1"></a></P>
-<P>First you need to change the behavior of the http daemon (the Web server). 
-  The configuration file, called httpd.conf, is normally found in the /etc/httpd/conf/ 
-  folder (N.B. non-standard installation of the Apache server can change the location 
+<P>First you need to change the behavior of the http daemon (the Web server).
+  The configuration file, called httpd.conf, is normally found in the /etc/httpd/conf/
+  folder (N.B. non-standard installation of the Apache server can change the location
   of the file). The changes you have to apply to the file are:</P>
 <P>- activate the DirectoryIndex directive and add to it the following options:<br>
   <font face="Courier New, Courier, mono">DirectoryIndex index.xql /priv/templates/idx.xql</font></P>
@@ -197,18 +197,18 @@
   Action www-sql /cgi-bin/www-sql<br>
   AddHandler parser .tpl<br>
   Action parser /cgi-bin/parser</font></P>
-<P>- make sure that the server has the rights to read, write and execute in the 
-  folder where the file are stored and uploaded. Standardly, the user and group 
-  should be set as 'httpd'; the rights should be set as 'rwx' for the user and 
-  'rw' for the group. Consult the Linux Administration Guide for further information. 
-  Furthermore, the Web server should have activated the UniqueID option (the mod_unique_id 
+<P>- make sure that the server has the rights to read, write and execute in the
+  folder where the file are stored and uploaded. Standardly, the user and group
+  should be set as 'httpd'; the rights should be set as 'rwx' for the user and
+  'rw' for the group. Consult the Linux Administration Guide for further information.
+  Furthermore, the Web server should have activated the UniqueID option (the mod_unique_id
   should be loaded)</P>
 <P>- restart the httpd daemon:<br>
   <font face="Courier New, Courier, mono">killall httpd<br>
   {PATH}/httpd</font></P>
 <P><font face="Courier New, Courier, mono">(or /etc/rc.d/init.d/httpd restart)</font></P>
-<P>- a public free CGI, we used 'www-sql', must be configured to allow the 'exec' 
-  directive activated and to allow recursivity. The package we supply is well 
+<P>- a public free CGI, we used 'www-sql', must be configured to allow the 'exec'
+  directive activated and to allow recursivity. The package we supply is well
   configured, but if you want to install a newer version of www-sql later (for 
   further development and other purposes) make sure to compile it with these options.</P>
 <P>1.2.2 <b>Customize the application framework</b><a name="1.2.2"></a></P>
@@ -217,20 +217,20 @@
   <li> Unarchive it using the command: tar xzvf &lt;campsite_archive&gt;</li>
   <li>Enter campsite directory.</li>
   <li>Edit the campsite/Makefile file to reflect your directory structure:<br>
-    CGI_BIN - cgi directory<br>
-    SCRIPT_BIN - the script folder (normally the same folder as CGI_BIN)<br>
-    ROOT_DIR - where the application's files are kept<br>
-    CLASS_DIR - the folder with the Java classes for the browser (where swingall.jar 
-    archive needed for the Java Editor and the Unicode charset translators will 
-    be kept)</li>
-  <li>run: 'make install' as a root, and the application is up and running.</li>
+    WWW_DIR - www directory<br>
+    REL_CGI_BIN - cgi directory (relative to www directory)<br>
+    REL_HTML - html directory (relative to www directory)<br>
+    HTTP_USER - apache user (the user apache server runs with)<br>
+    HTTP_GROUP - apache group (the group apache server runs with)<br>
+    Run './install', answer the install questions and wait for the application to be installed.<br>
+    </li>
 </ol>
 <P>1.2.3 <b>The CAMPFIRE Java Editor</b><a name="1.2.3"></a></P>
 <P>At the heart of CAMPSITE's client interface, lies CAMPFIRE, a text editor implemented 
   as a Java Applet. To enable this applet to work, you must copy install certain 
   (still) non-standard Java classes on your local workstation(s). </P>
 <P>The files you need to install locally are swingall.jar and unicoded.zip, both 
-  of which you should have created when you unpacked the campsite archive (campsite-2.0.0.tar.gz). 
+  of which you should have created when you unpacked the campsite archive (campsite-2.x.x.tar.gz). 
   Both of these files should be unpacked in the folders where Java classes are 
   regularly stored. The breakdown according to browser/operating system is as 
   follows:</P>
@@ -850,7 +850,7 @@
   the parser will generate a link. Marked keywords are like sleeping beauties.  
 </P>
 <P>2.3.5 <b>Known Limitations of the Dictionary Module<a name="2.3.5"></a></b></P>
-<P>In its present incarnation (CAMPSITE version 2.0.0), the Dictionary module 
+<P>In its present incarnation (CAMPSITE version 2.x.x), the Dictionary module 
   is functional, but its appearance is still, shall we say, rather sobering. We 
   thus consider it as a feature under development, particularly regarding the 
   lack of possibility for CAMPSITE administrators to alter the layout of the popup 
@@ -1456,14 +1456,14 @@
   List Issue statement; inside the statement however, all these parameters are 
   defined.</P>
 <P>Syntax:</P>
-<P><font face="Courier New, Courier, mono">List [length &lt;value&gt;] [columns 
-  &lt;value&gt;] Issue [&lt;issue_constraint&gt;]<br>
+<P><font face="Courier New, Courier, mono">List [length &lt;value&gt;] [columns
+  &lt;value&gt;] Issue [&lt;issue_constraint&gt;] [order &lt;order_condition&gt;]<br>
 list of instructions
   </font><i><br>
   </i><font face="Courier New, Courier, mono">[ForEmptyList [list of instructions]]<br>
   EndList [Issue]</font></P>
 <P>where</P>
-<P><font face="Courier New, Courier, mono">&lt;issue_constraint&gt; = number is|not|greater|smaller 
+<P><font face="Courier New, Courier, mono">&lt;issue_constraint&gt; = number is|not|greater|smaller
   &lt;value&gt;<br>
   | name is|not &lt;value&gt;<br>
   | &lt;date_constraint&gt;</font></P>
@@ -1476,12 +1476,15 @@ list of instructions
   |hour is|not|greater|smaller <br>
   |min is|not|greater|smaller <br>
   |sec is|not|greater|smaller</font></P>
-<P>where year stands for year, mon_nr for month number (1..12), mday for month 
-  day (1..31), yday for year day (1..365), wday for week day (1..7), hour for hour, 
+<P><font face="Courier New, Courier, mono"><br>
+  &lt;order_condition&gt;=bydate desc|asc<br>
+  |bynumber desc|asc</font><P>
+<P>where year stands for year, mon_nr for month number (1..12), mday for month
+  day (1..31), yday for year day (1..365), wday for week day (1..7), hour for hour,
   min for minute and sec for second.</P>
 <P>Any parameter used in &lt;issue_constraint&gt; list can only be used once.</P>
-<P>Inside the List, the parameter context is defined by the constraints applied 
-  to the current issue for every processed line. The parameter context is restored 
+<P>Inside the List, the parameter context is defined by the constraints applied
+  to the current issue for every processed line. The parameter context is restored
   after the list processing.</P>
 <P>Constraints:</P>
 <P>The list of forbidden statements inside List Issue:</P>
@@ -1531,22 +1534,22 @@ Section statement cannot be used inside List Article, List Subtitle, List
 SearchResult statements.</span></p>
 <P>3.9.1.8 <b>List of Articles<a name="3.9.1.8"></a></b></P>
 <P>Purpose:</P>
-<P>Select the list of articles according to the given constraints and current 
-  environmental parameters. The Publication, Language, Issue, Section, Article 
-  parameters may not be defined outside List Article statement; inside the statement 
+<P>Select the list of articles according to the given constraints and current
+  environmental parameters. The Publication, Language, Issue, Section, Article
+  parameters may not be defined outside List Article statement; inside the statement
   however, all these parameters are defined.</P>
 <P>Syntax:</P>
-<P><font face="Courier New, Courier, mono">List [length &lt;value&gt;] [column 
+<P><font face="Courier New, Courier, mono">List [length &lt;value&gt;] [column
   &lt;value&gt;] Article [&lt;article_constraint&gt;] [&lt;article_type_constraint&gt;]<br>
   [order &lt;order_condition&gt;]</font><br>
   <i>list of instructions<br>
   </i><font face="Courier New, Courier, mono">[ForEmptyList [list of instructions]]<br>
   EndList [Article]</font></P>
 <P>where</P>
-<P><font face="Courier New, Courier, mono">&lt;article_type_constraint&gt;=type 
+<P><font face="Courier New, Courier, mono">&lt;article_type_constraint&gt;=type
   is|not &lt;value&gt;</font></P>
 <P>and</P>
-<P><font face="Courier New, Courier, mono">&lt;article_constraint&gt;=name is|not 
+<P><font face="Courier New, Courier, mono">&lt;article_constraint&gt;=name is|not
   &lt;value&gt;<br>
   |number is|not|greater|smaller &lt;value&gt;<br>
   |keyword &lt;value&gt;<br>
@@ -1554,8 +1557,8 @@ SearchResult statements.</span></p>
 <P>and</P>
 <P><font face="Courier New, Courier, mono">&lt;order_condition&gt;=bydate desc|asc<br>
   |bynumber desc|asc</font></P>
-<P>Inside the List, the data context is defined by the constraints applied to 
-  the current article for every processed line. The data context is restored after 
+<P>Inside the List, the data context is defined by the constraints applied to
+  the current article for every processed line. The data context is restored after
   the list processing.</P>
 <P>Constraints:</P>
 <P>The list of forbidden statements inside List Issue:</P>
@@ -1576,22 +1579,22 @@ Article statement cannot be used inside List Subtitle, List SearchResult
 statements.</span></p>
 <P>3.9.1.9 <b>List of Subtitles<a name="3.9.1.9"></a></b></P>
 <P>Purpose:</P>
-<P>Select the list of subtitles according to the given constraints and current 
-  environmental parameters. The article if not specified somewhere else, is treated 
+<P>Select the list of subtitles according to the given constraints and current
+  environmental parameters. The article if not specified somewhere else, is treated
   as group of paragraphs. The markup for a new paragraph is the subtitle.</P>
 <P>Syntax:</P>
-<P><font face="Courier New, Courier, mono">List [length &lt;value&gt;] [column 
+<P><font face="Courier New, Courier, mono">List [length &lt;value&gt;] [column
   &lt;value&gt;] Subtitle</font><br>
 <font face="Courier New, Courier, mono">list of instructions</font>
   <i><br>
   </i><font face="Courier New, Courier, mono">[ForEmptyList [list of instructions]]<br>
   EndList [Article]</font></P>
-<P>Inside the List, the data context is defined by the constraints applied to 
-  the current article for every processed line. The data context is restored after 
-  the list processing. Here it doesn't function the nextitems an previousitems 
-  in the expected manner, because they refer to the list of article, the most 
-  inner level for publication components. In the same template one can use list 
-  of articles which are treated as lists of paragraphs, so a new option was needed 
+<P>Inside the List, the data context is defined by the constraints applied to
+  the current article for every processed line. The data context is restored after
+  the list processing. Here it doesn't function the nextitems an previousitems
+  in the expected manner, because they refer to the list of article, the most
+  inner level for publication components. In the same template one can use list
+  of articles which are treated as lists of paragraphs, so a new option was needed
   and is called nextsubtitle (and prevsubtitle respectively).</P>
 <P>Constraints:</P>
 <P>The list of forbidden statements inside List Issue:</P>
@@ -1607,19 +1610,22 @@ statements.</span></p>
 </ul>
 <P>3.9.1.10 <b>List Search Result<a name="3.9.1.10"></a></b></P>
 <P>Purpose:</P>
-<P>Select the list of articles after searching database for given keywords. The 
-  Publication, Language, Issue, Section, Article parameters may not be defined 
-  outside List SearchResult statement; inside the statement however, all these 
+<P>Select the list of articles after searching database for given keywords. The
+  Publication, Language, Issue, Section, Article parameters may not be defined
+  outside List SearchResult statement; inside the statement however, all these
   parameters are defined.</P>
 <P>Syntax:</P>
-<P><font face="Courier New, Courier, mono">List [length &lt;value&gt;] [column 
-  &lt;value&gt;] SearchResult</font><br>
+<P><font face="Courier New, Courier, mono">List [length &lt;value&gt;] [column
+  &lt;value&gt;] SearchResult [order &lt;order_condition&gt;]</font><br>
 <font face="Courier New, Courier, mono">list of instructions</font>
   <i><br>
   </i><font face="Courier New, Courier, mono">[ForEmptyList [list of instructions]]<br>
   EndList [SearchResult]</font></P>
-<P>Inside the List, the data context is defined by the constraints applied to 
-  the current article for every processed line. The data context is restored after 
+<P>where</P>
+<P><font face="Courier New, Courier, mono">&lt;order_condition&gt;=bydate desc|asc<br>
+  |bynumber desc|asc</font></P>
+<P>Inside the List, the data context is defined by the constraints applied to
+  the current article for every processed line. The data context is restored after
   the list processing.</P>
 <P>Constraints:</P>
 <P>The list of forbidden statements inside List SearchResult:</P>
@@ -1627,10 +1633,16 @@ statements.</span></p>
   <li>Language</li>
   <li>Publication</li>
 </ul>
+<P><B><font color="red" size=+1>Note!!!</font>(This is valid only for 2.0.11 and newer versions.)</B>
+<P>All <b>If</b> statements can be negated by inserting "not" between If and its modifier (Publication, Issue etc.)
+<P>Example:
+<BR>&nbsp;&nbsp;If Publication defined
+<BR>and the negated version:
+<BR>&nbsp;&nbsp;If not Publication defined
 <P>3.9.1.11 <b>If NextItems | PrevItems<a name="3.9.1.11"></a></b></P>
 <P>Purpose:</P>
-<P>It runs the first or second list of instructions depending on existing articles 
-  in a limited length list after/before the end/start of the list. It can be used 
+<P>It runs the first or second list of instructions depending on existing articles
+  in a limited length list after/before the end/start of the list. It can be used
   only inside List instructions, especially to validate Next | Previous buttons.</P>
 <P>Syntax:</P>
 <P><font face="Courier New, Courier, mono">If NextItems|PrevItems [list of instructions]<br>
@@ -1691,19 +1703,19 @@ PrevSubtitles
 <P>Can only be used only inside List statement.</P>
 <P>3.9.1.14 <b>Include<a name="3.9.1.14"></a></b></P>
 <P>Purpose:</P>
-<P>Specify the text file to be included in a certain position of the current template. 
+<P>Specify the text file to be included in a certain position of the current template.
   This instruction passes data context to the included template on runtime.</P>
 <P>Syntax:</P>
 <P><font face="Courier New, Courier, mono">Include template_path</font></P>
-<P>Notice: the template_path can be relative to the position of the current template, 
-  if the path starts with a letter, or relative to the server's document root, 
+<P>Notice: the template_path can be relative to the position of the current template,
+  if the path starts with a letter, or relative to the server's document root,
   if the path starts with a '/'.</P>
 <P>Constraints:</P>
 <P>None.</P>
 <P>3.9.1.15 <b>If Publication<a name="3.9.1.15"></a></b></P>
 <P>Purpose:</P>
-<P>Depending on the given condition, it runs the first or second list of instructions. 
-  It may be used anywhere in the template. It is used when printing information 
+<P>Depending on the given condition, it runs the first or second list of instructions.
+  It may be used anywhere in the template. It is used when printing information
   for a certain publication.</P>
 <P>Syntax:</P>
 <P><font face="Courier New, Courier, mono">If Publication defined|fromstart</font><br>
@@ -1712,18 +1724,18 @@ PrevSubtitles
   EndIf [Section]</font></P>
 <ul>
   <li>defined: the if condition is true if publication parameter is defined</li>
-  <li>fromstart: the if condition is true if actual value of publication parameter 
+  <li>fromstart: the if condition is true if actual value of publication parameter
     is equal with the value from template start</li>
 </ul>
-<P>The list of instructions may contain any instruction allowed in the current 
-  context. If it is used inside a list, it must respect the constraints of the 
+<P>The list of instructions may contain any instruction allowed in the current
+  context. If it is used inside a list, it must respect the constraints of the
   list (List Issue, List Section, List Article, List Subtitle, List SearchResult).</P>
 <P>Constraints:</P>
 <P>None.</P>
 <P>3.9.1.16 <b>If Issue<a name="3.9.1.16"></a></b></P>
 <P>Purpose:</P>
-<P>Depending on the given condition, it runs the first or second list of instructions. 
-  It may be used anywhere in the template. It is used when printing information 
+<P>Depending on the given condition, it runs the first or second list of instructions.
+  It may be used anywhere in the template. It is used when printing information
   for a certain issue.</P>
 <P>Syntax:</P>
 <P><font face="Courier New, Courier, mono">If Issue&#9;condition</font><br>
@@ -1780,8 +1792,8 @@ PrevSubtitles
 <P>None.</P>
 <P>3.9.1.18 <b>If Article<a name="3.9.1.18"></a></b></P>
 <P>Purpose:</P>
-<P>Depending on the given condition, it runs the first or second list of instructions. 
-  It may be used anywhere in the template. It is used when printing information 
+<P>Depending on the given condition, it runs the first or second list of instructions.
+  It may be used anywhere in the template. It is used when printing information
   from different types of article.</P>
 <P>Syntax:</P>
 <P><font face="Courier New, Courier, mono">If Article &lt;condition&gt;</font><br>
@@ -1789,42 +1801,42 @@ PrevSubtitles
   <font face="Courier New, Courier, mono">[Else [list of instructions]]<br>
   EndIf [Article]</font></P>
 <P>where</P>
-<P><font face="Courier New, Courier, mono">&lt;condition&gt;=type &lt;article_type&gt; 
+<P><font face="Courier New, Courier, mono">&lt;condition&gt;=type &lt;article_type&gt;
   <br>
   |defined<br>
   |fromstart</font></P>
 <ul>
   <li>defined: the if condition is true if article parameter is defined</li>
-  <li>fromstart: the if condition is true if actual value of article parameter 
+  <li>fromstart: the if condition is true if actual value of article parameter
     is equal with the value from template start</li>
   <li>type: the if condition is true if actual article type is &lt;article_type&gt;</li>
 </ul>
-<P>The list of instructions may contain any instruction allowed in the current 
-  context. If it is used inside a list it must respect the constraints of the 
+<P>The list of instructions may contain any instruction allowed in the current
+  context. If it is used inside a list it must respect the constraints of the
   list (List Issue, List Section, List Article, List Subtitle, List SearchResult).</P>
 <P>Constraints:</P>
 <P>None.</P>
 <P>3.9.1.19 <b>If Allowed<a name="3.9.1.19"></a></b></P>
 <P>Purpose:</P>
-<P>Depending on the given condition it runs a list of instructions (or not). It 
+<P>Depending on the given condition it runs a list of instructions (or not). It
   may be used anywhere in the template. It is used when printing protected information.</P>
 <P>Syntax:</P>
 <P><font face="Courier New, Courier, mono">If Allowed</font><br>
   <i>list of instructions</i><br>
   <font face="Courier New, Courier, mono">[Else [list of instructions]]<br>
   EndIf</font></P>
-<P>The list of instructions may contain any instruction allowed in current context. 
-  If it is used inside a list it must respect the constraints of the list (List 
+<P>The list of instructions may contain any instruction allowed in current context.
+  If it is used inside a list it must respect the constraints of the list (List
   Issue, List Section, List Article, List Subtitle, List SearchResult).</P>
 <P>Constraints:</P>
 <P>None.</P>
 <P>3.9.1.20 <b>If Subscription<a name="3.9.1.20"></a></b></P>
 <P>Purpose:</P>
-<P>Depending on the given condition, it runs the first, the second list of instructions 
-  or neither of them. If the subscription event did not occur, neither of the 
-  instructions list will be run. (This implies a certain order to be followed; 
-  that is, the template containing If Subscription must follow a template containing 
-  Subscription). It may be used anywhere in the template. It is used to describe 
+<P>Depending on the given condition, it runs the first, the second list of instructions
+  or neither of them. If the subscription event did not occur, neither of the
+  instructions list will be run. (This implies a certain order to be followed;
+  that is, the template containing If Subscription must follow a template containing
+  Subscription). It may be used anywhere in the template. It is used to describe
   the subscription result.</P>
 <P>Syntax:</P>
 <P><font face="Courier New, Courier, mono">If Subscription &lt;condition&gt;</font><br>
@@ -1870,23 +1882,23 @@ PrevSubtitles
   |error<br>
   |action</font></P>
 <ul>
-  <li>ok: the if condition is true if login action was taken and its result is 
+  <li>ok: the if condition is true if login action was taken and its result is
     success</li>
-  <li>error: the if condition is true if login action was taken and its result 
+  <li>error: the if condition is true if login action was taken and its result
     is error</li>
   <li>action: the if condition is true if login action was taken</li>
 </ul>
-<P>The list of instructions may contain any instruction allowed in current context. 
-  If it is used inside a list it must respect the constraints of the list (List 
+<P>The list of instructions may contain any instruction allowed in current context.
+  If it is used inside a list it must respect the constraints of the list (List
   Issue, List Section, List Article, List Subtitle, List SearchResult).</P>
 <P>Constraints:</P>
 <P>Cannot be used inside Login-EndLogin statement.</P>
 <P>3.9.1.22 <b>If User<a name="3.9.1.22"></a></b></P>
 <P>Purpose:</P>
-<P>Depending on given condition, it runs the first, the second list of instructions 
-  or none. If the User event didn't occur, none of the instructions list will 
-  be run. (It implies a certain order to be followed; that is, the template containing 
-  If User must follow a template containing User). It may be used anywhere in 
+<P>Depending on given condition, it runs the first, the second list of instructions
+  or none. If the User event didn't occur, none of the instructions list will
+  be run. (It implies a certain order to be followed; that is, the template containing
+  If User must follow a template containing User). It may be used anywhere in
   template. It is used to describe the subscription result.</P>
 <P>Syntax:</P>
 <P><font face="Courier New, Courier, mono">If User &lt;condition&gt;</font><br>
@@ -1903,30 +1915,30 @@ PrevSubtitles
   |modifyaction<br>
   |loggedin</font></P>
 <ul>
-  <li>addok: the if condition is true if user add action was taken and its result 
+  <li>addok: the if condition is true if user add action was taken and its result
     is success</li>
-  <li>modifyok: the if condition is true if user modify action was taken and its 
+  <li>modifyok: the if condition is true if user modify action was taken and its
     result is success</li>
-  <li>adderror: the if condition is true if user add action was taken and its 
+  <li>adderror: the if condition is true if user add action was taken and its
     result is error</li>
-  <li>modifyerror: the if condition is true if user modify action was taken and 
+  <li>modifyerror: the if condition is true if user modify action was taken and
     its result is error</li>
   <li>addaction: the if condition is true if user add action was taken</li>
   <li>modifyaction: the if condition is true if user modify action was taken</li>
-  <li>defined: the if condition is true if user is defined (user cookie exists); 
+  <li>defined: the if condition is true if user is defined (user cookie exists);
     this doesn't necessary mean that the user is properly logged in</li>
   <li>loggedin: the if condition is true if user is properly logged in</li>
 </ul>
-<p>The list of instructions may contain any instruction allowed in the current 
-  context. If it is used inside a list it must respect the constraints of the 
+<p>The list of instructions may contain any instruction allowed in the current
+  context. If it is used inside a list it must respect the constraints of the
   list (List Issue, List Section, List Article, List Subtitle, List SearchResult).</p>
 <P>Constraints:</P>
 <P>Cannot be used inside User-EndUser statement.</P>
 <P>3.9.1.23 <b>If CurrentSubtitle<a name="3.9.1.23"></a></b></P>
 <P>Purpose:</P>
-<P>Depending on the given condition, it runs the first or second list of instructions. 
-  It may be used within the list of subtitle (while printing an article). It runs 
-  the first list of instructions when the index of subtitles list equals the number 
+<P>Depending on the given condition, it runs the first or second list of instructions.
+  It may be used within the list of subtitle (while printing an article). It runs
+  the first list of instructions when the index of subtitles list equals the number
   of the current subtitle (selected for printing).</P>
 <P>Syntax:</P>
 <P><font face="Courier New, Courier, mono">If CurrentSubtitle</font><br>
@@ -1935,16 +1947,32 @@ PrevSubtitles
   EndIf [CurrentSubtitle]</font></P>
 <P>Constraints:</P>
 <P>Can be used only inside With and List Subtitles statements.</P>
-<P>3.9.1.24 <b>Local<a name="3.9.1.24"></a></b></P>
+<P>3.9.1.24 <b>If Image<a name="3.9.1.24"></a></b></P>
 <P>Purpose:</P>
-<P>Creating a temporary data context block for special conditions; the previous 
+<P>If image <number> exists, it runs the first list of instructions, otherwise the second
+list. It may be used anywhere in the template.</P>
+<P>Syntax:</P>
+<P><font face="Courier New, Courier, mono">If Image &lt;number&gt;</font><br>
+  <i>list of instructions</i><br>
+  <font face="Courier New, Courier, mono">[Else [list of instructions]]<br>
+  EndIf [Image]</font></P>
+<P>The list of instructions may contain any instruction allowed in the current
+  context. If it is used inside a list it must respect the constraints of the
+  list (List Issue, List Section, List Article, List Subtitle, List SearchResult).</P>
+<P>Constraints:</P>
+<P>None.</P>
+<P><b><font color="red" size=+1>Note:</font></b></P>
+<P>The If Image statement is valid only in 2.0.11 and newer versions. It won't work in 2.0.10 or older versions.
+<P>3.9.1.25 <b>Local<a name="3.9.1.25"></a></b></P>
+<P>Purpose:</P>
+<P>Creating a temporary data context block for special conditions; the previous
   data context is restored outside the block.</P>
 <P>Syntax:</P>
 <P><font face="Courier New, Courier, mono">Local</font><br>
   <i>list of instructions</i><br>
   <font face="Courier New, Courier, mono">EndLocal</font></P>
-<P>The list of instructions may contain any instruction allowed in the current 
-  context. If it is used inside a list it must respect the constraints of the 
+<P>The list of instructions may contain any instruction allowed in the current
+  context. If it is used inside a list it must respect the constraints of the
   list (List Issue, List Section, List Article, List Subtitle, List SearchResult).</P>
 <P>Constraints:</P>
 <P>None.</P>
