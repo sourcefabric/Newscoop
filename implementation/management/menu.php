@@ -1,6 +1,9 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/db_connect.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/Publication.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/Issue.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/Section.php");
 load_common_include_files("$ADMIN_DIR");
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
@@ -29,7 +32,21 @@ $showUserMenu = ($User->hasPermission("ManageUsers")
 $showObsoleteMenu = ($User->hasPermission("ManageDictionary") 
 	|| $User->hasPermission("DeleteDictionary") 
 	|| $User->hasPermission("ManageClasses"));
-	
+
+$publications =& Publication::GetAllPublications();
+$issues = array();
+$sections = array();
+foreach ($publications as $publication) {
+	$issues[$publication->getPublicationId()] =& 
+		Issue::GetIssuesInPublication($publication->getPublicationId(), 
+		null, array('ORDER BY'=>array('Number'=>'DESC'), 'LIMIT' => '5'));
+	foreach ($issues[$publication->getPublicationId()] as $issue) {
+		$sections[$issue->getPublicationId()][$issue->getIssueId()][$issue->getLanguageId()] = 
+			Section::GetSectionsInIssue($issue->getPublicationId(), 
+				$issue->getIssueId(), 
+				$issue->getLanguageId());
+	}
+}
 ?>
 <HEAD>
     <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -43,7 +60,37 @@ $showObsoleteMenu = ($User->hasPermission("ManageDictionary")
 	[
 	    ['<img src="/<?php p($ADMIN); ?>/img/icon/content.png" align="middle" style="padding-bottom: 3px;" width="22" height="22" />', ' <?php putGS('Content'); ?>', '', '', '',
 	    	['<img src="/<?php p($ADMIN); ?>/img/icon/publication.png"  width="22" height="22"/>', '<?php putGS('Publications'); ?>', '/<?php p($ADMIN); ?>/pub/index.php' ],
-	    	['<img src="/<?php p($ADMIN); ?>/img/icon/image_archive.png"  width="22" height="22"/>', '<?php putGS('Image archive'); ?>', '/<?php p($ADMIN); ?>/imagearchive/index.php' ]
+	    	['<img src="/<?php p($ADMIN); ?>/img/icon/image_archive.png"  width="22" height="22"/>', '<?php putGS('Image archive'); ?>', '/<?php p($ADMIN); ?>/imagearchive/index.php' ],
+		    _cmSplit,
+	    	<?php
+	    	foreach ($publications as $publication) {
+	    		$pubId = $publication->getPublicationId();
+	    		?>
+		    	['<img src="/<?php p($ADMIN); ?>/img/tol.gif"/>', '<?php p(htmlspecialchars($publication->getName())); ?>', '/<?php p($ADMIN); ?>/pub/issues/index.php?Pub=<?php p($pubId); ?>', '', '' <?php
+	    		if (isset($issues[$pubId])) {
+	    			echo ",\n";
+	    			foreach ($issues[$pubId] as $issue) {
+	    				$issueId = $issue->getIssueId();
+	    				$languageId = $issue->getLanguageId();
+		    			?>['<img src="/<?php p($ADMIN); ?>/img/tol.gif"/>', '<?php p(htmlspecialchars($issue->getName())); ?>', '/<?php p($ADMIN); ?>/pub/issues/sections/index.php?Pub=<?php p($pubId); ?>&Issue=<?php p($issueId); ?>&Language=<?php p($languageId); ?>', '', ''
+		    			<?php
+		    			if (isset($sections[$pubId][$issueId][$languageId])) {
+			    			echo ",\n";
+		    				foreach ($sections[$pubId][$issueId][$languageId] as $section) {
+		    					?>['<img src="/<?php p($ADMIN); ?>/img/tol.gif"/>', '<?php p(htmlspecialchars($section->getName())); ?>', '/<?php p($ADMIN); ?>/pub/issues/sections/articles/index.php?Pub=<?php p($pubId); ?>&Issue=<?php p($issueId); ?>&Language=<?php p($languageId); ?>&Section=<?php p($section->getSectionId()); ?>' ], 					
+		    					<?php
+		    				} // foreach ($sections ... )
+		    			}
+	    				echo "],\n";		    			
+		    		} // foreach ($issues ... )
+		    		?>
+		    		_cmSplit,
+		    		['<img src="/<?php p($ADMIN); ?>/img/tol.gif"/>', '<?php putGS('More...'); ?>', '/<?php p($ADMIN); ?>/pub/issues/index.php?Pub=<?php p($pubId); ?>' ],
+		    		<?php
+	    		}
+	    		echo "],\n";
+	    	} // foreach ($publications ... )
+	    	?>
 	    ],
 	    _cmSplit,
 	    ['<img src="/<?php p($ADMIN); ?>/img/icon/actions.png" align="middle"  width="22" height="22"/>', ' <?php putGS('Actions'); ?>', '', '', '',
@@ -143,7 +190,7 @@ $showObsoleteMenu = ($User->hasPermission("ManageDictionary")
 <BODY>
 <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border: 1px solid black;">
 <tr>
-	<td valign="top" align="left" width="100%" style="padding-top: 0px; ">
+	<td valign="top" align="left" width="70%" style="padding-top: 0px; ">
 		<table border="0" cellpadding="0" cellspacing="0">
 		<tr>
 			<td style="padding-left: 5px; padding-right: 10px; padding-top: 2px; padding-bottom: 2px; font-size: 14pt; font-weight: bold; color: black; font-style: Verdana;" align="left" valign="middle">
@@ -159,25 +206,33 @@ $showObsoleteMenu = ($User->hasPermission("ManageDictionary")
 		</tr>
 		</table>
 	</td>
-	<td align="right">
-		<table cellpadding="0" cellspacing="0">
+	<td align="right" valign="top" width="30%">
+		<table cellpadding="0" cellspacing="0" width="100%" style="">
 		<tr>
-			<td align="center" style="padding-right: 25px;">
-				<?php putGS('Welcome'); ?>,<br><nobr><b><?php p($User->getName()); ?></b></nobr>
+			<td align="right" style="padding-top: 2px;">
+				<table cellpadding="0" cellspacing="0">
+				<TR>
+					<td>
+						<A HREF="/<?php p($ADMIN); ?>/home.php"><img src="/<?php p($ADMIN); ?>/img/icon/home.png" width="22" height="22" border="0" alt="<?php putGS('Home'); ?>"></a>
+					</td>
+					<td style="font-weight: bold; padding-left: 2px;">
+						<A HREF="/<?php p($ADMIN); ?>/home.php" style="color: black; text-decoration: none;"><?php putGS('Home'); ?></A>
+					</td>
+								
+					<td style="padding-left: 10px;">
+						<A HREF="/<?php p($ADMIN); ?>/logout.php"><img src="/<?php p($ADMIN); ?>/img/icon/logout.png" width="22" height="22" border="0" alt="<?php putGS('Logout'); ?>"></a>
+					</td>
+					<td style="font-weight: bold; padding-left: 2px; padding-right: 10px;">
+						<A HREF="/<?php p($ADMIN); ?>/logout.php" style="color: black; text-decoration: none;"><?php putGS('Logout'); ?></a>
+					</td>
+				</tr>
+				</table>
 			</td>
-			<td>
-				<A HREF="/<?php p($ADMIN); ?>/home.php"><img src="/<?php p($ADMIN); ?>/img/icon/home.png" width="22" height="22" border="0" alt="<?php putGS('Home'); ?>"></a>
-			</td>
-			<td style="font-weight: bold; padding-left: 2px;">
-				<A HREF="/<?php p($ADMIN); ?>/home.php" style="color: black; text-decoration: none;"><?php putGS('Home'); ?></A>
-			</td>
-						
-			<td style="padding-left: 10px;">
-				<A HREF="/<?php p($ADMIN); ?>/logout.php"><img src="/<?php p($ADMIN); ?>/img/icon/logout.png" width="22" height="22" border="0" alt="<?php putGS('Logout'); ?>"></a>
-			</td>
-			<td style="font-weight: bold; padding-left: 2px; padding-right: 10px;">
-				<A HREF="/<?php p($ADMIN); ?>/logout.php" style="color: black; text-decoration: none;"><?php putGS('Logout'); ?></a>
-			</td>
+		</tr>
+		<tr>
+			<td align="right" style="font-size: 8pt; padding-right: 5px; padding-top: 2px;" colspan="4">
+				<?php putGS("You are logged in as $1", "<b>".$User->getName()."</b>"); ?>
+			</td>		
 		</tr>
 		</table>
 	</td>
