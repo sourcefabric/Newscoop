@@ -1,19 +1,19 @@
 <?
 class DatabaseObject {
 	/**
-	 * @var array
+	 * @var string
 	 */
-	var $m_columnNames = array();
-	
+	var $m_dbTableName = "";
+
 	/**
 	 * @var array
 	 */
 	var $m_primaryKeyColumnNames = array();
-	
+
 	/**
-	 * @var string
+	 * @var array
 	 */
-	var $m_dbTableName = "";
+	var $m_columnNames = array();
 	
 	
 	function DatabaseObject() {
@@ -43,28 +43,41 @@ class DatabaseObject {
 	
 	/**
 	 * Fetch a single record from the database for the given key.
-	 * Note: The subclass must implement getVarMap() for this function to work.
+	 *
+	 * @param array p_recordSet
+	 *		If the record has already been fetched and we just need to 
+	 * 		assign the values to the object's internal member variables.
+	 *
+	 * @return boolean
+	 *		TRUE on success, FALSE on failure
 	 */
-	function fetch() {
+	function fetch($p_recordSet = null) {
 		global $Campsite;
 		
-		$queryStr = "SELECT ";
-		$tmpColumnNames = array();
-		foreach ($this->m_columnNames as $columnName) {
-			$tmpColumnNames[] = "`".$columnName."`";
-		}
-		$queryStr .= implode(", ", $tmpColumnNames);
-		$queryStr .= " FROM " . $this->m_dbTableName;
-		$queryStr .= " WHERE " . $this->getKeyWhereClause();
-		$queryStr .= " LIMIT 1";
-		$resultSet =& $Campsite["db"]->GetRow($queryStr);
-		if ($resultSet) {
-			foreach ($this->m_columnNames as $dbColumnName) {
-				$this->$dbColumnName = $resultSet[$dbColumnName];
+		if (is_null($p_recordSet)) {
+			$queryStr = "SELECT ";
+			$tmpColumnNames = array();
+			foreach ($this->m_columnNames as $columnName) {
+				$tmpColumnNames[] = "`".$columnName."`";
+			}
+			$queryStr .= implode(", ", $tmpColumnNames);
+			$queryStr .= " FROM " . $this->m_dbTableName;
+			$queryStr .= " WHERE " . $this->getKeyWhereClause();
+			$queryStr .= " LIMIT 1";
+			$resultSet =& $Campsite["db"]->GetRow($queryStr);
+			if ($resultSet) {
+				foreach ($this->m_columnNames as $dbColumnName) {
+					$this->$dbColumnName = $resultSet[$dbColumnName];
+				}
+			}
+			else {
+				return false;
 			}
 		}
 		else {
-			return false;
+			foreach ($this->m_columnNames as $dbColumnName) {
+				$this->$dbColumnName = $p_recordSet[$dbColumnName];
+			}			
 		}
 		return true;
 	} // fn fetch
