@@ -8,7 +8,7 @@ if ($type == "-i")
 	$instance_name = trim($GLOBALS['argv'][3]);
 
 if ($etc_dir == "" || $type == "" || ($type == "-a" && $archive_file == "")
-	|| ($type == "-i" && $instance_name == "")) {
+	|| ($type == "-i" && $instance_name == "") || ($type != '-a' && $type != '-i')) {
 	echo "Invalid parameters received; usage:\n"
 		. "\tphp restore_backup.php [etc_dir] [type] [archive_name/instance_name]\n"
 		. "\twhere [etc_dir] = campsite etc directory\n"
@@ -62,16 +62,22 @@ if ($type == "-i") {
 	exec_command($cmd);
 }
 
+// call create_instance
+$bin_dir = $Campsite['BIN_DIR'];
+exec_command("$bin_dir/create_instance --db_name $instance_name --no_database");
+
 // extract packages
 $html_dir = $Campsite['WWW_DIR'] . "/$instance_name/html";
 $packages = glob("$backup_dir/$instance_name-*.tar.gz");
 foreach ($packages as $index=>$package) {
 	$package_name = file_name($package);
 	switch ($package_name) {
-	case "$instance_name-database.tar.gz": continue;
+	case "$instance_name-database.tar.gz": $package = ""; break;
 	case "$instance_name-conf.tar.gz": $dest_dir = $etc_dir; break;
 	default: $dest_dir = $html_dir; break;
 	}
+	if ($package == "")
+		continue;
 	$cmd = "pushd " . escapeshellarg($dest_dir) . " && tar xzf "
 		. escapeshellarg($package) . " && popd > /dev/null";
 	exec_command($cmd);
@@ -97,8 +103,10 @@ $cmd = "pushd " . escapeshellarg($backup_dir) . " && tar xzf "
 	. escapeshellarg("$backup_dir/$instance_name-database.tar.gz") . " && popd > /dev/null";
 exec_command($cmd);
 
-// restore the database
+// restore the database and create language links
 restore_database($instance_name, $database_dump_file);
+require_once("$html_dir/parser_utils.php");
+create_language_links($html_dir);
 
 // remove packages
 exec_command("rm -f $backup_dir/*.tar.gz");
