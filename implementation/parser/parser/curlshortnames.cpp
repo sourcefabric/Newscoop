@@ -93,7 +93,6 @@ void CURLShortNames::setURL(const CMsgURLRequest& p_rcoURLMessage)
 		setIssue(nIssue);
 	}
 
-	int sz = coPath.size();
 	if (nNext < (coPath.size() - 1))
 	{
 		// read the section short name
