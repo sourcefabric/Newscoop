@@ -26,8 +26,6 @@ B_HEADER(<*Edit keyword/infotype definition*>)
 B_HEADER_BUTTONS
 X_HBUTTON(<*Keyword infotypes*>, <*glossary/keyword/?Keyword=<?php  pencURL($Keyword); ?>&Language=<?php  pencURL($Language); ?>*>)
 X_HBUTTON(<*Glossary*>, <*glossary/*>)
-X_HBUTTON(<*Home*>, <*home.php*>)
-X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
@@ -47,9 +45,9 @@ E_HEADER
 		
 ?>dnl
 B_CURRENT
-X_CURRENT(<*Keyword*>, <*<B><B><?php  pgetHVar($q_kwd,'Keyword'); ?></B>*>)
-X_CURRENT(<*Infotype*>, <*<B><B><?php  pgetHVar($q_cls,'Name'); ?></B>*>)
-X_CURRENT(<*Language*>, <*<B><?php  pgetHVar($q_lang,'Name'); ?></B>*>)
+X_CURRENT(<*Keyword*>, <*<?php  pgetHVar($q_kwd,'Keyword'); ?>*>)
+X_CURRENT(<*Infotype*>, <*<?php  pgetHVar($q_cls,'Name'); ?>*>)
+X_CURRENT(<*Language*>, <*<?php  pgetHVar($q_lang,'Name'); ?>*>)
 E_CURRENT
 
 

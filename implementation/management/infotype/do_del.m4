@@ -20,8 +20,6 @@ B_BODY
 B_HEADER(<*Deleting infotype*>)
 B_HEADER_BUTTONS
 X_HBUTTON(<*Glossary infotypes*>, <*infotype/*>)
-X_HBUTTON(<*Home*>, <*home.php*>)
-X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 

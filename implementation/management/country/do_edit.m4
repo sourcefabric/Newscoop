@@ -25,8 +25,6 @@ B_BODY
 B_HEADER(<*Changing country name*>)
 B_HEADER_BUTTONS
 X_HBUTTON(<*Countries*>, <*country/*>)
-X_HBUTTON(<*Home*>, <*home.php*>)
-X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
