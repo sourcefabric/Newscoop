@@ -35,29 +35,36 @@ class Section extends DatabaseObject {
 			$this->fetch();
 		}
 	} // fn Section
+
 	
 	function getPublicationId() {
 		return $this->IdPublication;
-	}
+	} // fn getPublicationId
+	
 	
 	function getIssueId() {
 		return $this->NrIssue;
-	}
+	} // fn getIssueId
+	
 	
 	function getLanguageId() {
 		return $this->IdLanguage;
-	}
+	} // fn getLanguageId
+	
 	
 	function getSectionId() {
 		return $this->Number;
 	} // fn getSectionId
 
+	
 	function getName() {
 		return $this->Name;
 	} // fn getName
 	
+	
 	function getShortName() {
 		return $this->ShortName;
-	}
+	} // fn getShortName
+	
 } // class Section
 ?>

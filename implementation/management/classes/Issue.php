@@ -37,21 +37,25 @@ class Issue extends DatabaseObject {
 		}
 	} // ctor
 
+	
 	function getPublicationId() {
 		return $this->IdPublication;
-	}
+	} // fn getPublicationId
+	
 	
 	function getLanguageId() {
 		return $this->IdLanguage;
-	}
+	} // fn getLanguageId
+	
 	
 	function getIssueId() {
 		return $this->Number;
-	}
+	} // fn getIssueId
+	
 	
 	function getName() {
 		return $this->Name;
-	}
+	} // fn getName
 	
 } // class Issue
 
