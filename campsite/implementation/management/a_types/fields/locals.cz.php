@@ -8,7 +8,7 @@ regGS("Text","Text");
 regGS("Adding new field","Přidání nového pole");
 regGS("You do not have the right to add article type fields.","Nemáte právo přidat pole tohoto typu článku");
 regGS("The field $1 already exists.","Pole $1 již existuje");
-regGS("The $1  must not be void and may only contain letters.","$1 nesmí být prázdný a musí obsahovat pouze písmena");
+regGS("The $1  must not be void and may only contain letters and underscore (_) character.","$1 nesmí být prázdný a musí obsahovat pouze písmena");
 regGS("Invalid field type.","Špatně zadaný typ pole");
 regGS("The field $1 has been created.","Pole $1 bylo vytvořeno");
 regGS("Article type field $1 created","Pole typu článku $1 bylo vytvořeno");

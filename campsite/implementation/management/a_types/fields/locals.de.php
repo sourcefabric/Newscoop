@@ -8,7 +8,7 @@ regGS("Text","Textzeile");
 regGS("Adding new field","Neues Feld hinzufügen");
 regGS("You do not have the right to add article type fields.","Keine Berechtigung Artikeltyp-Felder hinzuzufügen");
 regGS("The field $1 already exists.","Feld $1 existiert bereits");
-regGS("The $1  must not be void and may only contain letters.","$1 darf nicht leer sein und darf nur Buchstaben beinhalten");
+regGS("The $1  must not be void and may only contain letters and underscore (_) character.","$1 darf nicht leer sein und darf nur Buchstaben beinhalten");
 regGS("Invalid field type.","Ungültiger Feldtyp");
 regGS("The field $1 has been created.","Feld $1 wurde erstellt");
 regGS("Article type field $1 created","Artikeltyp-Feld $1erstellt");
