@@ -34,7 +34,7 @@
   </blockquote>
 </blockquote>
 <P>2. <a href="#2.">BRINGING YOUR PUBLICATIONS ONLINE WITH CAMPSITE</a></P>
-<blockquote> 
+<blockquote>
   <p>2.1. <a href="#2.1.">CONFIGURING THE PUBLISHING ENVIRONMENT</a></p>
   <blockquote> 
     <p>2.1.1 <a href="#2.1.1">Languages</a><br>
@@ -102,73 +102,73 @@
   8. <a href="#8.">APPENDIX V - BACKING UP DATABASES IN MYSQL</a></P>
 <hr noshade size="1">
 <p><b>INTRODUCTION<a name="introduction"></a></b></p>
-<P>CAMPSITE is a content management system with multilingual Unicode support, 
-  designed for medium-to-large-size online news publications. Issues, copy flow, 
-  back archives, as well as subscription management are fully implemented features. 
-  At the core of CAMPSITE is CAMPFIRE, the Java Editor supporting Unicode, which 
-  allows contributors and editors to publish content and control layout online 
-  in their native alphabets. Formatting can be altered in a similar way as in 
-  editors such as Wordpad, meaning that no HTML knowledge is necessary for formatting 
+<P>CAMPSITE is a content management system with multilingual Unicode support,
+  designed for medium-to-large-size online news publications. Issues, copy flow,
+  back archives, as well as subscription management are fully implemented features.
+  At the core of CAMPSITE is CAMPFIRE, the Java Editor supporting Unicode, which
+  allows contributors and editors to publish content and control layout online
+  in their native alphabets. Formatting can be altered in a similar way as in
+  editors such as Wordpad, meaning that no HTML knowledge is necessary for formatting
   text.</P>
-<P>The original CAMPSITE concept was developed by Center for Advanced Media-Prague 
-  (<a href="http://www.mdlf-camp.net" target="_blank">C@MP</a>) in collaboration 
-  with Transitions Online, which started using CAMPSITE in late 2000. DNT-Cluj 
-  (<a href="http://www.dntcj.ro" target="_blank">http://www.dntcj.ro</a>) and 
-  Recognos (<a href="http://www.recognos.com" target="_blank">http://www.recognos.com</a>), 
-  software companies based in Cluj, Romania accomplished original coding and part 
-  of the further development. For a detailed revision history, click here. CAMPSITE 
+<P>The original CAMPSITE concept was developed by Center for Advanced Media-Prague
+  (<a href="http://www.mdlf-camp.net" target="_blank">C@MP</a>) in collaboration
+  with Transitions Online, which started using CAMPSITE in late 2000. DNT-Cluj
+  (<a href="http://www.dntcj.ro" target="_blank">http://www.dntcj.ro</a>) and
+  Recognos (<a href="http://www.recognos.com" target="_blank">http://www.recognos.com</a>),
+  software companies based in Cluj, Romania accomplished original coding and part
+  of the further development. For a detailed revision history, click here. CAMPSITE
   in action can be seen at the Transitions Online web site (<a href="http://www.tol.cz" target="_blank">http://www.tol.cz</a>).</P>
-<P>You can test drive CAMPSITE at the campware project site (<a href="http://www.campware.org" target="_blank">http://www.campware.org</a>) 
+<P>You can test drive CAMPSITE at the campware project site (<a href="http://www.campware.org" target="_blank">http://www.campware.org</a>)
   and take a look at its features. Mail us for a login (<a href="mailto:contact@campware.org">contact@campware.org</a>).</P>
 <P>CAMPSITE tech specs in a nutshell:</P>
-<P>CAMPSITE server: </P>
+<P>CAMPSITE server:</P>
 <ul>
-  <li> runs on a Linux server, originally tested on RedHat 5.2 release, but has 
-    proven compatible with newer versions up to 7.0. </li>
-  <li> requires an Apache web server to be running, and its virtual servers configured 
-    by the administrator.</li>
-  <li> needs a MySQL database server for Linux to be able to store data. The tests 
-    were made on MySQL v.3.22.27.</li>
+  <li> runs on a Linux server, originally tested on RedHat 7.0 release, and has proven
+  compatible with Mandrake 8.0.
+  <li> requires an Apache web server to be running, and its virtual servers configured
+  by the administrator.
+  <li> needs a MySQL database server for Linux to be able to store data. The tests were
+  made on MySQL v.3.23.36.
 </ul>
 <P>CAMPSITE client side:</P>
 <ul>
-  <li> runs on Netscape under Unix, Windows (versions up to 4.7), and Macintosh 
+  <li> runs on Netscape under Unix, Windows (versions up to 4.7), and Macintosh
     (see known limitations for the Mac), and Internet Explorer under Windows.</li>
-  <li> requires local installation of customized Java-class packages (At the moment 
-    of the publishing of this manual, an installer is available for Windows 98, 
+  <li> requires local installation of customized Java-class packages (At the moment
+    of the publishing of this manual, an installer is available for Windows 98,
     Me, and 2000). </li>
 </ul>
 <hr noshade size="1">
 <p><b>COPYRIGHT<a name="copyright"></a></b></p>
-<p>CAMPSITE is a Unicode-enabled multilingual web content management system for 
-  news publications. CAMPFIRE is a Unicode-enabled java-based near-WYSIWYG text 
+<p>CAMPSITE is a Unicode-enabled multilingual web content management system for
+  news publications. CAMPFIRE is a Unicode-enabled java-based near-WYSIWYG text
   editor. Copyright </p>
 <p>(C)1999-2001 Media Development Loan Fund. </p>
-<p>contact: <a href="http://www.campware.org">http://www.campware.org</a> Campware 
+<p>contact: <a href="http://www.campware.org">http://www.campware.org</a> Campware
   encourages further development. Please let us know. </p>
-<p>This program is free software; you can redistribute it and/or modify it under 
-  the terms of the GNU General Public License as published by the Free Software 
-  Foundation; either version 2 of the License, or (at your option) any later version. 
-  This program is distributed in the hope that it will be useful, but WITHOUT 
-  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
+<p>This program is free software; you can redistribute it and/or modify it under
+  the terms of the GNU General Public License as published by the Free Software
+  Foundation; either version 2 of the License, or (at your option) any later version.
+  This program is distributed in the hope that it will be useful, but WITHOUT
+  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
   FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.</p>
 <hr noshade size="1">
 <P>1. <b>INSTALLATION GUIDE</b><a name="1."></a></P>
 <P>1.1. <b>Requirements</b><a name="1.1."></a></P>
-<P>The server part of the application runs on a Linux computer. It was originally 
-  developed and tested on RedHat 5.2 release, but it is compatible with later 
-  versions up to 7.0. </P>
-<P>Before installing CAMPSITE, make sure you have two other applications up and 
+<P>The server part of the application runs on a Linux computer. It was originally
+  developed and tested on RedHat 7.0 release, and it has proven compatible with
+  Mandrake 8.0.</P>
+<P>Before installing CAMPSITE, make sure you have two other applications up and
   running:</P>
 <P>1. Apache web server - your http daemon, serving your web site to the world</P>
 <P>&#9;<a href="http://www.apache.org" target="_blank">http://www.apache.org</a></P>
-<P>&#9;For installation instructions, see the Apache web site. Installing Apache 
-  will generate the httpd.conf file referred to further down. This file contains 
-  all relevant information for Apache to handle the content on your Linux server. 
-  The adjustments described below need to be made in order to tell Apache about 
+<P>&#9;For installation instructions, see the Apache web site. Installing Apache
+  will generate the httpd.conf file referred to further down. This file contains
+  all relevant information for Apache to handle the content on your Linux server.
+  The adjustments described below need to be made in order to tell Apache about
   the procedures for CAMPSITE files and templates.</P>
-<P>2. MySQL Database Server - this application handles the CAMPSITE database. 
-  The tests were made on MySQL v.3.22.27</P>
+<P>2. MySQL Database Server - this application handles the CAMPSITE database. The
+  tests were made on MySQL v.3.23.36.</P>
 <P>&#9;<a href="http://www.mysql.com">http://www.mysql.com</a></P>
 <P>Three components of MySQL are needed for CAMPSITE:</P>
 <ol>
@@ -177,16 +177,16 @@
   <li> files and libraries for development for i386 systems.</li>
 </ol>
 <P>All of those can be found on the MySQL website. </P>
-<P>When installing on Red Hat, try to find the section 'Standard Binary RPMs' 
-  which have been compiled especially for Red Hat and should cause the least hassle. 
-  You can install these filed on prompt level by typing 'rpm -t nameoffile.rpm' 
+<P>When installing on Red Hat, try to find the section 'Standard Binary RPMs'
+  which have been compiled especially for Red Hat and should cause the least hassle.
+  You can install these filed on prompt level by typing 'rpm -t nameoffile.rpm'
   (without the '').</P>
 <P>1.2. <b>TODO</b><a name="1.2."></a></P>
 <P>Here is what you need to do. </P>
 <P>1.2.1 Configure the Web server<a name="1.2.1"></a></P>
-<P>First you need to change the behavior of the http daemon (the Web server). 
-  The configuration file, called httpd.conf, is normally found in the /etc/httpd/conf/ 
-  folder (N.B. non-standard installation of the Apache server can change the location 
+<P>First you need to change the behavior of the http daemon (the Web server).
+  The configuration file, called httpd.conf, is normally found in the /etc/httpd/conf/
+  folder (N.B. non-standard installation of the Apache server can change the location
   of the file). The changes you have to apply to the file are:</P>
 <P>- activate the DirectoryIndex directive and add to it the following options:<br>
   <font face="Courier New, Courier, mono">DirectoryIndex index.xql /priv/templates/idx.xql</font></P>
@@ -197,18 +197,18 @@
   Action www-sql /cgi-bin/www-sql<br>
   AddHandler parser .tpl<br>
   Action parser /cgi-bin/parser</font></P>
-<P>- make sure that the server has the rights to read, write and execute in the 
-  folder where the file are stored and uploaded. Standardly, the user and group 
-  should be set as 'httpd'; the rights should be set as 'rwx' for the user and 
-  'rw' for the group. Consult the Linux Administration Guide for further information. 
-  Furthermore, the Web server should have activated the UniqueID option (the mod_unique_id 
+<P>- make sure that the server has the rights to read, write and execute in the
+  folder where the file are stored and uploaded. Standardly, the user and group
+  should be set as 'httpd'; the rights should be set as 'rwx' for the user and
+  'rw' for the group. Consult the Linux Administration Guide for further information.
+  Furthermore, the Web server should have activated the UniqueID option (the mod_unique_id
   should be loaded)</P>
 <P>- restart the httpd daemon:<br>
   <font face="Courier New, Courier, mono">killall httpd<br>
   {PATH}/httpd</font></P>
 <P><font face="Courier New, Courier, mono">(or /etc/rc.d/init.d/httpd restart)</font></P>
-<P>- a public free CGI, we used 'www-sql', must be configured to allow the 'exec' 
-  directive activated and to allow recursivity. The package we supply is well 
+<P>- a public free CGI, we used 'www-sql', must be configured to allow the 'exec'
+  directive activated and to allow recursivity. The package we supply is well
   configured, but if you want to install a newer version of www-sql later (for 
   further development and other purposes) make sure to compile it with these options.</P>
 <P>1.2.2 <b>Customize the application framework</b><a name="1.2.2"></a></P>
@@ -217,13 +217,13 @@
   <li> Unarchive it using the command: tar xzvf &lt;campsite_archive&gt;</li>
   <li>Enter campsite directory.</li>
   <li>Edit the campsite/Makefile file to reflect your directory structure:<br>
-    CGI_BIN - cgi directory<br>
-    SCRIPT_BIN - the script folder (normally the same folder as CGI_BIN)<br>
-    ROOT_DIR - where the application's files are kept<br>
-    CLASS_DIR - the folder with the Java classes for the browser (where swingall.jar 
-    archive needed for the Java Editor and the Unicode charset translators will 
-    be kept)</li>
-  <li>run: 'make install' as a root, and the application is up and running.</li>
+    WWW_DIR - www directory<br>
+    REL_CGI_BIN - cgi directory (relative to www directory)<br>
+    REL_HTML - html directory (relative to www directory)<br>
+    HTTP_USER - apache user (the user apache server runs with)<br>
+    HTTP_GROUP - apache group (the group apache server runs with)<br>
+    Run './install', answer the install questions and wait for the application to be installed.<br>
+    </li>
 </ol>
 <P>1.2.3 <b>The CAMPFIRE Java Editor</b><a name="1.2.3"></a></P>
 <P>At the heart of CAMPSITE's client interface, lies CAMPFIRE, a text editor implemented 
