@@ -1,5 +1,8 @@
 <?
 
+regGS("Add section to all subscriptions.","Adaugă secţiunea la toate subscrierile.");
+regGS("Delete section from all subscriptions.","Şterge secţiunea de la toate subscrierile.");
+regGS("A number of $1 subscriptions were updated.","A fost actualizat un număr de $1 subscrieri.");
 regGS("Name<BR><SMALL>(click to see articles)</SMALL>","Nume");
 regGS("Delete section $1","Şterge secţiunea $1");
 regGS("No sections.","Nu există secţiuni");

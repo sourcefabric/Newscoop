@@ -68,6 +68,13 @@ B_DIALOG(<*Change section name*>, <*POST*>, <*do_edit.php*>)
 	B_DIALOG_INPUT(<*Name*>)
 		<INPUT TYPE="TEXT" NAME="cName" SIZE="32" MAXLENGTH="64" value="<? pgetHVar($q_sect,'Name'); ?>">
 	E_DIALOG_INPUT
+	B_DIALOG_INPUT(<*Subscriptions*>)
+		<SELECT NAME="cSubs">
+			<OPTION VALUE="n"> --- </OPTION>
+			<OPTION VALUE="a"><? putGS("Add section to all subscriptions."); ?></OPTION>
+			<OPTION VALUE="d"><? putGS("Delete section from all subscriptions."); ?></OPTION>
+		</SELECT>
+	E_DIALOG_INPUT
 	B_DIALOG_BUTTONS
 		<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<? p($Pub); ?>">
 		<INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<? p($Issue); ?>">

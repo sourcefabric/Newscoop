@@ -56,9 +56,12 @@ E_CURRENT
 
 <P>
 B_MSGBOX(<*Delete section*>)
-	X_MSGBOX_TEXT(<*<LI><? putGS('Are you sure you want to delete the section $1?','<B>'.getHVar($q_sect,'Name').'</B>'); ?></LI>*>)
-	B_MSGBOX_BUTTONS
 		<FORM METHOD="POST" ACTION="do_del.php">
+	X_MSGBOX_TEXT(<*<LI><? putGS('Are you sure you want to delete the section $1?','<B>'.getHVar($q_sect,'Name').'</B>'); ?></LI>*>)
+	B_DIALOG_INPUT(<*Subscriptions*>)
+		<INPUT TYPE="checkbox" checked NAME="cSubs"> <? putGS("Delete section from all subscriptions."); ?>
+	E_DIALOG_INPUT
+	B_MSGBOX_BUTTONS
 		<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<? p($Pub); ?>">
 		<INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<? p($Issue); ?>">
 		<INPUT TYPE="HIDDEN" NAME="Section" VALUE="<? p($Section); ?>">

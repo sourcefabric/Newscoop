@@ -19,11 +19,12 @@ E_STYLE
 
 B_BODY
 
-<? 
+<?
     todefnum('Pub');
     todefnum('Issue');
     todefnum('Language');
     todefnum('Section');
+    todef('cSubs');
 ?>dnl
 B_HEADER(<*Deleting section*>)
 B_HEADER_BUTTONS
@@ -37,12 +38,12 @@ E_HEADER
 
 <?
     query ("SELECT * FROM Sections WHERE IdPublication=$Pub AND NrIssue=$Issue AND IdLanguage=$Language AND Number=$Section", 'q_sect');
-    if ($NUM_ROWS) { 
+    if ($NUM_ROWS) {
 	query ("SELECT * FROM Issues WHERE IdPublication=$Pub AND Number=$Issue AND IdLanguage=$Language", 'q_iss');
 	if ($NUM_ROWS) {
 	    query ("SELECT * FROM Publications WHERE Id=$Pub", 'q_pub');
 	    if ($NUM_ROWS) {
-		query ("SELECT Name FROM Languages WHERE Id=$Language", 'q_lang'); 
+		query ("SELECT Name FROM Languages WHERE Id=$Language", 'q_lang');
 		fetchRow($q_sect);
 		fetchRow($q_iss);
 		fetchRow($q_pub);
@@ -64,16 +65,26 @@ B_MSGBOX(<*Deleting section*>)
 	$del= 0; ?>dnl
 	<LI><? putGS('There are $1 article(s) left.',getNumVar($q_art,0) ); ?></LI>
     <? }
-    
+
     if ($del)
 	query ("DELETE FROM Sections WHERE IdPublication=$Pub AND NrIssue=$Issue AND IdLanguage=$Language AND Number=$Section");
-    
+
     if ($AFFECTED_ROWS > 0) { ?>dnl
-	<LI><? putGS('The section $1 has been deleted.','<B>'.gethVar($q_sect,'Name').'</B>'); ?></LI>
-X_AUDIT(<*22*>, <*getGS('Section $1 deleted from issue $2. $3 $4 of $5',getHVar($q_sect,'Name'),getHVar($q_iss,'Number'),getHVar($q_iss,'Name'),getHVar($q_lang,'Name'),getHVar($q_pub,'Name')  )*>)
-<? } else { ?>
+		<LI><? putGS('The section $1 has been deleted.','<B>'.gethVar($q_sect,'Name').'</B>'); ?></LI>
+	<?
+		if ($cSubs != "") {
+			$del_subs_res = del_subs_section($Pub, $Section);
+			if ($del_subs_res == -1) { ?>
+				<LI><? putGS('Error updating subscriptions.'); ?></LI>
+		<?	} else { ?>
+				<LI><? putGS('A number of $1 subscriptions were updated.','<B>'.encHTML(decS($del_subs_res)).'</B>'); ?></LI>
+	<?		}
+		}
+	?>
+		X_AUDIT(<*22*>, <*getGS('Section $1 deleted from issue $2. $3 $4 of $5',getHVar($q_sect,'Name'),getHVar($q_iss,'Number'),getHVar($q_iss,'Name'),getHVar($q_lang,'Name'),getHVar($q_pub,'Name')  )*>)
+<?	} else { ?>
 	<LI><? putGS('The section $1 could not be deleted.','<B>'.getHVar($q_sect,'Name').'</B>'); ?></LI>
-<? } ?>dnl
+<?	} ?>dnl
 	*>)
 	B_MSGBOX_BUTTONS
 <? if ($AFFECTED_ROWS > 0) { ?>dnl

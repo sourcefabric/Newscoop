@@ -49,17 +49,18 @@ X_CURRENT(<*Publication*>, <*<B><? pgetHVar($q_pub,'Name'); ?></B>*>)
 X_CURRENT(<*Issue*>, <*<B><? pgetHVar($q_iss,'Number'); ?>. <? pgetHVar($q_iss,'Name'); ?> (<? pgetHVar($q_lang,'Name'); ?>)</B>*>)
 E_CURRENT
 
-<? 
+<?
     todef('cName');
     todefnum('cNumber');
-    
+    todef('cSubs');
+
     $correct= 1;
     $created= 0;
 ?>dnl
 <P>
 B_MSGBOX(<*Adding new section*>)
 	X_MSGBOX_TEXT(<*
-<? 
+<?
     if ($cName == "") {
 	$correct= 0; ?>dnl
 		<LI><? putGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); ?></LI>
@@ -79,6 +80,15 @@ B_MSGBOX(<*Adding new section*>)
     
     if ($created) { ?>dnl
 		<LI><? putGS('The section $1 has been successfuly added.','<B>'.encHTML(decS($cName)).'</B>'); ?></LI>
+	<?	if ($cSubs != "") {
+			$add_subs_res = add_subs_section($Pub, $cNumber);
+			if ($add_subs_res == -1) { ?>
+				<LI><? putGS('Error updating subscriptions.'); ?></LI>
+		<?	} else { ?>
+				<LI><? putGS('A number of $1 subscriptions were updated.','<B>'.encHTML(decS($add_subs_res)).'</B>'); ?></LI>
+	<?		}
+		}
+	?>
 X_AUDIT(<*21*>, <*getGS('Section $1 added to issue $2. $3 ($4) of $5',$cName,getHVar($q_iss,'Number'),getHVar($q_iss,'Name'),getHVar($q_lang,'Name'),getHVar($q_pub,'Name'))*>)
 <? } else {
     
