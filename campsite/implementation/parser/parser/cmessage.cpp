@@ -139,6 +139,14 @@ void CMsgURLRequest::setContent(char* p_pchContent)
 
 		try {
 			pchElement = coReader.nextElement("#text");
+			const char* pchContent = coReader.elementContent();
+			if (strcasecmp(coAttr.c_str(), "string") == 0)
+				setParameter(coName, string(pchContent));
+			else
+				setParameter(coName, pair<lint, const char*> (nSize, pchContent));
+
+			pchElement = coReader.nextElement();
+			pchElement = coReader.nextElement();
 		}
 		catch (invalid_message_content& rcoEx)
 		{
@@ -146,14 +154,6 @@ void CMsgURLRequest::setContent(char* p_pchContent)
 			pchElement = coReader.nextElement();
 			continue;
 		}
-		const char* pchContent = coReader.elementContent();
-		if (strcasecmp(coAttr.c_str(), "string") == 0)
-			setParameter(coName, string(pchContent));
-		else
-			setParameter(coName, pair<lint, const char*> (nSize, pchContent));
-
-		pchElement = coReader.nextElement();
-		pchElement = coReader.nextElement();
 	}
 
 	pchElement = coReader.nextElement("Cookies");
@@ -163,10 +163,18 @@ void CMsgURLRequest::setContent(char* p_pchContent)
 		if (strcasecmp(pchElement, "Cookie") != 0)
 			continue;
 		string coName = coReader.getAttributeValue("Name");
-		coReader.nextElement("#text");
-		m_coCookies[coName] = string(coReader.elementContent());
-		pchElement = coReader.nextElement();
-		pchElement = coReader.nextElement();
+		try {
+			coReader.nextElement("#text");
+			m_coCookies[coName] = string(coReader.elementContent());
+			pchElement = coReader.nextElement();
+			pchElement = coReader.nextElement();
+		}
+		catch (invalid_message_content& rcoEx)
+		{
+			m_coCookies[coName] = string("");
+			pchElement = coReader.nextElement();
+			continue;
+		}
 	}
 
 	// set the pointer to the content buffer
@@ -216,6 +224,11 @@ void CMsgResetCache::setContent(char* p_pchContent)
 		string coName = coReader.getAttributeValue("Name");
 		try {
 			pchElement = coReader.nextElement("#text");
+			const char* pchContent = coReader.elementContent();
+			setParameter(coName, string(pchContent));
+
+			pchElement = coReader.nextElement();
+			pchElement = coReader.nextElement();
 		}
 		catch (invalid_message_content& rcoEx)
 		{
@@ -223,11 +236,6 @@ void CMsgResetCache::setContent(char* p_pchContent)
 			pchElement = coReader.nextElement();
 			continue;
 		}
-		const char* pchContent = coReader.elementContent();
-		setParameter(coName, string(pchContent));
-
-		pchElement = coReader.nextElement();
-		pchElement = coReader.nextElement();
 	}
 
 	// set the pointer to the content buffer
