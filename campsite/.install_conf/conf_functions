@@ -550,7 +550,7 @@ mod_deps=`read_module_deps $1`
 [ $? -ne 0 ] && echo -e "ERROR\n$mod_deps" && return 1
 for mod_dep in $mod_deps; do
     check4_${mod_dep} $2
-    [ $? -ne 0 ] && return 1
+    [ $? -ne 0 ] && echo $output && return 1
 done
 echo "OK"
 return 0
