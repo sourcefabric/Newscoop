@@ -81,9 +81,6 @@ private:
 	// buildURI(): internal method; builds the URI string from object attributes
 	void buildURI() const;
 	
-	// readQueryString(): internal method; reads the parameters from the query string
-	void readQueryString(const string& p_rcoQueryString);
-
 private:
 	mutable bool m_bValidURI;
 	mutable string m_coURI;  // caches the URI string

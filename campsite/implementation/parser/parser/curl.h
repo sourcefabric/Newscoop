@@ -115,6 +115,10 @@ public:
 	virtual string getQueryString() const = 0;
 
 protected:
+	// readQueryString(): internal method; reads the parameters from the query string
+	void readQueryString(const string& p_rcoQueryString);
+
+protected:
 	string m_coMethod;
 	String2String m_coParamMap;
 	String2String m_coCookies;
