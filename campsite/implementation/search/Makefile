@@ -2,7 +2,7 @@ include ../../make.env
 
 INCLUDE_PATH=-I$(MYSQL_H_PATH)
 
-CFLAGS=-Wall -O3 -fomit-frame-pointer -falign-jumps=4 -falign-loops=4 -falign-functions=4 $(INCLUDE_PATH)
+CFLAGS=-Wall -O3 $(INCLUDE_PATH)
 CXXFLAGS=$(CFLAGS)
 LDFLAGS=-L$(LIBMYSQLCLIENT_PATH)
 LDLIBS=-lmysqlclient -lm -lz $(LIBCRYPT_LINK) $(PTHREAD_LINK)
