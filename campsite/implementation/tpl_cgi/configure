@@ -1,7 +1,0 @@
-#!/bin/bash
-
-cd tpl_cgi && ./configure
-result=$?
-cd ..
-exit $result
- 
