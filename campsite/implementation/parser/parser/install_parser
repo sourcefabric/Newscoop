@@ -25,10 +25,6 @@
 #
 ################################################################################
 
-mkdir -p $ETC_DIR
-echo -e "THREADS $PARSER_THREADS\nPORT $PARSER_PORT\nALLOWED_HOSTS $PARSER_ALLOWED_HOSTS\nUSER $PARSER_USER\nGROUP $PARSER_GROUP\n" > ${CONF_DIR}/parser.conf
-[ $? -ne 0 ] && echo "Error writing parser configuration file" && exit 1
-
 mkdir -p $BIN_DIR
 echo "Stop old version server (if installed)"
 test -f $BIN_DIR/$CAMPSITECTL && $BIN_DIR/$CAMPSITECTL stop
