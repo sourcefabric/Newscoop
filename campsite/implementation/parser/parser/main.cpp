@@ -52,7 +52,6 @@ object.
 #include "atoms.h"
 #include "parser.h"
 #include "util.h"
-#include "cgi.h"
 #include "threadpool.h"
 #include "cms_types.h"
 #include "srvdef.h"
@@ -60,6 +59,11 @@ object.
 #include "readconf.h"
 #include "thread.h"
 #include "process_req.h"
+#include "cpublication.h"
+#include "cpublicationsregister.h"
+#include "curlshortnames.h"
+#include "curltemplatepath.h"
+#include "cmessagefactory.h"
 
 using std::cout;
 using std::cerr;
@@ -85,64 +89,25 @@ void* CUpdateThread::Run()
 	return NULL;
 }
 
-// NextParam: read next parameter from string of parameters; return pointer to parameter
-// Read parameter is dynamically allocated and it must be deallocated using delete operator.
-// Parameters:
-//		const char* p_pchParams - string of parameters
-//		int* p_pnIndex - current index in the string
-//		int p_nMax - string length
-char* NextParam(const char* p_pchParams, int* p_pnIndex, int p_nMax) throw(RunException)
+
+CMessage* readMessage(CTCPSocket* p_pcoClSock, CMessageFactoryRegister& p_rcoMFReg)
 {
-	if (p_pchParams == NULL)
-		throw RunException("Invalid params");
-	if (*p_pnIndex >= p_nMax)
-		throw RunException("Mising parameter");
-	int nIndexNext = *p_pnIndex + strlen(p_pchParams + *p_pnIndex) + 1;
-	char* pchParam = new char[nIndexNext - *p_pnIndex];
-	if (pchParam == NULL)
-		throw RunException("Alloc error");
-	strcpy(pchParam, p_pchParams + *p_pnIndex);
-	*p_pnIndex = nIndexNext;
-	return pchParam;
+	char pchContent[11];
+
+	int nMsgLen = p_pcoClSock->Recv(pchContent, 10, 0);
+	if (nMsgLen < 9)
+		throw SocketErrorException("Receive error");
+
+	pchContent[10] = 0;
+	uint nDataSize = strtol(pchContent + 5, NULL, 16);
+	char *pchMsg = new char[nDataSize + 10];
+	memcpy(pchMsg, pchContent, 10);
+	p_pcoClSock->Recv(pchMsg + 10, nDataSize, 0);
+	pchMsg[nDataSize + 10] = 0;
+
+	return p_rcoMFReg.createMessage(pchMsg);
 }
 
-// ReadCGIParams: read cgi environment from string into cgi environment structure
-// Parameters:
-//		const char* p_pchParams - string of parameters
-CGIParams* ReadCGIParams(const char* p_pchParams) throw(RunException)
-{
-	if (p_pchParams == 0)
-		throw RunException("NULL Params");
-	CGIParams* pParams = new CGIParams;
-	if (pParams == 0)
-		throw RunException("Can not alloc memory");
-	const int* pnSize = (const int*)p_pchParams;
-	int nIndex = 4;
-	try
-	{
-		pParams->m_pchDocumentRoot = NextParam(p_pchParams, &nIndex, *pnSize);
-		pParams->m_pchIP = NextParam(p_pchParams, &nIndex, *pnSize);
-		pParams->m_pchPathTranslated = NextParam(p_pchParams, &nIndex, *pnSize);
-		pParams->m_pchPathInfo = NextParam(p_pchParams, &nIndex, *pnSize);
-		pParams->m_pchRequestMethod = NextParam(p_pchParams, &nIndex, *pnSize);
-		pParams->m_pchQueryString = NextParam(p_pchParams, &nIndex, *pnSize);
-		try
-		{
-			pParams->m_pchHttpCookie = NextParam(p_pchParams, &nIndex, *pnSize);
-		}
-		catch (RunException& rcoEx)
-		{
-			pParams->m_pchHttpCookie = NULL;
-		}
-	}
-	catch (RunException& rcoEx)
-	{
-		delete pParams;
-		throw rcoEx;
-		return NULL;
-	}
-	return pParams;
-}
 
 // MyThreadRoutine: thread routine; this is started on new thread start
 // Parameters:
@@ -160,11 +125,15 @@ void* MyThreadRoutine(void* p_pArg)
 	sigfillset(&nSigMask);
 	pthread_sigmask(SIG_SETMASK, &nSigMask, NULL);
 
+	new CPublication(6, MYSQLConnection());
+	new CURLShortNamesType();
+	new CURLTemplatePathType();
+	CMessageFactoryRegister coMFReg;
+	coMFReg.insert(new CURLRequestMessageFactory());
+	const CPublicationsRegister& rcoPubReg = CPublicationsRegister::getInstance();
+
 	CAction::initTempMembers();
 	CTCPSocket* pcoClSock = (CTCPSocket*)p_pArg;
-	char pchBuff[4];
-	char* pchMsg = 0;
-	CGIParams* pParams = NULL;
 	struct timeval tVal = { 0, 0 };
 	tVal.tv_sec = 5;
 	fd_set clSet;
@@ -178,24 +147,13 @@ void* MyThreadRoutine(void* p_pArg)
 		{
 			throw RunException("Error on select");
 		}
-		if (pcoClSock->Recv(pchBuff, 4) < 4)
-			throw RunException("Error receiving packet");
-		int* pnMsgLen = (int*)pchBuff;
-		pchMsg = new char[*pnMsgLen + 1];
-		if (pchMsg == 0)
-			throw RunException("Out of memory");
-		int nCnt = 0;
-		while (nCnt < *pnMsgLen)
-		{
-			if (select(FD_SETSIZE, &clSet, NULL, NULL, &tVal) == -1
-			    || !FD_ISSET((SOCKET)*pcoClSock, &clSet))
-			{
-				throw RunException("Error on select");
-			}
-			nCnt += pcoClSock->Recv(pchMsg + nCnt, *pnMsgLen - nCnt);
-		}
-		pchMsg[*pnMsgLen] = 0;
-		pParams = ReadCGIParams(pchMsg);
+		CMessage* pcoMessage = readMessage(pcoClSock, coMFReg);
+		string coAlias = ((CMsgURLRequest*)pcoMessage)->getHTTPHost();
+		const CPublication* pcoPub = rcoPubReg.getPublication(coAlias);
+		const CURLType* pcoURLType = pcoPub->getURLType();
+		CURL* pcoURL = pcoURLType->getURL(*((CMsgURLRequest*)pcoMessage));
+		string coRemoteAddress = ((CMsgURLRequest*)pcoMessage)->getRemoteAddress();
+
 		outbuf coOutBuf((SOCKET)*pcoClSock);
 		sockstream coOs(&coOutBuf);
 		pSql = MYSQLConnection();
@@ -206,19 +164,13 @@ void* MyThreadRoutine(void* p_pArg)
 		}
 		else
 		{
-			RunParser(pSql, pParams, coOs);
+			RunParser(MYSQLConnection(), pcoURL, coRemoteAddress.c_str(), coOs);
 		}
 		coOs.flush();
-		delete pParams;
-		delete []pchMsg;
-		pcoClSock->Shutdown();
 		delete pcoClSock;
 	}
 	catch (RunException& coEx)
 	{
-		delete pParams;
-		delete pchMsg;
-		pcoClSock->Shutdown();
 		delete pcoClSock;
 #ifdef _DEBUG
 		cout << "MyThreadRoutine: " << coEx.what() << endl;
@@ -226,9 +178,6 @@ void* MyThreadRoutine(void* p_pArg)
 	}
 	catch (SocketErrorException& coEx)
 	{
-		delete pParams;
-		delete pchMsg;
-		pcoClSock->Shutdown();
 		delete pcoClSock;
 #ifdef _DEBUG
 		cout << "MyThreadRoutine: " << coEx.Message() << endl;
