@@ -60,7 +60,7 @@ export PACKAGE_TYPE=`cat ./.package_type`
 [ "$PACKAGE_TYPE" != "source" ] && [ "$PACKAGE_TYPE" != "binary" ] && echo "Invalid package type $PACKAGE_TYPE" && exit 1
 campsite_version=`cat ${CAMPSITE_PACKAGE_DIR}/README | grep -w ^version | grep ":" | cut -f 2 -d ":"`
 [ $? -ne 0 ] && echo "Error reading campsite version" && exit 1
-export CAMPSITE_VERSION=$campsite_version
+export CAMPSITE_VERSION=`echo $campsite_version`
 release_date=`cat ${CAMPSITE_PACKAGE_DIR}/README | grep -w ^release | grep ":" | cut -f 2 -d ":"`
 [ $? -ne 0 ] && echo "Error reading campsite release date" && exit 1
 export CAMPSITE_RELEASE_DATE=release_date
@@ -105,7 +105,7 @@ export HTTP_GROUP=$APACHE_GROUP
 export BIN_DIR=$PREFIX/$ROOT_BIN_DIR/$APP_NAME
 export CONF_DIR=$PREFIX/etc/campsite.d/$APP_NAME
 export BIN_PACKAGE_DIR=$CAMPSITE_PACKAGE_DIR/.package/campsite
-export CAMPSITE_VERSION="$CAMPSITE_VERSION"
+export CAMPSITE_VERSION=$CAMPSITE_VERSION
 export CLASS_DIR=$PREFIX/usr/lib/netscape/java/classes
 export PROCESSOR_TYPE=\`uname -m\`
 export MAKE=$MAKE
