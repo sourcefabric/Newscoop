@@ -49,7 +49,6 @@ regGS("Template $1 uploaded", "Template $1 uploaded:en");
 
 regGS("Create new template", "Create new template:en");
 regGS("Creating new template", "Creating new template:en");
-regGS("Duplicate", "Duplicate:en");
 regGS("Duplicate template", "Duplicate template:en");
 regGS("Edit template", "Edit template:en");
 regGS("Template", "Template:en");

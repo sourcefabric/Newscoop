@@ -39,7 +39,6 @@ regGS("The upload of $1 was successful !","Загрузка $1 была успе
 regGS("Template $1 uploaded","Загружен шаблон $1:ru");
 regGS("Create new template","Создать новый шаблон:ru");
 regGS("Creating new template","Создание нового шаблона:ru");
-regGS("Duplicate","Дублировать:ru");
 regGS("Duplicate template","Дублировать шаблон:ru");
 regGS("Edit template","Редактировать шаблон:ru");
 regGS("Template","Шаблон:ru");

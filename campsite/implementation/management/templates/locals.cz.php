@@ -39,7 +39,6 @@ regGS("The upload of $1 was successful !","Nahrání $1 proběhlo úspěšně!")
 regGS("Template $1 uploaded","Šablona $1 byla nahrána");
 regGS("Create new template","Vytvořit novou šablonu");
 regGS("Creating new template","Vytváření nové šablony");
-regGS("Duplicate","Duplikovat");
 regGS("Duplicate template","Duplikovat šablonu");
 regGS("Edit template","Editovat šablonu");
 regGS("Template","Šablona");

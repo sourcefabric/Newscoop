@@ -38,7 +38,6 @@ regGS("The upload of $1 was successful !","上载$1成功！");
 regGS("Template $1 uploaded","模版$1已上载");
 regGS("Create new template","建立新模版");
 regGS("Creating new template","正在建新模版");
-regGS("Duplicate","复制");
 regGS("Duplicate template","复制模版");
 regGS("Edit template","编辑模版");
 regGS("Template","模版");
