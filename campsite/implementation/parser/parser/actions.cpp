@@ -233,18 +233,19 @@ int CAction::runActions(CActionList& al, CContext& c, sockstream& fs)
 //		id_type p_nLanguageId - language to use
 string CAction::dateFormat(const char* p_pchDate, const char* p_pchFormat, id_type p_nLanguageId)
 {
+	const char* pchDate = p_pchDate != NULL ? p_pchDate : "";
 	if (p_pchFormat == NULL || *p_pchFormat == 0)
-		return string(p_pchDate);
+		return string(pchDate);
 	stringstream coQuery;
-	coQuery << "select MONTH('" << p_pchDate << "'), WEEKDAY('"<< p_pchDate << "')";
+	coQuery << "select MONTH('" << pchDate << "'), WEEKDAY('"<< pchDate << "')";
 	if (mysql_query(&m_coSql, coQuery.str().c_str()) != 0)
-		return string(p_pchDate);
+		return string(pchDate);
 	CMYSQL_RES res = mysql_store_result(&m_coSql);
 	if (*res == NULL || mysql_num_fields(*res) < 2)
-		return string(p_pchDate);
+		return string(pchDate);
 	MYSQL_ROW row = mysql_fetch_row(*res);
 	if (row == NULL || row[0] == NULL || row[1] == NULL)
-		return string(p_pchDate);
+		return string(pchDate);
 	int nMonth = atol(row[0]);
 	int nWDay = (atol(row[1]) + 2) % 7;
 	nWDay = nWDay == 0 ? 7 : nWDay;
@@ -277,7 +278,7 @@ string CAction::dateFormat(const char* p_pchDate, const char* p_pchFormat, id_ty
 		{
 			if (nParams > 0)
 				coQuery << ", ";
-			coQuery << "DATE_FORMAT('" << p_pchDate << "', '";
+			coQuery << "DATE_FORMAT('" << pchDate << "', '";
 			coQuery.write(p_pchFormat + nStartFormat, nFormatLen);
 			coQuery << "')";
 			nParams++;
@@ -297,7 +298,7 @@ string CAction::dateFormat(const char* p_pchDate, const char* p_pchFormat, id_ty
 	{
 		if (nParams > 0)
 			coQuery << ", ";
-		coQuery << "DATE_FORMAT('" << p_pchDate << "', '";
+		coQuery << "DATE_FORMAT('" << pchDate << "', '";
 		coQuery.write(p_pchFormat + nStartFormat, nIndex - nStartFormat);
 		coQuery << "')";
 		nParams++;
@@ -756,7 +757,7 @@ int CActList::WriteArtParam(string& s, CContext& c, string& table)
 			w += " and Articles.Number not in (";
 			while ((row = mysql_fetch_row(*qRes)) != NULL)
 			{
-				w += string(first ? "" : ", ") + row[0];
+				w += string(first ? "" : ", ") + (row[0] != NULL ? row[0] : "");
 				first = false;
 			}
 			w += ")";
@@ -969,8 +970,7 @@ int CActList::takeAction(CContext& c, sockstream& fs)
 			fields += ", Articles.NrIssue, Articles.NrSection";
 		else if (modifier == CMS_ST_SECTION)
 			fields += ", NrIssue";
-		string grfield;
-		grfield = (modifier == CMS_ST_SEARCHRESULT ? "NrArticle" : "Number");
+		string grfield = (modifier == CMS_ST_SEARCHRESULT ? "NrArticle" : "Number");
 		string coQuery = fields + string(" from ") + table + where + " group by " + grfield
 		                 + having + order + limit;
 		DEBUGAct("takeAction()", coQuery.c_str(), fs);
@@ -1637,6 +1637,8 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 	res = mysql_store_result(&m_coSql);
 	CheckForRows(*res, 1);
 	row = mysql_fetch_row(*res);
+	if (row == NULL || row[0] == NULL)
+		return -1;
 	if (modifier == CMS_ST_ARTICLE && type != "")
 	{
 		if (strictType && type != row[0])
@@ -2671,7 +2673,7 @@ int CActUser::takeAction(CContext& c, sockstream& fs)
 		FetchRow(*res, row);
 		for (int i = 0; i < 28; i++)
 			if (!lc.IsUserInfo(string(params[i])))
-				lc.SetUserInfo(string(params[i]), string(row[i]));
+				lc.SetUserInfo(string(params[i]), string(row[i] != NULL ? row[i] : ""));
 	}
 	runActions(block, lc, fs);
 	fs << "<input type=submit name=\"" << (add ? P_USERADD : P_USERMODIFY)
