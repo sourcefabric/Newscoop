@@ -74,10 +74,10 @@ $languageObj =& new Language($Language);
 	<TD VALIGN="TOP" class="current_location_content"><?php echo htmlspecialchars($publicationObj->getName()); ?></TD>
 
 	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php putGS('Issue'); ?>:</TD>
-	<TD VALIGN="TOP" class="current_location_content"><?php echo htmlspecialchars($issueObj->getIssueId()); ?>. <?php echo htmlspecialchars($issueObj->getName()); ?> (<?php echo htmlspecialchars($languageObj->getName()); ?>)</TD>
+	<TD VALIGN="TOP" class="current_location_content"><?php echo $issueObj->getIssueId(); ?>. <?php echo htmlspecialchars($issueObj->getName()); ?> (<?php echo htmlspecialchars($languageObj->getName()); ?>)</TD>
 
 	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php putGS('Section'); ?>:</TD>
-	<TD VALIGN="TOP" class="current_location_content"><?php echo htmlspecialchars($sectionObj->getSectionId()); ?>. <?php echo htmlspecialchars($sectionObj->getName()); ?></TD>
+	<TD VALIGN="TOP" class="current_location_content"><?php echo $sectionObj->getSectionId(); ?>. <?php echo htmlspecialchars($sectionObj->getName()); ?></TD>
 
 	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php putGS('Article'); ?>:</TD>
 	<TD VALIGN="TOP" class="current_location_content"><?php echo htmlspecialchars($articleObj->getTitle()); ?></TD>
@@ -205,7 +205,7 @@ if (count($articleImages) > 0) {
 		<?php
 	    if ($articleObj->userCanModify($User)) { ?>
 			<TD ALIGN="CENTER">
-				<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/images/do_unlink.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($Article); ?>&ImageId=<?php echo $image->getImageId(); ?>&ImageTemplateId=<?php echo $articleImage->getTemplateId(); ?>&sLanguage=<?php  p($sLanguage); ?>&Language=<?php  p($Language); ?>" onclick="return confirm('<?php putGS('Are you sure you want to remove the image \\\'$1\\\' from the article?', htmlspecialchars($image->getDescription())); ?>');"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/unlink.png" BORDER="0" ALT="<?php  putGS('Unlink image $1', $image->getDescription()); ?>"></A>
+				<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/images/do_unlink.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($Article); ?>&ImageId=<?php echo $image->getImageId(); ?>&ImageTemplateId=<?php echo $articleImage->getTemplateId(); ?>&sLanguage=<?php  p($sLanguage); ?>&Language=<?php  p($Language); ?>" onclick="return confirm('<?php putGS('Are you sure you want to remove the image \\\'$1\\\' from the article?', javascriptspecialchars($image->getDescription())); ?>');"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/unlink.png" BORDER="0" ALT="<?php  putGS('Unlink image $1', htmlspecialchars($image->getDescription())); ?>"></A>
 			</TD>
 		<?php
 	    }
@@ -214,7 +214,7 @@ if (count($articleImages) > 0) {
 			<?php 
 			if (count(ArticleImage::GetArticlesThatUseImage($image->getImageId())) == 1) {
 				?>
-				<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/images/do_del.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&ImageId=<?php echo $image->getImageId(); ?>&sLanguage=<?php  p($sLanguage); ?>&Language=<?php p($Language); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the image \\\'$1\\\'?', htmlspecialchars($image->getDescription())); ?>');"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/delete.png" BORDER="0" ALT="<?php  putGS('Delete image $1', $image->getDescription()); ?>"></A>
+				<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/images/do_del.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&ImageId=<?php echo $image->getImageId(); ?>&sLanguage=<?php  p($sLanguage); ?>&Language=<?php p($Language); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the image \\\'$1\\\'?', javascriptspecialchars($image->getDescription())); ?>');"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/delete.png" BORDER="0" ALT="<?php  putGS('Delete image $1', htmlspecialchars($image->getDescription())); ?>"></A>
 				<?php
 			}
 			else {
