@@ -66,7 +66,9 @@ E_CURRENT
 
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" WIDTH="100%">
 <TR>
+<? if ($mca) { ?>dnl
 	<TD ALIGN="LEFT">X_NEW_BUTTON(<*Add new topic*>, <*add.php?IdCateg=<?p($IdCateg);?>&Back=<? pencURL($REQUEST_URI); ?>*>)</TD>
+<? } ?>
 	<TD ALIGN="RIGHT">
 	B_SEARCH_DIALOG(<*GET*>, <*index.php*>)
 		<TD><? putGS('Topic'); ?>:</TD>
@@ -90,8 +92,10 @@ E_CURRENT
 B_LIST
 	B_LIST_HEADER
 		X_LIST_TH(<*Name*>)
+<? if ($mca) { ?>dnl
 		X_LIST_TH(<*Change*>, <*1%*>)
 		X_LIST_TH(<*Delete*>, <*1%*>)
+<? } ?>
 	E_LIST_HEADER
 <?
     for($loop=0;$loop<$nr;$loop++) {
@@ -101,12 +105,14 @@ B_LIST
 		B_LIST_ITEM
 			<A HREF="index.php?IdCateg=<?pgetVar($categ,'Id');?>"><? pgetHVar($categ,'Name'); ?></A>
 		E_LIST_ITEM
+<? if ($mca) { ?>dnl
 		B_LIST_ITEM(<*CENTER*>)
 			<A HREF="edit.php?IdCateg=<?p($IdCateg);?>&EdCateg=<? pgetVar($categ,'Id'); ?>"><? putGS("Change"); ?></A>
 		E_LIST_ITEM
 		B_LIST_ITEM(<*CENTER*>)
 			X_BUTTON(<*<? putGS('Delete topic $1',getHVar($categ,'Name')); ?>*>, <*icon/x.gif*>, <*topics/del.php?IdCateg=<?p($IdCateg);?>&DelCateg=<? pgetVar($categ,'Id'); ?>*>)
 		E_LIST_ITEM
+<? } ?>
     E_LIST_TR
 <?
     $i--;
