@@ -1,5 +1,7 @@
 2.0.12
     - Set login username/password fields to size 10
+    - Add If Language statement (see manual: 3.9.1.26)
+    - Updated manual: added With statement description: 3.9.1.27
 
 2.0.11
     - When adding a new subscription to a publication add the sections too
