@@ -1508,7 +1508,10 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 		res = mysql_store_result(&m_coSql);
 		CheckForRows(*res, 1);
 		row = mysql_fetch_row(*res);
-		fs << pcoTopic->name(row[0]);
+		if (case_comp(attr, "name") == 0)
+			fs << pcoTopic->name(row[0]);
+		if (case_comp(attr, "identifier") == 0)
+			fs << pcoTopic->id();
 		return RES_OK;
 	}
 	if (modifier == CMS_ST_ARTICLE && attr == "SingleArticle")
