@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "globals.h"
 
 
-CBinaryStringValue::CBinaryStringValue(long p_nSize, const char* p_pchValue)
+CBinaryStringValue::CBinaryStringValue(lint p_nSize, const char* p_pchValue)
 	: m_nSize(p_nSize)
 {
 	if (p_nSize == 0 || p_pchValue == 0)
@@ -117,10 +117,6 @@ void CMsgURLRequest::setContent(char* p_pchContent)
 	if (strcmp(pchValue, s_coMessageType.c_str()) != 0)
 		throw invalid_message_content(string("invalid message type ") + pchValue + "; " + s_coMessageType + " was expected");
 
-	// read MessageId attribute
-	pchValue = coReader.getAttributeValue(MessageId);
-	setId(strtol(pchValue, NULL, 10));
-
 	// read the URL request attributes values
 	m_coHTTPHost = coReader.nextElementContent("HTTPHost", 1);
 	m_coDocumentRoot = coReader.nextElementContent("DocumentRoot", 1);
@@ -138,7 +134,7 @@ void CMsgURLRequest::setContent(char* p_pchContent)
 			continue;
 		string coName = coReader.getAttributeValue("Name");
 		string coAttr = coReader.getAttributeValue("Type");
-		long nSize;
+		lint nSize;
 		if (strcasecmp(coAttr.c_str(), "string") != 0)
 			nSize = strtol(coReader.getAttributeValue("Size"), NULL, 10);
 
@@ -155,7 +151,7 @@ void CMsgURLRequest::setContent(char* p_pchContent)
 		if (strcasecmp(coAttr.c_str(), "string") == 0)
 			setParameter(coName, string(pchContent));
 		else
-			setParameter(coName, pair<long, const char*> (nSize, pchContent));
+			setParameter(coName, pair<lint, const char*> (nSize, pchContent));
 
 		pchElement = coReader.nextElement();
 		pchElement = coReader.nextElement();
@@ -180,24 +176,12 @@ void CMsgURLRequest::setContent(char* p_pchContent)
 	m_bValidContent = true;
 }
 
-pair<long, const char*> CMsgURLRequest::getContent() const
+pair<lint, const char*> CMsgURLRequest::getContent() const
 {
-	return pair<long, const char*> (m_nContentSize, m_pchContent);
+	return pair<lint, const char*> (m_nContentSize, m_pchContent);
 }
 
 
-// CMsgURLServe static members initialisation
-const string CMsgURLServe::s_coMessageType = "URLServe";
-const uint CMsgURLServe::s_nMessageTypeId = 0x1001;
-
-
-// CMsgURLServe inline methods
-
-void CMsgURLServe::setContent(char* p_pchContent)
-	throw (out_of_range, xml_parse_error, invalid_message_content)
-{
-}
-
-pair<long, const char*> CMsgURLServe::getContent() const
-{
-}
+// CMsgResetCache static members initialisation
+const string CMsgResetCache::s_coMessageType = "ResetCache";
+const uint CMsgResetCache::s_nMessageTypeId = 0x0002;
