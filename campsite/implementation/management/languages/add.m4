@@ -1,4 +1,3 @@
-B_HTML
 INCLUDE_PHP_LIB(<*$ADMIN_DIR/languages*>)
 B_DATABASE
 
@@ -6,7 +5,6 @@ CHECK_BASIC_ACCESS
 CHECK_ACCESS(<*ManageLanguages*>)
 
 B_HEAD
-	X_EXPIRES
 	X_TITLE(<*Add new language*>)
 <?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to add languages.*>)

@@ -1,11 +1,9 @@
-B_HTML
 INCLUDE_PHP_LIB(<*$ADMIN_DIR/pub/issues/sections*>)
 B_DATABASE
 
 CHECK_BASIC_ACCESS
 
 B_HEAD
-	X_EXPIRES
 	X_TITLE(<*Duplicate section*>)
 <?php  if ($access == 0) { ?>dnl
 	X_LOGOUT

@@ -8,7 +8,6 @@ CHECK_BASIC_ACCESS
 CHECK_ACCESS(<*ManagePub*>)
 
 B_HEAD
-	X_EXPIRES
 	X_TITLE(<*Configure publication*>)
 <?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to edit publication information.*>)

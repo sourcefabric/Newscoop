@@ -1,11 +1,9 @@
-B_HTML
 INCLUDE_PHP_LIB(<*$ADMIN_DIR/a_types/fields*>)
 B_DATABASE
 
 CHECK_BASIC_ACCESS
 
 B_HEAD
-	X_EXPIRES
 	X_TITLE(<*Article type fields*>)
 	<?php  if ($access == 0) { ?>
 		X_LOGOUT

@@ -1,4 +1,3 @@
-B_HTML
 INCLUDE_PHP_LIB(<*$ADMIN_DIR/a_types*>)
 B_DATABASE
 <?php  todef('cName');
@@ -11,7 +10,6 @@ CHECK_BASIC_ACCESS
 CHECK_ACCESS(<*ManageArticleTypes*>)
 
 B_HEAD
-	X_EXPIRES
 	X_TITLE(<*Adding new article type*>)
 <?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to add article types.*>)

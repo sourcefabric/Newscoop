@@ -1,4 +1,3 @@
-B_HTML
 INCLUDE_PHP_LIB(<*$ADMIN_DIR/a_types/fields*>)
 B_DATABASE
 
@@ -6,7 +5,6 @@ CHECK_BASIC_ACCESS
 CHECK_ACCESS(<*DeleteArticleTypes*>)
 
 B_HEAD
-	X_EXPIRES
 	X_TITLE(<*Delete field*>)
 	<?php  if ($access == 0) { ?>
 		X_AD(<*You do not have the right to delete article type fields.*>)

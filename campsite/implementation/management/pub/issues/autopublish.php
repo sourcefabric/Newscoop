@@ -21,8 +21,6 @@ if ($NUM_ROWS) {
 ?>
 
 <HEAD>
-	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<META HTTP-EQUIV="Expires" CONTENT="now">
 	<TITLE><?php  putGS("Issue automatic publishing schedule"); ?></TITLE>
 <?php if ($access == 0) { ?>	<META HTTP-EQUIV="Refresh" CONTENT="0; URL=/<?php echo $ADMIN; ?>/logout.php">
 <?php }
