@@ -821,6 +821,9 @@ columns <integer_value> where <integer_value> specifies columns_number sets an e
 number <integer_operator> <integer_value> 
 |name <string_operator> <string_value> 
 |publish_date <date_operator> <date_value> 
+|publish_year <integer_operator> <integer_value>
+|publish_month <integer_operator> <integer_value>
+|publish_mday <integer_operator> <integer_value>
 |<date_constraint>
 <date_constraint> =
 year <integer_operator> <integer_value> 
