@@ -1,7 +1,13 @@
 #!/bin/bash
 
-export PREFIX=
+export PREFIX_DIR=/usr/local
 export USER_INSTALL=false
+export CAMPSITE_DIR=""
+export BIN_DIR=""
+export ETC_DIR=""
+export WWW_DIR=""
+export WWW_COMMON_DIR=""
+export PARSER_START_PORT=2001
 
 if [ "`uname | grep BSD`" != "" ]; then
     export BSD=1
@@ -40,9 +46,26 @@ while [ "$1" != "" ]; do
     --apache_bin_path) export APACHE_BIN_PATH=$2; shift 1 ;;
     --root_only) root_only=true ;;
     --read_only) read_only=true ;;
+    --prefix) export PREFIX_DIR=$2; shift 1 ;;
+    --campsite_dir) export CAMPSITE_DIR=$2; shift 1 ;;
+    --bin_dir) export BIN_DIR=$2; shift 1 ;;
+    --etc_dir) export ETC_DIR=$2; shift 1 ;;
+    --www_dir) export WWW_DIR=$2; shift 1 ;;
+    --www_common_dir) export WWW_COMMON_DIR=$2; shift 1 ;;
+    --parser_start_port) export PARSER_START_PORT=$2; shift 1 ;;
     esac
     shift 1
 done
+
+[ "$CAMPSITE_DIR" = "" ] && export CAMPSITE_DIR=$PREFIX_DIR/campsite
+[ "$BIN_DIR" = "" ] && export BIN_DIR=$CAMPSITE_DIR/bin
+[ "$ETC_DIR" = "" ] && export ETC_DIR=$CAMPSITE_DIR/etc
+[ "$WWW_DIR" = "" ] && export WWW_DIR=$CAMPSITE_DIR/www
+[ "$WWW_COMMON_DIR" = "" ] && export WWW_COMMON_DIR=$CAMPSITE_DIR/www-common
+HTML_COMMON_DIR=$WWW_COMMON_DIR/html
+CGI_COMMON_DIR=$WWW_COMMON_DIR/cgi
+SCRIPT_COMMON_DIR=$WWW_COMMON_DIR/script
+INCLUDE_COMMON_DIR=$WWW_COMMON_DIR/include
 
 cdir=`pwd`
 [ $? -ne 0 ] && echo "Error reading campsite directory" && exit 1
@@ -50,10 +73,12 @@ export CAMPSITE_PACKAGE_DIR=$cdir
 export INSTALL_CONF=${CAMPSITE_PACKAGE_DIR}/.install_conf
 . ${INSTALL_CONF}/install_functions
 
-for m in pwd make m4 mkdir ls chown chmod cut cat grep stat which cp rm clear gcc gpp locate; do
-    check4_$m
-    [ $? -ne 0 ] && echo $output && exit 1
-done
+if [ "$c_define_start_env" != "--define_start_env" ]; then
+    for m in pwd make m4 mkdir ls chown chmod cut cat grep stat which cp rm clear gcc gpp locate; do
+	check4_$m
+        [ $? -ne 0 ] && echo $output && exit 1
+    done
+fi
 
 campsite_version=`cat ${CAMPSITE_PACKAGE_DIR}/README | grep -w ^version | grep ":" | cut -f 2 -d ":"`
 [ $? -ne 0 ] && echo "Error reading campsite version" && exit 1
@@ -61,7 +86,6 @@ export CAMPSITE_VERSION=$campsite_version
 release_date=`cat ${CAMPSITE_PACKAGE_DIR}/README | grep -w ^release | grep ":" | cut -f 2 -d ":"`
 [ $? -ne 0 ] && echo "Error reading campsite release date" && exit 1
 export CAMPSITE_RELEASE_DATE=release_date
-export ROOT_BIN_DIR=/usr/local
 export INSTALL_LOG=${CAMPSITE_PACKAGE_DIR}/install_log
 
 
@@ -70,18 +94,16 @@ if [ "$c_define_start_env" != "--define_start_env" ]; then
 if [ "$read_only" = "false" ]; then
     do_install_full_config $c_define_start_env $c_upgrade
     [ $? -ne 0 ] && exit 1
-    for sel_mod in $SELECTED_MODULES; do
-	do_module_full_config $sel_mod $c_define_start_env $c_upgrade
-	[ $? -ne 0 ] && exit 1
+    for mod in $MODULES_LIST; do
+	do_module_full_config $mod $c_define_start_env $c_upgrade || exit 1
     done
 else
-    prepare_install_env && [ $? -ne 0 ] && exit 1
-    install_conf --set && [ $? -ne 0 ] && exit 1
-    for sel_mod in $SELECTED_MODULES; do
-	prepare_${sel_mod}_env
+    prepare_install_env || exit 1
+    install_conf --set || exit 1
+    for mod in $MODULES_LIST; do
+	prepare_${mod}_env
     done
-    modules_conf --set $sel_mod
-    [ $? -ne 0 ] && exit 1
+    modules_conf --set $mod || exit 1
 fi
 
 rm -f make.env
@@ -90,19 +112,17 @@ make_env=${CAMPSITE_PACKAGE_DIR}/make.env
 cat > $make_env << EOF
 export ROOT_USER=$ROOT_USER
 export ROOT_GROUP=$ROOT_GROUP
-export APP_NAME=$APP_NAME
-export CGI_DIR=$PREFIX/$ADMIN_INTERFACE_CGI_DIR
-export SCRIPT_DIR=$PREFIX/$ADMIN_INTERFACE_SCRIPT_DIR
-export HTML_DIR=$PREFIX/$ADMIN_INTERFACE_HTML_DIR
-export PRIV_DIR=$PREFIX/$ADMIN_INTERFACE_HTML_DIR/priv
-export PUBLIC_DIR=$PREFIX/$ADMIN_INTERFACE_HTML_DIR/pub
-export HTTP_USER=$APACHE_USER
-export HTTP_GROUP=$APACHE_GROUP
-export BIN_DIR=$PREFIX/$ROOT_BIN_DIR/$APP_NAME
-export CONF_DIR=$PREFIX/etc/campsite.d/$APP_NAME
-export BIN_PACKAGE_DIR=$CAMPSITE_PACKAGE_DIR/.package/campsite
+export BIN_DIR=$BIN_DIR
+export ETC_DIR=$ETC_DIR
+export WWW_DIR=$WWW_DIR
+export WWW_COMMON_DIR=$WWW_COMMON_DIR
+export CGI_COMMON_DIR=$CGI_COMMON_DIR
+export HTML_COMMON_DIR=$HTML_COMMON_DIR
+export SCRIPT_COMMON_DIR=$SCRIPT_COMMON_DIR
+export INCLUDE_COMMON_DIR=$INCLUDE_COMMON_DIR
+export PRIV_COMMON_DIR=$PRIV_COMMON_DIR
 export CAMPSITE_VERSION="$CAMPSITE_VERSION"
-export CLASS_DIR=$PREFIX/usr/lib/netscape/java/classes
+export OLD_CAMPSITE_REGISTER=/etc/campsite.reg
 export PROCESSOR_TYPE=\`uname -m\`
 export MAKE=$MAKE
 export M4=$M4
@@ -118,7 +138,7 @@ export MYSQL_H_PATH=$MYSQL_H_PATH
 export LIBCRYPT_LINK=$LIBCRYPT_LINK
 export NSL_LINK=$NSL_LINK
 export KILLALL=$KILLALL
-export PARSER_DEFAULT_PORT=2001
+export PARSER_START_PORT=$PARSER_START_PORT
 export XML_INCLUDE=$XML_INCLUDE
 export XML_LINK=$XML_LINK
 EOF
@@ -127,13 +147,14 @@ EOF
 [ "$LIBMYSQLCLIENT_PATH" != "" ] && echo "export LIBMYSQLCLIENT_PATH=$LIBMYSQLCLIENT_PATH" >> $make_env
 [ "$LIBPTHREAD_PATH" != "" ] && echo "export LIBPTHREAD_PATH=$LIBPTHREAD_PATH" >> $make_env
 written_modules=""
-for sel_mod in $SELECTED_MODULES; do
-    preconf_mod=`preconf_modules $sel_mod`
+for mod in $MODULES_LIST; do
+    preconf_mod=`preconf_modules $mod`
     [ $? -ne 0 ] && echo $preconf_mod && exit 1
     if [ "$preconf_mod" != "" ]; then
 	for pmod in $preconf_mod; do
 	    if ! in_list $pmod $written_modules; then
 		attr_list=`modules_conf "$pmod" | cut -f 1 -d "#"`
+		[ $? -ne 0 ] && return $?
 		for a in $attr_list; do
 		    echo "export $a" >> $make_env
 		done
@@ -141,12 +162,13 @@ for sel_mod in $SELECTED_MODULES; do
 	    fi
 	done
     fi
-    if ! in_list $sel_mod $written_modules; then
-	attr_list=`modules_conf "$sel_mod" | cut -f 1 -d "#"`
+    if ! in_list $mod $written_modules; then
+	attr_list=`modules_conf "$mod" | cut -f 1 -d "#"`
+	[ $? -ne 0 ] && return $?
 	for a in $attr_list; do
 	    echo "export $a" >> $make_env
 	done
-	written_modules="$written_modules $sel_mod"
+	written_modules="$written_modules $mod"
     fi
 done
 echo "done"
@@ -164,32 +186,35 @@ fi
 
 else # else if define start env
 
-    prepare_install_env && [ $? -ne 0 ] && exit 1
-    install_conf --set && [ $? -ne 0 ] && exit 1
-    modules_conf --set && [ $? -ne 0 ] && exit 1
+    prepare_install_env || exit 1
+    install_conf --set || exit 1
+    modules_conf --set || exit 1
     for m in apache gethostbyaddr_r gethostbyname_r getservbyname_r killall libpthread mysql_h libcrypt libnsl xml; do
 	check4_${m}
     done
 
 fi # end if define start env
 
-export CGI_DIR=$PREFIX/$ADMIN_INTERFACE_CGI_DIR
-export SCRIPT_DIR=$PREFIX/$ADMIN_INTERFACE_SCRIPT_DIR
-export HTML_DIR=$PREFIX/$ADMIN_INTERFACE_HTML_DIR
-export PRIV_DIR=$PREFIX/$ADMIN_INTERFACE_HTML_DIR/priv
-export PUBLIC_DIR=$PREFIX/$ADMIN_INTERFACE_HTML_DIR/pub
-export HTTP_USER=$APACHE_USER
-export HTTP_GROUP=$APACHE_GROUP
-export BIN_DIR=$PREFIX/$ROOT_BIN_DIR/$APP_NAME
-export CONF_DIR=$PREFIX/etc/campsite.d/$APP_NAME
-export BIN_PACKAGE_DIR=$CAMPSITE_PACKAGE_DIR/.package/campsite
-export CLASS_DIR=$PREFIX/usr/lib/netscape/java/classes
+export ROOT_USER=$ROOT_USER
+export ROOT_GROUP=$ROOT_GROUP
+export BIN_DIR=$BIN_DIR
+export ETC_DIR=$ETC_DIR
+export WWW_DIR=$WWW_DIR
+export WWW_COMMON_DIR=$WWW_COMMON_DIR
+export CGI_COMMON_DIR=$CGI_COMMON_DIR
+export HTML_COMMON_DIR=$HTML_COMMON_DIR
+export SCRIPT_COMMON_DIR=$SCRIPT_COMMON_DIR
+export INCLUDE_COMMON_DIR=$INCLUDE_COMMON_DIR
+export PRIV_COMMON_DIR=$PRIV_COMMON_DIR
+export CAMPSITE_VERSION="$CAMPSITE_VERSION"
+export OLD_CAMPSITE_REGISTER=/etc/campsite.reg
 export PROCESSOR_TYPE=`uname -m`
 export MAKE=$MAKE
 export M4=$M4
 export IMPLEMENTATION_PARTS=$IMPLEMENTATION_PARTS
 export SUPPLEMENTAL_PARTS=$SUPPLEMENTAL_PARTS
-export CAMPSITE_REGISTER=$PREFIX/etc/campsite.reg
+export CAMPSITE_REGISTER=$CAMPSITE_REGISTER
+export INSTALL_CONF=$CAMPSITE_PACKAGE_DIR/.install_conf
 export HAVE_GETHOSTBYADDR_R=$HAVE_GETHOSTBYADDR_R
 export HAVE_GETHOSTBYNAME_R=$HAVE_GETHOSTBYNAME_R
 export HAVE_GETSERVBYNAME_R=$HAVE_GETSERVBYNAME_R
@@ -198,7 +223,7 @@ export MYSQL_H_PATH=$MYSQL_H_PATH
 export LIBCRYPT_LINK=$LIBCRYPT_LINK
 export NSL_LINK=$NSL_LINK
 export KILLALL=$KILLALL
-export PARSER_DEFAULT_PORT=2001
+export PARSER_START_PORT=$PARSER_START_PORT
 export XML_INCLUDE=$XML_INCLUDE
 export XML_LINK=$XML_LINK
 

@@ -2,97 +2,6 @@
 
 . ${INSTALL_CONF}/conf_functions
 
-select_modules()
-{
-modules_list=`modules_list`
-selected_modules=`selected_modules`
-err_msg=""
-saved=true
-clear
-[ "$1" != "" ] && echo $1
-while true; do
-    echo "Please select modules to be installed on this system."
-    echo "Modules marked with X are selected."
-    sm_index=1
-    for sm_mod in $modules_list; do
-	echo -n -e "\t$sm_index. ["
-	if in_list $sm_mod $selected_modules; then echo -n "X"
-	else echo -n " "; fi
-	echo "] $sm_mod"
-	sm_index=`expr $sm_index + 1`
-    done
-    sm_index=`expr $sm_index - 1`
-    echo -e "\nMenu"
-    echo -e "\t1. Select a module"
-    echo -e "\t2. Deselect a module"
-    echo -e -n "\t3. Save module selection"
-    $saved && echo " (already saved)"
-    ! $saved && echo " (not saved)"
-    echo -e -n "\t0. Exit module selection"
-    $saved && echo ""
-    ! $saved && echo " (without saving)"
-    echo "$err_msg"
-    echo -n "Select a choice: "
-    read -r choice
-    if [ "$choice" != "0" ] && [ "$choice" != "1" ] && [ "$choice" != "2" ] && [ "$choice" != "3" ]; then
-	err_msg="Invalid choice $choice"
-    else
-	err_msg=""
-	case $choice in
-	0) break ;;
-	1)
-	    read_string module_number
-	    m_nr=$module_number
-	    if [ $m_nr -gt $sm_index ] || [ 0 -ge $m_nr ]; then
-		err_msg="Invalid module number $module_number"
-	    else
-		mod_name=`list_item $module_number $modules_list`
-		if in_list $mod_name $selected_modules; then
-		    err_msg="Module $mod_name already selected"
-		else
-		    sm_deps_on=`depends_on $mod_name`
-		    for sm_dep_on in $sm_deps_on; do
-			add_to_list_var $sm_dep_on selected_modules
-			err_msg="$mod_name depends on $sm_deps_on modules. They were selected too."
-		    done
-		    add_to_list_var $mod_name selected_modules
-		    saved=false
-		fi
-	    fi ;;
-	2)
-	    read_string module_number
-	    m_nr=$module_number
-	    if [ $m_nr -gt $sm_index ] || [ 0 -ge $m_nr ]; then
-		err_msg="Invalid module number $module_number"
-	    else
-		mod_name=`list_item $module_number $modules_list`
-		if ! in_list $mod_name $selected_modules; then
-		    err_msg="Module $mod_name already deselected"
-		else
-		    sm_deps_on=`dependent_on $mod_name`
-		    for sm_dep_on in $sm_deps_on; do
-			rm_from_list_var $sm_dep_on selected_modules
-			err_msg="$sm_deps_on modules depend on $mod_name. They were deselected too."
-		    done
-		    rm_from_list_var $mod_name selected_modules
-		    saved=false
-		fi
-	    fi ;;
-	3)
-	    rm -f $INSTALL_CONF/.inst.modules
-	    for sm_mod in $selected_modules; do
-		echo $sm_mod >> $INSTALL_CONF/.inst.modules
-	    done
-	    err_msg="Module selection was saved succesfully."
-	    saved=true ;;
-	esac
-    fi
-    clear
-done
-export SELECTED_MODULES=`selected_modules`
-set_need_config_modules
-}
-
 configure_campsite()
 {
 cc_upgrade=""
@@ -107,31 +16,12 @@ done
 
 if [ "$cc_interactive" = "--interactive" ]; then
 
-echo -e "\nCampsite application can be installed in two ways:"
-echo "1. single system: the whole application installed on a single system"
-echo -e "2. multiple system: modules of the application can be installed on different\n\t\tsystems\n"
-while true; do
-    read_string install_type 1 "1 - single system, 2 - multiple system"
-    if [ "$install_type" != "1" ] && [ "$install_type" != "2" ]; then
-	echo "Invalid choice $install_type"
-    else
-	break
-    fi
-done
-inst_type_msg="single system"
-[ $install_type -eq 2 ] && inst_type_msg="multiple system"
 echo -e "\nCampsite application is composed out of modules. Before installing"
 echo "campsite they must be configured."
-if [ $install_type -eq 2 ]; then
-    echo -e "\nSelecting multiple system installation you will be able to select the"
-    echo "modules to install on this system. Keep in mind that in the end all"
-    echo "campsite modules must be installed."
-else
-    rm -fr $INSTALL_CONF/.inst.modules
-    for cc_mod in `modules_list`; do
-	echo $cc_mod >> $INSTALL_CONF/.inst.modules
-    done
-fi
+rm -fr $INSTALL_CONF/.inst.modules
+for cc_mod in `modules_list`; do
+    echo $cc_mod >> $INSTALL_CONF/.inst.modules
+done
 echo ""
 choice_yn "Do you want to read the description of campsite modules?" N
 if [ "$choice" = "Y" ]; then
@@ -142,9 +32,6 @@ if [ "$choice" = "Y" ]; then
     read
     clear
 fi
-if [ $install_type -eq 2 ]; then
-    select_modules
-fi
 
 fi # interactive
 
@@ -153,43 +40,27 @@ check_install_deps || exit 1
 check_install_config $cc_upgrade
 if $is_installed && [ "$cc_upgrade" != "--upgrade" ]; then
     [ "$cc_interactive" != "--interactive" ] && exit 1
-    echo "There is another campsite application instance ($APP_NAME) already installed."
+    echo "There is another older campsite instance already installed."
     choice_yn "Do you want to upgrade the current installation?" Y
     if [ "$choice" = "Y" ]; then
 	cc_upgrade=--upgrade
 	export upgrade=--upgrade
-	modules_conf --set
+	modules_conf --set || return 1
     else
 	echo "Installing new instance of campsite..."
-    fi
-    export OLD_VERSION=`grep -w $APP_NAME /etc/campsite.reg | cut -f 2 -d ":"`
-    echo "$OLD_VERSION" > $INSTALL_CONF/../.old_version
-fi
-b_upgrade=false
-[ "$cc_upgrade" = "--upgrade" ] && b_upgrade=true
-if [ "$cc_interactive" = "--interactive" ] && ( ! $is_installed || ! $b_upgrade ); then
-    configure_install $cc_upgrade
-    [ $? -ne 0 ] && echo "Error setting campsite instance name" && exit 1
-    install_conf --set
-    . $INSTALL_CONF/../configure --define_start_env &> /dev/null
-fi
-if [ "$cc_upgrade" = "--upgrade" ]; then
-    $INSTALL_CONF/read_app_conf
-    result=$?
-    if [ $result -ne 0 ]; then
-    echo result $result
-	choice_yn "Error reading $APP_NAME configuration. Continue anyway?" Y
-	if [ "$choice" = "N" ]; then
-	    echo "Aborting..."
-	    exit 1
-	fi
     fi
 fi
 
 if [ "$cc_interactive" = "--interactive" ]; then
 
+configure_install $cc_upgrade
+[ $? -ne 0 ] && echo "Error configuring install parameters" && exit 1
+install_conf --set
+. $INSTALL_CONF/../configure --define_start_env &> /dev/null
+
+export MODULES_LIST="DATABASE PARSER EVENT_HANDLERS SEARCH_ENGINE ADMIN_INTERFACE"
 echo "Please wait while checking modules configuration..."
-for cc_mod in $SELECTED_MODULES; do
+for cc_mod in $MODULES_LIST; do
     check_module_deps $cc_mod $cc_interactive
     if [ $? -ne 0 ]; then
 	if [ "$output" != "" ]; then echo $output; fi
@@ -206,11 +77,11 @@ for cc_mod in $NEED_CONFIG_MODULES; do
 	echo "Aborting..."
 	exit 1
     fi
-    check_${cc_mod}_config $cc_interactive
+    check_${cc_mod}_config $cc_interactive || exit 1
 done
 cc_err_msg=""
 while true; do
-    clear
+#    clear
     echo "The forward list shows modules that need to be configured."
     echo "Modules checked with X have a valid configuration."
     cc_index=1
@@ -265,6 +136,7 @@ if [ "$choice" = "Y" ]; then
     for cc_mod in $NEED_CONFIG_MODULES; do
 	echo "$cc_mod configuration:"
 	modules_conf $cc_mod
+	[ $? -ne 0 ] && return $?
 	echo -e "\nTo continue press ENTER"
 	read
     done
