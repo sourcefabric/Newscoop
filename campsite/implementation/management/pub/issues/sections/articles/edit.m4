@@ -126,14 +126,23 @@ CHECK_XACCESS(<*ChangeArticle*>)
 		?>dnl
 <P>
 B_MSGBOX(<*Article is locked*>)
-<?php 
+<?php
     query ("SELECT *, NOW() AS Now FROM Users WHERE Id=".getVar($q_art,'LockUser'), 'q_luser');
     fetchRow($q_luser);
+	$user_name = getHVar($q_luser,'Name');
+	$user_uname = getHVar($q_luser,'UName');
+	if ($user_uname == "") {
+		$user_name = "(deleted user)";
+		$user_uname = "---";
+		query ("SELECT NOW() as Now", 'q_luser');
+		fetchRow($q_luser);
+	}
+	$now = getHVar($q_luser,'Now');
 ?>dnl
-	X_MSGBOX_TEXT(<*<LI><?php  putGS('This article has been locked by $1 ($2) at','<B>'.getHVar($q_luser,'Name'),getHVar($q_luser,'UName').'</B>' ); ?>
-		<B><?php  pgetHVar($q_art,'LockTime'); ?></B></LI>
-		<LI><?php  putGS('Now is $1','<B>'.getHVar($q_luser,'Now').'</B>'); ?></LI>
-		<LI><?php  putGS('Are you sure you want to unlock it?'); ?></LI>
+	X_MSGBOX_TEXT(<*<LI><?php putGS('This article has been locked by $1 ($2) at',"<B>$user_name</B>","<B>$user_uname</B>"); ?>
+		<B><?php pgetHVar($q_art,'LockTime'); ?></B></LI>
+		<LI><?php putGS('Now is $1',"<B>$now</B>"); ?></LI>
+		<LI><?php putGS('Are you sure you want to unlock it?'); ?></LI>
 	*>)
 	B_MSGBOX_BUTTONS
 		REDIRECT(<*Yes*>, <*Yes*>, <*X_ROOT/pub/issues/sections/articles/edit.php?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&sLanguage=<? p($sLanguage); ?>&Language=<? p($Language); ?>&Section=<? p($Section); ?>&Article=<? p($Article); ?>&LockOk=1*>)
