@@ -5,16 +5,16 @@ require_once($_SERVER['DOCUMENT_ROOT']."/classes/DatabaseObject.php");
 class Issue extends DatabaseObject {
 	var $m_dbTableName = "Issues";
 	var $m_primaryKeyColumnNames = array("IdPublication", "Number", "IdLanguage");
-	var $m_columnNames = array("IdPublication",
-							   "Number",
-							   "IdLanguage",
-							   "Name",
-							   "PublicationDate",
-							   "Published",
-							   "IssueTplId",
-							   "SectionTplId",
-							   "ArticleTplId",
-							   "ShortName");
+//	var $m_columnNames = array("IdPublication",
+//							   "Number",
+//							   "IdLanguage",
+//							   "Name",
+//							   "PublicationDate",
+//							   "Published",
+//							   "IssueTplId",
+//							   "SectionTplId",
+//							   "ArticleTplId",
+//							   "ShortName");
 	
 	var $IdPublication;
 	var $Number;
@@ -29,6 +29,7 @@ class Issue extends DatabaseObject {
 	
 	
 	function Issue($p_publicationId, $p_languageId, $p_issueId = null) {
+		parent::DatabaseObject();
 		$this->IdPublication = $p_publicationId;
 		$this->IdLanguage = $p_languageId;
 		$this->Number = $p_issueId;

@@ -8,15 +8,15 @@ class Section extends DatabaseObject {
 										 "NrIssue",
 										 "IdLanguage",
 										 "Number");
-	var $m_columnNames = array("IdPublication", 
-							   "NrIssue",
-							   "IdLanguage",
-							   "Number",
-							   "Name",
-							   "ShortName",
-							   "SectionTplId",
-							   "ArticleTplId"
-							   );
+//	var $m_columnNames = array("IdPublication", 
+//							   "NrIssue",
+//							   "IdLanguage",
+//							   "Number",
+//							   "Name",
+//							   "ShortName",
+//							   "SectionTplId",
+//							   "ArticleTplId"
+//							   );
 	var $IdPublication;
 	var $NrIssue;
 	var $IdLanguage;
@@ -27,6 +27,7 @@ class Section extends DatabaseObject {
 	var $ArticleTplId;
 	
 	function Section($p_publication, $p_issue, $p_language, $p_section = null) {
+		parent::DatabaseObject();
 		$this->IdPublication = $p_publication;
 		$this->NrIssue = $p_issue;
 		$this->IdLanguage = $p_language;
