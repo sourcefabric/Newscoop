@@ -1,16 +1,16 @@
 <?php  
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
-load_common_include_files();
+load_common_include_files("$ADMIN_DIR/pub/issues/sections/articles/images");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/User.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/priv/CampsiteInterface.php');
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
 
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
-	header('Location: /priv/logout.php');
+	header("Location: /$ADMIN/logout.php");
 	exit;
 }
 
@@ -23,7 +23,7 @@ if (!$access) {
 //	"ArticleId" => "int",
 //	"ImageId" => "int"
 //	))) {
-//	header('Location: /priv/logout.php');
+//	header("Location: /$ADMIN/logout.php");
 //	exit;		
 //}
 //$PublicationId = array_get_value($_REQUEST, 'PublicationId', 0);
@@ -44,19 +44,19 @@ $ArticleId = Input::get('ArticleId', 'int', 0);
 $ImageId = Input::get('ImageId', 'int', 0);
 
 if (!Input::isValid()) {
-	header('Location: /priv/logout.php');
+	header("Location: /$ADMIN/logout.php");
 	exit;	
 }
 
 $articleObj =& new Article($PublicationId, $IssueId, $SectionId, $ArticleLanguageId, $ArticleId);
 if (!$articleObj->exists()) {
-	header('Location: /priv/logout.php');
+	header("Location: /$ADMIN/logout.php");
 	exit;	
 }
 
 $imageObj =& new Image($ImageId);
 if (!$imageObj->exists()) {
-	header('Location: /priv/logout.php');
+	header("Location: /$ADMIN/logout.php");
 	exit;	
 }
 
@@ -64,7 +64,7 @@ if (!$imageObj->exists()) {
 // or the user created this article and it hasnt been published yet.
 if (!($User->hasPermission('ChangeArticle') 
 	|| (($articleObj->getUserId() == $User->getId()) && ($articleObj->getPublished() == 'N')))) {
-	header('Location: /priv/logout.php');
+	header("Location: /$ADMIN/logout.php");
 	exit;		
 }
 
