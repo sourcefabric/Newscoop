@@ -136,7 +136,7 @@ if ($access) {
 <?php 
 	for($loop=0;$loop<$nr;$loop++) {
 	fetchRow($q_iss);
-	if ($i) { ?>	<TR <?php  if ($color) { $color=0; ?>BGCOLOR="#D0D0B0"<?php  } else { $color=1; ?>BGCOLOR="#D0D0D0"<?php  } ?>>
+	if ($i) { ?>	<TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 <?php  if ($mia != 0) { ?>
 		<TD ALIGN="RIGHT">
 	<?php  if ($IssNr != getVar($q_iss,'Number'))
