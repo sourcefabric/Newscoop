@@ -2,7 +2,7 @@ CAMPSITE
 Web Automation Tool User Guide
 CAMPSITE version: 2.1.3 and newer versions
 Maintained and distributed under GNU/GPL by CAMPWARE http://www.campware.org
-Manual version: May xx, 2003
+Manual version: July 2, 2003
 Language: English
 ©1999-2003 Media Development Loan Fund
 http://www.mdlf.org - http://www.mdlf-camp.net
@@ -33,7 +33,7 @@ COPYRIGHT
 2.2.5 Creating articles within a section
 2.2.6 Editing articles: Edit Article Details view
 2.2.7 Editing body-type fields: Working with CAMPFIRE
-2.2.8 Publishing articles4
+2.2.8 Publishing articles
 2.2.9 Setting the finalized publication live
 2.3. GLOSSARY
 2.3.1 Creating 'Infotypes'
@@ -236,7 +236,7 @@ c. New attributes to "If Article" statement:
 - OnSection <switch_operator> <switch_value>
 - translated_to <string_value>
 - <article_field> <field_type_operator> <field_type_value>
-For details see If Article. 
+For details see If Article.
 d. New attributes to "List Article" statement: 
 - upload_date <date_operator> <date_value>
 - public <switch_operator> <switch_value>
@@ -402,9 +402,9 @@ Individual articles can be previewed from the 'Articles' area. Simply click 'Pre
 NOTE: At the bottom of the preview window, you can see information about the parser. If any problems occur while generating the web pages, the CAMPSITE parser will display error messages. These should help you to identify the problem in the template structure.
 2.2.8 Publishing articles
 CAMPSITE's copy-flow control feature operates by means of assigning three statuses to an article: 
-- new
-- submitted
-- published
+new
+submitted
+published
 When you create an article, it is set to 'New'. If you change the status to 'Submit', then - via email - the editors will be informed to check the new submission. Editors will also be informed on new submissions when they login into CAMPSITE. Once the editors are happy with the way the article reads and appears, they can alter its status to 'Published'. It is only then article becomes visible on your web site (provided that you have previously published the relevant issue of your publication).
 The whole process is fully reversible, so you can unpublish articles (or even change their status to 'new') on your site as easily as you can publish them.
 NOTE: Only authorized users are allowed to publish articles, so you may not be able to access that option if your administrator has not granted you such rights.
@@ -417,8 +417,8 @@ Glossary allows you to create and globally update short pieces of additional inf
 Depending on the context within which these keywords appear, different types of information can be saved separately. It might, for example, be interesting to know more about the location of a company in one context, in another case it might be crucial to know who is running it. To make such distinctions, the Glossary module features 'Infotypes' (which is the best word we could come up with as a short form for types of information), which can be chosen to be displayed. 
 For example, I might decide to mark the name of a person in a political analysis as a keyword. And in this particular context, I wish to have a description of the political career as additional information (as opposed to the past three marriages, which might be interesting in another context). So I need to enter the person's name (e.g. Helmut Kohl) as a keyword in the Glossary. Later, while writing the article, I can mark Helmut Kohl as a keyword, and then assign the appropriate infotype (e.g. 'private life' or 'political career') to that incidence of 'Helmut Kohl' in the text.
 To make use of the Glossary function in your daily editing, you need to do the following:
-- define keywords (e.g. Helmut Kohl)
-- create the related Infotypes (e.g. Love Life, Career, Hobbies)
+define keywords (e.g. Helmut Kohl)
+create the related Infotypes (e.g. Love Life, Career, Hobbies)
 Once these steps have been taken, you will be able to mark different incidences of the keywords within CAMPFIRE. Later, when displaying the article, the parser will search the Glossary database for related entries. If such an entry is found, the parser will include a link, allowing the reader to access the additional explanation. If no such entry is found, the word is displayed regularly (i.e. no link is displayed).
 Changes to the Glossary can be introduced at any time and will be dynamically included in the display. The marked keyword will always trigger the parser to search through the current version of the Glossary and display the most up to date information.
 2.3.1 Creating 'Glossary Infotypes'
@@ -1260,6 +1260,21 @@ action: the if condition is true if search action was taken
 The list of instructions may contain any instruction allowed in the current context. If it is used inside a list it must respect the constraints of the list (List Issue, List Section, List Article, List Subtitle, List SearchResult).
 Constraints:
 None.
+3.9.3.23 If Subtitle
+Purpose:
+Depending on the given condition, it runs the first or second list of instructions. It may be used anywhere in the template.
+Syntax:
+If [not] Subtitle <condition>
+<list_of_instructions>
+[Else [<list_of_instructions>]]
+EndIf [Search]
+where
+<condition> = number <integer_operator> <integer_value>
+number: the if condition is true if operation: number <integer_operator> <integer_value> is true
+
+The list of instructions may contain any instruction allowed in the current context. If it is used inside a list it must respect the constraints of the list (List Issue, List Section, List Article, List Subtitle, List SearchResult).
+Constraints:
+None.
 3.9.4 Printable information
 3.9.4.1 URL, Form
 Purpose:
@@ -1555,8 +1570,10 @@ If NextSubtitles (3.9.3.7)
 If PreviousItems (3.9.3.6)
 If PrevSubtitles (3.9.3.7)
 If Publication (3.9.3.10)
+If Search (3.9.3.22)
 If Section (3.9.3.12)
 If Subscription (3.9.3.15)
+If Subtitle (3.9.3.23)
 If User (3.9.3.17)
 Include (3.9.3.9)
 Issue (3.9.2.3)
@@ -1606,7 +1623,7 @@ Multilingual support has been developed in various projects, independently from 
 Because different vendors had already created different versions of Unicode characters, we have endowed CAMPSITE with a generic translation table so that characters represented with one byte can be seen within this application without any special configurations on the client side.
 IMPORTANT: The configuration of your local machine must be set for multilingual support.
 Below you can find the best matches for individual languages and the appropriate character sets:
-Latin1 covers most West European languages, such as French (fr), Spanish (es), Catalan (ca), Basque (eu), Portuguese (pt), Italian (it), Albanian (sq), Rhaeto-Romanic (rm), Dutch (nl), German (de), Danish (da), Swedish (sv), Norwegian (no), Finnish (fi), Faroese (fo), Icelandic (is), Irish (ga), Scottish (gd), and English (en), incidentally also Afrikaans (af) and Swahili (sw), thus in effect also the entire American continent, Australia and much of Africa. The most notable exceptions are Zulu (zu) and other Bantu languages using Latin Extended-B letters, and of course Arabic in North Africa, and Guarani (gn) missing GEIUY with ~ tilde. The lack of the ligatures Dutch IJ, French OE and ,,German` quotation marks is considered tolerable. The lack of the new C=-resembling Euro currency symbol U+20AC has opened the discussion of a new Latin0.
+Latin1 covers most West European languages, such as French (fr), Spanish (es), Catalan (ca), Basque (eu), Portuguese (pt), Italian (it), Albanian (sq), Rhaeto-Romanic (rm), Dutch (nl), German (de), Danish (da), Swedish (sv), Norwegian (no), Finnish (fi), Faroese (fo), Icelandic (is), Irish (ga), Scottish (gd), and English (en), incidentally also Afrikaans (af) and Swahili (sw), thus in effect also the entire American continent, Australia and much of Africa. The most notable exceptions are Zulu (zu) and other Bantu languages using Latin Extended-B letters, and of course Arabic in North Africa, and Guarani (gn) missing GEIUY with ~ tilde. The lack of the ligatures Dutch IJ, French OE and ,,German` quotation marks is considered tolerable. The lack of the new resembling Euro currency symbol U+20AC has opened the discussion of a new Latin0.
 Latin1 has also been adopted as the first page of ISO 10646 (Unicode).
 Latin1 is HTML's base charset but HTML has now been globalized through RFC 2070.
 Latin2 covers the languages of Central and Eastern Europe: Czech (cs), Hungarian (hu), Polish (pl), Romanian (ro), Croatian (hr), Slovak (sk), Slovenian (sl), Sorbian. For Romanian the S and T had better use commas instead of cedilla as in Turkish: the U+015F LATIN SMALL LETTER S WITH CEDILLA at =BA ought to be read as U+0219 LATIN SMALL LETTER S WITH COMMA BELOW etc. The German Umlaute äöüß are found at exactly the same positions in Latin1, Latin2, Latin3, Latin4, Latin5, Latin6. Thus you can write German and Polish with Latin2 or German and Turkish with Latin5 but there is no 8bit charset to properly mix German and Russian, for instance.
