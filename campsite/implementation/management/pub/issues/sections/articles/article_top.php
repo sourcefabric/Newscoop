@@ -14,15 +14,12 @@ require_once($_SERVER['DOCUMENT_ROOT']."/priv/lib_campsite.php");
  * @param string p_title
  *		The title of the page.  This should have a translation in the language files.
  *
- * @param boolean p_access
- *		Whether the user has access to this page.
- *
  * @param boolean p_includeLinks
  *		Whether to include the links underneath the title or not.  Default TRUE.
  *
  * @return void
  */
-function ArticleTop($p_articleObj, $p_issueLanguageId, $p_title, $p_access, $p_includeLinks = true) {
+function ArticleTop($p_articleObj, $p_issueLanguageId, $p_title, $p_includeLinks = true) {
 	global $Campsite;
 	
     // Fetch section
@@ -49,7 +46,7 @@ function ArticleTop($p_articleObj, $p_issueLanguageId, $p_title, $p_access, $p_i
 <HEAD>
     <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<META HTTP-EQUIV="Expires" CONTENT="now">
-	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite["website_url"] ?>/stylesheet.css">
+	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite["website_url"] ?>/css/admin_stylesheet.css">
 	<script>
 	<!--
 	/*
@@ -65,9 +62,6 @@ function ArticleTop($p_articleObj, $p_issueLanguageId, $p_title, $p_access, $p_i
 	// -->
 	</script>
 	<TITLE><?php putGS($p_title); ?></TITLE>
-	<?php if (!$p_access) { ?>	
-		<META HTTP-EQUIV="Refresh" CONTENT="0; URL=/priv/logout.php">
-	<?php  } ?>
 </HEAD>
 
 <BODY BGCOLOR="WHITE" TEXT="BLACK" LINK="DARKBLUE" ALINK="RED" VLINK="DARKBLUE">
