@@ -2,7 +2,7 @@
 
 regGS("Add section to all subscriptions.","Add section to all subscriptions.");
 regGS("Delete section from all subscriptions.","Delete section from all subscriptions.");
-regGS("A number of $1 subscriptions were updated.","A number of $1 subscriptions were updated.");
+regGS("A total of $1 subscriptions were updated.","A total of $1 subscriptions were updated.");
 
 // -- index.m4
 regGS("Name<BR><SMALL>(click to see articles)</SMALL>","Name<BR><SMALL>(click to see articles)</SMALL>:en");

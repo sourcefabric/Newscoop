@@ -85,7 +85,7 @@ B_MSGBOX(<*Adding new section*>)
 			if ($add_subs_res == -1) { ?>
 				<LI><? putGS('Error updating subscriptions.'); ?></LI>
 		<?	} else { ?>
-				<LI><? putGS('A number of $1 subscriptions were updated.','<B>'.encHTML(decS($add_subs_res)).'</B>'); ?></LI>
+				<LI><? putGS('A total of $1 subscriptions were updated.','<B>'.encHTML(decS($add_subs_res)).'</B>'); ?></LI>
 	<?		}
 		}
 	?>
