@@ -12,45 +12,24 @@ if (!$access) {
 }
 
 // Initialize input variables ///////////////////////////////////////////////////
-$isSearch = isset($_REQUEST['is_search'])?$_REQUEST['is_search']:0;
-$OrderBy = isset($_REQUEST['order_by'])?$_REQUEST['order_by']:'id';
-$OrderDirection = isset($_REQUEST['order_direction'])?$_REQUEST['order_direction']:'ASC';
-$view = isset($_REQUEST['view'])?$_REQUEST['view']:'thumbnail';
-$ImageOffset = isset($_REQUEST['image_offset'])?$_REQUEST['image_offset']:0;
-$ImagesPerPage = 5;
-
-$SearchDescription = isset($_REQUEST['search_description'])?$_REQUEST['search_description']:null;
-$SearchPhotographer = isset($_REQUEST['search_photographer'])?$_REQUEST['search_photographer']:null;
-$SearchDate = isset($_REQUEST['search_date'])?$_REQUEST['search_date']:null;
-$SearchInUse = isset($_REQUEST['search_inuse'])?$_REQUEST['search_inuse']:null;
+$OrderBy = array_get_value($_REQUEST, 'order_by', 'id');
+$OrderDirection = array_get_value($_REQUEST, 'order_direction', 'ASC');
+$view = array_get_value($_REQUEST, 'view', 'thumbnail');
+$ImageOffset = array_get_value($_REQUEST, 'image_offset', 0);
+$SearchDescription = array_get_value($_REQUEST, 'search_description', '');
+$SearchPhotographer = array_get_value($_REQUEST, 'search_photographer', '');
+$SearchPlace = array_get_value($_REQUEST, 'search_place', '');
+$SearchDate = array_get_value($_REQUEST, 'search_date', '');
+$SearchInUse = array_get_value($_REQUEST, 'search_inuse', '');
 
 $searchKeywords = array('search_description' => $SearchDescription,
 						'search_photographer' => $SearchPhotographer,
+						'search_place' => $SearchPlace,
 						'search_date' => $SearchDate,
 						'search_inuse' => $SearchInUse);
 						
-$Link = cImgLink($searchKeywords, $OrderBy, $OrderDirection, $ImageOffset, $ImagesPerPage, $view);
-//$Link =& new ImageLink($_REQUEST);
+$Link = CreateImageLinks($searchKeywords, $OrderBy, $OrderDirection, $ImageOffset, $ImagesPerPage, $view);
 
-// SQL conditions for a search query /////////////////////////
-$WhereAdd = '';
-if ($isSearch && ($SearchDescription || $SearchPhotographer || $SearchDate || $SearchInUse)) {
-	if ($SearchDescription) {
-		$WhereAdd .= " AND i.Description LIKE '%$SearchDescription%'";
-	}
-	if ($SearchPhotographer) {
-		$WhereAdd .= " AND i.Photographer LIKE '%$SearchPhotographer%'";
-	}
-	if ($SearchDate) {
-		$WhereAdd .= " AND i.Date LIKE '%$SearchDate%'";
-	}
-	if ($SearchInUse) {
-		if ($SearchInUse) {
-            $not = "NOT";
-        }
-        $WhereAdd .= " AND a.IdImage IS $not NULL";
-	}
-}
 ///////////////////////////////////////////////////////////////////////
 
 // build the links for ordering (search results) //////////////////////
@@ -64,103 +43,81 @@ if ($OrderDirection == 'DESC') {
 
 $IdHref  = CAMPSITE_IMAGEARCHIVE_DIR
 	.'?order_by=id'
-	.$Link['search']
-	.'&id=0';
+	.$Link['search'];
 $DescriptionHref  = CAMPSITE_IMAGEARCHIVE_DIR
 	.'?order_by=description'
-	.$Link['search']
-	.'&description=0';
+	.$Link['search'];
 $PhotographerHref  = CAMPSITE_IMAGEARCHIVE_DIR
 	.'?order_by=photographer'
-	.$Link['search']
-	.'&photographer=0';
+	.$Link['search'];
+$PlaceHref  = CAMPSITE_IMAGEARCHIVE_DIR
+	.'?order_by=place'
+	.$Link['search'];
 $DateHref  = CAMPSITE_IMAGEARCHIVE_DIR
 	.'?order_by=date'
-	.$Link['search']
-	.'&date=0';
+	.$Link['search'];
 $InUseHref = CAMPSITE_IMAGEARCHIVE_DIR
 	.'?order_by=inuse'
-	.$Link['search']
-	.'&inuse=0';
+	.$Link['search'];
 ///////////////////////////////////////////////////////////////////////
-
+$DescriptionOrderIcon = '';
+$PhotographerOrderIcon = '';
+$PlaceOrderIcon = '';
+$DateOrderIcon = '';
+$InUseOrderIcon = '';
+$IdOrderIcon = '';
 switch ($OrderBy) {
 case 'description':
-	$Order .= 'ORDER BY i.Description '.$OrderDirection;
-	$DesciptionOrderIcon = $OrderSign;
+	$DescriptionOrderIcon = $OrderSign;
 	$DescriptionHref = CAMPSITE_IMAGEARCHIVE_DIR
 		.'?order_by=description'
 		.'&order_direction='.$ReverseOrderDirection
-		.$Link['search']
-		.'&description=0';
+		.$Link['search'];
 	break;
-
 case 'photographer':
-	$Order = 'ORDER BY i.Photographer '.$OrderDirection;
 	$PhotographerOrderIcon = $OrderSign;
 	$PhotographerHref = CAMPSITE_IMAGEARCHIVE_DIR
 		.'?order_by=photographer'
 		.'&order_direction='.$ReverseOrderDirection
-		.$Link['search']
-		.'&photographer=0';
+		.$Link['search'];
 	break;
-
+case 'place':
+	$PlaceOrderIcon = $OrderSign;
+	$PlaceHref = CAMPSITE_IMAGEARCHIVE_DIR
+		.'?order_by=place'
+		.'&order_direction='.$ReverseOrderDirection
+		.$Link['search'];
+	break;
 case 'date':
-	$Order = 'ORDER BY i.Date '.$OrderDirection;
 	$DateOrderIcon = $OrderSign;
 	$DateHref = CAMPSITE_IMAGEARCHIVE_DIR
 		.'?order_by=date'
 		.'&order_direction='.$ReverseOrderDirection
-		.$Link['search']
-		.'&date=0';
+		.$Link['search'];
 	break;
-
 case 'inuse':
-	$Order = 'ORDER BY inUse '.$OrderDirection;
 	$InUseOrderIcon = $OrderSign;
 	$InUseHref = CAMPSITE_IMAGEARCHIVE_DIR
 		.'?order_by=inuse'
 		.'&order_direction='.$ReverseOrderDirection
-		.$Link['search']
-		.'&inuse=0';
+		.$Link['search'];
 	break;
-
 case 'id':
 default:
-	$Order = 'ORDER BY i.Id '.$OrderDirection;
 	$IdOrderIcon = $OrderSign;
 	$IdHref = CAMPSITE_IMAGEARCHIVE_DIR
 		.'?order_by=id'
 		.'&order_direction='.$ReverseOrderDirection
-		.$Link['search'].'&id=0';
+		.$Link['search'];
 	break;
 }
 ///////////////////////////////////////////////////////////////////////
 
-$queryStr = "SELECT i.Id, i.Description, i.Photographer, i.Place, i.ContentType, i.Date, COUNT(a.IdImage) AS inUse"
-		  	." FROM Images AS i"
-		  	." LEFT JOIN ArticleImages AS a On i.Id=a.IdImage"
-		  	." WHERE 1 $WhereAdd"
-		    ." GROUP BY i.Id"
-		    ." $Order LIMIT $ImageOffset, ".$ImagesPerPage;
-//echo $queryStr;
-//exit;
-$query = $Campsite['db']->Execute($queryStr);
 $TotalImages = Image::GetTotalImages();
-
-// Create image templates
-$imageData = array();
-while ($row = $query->FetchRow()) {
-	$tmpImage =& new Image();
-	$tmpImage->fetch($row);
-	$template = $tmpImage->toTemplate();
-	$template["in_use"] = $row["inUse"];
-	$imageData[] = $template;
-}
-//echo "<pre>";
-//print_r($imageData);
-//echo "</pre>";
-//exit;
+$imageSearch =& new ImageSearch($_REQUEST);
+$imageSearch->run();
+$imageData =& $imageSearch->getImages();
+$NumImagesFound = $imageSearch->getNumImagesFound();
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
@@ -197,53 +154,37 @@ while ($row = $query->FetchRow()) {
   <tr>
 <?php
 if ($User->hasPermission('AddImage')) { ?>
-    <td><A HREF="<?php echo CAMPSITE_IMAGEARCHIVE_DIR; ?>add.php?v=<?php echo $v; ?>"><IMG SRC="/priv/img/tol.gif" BORDER="0" alt="<?php  putGS('Add new image'); ?>"></A></TD><TD><A HREF="<?php echo CAMPSITE_IMAGEARCHIVE_DIR; ?>add.php?v=<?php echo $v; ?>"><B><?php  putGS('Add new image'); ?></B></A></TD>
+    <td><A HREF="<?php echo CAMPSITE_IMAGEARCHIVE_DIR; ?>add.php?<?php echo Image_GetSearchUrl($_REQUEST); ?>"><IMG SRC="/priv/img/tol.gif" BORDER="0" alt="<?php  putGS('Add new image'); ?>"></A></TD><TD><A HREF="<?php echo CAMPSITE_IMAGEARCHIVE_DIR; ?>add.php?<?php echo Image_GetSearchUrl($_REQUEST); ?>"><B><?php  putGS('Add new image'); ?></B></A></TD>
 <?php } ?>
-    <td><A HREF="<?php echo CAMPSITE_IMAGEARCHIVE_DIR; ?>searchform.php?<?php echo $Link['search'].$Link['order_by']; ?>"><IMG SRC="/priv/img/tol.gif" BORDER="0" alt="<?php  putGS('Search for images'); ?>"></A></TD><TD><A HREF="<?php echo CAMPSITE_IMAGEARCHIVE_DIR; ?>searchform.php?<?php echo $Link['search'].$Link['order_by']; ?>" ><B><?php putGS('Search for images'); ?></B></A></TD>
     
     <td><a href="<?php echo CAMPSITE_IMAGEARCHIVE_DIR; ?>index.php?view=<?php echo $view; ?>"><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php putGS("Reset search conditions"); ?>"></a></td><td><a href="<?php echo CAMPSITE_IMAGEARCHIVE_DIR; ?>index.php?view=<?php echo $view; ?>"><b><?php echo putGS('Reset search conditions'); ?></b></a></td>
 
     <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
     <td><B><?php putGS('View', 'View'); ?>:</b></td>
     <td><A HREF="<?php echo CAMPSITE_IMAGEARCHIVE_DIR; ?>index.php?<?php echo $Link['search'].$Link['order_by']; ?>&view=thumbnail"><IMG SRC="/priv/img/tol.gif" BORDER="0" alt="<?php  putGS('Thumbnail'); ?>"></A></TD><TD><A HREF="index.php?<?php echo $Link['search'].$Link['order_by']; ?>&view=thumbnail"><B><?php putGS('Thumbnail'); ?></B></A></TD>
-    <td><A HREF="<?php echo CAMPSITE_IMAGEARCHIVE_DIR; ?>index.php?<?php echo $Link['search'].$Link['order_by']; ?>&view=gallery"><IMG SRC="/priv/img/tol.gif" BORDER="0" alt="<?php  putGS('Gallery'); ?>"></A></TD><TD><A HREF="index.php?<?php echo $Link['search'].$Link['order']; ?>&view=gallery"><B><?php putGS('Gallery'); ?></B></A></TD>
-    <td><A HREF="<?php echo CAMPSITE_IMAGEARCHIVE_DIR; ?>index.php?<?php echo $Link['search'].$Link['order_by']; ?>&view=flat"><IMG SRC="/priv/img/tol.gif" BORDER="0" alt="<?php  putGS('Text only'); ?>"></A></TD><TD><A HREF="index.php?<?php echo $Link['search'].$Link['order']; ?>&v=f"><B><?php  putGS('Text only'); ?></B></A></TD>
+    <td><A HREF="<?php echo CAMPSITE_IMAGEARCHIVE_DIR; ?>index.php?<?php echo $Link['search'].$Link['order_by']; ?>&view=gallery"><IMG SRC="/priv/img/tol.gif" BORDER="0" alt="<?php  putGS('Gallery'); ?>"></A></TD><TD><A HREF="index.php?<?php echo $Link['search'].$Link['order_by']; ?>&view=gallery"><B><?php putGS('Gallery'); ?></B></A></TD>
+    <td><A HREF="<?php echo CAMPSITE_IMAGEARCHIVE_DIR; ?>index.php?<?php echo $Link['search'].$Link['order_by']; ?>&view=flat"><IMG SRC="/priv/img/tol.gif" BORDER="0" alt="<?php  putGS('Text only'); ?>"></A></TD><TD><A HREF="index.php?<?php echo $Link['search'].$Link['order_by']; ?>&view=flat"><B><?php  putGS('Text only'); ?></B></A></TD>
   </tr>
 </table>
 
-<table>
-<tr>
-	<td>
-	<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
-	<tr BGCOLOR="#C0D0FF"><td colspan="2"><b><?php putGS('Search conditions'); ?></b></td></tr>
-	<?php
-		if (!is_null($SearchDescription)) {
-			?>
-			<tr <?php trColor(); ?>><td><b><?php putGS('Description');?>:</b></td><td><?php echo $SearchDescription; ?></td></tr>
-			<?php
-		}
-		if (!is_null($SearchPhotographer)) {
-			?>
-			<tr <?php trColor(); ?>><td><b><?php putGS('Photographer'); ?>:</b></td><td><?php echo $SearchPhotographer; ?></td></tr>
-			<?php
-		}
-		if (!is_null($SearchDate)) {
-			?>
-			<tr <?php trColor(); ?>><td><b><?php putGS('Date') ?>:</b></td><td><?php echo $SearchDate; ?></td></tr>
-			<?php
-		}
-		if (!is_null($SearchInUse)) {
-			?>
-			<tr <?php trColor() ?>><td><b><?php putGS('In use') ?>:</b></td><td><?php echo $SearchInUse; ?></td></tr>
-			<?php
-		}
-	?>
-	</table>
-	</tr>
-	</td>
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="3" style="border: 1px solid #00008b; margin-bottom: 10px; margin-top: 5px;" align="center">
+<form method="GET" action="index.php">
+<input type="hidden" name="order_by" value="<?php echo $OrderBy; ?>">
+<input type="hidden" name="order_direction" value="<?php echo $OrderDirection; ?>">
+<input type="hidden" name="view" value="<?php echo $view; ?>">
+<input type="hidden" name="image_offset" value="0">
+<tr BGCOLOR="#C0D0FF">
+	<td style="padding-left: 10px; color: #00008b;"><?php putGS('Description')?>:</td>
+	<td><input type="text" name="search_description" value="<?php echo $SearchDescription; ?>" style="border: 1px solid #00008b; background-color: #f0f0ff; text-indent: 3px; width: 150px;"></td>
+	<td style=" color: #00008b;"><?php putGS('Photographer'); ?>:</td>
+	<td><input type="text" name="search_photographer" value="<?php echo $SearchPhotographer; ?>"  style="border: 1px solid #00008b; background-color: #f0f0ff; text-indent: 3px; width: 100px;"></td>
+	<td style=" color: #00008b;"><?php putGS('Place'); ?>:</td>
+	<td><input type="text" name="search_place" value="<?php echo $SearchPlace; ?>" style="border: 1px solid #00008b; background-color: #f0f0ff; text-indent: 3px; width: 100px;"></td>
+	<td style=" color: #00008b;"><?php putGS('Date'); ?>:</td>
+	<td><input type="text" name="search_date" value="<?php echo $SearchDate; ?>" style="border: 1px solid #00008b; background-color: #f0f0ff; text-indent: 3px; width: 80px;"></td>
+	<td><input type="submit" name="submit_button" value="Search" class="button"></td>
 </tr>
 </table>
-<P>
 
 <?php
 if (count($imageData) > 0) {
@@ -266,4 +207,3 @@ if (count($imageData) > 0) {
 }
 ?>
 <?php CampsiteInterface::CopyrightNotice(); ?>
-
