@@ -36,7 +36,3 @@ regGS("Translate infotype","Translate infotype:en");
 regGS("Check if the translation does not already exist.","Please check if the translation does not already exist.:en");
 
 ?>
-
-
-
-
