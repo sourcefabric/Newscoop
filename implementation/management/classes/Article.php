@@ -1023,10 +1023,13 @@ class Article extends DatabaseObject {
 		// WHERE clause.
 		$uniqueRowsClause = '';
 		if ($p_numRowsIsUniqueRows) {
+			$tmpClause = array();
 			foreach ($uniqueArticleNumbers as $uniqueNumber) {
 				$tmpClause[] = "Number = $uniqueNumber";
 			}
-			$uniqueRowsClause = '(' .implode(' OR ', $tmpClause).')';
+			if (count($tmpClause) > 0) {
+				$uniqueRowsClause = '(' .implode(' OR ', $tmpClause).')';
+			}
 		}
 		
 		// Add the WHERE clause.
