@@ -67,13 +67,7 @@ public:
 
 	const string& getMethod() const { return m_coMethod; }
 
-	void setPathTranslated(const string& p_coPathTranslated)
-		{ m_coPathTranslated = p_coPathTranslated; }
-
 	const string& getPathTranslated() const { return m_coPathTranslated; }
-
-	void setDocumentRoot(const string& p_coDocumentRoot)
-		{ m_coDocumentRoot = p_coDocumentRoot; }
 
 	const string& getDocumentRoot() const { return m_coDocumentRoot; }
 
@@ -181,7 +175,8 @@ inline string CURL::getValue(string p_rcoParameter) const
 
 inline long CURL::getIntValue(string p_rcoParameter) const throw(InvalidValue)
 {
-	return Integer(getValue(p_rcoParameter));
+	string coValue = getValue(p_rcoParameter);
+	return coValue != "" ? (long)Integer(coValue) : 0;
 }
 
 inline void CURL::setCookie(const string& p_rcoName, const string& p_rcoValue)
