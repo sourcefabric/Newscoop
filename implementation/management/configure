@@ -1,6 +1,8 @@
 #!/bin/bash
 
-[ "$CAMPSITE_PACKAGE_DIR" = "" ] && cd ../.. && . ./configure --define_start_env && cd implementation/management
+cd ../..
+. ./make.env
+cd implementation/management
 . ${INSTALL_CONF}/conf_functions
 
 in_modified=false
@@ -12,22 +14,14 @@ if [ -f macros.m4 ]; then
     fi
 fi
 
-modules_conf --set DATABASE
-[ $? -ne 0 ] && echo "Error reading DATABASE module configuration" && exit 1
-modules_conf --set ADMIN_INTERFACE
-[ $? -ne 0 ] && echo "Error reading ADMIN_INTERFACE module configuration" && exit 1
+admin_vars="WWW_DIR WWW_COMMON_DIR HTML_COMMON_DIR CGI_COMMON_DIR SCRIPT_COMMON_DIR INCLUDE_COMMON_DIR PRIV_COMMON_DIR"
+var_not_modified $admin_vars CAMPSITE_VERSION && ! $in_modified && exit 0
+save_var $admin_vars CAMPSITE_VERSION
 
-database_vars="DATABASE_SERVER DATABASE_USER DATABASE_PASSWORD DATABASE_NAME"
-admin_vars="ADMIN_INTERFACE_SCRIPT_DIR ADMIN_INTERFACE_CGI_DIR"
-var_not_modified $database_vars $admin_vars CAMPSITE_VERSION && ! $in_modified && exit 0
-save_var $database_vars $admin_vars CAMPSITE_VERSION
-
-echo -n -e "Writing macros.m4..."
+echo -n -e "\t\tWriting macros.m4..."
 cat > macros.m4 << EOF
 changecom\`'dnl
 changequote(<*, *>)dnl
-define(<*X_SCRIPT_BIN*>, <*$ADMIN_INTERFACE_SCRIPT_DIR*>)dnl
-define(<*X_CGI_BIN*>, <*$ADMIN_INTERFACE_CGI_DIR*>)dnl
 define(<*X_COPYRIGHT*>, <*<a STYLE='font-size:8pt;color:#000000' href='http://www.campware.org' target='campware'>CAMPSITE $CAMPSITE_VERSION &copy 1999-2004 MDLF, maintained and distributed under GNU GPL by CAMPWARE</a>*>)dnl
 EOF
 [ $? -ne 0 ] && echo "ERROR" && exit 1
