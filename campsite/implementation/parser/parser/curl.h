@@ -102,6 +102,8 @@ public:
 
 	const String2String& getCookies() const;
 
+	virtual bool equalTo(const CURL* p_pcoURL) const;
+
 	virtual void setURL(const CMsgURLRequest& p_rcoMsg) = 0;
 
 	virtual string getURL() const = 0;
@@ -136,6 +138,14 @@ inline void CURL::setValue(const string& p_rcoParameter, long p_nValue)
 inline void CURL::setValue(const string& p_rcoParameter, const string& p_rcoValue)
 {
 	m_coParamMap[p_rcoParameter] = p_rcoValue;
+}
+
+inline bool CURL::equalTo(const CURL* p_pcoURL) const
+{
+	return this->getURLType() == p_pcoURL->getURLType()
+		&& m_coMethod == p_pcoURL->m_coMethod
+		&& m_coParamMap == p_pcoURL->m_coParamMap
+		&& m_coCookies == p_pcoURL->m_coCookies;
 }
 
 inline string CURL::getValue(string p_rcoParameter) const
