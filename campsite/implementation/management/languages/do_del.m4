@@ -24,7 +24,7 @@ E_HEADER_BUTTONS
 E_HEADER
 
 <?php  todefnum('Language');
-    query ("SELECT Name FROM Languages WHERE Id=$Language", 'q_lang');
+    query ("SELECT Name, Code FROM Languages WHERE Id=$Language", 'q_lang');
     if ($NUM_ROWS) { 
 	fetchRow($q_lang);
     ?>dnl
@@ -86,7 +86,9 @@ B_MSGBOX(<*Deleting language*>)
     $AFFECTED_ROWS=0;
     if ($del)
 	query ("DELETE FROM Languages WHERE Id=$Language");
-    if ($AFFECTED_ROWS > 0) { ?>
+    if ($AFFECTED_ROWS > 0) {
+		unlink($_SERVER['DOCUMENT_ROOT'] . "/" . getVar($q_lang,'Code') . ".php");
+?>
 		<LI><?php  putGS('The language $1 has been deleted.','<B>'.getHVar($q_lang,'Name').'</B>'); ?></LI>
 X_AUDIT(<*102*>, <*getGS('Language $1 deleted',getHVar($q_lang,'Name'))*>)
     <?php  } else { ?>
