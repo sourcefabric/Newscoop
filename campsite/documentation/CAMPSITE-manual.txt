@@ -2,9 +2,9 @@ CAMPSITE
 Web Automation Tool User Guide
 CAMPSITE version: 2.1.1 and newer versions
 Maintained and distributed under GNU/GPL by CAMPWARE http://www.campware.org
-Manual version: February 10, 2003 
+Manual version: February 18, 2003 
 Language: English
-©1999-2002 Media Development Loan Fund
+©1999-2003 Media Development Loan Fund
 http://www.mdlf.org - http://www.mdlf-camp.net
 Table of Contents
 INTRODUCTION
@@ -74,7 +74,7 @@ COPYRIGHT
 INTRODUCTION
 CAMPSITE is a multilingual, Unicode-based content management system, featuring easy localization of the backend user interface. CAMPSITE was designed for medium-to-large-size online news publications. Issues, copy flow, back archives, as well as subscription management are fully implemented features. At the core of CAMPSITE is CAMPFIRE, a near-WYSIWYG Java editor based on Unicode, which allows journalists and editors to publish content and control layout online in their native character sets. Formatting can be altered in a similar way as in editors such as Wordpad, meaning that absolutely no HTML knowledge is necessary for formatting and inputting text.
 The original CAMPSITE concept was developed by Center for Advanced Media-Prague (CAMP) in collaboration with Transitions Online, which started using CAMPSITE in late 2000. DNT-Cluj (http://www.dntcj.ro) and Recognos (http://www.recognos.com), software companies based in Cluj, Romania accomplished the original coding and part of the further development. Current core development is taken care of by CAMP New Media Fellows. For a detailed revision history, go to http://www.campware.org. CAMPSITE in action can be seen, among other locations, on the web sites of Transitions Online (http://www.tol.cz), Fluter (http://www.fluter.de), Feral Tribune (http://www.feral.hr) and Reporter (http://www.reporter-magazin.com).
-Test drives of CAMPSITE are available soon at the campware project site (http://www.campware.org). Mail us for any related questions at contact@campware.org.
+Test drives of CAMPSITE are available at the campware project site (http://www.campware.org). Mail us for any related questions at contact@campware.org.
 CAMPSITE tech specs in a nutshell:
 CAMPSITE server: 
 runs on a Linux server, originally tested on RedHat 7.0 and Mandrake 8.0 and has proven compatible with RedHat 7.1, 7.2, 8.0, Mandrake 8.1, 8.2, 9.0 and Debian
@@ -113,7 +113,7 @@ activate the IndexIgnore directive and set it to
 IndexIgnore *
 add the following lines:
 AddHandler tpl_handler .tpl
-Action tpl_handler /cgi-bin/tpl_cgi /priv/templates/idx.php
+Action tpl_handler /cgi-bin/tpl_cgi
 make sure that the server has the rights to read, write and execute in the folder where the file are stored and uploaded. Standardly, the user and group should be set as 'httpd'; the rights should be set as 'rwx' for the user and 'rw' for the group. Consult the Linux Administration Guide for further information. Furthermore, the Web server should have activated the UniqueID option (the mod_unique_id should be loaded)
 restart the httpd daemon:
 killall httpd
