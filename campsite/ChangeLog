@@ -1,3 +1,6 @@
+2.0.12
+    - Set login username/password fields to size 10
+
 2.0.11
     - When adding a new subscription to a publication add the sections too
     - Admin interface, subscription-section: the section is now selectable
