@@ -52,7 +52,7 @@ fetchRowNum($q_now);
 <P>
 <FORM NAME="dialog" METHOD="POST" ACTION="do_add.php?<?php echo $imageNav->getSearchLink(); ?>" ENCTYPE="multipart/form-data">
 <CENTER>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" BGCOLOR="#C0D0FF" ALIGN="CENTER">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input" ALIGN="CENTER">
 	<TR>
 		<TD COLSPAN="2">
 			<B><?php putGS('Add new image'); ?></B>
