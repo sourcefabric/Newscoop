@@ -96,7 +96,7 @@ inline void CCompOperator::initStrings()
 	m_pcoLess = new string("smaller");
 	m_pcoLessEqual = new string("smaller_equal");
 
-	m_pcoEqualSymbol = new string("==");
+	m_pcoEqualSymbol = new string("=");
 	m_pcoNotEqualSymbol = new string("!=");
 	m_pcoGreaterSymbol = new string(">");
 	m_pcoGreaterEqualSymbol = new string(">=");
