@@ -184,11 +184,15 @@ private:
 
 	static const string emptystring;
 
+	void SetURLValue(const string& p_coParam, unsigned long int p_nValue);
+
 public:
 	// default constructor
 	CContext();
 	// copy constructor
 	CContext(const CContext& c) { *this = c; }
+
+	~CContext();
 
 	int operator ==(const CContext& c) const;
 
@@ -220,6 +224,7 @@ public:
 	}
 	void SetLanguage(long int l)
 	{
+		SetURLValue(P_IDLANG, l);
 		language_id = l;
 	}
 	void SetDefLanguage(long int l)
@@ -228,6 +233,7 @@ public:
 	}
 	void SetPublication(long int p)
 	{
+		SetURLValue(P_IDPUBL, p);
 		publication_id = p;
 	}
 	void SetDefPublication(long int p)
@@ -236,6 +242,7 @@ public:
 	}
 	void SetIssue(long int i)
 	{
+		SetURLValue(P_NRISSUE, i);
 		issue_nr = i;
 	}
 	void SetDefIssue(long int i)
@@ -244,6 +251,7 @@ public:
 	}
 	void SetSection(long int s)
 	{
+		SetURLValue(P_NRSECTION, s);
 		section_nr = s;
 	}
 	void SetDefSection(long int s)
@@ -252,6 +260,7 @@ public:
 	}
 	void SetArticle(long int a)
 	{
+		SetURLValue(P_NRARTICLE, a);
 		article_nr = a;
 	}
 	void SetDefArticle(long int a)
@@ -698,8 +707,20 @@ public:
 	{
 		return m_pcoURL;
 	}
-	
+
 	void PrintSubs();
 };
+
+inline void CContext::SetURLValue(const string& p_coParam, unsigned long int p_nValue)
+{
+	if (m_pcoURL != NULL)
+		m_pcoURL->replaceValue(p_coParam, p_nValue);
+}
+
+inline CContext::~CContext()
+{
+	if (m_pcoURL != NULL)
+		delete m_pcoURL;
+}
 
 #endif
