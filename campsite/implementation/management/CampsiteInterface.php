@@ -118,19 +118,19 @@ class CampsiteInterface {
 	 *
 	 * @return void
 	 */
-	function DisplayError($p_errorStr, $p_backLink = null) {
+	function DisplayError($p_errorStr, $p_backLink = null, $popup = false) {
 		global $ADMIN;
-		$location = 'ad.php?ADReason='.urlencode(getGS($p_errorStr));
+		$script = $popup ? 'ad_popup.php' : 'ad.php';
+		if (is_array($p_errorStr)) {
+			$p_errorStr = call_user_func_array('getGS', $p_errorStr);
+		} else {
+			$p_errorStr = getGS($p_errorStr);
+		}
+		$location = "/$ADMIN/$script?ADReason=".urlencode(getGS($p_errorStr));
 		if (!is_null($p_backLink)) {
 			$location .= '&Back='.$p_backLink;
 		}
-		if (is_array($p_errorStr)) {
-			$p_errorStr = call_user_func_array('getGS', $p_errorStr);
-		}
-		else {
-			$p_errorStr = getGS($p_errorStr);
-		}
-		header("Location: /$ADMIN/ad.php?ADReason=".urlencode($p_errorStr).'&Back='.urlencode($p_backLink));
+		header("Location: $location");
 	} // fn DisplayError
 	
 } // class CampsiteInterface
