@@ -1,9 +1,11 @@
 <?php 
 
 // -- index.m4
-regGS("Name<BR><SMALL>(click to see issues)</SMALL>","Name<BR><SMALL>(click to see issues)</SMALL>:en");
+regGS("Name<BR><SMALL>(click to see issues)</SMALL>","Name <SMALL>(click to see issues)</SMALL>:en");
 regGS("Delete publication $1","Delete publication $1:en");
 regGS("No publications.", "No publications.:en");
+regGS("Default Site Alias", "Default Site Alias:en");
+regGS("URL Type", "URL Type:en");
 
 // -- deftime.m4
 regGS("Country<BR><SMALL>(click to edit)</SMALL>","Country<BR><SMALL>(click to edit)</SMALL>:en");
@@ -13,6 +15,8 @@ regGS("No entries defined.","No entries defined.:en");
 // -- edit.m4
 regGS("Change publication information","Change publication information:en");
 regGS("You do not have the right to edit publication information.","You do not have the right to edit publication information.:en");
+regGS("General attributes", "General attributes:en");
+regGS("Subscriptions defaults", "Subscriptions defaults:en");
 
 // -- do_edit.m4
 regGS("Changing publication information","Changing publication information:en");
