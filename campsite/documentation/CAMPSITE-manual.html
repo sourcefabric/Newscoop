@@ -5,7 +5,7 @@
 	<TITLE>CAMPSITE manual Version 2.1</TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
 	<META NAME="CREATED" CONTENT="20020913;19124500">
-	<META NAME="CHANGED" CONTENT="20030806;9473200">
+	<META NAME="CHANGED" CONTENT="20030823;14270700">
 	<STYLE>
 	<!--
 		@page { size: 21.59cm 27.94cm }
@@ -699,7 +699,7 @@ interface language. The default language is English, but you can
 either use one of the localized versions we supply (at the moment, we
 supply the German, Russian, and Czech versions) or create your own
 (see The Localizer section below).</P>
-<H3 CLASS="western"><A NAME="2_1_1"></A><FONT FACE="Times, serif">2.1.1
+<H3 CLASS="western"><A NAME="2_1_1"></A><IMG SRC="CAMPSITE-manual_html_m4af947a1.png" NAME="Graphic1" ALIGN=LEFT HSPACE=6 WIDTH=311 HEIGHT=350 BORDER=0><BR CLEAR=LEFT><FONT FACE="Times, serif">2.1.1
 Languages</FONT></H3>
 <P CLASS="western">While CAMPSITE's default language is English, you
 are by no means limited to publishing in that language only. It's
@@ -716,10 +716,24 @@ machine (e.g. if you are working on a Windows machine on your Russian<SPAN LANG=
 Cyrillic </SPAN>template in an editor, you will want to specify KOI-8
 or Windows-1251), and the names of months and days of the week in the
 language you are configuring.</P>
-<P CLASS="western">[NOTE TO ADMINISTRATOR: You may want to limit the
-number of languages configured on your server in order to spare your
-users from long drop-down language menus. Sometimes less is more, if
-you know what we mean.]</P>
+<P CLASS="western"><IMG SRC="CAMPSITE-manual_html_m6aaa028f.png" NAME="Graphic2" ALIGN=LEFT VSPACE=11 WIDTH=686 HEIGHT=511 BORDER=0><BR CLEAR=LEFT>[NOTE
+TO ADMINISTRATOR: You may want to limit the number of languages
+configured on your server in order to spare your users from long
+drop-down language menus. Sometimes less is more, if you know what we
+mean.]</P>
+<P CLASS="western">Code refers to the two-letter ISO 639-1 code name
+for your language. English, for example, is &ldquo;en&rdquo;, German
+is &ldquo;de&rdquo;, Spanish is &ldquo;es&rdquo;, Chinese is &ldquo;zh&rdquo;
+and so on. If you don't know your code, this web page can help:
+http://lcweb.loc.gov/standards/iso639-2/englangn.html.</P>
+<P CLASS="western">Code page refers to the ISO code page for your
+character set. CAMPSITE supports Unicode, and its code page is UTF-8.
+We recommend Unicode, but if you wish to use another code page, you
+can input it here. You can get a list of code pages and languages
+here: http://www.w3.org/International/O-charset-lang.html.</P>
+<P CLASS="western">For more on language and localization, visit this
+web address:
+http://tlt.its.psu.edu/suggestions/international/links.html</P>
 <H3 CLASS="western"><A NAME="2_1_2"></A><FONT FACE="Times, serif">2.1.2
 Countries</FONT></H3>
 <P CLASS="western">This module determines how country lists will
@@ -733,31 +747,103 @@ defined in the Languages module (see section 2.1.1).</P>
 language in which you are entering a country's name, *NOT* the
 language spoken in the country!]</P>
 <H3 CLASS="western"><A NAME="2_1_3"></A>2.1.3 The Localizer</H3>
-<P CLASS="western">The localizer is a new module of CAMPSITE that is
-introduced in version 2.1. The module allows you to create your own
-localization of CAMPSITE's<SPAN LANG="en-US"> back end </SPAN>user
-interface by simply translating individual strings that appear in the
-interface.</P>
-<P CLASS="western">To do so, enter the Localizer, scroll down to the
-bottom of the window and select a language in which you want to
-create localization files from the<SPAN LANG="en-US"> drop down </SPAN>menu
-(the menu will contain as many languages as you have had configured
-in the Languages module) and then press the 'Create files' button.
-This will create a range of globals.xx.php files and locals.xx.php
-files, which will be visible in the left frame of the Localizer.
-Select one of the newly created files, and the strings related to
-that particular part of the interface will be shown in the right
-frame. You can interrupt the translation process at any time. Just
-press save at the bottom of the frame and exit the localizer. When
-you return, you'll find all the non-translated strings in red and you
-can continue from where you left off.</P>
-<P CLASS="western">[NOTE: Localization currently works for the entire
-user interface, minus the OK and Cancel buttons. The CAMPFIRE Java
-editor is fully localizable, but that is done outside the localizer
-(CAMPFIRE strings have to be compiled separately; the localization
-text file is available from http://). For more information on how to
-become a localization volunteer for CAMPSITE and CAMPFIRE, please
-send an e-mail to &lt;contact@campware.org&gt;.]</P>
+<P CLASS="western"><IMG SRC="CAMPSITE-manual_html_m644cd199.png" NAME="Graphic3" ALIGN=LEFT HSPACE=6 WIDTH=446 HEIGHT=543 BORDER=0><BR CLEAR=LEFT>The
+localizer is a new module of CAMPSITE that is introduced in version
+2.1. The module allows you to create your own localization of
+CAMPSITE's<SPAN LANG="en-US"> back end </SPAN>user interface by
+simply translating individual strings that appear in the interface.</P>
+<P CLASS="western">The first step is to check the Languages menu (see
+above). Enter the Localizer, scroll down to the bottom of the window
+and select a language in which you want to create localization files
+from the<SPAN LANG="en-US"> drop down </SPAN>menu (the menu will
+contain as many languages as you have had configured in the Languages
+module) and then press the 'Create files' button. This will create a
+range of globals.xx.php files and locals.xx.php files, which will be
+visible in the left frame of the Localizer (xx refers to the
+two-letter language code you input in the Languages module).</P>
+<P CLASS="western">Select one of the newly created files, and the
+strings related to that particular part of the interface will be
+shown in the right frame. You can interrupt the translation process
+at any time. Just press save at the bottom of the frame and exit the
+localizer. When you return, you'll find all the non-translated
+strings in red and you can continue from where you left off:</P>
+<P CLASS="western"><IMG SRC="CAMPSITE-manual_html_500a9170.png" NAME="Graphic4" ALIGN=LEFT VSPACE=11 WIDTH=703 HEIGHT=449 BORDER=0><BR CLEAR=LEFT>[NOTE:
+Localization currently works for the entire user interface, minus log
+messages. The CAMPFIRE Java editor is fully localizable, but that is
+done outside the localizer (CAMPFIRE strings have to be compiled
+separately; the localization text file is available from http://).
+For more information on how to become a localization volunteer for
+CAMPSITE and CAMPFIRE, please send an e-mail to
+&lt;contact@campware.org&gt;.]</P>
+<H4 CLASS="western"><A NAME="2_1_4_11"></A><FONT FACE="Times, serif"><FONT FACE="Times, serif">2.1.3.1<SPAN LANG="en-US">
+Operating system regional settings and the Campfire editor</SPAN></FONT></FONT></H4>
+<P CLASS="western"><FONT FACE="Nimbus Roman No9 L">You may see
+squares in the Campfire editor where your text should be. If this
+happens, check your regional settings in your operating system to
+make sure they support the language you want to work in. For Windows
+95/98/2000 XP, this is in Control Panels -&gt; Regional options -&gt;
+ Locale. Make sure the locale you're in is set here. For example, if
+you want to use the settings for Chinese (Hong Kong), select this
+from the menu. The Campfire editor will then display the characters
+correctly. If you want to use differrent languages, such as English
+and Czech, you can set this in the &quot;Languages&quot; panel in the
+same menu.</FONT></P>
+<H4 CLASS="western"><A NAME="2_1_4_111"></A><FONT FACE="Times, serif">2.1.3.2<SPAN LANG="en-US">
+Submitting a language localization</SPAN></FONT></H4>
+<P CLASS="western"><FONT FACE="Nimbus Roman No9 L">We actively
+encourage CAMPSITE users to submit their language localizations. This
+makes CAMPSITE more useful around the world. If you'd like to submit
+your localization, here's what you have to do:</FONT></P>
+<OL>
+	<LI><P CLASS="western"><FONT FACE="Nimbus Roman No9 L">Go to
+	campsite source directory and run the following command:</FONT></P>
+	<P CLASS="western"><FONT FACE="Nimbus Roman No9 L">./translation
+	--make_package &lt;language_code&gt;</FONT></P>
+</OL>
+<P CLASS="western"><FONT FACE="Nimbus Roman No9 L">CAMPSITE will
+create a file in the campsite source directory called
+translation-&lt;language_code&gt;.tar.gz. For example, the Chinese
+language code is zh, so the file would be called
+<A HREF="http://translation-zh.tar.gz/">translation-zh.tar.gz</A></FONT></P>
+<OL START=2>
+	<LI><P CLASS="western"><FONT FACE="Nimbus Roman No9 L">Localize the
+	Campfire editor; here's what you have to do:</FONT></P>
+	<P CLASS="western"><FONT FACE="Nimbus Roman No9 L">- Go to the
+	campsite/implementation/java/resources directory</FONT></P>
+	<P CLASS="western"><FONT FACE="Nimbus Roman No9 L">- Copy the
+	Campfire_en.properties file to Campfire_&lt;language_code&gt;.properties
+	For example, Campfire_zh.properties for Chinese.</FONT></P>
+	<P CLASS="western"><FONT FACE="Nimbus Roman No9 L">- Edit this file
+	in any Unicode-friendly text editor</FONT></P>
+	<P CLASS="western"><FONT FACE="Nimbus Roman No9 L">- In this file,
+	replace the english translation on the right part of the &ldquo;=&rdquo;
+	with your translation</FONT></P>
+	<P CLASS="western"><FONT FACE="Nimbus Roman No9 L">- Save the file,
+	and make sure it's saved as Unicode</FONT></P>
+</OL>
+<P CLASS="western"><FONT FACE="Nimbus Roman No9 L">Here you have two
+options. You can either:</FONT></P>
+<OL START=2>
+	<P CLASS="western"><FONT FACE="Nimbus Roman No9 L">- Copy this file
+	to the
+	[campsite_html_dir]/priv/pub/issues/sections/articles/java/resources
+	directory</FONT></P>
+	<P CLASS="western"><FONT FACE="Nimbus Roman No9 L">      - or -</FONT></P>
+	<P CLASS="western"><FONT FACE="Nimbus Roman No9 L">- Reinstall
+	CAMPSITE from the sources you installed it in the first place,
+	taking care not to change settings</FONT></P>
+</OL>
+<OL START=3>
+	<LI><P CLASS="western"><FONT FACE="Nimbus Roman No9 L">E-mail the
+	two translated files to us at <A HREF="mailto:campsite-support@campware.org">campsite-support@campware.org</A></FONT></P>
+</OL>
+<P CLASS="western"><FONT FACE="Nimbus Roman No9 L">The current list
+of language localizations can be found in the latest  CAMPSITE
+version at the campware site (<A HREF="http://www.campware.org/">http://www.campware.org</A>).
+Even if a language localization exists, it may not address your
+particular needs or regional differences. For example, the
+differences in Spanish between that used in Spain and that used in
+Guatemala.</FONT></P>
 <H3 CLASS="western"><A NAME="2_1_4"></A>2.1.4 User Management</H3>
 <P CLASS="western">CAMPSITE's user management module allows you to
 control access to the<SPAN LANG="en-US"> back end </SPAN>and the
