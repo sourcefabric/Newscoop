@@ -110,12 +110,12 @@ char CLex::NextChar()
 // IdentifyAtom: identifies the current lexem
 const CLexem* CLex::IdentifyAtom()
 {
-	if (m_coAtom.identifier() == "") // no atom
+	// accept empty string as identifiers
+	if (m_coAtom.identifier() == "")
 	{
-		m_coLexem.setAtom(NULL);
-		m_coLexem.setDataType(CMS_DT_NONE);
-		m_coLexem.setRes(CMS_LEX_NONE);
-		return &m_coLexem;
+		m_coLexem.setAtom(&m_coAtom);
+		m_coLexem.setRes(CMS_LEX_IDENTIFIER);
+		m_coLexem.setDataType(CMS_DT_STRING);
 	}
 	// search read atom into statements list
 	CStatementMap::iterator st_it = s_coStatements.find(m_coAtom.identifier());
@@ -924,8 +924,8 @@ const CLexem* CLex::getLexem()
 			}
 			else				// lexem is not delimited by quotes
 			{
-				if ((m_chChar <= ' ' && m_chChar >= 0) || m_chChar == s_chCTokenEnd)	// separator or end token
-				{
+				if ((m_chChar <= ' ' && m_chChar >= 0) || m_chChar == s_chCTokenEnd)
+				{	// separator or end token
 					FoundLexem = true;
 					m_bLexemStarted = false;
 					if (m_chChar == s_chCTokenEnd)
@@ -934,15 +934,15 @@ const CLexem* CLex::getLexem()
 						return IdentifyAtom();
 					}
 				}
-				else if (m_chChar == '\"')		// found another lexem delimited by quotes
-				{
+				else if (m_chChar == '\"')
+				{	// found another lexem delimited by quotes
 					FoundLexem = true;
 					m_bLexemStarted = true;
 					m_bQuotedLexem = true;
 					return IdentifyAtom();
 				}
-				else		// append character to atom identifier
-				{
+				else
+				{	// append character to atom identifier
 					if (!AppendOnAtom())
 					{
 						m_bLexemStarted = false;
