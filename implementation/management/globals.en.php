@@ -103,6 +103,7 @@ regGS("Add new article","Add new article:en");
 regGS("Status","Status:en");
 regGS("No such article.","No such article.:en");
 regGS("Published","Published:en");
+regGS("Not published","Not published:en");
 regGS("Submitted","Submitted:en");
 regGS("New","New:en");
 regGS("Article","Article:en");
