@@ -1,7 +1,5 @@
-<?php 
-## changed by sebastian #################################
+<?php
 require_once($_SERVER[DOCUMENT_ROOT].'/db_connect.php');
-#########################################################
 
 function writeFile($newfile,$fen){
     global $for,$en;
@@ -106,7 +104,7 @@ function parseFolder($dirname, $depth){
         &&
         (substr($filen,strlen($filen)-4)==='.php')
         &&
-        (substr($filen,strlen($filen)-6)!='en.php')
+        (substr($filen,strlen($filen)-6)!='en.php' || substr($dirname,3,7)=='modules')  //enable editing english files for modules
         ){
 
         if ( (strpos($filen,'globals')===0) ){
@@ -115,6 +113,7 @@ function parseFolder($dirname, $depth){
 
 
         print str_repeat(' ',$depth*$space)."<a href='display.php?file=$filen&dir=$dirname' target=panel>$filen</a>\n";
+        usleep (0); //usleep(0) seems to be senseless, but needet for a strange behavior of PHP in combination with IE
      }
         }//for
 
@@ -133,13 +132,21 @@ function parseFolder($dirname, $depth){
     }
 }
 
-if (isset($newlang)){
-    $newlang=trim($newlang);
+?>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+<?php
+
+if (isset($_REQUEST[newlang])){
+    $newlang = trim($_REQUEST[newlang]);
 }
 
 if ( (isset($newlang)) && ($newlang!='') && (strlen($newlang)>1) &&($newlang!='en') ){
     $createnew=true;
-    print "creating files for $newlang";
+    print "creating files for: $newlang";
     $langarray[]=$newlang;
 }
 else{
@@ -153,9 +160,7 @@ $langfile.='function registerLanguage($name,$code,$charset){'."\n\n";
 $langfile.="\t".'global $languages;'."\n";
 $langfile.="\t".'$languages["$code"]=array("name"=>$name,"charset"=>$charset);'."\n";
 $langfile.='}'."\n";
-?>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<?php 
+
 
 print '<PRE>';
 parseFolder('..', 0);
@@ -165,7 +170,7 @@ print '</PRE>';
 <form action=# method=post>
 
 <SELECT NAME=newlang>
-<?php 
+<?php
 
     $Languages=mysql_query ("SELECT Id, Name, OrigName, CodePage, Code FROM Languages ORDER BY Name");
     $NUM_ROWS=mysql_num_rows($Languages);
@@ -189,7 +194,7 @@ $langfile.="\n".'?>';
  <input type=submit value='create language files'>
 </form>
 
-<?php 
+<?php
 if ($createnew){
     $langf=fopen('../languages.php','w');
     fwrite($langf,$langfile);
@@ -198,12 +203,15 @@ if ($createnew){
 ?>
 
 
-<?php 
+<?php
 if ($createnew){ ?>
     <SCRIPT>
  document.location.href='menu.php';
     </SCRIPT>
-<?php 
+<?php
 //exit();
 
 }
+?>
+</body>
+</html>
