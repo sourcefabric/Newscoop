@@ -742,7 +742,16 @@ int CStatementMap::InitStatements()
 	this->insert(new CStatement(CMS_ST_ENDWITH, ST_ENDWITH));
 
 	// URIPath statement
-	this->insert(new CStatement(CMS_ST_URIPATH, ST_URIPATH));
+	pcoSt = new CStatement(CMS_ST_URIPATH, ST_URIPATH);
+
+	pcoCtx = new CStatementContext(CMS_CT_DEFAULT);
+	pcoCtx->insertAttr(new CStringAttr("template"));
+	pcoCtx->insertAttr(new CAttribute("issue"));
+	pcoCtx->insertAttr(new CAttribute("section"));
+	pcoCtx->insertAttr(new CAttribute("article"));
+	pcoSt->insertCtx(pcoCtx);
+
+	this->insert(pcoSt);
 
 	CLOSE_TRY
 	CATCH(InvalidValue &rcoEx)
