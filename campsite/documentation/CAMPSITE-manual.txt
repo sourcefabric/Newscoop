@@ -132,8 +132,9 @@ or
 At the heart of CAMPSITE's client interface, lies CAMPFIRE, a text editor implemented as a signed Java Applet. For this applet to work, you need to have the standard Java Virtual Machine plugin (version 1.3.1) installed on your Unix or Windows client machine (it may well already be there) and it is native on Macintosh OS X systems. 
 If you don't already have the plugin on a Windows machine, CAMPFIRE will automatically download the .exe version of the plugin from the Sun Microsystems's website and you will be prompted to initialize installation will start automatically (please be patient, the plugin is rather large). 
 In either case, make sure to make sure you click on 'Grant always' option in the popup window asking you 'Do you want to install and run signed applet distributed by "Campsite team"'(if you do otherwise, you will not be able to cut and paste within the editor). 
-1.2.4 KNOWN LIMITATIONS: Apple Macintosh
-CAMPFIRE currently works only on Internet Explorer under OS X. We are working on expanding the range of browsers it works with. System 9.x and lower are not supported.
+1.2.4 KNOWN LIMITATIONS
+Apple Macintosh: CAMPFIRE currently works only on Internet Explorer under OS X. We are working on expanding the range of browsers it works with. System 9.x and lower are not supported.
+Localizer: There are several known problems related to the localizer at this time. Action buttons like Save Changes or Cancel are only in English, for the moment. Similarly, some dropdown lists like Language or Country are not translated into the local language either at this stage. These are all known and documented problems and our development team will be resolving these issues in future releases.
 1.3. UPGRADING FROM VERSIONS 1.x or 2.0
 Upgrading from 1.x or 2.0 versions of Campsite requires three actions to be performed before the installation: 
 database conversion to UTF-8 character set
