@@ -203,9 +203,11 @@ CREATE TABLE `ImagesDup` (
     `ContentType` varchar(64) NOT NULL default '',
     `Location` enum('local','remote') NOT NULL default 'local',
     `URL` varchar(255) NOT NULL default '',
-    `NrArticle` int(10) unsigned NOT NULL default '0',
-    `Number` int(10) unsigned NOT NULL default '0',
-    `Image` mediumblob NOT NULL,
+    `ThumbnailFileName` varchar(50) NOT NULL default '',
+    `ImageFileName` varchar(50) NOT NULL default '',
+    `UploadedByUser` int(11) default NULL,
+    `LastModified` timestamp(14) NOT NULL,
+    `TimeCreated` timestamp(14) NOT NULL default '00000000000000',
     PRIMARY KEY (`Id`)
 );
 INSERT INTO ImagesDup (Description, Photographer, Place, Date, ContentType, Location, URL, NrArticle, Number, Image) SELECT Description, Photographer, Place, Date, ContentType, 'local', '', NrArticle, Number, Image FROM Images;
