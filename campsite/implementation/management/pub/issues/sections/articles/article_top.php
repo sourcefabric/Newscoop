@@ -90,19 +90,19 @@ if ($p_includeLinks) {
 </TR>
 </TABLE>
 
-<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="1" WIDTH="100%">
+<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="1" WIDTH="100%" class="current_location_table">
 <TR>
-	<TD ALIGN="RIGHT" NOWRAP VALIGN="TOP" width="1%">&nbsp;<?php putGS("Publication"); ?>:</TD>
-	<TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><?php print htmlspecialchars($publicationObj->getName()); ?></B></TD>
+	<TD ALIGN="RIGHT" NOWRAP VALIGN="TOP" width="1%" class="current_location_title">&nbsp;<?php putGS("Publication"); ?>:</TD>
+	<TD VALIGN="TOP" class="current_location_content"><B><?php print htmlspecialchars($publicationObj->getName()); ?></B></TD>
 
-	<TD ALIGN="RIGHT" NOWRAP VALIGN="TOP" width="1%">&nbsp;<?php putGS("Issue"); ?>:</TD>
-	<TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><?php print htmlspecialchars($issueObj->getIssueId()); ?>. <?php  print htmlspecialchars($issueObj->getName()); ?> (<?php print htmlspecialchars($interfaceLanguageObj->getName()) ?>)</B></TD>
+	<TD ALIGN="RIGHT" NOWRAP VALIGN="TOP" width="1%" class="current_location_title">&nbsp;<?php putGS("Issue"); ?>:</TD>
+	<TD VALIGN="TOP" class="current_location_content"><B><?php print htmlspecialchars($issueObj->getIssueId()); ?>. <?php  print htmlspecialchars($issueObj->getName()); ?> (<?php print htmlspecialchars($interfaceLanguageObj->getName()) ?>)</B></TD>
 
-	<TD ALIGN="RIGHT" NOWRAP VALIGN="TOP" width="1%">&nbsp;<?php putGS("Section"); ?>:</TD>
-	<TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><?php print $sectionObj->getSectionId(); ?>. <?php  print htmlspecialchars($sectionObj->getName()); ?></B></TD>
+	<TD ALIGN="RIGHT" NOWRAP VALIGN="TOP" width="1%" class="current_location_title">&nbsp;<?php putGS("Section"); ?>:</TD>
+	<TD VALIGN="TOP" class="current_location_content"><B><?php print $sectionObj->getSectionId(); ?>. <?php  print htmlspecialchars($sectionObj->getName()); ?></B></TD>
 
-	<TD ALIGN="RIGHT" NOWRAP VALIGN="TOP" width="1%">&nbsp;<?php putGS("Article"); ?>:</TD>
-	<TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><?php print htmlspecialchars($p_articleObj->getTitle()); ?> (<?php print htmlspecialchars($articleLanguageObj->getName()); ?>)</B></TD>
+	<TD ALIGN="RIGHT" NOWRAP VALIGN="TOP" width="1%" class="current_location_title">&nbsp;<?php putGS("Article"); ?>:</TD>
+	<TD VALIGN="TOP" class="current_location_content"><B><?php print htmlspecialchars($p_articleObj->getTitle()); ?> (<?php print htmlspecialchars($articleLanguageObj->getName()); ?>)</B></TD>
 </TR>
 </TABLE>
 	<?php
