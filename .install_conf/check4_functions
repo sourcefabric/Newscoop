@@ -653,6 +653,8 @@ if [ "$cf_path" = "" ]; then
 	echo "Could not find apache configuration file in$cf_paths"
 	return 1
     fi
+else
+	conf_path=`cut_last_dirs "$cf_path"`
 fi
 apache_conf_path=$conf_path
 if $USER_INSTALL; then
