@@ -32,7 +32,7 @@ regGS("The section $1 has been deleted.","The section $1 has been deleted.:en");
 regGS("Section $1 deleted from issue $2. $3 $4 of $5","Section $1 deleted from issue $2. $3 $4 of $5:en");
 
 // -- edit.m4
-regGS("Change section name","Change section name:en");
+regGS("Configure section","Configure section:en");
 regGS("You do not have the right to change section details","You do not have the right to change section details:en");
 
 // -- do_edit.m4
