@@ -15,6 +15,7 @@ function export_conf($module_name)
 		return 1;
 	}
 
+	$vars = "";
 	require_once($conf_file);
 	foreach ($CampsiteVars[$module_name] as $key=>$var_name)
 		$vars .= " " . $var_name;
