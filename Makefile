@@ -23,11 +23,17 @@ install: dummy
 	mkdir -p "$(CAMPSITE_DIR)/instance"
 	chown $(ROOT_USER):$(APACHE_GROUP) "$(CAMPSITE_DIR)/instance"
 	chmod 755 "$(CAMPSITE_DIR)/instance"
-	$(MAKE) -C implementation install
-	$(MAKE) -C supplemental install
 	cp -f "$(INSTALL_CONF)/create_instance.php" "$(BIN_DIR)"
 	chown $(ROOT_USER):$(APACHE_GROUP) "$(BIN_DIR)/create_instance.php"
 	chmod 644 "$(BIN_DIR)/create_instance.php"
+	cp -f "$(INSTALL_CONF)/install_conf.php" "$(BIN_DIR)"
+	chown $(ROOT_USER):$(APACHE_GROUP) "$(BIN_DIR)/install_conf.php"
+	chmod 644 "$(BIN_DIR)/install_conf.php"
+	cp -f "$(INSTALL_CONF)/parser_conf.php" "$(BIN_DIR)"
+	chown $(ROOT_USER):$(APACHE_GROUP) "$(BIN_DIR)/parser_conf.php"
+	chmod 644 "$(BIN_DIR)/parser_conf.php"
+#	$(MAKE) -C implementation install
+#	$(MAKE) -C supplemental install
 
 clean:
 	$(MAKE) -C implementation clean
