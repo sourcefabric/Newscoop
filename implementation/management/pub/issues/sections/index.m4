@@ -6,6 +6,21 @@ B_DATABASE
 CHECK_BASIC_ACCESS
 
 B_HEAD
+<script>
+<!--
+/*
+A slightly modified version of "Break-out-of-frames script"
+By JavaScript Kit (http://javascriptkit.com)
+*/
+
+if (window != top.fmain && window != top) {
+	if (top.fmenu)
+		top.fmain.location.href=location.href
+	else
+		top.location.href=location.href
+}
+// -->
+</script>
 	X_EXPIRES
 	X_TITLE(<*Sections*>)
 <? if ($access == 0) { ?>dnl
@@ -17,6 +32,7 @@ E_HEAD
 B_STYLE
 E_STYLE
 <?
+SET_ACCESS(<*aaa*>, <*AddArticle*>)
 SET_ACCESS(<*msa*>, <*ManageSection*>)
 SET_ACCESS(<*dsa*>, <*DeleteSection*>)
 ?>
@@ -60,7 +76,7 @@ E_CURRENT
     todefnum('SectOffs');
     if ($SectOffs < 0)	$SectOffs= 0;
     todefnum('lpp', 20);
-    
+
     query ("SELECT * FROM Sections WHERE IdPublication=$Pub AND NrIssue=$Issue AND IdLanguage=$Language ORDER BY Number LIMIT $SectOffs, ".($lpp+1), 'q_sect');
     if ($NUM_ROWS) {
 	$nr= $NUM_ROWS;
@@ -74,14 +90,16 @@ B_LIST
 		X_LIST_TH(<*Name<BR><SMALL>(click to see articles)</SMALL>*>)
 	<? if ($msa != 0) { ?>
 		X_LIST_TH(<*Change*>, <*1%*>)
-	<? }
-
-	    if($dsa != 0) { ?>
+	<?	} ?>
+	<? if ($msa != 0 && $aaa != 0) { ?>
+		X_LIST_TH(<*Duplicate*>, <*1%*>)
+	<?	} ?>
+	<?	if($dsa != 0) { ?>
 		X_LIST_TH(<*Delete*>, <*1%*>)
 	<? } ?>
 	E_LIST_HEADER
 <?
-    for($loop=0;$loop<$i;$loop++) {
+	for($loop=0;$loop<$i;$loop++) {
 	fetchRow($q_sect); ?>dnl
 	B_LIST_TR
 		B_LIST_ITEM(<*RIGHT*>)
@@ -94,9 +112,13 @@ B_LIST
 		B_LIST_ITEM(<*CENTER*>)
 			<A HREF="X_ROOT/pub/issues/sections/edit.php?Pub=<? p($Pub); ?>&Issue=<? pgetUVar($q_sect,'NrIssue'); ?>&Section=<? pgetUVar($q_sect,'Number'); ?>&Language=<? pgetUVar($q_sect,'IdLanguage'); ?>"><? putGS("Change"); ?></A>
 		E_LIST_ITEM
-	<? }
-
-	    if ($dsa != 0) { ?>
+	<?	} ?>
+	<? if ($msa != 0 && $aaa != 0) { ?>
+		B_LIST_ITEM(<*CENTER*>)
+			<A HREF="X_ROOT/pub/issues/sections/fduplicate.php?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Section=<? pgetUVar($q_sect,'Number'); ?>&Language=<? p($Language); ?>"><? putGS("Duplicate"); ?></A>
+		E_LIST_ITEM
+	<?	} ?>
+	<?	if ($dsa != 0) { ?>
 		B_LIST_ITEM(<*CENTER*>)
 			X_BUTTON(<*<? putGS('Delete section $1',getHVar($q_sect,'Name')); ?>*>, <*icon/x.gif*>, <*pub/issues/sections/del.php?Pub=<? p($Pub); ?>&Issue=<? pgetUVar($q_sect,'NrIssue'); ?>&Section=<? pgetUVar($q_sect,'Number'); ?>&Language=<? pgetUVar($q_sect,'IdLanguage'); ?>*>)
 		E_LIST_ITEM
@@ -121,7 +143,7 @@ B_LIST
 E_LIST
 <? } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No sections.'); ?></LI>
+	<LI><? putGS('No sections'); ?></LI>
 </BLOCKQUOTE>
 <? } ?>dnl
 
