@@ -1,9 +1,12 @@
 OBJ_FILES=main.o lex.o atoms.o parser.o actions.o util.o error.o\
  context.o cparser.o cgi.o csocket.o threadpool.o mutex.o readconf.o\
- thread.o process_req.o attributes.o data_types.o operators.o
+ thread.o process_req.o attributes.o data_types.o operators.o\
+ cmessage.o cmessagefactory.o cpublication.o cpublicationsregister.o curl.o\
+ curlshortnames.o curltype.o curltyperegister.o cxmlreader.o cxmltree.o
+ 
 
 LDFLAGS=-L$(LIBMYSQLCLIENT_PATH) -L$(LIBPTHREAD_PATH)
-LIBS=-lmysqlclient $(NSL_LINK) -lm -lz $(LIBCRYPT_LINK) $(PTHREAD_LINK)
+LIBS=-lmysqlclient $(NSL_LINK) -lm -lz -lxml2 $(LIBCRYPT_LINK) $(PTHREAD_LINK)
 
 DEPENDENCES= *.h
 
