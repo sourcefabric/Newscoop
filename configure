@@ -8,6 +8,11 @@ if [ "`uname | grep BSD`" != "" ]; then
 else
     export BSD=0
 fi;
+if [ "`uname | grep OpenBSD`" != "" ]; then
+    export OPENBSD=1
+else
+    export OPENBSD=0
+fi;
 if ! $USER_INSTALL; then
 	export ROOT_USER=root
 	if [ $BSD -eq 1 ]; then
@@ -69,6 +74,7 @@ if [ "$read_only" = "false" ]; then
 else
     check4_make
     check4_m4
+    check4_killall
     prepare_install_env
     install_conf --set
     for sel_mod in $SELECTED_MODULES; do
@@ -110,6 +116,9 @@ export HAVE_GETHOSTBYNAME_R=$HAVE_GETHOSTBYNAME_R
 export HAVE_GETSERVBYNAME_R=$HAVE_GETSERVBYNAME_R
 export PTHREAD_LINK=$PTHREAD_LINK
 export MYSQL_H_PATH=$MYSQL_H_PATH
+export LIBCRYPT_LINK=$LIBCRYPT_LINK
+export NSL_LINK=$NSL_LINK
+export KILLALL=$KILLALL
 EOF
 [ $? -ne 0 ] && echo "ERROR" && exit 1
 [ "$GPP" != "" ] && echo "export GPP=$GPP" >> $make_env
@@ -155,6 +164,7 @@ else # else if define start env
 
     check4_make
     check4_m4
+    check4_killall
     prepare_install_env
     install_conf --set
     modules_conf --set
@@ -183,5 +193,8 @@ export HAVE_GETHOSTBYNAME_R=$HAVE_GETHOSTBYNAME_R
 export HAVE_GETSERVBYNAME_R=$HAVE_GETSERVBYNAME_R
 export PTHREAD_LINK=$PTHREAD_LINK
 export MYSQL_H_PATH=$MYSQL_H_PATH
+export LIBCRYPT_LINK=$LIBCRYPT_LINK
+export NSL_LINK=$NSL_LINK
+export KILLALL=$KILLALL
 
 echo "Configuration done"
