@@ -64,7 +64,7 @@ if [ $BSD -eq 1 ]; then
 else
     check4_file make --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
 fi
-result=$? && [ $result -ne 0 ] && return 1
+result=$? && [ $result -ne 0 ] && output="Could not find make utility. Please install make package." && return 1
 export MAKE=$file_path
 set_checked make
 return 0
@@ -85,7 +85,7 @@ if [ $BSD -eq 1 ]; then
 else
 	check4_file m4 --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
 fi
-result=$? && [ $result -ne 0 ] && return 1
+result=$? && [ $result -ne 0 ] && output="Could not find m4 utility. Please install m4 package." && return 1
 export M4=$file_path
 set_checked m4
 return 0
@@ -204,7 +204,7 @@ check4_grep()
 {
 is_checked grep && return 0
 check4_file grep --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
-result=$? && [ $result -ne 0 ] && return 1
+result=$? && [ $result -ne 0 ] && output="Could not find grep utility. Please install grep package." && return 1
 export GREP=$file_path
 set_checked grep
 return 0
@@ -221,8 +221,7 @@ check4_stat()
 {
 is_checked stat && return 0
 check4_file stat --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
-result=$? && [ $result -ne 0 ] && \
-echo "Install fileutils package on Mandrake, stat package on RedHat, SuSE, Debian." && return 1
+result=$? && [ $result -ne 0 ] && output="Could not find stat utility. Install fileutils package on Mandrake, stat package on RedHat, SuSE, Debian." && return 1
 export STAT=$file_path
 set_checked stat
 return 0
@@ -239,8 +238,11 @@ check4_which()
 {
 is_checked which && return 0
 check4_file which --file --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
-result=$? && [ $result -ne 0 ] && return 1
-[ ! -x $file_path ] && output="executable which not found" && echo $output && return 1
+result=$?
+if [ $result -ne 0 ] || [ ! -x $file_path ]; then
+    output="Could not find 'which' utility. Please install 'which' package."
+    return 1
+fi
 export WHICH=$file_path
 set_checked which
 return 0
@@ -291,7 +293,7 @@ check4_clear()
 {
 is_checked clear && return 0
 check4_file clear --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
-result=$? && [ $result -ne 0 ] && return 1
+result=$? && [ $result -ne 0 ] && output="Could not find 'clear' utility. Please install ncurses package." && return 1
 export CLEAR=$file_path
 set_checked clear
 return 0
@@ -308,7 +310,7 @@ check4_gcc()
 {
 is_checked gcc && return 0
 check4_file gcc --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
-result=$? && [ $result -ne 0 ] && return 1
+result=$? && [ $result -ne 0 ] && output="Could not find 'gcc' - GNU C compiler. Please install gcc package." && return 1
 export GPP=$file_path
 set_checked gcc
 return 0
@@ -325,7 +327,7 @@ check4_gpp()
 {
 is_checked gpp && return 0
 check4_file g++ --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
-result=$? && [ $result -ne 0 ] && return 1
+result=$? && [ $result -ne 0 ] && output="Could not find 'g++' - GNU C++ compiler. Please install gcc-c++ package." && return 1
 export GPP=$file_path
 set_checked gpp
 return 0
@@ -342,7 +344,7 @@ check4_locate()
 {
 is_checked locate && return 0
 check4_file locate --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
-result=$? && [ $result -ne 0 ] && return 1
+result=$? && [ $result -ne 0 ] && output="Could not find 'locate' utility. Please install slocate package." && return 1
 export LOCATE=$file_path
 set_checked locate
 return 0
@@ -359,7 +361,7 @@ check4_mysql()
 {
 is_checked mysql && return 0
 check4_file mysql --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin:/usr/local/mysql/bin"
-result=$? && [ $result -ne 0 ] && return 1
+result=$? && [ $result -ne 0 ] && output="Could not find 'mysql' client utility. Please install mysql-client package." && return 1
 export MYSQL=$file_path
 set_checked mysql
 return 0
@@ -376,7 +378,7 @@ check4_mysqladmin()
 {
 is_checked mysqladmin && return 0
 check4_file mysqladmin --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin:/usr/local/mysql/bin"
-result=$? && [ $result -ne 0 ] && return 1
+result=$? && [ $result -ne 0 ] && output="Could not find 'mysqladmin' client utility. Please install mysql-client package." && return 1
 export MYSQLADMIN=$file_path
 set_checked mysqladmin
 return 0
@@ -393,7 +395,7 @@ check4_mysqld()
 {
 is_checked mysqld && return 0
 check4_file mysqld --executable --path "/sbin:/usr/sbin:/usr/local/sbin:/opt/sbin:/usr/libexec:/usr/local/mysql/bin:/usr/local/mysql/libexec:/usr/local/libexec"
-result=$? && [ $result -ne 0 ] && return 1
+result=$? && [ $result -ne 0 ] && output="Could not find 'mysqld' server. Please install mysql package." && return 1
 export MYSQLD=$file_path
 set_checked mysqld
 return 0
@@ -412,7 +414,7 @@ check4_crond()
 check4_file cron --executable --path "/sbin:/usr/sbin:/usr/local/sbin:/opt/sbin" &> /dev/null
 if [ $? -ne 0 ]; then
     check4_file crond --executable --path "/sbin:/usr/sbin:/usr/local/sbin:/opt/sbin"
-    [ $? -ne 0 ] && return 1
+    result=$? && [ $result -ne 0 ] && output="Could not find 'crond' server. Please install vixie-cron package." && return 1
 fi
 export CROND=$file_path
 set_checked crond
@@ -430,7 +432,7 @@ check4_passwd()
 {
 is_checked passwd && return 0
 check4_file passwd --file --path "/etc"
-result=$? && [ $result -ne 0 ] && return 1
+result=$? && [ $result -ne 0 ] && output="Could not find 'passwd' utility. Please install passwd package." && return 1
 export PASSWD=$file_path
 set_checked passwd
 return 0
@@ -465,7 +467,11 @@ check4_mysql_h()
 {
 is_checked mysql_h && return 0
 check4_file mysql.h --file --path "/usr/include:/usr/include/mysql:/usr/local/include:/usr/local/include/mysql:/usr/local/mysql/include"
-result=$? && [ $result -ne 0 ] && return 1
+result=$?
+if [ $result -ne 0 ]; then
+    output="Could not find mysql development files. Please install mysql development package (mysql-devel or libmysql-devel)."
+    return 1
+fi
 export MYSQL_H=$file_path
 export MYSQL_H_PATH=`cut_last_dirs "$MYSQL_H" 2`
 set_checked mysql_h
@@ -483,7 +489,7 @@ check4_socket_h()
 {
 is_checked socket_h && return 0
 check4_file socket.h --file --path "/usr/include:/usr/include/sys:/usr/local/include/sys"
-result=$? && [ $result -ne 0 ] && return 1
+result=$? && [ $result -ne 0 ] && output="Could not find network development files (socket.h). Please install glibc-devel package." && return 1
 export SOCKET_H=$file_path
 set_checked socket_h
 return 0
@@ -500,7 +506,7 @@ check4_pthread_h()
 {
 is_checked pthread_h && return 0
 check4_file pthread.h --file --path "/usr/include:/usr/local/include"
-result=$? && [ $result -ne 0 ] && return 1
+result=$? && [ $result -ne 0 ] && output="Could not find threading development files (pthread.h). Please install glibc-devel package." && return 1
 export PTHREAD_H=$file_path
 set_checked pthread_h
 return 0
@@ -517,9 +523,28 @@ check4_semaphore_h()
 {
 is_checked semaphore_h && return 0
 check4_file semaphore.h --file --path "/usr/include:/usr/local/include"
-result=$? && [ $result -ne 0 ] && return 1
+result=$? && [ $result -ne 0 ] && output="Could not find threading development files (semaphore.h). Please install glibc-devel package." && return 1
 export SEMAPHORE_H=$file_path
 set_checked semaphore_h
+return 0
+}
+# END OF check4_semaphore_h
+
+# FUNCTION: check4_xml
+# Description: check if xml library and header files were installed
+# Parameters: none
+# Variables set:
+#	XML_INCLUDE - compiler flags for xml library
+#	XML_LINK - link flags for xml library
+#	output - error message (if any)
+check4_xml()
+{
+is_checked xml && return 0
+check4_file xml2-config --executable --path "/usr/bin:/usr/local/bin:/opt/bin"
+result=$? && [ $result -ne 0 ] && output="Could not find XML development files. Please install libxml2-devel package." && return 1
+export XML_INCLUDE=`xml2-config --cflags`
+export XML_LINK=`xml2-config --libs`
+set_checked xml
 return 0
 }
 # END OF check4_semaphore_h
@@ -533,7 +558,8 @@ return 0
 check4_stl()
 {
 is_checked stl && return 0
-check4_file string --file --path "/usr/include:/usr/include/g++:/usr/include/g++-2:/usr/include/g++-3:/usr/include/c++:/usr/include/c++/3.1:/usr/include/c++/3.2:/usr/include/c++/3.2.1:/usr/include/c++/3.2.2:/usr/local/include:/usr/local/include/g++:/usr/local/include/g++-2:/usr/local/include/g++-3:/usr/include/c++/3.3.0:/usr/include/c++/3.3.1:/usr/include/c++/3.3.2:/usr/include/c++/3.3.3:/usr/include/c++/3.3"
+stl_path="/usr/include:/usr/include/g++:/usr/include/g++-2:/usr/include/g++-3:/usr/include/c++:/usr/include/c++/3.1:/usr/include/c++/3.2:/usr/include/c++/3.2.1:/usr/include/c++/3.2.2:/usr/local/include:/usr/local/include/g++:/usr/local/include/g++-2:/usr/local/include/g++-3:/usr/include/c++/3.3.0:/usr/include/c++/3.3.1:/usr/include/c++/3.3.2:/usr/include/c++/3.3.3:/usr/include/c++/3.3:/usr/include/c++/3.4"
+check4_file string --file --path "$stl_path"
 result=$? && [ $result -ne 0 ] && output="STL not properly installed" && echo $output && return 1
 export STL_PATH=`cut_last_dirs $file_path 1`
 for file in map list stack hashtable.h vector; do
@@ -543,7 +569,7 @@ for file in map list stack hashtable.h vector; do
 	check4_file $file --file --path "$STL_PATH/backward"
 	result=$?
     fi
-    [ $result -ne 0 ] && output="STL not properly installed" && echo $output && return 1
+    [ $result -ne 0 ] && output="Could not find STL files. Please install libstdc++-devel package." && return 1
 done
 file_path=$STL_PATH
 set_checked stl
@@ -619,6 +645,7 @@ while [ "$bin_path" = "" ]; do
 	return 1
     fi
 done
+conf_file=${apache_bin_name}.conf
 apache_bin_path="$bin_path"
 if [ "$apache_conf_path" != "" ]; then
     conf_paths=$apache_conf_path
@@ -644,7 +671,7 @@ if [ "$cf_path" = "" ]; then
     if $interactive; then
 	choice_yn "Could not find apache conf directory. Do you want to supply one?" y
 	if [ "$choice" = "N" ]; then
-	    echo "Could not find apache configuration file in$cf_paths"
+	    echo "Could not find apache configuration file in $cf_paths"
 	    return 1
 	fi
 	found=false
@@ -654,13 +681,14 @@ if [ "$cf_path" = "" ]; then
 	    conf_path=$path_to_conf_directory
 	    for cf_fn in $bin_names; do
 		if [ -f "${conf_path}/${cf_fn}.conf" ]; then
+		    conf_file=${cf_fn}.conf
 		    found=true
 		    break
 		fi
 	    done
 	done
     else
-	echo "Could not find apache configuration file in$cf_paths"
+	echo "Could not find apache configuration file in $cf_paths"
 	return 1
     fi
 else
@@ -673,7 +701,8 @@ if $USER_INSTALL; then
     set_checked apache
     return 0
 fi
-user_line=`grep -h -w ^User ${conf_path}/*.conf 2> /dev/null`
+conf_files="${conf_path}/${conf_file} ${conf_path}/commonhttpd.conf ${conf_path}/common${apache_bin_name}.conf"
+user_line=`grep -h -w ^User ${conf_files} 2> /dev/null`
 if [ "$user_line" = "" ]; then
     echo "Invalid apache configuration files. Aborting."
     return 1
@@ -683,7 +712,7 @@ for w in $user_line; do
     [ $i -eq 2 ] && export APACHE_USER=$w && break
     i=`expr $i + 1`
 done
-group_line=`grep -h -w ^Group ${conf_path}/*.conf 2> /dev/null`
+group_line=`grep -h -w ^Group ${conf_files} 2> /dev/null`
 if [ "$group_line" = "" ]; then
     echo "Invalid apache configuration files. Aborting."
     return 1
@@ -708,7 +737,7 @@ check4_libz()
 {
 is_checked libz && return 0
 check4_file libz.so --file --path "/usr/lib:/usr/local/lib"
-result=$? && [ $result -ne 0 ] && return 1
+result=$? && [ $result -ne 0 ] && output="Could not find z compression library. Please install zlib1-devel package." && return 1
 export LIBZ=$file_path
 set_checked libz
 return 0
@@ -726,13 +755,13 @@ check4_libcrypt()
 {
 is_checked libcrypt && return 0
 if [ $OPENBSD -eq 1 ]; then
-	export LIBCRYPT=
-	export LIBCRYPT_LINK=
+    export LIBCRYPT=
+    export LIBCRYPT_LINK=
 else
-	check4_file libcrypt.so --file --path "/usr/lib:/usr/local/lib"
-	result=$? && [ $result -ne 0 ] && return 1
-	export LIBCRYPT=$file_path
-	export LIBCRYPT_LINK=-lcrypt
+    check4_file libcrypt.so --file --path "/usr/lib:/usr/local/lib"
+    result=$? && [ $result -ne 0 ] && output="Could not find crypt library. Please install glibc-devel package." && return 1
+    export LIBCRYPT=$file_path
+    export LIBCRYPT_LINK=-lcrypt
 fi
 set_checked libcrypt
 return 0
@@ -772,7 +801,7 @@ EOF
 g++ -o $test_file ${test_file}.cpp -lm -lz -L$LIBMYSQLCLIENT_PATH -lmysqlclient
 result=$?
 rm -f ${test_file}.* ${test_file}
-[ $result -ne 0 ] && output="mysqlclient library is not installed" && echo $output && return 1
+[ $result -ne 0 ] && output="Could not find mysqlclient library. Please install mysql-devel package." && return 1
 set_checked libmysqlclient
 return 0
 }
@@ -816,7 +845,7 @@ EOF
 g++ -o $test_file ${test_file}.cpp -L$LIBPTHREAD_PATH $PTHREAD_LINK
 result=$?
 rm -f ${test_file}*
-[ $result -ne 0 ] && output="pthread library is not installed" && echo $output && return 1
+[ $result -ne 0 ] && output="Could not find threading library. Please install glibc-devel package." && return 1
 set_checked libpthread
 return 0
 }
@@ -832,7 +861,7 @@ check4_iconv()
 {
 is_checked iconv && return 0
 check4_file iconv --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
-result=$? && [ $result -ne 0 ] && return 1
+result=$? && [ $result -ne 0 ] && output="Could not find 'iconv' utility. Please install glibc package." && return 1
 export ICONV=$file_path
 set_checked iconv
 return 0
