@@ -100,6 +100,20 @@ INSTALLATION - the usual procedure
    you for the root password when necessary. Without root access it
    can not install the CAMPSITE application.
 
+Be aware that the Campsite installer does its best to pick reasonable
+defaults in the configuration of the various modules, but that these should
+always be checked by the user. (This applies when installing Campsite on
+any architecture). You can change all necessary variables interactively in
+the installer.
+
+In particular, note that:
+	- PARSER_USER and PARSER_GROUP should be the same as the user and group
+	  you use for apache.
+	- ADMIN_INTERFACE_HTML_DIR, ADMIN_INTERFACE_CGI_DIR, and
+	  ADMIN_INTERFACE_SCRIPT_DIR specify where you wish to install the campsite
+	  html, cgi, and scripts. On a machine with virtual hosts you will likely
+	  want to choose these directories carefully.
+
 ####################################################################
 
 IN DEPTH - example installation
