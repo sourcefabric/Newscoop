@@ -886,7 +886,7 @@ inline int CParser::HURLParameters(CActionList& al)
 	                                    nLevel));
 	else
 		al.insert(al.end(),
-		          new CActURL(fromstart, allsubtitles, img, nResetList, nTemplate, nLevel));
+		          new CActURI(fromstart, allsubtitles, img, nResetList, nTemplate, nLevel));
 	if (l->res() != CMS_LEX_END_STATEMENT)
 		WaitForStatementEnd(true);
 	return 0;
@@ -2111,7 +2111,7 @@ int CParser::LevelParser(CActionList& al, int level, int sublevel)
 			if ((res = HURIPath(al)))
 				return res;
 			break;
-		case CMS_ST_URL:
+		case CMS_ST_URI:
 			if ((res = HURLParameters(al)))
 				return res;
 			break;
