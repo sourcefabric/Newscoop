@@ -189,8 +189,6 @@ install=false
 install_location=
 type=HEADER
 
-[parser/threadpool.cpp]
-
 [parser/data_types.cpp]
 dist=true
 install=false

@@ -279,15 +279,12 @@ B_DIALOG(<*Edit article details*>, <*POST*>, <*do_edit.php*>)
 	<? } else { ?>dnl
 		<!-- blob -->
 
-		<!sql query "SELECT ?q_fld.0, length(?q_fld.0) FROM X?q_art.Type WHERE NrArticle=?Article AND IdLanguage=?sLanguage" q_afld>dnl
-		<!sql if $q_afld.1 = 0>
-			B_DIALOG_INPUT({<!sql print ~q_substr.0>:}) <a href="X_ROOT/pub/issues/sections/articles/edit_t.xql?Pub=<!sql print #Pub>&Issue=<!sql print #Issue>&Section=<!sql print #Section>&Article=<!sql print #Article>&Language=<!sql print #Language>&sLanguage=<!sql print #sLanguage>&eField=<!sql print #q_fld.0>"> Simple editor</a> / <a href="X_ROOT/pub/issues/sections/articles/edit_b.xql?Pub=<!sql print #Pub>&Issue=<!sql print #Issue>&Section=<!sql print #Section>&Article=<!sql print #Article>&Language=<!sql print #Language>&sLanguage=<!sql print #sLanguage>&eField=<!sql print #q_fld.0>"> Advanced editor</a>
-		<!sql else>
-			B_DIALOG_INPUT({<BR><!sql print ~q_substr.0>:<BR> X_NEW_BUTTON({Edit}, {X_ROOT/pub/issues/sections/articles/edit_b.xql?Pub=<!sql print #Pub>&Issue=<!sql print #Issue>&Section=<!sql print #Section>&Article=<!sql print #Article>&Language=<!sql print #Language>&sLanguage=<!sql print #sLanguage>&eField=<!sql print #q_fld.0>})}, {TOP})
+		<?
+		    query ("SELECT ".getNumVar($q_fld,0).", length(".getNumVar($q_fld,0).") FROM X".getSVar($q_art,'Type')." WHERE NrArticle=$Article AND IdLanguage=$sLanguage", 'q_afld');
+		    fetchRowNum($q_afld);   ?>
+			B_X_DIALOG_INPUT(<*<BR><? pencHTML($table); ?>:<BR> X_NEW_BUTTON(<*Edit*>, <*javascript:campfire('Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Section=<? p($Section); ?>&Article=<? p($Article); ?>&Language=<? p($Language); ?>&sLanguage=<? p($sLanguage); ?>&eField=<? pencURL(getNumVar($q_fld,0)); ?>')*>)*>, <*TOP*>)
 		X_HR
-		<table width=100% border=2><tr bgcolor=LightBlue><td><!sql print $q_afld.0></td></tr></table>
-		<!sql endif>
-		<!sql free q_afld>dnl
+		<table width=100% border=2><tr bgcolor=LightBlue><td><? pgetNumVar($q_afld,0); ?></td></tr></table>
 		<BR><P>
 	<? } ?>dnl
 
