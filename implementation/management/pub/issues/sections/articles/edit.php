@@ -40,6 +40,22 @@ $hasAccess = false;
 if ($User->hasPermission('ChangeArticle') || (($articleObj->getUserId() == $User->getId()) && ($articleObj->getPublished() == 'N'))) {
 	$hasAccess = true;
 	$edit_ok = 0;
+	
+	//
+	// Automatic unlocking
+	//
+	// If the article hasnt been touched in 24 hours
+	if ( (time() - strtotime($articleObj->getLockTime())) > 86400) {
+		$articleObj->unlock();
+		$edit_ok = 1;		
+	}
+	// If the user who locked the article doesnt exist anymore, unlock the article.
+	elseif (($articleObj->getLockedByUser() != 0) && !$lockUserObj->exists()) {
+		$articleObj->unlock();
+		$edit_ok = 1;
+	}
+	
+	// Automatic locking
 	// If the article is not locked by a user or its been locked by the current user.
 	if (($articleObj->getLockedByUser() == 0) 
 		|| ($articleObj->getLockedByUser() == $User->getId())) {
@@ -47,11 +63,6 @@ if ($User->hasPermission('ChangeArticle') || (($articleObj->getUserId() == $User
 		$articleObj->lock($User->getId());
 	    $edit_ok = 1;
 	} 
-	// If the user who locked the article doesnt exist anymore, unlock the article.
-	if (($articleObj->getLockedByUser() != 0) && !$lockUserObj->exists()) {
-		$articleObj->unlock();
-		$edit_ok = 1;
-	}
 }
 
 if ($User->hasPermission('AddArticle')) { 
@@ -469,10 +480,31 @@ if ($edit_ok) { ?>
 			// Transform Campsite-specific tags into editor-friendly tags.
 			$text = $articleType->getProperty($dbColumn->getName());
 			
+			// Subheads
 			$text = preg_replace("/<!\*\*\s*Title\s*>/i", "<span class=\"campsite_subhead\">", $text);
 			$text = preg_replace("/<!\*\*\s*EndTitle\s*>/i", "</span>", $text);
-			$text = preg_replace("/<!\*\*\s*Link\s*Internal\s*[\w&]*\s*>/i", "<a href=\"campsite_internal_link?\7\">", $text);
+			
+			// Internal Links
+			$text = preg_replace("/<!\*\*\s*Link\s*Internal\s*([\w=&]*)\s*>/i", '<a href="campsite_internal_link?$1">', $text);
 			$text = preg_replace("/<!\*\*\s*EndLink\s*>/i", "</a>", $text);
+			
+			// External Links
+			// Match the case when there is a target with the link
+			$text = preg_replace("/<!\*\*\s*Link\s*external\s*(['\"][^'\"]*['\"])\s*(target)\s*(['\"][^'\"]*['\"])\s*>/i", '<a href=$1 $3=$4>', $text);
+			// Match the case when there isnt a target
+			$text = preg_replace("/<!\*\*\s*Link\s*external\s*(['\"][^'\"]*['\"])\s*>/i", '<a href=$1>', $text);
+			
+			// Images
+			preg_match_all("/<!\*\*\s*Image\s*([\d]*)\s*/i",$text, $imageMatches);
+			if (isset($imageMatches[1][0])) {
+				foreach ($imageMatches[1] as $templateId) {
+					// Get the image URL
+					$articleImage =& new ArticleImage($Article, null, $templateId);
+					$image =& new Image($articleImage->getImageId());
+					$imageUrl = $image->getImageUrl();
+					$text = preg_replace("/<!\*\*\s*Image\s*".$templateId."\s*/i", '<img src="'.$imageUrl.'" ', $text);
+				}
+			}			
 			?>
 			<TR>
 			<TD ALIGN="RIGHT" VALIGN="TOP" style="padding-top: 25px;">
