@@ -1,9 +1,8 @@
 include ../../make.env
 
-MY_TARGETS=login.php
 ALL=all
 
-all: $(MY_TARGETS)
+all: dummy
 	$(MAKE) -C root
 	$(MAKE) -C bin
 	$(MAKE) -C cgi
@@ -19,12 +18,6 @@ all: $(MY_TARGETS)
 	$(MAKE) -C logs
 	$(MAKE) -C country
 	$(MAKE) -C localizer
-
-%.php: %.m4 macros.m4
-	$(M4) macros.m4 $< >$@
-
-%.html: %.m4 macros.m4
-	$(M4) macros.m4 $< >$@
 
 install: $(ALL)
 	mkdir -p $(BIN_DIR)
@@ -63,7 +56,6 @@ install: $(ALL)
 	pear install Net_URL HTTP_Request HTTP_Client
 
 clean: dummy
-	rm -f *~ $(MY_TARGETS)
 	$(MAKE) -C root clean
 	$(MAKE) -C bin clean
 	$(MAKE) -C cgi clean
