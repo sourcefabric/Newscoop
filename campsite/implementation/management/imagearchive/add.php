@@ -2,6 +2,7 @@
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
 load_common_include_files();
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ImageSearch.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/priv/CampsiteInterface.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/priv/imagearchive/include.inc.php');
 
@@ -15,7 +16,7 @@ if (!$User->hasPermission('AddImage')) {
 	exit;	
 }
 $view = isset($_REQUEST['view'])?$_REQUEST['view']:'thumbnail';
-
+$imageNav =& new ImageNav($_REQUEST, CAMPSITE_IMAGEARCHIVE_IMAGES_PER_PAGE, $view);
 query ("SELECT LEFT(NOW(), 10)", 'q_now');
 fetchRowNum($q_now);
 
@@ -42,7 +43,7 @@ fetchRowNum($q_now);
 	<TR><TD ALIGN=RIGHT>
 	  <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
 		<TR>
-		  <TD><A HREF="<?php echo CAMPSITE_IMAGEARCHIVE_DIR.'?'.Image_GetSearchUrl($_REQUEST); ?>" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS('Images'); ?>"></A></TD><TD><A HREF="<?php echo CAMPSITE_IMAGEARCHIVE_DIR.'?'.Image_GetSearchUrl($_REQUEST); ?>" ><B><?php  putGS('Images');  ?></B></A></TD>
+		  <TD><A HREF="index.php?<?php echo $imageNav->getSearchLink(); ?>" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS('Image archive'); ?>"></A></TD><TD><A HREF="index.php?<?php echo $imageNav->getSearchLink(); ?>" ><B><?php  putGS('Image archive');  ?></B></A></TD>
 		  <TD><A HREF="/priv/home.php" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS('Home'); ?>"></A></TD><TD><A HREF="/priv/home.php" ><B><?php  putGS('Home');  ?></B></A></TD>
 		  <TD><A HREF="/priv/logout.php" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS('Logout'); ?>"></A></TD><TD><A HREF="/priv/logout.php" ><B><?php  putGS('Logout');  ?></B></A></TD>
 		</TR>
@@ -51,7 +52,7 @@ fetchRowNum($q_now);
 </TABLE>
 
 <P>
-<FORM NAME="dialog" METHOD="POST" ACTION="do_add.php?<?php echo Image_GetSearchUrl($_REQUEST); ?>" ENCTYPE="multipart/form-data">
+<FORM NAME="dialog" METHOD="POST" ACTION="do_add.php?<?php echo $imageNav->getSearchLink(); ?>" ENCTYPE="multipart/form-data">
 <CENTER><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" BGCOLOR="#C0D0FF" ALIGN="CENTER">
 	<TR>
 		<TD COLSPAN="2">
@@ -92,7 +93,7 @@ fetchRowNum($q_now);
 	<TR>
 		<TD ALIGN="RIGHT" ><?php putGS('Image'); ?>:</TD>
 		<TD align="left">
-		<INPUT TYPE="FILE" NAME="cImage" SIZE="32" >
+		<INPUT TYPE="FILE" NAME="cImage" SIZE="32" class="input_file">
 		</TD>
 	</TR>
 	<TR>
@@ -100,7 +101,7 @@ fetchRowNum($q_now);
 		<DIV ALIGN="CENTER">
         <input type="hidden" name="view" value="<?php echo $view ?>"> 
 		<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save changes'); ?>" class="button">
-		<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="history.back()" class="button">
+		<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='index.php?<?php echo $imageNav->getSearchLink(); ?>'" class="button">
 		</DIV>
 		</TD>
 	</TR>
