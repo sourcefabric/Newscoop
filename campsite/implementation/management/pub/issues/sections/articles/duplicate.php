@@ -1,172 +1,237 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
-	"http://www.w3.org/TR/REC-html40/loose.dtd">
-<HTML>
-<?php  include ("../../../../lib_campsite.php");
-    $globalfile=selectLanguageFile('../../../..','globals');
-    $localfile=selectLanguageFile('.','locals');
-    @include ($globalfile);
-    @include ($localfile);
-    include ("../../../../languages.php");   ?>
-<?php  require_once("$DOCUMENT_ROOT/db_connect.php"); ?>
+<?php
+require_once($_SERVER['DOCUMENT_ROOT']. "/priv/pub/issues/sections/articles/article_common.php");
 
+list($access, $User) = check_basic_access($_REQUEST);
+if (!$access) {
+	header("Location: /priv/logout.php");
+	exit;
+}
+if (!$User->hasPermission("AddArticle")) {
+	header("Location: /priv/ad.php?ADReason=".urlencode(getGS("You do not have the right to add articles." ))); 	
+	exit;
+}
 
-<?php 
-    todefnum('TOL_UserId');
-    todefnum('TOL_UserKey');
-    query ("SELECT * FROM Users WHERE Id=$TOL_UserId AND KeyId=$TOL_UserKey", 'Usr');
-    $access=($NUM_ROWS != 0);
-    if ($NUM_ROWS) {
-	fetchRow($Usr);
-	query ("SELECT * FROM UserPerm WHERE IdUser=".getVar($Usr,'Id'), 'XPerm');
-	 if ($NUM_ROWS){
-	 	fetchRow($XPerm);
-	 }
-	 else $access = 0;						//added lately; a non-admin can enter the administration area; he exists but doesn't have ANY rights
-	 $xpermrows= $NUM_ROWS;
-    }
-    else {
-	query ("SELECT * FROM UserPerm WHERE 1=0", 'XPerm');
-    }
+$Pub = Input::get('Pub', 'int', 0);
+$Issue = Input::get('Issue', 'int', 0);
+$Section = Input::get('Section', 'int', 0);
+$Language = Input::get('Language', 'int', 0);
+$sLanguage = Input::get('sLanguage', 'int', 0);
+$Article = Input::get('Article', 'int', 0);
+$DestPublication = Input::get('destination_publication', 'int', 0, true);
+$DestIssue = Input::get('destination_issue', 'int', 0, true);
+$DestSection = Input::get('destination_section', 'int', 0, true);
+$BackLink = Input::get('Back', 'string', '/priv/pub/issues/sections/articles/index.php', true);
+
+if (!Input::isValid()) {
+	header("Location: /priv/logout.php");
+	exit;	
+}
+
+$publicationObj =& new Publication($Pub);
+if (!$publicationObj->exists()) {
+	header("Location: /priv/ad.php?ADReason=".urlencode(getGS('Publication does not exist.')));
+	exit;	
+}
+
+$issueObj =& new Issue($Pub, $Language, $Issue);
+if (!$issueObj->exists()) {
+	header("Location: /priv/ad.php?ADReason=".urlencode(getGS('Issue does not exist.')));
+	exit;	
+}
+
+$sectionObj =& new Section($Pub, $Issue, $Language, $Section);
+if (!$sectionObj->exists()) {
+	header("Location: /priv/ad.php?ADReason=".urlencode(getGS('Section does not exist.')));
+	exit;	
+}
+
+$articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
+if (!$articleObj->exists()) {
+	header("Location: /priv/ad.php?ADReason=".urlencode(getGS('Article does not exist.')));
+}
+
+$languageObj =& new Language($Language);
+$sLanguageObj =& new Language($sLanguage);
+
+$allPublications =& Publication::GetAllPublications();
+$allIssues = array();
+if ($DestPublication > 0) {
+	$allIssues =& Issue::GetIssuesInPublication($DestPublication);
+}
+$allSections = array();
+if ($DestIssue > 0) {
+	$allSections =& Section::GetSectionsInIssue($DestPublication, $DestIssue, $Language);
+}
+
+ArticleTop($articleObj, $Language, "Duplicate article");
 ?>
-    
 
+<P>
+<CENTER>
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" BGCOLOR="#C0D0FF" ALIGN="CENTER">
+<TR>
+	<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
+	<TD>
+	<INPUT DISABLED TYPE="TEXT" NAME="cName" SIZE="64" MAXLENGTH="64" VALUE="<?php  p(htmlspecialchars($articleObj->getTitle())); ?>" class="input_text_disabled">
+	</TD>
+</TR>
+<TR>
+	<TD ALIGN="RIGHT" ><?php  putGS("Type"); ?>:</TD>
+	<TD>
+	<B><?php p(htmlspecialchars($articleObj->getType())); ?></B>
+	</TD>
+</TR>
+<TR>
+	<TD ALIGN="RIGHT" ><?php  putGS("Uploaded"); ?>:</TD>
+	<TD>
+	<B><?php p(htmlspecialchars($articleObj->getUploadDate())); ?> <?php  putGS('(yyyy-mm-dd)'); ?></B>
+	</TD>
+</TR>
 
-<HEAD>
-    <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TR>
+	<td colspan="2">&nbsp;</TD>
+</TR>
+<TR>
+	<td colspan="2" style="padding-left: 20px; font-size: 12pt; font-weight: bold;"><?php  putGS("Select destination"); ?></TD>
+</TR>
+<TR>
+	<TD VALIGN="middle" ALIGN="RIGHT" style="padding-left: 20px;"><?php  putGS('Publication'); ?>: </TD>
+	<TD valign="middle" ALIGN="LEFT">
+		<?php if (count($allPublications) > 0) { ?>
+		<FORM NAME="FORM_PUB" METHOD="POST">
+		<input type="hidden" name="Pub" value="<?php p($Pub); ?>">
+		<input type="hidden" name="Issue" value="<?php p($Issue); ?>">
+		<input type="hidden" name="Section" value="<?php p($Section); ?>">
+		<input type="hidden" name="Language" value="<?php p($Language); ?>">
+		<input type="hidden" name="Article" value="<?php p($Article); ?>">
+		<input type="hidden" name="sLanguage" value="<?php p($sLanguage); ?>">
+		<input type="hidden" name="Back" value="<?php p($BackLink); ?>">
+		<SELECT NAME="destination_publication" class="input_select" ONCHANGE="if ((this.selectedIndex != 0) && (this.options[this.selectedIndex].value != <?php p($DestPublication); ?>)) {this.form.submit();}">
+		<OPTION VALUE="0"><?php  putGS('---Select publication---'); ?></option>
+		<?php 
+		foreach ($allPublications as $tmpPublication) {
+			?><option value="<?php p($tmpPublication->getPublicationId());?>" <?php if ($tmpPublication->getPublicationId() == $DestPublication) {	?>selected<?php	} ?>><?php p(htmlspecialchars($tmpPublication->getName())); ?></option>
+			<?
+		}
+		?>
+		</SELECT>
+		<?php
+		}
+		else {
+			?>
+			<SELECT class="input_select" DISABLED><OPTION><?php  putGS('No publications'); ?></option></SELECT>
+			<?php
+		}
+		?>
+		</form>
+	</td>
+</tr>
 
-	<META HTTP-EQUIV="Expires" CONTENT="now">
-	<TITLE><?php  putGS("Duplicate article"); ?></TITLE>
-<?php  if ($access == 0) { ?>	<META HTTP-EQUIV="Refresh" CONTENT="0; URL=/priv/logout.php">
-<?php  } ?>
-</HEAD>
+<tr>
+	<TD VALIGN="middle" ALIGN="RIGHT" style="padding-left: 20px;"><?php  putGS('Issue'); ?>: </TD>
+	<TD valign="middle" ALIGN="LEFT">
+		<?php if (($DestPublication > 0) && (count($allIssues) > 0)) { ?>
+		<FORM NAME="FORM_ISS" METHOD="POST">
+		<input type="hidden" name="Pub" value="<?php p($Pub); ?>">
+		<input type="hidden" name="Issue" value="<?php p($Issue); ?>">
+		<input type="hidden" name="Section" value="<?php p($Section); ?>">
+		<input type="hidden" name="Language" value="<?php p($Language); ?>">
+		<input type="hidden" name="Article" value="<?php p($Article); ?>">
+		<input type="hidden" name="sLanguage" value="<?php p($sLanguage); ?>">
+		<input type="hidden" name="Back" value="<?php p($BackLink); ?>">
+		<input type="hidden" name="destination_publication" value="<?php p($DestPublication); ?>">
+		<SELECT NAME="destination_issue" class="input_select" ONCHANGE="if ((this.selectedIndex != 0) && (this.options[this.selectedIndex].value != <?php p($DestIssue); ?>)) { this.form.submit(); }">
+		<OPTION VALUE="0"><?php  putGS('---Select issue---'); ?></option>
+		<?php 
+		foreach ($allIssues as $tmpIssue) {
+			?>
+			<option value="<?php p($tmpIssue->getIssueId());?>"
+			<?php
+			if ($tmpIssue->getIssueId() == $DestIssue) {
+				?>selected<?php
+			}
+			?>
+			><?php p(htmlspecialchars($tmpIssue->getName())); ?></option>
+			<?			
+		}
+		?>
+		</SELECT>
+		</FORM>
+		<?php  
+		} 
+		else { 
+			?><SELECT class="input_select" DISABLED><OPTION><?php  putGS('No issues'); ?></SELECT>
+			<?php  
+		} 
+		?>
+	</td>
+</tr>
 
-<STYLE>
-	BODY { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	SMALL { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 8pt; }
-	FORM { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	TH { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	TD { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	BLOCKQUOTE { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	UL { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	LI { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	A  { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; text-decoration: none; color: darkblue; }
-	ADDRESS { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 8pt; }
-</STYLE>
-
-<?php  if ($access) {
-?><BODY  BGCOLOR="WHITE" TEXT="BLACK" LINK="DARKBLUE" ALINK="RED" VLINK="DARKBLUE">
-<?php 
-	todefnum('Language');
-	todefnum('sLanguage');
-	todefnum('Pub');
-	todefnum('Issue');
-	todefnum('Section');
-	todefnum('Article');
-?>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%">
-	<TR>
-		<TD ROWSPAN="2" WIDTH="1%"><IMG SRC="/priv/img/sign_big.gif" BORDER="0"></TD>
-		<TD>
-		    <DIV STYLE="font-size: 12pt"><B><?php  putGS("Duplicate article"); ?></B></DIV>
-		    <HR NOSHADE SIZE="1" COLOR="BLACK">
+<tr>	
+	<TD VALIGN="middle" ALIGN="RIGHT" style="padding-left: 20px;"><?php  putGS('Section'); ?>: </TD>
+	<TD valign="middle" ALIGN="LEFT">
+		<?php if (($DestIssue > 0) && (count($allSections) > 0)) { ?>
+		<FORM NAME="FORM_SECT" METHOD="POST">
+		<input type="hidden" name="Pub" value="<?php p($Pub); ?>">
+		<input type="hidden" name="Issue" value="<?php p($Issue); ?>">
+		<input type="hidden" name="Section" value="<?php p($Section); ?>">
+		<input type="hidden" name="Language" value="<?php p($Language); ?>">
+		<input type="hidden" name="Article" value="<?php p($Article); ?>">
+		<input type="hidden" name="sLanguage" value="<?php p($sLanguage); ?>">
+		<input type="hidden" name="Back" value="<?php p($BackLink); ?>">
+		<input type="hidden" name="destination_publication" value="<?php p($DestPublication); ?>">
+		<input type="hidden" name="destination_issue" value="<?php p($DestIssue); ?>">
+		<SELECT NAME="destination_section" class="input_select" ONCHANGE="if ((this.selectedIndex != 0) && (this.options[this.selectedIndex].value != <?php p($DestSection); ?>)) { this.form.submit(); }">
+		<OPTION VALUE="0"><?php  putGS('---Select section---'); ?>
+		<?php 
+		foreach ($allSections as $tmpSection) {
+			?>
+			<option value="<?php p($tmpSection->getSectionId());?>"
+			<?php
+			if ($tmpSection->getSectionId() == $DestSection) {
+				?>selected<?php
+			}
+			?>
+			><?php p(htmlspecialchars($tmpSection->getName())); ?></option>
+			<?			
+		}
+		?>
+		</SELECT>
+		</form>
+		<?php  
+		} 
+		else { 
+			?><SELECT DISABLED><OPTION><?php  putGS('No sections'); ?></SELECT>
+			<?php  
+		}
+		?>
 		</TD>
-	</TR>
-	<TR><TD ALIGN=RIGHT><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0"><TR><TD><A HREF="/priv/pub/issues/sections/articles/edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Back to article details"); ?>"></A></TD><TD><A HREF="/priv/pub/issues/sections/articles/edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>" ><B><?php  putGS("Back to article details");  ?></B></A></TD>
-<TD><A HREF="/priv/pub/issues/sections/articles/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>&Section=<?php  p($Section); ?>" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Articles"); ?>"></A></TD><TD><A HREF="/priv/pub/issues/sections/articles/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>&Section=<?php  p($Section); ?>" ><B><?php  putGS("Articles");  ?></B></A></TD>
-<TD><A HREF="/priv/pub/issues/sections/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Sections"); ?>"></A></TD><TD><A HREF="/priv/pub/issues/sections/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>" ><B><?php  putGS("Sections");  ?></B></A></TD>
-<TD><A HREF="/priv/pub/issues/?Pub=<?php  p($Pub); ?>" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Issues"); ?>"></A></TD><TD><A HREF="/priv/pub/issues/?Pub=<?php  p($Pub); ?>" ><B><?php  putGS("Issues");  ?></B></A></TD>
-<TD><A HREF="/priv/pub/" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Publications"); ?>"></A></TD><TD><A HREF="/priv/pub/" ><B><?php  putGS("Publications");  ?></B></A></TD>
-<TD><A HREF="/priv/home.php" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Home"); ?>"></A></TD><TD><A HREF="/priv/home.php" ><B><?php  putGS("Home");  ?></B></A></TD>
-<TD><A HREF="/priv/logout.php" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Logout"); ?>"></A></TD><TD><A HREF="/priv/logout.php" ><B><?php  putGS("Logout");  ?></B></A></TD>
-</TR></TABLE></TD></TR>
-</TABLE>
+</tr>
 
-<?php 
-    query ("SELECT * FROM Articles WHERE IdPublication=$Pub AND NrIssue=$Issue AND NrSection=$Section AND Number=$Article AND IdLanguage=$sLanguage", 'q_art');
-    if ($NUM_ROWS) {
-	query ("SELECT * FROM Sections WHERE IdPublication=$Pub AND NrIssue=$Issue AND IdLanguage=$Language AND Number=$Section", 'q_sect');
-	if ($NUM_ROWS) {
-	    query ("SELECT * FROM Issues WHERE IdPublication=$Pub AND Number=$Issue AND IdLanguage=$Language", 'q_iss');
-	    if ($NUM_ROWS) {
-		query ("SELECT * FROM Publications WHERE Id=$Pub", 'q_pub');
-		if ($NUM_ROWS) {
-		    query ("SELECT Name FROM Languages WHERE Id=$Language", 'q_lang');
-		    query ("SELECT Name FROM Languages WHERE Id=$sLanguage", 'q_slang');
+<tr>
+	<td colspan="2"><?php 
+		if ( ($Pub == $DestPublication) && ($Issue == $DestIssue) && ($Section == $DestSection)) {
+			putGS("The destination section is the same as the source section."); echo "<BR>\n";
+		}
+	?></td>
+</tr>
 
-		    fetchRow($q_art);
-		    fetchRow($q_sect);
-		    fetchRow($q_iss);
-		    fetchRow($q_pub);
-		    fetchRow($q_lang);
-		    fetchRow($q_slang);
-?><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="1" WIDTH="100%"><TR>
-<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP">&nbsp;<?php  putGS("Publication"); ?>:</TD><TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><?php  pgetHVar($q_pub,'Name'); ?></B></TD>
-
-<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP">&nbsp;<?php  putGS("Issue"); ?>:</TD><TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><?php  pgetHVar($q_iss,'Number'); ?>. <?php  pgetHVar($q_iss,'Name'); ?> (<?php  pgetHVar($q_lang,'Name'); ?>)</B></TD>
-
-<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP">&nbsp;<?php  putGS("Section"); ?>:</TD><TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><?php  pgetHVar($q_sect,'Number'); ?>. <?php  pgetHVar($q_sect,'Name'); ?></B></TD>
-
-<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP">&nbsp;<?php  putGS("Article"); ?>:</TD><TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><?php  pgetHVar($q_art,'Name'); ?> (<?php  pgetHVar($q_slang,'Name'); ?>)</B></TD>
-
-</TR></TABLE>
-
-
-	<?php  if($xpermrows) {
-		$xaccess=(getvar($XPerm,'AddArticle') == "Y");
-		if($xaccess =='') $xaccess = 0;
-	}
-	else $xaccess = 0;
-	?>
-	
-
-<?php 
-    if ($xaccess) {
-?>
-<P><CENTER><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" BGCOLOR="#C0D0FF" ALIGN="CENTER">
-
-	<TR>
-		<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
-		<TD>
-		<INPUT DISABLED TYPE="TEXT" NAME="cName" SIZE="64" MAXLENGTH="64" VALUE="<?php  pgetHVar($q_art,'Name'); ?>">
-		</TD>
-	</TR>
-	<TR>
-		<TD ALIGN="RIGHT" ><?php  putGS("Type"); ?>:</TD>
-		<TD>
-		<B><?php  pgetHVar($q_art,'Type'); ?></B>
-		</TD>
-	</TR>
-	<TR>
-		<TD ALIGN="RIGHT" ><?php  putGS("Uploaded"); ?>:</TD>
-		<TD>
-		<B><?php  pgetHVar($q_art,'UploadDate'); ?> <?php  putGS('(yyyy-mm-dd)'); ?></B>
-		</TD>
-	</TR>
-
-</TABLE></CENTER>
-
-<P><DIV><TABLE><TR><TH WIDTH="150"></TH><TH><?php  putGS("Select destination"); ?></TH></TR></TABLE></DIV></P>
-
-<?php  } else { ?>	<META HTTP-EQUIV="Refresh" CONTENT="0; URL=/priv/ad.php?ADReason=<?php  print encURL(getGS("You do not have the right to add articles." )); ?>">
-<?php  } ?>
-<?php  } else { ?><BLOCKQUOTE>
-	<LI><?php  putGS('No such publication.'); ?></LI>
-</BLOCKQUOTE>
-<?php  } ?>
-<?php  } else { ?><BLOCKQUOTE>
-	<LI><?php  putGS('No such issue.'); ?></LI>
-</BLOCKQUOTE>
-<?php  } ?>
-<?php  } else { ?><BLOCKQUOTE>
-	<LI><?php  putGS('No such section.'); ?></LI>
-</BLOCKQUOTE>
-<?php  } ?>
-<?php  } else { ?><BLOCKQUOTE>
-	<LI><?php  putGS('No such article.'); ?></LI>
-</BLOCKQUOTE>
-<?php  } ?>
-<?php  } // access ?>
-</BODY>
-
-
-</HTML>
+<tr>
+	<td align="center" colspan="2">
+		<FORM NAME="ART_DUP" METHOD="POST" action="do_duplicate.php">
+		<input type="hidden" name="Pub" value="<?php p($Pub); ?>">
+		<input type="hidden" name="Issue" value="<?php p($Issue); ?>">
+		<input type="hidden" name="Section" value="<?php p($Section); ?>">
+		<input type="hidden" name="Language" value="<?php p($Language); ?>">
+		<input type="hidden" name="Article" value="<?php p($Article); ?>">
+		<input type="hidden" name="sLanguage" value="<?php p($sLanguage); ?>">
+		<input type="hidden" name="destination_publication" value="<?php p($DestPublication); ?>">
+		<input type="hidden" name="destination_issue" value="<?php p($DestIssue); ?>">
+		<input type="hidden" name="destination_section" value="<?php p($DestSection); ?>">
+		<INPUT TYPE="button" Name="Duplicate" Value="<?php putGS("Duplicate article"); ?>" <?php if (($DestPublication <= 0) || ($DestIssue <=0) || ($DestSection <= 0)) { echo 'class="button_disabled"'; } else { echo 'class="button" onclick="this.form.submit();"'; }?> >
+		<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='<?php echo CampsiteInterface::ArticleUrl($articleObj, $Language, $BackLink); ?>'" class="button">
+		</FORM>
+	</td>
+</tr>
+</table>
+<?php CampsiteInterface::CopyrightNotice(); ?>
