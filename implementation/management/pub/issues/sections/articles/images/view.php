@@ -45,7 +45,7 @@ $imageObj =& new Image($ImageId);
 
 	<META HTTP-EQUIV="Expires" CONTENT="now">
 	<TITLE><?php  putGS("View image"); ?></TITLE>
-	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite["website_url"] ?>/css/admin_stylesheet.css">	
+	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">	
 </HEAD>
 
 <BODY>

@@ -41,7 +41,7 @@ if (function_exists ("incModFile")) {
 ?>
 <HEAD>
 	<TITLE><?php  putGS("Add new article"); ?></TITLE>
-	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite["website_url"] ?>/css/admin_stylesheet.css">
+	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
 </HEAD>
 
 <BODY>
