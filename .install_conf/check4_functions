@@ -542,6 +542,11 @@ check4_xml()
 is_checked xml && return 0
 check4_file xml2-config --executable --path "/usr/bin:/usr/local/bin:/opt/bin"
 result=$? && [ $result -ne 0 ] && output="Could not find XML development files. Please install libxml2-devel package." && return 1
+export XML_VERSION=`xml2-config --version`
+if [ "$XML_VERSION" "<" "2.6.0" ]; then
+    output="The XML library is older than 2.6.0. Please install 2.6.0 or newer version."
+    return 1
+fi
 export XML_INCLUDE=`xml2-config --cflags`
 export XML_LINK=`xml2-config --libs`
 set_checked xml
