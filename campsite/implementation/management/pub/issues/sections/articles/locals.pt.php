@@ -1,4 +1,5 @@
 <?
+
 regGS("Delete article $1","Eliminar Artigo $1.");
 regGS("Show article on front page","Mostrar Artigo na 1ª Página");
 regGS("Show article on section page","Mostrar Artigo na página de Secção");
@@ -13,6 +14,7 @@ regGS("Delete article","Eliminar Artigo");
 regGS("You do not have the right to delete articles.","Não tem permissões para eliminar Artigos.");
 regGS("Are you sure you want to delete the article $1 ($2)?","Confirme a Eliminação do Artigo $1 ($2)?");
 regGS("Deleting article","Eliminando Artigo");
+regGS("There are $1 image(s) left.","Resta(m) $1 imagen(s).");
 regGS("The article $1 ($2) has been deleted.","Artigo $1 ($2) foi eliminado");
 regGS("The article $1 ($2) could not be deleted.","Artigo $1 ($2) não pode ser eliminado");
 regGS("Article $1 ($2) deleted from $3. $4 from $5. $6 ($7) of $8","Artigo $1 ($2) foi eliminado de $3. $4 de $5. $6 ($7) de $8");
@@ -43,5 +45,11 @@ regGS("This article has been locked by $1 ($2) at","Este Artigo foi bloqueado po
 regGS("Now is $1","São agora $1");
 regGS("Are you sure you want to unlock it?","Confirme o desbloqueamento");
 regGS("Edit article","Editar Artigo");
+regGS("Duplicate article","Duplicar Artigo");
+regGS("Duplicating article","Duplicando Artigo");
+regGS("The destination section is the same as the source section.","Secção destino idêntica à de origem.");
+regGS("The article $1 has been duplicated as $2","O Artigo $1 foi duplicado para $2");
+regGS("The article $1 could not be duplicated","O Artigo $1 não pode ser duplicado");
+
 
 ?>
