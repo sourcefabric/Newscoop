@@ -1,7 +1,10 @@
 <?php
 
 
+global $Campsite, $info_messages;
 $info_messages = array();
+$Campsite = array();
+
 if (!create_instance($GLOBALS['argv'], $errors)) {
 	foreach($errors as $index=>$error)
 		echo "$error\n";
@@ -375,8 +378,8 @@ function create_virtual_host(&$p_defined_parameters)
 
 	$file_content = file_get_contents($vhost_template);
 
-	$html_dir = $Campsite['WWW_DIR'] . "/html";
-	$cgi_dir = $Campsite['WWW_DIR'] . "/cgi-bin";
+	$html_dir = $Campsite['WWW_DIR'] . "/$instance_name/html";
+	$cgi_dir = $Campsite['WWW_DIR'] . "/$instance_name/cgi-bin";
 
 	$search = array('$INSTANCE_HTML_DIR', '$INSTANCE_CGI_DIR');
 	$replace = array($html_dir, $cgi_dir);
