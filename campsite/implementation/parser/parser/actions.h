@@ -271,7 +271,7 @@ public:
 	// Parameters:
 	//		const string& p_pchLang - language name
 	CActLanguage(const string& p_pcoLang) : m_coLang(p_pcoLang) {}
-	
+
 	// destructor
 	virtual ~CActLanguage() {}
 	
@@ -331,7 +331,7 @@ public:
 	// Parameters:
 	//		const CParameter& p - parameter
 	CActPublication(const CParameter& p) : param(p) {}
-	
+
 	// copy-constructor
 	CActPublication(const CActPublication& s) : param("") { *this = s; }
 
@@ -369,7 +369,7 @@ public:
 	// Parameters:
 	//		const CParameter& p - parameter
 	CActIssue(const CParameter& p) : param(p) {}
-	
+
 	// copy-constructor
 	CActIssue(const CActIssue& s) : param("") { *this = s; }
 	
@@ -407,7 +407,7 @@ public:
 	// Parameters:
 	//		const CParameter& p - parameter
 	CActSection(const CParameter& p) : param(p) {}
-	
+
 	// copy-constructor
 	CActSection(const CActSection& s) : param("") { *this = s; }
 	
@@ -486,7 +486,7 @@ public:
 	
 	// copy-constructor
 	CActTopic(const CActTopic& s) : param("") { *this = s; }
-	
+
 	// destructor
 	virtual ~CActTopic() {}
 
@@ -627,6 +627,8 @@ protected:
 	bool allsubtitles;		// if true, print all subtitles parameter
 	CLevel reset_from_list;	// level from which to reset list start
 	long int m_coTemplate;	// specified a certain template to be used
+	TPubLevel m_nPubLevel;	// identifies the level in the publication structure; parameters
+							// above this level are cut
 
 	// PrintSubtitlesURL: print url parameters for subtitle list/printing
 	// Parameters:
@@ -638,9 +640,10 @@ protected:
 public:
 	// constructor
 	CActURLParameters(bool fs = false, bool as = false, long int i = -1, CLevel r_fl = CLV_ROOT,
-	                  long int tpl = -1)
-		: image_nr(i), fromstart(fs), allsubtitles(as), reset_from_list(r_fl), m_coTemplate(tpl) {}
-	
+	                  long int tpl = -1, TPubLevel lvl = CMS_PL_ARTICLE)
+		: image_nr(i), fromstart(fs), allsubtitles(as), reset_from_list(r_fl), m_coTemplate(tpl),
+		m_nPubLevel(lvl) {}
+
 	// destructor
 	virtual ~CActURLParameters() {}
 
@@ -793,7 +796,7 @@ public:
 		if (!s_coModifiers.validModifier(m))
 			throw InvalidModifier();
 	}
-	
+
 	// copy-constructor
 	CActIf(const CActIf& s) : param("") { *this = s; }
 	
@@ -830,7 +833,7 @@ public:
 	// Parameters:
 	//		const string& d - date attribute
 	CActDate(const string& d) : attr(d) {}
-	
+
 	// destructor
 	virtual ~CActDate() {}
 
@@ -861,7 +864,7 @@ public:
 		text = t;
 		text_len = tl;
 	}
-	
+
 	// destructor
 	virtual ~CActText() {}
 
@@ -930,7 +933,7 @@ public:
 	CActSubscription(bool bp, long int p_nTemplateId, string bn, string t, string ev)
 		: by_publication(bp), m_nTemplateId(p_nTemplateId), button_name(bn), total(t), evaluate(ev)
 	{}
-	
+
 	// destructor
 	virtual ~CActSubscription() {}
 
@@ -1027,7 +1030,7 @@ public:
 		if (!s_coModifiers.validModifier(m))
 			throw InvalidModifier();
 	}
-	
+
 	// destructor
 	virtual ~CActSelect() {}
 
@@ -1062,7 +1065,7 @@ public:
 	// constructor
 	CActUser(bool a, long int p_nTemplateId, string &bn)
 		: add(a), m_nTemplateId(p_nTemplateId), button_name(bn) {}
-	
+
 	// destructor
 	virtual ~CActUser() {}
 
@@ -1093,7 +1096,7 @@ public:
 	// constructor
 	CActLogin(long int p_nTemplateId, const string &bn)
 		: m_nTemplateId(p_nTemplateId), button_name(bn) {}
-	
+
 	// destructor
 	virtual ~CActLogin() {}
 
@@ -1124,7 +1127,7 @@ public:
 	// constructor
 	CActSearch(long int p_nTemplateId, const string& bn)
 		: m_nTemplateId(p_nTemplateId), button_name(bn) {}
-	
+
 	// destructor
 	virtual ~CActSearch() {}
 
@@ -1155,7 +1158,7 @@ protected:
 public:
 	// constructor
 	CActWith(const string& art_t, const string& fld) : art_type(art_t), field(fld) {}
-	
+
 	// destructor
 	virtual ~CActWith() {}
 
@@ -1177,12 +1180,14 @@ public:
 class CActURIPath : public CAction
 {
 protected:
-	CParameterList params;
+	long int m_nTemplate;
+	TPubLevel m_nPubLevel;
 
 public:
 	// constructor
-	CActURIPath(CParameterList& p) : params(p) {}
-	
+	CActURIPath(long int p_nTemplate = -1, TPubLevel p_nPubLevel = CMS_PL_ARTICLE)
+		: m_nTemplate(p_nTemplate), m_nPubLevel(p_nPubLevel) {}
+
 	// destructor
 	virtual ~CActURIPath() {}
 
@@ -1191,6 +1196,35 @@ public:
 
 	// clone this object
 	virtual CAction* clone() const { return new CActURIPath(*this); }
+
+	// takeAction: performs the action
+	// Parametes:
+	//		CContext& c - current context
+	//		sockstream& fs - output stream
+	virtual int takeAction(CContext& c, sockstream& fs);
+};
+
+// CActURL: URL action - corresponding to URL statement (see manual)
+class CActURL : public CAction
+{
+protected:
+	CActURIPath m_coURIPath;
+	CActURLParameters m_coURLParameters;
+
+public:
+	// constructor
+	CActURL(bool fs = false, bool as = false, long int i = -1, CLevel r_fl = CLV_ROOT,
+	        long int tpl = -1, TPubLevel lvl = CMS_PL_ARTICLE)
+		: m_coURIPath(tpl, lvl), m_coURLParameters(fs, as, i, r_fl, tpl, lvl) {}
+
+	// destructor
+	virtual ~CActURL() {}
+
+	// action: return action identifier
+	virtual TAction action() const { return CMS_ACT_URL; }
+
+	// clone this object
+	virtual CAction* clone() const { return new CActURL(*this); }
 
 	// takeAction: performs the action
 	// Parametes:
