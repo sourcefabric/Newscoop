@@ -186,8 +186,8 @@ protected:
 	// The returned string must be deallocated by the user using delete operator.
 	// Parameters:
 	//		const char* src - source string
-	//		UInt p_nLength - string length
-	char* SQLEscapeString(const char* src, UInt p_nLength);
+	//		ulint p_nLength - string length
+	char* SQLEscapeString(const char* src, ulint p_nLength);
 
 public:
 	// destructor
@@ -236,8 +236,8 @@ public:
 	// Parameters:
 	//		const char* p_pchDate - date to format
 	//		const char* p_pchFormat - format of the date
-	//		long int p_nLanguageId - language to use
-	string dateFormat(const char* p_pchDate, const char* p_pchFormat, long int p_nLanguageId);
+	//		id_type p_nLanguageId - language to use
+	string dateFormat(const char* p_pchDate, const char* p_pchFormat, id_type p_nLanguageId);
 };
 
 
@@ -526,8 +526,8 @@ private:
 	static CListModifiers s_coModifiers;
 
 protected:
-	long int length;				// list length
-	long int columns;				// columns (used to build tables)
+	lint length;					// list length
+	lint columns;					// columns (used to build tables)
 	CParameterList mod_param;		// modifier parameters
 	CParameterList ord_param;		// order parameters
 	CActionList first_block;		// first list of actions (list is not empty)
@@ -574,8 +574,8 @@ protected:
 	// modifier
 	// Parameters:
 	//		CContext& c - current context
-	// 		long int value - value to be set
-	void SetContext(CContext& c, long int value);
+	// 		id_type value - value to be set
+	void SetContext(CContext& c, id_type value);
 	
 	// IMod2Level: convert from list modifier to level identifier; return level identifier
 	// Parameters:
@@ -586,11 +586,11 @@ public:
 	// constructor
 	// Parameters:
 	//		int m - list modifier
-	//		long int l - list length
-	//		long int c - list columns
+	//		lint l - list length
+	//		lint c - list columns
 	//		CParameterList& mp - modifier parameter list
 	//		CParameterList& op - order parameter list
-	CActList(int m, long int l, long int c, CParameterList& mp, CParameterList& op)
+	CActList(int m, lint l, lint c, CParameterList& mp, CParameterList& op)
 		throw (InvalidModifier)
 		: length(l), columns(c), mod_param(mp), ord_param(op), modifier(m)
 	{
@@ -622,11 +622,11 @@ public:
 class CActURLParameters : public CAction
 {
 protected:
-	long int image_nr;		// if not -1, print url parameters for image nr.
+	id_type image_nr;		// if not -1, print url parameters for image nr.
 	bool fromstart;			// if true, print url parameters using template start parameters
 	bool allsubtitles;		// if true, print all subtitles parameter
 	CLevel reset_from_list;	// level from which to reset list start
-	long int m_coTemplate;	// specified a certain template to be used
+	id_type m_coTemplate;	// specified a certain template to be used
 	TPubLevel m_nPubLevel;	// identifies the level in the publication structure; parameters
 							// above this level are cut
 
@@ -639,8 +639,8 @@ protected:
 
 public:
 	// constructor
-	CActURLParameters(bool fs = false, bool as = false, long int i = -1, CLevel r_fl = CLV_ROOT,
-	                  long int tpl = -1, TPubLevel lvl = CMS_PL_ARTICLE)
+	CActURLParameters(bool fs = false, bool as = false, id_type i = -1, CLevel r_fl = CLV_ROOT,
+	                  id_type tpl = -1, TPubLevel lvl = CMS_PL_ARTICLE)
 		: image_nr(i), fromstart(fs), allsubtitles(as), reset_from_list(r_fl), m_coTemplate(tpl),
 		m_nPubLevel(lvl) {}
 
@@ -703,13 +703,13 @@ private:
 	static CPrintModifiers s_coModifiers;
 
 protected:
-	string attr;				// attribute to print
-	string type;				// attribute type (for special type attributes)
-	bool strictType;			// if true print only if type member matches the current article type
-	string format;				// if attribute is of date type, format to use for printing
-	int modifier;				// print modifier
-	int image;					// image number for printing image attributes
-	CCParser cparser;			// article content parser
+	string attr;		// attribute to print
+	string type;		// attribute type (for special type attributes)
+	bool strictType;	// if true print only if type member matches the current article type
+	string format;		// if attribute is of date type, format to use for printing
+	int modifier;		// print modifier
+	int image;			// image number for printing image attributes
+	CCParser cparser;	// article content parser
 
 	// BlobField: return 0 if field of table is blob type
 	// Parameters:
@@ -855,11 +855,11 @@ class CActText : public CAction
 {
 protected:
 	const char* text;		// text to print
-	ULInt text_len;		// text length
+	ulint text_len;		// text length
 
 public:
 	// constructor
-	CActText(const char* t, ULInt tl)
+	CActText(const char* t, ulint tl)
 	{
 		text = t;
 		text_len = tl;
@@ -922,7 +922,7 @@ class CActSubscription : public CAction
 
 protected:
 	bool by_publication;	// if true, subscribe on the whole publication
-	long int m_nTemplateId;		// identifier of the template to load on submit
+	id_type m_nTemplateId;		// identifier of the template to load on submit
 	string button_name;		// submit button name
 	string total;			// total field name
 	string evaluate;		// evaluate button name
@@ -930,7 +930,7 @@ protected:
 
 public:
 	// constructor
-	CActSubscription(bool bp, long int p_nTemplateId, string bn, string t, string ev)
+	CActSubscription(bool bp, id_type p_nTemplateId, string bn, string t, string ev)
 		: by_publication(bp), m_nTemplateId(p_nTemplateId), button_name(bn), total(t), evaluate(ev)
 	{}
 
@@ -1058,12 +1058,12 @@ class CActUser : public CAction
 protected:
 	CActionList block;			// list of action between User - EndUser
 	bool add;					// if true, perform user add action
-	long int m_nTemplateId;		// identifier of the template to load on submit
+	id_type m_nTemplateId;		// identifier of the template to load on submit
 	string button_name;			// submit button name
 
 public:
 	// constructor
-	CActUser(bool a, long int p_nTemplateId, string &bn)
+	CActUser(bool a, id_type p_nTemplateId, string &bn)
 		: add(a), m_nTemplateId(p_nTemplateId), button_name(bn) {}
 
 	// destructor
@@ -1089,12 +1089,12 @@ class CActLogin : public CAction
 
 protected:
 	CActionList block;	// actions between Login - EndLogin statements
-	long int m_nTemplateId;		// identifier of the template to load on submit
+	id_type m_nTemplateId;		// identifier of the template to load on submit
 	string button_name;		// submit button name
 
 public:
 	// constructor
-	CActLogin(long int p_nTemplateId, const string &bn)
+	CActLogin(id_type p_nTemplateId, const string &bn)
 		: m_nTemplateId(p_nTemplateId), button_name(bn) {}
 
 	// destructor
@@ -1120,12 +1120,12 @@ class CActSearch : public CAction
 
 protected:
 	CActionList block;			// actions between Search - EndSearch statements
-	long int m_nTemplateId;		// identifier of the template to load on submit
+	id_type m_nTemplateId;		// identifier of the template to load on submit
 	string button_name;			// submit button name
 
 public:
 	// constructor
-	CActSearch(long int p_nTemplateId, const string& bn)
+	CActSearch(id_type p_nTemplateId, const string& bn)
 		: m_nTemplateId(p_nTemplateId), button_name(bn) {}
 
 	// destructor
@@ -1180,12 +1180,12 @@ public:
 class CActURIPath : public CAction
 {
 protected:
-	long int m_nTemplate;
+	id_type m_nTemplate;
 	TPubLevel m_nPubLevel;
 
 public:
 	// constructor
-	CActURIPath(long int p_nTemplate = -1, TPubLevel p_nPubLevel = CMS_PL_ARTICLE)
+	CActURIPath(id_type p_nTemplate = -1, TPubLevel p_nPubLevel = CMS_PL_ARTICLE)
 		: m_nTemplate(p_nTemplate), m_nPubLevel(p_nPubLevel) {}
 
 	// destructor
@@ -1213,8 +1213,8 @@ protected:
 
 public:
 	// constructor
-	CActURL(bool fs = false, bool as = false, long int i = -1, CLevel r_fl = CLV_ROOT,
-	        long int tpl = -1, TPubLevel lvl = CMS_PL_ARTICLE)
+	CActURL(bool fs = false, bool as = false, id_type i = -1, CLevel r_fl = CLV_ROOT,
+	        id_type tpl = -1, TPubLevel lvl = CMS_PL_ARTICLE)
 		: m_coURIPath(tpl, lvl), m_coURLParameters(fs, as, i, r_fl, tpl, lvl) {}
 
 	// destructor

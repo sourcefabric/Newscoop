@@ -339,7 +339,7 @@ public:
 
 	virtual string second() const { return (string)m_coSecond; }
 
-	long int secondId() const { return m_coSecond.id(); }
+	id_type secondId() const { return m_coSecond.id(); }
 
 	virtual const string& symbol() const { return m_rcoOp.symbol(); }
 
