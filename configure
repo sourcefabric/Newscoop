@@ -1,7 +1,15 @@
 #!/bin/sh
 
-export ROOT_USER=root
-export ROOT_GROUP=root
+export PREFIX=
+export USER_INSTALL=false
+
+if ! $USER_INSTALL; then
+	export ROOT_USER=root
+	export ROOT_GROUP=root
+else
+	export ROOT_USER=`id -un`
+	export ROOT_GROUP=`id -gn`
+fi
 export APACHE_CONF_PATH=""
 export APACHE_BIN_PATH=""
 c_upgrade=""
@@ -68,24 +76,24 @@ export ROOT_USER=$ROOT_USER
 export ROOT_GROUP=$ROOT_GROUP
 export APP_NAME=$APP_NAME
 export PACKAGE_TYPE=$PACKAGE_TYPE
-export CGI_DIR=$ADMIN_INTERFACE_CGI_DIR
-export SCRIPT_DIR=$ADMIN_INTERFACE_SCRIPT_DIR
-export HTML_DIR=$ADMIN_INTERFACE_HTML_DIR
-export PRIV_DIR=${ADMIN_INTERFACE_HTML_DIR}/priv
-export PUBLIC_DIR=${ADMIN_INTERFACE_HTML_DIR}/pub
+export CGI_DIR=$PREFIX/$ADMIN_INTERFACE_CGI_DIR
+export SCRIPT_DIR=$PREFIX/$ADMIN_INTERFACE_SCRIPT_DIR
+export HTML_DIR=$PREFIX/$ADMIN_INTERFACE_HTML_DIR
+export PRIV_DIR=$PREFIX/$ADMIN_INTERFACE_HTML_DIR/priv
+export PUBLIC_DIR=$PREFIX/$ADMIN_INTERFACE_HTML_DIR/pub
 export HTTP_USER=$APACHE_USER
 export HTTP_GROUP=$APACHE_GROUP
-export BIN_DIR=${ROOT_BIN_DIR}/$APP_NAME
-export CONF_DIR=/etc/campsite.d/$APP_NAME
-export BIN_PACKAGE_DIR=${CAMPSITE_PACKAGE_DIR}/.package/campsite
+export BIN_DIR=$PREFIX/$ROOT_BIN_DIR/$APP_NAME
+export CONF_DIR=$PREFIX/etc/campsite.d/$APP_NAME
+export BIN_PACKAGE_DIR=$CAMPSITE_PACKAGE_DIR/.package/campsite
 export CAMPSITE_VERSION="$CAMPSITE_VERSION"
-export CLASS_DIR=/usr/lib/netscape/java/classes
+export CLASS_DIR=$PREFIX/usr/lib/netscape/java/classes
 export PROCESSOR_TYPE=\`uname -m\`
 export MAKE=$MAKE
 export IMPLEMENTATION_PARTS=$IMPLEMENTATION_PARTS
 export SUPPLEMENTAL_PARTS=$SUPPLEMENTAL_PARTS
 export CAMPSITE_REGISTER=$CAMPSITE_REGISTER
-export INSTALL_CONF=${CAMPSITE_PACKAGE_DIR}/.install_conf
+export INSTALL_CONF=$CAMPSITE_PACKAGE_DIR/.install_conf
 EOF
 [ $? -ne 0 ] && echo "ERROR" && exit 1
 [ "$GPP" != "" ] && echo "export GPP=$GPP" >> $make_env
@@ -135,21 +143,21 @@ else # else if define start env
 
 fi # end if define start env
 
-export CGI_DIR=$ADMIN_INTERFACE_CGI_DIR
-export SCRIPT_DIR=$ADMIN_INTERFACE_SCRIPT_DIR
-export HTML_DIR=$ADMIN_INTERFACE_HTML_DIR
-export PRIV_DIR=${ADMIN_INTERFACE_HTML_DIR}/priv
-export PUBLIC_DIR=${ADMIN_INTERFACE_HTML_DIR}/pub
+export CGI_DIR=$PREFIX/$ADMIN_INTERFACE_CGI_DIR
+export SCRIPT_DIR=$PREFIX/$ADMIN_INTERFACE_SCRIPT_DIR
+export HTML_DIR=$PREFIX/$ADMIN_INTERFACE_HTML_DIR
+export PRIV_DIR=$PREFIX/$ADMIN_INTERFACE_HTML_DIR/priv
+export PUBLIC_DIR=$PREFIX/$ADMIN_INTERFACE_HTML_DIR/pub
 export HTTP_USER=$APACHE_USER
 export HTTP_GROUP=$APACHE_GROUP
-export BIN_DIR=${ROOT_BIN_DIR}/$APP_NAME
-export CONF_DIR=/etc/campsite.d/$APP_NAME
-export BIN_PACKAGE_DIR=${CAMPSITE_PACKAGE_DIR}/.package/campsite
-export CLASS_DIR=/usr/lib/netscape/java/classes
+export BIN_DIR=$PREFIX/$ROOT_BIN_DIR/$APP_NAME
+export CONF_DIR=$PREFIX/etc/campsite.d/$APP_NAME
+export BIN_PACKAGE_DIR=$CAMPSITE_PACKAGE_DIR/.package/campsite
+export CLASS_DIR=$PREFIX/usr/lib/netscape/java/classes
 export PROCESSOR_TYPE=`uname -m`
 export MAKE=$MAKE
 export IMPLEMENTATION_PARTS=$IMPLEMENTATION_PARTS
 export SUPPLEMENTAL_PARTS=$SUPPLEMENTAL_PARTS
-export CAMPSITE_REGISTER=/etc/campsite.reg
+export CAMPSITE_REGISTER=$PREFIX/etc/campsite.reg
 
 echo "Configuration done"

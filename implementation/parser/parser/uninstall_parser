@@ -28,6 +28,9 @@
 rm -f $BIN_DIR/$CAMPSITE_SERVER
 rm -f $BIN_DIR/$CAMPSITECTL
 rm -f $CONF_DIR/parser.conf
+
+if $USER_INSTALL; then exit 0; fi
+
 if [ -d $RC_INIT ]; then
 	test -f $RC_INIT/$CAMPSITEINIT && rm -f $RC_INIT/$CAMPSITEINIT
 	test -L /etc/rc.d/rc3.d/S95$CAMPSITEINIT && rm -f /etc/rc.d/rc3.d/S95$CAMPSITEINIT

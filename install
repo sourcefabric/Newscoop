@@ -117,7 +117,7 @@ fi
 configure_campsite $upgrade $interactive
 do_configure $upgrade --apache_conf_path "$apache_conf_path" --apache_bin_path "$apache_bin_path"
 compile_sources
-if [ $my_id -ne 0 ]; then
+if [ $my_id -ne 0 ] && ! $USER_INSTALL; then
     echo -e "\nIt is time to login as root. Please supply password."
     while true; do
 	echo -n "Root password: "

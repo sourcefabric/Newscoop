@@ -6,6 +6,9 @@ cp -f notifyevents $BIN_DIR
 chown $ROOT_USER.$ROOT_GROUP $BIN_DIR/notifyendsubs $BIN_DIR/notifyevents
 chmod 750 $BIN_DIR/notifyendsubs
 chmod 750 $BIN_DIR/notifyevents
+
+if $USER_INSTALL; then exit 0; fi
+
 . ${INSTALL_CONF}/cron_functions
 if [ -f /etc/crontab ]; then
     uninstall_cron_task "$BIN_DIR/notifyendsubs" /etc/crontab
