@@ -49,11 +49,11 @@ Integer::operator string() const
 }
 
 // string2int: converts string to int; throws InvalidValue if unable to convert
-long int Integer::string2int(const string& p_rcoVal) throw(InvalidValue)
+lint Integer::string2int(const string& p_rcoVal) throw(InvalidValue)
 {
 	const char* pchStart = p_rcoVal.c_str();
 	char* pchEnd;
-	long int nRes = strtol(pchStart, &pchEnd, 10);
+	lint nRes = strtol(pchStart, &pchEnd, 10);
 	if (nRes == LONG_MIN || nRes == LONG_MAX || pchEnd == pchStart || *pchEnd != '\0')
 		throw InvalidValue();
 	return nRes;
@@ -189,20 +189,20 @@ Enum::Item::Item(const string& p_rcoVal) throw(InvalidValue)
 }
 
 // CValuesMap: map used to store enum values
-class CValuesMap : private map<string, long int>
+class CValuesMap : private map<string, lint>
 {
 public:
 	// default constructor
 	CValuesMap() : m_bValuesValid(true), m_coValues("") {}
 
 	// insert: insert value in map
-	void insert(const string& val, long int id);
+	void insert(const string& val, lint id);
 
 	// erase: erase value from map
 	void erase(const string& val);
 
 	// id: return id associated to value
-	long int id(const string& val) const throw(InvalidValue);
+	lint id(const string& val) const throw(InvalidValue);
 
 	// has: return true if value is in map
 	bool has(const string& val) const;
@@ -216,7 +216,7 @@ private:
 };
 
 // insert: insert value in map
-inline void CValuesMap::insert(const string& val, long int id)
+inline void CValuesMap::insert(const string& val, lint id)
 {
 	m_bValuesValid = false;
 	this->operator [](val) = id;
@@ -229,11 +229,11 @@ inline void CValuesMap::erase(const string& val)
 	if (coIt == end())
 		return;
 	m_bValuesValid = false;
-	map<string, long int>::erase(coIt);
+	map<string, lint>::erase(coIt);
 }
 
 // id: return id associated to value
-inline long int CValuesMap::id(const string& val) const throw(InvalidValue)
+inline lint CValuesMap::id(const string& val) const throw(InvalidValue)
 {
 	const_iterator coIt = find(val);
 	if (coIt == end())
@@ -381,10 +381,10 @@ void Enum::initMap()
 }
 
 // Enum constructor: initialise it from a string (name) and a list of pair values; the list
-// must be ordered by the data type: long int; if the data value is -1 it is automatically
+// must be ordered by the data type: lint; if the data value is -1 it is automatically
 // generated; throws InvalidValue if list contains two or more pairs having the same key or
 // is not ordered
-Enum::Enum(const string& p_rcoName, const list<pair<string, long int> >& p_rcoValues)
+Enum::Enum(const string& p_rcoName, const list<pair<string, lint> >& p_rcoValues)
 	throw(InvalidValue, bad_alloc) : m_coName(p_rcoName)
 {
 	registerEnum(p_rcoName, p_rcoValues);
@@ -400,7 +400,7 @@ Enum::Item Enum::item(const string& p_rcoVal) const throw(InvalidValue)
 }
 
 // returns the value of an item identified by name; throws InvalidValue if invalid item name
-long int Enum::itemValue(const string& p_rcoVal) const throw(InvalidValue)
+lint Enum::itemValue(const string& p_rcoVal) const throw(InvalidValue)
 {
 	return s_pcoEnums->valMap(m_coName)->id(p_rcoVal);
 }
@@ -433,17 +433,17 @@ bool Enum::isValid(const string& p_rcoEnum)
 
 // registerEnum: add enum to enum types
 void Enum::registerEnum(const string& p_rcoName,
-	                    const list<pair<string, long int> >& p_rcoValues)
+	                    const list<pair<string, lint> >& p_rcoValues)
 	throw(InvalidValue, bad_alloc)
 {
 	initMap();
 	SafeAutoPtr<CValuesMap> pcoValues(new CValuesMap);
-	list<pair<string, long int> >::const_iterator coIt;
-	long int i = 1;
-	long int nMax = 0;
+	list<pair<string, lint> >::const_iterator coIt;
+	lint i = 1;
+	lint nMax = 0;
 	for (coIt = p_rcoValues.begin(); coIt != p_rcoValues.end(); ++coIt)
 	{
-		long int nVal = (*coIt).second;
+		lint nVal = (*coIt).second;
 		if (nVal < 0)
 			nVal = i;
 		if (nMax >= nVal)
@@ -462,7 +462,7 @@ void Enum::registerEnum(const string& p_rcoName,
 // Topic implementation
 
 // CTopicMap: map of topics
-class CTopicMap : private map<long int, Topic*>
+class CTopicMap : private map<lint, Topic*>
 {
 public:
 	// constructor
@@ -475,7 +475,7 @@ public:
 	void insert(Topic*);
 
 	// erase topic referred by name from the map
-	void erase(long int);
+	void erase(lint);
 
 	// names: return string containig values in the topic map
 	const string& names(const string&) const;
@@ -505,12 +505,12 @@ inline void CTopicMap::insert(Topic* p_pcoTopic)
 }
 
 // erase topic referred by name from the map
-inline void CTopicMap::erase(long int p_nTopic)
+inline void CTopicMap::erase(lint p_nTopic)
 {
 	iterator coIt = find(p_nTopic);
 	if (coIt == end())
 		return;
-	map<long int, Topic*>::erase(coIt);
+	map<lint, Topic*>::erase(coIt);
 }
 
 // values: return string containig values in the topic map
@@ -549,7 +549,7 @@ void CTopicMap::reparent(Topic* p_pcoNewParent)
 }
 
 
-class CTopicIdTable : private map<long int, Topic*>
+class CTopicIdTable : private map<lint, Topic*>
 {
 	friend class Topic;
 
@@ -560,13 +560,13 @@ public:
 	// destructor
 	~CTopicIdTable() { clear(); }
 
-	Topic* find(long int p_nId) const { return (*(map<long int, Topic*>::find(p_nId))).second; }
+	Topic* find(lint p_nId) const { return (*(map<lint, Topic*>::find(p_nId))).second; }
 
 	void insert(Topic*);
 
-	void erase(long int);
+	void erase(lint);
 
-	void clear() { map<long int, Topic*>::clear(); }
+	void clear() { map<lint, Topic*>::clear(); }
 
 	void setUpdated(bool p_bUpdate) const;
 
@@ -585,12 +585,12 @@ inline void CTopicIdTable::insert(Topic* p_pcoTopic)
 	(*this)[p_pcoTopic->id()] = p_pcoTopic;
 }
 
-inline void CTopicIdTable::erase(long int p_nId)
+inline void CTopicIdTable::erase(lint p_nId)
 {
-	iterator coIt = map<long int, Topic*>::find(p_nId);
+	iterator coIt = map<lint, Topic*>::find(p_nId);
 	if (coIt == end())
 		return;
-	map<long int, Topic*>::erase(coIt);
+	map<lint, Topic*>::erase(coIt);
 }
 
 void CTopicIdTable::setUpdated(bool p_bUpdate) const
@@ -740,7 +740,7 @@ const string& Topic::values()
 }
 
 // isValid: returns true if topic id is valid
-bool Topic::isValid(long int p_nId)
+bool Topic::isValid(lint p_nId)
 {
 	CMutexHandler coH(&s_coOpMutex);
 	return s_pcoIdTopics->find(p_nId) != NULL;
@@ -776,7 +776,7 @@ Topic::Item Topic::item(const string& p_rcoValue) throw(InvalidValue)
 }
 
 // topic: return pointer to const topic identified by id
-const Topic* Topic::topic(long int p_nId)
+const Topic* Topic::topic(lint p_nId)
 {
 	CMutexHandler coH(&s_coOpMutex);
 	return s_pcoIdTopics->find(p_nId);
@@ -810,7 +810,7 @@ void Topic::clearInvalid()
 	s_pcoIdTopics->clearInvalid();
 }
 
-void Topic::setNames(const CStringMap& p_rcoNames, long int p_nTopicId)
+void Topic::setNames(const CStringMap& p_rcoNames, lint p_nTopicId)
 {
 	CMutexHandler coH(&s_coOpMutex);
 	Topic* pcoTopic = s_pcoIdTopics->find(p_nTopicId);
@@ -850,8 +850,8 @@ void Topic::setNames(const CStringMap& p_rcoNames, long int p_nTopicId)
 	pcoTopic->m_bUpdated = true;
 }
 
-const Topic* Topic::setTopic(const string& p_rcoName, const string& p_rcoLang, long int p_nId,
-	                         long int p_nParentId)
+const Topic* Topic::setTopic(const string& p_rcoName, const string& p_rcoLang, lint p_nId,
+	                         lint p_nParentId)
 {
 	CMutexHandler coH(&s_coOpMutex);
 	Topic* pcoCurr = s_pcoIdTopics->find(p_nId);
@@ -865,7 +865,7 @@ const Topic* Topic::setTopic(const string& p_rcoName, const string& p_rcoLang, l
 }
 
 // constructor
-Topic::Topic(const string& p_rcoName, const string& p_rcoLang, long int p_nId, Topic* p_pcoParent)
+Topic::Topic(const string& p_rcoName, const string& p_rcoLang, lint p_nId, Topic* p_pcoParent)
 	: m_nTopicId(p_nId), m_pcoParent(p_pcoParent), m_pcoChildren(NULL),
 	m_bUpdated(true), m_bValidNames(false), m_coNamesStr("")
 {

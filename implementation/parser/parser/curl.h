@@ -71,35 +71,35 @@ public:
 
 	const string& getDocumentRoot() const { return m_coDocumentRoot; }
 
-	void setId(long p_nId) { replaceValue("url_id", p_nId); }
+	void setId(id_type p_nId) { replaceValue("url_id", p_nId); }
 
-	long getId() const throw(InvalidValue) { return getIntValue("url_id"); }
+	id_type getId() const throw(InvalidValue) { return getIntValue("url_id"); }
 
-	void setLanguage(long p_nLanguage) { replaceValue(P_IDLANG, p_nLanguage); }
+	void setLanguage(id_type p_nLanguage) { replaceValue(P_IDLANG, p_nLanguage); }
 
-	long getLanguage() const throw(InvalidValue) { return getIntValue(P_IDLANG); }
+	id_type getLanguage() const throw(InvalidValue) { return getIntValue(P_IDLANG); }
 
-	void setPublication(long p_nPublication) { replaceValue(P_IDPUBL, p_nPublication); }
+	void setPublication(id_type p_nPublication) { replaceValue(P_IDPUBL, p_nPublication); }
 
-	long getPublication() const throw(InvalidValue) { return getIntValue(P_IDPUBL); }
+	id_type getPublication() const throw(InvalidValue) { return getIntValue(P_IDPUBL); }
 
-	void setIssue(long p_nIssue) { replaceValue(P_NRISSUE, p_nIssue); }
+	void setIssue(id_type p_nIssue) { replaceValue(P_NRISSUE, p_nIssue); }
 
-	long getIssue() const throw(InvalidValue) { return getIntValue(P_NRISSUE); }
+	id_type getIssue() const throw(InvalidValue) { return getIntValue(P_NRISSUE); }
 
-	void setSection(long p_nSection) { replaceValue(P_NRSECTION, p_nSection); }
+	void setSection(id_type p_nSection) { replaceValue(P_NRSECTION, p_nSection); }
 
-	long getSection() const throw(InvalidValue) { return getIntValue(P_NRSECTION); }
+	id_type getSection() const throw(InvalidValue) { return getIntValue(P_NRSECTION); }
 
-	void setArticle(long p_nArticle) { replaceValue(P_NRARTICLE, p_nArticle); }
+	void setArticle(id_type p_nArticle) { replaceValue(P_NRARTICLE, p_nArticle); }
 
-	long getArticle() const throw(InvalidValue) { return getIntValue(P_NRARTICLE); }
+	id_type getArticle() const throw(InvalidValue) { return getIntValue(P_NRARTICLE); }
 
-	void setValue(const string& p_rcoParameter, long p_nValue);
+	void setValue(const string& p_rcoParameter, id_type p_nValue);
 
 	void setValue(const string& p_rcoParameter, const string& p_rcoValue);
 
-	void replaceValue(const string& p_rcoParameter, long p_nValue);
+	void replaceValue(const string& p_rcoParameter, id_type p_nValue);
 
 	void replaceValue(const string& p_rcoParameter, const string& p_rcoValue);
 
@@ -109,7 +109,7 @@ public:
 
 	const string& getNextValue(const string& p_rcoParameter) const;
 
-	long getIntValue(const string& p_rcoParameter) const throw(InvalidValue);
+	id_type getIntValue(const string& p_rcoParameter) const throw(InvalidValue);
 
 	void resetParamValuesIndex(const string& p_rcoParameter = string("")) const;
 
@@ -143,7 +143,7 @@ public:
 
 	virtual string setTemplate(const string& p_rcoTemplate) throw (InvalidValue) = 0;
 
-	virtual string setTemplate(long int p_nTemplateId) throw (InvalidValue) = 0;
+	virtual string setTemplate(id_type p_nTemplateId) throw (InvalidValue) = 0;
 
 	virtual string getTemplate() const = 0;
 
@@ -187,7 +187,7 @@ inline CURL::CURL(const CURL& p_rcoSrc)
 	m_coPathTranslated = p_rcoSrc.m_coPathTranslated;
 }
 
-inline void CURL::setValue(const string& p_rcoParameter, long p_nValue)
+inline void CURL::setValue(const string& p_rcoParameter, id_type p_nValue)
 {
 	setValue(p_rcoParameter, (string)Integer(p_nValue));
 }
@@ -199,7 +199,7 @@ inline void CURL::setValue(const string& p_rcoParameter, const string& p_rcoValu
 	PostSetValue(p_rcoParameter, p_rcoValue);
 }
 
-inline void CURL::replaceValue(const string& p_rcoParameter, long p_nValue)
+inline void CURL::replaceValue(const string& p_rcoParameter, id_type p_nValue)
 {
 	replaceValue(p_rcoParameter, (string)Integer(p_nValue));
 }
@@ -217,10 +217,10 @@ inline bool CURL::equalTo(const CURL* p_pcoURL) const
 		&& m_coCookies == p_pcoURL->m_coCookies;
 }
 
-inline long CURL::getIntValue(const string& p_rcoParameter) const throw(InvalidValue)
+inline id_type CURL::getIntValue(const string& p_rcoParameter) const throw(InvalidValue)
 {
 	string coValue = getValue(p_rcoParameter);
-	return coValue != "" ? (long)Integer(coValue) : 0;
+	return coValue != "" ? (id_type)Integer(coValue) : 0;
 }
 
 inline void CURL::deleteParameter(const string& p_rcoParameter)

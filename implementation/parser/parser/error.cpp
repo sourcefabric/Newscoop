@@ -105,10 +105,10 @@ void CError::init()
 //	int p_nCode - error code
 //	int p_nMode - mode (parsing/writing output)
 //	string p_coRequired - on parsing, required tokens
-//	long int p_nRow - on parsing, the row where the error occured
-//	long int p_nColumng - on parsing, the column where the error occured
+//	lint p_nRow - on parsing, the row where the error occured
+//	lint p_nColumng - on parsing, the column where the error occured
 CError::CError(int p_nCode, int p_nMode, string p_coRequired,
-			   long int p_nRow, long int p_nColumn)
+			   lint p_nRow, lint p_nColumn)
 {
 	code = p_nCode;
 	mode = p_nMode;

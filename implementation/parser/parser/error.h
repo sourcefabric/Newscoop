@@ -36,6 +36,7 @@ Define error codes, macros and classes used for dealing parse and write errors
 #include <fstream>
 
 #include "cms_types.h"
+#include "globals.h"
 
 using std::fstream;
 
@@ -151,8 +152,8 @@ private:
 	int code;			// error code
 	int mode;			// mode: parsing or writing output
 	string required;	// when parsing: required statements, attributes, operators or values
-	long int row;		// when parsing: the row containing the error
-	long int column;	// when parsing: the column where the error occured
+	lint row;			// when parsing: the row containing the error
+	lint column;		// when parsing: the column where the error occured
 	static const string req_word, line_word, column_word, when_word, error_word;
 	static Int2String messages;		// error messages
 	static Int2String modes;		// modes: parsing or writing output
@@ -166,10 +167,10 @@ public:
 	//	int p_nCode - error code
 	//	int p_nMode - mode (parsing/writing output)
 	//	string p_coRequired - on parsing, required tokens
-	//	long int p_nRow - on parsing, the row where the error occured
-	//	long int p_nColumng - on parsing, the column where the error occured
+	//	lint p_nRow - on parsing, the row where the error occured
+	//	lint p_nColumng - on parsing, the column where the error occured
 	CError(int p_nCode, int p_nMode, string p_coRequired = string(""),
-	       long int p_nRow = 0, long int p_nColumn = 0);
+	       lint p_nRow = 0, lint p_nColumn = 0);
 
 	// Print: print the error
 	// Parameters:

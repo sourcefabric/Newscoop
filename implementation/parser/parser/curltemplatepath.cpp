@@ -64,7 +64,7 @@ void CURLTemplatePath::setURL(const CMsgURLRequest& p_rcoURLMessage)
 	MYSQL_ROW qRow = QueryFetchRow(m_pDBConn, coQuery.c_str(), coRes);
 	if (qRow == NULL)
 		throw InvalidValue("site alias", m_coHTTPHost.c_str());
-	long nPublication = Integer(qRow[0]);
+	id_type nPublication = Integer(qRow[0]);
 	setPublication(nPublication);
 
 	// prepare the path string
@@ -179,7 +179,7 @@ string CURLTemplatePath::setTemplate(const string& p_rcoTemplate) throw (Invalid
 	return m_coTemplate;
 }
 
-string CURLTemplatePath::setTemplate(long int p_nTemplateId) throw (InvalidValue)
+string CURLTemplatePath::setTemplate(id_type p_nTemplateId) throw (InvalidValue)
 {
 	m_bValidURI = false;
 	string coSql = string("select Name from Templates where Id = ")

@@ -31,8 +31,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "util.h"
 
 
-string CPublication::getTemplate(long p_nLanguage, long p_nPublication, long p_nIssue,
-                                 long p_nSection, long p_nArticle, MYSQL* p_DBConn,
+string CPublication::getTemplate(id_type p_nLanguage, id_type p_nPublication, id_type p_nIssue,
+                                 id_type p_nSection, id_type p_nArticle, MYSQL* p_DBConn,
                                  bool p_bIsPublished)
 {
 	if (p_nLanguage <= 0)
@@ -58,8 +58,8 @@ string CPublication::getTemplate(long p_nLanguage, long p_nPublication, long p_n
 			MYSQL_ROW qRow = QueryFetchRow(p_DBConn, coSql.str().c_str(), coRes);
 			if (qRow == NULL)
 				throw InvalidValue("article number", ((string)Integer(p_nArticle)).c_str());
-			p_nIssue = (p_nIssue > 0) ? p_nIssue : (long int)Integer(string(qRow[0]));
-			p_nSection = (p_nSection > 0) ? p_nSection : (long int)Integer(string(qRow[1]));
+			p_nIssue = (p_nIssue > 0) ? p_nIssue : (id_type)Integer(string(qRow[0]));
+			p_nSection = (p_nSection > 0) ? p_nSection : (id_type)Integer(string(qRow[1]));
 		}
 		return getArticleTemplate(p_nLanguage, p_nPublication, p_nIssue, p_nSection, p_DBConn);
 	}
@@ -78,7 +78,7 @@ string CPublication::getTemplate(long p_nLanguage, long p_nPublication, long p_n
 			MYSQL_ROW qRow = QueryFetchRow(p_DBConn, coSql.str().c_str(), coRes);
 			if (qRow == NULL)
 				throw InvalidValue("section number", ((string)Integer(p_nSection)).c_str());
-			p_nIssue = (long int)Integer(string(qRow[0]));
+			p_nIssue = (id_type)Integer(string(qRow[0]));
 		}
 		return getSectionTemplate(p_nLanguage, p_nPublication, p_nIssue, p_nSection, p_DBConn);
 	}
@@ -93,13 +93,13 @@ string CPublication::getTemplate(long p_nLanguage, long p_nPublication, long p_n
 		MYSQL_ROW qRow = QueryFetchRow(p_DBConn, coSql.str().c_str(), coRes);
 		if (qRow == NULL)
 			throw InvalidValue("publication number", ((string)Integer(p_nPublication)).c_str());
-		p_nIssue = (long int)Integer(string(qRow[0]));
+		p_nIssue = (id_type)Integer(string(qRow[0]));
 	}
 	return getIssueTemplate(p_nLanguage, p_nPublication, p_nIssue, p_DBConn);
 }
 
 
-string CPublication::getIssueTemplate(long p_nLanguage, long p_nPublication, long p_nIssue, 
+string CPublication::getIssueTemplate(id_type p_nLanguage, id_type p_nPublication, id_type p_nIssue, 
                                       MYSQL* p_DBConn)
 {
 	stringstream coSql;
@@ -113,8 +113,8 @@ string CPublication::getIssueTemplate(long p_nLanguage, long p_nPublication, lon
 	return string(qRow[0]);
 }
 
-string CPublication::getSectionTemplate(long p_nLanguage, long p_nPublication, long p_nIssue,
-                                        long p_nSection, MYSQL* p_DBConn)
+string CPublication::getSectionTemplate(id_type p_nLanguage, id_type p_nPublication, id_type p_nIssue,
+                                        id_type p_nSection, MYSQL* p_DBConn)
 {
 	stringstream coSql;
 	CMYSQL_RES coRes;
@@ -137,8 +137,8 @@ string CPublication::getSectionTemplate(long p_nLanguage, long p_nPublication, l
 	return string(qRow[0]);
 }
 
-string CPublication::getArticleTemplate(long p_nLanguage, long p_nPublication, long p_nIssue,
-                                        long p_nSection, MYSQL* p_DBConn)
+string CPublication::getArticleTemplate(id_type p_nLanguage, id_type p_nPublication, id_type p_nIssue,
+                                        id_type p_nSection, MYSQL* p_DBConn)
 {
 	stringstream coSql;
 	CMYSQL_RES coRes;
@@ -162,7 +162,7 @@ string CPublication::getArticleTemplate(long p_nLanguage, long p_nPublication, l
 }
 
 
-long CPublication::getTemplateId(const string& p_rcoTemplate, MYSQL* p_DBConn) throw(InvalidValue)
+id_type CPublication::getTemplateId(const string& p_rcoTemplate, MYSQL* p_DBConn) throw(InvalidValue)
 {
 	stringstream coSql;
 	coSql << "select Id from Templates where Name = '" << p_rcoTemplate << "'";
@@ -174,7 +174,7 @@ long CPublication::getTemplateId(const string& p_rcoTemplate, MYSQL* p_DBConn) t
 }
 
 
-void CPublication::BuildFromDB(long p_nId, MYSQL* p_DBConn) throw(InvalidValue)
+void CPublication::BuildFromDB(id_type p_nId, MYSQL* p_DBConn) throw(InvalidValue)
 {
 	m_nId = p_nId;
 

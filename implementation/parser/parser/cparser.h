@@ -89,11 +89,11 @@ private:
 	char Identifier[ID_MAXLEN + 1];		// lexem identifier
 	TCDataType atom_dt;					// atom data type
 	const char* text_start;					// html text found (after ">" - end of statement - lexem)
-	long int text_len;					// html text length
+	lint text_len;					// html text length
 
 public:
 	// constructor
-	CCLexem(CCLexResult r, TCDataType a_dt, const char* t = 0, long int tl = 0)
+	CCLexem(CCLexResult r, TCDataType a_dt, const char* t = 0, lint tl = 0)
 			: res(r), atom_dt(a_dt)
 	{
 		text_start = t;
@@ -141,10 +141,10 @@ private:
 	int QuotedLexem;						// true if LexemStarted is true and the new lexem
 											// is quoted
 	int isEOF;								// true if end of text buffer
-	long int buf_len;						// input text buffer length
-	long int text_len;						// html text length
-	long int IdIndex;						// atom identifier index of current character
-	long int index;							// index to current character of input text buffer
+	lint buf_len;						// input text buffer length
+	lint text_len;						// html text length
+	lint IdIndex;						// atom identifier index of current character
+	lint index;							// index to current character of input text buffer
 	CCLexem CurrLexem;					// current lexem
 
 	// NextChar: return next character from text buffer
@@ -162,7 +162,7 @@ private:
 
 public:
 	// constructor
-	CCLex(const char* = 0, long int = 0);
+	CCLex(const char* = 0, lint = 0);
 
 	// copy-constructor
 	CCLex(const CCLex& s) : CurrLexem(CMS_CLEX_NONE, CMS_CDT_NONE) { *this = s; }
@@ -171,7 +171,7 @@ public:
 	~CCLex() { delete m_pchTempBuff; }
 
 	// reset: reset lex
-	void reset(const char* = 0, long int = 0);
+	void reset(const char* = 0, lint = 0);
 
 	// assign operator
 	const CCLex& operator =(const CCLex&);
@@ -219,12 +219,12 @@ private:
 	// MakeImageLink: write image link
 	// Parameters:
 	//		CContext& p_rcoContext - context
-	//		long int p_nImageNr - image number
+	//		lint p_nImageNr - image number
 	//		const char* p_pchAlign - html parameter (align)
 	//		const char* p_pchAlt - html parameter (alt)
 	//		const char* p_pchImgTitle - image subtitle
 	//		sockstream& p_rcoOut - output stream
-	void MakeImageLink(const CContext& p_rcoContext, long int p_rcoImageNr,
+	void MakeImageLink(const CContext& p_rcoContext, lint p_rcoImageNr,
 					   const char* p_pchAlign, const char* p_pchAlt, const char* p_pchImgTitle, sockstream& p_rcoOut);
 
 	// MakeClassLink: write class popup link
@@ -232,35 +232,35 @@ private:
 	//		const CContext& p_rcoContext - context
 	//		const char* p_pchClass - class name
 	//		const char* p_pchKey - keyword
-	//		long int p_nKeyLen - keyword length
+	//		lint p_nKeyLen - keyword length
 	//		sockstream& p_rcoOut - output stream
 	//		MYSQL* p_SQL - pointer to MySQL connection
 	void MakeClassLink(const CContext& p_rcoContext, const char* p_pchClass,
-					   const char* p_pchKey, long int p_nKeyLen, sockstream& p_rcoOut,
+					   const char* p_pchKey, lint p_nKeyLen, sockstream& p_rcoOut,
 					   MYSQL* p_SQL);
 	
 	// HTMLClean: clean the input string of html code
 	// Paramters:
 	//		char*& p_pchCleanKey - cleaned string
-	//		long int& p_nCleanKeyLen - cleaned string length
+	//		lint& p_nCleanKeyLen - cleaned string length
 	//		const char* p_pchKey - string to clean
-	//		long int p_nKeyLen - string to clean length
-	void HTMLClean(char*& p_pchCleanKey, long int& p_nCleanKeyLen, const char* p_pchKey,
-				   long int p_nKeyLen);
+	//		lint p_nKeyLen - string to clean length
+	void HTMLClean(char*& p_pchCleanKey, lint& p_nCleanKeyLen, const char* p_pchKey,
+				   lint p_nKeyLen);
 	// HTMLUnescape: unescape input html string
 	//		char*& unesc - unescaped string
-	//		long int& unesc_len - unescaped string length
+	//		lint& unesc_len - unescaped string length
 	//		const char* str - string to unescape
-	//		long int str_len - string to unescape length
-	void HTMLUnescape(char*& unesc, long int& unesc_len, const char* str, long int str_len);
+	//		lint str_len - string to unescape length
+	void HTMLUnescape(char*& unesc, lint& unesc_len, const char* str, lint str_len);
 	
 	// CGIEscape: escape input string for URL use
 	// Parameters:
 	//		char*& esc - escaped string
-	//		long int& esc_len - escaped string length
+	//		lint& esc_len - escaped string length
 	//		const char* str - string to escape
-	//		long int str_len - string to escape length
-	void CGIEscape(char*& esc, long int& esc_len, const char* str, long int str_len);
+	//		lint str_len - string to escape length
+	void CGIEscape(char*& esc, lint& esc_len, const char* str, lint str_len);
 	
 	// DoParse: parse the article content
 	//		CContext& p_rcoContext - context
@@ -277,7 +277,7 @@ private:
 							 int start_st = 0, bool all = false, bool p_bWrite = true);
 public:
 	// constructor
-	CCParser(const char* b = 0, long int bl = 0, bool d = false) : clex(b, bl) { debug = d; }
+	CCParser(const char* b = 0, lint bl = 0, bool d = false) : clex(b, bl) { debug = d; }
 
 	// copy-constructor
 	CCParser(const CCParser& p) : clex(p.clex.in_buf, p.clex.buf_len) {}
@@ -295,7 +295,7 @@ public:
 	}
 
 	// reset: reset article content parser
-	void reset(const char* b = 0, long int bl = 0) { clex.reset(b, bl); }
+	void reset(const char* b = 0, lint bl = 0) { clex.reset(b, bl); }
 	
 	// setDebug: set debug member
 	void setDebug(bool v) { debug = v; }

@@ -63,7 +63,7 @@ void CURLShortNames::setURL(const CMsgURLRequest& p_rcoURLMessage)
 	MYSQL_ROW qRow = QueryFetchRow(m_pDBConn, coQuery.c_str(), coRes);
 	if (qRow == NULL)
 		throw InvalidValue("site alias", m_coHTTPHost.c_str());
-	long nPublication = Integer(qRow[0]);
+	id_type nPublication = Integer(qRow[0]);
 	setPublication(nPublication);
 
 	// prepare the path string
@@ -92,7 +92,7 @@ void CURLShortNames::setURL(const CMsgURLRequest& p_rcoURLMessage)
 	qRow = QueryFetchRow(m_pDBConn, coQuery.c_str(), coRes);
 	if (qRow == NULL)
 		throw InvalidValue("language code", coLangCode.c_str());
-	long nLanguage = Integer(qRow[0]);
+	id_type nLanguage = Integer(qRow[0]);
 	if ("" == m_coURIPath || "/" == m_coURIPath || "" != coLangCode)
 		setLanguage(nLanguage);
 
@@ -105,7 +105,7 @@ void CURLShortNames::setURL(const CMsgURLRequest& p_rcoURLMessage)
 		coIssue = m_coURIPath.substr(nCurrent, nNext - nCurrent);
 	}
 
-	long nIssue = -1;
+	id_type nIssue = -1;
 	// query the database for the issue
 	if (coIssue != "")
 	{
@@ -141,7 +141,7 @@ void CURLShortNames::setURL(const CMsgURLRequest& p_rcoURLMessage)
 	}
 
 	string coIssueCond = nIssue != -1 ? string(" and NrIssue = ") + getValue(P_NRISSUE) : "";
-	long nSection = -1;
+	id_type nSection = -1;
 	// query the database for the section
 	if (coSection != "")
 	{
@@ -165,7 +165,7 @@ void CURLShortNames::setURL(const CMsgURLRequest& p_rcoURLMessage)
 	}
 
 	string coSectCond = nSection != -1 ? string(" and NrSection = ") + getValue(P_NRSECTION) : "";
-	long nArticle = -1;
+	id_type nArticle = -1;
 	// query the database for the section
 	if (coArticle != "")
 	{
@@ -262,7 +262,7 @@ string CURLShortNames::setTemplate(const string& p_rcoTemplate) throw (InvalidVa
 	return m_coTemplate;
 }
 
-string CURLShortNames::setTemplate(long int p_nTemplateId) throw (InvalidValue)
+string CURLShortNames::setTemplate(id_type p_nTemplateId) throw (InvalidValue)
 {
 	string coSql = string("select Name from Templates where Id = ")
 	             + (string)Integer(p_nTemplateId);
