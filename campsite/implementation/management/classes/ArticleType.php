@@ -1,22 +1,54 @@
 <?
-require_once("$DOCUMENT_ROOT/classes/DatabaseObject.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/DatabaseObject.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/DbColumn.php");
 
 class ArticleType extends DatabaseObject {
-	var $m_dbColumnNames;
+	var $m_columnNames = array("NrArticle", "IdLanguage");
 	var $m_primaryKeyColumnNames = array("NrArticle", "IdLanguage");
 	var $m_dbTableName;
 	var $NrArticle;
 	var $IdLanguage;
 	
-	var $m_intro;
-	var $m_body;
-	
 	function ArticleType($p_articleType, $p_articleId, $p_languageId) {
 		$this->m_dbTableName = "X".$p_articleType;
 		$this->NrArticle = $p_articleId;
 		$this->IdLanguage = $p_languageId;
+		// Get user-defined values.
+		$dbColumns = $this->getUserDefinedColumns();
+		foreach ($dbColumns as $dbColumn) {
+			$columnName = $dbColumn->getName();
+			$this->$columnName = null;
+			array_push($this->m_columnNames, $columnName);
+		}
+		if ($this->exists()) {
+			$this->fetch();
+		}
 	} // constructor
 	
+	
+	/**
+	 * Return an array of DbColumn objects.
+	 *
+	 * @return array
+	 */
+	function getUserDefinedColumns() {
+		global $Campsite;
+		$queryStr = "SHOW COLUMNS FROM ".$this->m_dbTableName
+					." LIKE 'F%'";
+		$queryArray = $Campsite["db"]->GetAll($queryStr);
+		$metadata = array();
+		foreach ($queryArray as $row) {
+			$columnMetadata =& new DbColumn($this->m_dbTableName);
+			$columnMetadata->fetch($row);
+			$metadata[] =& $columnMetadata;
+		}
+		return $metadata;
+	} // fn getUserDefinedColumns
+	
+
+	function getColumnValue($p_columnName) {
+		return $this->$p_columnName;
+	}
 	
 	/**
 	 * Set the body of the article.
