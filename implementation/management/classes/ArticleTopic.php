@@ -25,6 +25,33 @@ class ArticleTopic extends DatabaseObject {
 
 	
 	/**
+	 * Link a topic to an article.
+	 * @param int p_topicId
+	 * @param int p_articleId
+	 * @return void
+	 */
+	function AddTopicToArticle($p_topicId, $p_articleId) {
+		global $Campsite;
+		$queryStr = 'INSERT IGNORE INTO ArticleTopics(NrArticle, TopicId)'
+					.' VALUES('.$p_articleId.', '.$p_topicId.')';
+		$Campsite['db']->Execute($queryStr);
+	} // fn AddTopicToArticle
+	
+	
+	/**
+	 * Unlink a topic from an article.
+	 * @param int p_topicId
+	 * @param int p_articleId
+	 * @return void
+	 */
+	function RemoveTopicFromArticle($p_topicId, $p_articleId) {
+		global $Campsite;
+		$queryStr = "DELETE FROM ArticleTopics WHERE NrArticle=$p_articleId AND TopicId=$p_topicId";
+		$Campsite['db']->Execute($queryStr);
+	} // fn RemoveTopicFromArticle
+	
+	
+	/**
 	 * Remove topic pointers for the given article.
 	 * @param int p_articleId
 	 * @return void
@@ -53,6 +80,33 @@ class ArticleTopic extends DatabaseObject {
 			$Campsite['db']->Execute($queryStr);
 		}
 	} // fn OnArticleCopy
+
+	
+	/**
+	 * Get the topics for the given article.
+	 *
+	 * @param int p_articleId
+	 *		Retrieve the topics for this article.
+	 *
+	 * @param int p_numTopics
+	 *		The max number of topics to return.
+	 *
+	 * @param int p_start
+	 * 		Start listing the topics from this index.
+	 *
+	 * @return array
+	 */
+	function GetArticleTopics($p_articleId, $p_sqlOptions = null) {
+		global $Campsite;
+		$tmpTopic =& new Topic();
+		$columnNames = implode(',', $tmpTopic->getColumnNames(true));
+    	$queryStr = "SELECT $columnNames FROM ArticleTopics, Topics "
+    				." WHERE ArticleTopics.NrArticle = $p_articleId"
+    				.' AND ArticleTopics.TopicId = Topics.Id '
+    				.' ORDER BY Topics.Name ';
+    	$queryStr = DatabaseObject::ProcessOptions($queryStr, $p_sqlOptions);
+    	return DbObjectArray::Create('Topic', $queryStr);
+	} // fn GetArticleTopics
 	
 } // class ArticleTopic
 
