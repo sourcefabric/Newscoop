@@ -14,7 +14,8 @@ $g_spanCounter = -1;
 function TransformSubheads($match) {
 	global $g_spanCounter;
 	// This matches '<span class="campsite_subhead">'
-	if (preg_match("/<\s*span\s*class\s*=\s*[\"']campsite_subhead[\"']\s*>/i", $match[0])) {
+	if (preg_match("/<\s*span[^>]*class\s*=\s*[\"']campsite_subhead[\"'][^>]*>/i", $match[0])) {
+		echo "matched ".htmlspecialchars($match[0]);
 		$g_spanCounter = 1;
 		return "<!** Title>";
 	}
@@ -104,7 +105,7 @@ if (($errorStr == "") && $access && $hasAccess) {
 				$text = stripslashes($text);
 			}
 			// Replace <span class="subhead"> ... </span> with <!** Title> ... <!** EndTitle>
-			$text = preg_replace_callback("/(<\s*span\s*class\s*=\s*[\"']campsite_subhead[\"']\s*>|<\s*span|<\s*\/\s*span\s*>)/i", "TransformSubheads", $text);
+			$text = preg_replace_callback("/(<\s*span[^>]*class\s*=\s*[\"']campsite_subhead[\"'][^>]*>|<\s*span|<\s*\/\s*span\s*>)/i", "TransformSubheads", $text);
 			
 			// Replace <a href="campsite_internal_link?IdPublication=1&..." ...> ... </a>
 			// with <!** Link Internal IdPublication=1&...> ... <!** EndLink>
