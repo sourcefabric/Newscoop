@@ -1,6 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/config.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/Input.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Publication.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Issue.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Section.php");
@@ -24,14 +25,16 @@ if ($User->hasPermission("ChangeArticle")) {
 else {
 	todefnum('What',1);
 }
-todefnum('NArtOffs');
+$NArtOffs = Input::get('NArtOffs', 'int', 0, true);
 if ($NArtOffs<0) {
 	$NArtOffs=0;
 }
-todefnum('ArtOffs');
+$ArtOffs = Input::get('ArtOffs', 'int', 0, true);
 if ($ArtOffs < 0) {
 	$ArtOffs=0; 
 }
+$showSections = Input::get('show_sections', 'int', 1, true);
+
 $NumDisplayArticles=15;
 list($YourArticles, $NumYourArticles) = Article::GetArticlesByUser($User->getId(), $ArtOffs, 
 	$NumDisplayArticles);
@@ -46,7 +49,8 @@ foreach ($publications as $publication) {
 			array('LIMIT' => 5, 'ORDER BY' => array('Number' => 'DESC')));
 }
 $sections = array();
-if ((count($publications) + count($issues)) <= 12) {
+//if ((count($publications) + count($issues)) <= 12) {
+if ($showSections) {
 	foreach ($publications as $publication) {
 		foreach ($issues[$publication->getPublicationId()] as $issue) {
 			$sections[$issue->getIssueId()] = 
@@ -75,7 +79,26 @@ if ((count($publications) + count($issues)) <= 12) {
     <TD VALIGN="TOP" width="40%">
 		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="3" class="table_list" width="100%" style="padding: 0px;">
 		<tr class="table_list_header">
-			<td style="padding-left: 8px;"><?php putGS('Publication'); ?> / <?php putGS('Issue'); ?> <?php if (count($sections) > 0) { ?> / <?php putGS('Section');  } ?></td>
+			<td style="padding-left: 8px; padding-right: 8px;">
+				<table width="100%" cellpadding="0" cellspacing="0">
+				<tr>
+					<td align="left">
+						<?php putGS('Publication'); ?> / <?php putGS('Issue'); ?> <?php if ($showSections) { ?> / <?php putGS('Section');  } ?></td>
+					</td>
+					<td align="right">
+						<?php 
+						if ($showSections) { ?>
+							<a href="home.php?ArtOffs=<?php p($ArtOffs); ?>&NArtOffs=<?php  p($NArtOffs);?>&What=1&show_sections=0"><?php putGS('Hide Sections'); ?></a>
+							<?php 
+						}
+						else { ?>
+							<a href="home.php?ArtOffs=<?php p($ArtOffs); ?>&NArtOffs=<?php  p($NArtOffs);?>&What=1&show_sections=1"><?php putGS('Show Sections'); ?></a>
+							<?php 							
+						} ?>
+					</td>
+				</tr>
+				</table>
+			</td>
 		</tr>
 		<?php 
 		$count = 1;
@@ -181,20 +204,12 @@ if ((count($publications) + count($issues)) <= 12) {
     	<TR>
     		<TD COLSPAN="2" NOWRAP>
 				<?php  
-				if ($ArtOffs<=0) { 
-					p(htmlspecialchars("<< ")); 
-					putGS('Previous'); 
-				} 
-				else { ?>
-					<B><A HREF="home.php?ArtOffs=<?php print ($ArtOffs - $NumDisplayArticles); ?>&What=1"><?php p(htmlspecialchars("<< ")); putGS('Previous'); ?></A></B>
+				if ($ArtOffs > 0) { ?>
+					<B><A HREF="home.php?ArtOffs=<?php print ($ArtOffs - $NumDisplayArticles); ?>&What=1&show_sections=<?php p($showSections); ?>"><?php p(htmlspecialchars("<< ")); putGS('Previous'); ?></A></B>
 					<?php  
 				} 
-				if ( ($ArtOffs + $NumDisplayArticles) >= $NumYourArticles ) { 
-					?>
-					| <?php putGS('Next'); p(htmlspecialchars(" >>"));
-				} 
-				else { ?>
-					| <B><A HREF="home.php?ArtOffs=<?php print ($ArtOffs + $NumDisplayArticles); ?>&What=1"><?php putGS('Next'); p(htmlspecialchars(" >>")); ?></A></B>
+				if ( ($ArtOffs + $NumDisplayArticles) < $NumYourArticles ) { ?>
+					| <B><A HREF="home.php?ArtOffs=<?php print ($ArtOffs + $NumDisplayArticles); ?>&What=1&show_sections=<?php p($showSections); ?>"><?php putGS('Next'); p(htmlspecialchars(" >>")); ?></A></B>
 					<?php  
 				} 
 				?>	
@@ -241,19 +256,12 @@ if ((count($publications) + count($issues)) <= 12) {
 		<TR>
 			<TD COLSPAN="2" NOWRAP>
 			<?php 
-			if ($NArtOffs <= 0) { 
-				p(htmlspecialchars("<< "));  
-				putGS('Previous'); 
-			} 
-			else { ?>
-				<B><A HREF="home.php?NArtOffs=<?php print ($NArtOffs - $NumDisplayArticles); ?>&What=0"><?php p(htmlspecialchars("<< ")); putGS('Previous'); ?></A></B>
+			if ($NArtOffs > 0) { ?>
+				<B><A HREF="home.php?NArtOffs=<?php p($NArtOffs - $NumDisplayArticles); ?>&What=0&show_sections=<?php p($showSections); ?>"><?php p(htmlspecialchars("<< ")); putGS('Previous'); ?></A></B>
 				<?php  
     		}
-    		if (($NArtOffs + $NumDisplayArticles) >= $NumSubmittedArticles) { ?>
-    	 		| <?php  putGS('Next'); p(htmlspecialchars(" >>")); 
-    		} 
-    		else { ?>
-    			| <B><A HREF="home.php?NArtOffs=<?php  print ($NArtOffs + $NumDisplayArticles); ?>&What=0"><?php putGS('Next'); p(htmlspecialchars(" >>")); ?></A></B>
+    		if (($NArtOffs + $NumDisplayArticles) < $NumSubmittedArticles) { ?>
+    			| <B><A HREF="home.php?NArtOffs=<?php  p($NArtOffs + $NumDisplayArticles); ?>&What=0&show_sections=<?php p($showSections); ?>"><?php putGS('Next'); p(htmlspecialchars(" >>")); ?></A></B>
 				<?php  
     		} 
     		?>	
@@ -271,8 +279,8 @@ if ((count($publications) + count($issues)) <= 12) {
 			<TD>
 				<TABLE>
 				<TR>
-					<TD ALIGN="RIGHT"><A HREF="home.php?What=0"><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Submitted articles"); ?>"></A></TD>
-					<TD NOWRAP><A HREF="home.php?What=0"><?php  putGS("Submitted articles"); ?></A></TD>
+					<TD ALIGN="RIGHT"><A HREF="home.php?ArtOffs=<?php p($ArtOffs); ?>&NArtOffs=<?php  p($NArtOffs);?>&What=0&show_sections=<?php p($showSections); ?>"><IMG SRC="/<?php p($ADMIN); ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Submitted articles"); ?>"></A></TD>
+					<TD NOWRAP><A HREF="home.php?ArtOffs=<?php p($ArtOffs); ?>&NArtOffs=<?php  p($NArtOffs);?>&What=0&show_sections=<?php p($showSections); ?>"><?php  putGS("Submitted articles"); ?></A></TD>
 				</TR>
 				</TABLE>
 			</TD>
@@ -283,8 +291,8 @@ if ((count($publications) + count($issues)) <= 12) {
  			<TD>
  				<TABLE>
 				<TR>
-					<TD ALIGN="RIGHT"><A HREF="home.php?What=1"><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Your articles"); ?>"></A></TD>
-					<TD NOWRAP><A HREF="home.php?What=1"><?php  putGS("Your articles"); ?></A></TD>
+					<TD ALIGN="RIGHT"><A HREF="home.php?ArtOffs=<?php p($ArtOffs); ?>&NArtOffs=<?php  p($NArtOffs);?>&What=1&show_sections=<?php p($showSections); ?>"><IMG SRC="/<?php p($ADMIN); ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Your articles"); ?>"></A></TD>
+					<TD NOWRAP><A HREF="home.php?ArtOffs=<?php p($ArtOffs); ?>&NArtOffs=<?php  p($NArtOffs);?>&What=1&show_sections=<?php p($showSections); ?>"><?php  putGS("Your articles"); ?></A></TD>
 				</TR>
 				</TABLE>
 			</TD>
