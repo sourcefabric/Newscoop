@@ -23,8 +23,7 @@
           $DateLink = '?search_date='.urlencode($image['date']).'&view='.$view;
           echo "<a href='$DateLink'>".orE(htmlspecialchars($image['date']))."</a><br>";
 
-          $InUseLink = '?search_inuse='.urlencode($image['in_use']).'&view='.$view;
-          echo "<a href='$InUseLink'>".htmlspecialchars($image['in_use'])."</a><br>";
+          echo $image['in_use']."<br>";
 
           if ($User->hasPermission('DeleteImage') && !$image['in_use']) { ?>
                 <A HREF="do_del.php?image_id=<?php echo $image['id'].'&'.$imageNav->getSearchLink(); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the image $1?', '&quot;'.htmlspecialchars($image['description'], ENT_QUOTES).'&quot'); ?>');"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/delete.gif" BORDER="0" ALT="<?php  putGS('Delete image $1', htmlspecialchars($image['description'])); ?>"></A>

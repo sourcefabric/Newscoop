@@ -64,10 +64,7 @@
             </TD>
             <TD align="center">
                 <?php
-                $InUseLink = 'index.php?'
-                	.'search_inuse='.urlencode($image['in_use'])
-                	.'&view='.$view;
-                echo "<a href='$InUseLink'>".htmlspecialchars($image['in_use'])."</a>";
+                echo $image['in_use'];
                 ?>&nbsp;
             </TD>
             <?php
