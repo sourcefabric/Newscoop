@@ -19,6 +19,6 @@ foreach (array_merge ($_POST, $_GET) as $key=>$val)
  fputs($fh,"<?php \n\n$sb\n\n?>");
  fclose($fh);
      //print $sb;
- print "Done<br>\n";
+// print "Done<br>\n";
 
 ?>
