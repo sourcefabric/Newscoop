@@ -11,6 +11,7 @@ if (!create_instance($GLOBALS['argv'], $errors)) {
 	echo "Campsite parameters:\n";
 	foreach($Campsite as $var_name=>$value)
 		echo "$var_name = $value\n";
+	exit(1);
 }
 foreach ($info_messages as $index=>$message)
 	echo "$message\n";
@@ -22,8 +23,10 @@ function create_instance($p_arguments, &$p_errors)
 
 	$p_errors = array();
 	// read parameters
-	if (!$defined_parameters = read_cmdline_parameters($p_arguments, $p_errors))
+	if (!$defined_parameters = read_cmdline_parameters($p_arguments, $p_errors)) {
+		print_usage();
 		return false;
+	}
 
 	$etc_dir = $defined_parameters['--etc_dir'];
 	// check if etc directory was valid
@@ -451,25 +454,25 @@ function generate_parser_port($p_defined_parameters)
 	if (!is_dir($etc_dir))
 		die("Invalid directory $etc_dir");
 
+	$old_port_value = 0;
 	$max_port_value = 0;
 	$parser_port = 0;
 	if (!$dh = opendir($etc_dir))
 		die("Can't open $etc_dir\n");
 	while (($file_name = readdir($dh)) !== false) {
-		if ($file_name == "." || $file_name == ".." || !is_dir("$etc_dir/$file_name")
-			|| $file_name == $p_defined_parameters['--db_name'])
+		if ($file_name == "." || $file_name == ".." || !is_dir("$etc_dir/$file_name"))
 			continue;
 		require_once("$etc_dir/$file_name/parser_conf.php");
+		if ($file_name == $p_defined_parameters['--db_name']) {
+			return $Campsite['PARSER_PORT'];
+		}
 		if ($max_port_value < $Campsite['PARSER_PORT'])
 			$max_port_value = $Campsite['PARSER_PORT'];
 	}
-	if ($max_port_value > 0) {
-		$parser_port = $max_port_value + 1;
-	} else {
-		require_once("$etc_dir/parser_conf.php");
-		$parser_port = $Campsite['PARSER_START_PORT'] + 1;
-	}
-	return $parser_port;
+	if ($max_port_value > 0)
+		return $max_port_value + 1;
+	require_once("$etc_dir/parser_conf.php");
+	return ($Campsite['PARSER_START_PORT'] + 1);
 }
 
 
@@ -512,6 +515,21 @@ function read_cmdline_parameters($p_arguments, &$p_errors)
 	if (sizeof($p_errors) > 0)
 		return false;
 	return $defined_parameters;
+}
+
+
+function print_usage()
+{
+	global $g_instance_parameters, $g_mandatory_parameters, $g_parameters_defaults;
+
+	define_globals();
+	echo "Usage: create_instance [arguments]\nArguments may be:\n";
+	foreach ($g_instance_parameters as $index=>$parameter) {
+		if ($parameter != '--no_database')
+			echo "\t$parameter [value]\n";
+		else
+			echo "\t$parameter\n";
+	}
 }
 
 
