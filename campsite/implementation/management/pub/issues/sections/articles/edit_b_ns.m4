@@ -198,7 +198,7 @@ X_NEW_BUTTON(<*Edit details*>, <*X_ROOT/pub/issues/sections/articles/edit.php?Pu
 <TR>
 <TD>
 <EMBED id="campeditor" type="application/x-java-applet;jpi-version=1.4" width="660"
-height="420" align="baseline" code="Campfire.class" codebase="html/" archive="campfire.jar"
+height="420" align="baseline" code="Campfire.class" codebase="java/" archive="campfire.jar"
 model="models/HyaluronicAcid.xyz"
 pluginspage="http://java.sun.com/j2se/1.4.1/download.html"
 mayscript="true"
