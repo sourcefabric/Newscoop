@@ -5,10 +5,9 @@ require_once($_SERVER['DOCUMENT_ROOT']."/classes/DatabaseObject.php");
 class Language extends DatabaseObject {
 	var $m_dbTableName = "Languages";
 	var $m_primaryKeyColumnNames = array("Id");
-//	var $m_columnNames = array("Id","Name");
-
 	var $Id;
 	var $Name;
+	var $Code;
 	
 	function Language($p_languageId = null) {
 		parent::DatabaseObject();
@@ -18,6 +17,18 @@ class Language extends DatabaseObject {
 		}
 	} // constructor
 	
+	function getAllLanguages() {
+		global $Campsite;
+		$queryStr = "SELECT * FROM Languages";
+		$query = $Campsite["db"]->Execute($queryStr);
+		$languages = array();
+		while ($row = $query->FetchRow()) {
+			$tmpLanguage =& new Language();
+			$tmpLanguage->fetch($row);
+			$languages[] = $tmpLanguage;
+		}
+		return $languages;
+	} // fn getAllLanguages
 
 	function getLanguageId() {
 		return $this->Id;
@@ -27,6 +38,10 @@ class Language extends DatabaseObject {
 	function getName() {
 		return $this->Name;
 	} // fn getName
+	
+	function getCode() {
+		return $this->Code;
+	} // fn getCode
 	
 } // class Language
 
