@@ -143,6 +143,7 @@ int CContext::operator ==(const CContext& c) const
 	       && search_and == c.search_and
 	       && search_level == c.search_level
 	       && start_subtitle == c.start_subtitle
+	       && default_start_subtitle == c.default_start_subtitle
 	       && all_subtitles == c.all_subtitles
 	       && st_list_start == c.st_list_start
 	       && st_prev_start == c.st_prev_start
@@ -216,6 +217,7 @@ const CContext& CContext::operator =(const CContext& s)
 	search_and = s.search_and;
 	search_level = s.search_level;
 	start_subtitle = s.start_subtitle;
+	default_start_subtitle = s.default_start_subtitle;
 	all_subtitles = s.all_subtitles;
 	subtitles = s.subtitles;
 	fields = s.fields;
@@ -442,6 +444,23 @@ void CContext::SetStartSubtitle(int subtitle_nr, const string& field)
 		(*it).second = subtitle_nr;
 	else
 		start_subtitle[actualField] = subtitle_nr;
+}
+
+// SetDefaultStartSubtitle: set the default start subtitle of given article content (field)
+// Parameters:
+//		int subtitle_nr - subtitle number
+//		const string& field - field (article content) for which to set the start subtitle
+void CContext::SetDefaultStartSubtitle(int subtitle_nr, const string& field)
+{
+	string actualField = (field == "" ? current_field : field);
+	if (actualField == "")
+		return ;
+	String2Int::iterator it;
+	it = default_start_subtitle.find(actualField);
+	if (it != default_start_subtitle.end())
+		(*it).second = subtitle_nr;
+	else
+		default_start_subtitle[actualField] = subtitle_nr;
 }
 
 // SetAllSubtitles: set all_subtitles value to true/false for the given field (article content)
@@ -761,6 +780,20 @@ int CContext::StartSubtitle(const string& field)
 	if (start_subtitle.find(actualField) == start_subtitle.end())
 		return 0;
 	return (*start_subtitle.find(actualField)).second;
+}
+
+// DefaultStartSubtitle: return the default start subtitle for the given field (article
+//		content). If field is empty ("") perform the action for the current field
+// Parameters:
+//		const string& field - field (article content)
+int CContext::DefaultStartSubtitle(const string& field)
+{
+	string actualField = (field == "" ? current_field : field);
+	if (actualField == "")
+		return 0;
+	if (default_start_subtitle.find(actualField) == default_start_subtitle.end())
+		return 0;
+	return (*default_start_subtitle.find(actualField)).second;
 }
 
 // AllSubtitles: return the all_subtitles value for the given field (article

@@ -173,7 +173,8 @@ private:
 	int search_level;							// search level: 0 - all, 1 - issue, 2 - section
 	String2StringList subtitles;				// current article body field subtitles/field
 	String2StringListIt subtitles_it;			// subtitles iterator: current subtitle/field
-	String2Int start_subtitle;					// start subtitle/field
+	String2Int start_subtitle;					// start subtitle/field to print
+	String2Int default_start_subtitle;			// start subtitle/field supplied as a parameter
 	String2Bool all_subtitles;					// print all subtitles/field
 	String2String fields;						// fields/article type to print
 	string current_field;						// current printing field from article
@@ -406,6 +407,7 @@ public:
 	void ResetSubtitles(const string& = "");
 	void SetStartSubtitle(int, const string& = "");
 	void SetAllSubtitles(bool, const string& = "");
+	void SetDefaultStartSubtitle(int, const string& = "");
 	void SetField(const string&, const string&);
 	void SetCurrentField(const string &f)
 	{
@@ -640,6 +642,7 @@ public:
 	const string& SelectSubtitle(int, const string& = "");
 	int StartSubtitle(const string& = "");
 	int AllSubtitles(const string& = "");
+	int DefaultStartSubtitle(const string& = "");
 	const string& FieldArtType(const string&);
 	String2String& Fields()
 	{
