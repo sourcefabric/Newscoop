@@ -30,9 +30,8 @@ $msg .= "</CampsiteMessage>\n";
 $size = sprintf("%04x", strlen($msg));
 //echo "size: " . $size . "\n";
 
-require_once("config.php");
-$service_port = $SERVER_PORT == 0 ? $SERVER_DEFAULT_PORT : $SERVER_PORT;
-@$socket = fsockopen($SERVER_ADDRESS, $service_port, $errno, $errstr, 30);
+require_once("configuration.php");
+@$socket = fsockopen('127.0.0.1', $Campsite['PARSER_PORT'], $errno, $errstr, 30);
 if (!$socket) {
 	echo "$errstr ($errno)\n";
 	die();
@@ -46,6 +45,7 @@ fwrite($socket, $msg);
 // fclose($socket);
 // exit(0);
 
+//echo "<p>reading:</p>\n";
 stream_set_timeout($socket, 10);
 do {
 	$str = fread($socket, 1000);
