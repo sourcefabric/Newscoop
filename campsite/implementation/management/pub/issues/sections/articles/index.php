@@ -1,6 +1,7 @@
 <?php 
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/pub/issues/sections/articles/article_common.php");
-require_once($_SERVER['DOCUMENT_ROOT']. "/classes/DbObjectArray.php");
+require_once($_SERVER['DOCUMENT_ROOT']. '/classes/DbObjectArray.php');
+require_once($_SERVER['DOCUMENT_ROOT']. '/classes/ArticlePublish.php');
 
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
@@ -72,16 +73,12 @@ $previousArticleId = 0;
 </HEAD>
 <BODY  BGCOLOR="WHITE" TEXT="BLACK" LINK="DARKBLUE" ALINK="RED" VLINK="DARKBLUE">
 
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
 <TR>
-	<!--<TD ROWSPAN="2" WIDTH="1%"><IMG SRC="/<?php echo $ADMIN; ?>/img/sign_big.gif" BORDER="0"></TD>-->
-	<TD style="padding-left: 10px; padding-top: 10px;">
-	    <DIV STYLE="font-size: 12pt"><B><?php  putGS("Articles"); ?></B></DIV>
-	    <!--<HR NOSHADE SIZE="1" COLOR="BLACK">-->
+	<TD class="page_title">
+	    <?php  putGS("Articles"); ?>
 	</TD>
-<!--</TR>
-<TR>
--->	<TD ALIGN="RIGHT" style="padding-right: 10px; padding-top: 10px;">
+	<TD ALIGN="RIGHT" style="padding-right: 10px; padding-top: 0px;">
 		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
 		<TR>
 			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Sections"); ?>"></A></TD>
@@ -90,16 +87,11 @@ $previousArticleId = 0;
 			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/?Pub=<?php  p($Pub); ?>" ><B><?php  putGS("Issues");  ?></B></A></TD>
 			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Publications"); ?>"></A></TD>
 			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/" ><B><?php  putGS("Publications");  ?></B></A></TD>
-<!--			<TD><A HREF="/<?php echo $ADMIN; ?>/home.php" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Home"); ?>"></A></TD>
-			<TD><A HREF="/<?php echo $ADMIN; ?>/home.php" ><B><?php  putGS("Home");  ?></B></A></TD>
-			<TD><A HREF="/<?php echo $ADMIN; ?>/logout.php" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Logout"); ?>"></A></TD>
-			<TD><A HREF="/<?php echo $ADMIN; ?>/logout.php" ><B><?php  putGS("Logout");  ?></B></A></TD>
--->		</TR>
+		</TR>
 		</TABLE>
 	</TD>
 </TR>
 </TABLE>
-<HR NOSHADE SIZE="1" COLOR="BLACK">
 
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="1" WIDTH="100%">
 <TR>
@@ -159,7 +151,6 @@ $previousArticleId = 0;
 
 <P>
 <?php 
-//if ($NUM_ROWS) {
 if ($numUniqueArticlesDisplayed > 0) {
 	$counter = 0;
 	$color = 0;
@@ -186,9 +177,6 @@ if ($numUniqueArticlesDisplayed > 0) {
 <?php 
 $uniqueArticleCounter = 0;
 foreach ($allArticles as $articleObj) {
-//	if ($counter++ > $ArticlesPerPage) {
-//		break;
-//	}
 	if ($articleObj->getArticleId() != $previousArticleId) {
 		$uniqueArticleCounter++;
 	}
@@ -314,8 +302,10 @@ foreach ($allArticles as $articleObj) {
 		
 		<?php if ($User->hasPermission('Publish')) { ?>
 		<TD ALIGN="CENTER">
-			<?php if ($articleObj->getPublished() == 'S') { ?>
-			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/autopublish.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($articleObj->getArticleId()); ?>&Language=<?php  p($Language);?>&sLanguage=<?php p($articleObj->getLanguageId()); ?>"><img src="/<?php p($ADMIN); ?>/img/icon/automatic_publishing.png" alt="<?php  putGS("Automatic publishing"); ?>" border="0"></A>
+			<?php if ($articleObj->getPublished() != 'N') { 
+				$events =& ArticlePublish::GetArticleEvents($articleObj->getArticleId(),
+					$articleObj->getLanguageId());?>
+			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/autopublish.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($articleObj->getArticleId()); ?>&Language=<?php  p($Language);?>&sLanguage=<?php p($articleObj->getLanguageId()); ?>"><img src="/<?php p($ADMIN); ?>/img/icon/<?php p((count($events) > 0) ? 'automatic_publishing_active.png':'automatic_publishing.png'); ?>" alt="<?php  putGS("Automatic publishing"); ?>" border="0"></A>
 			<?php 
 			} else { ?>
 				&nbsp;<?PHP
