@@ -854,8 +854,14 @@ set_checked libnsl
 }
 # END OF check4_libnsl
 
+# list of possible libc names
+libcnames="libc.a libc_r.a libc.so libc_r.so"
+
+# list of possible lisc directories
+libcdirs="/usr/lib:/lib"
+
 # FUNCTION: check4_gethostbyaddr_r
-# Description: 
+# Description:
 # Parameters: none
 # Variables set:
 #       HAVE_GETHOSTBYADDR_R - 1 if found, 0 if not
@@ -864,21 +870,18 @@ check4_gethostbyaddr_r()
 {
 is_checked gethostbyaddr_r && return 0
 export HAVE_GETHOSTBYADDR_R=0
-check4_symbol_and_prototype libc.a /usr/lib netdb.h /usr/include gethostbyaddr_r
-if [ $? -eq 0 ]; then
-	export HAVE_GETHOSTBYADDR_R=1
-else
-	check4_symbol_and_prototype libc_r.a /usr/lib netdb.h /usr/include gethostbyaddr_r
+for libname in $libcnames; do
+	check4_symbol_and_prototype $libname "$libcdirs" netdb.h /usr/include gethostbyaddr_r &> /dev/null
 	if [ $? -eq 0 ]; then
 		export HAVE_GETHOSTBYADDR_R=1
 	fi
-fi
+done
 set_checked gethostbyaddr_r
 }
 # END OF check4_gethostbyaddr
 
 # FUNCTION: check4_gethostbyname_r
-# Description: 
+# Description:
 # Parameters: none
 # Variables set:
 #       HAVE_GETHOSTBYNAME_R - 1 if found, 0 if not
@@ -887,21 +890,18 @@ check4_gethostbyname_r()
 {
 is_checked gethostbyname_r && return 0
 export HAVE_GETHOSTBYNAME_R=0
-check4_symbol_and_prototype libc.a /usr/lib netdb.h /usr/include gethostbyname_r
-if [ $? -eq 0 ]; then
-	export HAVE_GETHOSTBYNAME_R=1
-else
-	check4_symbol_and_prototype libc_r.a /usr/lib netdb.h /usr/include gethostbyname_r
+for libname in $libcnames; do
+	check4_symbol_and_prototype $libname "$libcdirs" netdb.h /usr/include gethostbyname_r &> /dev/null
 	if [ $? -eq 0 ]; then
 		export HAVE_GETHOSTBYNAME_R=1
 	fi
-fi
+done
 set_checked gethostbyname_r
 }
 # END OF check4_gethostbyname
 
 # FUNCTION: check4_getservbyname_r
-# Description: 
+# Description:
 # Parameters: none
 # Variables set:
 #       HAVE_GETSERVBYNAME_R - 1 if found, 0 if not
@@ -910,16 +910,12 @@ check4_getservbyname_r()
 {
 is_checked getservbyname_r && return 0
 export HAVE_GETSERVBYNAME_R=0
-check4_symbol_and_prototype libc.a /usr/lib netdb.h /usr/include getservbyname_r
-if [ $? -eq 0 ]; then
-	export HAVE_GETSERVBYNAME_R=1
-else
-	check4_symbol_and_prototype libc_r.a /usr/lib netdb.h /usr/include getservbyname_r
+for libname in $libcnames; do
+	check4_symbol_and_prototype $libname "$libcdirs" netdb.h /usr/include getservbyname_r &> /dev/null
 	if [ $? -eq 0 ]; then
 		export HAVE_GETSERVBYNAME_R=1
 	fi
-fi
+done
 set_checked getservbyname_r
 }
 # END OF check4_getservbyname
-# END OF check4_
