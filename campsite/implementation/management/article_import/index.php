@@ -6,7 +6,7 @@ require_once("Issue.php");
 require_once("Publication.php");
 require_once("Language.php");
 
-$rootDirectory = "/priv";
+$rootDirectory = $ADMIN_DIR;
 
 //echo $TOL_UserId;exit;
 //$access = check_basic_access($TOL_UserId, $TOL_UserKey);
@@ -40,10 +40,10 @@ $issueLanguage =& new Language($sLanguage);
 <HTML>
 <HEAD>
     <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <script type="text/javascript" src="/priv/article_import/javascript/fValidate.config.js"></script>
-    <script type="text/javascript" src="/priv/article_import/javascript/fValidate.core.js"></script>
-    <script type="text/javascript" src="/priv/article_import/javascript/fValidate.lang-enUS.js"></script>
-    <script type="text/javascript" src="/priv/article_import/javascript/fValidate.validators.js"></script>
+    <script type="text/javascript" src="/<?php echo $ADMIN; ?>/article_import/javascript/fValidate.config.js"></script>
+    <script type="text/javascript" src="/<?php echo $ADMIN; ?>/article_import/javascript/fValidate.core.js"></script>
+    <script type="text/javascript" src="/<?php echo $ADMIN; ?>/article_import/javascript/fValidate.lang-enUS.js"></script>
+    <script type="text/javascript" src="/<?php echo $ADMIN; ?>/article_import/javascript/fValidate.validators.js"></script>
 	<TITLE>Article Import<?php //putGS("$1"); ?></TITLE>
 	<?php  if ($access == 0) { ?>
 		<META HTTP-EQUIV="Refresh" CONTENT="0; URL=<?php echo $rootDirectory ?>/logout.php">
@@ -60,12 +60,12 @@ $issueLanguage =& new Language($sLanguage);
 	    <HR NOSHADE SIZE="1" COLOR="BLACK">
 	</TD>
 </TR>
-	<TR><TD ALIGN=RIGHT><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0"><TR><TD><A HREF="/priv/pub/issues/sections/articles/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>&Section=<? p($Section); ?>" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<? putGS("Articles"); ?>"></A></TD><TD><A HREF="/priv/pub/issues/sections/articles/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>&Section=<? p($Section); ?>" ><B><? putGS("Articles");  ?></B></A></TD>
-<TD><A HREF="/priv/pub/issues/sections/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<? putGS("Sections"); ?>"></A></TD><TD><A HREF="/priv/pub/issues/sections/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>" ><B><? putGS("Sections");  ?></B></A></TD>
-<TD><A HREF="/priv/pub/issues/?Pub=<? p($Pub); ?>" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<? putGS("Issues"); ?>"></A></TD><TD><A HREF="/priv/pub/issues/?Pub=<? p($Pub); ?>" ><B><? putGS("Issues");  ?></B></A></TD>
-<TD><A HREF="/priv/pub/" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<? putGS("Publications"); ?>"></A></TD><TD><A HREF="/priv/pub/" ><B><? putGS("Publications");  ?></B></A></TD>
-<TD><A HREF="/priv/home.php" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<? putGS("Home"); ?>"></A></TD><TD><A HREF="/priv/home.php" ><B><? putGS("Home");  ?></B></A></TD>
-<TD><A HREF="/priv/logout.php" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<? putGS("Logout"); ?>"></A></TD><TD><A HREF="/priv/logout.php" ><B><? putGS("Logout");  ?></B></A></TD>
+	<TR><TD ALIGN=RIGHT><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0"><TR><TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>&Section=<? p($Section); ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<? putGS("Articles"); ?>"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>&Section=<? p($Section); ?>" ><B><? putGS("Articles");  ?></B></A></TD>
+<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<? putGS("Sections"); ?>"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>" ><B><? putGS("Sections");  ?></B></A></TD>
+<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/?Pub=<? p($Pub); ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<? putGS("Issues"); ?>"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/?Pub=<? p($Pub); ?>" ><B><? putGS("Issues");  ?></B></A></TD>
+<TD><A HREF="/<?php echo $ADMIN; ?>/pub/" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<? putGS("Publications"); ?>"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/pub/" ><B><? putGS("Publications");  ?></B></A></TD>
+<TD><A HREF="/<?php echo $ADMIN; ?>/home.php" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<? putGS("Home"); ?>"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/home.php" ><B><? putGS("Home");  ?></B></A></TD>
+<TD><A HREF="/<?php echo $ADMIN; ?>/logout.php" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<? putGS("Logout"); ?>"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/logout.php" ><B><? putGS("Logout");  ?></B></A></TD>
 </TR></TABLE></TD></TR>
 </TABLE>
 
@@ -123,7 +123,7 @@ $issueLanguage =& new Language($sLanguage);
 				<INPUT type="submit" name="Submit" value="Upload">
 			</td>
 			<td align="left" style="padding: 3px;">
-				<INPUT type="button" name="Cancel" value="Cancel" ONCLICK="location.href='/priv/pub/issues/sections/articles/edit.php?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Section=<? p($Section); ?>&Article=<? p($Article) ?>&Language=<? p($Language); ?>&sLanguage=<? p($sLanguage) ?>'">	
+				<INPUT type="button" name="Cancel" value="Cancel" ONCLICK="location.href='/<?php echo $ADMIN; ?>/pub/issues/sections/articles/edit.php?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Section=<? p($Section); ?>&Article=<? p($Article) ?>&Language=<? p($Language); ?>&sLanguage=<? p($sLanguage) ?>'">
 			</td>
 		</tr>
 		</table>
