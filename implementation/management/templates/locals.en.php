@@ -62,4 +62,12 @@ regGS("All languages", "All languages");
 regGS("You do not have the right to modify templates.","You do not have the right to modify templates.:en");
 regGS("Invalid template file $1", "Invalid template file $1:en");
 
+regGS("You do not have the right to create folders.", "You do not have the right to create folders.:en");
+regGS("You do not have the right to upload templates.", "You do not have the right to upload templates.:en");
+regGS("You do not have the right to delete folders.", "You do not have the right to delete folders.:en");
+regGS("You do not have the right to create templates.", "You do not have the right to create templates.:en");
+
+regGS("Duplicate file", "Duplicate file:en");
+regGS("Delete file", "Delete file:en");
+
 ?>

@@ -19,4 +19,6 @@ regGS("Article topic $1 deleted","Article topic $1 deleted:en");
 // -- do_add.m4
 regGS("Topic $1 added to article","Topic $1 added to article:en");
 
+regGS("You do not have the right to add topics to article.", "You do not have the right to add topics to article.:en");
+
 ?>

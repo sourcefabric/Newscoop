@@ -60,4 +60,6 @@ regGS("Duplicate article", "Duplicate article");
 // -- dupform.m4
 regGS("The destination section is the same as the source section.", "The destination section is the same as the source section.:en");
 
+regGS("The article is new; it is not possible to schedule it for automatic publishing.", "The article is new; it is not possible to schedule it for automatic publishing.:en");
+
 ?>

@@ -5,7 +5,7 @@ CHECK_BASIC_ACCESS
 CHECK_ACCESS(<*ManageTempl*>)
 
 B_HEAD
-	X_TITLE(<* Duplicate template*>)
+	X_TITLE(<*Duplicate template*>)
 <?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to create templates.*>)
 <?php  } ?>dnl
