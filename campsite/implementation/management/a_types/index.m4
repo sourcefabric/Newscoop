@@ -1,5 +1,5 @@
 B_HTML
-INCLUDE_PHP_LIB(<*..*>)
+INCLUDE_PHP_LIB(<*$ADMIN_DIR/a_types*>)
 B_DATABASE
 
 <?php  query ("SHOW TABLES LIKE 'XXYYZZ'", 'ATypes'); ?>dnl
