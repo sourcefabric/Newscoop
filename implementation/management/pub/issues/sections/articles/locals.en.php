@@ -2,6 +2,7 @@
 
 // -- index.m4
 regGS("Delete article $1","Delete article $1:en");
+regGS("Order", "Order:en");
 
 // -- add.m4
 regGS("Show article on front page","Show article on front page:en");
