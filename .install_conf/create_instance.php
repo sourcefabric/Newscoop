@@ -323,12 +323,13 @@ function create_site($p_defined_parameters)
 		"$instance_etc_dir/apache_conf.php"=>"$html_dir/apache_conf.php",
 		"$common_html_dir/index.php"=>"$html_dir/index.php",
 		"$common_html_dir/admin.php"=>"$html_dir/admin.php",
+		"$common_html_dir/db_connect.php"=>"$html_dir/db_connect.php",
 		"$common_html_dir/configuration.php"=>"$html_dir/configuration.php",
 		"$common_html_dir/classes"=>"$html_dir/classes",
 		"$common_html_dir/css"=>"$html_dir/css",
 		"$common_html_dir/include"=>"$html_dir/include",
 		"$common_html_dir/javascript"=>"$html_dir/javascript",
-		"$common_html_dir/priv"=>"$html_dir/priv"
+		"$common_html_dir/priv"=>"$html_dir/admin-files"
 		);
 	foreach ($link_files as $file=>$link) {
 		if (!is_link($link) && !symlink($file, $link))
