@@ -123,7 +123,7 @@ inline void CURLTemplatePath::setValue(const string& p_rcoParameter, const strin
 
 inline bool CURLTemplatePath::equalTo(const CURL* p_pcoURL) const
 {
-	return CURL::equalTo(p_pcoURL)
+	return this->getURLType() == p_pcoURL->getURLType() && CURL::equalTo(p_pcoURL)
 		&& m_coHTTPHost == ((const CURLTemplatePath*)p_pcoURL)->m_coHTTPHost;
 }
 
