@@ -2,6 +2,10 @@
 require_once($_SERVER['DOCUMENT_ROOT']. "/priv/pub/issues/sections/articles/article_common.php");
 
 list($access, $User) = check_basic_access($_REQUEST);
+if (!$access) {
+	header("Location: /priv/logout.php");
+	exit;
+}
 $Pub = isset($_REQUEST["Pub"])?$_REQUEST["Pub"]:0;
 $Issue = isset($_REQUEST["Issue"])?$_REQUEST["Issue"]:0;
 $Section = isset($_REQUEST["Section"])?$_REQUEST["Section"]:0;
@@ -65,7 +69,7 @@ foreach ($dbColumns as $dbColumn) {
 }
 
 // Begin Display of page
-ArticleTop($articleObj, $Language, "Edit article details", $access);
+ArticleTop($articleObj, $Language, "Edit article details");
 HtmlArea_Campsite($dbColumns);
 
 if ($errorStr != "") {
