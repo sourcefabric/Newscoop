@@ -224,6 +224,7 @@ else # else if define start env
     modules_conf --set || exit 1
     for m in apache gethostbyaddr_r gethostbyname_r getservbyname_r killall libpthread mysql_h libcrypt libnsl xml libmysqlclient gcc m4 make; do
 	check4_${m}
+	[ $? -ne 0 ] && exit 1
     done
 
 fi # end if define start env
