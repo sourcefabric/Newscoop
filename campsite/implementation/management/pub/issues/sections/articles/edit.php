@@ -1,7 +1,7 @@
 <?php  
 require_once($_SERVER['DOCUMENT_ROOT']. "/priv/pub/issues/sections/articles/article_common.php");
 
-list($access, $User, $XPerm) = check_basic_access($_REQUEST);
+list($access, $User) = check_basic_access($_REQUEST);
 $Pub = isset($_REQUEST["Pub"])?$_REQUEST["Pub"]:0;
 $Issue = isset($_REQUEST["Issue"])?$_REQUEST["Issue"]:0;
 $Section = isset($_REQUEST["Section"])?$_REQUEST["Section"]:0;
@@ -26,19 +26,19 @@ $articleTemplate =& new Template($issueObj->getArticleTemplateId());
 // If the user has the ability to change the article OR
 // the user created the article and it hasnt been published.
 $hasAccess = false;
-if ($XPerm['ChangeArticle'] || (($articleObj->getUserId() == $User['Id']) && ($articleObj->getPublished() == 'N'))) {
+if ($User->hasPermission('ChangeArticle') || (($articleObj->getUserId() == $User->getId()) && ($articleObj->getPublished() == 'N'))) {
 	$hasAccess = true;
 	$edit_ok= 0;
 	// If the article is not locked by a user or its been locked by the current user.
 	if (($articleObj->getLockedByUser() == 0) 
-		|| ($articleObj->getLockedByUser() == $User['Id'])) {
+		|| ($articleObj->getLockedByUser() == $User->getId())) {
 		// Lock the article
-		$articleObj->lock($User['Id']);
+		$articleObj->lock($User->getId());
 	    $edit_ok= 1;
 	} 
 }
 
-if ($XPerm['AddArticle']) { 
+if ($User->hasPermission('AddArticle')) { 
 	// Added by sebastian.
 	if (function_exists ("incModFile")) {
 		incModFile ();
@@ -139,7 +139,7 @@ if ($edit_ok) { ?>
 		<TR>
 		<?php 
 		if ($articleObj->getPublished() == "Y") { 
-			if ($XPerm['Publish']) { 
+			if ($User->hasPermission('Publish')) { 
 				?>
 				<TD>
 					<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
@@ -153,7 +153,7 @@ if ($edit_ok) { ?>
 			} 
 		} 
 		elseif ($articleObj->getPublished() == "S") { 
-			if ($XPerm['Publish']) { 
+			if ($User->hasPermission('Publish')) { 
 				?>
 				<TD>
 					<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
@@ -223,7 +223,7 @@ if ($edit_ok) { ?>
 			</TD>
 
 			<?php  
-			if ($XPerm['AddArticle']) { 
+			if ($User->hasPermission('AddArticle')) { 
 				?>
 				<TD>
 					<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
@@ -236,7 +236,7 @@ if ($edit_ok) { ?>
 				<?php  
 			} 
 
-			if ($XPerm['DeleteArticle']) { 
+			if ($User->hasPermission('DeleteArticle')) { 
 				?>
 				<TD>
 					<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
@@ -249,7 +249,7 @@ if ($edit_ok) { ?>
 				<?php  
 			} 
 
-			if ($XPerm['AddArticle']) { 
+			if ($User->hasPermission('AddArticle')) { 
 				?>
 				<TD>
 					<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">

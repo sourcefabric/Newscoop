@@ -1,6 +1,6 @@
 <?php  
 require_once($_SERVER['DOCUMENT_ROOT']. "/priv/pub/issues/sections/articles/article_common.php");
-list($access, $User, $XPerm) = check_basic_access($_REQUEST);
+list($access, $User) = check_basic_access($_REQUEST);
 $Pub = isset($_REQUEST["Pub"])?$_REQUEST["Pub"]:0;
 $Issue = isset($_REQUEST["Issue"])?$_REQUEST["Issue"]:0;
 $Section = isset($_REQUEST["Section"])?$_REQUEST["Section"]:0;
@@ -19,7 +19,7 @@ setcookie("TOL_Preview", "on", null, "/");
 <?php  
 if ($access) {
 	if (($articleObj->exists()) && ($templateObj->getName() != "")) {
-		if ($XPerm["ManageTempl"] || $XPerm["DeleteTempl"]) {
+		if ($User->hasPermission("ManageTempl") || $User->hasPermission("DeleteTempl")) {
 			// Show dual-pane view for those with template management priviledges
 			?>
 			<FRAMESET ROWS="60%,*" BORDER="2">
