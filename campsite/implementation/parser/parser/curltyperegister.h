@@ -67,7 +67,7 @@ private:
 	CURLTypeMap m_coCURLTypes;
 
 #ifdef _REENTRANT
-	CMutex m_coMutex;
+	mutable CMutex m_coMutex;
 #endif
 };
 
@@ -77,7 +77,7 @@ private:
 inline void CURLTypeRegister::insert(CURLType& p_rcoURLType)
 {
 #ifdef _REENTRANT
-	CMutexHandler coLockHandler(m_coMutex);
+	CMutexHandler coLockHandler(&m_coMutex);
 #endif
 	m_coCURLTypes[p_rcoURLType.getTypeName()] = &p_rcoURLType;
 }
@@ -85,7 +85,7 @@ inline void CURLTypeRegister::insert(CURLType& p_rcoURLType)
 inline void CURLTypeRegister::erase(const string& p_rcoURLTypeName)
 {
 #ifdef _REENTRANT
-	CMutexHandler coLockHandler(m_coMutex);
+	CMutexHandler coLockHandler(&m_coMutex);
 #endif
 	m_coCURLTypes.erase(p_rcoURLTypeName);
 }
@@ -93,7 +93,7 @@ inline void CURLTypeRegister::erase(const string& p_rcoURLTypeName)
 inline bool CURLTypeRegister::has(const string& p_rcoURLTypeName) const
 {
 #ifdef _REENTRANT
-	CMutexHandler coLockHandler(m_coMutex);
+	CMutexHandler coLockHandler(&m_coMutex);
 #endif
 	return m_coCURLTypes.find(p_rcoURLTypeName) != m_coCURLTypes.end();
 }
@@ -101,7 +101,7 @@ inline bool CURLTypeRegister::has(const string& p_rcoURLTypeName) const
 inline const CURLType* CURLTypeRegister::getURLType(const string& p_rcoURLTypeName) const
 {
 #ifdef _REENTRANT
-	CMutexHandler coLockHandler(m_coMutex);
+	CMutexHandler coLockHandler(&m_coMutex);
 #endif
 	CURLTypeMap::const_iterator coIt = m_coCURLTypes.find(p_rcoURLTypeName);
 	if (coIt != m_coCURLTypes.end())

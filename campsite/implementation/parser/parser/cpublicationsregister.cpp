@@ -34,7 +34,7 @@ CPublicationsRegister g_coPublicationsRegister;
 void CPublicationsRegister::insert(CPublication& p_rcoPublication)
 {
 #ifdef _REENTRANT
-	CMutexHandler coLockHandler(m_coMutex);
+	CMutexHandler coLockHandler(&m_coMutex);
 #endif
 	m_coPublications[p_rcoPublication.getId()] = &p_rcoPublication;
 	const StringSet& rcoAliases = p_rcoPublication.getAliases();
