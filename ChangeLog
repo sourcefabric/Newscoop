@@ -1,3 +1,23 @@
+2.1.5
+    - Added Chinese translation thanks to Andrew Lih and Tian Fawei at Hong Kong
+    University, Journalism and Media Studies Centre
+    - Implemented article/section duplication feature
+    - Implemented a small extension API in order to allow the Phorum modules to
+    work with campsite (thanks to Sebastian Goebel)
+    - Implemented ordering by name in issues and articles lists
+    - Added a technical FAQ for troubleshooting
+    - Added Arabic translation
+    - Many bug fixes
+
+2.1.4
+    - Changed the image buttons to text buttons which are easy to translate
+    - Fixed bug 178: Some admin rights not added by default when admin account
+    created
+    - Improved the manual (2.1. Configuring the publishing environment)
+    - Improved the template parser behavior: display error message when an
+    invalid template was included (previously it would display an empty page)
+    - Other bug fixes
+
 2.1.3
     - Manual updates: some statements were not documented: "If Search"
     (3.9.3.22), "Print Search" (3.9.4.2), "If Subtitle" (3.9.3.23); manual
