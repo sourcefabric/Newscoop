@@ -161,7 +161,15 @@ initdocument = function () {
 
 			config.toolbar = [
 				[ 
-				  "bold", "italic", "underline", 
+				<?php if ($p_user->hasPermission('EditorBold')) { ?>
+				  "bold", 
+				<?php } ?>
+				<?php if ($p_user->hasPermission('EditorItalic')) { ?>
+				  "italic", 
+				<?php } ?>
+				<?php if ($p_user->hasPermission('EditorUnderline')) { ?>
+				  "underline", 
+				<?php } ?>
 				<?php if ($p_user->hasPermission('EditorStrikethrough')) { ?>
 				  "strikethrough", 
 				<?php } ?>
@@ -169,19 +177,20 @@ initdocument = function () {
 				<?php if ($p_user->hasPermission('EditorTextAlignment')) { ?>
 				"justifyleft", "justifycenter", "justifyright", "justifyfull", "separator",
 				<?php } ?>
-				<?php if ($p_user->hasPermission('EditorTextIndent')) { ?>
+				<?php if ($p_user->hasPermission('EditorIndent')) { ?>
 				  "outdent", "indent", "separator",
 				<?php } ?>
+				<?php if ($p_user->hasPermission('EditorCopyCutPaste')) { ?>
 				  "copy", "cut", "paste", "space", "separator", 
+				<?php } ?>
+				<?php if ($p_user->hasPermission('EditorUndoRedo')) { ?>				  
 				  "undo", "redo", "separator", 
+				<?php } ?>				  
 				<?php if ($p_user->hasPermission('EditorTextDirection')) { ?>
 				  "lefttoright", "righttoleft", "separator", 
 				<?php } ?>
 				<?php if ($p_user->hasPermission('EditorLink')) { ?>
 				  "campsite-internal-link", "createlink", "separator",
-				<?php } ?>
-				<?php if ($p_user->hasPermission('EditorHorizontalRule')) { ?>
-				  "inserthorizontalrule", 
 				<?php } ?>
 				<?php if ($p_user->hasPermission('EditorSubhead')) { ?>
 				  "campsite-subhead", 
@@ -215,6 +224,9 @@ initdocument = function () {
 				<?php } ?>
 				  ],
 				  [
+				<?php if ($p_user->hasPermission('EditorHorizontalRule')) { ?>
+				  "inserthorizontalrule", "separator",
+				<?php } ?>
 				<?php if ($p_user->hasPermission('EditorFontColor')) { ?>
 				  "forecolor", "hilitecolor", "separator",
 				<?php } ?>
