@@ -2,7 +2,7 @@
 /**
  * Image Manager configuration file.
  * @author $Author: paul $
- * @version $Id: config.inc.php,v 1.1 2004/09/11 02:43:24 paul Exp $
+ * @version $Id: config.inc.php,v 1.2 2004/11/14 01:38:50 paul Exp $
  * @package ImageManager
  */
 
@@ -15,7 +15,7 @@
        PHP must be able to create files in this directory.
 	   Able to create directories is nice, but not necessary.
 */
-$IMConfig['base_dir'] = '/var/www/html/upload/';
+$IMConfig['base_dir'] = '/var/www/html/images/';
 
 /*
  The URL to the above path, the web browser needs to be able to see it.
@@ -25,7 +25,7 @@ $IMConfig['base_dir'] = '/var/www/html/upload/';
  for this directory (i.e. disable PHP, Perl, CGI). We only want to store assets
  in this directory and its subdirectories.
 */
-$IMConfig['base_url'] = 'http://127.0.0.1/upload/';
+$IMConfig['base_url'] = "http://".$_SERVER['HTTP_HOST'].'/images/';
 
 /*
   Possible values: true, false
@@ -66,7 +66,7 @@ define('IMAGE_TRANSFORM_LIB_PATH', 'C:/"Program Files"/ImageMagick-5.5.7-Q16/');
   thumbnails files will be named as "prefix_imagefile.ext", that is,
   prefix + orginal filename.
 */
-$IMConfig['thumbnail_prefix'] = 'thumb';
+$IMConfig['thumbnail_prefix'] = 'cms-thumb-';
 
 /*
   Thumbnail can also be stored in a directory, this directory
@@ -76,7 +76,7 @@ $IMConfig['thumbnail_prefix'] = 'thumb';
   If you do not want to store thumbnails in a directory, set this
   to false or empty string '';
 */
-$IMConfig['thumbnail_dir'] = 'thumbs';
+$IMConfig['thumbnail_dir'] = 'thumbnails';
 
 /*
   Possible values: true, false
@@ -89,7 +89,18 @@ $IMConfig['thumbnail_dir'] = 'thumbs';
  NOTE: If $IMConfig['safe_mode'] = true, this parameter
        is ignored, you can not create directories
 */
-$IMConfig['allow_new_dir'] = true;
+$IMConfig['allow_new_dir'] = false;
+
+/*
+  Possible values: true, false
+
+ TRUE -  Show the directory dropdown at the top of the 
+ 		 "Insert Image" window.
+
+ FALSE - Do not show the directory dropdown control at the top 
+ 		 of the "Insert Image" window.
+*/
+$IMConfig['show_dirs'] = false;
 
 /*
   Possible values: true, false
@@ -98,7 +109,7 @@ $IMConfig['allow_new_dir'] = true;
 
   FALSE - No uploading allowed.
 */
-$IMConfig['allow_upload'] = true;
+$IMConfig['allow_upload'] = false;
 
 /*
  Possible values: true, false
