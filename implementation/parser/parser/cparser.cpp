@@ -36,9 +36,11 @@ Implementation of CCLexem, CCLex, CCParser methods.
 #include "cparser.h"
 #include "util.h"
 #include "error.h"
-#include "cgi.h"
+#include "curl.h"
+
 
 using std::cout;
+
 
 // macros
 #define CheckForEOF(l)\
@@ -763,15 +765,20 @@ const CCLexem* CCParser::DoParse(CContext& p_rcoContext, sockstream& p_rcoOut,
 			}
 			if (mode == "internal")
 			{
-				CGI coCGI("GET", link.c_str());
-				const char* pchLangId = coCGI.GetFirst(P_IDLANG);
-				const char* pchPubId = coCGI.GetFirst(P_IDPUBL);
-				const char* pchIssueId = coCGI.GetFirst(P_NRISSUE);
-				if (pchLangId == NULL || pchPubId == NULL || pchIssueId == NULL)
+				String2StringMMap* pcoParams = CURL::readQueryString(link);
+				String2StringMMap::const_iterator coIt = pcoParams->find(P_IDLANG);
+				if (coIt == pcoParams->end())
 					return l;
+				string coLangId = (*coIt).second;
+				if ((coIt = pcoParams->find(P_IDPUBL)) == pcoParams->end())
+					return l;
+				string coPubId = (*coIt).second;
+				if ((coIt = pcoParams->find(P_NRISSUE)) == pcoParams->end())
+					return l;
+				string coIssueId = (*coIt).second;
 				sprintf(pchTmpBuf, "select SingleArticle from Issues where IdPublication = %ld"
-						" and Number = %ld and IdLanguage = %ld", atol(pchPubId),
-				        atol(pchIssueId), atol(pchLangId));
+						" and Number = %ld and IdLanguage = %ld", atol(coPubId.c_str()),
+				        atol(coIssueId.c_str()), atol(coLangId.c_str()));
 				if (mysql_query(p_SQL, pchTmpBuf) != 0)
 					return l;
 				CMYSQL_RES res = mysql_store_result(p_SQL);
