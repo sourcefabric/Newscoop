@@ -83,7 +83,8 @@ void CURLTemplatePath::setURL(const CMsgURLRequest& p_rcoURLMessage)
 	const String2Value& coParams = p_rcoURLMessage.getParameters().getMap();
 	String2Value::const_iterator coIt = coParams.begin();
 	for (; coIt != coParams.end(); ++coIt)
-		setValue((*coIt).first, (*coIt).second->asString());
+		if ((*coIt).first != P_IDPUBL)
+			setValue((*coIt).first, (*coIt).second->asString());
 
 	// read cookies
 	const String2String& coCookies = p_rcoURLMessage.getCookies();
