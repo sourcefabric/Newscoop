@@ -943,6 +943,7 @@ int CActList::takeAction(CContext& c, sockstream& fs)
 		}
 		else
 		{
+			lc.SetStartSubtitle(i);
 			if ((st = lc.SelectSubtitle(i + lc.StListStart())) == "")
 				break;
 		}
@@ -1814,7 +1815,7 @@ int CActIf::takeAction(CContext& c, sockstream& fs)
 	}
 	else if (modifier == CMS_ST_SUBTITLE)
 	{
-		run_first = (c.StartSubtitle() + 1) == atol(param.value().c_str()) && !c.AllSubtitles();
+		run_first = (c.DefaultStartSubtitle() + 1) == atol(param.value().c_str()) && !c.AllSubtitles();
 		run_first = m_bNegated ? !run_first : run_first;
 		if (run_first)
 			runActions(block, c, fs);
@@ -1824,7 +1825,7 @@ int CActIf::takeAction(CContext& c, sockstream& fs)
 	}
 	else if (modifier == CMS_ST_CURRENTSUBTITLE)
 	{
-		run_first = (c.StartSubtitle() ) == (c.ListIndex() - 1) && !c.AllSubtitles();
+		run_first = (c.DefaultStartSubtitle() ) == (c.ListIndex() - 1) && !c.AllSubtitles();
 		run_first = m_bNegated ? !run_first : run_first;
 		if (run_first)
 			runActions(block, c, fs);
