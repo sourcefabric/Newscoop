@@ -153,7 +153,7 @@ public:
 
 	virtual pair<lint, const char*> getContent() const = 0;
 
-	const CValue* getParameter(const string& p_rcoParameter) throw(out_of_range);
+	const CValue* getParameter(const string& p_rcoParameter) const throw(out_of_range);
 
 	void setParameter(const string& p_rcoParameter, const string& p_rcoValue);
 
@@ -188,7 +188,7 @@ inline void CParameterMap::insert(const string& p_rcoParameter, pair<lint, const
 
 // CMessage inline methods
 
-inline const CValue* CMessage::getParameter(const string& p_rcoParameter) throw(out_of_range)
+inline const CValue* CMessage::getParameter(const string& p_rcoParameter) const throw(out_of_range)
 {
 	return m_coParameters.valueOf(p_rcoParameter);
 }
