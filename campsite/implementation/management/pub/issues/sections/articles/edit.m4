@@ -232,7 +232,8 @@ B_DIALOG({Edit article details}, {POST}, {do_edit.xql})
 				<!sql free q_vd>dnl 
 		B_DIALOG_INPUT({<!sql print ~q_substr.0>:})
 		<!sql query "SELECT ?q_fld.0 FROM X?q_art.Type WHERE NrArticle=?Article AND IdLanguage=?sLanguage" q_afld>dnl
-			<INPUT NAME="<!sql print ~q_fld.0>" TYPE="TEXT" VALUE="<!sql print ~q_afld.0>" SIZE="10" MAXLENGTH="10">
+			<INPUT NAME="<!sql print ~q_fld.0>" TYPE="TEXT" VALUE="<!sql print ~q_afld.0>" SIZE="10" MAXLENGTH="10"> YYYY-MM-DD
+			
 		<!sql free q_afld>dnl
 	<!sql else>dnl
 		<!-- blob -->
