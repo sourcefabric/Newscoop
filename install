@@ -102,7 +102,7 @@ if [ "$go_to_install" = "true" ] && [ $my_id -eq 0 ]; then
     install_campsite
     exit 0
 fi
-clear
+#clear
 . ${INSTALL_CONF}/install_functions
 if [ $? -ne 0 ]; then
     echo "Error reading install files."
@@ -115,10 +115,6 @@ if [ "$1" = "--version" ]; then
     exit 0
 fi
 echo -e "\nInstalling CAMPSITE $CAMPSITE_VERSION"
-if [ $my_id -ne 0 ]; then
-    echo -e "\nYou are not logged in as root. Without root access this application"
-    echo "can not be installed. You will be prompted later for root password."
-fi
 configure_campsite $upgrade $do_interactive
 do_configure $upgrade --apache_conf_path "$apache_conf_path" --apache_bin_path "$apache_bin_path"
 compile_sources
