@@ -11,6 +11,6 @@ install: $(ALL)
 	chmod 750 $(CGI_COMMON_DIR)/*
 
 uninstall:
-	rm -f $(CGI_COMMON_DIR)/*
+	for t in $(TARGETS); do rm -f "$(CGI_COMMON_DIR)/$t"; done
 
 dummy:
