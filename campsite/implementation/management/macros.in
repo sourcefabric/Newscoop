@@ -153,7 +153,7 @@ define(<*REDIRECT*>, <*<INPUT TYPE="button" class="button" NAME="$1" VALUE="<?ph
 dnl
 dnl *** Message box ***
 dnl
-define(<*B_MSGBOX*>, <*<CENTER><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" ifelse(<*$2*>, <**>, <*BGCOLOR="#C0D0FF"*>, <*BGCOLOR="$2"*>) ALIGN="CENTER">
+define(<*B_MSGBOX*>, <*<CENTER><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" ifelse(<*$2*>, <**>, <*class="message_box"*>, <*BGCOLOR="$2"*>) ALIGN="CENTER">
 	<TR>
 		<TD COLSPAN="2">
 			<B> ifelse(<*$3*>, <**>, <**>, <*<font color="$3">*>)<?php  putGS("$1"); ?> ifelse(<*$3*>, <**>, <**>, <*</font>*>)</B>
@@ -174,7 +174,7 @@ dnl
 dnl *** SearchDialog ***
 dnl
 define(<*B_SEARCH_DIALOG*>, <*<FORM METHOD="$1" ACTION="$2" NAME="$3">
-	<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#C0D0FF">
+	<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="search_dialog">
 	<TR>*>)dnl
 define(<*E_SEARCH_DIALOG*>, <*</TR>
 	</TABLE>
