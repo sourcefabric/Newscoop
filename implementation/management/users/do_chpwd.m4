@@ -7,12 +7,12 @@ CHECK_BASIC_ACCESS
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Changing your password*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_LOGOUT
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
@@ -25,23 +25,23 @@ X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<? $ok= 1; ?>dnl
+<?php  $ok= 1; ?>dnl
 <P>
 B_MSGBOX(<*Changing your password*>)
 	X_MSGBOX_TEXT(<*
-<?
+<?php 
     query ("SELECT COUNT(*) FROM Users WHERE Id=".getSVar($Usr,'Id')." AND Password=password('$cOldPass')", 'urec');
     fetchRowNum($urec);
     if (getNumVar($urec,0) == 0) { ?>dnl
-	<LI><? putGS('The password you typed is incorrect.'); ?></LI>
-<?
+	<LI><?php  putGS('The password you typed is incorrect.'); ?></LI>
+<?php 
     $ok= 0;
     }
 
     if ($ok) {
 	if ((strlen(decS($cNewPass1))<6)||($cNewPass1!=$cNewPass2)) { ?>dnl
-	    <LI><? putGS('The password must be at least 6 characters long and both passwords should match.'); ?></LI>
-<?
+	    <LI><?php  putGS('The password must be at least 6 characters long and both passwords should match.'); ?></LI>
+<?php 
     $ok= 0;
     }
     }
@@ -49,21 +49,21 @@ B_MSGBOX(<*Changing your password*>)
     if ($ok) {
 	query ("UPDATE Users SET Password=password('$cNewPass1') WHERE Id=".getSVar($Usr,'Id'));
 	if ($AFFECTED_ROWS <= 0) { ?>dnl
-	<LI><? putGS('The password could not be changed.'); ?></LI>
-<?
+	<LI><?php  putGS('The password could not be changed.'); ?></LI>
+<?php 
     $ok= 0;
     } else { ?>dnl
 X_AUDIT(<*53*>, <*getGS('User $1 changed his password',getHVar($Usr,'UName'))*>)
-	<LI><? putGS('The password has been changed.'); ?></LI>
-<? } ?>dnl
-<? } ?>dnl
+	<LI><?php  putGS('The password has been changed.'); ?></LI>
+<?php  } ?>dnl
+<?php  } ?>dnl
 	*>)
 	B_MSGBOX_BUTTONS
-<? if ($ok) { ?>dnl
+<?php  if ($ok) { ?>dnl
 		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/home.php*>)
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/users/chpwd.php*>)
-<? } ?>dnl
+<?php  } ?>dnl
 	E_MSGBOX_BUTTONS
 E_MSGBOX
 <P>
@@ -71,7 +71,7 @@ E_MSGBOX
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

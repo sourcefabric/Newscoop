@@ -21,7 +21,7 @@ if (window != top.fmain && window != top) {
 	X_COOKIE(<*TOL_UserId=0*>)
 	X_COOKIE(<*TOL_UserKey=0*>)
 
-<?
+<?php 
 ## added by sebastian
 if (function_exists ("incModFile"))
 	incModFile ();

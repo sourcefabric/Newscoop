@@ -8,12 +8,12 @@ CHECK_ACCESS(<*DeletePub*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Deleting publication*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to delete publications.*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
@@ -27,7 +27,7 @@ X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<?
+<?php 
     todefnum('Pub');
     todefnum('del',1);
     query ("SELECT Name FROM Publications WHERE Id=$Pub", 'q_pub');
@@ -38,41 +38,41 @@ E_HEADER
 <P>
 B_MSGBOX(<*Deleting publication*>)
 	X_MSGBOX_TEXT(<*
-<?
+<?php 
     query ("SELECT COUNT(*) FROM Issues WHERE IdPublication=$Pub", 'q_iss');
     fetchRowNum($q_iss);
     if (getNumVar($q_iss,0) != 0) {
 	$del= 0; ?>dnl
-	<LI><? putGS('There are $1 issue(s) left.',getNumVar($q_iss,0)); ?></LI>
-    <? }
+	<LI><?php  putGS('There are $1 issue(s) left.',getNumVar($q_iss,0)); ?></LI>
+    <?php  }
     
     query ("SELECT COUNT(*) FROM Sections WHERE IdPublication=$Pub", 'q_sect');
     fetchRowNum($q_sect);
     if (getNumVar($q_sect,0) != 0) {
 	$del= 0; ?>dnl
-	<LI><? putGS('There are $1 section(s) left.',getNumVar($q_sect,0)); ?></LI>
-    <? }
+	<LI><?php  putGS('There are $1 section(s) left.',getNumVar($q_sect,0)); ?></LI>
+    <?php  }
     
     query ("SELECT COUNT(*) FROM Articles WHERE IdPublication=$Pub", 'q_art');
     fetchRowNum($q_art);
     if (getNumVar($q_art,0) != 0) {
 	$del= 0; ?>dnl
-	<LI><? putGS('There are $1 article(s) left.',getNumVar($q_art,0)); ?></LI>
-    <? }
+	<LI><?php  putGS('There are $1 article(s) left.',getNumVar($q_art,0)); ?></LI>
+    <?php  }
     
     query ("SELECT COUNT(*) FROM Images WHERE IdPublication=$Pub", 'q_img');
     fetchRowNum($q_img);
     if (getNumVar($q_img,0) != 0) {
 	$del= 0; ?>dnl
-	<LI><? putGS('There are $1 image(s) left.',getNumVar($q_img,0)); ?></LI>
-    <? }
+	<LI><?php  putGS('There are $1 image(s) left.',getNumVar($q_img,0)); ?></LI>
+    <?php  }
     
     query ("SELECT COUNT(*) FROM Subscriptions WHERE IdPublication=$Pub", 'q_subs');
     fetchRowNum($q_subs);
     if (getNumVar($q_subs,0) != 0) {
 	$del= 0; ?>dnl
-	<LI><? putGS('There are $1 subscription(s) left.',getNumVar($q_subs,0)); ?></LI>
-    <? }
+	<LI><?php  putGS('There are $1 subscription(s) left.',getNumVar($q_subs,0)); ?></LI>
+    <?php  }
     
     $AFFECTED_ROWS=0;
     
@@ -80,31 +80,31 @@ B_MSGBOX(<*Deleting publication*>)
 	query ("DELETE FROM Publications WHERE Id=$Pub");
 
     if ($AFFECTED_ROWS > 0) { ?>dnl
-	<LI><? putGS('The publication $1 has been deleted.','<B>'.getHVar($q_pub,'Name').'</B>'); ?></LI>
+	<LI><?php  putGS('The publication $1 has been deleted.','<B>'.getHVar($q_pub,'Name').'</B>'); ?></LI>
 X_AUDIT(<*2*>, <*getGS('Publication $1 deleted',getHVar($q_pub,'Name'))*>)
-<? } else { ?>dnl
-	<LI><? putGS('The publication $1 could not be deleted.','<B>'.getHVar($q_pub,'Name').'</B>'); ?></LI>
-<? } ?>dnl
+<?php  } else { ?>dnl
+	<LI><?php  putGS('The publication $1 could not be deleted.','<B>'.getHVar($q_pub,'Name').'</B>'); ?></LI>
+<?php  } ?>dnl
 	*>)
 	B_MSGBOX_BUTTONS
-<? if ($AFFECTED_ROWS > 0) { ?>dnl
+<?php  if ($AFFECTED_ROWS > 0) { ?>dnl
 		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/pub/*>)
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/pub/*>)
-<? } ?>dnl
+<?php  } ?>dnl
 	E_MSGBOX_BUTTONS
 E_MSGBOX
 <P>
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such publication.'); ?></LI>
+	<LI><?php  putGS('No such publication.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>
+<?php  } ?>
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

@@ -1,6 +1,6 @@
 INCLUDE_PHP_LIB(<*./priv*>)
 B_DATABASE<**>
-<?
+<?php 
     query("SELECT * FROM Publications WHERE Site='$HTTP_HOST'", 'Publication');
     if ($NUM_ROWS != 0) { 
 	fetchRow($Publication);
@@ -9,14 +9,14 @@ B_DATABASE<**>
 <HTML>
 <HEAD>
 	<META HTTP-EQUIV="Expires" CONTENT="now">
-	<TITLE>Welcome to <? pgetHVar($Publication,'Name'); ?></TITLE>
+	<TITLE>Welcome to <?php  pgetHVar($Publication,'Name'); ?></TITLE>
 </HEAD>
 
 <BODY BGCOLOR="WHITE" TEXT="BLACK" LINK="DARKBLUE" ALINK="RED" VLINK="DARKBLUE">
-<H1><? pgetHVar($Publication,'Name'); ?></H1>
+<H1><?php  pgetHVar($Publication,'Name'); ?></H1>
 
 
-<?
+<?php 
     todefnum('TOL_UserId');
     todefnum('TOL_UserKey');
     query("SELECT * FROM Users WHERE Id=$TOL_UserId AND KeyId=$TOL_UserKey", 'User');
@@ -25,15 +25,15 @@ B_DATABASE<**>
     ?>dnl
 
 	<P><A HREF="">Change your account information</A>
-	<P><A HREF="password.php?IdPublication=<? pgetUVar($Publication,'Id'); ?>">Change your password</A>
+	<P><A HREF="password.php?IdPublication=<?php  pgetUVar($Publication,'Id'); ?>">Change your password</A>
 
-    <? 
+    <?php  
 	query("SELECT * FROM Subscriptions WHERE IdUser=".getSVar($User,'Id')." AND IdPublication=".getSVar($Publication,'Id'), 'Subscription');
 	if($NUM_ROWS != 0) { 
 	    fetchRow($Subscription);
 	?>dnl
 
-<?
+<?php 
     if (getVar($Subscription,'Active') == "Y") { ?>dnl
 
 <P><TABLE BORDER="0" CELLSPACING="2" CELLPADDING="2" WIDTH="100%">
@@ -44,7 +44,7 @@ B_DATABASE<**>
 <TR BGCOLOR="#FFFFD0">
 	<TD VALIGN="TOP">
 
-<?
+<?php 
     query( "SELECT * FROM SubsSections WHERE IdSubscription=".getSVar($Subscription,'Id')." ORDER BY StartDate DESC", 'Section');
     if ($NUM_ROWS) { ?>dnl
 
@@ -57,52 +57,52 @@ B_DATABASE<**>
 	<TH>Continue</TH>
 </TR>
 
-<?
+<?php 
     $nr=$NUM_ROWS;
     for($loop=0;$loop<$nr;$loop++) {
 	fetchRow($Section);
 	?>dnl
 <TR>
-	<TD><? pgetHVar($Section,'SectionNumber'); ?></TD>
-	<TD><? pgetHVar($Section,'StartDate'); ?></TD>
-	<TD><? pgetHVar($Section,'Days'); ?></TD>
-	<TD><? if (getVar($Section,'Paid') == "Y") { ?>Yes<? } else { ?>No<? } ?></TD>
+	<TD><?php  pgetHVar($Section,'SectionNumber'); ?></TD>
+	<TD><?php  pgetHVar($Section,'StartDate'); ?></TD>
+	<TD><?php  pgetHVar($Section,'Days'); ?></TD>
+	<TD><?php  if (getVar($Section,'Paid') == "Y") { ?>Yes<?php  } else { ?>No<?php  } ?></TD>
 	<TD><A HREF="">Continue</A></TD>
 </TR>
-<? } //loop
+<?php  } //loop
 ?>dnl
 
 </TABLE>
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 	<P>No subscriptions.
-<? } ?>dnl
+<?php  } ?>dnl
 	</TD>
 	<TD VALIGN="TOP">
 	</TD>
 </TR>
 </TABLE>
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 
 	<P>Your subscription to this publication has been disabled.
 	Please contact the site administrator for further informations.
 
-<? } ?>dnl
+<?php  } ?>dnl
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 
 	<P>You are not currently subscribed to this publication.
 	Click on the <B>subscribe</B> button to subscribe.
 
 	<FORM METHOD="POST" ACTION="sub_pub.php">
-	<INPUT TYPE="HIDDEN" NAME="IdPublication" VALUE="<? pgetHVar($Publication,'Id'); ?>">
+	<INPUT TYPE="HIDDEN" NAME="IdPublication" VALUE="<?php  pgetHVar($Publication,'Id'); ?>">
 	<INPUT TYPE="SUBMIT" VALUE="    Subscribe    ">
 	</FORM>
 
-<? } ?>dnl
+<?php  } ?>dnl
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 
 	<TABLE BORDER="0" CELLSPACING="2" CELLPADDING="2" WIDTH="100%">
 	<TR BGCOLOR="#D0D0FF">
@@ -134,7 +134,7 @@ B_DATABASE<**>
 	</TR>
 	</TABLE>
 
-<? } ?>dnl
+<?php  } ?>dnl
 
 </BODY>
 </HTML>
@@ -142,7 +142,7 @@ B_DATABASE<**>
 </BODY>
 </HTML>
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 	<P>No publication found matching this site.
-<? } ?>dnl
+<?php  } ?>dnl
 E_DATABASE<**>

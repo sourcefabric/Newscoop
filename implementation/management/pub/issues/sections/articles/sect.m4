@@ -7,17 +7,17 @@ CHECK_BASIC_ACCESS
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Duplicate article*>)
-<?
+<?php 
     query ("SELECT Number, Name FROM Sections WHERE 1=0", 'q_sect');
 ?>dnl
 E_HEAD
 
-<? if ($access) {
+<?php  if ($access) {
 ?>dnl
 B_STYLE
 E_STYLE
 
-<?
+<?php 
 	todefnum('Language');
 	todefnum('Pub');
 	todefnum('Issue');
@@ -31,13 +31,13 @@ E_STYLE
 
 <DIV><TABLE BORDER="0">
 	<TR>
-		<TD VALIGN="TOP" ALIGN="RIGHT" WIDTH="150"><? putGS('Section'); ?>: </TD>
+		<TD VALIGN="TOP" ALIGN="RIGHT" WIDTH="150"><?php  putGS('Section'); ?>: </TD>
 		<TD ALIGN="LEFT">
 <FORM NAME="FORM_SECT" METHOD="GET">
-<? if ($NUM_ROWS) { ?>dnl
-<SELECT NAME="ssect" ONCHANGE="var f = this.form.ssect; var v = f.options[f.selectedIndex].value; var x = 'X_ROOT/pub/issues/sections/articles/i3.php?Language=<? pencURL($Language); ?>&Pub=<? pencURL($Pub); ?>&Issue=<? pencURL($Issue); ?>&Section=<? pencURL($Section); ?>&Article=<? pencURL($Article); ?>&dstPub=<? pencURL($dstPub); ?>&dstIssue=<? pencURL($dstIssue); ?>&dstSection=' + v; if (v != 0) { parent.frames[1].location.href = x; }">
-	<OPTION VALUE="0"><? putGS('---Select section---'); ?>
-<?
+<?php  if ($NUM_ROWS) { ?>dnl
+<SELECT NAME="ssect" ONCHANGE="var f = this.form.ssect; var v = f.options[f.selectedIndex].value; var x = 'X_ROOT/pub/issues/sections/articles/i3.php?Language=<?php  pencURL($Language); ?>&Pub=<?php  pencURL($Pub); ?>&Issue=<?php  pencURL($Issue); ?>&Section=<?php  pencURL($Section); ?>&Article=<?php  pencURL($Article); ?>&dstPub=<?php  pencURL($dstPub); ?>&dstIssue=<?php  pencURL($dstIssue); ?>&dstSection=' + v; if (v != 0) { parent.frames[1].location.href = x; }">
+	<OPTION VALUE="0"><?php  putGS('---Select section---'); ?>
+<?php 
 	$nr=$NUM_ROWS;
 	for($loop=0;$loop<$nr;$loop++) {
 		fetchRow($q_sect);
@@ -45,9 +45,9 @@ E_STYLE
 	}
 ?>
 </SELECT>
-<? } else { ?>dnl
-<SELECT DISABLED><OPTION><? putGS('No sections'); ?></SELECT>
-<? } ?>dnl
+<?php  } else { ?>dnl
+<SELECT DISABLED><OPTION><?php  putGS('No sections'); ?></SELECT>
+<?php  } ?>dnl
 </FORM>
 		</TD>
 	</TR>
@@ -55,7 +55,7 @@ E_STYLE
 
 E_BODY
 
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

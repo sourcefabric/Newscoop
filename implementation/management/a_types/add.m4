@@ -8,12 +8,12 @@ CHECK_ACCESS(<*ManageArticleTypes*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Add new article type*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to add article types.*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
@@ -34,13 +34,13 @@ B_DIALOG(<*Add new article type*>, <*POST*>, <*do_add.php*>)
 	E_DIALOG_INPUT
 	B_DIALOG_BUTTONS
 		SUBMIT(<*Ok*>, <*Save changes*>)
-<? todef('Back'); ?>dnl
-		<INPUT TYPE="HIDDEN" NAME="Back" VALUE="<? print encHTML($Back); ?>">
-<? if ($Back != "") { ?>dnl
-		REDIRECT(<*Cancel*>, <*Cancel*>, <*<? print ($Back); ?>*>)
-<? } else { ?>dnl
+<?php  todef('Back'); ?>dnl
+		<INPUT TYPE="HIDDEN" NAME="Back" VALUE="<?php  print encHTML($Back); ?>">
+<?php  if ($Back != "") { ?>dnl
+		REDIRECT(<*Cancel*>, <*Cancel*>, <*<?php  print ($Back); ?>*>)
+<?php  } else { ?>dnl
 		REDIRECT(<*Cancel*>, <*Cancel*>, <*X_ROOT/a_types/*>)
-<? } ?>dnl
+<?php  } ?>dnl
 	E_DIALOG_BUTTONS
 E_DIALOG
 <P>
@@ -48,7 +48,7 @@ E_DIALOG
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

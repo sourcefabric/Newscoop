@@ -8,34 +8,34 @@ CHECK_ACCESS(<*ManageTempl*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Duplicate template*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to create new templates.*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
 
-<? todef('cPath'); ?>dnl
-<? todef('Name'); ?>dnl
+<?php  todef('cPath'); ?>dnl
+<?php  todef('Name'); ?>dnl
 
 B_HEADER(<*Duplicate template*>)
 B_HEADER_BUTTONS
-X_HBUTTON(<*Templates*>, <*templates/?Path=<? pencURL(decS($cPath)); ?>*>)
+X_HBUTTON(<*Templates*>, <*templates/?Path=<?php  pencURL(decS($cPath)); ?>*>)
 X_HBUTTON(<*Home*>, <*home.php*>)
 X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
 B_CURRENT
-X_CURRENT(<*Path*>, <*<B><? pencHTML(decURL($cPath)); ?></B>*>)
-X_CURRENT(<*Template*>, <*<B><? pencHTML(decURL($Name)); ?></B>*>)
+X_CURRENT(<*Path*>, <*<B><?php  pencHTML(decURL($cPath)); ?></B>*>)
+X_CURRENT(<*Template*>, <*<B><?php  pencHTML(decURL($Name)); ?></B>*>)
 E_CURRENT
 
-<? 
+<?php  
     todef('cName');
     $correct= 1;
     $created= 0;
@@ -43,11 +43,11 @@ E_CURRENT
 <P>
 B_MSGBOX(<*Duplicate template*>)
 	X_MSGBOX_TEXT(<*
-<? 
+<?php  
     if ($cName == "") { 
 	$correct= 0; ?>dnl
-		<LI><? putGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); ?></LI>
-<? }
+		<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); ?></LI>
+<?php  }
 
     if ($correct) {
 	$cName=decS($cName);
@@ -88,17 +88,17 @@ B_MSGBOX(<*Duplicate template*>)
 ?>dnl
 		*>)
 		
-<? if ($ok) { ?>dnl
-	X_MSGBOX_TEXT(<*<LI><? putGS('Do you want to edit the template ?'); ?></LI>*>)
-<? } ?>dnl		
+<?php  if ($ok) { ?>dnl
+	X_MSGBOX_TEXT(<*<LI><?php  putGS('Do you want to edit the template ?'); ?></LI>*>)
+<?php  } ?>dnl		
 X_AUDIT(<*115*>, <*getGS('Template $1 was duplicated into $2', encHTML(decS($cPath)).encHTML(decS($Name)), encHTML(decS($cPath)).encHTML(decS($cName)))*>)		
 	B_MSGBOX_BUTTONS
-<? if ($ok) { ?>dnl
-		REDIRECT(<*Yes*>, <*Yes*>, <*X_ROOT/templates/edit_template.php?Path=<? pencURL(decS($cPath)); ?>&Name=<?pencURL($cName); ?>*>)
-		REDIRECT(<*No*>, <*No*>, <*<? p(decS($cPath)) ?>*>)
-<? } else { ?>
-		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/templates/dup.php?Path=<? pencURL(decS($cPath)); ?>&Name=<? pencURL(decS($Name)); ?>*>)
-<? } ?>dnl
+<?php  if ($ok) { ?>dnl
+		REDIRECT(<*Yes*>, <*Yes*>, <*X_ROOT/templates/edit_template.php?Path=<?php  pencURL(decS($cPath)); ?>&Name=<?php pencURL($cName); ?>*>)
+		REDIRECT(<*No*>, <*No*>, <*<?php  p(decS($cPath)) ?>*>)
+<?php  } else { ?>
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/templates/dup.php?Path=<?php  pencURL(decS($cPath)); ?>&Name=<?php  pencURL(decS($Name)); ?>*>)
+<?php  } ?>dnl
 
 	E_MSGBOX_BUTTONS
 E_MSGBOX
@@ -107,7 +107,7 @@ E_MSGBOX
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

@@ -8,35 +8,35 @@ CHECK_ACCESS(<*ManageIssue*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Add new translation*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to add issues.*>)
-<? }
+<?php  }
     query ("SELECT Name FROM Issues WHERE 1=0", 'q_iss');
     
 ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
 
-<?
+<?php 
     todefnum('Pub');
     todefnum('Issue');
     todefnum('Language');
 ?>    
 B_HEADER(<*Add new translation*>)
 B_HEADER_BUTTONS
-X_HBUTTON(<*Issues*>, <*pub/issues/?Pub=<? pencURL($Pub); ?>*>)
+X_HBUTTON(<*Issues*>, <*pub/issues/?Pub=<?php  pencURL($Pub); ?>*>)
 X_HBUTTON(<*Publications*>, <*pub/*>)
 X_HBUTTON(<*Home*>, <*home.php*>)
 X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<?
+<?php 
     query ("SELECT Name FROM Publications WHERE Id=$Pub", 'q_pub');
     if ($NUM_ROWS) {
     	query ("SELECT Name FROM Issues WHERE IdPublication=$Pub AND Number=$Issue", 'q_iss');
@@ -46,10 +46,10 @@ E_HEADER
 //		fetchRow($q_iss);
 ?>dnl
 B_CURRENT
-X_CURRENT(<*Publication*>, <*<B><? pgetHVar($q_pub,'Name'); ?></B>*>)
+X_CURRENT(<*Publication*>, <*<B><?php  pgetHVar($q_pub,'Name'); ?></B>*>)
 E_CURRENT
 
-<?
+<?php 
     query ("SELECT Languages.Id, Languages.Name FROM Languages LEFT JOIN Issues ON Issues.IdPublication = $Pub AND Issues.Number=$Issue AND Issues.IdLanguage = Languages.Id WHERE Issues.IdPublication IS NULL ORDER BY Name", 'q_lang');
     if ($NUM_ROWS) { 
         $nrlang=$NUM_ROWS;
@@ -57,7 +57,7 @@ E_CURRENT
 <P>
 B_DIALOG(<*Add new translation*>, <*POST*>, <*do_translate.php*>)
 	B_DIALOG_INPUT(<*Issue*>)
-			<? $comma= 0;
+			<?php  $comma= 0;
     for($loop=0;$loop<$nriss;$loop++) {
 	fetchRow($q_iss);
 	if ($comma)
@@ -71,7 +71,7 @@ B_DIALOG(<*Add new translation*>, <*POST*>, <*do_translate.php*>)
 		<INPUT TYPE="TEXT" NAME="cName" SIZE="32" MAXLENGTH="64">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Language*>)
-		<SELECT NAME="cLang"><?
+		<SELECT NAME="cLang"><?php 
 	for($loop2=0;$loop2<$nrlang;$loop2++) { 
 		fetchRow($q_lang);
 		pcomboVar(getHVar($q_lang,'Id'),'',getHVar($q_lang,'Name'));
@@ -80,36 +80,36 @@ B_DIALOG(<*Add new translation*>, <*POST*>, <*do_translate.php*>)
 		</SELECT>
 	E_DIALOG_INPUT
 	B_DIALOG_BUTTONS
-		<INPUT TYPE="HIDDEN" NAME="cPub" VALUE="<? pencHTML($Pub);?>">
-		<INPUT TYPE="HIDDEN" NAME="cNumber" VALUE="<? pencHTML($Issue); ?>">
-		<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<? pencHTML($Language); ?>">
+		<INPUT TYPE="HIDDEN" NAME="cPub" VALUE="<?php  pencHTML($Pub);?>">
+		<INPUT TYPE="HIDDEN" NAME="cNumber" VALUE="<?php  pencHTML($Issue); ?>">
+		<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php  pencHTML($Language); ?>">
 		SUBMIT(<*Save*>, <*Save changes*>)
-		REDIRECT(<*Cancel*>, <*Cancel*>, <*X_ROOT/pub/issues/?Pub=<? pencURL($Pub); ?>*>)
+		REDIRECT(<*Cancel*>, <*Cancel*>, <*X_ROOT/pub/issues/?Pub=<?php  pencURL($Pub); ?>*>)
 	E_DIALOG_BUTTONS
 E_DIALOG
 <P>
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No more languages.'); ?></LI>
+	<LI><?php  putGS('No more languages.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such issue.'); ?></LI>
+	<LI><?php  putGS('No such issue.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such publication.'); ?></LI>
+	<LI><?php  putGS('No such publication.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

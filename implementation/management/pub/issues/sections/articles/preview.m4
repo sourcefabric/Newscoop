@@ -9,12 +9,12 @@ B_HEAD
         X_COOKIE(<*TOL_Access=all*>)
 	X_COOKIE(<*TOL_Preview=on*>)
 	X_TITLE(<*Preview article*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_LOGOUT
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? 
+<?php  
     if ($access) {
 
         todefnum('Pub');
@@ -39,10 +39,10 @@ E_HEAD
 	        if (($NUM_ROWS !=0)&&(getVar($q_iss,'SingleArticle') != "")) {
 		    ?>dnl
 <FRAMESET ROWS="60%,*" BORDER="2">
-<FRAME SRC="<? pgetVar($q_iss,'SingleArticle'); ?>?IdPublication=<? p($Pub); ?>&NrIssue=<? p($Issue); ?>&NrSection=<? p($Section); ?>&NrArticle=<? p($Article); ?>&IdLanguage=<? p($sLanguage); ?>" NAME="body" FRAMEBORDER="1">
+<FRAME SRC="<?php  pgetVar($q_iss,'SingleArticle'); ?>?IdPublication=<?php  p($Pub); ?>&NrIssue=<?php  p($Issue); ?>&NrSection=<?php  p($Section); ?>&NrArticle=<?php  p($Article); ?>&IdLanguage=<?php  p($sLanguage); ?>" NAME="body" FRAMEBORDER="1">
 <FRAME NAME="e" SRC="empty.php" FRAMEBORDER="1">
 </FRAMESET>
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 B_STYLE
 E_STYLE
 
@@ -52,46 +52,46 @@ B_HEADER(<*Preview article*>)
 X_HEADER_NO_BUTTONS
 E_HEADER
 
-<?
+<?php 
     query ("SELECT Name FROM Languages WHERE Id=$Language", 'q_lang');
     query ("SELECT Name FROM Languages WHERE Id=$sLanguage", 'q_slang');
     fetchRow($q_lang);
     fetchRow($q_slang);
 ?>dnl
 B_CURRENT
-X_CURRENT(<*Publication*>, <*<B><? pgetHVar($q_pub,'Name'); ?></B>*>)
-X_CURRENT(<*Issue*>, <*<B><? pgetHVar($q_iss,'Number'); ?>. <? pgetHVar($q_iss,'Name'); ?> (<? pgetHVar($q_lang,'Name'); ?>)</B>*>)
-X_CURRENT(<*Section*>, <*<B><? pgetHVar($q_sect,'Number'); ?>. <? pgetHVar($q_sect,'Name'); ?></B>*>)
-X_CURRENT(<*Article*>, <*<B><? pgetHVar($q_art,'Name'); ?> (<? pgetHVar($q_slang,'Name'); ?>)</B>*>)
+X_CURRENT(<*Publication*>, <*<B><?php  pgetHVar($q_pub,'Name'); ?></B>*>)
+X_CURRENT(<*Issue*>, <*<B><?php  pgetHVar($q_iss,'Number'); ?>. <?php  pgetHVar($q_iss,'Name'); ?> (<?php  pgetHVar($q_lang,'Name'); ?>)</B>*>)
+X_CURRENT(<*Section*>, <*<B><?php  pgetHVar($q_sect,'Number'); ?>. <?php  pgetHVar($q_sect,'Name'); ?></B>*>)
+X_CURRENT(<*Article*>, <*<B><?php  pgetHVar($q_art,'Name'); ?> (<?php  pgetHVar($q_slang,'Name'); ?>)</B>*>)
 E_CURRENT
 
 <BLOCKQUOTE>
-	<LI><? putGS('This article cannot be previewed. Please make sure it has a <B><I>single article</I></B> template selected.'); ?></LI>
+	<LI><?php  putGS('This article cannot be previewed. Please make sure it has a <B><I>single article</I></B> template selected.'); ?></LI>
 </BLOCKQUOTE>
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
-<? } else { ?>dnl
+<?php  } ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such publication.'); ?></LI>
+	<LI><?php  putGS('No such publication.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such section.'); ?></LI>
+	<LI><?php  putGS('No such section.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such article.'); ?></LI>
+	<LI><?php  putGS('No such article.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

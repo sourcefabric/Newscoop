@@ -7,12 +7,12 @@ CHECK_ACCESS(<*ManagePub*>)
 
 B_HEAD
 	X_TITLE(<*Add new publication*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to add publications.*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
@@ -26,7 +26,7 @@ X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<?
+<?php 
 	query ("SELECT Unit, Name FROM TimeUnits WHERE 1=0", 'q_unit');
 	query("SELECT Id as IdLang FROM Languages WHERE code='$TOL_Language'", 'q_def_lang');
 	if($NUM_ROWS == 0){
@@ -42,11 +42,11 @@ B_DIALOG(<*Add new publication*>, <*POST*>, <*do_add.php*>)
 		<INPUT TYPE="TEXT" NAME="cName" SIZE="32" MAXLENGTH="255">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Site*>)
-		<INPUT TYPE="TEXT" NAME="cSite" VALUE="<? pencHTML($HTTP_HOST); ?>" SIZE="32" MAXLENGTH="255">
+		<INPUT TYPE="TEXT" NAME="cSite" VALUE="<?php  pencHTML($HTTP_HOST); ?>" SIZE="32" MAXLENGTH="255">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Default language*>)
 	    <SELECT NAME="cLanguage">
-	    <?
+	    <?php 
 		query ("SELECT Id, OrigName FROM Languages", 'q_lang');
 		    $nr=$NUM_ROWS;
 		    for($loop=0;$loop<$nr;$loop++) {
@@ -61,7 +61,7 @@ B_DIALOG(<*Add new publication*>, <*POST*>, <*do_add.php*>)
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Time Unit*>)
 	    <SELECT NAME="cTimeUnit">
-<?
+<?php 
 	$q = "SELECT t.Unit, t.Name FROM TimeUnits as t, Languages as l WHERE t.IdLanguage = l.Id and l.Code = '" . $TOL_Language . "' order by t.Unit asc";
 	query($q, 'q_unit');
 	$nr = $NUM_ROWS;
@@ -99,7 +99,7 @@ E_DIALOG
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

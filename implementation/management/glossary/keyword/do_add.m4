@@ -8,75 +8,75 @@ CHECK_ACCESS(<*ManageDictionary*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Adding new keyword infotype*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to add keyword infotypes.*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
 
-<?
+<?php 
     todefnum('Keyword');
     todefnum('Language');
     todefnum('cClass');
 ?>dnl
 B_HEADER(<*Adding new keyword infotype*>)
 B_HEADER_BUTTONS
-X_HBUTTON(<*Keyword infotypes*>, <*glossary/keyword/?Keyword=<? pencURL($Keyword); ?>&Language=<? pencURL($Language); ?>*>)
+X_HBUTTON(<*Keyword infotypes*>, <*glossary/keyword/?Keyword=<?php  pencURL($Keyword); ?>&Language=<?php  pencURL($Language); ?>*>)
 X_HBUTTON(<*Glossary*>, <*glossary/*>)
 X_HBUTTON(<*Home*>, <*home.php*>)
 X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<?
+<?php 
     query ("SELECT Keyword FROM Dictionary WHERE Id=$Keyword AND IdLanguage=$Language", 'q_dict');
     query ("SELECT Name FROM Languages WHERE Id=$Language", 'q_lang');
     fetchRow($q_dict);
     fetchRow($q_lang);
 ?>dnl
 B_CURRENT
-X_CURRENT(<*Keyword*>, <*<B><? pgetHVar($q_dict,'Keyword'); ?></B>*>)
-X_CURRENT(<*Language*>, <*<B><? pgetHVar($q_lang,'Name') ;?></B>*>)
+X_CURRENT(<*Keyword*>, <*<B><?php  pgetHVar($q_dict,'Keyword'); ?></B>*>)
+X_CURRENT(<*Language*>, <*<B><?php  pgetHVar($q_lang,'Name') ;?></B>*>)
 E_CURRENT
 
-<?
+<?php 
     $created= 0;
 ?>dnl
 <P>
 B_MSGBOX(<*Adding new keyword infotype*>)
 	X_MSGBOX_TEXT(<*
-<?
+<?php 
     $AFFECTED_ROWS = 0;
     if ($cClass != 0)
 	query ("INSERT IGNORE INTO KeywordClasses SET IdDictionary=$Keyword, IdClasses=$cClass, IdLanguage=$Language");
     if ($AFFECTED_ROWS > 0) { ?>dnl
-		<LI><? putGS('The keyword infotype has been added.'); ?></LI>
-<? } else { ?>dnl
-		<LI><? putGS('The keyword infotype could not be added.'); ?><LI></LI><? putGS('Please check if the keyword infotype does not already exist.'); ?></LI>
-<? } ?>dnl
+		<LI><?php  putGS('The keyword infotype has been added.'); ?></LI>
+<?php  } else { ?>dnl
+		<LI><?php  putGS('The keyword infotype could not be added.'); ?><LI></LI><?php  putGS('Please check if the keyword infotype does not already exist.'); ?></LI>
+<?php  } ?>dnl
 		*>)
-<? if ($AFFECTED_ROWS > 0) { ?>dnl
+<?php  if ($AFFECTED_ROWS > 0) { ?>dnl
 	B_MSGBOX_BUTTONS
-		REDIRECT(<*New*>, <*Add another*>, <*X_ROOT/glossary/keyword/add.php?Keyword=<? pencURL($Keyword); ?>&Language=<? pencURL($Language); ?>*>)
-		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/glossary/keyword/?Keyword=<? pencURL($Keyword); ?>&Language=<? pencURL($Language); ?>*>)
+		REDIRECT(<*New*>, <*Add another*>, <*X_ROOT/glossary/keyword/add.php?Keyword=<?php  pencURL($Keyword); ?>&Language=<?php  pencURL($Language); ?>*>)
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/glossary/keyword/?Keyword=<?php  pencURL($Keyword); ?>&Language=<?php  pencURL($Language); ?>*>)
 	E_MSGBOX_BUTTONS
-<? } else { ?>
+<?php  } else { ?>
 	B_MSGBOX_BUTTONS
-		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/glossary/keyword/add.php?Keyword=<? pencURL($Keyword); ?>&Language=<? pencURL($Language); ?>*>)
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/glossary/keyword/add.php?Keyword=<?php  pencURL($Keyword); ?>&Language=<?php  pencURL($Language); ?>*>)
 	E_MSGBOX_BUTTONS
-<? } ?>dnl
+<?php  } ?>dnl
 E_MSGBOX
 <P>
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

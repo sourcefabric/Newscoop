@@ -7,15 +7,15 @@ CHECK_BASIC_ACCESS
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Glossary*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_LOGOUT
-<? } 
+<?php  } 
     query ("SELECT Id, Name FROM Languages WHERE 1=0", 'ls');
     query ("SELECT Id, IdLanguage, Keyword FROM Dictionary WHERE 1=0", 'Dict');
 ?>dnl
 E_HEAD
 
-<? if ($access) { 
+<?php  if ($access) { 
 SET_ACCESS(<*mda*>, <*ManageDictionary*>)
 SET_ACCESS(<*dda*>, <*DeleteDictionary*>)
 ?>dnl
@@ -31,20 +31,20 @@ X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<?
+<?php 
     todef('sKeyword');
     todef('sLang');
 ?>dnl
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" WIDTH="100%">
 <TR>
-	<? if ($mda != 0) { ?>
+	<?php  if ($mda != 0) { ?>
 	<TD>X_NEW_BUTTON(<*Add new keyword*>, <*add.php*>)</TD>
-	<? } ?>
+	<?php  } ?>
 	<TD ALIGN="RIGHT">
 	B_SEARCH_DIALOG(<*GET*>, <*index.php*>)
-		<TD><? putGS('Keyword'); ?>:</TD>
-		<TD><INPUT TYPE="TEXT" NAME="sKeyword" VALUE="<? print encHTML(decS($sKeyword)); ?>" SIZE="16" MAXLENGTH="32"></TD>
-		<TD><SELECT NAME="sLang"><OPTION><?
+		<TD><?php  putGS('Keyword'); ?>:</TD>
+		<TD><INPUT TYPE="TEXT" NAME="sKeyword" VALUE="<?php  print encHTML(decS($sKeyword)); ?>" SIZE="16" MAXLENGTH="32"></TD>
+		<TD><SELECT NAME="sLang"><OPTION><?php 
 		    query ("SELECT Id, Name FROM Languages ORDER BY Name", 'ls');
 
 		    $nr=$NUM_ROWS;
@@ -58,7 +58,7 @@ E_HEADER
 	</TD>
 </TABLE>
 
-<?
+<?php 
     if ($sKeyword != "")
 	$kk= "Keyword LIKE '$sKeyword%'";
     else
@@ -84,7 +84,7 @@ E_HEADER
     $kwdid= "xxxxxx";
     ?>dnl
 
-<P><?
+<P><?php 
     todefnum('DictOffs');
     if ($DictOffs < 0) $DictOffs= 0;
     $lpp = 20;
@@ -99,24 +99,24 @@ B_LIST
 	B_LIST_HEADER
 		X_LIST_TH(<*Keyword*>)
 		X_LIST_TH(<*Language*>)
-	<? if ($mda != 0) { ?>
+	<?php  if ($mda != 0) { ?>
 		X_LIST_TH(<*Translate*>, <*1%*>)
-	<? } ?>
+	<?php  } ?>
 		X_LIST_TH(<*Infotypes*>, <*1%*>)
-	<? if ($dda != 0) { ?>
+	<?php  if ($dda != 0) { ?>
 		X_LIST_TH(<*Delete*>, <*1%*>)
-	<? } ?>
+	<?php  } ?>
 	E_LIST_HEADER
-	<? 
+	<?php  
 	    for($loop=0;$loop<$nr;$loop++) {
 		fetchRow($Dict);
 		if ($i) { ?>dnl
 	B_LIST_TR
 		B_LIST_ITEM
-			<? if (getVar($Dict,'Id') == $kwdid) { ?>&nbsp; <? } print getHVar($Dict,'Keyword'); ?>&nbsp;
+			<?php  if (getVar($Dict,'Id') == $kwdid) { ?>&nbsp; <?php  } print getHVar($Dict,'Keyword'); ?>&nbsp;
 		E_LIST_ITEM
 		B_LIST_ITEM
-<? 
+<?php  
     query ("SELECT Name FROM Languages WHERE Id=".getVar($Dict,'IdLanguage'), 'l');
 
     $nr2=$NUM_ROWS;
@@ -127,56 +127,56 @@ B_LIST
     }
     ?>&nbsp;
 		E_LIST_ITEM
-	<? if ($mda != 0) { ?>
+	<?php  if ($mda != 0) { ?>
 		B_LIST_ITEM(<*CENTER*>)
-<? if (getVar($Dict,'Id') != $kwdid) { ?>dnl
-			<A HREF="X_ROOT/glossary/translate.php?Keyword=<? pgetUVar($Dict,'Id'); ?>"><? putGS("Translate"); ?></A>
-<? } ?>&nbsp;
+<?php  if (getVar($Dict,'Id') != $kwdid) { ?>dnl
+			<A HREF="X_ROOT/glossary/translate.php?Keyword=<?php  pgetUVar($Dict,'Id'); ?>"><?php  putGS("Translate"); ?></A>
+<?php  } ?>&nbsp;
 		E_LIST_ITEM
-	<? } ?>
+	<?php  } ?>
 		B_LIST_ITEM(<*CENTER*>)
-			<A HREF="X_ROOT/glossary/keyword/?Keyword=<? pgetHVar($Dict,'Id'); ?>&Language=<? pgetHVar($Dict,'IdLanguage'); ?>"><? putGS("Infotypes"); ?></A>
+			<A HREF="X_ROOT/glossary/keyword/?Keyword=<?php  pgetHVar($Dict,'Id'); ?>&Language=<?php  pgetHVar($Dict,'IdLanguage'); ?>"><?php  putGS("Infotypes"); ?></A>
 		E_LIST_ITEM
 
-	<? if ($dda != 0) { ?> 
+	<?php  if ($dda != 0) { ?> 
 		B_LIST_ITEM(<*CENTER*>)
-			X_BUTTON(<*Delete keyword <? pgetHVar($Dict,'Keyword'); ?>*>, <*icon/x.gif*>, <*glossary/del.php?Keyword=<? pgetVar($Dict,'Id'); ?>&Language=<? pgetVar($Dict,'IdLanguage'); ?>*>)
+			X_BUTTON(<*Delete keyword <?php  pgetHVar($Dict,'Keyword'); ?>*>, <*icon/x.gif*>, <*glossary/del.php?Keyword=<?php  pgetVar($Dict,'Id'); ?>&Language=<?php  pgetVar($Dict,'IdLanguage'); ?>*>)
 		E_LIST_ITEM
-	<? } ?>
-<?
+	<?php  } ?>
+<?php 
     if (getVar($Dict,'Id') != $kwdid)
 	$kwdid= getVar($Dict,'Id');
 ?>dnl
 	E_LIST_TR
-	<?
+	<?php 
 	    $i--;
 	    }
 	}
 	?>dnl    
 	B_LIST_FOOTER
-<?
+<?php 
     if ($DictOffs <= 0) { ?>dnl
 		X_PREV_I
-<? } else { ?>dnl
-		X_PREV_A(<*index.php?sKeyword=<? print encURL($sKeyword); ?>&sLang=<? print encURL($sLang); ?>&DictOffs=<? print ($DictOffs - $lpp); ?>*>)
-<? }
+<?php  } else { ?>dnl
+		X_PREV_A(<*index.php?sKeyword=<?php  print encURL($sKeyword); ?>&sLang=<?php  print encURL($sLang); ?>&DictOffs=<?php  print ($DictOffs - $lpp); ?>*>)
+<?php  }
     if ($nr < $lpp+1) { ?>dnl
 		X_NEXT_I
-<? } else { ?>dnl
-		X_NEXT_A(<*index.php?sKeyword=<? print encURL($sKeyword); ?>&sLang=<? print encURL($sLang); ?>&DictOffs=<? print ($DictOffs + $lpp); ?>*>)
-<? } ?>dnl
+<?php  } else { ?>dnl
+		X_NEXT_A(<*index.php?sKeyword=<?php  print encURL($sKeyword); ?>&sLang=<?php  print encURL($sLang); ?>&DictOffs=<?php  print ($DictOffs + $lpp); ?>*>)
+<?php  } ?>dnl
 	E_LIST_FOOTER
 E_LIST
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No keywords.'); ?></LI>
+	<LI><?php  putGS('No keywords.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

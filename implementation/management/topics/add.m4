@@ -7,12 +7,12 @@ CHECK_ACCESS(<*ManageTopics*>)
 
 B_HEAD
 	X_TITLE(<*Add new topic*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to add topics.*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
@@ -24,12 +24,12 @@ X_HBUTTON(<*Home*>, <*home.php*>)
 X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
-<?
+<?php 
     todefnum('IdCateg');
 ?>dnl
 
 B_CURRENT
-	<?
+	<?php 
 		todef('Path');
 		$crtCat = $IdCateg;
 		while($crtCat != 0){
@@ -40,25 +40,25 @@ B_CURRENT
 		}
 		if($Path == '') $Path="/";
 	?>
-	X_CURRENT(<*Topic*>, <*<B><?p($Path);?></B>*>)
+	X_CURRENT(<*Topic*>, <*<B><?php p($Path);?></B>*>)
 E_CURRENT
 
 <P>
 B_DIALOG(<*Add new topic*>, <*POST*>, <*do_add.php*>)
 	B_DIALOG_INPUT(<*Name*>)
 		<INPUT TYPE="TEXT" NAME="cName" SIZE="32" MAXLENGTH="32">
-		<INPUT TYPE="HIDDEN" NAME="IdCateg" VALUE="<?p($IdCateg);?>">
+		<INPUT TYPE="HIDDEN" NAME="IdCateg" VALUE="<?php p($IdCateg);?>">
 	E_DIALOG_INPUT
 	
 	B_DIALOG_BUTTONS
 		SUBMIT(<*Save*>, <*Save changes*>)
-<?
+<?php 
     todef('Back');
     if ($Back != "") { ?>dnl
-		REDIRECT(<*Cancel*>, <*Cancel*>, <*<? print($Back); ?>*>)
-<? } else { ?>dnl
-		REDIRECT(<*Cancel*>, <*Cancel*>, <*X_ROOT/topics/index.php?IdCateg=<?p($IdCateg);?>*>)
-<? } ?>dnl
+		REDIRECT(<*Cancel*>, <*Cancel*>, <*<?php  print($Back); ?>*>)
+<?php  } else { ?>dnl
+		REDIRECT(<*Cancel*>, <*Cancel*>, <*X_ROOT/topics/index.php?IdCateg=<?php p($IdCateg);?>*>)
+<?php  } ?>dnl
 
 	E_DIALOG_BUTTONS
 E_DIALOG
@@ -67,7 +67,7 @@ E_DIALOG
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

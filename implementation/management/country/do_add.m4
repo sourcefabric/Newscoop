@@ -8,18 +8,18 @@ CHECK_ACCESS(<*ManageCountries*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Adding new country*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to add countries.*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
 
-<? todefnum('Language'); ?>dnl
+<?php  todefnum('Language'); ?>dnl
 B_HEADER(<*Adding new country*>)
 B_HEADER_BUTTONS
 X_HBUTTON(<*Countries*>, <*country/*>)
@@ -28,7 +28,7 @@ X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<? 
+<?php  
     todef('cCode');
     todef('cName');
     todefnum('cLanguage');
@@ -38,24 +38,24 @@ E_HEADER
 <P>
 B_MSGBOX(<*Adding new country*>)
 	X_MSGBOX_TEXT(<*
-<? 
+<?php  
     query ("SELECT TRIM('$cCode'), TRIM('$cName')", 'q_var');
     fetchRowNum($q_var);
     if (getNumVar($q_var,0) == "" || getNumVar($q_var,0) == " ") {
 	$correct= 0;
 	?>dnl
-	<LI><? putGS('You must complete the $1 field.','<B>'.getGS('Code').'</B>'); ?></LI>
-<? } 
+	<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Code').'</B>'); ?></LI>
+<?php  } 
     if (getNumVar($q_var,1) == "" || getNumVar($q_var,1) == " ") {
 	$correct=0;
 	?>dnl
-	<LI><? putGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); ?></LI>
-<? }
+	<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); ?></LI>
+<?php  }
     if ($cLanguage == "" || $cLanguage == "0") {
 	$correct= 0
         ?>dnl
-	<LI><? putGS('You must select a language.'); ?></LI>
-<? } 
+	<LI><?php  putGS('You must select a language.'); ?></LI>
+<?php  } 
     if ($correct) { 
 	query ("INSERT IGNORE INTO Countries SET Code='$cCode', Name='$cName', IdLanguage=$cLanguage");
 	if ($AFFECTED_ROWS > 0)
@@ -63,21 +63,21 @@ B_MSGBOX(<*Adding new country*>)
  }
     if ($correct) {
 	if ($created) { ?>
-	<LI><? putGS('The country $1 has been created','<B>'.encHTML(decS($cName)).'</B>'); ?></LI>
+	<LI><?php  putGS('The country $1 has been created','<B>'.encHTML(decS($cName)).'</B>'); ?></LI>
 X_AUDIT(<*131*>, <*getGS('Country $1 added',$cName)*>)
-<? } else { ?>dnl
-	<LI><? putGS('The country $1 could not be created','<B>'.encHTML(decS($cName)).'</B>'); ?></LI>
-<? } ?>dnl
-<? } ?>dnl
+<?php  } else { ?>dnl
+	<LI><?php  putGS('The country $1 could not be created','<B>'.encHTML(decS($cName)).'</B>'); ?></LI>
+<?php  } ?>dnl
+<?php  } ?>dnl
 	*>)
 	B_MSGBOX_BUTTONS
-<? 
+<?php  
     todef('Back');
     if ($created) { ?>dnl
 		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/country/*>)
-<? } else { ?>dnl
-		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/country/add.php<? if ($Back != "") { ?>?Back=<? print encURL($Back); } ?>*>)
-<? } ?>dnl
+<?php  } else { ?>dnl
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/country/add.php<?php  if ($Back != "") { ?>?Back=<?php  print encURL($Back); } ?>*>)
+<?php  } ?>dnl
 	E_MSGBOX_BUTTONS
 E_MSGBOX
 <P>
@@ -85,7 +85,7 @@ E_MSGBOX
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

@@ -8,12 +8,12 @@ CHECK_ACCESS(<*ManageLanguages*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Adding new language*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to add new languages.*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
@@ -27,7 +27,7 @@ X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<?
+<?php 
 todef('cName');
 todef('cCodePage');
 todef('cOrigName');
@@ -58,18 +58,18 @@ $created= 0;
 <P>
 B_MSGBOX(<*Adding new language*>)
 	X_MSGBOX_TEXT(<*
-<? if ($cName == "") {
+<?php  if ($cName == "") {
     $correct=0; ?>dnl
-		<LI><? putGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); ?></LI>
-<? }
+		<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); ?></LI>
+<?php  }
    if ($cOrigName == "") {
     $correct= 0; ?>dnl
-		<LI><? putGS('You must complete the $1 field.','<B>'.getGS('Native name').'</B>'); ?></LI>
-<? }
+		<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Native name').'</B>'); ?></LI>
+<?php  }
    if ($cCodePage == "") {
     $correct= 0; ?>dnl
-		<LI><? putGS('You must complete the $1 field.','<B>'.getGS('Code page').'</B>'); ?></LI>
-<? }
+		<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Code page').'</B>'); ?></LI>
+<?php  }
    if ($correct) {
 	query ("INSERT IGNORE INTO Languages SET Name='$cName', CodePage='$cCodePage', Code='$cCode', OrigName='$cOrigName', Month1='$cMonth1', Month2='$cMonth2', Month3='$cMonth3', Month4='$cMonth4', Month5='$cMonth5', Month6='$cMonth6', Month7='$cMonth7', Month8='$cMonth8', Month9='$cMonth9', Month10='$cMonth10', Month11='$cMonth11', Month12='$cMonth12', WDay1='$cWDay1', WDay2='$cWDay2', WDay3='$cWDay3', WDay4='4cWDay4', WDay5='$cWDay5', WDay6='$cWDay6', WDay7='$cWDay7'");
 	$created= ($AFFECTED_ROWS > 0);
@@ -79,22 +79,22 @@ B_MSGBOX(<*Adding new language*>)
 	query("INSERT IGNORE INTO TimeUnits VALUES ('D', $IdLang, '$D'), ('W', $IdLang, '$W'), ('M', $IdLang, '$M'), ('Y', $IdLang, '$Y')");
     }
     if ($created) { ?>dnl
-		<LI><? putGS('The language $1 has been successfuly added.','<B>'.decS($cName).'</B>'); ?></LI>
+		<LI><?php  putGS('The language $1 has been successfuly added.','<B>'.decS($cName).'</B>'); ?></LI>
 X_AUDIT(<*101*>, <*getGS('Language $1 added',$cName)*>)
-    <? } else {
+    <?php  } else {
     if ($correct != 0) { ?>dnl
-		<LI><? putGS('The language could not be added.'); ?></LI><LI><? putGS('Please check if a language with the same name does not already exist.'); ?></LI>
-    <? } 
+		<LI><?php  putGS('The language could not be added.'); ?></LI><LI><?php  putGS('Please check if a language with the same name does not already exist.'); ?></LI>
+    <?php  } 
     } ?>dnl
 		*>)
 	B_MSGBOX_BUTTONS
-<? todef('Back');
+<?php  todef('Back');
     if (($correct) && ($created)) { ?>dnl
-		REDIRECT(<*New*>, <*Add another language*>, <*X_ROOT/languages/add.php<? if ($Back) { ?>?Back=<? print encURL($Back); } ?>*>)
+		REDIRECT(<*New*>, <*Add another language*>, <*X_ROOT/languages/add.php<?php  if ($Back) { ?>?Back=<?php  print encURL($Back); } ?>*>)
 		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/languages/*>)
-<? } else { ?>
-		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/languages/add.php<? if ($Back) { ?>?Back=<? print encURL($Back); } ?>*>)
-<? } ?>dnl
+<?php  } else { ?>
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/languages/add.php<?php  if ($Back) { ?>?Back=<?php  print encURL($Back); } ?>*>)
+<?php  } ?>dnl
 	E_MSGBOX_BUTTONS
 E_MSGBOX
 <P>
@@ -102,7 +102,7 @@ E_MSGBOX
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

@@ -8,32 +8,32 @@ CHECK_ACCESS(<*DeleteDictionary*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Unlinking infotype from keyword*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
         X_AD(<*You do not have the right to unlink infotypes from keywords.*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
 
-<?
+<?php 
     todefnum('Keyword');
     todefnum('Class');
     todefnum('Language');
 ?>dnl
 B_HEADER(<*Unlinking infotype from keyword*>)
 B_HEADER_BUTTONS
-X_HBUTTON(<*Keyword Infotypes*>, <*glossary/keyword/?Keyword=<? pencURL($Keyword); ?>&Language=<? pencURL($Language); ?>*>)
+X_HBUTTON(<*Keyword Infotypes*>, <*glossary/keyword/?Keyword=<?php  pencURL($Keyword); ?>&Language=<?php  pencURL($Language); ?>*>)
 X_HBUTTON(<*Glossary*>, <*glossary/*>)
 X_HBUTTON(<*Home*>, <*home.php*>)
 X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<?
+<?php 
     query ("SELECT Keyword FROM Dictionary WHERE Id=$Keyword AND IdLanguage=$Language", 'q_kwd');
     if ($NUM_ROWS) {
 	$NUM_ROWS= 0;
@@ -46,51 +46,51 @@ E_HEADER
 		fetchRow($q_lang);
 	    ?>dnl
 B_CURRENT
-X_CURRENT(<*Keyword*>, <*<B><B><? pgetHVar($q_kwd,'Keyword'); ?></B>*>)
-X_CURRENT(<*Language*>, <*<B><? pgetHVar($q_lang,'Name'); ?></B>*>)
+X_CURRENT(<*Keyword*>, <*<B><B><?php  pgetHVar($q_kwd,'Keyword'); ?></B>*>)
+X_CURRENT(<*Language*>, <*<B><?php  pgetHVar($q_lang,'Name'); ?></B>*>)
 E_CURRENT
 
 
 <P>
 B_MSGBOX(<*Deleting keyword infotype*>)
-<?
+<?php 
     query ("DELETE FROM KeywordClasses WHERE IdDictionary=$Keyword AND IdClasses=$Class AND IdLanguage=$Language");
     if ($AFFECTED_ROWS > 0) { ?>dnl
-	X_MSGBOX_TEXT(<*<LI><? putGS('The infotype has been deleted.'); ?></LI>*>)
-<? } else { ?>dnl
-	X_MSGBOX_TEXT(<*<LI><? putGS('The infotype could not be deleted.'); ?></LI>*>)
-<? } ?>dnl
+	X_MSGBOX_TEXT(<*<LI><?php  putGS('The infotype has been deleted.'); ?></LI>*>)
+<?php  } else { ?>dnl
+	X_MSGBOX_TEXT(<*<LI><?php  putGS('The infotype could not be deleted.'); ?></LI>*>)
+<?php  } ?>dnl
 	B_MSGBOX_BUTTONS
-<? if ($AFFECTED_ROWS > 0) { ?>dnl
-		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/glossary/keyword/?Keyword=<? pencURL($Keyword); ?>&Language=<? pencURL($Language); ?>*>)
-<? } else { ?>dnl
-		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/glossary/keyword/?Keyword=<? pencURL($Keyword); ?>&Language=<? pencURL($Language); ?>*>)
-<? } ?>dnl
+<?php  if ($AFFECTED_ROWS > 0) { ?>dnl
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/glossary/keyword/?Keyword=<?php  pencURL($Keyword); ?>&Language=<?php  pencURL($Language); ?>*>)
+<?php  } else { ?>dnl
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/glossary/keyword/?Keyword=<?php  pencURL($Keyword); ?>&Language=<?php  pencURL($Language); ?>*>)
+<?php  } ?>dnl
 	E_MSGBOX_BUTTONS
 E_MSGBOX
 <P>
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such language.'); ?></LI>
+	<LI><?php  putGS('No such language.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such infotype.'); ?></LI>
+	<LI><?php  putGS('No such infotype.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such keyword.'); ?></LI>
+	<LI><?php  putGS('No such keyword.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

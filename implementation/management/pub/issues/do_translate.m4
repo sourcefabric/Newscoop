@@ -8,18 +8,18 @@ CHECK_ACCESS(<*ManageIssue*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Adding new translation*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to add issues.*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
 
-<?
+<?php 
     todef('cName');
     todefnum('cNumber');
     todefnum('cLang');
@@ -28,39 +28,39 @@ B_BODY
 ?>
 B_HEADER(<*Adding new translation*>)
 B_HEADER_BUTTONS
-X_HBUTTON(<*Issues*>, <*pub/issues/?Pub=<? pencURL($cPub); ?>*>)
+X_HBUTTON(<*Issues*>, <*pub/issues/?Pub=<?php  pencURL($cPub); ?>*>)
 X_HBUTTON(<*Publications*>, <*pub/*>)
 X_HBUTTON(<*Home*>, <*home.php*>)
 X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<? 
+<?php  
     $correct= 1;
     $created= 0;
 ?>dnl
 <P>
 B_MSGBOX(<*Adding new translation*>)
 	X_MSGBOX_TEXT(<*
-<?
+<?php 
     $cName=trim($cName);
     $cNumber=trim($cNumber);
     
     if ($cLang == 0) {
 	$correct= 0;
 	?>dnl
-		<LI><? putGS('You must select a language.'); ?></LI>
-    <? }
+		<LI><?php  putGS('You must select a language.'); ?></LI>
+    <?php  }
     
     if ($cName == "" || $cName == " ") {
 	$correct= 0; ?>dnl
-		<LI><? putGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); ?></LI>
-    <? }
+		<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); ?></LI>
+    <?php  }
     
     if ($cNumber == "" || $cNumber == " ") {
 	$correct= 0; ?>dnl
-		<LI><? putGS('You must complete the $1 field.','<B>'.getGS('Number').'</B>'); ?></LI>
-    <? }
+		<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Number').'</B>'); ?></LI>
+    <?php  }
     
     if ($correct) {
 	query ("INSERT IGNORE INTO Issues SET Name='$cName', IdPublication=$cPub, IdLanguage=$cLang, Number=$cNumber");
@@ -76,31 +76,31 @@ B_MSGBOX(<*Adding new translation*>)
     }
 
     if ($created) { ?>dnl
-		<LI><? putGS('The issue $1 has been successfuly added.','<B>'.encHTML(decS($cName)).'</B>' ); ?></LI>
+		<LI><?php  putGS('The issue $1 has been successfuly added.','<B>'.encHTML(decS($cName)).'</B>' ); ?></LI>
 X_AUDIT(<*11*>, <*getGS('Issue $1 added',$cName)*>)
-<? } else {
+<?php  } else {
     if ($correct != 0) { ?>dnl
-		<LI><? putGS('The issue could not be added.'); ?></LI><LI><? putGS('Please check if another issue with the same number/language does not already exist.'); ?></LI>
-<? }
+		<LI><?php  putGS('The issue could not be added.'); ?></LI><LI><?php  putGS('Please check if another issue with the same number/language does not already exist.'); ?></LI>
+<?php  }
 } ?>dnl
 		*>)
-<? if ($correct && $created) { ?>dnl
+<?php  if ($correct && $created) { ?>dnl
 	B_MSGBOX_BUTTONS
-		REDIRECT(<*Another*>, <*Add another*>, <*X_ROOT/pub/issues/translate.php?Pub=<? pencURL($cPub); ?>&Issue=<? pencURL($cNumber); ?>*>)
-		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/pub/issues/?Pub=<? pencURL($cPub); ?>*>)
+		REDIRECT(<*Another*>, <*Add another*>, <*X_ROOT/pub/issues/translate.php?Pub=<?php  pencURL($cPub); ?>&Issue=<?php  pencURL($cNumber); ?>*>)
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/pub/issues/?Pub=<?php  pencURL($cPub); ?>*>)
 	E_MSGBOX_BUTTONS
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 	B_MSGBOX_BUTTONS
-		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/pub/issues/translate.php?Pub=<? pencURL($cPub); ?>&Issue=<? pencURL($cNumber); ?>*>)
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/pub/issues/translate.php?Pub=<?php  pencURL($cPub); ?>&Issue=<?php  pencURL($cNumber); ?>*>)
 	E_MSGBOX_BUTTONS
-<? } ?>dnl
+<?php  } ?>dnl
 E_MSGBOX
 <P>
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

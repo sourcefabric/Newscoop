@@ -7,12 +7,12 @@ CHECK_ACCESS(<*ManageUserTypes*>)
 
 B_HEAD
 	X_TITLE(<*Add new user type*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to add user types.*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
@@ -33,109 +33,109 @@ B_DIALOG(<*Add new user type*>, <*POST*>, <*do_add.php*>)
 	E_DIALOG_INPUT
 	B_DIALOG_PACKEDINPUT
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cReader">*>)
-		<? putGS('User is a reader'); ?>
+		<?php  putGS('User is a reader'); ?>
 	E_DIALOG_INPUT
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManagePub">*>)
-		<? putGS('User may add/change publications'); ?>
+		<?php  putGS('User may add/change publications'); ?>
 	E_DIALOG_INPUT
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cDeletePub">*>)
-		<? putGS('User may delete publications'); ?>
+		<?php  putGS('User may delete publications'); ?>
 	E_DIALOG_INPUT
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManageIssue">*>)
-		<? putGS('User may add/change issues'); ?>
+		<?php  putGS('User may add/change issues'); ?>
 	E_DIALOG_INPUT
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cDeleteIssue">*>)
-		<? putGS('User may delete issues'); ?>
+		<?php  putGS('User may delete issues'); ?>
 	E_DIALOG_INPUT
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManageSection">*>)
-		<? putGS('User may add/change sections'); ?>
+		<?php  putGS('User may add/change sections'); ?>
 	E_DIALOG_INPUT
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cDeleteSection">*>)
-		<? putGS('User may delete sections'); ?>
+		<?php  putGS('User may delete sections'); ?>
 	E_DIALOG_INPUT
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cAddArticle">*>)
-		<? putGS('User may add articles'); ?>
+		<?php  putGS('User may add articles'); ?>
 	E_DIALOG_INPUT
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cChangeArticle">*>)
-		<? putGS('User may change articles'); ?>
+		<?php  putGS('User may change articles'); ?>
 	E_DIALOG_INPUT
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cDeleteArticle">*>)
-		<? putGS('User may delete articles'); ?>
+		<?php  putGS('User may delete articles'); ?>
 	E_DIALOG_INPUT
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cAddImage">*>)
-		<? putGS('User may add images'); ?>
+		<?php  putGS('User may add images'); ?>
 	E_DIALOG_INPUT
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cChangeImage">*>)
-		<? putGS('User may change images'); ?>
+		<?php  putGS('User may change images'); ?>
 	E_DIALOG_INPUT
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cDeleteImage">*>)
-		<? putGS('User may delete images'); ?>
+		<?php  putGS('User may delete images'); ?>
 	E_DIALOG_INPUT
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManageTempl">*>)
-		<? putGS('User may add templates'); ?>
+		<?php  putGS('User may add templates'); ?>
 	E_DIALOG_INPUT
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cDeleteTempl">*>)
-		<? putGS('User may delete templates'); ?>
+		<?php  putGS('User may delete templates'); ?>
 	E_DIALOG_INPUT
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManageUsers">*>)
-		<? putGS('User may add/change user accounts and passwords'); ?>
+		<?php  putGS('User may add/change user accounts and passwords'); ?>
 	E_DIALOG_INPUT
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cDeleteUsers">*>)
-		<? putGS('User may delete user accounts'); ?>
+		<?php  putGS('User may delete user accounts'); ?>
 	E_DIALOG_INPUT
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManageSubscriptions">*>)
-		<? putGS('User may manage user subscriptions'); ?>
+		<?php  putGS('User may manage user subscriptions'); ?>
 	E_DIALOG_INPUT
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManageUserTypes">*>)
-		<? putGS('User may manage account types'); ?>
+		<?php  putGS('User may manage account types'); ?>
 	E_DIALOG_INPUT
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManageArticleTypes">*>)
-		<? putGS('User may add/change article types'); ?>
+		<?php  putGS('User may add/change article types'); ?>
 	E_DIALOG_INPUT
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cDeleteArticleTypes">*>)
-		<? putGS('User may delete article types'); ?>
+		<?php  putGS('User may delete article types'); ?>
 	E_DIALOG_INPUT
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManageLanguages">*>)
-		<? putGS('User may add languages and manage language information'); ?>
+		<?php  putGS('User may add languages and manage language information'); ?>
 	E_DIALOG_INPUT
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cDeleteLanguages">*>)
-		<? putGS('User may delete languages'); ?>
+		<?php  putGS('User may delete languages'); ?>
 	E_DIALOG_INPUT
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManageClasses">*>)
-		<? putGS('User may manage glossary infotypes'); ?>
+		<?php  putGS('User may manage glossary infotypes'); ?>
 	E_DIALOG_INPUT
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManageDictionary">*>)
-		<? putGS('User may add/change glossary entries'); ?>
+		<?php  putGS('User may add/change glossary entries'); ?>
 	E_DIALOG_INPUT
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cDeleteDictionary">*>)
-		<? putGS('User may delete glossary entries'); ?>
+		<?php  putGS('User may delete glossary entries'); ?>
 	E_DIALOG_INPUT
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cMailNotify">*>)
-		<? putGS('User will be notified on several events'); ?>
+		<?php  putGS('User will be notified on several events'); ?>
 	E_DIALOG_INPUT
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cViewLogs">*>)
-		<? putGS('User may view audit logs'); ?>
+		<?php  putGS('User may view audit logs'); ?>
 	E_DIALOG_INPUT
 	E_DIALOG_INPUT
 		B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cViewLogs">*>)
-		<? putGS('User may manage localizer'); ?>
+		<?php  putGS('User may manage localizer'); ?>
 	E_DIALOG_INPUT
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cViewLogs">*>)
-		<? putGS('User may publish articles'); ?>
+		<?php  putGS('User may publish articles'); ?>
 	E_DIALOG_INPUT
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cViewLogs">*>)
-		<? putGS('User may manage topics'); ?>
+		<?php  putGS('User may manage topics'); ?>
 	E_DIALOG_INPUT
 	E_DIALOG_PACKEDINPUT
 	B_DIALOG_BUTTONS
 		SUBMIT(<*Save*>, <*Save changes*>)
-<? todef('Back'); ?>dnl
-		<INPUT TYPE="HIDDEN" NAME="Back" VALUE="<? print encHTML($Back); ?>">
-<? if ($Back != "") { ?>dnl
-		REDIRECT(<*Cancel*>, <*Cancel*>, <*<? print encHTML($Back); ?>*>)
-<?} else { ?>dnl
+<?php  todef('Back'); ?>dnl
+		<INPUT TYPE="HIDDEN" NAME="Back" VALUE="<?php  print encHTML($Back); ?>">
+<?php  if ($Back != "") { ?>dnl
+		REDIRECT(<*Cancel*>, <*Cancel*>, <*<?php  print encHTML($Back); ?>*>)
+<?php } else { ?>dnl
 		REDIRECT(<*Cancel*>, <*Cancel*>, <*X_ROOT/u_types/*>)
-<? } ?>dnl
+<?php  } ?>dnl
 	E_DIALOG_BUTTONS
 E_DIALOG
 <P>
@@ -143,7 +143,7 @@ E_DIALOG
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

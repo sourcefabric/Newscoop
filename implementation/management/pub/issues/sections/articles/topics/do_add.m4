@@ -8,18 +8,18 @@ CHECK_ACCESS(<*ChangeArticle*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Adding new topic to article*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to add topics to article.*>)
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
-<?
+<?php 
     todefnum('Pub');
     todefnum('Issue');
     todefnum('Section');
@@ -31,17 +31,17 @@ B_BODY
 ?>
 B_HEADER(<*Adding new topic to article*>)
 B_HEADER_BUTTONS
-X_HBUTTON(<*Topics*>, <*pub/issues/sections/articles/topics/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Article=<? p($Article); ?>&Language=<? p($Language); ?>&sLanguage=<? p($sLanguage); ?>&Section=<? p($Section); ?>&IdCateg=<? p($IdCateg); ?>*>)
-X_HBUTTON(<*Articles*>, <*pub/issues/sections/articles/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>&Section=<? p($Section); ?>*>)
-X_HBUTTON(<*Sections*>, <*pub/issues/sections/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>*>)
-X_HBUTTON(<*Issues*>, <*pub/issues/?Pub=<? p($Pub); ?>*>)
+X_HBUTTON(<*Topics*>, <*pub/issues/sections/articles/topics/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&Section=<?php  p($Section); ?>&IdCateg=<?php  p($IdCateg); ?>*>)
+X_HBUTTON(<*Articles*>, <*pub/issues/sections/articles/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>&Section=<?php  p($Section); ?>*>)
+X_HBUTTON(<*Sections*>, <*pub/issues/sections/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>*>)
+X_HBUTTON(<*Issues*>, <*pub/issues/?Pub=<?php  p($Pub); ?>*>)
 X_HBUTTON(<*Publications*>, <*pub/*>)
 X_HBUTTON(<*Home*>, <*home.php*>)
 X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<?
+<?php 
 query ("SELECT Name FROM Topics WHERE Id=$AddTopic", 'q_topic');
 if ($NUM_ROWS) {
     query ("SELECT * FROM Articles WHERE IdPublication=$Pub AND NrIssue=$Issue AND NrSection=$Section AND Number=$Article", 'q_art');
@@ -62,27 +62,27 @@ if ($NUM_ROWS) {
 		    fetchRow($q_topic);
 ?>dnl
 B_CURRENT
-X_CURRENT(<*Publication*>, <*<B><? pgetHVar($q_pub,'Name'); ?></B>*>)
-X_CURRENT(<*Issue*>, <*<B><? pgetHVar($q_iss,'Number'); ?>. <? pgetHVar($q_iss,'Name'); ?> (<? pgetHVar($q_lang,'Name'); ?>)</B>*>)
-X_CURRENT(<*Section*>, <*<B><? pgetHVar($q_sect,'Number'); ?>. <? pgetHVar($q_sect,'Name'); ?></B>*>)
-X_CURRENT(<*Article*>, <*<B><? pgetHVar($q_art,'Name'); ?></B>*>)
-X_CURRENT(<*Topic*>, <*<B><? pgetHVar($q_topic,'Name'); ?></B>*>)
+X_CURRENT(<*Publication*>, <*<B><?php  pgetHVar($q_pub,'Name'); ?></B>*>)
+X_CURRENT(<*Issue*>, <*<B><?php  pgetHVar($q_iss,'Number'); ?>. <?php  pgetHVar($q_iss,'Name'); ?> (<?php  pgetHVar($q_lang,'Name'); ?>)</B>*>)
+X_CURRENT(<*Section*>, <*<B><?php  pgetHVar($q_sect,'Number'); ?>. <?php  pgetHVar($q_sect,'Name'); ?></B>*>)
+X_CURRENT(<*Article*>, <*<B><?php  pgetHVar($q_art,'Name'); ?></B>*>)
+X_CURRENT(<*Topic*>, <*<B><?php  pgetHVar($q_topic,'Name'); ?></B>*>)
 E_CURRENT
 
 <BLOCKQUOTE>
 <P>
 B_MSGBOX(<*Adding new topic to article*>)
-<?  query ("SELECT Name FROM Topics WHERE Id = $AddTopic", 'q_topic');
+<?php   query ("SELECT Name FROM Topics WHERE Id = $AddTopic", 'q_topic');
     fetchRow($q_topic);
     query ("INSERT INTO ArticleTopics VALUES($Article, $AddTopic)");
     if ($AFFECTED_ROWS > 0) { ?>dnl
-	X_MSGBOX_TEXT(<*<LI><? putGS('The topic $1 has been successfully added.','<B>'.getHVar($q_topic,'Name').'</B>'); ?></LI>*>)
+	X_MSGBOX_TEXT(<*<LI><?php  putGS('The topic $1 has been successfully added.','<B>'.getHVar($q_topic,'Name').'</B>'); ?></LI>*>)
 	X_AUDIT(<*144*>, <*getGS('Topic $1 added to article', getHVar($q_topic, 'Name'));*>)
-<? } else { ?>dnl
-	X_MSGBOX_TEXT(<*<LI><? putGS('The topic $1 could not be added.','<B>'.getHVar($q_topic,'Name').'</B>'); ?></LI>*>)
-<? } ?>dnl
+<?php  } else { ?>dnl
+	X_MSGBOX_TEXT(<*<LI><?php  putGS('The topic $1 could not be added.','<B>'.getHVar($q_topic,'Name').'</B>'); ?></LI>*>)
+<?php  } ?>dnl
 	B_MSGBOX_BUTTONS
-		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/pub/issues/sections/articles/topics/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Article=<? p($Article); ?>&Language=<? p($Language); ?>&sLanguage=<? p($sLanguage); ?>&Section=<? p($Section); ?>&IdCateg=<? p($IdCateg) ?>*>)
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/pub/issues/sections/articles/topics/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&Section=<?php  p($Section); ?>&IdCateg=<?php  p($IdCateg) ?>*>)
 		</FORM>
 	E_MSGBOX_BUTTONS
 E_MSGBOX
@@ -90,40 +90,40 @@ E_MSGBOX
 
 </BLOCKQUOTE>
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such publication.'); ?></LI>
+	<LI><?php  putGS('No such publication.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such issue.'); ?></LI>
+	<LI><?php  putGS('No such issue.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such section.'); ?></LI>
+	<LI><?php  putGS('No such section.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such article.'); ?></LI>
+	<LI><?php  putGS('No such article.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such topic.'); ?></LI>
+	<LI><?php  putGS('No such topic.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

@@ -8,18 +8,18 @@ CHECK_ACCESS(<*ManageCountries*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Adding new translation*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to translate country names.*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
 
-<?
+<?php 
     todef('cName');
     todefnum('cLanguage');
     todefnum('Language');
@@ -33,7 +33,7 @@ X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<?
+<?php 
     query ("SELECT * FROM Countries WHERE Code='$cCode' AND IdLanguage=$Language", 'q_country');
     if ($NUM_ROWS) {
 	fetchRow($q_country);
@@ -43,12 +43,12 @@ E_HEADER
 <P>
 B_MSGBOX(<*Adding new translation*>)
 	X_MSGBOX_TEXT(<*
-<?
+<?php 
     if (trim($cName) == "" || trim($cName) == " ") {
 	$correct= 0;
 	?>
-	<LI><? putGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); ?></LI>
-    <? }
+	<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); ?></LI>
+    <?php  }
     
     if ($correct) {
 	if ($cLanguage == "")
@@ -58,8 +58,8 @@ B_MSGBOX(<*Adding new translation*>)
 	if (getVar($q_xlang,'count') == 0) {
 	    $correct= 0;
 	    ?>
-	<LI><? putGS('You must select a language.'); ?></LI>
-	<? }
+	<LI><?php  putGS('You must select a language.'); ?></LI>
+	<?php  }
     }
     
     if ($correct) {
@@ -71,33 +71,33 @@ B_MSGBOX(<*Adding new translation*>)
     if ($correct) {
 	if ($created) {
 	    ?>dnl
-	<LI><? putGS('The country name $1 has been translated','<B>'.getHVar($q_country,'Name').'</B>'); ?></LI>
+	<LI><?php  putGS('The country name $1 has been translated','<B>'.getHVar($q_country,'Name').'</B>'); ?></LI>
 X_AUDIT(<*132*>, <*getGS('Country name $1 translated',getSVar($q_country,'Name'))*>)
-	<? } else { ?>dnl
-	<LI><? putGS('The country name $1 could not be translated','<B>'.encHTML(decS($cName)).'</B>'); ?></LI>
-	<? } ?>dnl
-    <? } ?>dnl
+	<?php  } else { ?>dnl
+	<LI><?php  putGS('The country name $1 could not be translated','<B>'.encHTML(decS($cName)).'</B>'); ?></LI>
+	<?php  } ?>dnl
+    <?php  } ?>dnl
 	*>)
 	B_MSGBOX_BUTTONS
-<? if ($created) { ?>dnl
+<?php  if ($created) { ?>dnl
 		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/country/*>)
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/country/*>)
-<? } ?>dnl
+<?php  } ?>dnl
 	E_MSGBOX_BUTTONS
 E_MSGBOX
 <P>
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such country name.'); ?></LI>
+	<LI><?php  putGS('No such country name.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

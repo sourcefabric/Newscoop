@@ -6,17 +6,17 @@ CHECK_BASIC_ACCESS
 
 B_HEAD
 	X_TITLE(<*CAMPSITE*>)
-<? if ($access==0) { ?>dnl
+<?php  if ($access==0) { ?>dnl
 	X_REFRESH(<*0; URL=X_ROOT/login.php*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 <FRAMESET COLS="140,*" BORDER="0">
     <FRAME SRC="menu.php" NAME="fmenu" FRAMEBORDER="0" MARGINWIDTH="0" SCROLLING="AUTO">
     <FRAME SRC="home.php" NAME="fmain" FRAMEBORDER="0" MARGINWIDTH="0" SCROLLING="AUTO">
 </FRAMESET>
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

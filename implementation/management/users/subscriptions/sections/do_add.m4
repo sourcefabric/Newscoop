@@ -8,18 +8,18 @@ CHECK_ACCESS(<*ManageSubscriptions*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Adding subscription*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to add subscriptions.*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
 
-<? 
+<?php  
     todefnum('User');
     todefnum('Pub');
     todefnum('Subs');
@@ -30,15 +30,15 @@ B_BODY
 ?>dnl
 B_HEADER(<*Adding sections*>)
 B_HEADER_BUTTONS
-X_HBUTTON(<*Sections*>, <*users/subscriptions/sections/?User=<? p($User); ?>&Pub=<? p($Pub); ?>&Subs=<? p($Subs); ?>*>)
-X_HBUTTON(<*Subscriptions*>, <*users/subscriptions/?User=<? p($User); ?>*>)
+X_HBUTTON(<*Sections*>, <*users/subscriptions/sections/?User=<?php  p($User); ?>&Pub=<?php  p($Pub); ?>&Subs=<?php  p($Subs); ?>*>)
+X_HBUTTON(<*Subscriptions*>, <*users/subscriptions/?User=<?php  p($User); ?>*>)
 X_HBUTTON(<*Users*>, <*users/*>)
 X_HBUTTON(<*Home*>, <*home.php*>)
 X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<?
+<?php 
     query ("SELECT UName FROM Users WHERE Id=$User", 'q_usr');
     if ($NUM_ROWS) {
 	query ("SELECT Name FROM Publications WHERE Id=$Pub", 'q_pub');
@@ -54,33 +54,33 @@ E_HEADER
 ?>dnl
 
 B_CURRENT
-X_CURRENT(<*User account*>, <*<B><? pgetHVar($q_usr,'UName'); ?></B>*>)
-X_CURRENT(<*Publication*>, <*<B><? pgetHVar($q_pub,'Name'); ?></B>*>)
+X_CURRENT(<*User account*>, <*<B><?php  pgetHVar($q_usr,'UName'); ?></B>*>)
+X_CURRENT(<*Publication*>, <*<B><?php  pgetHVar($q_pub,'Name'); ?></B>*>)
 E_CURRENT
 
 <P>
 B_MSGBOX(<*Adding sections to subscription*>)
 
-<?
+<?php 
     $cPaidDays = 0;
     if (!$isPaid)
 	$cPaidDays = $cDays;
     if ($cSection != 0) {
 	query ("INSERT IGNORE INTO SubsSections SET IdSubscription=$Subs, SectionNumber='$cSection', StartDate='$cStartDate', Days='$cDays', PaidDays='$cPaidDays'");
 	if ($AFFECTED_ROWS > 0) { ?>dnl
-	X_MSGBOX_TEXT(<*<LI><? putGS('The section was added successfully.'); ?></LI>*>)
-    <? } else { ?>dnl
-	X_MSGBOX_TEXT(<*<LI><? putGS('The section could not be added.'); ?></LI><LI><? putGS("Please check if there isn't another subscription with the same section."); ?></LI>*>)
-<? } ?>dnl
+	X_MSGBOX_TEXT(<*<LI><?php  putGS('The section was added successfully.'); ?></LI>*>)
+    <?php  } else { ?>dnl
+	X_MSGBOX_TEXT(<*<LI><?php  putGS('The section could not be added.'); ?></LI><LI><?php  putGS("Please check if there isn't another subscription with the same section."); ?></LI>*>)
+<?php  } ?>dnl
 	B_MSGBOX_BUTTONS
-<? if ($AFFECTED_ROWS > 0) { ?>dnl
-		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/users/subscriptions/sections/?Pub=<? p($Pub); ?>&User=<? p($User); ?>&Subs=<? p($Subs); ?>*>)
-<? } else { ?>dnl
-		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/users/subscriptions/sections/add.php?Pub=<? p($Pub); ?>&User=<? p($User); ?>&Subs=<? p($Subs); ?>*>)
-<? } ?>dnl
+<?php  if ($AFFECTED_ROWS > 0) { ?>dnl
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/users/subscriptions/sections/?Pub=<?php  p($Pub); ?>&User=<?php  p($User); ?>&Subs=<?php  p($Subs); ?>*>)
+<?php  } else { ?>dnl
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/users/subscriptions/sections/add.php?Pub=<?php  p($Pub); ?>&User=<?php  p($User); ?>&Subs=<?php  p($Subs); ?>*>)
+<?php  } ?>dnl
 	E_MSGBOX_BUTTONS
 
-<? } else {
+<?php  } else {
 
     query ("SELECT DISTINCT Number FROM Sections where IdPublication=$Pub", 'q_sect');
     $nr=$NUM_ROWS;
@@ -94,44 +94,44 @@ B_MSGBOX(<*Adding sections to subscription*>)
     }
 
     if ($Success) { ?>dnl
-	X_MSGBOX_TEXT(<*<LI><? putGS('The sections were added successfully.'); ?></LI>*>)
-<? } else { ?>dnl
-	X_MSGBOX_TEXT(<*<LI><? putGS('The sections could not be added successfully. Some of them were already added !'); ?></LI>*>)
-<? } ?>dnl
+	X_MSGBOX_TEXT(<*<LI><?php  putGS('The sections were added successfully.'); ?></LI>*>)
+<?php  } else { ?>dnl
+	X_MSGBOX_TEXT(<*<LI><?php  putGS('The sections could not be added successfully. Some of them were already added !'); ?></LI>*>)
+<?php  } ?>dnl
 	B_MSGBOX_BUTTONS
-<? if ($Success) { ?>dnl
-		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/users/subscriptions/sections/?Pub=<? p($Pub); ?>&User=<? p($User); ?>&Subs=<? p($Subs); ?>*>)
-<? } else { ?>dnl
-		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/users/subscriptions/sections/add.php?Pub=<? p($Pub); ?>&User=<? p($User); ?>&Subs=<? p($Subs); ?>*>)
-<? } ?>dnl
+<?php  if ($Success) { ?>dnl
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/users/subscriptions/sections/?Pub=<?php  p($Pub); ?>&User=<?php  p($User); ?>&Subs=<?php  p($Subs); ?>*>)
+<?php  } else { ?>dnl
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/users/subscriptions/sections/add.php?Pub=<?php  p($Pub); ?>&User=<?php  p($User); ?>&Subs=<?php  p($Subs); ?>*>)
+<?php  } ?>dnl
 	E_MSGBOX_BUTTONS
-<? } ?>
+<?php  } ?>
 
 E_MSGBOX
 <P>
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such subscription.'); ?></LI>
+	<LI><?php  putGS('No such subscription.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such publication.'); ?></LI>
+	<LI><?php  putGS('No such publication.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such user account.'); ?></LI>
+	<LI><?php  putGS('No such user account.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

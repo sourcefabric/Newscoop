@@ -9,22 +9,22 @@ B_HEAD
 	X_TITLE(<*Menu*>)
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
-<?
+<?php 
     todefnum('lang');
     todefnum('pub');
     todefnum('iss');
 ?>dnl
 
 <FRAMESET ROWS="70, *" BORDER="0">
-    <FRAME SRC="sect.php?lang=<? pencURL($lang); ?>&pub=<? pencURL($pub); ?>&iss=<? pencURL($iss); ?>" NAME="fsect" FRAMEBORDER="0" MARGINHEIGHT="0" NORESIZE SCROLLING="NO">
+    <FRAME SRC="sect.php?lang=<?php  pencURL($lang); ?>&pub=<?php  pencURL($pub); ?>&iss=<?php  pencURL($iss); ?>" NAME="fsect" FRAMEBORDER="0" MARGINHEIGHT="0" NORESIZE SCROLLING="NO">
     <FRAME SRC="empty.php?bg=1" NAME="f4" FRAMEBORDER="0" MARGINHEIGHT="0" NORESIZE SCROLLING="NO">
 </FRAMESET>
 
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

@@ -40,7 +40,7 @@ echo OK
 
 echo -n -e "\tWriting lib_campsite.php..."
 cat > lib_campsite.php << EOF
-<?
+<?php
 
 \$scriptBase='$ADMIN_INTERFACE_SCRIPT_DIR';
 

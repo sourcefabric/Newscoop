@@ -6,15 +6,15 @@ CHECK_BASIC_ACCESS
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Glossary infotypes*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_LOGOUT
-<? }
+<?php  }
     query ("SELECT Id, Name FROM Languages WHERE 1=0", 'ls');
     query ("SELECT Id, IdLanguage, Name FROM Classes WHERE 1=0", 'q_cls');
 ?>dnl
 E_HEAD
 
-<? if ($access) {
+<?php  if ($access) {
 SET_ACCESS(<*mca*>, <*ManageClasses*>)
 ?>dnl
 
@@ -30,19 +30,19 @@ X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<? todef('sLang');
+<?php  todef('sLang');
     todef('sName');
 ?>dnl
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" WIDTH="100%">
 <TR>
-	<? if ($mca != 0) { ?>
+	<?php  if ($mca != 0) { ?>
 	<TD>X_NEW_BUTTON(<*Add new glossary infotype*>, <*add.php*>)</TD>
-	<? } ?>
+	<?php  } ?>
 	<TD ALIGN="RIGHT">
 	B_SEARCH_DIALOG(<*GET*>, <*index.php*>)
-		<TD><? putGS('Infotype'); ?>:</TD>
-		<TD><INPUT TYPE="TEXT" NAME="sName" VALUE="<? print encHTML(decS($sName)); ?>"></TD>
-		<TD><SELECT NAME="sLang"><? query ("SELECT Id, Name FROM Languages ORDER BY Name", 'ls');
+		<TD><?php  putGS('Infotype'); ?>:</TD>
+		<TD><INPUT TYPE="TEXT" NAME="sName" VALUE="<?php  print encHTML(decS($sName)); ?>"></TD>
+		<TD><SELECT NAME="sLang"><?php  query ("SELECT Id, Name FROM Languages ORDER BY Name", 'ls');
 		    $nr=$NUM_ROWS;
 		    for($loop=0;$loop<$nr;$loop++) {
 			fetchRow($ls);
@@ -54,7 +54,7 @@ E_HEADER
 	</TD>
 </TABLE>
 
-<?
+<?php 
     if ($sName != "")
 	$kk= "Name LIKE '$sName%'";
     else
@@ -82,7 +82,7 @@ E_HEADER
 
 ?>dnl
 
-<P><?
+<P><?php 
     todefnum('ClsOffs');
     if ($ClsOffs < 0) $ClsOffs= 0;
     $lpp=20;
@@ -97,21 +97,21 @@ B_LIST
 	B_LIST_HEADER
 		X_LIST_TH(<*Infotype*>)
 		X_LIST_TH(<*Language*>)
-	<? if ($mca != 0) { ?> 
+	<?php  if ($mca != 0) { ?> 
 		X_LIST_TH(<*Translate*>, <*1%*>)
 		X_LIST_TH(<*Delete*>, <*1%*>)
-	<? } ?>
+	<?php  } ?>
 	E_LIST_HEADER
-<?
+<?php 
     for ($loop=0;$loop<$nr;$loop++) {
 	fetchRow($q_cls);
 	if ($i) { ?>dnl
 	B_LIST_TR
 		B_LIST_ITEM
-			<? if (getVar($q_cls,'Id') == $kwdid) { ?>&nbsp; <? } pgetHVar($q_cls,'Name'); ?>&nbsp;
+			<?php  if (getVar($q_cls,'Id') == $kwdid) { ?>&nbsp; <?php  } pgetHVar($q_cls,'Name'); ?>&nbsp;
 		E_LIST_ITEM
 		B_LIST_ITEM
-<? 
+<?php  
     query ("SELECT Name FROM Languages WHERE Id=".getVar($q_cls,'IdLanguage'), 'l');
     $nr2=$NUM_ROWS;
     for ($loop2=0;$loop2<$nr2;$loop2++) {
@@ -121,48 +121,48 @@ B_LIST
     }
     ?>&nbsp;
 		E_LIST_ITEM
-	<? if ($mca != 0) { ?> 
+	<?php  if ($mca != 0) { ?> 
 		B_LIST_ITEM(<*CENTER*>)
-<? if (getVar($q_cls,'Id') != $kwdid) { ?>dnl
-			<A HREF="X_ROOT/infotype/translate.php?Class=<? pgetUVar($q_cls,'Id'); ?>"><? putGS("Translate"); ?></A>
-<? } ?>&nbsp;
+<?php  if (getVar($q_cls,'Id') != $kwdid) { ?>dnl
+			<A HREF="X_ROOT/infotype/translate.php?Class=<?php  pgetUVar($q_cls,'Id'); ?>"><?php  putGS("Translate"); ?></A>
+<?php  } ?>&nbsp;
 		E_LIST_ITEM
 		B_LIST_ITEM(<*CENTER*>)
-			X_BUTTON(<*<? putGS('Delete glossary infotype $1',getHVar($q_cls,'Name')); ?>*>, <*icon/x.gif*>, <*infotype/del.php?Class=<? pgetUVar($q_cls,'Id'); ?>&Lang=<? pgetUVar($q_cls,'IdLanguage'); ?>*>)
+			X_BUTTON(<*<?php  putGS('Delete glossary infotype $1',getHVar($q_cls,'Name')); ?>*>, <*icon/x.gif*>, <*infotype/del.php?Class=<?php  pgetUVar($q_cls,'Id'); ?>&Lang=<?php  pgetUVar($q_cls,'IdLanguage'); ?>*>)
 		E_LIST_ITEM
-	<? }
+	<?php  }
 if (getVar($q_cls,'Id') != $kwdid)
     $kwdid=getVar($q_cls,'Id');
 ?>dnl
 	E_LIST_TR
-<?
+<?php 
     $i--;
     }
 }
 ?>dnl
 	B_LIST_FOOTER
-<? if ($ClsOffs <= 0) { ?>dnl
+<?php  if ($ClsOffs <= 0) { ?>dnl
 		X_PREV_I
-<? } else { ?>dnl
-		X_PREV_A(<*index.php?sName=<? print encURL($sName); ?>&sLang=<?  print encURL($sLang); ?>&ClsOffs=<? print ($ClsOffs - $lpp);?>*>)
-<? }
+<?php  } else { ?>dnl
+		X_PREV_A(<*index.php?sName=<?php  print encURL($sName); ?>&sLang=<?php   print encURL($sLang); ?>&ClsOffs=<?php  print ($ClsOffs - $lpp);?>*>)
+<?php  }
     if ($nr < $lpp+1) { ?>dnl
 		X_NEXT_I
-<? } else { ?>dnl
-		X_NEXT_A(<*index.php?sName=<? print encURL($sName); ?>&sLang=<?  print encURL($sLang); ?>&ClsOffs=<? print ($ClsOffs + $lpp);?>*>)
-<? } ?>dnl
+<?php  } else { ?>dnl
+		X_NEXT_A(<*index.php?sName=<?php  print encURL($sName); ?>&sLang=<?php   print encURL($sLang); ?>&ClsOffs=<?php  print ($ClsOffs + $lpp);?>*>)
+<?php  } ?>dnl
 	E_LIST_FOOTER
 E_LIST
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No glossary infotypes.'); ?></LI>
+	<LI><?php  putGS('No glossary infotypes.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

@@ -1,4 +1,4 @@
-<? function isTpl($s){
+<?php  function isTpl($s){
 	$dotpos=strrpos($s,".");
 	$ext=substr($s,$dotpos+1);
         return ($ext == 'tpl' || $ext=='TPL' || $ext == 'php' || $ext == 'htm' || $ext == 'html' || $ext == 'php3' || $ext == 'php4');
@@ -8,14 +8,14 @@
 <TR BGCOLOR="WHITE"><TD WIDTH="30%" VALIGN="TOP">
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" WIDTH="100%">
 <TR BGCOLOR="#C0D0FF">
-<TD VALIGN="TOP"><B> <? putGS('Folders'); ?> </B></TD>
-<?
+<TD VALIGN="TOP"><B> <?php  putGS('Folders'); ?> </B></TD>
+<?php 
     if ( $dta != "0" ) {
 	echo '<TD WIDTH="1%" ><B> '.getGS('Delete').' </B></TD>';
     }
 ?>
 </TR>
-<?
+<?php 
     $c="";
 	// once entered here, in the TemplateManagement, because the parameter What is 0 by default, even if the value set before is still set
 	// its meaning is lost, so we can use the variable to switch between file and folders; let's say 0 is for folders and 1 for files
@@ -69,15 +69,15 @@ echo '<TR><TD COLSPAN="2">'.getGS('No folders.').'</TD></TR>' ;
 </TD><TD WIDTH="60%" VALIGN="TOP">
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" WIDTH="100%">
 <TR BGCOLOR="#C0D0FF">
-<TD  VALIGN="TOP"><B> <? putGS('Files'); ?> </B></TD>
-<?
+<TD  VALIGN="TOP"><B> <?php  putGS('Files'); ?> </B></TD>
+<?php 
     if($dta!= "0") {
     	echo '<TD  VALIGN="TOP" WIDTH="1%" ><B> '.getGS('Duplicate').' </B></TD>';
 	echo '<TD  VALIGN="TOP" WIDTH="1%" ><B> '.getGS('Delete').' </B></TD>';
 	}
 ?>
 </TR>
-<?
+<?php 
     $c="";
 
 if (isset($files)) {

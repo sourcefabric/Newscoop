@@ -5,7 +5,7 @@ B_DATABASE
 CHECK_BASIC_ACCESS
 CHECK_ACCESS(<*DeleteTempl*>)
 
-<?
+<?php 
     todef('Path');
     todef('Name');
     todefnum('What');
@@ -13,52 +13,52 @@ CHECK_ACCESS(<*DeleteTempl*>)
 
 B_HEAD
 	X_EXPIRES
-	<? if ($What == 1) {?>dnl
+	<?php  if ($What == 1) {?>dnl
 		X_TITLE(<*Deleting template*>)
-	<?}
+	<?php }
 	else {?>dnl
 		X_TITLE(<*Deleting folder*>)
-	<?}?>dnl
+	<?php }?>dnl
 	
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to delete templates.*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
 
 
-<?if ($What == 1){?>dnl
+<?php if ($What == 1){?>dnl
 	B_HEADER(<*Deleting template*>)
-<?}
+<?php }
 else{?>dnl
 	B_HEADER(<*Deleting folder*>)
-<?}?>dnl
+<?php }?>dnl
 B_HEADER_BUTTONS
-X_HBUTTON(<*Templates*>, <*templates/?Path=<? pencURL(decS($Path)); ?>*>)
+X_HBUTTON(<*Templates*>, <*templates/?Path=<?php  pencURL(decS($Path)); ?>*>)
 X_HBUTTON(<*Home*>, <*home.php*>)
 X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
 B_CURRENT
-X_CURRENT(<*Path*>, <*<B><? pencHTML(decURL($Path)); ?></B>*>)
+X_CURRENT(<*Path*>, <*<B><?php  pencHTML(decURL($Path)); ?></B>*>)
 E_CURRENT
 
 <P>
 
-<? if($What == 1){?>dnl
+<?php  if($What == 1){?>dnl
 	B_MSGBOX(<*Deleting template*>)
-<?}
+<?php }
 else {?>dnl
 	B_MSGBOX(<*Deleting folder*>)
-<?}?>dnl
+<?php }?>dnl
 	X_MSGBOX_TEXT(<*
-<?
+<?php 
 	$dir=decURL(decS($Path)).decURL(decS($Name));
 	$file = $DOCUMENT_ROOT.decURL($Path).$Name;
 	$olderr =  error_reporting(0);
@@ -87,7 +87,7 @@ else {?>dnl
 X_AUDIT(<*112*>, <*getGS('Templates deleted from $1',encHTML(decS($Path)).encHTML(decS($Name)) )*>)
 	*>)
 	B_MSGBOX_BUTTONS
-		REDIRECT(<*Done*>, <*Done*>, <*<? p(decS($Path)); ?>*>)
+		REDIRECT(<*Done*>, <*Done*>, <*<?php  p(decS($Path)); ?>*>)
 	E_MSGBOX_BUTTONS
 E_MSGBOX
 <P>
@@ -95,7 +95,7 @@ E_MSGBOX
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

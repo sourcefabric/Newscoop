@@ -8,12 +8,12 @@ CHECK_ACCESS(<*ManageUsers*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Updating user account permissions*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to change user account permissions.*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
@@ -27,7 +27,7 @@ X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<?
+<?php 
     todefnum('User');
 
 todefradio('cManagePub');
@@ -76,12 +76,12 @@ todefradio('cManageTopics');
 	?>dnl
 
 B_CURRENT
-X_CURRENT(<*User account*>, <*<B><? pgetHVar($uacc,'UName'); ?></B>*>)
+X_CURRENT(<*User account*>, <*<B><?php  pgetHVar($uacc,'UName'); ?></B>*>)
 E_CURRENT
 
 <P>
 B_MSGBOX(<*Updating user account permissions*>)
-<?
+<?php 
     query ("UPDATE UserPerm SET ManagePub='$cManagePub', DeletePub='$cDeletePub', ManageIssue='$cManageIssue', DeleteIssue='$cDeleteIssue', ManageSection='$cManageSection', DeleteSection='$cDeleteSection', AddArticle='$cAddArticle', ChangeArticle='$cChangeArticle', DeleteArticle='$cDeleteArticle', AddImage='$cAddImage', ChangeImage='$cChangeImage', DeleteImage='$cDeleteImage', ManageTempl='$cManageTempl', DeleteTempl='$cDeleteTempl', ManageUsers='$cManageUsers', ManageSubscriptions='$cManageSubscriptions', DeleteUsers='$cDeleteUsers', ManageUserTypes='$cManageUserTypes', ManageArticleTypes='$cManageArticleTypes', DeleteArticleTypes='$cDeleteArticleTypes', ManageLanguages='$cManageLanguages', DeleteLanguages='$cDeleteLanguages', MailNotify='$cMailNotify', ManageClasses='$cManageClasses', ManageDictionary='$cManageDictionary', DeleteDictionary='$cDeleteDictionary', ManageCountries='$cManageCountries', DeleteCountries='$cDeleteCountries', ViewLogs='$cViewLogs' , ManageLocalizer = '$cManageLocalizer', ManageIndexer = '$cManageIndexer', Publish = '$cPublish', ManageTopics= '$cManageTopics' WHERE IdUser=$User");
 
 	## added by sebastian
@@ -90,37 +90,37 @@ B_MSGBOX(<*Updating user account permissions*>)
 
 	if ($AFFECTED_ROWS > 0) { ?>dnl
 		X_AUDIT(<*55*>, <*getGS('Permissions for $1 changed',getHVar($uacc,'UName'))*>)
-		X_MSGBOX_TEXT(<*<LI><? putGS('User account permissions have been successfuly updated.'); ?></LI>*>)
-<?	} else { ?>dnl
-		X_MSGBOX_TEXT(<*<LI><? putGS('User account permissions could not be updated.'); ?></LI>
-<?	} ?>*>)
+		X_MSGBOX_TEXT(<*<LI><?php  putGS('User account permissions have been successfuly updated.'); ?></LI>*>)
+<?php 	} else { ?>dnl
+		X_MSGBOX_TEXT(<*<LI><?php  putGS('User account permissions could not be updated.'); ?></LI>
+<?php 	} ?>*>)
 	B_MSGBOX_BUTTONS
-<?
+<?php 
     if ($AFFECTED_ROWS > 0) { ?>dnl
 		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/users/*>)
-<? } else { ?>dnl
-		REDIRECT(<OK**>, <*OK*>, <*X_ROOT/users/access.php?User=<? pencURL($User); ?>*>)
-<? } ?>dnl
+<?php  } else { ?>dnl
+		REDIRECT(<OK**>, <*OK*>, <*X_ROOT/users/access.php?User=<?php  pencURL($User); ?>*>)
+<?php  } ?>dnl
 	E_MSGBOX_BUTTONS
 E_MSGBOX
 <P>
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('This user account does not have permissions information.'); ?></LI>
+	<LI><?php  putGS('This user account does not have permissions information.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such user account.'); ?></LI>
+	<LI><?php  putGS('No such user account.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

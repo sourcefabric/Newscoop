@@ -1,4 +1,4 @@
-<?
+<?php 
 
 function registerLanguage($name,$code,$charset){
 

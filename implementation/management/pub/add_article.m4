@@ -8,14 +8,14 @@ CHECK_ACCESS(<*AddArticle*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Add new article*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to add articles.*>)
-<? }
+<?php  }
     query ("SELECT * FROM Publications WHERE 1=0", 'publ');
 ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
@@ -31,7 +31,7 @@ E_HEADER
 <P>
 X_BULLET(<*Select the publication*>)
 
-<P><?
+<P><?php 
     todefnum('PubOffs');
     if ($PubOffs < 0)
 	$PubOffs= 0;
@@ -47,47 +47,47 @@ B_LIST
 		X_LIST_TH(<*Name<BR><SMALL>(click to select the publication)</SMALL>*>)
 		X_LIST_TH(<*Site*>, <*20%*>)
 	E_LIST_HEADER
-<?
+<?php 
     for($loop=0;$loop<$nr;$loop++) {
 	fetchRow($publ);
 	if ($i) { ?>dnl
 	B_LIST_TR
 		B_LIST_ITEM
-			<A HREF="X_ROOT/pub/issues/add_article.php?Pub=<? pgetUVar($publ,'Id'); ?>"><? pgetHVar($publ,'Name'); ?></A>
+			<A HREF="X_ROOT/pub/issues/add_article.php?Pub=<?php  pgetUVar($publ,'Id'); ?>"><?php  pgetHVar($publ,'Name'); ?></A>
 		E_LIST_ITEM
 		B_LIST_ITEM
-			<? pgetHVar($publ,'Site'); ?>&nbsp;
+			<?php  pgetHVar($publ,'Site'); ?>&nbsp;
 		E_LIST_ITEM
     E_LIST_TR
-<?
+<?php 
     $i--;
     }
 }
 ?>dnl
 	B_LIST_FOOTER
-<?
+<?php 
     if ($PubOffs <= 0) { ?>dnl
 		X_PREV_I
-<? } else { ?>dnl
-		X_PREV_A(<*add_article.php?PubOffs=<? print  ($PubOffs - 10); ?>*>)
-<? }
+<?php  } else { ?>dnl
+		X_PREV_A(<*add_article.php?PubOffs=<?php  print  ($PubOffs - 10); ?>*>)
+<?php  }
     if ($nr < 11) { ?>dnl
 		X_NEXT_I
-<? } else { ?>dnl
-		X_NEXT_A(<*add_article.php?PubOffs=<? print  ($PubOffs + 10); ?>*>)
-<? } ?>dnl
+<?php  } else { ?>dnl
+		X_NEXT_A(<*add_article.php?PubOffs=<?php  print  ($PubOffs + 10); ?>*>)
+<?php  } ?>dnl
 	E_LIST_FOOTER
 E_LIST
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No publications.'); ?></LI>
+	<LI><?php  putGS('No publications.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

@@ -8,12 +8,12 @@ CHECK_ACCESS(<*ManagePub*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Adding new publication*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to add publications.*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
@@ -27,7 +27,7 @@ X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<?
+<?php 
     todef('cName');
     todef('cSite');
     todefnum('cLanguage');
@@ -44,20 +44,20 @@ E_HEADER
 <P>
 B_MSGBOX(<*Adding new publication*>)
 	X_MSGBOX_TEXT(<*
-<?
+<?php 
     $cName=trim($cName);
     $cSite=trim($cSite);
 //!sql query "SELECT TRIM('?cName'), TRIM('?cSite')" q_tr>dnl
 
     if ($cName == "" || $cName == " ") {
 	$correct= 0; ?>dnl
-		<LI><? putGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); ?></LI>
-    <? }
+		<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); ?></LI>
+    <?php  }
     
     if ($cSite == "" || $cSite == " ") {
 	$correct=0; ?>dnl
-		<LI><? putGS('You must complete the $1 field.','<B>'.getGS('Site').'</B>'); ?></LI>
-    <? }
+		<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Site').'</B>'); ?></LI>
+    <?php  }
 
     if ($correct) {
 	$AFFECTED_ROWS=0;
@@ -66,33 +66,33 @@ B_MSGBOX(<*Adding new publication*>)
     }
 
     if ($created) { ?>dnl
-		<LI><? putGS('The publication $1 has been successfuly added.',"<B>".encHTML(decS($cName))."</B>"); ?></LI>
+		<LI><?php  putGS('The publication $1 has been successfuly added.',"<B>".encHTML(decS($cName))."</B>"); ?></LI>
 X_AUDIT(<*1*>, <*getGS('Publication $1 added',$cName)*>)
-<?
+<?php 
     } else {
 	if ($correct != 0) { ?>dnl
-		<LI><? putGS('The publication could not be added.'); ?></LI><LI><? putGS('Please check if another publication with the same or the same site name does not already exist.'); ?></LI>
-<? }
+		<LI><?php  putGS('The publication could not be added.'); ?></LI><LI><?php  putGS('Please check if another publication with the same or the same site name does not already exist.'); ?></LI>
+<?php  }
 }
 ?>dnl
 		*>)
-<? if ($correct && $created) { ?>dnl
+<?php  if ($correct && $created) { ?>dnl
 	B_MSGBOX_BUTTONS
 		REDIRECT(<*another*>, <*Add another*>, <*X_ROOT/pub/add.php*>)
 		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/pub/*>)
 	E_MSGBOX_BUTTONS
-<? } else { ?>
+<?php  } else { ?>
 	B_MSGBOX_BUTTONS
 		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/pub/add.php*>)
 	E_MSGBOX_BUTTONS
-<? } ?>dnl
+<?php  } ?>dnl
 E_MSGBOX
 <P>
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

@@ -9,18 +9,18 @@ B_HEAD
 	X_TITLE(<*Menu*>)
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
-<? todefnum('lang'); ?>dnl
+<?php  todefnum('lang'); ?>dnl
 
 <FRAMESET ROWS="70, *" BORDER="0">
-    <FRAME SRC="pub.php?lang=<? pencURL($lang); ?>" NAME="fpub" FRAMEBORDER="0" MARGINHEIGHT="0" NORESIZE SCROLLING="NO">
+    <FRAME SRC="pub.php?lang=<?php  pencURL($lang); ?>" NAME="fpub" FRAMEBORDER="0" MARGINHEIGHT="0" NORESIZE SCROLLING="NO">
     <FRAME SRC="empty.php?bg=1" NAME="f2" FRAMEBORDER="0" MARGINHEIGHT="0" NORESIZE SCROLLING="NO">
 </FRAMESET>
 
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

@@ -9,7 +9,7 @@ B_HEAD
 	X_TITLE(<*Menu*>)
 E_HEAD
 
-<? if ($access) { 
+<?php  if ($access) { 
 SET_ACCESS(<*mpa*>, <*ManagePub*>)
 SET_ACCESS(<*muta*>, <*ManageUserTypes*>)
 SET_ACCESS(<*mda*>, <*ManageDictionary*>)
@@ -36,42 +36,42 @@ B_MENU
     X_MENU_ITEM(<*Quick Menu*>, <**>, <*window.open('X_ROOT/popup/', 'fpopup', 'menu=no,width=500,height=410'); return false;*>)
     X_MENU_BAR
     X_MENU_ITEM(<*Publications*>, <*pub/*>)
-<? if ($mta) { ?>dnl
+<?php  if ($mta) { ?>dnl
     X_MENU_ITEM(<*Templates*>, <*/look/*>)
-<? } ?>dnl
-<? if ($mcta) { ?>dnl
+<?php  } ?>dnl
+<?php  if ($mcta) { ?>dnl
     X_MENU_ITEM(<*Topics*>, <*topics/*>)
-<? } ?>dnl
-<? if ($mua) { ?>dnl
+<?php  } ?>dnl
+<?php  if ($mua) { ?>dnl
     X_MENU_ITEM(<*Users*>, <*users/*>)
-<? } ?>dnl
-<? if ($muta) { ?>dnl
+<?php  } ?>dnl
+<?php  if ($muta) { ?>dnl
     X_MENU_ITEM(<*User Types*>, <*u_types/*>)
-<? } ?>dnl
-<? if ($mata) { ?>dnl
+<?php  } ?>dnl
+<?php  if ($mata) { ?>dnl
     X_MENU_ITEM(<*Article Types*>, <*a_types/*>)
-<? } ?>dnl
-<? if ($mcoa) { ?>dnl
+<?php  } ?>dnl
+<?php  if ($mcoa) { ?>dnl
     X_MENU_ITEM(<*Countries*>, <*country/*>)
-<? } ?>dnl
-<? if ($mla) { ?>dnl
+<?php  } ?>dnl
+<?php  if ($mla) { ?>dnl
     X_MENU_ITEM(<*Languages*>, <*languages/*>)
-<? } ?>dnl
-<? if ($mda) { ?>dnl
+<?php  } ?>dnl
+<?php  if ($mda) { ?>dnl
     X_MENU_ITEM(<*Glossary*>, <*glossary/*>)
-<? } ?>dnl
-<? if ($mca) { ?>dnl
+<?php  } ?>dnl
+<?php  if ($mca) { ?>dnl
     X_MENU_ITEM(<*Infotype*>, <*infotype/*>)
-<? } ?>dnl
-<? if ($vla) { ?>dnl
+<?php  } ?>dnl
+<?php  if ($vla) { ?>dnl
     X_MENU_ITEM(<*Logs*>, <*logs/*>)
-<? } ?>dnl
-<? if ($mlza) { ?>dnl
+<?php  } ?>dnl
+<?php  if ($mlza) { ?>dnl
     X_MENU_BAR
     X_MENU_ITEM(<*Localizer*>, <*localizer/*>)
-<? } ?>dnl
+<?php  } ?>dnl
     X_MENU_BAR
-<?
+<?php 
 ## added by sebastian
 if (function_exists ("incModFile"))
 	incModFile ($TOL_UserId);
@@ -80,7 +80,7 @@ if (function_exists ("incModFile"))
 E_MENU
 
 E_MBODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

@@ -8,12 +8,12 @@ CHECK_ACCESS(<*ManageUsers*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Changing user account information*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to change user account information.*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
@@ -27,7 +27,7 @@ X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<?
+<?php 
 
 todef('Name');
 todef('Title');
@@ -55,53 +55,53 @@ todefnum('User');
     ?>dnl
 
 B_CURRENT
-X_CURRENT(<*User account*>, <*<B><? pgetHVar($users,'UName'); ?></B>*>)
+X_CURRENT(<*User account*>, <*<B><?php  pgetHVar($users,'UName'); ?></B>*>)
 E_CURRENT
 
-<?
+<?php 
     $correct= 1;
     $changed= 0;
 ?>dnl
 <P>
 B_MSGBOX(<*Changing user account information*>)
 	X_MSGBOX_TEXT(<*
-<?
+<?php 
     if ($Name == "") {
 	$correct= 0; ?>dnl
-		<LI><? putGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); ?></LI>
-<? }
+		<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); ?></LI>
+<?php  }
 
     if ($correct) {
 	query ("UPDATE Users SET Name='$Name', Title='$Title', Gender='$Gender', Age='$Age', EMail='$EMail', City='$City', StrAddress='$StrAddress', State='$State', CountryCode='$CountryCode', Phone='$Phone', Fax='$Fax', Contact='$Contact', Phone2='$Phone2', PostalCode='$PostalCode', Employer='$Employer', EmployerType='$EmployerType', Position='$Position' WHERE Id=$User");
 	$changed= $AFFECTED_ROWS;
 	if ($changed) { ?>dnl
-		<LI><? putGS('User account information has been changed.'); ?></LI>
+		<LI><?php  putGS('User account information has been changed.'); ?></LI>
 X_AUDIT(<*56*>, <*getGS('User account information changed for $1',getHVar($users,'UName'))*>)
-	<? } else { ?>dnl
-		<LI><? putGS('User account information could not be changed.'); ?></LI>
-	<? } ?>dnl
-<? } ?>dnl
+	<?php  } else { ?>dnl
+		<LI><?php  putGS('User account information could not be changed.'); ?></LI>
+	<?php  } ?>dnl
+<?php  } ?>dnl
 	*>)
 	B_MSGBOX_BUTTONS
-<? if ($changed) { ?>dnl
+<?php  if ($changed) { ?>dnl
 		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/users/*>)
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/users/*>)
-<? } ?>dnl
+<?php  } ?>dnl
 	E_MSGBOX_BUTTONS
 E_MSGBOX
 <P>
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such user.'); ?></LI>
+	<LI><?php  putGS('No such user.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

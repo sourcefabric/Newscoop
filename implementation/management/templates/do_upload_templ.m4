@@ -1,6 +1,6 @@
 B_HTML
 INCLUDE_PHP_LIB(<*..*>)
-<?    
+<?php     
     require('./lib_upload.php');
 ?>
 B_DATABASE
@@ -11,9 +11,9 @@ CHECK_ACCESS(<*ManageTempl*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Uploading template*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to upload templates.*>)
-<? } else {
+<?php  } else {
 	//dSystem( "$scriptBase/process_t '$Id'");
     $debugLevelHigh=false;
     $debugLevelLow=false;
@@ -23,13 +23,13 @@ B_HEAD
 } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
 
-<? todefnum('Id'); ?>dnl
+<?php  todefnum('Id'); ?>dnl
 B_HEADER(<*Uploading template*>)
 B_HEADER_BUTTONS
 X_HEADER_NO_BUTTONS
@@ -37,25 +37,25 @@ E_HEADER_BUTTONS
 E_HEADER
 
 B_CURRENT
-X_CURRENT(<*Path*>, <*<B><? pencHTML(decURL($Path)); ?></B>*>)
+X_CURRENT(<*Path*>, <*<B><?php  pencHTML(decURL($Path)); ?></B>*>)
 E_CURRENT
 
 <P>
 B_MSGBOX(<*Uploading template*>)
-	X_MSGBOX_TEXT(<* <LI> <? p($FSresult)?> </LI> *>)
+	X_MSGBOX_TEXT(<* <LI> <?php  p($FSresult)?> </LI> *>)
 	B_MSGBOX_BUTTONS
-		REDIRECT(<*Done*>, <*Done*>, <*<? pencHTML(decS($Path)); ?>*>)
+		REDIRECT(<*Done*>, <*Done*>, <*<?php  pencHTML(decS($Path)); ?>*>)
 	E_MSGBOX_BUTTONS
 E_MSGBOX
 <P>
-<?       $fileName=$GLOBALS["File"."_name"]; ?>
+<?php        $fileName=$GLOBALS["File"."_name"]; ?>
 
 X_AUDIT(<*111*>, <*getGS('Template $1 uploaded', encHTML(decS($fileName)))*>)
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML
