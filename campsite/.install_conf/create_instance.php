@@ -352,7 +352,10 @@ function fill_missing_parameters(&$p_defined_parameters)
 
 	// read old configuration
 	$db_name = $p_defined_parameters['--db_name'];
-	$old_conf_dir = "/etc/campsite.d/$db_name";
+	if (is_dir("/etc/campsite.d/$db_name"))
+		$old_conf_dir = "/etc/campsite.d/$db_name";
+	if (is_dir("/usr/local/etc/campsite.d/$db_name"))
+		$old_conf_dir = "/usr/local/etc/campsite.d/$db_name";
 
 	$CampsiteOld = array();
 	if (read_old_config($old_conf_dir, 'database', $CampsiteOld) == 0) {
