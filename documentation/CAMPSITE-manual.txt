@@ -154,7 +154,7 @@ Dump tables structure only:
 mysqldump ... [database] -d > tables.sql
 where [database] should be replaced by the name of the CAMPSITE database and "..." with other needed parameters (user, host etc.)
 Dump data for tables that need not be converted to UTF:
-mysqldump ... [database] -t --tables ArticleIndex AutoId, \
+mysqldump ... [database] -t --tables ArticleIndex AutoId Events \
 Images KeywordIndex SubsByIP SubsDefTime SubsSections Subscriptions \
 UserPerm UserTypes Users > data_nolang.sql
 Don't forget to add "ArticleTopics" and "Topics" to the list of tables if CAMPSITE upgrade took place already.
@@ -162,9 +162,9 @@ Dump data for tables that should be converted to UTF
 Group languages having the same character set (see Languages in admin interface and read the following  note below). For every character set used repeat the following steps:
 a)select all the languages in the character set and compose the where clause:
 "IdLanguage = [l1] or IdLanguage = [l2] ..."
-where [l1], [l2] are the language identifiers. In order to read the language identifiers and character sets log in to CAMPSITE database and run the following sql: "select Name, Id, CodePage, from Languages".
+where [l1], [l2] are the language identifiers. In order to read the language identifiers and character sets log in to CAMPSITE database and run the following sql: "select Name, Id, CodePage from Languages".
 b)mysqldump ... [database] -t --tables Articles Classes Countries \
-Dictionary Errors Events Issues KeywordClasses Sections TimeUnits \
+Dictionary Errors Issues KeywordClasses Sections TimeUnits \
 --where="IdLanguage = [l1] or IdLanguage = [l2]..." > data_[charsetn]_1.sql
 c)mysqldump ... [database] -t --tables Publications \
 --where="IdDefaultLanguage = [l1] or IdDefaultLanguage = [l2]..." \

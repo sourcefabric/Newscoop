@@ -5,7 +5,7 @@
 	<TITLE>CAMPSITE manual Version 2.1</TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.1  (Linux)">
 	<META NAME="CREATED" CONTENT="20020913;19124500">
-	<META NAME="CHANGED" CONTENT="20030128;14210000">
+	<META NAME="CHANGED" CONTENT="20030129;13515000">
 	<STYLE>
 	<!--
 		@page { size: 21.59cm 27.94cm }
@@ -386,7 +386,7 @@ and &ldquo;...&rdquo; with other needed parameters (user, host etc.)</FONT></P>
 	data for tables that need not be converted to UTF:</FONT></P>
 	<UL>
 		<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif"><I>mysqldump
-		... [database] -t --tables ArticleIndex AutoId, \</I></FONT></P>
+		... [database] -t --tables ArticleIndex AutoId Events \</I></FONT></P>
 		<UL>
 			<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif"><I>Images
 			KeywordIndex SubsByIP SubsDefTime SubsSections Subscriptions \</I></FONT></P>
@@ -416,13 +416,12 @@ the list of tables if CAMPSITE upgrade took place already.</FONT></P>
 	<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif">where [l1],
 	[l2] are the language identifiers. In order to read the language
 	identifiers and character sets log in to CAMPSITE database and run
-	the following sql: &ldquo;select Name, Id, CodePage, from
-	Languages&rdquo;.</FONT></P>
+	the following sql: &ldquo;select Name, Id, CodePage from Languages&rdquo;.</FONT></P>
 	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif"><I>mysqldump
 	... [database] -t --tables Articles Classes Countries \</I></FONT></P>
 	<OL>
 		<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif"><I>Dictionary
-		Errors Events Issues KeywordClasses Sections TimeUnits \</I></FONT></P>
+		Errors Issues KeywordClasses Sections TimeUnits \</I></FONT></P>
 		<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif"><I>--where=&quot;IdLanguage
 		= [l1] or IdLanguage = [l2]...&quot; &gt; data_[charsetn]_1.sql</I></FONT></P>
 	</OL>
