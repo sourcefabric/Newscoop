@@ -5,7 +5,7 @@
 	<TITLE>CAMPSITE manual Version 2.1</TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
 	<META NAME="CREATED" CONTENT="20020913;19124500">
-	<META NAME="CHANGED" CONTENT="20030423;16162500">
+	<META NAME="CHANGED" CONTENT="20030429;21414800">
 	<STYLE>
 	<!--
 		@page { size: 21.59cm 27.94cm }
@@ -43,10 +43,10 @@
 <P STYLE="margin-top: 0.42cm; margin-bottom: 0.5cm; page-break-after: avoid">
 <FONT FACE="Albany, sans-serif"><FONT SIZE=4>Web Automation Tool User
 Guide</FONT></FONT></P>
-<P CLASS="western">CAMPSITE version: 2.1.2 and newer versions</P>
+<P CLASS="western">CAMPSITE version: 2.1.3 and newer versions</P>
 <P CLASS="western">Maintained and distributed under GNU/GPL by
 CAMPWARE <A HREF="http://www.campware.org/">http://www.campware.org</A></P>
-<P CLASS="western">Manual version: April 23, 2003</P>
+<P CLASS="western">Manual version: May xx, 2003</P>
 <P CLASS="western">Language: English</P>
 <P CLASS="western">&copy;1999-2003 Media Development Loan Fund</P>
 <P CLASS="western"><A HREF="http://www.mdlf.org/" TARGET="_blank">http://www.mdlf.org</A>
@@ -2109,8 +2109,8 @@ conventions:</P>
 	not in between '&lt;' and '&gt;' are language keywords and must be
 	written as in the language description</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">any language
-	identifier can be written in between '&quot;' character; identifiers
-	containing spaces and must be written in between '&quot;'</P>
+	identifier can be written in between &ldquo;&rdquo; character;
+	identifiers containing spaces and must be written in between &ldquo;&rdquo;</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">identifiers enclosed
 	by '[' and ']' characters are not mandatory in the statement</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">sequences of
@@ -2495,30 +2495,29 @@ data. For details see <A HREF="#3.9.3.8">If List</A>.</P>
 may contain any statement except: &quot;Language&quot;,
 &quot;Publication&quot;, &quot;List Issue&quot;, &quot;Issue&quot;,
 &quot;List Section&quot;, &quot;Section&quot;.</P>
-<TABLE WIDTH=858 BORDER=0 CELLPADDING=2 CELLSPACING=0>
-	<COL WIDTH=314>
-	<COL WIDTH=536>
+<TABLE WIDTH=703 BORDER=0 CELLPADDING=2 CELLSPACING=0>
+	<COL WIDTH=308>
+	<COL WIDTH=387>
 	<TR>
-		<TD WIDTH=314 VALIGN=TOP>
+		<TD WIDTH=308 VALIGN=TOP>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;list_of_section_constraints&gt;
 			=</FONT></P>
 		</TD>
-		<TD WIDTH=536>
+		<TD WIDTH=387>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">[&lt;section_constraint&gt;]
 			&lt;list_of_section_constraints&gt; <BR>| &lt;section_constraint&gt;</FONT></P>
 		</TD>
 	</TR>
 </TABLE>
 <TABLE WIDTH=678 BORDER=0 CELLPADDING=2 CELLSPACING=0>
-	<COL WIDTH=234>
-	<COL WIDTH=436>
+	<COL WIDTH=230>
+	<COL WIDTH=440>
 	<TR>
-		<TD WIDTH=234 VALIGN=TOP>
+		<TD WIDTH=230 VALIGN=TOP>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;section_constraint&gt;
-			= </FONT>
-			</P>
+			=</FONT></P>
 		</TD>
-		<TD WIDTH=436>
+		<TD WIDTH=440>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">name
 			</FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;string_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
 			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;string_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
@@ -2587,29 +2586,29 @@ may contain any statement except: &quot;Language&quot;,
 &quot;Publication&quot;, &quot;List Issue&quot;, &quot;Issue&quot;,
 &quot;List Section&quot;, &quot;Section&quot;, &quot;List Article&quot;,
 &quot;Article&quot;.</P>
-<TABLE WIDTH=858 BORDER=0 CELLPADDING=2 CELLSPACING=0>
-	<COL WIDTH=314>
-	<COL WIDTH=536>
+<TABLE WIDTH=703 BORDER=0 CELLPADDING=2 CELLSPACING=0>
+	<COL WIDTH=307>
+	<COL WIDTH=388>
 	<TR>
-		<TD WIDTH=314 VALIGN=TOP>
+		<TD WIDTH=307 VALIGN=TOP>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;list_of_article_constraints&gt;
 			=</FONT></P>
 		</TD>
-		<TD WIDTH=536>
+		<TD WIDTH=388>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">[&lt;article_constraint&gt;]
 			&lt;list_of_article_constraints&gt; <BR>| &lt;article_constraint&gt;</FONT></P>
 		</TD>
 	</TR>
 </TABLE>
-<TABLE WIDTH=1075 BORDER=0 CELLPADDING=2 CELLSPACING=0>
-	<COL WIDTH=222>
-	<COL WIDTH=845>
+<TABLE WIDTH=703 BORDER=0 CELLPADDING=2 CELLSPACING=0>
+	<COL WIDTH=220>
+	<COL WIDTH=475>
 	<TR>
-		<TD WIDTH=222 VALIGN=TOP>
+		<TD WIDTH=220 VALIGN=TOP>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;article_constraint&gt;
 			=</FONT></P>
 		</TD>
-		<TD WIDTH=845>
+		<TD WIDTH=475>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">name
 			</FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;string_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
 			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;string_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
@@ -2662,15 +2661,15 @@ may contain any statement except: &quot;Language&quot;,
 	articles not having specified topic in their list of topics will be
 	selected</P>
 </UL>
-<TABLE WIDTH=1008 BORDER=0 CELLPADDING=2 CELLSPACING=0>
-	<COL WIDTH=364>
-	<COL WIDTH=636>
+<TABLE WIDTH=703 BORDER=0 CELLPADDING=2 CELLSPACING=0>
+	<COL WIDTH=353>
+	<COL WIDTH=342>
 	<TR>
-		<TD WIDTH=364 VALIGN=TOP>
-			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;list_of_article_type_constraints&gt;
+		<TD WIDTH=353 VALIGN=TOP>
+			<P CLASS="western" STYLE="margin-left: 0cm; margin-right: 0cm"><FONT FACE="Courier New, Courier, mono">&lt;list_of_article_type_constraints&gt;
 			=</FONT></P>
 		</TD>
-		<TD WIDTH=636>
+		<TD WIDTH=342>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">[&lt;article_type_constraint&gt;]
 			&lt;list_of_article_type_constraints&gt; <BR>|
 			&lt;article_type_constraint&gt;</FONT></P>
@@ -2833,10 +2832,9 @@ line. The data context is restored after the list processing.</P>
 are forbidden:</P>
 <UL>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">Language</P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm">Publication</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Publicatio<FONT COLOR="#000000">n</FONT></P>
 </UL>
-<P CLASS="western"><B><FONT SIZE=4><FONT COLOR="#ff0000">Note!!!</FONT></FONT>
-(This is valid only for 2.0.11 and newer versions.)</B></P>
+<H4 CLASS="western"><B>Note</B> for If statements</H4>
 <P CLASS="western">All <B>If</B> statements can be negated by
 inserting &quot;not&quot; between If and its modifier (Publication,
 Issue etc.)</P>
@@ -2852,7 +2850,8 @@ the end/start of the list. It can be used only inside List
 statements, especially to validate Next | Previous buttons.</P>
 <P CLASS="western">Syntax:</P>
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">If [not]
-NextItems|PreviousItems [&lt;list_of_instructions&gt;]<BR>[Else
+NextItems|PreviousItems</FONT></P>
+<P CLASS="western" STYLE="margin-top: 0cm; page-break-before: auto"><FONT FACE="Courier, monospace">[&lt;list_of_instructions&gt;]<BR>[Else
 [&lt;list_of_instructions&gt;]]<BR>EndIf [NextItems|PreviousItems]</FONT></P>
 <P CLASS="western">Constraints:</P>
 <P CLASS="western">Can be used only inside List statement. It can not
@@ -2867,10 +2866,11 @@ depending on existing paragraphs (marked with their subtitles) in a
 <A HREF="#3.9.3.21">With statement</A>. It can be used only inside
 With statement, especially to validate Next | Previous buttons.</P>
 <P CLASS="western">Syntax:</P>
-<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If
-NextSubtitles | PrevSubtitles [&lt;list_of_instructions&gt;]<BR>[Else
-[&lt;list_of_instructions&gt;]]<BR>EndIf [NextSubtitles |
-PrevSubtitles]</FONT></P>
+<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If [not]
+NextSubtitles | PrevSubtitles</FONT></P>
+<P CLASS="western" STYLE="margin-top: 0cm"><FONT FACE="Courier, monospace">[&lt;list_of_instructions&gt;]<BR>[Else
+[&lt;list_of_instructions&gt;]]<BR>EndIf
+[NextSubtitles|PrevSubtitles]</FONT></P>
 <P CLASS="western">Constraints:</P>
 <P CLASS="western">Can be used only inside With statement. Also, If
 NextSubtitles can not be used inside If PrevSubtitles and vice versa.</P>
@@ -2881,8 +2881,8 @@ first or second list of instructions. It can be used inside List
 instructions. It is used to <A HREF="#building_a_table">build tables</A>
 from lists.</P>
 <P CLASS="western">Syntax:</P>
-<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If List
-&lt;condition&gt;<BR>&lt;list_of_instructions&gt;<BR>[Else
+<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If [not]
+List &lt;condition&gt;<BR>&lt;list_of_instructions&gt;<BR>[Else
 [&lt;list_of_instructions&gt;]]<BR>EndIf [List]</FONT></P>
 <P CLASS="western">where</P>
 <TABLE WIDTH=428 BORDER=0 CELLPADDING=2 CELLSPACING=0>
@@ -2961,9 +2961,9 @@ first or second list of instructions. It may be used anywhere in the
 template. It is used when printing information for a certain
 publication.</P>
 <P CLASS="western">Syntax:</P>
-<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If
+<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If [not]
 Publication &lt;condition&gt;</FONT><BR><FONT FACE="Courier New, Courier, mono">&lt;list_of_instructions&gt;</FONT><BR><FONT FACE="Courier New, Courier, mono">[Else
-[&lt;list_of_instructions&gt;]]<BR>EndIf [Section]</FONT></P>
+[&lt;list_of_instructions&gt;]]<BR>EndIf [Publication]</FONT></P>
 <TABLE WIDTH=618 BORDER=0 CELLPADDING=2 CELLSPACING=0>
 	<COL WIDTH=144>
 	<COL WIDTH=466>
@@ -3008,9 +3008,9 @@ Section, List Article, List Subtitle, List SearchResult).</P>
 first or second list of instructions. It may be used anywhere in the
 template. It is used when printing information for a certain issue.</P>
 <P CLASS="western">Syntax:</P>
-<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If Issue
-&lt;condition&gt;<BR>&lt;list_of_instructions&gt;<BR>[Else
-[&lt;list_of_instructions&gt;]]<BR>EndIf [Section]</FONT></P>
+<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If [not]
+Issue &lt;condition&gt;<BR>&lt;list_of_instructions&gt;<BR>[Else
+[&lt;list_of_instructions&gt;]]<BR>EndIf [Issue]</FONT></P>
 <P CLASS="western">where 
 </P>
 <TABLE WIDTH=588 BORDER=0 CELLPADDING=2 CELLSPACING=0>
@@ -3070,8 +3070,8 @@ Section, List Article, List Subtitle, List SearchResult).</P>
 first or second list of instructions. It may be used anywhere in the
 template. It is used when printing information for a certain section.</P>
 <P CLASS="western">Syntax:</P>
-<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If Section
-&lt;condition&gt;<BR>&lt;list_of_instructions&gt;<BR>[Else
+<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If [not]
+Section &lt;condition&gt;<BR>&lt;list_of_instructions&gt;<BR>[Else
 [&lt;list_of_instructions&gt;]]<BR>EndIf [Section]</FONT></P>
 <P CLASS="western">The list of instructions may contain any
 instruction allowed in the current context. If it is used inside a
@@ -3120,8 +3120,8 @@ first (for true) or second (for false) list of instructions. It may
 be used anywhere in the template. It is used when printing
 information from different types of article.</P>
 <P CLASS="western">Syntax:</P>
-<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If Article
-&lt;condition&gt;<BR>&lt;list_of_instructions&gt;<BR>[Else
+<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If [not]
+Article &lt;condition&gt;<BR>&lt;list_of_instructions&gt;<BR>[Else
 [&lt;list_of_instructions&gt;]]<BR>EndIf [Article]</FONT></P>
 <P CLASS="western">where</P>
 <TABLE WIDTH=703 BORDER=0 CELLPADDING=2 CELLSPACING=0>
@@ -3203,9 +3203,9 @@ to, the result is false. If true, runs the first list of instructions
 and the second list on false. It is true if the reader has an active
 subscription including the article section or the article is public.</P>
 <P CLASS="western">Syntax:</P>
-<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If
+<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If [not]
 Allowed<BR>&lt;list_of_instructions&gt;<BR>[Else
-[&lt;list_of_instructions&gt;]]<BR>EndIf</FONT></P>
+[&lt;list_of_instructions&gt;]]<BR>EndIf [Allowed]</FONT></P>
 <P CLASS="western">The list of instructions may contain any
 instruction allowed in current context. If it is used inside a list
 it must respect the constraints of the list (List Issue, List
@@ -3222,9 +3222,9 @@ the template containing If Subscription must follow a template
 containing Subscription). It may be used anywhere in the template. It
 is used to describe the subscription result.</P>
 <P CLASS="western">Syntax:</P>
-<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If
+<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If [not]
 Subscription &lt;condition&gt;<BR>&lt;list_of_instructions&gt;<BR>[Else
-[&lt;list_of_instructions&gt;]]<BR>EndIf</FONT></P>
+[&lt;list_of_instructions&gt;]]<BR>EndIf [Subscription]</FONT></P>
 <P CLASS="western">where</P>
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;condition&gt;
 = ok | error | trial | paid | action</FONT></P>
@@ -3259,9 +3259,9 @@ template containing If Login must follow a template containing
 Login). It may be used anywhere in the template. It is used to
 describe the subscription result.</P>
 <P CLASS="western">Syntax:</P>
-<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If Login
-&lt;condition&gt;<BR>&lt;list_of_instructions&gt;<BR>[Else
-[&lt;list_of_instructions&gt;]]<BR>EndIf</FONT></P>
+<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If [not]
+Login &lt;condition&gt;<BR>&lt;list_of_instructions&gt;<BR>[Else
+[&lt;list_of_instructions&gt;]]<BR>EndIf [Login]</FONT></P>
 <P CLASS="western">where</P>
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;condition&gt;
 = ok | error | action</FONT></P>
@@ -3288,9 +3288,9 @@ certain order to be followed; that is, the template containing If
 User must follow a template containing User). It may be used anywhere
 in template. It is used to describe the subscription result.</P>
 <P CLASS="western">Syntax:</P>
-<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If User
-&lt;condition&gt;<BR>&lt;list_of_instructions&gt;<BR>[Else
-[&lt;list_of_instructions&gt;]]<BR>EndIf</FONT></P>
+<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If [not]
+User &lt;condition&gt;<BR>&lt;list_of_instructions&gt;<BR>[Else
+[&lt;list_of_instructions&gt;]]<BR>EndIf [User]</FONT></P>
 <P CLASS="western">where</P>
 <TABLE WIDTH=298 BORDER=0 CELLPADDING=2 CELLSPACING=0>
 	<COL WIDTH=144>
@@ -3346,7 +3346,7 @@ of subtitle (while printing an article). It runs the first list of
 instructions when the index of subtitles list equals the number of
 the current subtitle (selected for printing).</P>
 <P CLASS="western">Syntax:</P>
-<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If
+<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If [not]
 CurrentSubtitle<BR>&lt;list_of_instructions&gt;<BR>[Else
 [&lt;list_of_instructions&gt;]]<BR>EndIf [CurrentSubtitle]</FONT></P>
 <P CLASS="western">Constraints:</P>
@@ -3358,8 +3358,8 @@ statements.</P>
 instructions, otherwise the second list. It may be used anywhere in
 the template.</P>
 <P CLASS="western">Syntax:</P>
-<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If Image
-</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;integer_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono"><BR>&lt;list_of_instructions&gt;<BR>[Else
+<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If [not]
+Image </FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;integer_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono"><BR>&lt;list_of_instructions&gt;<BR>[Else
 [&lt;list_of_instructions&gt;]]<BR>EndIf [Image]</FONT></P>
 <P CLASS="western">The list of instructions may contain any
 instruction allowed in the current context. If it is used inside a
@@ -3367,18 +3367,15 @@ list it must respect the constraints of the list (List Issue, List
 Section, List Article, List Subtitle, List SearchResult).</P>
 <P CLASS="western">Constraints:</P>
 <P CLASS="western">None.</P>
-<P CLASS="western"><FONT SIZE=4><B>Note:</B></FONT></P>
-<P CLASS="western">The If Image statement is valid only in 2.0.11 and
-newer versions. It won't work in 2.0.10 or older versions.</P>
 <H4 CLASS="western"><A NAME="3.9.3.20"></A>3.9.3.20 If Language</H4>
 <P CLASS="western">Purpose:</P>
 <P CLASS="western">Depending on the given condition, it runs the
 first or second list of instructions. It may be used anywhere in the
 template.</P>
 <P CLASS="western">Syntax:</P>
-<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If
-Language condition<BR>&lt;list_of_instructions&gt;<BR>[Else
-[&lt;list_of_instructions&gt;]]<BR>EndIf [Section]</FONT></P>
+<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If [not]
+Language &lt;condition&gt;<BR>&lt;list_of_instructions&gt;<BR>[Else
+[&lt;list_of_instructions&gt;]]<BR>EndIf [Language]</FONT></P>
 <P CLASS="western" STYLE="font-weight: medium; page-break-before: auto">
 where</P>
 <TABLE WIDTH=588 BORDER=0 CELLPADDING=2 CELLSPACING=0>
@@ -3419,7 +3416,8 @@ where</P>
 	the if condition is true if operation: <FONT FACE="Courier New, Courier, mono">name|englname|code
 	</FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;string_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
 	</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;string_value&gt;</FONT></A>
-	is true</P>
+	is true where englname is the English name of the language, name is
+	the original language name</P>
 </UL>
 <P CLASS="western">The list of instructions may contain any
 instruction allowed in the current context. If it is used inside a
@@ -3427,9 +3425,6 @@ list it must respect the constraints of the list (List Issue, List
 Section, List Article, List Subtitle, List SearchResult).</P>
 <P CLASS="western">Constraints:</P>
 <P CLASS="western">None.</P>
-<P CLASS="western"><FONT COLOR="#ff0000"><FONT SIZE=4><B>Note:</B></FONT></FONT></P>
-<P CLASS="western">The If Language statement is valid only in 2.0.12
-and newer versions. It won't work in 2.0.11 or older versions.</P>
 <H4 CLASS="western"><A NAME="3.9.3.21"></A>3.9.3.21 With</H4>
 <P CLASS="western">Purpose:</P>
 <P CLASS="western">Used to access a body field of a certain type of
@@ -3445,6 +3440,33 @@ PrevSubtitles, If NextSubtitles</A></P>
 identifies a valid article type</P>
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;body_field&gt;</FONT>
 identifies a valid field of the given article type</P>
+<P CLASS="western">The list of instructions may contain any
+instruction allowed in the current context. If it is used inside a
+list it must respect the constraints of the list (List Issue, List
+Section, List Article, List Subtitle, List SearchResult).</P>
+<P CLASS="western">Constraints:</P>
+<P CLASS="western">None.</P>
+<H4 CLASS="western"><A NAME="3_9_3_22"></A>3.9.3.22 If Search</H4>
+<P CLASS="western">Purpose:</P>
+<P CLASS="western">Depending on the given condition, it runs the
+first or second list of instructions. It may be used anywhere in the
+template.</P>
+<P CLASS="western">Syntax:</P>
+<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If [not]
+Search &lt;condition&gt;<BR>&lt;list_of_instructions&gt;<BR>[Else
+[&lt;list_of_instructions&gt;]]<BR>EndIf [Search]</FONT></P>
+<P CLASS="western" STYLE="font-weight: medium; page-break-before: auto">
+where</P>
+<P CLASS="western" STYLE="margin-top: 0cm"><FONT FACE="Courier, monospace">&lt;condition&gt;
+= ok | error | action</FONT></P>
+<UL>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">ok: the if condition
+	is true if search action was taken and its result is success</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">error: the if
+	condition is true if search action was taken and its result is error</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">action: the if
+	condition is true if search action was taken</P>
+</UL>
 <P CLASS="western">The list of instructions may contain any
 instruction allowed in the current context. If it is used inside a
 list it must respect the constraints of the list (List Issue, List
@@ -3582,6 +3604,8 @@ data context will be printed.</P>
 			</FONT><A HREF="#p_login_expr"><FONT FACE="Courier New, Courier, mono">&lt;login_expression&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
 			<BR>| </FONT><A HREF="#p_user_expr"><FONT FACE="Courier New, Courier, mono">&lt;user_expression&gt;</FONT></A><FONT FACE="Courier New, Courier, mono"><BR>|
 			</FONT><A HREF="#p_subt_expr"><FONT FACE="Courier New, Courier, mono">&lt;subtitle_expression&gt;</FONT></A></P>
+			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">|
+			</FONT><A HREF="#p_search_expr"><FONT FACE="Courier New, Courier, mono">&lt;search_expression&gt;</FONT></A></P>
 		</TD>
 	</TR>
 </TABLE>
@@ -3792,21 +3816,35 @@ THE SUBSCRIPTION MODULE</A></P>
 action took place (after submitting a user subscription form) it
 prints the error message (if there was an <SPAN LANG="en-US">error</SPAN>)</P>
 <UL>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm">modifyerror: if user
-	modify action took place (after submitting a user info form) it
-	prints the error message (if there was an <SPAN LANG="en-US">error</SPAN>)</P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm">the other parameters
-	(name, uname, email, city...) are fields describing the user
-	information; they are self-explaining; Field1-Field5, Text1-Text3
-	are extra fields for storing some extra information; the publication
-	administrator sets their meaning</P>
+	<UL>
+		<LI><P CLASS="western" STYLE="margin-top: 0cm">modifyerror: if user
+		modify action took place (after submitting a user info form) it
+		prints the error message (if there was an <SPAN LANG="en-US">error</SPAN>)</P>
+		<LI><P CLASS="western" STYLE="margin-top: 0cm">the other parameters
+		(name, uname, email, city...) are fields describing the user
+		information; they are self-explaining; Field1-Field5, Text1-Text3
+		are extra fields for storing some extra information; the
+		publication administrator sets their meaning</P>
+	</UL>
 </UL>
 <P CLASS="western"><A NAME="p_subt_expr"></A><FONT FACE="Courier, monospace">&lt;subtitle_expression&gt;
 = Subtitle name</FONT></P>
 <UL>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm">name: print subtitle
-	name (see also <A HREF="#2.2.7">Editing body-type fields: Working
-	with CAMPFIRE</A>)</P>
+	<UL>
+		<LI><P CLASS="western" STYLE="margin-top: 0cm">name: print subtitle
+		name (see also <A HREF="#2.2.7">Editing body-type fields: Working
+		with CAMPFIRE</A>)</P>
+	</UL>
+</UL>
+<P CLASS="western"><A NAME="p_search_expr"></A><FONT FACE="Courier, monospace">&lt;search_expression&gt;
+= Search error | keywords</FONT></P>
+<UL>
+	<UL>
+		<LI><P CLASS="western" STYLE="margin-top: 0cm">error: print error
+		message if the search action generated an error</P>
+		<LI><P CLASS="western" STYLE="margin-top: 0cm">keywords: print the
+		keywords the user inputted</P>
+	</UL>
 </UL>
 <P CLASS="western">Constraints:</P>
 <UL>
