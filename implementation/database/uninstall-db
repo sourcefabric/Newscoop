@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ################################################################################
 #
@@ -36,9 +36,9 @@ use_pass=false
 
 if [ "$DROP_DB" = "Y" ]; then
     if $use_pass; then
-	echo "Y" | mysqladmin drop $DATABASE_NAME -h $DATABASE_SERVER -P $DATABASE_PORT -u $DATABASE_USER --password="$DATABASE_PASSWORD"
+	echo "Y" | mysqladmin -h $DATABASE_SERVER -P $DATABASE_PORT -u $DATABASE_USER --password="$DATABASE_PASSWORD" drop $DATABASE_NAME
     else
-	echo "Y" | mysqladmin drop $DATABASE_NAME -h $DATABASE_SERVER -P $DATABASE_PORT -u $DATABASE_USER
+	echo "Y" | mysqladmin -h $DATABASE_SERVER -P $DATABASE_PORT -u $DATABASE_USER drop $DATABASE_NAME
     fi
     [ $? -ne 0 ] && exit 1
 fi
