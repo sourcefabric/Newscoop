@@ -1,3 +1,23 @@
+2.2.0
+    - Improve management of multiple instances of CAMPSITE on a single server
+    (new instances can be created without reinstalling Campsite)
+    - Allow editors/journalists to change and set the order of articles
+    - New handling of Images (and other Multimedia)
+    - Automatic publishing/removal of selected articles without human
+    intervention at a specified date and time
+    - Publication site aliases: aliases allow Campsite to identify a
+    publication based on multiple domain names
+    - Shorter, Search Engine-Friendly URLs: the user has the choice of old
+    type URLs or new, shorter URLs
+    - Replaced the Campfire Java applet with the JavaScript-based HTMLArea.
+    This will allow users to input and edit articles without having to
+    download and install the Java VM and Campfire applet. It will also allow
+    additional features such as image display inside the article.
+
+2.1.7
+    - Implemented "Print Topic Identifier" and "Print User Identifier"
+    - Many bug fixes
+
 2.1.6
     - Implemented new "Topic", "If Topic" and "Print Topic" statements
     - Added new environment attribute: topic; this affects articles lists and
