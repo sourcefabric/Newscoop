@@ -12,7 +12,7 @@ regGS("Text","Text:en");
 regGS("Adding new field","Adding new field:en");
 regGS("You do not have the right to add article type fields.","You do not have the right to add article type fields.:en");
 regGS("The field $1 already exists.","The field $1 already exists.:en");
-regGS("The $1  must not be void and may only contain letters.","The $1  must not be void and may only contain letters.:en");
+regGS("The $1  must not be void and may only contain letters and underscore (_) character.","The $1  must not be void and may only contain letters and underscore (_) character.:en");
 regGS("Invalid field type.","Invalid field type.:en");
 regGS("The field $1 has been created.","The field $1 has been created.:en");
 // log
