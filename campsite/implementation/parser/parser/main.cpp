@@ -62,7 +62,9 @@ object.
 #include "process_req.h"
 
 using std::cout;
+using std::cerr;
 using std::endl;
+using std::flush;
 
 class CUpdateThread : public CThread
 {
@@ -152,6 +154,12 @@ void* MyThreadRoutine(void* p_pArg)
 		cout << "MyThreadRoutine: Invalid arg\n";
 		return NULL;
 	}
+
+	// block all signals
+	sigset_t nSigMask;
+	sigfillset(&nSigMask);
+	pthread_sigmask(SIG_SETMASK, &nSigMask, NULL);
+
 	CAction::initTempMembers();
 	CTCPSocket* pcoClSock = (CTCPSocket*)p_pArg;
 	char pchBuff[4];
@@ -166,7 +174,7 @@ void* MyThreadRoutine(void* p_pArg)
 	try
 	{
 		if (select(FD_SETSIZE, &clSet, NULL, NULL, &tVal) == -1
-		        || !FD_ISSET((SOCKET)*pcoClSock, &clSet))
+		    || !FD_ISSET((SOCKET)*pcoClSock, &clSet))
 		{
 			throw RunException("Error on select");
 		}
@@ -180,7 +188,7 @@ void* MyThreadRoutine(void* p_pArg)
 		while (nCnt < *pnMsgLen)
 		{
 			if (select(FD_SETSIZE, &clSet, NULL, NULL, &tVal) == -1
-			        || !FD_ISSET((SOCKET)*pcoClSock, &clSet))
+			    || !FD_ISSET((SOCKET)*pcoClSock, &clSet))
 			{
 				throw RunException("Error on select");
 			}
@@ -194,7 +202,7 @@ void* MyThreadRoutine(void* p_pArg)
 		if (pSql == NULL)		// unable to connect to server
 		{
 			coOs << "<html><head><title>REQUEST ERROR</title></head>\n"
-			"<body>Unable to connect to database server.</body></html>\n";
+			        "<body>Unable to connect to database server.</body></html>\n";
 		}
 		else
 		{
@@ -410,6 +418,55 @@ void my_terminate()
 }
 #endif
 
+CThreadPool* g_pcoThreadPool = NULL;
+
+void sigterm_handler(int p_nSigNum)
+{
+#ifdef _DEBUG
+	cout << "TERM signal received" << endl;
+#endif
+	if (g_pcoThreadPool == NULL)
+	{
+#ifdef _DEBUG
+		cout << "pointer to thread pool object is null" << endl;
+#endif
+		exit(0);
+	}
+	UInt nWorkingThreads = g_pcoThreadPool->workingThreads();
+	if (nWorkingThreads == 0)
+	{
+#ifdef _DEBUG
+		cout << "there are no working threads" << endl << "closing all sockets" << endl;
+#endif
+		CSocket::closeAllSockets();
+		exit(0);
+	}
+#ifdef _DEBUG
+	cout << "waiting for " << nWorkingThreads << " thread(s) to finish" << endl;
+#endif
+	for (int i = 1; i < 20 && nWorkingThreads > 0; i++)
+	{
+		usleep(300000);
+		nWorkingThreads = g_pcoThreadPool->workingThreads();
+	}
+#ifdef _DEBUG
+	cout << "killing idle threads" << endl;
+#endif
+	g_pcoThreadPool->killIdleThreads();
+#ifdef _DEBUG
+	cout << endl << "closing all sockets" << endl;
+#endif
+	CSocket::closeAllSockets();
+	if (nWorkingThreads > 0)
+	{
+#ifdef _DEBUG
+		cerr << "killing all threads" << endl;
+#endif
+		g_pcoThreadPool->killAllThreads();
+	}
+	exit(0);
+}
+
 // main: main function
 // Return 0 if no error encountered; error code otherwise
 // Parameters:
@@ -439,7 +496,16 @@ int main(int argc, char** argv)
 		exit (1);
 	}
 	StartWatchDog(bRunAsDaemon);
-	signal(SIGTERM, SIG_DFL);
+
+	// mask all signals except TERM signal
+	sigset_t nSigMask;
+	sigfillset(&nSigMask);
+	sigdelset(&nSigMask, SIGTERM);
+	pthread_sigmask(SIG_SETMASK, &nSigMask, NULL);
+
+	// set the signal handler TERM
+	signal(SIGTERM, sigterm_handler);
+
 #if (__GNUC__ < 3)
 	set_terminate(my_terminate);
 #else
@@ -457,62 +523,63 @@ int main(int argc, char** argv)
 		coUpdateThread.run();
 		if (!coUpdateThread.isRunning())
 			throw ExThread(ThreadSvAbort, "Error starting update thread.");
-		CThreadPool coThreadPool(1, nMaxThreads, MyThreadRoutine, NULL);
+		g_pcoThreadPool = new CThreadPool(1, nMaxThreads, MyThreadRoutine, NULL);
 		CTCPSocket* pcoClSock = NULL;
 		for (; ; )
 		{
 			try
 			{
 				pcoClSock = coServer.Accept();
-				if (coAllowedHosts.find(pcoClSock->RemoteIP()) == coAllowedHosts.end())
+				char* pchRemoteIP = pcoClSock->RemoteIP();
+				if (coAllowedHosts.find(pchRemoteIP) == coAllowedHosts.end())
 				{
-					cout << "Not allowed host (" << pcoClSock->RemoteIP() << ") connected" << endl;
+					cerr << "Not allowed host (" << pchRemoteIP << ") connected" << endl;
 					delete pcoClSock;
 					continue;
 				}
 				if (pcoClSock == 0)
 					throw SocketErrorException("Accept error");
-				coThreadPool.waitFreeThread();
-				coThreadPool.startThread(true, (void*)pcoClSock);
+				g_pcoThreadPool->waitFreeThread();
+				g_pcoThreadPool->startThread(true, (void*)pcoClSock);
 			}
 			catch (ExThread& coEx)
 			{
 				pcoClSock->Shutdown();
 				delete pcoClSock;
-				cout << "Error starting thread: " << coEx.Message() << endl;
+				cerr << "Error starting thread: " << coEx.Message() << endl;
 			}
 			catch (SocketErrorException& coEx)
 			{
+				cerr << "Socket (" << (SOCKET)*pcoClSock << ") error: " << coEx.Message() << endl;
 				pcoClSock->Shutdown();
 				delete pcoClSock;
-				cout << "Socket error: " << coEx.Message() << endl;
 			}
 		}
 	}
 	catch (ExMutex& rcoEx)
 	{
-		cout << rcoEx.Message() << endl;
+		cerr << rcoEx.Message() << endl;
 		return 1;
 	}
 	catch (ExThread& rcoEx)
 	{
-		cout << "Thread: " << rcoEx.ThreadId() << ", Severity: " << rcoEx.Severity()
-		<< "; " << rcoEx.Message() << endl;
+		cerr << "Thread: " << rcoEx.ThreadId() << ", Severity: " << rcoEx.Severity()
+		     << "; " << rcoEx.Message() << endl;
 		return 2;
 	}
 	catch (SocketErrorException& rcoEx)
 	{
-		cout << rcoEx.Message() << endl;
+		cerr << rcoEx.Message() << endl;
 		return 3;
 	}
 	catch (exception& rcoEx)
 	{
-		cout << "exception: " << rcoEx.what() << endl;
+		cerr << "exception: " << rcoEx.what() << endl;
 		return 4;
 	}
 	catch (...)
 	{
-		cout << "unknown exception" << endl;
+		cerr << "unknown exception" << endl;
 		return 5;
 	}
 	return 0;
