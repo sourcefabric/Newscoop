@@ -39,6 +39,7 @@ install_campsite()
     echo -n "Installing CAMPSITE..."
     echo -e "\n\n###############################################\n\tInstalling campsite\n" >> install_log
     $MAKE install >> install_log 2>&1
+    $MAKE default_instance >> install_log 2>&1
     err_code=$?
     if [ $err_code -ne 0 ]; then
 	rm -f ./campsite_upgrade
@@ -50,7 +51,8 @@ install_campsite()
     echo -e "done\n\nCAMPSITE was installed successfully."
     echo "For a complete installation log read install_log file."
     echo -n -e "\nStarting campsite_server daemon..."
-    $BIN_DIR/${APP_NAME}ctl restart
+    "$BIN_DIR/campsitectl stop"
+    "$BIN_DIR/campsitectl start"
     err_code=$?
     if [ $err_code -ne 0 ]; then
 	echo "ERROR"
@@ -117,8 +119,9 @@ echo -e "\nInstalling CAMPSITE $CAMPSITE_VERSION"
 configure_campsite $upgrade $do_interactive
 do_configure $upgrade --apache_conf_path "$apache_conf_path" --apache_bin_path "$apache_bin_path"
 compile_sources
-if [ $my_id -ne 0 ] && ! $USER_INSTALL; then
-    echo -e "\nIt is time to login as root. Please supply password."
+make test_install &> /dev/null
+if [ $? -ne 0 ] && [ $my_id -ne 0 ] && ! $USER_INSTALL; then
+    echo -e "\nThe root password is needed in order to install campsite. Please supply password."
     while true; do
 	echo -n "Root password: "
 	archive_path=`pwd`
