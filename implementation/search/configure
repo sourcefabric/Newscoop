@@ -1,0 +1,35 @@
+#!/bin/sh
+
+[ "$CAMPSITE_PACKAGE_DIR" = "" ] && cd ../.. && . ./configure --define_start_env && cd implementation/search
+. ${INSTALL_CONF}/conf_functions
+
+PACKAGE_TYPE=`cat $CAMPSITE_PACKAGE_DIR/.package_type`
+[ "$PACKAGE_TYPE" = "binary" ] && exit 0
+
+install_conf --set
+export CONF_DIR=/etc/campsite.d/${APP_NAME}
+
+var_not_modified APP_NAME && [ -f configure.h ] && exit 0
+save_var APP_NAME
+
+echo -n -e "\tWriting configure.h header..."
+cat > configure.h << EOF
+/******************************************************************************
+
+Defines used to connect to MySQL database server
+
+WARNING!!! This file is generated. Do not edit!
+
+******************************************************************************/
+
+#ifndef _CONFIGURE_H
+#define _CONFIGURE_H
+
+#define DATABASE_CONF_FILE "${CONF_DIR}/database.conf"
+
+#endif
+EOF
+[ $? -ne 0 ] && echo "ERROR" && exit 1
+echo OK
+
+exit 0

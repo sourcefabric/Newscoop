@@ -33,28 +33,43 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <stdio.h>
 #include <iostream.h>
 
-#include "global.h"
+#include "globals.h"
 #include "csocket.h"
-#include "tol_srvdef.h"
+#include "srvdef.h"
+#include "tpl_cgi.h"
+#include "readconf.h"
 
-class Exception
+char* ReadPOSTQuery();
+int ReadParameters(char** p_ppchParams, int* p_pnSize, const char** p_ppchErrMsg);
+
+void ReadConf(string& p_rcoIP, int& p_rnPort)
 {
-public:
-	Exception(cpChar p_pchMsg) : m_pchMsg(p_pchMsg) {}
-	~Exception() {}
-	
-	cpChar Message() const { return m_pchMsg; }
-
-private:
-	cpChar m_pchMsg;
-};
-
-pChar ReadPOSTQuery();
-int ReadParameters(pChar* p_ppchParams, int* p_pnSize, cpChar* p_ppchErrMsg);
+	try
+	{
+		// read tpl_cgi configuration
+		ConfAttrValue coConf(TPL_CGI_CONF_FILE);
+		p_rcoIP = coConf.ValueOf("PARSER_IP");
+		p_rnPort = atoi(coConf.ValueOf("PARSER_PORT").c_str());
+	}
+	catch (ConfException& rcoEx)
+	{
+		cout << "Error reading configuration: " << rcoEx.what() << endl;
+		exit(0);
+	}
+	catch (SocketException& rcoEx)
+	{
+		cout << "Error reading configuration: " << rcoEx.Message() << endl;
+		exit(0);
+	}
+}
 
 int main()
 {
 	cout << "Content-type: text/html\n\n";
+	string coIP;
+	int nPort;
+	ReadConf(coIP, nPort);
+	nPort = nPort != 0 ? nPort : TOL_SRV_PORT;
 	int nErrNo;
 	int nSize;
 	char* pchParams;
@@ -76,7 +91,7 @@ int main()
 	CTCPSocket coSock;
 	try
 	{
-		coSock.Connect("127.0.0.1", TOL_SRV_PORT);
+		coSock.Connect(coIP.c_str(), nPort);
 		coSock.Send(pchParams, nSize);
 		FD_SET((SOCKET)coSock, &clSet);
 		for (;;)
@@ -84,12 +99,12 @@ int main()
 			if (select(FD_SETSIZE, &clSet, NULL, NULL, &tVal) == -1
 				|| !FD_ISSET((SOCKET)*coSock, &clSet))
 			{
-				throw Exception("Error on select");
+				throw ConfException("Error on select");
 			}
 			char pchBuff[1000];
 			int nReceived = coSock.Recv(pchBuff, 1000);
 			if (nReceived == -1)
-				throw Exception("Error receiving packet");
+				throw ConfException("Error receiving packet");
 			if (nReceived == 0)
 				break;
 			pchBuff[nReceived] = 0;
@@ -97,25 +112,19 @@ int main()
 		}
 		coSock.Shutdown();
 	}
-	catch (Exception& rcoEx)
+	catch (ConfException& rcoEx)
 	{
-#ifdef _DEBUG
-		cout << "<html>\n" << rcoEx.Message() << "\n</html>" << endl;
-#endif
+		cout << "<html>\n" << rcoEx.what() << "\n</html>" << endl;
 		coSock.Shutdown();
 	}
 	catch (ConnectRefused& rcoEx)
 	{
-#ifdef _DEBUG
 		cout << "<html>\n" << rcoEx.Message() << " " << rcoEx.Host() << "\n</html>" << endl;
-#endif
 		coSock.Shutdown();
 	}
 	catch (SocketErrorException& rcoEx)
 	{
-#ifdef _DEBUG
 		cout << "<html>\n" << rcoEx.Message() << "\n</html>" << endl;
-#endif
 		coSock.Shutdown();
 	}
 	return 0;
@@ -124,27 +133,27 @@ int main()
 class ExReadParams
 {
 public:
-	ExReadParams(int p_nErrNo, cpChar p_pchErrMsg)
+	ExReadParams(int p_nErrNo, const char* p_pchErrMsg)
 		: m_nErrNo(p_nErrNo), m_pchErrMsg(p_pchErrMsg) {}
 	~ExReadParams() {}
 	
 	int ErrNo() const { return m_nErrNo; }
-	cpChar ErrMsg() const { return m_pchErrMsg; }
+	const char* ErrMsg() const { return m_pchErrMsg; }
 
 private:
 	int m_nErrNo;
-	cpChar m_pchErrMsg;
+	const char* m_pchErrMsg;
 };
 
-int ReadParameters(pChar* p_ppchParams, int* p_pnSize, cpChar* p_ppchErrMsg)
+int ReadParameters(char** p_ppchParams, int* p_pnSize, const char** p_ppchErrMsg)
 {
-	pChar pchDocumentRoot = 0;
-	pChar pchIP = 0;
-	pChar pchPathTranslated = 0;
-	pChar pchPathInfo = 0;
-	pChar pchRequestMethod = 0;
-	pChar pchQueryString = 0;
-	pChar pchHttpCookie = 0;
+	char* pchDocumentRoot = 0;
+	char* pchIP = 0;
+	char* pchPathTranslated = 0;
+	char* pchPathInfo = 0;
+	char* pchRequestMethod = 0;
+	char* pchQueryString = 0;
+	char* pchHttpCookie = 0;
 	char* pchParams = 0;
 	int nParamsBufSize = 0;
 	try
@@ -252,10 +261,10 @@ int ReadParameters(pChar* p_ppchParams, int* p_pnSize, cpChar* p_ppchErrMsg)
 	return 0;
 }
 
-pChar ReadPOSTQuery()
+char* ReadPOSTQuery()
 {
 	int nQueryAlloc = 1000;
-	pChar pchQuery = (pChar) malloc(nQueryAlloc);
+	char* pchQuery = (char*) malloc(nQueryAlloc);
 	if (pchQuery == NULL)
 		return NULL;
 	int nIndex = 0;
@@ -269,7 +278,7 @@ pChar ReadPOSTQuery()
 		if (nIndex >= nQueryAlloc)
 		{
 			nQueryAlloc += nQueryAlloc;
-			pChar pchNewQuery = (pChar) realloc(pchQuery, nQueryAlloc);
+			char* pchNewQuery = (char*) realloc(pchQuery, nQueryAlloc);
 			pchQuery = pchNewQuery;
 		}
 		char chIn = fgetc(stdin);

@@ -23,20 +23,83 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
-################################################################################                                                              
+################################################################################
 
 if [ ! -f campsite-db.sql ]; then
     echo "Database dump file does not exist."
     exit 1
 fi
 
-mysqladmin create campsite -u root
-result=$?
+[ "$CAMPSITE_PACKAGE_DIR" = "" ] && cd ../.. && export CAMPSITE_PACKAGE_DIR=`pwd` && cd implementation/database
+[ "$INSTALL_CONF" = "" ] && export INSTALL_CONF=${CAMPSITE_PACKAGE_DIR}/.install_conf
+. ${INSTALL_CONF}/conf_functions
+
+modules_conf --set DATABASE
+[ $? -ne 0 ] && exit 1
+use_pass=false
+[ "$DATABASE_PASSWORD" != "" ] && use_pass=true
+
+echo "mysqladmin create $DATABASE_NAME -h $DATABASE_SERVER -P $DATABASE_PORT -u $DATABASE_USER $password"
+if $use_pass; then
+    mysqladmin create $DATABASE_NAME -h $DATABASE_SERVER -P $DATABASE_PORT -u $DATABASE_USER --password="$DATABASE_PASSWORD"
+    result=$?
+else
+    mysqladmin create $DATABASE_NAME -h $DATABASE_SERVER -P $DATABASE_PORT -u $DATABASE_USER
+    result=$?
+fi
 if [ "$result" != "0" ]; then
     touch ../../campsite_upgrade
-    echo "Database alread exists. Type make drop-db to drop old database."
+    echo "Database alread exists."
+    OLD_VERSION=""
+    if [ -f "$CAMPSITE_PACKAGE_DIR/.old_version" ]; then
+	OLD_VERSION=`cat $CAMPSITE_PACKAGE_DIR/.old_version`
+    fi
+    echo "[$OLD_VERSION]"
+    if [ "$OLD_VERSION" != "" ]; then
+	if [ -d "./upgrade/$OLD_VERSION" ]; then
+	    upgrade_dir="./upgrade/$OLD_VERSION"
+	else
+	    upgrade_dir="./upgrade/2.0.x"
+	fi
+    else
+	upgrade_dir="./upgrade/2.0.x"
+    fi
+    echo "Upgrading database from $upgrade_dir..."
+    if $use_pass; then
+	mysql -f $DATABASE_NAME -h $DATABASE_SERVER -P $DATABASE_PORT -u $DATABASE_USER --password="$DATABASE_PASSWORD" < $upgrade_dir/tables.sql
+	result=$?
+    else
+	mysql -f $DATABASE_NAME -h $DATABASE_SERVER -P $DATABASE_PORT -u $DATABASE_USER < $upgrade_dir/tables.sql
+	result=$?
+    fi
+    if [ $result -ne 0 ]; then
+	echo "Error upgrading tables"
+	exit 1
+    fi
+    if $use_pass; then
+	mysql -f $DATABASE_NAME -h $DATABASE_SERVER -P $DATABASE_PORT -u $DATABASE_USER --password="$DATABASE_PASSWORD" < $upgrade_dir/data-required.sql
+	result=$?
+    else
+	mysql -f $DATABASE_NAME -h $DATABASE_SERVER -P $DATABASE_PORT -u $DATABASE_USER < $upgrade_dir/data-required.sql
+	result=$?
+    fi
+    if [ $result -ne 0 ]; then
+	echo "Error upgrading tables data"
+	exit 1
+    fi
+    if $use_pass; then
+	mysql -f $DATABASE_NAME -h $DATABASE_SERVER -P $DATABASE_PORT -u $DATABASE_USER --password="$DATABASE_PASSWORD" < $upgrade_dir/data-optional.sql
+    else
+	mysql -f $DATABASE_NAME -h $DATABASE_SERVER -P $DATABASE_PORT -u $DATABASE_USER < $upgrade_dir/data-optional.sql
+    fi
 else
     echo -n "Creating campsite database..."
-    mysql campsite -u root < campsite-db.sql 1> /dev/null
-    echo "done."
+    if $use_pass; then
+	mysql $DATABASE_NAME -h $DATABASE_SERVER -P $DATABASE_PORT -u $DATABASE_USER --password="$DATABASE_PASSWORD" < campsite-db.sql 1> /dev/null
+    else
+	mysql $DATABASE_NAME -h $DATABASE_SERVER -P $DATABASE_PORT -u $DATABASE_USER < campsite-db.sql 1> /dev/null
+    fi
+    [ $? -ne 0 ] && exit 1
 fi
+echo "done."
+exit 0

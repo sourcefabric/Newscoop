@@ -30,15 +30,15 @@
      * RedoAction 
      */
 
-import com.sun.java.swing.*;
+import javax.swing.*;
 import java.awt.event.*;
 
 class RedoAction extends AbstractAction{
     
-    Test parent;
+    private Campfire parent;
     
-    public RedoAction(Test p){
-        super("Redo");
+    public RedoAction(Campfire p){
+        super(CampResources.get("EditMenu.Redo"));
         parent=p;
         update();
     }
@@ -51,15 +51,10 @@ class RedoAction extends AbstractAction{
     
     public void update(){
         boolean canRedo=parent.undoManager.canRedo();
-        if (canRedo)
-        {
+        if (canRedo){
             setEnabled(true);
-        //    putValue(Action.NAME,parent.undoManager.getRedoPresentationName());
-        }
-        else
-        {
+        }else{
             setEnabled(false);
-        //    putValue(Action.NAME,"Redo");
         }
     }
 }

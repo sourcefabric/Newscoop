@@ -1,32 +1,40 @@
-B_DATABASE
-<!SQL SET NUM_ROWS 0>dnl
-<!SQL QUERY "SELECT * FROM Publications WHERE Site='?HTTP_HOST'" Publication>dnl
-<!SQL IF $NUM_ROWS != 0>dnl
+INCLUDE_PHP_LIB(<*./priv*>)
+B_DATABASE<**>
+<?
+    query("SELECT * FROM Publications WHERE Site='$HTTP_HOST'", 'Publication');
+    if ($NUM_ROWS != 0) { 
+	fetchRow($Publication);
+    ?>dnl
 
 <HTML>
 <HEAD>
 	<META HTTP-EQUIV="Expires" CONTENT="now">
-	<TITLE>Welcome to <!SQL PRINT ~Publication.Name></TITLE>
+	<TITLE>Welcome to <? pgetHVar($Publication,'Name'); ?></TITLE>
 </HEAD>
 
 <BODY BGCOLOR="WHITE" TEXT="BLACK" LINK="DARKBLUE" ALINK="RED" VLINK="DARKBLUE">
-<H1><!SQL PRINT ~Publication.Name></H1>
+<H1><? pgetHVar($Publication,'Name'); ?></H1>
 
 
-<!SQL SETDEFAULT TOL_UserId 0>dnl
-<!SQL SETDEFAULT TOL_UserKey 0>dnl
-<!SQL SET NUM_ROWS 0>dnl
-<!SQL QUERY "SELECT * FROM Users WHERE Id=?TOL_UserId AND KeyId=?TOL_UserKey" User>dnl
-<!SQL IF $NUM_ROWS != 0>dnl
+<?
+    todefnum('TOL_UserId');
+    todefnum('TOL_UserKey');
+    query("SELECT * FROM Users WHERE Id=$TOL_UserId AND KeyId=$TOL_UserKey", 'User');
+    if ($NUM_ROWS != 0) { 
+	fetchRow($User);
+    ?>dnl
 
 	<P><A HREF="">Change your account information</A>
-	<P><A HREF="password.xql?IdPublication=<!SQL PRINT #Publication.Id>">Change your password</A>
+	<P><A HREF="password.php?IdPublication=<? pgetUVar($Publication,'Id'); ?>">Change your password</A>
 
-<!SQL SET NUM_ROWS 0>dnl
-<!SQL QUERY "SELECT * FROM Subscriptions WHERE IdUser=?User.Id AND IdPublication=?Publication.Id" Subscription>dnl
-<!SQL IF $NUM_ROWS != 0>dnl
+    <? 
+	query("SELECT * FROM Subscriptions WHERE IdUser=".getSVar($User,'Id')." AND IdPublication=".getSVar($Publication,'Id'), 'Subscription');
+	if($NUM_ROWS != 0) { 
+	    fetchRow($Subscription);
+	?>dnl
 
-<!SQL IF @Subscription.Active == "Y">dnl
+<?
+    if (getVar($Subscription,'Active') == "Y") { ?>dnl
 
 <P><TABLE BORDER="0" CELLSPACING="2" CELLPADDING="2" WIDTH="100%">
 <TR BGCOLOR="#D0D0FF">
@@ -36,9 +44,9 @@ B_DATABASE
 <TR BGCOLOR="#FFFFD0">
 	<TD VALIGN="TOP">
 
-<!SQL SET NUM_ROWS 0>dnl
-<!SQL QUERY "SELECT * FROM SubsSections WHERE IdSubscription=?Subscription.Id ORDER BY StartDate DESC" Section>dnl
-<!SQL IF $NUM_ROWS>dnl
+<?
+    query( "SELECT * FROM SubsSections WHERE IdSubscription=".getSVar($Subscription,'Id')." ORDER BY StartDate DESC", 'Section');
+    if ($NUM_ROWS) { ?>dnl
 
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="2" WIDTH="100%">
 <TR BGCOLOR="#DODOFF">
@@ -49,49 +57,52 @@ B_DATABASE
 	<TH>Continue</TH>
 </TR>
 
-<!SQL PRINT_LOOP Section>dnl
+<?
+    $nr=$NUM_ROWS;
+    for($loop=0;$loop<$nr;$loop++) {
+	fetchRow($Section);
+	?>dnl
 <TR>
-	<TD><!SQL PRINT ~Section.SectionNumber></TD>
-	<TD><!SQL PRINT ~Section.StartDate></TD>
-	<TD><!SQL PRINT ~Section.Days></TD>
-	<TD><!SQL IF @Section.Paid == "Y">Yes<!SQL ELSE>No<!SQL ENDIF></TD>
+	<TD><? pgetHVar($Section,'SectionNumber'); ?></TD>
+	<TD><? pgetHVar($Section,'StartDate'); ?></TD>
+	<TD><? pgetHVar($Section,'Days'); ?></TD>
+	<TD><? if (getVar($Section,'Paid') == "Y") { ?>Yes<? } else { ?>No<? } ?></TD>
 	<TD><A HREF="">Continue</A></TD>
 </TR>
-<!SQL DONE>dnl
+<? } //loop
+?>dnl
 
 </TABLE>
 
-<!SQL ELSE>dnl
+<? } else { ?>dnl
 	<P>No subscriptions.
-<!SQL ENDIF>dnl
-<!SQL FREE Sections>dnl
-
+<? } ?>dnl
 	</TD>
 	<TD VALIGN="TOP">
 	</TD>
 </TR>
 </TABLE>
 
-<!SQL ELSE>dnl
+<? } else { ?>dnl
 
 	<P>Your subscription to this publication has been disabled.
 	Please contact the site administrator for further informations.
 
-<!SQL ENDIF>dnl
+<? } ?>dnl
 
-<!SQL ELSE>dnl
+<? } else { ?>dnl
 
 	<P>You are not currently subscribed to this publication.
 	Click on the <B>subscribe</B> button to subscribe.
 
-	<FORM METHOD="POST" ACTION="sub_pub.xql">
-	<INPUT TYPE="HIDDEN" NAME="IdPublication" VALUE="<!SQL PRINT ~Publication.Id>">
+	<FORM METHOD="POST" ACTION="sub_pub.php">
+	<INPUT TYPE="HIDDEN" NAME="IdPublication" VALUE="<? pgetHVar($Publication,'Id'); ?>">
 	<INPUT TYPE="SUBMIT" VALUE="    Subscribe    ">
 	</FORM>
 
-<!SQL ENDIF>dnl
+<? } ?>dnl
 
-<!SQL ELSE>dnl
+<? } else { ?>dnl
 
 	<TABLE BORDER="0" CELLSPACING="2" CELLPADDING="2" WIDTH="100%">
 	<TR BGCOLOR="#D0D0FF">
@@ -103,7 +114,7 @@ B_DATABASE
 			<P>Do you already have an account?<BR>
 			If so, enter your user name and password to proceed.
 
-			<FORM METHOD="POST" ACTION="login.xql">
+			<FORM METHOD="POST" ACTION="login.php">
 
 			<P>User name:
 			<INPUT TYPE="TEXT" NAME="UserName" SIZE="16" MAXLENGTH="32">
@@ -118,12 +129,12 @@ B_DATABASE
 			<P>No account?<BR>
 			Click here to get one.
 
-			<H1><A HREF="signup.xql">Sign-Up Here!</A></H1>
+			<H1><A HREF="signup.php">Sign-Up Here!</A></H1>
 		</TD>
 	</TR>
 	</TABLE>
 
-<!SQL ENDIF>dnl
+<? } ?>dnl
 
 </BODY>
 </HTML>
@@ -131,7 +142,7 @@ B_DATABASE
 </BODY>
 </HTML>
 
-<!SQL ELSE>dnl
+<? } else { ?>dnl
 	<P>No publication found matching this site.
-<!SQL ENDIF>dnl
-E_DATABASE
+<? } ?>dnl
+E_DATABASE<**>

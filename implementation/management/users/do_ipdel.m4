@@ -1,70 +1,72 @@
 B_HTML
+INCLUDE_PHP_LIB(<*..*>)
 B_DATABASE
 
 CHECK_BASIC_ACCESS
-CHECK_ACCESS({ManageUsers})
+CHECK_ACCESS(<*ManageUsers*>)
 
 B_HEAD
 	X_EXPIRES
-	X_TITLE({Deleting IP Group})
-<!sql if $access == 0>dnl
-		X_AD({You do not have the right to delete IP Groups.})
-<!sql endif>dnl
+	X_TITLE(<*Deleting IP Group*>)
+<? if ($access == 0) { ?>dnl
+		X_AD(<*You do not have the right to delete IP Groups.*>)
+<? } ?>dnl
 E_HEAD
 
-<!sql if $access>dnl
+<? if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
 
-B_HEADER({Deleting IP Group})
+B_HEADER(<*Deleting IP Group*>)
 B_HEADER_BUTTONS
-X_HBUTTON({IP Access List}, {users/ipaccesslist.xql?User=<!sql print #User>})
-X_HBUTTON({Users}, {users/})
-X_HBUTTON({Home}, {home.xql})
-X_HBUTTON({Logout}, {logout.xql})
+X_HBUTTON(<*IP Access List*>, <*users/ipaccesslist.php?User=<? p($User); ?>*>)
+X_HBUTTON(<*Users*>, <*users/*>)
+X_HBUTTON(<*Home*>, <*home.php*>)
+X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<!sql setdefault User 0>dnl
-<!sql setdefault StartIP 0>dnl
-<!sql set NUM_ROWS 0>dnl
-<!sql query "SELECT (StartIP & 0xff000000) >> 24, (StartIP & 0x00ff0000) >> 16, (StartIP & 0x0000ff00) >> 8, StartIP & 0x000000ff, Addresses FROM SubsByIP WHERE IdUser=?User and StartIP=?StartIP" ig>dnl
-<!sql set onlyone 0>
-<!sql if $NUM_ROWS>dnl
- <!sql query "DELETE FROM SubsByIP WHERE IdUser=?User and StartIP=?StartIP" dq>
- <!sql set del 1>dnl
-<!sql else>dnl
- <!sql set del 0>dnl
-<!sql endif>dnl
+<?
+    todefnum('User');
+    todefnum('StartIP');
+    query ("SELECT (StartIP & 0xff000000) >> 24 as ip0, (StartIP & 0x00ff0000) >> 16 as ip1, (StartIP & 0x0000ff00) >> 8 as ip2, StartIP & 0x000000ff as ip3, Addresses FROM SubsByIP WHERE IdUser=$User and StartIP=$StartIP", 'ig');
+    $onlyone= 0;
+    if ($NUM_ROWS) {
+	fetchRow($ig);
+	query ("DELETE FROM SubsByIP WHERE IdUser=$User and StartIP=$StartIP");
+	$del= 1;
+    } else {
+	$del= 0;
+    }
+?>dnl
 <P>
-B_MSGBOX({Deleting IP Group})
-<!sql if $del>
-X_AUDIT({58}, {IP Group ~ig.0.~ig.1.~ig.2.~ig.3:~ig.4 deleted})
-	X_MSGBOX_TEXT({<LI>The IP Group <B><!sql print ~ig.0.~ig.1.~ig.2.~ig.3:~ig.4></B> has been deleted.</LI>})
-<!sql else>
-	X_MSGBOX_TEXT({<LI>The IP Group <B><!sql print ~ig.0.~ig.1.~ig.2.~ig.3:~ig.4></B> could not be deleted.</LI>})
-<!sql endif>
+B_MSGBOX(<*Deleting IP Group*>)
+<? if ($del) { ?>
+X_AUDIT(<*58*>, <*getGS('The IP address group $1 has been deleted.',getHVar($ig,'ip0').'.'.getHVar($ig,'ip1').'.'.getHVar($ig,'ip2').'.'.getHVar($ig,'ip3').':'.getHVar($ig,'Addresses') )*>)
+	X_MSGBOX_TEXT(<*<LI><? putGS('The IP address group $1 has been deleted.','<B>'.getHVar($ig,'ip0').'.'.getHVar($ig,'ip1').'.'.getHVar($ig,'ip2').'.'.getHVar($ig,'ip3').':'.getHVar($ig,'Addresses').'</B>'); ?></LI>*>)
+<? } else { ?>
+	X_MSGBOX_TEXT(<*<LI><? putGS('The IP Group could not be deleted.'); ?></LI>*>)
+<? } ?>
 	B_MSGBOX_BUTTONS
-<!sql if $del>
-		<A HREF="X_ROOT/users/ipaccesslist.xql?User=<!sql print #User>"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
-<!sql else>
-		<A HREF="X_ROOT/users/ipaccesslist.xql?User=<!sql print #User>"><IMG SRC="X_ROOT/img/button/ok.gif" BORDER="0" ALT="OK"></A>
-<!sql endif>
+<? if ($del) { ?>
+		<A HREF="X_ROOT/users/ipaccesslist.php?User=<? p($User); ?>"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
+<? } else { ?>
+		<A HREF="X_ROOT/users/ipaccesslist.php?User=<? p($User); ?>"><IMG SRC="X_ROOT/img/button/ok.gif" BORDER="0" ALT="OK"></A>
+<? } ?>
 	E_MSGBOX_BUTTONS
 E_MSGBOX
 <P>
-<!sql else>dnl
+<? } else { ?>dnl
 <BLOCKQUOTE>
-	<LI>No IP Group.</LI>
+	<LI><? putGS('No IP Group.'); ?></LI>
 </BLOCKQUOTE>
-<!sql endif>dnl
+<? } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<!sql endif>dnl
 
 E_DATABASE
 E_HTML

@@ -1,73 +1,80 @@
 B_HTML
+INCLUDE_PHP_LIB(<*../..*>)
 B_DATABASE
 
 CHECK_BASIC_ACCESS
-CHECK_ACCESS({DeleteIssue})
+CHECK_ACCESS(<*DeleteIssue*>)
 
 B_HEAD
 	X_EXPIRES
-	X_TITLE({Delete Issue})
-<!sql if $access == 0>dnl
-	X_AD({You do not have the right to delete issues.})
-<!sql endif>dnl
+	X_TITLE(<*Delete issue*>)
+<? if ($access == 0) { ?>dnl
+	X_AD(<*You do not have the right to delete issues.*>)
+<? } ?>dnl
 E_HEAD
 
-<!sql if $access>dnl
+<? if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
 
-<!sql setdefault Pub 0>dnl
-<!sql setdefault Issue 0>dnl
-<!sql setdefault Language 0>dnl
-B_HEADER({Delete Issue})
+<?
+    todefnum('Pub');
+    todefnum('Issue');
+    todefnum('Language');
+?>dnl
+B_HEADER(<*Delete issue*>)
 B_HEADER_BUTTONS
-X_HBUTTON({Issues}, {pub/issues/?Pub=<!sql print #Pub>})
-X_HBUTTON({Publications}, {pub/})
-X_HBUTTON({Home}, {home.xql})
-X_HBUTTON({Logout}, {logout.xql})
+X_HBUTTON(<*Issues*>, <*pub/issues/?Pub=<? pencURL($Pub); ?>*>)
+X_HBUTTON(<*Publications*>, <*pub/*>)
+X_HBUTTON(<*Home*>, <*home.php*>)
+X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
-<!sql set NUM_ROWS 0>dnl
-<!sql query "SELECT Name FROM Issues WHERE IdPublication=?Pub AND Number=?Issue AND IdLanguage=?Language" q_iss>dnl
-<!sql if $NUM_ROWS>dnl
-<!sql query "SELECT Name FROM Publications WHERE Id=?Pub" q_pub>dnl
-<!sql if $NUM_ROWS>dnl
+<?
+    query ("SELECT Name FROM Issues WHERE IdPublication=$Pub AND Number=$Issue AND IdLanguage=$Language", 'q_iss');
+    if ($NUM_ROWS) {
+	query ("SELECT Name FROM Publications WHERE Id=$Pub", 'q_pub');
+	if ($NUM_ROWS) {
+	    fetchRow($q_iss);
+	    fetchRow($q_pub);
+?>dnl
 B_CURRENT
-X_CURRENT({Publication:}, {<B><!sql print ~q_pub.Name></B>})
+X_CURRENT(<*Publication*>, <*<B><? pgetHVar($q_pub,'Name'); ?></B>*>)
 E_CURRENT
 
 <P>
-B_MSGBOX({Delete issue})
-	X_MSGBOX_TEXT({<LI>Are you sure you want to delete the issue <B><!sql print ~q_iss.Name></B>?</LI>})
+B_MSGBOX(<*Delete issue*>)
+	X_MSGBOX_TEXT(<*<LI><? putGS('Are you sure you want to delete the issue $1?','<B>'.getHVar($q_iss,'Name').'</B>'); ?></LI>*>)
 	B_MSGBOX_BUTTONS
-		<FORM METHOD="POST" ACTION="do_del.xql">
-		<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<!sql print ~Pub>">
-		<INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<!sql print ~Issue>">
-		<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<!sql print ~Language>">
+		<FORM METHOD="POST" ACTION="do_del.php">
+		<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<? pencHTML($Pub); ?>">
+		<INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<? pencHTML($Issue); ?>">
+		<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<? pencHTML($Language); ?>">
 		<INPUT TYPE="IMAGE" NAME="Yes" SRC="X_ROOT/img/button/yes.gif" BORDER="0">
-		<A HREF="X_ROOT/pub/issues/?Pub=<!sql print #Pub>"><IMG SRC="X_ROOT/img/button/no.gif" BORDER="0" ALT="No"></A>
+		<A HREF="X_ROOT/pub/issues/?Pub=<? pencURL($Pub); ?>"><IMG SRC="X_ROOT/img/button/no.gif" BORDER="0" ALT="No"></A>
 		</FORM>
 	E_MSGBOX_BUTTONS
 E_MSGBOX
 <P>
-<!sql else>dnl
+<? } else { ?>dnl
 <BLOCKQUOTE>
-	<LI>No such publication.</LI>
+	<LI><? putGS('No such publication.'); ?></LI>
 </BLOCKQUOTE>
-<!sql endif>dnl
+<? } ?>dnl
 
-<!sql else>dnl
+<? } else { ?>dnl
 <BLOCKQUOTE>
-	<LI>No such issue.</LI>
+	<LI><? putGS('No such issue.'); ?></LI>
 </BLOCKQUOTE>
-<!sql endif>dnl
+<? } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<!sql endif>dnl
+<? } ?>dnl
 
 E_DATABASE
 E_HTML
+

@@ -1,81 +1,93 @@
 B_HTML
+INCLUDE_PHP_LIB(<*..*>)
 B_DATABASE
 
 CHECK_BASIC_ACCESS
-CHECK_ACCESS({AddArticle})
+CHECK_ACCESS(<*AddArticle*>)
 
 B_HEAD
 	X_EXPIRES
-	X_TITLE({Add New Article})
-<!sql if $access == 0>dnl
-	X_AD({You do not have the right to add articles.})
-<!sql endif>dnl
-<!sql query "SELECT * FROM Publications WHERE 1=0" publ>dnl
+	X_TITLE(<*Add new article*>)
+<? if ($access == 0) { ?>dnl
+	X_AD(<*You do not have the right to add articles.*>)
+<? }
+    query ("SELECT * FROM Publications WHERE 1=0", 'publ');
+?>dnl
 E_HEAD
 
-<!sql if $access>dnl
+<? if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
 
-B_HEADER({Add New Article})
+B_HEADER(<*Add new article*>)
 B_HEADER_BUTTONS
-X_HBUTTON({Home}, {home.xql})
-X_HBUTTON({Logout}, {logout.xql})
+X_HBUTTON(<*Home*>, <*home.php*>)
+X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
 <P>
-X_BULLET({Select the publication:})
+X_BULLET(<*Select the publication*>)
 
-<P><!sql setdefault PubOffs 0><!sql if $PubOffs < 0><!sql set PubOffs 0><!sql endif><!sql set NUM_ROWS 0>dnl
-<!sql query "SELECT * FROM Publications ORDER BY Name LIMIT $PubOffs, 11" publ>dnl
-<!sql if $NUM_ROWS>dnl
-<!sql set nr $NUM_ROWS>dnl
-<!sql set i 10>dnl
-<!sql set color 0>dnl
+<P><?
+    todefnum('PubOffs');
+    if ($PubOffs < 0)
+	$PubOffs= 0;
+
+    query ("SELECT * FROM Publications ORDER BY Name LIMIT $PubOffs, 11", 'publ');
+    if ($NUM_ROWS) {
+	$nr= $NUM_ROWS;
+	$i=10;
+	$color=0;
+?>dnl
 B_LIST
 	B_LIST_HEADER
-		X_LIST_TH({Name<BR><SMALL>(click to select the publication)</SMALL>})
-		X_LIST_TH({Site}, {20%})
+		X_LIST_TH(<*Name<BR><SMALL>(click to select the publication)</SMALL>*>)
+		X_LIST_TH(<*Site*>, <*20%*>)
 	E_LIST_HEADER
-<!sql print_loop publ>dnl
-<!sql if $i>dnl
+<?
+    for($loop=0;$loop<$nr;$loop++) {
+	fetchRow($publ);
+	if ($i) { ?>dnl
 	B_LIST_TR
 		B_LIST_ITEM
-			<A HREF="X_ROOT/pub/issues/add_article.xql?Pub=<!sql print #publ.Id>"><!sql print ~publ.Name></A>
+			<A HREF="X_ROOT/pub/issues/add_article.php?Pub=<? pgetUVar($publ,'Id'); ?>"><? pgetHVar($publ,'Name'); ?></A>
 		E_LIST_ITEM
 		B_LIST_ITEM
-			<!sql print ~publ.Site>&nbsp;
+			<? pgetHVar($publ,'Site'); ?>&nbsp;
 		E_LIST_ITEM
     E_LIST_TR
-<!sql setexpr i ($i - 1)>dnl
-<!sql endif>dnl
-<!sql done>dnl
+<?
+    $i--;
+    }
+}
+?>dnl
 	B_LIST_FOOTER
-<!sql if ($PubOffs <= 0)>dnl
+<?
+    if ($PubOffs <= 0) { ?>dnl
 		X_PREV_I
-<!sql else>dnl
-		X_PREV_A({add_article.xql?PubOffs=<!sql eval ($PubOffs - 10)>})
-<!sql endif>dnl
-<!sql if $nr < 11>dnl
+<? } else { ?>dnl
+		X_PREV_A(<*add_article.php?PubOffs=<? print  ($PubOffs - 10); ?>*>)
+<? }
+    if ($nr < 11) { ?>dnl
 		X_NEXT_I
-<!sql else>dnl
-		X_NEXT_A({add_article.xql?PubOffs=<!sql eval ($PubOffs + 10)>})
-<!sql endif>dnl
+<? } else { ?>dnl
+		X_NEXT_A(<*add_article.php?PubOffs=<? print  ($PubOffs + 10); ?>*>)
+<? } ?>dnl
 	E_LIST_FOOTER
 E_LIST
-<!sql else>dnl
+<? } else { ?>dnl
 <BLOCKQUOTE>
-	<LI>No publications.</LI>
+	<LI><? putGS('No publications.'); ?></LI>
 </BLOCKQUOTE>
-<!sql endif>dnl
+<? } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<!sql endif>dnl
+<? } ?>dnl
 
 E_DATABASE
 E_HTML

@@ -1,93 +1,123 @@
 B_HTML
+INCLUDE_PHP_LIB(<*..*>)
 B_DATABASE
 
-<!sql query "SELECT Id, Name FROM Languages WHERE 1=0" q_lang>dnl
+<?
+    query ("SELECT Id, Name FROM Languages WHERE 1=0", 'q_lang');
+?>dnl
 CHECK_BASIC_ACCESS
-CHECK_ACCESS({ManagePub})
+CHECK_ACCESS(<*ManagePub*>)
 
 B_HEAD
 	X_EXPIRES
-	X_TITLE({Change Publication Information})
-<!sql if $access == 0>dnl
-	X_AD({You do not have the right to edit publication information.})
-<!sql endif>dnl
-<!sql query "SELECT Id, Name FROM Languages WHERE 1=0" q_lang>dnl
-<!sql query "SELECT Unit, Name FROM TimeUnits WHERE 1=0" q_unit>dnl
+	X_TITLE(<*Change publication information*>)
+<? if ($access == 0) { ?>dnl
+	X_AD(<*You do not have the right to edit publication information.*>)
+<? }
+    query ("SELECT Id, Name FROM Languages WHERE 1=0", 'q_lang');
+
+    query ("SELECT Unit, Name FROM TimeUnits WHERE 1=0", 'q_unit');
+    query("SELECT  Id as IdLang FROM Languages WHERE code='$TOL_Language'", 'q_def_lang');
+	if($NUM_ROWS == 0){
+		query("SELECT IdDefaultLanguage as IdLang  FROM Publications WHERE Id=1", 'q_def_lang');
+	}
+	fetchRow($q_def_lang);
+	$IdLang = getVar($q_def_lang,'IdLang');
+?>dnl
 E_HEAD
 
-<!sql if $access>dnl
+<? if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
 
-<!sql setdefault Pub 0>dnl
-B_HEADER({Change Publication Information})
+<?
+    todefnum('Pub');
+?>
+B_HEADER(<*Change publication information*>)
 B_HEADER_BUTTONS
-X_HBUTTON({Publications}, {pub/})
-X_HBUTTON({Home}, {home.xql})
-X_HBUTTON({Logout}, {logout.xql})
+X_HBUTTON(<*Publications*>, <*pub/*>)
+X_HBUTTON(<*Home*>, <*home.php*>)
+X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<!sql set NUM_ROWS 0>dnl
-<!sql query "SELECT * FROM Publications WHERE Id=?Pub" q_pub>dnl
-<!sql if $NUM_ROWS>dnl
-
+<?
+    query ("SELECT * FROM Publications WHERE Id=$Pub", 'q_pub');
+    if ($NUM_ROWS) { 
+	fetchRow($q_pub);
+?>dnl
 B_CURRENT
-X_CURRENT({Publication:}, {<B><!sql print ~q_pub.Name></B>})
+X_CURRENT(<*Publication*>, <*<B><? pgetHVar($q_pub,'Name'); ?></B>*>)
 E_CURRENT
-
+	<?query ("SELECT Unit, Name FROM TimeUnits WHERE (IdLanguage=$IdLang or IdLanguage = 1) and Unit='".getHVar($q_pub,'TimeUnit')."' order by IdLanguage desc", 'q_tunit');
+		fetchRow($q_tunit); $tunit =getVar($q_tunit,'Name'); ?>dnl
 <P>
-B_DIALOG({Change publication information}, {POST}, {do_edit.xql})
-	B_DIALOG_INPUT({Name:})
-		<INPUT TYPE="TEXT" NAME="cName" VALUE="<!sql print ~q_pub.Name>" SIZE="32" MAXLENGTH="32">
+B_DIALOG(<*Change publication information*>, <*POST*>, <*do_edit.php*>)
+	B_DIALOG_INPUT(<*Name*>)
+		<INPUT TYPE="TEXT" NAME="cName" VALUE="<? pgetHVar($q_pub,'Name'); ?>" SIZE="32" MAXLENGTH="32">
 	E_DIALOG_INPUT
-	B_DIALOG_INPUT({Site:})
-		<INPUT TYPE="TEXT" NAME="cSite" VALUE="<!sql print ~q_pub.Site>" SIZE="32" MAXLENGTH="128">
+	B_DIALOG_INPUT(<*Site*>)
+		<INPUT TYPE="TEXT" NAME="cSite" VALUE="<? pgetHVar($q_pub,'Site'); ?>" SIZE="32" MAXLENGTH="128">
 	E_DIALOG_INPUT
-	B_DIALOG_INPUT({Default language:})
+	B_DIALOG_INPUT(<*Default language*>)
 	    <SELECT NAME="cLanguage">
-<!sql query "SELECT Id, Name FROM Languages" q_lang>dnl
-<!sql print_loop q_lang>dnl
-		<OPTION VALUE="<!sql print ~q_lang.Id>"<!sql if (@q_lang.Id == @q_pub.IdDefaultLanguage)> SELECTED<!sql endif>><!sql print ~q_lang.Name>
-<!sql done>dnl	
+	    <?
+		query ("SELECT Id, Name FROM Languages", 'q_lang');
+		    $nr=$NUM_ROWS;
+		    for($loop=0;$loop<$nr;$loop++) {
+			fetchRow($q_lang);
+			pcomboVar(getVar($q_lang,'Id'),getVar($q_pub,'IdDefaultLanguage'),getVar($q_lang,'Name'));
+		    }
+	    ?>dnl
 	    </SELECT>
 	E_DIALOG_INPUT
-	B_DIALOG_INPUT({Pay time:})
-		<INPUT TYPE="TEXT" NAME="cPayTime" VALUE="<!sql print ~q_pub.PayTime>" SIZE="5" MAXLENGTH="5"> days
+	B_DIALOG_INPUT(<*Pay Period*>)
+		<INPUT TYPE="TEXT" NAME="cPayTime" VALUE="<? pgetHVar($q_pub,'PayTime'); ?>" SIZE="5" MAXLENGTH="5"> <? p($tunit); ?>
 	E_DIALOG_INPUT
-	B_DIALOG_INPUT({Time Unit:})
+	B_DIALOG_INPUT(<*Time Unit*>)
 	    <SELECT NAME="cTimeUnit">
-<!sql query "SELECT Unit, Name FROM TimeUnits" q_unit>dnl
-<!sql print_loop q_unit>dnl
-		<OPTION VALUE="<!sql print ~q_unit.Unit>"<!sql if (@q_unit.Unit == @q_pub.TimeUnit)> SELECTED<!sql endif>><!sql print ~q_unit.Name>
-<!sql done>dnl	
+<?
+	query ("SELECT Unit, Name FROM TimeUnits WHERE IdLanguage=1", 'q_unit');
+		    $nr=$NUM_ROWS;
+		    for($loop=0;$loop<$nr;$loop++) {
+			fetchRow($q_unit);
+			pcomboVar(getVar($q_unit,'Unit'),getVar($q_pub,'TimeUnit'),getVar($q_unit,'Name'));
+		    }
+		?>dnl
 	    </SELECT>
 	E_DIALOG_INPUT
-	B_DIALOG_INPUT({Unit Cost:})
-		<INPUT TYPE="TEXT" NAME="cUnitCost" VALUE="<!sql print ~q_pub.UnitCost>" SIZE="20" MAXLENGTH="32">
+	B_DIALOG_INPUT(<*Unit Cost*>)
+		<INPUT TYPE="TEXT" NAME="cUnitCost" VALUE="<? pgetHVar($q_pub,'UnitCost'); ?>" SIZE="20" MAXLENGTH="32">
 	E_DIALOG_INPUT
-	B_DIALOG_INPUT({Currency:})
-		<INPUT TYPE="TEXT" NAME="cCurrency" VALUE="<!sql print ~q_pub.Currency>" SIZE="20" MAXLENGTH="32">
+	B_DIALOG_INPUT(<*Currency*>)
+		<INPUT TYPE="TEXT" NAME="cCurrency" VALUE="<? pgetHVar($q_pub,'Currency'); ?>" SIZE="20" MAXLENGTH="32">
 	E_DIALOG_INPUT
+	B_DIALOG_INPUT(<*Paid Period*>)
+		<INPUT TYPE="TEXT" NAME="cPaid" VALUE="<? pgetHVar($q_pub,'PaidTime'); ?>" SIZE="20" MAXLENGTH="32"> <? p($tunit); ?>
+	E_DIALOG_INPUT
+	B_DIALOG_INPUT(<*Trial Period*>)
+		<INPUT TYPE="TEXT" NAME="cTrial" VALUE="<? pgetHVar($q_pub,'TrialTime'); ?>" SIZE="20" MAXLENGTH="32"> <? p($tunit); ?>
+	E_DIALOG_INPUT
+
 	B_DIALOG_BUTTONS
-		<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<!sql print ~Pub>">
+		<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<? pencHTML($Pub); ?>">
 		<INPUT TYPE="IMAGE" NAME="OK" SRC="X_ROOT/img/button/save.gif" BORDER="0">
 		<A HREF="X_ROOT/pub/"><IMG SRC="X_ROOT/img/button/cancel.gif" BORDER="0" ALT="Cancel"></A>
 	E_DIALOG_BUTTONS
 E_DIALOG
 <P>
-<!sql else>dnl
+<? } else { ?>dnl
 <BLOCKQUOTE>
-	<LI>No such publication.</LI>
+	<LI><? putGS('No such publication.'); ?></LI>
 </BLOCKQUOTE>
-<!sql endif>dnl
+<? } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<!sql endif>dnl
+<? } ?>dnl
 
 E_DATABASE
 E_HTML

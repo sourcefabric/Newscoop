@@ -1,21 +1,24 @@
-export INSTALL_DIR2=$(INSTALL_DIR)/popup
+export PRIV_DIR2=$(PRIV_DIR)/popup
 
-all: index.xql empty.xql lang.xql i1.xql pub.xql i2.xql iss.xql i3.xql sect.xql i4.xql art.xql img.xql
+MY_TARGETS=index.php empty.php lang.php i1.php pub.php i2.php iss.php i3.php sect.php i4.php art.php img.php
+
+all: $(MY_TARGETS)
 
 popup.m4: popup.in
 	cat popup.in >popup.m4
 
-%.xql: %.m4 ../macros.m4 popup.m4
+%.php: %.m4 ../macros.m4 popup.m4
 	m4 ../macros.m4 popup.m4 $< >$@
 
-install: all
-	mkdir -p $(INSTALL_DIR2)
-	cp *.xql $(INSTALL_DIR2)/
+install: $(ALL)
+	mkdir -p $(PRIV_DIR2)
+	cp -f *.php $(PRIV_DIR2)/
 
 clean:
-	rm -f *.xql *~
+	rm -f *~
+	if [ "$(PACKAGE_TYPE)" = "source" ]; then rm -f $(MY_TARGETS); fi
 
-package: all
+package: $(ALL)
 	mkdir -p $(PACKAGE_DIR)/popup
 	cp -f Makefile $(PACKAGE_DIR)/popup
-	cp -f *.xql $(PACKAGE_DIR)/popup
+	cp -f *.php $(PACKAGE_DIR)/popup

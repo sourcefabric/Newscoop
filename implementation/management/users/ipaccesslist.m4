@@ -1,100 +1,114 @@
 B_HTML
+INCLUDE_PHP_LIB(<*..*>)
 B_DATABASE
 
 CHECK_BASIC_ACCESS
 
 B_HEAD
 	X_EXPIRES
-	X_TITLE({User Management})
-<!sql if $access == 0>dnl
+	X_TITLE(<*User management*>)
+<? if ($access == 0) { ?>dnl
 	X_LOGOUT
-<!sql endif>dnl
-<!sql query "SELECT (StartIP & 0xff000000) >> 24, (StartIP & 0x00ff0000) >> 16, (StartIP & 0x0000ff00) >> 8, StartIP & 0x000000ff, StartIP, Addresses FROM SubsByIP WHERE 1=0" IPs>dnl
+<? }
+
+    query ("SELECT (StartIP & 0xff000000) >> 24, (StartIP & 0x00ff0000) >> 16, (StartIP & 0x0000ff00) >> 8, StartIP & 0x000000ff, StartIP, Addresses FROM SubsByIP WHERE 1=0", 'IPs');
+?>dnl
 E_HEAD
 
-<!sql if $access>dnl
+<? if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
 
-B_HEADER({User IP Access List Management})
+B_HEADER(<*User IP access list management*>)
 B_HEADER_BUTTONS
-X_HBUTTON({Users}, {users/})
-X_HBUTTON({Home}, {home.xql})
-X_HBUTTON({Logout}, {logout.xql})
+X_HBUTTON(<*Users*>, <*users/*>)
+X_HBUTTON(<*Home*>, <*home.php*>)
+X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<!sql setdefault User 0>dnl
-<!sql set NUM_ROWS 0>dnl
-<!sql query "SELECT Name FROM Users WHERE Id=?User" users>dnl
-<!sql if $NUM_ROWS>dnl
+<?
+    todefnum('User');
+    query ("SELECT Name FROM Users WHERE Id=$User", 'users');
+    if ($NUM_ROWS) { 
+	fetchRow($users);
+    ?>dnl
 B_CURRENT
-X_CURRENT({User account:}, {<B><!sql print ~users.Name></B>})
+X_CURRENT(<*User account*>, <*<B><? pgetHVar($users,'Name'); ?></B>*>)
 E_CURRENT
 <P>
-<!sql endif>
+<? } ?>
 
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" WIDTH="100%">
 <TR>
-	<TD>X_NEW_BUTTON({Add new IP address group}, {ipadd.xql?User=<!sql print #User>})</TD>
+	<TD>X_NEW_BUTTON(<*Add new IP address group*>, <*ipadd.php?User=<? p($User); ?>*>)</TD>
 	<TD ALIGN="RIGHT">
 	</TD>
 </TABLE>
 
-<P><!sql setdefault IPOffs 0><!sql if $IPOffs < 0><!sql set IPOffs 0><!sql endif><!sql set NUM_ROWS 0>dnl
-<!sql set NUM_ROWS 0>dnl
-<!sql query "SELECT (StartIP & 0xff000000) >> 24, (StartIP & 0x00ff0000) >> 16, (StartIP & 0x0000ff00) >> 8, StartIP & 0x000000ff, StartIP, Addresses FROM SubsByIP WHERE IdUser = ?User LIMIT $IPOffs, 11" IPs>dnl
-<!sql if $NUM_ROWS>dnl
-<!sql set nr $NUM_ROWS>dnl
-<!sql set i 10>dnl
-<!sql set color 0>dnl
+<P><?
+    todefnum('IPOffs');
+    if ($IPOffs < 0)
+	$IPOffs= 0;
+    
+    query ("SELECT (StartIP & 0xff000000) >> 24 as ip0, (StartIP & 0x00ff0000) >> 16 as ip1, (StartIP & 0x0000ff00) >> 8 as ip2, StartIP & 0x000000ff as ip3, StartIP, Addresses FROM SubsByIP WHERE IdUser = $User LIMIT $IPOffs, 11", 'IPs');
+    if ($NUM_ROWS) {
+	$nr= $NUM_ROWS;
+	$i= 10;
+	$color= 0;
+	?>dnl
 B_LIST
 	B_LIST_HEADER
-		X_LIST_TH({Start IP})
-		X_LIST_TH({Number of addresses})
-		X_LIST_TH({Delete}, {1%})
+		X_LIST_TH(<*Start IP*>)
+		X_LIST_TH(<*Number of addresses*>)
+		X_LIST_TH(<*Delete*>, <*1%*>)
 	E_LIST_HEADER
-<!sql print_loop IPs>dnl
-<!sql if $i>dnl
+<?
+    for($loop=0;$loop<$nr;$loop++) {
+	fetchRow($IPs);
+	if ($i) { ?>dnl
 	B_LIST_TR
 		B_LIST_ITEM
-			<!sql print ~IPs.0.~IPs.1.~IPs.2.~IPs.3>
+			<? p(getHVar($IPs,'ip0').'.'.getHVar($IPs,'ip1').'.'.getHVar($IPs,'ip2').'.'.getHVar($IPs,'ip3') ); ?>
 		E_LIST_ITEM
 		B_LIST_ITEM
-			<!sql print ~IPs.Addresses>
+			<? pgetHVar($IPs,'Addresses'); ?>
 		E_LIST_ITEM
-		B_LIST_ITEM({CENTER})
-			X_BUTTON({Delete IP Group <!sql print ~IPs.StartIP>}, {icon/x.gif}, {users/ipdel.xql?User=<!sql print @User>&StartIP=<!sql print @IPs.StartIP>})
+		B_LIST_ITEM(<*CENTER*>)
+			X_BUTTON(<*<? putGS('Delete IP Group $1',getHVar($IPs,'StartIP') ); ?>*>, <*icon/x.gif*>, <*users/ipdel.php?User=<? p($User); ?>&StartIP=<? pgetVar($IPs,'StartIP'); ?>*>)
 		E_LIST_ITEM
 	E_LIST_TR
-<!sql setexpr i ($i - 1)>dnl
-<!sql endif>dnl
-<!sql done>dnl
+<? 
+    $i--;
+    }
+}
+?>dnl
 	B_LIST_FOOTER
-<!sql if ($IPOffs <= 0)>dnl
+<? if ($IPOffs <= 0) { ?>dnl
 		X_PREV_I
-<!sql else>dnl
-		X_PREV_A({ipaccesslist.xql?User=<!sql print #User>&IPOffs=<!sql eval ($IPOffs - 10)>})
-<!sql endif>dnl
-<!sql if $nr < 11>dnl
+<? } else { ?>dnl
+		X_PREV_A(<*ipaccesslist.php?User=<? p($User); ?>&IPOffs=<? p($IPOffs - 10); ?>*>)
+<? } ?>dnl
+<? if ($nr < 11) { ?>dnl
 		X_NEXT_I
-<!sql else>dnl
-		X_NEXT_A({ipaccesslist.xql?User=<!sql print #User>&IPOffs=<!sql eval ($UserOffs + 10)>})
-<!sql endif>dnl
+<? } else { ?>dnl
+		X_NEXT_A(<*ipaccesslist.php?User=<? p($User); ?>&IPOffs=<? p($IPOffs + 10); ?>*>)
+<? } ?>dnl
 	E_LIST_FOOTER
 E_LIST
-<!sql else>dnl
+<? } else { ?>dnl
 <BLOCKQUOTE>
-	<LI>No records.</LI>
+	<LI><? putGS('No records.'); ?></LI>
 </BLOCKQUOTE>
-<!sql endif>dnl
+<? } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<!sql endif>dnl
+<? } ?>dnl
 
 E_DATABASE
 E_HTML
+

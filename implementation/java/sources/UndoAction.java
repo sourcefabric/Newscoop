@@ -31,18 +31,17 @@
      */
 
 
-import com.sun.java.swing.*;
+import javax.swing.*;
 import java.awt.event.*;
 
 class UndoAction extends AbstractAction{
     
-    Test parent;
+    private Campfire parent;
     
-    public UndoAction(Test p){
-        super("Undo");
+    public UndoAction(Campfire p){
+        super(CampResources.get("EditMenu.Undo"));
         parent=p;
         update();
-       // System.out.println("undo");
     }
     
     public void actionPerformed(ActionEvent e){
@@ -53,15 +52,10 @@ class UndoAction extends AbstractAction{
     
     public void update(){
         boolean canUndo=parent.undoManager.canUndo();
-        if (canUndo)
-        {
+        if (canUndo){
             setEnabled(true);
-            //putValue(Action.NAME,parent.undoManager.getUndoPresentationName());
-        }
-        else
-        {
+        }else{
             setEnabled(false);
-            //putValue(Action.NAME,"Undo");
         }
     }
 }

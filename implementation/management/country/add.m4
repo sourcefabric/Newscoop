@@ -1,56 +1,59 @@
 B_HTML
+INCLUDE_PHP_LIB(<*..*>)
 B_DATABASE
 
 CHECK_BASIC_ACCESS
-CHECK_ACCESS({ManageCountries})
+CHECK_ACCESS(<*ManageCountries*>)
 
 B_HEAD
 	X_EXPIRES
-	X_TITLE({Add New Country})
-<!sql if $access == 0>dnl
-	X_AD({You do not have the right to add countries.})
-<!sql endif>dnl
+	X_TITLE(<*Add New Country*>)
+<? if ($access == 0) { ?>dnl
+	X_AD(<*You do not have the right to add countries.*>)
+<? } ?>dnl
 E_HEAD
 
-<!sql if $access>dnl
+<? if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
 
-B_HEADER({Add New Country})
+B_HEADER(<*Add new country*>)
 B_HEADER_BUTTONS
-X_HBUTTON({Countries}, {country/})
-X_HBUTTON({Home}, {home.xql})
-X_HBUTTON({Logout}, {logout.xql})
+X_HBUTTON(<*Countries*>, <*country/*>)
+X_HBUTTON(<*Home*>, <*home.php*>)
+X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
 <P>
-B_DIALOG({Add new country}, {POST}, {do_add.xql})
-	B_DIALOG_INPUT({Code:})
+B_DIALOG(<*Add new country*>, <*POST*>, <*do_add.php*>)
+	B_DIALOG_INPUT(<*Code*>)
 		<INPUT TYPE="TEXT" NAME="cCode" SIZE="2" MAXLENGTH="2">
 	E_DIALOG_INPUT
-	B_DIALOG_INPUT({Name:})
+	B_DIALOG_INPUT(<*Name*>)
 		<INPUT TYPE="TEXT" NAME="cName" SIZE="32" MAXLENGTH="64">
 	E_DIALOG_INPUT
-	B_DIALOG_INPUT({Language:})
+	B_DIALOG_INPUT(<*Language*>)
 			<SELECT NAME="cLanguage">
-<!sql query "SELECT Id, Name FROM Languages ORDER BY Id" q_lng>dnl
-<!sql print_rows q_lng "				<OPTION VALUE=\"~q_lng.Id\">~q_lng.Name">
-<!sql free q_lng>dnl
+<? query ("SELECT Id, Name FROM Languages ORDER BY Id", 'q_lng');
+    for($loop=0;$loop<$NUM_ROWS;$loop++) {
+	fetchRow($q_lng);
+	print '<OPTION VALUE="'.getHVar($q_lng,'Id').'">'.getHVar($q_lng,'Name');
+    } ?>dnl
 			</SELECT>
 	E_DIALOG_INPUT
 	B_DIALOG_BUTTONS
-		<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<!sql print ~Language>">
+		<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<? todef('Language'); print encHTML($Language); ?>">
 		<INPUT TYPE="IMAGE" NAME="OK" SRC="X_ROOT/img/button/save.gif" BORDER="0">
-<!sql setdefault Back "">dnl
-		<INPUT TYPE="HIDDEN" NAME="Back" VALUE="<!sql print ~Back>">
-<!sql if $Back != "">dnl
-		<A HREF="<!sql print $Back>"><IMG SRC="X_ROOT/img/button/cancel.gif" BORDER="0" ALT="Cancel"></A>
-<!sql else>dnl
+<? todef('Back'); ?>dnl
+		<INPUT TYPE="HIDDEN" NAME="Back" VALUE="<? print encHTML($Back); ?>">
+<? if ($Back != "") { ?>dnl
+		<A HREF="<? print $Back; ?>"><IMG SRC="X_ROOT/img/button/cancel.gif" BORDER="0" ALT="Cancel"></A>
+<? } else { ?>dnl
 		<A HREF="X_ROOT/country/"><IMG SRC="X_ROOT/img/button/cancel.gif" BORDER="0" ALT="Cancel"></A>
-<!sql endif>dnl
+<? } ?>dnl
 	E_DIALOG_BUTTONS
 E_DIALOG
 <P>
@@ -58,7 +61,8 @@ E_DIALOG
 X_HR
 X_COPYRIGHT
 E_BODY
-<!sql endif>dnl
+<? } ?>dnl
 
 E_DATABASE
 E_HTML
+

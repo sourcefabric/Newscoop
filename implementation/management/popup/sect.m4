@@ -1,50 +1,64 @@
 B_HTML
+INCLUDE_PHP_LIB(<*..*>)
 B_DATABASE
 
 CHECK_BASIC_ACCESS
 
 B_HEAD
 	X_EXPIRES
-	X_TITLE({Sections})
-<!sql query "SELECT Number, Name FROM Sections WHERE 1=0" q_sect>dnl
+	X_TITLE(<*Sections*>)
+<?
+    query ("SELECT Number, Name FROM Sections WHERE 1=0", 'q_sect');
+?>dnl
 E_HEAD
 
-<!sql if $access>dnl
-SET_ACCESS({msa}, {ManageSection})
-
+<? if ($access) { 
+SET_ACCESS(<*msa*>, <*ManageSection*>)
+?>dnl
 B_STYLE
 E_STYLE
 
 B_PBODY2
 
-<!sql setdefault lang 0>dnl
-<!sql setdefault pub 0>dnl
-<!sql setdefault iss 0>dnl
-<!sql set NUM_ROWS 0>dnl
-<!sql query "SELECT Number, Name FROM Sections WHERE IdPublication=?pub AND NrIssue=?iss AND IdLanguage=?lang ORDER BY Number" q_sect>dnl
+<?
+    todefnum('lang');
+    todefnum('pub');
+    todefnum('iss');
+    query ("SELECT Number, Name FROM Sections WHERE IdPublication=$pub AND NrIssue=$iss AND IdLanguage=$lang ORDER BY Number", 'q_sect');
+?>dnl
 B_PBAR
-	X_PBUTTON({X_ROOT/pub/issues/sections/?Pub=<!sql print #pub>&Issue=<!sql print #iss>&Language=<!sql print #lang>}, {Sections})
-<!sql if $msa>dnl
-	X_PBUTTON({X_ROOT/pub/issues/sections/add.xql?Pub=<!sql print #pub>&Issue=<!sql print #iss>&Language=<!sql print #lang>}, {Add new section})
-<!sql endif>dnl
+	X_PBUTTON(<*X_ROOT/pub/issues/sections/?Pub=<? pencURL($pub); ?>&Issue=<? pencURL($iss); ?>&Language=<? pencURL($lang); ?>*>, <*Sections*>)<? if ($msa) { ?>dnl
+	X_PBUTTON(<*X_ROOT/pub/issues/sections/add.php?Pub=<? pencURL($pub); ?>&Issue=<? pencURL($iss); ?>&Language=<? pencURL($lang); ?>*>, <*Add new section*>)
+<? } ?>dnl
 	X_PSEP
-	X_PLABEL2({Issue:})
-	X_ABUTTON2({javascript:void(window.open('X_ROOT/pub/issues/preview.xql?Pub=<!sql print #pub>&Issue=<!sql print #iss>&Language=<!sql print #lang>', 'fpreview', 'menu=no,width=620,height=460'))}, {Preview})
+	X_PLABEL2(<*Issue*>)
+	X_ABUTTON2(<**>, <*Preview*>, <*window.open('X_ROOT/pub/issues/preview.php?Pub=<? pencURL($pub); ?>&Issue=<? pencURL($iss); ?>&Language=<? pencURL($lang); ?>', 'fpreview', PREVIEW_OPT); return false*>)
 X_PSEP2
 <FORM NAME="FORM_SECT" METHOD="GET">
-<!sql if $NUM_ROWS>dnl
-<SELECT NAME="ssect" ONCHANGE="var f = this.form.ssect; var v = f.options[f.selectedIndex].value; var x = 'X_ROOT/popup/i4.xql?lang=<!sql print #lang>&amp;pub=<!sql print #pub>&amp;iss=<!sql print #iss>&amp;ssect=' + v; if (v != 0) {{ parent.frames[1].location.href = x; }}">
-	<OPTION VALUE="0">---Select section---<!sql print_loop q_sect><OPTION VALUE="<!sql print ~q_sect.Number>"><!sql print ~q_sect.Number>. <!sql print ~q_sect.Name><!sql done>
+<? if ($NUM_ROWS) { ?>dnl
+<SELECT NAME="ssect" ONCHANGE="var f = this.form.ssect; var v = f.options[f.selectedIndex].value; var x = 'X_ROOT/popup/i4.php?lang=<? pencURL($lang); ?>&amp;pub=<? pencURL($pub); ?>&amp;iss=<? pencURL($iss); ?>&amp;ssect=' + v; if (v != 0) { parent.frames[1].location.href = x; }">
+	<OPTION VALUE="0"><? putGS('---Select section---'); ?>
+	<?
+		    $nr=$NUM_ROWS;
+		    for($loop=0;$loop<$nr;$loop++) {
+			fetchRow($q_sect);
+			pcomboVar(getVar($q_sect,'Number'),'',getVar($q_sect,'Number').'. '.getVar($q_sect,'Name'));
+		    }
+
+
+	?>
 </SELECT>
-<!sql else>dnl
-<SELECT DISABLED><OPTION>No sections</SELECT>
-<!sql endif>dnl
+<? } else { ?>dnl
+<SELECT DISABLED><OPTION><? putGS('No sections'); ?></SELECT>
+<? } ?>dnl
 </FORM>
 E_PBAR
 
 E_BODY
 
-<!sql endif>dnl
+<? } ?>dnl
 
 E_DATABASE
 E_HTML
+
+

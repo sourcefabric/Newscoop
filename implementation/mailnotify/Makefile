@@ -1,49 +1,64 @@
-ROOT_DIR= .
-MY_INCLUDE_DIR=
+include ../../make.env
 
-MYSQL_LIBS= -L/usr/lib/mysql -lmysqlclient -lnsl -lm -lz -lcrypt
+ALL=$(shell if [ "$(PACKAGE_TYPE)" = "source" ]; then echo all; else echo dummy; fi)
 
-DEPENDANCES= *.h
+PACKAGE_DIR=$(BIN_PACKAGE_DIR)/implementation/mailnotify
+
+DEPENDENCES= sql_macros.h configure.h
 
 CFLAGS= -Wall
 
+LINKS=globals.h readconf.h readconf.cpp
+
 all: links notifyendsubs notifyevents
+	$(MAKE) -C smtp_wrapper
 
-links:
-	@if [ ! -L sql_connect.h ]; then /bin/ln -s ../parser/parser/sql_connect.h; fi
+links: dummy
+	for l in $(LINKS); do \
+	    if [ ! -L $$l ]; then ln -s ../parser/parser/$$l; fi; \
+	done
 
-notifyendsubs: notifyendsubs.o
-	g++ -o notifyendsubs notifyendsubs.o $(MYSQL_LIBS)
+notifyendsubs: notifyendsubs.o readconf.o
+	g++ -o notifyendsubs notifyendsubs.o readconf.o -L$(LIBMYSQLCLIENT_PATH) -lmysqlclient -lnsl -lm -lz -lcrypt
 	strip notifyendsubs
 
-notifyevents: notifyevents.o
-	g++ -o notifyevents notifyevents.o $(MYSQL_LIBS)
+notifyevents: notifyevents.o readconf.o
+	g++ -o notifyevents notifyevents.o readconf.o -L$(LIBMYSQLCLIENT_PATH) -lmysqlclient -lnsl -lm -lz -lcrypt
 	strip notifyevents
 
-clean:
-	rm -f *.o *~ notifyendsubs notifyevents sql_connect.h
+clean: dummy
+	rm -f $(LINKS) .env_vars
+	$(MAKE) -C smtp_wrapper clean
+	rm -f *.o configure.h *~
+	if [ "$(PACKAGE_TYPE)" = "source" ]; then \
+	    rm -f notifyendsubs notifyevents; \
+	fi
 
-%.o: %.C $(DEPENDANCES)
-	g++ -c -o $@ $(CFLAGS) $< -I$(ROOT_DIR)$(MY_INCLUDE_DIR)
+readconf.o: readconf.cpp readconf.h
+	g++ -c -o readconf.o readconf.cpp $(CFLAGS)
 
-install: all
-	mkdir -p $(UTIL_BIN)
-	cp -f notifyendsubs $(UTIL_BIN)
-	cp -f notifyevents $(UTIL_BIN)
-	chown root.$(HTTP_GROUP) $(UTIL_BIN) -R
-	chmod 750 $(UTIL_BIN) -R
-	cat /etc/crontab | grep "$(UTIL_BIN)/notifyendsubs" > /dev/null || echo "0 0 * * * root $(UTIL_BIN)/notifyendsubs" >> /etc/crontab
-	cat /etc/crontab | grep "$(UTIL_BIN)/notifyevents" > /dev/null || echo "* * * * * root $(UTIL_BIN)/notifyevents" >> /etc/crontab
-	killall -1 crond
+%.o: %.cpp $(DEPENDENCES) readconf.h globals.h
+	g++ -c -o $@ $(CFLAGS) $<
+
+install: $(ALL)
+	mkdir -p $(CONF_DIR)
+	echo -e "SERVER $(EVENT_HANDLERS_SMTP_SERVER)\nWRAPPER $(BIN_DIR)/smtp_wrapper" > $(CONF_DIR)/smtp.conf
+	$(MAKE) -C smtp_wrapper install
+	./install_mailnotify
 
 uninstall: dummy
-	./uninstall
+	$(MAKE) -C smtp_wrapper uninstall
+	./uninstall_mailnotify
 
-package: all
-	mkdir -p $(PACKAGE_DIR)/mailnotify
-	cp -f Makefile.inst $(PACKAGE_DIR)/mailnotify/Makefile
-	cp -f uninstall $(PACKAGE_DIR)/mailnotify
-	cp -f notifyendsubs $(PACKAGE_DIR)/mailnotify
-	cp -f notifyevents $(PACKAGE_DIR)/mailnotify
+package: $(ALL)
+	@if [ "$(PACKAGE_TYPE)" = "binary" ]; then echo "This is a binary package"; exit 1; fi
+	mkdir -p $(PACKAGE_DIR)
+	cp -f Makefile $(PACKAGE_DIR)
+	cp -f configure $(PACKAGE_DIR)
+	cp -f install_mailnotify $(PACKAGE_DIR)
+	cp -f uninstall_mailnotify $(PACKAGE_DIR)
+	cp -f notifyendsubs $(PACKAGE_DIR)
+	cp -f notifyevents $(PACKAGE_DIR)
+	$(MAKE) -C smtp_wrapper package PACKAGE_DIR=$(PACKAGE_DIR)
 
 dummy:

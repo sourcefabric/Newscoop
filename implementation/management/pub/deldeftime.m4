@@ -1,62 +1,66 @@
 B_HTML
+INCLUDE_PHP_LIB(<*..*>)
 B_DATABASE
 
 CHECK_BASIC_ACCESS
-CHECK_ACCESS({ManagePub})
+CHECK_ACCESS(<*ManagePub*>)
 
 B_HEAD
 	X_EXPIRES
-	X_TITLE({Delete Subscription Default Time})
-<!sql if $access == 0>dnl
-	X_AD({You do not have the right to manage publications.})
-<!sql endif>dnl
+	X_TITLE(<*Delete subscription default time*>)
+<? if ($access == 0) { ?>dnl
+	X_AD(<*You do not have the right to manage publications.*>)
+<? } ?>dnl
 E_HEAD
 
-<!sql if $access>dnl
+<? if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
 
-B_HEADER({Delete Subscription Default Time})
+B_HEADER(<*Delete subscription default time*>)
 B_HEADER_BUTTONS
-X_HBUTTON({Subscriptions}, {pub/deftime.xql?Pub=<!sql print #Pub>&Language=<!sql print #Language>})
-X_HBUTTON({Publications}, {pub/})
-X_HBUTTON({Home}, {home.xql})
-X_HBUTTON({Logout}, {logout.xql})
+X_HBUTTON(<*Subscriptions*>, <*pub/deftime.php?Pub=<? pencURL($Pub); ?>&Language=<? pencURL($Language); ?>*>)
+X_HBUTTON(<*Publications*>, <*pub/*>)
+X_HBUTTON(<*Home*>, <*home.php*>)
+X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<!sql setdefault Pub 0>dnl
-<!sql setdefault Language 0>dnl
-<!sql setdefault CountryCode "">dnl
-<!sql set NUM_ROWS 0>dnl
-<!sql query "SELECT * FROM Publications WHERE Id=?Pub" p>dnl
-<!sql if $NUM_ROWS>dnl
+<?
+    todefnum('Pub');
+    todefnum('Language');
+    todef('CountryCode');
+
+    query ("SELECT * FROM Publications WHERE Id=$Pub", 'p');
+    if ($NUM_ROWS) { 
+	fetchRow($p);
+?>dnl
 <P>
-B_MSGBOX({Delete subscription default time})
-	X_MSGBOX_TEXT({<LI>Are you sure you want to delete the subscription default time for <B><!sql print ~p.Name>:<!sql print ~CountryCode></B>?</LI>})
+B_MSGBOX(<*Delete subscription default time*>)
+	X_MSGBOX_TEXT(<*<LI><? putGS('Are you sure you want to delete the subscription default time for $1?','<B>'.getHVar($p,'Name').':'.encHTML($CountryCode).'</B>'); ?></LI>*>)
 	B_MSGBOX_BUTTONS
-		<FORM METHOD="POST" ACTION="do_deldeftime.xql">
-		<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<!sql print ~Pub>">
-		<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<!sql print ~Language>">
-		<INPUT TYPE="HIDDEN" NAME="CountryCode" VALUE="<!sql print ~CountryCode>">
+		<FORM METHOD="POST" ACTION="do_deldeftime.php">
+		<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<? pencHTML($Pub); ?>">
+		<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<? pencHTML($Language); ?>">
+		<INPUT TYPE="HIDDEN" NAME="CountryCode" VALUE="<? pencHTML($CountryCode); ?>">
 		<INPUT TYPE="IMAGE" NAME="Yes" SRC="X_ROOT/img/button/yes.gif" BORDER="0">
-		<A HREF="X_ROOT/pub/deftime.xql?Pub=<!sql print #Pub>&Language=<!sql print #Language>"><IMG SRC="X_ROOT/img/button/no.gif" BORDER="0" ALT="No"></A>
+		<A HREF="X_ROOT/pub/deftime.php?Pub=<? pencURL($Pub); ?>&Language=<? pencURL($Language); ?>"><IMG SRC="X_ROOT/img/button/no.gif" BORDER="0" ALT="No"></A>
 		</FORM>
 	E_MSGBOX_BUTTONS
 E_MSGBOX
 <P>
-<!sql else>dnl
+<? } else { ?>dnl
 <BLOCKQUOTE>
-	<LI>No such publication.</LI>
+	<LI><? putGS('No such publication.'); ?></LI>
 </BLOCKQUOTE>
-<!sql endif>dnl
+<? } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<!sql endif>dnl
+<? } ?>dnl
 
 E_DATABASE
 E_HTML

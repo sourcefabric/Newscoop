@@ -28,49 +28,34 @@
 
     /**
      * FontColorStyleAction is triggered when the user clicks the ok button of the
-     * FontColorChooser frame. If there is a selected text, its color will be changed.
+     * FontColorFrame frame. If there is a selected text, its color will be changed.
      * It is also triggered when all the attributes of a text must be cleared.
      * In this case, it will set the color to null.
      */
 
 
 
-import com.sun.java.swing.text.*;
-import com.sun.java.swing.*;
+import javax.swing.text.*;
+import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
-//import com.sun.java.swing.colorchooser.*;
 
 class FontColorStyleAction extends StyledEditorKit.StyledTextAction{
     JTextPane text;
     Color color;
-    FontColorChooser chooser;
-    //Frame fake;
     boolean nullcol;
     String defaultColor;
 
-    public FontColorStyleAction(String action,JTextPane tp,FontColorChooser ch,String cols){
+    public FontColorStyleAction(String action,JTextPane tp,Color ch,String cols){
         super(action);
         defaultColor=new String(cols);
         if (action.equals("NULLOL")) nullcol=true; else nullcol=false;
-        //System.out.println("itt");
         text=tp;
-        //fake=new Frame();
-        //fake.setVisible(false);
-        chooser=ch;
+        color=ch;
     }
     
     public void actionPerformed(ActionEvent e){
         if (text!=null){
-            //System.out.println(e.getSource());
-            //System.out.println(e.paramString());
-            //System.out.println(e.getSource());
-            //chooser.setTP(text);
-            //chooser.setVisible(true);
-            color=chooser.getColor();
-            //JDialog a=new JDialog(chooser,"na",true);
-            //a.setVisible(true);
-            //color=Color.green;
             if (nullcol) color=null;
             if (!defaultColor.equals(""))
                 color=new ColorConverter(defaultColor).getColor();
@@ -83,15 +68,7 @@ class FontColorStyleAction extends StyledEditorKit.StyledTextAction{
             }
             else 
             {
-                //System.out.println("szia");
-            //AttributeSet attr=text.getCharacterAttributes();
-            //MutableAttributeSet ats=(SimpleAttributeSet)attr.copyAttributes();//new SimpleAttributeSet(attr);
-            //StyleConstants.setForeground(ats,Color.red);
             MutableAttributeSet t=new SimpleAttributeSet();
-            //StyleConstants.setForeground(t,StyleConstants.getForeground(attr));
-//            ats.removeAttribute("foreground");
-            //ats.removeAttribute(t);
-            //System.out.println(StyleConstants.getForeground(ats));
             setCharacterAttributes(text,t,true);
             }
         }

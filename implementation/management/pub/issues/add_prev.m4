@@ -1,72 +1,77 @@
 B_HTML
+INCLUDE_PHP_LIB(<*../..*>)
 B_DATABASE
 
 CHECK_BASIC_ACCESS
-CHECK_ACCESS({ManageIssue})
+CHECK_ACCESS(<*ManageIssue*>)
 
 B_HEAD
 	X_EXPIRES
-	X_TITLE({Copy Previous Issue})
-<!sql if $access == 0>dnl
-	X_AD({You do not have the right to add issues.})
-<!sql endif>dnl
+	X_TITLE(<*Copy previous issue*>)
+<? if ($access == 0) { ?>dnl
+	X_AD(<*You do not have the right to add issues.*>)
+<? } ?>dnl
 E_HEAD
 
-<!sql if $access>dnl
+<? if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
 
-<!sql setdefault Pub 0>dnl
-B_HEADER({Copy Previous Issue})
+<? todefnum('Pub'); ?>dnl
+B_HEADER(<*Copy previous issue*>)
 B_HEADER_BUTTONS
-X_HBUTTON({Issues}, {pub/issues/?Pub=<!sql print #Pub>})
-X_HBUTTON({Publications}, {pub/})
-X_HBUTTON({Home}, {home.xql})
-X_HBUTTON({Logout}, {logout.xql})
+X_HBUTTON(<*Issues*>, <*pub/issues/?Pub=<? pencURL($Pub); ?>*>)
+X_HBUTTON(<*Publications*>, <*pub/*>)
+X_HBUTTON(<*Home*>, <*home.php*>)
+X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<!sql set NUM_ROWS 0>dnl
-<!sql query "SELECT Name FROM Publications WHERE Id=?Pub" publ>dnl
-<!sql if $NUM_ROWS>dnl
+<?
+    query ("SELECT Name FROM Publications WHERE Id=$Pub", 'publ');
+    if ($NUM_ROWS) {
+	fetchRow($publ);
+?>dnl
 B_CURRENT
-X_CURRENT({Publication:}, {<B><!sql print ~publ.Name></B>})
+X_CURRENT(<*Publication*>, <*<B><? pgetHVar($publ,'Name'); ?></B>*>)
 E_CURRENT
 
-<!sql query "SELECT MAX(Number) FROM Issues WHERE IdPublication=?Pub" q_nr>dnl
-<!sql if @q_nr.0 == "">dnl
+<?
+    query ("SELECT MAX(Number) FROM Issues WHERE IdPublication=$Pub", 'q_nr');
+    fetchRowNum($q_nr);
+    if (getNumVar($q_nr,0) == "") { ?>dnl
 <BLOCKQUOTE>
-	<LI>No previous issue.</LI>
+	<LI><? putGS('No previous issue.'); ?></LI>
 </BLOCKQUOTE>
-<!sql else>dnl
+<? } else { ?>dnl
 <P>
-B_DIALOG({Copy previous issue}, {POST}, {do_add_prev.xql})
-	X_DIALOG_TEXT({Copy structure from issue nr <B><!sql print ~q_nr.0></B>})
-	B_DIALOG_INPUT({Number:})
-		<INPUT TYPE="TEXT" NAME="cNumber" VALUE="<!sql eval (@q_nr.0 + 1)>" SIZE="5" MAXLENGTH="5">
+B_DIALOG(<*Copy previous issue*>, <*POST*>, <*do_add_prev.php*>)
+	X_DIALOG_TEXT(<*<? putGS('Copy structure from issue nr $1','<B>'.getNumVar($q_nr,0).'</B>'); ?>*>)
+	B_DIALOG_INPUT(<*Number*>)
+		<INPUT TYPE="TEXT" NAME="cNumber" VALUE="<? print (getNumVar($q_nr,0) + 1); ?>" SIZE="5" MAXLENGTH="5">
 	E_DIALOG_INPUT
 	B_DIALOG_BUTTONS
-		<INPUT TYPE="HIDDEN" NAME="cOldNumber" VALUE="<!sql print ~q_nr.0>">
-		<INPUT TYPE="HIDDEN" NAME="cPub" VALUE="<!sql print ~Pub>">
+		<INPUT TYPE="HIDDEN" NAME="cOldNumber" VALUE="<? pgetNumVar($q_nr,0); ?>">
+		<INPUT TYPE="HIDDEN" NAME="cPub" VALUE="<? pencHTML($Pub); ?>">
 		<INPUT TYPE="IMAGE" NAME="OK" SRC="X_ROOT/img/button/save.gif" BORDER="0">
-		<A HREF="X_ROOT/pub/issues/?Pub=<!sql print #Pub>"><IMG SRC="X_ROOT/img/button/cancel.gif" BORDER="0" ALT="Cancel"></A>
+		<A HREF="X_ROOT/pub/issues/?Pub=<? pencURL($Pub); ?>"><IMG SRC="X_ROOT/img/button/cancel.gif" BORDER="0" ALT="Cancel"></A>
 	E_DIALOG_BUTTONS
 E_DIALOG
 <P>
-<!sql endif>dnl
+<? } ?>dnl
 
-<!sql else>dnl
+<? } else { ?>dnl
 <BLOCKQUOTE>
-	<LI>No such publication.</LI>
+	<LI><? putGS('No such publication.'); ?></LI>
 </BLOCKQUOTE>
-<!Sql endif>dnl
+<? } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<!sql endif>dnl
+<? } ?>dnl
 
 E_DATABASE
 E_HTML

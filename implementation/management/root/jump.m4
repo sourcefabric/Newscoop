@@ -1,83 +1,94 @@
+INCLUDE_PHP_LIB(<*./priv*>)
 <HTML>
 	<HEAD>
-B_DATABASE{}dnl
-<!sql setdefault HTTP_USER_AGENT "XXX">dnl
-<!sql query "SELECT ('<!sql print $HTTP_USER_AGENT>' LIKE '%Mozilla%') OR ('<!sql print $HTTP_USER_AGENT>' LIKE '%MSIE%')" q_nav>dnl
-<!sql query "SHOW FIELDS FROM Articles LIKE 'XXYYZZ'" q_fld>dnl
+B_DATABASE<**>dnl
+<?
+    todef('HTTP_USER_AGENT', "XXX");
+    query ("SELECT ('$HTTP_USER_AGENT' LIKE '%Mozilla%') OR ('$HTTP_USER_AGENT' LIKE '%MSIE%')", 'q_nav');
+    fetchRowNum($q_nav);
+    query ("SHOW FIELDS FROM Articles LIKE 'XXYYZZ'", 'q_fld');
+    
+    todefnum('IdPublication');
+    todefnum('NrIssue');
+    todefnum('NrSection');
+    todefnum('Number');
+    todefnum('IdLanguage');
 
-<!sql setdefault IdPublication 0>dnl
-<!sql setdefault NrIssue 0>dnl
-<!sql setdefault NrSection 0>dnl
-<!sql setdefault Number 0>dnl
-<!sql setdefault IdLanguage 0>dnl
+    $ok= 0;
 
-<!sql set ok 0>dnl
-<!sql set NUM_ROWS 0>dnl
-<!sql query "SELECT * FROM Publications WHERE Id=?IdPublication" q_pub>dnl
-<!sql if $NUM_ROWS>dnl
-	<!sql set NUM_ROWS 0>dnl
-	<!sql query "SELECT * FROM Issues WHERE IdPublication=?IdPublication AND Number=?NrIssue AND IdLanguage=?IdLanguage" q_iss>dnl
-	<!sql if $NUM_ROWS>dnl
-		<!sql set ok 1>dnl
-	<!sql else>dnl
-		<!sql set NUM_ROWS 0>dnl
-		<!sql query "SELECT * FROM Issues WHERE IdPublication=?IdPublication AND Number=?NrIssue AND IdLanguage=?q_pub.IdDefaultLanguage" q_iss>dnl
-		<!sql if $NUM_ROWS>dnl
-			<!sql set ok 1>dnl
-		<!sql else>dnl
-			<!sql set NUM_ROWS 0>dnl
-			<!sql query "SELECT * FROM Issues WHERE IdPublication=?IdPublication AND Number=?NrIssue LIMIT 1" q_iss>dnl
-			<!sql if $NUM_ROWS>dnl
-				<!sql set ok 1>dnl
-			<!sql else>dnl
+    query ("SELECT * FROM Publications WHERE Id=$IdPublication", 'q_pub');
+    if ($NUM_ROWS) {
+	fetchRow($q_pub);
+	query ("SELECT * FROM Issues WHERE IdPublication=$IdPublication AND Number=$NrIssue AND IdLanguage=$IdLanguage", 'q_iss');
+	if ($NUM_ROWS) {
+	    $ok= 1;
+	}
+	else{    
+	    query ("SELECT * FROM Issues WHERE IdPublication=$IdPublication AND Number=$NrIssue AND IdLanguage=".getSVar($q_pub,'IdDefaultLanguage'), 'q_iss');
+	    if ($NUM_ROWS){
+		$ok= 1;
+	    }
+	    else{
+		query ("SELECT * FROM Issues WHERE IdPublication=$IdPublication AND Number=$NrIssue LIMIT 1", 'q_iss');
+		if ($NUM_ROWS){
+		    $ok= 1;
+		}
+		else{ ?>dnl
 	</HEAD>
 <BODY>
 	No such issue.
 </BODY>
-			<!sql endif>dnl
-		<!sql endif>dnl
-	<!sql endif>dnl
-<!sql else>dnl
+		<? 
+		}
+	    }
+	}
+    }
+    else{ ?>dnl
 	</HEAD>
 <BODY>
 	No such publication.
 </BODY>
-<!sql endif>dnl
+<? }
 
-<!sql if $ok>dnl
-<!sql set NUM_ROWS 0>dnl
-<!sql query "SELECT * FROM Articles WHERE IdPublication=?IdPublication AND NrIssue=?NrIssue AND NrSection=?NrSection AND  Number=?Number AND IdLanguage=?IdLanguage" q_art>dnl
-<!sql if $NUM_ROWS>dnl
-<!sql set NUM_ROWS 0>dnl
-<!sql query "SELECT * FROM Languages WHERE Id=?IdLanguage" q_lang>dnl
-<!sql if $NUM_ROWS>dnl
-	<TITLE><!sql print ~q_art.Name></TITLE>
-	<META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=<!sql print ~q_lang.CodePage>">
-	<META HTTP-EQUIV="Keywords" CONTENT="<!sql print ~q_art.Keywords>">
+if ($ok) {
+    query ("SELECT * FROM Articles WHERE IdPublication=$IdPublication AND NrIssue=$NrIssue AND NrSection=$NrSection AND  Number=$Number AND IdLanguage=$IdLanguage", 'q_art');
+    if ($NUM_ROWS) {
+	fetchRow($q_art);
+	fetchRow($q_lang);
+	query ("SELECT * FROM Languages WHERE Id=$IdLanguage", 'q_lang');
+	if ($NUM_ROWS) { ?>dnl
+	<TITLE><? pgetHVar($q_art,'Name'); ?></TITLE>
+	<META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=<? pgetHVar($q_lang,'CodePage'); ?>">
+	<META HTTP-EQUIV="Keywords" CONTENT="<? pgetHVar($q_art,'Keywords'); ?>">
 	</HEAD>
-<BODY BGCOLOR=WHITE TEXT=WHITE LINK=WHITE ALINK=WHITE VLINK=WHITE onload="param='IdPublication=<!sql print #IdPublication>&NrIssue=<!sql print #NrIssue>&NrSection=<!sql print #NrSection>&NrArticle=<!sql print #Number>&IdLanguage=<!sql print #IdLanguage>';site='<!sql print $q_pub.Site>'; path='<!sql print $q_iss.SingleArticle>'; document.location.replace('http://' + site + path + '?' + param);">
-<!sql if $q_nav.0 == 0>dnl
-<!sql query "SHOW FIELDS FROM X?q_art.Type LIKE 'F%'" q_fld>dnl
-<!sql print_loop q_fld>dnl
-<!sql query "SELECT REPLACE(REPLACE(?q_fld.0, '<', '<!-- '), '>', ' -->') FROM X?q_art.Type WHERE NrArticle=?Number AND IdLanguage=?IdLanguage" q_fff>dnl
-<p><!sql print $q_fff.0>
-<!sql free q_fff>dnl
-<!sql done>dnl
-<!sql endif>dnl
+<BODY BGCOLOR=WHITE TEXT=WHITE LINK=WHITE ALINK=WHITE VLINK=WHITE onload="param='IdPublication=<? p($IdPublication); ?>&NrIssue=<? p($NrIssue); ?>&NrSection=<? p($NrSection); ?>&NrArticle=<? p($Number); ?>&IdLanguage=<? p($IdLanguage); ?>';site='<? pgetVar($q_pub,'Site'); ?>'; path='<? pgetVar($q_iss,'SingleArticle'); ?>'; document.location.replace('http://' + site + path + '?' + param);">
+<?
+    if (getNumVar($q_nav,0) == 0) {
+	query ("SHOW FIELDS FROM X".getSVar($q_art,'Type')." LIKE 'F%'", 'q_fld');
+	$nr=$NUM_ROWS;
+	for($loop=0;$loop<$nr;$loop++) {
+	    fetchRowNum($q_fld);
+	    query ("SELECT REPLACE(REPLACE(".encS(getNumVar($q_fld,0)).", '<', '<!-- '), '>', ' -->') FROM X".getSVar($q_art,'Type')." WHERE NrArticle=$Number AND IdLanguage=$IdLanguage", 'q_fff');
+	    fetchRowNum($q_fff);
+	    ?>dnl	    
+<p><? pgetVar($q_fff,0);
+	}
+    }
+?>dnl
 </BODY>
-<!sql else>dnl
+<? } else { ?>dnl
 	</HEAD>
 <BODY>
 	No such language.
 </BODY>
-<!sql endif>dnl
-<!sql else>dnl
+<? }
+} else { ?>dnl
 	</HEAD>
 <BODY>
 	No such article.
 </BODY>
-<!sql endif>dnl
-<!sql endif>dnl
+<? }
+} ?>dnl
 
-E_DATABASE{}dnl
+E_DATABASE<**>dnl
 </HTML>

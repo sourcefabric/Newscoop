@@ -1,0 +1,76 @@
+#!/bin/sh
+
+. ${INSTALL_CONF}/check4_functions
+
+restart_cron()
+{
+check4_crond --force
+cron_bin=$file_name
+killall -1 $cron_bin
+return $?
+}
+
+install_cron_task()
+{
+minute=$1
+shift 1
+hour=$1
+shift 1
+day_of_mon=$1
+shift 1
+mon=$1
+shift 1
+day_of_week=$1
+shift 1
+user=$1
+shift 1
+binary=$1
+shift 1
+file=$1
+if [ "$minute" = "" ] || [ "$hour" = "" ] || [ "$day_of_mon" = "" ] || [ "$mon" = "" ] || \
+   [ "$day_of_week" = "" ] || [ "$binary" = "" ] || [ "$file" = "" ]; then
+    echo "invalid parameters"
+    return 1
+fi
+shift 1
+force=false
+while [ "$1" != "" ]; do
+    [ "$1" = "-f" ] && force=true
+    shift 1
+done
+installed=false
+cat "$file" | grep "$binary" &> /dev/null
+[ $? -eq 0 ] && installed=true
+$installed && ! $force && return 0
+if $installed; then
+    uninstall_cron_task "$binary" "$file"
+    [ $? -ne 0 ] && return 3
+fi
+echo "$minute $hour $day_of_mon $mon $day_of_week $user $binary" > $file
+if [ ! -f "$file" ]; then
+    echo "invalid file or unable to create file"
+    return 2
+fi
+return $?
+}
+
+uninstall_cron_task()
+{
+binary=$1
+shift 1
+file=$1
+if [ "$binary" = "" ] || [ "$file" = "" ]; then
+    echo "invalid parameters"
+    return 1
+fi
+if [ ! -f "$file" ]; then
+    echo "invalid file"
+    return 2
+fi
+installed=false
+cat "$file" | grep "$binary" &> /dev/null
+[ $? -eq 0 ] && installed=true
+! $installed && return 0
+rm -f "$file"
+return $?
+}

@@ -1,0 +1,29 @@
+UPGRADE
+
+Upgrading from 1.x or 2.0 versions of Campsite requires no special/other actions
+to be performed at the installation. The only action that must be taken concerns
+the templates already written for the older versions.
+
+Read INSTALL file and follow the steps; read on Compatibility issues.
+
+
+Compatibility issues
+
+Some attributes of List Article statement are not supported in 2.1 anymore so all
+templates using them must be updated.
+
+Attributes no longer supported:
+
+    - IsOn|IsNotOn FrontPage
+    - IsOn|IsNotOn Section
+
+Replacing unsupported attributes:
+
+    - "IsOn FrontPage" replaced by: "OnFrontPage is on"
+    - "IsNotOn FrontPage" replaced by: "OnFrontPage is off"
+    - "IsOn Section" replaced by: "OnSection is on"
+    - "IsNotOn Section" replaced by: "OnSection is off"
+
+For details see "3.9.3.3 List of Articles" in CAMPSITE 2.1 manual.
+
+See also 1.3 Upgrading in Campsite manual.

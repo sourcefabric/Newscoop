@@ -1,20 +1,30 @@
+INCLUDE_PHP_LIB(<*./priv*>)
 <HTML>
-B_DATABASE{}dnl
-<!sql set NUM_ROWS 0>dnl
-<!sql query "SELECT Id, IdDefaultLanguage, Name FROM Publications WHERE Site='$HTTP_HOST'" q_pub>dnl
-<!sql if $NUM_ROWS>dnl
+B_DATABASE<**>dnl
+<?
+    query ("SELECT Id, IdDefaultLanguage, Name FROM Publications WHERE Site='$HTTP_HOST'", 'q_pub');
+    if ($NUM_ROWS) { 
+	fetchRow($q_pub);
+    ?>dnl
     <HEAD>
-        <TITLE><!sql print ~q_pub.Name></TITLE>
+        <TITLE><? pgetHVar($q_pub,'Name'); ?></TITLE>
     </HEAD>
-<!sql query "SELECT * FROM Articles WHERE IdPublication=?q_pub.Id AND Published='Y' ORDER BY Number DESC LIMIT 200" q_art>dnl
+<?
+    query ("SELECT * FROM Articles WHERE IdPublication=".getSVar($q_pub,'Id')." AND Published='Y' ORDER BY Number DESC LIMIT 200", 'q_art');
+?>dnl
 <BODY>
-<!sql print_loop q_art>dnl
-<!sql query "SELECT COUNT(*) FROM Issues WHERE IdPublication=?q_pub.Id AND IdLanguage=?q_art.IdLanguage AND Published='Y'" q_iss>dnl
-<!sql if @q_iss.0>dnl
-<!sql print "\t<P><A HREF=\"/jump.xql\?IdPublication=#q_art.IdPublication&NrIssue=#q_art.NrIssue&NrSection=#q_art.NrSection&Number=#q_art.Number&IdLanguage=#q_art.IdLanguage\">~q_art.Name</A>\n">dnl
-<!sql endif>dnl
-<!sql done>dnl
+<?
+    $nr=$NUM_ROWS;
+    for($loop=0;$loop<$nr;$loop++){
+	fetchRow($q_art);
+	query ("SELECT COUNT(*) FROM Issues WHERE IdPublication=".getSVar($q_pub,'Id')." AND IdLanguage=".getSVar($q_art,'IdLanguage')." AND Published='Y'", 'q_iss');
+	fetchRowNum($q_iss);
+	if (getNumVar($q_iss,0)){
+	    print "\t<P><A HREF=\"/jump.php?IdPublication=".getUVar($q_art,'IdPublication')."&NrIssue=".getUVar($q_art,'NrIssue')."&NrSection=".getUVar($q_art,'NrSection')."&Number=".getUVar($q_art,'Number')."&IdLanguage=".getUVar($q_art,'IdLanguage')."\">".getHVar($q_art,'Name')."</A>\n";
+	}
+    }
+?>dnl
 </BODY>
-<!sql endif>dnl
-E_DATABASE{}dnl
+<? } ?>dnl
+E_DATABASE<**>dnl
 </HTML>

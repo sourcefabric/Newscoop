@@ -32,34 +32,34 @@
 
 
 
-import com.sun.java.swing.*;
+import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
 import java.util.*;
 
 class LinkCombo extends JPanel{
     Vector id;
-    Vector name;
+    private Vector name;
     JComboBox combo;
     String value=null;
-    int level;
+    private int level;
     boolean valid;
-    String ID=null;
-    LinkCombo upper;
-    InternalLinkFrame pp;
-    //Color invcolor=new Color(255,0,0);
-    //Color valcolor;
+    private String ID=null;
+    private LinkCombo upper;
+    private InternalLinkFrame pp;
+    private CampSRLayout comboLayout = new CampSRLayout(1, CampSRLayout.FILL, CampSRLayout.CENTER, 0);    
     
     public LinkCombo(int l,String id,InternalLinkFrame p){
         super();
+        this.setLayout(comboLayout);
         combo=new JComboBox();
         add(combo);
+        if (CampResources.isRightToLeft())((JLabel)combo.getRenderer()).setHorizontalAlignment(SwingConstants.RIGHT);
+        
         pp=p;
         level=l;
         ID=id;
         upper=null;
-      //  valcolor=getBackground();
-      //  setBackground(invcolor);
         
         combo.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
@@ -70,10 +70,8 @@ class LinkCombo extends JPanel{
     }
     
     public void setValid(boolean v){
-        //valid=v;
         if ((!v)&&(combo.getItemCount()>=1)) combo.setSelectedIndex(0);
         combo.setEnabled(v);
-        //if (v==true) setBackground(valcolor); else setBackground(invcolor);
     }
     
     public void setUpper(LinkCombo u){
@@ -83,7 +81,6 @@ class LinkCombo extends JPanel{
     public void setValues(String s){
         
         if (pp.err) return;
-        //System.out.println("setvalues enter");
         id=new Vector();
         name=new Vector();
         if (combo.getItemCount()!=0)
@@ -92,6 +89,8 @@ class LinkCombo extends JPanel{
         combo=null;
         combo=new JComboBox();
         add(combo);
+        //combo.setPreferredSize(new Dimension(180,20));
+        //combo.setMaximumSize(new Dimension(180,20));
         setValid(true);
         setVisible(true);
         combo.setVisible(true);
@@ -104,13 +103,10 @@ class LinkCombo extends JPanel{
             });
 
         }
-        //setValid(true);
         id.addElement("ID?");
         name.addElement("?");
-        //System.out.println("szia1"+getItemCount());
-            //System.out.println("aaa");
         combo.addItem("?");
-            //System.out.println("aaa"+s);
+
         int i=0;
         while(i<s.length())
         {
@@ -134,8 +130,6 @@ class LinkCombo extends JPanel{
         }
         combo.setSelectedIndex(0);
         combo.setEnabled(true);
-        //System.out.println(s);
-        //System.out.println("setvalues ex ti");
 
     }
     
@@ -147,11 +141,8 @@ class LinkCombo extends JPanel{
                 pp.links[g].valid=false;
             }
         value=(String)id.elementAt(i);
-        //System.out.println("en "+level+" validom"+valid);
         valid=(i!=0);
         if ((i!=0)&&(level!=4))
                     pp.refresh(level+1);
-        //System.out.println("en "+level+" validom"+valid);
-        pp.status.setText(pp.stat());
    }
 } 

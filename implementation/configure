@@ -1,0 +1,13 @@
+#!/bin/sh
+
+cdirs=`find . -maxdepth 1 -type d -print | cut -f 2 -d "/"`
+for dir in $cdirs; do
+    if [ -x ${dir}/configure ] && [ "$dir" != "." ]; then
+	echo -e "\tConfiguring implementation/$dir ..."
+	cd $dir && ./configure
+	result=$?
+	cd ..
+	[ $result -ne 0 ] && echo "ERROR configuring implementation/${dir}" && exit 1
+    fi
+done
+exit 0

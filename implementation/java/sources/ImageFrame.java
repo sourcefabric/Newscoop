@@ -32,121 +32,141 @@
      * The values are filled from the ImageControl which opened this frame.
      */
      
-import com.sun.java.swing.*;
+import javax.swing.*;
 //import java.applet.*;
 import java.awt.*;
 import java.awt.event.*;
-import com.sun.java.swing.event.*;
+import javax.swing.event.*;
 import java.net.*;
 import java.util.*;
 
-class ImageFrame extends JFrame/* implements Runnable*/{
-    JTextField alt;
-    JButton ok, cancel;
-    Test parent;
-    Container cp;
-	ImageControl im;
+class ImageFrame extends CampDialog{
+    private JTextField alt, sub;
+	private ImageControl imgControl;
+    private String urlVal;
+    private JComboBox image,align;
+    private ImageProperties imgProps;
+    private boolean bIsNew=false;
+    private Vector imgPseudos= new Vector();
 
-    String urlVal;
+    public ImageFrame(Campfire p,String title,Vector im, Vector imps){
+        //super(p, title, 400, 280);
+        super(p, title, 4, 2);
 
-    JComboBox image,align;
-    GridBagLayout gbl;
-    GridBagConstraints gbc;
-    
-
-    public ImageFrame(String s,Test par,Vector im){
-        super(s);
-        cp=getContentPane();
-        parent=par;
-        setVisible(false);
-        setSize(400,230);
-
-        gbl=new GridBagLayout();
-        gbc=new GridBagConstraints();
-        cp.setLayout(gbl);
-        
-        gbc.anchor=GridBagConstraints.NORTHWEST;
-        gbc.gridwidth=GridBagConstraints.REMAINDER;
-        gbc.insets=new Insets(0,10,10,10);
-        gbc.anchor=GridBagConstraints.NORTH;
-        gbc.fill=GridBagConstraints.HORIZONTAL;
-        
         image=new JComboBox(im);
-
+        imgPseudos= imps;
         Vector al=new Vector();
-        al.addElement("align NONE");    
-        //al.addElement("TOP");    
-        //al.addElement("MIDDLE");    
-        //al.addElement("BOTTOM");    
-        al.addElement("RIGHT");    
-        al.addElement("LEFT");    
-        //al.addElement("ABSMIDDLE");    
-        //al.addElement("ABSBOTTOM");    
-        //al.addElement("TEXTTOP");    
-        //al.addElement("BASELINE");    
+        al.addElement(CampResources.get("ImageFrame.Alignment.None"));    
+        al.addElement(CampResources.get("ImageFrame.Alignment.Right"));    
+        al.addElement(CampResources.get("ImageFrame.Alignment.Left"));    
         align=new JComboBox(al);
+
+        if (CampResources.isRightToLeft())((JLabel)image.getRenderer()).setHorizontalAlignment(SwingConstants.RIGHT);
+        if (CampResources.isRightToLeft())((JLabel)align.getRenderer()).setHorizontalAlignment(SwingConstants.RIGHT);
         align.setSelectedIndex(0);
         
         alt=new JTextField(20);
-        ok=new JButton("Ok");
-        cancel=new JButton("Cancel");
-
-        addCompo(new JLabel("Image"),image);
-        addCompo(new JLabel("Alignment"),align);
-        addCompo(new JLabel("Alternative text"),alt);
+        sub=new JTextField(20);
+        //alt.setPreferredSize(new Dimension(180,20));
+        //sub.setPreferredSize(new Dimension(180,20));
         
         
-        addCompo(ok,cancel);
+        addCompo(new JLabel(CampResources.get("ImageFrame.Image")),image);
+        addCompo(new JLabel(CampResources.get("ImageFrame.Alignment")),align);
+        addCompo(new JLabel(CampResources.get("ImageFrame.AlternativeText")),alt);
+        addCompo(new JLabel(CampResources.get("ImageFrame.Caption")),sub);
+        
+        
+        addButtons(ok,cancel);
+        finishDialog();
+        
+        cancel.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+				cancelClicked();
+            }
+            });
 
         ok.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-				closeIt();
+				okClicked();
             }
             });
-        cancel.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-                setVisible(false);
-            }
-            });
-            
+        
+        if (image.getItemCount()<1) ok.setEnabled(false);
+        
+          
     }
 
-	public void closeIt(){
+
+	private void okClicked(){
 		setVisible(false);
-		int r=align.getSelectedIndex();
-		if (r!=-1) im.align.setSelectedIndex(r);
-		r=image.getSelectedIndex();
-		if (r!=-1) im.combo.setSelectedIndex(r);
-		im.alt=alt.getText();
+		//dispose();
+
+		imgProps.imageName=(String)imgPseudos.elementAt(image.getSelectedIndex());
+		
+		if (align.getSelectedIndex()==0)
+		  imgProps.alignWay="NONE";
+		else if (align.getSelectedIndex()==1)
+		  imgProps.alignWay="RIGHT";
+		else if (align.getSelectedIndex()==2)
+		  imgProps.alignWay="LEFT";
+		else
+		  imgProps.alignWay="";
+		  
+		imgProps.altText=alt.getText();
+		imgProps.subTitle=sub.getText();
+    		
+		if (bIsNew) {
+            CampBroker.getImage().createPresentation(imgProps);
+        }else{
+    	   imgControl.setProperties(imgProps);
+    	}
+	}
+
+	private void cancelClicked(){
+		setVisible(false);
+        //dispose();
 	}
 
 	public void open(ImageControl i){
-		setVisible(true);
-		im=i;
-		int r=im.align.getSelectedIndex();
-		if (r!=-1) align.setSelectedIndex(r);
-		r=im.combo.getSelectedIndex();
-		if (r!=-1) image.setSelectedIndex(r);
-		if (im.alt==null) alt.setText(""); else
-			alt.setText(im.alt);
+		imgControl=i;
+		
+	    bIsNew= false;
+		imgProps= imgControl.getProperties();
+		
+		image.setSelectedIndex(imgPseudos.indexOf(imgProps.imageName));
+		if (imgProps.alignWay.equals("NONE"))
+		  align.setSelectedIndex(0);
+		else if (imgProps.alignWay.equals("RIGHT"))
+		  align.setSelectedIndex(1);
+		if (imgProps.alignWay.equals("LEFT"))
+		  align.setSelectedIndex(2);
+		//align.setSelectedItem(imgProps.alignWay);
+        alt.setText(imgProps.altText);
+        sub.setText(imgProps.subTitle);
+        
+        this.setVisible(true);
+		image.requestFocus();
 	}
 
+	public void open(ImageProperties props){
+	    int r=0;
+	    
+	    imgProps=props;
+	    bIsNew= true;
+	    
+        this.setVisible(true);
+		image.requestFocus();
+	}
 
-    private void addCompo(JComponent o1,JComponent o2){
-        JPanel holder=new JPanel();
-        holder.add(o2);
-        holder.setLayout(new FlowLayout(FlowLayout.LEFT));
-        gbc.anchor=GridBagConstraints.WEST;
-        gbc.gridwidth=1;
-        gbc.insets=new Insets(3,10,3,10);
-        cp.add(o1,gbc);
-        cp.add(Box.createHorizontalStrut(10));
-        gbc.gridwidth=GridBagConstraints.REMAINDER;
-        cp.add(holder,gbc);
-        //fields.addElement(o2);
-        //labels.addElement(o1);
-    }
-
+	public void reset(){
+	    int r=0;
+	    
+		if (image.getItemCount()>0) image.setSelectedIndex(r);
+		if (align.getItemCount()>0) align.setSelectedIndex(r);
+    	alt.setText("");
+    	sub.setText("");
+	}
 
     
 }
