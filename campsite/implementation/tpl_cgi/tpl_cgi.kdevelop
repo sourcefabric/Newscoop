@@ -14,6 +14,7 @@
       <group pattern="*.kdevdlg;*.ui;*.rc" name="User Interface" />
       <group pattern="*" name="Others" />
       <hidenonprojectfiles>false</hidenonprojectfiles>
+      <hidenonlocation>false</hidenonlocation>
     </groups>
     <tree>
       <hidepatterns>*.o,*.lo,CVS</hidepatterns>
