@@ -92,12 +92,13 @@ while [ "$1" != "" ]; do
     shift 1
 done
 my_id=`id -u`
-if [ "`uname | grep BSD`" != "" ]; then
+if [ "`uname | grep BSD &> /dev/null`" != "" ]; then
 	export BSD=1
 else
 	export BSD=0
 fi;
 . ./configure --define_start_env
+[ $? -ne 0 ] && exit 1
 if [ "$go_to_install" = "true" ] && [ $my_id -eq 0 ]; then
     install_campsite
     exit 0
