@@ -73,7 +73,7 @@ regGS("You must complete the $1 field.","يجب إكمال الحقل $1");
 regGS("No such language.","لغة غير محددة");
 regGS("No such infotype.","نوع معلومات غير محدد");
 regGS("No such keyword.","كلمة المفتاح غير محددة");
-regGS("No such publication.","منشور غير محدد");
+regGS("Publication does not exist.","منشور غير محدد");
 regGS("No such country.","بلد غير محدد");
 regGS("No such issue.","إصدار غير محدد");
 regGS("No such topic.","موضوع غير محدد");

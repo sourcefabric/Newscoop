@@ -147,7 +147,7 @@ regGS('Invalid input: $1','Invalid input: $1:en');
 regGS('No such language.','Language does not exist.:en');
 regGS('No such infotype.','Infotype does not exist.:en');
 regGS('No such keyword.','Keyword does not exist.:en');
-regGS('No such publication.','Publication does not exist.:en');
+regGS('Publication does not exist.','Publication does not exist.:en');
 regGS('No such country.','Country does not exist.:en');
 regGS('No such issue.','Issue does not exist.:en');
 regGS('No such topic.','Topic does not exist.:en');

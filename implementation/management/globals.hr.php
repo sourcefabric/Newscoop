@@ -73,7 +73,7 @@ regGS("You must complete the $1 field.","Morate ispuniti polje $1");
 regGS("No such language.","Nema tog jezika");
 regGS("No such infotype.","Nema tog <i>infotype</i>");
 regGS("No such keyword.","Nema te ključne riječi");
-regGS("No such publication.","Nema te publikacije");
+regGS("Publication does not exist.","Nema te publikacije");
 regGS("No such country.","Nema te države");
 regGS("No such issue.","Nema tog izdanja");
 regGS("No such topic.","Nema te teme");

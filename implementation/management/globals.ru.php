@@ -73,7 +73,7 @@ regGS("You must complete the $1 field.","Вы должны заполнить $1
 regGS("No such language.","Нет такого языка.:ru");
 regGS("No such infotype.","Нет такого класса:ru");
 regGS("No such keyword.","Нет такого ключевого слова.:ru");
-regGS("No such publication.","Нет такой публикации.:ru");
+regGS("Publication does not exist.","Нет такой публикации.:ru");
 regGS("No such country.","Нет такой страны.:ru");
 regGS("No such issue.","Нет такого выпуска.:ru");
 regGS("No such topic.","Нет такой темы.");

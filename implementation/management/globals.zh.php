@@ -72,7 +72,7 @@ regGS("You must complete the $1 field.","您必须完成$1字段");
 regGS("No such language.","无此语言");
 regGS("No such infotype.","无此类型");
 regGS("No such keyword.","无此关键字");
-regGS("No such publication.","无此出版物");
+regGS("Publication does not exist.","无此出版物");
 regGS("No such country.","无此国家");
 regGS("No such issue.","无此问题");
 regGS("No such topic.","无此主题");

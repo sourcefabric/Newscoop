@@ -85,7 +85,7 @@ regGS("You must complete the $1 field.","Trebuie să completaţi câmpul $1");
 regGS("No such language.","Limba nu există");
 regGS("No such infotype.","Tipul de informaţie nu există");
 regGS("No such keyword.","Cuvântul cheie nu există");
-regGS("No such publication.","Publicaţia nu există");
+regGS("Publication does not exist.","Publicaţia nu există");
 regGS("No such country.","Ţara nu există");
 regGS("No such issue.","Ediţia nu există");
 regGS("No such topic.","Topicul nu există");
