@@ -1,4 +1,5 @@
 <?
+
 regGS("Select template","Выберите шаблон:ru");
 regGS("Templates management","Управление шаблонами:ru");
 regGS("You do not have the right to change default templates.","Вы не имеете права изменять шаблоны по умолчанию.:ru");
@@ -6,6 +7,7 @@ regGS("Create new folder","Создать новую папку:ru");
 regGS("Upload template","Загрузить шаблон:ru");
 regGS("Select the template for displaying the front page.","Выберите шаблон для отображения титульной странице.:ru");
 regGS("Select the template for displaying a single article.","Выберите шаблон для отображения отдельной статьи.:ru");
+regGS("You do no have access to the $1 directory!","Вы не имеете доступа к каталогу $1!");
 regGS("Creating new folder","Создание новой папки:ru");
 regGS("You do not have the right to create new folders.","Вы не имеете права создания новых папок.:ru");
 regGS("The folder $1 has been created","Папка $1 была создана:ru");
@@ -51,5 +53,10 @@ regGS("The template $1 could not be created.","Невозможно создат
 regGS("Template $1 was changed","Шаблон $1 был изменен:ru");
 regGS("New template $1 was created","Был создан новый шаблон $1:ru");
 regGS("Template $1 was duplicated into $2","Шаблон $1 был дублирован в $2:ru");
+regGS("Error converting the template to UTF-8 charset.","Ошибка конвертации шаблона в UTF-8");
+regGS("Template charset","Кодовая таблица шаблона");
+regGS("Select a language/character set","Выберите язык/кодовую таблицу");
+regGS("All languages","Все языки");
+
 
 ?>
