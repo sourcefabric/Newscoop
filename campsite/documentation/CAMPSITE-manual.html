@@ -5,7 +5,7 @@
 	<TITLE>CAMPSITE manual Version 2.1</TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.1.0  (Linux)">
 	<META NAME="CREATED" CONTENT="20020913;19124500">
-	<META NAME="CHANGED" CONTENT="20040403;15583100">
+	<META NAME="CHANGED" CONTENT="20040407;21440800">
 	<STYLE>
 	<!--
 		@page { size: 8.5in 11in }
@@ -2376,7 +2376,7 @@ template start it's value from now on is undefined.</P>
 and &quot;List Article&quot; statements.</P>
 <H4 CLASS="western"><A NAME="3_9_2_5"></A>3.9.2.5 Article</H4>
 <P CLASS="western">Purpose:</P>
-<P CLASS="western">Sets the runtime environment section to the one
+<P CLASS="western">Sets the runtime environment article to the one
 selected by the statement constraint. If the statement constraint is
 not valid the section is not changed.</P>
 <P CLASS="western">Syntax:</P>
@@ -2409,6 +2409,27 @@ list it must respect the constraints of the list (List Issue, List
 Section, List Article, List Subtitle, List SearchResult).</P>
 <P CLASS="western">Constraints:</P>
 <P CLASS="western">None.</P>
+<H4 CLASS="western"><A NAME="3_9_2_7"></A>3.9.2.7 Topic</H4>
+<P CLASS="western">Purpose:</P>
+<P CLASS="western">Sets the runtime environment topic to the one
+selected by the statement constraint. If the statement constraint is
+not valid the topic is not changed.</P>
+<P CLASS="western">Syntax:</P>
+<P CLASS="western"><FONT FACE="Courier New, Courier, mono">Topic name
+&lt;topic_name&gt;</FONT></P>
+<P CLASS="western">Select the topic having the specified name. If the
+supplied name is not a valid one, this parameter is not modified.</P>
+<P CLASS="western"><FONT FACE="Courier New, Courier, mono">Topic off</FONT></P>
+<P CLASS="western">Deselect topic; the topic is not defined after
+this instruction.</P>
+<P CLASS="western"><FONT FACE="Courier New, Courier, mono">Topic
+default</FONT></P>
+<P CLASS="western">The topic selected is the one provided by the
+parameter from template start. If this parameter was not defined on
+template start it's value from now on is undefined.</P>
+<P CLASS="western">Constraints:</P>
+<P CLASS="western">Cannot be used inside &quot;List Article&quot;
+statement.</P>
 <H3 CLASS="western"><A NAME="3_9_3"></A>3.9.3 Flow control
 instructions</H3>
 <H4 CLASS="western"><A NAME="3_9_3_1"></A>3.9.3.1 List of Issues</H4>
@@ -3226,7 +3247,7 @@ Section, List Article, List Subtitle, List SearchResult).</P>
 <P CLASS="western">Depending on the given condition, it runs the
 first (for true) or second (for false) list of instructions. It may
 be used anywhere in the template. It is used when printing
-information from different types of article.</P>
+information for different types of articles.</P>
 <P CLASS="western">Syntax:</P>
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">If [not]
 Article &lt;condition&gt;<BR>&lt;list_of_instructions&gt;<BR>[Else
@@ -3610,6 +3631,43 @@ list it must respect the constraints of the list (List Issue, List
 Section, List Article, List Subtitle, List SearchResult).</P>
 <P CLASS="western">Constraints:</P>
 <P CLASS="western">None.</P>
+<H4 CLASS="western"><A NAME="3_9_3_24"></A>3.9.3.24 If Topic</H4>
+<P CLASS="western">Purpose:</P>
+<P CLASS="western">Depending on the given condition, it runs the
+first (for true) or second (for false) list of instructions. It may
+be used anywhere in the template.</P>
+<P CLASS="western">Syntax:</P>
+<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If [not]
+Topic &lt;condition&gt;<BR>&lt;list_of_instructions&gt;<BR>[Else
+[&lt;list_of_instructions&gt;]]<BR>EndIf [Topic]</FONT></P>
+<P CLASS="western">where</P>
+<TABLE WIDTH=703 BORDER=0 CELLPADDING=2 CELLSPACING=0>
+	<COL WIDTH=136>
+	<COL WIDTH=558>
+	<TR>
+		<TD WIDTH=136 VALIGN=TOP>
+			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;condition&gt;
+			= </FONT>
+			</P>
+		</TD>
+		<TD WIDTH=558>
+			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">name
+			</FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;string_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
+			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;string_value&gt;</FONT></A></P>
+		</TD>
+	</TR>
+</TABLE>
+<UL>
+	<LI><P CLASS="western" STYLE="margin-top: 0in">name: the condition
+	is true if topic name is in &lt;string_operator&gt; relation with
+	&lt;string_value&gt;</P>
+</UL>
+<P CLASS="western">The list of instructions may contain any
+instruction allowed in the current context. If it is used inside a
+list it must respect the constraints of the list (List Issue, List
+Section, List Article, List Subtitle, List SearchResult).</P>
+<P CLASS="western">Constraints:</P>
+<P CLASS="western">None.</P>
 <H3 CLASS="western"><A NAME="3_9_4"></A>3.9.4 Printable information</H3>
 <H4 CLASS="western"><A NAME="3_9_4_1"></A>3.9.4.1 URL, Form</H4>
 <P CLASS="western">Purpose:</P>
@@ -3743,6 +3801,8 @@ data context will be printed.</P>
 			</FONT><A HREF="#p_subt_expr"><FONT FACE="Courier New, Courier, mono">&lt;subtitle_expression&gt;</FONT></A></P>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">|
 			</FONT><A HREF="#p_search_expr"><FONT FACE="Courier New, Courier, mono">&lt;search_expression&gt;</FONT></A></P>
+			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">|
+			</FONT><A HREF="#p_topic_expr"><FONT FACE="Courier New, Courier, mono">&lt;topic_expression&gt;</FONT></A></P>
 		</TD>
 	</TR>
 </TABLE>
@@ -3981,6 +4041,14 @@ prints the error message (if there was an <SPAN LANG="en-US">error</SPAN>)</P>
 		message if the search action generated an error</P>
 		<LI><P CLASS="western" STYLE="margin-top: 0in">keywords: print the
 		keywords the user inputted</P>
+	</UL>
+</UL>
+<P CLASS="western"><A NAME="p_topic_expr"></A><FONT FACE="Courier, monospace">&lt;topic_expression&gt;
+= Topic name</FONT></P>
+<UL>
+	<UL>
+		<LI><P CLASS="western" STYLE="margin-top: 0in">name: print topic
+		name in the language of the environment</P>
 	</UL>
 </UL>
 <P CLASS="western">Constraints:</P>
@@ -4346,6 +4414,8 @@ LANGUAGE STATEMENTS</H1>
 	Subscription (3.9.3.15)</A></P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in"><A HREF="#3_9_3_23">If
 	Subtitle (3.9.3.23)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0in"><A HREF="#3_9_3_24">If
+	Topic (3.9.3.24)</A></P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in"><A HREF="#3_9_3_17">If
 	User (3.9.3.17)</A></P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in"><A HREF="#3_9_3_9">Include
@@ -4389,6 +4459,8 @@ LANGUAGE STATEMENTS</H1>
 	<LI><P CLASS="western" STYLE="margin-top: 0in"><A HREF="#3_9_4_2">Print
 	Subtitle (3.9.4.2)</A></P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in"><A HREF="#3_9_4_2">Print
+	Topic (3.9.4.2)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0in"><A HREF="#3_9_4_2">Print
 	User (3.9.4.2)</A></P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in"><A HREF="#3_9_2_2">Publication
 	(3.9.2.2)</A></P>
@@ -4404,6 +4476,8 @@ LANGUAGE STATEMENTS</H1>
 	User (3.9.4.9)</A></P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in"><A HREF="#3_9_4_4">Subscription
 	(3.9.4.4)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0in"><A HREF="#3_9_2_7">Topic
+	(3.9.2.7)</A></P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in"><A HREF="#3_9_4_1">URLParameters
 	(3.9.4.1)</A></P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in"><A HREF="#3_9_4_5">User
