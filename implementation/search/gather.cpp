@@ -23,9 +23,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 ******************************************************************************/
 
-/*
- * gather.cpp
- */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -43,6 +40,7 @@ using std::endl;
 
 #define debug if(0) printf
 
+string CONF_DIR;
 string SMTP_SERVER;
 string SMTP_WRAPPER;
 string SQL_SERVER;
@@ -53,270 +51,241 @@ int SQL_SRV_PORT = 0;
 char *prog_name = 0;
 
 struct article_t {
-  unsigned IdPublication;
-  unsigned NrIssue;
-  unsigned NrSection;
-  unsigned Number;
-  unsigned IdLanguage;
-  int Published;
-  char *Type;
-  char *Keywords;
-  char *Name;
+	unsigned IdPublication;
+	unsigned NrIssue;
+	unsigned NrSection;
+	unsigned Number;
+	unsigned IdLanguage;
+	int Published;
+	char *Type;
+	char *Keywords;
+	char *Name;
 };
 
-void
-die_usage()
+void die_usage()
 {
-  printf("Usage: %s [options]\n"
-         "Options:\n"
-         "\t--sql-host\tHost name of the MySQL server.\n"
-         "\t--sql-user\tUser name for login.\n"
-         "\t--sql-pass\tPassword for this user.\n"
-         "\t--sql-db\tDatabase file to use.\n"
-         "\t--sql-port\tPort number to use for connection.\n"
-         "\t--sql-sock\tSocket to use for connection.\n"
-         "\t--sql-flags\tMySQL flags for connection.\n"
-         "\t--help\tDisplay this information.\n",
-         prog_name);
-  exit(0);
+	printf("Usage: %s [options]\n"
+			"Options:\n"
+			"\t--conf_dir [conf_dir]: Host name of the MySQL server.\n"
+			"\t--help: Display this information.\n",
+	prog_name);
+	exit(0);
 }
 
-void
-die_mysql(MYSQL *mysql, const char *message)
+void die_mysql(MYSQL *mysql, const char *message)
 {
-  fprintf(stderr, "%s: %s: %s\n", prog_name, message, mysql_error(mysql));
-  exit(1);
+	fprintf(stderr, "%s: %s: %s\n", prog_name, message, mysql_error(mysql));
+	exit(1);
 }
 
-static void
-build_kwd_list(MYSQL *mysql, struct article_t *a)
+static void build_kwd_list(MYSQL *mysql, struct article_t *a)
 {
-  MYSQL_RES *res;
-  MYSQL_ROW row;
-  MYSQL_FIELD *fld;
-  int nf, i;
-  char query[1024];
+	MYSQL_RES *res;
+	MYSQL_ROW row;
+	MYSQL_FIELD *fld;
+	int nf, i;
+	char query[1024];
 
-  debug("kwd[%s]\n", a->Keywords);
-  parse_kwd(a->Keywords);
-  debug("name[%s]\n", a->Name);
-  parse_kwd(a->Name);
+	debug("kwd[%s]\n", a->Keywords);
+	parse_kwd(a->Keywords);
+	debug("name[%s]\n", a->Name);
+	parse_kwd(a->Name);
 
-  if (!a->Type)
-    return;
+	if (!a->Type)
+		return;
 
-  sprintf(query, "SELECT * FROM X%s WHERE NrArticle = %u AND IdLanguage = %u",
-          a->Type, a->Number, a->IdLanguage);
-  debug("QUERY [%s]\n", query);
-  if (mysql_query(mysql, query) != 0)
-    die_mysql(mysql, "Get article: query");
+	sprintf(query, "SELECT * FROM X%s WHERE NrArticle = %u AND IdLanguage = %u",
+			a->Type, a->Number, a->IdLanguage);
+	debug("QUERY [%s]\n", query);
+	if (mysql_query(mysql, query) != 0)
+		die_mysql(mysql, "Get article: query");
 
-  res = mysql_store_result(mysql);
-  if (!res)
-    die_mysql(mysql, "Get article: store_result");
+	res = mysql_store_result(mysql);
+	if (!res)
+		die_mysql(mysql, "Get article: store_result");
 
-  row = mysql_fetch_row(res);
-  if (row) {
-    nf = mysql_num_fields(res);
-    fld = mysql_fetch_fields(res);
-    for (i = 0; i < nf; i++) {
-      if (fld[i].name[0] == 'F') {
-        debug("fdl[%s]\n", fld[i].name);
-        if (row[i])
-          parse_kwd(row[i]);
-      }
-    }
-  }
-  mysql_free_result(res);
+	row = mysql_fetch_row(res);
+	if (row) {
+		nf = mysql_num_fields(res);
+		fld = mysql_fetch_fields(res);
+		for (i = 0; i < nf; i++) {
+			if (fld[i].name[0] == 'F') {
+				debug("fdl[%s]\n", fld[i].name);
+				if (row[i])
+					parse_kwd(row[i]);
+			}
+		}
+	}
+	mysql_free_result(res);
 }
 
 void ReadConf()
 {
-  try
-  {
-    ConfAttrValue coDBConf(DATABASE_CONF_FILE);
-    SQL_SERVER = coDBConf.ValueOf("SERVER");
-    SQL_SRV_PORT = atoi(coDBConf.ValueOf("PORT").c_str());
-    SQL_USER = coDBConf.ValueOf("USER");
-    SQL_PASSWORD = coDBConf.ValueOf("PASSWORD");
-    SQL_DATABASE = coDBConf.ValueOf("NAME");
-  }
-  catch (ConfException& rcoEx)
-  {
-    cout << "Error reading configuration: " << rcoEx.what() << endl;
-    exit(1);
-  }
+	try
+	{
+		ConfAttrValue coDBConf(DATABASE_CONF_FILE);
+		SQL_SERVER = coDBConf.ValueOf("SERVER");
+		SQL_SRV_PORT = atoi(coDBConf.ValueOf("PORT").c_str());
+		SQL_USER = coDBConf.ValueOf("USER");
+		SQL_PASSWORD = coDBConf.ValueOf("PASSWORD");
+		SQL_DATABASE = coDBConf.ValueOf("NAME");
+	}
+	catch (ConfException& rcoEx)
+	{
+		cout << "Error reading configuration: " << rcoEx.what() << endl;
+		exit(1);
+	}
 }
 
 
-int
-main(int argc, char **argv)
+int main(int argc, char **argv)
 {
-  MYSQL mysql;
-  MYSQL_RES *res, *res1;
-  MYSQL_ROW row, row1;
+	MYSQL mysql;
+	MYSQL_RES *res, *res1;
+	MYSQL_ROW row, row1;
 
-  unsigned nart, nword, nnew, kwd_id;
-  int h, i;
-  struct kwd_t *k;
-  struct article_t a;
-  char query[1024], *p;
+	unsigned nart, nword, nnew, kwd_id;
+	int h, i;
+	struct kwd_t *k;
+	struct article_t a;
+	char query[1024], *p;
 
-  /* Parse program name from command line */
-  prog_name = strrchr(argv[0], '/');
-  if (prog_name)
-    prog_name++;
-  else
-    prog_name = argv[0];
-  ReadConf();
+	/* Parse program name from command line */
+	prog_name = strrchr(argv[0], '/');
+	if (prog_name)
+		prog_name++;
+	else
+		prog_name = argv[0];
+	ReadConf();
 
-  /* Parse parameters from command line */
-  for (i = 1; i < argc; i++) {
-    if (strcmp(argv[i], "--sql-host") == 0) {
-      if (!argv[++i])
-        die_usage();
-      SQL_SERVER = argv[i];
-    } else if (strcmp(argv[i], "--sql-user") == 0) {
-      if (!argv[++i])
-        die_usage();
-      SQL_USER = argv[i];
-    } else if (strcmp(argv[i], "--sql-pass") == 0) {
-      if (!argv[++i])
-        die_usage();
-      /* Clear the password from the command line ! */
-      SQL_PASSWORD = strdup(argv[i]);
-      for (p = argv[i]; *p; p++)
-        *p = 0;
-    } else if (strcmp(argv[i], "--sql-db") == 0) {
-      if (!argv[++i])
-        die_usage();
-      SQL_DATABASE = argv[i];
-    } else if (strcmp(argv[i], "--sql-port") == 0) {
-      if (!argv[++i])
-        die_usage();
-      SQL_SRV_PORT = atoi(argv[i]);
-    } else
-      die_usage();
-  }
+	/* Parse parameters from command line */
+	for (i = 1; i < argc; i++) {
+		if (strcmp(argv[i], "--conf_dir") == 0) {
+			if (!argv[++i])
+				die_usage();
+			CONF_DIR = argv[i];
+		} else
+			die_usage();
+	}
 
-  /* Connect to the MySQL server */
-  mysql_init(&mysql);
-  if (!mysql_real_connect(&mysql, SQL_SERVER.c_str(), SQL_USER.c_str(),
-                          SQL_PASSWORD.c_str(), SQL_DATABASE.c_str(),
-                          SQL_SRV_PORT, 0, 0))
-    die_mysql(&mysql, "Connecting to the database server");
+	/* Connect to the MySQL server */
+	mysql_init(&mysql);
+	if (!mysql_real_connect(&mysql, SQL_SERVER.c_str(), SQL_USER.c_str(),
+		 SQL_PASSWORD.c_str(), SQL_DATABASE.c_str(),
+		 SQL_SRV_PORT, 0, 0))
+		die_mysql(&mysql, "Connecting to the database server");
 
 
-  /* Select articles not yet indexed */
-  if (mysql_query(&mysql, "SELECT IdPublication, NrIssue, NrSection, Number, "
-                  "IdLanguage, Published, Type, Keywords, Name FROM Articles "
-                  "WHERE IsIndexed = 'N'") != 0)
-    die_mysql(&mysql, "Selecting articles not yet indexed: query");
-  res = mysql_store_result(&mysql);
-  if (!res)
-    die_mysql(&mysql, "Selecting articles not yet indexed: store_result");
+	/* Select articles not yet indexed */
+	if (mysql_query(&mysql, "SELECT IdPublication, NrIssue, NrSection, Number, "
+		   "IdLanguage, Published, Type, Keywords, Name FROM Articles "
+				   "WHERE IsIndexed = 'N'") != 0)
+		die_mysql(&mysql, "Selecting articles not yet indexed: query");
+	res = mysql_store_result(&mysql);
+	if (!res)
+		die_mysql(&mysql, "Selecting articles not yet indexed: store_result");
 
-  nart = nword = nnew = 0;
+	nart = nword = nnew = 0;
 
-  while ((row = mysql_fetch_row(res))) {
-    a.IdPublication = row[0] ? atoi(row[0]) : 0;
-    a.NrIssue = row[1] ? atoi(row[1]) : 0;
-    a.NrSection = row[2] ? atoi(row[2]) : 0;
-    a.Number = row[3] ? atoi(row[3]) : 0;
-    a.IdLanguage = row[4] ? atoi(row[4]) : 0;
-    a.Published = row[5] && (row[5][0] == 'Y');
-    a.Type = strdup(row[6] ? row[6] : "");
-    a.Keywords = strdup(row[7] ? row[7] : "");
-    a.Name = strdup(row[8] ? row[8] : "");
+	while ((row = mysql_fetch_row(res))) {
+		a.IdPublication = row[0] ? atoi(row[0]) : 0;
+		a.NrIssue = row[1] ? atoi(row[1]) : 0;
+		a.NrSection = row[2] ? atoi(row[2]) : 0;
+		a.Number = row[3] ? atoi(row[3]) : 0;
+		a.IdLanguage = row[4] ? atoi(row[4]) : 0;
+		a.Published = row[5] && (row[5][0] == 'Y');
+		a.Type = strdup(row[6] ? row[6] : "");
+		a.Keywords = strdup(row[7] ? row[7] : "");
+		a.Name = strdup(row[8] ? row[8] : "");
 
-    /* Delete from index */
-    sprintf(query, "DELETE FROM ArticleIndex WHERE IdPublication = %u AND "
-            "IdLanguage = %u AND NrIssue = %u AND NrSection = %u AND "
-            "NrArticle = %u", a.IdPublication, a.IdLanguage, a.NrIssue,
-            a.NrSection, a.Number);
-    debug("QUERY [%s]\n", query);
-    if (mysql_query(&mysql, query) != 0)
-      die_mysql(&mysql, "Deleting old index: query");
+		/* Delete from index */
+		sprintf(query, "DELETE FROM ArticleIndex WHERE IdPublication = %u AND "
+				"IdLanguage = %u AND NrIssue = %u AND NrSection = %u AND "
+						"NrArticle = %u", a.IdPublication, a.IdLanguage, a.NrIssue,
+				a.NrSection, a.Number);
+		debug("QUERY [%s]\n", query);
+		if (mysql_query(&mysql, query) != 0)
+			die_mysql(&mysql, "Deleting old index: query");
 
 
-    if (!a.Published)
-      continue;
+		if (!a.Published)
+			continue;
 
-    nart++;
+		nart++;
 
-    init_hash();
-    build_kwd_list(&mysql, &a);
-    for (h = 0; h < 256; h++)
-      for (k = kwd_hash[h]; k; k = k->next) {
-        if (!k->k)
-          continue;
-        nword++;
+		init_hash();
+		build_kwd_list(&mysql, &a);
+		for (h = 0; h < 256; h++)
+			for (k = kwd_hash[h]; k; k = k->next) {
+			if (!k->k)
+				continue;
+			nword++;
 
-        p = (char*)malloc(strlen(k->k) * 2 + 1);
-        mysql_escape_string(p, k->k, mymin(strlen(k->k), MAX_KWD));
+			p = (char*)malloc(strlen(k->k) * 2 + 1);
+			mysql_escape_string(p, k->k, mymin(strlen(k->k), MAX_KWD));
 
-        sprintf(query, "SELECT Id FROM KeywordIndex WHERE Keyword = '%s'", p);
-        debug("QUERY [%s]\n", query);
-        if (mysql_query(&mysql, query) != 0)
-          die_mysql(&mysql, "Get KeywordId: query");
+			sprintf(query, "SELECT Id FROM KeywordIndex WHERE Keyword = '%s'", p);
+			debug("QUERY [%s]\n", query);
+			if (mysql_query(&mysql, query) != 0)
+				die_mysql(&mysql, "Get KeywordId: query");
 
-        res1 = mysql_store_result(&mysql);
-        if (!res1)
-          die_mysql(&mysql, "Get KeywordId: store_result");
+			res1 = mysql_store_result(&mysql);
+			if (!res1)
+				die_mysql(&mysql, "Get KeywordId: store_result");
         
-        row1 = mysql_fetch_row(res1);
-        kwd_id = row1 ? (row1[0] ? atoi(row1[0]) : 0) : 0;
+			row1 = mysql_fetch_row(res1);
+			kwd_id = row1 ? (row1[0] ? atoi(row1[0]) : 0) : 0;
         
-        mysql_free_result(res1);
+			mysql_free_result(res1);
         
-        if (!kwd_id) {
-          /* Get a new id */
-          if (mysql_query(&mysql, "UPDATE AutoId SET KeywordId = LAST_INSERT_ID"
-                          "(KeywordId + 1)") != 0)
-            die_mysql(&mysql, "Obtaining new KeywordId: query");
-          kwd_id = mysql_insert_id(&mysql);
+			if (!kwd_id) {
+				/* Get a new id */
+				if (mysql_query(&mysql, "UPDATE AutoId SET KeywordId = LAST_INSERT_ID"
+								"(KeywordId + 1)") != 0)
+					die_mysql(&mysql, "Obtaining new KeywordId: query");
+				kwd_id = mysql_insert_id(&mysql);
           
-          /* Insert in keyword list */
-          sprintf(query, "INSERT INTO KeywordIndex SET Keyword = '%s', Id = %u",
-                  p, kwd_id);
-          debug("QUERY [%s]\n", query);
-          if (mysql_query(&mysql, query) != 0)
-            die_mysql(&mysql, "Adding keyword: query");
-          nnew++;
-        }
+				/* Insert in keyword list */
+				sprintf(query, "INSERT INTO KeywordIndex SET Keyword = '%s', Id = %u",
+						p, kwd_id);
+				debug("QUERY [%s]\n", query);
+				if (mysql_query(&mysql, query) != 0)
+					die_mysql(&mysql, "Adding keyword: query");
+				nnew++;
+			}
         
-        free(p);
+			free(p);
         
-        /* Insert in article index */
-        sprintf(query, "INSERT IGNORE INTO ArticleIndex SET IdPublication = %u"
-                ", IdLanguage = %u, IdKeyword = %u, NrIssue = %u, NrSection = "
-                "%u, NrArticle = %u", a.IdPublication, a.IdLanguage, kwd_id,
-                a.NrIssue, a.NrSection, a.Number);
-        debug("QUERY [%s]\n", query);
-        if (mysql_query(&mysql, query) != 0)
-          die_mysql(&mysql, "Adding article to index: query");
-      }
+			/* Insert in article index */
+			sprintf(query, "INSERT IGNORE INTO ArticleIndex SET IdPublication = %u"
+					", IdLanguage = %u, IdKeyword = %u, NrIssue = %u, NrSection = "
+							"%u, NrArticle = %u", a.IdPublication, a.IdLanguage, kwd_id,
+					a.NrIssue, a.NrSection, a.Number);
+			debug("QUERY [%s]\n", query);
+			if (mysql_query(&mysql, query) != 0)
+				die_mysql(&mysql, "Adding article to index: query");
+			}
     
-    del_kwd_list();
+			del_kwd_list();
     
-    free(a.Name);
-    free(a.Keywords);
-    free(a.Type);
+			free(a.Name);
+			free(a.Keywords);
+			free(a.Type);
     
-    sprintf(query, "UPDATE Articles SET IsIndexed = 'Y' WHERE IdPublication = "
-            "%u AND NrIssue = %u AND NrSection = %u AND Number = %u AND "
-            "IdLanguage = %u", a.IdPublication, a.NrIssue, a.NrSection,
-            a.Number, a.IdLanguage);
-    debug("QUERY [%s]\n", query);
-    if (mysql_query(&mysql, query) != 0)
-      die_mysql(&mysql, "Updating article: query");
+			sprintf(query, "UPDATE Articles SET IsIndexed = 'Y' WHERE IdPublication = "
+					"%u AND NrIssue = %u AND NrSection = %u AND Number = %u AND "
+							"IdLanguage = %u", a.IdPublication, a.NrIssue, a.NrSection,
+					a.Number, a.IdLanguage);
+			debug("QUERY [%s]\n", query);
+			if (mysql_query(&mysql, query) != 0)
+				die_mysql(&mysql, "Updating article: query");
     
-    printf("Articles: %u, Words: %u, New: %u\r", nart, nword, nnew);
-    fflush(stdout);
-  }    
+			printf("Articles: %u, Words: %u, New: %u\r", nart, nword, nnew);
+			fflush(stdout);
+	}    
   
-  printf("\n");
-  mysql_close(&mysql);
+	printf("\n");
+	mysql_close(&mysql);
   
-  return 0;
+	return 0;
 }
