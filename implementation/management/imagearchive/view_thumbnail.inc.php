@@ -1,22 +1,76 @@
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" WIDTH="100%" class="table_list">
     <TR class="table_list_header">
         <TD ALIGN="LEFT" VALIGN="TOP" WIDTH="5%">
-          <table border="0" cellspacing="0" cellpadding="0"><tr><td style="padding: 3px;"><B><a href="<?php echo $IdHref; ?>"><?php  putGS("Thumbnail"); ?></a></B></td><td align="left"><a href="<?php echo $IdHref; ?>"><?php echo $IdOrderIcon; ?></a></td></tr></table>
+          <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+          	<td style="padding: 3px;">
+          		<B><a href="<?php echo $IdHref; ?>"><?php  putGS("Thumbnail"); ?></a></B>
+          	</td>
+          	<td align="left">
+          		<a href="<?php echo $IdHref; ?>"><?php echo $IdOrderIcon; ?></a>
+          	</td>
+          	</tr>
+          	</table>
         </TD>
         <TD ALIGN="LEFT" VALIGN="TOP" width="35%">
-          <table border="0" cellspacing="0" cellpadding="0"><tr><td style="padding: 3px;"><B><a href="<?php echo $DescriptionHref; ?>"><?php  putGS("Description<BR><SMALL>(Click to view details)</SMALL>"); ?></a></B></td><td align="left"><a href="<?php echo $DescriptionHref; ?>"><?php echo $DescriptionOrderIcon; ?></a></td></tr></table>
+          <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+          	<td style="padding: 3px;">
+          		<B><a href="<?php echo $DescriptionHref; ?>"><?php  putGS("Description<BR><SMALL>(Click to view details)</SMALL>"); ?></a></B>
+          	</td>
+          	<td align="left">
+          		<a href="<?php echo $DescriptionHref; ?>"><?php echo $DescriptionOrderIcon; ?></a>
+          	</td>
+          	</tr>
+          	</table>
         </TD>
         <TD ALIGN="LEFT" VALIGN="TOP" width="20%">
-          <table border="0" cellspacing="0" cellpadding="0" ><tr><td style="padding: 3px;"><B><a href="<?php echo $PhotographerHref; ?>"><?php  putGS("Photographer"); ?></a></B></td><td align="left"><a href="<?php echo $PhotographerHref; ?>"><?php echo $PhotographerOrderIcon; ?></a></td></tr></table>
+          <table border="0" cellspacing="0" cellpadding="0" >
+          <tr>
+          	<td style="padding: 3px;">
+          		<B><a href="<?php echo $PhotographerHref; ?>"><?php  putGS("Photographer"); ?></a></B>
+          	</td>
+          	<td align="left">
+          		<a href="<?php echo $PhotographerHref; ?>"><?php echo $PhotographerOrderIcon; ?></a>
+          	</td>
+          	</tr>
+          	</table>
         </TD>
         <TD ALIGN="LEFT" VALIGN="TOP" width="20%">
-          <table border="0" cellspacing="0" cellpadding="0"><tr><td style="padding: 3px;"><B><a href="<?php echo $PlaceHref; ?>"><?php  putGS("Place"); ?></a></B></td><td align="left"><a href="<?php echo $PlaceHref; ?>"><?php echo $PlaceOrderIcon; ?></a></td></tr></table>
+          <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+          	<td style="padding: 3px;">
+          		<B><a href="<?php echo $PlaceHref; ?>"><?php  putGS("Place"); ?></a></B>
+          	</td>
+          	<td align="left">
+          		<a href="<?php echo $PlaceHref; ?>"><?php echo $PlaceOrderIcon; ?></a>
+          	</td>
+          	</tr>
+          	</table>
         </TD>
         <TD ALIGN="LEFT" VALIGN="TOP" width="15%">
-          <table border="0" cellspacing="0" cellpadding="0"><tr><td style="padding: 3px;" nowrap><B><a href="<?php echo $DateHref; ?>"><?php  putGS("Date<BR><SMALL>(yyyy-mm-dd)</SMALL>"); ?></a></B></td><td align="left"><a href="<?php echo $DateHref; ?>"><?php echo $DateOrderIcon; ?></a></td></tr></table>
+          <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+          	<td style="padding: 3px;" nowrap>
+          		<B><a href="<?php echo $DateHref; ?>"><?php  putGS("Date<BR><SMALL>(yyyy-mm-dd)</SMALL>"); ?></a></B>
+          	</td>
+          	<td align="left">
+          		<a href="<?php echo $DateHref; ?>"><?php echo $DateOrderIcon; ?></a>
+          	</td>
+          	</tr>
+          	</table>
         </TD>
         <TD ALIGN="LEFT" VALIGN="TOP" width="5%">
-          <table border="0" cellspacing="0" cellpadding="0"><tr><td align="center" style="padding: 3px;" nowrap><B><a href="<?php echo $InUseHref; ?>"><?php  putGS("In use"); ?></a></B></td><td align="left"><a href="<?php echo $InUseHref; ?>"><?php echo $InUseOrderIcon; ?></a></td></tr></table>
+          <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+          	<td align="center" style="padding: 3px;" nowrap>
+          		<B><?php  putGS("In use"); ?></B>
+          	</td>
+          	<td align="center">
+          		<a href="<?php echo $InUseHref; ?>"><?php echo $InUseOrderIcon; ?></a>
+          	</td>
+          </tr>
+          </table>
         </TD>
         <?php
         if ($User->hasPermission('DeleteImage')) { ?>
@@ -68,17 +122,19 @@
                 ?>&nbsp;
             </TD>
             <?php
-            if ($User->hasPermission('DeleteImage') && (!$image['in_use'])) { ?>
-            	<TD ALIGN="CENTER">
-                <A HREF="do_del.php?image_id=<?php echo $image['id'].'&'.$imageNav->getSearchLink(); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the image $1?', '&quot;'.htmlspecialchars($image['description'], ENT_QUOTES).'&quot'); ?>');"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/delete.png" BORDER="0" ALT="<?php putGS('Delete image $1',htmlspecialchars($image['description'])); ?>"></A>
-              	</TD>
-            	<?php
-         	}
-         	else {
-         		?>
-            	<TD ALIGN="CENTER">&nbsp;</TD>             		
-         		<?php
-         	}
+            if ($User->hasPermission('DeleteImage')) {
+            	if (!$image['in_use']) { ?>
+	            	<TD ALIGN="CENTER">
+	                <A HREF="do_del.php?image_id=<?php echo $image['id'].'&'.$imageNav->getSearchLink(); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the image $1?', '&quot;'.htmlspecialchars($image['description'], ENT_QUOTES).'&quot'); ?>');"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/delete.png" BORDER="0" ALT="<?php putGS('Delete image $1',htmlspecialchars($image['description'])); ?>"></A>
+	              	</TD>
+	            	<?php
+	         	}
+	         	else {
+	         		?>
+	            	<TD ALIGN="CENTER">&nbsp;</TD>             		
+	         		<?php
+	         	}
+            }
             ?>
         </TR>
     <?php
