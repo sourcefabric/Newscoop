@@ -73,7 +73,7 @@ regGS("You must complete the $1 field.","Vyplňte $1 pole");
 regGS("No such language.","Jazyk neexistuje");
 regGS("No such infotype.","Infotyp neexistuje");
 regGS("No such keyword.","Klíčové slovo neexistuje");
-regGS("No such publication.","Publikace neexistuje");
+regGS("Publication does not exist.","Publikace neexistuje");
 regGS("No such country.","Země neexistuje");
 regGS("No such issue.","Vydání neexistuje");
 regGS("No such topic.","Téma neexistuje");

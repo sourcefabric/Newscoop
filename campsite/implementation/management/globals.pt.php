@@ -87,7 +87,7 @@ regGS("You must complete the $1 field.","O campo $1 tem de ser preenchido.");
 regGS("No such language.","Idioma Desconhecido");
 regGS("No such infotype.","Informação-Tipo Desconhecida.");
 regGS("No such keyword.","Palavra-Chave Desconhecida.");
-regGS("No such publication.","Publicação Desconhecida.");
+regGS("Publication does not exist.","Publicação Desconhecida.");
 regGS("No such country.","País Desconhecido.");
 regGS("No such issue.","Edição Desconhecida.");
 regGS("No such topic.","Tema Desconhecido.");

@@ -32,7 +32,7 @@ if (!$languageObj->exists()) {
 
 $publicationObj =& new Publication($Pub);
 if (!$publicationObj->exists()) {
-	CampsiteInterface::DisplayError('No such publication.', $BackLink);
+	CampsiteInterface::DisplayError('Publication does not exist.', $BackLink);
 	exit;	
 }
 

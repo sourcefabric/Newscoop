@@ -73,7 +73,7 @@ regGS("You must complete the $1 field.","Das $1 Feld muss ausgefüllt werden");
 regGS("No such language.","Sprache nicht vorhanden");
 regGS("No such infotype.","Infotyp nicht vorhanden");
 regGS("No such keyword.","Stichwort nicht vorhanden");
-regGS("No such publication.","Publikation nicht vorhanden");
+regGS("Publication does not exist.","Publikation nicht vorhanden");
 regGS("No such country.","Land nicht vorhanden");
 regGS("No such issue.","Ausgabe nicht vorhanden");
 regGS("No such topic.","Thema existiert nicht");
