@@ -10,7 +10,7 @@
 // Version 3.0 developed by Mihai Bazon for InteractiveTools.
 //   http://dynarch.com/mishoo
 //
-// $Id: table-operations.js,v 1.1 2004/09/11 02:43:24 paul Exp $
+// $Id: table-operations.js,v 1.2 2004/10/09 12:32:35 paul Exp $
 
 // Object that will encapsulate all the table operations provided by
 // HTMLArea-3.0 (except "insert table" which is included in the main file)
@@ -23,7 +23,7 @@ function TableOperations(editor) {
 	var self = this;
 
 	// register the toolbar buttons provided by this plugin
-	var toolbar = ["linebreak"];
+	var toolbar = ["inserttable"];//["linebreak"];
 	for (var i in bl) {
 		var btn = bl[i];
 		if (!btn) {
@@ -40,7 +40,8 @@ function TableOperations(editor) {
 	}
 
 	// add a new line in the toolbar
-	cfg.toolbar.push(toolbar);
+	cfg.toolbar.splice(2, 0, toolbar);
+	//cfg.toolbar.push(toolbar);
 };
 
 TableOperations._pluginInfo = {
