@@ -1563,13 +1563,16 @@ Select
 <subscription_expression>
 |<user_expression>
 |<search_expression>
+|<login_expression>
 <subscription_expression> = Subscription section
 Generates a multiple select list for selecting sections in subscription form.
 <user_expression> = User 
 country |title |gender |age |employertype |pref1 |pref2 |pref3 |pref4
 The parameters (country, title, gender...) are fields describing the user information; they are self-explaining; pref1-pref4 are extra fields for storing some extra information; the publication administrator sets their meaning. Generates pop-up list or radio-button for selecting values for the above fields.
 <search_expression> = Search mode |level
-Generates a check box for selecting the search mode (match one or all keywords).
+Generates a check box for selecting the search mode (match at lease one or all keywords).
+<login_expression> = Login RememberUser
+Generates a check box; if checked the user session will be permanently remembered so the user will not have to login again.
 Constraints:
 Select Subscription can be used inside Subscription-EndSubscription statement only.
 Select User can be used inside User-EndUser statement only.
