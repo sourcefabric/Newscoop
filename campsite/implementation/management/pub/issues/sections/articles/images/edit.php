@@ -90,25 +90,25 @@ if (!$User->hasPermission('ChangeArticle')
 	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS('Description'); ?>:</TD>
 		<TD>
-		<INPUT TYPE="TEXT" NAME="cDescription" VALUE="<?php echo htmlspecialchars($imageObj->getDescription()); ?>" SIZE="32" MAXLENGTH="128">
+		<INPUT TYPE="TEXT" NAME="cDescription" VALUE="<?php echo htmlspecialchars($imageObj->getDescription()); ?>" class="input_text" SIZE="32" MAXLENGTH="128">
 		</TD>
 	</TR>
 	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS('Photographer'); ?>:</TD>
 		<TD>
-		<INPUT TYPE="TEXT" NAME="cPhotographer" VALUE="<?php echo htmlspecialchars($imageObj->getPhotographer());?>" SIZE="32" MAXLENGTH="64">
+		<INPUT TYPE="TEXT" NAME="cPhotographer" VALUE="<?php echo htmlspecialchars($imageObj->getPhotographer());?>" class="input_text" SIZE="32" MAXLENGTH="64">
 		</TD>
 	</TR>
 	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS('Place'); ?>:</TD>
 		<TD>
-		<INPUT TYPE="TEXT" NAME="cPlace" VALUE="<?php echo htmlspecialchars($imageObj->getPlace()); ?>" SIZE="32" MAXLENGTH="64">
+		<INPUT TYPE="TEXT" NAME="cPlace" VALUE="<?php echo htmlspecialchars($imageObj->getPlace()); ?>" class="input_text" SIZE="32" MAXLENGTH="64">
 		</TD>
 	</TR>
 	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS('Date'); ?>:</TD>
 		<TD>
-		<INPUT TYPE="TEXT" NAME="cDate" VALUE="<?php echo htmlspecialchars($imageObj->getDate()); ?>" SIZE="10" MAXLENGTH="10"><?php putGS('YYYY-MM-DD'); ?>
+		<INPUT TYPE="TEXT" NAME="cDate" VALUE="<?php echo htmlspecialchars($imageObj->getDate()); ?>" class="input_text" SIZE="10" MAXLENGTH="10"><?php putGS('YYYY-MM-DD'); ?>
 		</TD>
 	</TR>
 	<TR>
@@ -121,8 +121,8 @@ if (!$User->hasPermission('ChangeArticle')
 	    <INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php  p($Language); ?>">
 	    <INPUT TYPE="HIDDEN" NAME="sLanguage" VALUE="<?php  p($sLanguage); ?>">
 	    <INPUT TYPE="HIDDEN" NAME="Image" VALUE="<?php  p($Image); ?>">
-		<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save changes'); ?>">
-		<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='/priv/pub/issues/sections/articles/images/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&Section=<?php  p($Section); ?>'">
+		<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save changes'); ?>" class="button">
+		<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" class="button" ONCLICK="location.href='/priv/pub/issues/sections/articles/images/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&Section=<?php  p($Section); ?>'">
 		</DIV>
 		</TD>
 	</TR>
