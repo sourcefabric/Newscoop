@@ -378,6 +378,8 @@ void parent_sig_handler(int p_nSigNum)
 		cout << "stopping instance: " << (*coIt).second->getName() << endl;
 		(*coIt).second->stop();
 	}
+
+	exit(0);
 }
 
 
@@ -432,9 +434,20 @@ int main(int argc, char** argv)
 		cout << "instance: " << (*coIt).second->getName() << endl;
 		(*coIt).second->run();
 	}
-	int nStatus;
-	pid_t nChildPID = waitpid(-1, &nStatus, 0);
-	cout << "child " << nChildPID << " exited with status " << nStatus << endl;
+	while (true)
+	{
+		int nStatus;
+		pid_t nChildPID = waitpid(-1, &nStatus, 0);
+		cout << "child " << nChildPID << " exited with status " << nStatus << endl;
+		try {
+			CCampsiteInstance* pcoInstance = 
+					CCampsiteInstanceRegister::get().getCampsiteInstance(nChildPID);
+			pcoInstance->run();
+		}
+		catch (InvalidValue& rcoEx) {
+			cout << "child " << nChildPID << " not found" << endl;
+		}
+	}
 	exit(0);
 }
 
