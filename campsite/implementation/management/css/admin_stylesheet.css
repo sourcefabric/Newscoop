@@ -177,3 +177,11 @@ hr {
 	font-size: 14pt; 
 	color: #239f34;
 }
+
+.action_link {
+	font-weight: bold;
+}
+
+.action_link_container {
+	padding-left: 8px;
+}
