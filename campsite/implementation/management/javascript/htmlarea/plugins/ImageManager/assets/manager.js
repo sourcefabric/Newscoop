@@ -1,7 +1,7 @@
 /**
  * Functions for the ImageManager, used by manager.php only	
  * @author $Author: paul $
- * @version $Id: manager.js,v 1.1 2004/09/11 02:43:24 paul Exp $
+ * @version $Id: manager.js,v 1.2 2005/03/20 17:14:38 paul Exp $
  * @package ImageManager
  */
 	
@@ -52,7 +52,7 @@
 			setAlign(param["f_align"]);
 		}
 
-		document.getElementById("f_url").focus();
+		document.getElementById("f_alt").focus();
 	}
 
 
