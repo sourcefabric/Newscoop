@@ -524,6 +524,22 @@ class Article extends DatabaseObject {
 	
 
 	/**
+	 * Return true if the given user has permission to modify this article.
+	 * @return boolean
+	 */
+	function userCanModify($p_user) {
+		$userCreatedArticle = ($this->m_data['IdUser'] == $p_user->getId());
+		$articleIsNew = ($this->m_data['Published'] == 'N');
+		if ($p_user->hasPermission('ChangeArticle') || ($userCreatedArticle && $articleIsNew)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	} // fn userCanModify
+	
+	
+	/**
 	 * Get the name of the dynamic article type table.
 	 *
 	 * @return string
