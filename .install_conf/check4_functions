@@ -466,7 +466,7 @@ is_checked mysql_h && return 0
 check4_file mysql.h --file --path "/usr/include:/usr/include/mysql:/usr/local/include:/usr/local/include/mysql:/usr/local/mysql/include"
 result=$? && [ $result -ne 0 ] && return 1
 export MYSQL_H=$file_path
-export MYSQL_H_PATH=`cut_last_dirs $MYSQL_H 2`
+export MYSQL_H_PATH=`cut_last_dirs "$MYSQL_H" 1`
 set_checked mysql_h
 return 0
 }
