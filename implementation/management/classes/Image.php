@@ -86,7 +86,11 @@ class Image extends DatabaseObject {
 	 */
 	function inUse() {
 		global $Campsite;
-		$queryStr = 'SELECT IdImage FROM ArticleImages WHERE IdImage='.$this->getImageId();
+		// It is in use only if there is an entry in both
+		// the ArticleImages table and the Articles table.
+		$queryStr = 'SELECT Number FROM Articles, ArticleImages '
+					.' WHERE IdImage='.$this->getImageId()
+					.' AND Articles.Number=ArticlesImage.NrArticle';
 		if ($Campsite['db']->GetOne($queryStr)) {
 			return true;
 		}
