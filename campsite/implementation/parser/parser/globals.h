@@ -33,11 +33,9 @@ Global types
 #define _CMS_GLOBALS
 
 #include <stdexcept>
-#include <functional>
 
 using std::exception;
 using std::string;
-using std::binary_function;
 
 typedef unsigned int UInt;
 typedef unsigned long int ULInt;
@@ -75,22 +73,6 @@ inline InvalidValue::InvalidValue(const string& p_rcoName, const string& p_rcoVa
 {
 	m_coMsg = string("Invalid value \"") + p_rcoName + "\" of \"" + p_rcoValue + "\"";
 }
-
-inline int case_comp(const string& p_rcoS1, const string& p_rcoS2)
-{
-	return strcasecmp(p_rcoS1.c_str(), p_rcoS2.c_str());
-}
-
-inline int case_comp(const string& p_rcoS1, const string& p_rcoS2, int len)
-{
-	return strcasecmp(p_rcoS1.substr(0, len).c_str(), p_rcoS2.substr(0, len).c_str());
-}
-
-struct str_case_less : public binary_function<string, string, bool>
-{
-	bool operator ()(const string& first, const string& second) const
-	{ return case_comp(first, second) < 0; }
-};
 
 
 // other useful functions
