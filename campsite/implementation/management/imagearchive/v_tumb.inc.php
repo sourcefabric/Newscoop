@@ -1,7 +1,7 @@
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" WIDTH="100%">
     <TR BGCOLOR="#C0D0FF">
         <TD ALIGN="LEFT" VALIGN="TOP" WIDTH="5%">
-          <table border="0" cellspacing="0" cellpadding="0" width="100%"><tr><td><B><a href="<?php echo $IdHref; ?>"><?php  putGS("Tumbnail"); ?></a></B></td><td align="right"><?php echo $IdO; ?></td></tr></table>
+          <table border="0" cellspacing="0" cellpadding="0" width="100%"><tr><td><B><a href="<?php echo $IdHref; ?>"><?php  putGS("Thumbnail"); ?></a></B></td><td align="right"><?php echo $IdO; ?></td></tr></table>
         </TD>
         <TD ALIGN="LEFT" VALIGN="TOP" width="35%">
           <table border="0" cellspacing="0" cellpadding="0" width="100%"><tr><td><B><a href="<?php echo $DeHref; ?>"><?php  putGS("Description<BR><SMALL>(Click to view details)</SMALL>"); ?></a></B></td><td align="right"><?php echo $DeO; ?></td></tr></table>
@@ -77,6 +77,6 @@
         <?php  } ?><?php  if ($nr < $lpp+1) { ?>         | <?php  putGS('Next'); ?> &gt;&gt;
         <?php  } else { ?>         | <B><A HREF="<?php echo _DIR_; ?>index.php?<?php echo $Link['N']; ?>"><?php  putGS('Next'); ?> &gt;&gt</A></B>
         <?php  } ?></td>
-        <td colspan="3"><?php query ($baseq, 'q_counter'); putGS('$1 Images found total', $NUM_ROWS); ?></TD>
+        <td colspan="3"><?php query ($baseq, 'q_counter'); putGS('$1 images found', $NUM_ROWS); ?></TD>
     </TR>
 </TABLE>

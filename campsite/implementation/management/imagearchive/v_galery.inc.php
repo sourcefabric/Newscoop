@@ -48,6 +48,6 @@
         <?php  } ?><?php  if ($nr < $lpp+1) { ?>         | <?php  putGS('Next'); ?> &gt;&gt;
         <?php  } else { ?>         | <B><A HREF="<?php echo _DIR_; ?>index.php?<?php echo $Link['N']; ?>"><?php  putGS('Next'); ?> &gt;&gt</A></B>
         <?php  } ?></td>
-        <td colspan="3"><?php query ($baseq, 'q_counter'); putGS('$1 Images found total', $NUM_ROWS); ?></TD>
+        <td colspan="3"><?php query ($baseq, 'q_counter'); putGS('$1 images found', $NUM_ROWS); ?></TD>
     </TR>
 </TABLE>
