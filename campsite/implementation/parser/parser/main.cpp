@@ -202,7 +202,7 @@ void* MyThreadRoutine(void* p_pArg)
 		}
 		coOs.flush();
 		delete pParams;
-		delete pchMsg;
+		delete []pchMsg;
 		pcoClSock->Shutdown();
 		delete pcoClSock;
 	}
