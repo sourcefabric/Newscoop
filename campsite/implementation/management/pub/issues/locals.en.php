@@ -100,4 +100,7 @@ regGS("Issue template for publication $1 changed to $2","Issue template for publ
 regGS("Issue template for single articles from $1 changed to $2","Issue template for single articles from $1 changed to $2:en");
 regGS("The template could not be changed.","The template could not be changed.:en");
 
+// -- autopublish.php
+regGS("Delete entry", "Delete entry:en");
+
 ?>
