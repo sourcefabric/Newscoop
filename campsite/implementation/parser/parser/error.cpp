@@ -59,12 +59,14 @@ void CError::init()
 	messages[ERR_NOKEY] = "User key missing.";
 	messages[ERR_LOCKHASH] = "Error locking/unlocking parser hash.";
 	// parser errors
-	messages[PERR_ATOM_MISSING] = "internal error: atom missing.";
+	messages[PERR_ATOM_MISSING] = "internal parser error: atom missing "
+	                              "(report bug to http://bugs.campware.org)";
 	messages[PERR_STATEMENT_MISSING] = "statement missing";
 	messages[PERR_ATOM_NOT_STATEMENT] = "found atom, need statement";
 	messages[PERR_IDENTIFIER_MISSING] = "missing identifier";
 	messages[PERR_WRONG_STATEMENT] = "this statement is not allowed here";
-	messages[PERR_NO_ATOM_IN_LEXEM] = "internal error (no atom in lexem)";
+	messages[PERR_NO_ATOM_IN_LEXEM] = "internal parser error: no atom in lexem "
+	                                  "(report bug to http://bugs.campware.org)";
 	messages[PERR_END_STATEMENT_MISSING] = "found identifier; need end statement";
 	messages[PERR_NOT_VALUE] = "need value, not statement";
 	messages[PERR_INVALID_ATTRIBUTE] = "not a valid attribute";
@@ -85,7 +87,8 @@ void CError::init()
             "numeric: 1..12), %d(Day of the month, numeric: 00..31), %e(Day of the month, "
             "numeric: 0..31), %j(Day of year: 001..366), %D(Day of the month with "
             "english suffix: 1st, 2nd, 3rd, etc.), %%(% character";
-	messages[PERR_INTERNAL] = "parser internal error";
+	messages[PERR_INVALID_TEMPLATE] = "invalid template specified";
+	messages[PERR_INTERNAL] = "parser internal error (report bug to http://bugs.campware.org)";
 	// map errors
 	messages[EMAP_STAT] = "Unable to stat template file";
 	messages[EMAP_NOTREGFILE] = "Not a regular file";
