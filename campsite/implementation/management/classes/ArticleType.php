@@ -8,7 +8,10 @@ class ArticleType extends DatabaseObject {
 	var $m_dbTableName;
 	
 	/**
-	 * An 
+	 * An article type is a dynamic table that is created for an article
+	 * to allow different publications to display their content in different
+	 * ways.  
+	 *
 	 * @param string p_articleType
 	 * @param int p_articleId
 	 * @param int p_languageId
@@ -98,6 +101,12 @@ class ArticleType extends DatabaseObject {
 	} // fn getUserDefinedColumns
 
 	
+	/**
+	 * Get all article types that currently exist.
+	 * Returns an array of strings.
+	 *
+	 * @return array
+	 */ 
 	function GetAllTypes() {
 		global $Campsite;
 		$queryStr = "SHOW TABLES LIKE 'X%'";
