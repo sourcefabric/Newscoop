@@ -635,24 +635,27 @@ inline int CParser::HInclude(CActionList& al)
 		FatalPError(parse_err, PERR_INCLUDE_CICLE, MODE_PARSE, "", lex.prevLine(), lex.prevColumn());
 	child_tpl.insert(itpl_name);
 	CParser* p;
-	if ((p = m_coPMap.find(itpl_name)) == NULL)
-		p = new CParser(itpl_name);
+	int nErrCode = 0;
 	try
 	{
+		if ((p = m_coPMap.find(itpl_name)) == NULL)
+			p = new CParser(itpl_name);
 		p->parent_tpl.insert(parent_tpl.begin(), parent_tpl.end());
 		p->parse();
 	}
 	catch (ExStat& rcoEx)
 	{
-		return rcoEx.ErrNr();
+		nErrCode = rcoEx.ErrNr();
+		SetPError(parse_err, PERR_INVALID_TEMPLATE, MODE_PARSE, "", lex.prevLine(), lex.prevColumn());
 	}
 	catch (ExMutex& rcoEx)
 	{
-		return ERR_NOACCESS;
+		nErrCode = ERR_NOACCESS;
+		SetPError(parse_err, PERR_INVALID_TEMPLATE, MODE_PARSE, "", lex.prevLine(), lex.prevColumn());
 	}
 	al.insert(al.end(), new CActInclude(itpl_name, &m_coPMap));
 	WaitForStatementEnd(true);
-	return 0;
+	return nErrCode;
 }
 
 // HPublication: parse publication statement; add CActPublication action to actions list (al)
