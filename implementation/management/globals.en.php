@@ -322,7 +322,7 @@ regGS("Cancel", "Cancel:en");
 regGS("Done", "Done:en");
 regGS("New field", "New Field:en");
 regGS("OK", "OK:en");
-regGS("Save changes", "Save Changes:en");
+regGS("Save changes", "Save:en");
 regGS("Search", "Search:en");
 regGS("Add new field","Add New Field:en");
 
