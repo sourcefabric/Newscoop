@@ -1,10 +1,7 @@
 <?php 
-// -- index.m4
-
 // -- idx.m4
 regGS("Create new folder","Create new folder:en");
 regGS("Upload template","Upload template:en");
-regGS("Refresh templates directory", "Refresh templates directory:en");
 
 // -- do_new_dir.m4
 regGS("Creating new folder","Creating new folder:en");
@@ -37,8 +34,6 @@ regGS("No templates.","No templates.:en");
 
 regGS("Uploading template","Uploading template:en");
 regGS("File","File:en");
-regGS("Select","Select:en");
-regGS("Set template","Set template:en");
 regGS("File $1 already exists.", "File $1 already exists.:en");
 regGS("File $1 already exists. Old version deleted !", "File $1 already exists. Old version deleted !:en");
 regGS("The upload of $1 was successful !", "The upload of $1 was successful !:en");
@@ -50,7 +45,6 @@ regGS("Duplicate template", "Duplicate template:en");
 regGS("Edit template", "Edit template:en");
 regGS("Template", "Template:en");
 regGS("Save", "Save:en");
-regGS("Download", "Download:en");
 regGS("The template could not be saved", "The template could not be saved:en");
 regGS("The template has been saved.","The template has been saved.:en");
 regGS("The template $1 has been created.", "The template $1 has been created.:en");
@@ -64,14 +58,6 @@ regGS("Error converting the template to UTF-8 charset.", "Error converting the t
 regGS("Template charset", "Template charset");
 regGS("Select a language/character set", "Select a language/character set");
 regGS("All languages", "All languages");
-
-// refresh.m4
-regGS("There were the following errors while refreshing the template directory:", "There were the following errors while refreshing the template directory::en");
-regGS("Refreshing the templates directory", "Refreshing the templates directory:en");
-regGS("The templates directory was refreshed succesfully.", "The templates directory was refreshed succesfully.:en");
-regGS("There were $1 new template(s) found.", "There were $1 new template(s) found.:en");
-regGS("The following templates had been registered but are missing from the templates directory and were deleted:", "The following templates had been registered but are missing from the templates directory and were deleted::en");
-regGS("The following templates were registered and used but are missing from the templates directory:", "The following templates were registered and used but are missing from the templates directory::en");
 
 regGS("You do not have the right to modify templates.","You do not have the right to modify templates.:en");
 regGS("Invalid template file $1", "Invalid template file $1:en");
