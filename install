@@ -40,7 +40,6 @@ install_campsite()
     echo -e "\n\n###############################################\n\tInstalling campsite\n" >> install_log
     $MAKE install >> install_log 2>&1
     err_code=$?
-    rm -f .old_version
     if [ $err_code -ne 0 ]; then
 	rm -f ./campsite_upgrade
 	echo "ERROR."
