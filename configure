@@ -3,6 +3,11 @@
 export PREFIX=
 export USER_INSTALL=false
 
+if [ "`uname | grep BSD`" != "" ]; then
+    export BSD=1
+else
+    export BSD=0
+fi;
 if ! $USER_INSTALL; then
 	export ROOT_USER=root
 	if [ $BSD -eq 1 ]; then
