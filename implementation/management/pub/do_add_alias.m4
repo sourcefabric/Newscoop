@@ -75,6 +75,9 @@ B_MSGBOX(<*Adding new alias*>)
 	}
 
 	if ($created) {
+		$params = array($operation_attr=>$operation_modify, "IdPublication"=>"$cPub" );
+		$msg = build_reset_cache_msg($cache_type_publications, $params);
+		send_message($SERVER_ADDRESS, server_port(), $msg, $err_msg);
 ?>dnl
 		<LI><?php  putGS('The site alias $1 has been added to publication $2.', '<B>'.$cName.'</B>', '<B>'.getHVar($q_pub,'Name').'</B>'); ?></LI>
 		X_AUDIT(<*151*>, <*getGS('The site alias $1 has been added to publication $2.',$cName,getVar($q_pub,'Name'))*>)
