@@ -92,7 +92,7 @@ while [ "$1" != "" ]; do
     shift 1
 done
 my_id=`id -u`
-if [ "`uname | grep BSD &> /dev/null`" != "" ]; then
+if [ "`uname | grep BSD`" != "" ]; then
 	export BSD=1
 else
 	export BSD=0
