@@ -26,7 +26,7 @@ notifyevents: notifyevents.o readconf.o
 	strip notifyevents
 
 clean: dummy
-	rm -f $(LINKS) .env_vars *.o configure.h *~ notifyendsubs notifyevents
+	rm -f $(LINKS) *.o configure.h *~ notifyendsubs notifyevents
 	$(MAKE) -C smtp_wrapper clean
 
 readconf.o: readconf.cpp readconf.h

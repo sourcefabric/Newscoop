@@ -3,20 +3,6 @@
 cd ../..
 . ./make.env
 cd implementation/management
-. ${INSTALL_CONF}/conf_functions
-
-in_modified=false
-if [ -f macros.m4 ]; then
-    in_stat=`stat macros.in -t | cut -f 13 -d " "`
-    m4_stat=`stat macros.m4 -t | cut -f 13 -d " "`
-    if [ $in_stat -gt $m4_stat ]; then
-	in_modified=true
-    fi
-fi
-
-admin_vars="WWW_DIR WWW_COMMON_DIR HTML_COMMON_DIR CGI_COMMON_DIR SCRIPT_COMMON_DIR INCLUDE_COMMON_DIR PRIV_COMMON_DIR"
-var_not_modified $admin_vars CAMPSITE_VERSION && ! $in_modified && exit 0
-save_var $admin_vars CAMPSITE_VERSION
 
 echo -n -e "\t\tWriting macros.m4..."
 cat > macros.m4 << EOF
