@@ -5,7 +5,11 @@ export USER_INSTALL=false
 
 if ! $USER_INSTALL; then
 	export ROOT_USER=root
-	export ROOT_GROUP=root
+	if [ $BSD -eq 1 ]; then
+		export ROOT_GROUP=wheel
+	else
+		export ROOT_GROUP=root
+	fi
 else
 	export ROOT_USER=`id -un`
 	export ROOT_GROUP=`id -gn`
