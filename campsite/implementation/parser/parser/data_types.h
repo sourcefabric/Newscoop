@@ -137,6 +137,9 @@ public:
 	bool case_less_equal(const String& p_rcoOther) const
 	{ return case_comp(m_coValue, p_rcoOther.m_coValue) <= 0; }
 
+public:
+	const static string emptyString;
+
 private:
 	string m_coValue;
 };

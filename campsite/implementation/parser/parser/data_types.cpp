@@ -60,6 +60,10 @@ long int Integer::string2int(const string& p_rcoVal) throw(InvalidValue)
 }
 
 
+// String implementation
+const string String::emptyString = "";
+
+
 // Switch implementation
 
 string Switch::s_coValName[2] = { "OFF", "ON" };
