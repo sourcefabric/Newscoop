@@ -8,6 +8,7 @@ function HtmlArea_Campsite($dbColumns) {
 	//<![CDATA[
       _editor_url = "/javascript/htmlarea/";
       _editor_lang = "en";
+      _campsite_article_id = <?php echo $_REQUEST['Article']; ?>;
 	//]]>
 </script>    
 
