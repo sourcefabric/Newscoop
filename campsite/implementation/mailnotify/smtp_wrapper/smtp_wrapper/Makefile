@@ -27,13 +27,13 @@ mutex.o: mutex.cpp mutex.h
 	g++ -c -o mutex.o $(CFLAGS) mutex.cpp
 
 install: all
-	mkdir -p $(BIN_DIR)
-	cp -f smtp_wrapper $(BIN_DIR)
-	chown $(ROOT_USER):$(ROOT_GROUP) $(BIN_DIR)/smtp_wrapper
-	chmod 755 $(BIN_DIR)/smtp_wrapper
+	mkdir -p "$(BIN_DIR)"
+	cp -f smtp_wrapper "$(BIN_DIR)"
+	chown $(ROOT_USER):$(ROOT_GROUP) "$(BIN_DIR)/smtp_wrapper"
+	chmod 755 "$(BIN_DIR)/smtp_wrapper"
 
 uninstall: dummy
-	rm -f $(BIN_DIR)/smtp_wrapper
+	rm -f "$(BIN_DIR)/smtp_wrapper"
 
 dummy:
 
