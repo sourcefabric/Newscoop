@@ -1,6 +1,8 @@
 2.1.5
     - Added Chinese translation thanks to Andrew Lih and Tian Fawei at Hong Kong
     University, Journalism and Media Studies Centre
+    - Added Arabic localization (thanks to folks at www.rightsmedia.org in 
+    Lebanon)
     - Implemented article/section duplication feature
     - Implemented a small extension API in order to allow the Phorum modules to
     work with campsite (thanks to Sebastian Goebel)
