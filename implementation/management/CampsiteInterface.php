@@ -86,15 +86,16 @@ class CampsiteInterface {
 	 *		I'm not entirely sure what this is for.  I put it in for backward compatibility.
 	 */
 	function ArticleUrl($p_articleObj, $p_interfaceLanguageId, $p_targetFileName = "", $p_backLink = "") {
-		$str = '/priv/pub/issues/sections/articles/'.$p_targetFileName
-			.'?Pub='.$p_articleObj->getPublicationId()
-			.'&Issue='.$p_articleObj->getIssueId()
-			.'&Section='.$p_articleObj->getSectionId()
-			.'&Article='.$p_articleObj->getArticleId()
-			.'&Language='.$p_interfaceLanguageId
-			.'&sLanguage='.$p_articleObj->getLanguageId(); 
+		global $ADMIN;
+		$str = "/$ADMIN/pub/issues/sections/articles/".$p_targetFileName
+			."?Pub=".$p_articleObj->getPublicationId()
+			."&Issue=".$p_articleObj->getIssueId()
+			."&Section=".$p_articleObj->getSectionId()
+			."&Article=".$p_articleObj->getArticleId()
+			."&Language=".$p_interfaceLanguageId
+			."&sLanguage=".$p_articleObj->getLanguageId();
 		if ($p_backLink != "") { 
-			$str .='&Back='.urlencode($p_backLink); 
+			$str .="&Back=".urlencode($p_backLink);
 		} 
 		return $str;
 	} // fn ArticleUrl
