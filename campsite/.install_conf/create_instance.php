@@ -303,8 +303,7 @@ function create_site($p_defined_parameters)
 		'IMAGES_DIR'=>$instance_www_dir . "/html/images",
 		'THUMBNAILS_DIR'=>$instance_www_dir . "/html/images/thumbnails",
 		'TEMPLATES_DIR'=>$instance_www_dir . "/html/look",
-		'CGI_DIR'=>$instance_www_dir . "/cgi-bin",
-		'INCLUDE_DIR'=>$instance_www_dir . "/include");
+		'CGI_DIR'=>$instance_www_dir . "/cgi-bin");
 	// create directories
 	foreach ($instance_dirs as $dir_type=>$dir_name)
 		if (!is_dir($dir_name) && !mkdir($dir_name))
