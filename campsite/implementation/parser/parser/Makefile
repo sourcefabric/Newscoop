@@ -16,7 +16,7 @@ CFLAGS= -D_REENTRANT -Wall $(INCLUDE_PATH) $(CSOCKET_FLAGS)
 export CAMPSITE_SERVER=$(APP_NAME)_server
 export CAMPSITECTL=$(APP_NAME)ctl
 export CAMPSITEINIT=$(APP_NAME)
-export RC_INIT=/etc/rc.d/init.d/
+export RC_INIT=/etc/init.d/
 
 all: $(CAMPSITE_SERVER)
 
