@@ -6,14 +6,14 @@ all:
 
 install: dummy
 	mkdir -p $(CONF_DIR)
-	chown $(ROOT_USER).$(HTTP_GROUP) $(CONF_DIR)
+	chown $(ROOT_USER):$(HTTP_GROUP) $(CONF_DIR)
 	chmod 750 $(CONF_DIR)
 	echo "SERVER $(DATABASE_SERVER)" > $(CONF_DIR)/database.conf
 	echo "PORT $(DATABASE_PORT)" >> $(CONF_DIR)/database.conf
 	echo "USER $(DATABASE_USER)" >> $(CONF_DIR)/database.conf
 	echo "PASSWORD $(DATABASE_PASSWORD)" >> $(CONF_DIR)/database.conf
 	echo "NAME $(DATABASE_NAME)" >> $(CONF_DIR)/database.conf
-	chown $(ROOT_USER).$(HTTP_GROUP) $(CONF_DIR)/database.conf
+	chown $(ROOT_USER):$(HTTP_GROUP) $(CONF_DIR)/database.conf
 	chmod 640 $(CONF_DIR)/database.conf
 	mkdir -p $(CONF_DIR)/install
 	rm -f $(CONF_DIR)/install/.inst.modules
@@ -22,7 +22,7 @@ install: dummy
 	cp $(INSTALL_CONF)/.modules.conf $(CONF_DIR)/install
 	rm -f $(CONF_DIR)/install/.modules.desc
 	cp $(INSTALL_CONF)/.modules.desc $(CONF_DIR)/install
-	chown $(ROOT_USER).$(HTTP_GROUP) $(CONF_DIR)/install -R
+	chown -R $(ROOT_USER):$(HTTP_GROUP) $(CONF_DIR)/install
 	chmod 750 $(CONF_DIR)/install
 	chmod 640 $(CONF_DIR)/install/.inst.modules
 	chmod 640 $(CONF_DIR)/install/.modules.conf
