@@ -81,9 +81,10 @@ clean: dummy
 	$(MAKE) -C localizer clean
 
 uninstall: dummy
+# check the validity of the directory name
+	./check_dir_name "$(WWW_COMMON_DIR)"
 	rm -fr $(WWW_COMMON_DIR)/*
 	$(MAKE) -C cgi uninstall
 	$(MAKE) -C bin uninstall
-	$(MAKE) -C templates uninstall
 
 dummy:
