@@ -71,8 +71,8 @@ public:
 
 	const string& getURLTypeName() const { return m_coURLTypeName; }
 
-	static string getTemplate(long p_nLanguage, long p_nPublication, long p_nIssue,
-	                          long p_nSection, MYSQL* p_DBConn);
+	static string getTemplate(long p_nLanguage, long p_nPublication, long p_nIssue, long p_nSection,
+	                          long p_nArticle, MYSQL* p_DBConn, bool p_bIsPublished = true);
 
 	static string getIssueTemplate(long p_nLanguage, long p_nPublication, long p_nIssue, 
 	                               MYSQL* p_DBConn);
