@@ -138,13 +138,8 @@ if ($showSections) {
 		<?php  if ($What) { ?>
 
 		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3">
-		<TR>
-			<TD colspan="3" style="font-weight: bold; font-size: 10pt; padding-top: 0px">
-				<?php  putGS("Your articles"); ?>
-			</TD>
-		</TR>
 		<TR class="table_list_header">
-			<TD ALIGN="LEFT" VALIGN="TOP" width="98%"><?php  putGS("Name<BR><SMALL>(click to edit article)</SMALL>"); ?></TD>
+			<TD ALIGN="LEFT" VALIGN="TOP" width="98%"><?php  putGS("Your articles"); ?></TD>
 			<TD ALIGN="center" VALIGN="TOP" WIDTH="1%" ><?php  putGS("Language"); ?></TD>
 			<TD ALIGN="center" VALIGN="TOP" WIDTH="1%" ><?php  putGS("Status"); ?></TD>
 		</TR>
@@ -226,14 +221,8 @@ if ($showSections) {
 			// Submitted articles
 			?>
 		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3">
-		<tr>
-			<td valign="top" colspan="2" style="font-weight: bold; font-size: 10pt; padding-top: 0px;">
-				<?php putGS("Submitted articles"); ?>
-			</td>
-		</tr>
-		
 		<TR class="table_list_header">
-			<TD ALIGN="left" VALIGN="TOP" width="99%"><?php  putGS("Name<BR><SMALL>(click to edit article)</SMALL>"); ?></TD>
+			<TD ALIGN="left" VALIGN="TOP" width="99%"><?php  putGS("Submitted articles"); ?></TD>
 			<TD ALIGN="center" VALIGN="TOP" width="1%"><?php  putGS("Language"); ?></TD>
 		</TR>
 		<?php 
