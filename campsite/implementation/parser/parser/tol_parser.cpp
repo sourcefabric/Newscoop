@@ -1271,7 +1271,8 @@ inline int TOLParser::HList(TOLPActionList& al, int level, int sublevel, const T
 	}
 	// check for order params (Article)
 	TOLParameterList ord_params;
-	if (st->statement == TOL_ST_ARTICLE && l->m_Res == TOL_LEX_STATEMENT)
+	if ((st->statement == TOL_ST_ARTICLE || st->statement == TOL_ST_SEARCHRESULT)
+	    && l->m_Res == TOL_LEX_STATEMENT)
 	{
 		CheckForAtom(l);
 		CheckForAtomType(l->m_pcoAtom, CL_TOLSTATEMENT, PERR_ATOM_NOT_STATEMENT,
