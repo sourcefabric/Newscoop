@@ -56,10 +56,10 @@ E_CURRENT
 <P>
 B_DIALOG(<*Change publication information*>, <*POST*>, <*do_edit.php*>)
 	B_DIALOG_INPUT(<*Name*>)
-		<INPUT TYPE="TEXT" NAME="cName" VALUE="<? pgetHVar($q_pub,'Name'); ?>" SIZE="32" MAXLENGTH="32">
+		<INPUT TYPE="TEXT" NAME="cName" VALUE="<? pgetHVar($q_pub,'Name'); ?>" SIZE="32" MAXLENGTH="255">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Site*>)
-		<INPUT TYPE="TEXT" NAME="cSite" VALUE="<? pgetHVar($q_pub,'Site'); ?>" SIZE="32" MAXLENGTH="128">
+		<INPUT TYPE="TEXT" NAME="cSite" VALUE="<? pgetHVar($q_pub,'Site'); ?>" SIZE="32" MAXLENGTH="255">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Default language*>)
 	    <SELECT NAME="cLanguage">
