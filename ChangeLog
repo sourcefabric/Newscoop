@@ -4,8 +4,9 @@
     - Manual updates relative to the FreeBSD port
     - Manual update: 2.1.4 User management: write about the admin user and it's
     use in email notifiers
-    - Small template language improvement: ability to specify the image number
-    when printig image attributes (3.9.4.2 Print)
+    - Small template language improvements: ability to specify the image number
+    when printig image attributes (3.9.4.2 Print), accept empty strings as
+    identifiers
 
 2.1.1
     - Added new languages: Serbian (Cyrillic), Spanish, Bosnian and updated
