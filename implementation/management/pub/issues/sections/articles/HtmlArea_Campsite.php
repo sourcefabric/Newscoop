@@ -1,6 +1,8 @@
 <?php
 
 function HtmlArea_Campsite($dbColumns) {
+	global $Campsite;
+	global $ADMIN;
 	?>	
 <script type="text/javascript">
 	//<![CDATA[
@@ -103,6 +105,8 @@ HTMLArea.loadPlugin("ListType");
 
 initdocument = function () {
 	<?php
+	$stylesheetFile = $Campsite['HTML_COMMON_DIR'] 
+		.'/priv/pub/issues/sections/articles/article_stylesheet.css';
 	foreach ($dbColumns as $dbColumn) {	
 		if (stristr($dbColumn->getType(), "blob")) {
 			?>
@@ -110,7 +114,7 @@ initdocument = function () {
  			var config = editor.config;
  			// Import our custom CSS - watch out for newlines though!
  			// They will break the editor.
-			config.pageStyle = "<?php echo str_replace("\n", "", file_get_contents("article_stylesheet.css")); ?>";
+			config.pageStyle = "<?php echo str_replace("\n", "", file_get_contents($stylesheetFile)); ?>";
 	 		config.registerButton({
 	 			// The ID of the button.
 				id        : "campsite-subhead", 
