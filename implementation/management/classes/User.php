@@ -4,50 +4,52 @@ require_once($_SERVER['DOCUMENT_ROOT']."/classes/DatabaseObject.php");
 
 class User extends DatabaseObject {
 	var $m_dbTableName = "Users";
-	var $m_primaryKeyColumnNames = array("Id");
+	var $m_keyColumnNames = array("Id");
+	var $m_keyIsAutoIncrement = true;
 	var $m_permissions = array();
-	var $Id;
-	var $KeyId;
-	var $Name;
-	var $UName;
-	var $Password;
-	var $EMail;
-	var $Reader;
-	var $City;
-	var $StrAddress;
-	var $State;
-	var $CountryCode;
-	var $Phone;
-	var $Fax;
-	var $Contact;
-	var $Phone2;
-	var $Title;
-	var $Gender;
-	var $Age;
-	var $PostalCode;
-	var $Employer;
-	var $EmployerType;
-	var $Position;
-	var $Interests;
-	var $How;
-	var $Languages;
-	var $Improvements;
-	var $Pref1;
-	var $Pref2;
-	var $Pref3;
-	var $Pref4;
-	var $Field1;
-	var $Field2;
-	var $Field3;
-	var $Field4;
-	var $Field5;
-	var $Text1;
-	var $Text2;
-	var $Text3;
+	var $m_columnNames = array(
+		"Id",
+		"KeyId",
+		"Name",
+		"UName",
+		"Password",
+		"EMail",
+		"Reader",
+		"City",
+		"StrAddress",
+		"State",
+		"CountryCode",
+		"Phone",
+		"Fax",
+		"Contact",
+		"Phone2",
+		"Title",
+		"Gender",
+		"Age",
+		"PostalCode",
+		"Employer",
+		"EmployerType",
+		"Position",
+		"Interests",
+		"How",
+		"Languages",
+		"Improvements",
+		"Pref1",
+		"Pref2",
+		"Pref3",
+		"Pref4",
+		"Field1",
+		"Field2",
+		"Field3",
+		"Field4",
+		"Field5",
+		"Text1",
+		"Text2",
+		"Text3");
 	
 	function User($p_userId = null) {
-		parent::DatabaseObject();
-		$this->Id = $p_userId;
+		parent::DatabaseObject($this->m_columnNames);
+		$this->setProperty("Id", $p_userId, false);
 		if (!is_null($p_userId) && ($p_userId > 0)) {
 			$this->fetch();
 		}
@@ -59,7 +61,7 @@ class User extends DatabaseObject {
 		parent::fetch($p_recordSet);
 		// Fetch the user's permissions.
 		$queryStr = "SELECT * FROM UserPerm "
-					." WHERE IdUser=".$this->Id;
+					." WHERE IdUser=".$this->getProperty("Id");
 		$permissions = $Campsite["db"]->GetRow($queryStr);
 		if ($permissions) {
 			// Make m_permissions a boolean array.
@@ -71,19 +73,19 @@ class User extends DatabaseObject {
 	
 	
 	function getId() {
-		return $this->Id;
+		return $this->getProperty("Id");
 	} // fn getId
 	
 	function getKeyId() {
-		return $this->KeyId;
+		return $this->getProperty("KeyId");
 	} // fn getKeyId
 	
 	function getName() {
-		return $this->Name;
+		return $this->getProperty("Name");
 	} // fn getName
 	
 	function getUName() {
-		return $this->UName;
+		return $this->getProperty("UName");
 	} // fn getUName
 
 	
@@ -103,7 +105,7 @@ class User extends DatabaseObject {
 	 *		boolean - whether the login was successful
 	 *		object - if successful, the user object
 	 */
-	function login($p_userName, $p_userPassword) {
+	function Login($p_userName, $p_userPassword) {
 		global $Campsite;
 		$queryStr = "SELECT Id FROM Users "
 					." WHERE UName='$p_userName' "
@@ -122,7 +124,7 @@ class User extends DatabaseObject {
 		else {
 			return array(false, null);
 		}
-	} // fn login
+	} // fn Login
 } // class User
 
 ?>

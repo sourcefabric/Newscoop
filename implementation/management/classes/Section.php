@@ -4,32 +4,33 @@ require_once($_SERVER['DOCUMENT_ROOT']."/classes/DatabaseObject.php");
 
 class Section extends DatabaseObject {
 	var $m_dbTableName = "Sections";
-	var $m_primaryKeyColumnNames = array("IdPublication", 
-										 "NrIssue",
-										 "IdLanguage",
-										 "Number");
-	var $IdPublication;
-	var $NrIssue;
-	var $IdLanguage;
-	var $Number;
-	var $Name;
-	var $ShortName;
-	var $SectionTplId;
-	var $ArticleTplId;
+	var $m_keyColumnNames = array("IdPublication", 
+								  "NrIssue",
+								  "IdLanguage",
+								  "Number");
+	var $m_columnNames = array(
+		"IdPublication",
+		"NrIssue",
+		"IdLanguage",
+		"Number",
+		"Name",
+		"ShortName",
+		"SectionTplId",
+		"ArticleTplId");
 	
 	function Section($p_publication, $p_issue, $p_language, $p_section = null) {
-		parent::DatabaseObject();
-		$this->IdPublication = $p_publication;
-		$this->NrIssue = $p_issue;
-		$this->IdLanguage = $p_language;
-		$this->Number = $p_section;
+		parent::DatabaseObject($this->m_columnNames);
+		$this->setProperty("IdPublication", $p_publication, false);
+		$this->setProperty("NrIssue", $p_issue, false);
+		$this->setProperty("IdLanguage", $p_language, false);
+		$this->setProperty("Number", $p_section, false);
 		if (!is_null($p_section)) {
 			$this->fetch();
 		}
 	} // fn Section
 
 	
-	function getSectionsInIssue($p_publicationId, $p_issueId, $p_languageId) {
+	function GetSectionsInIssue($p_publicationId, $p_issueId, $p_languageId) {
 		global $Campsite;
 		$queryStr = "SELECT * FROM Sections"
 					." WHERE IdPublication='".$p_publicationId."'"
@@ -43,35 +44,35 @@ class Section extends DatabaseObject {
 			$sections[] = $tmpSection;
 		}
 		return $sections;		
-	} // fn getAllSectionsInIssue
+	} // fn GetSectionsInIssue
 	
 	function getPublicationId() {
-		return $this->IdPublication;
+		return $this->getProperty("IdPublication");
 	} // fn getPublicationId
 	
 	
 	function getIssueId() {
-		return $this->NrIssue;
+		return $this->getProperty("NrIssue");
 	} // fn getIssueId
 	
 	
 	function getLanguageId() {
-		return $this->IdLanguage;
+		return $this->getProperty("IdLanguage");
 	} // fn getLanguageId
 	
 	
 	function getSectionId() {
-		return $this->Number;
+		return $this->getProperty("Number");
 	} // fn getSectionId
 
 	
 	function getName() {
-		return $this->Name;
+		return $this->getProperty("Name");
 	} // fn getName
 	
 	
 	function getShortName() {
-		return $this->ShortName;
+		return $this->getProperty("ShortName");
 	} // fn getShortName
 	
 } // class Section
