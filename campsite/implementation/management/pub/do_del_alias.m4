@@ -47,7 +47,7 @@ B_MSGBOX(<*Deleting alias*>)
 		query ("DELETE FROM Aliases WHERE Id='$Alias'");
 	if ($AFFECTED_ROWS > 0) { ?>dnl
 		<LI><?php  putGS('The alias $1 has been deleted from publication $2.','<B>'.getHVar($q_alias,'Name').'</B>','<B>'.getHVar($q_pub,'Name').'</B>'); ?></LI>
-		X_AUDIT(<*5*>, <*getGS('The alias $1 has been deleted from publication $2.',getVar($q_alias,'Name'),getVar($q_pub, 'Name'))*>)
+		X_AUDIT(<*152*>, <*getGS('The alias $1 has been deleted from publication $2.',getVar($q_alias,'Name'),getVar($q_pub, 'Name'))*>)
 <?php
 	} else {
 ?>dnl
