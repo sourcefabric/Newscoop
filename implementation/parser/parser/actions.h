@@ -1204,8 +1204,8 @@ public:
 	virtual int takeAction(CContext& c, sockstream& fs);
 };
 
-// CActURL: URL action - corresponding to URL statement (see manual)
-class CActURL : public CAction
+// CActURI: URI action - corresponding to URI statement (see manual)
+class CActURI : public CAction
 {
 protected:
 	CActURIPath m_coURIPath;
@@ -1213,18 +1213,18 @@ protected:
 
 public:
 	// constructor
-	CActURL(bool fs = false, bool as = false, id_type i = -1, CLevel r_fl = CLV_ROOT,
+	CActURI(bool fs = false, bool as = false, id_type i = -1, CLevel r_fl = CLV_ROOT,
 	        id_type tpl = -1, TPubLevel lvl = CMS_PL_ARTICLE)
 		: m_coURIPath(tpl, lvl), m_coURLParameters(fs, as, i, r_fl, tpl, lvl) {}
 
 	// destructor
-	virtual ~CActURL() {}
+	virtual ~CActURI() {}
 
 	// action: return action identifier
-	virtual TAction action() const { return CMS_ACT_URL; }
+	virtual TAction action() const { return CMS_ACT_URI; }
 
 	// clone this object
-	virtual CAction* clone() const { return new CActURL(*this); }
+	virtual CAction* clone() const { return new CActURI(*this); }
 
 	// takeAction: performs the action
 	// Parametes:
