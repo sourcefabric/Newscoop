@@ -642,6 +642,104 @@ function build_restart_server_msg()
 	return $msg;
 }
 
+function verify_templates($templates_dir, &$missing_templates, &$deleted_templates, $errors)
+{
+	$templates_dir = trim($templates_dir);
+	if (!is_dir($templates_dir))
+		return $templates_dir . "is not a valid directory";
+	if ($templates_dir[strlen($templates_dir) - 1] != '/')
+		$templates_dir .= '/';
+
+	$sql = "select * from Templates order by Level, Name";
+	if (!($res = mysql_query($sql))) {
+		$errors[] = "Unable to read templates from the database";
+		return false;
+	}
+	while ($row = mysql_fetch_array($res)) {
+		$id = 0 + $row['Id'];
+		$name = $row['Name'];
+
+		$file_path = $templates_dir . $name;
+		if (!is_file($file_path))
+		{
+			$sql = "select count(*) as nr from Issues where IssueTplId = " . $id
+				 . " or SectionTplId = " . $id . " or ArticleTplId = " . $id;
+			if (!($res_nr = mysql_query($sql))) {
+				$errors[] = "Unable to read from the database";
+				continue;
+			}
+			$row_nr = mysql_fetch_array($res_nr);
+			$used = 0 + $row_nr['nr'];
+
+			$sql = "select count(*) as nr from Sections where SectionTplId = " . $id
+				 . " or ArticleTplId = " . $id;
+			if (!($res_nr = mysql_query($sql))) {
+				$errors[] = "Unable to read from the database";
+				continue;
+			}
+			$row_nr = mysql_fetch_array($res_nr);
+			$used += $row_nr['nr'];
+
+			if ($used > 0) {
+				$missing_templates[$id] = $name;
+			} else {
+				$sql = "delete from Templates where Id = " . $id;
+				if (!mysql_query($sql)) {
+					$errors = "Unable to delete template " . $name . " from the database";
+					continue;
+				}
+				$deleted_templates[$id] = $name;
+			}
+		}
+	}
+	return true;
+}
+
+function register_templates($dir, $root_dir, &$errors, $level = 0)
+{
+	$dir = trim($dir);
+	$root_dir = trim($root_dir);
+	if (!$dh = @opendir($dir)) {
+		$errors[] = "Unable to open directory " . $dir;
+		return -1;
+	}
+
+	$count = 0;
+	while ($file = readdir($dh)) {
+		if ($file == "." || $file == "..")
+			continue;
+
+		$full_path = $dir . "/" . $file;
+		$filetype = filetype($full_path);
+		if ($filetype == "dir") {
+			$count += register_templates($full_path, $root_dir, $errors, $level + 1);
+			continue;
+		}
+
+		if ($filetype != "file") // ignore special files and links
+			continue;
+		$ending = substr($file, strlen($file) - 4);
+		if ($ending != ".tpl") // ignore files that are not templates (end in .tpl)
+			continue;
+
+		$rel_path = substr($full_path, strlen($root_dir) + 1);
+		$sql = "select count(*) as nr from Templates where Name = '" . $rel_path . "'";
+		if (!($res = mysql_query($sql))) {
+			$errors[] = "Unable to read from the database";
+			continue;
+		}
+		$row = mysql_fetch_array($res);
+		if ($row['nr'] > 0)
+			continue;
+		$sql = "insert ignore into Templates (Name, Level) values('"
+		     . $rel_path . "', " . $level . ")";
+		if (!mysql_query($sql))
+			$errors[] = "Unable to insert template " . $rel_path;
+		$count++;
+	}
+	return $count;
+}
+
 if (file_exists ($_SERVER['DOCUMENT_ROOT'].'/priv/modules/admin/priv_functions.php'))
   include ($_SERVER['DOCUMENT_ROOT'].'/priv/modules/admin/priv_functions.php');
 ?>
