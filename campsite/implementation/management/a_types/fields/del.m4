@@ -1,59 +1,59 @@
 B_HTML
+INCLUDE_PHP_LIB(<*../..*>)
 B_DATABASE
 
 CHECK_BASIC_ACCESS
-CHECK_ACCESS({DeleteArticleTypes})
+CHECK_ACCESS(<*DeleteArticleTypes*>)
 
 B_HEAD
 	X_EXPIRES
-	X_TITLE({Delete Field})
-	<!sql if $access == 0>
-		X_AD({You do not have the right to delete article type fields.})
-	<!sql endif>
+	X_TITLE(<*Delete field*>)
+	<? if ($access == 0) { ?>
+		X_AD(<*You do not have the right to delete article type fields.*>)
+	<? } ?>
 E_HEAD
 
-<!sql if $access>
+<? if ($access) { ?>
 B_STYLE
 E_STYLE
 
 B_BODY
 
-<!sql setdefault AType "">dnl
-<!sql setdefault Field "">dnl
+<? todef('AType');
+todef('Field');?>dnl
 
-B_HEADER({Delete Field})
+B_HEADER(<*Delete field*>)
 B_HEADER_BUTTONS
-X_HBUTTON({Fields}, {a_types/fields/?AType=<!sql print #AType>})
-X_HBUTTON({Article Types}, {a_types/})
-X_HBUTTON({Home}, {home.xql})
-X_HBUTTON({Logout}, {logout.xql})
+X_HBUTTON(<*Fields*>, <*a_types/fields/?AType=<? print encURL($AType); ?>*>)
+X_HBUTTON(<*Article Types*>, <*a_types/*>)
+X_HBUTTON(<*Home*>, <*home.php*>)
+X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
 B_CURRENT
-X_CURRENT({Article type:}, {<B><!sql print ~AType></B>})
+X_CURRENT(<*Article type*>, <*<B><? print encHTML($AType); ?></B>*>)
 E_CURRENT
 
 <P>
-B_MSGBOX({Delete field})
-	X_MSGBOX_TEXT({<LI>Are you sure you want to delete the field <B><!sql print ~Field></B>?</LI>
-		<LI>You will also delete all fields with this name from all articles of this type from all publications.</LI>})
+B_MSGBOX(<*Delete field*>)
+	X_MSGBOX_TEXT(<*<LI><? putGS('Are you sure you want to delete the field $1?','<B>'.encHTML($Field).'</B>'); ?></LI>
+		<LI><? putGS('You will also delete all fields with this name from all articles of this type from all publications.'); ?></LI>*>)
 	B_MSGBOX_BUTTONS
-		<FORM METHOD="POST" ACTION="do_del.xql">
-		<INPUT TYPE="HIDDEN" NAME="AType" VALUE="<!sql print ~AType>">
-		<INPUT TYPE="HIDDEN" NAME="Field" VALUE="<!sql print ~Field>">
+		<FORM METHOD="POST" ACTION="do_del.php">
+		<INPUT TYPE="HIDDEN" NAME="AType" VALUE="<? print encHTML($AType); ?>">
+		<INPUT TYPE="HIDDEN" NAME="Field" VALUE="<? print encHTML($Field); ?>">
 		<INPUT TYPE="IMAGE" NAME="Yes" SRC="X_ROOT/img/button/yes.gif" BORDER="0"></A>
-		<A HREF="X_ROOT/a_types/fields/?AType=<!sql print #AType>"><IMG SRC="X_ROOT/img/button/no.gif" BORDER="0" ALT="No"></A>
+		<A HREF="X_ROOT/a_types/fields/?AType=<? print encURL($AType); ?>"><IMG SRC="X_ROOT/img/button/no.gif" BORDER="0" ALT="No"></A>
 		</FORM>
 	E_MSGBOX_BUTTONS
 E_MSGBOX
 <P>
-<!sql free s>
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<!sql endif>
+<? } ?>
 
 E_DATABASE
 E_HTML

@@ -1,107 +1,124 @@
 B_HTML
+INCLUDE_PHP_LIB(<*../..*>)
 B_DATABASE
 
 CHECK_BASIC_ACCESS
 
 B_HEAD
 	X_EXPIRES
-	X_TITLE({Article Type Fields})
-	<!sql if $access == 0>
+	X_TITLE(<*Article type fields*>)
+	<? if ($access == 0) { ?>
 		X_LOGOUT
-	<!sql endif>
-<!sql query "SHOW COLUMNS FROM Articles LIKE 'XXYYZZ'" q_col>dnl
+	<? }
+    query ("SHOW COLUMNS FROM Articles LIKE 'XXYYZZ'", 'q_col'); ?>dnl
 E_HEAD
 
-<!sql if $access>dnl
+<? if ($access) { 
 
-SET_ACCESS({mata}, {ManageArticleTypes})
+SET_ACCESS(<*mata*>, <*ManageArticleTypes*>)
 
+?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
 
-B_HEADER({Article Type Fields})
+B_HEADER(<*Article type fields*>)
 B_HEADER_BUTTONS
-X_HBUTTON({Article Types}, {a_types/})
-X_HBUTTON({Home}, {home.xql})
-X_HBUTTON({Logout}, {logout.xql})
+X_HBUTTON(<*Article Types*>, <*a_types/*>)
+X_HBUTTON(<*Home*>, <*home.php*>)
+X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
 B_CURRENT
-X_CURRENT({Article type:}, {<B><!sql print ~AType></B>})
+X_CURRENT(<*Article type*>, <*<B><? print encHTML($AType); ?></B>*>)
 E_CURRENT
 
-<!sql if ?mata != 0>
-<P>X_NEW_BUTTON({Add new field}, {add.xql?AType=<!sql print ~AType>})
-<!sql endif>
+<? if ($mata != 0) { ?>
+<P>X_NEW_BUTTON(<*Add new field*>, <*add.php?AType=<? print encHTML($AType); ?>*>)
+<? } ?>
 
 
 <P>
-<!sql set NUM_ROWS 0>dnl
-<!sql query "SHOW COLUMNS FROM X?AType LIKE 'F%'" q_col>
-<!sql if $NUM_ROWS>dnl
-<!sql setdefault AFOffs 0><!sql if ($AFOffs <= 0)><!sql set AFOffs 0><!sql endif>dnl
-<!sql setexpr be $AFOffs><!sql set en 0>dnl
-<!sql set color 0>dnl
+<? 
+    query ("SHOW COLUMNS FROM X$AType LIKE 'F%'", 'q_col'); 
+    if ($NUM_ROWS) {
+	todefnum('AFOffs');
+	if ($AFOffs <= 0)   $AFOffs= 0;
+	$lpp=20;
+	$be= $AFOffs;
+	$en= 0;
+	$color= 0;
+?>dnl
 B_LIST
 	B_LIST_HEADER
-		X_LIST_TH({Name})
-		X_LIST_TH({Type})
-	<!sql if ?mata != 0>
-		X_LIST_TH({Delete}, {1%})
-	<!sql endif>
+		X_LIST_TH(<*Name*>)
+		X_LIST_TH(<*Type*>)
+	<? if ($mata != 0) { ?>
+		X_LIST_TH(<*Delete*>, <*1%*>)
+	<? } ?>
 	E_LIST_HEADER
-<!sql print_loop q_col>dnl
-<!sql if (0 < $be)>dnl
-<!sql setexpr be ($be - 1)>dnl
-<!sql else>dnl
-<!sql if ($en < 10)>dnl
-<!sql query "SELECT SUBSTRING('?q_col.0', 2)" q_ss>dnl
+<?
+    $nr=$NUM_ROWS;
+    for ($loop=0;$loop<$nr;$loop++) {
+	fetchRowNum($q_col);
+	if (0 < $be)
+	    $be--;
+	else {
+	    if ($en < $lpp) {
+	    $table=substr ( getNumVar ( $q_col,0),1);
+	    ?>
 	B_LIST_TR
 		B_LIST_ITEM
-			<!sql print ~q_ss.0>&nbsp;
-		E_LIST_ITEM
+			<? print encHTML($table); ?>&nbsp;
+    		E_LIST_ITEM
 		B_LIST_ITEM
-<!sql query "SELECT REPLACE(REPLACE(REPLACE('?q_col.1', 'mediumblob', 'Article body'), 'varchar(100)', 'Text '), 'date', 'Date')" q_rr>dnl
-			<!sql print ~q_rr.0>&nbsp;
-<!sql free q_rr>dnl
+<?
+    $desc=getNumVar($q_col,1);
+    $desc=str_replace('mediumblob',getGS('Article body'),$desc);
+    $desc=str_replace('varchar(100)',getGS('Text'),$desc);
+    $desc=str_replace('date',getGS('Date'),$desc);
+    print encHTML($desc);
+?>&nbsp;
 		E_LIST_ITEM
-	<!sql if ?mata != 0>
-		B_LIST_ITEM({CENTER})
-			X_BUTTON({Delete field <!sql print ~q_ss.0>}, {icon/x.gif}, {a_types/fields/del.xql?AType=<!sql print #AType>&Field=<!sql print #q_ss.0>})
+	<? if ($mata != 0) { ?>
+		B_LIST_ITEM(<*CENTER*>)
+			X_BUTTON(<*<? putGS('Delete field $1',encHTML($table)); ?>*>, <*icon/x.gif*>, <*a_types/fields/del.php?AType=<? print encURL($AType); ?>&Field=<? print encURL($table); ?>*>)
 		E_LIST_ITEM
-	<!sql endif>
+	<? } ?>
 	E_LIST_TR
-<!sql free q_ss>dnl
-<!sql endif>dnl
-<!sql setexpr en ($en + 1)>dnl
-<!sql endif>dnl
-<!sql done>dnl
+<? }
+    $en++;
+    
+    }	    
+}
+    ?>dnl
 	B_LIST_FOOTER
-<!sql if ($AFOffs <= 0)>dnl
+<?
+    if ($AFOffs <= 0) { ?>dnl
 		X_PREV_I
-<!sql else>dnl
-		X_PREV_A({X_ROOT/a_types/fields/?AType=<!sql print #AType>&AFOffs=<!sql eval ($AFOffs - 10)>})
-<!sql endif>dnl
-<!sql if (10 < $en)>dnl
-		X_NEXT_A({X_ROOT/a_types/fields/?AType=<!sql print #AType>&AFOffs=<!sql eval ($AFOffs + 10)>})
-<!sql else>dnl
+<? } else { ?>dnl
+		X_PREV_A(<*X_ROOT/a_types/fields/?AType=<? print encURL($AType); ?>&AFOffs=<? print ($AFOffs - $lpp); ?>*>)
+<? }
+    if ($lpp < $en) { ?>dnl
+		X_NEXT_A(<*X_ROOT/a_types/fields/?AType=<? print encURL($AType); ?>&AFOffs=<? print ($AFOffs + $lpp); ?>*>)
+<? } else { ?>dnl
 		X_NEXT_I
-<!sql endif>dnl
+<? } ?>dnl
 	E_LIST_FOOTER
 E_LIST
-<!sql else>dnl
+<? } else { ?>dnl
 <BLOCKQUOTE>
-	<LI>No fields.</LI>
+	<LI><? putGS('No fields.'); ?></LI>
 </BLOCKQUOTE>
-<!sql endif>dnl
+<? } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<!sql endif>dnl
+<? } ?>dnl
 
 E_DATABASE
 E_HTML
+
