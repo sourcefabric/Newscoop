@@ -7,7 +7,7 @@ CHECK_ACCESS(<*ManageArticleTypes*>)
 
 B_HEAD
 	X_EXPIRES
-	X_TITLE(<*Add New Field*>)
+	X_TITLE(<*Add new field*>)
 <? if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to add article type fields.*>)
 <? } ?>dnl
