@@ -281,12 +281,27 @@ void CURLShortNames::BuildURI() const
 	if (m_bValidURI)
 		return;
 
+	if ("" == getValue(P_IDLANG))
+	{
+		m_coURIPath = "";
+		m_coQueryString = getQueryString();
+		m_bValidURI = true;
+		return;
+	}
+
 	CMYSQL_RES coRes;
 	string coQuery = string("select Code from Languages where Id = ") + getValue(P_IDLANG);
 	MYSQL_ROW qRow = QueryFetchRow(m_pDBConn, coQuery.c_str(), coRes);
 	if (qRow == NULL)
 		throw InvalidValue("language identifier", getValue(P_IDLANG));
 	m_coURIPath = string("/") + qRow[0] + "/";
+
+	if ("" == getValue(P_NRISSUE))
+	{
+		m_coQueryString = getQueryString();
+		m_bValidURI = true;
+		return;
+	}
 
 	string coIssueSN, coSectionSN, coArticleSN, coLang = getValue(P_IDLANG);
 	string coPubCond, coIssueCond, coSectionCond, coArticleCond;
