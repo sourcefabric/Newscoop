@@ -2,7 +2,6 @@
 
 rm -f $BIN_DIR/notifyendsubs
 rm -f $BIN_DIR/notifyevents
-rm -f $CONF_DIR/smtp.conf
 
 if $USER_INSTALL; then exit 0; fi
 
@@ -11,7 +10,7 @@ if [ -f /etc/crontab ]; then
     uninstall_cron_task "$BIN_DIR/notifyendsubs" /etc/crontab
     uninstall_cron_task "$BIN_DIR/notifyevents" /etc/crontab
 fi
-uninstall_cron_task "$BIN_DIR/notifyendsubs" "/etc/cron.d/${APP_NAME}_subs" || exit 1
-uninstall_cron_task "$BIN_DIR/notifyevents" "/etc/cron.d/${APP_NAME}_events" || exit 1
+uninstall_cron_task "$BIN_DIR/notifyendsubs" "/etc/cron.d/notifyendsubs" || exit 1
+uninstall_cron_task "$BIN_DIR/notifyevents" "/etc/cron.d/notifyevents" || exit 1
 restart_cron
 exit 0

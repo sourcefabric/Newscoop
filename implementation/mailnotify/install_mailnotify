@@ -14,7 +14,7 @@ if [ -f /etc/crontab ]; then
     uninstall_cron_task "$BIN_DIR/notifyendsubs" /etc/crontab
     uninstall_cron_task "$BIN_DIR/notifyevents" /etc/crontab
 fi
-install_cron_task "0" "*/8" "*" "*" "*" "$ROOT_USER" "$BIN_DIR/notifyendsubs" "/etc/cron.d/${APP_NAME}_subs" || exit 1
-install_cron_task "*/2" "*" "*" "*" "*" "$ROOT_USER" "$BIN_DIR/notifyevents" "/etc/cron.d/${APP_NAME}_events" || exit 1
+install_cron_task "0" "*/8" "*" "*" "*" "$ROOT_USER" "$BIN_DIR/notifyendsubs" "/etc/cron.d/notifyendsubs" || exit 1
+install_cron_task "*/2" "*" "*" "*" "*" "$ROOT_USER" "$BIN_DIR/notifyevents" "/etc/cron.d/notifyevents" || exit 1
 restart_cron || exit 1
 exit 0
