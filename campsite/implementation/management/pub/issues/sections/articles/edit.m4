@@ -219,7 +219,7 @@ X_NEW_BUTTON(<*Duplicate*>, <*X_ROOT/pub/issues/sections/articles/fduplicate.php
 
 B_DIALOG(<*Edit article details*>, <*POST*>, <*do_edit.php*>)
 	B_DIALOG_INPUT(<*Name*>)
-		<INPUT TYPE="TEXT" NAME="cName" SIZE="64" MAXLENGTH="64" VALUE="<? pgetHVar($q_art,'Name'); ?>">
+		<INPUT TYPE="TEXT" NAME="cName" SIZE="64" MAXLENGTH="140" VALUE="<? pgetHVar($q_art,'Name'); ?>">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Type*>)
 		<B><? pgetHVar($q_art,'Type'); ?></B>
