@@ -3,7 +3,7 @@ OBJ_FILES=main.o lex.o atoms.o parser.o actions.o util.o error.o\
  thread.o process_req.o attributes.o data_types.o operators.o
 
 LDFLAGS=-L$(LIBMYSQLCLIENT_PATH) -L$(LIBPTHREAD_PATH)
-LIBS=-lmysqlclient $(NSL_LINK) -lm -lz -lcrypt $(PTHREAD_LINK)
+LIBS=-lmysqlclient $(NSL_LINK) -lm -lz $(LIBCRYPT_LINK) $(PTHREAD_LINK)
 
 DEPENDENCES= *.h
 

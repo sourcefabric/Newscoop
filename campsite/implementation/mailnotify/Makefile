@@ -22,11 +22,11 @@ links: dummy
 	done
 
 notifyendsubs: notifyendsubs.o readconf.o
-	g++ -o notifyendsubs notifyendsubs.o readconf.o -L$(LIBMYSQLCLIENT_PATH) -lmysqlclient $(NSL_LINK) -lm -lz -lcrypt
+	g++ -o notifyendsubs notifyendsubs.o readconf.o -L$(LIBMYSQLCLIENT_PATH) -lmysqlclient $(NSL_LINK) -lm -lz $(LIBCRYPT_LINK)
 	strip notifyendsubs
 
 notifyevents: notifyevents.o readconf.o
-	g++ -o notifyevents notifyevents.o readconf.o -L$(LIBMYSQLCLIENT_PATH) -lmysqlclient $(NSL_LINK) -lm -lz -lcrypt
+	g++ -o notifyevents notifyevents.o readconf.o -L$(LIBMYSQLCLIENT_PATH) -lmysqlclient $(NSL_LINK) -lm -lz $(LIBCRYPT_LINK)
 	strip notifyevents
 
 clean: dummy
