@@ -33,6 +33,7 @@ E_HEADER
 	todefnum('cCurrency');
 	todefnum('cPaid');
 	todefnum('cTrial');
+	todefnum('cURLType');
 
 	$correct = 1;
 	$created = 0;
