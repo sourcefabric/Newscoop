@@ -1,25 +1,9 @@
-B_HTML
 INCLUDE_PHP_LIB(<*$ADMIN_DIR/pub*>)
 B_DATABASE
 
 CHECK_BASIC_ACCESS
 
 B_HEAD
-<script>
-<!--
-/*
-A slightly modified version of "Break-out-of-frames script"
-By JavaScript Kit (http://javascriptkit.com)
-*/
-
-if (window != top.fmain && window != top) {
-    if (top.fmenu)
-        top.fmain.location.href=location.href
-    else
-        top.location.href=location.href
-}
-// -->
-</script>
     X_EXPIRES
     X_TITLE(<*Publications*>)
 <?php  if ($access == 0) { ?>dnl
