@@ -22,7 +22,7 @@ if ($validUser) {
 	"http://www.w3.org/TR/REC-html40/loose.dtd">
 <HTML>
 <HEAD>
-   	<LINK rel="stylesheet" type="text/css" href="<?php $Campsite["website_url"] ?>/css/admin_stylesheet.css">
+   	<LINK rel="stylesheet" type="text/css" href="<?php $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
 	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<META HTTP-EQUIV="Expires" CONTENT="now">
 	<TITLE><?php  putGS("Login failed"); ?></TITLE>

@@ -13,7 +13,7 @@ class CampsiteInterface {
 		?>
 		<TABLE width="100%" style="border-top: 1px solid black;"><tr><td style="padding-left: 5px;">
 		<a style="font-size:8pt; color: black;" href="http://www.campware.org" target="campware">
-		Campsite <?php echo $Campsite["version"] ?> &copy 1999-2005 MDLF, 
+		Campsite <?php echo $Campsite['VERSION'] ?> &copy 1999-2005 MDLF, 
 		maintained and distributed under GNU GPL by CAMPWARE
 		</a>
 		</td></tr></table>

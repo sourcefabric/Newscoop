@@ -34,10 +34,10 @@ $showObsoleteMenu = ($User->hasPermission("ManageDictionary")
 <HEAD>
     <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<META HTTP-EQUIV="Expires" CONTENT="now">
-	<script language="JavaScript" src="<?php echo $Campsite["website_url"]; ?>/javascript/JSCookMenu/JSCookMenu.js" type="text/javascript"></script>
-	<LINK REL="stylesheet" HREF="<?php echo $Campsite["website_url"]; ?>/javascript/JSCookMenu/ThemeOffice/theme.css" TYPE="text/css">
-	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite["website_url"]; ?>/css/admin_stylesheet.css">
-<script language="JavaScript" src="<?php echo $Campsite["website_url"]; ?>/javascript/JSCookMenu/ThemeOffice/theme.js" type="text/javascript"></script>
+	<script language="JavaScript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/JSCookMenu/JSCookMenu.js" type="text/javascript"></script>
+	<LINK REL="stylesheet" HREF="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/JSCookMenu/ThemeOffice/theme.css" TYPE="text/css">
+	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
+<script language="JavaScript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/JSCookMenu/ThemeOffice/theme.js" type="text/javascript"></script>
 	<SCRIPT LANGUAGE="JavaScript"><!--
 	var myMenu =
 	[
@@ -137,7 +137,7 @@ $showObsoleteMenu = ($User->hasPermission("ManageDictionary")
 	];
 	--></SCRIPT>
 
-	<TITLE>Campsite <?php p($Campsite['version']); ?></TITLE>
+	<TITLE>Campsite <?php p($Campsite['VERSION']); ?></TITLE>
 </HEAD>
 
 <BODY>
@@ -148,7 +148,7 @@ $showObsoleteMenu = ($User->hasPermission("ManageDictionary")
 		<tr>
 			<td style="padding-left: 5px; padding-right: 10px; padding-top: 2px; padding-bottom: 2px; font-size: 14pt; font-weight: bold; color: black; font-style: Verdana;" align="left" valign="middle">
 				<IMG SRC="/admin/img/sign_big.gif" BORDER="0" align="middle">
-				Campsite v<?php p($Campsite['version']); ?>
+				Campsite v<?php p($Campsite['VERSION']); ?>
 			</td>
 			<td style="padding-left: 2px;">
 			<DIV ID="myMenuID"></DIV>
