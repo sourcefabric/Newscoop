@@ -28,6 +28,9 @@ install: dummy
 	cp -f "$(INSTALL_CONF)/create_instance.php" "$(BIN_DIR)"
 	chown $(ROOT_USER):$(APACHE_GROUP) "$(BIN_DIR)/create_instance.php"
 	chmod 644 "$(BIN_DIR)/create_instance.php"
+	cp -f "$(INSTALL_CONF)/campsite_config" "$(BIN_DIR)"
+	chown $(ROOT_USER):$(APACHE_GROUP) "$(BIN_DIR)/campsite_config"
+	chmod 755 "$(BIN_DIR)/campsite_config"
 	cp -f "$(INSTALL_CONF)/install_conf.php" "$(ETC_DIR)"
 	cp -f "$(INSTALL_CONF)/vhost-template.conf" "$(ETC_DIR)"
 	cp -f "$(INSTALL_CONF)/parser_conf.php" "$(ETC_DIR)"
@@ -44,7 +47,7 @@ default_instance:
 
 clean:
 	$(MAKE) -C implementation clean
-	rm -f install_log uninstall_log "$(INSTALL_CONF)/create_instance"
+	rm -f install_log uninstall_log "$(INSTALL_CONF)/campsite_config"
 
 distclean: clean
 	rm -f make.env
