@@ -47,7 +47,7 @@ if ($access) {
 		$publish=0;
 
 ?>
-<BODY  BGCOLOR="WHITE" TEXT="BLACK" LINK="DARKBLUE" ALINK="RED" VLINK="DARKBLUE">
+<BODY>
 
 <?php  todefnum('Pub'); ?>
 <?php  function tplRedirect($s){

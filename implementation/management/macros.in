@@ -40,8 +40,8 @@ define(<*X_LOGOUT*>, <*X_REFRESH(0; URL=X_ROOT/logout.php)*>)dnl
 define(<*X_AD*>, <*X_REFRESH(0; URL=X_ROOT/ad.php?ADReason=<?php  print encURL(getGS("$1" ifelse(<*$2*>, <**>, <**>, <*,$2*>))); ?>)*>)dnl
 define(<*B_STYLE*>, <* *>)dnl
 define(<*E_STYLE*>, <* *>)dnl
-define(<*B_BODY*>, <*<BODY $1 BGCOLOR="WHITE" TEXT="BLACK" LINK="DARKBLUE" ALINK="RED" VLINK="DARKBLUE">*>)dnl
-define(<*B_BODY_SPECIAL*>, <*<BODY BGCOLOR="WHITE" TEXT="BLACK" LINK="DARKBLUE" ALINK="RED" VLINK="DARKBLUE" ONUNLOAD="check()">*>)dnl
+define(<*B_BODY*>, <*<BODY $1>*>)dnl
+define(<*B_BODY_SPECIAL*>, <*<BODY ONUNLOAD="check()">*>)dnl
 define(<*E_BODY*>, <*</BODY>*>)dnl
 define(<*B_MBODY*>, <*<BODY BGCOLOR="#D0D0B0" TEXT="BLACK" LINK="DARKBLUE" ALINK="RED" VLINK="DARKBLUE">*>)dnl
 define(<*E_MBODY*>, <*</BODY>*>)dnl
