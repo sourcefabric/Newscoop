@@ -360,13 +360,33 @@ class HtmlGenerator{
     }
 
     
+	private String toCampUpperCase(String big){
+	    String work=new String(big);
+	    String sw= new String("ß");
+	    String with= new String("s");
+	    StringBuffer t;
+
+	    int i;
+	    while ((i=work.indexOf(sw))!=-1)
+	    {
+	        t=new StringBuffer();
+	        t.append(work.substring(0,i));
+	        t.append(with);
+	        t.append(work.substring(i+sw.length()));
+	        work=new String(t);
+	    }
+
+	    work= work.toUpperCase();
+	    return work;
+	}
+
 	private String replacer(String big,String small,String with,boolean ignoreCase){
 	    String work=new String(big);
 	    String upper;
 	    String sw;
 	    StringBuffer t;
-	    if (!ignoreCase) sw=new String(small); else sw=small.toUpperCase();
-	    if (!ignoreCase) upper=work; else upper=work.toUpperCase();
+	    if (!ignoreCase) sw=new String(small); else sw=toCampUpperCase(small);
+	    if (!ignoreCase) upper=work; else upper=toCampUpperCase(work);
 	    int i;
 	    while ((i=upper.indexOf(sw))!=-1)
 	    {
@@ -375,7 +395,7 @@ class HtmlGenerator{
 	        t.append(with);
 	        t.append(work.substring(i+small.length()));
 	        work=new String(t);
-    	    if (!ignoreCase) upper=work; else upper=work.toUpperCase();
+    	    if (!ignoreCase) upper=work; else upper=toCampUpperCase(work);
 	    }
 	    return work;
 	}
