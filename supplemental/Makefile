@@ -11,7 +11,7 @@ install: $(ALL)
 	$(MAKE) -C mysql_connect install
 	if [ -f swingall.jar ]; then \
 	    cp swingall.jar $(CLASS_DIR); \
-	    chown $(ROOT_USER).$(HTTP_GROUP) $(CLASS_DIR)/swingall.jar; \
+	    chown $(ROOT_USER):$(HTTP_GROUP) $(CLASS_DIR)/swingall.jar; \
 	    chmod 644 $(CLASS_DIR)/swingall.jar; \
 	fi
 
