@@ -1,6 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
 load_common_include_files("$ADMIN_DIR/imagearchive");
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ImageSearch.php');
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
@@ -15,8 +16,8 @@ if (!$User->hasPermission('AddImage')) {
 	header("Location: /$ADMIN/logout.php");
 	exit;	
 }
-$view = isset($_REQUEST['view'])?$_REQUEST['view']:'thumbnail';
-$imageNav =& new ImageNav($_REQUEST, CAMPSITE_IMAGEARCHIVE_IMAGES_PER_PAGE, $view);
+$view = Input::Get('view', 'string', 'thumbnail', true);
+$imageNav =& new ImageNav(CAMPSITE_IMAGEARCHIVE_IMAGES_PER_PAGE, $view);
 query ("SELECT LEFT(NOW(), 10)", 'q_now');
 fetchRowNum($q_now);
 
