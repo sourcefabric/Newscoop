@@ -764,8 +764,8 @@ int CStatementMap::InitStatements()
 
 	this->insert(pcoSt);
 
-	// URL statement
-	pcoSt = new CStatement(CMS_ST_URL, ST_URL);
+	// URI statement
+	pcoSt = new CStatement(CMS_ST_URI, ST_URI);
 
 	pcoCtx = new CStatementContext(CMS_CT_DEFAULT);
 	pcoCtx->insertAttr(new CStringAttr("template"));
