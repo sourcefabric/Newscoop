@@ -8,6 +8,9 @@ class Language extends DatabaseObject {
 	var $m_keyIsAutoIncrement = true;
 	var $m_columnNames = array('Id', 'Name', 'Code');
 	
+	/** 
+	 * Constructor.
+	 */
 	function Language($p_languageId = null) {
 		parent::DatabaseObject($this->m_columnNames);
 		$this->setProperty('Id', $p_languageId, false);
@@ -16,9 +19,14 @@ class Language extends DatabaseObject {
 		}
 	} // constructor
 	
-	function getAllLanguages() {
+	
+	/**
+	 * Return an array of all languages (array of Language objects).
+	 * @return array
+	 */
+	function GetAllLanguages() {
 		global $Campsite;
-		$queryStr = 'SELECT * FROM Languages';
+		$queryStr = 'SELECT * FROM Languages ORDER BY Name';
 		$query = $Campsite['db']->Execute($queryStr);
 		$languages = array();
 		while ($row = $query->FetchRow()) {
@@ -27,17 +35,28 @@ class Language extends DatabaseObject {
 			$languages[] = $tmpLanguage;
 		}
 		return $languages;
-	} // fn getAllLanguages
+	} // fn GetAllLanguages
 
+	
+	/**
+	 * @return int
+	 */
 	function getLanguageId() {
 		return $this->getProperty('Id');
 	} // fn getLanguageId
 	
 	
+	/**
+	 * @return string
+	 */
 	function getName() {
 		return $this->getProperty('Name');
 	} // fn getName
 	
+	
+	/**
+	 * @return string
+	 */
 	function getCode() {
 		return $this->getProperty('Code');
 	} // fn getCode
