@@ -5,8 +5,8 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/User.php');
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
 list($validUser, $user) = User::Login($_REQUEST["UserName"], $_REQUEST["UserPassword"]);
 $selectLanguage = isset($_REQUEST["selectlanguage"])?$_REQUEST["selectlanguage"]:"";
-if ($selectlanguage == "") {
-	$selectlanguage='en';
+if ($selectLanguage == "") {
+	$selectLanguage='en';
 }
 if ($validUser) {
 	if (function_exists ("incModFile")) {
