@@ -11,12 +11,14 @@ regGS("URL Type", "URL Type:en");
 regGS("Country<BR><SMALL>(click to edit)</SMALL>","Country<BR><SMALL>(click to edit)</SMALL>:en");
 regGS("Delete entry $1","Delete entry $1:en");
 regGS("No entries defined.","No entries defined.:en");
+regGS("Back to publication","Back to publication:en");
 
 // -- edit.m4
 regGS("Change publication information","Change publication information:en");
 regGS("You do not have the right to edit publication information.","You do not have the right to edit publication information.:en");
 regGS("General attributes", "General attributes:en");
 regGS("Subscriptions defaults", "Subscriptions defaults:en");
+regGS("Countries defaults", "Countries defaults:en");
 
 // -- do_edit.m4
 regGS("Changing publication information","Changing publication information:en");

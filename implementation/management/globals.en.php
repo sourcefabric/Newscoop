@@ -89,9 +89,10 @@ regGS("Change","Change:en");
 regGS("Add new issue","Add new issue:en");
 regGS("Add new topic","Add new topic:en");
 regGS("Delete topic","Delete topic:en");
+regGS("Edit languages","Edit languages:en");
 
 regGS("Default Language","Default Language:en");
-regGS("Subscription Default Time","Subscription Default Time:en");
+regGS("Countries Subscription Default Time","Countries Subscription Default Time:en");
 regGS("Pay Period","Pay Period:en");
 regGS("Info","Info:en");
 regGS("Trial Period","Trial Period:en");
