@@ -5,8 +5,8 @@ MY_TARGETS=dummy
 all: $(MY_TARGETS)
 
 install: $(ALL)
-	mkdir -p $(PRIV_DIR2)
-	cp -f *.php $(PRIV_DIR2)/
+	mkdir -p "$(PRIV_DIR2)"
+	cp -f *.php "$(PRIV_DIR2)/"
 
 clean:
 	rm -f *~ $(MY_TARGETS)

@@ -8,8 +8,8 @@ all: $(MY_TARGETS)
 	$(M4) ../../macros.m4 $< >$@
 
 install: $(ALL)
-	mkdir -p $(PRIV_DIR3)
-	cp -f *.php $(PRIV_DIR3)/
+	mkdir -p "$(PRIV_DIR3)"
+	cp -f *.php "$(PRIV_DIR3)/"
 
 clean:
 	rm -f *~ $(MY_TARGETS)
