@@ -5,7 +5,7 @@
 	<TITLE>CAMPSITE manual Version 2.1</TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.1  (Linux)">
 	<META NAME="CREATED" CONTENT="20020913;19124500">
-	<META NAME="CHANGED" CONTENT="20030313;21312600">
+	<META NAME="CHANGED" CONTENT="20030401;17074000">
 	<STYLE>
 	<!--
 		@page { size: 21.59cm 27.94cm }
@@ -421,7 +421,7 @@ style.</P>
 </OL>
 <UL>
 	<LI><P STYLE="margin-top: 0cm">Dump tables structure only:</P>
-	<P STYLE="margin-top: 0cm"><I>mysqldump ... [database] -d &gt;
+	<P STYLE="margin-top: 0cm"><I>mysqldump ... -d [database] &gt;
 	tables.sql</I></P>
 </UL>
 <P STYLE="margin-top: 0cm">where [database] should be replaced by the
@@ -431,7 +431,7 @@ parameters (user, host etc.)</P>
 	<LI><P STYLE="margin-top: 0cm">Dump data for tables that need not be
 	converted to UTF:</P>
 	<UL>
-		<P STYLE="margin-top: 0cm"><I>mysqldump ... [database] -t --tables
+		<P STYLE="margin-top: 0cm"><I>mysqldump ... -t --tables [database]
 		ArticleIndex AutoId Events \</I></P>
 		<UL>
 			<P STYLE="margin-top: 0cm"><I>Images KeywordIndex SubsByIP
@@ -462,34 +462,34 @@ tables if CAMPSITE upgrade took place already.</P>
 	identifiers. In order to read the language identifiers and character
 	sets log in to CAMPSITE database and run the following sql: &ldquo;select
 	Name, Id, CodePage from Languages&rdquo;.</P>
-	<LI><P STYLE="margin-top: 0cm"><I>mysqldump ... [database] -t
-	--tables Articles Classes Countries \</I></P>
+	<LI><P STYLE="margin-top: 0cm"><I>mysqldump ... -t &ndash;tables
+	--where=&quot;IdLanguage = [l1] or IdLanguage = [l2]...&quot; \</I></P>
 	<OL>
-		<P STYLE="margin-top: 0cm"><I>Dictionary Errors Issues
-		KeywordClasses Sections TimeUnits \</I></P>
-		<P STYLE="margin-top: 0cm"><I>--where=&quot;IdLanguage = [l1] or
-		IdLanguage = [l2]...&quot; &gt; data_[charsetn]_1.sql</I></P>
+		<P STYLE="margin-top: 0cm"><I>[database] Articles Classes Countries
+		Dictionary Errors Issues \</I></P>
+		<P STYLE="margin-top: 0cm"><I>KeywordClasses Sections TimeUnits &gt;
+		data_[charsetn]_1.sql</I></P>
 	</OL>
 	<LI><P STYLE="margin-top: 0cm"><I>mysqldump ... [database] -t
-	--tables Publications \</I></P>
+	--tables \</I></P>
 	<OL>
 		<P STYLE="margin-top: 0cm"><I>--where=&quot;IdDefaultLanguage =
 		[l1] or IdDefaultLanguage = [l2]...&quot; \</I></P>
-		<P STYLE="margin-top: 0cm"><I>&gt; data_[charsetn]_2.sql</I></P>
+		<P STYLE="margin-top: 0cm"><I>Publications &gt;
+		data_[charsetn]_2.sql</I></P>
 	</OL>
-	<LI><P STYLE="margin-top: 0cm"><I>mysqldump ... [database] -t
-	--tables Languages \</I></P>
+	<LI><P STYLE="margin-top: 0cm"><I>mysqldump ... -t --tables
+	--where=&quot;Id = [l1] or Id = [l2]...&quot; [database] \</I></P>
 	<OL>
-		<P STYLE="margin-top: 0cm"><I>--where=&quot;Id = [l1] or Id =
-		[l2]...&quot; &gt; data_[charsetn]_3.sql</I></P>
+		<P STYLE="margin-top: 0cm"><I>Languages &gt; data_[charsetn]_3.sql</I></P>
 	</OL>
 	<LI><P STYLE="margin-top: 0cm">make a list of all X tables (tables
 	whose names start with X) and dump their data:</P>
-	<P STYLE="margin-top: 0cm"><I>mysqldump ... [database] -t --tables
-	[list_of_X_tables] \</I></P>
+	<P STYLE="margin-top: 0cm"><I>mysqldump ... -t --tables
+	--where=&quot;IdLanguage = [l1] or IdLanguage = [l2]...&quot; \</I></P>
 	<OL>
-		<P STYLE="margin-top: 0cm"><I>--where=&quot;IdLanguage = [l1] or
-		IdLanguage = [l2]...&quot; &gt; data_[charsetn]_4.sql</I></P>
+		<P STYLE="margin-top: 0cm"><I>[database] [list_of_X_tables] &gt;
+		data_[charsetn]_4.sql</I></P>
 	</OL>
 </OL>
 <P STYLE="margin-top: 0cm">Replace [l1], [l2] with language
@@ -510,7 +510,7 @@ and remove &ldquo;--where&rdquo; clause from commands.</FONT></P>
 </P>
 <P STYLE="margin-top: 0cm">Select the character set for Log and dump
 Log table data:</P>
-<P STYLE="margin-top: 0cm">	<I>mysqldump ... [database] -t --tables
+<P STYLE="margin-top: 0cm">	<I>mysqldump ... -t --tables [database]
 Log &gt; data_log.sql</I></P>
 <P STYLE="margin-top: 0cm">Selecting the character set for Log table
 data: decide which language you use most often when logging in to
