@@ -62,10 +62,10 @@ object.
 class CUpdateThread : public CThread
 {
 private:
-	virtual void* run();
+	virtual void* Run();
 };
 
-void* CUpdateThread::run()
+void* CUpdateThread::Run()
 {
 	while (true)
 	{
@@ -333,7 +333,8 @@ int main(int argc, char** argv)
 	{
 		CServerSocket coServer("0.0.0.0", TOL_SRV_PORT);
 		CUpdateThread coUpdateThread;
-		if (!coUpdateThread.IsRunning())
+		coUpdateThread.run();
+		if (!coUpdateThread.isRunning())
 			throw ExThread(ThreadSvAbort, "Error starting update thread.");
 		ThreadPool coThreadPool(1, nMaxThreads, MyThreadRoutine, NULL);
 		CTCPSocket* pcoClSock = NULL;
