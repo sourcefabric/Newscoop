@@ -50,6 +50,16 @@ public:
 		: m_coURI(""), m_pDBConn(p_pDBConn)
 		{ setURL(p_rcoURLMessage); }
 
+	// CURLShortNames(): copy constructor
+	CURLShortNames(const CURLShortNames& p_rcoSrc);
+
+	// clone(): create a clone
+	CURL* clone() const;
+
+	virtual void setValue(const string& p_rcoParameter, long p_nValue);
+
+	virtual void setValue(const string& p_rcoParameter, const string& p_rcoValue);
+
 	// setURL(): sets the URL object value
 	virtual void setURL(const CMsgURLRequest& p_rcoURLMessage);
 
@@ -73,6 +83,7 @@ private:
 	void readQueryString(const string& p_rcoQueryString);
 
 private:
+	mutable bool m_bValidURI;
 	mutable string m_coURI;  // caches the URI string
 	mutable MYSQL* m_pDBConn;  // caches the connection to the database
 
@@ -95,6 +106,23 @@ public:
 
 
 // CURLShortNames inline methods
+
+inline CURL* CURLShortNames::clone() const
+{
+	return new CURLShortNames(*this);
+}
+
+inline void CURLShortNames::setValue(const string& p_rcoParameter, long p_nValue)
+{
+	CURL::setValue(p_rcoParameter, p_nValue);
+	m_bValidURI = false;
+}
+
+inline void CURLShortNames::setValue(const string& p_rcoParameter, const string& p_rcoValue)
+{
+	CURL::setValue(p_rcoParameter, p_rcoValue);
+	m_bValidURI = false;
+}
 
 inline string CURLShortNames::getURI() const
 {
