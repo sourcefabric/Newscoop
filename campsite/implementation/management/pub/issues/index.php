@@ -82,7 +82,7 @@ if ($access) {
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="1" WIDTH="100%" class="current_location_table">
 <TR>
 	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php  putGS("Publication"); ?>:</TD>
-	<TD VALIGN="TOP" class="current_location_content"><B><?php  pgetHVar($q_pub,'Name'); ?></B></TD>
+	<TD VALIGN="TOP" class="current_location_content"><?php  pgetHVar($q_pub,'Name'); ?></TD>
 </TR>
 </TABLE>
 
