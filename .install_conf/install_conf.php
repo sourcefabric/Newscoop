@@ -8,8 +8,7 @@ $Campsite['ETC_DIR'] = '/usr/local/campsite/etc';
 $Campsite['WWW_DIR'] = '/usr/local/campsite/www';
 $Campsite['WWW_COMMON_DIR'] = '/usr/local/campsite/www-common';
 
-$campsite_local_vars['install'] = array("APACHE_USER", "APACHE_GROUP", "CAMPSITE_DIR",
-	"BIN_DIR", "ETC_DIR", "WWW_DIR", "WWW_COMMON_DIR");
+$CampsiteVars['install'] = array("APACHE_USER", "APACHE_GROUP", "CAMPSITE_DIR", "BIN_DIR", "ETC_DIR", "WWW_DIR", "WWW_COMMON_DIR");
 
 ?>
 
