@@ -1,5 +1,6 @@
 <?php 
-require_once($_SERVER['DOCUMENT_ROOT']. "/priv/pub/issues/sections/articles/article_common.php");
+require_once($_SERVER['DOCUMENT_ROOT'].'/priv/pub/issues/sections/articles/article_common.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DbObjectArray.php');
 
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
@@ -13,7 +14,7 @@ $Section = Input::get('Section', 'int', 0);
 $Language = Input::get('Language', 'int', 0);
 $sLanguage = Input::get('sLanguage', 'int', 0, true);
 $ArticleOffset = Input::get('ArtOffs', 'int', 0, true);
-$ArticlesPerPage = Input::get('lpp', 'int', 15, true);
+$ArticlesPerPage = Input::get('lpp', 'int', 10, true);
 
 if (!Input::isValid()) {
 	header("Location: /priv/logout.php");
@@ -49,13 +50,17 @@ $allArticleLanguages =& Article::GetAllLanguages();
 if ($sLanguage) {
 	// Only show a specific language.
 	$allArticles = Article::GetArticles($Pub, $Issue, $Section, $sLanguage, $Language,
-		"$ArticleOffset, $ArticlesPerPage");
+		$ArticlesPerPage, $ArticleOffset);
 	$totalArticles = count(Article::GetArticles($Pub, $Issue, $Section, $sLanguage));
+	$numUniqueArticles = $totalArticles;
+	$numUniqueArticlesDisplayed = count($allArticles);
 } else {
-	// Shjow articles in all languages.
+	// Show articles in all languages.
 	$allArticles =& Article::GetArticles($Pub, $Issue, $Section, null, $Language,
-		"$ArticleOffset, $ArticlesPerPage");
+		$ArticlesPerPage, $ArticleOffset, true);
 	$totalArticles = count(Article::GetArticles($Pub, $Issue, $Section, null));
+	$numUniqueArticles = Article::GetNumUniqueArticles($Pub, $Issue, $Section);
+	$numUniqueArticlesDisplayed = count(array_unique(DbObjectArray::GetColumn($allArticles, 'Number')));
 }
 
 $previousArticleId = 0;
@@ -175,7 +180,7 @@ $previousArticleId = 0;
 <P>
 <?php 
 //if ($NUM_ROWS) {
-if ($totalArticles > 0) {
+if ($numUniqueArticlesDisplayed > 0) {
 	$counter = 0;
 	$color = 0;
 ?>
@@ -199,8 +204,15 @@ if ($totalArticles > 0) {
 	<?php  } ?>	
 </TR>
 <?php 
+$uniqueArticleCounter = 0;
 foreach ($allArticles as $articleObj) {
-	if ($counter++ > $ArticlesPerPage) {
+//	if ($counter++ > $ArticlesPerPage) {
+//		break;
+//	}
+	if ($articleObj->getArticleId() != $previousArticleId) {
+		$uniqueArticleCounter++;
+	}
+	if ($uniqueArticleCounter > $ArticlesPerPage) {
 		break;
 	}
 	?>	
@@ -264,9 +276,9 @@ foreach ($allArticles as $articleObj) {
 		<?php
 		// The MOVE links  
 		if ($User->hasPermission('Publish')) { 
-			if ($articleObj->getArticleId() == $previousArticleId)  {
+			if (($articleObj->getArticleId() == $previousArticleId) || ($numUniqueArticles <= 1))  {
 				?>
-				<TD ALIGN="CENTER" valign="middle" NOWRAP>
+				<TD ALIGN="CENTER" valign="middle" NOWRAP></TD>
 				<?
 			}
 			else {
@@ -275,36 +287,43 @@ foreach ($allArticles as $articleObj) {
 					<table cellpadding="0" cellspacing="0">
 					<tr>
 						<td>
-							<?php if (($ArticleOffset <= 0) && ($counter == 1)) { ?>
+							<?php if (($ArticleOffset <= 0) && ($uniqueArticleCounter == 1)) { ?>
 								<img src="/priv/img/up-dis.png">
 							<?php } else { ?>
-								<A HREF="/priv/pub/issues/sections/articles/do_move.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($articleObj->getArticleId()); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php p($articleObj->getLanguageId()); ?>&move=up_rel&pos=1&ArtOffs=<?php p($ArticleOffset); ?>"><img src="/priv/img/up.png" width="20" height="20" border="0"></A>
+								<A HREF="/priv/pub/issues/sections/articles/do_move.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($articleObj->getArticleId()); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php p($sLanguage); ?>&ArticleLanguage=<?php p($articleObj->getLanguageId()); ?>&move=up_rel&pos=1&ArtOffs=<?php p($ArticleOffset); ?>"><img src="/priv/img/up.png" width="20" height="20" border="0"></A>
 							<?php } ?>
 						</td>
 						<td>
-							<?php if (($ArticleOffset + $counter) >= $totalArticles) { ?>
+							<?php if (($uniqueArticleCounter+$ArticleOffset) >= $numUniqueArticles) { ?>
 								<img src="/priv/img/down-dis.png">
 							<?php } else { ?>
-								<A HREF="/priv/pub/issues/sections/articles/do_move.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($articleObj->getArticleId()); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php p($articleObj->getLanguageId()); ?>&move=down_rel&pos=1&ArtOffs=<?php p($ArticleOffset); ?>"><img src="/priv/img/down.png" width="20" height="20" border="0"></A>
+								<A HREF="/priv/pub/issues/sections/articles/do_move.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($articleObj->getArticleId()); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php p($sLanguage); ?>&ArticleLanguage=<?php p($articleObj->getLanguageId()); ?>&move=down_rel&pos=1&ArtOffs=<?php p($ArticleOffset); ?>"><img src="/priv/img/down.png" width="20" height="20" border="0"></A>
 							<?php } ?>
 						</td>
+						<form method="GET" action="do_move.php">
+						<input type="hidden" name="Pub" value="<?php p($Pub); ?>">
+						<input type="hidden" name="Issue" value="<?php p($Issue); ?>">
+						<input type="hidden" name="Section" value="<?php p($Section); ?>">
+						<input type="hidden" name="Language" value="<?php p($Language); ?>">
+						<input type="hidden" name="sLanguage" value="<?php p($sLanguage); ?>">
+						<input type="hidden" name="ArticleLanguage" value="<?php p($articleObj->getLanguageId()); ?>">
+						<input type="hidden" name="Article" value="<?php p($articleObj->getArticleId()); ?>">
+						<input type="hidden" name="ArtOffs" value="<?php p($ArticleOffset); ?>">
+						<input type="hidden" name="move" value="abs">
 						<td>
-							<select name="pos" onChange="location=this.options[this.selectedIndex].value" class="input_select">
+							<select name="pos" onChange="this.form.submit();" class="input_select">
 							<?php
-							$moveLink = CampsiteInterface::ArticleUrl($articleObj, $Language, "do_move.php")
-								."&ArtOffs=$ArticleOffset";
-							$currentIndex = $articleObj->getProperty('ArticleOrder');
-							for ($j = 1; $j <= $totalArticles; $j++) {
-								if ($currentIndex != $j) {
-									$vlink = $moveLink . "&move=abs&pos=$j";
-									echo "<option value=\"$vlink\">$j</option>\n";
+							for ($j = 1; $j <= $numUniqueArticles; $j++) {
+								if (($ArticleOffset + $uniqueArticleCounter) == $j) {
+									echo "<option value=\"$j\" selected>$j</option>\n";
 								} else {
-									echo "<option value=\"$moveLink\" selected>$j</option>\n";
+									echo "<option value=\"$j\">$j</option>\n";
 								}
 							}
 							?>
 							</select>
 						</td>
+						</form>
 					</tr>
 					</table>
 				</TD>
@@ -356,16 +375,16 @@ foreach ($allArticles as $articleObj) {
 			<B><A HREF="index.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&ArtOffs=<?php  p(max(0, ($ArticleOffset - $ArticlesPerPage))); ?>">&lt;&lt; <?php  putGS('Previous'); ?></A></B>
 		<?php  }
 
-    	if ( ($ArticleOffset + $ArticlesPerPage) < $totalArticles) { 
+    	if ( ($ArticleOffset + $ArticlesPerPage) < $numUniqueArticles) { 
     		if ($ArticleOffset > 0) {
     			?>|<?php
     		}
     		?>
-			 <B><A HREF="index.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&ArtOffs=<?php  p(min( ($totalArticles-1), ($ArticleOffset + $ArticlesPerPage))); ?>"><?php  putGS('Next'); ?> &gt;&gt</A></B>
+			 <B><A HREF="index.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&ArtOffs=<?php  p(min( ($numUniqueArticles-1), ($ArticleOffset + $ArticlesPerPage))); ?>"><?php  putGS('Next'); ?> &gt;&gt</A></B>
 		<?php  } ?>
 	</TD>
 	<td colspan="3">
-		<?php putGS("$1 articles found", $totalArticles); ?>
+		<?php putGS("$1 articles found", $numUniqueArticles); ?>
 	</td>
 </TR>
 </TABLE>
