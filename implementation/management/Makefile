@@ -5,6 +5,7 @@ ALL=all
 
 all: $(MY_TARGETS)
 	$(MAKE) -C root
+	$(MAKE) -C bin
 	$(MAKE) -C cgi
 	$(MAKE) -C pub
 	$(MAKE) -C templates
@@ -26,6 +27,7 @@ all: $(MY_TARGETS)
 	$(M4) macros.m4 $< >$@
 
 install: $(ALL)
+	mkdir -p $(BIN_DIR)
 	mkdir -p $(CGI_COMMON_DIR)
 	mkdir -p $(HTML_COMMON_DIR)
 	mkdir -p $(HTML_COMMON_DIR)/look
@@ -36,12 +38,12 @@ install: $(ALL)
 	mkdir -p $(HTML_COMMON_DIR)/classes
 	cp -f classes/*.php $(HTML_COMMON_DIR)/classes
 	mkdir -p $(HTML_COMMON_DIR)/images/thumbnails
-	#cp -rf article_import $(PRIV_COMMON_DIR)
 	cp -rf javascript $(HTML_COMMON_DIR)
 	cp -rf imagearchive $(PRIV_COMMON_DIR)
 	cp -rf include $(HTML_COMMON_DIR)
 	cp -f *.php $(PRIV_COMMON_DIR)/
 	$(MAKE) -C root install
+	$(MAKE) -C bin install
 	$(MAKE) -C cgi install
 	$(MAKE) -C pub install
 	$(MAKE) -C templates install
@@ -55,28 +57,15 @@ install: $(ALL)
 	$(MAKE) -C logs install
 	$(MAKE) -C country install
 	$(MAKE) -C localizer install
-	chown $(APACHE_USER):$(APACHE_GROUP) $(HTML_COMMON_DIR)/*.php
 	chown -R $(APACHE_USER):$(APACHE_GROUP) $(HTML_COMMON_DIR)/*
-	chown -R $(APACHE_USER):$(APACHE_GROUP) $(PRIV_COMMON_DIR)
-	chmod u+rw $(HTML_COMMON_DIR)/*.php
-	chmod g+r $(HTML_COMMON_DIR)/*.php
-	chmod -R u+rw $(HTML_COMMON_DIR)/javascript
-	chmod -R g+r $(HTML_COMMON_DIR)/javascript
-	chmod -R u+rw $(HTML_COMMON_DIR)/classes
-	chmod -R g+r $(HTML_COMMON_DIR)/classes
-	chmod -R u+rw $(HTML_COMMON_DIR)/css
-	chmod -R g+r $(HTML_COMMON_DIR)/css
-	chmod -R u+rw $(PRIV_COMMON_DIR)/imagearchive
-	chmod -R g+r $(PRIV_COMMON_DIR)/imagearchive
-	chmod -R u+rw $(PRIV_COMMON_DIR)
-	chmod -R g+rw $(PRIV_COMMON_DIR)
-	chmod -R u+rw $(HTML_COMMON_DIR)/images
-	chmod -R g+r $(HTML_COMMON_DIR)/images
+	chmod -R u+rw $(HTML_COMMON_DIR)/*
+	chmod -R g+r $(HTML_COMMON_DIR)/*
 	pear install Net_URL HTTP_Request HTTP_Client
 
 clean: dummy
-	rm -f *~ macros.m4 $(MY_TARGETS)
+	rm -f *~ $(MY_TARGETS)
 	$(MAKE) -C root clean
+	$(MAKE) -C bin clean
 	$(MAKE) -C cgi clean
 	$(MAKE) -C pub clean
 	$(MAKE) -C templates clean
@@ -94,6 +83,7 @@ clean: dummy
 uninstall: dummy
 	rm -fr $(WWW_COMMON_DIR)/*
 	$(MAKE) -C cgi uninstall
+	$(MAKE) -C bin uninstall
 	$(MAKE) -C templates uninstall
 
 dummy:
