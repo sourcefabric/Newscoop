@@ -153,7 +153,7 @@ Apache configuration:
 			Allow from all
 		</IfModule>
 	</Directory>
-	<Directory /var/www/cgi-bin>
+	<Directory /var/www/INST01/cgi-bin>
 		AllowOverride All
 		Options ExecCGI
 		<IfModule mod_access.c>
