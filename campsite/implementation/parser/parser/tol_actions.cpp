@@ -1880,7 +1880,9 @@ int TOLActIf::TakeAction(TOLContext& c, fstream& fs)
 	}
 	if (strcasecmp(param.Attribute(), "defined") == 0)
 	{
-		if (modifier == TOL_IMOD_PUBLICATION)
+		if (modifier == TOL_IMOD_LANGUAGE)
+			run_first = c.Language() >= 0;
+		else if (modifier == TOL_IMOD_PUBLICATION)
 			run_first = c.Publication() >= 0;
 		else if (modifier == TOL_IMOD_ISSUE)
 			run_first = c.Issue() >= 0;
@@ -1899,7 +1901,9 @@ int TOLActIf::TakeAction(TOLContext& c, fstream& fs)
 	}
 	if (strcasecmp(param.Attribute(), "fromstart") == 0)
 	{
-		if (modifier == TOL_IMOD_PUBLICATION)
+		if (modifier == TOL_IMOD_LANGUAGE)
+			run_first = c.Language() == c.DefLanguage();
+		else if (modifier == TOL_IMOD_PUBLICATION)
 			run_first = c.Publication() == c.DefPublication();
 		else if (modifier == TOL_IMOD_ISSUE)
 			run_first = c.Issue() == c.DefIssue();
@@ -1919,7 +1923,9 @@ int TOLActIf::TakeAction(TOLContext& c, fstream& fs)
 	if (strcasecmp(param.Attribute(), "number") == 0)
 	{
 		long int nVal = 0;
-		if (modifier == TOL_IMOD_ISSUE)
+		if (modifier == TOL_IMOD_LANGUAGE)
+			nVal = c.Language();
+		else if (modifier == TOL_IMOD_ISSUE)
 			nVal = c.Issue();
 		else if (modifier == TOL_IMOD_SECTION)
 			nVal = c.Section();
@@ -1941,13 +1947,22 @@ int TOLActIf::TakeAction(TOLContext& c, fstream& fs)
 			RunBlock(sec_block, c, fs);
 		return RES_OK;
 	}
-	if (c.Language() < 0 || c.Publication() < 0 || c.Issue() < 0)
+	if (modifier != TOL_IMOD_LANGUAGE &&
+	    (c.Language() < 0 || c.Publication() < 0 || c.Issue() < 0))
+	{
 		return ERR_NOPARAM;
+	}
 	string w, field, tables, value;
 	field = param.Attribute();
 	value = param.Value();
 	bool need_lang = false;
-	if (modifier == TOL_IMOD_ISSUE)
+	if (modifier == TOL_IMOD_LANGUAGE)
+	{
+		tables = "Languages";
+		SetNrField("Id", c.Language(), &m_coBuf, w);
+		need_lang = false;
+	}
+	else if (modifier == TOL_IMOD_ISSUE)
 	{
 		tables = "Issues";
 		if (strcasecmp(param.Attribute(), "iscurrent") == 0)
@@ -1983,7 +1998,8 @@ int TOLActIf::TakeAction(TOLContext& c, fstream& fs)
 		SetNrField("NrIssue", c.Issue(), &m_coBuf, w);
 		need_lang = true;
 	}
-	SetNrField("IdPublication", c.Publication(), &m_coBuf, w);
+	if (modifier != TOL_IMOD_LANGUAGE)
+		SetNrField("IdPublication", c.Publication(), &m_coBuf, w);
 	if (need_lang)
 	{
 		sprintf(&m_coBuf, "(IdLanguage = %ld or IdLanguage = 1)", c.Language());
@@ -2001,9 +2017,9 @@ int TOLActIf::TakeAction(TOLContext& c, fstream& fs)
 	FetchRow(*res, row);
 	switch (param.Operator())
 	{
-		case TOL_OP_IS: run_first = value == row[0]; break;
-		case TOL_OP_IS_NOT: run_first = value != row[0]; break;
-		default: run_first = value == row[0];
+		case TOL_OP_IS: run_first = strcasecmp(value.c_str(), row[0]) == 0; break;
+		case TOL_OP_IS_NOT: run_first = strcasecmp(value.c_str(), row[0]) != 0; break;
+		default: run_first = strcasecmp(value.c_str(), row[0]) == 0;
 	}
 	run_first = m_bNegated ? !run_first : run_first;
 	if (run_first)
