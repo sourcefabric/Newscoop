@@ -8,6 +8,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ImageSearch.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/priv/CampsiteInterface.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/priv/imagearchive/include.inc.php');
 
@@ -17,34 +18,58 @@ if (!$access) {
 	exit;
 }
 
-if (!IsValidInput(array(
-	"Pub" => "int",
-	"Issue" => "int",
-	"Section" => "int",
-	"Language" => "int",
-	"sLanguage" => "int",
-	"Article" => "int"))) {
-	header('Location: /priv/logout.php');
-	exit;		
-}
+//if (!IsValidInput(array(
+//	"Pub" => "int",
+//	"Issue" => "int",
+//	"Section" => "int",
+//	"Language" => "int",
+//	"sLanguage" => "int",
+//	"Article" => "int"))) {
+//	header('Location: /priv/logout.php');
+//	exit;		
+//}
 // Initialize input variables ///////////////////////////////////////////////////
-$OrderBy = array_get_value($_REQUEST, 'order_by', 'id');
-$OrderDirection = array_get_value($_REQUEST, 'order_direction', 'ASC');
-$view = array_get_value($_REQUEST, 'view', 'thumbnail');
-$ImageOffset = array_get_value($_REQUEST, 'image_offset', 0);
-$SearchDescription = array_get_value($_REQUEST, 'search_description', '');
-$SearchPhotographer = array_get_value($_REQUEST, 'search_photographer', '');
-$SearchPlace = array_get_value($_REQUEST, 'search_place', '');
-$SearchDate = array_get_value($_REQUEST, 'search_date', '');
-$SearchInUse = array_get_value($_REQUEST, 'search_inuse', '');
-$SearchUploadedBy = array_get_value($_REQUEST, 'search_uploadedby', '');
+//$OrderBy = array_get_value($_REQUEST, 'order_by', 'id');
+//$OrderDirection = array_get_value($_REQUEST, 'order_direction', 'ASC');
+//$view = array_get_value($_REQUEST, 'view', 'thumbnail');
+//$ImageOffset = array_get_value($_REQUEST, 'image_offset', 0);
+//$SearchDescription = array_get_value($_REQUEST, 'search_description', '');
+//$SearchPhotographer = array_get_value($_REQUEST, 'search_photographer', '');
+//$SearchPlace = array_get_value($_REQUEST, 'search_place', '');
+//$SearchDate = array_get_value($_REQUEST, 'search_date', '');
+//$SearchInUse = array_get_value($_REQUEST, 'search_inuse', '');
+//$SearchUploadedBy = array_get_value($_REQUEST, 'search_uploadedby', '');
+//	
+//$PublicationId = array_get_value($_REQUEST, 'Pub', 0);
+//$IssueId = array_get_value($_REQUEST, 'Issue', 0);
+//$SectionId = array_get_value($_REQUEST, 'Section', 0);
+//$InterfaceLanguageId = array_get_value($_REQUEST, 'Language', 0);
+//$ArticleLanguageId = array_get_value($_REQUEST, 'sLanguage', 0);
+//$ArticleId = array_get_value($_REQUEST, 'Article', 0);
+//
+
+$OrderBy = Input::get('order_by', 'string', 'id', true);
+$OrderDirection = Input::get('order_direction', 'string', 'ASC', true);
+$view = Input::get('view', 'string', 'thumbnail', true);
+$ImageOffset = Input::get('image_offset', 'int', 0, true);
+$SearchDescription = Input::get('search_description', 'string', '', true);
+$SearchPhotographer = Input::get('search_photographer', 'string', '', true);
+$SearchPlace = Input::get('search_place', 'string', '', true);
+$SearchDate = Input::get('search_date', 'string', '', true);
+$SearchInUse = Input::get('search_inuse', 'string', '', true);
+$SearchUploadedBy = Input::get('search_uploadedby', 'int', '', true);
 	
-$PublicationId = array_get_value($_REQUEST, 'Pub', 0);
-$IssueId = array_get_value($_REQUEST, 'Issue', 0);
-$SectionId = array_get_value($_REQUEST, 'Section', 0);
-$InterfaceLanguageId = array_get_value($_REQUEST, 'Language', 0);
-$ArticleLanguageId = array_get_value($_REQUEST, 'sLanguage', 0);
-$ArticleId = array_get_value($_REQUEST, 'Article', 0);
+$PublicationId = Input::get('Pub', 'int', 0);
+$IssueId = Input::get('Issue', 'int', 0);
+$SectionId = Input::get('Section', 'int', 0);
+$InterfaceLanguageId = Input::get('Language', 'int', 0);
+$ArticleLanguageId = Input::get('sLanguage', 'int', 0);
+$ArticleId = Input::get('Article', 'int', 0);
+
+if (!Input::isValid()) {
+	header('Location: /priv/logout.php');
+	exit;	
+}
 
 $imageNav =& new ImageNav($_REQUEST, CAMPSITE_IMAGEARCHIVE_IMAGES_PER_PAGE, $view);
 $publicationObj =& new Publication($PublicationId);

@@ -7,6 +7,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/classes/Issue.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Section.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Language.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Publication.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/Input.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/priv/CampsiteInterface.php");
 
 list($access, $User) = check_basic_access($_REQUEST);
@@ -14,14 +15,24 @@ if (!$access) {
 	header("Location: /priv/logout.php");
 	exit;
 }
-$PublicationId = array_get_value($_REQUEST, "Pub", 0);
-$IssueId = array_get_value($_REQUEST, "Issue", 0);
-$SectionId = array_get_value($_REQUEST, "Section", 0);
-$InterfaceLanguageId = array_get_value($_REQUEST, "Language", 0);
-$ArticleLanguageId = array_get_value($_REQUEST, "sLanguage", 0);
-$ArticleId = array_get_value($_REQUEST, "Article", 0);
-$ImageId = array_get_value($_REQUEST, "ImageId", 0);
-$BackLink = array_get_value($_REQUEST, "BackLink", "index.php");
+//$PublicationId = array_get_value($_REQUEST, "Pub", 0);
+//$IssueId = array_get_value($_REQUEST, "Issue", 0);
+//$SectionId = array_get_value($_REQUEST, "Section", 0);
+//$InterfaceLanguageId = array_get_value($_REQUEST, "Language", 0);
+//$ArticleLanguageId = array_get_value($_REQUEST, "sLanguage", 0);
+//$ArticleId = array_get_value($_REQUEST, "Article", 0);
+//$ImageId = array_get_value($_REQUEST, "ImageId", 0);
+//$BackLink = array_get_value($_REQUEST, "BackLink", "index.php");
+
+$PublicationId = Input::get('Pub', 'int', 0);
+$IssueId = Input::get('Issue', 'int', 0);
+$SectionId = Input::get('Section', 'int', 0);
+$InterfaceLanguageId = Input::get('Language', 'int', 0);
+$ArticleLanguageId = Input::get('sLanguage', 'int', 0);
+$ArticleId = Input::get('Article', 'int', 0);
+$ImageId = Input::get('ImageId', 'int', 0);
+$BackLink = Input::get('BackLink', 'string', 'index.php', true);
+
 // Security
 if ( ($BackLink != "index.php") && ($BackLink != "search.php")) {
 	header("Location: /priv/logout.php");
