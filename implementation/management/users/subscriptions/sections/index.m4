@@ -42,7 +42,7 @@ X_CURRENT({User account:}, {<B><!sql print ~q_usr.UName></B>})
 X_CURRENT({Publication:}, {<B><!sql print ~q_pub.Name></B>})
 E_CURRENT
 
-<P>X_NEW_BUTTON({Add new subscription}, {add.xql?Subs=<!sql print #Subs>&Pub=<!sql print #Pub>&User=<!sql print #User>})
+<P>X_NEW_BUTTON({Add new section}, {add.xql?Subs=<!sql print #Subs>&Pub=<!sql print #Pub>&User=<!sql print #User>})
 
 <P><!sql setdefault SSectOffs 0><!sql if $SSectOffs < 0><!sql set SSectOffs 0><!sql endif><!sql set NUM_ROWS 0>dnl
 
@@ -100,7 +100,7 @@ B_LIST
 E_LIST
 <!sql else>dnl
 <BLOCKQUOTE>
-	<LI>No subscriptions.</LI>
+	<LI>No sections in current subscriptions.</LI>
 </BLOCKQUOTE>
 <!sql endif>dnl
 
