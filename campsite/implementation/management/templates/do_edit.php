@@ -29,7 +29,7 @@ if ($nField == 0 || $res > 0) {
 	$logtext = getGS('Template $1 was changed', encHTML(decS($Path))."/".encHTML(decS($Name)));
 	query ("INSERT INTO Log SET TStamp=NOW(), IdEvent=113, User='".$User->getUserName()."', Text='$logtext'");
 	header("Location: /$ADMIN/templates?Path=".encURL(decS($Path)));
-}
+
 ?>
 
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
