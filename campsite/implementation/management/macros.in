@@ -58,7 +58,7 @@ dnl *** Header ****
 dnl
 define(<*B_HEADER*>, <*<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
 	<TR>
-		<TD>
+		<TD class="page_title">
 		    <?php  putGS("$1"); ?>
 		</TD>
 *>)dnl
@@ -93,18 +93,18 @@ define(<*E_HOME_MENU*>, <*</TABLE>*>)dnl
 dnl
 dnl *** Current object **
 dnl
-define(<*B_CURRENT*>, <*<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="1" WIDTH="100%"><TR>*>)dnl
-define(<*X_CURRENT*>, <*<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP">&nbsp;<?php  putGS("$1"); ?>:</TD><TD BGCOLOR="#D0D0B0" VALIGN="TOP">$2</TD>
+define(<*B_CURRENT*>, <*<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="1" WIDTH="100%" class="current_location_table"><TR>*>)dnl
+define(<*X_CURRENT*>, <*<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php  putGS("$1"); ?>:</TD><TD VALIGN="TOP" class="current_location_content">$2</TD>
 *>)dnl
 define(<*E_CURRENT*>, <*</TR></TABLE>*>)dnl
 dnl
 dnl *** List ***
 dnl
-define(<*B_LIST*>, <*<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" WIDTH="100%">*>)dnl
+define(<*B_LIST*>, <*<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" WIDTH="100%" class="table_list">*>)dnl
 define(<*B_LIST_HEADER*>, <*<TR BGCOLOR="#C0D0FF">*>)dnl
 define(<*X_LIST_TH*>, <*<TD ALIGN="LEFT" VALIGN="TOP" ifelse(<*$2*>, <**>, <**>, <*WIDTH="$2"*>) ifelse(<*$3*>, <**>, <**>, <*$3*>)><B><?php  putGS("$1"); ?></B></TD>*>)dnl
 define(<*E_LIST_HEADER*>, <*</TR>*>)dnl
-define(<*B_LIST_TR*>, <*<TR <?php  if ($color) { $color=0; ?>BGCOLOR="#D0D0B0"<?php  } else { $color=1; ?>BGCOLOR="#D0D0D0"<?php  } ?>>*>)dnl
+define(<*B_LIST_TR*>, <*<TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>*>)dnl
 define(<*B_LIST_ITEM*>, <*<TD ifelse(<*$1*>, <**>, <**>, <*ALIGN="$1"*>)<**>ifelse(<*$2*>, <**>, <**>, <*COLSPAN="$2"*>)>*>)dnl
 define(<*E_LIST_ITEM*>, <*</TD>*>)dnl
 define(<*E_LIST_TR*>, <*</TR>*>)dnl
