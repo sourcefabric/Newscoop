@@ -99,7 +99,7 @@ B_LIST
 E_LIST
 <? } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No sections.'); ?></LI>
+	<LI><? putGS('No sections'); ?></LI>
 </BLOCKQUOTE>
 <? } ?>dnl
 
