@@ -19,9 +19,10 @@ E_STYLE
 
 B_BODY
 
-<? 
+<?
     todefnum('Pub');
     todefnum('Issue');
+    todefnum('Section');
     todefnum('Language');
 ?>dnl
 
@@ -65,8 +66,24 @@ B_MSGBOX(<*Updating section name*>)
 <? }
 
     if ($correct) {
-	query ("UPDATE Sections SET Name='$cName' WHERE IdPublication=$Pub AND NrIssue=$Issue AND Number=$Section AND IdLanguage=$Language");
-	$created= ($AFFECTED_ROWS > 0);
+		query ("UPDATE Sections SET Name='$cName' WHERE IdPublication=$Pub AND NrIssue=$Issue AND Number=$Section AND IdLanguage=$Language");
+		$created= ($AFFECTED_ROWS > 0);
+		if ($cSubs == "a") {
+			$add_subs_res = add_subs_section($Pub, $Section);
+			if ($add_subs_res == -1) { ?>
+				<LI><? putGS('Error updating subscriptions.'); ?></LI>
+		<?	} else { ?>
+				<LI><? putGS('A number of $1 subscriptions were updated.','<B>'.encHTML(decS($add_subs_res)).'</B>'); ?></LI>
+	<?		}
+		}
+		if ($cSubs == "d") {
+			$del_subs_res = del_subs_section($Pub, $Section);
+			if ($del_subs_res == -1) { ?>
+				<LI><? putGS('Error updating subscriptions.'); ?></LI>
+		<?	} else { ?>
+				<LI><? putGS('A number of $1 subscriptions were updated.','<B>'.encHTML(decS($del_subs_res)).'</B>'); ?></LI>
+	<?		}
+		}
     }
 
     if ($created) { ?>dnl
