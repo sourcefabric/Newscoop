@@ -91,7 +91,8 @@ function read_get_parameters(&$query_string)
 	$pairs = explode("&", $query_string);
 	foreach ($pairs as $index=>$pair) {
 		$pair_array = explode("=", $pair);
-		$parameters[$pair_array[0]] = $pair_array[1];
+		if (trim($pair_array[0]) != "")
+			$parameters[trim($pair_array[0])] = trim($pair_array[1]);
 	}
 	return $parameters;
 }
@@ -110,7 +111,8 @@ function read_cookies(&$cookies_string)
 	$pairs = explode(";", $cookies_string);
 	foreach ($pairs as $index=>$pair) {
 		$pair_array = explode("=", $pair);
-		$cookies[trim($pair_array[0])] = trim($pair_array[1]);
+		if (trim($pair_array[0]) != "")
+			$cookies[trim($pair_array[0])] = trim($pair_array[1]);
 	}
 	return $cookies;
 }
