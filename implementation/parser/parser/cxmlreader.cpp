@@ -40,7 +40,7 @@ const char* CXMLReader::nextElement(const char* p_pchName)
 	const char* pchName = (const char*)xmlTextReaderConstName(m_pReader);
 	if (strcmp(pchName, "#text") == 0 && (p_pchName == NULL || strcmp(p_pchName, "#text") != 0))
 		return nextElement(p_pchName);
-	if (p_pchName != NULL && strcmp(pchName, p_pchName) != 0)
+	if (p_pchName != NULL && strcmp(pchName, p_pchName) != 0 && strcmp(p_pchName, "#text") != 0)
 		throw invalid_message_content(string(p_pchName) + " element is missing");
 	return pchName;
 }
@@ -57,12 +57,14 @@ string CXMLReader::nextElementContent(const char* p_pchName, int p_nDepth, bool 
 	if (p_nDepth >= 0 && elementDepth() != p_nDepth)
 		throw invalid_message_content("element depth must be " + int2string(p_nDepth));
 	pchName = nextElement("#text");
-	if (strcmp(pchName, "#text") != 0)
-		throw invalid_message_content("element does not have content");
-	string coContent = elementContent();
-	if (!p_bExpectEnd)
-		return coContent;
-	pchName = nextElement();
+	string coContent;
+	if (strcmp(pchName, "#text") == 0)
+	{
+		coContent = elementContent();
+		if (!p_bExpectEnd)
+			return coContent;
+		pchName = nextElement();
+	}
 	if (p_pchName != NULL && strcmp(pchName, p_pchName) != 0)
 		throw invalid_message_content("element end is missing");
 	return coContent;
