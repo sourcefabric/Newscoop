@@ -91,7 +91,7 @@ if ($access) {
 </TABLE>
 
 <P>
-<CENTER><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" BGCOLOR="#C0D0FF" ALIGN="CENTER">
+<CENTER><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box" ALIGN="CENTER">
 	<TR>
 		<TD COLSPAN="2">
 			<B> <?php  putGS("Delete scheduled publish action"); ?> </B>

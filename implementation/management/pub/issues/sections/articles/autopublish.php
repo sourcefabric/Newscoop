@@ -80,7 +80,7 @@ if ($articleObj->getPublished() != 'N') {
 
 <P>
 <FORM NAME="dialog" METHOD="POST" ACTION="autopublish_do_add.php" >
-<CENTER><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" BGCOLOR="#C0D0FF" ALIGN="CENTER">
+<CENTER><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input" ALIGN="CENTER">
 	<TR>
 		<TD COLSPAN="2">
 			<B><?php  putGS("Schedule a new publish action"); ?></B>
@@ -156,8 +156,8 @@ if ($articleObj->getPublished() != 'N') {
 	$color= 0;
 	?>
 	<center>
-	<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" WIDTH="550px">
-	<TR BGCOLOR="#C0D0FF">
+	<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" WIDTH="550px" class="table_list">
+	<TR class="table_list_header">
 		<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("Date/Time"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("Publish"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("Front page"); ?></B></TD>
@@ -222,7 +222,7 @@ if ($articleObj->getPublished() != 'N') {
 } 
 else { ?>
 	<BLOCKQUOTE>
-	<CENTER><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" BGCOLOR="#C0D0FF" ALIGN="CENTER">
+	<CENTER><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box" ALIGN="CENTER">
 	<TR>
 		<TD COLSPAN="2">
 			<B> <?php  putGS("Scheduling a new publish action"); ?> </B>
