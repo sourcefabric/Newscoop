@@ -581,7 +581,9 @@ int CampsiteInstanceFunc(const ConfAttrValue& p_rcoConfValues)
 				pcoClSock = coServer.Accept();
 				char* pchRemoteIP = pcoClSock->RemoteIP();
 #ifdef _DEBUG
-				cout << "received request from " << pchRemoteIP << endl;
+				cout << endl << "**********************************************" << endl;
+				cout << "*****   received request from " << pchRemoteIP << endl;
+				cout << "**********************************************" << endl;
 #endif
 				if (case_comp(pchRemoteIP, "127.0.0.1") != 0)
 				{
