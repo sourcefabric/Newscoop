@@ -1,97 +1,102 @@
-<?php
+<?PHP
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/config.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/DatabaseObject.php");
 
-class UserPerm {
-	var $IdUser;
+class User extends DatabaseObject {
+	var $m_dbTableName = "Users";
+	var $m_primaryKeyColumnNames = array("Id");
+	var $m_columnNames = array("Id", 
+							   "KeyId",
+							   "Name",
+							   "UName",
+							   "Password",
+							   "Email",
+							   "Reader",
+							   "City",
+							   "StrAddress",
+							   "State",
+							   "CountryCode",
+							   "Phone",
+							   "Fax",
+							   "Contact",
+							   "Phone2",
+							   "Title",
+							   "Gender",
+							   "Age",
+							   "PostalCode",
+							   "Employer",
+							   "EmployerType",
+							   "Position",
+							   "Interests",
+							   "How",
+							   "Languages",
+							   "Improvements",
+							   "Pref1",
+							   "Pref2",
+							   "Pref3",
+							   "Pref4",
+							   "Field1",
+							   "Field2",
+							   "Field3",
+							   "Field4",
+							   "Field5",
+							   "Text1",
+							   "Text2",
+							   "Text3");
+	var $Id;
+	var $KeyId;
+	var $Name;
+	var $UName;
+	var $Password;
+	var $Email;
+	var $Reader;
+	var $City;
+	var $StrAddress;
+	var $State;
+	var $CountryCode;
+	var $Phone;
+	var $Fax;
+	var $Contact;
+	var $Phone2;
+	var $Title;
+	var $Gender;
+	var $Age;
+	var $PostalCode;
+	var $Employer;
+	var $EmployerType;
+	var $Position;
+	var $Interests;
+	var $How;
+	var $Languages;
+	var $Improvements;
+	var $Pref1;
+	var $Pref2;
+	var $Pref3;
+	var $Pref4;
+	var $Field1;
+	var $Field2;
+	var $Field3;
+	var $Field4;
+	var $Field5;
+	var $Text1;
+	var $Text2;
+	var $Text3;
 	
-	/**
-	 * @var string
-	 */
-	var $m_dbTableName = "UserPerm";
-	
-	/**
-	 * @var array
-	 */
-	var $m_primaryKeyColumnNames = array("IdUser");
-	
-	var $m_columnNames = array(
-							"ManagePub",
-							"DeletePub",
-							"ManageIssue",
-							"DeleteIssue",
-							"ManageSection",
-							"DeleteSection",
-							"AddArticle",
-							"ChangeArticle",
-							"DeleteArticle",
-							"AddImage",
-							"ChangeImage",
-							"DeleteImage",
-							"ManageTempl",
-							"DeleteTempl",
-							"ManageUsers",
-							"ManageSubscriptions",
-							"DeleteUsers",
-							"ManageUserTypes",
-							"ManageArticleTypes",
-							"DeleteArticleTypes",
-							"ManageLanguages",
-							"DeleteLanguages",
-							"ManageDictionary",
-							"DeleteDictionary",
-							"ManageCountries",
-							"DeleteCountries",
-							"ManageClasses",
-							"MailNotify",
-							"ViewLogs",
-							"ManageLocalizer",
-							"Publish",
-							"ManageTopics"
-						);
-	
-	
-	var $ManagePub = "N";
-	var $DeletePub = "N";
-	var $ManageIssue = "N";
-	var $DeleteIssue = "N";
-	var $ManageSection = "N";
-	var $DeleteSection = "N";
-	var $AddArticle = "N";
-	var $ChangeArticle = "N";
-	var $DeleteArticle = "N";
-	var $AddImage = "N";
-	var $ChangeImage = "N";
-	var $DeleteImage = "N";
-	var $ManageTempl = "N";
-	var $DeleteTempl = "N";
-	var $ManageUsers = "N";
-	var $ManageSubscriptions = "N";
-	var $DeleteUsers = "N";
-	var $ManageUserTypes = "N";
-	var $ManageArticleTypes = "N";
-	var $DeleteArticleTypes = "N";
-	var $ManageLanguages = "N";
-	var $DeleteLanguages = "N";
-	var $ManageDictionary = "N";
-	var $DeleteDictionary = "N";
-	var $ManageCountries = "N";
-	var $DeleteCountries = "N";
-	var $ManageClasses = "N";
-	var $MailNotify = "N";
-	var $ViewLogs = "N";
-	var $ManageLocalizer = "N";
-	var $Publish = "N";
-	var $ManageTopics = "N";
-	
-	function UserPerm($p_userId, $p_userKey) {
-		$this->IdUser = $p_userId;
+	function User($p_userId = null) {
+		$this->Id = $p_userId;
+		if (!is_null($p_userId) && ($p_userId > 0)) {
+			$this->fetch();
+		}
 	} // constructor
 	
-	function hasPerm($p_perm) {
-		return ($this->$p_perm == 'Y');
-	} // fn hasPerm
+	function getName() {
+		return $this->Name;
+	} // fn getName
 	
-} // class UserPerm
+	function getUName() {
+		return $this->UName;
+	} // fn getUName
+	
+} // class User
 
 ?>
