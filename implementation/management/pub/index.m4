@@ -60,7 +60,7 @@ B_LIST
         X_LIST_TH(<*Default Language*>, <*20%*>)
     <?php  if ($mpa != 0) { ?>dnl
         X_LIST_TH(<*URL Type*>, <*20%*>)
-        X_LIST_TH(<*Configure*>, <*10%*>)
+        X_LIST_TH(<*Configure*>, <*1%*>)
     <?php  }
     if ($dpa != 0) { ?>dnl
         X_LIST_TH(<*Delete*>, <*1%*>)
@@ -84,7 +84,7 @@ B_LIST
         B_LIST_ITEM
             <?php  pgetHVar($publ,'URLType'); ?>&nbsp;
         E_LIST_ITEM
-        B_LIST_ITEM
+        B_LIST_ITEM(<*CENTER*>)
             <A HREF="X_ROOT/pub/edit.php?Pub=<?php  pgetUVar($publ,'Id'); ?>"><img src="/<?php echo $ADMIN; ?>/img/icon/configure.png" alt="<?php  putGS("Configure"); ?>" border="0"></A>
         E_LIST_ITEM
 <?php  }
