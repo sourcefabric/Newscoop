@@ -253,24 +253,19 @@ function ifYthenCHECKED($q,$f)
 
 function selectLanguageFile($path, $name)
 {
-    global $TOL_Language;
-
     if (!isset($_COOKIE[TOL_Language])){
-      $TOL_Language='en';
+      $_COOKIE[TOL_Language] = 'en';
     }
-    else {
-      $TOL_Language=$_COOKIE[TOL_Language];
-    }
-    return "$path/$name.$TOL_Language.php";
+
+    return "$path/$name.$_COOKIE[TOL_Language].php";
 }
 
 function pLanguageCode()
 {
-    global $TOL_Language;
-    if (!isset($TOL_Language)){
- $TOL_Language='en';
+    if (!isset($_COOKIE[TOL_Language])){
+        $_COOKIE[TOL_Language] = 'en';
     }
-    print $TOL_Language;
+    print $_COOKIE[TOL_Language];
 }
 
 function decSlashes($s)
