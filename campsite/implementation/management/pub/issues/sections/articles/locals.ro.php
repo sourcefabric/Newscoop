@@ -20,7 +20,7 @@ regGS("The article $1 ($2) has been deleted.","Articolul $1 ($2) a fost şters")
 regGS("The article $1 ($2) could not be deleted.","Articolul $1 ($2) a fost şters");
 regGS("Article $1 ($2) deleted from $3. $4 from $5. $6 ($7) of $8","Articolul $1 ($2) a fost şters din $3. $4 din $5. $6 ($7) din $8");
 regGS("Change article status","Modific starea articolului");
-regGS("Change the status of article $1 ($2) from $3 to","Am modificat starea articolului $1 ($2) de la $3 la");
+regGS("Change the status of article $1 ($2) from $3 to","Modific starea articolului $1 ($2) de la $3 la");
 regGS("Changing article status","Modific starea articolului");
 regGS("Status of the article $1 ($2) has been changed from $3 to $4.","Starea articolului $1 ($2) a modificată de la $3 la $4 ");
 regGS("Status of the article $1 ($2) could not be changed.","Starea articolului $1 ($2) nu poate fi modificată");
