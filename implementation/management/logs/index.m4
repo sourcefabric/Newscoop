@@ -72,7 +72,7 @@ B_LIST
 		X_LIST_TH(<*Date/Time*>, <*15%*>)
 		X_LIST_TH(<*User*>, <*1%*>)
 <?php  if ($sEvent == 0) { ?>dnl
-		X_LIST_TH(<*Event*>, <*10%*>)
+		X_LIST_TH(<*Event*>, <*20%*>)
 <?php  } ?>dnl
 		X_LIST_TH(<*Description*>)
 	E_LIST_HEADER
