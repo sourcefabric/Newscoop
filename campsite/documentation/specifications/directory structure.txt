@@ -1,58 +1,92 @@
-Campsite Directory Structure
+Campsite Install API
 
+
+Directory Structure
+
+[campsite_dir]/
+               |- bin
+               |- etc/
+               |      |- [instance_name]
+               |- www/
+               |      |- [instance_name]/
+               |                         |- html
+               |                         |- cgi-bin
+               |                         |- script
+               |                         |- include
+               |- www-common/
+                      |- html
+                      |- cgi-bin
+                      |- script
+                      |- include
+
+By default [campsite_dir] is [prefix]/campsite and can be set to a different value by the user.
 By default [prefix] is /usr/local and can be set to a different value by the user.
 
+The user will be able to set one of the two directories, but not both at the same time.
+Examples:
+- [prefix] = /usr - set by the user; [campsite_dir] = /usr/campsite - set by campsite install scripts
+- [campsite_dir] = /home/user - set by the user; [prefix] not needed anymore
 
-Binaries:
-[prefix]/campsite/bin
+
+Binaries directory
+[campsite_dir]/bin (default; can be set to a different value by the user)
 - all binaries are put here
 
 
-Configuration files:
-[prefix]/campsite/etc/campsite/
+Configuration files directory
+[etc_common_dir] = [campsite_dir]/etc (default; can be set to a different value by the user)
 - all common configuration files are put here
 
-[prefix]/campsite/etc/campsite/[instance_name]
-- campsite instance configuration files are put here
-
-
-WWW directories of campsite instances
-[prefix]/campsite/www
-contains the follwing subdirectories:
-
-[prefix]/campsite/www/[instance_name]/html
-- contains the following files:
-	* link to [prefix]/campsite/www-common/html/index.php
-	* link to [prefix]/campsite/www-common/html/priv.php
-	* link to [prefix]/campsite/etc/campsite/path_config.php
-	* link to [prefix]/campsite/etc/campsite/[instance_name]/database_config.php
-
-[prefix]/campsite/www/[instance_name]/cgi-bin
-[prefix]/campsite/www/[instance_name]/script
-[prefix]/campsite/www/[instance_name]/include
+[common_etc_dir]/[instance_name]
+- instance specific configuration files are put here
 
 
 Common WWW directory
-[prefix]/campsite/www-common
-[prefix]/campsite/www-common/html
-[prefix]/campsite/www-common/cgi-bin
-[prefix]/campsite/www-common/script
-[prefix]/campsite/www-common/include
+[www_common_dir] = [campsite_dir]/www-common
 
+Subdirectories:
+[campsite_dir]/www-common/html
+[campsite_dir]/www-common/cgi-bin
+[campsite_dir]/www-common/script
+[campsite_dir]/www-common/include
+
+
+WWW directories of campsite instances
+[www_dir] = [campsite_dir]/www (default; can be set to a different value by the user)
+
+[www_dir] contains the follwing subdirectories:
+[www_dir]/[instance_name]/html
+- contains the following files:
+	* link to [www_common_dir]/html/index.php
+	* link to [www_common_dir]/html/priv.php
+	* link to [etc_common_dir]/path_config.php
+	* link to [etc_common_dir]/[instance_name]/database_config.php
+
+[www_dir]/[instance_name]/cgi-bin
+[www_dir]/[instance_name]/script
+[www_dir]/[instance_name]/include
+
+
+Configuration Files
 
 Description of database_config.php file
 
 - format:
 <?php
-define("DATABASE_NAME", "[database_name]");
-define("SERVER_ADDRESS", "[server_address]");
-define("SERVER_PORT", "[server_port]");
-define("DATABASE_USER", "[database_user]");
-define("DATABASE_PASSWORD", "[database_password]");
+
+$Campsite["DATABASE_NAME"] = "[database_name]");
+$Campsite["DATABASE_SERVER_ADDRESS"] = "[database_server_address]");
+$Campsite["DATABASE_SERVER_PORT"] = "[database_server_port]");
+$Campsite["DATABASE_USER"] = "[database_user]");
+$Campsite["DATABASE_PASSWORD"] = "[database_password]");
+
+$campsite_local_vars['database_config.php'] = array("DATABASE_NAME",
+	"DATABASE_SERVER_ADDRESS", "DATABASE_SERVER_PORT", "DATABASE_USER",
+	"DATABASE_PASSWORD");
+
 ?>
 
-- path:
-[prefix]/campsite/etc/campsite/[instance_name]/database_config.php
+- path: [etc_dir]/[instance_name]/database_config.php
 
 - owner: [apache_user]:[apache_user]
 - rights: owner: read/write, group: read/write, other: none
@@ -62,18 +96,28 @@ Description of path_config.php file
 
 - format:
 <?php
-define("PREFIX_DIR", "[prefix]");
-define("BIN_DIR", PREFIX_DIR . "/bin");
-define("ETC_DIR", PREFIX_DIR . "/etc");
-define("WWW_DIR", PREFIX_DIR . "/www");
-define("WWW_COMMON_DIR", PREFIX_DIR . "/www-common");
-define("HTML_TAIL", "html");
-define("CGI_BIN_TAIL", "cgi-bin");
-define("SCRIPT_TAIL", "script");
+
+$Campsite["CAMPSITE_DIR"] = "[campsite_dir]");
+$Campsite["BIN_DIR"] = "[bin_dir]"); // default = CAMPSITE_DIR . "/bin"
+$Campsite["ETC_DIR"] = "[etc_dir]"); // default = CAMPSITE_DIR . "/etc"
+$Campsite["WWW_DIR"] = "[www_dir]"); // default = CAMPSITE_DIR . "/www"
+$Campsite["WWW_COMMON_DIR"] = "[www_common_dir");
+	// default =  CAMPSITE_DIR . "/www-common"
+$Campsite["HTML_COMMON_DIR"] = "[html_common_dir]");
+	// default = CAMPSITE_DIR . "/www-common/html"
+$Campsite["CGI_COMMON_DIR"] = "[cgi_common_dir]");
+	// default = CAMPSITE_DIR . "/www-common/cgi-bin"
+$Campsite["SCRIPT_COMMON_DIR"] = "[script_common_dir]");
+	// default = CAMPSITE_DIR . "/www-common/script"
+$Campsite["INCLUDE_COMMON_DIR"] = "[include_common_dir]");
+	// default = CAMPSITE_DIR . "/www-common/include");
+
+$campsite_local_vars['path_config.php'] = array("CAMPSITE_DIR", "BIN_DIR",
+	"ETC_DIR", "WWW_DIR", "WWW_COMMON_DIR", "HTML_COMMON_DIR", "CGI_COMMON_DIR",
+	"SCRIPT_COMMON_DIR", "INCLUDE_COMMON_DIR");
+
 ?>
 
-- path:
-[prefix]/campsite/etc/campsite/path_config.php
-
+- path: [etc_dir]/path_config.php
 - owner: [apache_user]:[apache_user]
-- rights: owner: read/write, group: read/write, other: none
+- rights: owner: read/write, group: read/write, other: read
