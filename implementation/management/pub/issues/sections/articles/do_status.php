@@ -13,6 +13,7 @@
 <?php 
     todefnum('TOL_UserId');
     todefnum('TOL_UserKey');
+    todef('Status');
     query ("SELECT * FROM Users WHERE Id=$TOL_UserId AND KeyId=$TOL_UserKey", 'Usr');
     $access=($NUM_ROWS != 0);
     if ($NUM_ROWS) {
