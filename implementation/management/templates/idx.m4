@@ -116,6 +116,7 @@ E_CURRENT
    <TD>X_NEW_BUTTON(<*Create new folder*>, <*X_ROOT/templates/new_dir.php?Path=<?php  pencURL($myurl); ?>*>)</TD>
    <TD>X_NEW_BUTTON(<*Upload template*>, <*X_ROOT/templates/upload_templ.php?Path=<?php  pencURL($myurl); ?>*>)</TD>
    <TD>X_NEW_BUTTON(<*Create new template*>, <*X_ROOT/templates/new_template.php?Path=<?php  pencURL($myurl); ?>*>)</TD>
+   <TD>X_NEW_BUTTON(<*Refresh templates directory*>, <*X_ROOT/templates/refresh.php?Path=<?php  pencURL($myurl); ?>*>)</TD>
   <?php  }
  } else {?>dnl
 <TD>
