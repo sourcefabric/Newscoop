@@ -1,7 +1,8 @@
 BEGIN;
 
 
--- Create new tables first: URLTypes, TemplateTypes, Templates, Aliases
+-- Create new tables first: URLTypes, TemplateTypes, Templates, Aliases,
+-- ArticlePublish, IssuePublish
 -- Populate URLTypes and TemplateTypes tables with default values
 
 CREATE TABLE URLTypes (
@@ -33,6 +34,26 @@ CREATE TABLE Aliases (
     Name char(128) NOT NULL UNIQUE,
     IdPublication int(10) unsigned NOT NULL
 );
+
+CREATE TABLE ArticlePublish (
+  NrArticle int(10) unsigned NOT NULL default '0',
+  IdLanguage int(10) unsigned NOT NULL default '0',
+  PublishTime datetime NOT NULL default '0000-00-00 00:00:00',
+  Publish enum('P','U') default NULL,
+  FrontPage enum('S','R') default NULL,
+  SectionPage enum('S','R') default NULL,
+  PRIMARY KEY  (NrArticle,IdLanguage,PublishTime)
+) TYPE=MyISAM;
+
+CREATE TABLE IssuePublish (
+  IdPublication int(10) unsigned NOT NULL default '0',
+  NrIssue int(10) unsigned NOT NULL default '0',
+  IdLanguage int(10) unsigned NOT NULL default '0',
+  PublishTime datetime NOT NULL default '0000-00-00 00:00:00',
+  Action enum('P','U') NOT NULL default 'P',
+  PublishArticles enum('Y','N') NOT NULL default 'Y',
+  PRIMARY KEY  (IdPublication,NrIssue,IdLanguage,PublishTime)
+) TYPE=MyISAM;
 
 
 -- Run transfer_templates.php script now!!!
@@ -215,6 +236,6 @@ ALTER TABLE ImagesDup DROP COLUMN Image;
 ALTER TABLE ImagesDup DROP COLUMN Number;
 ALTER TABLE ImagesDup DROP COLUMN NrArticle;
 ALTER TABLE ImagesDup RENAME TO Images;
- 
+
 
 COMMIT;
