@@ -7,14 +7,14 @@ CHECK_BASIC_ACCESS
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Topics*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_LOGOUT
-<? } 
+<?php  } 
     query ("SELECT * FROM Topics WHERE 1=0", 'categ');
 ?>dnl
 E_HEAD
 
-<? if ($access) { 
+<?php  if ($access) { 
 SET_ACCESS(<*mca*>, <*ManageTopics*>)
 ?>dnl
 
@@ -30,7 +30,7 @@ X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<?
+<?php 
 	todefnum('IdCateg');
 	todef('Path');
 	todef('Top');
@@ -38,7 +38,7 @@ E_HEADER
 	todef('cCateg');
 ?>dnl
 
-<?
+<?php 
 	if($cCateg != ""){
 		query ("SELECT * FROM Topics WHERE Name = '$cCateg'", 'q_cat');
 		if($NUM_ROWS) {
@@ -49,7 +49,7 @@ E_HEADER
 ?>
 
 B_CURRENT
-	<?
+	<?php 
 		$crtCat = $IdCateg;
 		while($crtCat != 0){
 			query ("SELECT * FROM Topics WHERE Id = $crtCat", 'q_cat');
@@ -60,25 +60,25 @@ B_CURRENT
 		$Path=$Top."/".$Path;
 		if($Path == '') $Path="/";
 	?>
-	X_CURRENT(<*Topic*>, <*<B><?p($Path);?></B>*>)
+	X_CURRENT(<*Topic*>, <*<B><?php p($Path);?></B>*>)
 E_CURRENT
 <P>
 
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" WIDTH="100%">
 <TR>
-<? if ($mca) { ?>dnl
-	<TD ALIGN="LEFT">X_NEW_BUTTON(<*Add new topic*>, <*add.php?IdCateg=<?p($IdCateg);?>&Back=<? pencURL($REQUEST_URI); ?>*>)</TD>
-<? } ?>
+<?php  if ($mca) { ?>dnl
+	<TD ALIGN="LEFT">X_NEW_BUTTON(<*Add new topic*>, <*add.php?IdCateg=<?php p($IdCateg);?>&Back=<?php  pencURL($REQUEST_URI); ?>*>)</TD>
+<?php  } ?>
 	<TD ALIGN="RIGHT">
 	B_SEARCH_DIALOG(<*GET*>, <*index.php*>)
-		<TD><? putGS('Topic'); ?>:</TD>
+		<TD><?php  putGS('Topic'); ?>:</TD>
 		<TD><INPUT TYPE="TEXT" NAME="cCateg" SIZE="8" MAXLENGTH="20"></TD>
 		<TD>SUBMIT(<*Search*>, <*Search*>)</TD>
-		<INPUT TYPE="HIDDEN" NAME="IdCateg" VALUE="<? p($IdCateg); ?>">
+		<INPUT TYPE="HIDDEN" NAME="IdCateg" VALUE="<?php  p($IdCateg); ?>">
 	E_SEARCH_DIALOG
 	</TD>
 </TABLE>
-<?
+<?php 
 	todefnum('CatOffs');
 	if ($CatOffs < 0) $CatOffs= 0;
 	$lpp=10;
@@ -92,55 +92,55 @@ E_CURRENT
 B_LIST
 	B_LIST_HEADER
 		X_LIST_TH(<*Name*>)
-<? if ($mca) { ?>dnl
+<?php  if ($mca) { ?>dnl
 		X_LIST_TH(<*Change*>, <*1%*>)
 		X_LIST_TH(<*Delete*>, <*1%*>)
-<? } ?>
+<?php  } ?>
 	E_LIST_HEADER
-<?
+<?php 
     for($loop=0;$loop<$nr;$loop++) {
 	fetchRow($categ);
 	if ($i) { ?>dnl
 	B_LIST_TR
 		B_LIST_ITEM
-			<A HREF="index.php?IdCateg=<?pgetVar($categ,'Id');?>"><? pgetHVar($categ,'Name'); ?></A>
+			<A HREF="index.php?IdCateg=<?php pgetVar($categ,'Id');?>"><?php  pgetHVar($categ,'Name'); ?></A>
 		E_LIST_ITEM
-<? if ($mca) { ?>dnl
+<?php  if ($mca) { ?>dnl
 		B_LIST_ITEM(<*CENTER*>)
-			<A HREF="edit.php?IdCateg=<?p($IdCateg);?>&EdCateg=<? pgetVar($categ,'Id'); ?>"><? putGS("Change"); ?></A>
+			<A HREF="edit.php?IdCateg=<?php p($IdCateg);?>&EdCateg=<?php  pgetVar($categ,'Id'); ?>"><?php  putGS("Change"); ?></A>
 		E_LIST_ITEM
 		B_LIST_ITEM(<*CENTER*>)
-			X_BUTTON(<*<? putGS('Delete topic $1',getHVar($categ,'Name')); ?>*>, <*icon/x.gif*>, <*topics/del.php?IdCateg=<?p($IdCateg);?>&DelCateg=<? pgetVar($categ,'Id'); ?>*>)
+			X_BUTTON(<*<?php  putGS('Delete topic $1',getHVar($categ,'Name')); ?>*>, <*icon/x.gif*>, <*topics/del.php?IdCateg=<?php p($IdCateg);?>&DelCateg=<?php  pgetVar($categ,'Id'); ?>*>)
 		E_LIST_ITEM
-<? } ?>
+<?php  } ?>
     E_LIST_TR
-<?
+<?php 
     $i--;
     }
 } ?>dnl
 	B_LIST_FOOTER
-<? if ($CatOffs <= 0) { ?>dnl
+<?php  if ($CatOffs <= 0) { ?>dnl
 		X_PREV_I
-<? } else { ?>dnl
-		X_PREV_A(<*index.php?IdCateg=<?p($IdCateg);?>&CatOffs=<? print ($CatOffs - $lpp); ?>*>)
-<? } ?>dnl
-<? if ($nr < $lpp+1) { ?>dnl
+<?php  } else { ?>dnl
+		X_PREV_A(<*index.php?IdCateg=<?php p($IdCateg);?>&CatOffs=<?php  print ($CatOffs - $lpp); ?>*>)
+<?php  } ?>dnl
+<?php  if ($nr < $lpp+1) { ?>dnl
 		X_NEXT_I
-<? } else { ?>dnl
-		X_NEXT_A(<*index.php?IdCateg=<?p($IdCateg);?>&CatOffs=<? print ($CatOffs + $lpp); ?>*>)
-<? } ?>dnl
+<?php  } else { ?>dnl
+		X_NEXT_A(<*index.php?IdCateg=<?php p($IdCateg);?>&CatOffs=<?php  print ($CatOffs + $lpp); ?>*>)
+<?php  } ?>dnl
 	E_LIST_FOOTER
 E_LIST
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No topics'); ?></LI>
+	<LI><?php  putGS('No topics'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

@@ -1,7 +1,7 @@
 B_HTML
 INCLUDE_PHP_LIB(<*..*>)
 B_DATABASE
-<? todef('cName');
+<?php  todef('cName');
 $correct= 1;
 $created= 0;
 $j= 0;
@@ -13,12 +13,12 @@ CHECK_ACCESS(<*ManageArticleTypes*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Adding new article type*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to add article types.*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
@@ -35,25 +35,25 @@ E_HEADER
 <P>
 B_MSGBOX(<*Adding new article type*>)
 	X_MSGBOX_TEXT(<*
-<? if ($cName == "") {
+<?php  if ($cName == "") {
     $correct= 0; ?>dnl
-	<LI><? putGS('You must complete the $1 field.','</B>'.getGS('Name').'</B>'); ?></LI>
-<? } else {
+	<LI><?php  putGS('You must complete the $1 field.','</B>'.getGS('Name').'</B>'); ?></LI>
+<?php  } else {
 	$cName=decS($cName);
 
 	$ok = valid_field_name($cName);
 	if ($ok == 0) {
 		$correct= 0; ?>dnl
-		<LI><? putGS('The $1 field may only contain letters and underscore (_) character.', '</B>' . getGS('Name') . '</B>'); ?></LI>
-    <? }
+		<LI><?php  putGS('The $1 field may only contain letters and underscore (_) character.', '</B>' . getGS('Name') . '</B>'); ?></LI>
+    <?php  }
 
     $cName=encS($cName);
     if ($correct) {
 	query ("SHOW TABLES LIKE 'X$cName'", 't');
 	if ($NUM_ROWS) {
 	    $correct= 0; ?>dnl
-	<LI><? putGS('The article type $1 already exists.','<B>'.encHTML(decS($cName)).'</B>'); ?></LI>
-	<? }
+	<LI><?php  putGS('The article type $1 already exists.','<B>'.encHTML(decS($cName)).'</B>'); ?></LI>
+	<?php  }
     }
     
     if ($correct) {
@@ -61,31 +61,31 @@ B_MSGBOX(<*Adding new article type*>)
 	$sql = "CREATE TABLE `".$tname."` (NrArticle INT UNSIGNED NOT NULL, IdLanguage INT UNSIGNED NOT NULL, PRIMARY KEY(NrArticle, IdLanguage))";
 	query($sql);
 	$created= 1; ?>
-	<LI><? putGS('The article type $1 has been added.','<B>'.encHTML(decS($cName)).'</B>'); ?></LI>
+	<LI><?php  putGS('The article type $1 has been added.','<B>'.encHTML(decS($cName)).'</B>'); ?></LI>
 X_AUDIT(<*61*>, <*getGS('The article type $1 has been added.',$cName)*>)
-<? }
+<?php  }
 } ?>dnl
 	*>)
-<?
+<?php 
     todef ('Back');
     if ($correct && $created) { ?>dnl
 	B_MSGBOX_BUTTONS
-		REDIRECT(<*New field*>, <*Add new field*>, <*X_ROOT/a_types/fields/add.php?AType=<? print encURL($cName); ?>*>)
+		REDIRECT(<*New field*>, <*Add new field*>, <*X_ROOT/a_types/fields/add.php?AType=<?php  print encURL($cName); ?>*>)
 		REDIRECT(<*New type*>, <*Add another*>, <*X_ROOT/a_types/add.php*>)
 		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/a_types/*>)
 	E_MSGBOX_BUTTONS
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 	B_MSGBOX_BUTTONS
-		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/a_types/add.php<? if ($Back != "") { ?>?Back=<? print encURL($Back); } ?>*>)
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/a_types/add.php<?php  if ($Back != "") { ?>?Back=<?php  print encURL($Back); } ?>*>)
 	E_MSGBOX_BUTTONS
-<? } ?>dnl
+<?php  } ?>dnl
 E_MSGBOX
 <P>
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

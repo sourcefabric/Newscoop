@@ -15,7 +15,7 @@ E_HEADER
 
 <P>
 B_DIALOG(<*Login*>, <*POST*>, <*do_login.php*>)
-	X_DIALOG_TEXT(<*<? putGS('Please enter your user name and password'); ?>*>)
+	X_DIALOG_TEXT(<*<?php  putGS('Please enter your user name and password'); ?>*>)
 	B_DIALOG_INPUT(<*User name*>)
 		<INPUT TYPE="TEXT" NAME="UserName" SIZE="32" MAXLENGTH="32">
 	E_DIALOG_INPUT
@@ -24,7 +24,7 @@ B_DIALOG(<*Login*>, <*POST*>, <*do_login.php*>)
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Language*>)
 		<SELECT name=selectlanguage>
-		    <?
+		    <?php 
 			foreach($languages as $key=>$larr){
 			    //$lcode=key($larr[]);
 			    $lval=$larr['name'];
@@ -38,7 +38,7 @@ B_DIALOG(<*Login*>, <*POST*>, <*do_login.php*>)
 	E_DIALOG_BUTTONS
 E_DIALOG
 <P>
-<? if (file_exists("./guest_include.php")) require("./guest_include.php"); ?>
+<?php  if (file_exists("./guest_include.php")) require("./guest_include.php"); ?>
 X_HR
 X_COPYRIGHT
 E_BODY

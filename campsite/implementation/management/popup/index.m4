@@ -9,7 +9,7 @@ B_HEAD
 	X_TITLE(<*Quick Menu*>)
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
@@ -18,7 +18,7 @@ E_STYLE
     <FRAME SRC="empty.php?bg=0" NAME="f1" FRAMEBORDER="0" MARGINHEIGHT="0" NORESIZE SCROLLING="NO">
 </FRAMESET>
 
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

@@ -7,33 +7,33 @@ CHECK_BASIC_ACCESS
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Subscribed sections*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_LOGOUT
-<? }
+<?php  }
     query ("SELECT * FROM SubsSections WHERE 1=0", 'q_ssect');
 ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
-<?
+<?php 
     todefnum('Pub');
     todefnum('User');
     todefnum('Subs');
 ?>dnl
 B_HEADER(<*Subscribed sections*>)
 B_HEADER_BUTTONS
-X_HBUTTON(<*Subscriptions*>, <*users/subscriptions/?User=<? p($User); ?>*>)
+X_HBUTTON(<*Subscriptions*>, <*users/subscriptions/?User=<?php  p($User); ?>*>)
 X_HBUTTON(<*Users*>, <*users/*>)
 X_HBUTTON(<*Home*>, <*home.php*>)
 X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<?
+<?php 
 	query("SELECT  Id as IdLang FROM Languages WHERE code='$TOL_Language'", 'q_lang');
 	if($NUM_ROWS == 0){
 		query("SELECT IdDefaultLanguage as IdLang  FROM Publications WHERE Id=$Pub", 'q_lang');
@@ -50,21 +50,21 @@ E_HEADER
 ?>dnl
 
 B_CURRENT
-X_CURRENT(<*User account*>, <*<B><? pgetHVar($q_usr,'UName'); ?></B>*>)
-X_CURRENT(<*Publication*>, <*<B><? pgetHVar($q_pub,'Name'); ?></B>*>)
+X_CURRENT(<*User account*>, <*<B><?php  pgetHVar($q_usr,'UName'); ?></B>*>)
+X_CURRENT(<*Publication*>, <*<B><?php  pgetHVar($q_pub,'Name'); ?></B>*>)
 E_CURRENT
 
-<P><table><tr><td valign=top>X_NEW_BUTTON(<*Add new section to subscription*>, <*add.php?Subs=<? p($Subs); ?>&Pub=<? p($Pub); ?>&User=<? p($User); ?>*>)</td>
+<P><table><tr><td valign=top>X_NEW_BUTTON(<*Add new section to subscription*>, <*add.php?Subs=<?php  p($Subs); ?>&Pub=<?php  p($Pub); ?>&User=<?php  p($User); ?>*>)</td>
 
-<P><?
+<P><?php 
     todefnum('SSectOffs');
     if ($SSectOffs < 0) $SSectOffs= 0;
     $lpp=20;
     query ("SELECT DISTINCT Sub.*, Sec.Name, Scr.Type FROM SubsSections as Sub, Sections as Sec, Subscriptions as Scr WHERE Sub.IdSubscription=$Subs AND Scr.Id = $Subs AND Scr.IdPublication = Sec.IdPublication AND Sub.SectionNumber = Sec.Number ORDER BY SectionNumber LIMIT $SSectOffs, ".($lpp+1), 'q_ssect');
     if ($NUM_ROWS) {
 ?>
-<td valign=top>X_NEW_BUTTON(<*Change all sections*>, <*change.php?Subs=<? p($Subs); ?>&Pub=<? p($Pub); ?>&User=<? p($User); ?>*>)</td></tr></table>
-<?
+<td valign=top>X_NEW_BUTTON(<*Change all sections*>, <*change.php?Subs=<?php  p($Subs); ?>&Pub=<?php  p($Pub); ?>&User=<?php  p($User); ?>*>)</td></tr></table>
+<?php 
 	$nr= $NUM_ROWS;
 	$i= $lpp;
 	$color= 0;
@@ -79,38 +79,38 @@ B_LIST
 		X_LIST_TH(<*Section*>)
 		X_LIST_TH(<*Start Date<BR><SMALL>(yyyy-mm-dd)</SMALL>*>)
 		X_LIST_TH(<*Days*>)
-	<? if ($isPaid) { ?>
+	<?php  if ($isPaid) { ?>
 		X_LIST_TH(<*Paid Days*>)
-	<? } ?>
+	<?php  } ?>
 		X_LIST_TH(<*Change*>, <*1%*>)
 		X_LIST_TH(<*Delete*>, <*1%*>)
 	E_LIST_HEADER
-<?
+<?php 
     for($loop=0;$loop<$nr;$loop++) {
 	if ($i) { ?>dnl
 	B_LIST_TR
 		B_LIST_ITEM
-			<? p(getHVar($q_ssect,'Name')); ?>
+			<?php  p(getHVar($q_ssect,'Name')); ?>
 		E_LIST_ITEM
 		B_LIST_ITEM
-			<? pgetHVar($q_ssect,'StartDate'); ?>
+			<?php  pgetHVar($q_ssect,'StartDate'); ?>
 		E_LIST_ITEM
 		B_LIST_ITEM
-			<? pgetHVar($q_ssect,'Days'); ?>
+			<?php  pgetHVar($q_ssect,'Days'); ?>
 		E_LIST_ITEM
-	<? if ($isPaid) { ?>
+	<?php  if ($isPaid) { ?>
 		B_LIST_ITEM
-			<? pgetHVar($q_ssect,'PaidDays'); ?>
+			<?php  pgetHVar($q_ssect,'PaidDays'); ?>
 		E_LIST_ITEM
-	<? } ?>
+	<?php  } ?>
 		B_LIST_ITEM(<*CENTER*>)
-			<A HREF="X_ROOT/users/subscriptions/sections/change.php?User=<? p($User); ?>&Pub=<? p($Pub); ?>&Subs=<? p($Subs); ?>&Sect=<? pgetUVar($q_ssect,'SectionNumber'); ?>"><? putGS('Change'); ?></A>
+			<A HREF="X_ROOT/users/subscriptions/sections/change.php?User=<?php  p($User); ?>&Pub=<?php  p($Pub); ?>&Subs=<?php  p($Subs); ?>&Sect=<?php  pgetUVar($q_ssect,'SectionNumber'); ?>"><?php  putGS('Change'); ?></A>
 		E_LIST_ITEM
 		B_LIST_ITEM(<*CENTER*>)
-			X_BUTTON(<*<? putGS('Delete subscription to section $1?',getHVar($q_ssect,'SectionNumber')); ?>*>, <*icon/x.gif*>, <*users/subscriptions/sections/del.php?User=<? p($User); ?>&Pub=<? p($Pub); ?>&Subs=<? p($Subs); ?>&Sect=<? pgetUVar($q_ssect,'SectionNumber'); ?>*>)
+			X_BUTTON(<*<?php  putGS('Delete subscription to section $1?',getHVar($q_ssect,'SectionNumber')); ?>*>, <*icon/x.gif*>, <*users/subscriptions/sections/del.php?User=<?php  p($User); ?>&Pub=<?php  p($Pub); ?>&Subs=<?php  p($Subs); ?>&Sect=<?php  pgetUVar($q_ssect,'SectionNumber'); ?>*>)
 		E_LIST_ITEM
 	E_LIST_TR
-<?
+<?php 
 	$i--;
 	if ($i)
 		fetchRow($q_ssect);
@@ -118,42 +118,42 @@ B_LIST
 }
 ?>dnl
 	B_LIST_FOOTER
-<? if ($SSectOffs <= 0) { ?>dnl
+<?php  if ($SSectOffs <= 0) { ?>dnl
 		X_PREV_I
-<? } else { ?>dnl
-		X_PREV_A(<*index.php?Subs=<? p($Subs); ?>&Pub=<? p($Pub); ?>&User=<? p($User); ?>&SSectOffs=<? p($SSectOffs - $lpp); ?>*>)
-<? }
+<?php  } else { ?>dnl
+		X_PREV_A(<*index.php?Subs=<?php  p($Subs); ?>&Pub=<?php  p($Pub); ?>&User=<?php  p($User); ?>&SSectOffs=<?php  p($SSectOffs - $lpp); ?>*>)
+<?php  }
 
     if ($nr < $lpp+1) { ?>dnl
 		X_NEXT_I
-<? } else { ?>dnl
-		X_NEXT_A(<*index.php?Subs=<? p($Subs); ?>&Pub=<? p($Pub); ?>&User=<? p($User); ?>&SSectOffs=<? p($SSectOffs + $lpp); ?>*>)
-<? } ?>dnl
+<?php  } else { ?>dnl
+		X_NEXT_A(<*index.php?Subs=<?php  p($Subs); ?>&Pub=<?php  p($Pub); ?>&User=<?php  p($User); ?>&SSectOffs=<?php  p($SSectOffs + $lpp); ?>*>)
+<?php  } ?>dnl
 	E_LIST_FOOTER
 E_LIST
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 </tr></table>
 <BLOCKQUOTE>
-	<LI><? putGS('No sections in the current subscription.'); ?></LI>
+	<LI><?php  putGS('No sections in the current subscription.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such publication.'); ?></LI>
+	<LI><?php  putGS('No such publication.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such user account.'); ?></LI>
+	<LI><?php  putGS('No such user account.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

@@ -8,13 +8,13 @@ CHECK_ACCESS(<*DeleteDictionary*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Deleting keyword*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 		X_AD(<*You do not have the right to delete keywords.*>)
-<? query ("SELECT 1", 's');
+<?php  query ("SELECT 1", 's');
 } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
@@ -28,7 +28,7 @@ X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<?
+<?php 
     todefnum('Keyword');
     todefnum('Language');
 
@@ -43,37 +43,37 @@ E_HEADER
 	    ?>dnl
 <P>
 B_MSGBOX(<*Deleting keyword*>)
-<? if ($AFFECTED_ROWS > 0) { ?>
-	X_MSGBOX_TEXT(<*<LI><? putGS('The keyword has been deleted.'); ?></LI>*>)
+<?php  if ($AFFECTED_ROWS > 0) { ?>
+	X_MSGBOX_TEXT(<*<LI><?php  putGS('The keyword has been deleted.'); ?></LI>*>)
 X_AUDIT(<*82*>, <*getGS('Keyword $1 deleted',getHVar($q_dic,'Keyword'))*>)
-<? } else { ?>
-	X_MSGBOX_TEXT(<*<LI><? putGS('The keyword could not be deleted.'); ?></LI>*>)
-<? } ?>
+<?php  } else { ?>
+	X_MSGBOX_TEXT(<*<LI><?php  putGS('The keyword could not be deleted.'); ?></LI>*>)
+<?php  } ?>
 	B_MSGBOX_BUTTONS
-<? if ($AFFECTED_ROWS > 0) { ?>
+<?php  if ($AFFECTED_ROWS > 0) { ?>
 		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/glossary/*>)
-<? } else { ?>
+<?php  } else { ?>
 		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/glossary/*>)
-<? } ?>
+<?php  } ?>
 	E_MSGBOX_BUTTONS
 E_MSGBOX
 <P>
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('You must delete keyword infotypes first.'); ?></LI>
+	<LI><?php  putGS('You must delete keyword infotypes first.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such keyword.'); ?></LI>
+	<LI><?php  putGS('No such keyword.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

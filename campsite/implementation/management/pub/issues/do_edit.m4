@@ -8,18 +8,18 @@ CHECK_ACCESS(<*ManageIssue*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Updating issue*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to add issues.*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
 
-<?
+<?php 
     todef('cName');
     todefnum('cLang');
     todefnum('cPublicationDate');
@@ -30,14 +30,14 @@ B_BODY
 
 B_HEADER(<*Changing issue's details*>)
 B_HEADER_BUTTONS
-X_HBUTTON(<*Issues*>, <*pub/issues/?Pub=<? pencURL($cPub); ?>*>)
+X_HBUTTON(<*Issues*>, <*pub/issues/?Pub=<?php  pencURL($cPub); ?>*>)
 X_HBUTTON(<*Publications*>, <*pub/*>)
 X_HBUTTON(<*Home*>, <*home.php*>)
 X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<?
+<?php 
     query ("SELECT * FROM Issues WHERE IdPublication=$Pub AND Number=$Issue AND IdLanguage=$Language", 'publ');
     if ($NUM_ROWS) {
 	query ("SELECT * FROM Publications WHERE Id=$Pub", 'q_pub');
@@ -49,11 +49,11 @@ E_HEADER
 ?>dnl
 
 B_CURRENT
-X_CURRENT(<*Publication*>, <*<B><? pgetHVar($q_pub,'Name'); ?></B>*>)
-X_CURRENT(<*Issue*>, <*<B><? pgetHVar($publ,'Number'); ?>. <? pgetHVar($publ,'Name'); ?> (<? pgetHVar($q_lang,'Name'); ?>)</B>*>)
+X_CURRENT(<*Publication*>, <*<B><?php  pgetHVar($q_pub,'Name'); ?></B>*>)
+X_CURRENT(<*Issue*>, <*<B><?php  pgetHVar($publ,'Number'); ?>. <?php  pgetHVar($publ,'Name'); ?> (<?php  pgetHVar($q_lang,'Name'); ?>)</B>*>)
 E_CURRENT   
 
-<?
+<?php 
     $correct= 1;
     $created= 0;
 ?>dnl
@@ -61,19 +61,19 @@ E_CURRENT
 B_MSGBOX(<*Changing issue's details*>)
 	X_MSGBOX_TEXT(<*
 
-<?
+<?php 
     $cName=trim($cName);
 	///!sql query "SELECT TRIM('?cName')" q_x
     
     if ($cLang == 0) {
 	$correct= 0; ?>dnl
-		<LI><? putGS('You must select a language.'); ?></LI>
-    <? }
+		<LI><?php  putGS('You must select a language.'); ?></LI>
+    <?php  }
     
     if ($cName == "" || $cName == " ") {
 	$correct= 0; ?>dnl
-		<LI><? putGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); ?></LI>
-    <? }
+		<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); ?></LI>
+    <?php  }
     
     if ($correct) {
 	
@@ -82,45 +82,45 @@ B_MSGBOX(<*Changing issue's details*>)
     }
     
     if ($created) { ?>dnl
-		<LI><? putGS('The issue $1 has been successfuly changed.','<B>'.encHTML(decS($cName)).'</B>'); ?></LI>
+		<LI><?php  putGS('The issue $1 has been successfuly changed.','<B>'.encHTML(decS($cName)).'</B>'); ?></LI>
 X_AUDIT(<*11*>, <*getGS('Issue $1 updated in publication $2',$cName,getVar($publ,'Name'))*>)
-<? } else {
+<?php  } else {
     
     if ($correct != 0) { ?>dnl
-		<LI><? putGS('The issue could not be changed.'); ?></LI>
+		<LI><?php  putGS('The issue could not be changed.'); ?></LI>
 <!--LI>Please check if another issue with the same number/language does not already exist.</LI-->
-<? }
+<?php  }
 }
 ?>dnl
 		*>)
-<? if ($correct && $created) { ?>dnl
+<?php  if ($correct && $created) { ?>dnl
 	B_MSGBOX_BUTTONS
-		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/pub/issues/?Pub=<? pencURL($Pub); ?>*>)
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/pub/issues/?Pub=<?php  pencURL($Pub); ?>*>)
 	E_MSGBOX_BUTTONS
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 	B_MSGBOX_BUTTONS
-		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/pub/issues/edit.php?Pub=<? pencURL($Pub); ?>&Issue=<? pencURL($Issue); ?>&Language=<? pencURL($Language); ?>*>)
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/pub/issues/edit.php?Pub=<?php  pencURL($Pub); ?>&Issue=<?php  pencURL($Issue); ?>&Language=<?php  pencURL($Language); ?>*>)
 	E_MSGBOX_BUTTONS
-<? } ?>dnl
+<?php  } ?>dnl
 E_MSGBOX
 <P>
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such publication.'); ?></LI>
+	<LI><?php  putGS('No such publication.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-        <LI><? putGS('No such issue.'); ?></LI>
+        <LI><?php  putGS('No such issue.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl   
+<?php  } ?>dnl   
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

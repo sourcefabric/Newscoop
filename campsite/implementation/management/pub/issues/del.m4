@@ -8,31 +8,31 @@ CHECK_ACCESS(<*DeleteIssue*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Delete issue*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to delete issues.*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
 
-<?
+<?php 
     todefnum('Pub');
     todefnum('Issue');
     todefnum('Language');
 ?>dnl
 B_HEADER(<*Delete issue*>)
 B_HEADER_BUTTONS
-X_HBUTTON(<*Issues*>, <*pub/issues/?Pub=<? pencURL($Pub); ?>*>)
+X_HBUTTON(<*Issues*>, <*pub/issues/?Pub=<?php  pencURL($Pub); ?>*>)
 X_HBUTTON(<*Publications*>, <*pub/*>)
 X_HBUTTON(<*Home*>, <*home.php*>)
 X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
-<?
+<?php 
     query ("SELECT Name FROM Issues WHERE IdPublication=$Pub AND Number=$Issue AND IdLanguage=$Language", 'q_iss');
     if ($NUM_ROWS) {
 	query ("SELECT Name FROM Publications WHERE Id=$Pub", 'q_pub');
@@ -41,39 +41,39 @@ E_HEADER
 	    fetchRow($q_pub);
 ?>dnl
 B_CURRENT
-X_CURRENT(<*Publication*>, <*<B><? pgetHVar($q_pub,'Name'); ?></B>*>)
+X_CURRENT(<*Publication*>, <*<B><?php  pgetHVar($q_pub,'Name'); ?></B>*>)
 E_CURRENT
 
 <P>
 B_MSGBOX(<*Delete issue*>)
-	X_MSGBOX_TEXT(<*<LI><? putGS('Are you sure you want to delete the issue $1?','<B>'.getHVar($q_iss,'Name').'</B>'); ?></LI>*>)
+	X_MSGBOX_TEXT(<*<LI><?php  putGS('Are you sure you want to delete the issue $1?','<B>'.getHVar($q_iss,'Name').'</B>'); ?></LI>*>)
 	B_MSGBOX_BUTTONS
 		<FORM METHOD="POST" ACTION="do_del.php">
-		<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<? pencHTML($Pub); ?>">
-		<INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<? pencHTML($Issue); ?>">
-		<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<? pencHTML($Language); ?>">
+		<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<?php  pencHTML($Pub); ?>">
+		<INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<?php  pencHTML($Issue); ?>">
+		<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php  pencHTML($Language); ?>">
 		SUBMIT(<*Yes*>, <*Yes*>)
-		REDIRECT(<*No*>, <*No*>, <*X_ROOT/pub/issues/?Pub=<? pencURL($Pub); ?>*>)
+		REDIRECT(<*No*>, <*No*>, <*X_ROOT/pub/issues/?Pub=<?php  pencURL($Pub); ?>*>)
 		</FORM>
 	E_MSGBOX_BUTTONS
 E_MSGBOX
 <P>
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such publication.'); ?></LI>
+	<LI><?php  putGS('No such publication.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such issue.'); ?></LI>
+	<LI><?php  putGS('No such issue.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

@@ -12,7 +12,7 @@ E_HEAD
 B_STYLE
 E_STYLE
 
-<?
+<?php 
 	todefnum('Language');
 	todefnum('Pub');
 	todefnum('Issue');
@@ -23,13 +23,13 @@ E_STYLE
 
 <DIV><TABLE BORDER="0">
 	<TR>
-		<TD VALIGN="TOP" ALIGN="RIGHT" WIDTH="150"><? putGS('Publication'); ?>: </TD>
+		<TD VALIGN="TOP" ALIGN="RIGHT" WIDTH="150"><?php  putGS('Publication'); ?>: </TD>
 		<TD ALIGN="LEFT">
 <FORM NAME="FORM_PUB" METHOD="GET">
-<? if ($NUM_ROWS) { ?>dnl
-<SELECT NAME="pub" ONCHANGE="var f = this.form.pub; var v = f.options[f.selectedIndex].value; var x = 'X_ROOT/pub/issues/sections/i1.php?Language=<? pencURL($Language); ?>&Pub=<? pencURL($Pub); ?>&Issue=<? pencURL($Issue); ?>&Section=<? pencURL($Section); ?>&dstPub=' + v; if (v != 0) { parent.frames[1].location.href = x; }">
-	<OPTION VALUE="0"><? putGS('---Select publication---'); ?>
-<?
+<?php  if ($NUM_ROWS) { ?>dnl
+<SELECT NAME="pub" ONCHANGE="var f = this.form.pub; var v = f.options[f.selectedIndex].value; var x = 'X_ROOT/pub/issues/sections/i1.php?Language=<?php  pencURL($Language); ?>&Pub=<?php  pencURL($Pub); ?>&Issue=<?php  pencURL($Issue); ?>&Section=<?php  pencURL($Section); ?>&dstPub=' + v; if (v != 0) { parent.frames[1].location.href = x; }">
+	<OPTION VALUE="0"><?php  putGS('---Select publication---'); ?>
+<?php 
 	$nr=$NUM_ROWS;
 	for($loop=0;$loop<$nr;$loop++) {
 		fetchRow($q_pub);
@@ -37,9 +37,9 @@ E_STYLE
 	}
 ?>
 </SELECT>
-<? } else { ?>dnl
-<SELECT DISABLED><OPTION><? putGS('No publications'); ?></SELECT>
-<? } ?>dnl
+<?php  } else { ?>dnl
+<SELECT DISABLED><OPTION><?php  putGS('No publications'); ?></SELECT>
+<?php  } ?>dnl
 </FORM>
 		</TD>
 	</TR>

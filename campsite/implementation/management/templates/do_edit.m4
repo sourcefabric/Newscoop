@@ -3,14 +3,14 @@ INCLUDE_PHP_LIB(<*..*>)dnl
 B_DATABASE
 
 CHECK_BASIC_ACCESS
-<?
+<?php 
 	todefnum('What');
 	if ($What != 0) {
 ?>dnl
 CHECK_ACCESS(<*ManageTempl*>)dnl
-<? } ?>dnl
+<?php  } ?>dnl
 
-<?
+<?php 
 	todef('query');
 	todef('Path');
 	todef('Name');
@@ -21,18 +21,18 @@ B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Templates management*>)
 
-<?
+<?php 
     if ($access == 0) {
 	if ($What) { ?>dnl
 	X_AD(<*You do not have the right to change default templates.*>)
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 	X_LOGOUT
-<? }
+<?php  }
     }
 ?>dnl
 E_HEAD
 
-<? if ($access) {
+<?php  if ($access) {
 
 SET_ACCESS(<*mta*>, <*ManageTempl*>)
 SET_ACCESS(<*dta*>, <*DeleteTempl*>)
@@ -51,14 +51,14 @@ E_HEADER_BUTTONS
 E_HEADER
 
 B_CURRENT
-X_CURRENT(<*Path*>, <*<B><? pencHTML(decURL($Path)); ?></B>*>)
-X_CURRENT(<*Template*>, <*<B><? pencHTML(decURL($Name)); ?></B>*>)
+X_CURRENT(<*Path*>, <*<B><?php  pencHTML(decURL($Path)); ?></B>*>)
+X_CURRENT(<*Template*>, <*<B><?php  pencHTML(decURL($Name)); ?></B>*>)
 E_CURRENT
 
 <P>
 
 B_MSGBOX(<*Edit template*>)
-<?
+<?php 
 	if($dta){
 		$filename = "$DOCUMENT_ROOT".decURL($Path)."$Name";
 		$fd = fopen ($filename, "w");
@@ -67,28 +67,28 @@ B_MSGBOX(<*Edit template*>)
 		$nField = decS($nField);
 		$res = fwrite ($fd, $nField);
 		if($res >  0){ ?>dnl
-			X_MSGBOX_TEXT(<* <LI><?putGS('The template has been saved.'); ?></LI> *>)
-		<? }
+			X_MSGBOX_TEXT(<* <LI><?php putGS('The template has been saved.'); ?></LI> *>)
+		<?php  }
 		else { ?>dnl
-			X_MSGBOX_TEXT(<* <LI><? putGS('The template could not be saved'); ?></LI> *>)
-		<? }
+			X_MSGBOX_TEXT(<* <LI><?php  putGS('The template could not be saved'); ?></LI> *>)
+		<?php  }
 		fclose ($fd);
 	?>dnl
 	X_AUDIT(<*113*>, <*getGS('Template $1 was changed',encHTML(decS($Path)).encHTML(decS($Name)) )*>)	
 		B_MSGBOX_BUTTONS
-		<? if ($res > 0) { ?>dnl
-			REDIRECT(<*Done*>, <*Done*>, <*<? pencHTML(decS($Path)); ?>*>)
-		<? } else { ?>dnl
-			REDIRECT(<*OK*>, <*OK*>, <*<? pencHTML(decS($Path)); ?>*>)
-		<? } ?>dnl
+		<?php  if ($res > 0) { ?>dnl
+			REDIRECT(<*Done*>, <*Done*>, <*<?php  pencHTML(decS($Path)); ?>*>)
+		<?php  } else { ?>dnl
+			REDIRECT(<*OK*>, <*OK*>, <*<?php  pencHTML(decS($Path)); ?>*>)
+		<?php  } ?>dnl
 		E_MSGBOX_BUTTONS
-	<?}
+	<?php }
 	else{?>
-		X_MSGBOX_TEXT(<* <LI><?putGS('You do not have the right to modify templates.'); ?></LI> *>)
+		X_MSGBOX_TEXT(<* <LI><?php putGS('You do not have the right to modify templates.'); ?></LI> *>)
 		B_MSGBOX_BUTTONS
-			REDIRECT(<*OK*>, <*OK*>, <*<? pencHTML(decS($Path)); ?>*>)
+			REDIRECT(<*OK*>, <*OK*>, <*<?php  pencHTML(decS($Path)); ?>*>)
 		E_MSGBOX_BUTTONS
-	<?}
+	<?php }
 ?>dnl
 	
 E_MSGBOX
@@ -96,7 +96,7 @@ E_MSGBOX
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

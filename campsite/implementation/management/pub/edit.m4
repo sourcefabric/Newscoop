@@ -2,7 +2,7 @@ B_HTML
 INCLUDE_PHP_LIB(<*..*>)
 B_DATABASE
 
-<?
+<?php 
     query ("SELECT Id, Name FROM Languages WHERE 1=0", 'q_lang');
 ?>dnl
 CHECK_BASIC_ACCESS
@@ -11,9 +11,9 @@ CHECK_ACCESS(<*ManagePub*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Change publication information*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to edit publication information.*>)
-<? }
+<?php  }
     query ("SELECT Id, Name FROM Languages WHERE 1=0", 'q_lang');
 
     query ("SELECT Unit, Name FROM TimeUnits WHERE 1=0", 'q_unit');
@@ -26,13 +26,13 @@ B_HEAD
 ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
 
-<?
+<?php 
     todefnum('Pub');
 ?>
 B_HEADER(<*Change publication information*>)
@@ -43,27 +43,27 @@ X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<?
+<?php 
     query ("SELECT * FROM Publications WHERE Id=$Pub", 'q_pub');
     if ($NUM_ROWS) { 
 	fetchRow($q_pub);
 ?>dnl
 B_CURRENT
-X_CURRENT(<*Publication*>, <*<B><? pgetHVar($q_pub,'Name'); ?></B>*>)
+X_CURRENT(<*Publication*>, <*<B><?php  pgetHVar($q_pub,'Name'); ?></B>*>)
 E_CURRENT
-	<?query ("SELECT Unit, Name FROM TimeUnits WHERE (IdLanguage=$IdLang or IdLanguage = 1) and Unit='".getHVar($q_pub,'TimeUnit')."' order by IdLanguage desc", 'q_tunit');
+	<?php query ("SELECT Unit, Name FROM TimeUnits WHERE (IdLanguage=$IdLang or IdLanguage = 1) and Unit='".getHVar($q_pub,'TimeUnit')."' order by IdLanguage desc", 'q_tunit');
 		fetchRow($q_tunit); $tunit =getVar($q_tunit,'Name'); ?>dnl
 <P>
 B_DIALOG(<*Change publication information*>, <*POST*>, <*do_edit.php*>)
 	B_DIALOG_INPUT(<*Name*>)
-		<INPUT TYPE="TEXT" NAME="cName" VALUE="<? pgetHVar($q_pub,'Name'); ?>" SIZE="32" MAXLENGTH="255">
+		<INPUT TYPE="TEXT" NAME="cName" VALUE="<?php  pgetHVar($q_pub,'Name'); ?>" SIZE="32" MAXLENGTH="255">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Site*>)
-		<INPUT TYPE="TEXT" NAME="cSite" VALUE="<? pgetHVar($q_pub,'Site'); ?>" SIZE="32" MAXLENGTH="255">
+		<INPUT TYPE="TEXT" NAME="cSite" VALUE="<?php  pgetHVar($q_pub,'Site'); ?>" SIZE="32" MAXLENGTH="255">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Default language*>)
 	    <SELECT NAME="cLanguage">
-	    <?
+	    <?php 
 		query ("SELECT Id, OrigName FROM Languages", 'q_lang');
 		    $nr=$NUM_ROWS;
 		    for($loop=0;$loop<$nr;$loop++) {
@@ -74,11 +74,11 @@ B_DIALOG(<*Change publication information*>, <*POST*>, <*do_edit.php*>)
 	    </SELECT>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Pay Period*>)
-		<INPUT TYPE="TEXT" NAME="cPayTime" VALUE="<? pgetHVar($q_pub,'PayTime'); ?>" SIZE="5" MAXLENGTH="5"> <? p($tunit); ?>
+		<INPUT TYPE="TEXT" NAME="cPayTime" VALUE="<?php  pgetHVar($q_pub,'PayTime'); ?>" SIZE="5" MAXLENGTH="5"> <?php  p($tunit); ?>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Time Unit*>)
 	    <SELECT NAME="cTimeUnit">
-<?
+<?php 
 	$q = "SELECT t.Unit, t.Name FROM TimeUnits as t, Languages as l WHERE t.IdLanguage = l.Id and l.Code = '" . $TOL_Language . "' order by t.Unit asc";
 	query($q, 'q_unit');
 	$nr = $NUM_ROWS;
@@ -95,35 +95,35 @@ B_DIALOG(<*Change publication information*>, <*POST*>, <*do_edit.php*>)
 	    </SELECT>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Unit Cost*>)
-		<INPUT TYPE="TEXT" NAME="cUnitCost" VALUE="<? pgetHVar($q_pub,'UnitCost'); ?>" SIZE="20" MAXLENGTH="32">
+		<INPUT TYPE="TEXT" NAME="cUnitCost" VALUE="<?php  pgetHVar($q_pub,'UnitCost'); ?>" SIZE="20" MAXLENGTH="32">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Currency*>)
-		<INPUT TYPE="TEXT" NAME="cCurrency" VALUE="<? pgetHVar($q_pub,'Currency'); ?>" SIZE="20" MAXLENGTH="32">
+		<INPUT TYPE="TEXT" NAME="cCurrency" VALUE="<?php  pgetHVar($q_pub,'Currency'); ?>" SIZE="20" MAXLENGTH="32">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Paid Period*>)
-		<INPUT TYPE="TEXT" NAME="cPaid" VALUE="<? pgetHVar($q_pub,'PaidTime'); ?>" SIZE="20" MAXLENGTH="32"> <? p($tunit); ?>
+		<INPUT TYPE="TEXT" NAME="cPaid" VALUE="<?php  pgetHVar($q_pub,'PaidTime'); ?>" SIZE="20" MAXLENGTH="32"> <?php  p($tunit); ?>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Trial Period*>)
-		<INPUT TYPE="TEXT" NAME="cTrial" VALUE="<? pgetHVar($q_pub,'TrialTime'); ?>" SIZE="20" MAXLENGTH="32"> <? p($tunit); ?>
+		<INPUT TYPE="TEXT" NAME="cTrial" VALUE="<?php  pgetHVar($q_pub,'TrialTime'); ?>" SIZE="20" MAXLENGTH="32"> <?php  p($tunit); ?>
 	E_DIALOG_INPUT
 
 	B_DIALOG_BUTTONS
-		<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<? pencHTML($Pub); ?>">
+		<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<?php  pencHTML($Pub); ?>">
 		SUBMIT(<*Save*>, <*Save changes*>)
 		REDIRECT(<*Cancel*>, <*Cancel*>, <*X_ROOT/pub/*>)
 	E_DIALOG_BUTTONS
 E_DIALOG
 <P>
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such publication.'); ?></LI>
+	<LI><?php  putGS('No such publication.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

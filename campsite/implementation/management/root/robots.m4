@@ -1,19 +1,19 @@
 INCLUDE_PHP_LIB(<*./priv*>)
 <HTML>
 B_DATABASE<**>dnl
-<?
+<?php 
     query ("SELECT Id, IdDefaultLanguage, Name FROM Publications WHERE Site='$HTTP_HOST'", 'q_pub');
     if ($NUM_ROWS) { 
 	fetchRow($q_pub);
     ?>dnl
     <HEAD>
-        <TITLE><? pgetHVar($q_pub,'Name'); ?></TITLE>
+        <TITLE><?php  pgetHVar($q_pub,'Name'); ?></TITLE>
     </HEAD>
-<?
+<?php 
     query ("SELECT * FROM Articles WHERE IdPublication=".getSVar($q_pub,'Id')." AND Published='Y' ORDER BY Number DESC LIMIT 200", 'q_art');
 ?>dnl
 <BODY>
-<?
+<?php 
     $nr=$NUM_ROWS;
     for($loop=0;$loop<$nr;$loop++){
 	fetchRow($q_art);
@@ -25,6 +25,6 @@ B_DATABASE<**>dnl
     }
 ?>dnl
 </BODY>
-<? } ?>dnl
+<?php  } ?>dnl
 E_DATABASE<**>dnl
 </HTML>

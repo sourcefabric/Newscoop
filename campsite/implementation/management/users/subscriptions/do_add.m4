@@ -8,18 +8,18 @@ CHECK_ACCESS(<*ManageSubscriptions*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Adding subscription*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to add subscriptions.*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
 
-<?
+<?php 
     todefnum('User');
     todefnum('cPub');
     todefnum('cActive');
@@ -35,26 +35,26 @@ B_BODY
 ?>dnl
 B_HEADER(<*Adding subscription*>)
 B_HEADER_BUTTONS
-X_HBUTTON(<*Subscriptions*>, <*users/subscriptions/?User=<? p($User); ?>*>)
+X_HBUTTON(<*Subscriptions*>, <*users/subscriptions/?User=<?php  p($User); ?>*>)
 X_HBUTTON(<*Users*>, <*users/*>)
 X_HBUTTON(<*Home*>, <*home.php*>)
 X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<?
+<?php 
     query ("SELECT UName FROM Users WHERE Id=$User", 'q_usr');
     if ($NUM_ROWS) {
 	fetchRow($q_usr);
 ?>dnl
 
 B_CURRENT
-X_CURRENT(<*User account*>, <*<B><? pgetHVar($q_usr,'UName'); ?></B>*>)
+X_CURRENT(<*User account*>, <*<B><?php  pgetHVar($q_usr,'UName'); ?></B>*>)
 E_CURRENT
 
 <P>
 B_MSGBOX(<*Adding subscription*>)
-<?
+<?php 
 	$paidDays = 0;
 	if ($sType == "PN" || $sType == "T")
 		$paidDays = $cDays;
@@ -71,11 +71,11 @@ B_MSGBOX(<*Adding subscription*>)
         else $success_subs= 0;
 
 	if ($success_subs) { ?>dnl
-		X_MSGBOX_TEXT(<*<LI><? putGS('The subscription has been added successfully.'); ?></LI>*>)
-	<? }
+		X_MSGBOX_TEXT(<*<LI><?php  putGS('The subscription has been added successfully.'); ?></LI>*>)
+	<?php  }
 	else { ?>dnl
-		X_MSGBOX_TEXT(<*<LI><? putGS('The subscription could not be added.'); ?></LI><LI><? putGS("Please check if there isn't another subscription to the same publication."); ?></LI>*>)
-	<? }
+		X_MSGBOX_TEXT(<*<LI><?php  putGS('The subscription could not be added.'); ?></LI><LI><?php  putGS("Please check if there isn't another subscription to the same publication."); ?></LI>*>)
+	<?php  }
 
 	if($success_subs && ($bAddSect == 'Y')){
 		query ("SELECT DISTINCT Number FROM Sections where IdPublication=$cPub", 'q_sect');
@@ -88,39 +88,39 @@ B_MSGBOX(<*Adding subscription*>)
 			if ($AFFECTED_ROWS == 0)  $success_sect= 0;
 		}
 		if ($success_sect) { ?>dnl
-			X_MSGBOX_TEXT(<*<LI><? putGS('The sections were added successfully.'); ?></LI>*>)
-		<? }
+			X_MSGBOX_TEXT(<*<LI><?php  putGS('The sections were added successfully.'); ?></LI>*>)
+		<?php  }
 		else { ?>dnl
-			X_MSGBOX_TEXT(<*<LI><? putGS('The sections could not be added successfully. Some of them were already added !'); ?></LI>*>)
-		<? }
+			X_MSGBOX_TEXT(<*<LI><?php  putGS('The sections could not be added successfully. Some of them were already added !'); ?></LI>*>)
+		<?php  }
 	} ?>dnl
 
 
 	B_MSGBOX_BUTTONS
-	<? if ($success_sect) { ?>dnl
-		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/users/subscriptions/?User=<? p($User); ?>*>)
-	<? } else {
+	<?php  if ($success_sect) { ?>dnl
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/users/subscriptions/?User=<?php  p($User); ?>*>)
+	<?php  } else {
 		if($success_subs) {?>dnl
-			REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/users/subscriptions/sections/add.php?Pub=<? p($cPub); ?>&User=<? p($User); ?>&Subs=<? p($Subs); ?>*>)
-		<? }
+			REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/users/subscriptions/sections/add.php?Pub=<?php  p($cPub); ?>&User=<?php  p($User); ?>&Subs=<?php  p($Subs); ?>*>)
+		<?php  }
 		else { ?>
-			REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/users/subscriptions/add.php?User=<? p($User); ?>*>)
-		<? }
+			REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/users/subscriptions/add.php?User=<?php  p($User); ?>*>)
+		<?php  }
 	} ?>dnl
 	E_MSGBOX_BUTTONS
 E_MSGBOX
 <P>
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such user account.'); ?></LI>
+	<LI><?php  putGS('No such user account.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

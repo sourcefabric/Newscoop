@@ -8,18 +8,18 @@ CHECK_ACCESS(<*ManageDictionary*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Changing keyword/infotype definition*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to change definitions.*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
 
-<?
+<?php 
     todefnum('Keyword');
     todefnum('Class');
     todefnum('Language');
@@ -27,14 +27,14 @@ B_BODY
 ?>dnl
 B_HEADER(<*Changing keyword/infotype definition*>)
 B_HEADER_BUTTONS
-X_HBUTTON(<*Keyword infotypes*>, <*glossary/keyword/?Keyword=<? pencURL($Keyword); ?>&Language=<? pencURL($Language); ?>*>)
+X_HBUTTON(<*Keyword infotypes*>, <*glossary/keyword/?Keyword=<?php  pencURL($Keyword); ?>&Language=<?php  pencURL($Language); ?>*>)
 X_HBUTTON(<*Glossary*>, <*glossary/*>)
 X_HBUTTON(<*Home*>, <*home.php*>)
 X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<?
+<?php 
     query ("SELECT Keyword FROM Dictionary WHERE Id=$Keyword AND IdLanguage=$Language", 'q_kwd');
     if ($NUM_ROWS) {
 	query ("SELECT Name FROM Classes WHERE Id=$Class AND IdLanguage=$Language", 'q_cls');
@@ -46,57 +46,57 @@ E_HEADER
 		fetchRow($q_lang);
 ?>dnl
 B_CURRENT
-X_CURRENT(<*Keyword*>, <*<B><B><? pgetHVar($q_kwd,'Keyword'); ?></B>*>)
-X_CURRENT(<*Infotype*>, <*<B><B><? pgetHVar($q_cls,'Name'); ?></B>*>)
-X_CURRENT(<*Language*>, <*<B><? pgetHVar($q_lang,'Name'); ?></B>*>)
+X_CURRENT(<*Keyword*>, <*<B><B><?php  pgetHVar($q_kwd,'Keyword'); ?></B>*>)
+X_CURRENT(<*Infotype*>, <*<B><B><?php  pgetHVar($q_cls,'Name'); ?></B>*>)
+X_CURRENT(<*Language*>, <*<B><?php  pgetHVar($q_lang,'Name'); ?></B>*>)
 E_CURRENT
 
 <P>
 B_MSGBOX(<*Changing keyword*>)
 	X_MSGBOX_TEXT(<*
-<?
+<?php 
     query ("UPDATE KeywordClasses SET Definition='".encHTML($cDefinition)."' WHERE IdDictionary=$Keyword AND IdClasses=$Class AND IdLanguage=$Language");
     if ($AFFECTED_ROWS > 0) { ?>dnl
-		<LI><? putGS('The keyword has been changed.'); ?></LI>
+		<LI><?php  putGS('The keyword has been changed.'); ?></LI>
 X_AUDIT(<*93*>, <*getGS('Keyword $1 changed',getHVar($q_kwd,'Keyword'))*>)
-<? } else { ?>dnl
-		<LI><? putGS('The keyword could not be changed.'); ?><LI>
-<? } ?>dnl
+<?php  } else { ?>dnl
+		<LI><?php  putGS('The keyword could not be changed.'); ?><LI>
+<?php  } ?>dnl
 		*>)
-<? if ($AFFECTED_ROWS > 0) { ?>dnl
+<?php  if ($AFFECTED_ROWS > 0) { ?>dnl
 	B_MSGBOX_BUTTONS
-		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/glossary/keyword/?Keyword=<? pencURL($Keyword); ?>&Language=<? pencURL($Language); ?>*>)
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/glossary/keyword/?Keyword=<?php  pencURL($Keyword); ?>&Language=<?php  pencURL($Language); ?>*>)
 	E_MSGBOX_BUTTONS
-<? } else { ?>
+<?php  } else { ?>
 	B_MSGBOX_BUTTONS
-		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/glossary/keyword/?Keyword=<? pencURL($Keyword); ?>&Language=<? pencURL($Language); ?>*>)
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/glossary/keyword/?Keyword=<?php  pencURL($Keyword); ?>&Language=<?php  pencURL($Language); ?>*>)
 	E_MSGBOX_BUTTONS
-<? } ?>dnl
+<?php  } ?>dnl
 E_MSGBOX
 <P>
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such language.'); ?></LI>
+	<LI><?php  putGS('No such language.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such infotype.'); ?></LI>
+	<LI><?php  putGS('No such infotype.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such keyword.'); ?></LI>
+	<LI><?php  putGS('No such keyword.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

@@ -1,6 +1,6 @@
 INCLUDE_PHP_LIB(<*../../../..*>)dnl
 B_DATABASE<**>dnl
-<?    function printRows($q,$id,$s) {
+<?php     function printRows($q,$id,$s) {
 	$nr=$GLOBALS['NUM_ROWS'];
 	for($loop=0;$loop<$nr;$loop++) {
 	    $arr=mysql_fetch_array($q,MYSQL_ASSOC);

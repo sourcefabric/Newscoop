@@ -8,14 +8,14 @@ CHECK_ACCESS(<*DeleteUsers*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Deleting user account*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 		X_AD(<*You do not have the right to delete user accounts.*>)
-<? }
+<?php  }
     query ("SELECT Id FROM Subscriptions WHERE 1=0", 's');
     ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
@@ -29,7 +29,7 @@ X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<?
+<?php 
 	todefnum('User');
 
 	## added by sebastian
@@ -58,31 +58,31 @@ E_HEADER
 	?>dnl
 <P>
 B_MSGBOX(<*Deleting user account*>)
-<? if ($del) { ?>
+<?php  if ($del) { ?>
 X_AUDIT(<*52*>, <*getGS('The user account $1 has been deleted.',getHVar($uu,'UName'))*>)
-	X_MSGBOX_TEXT(<*<LI><? putGS('The user account $1 has been deleted.','<B>'.getHVar($uu,'UName').'</B>'); ?></LI>*>)
-<? } else { ?>
-	X_MSGBOX_TEXT(<*<LI><? putGS('The user account $1 could not be deleted.','<B>'.getHVar($uu,'UName').'</B>'); ?></LI>*>)
-<? } ?>
+	X_MSGBOX_TEXT(<*<LI><?php  putGS('The user account $1 has been deleted.','<B>'.getHVar($uu,'UName').'</B>'); ?></LI>*>)
+<?php  } else { ?>
+	X_MSGBOX_TEXT(<*<LI><?php  putGS('The user account $1 could not be deleted.','<B>'.getHVar($uu,'UName').'</B>'); ?></LI>*>)
+<?php  } ?>
 	B_MSGBOX_BUTTONS
-<? if ($del) { ?>
+<?php  if ($del) { ?>
 		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/users/*>)
-<? } else { ?>
+<?php  } else { ?>
 		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/users/*>)
-<? } ?>
+<?php  } ?>
 	E_MSGBOX_BUTTONS
 E_MSGBOX
 <P>
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such user.'); ?></LI>
+	<LI><?php  putGS('No such user.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

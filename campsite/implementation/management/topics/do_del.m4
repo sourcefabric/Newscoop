@@ -8,12 +8,12 @@ CHECK_ACCESS(<*ManageTopics*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Deleting topic*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to delete topics.*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
@@ -26,7 +26,7 @@ X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<?
+<?php 
 	todefnum('IdCateg');
 	todefnum('DelCateg');
 	todefnum('del',1);
@@ -38,19 +38,19 @@ E_HEADER
 <P>
 B_MSGBOX(<*Deleting topic*>)
 	X_MSGBOX_TEXT(<*
-<?
+<?php 
 	query ("SELECT COUNT(*) FROM Topics WHERE ParentId=$DelCateg AND LanguageId = 1", 'q_sons');
 	fetchRowNum($q_sons);
 	if (getNumVar($q_sons,0) != 0) {
 		$del= 0; ?>dnl
-		<LI><? putGS('There are $1 subtopics left.',getNumVar($q_sons,0)); ?></LI>
-    <? }
+		<LI><?php  putGS('There are $1 subtopics left.',getNumVar($q_sons,0)); ?></LI>
+    <?php  }
 	query ("SELECT COUNT(*) FROM ArticleTopics WHERE TopicId=$DelCateg", 'q_tart');
 	fetchRowNum($q_tart);
 	if (getNumVar($q_tart,0) != 0) {
 		$del= 0; ?>dnl
-		<LI><? putGS('There are $1 articles using the topic.',getNumVar($q_tart,0)); ?></LI>
-    <? }
+		<LI><?php  putGS('There are $1 articles using the topic.',getNumVar($q_tart,0)); ?></LI>
+    <?php  }
 
     $AFFECTED_ROWS=0;
 
@@ -58,32 +58,32 @@ B_MSGBOX(<*Deleting topic*>)
 	query ("DELETE FROM Topics WHERE Id=$DelCateg");
 
 	if ($AFFECTED_ROWS > 0) { ?>dnl
-		<LI><? putGS('The topic $1 has been deleted.','<B>'.getHVar($q_cat,'Name').'</B>'); ?></LI>
+		<LI><?php  putGS('The topic $1 has been deleted.','<B>'.getHVar($q_cat,'Name').'</B>'); ?></LI>
 		X_AUDIT(<*142*>, <*getGS('Topic $1 deleted',getHVar($q_cat,'Name'))*>)
-	<? } else { ?>dnl
-		<LI><? putGS('The topic $1 could not be deleted.','<B>'.getHVar($q_cat,'Name').'</B>'); ?></LI>
-	<? } ?>dnl
+	<?php  } else { ?>dnl
+		<LI><?php  putGS('The topic $1 could not be deleted.','<B>'.getHVar($q_cat,'Name').'</B>'); ?></LI>
+	<?php  } ?>dnl
 *>)
 
 	B_MSGBOX_BUTTONS
-<? if ($AFFECTED_ROWS > 0) { ?>dnl
-		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/topics/index.php?IdCateg=<?p($IdCateg);?>*>)
-<? } else { ?>dnl
-		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/topics/index.php?IdCateg=<?p($IdCateg);?>*>)
-<? } ?>dnl
+<?php  if ($AFFECTED_ROWS > 0) { ?>dnl
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/topics/index.php?IdCateg=<?php p($IdCateg);?>*>)
+<?php  } else { ?>dnl
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/topics/index.php?IdCateg=<?php p($IdCateg);?>*>)
+<?php  } ?>dnl
 	E_MSGBOX_BUTTONS
 E_MSGBOX
 <P>
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such topic.'); ?></LI>
+	<LI><?php  putGS('No such topic.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>
+<?php  } ?>
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

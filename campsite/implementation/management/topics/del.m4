@@ -8,12 +8,12 @@ CHECK_ACCESS(<*ManageTopics*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Delete topic*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to delete topics.*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
@@ -26,7 +26,7 @@ X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<?
+<?php 
     todefnum('IdCateg');
     todefnum('DelCateg');
     query ("SELECT * FROM Topics WHERE Id=$DelCateg", 'p');
@@ -35,7 +35,7 @@ E_HEADER
 ?>dnl
 
 B_CURRENT
-	<?
+	<?php 
 		$crtCat = $IdCateg;
 		while($crtCat != 0){
 			query ("SELECT * FROM Topics WHERE Id = $crtCat", 'q_cat');
@@ -45,32 +45,32 @@ B_CURRENT
 		}
 		if($Path == '') $Path="/";
 	?>
-	X_CURRENT(<*Topic*>, <*<B><?p($Path);?></B>*>)
+	X_CURRENT(<*Topic*>, <*<B><?php p($Path);?></B>*>)
 E_CURRENT
 
 <P>
 B_MSGBOX(<*Delete topic*>)
-	X_MSGBOX_TEXT(<*<LI><? putGS('Do you want to delete the topic $1?','<B>'.getHVar($p,'Name').'</B>'); ?></LI>*>)
+	X_MSGBOX_TEXT(<*<LI><?php  putGS('Do you want to delete the topic $1?','<B>'.getHVar($p,'Name').'</B>'); ?></LI>*>)
 	B_MSGBOX_BUTTONS
 		<FORM METHOD="POST" ACTION="do_del.php">
-		<INPUT TYPE="HIDDEN" NAME="IdCateg" VALUE="<? p($IdCateg); ?>">
-		<INPUT TYPE="HIDDEN" NAME="DelCateg" VALUE="<? p($DelCateg); ?>">
+		<INPUT TYPE="HIDDEN" NAME="IdCateg" VALUE="<?php  p($IdCateg); ?>">
+		<INPUT TYPE="HIDDEN" NAME="DelCateg" VALUE="<?php  p($DelCateg); ?>">
 		SUBMIT(<*Yes*>, <*Yes*>)
-		REDIRECT(<*No*>, <*No*>, <*X_ROOT/topics/index.php?IdCateg=<?p($IdCateg);?>*>)
+		REDIRECT(<*No*>, <*No*>, <*X_ROOT/topics/index.php?IdCateg=<?php p($IdCateg);?>*>)
 		</FORM>
 	E_MSGBOX_BUTTONS
 E_MSGBOX
 <P>
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such topic.'); ?></LI>
+	<LI><?php  putGS('No such topic.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

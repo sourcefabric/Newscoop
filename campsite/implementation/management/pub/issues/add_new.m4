@@ -8,37 +8,37 @@ CHECK_ACCESS(<*ManageIssue*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Add new issue*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to add issues.*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
 
-<? todefnum('Pub'); ?>dnl
+<?php  todefnum('Pub'); ?>dnl
 B_HEADER(<*Add new issue*>)
 B_HEADER_BUTTONS
-X_HBUTTON(<*Issues*>, <*pub/issues/?Pub=<? pencURL($Pub); ?>*>)
+X_HBUTTON(<*Issues*>, <*pub/issues/?Pub=<?php  pencURL($Pub); ?>*>)
 X_HBUTTON(<*Publications*>, <*pub/*>)
 X_HBUTTON(<*Home*>, <*home.php*>)
 X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<?
+<?php 
     query ("SELECT Name FROM Publications WHERE Id=$Pub", 'publ');
     if ($NUM_ROWS) { 
 	fetchRow($publ);
 ?>dnl
 B_CURRENT
-X_CURRENT(<*Publication*>, <*<B><? pgetHVar($publ,'Name'); ?></B>*>)
+X_CURRENT(<*Publication*>, <*<B><?php  pgetHVar($publ,'Name'); ?></B>*>)
 E_CURRENT
 
-<?
+<?php 
 	query("SELECT IdDefaultLanguage as IdLang FROM Publications WHERE Id=$Pub", 'q_lang');
 	fetchRow($q_lang);
 	$IdLang = getVar($q_lang,'IdLang');
@@ -58,7 +58,7 @@ B_DIALOG(<*Add new issue*>, <*POST*>, <*do_add_new.php*>)
 		<INPUT TYPE="TEXT" NAME="cName" SIZE="32" MAXLENGTH="64">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Language*>)
-		<SELECT NAME="cLang"><?
+		<SELECT NAME="cLang"><?php 
     for($loop=0;$loop<$rownr;$loop++) {
 	fetchRow($q_lang);
 	pcomboVar(getHVar($q_lang,'Id'), $IdLang, getHVar($q_lang,'Name'));
@@ -67,26 +67,26 @@ B_DIALOG(<*Add new issue*>, <*POST*>, <*do_add_new.php*>)
 		</SELECT>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Number*>)
-		<INPUT TYPE="TEXT" NAME="cNumber" VALUE="<? pencHTML($nr); ?>" SIZE="5" MAXLENGTH="5">
+		<INPUT TYPE="TEXT" NAME="cNumber" VALUE="<?php  pencHTML($nr); ?>" SIZE="5" MAXLENGTH="5">
 	E_DIALOG_INPUT
 	B_DIALOG_BUTTONS
-		<INPUT TYPE="HIDDEN" NAME="cPub" VALUE="<? pencHTML($Pub); ?>">
+		<INPUT TYPE="HIDDEN" NAME="cPub" VALUE="<?php  pencHTML($Pub); ?>">
 		SUBMIT(<*Save*>, <*Save changes*>)
-		REDIRECT(<*Cancel*>, <*Cancel*>, <*X_ROOT/pub/issues/?Pub=<? pencURL($Pub); ?>*>)
+		REDIRECT(<*Cancel*>, <*Cancel*>, <*X_ROOT/pub/issues/?Pub=<?php  pencURL($Pub); ?>*>)
 	E_DIALOG_BUTTONS
 E_DIALOG
 <P>
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such publication.'); ?></LI>
+	<LI><?php  putGS('No such publication.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

@@ -2,7 +2,7 @@ B_HTML
 INCLUDE_PHP_LIB(<*.*>)
 B_DATABASE
 
-<?
+<?php 
     $ok=0;
     todef ('UserName');
     todef ('UserPassword');
@@ -19,14 +19,14 @@ B_DATABASE
 
 B_HEAD
 	X_EXPIRES
-<? if ($ok==0) { ?>dnl
+<?php  if ($ok==0) { ?>dnl
 	X_TITLE(<*Login failed*>)
-<? } else { 
+<?php  } else { 
     fetchRow($usrs);?>dnl
 	X_TITLE(<*Login*>)
-	X_COOKIE(<*TOL_UserId=<? print getVar ($usrs,'Id'); ?>*>)
-	X_COOKIE(<*TOL_UserKey=<? print getVar ($usrs,'KeyId'); ?>*>)
-	<?
+	X_COOKIE(<*TOL_UserId=<?php  print getVar ($usrs,'Id'); ?>*>)
+	X_COOKIE(<*TOL_UserKey=<?php  print getVar ($usrs,'KeyId'); ?>*>)
+	<?php 
 	## added by sebastian
 	if (function_exists ("incModFile"))
 		incModFile ();
@@ -35,12 +35,12 @@ B_HEAD
 		$selectlanguage='en';
 	    *>
 	?>
-	X_COOKIE(<*TOL_Language=<? p($selectlanguage); ?>*>)
+	X_COOKIE(<*TOL_Language=<?php  p($selectlanguage); ?>*>)
 	X_REFRESH(<*0; URL=X_ROOT/*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($ok==0) { ?>dnl
+<?php  if ($ok==0) { ?>dnl
 B_STYLE
 E_STYLE
 
@@ -52,15 +52,15 @@ E_HEADER_BUTTONS
 E_HEADER
 
 <BLOCKQUOTE>
-	<LI><? putGS('Login failed'); ?></LI>
-	<LI><? putGS('Pease make sure that you typed the correct user name and password.'); ?></LI>
-	<LI><? putGS('If your problem persists please contact the site administrator $1','<A HREF="mailto:'.encURL($SERVER_ADMIN).'">'.encHTML($SERVER_ADMIN) );?></A></LI>
+	<LI><?php  putGS('Login failed'); ?></LI>
+	<LI><?php  putGS('Pease make sure that you typed the correct user name and password.'); ?></LI>
+	<LI><?php  putGS('If your problem persists please contact the site administrator $1','<A HREF="mailto:'.encURL($SERVER_ADMIN).'">'.encHTML($SERVER_ADMIN) );?></A></LI>
 </BLOCKQUOTE>
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

@@ -8,12 +8,12 @@ CHECK_ACCESS(<*DeleteLanguages*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Delete language*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to delete languages.*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
@@ -27,7 +27,7 @@ X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<? 
+<?php  
     todefnum('Language');
     query ("SELECT * FROM Languages WHERE Id=$Language", 'q_lang');
     if ($NUM_ROWS) { 
@@ -35,26 +35,26 @@ E_HEADER
     ?>dnl
 <P>
 B_MSGBOX(<*Delete language*>)
-	X_MSGBOX_TEXT(<*<LI><? putGS('Are you sure you want to delete the language $1?','<B>'.getHVar($q_lang,'Name').'</B>'); ?></LI>*>)
+	X_MSGBOX_TEXT(<*<LI><?php  putGS('Are you sure you want to delete the language $1?','<B>'.getHVar($q_lang,'Name').'</B>'); ?></LI>*>)
 	B_MSGBOX_BUTTONS
 		<FORM METHOD="POST" ACTION="do_del.php">
-		<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<? print encHTML($Language); ?>">
+		<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php  print encHTML($Language); ?>">
 		SUBMIT(<*Yes*>, <*Yes*>)
 		SUBMIT(<*No*>, <*No*>)
 		</FORM>
 	E_MSGBOX_BUTTONS
 E_MSGBOX
 <P>
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such language.'); ?></LI>
+	<LI><?php  putGS('No such language.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

@@ -2,7 +2,7 @@ INCLUDE_PHP_LIB(<*./priv*>)
 <HTML>
 	<HEAD>
 B_DATABASE<**>dnl
-<?
+<?php 
     todef('HTTP_USER_AGENT', "XXX");
     query ("SELECT ('$HTTP_USER_AGENT' LIKE '%Mozilla%') OR ('$HTTP_USER_AGENT' LIKE '%MSIE%')", 'q_nav');
     fetchRowNum($q_nav);
@@ -38,7 +38,7 @@ B_DATABASE<**>dnl
 <BODY>
 	No such issue.
 </BODY>
-		<? 
+		<?php  
 		}
 	    }
 	}
@@ -48,7 +48,7 @@ B_DATABASE<**>dnl
 <BODY>
 	No such publication.
 </BODY>
-<? }
+<?php  }
 
 if ($ok) {
     query ("SELECT * FROM Articles WHERE IdPublication=$IdPublication AND NrIssue=$NrIssue AND NrSection=$NrSection AND  Number=$Number AND IdLanguage=$IdLanguage", 'q_art');
@@ -57,12 +57,12 @@ if ($ok) {
 	fetchRow($q_lang);
 	query ("SELECT * FROM Languages WHERE Id=$IdLanguage", 'q_lang');
 	if ($NUM_ROWS) { ?>dnl
-	<TITLE><? pgetHVar($q_art,'Name'); ?></TITLE>
-	<META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=<? pgetHVar($q_lang,'CodePage'); ?>">
-	<META HTTP-EQUIV="Keywords" CONTENT="<? pgetHVar($q_art,'Keywords'); ?>">
+	<TITLE><?php  pgetHVar($q_art,'Name'); ?></TITLE>
+	<META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=<?php  pgetHVar($q_lang,'CodePage'); ?>">
+	<META HTTP-EQUIV="Keywords" CONTENT="<?php  pgetHVar($q_art,'Keywords'); ?>">
 	</HEAD>
-<BODY BGCOLOR=WHITE TEXT=WHITE LINK=WHITE ALINK=WHITE VLINK=WHITE onload="param='IdPublication=<? p($IdPublication); ?>&NrIssue=<? p($NrIssue); ?>&NrSection=<? p($NrSection); ?>&NrArticle=<? p($Number); ?>&IdLanguage=<? p($IdLanguage); ?>';site='<? pgetVar($q_pub,'Site'); ?>'; path='<? pgetVar($q_iss,'SingleArticle'); ?>'; document.location.replace('http://' + site + path + '?' + param);">
-<?
+<BODY BGCOLOR=WHITE TEXT=WHITE LINK=WHITE ALINK=WHITE VLINK=WHITE onload="param='IdPublication=<?php  p($IdPublication); ?>&NrIssue=<?php  p($NrIssue); ?>&NrSection=<?php  p($NrSection); ?>&NrArticle=<?php  p($Number); ?>&IdLanguage=<?php  p($IdLanguage); ?>';site='<?php  pgetVar($q_pub,'Site'); ?>'; path='<?php  pgetVar($q_iss,'SingleArticle'); ?>'; document.location.replace('http://' + site + path + '?' + param);">
+<?php 
     if (getNumVar($q_nav,0) == 0) {
 	query ("SHOW FIELDS FROM X".getSVar($q_art,'Type')." LIKE 'F%'", 'q_fld');
 	$nr=$NUM_ROWS;
@@ -71,23 +71,23 @@ if ($ok) {
 	    query ("SELECT REPLACE(REPLACE(".encS(getNumVar($q_fld,0)).", '<', '<!-- '), '>', ' -->') FROM X".getSVar($q_art,'Type')." WHERE NrArticle=$Number AND IdLanguage=$IdLanguage", 'q_fff');
 	    fetchRowNum($q_fff);
 	    ?>dnl	    
-<p><? pgetVar($q_fff,0);
+<p><?php  pgetVar($q_fff,0);
 	}
     }
 ?>dnl
 </BODY>
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 	</HEAD>
 <BODY>
 	No such language.
 </BODY>
-<? }
+<?php  }
 } else { ?>dnl
 	</HEAD>
 <BODY>
 	No such article.
 </BODY>
-<? }
+<?php  }
 } ?>dnl
 
 E_DATABASE<**>dnl

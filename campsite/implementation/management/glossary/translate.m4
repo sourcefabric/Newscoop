@@ -8,14 +8,14 @@ CHECK_ACCESS(<*ManageDictionary*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Translate keyword*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to add keywords.*>)
-<? }
+<?php  }
     query ("SELECT Keyword FROM Dictionary WHERE 1=0", 'k');
 ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
@@ -29,7 +29,7 @@ X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<? 
+<?php  
     todefnum('Keyword');
     query ("SELECT Keyword FROM Dictionary WHERE Id=$Keyword ORDER BY IdLanguage", 'k');
     if ($NUM_ROWS) {
@@ -42,7 +42,7 @@ E_HEADER
 <P>
 B_DIALOG(<*Translate keyword*>, <*POST*>, <*do_translate.php*>)
 	B_DIALOG_INPUT(<*Keyword*>)
-<?
+<?php 
     $comma= 0;
     for ($loop=0;$loop<$nr;$loop++) {
 	fetchRow($k);
@@ -57,7 +57,7 @@ B_DIALOG(<*Translate keyword*>, <*POST*>, <*do_translate.php*>)
 		<INPUT TYPE="TEXT" NAME="cKeyword" SIZE="32" MAXLENGTH="64">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Language*>)
-		<SELECT NAME="cLang"><?
+		<SELECT NAME="cLang"><?php 
 		    for($loop2=0;$loop2<$nr2;$loop2++) {
 			fetchRow($languages);
 			pcomboVar(getVar($languages,'Id'),'',getVar($languages,'Name'));
@@ -65,27 +65,27 @@ B_DIALOG(<*Translate keyword*>, <*POST*>, <*do_translate.php*>)
 		?></SELECT>
 	E_DIALOG_INPUT
 	B_DIALOG_BUTTONS
-		<INPUT TYPE="HIDDEN" NAME="cId" VALUE="<? print encHTML($Keyword); ?>">
+		<INPUT TYPE="HIDDEN" NAME="cId" VALUE="<?php  print encHTML($Keyword); ?>">
 		SUBMIT(<*Save*>, <*Save changes*>)
 		REDIRECT(<*Cancel*>, <*Cancel*>, <*X_ROOT/glossary/*>)
 	E_DIALOG_BUTTONS
 E_DIALOG
 <P>
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No more languages.'); ?></LI>
+	<LI><?php  putGS('No more languages.'); ?></LI>
 </BLOCKQUOTE>
-<? }
+<?php  }
 } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such keyword.'); ?></LI>
+	<LI><?php  putGS('No such keyword.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

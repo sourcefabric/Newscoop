@@ -8,12 +8,12 @@ CHECK_ACCESS(<*ManageTempl*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Upload template*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to upload templates.*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
@@ -21,25 +21,25 @@ B_BODY
 
 B_HEADER(<*Upload template*>)
 B_HEADER_BUTTONS
-X_HBUTTON(<*Templates*>, <*templates/?Path=<? pencURL(decS($Path)); ?>*>)
+X_HBUTTON(<*Templates*>, <*templates/?Path=<?php  pencURL(decS($Path)); ?>*>)
 X_HBUTTON(<*Home*>, <*home.php*>)
 X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<? todef('Path'); ?>dnl
+<?php  todef('Path'); ?>dnl
 
 B_CURRENT
-X_CURRENT(<*Path*>, <*<B><? pencHTML(decURL($Path)); ?></B>*>)
+X_CURRENT(<*Path*>, <*<B><?php  pencHTML(decURL($Path)); ?></B>*>)
 E_CURRENT
 
 <P>
 
 B_DIALOG(<*Upload template*>, <*POST*>, <*do_upload_templ.php*>, <*multipart/form-data*>)
 	B_DIALOG_INPUT(<*Template charset*>)
-		<INPUT TYPE="HIDDEN" NAME="Path" VALUE="<? pencHTML(decS($Path)); ?>">
+		<INPUT TYPE="HIDDEN" NAME="Path" VALUE="<?php  pencHTML(decS($Path)); ?>">
 		<INPUT TYPE="HIDDEN" NAME="UNIQUE_ID" VALUE="1">
-<?
+<?php 
 	echo "<SELECT NAME=\"Charset\"><OPTION VALUE=\"\">-- ".getGS("Select a language/character set");
 	echo " --<OPTION VALUE=\"UTF-8\">".getGS("All languages")."/UTF-8";
 	query("SELECT CodePage, OrigName, Code FROM Languages", 'q_lang');
@@ -62,12 +62,12 @@ B_DIALOG(<*Upload template*>, <*POST*>, <*do_upload_templ.php*>, <*multipart/for
 	E_DIALOG_INPUT
 	B_DIALOG_BUTTONS
 		SUBMIT(<*Save*>, <*Save changes*>)
-<? todef('Back');
+<?php  todef('Back');
     if ($Back != "") { ?>dnl
-		REDIRECT(<*Cancel*>, <*Cancel*>, <*<? p($Back); ?>*>)
-<? } else { ?>dnl
-		REDIRECT(<*Cancel*>, <*Cancel*>, <*<? pencHTML(decS($Path)); ?>*>)
-<? } ?>dnl
+		REDIRECT(<*Cancel*>, <*Cancel*>, <*<?php  p($Back); ?>*>)
+<?php  } else { ?>dnl
+		REDIRECT(<*Cancel*>, <*Cancel*>, <*<?php  pencHTML(decS($Path)); ?>*>)
+<?php  } ?>dnl
 	E_DIALOG_BUTTONS
 E_DIALOG
 <P>
@@ -75,7 +75,7 @@ E_DIALOG
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

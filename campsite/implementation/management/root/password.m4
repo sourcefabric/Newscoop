@@ -1,6 +1,6 @@
 INCLUDE_PHP_LIB(<*./priv*>)
 B_DATABASE<**>
-<?
+<?php 
     TODEFNUM('IdPublication');
     query("SELECT * FROM Publications WHERE Id=$IdPublication", 'Publication');
 
@@ -11,9 +11,9 @@ B_DATABASE<**>
 <HTML>
 <HEAD>
 	<META HTTP-EQUIV="Expires" CONTENT="now">
-	<TITLE>Welcome to <? pgetHVar($Publication,'Name'); ?></TITLE>
+	<TITLE>Welcome to <?php  pgetHVar($Publication,'Name'); ?></TITLE>
 
-<?
+<?php 
     todefnum('TOL_UserId');
     todefnum('TOL_UserKey');
     query ("SELECT * FROM Users WHERE Id=$TOL_UserId AND KeyId=$TOL_UserKey", 'User');
@@ -24,7 +24,7 @@ B_DATABASE<**>
 </HEAD>
 
 <BODY BGCOLOR="WHITE" TEXT="BLACK" LINK="DARKBLUE" ALINK="RED" VLINK="DARKBLUE">
-<H1><? pgetHVar($Publication,'Name'); ?></H1>
+<H1><?php  pgetHVar($Publication,'Name'); ?></H1>
 
 <FORM METHOD="POST" ACTION="change_password.php">
 
@@ -53,19 +53,19 @@ B_DATABASE<**>
 
 </BODY>
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 
 	<META HTTP-EQUIV="Refresh" CONTENT="0; URL=enter.php">
 </HEAD>
 
-<? } ?>dnl
+<?php  } ?>dnl
 
 </HTML>
 
 </BODY>
 </HTML>
 
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 	<P>No publication found.
-<? } ?>dnl
+<?php  } ?>dnl
 E_DATABASE<**>

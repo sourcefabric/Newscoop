@@ -8,18 +8,18 @@ CHECK_ACCESS(<*ManagePub*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Changing publication information*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to change publication information.*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
 
-<?
+<?php 
     todefnum('Pub');
     todef('cName');
     todef('cSite');
@@ -39,7 +39,7 @@ X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<?
+<?php 
     $correct= 1;
     $created= 0;
     query ("SELECT * FROM Publications WHERE Id=$Pub", 'q_pub');
@@ -48,13 +48,13 @@ E_HEADER
 ?>dnl
 
 B_CURRENT
-X_CURRENT(<*Publication*>, <*<B><? pgetHVar($q_pub,'Name'); ?></B>*>)
+X_CURRENT(<*Publication*>, <*<B><?php  pgetHVar($q_pub,'Name'); ?></B>*>)
 E_CURRENT
 
 <P>
 B_MSGBOX(<*Changing publication information*>)
 	X_MSGBOX_TEXT(<*
-<?
+<?php 
     $cName=trim($cName);
     $cSite=trim($cSite);
     $cUnitCost=trim($cUnitCost);
@@ -62,23 +62,23 @@ B_MSGBOX(<*Changing publication information*>)
     
     if ($cName == "" || $cName== " ") {
 	$correct=0; ?>dnl
-		<LI><? putGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); ?></LI>
-    <? }
+		<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); ?></LI>
+    <?php  }
     
     if ($cSite == "" || $cSite == " ") {
 	$correct= 0; ?>dnl
-		<LI><? putGS('You must complete the $1 field.','<B>'.getGS('Site').'</B>'); ?></LI>
-    <? }
+		<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Site').'</B>'); ?></LI>
+    <?php  }
 
     if ($cUnitCost == "" || $cUnitCost == " ") {
 	$correct= 0; ?>dnl
-		<LI><? putGS('You must complete the $1 field.','<B>'.getGS('Unit Cost').'</B>'); ?></LI>
-    <? }
+		<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Unit Cost').'</B>'); ?></LI>
+    <?php  }
     
     if ($cCurrency == "" || $cCurrency == " ") {
 	$correct= 0; ?>dnl
-		<LI><? putGS('You must complete the $1 field.','<B>'.getGS('Currency').'</B>'); ?></LI>
-    <? }
+		<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Currency').'</B>'); ?></LI>
+    <?php  }
     
     if ($correct) {
 	query ("UPDATE Publications SET Name='$cName', Site='$cSite', IdDefaultLanguage=$cLanguage, PayTime='$cPayTime', TimeUnit='$cTimeUnit', UnitCost='$cUnitCost', Currency='$cCurrency', PaidTime='$cPaid', TrialTime='$cTrial' WHERE Id=$Pub");
@@ -86,34 +86,34 @@ B_MSGBOX(<*Changing publication information*>)
     }
 
     if ($created) { ?>dnl
-		<LI><? putGS('The publication $1 has been successfuly updated.',"<B>".encHTML(decS($cName))."</B>"); ?></LI>
+		<LI><?php  putGS('The publication $1 has been successfuly updated.',"<B>".encHTML(decS($cName))."</B>"); ?></LI>
 X_AUDIT(<*3*>, <*getGS('Publication $1 changed',$cName)*>)
-<? } else {
+<?php  } else {
 
     if ($correct != 0) { ?>dnl
-		<LI><? putGS('The publication information could not be updated.'); ?></LI><LI><? putGS('Please check if another publication with the same or the same site name does not already exist.'); ?></LI>
-<? }
+		<LI><?php  putGS('The publication information could not be updated.'); ?></LI><LI><?php  putGS('Please check if another publication with the same or the same site name does not already exist.'); ?></LI>
+<?php  }
     } ?>dnl
 		*>)
 	B_MSGBOX_BUTTONS
-<? if ($correct && $created) { ?>dnl
+<?php  if ($correct && $created) { ?>dnl
 		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/pub/*>)
-<? } else { ?>
-		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/pub/edit.php?Pub=<? pencURL($Pub); ?>*>)
-<? } ?>dnl
+<?php  } else { ?>
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/pub/edit.php?Pub=<?php  pencURL($Pub); ?>*>)
+<?php  } ?>dnl
 	E_MSGBOX_BUTTONS
 E_MSGBOX
 <P>
-<? } else { ?>dnl
+<?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><? putGS('No such publication.'); ?></LI>
+	<LI><?php  putGS('No such publication.'); ?></LI>
 </BLOCKQUOTE>
-<? } ?>dnl
+<?php  } ?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

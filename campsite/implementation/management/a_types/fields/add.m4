@@ -8,21 +8,21 @@ CHECK_ACCESS(<*ManageArticleTypes*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Add new field*>)
-<? if ($access == 0) { ?>dnl
+<?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to add article type fields.*>)
-<? } ?>dnl
+<?php  } ?>dnl
 E_HEAD
 
-<? if ($access) { ?>dnl
+<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
 
-<? todef('AType'); ?>dnl
+<?php  todef('AType'); ?>dnl
 B_HEADER(<*Add new field*>)
 B_HEADER_BUTTONS
-X_HBUTTON(<*Fields*>, <*a_types/fields/?AType=<? print encHTML($AType); ?>*>)
+X_HBUTTON(<*Fields*>, <*a_types/fields/?AType=<?php  print encHTML($AType); ?>*>)
 X_HBUTTON(<*Article Types*>, <*a_types/*>)
 X_HBUTTON(<*Home*>, <*home.php*>)
 X_HBUTTON(<*Logout*>, <*logout.php*>)
@@ -30,7 +30,7 @@ E_HEADER_BUTTONS
 E_HEADER
 
 B_CURRENT
-X_CURRENT(<*Article type*>, <*<B><? print encHTML($AType); ?></B>*>)
+X_CURRENT(<*Article type*>, <*<B><?php  print encHTML($AType); ?></B>*>)
 E_CURRENT
 
 <P>
@@ -40,15 +40,15 @@ B_DIALOG(<*Add new field*>, <*POST*>, <*do_add.php*>)
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Type*>)
 		<SELECT NAME="cType">
-			<OPTION VALUE="1"><? putGS('Text'); ?>
-			<OPTION VALUE="2"><? putGS('Date'); ?>
-			<OPTION VALUE="3"><? putGS('Article body'); ?>
+			<OPTION VALUE="1"><?php  putGS('Text'); ?>
+			<OPTION VALUE="2"><?php  putGS('Date'); ?>
+			<OPTION VALUE="3"><?php  putGS('Article body'); ?>
 		</SELECT>
 	E_DIALOG_INPUT
 	B_DIALOG_BUTTONS
-		<INPUT TYPE="HIDDEN" NAME="AType" VALUE="<? print encHTML($AType); ?>">
+		<INPUT TYPE="HIDDEN" NAME="AType" VALUE="<?php  print encHTML($AType); ?>">
 		SUBMIT(<*OK*>, <*Save changes*>)
-		REDIRECT(<*Cancel*>, <*Cancel*>, <*X_ROOT/a_types/fields/?AType=<? print encURL($AType); ?>*>)
+		REDIRECT(<*Cancel*>, <*Cancel*>, <*X_ROOT/a_types/fields/?AType=<?php  print encURL($AType); ?>*>)
 	E_DIALOG_BUTTONS
 E_DIALOG
 <P>
@@ -56,7 +56,7 @@ E_DIALOG
 X_HR
 X_COPYRIGHT
 E_BODY
-<? } ?>dnl
+<?php  } ?>dnl
 
 E_DATABASE
 E_HTML
