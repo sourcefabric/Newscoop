@@ -68,7 +68,7 @@ if (!($User->hasPermission('ChangeArticle')
 	exit;		
 }
 
-ArticleImage::AssociateImageWithArticle($ImageId, $ArticleId);
+ArticleImage::AddImageToArticle($ImageId, $ArticleId);
 
 $logtext = getGS('Image $1 linked to article $2', $ImageId, $ArticleId); 
 Log::Message($logtext, $User->getUserName(), 42);

@@ -85,7 +85,7 @@ if (!is_object($image)) {
 	exit;	
 }
 
-ArticleImage::AssociateImageWithArticle($image->getImageId(), $articleObj->getArticleId(), $ImageTemplateId);
+ArticleImage::AddImageToArticle($image->getImageId(), $articleObj->getArticleId(), $ImageTemplateId);
 
 $logtext = getGS('The image $1 has been added.', $attributes['Description']);
 Log::Message($logtext, $User->getUserName(), 41);
