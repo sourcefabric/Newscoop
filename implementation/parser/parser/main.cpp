@@ -438,6 +438,7 @@ int main(int argc, char** argv)
 	{
 		(*coIt).second->run();
 	}
+#ifndef _DEBUG_SOURCE
 	while (true)
 	{
 		int nStatus;
@@ -458,6 +459,7 @@ int main(int argc, char** argv)
 			}
 		}
 	}
+#endif
 
 	return 0;
 }
