@@ -37,6 +37,8 @@
     - Select the publication language when adding a new issue or article
     - Fixed bug: listing subscription sections showed section from all the
     publication (not just the selected one)
+    - Fixed subscription process bug: the parser doesn't process subscription
+    statement when modifying/updating the subscription
 
 2.0.10
     - Fixed the 'Back to article details' bug
