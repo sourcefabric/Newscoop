@@ -11,11 +11,11 @@ if ($validUser) {
 	if (function_exists ("incModFile")) {
 		incModFile ();
 	}
-	setcookie("TOL_UserId", $user->getId());
+/*	setcookie("TOL_UserId", $user->getId());
 	setcookie("TOL_UserKey", $user->getKeyId());
 	setcookie("TOL_Language", $selectLanguage);
 	header("Location: /priv/index.php");
-	exit;
+	exit;*/
 }
 ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
 	"http://www.w3.org/TR/REC-html40/loose.dtd">
