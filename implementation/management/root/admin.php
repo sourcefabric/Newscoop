@@ -51,12 +51,19 @@ else {
 	}
 	$needs_menu = ! in_array($call_script, $no_menu_scripts);
 
+	$menu = "";
 	if ($needs_menu) {
+		ob_start();
 		echo "<html><table width=\"100%\">\n<tr><td>\n";
 		require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/menu.php");
 		echo "</td></tr>\n<tr><td>\n";
+		$menu = ob_get_clean();
 	}
+	ob_start();
 	require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/$call_script");
+	$content = ob_get_clean();
+	echo $menu . $content;
+	
 	if ($needs_menu) {
 		echo "</td></tr>\n</table>\n</html>\n";
 	}
