@@ -11,11 +11,11 @@ CHECK_ACCESS(<*ManageTempl*>)dnl
 <?php  } ?>dnl
 
 <?php 
-	todef('query');
-	todef('Path');
-	todef('Name');
-	todef('cField');
- ?>
+todef('query');
+todef('Path');
+todef('Name');
+todef('cField');
+?>
 
 B_HEAD
 	X_EXPIRES
@@ -32,10 +32,16 @@ B_HEAD
 ?>dnl
 E_HEAD
 
-<?php  if ($access) {
-
-SET_ACCESS(<*mta*>, <*ManageTempl*>)
-SET_ACCESS(<*dta*>, <*DeleteTempl*>)
+<?php
+if (strncmp($Path, "/look/", 6) != 0) {
+	$access = 0;
+?>
+	X_AD(<*You do not have the right to edit scripts outside the templates directory.*>)
+<?php
+}
+if ($access) {
+	SET_ACCESS(<*mta*>, <*ManageTempl*>)
+	SET_ACCESS(<*dta*>, <*DeleteTempl*>)
 ?>dnl
 B_STYLE
 E_STYLE
@@ -65,6 +71,7 @@ B_MSGBOX(<*Edit template*>)
 		$nField = str_replace("\\r", "\r", $cField);
 		$nField = str_replace("\\n", "\n", $nField);
 		$nField = decS($nField);
+		echo "<p>writing template";
 		$res = fwrite ($fd, $nField);
 		if($res >  0){ ?>dnl
 			X_MSGBOX_TEXT(<* <LI><?php putGS('The template has been saved.'); ?></LI> *>)
