@@ -70,6 +70,8 @@ using std::cerr;
 using std::endl;
 using std::flush;
 
+#define MAX_THREADS 40
+
 
 CMessage* readMessage(CTCPSocket* p_pcoClSock, CMessageFactoryRegister& p_rcoMFReg)
 {
@@ -443,7 +445,7 @@ int main(int argc, char** argv)
 #endif
 
 	if (coConfDir == "")
-		coConfDir = ETC_FILE;
+		coConfDir = ETC_DIR;
 	const CCampsiteInstanceMap& rcoInstances =
 			CCampsiteInstance::readFromDirectory(coConfDir, CampsiteInstanceFunc);
 
