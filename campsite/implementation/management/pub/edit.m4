@@ -55,24 +55,51 @@ E_CURRENT
 		fetchRow($q_tunit); $tunit =getVar($q_tunit,'Name'); ?>dnl
 <P>
 B_DIALOG(<*Change publication information*>, <*POST*>, <*do_edit.php*>)
+	<tr><td colspan=2><b><?php putGS("General attributes"); ?></b></td></tr>
 	B_DIALOG_INPUT(<*Name*>)
 		<INPUT TYPE="TEXT" NAME="cName" VALUE="<?php  pgetHVar($q_pub,'Name'); ?>" SIZE="32" MAXLENGTH="255">
 	E_DIALOG_INPUT
-	B_DIALOG_INPUT(<*Site*>)
-		<INPUT TYPE="TEXT" NAME="cSite" VALUE="<?php  pgetHVar($q_pub,'Site'); ?>" SIZE="32" MAXLENGTH="255">
-	E_DIALOG_INPUT
-	B_DIALOG_INPUT(<*Default language*>)
-	    <SELECT NAME="cLanguage">
-	    <?php 
-		query ("SELECT Id, OrigName FROM Languages", 'q_lang');
-		    $nr=$NUM_ROWS;
-		    for($loop=0;$loop<$nr;$loop++) {
-			fetchRow($q_lang);
-			pcomboVar(getVar($q_lang,'Id'),getVar($q_pub,'IdDefaultLanguage'),getVar($q_lang,'OrigName'));
-		    }
-	    ?>dnl
+	B_DIALOG_INPUT(<*Default Site Alias*>)
+		<SELECT NAME="cDefaultAlias">
+<?php
+	$sql = "SELECT * FROM Aliases WHERE IdPublication = " . $Pub;
+	query ($sql, 'q_alias');
+	$nr=$NUM_ROWS;
+	for($loop=0;$loop<$nr;$loop++) {
+		fetchRow($q_alias);
+		pcomboVar(getVar($q_alias,'Id'),getVar($q_pub,'IdDefaultAlias'),getVar($q_alias,'Name'));
+	}
+?>dnl
 	    </SELECT>
 	E_DIALOG_INPUT
+	B_DIALOG_INPUT(<*Default language*>)
+		<SELECT NAME="cLanguage">
+<?php 
+	query ("SELECT Id, OrigName FROM Languages", 'q_lang');
+	$nr=$NUM_ROWS;
+	for($loop=0;$loop<$nr;$loop++) {
+		fetchRow($q_lang);
+		pcomboVar(getVar($q_lang,'Id'),getVar($q_pub,'IdDefaultLanguage'),getVar($q_lang,'OrigName'));
+	}
+?>dnl
+	    </SELECT>
+	E_DIALOG_INPUT
+	B_DIALOG_INPUT(<*URL Type*>)
+		<SELECT NAME="cURLType">
+<?php
+	$sql = "SELECT * FROM URLTypes";
+	query ($sql, 'q_urltype');
+	$nr=$NUM_ROWS;
+	for($loop=0;$loop<$nr;$loop++) {
+		fetchRow($q_urltype);
+		pcomboVar(getVar($q_urltype,'Id'),getVar($q_pub,'IdURLType'),getVar($q_urltype,'Name'));
+	}
+?>dnl
+	    </SELECT>
+	E_DIALOG_INPUT
+
+	<tr><td colspan=2><HR NOSHADE SIZE="1" COLOR="BLACK"></td></tr>
+	<tr><td colspan=2><b><?php putGS("Subscriptions defaults"); ?></b></td></tr>
 	B_DIALOG_INPUT(<*Pay Period*>)
 		<INPUT TYPE="TEXT" NAME="cPayTime" VALUE="<?php  pgetHVar($q_pub,'PayTime'); ?>" SIZE="5" MAXLENGTH="5"> <?php  p($tunit); ?>
 	E_DIALOG_INPUT
@@ -95,16 +122,16 @@ B_DIALOG(<*Change publication information*>, <*POST*>, <*do_edit.php*>)
 	    </SELECT>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Unit Cost*>)
-		<INPUT TYPE="TEXT" NAME="cUnitCost" VALUE="<?php  pgetHVar($q_pub,'UnitCost'); ?>" SIZE="20" MAXLENGTH="32">
+		<INPUT TYPE="TEXT" NAME="cUnitCost" VALUE="<?php  pgetHVar($q_pub,'UnitCost'); ?>" SIZE="10" MAXLENGTH="10">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Currency*>)
-		<INPUT TYPE="TEXT" NAME="cCurrency" VALUE="<?php  pgetHVar($q_pub,'Currency'); ?>" SIZE="20" MAXLENGTH="32">
+		<INPUT TYPE="TEXT" NAME="cCurrency" VALUE="<?php  pgetHVar($q_pub,'Currency'); ?>" SIZE="10" MAXLENGTH="10">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Paid Period*>)
-		<INPUT TYPE="TEXT" NAME="cPaid" VALUE="<?php  pgetHVar($q_pub,'PaidTime'); ?>" SIZE="20" MAXLENGTH="32"> <?php  p($tunit); ?>
+		<INPUT TYPE="TEXT" NAME="cPaid" VALUE="<?php  pgetHVar($q_pub,'PaidTime'); ?>" SIZE="10" MAXLENGTH="10"> <?php  p($tunit); ?>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Trial Period*>)
-		<INPUT TYPE="TEXT" NAME="cTrial" VALUE="<?php  pgetHVar($q_pub,'TrialTime'); ?>" SIZE="20" MAXLENGTH="32"> <?php  p($tunit); ?>
+		<INPUT TYPE="TEXT" NAME="cTrial" VALUE="<?php  pgetHVar($q_pub,'TrialTime'); ?>" SIZE="10" MAXLENGTH="10"> <?php  p($tunit); ?>
 	E_DIALOG_INPUT
 
 	B_DIALOG_BUTTONS

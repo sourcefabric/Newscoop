@@ -8,28 +8,35 @@ CHECK_ACCESS(<*ManagePub*>)
 B_HEAD
 	X_EXPIRES
 	X_TITLE(<*Changing publication information*>)
-<?php  if ($access == 0) { ?>dnl
+<?php
+if ($access == 0) {
+?>dnl
 	X_AD(<*You do not have the right to change publication information.*>)
-<?php  } ?>dnl
+<?php
+}
+?>dnl
 E_HEAD
 
-<?php  if ($access) { ?>dnl
+<?php
+if ($access) {
+?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
 
 <?php 
-    todefnum('Pub');
-    todef('cName');
-    todef('cSite');
-    todefnum('cLanguage');
-    todefnum('cPayTime');
-    todefnum('cTimeUnit');
-    todefnum('cUnitCost');
-    todefnum('cCurrency');
-    todefnum('cPaid');
-    todefnum('cTrial');
+	todefnum('Pub');
+	todef('cName');
+	todefnum('cDefaultAlias');
+	todefnum('cLanguage');
+	todefnum('cURLType');
+	todefnum('cPayTime');
+	todefnum('cTimeUnit');
+	todefnum('cUnitCost');
+	todefnum('cCurrency');
+	todefnum('cPaid');
+	todefnum('cTrial');
 ?>dnl
 B_HEADER(<*Changing publication information*>)
 B_HEADER_BUTTONS
@@ -40,11 +47,11 @@ E_HEADER_BUTTONS
 E_HEADER
 
 <?php 
-    $correct= 1;
-    $created= 0;
-    query ("SELECT * FROM Publications WHERE Id=$Pub", 'q_pub');
-    if ($NUM_ROWS) { 
-	fetchRow($q_pub);
+	$correct = 1;
+	$updated = 0;
+	query ("SELECT * FROM Publications WHERE Id = $Pub", 'q_pub');
+	if ($NUM_ROWS) { 
+		fetchRow($q_pub);
 ?>dnl
 
 B_CURRENT
@@ -55,48 +62,60 @@ E_CURRENT
 B_MSGBOX(<*Changing publication information*>)
 	X_MSGBOX_TEXT(<*
 <?php 
-    $cName=trim($cName);
-    $cSite=trim($cSite);
-    $cUnitCost=trim($cUnitCost);
-    $cCurrency=trim($cCurrency);
-    
-    if ($cName == "" || $cName== " ") {
-	$correct=0; ?>dnl
+	$cName=trim($cName);
+	$cSite=trim($cSite);
+	$cUnitCost=trim($cUnitCost);
+	$cCurrency=trim($cCurrency);
+
+	if ($cName == "" || $cName== " ") {
+		$correct=0;
+?>dnl
 		<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); ?></LI>
-    <?php  }
-    
-    if ($cSite == "" || $cSite == " ") {
-	$correct= 0; ?>dnl
+<?php
+	}
+	if ($cDefaultAlias == "" || $cSite == " ") {
+		$correct= 0;
+?>dnl
 		<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Site').'</B>'); ?></LI>
-    <?php  }
-
-    if ($cUnitCost == "" || $cUnitCost == " ") {
-	$correct= 0; ?>dnl
+<?php
+	}
+	if ($cUnitCost == "" || $cUnitCost == " ") {
+		$correct= 0;
+?>dnl
 		<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Unit Cost').'</B>'); ?></LI>
-    <?php  }
-    
-    if ($cCurrency == "" || $cCurrency == " ") {
-	$correct= 0; ?>dnl
+<?php
+	}
+	if ($cCurrency == "" || $cCurrency == " ") {
+		$correct= 0;
+?>dnl
 		<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Currency').'</B>'); ?></LI>
-    <?php  }
-    
-    if ($correct) {
-	query ("UPDATE Publications SET Name='$cName', Site='$cSite', IdDefaultLanguage=$cLanguage, PayTime='$cPayTime', TimeUnit='$cTimeUnit', UnitCost='$cUnitCost', Currency='$cCurrency', PaidTime='$cPaid', TrialTime='$cTrial' WHERE Id=$Pub");
-	$created= ($AFFECTED_ROWS > 0);
-    }
+<?php
+	}
+	if ($correct) {
+		$sql = "UPDATE Publications SET Name = '$cName', IdDefaultAlias = '$cDefaultAlias', "
+		     . "IdDefaultLanguage = $cLanguage, IdURLType = '$cURLType', PayTime = '$cPayTime', "
+		     . "TimeUnit = '$cTimeUnit', UnitCost = '$cUnitCost', Currency = '$cCurrency', "
+		     . "PaidTime = '$cPaid', TrialTime = '$cTrial' WHERE Id = $Pub";
+		query($sql);
+		$updated = ($AFFECTED_ROWS >= 0);
+	}
 
-    if ($created) { ?>dnl
-		<LI><?php  putGS('The publication $1 has been successfuly updated.',"<B>".encHTML(decS($cName))."</B>"); ?></LI>
-X_AUDIT(<*3*>, <*getGS('Publication $1 changed',$cName)*>)
-<?php  } else {
-
-    if ($correct != 0) { ?>dnl
-		<LI><?php  putGS('The publication information could not be updated.'); ?></LI><LI><?php  putGS('Please check if another publication with the same or the same site name does not already exist.'); ?></LI>
+	if ($updated) {
+?>dnl
+		<LI><?php  putGS('The publication $1 has been successfuly updated.', "<B>" 
+		                 . encHTML(decS($cName)) . "</B>"); ?></LI>
+		X_AUDIT(<*3*>, <*getGS('Publication $1 changed', $cName)*>)
+<?php
+	} else {
+		if ($correct != 0) { ?>dnl
+			<LI><?php  putGS('The publication information could not be updated.'); ?></LI>
+			<LI><?php  putGS('Please check if another publication with the same or the same site name does not already exist.'); ?></LI>
 <?php  }
-    } ?>dnl
-		*>)
+	}
+?>dnl
+*>)
 	B_MSGBOX_BUTTONS
-<?php  if ($correct && $created) { ?>dnl
+<?php  if ($correct && $updated) { ?>dnl
 		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/pub/*>)
 <?php  } else { ?>
 		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/pub/edit.php?Pub=<?php  pencURL($Pub); ?>*>)

@@ -59,10 +59,14 @@ E_HEADER
 
 <P><?php
     todefnum('PubOffs');
-     if ($PubOffs < 0) $PubOffs= 0;
+    if ($PubOffs < 0) $PubOffs= 0;
     $lpp=20;
 
-    query ("SELECT * FROM Publications ORDER BY Name LIMIT $PubOffs, ".($lpp+1), 'publ');
+	$sql = "SELECT p.Id, p.Name, a.Name as Alias, u.Name as URLType, l.OrigName FROM "
+	     . "Publications as p, Aliases as a, URLTypes as u, Languages as l WHERE "
+	     . "p.IdDefaultAlias = a.Id AND p.IdURLType = u.Id AND p.IdDefaultLanguage = l.Id "
+	     . "ORDER BY p.Name ASC LIMIT $PubOffs, ".($lpp+1);
+	query($sql, 'publ');
     if ($NUM_ROWS) {
     $nr= $NUM_ROWS;
     $i= $lpp;
@@ -71,17 +75,12 @@ E_HEADER
 B_LIST
     B_LIST_HEADER
         X_LIST_TH(<*Name<BR><SMALL>(click to see issues)</SMALL>*>)
-        X_LIST_TH(<*Site*>, <*20%*>)
+        X_LIST_TH(<*Default Site Alias*>, <*20%*>)
         X_LIST_TH(<*Default Language*>, <*20%*>)
     <?php  if ($mpa != 0) { ?>dnl
-        X_LIST_TH(<*Subscription Default Time*>, <*10%*>)
-        X_LIST_TH(<*Pay Period*>, <*10%*>)
-        X_LIST_TH(<*Unit Cost*>, <*10%*>)
-        X_LIST_TH(<*Paid Period*>, <*10%*>)
-        X_LIST_TH(<*Trial Period*>, <*10%*>)
-        X_LIST_TH(<*Info*>, <*1%*>)
+        X_LIST_TH(<*URL Type*>, <*20%*>)
+        X_LIST_TH(<*Edit*>, <*10%*>)
     <?php  }
-
     if ($dpa != 0) { ?>dnl
         X_LIST_TH(<*Delete*>, <*1%*>)
     <?php  } ?>dnl
@@ -95,35 +94,17 @@ B_LIST
             <A HREF="X_ROOT/pub/issues/?Pub=<?php  pgetUVar($publ,'Id'); ?>"><?php  pgetHVar($publ,'Name'); ?></A>
         E_LIST_ITEM
         B_LIST_ITEM
-            <?php  pgetHVar($publ,'Site'); ?>&nbsp;
+            <?php  pgetHVar($publ,'Alias'); ?>&nbsp;
         E_LIST_ITEM
         B_LIST_ITEM
-            <?php  query ("SELECT Name FROM Languages WHERE Id=".getVar($publ,'IdDefaultLanguage'), 'q_dlng');
-            fetchRow($q_dlng);
-            pgetHVar($q_dlng,'Name');
-            ?>&nbsp;
+            <?php  pgetHVar($publ,'OrigName'); ?>&nbsp;
         E_LIST_ITEM
 <?php  if ($mpa != 0) { ?>dnl
         B_LIST_ITEM
-            <a href="deftime.php?Pub=<?php  pgetUVar($publ,'Id'); ?>"><?php  putGS("Change"); ?></A>
-        E_LIST_ITEM
-        B_LIST_ITEM(<*RIGHT*>)
-            <?php  query ("SELECT Name FROM TimeUnits where Unit = '".getHVar($publ,'TimeUnit')."' and IdLanguage = ".($IdLang), 'tu');
-                fetchRow($tu);
-             pgetHVar($publ,'PayTime'); p("&nbsp;"); pgetHVar($tu,'Name'); ?>
+            <?php  pgetHVar($publ,'URLType'); ?>&nbsp;
         E_LIST_ITEM
         B_LIST_ITEM
-            <?php  pgetHVar($publ,'UnitCost'); p("&nbsp;"); pgetHVar($publ,'Currency');
-                ?>
-        E_LIST_ITEM
-        B_LIST_ITEM(<*CENTER*>)
-            <?php  pgetHVar($publ,'PaidTime'); p("&nbsp;"); pgetHVar($tu,'Name'); ?>&nbsp;
-        E_LIST_ITEM
-        B_LIST_ITEM(<*CENTER*>)
-            <?php  pgetHVar($publ,'TrialTime'); p("&nbsp;"); pgetHVar($tu,'Name'); ?>&nbsp;
-        E_LIST_ITEM
-        B_LIST_ITEM(<*CENTER*>)
-            <A HREF="X_ROOT/pub/edit.php?Pub=<?php  pgetUVar($publ,'Id'); ?>"><?php  putGS("Change"); ?></A>
+            <A HREF="X_ROOT/pub/edit.php?Pub=<?php  pgetUVar($publ,'Id'); ?>"><?php  putGS("Edit"); ?></A>
         E_LIST_ITEM
 <?php  }
     if ($dpa != 0) { ?>dnl
