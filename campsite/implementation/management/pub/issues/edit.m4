@@ -115,6 +115,9 @@ B_DIALOG(<*Change issue details*>, <*POST*>, <*do_edit.php*>)
 ?>dnl
 	    </SELECT>
 	E_DIALOG_INPUT
+	B_DIALOG_INPUT(<*Short Name*>)
+		<INPUT TYPE="TEXT" NAME="cShortName" SIZE="32" MAXLENGTH="32" value="<?php  pgetHVar($publ,'ShortName'); ?>">
+	E_DIALOG_INPUT
 	B_DIALOG_BUTTONS
 		<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<?php  pencHTML($Pub); ?>">
 		<INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<?php  pencHTML($Issue); ?>">

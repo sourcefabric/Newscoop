@@ -50,34 +50,42 @@ X_CURRENT(<*Issue*>, <*<B><?php  pgetHVar($q_iss,'Number'); ?>. <?php  pgetHVar(
 E_CURRENT
 
 <?php 
-    todef('cName');
-    todefnum('cNumber');
-    todef('cSubs');
+	todef('cName');
+	todefnum('cNumber');
+	todef('cSubs');
+	todef('cShortName');
 
-    $correct= 1;
-    $created= 0;
+	$correct= 1;
+	$created= 0;
 ?>dnl
 <P>
 B_MSGBOX(<*Adding new section*>)
 	X_MSGBOX_TEXT(<*
 <?php 
-    if ($cName == "") {
-	$correct= 0; ?>dnl
+	if ($cName == "") {
+		$correct= 0; ?>dnl
 		<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); ?></LI>
-    <?php  }
-    
+<?php  }
 	if ($cNumber == "") {
 		$correct= 0;
 		$cNumber= ($cNumber + 0); ?>dnl
 		<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Number').'</B>'); ?></LI>
 <?php  
 	}
-    
-	if ($correct) {
-		query ("INSERT IGNORE INTO Sections SET Name='$cName', IdPublication=$Pub, NrIssue=$Issue, IdLanguage=$Language, Number=$cNumber");
-		$created= ($AFFECTED_ROWS > 0);
+	if ($cShortName == "" || $cShortName == " ") {
+		$correct = 0;
+		echo "<LI>" . getGS('You must complete the $1 field.','<B>'.getGS('Short Name').'</B>') . "</LI>\n";
 	}
-    
+	$ok = valid_short_name($cShortName);
+	if ($ok == 0) {
+		$correct= 0;
+		echo "<LI>" . getGS('The $1 field may only contain letters, digits and underscore (_) character.', '</B>' . getGS('Short Name') . '</B>') . "</LI>\n";
+	}
+	if ($correct) {
+		$sql = "INSERT INTO Sections SET Name='$cName', IdPublication=$Pub, NrIssue=$Issue, IdLanguage=$Language, Number=$cNumber, ShortName='$cShortName'";
+		query($sql);
+		$created = ($AFFECTED_ROWS >= 0);
+	}
 	if ($created) {
 		## added by sebastian
 		if (function_exists ("incModFile"))

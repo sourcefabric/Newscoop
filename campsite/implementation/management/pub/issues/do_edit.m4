@@ -29,6 +29,7 @@ B_BODY
 	todefnum('cIssueTplId');
 	todefnum('cSectionTplId');
 	todefnum('cArticleTplId');
+	todef('cShortName');
 ?>dnl
 
 B_HEADER(<*Changing issue's details*>)
@@ -72,9 +73,17 @@ B_MSGBOX(<*Changing issue's details*>)
 	}
 	if ($cName == "" || $cName == " ") {
 		$correct = 0;
-?>dnl
-		<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); ?></LI>
-<?php  }
+		echo "<LI>" . getGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>') . "</LI>\n";
+	}
+	if ($cShortName == "" || $cShortName == " ") {
+		$correct = 0;
+		echo "<LI>" . getGS('You must complete the $1 field.','<B>'.getGS('Short Name').'</B>') . "</LI>\n";
+	}
+	$ok = valid_short_name($cShortName);
+	if ($ok == 0) {
+		$correct= 0;
+		echo "<LI>" . getGS('The $1 field may only contain letters, digits and underscore (_) character.', '</B>' . getGS('Short Name') . '</B>') . "</LI>\n";
+	}
 	if ($correct) {
 		$sql = "UPDATE Issues SET Name = '$cName', IdLanguage = $cLang";
 		if (getVar($publ, 'Published') == 'Y')
@@ -82,6 +91,7 @@ B_MSGBOX(<*Changing issue's details*>)
 		$sql .= ", IssueTplId = " . ($cIssueTplId > 0 ? $cIssueTplId : "NULL");
 		$sql .= ", SectionTplId = " . ($cSectionTplId > 0 ? $cSectionTplId : "NULL");
 		$sql .= ", ArticleTplId = " . ($cArticleTplId > 0 ? $cArticleTplId : "NULL");
+		$sql .= ", ShortName = '" . $cShortName . "'";
 		$sql .= " WHERE IdPublication = $Pub AND Number = $Issue AND IdLanguage = $cLang";
 		query($sql);
 		$created = ($AFFECTED_ROWS >= 0);
