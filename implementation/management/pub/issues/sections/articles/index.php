@@ -187,10 +187,7 @@ foreach ($allArticles as $articleObj) {
 		<TD <?php if ($articleObj->getArticleId() == $previousArticleId) { ?>style="padding-left: 20px;"<?php } ?>>
 		<?php
 		// Can the user edit the article?
-		$userCanEdit = false;
-		if ($User->hasPermission('ChangeArticle') || (($User->getId() == $articleObj->getUserId()) && ($articleObj->getPublished() == 'N'))) {
-			$userCanEdit = true;
-		}
+		$userCanEdit = $articleObj->userCanModify($User);
 		if ($userCanEdit) { ?>
 		<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($articleObj->getArticleId()); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php p($articleObj->getLanguageId()); ?>"><?php } ?><?php  p(htmlspecialchars($articleObj->getTitle())); ?>&nbsp;<?php if ($userCanEdit) { ?></A><?php } ?>
 		</TD>

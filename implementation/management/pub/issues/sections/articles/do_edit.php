@@ -171,10 +171,7 @@ if (!$articleObj->exists()) {
 	CampsiteInterface::DisplayError('No such article.', $BackLink);
 }
 
-// If the user has the ability to change the article OR
-// the user created the article and it hasnt been published.
-if (!($User->hasPermission('ChangeArticle') || (($articleObj->getUserId() == $User->getId()) 
-		&& ($articleObj->getPublished() == 'N')))) {
+if (!$articleObj->userCanModify($User)) {
 	$errorStr = "You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only changed by authorized users.";
 	CampsiteInterface::DisplayError($errorStr, $BackLink);
 }

@@ -29,10 +29,7 @@ if (!$articleObj->exists()) {
 // You are allowed to change the status of an article
 // if you have publish permissions, OR you created the article
 // and it is new.  
-$userIsArticleOwner = ($User->getId() == $articleObj->getUserId());
-$articleIsNew = ($articleObj->getPublished() == 'N');
-$access = ($User->hasPermission('Publish') || $User->hasPermission('ChangeArticle') 
-			|| ($userIsArticleOwner && $articleIsNew ));
+$access = ($User->hasPermission('Publish') || $articleObj->userCanModify($User));
 if (!$access) {
 	CampsiteInterface::DisplayError("You do not have the right to change this article status. Once submitted an article can only changed by authorized users.", $BackLink);
 	exit;	

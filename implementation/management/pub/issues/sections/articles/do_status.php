@@ -48,16 +48,13 @@ if (!$publicationObj->exists()) {
 
 $languageObj =& new Language($Language);
 
-$userIsArticleOwner = ($User->getId() == $articleObj->getUserId());
-$articleIsNew = ($articleObj->getPublished() == 'N');
-
 $access = false;
 // A publisher can change the status in any way he sees fit.
 // Someone who can change an article can submit/unsubmit articles.
 // A user who owns the article may submit it.
 if ($User->hasPermission('Publish') 
 	|| ($User->hasPermission('ChangeArticle') && ($Status != 'Y'))
-	|| ($userIsArticleOwner && $articleIsNew && ($Status == 'S') )) {
+	|| ($articleObj->userCanModify($User) && ($Status == 'S') )) {
 	$access = true;
 }
 if (!$access) {

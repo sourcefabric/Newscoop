@@ -38,7 +38,7 @@ $articleTemplate =& new Template($issueObj->getArticleTemplateId());
 // If the user has the ability to change the article OR
 // the user created the article and it hasnt been published.
 $hasAccess = false;
-if ($User->hasPermission('ChangeArticle') || (($articleObj->getUserId() == $User->getId()) && ($articleObj->getPublished() == 'N'))) {
+if ($articleObj->userCanModify($User)) {
 	$hasAccess = true;
 	$edit_ok = 0;
 	
@@ -230,7 +230,7 @@ if ($edit_ok) { ?>
 			}
 		} 
 		
-		if ($User->hasPermission('AddImage') || $User->hasPermission('DeleteImage') || $User->hasPermission('ChangeArticle') || $User->hasPermission('ChangeImage')) {
+		if ($User->hasPermission('AddImage') || $User->hasPermission('DeleteImage') || $articleObj->userCanModify($User) || $User->hasPermission('ChangeImage')) {
 		?>
 			<TD class="action_link_container">
 				<!-- Images Link -->
