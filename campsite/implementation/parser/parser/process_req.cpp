@@ -367,16 +367,19 @@ int RunParser(MYSQL* p_pSQL, CURL* p_pcoURL, const char* p_pchRemoteIP, sockstre
 		pcoCtx->DefURL()->deleteParameter(P_TEMPLATE_ID);
 		CParser::setMYSQL(p_pSQL);
 #ifdef _DEBUG
-		cout << "running parser for " << coTemplate << " (" << coDocumentRoot << ")" << endl;
+		cout << "running parser for " << coTemplate << ": " << coDocumentRoot << endl;
 #endif
 		CParser* p = CParser::parserOf(coTemplate.c_str(), coDocumentRoot.c_str());
 		p->setDebug(bTechDebug);
-// no need to write the charset anymore: tpl_cgi will print it
-//		WriteCharset((*pcoCtx), p_pSQL, p_rOs);
+#ifdef _DEBUG
+		cout << "writing output for " << coTemplate << ": " << coDocumentRoot << endl;
+#endif
 		p->writeOutput(*pcoCtx, p_rOs);
-		bPreview = true;
 		if (bPreview == true)
 		{
+#ifdef _DEBUG
+			cout << "writing errors for " << coTemplate << endl;
+#endif
 			p_rOs << "<script LANGUAGE=\"JavaScript\">parent.e.document.open();\n"
 			"parent.e.document.write(\"<html><head><title>Errors</title>"
 			"</head><body bgcolor=white text=black>\\\n<pre>\\\n";
@@ -384,6 +387,9 @@ int RunParser(MYSQL* p_pSQL, CURL* p_pcoURL, const char* p_pchRemoteIP, sockstre
 			p->printParseErrors(p_rOs, true);
 			p_rOs << "</pre></body></html>\\\n\");\nparent.e.document.close();\n</script>\n";
 		}
+#ifdef _DEBUG
+			cout << "done answering request for " << coTemplate << endl;
+#endif
 		CParser::setMYSQL(NULL);
 	}
 	catch (ExStat& rcoEx)
