@@ -65,8 +65,9 @@ MYSQL* MYSQLConnection()
 	MYSQL* pSQL = NULL;
 	if ((pSQL = mysql_init(pSQL)) == NULL)	// initialise connection to MySQL server
 		return NULL;
+	// connecto to MySQL server
 	pSQL = mysql_real_connect(pSQL, SQL_SERVER.c_str(), SQL_USER.c_str(), SQL_PASSWORD.c_str(),
-	                          SQL_DATABASE.c_str(), SQL_SRV_PORT, 0, 0);	// connecto to MySQL server
+	                          SQL_DATABASE.c_str(), SQL_SRV_PORT, 0, 0);
 	if (pSQL == NULL)						// unable to connect
 		return NULL;
 	coMySql = pSQL;							// set key variable value to MySQL connection
@@ -93,16 +94,16 @@ int UpdateTopics(bool& p_rbUpdated)
 		return ERR_QUERY;
 	StoreResult(sql, res);
 	CheckForRows(*res, 1);
-	long int nLastId = -1;
+	id_type nLastId = -1;
 	CStringMap coValues;
 	Topic::setUpdated(false);
 	MYSQL_ROW row;
 	while ((row = mysql_fetch_row(*res)))
 	{
-		long int nTopicId = atol(row[0]);
+		id_type nTopicId = atol(row[0]);
 		const char* pchTopicName = row[1];
 		const char* pchLangCode = row[2];
-		long int nParentId = atol(row[3]);
+		id_type nParentId = atol(row[3]);
 		if (nParentId == 0)
 			nParentId = -1;
 		if (nTopicId != nLastId && !Topic::isValid(nTopicId))

@@ -142,12 +142,12 @@ private:
 	TDataType m_DataType;		// lexem data type
 	const CAtom* m_pcoAtom;		// pointer to atom structure
 	const char* m_pchTextStart;	// html text found (after ">" - end of statement - lexem)
-	long int m_nTextLen;		// html text length
+	lint m_nTextLen;		// html text length
 
 public:
 	// constructor
 	CLexem(TLexResult p_Res, TDataType p_DataType, const CAtom* p_pcoAtom = NULL,
-	         const char* p_pchText = NULL, long int p_nTextLen = 0)
+	         const char* p_pchText = NULL, lint p_nTextLen = 0)
 			: m_Res(p_Res), m_DataType(p_DataType), m_pcoAtom(p_pcoAtom)
 	{
 		m_pchTextStart = p_pchText;
@@ -185,8 +185,8 @@ public:
 	const char* textStart() const { return m_pchTextStart; }
 	void setTextStart(const char* p_pchTxtStart) { m_pchTextStart = p_pchTxtStart; }
 
-	long int textLen() const { return m_nTextLen; }
-	void setTextLen(long int p_nTextLen) { m_nTextLen = p_nTextLen; }
+	lint textLen() const { return m_nTextLen; }
+	void setTextLen(lint p_nTextLen) { m_nTextLen = p_nTextLen; }
 };
 
 
@@ -236,8 +236,8 @@ private:
 	int m_nHtmlCodeLevel;
 	const char* m_pchTextStart;				// html text start
 	const char* m_pchInBuf;					// input text buffer
-	ULInt m_nBufLen;						// input text buffer length
-	ULInt m_nIndex;							// index to current character of input text buffer
+	ulint m_nBufLen;						// input text buffer length
+	ulint m_nIndex;							// index to current character of input text buffer
 
 private:
 	// NextChar: return next character from text buffer
@@ -255,7 +255,7 @@ private:
 
 public:
 	// constructor
-	CLex(const char* = 0, ULInt = 0);
+	CLex(const char* = 0, ulint = 0);
 
 	// copy-constructor
 	CLex(const CLex& p_rcoSrc)
@@ -265,7 +265,7 @@ public:
 	~CLex() { }
 
 	// reset: reset lex
-	void reset(const char* = NULL, ULInt = 0) throw();
+	void reset(const char* = NULL, ulint = 0) throw();
 
 	// updateArticleTypes: update article types structure from database
 	static bool updateArticleTypes();

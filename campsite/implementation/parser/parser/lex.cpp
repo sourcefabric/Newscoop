@@ -152,9 +152,9 @@ int CStatementMap::InitStatements()
 {
 	OPEN_TRY
 	// register enum types
-	list<pair<string, long int> > coOrderValues;
-	coOrderValues.push_back(pair<string, long int>("asc", 1));
-	coOrderValues.push_back(pair<string, long int>("desc", -1));
+	list<pair<string, lint> > coOrderValues;
+	coOrderValues.push_back(pair<string, lint>("asc", 1));
+	coOrderValues.push_back(pair<string, lint>("desc", -1));
 	Enum::registerEnum("order_direction", coOrderValues);
 
 	// register statements
@@ -801,7 +801,7 @@ int CStatementMap::InitStatements()
 }
 
 // constructor
-CLex::CLex(const char* i, ULInt bl)
+CLex::CLex(const char* i, ulint bl)
 	: m_coAtom(""), m_coLexem(CMS_LEX_NONE, CMS_DT_NONE)
 {
 	m_pchTextStart = m_pchInBuf = i;
@@ -817,7 +817,7 @@ CLex::CLex(const char* i, ULInt bl)
 }
 
 // reset: reset lex
-void CLex::reset(const char* i, ULInt bl) throw()
+void CLex::reset(const char* i, ulint bl) throw()
 {
 	m_coLexem = CLexem(CMS_LEX_NONE, CMS_DT_NONE);
 	m_pchTextStart = m_pchInBuf = i;
@@ -891,13 +891,14 @@ const CLexem* CLex::getLexem()
 				return IdentifyAtom();
 			}
 			m_coLexem.setTextStart(m_pchTextStart);
-			m_coLexem.setTextLen(m_nIndex - (ULInt)(m_pchTextStart - m_pchInBuf));
+			m_coLexem.setTextLen(m_nIndex - (ulint)(m_pchTextStart - m_pchInBuf));
 			m_coLexem.setRes(CMS_LEX_NONE);
 			return &m_coLexem;
 		}
 		if (m_nState != 4)
 		{
-			if ((m_chChar >= 0 || m_chChar <= ' ') && !bValidText && m_pchTextStart != NULL && m_nState < 2)
+			if ((m_chChar >= 0 || m_chChar <= ' ') && !bValidText && m_pchTextStart != NULL
+					&& m_nState < 2)
 				m_pchTextStart = m_pchInBuf + m_nIndex - 1;
 			m_nPrevLine = m_nLine;
 			m_nPrevColumn = m_nColumn;
@@ -907,7 +908,8 @@ const CLexem* CLex::getLexem()
 				m_nColumn = 0;
 			}
 			else
-				m_nColumn += m_chChar == '\t' ? 8 : 1; // increment column (by 8 if character is tab)
+				m_nColumn += m_chChar == '\t' ? 8 : 1;
+				// increment column (by 8 if character is tab)
 		}
 		switch (m_nState)
 		{
@@ -942,7 +944,7 @@ const CLexem* CLex::getLexem()
 				m_bLexemStarted = false;
 				if (m_pchTextStart && bValidText)
 				{
-					m_coLexem.setTextLen(m_nIndex - (ULInt)(m_pchTextStart - m_pchInBuf)
+					m_coLexem.setTextLen(m_nIndex - (ulint)(m_pchTextStart - m_pchInBuf)
 					                     - strlen(s_pchCTokenStart));
 					m_coLexem.setTextStart(m_pchTextStart);
 				}

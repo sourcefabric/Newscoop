@@ -273,7 +273,7 @@ int RunParser(MYSQL* p_pSQL, CURL* p_pcoURL, const char* p_pchRemoteIP, sockstre
 		pcoCtx->URL()->deleteParameter(P_SUBSCRIBE);
 		pcoCtx->DefURL()->deleteParameter(P_SUBSCRIBE);
 	}
-	long int nIdUserIP = -1;
+	lint nIdUserIP = -1;
 	sprintf(pchBuf, "select IdUser from SubsByIP where StartIP <= %lu and "
 	        "%lu <= (StartIP + Addresses - 1)", pcoCtx->IP(), pcoCtx->IP());
 	SQLQuery(p_pSQL, pchBuf);
@@ -353,11 +353,11 @@ int RunParser(MYSQL* p_pSQL, CURL* p_pcoURL, const char* p_pchRemoteIP, sockstre
 		}
 		else
 		{
-			long int nLanguage = p_pcoURL->getLanguage();
-			long int nPublication = p_pcoURL->getPublication();
-			long int nIssue = p_pcoURL->getIssue();
-			long int nSection = p_pcoURL->getSection();
-			long int nArticle = p_pcoURL->getArticle();
+			id_type nLanguage = p_pcoURL->getLanguage();
+			id_type nPublication = p_pcoURL->getPublication();
+			id_type nIssue = p_pcoURL->getIssue();
+			id_type nSection = p_pcoURL->getSection();
+			id_type nArticle = p_pcoURL->getArticle();
 			coTemplate = p_pcoURL->getDocumentRoot() + "/look/"
 		               + CPublication::getTemplate(nLanguage, nPublication, nIssue,
 		                                           nSection, nArticle, p_pSQL, !bTechDebug);
@@ -670,10 +670,10 @@ int DoSubscribe(CContext& c, MYSQL* pSql)
 		modifier = "YEAR";
 	else
 		return SERR_UNIT_NOT_SPECIFIED;
-	long int paid_time = atol(row[1]);
+	lint paid_time = atol(row[1]);
 	double unit_cost = atof(row[2]);
 	string currency = row[3];
-	long int id_subscription;
+	id_type id_subscription;
 	bool active = true;
 	my_ulonglong rows = 0;
 	sprintf(pchBuf, "select Id, Active, ToPay from Subscriptions where IdUser = %ld and "
@@ -740,8 +740,8 @@ int DoSubscribe(CContext& c, MYSQL* pSql)
 				return -1;
 		}
 		row = mysql_fetch_row(*coSqlRes);
-		long int subs_days = atol(row[0]);
-		long int time_units = atol(row[1]);
+		lint subs_days = atol(row[0]);
+		lint time_units = atol(row[1]);
 		if (c.SubsType() == ST_TRIAL)
 			paid_time = subs_days;
 		sprintf(pchBuf, "select Number from Sections where IdPublication = %ld and NrIssue "
@@ -762,21 +762,21 @@ int DoSubscribe(CContext& c, MYSQL* pSql)
 	{
 		while (s != "")
 		{
-			long int section = atol(s.c_str());
+			id_type section = atol(s.c_str());
 			sprintf(pchBuf, "%s%s", P_TX_SUBS, s.c_str());
 			if ((s = c.URL()->getValue(pchBuf)) == "")
 			{
 				s = c.URL()->getNextValue(P_CB_SUBS);
 				continue;
 			}
-			long int time_units = atol(s.c_str());
+			lint time_units = atol(s.c_str());
 			sprintf(pchBuf, "select TO_DAYS(ADDDATE(now(), INTERVAL %ld %s)) - TO_DAYS(now())",
 			        time_units, modifier);
 			SQLQuery(pSql, pchBuf);
 			coSqlRes = mysql_store_result(pSql);
 			CheckForRows(*coSqlRes, 1);
 			row = mysql_fetch_row(*coSqlRes);
-			long int req_days = atol(row[0]);
+			lint req_days = atol(row[0]);
 			if (c.SubsType() == ST_TRIAL)
 				paid_time = req_days;
 			sprintf(pchBuf, "select TO_DAYS(ADDDATE(StartDate, INTERVAL Days DAY)) - "
@@ -838,7 +838,7 @@ void SetReaderAccess(CContext& c, MYSQL* pSql)
 	MYSQL_ROW row;
 	while ((row = mysql_fetch_row(pSqlRes)))
 	{
-		long int id_publ = atol(row[0]), id_subs = atol(row[1]);
+		id_type id_publ = atol(row[0]), id_subs = atol(row[1]);
 		sprintf(pchBuf, "select SectionNumber, (TO_DAYS(now())-TO_DAYS(StartDate)), "
 		        "PaidDays from SubsSections where IdSubscription = %ld", id_subs);
 		if (mysql_query(pSql, pchBuf))
@@ -849,9 +849,9 @@ void SetReaderAccess(CContext& c, MYSQL* pSql)
 		MYSQL_ROW row2;
 		while ((row2 = mysql_fetch_row(res2)))
 		{
-			long int nr_section = atol(row2[0]);
-			long int passed_days = atol(row2[1]);
-			long int days = atol(row2[2]);
+			id_type nr_section = atol(row2[0]);
+			lint passed_days = atol(row2[1]);
+			lint days = atol(row2[2]);
 			if (passed_days <= days)
 				c.SetSubs(id_publ, nr_section);
 		}
