@@ -351,6 +351,25 @@ CStatementMap::CStatementMap()
 	pcoSt->updateTypes(pcoArticleTypeAttributes);
 	this->insert(pcoSt);
 
+	// topic statement
+	pcoSt = new CStatement(CMS_ST_TOPIC, ST_TOPIC);
+
+	pcoCtx = new CStatementContext(CMS_CT_DEFAULT);
+	pcoCtx->insertAttr(new CTopicAttr("name"));
+	pcoCtx->insertAttr(new CAttribute("off"));
+	pcoCtx->insertAttr(new CAttribute("default"));
+	pcoSt->insertCtx(pcoCtx);
+
+	pcoCtx = new CStatementContext(CMS_CT_IF);
+	pcoCtx->insertAttr(new CTopicAttr("name"));
+	pcoSt->insertCtx(pcoCtx);
+
+	pcoCtx = new CStatementContext(CMS_CT_PRINT);
+	pcoCtx->insertAttr(new CTopicAttr("name"));
+	pcoSt->insertCtx(pcoCtx);
+
+	this->insert(pcoSt);
+
 	// order statement
 	pcoSt = new CStatement(CMS_ST_ORDER, ST_ORDER);
 
