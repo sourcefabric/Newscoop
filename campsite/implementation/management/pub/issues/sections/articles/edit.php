@@ -82,7 +82,7 @@ foreach ($dbColumns as $dbColumn) {
 
 // Begin Display of page
 ArticleTop($articleObj, $Language, "Edit article details");
-HtmlArea_Campsite($dbColumns);
+HtmlArea_Campsite($dbColumns, $User);
 
 if ($errorStr != "") {
 	CampsiteInterface::DisplayError($errorStr);
@@ -411,7 +411,18 @@ if ($edit_ok) { ?>
 			// Single line text fields
 			?>
 			<TR>
-				<TD ALIGN="RIGHT" ><?php echo htmlspecialchars($dbColumn->getPrintName()); ?>:</TD>
+				<TD ALIGN="RIGHT" >
+					<TABLE cellpadding="0" cellspacing="0" width="100%">
+					<tr>
+						<td align="left" style="padding-right: 5px;">
+							<input type="image" src="/<?php p($ADMIN); ?>/img/icon/save.png" name="save" value="save">
+						</td>
+						<td align="right">				
+							<?php echo htmlspecialchars($dbColumn->getPrintName()); ?>:
+						</td>
+					</tr>
+					</table>
+				</TD>
 				<TD>
 		        <INPUT NAME="<?php echo htmlspecialchars($dbColumn->getName()); ?>" 
 					   TYPE="TEXT" 
@@ -429,7 +440,18 @@ if ($edit_ok) { ?>
 			}
 			?>		
 			<TR>
-				<TD ALIGN="RIGHT" ><?php echo htmlspecialchars($dbColumn->getPrintName()); ?>:</TD>
+				<TD ALIGN="RIGHT" >
+					<TABLE cellpadding="0" cellspacing="0" width="100%">
+					<tr>
+						<td align="left" style="padding-right: 5px;">
+							<input type="image" src="/<?php p($ADMIN); ?>/img/icon/save.png" name="save" value="save">
+						</td>
+						<td align="right">				
+							<?php echo htmlspecialchars($dbColumn->getPrintName()); ?>:
+						</td>
+					</tr>
+					</table>	
+				</TD>
 				<TD>
 				<INPUT NAME="<?php echo htmlspecialchars($dbColumn->getName()); ?>" 
 					   TYPE="TEXT" 
@@ -452,7 +474,17 @@ if ($edit_ok) { ?>
 			$text = preg_replace("/<!\*\*\s*EndLink\s*>/i", "</a>", $text);
 			?>
 			<TR>
-			<TD ALIGN="RIGHT" VALIGN="TOP"><BR><?php echo htmlspecialchars($dbColumn->getPrintName()); ?>:<BR> 
+			<TD ALIGN="RIGHT" VALIGN="TOP" style="padding-top: 25px;">
+				<TABLE cellpadding="0" cellspacing="0" width="100%">
+				<tr>
+					<td align="left" style="padding-right: 5px;">
+						<input type="image" src="/<?php p($ADMIN); ?>/img/icon/save.png" name="save" value="save">
+					</td>
+					<td align="right">				
+						<?php echo htmlspecialchars($dbColumn->getPrintName()); ?>:
+					</td>
+				</tr>
+				</table>
 			</TD>
 			<TD>
 				<HR NOSHADE SIZE="1" COLOR="BLACK">
