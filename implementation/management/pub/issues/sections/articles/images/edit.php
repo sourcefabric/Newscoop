@@ -16,35 +16,27 @@ if (!$access) {
 	exit;
 }
 
-$PublicationId = Input::Get('PublicationId', 'int', 0);
-$IssueId = Input::Get('IssueId', 'int', 0);
-$SectionId = Input::Get('SectionId', 'int', 0);
-$InterfaceLanguageId = Input::Get('InterfaceLanguageId', 'int', 0);
-$ArticleLanguageId = Input::Get('ArticleLanguageId', 'int', 0);
-$ArticleId = Input::Get('ArticleId', 'int', 0);
+$Pub = Input::Get('Pub', 'int', 0);
+$Issue = Input::Get('Issue', 'int', 0);
+$Section = Input::Get('Section', 'int', 0);
+$Language = Input::Get('Language', 'int', 0);
+$sLanguage = Input::Get('sLanguage', 'int', 0);
+$Article = Input::Get('Article', 'int', 0);
 $ImageId = Input::Get('ImageId', 'int', 0);
-$ImageTemplateId = Input::Get('ImageTemplateId', 'int', 0);
+$ImageTemplateId = Input::Get('ImageTemplateId', 'int', 0, true);
 
 if (!Input::IsValid()) {
 	CampsiteInterface::DisplayError(array('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
 	exit;	
 }
 
-$publicationObj =& new Publication($PublicationId);
-$issueObj =& new Issue($PublicationId, $InterfaceLanguageId, $IssueId);
-$sectionObj =& new Section($PublicationId, $IssueId, $InterfaceLanguageId, $SectionId);
-$articleObj =& new Article($PublicationId, $IssueId, $SectionId, $ArticleLanguageId, $ArticleId);
-$languageObj =& new Language($InterfaceLanguageId);
+$publicationObj =& new Publication($Pub);
+$issueObj =& new Issue($Pub, $Language, $Issue);
+$sectionObj =& new Section($Pub, $Issue, $Language, $Section);
+$articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
+$languageObj =& new Language($Language);
 $imageObj =& new Image($ImageId);
 
-// This file can only be accessed if the user has the right to change articles
-// or the user created this article and it hasnt been published yet.
-$userCreatedArticle = ($articleObj->getUserId() == $User->getId());
-$articleIsNew = ($articleObj->getPublished() == 'N');
-if (!($User->hasPermission('ChangeArticle') || ($userCreatedArticle && !$articleIsNew))) {
-	CampsiteInterface::DisplayError('You do not have the right to change the article.', $_SERVER['REQUEST_URI']);
-	exit;		
-}
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
 	"http://www.w3.org/TR/REC-html40/loose.dtd">
@@ -66,13 +58,13 @@ if (!($User->hasPermission('ChangeArticle') || ($userCreatedArticle && !$article
 	<TD ALIGN="RIGHT">
 		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
 		<TR>
-			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/images/?Pub=<?php  p($PublicationId); ?>&Issue=<?php  p($IssueId); ?>&Article=<?php  p($ArticleId); ?>&Language=<?php  p($InterfaceLanguageId); ?>&sLanguage=<?php  p($ArticleLanguageId); ?>&Section=<?php  p($SectionId); ?>" class="breadcrumb" ><?php  putGS('Images');  ?></A></TD>
+			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/images/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&Section=<?php  p($Section); ?>" class="breadcrumb" ><?php  putGS('Images');  ?></A></TD>
 			<td class="breadcrumb_separator">&nbsp;</td>
-			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/?Pub=<?php  p($PublicationId); ?>&Issue=<?php  p($IssueId); ?>&Language=<?php  p($InterfaceLanguageId); ?>&Section=<?php  p($SectionId); ?>" class="breadcrumb"><?php  putGS('Articles');  ?></A></TD>
+			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>&Section=<?php  p($Section); ?>" class="breadcrumb"><?php  putGS('Articles');  ?></A></TD>
 			<td class="breadcrumb_separator">&nbsp;</td>
-			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/?Pub=<?php  p($PublicationId); ?>&Issue=<?php  p($IssueId); ?>&Language=<?php  p($InterfaceLanguageId); ?>" class="breadcrumb"><?php  putGS('Sections');  ?></A></TD>
+			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>" class="breadcrumb"><?php  putGS('Sections');  ?></A></TD>
 			<td class="breadcrumb_separator">&nbsp;</td>
-			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/?Pub=<?php  p($PublicationId); ?>"  class="breadcrumb"><?php  putGS('Issues');  ?></A></TD>
+			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/?Pub=<?php  p($Pub); ?>"  class="breadcrumb"><?php  putGS('Issues');  ?></A></TD>
 			<td class="breadcrumb_separator">&nbsp;</td>
 			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/" class="breadcrumb"><?php  putGS('Publications');  ?></A></TD>
 		</TR>
@@ -96,8 +88,12 @@ if (!($User->hasPermission('ChangeArticle') || ($userCreatedArticle && !$article
 	<TD VALIGN="TOP" class="current_location_content"><?php echo htmlspecialchars($articleObj->getTitle()); ?></TD>
 </TR>
 </TABLE>
-
 <P>
+<CENTER>
+<IMG SRC="<?php echo $imageObj->getImageUrl(); ?>" BORDER="0" ALT="<?php echo htmlspecialchars($imageObj->getDescription()); ?>">
+</CENTER>
+<?php if ($User->hasPermission('ChangeImage')) { ?>
+<p>
 <FORM NAME="dialog" METHOD="POST" ACTION="do_edit.php" >
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" ALIGN="CENTER" class="table_input">
 	<TR>
@@ -106,12 +102,14 @@ if (!($User->hasPermission('ChangeArticle') || ($userCreatedArticle && !$article
 			<HR NOSHADE SIZE="1" COLOR="BLACK">
 		</TD>
 	</TR>
+	<?php if ($ImageTemplateId > 0) { ?>
 	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS('Number'); ?>:</TD>
 		<TD>
 		<INPUT TYPE="TEXT" NAME="cNumber" VALUE="<?php echo $ImageTemplateId; ?>" class="input_text" SIZE="32" MAXLENGTH="10">
 		</TD>
 	</TR>
+	<?php } ?>
 	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS('Description'); ?>:</TD>
 		<TD>
@@ -139,19 +137,22 @@ if (!($User->hasPermission('ChangeArticle') || ($userCreatedArticle && !$article
 	<TR>
 		<TD COLSPAN="2">
 		<DIV ALIGN="CENTER">
-	    <INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<?php  p($PublicationId); ?>">
-	    <INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<?php  p($IssueId); ?>">
-	    <INPUT TYPE="HIDDEN" NAME="Section" VALUE="<?php  p($SectionId); ?>">
-	    <INPUT TYPE="HIDDEN" NAME="Article" VALUE="<?php  p($ArticleId); ?>">
-	    <INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php  p($InterfaceLanguageId); ?>">
-	    <INPUT TYPE="HIDDEN" NAME="sLanguage" VALUE="<?php  p($ArticleLanguageId); ?>">
+	    <INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<?php  p($Pub); ?>">
+	    <INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<?php  p($Issue); ?>">
+	    <INPUT TYPE="HIDDEN" NAME="Section" VALUE="<?php  p($Section); ?>">
+	    <INPUT TYPE="HIDDEN" NAME="Article" VALUE="<?php  p($Article); ?>">
+	    <INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php  p($Language); ?>">
+	    <INPUT TYPE="HIDDEN" NAME="sLanguage" VALUE="<?php  p($sLanguage); ?>">
 	    <INPUT TYPE="HIDDEN" NAME="Image" VALUE="<?php  p($ImageId); ?>">
 		<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save changes'); ?>" class="button">
-		<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" class="button" ONCLICK="location.href='/<?php echo $ADMIN; ?>/pub/issues/sections/articles/images/?Pub=<?php  p($PublicationId); ?>&Issue=<?php  p($IssueId); ?>&Article=<?php  p($ArticleId); ?>&Language=<?php  p($InterfaceLanguageId); ?>&sLanguage=<?php  p($ArticleLanguageId); ?>&Section=<?php  p($SectionId); ?>'">
+		<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" class="button" ONCLICK="location.href='/<?php echo $ADMIN; ?>/pub/issues/sections/articles/images/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&Section=<?php  p($Section); ?>'">
 		</DIV>
 		</TD>
 	</TR>
 </TABLE>
 </FORM>
 <P>
-<?php CampsiteInterface::CopyrightNotice(); ?>
+<?php 
+}
+
+CampsiteInterface::CopyrightNotice(); ?>

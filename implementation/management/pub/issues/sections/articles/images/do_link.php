@@ -14,12 +14,12 @@ if (!$access) {
 	exit;
 }
 
-$PublicationId = Input::Get('PublicationId', 'int', 0);
-$IssueId = Input::Get('IssueId', 'int', 0);
-$SectionId = Input::Get('SectionId', 'int', 0);
-$InterfaceLanguageId = Input::Get('InterfaceLanguageId', 'int', 0);
-$ArticleLanguageId = Input::Get('ArticleLanguageId', 'int', 0);
-$ArticleId = Input::Get('ArticleId', 'int', 0);
+$Pub = Input::Get('Pub', 'int', 0);
+$Issue = Input::Get('Issue', 'int', 0);
+$Section = Input::Get('Section', 'int', 0);
+$Language = Input::Get('Language', 'int', 0);
+$sLanguage = Input::Get('sLanguage', 'int', 0);
+$Article = Input::Get('Article', 'int', 0);
 $ImageId = Input::Get('ImageId', 'int', 0);
 
 if (!Input::IsValid()) {
@@ -27,7 +27,7 @@ if (!Input::IsValid()) {
 	exit;
 }
 
-$articleObj =& new Article($PublicationId, $IssueId, $SectionId, $ArticleLanguageId, $ArticleId);
+$articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
 if (!$articleObj->exists()) {
 	CampsiteInterface::DisplayError('Article does not exist.');
 	exit;		
@@ -41,18 +41,17 @@ if (!$imageObj->exists()) {
 
 // This file can only be accessed if the user has the right to change articles
 // or the user created this article and it hasnt been published yet.
-if (!($User->hasPermission('ChangeArticle') 
-	|| (($articleObj->getUserId() == $User->getId()) && ($articleObj->getPublished() == 'N')))) {
+if (!$articleObj->userCanModify($User)) {
 	CampsiteInterface::DisplayError("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only changed by authorized users.");
 	exit;		
 }
 
-ArticleImage::AddImageToArticle($ImageId, $ArticleId);
+ArticleImage::AddImageToArticle($ImageId, $Article);
 
-$logtext = getGS('Image $1 linked to article $2', $ImageId, $ArticleId); 
+$logtext = getGS('Image $1 linked to article $2', $ImageId, $Article); 
 Log::Message($logtext, $User->getUserName(), 42);
 
 // Go back to article image list.
-header('Location: '.CampsiteInterface::ArticleUrl($articleObj, $InterfaceLanguageId, 'images/'));
+header('Location: '.CampsiteInterface::ArticleUrl($articleObj, $Language, 'images/'));
 exit;
 ?>
