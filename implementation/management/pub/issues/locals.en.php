@@ -2,9 +2,6 @@
 
 // -- index.m4
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>","Name<BR><SMALL>(click to see sections)</SMALL>:en");
-regGS("Front Page Template","Front Page Template:en");
-regGS("Section Template","Section Template:en");
-regGS("Article Template","Article Template:en");
 regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>","Published<BR><SMALL>(yyyy-mm-dd)</SMALL>:en");
 regGS("Delete issue $1","Delete issue $1:en");
 regGS("Click here to set...","Click here to set...:en");
@@ -36,6 +33,7 @@ regGS("Issue $1 added","Issue $1 added:en");
 regGS("Change issue details","Change issue details:en");
 regGS("You do not have the right to change issue details.","You do not have the right to change issue details.:en");
 regGS("Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>","Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>:en");
+regGS("Front Page Template","Front Page Template:en");
 
 // -- do_edit.m4
 regGS("Updating issue","Updating issue:en");
