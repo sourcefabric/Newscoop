@@ -1,14 +1,12 @@
 #!/bin/bash
 
-cd ../..
-. ./make.env
-cd implementation/mailnotify
+. ../../make.env
 
 echo -n -e "\t\tWriting configure.h header..."
 cat > configure.h << EOF
 /******************************************************************************
 
-Defines used to connect to MySQL database server
+Defines the configuration directory
 
 WARNING!!! This file is generated. Do not edit!
 
