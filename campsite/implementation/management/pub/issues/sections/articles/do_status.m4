@@ -3,7 +3,10 @@ INCLUDE_PHP_LIB(<*../../../..*>)
 B_DATABASE
 
 CHECK_BASIC_ACCESS
-<?php  SET_ACCESS(<*pa*>, <*Publish*>) ?>
+<?php
+SET_ACCESS(<*pa*>, <*Publish*>)
+SET_ACCESS(<*ch_art*>, <*ChangeArticle*>)
+?>
 
 B_HEAD
 	X_EXPIRES
@@ -78,12 +81,14 @@ B_MSGBOX(<*Changing article status*>)
 		query ("DELETE FROM ArticleIndex WHERE IdPublication=$Pub AND NrIssue=$Issue AND NrSection=$Section AND NrArticle=$Article AND IdLanguage=$sLanguage");
 		//check the deletion
  	}
-	
-	if (!(((getVar($q_art,'Published') == "Y") || ($Status == "Y")) && ($pa == 0))){
+
+	$was_published = getVar($q_art,'Published');
+	if ((($was_published == 'Y' || $Status == 'Y') && $pa)
+		|| ($was_published != 'Y' && $Status != 'Y' && ($ch_art || $pa))) {
 		query ("UPDATE Articles SET LockUser=0, Published='$Status', IsIndexed='N' WHERE IdPublication=$Pub AND NrIssue=$Issue AND NrSection=$Section AND Number=$Article AND IdLanguage=$sLanguage");
 		if ($AFFECTED_ROWS > 0) { ?>dnl
-			<?php  if (getVar($q_art,'Published') == "Y")	$stat=getGS('Published');
-			else if (getVar($q_art,'Published')== "S") $stat=getGS('Submitted');
+			<?php  if ($was_published == "Y")	$stat=getGS('Published');
+			else if ($was_published == "S") $stat=getGS('Submitted');
 			else $stat=getGS('New');
 
 			if($Status == "Y") $newstat=getGS('Published');
