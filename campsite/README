@@ -1,11 +1,11 @@
 CAMPSITE / CAMPFIRE
-version     : 2.1.4
-release date: October 20, 2003
+version     : 2.1.5
+release date: March 26, 2004
 contact     : contact@campware.org
 url         : http://www.campware.org
-copyright   : (c)1999-2003 Media Development Loan Fund
+copyright   : (c)1999-2004 Media Development Loan Fund
 support     : mailto: campsite-support@campware.org; subject: subscribe
-manual      : http://www.campware.org/look/campware/download/manual-2.1.4.tar.gz
+manual      : http://www.campware.org/look/campware/download/manual-2.1.5.tar.gz
 
 INTRODUCTION
 
@@ -52,7 +52,9 @@ Implementing CAMPSITE for your purposes requires the following technical set-up,
 nothing out of the ordinary.
 
 CAMPSITE server:
-- runs on a GNU/Linux server, tested with RedHat 7.0 and Mandrake 8.0
+- runs on a GNU/Linux server, tested with RedHat 7.0 and Mandrake 8.0 and has 
+proved compatible with RedHat 7.1, 7.2, 8.0, 9.0; Mandrake 8.1, 8.2, 9.0, 9.1, 
+9.2, 10.0 and Debian
 - needs an Apache web to be running, and its virtual servers configured by the
   administrator.
 - for data storage it is needed a MySQL database server for GNU/Linux. The tests
@@ -72,7 +74,7 @@ COPYRIGHT
 
 CAMPSITE is a Unicode-enabled multilingual web content management system for
 news publications. CAMPFIRE is a Unicode-enabled java-based near WYSIWYG text
-editor. Copyright (C)1999-2003  Media Development Loan Fund.
+editor. Copyright (C)1999-2004  Media Development Loan Fund.
 contact: contact@campware.org - http://www.campware.org
 Campware encourages further development. Please let us know.
 
