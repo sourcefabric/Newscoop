@@ -52,9 +52,13 @@ using std::map;
 class CURL
 {
 public:
-	CURL() : m_bValidURI(false) { }
+	CURL() { }
+
+	CURL(const CURL& p_rcoSrc);
 
 	virtual ~CURL() {}
+
+	virtual CURL* clone() const = 0;
 
 	void setMethod(const string& p_rcoMethod) { m_coMethod = p_rcoMethod; }
 
@@ -84,9 +88,9 @@ public:
 
 	long getArticle() const throw(InvalidValue) { return getIntValue(P_NRARTICLE); }
 
-	void setValue(const string& p_rcoParameter, long p_nValue);
+	virtual void setValue(const string& p_rcoParameter, long p_nValue);
 
-	void setValue(const string& p_rcoParameter, const string& p_rcoValue);
+	virtual void setValue(const string& p_rcoParameter, const string& p_rcoValue);
 
 	string getValue(string p_rcoParameter) const;
 
@@ -109,7 +113,6 @@ public:
 	virtual string getQueryString() const = 0;
 
 protected:
-	mutable bool m_bValidURI;
 	string m_coMethod;
 	String2String m_coParamMap;
 	String2String m_coCookies;
@@ -118,16 +121,21 @@ protected:
 
 // CURL inline methods
 
+inline CURL::CURL(const CURL& p_rcoSrc)
+{
+	m_coMethod = p_rcoSrc.m_coMethod;
+	m_coParamMap = p_rcoSrc.m_coParamMap;
+	m_coCookies = p_rcoSrc.m_coCookies;
+}
+
 inline void CURL::setValue(const string& p_rcoParameter, long p_nValue)
 {
 	setValue(p_rcoParameter, (string)Integer(p_nValue));
-	m_bValidURI = false;
 }
 
 inline void CURL::setValue(const string& p_rcoParameter, const string& p_rcoValue)
 {
 	m_coParamMap[p_rcoParameter] = p_rcoValue;
-	m_bValidURI = false;
 }
 
 inline string CURL::getValue(string p_rcoParameter) const
