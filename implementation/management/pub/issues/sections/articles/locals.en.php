@@ -86,7 +86,6 @@ regGS("The article cannot be updated or no changes have been made.","No changes 
 
 // -- preview.m4
 regGS("Preview article","Preview Article:en");
-regGS("This article cannot be previewed. Please make sure it has a <B><I>single article</I></B> template selected.","This article cannot be previewed. Please make sure it has a <B><I>single article</I></B> template selected.:en");
 
 // -- duplicate.m4
 regGS("Duplicate article", "Duplicate article");
