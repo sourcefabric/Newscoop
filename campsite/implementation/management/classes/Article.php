@@ -1,6 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/config.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DatabaseObject.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DbObjectArray.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleType.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleImage.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleTopic.php');
@@ -335,25 +336,22 @@ class Article extends DatabaseObject {
 	
 	
 	/**
-	 * Return an array of Langauge objects, one for each
+	 * Return an array of Language objects, one for each
 	 * type of language the article is written in.
 	 *
 	 * @return array
 	 */
 	function getLanguages() {
 		global $Campsite;
-	 	$queryStr = 'SELECT IdLanguage FROM Articles '
+		$tmpLanguage  =& new Language();
+		$columnNames = $tmpLanguage->getColumnNames(true);
+	 	$queryStr = 'SELECT '.implode(',', $columnNames).' FROM Articles, Languages '
 	 				.' WHERE IdPublication='.$this->m_data['IdPublication']
 	 				.' AND NrIssue='.$this->m_data['NrIssue']
 	 				.' AND NrSection='.$this->m_data['NrSection']
-	 				.' AND Number='.$this->m_data['Number'];
-	 	$languageIds = $Campsite['db']->GetCol($queryStr);
-	 	$languages = array();
-	 	if (is_array($languageIds)) {
-			foreach ($languageIds as $languageId) {
-				$languages[] =& new Language($languageId);
-			}
-	 	}
+	 				.' AND Number='.$this->m_data['Number']
+	 				.' AND Articles.IdLanguage=Languages.Id';
+	 	$languages =& DbObjectArray::Create('Language', $queryStr);
 		return $languages;
 	} // fn getLanguages
 	
@@ -371,16 +369,7 @@ class Article extends DatabaseObject {
 	 				.' AND NrIssue='.$this->m_data['NrIssue']
 	 				.' AND NrSection='.$this->m_data['NrSection']
 	 				.' AND Number='.$this->m_data['Number'];
-	 	$rows = $Campsite['db']->GetAll($queryStr);
-	 	$articles = array();
-	 	if (is_array($rows)) {
-			foreach ($rows as $row) {
-				$tmpArticle =& new Article($row['IdPublication'], $row['NrIssue'], 
-					$row['NrSection'], $row['IdLanguage']);
-				$tmpArticle->fetch($row);
-				$articles[] =& $tmpArticle;
-			}
-	 	}
+	 	$articles =& DbObjectArray::Create('Article', $queryStr);
 		return $articles;
 	} // fn getTranslations
 	
@@ -678,6 +667,11 @@ class Article extends DatabaseObject {
 	
 	
 	/**
+	 * Return the current status of the article:
+	 *   'Y' = "Published"
+	 *	 'S' = "Submitted"
+	 *   'N' = "New"
+	 * 
 	 * @return string
 	 * 		Can be 'Y', 'S', or 'N'.
 	 */
@@ -688,13 +682,22 @@ class Article extends DatabaseObject {
 	
 	/**
 	 * Set the published state of the article.  
-	 * Can be 'Y' = 'Yes', 'S' = 'Submitted', or 'N' = 'No'.
+	 * 	   'Y' = 'Published'
+	 *     'S' = 'Submitted'
+	 *     'N' = 'New'
+	 *
 	 * @param string value
 	 */
 	function setPublished($p_value) {
-		if ($this->getPublished() == 'Y' && $p_value != 'Y') // Delete indexes
+		$p_value = strtoupper($p_value);
+		if ( ($p_value != 'Y') && ($p_value != 'S') && ($p_value != 'N')) {
+			return false;
+		}
+		if ($this->getPublished() == 'Y' && $p_value != 'Y') {
+			// Delete indexes
 			ArticleIndex::OnArticleDelete($this->getPublicationId(), $this->getIssueId(),
 				$this->getSectionId(), $this->getLanguageId(), $this->getArticleId());
+		}
 		$this->setIsIndexed(false);
 		return parent::setProperty('Published', $p_value);
 	} // fn setIsPublished
@@ -947,15 +950,7 @@ class Article extends DatabaseObject {
 	 	$queryStr = 'SELECT DISTINCT(IdLanguage), '.$languageColumns
 	 				.' FROM Articles, Languages '
 	 				.' WHERE Articles.IdLanguage = Languages.Id';
-	 	$rows = $Campsite['db']->GetAll($queryStr);
-	 	$languages = array();
-	 	if (is_array($rows)) {
-			foreach ($rows as $row) {
-				$tmpLanguage =& new Language();
-				$tmpLanguage->fetch($row);
-				$languages[] =& $tmpLanguage;
-			}
-	 	}
+	 	$languages =& DbObjectArray::Create('Language', $queryStr);
 		return $languages;		
 	} // fn GetAllLanguages
 	
@@ -968,15 +963,33 @@ class Article extends DatabaseObject {
 	 * the given language.
 	 *
 	 * @param int p_publicationId
+	 *		The publication ID.
+	 *
 	 * @param int p_issueId
+	 *		The issue ID.
+	 *
 	 * @param int p_sectionId
+	 *		The section ID.
+	 *
 	 * @param int p_languageId
+	 *		The language ID.
 	 *
 	 * @param int p_preferredLanguage
-	 *		If specified, list this language before others.
+	 *		If specified, list the articles in this language before others.
 	 *
-	 * @param array p_sqlLimit
-	 *		Set the terms for the LIMIT clause.
+	 * @param int p_numRows
+	 *		Max number of rows to fetch.
+	 *
+	 * @param int p_startAt
+	 *		Index into the result array to begin at.
+	 *
+	 * @param boolean p_numRowsIsUniqueRows
+	 *		Whether the number of rows stated in p_rows should be interpreted as
+	 *		the number of articles to return regardless of how many times an 
+	 *		article has been translated.  E.g. an article translated three times
+	 *		would be counted as one article if this is set to TRUE, and counted
+	 *		as three articles if this is set to FALSE.
+	 *		Default: false
 	 *
 	 * @return array
 	 *		Return an array of Article objects.
@@ -1067,15 +1080,8 @@ class Article extends DatabaseObject {
 				$queryStr2 .= ' LIMIT '.$p_startAt.$p_numRows;
 			}
 		}
-				
-		$query = $Campsite['db']->Execute($queryStr2);
-		$articles = array();
-		while ($row = $query->FetchRow()) {
-			$tmpArticle =& new Article($row['IdPublication'], $row['NrIssue'],
-				$row['NrSection'], $row['IdLanguage']);
-			$tmpArticle->fetch($row);
-			$articles[] = $tmpArticle;
-		}
+
+		$articles =& DbObjectArray::Create('Article', $queryStr2);
 		return $articles;
 	} // fn GetArticles
 	
