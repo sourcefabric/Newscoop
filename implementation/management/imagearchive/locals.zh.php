@@ -2,7 +2,7 @@
 regGS("Add new image","添加新图片");
 regGS("Select an old image","选择旧图片");
 regGS("Click to view image","单击查看图片");
-regGS("Date<BR><SMALL>(yyyy-mm-dd)</SMALL>","日期(yyyy-mm-dd)");
+regGS("Date <SMALL>(yyyy-mm-dd)</SMALL>","日期(yyyy-mm-dd)");
 regGS("Delete image $1","删除图片$1");
 regGS("No images.","无图片");
 regGS("View image","查看图片");

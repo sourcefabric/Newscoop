@@ -3,7 +3,7 @@
 regGS("Add new image","أضف صورة جديدة");
 regGS("Select an old image","إختر صورة قديمة");
 regGS("Click to view image","إضط لترى الصورة");
-regGS("Date<BR><SMALL>(yyyy-mm-dd)</SMALL>","التاريخ <br> (السنة، الشهرة، اليوم)");
+regGS("Date <SMALL>(yyyy-mm-dd)</SMALL>","التاريخ <br> (السنة، الشهرة، اليوم)");
 regGS("Delete image $1","الغاء الصورة $1");
 regGS("No images.","لا صور");
 regGS("View image","مشاهدة الصورة");

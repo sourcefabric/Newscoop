@@ -3,7 +3,7 @@
 regGS("Add new image","Adaugă imagine");
 regGS("Select an old image","Selectează imagine");
 regGS("Click to view image","Apăsaţi aici pentru a vedea imaginea");
-regGS("Date<BR><SMALL>(yyyy-mm-dd)</SMALL>","Data (aaaa-ll-zz)");
+regGS("Date <SMALL>(yyyy-mm-dd)</SMALL>","Data (aaaa-ll-zz)");
 regGS("Delete image $1","Şterge imaginea $1");
 regGS("No images.","Nu există imagini");
 regGS("View image","Vizualizare imagine");
