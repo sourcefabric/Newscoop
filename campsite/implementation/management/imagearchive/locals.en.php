@@ -1,7 +1,6 @@
 <?php
 // added by sebastian
 regGS("Search for images","Search for images");
-regGS("Reset search conditions","Reset search conditions");
 regGS("Search conditions","Search conditions");
 regGS("You cannot delete image $1","You cannot delete image $1");
 regGS("Image is still attached to Article(s)","Image is still attached to Article(s)");
@@ -14,13 +13,9 @@ regGS("Click to view image","Click to view image:en");
 regGS("Date<BR><SMALL>(yyyy-mm-dd)</SMALL>","Date <SMALL>(yyyy-mm-dd)</SMALL>:en");
 regGS("Delete image $1","Delete image $1:en");
 regGS("No images.","No images.:en");
-regGS("Thumbnail", "Thumbnail:en");
 regGS("Description<BR><SMALL>(Click to view details)</SMALL>", "Description <SMALL>(Click to view details)</SMALL>:en");
-regGS("In use", "In use:en");
 regGS("Gallery", "Gallery:en");
 regGS("Text only", "Text only:en");
-regGS("$1 images found", "$1 images found:en");
-regGS("Identifier", "Identifier:en");
 
 // -- view.m4
 regGS("View image","View image:en");
