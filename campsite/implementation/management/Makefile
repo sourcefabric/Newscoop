@@ -38,6 +38,7 @@ install: $(ALL)
 	cp -rf article_import $(PRIV_DIR)
 	cp -rf javascript $(HTML_DIR)
 	cp -rf classes $(HTML_DIR)
+	cp -rf imagearchive $(PRIV_DIR)
 	mkdir -p $(SCRIPT_DIR)
 	cp -fr img/* $(PRIV_DIR)/img
 	cp -f *.php $(PRIV_DIR)/
@@ -60,6 +61,7 @@ install: $(ALL)
 	chown -R $(HTTP_USER):$(HTTP_GROUP) $(HTML_DIR)/look
 	chown -R $(HTTP_USER):$(HTTP_GROUP) $(HTML_DIR)/javascript
 	chown -R $(HTTP_USER):$(HTTP_GROUP) $(HTML_DIR)/classes
+	chown -R $(HTTP_USER):$(HTTP_GROUP) $(PRIV_DIR)/imagearchive
 	chown -R $(HTTP_USER):$(HTTP_GROUP) $(PRIV_DIR) 
 	chown -R $(HTTP_USER):$(HTTP_GROUP) $(SCRIPT_DIR)
 	chmod u+rw $(HTML_DIR)/*.php
@@ -71,6 +73,9 @@ install: $(ALL)
 	chmod -R u+rw $(HTML_DIR)/classes
 	chmod -R g+r $(HTML_DIR)/classes
 	chmod -R o-rwx $(HTML_DIR)/classes
+	chmod -R u+rw $(PRIV_DIR)/imagearchive
+	chmod -R g+r $(PRIV_DIR)/imagearchive
+	chmod -R o-rwx $(PRIV_DIR)/imagearchive
 	chmod -R u+rw $(PRIV_DIR)
 	chmod -R g+rw $(PRIV_DIR)
 	chmod -R o-rwx $(PRIV_DIR)
