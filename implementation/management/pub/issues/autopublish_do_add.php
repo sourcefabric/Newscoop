@@ -1,8 +1,5 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
-	"http://www.w3.org/TR/REC-html40/loose.dtd">
-<HTML>
 <?php
-include($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
 load_common_include_files("$ADMIN_DIR/pub/issues");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
 
@@ -17,7 +14,7 @@ if ($NUM_ROWS) {
 		fetchRow($XPerm);
 	} else
 		$access = 0;	//added lately; a non-admin can enter the administration area; he exists but doesn't have ANY rights
-	 $xpermrows= $NUM_ROWS;
+	$xpermrows= $NUM_ROWS;
 } else {
 	query ("SELECT * FROM UserPerm WHERE 1=0", 'XPerm');
 }
