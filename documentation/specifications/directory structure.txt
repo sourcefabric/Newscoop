@@ -69,30 +69,7 @@ WWW directories of campsite instances
 
 Configuration Files
 
-Description of database_conf.php file
-
-- format:
-<?php
-
-$Campsite["DATABASE_NAME"] = "[database_name]");
-$Campsite["DATABASE_SERVER_ADDRESS"] = "[database_server_address]");
-$Campsite["DATABASE_SERVER_PORT"] = "[database_server_port]");
-$Campsite["DATABASE_USER"] = "[database_user]");
-$Campsite["DATABASE_PASSWORD"] = "[database_password]");
-
-$campsite_local_vars['database_config.php'] = array("DATABASE_NAME",
-	"DATABASE_SERVER_ADDRESS", "DATABASE_SERVER_PORT", "DATABASE_USER",
-	"DATABASE_PASSWORD");
-
-?>
-
-- path: [etc_dir]/[instance_name]/database_conf.php
-
-- owner: [apache_user]:[apache_user]
-- rights: owner: read/write, group: read/write, other: none
-
-
-Description of path_conf.php file
+Description of install_conf.php file
 
 - format:
 <?php
@@ -112,12 +89,91 @@ $Campsite["SCRIPT_COMMON_DIR"] = "[script_common_dir]");
 $Campsite["INCLUDE_COMMON_DIR"] = "[include_common_dir]");
 	// default = CAMPSITE_DIR . "/www-common/include");
 
-$campsite_local_vars['path_config.php'] = array("CAMPSITE_DIR", "BIN_DIR",
-	"ETC_DIR", "WWW_DIR", "WWW_COMMON_DIR", "HTML_COMMON_DIR", "CGI_COMMON_DIR",
+$CampsiteVars['install'] = array("CAMPSITE_DIR", "BIN_DIR", "ETC_DIR",
+	"WWW_DIR", "WWW_COMMON_DIR", "HTML_COMMON_DIR", "CGI_COMMON_DIR",
 	"SCRIPT_COMMON_DIR", "INCLUDE_COMMON_DIR");
 
 ?>
 
-- path: [etc_dir]/path_conf.php
+- path: [etc_dir]/install_conf.php
 - owner: [apache_user]:[apache_user]
 - rights: owner: read/write, group: read/write, other: read
+
+
+Description of apache_conf.php file
+
+- format:
+<?php
+
+$Campsite["APACHE_USER"] = "[apache_user]"); // must be set when creating instance
+$Campsite["APACHE_GROUP"] = "[apache_group]"); // must be set when creating instance
+
+$CampsiteVars['apache'] = array("APACHE_USER", "APACHE_GROUP");
+
+?>
+
+- path: [etc_dir]/[instance_name]/apache_conf.php
+
+- owner: [apache_user]:[apache_user]
+- rights: owner: read/write, group: read/write, other: none
+
+
+Description of database_conf.php file
+
+- format:
+<?php
+
+$Campsite["DATABASE_NAME"] = "[database_name]");
+$Campsite["DATABASE_SERVER_ADDRESS"] = "[database_server_address]");
+$Campsite["DATABASE_SERVER_PORT"] = "[database_server_port]");
+$Campsite["DATABASE_USER"] = "[database_user]");
+$Campsite["DATABASE_PASSWORD"] = "[database_password]");
+
+$CampsiteVars['database'] = array("DATABASE_NAME",
+	"DATABASE_SERVER_ADDRESS", "DATABASE_SERVER_PORT", "DATABASE_USER",
+	"DATABASE_PASSWORD");
+
+?>
+
+- path: [etc_dir]/[instance_name]/database_conf.php
+
+- owner: [apache_user]:[apache_user]
+- rights: owner: read/write, group: read/write, other: none
+
+
+Description of parser_conf.php file
+
+- format:
+<?php
+
+$Campsite["PARSER_MAX_THREADS"] = "[parser_max_threads]"); // 0 means use hardcoded default
+$Campsite["PARSER_PORT"] = "[parser_port]"); // must be set when creating instance
+
+$CampsiteVars['parser'] = array("PARSER_MAX_THREADS", "PARSER_PORT");
+
+?>
+
+- path: [etc_dir]/[instance_name]/parser_conf.php
+
+- owner: [apache_user]:[apache_user]
+- rights: owner: read/write, group: read/write, other: none
+
+
+Description of smtp_conf.php file
+
+- format:
+<?php
+
+$Campsite["SMTP_SERVER_ADDRESS"] = "[smtp_server_address]");
+	// must be set when creating instance
+$Campsite["SMTP_SERVER_PORT"] = "[smtp_server_port]");
+	// must be set when creating instance
+
+$CampsiteVars['smtp'] = array("SMTP_SERVER_ADDRESS", "SMTP_SERVER_PORT");
+
+?>
+
+- path: [etc_dir]/[instance_name]/smtp_conf.php
+
+- owner: [apache_user]:[apache_user]
+- rights: owner: read/write, group: read/write, other: none
