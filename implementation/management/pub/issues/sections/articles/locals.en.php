@@ -2,7 +2,6 @@
 
 // -- index.m4
 regGS("Delete article $1","Delete article $1:en");
-regGS("Order", "Order:en");
 
 // -- add.m4
 regGS("Show article on front page","Show article on front page:en");
@@ -49,7 +48,7 @@ regGS("Translate article","Translate article:en");
 regGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only changed by authorized users.","You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only changed by authorized users.:en");
 
 // -- edit.m4
-regGS("Edit article details","Edit article details:en");
+regGS("Edit article details","Edit Article:en");
 regGS("Simple editor","Simple editor:en");
 regGS("Advanced editor","Advanced editor:en");
 regGS("Allow users without subscriptions to view the article","Allow users without subscriptions to view the article:en");
@@ -89,10 +88,5 @@ regGS("The destination section is the same as the source section.", "The destina
 // -- do_duplicate.m4
 regGS("The article $1 has been duplicated as $2", "The article $1 has been duplicated as $2:en");
 regGS("The article $1 could not be duplicated", "The article $1 could not be duplicated:en");
-
-// order.m4
-regGS("Move article", "Move article:en");
-regGS("Move article \"$1\" from position $2", "Move article \"$1\" from position $2:en");
-regGS("To position", "To position:en");
 
 ?>
