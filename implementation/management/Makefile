@@ -5,7 +5,7 @@ ALL=all
 
 all: $(MY_TARGETS)
 	$(MAKE) -C root
-	$(MAKE) -C src
+	$(MAKE) -C cgi
 	$(MAKE) -C pub
 	$(MAKE) -C templates
 	$(MAKE) -C topics
@@ -42,7 +42,7 @@ install: $(ALL)
 	cp -rf include $(HTML_COMMON_DIR)
 	cp -f *.php $(PRIV_COMMON_DIR)/
 	$(MAKE) -C root install
-	$(MAKE) -C src install
+	$(MAKE) -C cgi install
 	$(MAKE) -C pub install
 	$(MAKE) -C templates install
 	$(MAKE) -C topics install	
@@ -76,7 +76,7 @@ install: $(ALL)
 clean: dummy
 	rm -f *~ macros.m4 $(MY_TARGETS)
 	$(MAKE) -C root clean
-	$(MAKE) -C src clean
+	$(MAKE) -C cgi clean
 	$(MAKE) -C pub clean
 	$(MAKE) -C templates clean
 	$(MAKE) -C topics clean	
@@ -92,7 +92,7 @@ clean: dummy
 
 uninstall: dummy
 	rm -fr $(WWW_COMMON_DIR)
-	$(MAKE) -C src uninstall
+	$(MAKE) -C cgi uninstall
 	$(MAKE) -C templates uninstall
 
 dummy:
