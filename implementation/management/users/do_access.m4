@@ -62,7 +62,24 @@ todefradio('cManageIndexer');
 todefradio('cPublish');
 todefradio('cManageTopics');
 
-
+todefradio('cEditorImage');
+todefradio('cEditorTextAlignment');
+todefradio('cEditorFontColor');
+todefradio('cEditorFontSize');
+todefradio('cEditorFontFace');
+todefradio('cEditorTable');
+todefradio('cEditorSuperscript');
+todefradio('cEditorSubscript');
+todefradio('cEditorStrikethrough');
+todefradio('cEditorIndent');
+todefradio('cEditorListBullet');
+todefradio('cEditorListNumber');
+todefradio('cEditorHorizontalRule');
+todefradio('cEditorSourceView');
+todefradio('cEditorEnlarge');
+todefradio('cEditorTextDirection');
+todefradio('cEditorLink');
+todefradio('cEditorSubhead');
 
     query ("SELECT * FROM Users WHERE Id=$User", 'uacc');
     if ($NUM_ROWS) {
@@ -80,7 +97,60 @@ E_CURRENT
 <P>
 B_MSGBOX(<*Updating user account permissions*>)
 <?php 
-    query ("UPDATE UserPerm SET ManagePub='$cManagePub', DeletePub='$cDeletePub', ManageIssue='$cManageIssue', DeleteIssue='$cDeleteIssue', ManageSection='$cManageSection', DeleteSection='$cDeleteSection', AddArticle='$cAddArticle', ChangeArticle='$cChangeArticle', DeleteArticle='$cDeleteArticle', AddImage='$cAddImage', ChangeImage='$cChangeImage', DeleteImage='$cDeleteImage', ManageTempl='$cManageTempl', DeleteTempl='$cDeleteTempl', ManageUsers='$cManageUsers', ManageSubscriptions='$cManageSubscriptions', DeleteUsers='$cDeleteUsers', ManageUserTypes='$cManageUserTypes', ManageArticleTypes='$cManageArticleTypes', DeleteArticleTypes='$cDeleteArticleTypes', ManageLanguages='$cManageLanguages', DeleteLanguages='$cDeleteLanguages', MailNotify='$cMailNotify', ManageClasses='$cManageClasses', ManageDictionary='$cManageDictionary', DeleteDictionary='$cDeleteDictionary', ManageCountries='$cManageCountries', DeleteCountries='$cDeleteCountries', ViewLogs='$cViewLogs' , ManageLocalizer = '$cManageLocalizer', ManageIndexer = '$cManageIndexer', Publish = '$cPublish', ManageTopics= '$cManageTopics' WHERE IdUser=$User");
+$queryStr = "UPDATE UserPerm SET "
+	." ManagePub='$cManagePub', "
+	." DeletePub='$cDeletePub',"
+	." ManageIssue='$cManageIssue',"
+	." DeleteIssue='$cDeleteIssue', "
+	." ManageSection='$cManageSection', "
+	." DeleteSection='$cDeleteSection', "
+	." AddArticle='$cAddArticle', "
+	." ChangeArticle='$cChangeArticle', "
+	." DeleteArticle='$cDeleteArticle', "
+	." AddImage='$cAddImage', "
+	." ChangeImage='$cChangeImage', "
+	." DeleteImage='$cDeleteImage', "
+	." ManageTempl='$cManageTempl', "
+	." DeleteTempl='$cDeleteTempl', "
+	." ManageUsers='$cManageUsers', "
+	." ManageSubscriptions='$cManageSubscriptions', "
+	." DeleteUsers='$cDeleteUsers', "
+	." ManageUserTypes='$cManageUserTypes', "
+	." ManageArticleTypes='$cManageArticleTypes', "
+	." DeleteArticleTypes='$cDeleteArticleTypes', "
+	." ManageLanguages='$cManageLanguages', "
+	." DeleteLanguages='$cDeleteLanguages', "
+	." MailNotify='$cMailNotify', "
+	." ManageClasses='$cManageClasses', "
+	." ManageDictionary='$cManageDictionary', "
+	." DeleteDictionary='$cDeleteDictionary', "
+	." ManageCountries='$cManageCountries', "
+	." DeleteCountries='$cDeleteCountries', "
+	." ViewLogs='$cViewLogs' , "
+	." ManageLocalizer = '$cManageLocalizer', "
+	." ManageIndexer = '$cManageIndexer', "
+	." Publish = '$cPublish', "
+	." ManageTopics= '$cManageTopics', "
+	." EditorImage='$cEditorImage', "
+	." EditorTextAlignment='$cEditorTextAlignment', "
+	." EditorFontColor='$cEditorFontColor', "
+	." EditorFontSize='$cEditorFontSize', "
+	." EditorFontFace='$cEditorFontFace', "
+	." EditorTable='$cEditorTable', "
+	." EditorSuperscript='$cEditorSuperscript', "
+	." EditorSubscript='$cEditorSubscript', "
+	." EditorStrikethrough='$cEditorStrikethrough', "
+	." EditorIndent='$cEditorIndent', "
+	." EditorListBullet='$cEditorListBullet', "
+	." EditorListNumber='$cEditorListNumber', "
+	." EditorHorizontalRule='$cEditorHorizontalRule', "
+	." EditorSourceView='$cEditorSourceView', "
+	." EditorEnlarge='$cEditorEnlarge', "
+	." EditorTextDirection='$cEditorTextDirection', "
+	." EditorLink='$cEditorLink', "
+	." EditorSubhead='$cEditorSubhead'"
+	." WHERE IdUser=$User";
+query($queryStr);
 
 	## added by sebastian
 	if (function_exists ("incModFile"))

@@ -139,6 +139,89 @@ B_DIALOG(<*Edit user account permissions*>, <*POST*>, <*do_access.php*>)
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManageTopics"<?php  ifYthenCHECKED($uperm,'ManageTopics'); ?>>*>)
 		<?php  putGS('User may manage topics'); ?>
 	E_DIALOG_INPUT
+	
+	<tr>
+		<td colspan="2" align="left" style="padding-top: 10px;">
+			<b>WYSIWYG Editor Permissions</b>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" align="left" style="padding-top: 5px;">
+			--- Line 1 ---
+		</td>
+	</tr>
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorStrikethrough"<?php  ifYthenCHECKED($uperm,'EditorStrikethrough'); ?>>*>)
+		<?php  putGS('User may use strikethrough'); ?>
+	E_DIALOG_INPUT
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorTextAlignment"<?php  ifYthenCHECKED($uperm,'EditorTextAlignment'); ?>>*>)
+		<?php  putGS('User may change text alignment'); ?>
+	E_DIALOG_INPUT
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorIndent"<?php  ifYthenCHECKED($uperm,'EditorIndent'); ?>>*>)
+		<?php  putGS('User may set indents'); ?>
+	E_DIALOG_INPUT
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorTextDirection"<?php  ifYthenCHECKED($uperm,'EditorTextDirection'); ?>>*>)
+		<?php  putGS('User may change text direction'); ?>
+	E_DIALOG_INPUT
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorLink"<?php  ifYthenCHECKED($uperm,'EditorLink'); ?>>*>)
+		<?php  putGS('User may add links'); ?>
+	E_DIALOG_INPUT
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorHorizontalRule"<?php  ifYthenCHECKED($uperm,'EditorHorizontalRule'); ?>>*>)
+		<?php  putGS('User may insert horizontal rules'); ?>
+	E_DIALOG_INPUT
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorSubhead"<?php  ifYthenCHECKED($uperm,'EditorSubhead'); ?>>*>)
+		<?php  putGS('User may add subheads'); ?>
+	E_DIALOG_INPUT
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorImage"<?php  ifYthenCHECKED($uperm,'EditorImage'); ?>>*>)
+		<?php  putGS('User may insert images'); ?>
+	E_DIALOG_INPUT
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorSourceView"<?php  ifYthenCHECKED($uperm,'EditorSourceView'); ?>>*>)
+		<?php  putGS('User may view the HTML source'); ?>
+	E_DIALOG_INPUT
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorEnlarge"<?php  ifYthenCHECKED($uperm,'EditorEnlarge'); ?>>*>)
+		<?php  putGS('User may enlarge the editor'); ?>
+	E_DIALOG_INPUT
+	
+	<tr>
+		<td colspan="2" align="left" style="padding-top: 5px;">
+			--- Line 2 ---
+		</td>
+	</tr>
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorFontFace"<?php  ifYthenCHECKED($uperm,'EditorFontFace'); ?>>*>)
+		<?php  putGS('User may change the font face'); ?>
+	E_DIALOG_INPUT
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorFontSize"<?php  ifYthenCHECKED($uperm,'EditorFontSize'); ?>>*>)
+		<?php  putGS('User may change the font size'); ?>
+	E_DIALOG_INPUT
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorListBullet"<?php  ifYthenCHECKED($uperm,'EditorListBullet'); ?>>*>)
+		<?php  putGS('User may create bulleted lists'); ?>
+	E_DIALOG_INPUT
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorListNumber"<?php  ifYthenCHECKED($uperm,'EditorListNumber'); ?>>*>)
+		<?php  putGS('User may create numbered lists'); ?>
+	E_DIALOG_INPUT
+	
+	<tr>
+		<td colspan="2" align="left" style="padding-top: 5px;">
+			--- Line 3 ---
+		</td>
+	</tr>
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorTable"<?php  ifYthenCHECKED($uperm,'EditorTable'); ?>>*>)
+		<?php  putGS('User may insert tables'); ?>
+	E_DIALOG_INPUT
+
+	<tr>
+		<td colspan="2" align="left" style="padding-top: 5px;">
+			--- Line 4 ---
+		</td>
+	</tr>
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorFontColor"<?php  ifYthenCHECKED($uperm,'EditorFontColor'); ?>>*>)
+		<?php  putGS('User may change the font color'); ?>
+	E_DIALOG_INPUT
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorSuperscript"<?php  ifYthenCHECKED($uperm,'EditorSuperscript'); ?>>*>)
+		<?php  putGS('User may use superscripts'); ?>
+	E_DIALOG_INPUT
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorSubscript"<?php  ifYthenCHECKED($uperm,'EditorSubscript'); ?>>*>)
+		<?php  putGS('User may use subscripts'); ?>
+	E_DIALOG_INPUT
 
 	<?php 
 	## added by sebastian
@@ -146,14 +229,6 @@ B_DIALOG(<*Edit user account permissions*>, <*POST*>, <*do_access.php*>)
 		incModFile ($User);
 	?>
 
-<SCRIPT>
-	function do_submit()
-	{
-		document.dialog.submit();
-		parent.fmenu.history.go(0);
-	}
-</SCRIPT>	
-	
 	E_DIALOG_PACKEDINPUT
 	B_DIALOG_BUTTONS
 		<INPUT TYPE="HIDDEN" NAME="User" VALUE="<?php  pencHTML($User); ?>">
