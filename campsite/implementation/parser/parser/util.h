@@ -76,6 +76,13 @@ int IsValidType(const char*, MYSQL*);
 //		operator; after use this must be deallocated using delete operator
 const char* const EscapeURL(const char* src);
 
+// UnescapeURL: return the given character string unescaped from URL format
+// Parameters: const char* src - pointer to const char; string to unescape; must not be
+//		NULL
+// Returns: pointer to escaped string; this is dynamically allocated using new
+//		operator; after use this must be deallocated using delete operator
+const char* const UnescapeURL(const char* src);
+
 // EscapeHTML: return the given character string escaped for HTML
 // Parameters: const char* src - pointer to const char; string to escape; must not be
 //		NULL
