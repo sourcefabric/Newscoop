@@ -10,4 +10,9 @@ File: /htmlarea/plugins/TableOperations/table-operations.js
 - Changed the default position of the toolbar and added the "Create Table" button at the beginning of the toolbar.
 
 File: /htmlarea/popups/link.html
-- Moved "resizeTo" call to the Init function, changed the height to 190 (IE needs this height to show everything).
+- Moved "resizeTo" call to the Init function, changed the height to
+190 (IE needs this height to show everything).
+
+* The ImageManagerPlugin
+- Changed all "<?" to "<?php"
+- Added options to turn off interface features
