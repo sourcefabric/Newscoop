@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 . ${INSTALL_CONF}/conf_functions
 
