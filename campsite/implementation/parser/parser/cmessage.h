@@ -55,7 +55,7 @@ public:
 
 	virtual const string& asString() const throw(bad_cast) = 0;
 
-	virtual pair<long, const char*> asBinaryString() const throw(bad_cast) = 0;
+	virtual pair<lint, const char*> asBinaryString() const throw(bad_cast) = 0;
 };
 
 
@@ -73,12 +73,12 @@ public:
 
 	const string& operator()() const { return m_coValue; }
 
-	long size() const { return m_coValue.size(); }
+	lint size() const { return m_coValue.size(); }
 
 	virtual const string& asString() const throw(bad_cast) { return m_coValue; }
 
-	virtual pair<long, const char*> asBinaryString() const throw(bad_cast)
-		{ return pair<long, const char*>(m_coValue.size(), m_coValue.c_str()); }
+	virtual pair<lint, const char*> asBinaryString() const throw(bad_cast)
+		{ return pair<lint, const char*>(m_coValue.size(), m_coValue.c_str()); }
 
 	CStringValue* clone() const { return new CStringValue(*this); }
 
@@ -90,7 +90,7 @@ private:
 class CBinaryStringValue : public CValue
 {
 public:
-	CBinaryStringValue(long p_nSize, const char* p_pchValue);
+	CBinaryStringValue(lint p_nSize, const char* p_pchValue);
 
 	CBinaryStringValue(const CBinaryStringValue& p_rcoSource);
 
@@ -98,19 +98,19 @@ public:
 
 	const CBinaryStringValue& operator = (const CBinaryStringValue& p_rcoSource);
 
-	char& operator [] (long p_nIndex) const;
+	char& operator [] (lint p_nIndex) const;
 
-	long size() const { return m_nSize; }
+	lint size() const { return m_nSize; }
 
 	virtual const string& asString() const throw(bad_cast) { throw bad_cast(); }
 
-	virtual pair<long, const char*> asBinaryString() const throw(bad_cast)
-		{ return pair<long, const char*>(m_nSize, m_pchValue); }
+	virtual pair<lint, const char*> asBinaryString() const throw(bad_cast)
+		{ return pair<lint, const char*>(m_nSize, m_pchValue); }
 
 	CBinaryStringValue* clone() const { return new CBinaryStringValue(*this); }
 
 private:
-	long m_nSize;
+	lint m_nSize;
 	char* m_pchValue;
 };
 
@@ -127,7 +127,7 @@ public:
 
 	void insert(const string& p_rcoParameter, const string& p_rcoValue);
 
-	void insert(const string& p_rcoParameter, pair<long, const char*> p_Value);
+	void insert(const string& p_rcoParameter, pair<lint, const char*> p_Value);
 
 	void erase(const string& p_rcoParameter) { m_coParameters.erase(p_rcoParameter); }
 
@@ -151,17 +151,13 @@ public:
 	virtual void setContent(char* p_pchContent)
 		throw (out_of_range, xml_parse_error, invalid_message_content) = 0;
 
-	virtual pair<long, const char*> getContent() const = 0;
-
-	void setId(uint p_nId);
-
-	long getId() const { return m_nId; }
+	virtual pair<lint, const char*> getContent() const = 0;
 
 	const CValue* getParameter(const string& p_rcoParameter) throw(out_of_range);
 
 	void setParameter(const string& p_rcoParameter, const string& p_rcoValue);
 
-	void setParameter(const string& p_rcoParameter, pair<long, const char*> p_Value);
+	void setParameter(const string& p_rcoParameter, pair<lint, const char*> p_Value);
 
 	const CParameterMap& getParameters() const { return m_coParameters; }
 
@@ -173,7 +169,6 @@ protected:
 	mutable bool m_bValidContent;
 
 private:
-	uint m_nId;
 	CParameterMap m_coParameters;
 };
 
@@ -185,19 +180,13 @@ inline void CParameterMap::insert(const string& p_rcoParameter, const string& p_
 	m_coParameters.insert(pair<string, CValue*>(p_rcoParameter, new CStringValue(p_rcoValue)));
 }
 
-inline void CParameterMap::insert(const string& p_rcoParameter, pair<long, const char*> p_Value)
+inline void CParameterMap::insert(const string& p_rcoParameter, pair<lint, const char*> p_Value)
 {
 	m_coParameters.insert(pair<string, CValue*>(p_rcoParameter,
 	                      new CBinaryStringValue(p_Value.first, p_Value.second)));
 }
 
 // CMessage inline methods
-
-inline void CMessage::setId(uint p_nId)
-{
-	m_bValidContent = false;
-	m_nId = p_nId;
-}
 
 inline const CValue* CMessage::getParameter(const string& p_rcoParameter) throw(out_of_range)
 {
@@ -210,7 +199,7 @@ inline void CMessage::setParameter(const string& p_rcoParameter, const string& p
 	m_coParameters.insert(p_rcoParameter, p_rcoValue);
 }
 
-inline void CMessage::setParameter(const string& p_rcoParameter, pair<long, const char*> p_Value)
+inline void CMessage::setParameter(const string& p_rcoParameter, pair<lint, const char*> p_Value)
 {
 	m_bValidContent = false;
 	m_coParameters.insert(p_rcoParameter, p_Value);
@@ -229,7 +218,7 @@ public:
 	void setContent(char* p_pchContent)
 		throw (out_of_range, xml_parse_error, invalid_message_content);
 
-	virtual pair<long, const char*> getContent() const;
+	virtual pair<lint, const char*> getContent() const;
 
 	virtual string getMessageType() const { return s_coMessageType; }
 
@@ -261,7 +250,7 @@ private:
 
 private:
 	char* m_pchContent;
-	long m_nContentSize;
+	lint m_nContentSize;
 
 	string m_coHTTPHost;
 	string m_coDocumentRoot;
@@ -285,16 +274,13 @@ inline const string& CMsgURLRequest::getCookie(const string& p_coCookie) const t
 }
 
 
-class CMsgURLServe : public CMessage
+class CMsgResetCache : public CMessage
 {
 public:
-	CMsgURLServe(char* p_pchContent) throw (out_of_range, invalid_message_content)
-		: m_pchContent(NULL) { setContent(p_pchContent); }
-
 	void setContent(char* p_pchContent)
 		throw (out_of_range, xml_parse_error, invalid_message_content);
 
-	virtual pair<long, const char*> getContent() const;
+	virtual pair<lint, const char*> getContent() const;
 
 	virtual string getMessageType() const { return s_coMessageType; }
 
@@ -309,8 +295,7 @@ private:
 	static const uint s_nMessageTypeId;
 
 private:
-	char* m_pchContent;
+	string m_coType;
 };
-
 
 #endif // CMESSAGE_H
