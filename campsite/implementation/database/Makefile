@@ -1,7 +1,5 @@
 include ../../make.env
 
-export DROP_DB=Y
-
 all: dummy
 
 install:
@@ -15,6 +13,10 @@ drop-db: uninstall
 clean: dummy
 
 uninstall: dummy
-	./uninstall-db
+	if [ "$(CAMPSITE_DIR)" = "" ] || [ "$(CAMPSITE_DIR)" = "/" ]; then \
+	    echo "Invalid campsite directory"; \
+	    exit 1; \
+	fi
+	rm -fr "$(CAMPSITE_DIR)/instance/database"
 
 dummy:
