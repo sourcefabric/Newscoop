@@ -284,6 +284,7 @@ install_conf()
 {
 action="print"
 [ "$1" = "--set" ] && action="set" && shift 1
+[ "$1" = "--reset" ] && action="reset" && shift 1
 [ "$1" = "--unset" ] && action="unset" && shift 1
 conf_file=`cd "$INSTALL_CONF"; php module_conf_file.php "install"`
 if [ ! -f "$INSTALL_CONF/$conf_file" ]; then
@@ -303,6 +304,14 @@ if [ $? -ne 0 ]; then
     return 1
 fi
 if [ "$action" = "set" ]; then
+    for param in $inst_param_list; do
+	if [ "${!param}" = "" ]; then
+	    line=`echo "$inst_conf" | grep "$param"`
+	    $line
+	fi
+    done
+fi
+if [ "$action" = "reset" ]; then
     $inst_conf
 fi
 if [ "$action" = "unset" ]; then
