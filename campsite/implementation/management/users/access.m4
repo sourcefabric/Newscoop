@@ -150,23 +150,35 @@ B_DIALOG(<*Edit user account permissions*>, <*POST*>, <*do_access.php*>)
 			--- Line 1 ---
 		</td>
 	</tr>
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorBold"<?php  ifYthenCHECKED($uperm,'EditorBold'); ?>>*>)
+		<?php  putGS('User may use bold'); ?>
+	E_DIALOG_INPUT
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorItalic"<?php  ifYthenCHECKED($uperm,'EditorItalic'); ?>>*>)
+		<?php  putGS('User may use italic'); ?>
+	E_DIALOG_INPUT
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorUnderline"<?php  ifYthenCHECKED($uperm,'EditorUnderline'); ?>>*>)
+		<?php  putGS('User may use underline'); ?>
+	E_DIALOG_INPUT
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorStrikethrough"<?php  ifYthenCHECKED($uperm,'EditorStrikethrough'); ?>>*>)
 		<?php  putGS('User may use strikethrough'); ?>
 	E_DIALOG_INPUT
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorTextAlignment"<?php  ifYthenCHECKED($uperm,'EditorTextAlignment'); ?>>*>)
 		<?php  putGS('User may change text alignment'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorIndent"<?php  ifYthenCHECKED($uperm,'EditorIndent'); ?>>*>)
-		<?php  putGS('User may set indents'); ?>
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorCopyCutPaste"<?php  ifYthenCHECKED($uperm,'EditorCopyCutPaste'); ?>>*>)
+		<?php  putGS('User may copy, cut, and paste'); ?>
+	E_DIALOG_INPUT
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorUndoRedo"<?php  ifYthenCHECKED($uperm,'EditorUndoRedo'); ?>>*>)
+		<?php  putGS('User may undo/redo'); ?>
 	E_DIALOG_INPUT
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorTextDirection"<?php  ifYthenCHECKED($uperm,'EditorTextDirection'); ?>>*>)
 		<?php  putGS('User may change text direction'); ?>
 	E_DIALOG_INPUT
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorIndent"<?php  ifYthenCHECKED($uperm,'EditorIndent'); ?>>*>)
+		<?php  putGS('User may set indents'); ?>
+	E_DIALOG_INPUT
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorLink"<?php  ifYthenCHECKED($uperm,'EditorLink'); ?>>*>)
 		<?php  putGS('User may add links'); ?>
-	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorHorizontalRule"<?php  ifYthenCHECKED($uperm,'EditorHorizontalRule'); ?>>*>)
-		<?php  putGS('User may insert horizontal rules'); ?>
 	E_DIALOG_INPUT
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorSubhead"<?php  ifYthenCHECKED($uperm,'EditorSubhead'); ?>>*>)
 		<?php  putGS('User may add subheads'); ?>
@@ -213,6 +225,9 @@ B_DIALOG(<*Edit user account permissions*>, <*POST*>, <*do_access.php*>)
 			--- Line 4 ---
 		</td>
 	</tr>
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorHorizontalRule"<?php  ifYthenCHECKED($uperm,'EditorHorizontalRule'); ?>>*>)
+		<?php  putGS('User may insert horizontal rules'); ?>
+	E_DIALOG_INPUT
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorFontColor"<?php  ifYthenCHECKED($uperm,'EditorFontColor'); ?>>*>)
 		<?php  putGS('User may change the font color'); ?>
 	E_DIALOG_INPUT
