@@ -13,6 +13,7 @@
     This will allow users to input and edit articles without having to
     download and install the Java VM and Campfire applet. It will also allow
     additional features such as image display inside the article.
+    - New admin interface (pretty icons, dropdown menu, no more frames)
 
 2.1.7
     - Implemented "Print Topic Identifier" and "Print User Identifier"
