@@ -1,13 +1,16 @@
+include ../../../make.env
+
 OBJ_FILES=main.o lex.o atoms.o parser.o actions.o util.o error.o\
  context.o cparser.o csocket.o threadpool.o mutex.o readconf.o\
  thread.o process_req.o attributes.o data_types.o operators.o\
  cmessage.o cmessagefactory.o cpublication.o cpublicationsregister.o curl.o\
  curlshortnames.o curltype.o curltyperegister.o cxmlreader.o cxmltree.o\
- curltemplatepath.o
+ curltemplatepath.o ccampsiteinstance.o
  
 
+CLEAN_XML_LINK=$(shell echo -n "$(XML_LINK)")
 LDFLAGS=-L$(LIBMYSQLCLIENT_PATH) -L$(LIBPTHREAD_PATH)
-LIBS=-lmysqlclient $(NSL_LINK) -lm -lz $(LIBCRYPT_LINK) $(PTHREAD_LINK) $(XML_LINK)
+LIBS=-lmysqlclient $(NSL_LINK) -lm -lz $(LIBCRYPT_LINK) $(PTHREAD_LINK) $(CLEAN_XML_LINK)
 
 DEPENDENCES= *.h
 
