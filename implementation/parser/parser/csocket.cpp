@@ -501,7 +501,7 @@ EXCEPTION_DEF(throw(SocketErrorException))
 // if interrupted by a signal.
 // throws ConnectException if other cases of failure to connect !
 ///////////////////////////////////////////////////////////////////////////////////
-int CTCPSocket::Connect(char* remote, int port) EXCEPTION_DEF(throw(SocketErrorException))
+int CTCPSocket::Connect(const char* remote, int port) EXCEPTION_DEF(throw(SocketErrorException))
 {
 	struct sockaddr_in server;
 	struct hostent* h;
