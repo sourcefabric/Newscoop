@@ -112,18 +112,16 @@ int WriteCharset(CContext& c, MYSQL* pSql, sockstream& fs);
 
 // Login: perform login action: log user in
 // Parameters:
-//		const CURL* p_pcoURL - pointer to the URL object
 //		CContext& c - current context
 //		MYSQL* pSql - pointer to MySQL connection
-int Login(const CURL* p_pcoURL, CContext& c, MYSQL* pSql);
+int Login(CContext& c, MYSQL* pSql);
 
 // CheckUserInfo: read user informations from CGI parameters
 // Parameters:
-//		const CURL* p_pcoURL - pointer to the URL object
 //		CContext& c - current context
 //		const char* ppchParams[] - parameters to read from cgi environment
 //		int param_nr - parameters number
-int CheckUserInfo(const CURL* p_pcoURL, CContext& c, const char* ppchParams[], int param_nr);
+int CheckUserInfo(CContext& c, const char* ppchParams[], int param_nr);
 
 // AddUser: perform add user action (add user to database); return error code
 // Parameters:
@@ -150,10 +148,9 @@ int ModifyUser(CContext& c, MYSQL* pSql, const char* ppchParams[], int param_nr,
 
 // DoSubscribe: perform subscribe action (subscribe user to a certain publication)
 // Parameters:
-//		const CURL* p_pcoURL - pointer to the URL object
 //		CContext& c - current context
 //		MYSQL* pSql - pointer to MySQL connection
-int DoSubscribe(const CURL* p_pcoURL, CContext& c, MYSQL* pSql);
+int DoSubscribe(CContext& c, MYSQL* pSql);
 
 // SetReaderAccess: update current context: set reader access to publication sections
 // according to user subscriptions.
@@ -167,8 +164,7 @@ void SetReaderAccess(CContext& c, MYSQL* pSql);
 // Parameters:
 //		CContext& c - current context
 //		MYSQL* pSql - pointer to MySQL connection
-//		const CURL* p_pcoURL - pointer to the URL object
-int Search(CContext& c, MYSQL* pSql, const CURL* p_pcoURL);
+int Search(CContext& c, MYSQL* pSql);
 
 // ParseKeywords: read keywords from a string of keywords and add them to current context
 // Parameters:
