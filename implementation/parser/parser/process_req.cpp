@@ -708,7 +708,7 @@ int DoSubscribe(const CURL* url, CContext& c, MYSQL* pSql)
 			sprintf(pchBuf, "%s%s", P_TX_SUBS, s.c_str());
 			if ((s = url->getValue(pchBuf)) == "")
 			{
-				s = url->getValue(P_CB_SUBS);
+				s = url->getNextValue(P_CB_SUBS);
 				continue;
 			}
 			long int time_units = atol(s.c_str());
@@ -746,7 +746,7 @@ int DoSubscribe(const CURL* url, CContext& c, MYSQL* pSql)
 				        "StartDate, Days, PaidDays) values(%ld, %ld, now(), %ld, %ld)",
 				        id_subscription, section, req_days, paid_time);
 			SQLQuery(pSql, pchBuf);
-			s = url->getValue(P_CB_SUBS);
+			s = url->getNextValue(P_CB_SUBS);
 		}
 	if (c.SubsType() != ST_TRIAL)
 	{
