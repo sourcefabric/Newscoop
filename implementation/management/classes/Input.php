@@ -40,7 +40,9 @@ class Input {
 		case 'int':
 			if (!is_numeric($_REQUEST[$p_varName])) {
 				if (!$p_errorsOk) {
-					$g_inputErrors[$p_varName] = 'Incorrect type.  Expected type '.$p_type.', but received type '.gettype($_REQUEST[$p_varName]).'.';
+					$g_inputErrors[$p_varName] = 'Incorrect type.  Expected type '.$p_type
+						.', but received type '.gettype($_REQUEST[$p_varName]).'.'
+						.' Value is "'.$_REQUEST[$p_varName].'".';
 				}
 				return $p_defaultValue;
 			}
@@ -48,7 +50,9 @@ class Input {
 		case 'string':
 			if (!is_string($_REQUEST[$p_varName])) {
 				if (!$errorsOk) {
-					$g_inputErrors[$p_varName] = $g_inputErrors[$p_varName] = 'Incorrect type.  Expected type '.$p_type.', but received type '.gettype($_REQUEST[$p_varName]).'.';
+					$g_inputErrors[$p_varName] = 'Incorrect type.  Expected type '.$p_type
+						.', but received type '.gettype($_REQUEST[$p_varName]).'.'
+						.' Value is "'.$_REQUEST[$p_varName].'".';
 				}
 				return $p_defaultValue;
 			}
