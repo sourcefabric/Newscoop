@@ -7,6 +7,7 @@
     - Implemented subscription update feature: update subscriptions automatically
     when adding/deleting subscriptions to/from issues
     - Improved the manual: detailed database conversion
+    - Other bug fixes
 
 2.1.0
     - The application is divided into modules that can be installed on
