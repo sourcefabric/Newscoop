@@ -185,3 +185,96 @@ pair<lint, const char*> CMsgURLRequest::getContent() const
 // CMsgResetCache static members initialisation
 const string CMsgResetCache::s_coMessageType = "ResetCache";
 const uint CMsgResetCache::s_nMessageTypeId = 0x0002;
+
+void CMsgResetCache::setContent(char* p_pchContent)
+	throw (out_of_range, xml_parse_error, invalid_message_content)
+{
+	// read the message type identifier
+	uint nMessageTypeId = strtol(p_pchContent, NULL, 16);
+	if (nMessageTypeId != s_nMessageTypeId)
+		throw invalid_message_content(string("invalid message type identifier ") + int2string(nMessageTypeId) + "; expected " + int2string(s_nMessageTypeId));
+
+	// read the message data size
+	uint nDataSize = strtol(p_pchContent + 5, NULL, 16);
+
+	// set the pointer to message data
+	const char* pchData = p_pchContent + 10;
+
+	// initialize the xml reader
+	CXMLReader coReader(pchData, nDataSize, "", NULL, 0);
+
+	// read the first node
+	coReader.nextElement(CampsiteMessage);
+
+	m_coType = coReader.nextElementContent("CacheType", 1);
+	coReader.nextElement("Parameters");
+	const char* pchElement = coReader.nextElement();
+	while (coReader.elementDepth() == 2)
+	{
+		if (strcasecmp(pchElement, "Parameter") != 0)
+			continue;
+
+		string coName = coReader.getAttributeValue("Name");
+		try {
+			pchElement = coReader.nextElement("#text");
+		}
+		catch (invalid_message_content& rcoEx)
+		{
+			setParameter(coName, string(""));
+			pchElement = coReader.nextElement();
+			continue;
+		}
+		const char* pchContent = coReader.elementContent();
+		setParameter(coName, string(pchContent));
+
+		pchElement = coReader.nextElement();
+		pchElement = coReader.nextElement();
+	}
+
+	// set the pointer to the content buffer
+	m_pchContent = p_pchContent;
+	m_nContentSize = nDataSize + 10;
+	m_bValidContent = true;
+}
+
+pair<lint, const char*> CMsgResetCache::getContent() const
+{
+	return pair<lint, const char*> (m_nContentSize, m_pchContent);
+}
+
+
+// CMsgRestartServer static members initialisation
+const string CMsgRestartServer::s_coMessageType = "RestartServer";
+const uint CMsgRestartServer::s_nMessageTypeId = 0x0003;
+
+void CMsgRestartServer::setContent(char* p_pchContent)
+	throw (out_of_range, xml_parse_error, invalid_message_content)
+{
+	// read the message type identifier
+	uint nMessageTypeId = strtol(p_pchContent, NULL, 16);
+	if (nMessageTypeId != s_nMessageTypeId)
+		throw invalid_message_content(string("invalid message type identifier ") + int2string(nMessageTypeId) + "; expected " + int2string(s_nMessageTypeId));
+
+	// read the message data size
+	uint nDataSize = strtol(p_pchContent + 5, NULL, 16);
+
+	// set the pointer to message data
+	const char* pchData = p_pchContent + 10;
+
+	// initialize the xml reader
+	CXMLReader coReader(pchData, nDataSize, "", NULL, 0);
+
+	// read the first node
+	coReader.nextElement(CampsiteMessage);
+	coReader.nextElement(CampsiteMessage);
+
+	// set the pointer to the content buffer
+	m_pchContent = p_pchContent;
+	m_nContentSize = nDataSize + 10;
+	m_bValidContent = true;
+}
+
+pair<lint, const char*> CMsgRestartServer::getContent() const
+{
+	return pair<lint, const char*> (m_nContentSize, m_pchContent);
+}
