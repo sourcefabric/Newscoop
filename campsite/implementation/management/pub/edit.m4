@@ -10,7 +10,7 @@ CHECK_ACCESS(<*ManagePub*>)
 
 B_HEAD
 	X_EXPIRES
-	X_TITLE(<*Change publication information*>)
+	X_TITLE(<*Configure publication*>)
 <?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to edit publication information.*>)
 <?php  }
@@ -35,7 +35,7 @@ B_BODY
 <?php 
     todefnum('Pub');
 ?>
-B_HEADER(<*Change publication information*>)
+B_HEADER(<*Configure publication*>)
 B_HEADER_BUTTONS
 X_HBUTTON(<*Publications*>, <*pub/*>)
 X_HBUTTON(<*Home*>, <*home.php*>)
@@ -54,7 +54,7 @@ E_CURRENT
 	<?php query ("SELECT Unit, Name FROM TimeUnits WHERE (IdLanguage=$IdLang or IdLanguage = 1) and Unit='".getHVar($q_pub,'TimeUnit')."' order by IdLanguage desc", 'q_tunit');
 		fetchRow($q_tunit); $tunit =getVar($q_tunit,'Name'); ?>dnl
 <P>
-B_DIALOG(<*Change publication information*>, <*POST*>, <*do_edit.php*>)
+B_DIALOG(<*Configure publication*>, <*POST*>, <*do_edit.php*>)
 	<tr><td colspan=2><b><?php putGS("General attributes"); ?></b></td></tr>
 	B_DIALOG_INPUT(<*Name*>)
 		<INPUT TYPE="TEXT" NAME="cName" VALUE="<?php  pgetHVar($q_pub,'Name'); ?>" SIZE="32" MAXLENGTH="255">
