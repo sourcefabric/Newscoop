@@ -41,7 +41,7 @@ $attributes['Place'] = $_REQUEST['cPlace'];
 $attributes['Date'] = $_REQUEST['cDate'];
 
 $image =& Image::OnImageUpload($_FILES['cImage'], $attributes);
-$articleObj->associateImage($image->getImageId());
+ArticleImage::AssociateImageWithArticle($image->getImageId(), $articleObj->getArticleId(), $ImageTemplateId);
 
 $logtext = getGS('The image $1 has been added.', $attributes['Description']);
 Log::Message($logtext, $User->getUserName(), 41);

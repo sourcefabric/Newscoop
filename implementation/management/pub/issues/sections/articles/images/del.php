@@ -144,8 +144,8 @@ if ($NUM_ROWS) {
 	    <INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php  p($Language); ?>">
 	    <INPUT TYPE="HIDDEN" NAME="sLanguage" VALUE="<?php  p($sLanguage); ?>">
 	    <INPUT TYPE="HIDDEN" NAME="Image" VALUE="<?php  p($Image); ?>">
-		<INPUT TYPE="submit" NAME="Yes" VALUE="<?php  putGS('Yes'); ?>">
-		<INPUT TYPE="button" NAME="No" VALUE="<?php  putGS('No'); ?>" ONCLICK="location.href='/priv/pub/issues/sections/articles/images/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&Section=<?php  p($Section); ?>'">
+		<INPUT TYPE="submit" NAME="Yes" VALUE="<?php  putGS('Yes'); ?>" class="button">
+		<INPUT TYPE="button" NAME="No" VALUE="<?php  putGS('No'); ?>" class="button" ONCLICK="location.href='/priv/pub/issues/sections/articles/images/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&Section=<?php  p($Section); ?>'">
 		</FORM>
 		</DIV>
 		</TD>

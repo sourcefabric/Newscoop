@@ -2,6 +2,7 @@
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
 load_common_include_files();
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleImage.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Issue.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Section.php');
@@ -79,7 +80,7 @@ $languageObj =& new Language($Language);
 
 <P>
 <?php 
-$articleImages = $articleObj->getImages();
+$articleImages = ArticleImage::FetchImagesByArticleId($articleObj->getArticleId());
 if (count($articleImages) > 0) {
 	?><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" WIDTH="100%">
 	<TR BGCOLOR="#C0D0FF">
@@ -93,12 +94,13 @@ if (count($articleImages) > 0) {
 	<?php  }
 	    
 	if ($User->hasPermission('DeleteImage')) { ?>
-		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS('Delete'); ?></B></TD>
+		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS('Unlink'); ?></B></TD>
 	<?php  } ?>
 	</TR>
 <?php 
 	$imageCount = 0;
-	foreach ($articleImages as $image) {
+	foreach ($articleImages as $articleImage) {
+		$image =& $articleImage->getImage();
 	?>	
 	<TR <?php  if (($imageCount%2)==0) { ?>BGCOLOR="#D0D0B0"<?php  } else { ?>BGCOLOR="#D0D0D0"<?php  } ?>>
 		<TD ALIGN="RIGHT">
@@ -125,13 +127,15 @@ if (count($articleImages) > 0) {
 			<A HREF="/priv/pub/issues/sections/articles/images/edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Image=<?php echo $image->getImageId(); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>"><?php  putGS('Change');?></A>
 		</TD>
 	<?php  }
-	    if ($User->hasPermission('DeleteImage')) { ?>
+	    if ($User->hasPermission('ChangeArticle')) { ?>
 		<TD ALIGN="CENTER">
-			<A HREF="/priv/pub/issues/sections/articles/images/do_del.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Image=<?php echo $image->getImageId(); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>"><IMG SRC="/priv/img/icon/x.gif" BORDER="0" ALT="<?php  putGS('Delete image $1', $image->getDescription()); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the image $1?', htmlspecialchars($image->getDescription())); ?>');"></A>
+			<A HREF="/priv/pub/issues/sections/articles/images/do_unlink.php?PublicationId=<?php  p($Pub); ?>&IssueId=<?php  p($Issue); ?>&SectionId=<?php  p($Section); ?>&ArticleId=<?php  p($Article); ?>&ImageId=<?php echo $image->getImageId(); ?>&ImageTemplateId=<?php echo $articleImage->getTemplateId(); ?>&LanguageId=<?php  p($Language); ?>&sLanguageId=<?php  p($sLanguage); ?>"><IMG SRC="/priv/img/icon/x.gif" BORDER="0" ALT="<?php  putGS('Unlink image $1', $image->getDescription()); ?>" onclick="return confirm('<?php putGS('Are you sure you want to unlink image \'$1\' from the article?', htmlspecialchars($image->getDescription())); ?>');"></A>
 		</TD>
-	<?php  } ?>
+	<?php  
+	    } ?>
 	</TR>
 <?php 
+		$imageCount++;
 	} // foreach
 } // if (count($articleImages) > 0)
 ?>	

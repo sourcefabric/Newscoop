@@ -86,40 +86,40 @@ fetchRowNum($q_now);
 			<HR NOSHADE SIZE="1" COLOR="BLACK">
 		</TD>
 	</TR>
-<!--	<TR>
+	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS("Number"); ?>:</TD>
 		<TD>
-		<INPUT TYPE="TEXT" NAME="cNumber" VALUE="<?php  p($maxId); ?>" SIZE="5" MAXLENGTH="5">
+		<INPUT TYPE="TEXT" NAME="cNumber" VALUE="<?php  p($maxId); ?>" SIZE="5" MAXLENGTH="5" class="input_text">
 		</TD>
 	</TR>
--->	<TR>
+	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS("Description"); ?>:</TD>
 		<TD>
-		<INPUT TYPE="TEXT" NAME="cDescription" VALUE="Image <?php  p($maxId); ?>" SIZE="32" MAXLENGTH="128">
+		<INPUT TYPE="TEXT" NAME="cDescription" VALUE="Image <?php  p($maxId); ?>" SIZE="32" MAXLENGTH="128" class="input_text">
 		</TD>
 	</TR>
 	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS("Photographer"); ?>:</TD>
 		<TD>
-		<INPUT TYPE="TEXT" NAME="cPhotographer" SIZE="32" MAXLENGTH="64" VALUE="<?php echo $User->getName(); ?>">
+		<INPUT TYPE="TEXT" NAME="cPhotographer" SIZE="32" MAXLENGTH="64" VALUE="<?php echo $User->getName(); ?>" class="input_text">
 		</TD>
 	</TR>
 	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS("Place"); ?>:</TD>
 		<TD>
-		<INPUT TYPE="TEXT" NAME="cPlace" SIZE="32" MAXLENGTH="64">
+		<INPUT TYPE="TEXT" NAME="cPlace" SIZE="32" MAXLENGTH="64" class="input_text">
 		</TD>
 	</TR>
 	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS("Date"); ?>:</TD>
 		<TD>
-			<INPUT TYPE="TEXT" NAME="cDate" VALUE="<?php  pgetNumVar($q_now,0); ?>" SIZE="10" MAXLENGTH="10"> <?php  putGS('YYYY-MM-DD'); ?>
+			<INPUT TYPE="TEXT" NAME="cDate" VALUE="<?php  pgetNumVar($q_now,0); ?>" class="input_text" SIZE="11" MAXLENGTH="10"> <?php  putGS('YYYY-MM-DD'); ?>
 		</TD>
 	</TR>
 	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS("Image"); ?>:</TD>
 		<TD>
-		<INPUT TYPE="FILE" NAME="cImage" SIZE="32" MAXLENGTH="64">
+		<INPUT TYPE="FILE" NAME="cImage" SIZE="32" MAXLENGTH="64" class="input_file">
 		</TD>
 	</TR>
 	<TR>
@@ -131,8 +131,8 @@ fetchRowNum($q_now);
 	    <INPUT TYPE="HIDDEN" NAME="Article" VALUE="<?php  p($Article); ?>">
 	    <INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php  p($Language); ?>">
 	    <INPUT TYPE="HIDDEN" NAME="sLanguage" VALUE="<?php  p($sLanguage); ?>">
-		<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save changes'); ?>">
-		<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='/priv/pub/issues/sections/articles/images/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&Section=<?php  p($Section); ?>'">
+		<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save changes'); ?>" class="button">
+		<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>"  class="button" ONCLICK="location.href='/priv/pub/issues/sections/articles/images/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&Section=<?php  p($Section); ?>'">
 		</DIV>
 		</TD>
 	</TR>
