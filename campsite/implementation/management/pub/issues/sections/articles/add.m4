@@ -62,7 +62,7 @@ E_CURRENT
 <P>
 B_DIALOG(<*Add new article*>, <*POST*>, <*do_add.php*>)
 	B_DIALOG_INPUT(<*Name*>)
-		<INPUT TYPE="TEXT" NAME="cName" SIZE="32" MAXLENGTH="64">
+		<INPUT TYPE="TEXT" NAME="cName" SIZE="64" MAXLENGTH="140">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Type*>)
 			<SELECT NAME="cType">
@@ -97,7 +97,7 @@ B_DIALOG(<*Add new article*>, <*POST*>, <*do_add.php*>)
 	E_DIALOG_INPUT
 	X_DIALOG_TEXT(<* <?putGS("Enter keywords, comma separated");?>*>)
 	B_DIALOG_INPUT(<*Keywords*>)
-		<INPUT TYPE="TEXT" NAME="cKeywords" SIZE="32" MAXLENGTH="255">
+		<INPUT TYPE="TEXT" NAME="cKeywords" SIZE="64" MAXLENGTH="255">
 	E_DIALOG_INPUT
 	B_DIALOG_BUTTONS
 		<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<? p($Pub); ?>">
