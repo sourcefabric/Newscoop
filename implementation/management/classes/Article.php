@@ -75,31 +75,7 @@ class Article extends DatabaseObject {
 	var $LockUser;
 	var $LockTime;
 	var $ShortName;
-	
-	/**
-	 * Map of database column names to internal variable names.
-	 * @var array
-	 */
-//	var $m_columnNames = array("IdPublication",
-//							   "NrIssue",
-//							   "NrSection",
-//							   "Number",
-//							   "IdLanguage",
-//							   "Type",
-//					 	  	   "Name",
-//					 	  	   "IdUser",
-//					  	  	   "OnFrontPage",
-//					 	  	   "OnSection",
-//					 	  	   "Published",
-//					 	  	   "UploadDate",
-//					 	  	   "Keywords",
-//					 	  	   "Public",
-//					 	  	   "IsIndexed",
-//					 	  	   "LockUser",
-//					 	  	   "LockTime",
-//					 	  	   "ShortName"
-//					 			);
-	
+		
 	/**
 	 * The column names used for the primary key.
 	 * @var array
@@ -499,6 +475,33 @@ class Article extends DatabaseObject {
 		$Campsite["db"]->Execute($queryStr);
 	} // fn lock
 
+//	/**
+//	 * Create and return an array representation of an article for use in a template.
+//	 * @return array
+//	 */
+//	function getTemplateVar() {
+//		$templateVar = array();
+//		$templateVar["publication_id"] = $this->IdPublication;
+//		$templateVar["issue_id"] = $this->NrIssue;
+//		$templateVar["section_id"] = $this->NrSection;
+//		$templateVar["article_id"] = $this->Number;
+//		$templateVar["language_id"] = $this->IdLanguage;
+//		$templateVar["article_type"] = $this->Type;
+//		$templateVar["user_id"] = $this->IdUser;
+//		$templateVar["title"] = $this->Name;
+//		$templateVar["on_front_page"] = $this->OnFrontPage;
+//		$templateVar["on_section"] = $this->OnSection;
+//		$templateVar["published"] = $this->Published;
+//		$templateVar["upload_date"] = $this->UploadDate;
+//		$templateVar["keywords"] = $this->Keywords;
+//		$templateVar["is_public"] = $this->Public;
+//		$templateVar["is_indexed"] = $this->IsIndexed;
+//		$templateVar["locked_by_user"] = $this->LockUser;
+//		$templateVar["lock_time"] = $this->LockTime;
+//		$templateVar["short_name"] = $this->ShortName;
+//		return $templateVar;
+//	} // fn getTemplateVar
+	
 } // class Article
 
 ?>
