@@ -643,7 +643,7 @@ inline int CParser::HInclude(CActionList& al)
 	try
 	{
 		if ((p = m_coPMap.find(itpl_name)) == NULL)
-			p = new CParser(itpl_name);
+			p = new CParser(itpl_name, document_root);
 		p->parent_tpl.insert(parent_tpl.begin(), parent_tpl.end());
 		p->parse();
 	}
@@ -659,7 +659,7 @@ inline int CParser::HInclude(CActionList& al)
 		SetPError(parse_err, PERR_INVALID_TEMPLATE, MODE_PARSE, "",
 		          lex.prevLine(), lex.prevColumn());
 	}
-	al.insert(al.end(), new CActInclude(itpl_name, &m_coPMap));
+	al.insert(al.end(), new CActInclude(itpl_name, document_root, &m_coPMap));
 	WaitForStatementEnd(true);
 	return nErrCode;
 }
@@ -2385,10 +2385,12 @@ void CParser::printParseErrors(sockstream& fs, bool p_bMainTpl)
 {
 	FUNC_DEBUG("CParser::printParseErrors", tpl);
 	CRWMutexHandler h(&m_coOpMutex, false);
+	string coTemplateShortPath = tpl.substr(document_root.size() + 5);
 	if (p_bMainTpl)
 	{
 		SetWriteErrors(true);
-		fs << "<p><font color=blue><b><p>- in main template " << tpl << "</b></font>\\\n<br>";
+		fs << "<p><font color=blue><b><p>- in main template " << coTemplateShortPath
+				<< "</b></font>\\\n<br>";
 	}
 	else
 	{
@@ -2396,7 +2398,8 @@ void CParser::printParseErrors(sockstream& fs, bool p_bMainTpl)
 		{
 			return ;
 		}
-		fs << "<p><font color=blue><b><p>- in included template " << tpl << "</b></font>\\\n<br>";
+		fs << "<p><font color=blue><b><p>- in included template " 
+				<< coTemplateShortPath << "</b></font>\\\n<br>";
 	}
 	CErrorList::iterator el_i;
 	for (el_i = parse_err.begin(); el_i != parse_err.end(); ++el_i)
