@@ -32,24 +32,32 @@ E_HEADER
 	todefnum('Alias');
 	todefnum('del', 1);
 
-	query ("SELECT Name FROM Publications WHERE Id=$Pub", 'q_pub');
+	query ("SELECT * FROM Publications WHERE Id=$Pub", 'q_pub');
 	if ($NUM_ROWS) {
 		fetchRow($q_pub);
+		$def_alias = getVar($q_pub, 'IdDefaultAlias');
+		$pub_name = getHVar($q_pub, 'Name');
 		query ("SELECT Name FROM Aliases WHERE Id=$Alias", 'q_alias');
 		if ($NUM_ROWS) {
 			fetchRow($q_alias);
+			$alias_name = getHVar($q_alias,'Name');
 ?>dnl
 <P>
 B_MSGBOX(<*Deleting alias*>)
 	X_MSGBOX_TEXT(<*
 <?php 
-	if ($del)
+	if ($del && $def_alias != $Alias)
 		query ("DELETE FROM Aliases WHERE Id='$Alias'");
 	if ($AFFECTED_ROWS > 0) { ?>dnl
-		<LI><?php  putGS('The alias $1 has been deleted from publication $2.','<B>'.getHVar($q_alias,'Name').'</B>','<B>'.getHVar($q_pub,'Name').'</B>'); ?></LI>
-		X_AUDIT(<*152*>, <*getGS('The alias $1 has been deleted from publication $2.',getVar($q_alias,'Name'),getVar($q_pub, 'Name'))*>)
+		<LI><?php  putGS('The alias $1 has been deleted from publication $2.','<B>'.$alias_name.'</B>','<B>'.$pub_name.'</B>'); ?></LI>
+		X_AUDIT(<*152*>, <*getGS('The alias $1 has been deleted from publication $2.',$alias_name,$pub_name)*>)
 <?php
 	} else {
+		if ($def_alias == $Alias) {
+			echo "<LI>";
+			putGS('$1 is the default publication alias, it can not be deleted.', '<B>'.$alias_name.'</B>');
+			echo "</LI>\n";
+		}
 ?>dnl
 		<LI><?php  putGS('The alias $1 could not be deleted.','<B>'.getHVar($q_alias,'Name').'</B>'); ?></LI>
 <?php
