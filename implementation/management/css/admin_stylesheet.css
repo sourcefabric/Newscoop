@@ -171,3 +171,9 @@ hr {
 	background-repeat: no-repeat;
 	background-position: 50% 70%;
 }
+
+.info_message {
+	font-weight: bold; 
+	font-size: 14pt; 
+	color: #239f34;
+}
