@@ -16,7 +16,7 @@ links: dummy
 	for l in $(LINKS); do \
 	    if [ ! -L $$l ]; then ln -s ../parser/parser/$$l; fi; \
 	done
-	if [ ! -L "$(INSTALL_CONF)" ]; then ln -s "$(INSTALL_CONF)/configure.h"; fi
+	if [ ! -L "configure.h" ]; then ln -s "$(INSTALL_CONF)/configure.h"; fi
 
 gather: gather.o kwd.o readconf.o ccampsiteinstance.o mutex.o
 	g++ -o gather gather.o kwd.o readconf.o ccampsiteinstance.o mutex.o $(LDFLAGS) $(LDLIBS)
