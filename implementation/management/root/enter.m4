@@ -1,4 +1,4 @@
-INCLUDE_PHP_LIB(<*./priv*>)
+INCLUDE_PHP_LIB(<**>)
 B_DATABASE<**>
 <?php 
     query("SELECT * FROM Publications WHERE Site='$HTTP_HOST'", 'Publication');
