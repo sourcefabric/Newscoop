@@ -1,0 +1,4 @@
+<files>
+  <file name="*.{js,html,css,cgi}" />
+  <file name="index.html" masonize="yes" />
+</files>
