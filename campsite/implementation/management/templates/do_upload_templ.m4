@@ -14,7 +14,6 @@ B_HEAD
 <?php  if ($access == 0) { ?>dnl
  X_AD(<*You do not have the right to upload templates.*>)
 <?php  } else {
- //dSystem( "$scriptBase/process_t '$Id'");
     $debugLevelHigh=false;
     $debugLevelLow=false;
 
