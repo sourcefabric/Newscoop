@@ -77,28 +77,25 @@ if ($showSections) {
 <TABLE BORDER="0" CELLSPACING="4" CELLPADDING="2" WIDTH="100%">
 <TR>
     <TD VALIGN="TOP" width="40%">
-		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="3" class="table_list" width="100%" style="padding: 0px;">
+		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list" width="100%" style="padding: 0px;">
 		<tr class="table_list_header">
-			<td style="padding-left: 8px; padding-right: 8px;">
-				<table width="100%" cellpadding="0" cellspacing="0">
-				<tr>
-					<td align="left">
-						<?php putGS('Publication'); ?> / <?php putGS('Issue'); ?> <?php if ($showSections) { ?> / <?php putGS('Section');  } ?></td>
-					</td>
-					<td align="right">
-						<?php 
-						if ($showSections) { ?>
-							<a href="home.php?ArtOffs=<?php p($ArtOffs); ?>&NArtOffs=<?php  p($NArtOffs);?>&What=1&show_sections=0"><?php putGS('Hide Sections'); ?></a>
-							<?php 
-						}
-						else { ?>
-							<a href="home.php?ArtOffs=<?php p($ArtOffs); ?>&NArtOffs=<?php  p($NArtOffs);?>&What=1&show_sections=1"><?php putGS('Show Sections'); ?></a>
-							<?php 							
-						} ?>
-					</td>
-				</tr>
-				</table>
+			<td style="padding-left: 8px;">
+				<?php putGS('Publication'); ?> / <?php putGS('Issue'); ?> / <?php putGS('Section'); ?>
+				<?php 
+				if ($showSections) { ?>
+					<a href="home.php?ArtOffs=<?php p($ArtOffs); ?>&NArtOffs=<?php  p($NArtOffs);?>&What=<?php p($What); ?>&show_sections=0" style="font-size: smaller;">(<?php putGS('Hide'); ?>)</a>
+					<?php 
+				}
+				else { ?>
+					<a href="home.php?ArtOffs=<?php p($ArtOffs); ?>&NArtOffs=<?php  p($NArtOffs);?>&What=<?php p($What); ?>&show_sections=1" style="font-size: smaller;">(<?php putGS('Show'); ?>)</a>
+					<?php 							
+				} ?>
 			</td>
+			<?php if ($showSections) { ?>
+			<td align="center" nowrap width="1%">
+				<?php putGS('Add article'); ?>
+			</td>
+			<?php } ?>
 		</tr>
 		<?php 
 		$count = 1;
@@ -106,19 +103,24 @@ if ($showSections) {
 			$publicationId = $publication->getPublicationId();
 			?>
 			<tr <?php if (($count++%2)==1) {?> class="list_row_odd"<?php } else { ?>class="list_row_even"<?php } ?>>
-				<td style="padding-left: 8px;"><a href="/<?php echo $ADMIN; ?>/pub/issues/?Pub=<?php p($publicationId); ?>"><?php p(htmlspecialchars($publication->getName())); ?></a></td>
+				<td style="padding-left: 8px;"><a href="/<?php echo $ADMIN; ?>/pub/issues/?Pub=<?php p($publicationId); ?>"><?php p(htmlspecialchars($publication->getName())); ?></a></td> <?php if ($showSections) { ?> <td>&nbsp;</td> <?php  } ?>
 			</tr>
 			<?PHP
 			if (isset($issues[$publicationId])) {
 				foreach ($issues[$publicationId] as $issue) { ?>
 					<tr <?php if (($count++%2)==1) {?> class="list_row_odd"<?php } else { ?>class="list_row_even"<?php } ?>>
-						<td style="padding-left: 25px;"><a href="/<?php echo $ADMIN; ?>/pub/issues/sections/?Pub=<?php p($publicationId); ?>&Issue=<?php  p($issue->getIssueId()); ?>&Language=<?php p($issue->getLanguageId()); ?>"><?php p(htmlspecialchars($issue->getName())); ?></a></td>
+						<td style="padding-left: 25px;"><a href="/<?php echo $ADMIN; ?>/pub/issues/sections/?Pub=<?php p($publicationId); ?>&Issue=<?php  p($issue->getIssueId()); ?>&Language=<?php p($issue->getLanguageId()); ?>"><?php p(htmlspecialchars($issue->getName())); ?></a></td><?php if ($showSections) { ?><td>&nbsp;</td><?php } ?>
 					</tr>
 					<?php 
 					if (isset($sections[$issue->getIssueId()])) {
 						foreach ($sections[$issue->getIssueId()] as $section) { ?>
 							<tr <?php if (($count++%2)==1) {?> class="list_row_odd"<?php } else { ?>class="list_row_even"<?php } ?>>
-								<td style="padding-left: 50px;"><a href="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/?Pub=<?php p($publicationId); ?>&Issue=<?php  p($issue->getIssueId()); ?>&Section=<?php p($section->getSectionId()); ?>&Language=<?php p($section->getLanguageId()); ?>"><?php p(htmlspecialchars($section->getName())); ?></a></td>
+								<td style="padding-left: 50px;">
+									<a href="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/?Pub=<?php p($publicationId); ?>&Issue=<?php  p($issue->getIssueId()); ?>&Section=<?php p($section->getSectionId()); ?>&Language=<?php p($section->getLanguageId()); ?>"><?php p(htmlspecialchars($section->getName())); ?></a>
+								</td>
+								<td align="center">
+									<a href="/<?php p($ADMIN); ?>/pub/issues/sections/articles/add.php?Pub=<?php p($section->getPublicationId());?>&Issue=<?php p($section->getIssueId()); ?>&Section=<?php p($section->getSectionId()); ?>&Language=<?php p($section->getLanguageId()); ?>&Wiz=1"><img src="/<?php p($ADMIN); ?>/img/icon/add_article.png" border="0" align="middle"></a>
+								</td>
 							</tr>
 							<?php
 						} // foreach ($sections
@@ -140,9 +142,9 @@ if ($showSections) {
 			</TD>
 		</TR>
 		<TR class="table_list_header">
-			<TD ALIGN="LEFT" VALIGN="TOP" width="450px"><B><?php  putGS("Name<BR><SMALL>(click to edit article)</SMALL>"); ?></B></TD>
-			<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="100px" ><B><?php  putGS("Language"); ?></B></TD>
-			<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="100px" ><B><?php  putGS("Status"); ?></B></TD>
+			<TD ALIGN="LEFT" VALIGN="TOP" width="98%"><?php  putGS("Name<BR><SMALL>(click to edit article)</SMALL>"); ?></TD>
+			<TD ALIGN="center" VALIGN="TOP" WIDTH="1%" ><?php  putGS("Language"); ?></TD>
+			<TD ALIGN="center" VALIGN="TOP" WIDTH="1%" ><?php  putGS("Status"); ?></TD>
 		</TR>
 
 		<?php 
@@ -164,11 +166,11 @@ if ($showSections) {
 				?>
 			</TD>
 			
-			<TD>
+			<TD width="1%" align="center">
 				<?php p(htmlspecialchars($language->getName())); ?>
 			</TD>
 			
-			<TD>
+			<TD width="1%" align="center">
 				<?php 
 				$changeStatusLink = CampsiteInterface::ArticleLink($YourArticle, $section->getLanguageId(), "status.php", $REQUEST_URI);
 				if ($YourArticle->getPublished() == "Y") { 
@@ -205,11 +207,11 @@ if ($showSections) {
     		<TD COLSPAN="2" NOWRAP>
 				<?php  
 				if ($ArtOffs > 0) { ?>
-					<B><A HREF="home.php?ArtOffs=<?php print ($ArtOffs - $NumDisplayArticles); ?>&What=1&show_sections=<?php p($showSections); ?>"><?php p(htmlspecialchars("<< ")); putGS('Previous'); ?></A></B>
+					<B><A HREF="home.php?ArtOffs=<?php print ($ArtOffs - $NumDisplayArticles); ?>&What=<?php p($What); ?>&NArtOffs=<?php  p($NArtOffs);?>&show_sections=<?php p($showSections); ?>"><?php p(htmlspecialchars("<< ")); putGS('Previous'); ?></A></B>
 					<?php  
 				} 
 				if ( ($ArtOffs + $NumDisplayArticles) < $NumYourArticles ) { ?>
-					| <B><A HREF="home.php?ArtOffs=<?php print ($ArtOffs + $NumDisplayArticles); ?>&What=1&show_sections=<?php p($showSections); ?>"><?php putGS('Next'); p(htmlspecialchars(" >>")); ?></A></B>
+					| <B><A HREF="home.php?ArtOffs=<?php print ($ArtOffs + $NumDisplayArticles); ?>&NArtOffs=<?php  p($NArtOffs);?>&What=<?php p($What); ?>&show_sections=<?php p($showSections); ?>"><?php putGS('Next'); p(htmlspecialchars(" >>")); ?></A></B>
 					<?php  
 				} 
 				?>	
@@ -229,8 +231,8 @@ if ($showSections) {
 		</tr>
 		
 		<TR class="table_list_header">
-			<TD ALIGN="LEFT" VALIGN="TOP" width="550px"><B><?php  putGS("Name<BR><SMALL>(click to edit article)</SMALL>"); ?></B></TD>
-			<TD ALIGN="LEFT" VALIGN="TOP" width="100px"><B><?php  putGS("Language"); ?></B></TD>
+			<TD ALIGN="left" VALIGN="TOP" width="99%"><?php  putGS("Name<BR><SMALL>(click to edit article)</SMALL>"); ?></TD>
+			<TD ALIGN="center" VALIGN="TOP" width="1%"><?php  putGS("Language"); ?></TD>
 		</TR>
 		<?php 
 	    $color=0;
@@ -239,13 +241,13 @@ if ($showSections) {
 			$language =& new Language($SubmittedArticle->getLanguageId());
 			?>	
 		<TR <?php if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
-			<TD width="550px">
+			<TD>
 			<?php echo CampsiteInterface::ArticleLink($SubmittedArticle, $section->getLanguageId(), "edit.php"); ?>
 			<?php p(htmlspecialchars($SubmittedArticle->getTitle())); ?>
 			</A>
 			</TD>
 			
-			<TD>
+			<TD align="center">
 			<?php p(htmlspecialchars($language->getName()));?>
 			</TD>
 		</TR>
@@ -257,11 +259,11 @@ if ($showSections) {
 			<TD COLSPAN="2" NOWRAP>
 			<?php 
 			if ($NArtOffs > 0) { ?>
-				<B><A HREF="home.php?NArtOffs=<?php p($NArtOffs - $NumDisplayArticles); ?>&What=0&show_sections=<?php p($showSections); ?>"><?php p(htmlspecialchars("<< ")); putGS('Previous'); ?></A></B>
+				<B><A HREF="home.php?NArtOffs=<?php p($NArtOffs - $NumDisplayArticles); ?>&What=<?php p($What); ?>&show_sections=<?php p($showSections); ?>"><?php p(htmlspecialchars("<< ")); putGS('Previous'); ?></A></B>
 				<?php  
     		}
     		if (($NArtOffs + $NumDisplayArticles) < $NumSubmittedArticles) { ?>
-    			| <B><A HREF="home.php?NArtOffs=<?php  p($NArtOffs + $NumDisplayArticles); ?>&What=0&show_sections=<?php p($showSections); ?>"><?php putGS('Next'); p(htmlspecialchars(" >>")); ?></A></B>
+    			| <B><A HREF="home.php?NArtOffs=<?php  p($NArtOffs + $NumDisplayArticles); ?>&What=<?php p($What); ?>&show_sections=<?php p($showSections); ?>"><?php putGS('Next'); p(htmlspecialchars(" >>")); ?></A></B>
 				<?php  
     		} 
     		?>	
