@@ -1,7 +1,7 @@
 /**
  * The ImageManager plugin javascript.
  * @author $Author: paul $
- * @version $Id: image-manager.js,v 1.2 2005/03/20 17:08:28 paul Exp $
+ * @version $Id: image-manager.js,v 1.3 2005/03/24 16:10:12 paul Exp $
  * @package ImageManager
  */
 
@@ -28,7 +28,7 @@ function ImageManager(editor)
 ImageManager._pluginInfo = {
 	name          : "ImageManager",
 	version       : "1.0",
-	developer     : "Xiang Wei Zhuo",
+	developer     : "Xiang Wei Zhuo, Paul Baranowski",
 	developer_url : "http://www.zhuo.org/htmlarea/",
 	license       : "htmlArea"
 };
@@ -59,42 +59,58 @@ HTMLArea.prototype._insertImage = function(image) {
 	var manager = _editor_url + 'plugins/ImageManager/manager.php?article_id='+_campsite_article_id;
 
 	Dialog(manager, function(param) {
+		//alert("Inside IM_InsertImage");
 		if (!param) {	// user must have pressed Cancel
+			//alert("User pressed cancel");
 			return false;
 		}
 		var img = image;
 		if (!img) {
-			var sel = editor._getSelection();
-			var range = editor._createRange(sel);			
-			editor._doc.execCommand("insertimage", false, param.f_url);
-			if (HTMLArea.is_ie) {
-				img = range.parentElement();
-				// wonder if this works...
-				if (img.tagName.toLowerCase() != "img") {
-					img = img.previousSibling;
-				}
-			} else {
-				img = range.startContainer.previousSibling;
+	//		var sel = editor._getSelection();
+	//		var range = editor._createRange(sel);
+	//		editor._doc.execCommand("insertimage", false, param.f_url);
+	//		if (HTMLArea.is_ie) {
+	//			img = range.parentElement();
+	//			// wonder if this works...
+	//			if (img.tagName.toLowerCase() != "img") {
+	//				img = img.previousSibling;
+	//			}
+	//		} else {
+	//			img = range.startContainer.previousSibling;
+	//		}
+			var imageTag = '<img src="'+param.f_url+'"';
+			if (param.f_alt) {
+				imageTag += ' alt="'+escape(param.f_alt)+'"';			
 			}
-		} else {			
+			if (param.f_align) {
+				imageTag += ' align="'+param.f_align+'"';
+			}
+			if (param.f_caption) {
+				imageTag += ' sub="'+escape(param.f_caption)+'"';
+			}
+			imageTag += '>';
+			//alert(imageTag);
+			editor.insertHTML(imageTag);
+	
+		} else {
+			//alert("img exists already, set attributes");
 			img.src = param.f_url;
+			for (field in param) {
+				var value = param[field];
+				//alert(field+' : '+value+', img.src: '+img.src+'img.alt: '+img.alt);
+				switch (field) {
+				    case "f_alt"    : img.alt	 = escape(value); break;
+				    case "f_border" : img.border = parseInt(value || "0"); break;
+				    case "f_align"  : img.align	 = value; break;
+				    case "f_vert"   : img.vspace = parseInt(value || "0"); break;
+				    case "f_horiz"  : img.hspace = parseInt(value || "0"); break;
+					case "f_width"  : img.width = parseInt(value || "0"); break;
+					case "f_height"  : img.height = parseInt(value || "0"); break;
+				}
+			}	
 		}
-		
-		for (field in param) {
-			var value = param[field];
-			switch (field) {
-			    case "f_alt"    : img.alt	 = value; break;
-			    case "f_border" : img.border = parseInt(value || "0"); break;
-			    case "f_align"  : img.align	 = value; break;
-			    case "f_vert"   : img.vspace = parseInt(value || "0"); break;
-			    case "f_horiz"  : img.hspace = parseInt(value || "0"); break;
-				case "f_width"  : img.width = parseInt(value || "0"); break;
-				case "f_height"  : img.height = parseInt(value || "0"); break;
-			}
-		}
-		
-		
-	}, outparam);
+	}
+	, outparam);
 };
 
 
