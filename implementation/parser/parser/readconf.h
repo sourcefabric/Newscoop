@@ -51,21 +51,21 @@ private:
 class ConfAttrValue
 {
 public:
-	ConfAttrValue(string p_rcoConfFileName) throw (ConfException);
-	void Open(string p_rcoConfFileName) throw (ConfException);
-	const string& ValueOf(string p_rcoAttribute) const throw (ConfException);
-	static string ReadWord(string& p_rcoLine, int& p_rnIndex);
+	ConfAttrValue(const string& p_rcoConfFileName) throw (ConfException);
+	void open(const string& p_rcoConfFileName) throw (ConfException);
+	const string& valueOf(const string& p_rcoAttribute) const throw (ConfException);
 
 private:
-	static bool isDel(char p_chChar);
+	static string ReadWord(string& p_rcoLine, int& p_rnIndex);
+	static bool IsDel(char p_chChar);
 
 	map <string, string, str_case_less> m_coAttrMap;
 };
 
-inline ConfAttrValue::ConfAttrValue(string p_rcoConfFileName) throw (ConfException)
+inline ConfAttrValue::ConfAttrValue(const string& p_rcoConfFileName) throw (ConfException)
 {
 	if (p_rcoConfFileName != "")
-		Open(p_rcoConfFileName);
+		open(p_rcoConfFileName);
 }
 
 #endif
