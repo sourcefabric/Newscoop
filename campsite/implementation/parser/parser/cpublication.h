@@ -67,8 +67,7 @@ public:
 
 	void setURLType(const string& p_rcoURLTypeName);
 
-	const CURLType* getURLType() const
-		{ return CURLTypeRegister::getInstance().getURLType(m_coURLTypeName); }
+	const CURLType* getURLType() const;
 
 	const string& getURLTypeName() const { return m_coURLTypeName; }
 
@@ -84,6 +83,11 @@ private:
 
 
 // CPublication inline methods
+
+inline const CURLType* CPublication::getURLType() const
+{
+	return CURLTypeRegister::getInstance().getURLType(m_coURLTypeName);
+}
 
 inline CPublication::CPublication(long p_nId, MYSQL* p_DBConn)
 {
