@@ -22,11 +22,6 @@ regGS("Updating subscription","Измена претплате");
 regGS("The subscription has been updated.","Претплата је измењена");
 regGS("The subscription could not be updated.","Претплата не може бити измењена");
 regGS("Changing subscription","Мењање претплате");
-regGS("Change paid status","Промените статус плаћеног периода");
-regGS("Are you sure you want to change the subscription to the section $1 status to $2?","Сигурни сте да желите да промените статус претплате на рубрику $1 у $2?");
-regGS("Change subscription paid status","Промени статус плаћеног периода за претплату");
-regGS("Not paid","Није плаћено");
-regGS("Paid","Плаћено");
 
 
 ?>

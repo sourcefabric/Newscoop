@@ -1,4 +1,5 @@
 <?php 
+
 regGS("Subscribed sections","Secções assinadas");
 regGS("Add new section to subscription","Adicionar Secção a assinatura");
 regGS("Start Date<BR><SMALL>(yyyy-mm-dd)</SMALL>","Data de Inicio da Assinatura<br>(aaaa-mm-dd)");
@@ -21,10 +22,6 @@ regGS("Updating subscription","Actualizanto Assinatura");
 regGS("The subscription has been updated.","A Assinatura foi actualizada");
 regGS("The subscription could not be updated.","A Assinatura não pode ser actualizada");
 regGS("Changing subscription","Actualizando a Assinatura");
-regGS("Change paid status","Alterar tempo pago");
-regGS("Are you sure you want to change the subscription to the section $1 status to $2?","Alterar o Status da assinatura da secção $1 para $2");
-regGS("Change subscription paid status","Alterar Status de Pagamento");
-regGS("Not paid","Não Pago");
-regGS("Paid","Pago");
+
 
 ?>

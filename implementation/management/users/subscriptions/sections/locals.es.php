@@ -22,11 +22,6 @@ regGS("Updating subscription","Actualizando suscripciones");
 regGS("The subscription has been updated.","La suscripción ha sido actualizada");
 regGS("The subscription could not be updated.","La suscripción no pudo ser actualizada");
 regGS("Changing subscription","Cambiando suscripciones");
-regGS("Change paid status","Cambiar estado de pago");
-regGS("Are you sure you want to change the subscription to the section $1 status to $2?","¿Esta seguro que desea cambiar el estatus de suscripción a la sección $1 a $2?");
-regGS("Change subscription paid status","Cambiar estatus de suscripción pagada");
-regGS("Not paid","Sin pago");
-regGS("Paid","Pagado");
 
 
 ?>

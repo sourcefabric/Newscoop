@@ -22,11 +22,6 @@ regGS("Updating subscription","Abonoment wird aktualisiert");
 regGS("The subscription has been updated.","Abonoment wurde aktualisiert");
 regGS("The subscription could not be updated.","Abonoment konnte nicht aktualisiert werden");
 regGS("Changing subscription","Abonoment wird geändert");
-regGS("Change paid status","Kontostand ändern");
-regGS("Are you sure you want to change the subscription to the section $1 status to $2?","Abonoment für Rubrik $1 -Status wirklich ändern?");
-regGS("Change subscription paid status","Abonoment-Kontostad ändern");
-regGS("Not paid","Nicht bezahlt");
-regGS("Paid","Bezahlt");
 
 
 ?>

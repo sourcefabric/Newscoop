@@ -36,11 +36,4 @@ regGS("The subscription has been updated.","The subscription has been updated.:e
 regGS("The subscription could not be updated.","The subscription could not be updated.:en");
 regGS("Changing subscription","Changing subscription:en");
 
-// pay.m4
-regGS("Change paid status","Change paid status:en");
-regGS("Are you sure you want to change the subscription to the section $1 status to $2?","Are you sure you want change the subscription to the section $1 status to $2?:en");
-regGS("Change subscription paid status","Change subscription paid status:en");
-regGS("Not paid","Not paid:en");
-regGS("Paid","Paid:en");
-
 ?>

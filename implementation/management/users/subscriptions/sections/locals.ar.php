@@ -22,11 +22,6 @@ regGS("Updating subscription","تحديث الاشتراك");
 regGS("The subscription has been updated.","تم تحديث الاشتراك");
 regGS("The subscription could not be updated.","لا يمكن تحديث الاشتراك");
 regGS("Changing subscription","تغيير الاشتراك");
-regGS("Change paid status","بدّل وضع الدفع");
-regGS("Are you sure you want to change the subscription to the section $1 status to $2?","هل أنت متأكد من أنك تريد تبديل الاشتراك في وضع  الباب من  $1 إلى  $2؟");
-regGS("Change subscription paid status","بدّل وضع الدفع الخاصة بالاشتراك");
-regGS("Not paid","غير مدفوع");
-regGS("Paid","مدفوع");
 
 
 ?>
