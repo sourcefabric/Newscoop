@@ -48,7 +48,7 @@ class ArticleImage extends DatabaseObject {
 		// Get the highest template ID and add one.
 		$queryStr = "SELECT MAX(Number)+1 FROM ArticleImages WHERE NrArticle=$p_articleId";
 		$templateId = $Campsite['db']->GetOne($queryStr);
-		if ($templateId === false) {
+		if (!$templateId) {
 			$templateId = 1;
 		}
 		return $templateId;
