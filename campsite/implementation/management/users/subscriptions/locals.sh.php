@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("Publication<BR><SMALL>(click to see sections)</SMALL>","Publikacija<br><small>(kliknite da vidite rubrike)</small>");
 regGS("Left to pay","Preostalo za plaćanje");

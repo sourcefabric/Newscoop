@@ -1,4 +1,4 @@
-<?
+<?php 
 regGS("Publication<BR><SMALL>(click to see sections)</SMALL>","发布（单击查看区）");
 regGS("Left to pay","");
 regGS("Active","");

@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("Subscribed sections","Předplacené rubriky");
 regGS("Add new section to subscription","Přidat novou rubriku do předplatného");

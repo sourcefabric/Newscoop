@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("Add section to all subscriptions.","Přidat rubriku pro všechny předplatné");
 regGS("Delete section from all subscriptions.","Smazat rubriku všech předplatných");

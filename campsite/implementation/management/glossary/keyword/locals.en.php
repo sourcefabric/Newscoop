@@ -1,4 +1,4 @@
-<?
+<?php 
 
 // -- index.m4
 regGS("Add new keyword infotype","Add new keyword infotype:en");

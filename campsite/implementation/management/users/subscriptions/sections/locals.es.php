@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("Subscribed sections","Secciones suscritas");
 regGS("Add new section to subscription","Agregar nueva sección para suscripción");

@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("Add","Adaugă");
 regGS("Delete topic $1 from article","Şterge topicul $1 din articol");

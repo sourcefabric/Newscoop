@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("Delete article $1","الغاء المقال $1");
 regGS("You do not have the right to add articles.","لا يحق لك إضافة مقالات");

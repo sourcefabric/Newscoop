@@ -1,4 +1,4 @@
-<?
+<?php 
 regGS("No article types.","Não existem Tipo de Artigos definidos");
 regGS("Delete article type $1","Eliminar Tipo de Artigo $1");
 regGS("You do not have the right to add article types.","Não tem permissões para adicionar Tipos de Artigos");

@@ -1,4 +1,4 @@
-<?
+<?php 
 
 // -- index.m4
 regGS("Publication<BR><SMALL>(click to see sections)</SMALL>","Publication<BR><SMALL>(click to see sections)</SMALL>:en");

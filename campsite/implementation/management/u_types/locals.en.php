@@ -1,4 +1,4 @@
-<?
+<?php 
 
 // -- index.m4
 regGS("User types","User types:en");

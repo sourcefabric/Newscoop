@@ -1,4 +1,4 @@
-<?
+<?php 
 
 // -- index.m4
 regGS("Delete article $1","Delete article $1:en");

@@ -1,4 +1,4 @@
-<?
+<?php 
 regGS("User types","Типы пользователей:ru");
 regGS("No user types.","Нет типов пользователей.:ru");
 regGS("You do not have the right to add user types.","Вы не имеете права добавлять типы пользователей.:ru");

@@ -1,4 +1,4 @@
-<?
+<?php 
 regGS("User types","Vrste korisnika");
 regGS("No user types.","Nema te vrste korisnika");
 regGS("You do not have the right to add user types.","Nemate pravo dodavati vrste korisnika");

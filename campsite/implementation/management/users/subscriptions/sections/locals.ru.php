@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("Subscribed sections","Подписанные секции:ru");
 regGS("Add new section to subscription","Добавление новой секции к подписке:ru");

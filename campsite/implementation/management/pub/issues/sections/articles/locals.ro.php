@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("Delete article $1","Şterge articolul $1");
 regGS("Show article on front page","Afişează articolul în pagina principală");

@@ -1,4 +1,4 @@
-<?
+<?php 
 regGS("Add new keyword","Добавить новое ключевое слово:ru");
 regGS("No keywords.","Нет ключевых слов.:ru");
 regGS("You do not have the right to add keywords.","Вы не имеете права добавлять ключевые слова.:ru");

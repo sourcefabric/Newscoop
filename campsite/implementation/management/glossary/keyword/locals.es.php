@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("Add new keyword infotype","Agregar nueva palabra clave infotype");
 regGS("Unlink infotype","Infotype no enlazado");

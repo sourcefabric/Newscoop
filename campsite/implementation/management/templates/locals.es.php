@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("Select template","Seleccionar plantilla");
 regGS("Templates management","Administración de plantillas");

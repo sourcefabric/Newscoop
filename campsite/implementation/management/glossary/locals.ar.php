@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("Add new keyword","أضف كلمة مفتاح جديدة");
 regGS("No keywords.","لا وجود لكلمة المفتاح");

@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("Add new image","Dodaj novu sliku");
 regGS("Select an old image","Izaberi postojeću sliku");

@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("No language.","Нема језика");
 regGS("Delete language $1","Обриши језик $1");

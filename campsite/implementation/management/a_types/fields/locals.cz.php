@@ -1,4 +1,4 @@
-<?
+<?php 
 regGS("Article type fields","Pole typu článku");
 regGS("Article type","Typ článku");
 regGS("No fields.","Žádná pole");

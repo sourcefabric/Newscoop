@@ -1,4 +1,4 @@
-<?
+<?php 
 regGS("User management","Управление пользователями:ru");
 regGS("Set","Установить:ru");
 regGS("Update","Обновить:ru");

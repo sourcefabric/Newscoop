@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("No article types.","Nije definisan nijedan tip članka");
 regGS("Delete article type $1","Obriši tip članka $1");

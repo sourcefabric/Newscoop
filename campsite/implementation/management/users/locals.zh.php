@@ -1,4 +1,4 @@
-<?
+<?php 
 regGS("User management","用户管理");
 regGS("Set","设置");
 regGS("Update","更新");

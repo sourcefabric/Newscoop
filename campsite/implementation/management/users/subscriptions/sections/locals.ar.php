@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("Subscribed sections","الابواب التي تم الاشتراك فيها");
 regGS("Add new section to subscription","أضف باب جديد إلى الاشتراك");

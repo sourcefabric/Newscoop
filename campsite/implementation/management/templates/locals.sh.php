@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("Select template","Izaberi šablon");
 regGS("Templates management","Upravljanje šablonima");

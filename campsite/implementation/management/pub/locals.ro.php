@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("Name<BR><SMALL>(click to see issues)</SMALL>","Nume");
 regGS("Delete publication $1","Şterge publicaţia $1");

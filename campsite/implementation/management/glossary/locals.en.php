@@ -1,4 +1,4 @@
-<?
+<?php 
 
 // -- index.m4
 regGS("Add new keyword","Add new keyword:en");

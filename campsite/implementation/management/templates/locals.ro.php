@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("Select template","Selectează şablon");
 regGS("Templates management","Evidenţa şabloanelor");

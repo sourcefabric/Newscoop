@@ -1,4 +1,4 @@
-<?
+<?php 
 regGS("Add new image","Добавить новую картинки:ru");
 regGS("Select an old image","Выберите старую картинку:ru");
 regGS("Click to view image","Щелкните для просмотра картинки:ru");

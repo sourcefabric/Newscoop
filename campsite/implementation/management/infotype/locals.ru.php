@@ -1,4 +1,4 @@
-<?
+<?php 
 regGS("Glossary infotypes","Классы глоссария:ru");
 regGS("Add new glossary infotype","Добавить новый класс глоссария:ru");
 regGS("Delete glossary infotype $1","Удалить класс глоссария:ru");

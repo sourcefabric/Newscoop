@@ -1,4 +1,4 @@
-<?
+<?php 
 // -- index.m4
 regGS("User management","User management:en");
 regGS("Set","Set:en");

@@ -1,4 +1,4 @@
-<?
+<?php 
 regGS("No article types.","Nema tipova članaka");
 regGS("Delete article type $1","Izbriši tip članka");
 regGS("You do not have the right to add article types.","Nemate pravo dodavati tipove članaka.");

@@ -1,4 +1,4 @@
-<?
+<?php 
 
 // -- login.m4
 regGS("Please enter your user name and password","Please enter your user name and password:en");
