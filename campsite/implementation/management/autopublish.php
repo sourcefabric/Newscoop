@@ -1,8 +1,9 @@
 <?
 
-include ("lib_campsite.php");
-require_once("$DOCUMENT_ROOT/db_connect.php");
-include ("languages.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/configuration.php");
+require_once($Campsite['HTML_DIR']."/$ADMIN_DIR/lib_campsite.php");
+require_once($Campsite['HTML_DIR']."/db_connect.php");
+require_once($Campsite['HTML_DIR']."/$ADMIN_DIR/languages.php");
 
 function publish_articles($datetime)
 {
