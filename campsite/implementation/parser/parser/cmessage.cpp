@@ -83,7 +83,6 @@ const CValue* CParameterMap::valueOf(const string& p_rcoParameter) const throw(o
 // general message elements
 const char* CampsiteMessage = "CampsiteMessage";
 const char* MessageType = "MessageType";
-const char* MessageId = "MessageId";
 
 
 // CMsgURLRequest static members initialisation
