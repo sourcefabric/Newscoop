@@ -2,11 +2,13 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
 load_common_include_files();
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Article.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/ArticleImage.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Image.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Issue.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Section.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Language.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Publication.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/Input.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/priv/CampsiteInterface.php");
 
 list($access, $User) = check_basic_access($_REQUEST);
@@ -19,18 +21,31 @@ if (!$User->hasPermission("AddImage")) {
 	exit;
 }
 $maxId = Image::GetMaxId();
-$Pub = isset($_REQUEST["Pub"])?$_REQUEST["Pub"]:0;
-$Issue = isset($_REQUEST["Issue"])?$_REQUEST["Issue"]:0;
-$Section = isset($_REQUEST["Section"])?$_REQUEST["Section"]:0;
-$Language = isset($_REQUEST["Language"])?$_REQUEST["Language"]:0;
-$sLanguage = isset($_REQUEST["sLanguage"])?$_REQUEST["sLanguage"]:0;
-$Article = isset($_REQUEST["Article"])?$_REQUEST["Article"]:0;
+//$Pub = isset($_REQUEST["Pub"])?$_REQUEST["Pub"]:0;
+//$Issue = isset($_REQUEST["Issue"])?$_REQUEST["Issue"]:0;
+//$Section = isset($_REQUEST["Section"])?$_REQUEST["Section"]:0;
+//$Language = isset($_REQUEST["Language"])?$_REQUEST["Language"]:0;
+//$sLanguage = isset($_REQUEST["sLanguage"])?$_REQUEST["sLanguage"]:0;
+//$Article = isset($_REQUEST["Article"])?$_REQUEST["Article"]:0;
+$Pub = Input::get('Pub', 'int', 0);
+$Issue = Input::get('Issue', 'int', 0);
+$Section = Input::get('Section', 'int', 0);
+$Language = Input::get('Language', 'int', 0);
+$sLanguage = Input::get('sLanguage', 'int', 0);
+$Article = Input::get('Article', 'int', 0);
+
+if (!Input::isValid()) {
+	header('Location: /priv/logout.php');
+	exit;	
+}
 
 $articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
 $publicationObj =& new Publication($Pub);
 $issueObj =& new Issue($Pub, $Language, $Issue);
 $languageObj =& new Language($Language);
 $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
+
+$ImageTemplateId = ArticleImage::GetUnusedTemplateId($Article);
 
 query ("SELECT LEFT(NOW(), 10)", 'q_now');
 fetchRowNum($q_now);
@@ -99,7 +114,7 @@ fetchRowNum($q_now);
 	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS("Number"); ?>:</TD>
 		<TD>
-		<INPUT TYPE="TEXT" NAME="cNumber" VALUE="" SIZE="5" MAXLENGTH="5" class="input_text" alt="number|0" emsg="<?php putGS('Please enter a number for the image.'); ?>">
+		<INPUT TYPE="TEXT" NAME="cNumber" VALUE="<?php p($ImageTemplateId); ?>" SIZE="5" MAXLENGTH="5" class="input_text" alt="number|0" emsg="<?php putGS('Please enter a number for the image.'); ?>">
 		</TD>
 	</TR>
 	<TR>
