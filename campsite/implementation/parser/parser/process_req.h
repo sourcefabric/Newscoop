@@ -43,35 +43,6 @@ using std::bad_alloc;
 #define PARAM_NR 36
 #define ERR_NR 6
 
-// CGIParams: structure containing some CGI environment variables
-typedef struct CGIParams
-{
-	char* m_pchDocumentRoot;
-	char* m_pchIP;
-	char* m_pchPathTranslated;
-	char* m_pchPathInfo;
-	char* m_pchRequestMethod;
-	char* m_pchQueryString;
-	char* m_pchHttpCookie;
-
-	CGIParams()
-			: m_pchDocumentRoot(NULL), m_pchIP(NULL), m_pchPathTranslated(NULL),
-			m_pchPathInfo(NULL), m_pchRequestMethod(NULL), m_pchQueryString(NULL),
-			m_pchHttpCookie(NULL)
-	{}
-
-	~CGIParams()
-	{
-		delete []m_pchDocumentRoot;
-		delete []m_pchIP;
-		delete []m_pchPathTranslated;
-		delete []m_pchPathInfo;
-		delete []m_pchRequestMethod;
-		delete []m_pchQueryString;
-		delete []m_pchHttpCookie;
-	}
-} CGIParams;
-
 class RunException : public exception
 {
 private:
