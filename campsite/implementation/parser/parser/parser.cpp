@@ -1924,8 +1924,31 @@ inline int CParser::HWith(CActionList& al, int lv, int sublv)
 //		CActionList& al - reference to actions list
 inline int CParser::HURIPath(CActionList& al)
 {
-	al.insert(al.end(), new CActURIPath());
-	WaitForStatementEnd(true);
+	CParameterList params;
+	const CLexem *l;
+	StringSet ah;
+	l = lex.getLexem();
+	while (l->res() != CMS_LEX_END_STATEMENT)
+	{
+		attr = st->findAttr(l->atom()->identifier(), CMS_CT_DEFAULT);
+		if (ah.find(attr->identifier()) != ah.end())
+			SetPError(parse_err, PERR_ATTRIBUTE_REDEF, MODE_PARSE, "",
+			          lex.prevLine(), lex.prevColumn());
+		if (case_comp(attr->identifier(), "template") == 0)
+		{
+			RequireAtom(l);
+			ValidateDType(l, attr);
+			params.insert(params.end(), new CParameter(attr->identifier(), "", NULL,
+			              l->atom()->identifier()));
+		}
+		else
+		{
+			params.insert(params.end(), new CParameter(attr->identifier()));
+		}
+	}
+	al.insert(al.end(), new CActURIPath(params));
+	if (l->res() != CMS_LEX_END_STATEMENT)
+		WaitForStatementEnd(true);
 	return 0;
 }
 
@@ -2277,7 +2300,7 @@ void CParser::printParseErrors(sockstream& fs, bool p_bMainTpl)
 	if (p_bMainTpl)
 	{
 		SetWriteErrors(true);
-		fs << "<p><font color=blue><b><p>- in main template " << tpl << "</b></font><br>";
+		fs << "<p><font color=blue><b><p>- in main template " << tpl << "</b></font>\\\n<br>";
 	}
 	else
 	{
@@ -2285,13 +2308,13 @@ void CParser::printParseErrors(sockstream& fs, bool p_bMainTpl)
 		{
 			return ;
 		}
-		fs << "<p><font color=blue><b><p>- in included template " << tpl << "</b></font><br>";
+		fs << "<p><font color=blue><b><p>- in included template " << tpl << "</b></font>\\\n<br>";
 	}
 	CErrorList::iterator el_i;
 	for (el_i = parse_err.begin(); el_i != parse_err.end(); ++el_i)
 		(*el_i)->Print(fs);
 	if (parse_err.empty())
-		fs << "No errors found<p>";
+		fs << "No errors found<p>\\\n";
 	parse_err_printed = true;
 	for (StringSet::iterator sh_i = child_tpl.begin(); sh_i != child_tpl.end(); ++sh_i)
 	{
