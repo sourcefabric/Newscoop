@@ -17,7 +17,6 @@ all: $(MY_TARGETS)
 	$(MAKE) -C infotype
 	$(MAKE) -C logs
 	$(MAKE) -C country
-	$(MAKE) -C popup
 	$(MAKE) -C localizer
 
 %.php: %.m4 macros.m4
@@ -53,29 +52,22 @@ install: $(ALL)
 	$(MAKE) -C infotype install
 	$(MAKE) -C logs install
 	$(MAKE) -C country install
-	$(MAKE) -C popup install
 	$(MAKE) -C localizer install
 	chown $(APACHE_USER):$(APACHE_GROUP) $(HTML_COMMON_DIR)/*.php
 	chown -R $(APACHE_USER):$(APACHE_GROUP) $(HTML_COMMON_DIR)/*
 	chown -R $(APACHE_USER):$(APACHE_GROUP) $(PRIV_COMMON_DIR)
 	chmod u+rw $(HTML_COMMON_DIR)/*.php
 	chmod g+r $(HTML_COMMON_DIR)/*.php
-	chmod o-rwx $(HTML_COMMON_DIR)/*.php
 	chmod -R u+rw $(HTML_COMMON_DIR)/javascript
 	chmod -R g+r $(HTML_COMMON_DIR)/javascript
-	chmod -R o-rwx $(HTML_COMMON_DIR)/javascript
 	chmod -R u+rw $(HTML_COMMON_DIR)/classes
 	chmod -R g+r $(HTML_COMMON_DIR)/classes
-	chmod -R o-rwx $(HTML_COMMON_DIR)/classes
 	chmod -R u+rw $(HTML_COMMON_DIR)/css
 	chmod -R g+r $(HTML_COMMON_DIR)/css
-	chmod -R o-rwx $(HTML_COMMON_DIR)/css
 	chmod -R u+rw $(PRIV_COMMON_DIR)/imagearchive
 	chmod -R g+r $(PRIV_COMMON_DIR)/imagearchive
-	chmod -R o-rwx $(PRIV_COMMON_DIR)/imagearchive
 	chmod -R u+rw $(PRIV_COMMON_DIR)
 	chmod -R g+rw $(PRIV_COMMON_DIR)
-	chmod -R o-rwx $(PRIV_COMMON_DIR)
 	chmod -R u+rw $(HTML_COMMON_DIR)/images
 	chmod -R g+r $(HTML_COMMON_DIR)/images
 
@@ -94,7 +86,6 @@ clean: dummy
 	$(MAKE) -C infotype clean
 	$(MAKE) -C logs clean
 	$(MAKE) -C country clean
-	$(MAKE) -C popup clean
 	$(MAKE) -C localizer clean
 
 uninstall: dummy
