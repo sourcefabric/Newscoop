@@ -74,6 +74,24 @@ B_MSGBOX(<*Duplicating section*>)
 		$correct = false;
 		echo "<LI>"; putGS('Invalid parameters received'); echo "</LI>\n";
 	}
+	if ($correct) {
+		$sql = "SELECT * FROM Issues WHERE IdPublication=$dstPub AND Number=$dstIssue AND IdLanguage=$Language";
+		query($sql, 'q_dst_iss');
+		if ($NUM_ROWS == 0) {
+			$correct = false;
+			echo "<LI>"; putGS('Invalid parameters received'); echo "</LI>\n";
+		} else {
+			fetchRow($q_dst_iss);
+		}
+		$sql = "SELECT * FROM Publications WHERE Id=$dstPub";
+		query($sql, 'q_dst_pub');
+		if ($NUM_ROWS == 0) {
+			$correct = false;
+			echo "<LI>"; putGS('Invalid parameters received'); echo "</LI>\n";
+		} else {
+			fetchRow($q_dst_pub);
+		}
+	}
 	$created = false;
 	if ($correct) {
 		fetchRow($s_curr_sect);
@@ -110,8 +128,8 @@ B_MSGBOX(<*Duplicating section*>)
 
 	if ($correct) {
 	if ($created) { ?>dnl
-	<LI><? putGS('Section $1 has been duplicated to $2. $3 of $4', '<B>'.encHTML(decS($sect_name)).'</B>', '<B>'.getHVar($q_iss,'Number').'</B>', '<B>'.getHVar($q_iss,'Name').'</B>', '<B>'.getHVar($q_pub,'Name').'</B>'); ?></LI>
-X_AUDIT(<*31*>, <*getGS('Section $1 has been duplicated to $2. $3 of $4', encHTML(decS($sect_name)), getHVar($q_iss,'Number'), getHVar($q_iss,'Name'), getHVar($q_pub,'Name') )*>)
+	<LI><? putGS('Section $1 has been duplicated to $2. $3 of $4', '<B>'.encHTML(decS($sect_name)).'</B>', '<B>'.$dstIssue.'</B>', '<B>'.getHVar($q_dst_iss,'Name').'</B>', '<B>'.getHVar($q_dst_pub,'Name').'</B>'); ?></LI>
+X_AUDIT(<*31*>, <*getGS('Section $1 has been duplicated to $2. $3 of $4', encHTML(decS($sect_name)), $dstIssue, getHVar($q_dst_iss,'Name'), getHVar($q_dst_pub,'Name') )*>)
 <? } else { ?>dnl
 	<LI><? putGS('The section $1 could not be duplicated','<B>'.encHTML(decS($sect_name)).'</B>'); ?></LI>
 <? }
