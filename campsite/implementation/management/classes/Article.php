@@ -692,6 +692,10 @@ class Article extends DatabaseObject {
 	 * @param string value
 	 */
 	function setPublished($p_value) {
+		if ($this->getPublished() == 'Y' && $p_value != 'Y') // Delete indexes
+			ArticleIndex::OnArticleDelete($this->getPublicationId(), $this->getIssueId(),
+				$this->getSectionId(), $this->getLanguageId(), $this->getArticleId());
+		$this->setIsIndexed(false);
 		return parent::setProperty('Published', $p_value);
 	} // fn setIsPublished
 	
