@@ -487,6 +487,8 @@ string CParser::SelectStatements(int sublevel)
 		s_str += (s_str == "" ? string("") : string(", ")) + ST_USER;
 	if ((sublevel & SUBLV_SEARCH) == 0)
 		s_str += (s_str == "" ? string("") : string(", ")) + ST_SEARCH;
+	if ((sublevel & SUBLV_LOGIN) == 0)
+		s_str += (s_str == "" ? string("") : string(", ")) + ST_LOGIN;
 	return s_str;
 }
 
@@ -1710,6 +1712,12 @@ inline int CParser::HSelect(CActionList& al, int lv, int sublv)
 	else if (st->id() == CMS_ST_SEARCH)
 	{
 		if ((sublv & SUBLV_SEARCH) == 0)
+			FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE,
+			            SelectStatements(sublv), lex.prevLine(), lex.prevColumn());
+	}
+	else if (st->id() == CMS_ST_LOGIN)
+	{
+		if ((sublv & SUBLV_LOGIN) == 0)
 			FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE,
 			            SelectStatements(sublv), lex.prevLine(), lex.prevColumn());
 	}

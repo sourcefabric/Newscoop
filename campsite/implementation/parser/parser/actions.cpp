@@ -2287,6 +2287,7 @@ CSelectModifiers::CSelectModifiers()
 	insert(CMS_ST_SUBSCRIPTION);
 	insert(CMS_ST_USER);
 	insert(CMS_ST_SEARCH);
+	insert(CMS_ST_LOGIN);
 }
 
 CSelectModifiers CActSelect::s_coModifiers;
@@ -2408,6 +2409,10 @@ int CActSelect::takeAction(CContext& c, sockstream& fs)
 			"<option value=2" << (c.SearchLevel() == 2 ? " selected" : "")
 			<< ">Section</option></select>";
 		}
+	}
+	else if (modifier == CMS_ST_LOGIN)
+	{
+		fs << "<input type=checkbox name=\"" P_REMEMBER_USER "\">";
 	}
 	return RES_OK;
 	TK_CATCH_ERR
