@@ -48,6 +48,7 @@ if (!$sectionObj->exists()) {
 $articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
 if (!$articleObj->exists()) {
 	header("Location: /priv/ad.php?ADReason=".urlencode(getGS('Article does not exist.')));
+	exit;
 }
 
 $languageObj =& new Language($Language);
@@ -229,7 +230,7 @@ ArticleTop($articleObj, $Language, "Duplicate article");
 		<input type="hidden" name="destination_issue" value="<?php p($DestIssue); ?>">
 		<input type="hidden" name="destination_section" value="<?php p($DestSection); ?>">
 		<INPUT TYPE="button" Name="Duplicate" Value="<?php putGS("Duplicate article"); ?>" <?php if (($DestPublication <= 0) || ($DestIssue <=0) || ($DestSection <= 0)) { echo 'class="button_disabled"'; } else { echo 'class="button" onclick="this.form.submit();"'; }?> >
-		<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='<?php echo CampsiteInterface::ArticleUrl($articleObj, $Language, $BackLink); ?>'" class="button">
+		<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='<?php p($BackLink); ?>'" class="button">
 		</FORM>
 	</td>
 </tr>
