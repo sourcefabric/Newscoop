@@ -6,6 +6,18 @@ require_once($_SERVER['DOCUMENT_ROOT']."/classes/Language.php");
 
 class Article extends DatabaseObject {
 	/**
+	 * The column names used for the primary key.
+	 * @var array
+	 */
+	var $m_primaryKeyColumnNames = array("IdPublication",
+								   		 "NrIssue",
+							   		 	 "NrSection",
+							   		 	 "Number",
+							   		 	 "IdLanguage");
+
+	var $m_dbTableName = "Articles";
+	
+	/**
 	 * Publication ID
 	 * @var int
 	 */
@@ -76,18 +88,6 @@ class Article extends DatabaseObject {
 	var $LockTime;
 	var $ShortName;
 		
-	/**
-	 * The column names used for the primary key.
-	 * @var array
-	 */
-	var $m_primaryKeyColumnNames = array("IdPublication",
-								   		 "NrIssue",
-							   		 	 "NrSection",
-							   		 	 "Number",
-							   		 	 "IdLanguage");
-
-	var $m_dbTableName = "Articles";
-	
 	/**
 	 * Construct by passing in the primary key to access the article in 
 	 * the database.
@@ -161,7 +161,7 @@ class Article extends DatabaseObject {
 
 	
 	/**
-	 *
+	 * Delete article from database.
 	 */
 	function delete() {
 		// Delete row from article type table.
@@ -171,6 +171,95 @@ class Article extends DatabaseObject {
 		// Delete row from Articles table.
 		parent::delete();
 	} // fn delete
+	
+	
+
+	
+	/**
+	 * Lock the article with the given User ID.
+	 *
+	 * @param int p_userId
+	 *
+	 */
+	function lock($p_userId) {
+		global $Campsite;
+		$queryStr = "UPDATE Articles "
+					." SET LockUser=".$p_userId
+					.", LockTime=NOW() "
+					." WHERE ". $this->getKeyWhereClause();
+		$Campsite["db"]->Execute($queryStr);
+	} // fn lock
+
+//	/**
+//	 * Create and return an array representation of an article for use in a template.
+//	 * @return array
+//	 */
+//	function getTemplateVar() {
+//		$templateVar = array();
+//		$templateVar["publication_id"] = $this->IdPublication;
+//		$templateVar["issue_id"] = $this->NrIssue;
+//		$templateVar["section_id"] = $this->NrSection;
+//		$templateVar["article_id"] = $this->Number;
+//		$templateVar["language_id"] = $this->IdLanguage;
+//		$templateVar["article_type"] = $this->Type;
+//		$templateVar["user_id"] = $this->IdUser;
+//		$templateVar["title"] = $this->Name;
+//		$templateVar["on_front_page"] = $this->OnFrontPage;
+//		$templateVar["on_section"] = $this->OnSection;
+//		$templateVar["published"] = $this->Published;
+//		$templateVar["upload_date"] = $this->UploadDate;
+//		$templateVar["keywords"] = $this->Keywords;
+//		$templateVar["is_public"] = $this->Public;
+//		$templateVar["is_indexed"] = $this->IsIndexed;
+//		$templateVar["locked_by_user"] = $this->LockUser;
+//		$templateVar["lock_time"] = $this->LockTime;
+//		$templateVar["short_name"] = $this->ShortName;
+//		return $templateVar;
+//	} // fn getTemplateVar
+
+
+	/**
+	 * Return an array of Langauge objects, one for each
+	 * type of language the article is written in.
+	 * TODO: change this to a function that returns the set of all 
+	 * articles, one for each language.
+	 */
+	function getLanguages() {
+		global $Campsite;
+	 	$queryStr = "SELECT IdLanguage FROM Articles "
+	 				." WHERE IdPublication=".$this->IdPublication
+	 				." AND NrIssue=".$this->NrIssue
+	 				." AND NrSection=".$this->NrSection
+	 				." AND Number=".$this->Number;
+	 	$languageIds = $Campsite["db"]->GetCol($queryStr);
+	 	$languages = array();
+		foreach ($languageIds as $languageId) {
+			$languages[] =& new Language($languageId);
+		}
+		return $languages;
+	} // fn getLanguages
+	
+	
+	/**
+	 * @return array
+	 */
+	function getArticlesInSection($p_publicationId, $p_issueId, $p_sectionId, $p_languageId) {
+		global $Campsite;
+		$queryStr = "SELECT * FROM Articles"
+					." WHERE IdPublication='".$p_publicationId."'"
+					." AND NrIssue='".$p_issueId."'"
+					." AND NrSection='".$p_sectionId."'"
+					." AND IdLanguage='".$p_languageId."'";
+		$query = $Campsite["db"]->Execute($queryStr);
+		$articles = array();
+		while ($row = $query->FetchRow()) {
+			$tmpArticle =& new Article($row["IdPublication"], $row["NrIssue"],
+				$row["NrSection"], $row["IdLanguage"]);
+			$tmpArticle->fetch($row);
+			$articles[] = $tmpArticle;
+		}
+		return $articles;
+	} // fn getArticlesInSection
 	
 	
 	/**
@@ -429,28 +518,6 @@ class Article extends DatabaseObject {
 	
 	
 	/**
-	 * Return an array of Langauge objects, one for each
-	 * type of language the article is written in.
-	 * TODO: change this to a function that returns the set of all 
-	 * articles, one for each language.
-	 */
-	function getLanguages() {
-		global $Campsite;
-	 	$queryStr = "SELECT IdLanguage FROM Articles "
-	 				." WHERE IdPublication=".$this->IdPublication
-	 				." AND NrIssue=".$this->NrIssue
-	 				." AND NrSection=".$this->NrSection
-	 				." AND Number=".$this->Number;
-	 	$languageIds = $Campsite["db"]->GetCol($queryStr);
-	 	$languages = array();
-		foreach ($languageIds as $languageId) {
-			$languages[] =& new Language($languageId);
-		}
-		return $languages;
-	} // fn getLanguages
-	
-	
-	/**
 	 * Return the ArticleType object for this article.
 	 *
 	 * @return ArticleType
@@ -458,49 +525,6 @@ class Article extends DatabaseObject {
 	function getArticleTypeObject() {
 		return new ArticleType($this->Type, $this->Number, $this->IdLanguage);
 	} // fn getArticleTypeObject
-
-	
-	/**
-	 * Lock the article with the given User ID.
-	 *
-	 * @param int p_userId
-	 *
-	 */
-	function lock($p_userId) {
-		global $Campsite;
-		$queryStr = "UPDATE Articles "
-					." SET LockUser=".$p_userId
-					.", LockTime=NOW() "
-					." WHERE ". $this->getKeyWhereClause();
-		$Campsite["db"]->Execute($queryStr);
-	} // fn lock
-
-//	/**
-//	 * Create and return an array representation of an article for use in a template.
-//	 * @return array
-//	 */
-//	function getTemplateVar() {
-//		$templateVar = array();
-//		$templateVar["publication_id"] = $this->IdPublication;
-//		$templateVar["issue_id"] = $this->NrIssue;
-//		$templateVar["section_id"] = $this->NrSection;
-//		$templateVar["article_id"] = $this->Number;
-//		$templateVar["language_id"] = $this->IdLanguage;
-//		$templateVar["article_type"] = $this->Type;
-//		$templateVar["user_id"] = $this->IdUser;
-//		$templateVar["title"] = $this->Name;
-//		$templateVar["on_front_page"] = $this->OnFrontPage;
-//		$templateVar["on_section"] = $this->OnSection;
-//		$templateVar["published"] = $this->Published;
-//		$templateVar["upload_date"] = $this->UploadDate;
-//		$templateVar["keywords"] = $this->Keywords;
-//		$templateVar["is_public"] = $this->Public;
-//		$templateVar["is_indexed"] = $this->IsIndexed;
-//		$templateVar["locked_by_user"] = $this->LockUser;
-//		$templateVar["lock_time"] = $this->LockTime;
-//		$templateVar["short_name"] = $this->ShortName;
-//		return $templateVar;
-//	} // fn getTemplateVar
 	
 } // class Article
 
