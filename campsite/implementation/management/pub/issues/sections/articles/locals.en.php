@@ -59,9 +59,18 @@ regGS("You do not have the right to change this article.  You may only edit your
 
 // -- edit.m4
 regGS("Edit article details","Edit Article:en");
-regGS("Simple editor","Simple editor:en");
-regGS("Advanced editor","Advanced editor:en");
+//regGS("Simple editor","Simple editor:en");
+//regGS("Advanced editor","Advanced editor:en");
 regGS("Allow users without subscriptions to view the article","Allow users without subscriptions to view the article:en");
+regGS("Edit field: $1","Edit field: $1:en");
+regGS("This article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", 
+	  "This article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.:en");
+regGS("This article has been locked by $1 ($2) $3 minute(s) ago.", 
+	  "This article has been locked by $1 ($2) $3 minute(s) ago.:en");
+//regGS("Now is $1","Now is $1:en");
+regGS("Are you sure you want to unlock it?","Are you sure you want to unlock it?:en");
+regGS("Edit article","Edit article:en");
+regGS("Article is locked", "Article is locked:en");
 
 // -- do_unlock.m4
 regGS("Unlocking article","Unlocking article:en");
@@ -75,19 +84,9 @@ regGS("The article has been updated.","The article has been updated.:en");
 //regGS("The article cannot be updated or no changes have been made.","The article cannot be updated or no changes have been made.:en");
 regGS("The article cannot be updated or no changes have been made.","No changes have been made, the article has not been updated.:en");
 
-// -- edit_t.m4
-regGS("Edit field: $1","Edit field: $1:en");
-
 // -- preview.m4
 regGS("Preview article","Preview Article:en");
 regGS("This article cannot be previewed. Please make sure it has a <B><I>single article</I></B> template selected.","This article cannot be previewed. Please make sure it has a <B><I>single article</I></B> template selected.:en");
-
-// -- edit_b.m4
-regGS("This article has been locked by $1 ($2) at","This article has been locked by $1 ($2) at:en");
-regGS("Now is $1","Now is $1:en");
-regGS("Are you sure you want to unlock it?","Are you sure you want to unlock it?:en");
-regGS("Edit article","Edit article:en");
-regGS("Article is locked", "Article is locked:en");
 
 // -- duplicate.m4
 regGS("Duplicate article", "Duplicate article");
