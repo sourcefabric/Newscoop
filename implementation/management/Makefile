@@ -30,14 +30,16 @@ install: $(ALL)
 	mkdir -p $(HTML_COMMON_DIR)
 	mkdir -p $(HTML_COMMON_DIR)/look
 	mkdir -p $(PRIV_COMMON_DIR)/img
+	cp -fr img/* $(PRIV_COMMON_DIR)/img
+	mkdir -p $(PRIV_COMMON_DIR)/css
+	cp -f css/*.css $(HTML_COMMON_DIR)
+	mkdir -p $(PRIV_COMMON_DIR)/classes
+	cp -f classes/*.php $(HTML_COMMON_DIR)
 	mkdir -p $(HTML_COMMON_DIR)/images/thumbnails
-	cp -rf article_import $(PRIV_COMMON_DIR)
+	#cp -rf article_import $(PRIV_COMMON_DIR)
 	cp -rf javascript $(HTML_COMMON_DIR)
-	cp -rf classes $(HTML_COMMON_DIR)
-	cp -rf css $(HTML_COMMON_DIR)
 	cp -rf imagearchive $(PRIV_COMMON_DIR)
 	cp -rf include $(HTML_COMMON_DIR)
-	cp -fr img/* $(PRIV_COMMON_DIR)/img
 	cp -f *.php $(PRIV_COMMON_DIR)/
 	$(MAKE) -C root install
 	$(MAKE) -C src install
