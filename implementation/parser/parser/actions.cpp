@@ -368,11 +368,11 @@ int CActInclude::takeAction(CContext& c, sockstream& fs)
 	{
 		CParser* pcoParser = CParser::map().find(tpl_path);
 		if (pcoParser == NULL)
-			pcoParser = new CParser(tpl_path);
-			pcoParser->setDebug(*m_coDebug);
-			pcoParser->parse();
-			pcoParser->setDebug(*m_coDebug);
-			return pcoParser->writeOutput(c, fs);
+			pcoParser = new CParser(tpl_path, document_root);
+		pcoParser->setDebug(*m_coDebug);
+		pcoParser->parse();
+		pcoParser->setDebug(*m_coDebug);
+		return pcoParser->writeOutput(c, fs);
 	}
 	catch (ExStat& rcoEx)
 	{
