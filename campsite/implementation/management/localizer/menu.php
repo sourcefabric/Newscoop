@@ -19,7 +19,7 @@ function writeFile($newfile,$fen){
     $fh=fopen($newfile,'w');
     fwrite($fh,$s);
     fclose($fh);
-    
+
 }
 
 
@@ -43,7 +43,7 @@ function createArrays($fen,$dirname,$newlang){
     $foreignfile="$dirname/$fen$newlang.php";
     include("$foreignfile");
     writeFile($foreignfile,$fen);
-    
+
 }
 
 function verifyFile($fen,$dirname,$newlang){
@@ -61,7 +61,7 @@ function verifyFile($fen,$dirname,$newlang){
     createArrays($fen,$dirname,$newlang);
 }
 
-    
+
 
 function parseFolder($dirname, $depth){
     global $createnew,$newlang,$langarray;
@@ -97,7 +97,7 @@ function parseFolder($dirname, $depth){
 		   (substr($filen,strlen($filen)-6)=='en.php')){
 		$filesinen[]=$filen;
 	    }
-		   
+
 
 
 	    if ( ( (strpos($filen,'locals')===0) ||
@@ -107,16 +107,16 @@ function parseFolder($dirname, $depth){
 	       &&
 	       (substr($filen,strlen($filen)-6)!='en.php')
 	       ){
-	    	
+
 	       if ( (strpos($filen,'globals')===0) ){
 		    $langarray[]=substr($filen,8,2);
 		}
-		
-		
+
+
 	       print str_repeat(' ',$depth*$space)."<a href='display.php?file=$filen&dir=$dirname' target=panel>$filen</a>\n";
 	    }
         }//for
-	
+
 	if (isset($filesinen)&&($createnew)){
 	    foreach($filesinen as $fen){
 		verifyFile(substr($fen,0,strlen($fen)-6),$dirname,$newlang);
@@ -136,7 +136,7 @@ if (isset($newlang)){
     $newlang=trim($newlang);
 }
 
-if ( (isset($newlang)) && ($newlang!='') && (strlen($newlang)>1) &&($newlang!='en') ){  
+if ( (isset($newlang)) && ($newlang!='') && (strlen($newlang)>1) &&($newlang!='en') ){
     $createnew=true;
     print "creating files for $newlang";
     $langarray[]=$newlang;
@@ -152,8 +152,9 @@ $langfile.='function registerLanguage($name,$code,$charset){'."\n\n";
 $langfile.="\t".'global $languages;'."\n";
 $langfile.="\t".'$languages["$code"]=array("name"=>$name,"charset"=>$charset);'."\n";
 $langfile.='}'."\n";
-
-
+?>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<?
 
 print '<PRE>';
 parseFolder('..', 0);
@@ -167,12 +168,12 @@ print '</PRE>';
 
     $Languages=mysql_query ("SELECT Id, Name, OrigName, CodePage, Code FROM Languages ORDER BY Name");
     $NUM_ROWS=mysql_num_rows($Languages);
-    if ($NUM_ROWS) { 
+    if ($NUM_ROWS) {
 	$nr= $NUM_ROWS;
         for($loop=0;$loop<$nr;$loop++) {
 	    $arr=mysql_fetch_array($Languages,MYSQL_ASSOC);
 	    if ($arr['Code']!='en'){
-		print '<OPTION VALUE="'.$arr['Code'].'">'.$arr['Name'].'('.$arr['Code'].")\n";
+		print '<OPTION VALUE="'.$arr['Code'].'">'.$arr['OrigName'].'('.$arr['Code'].")\n";
 	    }
 	    if (in_array($arr['Code'],$langarray)){
 		$langfile.='registerLanguage(\''. $arr['Name']."','".$arr['Code']."','".$arr['CodePage']."');\n";
@@ -201,7 +202,7 @@ if ($createnew){ ?>
     <SCRIPT>
 	document.location.href='menu.php';
     </SCRIPT>
-<? 
+<?
 //exit();
 
 }
