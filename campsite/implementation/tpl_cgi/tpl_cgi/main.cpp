@@ -70,7 +70,7 @@ void ReadConf(string& p_rcoIP, int& p_rnPort)
 
 int main()
 {
-	cout << "Content-type: text/html\n\n";
+	cout << "Content-type: text/html; charset=UTF-8\n\n";
 	string coIP;
 	int nPort;
 	ReadConf(coIP, nPort);
