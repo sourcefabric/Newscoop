@@ -1,5 +1,7 @@
 <?php
 
+ini_set('magic_quotes_gpc', '0');
+
 global $Campsite, $ADMIN_DIR, $ADMIN;
 
 $configuration_files = array("install_conf.php", 
