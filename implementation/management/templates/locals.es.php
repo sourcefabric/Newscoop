@@ -7,6 +7,7 @@ regGS("Create new folder","Crear nuevo directorio");
 regGS("Upload template","Subir plantilla");
 regGS("Select the template for displaying the front page.","Seleccionar plantilla para desplegar la portada");
 regGS("Select the template for displaying a single article.","Seleccionar plantilla para desplegar un articulo");
+regGS("You do no have access to the $1 directory!","No tiene acceso a el directorio $1!");
 regGS("Creating new folder","Crear nuevo directorio");
 regGS("You do not have the right to create new folders.","No tiene derecho para crear nuevos directorios");
 regGS("The folder $1 has been created","EL directorio $1 ha sido creado");

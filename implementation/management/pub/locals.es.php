@@ -25,6 +25,7 @@ regGS("The publication $1 could not be deleted.","La publicación $1 no pudo ser
 regGS("Publication $1 deleted","Publicación $1 borrada");
 regGS("Adding new publication","Agregando nueva publicación");
 regGS("The publication could not be added.","La publicación no pudo ser agregada");
+regGS("Select the publication","Seleccionar la publicación");
 regGS("Add new country default subscription time","Agregar nuevo país defecto de tiempo de suscripción");
 regGS("You do not have the right to manage publications.","No tiene derecho a manejar las publicaciones");
 regGS("Adding new country default subscription time","Agregando nuevo país de tiempo de suscripción");

@@ -1,4 +1,8 @@
 <?
+
+regGS("Add section to all subscriptions.","Přidat rubriku pro všechny předplatné");
+regGS("Delete section from all subscriptions.","Smazat rubriku všech předplatných");
+regGS("A total of $1 subscriptions were updated.","Bylo obnoveno $1 předplatné ");
 regGS("Name<BR><SMALL>(click to see articles)</SMALL>","Název ");
 regGS("Delete section $1","Smazat rubriku $1");
 regGS("No sections.","Žádné rubriky");
@@ -6,6 +10,7 @@ regGS("Adding new section","Přidání nové rubriky");
 regGS("You do not have the right to add sections.","Nemáte právo přidat rubriku");
 regGS("The section $1 has been successfuly added.","Rubrika $1 byla úspěšně přidána");
 regGS("Please check if another section with the same number does not already exist.","Prosím zkontrolujte, zda rubrika se stejným názvem již neexistuje");
+regGS("Select the section","Vyberte rubriku");
 regGS("Section $1 added to issue $2. $3 ($4) of $5","Rubrika $1 byla přidána do vydání $2. $3 ($4) z $5");
 regGS("Delete section","Smazat rubriku");
 regGS("You do not have the right to delete sections.","Nemáte právo mazat rubriky");
@@ -20,5 +25,6 @@ regGS("The section $1 has been successfuly modified.","Rubrika $1 byla úspěšn
 regGS("The section could not be changed.","Rubrika nemohla být změněna");
 regGS("Section $1 updated to issue $2. $3 ($4) of $5","Rubrika $1 byla obnovena ve vydání $2. $3 ($4) z $5");
 regGS("Name<BR><SMALL>(click to add article)</SMALL>","Název (klikněte pro přidání článku)");
+
 
 ?>

@@ -1,9 +1,11 @@
 <?
+
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>","Name (zum Betrachten der Rubrik anklicken)");
 regGS("Front Page Template<BR><SMALL>(click to change)</SMALL>","Template der Startseite");
 regGS("Single Article Template<BR><SMALL>(click to change)</SMALL>","Template für Artikel");
 regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>","Veröffentlicht (jjjj-mm-tt)");
 regGS("Delete issue $1","Ausgabe $1 löschen");
+regGS("Click here to set...","Anklicken zum Auswählen");
 regGS("Change issue status","Status der Ausgabe ändern");
 regGS("You do not have the right to change issues.","Keine Berechtigung Ausgaben zu ändern");
 regGS("Are you sure you want to change the issue $1 status from $2 to $3?","Ausgabe $1 wirklich von $2 auf $3 ändern?");
@@ -43,6 +45,7 @@ regGS("No previous issue.","Keine vorherige Ausgabe vorhanden");
 regGS("Copy structure from issue nr $1","Struktur der Ausgabe $1 kopieren");
 regGS("Copying previous issue","Vorherige Ausgabe kopieren");
 regGS("Copying done.","Kopiervorgang abgeschlossen");
+regGS("Select the issue","Ausgabe auswählen");
 regGS("New issue $1 from $2 in publication $3","Neue Ausgabe $1 von $2 der Publikation $3");
 regGS("Adding new issue","Neue Ausgabe hinzufügen");
 regGS("Issue $1 added in publication $2","Ausgabe $1 zu Publikation $2 hinzugefügt");
@@ -57,5 +60,6 @@ regGS("The template has been successfully changed.","Die Template wurde verände
 regGS("Issue template for publication $1 changed to $2","Template der Ausgabe in Publikation $1 nach $2 geändert");
 regGS("Issue template for single articles from $1 changed to $2","Template der Ausgabe für Artikel $1 nach $2 geändert");
 regGS("The template could not be changed.","Die Template konnte nicht geändert werden");
+
 
 ?>

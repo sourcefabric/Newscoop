@@ -1,9 +1,11 @@
 <?
+
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>","Název publikace");
 regGS("Front Page Template<BR><SMALL>(click to change)</SMALL>","Šablona titulní strany");
 regGS("Single Article Template<BR><SMALL>(click to change)</SMALL>","Šablona článku (klikněte pro změnu)");
 regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>","Zveřejněno (rrrr-mm-dd)");
 regGS("Delete issue $1","Smazat vydání $1");
+regGS("Click here to set...","Klikněte zde pro výběr...");
 regGS("Change issue status","Změnit stav vydání");
 regGS("You do not have the right to change issues.","Nemáte právo měnit vydání");
 regGS("Are you sure you want to change the issue $1 status from $2 to $3?","Určitě chcete změnit stav vydání $1 z $2 na $3?");
@@ -43,6 +45,7 @@ regGS("No previous issue.","Žádné předchozí vydání");
 regGS("Copy structure from issue nr $1","Kopírovat strukturu z vydání č. $1");
 regGS("Copying previous issue","Kopírování předchozího vydání");
 regGS("Copying done.","Kopírování dokončeno");
+regGS("Select the issue","Vyberte vydání");
 regGS("New issue $1 from $2 in publication $3","Nové vydání $1 z $1 v publikaci $3");
 regGS("Adding new issue","Přidání nového vydání");
 regGS("Issue $1 added in publication $2","Vydání $1 bylo přidáno v publikaci $2");
@@ -57,5 +60,6 @@ regGS("The template has been successfully changed.","Šablona byla úspěšně z
 regGS("Issue template for publication $1 changed to $2","Šablona vydání pro publikaci $1 byla změněna na $2");
 regGS("Issue template for single articles from $1 changed to $2","Šablona vydání pro jednotlivé články z $1 byla změněna na $2");
 regGS("The template could not be changed.","Šablona namohla být změněna");
+
 
 ?>
