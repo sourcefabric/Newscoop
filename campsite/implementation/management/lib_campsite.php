@@ -766,9 +766,9 @@ function build_restart_server_msg()
 
 function server_port()
 {
-	global $SERVER_PORT, $SERVER_DEFAULT_PORT;
+	global $Campsite;
 
-	return $SERVER_PORT == 0 ? $SERVER_DEFAULT_PORT : $SERVER_PORT;
+	return $Campsite['PARSER_PORT'];
 }
 
 function send_message($address, $server_port, $msg, &$err_msg, $socket = false, $close_socket = true)
