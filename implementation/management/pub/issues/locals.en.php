@@ -25,8 +25,6 @@ regGS("You do not have the right to add issues.","You do not have the right to a
 regGS("The issue $1 has been successfuly added.","The issue $1 has been successfuly added.:en");
 regGS("The issue could not be added.","The issue could not be added.:en");
 regGS("Please check if another issue with the same number/language does not already exist.","Please check if another issue with the same number/language does not already exist.:en");
-// log
-regGS("Issue $1 added","Issue $1 added:en");
 
 
 // -- edit.m4
@@ -39,7 +37,9 @@ regGS("Front Page Template","Front Page Template:en");
 regGS("Updating issue","Updating issue:en");
 regGS("Changing issue's details","Changing issue's details:en");
 regGS("The issue $1 has been successfuly changed.","The issue $1 has been successfuly changed.:en");
+
 // log
+regGS("Issue $1 added","Issue $1 added:en");
 regGS("The issue could not be changed.","The issue could not be changed.:en");
 regGS("Issue $1 updated in publication $2","Issue $1 updated in publication $2:en");
 
