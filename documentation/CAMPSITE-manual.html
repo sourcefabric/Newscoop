@@ -75,9 +75,9 @@
     3.3. <a href="#3.3.">BUILDING AN ARTICLE TEMPLATE: ARTICLETEMPLATE.TPL</a><br>
     3.4. <a href="#3.4.">GENERATING A NAVIGATION TEMPLATE: NAVIGATIONTEMPLATE.TPL</a><br>
     3.5. <a href="#3.5.">BUILDING THE SECTION TEMPLATE: SECTIONTEMPLATE.TPL</a></p>
-  <blockquote> 
+  <blockquote>
     <p>3.5.1 <a href="#3.5.1">The 'Feature' article of the section</a><br>
-      3.5.2 <a href="#3.5.2">Displaying only the most recent feature article on 
+      3.5.2 <a href="#3.5.2">Displaying only the most recent feature article on
       a section page</a><br>
       3.5.3 <a href="#3.5.3">Including Images in the Section Listing</a></p>
   </blockquote>
@@ -1607,19 +1607,19 @@ statements.</span></p>
 </ul>
 <P>3.9.1.10 <b>List Search Result<a name="3.9.1.10"></a></b></P>
 <P>Purpose:</P>
-<P>Select the list of articles after searching database for given keywords. The 
-  Publication, Language, Issue, Section, Article parameters may not be defined 
-  outside List SearchResult statement; inside the statement however, all these 
+<P>Select the list of articles after searching database for given keywords. The
+  Publication, Language, Issue, Section, Article parameters may not be defined
+  outside List SearchResult statement; inside the statement however, all these
   parameters are defined.</P>
 <P>Syntax:</P>
-<P><font face="Courier New, Courier, mono">List [length &lt;value&gt;] [column 
+<P><font face="Courier New, Courier, mono">List [length &lt;value&gt;] [column
   &lt;value&gt;] SearchResult</font><br>
 <font face="Courier New, Courier, mono">list of instructions</font>
   <i><br>
   </i><font face="Courier New, Courier, mono">[ForEmptyList [list of instructions]]<br>
   EndList [SearchResult]</font></P>
-<P>Inside the List, the data context is defined by the constraints applied to 
-  the current article for every processed line. The data context is restored after 
+<P>Inside the List, the data context is defined by the constraints applied to
+  the current article for every processed line. The data context is restored after
   the list processing.</P>
 <P>Constraints:</P>
 <P>The list of forbidden statements inside List SearchResult:</P>
@@ -1627,10 +1627,16 @@ statements.</span></p>
   <li>Language</li>
   <li>Publication</li>
 </ul>
+<P><B><font color="red" size=+1>Note!!!</font>(This is valid only for 2.0.11 and newer versions.)</B>
+<P>All <b>If</b> statements can be negated by inserting "not" between If and its modifier (Publication, Issue etc.)
+<P>Example:
+<BR>&nbsp;&nbsp;If Publication defined
+<BR>and the negated version:
+<BR>&nbsp;&nbsp;If not Publication defined
 <P>3.9.1.11 <b>If NextItems | PrevItems<a name="3.9.1.11"></a></b></P>
 <P>Purpose:</P>
-<P>It runs the first or second list of instructions depending on existing articles 
-  in a limited length list after/before the end/start of the list. It can be used 
+<P>It runs the first or second list of instructions depending on existing articles
+  in a limited length list after/before the end/start of the list. It can be used
   only inside List instructions, especially to validate Next | Previous buttons.</P>
 <P>Syntax:</P>
 <P><font face="Courier New, Courier, mono">If NextItems|PrevItems [list of instructions]<br>
@@ -1691,19 +1697,19 @@ PrevSubtitles
 <P>Can only be used only inside List statement.</P>
 <P>3.9.1.14 <b>Include<a name="3.9.1.14"></a></b></P>
 <P>Purpose:</P>
-<P>Specify the text file to be included in a certain position of the current template. 
+<P>Specify the text file to be included in a certain position of the current template.
   This instruction passes data context to the included template on runtime.</P>
 <P>Syntax:</P>
 <P><font face="Courier New, Courier, mono">Include template_path</font></P>
-<P>Notice: the template_path can be relative to the position of the current template, 
-  if the path starts with a letter, or relative to the server's document root, 
+<P>Notice: the template_path can be relative to the position of the current template,
+  if the path starts with a letter, or relative to the server's document root,
   if the path starts with a '/'.</P>
 <P>Constraints:</P>
 <P>None.</P>
 <P>3.9.1.15 <b>If Publication<a name="3.9.1.15"></a></b></P>
 <P>Purpose:</P>
-<P>Depending on the given condition, it runs the first or second list of instructions. 
-  It may be used anywhere in the template. It is used when printing information 
+<P>Depending on the given condition, it runs the first or second list of instructions.
+  It may be used anywhere in the template. It is used when printing information
   for a certain publication.</P>
 <P>Syntax:</P>
 <P><font face="Courier New, Courier, mono">If Publication defined|fromstart</font><br>
@@ -1712,18 +1718,18 @@ PrevSubtitles
   EndIf [Section]</font></P>
 <ul>
   <li>defined: the if condition is true if publication parameter is defined</li>
-  <li>fromstart: the if condition is true if actual value of publication parameter 
+  <li>fromstart: the if condition is true if actual value of publication parameter
     is equal with the value from template start</li>
 </ul>
-<P>The list of instructions may contain any instruction allowed in the current 
-  context. If it is used inside a list, it must respect the constraints of the 
+<P>The list of instructions may contain any instruction allowed in the current
+  context. If it is used inside a list, it must respect the constraints of the
   list (List Issue, List Section, List Article, List Subtitle, List SearchResult).</P>
 <P>Constraints:</P>
 <P>None.</P>
 <P>3.9.1.16 <b>If Issue<a name="3.9.1.16"></a></b></P>
 <P>Purpose:</P>
-<P>Depending on the given condition, it runs the first or second list of instructions. 
-  It may be used anywhere in the template. It is used when printing information 
+<P>Depending on the given condition, it runs the first or second list of instructions.
+  It may be used anywhere in the template. It is used when printing information
   for a certain issue.</P>
 <P>Syntax:</P>
 <P><font face="Courier New, Courier, mono">If Issue&#9;condition</font><br>
@@ -1780,8 +1786,8 @@ PrevSubtitles
 <P>None.</P>
 <P>3.9.1.18 <b>If Article<a name="3.9.1.18"></a></b></P>
 <P>Purpose:</P>
-<P>Depending on the given condition, it runs the first or second list of instructions. 
-  It may be used anywhere in the template. It is used when printing information 
+<P>Depending on the given condition, it runs the first or second list of instructions.
+  It may be used anywhere in the template. It is used when printing information
   from different types of article.</P>
 <P>Syntax:</P>
 <P><font face="Courier New, Courier, mono">If Article &lt;condition&gt;</font><br>
@@ -1789,42 +1795,42 @@ PrevSubtitles
   <font face="Courier New, Courier, mono">[Else [list of instructions]]<br>
   EndIf [Article]</font></P>
 <P>where</P>
-<P><font face="Courier New, Courier, mono">&lt;condition&gt;=type &lt;article_type&gt; 
+<P><font face="Courier New, Courier, mono">&lt;condition&gt;=type &lt;article_type&gt;
   <br>
   |defined<br>
   |fromstart</font></P>
 <ul>
   <li>defined: the if condition is true if article parameter is defined</li>
-  <li>fromstart: the if condition is true if actual value of article parameter 
+  <li>fromstart: the if condition is true if actual value of article parameter
     is equal with the value from template start</li>
   <li>type: the if condition is true if actual article type is &lt;article_type&gt;</li>
 </ul>
-<P>The list of instructions may contain any instruction allowed in the current 
-  context. If it is used inside a list it must respect the constraints of the 
+<P>The list of instructions may contain any instruction allowed in the current
+  context. If it is used inside a list it must respect the constraints of the
   list (List Issue, List Section, List Article, List Subtitle, List SearchResult).</P>
 <P>Constraints:</P>
 <P>None.</P>
 <P>3.9.1.19 <b>If Allowed<a name="3.9.1.19"></a></b></P>
 <P>Purpose:</P>
-<P>Depending on the given condition it runs a list of instructions (or not). It 
+<P>Depending on the given condition it runs a list of instructions (or not). It
   may be used anywhere in the template. It is used when printing protected information.</P>
 <P>Syntax:</P>
 <P><font face="Courier New, Courier, mono">If Allowed</font><br>
   <i>list of instructions</i><br>
   <font face="Courier New, Courier, mono">[Else [list of instructions]]<br>
   EndIf</font></P>
-<P>The list of instructions may contain any instruction allowed in current context. 
-  If it is used inside a list it must respect the constraints of the list (List 
+<P>The list of instructions may contain any instruction allowed in current context.
+  If it is used inside a list it must respect the constraints of the list (List
   Issue, List Section, List Article, List Subtitle, List SearchResult).</P>
 <P>Constraints:</P>
 <P>None.</P>
 <P>3.9.1.20 <b>If Subscription<a name="3.9.1.20"></a></b></P>
 <P>Purpose:</P>
-<P>Depending on the given condition, it runs the first, the second list of instructions 
-  or neither of them. If the subscription event did not occur, neither of the 
-  instructions list will be run. (This implies a certain order to be followed; 
-  that is, the template containing If Subscription must follow a template containing 
-  Subscription). It may be used anywhere in the template. It is used to describe 
+<P>Depending on the given condition, it runs the first, the second list of instructions
+  or neither of them. If the subscription event did not occur, neither of the
+  instructions list will be run. (This implies a certain order to be followed;
+  that is, the template containing If Subscription must follow a template containing
+  Subscription). It may be used anywhere in the template. It is used to describe
   the subscription result.</P>
 <P>Syntax:</P>
 <P><font face="Courier New, Courier, mono">If Subscription &lt;condition&gt;</font><br>
@@ -1870,23 +1876,23 @@ PrevSubtitles
   |error<br>
   |action</font></P>
 <ul>
-  <li>ok: the if condition is true if login action was taken and its result is 
+  <li>ok: the if condition is true if login action was taken and its result is
     success</li>
-  <li>error: the if condition is true if login action was taken and its result 
+  <li>error: the if condition is true if login action was taken and its result
     is error</li>
   <li>action: the if condition is true if login action was taken</li>
 </ul>
-<P>The list of instructions may contain any instruction allowed in current context. 
-  If it is used inside a list it must respect the constraints of the list (List 
+<P>The list of instructions may contain any instruction allowed in current context.
+  If it is used inside a list it must respect the constraints of the list (List
   Issue, List Section, List Article, List Subtitle, List SearchResult).</P>
 <P>Constraints:</P>
 <P>Cannot be used inside Login-EndLogin statement.</P>
 <P>3.9.1.22 <b>If User<a name="3.9.1.22"></a></b></P>
 <P>Purpose:</P>
-<P>Depending on given condition, it runs the first, the second list of instructions 
-  or none. If the User event didn't occur, none of the instructions list will 
-  be run. (It implies a certain order to be followed; that is, the template containing 
-  If User must follow a template containing User). It may be used anywhere in 
+<P>Depending on given condition, it runs the first, the second list of instructions
+  or none. If the User event didn't occur, none of the instructions list will
+  be run. (It implies a certain order to be followed; that is, the template containing
+  If User must follow a template containing User). It may be used anywhere in
   template. It is used to describe the subscription result.</P>
 <P>Syntax:</P>
 <P><font face="Courier New, Courier, mono">If User &lt;condition&gt;</font><br>
@@ -1903,30 +1909,30 @@ PrevSubtitles
   |modifyaction<br>
   |loggedin</font></P>
 <ul>
-  <li>addok: the if condition is true if user add action was taken and its result 
+  <li>addok: the if condition is true if user add action was taken and its result
     is success</li>
-  <li>modifyok: the if condition is true if user modify action was taken and its 
+  <li>modifyok: the if condition is true if user modify action was taken and its
     result is success</li>
-  <li>adderror: the if condition is true if user add action was taken and its 
+  <li>adderror: the if condition is true if user add action was taken and its
     result is error</li>
-  <li>modifyerror: the if condition is true if user modify action was taken and 
+  <li>modifyerror: the if condition is true if user modify action was taken and
     its result is error</li>
   <li>addaction: the if condition is true if user add action was taken</li>
   <li>modifyaction: the if condition is true if user modify action was taken</li>
-  <li>defined: the if condition is true if user is defined (user cookie exists); 
+  <li>defined: the if condition is true if user is defined (user cookie exists);
     this doesn't necessary mean that the user is properly logged in</li>
   <li>loggedin: the if condition is true if user is properly logged in</li>
 </ul>
-<p>The list of instructions may contain any instruction allowed in the current 
-  context. If it is used inside a list it must respect the constraints of the 
+<p>The list of instructions may contain any instruction allowed in the current
+  context. If it is used inside a list it must respect the constraints of the
   list (List Issue, List Section, List Article, List Subtitle, List SearchResult).</p>
 <P>Constraints:</P>
 <P>Cannot be used inside User-EndUser statement.</P>
 <P>3.9.1.23 <b>If CurrentSubtitle<a name="3.9.1.23"></a></b></P>
 <P>Purpose:</P>
-<P>Depending on the given condition, it runs the first or second list of instructions. 
-  It may be used within the list of subtitle (while printing an article). It runs 
-  the first list of instructions when the index of subtitles list equals the number 
+<P>Depending on the given condition, it runs the first or second list of instructions.
+  It may be used within the list of subtitle (while printing an article). It runs
+  the first list of instructions when the index of subtitles list equals the number
   of the current subtitle (selected for printing).</P>
 <P>Syntax:</P>
 <P><font face="Courier New, Courier, mono">If CurrentSubtitle</font><br>
@@ -1935,16 +1941,32 @@ PrevSubtitles
   EndIf [CurrentSubtitle]</font></P>
 <P>Constraints:</P>
 <P>Can be used only inside With and List Subtitles statements.</P>
-<P>3.9.1.24 <b>Local<a name="3.9.1.24"></a></b></P>
+<P>3.9.1.24 <b>If Image<a name="3.9.1.24"></a></b></P>
 <P>Purpose:</P>
-<P>Creating a temporary data context block for special conditions; the previous 
+<P>If image <number> exists, it runs the first list of instructions, otherwise the second
+list. It may be used anywhere in the template.</P>
+<P>Syntax:</P>
+<P><font face="Courier New, Courier, mono">If Image &lt;number&gt;</font><br>
+  <i>list of instructions</i><br>
+  <font face="Courier New, Courier, mono">[Else [list of instructions]]<br>
+  EndIf [Image]</font></P>
+<P>The list of instructions may contain any instruction allowed in the current
+  context. If it is used inside a list it must respect the constraints of the
+  list (List Issue, List Section, List Article, List Subtitle, List SearchResult).</P>
+<P>Constraints:</P>
+<P>None.</P>
+<P><b><font color="red" size=+1>Note:</font></b></P>
+<P>The If Image statement is valid only in 2.0.11 and newer versions. It won't work in 2.0.10 or older versions.
+<P>3.9.1.25 <b>Local<a name="3.9.1.25"></a></b></P>
+<P>Purpose:</P>
+<P>Creating a temporary data context block for special conditions; the previous
   data context is restored outside the block.</P>
 <P>Syntax:</P>
 <P><font face="Courier New, Courier, mono">Local</font><br>
   <i>list of instructions</i><br>
   <font face="Courier New, Courier, mono">EndLocal</font></P>
-<P>The list of instructions may contain any instruction allowed in the current 
-  context. If it is used inside a list it must respect the constraints of the 
+<P>The list of instructions may contain any instruction allowed in the current
+  context. If it is used inside a list it must respect the constraints of the
   list (List Issue, List Section, List Article, List Subtitle, List SearchResult).</P>
 <P>Constraints:</P>
 <P>None.</P>
