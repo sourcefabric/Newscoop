@@ -1,3 +1,5 @@
+include ../../../make.env
+
 MY_TARGETS=enter.php password.php sub_pub.php dictionary.php robots.php jump.php
 
 all: $(MY_TARGETS)
