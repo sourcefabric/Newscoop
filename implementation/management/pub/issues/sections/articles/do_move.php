@@ -18,10 +18,11 @@ $Pub = Input::get('Pub', 'int', 0);
 $Issue = Input::get('Issue', 'int', 0);
 $Section = Input::get('Section', 'int', 0);
 $Language = Input::get('Language', 'int', 0);
-$sLanguage = Input::get('sLanguage', 'int', 0);
 $Article = Input::get('Article', 'int', 0);
-$ArticleOffset = Input::get('ArtOffs', 'int', 0, true);
+$ArticleLanguage = Input::get('ArticleLanguage', 'int', 0);
 $MoveType = Input::get('move', 'string', 'up_rel');
+$sLanguage = Input::get('sLanguage', 'int', 0, true);
+$ArticleOffset = Input::get('ArtOffs', 'int', 0, true);
 $MoveToPosition = Input::get('pos', 'int', 1, true);
 
 if (!Input::isValid()) {
@@ -50,7 +51,7 @@ if (!$sectionObj->exists()) {
 
 $languageObj =& new Language($Language);
 
-$articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
+$articleObj =& new Article($Pub, $Issue, $Section, $ArticleLanguage, $Article);
 if (!$articleObj->exists()) {
 	header("Location: /priv/ad.php?ADReason=".urlencode(getGS('Article does not exist.')));
 	exit;	
@@ -58,10 +59,10 @@ if (!$articleObj->exists()) {
 
 switch ($MoveType) {
 case 'up_rel':
-	$articleObj->moveRelative('up');
+	$articleObj->moveRelative('up', 1);
 	break;
 case 'down_rel':
-	$articleObj->moveRelative('down');
+	$articleObj->moveRelative('down', 1);
 	break;
 case 'abs':
 	$articleObj->moveAbsolute($MoveToPosition);
@@ -74,6 +75,6 @@ if (function_exists ("incModFile")) {
 	incModFile();
 }
 
-header("Location: ".CampsiteInterface::ArticleUrl($articleObj, $Language, "index.php")."&ArtOffs=".$ArticleOffset);
+header("Location: /priv/pub/issues/sections/articles/index.php?Pub=$Pub&Issue=$Issue&Section=$Section&Language=$Language&ArtOffs=$ArticleOffset&sLanguage=$sLanguage");
 exit;
 ?>
