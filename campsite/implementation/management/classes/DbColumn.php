@@ -1,4 +1,4 @@
-<?
+<?php
 
 class DbColumn {
 	var $m_dbTableName;

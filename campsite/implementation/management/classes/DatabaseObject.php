@@ -1,4 +1,4 @@
-<?
+<?php
 class DatabaseObject {
 	/**
 	 * @var string

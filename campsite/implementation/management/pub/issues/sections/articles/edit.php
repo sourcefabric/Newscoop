@@ -177,7 +177,7 @@ if ($errorStr != "") {
 	<a STYLE='font-size:8pt;color:#000000' href='http://www.campware.org' target='campware'>CAMPSITE  2.1.5 &copy 1999-2004 MDLF, maintained and distributed under GNU GPL by CAMPWARE</a>
 	</BODY>
 	</HTML>
-	<?
+	<?php
 	return;
 }
 ?>
@@ -324,16 +324,16 @@ if ($edit_ok) { ?>
 			<table cellpadding="0" cellspacing="0" width="100%">
 			<tr>
 				<td align="left">
-					<B><? putGS("Edit article details"); ?></B>
+					<B><?php putGS("Edit article details"); ?></B>
 				</td>
 				<td align="right">
-					<? 
+					<?php 
 					if ($zipLibAvailable && $xsltLibAvailable && $xmlLibAvailable 
 						&& $introSupport && $bodySupport) {
 						// Article Import Link
 					?>
 					<b><a href="/priv/article_import/index.php?Pub=<?p($Pub);?>&Issue=<?p($Issue);?>&Section=<?p($Section);?>&Article=<?p($Article)?>&Language=<?p($Language);?>&sLanguage=<?p($sLanguage);?>">Import Article</a></b>
-					<?
+					<?php
 					}
 					?>
 				</td>

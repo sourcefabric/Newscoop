@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * Load include files.
  */

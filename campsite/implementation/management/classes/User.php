@@ -1,4 +1,4 @@
-<?
+<?php
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/config.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/DatabaseObject.php");
 
