@@ -295,6 +295,7 @@ if $absolute_path; then
 else
     result=0
     if [ "$file_type" = "executable" ]; then
+	export PATH="$PATH:/bin:/usr/bin:/usr/local/bin"
 	[ "$WHICH" = "" ] && export WHICH=`which --skip-alias which 2> /dev/null`
 	[ "$WHICH" = "" ] && output="could not find which binary" && echo $output && return 1
 	[ "$search_path" != "" ] && export PATH=$search_path
