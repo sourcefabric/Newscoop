@@ -14,8 +14,12 @@ function load_common_include_files() {
 
 /**
  * Check if user has access to this screen.
+ *
+ * @return array
+ *
  */
 function check_basic_access($request) {
+	require_once($_SERVER['DOCUMENT_ROOT']."/classes/User.php");
 	$access = false;
 	$XPerm = array();
 	$user = array();
@@ -33,27 +37,16 @@ function check_basic_access($request) {
     if ($query && (mysql_num_rows($query) > 0)) {
     	// User exists.
 		$access = true;
-		$user = mysql_fetch_array($query,MYSQL_ASSOC);
-
-		// Fetch the user's permissions.
-		$queryStr = "SELECT * FROM UserPerm "
-					." WHERE IdUser=".$user['Id'];
-		$query2 = mysql_query($queryStr);
-		if ($query2 && (mysql_num_rows($query2) > 0)) {
-			$tmpXPerm = mysql_fetch_array($query2, MYSQL_ASSOC);
-			// Make XPerm a boolean array.
-			$XPerm = array();
-			foreach ($tmpXPerm as $key => $value) {
-				$XPerm[$key] = ($value == 'Y');
-			}
-		}
-		else {
+		$userRow = mysql_fetch_array($query,MYSQL_ASSOC);
+		$user =& new User();
+		$user->fetch($userRow);
+		if (!$user->isAdmin()) {
 			// A non-admin can enter the administration area;
 			// they exist but do not have ANY rights.
 			$access = 0;
 		}
 	}
-	return array($access, $user, $XPerm);
+	return array($access, $user);
 } // fn check_basic_access
 
 ?>
