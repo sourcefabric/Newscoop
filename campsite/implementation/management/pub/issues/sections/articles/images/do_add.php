@@ -9,6 +9,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Section.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Publication.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/priv/CampsiteInterface.php');
 
 list($access, $User) = check_basic_access($_REQUEST);
@@ -21,25 +22,38 @@ if (!$User->hasPermission('AddImage')) {
 	exit;
 }
 
-if (!IsValidInput(array(
-	"PublicationId" => "int",
-	"IssueId" => "int",
-	"SectionId" => "int",
-	"InterfaceLanguageId" => "int",
-	"ArticleLanguageId" => "int",
-	"ArticleId" => "int",
-	"cNumber" => "int"))) {
+//if (!IsValidInput(array(
+//	"PublicationId" => "int",
+//	"IssueId" => "int",
+//	"SectionId" => "int",
+//	"InterfaceLanguageId" => "int",
+//	"ArticleLanguageId" => "int",
+//	"ArticleId" => "int",
+//	"cNumber" => "int"))) {
+//	header('Location: /priv/logout.php');
+//	exit;		
+//}
+//	
+//$PublicationId = array_get_value($_REQUEST, 'PublicationId', 0);
+//$IssueId = array_get_value($_REQUEST, 'IssueId', 0);
+//$SectionId = array_get_value($_REQUEST, 'SectionId', 0);
+//$InterfaceLanguageId = array_get_value($_REQUEST, 'InterfaceLanguageId', 0);
+//$ArticleLanguageId = array_get_value($_REQUEST, 'ArticleLanguageId', 0);
+//$ArticleId = array_get_value($_REQUEST, 'ArticleId', 0);
+//$ImageTemplateId = array_get_value($_REQUEST, 'cNumber', 0);
+//
+$PublicationId = Input::get('PublicationId', 'int', 0);
+$IssueId = Input::get('IssueId', 'int', 0);
+$SectionId = Input::get('SectionId', 'int', 0);
+$InterfaceLanguageId = Input::get('InterfaceLanguageId', 'int', 0);
+$ArticleLanguageId = Input::get('ArticleLanguageId', 'int', 0);
+$ArticleId = Input::get('ArticleId', 'int', 0);
+$ImageTemplateId = Input::get('cNumber', 'int', 0);
+
+if (!Input::isValid()) {
 	header('Location: /priv/logout.php');
-	exit;		
+	exit;			
 }
-	
-$PublicationId = array_get_value($_REQUEST, 'PublicationId', 0);
-$IssueId = array_get_value($_REQUEST, 'IssueId', 0);
-$SectionId = array_get_value($_REQUEST, 'SectionId', 0);
-$InterfaceLanguageId = array_get_value($_REQUEST, 'InterfaceLanguageId', 0);
-$ArticleLanguageId = array_get_value($_REQUEST, 'ArticleLanguageId', 0);
-$ArticleId = array_get_value($_REQUEST, 'ArticleId', 0);
-$ImageTemplateId = array_get_value($_REQUEST, 'cNumber', 0);
 
 $articleObj =& new Article($PublicationId, $IssueId, $SectionId, $ArticleLanguageId, $ArticleId);
 
@@ -57,7 +71,7 @@ $attributes['Date'] = $_REQUEST['cDate'];
 if (!empty($_REQUEST['cURL'])) {
 	$image =& Image::OnAddRemoteImage($_REQUEST['cURL'], $attributes, $User->getId());
 }
-elseif (!empty($_REQUEST['cImage'])) {
+elseif (!empty($_FILES['cImage'])) {
 	$image =& Image::OnImageUpload($_FILES['cImage'], $attributes, $User->getId());
 }
 else {
