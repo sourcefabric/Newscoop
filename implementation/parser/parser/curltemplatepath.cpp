@@ -72,19 +72,43 @@ void CURLTemplatePath::setURL(const CMsgURLRequest& p_rcoURLMessage)
 	m_coURIPath = (nQMark != string::npos) ? coURI.substr(0, nQMark) : coURI;
 	m_coQueryString = (nQMark != string::npos) ? coURI.substr(nQMark) : "";
 
-	if (strncmp(m_coURIPath.c_str(), "/look/", 6) != 0)
-		throw InvalidValue("template name", m_coURIPath);
-	m_coTemplate = m_coURIPath.substr(6);
-	CPublication::getTemplateId(m_coTemplate, m_pDBConn);
-	m_bValidTemplate = true;
-	m_bTemplateSet = true;
-
 	// read parameters
 	const String2Value& coParams = p_rcoURLMessage.getParameters().getMap();
 	String2Value::const_iterator coIt = coParams.begin();
 	for (; coIt != coParams.end(); ++coIt)
 		if ((*coIt).first != P_IDPUBL)
 			setValue((*coIt).first, (*coIt).second->asString());
+
+	if ("" == m_coURIPath || "/" == m_coURIPath)
+	{
+		if (0 == getLanguage())
+		{
+			coQuery = string("select IdDefaultLanguage from Publications where Id = ")
+					+ getValue(P_IDPUBL);
+			qRow = QueryFetchRow(m_pDBConn, coQuery.c_str(), coRes);
+			if (qRow == NULL)
+				throw InvalidValue("site alias", m_coHTTPHost.c_str());
+			setValue(P_IDLANG, qRow[0]);
+		}
+		if (0 == getIssue())
+		{
+			coQuery = string("select max(Number) from Issues where IdPublication = ")
+					+ getValue(P_IDPUBL) + " and IdLanguage = " + getValue(P_IDLANG)
+					+ " and Published = 'Y'";
+			qRow = QueryFetchRow(m_pDBConn, coQuery.c_str(), coRes);
+			if (qRow != NULL)
+				setValue(P_NRISSUE, qRow[0]); 
+		}
+	}
+	else
+	{
+		if (strncmp(m_coURIPath.c_str(), "/look/", 6) != 0)
+			throw InvalidValue("template name", m_coURIPath);
+		m_coTemplate = m_coURIPath.substr(6);
+		CPublication::getTemplateId(m_coTemplate, m_pDBConn);
+		m_bValidTemplate = true;
+		m_bTemplateSet = true;
+	}
 
 	// read cookies
 	const String2String& coCookies = p_rcoURLMessage.getCookies();
@@ -175,7 +199,7 @@ string CURLTemplatePath::getTemplate() const
 	if (m_bValidTemplate)
 		return m_coTemplate;
 	m_coTemplate = CPublication::getTemplate(getLanguage(), getPublication(), getIssue(),
-	                                         getSection(), getArticle(), m_pDBConn, false);
+	                                         getSection(), getArticle(), m_pDBConn, true);
 	return m_coTemplate;
 }
 
@@ -185,17 +209,9 @@ void CURLTemplatePath::BuildURI() const
 	if (m_bValidURI)
 		return;
 
-// 	CMYSQL_RES coRes;
-// 	string coQuery = string("select FrontPage from Issues where Published = 'Y' and "
-// 	               "IdPublication = ") + getValue(P_IDPUBL) + " order by Number desc";
-// 	MYSQL_ROW qRow = QueryFetchRow(m_pDBConn, coQuery.c_str(), coRes);
-// 	if (qRow == NULL)
-// 		throw InvalidValue("publication identifier", getValue(P_IDPUBL));
-// 	m_coURI = string("/") + qRow[0] + "/";
-
+	if (!m_bValidTemplate)
+		getTemplate();
 	m_coURIPath = string("/look/") + m_coTemplate;
-
 	m_coQueryString = getQueryString();
-
 	m_bValidURI = true;
 }
