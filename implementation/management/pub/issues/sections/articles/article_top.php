@@ -21,6 +21,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/lib_campsite.php");
  */
 function ArticleTop($p_articleObj, $p_interfaceLanguageId, $p_title, $p_includeLinks = true, $p_fValidate = false) {
 	global $Campsite;
+	global $ADMIN;
 	
     // Fetch section
     $sectionObj =& new Section($p_articleObj->getPublicationId(), 
