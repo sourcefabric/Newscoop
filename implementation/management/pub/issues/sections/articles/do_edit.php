@@ -1,6 +1,60 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']. "/priv/pub/issues/sections/articles/article_common.php");
 
+// This is used in TransformSubheads() in order to figure out when
+// a SPAN tag closes.
+global $g_spanCounter;
+$g_spanCounter = -1;
+
+/**
+ * This function is a callback for preg_replace_callback();
+ * It will replace <span class="campsite_subhead">...</span>
+ * with <!** Title>...<!** EndTitle>
+ */
+function TransformSubheads($match) {
+	global $g_spanCounter;
+	// This matches '<span class="campsite_subhead">'
+	if (preg_match("/<\s*span\s*class\s*=\s*[\"']campsite_subhead[\"']\s*>/i", $match[0])) {
+		$g_spanCounter = 1;
+		return "<!** Title>";
+	}
+	// This matches '<span'
+	elseif (($g_spanCounter >= 0) && preg_match("/<\s*span/i", $match[0])) {
+		$g_spanCounter += 1;
+	}
+	// This matches '</span>'
+	elseif (($g_spanCounter >= 0) && preg_match("/<\s*\/\s*span\s*>/i", $match[0])) {
+		$g_spanCounter -= 1;
+	}
+	if ($g_spanCounter == 0) {
+		$g_spanCounter = -1;
+		return "<!** EndTitle>";
+	}
+	return $match[0];
+} // fn TransformSubheads
+
+/**
+ * This function is a callback for preg_replace_callback().
+ * It will replace <a href="campsite_internal_link?...">...</a>
+ * with <!** Link Internal ...> ... <!** EndLink>
+ *
+ */
+function TransformLinks($match) {
+	// This matches '</a>'
+	if (preg_match("/<\s*\/a\s*>/i", $match[0])) {
+		$retval = "<!** EndLink>";
+		return $retval;
+	}
+	// This matches '<a href="campsite_internal_link?IdPublication=1&..." ...>'
+	elseif (preg_match("/<\s*a\s*href=[\"']campsite_internal_link[?][\w&=]*[\"'][\s\w\"']*>/i", $match[0])) {
+		$url = split("\"", $match[0]);
+		$parsedUrl = parse_url($url[1]);
+		$retval = "<!** Link Internal ".$parsedUrl["query"].">";
+		return $retval;
+	}	
+} // fn TransformLinks
+
+
 list($access, $User, $XPerm) = check_basic_access($_REQUEST);
 $Pub = isset($_REQUEST["Pub"])?$_REQUEST["Pub"]:0;
 $Issue = isset($_REQUEST["Issue"])?$_REQUEST["Issue"]:0;
@@ -45,8 +99,17 @@ if (($errorStr == "") && $access && $hasAccess) {
 	$hasChanged |= $articleObj->setIsIndexed(false);
 	foreach ($dbColumns as $dbColumn) {
 		if (isset($_REQUEST[$dbColumn->getName()])) {
-			$_REQUEST[$dbColumn->getName()] = str_replace("<!--** Title-->", "<!** Title>", $_REQUEST[$dbColumn->getName()]);
-			$_REQUEST[$dbColumn->getName()] = str_replace("<!--** EndTitle-->", "<!** EndTitle>", $_REQUEST[$dbColumn->getName()]);
+			$text = $_REQUEST[$dbColumn->getName()];
+			if (ini_get("magic_quotes_gpc")) {
+				$text = stripslashes($text);
+			}
+			// Replace <span class="subhead"> ... </span> with <!** Title> ... <!** EndTitle>
+			$text = preg_replace_callback("/(<\s*span\s*class\s*=\s*[\"']campsite_subhead[\"']\s*>|<\s*span|<\s*\/\s*span\s*>)/i", "TransformSubheads", $text);
+			
+			// Replace <a href="campsite_internal_link?IdPublication=1&..." ...> ... </a>
+			// with <!** Link Internal IdPublication=1&...> ... <!** EndLink>
+			//
+			$text = preg_replace_callback("/(<\s*a\s*href=[\"']campsite_internal_link[?][\w&=]*[\"'][\s\w\"']*>)|(<\s*\/a\s*>)/i", "TransformLinks", $text);
 			$hasChanged |= $articleTypeObj->setColumnValue($dbColumn->getName(),
 													   $_REQUEST[$dbColumn->getName()]);
 		}
@@ -57,7 +120,6 @@ if (($errorStr == "") && $access && $hasAccess) {
 		incModFile ();
 	}
 }
-
 ArticleTop($articleObj, $languageObj->getLanguageId(), "Changing article details", $access);
 
 if (!$access) { 
