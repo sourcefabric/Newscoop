@@ -96,13 +96,13 @@ $previousArticleId = 0;
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="1" WIDTH="100%" class="current_location_table">
 <TR>
 	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php  putGS("Publication"); ?>:</TD>
-	<TD VALIGN="TOP" class="current_location_content"><B><?php p(htmlspecialchars($publicationObj->getName())); ?></B></TD>
+	<TD VALIGN="TOP" class="current_location_content"><?php p(htmlspecialchars($publicationObj->getName())); ?></TD>
 
 	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php  putGS("Issue"); ?>:</TD>
-	<TD VALIGN="TOP" class="current_location_content"><B><?php p($issueObj->getIssueId()); ?>. <?php  p(htmlspecialchars($issueObj->getName())); ?> (<?php p(htmlspecialchars($languageObj->getName())); ?>)</B></TD>
+	<TD VALIGN="TOP" class="current_location_content"><?php p($issueObj->getIssueId()); ?>. <?php  p(htmlspecialchars($issueObj->getName())); ?> (<?php p(htmlspecialchars($languageObj->getName())); ?>)</TD>
 
 	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php  putGS("Section"); ?>:</TD>
-	<TD VALIGN="TOP" class="current_location_content"><B><?php p($sectionObj->getSectionId()); ?>. <?php  p(htmlspecialchars($sectionObj->getName())); ?></B></TD>
+	<TD VALIGN="TOP" class="current_location_content"><?php p($sectionObj->getSectionId()); ?>. <?php  p(htmlspecialchars($sectionObj->getName())); ?></TD>
 </TR>
 </TABLE>
 
