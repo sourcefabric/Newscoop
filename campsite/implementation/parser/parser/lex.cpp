@@ -740,6 +740,10 @@ int CStatementMap::InitStatements()
 
 	// EndWith statement
 	this->insert(new CStatement(CMS_ST_ENDWITH, ST_ENDWITH));
+
+	// URIPath statement
+	this->insert(new CStatement(CMS_ST_URIPATH, ST_URIPATH));
+
 	CLOSE_TRY
 	CATCH(InvalidValue &rcoEx)
 		cout << "InitStatements: " << rcoEx.what() << endl;
