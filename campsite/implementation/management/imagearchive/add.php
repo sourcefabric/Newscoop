@@ -42,7 +42,7 @@ fetchRowNum($q_now);
 	<TR><TD ALIGN=RIGHT>
 	  <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
 		<TR>
-		  <TD><A HREF="/priv/images/" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS('Images'); ?>"></A></TD><TD><A HREF="/priv/images/" ><B><?php  putGS('Images');  ?></B></A></TD>
+		  <TD><A HREF="<?php echo CAMPSITE_IMAGEARCHIVE_DIR.'?'.Image_GetSearchUrl($_REQUEST); ?>" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS('Images'); ?>"></A></TD><TD><A HREF="<?php echo CAMPSITE_IMAGEARCHIVE_DIR.'?'.Image_GetSearchUrl($_REQUEST); ?>" ><B><?php  putGS('Images');  ?></B></A></TD>
 		  <TD><A HREF="/priv/home.php" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS('Home'); ?>"></A></TD><TD><A HREF="/priv/home.php" ><B><?php  putGS('Home');  ?></B></A></TD>
 		  <TD><A HREF="/priv/logout.php" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS('Logout'); ?>"></A></TD><TD><A HREF="/priv/logout.php" ><B><?php  putGS('Logout');  ?></B></A></TD>
 		</TR>
@@ -51,7 +51,7 @@ fetchRowNum($q_now);
 </TABLE>
 
 <P>
-<FORM NAME="dialog" METHOD="POST" ACTION="do_add.php" ENCTYPE="multipart/form-data">
+<FORM NAME="dialog" METHOD="POST" ACTION="do_add.php?<?php echo Image_GetSearchUrl($_REQUEST); ?>" ENCTYPE="multipart/form-data">
 <CENTER><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" BGCOLOR="#C0D0FF" ALIGN="CENTER">
 	<TR>
 		<TD COLSPAN="2">
@@ -62,45 +62,45 @@ fetchRowNum($q_now);
 	<TR>
 		<TD ALIGN="RIGHT" ><?php putGS('Description'); ?>:</TD>
 		<TD align="left">
-		<INPUT TYPE="TEXT" NAME="cDescription" VALUE="Image <?php echo Image::GetMaxId(); ?>" SIZE="32" MAXLENGTH="128">
+		<INPUT TYPE="TEXT" NAME="cDescription" VALUE="Image <?php echo Image::GetMaxId(); ?>" SIZE="32" MAXLENGTH="128" class="input_text">
 		</TD>
 	</TR>
 	<TR>
 		<TD ALIGN="RIGHT" ><?php putGS('Photographer'); ?>:</TD>
 		<TD align="left">
-		<INPUT TYPE="TEXT" NAME="cPhotographer" VALUE="<?php echo htmlspecialchars($User->getName()); ?>" SIZE="32" MAXLENGTH="64">
+		<INPUT TYPE="TEXT" NAME="cPhotographer" VALUE="<?php echo htmlspecialchars($User->getName()); ?>" SIZE="32" MAXLENGTH="64" class="input_text">
 		</TD>
 	</TR>
 	<TR>
 		<TD ALIGN="RIGHT" ><?php putGS('Place'); ?>:</TD>
 		<TD align="left">
-		<INPUT TYPE="TEXT" NAME="cPlace" SIZE="32" MAXLENGTH="64">
+		<INPUT TYPE="TEXT" NAME="cPlace" SIZE="32" MAXLENGTH="64" class="input_text">
 		</TD>
 	</TR>
 	<TR>
 		<TD ALIGN="RIGHT" ><?php putGS('Date'); ?>:</TD>
 		<TD align="left">
-		<INPUT TYPE="TEXT" NAME="cDate" VALUE="<?php  pgetNumVar($q_now,0); ?>" SIZE="10" MAXLENGTH="10"> <?php  putGS('YYYY-MM-DD'); ?>
+		<INPUT TYPE="TEXT" NAME="cDate" VALUE="<?php  pgetNumVar($q_now,0); ?>" SIZE="11" MAXLENGTH="10" class="input_text"> <?php  putGS('YYYY-MM-DD'); ?>
 		</TD>
 	</TR>
 	<TR>
 		<TD ALIGN="RIGHT" ><?php putGS('URL'); ?>:</TD>
 		<TD align="left">
-		<INPUT TYPE="TEXT" NAME="cURL" SIZE="32">
+		<INPUT TYPE="TEXT" NAME="cURL" SIZE="32" class="input_text">
 		</TD>
 	</TR>
 	<TR>
 		<TD ALIGN="RIGHT" ><?php putGS('Image'); ?>:</TD>
 		<TD align="left">
-		<INPUT TYPE="FILE" NAME="cImage" SIZE="32" MAXLENGTH="64" onChange="document.dialog.cURL.value=''">
+		<INPUT TYPE="FILE" NAME="cImage" SIZE="32" >
 		</TD>
 	</TR>
 	<TR>
 		<TD COLSPAN="2">
 		<DIV ALIGN="CENTER">
         <input type="hidden" name="view" value="<?php echo $view ?>"> 
-		<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save changes'); ?>">
-		<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="history.back()">
+		<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save changes'); ?>" class="button">
+		<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="history.back()" class="button">
 		</DIV>
 		</TD>
 	</TR>
