@@ -82,19 +82,27 @@ void CURLShortNames::setURL(const CMsgURLRequest& p_rcoURLMessage)
 	// read the language code
 	coLangCode = m_coURIPath.substr(nCurrent, nNext - nCurrent);
 
-	// query the database for the language code
-	coQuery = string("select Id from Languages where Code = '") + coLangCode + "'";
+	if ("" != coLangCode)
+		// query the database for the language code
+		coQuery = string("select Id from Languages where Code = '") + coLangCode + "'";
+	else
+		// read the default publication language
+		coQuery = string("select IdDefaultLanguage from Publications where Id = ")
+				+ (string)Integer(nPublication);
 	qRow = QueryFetchRow(m_pDBConn, coQuery.c_str(), coRes);
 	if (qRow == NULL)
 		throw InvalidValue("language code", coLangCode.c_str());
 	long nLanguage = Integer(qRow[0]);
 	setLanguage(nLanguage);
 
-	// read the issue short name
-	nCurrent = nNext + 1;
-	nNext = m_coURIPath.find('/', nCurrent);
-	nNext = nNext == string::npos ? m_coURIPath.size() + 1 : nNext;
-	coIssue = m_coURIPath.substr(nCurrent, nNext - nCurrent);
+	if (nNext < (m_coURIPath.size() - 1))
+	{
+		// read the issue short name
+		nCurrent = nNext + 1;
+		nNext = m_coURIPath.find('/', nCurrent);
+		nNext = nNext == string::npos ? m_coURIPath.size() + 1 : nNext;
+		coIssue = m_coURIPath.substr(nCurrent, nNext - nCurrent);
+	}
 
 	long nIssue = -1;
 	// query the database for the issue
@@ -108,6 +116,17 @@ void CURLShortNames::setURL(const CMsgURLRequest& p_rcoURLMessage)
 			throw InvalidValue("issue short name", coIssue.c_str());
 		nIssue = Integer(qRow[0]);
 		setIssue(nIssue);
+	}
+	else
+	{
+		coQuery = string("select max(Number) from Issues where IdPublication = ")
+		        + (string)Integer(nPublication) + " and IdLanguage = " + (string)Integer(nLanguage);
+		qRow = QueryFetchRow(m_pDBConn, coQuery.c_str(), coRes);
+		if (qRow != NULL)
+		{
+			nIssue = Integer(qRow[0]);
+			setIssue(nIssue);
+		}
 	}
 
 	if (nNext < (m_coURIPath.size() - 1))
