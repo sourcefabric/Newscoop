@@ -319,7 +319,7 @@ CThreadPool* g_pcoThreadPool = NULL;
 
 void sigterm_handler(int p_nSigNum)
 {
-	cout << p_nSigNum << " signal received" << endl;
+	cout << p_nSigNum << " signal received (child)" << endl;
 #ifdef _DEBUG
 	cout << p_nSigNum << " signal received" << endl;
 #endif
@@ -368,6 +368,8 @@ void sigterm_handler(int p_nSigNum)
 
 void parent_sig_handler(int p_nSigNum)
 {
+	cout << p_nSigNum << " signal received (parent)" << endl;
+
 	const CCampsiteInstanceMap& rcoInstances =
 			CCampsiteInstanceRegister::get().getCampsiteInstances();
 	CCampsiteInstanceMap::const_iterator coIt = rcoInstances.begin();
@@ -376,6 +378,28 @@ void parent_sig_handler(int p_nSigNum)
 		cout << "stopping instance: " << (*coIt).second->getName() << endl;
 		(*coIt).second->stop();
 	}
+}
+
+
+void set_signals(sighandler_t p_sigHandler, bool p_bSetTERM = true, 
+				 bool p_bSetHUP = true, bool p_bSetINT = true)
+{
+	// mask most signals
+	sigset_t nSigMask;
+	sigemptyset(&nSigMask);
+	sigaddset(&nSigMask, SIGPIPE);
+	sigaddset(&nSigMask, SIGALRM);
+	sigaddset(&nSigMask, SIGUSR1);
+	sigaddset(&nSigMask, SIGUSR2);
+	pthread_sigmask(SIG_SETMASK, &nSigMask, NULL);
+
+	// set the signal handlers
+	if (p_bSetTERM)
+		signal(SIGTERM, p_sigHandler);
+	if (p_bSetHUP)
+		signal(SIGHUP, p_sigHandler);
+	if (p_bSetINT)
+		signal(SIGINT, p_sigHandler);
 }
 
 
@@ -395,18 +419,7 @@ int main(int argc, char** argv)
 	if (bRunAsDaemon)
 		StartDaemon();
 
-	// mask most signals
-	sigset_t nSigMask;
-	sigaddset(&nSigMask, SIGPIPE);
-	sigaddset(&nSigMask, SIGALRM);
-	sigaddset(&nSigMask, SIGUSR1);
-	sigaddset(&nSigMask, SIGUSR2);
-	pthread_sigmask(SIG_SETMASK, &nSigMask, NULL);
-
-	// set the signal handler TERM
-	signal(SIGTERM, parent_sig_handler);
-	signal(SIGHUP, parent_sig_handler);
-	signal(SIGINT, parent_sig_handler);
+	set_signals(parent_sig_handler);
 
 	if (coConfDir == "")
 		coConfDir = ETC_FILE;
@@ -478,19 +491,7 @@ int CampsiteInstanceFunc(const ConfAttrValue& p_rcoConfValues)
 // 		exit (1);
 // 	}
 
-	// mask most signals
-	sigset_t nSigMask;
-	sigaddset(&nSigMask, SIGINT);
-	sigaddset(&nSigMask, SIGPIPE);
-	sigaddset(&nSigMask, SIGALRM);
-	sigaddset(&nSigMask, SIGUSR1);
-	sigaddset(&nSigMask, SIGUSR2);
-	pthread_sigmask(SIG_SETMASK, &nSigMask, NULL);
-
-	// set the signal handler TERM
-	signal(SIGTERM, sigterm_handler);
-	signal(SIGHUP, sigterm_handler);
-	signal(SIGINT, sigterm_handler);
+	set_signals(sigterm_handler, true, true, false);
 
 #if (__GNUC__ < 3)
 	set_terminate(my_terminate);
