@@ -111,7 +111,7 @@ fi
 
 if [ "$to_do" = "package" ]; then
     pushd `pwd` &> /dev/null
-    pushd "$PRIV_DIR" &> /dev/null
+    pushd "$PRIV_COMMON_DIR" &> /dev/null
 
     if [ ! -f globals.$LANG.php ]; then
 	echo "no $LANG translation found"
@@ -153,11 +153,11 @@ if [ "$to_do" = "install" ]; then
 	echo "invalid package file $FILE"
 	exit 2
     fi
-    cp -f "$FILE" "$PRIV_DIR"
+    cp -f "$FILE" "$PRIV_COMMON_DIR"
 
     pushd `pwd` &> /dev/null
     . make.env
-    pushd "$PRIV_DIR" &> /dev/null
+    pushd "$PRIV_COMMON_DIR" &> /dev/null
 
     tar xzf "$FILE"
     if [ $? -ne 0 ]; then
@@ -183,7 +183,7 @@ fi
 
 if [ "$to_do" = "add_trans" ]; then
     pushd `pwd` &> /dev/null
-    pushd $PRIV_DIR &> /dev/null
+    pushd $PRIV_COMMON_DIR &> /dev/null
 
     if [ ! -f globals.$LANG.php ]; then
 	echo "no $LANG translation found"
