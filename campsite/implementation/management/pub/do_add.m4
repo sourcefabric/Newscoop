@@ -81,7 +81,7 @@ B_MSGBOX(<*Adding new publication*>)
 				$pub_id = mysql_insert_id();
 				$sql = "UPDATE Aliases SET IdPublication = " . $pub_id . " WHERE Id = " . $cDefaultAlias;
 				query($sql);
-				$params = array( "operation"=>"create", "IdPublication"=>"$pub_id" );
+				$params = array($operation_attr=>$operation_create, "IdPublication"=>"$pub_id");
 				$msg = build_reset_cache_msg($cache_type_publications, $params);
 				send_message($SERVER_ADDRESS, server_port(), $msg, $err_msg);
 			} else {
