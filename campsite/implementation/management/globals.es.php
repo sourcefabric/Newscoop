@@ -1,5 +1,4 @@
 <?
-
 regGS("CAMPSITE","CAMPSITE");
 regGS("Home","Inicio");
 regGS("Logout","Salir");
@@ -80,10 +79,12 @@ regGS("No such topic.","No existe tema");
 regGS("You must select a language.","Debe seleccionar un idioma");
 regGS("No such section.","No existe sección");
 regGS("No articles.","Sin articulos");
+regGS("Access denied","Acceso denegado");
 regGS("Add new article","Agregar nuevo articulo");
 regGS("Status","Estatus");
 regGS("No such article.","No existe articulo");
 regGS("Published","Publicado");
+regGS("Not published","No publicado");
 regGS("Submitted","Enviado");
 regGS("New","Nuevo");
 regGS("Article","Artículo");
@@ -210,6 +211,5 @@ regGS("Days","Dias");
 regGS("(YYYY-MM-DD)","AAAA-MM-DD");
 regGS("The sections were added successfully.","Las secciones fueron agregadas con éxito");
 regGS("The sections could not be added successfully. Some of them were already added !","Las secciones no pudieron ser agregadas con éxito. Algunas de ellas fueron ya agregadas!");
-
 
 ?>
