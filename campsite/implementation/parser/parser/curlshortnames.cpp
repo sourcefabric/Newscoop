@@ -200,16 +200,61 @@ string CURLShortNames::getFormString() const
 	for (; coIt != m_coParamMap.end(); ++coIt)
 	{
 		string coParam = (*coIt).first;
-		if (coParam != P_IDLANG && coParam != P_IDPUBL && coParam != P_NRISSUE
-			&& coParam != P_NRSECTION && coParam != P_NRARTICLE)
-		{
-			const char* pchValue = EscapeHTML((*coIt).second.c_str());
-			coFormString += string("<input type=\"hidden\" name=\"") + coParam + "\" value=\""
-			             + pchValue + "\">";
-			delete []pchValue;
-		}
+		const char* pchValue = EscapeHTML((*coIt).second.c_str());
+		coFormString += string("<input type=\"hidden\" name=\"") + coParam + "\" value=\""
+		             + pchValue + "\">\n";
+		delete []pchValue;
 	}
 	return coFormString;
+}
+
+string CURLShortNames::setTemplate(const string& p_rcoTemplate) throw (InvalidValue)
+{
+	if (p_rcoTemplate == "")
+	{
+		m_bValidTemplate = false;
+		m_bTemplateSet = false;
+		return getTemplate();
+	}
+
+	bool bRelativePath = p_rcoTemplate[0] != '/';
+	string coTemplate = p_rcoTemplate.substr(1);
+	if (bRelativePath)
+	{
+		getTemplate();
+		long nSlashPos = m_coTemplate.rfind('/');
+		if (nSlashPos != string::npos)
+			coTemplate = m_coTemplate.substr(0, nSlashPos) + "/" + p_rcoTemplate;
+	}
+	string coSql = string("select Id from Templates where Name = '") + coTemplate + "'";
+	CMYSQL_RES coRes;
+	MYSQL_ROW qRow = QueryFetchRow(m_pDBConn, coSql.c_str(), coRes);
+	if (qRow == NULL)
+		throw InvalidValue("template name", p_rcoTemplate.c_str());
+	m_coTemplate = coTemplate;
+	m_bValidTemplate = true;
+	m_bTemplateSet = true;
+	return m_coTemplate;
+}
+
+string CURLShortNames::getTemplate() const
+{
+	if (m_bValidTemplate)
+		return m_coTemplate;
+	if (getValue(P_TEMPLATE_ID) != "")
+	{
+		string coSql = string("select Name from Templates where Id = ") + getValue(P_TEMPLATE_ID);
+		CMYSQL_RES coRes;
+		MYSQL_ROW qRow = QueryFetchRow(m_pDBConn, coSql.c_str(), coRes);
+		m_coTemplate = qRow == NULL ? "" : qRow[0];
+	}
+	else
+	{
+		m_coTemplate = CPublication::getTemplate(getLanguage(), getPublication(), getIssue(),
+		                                         getSection(), getArticle(), m_pDBConn, false);
+	}
+	m_bValidTemplate = true;
+	return m_coTemplate;
 }
 
 // buildURI(): internal method; builds the URI string from object attributes
@@ -273,23 +318,4 @@ void CURLShortNames::buildURI() const
 
 	m_coQueryString = getQueryString();
 	m_bValidURI = true;
-}
-
-string CURLShortNames::getTemplate() const
-{
-	if (m_bValidTemplate)
-		return m_coTemplate;
-	if (getValue(P_TEMPLATE_ID) != "")
-	{
-		string coSql = string("select Name from Templates where Id = ") + getValue(P_TEMPLATE_ID);
-		CMYSQL_RES coRes;
-		MYSQL_ROW qRow = QueryFetchRow(m_pDBConn, coSql.c_str(), coRes);
-		m_coTemplate = qRow[0];
-	}
-	else
-	{
-		m_coTemplate = CPublication::getTemplate(getLanguage(), getPublication(), getIssue(),
-		                                         getSection(), getArticle(), m_pDBConn, false);
-	}
-	return m_coTemplate;
 }
