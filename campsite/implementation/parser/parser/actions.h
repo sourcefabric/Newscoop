@@ -295,6 +295,7 @@ class CActInclude : public CAction
 {
 protected:
 	string tpl_path;				// template to include
+	string document_root;
 	CParserMap* parser_map;			// pointer to parsers hash
 
 public:
@@ -302,7 +303,8 @@ public:
 	// Parameters:
 	//		const string& p - path to included template
 	//		CParserHash* ph - pointer to parsers hash
-	CActInclude(const string& p, CParserMap* pm) : tpl_path(p), parser_map(pm) {}
+	CActInclude(const string& p, const string& dr, CParserMap* pm)
+	: tpl_path(p), document_root(dr), parser_map(pm) {}
 	
 	// destructor
 	virtual ~CActInclude() {}
