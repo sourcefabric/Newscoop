@@ -64,6 +64,7 @@ regGS("Number","Number:en");
 regGS("Section","Section:en");
 regGS("Keywords","Keywords:en");
 regGS("Topic","Topic:en");
+regGS("Short Name", "Short Name:en");
 
 
 regGS("Next","Next:en");
@@ -198,6 +199,7 @@ regGS("No such keyword infotype.","No such keyword infotype.:en");
 regGS("Adding new keyword infotype","Adding new keyword infotype:en");
 regGS("The infotype has been deleted.","The infotype has been deleted.:en");
 regGS("The infotype could not be deleted.","The infotype could not be deleted.:en");
+regGS("The $1 field may only contain letters, digits and underscore (_) character.", "The $1 field may only contain letters, digits and underscore (_) character.:en");
 
 
 regGS("Add new publication","Add new publication:en");
