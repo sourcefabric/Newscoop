@@ -114,25 +114,33 @@ string CURLTemplatePath::getFormString() const
 	return coFormString;
 }
 
-// buildURI(): internal method; builds the URI string from object attributes
-void CURLTemplatePath::buildURI() const
+string CURLTemplatePath::setTemplate(const string& p_rcoTemplate) throw (InvalidValue)
 {
-	if (m_bValidURI)
-		return;
+	if (p_rcoTemplate == "")
+	{
+		m_bValidTemplate = false;
+		m_bTemplateSet = false;
+		return getTemplate();
+	}
 
-// 	CMYSQL_RES coRes;
-// 	string coQuery = string("select FrontPage from Issues where Published = 'Y' and "
-// 	               "IdPublication = ") + getValue(P_IDPUBL) + " order by Number desc";
-// 	MYSQL_ROW qRow = QueryFetchRow(m_pDBConn, coQuery.c_str(), coRes);
-// 	if (qRow == NULL)
-// 		throw InvalidValue("publication identifier", getValue(P_IDPUBL));
-// 	m_coURI = string("/") + qRow[0] + "/";
-
-	m_coURIPath = m_coTemplate;
-
-	m_coQueryString = getQueryString();
-
-	m_bValidURI = true;
+	bool bRelativePath = p_rcoTemplate[0] == '/';
+	string coTemplate = p_rcoTemplate;
+	if (bRelativePath)
+	{
+		getTemplate();
+		long nSlashPos = m_coTemplate.rfind('/');
+		if (nSlashPos != string::npos)
+			coTemplate = m_coTemplate.substr(0, nSlashPos) + p_rcoTemplate;
+	}
+	string coSql = string("select Id from Templates where Name = '") + coTemplate + "'";
+	CMYSQL_RES coRes;
+	MYSQL_ROW qRow = QueryFetchRow(m_pDBConn, coSql.c_str(), coRes);
+	if (qRow == NULL)
+		throw InvalidValue("template name", p_rcoTemplate.c_str());
+	m_coTemplate = coTemplate;
+	m_bValidTemplate = true;
+	m_bTemplateSet = true;
+	return m_coTemplate;
 }
 
 string CURLTemplatePath::getTemplate() const
@@ -152,4 +160,25 @@ string CURLTemplatePath::getTemplate() const
 		                                         getSection(), getArticle(), m_pDBConn, false);
 	}
 	return m_coTemplate;
+}
+
+// buildURI(): internal method; builds the URI string from object attributes
+void CURLTemplatePath::buildURI() const
+{
+	if (m_bValidURI)
+		return;
+
+// 	CMYSQL_RES coRes;
+// 	string coQuery = string("select FrontPage from Issues where Published = 'Y' and "
+// 	               "IdPublication = ") + getValue(P_IDPUBL) + " order by Number desc";
+// 	MYSQL_ROW qRow = QueryFetchRow(m_pDBConn, coQuery.c_str(), coRes);
+// 	if (qRow == NULL)
+// 		throw InvalidValue("publication identifier", getValue(P_IDPUBL));
+// 	m_coURI = string("/") + qRow[0] + "/";
+
+	m_coURIPath = m_coTemplate;
+
+	m_coQueryString = getQueryString();
+
+	m_bValidURI = true;
 }
