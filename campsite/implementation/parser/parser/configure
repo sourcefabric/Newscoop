@@ -1,10 +1,9 @@
 #!/bin/bash
 
+cd ../../..
+. ./make.env
+cd implementation/parser/parser
 . ${INSTALL_CONF}/conf_functions
-cd ../../.. && . ./configure --define_start_env && cd implementation/parser/parser
-
-install_conf --set
-[ $? -ne 0 ] && echo "Error reading install configuration" && exit 1
 
 if ! var_not_modified APP_NAME || [ ! -f $APP_NAME ]; then
 echo -n -e "\tWriting start/stop script..."
