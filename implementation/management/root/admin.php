@@ -26,8 +26,14 @@ if (($extension_start = strrpos($call_script, '.')) !== false) {
 // Is it an image?
 if ($is_image) {
 	$extension = substr(strrchr($call_script, '.'), 1);
+	// Expire one day from now.
+	$secondsTillExpired = 86400;
+	$currentTime = time();
+	$expireTime = $currentTime + $secondsTillExpired;
 	header("Content-type: image/$extension");
-	header("Cache-control: private");
+    header('Expires: ' . gmdate("D, d M Y H:i:s", $expireTime) . ' GMT');
+    header('Last-Modified: ' . gmdate("D, d M Y H:i:s", $currentTime) . ' GMT');
+    header('Cache-Control: private, max-age=' . $secondsTillExpired . ', must-revalidate, pre-check=' . $secondsTillExpired);
 	readfile($Campsite['HTML_DIR'] . "/$ADMIN_DIR/$call_script");
 } 
 elseif (($extension == '.php') || ($extension == '')) {
