@@ -85,7 +85,7 @@
 <HEAD>
     <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<META HTTP-EQUIV="Expires" CONTENT="now">
-	<LINK rel="stylesheet" type="text/css" href="http://<?php echo $_SERVER['SERVER_NAME'] ?>/stylesheet.css">
+	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite["website_url"] ?>/stylesheet.css">
 	<TITLE><?php  putGS("Changing article details"); ?></TITLE>
 	<?php if (!$access) { ?>
 		<META HTTP-EQUIV="Refresh" CONTENT="0; URL=/priv/logout.php">

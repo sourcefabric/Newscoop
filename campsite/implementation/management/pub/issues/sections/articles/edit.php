@@ -7,7 +7,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT']."/classes/Publication.php");
 	require_once($_SERVER['DOCUMENT_ROOT']."/classes/Language.php");
 	require_once($_SERVER['DOCUMENT_ROOT']."/classes/User.php");
-	
+		
 	list($access, $User, $XPerm) = check_basic_access($_REQUEST);
     $Pub = isset($_REQUEST["Pub"])?$_REQUEST["Pub"]:0;
     $Issue = isset($_REQUEST["Issue"])?$_REQUEST["Issue"]:0;
@@ -91,7 +91,7 @@
 <HEAD>
     <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<META HTTP-EQUIV="Expires" CONTENT="now">
-	<LINK rel="stylesheet" type="text/css" href="http://<?php echo $_SERVER['SERVER_NAME'] ?>/stylesheet.css">
+	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite["website_url"] ?>/stylesheet.css">
 	<script>
 	<!--
 	/*
