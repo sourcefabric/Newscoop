@@ -7,7 +7,7 @@
         }
         ?>
         <TD ALIGN="center">
-          <A HREF="<?php echo CAMPSITE_IMAGEARCHIVE_DIR; ?>edit.php?image_id=<?php echo $image['id'].'&'.Image_GetSearchUrl($_REQUEST); ?>">
+          <A HREF="edit.php?image_id=<?php echo $image['id'].'&'.$imageNav->getSearchLink(); ?>">
             <img src="<?php echo $image['thumbnail_url']; ?>" border="0">
           </a>
           <br>
@@ -27,7 +27,7 @@
           echo "<a href='$InUseLink'>".htmlspecialchars($image['in_use'])."</a><br>";
 
           if ($User->hasPermission('DeleteImage') && !$image['in_use']) { ?>
-                <A HREF="<?php echo CAMPSITE_IMAGEARCHIVE_DIR; ?>do_del.php?image_id=<?php echo $image['id'].'&'.Image_GetSearchUrl($_REQUEST); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the image $1?', $image['description']); ?>');"><IMG SRC="/priv/img/icon/x.gif" BORDER="0" ALT="<?php  putGS('Delete image $1', htmlspecialchars($image['description'])); ?>"></A>
+                <A HREF="do_del.php?image_id=<?php echo $image['id'].'&'.$imageNav->getSearchLink(); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the image $1?', $image['description']); ?>');"><IMG SRC="/priv/img/icon/delete.gif" BORDER="0" ALT="<?php  putGS('Delete image $1', htmlspecialchars($image['description'])); ?>"></A>
           <?php
           }
           ?>
@@ -47,16 +47,16 @@
         if ($ImageOffset > 0) { 
         	$previousLinkExists = true;
         	?>
-            <B><A HREF="<?php echo CAMPSITE_IMAGEARCHIVE_DIR; ?>index.php?<?php echo $Link['previous']; ?>">&lt;&lt; <?php  putGS('Previous'); ?></A></B>
+            <B><A HREF="index.php?<?php echo $imageNav->getPreviousLink(); ?>">&lt;&lt; <?php  putGS('Previous'); ?></A></B>
         	<?php  
         	
         } 
-        if ($NumImagesFound > ($ImageOffset+$ImagesPerPage)) { 
+        if ($NumImagesFound > ($ImageOffset+CAMPSITE_IMAGEARCHIVE_IMAGES_PER_PAGE)) { 
         	if ($previousLinkExists) {
         		echo ' | ';
         	}
         	?>
-        	<B><A HREF="<?php echo CAMPSITE_IMAGEARCHIVE_DIR; ?>index.php?<?php echo $Link['next']; ?>"><?php  putGS('Next'); ?> &gt;&gt</A></B>
+        	<B><A HREF="index.php?<?php echo $imageNav->getNextLink(); ?>"><?php  putGS('Next'); ?> &gt;&gt</A></B>
         	<?php
         } 
         ?></td>
