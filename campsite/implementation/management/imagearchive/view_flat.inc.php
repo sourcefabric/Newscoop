@@ -57,7 +57,7 @@
 			<?php
 			if ($User->hasPermission('DeleteImage') && !$image['in_use']) { ?>
 			  <TD ALIGN="CENTER">
-				<A HREF="do_del.php?image_id=<?php echo $image['id'].'&'.$imageNav->getSearchLink(); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the image $1?', $image['description']); ?>');"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/delete.gif" BORDER="0" ALT="<?php  putGS('Delete image $1',htmlspecialchars($image['description'])); ?>"></A>
+				<A HREF="do_del.php?image_id=<?php echo $image['id'].'&'.$imageNav->getSearchLink(); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the image $1?', '&quot'.htmlspecialchars($image['description'], ENT_QUOTES).'&quot'); ?>');"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/delete.gif" BORDER="0" ALT="<?php  putGS('Delete image $1',htmlspecialchars($image['description'])); ?>"></A>
 			  </TD>
 			<?php
 			}
