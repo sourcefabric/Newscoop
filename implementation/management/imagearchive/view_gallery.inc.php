@@ -2,7 +2,7 @@
     <?php
     $count = 0;
     foreach ($imageData as $image) {
-        if (($count%5) == 0) {
+        if ((($count+1)%5) == 0) {
             echo '<tr>';
         }
         ?>
@@ -34,7 +34,7 @@
           </small>
         </td>
         <?php
-        if ((($count+1)%5) ==0) {
+        if ((($count+2)%5) ==0) {
             echo '</tr><tr><td colspan="5"><br></td></tr>';
         }
     	$count++;
