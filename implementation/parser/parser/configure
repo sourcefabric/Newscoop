@@ -1,8 +1,6 @@
 #!/bin/bash
 
-cd ../../..
-. ./make.env
-cd implementation/parser/parser
+. ../../../make.env
 . ${INSTALL_CONF}/conf_functions
 
 echo -n -e "\t\tWriting start/stop script..."
