@@ -115,7 +115,7 @@ dnl
 dnl *** Dialog ***
 dnl
 define(<*B_DIALOG*>, <*<FORM NAME="dialog" METHOD="$2" ACTION="$3" ifelse(<*$4*>, <**>, <**>, <*ENCTYPE="$4"*>)>
-<CENTER><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" BGCOLOR="#C0D0FF" ALIGN="CENTER">
+<CENTER><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input" ALIGN="CENTER">
 	<TR>
 		<TD COLSPAN="2">
 			<B><?php  putGS("$1"); ?></B>
