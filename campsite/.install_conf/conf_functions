@@ -777,7 +777,7 @@ for var in $module_vars; do
 	vars_list_str="$vars_list_str, \"$var\""
     fi
 done
-echo -e "\n\$campsite_local_vars['$module_name'] = array($vars_list_str);\n\n?>\n" >> $tmp_file;
+echo -e "\n\$CampsiteVars['$module_name'] = array($vars_list_str);\n\n?>\n" >> $tmp_file;
 cp -f "$tmp_file" "${INSTALL_CONF}/$module_file"
 rm -f "$tmp_file"
 [ "$module_name" != "install" ] && set_configured $module_name
@@ -925,7 +925,7 @@ while true; do
 	    else
 		choice_yn "Commit changes?" y
 		if [ "$choice" = "Y" ]; then
-		    output=`set_module_config "$module" < ${INSTALL_CONF}/.modules.conf`
+		    output=`set_module_config "$module"`
 		    if [ $? -ne 0 ]; then
 			message=$output
 		    fi
@@ -976,7 +976,7 @@ while true; do
 	    else
 		choice_yn "Commit changes?" y
 		if [ "$choice" = "Y" ]; then
-		    output=`set_install_config < ${INSTALL_CONF}/.inst.conf`
+		    output=`set_install_config`
 		    if [ $? -ne 0 ]; then
 			message=$output
 		    fi
