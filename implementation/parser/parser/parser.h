@@ -397,13 +397,16 @@ public:
 	// Parameters:
 	//		const string& p_rcoTpl - template path
 	//		const string& dr - document root
-	CParser(const string& p_rcoTpl, const string& dr = string(""));
+	CParser(const string& p_rcoTpl, const string& dr);
 
 	// destructor
 	~CParser();
 
 	// getTpl: return template file name
 	const string& getTpl() const { return tpl; }
+
+	// getDocumentRoot: return the template document root
+	const string& getDocumentRoot() const { return document_root; }
 
 	// getTemplatePath(): returns the template full path
 	// Parameters:
