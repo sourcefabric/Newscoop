@@ -41,6 +41,7 @@ Declares data types: Integer, String, Switch, Date, Time, DateTime, Enum, Topic
 
 #include "globals.h"
 #include "mutex.h"
+#include "cms_types.h"
 
 using std::string;
 using std::pair;
