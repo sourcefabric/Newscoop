@@ -88,12 +88,13 @@ void CURLShortNames::setURL(const CMsgURLRequest& p_rcoURLMessage)
 	else
 		// read the default publication language
 		coQuery = string("select IdDefaultLanguage from Publications where Id = ")
-				+ (string)Integer(nPublication);
+		        + getValue(P_IDPUBL);
 	qRow = QueryFetchRow(m_pDBConn, coQuery.c_str(), coRes);
 	if (qRow == NULL)
 		throw InvalidValue("language code", coLangCode.c_str());
 	long nLanguage = Integer(qRow[0]);
-	setLanguage(nLanguage);
+	if ("" == m_coURIPath || "/" == m_coURIPath || "" != coLangCode)
+		setLanguage(nLanguage);
 
 	if (nNext < (m_coURIPath.size() - 1))
 	{
@@ -117,10 +118,11 @@ void CURLShortNames::setURL(const CMsgURLRequest& p_rcoURLMessage)
 		nIssue = Integer(qRow[0]);
 		setIssue(nIssue);
 	}
-	else
+	else if ("" == m_coURIPath || "/" == m_coURIPath)
 	{
 		coQuery = string("select max(Number) from Issues where IdPublication = ")
-		        + (string)Integer(nPublication) + " and IdLanguage = " + (string)Integer(nLanguage);
+		        + (string)Integer(nPublication) + " and IdLanguage = "
+		        + (string)Integer(nLanguage) + " and Published = 'Y'";
 		qRow = QueryFetchRow(m_pDBConn, coQuery.c_str(), coRes);
 		if (qRow != NULL)
 		{
@@ -288,7 +290,7 @@ string CURLShortNames::getTemplate() const
 	else
 	{
 		m_coTemplate = CPublication::getTemplate(getLanguage(), getPublication(), getIssue(),
-		                                         getSection(), getArticle(), m_pDBConn, false);
+		                                         getSection(), getArticle(), m_pDBConn, true);
 	}
 	m_bValidTemplate = true;
 	return m_coTemplate;
