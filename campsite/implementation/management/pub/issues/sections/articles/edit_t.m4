@@ -61,6 +61,7 @@ X_CURRENT({Publication:}, {<B><!sql print ~q_pub.Name></B>})
 X_CURRENT({Issue:}, {<B><!sql print ~q_iss.Number>. <!sql print ~q_iss.Name> (<!sql print ~q_lang.Name>)</B>})
 X_CURRENT({Section:}, {<B><!sql print ~q_sect.Number>. <!sql print ~q_sect.Name></B>})
 X_CURRENT({Article:}, {<B><!sql print ~q_art.Name> (<!sql print ~q_slang.Name>)</B>})
+X_CURRENT({Field:}, {<B><!sql print ?eField></B>})
 E_CURRENT
 <!sql free q_lang>dnl
 
@@ -125,6 +126,9 @@ X_NEW_BUTTON({Translate}, {X_ROOT/pub/issues/sections/articles/translate.xql?Pub
 <!sql if $dla>dnl
 </TD><TD>
 X_NEW_BUTTON({Delete}, {X_ROOT/pub/issues/sections/articles/del.xql?Pub=<!sql print #Pub>&Issue=<!sql print #Issue>&Section=<!sql print #Section>&Article=<!sql print #Article>&Language=<!sql print #Language>&sLanguage=<!sql print #sLanguage>&Back=<!sql print #REQUEST_URI>})
+</TD><TD>
+X_NEW_BUTTON({Edit details}, {X_ROOT/pub/issues/sections/articles/edit.xql?Pub=<!sql print #Pub>&Issue=<!sql print #Issue>&Section=<!sql print #Section>&Article=<!sql print #Article>&Language=<!sql print #Language>&sLanguage=<!sql print #sLanguage>})
+</TD><TD>
 <!sql endif>dnl
 </TD></TR>
 </TABLE>
@@ -152,30 +156,8 @@ X_NEW_BUTTON({Delete}, {X_ROOT/pub/issues/sections/articles/del.xql?Pub=<!sql pr
 </TABLE>
 
 
-B_DIALOG({Edit article details}, {POST}, {do_edit.xql})
-	B_DIALOG_INPUT({Name:})
-		<INPUT TYPE="TEXT" NAME="cName" SIZE="64" MAXLENGTH="64" VALUE="<!sql print ~q_art.Name>">
-	E_DIALOG_INPUT
-	B_DIALOG_INPUT({Type:})
-		<B><!sql print ~q_art.Type></B>
-	E_DIALOG_INPUT
-	B_DIALOG_INPUT({Uploaded:})
-		<B><!sql print ~q_art.UploadDate> (yyyy-mm-dd)</B>
-	E_DIALOG_INPUT
-	B_DIALOG_PACKEDINPUT
-	B_DIALOG_INPUT({<INPUT TYPE="CHECKBOX" NAME="cOnFrontPage"<!sql if @q_art.OnFrontPage == "Y"> CHECKED<!sql endif>>})
-		Show article on front page
-	E_DIALOG_INPUT
-	B_DIALOG_INPUT({<INPUT TYPE="CHECKBOX" NAME="cOnSection"<!sql if @q_art.OnSection == "Y"> CHECKED<!sql endif>>})
-		Show article on section page
-	E_DIALOG_INPUT
-	B_DIALOG_INPUT({<INPUT TYPE="CHECKBOX" NAME="cPublic"<!sql if @q_art.Public == "Y"> CHECKED<!sql endif>>})
-		Allow users without subscriptions to view the article
-	E_DIALOG_INPUT
-	E_DIALOG_PACKEDINPUT
-	B_DIALOG_INPUT({Keywords:})
-		<INPUT TYPE="TEXT" NAME="cKeywords" VALUE="<!sql print ~q_art.Keywords>" SIZE="64" MAXLENGTH="255">
-	E_DIALOG_INPUT
+B_DIALOG({Edit field: <!sql print ?eField>}, {POST}, {do_edit_t.xql})
+	<tr><td><TEXTAREA rows=15 cols=50 NAME="cField"></TEXTAREA></td></tr>
 
 <INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<!sql print ~Pub>">
 <INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<!sql print ~Issue>">
@@ -183,6 +165,7 @@ B_DIALOG({Edit article details}, {POST}, {do_edit.xql})
 <INPUT TYPE="HIDDEN" NAME="Article" VALUE="<!sql print ~Article>">
 <INPUT TYPE="HIDDEN" NAME="Language" VALUE="<!sql print ~Language>">
 <INPUT TYPE="HIDDEN" NAME="sLanguage" VALUE="<!sql print ~sLanguage>">
+<INPUT TYPE="HIDDEN" NAME="eField" VALUE="<!sql print ~eField>">
 <INPUT TYPE="HIDDEN" NAME="query" VALUE="">
 
 <!sql set fld "">
@@ -192,70 +175,6 @@ B_DIALOG({Edit article details}, {POST}, {do_edit.xql})
 
 <FORM NAME="fields">
 
-<!sql query "SHOW COLUMNS FROM X?q_art.Type LIKE 'F%'" q_fld>dnl
-<!sql print_loop q_fld>dnl
-	<!sql query "SELECT SUBSTRING('?q_fld.0', 2), LOCATE('char', '?q_fld.1', 1), LOCATE('date', '?q_fld.1', 1)" q_substr>dnl
-	<!sql if @q_substr.1 != 0>dnl
-		<!sql set type 0>dnl
-	<!sql elsif @q_substr.2 != 0>dnl
-		<!sql set type 1>dnl
-	<!sql else>dnl
-		<!sql set type 2>dnl
-	<!sql endif>dnl
-
-	<!sql if $type != 2>dnl
-		<!sql if $fld != "">dnl
-			<!sql set fld "$fld, \"F@q_substr.0\"">dnl
-		<!sql else>dnl
-			<!sql set fld "\"F@q_substr.0\"">dnl
-		<!sql endif>dnl
-		<!sql if $ftyp != "">dnl
-			<!sql set ftyp "$ftyp, $type">dnl
-		<!sql else>dnl
-			<!sql set ftyp "$type">dnl
-		<!sql endif>dnl
-	<!sql endif>dnl
-
-	<!sql if $type == 0>dnl
-		<!-- text -->
-		B_DIALOG_INPUT({<!sql print ~q_substr.0>:})
-		<!sql query "SELECT ?q_fld.0 FROM X?q_art.Type WHERE NrArticle=?Article AND IdLanguage=?sLanguage" q_afld>dnl
-			<INPUT NAME="<!sql print ~q_fld.0>" TYPE="TEXT" VALUE="<!sql print ~q_afld.0>" SIZE="64" MAXLENGTH="100">
-		<!sql free q_afld>dnl
-	<!sql elsif $type == 1>dnl
-		<!-- date -->
-				<!-- setez data curenta la cimpurile de tip data -->
-				<!sql query " SELECT F#q_substr.0 from X?q_art.Type where NrArticle=?Article AND IdLanguage=?sLanguage" q_vd>dnl
-				<!sql if @q_vd.0 = "0000-00-00">dnl
-					<!sql query "UPDATE X?q_art.Type SET F#q_substr.0=curdate() WHERE NrArticle=?Article AND IdLanguage=?sLanguage">dnl
-				<!sql endif>dnl
-				<!sql free q_vd>dnl 
-		B_DIALOG_INPUT({<!sql print ~q_substr.0>:})
-		<!sql query "SELECT ?q_fld.0 FROM X?q_art.Type WHERE NrArticle=?Article AND IdLanguage=?sLanguage" q_afld>dnl
-			<INPUT NAME="<!sql print ~q_fld.0>" TYPE="TEXT" VALUE="<!sql print ~q_afld.0>" SIZE="10" MAXLENGTH="10"> YYYY-MM-DD
-			
-		<!sql free q_afld>dnl
-	<!sql else>dnl
-		<!-- blob -->
-
-		<!sql query "SELECT ?q_fld.0, length(?q_fld.0) FROM X?q_art.Type WHERE NrArticle=?Article AND IdLanguage=?sLanguage" q_afld>dnl
-		<!sql if $q_afld.1 = 0>
-			B_DIALOG_INPUT({<!sql print ~q_substr.0>:}) <a href="X_ROOT/pub/issues/sections/articles/edit_t.xql?Pub=<!sql print #Pub>&Issue=<!sql print #Issue>&Section=<!sql print #Section>&Article=<!sql print #Article>&Language=<!sql print #Language>&sLanguage=<!sql print #sLanguage>&eField=<!sql print #q_fld.0>"> Simple editor</a> / <a href="X_ROOT/pub/issues/sections/articles/edit_b.xql?Pub=<!sql print #Pub>&Issue=<!sql print #Issue>&Section=<!sql print #Section>&Article=<!sql print #Article>&Language=<!sql print #Language>&sLanguage=<!sql print #sLanguage>&eField=<!sql print #q_fld.0>"> Advanced editor</a>
-		<!sql else>
-			B_DIALOG_INPUT({<BR><!sql print ~q_substr.0>:<BR> X_NEW_BUTTON({Edit}, {X_ROOT/pub/issues/sections/articles/edit_b.xql?Pub=<!sql print #Pub>&Issue=<!sql print #Issue>&Section=<!sql print #Section>&Article=<!sql print #Article>&Language=<!sql print #Language>&sLanguage=<!sql print #sLanguage>&eField=<!sql print #q_fld.0>})}, {TOP})
-		X_HR
-		<table width=100% border=2><tr bgcolor=LightBlue><td><!sql print $q_afld.0></td></tr></table>
-		<!sql endif>
-		<!sql free q_afld>dnl
-		<BR><P>
-
-	<!sql endif>dnl
-
-		E_DIALOG_INPUT
-
-	<!sql free q_substr>dnl
-<!sql done>dnl
-<!sql free q_fld>dnl
 
 	B_DIALOG_BUTTONS
 <SCRIPT>

@@ -145,7 +145,9 @@ typedef enum _TIfModifier {
     TOL_IMOD_PREVSUBTITLES = 0x030d,
     TOL_IMOD_NEXTSUBTITLES = 0x030e,
     TOL_IMOD_SUBTITLE = 0x030f,
-    TOL_IMOD_CURRENTSUBTITLE = 0x0310
+    TOL_IMOD_CURRENTSUBTITLE = 0x0310,
+    TOL_IMOD_IMAGE = 0x311,
+    TOL_IMOD_LANGUAGE = 0x312
 } TIfModifier;
 
 typedef enum _TPrintModifier {
@@ -312,17 +314,17 @@ inline cpChar stringValue(const string& s)
 typedef hashtable < string, cpChar, cpChar_HASH, TstringValue, cpChar_EQUAL > StringHash;
 
 typedef CThreadKey < MYSQL > TK_MYSQL;
-inline void TK_MYSQL::destroyData(void* p_pData)
+inline void TK_MYSQL::destroyData(void* p_pData) throw()
 {}
 
 typedef CThreadKey < char > TK_char;
-inline void TK_char::destroyData(void* p_pData)
+inline void TK_char::destroyData(void* p_pData) throw()
 {
 	delete (pChar)p_pData;
 }
 
 typedef CThreadKey < bool > TK_bool;
-inline void TK_bool::destroyData(void* p_pData)
+inline void TK_bool::destroyData(void* p_pData) throw()
 {
 	delete (bool*)p_pData;
 }

@@ -70,7 +70,7 @@ int main()
 		return 1;
 	}
 	struct timeval tVal = { 0, 0 };
-	tVal.tv_sec = 10;
+	tVal.tv_sec = 60;
 	fd_set clSet;
 	FD_ZERO(&clSet);
 	CTCPSocket coSock;
@@ -272,7 +272,16 @@ pChar ReadPOSTQuery()
 			pChar pchNewQuery = (pChar) realloc(pchQuery, nQueryAlloc);
 			pchQuery = pchNewQuery;
 		}
-		pchQuery[nIndex++] = fgetc(stdin);
+		char chIn = fgetc(stdin);
+		if (chIn > 0)
+		{
+			pchQuery[nIndex++] = chIn;
+		}
+		else
+		{
+			pchQuery[nIndex] = 0;
+			break;
+		}
 	}
 	return pchQuery;
 }

@@ -42,7 +42,7 @@ define({E_BODY}, {</BODY>})dnl
 define({B_MBODY}, {<BODY BGCOLOR="#D0D0B0" TEXT="BLACK" LINK="DARKBLUE" ALINK="RED" VLINK="DARKBLUE">})dnl
 define({E_MBODY}, {</BODY>})dnl
 define({X_HR}, {<HR NOSHADE SIZE="1" COLOR="BLACK">})dnl
-define({X_COPYRIGHT}, {<a STYLE='font-size:8pt;color:#000000' href='http://www.campware.org' target='campware'>CAMPSITE 2.0.0 &copy 1999-2001 MDLF, maintained and distributed under GNU GPL by CAMPWARE</a>})dnl
+define({X_COPYRIGHT}, {<a STYLE='font-size:8pt;color:#000000' href='http://www.campware.org' target='campware'>CAMPSITE 2.0.12 &copy 1999-2001 MDLF, maintained and distributed under GNU GPL by CAMPWARE</a>})dnl
 define({X_NEW_BUTTON}, {<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1"><TR><TD><A HREF="$2" ifelse({$3}, {}, {}, {ONCLICK="$3"})><IMG SRC="X_ROOT/img/tol.gif" BORDER="0"></A></TD><TD><A HREF="$2" ifelse({$3}, {}, {}, {ONCLICK="$3"})><B>$1</B></A></TD></TR></TABLE>})dnl
 define({X_BULLET}, {<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1"><TR><TD><IMG SRC="X_ROOT/img/tol.gif" BORDER="0"></TD><TD>$1</TD></TR></TABLE>})dnl
 define({X_NEXT_I}, { | Next &gt;&gt;})dnl

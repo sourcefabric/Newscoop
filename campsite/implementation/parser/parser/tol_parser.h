@@ -398,6 +398,9 @@ public:
 	// Reset: reset parser: clear actions tree, reset lex, clear errors list
 	void Reset();
 	
+	// Reset: reset all the parsers in the hash
+	static void ResetHash();
+	
 	// GetHash: return parsers hash
 	static TOLParserHash& GetHash()
 	{

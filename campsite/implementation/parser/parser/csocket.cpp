@@ -501,7 +501,7 @@ EXCEPTION_DEF(throw(SocketErrorException))
 // if interrupted by a signal.
 // throws ConnectException if other cases of failure to connect !
 ///////////////////////////////////////////////////////////////////////////////////
-int CTCPSocket::Connect(char* remote, int port) EXCEPTION_DEF(throw(SocketErrorException))
+int CTCPSocket::Connect(const char* remote, int port) EXCEPTION_DEF(throw(SocketErrorException))
 {
 	struct sockaddr_in server;
 	struct hostent* h;
@@ -687,7 +687,7 @@ EXCEPTION_DEF(throw(SocketErrorException)): CConnectedSocket(SOCK_DGRAM, PF_INET
 // throws Exception on failure to connect if network Unreachable or
 // if interrupted by a signal.
 ///////////////////////////////////////////////////////////////////////////////////
-int CUDPConnSocket::Connect(char* remote_addr, int port) EXCEPTION_DEF(throw(SocketErrorException))
+int CUDPConnSocket::Connect(const char* remote_addr, int port) EXCEPTION_DEF(throw(SocketErrorException))
 {
 	struct sockaddr_in server;
 	struct hostent* h;

@@ -712,6 +712,7 @@ protected:
 	TIfModifier modifier;		// if modifier
 	TOLPActionList block;		// first list of actions (condition is verified)
 	TOLPActionList sec_block;	// second list of actions (condition is not verified)
+	bool m_bNegated;
 
 	// RunBlock: run actions in a list of actions
 	// Parameters:
@@ -728,10 +729,11 @@ protected:
 
 public:
 	// constructor
-	TOLActIf(TIfModifier m, const TOLParameter& p)
+	TOLActIf(TIfModifier m, const TOLParameter& p, bool p_bNegated = false)
 			: TOLAction(TOL_ACT_IF), param(p), rc_hash(4, intHashFn, intEqual, intValue)
 	{
 		modifier = m;
+		m_bNegated = p_bNegated;
 	}
 	
 	// copy-constructor
@@ -937,7 +939,7 @@ protected:
 
 public:
 	// constructor
-	TOLActEdit(TEditModifier m, string &f, int s) : TOLAction(TOL_ACT_EDIT), field(f)
+	TOLActEdit(TEditModifier m, const string& f, int s) : TOLAction(TOL_ACT_EDIT), field(f)
 	{
 		modifier = m;
 		size = (s == 0 ? 10 : s);
@@ -983,7 +985,7 @@ protected:
 
 public:
 	// constructor
-	TOLActSelect(TSelectModifier m, string& f, string mn = "", string fn = "", bool ck = false)
+	TOLActSelect(TSelectModifier m, const string& f, string mn = "", string fn = "", bool ck = false)
 			: TOLAction(TOL_ACT_SELECT), field(f), male_name(mn), female_name(fn)
 	{
 		modifier = m;
