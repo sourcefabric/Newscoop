@@ -90,7 +90,7 @@ if (isset($files)) {
 		else
 			$c="#D0D0D0";
 	    
-		if(isTpl($j) && $dta) {
+		if(isTpl($j)) {
 			print "<TR BGCOLOR='$c'><TD><TABLE BORDER='0' CELLSPACING='1' CELLPADDING='0'><TR><TD><IMG SRC='/priv/img/icon/generic.gif' BORDER='0'></TD><TD><A HREF='/priv/templates/edit_template.php?Path=".encURL($listbasedir)."&Name=".encURL($j)."'>$j</A></TD></TR></TABLE></TD>";				
 		}
 		else{

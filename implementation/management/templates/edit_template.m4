@@ -46,12 +46,21 @@ E_HEADER_BUTTONS
 E_HEADER
 
 B_CURRENT
-X_CURRENT(<*Path*>, <*<B><? pencHTML(decURL($Path)); ?></B>*>)
+X_CURRENT(<*Path*>, <*<B><A HREF="<? pencHTML(decURL($Path)); ?>"><? pencHTML(decURL($Path)); ?></A></B>*>)
 X_CURRENT(<*Template*>, <*<B><? pencHTML(decURL($Name)); ?></B>*>)
 E_CURRENT
 
 
 B_DIALOG(<*Edit template*>, <*POST*>, <*do_edit.php*>)
+
+	B_DIALOG_BUTTONS
+<? if ($dta != 0) { ?>
+	<INPUT TYPE="IMAGE" SRC="X_ROOT/img/button/save.gif" BORDER="0" ALT="OK"></A>
+	<A HREF="<? pencHTML(decS($Path)); ?>"><IMG SRC="X_ROOT/img/button/cancel.gif" BORDER="0" ALT="Cancel"></A>
+<? } else { ?>
+	<A HREF="<? pencHTML(decS($Path)); ?>"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
+<? } ?>
+	E_DIALOG_BUTTONS
 
 <?
 	$filename = "$DOCUMENT_ROOT".decURL($Path)."$Name";
@@ -60,14 +69,17 @@ B_DIALOG(<*Edit template*>, <*POST*>, <*do_edit.php*>)
 	fclose ($fd);
 ?>
 
-	<TR><TD><TEXTAREA ROWS="30" COLS="100" NAME="cField" WRAP="NO"><? p(decS($contents)) ?></TEXTAREA></TD></TR>
+	<TR><TD><TEXTAREA ROWS="28" COLS="90" NAME="cField" WRAP="NO"><? p(decS($contents)) ?></TEXTAREA></TD></TR>
 	<INPUT TYPE="HIDDEN" NAME="Path" VALUE="<? p($Path); ?>">
 	<INPUT TYPE="HIDDEN" NAME="Name" VALUE="<? p($Name); ?>">
 
 	B_DIALOG_BUTTONS
-X_HR
+<? if ($dta != 0) { ?>
 	<INPUT TYPE="IMAGE" SRC="X_ROOT/img/button/save.gif" BORDER="0" ALT="OK"></A>
 	<A HREF="<? pencHTML(decS($Path)); ?>"><IMG SRC="X_ROOT/img/button/cancel.gif" BORDER="0" ALT="Cancel"></A>
+<? } else { ?>
+	<A HREF="<? pencHTML(decS($Path)); ?>"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
+<? } ?>
 	E_DIALOG_BUTTONS
 E_DIALOG
 
