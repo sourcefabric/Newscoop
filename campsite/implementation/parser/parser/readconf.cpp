@@ -36,10 +36,11 @@ Implementation of the classes defined in readconf.h
 using std::fstream;
 using std::ios;
 
-#define READ_ATTR 0
-#define READ_VAL 1
+#define READ_ARRAY 0
+#define READ_ATTR 1
+#define READ_VALUE 2
 
-void ConfAttrValue::Open(string p_rcoConfFileName) throw (ConfException)
+void ConfAttrValue::open(const string& p_rcoConfFileName) throw (ConfException)
 {
 	fstream coConfFile(p_rcoConfFileName.c_str(), ios::in);
 	if (!coConfFile.is_open())
@@ -50,7 +51,7 @@ void ConfAttrValue::Open(string p_rcoConfFileName) throw (ConfException)
 	}
 	while (!coConfFile.eof())
 	{
-		int nState = READ_ATTR;
+		int nState = READ_ARRAY;
 		string coLastAttr;
 		string coLine;
 		string coWord;
@@ -58,23 +59,28 @@ void ConfAttrValue::Open(string p_rcoConfFileName) throw (ConfException)
 		getline(coConfFile, coLine);
 		while ((coWord = ReadWord(coLine, nIndex)) != "")
 		{
-			if (nState == READ_ATTR)
-			{
-				coLastAttr = coWord;
-				m_coAttrMap[coLastAttr] = "";
-				nState = READ_VAL;
-			}
-			else
-			{
-				if (m_coAttrMap[coLastAttr] != "")
-					m_coAttrMap[coLastAttr] += "";
-				m_coAttrMap[coLastAttr] += coWord;
+			switch (nState) {
+				case READ_ARRAY:
+					if (coWord != "$Campsite")
+						continue;
+					nState = READ_ATTR;
+					break;
+				case READ_ATTR:
+					coLastAttr = coWord;
+					m_coAttrMap[coLastAttr] = "";
+					nState = READ_VALUE;
+					break;
+				case READ_VALUE:
+					if (m_coAttrMap[coLastAttr] != "")
+						m_coAttrMap[coLastAttr] += "";
+					m_coAttrMap[coLastAttr] += coWord;
+					break;
 			}
 		}
 	}
 }
 
-const string& ConfAttrValue::ValueOf(string p_rcoAttribute) const throw (ConfException)
+const string& ConfAttrValue::valueOf(const string& p_rcoAttribute) const throw (ConfException)
 {
 	map<string, string, str_case_less>::const_iterator coAttrIt = m_coAttrMap.find(p_rcoAttribute);
 	if (coAttrIt == m_coAttrMap.end())
@@ -93,19 +99,21 @@ string ConfAttrValue::ReadWord(string& p_rcoLine, int& p_rnIndex)
 	if (nStrLen <= p_rnIndex)
 		return "";
 	int nStartIndex = p_rnIndex;
-	while (nStartIndex <= nStrLen && isDel(pchStr[nStartIndex]))
+	while (nStartIndex <= nStrLen && IsDel(pchStr[nStartIndex]))
 		nStartIndex++;
-	if (nStartIndex == nStrLen)
+	if (nStartIndex >= nStrLen)
 		return "";
 	p_rnIndex = nStartIndex;
-	while (p_rnIndex <= nStrLen && !isDel(pchStr[p_rnIndex]))
+	while (p_rnIndex <= nStrLen && !IsDel(pchStr[p_rnIndex]))
 		p_rnIndex++;
 	return p_rcoLine.substr(nStartIndex, p_rnIndex++ - nStartIndex);
 }
 
-bool ConfAttrValue::isDel(char p_chChar)
+bool ConfAttrValue::IsDel(char p_chChar)
 {
-	if (p_chChar <= ' ' || p_chChar == ',')
+	if (p_chChar <= ' ' || p_chChar == ',' || p_chChar == '[' || p_chChar == ']'
+		   || p_chChar == '\'' || p_chChar == '=' || p_chChar == ';' || p_chChar == '<'
+		   || p_chChar == '>' || p_chChar == '?' || p_chChar == '(' || p_chChar == ')')
 		return true;
 	return false;
 }
