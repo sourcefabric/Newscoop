@@ -98,14 +98,17 @@ class ArticleTopic extends DatabaseObject {
 	 *
 	 * @return array
 	 */
-	function GetArticleTopics($p_articleId, $p_sqlOptions = null) {
+	function GetArticleTopics($p_articleId, $p_languageId = null, $p_sqlOptions = null) {
 		global $Campsite;
 		$tmpTopic =& new Topic();
 		$columnNames = implode(',', $tmpTopic->getColumnNames(true));
     	$queryStr = "SELECT $columnNames FROM ArticleTopics, Topics "
     				." WHERE ArticleTopics.NrArticle = $p_articleId"
-    				.' AND ArticleTopics.TopicId = Topics.Id '
-    				.' ORDER BY Topics.Name ';
+    				.' AND ArticleTopics.TopicId = Topics.Id ';
+    	if (!is_null($p_languageId) && is_numeric($p_languageId)) {
+    		$queryStr .= " AND Topics.LanguageId=$p_languageId";
+    	}
+		$queryStr .= ' ORDER BY Topics.Name ';
     	$queryStr = DatabaseObject::ProcessOptions($queryStr, $p_sqlOptions);
     	return DbObjectArray::Create('Topic', $queryStr);
 	} // fn GetArticleTopics
