@@ -12,6 +12,7 @@ BODY {
 	font-size: 10pt; 
 	color: black;
 	background: white;
+	margin: 0px;
 }
 
 TH, TD, FORM, BLOCKQUOTE, UL, LI { 
@@ -29,8 +30,9 @@ SMALL, ADDRESS {
 A { 
 	font-family: Tahoma, Arial, Helvetica, sans-serif; 
 	font-size: 10pt; 
-	text-decoration: none;
-	color: darkblue; 
+	/*text-decoration: none;*/
+	/*color: darkblue;*/
+	color: black; 
 }
 
 A:active {
@@ -38,7 +40,8 @@ A:active {
 }
 
 A:visited {
-	color: darkblue;
+	/*color: darkblue;*/
+	color: black;
 }
 
 hr {
@@ -161,4 +164,16 @@ hr {
 .search_dialog {
 	background-color: #d5e2ee;
 	border: 1px solid #8baed1;
+}
+
+.breadcrumb {
+	font-weight: bold;
+}
+
+.breadcrumb_separator {
+	padding-left: 8px;
+	padding-right: 8px;
+	background-image: url(/admin-files/img/icon/breadcrumb_separator.gif);
+	background-repeat: no-repeat;
+	background-position: 50% 70%;
 }
