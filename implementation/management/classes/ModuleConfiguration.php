@@ -56,7 +56,7 @@ class ModuleConfiguration
 	 * @param string p_moduleName
 	 * @param string p_directory
 	 *
-	 * @return bool or string in case of error
+	 * @return 0 or string in case of error
 	 */
 	function read($p_moduleName, $p_directory)
 	{
@@ -84,7 +84,7 @@ class ModuleConfiguration
 		foreach ($this->m_variablesList as $key=>$var_name)
 			$this->m_variables[$var_name] = $Campsite[$var_name];
 
-		return true;
+		return 0;
 	}
 
 	/**
@@ -93,7 +93,7 @@ class ModuleConfiguration
 	 * @param string p_moduleName
 	 * @param array p_variables
 	 *
-	 * @return bool or string in case of error
+	 * @return 0 or string in case of error
 	 */
 	function create($p_moduleName, $p_variables)
 	{
@@ -103,7 +103,7 @@ class ModuleConfiguration
 		$this->m_moduleName = $p_moduleName;
 		$this->m_variables = $p_variables;
 		$this->m_variablesList = array_keys($p_variables);
-		return true;
+		return 0;
 	}
 
 	/**
@@ -111,7 +111,7 @@ class ModuleConfiguration
 	 *
 	 * @param string p_destDirectory
 	 *
-	 * @return bool or string in case of error
+	 * @return 0 or string in case of error
 	 */
 	function save($p_destDirectory = "")
 	{
@@ -126,7 +126,7 @@ class ModuleConfiguration
 
 		// compute the configuration file path and create the file
 		$file_path = ModuleConfiguration::configurationFilePath($moduleName, $directory);
-		if (!$file = fopen($file_path, "w+"))
+		if (!$file = @fopen($file_path, "w+"))
 			return "Unable to create configuration file \"$file_path\"";
 		fputs($file, "<?php\n\n");
 		foreach($this->m_variables as $var_name=>$value)
@@ -134,7 +134,7 @@ class ModuleConfiguration
 		fputs($file, "\n\$CampsiteVars['$moduleName'] = array('"
 		      . implode("', '", $this->m_variablesList) . "');\n\n?>");
 		fclose($file);
-		return true;
+		return 0;
 	}
 
 	/**
@@ -150,7 +150,7 @@ class ModuleConfiguration
 	/**
 	 * Return the variables list as array
 	 *
-	 * @return array
+	 * @return array or false in case of error
 	 */
 	function variablesList()
 	{
