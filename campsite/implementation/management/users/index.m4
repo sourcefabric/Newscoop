@@ -123,7 +123,7 @@ B_LIST
 	
 	if ($dua != 0) { ?>
 		B_LIST_ITEM(<*CENTER*>)
-			X_BUTTON(<*<?php  putGS('Delete user $1',getHVar($Users,'Name')); ?>*>, <*icon/x.gif*>, <*users/del.php?User=<?php  pgetVar($Users,'Id'); ?>*>)
+			X_BUTTON(<*<?php  putGS('Delete user $1',getHVar($Users,'Name')); ?>*>, <*icon/delete.png*>, <*users/del.php?User=<?php  pgetVar($Users,'Id'); ?>*>)
 		E_LIST_ITEM
 	<?php  } ?>
 	E_LIST_TR
