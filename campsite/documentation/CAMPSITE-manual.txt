@@ -1586,6 +1586,7 @@ Constraints:
 Select Subscription can be used inside Subscription-EndSubscription statement only.
 Select User can be used inside User-EndUser statement only.
 Select Search can be used inside Search-EndSearch statement only.
+Select Login can be used inside Login-EndLogin statement only.
 
 4. APENDIX I - ALPHABETIC LIST OF LANGUAGE STATEMENTS
 Article (3.9.2.5)
