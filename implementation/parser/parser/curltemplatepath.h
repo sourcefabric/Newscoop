@@ -81,6 +81,8 @@ public:
 
 	virtual string getTemplate() const;
 
+	virtual bool needTemplateParameter() const;
+
 private:
 	// BuildURI(): internal method; builds the URI string from object attributes
 	void BuildURI() const;
@@ -147,6 +149,11 @@ inline string CURLTemplatePath::getURI() const
 inline string CURLTemplatePath::getURLType() const
 {
 	return CURLTemplatePathType::typeName();
+}
+
+inline bool CURLTemplatePath::needTemplateParameter() const
+{
+	return false;
 }
 
 inline CURL* CURLTemplatePathType::getURL(const CMsgURLRequest& p_rcoMsg) const

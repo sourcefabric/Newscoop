@@ -147,6 +147,8 @@ public:
 
 	virtual string getTemplate() const = 0;
 
+	virtual bool needTemplateParameter() const = 0;
+
 	// readQueryString(): static method; reads the parameters from the query string
 	static String2StringMMap* readQueryString(const string& p_rcoQueryString,
 	                                          String2StringMMap* p_pcoParams = NULL);

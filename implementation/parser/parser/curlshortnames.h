@@ -84,6 +84,8 @@ public:
 
 	virtual string getTemplate() const;
 
+	virtual bool needTemplateParameter() const;
+
 private:
 	// BuildURI(): internal method; builds the URI string from object attributes
 	void BuildURI() const;
@@ -145,6 +147,11 @@ inline string CURLShortNames::getURI() const
 	if (m_coQueryString == "")
 		return m_coURIPath;
 	return m_coURIPath + "?" + m_coQueryString;
+}
+
+inline bool CURLShortNames::needTemplateParameter() const
+{
+	return true;
 }
 
 inline string CURLShortNames::getURLType() const
