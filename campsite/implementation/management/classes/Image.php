@@ -2,6 +2,7 @@
 
 require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DatabaseObject.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DbObjectArray.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleImage.php');
 require_once('HTTP/Client.php');
@@ -490,17 +491,24 @@ class Image extends DatabaseObject {
 		$queryColumnNames = implode(",", $queryColumnNames);			
 		$queryStr = 'SELECT DISTINCT Users.Id, '.$queryColumnNames
 					.' FROM Images, Users WHERE Images.UploadedByUser = Users.Id';
-		$result = $Campsite['db']->GetAll($queryStr);
-		$users = array();
-		if (is_array($result)) {
-			foreach ($result as $row) {
-				$tmpUser =& new User();
-				$tmpUser->fetch($row);
-				$users[] =& $tmpUser;
-			}
-		}
+		$users =& DbObjectArray::Create('User', $queryStr);
 		return $users;
 	} // fn GetUploadUsers
+	
+	
+	/**
+	 * Fetch an image object by matching the URL.
+	 * @param string p_url
+	 * @return Image
+	 */
+	function GetByUrl($p_url) {
+		global $Campsite;
+		$queryStr = "SELECT * FROM Images WHERE URL='".mysql_real_escape_string($p_url)."'";
+		$row = $Campsite['db']->GetRow($queryStr);
+		$image =& new Image();
+		$image->fetch($row);
+		return $image;
+	} // fn GetByUrl
 	
 	
 	/**
