@@ -2,6 +2,7 @@
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
 load_common_include_files("$ADMIN_DIR/imagearchive");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/imagearchive/include.inc.php");
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ImageSearch.php');
@@ -13,19 +14,12 @@ if (!$access) {
 	header("Location: /$ADMIN_DIR/logout.php");
 	exit;
 }
-$ImageId = isset($_REQUEST['image_id'])?$_REQUEST['image_id']:0;
-$imageNav =& new ImageNav($_REQUEST, CAMPSITE_IMAGEARCHIVE_IMAGES_PER_PAGE, $_REQUEST['view']);
-if (!is_numeric($ImageId) || ($ImageId <= 0)) {
+$ImageId = Input::Get('image_id', 'int', 0);
+if (!Input::IsValid()) {
 	header('Location: index.php?'.$imageNav->getSearchLink());
 	exit;	
 }
-
-// This file can only be accessed if the user has the right to change images.
-if (!$User->hasPermission('ChangeImage')) {
-	header("Location: /$ADMIN_DIR/logout.php");
-	exit;		
-}
-
+$imageNav =& new ImageNav($_REQUEST, CAMPSITE_IMAGEARCHIVE_IMAGES_PER_PAGE, $_REQUEST['view']);
 $imageObj =& new Image($ImageId);
 $articles =& ArticleImage::GetArticlesThatUseImage($ImageId);
 ?>
@@ -44,7 +38,14 @@ $articles =& ArticleImage::GetArticlesThatUseImage($ImageId);
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
 <TR>
 	<TD class="page_title">
-		<?php  putGS("Change image information"); ?>
+		<?php  
+		if ($User->hasPermission('ChangeImage')) {
+			putGS('Change image information'); 
+		}
+		else {
+			putGS('View image');
+		}
+		?>
 	</TD>
 	<TD ALIGN="RIGHT">
 		<A HREF="index.php?<?php echo $imageNav->getSearchLink(); ?>" class="breadcrumb"><?php  putGS("Image archive");  ?></A>
@@ -52,8 +53,22 @@ $articles =& ArticleImage::GetArticlesThatUseImage($ImageId);
 </TR>
 </TABLE>
 
-<CENTER><IMG SRC="<?php echo $imageObj->getImageUrl(); ?>" BORDER="0" ALT="<?php echo htmlspecialchars($imageObj->getDescription()); ?>"></CENTER>
+<table>
+<tr>
+	<td>
+		<img src="/<?php p($ADMIN); ?>/img/icon/back.png" border="0">
+	<td>
+	<td class="action_link">
+		<a href="index.php?<?php p($imageNav->getSearchLink()); ?>"><?php putGS('Back to image archive'); ?></a>
+	</td>
+</tr>
+</table>
+
+<CENTER>
+<IMG SRC="<?php echo $imageObj->getImageUrl(); ?>" BORDER="0" ALT="<?php echo htmlspecialchars($imageObj->getDescription()); ?>">
+</CENTER>
 <P>
+<?php if ($User->hasPermission('ChangeImage')) { ?>
 <FORM NAME="dialog" METHOD="POST" ACTION="do_edit.php?<?php echo $imageNav->getSearchLink(); ?>" ENCTYPE="multipart/form-data">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" ALIGN="CENTER" class="table_input">
 <TR>
@@ -120,6 +135,8 @@ if ($imageObj->getLocation() == 'remote') {
 </FORM>
 <P>
 <?php
+} // if ($User->hasPermission('ChangeImage'))
+
 if (count($articles) > 0) {
 	// image is in use //////////////////////////////////////////////////////////////////
 	?>
@@ -148,7 +165,8 @@ if (count($articles) > 0) {
 			echo '<td>';
 		}
 		echo htmlspecialchars($article->getTitle())."</td>
-			  <td width=\"10%\" align=\"center\"><a href=\"/$ADMIN/pub/issues/sections/articles/edit.php?Pub=".htmlspecialchars($article->getPublicationId()).'&Issue='.$article->getIssueId().'&Section='.$article->getSectionId().'&Article='.$article->getArticleId().'&Language='.$article->getLanguageId().'&sLanguage='.$article->getLanguageId().'">'.getGS('Edit').'</a></td></tr>';
+			<td width=\"10%\" align=\"center\">
+			<a href=\"/$ADMIN/pub/issues/sections/articles/edit.php?Pub=".htmlspecialchars($article->getPublicationId()).'&Issue='.$article->getIssueId().'&Section='.$article->getSectionId().'&Article='.$article->getArticleId().'&Language='.$article->getLanguageId().'&sLanguage='.$article->getLanguageId().'">'.getGS('Edit').'</a></td></tr>';
 		$previousArticleId = $article->getArticleId();
 	}
 	?>
