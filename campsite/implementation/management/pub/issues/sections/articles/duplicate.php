@@ -194,7 +194,7 @@ ArticleTop($articleObj, $Language, "Duplicate article");
 			}
 			?>
 			><?php p(htmlspecialchars($tmpSection->getName())); ?></option>
-			<?			
+			<?php
 		}
 		?>
 		</SELECT>
