@@ -151,7 +151,7 @@ function onCancel() {
 	<td class="label">Publication:</td>
     <td>
     	<?php
-    	$publications = Publication::getAllPublications();
+    	$publications = Publication::GetAllPublications();
     	$options = array();
     	$options[0] = "?";
     	foreach ($publications as $publication) {
@@ -174,7 +174,7 @@ function onCancel() {
     	$options = array();
     	$options[0] = "?";
     	if (($languageId != 0) && ($publicationId != 0)) {
-	    	$issues = Issue::getIssuesInPublication($publicationId, $languageId);
+	    	$issues = Issue::GetIssuesInPublication($publicationId, $languageId);
 	    	foreach ($issues as $issue) {
 	    		$options[$issue->getIssueId()] = substr($issue->getName(), 0, $maxSelectLength);
 	    	}
@@ -195,7 +195,7 @@ function onCancel() {
     	$options = array();
     	$options[0] = "?";
     	if (($languageId != 0) && ($publicationId != 0) && ($issueId != 0)) {
-	    	$sections = Section::getSectionsInIssue($publicationId, $issueId, $languageId);
+	    	$sections = Section::GetSectionsInIssue($publicationId, $issueId, $languageId);
 	    	foreach ($sections as $section) {
 	    		$options[$section->getSectionId()] = substr($section->getName(), 0, $maxSelectLength);
 	    	}
