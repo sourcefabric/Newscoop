@@ -15,35 +15,30 @@ if (!$access) {
 	header('Location: /priv/logout.php');
 	exit;
 }
-$Pub = isset($_REQUEST['Pub'])?$_REQUEST['Pub']:0;
-$Issue = isset($_REQUEST['Issue'])?$_REQUEST['Issue']:0;
-$Section = isset($_REQUEST['Section'])?$_REQUEST['Section']:0;
-$Language = isset($_REQUEST['Language'])?$_REQUEST['Language']:0;
-$sLanguage = isset($_REQUEST['sLanguage'])?$_REQUEST['sLanguage']:0;
-$Article = isset($_REQUEST['Article'])?$_REQUEST['Article']:0;
-$Image = isset($_REQUEST['Image'])?$_REQUEST['Image']:0;
+$PublicationId = isset($_REQUEST['PublicationId'])?$_REQUEST['PublicationId']:0;
+$IssueId = isset($_REQUEST['IssueId'])?$_REQUEST['IssueId']:0;
+$SectionId = isset($_REQUEST['SectionId'])?$_REQUEST['SectionId']:0;
+$ArticleLanguageId = isset($_REQUEST['ArticleLanguageId'])?$_REQUEST['ArticleLanguageId']:0;
+$ArticleId = isset($_REQUEST['ArticleId'])?$_REQUEST['ArticleId']:0;
+$ImageId = isset($_REQUEST['ImageId'])?$_REQUEST['ImageId']:0;
+$InterfaceLanguageId = isset($_REQUEST['InterfaceLanguageId'])?$_REQUEST['InterfaceLanguageId']:0;
 
-$articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
-$publicationObj =& new Publication($Pub);
-$issueObj =& new Issue($Pub, $Language, $Issue);
-$languageObj =& new Language($Language);
-$sectionObj =& new Section($Pub, $Issue, $Language, $Section);
+$articleObj =& new Article($PublicationId, $IssueId, $SectionId, $ArticleLanguageId, $ArticleId);
 
 // This file can only be accessed if the user has the right to change articles
 // or the user created this article and it hasnt been published yet.
-if (!$User->hasPermission('ChangeArticle') 
+if (!$User->hasPermission('ChangeArticle') || !$User->hasPermission('DeleteImage')
 	|| (($articleObj->getUserId() == $User->getId()) && ($articleObj->getPublished() == 'N'))) {
 	header('Location: /priv/logout.php');
 	exit;		
 }
 
-$imageObj =& new Image($Image);
-$imageObj->delete($attributes);
-
-$logtext = getGS('Image $1 deleted', $imageObj->getDescription()); 
+$imageObj =& new Image($ImageId);
+$imageObj->delete();
+$logtext = getGS('Image $1 deleted', $imageObj->getImageId()); 
 Log::Message($logtext, $User->getUserName(), 42);
 
 // Go back to article image list.
-header('Location: '.CampsiteInterface::ArticleUrl($articleObj, $sLanguage, 'images/'));
+header('Location: '.CampsiteInterface::ArticleUrl($articleObj, $InterfaceLanguageId, 'images/'));
 
 ?>
