@@ -26,6 +26,7 @@ regGS("Templates","Templates:en");
 regGS("Topics","Topics:en");
 regGS("Path","Path:en");
 regGS("Go up","Go up:en");
+regGS("Configure", "Configure:en");
 
 regGS("Duplicate", "Duplicate:en");
 regGS("Select destination", "Select destination:en");
