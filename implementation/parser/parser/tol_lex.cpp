@@ -129,6 +129,15 @@ void TOLLex::InitStatements()
 	ah.insert_unique(TOLAttribute("number", TOL_DT_NUMBER));
 	ah.insert_unique(TOLAttribute("englname", TOL_DT_STRING, "Name"));
 	ah.insert_unique(TOLAttribute("code", TOL_DT_STRING, "Code"));
+	ah.insert_unique(TOLAttribute("defined", TOL_DT_NONE));
+	ah.insert_unique(TOLAttribute("fromstart", TOL_DT_NONE));
+	sch.insert_unique(TOLStatementContext(TOL_CT_IF, ah));
+
+	ah.clear();
+	ah.insert_unique(TOLAttribute("name", TOL_DT_STRING, "OrigName"));
+	ah.insert_unique(TOLAttribute("number", TOL_DT_NUMBER));
+	ah.insert_unique(TOLAttribute("englname", TOL_DT_STRING, "Name"));
+	ah.insert_unique(TOLAttribute("code", TOL_DT_STRING, "Code"));
 	ah.insert_unique(TOLAttribute("codepage", TOL_DT_STRING, "CodePage"));
 	sch.insert_unique(TOLStatementContext(TOL_CT_PRINT, ah));
 

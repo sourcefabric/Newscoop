@@ -1592,7 +1592,8 @@ inline int TOLParser::HIf(TOLPActionList& al, int lv, int sublv, const TOLLexem*
 		sublv |= SUBLV_IFISSUE;
 		modifier = TOL_IMOD_ISSUE;
 	}
-	else if (ist->statement == TOL_ST_SECTION || ist->statement == TOL_ST_ARTICLE)
+	else if (ist->statement == TOL_ST_SECTION || ist->statement == TOL_ST_ARTICLE
+	         || ist->statement == TOL_ST_LANGUAGE)
 	{
 		RequireAtom(l);
 		ValidateAttr(attr, ist, l, TOL_CT_IF, 1);
@@ -1631,10 +1632,14 @@ inline int TOLParser::HIf(TOLPActionList& al, int lv, int sublv, const TOLLexem*
 			sublv |= SUBLV_IFSECTION;
 			modifier = TOL_IMOD_SECTION;
 		}
-		else
-		{ // TOL_ST_ARTICLE
+		else if (ist->statement == TOL_ST_ARTICLE)
+		{
 			sublv |= SUBLV_IFARTICLE;
 			modifier = TOL_IMOD_ARTICLE;
+		}
+		else
+		{ // TOL_ST_LANGUAGE
+			modifier = TOL_IMOD_LANGUAGE;
 		}
 	}
 	else
