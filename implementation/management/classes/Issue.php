@@ -46,11 +46,13 @@ class Issue extends DatabaseObject {
 	} // fn GetAllIssues
 	
 	
-	function GetIssuesInPublication($p_publicationId, $p_languageId) {
+	function GetIssuesInPublication($p_publicationId, $p_languageId = null) {
 		global $Campsite;
 		$queryStr = 'SELECT * FROM Issues '
-					." WHERE IdPublication='".$p_publicationId."'"
-					." AND IdLanguage='".$p_languageId."'";
+					." WHERE IdPublication='".$p_publicationId."'";
+		if (!is_null($p_languageId)) {
+			$queryStr .= " AND IdLanguage='".$p_languageId."'";
+		}
 		$query = $Campsite['db']->Execute($queryStr);
 		$issues = array();
 		while ($row = $query->FetchRow()) {
