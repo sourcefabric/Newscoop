@@ -18,10 +18,6 @@ if [ "$cc_interactive" = "--interactive" ]; then
 
 echo -e "\nCampsite application is composed out of modules. Before installing"
 echo "campsite they must be configured."
-rm -fr $INSTALL_CONF/.inst.modules
-for cc_mod in `modules_list`; do
-    echo $cc_mod >> $INSTALL_CONF/.inst.modules
-done
 echo ""
 choice_yn "Do you want to read the description of campsite modules?" N
 if [ "$choice" = "Y" ]; then
