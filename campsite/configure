@@ -68,6 +68,7 @@ if [ "$read_only" = "false" ]; then
     done
 else
     check4_make
+    check4_m4
     prepare_install_env
     install_conf --set
     for sel_mod in $SELECTED_MODULES; do
@@ -99,6 +100,7 @@ export CAMPSITE_VERSION="$CAMPSITE_VERSION"
 export CLASS_DIR=$PREFIX/usr/lib/netscape/java/classes
 export PROCESSOR_TYPE=\`uname -m\`
 export MAKE=$MAKE
+export M4=$M4
 export IMPLEMENTATION_PARTS=$IMPLEMENTATION_PARTS
 export SUPPLEMENTAL_PARTS=$SUPPLEMENTAL_PARTS
 export CAMPSITE_REGISTER=$CAMPSITE_REGISTER
@@ -152,6 +154,7 @@ fi
 else # else if define start env
 
     check4_make
+    check4_m4
     prepare_install_env
     install_conf --set
     modules_conf --set
@@ -171,6 +174,7 @@ export BIN_PACKAGE_DIR=$CAMPSITE_PACKAGE_DIR/.package/campsite
 export CLASS_DIR=$PREFIX/usr/lib/netscape/java/classes
 export PROCESSOR_TYPE=`uname -m`
 export MAKE=$MAKE
+export M4=$M4
 export IMPLEMENTATION_PARTS=$IMPLEMENTATION_PARTS
 export SUPPLEMENTAL_PARTS=$SUPPLEMENTAL_PARTS
 export CAMPSITE_REGISTER=$PREFIX/etc/campsite.reg
