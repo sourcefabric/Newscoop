@@ -46,7 +46,7 @@ foreach ($publications as $publication) {
 			array('LIMIT' => 5, 'ORDER BY' => array('Number' => 'DESC')));
 }
 $sections = array();
-if ((count($publications) + count($issues)) < 12) {
+if ((count($publications) + count($issues)) <= 12) {
 	foreach ($publications as $publication) {
 		foreach ($issues[$publication->getPublicationId()] as $issue) {
 			$sections[$issue->getIssueId()] = 
