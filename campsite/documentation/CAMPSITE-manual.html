@@ -21,7 +21,7 @@
 <P><a href="#introduction">INTRODUCTION</a><br>
   <a href="#copyright">COPYRIGHT</a> </P>
 <P>1. <a href="#1.">INSTALLATION GUIDE</a></P>
-<blockquote> 
+<blockquote>
   <p>1.1. <a href="#1.1.">REQUIREMENTS</a><br>
     1.2. <a href="#1.2.">TODO</a></p>
   <blockquote> 
@@ -195,8 +195,8 @@
 <P>- add the following lines:<br>
   <font face="Courier New, Courier, mono">AddHandler www-sql .xql <br>
   Action www-sql /cgi-bin/www-sql<br>
-  AddHandler parser .tpl<br>
-  Action parser /cgi-bin/parser</font></P>
+  AddHandler tpl_handler .tpl<br>
+  Action tpl_handler /cgi-bin/tpl_cgi</font></P>
 <P>- make sure that the server has the rights to read, write and execute in the
   folder where the file are stored and uploaded. Standardly, the user and group
   should be set as 'httpd'; the rights should be set as 'rwx' for the user and
