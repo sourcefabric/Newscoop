@@ -740,6 +740,32 @@ function register_templates($dir, $root_dir, &$errors, $level = 0)
 	return $count;
 }
 
+function server_port()
+{
+	global $SERVER_PORT, $SERVER_DEFAULT_PORT;
+
+	return $SERVER_PORT == 0 ? $SERVER_DEFAULT_PORT : $SERVER_PORT;
+}
+
+function send_message($address, $server_port, $msg, &$err_msg, $socket = false, $close_socket = true)
+{
+	if (!$socket) {
+		@$socket = fsockopen($address, $server_port, $errno, $errstr, 30);
+		if (!$socket) {
+			$err_msg = "Unable to connect to server: " . $errstr . " (" . $errno . ")";
+			return false;
+		}
+	}
+
+	fwrite($socket, $msg);
+	fflush($socket);
+	if ($close_socket) {
+		fclose($socket);
+		return true;
+	}
+	return $socket;
+}
+
 if (file_exists ($_SERVER['DOCUMENT_ROOT'].'/priv/modules/admin/priv_functions.php'))
   include ($_SERVER['DOCUMENT_ROOT'].'/priv/modules/admin/priv_functions.php');
 ?>
