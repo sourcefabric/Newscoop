@@ -1,0 +1,23 @@
+#!/bin/sh
+
+if [ "$1" = "" ]; then
+	echo "please supply the configuration directory as an argument"
+	exit 1
+fi
+
+conf_dir=$1
+
+bin_path=`dirname $0`
+if [ "$bin_path" = "." ] || [ "$bin_path" = "" ]; then
+	script_call="./autopublish.php"
+else
+	script_call="$bin_path/autopublish.php"
+fi
+
+
+for inst_dir in $conf_dir/*; do
+	if [ ! -f "$inst_dir/database_conf.php" ]; then
+		continue
+	fi
+	php "$script_call" "$inst_dir"
+done
