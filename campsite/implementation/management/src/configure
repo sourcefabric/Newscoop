@@ -1,16 +1,16 @@
 #!/bin/bash
 
-[ "$CAMPSITE_PACKAGE_DIR" = "" ] && cd ../../.. && . ./configure --define_start_env && cd implementation/management/src
-. ${INSTALL_CONF}/conf_functions
+[ -f configure.h ] && [ -f dir_conf.h ] && exit 0
 
-var_not_modified APP_NAME && [ -f configure.h ] && [ -f dir_conf.h ] && exit 0
-save_var APP_NAME
+pushd ../../.. > /dev/null
+. ./make.env
+popd > /dev/null
 
 echo -n -e "\t\tWriting configure.h header..."
 cat > configure.h << EOF
 /******************************************************************************
 
-Defines used to connect to MySQL database server
+Defines path to configuration directory
 
 WARNING!!! This file is generated. Do not edit!
 
@@ -19,7 +19,7 @@ WARNING!!! This file is generated. Do not edit!
 #ifndef _CONFIGURE_H
 #define _CONFIGURE_H
 
-#define DATABASE_CONF_FILE "${CONF_DIR}/database.conf"
+#define ETC_DIR "$ETC_DIR"
 
 #endif
 EOF
