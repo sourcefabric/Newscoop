@@ -4,7 +4,6 @@
 regGS("Delete article $1","Delete article $1:en");
 
 // -- add.m4
-regGS("You do not have the right to add articles.","You do not have the right to add articles.:en");
 regGS("Show article on front page","Show article on front page:en");
 regGS("Show article on section page","Show article on section page:en");
 regGS("Enter keywords, comma separated","Enter keywords, comma separated:en");
@@ -77,5 +76,16 @@ regGS("This article has been locked by $1 ($2) at","This article has been locked
 regGS("Now is $1","Now is $1:en");
 regGS("Are you sure you want to unlock it?","Are you sure you want to unlock it?:en");
 regGS("Edit Article","Edit Article:en");
+
+// -- duplicate.m4
+regGS("Duplicate article", "Duplicate article");
+regGS("Duplicating article", "Duplicating article");
+
+// -- dupform.m4
+regGS("The destination section is the same as the source section.", "The destination section is the same as the source section.:en");
+
+// -- do_duplicate.m4
+regGS("The article $1 has been duplicated as $2", "The article $1 has been duplicated as $2:en");
+regGS("The article $1 could not be duplicated", "The article $1 could not be duplicated:en");
 
 ?>
