@@ -1,6 +1,6 @@
 export PRIV_DIR5=$(PRIV_DIR4)/articles
 
-MY_TARGETS=index.php add.php do_add.php del.php do_del.php edit.php edit_b.php edit_b_ns.php edit_b_apple.php edit_t.php preview.php status.php do_status.php upload.php translate.php do_translate.php empty.php list.php do_edit.php do_edit_t.php do_unlock.php
+MY_TARGETS=index.php add.php do_add.php del.php do_del.php edit.php edit_b.php edit_b_ns.php edit_b_apple.php edit_b_firebird.php edit_t.php preview.php status.php do_status.php upload.php translate.php do_translate.php empty.php list.php do_edit.php do_edit_t.php do_unlock.php
 
 subsystem: all
 	$(MAKE) -C images
