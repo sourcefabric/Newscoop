@@ -39,6 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 using std::cout;
 using std::endl;
 
+string DATABASE_CONF_FILE;
 string SMTP_SERVER;
 string SMTP_WRAPPER;
 string SQL_SERVER;
