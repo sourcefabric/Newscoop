@@ -2,4 +2,4 @@ DATABASE:implementation/database::make mysql_h libmysqlclient mysql mysqladmin:
 PARSER:implementation/parser @ADMIN_INTERFACE:DATABASE:make killall libz libmysqlclient libcrypt libpthread:gpp mysql_h socket_h pthread_h semaphore_h stl libnsl gethostbyaddr_r gethostbyname_r getservbyname_r xml
 EVENT_HANDLERS:implementation/mailnotify:DATABASE:crond make libz libmysqlclient libcrypt:gpp mysql_h socket_h
 SEARCH_ENGINE:implementation/search:DATABASE:crond make libz libmysqlclient libcrypt:gpp mysql_h socket_h
-ADMIN_INTERFACE:implementation/java implementation/management implementation/tpl_cgi:DATABASE:make libz libmysqlclient libcrypt apache iconv:m4 gpp mysql_h socket_h xml
+ADMIN_INTERFACE:implementation/management implementation/tpl_cgi:DATABASE:make libz libmysqlclient libcrypt apache iconv:m4 gpp mysql_h socket_h xml
