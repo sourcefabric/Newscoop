@@ -73,7 +73,7 @@ echo 'E_LIST_HEADER'
 tmpfile="/tmp/ls_url-$$"
 X_SCRIPT_BIN/ls_url d "$DOCUMENT_ROOT" "$1" > $tmpfile
 echo "EOF" >> $tmpfile
-cat $tmpfile | list_dirs
+cat $tmpfile | list_dirs $1 $2
 rm -f $tmpfile
 echo 'E_LIST'
 echo '</TD><TD WIDTH="60%" VALIGN="TOP">'
@@ -86,7 +86,7 @@ fi
 echo 'E_LIST_HEADER'
 X_SCRIPT_BIN/ls_url f "$DOCUMENT_ROOT" "$1" > $tmpfile
 echo "EOF" >> $tmpfile
-cat $tmpfile | list_files
+cat $tmpfile | list_files $1 $2
 rm -f $tmpfile
 echo 'E_LIST'
 echo '</TD></TR>'

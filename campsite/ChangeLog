@@ -31,6 +31,7 @@
     - Fixed bug on template list: didn't print properly file names containg spaces
     - Small enhancement on template list: print files/directories in alphabetical
     order
+    - Fixed small bug on install/uninstall scripts
 
 2.0.10
     - Fixed the 'Back to article details' bug
