@@ -1,10 +1,10 @@
 CAMPSITE
 Web Automation Tool User Guide
-CAMPSITE version: 2.1.4 and newer versions
+CAMPSITE version: 2.1.5 and newer versions
 Maintained and distributed under GNU/GPL by CAMPWARE http://www.campware.org
-Manual version: October 20, 2003
+Manual version: March 26, 2004
 Language: English
-©1999-2003 Media Development Loan Fund
+©1999-2004 Media Development Loan Fund
 http://www.mdlf.org - http://www.mdlf-camp.net
 Table of Contents
 INTRODUCTION
@@ -76,7 +76,7 @@ The original CAMPSITE concept was developed by Center for Advanced Media-Prague 
 Test drives of CAMPSITE are available at the campware project site (http://www.campware.org). Mail us for any related questions at contact@campware.org.
 CAMPSITE tech specs in a nutshell:
 CAMPSITE server: 
-runs on a Linux server, originally tested on RedHat 7.0 and Mandrake 8.0 and has proved compatible with RedHat 7.1, 7.2, 8.0, Mandrake 8.1, 8.2, 9.0 and Debian
+runs on a Linux server, originally tested on RedHat 7.0 and Mandrake 8.0 and has proved compatible with RedHat 7.1, 7.2, 8.0, 9.0; Mandrake 8.1, 8.2, 9.0, 9.1, 9.2 and Debian
 requires an Apache web server to be running, and its virtual servers to be configured by the administrator.
 needs a MySQL database server for Linux to be able to store data. The tests were made on MySQL v.3.23.36.
 requires PHP (version 3.0 and up) to be running.
@@ -84,7 +84,7 @@ CAMPSITE client side:
 runs on top of standard Java Virtual Machine Plugin (plugin version 1.3.1 and up) in Netscape under Unix (tested on version 6.2), Netscape under Windows (versions 6.2 and up),and MS Internet Explorer (versions 5.0 and up). On Macintosh it works in Internet Explorer under OS X.
 COPYRIGHT
 CAMPSITE is a Unicode-based multilingual web content management system for news publications. CAMPFIRE is a Unicode-based java-based near-WYSIWYG text editor. 
-Copyright ©1999-2003 Media Development Loan Fund.
+Copyright ©1999-2004 Media Development Loan Fund.
 Contact: http://www.campware.org
 Campware encourages further development and financial contributions. Please let us know at contact@campware.org.
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version. This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
@@ -340,9 +340,15 @@ Once you have successfully created your first publication, click on its name (e.
 The options you will be presented with are 'Create a new structure' and 'Use the structure of the previous issue'. If you are creating a new publication from the ground up, the first option is your only real choice.
 The second option will be the one to choose once you are ready to publish additional issues of your publication, because it allows you to automatically create a new issue with the same logical structure (sections) as the preceding one. Sections are created but are empty, so that you can begin to add articles immediately. You should possibly only change the name of the new issue, because it will otherwise remain the same as the last issue. The templates, however, are not copied, so the new issue must be linked to a template for the front page (see the NOTE below for more details).
 You can introduce changes to the structure of the issue you just created, including adding or deleting sections or adding new article types, changing field choices within article types, etc.
-[NOTE: If you are copying the structure of an old issue, you need to connect the new issue to a front-page template (see Section 3 of this manual). If you are not bent on changing the look of your publication, just select the old template; If you wish to alter the visual layout of your publication, you should select a new template that you have meanwhile created. Regardless of your choice, old issues will keep their original layout (unless you go back and change their template associations manually for each of them).
-Whichever option you choose, that is to replicate the structure of the last issue or create a brand new structure, you will be able to change the name, the default language and the number of the issue.]
-[TIP: While you can always go back and change the name and the default language of an issue at any time, the issue number cannot be changed once it is specified. If you are planning to add older issues of your newspaper/static-HTML site at a later stage to the same CAMPSITE publication, you may consider continuing the series. For example, if you just published issue 154 of the "Prague Times" in static HTML before moving to CAMPSITE, you could assign number 155 to the first issue you are creating within CAMPSITE.]
+NOTE: It is possible to keep the look for the old editions and in the same time to have a new look for the new ones. There are a few steps you have to take:
+1.template directories: create the new templates in a separate directory
+2.admin interface: select the new issue and article templates for the issue (e.g. template /new/issue.tpl and /new/article.tpl) and leave the old issues as they are
+3.editing templates: when creating links to issue and article templates use "Print Issue Template" and "Print Article Template" instead of manually writing the template path:
+<a href="<!** print issue template>?<!** urlparameters>">link</a>
+instead of:
+<a href="/look/old/issue.tpl?<!** urlparameters>">link</a>
+This step is specially important for the search template!
+TIP: While you can always go back and change the name and the default language of an issue at any time, the issue number cannot be changed once it is specified. If you are planning to add older issues of your newspaper/static-HTML site at a later stage to the same CAMPSITE publication, you may consider continuing the series. For example, if you just published issue 154 of the "Prague Times" in static HTML before moving to CAMPSITE, you could assign number 155 to the first issue you are creating within CAMPSITE.
 2.2.3 Adding new sections to an issue
 By clicking on an issue, you will enter the Sections view in which you will have the option of adding new sections to the current issue by clicking on 'Add new section'. You should specify the name and section number (within the issue). While you can come back later and change the name of the section, the section number can be chosen only at the time when the new section is added.
 In 2.1.1. version a new feature was implemented: update subscriptions when adding/editing/deleting sections.  If "Add section to all subscriptions" was checked all subscriptions will have this section added to them. On delete, if "Delete section from all subscriptions" was checked all subscriptions will have this section removed from them. The sections can be added to or deleted from subscriptions when editing the section too.
@@ -352,7 +358,7 @@ The next step in setting up your publication is to define the types of articles 
 After you name the field, you have to specify its type. There are three options:
 Text - this type of field can contain a maximum of 265 characters. It does not support HTML tags and it its appearance/formatting/character set is entirely determined by the template (see section 3 for more information on templates).
 Date - this is a standard date field with a fixed syntax of YYYY-MM-DD
-Body - this type of field can be up to 64KB in size (database space, however, is used optimally, as the database server adjusts the size on the disk to be sure the field fits, so there is no waste of space). More important, this type of field is edited with CAMPSITE's near-WYSIWYG Java editor -- CAMPFIRE. CAMPFIRE enables you to enter text in any character set, and even in multiple character sets. Text entered through CAMPFIRE is independent of the format and character set specified by the template. Moreover, CAMPFIRE allows you to insert images, links, and formatting tags, as well as special CAMPSITE Glossary tags (for more on Glossary, see section 2.3).
+Body - this type of field can be up to 16MB in size (database space, however, is used optimally, as the database server adjusts the size on the disk to be sure the field fits, so there is no waste of space). More important, this type of field is edited with CAMPSITE's near-WYSIWYG Java editor -- CAMPFIRE. CAMPFIRE enables you to enter text in any character set, and even in multiple character sets. Text entered through CAMPFIRE is independent of the format and character set specified by the template. Moreover, CAMPFIRE allows you to insert images, links, and formatting tags, as well as special CAMPSITE Glossary tags (for more on Glossary, see section 2.3).
 After you have specified the field type, you can keep on adding fields to the article type or finish the operation. Anytime later you can add more fields to the article type without affecting the rest of the application or the database contents. You will not lose articles if you add fields to their particular article type.
 WARNING: While you can safely add article fields to a article types, deleting them may cause improper functioning of templates that refer to these fields. Article-type management is best left exclusively to expert users (e.g. administrators)
 2.2.5 Creating articles within a section
@@ -816,6 +822,7 @@ year <integer_operator> <integer_value>
 <order_condition> =
 bydate desc|asc 
 |bynumber desc|asc
+|byname desc|asc
 where year stands for year, mon_nr for month number (1..12), mday for month day (1..31), yday for year day (1..365), wday for week day (1..7), hour for hour, min for minute and sec for second.
 Any parameter used in <list_of_issue_constraints> can only be used once.
 Inside the List the following environment variables are modified:
@@ -903,6 +910,7 @@ Examples of valid topic names: "sports:en", "health:en" etc.
 <order_condition> =
 bydate desc|asc 
 |bynumber desc|asc
+|byname desc|asc
 Inside the List, the data context is defined by the constraints applied to the current article for every processed line. The data context is restored after the list processing.
 Constraints:
 Inside List Article the following statements are forbidden:
