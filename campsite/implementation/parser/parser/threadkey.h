@@ -32,6 +32,7 @@ of POSIX key variables.
 
 #ifndef THREADKEY
 #define THREADKEY
+#include <pthread.h>
 
 #define TK_TRY try {
 
