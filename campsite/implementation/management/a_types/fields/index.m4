@@ -27,13 +27,11 @@ B_BODY
 B_HEADER(<*Article type fields*>)
 B_HEADER_BUTTONS
 X_HBUTTON(<*Article Types*>, <*a_types/*>)
-X_HBUTTON(<*Home*>, <*home.php*>)
-X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
 B_CURRENT
-X_CURRENT(<*Article type*>, <*<B><?php  print encHTML($AType); ?></B>*>)
+X_CURRENT(<*Article type*>, <*<?php  print encHTML($AType); ?>*>)
 E_CURRENT
 
 <?php  if ($mata != 0) { ?>

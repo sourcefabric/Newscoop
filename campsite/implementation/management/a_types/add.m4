@@ -20,8 +20,6 @@ B_BODY
 B_HEADER(<*Add new article type*>)
 B_HEADER_BUTTONS
 X_HBUTTON(<*Article Types*>, <*a_types/*>)
-X_HBUTTON(<*Home*>, <*home.php*>)
-X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 

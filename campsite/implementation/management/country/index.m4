@@ -27,8 +27,6 @@ B_BODY
 <?php  todefnum('sLanguage'); ?>dnl
 B_HEADER(<*Countries*>)
 B_HEADER_BUTTONS
-X_HBUTTON(<*Home*>, <*home.php*>)
-X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 

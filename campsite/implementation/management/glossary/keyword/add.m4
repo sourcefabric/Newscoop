@@ -27,8 +27,6 @@ B_HEADER(<*Add keyword infotype*>)
 B_HEADER_BUTTONS
 X_HBUTTON(<*Keyword infotype*>, <*glossary/keyword/?Keyword=<?php  print encURL($Keyword); ?>&Language=<?php  print encURL($Language); ?>*>)
 X_HBUTTON(<*Glossary*>, <*glossary/*>)
-X_HBUTTON(<*Home*>, <*home.php*>)
-X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
@@ -39,8 +37,8 @@ E_HEADER
     fetchRow($q_lang);
 ?>dnl
 B_CURRENT
-X_CURRENT(<*Keyword*>, <*<B><?php  pgetHVar($q_dict,'Keyword'); ?></B>*>)
-X_CURRENT(<*Language*>, <*<B><?php  pgetHVar($q_lang,'Name'); ?></B>*>)
+X_CURRENT(<*Keyword*>, <*<?php  pgetHVar($q_dict,'Keyword'); ?>*>)
+X_CURRENT(<*Language*>, <*<?php  pgetHVar($q_lang,'Name'); ?>*>)
 E_CURRENT
 
 <?php 

@@ -24,8 +24,6 @@ B_BODY
 
 B_HEADER(<*Languages*>)
 B_HEADER_BUTTONS
-X_HBUTTON(<*Home*>, <*home.php*>)
-X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
