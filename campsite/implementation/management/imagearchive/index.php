@@ -129,22 +129,22 @@ if ($User->hasPermission('AddImage')) { ?>
   </tr>
 </table>
 
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="3" style="border: 1px solid #00008b; margin-bottom: 10px; margin-top: 5px;" align="center">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="3" class="table_input" style="margin-bottom: 10px; margin-top: 5px;" align="center">
 <form method="POST" action="index.php">
 <input type="hidden" name="order_by" value="<?php echo $OrderBy; ?>">
 <input type="hidden" name="order_direction" value="<?php echo $OrderDirection; ?>">
 <input type="hidden" name="view" value="<?php echo $view; ?>">
 <input type="hidden" name="image_offset" value="0">
-<tr BGCOLOR="#C0D0FF">
-	<td style="padding-left: 10px; color: #00008b;"><?php putGS('Description')?>:</td>
-	<td><input type="text" name="search_description" value="<?php echo $SearchDescription; ?>" style="border: 1px solid #00008b; background-color: #f0f0ff; text-indent: 3px; width: 150px;"></td>
-	<td style="color: #00008b;"><?php putGS('Photographer'); ?>:</td>
-	<td><input type="text" name="search_photographer" value="<?php echo $SearchPhotographer; ?>"  style="border: 1px solid #00008b; background-color: #f0f0ff; text-indent: 3px; width: 100px;"></td>
-	<td style="color: #00008b;"><?php putGS('Place'); ?>:</td>
-	<td><input type="text" name="search_place" value="<?php echo $SearchPlace; ?>" style="border: 1px solid #00008b; background-color: #f0f0ff; text-indent: 3px; width: 100px;"></td>
-	<td style="color: #00008b;"><?php putGS('Date'); ?>:</td>
-	<td><input type="text" name="search_date" value="<?php echo $SearchDate; ?>" style="border: 1px solid #00008b; background-color: #f0f0ff; text-indent: 3px; width: 80px;"></td>
-	<td style="color: #00008b;" nowrap>Uploaded by:</td>
+<tr>
+	<td style="padding-left: 10px;"><?php putGS('Description')?>:</td>
+	<td><input type="text" name="search_description" value="<?php echo $SearchDescription; ?>" class="input_text" style="width: 150px;"></td>
+	<td><?php putGS('Photographer'); ?>:</td>
+	<td><input type="text" name="search_photographer" value="<?php echo $SearchPhotographer; ?>"  class="input_text" style="width: 100px;"></td>
+	<td><?php putGS('Place'); ?>:</td>
+	<td><input type="text" name="search_place" value="<?php echo $SearchPlace; ?>" class="input_text" style="width: 100px;"></td>
+	<td><?php putGS('Date'); ?>:</td>
+	<td><input type="text" name="search_date" value="<?php echo $SearchDate; ?>" class="input_text" style="width: 80px;"></td>
+	<td nowrap>Uploaded by:</td>
 	<td>
 		<select name="search_uploadedby" class="input_select" style="width: 100px;">
 		<option value="0"></option>
@@ -159,7 +159,7 @@ if ($User->hasPermission('AddImage')) { ?>
 	</td>
 	<td><input type="submit" name="submit_button" value="Search" class="button"></td>
 </tr>
-<tr BGCOLOR="#C0D0FF">
+<tr>
 	<td colspan="11" align="center" >
 		Additional searches: &nbsp;
 		<a href="index.php?<?php $imageNav->getSearchLink() ?>&order_by=time_created" style="font-size: 9pt; font-weight: bold; text-decoration: underline;">Most Recently Added</a><?php if ($OrderBy == "time_created") { echo "*"; } ?>
