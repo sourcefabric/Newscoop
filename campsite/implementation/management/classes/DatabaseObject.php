@@ -351,7 +351,7 @@ class DatabaseObject {
 	 */
 	function getProperty($p_dbColumnName, $p_forceFetchFromDatabase = false) {
 		global $Campsite;
-		if (array_key_exists($p_dbColumnName, $this->m_columnNames)) {
+		if (in_array($p_dbColumnName, $this->m_columnNames)) {
 			if ($p_forceFetchFromDatabase) {
 				if ($this->keyValuesExist()) {
 					$queryStr = 'SELECT '.$p_dbColumnName
