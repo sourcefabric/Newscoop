@@ -219,6 +219,17 @@ regGS("New field","Nové pole");
 regGS("OK","OK");
 regGS("Save changes","Uložit změny");
 regGS("Search","Hledej");
-
+regGS("No languages","Žádný jazyk");
+regGS("---Select language---","---Vyber jazyk---");
+regGS("No publications","Žádné publikace");
+regGS("---Select publication---","---Vyber publikaci---");
+regGS("No issues","Žádná vydání");
+regGS("---Select issue---","---Vyber vydání---");
+regGS("No sections","Žádné rubriky");
+regGS("---Select section---","---Vyber rubliku---");
+regGS("No articles","Žádné články");
+regGS("---Select article---","---Vyber článek---");
+regGS("Duplicate","Duplikovat");
+regGS("You do not have the right to add articles.","Nemáte právo přidat článek");
 
 ?>
