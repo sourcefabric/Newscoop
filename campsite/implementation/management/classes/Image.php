@@ -1,17 +1,10 @@
 <?php
+
+require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DatabaseObject.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleImage.php');
 require_once('HTTP/Client.php');
-
-define('CAMPSITE_IMAGE_DIRECTORY', '/images/');
-define('CAMPSITE_IMAGE_PREFIX', 'cms-image-');
-define('CAMPSITE_IMAGEMAGICK', TRUE);
-define('CAMPSITE_THUMBNAIL_COMMAND', 'convert -sample 64x64');
-define('CAMPSITE_THUMBNAIL_DIRECTORY', '/images/thumbnails/');
-define('CAMPSITE_THUMBNAIL_PREFIX', 'cms-thumb-');
-// TODO: this should be replaced with the php.ini defined temp directory.
-define('CAMPSITE_TMP_DIR', '/tmp/');
 
 class Image extends DatabaseObject {
 	var $m_keyColumnNames = array('Id');
@@ -171,8 +164,8 @@ class Image extends DatabaseObject {
 	 * @return string
 	 */
 	function getImageStorageLocation() {
-		return $_SERVER['DOCUMENT_ROOT'].CAMPSITE_IMAGE_DIRECTORY
-			.$this->m_data['ImageFileName'];
+		global $Campsite;
+		return $Campsite['IMAGE_DIRECTORY'].$this->m_data['ImageFileName'];
 	} // fn getImageStorageLocation
 	
 	
@@ -181,8 +174,8 @@ class Image extends DatabaseObject {
 	 * @return string
 	 */
 	function getThumbnailStorageLocation() {
-		return $_SERVER['DOCUMENT_ROOT'].CAMPSITE_THUMBNAIL_DIRECTORY
-			.$this->m_data['ThumbnailFileName'];
+		global $Campsite;
+		return $Campsite['THUMBNAIL_DIRECTORY'].$this->m_data['ThumbnailFileName'];
 	} // fn getThumbnailStorageLocation
 	
 
@@ -193,8 +186,9 @@ class Image extends DatabaseObject {
 	 * @return string
 	 */
 	function generateThumbnailStorageLocation($p_fileExtension) {
-	    $thumbnailStorageLocation = $_SERVER['DOCUMENT_ROOT'].CAMPSITE_THUMBNAIL_DIRECTORY
-	    	.CAMPSITE_THUMBNAIL_PREFIX.sprintf('%09d', $this->getImageId())
+		global $Campsite;
+	    $thumbnailStorageLocation = $Campsite['THUMBNAIL_DIRECTORY']
+	    	.$Campsite['THUMBNAIL_PREFIX'].sprintf('%09d', $this->getImageId())
 	    	.'.'.$p_fileExtension;
 	    return $thumbnailStorageLocation;
 	} // fn generateThumbnailStorageLocation
@@ -207,8 +201,9 @@ class Image extends DatabaseObject {
 	 * @return string
 	 */
 	function generateImageStorageLocation($p_fileExtension) {
-	    $imageStorageLocation = $_SERVER['DOCUMENT_ROOT'].CAMPSITE_IMAGE_DIRECTORY
-	    	.CAMPSITE_IMAGE_PREFIX.sprintf('%09d', $this->getImageId())
+		global $Campsite;
+	    $imageStorageLocation = $Campsite['IMAGE_DIRECTORY']
+	    	.$Campsite['IMAGE_PREFIX'].sprintf('%09d', $this->getImageId())
 	    	.'.'.$p_fileExtension;
 	    return $imageStorageLocation;
 	} // fn generateImageStorageLocation
@@ -221,7 +216,7 @@ class Image extends DatabaseObject {
 	function getImageUrl() {
 		global $Campsite;
 		if ($this->m_data['Location'] == 'local') {
-			return $Campsite['website_url'].CAMPSITE_IMAGE_DIRECTORY.$this->m_data['ImageFileName'];
+			return $Campsite['IMAGE_BASE_URL'].$this->m_data['ImageFileName'];
 		}
 		else {
 			return $this->m_data['URL'];
@@ -235,7 +230,7 @@ class Image extends DatabaseObject {
 	 */
 	function getThumbnailUrl() {
 		global $Campsite;
-		return $Campsite['website_url'].CAMPSITE_THUMBNAIL_DIRECTORY.$this->m_data['ThumbnailFileName'];
+		return $Campsite['THUMBNAIL_BASE_URL'].$this->m_data['ThumbnailFileName'];
 	} // fn getThumbnailUrl
 	
 	
@@ -259,6 +254,30 @@ class Image extends DatabaseObject {
 		$result = $Campsite['db']->getRow($queryStr);
 		return $result['Rows'];
 	} // fn GetTotalImages
+	
+
+	function __ImageTypeToExtension($p_imageType) {
+		$extension = '';
+		switch($p_imageType) {
+           case 1:  $extension = 'gif'; break;
+           case 2:  $extension = 'jpg'; break;
+           case 3:  $extension = 'png'; break;
+           case 4:  $extension = 'swf'; break;
+           case 5:  $extension = 'psd'; break;
+           case 6:  $extension = 'bmp'; break;
+           case 7:  $extension = 'tiff'; break;
+           case 8:  $extension = 'tiff'; break;
+           case 9:  $extension = 'jpc'; break;
+           case 10: $extension = 'jp2'; break;
+           case 11: $extension = 'jpx'; break;
+           case 12: $extension = 'jb2'; break;
+           case 13: $extension = 'swc'; break;
+           case 14: $extension = 'aiff'; break;
+           case 15: $extension = 'wbmp'; break;
+           case 16: $extension = 'xbm'; break;
+        }
+        return $extension;
+	}
 	
 	
 	/**
@@ -290,32 +309,31 @@ class Image extends DatabaseObject {
 	 *		NULL if there was an error.
 	 */
 	function OnImageUpload($p_fileVar, $p_attributes, $p_userId = null, $p_id = null) {
+		global $Campsite;
 		if (!is_array($p_fileVar)) {
 			return null;
 		}
-		$fileExtension = split("\.", $p_fileVar['name']);
-		$fileExtension = $fileExtension[(count($fileExtension)-1)];
 
 		// Verify its a valid image file.
-		if (!getimagesize($p_fileVar['tmp_name'])) {
+		$imageInfo = getimagesize($p_fileVar['tmp_name']);
+		if ($imageInfo === false) {
 			return null;
 		}
+		$extension = Image::__ImageTypeToExtension($imageInfo[2]);
 		
 		// Are we updating or creating?
 	 	if (!is_null($p_id)) {
 	 		// Updating the image
 	 		$image =& new Image($p_id);
 	 		$image->update($p_attributes);
-		    if ($p_fileVar['type'] != $image->getContentType()) {
-		    	// Remove the old image & thumbnail because
-				// the new file will have a different file extension.
-				if (file_exists($image->getImageStorageLocation())) {
-		    		unlink($image->getImageStorageLocation());
-				}
-				if (file_exists($image->getThumbnailStorageLocation())) {
-		    		unlink($image->getThumbnailStorageLocation());
-				}
-		    }
+	    	// Remove the old image & thumbnail because
+			// the new file may have a different file extension.
+			if (file_exists($image->getImageStorageLocation())) {
+	    		unlink($image->getImageStorageLocation());
+			}
+			if (file_exists($image->getThumbnailStorageLocation())) {
+	    		unlink($image->getThumbnailStorageLocation());
+			}
 	    } else {
 	    	// Creating the image
 	    	$image =& new Image();
@@ -324,12 +342,18 @@ class Image extends DatabaseObject {
 			$image->setProperty('LastModified', 'NULL', true, true);
 	    }
 	    $image->setProperty('Location', 'local', false);
-		$image->setProperty('ContentType', $p_fileVar['type'], false);
+	    // If we are using PHP version >= 4.3
+	    if (isset($imageInfo['mime'])) {
+	    	$image->setProperty('ContentType', $imageInfo['mime'], false);
+	    }
+	    else {
+			$image->setProperty('ContentType', $p_fileVar['type'], false);
+	    }
 		if (!is_null($p_userId)) {
 			$image->setProperty('UploadedByUser', $p_userId, false);
 		}
-	    $target = $image->generateImageStorageLocation($fileExtension);
-	    $thumbnail = $image->generateThumbnailStorageLocation($fileExtension);
+	    $target = $image->generateImageStorageLocation($extension);
+	    $thumbnail = $image->generateThumbnailStorageLocation($extension);
 	    $image->setProperty('ImageFileName', basename($target), false);
 	    $image->setProperty('ThumbnailFileName', basename($thumbnail), false);
 	    
@@ -337,9 +361,8 @@ class Image extends DatabaseObject {
              return null;
         }
 		chmod($target, 0644);
-        if (CAMPSITE_IMAGEMAGICK) {
-            $cmd = CAMPSITE_THUMBNAIL_COMMAND.' '.$target.' '.$thumbnail;
-            #echo $cmd;
+        if ($Campsite['IMAGEMAGICK_INSTALLED']) {
+            $cmd = $Campsite['THUMBNAIL_COMMAND'].' '.$target.' '.$thumbnail;
             system($cmd);
             if (file_exists($thumbnail)) {
             	chmod($thumbnail, 0644);
@@ -370,6 +393,7 @@ class Image extends DatabaseObject {
 	 * @return void
 	 */
 	function OnAddRemoteImage($p_url, $p_attributes, $p_userId = null, $p_id = null) {
+		global $Campsite;
 	    $client =& new HTTP_Client();
 	    $client->get($p_url);
 	    $response = $client->currentResponse(); 
@@ -394,7 +418,8 @@ class Image extends DatabaseObject {
         }
         
         // Check if it is really an image file
-        if (!getimagesize($tmpname)) {
+        $imageInfo = getimagesize($tmpname);
+        if ($imageInfo === false) {
         	unlink($tmpname);
             return getGS('URL <B>$1</B> have wrong content type <B>$2</B>', $cURL, $ctype);
         }
@@ -404,16 +429,14 @@ class Image extends DatabaseObject {
         	// Updating the image
         	$image =& new Image($p_id);
         	$image->update($p_attributes);
-		    if ($ContentType != $image->getContentType()) {
-		    	// Remove the old image & thumbnail because
-		    	// the new file will have a different file extension.
-		    	if (file_exists($image->getImageStorageLocation())) {
-		    		unlink($image->getImageStorageLocation());
-		    	}
-		    	if (file_exists($image->getThumbnailStorageLocation())) {
-		    		unlink($image->getThumbnailStorageLocation());
-		    	}
-		    }
+	    	// Remove the old image & thumbnail because
+	    	// the new file might have a different file extension.
+	    	if (file_exists($image->getImageStorageLocation())) {
+	    		unlink($image->getImageStorageLocation());
+	    	}
+	    	if (file_exists($image->getThumbnailStorageLocation())) {
+	    		unlink($image->getThumbnailStorageLocation());
+	    	}
         } else {
         	// Creating the image
         	$image =& new Image();
@@ -423,23 +446,23 @@ class Image extends DatabaseObject {
         }
         $image->setProperty('Location', 'remote', false);
         $image->setProperty('URL', $p_url, false);
+	    if (isset($imageInfo['mime'])) {
+	    	$image->setProperty('ContentType', $imageInfo['mime'], false);
+	    }
         
         // Remember who uploaded the image
         if (!is_null($p_userId)) {
 			$image->setProperty('UploadedByUser', $p_userId, false);
         }
 
-        if (CAMPSITE_IMAGEMAGICK) {
+        if ($Campsite['IMAGEMAGICK_INSTALLED']) {
 		    // Set thumbnail file name
-		    $urlParts = parse_url($p_url);
-		    $fileName = basename($urlParts['path']);
-			$fileExtension = split("\.", $fileName);
-			$fileExtension = $fileExtension[(count($fileExtension)-1)];
-		    $thumbnail = $image->generateThumbnailStorageLocation($fileExtension);
+		    $extension = Image::__ImageTypeToExtension($imageInfo[2]);
+		    $thumbnail = $image->generateThumbnailStorageLocation($extension);
 		    $image->setProperty('ThumbnailFileName', basename($thumbnail), false);
 
 		    // Create the thumbnail 
-            $cmd = CAMPSITE_THUMBNAIL_COMMAND.' '
+            $cmd = $Campsite['THUMBNAIL_COMMAND'].' '
             	. $tmpname . ' ' . $image->getThumbnailStorageLocation();
             system($cmd);
             if (file_exists($image->getThumbnailStorageLocation())) {
