@@ -84,12 +84,9 @@ $Campsite["HTML_COMMON_DIR"] = "[html_common_dir]");
 	// default = CAMPSITE_DIR . "/www-common/html"
 $Campsite["CGI_COMMON_DIR"] = "[cgi_common_dir]");
 	// default = CAMPSITE_DIR . "/www-common/cgi-bin"
-$Campsite["INCLUDE_COMMON_DIR"] = "[include_common_dir]");
-	// default = CAMPSITE_DIR . "/www-common/include");
 
 $CampsiteVars['install'] = array("CAMPSITE_DIR", "BIN_DIR", "ETC_DIR",
-	"WWW_DIR", "WWW_COMMON_DIR", "HTML_COMMON_DIR", "CGI_COMMON_DIR",
-	"INCLUDE_COMMON_DIR");
+	"WWW_DIR", "WWW_COMMON_DIR", "HTML_COMMON_DIR", "CGI_COMMON_DIR");
 
 ?>
 
