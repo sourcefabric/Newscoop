@@ -1,6 +1,11 @@
 <?php
 
-function HtmlArea_Campsite($dbColumns) {
+/**
+ * @param array p_dbColumns
+ * @param User p_user
+ * @return void
+ */
+function HtmlArea_Campsite($p_dbColumns, $p_user) {
 	global $Campsite;
 	global $ADMIN;
 	?>	
@@ -101,14 +106,18 @@ function CampsiteInternalLink(editor, objectName, object, link) {
 
 //<![CDATA[
 HTMLArea.loadPlugin("ImageManager");
+<?php if ($p_user->hasPermission('EditorTable')) { ?>
 HTMLArea.loadPlugin("TableOperations");
+<?php } ?>
+<?php if ($p_user->hasPermission('EditorListNumber')) { ?>
 HTMLArea.loadPlugin("ListType");
+<?php } ?>
 
 initdocument = function () {
 	<?php
 	$stylesheetFile = $Campsite['HTML_COMMON_DIR'] 
 		.'/priv/pub/issues/sections/articles/article_stylesheet.css';
-	foreach ($dbColumns as $dbColumn) {	
+	foreach ($p_dbColumns as $dbColumn) {	
 		if (stristr($dbColumn->getType(), "blob")) {
 			?>
 			var editor = new HTMLArea("<?php print $dbColumn->getName(); ?>");
@@ -151,22 +160,78 @@ initdocument = function () {
 				});
 
 			config.toolbar = [
-				[ "fontname", "space",
-				  "fontsize", "space",
-				  "formatblock", "space",
-				  "bold", "italic", "underline", "strikethrough", "separator",
-				  "forecolor", "hilitecolor", "separator",
-				  "subscript", "superscript"
-				  ],
-		
-				[ "justifyleft", "justifycenter", "justifyright", "justifyfull", "separator",
+				[ 
+				  "bold", "italic", "underline", 
+				<?php if ($p_user->hasPermission('EditorStrikethrough')) { ?>
+				  "strikethrough", 
+				<?php } ?>
+				  "separator",
+				<?php if ($p_user->hasPermission('EditorTextAlignment')) { ?>
+				"justifyleft", "justifycenter", "justifyright", "justifyfull", "separator",
+				<?php } ?>
+				<?php if ($p_user->hasPermission('EditorTextIndent')) { ?>
 				  "outdent", "indent", "separator",
-				  "unorderedlist", "orderedlist", "separator", 
-				  "inserthorizontalrule", "campsite-subhead", "campsite-internal-link", "createlink", "insertimage" ],
-				  ["copy", "cut", "paste", "space", "separator", "undo", "redo", "separator", "lefttoright", "righttoleft", "separator", "htmlmode", "popupeditor"]
+				<?php } ?>
+				  "copy", "cut", "paste", "space", "separator", 
+				  "undo", "redo", "separator", 
+				<?php if ($p_user->hasPermission('EditorTextDirection')) { ?>
+				  "lefttoright", "righttoleft", "separator", 
+				<?php } ?>
+				<?php if ($p_user->hasPermission('EditorLink')) { ?>
+				  "campsite-internal-link", "createlink", "separator",
+				<?php } ?>
+				<?php if ($p_user->hasPermission('EditorHorizontalRule')) { ?>
+				  "inserthorizontalrule", 
+				<?php } ?>
+				<?php if ($p_user->hasPermission('EditorSubhead')) { ?>
+				  "campsite-subhead", 
+				<?php } ?>
+				<?php if ($p_user->hasPermission('EditorImage')) { ?>
+				  "insertimage", "separator",
+				<?php } ?>
+				<?php if ($p_user->hasPermission('EditorSourceView')) { ?>
+				  "htmlmode", 
+				<?php } ?>
+				<?php if ($p_user->hasPermission('EditorEnlarge')) { ?>
+				  "popupeditor",
+				<?php } ?>
+				],
+		
+				[ 
+				<?php if ($p_user->hasPermission('EditorFontFace')) { ?>
+				  "fontname", "space",
+				<?php } ?>
+				<?php if ($p_user->hasPermission('EditorFontSize')) { ?>
+				  "fontsize", "space",
+				<?php } ?>
+				<?php if (false) { ?>
+				  "formatblock", "space",
+				<?php } ?>
+				<?php if ($p_user->hasPermission('EditorListBullet')) { ?>
+				  "unorderedlist", 
+				<?php } ?>
+				<?php if ($p_user->hasPermission('EditorListNumber')) { ?>
+				  "orderedlist", "separator", 
+				<?php } ?>
+				  ],
+				  [
+				<?php if ($p_user->hasPermission('EditorFontColor')) { ?>
+				  "forecolor", "hilitecolor", "separator",
+				<?php } ?>
+				<?php if ($p_user->hasPermission('EditorSubscript')) { ?>
+				  "subscript",
+				<?php } ?>
+				<?php if ($p_user->hasPermission('EditorSuperscript')) { ?>
+				 "superscript",
+				<?php } ?>
+				  ]
 			];
+			<?php if ($p_user->hasPermission('EditorListNumber')) { ?>
 			editor.registerPlugin(ListType);
+			<?php } ?>
+			<?php if ($p_user->hasPermission('EditorTable')) { ?>
 		  	editor.registerPlugin(TableOperations);
+		  	<?php } ?>
 			editor.generate();
 			<?php
 		}
