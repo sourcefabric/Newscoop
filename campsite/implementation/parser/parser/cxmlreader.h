@@ -131,6 +131,8 @@ private:
 // Create an xml reader fed with the resource from file name.
 inline CXMLReader::CXMLReader(const char* p_pchFilename) throw (invalid_argument)
 {
+	if (p_pchFilename == NULL)
+		throw invalid_argument(string("Invalid file NULL"));
 	m_pReader = xmlNewTextReaderFilename(p_pchFilename);
 	if (m_pReader == NULL)
 		throw invalid_argument(string("Invalid file ") + p_pchFilename);
@@ -186,6 +188,8 @@ inline bool CXMLReader::isValid() const
 inline bool CXMLReader::moveToAttribute(const char* p_pchAttribute)
 	throw(xml_parse_error, invalid_argument)
 {
+	if (p_pchAttribute == NULL)
+		throw invalid_argument(string("Invalid attribute NULL"));
 	int nRes = xmlTextReaderMoveToAttribute(m_pReader, (const xmlChar*) p_pchAttribute);
 	if (nRes == -1)
 		throw xml_parse_error("");
