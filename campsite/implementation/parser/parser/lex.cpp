@@ -147,7 +147,7 @@ CStatementMap::CStatementMap()
 	InitStatements();
 }
 
-// InitStatements: initialise statements
+// InitStatements: initialize statements
 int CStatementMap::InitStatements()
 {
 	OPEN_TRY
@@ -159,7 +159,7 @@ int CStatementMap::InitStatements()
 
 	// register statements
 	CTypeAttributesMap* pcoArticleTypeAttributes = NULL;
-	GetArticleTypeAttributes(&pcoArticleTypeAttributes);
+//	GetArticleTypeAttributes(&pcoArticleTypeAttributes);
 
 	CStatement* pcoSt = NULL;
 	CStatementContext* pcoCtx = NULL;
