@@ -327,15 +327,7 @@ prepare_DATABASE_env()
 {
 in_list DATABASE $PREPARED_MOD_ENV && return 0
 output_err="Error preparing environment for DATABASE module."
-echo -e "*** Preparing DATABASE environment..."
-mysql_connect=${CAMPSITE_PACKAGE_DIR}/supplemental/mysql_connect/mysql_connect/mysql_connect
-pushd `pwd` &> /dev/null
-cd ${CAMPSITE_PACKAGE_DIR}/supplemental/mysql_connect
-./configure && $MAKE && check4_file $mysql_connect --executable
-result=$?
-popd &> /dev/null
-[ $result -ne 0 ] && echo $output_err && return 1
-export MYSQL_CONNECT=$mysql_connect
+echo "*** Preparing DATABASE environment..."
 add_to_list_var DATABASE PREPARED_MOD_ENV
 echo "DATABASE environment OK"
 return 0
@@ -445,10 +437,10 @@ return 0
 # END OF prepare_install_env
 
 # FUNCTION: set_module_parts
-# Description: add module parts to IMPLEMENTATION_PARTS and SUPPLEMENTAL_PARTS variables
+# Description: add module parts to IMPLEMENTATION_PARTS variable
 # Parameters: none
 # Variables set:
-#	IMPLEMENTATION_PARTS and SUPPLEMENTAL_PARTS
+#	IMPLEMENTATION_PARTS
 set_module_parts()
 {
 output=`validate_module $1`
@@ -461,7 +453,6 @@ for part in $parts; do
 	part_type=`echo $part | cut -f 1 -d "/"`
 	part_name=`echo $part | cut -f 2 -d "/"`
 	[ "$part_type" = "implementation" ] && add_to_list_var $part_name IMPLEMENTATION_PARTS
-	[ "$part_type" = "supplemental" ] && add_to_list_var $part_name SUPPLEMENTAL_PARTS
     fi
 done
 return 0
