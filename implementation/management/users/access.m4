@@ -41,102 +41,102 @@ E_CURRENT
 <P>
 B_DIALOG(<*Edit user account permissions*>, <*POST*>, <*do_access.php*>)
 	B_DIALOG_PACKEDINPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManagePub"<?php  ifYthenCHECKED($uperm,'ManagePub'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManagePub" class="input_checkbox" <?php  ifYthenCHECKED($uperm,'ManagePub'); ?>>*>)
 		<?php  putGS('User may add/change publications'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cDeletePub"<?php  ifYthenCHECKED($uperm,'DeletePub'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cDeletePub" class="input_checkbox" <?php  ifYthenCHECKED($uperm,'DeletePub'); ?>>*>)
 		<?php  putGS('User may delete publications'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManageIssue"<?php  ifYthenCHECKED($uperm,'ManageIssue'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManageIssue" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'ManageIssue'); ?>>*>)
 		<?php  putGS('User may add/change issues'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cDeleteIssue"<?php  ifYthenCHECKED($uperm,'DeleteIssue'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cDeleteIssue" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'DeleteIssue'); ?>>*>)
 		<?php  putGS('User may delete issues'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManageSection"<?php  ifYthenCHECKED($uperm,'ManageSection'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManageSection" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'ManageSection'); ?>>*>)
 		<?php  putGS('User may add/change sections'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cDeleteSection"<?php  ifYthenCHECKED($uperm,'DeleteSection'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cDeleteSection" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'DeleteSection'); ?>>*>)
 		<?php  putGS('User may delete sections'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cAddArticle"<?php  ifYthenCHECKED($uperm,'AddArticle'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cAddArticle" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'AddArticle'); ?>>*>)
 		<?php  putGS('User may add articles'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cChangeArticle"<?php  ifYthenCHECKED($uperm,'ChangeArticle'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cChangeArticle" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'ChangeArticle'); ?>>*>)
 		<?php  putGS('User may change articles'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cDeleteArticle"<?php  ifYthenCHECKED($uperm,'DeleteArticle'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cDeleteArticle" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'DeleteArticle'); ?>>*>)
 		<?php  putGS('User may delete articles'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cAddImage"<?php  ifYthenCHECKED($uperm,'AddImage'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cAddImage" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'AddImage'); ?>>*>)
 		<?php  putGS('User may add images'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cChangeImage"<?php  ifYthenCHECKED($uperm,'ChangeImage'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cChangeImage" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'ChangeImage'); ?>>*>)
 		<?php  putGS('User may change images'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cDeleteImage"<?php  ifYthenCHECKED($uperm,'DeleteImage'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cDeleteImage" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'DeleteImage'); ?>>*>)
 		<?php  putGS('User may delete images'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManageTempl"<?php  ifYthenCHECKED($uperm,'ManageTempl'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManageTempl" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'ManageTempl'); ?>>*>)
 		<?php  putGS('User may manage templates'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cDeleteTempl"<?php  ifYthenCHECKED($uperm,'DeleteTempl'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cDeleteTempl" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'DeleteTempl'); ?>>*>)
 		<?php  putGS('User may delete templates'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManageUsers"<?php  ifYthenCHECKED($uperm,'ManageUsers'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManageUsers" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'ManageUsers'); ?>>*>)
 		<?php  putGS('User may add/change user accounts and passwords'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cDeleteUsers"<?php  ifYthenCHECKED($uperm,'DeleteUsers'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cDeleteUsers" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'DeleteUsers'); ?>>*>)
 		<?php  putGS('User may delete user accounts'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManageSubscriptions"<?php  ifYthenCHECKED($uperm,'ManageSubscriptions'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManageSubscriptions" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'ManageSubscriptions'); ?>>*>)
 		<?php  putGS('User may manage user subscriptions'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManageUserTypes"<?php  ifYthenCHECKED($uperm,'ManageUserTypes'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManageUserTypes" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'ManageUserTypes'); ?>>*>)
 		<?php  putGS('User may manage account types'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManageArticleTypes"<?php  ifYthenCHECKED($uperm,'ManageArticleTypes'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManageArticleTypes" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'ManageArticleTypes'); ?>>*>)
 		<?php  putGS('User may add/change article types'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cDeleteArticleTypes"<?php  ifYthenCHECKED($uperm,'DeleteArticleTypes'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cDeleteArticleTypes" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'DeleteArticleTypes'); ?>>*>)
 		<?php  putGS('User may delete article types'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManageLanguages"<?php  ifYthenCHECKED($uperm,'ManageLanguages'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManageLanguages" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'ManageLanguages'); ?>>*>)
 		<?php  putGS('User may add languages and manage language information'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cDeleteLanguages"<?php  ifYthenCHECKED($uperm,'DeleteLanguages'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cDeleteLanguages" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'DeleteLanguages'); ?>>*>)
 		<?php  putGS('User may delete languages'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManageClasses"<?php  ifYthenCHECKED($uperm,'ManageClasses'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManageClasses" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'ManageClasses'); ?>>*>)
 		<?php  putGS('User may manage glossary infotypes'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManageDictionary"<?php  ifYthenCHECKED($uperm,'ManageDictionary'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManageDictionary" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'ManageDictionary'); ?>>*>)
 		<?php  putGS('User may add/change glossary entries'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cDeleteDictionary"<?php  ifYthenCHECKED($uperm,'DeleteDictionary'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cDeleteDictionary" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'DeleteDictionary'); ?>>*>)
 		<?php  putGS('User may delete glossary entries'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManageCountries"<?php  ifYthenCHECKED($uperm,'ManageCountries'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManageCountries" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'ManageCountries'); ?>>*>)
 		<?php  putGS('User may add/change country entries'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cDeleteCountries"<?php  ifYthenCHECKED($uperm,'DeleteCountries'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cDeleteCountries" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'DeleteCountries'); ?>>*>)
 		<?php  putGS('User may delete country entries'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cViewLogs"<?php  ifYthenCHECKED($uperm,'ViewLogs'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cViewLogs" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'ViewLogs'); ?>>*>)
 		<?php  putGS('User may view audit logs'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cMailNotify"<?php  ifYthenCHECKED($uperm,'MailNotify'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cMailNotify" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'MailNotify'); ?>>*>)
 		<?php  putGS('User will be notified on several events'); ?>
 	E_DIALOG_INPUT
 	
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManageLocalizer"<?php  ifYthenCHECKED($uperm,'ManageLocalizer'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManageLocalizer" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'ManageLocalizer'); ?>>*>)
 		<?php  putGS('User may manage localizer'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cPublish"<?php  ifYthenCHECKED($uperm,'Publish'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cPublish" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'Publish'); ?>>*>)
 		<?php  putGS('User may publish articles'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManageTopics"<?php  ifYthenCHECKED($uperm,'ManageTopics'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManageTopics" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'ManageTopics'); ?>>*>)
 		<?php  putGS('User may manage topics'); ?>
 	E_DIALOG_INPUT
 	
@@ -150,46 +150,46 @@ B_DIALOG(<*Edit user account permissions*>, <*POST*>, <*do_access.php*>)
 			--- Line 1 ---
 		</td>
 	</tr>
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorBold"<?php  ifYthenCHECKED($uperm,'EditorBold'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorBold" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'EditorBold'); ?>>*>)
 		<?php  putGS('User may use bold'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorItalic"<?php  ifYthenCHECKED($uperm,'EditorItalic'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorItalic" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'EditorItalic'); ?>>*>)
 		<?php  putGS('User may use italic'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorUnderline"<?php  ifYthenCHECKED($uperm,'EditorUnderline'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorUnderline" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'EditorUnderline'); ?>>*>)
 		<?php  putGS('User may use underline'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorStrikethrough"<?php  ifYthenCHECKED($uperm,'EditorStrikethrough'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorStrikethrough" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'EditorStrikethrough'); ?>>*>)
 		<?php  putGS('User may use strikethrough'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorTextAlignment"<?php  ifYthenCHECKED($uperm,'EditorTextAlignment'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorTextAlignment" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'EditorTextAlignment'); ?>>*>)
 		<?php  putGS('User may change text alignment'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorCopyCutPaste"<?php  ifYthenCHECKED($uperm,'EditorCopyCutPaste'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorCopyCutPaste" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'EditorCopyCutPaste'); ?>>*>)
 		<?php  putGS('User may copy, cut, and paste'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorUndoRedo"<?php  ifYthenCHECKED($uperm,'EditorUndoRedo'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorUndoRedo" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'EditorUndoRedo'); ?>>*>)
 		<?php  putGS('User may undo/redo'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorTextDirection"<?php  ifYthenCHECKED($uperm,'EditorTextDirection'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorTextDirection" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'EditorTextDirection'); ?>>*>)
 		<?php  putGS('User may change text direction'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorIndent"<?php  ifYthenCHECKED($uperm,'EditorIndent'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorIndent" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'EditorIndent'); ?>>*>)
 		<?php  putGS('User may set indents'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorLink"<?php  ifYthenCHECKED($uperm,'EditorLink'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorLink" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'EditorLink'); ?>>*>)
 		<?php  putGS('User may add links'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorSubhead"<?php  ifYthenCHECKED($uperm,'EditorSubhead'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorSubhead" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'EditorSubhead'); ?>>*>)
 		<?php  putGS('User may add subheads'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorImage"<?php  ifYthenCHECKED($uperm,'EditorImage'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorImage" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'EditorImage'); ?>>*>)
 		<?php  putGS('User may insert images'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorSourceView"<?php  ifYthenCHECKED($uperm,'EditorSourceView'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorSourceView" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'EditorSourceView'); ?>>*>)
 		<?php  putGS('User may view the HTML source'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorEnlarge"<?php  ifYthenCHECKED($uperm,'EditorEnlarge'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorEnlarge" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'EditorEnlarge'); ?>>*>)
 		<?php  putGS('User may enlarge the editor'); ?>
 	E_DIALOG_INPUT
 	
@@ -198,16 +198,16 @@ B_DIALOG(<*Edit user account permissions*>, <*POST*>, <*do_access.php*>)
 			--- Line 2 ---
 		</td>
 	</tr>
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorFontFace"<?php  ifYthenCHECKED($uperm,'EditorFontFace'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorFontFace" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'EditorFontFace'); ?>>*>)
 		<?php  putGS('User may change the font face'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorFontSize"<?php  ifYthenCHECKED($uperm,'EditorFontSize'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorFontSize" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'EditorFontSize'); ?>>*>)
 		<?php  putGS('User may change the font size'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorListBullet"<?php  ifYthenCHECKED($uperm,'EditorListBullet'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorListBullet" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'EditorListBullet'); ?>>*>)
 		<?php  putGS('User may create bulleted lists'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorListNumber"<?php  ifYthenCHECKED($uperm,'EditorListNumber'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorListNumber" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'EditorListNumber'); ?>>*>)
 		<?php  putGS('User may create numbered lists'); ?>
 	E_DIALOG_INPUT
 	
@@ -216,7 +216,7 @@ B_DIALOG(<*Edit user account permissions*>, <*POST*>, <*do_access.php*>)
 			--- Line 3 ---
 		</td>
 	</tr>
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorTable"<?php  ifYthenCHECKED($uperm,'EditorTable'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorTable" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'EditorTable'); ?>>*>)
 		<?php  putGS('User may insert tables'); ?>
 	E_DIALOG_INPUT
 
@@ -225,16 +225,16 @@ B_DIALOG(<*Edit user account permissions*>, <*POST*>, <*do_access.php*>)
 			--- Line 4 ---
 		</td>
 	</tr>
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorHorizontalRule"<?php  ifYthenCHECKED($uperm,'EditorHorizontalRule'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorHorizontalRule" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'EditorHorizontalRule'); ?>>*>)
 		<?php  putGS('User may insert horizontal rules'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorFontColor"<?php  ifYthenCHECKED($uperm,'EditorFontColor'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorFontColor" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'EditorFontColor'); ?>>*>)
 		<?php  putGS('User may change the font color'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorSuperscript"<?php  ifYthenCHECKED($uperm,'EditorSuperscript'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorSuperscript" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'EditorSuperscript'); ?>>*>)
 		<?php  putGS('User may use superscripts'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorSubscript"<?php  ifYthenCHECKED($uperm,'EditorSubscript'); ?>>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cEditorSubscript" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'EditorSubscript'); ?>>*>)
 		<?php  putGS('User may use subscripts'); ?>
 	E_DIALOG_INPUT
 

@@ -69,7 +69,7 @@ B_DIALOG(<*Add new subscription*>, <*POST*>, <*do_add.php*>)
 	B_DIALOG_INPUT(<*Days*>)
 		<INPUT TYPE="TEXT" class="input_text" NAME="cDays" SIZE="5" MAXLENGTH="5">
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cActive" CHECKED>*>)
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cActive" CHECKED class="input_checkbox">*>)
 		Active
 	E_DIALOG_INPUT
 	B_DIALOG_BUTTONS
