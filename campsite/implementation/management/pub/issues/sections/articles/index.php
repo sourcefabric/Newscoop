@@ -125,7 +125,7 @@ $previousArticleId = 0;
 		<INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<?php  p($Issue); ?>">
 		<INPUT TYPE="HIDDEN" NAME="Section" VALUE="<?php  p($Section); ?>">
 		<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php  p($Language); ?>">
-		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="#C0D0FF">
+		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="3" class="table_input">
 		<TR>
 			<TD><?php  putGS('Language'); ?>:</TD>
 			<TD valign="middle">

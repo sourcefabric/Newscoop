@@ -90,7 +90,7 @@ if (function_exists ("incModFile")) {
 <INPUT TYPE="HIDDEN" NAME="Section" VALUE="<?php  p($Section); ?>">
 <INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php  p($Language); ?>">
 <CENTER>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" BGCOLOR="#C0D0FF" ALIGN="CENTER">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" ALIGN="CENTER" class="table_input">
 <TR>
 	<TD COLSPAN="2">
 		<B><?php  putGS("Add new article"); ?></B>
