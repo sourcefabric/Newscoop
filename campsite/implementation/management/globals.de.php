@@ -219,6 +219,17 @@ regGS("New field","Neues Feld");
 regGS("OK","OK");
 regGS("Save changes","Veränderungen speichern");
 regGS("Search","Suche");
-
+regGS("No languages","Keine Sprachen");
+regGS("---Select language---","---Sprache auswählen---");
+regGS("No publications","Keine Publikationen");
+regGS("---Select publication---","---Publikation auswählen---");
+regGS("No issues","keine Ausgaben");
+regGS("---Select issue---","---Ausgabe auswählen---");
+regGS("No sections","Keine Rubriken");
+regGS("---Select section---","----Rubrik auswählen---");
+regGS("No articles","Keine Artikel");
+regGS("---Select article---","---Artikel auswählen---");
+regGS("Duplicate","Duplizieren");
+regGS("You do not have the right to add articles.","Keine Berechtigung Artikel hinzuzufügen");
 
 ?>

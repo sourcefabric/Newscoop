@@ -219,6 +219,17 @@ regGS("New field","Novo polje");
 regGS("OK","OK");
 regGS("Save changes","Snimi izmene");
 regGS("Search","Traži");
-
+regGS("No languages","Nema jezika");
+regGS("---Select language---","--- Izaberite jezik ---");
+regGS("No publications","Nema publikacija");
+regGS("---Select publication---","--- Izaberite publikaciju ---");
+regGS("No issues","Nema izdanja");
+regGS("---Select issue---","--- Izaberite izdanje ---");
+regGS("No sections","Nema rubrika");
+regGS("---Select section---","--- Izaberite rubriku ---");
+regGS("No articles","Nema članaka");
+regGS("---Select article---","--- Izaberite članak ---");
+regGS("Duplicate","Dupliraj");
+regGS("You do not have the right to add articles.","Nemate pravo da dodajete članke");
 
 ?>

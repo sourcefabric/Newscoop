@@ -212,6 +212,17 @@ regGS("Days","Dani");
 regGS("(YYYY-MM-DD)","(GGGG-MM-DD)");
 regGS("The sections were added successfully.","Rubrika je uspješno dodana.");
 regGS("The sections could not be added successfully. Some of them were already added !","Rubrika ne može bit uspješno dodana.");
-
+regGS("No languages","Nema jezika");
+regGS("---Select language---","---Odaberi jezik---");
+regGS("No publications","Nema publikacija");
+regGS("---Select publication---","---Odaberi publikaciju---");
+regGS("No issues","Nema izdanja");
+regGS("---Select issue---","---Odaberi izdanje---");
+regGS("No sections","Nema rubrika");
+regGS("---Select section---","---Odaberi rubriku");
+regGS("No articles","Nema članaka");
+regGS("---Select article---","---Odaberi članak---");
+regGS("Duplicate","Napravi kopiju");
+regGS("You do not have the right to add articles.","Nemate prava kreirati članak");
 
 ?>
