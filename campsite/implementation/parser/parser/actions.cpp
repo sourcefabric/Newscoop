@@ -2003,7 +2003,7 @@ int CActIf::takeAction(CContext& c, sockstream& fs)
 		if (c.Article() < 0)
 			return ERR_NOPARAM;
 		need_lang = true;
-		if (param.attrType() != "")
+		if (param.attrType() != "" && m_bStrictType)
 		{
 			tables = string("X") + param.attrType();
 			SetNrField("NrArticle", c.Article(), buf, w);
@@ -2011,6 +2011,8 @@ int CActIf::takeAction(CContext& c, sockstream& fs)
 		}
 		else
 		{
+			if (param.attrType() != "" && !m_bStrictType)
+				field = "Type";
 			tables = "Articles";
 			SetNrField("NrIssue", c.Issue(), buf, w);
 			SetNrField("NrSection", c.Section(), buf, w);
@@ -2064,6 +2066,27 @@ int CActIf::takeAction(CContext& c, sockstream& fs)
 	StoreResult(&m_coSql, res);
 	CheckForRows(*res, 1);
 	FetchRow(*res, row);
+	if (modifier == CMS_ST_ARTICLE && param.attrType() != "" && !m_bStrictType)
+	{
+		field = param.attribute();
+		tables = string("X") + row[0];
+		buf.str("");
+		w = "";
+		SetNrField("NrArticle", c.Article(), buf, w);
+		SetNrField("IdLanguage", c.Language(), buf, w);
+		string coQuery = string("select ") + field + " from " + tables;
+		if (w.length())
+			coQuery += string(" where ") + w;
+		DEBUGAct("takeAction()", coQuery.c_str(), fs);
+		SQLQuery(&m_coSql, coQuery.c_str());
+		res = mysql_store_result(&m_coSql);
+		if (*res == NULL)
+			return ERR_NOMEM;
+		row = mysql_fetch_row(*res);
+		if (row == NULL)
+			return ERR_NOMEM;
+		value = param.value();
+	}
 	if (param.operation())
 		run_first = param.applyOp(row[0], value);
 	else
