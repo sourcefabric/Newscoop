@@ -30,9 +30,9 @@ $msg .= "</CampsiteMessage>\n";
 $size = sprintf("%04x", strlen($msg));
 //echo "size: " . $size . "\n";
 
-$address = "127.0.0.1";
-$service_port = 2001;
-@$socket = fsockopen($address, $service_port, $errno, $errstr, 30);
+require_once("config.php");
+$service_port = $SERVER_PORT == 0 ? $SERVER_DEFAULT_PORT : $SERVER_PORT;
+@$socket = fsockopen($SERVER_ADDRESS, $service_port, $errno, $errstr, 30);
 if (!$socket) {
 	echo "$errstr ($errno)\n";
 	die();
