@@ -295,7 +295,7 @@ if $absolute_path; then
 else
     result=0
     if [ "$file_type" = "executable" ]; then
-	[ "$WHICH" = "" ] && export WHICH=`which which 2> /dev/null`
+	[ "$WHICH" = "" ] && export WHICH=`which --skip-alias which 2> /dev/null`
 	[ "$WHICH" = "" ] && output="could not find which binary" && echo $output && return 1
 	[ "$search_path" != "" ] && export PATH=$search_path
 	file_path=`$WHICH "$file_name" 2> /dev/null`
@@ -335,6 +335,10 @@ return 0
 #	output - error message (if any)
 check4_symbol_and_prototype()
 {
+if [ "$1" = "" ] || [ "$2" = "" ] || [ "$3" = "" ] || [ "$4" = "" ] || [ "$5" = "" ]; then
+	echo "Invalid parameters in check4_symbol_and_prototype()"
+	return 1
+fi
 check4_file $1 --file --path $2
 if [ $? -eq 0 ]; then
 	res=1
