@@ -104,7 +104,7 @@ class ArticleImage extends DatabaseObject {
 			}
 		}
 		return $returnArray;
-	} // fn FetchImagesByArticleId
+	} // fn GetImagesByArticleId
 	
 	
 	/**
@@ -231,7 +231,8 @@ class ArticleImage extends DatabaseObject {
 		$columnQuery = implode(',', $columnQuery);
 		$queryStr = 'SELECT '.$columnQuery.' FROM Articles, ArticleImages '
 					.' WHERE ArticleImages.IdImage='.$p_imageId
-					.' AND ArticleImages.NrArticle=Articles.Number';
+					.' AND ArticleImages.NrArticle=Articles.Number'
+					.' ORDER BY Articles.Number, Articles.IdLanguage';
 		$rows =& $Campsite['db']->GetAll($queryStr);
 		$articles = array();
 		if (is_array($rows)) {
