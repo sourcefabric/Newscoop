@@ -33,6 +33,10 @@ install: dummy
 	    chown $(ROOT_USER).$(HTTP_GROUP) $(BIN_DIR); \
 	    chmod 750 $(BIN_DIR); \
 	fi
+	if [ -d $(CGI_DIR) ]; then \
+	    chown $(HTTP_USER).$(HTTP_GROUP) $(CGI_DIR); \
+	    chmod 750 $(CGI_DIR); \
+	fi
 	if [ -d $(PRIV_DIR) ]; then \
 	    chown $(HTTP_USER).$(HTTP_GROUP) $(PRIV_DIR); \
 	    chmod 750 $(PRIV_DIR); \
