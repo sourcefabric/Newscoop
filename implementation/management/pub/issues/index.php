@@ -1,35 +1,28 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
 	"http://www.w3.org/TR/REC-html40/loose.dtd">
 <HTML>
-<?php  include ("../../lib_campsite.php");
-    $globalfile=selectLanguageFile('../..','globals');
-    $localfile=selectLanguageFile('.','locals');
-    @include ($globalfile);
-    @include ($localfile);
-    include ("../../languages.php");   ?>
-<?php  require_once("$DOCUMENT_ROOT/db_connect.php"); ?>
+<?php
 
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
+load_common_include_files("$ADMIN_DIR/pub/issues");
 
-<?php 
-    todefnum('TOL_UserId');
-    todefnum('TOL_UserKey');
-    query ("SELECT * FROM Users WHERE Id=$TOL_UserId AND KeyId=$TOL_UserKey", 'Usr');
-    $access=($NUM_ROWS != 0);
-    if ($NUM_ROWS) {
+todefnum('TOL_UserId');
+todefnum('TOL_UserKey');
+query ("SELECT * FROM Users WHERE Id=$TOL_UserId AND KeyId=$TOL_UserKey", 'Usr');
+$access=($NUM_ROWS != 0);
+if ($NUM_ROWS) {
 	fetchRow($Usr);
 	query ("SELECT * FROM UserPerm WHERE IdUser=".getVar($Usr,'Id'), 'XPerm');
-	 if ($NUM_ROWS){
-	 	fetchRow($XPerm);
-	 }
-	 else $access = 0;						//added lately; a non-admin can enter the administration area; he exists but doesn't have ANY rights
-	 $xpermrows= $NUM_ROWS;
-    }
-    else {
+	if ($NUM_ROWS){
+		fetchRow($XPerm);
+	} else
+		$access = 0;	//added lately; a non-admin can enter the administration area
+						// he exists but doesn't have ANY rights
+	$xpermrows = $NUM_ROWS;
+} else {
 	query ("SELECT * FROM UserPerm WHERE 1=0", 'XPerm');
-    }
+}
 ?>
-    
-
 
 <HEAD>
     <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -51,7 +44,7 @@ if (window != top.fmain && window != top) {
 </script>
 	<META HTTP-EQUIV="Expires" CONTENT="now">
 	<TITLE><?php  putGS("Issues"); ?></TITLE>
-<?php  if ($access == 0) { ?>	<META HTTP-EQUIV="Refresh" CONTENT="0; URL=/priv/logout.php">
+<?php  if ($access == 0) { ?>	<META HTTP-EQUIV="Refresh" CONTENT="0; URL=/<?php echo $ADMIN; ?>/logout.php">
 <?php  }
     query ("SELECT * FROM Issues WHERE 1=0", 'q_iss');
 ?></HEAD>
@@ -102,15 +95,15 @@ if ($access) {
 }?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%">
 	<TR>
-		<TD ROWSPAN="2" WIDTH="1%"><IMG SRC="/priv/img/sign_big.gif" BORDER="0"></TD>
+		<TD ROWSPAN="2" WIDTH="1%"><IMG SRC="/<?php echo $ADMIN; ?>/img/sign_big.gif" BORDER="0"></TD>
 		<TD>
 		    <DIV STYLE="font-size: 12pt"><B><?php  putGS("Issues"); ?></B></DIV>
 		    <HR NOSHADE SIZE="1" COLOR="BLACK">
 		</TD>
 	</TR>
-	<TR><TD ALIGN=RIGHT><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0"><TR><TD><A HREF="/priv/pub/" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Publications"); ?>"></A></TD><TD><A HREF="/priv/pub/" ><B><?php  putGS("Publications");  ?></B></A></TD>
-<TD><A HREF="/priv/home.php" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Home"); ?>"></A></TD><TD><A HREF="/priv/home.php" ><B><?php  putGS("Home");  ?></B></A></TD>
-<TD><A HREF="/priv/logout.php" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Logout"); ?>"></A></TD><TD><A HREF="/priv/logout.php" ><B><?php  putGS("Logout");  ?></B></A></TD>
+	<TR><TD ALIGN=RIGHT><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0"><TR><TD><A HREF="/<?php echo $ADMIN; ?>/pub/" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Publications"); ?>"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/pub/" ><B><?php  putGS("Publications");  ?></B></A></TD>
+<TD><A HREF="/<?php echo $ADMIN; ?>/home.php" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Home"); ?>"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/home.php" ><B><?php  putGS("Home");  ?></B></A></TD>
+<TD><A HREF="/<?php echo $ADMIN; ?>/logout.php" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Logout"); ?>"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/logout.php" ><B><?php  putGS("Logout");  ?></B></A></TD>
 </TR></TABLE></TD></TR>
 </TABLE>
 
@@ -127,8 +120,8 @@ if ($access) {
 	query ("SELECT MAX(Number) FROM Issues WHERE IdPublication=$Pub", 'q_nr');
 	fetchRowNum($q_nr);
 	if (getNumVar($q_nr,0) == "") { ?>
-	<P><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1"><TR><TD><A HREF="add_new.php?Pub=<?php  pencURL($Pub); ?>" ><IMG SRC="/priv/img/tol.gif" BORDER="0"></A></TD><TD><A HREF="add_new.php?Pub=<?php  pencURL($Pub); ?>" ><B><?php  putGS("Add new issue"); ?></B></A></TD></TR></TABLE>
-	<?php  } else { ?>	<P><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1"><TR><TD><A HREF="qadd.php?Pub=<?php  pencURL($Pub); ?>" ><IMG SRC="/priv/img/tol.gif" BORDER="0"></A></TD><TD><A HREF="qadd.php?Pub=<?php  pencURL($Pub); ?>" ><B><?php  putGS("Add new issue"); ?></B></A></TD></TR></TABLE>
+	<P><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1"><TR><TD><A HREF="add_new.php?Pub=<?php  pencURL($Pub); ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0"></A></TD><TD><A HREF="add_new.php?Pub=<?php  pencURL($Pub); ?>" ><B><?php  putGS("Add new issue"); ?></B></A></TD></TR></TABLE>
+	<?php  } else { ?>	<P><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1"><TR><TD><A HREF="qadd.php?Pub=<?php  pencURL($Pub); ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0"></A></TD><TD><A HREF="qadd.php?Pub=<?php  pencURL($Pub); ?>" ><B><?php  putGS("Add new issue"); ?></B></A></TD></TR></TABLE>
 	<?php  }
     }
     $IssNr= "xxxxxxxxx";
@@ -182,7 +175,7 @@ if ($access) {
 		print '&nbsp;';
 	 ?>		</TD>
 		<TD >
-			<A HREF="/priv/pub/issues/sections/?Pub=<?php  pencURL($Pub); ?>&Issue=<?php  pgetUVar($q_iss,'Number'); ?>&Language=<?php  pgetUVar($q_iss,'IdLanguage'); ?>"><?php  pgetHVar($q_iss,'Name'); ?></A>
+			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/?Pub=<?php  pencURL($Pub); ?>&Issue=<?php  pgetUVar($q_iss,'Number'); ?>&Language=<?php  pgetUVar($q_iss,'IdLanguage'); ?>"><?php  pgetHVar($q_iss,'Name'); ?></A>
 		</TD>
 		<TD >
 			<?php  pgetHVar($q_iss,'ShortName'); ?>
@@ -195,27 +188,27 @@ if ($access) {
 	    } 
 	 ?>		</TD>
 		<TD ALIGN="CENTER">
-			<A HREF="/priv/pub/issues/status.php?Pub=<?php  pencURL($Pub); ?>&Issue=<?php  pgetUVar($q_iss,'Number'); ?>&Language=<?php  pgetUVar($q_iss,'IdLanguage'); ?>"><?php  if (getHVar($q_iss, 'Published') == 'Y') pgetHVar($q_iss,'PublicationDate'); else print putGS(getHVar($q_iss,'Pub')); ?></A>
+			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/status.php?Pub=<?php  pencURL($Pub); ?>&Issue=<?php  pgetUVar($q_iss,'Number'); ?>&Language=<?php  pgetUVar($q_iss,'IdLanguage'); ?>"><?php  if (getHVar($q_iss, 'Published') == 'Y') pgetHVar($q_iss,'PublicationDate'); else print putGS(getHVar($q_iss,'Pub')); ?></A>
 		</TD>
 	<? if ($publish) { ?>
 		<TD ALIGN="CENTER">
-			<A HREF="/priv/pub/issues/autopublish.php?Pub=<? pencURL($Pub); ?>&Issue=<? pgetUVar($q_iss,'Number'); ?>&Language=<? pgetUVar($q_iss,'IdLanguage'); ?>"><? putGS("Automatic publishing"); ?></A>
+			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/autopublish.php?Pub=<? pencURL($Pub); ?>&Issue=<? pgetUVar($q_iss,'Number'); ?>&Language=<? pgetUVar($q_iss,'IdLanguage'); ?>"><? putGS("Automatic publishing"); ?></A>
 		</TD>
 	<? } ?>
 		<TD ALIGN="CENTER">
-			<A HREF="/priv/pub/issues/translate.php?Pub=<?php  pencURL($Pub); ?>&Issue=<?php  pgetUVar($q_iss,'Number'); ?>&Language=<?php  pgetUVar($q_iss,'IdLanguage'); ?>"><?php  putGS("Translate"); ?></A>
+			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/translate.php?Pub=<?php  pencURL($Pub); ?>&Issue=<?php  pgetUVar($q_iss,'Number'); ?>&Language=<?php  pgetUVar($q_iss,'IdLanguage'); ?>"><?php  putGS("Translate"); ?></A>
 		</TD>
 		<TD ALIGN="CENTER">
-			<A HREF="/priv/pub/issues/edit.php?Pub=<?php  pencURL($Pub); ?>&Issue=<?php  pgetUVar($q_iss,'Number'); ?>&Language=<?php  pgetUVar($q_iss,'IdLanguage'); ?>"><?php  putGS("Configure"); ?></A>
+			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/edit.php?Pub=<?php  pencURL($Pub); ?>&Issue=<?php  pgetUVar($q_iss,'Number'); ?>&Language=<?php  pgetUVar($q_iss,'IdLanguage'); ?>"><?php  putGS("Configure"); ?></A>
 		</TD>
 		<TD ALIGN="CENTER">
-			<A HREF="" ONCLICK="window.open('/priv/pub/issues/preview.php?Pub=<?php  pencURL($Pub); ?>&Issue=<?php  pgetUVar($q_iss,'Number'); ?>&Language=<?php  pgetUVar($q_iss,'IdLanguage'); ?>', 'fpreview', 'resizable=yes, menubar=yes, toolbar=yes, width=680, height=560'); return false"><?php  putGS("Preview"); ?></A>
+			<A HREF="" ONCLICK="window.open('/<?php echo $ADMIN; ?>/pub/issues/preview.php?Pub=<?php  pencURL($Pub); ?>&Issue=<?php  pgetUVar($q_iss,'Number'); ?>&Language=<?php  pgetUVar($q_iss,'IdLanguage'); ?>', 'fpreview', 'resizable=yes, menubar=yes, toolbar=yes, width=680, height=560'); return false"><?php  putGS("Preview"); ?></A>
 		</TD>
 <?php  } else { ?>
 		<TD ALIGN="RIGHT">
 	<?php pgetHVar($q_iss,'Number'); ?>		</TD>
 		<TD >
-			<A HREF="/priv/pub/issues/sections/?Pub=<?php  pencURL($Pub); ?>&Issue=<?php  pgetUVar($q_iss,'Number'); ?>&Language=<?php  pgetUVar($q_iss,'IdLanguage'); ?>"><?php  pgetHVar($q_iss,'Name'); ?></A>
+			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/?Pub=<?php  pencURL($Pub); ?>&Issue=<?php  pgetUVar($q_iss,'Number'); ?>&Language=<?php  pgetUVar($q_iss,'IdLanguage'); ?>"><?php  pgetHVar($q_iss,'Name'); ?></A>
 		</TD>
 		<TD >
 	<?php
@@ -229,12 +222,12 @@ if ($access) {
 			<?php  if (getHVar($q_iss, 'Published') == 'Y') pgetHVar($q_iss,'PublicationDate'); else print putGS(getHVar($q_iss,'Pub')); ?>
 		</TD>
 		<TD ALIGN="CENTER">
-			<A HREF="" ONCLICK="window.open('/priv/pub/issues/preview.php?Pub=<?php  pencURL($Pub); ?>&Issue=<?php  pgetUVar($q_iss,'Number'); ?>&Language=<?php  pgetUVar($q_iss,'IdLanguage'); ?>', 'fpreview', 'resizable=yes, menubar=yes, toolbar=yes, width=680, height=560'); return false"><?php  putGS("Preview"); ?></A>
+			<A HREF="" ONCLICK="window.open('/<?php echo $ADMIN; ?>/pub/issues/preview.php?Pub=<?php  pencURL($Pub); ?>&Issue=<?php  pgetUVar($q_iss,'Number'); ?>&Language=<?php  pgetUVar($q_iss,'IdLanguage'); ?>', 'fpreview', 'resizable=yes, menubar=yes, toolbar=yes, width=680, height=560'); return false"><?php  putGS("Preview"); ?></A>
 		</TD>
 <?php  }
     if ($dia != 0) { ?> 
 		<TD ALIGN="CENTER">
-			<A HREF="/priv/pub/issues/del.php?Pub=<?php  pencURL($Pub); ?>&Issue=<?php  pgetUVar($q_iss,'Number'); ?>&Language=<?php  pgetUVar($q_iss,'IdLanguage'); ?>"><IMG SRC="/priv/img/icon/x.gif" BORDER="0" ALT="<?php  putGS('Delete issue $1',getHVar($q_iss,'Name')); ?>"></A>
+			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/del.php?Pub=<?php  pencURL($Pub); ?>&Issue=<?php  pgetUVar($q_iss,'Number'); ?>&Language=<?php  pgetUVar($q_iss,'IdLanguage'); ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/x.gif" BORDER="0" ALT="<?php  putGS('Delete issue $1',getHVar($q_iss,'Name')); ?>"></A>
 		</TD>
 <?php  } ?>
 	</TR>
