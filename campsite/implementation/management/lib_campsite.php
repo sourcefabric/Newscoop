@@ -848,11 +848,11 @@ function move_article_rel($pub_id, $lang_id, $issue, $section, $article, $dir, $
 	$prev_number = $row['Number'];
 	$sql = "update Articles set ArticleOrder = ArticleOrder + 1 where IdPublication = "
 	     . $pub_id . " and NrIssue = " . $issue . " and NrSection = " . $section
-	     . " and IdLanguage = " . $lang_id . " and ArticleOrder >= " . $prev_order;
+	     . " and ArticleOrder >= " . $prev_order;
 	$res = mysql_query($sql);
 	$sql = "update Articles set ArticleOrder = " . $prev_order . " where IdPublication = "
 	     . $pub_id . " and NrIssue = " . $issue . " and NrSection = " . $section
-	     . " and Number = " . $article . " and IdLanguage = " . $lang_id;
+	     . " and Number = " . $article;
 	$res = mysql_query($sql);
 	return true;
 }
@@ -887,11 +887,11 @@ function move_article_abs($pub_id, $lang_id, $issue, $section, $article, $pos = 
 	}
 	$sql = "update Articles set ArticleOrder = ArticleOrder + 1 where IdPublication = "
 	     . $pub_id . " and NrIssue = " . $issue . " and NrSection = " . $section
-	     . " and IdLanguage = " . $lang_id . " and ArticleOrder " . $comp . " " . $prev_order;
+	     . " and ArticleOrder " . $comp . " " . $prev_order;
 	$res = mysql_query($sql);
 	$sql = "update Articles set ArticleOrder = " . $new_order . " where IdPublication = "
 	     . $pub_id . " and NrIssue = " . $issue . " and NrSection = " . $section
-	     . " and Number = " . $article . " and IdLanguage = " . $lang_id;
+	     . " and Number = " . $article;
 	$res = mysql_query($sql);
 	return true;
 }
