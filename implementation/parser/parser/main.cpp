@@ -70,25 +70,6 @@ using std::cerr;
 using std::endl;
 using std::flush;
 
-class CUpdateThread : public CThread
-{
-protected:
-	virtual void* Run();
-};
-
-void* CUpdateThread::Run()
-{
-	while (true)
-	{
-		bool nTopicsChanged = false;
-		UpdateTopics(nTopicsChanged);
-		if (CLex::updateArticleTypes() || nTopicsChanged)
-			CParser::resetMap();
-		sleep(5);
-	}
-	return NULL;
-}
-
 
 CMessage* readMessage(CTCPSocket* p_pcoClSock, CMessageFactoryRegister& p_rcoMFReg)
 {
@@ -109,6 +90,68 @@ CMessage* readMessage(CTCPSocket* p_pcoClSock, CMessageFactoryRegister& p_rcoMFR
 }
 
 
+void resetPublicationsCache(const CMsgResetCache* p_pcoMsg)
+{
+	string coOperation = p_pcoMsg->getParameter("operation")->asString();
+	id_type nPublicationId = Integer(p_pcoMsg->getParameter(P_IDPUBL)->asString());
+
+	if (coOperation == "delete" || coOperation == "modify")
+		CPublicationsRegister::getInstance().erase(nPublicationId);
+	if (coOperation == "create" || coOperation == "modify")
+		new CPublication(nPublicationId, MYSQLConnection());
+}
+
+
+void resetTopicsCache(const CMsgResetCache* p_pcoMsg)
+{
+	bool bUpdated;
+	UpdateTopics(bUpdated);
+	if (bUpdated)
+		CParser::resetMap();
+}
+
+
+void resetArticleTypesCache(const CMsgResetCache* p_pcoMsg)
+{
+	if (CLex::updateArticleTypes())
+		CParser::resetMap();
+}
+
+
+void resetAllCache(const CMsgResetCache* p_pcoMsg)
+{
+	resetPublicationsCache(p_pcoMsg);
+	resetTopicsCache(p_pcoMsg);
+	resetArticleTypesCache(p_pcoMsg);
+}
+
+
+void resetCache(const CMsgResetCache* p_pcoMsg)
+{
+	string coType = p_pcoMsg->getType();
+	if (coType == "all")
+		resetAllCache(p_pcoMsg);
+	if (coType == "publications")
+		resetPublicationsCache(p_pcoMsg);
+	if (coType == "topics")
+		resetTopicsCache(p_pcoMsg);
+	if (coType == "article_types")
+		resetArticleTypesCache(p_pcoMsg);
+}
+
+
+int readPublications()
+{
+	MYSQL* pSQL = MYSQLConnection();
+	SQLQuery(pSQL, "select Id from Publications");
+	StoreResult(pSQL, coRes);
+	MYSQL_ROW row;
+	while ((row = mysql_fetch_row(*coRes)) != NULL)
+		new CPublication(Integer(row[0]), pSQL);
+	return RES_OK;
+}
+
+
 // MyThreadRoutine: thread routine; this is started on new thread start
 // Parameters:
 //		void* p_pArg - pointer to connection to client socket
@@ -125,13 +168,6 @@ void* MyThreadRoutine(void* p_pArg)
 	sigfillset(&nSigMask);
 	pthread_sigmask(SIG_SETMASK, &nSigMask, NULL);
 
-	new CPublication(6, MYSQLConnection());
-	new CURLShortNamesType();
-	new CURLTemplatePathType();
-	CMessageFactoryRegister coMFReg;
-	coMFReg.insert(new CURLRequestMessageFactory());
-	const CPublicationsRegister& rcoPubReg = CPublicationsRegister::getInstance();
-
 	CAction::initTempMembers();
 	CTCPSocket* pcoClSock = (CTCPSocket*)p_pArg;
 	struct timeval tVal = { 0, 0 };
@@ -147,9 +183,15 @@ void* MyThreadRoutine(void* p_pArg)
 		{
 			throw RunException("Error on select");
 		}
-		CMessage* pcoMessage = readMessage(pcoClSock, coMFReg);
+		CMessage* pcoMessage = readMessage(pcoClSock, CMessageFactoryRegister::getInstance());
+		if (pcoMessage->getMessageTypeId() == 2) {
+			resetCache((CMsgResetCache*)pcoMessage);
+			return NULL;
+		}
+		if (pcoMessage->getMessageTypeId() != 1)
+			return NULL;
 		string coAlias = ((CMsgURLRequest*)pcoMessage)->getHTTPHost();
-		const CPublication* pcoPub = rcoPubReg.getPublication(coAlias);
+		const CPublication* pcoPub = CPublicationsRegister::getInstance().getPublication(coAlias);
 		const CURLType* pcoURLType = pcoPub->getURLType();
 		CURL* pcoURL = pcoURLType->getURL(*((CMsgURLRequest*)pcoMessage));
 		string coRemoteAddress = ((CMsgURLRequest*)pcoMessage)->getRemoteAddress();
@@ -173,14 +215,35 @@ void* MyThreadRoutine(void* p_pArg)
 	{
 		delete pcoClSock;
 #ifdef _DEBUG
-		cout << "MyThreadRoutine: " << coEx.what() << endl;
+		cerr << "MyThreadRoutine: " << coEx.what() << endl;
 #endif
 	}
 	catch (SocketErrorException& coEx)
 	{
 		delete pcoClSock;
 #ifdef _DEBUG
-		cout << "MyThreadRoutine: " << coEx.Message() << endl;
+		cerr << "MyThreadRoutine: " << coEx.Message() << endl;
+#endif
+	}
+	catch (out_of_range& coEx)
+	{
+		delete pcoClSock;
+#ifdef _DEBUG
+		cerr << "MyThreadRoutine: " << coEx.what() << endl;
+#endif
+	}
+	catch (bad_alloc& coEx)
+	{
+		delete pcoClSock;
+#ifdef _DEBUG
+		cerr << "MyThreadRoutine: unable to allocate memory: " << coEx.what() << endl;
+#endif
+	}
+	catch (exception& coEx)
+	{
+		delete pcoClSock;
+#ifdef _DEBUG
+		cerr << coEx.what() << endl;
 #endif
 	}
 	return NULL;
@@ -381,7 +444,7 @@ void sigterm_handler(int p_nSigNum)
 #endif
 		exit(0);
 	}
-	UInt nWorkingThreads = g_pcoThreadPool->workingThreads();
+	uint nWorkingThreads = g_pcoThreadPool->workingThreads();
 	if (nWorkingThreads == 0)
 	{
 #ifdef _DEBUG
@@ -458,20 +521,33 @@ int main(int argc, char** argv)
 #if (__GNUC__ < 3)
 	set_terminate(my_terminate);
 #else
-	// The __verbose_terminate_handler function obtains the name of the current exception, attempts to
-	// demangle it, and prints it to stderr. If the exception is derived from std::exception then the
-	// output from what() will be included. 
+	// The __verbose_terminate_handler function obtains the name of the current exception, 
+	// attempts to demangle it, and prints it to stderr. If the exception is derived from
+	// std::exception then the output from what() will be included. 
 	std::set_terminate (__gnu_cxx::__verbose_terminate_handler);
 #endif
 	try
 	{
+		// initialize topics cache
 		bool nTopicsChanged = false;
 		UpdateTopics(nTopicsChanged);
+
+		// initialize article types cache
+		CLex::updateArticleTypes();
+
+		// initialize publications cache
+		readPublications();
+
+		// initilize URL types
+		new CURLShortNamesType();
+		new CURLTemplatePathType();
+
+		// initialize message types
+		CMessageFactoryRegister::getInstance().insert(new CURLRequestMessageFactory());
+		CMessageFactoryRegister::getInstance().insert(new CResetCacheMessageFactory());
+		CMessageFactoryRegister::getInstance().insert(new CRestartServerMessageFactory());
+
 		CServerSocket coServer("0.0.0.0", nPort);
-		CUpdateThread coUpdateThread;
-		coUpdateThread.run();
-		if (!coUpdateThread.isRunning())
-			throw ExThread(ThreadSvAbort, "Error starting update thread.");
 		g_pcoThreadPool = new CThreadPool(1, nMaxThreads, MyThreadRoutine, NULL);
 		CTCPSocket* pcoClSock = NULL;
 		for (; ; )
