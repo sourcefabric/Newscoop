@@ -3,6 +3,7 @@
 regGS("CAMPSITE","CAMPSITE:en");
 regGS("Home","Home:en");
 regGS("Logout","Logout:en");
+regGS("Welcome", "Welcome:en");
 
 regGS("Content","Content:en");
 regGS("Obsolete","Obsolete:en");
