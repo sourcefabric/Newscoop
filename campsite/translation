@@ -134,7 +134,7 @@ if [ "$to_do" = "package" ]; then
 
     mv -f $DST_DIR/translation-$LANG.tar.gz .
     rm -fr $DST_DIR
-    chown "$USER_NAME"."$GROUP_NAME" translation-$LANG.tar.gz
+    [ "$USER_NAME" != "" ] && chown "$USER_NAME"."$GROUP_NAME" translation-$LANG.tar.gz
 
     popd &> /dev/null
 
@@ -199,7 +199,7 @@ if [ "$to_do" = "add_trans" ]; then
     popd &> /dev/null
     pushd $DST_DIR &> /dev/null
 
-    chown "$USER_NAME"."$GROUP_NAME" globals.$LANG.php
+    [ "$USER_NAME" != "" ] && chown "$USER_NAME"."$GROUP_NAME" globals.$LANG.php
     chmod 660 globals.$LANG.php
     find . -name locals.$LANG.php -exec chown "$USER_NAME"."$GROUP_NAME" {} \;
     find . -name locals.$LANG.php -exec chmod 660 {} \;
