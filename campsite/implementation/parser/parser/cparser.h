@@ -79,7 +79,7 @@ typedef enum _TCDataType {
     CMS_CDT_STRING = 2
 } TCDataType;
 
-#define ID_MAXLEN 80
+#define ID_MAXLEN 1024
 
 // The lexem returned by lex class
 class CCLexem
@@ -165,7 +165,8 @@ public:
 	CCLex(const char* = 0, lint = 0);
 
 	// copy-constructor
-	CCLex(const CCLex& s) : CurrLexem(CMS_CLEX_NONE, CMS_CDT_NONE) { *this = s; }
+	CCLex(const CCLex& s) : CurrLexem(CMS_CLEX_NONE, CMS_CDT_NONE), m_pchTempBuff(NULL)
+	{ *this = s; }
 
 	// destructor
 	~CCLex() { delete m_pchTempBuff; }
