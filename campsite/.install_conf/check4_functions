@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 . ${INSTALL_CONF}/global_functions
 
@@ -59,7 +59,11 @@ return 0
 check4_make()
 {
 is_checked make && return 0
-check4_file make --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
+if [ $BSD -eq 1 ]; then
+    check4_file gmake --executable --path "/bin:/usr/bin:/usr/local/bin"
+else
+    check4_file make --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
+fi
 result=$? && [ $result -ne 0 ] && return 1
 export MAKE=$file_path
 set_checked make
@@ -76,7 +80,11 @@ return 0
 check4_m4()
 {
 is_checked m4 && return 0
-check4_file m4 --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
+if [ $BSD -eq 1 ]; then
+	check4_file gm4 --executable --path "/bin:/usr/bin:/usr/local/bin"
+else
+	check4_file m4 --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
+fi
 result=$? && [ $result -ne 0 ] && return 1
 export M4=$file_path
 set_checked m4
@@ -127,7 +135,7 @@ return 0
 check4_chown()
 {
 is_checked chown && return 0
-check4_file chown --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
+check4_file chown --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin:/usr/sbin"
 result=$? && [ $result -ne 0 ] && return 1
 export CHOWN=$file_path
 set_checked chown
@@ -383,7 +391,7 @@ return 0
 check4_mysqld()
 {
 is_checked mysqld && return 0
-check4_file mysqld --executable --path "/sbin:/usr/sbin:/usr/local/sbin:/opt/sbin:/usr/libexec:/usr/local/mysql/bin"
+check4_file mysqld --executable --path "/sbin:/usr/sbin:/usr/local/sbin:/opt/sbin:/usr/libexec:/usr/local/mysql/bin:/usr/local/mysql/libexec:/usr/local/libexec"
 result=$? && [ $result -ne 0 ] && return 1
 export MYSQLD=$file_path
 set_checked mysqld
@@ -450,6 +458,7 @@ return 0
 # Parameters: none
 # Variables set:
 #	MYSQL_H - mysql.h full path
+#       MYSQL_H_PATH - directory containing mysql.h
 #	output - error message (if any)
 check4_mysql_h()
 {
@@ -457,6 +466,7 @@ is_checked mysql_h && return 0
 check4_file mysql.h --file --path "/usr/include:/usr/include/mysql:/usr/local/include:/usr/local/include/mysql:/usr/local/mysql/include"
 result=$? && [ $result -ne 0 ] && return 1
 export MYSQL_H=$file_path
+export MYSQL_H_PATH=`cut_last_dirs $MYSQL_H 2`
 set_checked mysql_h
 return 0
 }
@@ -614,7 +624,7 @@ if [ "$apache_conf_path" != "" ]; then
 else
     conf_paths=""
     for bn in $bin_names; do
-	conf_paths="$conf_paths /etc/${bn}/conf /etc/${bn} "
+	conf_paths="$conf_paths /etc/${bn}/conf /etc/${bn} /usr/local/etc/${bn}/conf /usr/local/etc/${bn} "
     done
     conf_paths="$conf_paths "`cut_last_dirs "${apache_bin_path}"`/conf
 fi
@@ -755,14 +765,22 @@ return 0
 # Variables set:
 #	LIBPTHREAD - libpthread full path
 #	LIBPTHREAD_PATH - path to pthread library
+#       PTHREAD_LINK - added to gcc line to link with pthread
 #	output - error message (if any)
 check4_libpthread()
 {
 is_checked libpthread && return 0
+if [ $BSD -eq 1 ]; then
+	export LIBPTHREAD=./
+	export LIBPTHREAD_PATH=./
+	export PTHREAD_LINK=-pthread
+	return 0
+fi
 check4_file libpthread.so --file --path "/usr/lib:/usr/local/lib"
 result=$? && [ $result -ne 0 ] && return 1
 export LIBPTHREAD=$file_path
 export LIBPTHREAD_PATH=`cut_last_dirs $LIBPTHREAD 1`
+export PTHREAD_LINK=-lpthread
 check4_gpp
 [ $? -ne 0 ] && return 1
 check4_pthread_h
@@ -776,7 +794,7 @@ int main()
 pthread_create(0, 0, 0, 0);
 }
 EOF
-g++ -o $test_file ${test_file}.cpp -L$LIBPTHREAD_PATH -lpthread
+g++ -o $test_file ${test_file}.cpp -L$LIBPTHREAD_PATH $PTHREAD_LINK
 result=$?
 rm -f ${test_file}*
 [ $result -ne 0 ] && output="pthread library is not installed" && echo $output && return 1
@@ -817,4 +835,91 @@ return 0
 #set_checked
 #return 0
 #}
+
+# FUNCTION: check4_libnsl
+# Description: 
+# Parameters: none
+# Variables set:
+#       NSL_LINK - added to gcc line to link with nsl
+#	output - error message (if any)
+check4_libnsl()
+{
+is_checked libnsl && return 0
+if [ $BSD -eq 1 ]; then
+	export NSL_LINK=
+else
+	export NSL_LINK=-lnsl
+fi
+set_checked libnsl
+}
+# END OF check4_libnsl
+
+# FUNCTION: check4_gethostbyaddr_r
+# Description: 
+# Parameters: none
+# Variables set:
+#       HAVE_GETHOSTBYADDR_R - 1 if found, 0 if not
+#	output - error message (if any)
+check4_gethostbyaddr_r()
+{
+is_checked gethostbyaddr_r && return 0
+export HAVE_GETHOSTBYADDR_R=0
+check4_symbol_and_prototype libc.a /usr/lib netdb.h /usr/include gethostbyaddr_r
+if [ $? -eq 0 ]; then
+	export HAVE_GETHOSTBYADDR_R=1
+else
+	check4_symbol_and_prototype libc_r.a /usr/lib netdb.h /usr/include gethostbyaddr_r
+	if [ $? -eq 0 ]; then
+		export HAVE_GETHOSTBYADDR_R=1
+	fi
+fi
+set_checked gethostbyaddr_r
+}
+# END OF check4_gethostbyaddr
+
+# FUNCTION: check4_gethostbyname_r
+# Description: 
+# Parameters: none
+# Variables set:
+#       HAVE_GETHOSTBYNAME_R - 1 if found, 0 if not
+#	output - error message (if any)
+check4_gethostbyname_r()
+{
+is_checked gethostbyname_r && return 0
+export HAVE_GETHOSTBYNAME_R=0
+check4_symbol_and_prototype libc.a /usr/lib netdb.h /usr/include gethostbyname_r
+if [ $? -eq 0 ]; then
+	export HAVE_GETHOSTBYNAME_R=1
+else
+	check4_symbol_and_prototype libc_r.a /usr/lib netdb.h /usr/include gethostbyname_r
+	if [ $? -eq 0 ]; then
+		export HAVE_GETHOSTBYNAME_R=1
+	fi
+fi
+set_checked gethostbyname_r
+}
+# END OF check4_gethostbyname
+
+# FUNCTION: check4_getservbyname_r
+# Description: 
+# Parameters: none
+# Variables set:
+#       HAVE_GETSERVBYNAME_R - 1 if found, 0 if not
+#	output - error message (if any)
+check4_getservbyname_r()
+{
+is_checked getservbyname_r && return 0
+export HAVE_GETSERVBYNAME_R=0
+check4_symbol_and_prototype libc.a /usr/lib netdb.h /usr/include getservbyname_r
+if [ $? -eq 0 ]; then
+	export HAVE_GETSERVBYNAME_R=1
+else
+	check4_symbol_and_prototype libc_r.a /usr/lib netdb.h /usr/include getservbyname_r
+	if [ $? -eq 0 ]; then
+		export HAVE_GETSERVBYNAME_R=1
+	fi
+fi
+set_checked getservbyname_r
+}
+# END OF check4_getservbyname
 # END OF check4_
