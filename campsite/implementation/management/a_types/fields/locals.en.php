@@ -3,7 +3,6 @@
 // -- index.m4
 regGS("Article type fields","Article type fields:en");
 regGS("Article type","Article type:en");
-regGS("Add new field","Add new field:en");
 regGS("No fields.","No fields.:en");
 regGS("Delete field $1","Delete field $1:en");
 regGS("Article body","Article body:en");

@@ -1,7 +1,6 @@
 <?
 regGS("Article type fields","Polja tipova članaka");
 regGS("Article type","Tip članka");
-regGS("Add new field","Dodaj novo polje");
 regGS("No fields.","Nema polja");
 regGS("Delete field $1","Izbriši polje $1");
 regGS("Article body","Tijelo članka");

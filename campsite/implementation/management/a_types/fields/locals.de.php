@@ -1,7 +1,6 @@
 <?
 regGS("Article type fields","Artikeltypen-Felder");
 regGS("Article type","Artikeltyp");
-regGS("Add new field","Neues Feld hinzufügen");
 regGS("No fields.","Keine Felder");
 regGS("Delete field $1","Feld $1 löschen");
 regGS("Article body","Fliesstext");
