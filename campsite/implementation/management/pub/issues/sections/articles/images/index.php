@@ -147,7 +147,7 @@ if (count($articleImages) > 0) {
 		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php putGS('Place'); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php putGS('Date<BR><SMALL>(yyyy-mm-dd)</SMALL>'); ?></B></TD>
 	<?php    
-	if ($User->hasPermission('ChangeArticle')) { ?>
+	if ($articleObj->userCanModify($User)) { ?>
 		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php putGS('Remove Image From Article'); ?></B></TD>
 		<?php
 	}
@@ -168,13 +168,13 @@ if (count($articleImages) > 0) {
 		<?php  
 		if ($User->hasPermission('ChangeImage')) { 	
 			$imageUrl = "/$ADMIN/pub/issues/sections/articles/images/edit.php?"
-				."PublicationId=$Pub"
-				."&IssueId=$Issue"
-				."&SectionId=$Section"
-				."&ArticleId=$Article"
+				."Pub=$Pub"
+				."&Issue=$Issue"
+				."&Section=$Section"
+				."&Article=$Article"
 				."&ImageId=".$image->getImageId()
-				."&InterfaceLanguageId=$Language"
-				."&ArticleLanguageId=$sLanguage"
+				."&Language=$Language"
+				."&sLanguage=$sLanguage"
 				."&ImageTemplateId=".$articleImage->getTemplateId();
 		}
 		else {
@@ -203,9 +203,9 @@ if (count($articleImages) > 0) {
 			<?php echo htmlspecialchars($image->getDate()); ?>
 		</TD>
 		<?php
-	    if ($User->hasPermission('ChangeArticle')) { ?>
+	    if ($articleObj->userCanModify($User)) { ?>
 			<TD ALIGN="CENTER">
-				<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/images/do_unlink.php?PublicationId=<?php  p($Pub); ?>&IssueId=<?php  p($Issue); ?>&SectionId=<?php  p($Section); ?>&ArticleId=<?php  p($Article); ?>&ImageId=<?php echo $image->getImageId(); ?>&ImageTemplateId=<?php echo $articleImage->getTemplateId(); ?>&ArticleLanguageId=<?php  p($Language); ?>&InterfaceLanguageId=<?php  p($sLanguage); ?>" onclick="return confirm('<?php putGS('Are you sure you want to remove the image \\\'$1\\\' from the article?', htmlspecialchars($image->getDescription())); ?>');"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/unlink.png" BORDER="0" ALT="<?php  putGS('Unlink image $1', $image->getDescription()); ?>"></A>
+				<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/images/do_unlink.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($Article); ?>&ImageId=<?php echo $image->getImageId(); ?>&ImageTemplateId=<?php echo $articleImage->getTemplateId(); ?>&sLanguage=<?php  p($sLanguage); ?>&Language=<?php  p($Language); ?>" onclick="return confirm('<?php putGS('Are you sure you want to remove the image \\\'$1\\\' from the article?', htmlspecialchars($image->getDescription())); ?>');"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/unlink.png" BORDER="0" ALT="<?php  putGS('Unlink image $1', $image->getDescription()); ?>"></A>
 			</TD>
 		<?php
 	    }
@@ -214,7 +214,7 @@ if (count($articleImages) > 0) {
 			<?php 
 			if (count(ArticleImage::GetArticlesThatUseImage($image->getImageId())) == 1) {
 				?>
-				<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/images/do_del.php?PublicationId=<?php  p($Pub); ?>&IssueId=<?php  p($Issue); ?>&SectionId=<?php  p($Section); ?>&ArticleId=<?php  p($Article); ?>&ImageId=<?php echo $image->getImageId(); ?>&ArticleLanguageId=<?php  p($sLanguage); ?>&InterfaceLanguageId=<?php p($Language); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the image \\\'$1\\\'?', htmlspecialchars($image->getDescription())); ?>');"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/delete.png" BORDER="0" ALT="<?php  putGS('Delete image $1', $image->getDescription()); ?>"></A>
+				<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/images/do_del.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&ImageId=<?php echo $image->getImageId(); ?>&sLanguage=<?php  p($sLanguage); ?>&Language=<?php p($Language); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the image \\\'$1\\\'?', htmlspecialchars($image->getDescription())); ?>');"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/delete.png" BORDER="0" ALT="<?php  putGS('Delete image $1', $image->getDescription()); ?>"></A>
 				<?php
 			}
 			else {

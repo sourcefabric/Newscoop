@@ -17,26 +17,25 @@ if (!$access) {
 	exit;
 }
 
-$PublicationId = Input::Get('PublicationId', 'int', 0);
-$IssueId = Input::Get('IssueId', 'int', 0);
-$SectionId = Input::Get('SectionId', 'int', 0);
-$ArticleLanguageId = Input::Get('ArticleLanguageId','int', 0);
-$ArticleId = Input::Get('ArticleId', 'int', 0);
+$Pub = Input::Get('Pub', 'int', 0);
+$Issue = Input::Get('Issue', 'int', 0);
+$Section = Input::Get('Section', 'int', 0);
+$sLanguage = Input::Get('sLanguage','int', 0);
+$Article = Input::Get('Article', 'int', 0);
 $ImageId = Input::Get('ImageId', 'int', 0);
-$InterfaceLanguageId = Input::Get('InterfaceLanguageId', 'int', 0);
+$Language = Input::Get('Language', 'int', 0);
 
 if (!Input::IsValid()) {
 	CampsiteInterface::DisplayError(array('Invalid input: $1', Input::GetErrorString()));
 	exit;		
 }
 
-$articleObj =& new Article($PublicationId, $IssueId, $SectionId, $ArticleLanguageId, $ArticleId);
+$articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
 
 // This file can only be accessed if the user has the right to change articles
 // or the user created this article and it hasnt been published yet.
 $access = false;
-if ($User->hasPermission('ChangeArticle') || $User->hasPermission('DeleteImage')
-	|| (($articleObj->getUserId() == $User->getId()) && ($articleObj->getPublished() == 'N'))) {
+if ($articleObj->userCanModify($User) || $User->hasPermission('DeleteImage')) {
 	$access = true;
 }
 if (!$access) {
@@ -50,6 +49,6 @@ $logtext = getGS('Image $1 deleted', $imageObj->getImageId());
 Log::Message($logtext, $User->getUserName(), 42);
 
 // Go back to article image list.
-header('Location: '.CampsiteInterface::ArticleUrl($articleObj, $InterfaceLanguageId, 'images/'));
+header('Location: '.CampsiteInterface::ArticleUrl($articleObj, $Language, 'images/'));
 
 ?>
