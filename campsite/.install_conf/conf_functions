@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 . ${INSTALL_CONF}/check4_functions
 
@@ -440,7 +440,7 @@ if [ "$PACKAGE_TYPE" = "binary" ]; then
 else
     pushd `pwd` &> /dev/null
     cd ${CAMPSITE_PACKAGE_DIR}/supplemental/mysql_connect
-    ./configure && make && check4_file $mysql_connect --executable
+    ./configure && $MAKE && check4_file $mysql_connect --executable
     result=$?
     popd &> /dev/null
     [ $result -ne 0 ] && echo $output_err && return 1
@@ -459,6 +459,9 @@ return 0
 prepare_PARSER_env()
 {
 in_list PARSER $PREPARED_MOD_ENV && return 0
+check4_gethostbyaddr_r
+check4_gethostbyname_r
+check4_getservbyname_r
 output_err="Error preparing environment for PARSER module."
 echo -e "*** Preparing PARSER environment...OK"
 add_to_list_var PARSER PREPARED_MOD_ENV
@@ -477,13 +480,16 @@ in_list EVENT_HANDLERS $PREPARED_MOD_ENV && return 0
 output_err="Error preparing environment for EVENT_HANDLERS module."
 echo -e "*** Preparing EVENT_HANDLERS environment..."
 smtp_wrapper=${CAMPSITE_PACKAGE_DIR}/implementation/mailnotify/smtp_wrapper/smtp_wrapper/smtp_wrapper
+check4_gethostbyaddr_r
+check4_gethostbyname_r
+check4_getservbyname_r
 if [ "$PACKAGE_TYPE" = "binary" ]; then
     check4_file $smtp_wrapper --executable
     [ $? -ne 0 ] && echo $output_err && return 1
 else
     pushd `pwd` &> /dev/null
     cd ${CAMPSITE_PACKAGE_DIR}/implementation/mailnotify/smtp_wrapper
-    ./configure && make && check4_file $smtp_wrapper --executable
+    ./configure && $MAKE && check4_file $smtp_wrapper --executable
     result=$?
     popd &> /dev/null
     [ $result -ne 0 ] && echo $output_err && return 1
