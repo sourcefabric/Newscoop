@@ -22,7 +22,7 @@ $Section = Input::get('Section', 'int', 0);
 $Language = Input::get('Language', 'int', 0);
 $DestPublication = Input::get('destination_publication', 'int', 0, true);
 $DestIssue = Input::get('destination_issue', 'int', 0, true);
-$BackLink = Input::get('Back', 'string', "/$ADMIN/pub/issues/sections/index.php", true);
+$BackLink = Input::get('Back', 'string', "/$ADMIN/pub/issues/sections/index.php?Pub=$Pub&Issue=$Issue&Language=$Language", true);
 
 if (!Input::isValid()) {
 	header("Location: /$ADMIN/logout.php");
@@ -141,9 +141,24 @@ SectionTop($sectionObj, $Language, "Duplicate section");
 	</td>
 </tr>
 
+<FORM NAME="SECT_DUP" METHOD="POST" action="do_duplicate.php">
+<?php if ($DestPublication > 0 && $DestIssue > 0) { ?>
+<tr>
+	<td><?php putGS("Destination section number"); ?>:</td>
+	<td><input type="text" class="input_text" name="destination_section" value="<?php echo $Section; ?>"></td>
+</tr>
+<?php } ?>
+
+<tr>
+	<td colspan="2"><?php 
+		if ( ($Pub == $DestPublication) && ($Issue == $DestIssue)) {
+			putGS("The destination issue is the same as the source issue."); echo "<BR>\n";
+		}
+	?></td>
+</tr>
+
 <tr>
 	<td align="center" colspan="2">
-		<FORM NAME="SECT_DUP" METHOD="POST" action="do_duplicate.php">
 		<input type="hidden" name="Pub" value="<?php p($Pub); ?>">
 		<input type="hidden" name="Issue" value="<?php p($Issue); ?>">
 		<input type="hidden" name="Section" value="<?php p($Section); ?>">
@@ -152,9 +167,9 @@ SectionTop($sectionObj, $Language, "Duplicate section");
 		<input type="hidden" name="destination_issue" value="<?php p($DestIssue); ?>">
 		<INPUT TYPE="button" Name="Duplicate" Value="<?php putGS("Duplicate section"); ?>" <?php if (($DestPublication <= 0) || ($DestIssue <=0)) { echo 'class="button_disabled"'; } else { echo 'class="button" onclick="this.form.submit();"'; }?> >
 		<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='<?php p($BackLink); ?>'" class="button">
-		</FORM>
 	</td>
 </tr>
+</FORM>
 </table>
 <p>
 
