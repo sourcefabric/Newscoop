@@ -1,4 +1,6 @@
 2.1.1
+    - Added new languages: Serbian (Cyrillic), Spanish, Bosnian and updated
+    the other translations
     - Improved template management user interface; allow users whithout write
     right to view the template
     - Login file checks for guest_include.php; if found, it is included
