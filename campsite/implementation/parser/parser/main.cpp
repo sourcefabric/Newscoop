@@ -74,11 +74,11 @@ void* CUpdateThread::Run()
 {
 	while (true)
 	{
-		sleep(5);
 		bool nTopicsChanged = false;
 		UpdateTopics(nTopicsChanged);
 		if (CLex::updateArticleTypes() || nTopicsChanged)
 			CParser::resetMap();
+		sleep(5);
 	}
 	return NULL;
 }
