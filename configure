@@ -2,12 +2,6 @@
 
 export PREFIX_DIR=/usr/local
 export USER_INSTALL=false
-export CAMPSITE_DIR=""
-export BIN_DIR=""
-export ETC_DIR=""
-export WWW_DIR=""
-export WWW_COMMON_DIR=""
-export PARSER_START_PORT=2000
 
 if [ "`uname | grep BSD`" != "" ]; then
     export BSD=1
@@ -32,32 +26,6 @@ else
 fi
 export APACHE_CONF_PATH=""
 export APACHE_BIN_PATH=""
-c_upgrade=""
-c_define_start_env=""
-root_only=false
-read_only=false
-defaults=false
-while [ "$1" != "" ]; do
-    case $1 in
-    --defaults) defaults=true ;;
-    --define_start_env) c_define_start_env=--define_start_env ;;
-    --upgrade) c_upgrade=--upgrade ;;
-    --root_user) export ROOT_USER=$2; shift 1 ;;
-    --root_group) export ROOT_GROUP=$2; shift 1 ;;
-    --apache_conf_path) export APACHE_CONF_PATH=$2; shift 1 ;;
-    --apache_bin_path) export APACHE_BIN_PATH=$2; shift 1 ;;
-    --root_only) root_only=true ;;
-    --read_only) read_only=true ;;
-    --prefix) export PREFIX_DIR=$2; shift 1 ;;
-    --campsite_dir) export CAMPSITE_DIR=$2; shift 1 ;;
-    --bin_dir) export BIN_DIR=$2; shift 1 ;;
-    --etc_dir) export ETC_DIR=$2; shift 1 ;;
-    --www_dir) export WWW_DIR=$2; shift 1 ;;
-    --www_common_dir) export WWW_COMMON_DIR=$2; shift 1 ;;
-    --parser_start_port) export PARSER_START_PORT=$2; shift 1 ;;
-    esac
-    shift 1
-done
 
 
 # set the directory where campsite is located and install conf directory
@@ -78,36 +46,53 @@ export CAMPSITE_RELEASE_DATE=release_date
 export INSTALL_LOG=${CAMPSITE_PACKAGE_DIR}/install_log
 
 
-# if defaults was set read them from configuration files
-if $defaults; then
-    install_conf --reset
-    modules_conf --set
-    for mod in $configurable_modules; do
-        modules_conf --reset $mod
-    done
-fi
+# read intall options from configuration files
+install_conf --reset
+modules_conf --set
+for mod in $configurable_modules; do
+    modules_conf --reset $mod
+done
 
 
-# set install directories
-[ "$CAMPSITE_DIR" = "" ] && export CAMPSITE_DIR=$PREFIX_DIR/campsite
-[ "$BIN_DIR" = "" ] && export BIN_DIR=$CAMPSITE_DIR/bin
-[ "$ETC_DIR" = "" ] && export ETC_DIR=$CAMPSITE_DIR/etc
-[ "$WWW_DIR" = "" ] && export WWW_DIR=$CAMPSITE_DIR/www
-[ "$WWW_COMMON_DIR" = "" ] && export WWW_COMMON_DIR=$CAMPSITE_DIR/www-common
+# read user install options
+c_upgrade=""
+c_define_start_env=""
+root_only=false
+read_only=false
+while [ "$1" != "" ]; do
+    case $1 in
+    --define_start_env) c_define_start_env=--define_start_env ;;
+    --upgrade) c_upgrade=--upgrade ;;
+    --root_user) export ROOT_USER=$2; shift 1 ;;
+    --root_group) export ROOT_GROUP=$2; shift 1 ;;
+    --apache_conf_path) export APACHE_CONF_PATH=$2; shift 1 ;;
+    --apache_bin_path) export APACHE_BIN_PATH=$2; shift 1 ;;
+    --root_only) root_only=true ;;
+    --read_only) read_only=true ;;
+    --prefix) export PREFIX_DIR=$2; shift 1 ;;
+    --campsite_dir) export CAMPSITE_DIR=$2; shift 1 ;;
+    --bin_dir) export BIN_DIR=$2; shift 1 ;;
+    --etc_dir) export ETC_DIR=$2; shift 1 ;;
+    --www_dir) export WWW_DIR=$2; shift 1 ;;
+    --www_common_dir) export WWW_COMMON_DIR=$2; shift 1 ;;
+    --parser_start_port) export PARSER_START_PORT=$2; shift 1 ;;
+    esac
+    shift 1
+done
+
+
+# set extra install directories
 HTML_COMMON_DIR=$WWW_COMMON_DIR/html
 PRIV_COMMON_DIR=$WWW_COMMON_DIR/html/priv
 CGI_COMMON_DIR=$WWW_COMMON_DIR/cgi-bin
 
 
 if [ "$c_define_start_env" != "--define_start_env" ]; then
-    for m in pwd make m4 mkdir ls chown chmod cut cat grep stat which cp rm clear gcc gpp locate; do
-	check4_$m
-        [ $? -ne 0 ] && echo $output && exit 1
-    done
-fi
 
-
-if [ "$c_define_start_env" != "--define_start_env" ]; then
+for m in pwd make m4 mkdir ls chown chmod cut cat grep stat which cp rm clear gcc gpp locate; do
+    check4_$m
+    [ $? -ne 0 ] && echo $output && exit 1
+done
 
 if [ "$read_only" = "false" ]; then
     do_install_full_config $c_define_start_env $c_upgrade
