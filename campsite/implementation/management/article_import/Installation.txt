@@ -1,0 +1,25 @@
+Article Import Installation Instructions
+----------------------------------------
+
+ZZipLib needs to be installed.  You can get it here:
+http://zziplib.sourceforge.net/
+./configure; make; make install;
+
+XSLT libraries:
+Sablotron: http://www.gingerall.com
+Expat: http://sourceforge.net/projects/expat
+
+Then you need to recompile Apache & PHP.
+First do this:
+export LDFLAGS=-lstdc++
+
+"Make sure you follow the advice of adding -lstdc++ to EXTRA_LD_FLAGS in Makefile after you've run ./configure, and BEFORE you've run make (if you issue make, you'll need to do a make clean before you make again, after changing the Makefile, or it still won't work reliably)."
+
+Apache configure command (must be rebuilt after the export command above):
+configure --prefix=/usr/local/apache-1.3 --enable-module=so
+
+PHP configure command:
+./configure --prefix=/usr/local/php-4.3.4 --with-mysql --with-apxs=/usr/local/apache-1.3/bin/apxs --with-zip --enable-xslt --with-xslt-sablot
+
+Sablotron,expat,libxml,.., and PHP compilation FAQ (read this if you encounter errors):
+http://www.protonicdesign.com/tutorial/faq.php
