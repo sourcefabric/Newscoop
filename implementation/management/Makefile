@@ -72,6 +72,7 @@ install: $(ALL)
 	chmod -R g+rw $(PRIV_COMMON_DIR)
 	chmod -R u+rw $(HTML_COMMON_DIR)/images
 	chmod -R g+r $(HTML_COMMON_DIR)/images
+	pear install Net_URL HTTP_Request HTTP_Client
 
 clean: dummy
 	rm -f *~ macros.m4 $(MY_TARGETS)
