@@ -936,11 +936,30 @@ inline int CParser::HPrint(CActionList& al, int lv, int sublv)
 		strictType = true;
 		RequireAtom(l);
 	}
+	int image = 1;
 	SafeAutoPtr<CPairAttrType> attrType(NULL);
 	if (type != "")
 		attrType.reset(st->findTypeAttr(l->atom()->identifier(), type, CMS_CT_PRINT));
 	else
+	{
+		if (st->id() == CMS_ST_IMAGE)
+		{
+			// check for image number
+			const CAttribute* pImgAttrType;
+			OPEN_TRY
+				pImgAttrType = st->findAttr("number", CMS_CT_PRINT);
+			CLOSE_TRY
+			CATCH(InvalidAttr &rcoEx)
+				SetPError(parse_err, PERR_INTERNAL, MODE_PARSE, "", lex.prevLine(), lex.prevColumn());
+			END_CATCH
+			if (pImgAttrType->validValue(l->atom()->identifier()))
+			{
+				image = Integer(l->atom()->identifier());
+				RequireAtom(l);
+			}
+		}
 		attrType.reset(st->findAnyAttr(l->atom()->identifier(), CMS_CT_PRINT));
+	}
 	if (attrType->second != NULL)
 		type = attrType->second->name();
 	const string& attrIdentifier = attrType->first->identifier();
@@ -968,7 +987,7 @@ inline int CParser::HPrint(CActionList& al, int lv, int sublv)
 		format = "%M";
 	if (case_comp(attrIdentifier, "wday_name") == 0)
 		format = "%W";
-	al.insert(al.end(), new CActPrint(attrAttribute, st->id(), type, strictType, format));
+	al.insert(al.end(), new CActPrint(attrAttribute, st->id(), type, strictType, format, image));
 	if (l->res() != CMS_LEX_END_STATEMENT)
 		WaitForStatementEnd(true);
 	return 0;
