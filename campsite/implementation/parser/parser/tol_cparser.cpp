@@ -160,6 +160,7 @@ const TOLCLex& TOLCLex::operator =(const TOLCLex& s)
 	TempIndex = 0;
 	LexemStarted = 0;
 	isEOF = 0;
+	QuotedLexem = 0;
 	return *this;
 }
 
@@ -182,19 +183,18 @@ void TOLCLex::Reset(cpChar b = 0, long int bl = 0)
 	m_pchTempBuff[0] = (char)0;
 	TempIndex = 0;
 	LexemStarted = 0;
+	QuotedLexem = 0;
 	isEOF = 0;
 }
 
 // GetLexem: return next lexem
 const TOLCLexem* TOLCLex::GetCLexem()
 {
-	int FoundLexem;
-	int QuotedLexem;
+	int FoundLexem = 0;
 	CurrLexem.atom_dt = TOL_CDT_NUMBER;
 	CurrLexem.text_start = 0;
 	CurrLexem.text_len = 0;
 	IdIndex = 0;
-	FoundLexem = (int)0;
 	if (isEOF)
 	{
 		CurrLexem.res = TOL_CRES_EOF;
@@ -425,8 +425,8 @@ void TOLCParser::MakeImageLink(const TOLContext& p_rcoContext, long int p_rcoIma
 	p_rcoOut << "<img src=\"/cgi-bin/get_img?" << P_NRARTICLE << "=" << p_rcoContext.Article()
 	<< "&" << P_NRIMAGE << "=" << p_rcoImageNr << P_NRSECTION << "=" << p_rcoContext.Section()
 	<< "&" << P_NRISSUE << "=" << p_rcoContext.Issue() << "&" << P_IDPUBL << "="
-	<< p_rcoContext.Publication() << "\" " << (p_pchAlign ? p_pchAlign : "") << " ALT=\""
-	<< (p_pchAlt ? p_pchAlt : "") << "\" BORDER=0>";
+	<< p_rcoContext.Publication() << "\" " << (p_pchAlign ? p_pchAlign : "") << " "// << " ALT=\""
+	<< (p_pchAlt ? p_pchAlt : "") << " BORDER=0>";
 }
 
 // MakeClassLink: write class popup link
@@ -639,14 +639,22 @@ const TOLCLexem* TOLCParser::DoParse(TOLContext& p_rcoContext, fstream& p_rcoOut
 			{
 				align = string(l->Identifier);
 				l = clex.GetCLexem();
-				DEBUGLexem("parse 10", l);
+				DEBUGLexem("parse 8", l);
 			}
 			if (l->res == TOL_CLEX_IDENTIFIER
 			        && strncasecmp(l->Identifier, "Alt=", strlen("Alt=")) == 0)
 			{
-				l = clex.GetCLexem();
-				DEBUGLexem("parse 10", l);
 				alt = string(l->Identifier);
+				if (strcasecmp(alt.c_str(), "Alt=") == 0)
+				{
+					l = clex.GetCLexem();
+					DEBUGLexem("parse 9", l);
+					if (l->res == TOL_CLEX_IDENTIFIER)
+					{
+						alt += string(1, '\"') + l->Identifier + string(1, '\"');
+						l = clex.GetCLexem();
+					}
+				}
 			}
 			if (local_write)
 				MakeImageLink(p_rcoContext, img_nr, align.c_str(), alt.c_str(), p_rcoOut);
@@ -707,7 +715,7 @@ const TOLCLexem* TOLCParser::DoParse(TOLContext& p_rcoContext, fstream& p_rcoOut
 			RequireAtom(l);
 			link = string(l->Identifier);
 			l = clex.GetCLexem();
-			DEBUGLexem("parse 5", l);
+			DEBUGLexem("parse 7", l);
 			if (l->res == TOL_CRES_EOF)
 				return l;
 			if (l->res != TOL_CLEX_END_STATEMENT)
@@ -718,9 +726,15 @@ const TOLCLexem* TOLCParser::DoParse(TOLContext& p_rcoContext, fstream& p_rcoOut
 			}
 			if (mode == "internal")
 			{
+				CGI coCGI("GET", link.c_str());
+				cpChar pchLangId = coCGI.GetFirst(P_IDLANG);
+				cpChar pchPubId = coCGI.GetFirst(P_IDPUBL);
+				cpChar pchIssueId = coCGI.GetFirst(P_NRISSUE);
+				if (pchLangId == NULL || pchPubId == NULL || pchIssueId == NULL)
+					return l;
 				sprintf(pchTmpBuf, "select SingleArticle from Issues where IdPublication = %ld"
-						" and Number = %ld and IdLanguage = %ld", p_rcoContext.Publication(),
-				        p_rcoContext.Issue(), p_rcoContext.Language());
+						" and Number = %ld and IdLanguage = %ld", atol(pchPubId),
+				        atol(pchIssueId), atol(pchLangId));
 				if (mysql_query(p_SQL, pchTmpBuf) != 0)
 					return l;
 				CMYSQL_RES res = mysql_store_result(p_SQL);

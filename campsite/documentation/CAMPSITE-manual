@@ -3,8 +3,7 @@
 CAMPSITE / CAMPFIRE - Web Automation Tool
 User Guide
 
-version       : 2.0.0
-release date  : 15 March 2001
+release date  : May, 14th 2001
 contact       : contact@campware.org
 url           : http://www.campware.org/campsite/
 copyright     : (c)1999-2001 Media Development Loan Fund
@@ -12,8 +11,9 @@ support       : mailto:majordomo@campware.org
                 subject: subscribe campsite-list your@mail.org
 manual        : http://www.campware.org/documentation/
 
+###################################################
 
-COPYRIGHT###################################################
+COPYRIGHT
 
 CAMPSITE is a Unicode-enabled multilingual web content
 management system for news publications.
@@ -40,8 +40,8 @@ CAMPSITE - Web Automation Tool
 
 User Guide
 
-CAMPSITE version: 2.0.0
-Manual version: TXT 6 April 2001
+CAMPSITE version: 2.0.0 and newer versions
+Manual version: TXT May, 14th 2001
 
 ©1999-2001 Media Development Loan Fund
 http://www.mdlf.org
@@ -119,25 +119,25 @@ You can test drive CAMPSITE at the campware project site (http://www.campware.or
 
 CAMPSITE tech specs in a nutshell:
 
-CAMPSITE server: 
-· runs on a Linux server, originally tested on RedHat 5.2 release, but has proven compatible with newer versions up to 7.0. 
+CAMPSITE server:
+· runs on a Linux server, originally tested on RedHat 7.0 release, and has proven compatible with Mandrake 8.0.
 · requires an Apache web server to be running, and its virtual servers configured by the administrator.
-· needs a MySQL database server for Linux to be able to store data. The tests were made on MySQL v.3.22.27.
+· needs a MySQL database server for Linux to be able to store data. The tests were made on MySQL v.3.23.36.
 
 CAMPSITE client side:
 · runs on Netscape under Unix, Windows (versions up to 4.7), and Macintosh (see known limitations for the Mac), and Internet Explorer under Windows.
-· requires local installation of customized Java-class packages (At the moment of the publishing of this manual, an installer is available for Windows 98, Me, and 2000). 
+· requires local installation of customized Java-class packages (At the moment of the publishing of this manual, an installer is available for Windows 98, Me, and 2000).
 1. INSTALLATION GUIDE
 
 1.1. Requirements
-The server part of the application runs on a Linux computer. It was originally developed and tested on RedHat 5.2 release, but it is compatible with later versions up to 7.0. 
+The server part of the application runs on a Linux computer. It was originally developed and tested on RedHat 7.0 release, and it has proven compatible with Mandrake 8.0.
 Before installing CAMPSITE, make sure you have two other applications up and running:
 1. Apache web server - your http daemon, serving your web site to the world
 	http://www.apache.org
 
 	For installation instructions, see the Apache web site. Installing Apache will generate the httpd.conf file referred to further down. This file contains all relevant information for Apache to handle the content on your Linux server. The adjustments described below need to be made in order to tell Apache about the procedures for CAMPSITE files and templates.
 
-2. MySQL Database Server - this application handles the CAMPSITE database. The tests were made on MySQL v.3.22.27
+2. MySQL Database Server - this application handles the CAMPSITE database. The tests were made on MySQL v.3.23.36.
 	http://www.mysql.com
 
 Three components of MySQL are needed for CAMPSITE:
@@ -180,16 +180,17 @@ Unarchive it using the command: tar xzvf <campsite_archive>.
 Enter campsite directory.
 Edit the campsite/Makefile file to reflect your directory structure:
 
-CGI_BIN - cgi directory
-SCRIPT_BIN - the script folder (normally the same folder as CGI_BIN)
-ROOT_DIR - where the application's files are kept
-CLASS_DIR - the folder with the Java classes for the browser (where swingall.jar archive needed for the Java Editor and the Unicode charset translators will be kept)
-run: 'make install' as a root, and the application is up and running.
+WWW_DIR - www directory
+REL_CGI_BIN - cgi directory (relative to www directory)
+REL_HTML - html directory (relative to www directory)
+HTTP_USER - apache user (the user apache server runs with)
+HTTP_GROUP - apache group (the group apache server runs with)
+Run './install', answer the install questions and wait for the application to be installed.
 
 1.2.3 The CAMPFIRE Java Editor
 At the heart of CAMPSITE's client interface, lies CAMPFIRE, a text editor implemented as a Java Applet. To enable this applet to work, you must copy install certain (still) non-standard Java classes on your local workstation(s). 
 
-The files you need to install locally are swingall.jar and unicoded.zip, both of which you should have created when you unpacked the campsite archive (campsite-2.0.0.tar.gz). Both of these files should be unpacked in the folders where Java classes are regularly stored. The breakdown according to browser/operating system is as follows:
+The files you need to install locally are swingall.jar and unicoded.zip, both of which you should have created when you unpacked the campsite archive (campsite-2.x.x.tar.gz). Both of these files should be unpacked in the folders where Java classes are regularly stored. The breakdown according to browser/operating system is as follows:
 
 a) Netscape under Unix:
 /usr/lib/netscape/java/classes
@@ -505,7 +506,7 @@ As the parser is going through the text, it will firstly find the marked keyword
 If the parser detects a keyword, but can not find the same word in the dictionary entry, no link will appear. However, once this keyword is added to the dictionary, the parser will generate a link. Marked keywords are like sleeping beauties. 
 
 2.3.5 Known Limitations of the Dictionary Module
-In its present incarnation (CAMPSITE version 2.0.0), the Dictionary module is functional, but its appearance is still, shall we say, rather sobering. We thus consider it as a feature under development, particularly regarding the lack of possibility for CAMPSITE administrators to alter the layout of the popup windows. In other words, you can use it, but you might want to see if the appearance of the pop-up window would not strongly conflict with your overall design. If you decide to continue the dictionary development, please inform us, so we can announce this on our support list.
+In its present incarnation (CAMPSITE version 2.x.x), the Dictionary module is functional, but its appearance is still, shall we say, rather sobering. We thus consider it as a feature under development, particularly regarding the lack of possibility for CAMPSITE administrators to alter the layout of the popup windows. In other words, you can use it, but you might want to see if the appearance of the pop-up window would not strongly conflict with your overall design. If you decide to continue the dictionary development, please inform us, so we can announce this on our support list.
 
 2.4. Configuring the Subscription Module
 CAMPSITE allows you to control access to your site in two ways: 
@@ -949,7 +950,7 @@ Purpose:
 Select the list of issues according to the given constraints and current environmental parameters. The Publication, Language, Issue parameters may not be defined outside List Issue statement; inside the statement however, all these parameters are defined.
 
 Syntax:
-List [length <value>] [columns <value>] Issue [<issue_constraint>]
+List [length <value>] [columns <value>] Issue [<issue_constraint>] [order <order_condition>]
 list of instructions
 [ForEmptyList [list of instructions]]
 EndList [Issue]
@@ -968,6 +969,9 @@ where
 |hour is|not|greater|smaller
 |min is|not|greater|smaller
 |sec is|not|greater|smaller
+
+<order_condition>=bydate desc|asc
+ |bynumber desc|asc
 
 WHERE YEAR STANDS FOR YEAR, MON_NR FOR MONTH NUMBER (1..12), MDAY FOR MONTH DAY (1..31), YDAY FOR YEAR DAY (1..365), WDAY FOR WEEK DAY (1..7), HOUR FOR HOUR, MIN FOR MINUTE AND SEC FOR SECOND.
 Any parameter used in <issue_constraint> list can only be used once.
@@ -1075,12 +1079,14 @@ Purpose:
 Select the list of articles after searching database for given keywords. The Publication, Language, Issue, Section, Article parameters may not be defined outside List SearchResult statement; inside the statement however, all these parameters are defined.
 
 Syntax:
-List [length <value>] [column <value>] SearchResult
-list of instructions
-
+List [length <value>] [column <value>] SearchResult [order <order_condition>]
+  list of instructions
 [ForEmptyList [list of instructions]]
-
 EndList [SearchResult]
+
+where
+<order_condition>=bydate desc|asc
+ |bynumber desc|asc
 
 Inside the List, the data context is defined by the constraints applied to the current article for every processed line. The data context is restored after the list processing.
 
@@ -1088,6 +1094,13 @@ Constraints:
 The list of forbidden statements inside List SearchResult:
 - Language
 - Publication
+
+Note!!! (This is valid only for 2.0.11 and newer versions.)
+All If statements can be negated by inserting "not" between If and its modifier (Publication, Issue etc.)
+Example:
+	If Publication defined
+and the negated version:
+	If not Publication defined
 
 3.9.1.11   If NextItems | PrevItems
 Purpose:
@@ -1378,7 +1391,26 @@ EndIf [CurrentSubtitle]
 Constraints:
 Can be used only inside With and List Subtitles statements.
 
-3.9.1.24   Local
+3.9.1.24   If Image
+Purpose:
+If image <number> exists, it runs the first list of instructions, otherwise the second list. It may be used anywhere in the template.
+
+Syntax:
+If Image <number>
+	list of instructions
+[Else
+	list of instructions]
+EndIf [Image]
+
+The list of instructions may contain any instruction allowed in the current context. If it is used inside a list it must respect the constraints of the list (List Issue, List Section, List Article, List Search).
+
+Constraints:
+None.
+
+Note:
+The If Image statement is valid only in 2.0.11 and newer versions. It won't work in 2.0.10 or older versions.
+
+3.9.1.25   Local
 Purpose:
 Creating a temporary data context block for special conditions; the previous data context is restored outside the block.
 
