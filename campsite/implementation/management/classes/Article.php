@@ -315,12 +315,8 @@ class Article extends DatabaseObject {
 	 *
 	 */
 	function lock($p_userId) {
-		global $Campsite;
-		$queryStr = 'UPDATE Articles '
-					.' SET LockUser='.$p_userId
-					.', LockTime=NOW() '
-					.' WHERE '. $this->getKeyWhereClause();
-		$Campsite['db']->Execute($queryStr);
+		$this->setProperty('LockUser', $p_userId);
+		$this->setProperty('LockTime', 'NOW()', true, true);
 	} // fn lock
 
 	
@@ -329,11 +325,9 @@ class Article extends DatabaseObject {
 	 * @return void
 	 */
 	function unlock() {
-		global $Campsite;
-		$queryStr = 'UPDATE Articles '
-					.' SET LockUser=0, LockTime=0'
-					.' WHERE '. $this->getKeyWhereClause();
-		$Campsite['db']->Execute($queryStr);		
+		$this->setProperty('LockUser', '0', false);
+		$this->setProperty('LockTime', '0', false);
+		$this->commit();
 	} // fn unlock
 	
 	
@@ -468,7 +462,9 @@ class Article extends DatabaseObject {
 					.' AND NrSection = ' . $this->m_data['NrSection']
 		     		.' AND Number = ' . $this->m_data['Number'];
 		$Campsite['db']->Execute($queryStr);
-
+		
+		// Re-fetch this article to get the updated article order.
+		$this->fetch();
 		return true;
 	} // fn moveRelative
 	
@@ -519,6 +515,8 @@ class Article extends DatabaseObject {
 					.' AND NrSection='.$this->m_data['NrSection']
 		     		.' AND Number='.$this->m_data['Number'];
 		$Campsite['db']->Execute($queryStr);
+		
+		$this->fetch();
 		return true;
 	} // fn moveAbsolute
 	
