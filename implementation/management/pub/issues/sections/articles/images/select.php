@@ -96,7 +96,6 @@
 <TD><A HREF="/priv/logout.php" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Logout"); ?>"></A></TD><TD><A HREF="/priv/logout.php" ><B><?php  putGS("Logout");  ?></B></A></TD>
 </TR></TABLE></TD></TR>
 </TABLE>
-
 <?php 
     query ("SELECT * FROM Articles WHERE IdPublication=$Pub AND NrIssue=$Issue AND NrSection=$Section AND Number=$Article", 'q_art');
     if ($NUM_ROWS) {
@@ -124,48 +123,80 @@
 
 </TR></TABLE>
 
-<table>
-<?php  if ($aia != 0) { ?>
-<tr><td><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1"><TR><TD><A HREF="add.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>" ><IMG SRC="/priv/img/tol.gif" BORDER="0"></A></TD><TD><A HREF="add.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>" ><B><?php  putGS("Add new image"); ?></B></A></TD></TR></TABLE></td>
-<td><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1"><TR><TD><A HREF="select.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>" ><IMG SRC="/priv/img/tol.gif" BORDER="0"></A></TD><TD><A HREF="select.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>" ><B><?php  putGS("Select an old image"); ?></B></A></TD></TR></TABLE></td></tr>
-<?php  } ?>
-<tr><td><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1"><TR><TD><A HREF="../edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>" ><IMG SRC="/priv/img/tol.gif" BORDER="0"></A></TD><TD><A HREF="../edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>" ><B><?php  putGS("Back to article details"); ?></B></A></TD></TR></TABLE></td></tr>
-</table>
+<?php 
+	todef('sDescription');		$sDescription =  decURL($sDescription);
+	todef('sPhotographer');	$sPhotographer  = decURL($sPhotographer);
+	todef('sPlace');			$sPlace = decURL($sPlace);
+	todef('cIssue');
+	todefnum('ImgOffs');
+	if ($ImgOffs < 0) $ImgOffs= 0;
+	todefnum('lpp', 20);
+?>
 
-<P><?php 
-    todefnum('ImgOffs');
-    if ($ImgOffs < 0) $ImgOffs= 0;
-    todefnum('lpp', 20);
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1"><TR><TD><A HREF="./?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&Section=<?php  p($Section); ?>" ><IMG SRC="/priv/img/tol.gif" BORDER="0"></A></TD><TD><A HREF="./?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&Section=<?php  p($Section); ?>" ><B><?php  putGS("Back to current article"); ?></B></A></TD></TR></TABLE>
 
-    query ("SELECT * FROM Images WHERE IdPublication=$Pub AND NrIssue=$Issue AND NrSection=$Section AND NrArticle=$Article ORDER BY Number LIMIT $ImgOffs, ".($lpp+1), 'q_img');
-    if ($NUM_ROWS) {
-	$nr= $NUM_ROWS;
-	$i=$lpp;
-	$color= 0;
-	?><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" WIDTH="100%">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" WIDTH="100%">
+<TR>
+	<TD></TD>
+	<TD ALIGN="RIGHT">
+	<FORM METHOD="GET" ACTION="select.php" NAME="">
+	<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#C0D0FF">
+	<TR>
+		<TD><?php  putGS('Issue'); ?></TD>
+		<TD><INPUT TYPE="TEXT" NAME="cIssue" VALUE="<?php  p($cIssue); ?>" SIZE="4" MAXLENGTH="8"></TD>
+		<TD><?php  putGS('Description'); ?></TD>
+		<TD><INPUT TYPE="TEXT" NAME="sDescription" VALUE="<?php  pencHTML($sDescription); ?>" SIZE="16" MAXLENGTH="32"></TD>
+		<TD><?php  putGS('Photographer'); ?></TD>
+		<TD><INPUT TYPE="TEXT" NAME="sPhotographer" VALUE="<?php  pencHTML($sPhotographer); ?>" SIZE="8" MAXLENGTH="32"></TD>
+		<TD><?php  putGS('Place'); ?></TD>
+		<TD><INPUT TYPE="TEXT" NAME="sPlace" VALUE="<?php  pencHTML($sPlace); ?>" SIZE="16" MAXLENGTH="32"></TD>
+		<TD><INPUT TYPE="submit" NAME="Search" VALUE="<?php  putGS('Search'); ?>"></TD>
+		<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<?php  p($Pub); ?>">
+		<INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<?php  p($Issue); ?>">
+		<INPUT TYPE="HIDDEN" NAME="Article" VALUE="<?php  p($Article);?>">
+		<INPUT TYPE="HIDDEN" NAME="Section" VALUE="<?php  p($Section);?>">
+		<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php  p($Language); ?>">
+		<INPUT TYPE="HIDDEN" NAME="sLanguage" VALUE="<?php  p($sLanguage); ?>">
+	</TR>
+	</TABLE>
+</FORM>
+	</TD>
+</TABLE>
+
+<?php 
+	$cIssue=trim($cIssue);
+	$sDescription = trim($sDescription);
+	$sPhotographer = trim($sPhotographer);
+	$sPlace = trim($sPlace);
+	
+	if(($cIssue == 0) || ($cIssue == '') || !is_numeric($cIssue)) {
+		// check if numeric !!!!
+		query ("SELECT * FROM Images WHERE IdPublication=$Pub AND NrArticle != $Article AND Description LIKE '%$sDescription%' AND Photographer LIKE '%$sPhotographer%' AND Place LIKE '%$sPlace%'  ORDER BY IdPublication, NrIssue, NrSection, NrArticle, Number LIMIT $ImgOffs, ".($lpp+1), 'q_img');
+	}
+	else query ("SELECT * FROM Images WHERE IdPublication=$Pub AND NrIssue=$cIssue AND NrArticle != $Article AND Description LIKE '%$sDescription%' AND Photographer LIKE '%$sPhotographer%' AND Place LIKE '%$sPlace%'  ORDER BY IdPublication, NrIssue, NrSection, NrArticle, Number LIMIT $ImgOffs, ".($lpp+1), 'q_img');
+	if ($NUM_ROWS) {
+		$nr= $NUM_ROWS;
+		$i=$lpp;
+		$color= 0;
+	?>
+<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" WIDTH="100%">
 	<TR BGCOLOR="#C0D0FF">
-		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Nr"); ?></B></TD>
+		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Image number"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("Click to view image"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("Photographer"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("Place"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("Date<BR><SMALL>(yyyy-mm-dd)</SMALL>"); ?></B></TD>
-	<?php  if ($cia != 0) { ?>
-		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Info"); ?></B></TD>
-	<?php  }
-	    
-	    if ($dia != 0) { ?>
-		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Delete"); ?></B></TD>
-	<?php  } ?>
+		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Add to current article"); ?></B></TD>
 	</TR>
 <?php 
-    for($loop=0; $loop<$nr; $loop++) {
+    for($loop=0;$loop<$nr;$loop++) {
 	fetchRow($q_img);
 	if ($i) { ?>	<TR <?php  if ($color) { $color=0; ?>BGCOLOR="#D0D0B0"<?php  } else { $color=1; ?>BGCOLOR="#D0D0D0"<?php  } ?>>
-		<TD ALIGN="RIGHT">
-			<?php  pgetHVar($q_img,'Number'); ?>
+		<TD ALIGN="LEFT">
+			<?php  pgetHVar($q_img,'IdPublication'); ?>_<?php  pgetHVar($q_img,'NrIssue'); ?>_<?php  pgetHVar($q_img,'NrSection'); ?>_<?php  pgetHVar($q_img,'NrArticle'); ?>_<?php  pgetHVar($q_img,'Number'); ?>
 		</TD>
 		<TD >
-			<A HREF="/priv/pub/issues/sections/articles/images/view.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Image=<?php  pgetUVar($q_img,'Number'); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>"><?php  pgetHVar($q_img,'Description'); ?></A>
+			<A HREF="/priv/pub/issues/sections/articles/images/viewsel.php?Pub=<?php  pgetUVar($q_img,'IdPublication'); ?>&Issue=<?php  pgetUVar($q_img,'NrIssue'); ?>&Section=<?php  pgetUVar($q_img,'NrSection'); ?>&Article=<?php  pgetUVar($q_img,'NrArticle'); ?>&Image=<?php  pgetUVar($q_img,'Number'); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>"><?php  pgetHVar($q_img,'Description'); ?></A>
 		</TD>
 		<TD >
 			<?php  pgetHVar($q_img,'Photographer'); ?>&nbsp;
@@ -176,26 +207,20 @@
 		<TD >
 			<?php  pgetHVar($q_img,'Date'); ?>
 		</TD>
-	<?php  if ($cia != 0) { ?>
-		<TD ALIGN="CENTER">
-			<A HREF="/priv/pub/issues/sections/articles/images/edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Image=<?php  pgetUVar($q_img,'Number'); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>"><?php  putGS("Change");?></A>
+		<TD >
+			<A HREF="/priv/pub/issues/sections/articles/images/do_sel.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Image=<?php  pgetUVar($q_img,'Number'); ?>&Pub1=<?php  pgetUVar($q_img,'IdPublication'); ?>&Issue1=<?php  pgetUVar($q_img,'NrIssue'); ?>&Section1=<?php  pgetUVar($q_img,'NrSection'); ?>&Article1=<?php  pgetUVar($q_img,'NrArticle'); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>"><?php  putGS('Add now'); ?></A>
 		</TD>
-	<?php  }
-	    if ($dia != 0) { ?>
-		<TD ALIGN="CENTER">
-			<A HREF="/priv/pub/issues/sections/articles/images/del.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Image=<?php  pgetHVar($q_img,'Number'); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>"><IMG SRC="/priv/img/icon/x.gif" BORDER="0" ALT="<?php  putGS('Delete image $1',getHVar($q_img,'Description')); ?>"></A>
-		</TD>
-	<?php  } ?>
 	</TR>
-<?php 
+<?php  
     $i--;
     }
 }
 ?>	<TR><TD COLSPAN="2" NOWRAP>
+		<?php 	print "(Publ. no._Issue no._Section no._Article_Image number)<br>"; ?>
 <?php  if ($ImgOffs <= 0) { ?>		&lt;&lt; <?php  putGS('Previous'); ?>
-<?php  } else { ?>		<B><A HREF="index.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&ImgOffs=<?php  p($ImgOffs - $lpp); ?>">&lt;&lt; <?php  putGS('Previous'); ?></A></B>
+<?php  } else { ?>		<B><A HREF="select.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&Section=<?php  p($Section); ?>&sDescription=<?php  pencURL(encHTML($sDescription));?>&sPhotographer=<?php  pencURL(encHTML($sPhotographer));?>&sPlace=<?php  pencURL(encHTML($sPlace));?>&cIssue=<?php  p($cIssue); ?>&ImgOffs=<?php  p($ImgOffs - $lpp); ?>">&lt;&lt; <?php  putGS('Previous'); ?></A></B>
 <?php  } ?><?php  if ($nr < $lpp+1) { ?>		 | <?php  putGS('Next'); ?> &gt;&gt;
-<?php  } else { ?>		 | <B><A HREF="index.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&ImgOffs=<?php  p($ImgOffs + $lpp); ?>"><?php  putGS('Next'); ?> &gt;&gt</A></B>
+<?php  } else { ?>		 | <B><A HREF="select.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&Section=<?php  p($Section); ?>&sDescription=<?php  pencURL(encHTML($sDescription));?>&sPhotographer=<?php  pencURL(encHTML($sPhotographer));?>&sPlace=<?php  pencURL(encHTML($sPlace));?>&cIssue=<?php  p($cIssue); ?>&ImgOffs=<?php  p($ImgOffs + $lpp); ?>"><?php  putGS('Next'); ?> &gt;&gt</A></B>
 <?php  } ?>	</TD></TR>
 </TABLE>
 <?php  } else { ?><BLOCKQUOTE>
