@@ -1,4 +1,6 @@
-CFLAGS=-Wall
+INCLUDE_PATH=-I$(MYSQL_H_PATH)
+CFLAGS=-Wall $(INCLUDE_PATH)
+CXXFLAGS=$(CFLAGS)
 LDFLAGS=-L$(LIBMYSQLCLIENT_PATH)
 LIBS=-lmysqlclient -lm -lz -lcrypt
 
@@ -50,16 +52,16 @@ clean:
 
 install: $(ALL)
 	cp -f get_img $(CGI_DIR)/
-	chown $(ROOT_USER).$(HTTP_GROUP) $(CGI_DIR)/get_img
+	chown $(ROOT_USER):$(HTTP_GROUP) $(CGI_DIR)/get_img
 	chmod 750 $(CGI_DIR)/get_img
 	cp -f process_i $(SCRIPT_DIR)/
-	chown $(ROOT_USER).$(HTTP_GROUP) $(SCRIPT_DIR)/process_i
+	chown $(ROOT_USER):$(HTTP_GROUP) $(SCRIPT_DIR)/process_i
 	chmod 750 $(SCRIPT_DIR)/process_i
 	cp -f process_t $(SCRIPT_DIR)/
-	chown $(ROOT_USER).$(HTTP_GROUP) $(SCRIPT_DIR)/process_t
+	chown $(ROOT_USER):$(HTTP_GROUP) $(SCRIPT_DIR)/process_t
 	chmod 755 $(SCRIPT_DIR)/process_t
 	cp -f cleanb $(CGI_DIR)/
-	chown $(ROOT_USER).$(HTTP_GROUP) $(CGI_DIR)/cleanb
+	chown $(ROOT_USER):$(HTTP_GROUP) $(CGI_DIR)/cleanb
 	chmod 755 $(CGI_DIR)/cleanb
 	chmod u+s $(CGI_DIR)/cleanb
 
