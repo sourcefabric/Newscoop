@@ -2,7 +2,7 @@
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DatabaseObject.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleImage.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/include/Yahc.class.php');
+require_once('HTTP/Client.php');
 
 define('CAMPSITE_IMAGE_DIRECTORY', '/images/');
 define('CAMPSITE_IMAGE_PREFIX', 'cms-image-');
@@ -370,23 +370,13 @@ class Image extends DatabaseObject {
 	 * @return void
 	 */
 	function OnAddRemoteImage($p_url, $p_attributes, $p_userId = null, $p_id = null) {
-	    $data =& new Yahc($p_url, 'CAMPWARE');
-	    $data->request_protocol = 'HTTP/1.0';
-	    $data->request_method = 'GET';
-	    if (!$data->connect()) {
-	        // no connection
-	        return getGS('Unable to read image from <B>$1</B>', $cURL);
+	    $client =& new HTTP_Client();
+	    $client->get($p_url);
+	    $response = $client->currentResponse(); 
+	    if ($response['code'] != 200) {
+	    	return;
 	    }
-        // URL OK
-        $data->send_request();
-        $data->get_response();
-        $hrows = explode ("\r\n", $data->response_HEADER);
-        foreach ($hrows as $row) {
-            if (preg_match('/Content-Type:/', $row)) {
-                $ContentType = trim(substr($row, strlen('Content-Type:')));
-                break;
-            }
-        }
+        $ContentType = $response['headers']['Content-Type'];
         
         // Check content type
         if (!preg_match('/image/', $ContentType)) {
@@ -397,7 +387,7 @@ class Image extends DatabaseObject {
     	// Save the file
         $tmpname = CAMPSITE_TMP_DIR.'img'.md5(rand());
         if ($tmphandle = fopen($tmpname, 'w')) {
-            fwrite($tmphandle, $data->response_HTML);
+            fwrite($tmphandle, $response['body']);
             fclose($tmphandle);
         } else {
             return getGS('Cannot create <B>$1</B>', $tmpname);
