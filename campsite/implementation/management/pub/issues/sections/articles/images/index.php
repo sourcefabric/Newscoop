@@ -140,7 +140,7 @@ if (count($articleImages) <= 0) {
 
 if (count($articleImages) > 0) {
 	?><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" WIDTH="100%" class="table_list">
-	<TR BGCOLOR="#C0D0FF">
+	<TR class="table_list_header">
 		<TD ALIGN="LEFT" VALIGN="TOP" width="1%" nobr><B><?php putGS('Number'); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP" width="1%"><B><?php putGS('Thumbnail'); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php putGS('Description'); ?></B></TD>

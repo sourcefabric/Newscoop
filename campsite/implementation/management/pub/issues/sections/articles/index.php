@@ -156,7 +156,7 @@ if ($numUniqueArticlesDisplayed > 0) {
 	$color = 0;
 ?>
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" WIDTH="100%" class="table_list">
-<TR BGCOLOR="#C0D0FF">
+<TR class="table_list_header">
 	<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("Name<BR><SMALL>(click to edit)</SMALL>"); ?></B></TD>
 	<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Type"); ?></B></TD>
 	<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Language"); ?></B></TD>
