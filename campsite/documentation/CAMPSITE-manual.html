@@ -5,7 +5,7 @@
 	<TITLE>CAMPSITE manual Version 2.1</TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
 	<META NAME="CREATED" CONTENT="20020913;19124500">
-	<META NAME="CHANGED" CONTENT="20030414;16332100">
+	<META NAME="CHANGED" CONTENT="20030423;16162500">
 	<STYLE>
 	<!--
 		@page { size: 21.59cm 27.94cm }
@@ -27,7 +27,7 @@
 		H4.western { font-family: "Times New Roman", serif }
 		H4.cjk { font-family: "HG Mincho Light J"; font-weight: medium }
 		H4.ctl { font-weight: medium }
-		TD P { margin-top: 0.5cm; margin-bottom: 0cm; color: #000000; page-break-before: auto }
+		TD P { margin-bottom: 0cm; color: #000000; page-break-before: auto }
 		TD P.western { font-family: "Times", serif; font-weight: medium }
 		BLOCKQUOTE { color: #000000; page-break-before: auto }
 		BLOCKQUOTE.western { font-family: "Times", serif; font-weight: medium }
@@ -43,10 +43,10 @@
 <P STYLE="margin-top: 0.42cm; margin-bottom: 0.5cm; page-break-after: avoid">
 <FONT FACE="Albany, sans-serif"><FONT SIZE=4>Web Automation Tool User
 Guide</FONT></FONT></P>
-<P CLASS="western">CAMPSITE version: 2.1.1 and newer versions</P>
+<P CLASS="western">CAMPSITE version: 2.1.2 and newer versions</P>
 <P CLASS="western">Maintained and distributed under GNU/GPL by
 CAMPWARE <A HREF="http://www.campware.org/">http://www.campware.org</A></P>
-<P CLASS="western">Manual version: March 4, 2003</P>
+<P CLASS="western">Manual version: April 23, 2003</P>
 <P CLASS="western">Language: English</P>
 <P CLASS="western">&copy;1999-2003 Media Development Loan Fund</P>
 <P CLASS="western"><A HREF="http://www.mdlf.org/" TARGET="_blank">http://www.mdlf.org</A>
@@ -184,16 +184,16 @@ BACKING UP DATABASES IN MYSQL</FONT></A></P>
 <HR SIZE=1 NOSHADE>
 <H1 CLASS="western"><A NAME="introduction"></A><FONT FACE="Times, serif">INTRODUCTION</FONT></H1>
 <P CLASS="western">CAMPSITE is a multilingual, Unicode-based content
-management system, featuring easy localization of the backend user
-interface. CAMPSITE was designed for medium-to-large-size online news
-publications. Issues, copy flow, back archives, as well as
-subscription management are fully implemented features. At the core
-of CAMPSITE is CAMPFIRE, a near-WYSIWYG Java editor based on Unicode,
-which allows journalists and editors to publish content and control
-layout online in their native character sets. Formatting can be
-altered in a similar way as in editors such as Wordpad, meaning that
-absolutely no HTML knowledge is necessary for formatting and
-inputting text.</P>
+management system, featuring easy localization of the<SPAN LANG="en-US">
+backed </SPAN>user interface. CAMPSITE was designed for
+medium-to-large-size online news publications. Issues, copy flow,
+back archives, as well as subscription management are fully
+implemented features. At the core of CAMPSITE is CAMPFIRE, a
+near-WYSIWYG Java editor based on Unicode, which allows journalists
+and editors to publish content and control layout online in their
+native character sets. Formatting can be altered in a similar way as
+in editors such as Wordpad, meaning that absolutely no HTML knowledge
+is necessary for formatting and inputting text.</P>
 <P CLASS="western">The original CAMPSITE concept was developed by
 Center for Advanced Media-Prague (CAMP) in collaboration with
 Transitions Online, which started using CAMPSITE in late 2000.
@@ -214,9 +214,9 @@ related questions at contact@campware.org.</P>
 </P>
 <UL>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">runs on a Linux
-	server, originally tested on RedHat 7.0 and Mandrake 8.0 and has
-	proven compatible with RedHat 7.1, 7.2, 8.0, Mandrake 8.1, 8.2, 9.0
-	and Debian</P>
+	server, originally tested on RedHat 7.0 and Mandrake 8.0 and has<SPAN LANG="en-US">
+	proved </SPAN>compatible with RedHat 7.1, 7.2, 8.0, Mandrake 8.1,
+	8.2, 9.0 and Debian</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">requires an Apache
 	web server to be running, and its virtual servers to be configured
 	by the administrator.</P>
@@ -259,9 +259,9 @@ GUIDE</FONT></H1>
 Requirements</FONT></H2>
 <P CLASS="western">The server part of the application runs on a Linux
 computer. It was originally developed and tested on RedHat 7.0
-release and works on all subsequent releases, and it has proven
-compatible with Mandrake 8.0 and higher as well as on Debian 2.0 and
-up.</P>
+release and works on all subsequent releases, and it has<SPAN LANG="en-US">
+proved </SPAN>compatible with Mandrake 8.0 and higher as well as on
+Debian 2.0 and up.</P>
 <P CLASS="western">Before installing CAMPSITE, make sure you have two
 other applications up and running:</P>
 <P CLASS="western">1. Apache web server -- your http daemon, serving
@@ -373,10 +373,11 @@ supported.</P>
 <P CLASS="western" STYLE="page-break-before: auto"><B>Localizer</B>:
 There are several known problems related to the localizer at this
 time. Action buttons like Save Changes or Cancel are only in English,
-for the moment. Similarly, some dropdown lists like Language or
-Country are not translated into the local language either at this
-stage. These are all known and documented problems and our
-development team will be resolving these issues in future releases.</P>
+for the moment. Similarly, some<SPAN LANG="en-US"> drop down </SPAN>lists
+like Language or Country are not translated into the local language
+either at this stage. These are all known and documented problems and
+our development team will be resolving these issues in future
+releases.</P>
 <H2 CLASS="western"><A NAME="1.3."></A>1.3. UPGRADING FROM VERSIONS
 1.x or 2.0</H2>
 <P CLASS="western" STYLE="margin-top: 0cm">Upgrading from 1.x or 2.0
@@ -691,13 +692,14 @@ can access, while the right frame displays the currently selected
 module.</P>
 <P CLASS="western">CAMPSITE appears differently to different users.
 Each user sees only the options that he or she has the right to
-access or alter. A typical backend user (an editor or journalist)
-will get to see only a fraction of the options available to a fully
-authorized user (such as the default administrator). On top of that,
-each user is able to choose his interface language. The default
-language is English, but you can either use one of the localized
-versions we supply (at the moment, we supply the German, Russian, and
-Czech versions) or create your own (see The Localizer section below).</P>
+access or alter. A typical<SPAN LANG="en-US"> backed </SPAN>user (an
+editor or journalist) will get to see only a fraction of the options
+available to a fully authorized user (such as the default
+administrator). On top of that, each user is able to choose his
+interface language. The default language is English, but you can
+either use one of the localized versions we supply (at the moment, we
+supply the German, Russian, and Czech versions) or create your own
+(see The Localizer section below).</P>
 <H3 CLASS="western"><A NAME="2.1.1"></A><FONT FACE="Times, serif">2.1.1
 Languages</FONT></H3>
 <P CLASS="western">While CAMPSITE's default language is English, you
@@ -711,9 +713,9 @@ languages, you can configure your own languages.</P>
 'Add new language'. You should enter the language name (both in
 English and in the language itself), its code (e.g. hr for Croatian),
 the code page your will be saving your templates in on your local
-machine (e.g. if you are working on a Windows machine on your Russian
-cyrillic template in an editor, you will want to specify KOI-8 or
-Windows-1251), and the names of months and days of the week in the
+machine (e.g. if you are working on a Windows machine on your Russian<SPAN LANG="en-US">
+Cyrillic </SPAN>template in an editor, you will want to specify KOI-8
+or Windows-1251), and the names of months and days of the week in the
 language you are configuring.</P>
 <P CLASS="western">[NOTE TO ADMINISTRATOR: You may want to limit the
 number of languages configured on your server in order to spare your
@@ -725,30 +727,31 @@ Countries</FONT></H3>
 appear in user-profile forms. The module allows you to create country
 lists in different languages. When you click on 'Add new country',
 you will be prompted to enter the country's name in a language of
-your choice as well as the country's code. The language dropdown menu
-will contain as many languages as you had defined in the Languages
-module (see section 2.1.1).</P>
+your choice as well as the country's code. The language<SPAN LANG="en-US">
+drop down </SPAN>menu will contain as many languages as you had
+defined in the Languages module (see section 2.1.1).</P>
 <P CLASS="western">[N.B. The language you are asked to specify is the
 language in which you are entering a country's name, *NOT* the
 language spoken in the country!]</P>
 <H3 CLASS="western"><A NAME="2.1.3"></A>2.1.3 The Localizer</H3>
 <P CLASS="western">The localizer is a new module of CAMPSITE that is
 introduced in version 2.1. The module allows you to create your own
-localization of CAMPSITE's backend user interface by simply
-translating individual strings that appear in the interface.</P>
+localization of CAMPSITE's<SPAN LANG="en-US"> back end </SPAN>user
+interface by simply translating individual strings that appear in the
+interface.</P>
 <P CLASS="western">To do so, enter the Localizer, scroll down to the
 bottom of the window and select a language in which you want to
-create localization files from the dropdown menu (the menu will
-contain as many languages as you have had configured in the Languages
-module) and then press the 'Create files' button. This will create a
-range of globals.xx.php files and locals.xx.php files, which will be
-visible in the left frame of the Localizer. Select one of the newly
-created files, and the strings related to that particular part of the
-interface will be shown in the right frame. You can interrupt the
-translation process at any time. Just press save at the bottom of the
-frame and exit the localizer. When you return, you'll find all the
-non-translated strings in red and you can continue from where you
-left off.</P>
+create localization files from the<SPAN LANG="en-US"> drop down </SPAN>menu
+(the menu will contain as many languages as you have had configured
+in the Languages module) and then press the 'Create files' button.
+This will create a range of globals.xx.php files and locals.xx.php
+files, which will be visible in the left frame of the Localizer.
+Select one of the newly created files, and the strings related to
+that particular part of the interface will be shown in the right
+frame. You can interrupt the translation process at any time. Just
+press save at the bottom of the frame and exit the localizer. When
+you return, you'll find all the non-translated strings in red and you
+can continue from where you left off.</P>
 <P CLASS="western">[NOTE: Localization currently works for the entire
 user interface, minus the OK and Cancel buttons. The CAMPFIRE Java
 editor is fully localizable, but that is done outside the localizer
@@ -758,18 +761,19 @@ become a localization volunteer for CAMPSITE and CAMPFIRE, please
 send an e-mail to &lt;contact@campware.org&gt;.]</P>
 <H3 CLASS="western"><A NAME="2.1.4"></A>2.1.4 User Management</H3>
 <P CLASS="western">CAMPSITE's user management module allows you to
-control access to the backend and the front end of your
-publication(s). In other words, the module, which features a search
-option, allows you to define who will have the right to manage and
-edit content on your site and who will be allowed to read it.</P>
+control access to the<SPAN LANG="en-US"> back end </SPAN>and the
+front end of your publication(s). In other words, the module, which
+features a search option, allows you to define who will have the
+right to manage and edit content on your site and who will be allowed
+to read it.</P>
 <P CLASS="western">IMPORTANT: Initially CAMPSITE has only one user:
 admin with admn00 password. This user is needed by the email
 notifiers: end of subscription and event notifier so it must not be
 deleted. You should set the email address of this user after
 installation because it is used as reply to address in the
 notification emails.</P>
-<H4 CLASS="western"><A NAME="2.1.4.1"></A><FONT FACE="Times, serif">2.1.4.1
-Backend Access: Creating User Types</FONT></H4>
+<H4 CLASS="western"><A NAME="2.1.4.1"></A><FONT FACE="Times, serif">2.1.4.1<SPAN LANG="en-US">
+Back end </SPAN>Access: Creating User Types</FONT></H4>
 <P CLASS="western">A user is generally defined by the list of the
 tasks he or she has and is allowed to do in a system. In CAMPSITE,
 this list of tasks ranges from creating, managing, and editing
@@ -788,17 +792,17 @@ three default user types:</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">Chief Editor - user
 	with higher editorial rights (e.g. has a right to create and delete
 	issues)</P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm">Editor - standard
-	backend user with rights limited to basic article management and
-	editing (normally assigned to journalists and editors)</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Editor - standard<SPAN LANG="en-US">
+	back end </SPAN>user with rights limited to basic article management
+	and editing (normally assigned to journalists and editors)</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">Reader - the profile
 	limited to viewing the site, i.e. front end only.</P>
 </UL>
 <P CLASS="western">To create your custom user profiles, click on
 'User types' and then on 'Add new user type'. Then proceed to select
 the rights that you want included for this type of user.</P>
-<H4 CLASS="western" STYLE="line-height: 100%"><A NAME="2.1.4.11"></A><FONT FACE="Times, serif">2.1.4.2
-Backend Access: Creating Users</FONT></H4>
+<H4 CLASS="western" STYLE="line-height: 100%"><A NAME="2.1.4.11"></A><FONT FACE="Times, serif">2.1.4.2<SPAN LANG="en-US">
+Back end </SPAN>Access: Creating Users</FONT></H4>
 <P CLASS="western">To add a user, click on 'Users' and choose 'Add
 new user account'. You should specify the full name of the user, user
 name, password, and choose a predefined user type (i.e. one of the
@@ -823,8 +827,8 @@ article accessible to non-subscribers.</P>
 If a reader tries to access a non-public article, she is informed
 that she is not allowed to read the article but is provided with an
 option to subscribe immediately to that article or other articles or
-the whole publication. A temporarysubscription is activated
-immediately (the duration of that temporary subscription is
+the whole publication. A<SPAN LANG="en-US"> temporary subscription </SPAN>is
+activated immediately (the duration of that temporary subscription is
 determined by the value you set for the 'Pay Time', For more
 information, see section 2.5). During this period, the reader has a
 chance to effect the payment and consequently have her subscription
@@ -834,8 +838,8 @@ notified of all new subscriptions by e-mail. Subscribers also receive
 automatically generated e-mail reminders that their subscription is
 expiring 14<B> days </B>before the event.</P>
 <P CLASS="western">[NOTE: The text of the subscription-expiry message
-is hardcoded in the current version of CAMPSITE and it reads as
-follows:</P>
+is<SPAN LANG="en-US"> hard coded </SPAN>in the current version of
+CAMPSITE and it reads as follows:</P>
 <P CLASS="western">&quot;Dear &lt;reader&gt;,</P>
 <P CLASS="western">This is an automatically generated e-mail message.
 Your &lt;subs_type&gt; subscription (started on &lt;start_date&gt;)
@@ -904,8 +908,8 @@ know what they mean:</P>
 	will set this value to &quot;0&quot;).</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">Time unit - select
 	the unit in which you will measure the duration of trial or paid
-	subscriptions to your publication from the dropdown menu (days,
-	weeks, months, years)</P>
+	subscriptions to your publication from the<SPAN LANG="en-US"> drop
+	down </SPAN>menu (days, weeks, months, years)</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">Unit cost - the cost
 	of each time unit</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">Currency - the
@@ -921,10 +925,11 @@ altered or fine-tuned at a later stage.</P>
 hosted on the same server (computer), but to make different
 publications directly accessible to readers, you need to specify
 different virtual web servers. For example, if you want to add
-another publication (e.g. &quot;Moldovan Contemporary Political
-Thought&quot;) onto the server on which you are hosting your &quot;Prague
-Times&quot; publication, you need to assign it a different virtual
-web server name (e.g. www.moldovanthought.com)]</P>
+another publication (e.g. &quot;<SPAN LANG="en-US">Moldovan</SPAN>
+Contemporary Political Thought&quot;) onto the server on which you
+are hosting your &quot;Prague Times&quot; publication, you need to
+assign it a different virtual web server name (e.g.
+www.moldovanthought.com)]</P>
 <P CLASS="western">If you have virtual hosts set up in your Apache
 configuration, you can start a new publication and specify the URL
 for this virtual host, which will then allow readers to access your
@@ -1066,15 +1071,16 @@ see a dialog box with the following fields/options:</P>
 	field is mandatory, because it determines how your article will be
 	known to the database and appear in the Articles view. You, however,
 	have the liberty of renaming the article at any time. Type: you have
-	to select one of the available article types from the dropdown menu.
-	The choice you make at this stage CANNOT be altered later.</P>
+	to select one of the available article types from the<SPAN LANG="en-US">
+	drop down </SPAN>menu. The choice you make at this stage CANNOT be
+	altered later.</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm"><B>Language</B>:
 	select the language in which you want to create your article from
-	the dropdown menu. The list of languages will contain the languages
-	you have defined in the Languages module (see section 2.1.1). The
-	language choice you make at this stage is final, though you can
-	always create a version in another language with the Translate
-	option in the Articles view.</P>
+	the<SPAN LANG="en-US"> drop down </SPAN>menu. The list of languages
+	will contain the languages you have defined in the Languages module
+	(see section 2.1.1). The language choice you make at this stage is
+	final, though you can always create a version in another language
+	with the Translate option in the Articles view.</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm"><B>Show article on
 	front page</B>: Tick this box if you would like the article to be
 	displayed on your publication's front (home) page. You can alter
@@ -1188,14 +1194,15 @@ editors) without any technical or HTML knowledge to perform extensive
 formatting procedures.</P>
 <P CLASS="western">Chances are that anyone who has ever worked with a
 text editor should find CAMPFIRE intuitive to use. CAMPFIRE features
-a toolbar with buttons from which main functions can be performed,
-while additional features can be accessed from pull-down menus.</P>
+a<SPAN LANG="en-US"> tool bar </SPAN>with buttons from which main
+functions can be performed, while additional features can be accessed
+from pull-down menus.</P>
 <P CLASS="western">All text-formatting features are fully WYSIWYG,
 except align justify. The non-WYSIWYG features are insertion of
 images, subheads/page breaks and CAMPSITE Glossary keywords (see
 section 2.3).</P>
-<P CLASS="western">From left to right on the toolbar, in order of
-appearance, the buttons are:</P>
+<P CLASS="western">From left to right on the <SPAN LANG="en-US">tool
+bar</SPAN>, in order of appearance, the buttons are:</P>
 <UL>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">New - clears the
 	editor</P>
@@ -1242,8 +1249,8 @@ appearance, the buttons are:</P>
 	link to open (e.g. a new window). (N.B. you can use this feature to
 	create mailto links as well).</P>
 </UL>
-<P CLASS="western">All of these functions are also available from the
-dropdown menus. The menus four five important extra options:</P>
+<P CLASS="western">All of these functions are also available from the<SPAN LANG="en-US">
+drop down </SPAN>menus. The menus four five important extra options:</P>
 <UL>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">Glossary keywords</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">Font color</P>
@@ -1332,10 +1339,10 @@ already published.</P>
 <H2 CLASS="western"><A NAME="2.3."></A><FONT FACE="Times, serif">2.3.
 Glossary</FONT></H2>
 <P CLASS="western">The Glossary is in our view one of the two
-insufficiently developed but fully funcitonal and potentially
-powerful features of CAMPSITE (the other one is Topics, of which more
-in section 2.4). For this reason, Glossary-related rights are
-unchecked from all default users (including the default
+insufficiently developed but fully<SPAN LANG="en-US"> functional </SPAN>and
+potentially powerful features of CAMPSITE (the other one is Topics,
+of which more in section 2.4). For this reason, Glossary-related
+rights are unchecked from all default users (including the default
 administrator) or user types. If you would like to try your luck with
 the Glossary, you would need to return those rights to the users you
 configure on your system (you've learned how to do that in section
@@ -1441,20 +1448,21 @@ administrators to alter the layout of the popup windows. In other
 words, you can use it, but you might want to see if the appearance of
 the pop-up window would not strongly conflict with your overall
 design. If you like the Glossary's promise and would like to further
-its development, please let us knowat <A HREF="mailto:contact@campware.org">contact@campware.org</A>.
+its development, please let us<SPAN LANG="en-US"> know at
+</SPAN><A HREF="mailto:contact@campware.org">contact@campware.org</A>.
 We will fix in the coming versions, but if you can't wait, financial
 and in-kind contributions are more than welcome.</P>
 <H2 CLASS="western"><A NAME="2.4."></A>2.4. Topics</H2>
 <P CLASS="western">The Topics were introduced into CAMPSITE to add
 another level of freedom to the web designer/producer in site design.
 The projected topic features will enable designers to make
-portal-like, crosslinked sites, as any topics can be subtopic of more
-different topics.</P>
+portal-like,<SPAN LANG="en-US"> cross linked </SPAN>sites, as any
+topics can be subtopic of more different topics.</P>
 <P CLASS="western">In plain English, topics are subject matters of
 articles. A topic can have subtopics, like: the sports topic can have
-football, basketball, and waterpolo as subtopics. An article may have
-several topics attached to it, so that the article can be displayed
-in certain article lists.</P>
+football, basketball, and<SPAN LANG="en-US"> water polo </SPAN>as
+subtopics. An article may have several topics attached to it, so that
+the article can be displayed in certain article lists.</P>
 <H3 CLASS="western"><A NAME="2.4.1"></A>2.4.1 Known limitations of
 Topics</H3>
 <P CLASS="western">At present, the Topics user interface is
@@ -2086,8 +2094,9 @@ select all articles to be shown on the front page, for the given
 issue number, for all publications.</P>
 <H3 CLASS="western"><A NAME="3.9.1"></A>3.9.1 Language Elements.
 Conventions</H3>
-<P CLASS="western">In the following subchapters describing the
-template language we used the following conventions:</P>
+<P CLASS="western">In the following<SPAN LANG="en-US"> sub chapters
+</SPAN>describing the template language we used the following
+conventions:</P>
 <UL>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">identifiers in
 	between '&lt;' and '&gt;' must be replaced in the template according
@@ -2339,8 +2348,8 @@ NextItems/PreviousItems</A> statements.</P>
 incremented as if the items would be placed in a table cell. The
 counting starts from one and the variable is incremented for every
 new element. When it reaches the maximum value it is reset to one.
-This is very usefull in building tables of data. For details see <A HREF="#3.9.3.8">If
-List</A>.</P>
+This is very<SPAN LANG="en-US"> useful </SPAN>in building tables of
+data. For details see <A HREF="#3.9.3.8">If List</A>.</P>
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;list_of_instructions&gt;</FONT>
 may contain any statement except: &quot;Language&quot;,
 &quot;Publication&quot;, &quot;List Issue&quot;, &quot;Issue&quot;.</P>
@@ -2480,8 +2489,8 @@ NextItems/PreviousItems</A> statements.</P>
 incremented as if the items would be placed in a table cell. The
 counting starts from one and the variable is incremented for every
 new element. When it reaches the maximum value it is reset to one.
-This is very usefull in building tables of data. For details see <A HREF="#3.9.3.8">If
-List</A>.</P>
+This is very<SPAN LANG="en-US"> useful </SPAN>in building tables of
+data. For details see <A HREF="#3.9.3.8">If List</A>.</P>
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;list_of_instructions&gt;</FONT>
 may contain any statement except: &quot;Language&quot;,
 &quot;Publication&quot;, &quot;List Issue&quot;, &quot;Issue&quot;,
@@ -2736,8 +2745,8 @@ NextItems/PreviousItems</A> statements.</P>
 incremented as if the items would be placed in a table cell. The
 counting starts from one and the variable is incremented for every
 new element. When it reaches the maximum value it is reset to one.
-This is very usefull in building tables of data. For details see <A HREF="#3.9.3.8">If
-List</A>.</P>
+This is very<SPAN LANG="en-US"> useful </SPAN>in building tables of
+data. For details see <A HREF="#3.9.3.8">If List</A>.</P>
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;list_of_instructions&gt;</FONT>
 may contain any statement except: &quot;Language&quot;,
 &quot;Publication&quot;, &quot;List Issue&quot;, &quot;Issue&quot;,
@@ -2797,8 +2806,8 @@ NextItems/PreviousItems</A> statements.</P>
 incremented as if the items would be placed in a table cell. The
 counting starts from one and the variable is incremented for every
 new element. When it reaches the maximum value it is reset to one.
-This is very usefull in building tables of data. For details see <A HREF="#3.9.3.8">If
-List</A>.</P>
+This is very<SPAN LANG="en-US"> useful </SPAN>in building tables of
+data. For details see <A HREF="#3.9.3.8">If List</A>.</P>
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;list_of_instructions&gt;</FONT>
 may contain any statement except: &quot;Language&quot;,
 &quot;Publication&quot;.</P>
@@ -2848,7 +2857,8 @@ NextItems|PreviousItems [&lt;list_of_instructions&gt;]<BR>[Else
 <P CLASS="western">Constraints:</P>
 <P CLASS="western">Can be used only inside List statement. It can not
 be used inside ForEmptyList block of List statement. Also, If
-NextItems can not be used inside If PreviousItems and viceversa.</P>
+NextItems can not be used inside If PreviousItems and <SPAN LANG="en-US">vice
+versa.</SPAN></P>
 <H4 CLASS="western"><A NAME="3.9.3.7"></A>3.9.3.7 If NextSubtitles |
 PrevSubtitles</H4>
 <P CLASS="western">Purpose:</P>
@@ -3077,7 +3087,7 @@ Section, List Article, List Subtitle, List SearchResult).</P>
 				=</FONT></P>
 			</TD>
 			<TD WIDTH=413>
-				<P CLASS="western" STYLE="margin-top: 0cm"><FONT FACE="Courier, monospace">number
+				<P CLASS="western"><FONT FACE="Courier, monospace">number
 				</FONT><A HREF="#operators"><FONT FACE="Courier, monospace">&lt;integer_operator&gt;</FONT></A><FONT FACE="Courier, monospace">
 				</FONT><A HREF="#attr_types"><FONT FACE="Courier, monospace">&lt;integer_value&gt;</FONT><FONT FACE="Courier New, Courier, mono"><BR></FONT></A><FONT FACE="Courier, monospace">|
 				name </FONT><A HREF="#operators"><FONT FACE="Courier, monospace">&lt;string_operator&gt;</FONT></A><FONT FACE="Courier, monospace">
@@ -3509,7 +3519,7 @@ representing a valid number of article image</P>
 	one subtitle.</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">fromstart: prints the
 	parameters received at the start of template, not the current ones
-	(useful when building sitemaps)</P>
+	(useful when building <SPAN LANG="en-US">site maps</SPAN>)</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">reset_issue_list:
 	reset list counters for all the lists (issue, section, article,
 	searchresult, subtitle)</P>
@@ -3681,15 +3691,22 @@ Edit Article Details view.</A></P><A NAME="p_img_expr"></A>
 		</TD>
 		<TD WIDTH=516>
 			<P CLASS="western"><FONT FACE="Courier, monospace"><FONT SIZE=2 STYLE="font-size: 11pt"><FONT FACE="Courier New, Courier, mono">[&lt;image_number&gt;]
-			</FONT>photographer |place |description |&lt;date_attribute&gt;
-			|date [&lt;date_format&gt;]</FONT></FONT></P>
+			</FONT>photographer</FONT></FONT></P>
+			<P CLASS="western"><FONT FACE="Courier, monospace"><FONT SIZE=2 STYLE="font-size: 11pt">|<FONT FACE="Courier New, Courier, mono">[&lt;image_number&gt;]
+			</FONT>place</FONT></FONT></P>
+			<P CLASS="western"><FONT FACE="Courier, monospace"><FONT SIZE=2 STYLE="font-size: 11pt">|<FONT FACE="Courier New, Courier, mono">[&lt;image_number&gt;]
+			</FONT>description</FONT></FONT></P>
+			<P CLASS="western"><FONT FACE="Courier, monospace"><FONT SIZE=2 STYLE="font-size: 11pt">|<FONT FACE="Courier New, Courier, mono">[&lt;image_number&gt;]
+			</FONT>&lt;date_attribute&gt;</FONT></FONT></P>
+			<P CLASS="western"><FONT FACE="Courier, monospace"><FONT SIZE=2 STYLE="font-size: 11pt">|<FONT FACE="Courier New, Courier, mono">[&lt;image_number&gt;]
+			</FONT>date [&lt;date_format&gt;]</FONT></FONT></P>
 		</TD>
 	</TR>
 </TABLE>
 <P CLASS="western" STYLE="margin-top: 0cm"><FONT FACE="Nimbus Roman No9 L">&lt;image_number&gt;
 is</FONT> an <A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;integer_value&gt;</FONT></A>
 representing a valid number of the article image; a default image
-number (1) is used if &lt;image_number&gt; was ommited.</P>
+number (1) is used if &lt;image_number&gt; was omitted.</P>
 <UL>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">photographer, place,
 	description are fields describing the image</P>
@@ -3705,11 +3722,11 @@ number (1) is used if &lt;image_number&gt; was ommited.</P>
 	column is not specified in list statement or has value 1 row takes
 	the value of the element number in the list</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">column: list column;
-	if column is not specified in list statement it will have a vallue
-	of 1 for every list element</P>
+	if column is not specified in list statement it will have a<SPAN LANG="en-US">
+	value </SPAN>of 1 for every list element</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">index: element number
 	in the list; if list length is specified index will take the value
-	of list_length * number_of_steps_from_list_start * elment_number
+	of list_length * number_of_steps_from_list_start * <SPAN LANG="en-US">element</SPAN>_number
 	where</P>
 	<UL>
 		<LI><P CLASS="western" STYLE="margin-top: 0cm">list_length is the
@@ -3717,8 +3734,8 @@ number (1) is used if &lt;image_number&gt; was ommited.</P>
 		<LI><P CLASS="western" STYLE="margin-top: 0cm">number_of_steps_from_list_start
 		is how many steps the list start moved from the &quot;whole list&quot;
 		start</P>
-		<LI><P CLASS="western" STYLE="margin-top: 0cm">elment_number is the
-		number of the element in the current list</P>
+		<LI><P CLASS="western" STYLE="margin-top: 0cm"><SPAN LANG="en-US">element</SPAN>_number
+		is the number of the element in the current list</P>
 	</UL>
 </UL>
 <P CLASS="western">For details on list see <A HREF="#3.9.3.8">If List</A></P><A NAME="p_subs_expr"></A>
@@ -3743,7 +3760,7 @@ number (1) is used if &lt;image_number&gt; was ommited.</P>
 	describing the publication subscription</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">error: if
 	subscription action took place (after submitting a subscription
-	form) it prints the error message (if there was an errror)</P>
+	form) it prints the error message (if there was an <SPAN LANG="en-US">error</SPAN>)</P>
 </UL>
 <P CLASS="western">For details on subscription see <A HREF="#2.4.">CONFIGURING
 THE SUBSCRIPTION MODULE</A></P>
@@ -3752,7 +3769,7 @@ THE SUBSCRIPTION MODULE</A></P>
 <UL>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">error: if login
 	action took place (after submitting a login form) it prints the
-	error message (if there was an errror)</P>
+	error message (if there was an <SPAN LANG="en-US">error</SPAN>)</P>
 </UL><A NAME="p_user_expr"></A>
 <TABLE WIDTH=703 BORDER=0 CELLPADDING=2 CELLSPACING=0>
 	<COL WIDTH=226>
@@ -3773,11 +3790,11 @@ THE SUBSCRIPTION MODULE</A></P>
 </TABLE>
 <P CLASS="western" STYLE="margin-top: 0cm">adderror: if user add
 action took place (after submitting a user subscription form) it
-prints the error message (if there was an errror)</P>
+prints the error message (if there was an <SPAN LANG="en-US">error</SPAN>)</P>
 <UL>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">modifyerror: if user
 	modify action took place (after submitting a user info form) it
-	prints the error message (if there was an errror)</P>
+	prints the error message (if there was an <SPAN LANG="en-US">error</SPAN>)</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">the other parameters
 	(name, uname, email, city...) are fields describing the user
 	information; they are self-explaining; Field1-Field5, Text1-Text3
@@ -4038,7 +4055,8 @@ keywords.</P>
 <H4 CLASS="western"><A NAME="3.9.4.9"></A>3.9.4.9 Select</H4>
 <P CLASS="western">Purpose:</P>
 <P CLASS="western">Generate input data pop-up list, list, radio
-button or checkbox for subscription, user or search forms.</P>
+button or<SPAN LANG="en-US"> check box </SPAN>for subscription, user
+or search forms.</P>
 <P CLASS="western">Syntax:</P>
 <TABLE WIDTH=338 BORDER=0 CELLPADDING=2 CELLSPACING=0>
 	<COL WIDTH=74>
@@ -4079,8 +4097,8 @@ publication administrator sets their meaning. Generates pop-up list
 or radio-button for selecting values for the above fields.</P>
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;search_expression&gt;
 = Search mode |level</FONT></P>
-<P CLASS="western">Generates a checkbox for selecting the search mode
-(match one or all keywords).</P>
+<P CLASS="western">Generates a<SPAN LANG="en-US"> check box </SPAN>for
+selecting the search mode (match one or all keywords).</P>
 <P CLASS="western">Constraints:</P>
 <UL>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">Select Subscription
