@@ -6,7 +6,7 @@ do_configure()
     echo -e "\nSTEP 1"
     echo -n "Configuring campsite (this may take a while, please wait)..."
     echo -e "###############################################\n\tConfiguring campsite\n" >> install_log
-    ./configure $* >> install_log 2>&1
+    ./configure --defaults $* >> install_log 2>&1
     err_code=$?
     if [ $err_code -ne 0 ]; then
 	echo "ERROR."
