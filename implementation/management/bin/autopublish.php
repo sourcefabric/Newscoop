@@ -1,8 +1,4 @@
-<?
-
-require_once($Campsite['HTML_DIR']."/db_connect.php");
-require_once($Campsite['HTML_DIR']."/$ADMIN_DIR/lib_campsite.php");
-require_once($Campsite['HTML_DIR']."/$ADMIN_DIR/languages.php");
+<?php
 
 function publish_articles($datetime)
 {
@@ -77,11 +73,35 @@ function publish_issues($datetime)
 	}
 }
 
+function connect_to_database()
+{
+	global $Campsite;
+	$db_server = $Campsite['DATABASE_SERVER_ADDRESS'].":".$Campsite['DATABASE_SERVER_PORT'];
+	$db_user = $Campsite['DATABASE_USER'];
+	$db_password = $Campsite['DATABASE_PASSWORD'];
+	if (!mysql_connect($db_server, $db_user, $db_password))
+		die("unable to connect to mysql server $db_server\n");
+	if (!mysql_select_db($Campsite['DATABASE_NAME']))
+		die("unable to select database " . $Campsite['DATABASE_NAME'] . "\n");
+}
+
 function automatic_publishing($datetime)
 {
+	connect_to_database();
 	publish_issues($datetime);
 	publish_articles($datetime);
 }
+
+
+if (sizeof($GLOBALS['argv']) < 2)
+	die("please supply the configuration directory as an argument\n");
+
+$etc_dir = $GLOBALS['argv'][1];
+
+global $Campsite;
+$Campsite = array();
+
+require_once("$etc_dir/database_conf.php");
 
 $datetime = strftime("%Y-%m-%d %H:%M:00");
 automatic_publishing($datetime);
