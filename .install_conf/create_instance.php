@@ -44,12 +44,12 @@ function create_instance($p_arguments, &$p_errors)
 		return false;
 	}
 
-	if (!($res = create_database($defined_parameters)) == 0) {
+	if (!($res = create_site($defined_parameters)) == 0) {
 		$p_errors[] = $res;
 		return false;
 	}
 
-	if (!($res = create_site($defined_parameters)) == 0) {
+	if (!($res = create_database($defined_parameters)) == 0) {
 		$p_errors[] = $res;
 		return false;
 	}
@@ -119,11 +119,11 @@ function create_database($p_defined_parameters)
 {
 	global $Campsite, $CampsiteVars;
 
-	$instance_etc_dir = $Campsite['ETC_DIR'] . "/" . $p_defined_parameters['--db_name'];
+	$db_name = $p_defined_parameters['--db_name'];
+	$instance_etc_dir = $p_defined_parameters['--etc_dir'] . "/" . $db_name;
 	require_once($instance_etc_dir . "/database_conf.php");
 	$db_dir = $Campsite['CAMPSITE_DIR'] . "/instance/database";
 
-	$db_name = $Campsite['DATABASE_NAME'];
 	$db_user = $Campsite['DATABASE_USER'];
 	$db_password = $Campsite['DATABASE_PASSWORD'];
 	$res = mysql_connect($Campsite['DATABASE_SERVER_ADDRESS'] . ":"
@@ -135,8 +135,11 @@ function create_database($p_defined_parameters)
 	if ($db_exists) {
 		if (!($res = backup_database($db_name, $p_defined_parameters)) == 0)
 			return $res;
-		if (!($res = upgrade_database($db_name, $p_defined_parameters)) == 0)
-			return $res;
+		if (!($res = upgrade_database($db_name, $p_defined_parameters)) == 0) {
+			restore_database($db_name, $p_defined_parameters);
+			return $res . "\nThere was an error when upgrading the database; "
+				. "the old database was restored.";
+		}
 	} else {
 		if (!mysql_query("CREATE DATABASE " . $db_name))
 			return "Unable to create the database " . $db_name;
@@ -246,8 +249,66 @@ function backup_database($p_db_name, $p_defined_parameters)
 }
 
 
+function restore_database($p_db_name, $p_defined_parameters)
+{
+	global $Campsite, $CampsiteVars;
+
+	$backup_file = $Campsite['CAMPSITE_DIR'] . "/backup/$p_db_name/$p_db_name-backup.sql";
+	if (!is_file($backup_file))
+		return "Can't restore database: backup file not found";
+
+	if (database_exists($p_db_name))
+		mysql_query("DROP DATABASE $p_db_name");
+	mysql_query("CREATE DATABASE $p_db_name");
+
+	$cmd = "mysql -u " . $Campsite['DATABASE_USER'];
+	if ($Campsite['DATABASE_PASSWORD'] != "")
+		$cmd .= " --password=\"" . $Campsite['DATABASE_PASSWORD'] . "\"";
+	$cmd .= " $p_db_name < \"$backup_file\"";
+	exec($cmd, $output, $res);
+	if ($res != 0)
+		return implode("\n", $output);
+
+	return 0;
+}
+
+
 function create_site($p_defined_parameters)
 {
+	global $Campsite, $CampsiteVars;
+
+	$db_name = $p_defined_parameters['--db_name'];
+	$etc_dir = $p_defined_parameters['--etc_dir'];
+	$instance_etc_dir = $etc_dir . "/$db_name";
+	require_once($etc_dir . "/install_conf.php");
+
+	$instance_www_dir = $Campsite['WWW_DIR'] . "/$db_name";
+	$html_dir = $instance_www_dir . "/html";
+	$common_html_dir = $Campsite['WWW_COMMON_DIR'] . "/html";
+	$instance_dirs = array('WWW_DIR'=>$instance_www_dir,
+		'HTML_DIR'=>$instance_www_dir . "/html",
+		'CGI_DIR'=>$instance_www_dir . "/cgi-bin",
+		'SCRIPT_DIR'=>$instance_www_dir . "/script",
+		'INCLUDE_DIR'=>$instance_www_dir . "/include");
+
+	// create directories
+	foreach ($instance_dirs as $dir_type=>$dir_name)
+		if (!is_dir($dir_name) && !mkdir($dir_name))
+			return "Unable to create directory $dir_name";
+
+	// create symbolik links to configuration files
+	$link_files = array("$etc_dir/install_conf.php"=>"$html_dir/install_conf.php",
+		"$instance_etc_dir/database_conf.php"=>"$html_dir/database_conf.php",
+		"$instance_etc_dir/parser_conf.php"=>"$html_dir/parser_conf.php",
+		"$instance_etc_dir/smtp_conf.php"=>"$html_dir/smtp_conf.php",
+		"$instance_etc_dir/apache_conf.php"=>"$html_dir/apache_conf.php",
+		"$common_html_dir/index.php"=>"$html_dir/index.php");
+	foreach ($link_files as $file=>$link) {
+		if (!is_link($link) && !symlink($file, $link))
+			return "Unable to create symbolic link to $file";
+	}
+
+	return 0;
 }
 
 
