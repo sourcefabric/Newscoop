@@ -12,7 +12,7 @@ install: dummy
 	if [ -f *.crt ]; then cp -f *.crt $(JAVA_DIR); fi
 	mkdir -p $(JAVA_DIR)/resources
 	cp -f resources/*.* $(JAVA_DIR)/resources
-	chown $(ROOT_USER).$(HTTP_GROUP) $(JAVA_DIR) -R
+	chown -R $(ROOT_USER):$(HTTP_GROUP) $(JAVA_DIR)
 	chmod u+rw $(JAVA_DIR)/* $(JAVA_DIR)/resources/*
 	chmod g+r $(JAVA_DIR)/* $(JAVA_DIR)/resources/*
 	chmod +x $(JAVA_DIR)/resources
