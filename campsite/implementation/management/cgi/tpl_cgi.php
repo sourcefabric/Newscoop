@@ -8,6 +8,7 @@ global $Campsite;
 // initialize needed global variables
 $_SERVER['DOCUMENT_ROOT'] = getenv("DOCUMENT_ROOT");
 
+$DO_NOT_CONNECT_TO_DB = true;
 require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/parser_utils.php');
 
