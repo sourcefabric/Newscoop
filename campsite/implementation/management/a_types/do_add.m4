@@ -39,17 +39,12 @@ B_MSGBOX(<*Adding new article type*>)
     $correct= 0; ?>dnl
 	<LI><? putGS('You must complete the $1 field.','</B>'.getGS('Name').'</B>'); ?></LI>
 <? } else {
-    $cName=decS($cName);
-    
-    $ok= 1;
-    for ($i=0;$i<strlen($cName);$i++) {
-	$c = ord ( strtolower ( substr ( $cName,$i,1 ) ) );
-	if ($c<97 || $c>122)
-	    $ok=0;
-    }
-    if ($ok == 0) {
-	$correct= 0; ?>dnl
-	<LI><? putGS('The $1 field may only contain letters.','</B>'.getGS('Name').'</B>'); ?></LI>
+	$cName=decS($cName);
+
+	$ok = valid_field_name($cName);
+	if ($ok == 0) {
+		$correct= 0; ?>dnl
+		<LI><? putGS('The $1 field may only contain letters and underscore (_) character.', '</B>' . getGS('Name') . '</B>'); ?></LI>
     <? }
 
     $cName=encS($cName);
@@ -62,7 +57,9 @@ B_MSGBOX(<*Adding new article type*>)
     }
     
     if ($correct) {
-	query ("CREATE TABLE X$cName (NrArticle INT UNSIGNED NOT NULL, IdLanguage INT UNSIGNED NOT NULL, PRIMARY KEY(NrArticle, IdLanguage))");
+	$tname = "X" . mysql_escape_string($cName);
+	$sql = "CREATE TABLE `".$tname."` (NrArticle INT UNSIGNED NOT NULL, IdLanguage INT UNSIGNED NOT NULL, PRIMARY KEY(NrArticle, IdLanguage))";
+	query($sql);
 	$created= 1; ?>
 	<LI><? putGS('The article type $1 has been added.','<B>'.encHTML(decS($cName)).'</B>'); ?></LI>
 X_AUDIT(<*61*>, <*getGS('The article type $1 has been added.',$cName)*>)
