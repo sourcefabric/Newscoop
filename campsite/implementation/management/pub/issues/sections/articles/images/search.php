@@ -29,12 +29,12 @@ $SearchDate = Input::Get('search_date', 'string', '', true);
 $SearchInUse = Input::Get('search_inuse', 'string', '', true);
 $SearchUploadedBy = Input::Get('search_uploadedby', 'int', '', true);
 	
-$PublicationId = Input::Get('Pub', 'int', 0);
-$IssueId = Input::Get('Issue', 'int', 0);
-$SectionId = Input::Get('Section', 'int', 0);
-$InterfaceLanguageId = Input::Get('Language', 'int', 0);
-$ArticleLanguageId = Input::Get('sLanguage', 'int', 0);
-$ArticleId = Input::Get('Article', 'int', 0);
+$Pub = Input::Get('Pub', 'int', 0);
+$Issue = Input::Get('Issue', 'int', 0);
+$Section = Input::Get('Section', 'int', 0);
+$Language = Input::Get('Language', 'int', 0);
+$sLanguage = Input::Get('sLanguage', 'int', 0);
+$Article = Input::Get('Article', 'int', 0);
 
 if (!Input::IsValid()) {
 	CampsiteInterface::DisplayError(array('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
@@ -42,11 +42,11 @@ if (!Input::IsValid()) {
 }
 
 $imageNav =& new ImageNav($_REQUEST, CAMPSITE_IMAGEARCHIVE_IMAGES_PER_PAGE, $view);
-$publicationObj =& new Publication($PublicationId);
-$issueObj =& new Issue($PublicationId, $InterfaceLanguageId, $IssueId);
-$sectionObj =& new Section($PublicationId, $IssueId, $InterfaceLanguageId, $SectionId);
-$languageObj =& new Language($InterfaceLanguageId);
-$articleObj =& new Article($PublicationId, $IssueId, $SectionId, $ArticleLanguageId, $ArticleId);
+$publicationObj =& new Publication($Pub);
+$issueObj =& new Issue($Pub, $Language, $Issue);
+$sectionObj =& new Section($Pub, $Issue, $Language, $Section);
+$languageObj =& new Language($Language);
+$articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
 
 ///////////////////////////////////////////////////////////////////////
 $ImagesPerPage = 8;
@@ -61,27 +61,27 @@ if ($OrderDirection == 'DESC') {
 }
 
 $IdHref  = 
-	CampsiteInterface::ArticleUrl($articleObj, $InterfaceLanguageId, 'images/search.php')
+	CampsiteInterface::ArticleUrl($articleObj, $Language, 'images/search.php')
 	.'&order_by=id'
 	.$imageNav->getKeywordSearchLink();
 $DescriptionHref  = 
-	CampsiteInterface::ArticleUrl($articleObj, $InterfaceLanguageId, 'images/search.php')
+	CampsiteInterface::ArticleUrl($articleObj, $Language, 'images/search.php')
 	.'&order_by=description'
 	.$imageNav->getKeywordSearchLink();
 $PhotographerHref  = 
-	CampsiteInterface::ArticleUrl($articleObj, $InterfaceLanguageId, 'images/search.php')
+	CampsiteInterface::ArticleUrl($articleObj, $Language, 'images/search.php')
 	.'&order_by=photographer'
 	.$imageNav->getKeywordSearchLink();
 $PlaceHref  = 
-	CampsiteInterface::ArticleUrl($articleObj, $InterfaceLanguageId, 'images/search.php')
+	CampsiteInterface::ArticleUrl($articleObj, $Language, 'images/search.php')
 	.'&order_by=place'
 	.$imageNav->getKeywordSearchLink();
 $DateHref  = 
-	CampsiteInterface::ArticleUrl($articleObj, $InterfaceLanguageId, 'images/search.php')
+	CampsiteInterface::ArticleUrl($articleObj, $Language, 'images/search.php')
 	.'&order_by=date'
 	.$imageNav->getKeywordSearchLink();
 $InUseHref = 
-	CampsiteInterface::ArticleUrl($articleObj, $InterfaceLanguageId, 'images/search.php')
+	CampsiteInterface::ArticleUrl($articleObj, $Language, 'images/search.php')
 	.'&order_by=inuse'
 	.$imageNav->getKeywordSearchLink();
 ///////////////////////////////////////////////////////////////////////
@@ -183,14 +183,14 @@ $uploadedByUsers =& Image::GetUploadUsers();
 
 <table>
 <tr>
-    <td><?php echo CampsiteInterface::ArticleLink($articleObj, $InterfaceLanguageId, 'images/index.php') ?><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/back.png" BORDER="0" ALT="<?php putGS("Back to Article Image List"); ?>"></a></td>
-    <td><?php echo CampsiteInterface::ArticleLink($articleObj, $InterfaceLanguageId, 'images/index.php') ?><b><?php echo putGS('Back to Article Image List'); ?></b></a></td>
-    <td><?php echo CampsiteInterface::ArticleLink($articleObj, $InterfaceLanguageId, 'edit.php') ?><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/back.png" BORDER="0" ALT="<?php putGS("Back to article details"); ?>"></a></td>
-    <td><?php echo CampsiteInterface::ArticleLink($articleObj, $InterfaceLanguageId, 'edit.php') ?><b><?php echo putGS('Back to article details'); ?></b></a></td>
+    <td><?php echo CampsiteInterface::ArticleLink($articleObj, $Language, 'images/index.php') ?><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/back.png" BORDER="0" ALT="<?php putGS("Back to Article Image List"); ?>"></a></td>
+    <td><?php echo CampsiteInterface::ArticleLink($articleObj, $Language, 'images/index.php') ?><b><?php echo putGS('Back to Article Image List'); ?></b></a></td>
+    <td><?php echo CampsiteInterface::ArticleLink($articleObj, $Language, 'edit.php') ?><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/back.png" BORDER="0" ALT="<?php putGS("Back to article details"); ?>"></a></td>
+    <td><?php echo CampsiteInterface::ArticleLink($articleObj, $Language, 'edit.php') ?><b><?php echo putGS('Back to article details'); ?></b></a></td>
 </tr>
 <tr>
-    <td><?php echo CampsiteInterface::ArticleLink($articleObj, $InterfaceLanguageId, 'images/search.php') ?><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/reset.png" BORDER="0" ALT="<?php putGS("Reset search conditions"); ?>"></a></td>
-    <td colspan="3"><?php echo CampsiteInterface::ArticleLink($articleObj, $InterfaceLanguageId, 'images/search.php') ?><b><?php echo putGS('Reset search conditions'); ?></b></a></td>
+    <td><?php echo CampsiteInterface::ArticleLink($articleObj, $Language, 'images/search.php') ?><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/reset.png" BORDER="0" ALT="<?php putGS("Reset search conditions"); ?>"></a></td>
+    <td colspan="3"><?php echo CampsiteInterface::ArticleLink($articleObj, $Language, 'images/search.php') ?><b><?php echo putGS('Reset search conditions'); ?></b></a></td>
 </tr>
 </table>
 
@@ -200,12 +200,12 @@ $uploadedByUsers =& Image::GetUploadUsers();
 <input type="hidden" name="order_direction" value="<?php echo $OrderDirection; ?>">
 <input type="hidden" name="view" value="<?php echo $view; ?>">
 <input type="hidden" name="image_offset" value="0">
-<input type="hidden" name="Pub" value="<?php p($PublicationId); ?>">
-<input type="hidden" name="Issue" value="<?php p($IssueId); ?>">
-<input type="hidden" name="Section" value="<?php p($SectionId); ?>">
-<input type="hidden" name="Language" value="<?php p($InterfaceLanguageId); ?>">
-<input type="hidden" name="sLanguage" value="<?php p($ArticleLanguageId); ?>">
-<input type="hidden" name="Article" value="<?php p($ArticleId); ?>">
+<input type="hidden" name="Pub" value="<?php p($Pub); ?>">
+<input type="hidden" name="Issue" value="<?php p($Issue); ?>">
+<input type="hidden" name="Section" value="<?php p($Section); ?>">
+<input type="hidden" name="Language" value="<?php p($Language); ?>">
+<input type="hidden" name="sLanguage" value="<?php p($sLanguage); ?>">
+<input type="hidden" name="Article" value="<?php p($Article); ?>">
 <tr>
 	<td style="padding-left: 10px;"><?php putGS('Description')?>:</td>
 	<td><input type="text" name="search_description" value="<?php echo $SearchDescription; ?>" class="input_text" style="width: 150px;"></td>
@@ -233,9 +233,9 @@ $uploadedByUsers =& Image::GetUploadUsers();
 <tr>
 	<td colspan="11" align="center" >
 		Additional searches: &nbsp;
-		<a href="<?php echo CampsiteInterface::ArticleUrl($articleObj, $InterfaceLanguageId, 'images/search.php').'&'.$imageNav->getSearchLink(); ?>&order_by=time_created" style="font-size: 9pt; font-weight: bold; text-decoration: underline;"><?php putGS('Most Recently Added'); ?></a><?php if ($OrderBy == "time_created") { echo "*"; } ?>
+		<a href="<?php echo CampsiteInterface::ArticleUrl($articleObj, $Language, 'images/search.php').'&'.$imageNav->getSearchLink(); ?>&order_by=time_created" style="font-size: 9pt; font-weight: bold; text-decoration: underline;"><?php putGS('Most Recently Added'); ?></a><?php if ($OrderBy == "time_created") { echo "*"; } ?>
 		&nbsp;
-		<a href="<?php echo CampsiteInterface::ArticleUrl($articleObj, $InterfaceLanguageId, 'images/search.php').'&'.$imageNav->getSearchLink(); ?>&order_by=last_modified" style="font-size: 9pt; font-weight: bold; text-decoration: underline;"><?php putGS('Most Recently Modified'); ?></a><?php if ($OrderBy == "last_modified") { echo "*"; } ?>
+		<a href="<?php echo CampsiteInterface::ArticleUrl($articleObj, $Language, 'images/search.php').'&'.$imageNav->getSearchLink(); ?>&order_by=last_modified" style="font-size: 9pt; font-weight: bold; text-decoration: underline;"><?php putGS('Most Recently Modified'); ?></a><?php if ($OrderBy == "last_modified") { echo "*"; } ?>
 	</td>
 	
 </tr>
