@@ -6,7 +6,11 @@ restart_cron()
 {
 check4_crond --force
 cron_bin=$file_name
-killall -1 $cron_bin
+if [ $OPENBSD -eq 1 ]; then
+	$KILLALL -s1 $cron_bin
+else
+	$KILLALL -1 $cron_bin
+fi
 return $?
 }
 
