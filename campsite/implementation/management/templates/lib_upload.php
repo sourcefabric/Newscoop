@@ -91,7 +91,7 @@
 		printDH("MIME Type: $fType");
 		if (strncmp($fType, "text", 4) == 0)
 		{
-			$command="iconv -f $charset -t UTF-8 $origFile > $newname";
+			$command="iconv -f $charset -t UTF-8 \"$origFile\" > \"$newname\"";
 			printDH("Command: $command");
 			$res_out=system($command, $status);
 			unlink($origFile);
