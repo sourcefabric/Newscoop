@@ -20,12 +20,15 @@ E_STYLE
 B_BODY
 
 <?php 
-    todef('cName');
-    todefnum('cLang');
-    todefnum('cPublicationDate');
-    todefnum('Pub');
-    todefnum('Issue');
-    todefnum('Language');
+	todef('cName');
+	todefnum('cLang');
+	todefnum('cPublicationDate');
+	todefnum('Pub');
+	todefnum('Issue');
+	todefnum('Language');
+	todefnum('cIssueTplId');
+	todefnum('cSectionTplId');
+	todefnum('cArticleTplId');
 ?>dnl
 
 B_HEADER(<*Changing issue's details*>)
@@ -53,46 +56,49 @@ X_CURRENT(<*Publication*>, <*<B><?php  pgetHVar($q_pub,'Name'); ?></B>*>)
 X_CURRENT(<*Issue*>, <*<B><?php  pgetHVar($publ,'Number'); ?>. <?php  pgetHVar($publ,'Name'); ?> (<?php  pgetHVar($q_lang,'Name'); ?>)</B>*>)
 E_CURRENT   
 
-<?php 
-    $correct= 1;
-    $created= 0;
-?>dnl
 <P>
 B_MSGBOX(<*Changing issue's details*>)
 	X_MSGBOX_TEXT(<*
 
 <?php 
-    $cName=trim($cName);
-	///!sql query "SELECT TRIM('?cName')" q_x
-    
-    if ($cLang == 0) {
-	$correct= 0; ?>dnl
-		<LI><?php  putGS('You must select a language.'); ?></LI>
-    <?php  }
-    
-    if ($cName == "" || $cName == " ") {
-	$correct= 0; ?>dnl
-		<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); ?></LI>
-    <?php  }
-    
-    if ($correct) {
-	
-	query("UPDATE Issues SET Name='$cName', IdLanguage=$cLang, PublicationDate='$cPublicationDate' WHERE IdPublication=$Pub AND Number=$Issue AND IdLanguage=$cLang");
-	$created= ($AFFECTED_ROWS > 0);
-    }
-    
-    if ($created) { ?>dnl
-		<LI><?php  putGS('The issue $1 has been successfuly changed.','<B>'.encHTML(decS($cName)).'</B>'); ?></LI>
-X_AUDIT(<*11*>, <*getGS('Issue $1 updated in publication $2',$cName,getVar($publ,'Name'))*>)
-<?php  } else {
-    
-    if ($correct != 0) { ?>dnl
-		<LI><?php  putGS('The issue could not be changed.'); ?></LI>
-<!--LI>Please check if another issue with the same number/language does not already exist.</LI-->
-<?php  }
-}
+	$correct = 1;
+	$created = 0;
+	$cName = trim($cName);
+	if ($cLang == 0) {
+		$correct = 0;
 ?>dnl
-		*>)
+		<LI><?php  putGS('You must select a language.'); ?></LI>
+<?php
+	}
+	if ($cName == "" || $cName == " ") {
+		$correct = 0;
+?>dnl
+		<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); ?></LI>
+<?php  }
+	if ($correct) {
+		$sql = "UPDATE Issues SET Name = '$cName', IdLanguage = $cLang";
+		if (getVar($publ, 'Published') == 'Y')
+			$sql .= ", PublicationDate = '$cPublicationDate'";
+		$sql .= ", IssueTplId = " . ($cIssueTplId > 0 ? $cIssueTplId : "NULL");
+		$sql .= ", SectionTplId = " . ($cSectionTplId > 0 ? $cSectionTplId : "NULL");
+		$sql .= ", ArticleTplId = " . ($cArticleTplId > 0 ? $cArticleTplId : "NULL");
+		$sql .= " WHERE IdPublication = $Pub AND Number = $Issue AND IdLanguage = $cLang";
+		query($sql);
+		$created = ($AFFECTED_ROWS >= 0);
+	}
+	if ($created) {
+?>dnl
+		<LI><?php  putGS('The issue $1 has been successfuly changed.', '<B>'.encHTML(decS($cName)).'</B>'); ?></LI>
+		X_AUDIT(<*11*>, <*getGS('Issue $1 updated in publication $2',$cName,getVar($publ,'Name'))*>)
+<?php
+	} else {
+		if ($correct != 0) { ?>dnl
+			<LI><?php  putGS('The issue could not be changed.'); ?></LI>
+<?php
+		}
+	}
+?>dnl
+	*>)
 <?php  if ($correct && $created) { ?>dnl
 	B_MSGBOX_BUTTONS
 		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/pub/issues/?Pub=<?php  pencURL($Pub); ?>*>)

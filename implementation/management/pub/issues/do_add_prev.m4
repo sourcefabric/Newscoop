@@ -49,23 +49,25 @@ E_CURRENT
 B_MSGBOX(<*Copying previous issue*>)
 	X_MSGBOX_TEXT(<*
 <?php 
-    query ("SELECT * FROM Issues WHERE IdPublication=$cPub AND Number=$cOldNumber", 'q_iss');
-    	//copy the whole structure; translated issues may exists
-    $nr=$NUM_ROWS;
-    for($loop=0;$loop<$nr;$loop++) {
+query ("SELECT * FROM Issues WHERE IdPublication=$cPub AND Number=$cOldNumber", 'q_iss');
+//copy the whole structure; translated issues may exists
+$nr=$NUM_ROWS;
+for($loop=0;$loop<$nr;$loop++) {
 	fetchRow($q_iss);
 	$idlang=getVar($q_iss,'IdLanguage');
 
-	query ("INSERT IGNORE INTO Issues SET IdPublication=$cPub, Number=$cNumber, IdLanguage=$idlang, Name='".getSVar($q_iss,'Name')."', FrontPage='".getSVar($q_iss,'FrontPage')."', SingleArticle='".getSVar($q_iss,'SingleArticle')."'");
+	$sql = "INSERT INTO Issues SET IdPublication=$cPub, Number=$cNumber, IdLanguage=$idlang, Name='" . getSVar($q_iss,'Name') . "', IssueTplId='" . getSVar($q_iss,'IssueTplId') . "', SectionTplId='" . getSVar($q_iss,'SectionTplId') . "', ArticleTplId='" . getSVar($q_iss,'ArticleTplId') . "', ShortName = " . $cNumber;
+	query($sql);
 	query ("SELECT * FROM Sections WHERE IdPublication=$cPub AND NrIssue=$cOldNumber AND IdLanguage=$idlang", 'q_sect');
 	$nr2=$NUM_ROWS;
 	for($loop2=0;$loop2<$nr2;$loop2++) {
 	    fetchRow($q_sect);
-	    query ("INSERT IGNORE INTO Sections SET IdPublication=$cPub, NrIssue=$cNumber, IdLanguage=$idlang, Number=".getSVar($q_sect,'Number').", Name='".getSVar($q_sect,'Name')."'");
+	    $sql = "INSERT INTO Sections SET IdPublication=$cPub, NrIssue=$cNumber, IdLanguage=$idlang, Number=".getSVar($q_sect,'Number').", Name='".getSVar($q_sect,'Name')."', ShortName=".getSVar($q_sect,'Number');
+		query($sql);
 	}
-    }
+}
 ?>dnl
-X_AUDIT(<*11*>, <*getGS('New issue $1 from $2 in publication $3',$cNumber,$cOldNumber,getSVar($publ,'Name'))*>)
+	X_AUDIT(<*11*>, <*getGS('New issue $1 from $2 in publication $3', $cNumber, $cOldNumber, getSVar($publ,'Name'))*>)
 	<LI><?php  putGS('Copying done.'); ?></LI>
 	*>)
 	B_MSGBOX_BUTTONS
