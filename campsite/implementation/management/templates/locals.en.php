@@ -10,6 +10,7 @@ regGS("Upload template","Upload template:en");
 regGS("Select the template for displaying the front page.","Select the template for displaying the front page.:en");
 regGS("Select the template for displaying a single article.","Select the template for displaying a single article.:en");
 regGS("You do no have access to the $1 directory!", "You do no have access to the $1 directory!:en");
+regGS("Refresh templates directory", "Refresh templates directory:en");
 
 // -- do_new_dir.m4
 regGS("Creating new folder","Creating new folder:en");
@@ -23,6 +24,7 @@ regGS("Delete folders","Delete folders:en");
 regGS("You do not have the right to delete templates.","You do not have the right to delete templates.:en");
 regGS("Are you sure you want to delete the folder $1 from $2?","Are you sure you want to delete the folder $1 from $2?:en");
 regGS("Are you sure you want to delete the template $1 from folder $2?","Are you sure you want to delete the template $1 from folder $2?:en");
+regGS("The template $1 is in use and can not be deleted.", "The template $1 is in use and can not be deleted.:en");
 
 // -- do_del.m4
 regGS("Deleting template","Deleting template:en");
@@ -67,5 +69,13 @@ regGS("Error converting the template to UTF-8 charset.", "Error converting the t
 regGS("Template charset", "Template charset");
 regGS("Select a language/character set", "Select a language/character set");
 regGS("All languages", "All languages");
+
+// refresh.m4
+regGS("There were the following errors while refreshing the template directory:", "There were the following errors while refreshing the template directory::en");
+regGS("Refreshing the templates directory", "Refreshing the templates directory:en");
+regGS("The templates directory was refreshed succesfully.", "The templates directory was refreshed succesfully.:en");
+regGS("There were $1 new template(s) found.", "There were $1 new template(s) found.:en");
+regGS("The following templates had been registered but are missing from the templates directory and were deleted:", "The following templates had been registered but are missing from the templates directory and were deleted::en");
+regGS("The following templates were registered and used but are missing from the templates directory:", "The following templates were registered and used but are missing from the templates directory::en");
 
 ?>
