@@ -2,14 +2,8 @@
 	"http://www.w3.org/TR/REC-html40/loose.dtd">
 <HTML>
 <?php
-include ("../../../../lib_campsite.php");
-$globalfile=selectLanguageFile('../../../..','globals');
-$localfile=selectLanguageFile('.','locals');
-@include ($globalfile);
-@include ($localfile);
-include ("../../../../languages.php");
-require_once("$DOCUMENT_ROOT/db_connect.php");
 include($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
+load_common_include_files();
 require_once($_SERVER['DOCUMENT_ROOT']."/priv/CampsiteInterface.php");
     
 todefnum('TOL_UserId');
