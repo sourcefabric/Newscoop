@@ -31,7 +31,7 @@ changecom\`'dnl
 changequote(<*, *>)dnl
 define(<*X_SCRIPT_BIN*>, <*$ADMIN_INTERFACE_SCRIPT_DIR*>)dnl
 define(<*X_CGI_BIN*>, <*$ADMIN_INTERFACE_CGI_DIR*>)dnl
-define(<*X_COPYRIGHT*>, <*<a STYLE='font-size:8pt;color:#000000' href='http://www.campware.org' target='campware'>CAMPSITE $CAMPSITE_VERSION &copy 1999-2002 MDLF, maintained and distributed under GNU GPL by CAMPWARE</a>*>)dnl
+define(<*X_COPYRIGHT*>, <*<a STYLE='font-size:8pt;color:#000000' href='http://www.campware.org' target='campware'>CAMPSITE $CAMPSITE_VERSION &copy 1999-2003 MDLF, maintained and distributed under GNU GPL by CAMPWARE</a>*>)dnl
 EOF
 [ $? -ne 0 ] && echo "ERROR" && exit 1
 cat "./macros.in" >> macros.m4
