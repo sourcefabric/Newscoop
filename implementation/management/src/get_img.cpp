@@ -110,9 +110,6 @@ main(int argc, char **argv)
 	if (!qs)
 		return 1;
 
-	IdPublication = get_qs_u(qs, "IdPublication");
-	NrIssue = get_qs_u(qs, "NrIssue");
-	NrSection = get_qs_u(qs, "NrSection");
 	NrArticle = get_qs_u(qs, "NrArticle");
 	Number = get_qs_u(qs, "NrImage");
 
