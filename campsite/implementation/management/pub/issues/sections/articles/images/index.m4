@@ -122,7 +122,7 @@ B_LIST
 		E_LIST_ITEM
 	<? if ($cia != 0) { ?>
 		B_LIST_ITEM(<*CENTER*>)
-			<A HREF="X_ROOT/pub/issues/sections/articles/images/edit.php?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Section=<? p($Section); ?>&Article=<? p($Article); ?>&Image=<? pgetUVar($q_img,'Number'); ?>&Language=<? p($Language); ?>&sLanguage=<? p($sLanguage); ?>">Change</A>
+			<A HREF="X_ROOT/pub/issues/sections/articles/images/edit.php?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Section=<? p($Section); ?>&Article=<? p($Article); ?>&Image=<? pgetUVar($q_img,'Number'); ?>&Language=<? p($Language); ?>&sLanguage=<? p($sLanguage); ?>"><? putGS("Change");?></A>
 		E_LIST_ITEM
 	<? }
 	    if ($dia != 0) { ?>

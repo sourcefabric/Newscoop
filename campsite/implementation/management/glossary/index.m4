@@ -130,12 +130,12 @@ B_LIST
 	<? if ($mda != 0) { ?>
 		B_LIST_ITEM(<*CENTER*>)
 <? if (getVar($Dict,'Id') != $kwdid) { ?>dnl
-			<A HREF="X_ROOT/glossary/translate.php?Keyword=<? pgetUVar($Dict,'Id'); ?>">Translate</A>
+			<A HREF="X_ROOT/glossary/translate.php?Keyword=<? pgetUVar($Dict,'Id'); ?>"><? putGS("Translate"); ?></A>
 <? } ?>&nbsp;
 		E_LIST_ITEM
 	<? } ?>
 		B_LIST_ITEM(<*CENTER*>)
-			<A HREF="X_ROOT/glossary/keyword/?Keyword=<? pgetHVar($Dict,'Id'); ?>&Language=<? pgetHVar($Dict,'IdLanguage'); ?>">Infotypes</A>
+			<A HREF="X_ROOT/glossary/keyword/?Keyword=<? pgetHVar($Dict,'Id'); ?>&Language=<? pgetHVar($Dict,'IdLanguage'); ?>"><? putGS("Infotypes"); ?></A>
 		E_LIST_ITEM
 
 	<? if ($dda != 0) { ?> 

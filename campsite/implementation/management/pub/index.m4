@@ -90,7 +90,7 @@ B_LIST
 		E_LIST_ITEM
 <? if ($mpa != 0) { ?>dnl
 		B_LIST_ITEM
-			<a href="deftime.php?Pub=<? pgetUVar($publ,'Id'); ?>">Change</A>
+			<a href="deftime.php?Pub=<? pgetUVar($publ,'Id'); ?>"><? putGS("Change"); ?></A>
 		E_LIST_ITEM
 		B_LIST_ITEM(<*RIGHT*>)
 			<? query ("SELECT Name FROM TimeUnits where Unit = '".getHVar($publ,'TimeUnit')."' and IdLanguage = ".($IdLang), 'tu');
@@ -108,7 +108,7 @@ B_LIST
 			<? pgetHVar($publ,'TrialTime'); p("&nbsp;"); pgetHVar($tu,'Name'); ?>&nbsp;
 		E_LIST_ITEM
 		B_LIST_ITEM(<*CENTER*>)
-			<A HREF="X_ROOT/pub/edit.php?Pub=<? pgetUVar($publ,'Id'); ?>">Change</A>
+			<A HREF="X_ROOT/pub/edit.php?Pub=<? pgetUVar($publ,'Id'); ?>"><? putGS("Change"); ?></A>
 		E_LIST_ITEM
 <? }
     if ($dpa != 0) { ?>dnl 

@@ -117,7 +117,7 @@ if ($dca != 0) { ?>
 	<? if ($mca != 0) { ?>
 		B_LIST_ITEM(<*CENTER*>)
 <? if (getVar($q_countries,'Code') != $kwdid) { ?>dnl
-			<A HREF="X_ROOT/country/translate.php?Code=<? encURL(pgetUVar($q_countries,'Code')); ?>&Language=<? pgetUVar($q_countries,'IdLanguage'); ?>">Translate</A>
+			<A HREF="X_ROOT/country/translate.php?Code=<? encURL(pgetUVar($q_countries,'Code')); ?>&Language=<? pgetUVar($q_countries,'IdLanguage'); ?>"><? putGS("Translate"); ?></A>
 <? } else { ?>dnl
 &nbsp;
 <? } ?>dnl
