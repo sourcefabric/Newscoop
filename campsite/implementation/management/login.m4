@@ -27,13 +27,13 @@ B_BODY
 B_DIALOG(<*Login*>, <*POST*>, <*do_login.php*>)
 	X_DIALOG_TEXT(<*<?php  putGS('Please enter your user name and password'); ?>*>)
 	B_DIALOG_INPUT(<*User name*>)
-		<INPUT TYPE="TEXT" NAME="UserName" SIZE="32" MAXLENGTH="32">
+		<INPUT TYPE="TEXT" NAME="UserName" SIZE="32" MAXLENGTH="32" class="input_text">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Password*>)
-		<INPUT TYPE="PASSWORD" NAME="UserPassword" SIZE="32" MAXLENGTH="32">
+		<INPUT TYPE="PASSWORD" NAME="UserPassword" SIZE="32" MAXLENGTH="32" class="input_text">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Language*>)
-		<SELECT name=selectlanguage>
+		<SELECT name="selectlanguage" class="input_select">
 		    <?php 
 			foreach($languages as $key=>$larr){
 			    //$lcode=key($larr[]);
