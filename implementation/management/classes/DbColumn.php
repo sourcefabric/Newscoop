@@ -15,9 +15,11 @@ class DbColumn {
 		$this->m_dbColumnName = $p_columnName;
 	} // constructor
 	
+	
 	function getDbTableName() {
 		return $this->m_dbTableName;
 	} // fn getDbTableName
+	
 	
 	function fetch($p_recordSet = null) {
 		if (!is_null($p_recordSet)) {
@@ -27,17 +29,20 @@ class DbColumn {
 		}
 	} // fn fetch
 	
+	
 	function getName() {
 		return $this->Field;
-	}
+	} // fn getName
+	
 
 	function getPrintName() {
 		return substr($this->Field, 1);
-	}
+	} // fn getPrintName
+	
 	
 	function getType() {
 		return strtolower($this->Type);
-	}
+	} // fn getType
 	
 } // class DbColumn
 
