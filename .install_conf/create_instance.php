@@ -297,7 +297,9 @@ function create_site($p_defined_parameters)
 
 	$instance_www_dir = $Campsite['WWW_DIR'] . "/$db_name";
 	$html_dir = $instance_www_dir . "/html";
+	$cgi_dir = $instance_www_dir . "/cgi-bin";
 	$common_html_dir = $Campsite['WWW_COMMON_DIR'] . "/html";
+	$common_cgi_dir = $Campsite['WWW_COMMON_DIR'] . "/cgi-bin";
 	$instance_dirs = array('WWW_DIR'=>$instance_www_dir,
 		'HTML_DIR'=>$instance_www_dir . "/html",
 		'IMAGES_DIR'=>$instance_www_dir . "/html/images",
@@ -333,6 +335,9 @@ function create_site($p_defined_parameters)
 		if (!is_link($link) && !symlink($file, $link))
 			return "Unable to create symbolic link to $file";
 	}
+
+	$cp_cmd = "cp -f $common_cgi_dir/* $cgi_dir";
+	exec($cp_cmd);
 
 	$cmd = "chown " . $Campsite['APACHE_USER'] . ":" . $Campsite['APACHE_GROUP']
 		. " \"$instance_www_dir\" -R";
