@@ -102,7 +102,7 @@ E_LIST
 
 <?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><?php  putGS('No such publication.'); ?></LI>
+	<LI><?php  putGS('Publication does not exist.'); ?></LI>
 </BLOCKQUOTE>
 <?php  } ?>dnl
 

@@ -59,7 +59,7 @@ E_HOME_MENU
 <P>
 <?php  } else { ?>dnl
 <BLOCKQUOTE>
-	<LI><?php  putGS('No such publication.'); ?></LI>
+	<LI><?php  putGS('Publication does not exist.'); ?></LI>
 </BLOCKQUOTE>
 <?php  } ?>dnl
 
