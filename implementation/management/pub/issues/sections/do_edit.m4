@@ -88,7 +88,7 @@ B_MSGBOX(<*Updating section name*>)
 
     if ($created) { ?>dnl
 		<LI><? putGS('The section $1 has been successfuly modified.', '<B>'.encHTML(decS($cName)).'</B>'); ?></LI>
-X_AUDIT(<*21*>, <*getGS('Section $1 updated to issue $2. $3 ($4) of $5',$cName,getHVar($q_iss,'Number'),getGS($q_iss,'Name'),getHVar($q_lang,'Name'),getHVar($q_pub,'Name') )*>)
+X_AUDIT(<*21*>, <*getGS('Section $1 updated to issue $2. $3 ($4) of $5',$cName,getHVar($q_iss,'Number'),getHVar($q_iss,'Name'),getHVar($q_lang,'Name'),getHVar($q_pub,'Name') )*>)
 <? } else {
     if ($correct != 0) { ?>dnl
 		<LI><? putGS('The section could not be changed.'); ?></LI>
