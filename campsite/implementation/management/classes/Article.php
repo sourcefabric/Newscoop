@@ -173,9 +173,9 @@ class Article extends DatabaseObject {
 	
 		// Added by sebastian
 		// Paul asks: what does this do? 
-		//if (function_exists ("incModFile")) {
-		//	incModFile ();
-		//}
+		if (function_exists ("incModFile")) {
+			incModFile ();
+		}
 
 		// Insert an entry into the article type table.
 		$articleData =& new ArticleType($this->Type, $this->Number, $this->IdLanguage);
@@ -262,7 +262,7 @@ class Article extends DatabaseObject {
 	 * @return void
 	 */
 	function setTitle($p_title) {
-		parent::setProperty("Name", $p_title);
+		return parent::setProperty("Name", $p_title);
 	} // fn setTitle
 
 	
@@ -276,15 +276,6 @@ class Article extends DatabaseObject {
 	
 
 	/**
-	 * Set the article type.
-	 * @param string value
-	 */
-//	function setType($value) {
-//		parent::setProperty("Type", $value);
-//	} // fn setType
-	
-	
-	/**
 	 * Return the user ID of the user who created this article.
 	 * @return int
 	 */
@@ -297,7 +288,7 @@ class Article extends DatabaseObject {
 	 * @param int value
 	 */
 	function setUserId($value) {
-		parent::setProperty("IdUser", $value);
+		return parent::setProperty("IdUser", $value);
 	}
 	
 	
@@ -314,7 +305,7 @@ class Article extends DatabaseObject {
 	 * @param boolean value
 	 */
 	function setOnFrontPage($value) {
-		parent::setProperty("OnFrontPage", $value?"Y":"N");
+		return parent::setProperty("OnFrontPage", $value?"Y":"N");
 	} // fn setOnFrontPage
 	
 	
@@ -330,7 +321,7 @@ class Article extends DatabaseObject {
 	 * @param boolean value
 	 */
 	function setOnSection($value) {
-		parent::setProperty("OnSection", $value?"Y":"N");
+		return parent::setProperty("OnSection", $value?"Y":"N");
 	} // fn setOnSection
 	
 	
@@ -349,7 +340,7 @@ class Article extends DatabaseObject {
 	 * @param string value
 	 */
 	function setPublished($value) {
-		parent::setProperty("Published", $value);
+		return parent::setProperty("Published", $value);
 	} // fn setIsPublished
 	
 	
@@ -360,14 +351,6 @@ class Article extends DatabaseObject {
 	function getUploadDate() {
 		return $this->UploadDate;
 	} // fn getUploadDate
-	
-	
-	/**
-	 * @param date value
-	 */ 
-//	function setUploadDate($value) {
-//		parent::setProperty("UploadDate", $value);
-//	} // fn setUploadDate
 	
 	
 	/**
@@ -382,7 +365,7 @@ class Article extends DatabaseObject {
 	 * @param string $value
 	 */
 	function setKeywords($value) {
-		parent::setProperty("Keywords", $value);
+		return parent::setProperty("Keywords", $value);
 	} // fn setKeywords
 	
 	
@@ -399,7 +382,7 @@ class Article extends DatabaseObject {
 	 * @param boolean value
 	 */
 	function setIsPublic($value) {
-		parent::setProperty("Public", $value?"Y":"N");
+		return parent::setProperty("Public", $value?"Y":"N");
 	} // fn setIsPublic
 	
 	
@@ -415,7 +398,7 @@ class Article extends DatabaseObject {
 	 * @param boolean value
 	 */
 	function setIsIndexed($value) {
-		parent::setProperty("IsIndexed", $value?"Y":"N");
+		return parent::setProperty("IsIndexed", $value?"Y":"N");
 	} // fn setIsIndexed
 	
 	
@@ -432,7 +415,7 @@ class Article extends DatabaseObject {
 	 * @param int value
 	 */
 	function setLockedByUser($value) {
-		parent::setProperty("LockUser", $value);
+		return parent::setProperty("LockUser", $value);
 	} // fn setLockedByUser
 	
 	
@@ -464,10 +447,16 @@ class Article extends DatabaseObject {
 	 * @param string value
 	 */
 	function setShortName($value) {
-		parent::setProperty("ShortName", $value);
+		return parent::setProperty("ShortName", $value);
 	} // fn setShortName
 	
 	
+	/**
+	 * Return an array of Langauge objects, one for each
+	 * type of language the article is written in.
+	 * TODO: change this to a function that returns the set of all 
+	 * articles, one for each language.
+	 */
 	function getLanguages() {
 		global $Campsite;
 	 	$queryStr = "SELECT IdLanguage FROM Articles "
@@ -484,11 +473,22 @@ class Article extends DatabaseObject {
 	} // fn getLanguages
 	
 	
+	/**
+	 * Return the ArticleType object for this article.
+	 *
+	 * @return ArticleType
+	 */
 	function getArticleTypeObject() {
 		return new ArticleType($this->Type, $this->Number, $this->IdLanguage);
 	} // fn getArticleTypeObject
 
 	
+	/**
+	 * Lock the article with the given User ID.
+	 *
+	 * @param int p_userId
+	 *
+	 */
 	function lock($p_userId) {
 		global $Campsite;
 		$queryStr = "UPDATE Articles "
