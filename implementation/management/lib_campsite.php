@@ -88,37 +88,20 @@ function array_get_value($p_array, $p_index, $p_defaultValue = null) {
 } // fn array_get_value
 
 
-/** 
- * Check that the $_REQUEST array contains the given values of the given types.
- * @param array p_array
- *		An array indexed by the variable name in the $_REQUEST array, 
- *		with the value being a type.  Valid types are : "int".
- * @return boolean
- *		Return true if all the values exist in the $_REQUEST array,
- *		and they have the appropriate types.  False otherwise.
+/**
+ * Convert a string so that it can be placed within 
+ * a javascript string that begins and ends with a single quote (').
+ * This is for confirmation dialogs so that database strings do not
+ * mess things up.
+ *
+ * @param string p_string
+ * @return string
  */
-function IsValidInput($p_array) {
-	foreach ($p_array as $varName => $type) {
-		if (!isset($_REQUEST[$varName])) {
-			return false;
-		}
-		switch (strtolower($type)) {
-		case 'int':
-			if (!is_numeric($_REQUEST[$varName])) {
-				return false;
-			}
-			break;
-		case 'string':
-			if (!is_string($_REQUEST[$varName])) {
-				return false;
-			}
-			break;
-		default: 
-			return false;
-		}
-	}
-	return true;
-} // fn IsValidInput
+function javascriptspecialchars($p_string) {
+	$encodedString = htmlspecialchars($p_string);
+	$slashedString = addslashes($encodedString);
+	return $slashedString;
+} // fn javascriptspecialchars
 
 
 /**
@@ -543,163 +526,6 @@ function limitchars($text, $lim, $break, $tail) {
 	return $text;
 } // fn limitchars
 
-function duplicate_article($article_no, $language_id, $user_id, $dst_pub, $dst_issue, $dst_section , &$msg, &$name, &$new_name)
-{
-	$sql = "select *, current_date() as cdate from Articles where Number = " . $article_no
-	. " and IdLanguage = " . $language_id;
-	$res_art = mysql_query($sql);
-	if (mysql_num_rows($res_art) == 0) {
-		$msg = "Invalid article identifier";
-		return 0;
-	}
-	$row_art = mysql_fetch_assoc($res_art);
-	$name = $row_art['Name'];
-	
-	while (true) {
-		$sql = "select * from Articles where IdPublication = " . $dst_pub . " and NrIssue = " . $dst_issue
-		. " and NrSection = " . $dst_section . " and IdLanguage = " . $language_id . " and Name = '"
-		. mysql_escape_string($row_art['Name']) . "'";
-		$res_dup = mysql_query($sql);
-		if ($row_dup = mysql_fetch_assoc($res_dup)) {
-			$row_art['Name'] = $row_art['Name'] . " (duplicate)";
-		} else {
-			break;
-		}
-	}
-	$new_name = $row_art['Name'];
-	
-	$sql = "select * from Sections where IdPublication = " . $dst_pub . " and NrIssue = " . $dst_issue
-	. " and IdLanguage = " . $row_art['IdLanguage'] . " and Number = " . $dst_section;
-	$res_test = mysql_query($sql);
-	if (mysql_num_rows($res_test) == 0) {
-		$msg = "Invalid destination section selected";
-		return 0;
-	}
-	
-	// change some attributes
-	$row_art['IdPublication'] = $dst_pub;
-	$row_art['NrIssue'] = $dst_issue;
-	$row_art['NrSection'] = $dst_section;
-	$row_art['IdUser'] = $user_id;
-	$row_art['Published'] = 'N';
-	$row_art['UploadDate'] = $row_art['cdate'];
-	$row_art['IsIndexed'] = 'N';
-	
-	$sql = "select * from X" . $row_art['Type'] . " where NrArticle = " . $article_no . " and IdLanguage = "
-	. $language_id;
-	$res_art_data = mysql_query($sql);
-	if (mysql_num_rows($res_art_data) == 0) {
-		$msg = "Invalid article identifier";
-		return 0;
-	}
-	$row_art_data = mysql_fetch_assoc($res_art_data);
-	
-	$topics = array();
-	$sql = "select * from ArticleTopics where NrArticle = " . $article_no;
-	$res_topics = mysql_query($sql);
-	while($row_topics = mysql_fetch_assoc($res_topics)) {
-		$topics[] = $row_topics['TopicId'];
-	}
-	
-	$images = array();
-	$sql = "select * from Images where NrArticle = " . $article_no;
-	$res_images = mysql_query($sql);
-	while($row_images = mysql_fetch_assoc($res_images)) {
-		$image['IdPublication'] = $dst_pub;
-		$image['NrIssue'] = $dst_issue;
-		$image['NrSection'] = $dst_section;
-		$image['Number'] = $row_images['Number'];
-		$image['Description'] = $row_images['Description'];
-		$image['Photographer'] = $row_images['Photographer'];
-		$image['Place'] = $row_images['Place'];
-		$image['Date'] = $row_images['Date'];
-		$image['ContentType'] = $row_images['ContentType'];
-		$image['Image'] = $row_images['Image'];
-		$images[] = $image;
-	}
-	
-	$sql = "select * from AutoId";
-	$res_autoid = mysql_query($sql);
-	if (mysql_num_rows($res_autoid) == 0) {
-		$msg = "Internal error: identifiers not initialized";
-		return 0;
-	}
-	$row_autoid = mysql_fetch_assoc($res_autoid);
-	$row_art['Number'] = 1 + $row_autoid['ArticleId'];
-	$row_art_data['NrArticle'] = $row_art['Number'];
-	
-	$fields = "";
-	$values = "";
-	reset($row_art);
-	foreach($row_art as $field=>$value) {
-		if ($field == 'cdate') {
-			continue;
-		}
-		$fields = $fields == "" ? "" : $fields . ", ";
-		$values = $values == "" ? "" : $values . ", ";
-		$fields = $fields . $field;
-		$values = $values . "'" . mysql_escape_string($value) . "'";
-	}
-	$i_art = "insert into Articles (" . $fields . ") values(" . $values . ")";
-	
-	$fields = "";
-	$values = "";
-	reset($row_art_data);
-	foreach($row_art_data as $field=>$value) {
-		$fields = $fields == "" ? "" : $fields . ", ";
-		$values = $values == "" ? "" : $values . ", ";
-		$fields = $fields . $field;
-		$values = $values . "'" . mysql_escape_string($value) . "'";
-	}
-	$i_art_data = "insert into X" . $row_art['Type'] . " (" . $fields . ") values(" . $values . ")";
-	
-	$i_topics = array();
-	reset($topics);
-	foreach($topics as $key=>$topic) {
-		$i_topics[] = "insert into ArticleTopics (NrArticle, TopicId) values(" . $row_art['Number']
-		      . ", " . $topic . ")";
-	}
-	
-	$i_images = array();
-	reset($images);
-	foreach($images as $key=>$image) {
-		$fields = "NrArticle";
-		$values = $row_art['Number'];
-		reset($image);
-		foreach($image as $field=>$value) {
-			if ($field == "NrArticle") {
-				continue;
-			}
-			$fields = $fields == "" ? "" : $fields . ", ";
-			$values = $values == "" ? "" : $values . ", ";
-			$fields = $fields . $field;
-			$values = $values . "'" . mysql_escape_string($value) . "'";
-		}
-		$i_images[] = "insert into Images (" . $fields . ") values(" . $values . ")";
-	}
-	
-	$u_autoid = "update AutoId set ArticleId = " . $row_art['Number'];
-	if (!mysql_query($u_autoid)) {
-		$msg = "Internal database error";
-		return 0;
-	}
-	if (!mysql_query($i_art)) {
-		$msg = "Internal database error";
-		return 0;
-	}
-	if (!mysql_query($i_art_data)) {
-		$msg = "Internal database error";
-		return 0;
-	}
-	foreach($i_topics as $key=>$i_topic) {
-		mysql_query($i_topic);
-	}
-	foreach($i_images as $key=>$i_image) {
-		mysql_query($i_image);
-	}
-	
-	return $row_art['Number'];
-} // fn duplicate_article
 
 function valid_field_name($name) {
 	if (strlen($name) == 0) {
