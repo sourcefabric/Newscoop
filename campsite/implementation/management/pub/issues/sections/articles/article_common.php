@@ -1,12 +1,15 @@
 <?php
-
-class ArticleCommon {
-	function articleLink($p_articleObj, $p_adminLanguageId, $p_targetFileName = "", $backlink = "") {
-		?>
-		<A HREF="/priv/pub/issues/sections/articles/<?php echo $p_targetFileName ?>?Pub=<?php  echo $p_articleObj->getPublicationId(); ?>&Issue=<?php echo $p_articleObj->getIssueId(); ?>&Section=<?php echo $p_articleObj->getSectionId(); ?>&Article=<?php echo $p_articleObj->getArticleId(); ?>&Language=<?php echo $p_adminLanguageId; ?>&sLanguage=<?php echo $p_articleObj->getLanguageId(); ?><?php if ($backlink != "") { ?>&Back=<?php echo urlencode($backlink); } ?>">
-		<?php
-	} // fn articleLink
-	
-}
+include($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
+load_common_include_files();
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/Article.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/Section.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/Issue.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/Publication.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/Language.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/User.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/Template.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/priv/CampsiteInterface.php");
+require_once($_SERVER['DOCUMENT_ROOT']. "/priv/pub/issues/sections/articles/article_top.php");
+require_once($_SERVER['DOCUMENT_ROOT']. "/priv/pub/issues/sections/articles/HtmlArea_Campsite.php");
 
 ?>
