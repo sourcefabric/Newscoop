@@ -5,6 +5,22 @@ B_DATABASE
 CHECK_BASIC_ACCESS
 
 B_HEAD
+<script>
+<!--
+/*
+A slightly modified version of "Break-out-of-frames script"
+By JavaScript Kit (http://javascriptkit.com)
+*/
+
+if (window != top.fmain && window != top) {
+	if (top.fmenu)
+		top.fmain.location.href=location.href
+	else
+		top.location.href=location.href
+}
+// -->
+</script>
+
 	X_EXPIRES
 	X_TITLE(<*Articles*>)
 <? if ($access == 0) { ?>dnl
@@ -127,6 +143,9 @@ B_LIST
 		X_LIST_TH(<*Images*>, <*1%*>)
 		X_LIST_TH(<*Preview*>, <*1%*>)
 		X_LIST_TH(<*Translate*>, <*1%*>)
+<? if ($aaa != 0) { ?>dnl
+		X_LIST_TH(<*Duplicate*>, <*1%*>)
+<? } ?>dnl
 <? if ($daa != 0) { ?>dnl
 		X_LIST_TH(<*Delete*>, <*1%*>)
 <? } ?>dnl
@@ -176,6 +195,11 @@ B_LIST
 		&nbsp;
 <? } ?>dnl
 		E_LIST_ITEM
+<? if ($aaa != 0) { ?>dnl
+		B_LIST_ITEM(<*CENTER*>)
+			<A HREF="X_ROOT/pub/issues/sections/articles/fduplicate.php?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Section=<? p($Section); ?>&Article=<? pgetUVar($q_art,'Number'); ?>&Language=<? p($Language); ?>&sLanguage=<? pgetUVar($q_art,'IdLanguage'); ?>"><? putGS("Duplicate"); ?></A>
+		E_LIST_ITEM
+<? } ?>dnl
 	<? if ($daa != 0) { ?>
 		B_LIST_ITEM(<*CENTER*>)
 			X_BUTTON(<*<? putGS('Delete article $1',getHVar($q_art,'Name')); ?>*>, <*icon/x.gif*>, <*pub/issues/sections/articles/del.php?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Section=<? p($Section); ?>&Article=<? pgetUVar($q_art,'Number'); ?>&Language=<? p($Language); ?>&sLanguage=<? pgetUVar($q_art,'IdLanguage'); ?>&Back=<? pencURL($REQUEST_URI); ?>*>)
@@ -185,7 +209,7 @@ B_LIST
 			$kwdid=getVar($q_art,'Number');
 		?>dnl
 	E_LIST_TR
-<? 
+<?
     $i--;
     }
 }
