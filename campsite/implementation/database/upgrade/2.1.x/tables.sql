@@ -4,7 +4,7 @@ BEGIN;
 -- Create new tables first: URLTypes, TemplateTypes, Templates, Aliases,
 -- ArticlePublish, IssuePublish
 -- Populate URLTypes and TemplateTypes tables with default values
-
+DROP TABLE IF EXISTS URLTypes;
 CREATE TABLE URLTypes (
     Id int(10) unsigned NOT NULL PRIMARY KEY AUTO_INCREMENT,
     Name char(15) UNIQUE NOT NULL,
@@ -13,6 +13,7 @@ CREATE TABLE URLTypes (
 INSERT INTO URLTypes (Id, Name, Description) VALUES(1, 'template path', '');
 INSERT INTO URLTypes (Id, Name, Description) VALUES(2, 'short names', '');
 
+DROP TABLE IF EXISTS TemplateTypes;
 CREATE TABLE TemplateTypes (
     Id int(10) unsigned NOT NULL PRIMARY KEY AUTO_INCREMENT,
     Name char(20) NOT NULL UNIQUE
@@ -22,6 +23,7 @@ INSERT INTO TemplateTypes (Id, Name) VALUES (2, 'issue');
 INSERT INTO TemplateTypes (Id, Name) VALUES (3, 'section');
 INSERT INTO TemplateTypes (Id, Name) VALUES (4, 'article');
 
+DROP TABLE IF EXISTS Templates;
 CREATE TABLE Templates (
     Id int(10) unsigned NOT NULL PRIMARY KEY AUTO_INCREMENT,
     Name char(255) NOT NULL UNIQUE,
@@ -29,12 +31,14 @@ CREATE TABLE Templates (
     Level int(10) unsigned NOT NULL DEFAULT 0
 );
 
+DROP TABLE IF EXISTS Aliases;
 CREATE TABLE Aliases (
     Id int(10) unsigned NOT NULL PRIMARY KEY AUTO_INCREMENT,
     Name char(128) NOT NULL UNIQUE,
     IdPublication int(10) unsigned NOT NULL
 );
 
+DROP TABLE IF EXISTS ArticlePublish;
 CREATE TABLE ArticlePublish (
   NrArticle int(10) unsigned NOT NULL default '0',
   IdLanguage int(10) unsigned NOT NULL default '0',
@@ -45,6 +49,7 @@ CREATE TABLE ArticlePublish (
   PRIMARY KEY  (NrArticle,IdLanguage,PublishTime)
 ) TYPE=MyISAM;
 
+DROP TABLE IF EXISTS IssuePublish;
 CREATE TABLE IssuePublish (
   IdPublication int(10) unsigned NOT NULL default '0',
   NrIssue int(10) unsigned NOT NULL default '0',
@@ -67,6 +72,7 @@ DROP TABLE TransferTemplates;
 -- Change Publications table structure
 -- Retrieve publications info into a duplicate table having the new structure
 INSERT INTO Aliases (Name, IdPublication) SELECT Site, Publications.Id FROM Publications;
+DROP TABLE IF EXISTS PublicationsDup;
 CREATE TABLE PublicationsDup (
     Id int(10) unsigned NOT NULL auto_increment,
     Name varchar(255) NOT NULL default '',
@@ -92,6 +98,7 @@ ALTER TABLE PublicationsDup RENAME TO Publications;
 -- Retrieve issues info into a duplicate table having the new structure with 
 -- field IssueTplId replacing FrontPage and the new fields SectionTplId
 -- and ShortName
+DROP TABLE IF EXISTS IssuesDup;
 CREATE TABLE IssuesDup (
     IdPublication int(10) unsigned NOT NULL default '0',
     Number int(10) unsigned NOT NULL default '0',
@@ -112,6 +119,7 @@ ALTER TABLE IssuesDup RENAME TO Issues;
 
 
 -- Repeat the previous step for Single ArticleField
+DROP TABLE IF EXISTS IssuesDup;
 CREATE TABLE IssuesDup (
     IdPublication int(10) unsigned NOT NULL default '0',
     Number int(10) unsigned NOT NULL default '0',
@@ -133,6 +141,7 @@ ALTER TABLE IssuesDup RENAME TO Issues;
 
 -- Change Sections table structure
 -- Retrieve sections info into a duplicate table having the new structure
+DROP TABLE IF EXISTS SectionsDup;
 CREATE TABLE SectionsDup (
     IdPublication int(10) unsigned NOT NULL default '0',
     NrIssue int(10) unsigned NOT NULL default '0',
@@ -153,6 +162,7 @@ ALTER TABLE SectionsDup RENAME TO Sections;
 
 -- Change Articles table structure
 -- Retrieve articles info into a duplicate table having the new structure
+DROP TABLE IF EXISTS ArticlesDup;
 CREATE TABLE ArticlesDup (
     IdPublication int(10) unsigned NOT NULL default '0',
     NrIssue int(10) unsigned NOT NULL default '0',
@@ -193,6 +203,7 @@ INSERT INTO Events (Id, Name, Notify, IdLanguage) VALUES(153, 'Update alias', 'N
 
 
 -- Step 1: Create ImagesDup table and populate it with data from Images table
+DROP TABLE IF EXISTS `ImagesDup`;
 CREATE TABLE `ImagesDup` (
     `Id` int(10) unsigned NOT NULL auto_increment,
     `Description` varchar(255) NOT NULL default '',
@@ -225,6 +236,7 @@ DROP TABLE TransferImages;
 
 
 -- Step 3: Create ArticleImages table and populate it with data from ImagesDup table
+DROP TABLE IF EXISTS ArticleImages;
 CREATE TABLE `ArticleImages` (
     `NrArticle` int(10) unsigned NOT NULL default '0',
     `IdImage` int(10) unsigned NOT NULL default '0',
