@@ -32,81 +32,81 @@ E_HEADER
 <P>
 B_DIALOG(<*Add new language*>, <*POST*>, <*do_add.php*>)
 	B_DIALOG_INPUT(<*Name*>)
-		<INPUT TYPE="TEXT" NAME="cName" SIZE="32" MAXLENGTH="32">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cName" SIZE="32" MAXLENGTH="32">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Native name*>)
-		<INPUT TYPE="TEXT" NAME="cOrigName" SIZE="32" MAXLENGTH="32">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cOrigName" SIZE="32" MAXLENGTH="32">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Code*>)
-		<INPUT TYPE="TEXT" NAME="cCode" SIZE="5" MAXLENGTH="5">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cCode" SIZE="5" MAXLENGTH="5">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Code page*>)
-		<INPUT TYPE="TEXT" NAME="cCodePage" SIZE="32" MAXLENGTH="32">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cCodePage" SIZE="32" MAXLENGTH="32">
 	E_DIALOG_INPUT
 	X_DIALOG_TEXT(<*<?php  putGS('Please enter the translation for month names.'); ?>*>)
 	B_DIALOG_INPUT(<*January*>)
-		<INPUT TYPE="TEXT" NAME="cMonth1" SIZE="20" MAXLENGTH="20">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cMonth1" SIZE="20" MAXLENGTH="20">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*February*>)
-		<INPUT TYPE="TEXT" NAME="cMonth2" SIZE="20" MAXLENGTH="20">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cMonth2" SIZE="20" MAXLENGTH="20">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*March*>)
-		<INPUT TYPE="TEXT" NAME="cMonth3" SIZE="20" MAXLENGTH="20">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cMonth3" SIZE="20" MAXLENGTH="20">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*April*>)
-		<INPUT TYPE="TEXT" NAME="cMonth4" SIZE="20" MAXLENGTH="20">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cMonth4" SIZE="20" MAXLENGTH="20">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*May*>)
-		<INPUT TYPE="TEXT" NAME="cMonth5" SIZE="20" MAXLENGTH="20">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cMonth5" SIZE="20" MAXLENGTH="20">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*June*>)
-		<INPUT TYPE="TEXT" NAME="cMonth6" SIZE="20" MAXLENGTH="20">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cMonth6" SIZE="20" MAXLENGTH="20">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*July*>)
-		<INPUT TYPE="TEXT" NAME="cMonth7" SIZE="20" MAXLENGTH="20">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cMonth7" SIZE="20" MAXLENGTH="20">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*August*>)
-		<INPUT TYPE="TEXT" NAME="cMonth8" SIZE="20" MAXLENGTH="20">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cMonth8" SIZE="20" MAXLENGTH="20">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*September*>)
-		<INPUT TYPE="TEXT" NAME="cMonth9" SIZE="20" MAXLENGTH="20">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cMonth9" SIZE="20" MAXLENGTH="20">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*October*>)
-		<INPUT TYPE="TEXT" NAME="cMonth10" SIZE="20" MAXLENGTH="20">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cMonth10" SIZE="20" MAXLENGTH="20">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*November*>)
-		<INPUT TYPE="TEXT" NAME="cMonth11" SIZE="20" MAXLENGTH="20">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cMonth11" SIZE="20" MAXLENGTH="20">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*December*>)
-		<INPUT TYPE="TEXT" NAME="cMonth12" SIZE="20" MAXLENGTH="20">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cMonth12" SIZE="20" MAXLENGTH="20">
 	E_DIALOG_INPUT
 	X_DIALOG_TEXT(<*<?php  putGS('Please enter the translation for week day names.'); ?>*>)
 	B_DIALOG_INPUT(<*Sunday*>)
-		<INPUT TYPE="TEXT" NAME="cWDay1" SIZE="20" MAXLENGTH="20">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cWDay1" SIZE="20" MAXLENGTH="20">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Monday*>)
-		<INPUT TYPE="TEXT" NAME="cWDay2" SIZE="20" MAXLENGTH="20">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cWDay2" SIZE="20" MAXLENGTH="20">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Tuesday*>)
-		<INPUT TYPE="TEXT" NAME="cWDay3" SIZE="20" MAXLENGTH="20">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cWDay3" SIZE="20" MAXLENGTH="20">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Wednesday*>)
-		<INPUT TYPE="TEXT" NAME="cWDay4" SIZE="20" MAXLENGTH="20">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cWDay4" SIZE="20" MAXLENGTH="20">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Thursday*>)
-		<INPUT TYPE="TEXT" NAME="cWDay5" SIZE="20" MAXLENGTH="20">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cWDay5" SIZE="20" MAXLENGTH="20">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Friday*>)
-		<INPUT TYPE="TEXT" NAME="cWDay6" SIZE="20" MAXLENGTH="20">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cWDay6" SIZE="20" MAXLENGTH="20">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Saturday*>)
-		<INPUT TYPE="TEXT" NAME="cWDay7" SIZE="20" MAXLENGTH="20">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cWDay7" SIZE="20" MAXLENGTH="20">
 	E_DIALOG_INPUT
 	
 	X_DIALOG_TEXT(<*<?php  putGS('Please enter the translation for time units.'); ?>*>)
 	<?php  for($i=0; $i<$def_tu; $i++){
 		fetchRow($q_def_tu); ?>dnl
-		<TR><TD ALIGN="RIGHT"><?php pgetHVar($q_def_tu, 'Name');?></TD><TD><INPUT TYPE="TEXT" NAME="<?php pgetHVar($q_def_tu, 'Unit');?>" VALUE="" SIZE="20" MAXLENGTH="20"></TD></TR>
+		<TR><TD ALIGN="RIGHT"><?php pgetHVar($q_def_tu, 'Name');?></TD><TD><INPUT TYPE="TEXT" class="input_text" NAME="<?php pgetHVar($q_def_tu, 'Unit');?>" VALUE="" SIZE="20" MAXLENGTH="20"></TD></TR>
 	<?php } ?> dnl
 	
 	B_DIALOG_BUTTONS

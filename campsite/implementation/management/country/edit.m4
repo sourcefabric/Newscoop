@@ -53,7 +53,7 @@ B_DIALOG(<*Edit country name*>, <*POST*>, <*do_edit.php*>)
     }
 ?>dnl
 	B_DIALOG_INPUT(<*Name*>)
-		<INPUT TYPE="TEXT" NAME="cName" SIZE="32" MAXLENGTH="64" VALUE="<?php  pgetHVar($q_country,'Name'); ?>">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cName" SIZE="32" MAXLENGTH="64" VALUE="<?php  pgetHVar($q_country,'Name'); ?>">
 	E_DIALOG_INPUT
 	B_DIALOG_BUTTONS
 		<INPUT TYPE=HIDDEN NAME=Code VALUE="<?php  print encHTML(decS($Code)); ?>">
