@@ -61,7 +61,7 @@ public:
 
 	bool has(const string& p_rcoURLTypeName) const;
 
-	const CURLType* getURLType(const string& p_rcoURLTypeName) const;
+	const CURLType* getURLType(const string& p_rcoURLTypeName) const throw (InvalidValue);
 
 private:
 	CURLTypeMap m_coCURLTypes;
@@ -99,14 +99,15 @@ inline bool CURLTypeRegister::has(const string& p_rcoURLTypeName) const
 }
 
 inline const CURLType* CURLTypeRegister::getURLType(const string& p_rcoURLTypeName) const
+	throw (InvalidValue)
 {
 #ifdef _REENTRANT
 	CMutexHandler coLockHandler(&m_coMutex);
 #endif
 	CURLTypeMap::const_iterator coIt = m_coCURLTypes.find(p_rcoURLTypeName);
-	if (coIt != m_coCURLTypes.end())
-		return (*coIt).second;
-	return NULL;
+	if (coIt == m_coCURLTypes.end())
+		throw InvalidValue("URL type", p_rcoURLTypeName);
+	return (*coIt).second;
 }
 
 
