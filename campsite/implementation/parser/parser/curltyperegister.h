@@ -87,7 +87,12 @@ inline void CURLTypeRegister::erase(const string& p_rcoURLTypeName)
 #ifdef _REENTRANT
 	CMutexHandler coLockHandler(&m_coMutex);
 #endif
+	CURLTypeMap::const_iterator coIt = m_coCURLTypes.find(p_rcoURLTypeName);
+	if (coIt == m_coCURLTypes.end())
+		return;
+	CURLType* pcoURLType = (*coIt).second;
 	m_coCURLTypes.erase(p_rcoURLTypeName);
+	delete pcoURLType;
 }
 
 inline bool CURLTypeRegister::has(const string& p_rcoURLTypeName) const
