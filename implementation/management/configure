@@ -2,6 +2,12 @@
 
 . ../../make.env
 
+if [ -f "./macros.m4" ]; then
+    if [ "./macros.m4" -ot "../../make.env" ]; then
+	exit 0
+    fi
+fi
+
 echo -n -e "\t\tWriting macros.m4..."
 cat > macros.m4 << EOF
 changecom\`'dnl
