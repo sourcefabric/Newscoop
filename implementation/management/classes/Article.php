@@ -189,7 +189,7 @@ class Article extends DatabaseObject {
 						.' AND NrIssue = ' . $p_destIssue
 						.' AND NrSection = ' . $p_destSection
 						.' AND IdLanguage = ' . $this->m_data['IdLanguage']
-						." AND Name = '$newName'";
+						." AND Name = '" . mysql_escape_string($newName) . "'";
 			$row = $Campsite['db']->GetRow($queryStr);
 			if (count($row) > 0) {
 				$newName = $origNewName.' '.++$count.')';
