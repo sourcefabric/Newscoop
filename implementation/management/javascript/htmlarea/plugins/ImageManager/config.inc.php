@@ -1,8 +1,8 @@
-<?
+<?php
 /**
  * Image Manager configuration file.
  * @author $Author: paul $
- * @version $Id: config.inc.php,v 1.2 2004/11/14 01:38:50 paul Exp $
+ * @version $Id: config.inc.php,v 1.3 2004/11/15 02:53:18 paul Exp $
  * @package ImageManager
  */
 
