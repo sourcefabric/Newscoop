@@ -191,7 +191,7 @@ WARNING!!! This file is generated. Do not edit!
 
 #define DATABASE_CONF_FILE "$CONF_DIR/database.conf"
 #define PARSER_CONF_FILE "$CONF_DIR/parser.conf"
-#define TOL_SRV_PORT 2001
+#define TOL_SRV_PORT $PARSER_DEFAULT_PORT
 #define MAX_THREADS 40
 
 #endif
