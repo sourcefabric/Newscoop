@@ -229,7 +229,10 @@ const CContext& CContext::operator =(const CContext& s)
 	fields = s.fields;
 	current_field = s.current_field;
 	current_art_type = s.current_art_type;
-	m_pcoURL = s.m_pcoURL->clone();
+	if (s.m_pcoURL != NULL)
+		m_pcoURL = s.m_pcoURL->clone();
+	else
+		m_pcoURL = NULL;
 	ResetKwdIt();
 	return *this;
 }
