@@ -63,10 +63,12 @@ regGS("Edit article details","Edit Article:en");
 //regGS("Advanced editor","Advanced editor:en");
 regGS("Allow users without subscriptions to view the article","Allow users without subscriptions to view the article:en");
 regGS("Edit field: $1","Edit field: $1:en");
-regGS("This article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", 
-	  "This article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.:en");
-regGS("This article has been locked by $1 ($2) $3 minute(s) ago.", 
-	  "This article has been locked by $1 ($2) $3 minute(s) ago.:en");
+regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", 
+	  "The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.:en");
+regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", 
+	  "The article has been locked by $1 ($2) $3 minute(s) ago.:en");
+regGS('Could not save the article.  It has been locked by $1 $2 hours and $3 minutes ago.',
+	  'Could not save the article.  It has been locked by $1 $2 hours and $3 minutes ago.');
 //regGS("Now is $1","Now is $1:en");
 regGS("Are you sure you want to unlock it?","Are you sure you want to unlock it?:en");
 regGS("Edit article","Edit article:en");
