@@ -1,11 +1,12 @@
 <?
+
 regGS("User management","Gestão de Utilizadores");
 regGS("Set","Escolher");
 regGS("Update","Actualizar");
 regGS("Rights","Permissões");
 regGS("IP Access","Acesso por IP");
 regGS("User Name","Nome de Utilizador");
-regGS("Full Name","Nome COmpleto");
+regGS("Full Name","Nome Completo");
 regGS("Staff","Staff");
 regGS("Delete user $1","Eliminar utilizador $1");
 regGS("You do not have the right to create user accounts.","Não tem permissões para criar utilizadores");
@@ -100,5 +101,6 @@ regGS("No such IP Group.","Não existe o Grupo de IP's");
 regGS("Deleting IP Group","Eliminando Grupo de IP's");
 regGS("The IP address group $1 has been deleted.","Grupo de IP's $1 foi eliminado");
 regGS("The IP Group could not be deleted.","Grupo de IP's não pode ser eliminado");
+
 
 ?>
