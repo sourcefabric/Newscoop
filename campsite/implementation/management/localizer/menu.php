@@ -171,7 +171,7 @@ $langfile.="\n".'?>';
 
 ?>
 </select>
-<p><input type=submit value='create language files'></p>
+<p><input type=submit value='create language files' class="button"></p>
 </form>
 
 <?php

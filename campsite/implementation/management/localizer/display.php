@@ -41,7 +41,7 @@ while (list ($key,$value)=each($base)) {
 	if ($key!='') {
 		print "$pre$value$post<BR>\n";
 		print "<input name=base$nr type=hidden value=\"$key\">\n";
-		print "<input name=translation$nr type=text size=50 value=\"$insval\"><BR><HR>\n";
+		print "<input name=translation$nr type=text class=\"input_text\" size=50 value=\"$insval\"><BR><HR>\n";
 		$nr++;
 	}
 }
@@ -51,5 +51,5 @@ print "<INPUT TYPE=hidden name=destfile value='$fn'>";
 
 ?>
 
-<input type="submit" name="save" value="save">
+<input type="submit" name="save" value="save" class="button">
 </form>
