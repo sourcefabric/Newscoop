@@ -100,7 +100,7 @@ B_LIST
 	<?php 	} ?>
 	<?php  if ($msa != 0 && $aaa != 0) { ?>
 		B_LIST_ITEM(<*CENTER*>)
-			<A HREF="X_ROOT/pub/issues/sections/fduplicate.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  pgetUVar($q_sect,'Number'); ?>&Language=<?php  p($Language); ?>"><img src="/<?php echo $ADMIN; ?>/img/icon/duplicate.png" alt="Duplicate" border="0"></A>
+			<A HREF="X_ROOT/pub/issues/sections/duplicate.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  pgetUVar($q_sect,'Number'); ?>&Language=<?php  p($Language); ?>"><img src="/<?php echo $ADMIN; ?>/img/icon/duplicate.png" alt="Duplicate" border="0"></A>
 		E_LIST_ITEM
 	<?php 	} ?>
 	<?php 	if ($dsa != 0) { ?>
