@@ -26,6 +26,7 @@ B_BODY
 B_HEADER(<*Add new article*>)
 B_HEADER_BUTTONS
 X_HBUTTON(<*Issues*>, <*pub/issues/add_article.php?Pub=<?php  p($Pub); ?>*>)
+<td class="breadcrumb_separator">&nbsp;</td>
 X_HBUTTON(<*Publications*>, <*pub/add_article.php*>)
 E_HEADER_BUTTONS
 E_HEADER

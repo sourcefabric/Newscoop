@@ -102,12 +102,14 @@ hr {
 	border-bottom: 1px solid black;
 	background-color: lightgrey;
 	margin-bottom: 3px;
+	padding-left: 12px;
+	padding-right: 12px;
 }
 
 .page_title {
 	font-weight: bold;
 	padding-top: 0px;
-	padding-left: 12px;
+	/* padding-left: 12px; */
 	font-size: 12pt;
 }
 

@@ -27,6 +27,7 @@ B_BODY
 B_HEADER(<*Adding new field*>)
 B_HEADER_BUTTONS
 X_HBUTTON(<*Fields*>, <*a_types/fields/?AType=<?php  print encURL($AType); ?>*>)
+<td class="breadcrumb_separator">&nbsp;</td>
 X_HBUTTON(<*Article Types*>, <*a_types/*>)
 E_HEADER_BUTTONS
 E_HEADER

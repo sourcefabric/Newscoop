@@ -64,15 +64,15 @@ define(<*B_HEADER*>, <*<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="
 *>)dnl
 define(<*X_HEADER_NO_BUTTONS*>, <*	<TR><TD>&nbsp;</TD></TR>*>)dnl
 define(<*B_HEADER_BUTTONS*>, <*	<TD ALIGN=RIGHT><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0"><TR>dnl*>)dnl
-define(<*X_HBUTTON*>, <*<TD><A HREF="X_ROOT/$2" ifelse(<*$3*>, <**>, <**>, <*TARGET="$3"*>)><IMG SRC="X_ROOT/img/tol.gif" BORDER="0" ALT="<?php  putGS("$1"); ?>"></A></TD><TD><A HREF="X_ROOT/$2" ifelse(<*$3*>, <**>, <**>, <*TARGET="$3"*>)><B><?php  putGS("$1");  ?></B></A></TD>*>)dnl
+define(<*X_HBUTTON*>, <*<TD><A HREF="X_ROOT/$2" class="breadcrumb" ifelse(<*$3*>, <**>, <**>, <*TARGET="$3"*>)><?php  putGS("$1");  ?></A></TD>*>)dnl
 define(<*E_HEADER_BUTTONS*>, <*</TR></TABLE></TD></TR>*>)dnl
 define(<*E_HEADER*>, <*</TABLE>*>)dnl
 dnl
 dnl *** Menu ***
 dnl
 define(<*B_MENU*>, <*<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%">*>)dnl
-define(<*X_MENU_ITEM*>, <*<TR><TD ALIGN="RIGHT"><A HREF="$2" ONCLICK="$3" TARGET="fmain"><IMG SRC="X_ROOT/img/tol.gif" BORDER="0" ALT="<?php  putGS("$1"); ?>"></A></TD><TD NOWRAP><A HREF="$2" ONCLICK="$3" TARGET="fmain"><?php  putGS("$1"); ?></A></TD></TR>*>)dnl
-define(<*X_HITEM*>, <*<TR><TD ALIGN="RIGHT"><A HREF="$1"><IMG SRC="X_ROOT/img/tol.gif" BORDER="0" ALT="<?php  putGS("$2"); ?>"></A></TD><TD NOWRAP><A HREF="$1"><?php  putGS("$2"); ?></A></TD></TR>*>)dnl
+dnl define(<*X_MENU_ITEM*>, <*<TR><TD ALIGN="RIGHT"><A HREF="$2" ONCLICK="$3" TARGET="fmain"><IMG SRC="X_ROOT/img/tol.gif" BORDER="0" ALT="<?php  putGS("$1"); ?>"></A></TD><TD NOWRAP><A HREF="$2" ONCLICK="$3" TARGET="fmain"><?php  putGS("$1"); ?></A></TD></TR>*>)dnl
+dnl define(<*X_HITEM*>, <*<TR><TD ALIGN="RIGHT"><A HREF="$1"><IMG SRC="X_ROOT/img/tol.gif" BORDER="0" ALT="<?php  putGS("$2"); ?>"></A></TD><TD NOWRAP><A HREF="$1"><?php  putGS("$2"); ?></A></TD></TR>*>)dnl
 define(<*X_MENU_BAR*>, <*<TR><TD COLSPAN="2">X_HR</TD></TR>*>)dnl
 define(<*E_MENU*>, <*</TABLE>*>)dnl
 dnl

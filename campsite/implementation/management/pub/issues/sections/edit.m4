@@ -26,7 +26,9 @@ B_BODY
 B_HEADER(<*Configure section*>)
 B_HEADER_BUTTONS
 X_HBUTTON(<*Sections*>, <*pub/issues/sections/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>*>)
+<td class="breadcrumb_separator">&nbsp;</td>
 X_HBUTTON(<*Issues*>, <*pub/issues/?Pub=<?php p($Pub); ?>*>)
+<td class="breadcrumb_separator">&nbsp;</td>
 X_HBUTTON(<*Publications*>, <*pub/*>)
 E_HEADER_BUTTONS
 E_HEADER
