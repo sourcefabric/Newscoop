@@ -14,7 +14,9 @@ define(<*X_MYSQL_HOST*>, <*localhost*>)dnl
 define(<*X_MYSQL_USER*>, <*root*>)dnl
 define(<*X_MYSQL_PASSWORD*>, <**>)dnl
 define(<*X_MYSQL_DB*>, <*campsite*>)dnl
-define(<*B_DATABASE*>, <*<?php  require_once("$DOCUMENT_ROOT/db_connect.php"); ?>*>)dnl
+define(<*B_DATABASE*>, <*<?php
+require_once($_SERVER['DOCUMENT_ROOT']."/db_connect.php");
+?>*>)dnl
 define(<*E_DATABASE*>, <**>)dnl
 dnl
 dnl *** General ***
