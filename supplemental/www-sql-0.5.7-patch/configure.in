@@ -103,7 +103,7 @@ if test -z "$MYSQL_LIBDIR"; then
   JH_FIND_LIB(mysqlclient, mysql_connect,
     ["" "-L/usr/lib/mysql" "-L/usr/local/lib/mysql" "-L/usr/local/mysql/lib"],
     [MYSQL_LIBDIR=$jh_cv_lib_mysqlclient_mysql_connect],
-    [echo "*** MySQL library not found"; MYSQL_LIBDIR=""], [-lm])
+    [echo "*** MySQL library not found"; MYSQL_LIBDIR=""], [-lm -lz])
 fi
 AC_SUBST(MYSQL_LIBDIR)
 
