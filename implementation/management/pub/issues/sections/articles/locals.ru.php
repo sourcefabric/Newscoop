@@ -1,6 +1,5 @@
 <?
 regGS("Delete article $1","Удалить статью $1:ru");
-regGS("You do not have the right to add articles.","Вы не имеете права добавления статей:ru");
 regGS("Show article on front page","Показать статью на титульной странице:ru");
 regGS("Show article on section page","Показать статью на странице секции:ru");
 regGS("Enter keywords, comma separated","Введите ключевые слова, разделяя запятой:ru");

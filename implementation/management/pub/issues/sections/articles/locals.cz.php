@@ -1,7 +1,6 @@
 <?
 
 regGS("Delete article $1","Smazat článek $1");
-regGS("You do not have the right to add articles.","Nemáte právo přidat článek");
 regGS("Show article on front page","Zobrazit článek na titulní straně");
 regGS("Show article on section page","Zobrazit článek na stránce rubriky");
 regGS("Enter keywords, comma separated","Vložte klíčová slova, oddělená čárkou");
