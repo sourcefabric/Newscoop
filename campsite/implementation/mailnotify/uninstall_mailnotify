@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 rm -f $BIN_DIR/notifyendsubs
 rm -f $BIN_DIR/notifyevents
