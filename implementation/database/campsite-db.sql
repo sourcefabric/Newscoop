@@ -263,7 +263,12 @@ CREATE TABLE `Images` (
   `ContentType` varchar(64) NOT NULL default '',
   `Location` enum('local','remote') NOT NULL default 'local',
   `URL` varchar(255) NOT NULL default '',
-  PRIMARY KEY  (`Id`)
+  `ThumbnailFileName` varchar(50) NOT NULL default '',
+  `ImageFileName` varchar(50) NOT NULL default '',
+  `UploadedByUser` int(11) default NULL,
+  `LastModified` timestamp(14) NOT NULL,
+  `TimeCreated` timestamp(14) NOT NULL default '00000000000000',
+  PRIMARY KEY (`Id`)
 ) TYPE=MyISAM;
 
 --
