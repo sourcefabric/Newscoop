@@ -11,15 +11,18 @@ Original Specifications
 - Aleksandar Brajanoski
 
 Core coding
-- Lucian Muresan: database, admin interface, localization
-- Mugurel Rus: campsite server, database, admin interface
+- Lucian Muresan: database, admin interface, localization, documentation
+- Mugurel Rus: campsite server, database, admin interface, install scripts,
+  documentation
 - Nenad Pandzic: campfire
 - Attila Egyedi: campfire, admin interface, localization
 - Richard Airlie: port to FreeBSD and OpenBSD, documentation updates, bug fixes
+- Micz Flor: documentation
+- Sava Tatic: documentation
 - Recognos <www.recognos.com>
 - DNT Cluj <www.dntcj.ro>
 
-Admin Interface Localization:
+User interface localization:
 - Andrei Blagorazumov (Russian) <ru-localizer@campware.org>
 - Ljuba Rankovic (Serbian and Serbo-Croatian) <sr-localizer@campware.org>,
 <sh-localizer@campware.org>
