@@ -1,77 +1,46 @@
+<?php  
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
+load_common_include_files();
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/priv/CampsiteInterface.php');
+
+list($access, $User) = check_basic_access($_REQUEST);
+if (!$access) {
+	header('Location: /priv/logout.php');
+	exit;
+}
+$Article = isset($_REQUEST['Article'])?$_REQUEST['Article']:0;
+$Image = isset($_REQUEST['Image'])?$_REQUEST['Image']:0;
+
+$articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
+
+// This file can only be accessed if the user has the right to delete images.
+if (!$User->hasPermission('DeleteImage')) {
+	header('Location: /priv/logout.php');
+	exit;		
+}
+
+$imageObj =& new Image($Image);
+$imageObj->delete($attributes);
+
+$logtext = getGS('Image $1 deleted', $imageObj->getDescription()); 
+Log::Message($logtext, $User->getUserName(), 42);
+
+// Go back to article image list.
+header('Location: '.CampsiteInterface::ArticleUrl($articleObj, $sLanguage, 'images/'));
+
+?>
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
 	"http://www.w3.org/TR/REC-html40/loose.dtd">
 <HTML>
-<?php
-	require_once("../lib_campsite.php");
-	require_once ("../languages.php");
-	require_once('include.inc.php');
-	require_once("$DOCUMENT_ROOT/db_connect.php");
-
-	$globalfile=selectLanguageFile('..','globals');
-	$localfile=selectLanguageFile('.','locals');
-	@include ($globalfile);
-	@include ($localfile);
-?>
-
-<?php
-	todefnum('TOL_UserId');
-	todefnum('TOL_UserKey');
-	query ("SELECT * FROM Users WHERE Id=$TOL_UserId AND KeyId=$TOL_UserKey", 'Usr');
-	$access=($NUM_ROWS != 0);
-	if ($NUM_ROWS) {
-	fetchRow($Usr);
-	query ("SELECT * FROM UserPerm WHERE IdUser=".getVar($Usr,'Id'), 'XPerm');
-	 if ($NUM_ROWS){
-		fetchRow($XPerm);
-	 }
-	 else $access = 0;						//added lately; a non-admin can enter the administration area; he exists but doesn't have ANY rights
-	 $xpermrows= $NUM_ROWS;
-	}
-	else {
-	query ("SELECT * FROM UserPerm WHERE 1=0", 'XPerm');
-	}
-?>
-
-
-<?php 
-    todefnum('TOL_UserId');
-    todefnum('TOL_UserKey');
-    query ("SELECT * FROM Users WHERE Id=$TOL_UserId AND KeyId=$TOL_UserKey", 'Usr');
-    $access=($NUM_ROWS != 0);
-    if ($NUM_ROWS) {
-	fetchRow($Usr);
-	query ("SELECT * FROM UserPerm WHERE IdUser=".getVar($Usr,'Id'), 'XPerm');
-	 if ($NUM_ROWS){
-	 	fetchRow($XPerm);
-	 }
-	 else $access = 0;						//added lately; a non-admin can enter the administration area; he exists but doesn't have ANY rights
-	 $xpermrows= $NUM_ROWS;
-    }
-    else {
-	query ("SELECT * FROM UserPerm WHERE 1=0", 'XPerm');
-    }
-?>
-    
-
-
-    <?php  if ($access) {
-	query ("SELECT DeleteImage FROM UserPerm WHERE IdUser=".getVar($Usr,'Id'), 'Perm');
-	 if ($NUM_ROWS) {
-		fetchRow($Perm);
-		$access = (getVar($Perm,'DeleteImage') == "Y");
-	}
-	else $access = 0;
-    } ?>
-    
- 
-
 <HEAD>
     <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
 	<META HTTP-EQUIV="Expires" CONTENT="now">
 	<TITLE><?php  putGS("Deleting image"); ?></TITLE>
-<?php  if ($access == 0) { ?>	<META HTTP-EQUIV="Refresh" CONTENT="0; URL=/priv/ad.php?ADReason=<?php  print encURL(getGS("You do not have the right to delete images" )); ?>">
-<?php  } ?></HEAD>
+</HEAD>
 
 <?php  if ($access) { ?><STYLE>
 	BODY { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
