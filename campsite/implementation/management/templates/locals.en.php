@@ -67,5 +67,6 @@ regGS("Error converting the template to UTF-8 charset.", "Error converting the t
 regGS("Template charset", "Template charset");
 regGS("Select a language/character set", "Select a language/character set");
 regGS("All languages", "All languages");
+regGS("You do not have the right to edit scripts outside the templates directory.", "You do not have the right to edit scripts outside the templates directory.:en");
 
 ?>
