@@ -165,7 +165,7 @@ public:
 	CCLex(const char* = 0, lint = 0);
 
 	// copy-constructor
-	CCLex(const CCLex& s) : CurrLexem(CMS_CLEX_NONE, CMS_CDT_NONE), m_pchTempBuff(NULL)
+	CCLex(const CCLex& s) : m_pchTempBuff(NULL), CurrLexem(CMS_CLEX_NONE, CMS_CDT_NONE)
 	{ *this = s; }
 
 	// destructor
