@@ -695,6 +695,8 @@ int TOLActList::WriteSrcParam(string& s, TOLContext& c, string& table)
 		pChar pchVal = SQLEscapeString(k, strlen(k));
 		if (pchVal == NULL)
 			return ERR_NOMEM;
+		if (pchVal[0] == 0)
+			return -1;
 		if (First)
 		{
 			w = string("(Keyword = '") + pchVal + "'";
@@ -704,8 +706,9 @@ int TOLActList::WriteSrcParam(string& s, TOLContext& c, string& table)
 			w += string(" or Keyword = '") + pchVal + "'";
 		delete pchVal;
 	}
-	if (w != "")
-		w += ")";
+	if (w == "")
+		return -1;
+	w += ")";
 	CheckFor("Articles.IdPublication", c.Publication(), &m_coBuf, w);
 	if (c.SearchLevel() >= 1)
 		CheckFor("Articles.NrIssue", c.Issue(), &m_coBuf, w);
@@ -900,7 +903,14 @@ int TOLActList::TakeAction(TOLContext& c, fstream& fs)
 			prefix = "Articles.";
 		}
 		else if (modifier == TOL_LMOD_SEARCHRESULT)
+		{
 			WriteSrcParam(where, lc, table);
+			if (where == "")
+			{
+				RunBlock(second_block, c, fs);
+				return RES_OK;
+			}
+		}
 		else
 			WriteModParam(where, lc, table);
 		if (modifier == TOL_LMOD_SEARCHRESULT && lc.SearchAnd())
@@ -2210,7 +2220,7 @@ int TOLActEdit::TakeAction(TOLContext& c, fstream& fs)
 		}
 		if (field == "Password" || field == "PasswordAgain")
 		{
-			fs << "<input type=password name=\"User" << field << "\" size=8 maxlength=8>";
+			fs << "<input type=password name=\"User" << field << "\" size=32 maxlength=32>";
 			return RES_OK;
 		}
 		fs << "<textarea name=\"User" << field << "\" cols=40 rows=4></textarea>";
@@ -2236,9 +2246,9 @@ int TOLActEdit::TakeAction(TOLContext& c, fstream& fs)
 	if (modifier == TOL_EMOD_LOGIN)
 	{
 		if (field == "Password")
-			fs << "<input type=password name=\"Login" << field << "\" maxlength=8 size=8>";
+			fs << "<input type=password name=\"Login" << field << "\" maxlength=32 size=32>";
 		else
-			fs << "<input type=text name=\"Login" << field << "\" maxlength=32 size=12>";
+			fs << "<input type=text name=\"Login" << field << "\" maxlength=32 size=32>";
 	}
 	if (modifier == TOL_EMOD_SEARCH)
 	{
