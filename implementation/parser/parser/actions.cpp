@@ -1009,14 +1009,10 @@ int CActList::takeAction(CContext& c, sockstream& fs)
 void CActURLParameters::PrintSubtitlesURL(CContext& c, sockstream& fs, bool& first)
 {
 	String2String::iterator it;
-	int i;
-	for (i = 1, it = c.Fields().begin(); it != c.Fields().end(); ++it, i++)
+	int st_index, st_printed = 0;
+	for (st_index = 1, it = c.Fields().begin(); it != c.Fields().end(); ++it, ++st_index)
 	{
-		if (!first)
-			fs << "&";
-		else
-			first = false;
-		fs << "ST" << i << "=" << (*it).first << "&ST_T" << i << "=" << (*it).second;
+		// compute the start subtitle
 		long int start_subtitle;
 		if (reset_from_list > 0)
 			start_subtitle = 0;
@@ -1028,31 +1024,45 @@ void CActURLParameters::PrintSubtitlesURL(CContext& c, sockstream& fs, bool& fir
 			start_subtitle = c.StartSubtitle((*it).first) + 1;
 		else
 			start_subtitle = c.StartSubtitle((*it).first);
-		if (start_subtitle < 0)
-			start_subtitle = 0;
 		if (start_subtitle >= c.SubtitlesNumber())
 			start_subtitle = c.SubtitlesNumber() - 1;
+		if (start_subtitle < 0)
+			start_subtitle = 0;
+
+		if (start_subtitle == 0 && c.Level() != CLV_SUBTITLE_LIST && !allsubtitles)
+			continue;
+		if (c.LMode() == LM_NORMAL && c.Level() == CLV_SUBTITLE_LIST 
+			&& c.StListStart((*it).first) == 0 && !allsubtitles && start_subtitle == 0)
+			continue;
+		st_printed++;
+
+		if (!first)
+			fs << "&";
+		else
+			first = false;
+		fs << "ST" << st_index << "=" << (*it).first << "&ST_T" << st_index << "=" << (*it).second;
+
 		if (start_subtitle > 0)
-			fs << "&ST_PS" << i << "=" << start_subtitle;
+			fs << "&ST_PS" << st_index << "=" << start_subtitle;
 		if (c.LMode() != LM_NORMAL && c.Level() == CLV_SUBTITLE_LIST)
 		{
-			fs << "&ST_AS" << i << "=" << (int)c.AllSubtitles();
+			fs << "&ST_AS" << st_index << "=" << (int)c.AllSubtitles();
 		}
 		else
-			fs << "&ST_AS" << i << "=" << (int)allsubtitles;
+			fs << "&ST_AS" << st_index << "=" << (int)allsubtitles;
 		if (c.Level() == CLV_ROOT)
 			continue;
 		if (c.LMode() == LM_PREV && c.Level() == CLV_SUBTITLE_LIST)
-			fs << "&ST_LS" << i << "=" << c.StPrevStart((*it).first);
+			fs << "&ST_LS" << st_index << "=" << c.StPrevStart((*it).first);
 		else if (c.LMode() == LM_NEXT && c.Level() == CLV_SUBTITLE_LIST)
-			fs << "&ST_LS" << i << "=" << c.StNextStart((*it).first);
+			fs << "&ST_LS" << st_index << "=" << c.StNextStart((*it).first);
 		else if (c.Level() != CLV_ROOT)
-			fs << "&ST_LS" << i << "=" << c.StListStart((*it).first);
+			fs << "&ST_LS" << st_index << "=" << c.StListStart((*it).first);
 	}
-	if (i > 1)
+	if (st_printed > 0)
 	{
 		first = false;
-		fs << "&ST_max=" << i - 1;
+		fs << "&ST_max=" << st_index - 1;
 	}
 }
 
@@ -2526,12 +2536,14 @@ int CActUser::takeAction(CContext& c, sockstream& fs)
 int CActLogin::takeAction(CContext& c, sockstream& fs)
 {
 	CContext lc = c;
-	fs << "<form action=\"" << tpl_file << "\" method=POST><input type=hidden "
-	"name=\"" P_IDLANG "\" value=\"" << c.Language() << "\"><input type=hidden"
-	" name=\"" P_IDPUBL "\" value=\"" << c.Publication() << "\"><input "
-	"type=hidden name=\"" P_NRISSUE "\" value=\"" << c.Issue() << "\">";
+	fs << "\n<form action=\"" << tpl_file << "\" method=POST>\n"
+	      "\t<input type=hidden name=\"" P_IDLANG "\" value=\"" << c.Language() << "\">\n"
+	      "\t<input type=hidden name=\"" P_IDPUBL "\" value=\"" << c.Publication() << "\">\n"
+	      "\t<input type=hidden name=\"" P_NRISSUE "\" value=\"" << c.Issue() << "\">\n"
+	      "\t<input type=hidden name=\"" P_NRSECTION "\" value=\"" << c.Section() << "\">\n"
+	      "\t<input type=hidden name=\"" P_NRARTICLE "\" value=\"" << c.Article() << "\">\n";
 	runActions(block, lc, fs);
-	fs << "<input type=submit name=\"" P_LOGIN "\" value=\"" << button_name << "\"></form>";
+	fs << "\t<input type=submit name=\"" P_LOGIN "\" value=\"" << button_name << "\">\n</form>\n";
 	return RES_OK;
 }
 
