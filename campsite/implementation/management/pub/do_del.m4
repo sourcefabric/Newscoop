@@ -76,8 +76,14 @@ B_MSGBOX(<*Deleting publication*>)
     
     $AFFECTED_ROWS=0;
     
-    if ($del)
-	query ("DELETE FROM Publications WHERE Id=$Pub");
+	if ($del) {
+		$sql = "SELECT * FROM Publications WHERE Id = " . $Pub;
+		query($sql, 'q_pubs');
+		fetchRow($q_pubs);
+		$alias = getVar($q_pubs, 'IdDefaultAlias');
+		query("DELETE FROM Aliases WHERE Id = " . $alias);
+		query("DELETE FROM Publications WHERE Id = " . $Pub);
+	}
 
     if ($AFFECTED_ROWS > 0) { ?>dnl
 	<LI><?php  putGS('The publication $1 has been deleted.','<B>'.getHVar($q_pub,'Name').'</B>'); ?></LI>
