@@ -160,7 +160,7 @@ Group languages having the same character set (see Languages in admin interface 
 a)select all the languages in the character set and compose the where clause:
 "IdLanguage = [l1] or IdLanguage = [l2] ..."
 where [l1], [l2] are the language identifiers. In order to read the language identifiers and character sets log in to CAMPSITE database and run the following sql: "select Name, Id, CodePage from Languages".
-b)mysqldump ... -t -tables --where="IdLanguage = [l1] or IdLanguage = [l2]..." \
+b)mysqldump ... -t --tables --where="IdLanguage = [l1] or IdLanguage = [l2]..." \
 [database] Articles Classes Countries Dictionary Errors Issues \
 KeywordClasses Sections TimeUnits > data_[charsetn]_1.sql
 c)mysqldump ... [database] -t --tables \
