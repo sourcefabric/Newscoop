@@ -87,12 +87,12 @@ X_AUDIT(<*71*>, <*getGS('Article type field $1 created', decS($cName))*>)
 	*>)
 <? if ($created) { ?>dnl
 	B_MSGBOX_BUTTONS
-		<A HREF="X_ROOT/a_types/fields/add.php?AType=<? print encURL($AType); ?>"><IMG SRC="X_ROOT/img/button/add_another.gif" BORDER="0" ALT="Add another field"></A>
-		<A HREF="X_ROOT/a_types/fields/?AType=<? print encURL($AType); ?>"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
+		REDIRECT(<*Add*>, <*Add another*>, <*X_ROOT/a_types/fields/add.php?AType=<? print encURL($AType); ?>*>)
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/a_types/fields/?AType=<? print encURL($AType); ?>*>)
 	E_MSGBOX_BUTTONS
 <? } else { ?>
 	B_MSGBOX_BUTTONS
-		<A HREF="X_ROOT/a_types/fields/add.php?AType=<? print encURL($AType); ?>"><IMG SRC="X_ROOT/img/button/ok.gif" BORDER="0" ALT="OK"></A>
+		REDIRECT(<*Ok*>, <*OK*>, <*X_ROOT/a_types/fields/?AType=<? print encURL($AType); ?>*>)
 	E_MSGBOX_BUTTONS
 <? } ?>dnl
 E_MSGBOX

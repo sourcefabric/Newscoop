@@ -60,9 +60,9 @@ X_AUDIT(<*53*>, <*getGS('User $1 changed his password',getHVar($Usr,'UName'))*>)
 	*>)
 	B_MSGBOX_BUTTONS
 <? if ($ok) { ?>dnl
-		<A HREF="X_ROOT/home.php"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/home.php*>)
 <? } else { ?>dnl
-		<A HREF="X_ROOT/users/chpwd.php"><IMG SRC="X_ROOT/img/button/ok.gif" BORDER="0" ALT="OK"></A>
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/users/chpwd.php*>)
 <? } ?>dnl
 	E_MSGBOX_BUTTONS
 E_MSGBOX

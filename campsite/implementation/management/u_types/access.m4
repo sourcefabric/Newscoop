@@ -142,8 +142,8 @@ B_DIALOG(<*Change user type permissions*>, <*POST*>, <*do_access.php*>)
 	E_DIALOG_PACKEDINPUT
 	B_DIALOG_BUTTONS
 		<INPUT TYPE="HIDDEN" NAME="UType" VALUE="<? print encHTML(decS($UType)); ?>">
-		<INPUT TYPE="IMAGE" SRC="X_ROOT/img/button/save.gif" BORDER="0">
-		<A HREF="X_ROOT/u_types/"><IMG SRC="X_ROOT/img/button/cancel.gif" BORDER="0"></A>
+		SUBMIT(<*Save*>, <*Save changes*>)
+		REDIRECT(<*Cancel*>, <*Cancel*>, <*X_ROOT/u_types/*>)
 	E_DIALOG_BUTTONS
 E_DIALOG
 <? } else { ?>dnl

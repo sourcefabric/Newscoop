@@ -52,9 +52,9 @@ X_AUDIT(<*62*>, <*getGS('The article type $1 has been deleted.',$AType)*>)
 	*>)
 	B_MSGBOX_BUTTONS
 <? if ($del) { ?>dnl
-		<A HREF="X_ROOT/a_types/"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/a_types/*>)
 <? } else { ?>dnl
-		<A HREF="X_ROOT/a_types/"><IMG SRC="X_ROOT/img/button/ok.gif" BORDER="0" ALT="OK"></A>
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/a_types/*>)
 <? } ?>dnl
 	E_MSGBOX_BUTTONS
 E_MSGBOX

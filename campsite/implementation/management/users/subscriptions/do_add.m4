@@ -98,13 +98,13 @@ B_MSGBOX(<*Adding subscription*>)
 
 	B_MSGBOX_BUTTONS
 	<? if ($success_sect) { ?>dnl
-		<A HREF="X_ROOT/users/subscriptions/?User=<? p($User); ?>"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/users/subscriptions/?User=<? p($User); ?>*>)
 	<? } else {
 		if($success_subs) {?>dnl
-			<A HREF="X_ROOT/users/subscriptions/sections/add.php?Pub=<? p($cPub); ?>&User=<? p($User); ?>&Subs=<? p($Subs); ?>"><IMG SRC="X_ROOT/img/button/ok.gif" BORDER="0" ALT="OK"></A>
+			REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/users/subscriptions/sections/add.php?Pub=<? p($cPub); ?>&User=<? p($User); ?>&Subs=<? p($Subs); ?>*>)
 		<? }
 		else { ?>
-			<A HREF="X_ROOT/users/subscriptions/add.php?User=<? p($User); ?>"><IMG SRC="X_ROOT/img/button/ok.gif" BORDER="0" ALT="OK"></A>
+			REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/users/subscriptions/add.php?User=<? p($User); ?>*>)
 		<? }
 	} ?>dnl
 	E_MSGBOX_BUTTONS

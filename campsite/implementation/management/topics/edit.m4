@@ -52,8 +52,8 @@ B_DIALOG(<*Change topic name*>, <*POST*>, <*do_edit.php*>)
 	B_DIALOG_BUTTONS
 		<INPUT TYPE="HIDDEN" NAME="IdCateg" VALUE="<? p($IdCateg); ?>">
 		<INPUT TYPE="HIDDEN" NAME="EdCateg" VALUE="<? p($EdCateg); ?>">
-		<INPUT TYPE="IMAGE" NAME="OK" SRC="X_ROOT/img/button/save.gif" BORDER="0">
-		<A HREF="X_ROOT/topics/index.php?IdCateg=<?p($IdCateg);?>"><IMG SRC="X_ROOT/img/button/cancel.gif" BORDER="0" ALT="Cancel"></A>
+		SUBMIT(<*Save*>, <*Save changes*>)
+		REDIRECT(<*Cancel*>, <*Cancel*>, <*X_ROOT/topics/index.php?IdCateg=<?p($IdCateg);?>*>)
 	E_DIALOG_BUTTONS
 E_DIALOG
 <P>

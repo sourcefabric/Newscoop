@@ -53,7 +53,7 @@ E_HEADER
 			pcomboVar(getVar($ls,'Id'),$sLang,getVar($ls,'Name'));
 		    } ?>
 		    </SELECT></TD>
-		<TD><INPUT TYPE="IMAGE" SRC="X_ROOT/img/button/search.gif" BORDER="0"></TD>
+		<TD>SUBMIT(<*Search*>, <*Search*>)</TD>
 	E_SEARCH_DIALOG
 	</TD>
 </TABLE>

@@ -69,7 +69,7 @@ X_AUDIT(<*11*>, <*getGS('New issue $1 from $2 in publication $3',$cNumber,$cOldN
 	<LI><? putGS('Copying done.'); ?></LI>
 	*>)
 	B_MSGBOX_BUTTONS
-		<A HREF="X_ROOT/pub/issues/?Pub=<? pencURL($cPub); ?>"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/pub/issues/?Pub=<? pencURL($cPub); ?>*>)
 	E_MSGBOX_BUTTONS
 E_MSGBOX
 <P>

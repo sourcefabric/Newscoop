@@ -55,8 +55,8 @@ B_MSGBOX(<*Delete topic*>)
 		<FORM METHOD="POST" ACTION="do_del.php">
 		<INPUT TYPE="HIDDEN" NAME="IdCateg" VALUE="<? p($IdCateg); ?>">
 		<INPUT TYPE="HIDDEN" NAME="DelCateg" VALUE="<? p($DelCateg); ?>">
-		<INPUT TYPE="IMAGE" NAME="Yes" SRC="X_ROOT/img/button/yes.gif" BORDER="0">
-		<A HREF="X_ROOT/topics/index.php?IdCateg=<?p($IdCateg);?>"><IMG SRC="X_ROOT/img/button/no.gif" BORDER="0" ALT="No"></A>
+		SUBMIT(<*Yes*>, <*Yes*>)
+		REDIRECT(<*No*>, <*No*>, <*X_ROOT/topics/index.php?IdCateg=<?p($IdCateg);?>*>)
 		</FORM>
 	E_MSGBOX_BUTTONS
 E_MSGBOX

@@ -119,15 +119,15 @@ X_AUDIT(<*51*>, <*getGS('User account $1 created', encHTML(decS($cUName)))*>)
     fetchRowNum($lid);
     todef('Back');
     ?>dnl
-		<A HREF="X_ROOT/users/add.php<? if ($Back != "") { ?>?Back=<? pencURL($Back); ?><? } ?>"><IMG SRC="X_ROOT/img/button/add_another.gif" BORDER="0" ALT="Add another user account"></A>
+		REDIRECT(<*New*>, <*Add another*>, <*X_ROOT/users/add.php<? if ($Back != "") { ?>?Back=<? pencURL($Back); ?><? } ?>*>)
 <? if (getVar($utype,'Reader') == "Y") { ?>dnl
-		<A HREF="X_ROOT/users/subscriptions/?User=<? pencURL(getNumVar($lid,0)); ?>"><IMG SRC="X_ROOT/img/button/subscriptions.gif" BORDER="0" ALT="Edit user's subscriptions"></A>
+		REDIRECT(<*Edit subscr*>, <*Subscriptions*>, <*X_ROOT/users/subscriptions/?User=<? pencURL(getNumVar($lid,0)); ?>*>)
 <? } ?>dnl
-		<A HREF="X_ROOT/users/"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/users/*>)
 	E_MSGBOX_BUTTONS
 <? } else { ?>
 	B_MSGBOX_BUTTONS
-		<A HREF="X_ROOT/users/add.php?cName=<? pencURL($cName); ?>&cTitle=<? pencURL($cTitle); ?>&cGender=<? pencURL($cGender); ?>&cAge=<? pencURL($cAge); ?>&cUName=<? pencURL($cUName); ?>&cPass1=<? pencURL($cPass1); ?>&cPass2=<? pencURL($cPass2); ?>&cEMail=<? pencURL($cEMail); ?>&cCity=<? pencURL($cCity); ?>&cStrAddress=<? pencURL($cStrAddress); ?>&cState=<? pencURL($cState); ?>&cCountryCode=<? pencURL($cCountryCode); ?>&cPhone=<? pencURL($cPhone); ?>&cFax=<? pencURL($cFax); ?>&cContact=<? pencURL($cContact); ?>&cPhone2=<? pencURL($cPhone2); ?>&cPostalCode=<? pencURL($cPostalCode); ?>&cEmployer=<? pencURL($cEmployer); ?>&cEmployerType=<? pencURL($cEmployerType); ?>&cPosition=<? pencURL($cPosition); ?>&cType=<? pencURL($cType); ?>"><IMG SRC="X_ROOT/img/button/ok.gif" BORDER="0" ALT="OK"></A>
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/users/add.php?cName=<? pencURL($cName); ?>&cTitle=<? pencURL($cTitle); ?>&cGender=<? pencURL($cGender); ?>&cAge=<? pencURL($cAge); ?>&cUName=<? pencURL($cUName); ?>&cPass1=<? pencURL($cPass1); ?>&cPass2=<? pencURL($cPass2); ?>&cEMail=<? pencURL($cEMail); ?>&cCity=<? pencURL($cCity); ?>&cStrAddress=<? pencURL($cStrAddress); ?>&cState=<? pencURL($cState); ?>&cCountryCode=<? pencURL($cCountryCode); ?>&cPhone=<? pencURL($cPhone); ?>&cFax=<? pencURL($cFax); ?>&cContact=<? pencURL($cContact); ?>&cPhone2=<? pencURL($cPhone2); ?>&cPostalCode=<? pencURL($cPostalCode); ?>&cEmployer=<? pencURL($cEmployer); ?>&cEmployerType=<? pencURL($cEmployerType); ?>&cPosition=<? pencURL($cPosition); ?>&cType=<? pencURL($cType); ?>*>)
 	E_MSGBOX_BUTTONS
 <? } ?>dnl
 E_MSGBOX

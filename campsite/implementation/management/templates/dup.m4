@@ -42,8 +42,8 @@ B_DIALOG(<*Duplicate template*>, <*POST*>, <*do_dup.php*>)
 	B_DIALOG_BUTTONS
 		<INPUT TYPE="HIDDEN" NAME="cPath" VALUE="<? pencHTML(decS($Path)); ?>">
 		<INPUT TYPE="HIDDEN" NAME="Name" VALUE="<? pencHTML(decS($Name)); ?>">
-		<INPUT TYPE="IMAGE" NAME="OK" SRC="X_ROOT/img/button/save.gif" BORDER="0">
-		<A HREF="<? pencHTML(decS($Path)); ?>"><IMG SRC="X_ROOT/img/button/cancel.gif" BORDER="0" ALT="Cancel"></A>
+		SUBMIT(<*Save*>, <*Save changes*>)
+		REDIRECT(<*Cancel*>, <*Cancel*>, <*<? pencHTML(decS($Path)); ?>*>)
 	E_DIALOG_BUTTONS
 E_DIALOG
 <P>

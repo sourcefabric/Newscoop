@@ -45,7 +45,7 @@ E_HEADER
 		<TD><? putGS('User name'); ?>:</TD>
 		<TD><INPUT TYPE="TEXT" NAME="sUname" VALUE="<? pencHTML($sUname); ?>" SIZE="16" MAXLENGTH="32"></TD>
 		<TD><SELECT NAME="sType"><OPTION><OPTION VALUE="Y" <? if ($sType == "Y") { ?>SELECTED<? } ?>><? putGS('Reader'); ?><OPTION VALUE="N" <? if ($sType == "N") { ?>SELECTED<? } ?>><? putGS('Staff'); ?></SELECT></TD>
-		<TD><INPUT TYPE="IMAGE" SRC="X_ROOT/img/button/search.gif" BORDER="0"></TD>
+		<TD>SUBMIT(<*Search*>, <*Search*>)</TD>
 	E_SEARCH_DIALOG
 	</TD>
 </TABLE>

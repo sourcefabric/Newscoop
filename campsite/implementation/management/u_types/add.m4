@@ -128,13 +128,13 @@ B_DIALOG(<*Add new user type*>, <*POST*>, <*do_add.php*>)
 	E_DIALOG_INPUT
 	E_DIALOG_PACKEDINPUT
 	B_DIALOG_BUTTONS
-		<INPUT TYPE="IMAGE" NAME="OK" SRC="X_ROOT/img/button/save.gif" BORDER="0">
+		SUBMIT(<*Save*>, <*Save changes*>)
 <? todef('Back'); ?>dnl
 		<INPUT TYPE="HIDDEN" NAME="Back" VALUE="<? print encHTML($Back); ?>">
 <? if ($Back != "") { ?>dnl
-		<A HREF="<? print encHTML($Back); ?>"><IMG SRC="X_ROOT/img/button/cancel.gif" BORDER="0"></A>
+		REDIRECT(<*Cancel*>, <*Cancel*>, <*<? print encHTML($Back); ?>*>)
 <?} else { ?>dnl
-		<A HREF="X_ROOT/u_types/"><IMG SRC="X_ROOT/img/button/cancel.gif" BORDER="0"></A>
+		REDIRECT(<*Cancel*>, <*Cancel*>, <*X_ROOT/u_types/*>)
 <? } ?>dnl
 	E_DIALOG_BUTTONS
 E_DIALOG

@@ -87,7 +87,7 @@ else {?>dnl
 X_AUDIT(<*112*>, <*getGS('Templates deleted from $1',encHTML(decS($Path)).encHTML(decS($Name)) )*>)
 	*>)
 	B_MSGBOX_BUTTONS
-		<A HREF="<? p(decS($Path)); ?>"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
+		REDIRECT(<*Done*>, <*Done*>, <*<? p(decS($Path)); ?>*>)
 	E_MSGBOX_BUTTONS
 E_MSGBOX
 <P>

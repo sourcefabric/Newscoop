@@ -94,10 +94,10 @@ B_MSGBOX(<*Duplicate template*>)
 X_AUDIT(<*115*>, <*getGS('Template $1 was duplicated into $2', encHTML(decS($cPath)).encHTML(decS($Name)), encHTML(decS($cPath)).encHTML(decS($cName)))*>)		
 	B_MSGBOX_BUTTONS
 <? if ($ok) { ?>dnl
-		 <A HREF="X_ROOT/templates/edit_template.php?Path=<? pencURL(decS($cPath)); ?>&Name=<?pencURL($cName); ?>"><IMG SRC="X_ROOT/img/button/yes.gif" BORDER="0" ALT="Yes"></A>
-		<A HREF="<? p(decS($cPath)) ?>"><IMG SRC="X_ROOT/img/button/no.gif" BORDER="0" ALT="No"></A>
+		REDIRECT(<*Yes*>, <*Yes*>, <*X_ROOT/templates/edit_template.php?Path=<? pencURL(decS($cPath)); ?>&Name=<?pencURL($cName); ?>*>)
+		REDIRECT(<*No*>, <*No*>, <*<? p(decS($cPath)) ?>*>)
 <? } else { ?>
-	<A HREF="X_ROOT/templates/dup.php?Path=<? pencURL(decS($cPath)); ?>&Name=<? pencURL(decS($Name)); ?>"><IMG SRC="X_ROOT/img/button/ok.gif" BORDER="0" ALT="OK"></A>
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/templates/dup.php?Path=<? pencURL(decS($cPath)); ?>&Name=<? pencURL(decS($Name)); ?>*>)
 <? } ?>dnl
 
 	E_MSGBOX_BUTTONS

@@ -69,8 +69,8 @@ E_CURRENT
 		<INPUT TYPE="HIDDEN" NAME="Path" VALUE="<? pencHTML(decS($Path)); ?>">
 		<INPUT TYPE="HIDDEN" NAME="Name" VALUE="<? pencHTML(decS($Name)); ?>">
 		<INPUT TYPE="HIDDEN" NAME="What" VALUE="<? p($What); ?>">
-		<INPUT TYPE="IMAGE" SRC="X_ROOT/img/button/yes.gif" BORDER="0" NAME="Yes"></A>
-		<A HREF="<? pencHTML(decS($Path)); ?>"><IMG SRC="X_ROOT/img/button/no.gif" BORDER="0" ALT="No"></A>
+		SUBMIT(<*Yes*>, <*Yes*>)
+		REDIRECT(<*No*>, <*No*>, <*<? pencHTML(decS($Path)); ?>*>)
 		</FORM>
 	E_MSGBOX_BUTTONS
 E_MSGBOX

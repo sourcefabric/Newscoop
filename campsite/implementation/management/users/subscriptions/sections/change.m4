@@ -83,8 +83,8 @@ B_DIALOG(<*Change subscription*>, <*POST*>, <*do_change.php*>)
 		<INPUT TYPE="HIDDEN" NAME="Subs" VALUE="<? p($Subs); ?>">
 		<INPUT TYPE="HIDDEN" NAME="Sect" VALUE="<? p($Sect); ?>">
 		<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<? p($Pub); ?>">
-		<INPUT TYPE="IMAGE" NAME="OK" SRC="X_ROOT/img/button/save.gif" BORDER="0">
-		<A HREF="X_ROOT/users/subscriptions/sections/?Pub=<? p($Pub); ?>&User=<? p($User); ?>&Subs=<? p($Subs); ?>"><IMG SRC="X_ROOT/img/button/cancel.gif" BORDER="0" ALT="Cancel"></A>
+		SUBMIT(<*Save*>, <*Save changes*>)
+		REDIRECT(<*Cancel*>, <*Cancel*>, <*X_ROOT/users/subscriptions/sections/?Pub=<? p($Pub); ?>&User=<? p($User); ?>&Subs=<? p($Subs); ?>*>)
 	E_DIALOG_BUTTONS
 E_DIALOG
 <P>
