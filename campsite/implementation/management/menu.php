@@ -188,16 +188,15 @@ foreach ($publications as $publication) {
 </HEAD>
 
 <BODY>
-<table width="100%" cellpadding="0" cellspacing="0" border="0" style="border: 1px solid black;">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-bottom: 2px solid #fce2cc;"> 
 <tr>
 	<td valign="top" align="left" width="70%" style="padding-top: 0px; ">
 		<table border="0" cellpadding="0" cellspacing="0">
 		<tr>
-			<td style="padding-left: 5px; padding-right: 10px; padding-top: 2px; padding-bottom: 2px; font-size: 14pt; font-weight: bold; color: black; font-style: Verdana;" align="left" valign="middle" nowrap>
+			<td style="padding-left: 3px; padding-right: 10px; padding-top: 2px; padding-bottom: 2px; font-size: 14pt; font-weight: bold; color: black; font-style: Verdana;" align="left" valign="middle" nowrap>
 				<IMG SRC="/admin/img/sign_big.gif" BORDER="0" align="middle">
-				Campsite v<?php p($Campsite['VERSION']); ?>
 			</td>
-			<td style="padding-left: 2px;">
+			<td style="padding-left: 20px; padding-top: 6px;" valign="top">
 			<DIV ID="myMenuID"></DIV>
 			<SCRIPT LANGUAGE="JavaScript"><!--
 				cmDraw ('myMenuID', myMenu, 'hbr', cmThemeOffice, 'ThemeOffice');
