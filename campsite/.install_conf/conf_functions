@@ -731,12 +731,14 @@ if [ "$admin_selected" = "false" ] && ( [ "$PARSER_ALLOWED_HOSTS" = "localhost" 
     echo -e "ERROR\nADMIN_INTERFACE module is not selected for local install but allowed host is localhost."
     return 1
 fi
-if [ "$admin_selected" = "true" ]; then
-    if ! in_list localhost $PARSER_ALLOWED_HOSTS && ! in_list "127.0.0.1" $PARSER_ALLOWED_HOSTS; then
-	echo -e "ERROR\nALLOWED_HOST must contain localhost (127.0.0.1)!"
+for ipa in $PARSER_ALLOWED_HOSTS; do
+    ping "$ipa" -c 1 &> /dev/null
+    ping_res=$?
+    if [ $ping_res -ne 0 ]; then
+        echo -e "ERROR\nInvalid IP address $ipa!"
 	return 1
     fi
-fi
+done
 acp=""
 if [ "$APACHE_CONF_PATH" != "" ]; then
     acp="--apache_conf_path $APACHE_CONF_PATH"
@@ -811,8 +813,9 @@ if [ $PARSER_PORT -ne $ADMIN_INTERFACE_PARSER_PORT ]; then
     echo -e "ERROR\nParser port on ADMIN_INTERFACE and PARSER modules must be the same!"
     return 1
 fi
-if [ "$ADMIN_INTERFACE_PARSER_IP" != "localhost" ] && [ "$ADMIN_INTERFACE_PARSER_IP" != "127.0.0.1" ]; then
-    echo -e "ERROR\nPARSER_IP must be localhost (127.0.0.1)!"
+ping "$ADMIN_INTERFACE_PARSER_IP" -c 1 &> /dev/null
+if [ $? -ne 0 ]; then
+    echo -e "ERROR\nInvalid IP address $ADMIN_INTERFACE_PARSER_IP!"
     return 1
 fi
 echo "OK"
@@ -1239,6 +1242,7 @@ while true; do
 	    read_module_conf "$module"
             result=0
 	    if [ "$module_check" != "" ]; then
+		rm_from_list_var $module CHECKED_MODULES
 		$module_check $*
 		result=$?
 	    fi
