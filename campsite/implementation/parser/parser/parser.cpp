@@ -46,6 +46,7 @@ CParser methods implementation
 #include "error.h"
 #include "data_types.h"
 #include "exceptions.h"
+#include "cpublication.h"
 
 using std::cout;
 using std::endl;
@@ -807,7 +808,7 @@ inline int CParser::HURLParameters(CActionList& al)
 {
 	l = lex.getLexem();
 	DEBUGLexem("urlparam", l);
-	long int img = -1;
+	long int img = -1, nTemplate = -1;
 	bool fromstart = false, allsubtitles = false;
 	CLevel reset_from_list = CLV_ROOT;
 	while (l->res() != CMS_LEX_END_STATEMENT)
@@ -818,6 +819,7 @@ inline int CParser::HURLParameters(CActionList& al)
 			          lex.prevLine(), lex.prevColumn());
 			return 0;
 		}
+		attr = st->findAttr(l->atom()->identifier(), CMS_CT_DEFAULT);
 		if (case_comp(l->atom()->identifier(), "fromstart") == 0)
 		{
 			fromstart = true;
@@ -862,6 +864,17 @@ inline int CParser::HURLParameters(CActionList& al)
 			}
 			img = strtol(l->atom()->identifier().c_str(), 0, 10);
 		}
+		else if (case_comp(l->atom()->identifier(), "template") == 0)
+		{
+			RequireAtom(l);
+			ValidateDType(l, attr);
+			string tpl_name;
+			if ((l->atom()->identifier())[0] == '/')
+				tpl_name = l->atom()->identifier();
+			else
+				tpl_name = getTemplateInternalPath(true) + l->atom()->identifier();
+			nTemplate = CPublication::getTemplateId(tpl_name, MYSQLConnection());
+		}
 		else
 		{
 			string r_attrs = string(ST_IMAGE) + ", " + st->contextAttrs(CMS_CT_DEFAULT);
@@ -873,30 +886,31 @@ inline int CParser::HURLParameters(CActionList& al)
 		l = lex.getLexem();
 		DEBUGLexem("urlparam2", l);
 	}
-	al.insert(al.end(), new CActURLParameters(fromstart, allsubtitles, img, reset_from_list));
+	al.insert(al.end(),
+	          new CActURLParameters(fromstart, allsubtitles, img, reset_from_list, nTemplate));
 	if (l->res() != CMS_LEX_END_STATEMENT)
 		WaitForStatementEnd(true);
 	return 0;
 }
 
-// HFormParameters: parse FormParameters statement; add CActFormParameters action to
-// actions list (al)
+// getTemplatePath(): returns the template full path
 // Parameters:
-//		CActionList& al - reference to actions list
-inline int CParser::HFormParameters(CActionList& al)
+//		bool p_nAddTrailingSlash - if true add slash character to the end of the path
+string CParser::getTemplatePath(bool p_nAddTrailingSlash) const
 {
-	l = lex.getLexem();
-	DEBUGLexem("formparam", l);
-	bool fromstart = false;
-	if (l->res() != CMS_LEX_END_STATEMENT && l->atom()
-	    && case_comp(l->atom()->identifier(), "fromstart") == 0)
+	string tpl_path = tpl;
+	long int pos = tpl_path.rfind('/');
+	if (pos != string::npos)
 	{
-		fromstart = true;
+		tpl_path.erase(pos);
+		if (p_nAddTrailingSlash && tpl_path != "")
+			tpl_path += '/';
 	}
-	al.insert(al.end(), new CActFormParameters(fromstart));
-	if (l->res() != CMS_LEX_END_STATEMENT)
-		WaitForStatementEnd(true);
-	return 0;
+	else
+	{
+		tpl_path = "";
+	}
+	return tpl_path;
 }
 
 // HDate: parse date statement; add CActDate action to actions list (al)
@@ -961,9 +975,10 @@ inline int CParser::HPrint(CActionList& al, int lv, int sublv)
 	RequireAtom(l);
 	bool strictType = false;
 	string type, format;
-	if (st->findType(l->atom()->identifier()))
+	const CTypeAttributes* pcoType = st->findType(l->atom()->identifier());
+	if (pcoType != NULL)
 	{
-		type = l->atom()->identifier();
+		type = pcoType->name();
 		strictType = true;
 		RequireAtom(l);
 	}
@@ -1105,9 +1120,10 @@ inline int CParser::HList(CActionList& al, int level, int sublevel)
 		StringSet keywords;
 		CheckForAtom(l);
 		string type;
-		if (st->findType(l->atom()->identifier()))
+		const CTypeAttributes* pcoType = st->findType(l->atom()->identifier());
+		if (pcoType != NULL)
 		{
-			type = l->atom()->identifier();
+			type = pcoType->name();
 			RequireAtom(l);
 		}
 		SafeAutoPtr<CPairAttrType> attrType(NULL);
@@ -1137,15 +1153,18 @@ inline int CParser::HList(CActionList& al, int level, int sublevel)
 			ValidateOperator(l, attr);
 			string op = l->atom()->identifier();
 			RequireAtom(l);
+			string identifier = l->atom()->identifier();
 			if (attr->attrClass() != CMS_NORMAL_ATTR)
 			{
-				if (!st->findType(l->atom()->identifier()))
+				const CTypeAttributes* pcoType = st->findType(identifier);
+				if (pcoType == NULL)
 					throw InvalidType();
+				identifier = pcoType->name();
 			}
 			else
 				ValidateDType(l, attr);
 			params.insert(params.end(), new CParameter(attr->attribute(), type,
-			                                  attr->compOperation(op, l->atom()->identifier())));
+			                                           attr->compOperation(op, identifier)));
 		}
 		else
 		{
@@ -1457,10 +1476,11 @@ inline int CParser::HIf(CActionList& al, int lv, int sublv)
 	{
 		RequireAtom(l);
 		string type;
-		if (st->findType(l->atom()->identifier()))
+		const CTypeAttributes* pcoType = st->findType(l->atom()->identifier());
+		if (pcoType != NULL)
 		{
 			bStrictType = true;
-			type = l->atom()->identifier();
+			type = pcoType->name();
 			RequireAtom(l);
 		}
 		SafeAutoPtr<CPairAttrType> anyAttr(NULL);
@@ -1608,7 +1628,12 @@ inline int CParser::HSubscription(CActionList& al, int lv, int sublv)
 	attr = st->findAttr(l->atom()->identifier(), CMS_CT_DEFAULT);
 	by_publication = case_comp(attr->identifier(), "by_publication") == 0;
 	RequireAtom(l);
-	tpl_file = l->atom()->identifier();
+	string tpl_name;
+	if ((l->atom()->identifier())[0] == '/')
+		tpl_name = l->atom()->identifier();
+	else
+		tpl_name = getTemplateInternalPath(true) + l->atom()->identifier();
+	long int nTemplate = CPublication::getTemplateId(tpl_name, MYSQLConnection());
 	RequireAtom(l);
 	button_name = l->atom()->identifier();
 	l = lex.getLexem();
@@ -1624,8 +1649,8 @@ inline int CParser::HSubscription(CActionList& al, int lv, int sublv)
 	int res;
 	if (l->res() != CMS_LEX_END_STATEMENT)
 		WaitForStatementEnd(true);
-	SafeAutoPtr<CActSubscription> aloc(new CActSubscription(by_publication, tpl_file, button_name,
-	                                                        total, evaluate));
+	SafeAutoPtr<CActSubscription> aloc(new CActSubscription(by_publication, nTemplate,
+	                                                        button_name, total, evaluate));
 	sublv |= SUBLV_SUBSCRIPTION;
 	if ((res = LevelParser(aloc->block, lv, sublv)))
 	{
@@ -1790,12 +1815,17 @@ inline int CParser::HUser(CActionList& al, int lv, int sublv)
 	RequireAtom(l);
 	bool add = case_comp(l->atom()->identifier(), "add") == 0;
 	RequireAtom(l);
-	string tpl_file = l->atom()->identifier();
+	string tpl_name;
+	if ((l->atom()->identifier())[0] == '/')
+		tpl_name = l->atom()->identifier();
+	else
+		tpl_name = getTemplateInternalPath(true) + l->atom()->identifier();
+	long int nTemplate = CPublication::getTemplateId(tpl_name, MYSQLConnection());
 	RequireAtom(l);
 	string button_name = l->atom()->identifier();
 	int res;
 	WaitForStatementEnd(true);
-	SafeAutoPtr<CActUser> user(new CActUser(add, tpl_file, button_name));
+	SafeAutoPtr<CActUser> user(new CActUser(add, nTemplate, button_name));
 	if ((res = LevelParser(user->block, lv, sublv | SUBLV_USER)))
 	{
 		return res;
@@ -1825,12 +1855,17 @@ inline int CParser::HLogin(CActionList& al, int lv, int sublv)
 		            LvStatements(lv), lex.prevLine(), lex.prevColumn());
 	}
 	RequireAtom(l);
-	string tpl_file = l->atom()->identifier();
+	string tpl_name;
+	if ((l->atom()->identifier())[0] == '/')
+		tpl_name = l->atom()->identifier();
+	else
+		tpl_name = getTemplateInternalPath(true) + l->atom()->identifier();
+	long int nTemplate = CPublication::getTemplateId(tpl_name, MYSQLConnection());
 	RequireAtom(l);
 	string button_name = l->atom()->identifier();
 	int res;
 	WaitForStatementEnd(true);
-	SafeAutoPtr<CActLogin> login(new CActLogin(tpl_file, button_name));
+	SafeAutoPtr<CActLogin> login(new CActLogin(nTemplate, button_name));
 	if ((res = LevelParser(login->block, lv, sublv | SUBLV_LOGIN)))
 	{
 		return res;
@@ -1860,12 +1895,17 @@ inline int CParser::HSearch(CActionList& al, int lv, int sublv)
 		            LvStatements(lv), lex.prevLine(), lex.prevColumn());
 	}
 	RequireAtom(l);
-	string tpl_file = l->atom()->identifier();
+	string tpl_name;
+	if ((l->atom()->identifier())[0] == '/')
+		tpl_name = l->atom()->identifier();
+	else
+		tpl_name = getTemplateInternalPath(true) + l->atom()->identifier();
+	long int nTemplate = CPublication::getTemplateId(tpl_name, MYSQLConnection());
 	RequireAtom(l);
 	string button_name = l->atom()->identifier();
 	int res;
 	WaitForStatementEnd(true);
-	SafeAutoPtr<CActSearch> search(new CActSearch(tpl_file, button_name));
+	SafeAutoPtr<CActSearch> search(new CActSearch(nTemplate, button_name));
 	if ((res = LevelParser(search->block, lv, sublv | SUBLV_SEARCH)))
 	{
 		return res;
@@ -1895,12 +1935,13 @@ inline int CParser::HWith(CActionList& al, int lv, int sublv)
 	const CStatement* pcoArtSt = CLex::findSt(ST_ARTICLE);
 	if (pcoArtSt == NULL)
 		throw InvalidType();
-	if (!pcoArtSt->findType(l->atom()->identifier()))
+	const CTypeAttributes* pcoType = pcoArtSt->findType(l->atom()->identifier());
+	if (pcoType == NULL)
 		throw InvalidType();
-	string art_type = l->atom()->identifier();
+	string art_type = pcoType->name();
 	RequireAtom(l);
 	a.reset(pcoArtSt->findTypeAttr(l->atom()->identifier(), art_type, CMS_CT_WITH));
-	string field = l->atom()->identifier();
+	string field = a->first->identifier();
 	WaitForStatementEnd(true);
 	SafeAutoPtr<CActWith> aloc(new CActWith(art_type, field));
 	if ((res = LevelParser(aloc->block, lv, sublv | SUBLV_WITH)))
@@ -1945,10 +1986,9 @@ inline int CParser::HURIPath(CActionList& al)
 		{
 			params.insert(params.end(), new CParameter(attr->identifier()));
 		}
+		l = lex.getLexem();
 	}
 	al.insert(al.end(), new CActURIPath(params));
-	if (l->res() != CMS_LEX_END_STATEMENT)
-		WaitForStatementEnd(true);
 	return 0;
 }
 
@@ -2175,6 +2215,40 @@ CParser::~CParser()
 	catch (...)
 	{
 	}
+}
+
+// getTemplateInternalPath(): returns the template path inside the template directory
+// Parameters:
+//		bool p_nAddTrailingSlash - if true add slash character to the end of the path
+string CParser::getTemplateInternalPath(bool p_nAddTrailingSlash) const
+{
+	string tpl_ipath = getTemplatePath(false);
+	long int pos = tpl_ipath.find("/look/");
+	if (pos != string::npos)
+		tpl_ipath.erase(0, pos + 6);
+	if (p_nAddTrailingSlash && tpl_ipath != "")
+		tpl_ipath += '/';
+	return tpl_ipath;
+}
+
+// HFormParameters: parse FormParameters statement; add CActFormParameters action to
+// actions list (al)
+// Parameters:
+//		CActionList& al - reference to actions list
+inline int CParser::HFormParameters(CActionList& al)
+{
+	l = lex.getLexem();
+	DEBUGLexem("formparam", l);
+	bool fromstart = false;
+	if (l->res() != CMS_LEX_END_STATEMENT && l->atom()
+	    && case_comp(l->atom()->identifier(), "fromstart") == 0)
+	{
+		fromstart = true;
+	}
+	al.insert(al.end(), new CActFormParameters(fromstart));
+	if (l->res() != CMS_LEX_END_STATEMENT)
+		WaitForStatementEnd(true);
+	return 0;
 }
 
 // setMYSQL: set MySQL connection
