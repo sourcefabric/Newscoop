@@ -28,7 +28,7 @@ E_HEADER
 <P>
 B_DIALOG(<*Add new article type*>, <*POST*>, <*do_add.php*>)
 	B_DIALOG_INPUT(<*Name*>)
-		<INPUT TYPE="TEXT" NAME="cName" SIZE="15" MAXLENGTH="15">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cName" SIZE="15" MAXLENGTH="15">
 	E_DIALOG_INPUT
 	B_DIALOG_BUTTONS
 		SUBMIT(<*Ok*>, <*Save changes*>)

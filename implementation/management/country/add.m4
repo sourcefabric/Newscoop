@@ -28,10 +28,10 @@ E_HEADER
 <P>
 B_DIALOG(<*Add new country*>, <*POST*>, <*do_add.php*>)
 	B_DIALOG_INPUT(<*Code*>)
-		<INPUT TYPE="TEXT" NAME="cCode" SIZE="2" MAXLENGTH="2">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cCode" SIZE="2" MAXLENGTH="2">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Name*>)
-		<INPUT TYPE="TEXT" NAME="cName" SIZE="32" MAXLENGTH="64">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cName" SIZE="32" MAXLENGTH="64">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Language*>)
 			<SELECT NAME="cLanguage">

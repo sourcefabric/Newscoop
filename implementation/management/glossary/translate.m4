@@ -52,7 +52,7 @@ B_DIALOG(<*Translate keyword*>, <*POST*>, <*do_translate.php*>)
 ?>dnl
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Translation*>)
-		<INPUT TYPE="TEXT" NAME="cKeyword" SIZE="32" MAXLENGTH="64">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cKeyword" SIZE="32" MAXLENGTH="64">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Language*>)
 		<SELECT NAME="cLang"><?php 

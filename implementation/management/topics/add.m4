@@ -45,7 +45,7 @@ E_CURRENT
 <P>
 B_DIALOG(<*Add new topic*>, <*POST*>, <*do_add.php*>)
 	B_DIALOG_INPUT(<*Name*>)
-		<INPUT TYPE="TEXT" NAME="cName" SIZE="32" MAXLENGTH="32">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cName" SIZE="32" MAXLENGTH="32">
 		<INPUT TYPE="HIDDEN" NAME="IdCateg" VALUE="<?php p($IdCateg);?>">
 	E_DIALOG_INPUT
 	
