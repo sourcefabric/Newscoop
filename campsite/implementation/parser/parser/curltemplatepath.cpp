@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "curltemplatepath.h"
 #include "data_types.h"
 #include "util.h"
+#include "cpublication.h"
 
 
 // CURLTemplatePath(): copy constructor
@@ -39,6 +40,9 @@ CURLTemplatePath::CURLTemplatePath(const CURLTemplatePath& p_rcoSrc)
 	m_coQueryString = p_rcoSrc.m_coQueryString;
 	m_pDBConn = p_rcoSrc.m_pDBConn;
 	m_coHTTPHost = p_rcoSrc.m_coHTTPHost;
+	m_coTemplate = p_rcoSrc.m_coTemplate;
+	m_bTemplateSet = p_rcoSrc.m_bTemplateSet;
+	m_bValidTemplate = p_rcoSrc.m_bValidTemplate;
 }
 
 
@@ -95,6 +99,21 @@ string CURLTemplatePath::getQueryString() const
 	return coQueryString;
 }
 
+string CURLTemplatePath::getFormString() const
+{
+	string coFormString;
+	String2String::const_iterator coIt = m_coParamMap.begin();
+	for (; coIt != m_coParamMap.end(); ++coIt)
+	{
+		string coParam = (*coIt).first;
+		const char* pchValue = EscapeHTML((*coIt).second.c_str());
+		coFormString += string("<input type=\"hidden\" name=\"") + coParam + "\" value=\""
+		             + pchValue + "\">";
+		delete []pchValue;
+	}
+	return coFormString;
+}
+
 // buildURI(): internal method; builds the URI string from object attributes
 void CURLTemplatePath::buildURI() const
 {
@@ -114,4 +133,23 @@ void CURLTemplatePath::buildURI() const
 	m_coQueryString = getQueryString();
 
 	m_bValidURI = true;
+}
+
+string CURLTemplatePath::getTemplate() const
+{
+	if (m_bValidTemplate)
+		return m_coTemplate;
+	if (getValue(P_TEMPLATE_ID) != "")
+	{
+		string coSql = string("select Name from Templates where Id = ") + getValue(P_TEMPLATE_ID);
+		CMYSQL_RES coRes;
+		MYSQL_ROW qRow = QueryFetchRow(m_pDBConn, coSql.c_str(), coRes);
+		m_coTemplate = qRow[0];
+	}
+	else
+	{
+		m_coTemplate = CPublication::getTemplate(getLanguage(), getPublication(), getIssue(),
+		                                         getSection(), getArticle(), m_pDBConn, false);
+	}
+	return m_coTemplate;
 }
