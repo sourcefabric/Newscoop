@@ -214,7 +214,7 @@ int CStatementMap::InitStatements()
 	pcoCtx = new CStatementContext(CMS_CT_PRINT);
 	pcoCtx->insertAttr(new CStringAttr("name", "Name"));
 	pcoCtx->insertAttr(new CIntegerAttr("identifier", "Id"));
-	pcoCtx->insertAttr(new CStringAttr("site", "Site"));
+	pcoCtx->insertAttr(new CStringAttr("site", "a.Name"));
 	pcoSt->insertCtx(pcoCtx);
 
 	this->insert(pcoSt);
@@ -269,7 +269,7 @@ int CStatementMap::InitStatements()
 	pcoCtx->insertAttr(new CIntegerAttr("sec", "SECOND(PublicationDate)"));
 	pcoCtx->insertAttr(new CStringAttr("mon_name", "PublicationDate"));
 	pcoCtx->insertAttr(new CStringAttr("wday_name", "PublicationDate"));
-	pcoCtx->insertAttr(new CStringAttr("template", "FrontPage"));
+	pcoCtx->insertAttr(new CStringAttr("template"));
 	pcoSt->insertCtx(pcoCtx);
 
 	this->insert(pcoSt);
@@ -299,6 +299,7 @@ int CStatementMap::InitStatements()
 	pcoCtx = new CStatementContext(CMS_CT_PRINT);
 	pcoCtx->insertAttr(new CStringAttr("name", "Name"));
 	pcoCtx->insertAttr(new CIntegerAttr("number", "Number"));
+	pcoCtx->insertAttr(new CStringAttr("template"));
 	pcoSt->insertCtx(pcoCtx);
 
 	this->insert(pcoSt);
@@ -353,7 +354,7 @@ int CStatementMap::InitStatements()
 	pcoCtx->insertAttr(new CStringAttr("mon_name", "UploadDate"));
 	pcoCtx->insertAttr(new CStringAttr("wday_name", "UploadDate"));
 	pcoCtx->insertAttr(new CDateAttr("upload_date", "UploadDate"));
-	pcoCtx->insertAttr(new CStringAttr("template", "SingleArticle"));
+	pcoCtx->insertAttr(new CStringAttr("template"));
 	pcoSt->insertCtx(pcoCtx);
 
 	pcoSt->updateTypes(pcoArticleTypeAttributes);
