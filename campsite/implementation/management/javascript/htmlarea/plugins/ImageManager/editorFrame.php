@@ -1,9 +1,9 @@
-<?
+<?php
 
 /**
  * The frame that contains the image to be edited.
  * @author $Author: paul $
- * @version $Id: editorFrame.php,v 1.1 2004/09/11 02:43:24 paul Exp $
+ * @version $Id: editorFrame.php,v 1.2 2004/11/15 02:54:03 paul Exp $
  * @package ImageManager
  */
 
@@ -34,15 +34,15 @@ function i18n(str) {
 		return str;
 };
 	
-	var mode = "<? echo $editor->getAction(); ?>" //crop, scale, measure
+	var mode = "<?php echo $editor->getAction(); ?>" //crop, scale, measure
 
-var currentImageFile = "<? if(count($imageInfo)>0) echo rawurlencode($imageInfo['file']); ?>";
+var currentImageFile = "<?php if(count($imageInfo)>0) echo rawurlencode($imageInfo['file']); ?>";
 
-<? if ($editor->isFileSaved() == 1) { ?>
+<?php if ($editor->isFileSaved() == 1) { ?>
 	alert(i18n('File saved.'));
-<? } else if ($editor->isFileSaved() == -1) { ?>
+<?php } else if ($editor->isFileSaved() == -1) { ?>
 	alert(i18n('File was not saved.'));
-<? } ?>
+<?php } ?>
 
 </script>
 <script type="text/javascript" src="assets/editorFrame.js"></script>
@@ -51,17 +51,17 @@ var currentImageFile = "<? if(count($imageInfo)>0) echo rawurlencode($imageInfo[
 <body>
 <div id="status"></div>
 <div id="ant" class="selection" style="visibility:hidden"><img src="img/spacer.gif" width="0" height="0" border="0" alt="" id="cropContent"></div>
-<? if ($editor->isGDEditable() == -1) { ?>
+<?php if ($editor->isGDEditable() == -1) { ?>
 	<div style="text-align:center; padding:10px;"><span class="error">GIF format is not supported, image editing not supported.</span></div>
-<? } ?>
+<?php } ?>
 <table height="100%" width="100%">
 	<tr>
 		<td>
-<? if(count($imageInfo) > 0 && is_file($imageInfo['fullpath'])) { ?>
-	<span id="imgCanvas" class="crop"><img src="<? echo $imageInfo['src']; ?>" <? echo $imageInfo['dimensions']; ?> alt="" id="theImage" name="theImage"></span>
-<? } else { ?>
+<?php if(count($imageInfo) > 0 && is_file($imageInfo['fullpath'])) { ?>
+	<span id="imgCanvas" class="crop"><img src="<?php echo $imageInfo['src']; ?>" <?php echo $imageInfo['dimensions']; ?> alt="" id="theImage" name="theImage"></span>
+<?php } else { ?>
 	<span class="error">No Image Available</span>
-<? } ?>
+<?php } ?>
 		</td>
 	</tr>
 </table>

@@ -1,10 +1,10 @@
-<?
+<?php
 /**
  * On the fly Thumbnail generation.
  * Creates thumbnails given by thumbs.php?img=/relative/path/to/image.jpg
  * relative to the base_dir given in config.inc.php
  * @author $Author: paul $
- * @version $Id: thumbs.php,v 1.1 2004/09/11 02:43:24 paul Exp $
+ * @version $Id: thumbs.php,v 1.2 2004/11/15 02:54:34 paul Exp $
  * @package ImageManager
  */
 

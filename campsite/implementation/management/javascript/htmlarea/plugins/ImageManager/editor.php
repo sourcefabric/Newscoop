@@ -1,8 +1,8 @@
-<?
+<?php
 /**
  * The PHP Image Editor user interface.
  * @author $Author: paul $
- * @version $Id: editor.php,v 1.1 2004/09/11 02:43:24 paul Exp $
+ * @version $Id: editor.php,v 1.2 2004/11/15 02:53:43 paul Exp $
  * @package ImageManager
  */
 
@@ -98,7 +98,7 @@ $editor = new ImageEditor($manager);
 	</div>
 	<div id="tools_save" style="display:none;">
 		<div id="tool_inputs">
-			<label for="save_filename">Filename:</label><input type="text" id="save_filename" value="<? echo $editor->getDefaultSaveFile();?>"/>
+			<label for="save_filename">Filename:</label><input type="text" id="save_filename" value="<?php echo $editor->getDefaultSaveFile();?>"/>
 			<select name="format" id="save_format" style="margin-left: 10px; vertical-align: middle;" onchange="updateFormat(this)">
             <option value="" selected>Image Format</option>
             <option value="">---------------------</option>
@@ -106,9 +106,9 @@ $editor = new ImageEditor($manager);
             <option value="jpeg,60">JPEG Medium</option>
             <option value="jpeg,35">JPEG Low</option>
             <option value="png">PNG</option>
-			<? if($editor->isGDGIFAble() != -1) { ?>
+			<?php if($editor->isGDGIFAble() != -1) { ?>
             <option value="gif">GIF</option>
-			<? } ?>
+			<?php } ?>
          </select>
 			<label>Quality:</label>
 			<table style="display: inline; vertical-align: middle;" cellpadding="0" cellspacing="0">
@@ -137,7 +137,7 @@ $editor = new ImageEditor($manager);
 <a href="javascript:toggle('save')" id="icon_save" title="Save"><img src="img/save.gif" height="20" width="20" alt="Save" /><span>Save</span></a>
 </div>
 <div id="contents">
-<iframe src="editorFrame.php?img=<? if(isset($_GET['img'])) echo rawurlencode($_GET['img']); ?>" name="editor" id="editor"  scrolling="auto" title="Image Editor" frameborder="0"></iframe>
+<iframe src="editorFrame.php?img=<?php if(isset($_GET['img'])) echo rawurlencode($_GET['img']); ?>" name="editor" id="editor"  scrolling="auto" title="Image Editor" frameborder="0"></iframe>
 </div>
 <div id="bottom"></div>
 </body>
