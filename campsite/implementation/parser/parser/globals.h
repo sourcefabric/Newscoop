@@ -41,13 +41,40 @@ using std::binary_function;
 
 typedef unsigned int UInt;
 typedef unsigned long int ULInt;
+typedef unsigned long ULong;
+typedef unsigned int uint;
+typedef unsigned long int ulint;
+typedef unsigned long ulong;
 
 // exception classes
 class InvalidValue : public exception
 {
 public:
-	virtual const char* what () const throw () { return "invalid value"; }
+	InvalidValue(const char* p_pchName = NULL, const char* p_pchValue = NULL);
+
+	InvalidValue(const string& p_rcoName, const string& p_rcoValue);
+
+	~InvalidValue() throw () {}
+
+	virtual const char* what () const throw () { return m_coMsg.c_str(); }
+
+private:
+	string m_coMsg;
 };
+
+inline InvalidValue::InvalidValue(const char* p_pchName, const char* p_pchValue)
+{
+	m_coMsg = string("Invalid value");
+	if (p_pchValue != NULL)
+		m_coMsg += string(" \"") + p_pchValue + "\""; 
+	if (p_pchName != NULL)
+		m_coMsg += string(" of \"") + p_pchName + "\""; 
+}
+
+inline InvalidValue::InvalidValue(const string& p_rcoName, const string& p_rcoValue)
+{
+	m_coMsg = string("Invalid value \"") + p_rcoName + "\" of \"" + p_rcoValue + "\"";
+}
 
 inline int case_comp(const string& p_rcoS1, const string& p_rcoS2)
 {
@@ -64,5 +91,45 @@ struct str_case_less : public binary_function<string, string, bool>
 	bool operator ()(const string& first, const string& second) const
 	{ return case_comp(first, second) < 0; }
 };
+
+
+// other useful functions
+string int2string(int p_nValue);
+string long2string(long p_nValue);
+string uint2string(int p_nValue);
+string ulong2string(unsigned long p_nValue);
+
+#include <sstream>
+
+using std::stringstream;
+
+// other useful functions
+inline string int2string(int p_nValue)
+{
+	stringstream coStr("");
+	coStr << p_nValue;
+	return coStr.str();
+}
+
+inline string long2string(long p_nValue)
+{
+	stringstream coStr("");
+	coStr << p_nValue;
+	return coStr.str();
+}
+
+inline string uint2string(int p_nValue)
+{
+	stringstream coStr("");
+	coStr << p_nValue;
+	return coStr.str();
+}
+
+inline string ulong2string(unsigned long p_nValue)
+{
+	stringstream coStr("");
+	coStr << p_nValue;
+	return coStr.str();
+}
 
 #endif
