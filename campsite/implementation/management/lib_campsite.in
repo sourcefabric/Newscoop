@@ -60,17 +60,19 @@ function pencHTML($s)
 //    print htmlentities($s);
 }
 
-function todef($s,$v='')
+function todef($s)
 {
-  if (!isset($_REQUEST[$s])) {
-      $GLOBALS[$s] = $v;
+  if (isset($_REQUEST[$s])) {
+	$GLOBALS[$s] = $_REQUEST[$s];
   }
   else {
-    $GLOBALS[$s] = $_REQUEST[$s];
+	if (@func_get_arg(1)) {
+	  $GLOBALS[$s] = func_get_arg(1);
+	}
   }
 
   if (!get_magic_quotes_gpc()) {
-    $GLOBALS[$s] = mysql_escape_string($GLOBALS[$s]);
+	$GLOBALS[$s] = mysql_escape_string($GLOBALS[$s]);
   }
 }
 
@@ -153,12 +155,10 @@ function pgetVar($q,$s)
 
 function todefradio($s)
 {
-    if (!isset($GLOBALS[$s]))
- $GLOBALS[$s]='';
     if ($_REQUEST[$s]=='on')
- $GLOBALS[$s]='Y';
+ 		$GLOBALS[$s]='Y';
     else
- $GLOBALS[$s]='N';
+ 		$GLOBALS[$s]='N';
 }
 
 function checkedIfY($qh,$field)
