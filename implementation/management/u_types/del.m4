@@ -47,7 +47,6 @@ E_MSGBOX
 <?php  } ?>dnl
 <P>
 
-X_HR
 X_COPYRIGHT
 E_BODY
 <?php  } ?>dnl

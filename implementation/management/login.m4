@@ -49,7 +49,7 @@ B_DIALOG(<*Login*>, <*POST*>, <*do_login.php*>)
 E_DIALOG
 <P>
 <?php  if (file_exists("./guest_include.php")) require("./guest_include.php"); ?>
-X_HR
+
 X_COPYRIGHT
 E_BODY
 E_HTML

@@ -84,7 +84,6 @@ X_AUDIT(<*103*>, <*getGS('Language $1 modified',$cName)*>)
 E_MSGBOX
 <P>
 
-X_HR
 X_COPYRIGHT
 E_BODY
 <?php  } ?>dnl

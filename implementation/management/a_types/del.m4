@@ -37,7 +37,6 @@ B_MSGBOX(<*Delete article type*>)
 E_MSGBOX
 <P>
 
-X_HR
 X_COPYRIGHT
 E_BODY
 <?php  } ?>dnl

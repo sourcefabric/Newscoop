@@ -42,7 +42,6 @@ B_DIALOG(<*Create new template*>, <*POST*>, <*do_new_templ.php*>)
 E_DIALOG
 <P>
 
-X_HR
 X_COPYRIGHT
 E_BODY
 <?php  } ?>dnl

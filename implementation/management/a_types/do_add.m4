@@ -82,7 +82,6 @@ X_AUDIT(<*61*>, <*getGS('The article type $1 has been added.',$cName)*>)
 E_MSGBOX
 <P>
 
-X_HR
 X_COPYRIGHT
 E_BODY
 <?php  } ?>dnl

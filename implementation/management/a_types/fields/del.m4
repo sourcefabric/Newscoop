@@ -47,7 +47,6 @@ B_MSGBOX(<*Delete field*>)
 E_MSGBOX
 <P>
 
-X_HR
 X_COPYRIGHT
 E_BODY
 <?php  } ?>

@@ -131,7 +131,6 @@ X_AUDIT(<*51*>, <*getGS('User account $1 created', encHTML(decS($cUName)))*>)
 E_MSGBOX
 <P>
 
-X_HR
 X_COPYRIGHT
 E_BODY
 <?php  } ?>dnl

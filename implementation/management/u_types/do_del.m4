@@ -42,7 +42,6 @@ X_AUDIT(<*122*>, <*getGS('User type $1 deleted',encHTML($UType))*>)
 E_MSGBOX
 <P>
 
-X_HR
 X_COPYRIGHT
 E_BODY
 <?php  } ?>dnl

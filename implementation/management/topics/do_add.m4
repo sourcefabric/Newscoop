@@ -78,7 +78,6 @@ B_MSGBOX(<*Adding new topic*>)
 E_MSGBOX
 <P>
 
-X_HR
 X_COPYRIGHT
 E_BODY
 <?php  } ?>dnl

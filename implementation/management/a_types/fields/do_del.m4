@@ -51,7 +51,6 @@ X_AUDIT(<*72*>, <*getGS('Article type field $1 deleted',encHTML($Field))*>)
 E_MSGBOX
 <P>
 
-X_HR
 X_COPYRIGHT
 E_BODY
 <?php  } ?>dnl

@@ -94,7 +94,6 @@ X_AUDIT(<*11*>, <*getGS('Issue $1 added',$cName)*>)
 E_MSGBOX
 <P>
 
-X_HR
 X_COPYRIGHT
 E_BODY
 <?php  } ?>dnl

@@ -62,7 +62,6 @@ B_DIALOG(<*Edit template*>, <*POST*>, <*do_edit.php*>)
 	E_DIALOG_BUTTONS
 E_DIALOG
 
-X_HR
 X_COPYRIGHT
 E_BODY
 <?php  } ?>dnl
