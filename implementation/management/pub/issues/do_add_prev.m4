@@ -52,13 +52,28 @@ for($loop=0;$loop<$nr;$loop++) {
 	fetchRow($q_iss);
 	$idlang=getVar($q_iss,'IdLanguage');
 
-	$sql = "INSERT INTO Issues SET IdPublication=$cPub, Number=$cNumber, IdLanguage=$idlang, Name='" . getSVar($q_iss,'Name') . "', IssueTplId=" . getSVar($q_iss,'IssueTplId') . ", SectionTplId=" . getSVar($q_iss,'SectionTplId') . ", ArticleTplId=" . getSVar($q_iss,'ArticleTplId') . ", ShortName = " . $cNumber;
+	$sql = "INSERT INTO Issues SET IdPublication=$cPub, Number=$cNumber, IdLanguage=$idlang, Name='" . getSVar($q_iss,'Name') . "', ShortName = '" . $cNumber . "'";
+	$issueTplId = getSVar($q_iss,'IssueTplId');
+	if ($issueTplId > 0)
+		$sql .= ", IssueTplId=$issueTplId";
+	$sectionTplId = getSVar($q_iss,'SectionTplId');
+	if ($sectionTplId > 0)
+		$sql .= ", SectionTplId=$sectionTplId";
+	$articleTplId = getSVar($q_iss,'ArticleTplId');
+	if ($articleTplId > 0)
+		$sql .= ", ArticleTplId=$articleTplId";
 	query($sql);
 	query ("SELECT * FROM Sections WHERE IdPublication=$cPub AND NrIssue=$cOldNumber AND IdLanguage=$idlang", 'q_sect');
 	$nr2=$NUM_ROWS;
 	for($loop2=0;$loop2<$nr2;$loop2++) {
 	    fetchRow($q_sect);
-	    $sql = "INSERT INTO Sections SET IdPublication=$cPub, NrIssue=$cNumber, IdLanguage=$idlang, Number=".getSVar($q_sect,'Number').", Name='".getSVar($q_sect,'Name')."', ShortName=".getSVar($q_sect,'Number') . ", SectionTplId=" . getSVar($q_iss,'SectionTplId') . ", ArticleTplId=" . getSVar($q_iss,'ArticleTplId');
+	    $sql = "INSERT INTO Sections SET IdPublication=$cPub, NrIssue=$cNumber, IdLanguage=$idlang, Number=".getSVar($q_sect,'Number').", Name='".getSVar($q_sect,'Name')."', ShortName='".getSVar($q_sect,'Number') . "'";
+		$sectionTplId = getSVar($q_sect,'SectionTplId');
+		if ($sectionTplId > 0)
+			$sql .= ", SectionTplId=$sectionTplId";
+		$articleTplId = getSVar($q_sect,'ArticleTplId');
+		if ($articleTplId > 0)
+			$sql .= ", ArticleTplId=$articleTplId";
 		query($sql);
 	}
 }
