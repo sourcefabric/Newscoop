@@ -311,18 +311,18 @@ function putGS($p_translateString) {
  */
 function getGS($p_translateString) {
 	global $gs, $TOL_Language;
-	$nr=func_num_args();
+	$numFunctionArgs = func_num_args();
 	if (!isset($gs[$p_translateString]) || ($gs[$p_translateString]=='')) {
 		$translatedString = "$p_translateString (not translated)";
 	}
 	else {
 		$translatedString = $gs[$p_translateString];
 	}
-	if ($nr>1) {
-		for ($i=1; $i < $nr; $i++){
-			$name='$'.$i;
-			$val=func_get_arg($i);
-			$translatedString=str_replace($name,$val,$translatedString);
+	if ($numFunctionArgs > 1) {
+		for ($i = 1; $i < $numFunctionArgs; $i++){
+			$name = '$'.$i;
+			$val = func_get_arg($i);
+			$translatedString = str_replace($name, $val, $translatedString);
 		}
 	}
 	return $translatedString;
