@@ -141,9 +141,9 @@ if (count($articles) > 0) {
 	// image is in use //////////////////////////////////////////////////////////////////
 	?>
 	<center>
-	<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" width="50%" class="table_list">
+	<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" width="500px" class="table_list">
 	<tr class="table_list_header">
-		<td colspan="2"><?php putGS('Used in articles'); ?>:</td>
+		<td><?php putGS('Used in articles'); ?>:</td>
 	</tr>
 	<?php
 	$color = 0;
@@ -164,9 +164,7 @@ if (count($articles) > 0) {
 		else {
 			echo '<td>';
 		}
-		echo htmlspecialchars($article->getTitle())."</td>
-			<td width=\"10%\" align=\"center\">
-			<a href=\"/$ADMIN/pub/issues/sections/articles/edit.php?Pub=".htmlspecialchars($article->getPublicationId()).'&Issue='.$article->getIssueId().'&Section='.$article->getSectionId().'&Article='.$article->getArticleId().'&Language='.$article->getLanguageId().'&sLanguage='.$article->getLanguageId().'">'.getGS('Edit').'</a></td></tr>';
+		echo "<a href=\"/$ADMIN/pub/issues/sections/articles/edit.php?Pub=".htmlspecialchars($article->getPublicationId()).'&Issue='.$article->getIssueId().'&Section='.$article->getSectionId().'&Article='.$article->getArticleId().'&Language='.$article->getLanguageId().'&sLanguage='.$article->getLanguageId().'">'.htmlspecialchars($article->getTitle()).'</a></td></tr>';
 		$previousArticleId = $article->getArticleId();
 	}
 	?>
