@@ -2291,9 +2291,9 @@ int TOLActEdit::TakeAction(TOLContext& c, fstream& fs)
 	if (modifier == TOL_EMOD_LOGIN)
 	{
 		if (field == "Password")
-			fs << "<input type=password name=\"Login" << field << "\" maxlength=32 size=32>";
+			fs << "<input type=password name=\"Login" << field << "\" maxlength=32 size=10>";
 		else
-			fs << "<input type=text name=\"Login" << field << "\" maxlength=32 size=32>";
+			fs << "<input type=text name=\"Login" << field << "\" maxlength=32 size=10>";
 	}
 	if (modifier == TOL_EMOD_SEARCH)
 	{
