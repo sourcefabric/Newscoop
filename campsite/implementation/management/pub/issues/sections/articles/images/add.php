@@ -1,77 +1,53 @@
+<?php
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
+load_common_include_files();
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/Article.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/Image.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/Issue.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/Section.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/Language.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/Publication.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/priv/CampsiteInterface.php");
+
+list($access, $User) = check_basic_access($_REQUEST);
+if (!$access) {
+	header("Location: /priv/logout.php");
+	exit;
+}
+if (!$User->hasPermission("AddImage")) {
+	header("Location: /priv/ad.php?ADReason=".encURL(getGS("You do not have the right to add images" ))); 
+	exit;
+}
+$maxId = Image::GetMaxId();
+$Pub = isset($_REQUEST["Pub"])?$_REQUEST["Pub"]:0;
+$Issue = isset($_REQUEST["Issue"])?$_REQUEST["Issue"]:0;
+$Section = isset($_REQUEST["Section"])?$_REQUEST["Section"]:0;
+$Language = isset($_REQUEST["Language"])?$_REQUEST["Language"]:0;
+$sLanguage = isset($_REQUEST["sLanguage"])?$_REQUEST["sLanguage"]:0;
+$Article = isset($_REQUEST["Article"])?$_REQUEST["Article"]:0;
+
+$articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
+$publicationObj =& new Publication($Pub);
+$issueObj =& new Issue($Pub, $Language, $Issue);
+$languageObj =& new Language($Language);
+$sectionObj =& new Section($Pub, $Issue, $Language, $Section);
+
+query ("SELECT LEFT(NOW(), 10)", 'q_now');
+fetchRowNum($q_now);
+?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
 	"http://www.w3.org/TR/REC-html40/loose.dtd">
 <HTML>
-<?php  include ("../../../../../lib_campsite.php");
-    $globalfile=selectLanguageFile('../../../../..','globals');
-    $localfile=selectLanguageFile('.','locals');
-    @include ($globalfile);
-    @include ($localfile);
-    include ("../../../../../languages.php");   ?>
-<?php  require_once("$DOCUMENT_ROOT/db_connect.php"); ?>
-
-
-<?php 
-    todefnum('TOL_UserId');
-    todefnum('TOL_UserKey');
-    query ("SELECT * FROM Users WHERE Id=$TOL_UserId AND KeyId=$TOL_UserKey", 'Usr');
-    $access=($NUM_ROWS != 0);
-    if ($NUM_ROWS) {
-	fetchRow($Usr);
-	query ("SELECT * FROM UserPerm WHERE IdUser=".getVar($Usr,'Id'), 'XPerm');
-	 if ($NUM_ROWS){
-	 	fetchRow($XPerm);
-	 }
-	 else $access = 0;						//added lately; a non-admin can enter the administration area; he exists but doesn't have ANY rights
-	 $xpermrows= $NUM_ROWS;
-    }
-    else {
-	query ("SELECT * FROM UserPerm WHERE 1=0", 'XPerm');
-    }
-?>
-    
-
-
-    <?php  if ($access) {
-	query ("SELECT AddImage FROM UserPerm WHERE IdUser=".getVar($Usr,'Id'), 'Perm');
-	 if ($NUM_ROWS) {
-		fetchRow($Perm);
-		$access = (getVar($Perm,'AddImage') == "Y");
-	}
-	else $access = 0;
-    } ?>
-    
- 
 
 <HEAD>
     <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 	<META HTTP-EQUIV="Expires" CONTENT="now">
 	<TITLE><?php  putGS("Add new image"); ?></TITLE>
-<?php  if ($access == 0) { ?>	<META HTTP-EQUIV="Refresh" CONTENT="0; URL=/priv/ad.php?ADReason=<?php  print encURL(getGS("You do not have the right to add images" )); ?>">
-<?php  } ?></HEAD>
-
-<?php  if ($access) { ?><STYLE>
-	BODY { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	SMALL { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 8pt; }
-	FORM { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	TH { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	TD { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	BLOCKQUOTE { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	UL { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	LI { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	A  { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; text-decoration: none; color: darkblue; }
-	ADDRESS { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 8pt; }
-</STYLE>
+	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite["website_url"] ?>/css/admin_stylesheet.css">
+</HEAD>
 
 <BODY  BGCOLOR="WHITE" TEXT="BLACK" LINK="DARKBLUE" ALINK="RED" VLINK="DARKBLUE">
-<?php 
-    todefnum('Pub');
-    todefnum('Issue');
-    todefnum('Section');
-    todefnum('Article');
-    todefnum('Language');
-    todefnum('sLanguage');
-?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%">
 	<TR>
 		<TD ROWSPAN="2" WIDTH="1%"><IMG SRC="/priv/img/sign_big.gif" BORDER="0"></TD>
@@ -90,42 +66,19 @@
 </TR></TABLE></TD></TR>
 </TABLE>
 
-<?php 
-    query ("SELECT * FROM Articles WHERE IdPublication=$Pub AND NrIssue=$Issue AND NrSection=$Section AND Number=$Article", 'q_art');
-    if ($NUM_ROWS) {
-	query ("SELECT * FROM Sections WHERE IdPublication=$Pub AND NrIssue=$Issue AND IdLanguage=$Language AND Number=$Section", 'q_sect');
-	if ($NUM_ROWS) {
-	    query ("SELECT * FROM Issues WHERE IdPublication=$Pub AND Number=$Issue AND IdLanguage=$Language", 'q_iss');
-	    if ($NUM_ROWS) {
-		query ("SELECT * FROM Publications WHERE Id=$Pub", 'q_pub');
-		if ($NUM_ROWS) {
-		    query ("SELECT Name FROM Languages WHERE Id=$Language", 'q_lang');
+<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="1" WIDTH="100%"><TR>
+<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP">&nbsp;<?php  putGS("Publication"); ?>:</TD><TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><?php echo htmlspecialchars($publicationObj->getName()); ?></B></TD>
 
-		    fetchRow($q_art);
-		    fetchRow($q_sect);
-		    fetchRow($q_iss);
-		    fetchRow($q_pub);
-		    fetchRow($q_lang);
-?><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="1" WIDTH="100%"><TR>
-<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP">&nbsp;<?php  putGS("Publication"); ?>:</TD><TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><?php  pgetHVar($q_pub,'Name'); ?></B></TD>
+<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP">&nbsp;<?php  putGS("Issue"); ?>:</TD><TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><?php echo $issueObj->getIssueId(); ?>. <?php  echo htmlspecialchars($issueObj->getName()); ?> (<?php echo $languageObj->getName(); ?>)</B></TD>
 
-<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP">&nbsp;<?php  putGS("Issue"); ?>:</TD><TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><?php  pgetHVar($q_iss,'Number'); ?>. <?php  pgetHVar($q_iss,'Name'); ?> (<?php  pgetHVar($q_lang,'Name'); ?>)</B></TD>
+<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP">&nbsp;<?php  putGS("Section"); ?>:</TD><TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><?php echo $sectionObj->getSectionId(); ?>. <?php  echo htmlspecialchars($sectionObj->getName());; ?></B></TD>
 
-<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP">&nbsp;<?php  putGS("Section"); ?>:</TD><TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><?php  pgetHVar($q_sect,'Number'); ?>. <?php  pgetHVar($q_sect,'Name'); ?></B></TD>
-
-<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP">&nbsp;<?php  putGS("Article"); ?>:</TD><TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><?php  pgetHVar($q_art,'Name'); ?></B></TD>
+<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP">&nbsp;<?php  putGS("Article"); ?>:</TD><TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><?php echo htmlspecialchars($articleObj->getTitle()); ?></B></TD>
 
 </TR></TABLE>
 
-<?php 
-    query ("SELECT MAX(Number) + 1 FROM Images WHERE IdPublication=$Pub AND NrIssue=$Issue AND NrSection=$Section AND NrArticle=$Article", 'q_nr');
-    fetchRowNum($q_nr);
-    if (getNumVar($q_nr,0) == "")
-	$nr= 1;
-    else
-	$nr=getNumVar($q_nr,0);
-?><P>
-<FORM NAME="dialog" METHOD="POST" ACTION="/cgi-bin/upload_i" ENCTYPE="multipart/form-data">
+<P>
+<FORM NAME="dialog" METHOD="POST" ACTION="/priv/pub/issues/sections/articles/images/do_add.php" ENCTYPE="multipart/form-data">
 <CENTER><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" BGCOLOR="#C0D0FF" ALIGN="CENTER">
 	<TR>
 		<TD COLSPAN="2">
@@ -133,16 +86,16 @@
 			<HR NOSHADE SIZE="1" COLOR="BLACK">
 		</TD>
 	</TR>
-	<TR>
+<!--	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS("Number"); ?>:</TD>
 		<TD>
-		<INPUT TYPE="TEXT" NAME="cNumber" VALUE="<?php  p($nr); ?>" SIZE="5" MAXLENGTH="5">
+		<INPUT TYPE="TEXT" NAME="cNumber" VALUE="<?php  p($maxId); ?>" SIZE="5" MAXLENGTH="5">
 		</TD>
 	</TR>
-	<TR>
+-->	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS("Description"); ?>:</TD>
 		<TD>
-		<INPUT TYPE="TEXT" NAME="cDescription" VALUE="Image <?php  p($nr); ?>" SIZE="32" MAXLENGTH="128">
+		<INPUT TYPE="TEXT" NAME="cDescription" VALUE="Image <?php  p($maxId); ?>" SIZE="32" MAXLENGTH="128">
 		</TD>
 	</TR>
 	<TR>
@@ -160,10 +113,7 @@
 	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS("Date"); ?>:</TD>
 		<TD>
-<?php  
-    query ("SELECT LEFT(NOW(), 10)", 'q_now');
-    fetchRowNum($q_now);
-?>		<INPUT TYPE="TEXT" NAME="cDate" VALUE="<?php  pgetNumVar($q_now,0); ?>" SIZE="10" MAXLENGTH="10"> <?php  putGS('YYYY-MM-DD'); ?>
+			<INPUT TYPE="TEXT" NAME="cDate" VALUE="<?php  pgetNumVar($q_now,0); ?>" SIZE="10" MAXLENGTH="10"> <?php  putGS('YYYY-MM-DD'); ?>
 		</TD>
 	</TR>
 	<TR>
@@ -190,26 +140,4 @@
 </FORM>
 <P>
 
-<?php  } else { ?><BLOCKQUOTE>
-	<LI><?php  putGS('No such publication.'); ?></LI>
-</BLOCKQUOTE>
-<?php  } ?>
-<?php  } else { ?><BLOCKQUOTE>
-	<LI><?php  putGS('No such issue.'); ?></LI>
-</BLOCKQUOTE>
-<?php  } ?>
-<?php  } else { ?><BLOCKQUOTE>
-	<LI><?php  putGS('No such section.'); ?></LI>
-</BLOCKQUOTE>
-<?php  } ?>
-<?php  } else { ?><BLOCKQUOTE>
-	<LI><?php  putGS('No such article.'); ?></LI>
-</BLOCKQUOTE>
-<?php  } ?>
-<HR NOSHADE SIZE="1" COLOR="BLACK">
-<a STYLE='font-size:8pt;color:#000000' href='http://www.campware.org' target='campware'>CAMPSITE  2.1.5 &copy 1999-2004 MDLF, maintained and distributed under GNU GPL by CAMPWARE</a>
-
-</BODY>
-<?php  } ?>
-
-</HTML>
+<?php CampsiteInterface::CopyrightNotice(); ?>
