@@ -3,12 +3,14 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DatabaseObject.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/include/Yahc.class.php');
 
-define(CAMPSITE_IMAGE_PREFIX, '/images/cms-image-');
-define(CAMPSITE_IMAGEMAGICK, TRUE);
-define(CAMPSITE_THUMBNAIL_COMMAND, 'convert -sample 64x64');
-define(CAMPSITE_THUMBNAIL_PREFIX, '/images/thumbnails/cms-thumb-');
+define('CAMPSITE_IMAGE_DIRECTORY', '/images/');
+define('CAMPSITE_IMAGE_PREFIX', 'cms-image-');
+define('CAMPSITE_IMAGEMAGICK', TRUE);
+define('CAMPSITE_THUMBNAIL_COMMAND', 'convert -sample 64x64');
+define('CAMPSITE_THUMBNAIL_DIRECTORY', '/images/thumbnails/');
+define('CAMPSITE_THUMBNAIL_PREFIX', 'cms-thumb-');
 // TODO: this should be replaced with the php.ini defined temp directory.
-define(CAMPSITE_TMP_DIR, '/tmp/');
+define('CAMPSITE_TMP_DIR', '/tmp/');
 
 class Image extends DatabaseObject {
 	var $m_keyColumnNames = array('Id');
@@ -23,7 +25,11 @@ class Image extends DatabaseObject {
 		'Date', 
 		'ContentType', 
 		'Location', 
-		'URL');
+		'URL',
+		'ThumbnailFileName',
+		'ImageFileName',
+		'LastModified',
+		'TimeCreated');
 
 	/**
 	 *
@@ -53,10 +59,12 @@ class Image extends DatabaseObject {
 		parent::delete();
 		
 		// Delete the images from disk
-		if (file_exists($this->getImageStorageLocation())) {
+		if (file_exists($this->getImageStorageLocation()) 
+			&& is_file($this->getImageStorageLocation())) {
 			unlink($this->getImageStorageLocation());
 		}
-		if (file_exists($this->getThumbnailStorageLocation())) {
+		if (file_exists($this->getThumbnailStorageLocation()) 
+			&& is_file($this->getThumbnailStorageLocation())) {
 			unlink($this->getThumbnailStorageLocation());
 		}
 		return true;
@@ -71,7 +79,7 @@ class Image extends DatabaseObject {
 	function inUse() {
 		global $Campsite;
 		$queryStr = 'SELECT IdImage FROM ArticleImages WHERE IdImage='.$this->getImageId();
-		if ($Campsite['db']->FetchRow()) {
+		if ($Campsite['db']->GetOne($queryStr)) {
 			return true;
 		}
 		else {
@@ -123,22 +131,25 @@ class Image extends DatabaseObject {
 	/**
 	 * @return string
 	 */
-	function getContentType() {
-		return $this->getProperty('ContentType');
-	} // fn getContentType
+	function getLocation() {
+		return $this->getProperty('Location');
+	} // fn getLocation
 	
 	
 	/**
 	 * @return string
 	 */
-	function getFileExtension() {
-		switch ($this->getContentType()) {
-		case 'image/gif':
-			return 'gif';
-		case 'image/jpeg':
-			return 'jpg';
-		}
-	} // fn getFileExtension
+	function getUrl() {
+		return $this->getProperty('URL');
+	} // fn getUrl
+	
+	
+	/**
+	 * @return string
+	 */
+	function getContentType() {
+		return $this->getProperty('ContentType');
+	} // fn getContentType
 	
 	
 	/**
@@ -146,8 +157,8 @@ class Image extends DatabaseObject {
 	 * @return string
 	 */
 	function getImageStorageLocation() {
-		return $_SERVER['DOCUMENT_ROOT'].CAMPSITE_IMAGE_PREFIX
-			.sprintf('%09d', $this->getImageId()).'.'.$this->getFileExtension();
+		return $_SERVER['DOCUMENT_ROOT'].CAMPSITE_IMAGE_DIRECTORY
+			.$this->m_data['ImageFileName'];
 	} // fn getImageStorageLocation
 	
 	
@@ -156,22 +167,33 @@ class Image extends DatabaseObject {
 	 * @return string
 	 */
 	function getThumbnailStorageLocation() {
-		return $_SERVER['DOCUMENT_ROOT'].CAMPSITE_THUMBNAIL_PREFIX
-			.sprintf('%09d', $this->getImageId()).'.'.$this->getFileExtension();
+		return $_SERVER['DOCUMENT_ROOT'].CAMPSITE_THUMBNAIL_DIRECTORY
+			.$this->m_data['ThumbnailFileName'];
 	} // fn getThumbnailStorageLocation
 	
 	
+	/**
+	 * Return the full URL to the image image.
+	 * @return string
+	 */
 	function getImageUrl() {
 		global $Campsite;
-		return $Campsite['website_url'].CAMPSITE_IMAGE_PREFIX
-			.sprintf('%09d', $this->getImageId()).'.'.$this->getFileExtension();
+		if ($this->m_data['Location'] == 'local') {
+			return $Campsite['website_url'].CAMPSITE_IMAGE_DIRECTORY.$this->m_data['ImageFileName'];
+		}
+		else {
+			return $this->m_data['URL'];
+		}
 	} // fn getImageUrl
 	
 	
+	/**
+	 * Get the full URL to the thumbnail image.
+	 * @return string
+	 */
 	function getThumbnailUrl() {
 		global $Campsite;
-		return $Campsite['website_url'].CAMPSITE_THUMBNAIL_PREFIX
-			.sprintf('%09d', $this->getImageId()).'.'.$this->getFileExtension();
+		return $Campsite['website_url'].CAMPSITE_THUMBNAIL_DIRECTORY.$this->m_data['ThumbnailFileName'];
 	} // fn getThumbnailUrl
 	
 	
@@ -188,7 +210,7 @@ class Image extends DatabaseObject {
 		$queryStr = 'SHOW TABLE STATUS LIKE "Images"';
 		$result = $Campsite['db']->getRow($queryStr);
 		return $result['Rows'];
-	} // fn TotalImages
+	} // fn GetTotalImages
 	
 	
 	/**
@@ -216,6 +238,9 @@ class Image extends DatabaseObject {
 	 *		The Image object that was created or updated.
 	 */
 	function OnImageUpload($p_fileVar, $p_attributes, $p_id = null) {
+		if (!is_array($p_fileVar)) {
+			return null;
+		}
 	 	if (!is_null($p_id)) {
 	 		$image =& new Image($p_id);
 	 		$image->update($p_attributes);
@@ -230,8 +255,15 @@ class Image extends DatabaseObject {
 	    }
 		$image->setProperty('ContentType', $p_fileVar['type']);
 		
-	    $target = $image->getImageStorageLocation();
-	    $thumbnail = $image->getThumbnailStorageLocation();
+		$fileExtension = split("\.", $p_fileVar['name']);
+		$fileExtension = $fileExtension[(count($fileExtension)-1)];
+	    $target = $_SERVER['DOCUMENT_ROOT'].CAMPSITE_IMAGE_DIRECTORY
+	    	.CAMPSITE_IMAGE_PREFIX.sprintf('%09d', $image->getImageId()).'.'.$fileExtension;
+	    $thumbnail = $_SERVER['DOCUMENT_ROOT'].CAMPSITE_THUMBNAIL_DIRECTORY
+	    	.CAMPSITE_THUMBNAIL_PREFIX.sprintf('%09d', $image->getImageId()).'.'.$fileExtension;
+	    $image->setProperty('ImageFileName', basename($target));
+	    $image->setProperty('ThumbnailFileName', basename($thumbnail));
+	    
         if (!move_uploaded_file ($p_fileVar['tmp_name'], $target)) {
              return getGS('Unable to move Image to <B>$1</B>', $target);
         }
@@ -308,6 +340,35 @@ class Image extends DatabaseObject {
 	    return $image;
 	} // fn OnAddRemoteImage
 
+	
+	/**
+	 *
+	 * @return array
+	 */
+	function getArticlesThatUseImage() {
+		global $Campsite;
+		$article =& new Article();
+		$columnNames = $article->getColumnNames();
+		$columnQuery = array();
+		foreach ($columnNames as $columnName) {
+			$columnQuery[] = 'Articles.'.$columnName;
+		}
+		$columnQuery = implode(',', $columnQuery);
+		$queryStr = 'SELECT '.$columnQuery.' FROM Articles, ArticleImages '
+					.' WHERE ArticleImages.IdImage='.$this->getProperty('Id')
+					.' AND ArticleImages.NrArticle=Articles.Number';
+		$rows =& $Campsite['db']->GetAll($queryStr);
+		$articles = array();
+		if (is_array($rows)) {
+			foreach ($rows as $row) {
+				$tmpArticle =& new Article();
+				$tmpArticle->fetch($row);
+				$articles[] =& $tmpArticle;
+			}
+		}
+		return $articles;
+	} // fn getArticlesThatUseImage
+	
 	
 	function toTemplate() {
 		$template = array();
