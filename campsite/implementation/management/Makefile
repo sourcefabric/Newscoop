@@ -35,6 +35,8 @@ install: $(ALL)
 	mkdir -p $(PRIV_DIR)/img
 	mkdir -p $(PRIV_DIR)/img/buttons
 	mkdir -p $(PRIV_DIR)/img/icons
+	mkdir -p $(HTML_DIR)/images/thumbnails_big
+	mkdir -p $(HTML_DIR)/images/thumbnails_small
 	cp -rf article_import $(PRIV_DIR)
 	cp -rf javascript $(HTML_DIR)
 	cp -rf classes $(HTML_DIR)
@@ -68,6 +70,7 @@ install: $(ALL)
 	chown -R $(HTTP_USER):$(HTTP_GROUP) $(PRIV_DIR)/imagearchive
 	chown -R $(HTTP_USER):$(HTTP_GROUP) $(PRIV_DIR) 
 	chown -R $(HTTP_USER):$(HTTP_GROUP) $(SCRIPT_DIR)
+	chown -R $(HTTP_USER):$(HTTP_GROUP) $(HTML_DIR)/images
 	chmod u+rw $(HTML_DIR)/*.php
 	chmod g+r $(HTML_DIR)/*.php
 	chmod o-rwx $(HTML_DIR)/*.php
@@ -89,6 +92,8 @@ install: $(ALL)
 	chmod -R u+rw $(SCRIPT_DIR)
 	chmod -R g+r $(SCRIPT_DIR)
 	chmod -R o-rwx $(SCRIPT_DIR)
+	chmod -R u+rw $(HTML_DIR)/images
+	chmod -R g+r $(HTML_DIR)/images
 
 clean: dummy
 	rm -f *~ macros.m4 .env_vars
