@@ -119,7 +119,7 @@ chmod +x "$create_instance_script"
 echo "done"
 
 echo -n "Writing make.env file..."
-make_env=${CAMPSITE_PACKAGE_DIR}/make.env
+make_env=${CAMPSITE_PACKAGE_DIR}/.make.env.tmp
 rm -f "$make_env"
 cat > "$make_env" << EOF
 export ROOT_USER=$ROOT_USER
@@ -183,6 +183,16 @@ for mod in $MODULES_LIST; do
 	written_modules="$written_modules $mod"
     fi
 done
+if [ -f "./make.env" ]; then
+    diff "$make_env" "./make.env" &> /dev/null
+    if [ $? -ne 0 ]; then
+	rm -f "./make.env"
+	mv "$make_env" "./make.env"
+    fi
+    rm -f "$make_env"
+else
+    mv "$make_env" "./make.env"
+fi
 echo "done"
 if [ "$root_only" = "false" ]; then
     for dir in implementation; do
