@@ -94,7 +94,8 @@ if [ "$c_define_start_env" != "--define_start_env" ]; then
 if [ "$read_only" = "false" ]; then
     do_install_full_config $c_define_start_env $c_upgrade
     [ $? -ne 0 ] && exit 1
-    for mod in $MODULES_LIST; do
+    modules_conf --set
+    for mod in $configurable_modules; do
 	do_module_full_config $mod $c_define_start_env $c_upgrade || exit 1
     done
 else
