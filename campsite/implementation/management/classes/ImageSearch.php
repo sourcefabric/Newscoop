@@ -126,9 +126,7 @@ class ImageSearch {
 	function run() {
 		global $Campsite;
 		$tmpImage =& new Image();
-		foreach ($tmpImage->getColumnNames() as $columnName) {
-			$columnNames[] = 'Images.'.$columnName;
-		}
+		$columnNames = $tmpImage->getColumnNames(true);
 		$columnNames = implode(',', $columnNames);
 		$queryStr = 'SELECT '.$columnNames.', COUNT(ArticleImages.IdImage) AS inUse'
 				  	.' FROM Images '
@@ -137,21 +135,42 @@ class ImageSearch {
 				    .' GROUP BY Images.Id'
 				    ." $this->m_orderQuery LIMIT $this->m_imageOffset, ".$this->m_imagesPerPage;
 				    
-		$numImagesFoundQueryStr = 'SELECT COUNT(Images.Id)'
+		$numImagesFoundQueryStr = 'SELECT COUNT(DISTINCT(Images.Id))'
 				  	.' FROM Images '
 				  	.' LEFT JOIN ArticleImages On Images.Id=ArticleImages.IdImage'
 				  	." WHERE 1 $this->m_whereQuery";
 		$rows = $Campsite['db']->GetAll($queryStr);
 		$this->m_numImagesFound = $Campsite['db']->GetOne($numImagesFoundQueryStr);
-		
-		// Create image templates
+
 		$this->m_imageData = array();
 		if (is_array($rows)) {
+			// Get "In Use" information
+			$imageIds = array();
+			foreach ($rows as $row) {
+				$imageIds[$row['Id']] = '(IdImage='.$row['Id'].')';
+			}
+			$inUseQuery = "SELECT ArticleImages.IdImage, COUNT(Articles.Number) as in_use "
+							." FROM Articles, ArticleImages "
+							." WHERE (Articles.Number=ArticleImages.NrArticle) " 
+							." AND (".implode(' OR ', $imageIds).")"
+							." GROUP By ArticleImages.IdImage";
+			$tmpInUseArray = $Campsite['db']->GetAll($inUseQuery);
+			$inUseArray = array();
+			// Make it an associative array for easy lookup in the next loop.
+			if (is_array($tmpInUseArray)) {
+				foreach ($tmpInUseArray as $inUseItem) {
+					$inUseArray[$inUseItem['IdImage']] = $inUseItem['in_use'];
+				}
+			}
+			// Create image templates
 			foreach ($rows as $row) {
 				$tmpImage =& new Image();
 				$tmpImage->fetch($row);
 				$template = $tmpImage->toTemplate();
-				$template['in_use'] = $row['inUse'];
+				$template['in_use'] = 0;
+				if (isset($inUseArray[$row['Id']])) {
+					$template['in_use'] = $inUseArray[$row['Id']];
+				}
 				$this->m_imageData[] = $template;
 			}
 		}
