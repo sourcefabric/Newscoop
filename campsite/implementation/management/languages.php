@@ -7,6 +7,7 @@ function registerLanguage($name,$code,$charset){
 }
 registerLanguage('English','en','ISO_8859-1');
 registerLanguage('Serbo-Croatian','sh','ISO_8859-2');
+registerLanguage('Chinese','zh','UTF-8');
 registerLanguage('Croatian','hr','ISO_8859-2');
 registerLanguage('Czech','cz','ISO_8859-2');
 registerLanguage('German','de','ISO_8859-1');
