@@ -41,7 +41,7 @@ class CThread
 {
 public:
 	CThread();
-	~CThread() { Cancel(); }
+	virtual ~CThread() { Cancel(); }
 	
 	void Cancel();
 	
