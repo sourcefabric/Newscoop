@@ -8,15 +8,6 @@ class Section extends DatabaseObject {
 										 "NrIssue",
 										 "IdLanguage",
 										 "Number");
-//	var $m_columnNames = array("IdPublication", 
-//							   "NrIssue",
-//							   "IdLanguage",
-//							   "Number",
-//							   "Name",
-//							   "ShortName",
-//							   "SectionTplId",
-//							   "ArticleTplId"
-//							   );
 	var $IdPublication;
 	var $NrIssue;
 	var $IdLanguage;
@@ -37,6 +28,22 @@ class Section extends DatabaseObject {
 		}
 	} // fn Section
 
+	
+	function getSectionsInIssue($p_publicationId, $p_issueId, $p_languageId) {
+		global $Campsite;
+		$queryStr = "SELECT * FROM Sections"
+					." WHERE IdPublication='".$p_publicationId."'"
+					." AND NrIssue='".$p_issueId."'"
+					." AND IdLanguage='".$p_languageId."'";
+		$query = $Campsite["db"]->Execute($queryStr);
+		$sections = array();
+		while ($row = $query->FetchRow()) {
+			$tmpSection =& new Section($row["IdPublication"], $row["NrIssue"], $row["IdLanguage"]);
+			$tmpSection->fetch($row);
+			$sections[] = $tmpSection;
+		}
+		return $sections;		
+	} // fn getAllSectionsInIssue
 	
 	function getPublicationId() {
 		return $this->IdPublication;
