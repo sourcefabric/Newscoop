@@ -29,7 +29,7 @@ $(CAMPSITE_SERVER): $(OBJ_FILES)
 	strip $(CAMPSITE_SERVER)
 
 clean: dummy
-	rm -f *.o *~ srvdef.h $(CAMPSITECTL) $(CAMPSITEINIT) .env_vars $(CAMPSITE_SERVER)
+	rm -f *.o *~ srvdef.h $(CAMPSITECTL) $(CAMPSITEINIT) $(CAMPSITE_SERVER)
 
 %.o: %.cpp $(DEPENDENCES)
 	g++ -c -o $@ $(CFLAGS) $<

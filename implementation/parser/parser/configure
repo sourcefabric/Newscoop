@@ -5,7 +5,6 @@ cd ../../..
 cd implementation/parser/parser
 . ${INSTALL_CONF}/conf_functions
 
-if [ ! -f campsite ]; then
 echo -n -e "\t\tWriting start/stop script..."
 cat > campsite << EOF
 #!/bin/bash
@@ -83,9 +82,7 @@ exit 0
 EOF
 [ $? -ne 0 ] && echo "ERROR" && exit 1
 echo OK
-fi # end if [ ! -f campsite ]
 
-if ! var_not_modified BIN_DIR || [ ! -f campsitectl ]; then
 echo -n -e "\t\tWriting server control script..."
 cat > campsitectl << EOF
 #!/bin/bash
@@ -165,11 +162,6 @@ EOF
 # done writing control file; check if ok
 [ $? -ne 0 ] && echo "ERROR" && exit 1
 echo OK
-save_var BIN_DIR
-fi # end if ! var_not_modified BIN_DIR || [ ! -f campsite ]
-
-[ -f srvdef.h ] && exit 0
-save_var BIN_DIR
 
 echo -n -e "\t\tWriting srvdef.h header..."
 cat > srvdef.h << EOF

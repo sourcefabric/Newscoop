@@ -31,7 +31,7 @@ broker.o: broker.cpp kwd.h broker.h configure.h readconf.h globals.h
 readconf.o: readconf.cpp readconf.h globals.h
 
 clean: dummy
-	rm -f *.o *~ configure.h $(LINKS) .env_vars gather broker
+	rm -f *.o *~ configure.h $(LINKS) gather broker
 
 install: $(ALL)
 	./install_search

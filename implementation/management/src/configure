@@ -1,7 +1,5 @@
 #!/bin/bash
 
-[ -f configure.h ] && [ -f dir_conf.h ] && exit 0
-
 pushd ../../.. > /dev/null
 . ./make.env
 popd > /dev/null
