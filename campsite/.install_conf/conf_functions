@@ -6,38 +6,6 @@
 ## Functions for manipulating configuration variables
 ###########################################################
 
-# FUNCTION: save_var
-# Description: save the values of given variables into a file
-# Parameters:
-#	$1... - variable name
-# Variables set: none
-save_var()
-{
-rm -f ./.env_vars
-while [ "$1" != "" ]; do
-    var_name=$1
-    echo "$var_name=${!var_name}" >> ./.env_vars
-    shift 1
-done
-}
-# END OF save_var
-
-# FUNCTION: var_not_modified
-# Description: check if saved variables modified their value
-# Parameters: none
-# Variables set: none
-var_not_modified()
-{
-[ ! -f ./.env_vars ] && return 1
-var_list=`cut -f 1 -d '=' ./.env_vars`
-for v in $var_list; do
-    saved_value=`grep -w $v ./.env_vars | cut -f 2 -d '='`
-    [ "${!v}" != "$saved_value" ] && return 1
-done
-return 0
-}
-# END OF var_not_modified
-
 # FUNCTION: is_configured
 # Description: check if module is already configured
 # Parameters:
@@ -81,32 +49,6 @@ return 0
 }
 # END OF set_not_configured
 
-# FUNCTION: unset_env_vars
-# Description: unset environment variables used for installation
-# Parameters: none
-# Variables set: none
-unset_env_vars()
-{
-unset SELECTED_MODULES
-unset IMPLEMENTATION_PARTS
-unset SUPPLEMENTAL_PARTS
-unset CAMPSITE_VERSION
-unset INSTALL_CONF
-unset CAMPSITE_PACKAGE_DIR
-unset MYSQL_CONNECT
-unset SMTP_WRAPPER
-unset CAMPSITE_REGISTER
-unset INSTALL_LOG
-unset CHECKED_DEPENDENCIES
-unset CHECKED_MODULES
-unset CONFIGURED_MODULES
-unset INSTALL_CONFIGURED
-unset PACKAGE_TYPE
-unset PREPARED_MOD_ENV
-modules_conf --unset
-install_conf --unset
-}
-# END OF unset_env_vars
 
 ###########################################################
 ## Functions for reading configuration from files
@@ -734,7 +676,7 @@ if [ "$admin_selected" = "false" ] && ( [ "$PARSER_ALLOWED_HOSTS" = "localhost" 
     return 1
 fi
 for ipa in $PARSER_ALLOWED_HOSTS; do
-    ping "$ipa" -c 1 &> /dev/null
+    ping -c 1 "$ipa" &> /dev/null
     ping_res=$?
     if [ $ping_res -ne 0 ]; then
 	echo -e "ERROR\nInvalid IP address $ipa!"
@@ -815,7 +757,7 @@ if [ $PARSER_PORT -ne $ADMIN_INTERFACE_PARSER_PORT ]; then
     echo -e "ERROR\nParser port on ADMIN_INTERFACE and PARSER modules must be the same!"
     return 1
 fi
-ping "$ADMIN_INTERFACE_PARSER_IP" -c 1 &> /dev/null
+ping -c 1 "$ADMIN_INTERFACE_PARSER_IP" &> /dev/null
 if [ $? -ne 0 ]; then
     echo -e "ERROR\nInvalid IP address $ADMIN_INTERFACE_PARSER_IP!"
     return 1
