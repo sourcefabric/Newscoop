@@ -46,7 +46,7 @@ default_instance:
 
 clean:
 	$(MAKE) -C implementation clean
-	rm -f install_log uninstall_log "$(INSTALL_CONF)/campsite_config"
+	rm -f install_log uninstall_log "$(INSTALL_CONF)/campsite_config" "$(INSTALL_CONF)/configure.h"
 
 distclean: clean
 	rm -f make.env
