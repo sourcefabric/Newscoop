@@ -102,7 +102,7 @@ if ($access) {
 		<TR><TD ALIGN=RIGHT>
 		  <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
 			<TR>
-			  <TD><A HREF="<?php echo _DIR_; ?>" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Image Archive"); ?>"></A></TD><TD><A HREF="<?php echo _DIR_; ?>" ><B><?php  putGS("Image Archive");  ?></B></A></TD>
+			  <TD><A HREF="<?php echo CAMPSITE_IMAGEARCHIVE_DIR; ?>" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Image Archive"); ?>"></A></TD><TD><A HREF="<?php echo CAMPSITE_IMAGEARCHIVE_DIR; ?>" ><B><?php  putGS("Image Archive");  ?></B></A></TD>
 			  <TD><A HREF="/priv/home.php" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Home"); ?>"></A></TD><TD><A HREF="/priv/home.php" ><B><?php  putGS("Home");  ?></B></A></TD>
 			  <TD><A HREF="/priv/logout.php" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Logout"); ?>"></A></TD><TD><A HREF="/priv/logout.php" ><B><?php  putGS("Logout");  ?></B></A></TD>
 			</TR>
@@ -153,7 +153,7 @@ if ($access) {
 			<TR>
 				<TD COLSPAN="2">
 				<DIV ALIGN="CENTER">
-				<INPUT TYPE="button" NAME="Back" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='<?php echo _DIR_; ?>index.php?<?php echo $Link['SO']; ?>'">
+				<INPUT TYPE="button" NAME="Back" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='<?php echo CAMPSITE_IMAGEARCHIVE_DIR; ?>index.php?<?php echo $Link['SO']; ?>'">
 				</DIV>
 				</TD>
 			</TR>
@@ -179,8 +179,8 @@ if ($access) {
 			<TR>
 				<TD COLSPAN="2">
 				<DIV ALIGN="CENTER">
-				<INPUT TYPE="button" NAME="Yes" VALUE="<?php  putGS('Yes'); ?>" ONCLICK="location.href='<?php echo _DIR_; ?>do_del.php?Id=<?php echo $Id.$Link['SO']; ?>'">
-				<INPUT TYPE="button" NAME="No" VALUE="<?php  putGS('No'); ?>" ONCLICK="location.href='<?php echo _DIR_; ?>index.php?<?php echo $Link['SO']; ?>'">
+				<INPUT TYPE="button" NAME="Yes" VALUE="<?php  putGS('Yes'); ?>" ONCLICK="location.href='<?php echo CAMPSITE_IMAGEARCHIVE_DIR; ?>do_del.php?Id=<?php echo $Id.$Link['SO']; ?>'">
+				<INPUT TYPE="button" NAME="No" VALUE="<?php  putGS('No'); ?>" ONCLICK="location.href='<?php echo CAMPSITE_IMAGEARCHIVE_DIR; ?>index.php?<?php echo $Link['SO']; ?>'">
 				</DIV>
 				</TD>
 			</TR>
