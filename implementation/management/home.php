@@ -1,8 +1,10 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/config.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Article.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/Publication.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/Issue.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Section.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/Article.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Language.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
 
@@ -35,6 +37,14 @@ list($YourArticles, $NumYourArticles) = Article::GetArticlesByUser($User->getId(
 	$NumDisplayArticles);
 
 list($SubmittedArticles, $NumSubmittedArticles) = Article::GetSubmittedArticles($NArtOffs, $NumDisplayArticles);
+
+$publications =& Publication::GetAllPublications();
+$issues = array();
+foreach ($publications as $publication) {
+	$issues[$publication->getPublicationId()] =
+		Issue::GetIssuesInPublication($publication->getPublicationId(), null, 
+			array('LIMIT' => 5, 'ORDER BY' => array('Number' => 'DESC')));
+}
 ?>
 <HEAD>
 	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite["website_url"] ?>/css/admin_stylesheet.css">
@@ -49,71 +59,30 @@ list($SubmittedArticles, $NumSubmittedArticles) = Article::GetSubmittedArticles(
 	<TD style="font-size: 9pt; padding-right: 10px; padding-top: 0px; padding-bottom: 2px;" valign="bottom" align="right"><?php  putGS('Welcome $1!','<B>'.htmlspecialchars($User->getName()).'</B>'); ?></TD>
 </TR>
 </TABLE>
-<!--<HR NOSHADE SIZE="1" COLOR="BLACK">-->
 
 <TABLE BORDER="0" CELLSPACING="4" CELLPADDING="2" WIDTH="100%">
 <TR>
-    <TD VALIGN="TOP">
-		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
-		
-		<?php  if ($User->hasPermission("AddArticle")) { ?>	
-		<TR>
-			<TD ALIGN="RIGHT"><A HREF="pub/add_article.php?Back=/<?php echo $ADMIN; ?>/home.php"><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Add new article"); ?>"></A></TD><TD NOWRAP><A HREF="pub/add_article.php?Back=/<?php echo $ADMIN; ?>/home.php"><?php  putGS("Add new article"); ?></A></TD>
-		</TR>
-		<?php  } ?>
-		
-		<?php  if ($User->hasPermission("ManagePub")) { ?>	
-		<TR>
-			<TD ALIGN="RIGHT"><A HREF="pub/add.php?Back=<?php  print encURL ($REQUEST_URI); ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Add new publication"); ?>"></A></TD><TD NOWRAP><A HREF="pub/add.php?Back=<?php  print encURL ($REQUEST_URI); ?>"><?php  putGS("Add new publication"); ?></A></TD>
-		</TR>
-		<?php  } ?>
-		
-		<?php  if ($User->hasPermission("ManageTempl")) { ?>	
-		<TR>
-			<TD ALIGN="RIGHT"><A HREF="templates/upload_templ.php?Path=/look/&Back=<?php  print encURL ($REQUEST_URI); ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Upload new template"); ?>"></A></TD><TD NOWRAP><A HREF="templates/upload_templ.php?Path=/look/&Back=<?php  print encURL ($REQUEST_URI); ?>"><?php  putGS("Upload new template"); ?></A></TD>
-		</TR>
-		<?php  } ?>
-		
-		<?php  if ($User->hasPermission("ManageUsers")) { ?>	
-		<TR>
-			<TD ALIGN="RIGHT"><A HREF="users/add.php?Back=<?php  print encURL ($REQUEST_URI); ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Add new user account"); ?>"></A></TD><TD NOWRAP><A HREF="users/add.php?Back=<?php  print encURL ($REQUEST_URI); ?>"><?php  putGS("Add new user account"); ?></A></TD>
-		</TR>
-		<?php  } ?>
-		
-		<?php  if ($User->hasPermission("ManageUserTypes")) { ?>	
-		<TR>
-			<TD ALIGN="RIGHT"><A HREF="u_types/add.php?Back=<?php  print encURL ($REQUEST_URI); ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Add new user type"); ?>"></A></TD><TD NOWRAP><A HREF="u_types/add.php?Back=<?php  print encURL ($REQUEST_URI); ?>"><?php  putGS("Add new user type"); ?></A></TD>
-		</TR>
-		<?php  } ?>
-		
-		<?php  if ($User->hasPermission("ManageArticleTypes")) { ?>	
-		<TR>
-			<TD ALIGN="RIGHT"><A HREF="a_types/add.php?Back=<?php  print encURL ($REQUEST_URI); ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Add new article type"); ?>"></A></TD><TD NOWRAP><A HREF="a_types/add.php?Back=<?php  print encURL ($REQUEST_URI); ?>"><?php  putGS("Add new article type"); ?></A></TD>
-		</TR>
-		<?php  } ?>
-		
-		<?php  if ($User->hasPermission("ManageCountries")) { ?>	
-		<TR>
-			<TD ALIGN="RIGHT"><A HREF="country/add.php?Back=<?php  print encURL ($REQUEST_URI); ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Add new country"); ?>"></A></TD><TD NOWRAP><A HREF="country/add.php?Back=<?php  print encURL ($REQUEST_URI); ?>"><?php  putGS("Add new country"); ?></A></TD>
-		</TR>
-		<?php  } ?>
-		
-		<?php  if ($User->hasPermission("ManageLanguages")) { ?>	
-		<TR>
-			<TD ALIGN="RIGHT"><A HREF="languages/add.php?Back=<?php  print encURL ($REQUEST_URI); ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Add new language"); ?>"></A></TD><TD NOWRAP><A HREF="languages/add.php?Back=<?php  print encURL ($REQUEST_URI); ?>"><?php  putGS("Add new language"); ?></A></TD>
-		</TR>
-		<?php  } ?>
-		
-		<?php  if ($User->hasPermission("ViewLogs")) { ?>	
-		<TR>
-			<TD ALIGN="RIGHT"><A HREF="logs/"><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("View logs"); ?>"></A></TD><TD NOWRAP><A HREF="logs/"><?php  putGS("View logs"); ?></A></TD>
-		</TR>
-		<?php  } ?>	
-		
-		<TR>
-			<TD ALIGN="RIGHT"><A HREF="users/chpwd.php"><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Change your password"); ?>"></A></TD><TD NOWRAP><A HREF="users/chpwd.php"><?php  putGS("Change your password"); ?></A></TD>
-		</TR>
-		</TABLE>
+    <TD VALIGN="TOP" width="40%">
+		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="3" class="table_list" width="100%" style="padding: 0px;">
+		<tr class="table_list_header">
+			<td style="padding-left: 8px;"><?php putGS('Publication'); ?> / <?php putGS('Issue'); ?></td>
+		</tr>
+		<?php 
+		$count = 1;
+		foreach ($publications as $publication) { ?>
+			<tr <?php if (($count++%2)==1) {?> class="list_row_odd"<?php } else { ?>class="list_row_even"<?php } ?>>
+				<td style="padding-left: 8px;"><a href="/<?php echo $ADMIN; ?>/pub/issues/?Pub=<?php p($publication->getPublicationId()); ?>"><?php p(htmlspecialchars($publication->getName())); ?></a></td>
+			</tr>
+			<?PHP
+			foreach ($issues[$publication->getPublicationId()] as $issue) { ?>
+				<tr <?php if (($count++%2)==1) {?> class="list_row_odd"<?php } else { ?>class="list_row_even"<?php } ?>>
+					<td style="padding-left: 25px;"><a href="/<?php echo $ADMIN; ?>/pub/issues/sections/?Pub=<?php p($issue->getPublicationId()); ?>&Issue=<?php  p($issue->getIssueId()); ?>&Language=<?php p($issue->getLanguageId()); ?>"><?php p(htmlspecialchars($issue->getName())); ?></a></td>
+				</tr>
+				<?php 
+			}
+		}
+		?>		
+		</table>
 	</TD>
 	
 	<TD VALIGN="TOP" align="right">
@@ -121,7 +90,7 @@ list($SubmittedArticles, $NumSubmittedArticles) = Article::GetSubmittedArticles(
 
 		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3">
 		<TR>
-			<TD colspan="3" style="font-weight: bold; font-size: 12pt;">
+			<TD colspan="3" style="font-weight: bold; font-size: 10pt; padding-top: 0px">
 				<?php  putGS("Your articles"); ?>
 			</TD>
 		</TR>
@@ -217,7 +186,7 @@ list($SubmittedArticles, $NumSubmittedArticles) = Article::GetSubmittedArticles(
 			?>
 		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3">
 		<tr>
-			<td colspan="2" style="font-weight: bold; font-size: 12pt;">
+			<td valign="top" colspan="2" style="font-weight: bold; font-size: 10pt; padding-top: 0px;">
 				<?php putGS("Submitted articles"); ?>
 			</td>
 		</tr>
