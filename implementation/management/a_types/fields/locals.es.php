@@ -2,7 +2,6 @@
 
 regGS("Article type fields","Campos de tipo de archivo");
 regGS("Article type","Tipo de archivo");
-regGS("Add new field","Agregar nuevo archivo");
 regGS("No fields.","Sin campos");
 regGS("Delete field $1","Borrar campo $1");
 regGS("Article body","Cuerpo del artículo");

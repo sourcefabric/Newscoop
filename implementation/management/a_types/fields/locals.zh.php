@@ -1,7 +1,6 @@
 <?
 regGS("Article type fields","文章类型字段");
 regGS("Article type","文章类型");
-regGS("Add new field","增加新字段");
 regGS("No fields.","无字段");
 regGS("Delete field $1","删除字段$1");
 regGS("Article body","文章正文");
