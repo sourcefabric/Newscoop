@@ -1,19 +1,90 @@
-* Tuesday, March 13th 2001
-    New items: README, implementation/tpl_cgi, documentation/example, documentation/http-config
-    Removed items: implementation/http-config
-    General:
+2.0.12
+    - Set login username/password fields to size 10
+
+2.0.11
+    - When adding a new subscription to a publication add the sections too
+    - Admin interface, subscription-section: the section is now selectable
+    from a list instead of letting you type the section number
+    - Admin interface, subscription-section: print the name of the section
+    name instead of the number
+    - New text only editor for article body type fields
+    - Admin interface: print more sections per page (20)
+    - Admin interface: print the description for date-type fields (YYYY-MM-DD)
+    - When deleting article: delete the links from search keywords to articles
+    too
+    - Admin interface: adding new issue detects if there was an old structure
+    or not and selects the appropriate link accordingly
+    - The newly added articles are Public to everybody (not just to subscribers)
+    by default.
+    - Admin interface: on adding new images forward the current language
+    identifier
+    - New statement in template language: If Image <number>; tests if image
+    <number> exists
+    - If statements in template language can be negated: If not
+    - The parser server updates automatically the article types from the database
+    (in case they were modified)
+    - Fixed event notify bug: mailnotify used to send all the emails to the event
+    originator
+    - Order can be used now in Issue, SearchResult and Article lists
+    - Fixed parser crash bug: when encountered invalid identifier for Language,
+    Publication, Issue, Section, Article, Print, If, Subscription, Edit
+    - Fixed parser bug: on Issue statement select the current issue according to
+    access rights
+    - Added more debug information on Local statement
+    - Fixed bug on template list: didn't print properly file names containg spaces
+    - Small enhancement on template list: print files/directories in alphabetical
+    order
+    - Fixed small bug on install/uninstall scripts
+    - Fixed parser crash on empty search
+    - Fixed login/subscription password field size
+    - Select the publication language when adding a new issue or article
+    - Fixed bug: listing subscription sections showed section from all the
+    publication (not just the selected one)
+    - Fixed subscription process bug: the parser doesn't process subscription
+    statement when modifying/updating the subscription
+    - Fixed notification of subscription end bug
+    - Fixed reading ALT image property in article body
+    - Fixed some incorrect parser hash locks
+    - Fixed incorrect use of is, not, greater, smaller operators in if statements
+
+2.0.10
+    - Fixed the 'Back to article details' bug
+    - Removed the weird message from 'Old images'
+    - Fixed the language selection in lists bug
+
+2.0.9
+    - Fixed incorrect timestamp update on event notify
+    - Fixed mysqlclient library link problem on RedHat systems
+
+2.0.8
+    - Fixed internal links bug (select proper template according to link
+    publication)
+    - Fixed incorrect parsing of "list ... article ... keyword <keyword>" bug
+
+2.0.6 (May, 14th 2001)
+    - Fixed search list order bug. The parser did not list in the requested
+    order the list of searched articles.
+
+2.0.1-2.0.5
+    - Fixed install bugs
+
+2.0.0 (March 13th 2001):
+    - New items: README, implementation/tpl_cgi, documentation/example,
+    documentation/http-config
+    - General:
         - Changed Makefiles in order to compile on Redhat 7.0
-    implementation/parser:
+        implementation/parser:
         - The parser is now campsite_server, a multithreaded daemon.
         - Made campsitectl (start, stop, restart, show status) campsite_server.
         - Made campsite rc script for Sys V like systems (ex. RedHat)
-        - Made install script to install campsitectl, campsite scripts for automatic start of campsite_server on
-                system startup.
-        - The parser prints formatted date, month name (mon_name) and weekday name (wday_name) in
-                current language (not in English only).
-    documentation:
-        - Updated campsite-guide (changes made on: URLParameters, Print Issue Article Image
-                Subscription, Date)
-    implementation/tpl_cgi:
-        - This is a small cgi; it receives requests, connects to campsite_server, read the response from
-                campsite_server and forwards the response (HTML page)
+        - Made install script to install campsitectl, campsite scripts for
+        automatic start of campsite_server on system startup.
+        - The parser prints formatted date, month name (mon_name) and weekday
+        name (wday_name) in current language (not in English only).
+    - documentation:
+        - Updated campsite-guide (changes made on: URLParameters, Print Issue
+        Article Image Subscription, Date)
+    - implementation/tpl_cgi:
+        - This is a small cgi; it receives requests, connects to
+        campsite_server, read the response from campsite_server and forwards
+        the response (HTML page)

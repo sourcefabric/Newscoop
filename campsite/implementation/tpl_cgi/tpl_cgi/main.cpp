@@ -70,7 +70,7 @@ int main()
 		return 1;
 	}
 	struct timeval tVal = { 0, 0 };
-	tVal.tv_sec = 10;
+	tVal.tv_sec = 60;
 	fd_set clSet;
 	FD_ZERO(&clSet);
 	CTCPSocket coSock;

@@ -62,6 +62,7 @@ X_CURRENT({Publication:}, {<B><!sql print ~q_pub.Name></B>})
 X_CURRENT({Issue:}, {<B><!sql print ~q_iss.Number>. <!sql print ~q_iss.Name> (<!sql print ~q_lang.Name>)</B>})
 X_CURRENT({Section:}, {<B><!sql print ~q_sect.Number>. <!sql print ~q_sect.Name></B>})
 X_CURRENT({Article:}, {<B><!sql print ~q_art.Name> (<!sql print ~q_slang.Name>)</B>})
+X_CURRENT({Field:}, {<B><!sql print ~eField></B>})
 E_CURRENT
 <!sql free q_lang>dnl
 
@@ -111,8 +112,6 @@ X_NEW_BUTTON({Publish}, {X_ROOT/pub/issues/sections/articles/status.xql?Pub=<!sq
 X_NEW_BUTTON({Submit}, {X_ROOT/pub/issues/sections/articles/status.xql?Pub=<!sql print #Pub>&Issue=<!sql print #Issue>&Section=<!sql print #Section>&Article=<!sql print #q_art.Number>&Language=<!sql print #Language>&sLanguage=<!sql print #sLanguage>&Back=<!sql print #REQUEST_URI>})
 <!sql endif>dnl
 </TD><TD>
-X_NEW_BUTTON({Edit details}, {X_ROOT/pub/issues/sections/articles/edit.xql?Pub=<!sql print #Pub>&Issue=<!sql print #Issue>&Section=<!sql print #Section>&Article=<!sql print #Article>&Language=<!sql print #Language>&sLanguage=<!sql print #sLanguage>})
-</TD><TD>
 X_NEW_BUTTON({Images}, {X_ROOT/pub/issues/sections/articles/images/?Pub=<!sql print #Pub>&Issue=<!sql print #Issue>&Section=<!sql print #Section>&Article=<!sql print #Article>&Language=<!sql print #Language>&sLanguage=<!sql print #sLanguage>})
 </TD><TD>
 X_NEW_BUTTON({Unlock}, {X_ROOT/pub/issues/sections/articles/do_unlock.xql?Pub=<!sql print #Pub>&Issue=<!sql print #Issue>&Section=<!sql print #Section>&Article=<!sql print #Article>&Language=<!sql print #Language>&sLanguage=<!sql print #sLanguage>})
@@ -124,6 +123,9 @@ X_NEW_BUTTON({Translate}, {X_ROOT/pub/issues/sections/articles/translate.xql?Pub
 <!sql if $dla>dnl
 </TD><TD>
 X_NEW_BUTTON({Delete}, {X_ROOT/pub/issues/sections/articles/del.xql?Pub=<!sql print #Pub>&Issue=<!sql print #Issue>&Section=<!sql print #Section>&Article=<!sql print #Article>&Language=<!sql print #Language>&sLanguage=<!sql print #sLanguage>&Back=<!sql print #REQUEST_URI>})
+</TD><TD>
+X_NEW_BUTTON({Edit details}, {X_ROOT/pub/issues/sections/articles/edit.xql?Pub=<!sql print #Pub>&Issue=<!sql print #Issue>&Section=<!sql print #Section>&Article=<!sql print #Article>&Language=<!sql print #Language>&sLanguage=<!sql print #sLanguage>})
+</TD><TD>
 <!sql endif>dnl
 </TD></TR>
 </TABLE>
@@ -158,9 +160,9 @@ X_NEW_BUTTON({Delete}, {X_ROOT/pub/issues/sections/articles/del.xql?Pub=<!sql pr
 <!sql if $type == 2>dnl
 <!sql set okf 1>dnl
 <!sql query "SELECT F?Field FROM X?q_art.Type WHERE NrArticle=?Article AND IdLanguage=?sLanguage" q_fld>
-B_CURRENT
-X_CURRENT({Field:}, {<B><!sql print ~Field></B>})
-E_CURRENT
+<!--B_CURRENT-->
+<!--X_CURRENT({Field:}, {<B><!sql print ~Field></B>})-->
+<!--E_CURRENT-->
 <P ALIGN="CENTER">
 <APPLET CODE="Test.class" CODEBASE="java/" ARCHIVE="test.jar" WIDTH="720" HEIGHT="420">
 <PARAM NAME="port" VALUE="<!sql print $SERVER_PORT>">

@@ -1,6 +1,6 @@
 CAMPSITE / CAMPFIRE
-version       : 2.0.0
-release date  : 15 march 2001
+version       : 2.0.12
+release date  : July, 24th 2001
 contact       : contact@campware.org
 url           : http://www.campware.org/campsite/
 copyright     : (c)1999-2001 Media Development Loan Fund
@@ -13,20 +13,20 @@ INTRODUCTION
 CAMPSITE is a content management system with multi-lingual
 Unicode support, designed for medium to large sized online
 publications. Issues, back archives, as well as subscription
-management are fully implemented features. At the core of 
-management system sits the CAMPFIRE, a Java program supporting 
-Unicode fonts, allowing contributors and editors to control 
+management are fully implemented features. At the core of
+management system sits the CAMPFIRE, a Java program supporting
+Unicode fonts, allowing contributors and editors to control
 layout online in their native font face. Style features can be
-assigned via buttons - similar to editors such as Wordpad - 
+assigned via buttons - similar to editors such as Wordpad -
 meaning no HTML knowledge is necessary for formatting text.
 
-We encourage further development of this software and would 
-like to make any progress accessible to all other users. 
-Please contact us if you have or intend to developed this 
+We encourage further development of this software and would
+like to make any progress accessible to all other users.
+Please contact us if you have or intend to developed this
 software further.
 
-CAMPSITE offers... 
--  support of managing article translations in different 
+CAMPSITE offers...
+-  support of managing article translations in different
    languages
 -  advanced editorial interface for remote article editing
 -  cut and paste formatting from other editors into the online
@@ -62,12 +62,11 @@ Implementing CAMPSITE for your purposes requires the following
 technical set-up, nothing out of the ordinary.
 
 CAMPSITE server:
-- runs on a Linux server, tested with RedHat 5.2 release, but
-  has proven compatible with newer versions up to 7.0.
+- runs on a Linux server, tested with RedHat 7.0 and Mandrake 8.0
 - needs an Apache web to be running, and its virtual servers
-- configured by the administrator.
+  configured by the administrator.
 - for data storage it is needed a MySQL database server for
-  Linux. The tests were made on MySQL v.3.22.27.
+  Linux. The tests were made on MySQL v.3.23.36.
 
 CAMPSITE client:
 - tested on Netscape under Unix, Macintosh and Windows,

@@ -76,9 +76,9 @@ const TOLLexem* TOLLex::IdentifyAtom()
 		m_coLexem.m_Res = TOL_LEX_NONE;
 		return &m_coLexem;
 	}
-	m_coAtom.Identifier[m_nAtomIdIndex] = 0;
+	m_coAtom.m_pchIdentifier[m_nAtomIdIndex] = 0;
 	// search read atom into statements list
-	TOLStatementHash::iterator st_it = s_coStatements.find((cpChar)(m_coAtom.Identifier));
+	TOLStatementHash::iterator st_it = s_coStatements.find((cpChar)(m_coAtom.m_pchIdentifier));
 	if (st_it != s_coStatements.end()) // identified statement
 	{
 		m_coLexem.m_pcoAtom = (const TOLAtom*)(&(*st_it));
@@ -98,10 +98,10 @@ int TOLLex::AppendOnAtom()
 {
 	if (m_nAtomIdIndex >= ID_MAXLEN)
 	{
-		m_coAtom.Identifier[m_nAtomIdIndex] = 0;
+		m_coAtom.m_pchIdentifier[m_nAtomIdIndex] = 0;
 		return 0;
 	}
-	m_coAtom.Identifier[m_nAtomIdIndex++] = m_chChar;
+	m_coAtom.m_pchIdentifier[m_nAtomIdIndex++] = m_chChar;
 	if (!isdigit(m_chChar))
 		m_coLexem.m_DataType = TOL_DT_STRING;
 	return 1;
@@ -271,12 +271,13 @@ void TOLLex::InitStatements()
 
 	s_coStatements.insert_unique(TOLStatement(TOL_ST_ARTICLE, ST_ARTICLE, sch,
 	                             pcoArticleTypeAttributes));
-
+    delete pcoArticleTypeAttributes;
+	
 
 	sch.clear();
 
 	ah.clear();
-	ah.insert_unique(TOLAttribute("bydate", TOL_DT_ORDER, "UploadDate"));
+	ah.insert_unique(TOLAttribute("bydate", TOL_DT_ORDER));
 	ah.insert_unique(TOLAttribute("bynumber", TOL_DT_ORDER, "Number"));
 	sch.insert_unique(TOLStatementContext(TOL_CT_LIST, ah));
 
@@ -682,7 +683,22 @@ void TOLLex::Reset(cpChar i, ULInt bl)
 		m_pchTempBuff = new char[s_nTempBuffLen];
 	m_pchTempBuff[0] = 0;
 	m_nTempIndex = 0;
-	m_bLexemStarted = m_bIsEOF = false;
+	m_bLexemStarted = m_bIsEOF = m_bQuotedLexem = false;
+}
+
+// UpdateArticleTypes: update article types structure from database
+bool TOLLex::UpdateArticleTypes()
+{
+	TOLStatementHash::iterator coIt = s_coStatements.find(ST_ARTICLE);
+	if (coIt == s_coStatements.end())
+	{
+		return false;
+	}
+	TOLTypeAttributesHash* pcoArticleTypeAttributes = NULL;
+	GetArticleTypeAttributes(&pcoArticleTypeAttributes);
+	bool bModified = (*coIt).UpdateTypes(pcoArticleTypeAttributes);
+	delete pcoArticleTypeAttributes;
+	return bModified;
 }
 
 // assign operator
@@ -701,7 +717,7 @@ const TOLLex& TOLLex::operator =(const TOLLex& s)
 		m_pchTempBuff = new char[s_nTempBuffLen];
 	m_pchTempBuff[0] = 0;
 	m_nTempIndex = 0;
-	m_bLexemStarted = m_bIsEOF = false;
+	m_bLexemStarted = m_bIsEOF = m_bQuotedLexem = false;
 	m_pchTextStart = 0;
 	return *this;
 }
@@ -709,14 +725,12 @@ const TOLLex& TOLLex::operator =(const TOLLex& s)
 // GetLexem: return next lexem
 const TOLLexem* TOLLex::GetLexem()
 {
-	bool FoundLexem;
-	bool QuotedLexem;
+	bool FoundLexem = false;
 	m_coLexem.m_pcoAtom = 0;
 	m_coLexem.m_DataType = TOL_DT_NUMBER;
 	m_coLexem.m_pchTextStart = 0;
 	m_coLexem.m_nTextLen = 0;
 	m_nAtomIdIndex = 0;
-	FoundLexem = QuotedLexem = false;
 	if (m_bIsEOF)
 	{
 		m_coLexem.m_Res = TOL_ERR_EOF;
@@ -805,17 +819,17 @@ const TOLLexem* TOLLex::GetLexem()
 				else		// atom found
 				{
 					m_bLexemStarted = true;
-					QuotedLexem = m_chChar == '\"';
-					if (!(QuotedLexem))
+					m_bQuotedLexem = m_chChar == '\"';
+					if (!m_bQuotedLexem)
 						AppendOnAtom();
 				}
 			}
-			else if (QuotedLexem)		// lexem (atom) is delimited by quotes
+			else if (m_bQuotedLexem)		// lexem (atom) is delimited by quotes
 			{
 				if (m_chChar < ' ' || m_chChar == s_chTOLTokenEnd)
 				{
 					m_bLexemStarted = false;
-					QuotedLexem = false;
+					m_bQuotedLexem = false;
 					if (m_chChar == s_chTOLTokenEnd)
 						m_nState = 4;
 					m_coLexem.m_Res = TOL_ERR_END_QUOTE_MISSING;
@@ -851,7 +865,7 @@ const TOLLexem* TOLLex::GetLexem()
 				{
 					FoundLexem = true;
 					m_bLexemStarted = true;
-					QuotedLexem = true;
+					m_bQuotedLexem = true;
 					return IdentifyAtom();
 				}
 				else		// append character to atom identifier
@@ -876,15 +890,18 @@ const TOLLexem* TOLLex::GetLexem()
 }
 
 // PrintStatements: print lex statements (for test purposes)
-void TOLLex::PrintStatements() const
+void TOLLex::PrintStatements()
 {
 	TOLAttributeHash::iterator ah_iterator;
 	TOLStatementContextHash::iterator sch_iterator;
 	TOLTypeAttributesHash::iterator ta_iterator;
 	TOLStatementHash::iterator s_iterator;
-	for (s_iterator = s_coStatements.begin(); s_iterator != s_coStatements.end(); ++(s_iterator))
+	int nIndex;
+	for (nIndex = 1, s_iterator = s_coStatements.begin();
+	     s_iterator != s_coStatements.end();
+	     nIndex++, ++(s_iterator))
 	{
-		cout << "Statement " << (*s_iterator).Identifier << "\n";
+		cout << nIndex << ". " << (*s_iterator).m_pchIdentifier << "\n";
 		for (ta_iterator = (*s_iterator).type_attributes.begin();
 		        ta_iterator != (*s_iterator).type_attributes.end();
 		        ++(ta_iterator))
@@ -898,7 +915,7 @@ void TOLLex::PrintStatements() const
 				for (ah_iterator = (*sch_iterator).attributes.begin();
 				        ah_iterator != (*sch_iterator).attributes.end();
 				        ++ah_iterator)
-					cout << "\t\t\t\t" << (*ah_iterator).Identifier
+					cout << "\t\t\t\t" << (*ah_iterator).m_pchIdentifier
 					<< ", DType " << (int)((*ah_iterator).DType)
 					<< ", Class " << (int)((*ah_iterator).attr_class)
 					<< ", DBField " << ((*ah_iterator).DBField) << "\n";
@@ -912,7 +929,7 @@ void TOLLex::PrintStatements() const
 			for (ah_iterator = (*sch_iterator).attributes.begin();
 			        ah_iterator != (*sch_iterator).attributes.end();
 			        ++ah_iterator)
-				cout << "\t\t\t" << (*ah_iterator).Identifier
+				cout << "\t\t\t" << (*ah_iterator).m_pchIdentifier
 				<< ", DType " << (int)((*ah_iterator).DType)
 				<< ", Class " << (int)((*ah_iterator).attr_class)
 				<< ", DBField " << ((*ah_iterator).DBField) << "\n";
