@@ -135,6 +135,9 @@ void CMsgURLRequest::setContent(char* p_pchContent)
 	const char* pchElement = coReader.nextElement();
 	while (coReader.elementDepth() == 2)
 	{
+		if (strcasecmp(pchElement, "Parameter") != 0)
+			continue;
+		string coName = coReader.getAttributeValue("Name");
 		string coAttr = coReader.getAttributeValue("Type");
 		long nSize;
 		if (strcasecmp(coAttr.c_str(), "string") != 0)
@@ -143,9 +146,9 @@ void CMsgURLRequest::setContent(char* p_pchContent)
 		coReader.nextElement("#text");
 		const char* pchContent = coReader.elementContent();
 		if (strcasecmp(coAttr.c_str(), "string") == 0)
-			setParameter(string(pchElement), string(pchContent));
+			setParameter(coName, string(pchContent));
 		else
-			setParameter(string(pchElement), pair<long, const char*> (nSize, pchContent));
+			setParameter(coName, pair<long, const char*> (nSize, pchContent));
 
 		pchElement = coReader.nextElement();
 		pchElement = coReader.nextElement();
@@ -155,8 +158,11 @@ void CMsgURLRequest::setContent(char* p_pchContent)
 	pchElement = coReader.nextElement();
 	while (coReader.elementDepth() == 2)
 	{
+		if (strcasecmp(pchElement, "Cookie") != 0)
+			continue;
+		string coName = coReader.getAttributeValue("Name");
 		coReader.nextElement("#text");
-		m_coCookies[string(pchElement)] = string(coReader.elementContent());
+		m_coCookies[coName] = string(coReader.elementContent());
 		pchElement = coReader.nextElement();
 		pchElement = coReader.nextElement();
 	}
