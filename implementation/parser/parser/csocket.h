@@ -43,6 +43,9 @@ This is a blocking mode socket for use with TCP-IP
 
 #include "globals.h"
 #include "exceptions.h"
+#ifdef _REENTRANT
+#include "mutex.h"
+#endif
 
 #ifndef WIN32
 typedef int SOCKET;
@@ -55,6 +58,21 @@ typedef const char* IPAddr;
 
 class CSocket
 {
+private:
+	static bool s_bRegisterSockets;
+#ifdef _REENTRANT
+	// if threaded use a mutex to get access to the static member s_bRegisterSockets
+	static CMutex m_coAccessMutex;
+#endif
+
+#ifdef _REENTRANT
+	void RegisterSocket() EXCEPTION_DEF(throw (ExMutex));
+	void UnregisterSocket() EXCEPTION_DEF(throw (ExMutex));
+#else
+	void RegisterSocket() EXCEPTION_DEF(throw ());
+	void UnregisterSocket() EXCEPTION_DEF(throw ());
+#endif
+
 protected:
 	SOCKET sock;
 
@@ -62,21 +80,23 @@ protected:
 				EXCEPTION_DEF(throw (HostNotFound, MalformedAddress));
 
 public:
-	CSocket(int type, int domain, int protocol = 0) EXCEPTION_DEF(throw (SocketErrorException));
+#ifdef _REENTRANT
+	CSocket(int type, int domain, int protocol = 0) EXCEPTION_DEF(throw(SocketErrorException, ExMutex));
+#else
+	CSocket(int type, int domain, int protocol = 0) EXCEPTION_DEF(throw(SocketErrorException));
+#endif
 	CSocket(SOCKET s)
 	{
 		sock = s;
+		RegisterSocket();
 	}
-	virtual ~CSocket()
-	{
-		Close();
-	}
+	virtual ~CSocket();
 	
 	virtual void Close() const
 	{
 		close(sock);
 	}
-	void Shutdown(int how = 2) const
+	void Shutdown(int how = SHUT_RDWR) const
 	{
 		shutdown(sock, how);
 	}
@@ -99,13 +119,26 @@ public:
 	static const char* Alias(const char*, const int = 1) EXCEPTION_DEF(throw (SocketException));
 	static const int IPCount(const char*) EXCEPTION_DEF(throw (SocketException));
 	static IPAddr IPAddress(const char*, const int = 1) EXCEPTION_DEF(throw (SocketException));
-	static const int ServByName(const char*, const char* = "tcp")
-	EXCEPTION_DEF(throw (ServNotFound));
+	static const int ServByName(const char*, const char* = "tcp") EXCEPTION_DEF(throw (ServNotFound));
+
+	// setRegister: if parameter is true register all sockets that are created; closeAllSockets will
+	//   not work for unregistered sockets
+#ifdef _REENTRANT
+	static void setRegister(bool) EXCEPTION_DEF(throw (ExMutex));
+	static bool getRegister() EXCEPTION_DEF(throw (ExMutex));
+
+	// closeAllSockets: needed for closing registered sockets in case a signal was received
+	static void closeAllSockets() EXCEPTION_DEF(throw (ExMutex));
+#else
+	static void setRegister(bool) EXCEPTION_DEF(throw ());
+	static bool getRegister() EXCEPTION_DEF(throw ());
+
+	// closeAllSockets: needed for closing registered sockets in case a signal was received
+	static void closeAllSockets() EXCEPTION_DEF(throw ());
+#endif
 };
 
-///////////////////////////////////////////////////////////////////////////////////
 // Class CConnectedSocket - connected type of sockets - either UDP or TCP
-///////////////////////////////////////////////////////////////////////////////////
 class CConnectedSocket : public CSocket
 {
 public:
@@ -128,9 +161,7 @@ public:
 	{}
 };
 
-///////////////////////////////////////////////////////////////////////////////////
 // Class CTCPSocket - tcp sockets
-///////////////////////////////////////////////////////////////////////////////////
 class CTCPSocket : public CConnectedSocket
 {
 public:
@@ -144,9 +175,7 @@ public:
 	{}
 };
 
-///////////////////////////////////////////////////////////////////////////////////
 // Class CServerSocket - tcp sockets
-///////////////////////////////////////////////////////////////////////////////////
 class CServerSocket : public CTCPSocket
 {
 public:
@@ -159,9 +188,7 @@ public:
 	{}
 };
 
-///////////////////////////////////////////////////////////////////////////////////
 // Class CUDPSocket - udp sockets
-///////////////////////////////////////////////////////////////////////////////////
 class CUDPSocket : public CSocket
 {
 public:
@@ -175,9 +202,7 @@ public:
 	{}
 };
 
-///////////////////////////////////////////////////////////////////////////////////
 // Class CTCPSocket - tcp sockets
-///////////////////////////////////////////////////////////////////////////////////
 class CUDPConnSocket : public CConnectedSocket
 {
 public:
