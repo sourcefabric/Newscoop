@@ -1,112 +1,75 @@
 <?php  
-	include($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
-	load_common_include_files();
-	require_once($_SERVER['DOCUMENT_ROOT']."/classes/Article.php");
-	require_once($_SERVER['DOCUMENT_ROOT']."/classes/Section.php");
-	require_once($_SERVER['DOCUMENT_ROOT']."/classes/Issue.php");
-	require_once($_SERVER['DOCUMENT_ROOT']."/classes/Publication.php");
-	require_once($_SERVER['DOCUMENT_ROOT']."/classes/Language.php");
-	require_once($_SERVER['DOCUMENT_ROOT']."/classes/User.php");
-	require_once($_SERVER['DOCUMENT_ROOT']. "/priv/pub/issues/sections/articles/article_common.php");
-	require_once($_SERVER['DOCUMENT_ROOT']. "/priv/pub/issues/sections/articles/article_top.php");
-	require_once($_SERVER['DOCUMENT_ROOT']. "/priv/pub/issues/sections/articles/HtmlArea_Campsite.php");
-	
-	list($access, $User, $XPerm) = check_basic_access($_REQUEST);
-    $Pub = isset($_REQUEST["Pub"])?$_REQUEST["Pub"]:0;
-    $Issue = isset($_REQUEST["Issue"])?$_REQUEST["Issue"]:0;
-    $Section = isset($_REQUEST["Section"])?$_REQUEST["Section"]:0;
-    $Language = isset($_REQUEST["Language"])?$_REQUEST["Language"]:0;
-    $sLanguage = isset($_REQUEST["sLanguage"])?$_REQUEST["sLanguage"]:0;
-    $Article = isset($_REQUEST["Article"])?$_REQUEST["Article"]:0;
-    $LockOk = isset($_REQUEST["LockOk"])?$_REQUEST["LockOk"]:0;
+require_once($_SERVER['DOCUMENT_ROOT']. "/priv/pub/issues/sections/articles/article_common.php");
 
-    $errorStr = "";
-    
-    // Fetch article
-    $articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
-    if (!$articleObj->exists()) {
-    	$errorStr = 'No such article.';
-    }
+list($access, $User, $XPerm) = check_basic_access($_REQUEST);
+$Pub = isset($_REQUEST["Pub"])?$_REQUEST["Pub"]:0;
+$Issue = isset($_REQUEST["Issue"])?$_REQUEST["Issue"]:0;
+$Section = isset($_REQUEST["Section"])?$_REQUEST["Section"]:0;
+$Language = isset($_REQUEST["Language"])?$_REQUEST["Language"]:0;
+$sLanguage = isset($_REQUEST["sLanguage"])?$_REQUEST["sLanguage"]:0;
+$Article = isset($_REQUEST["Article"])?$_REQUEST["Article"]:0;
+$LockOk = isset($_REQUEST["LockOk"])?$_REQUEST["LockOk"]:0;
 
-    $lockUserObj =& new User($articleObj->getLockedByUser());
-    
-//     Fetch section
-//    $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
-//    if (!$sectionObj->exists()) {
-//    	$errorStr = 'No such section.';
-//    }
-//    
-//     Fetch issue
-//    $issueObj =& new Issue($Pub, $Language, $Issue);
-//    if (!$issueObj->exists()) {
-//    	$errorStr = 'No such issue.';
-//    }
-//
-//     Fetch publication
-//    $publicationObj =& new Publication($Pub);
-//    if (!$publicationObj->exists()) {
-//    	$errorStr = 'No such publication.';
-//    }
-//    
-    $issueLanguageObj =& new Language($Language);
-//    $sLanguageObj =& new Language($sLanguage);
+$errorStr = "";
 
-   	// If the user has the ability to change the article OR
-	// the user created the article and it hasnt been published.
-	$hasAccess = false;
-    if ($XPerm['ChangeArticle'] || (($articleObj->getUserId() == $User['Id']) && ($articleObj->getPublished() == 'N'))) {
-    	$hasAccess = true;
-		$edit_ok= 0;
-		// If the article is not locked by a user or its been locked by the current user.
-		if (($articleObj->getLockedByUser() == 0) 
-			|| ($articleObj->getLockedByUser() == $User['Id'])) {
-			// Lock the article
-			$articleObj->lock($User['Id']);
-		    $edit_ok= 1;
-		} 
+// Fetch article
+$articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
+if (!$articleObj->exists()) {
+	$errorStr = 'No such article.';
+}
+$articleType =& $articleObj->getArticleTypeObject();
+$lockUserObj =& new User($articleObj->getLockedByUser());
+$issueLanguageObj =& new Language($Language);
+$issueObj =& new Issue($Pub, $Language, $Issue);
+$articleTemplate =& new Template($issueObj->getArticleTemplateId());
+
+// If the user has the ability to change the article OR
+// the user created the article and it hasnt been published.
+$hasAccess = false;
+if ($XPerm['ChangeArticle'] || (($articleObj->getUserId() == $User['Id']) && ($articleObj->getPublished() == 'N'))) {
+	$hasAccess = true;
+	$edit_ok= 0;
+	// If the article is not locked by a user or its been locked by the current user.
+	if (($articleObj->getLockedByUser() == 0) 
+		|| ($articleObj->getLockedByUser() == $User['Id'])) {
+		// Lock the article
+		$articleObj->lock($User['Id']);
+	    $edit_ok= 1;
+	} 
+}
+
+if ($XPerm['AddArticle']) { 
+	// Added by sebastian.
+	if (function_exists ("incModFile")) {
+		incModFile ();
 	}
-	
-	if ($XPerm['AddArticle']) { 
-		// Added by sebastian.
-		if (function_exists ("incModFile")) {
-			incModFile ();
-		}
-	}
-	
-    $articleType =& $articleObj->getArticleTypeObject();
-    
-	// Check if everything needed for Article Import is available.
-	$zipLibAvailable = function_exists("zip_open");
-	$xsltLibAvailable = function_exists("xslt_create");
-	@include("XML/Parser.php");
-	$xmlLibAvailable = class_exists("XML_Parser");
-	$xmlLibAvailable |= function_exists("xml_parser_create");
-	// Verify this article type has the body & intro fields.
-	$introSupport = false;
-	$bodySupport = false;
-	$dbColumns = $articleType->getUserDefinedColumns();
-	foreach ($dbColumns as $dbColumn) {
-		if ($dbColumn->getName() == "Fintro") {
-			$introSupport = true;
-		}
-		if ($dbColumn->getName() == "Fbody") {
-			$bodySupport = true;
-		}
-	}
+}
 
-	article_top($articleObj, $Language, "Edit article details", $access);
-	HtmlArea_Campsite($dbColumns);
-	
-	if ($errorStr != "") {
-	?>
-	<BLOCKQUOTE>
-	<LI><?php putGS($errorStr); ?></LI>
-	</BLOCKQUOTE>
-	<HR NOSHADE SIZE="1" COLOR="BLACK">
-	<a STYLE='font-size:8pt;color:#000000' href='http://www.campware.org' target='campware'>CAMPSITE  2.1.5 &copy 1999-2004 MDLF, maintained and distributed under GNU GPL by CAMPWARE</a>
-	</BODY>
-	</HTML>
-	<?php
+// Check if everything needed for Article Import is available.
+$zipLibAvailable = function_exists("zip_open");
+$xsltLibAvailable = function_exists("xslt_create");
+@include("XML/Parser.php");
+$xmlLibAvailable = class_exists("XML_Parser");
+$xmlLibAvailable |= function_exists("xml_parser_create");
+// Verify this article type has the body & intro fields.
+$introSupport = false;
+$bodySupport = false;
+$dbColumns = $articleType->getUserDefinedColumns();
+foreach ($dbColumns as $dbColumn) {
+	if ($dbColumn->getName() == "Fintro") {
+		$introSupport = true;
+	}
+	if ($dbColumn->getName() == "Fbody") {
+		$bodySupport = true;
+	}
+}
+
+// Begin Display of page
+ArticleTop($articleObj, $Language, "Edit article details", $access);
+HtmlArea_Campsite($dbColumns);
+
+if ($errorStr != "") {
+	CampsiteInterface::DisplayError($errorStr);
 	return;
 }
 
@@ -181,8 +144,8 @@ if ($edit_ok) { ?>
 				<TD>
 					<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 					<TR>
-						<TD><?php ArticleCommon::articleLink($articleObj, $issueLanguageObj->getLanguageId(), "status.php", $REQUEST_URI); ?><IMG SRC="/priv/img/tol.gif" BORDER="0"></A></TD>
-						<TD><?php ArticleCommon::articleLink($articleObj, $issueLanguageObj->getLanguageId(), "status.php", $REQUEST_URI); ?><B><?php  putGS("Unpublish"); ?></B></A></TD>
+						<TD><?php CampsiteInterface::ArticleLink($articleObj, $issueLanguageObj->getLanguageId(), "status.php", $REQUEST_URI); ?><IMG SRC="/priv/img/tol.gif" BORDER="0"></A></TD>
+						<TD><?php CampsiteInterface::ArticleLink($articleObj, $issueLanguageObj->getLanguageId(), "status.php", $REQUEST_URI); ?><B><?php  putGS("Unpublish"); ?></B></A></TD>
 					</TR>
 					</TABLE>
 				</TD>
@@ -195,8 +158,8 @@ if ($edit_ok) { ?>
 				<TD>
 					<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 					<TR>
-						<TD><?php ArticleCommon::articleLink($articleObj, $issueLanguageObj->getLanguageId(), "status.php", $REQUEST_URI); ?><IMG SRC="/priv/img/tol.gif" BORDER="0"></A></TD>
-						<TD><?php ArticleCommon::articleLink($articleObj, $issueLanguageObj->getLanguageId(), "status.php", $REQUEST_URI); ?><B><?php  putGS("Publish"); ?></B></A></TD>
+						<TD><?php CampsiteInterface::ArticleLink($articleObj, $issueLanguageObj->getLanguageId(), "status.php", $REQUEST_URI); ?><IMG SRC="/priv/img/tol.gif" BORDER="0"></A></TD>
+						<TD><?php CampsiteInterface::ArticleLink($articleObj, $issueLanguageObj->getLanguageId(), "status.php", $REQUEST_URI); ?><B><?php  putGS("Publish"); ?></B></A></TD>
 					</TR>
 					</TABLE>
 				</TD>
@@ -208,9 +171,9 @@ if ($edit_ok) { ?>
 			<TD>
 				<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 				<TR>
-					<TD><?php ArticleCommon::articleLink($articleObj, $issueLanguageObj->getLanguageId(), "status.php", $REQUEST_URI); ?>
+					<TD><?php CampsiteInterface::ArticleLink($articleObj, $issueLanguageObj->getLanguageId(), "status.php", $REQUEST_URI); ?>
 					<IMG SRC="/priv/img/tol.gif" BORDER="0"></A></TD>
-					<TD><?php ArticleCommon::articleLink($articleObj, $issueLanguageObj->getLanguageId(), "status.php", $REQUEST_URI); ?><B><?php  putGS("Submit"); ?></B></A></TD>
+					<TD><?php CampsiteInterface::ArticleLink($articleObj, $issueLanguageObj->getLanguageId(), "status.php", $REQUEST_URI); ?><B><?php  putGS("Submit"); ?></B></A></TD>
 				</TR>
 				</TABLE>
 			</TD>
@@ -218,28 +181,31 @@ if ($edit_ok) { ?>
 		} 
 		?>
 			<TD>
+				<!-- Images Link -->
 				<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 				<TR>
-					<TD><?php ArticleCommon::articleLink($articleObj, $issueLanguageObj->getLanguageId(), "images/"); ?><IMG SRC="/priv/img/tol.gif" BORDER="0"></A></TD>
-					<TD><?php ArticleCommon::articleLink($articleObj, $issueLanguageObj->getLanguageId(), "images/"); ?><B><?php  putGS("Images"); ?></B></A></TD>
-				</TR>
-				</TABLE>
-			</TD>
-			
-			<TD>		
-				<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
-				<TR>
-					<TD><?php ArticleCommon::articleLink($articleObj, $issueLanguageObj->getLanguageId(), "topics/"); ?><IMG SRC="/priv/img/tol.gif" BORDER="0"></A></TD>
-					<TD><?php ArticleCommon::articleLink($articleObj, $issueLanguageObj->getLanguageId(), "topics/"); ?><B><?php  putGS("Topics"); ?></B></A></TD>
+					<TD><?php CampsiteInterface::ArticleLink($articleObj, $issueLanguageObj->getLanguageId(), "images/"); ?><IMG SRC="/priv/img/tol.gif" BORDER="0"></A></TD>
+					<TD><?php CampsiteInterface::ArticleLink($articleObj, $issueLanguageObj->getLanguageId(), "images/"); ?><B><?php  putGS("Images"); ?></B></A></TD>
 				</TR>
 				</TABLE>
 			</TD>
 			
 			<TD>
+				<!-- Topics Link -->
 				<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 				<TR>
-					<TD><?php ArticleCommon::articleLink($articleObj, $issueLanguageObj->getLanguageId(), "do_unlock.php"); ?><IMG SRC="/priv/img/tol.gif" BORDER="0"></A></TD>
-					<TD><?php ArticleCommon::articleLink($articleObj, $issueLanguageObj->getLanguageId(), "do_unlock.php"); ?><B><?php  putGS("Unlock"); ?></B></A></TD>
+					<TD><?php CampsiteInterface::ArticleLink($articleObj, $issueLanguageObj->getLanguageId(), "topics/"); ?><IMG SRC="/priv/img/tol.gif" BORDER="0"></A></TD>
+					<TD><?php CampsiteInterface::ArticleLink($articleObj, $issueLanguageObj->getLanguageId(), "topics/"); ?><B><?php  putGS("Topics"); ?></B></A></TD>
+				</TR>
+				</TABLE>
+			</TD>
+			
+			<TD>
+				<!-- Unlock Link -->
+				<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
+				<TR>
+					<TD><?php CampsiteInterface::ArticleLink($articleObj, $issueLanguageObj->getLanguageId(), "do_unlock.php"); ?><IMG SRC="/priv/img/tol.gif" BORDER="0"></A></TD>
+					<TD><?php CampsiteInterface::ArticleLink($articleObj, $issueLanguageObj->getLanguageId(), "do_unlock.php"); ?><B><?php  putGS("Unlock"); ?></B></A></TD>
 				</TR>
 				</TABLE>
 			</TD>
@@ -247,10 +213,11 @@ if ($edit_ok) { ?>
 		
 		<TR>
 			<TD>
+				<!-- Preview Link -->
 				<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 				<TR>	
-					<TD><A HREF="" ONCLICK="window.open('/priv/pub/issues/sections/articles/preview.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>', 'fpreview', 'resizable=yes, menubar=yes, toolbar=yes, width=680, height=560'); return false"><IMG SRC="/priv/img/tol.gif" BORDER="0"></A></TD>
-					<TD><A HREF="" ONCLICK="window.open('/priv/pub/issues/sections/articles/preview.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>', 'fpreview', 'resizable=yes, menubar=yes, toolbar=yes, width=680, height=560'); return false"><B><?php  putGS("Preview"); ?></B></A></TD>
+					<TD><A HREF="" ONCLICK="window.open('/priv/pub/issues/sections/articles/preview.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=no, width=680, height=560'); return false"><IMG SRC="/priv/img/tol.gif" BORDER="0"></A></TD>
+					<TD><A HREF="" ONCLICK="window.open('/priv/pub/issues/sections/articles/preview.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>', 'fpreview', 'resizable=yes, menubar=yes, toolbar=yes, width=680, height=560'); return false"><B><?php  putGS("Preview"); ?></B></A></TD>					
 				</TR>
 				</TABLE>
 			</TD>
@@ -261,8 +228,8 @@ if ($edit_ok) { ?>
 				<TD>
 					<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 					<TR>
-						<TD><?php ArticleCommon::articleLink($articleObj, $issueLanguageObj->getLanguageId(), "translate.php", $REQUEST_URI); ?><IMG SRC="/priv/img/tol.gif" BORDER="0"></A></TD>
-						<TD><?php ArticleCommon::articleLink($articleObj, $issueLanguageObj->getLanguageId(), "translate.php", $REQUEST_URI); ?><B><?php  putGS("Translate"); ?></B></A></TD>
+						<TD><?php CampsiteInterface::ArticleLink($articleObj, $issueLanguageObj->getLanguageId(), "translate.php", $REQUEST_URI); ?><IMG SRC="/priv/img/tol.gif" BORDER="0"></A></TD>
+						<TD><?php CampsiteInterface::ArticleLink($articleObj, $issueLanguageObj->getLanguageId(), "translate.php", $REQUEST_URI); ?><B><?php  putGS("Translate"); ?></B></A></TD>
 					</TR>
 					</TABLE>
 				</TD>
@@ -274,8 +241,8 @@ if ($edit_ok) { ?>
 				<TD>
 					<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 					<TR>
-						<TD><?php ArticleCommon::articleLink($articleObj, $issueLanguageObj->getLanguageId(), "del.php", $REQUEST_URI); ?><IMG SRC="/priv/img/tol.gif" BORDER="0"></A></TD>
-						<TD><?php ArticleCommon::articleLink($articleObj, $issueLanguageObj->getLanguageId(), "del.php", $REQUEST_URI); ?><B><?php  putGS("Delete"); ?></B></A></TD>
+						<TD><?php CampsiteInterface::ArticleLink($articleObj, $issueLanguageObj->getLanguageId(), "del.php", $REQUEST_URI); ?><IMG SRC="/priv/img/tol.gif" BORDER="0"></A></TD>
+						<TD><?php CampsiteInterface::ArticleLink($articleObj, $issueLanguageObj->getLanguageId(), "del.php", $REQUEST_URI); ?><B><?php  putGS("Delete"); ?></B></A></TD>
 					</TR>
 					</TABLE>
 				</TD>
@@ -287,8 +254,8 @@ if ($edit_ok) { ?>
 				<TD>
 					<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 					<TR>
-						<TD><?php ArticleCommon::articleLink($articleObj, $issueLanguageObj->getLanguageId(), "fduplicate.php"); ?><IMG SRC="/priv/img/tol.gif" BORDER="0"></A></TD>
-						<TD><?php ArticleCommon::articleLink($articleObj, $issueLanguageObj->getLanguageId(), "fduplicate.php"); ?><B><?php  putGS("Duplicate"); ?></B></A></TD>
+						<TD><?php CampsiteInterface::ArticleLink($articleObj, $issueLanguageObj->getLanguageId(), "fduplicate.php"); ?><IMG SRC="/priv/img/tol.gif" BORDER="0"></A></TD>
+						<TD><?php CampsiteInterface::ArticleLink($articleObj, $issueLanguageObj->getLanguageId(), "fduplicate.php"); ?><B><?php  putGS("Duplicate"); ?></B></A></TD>
 					</TR>
 					</TABLE>
 				</TD>
@@ -479,8 +446,5 @@ if ($edit_ok) { ?>
 </FORM>
 <?php  
 } // if ($edit_ok)
+CampsiteInterface::CopyrightNotice();
 ?>
-<HR NOSHADE SIZE="1" COLOR="BLACK">
-<a STYLE='font-size:8pt;color:#000000' href='http://www.campware.org' target='campware'>CAMPSITE  2.1.5 &copy 1999-2004 MDLF, maintained and distributed under GNU GPL by CAMPWARE</a>
-</BODY>
-</HTML>
