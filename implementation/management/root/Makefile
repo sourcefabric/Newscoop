@@ -3,10 +3,10 @@ MY_TARGETS=index.php enter.php password.php sub_pub.php dictionary.php robots.ph
 all: $(MY_TARGETS)
 
 %.php: %.m4 ../macros.m4
-	m4 ../macros.m4 $< >$@
+	$(M4) ../macros.m4 $< >$@
 
 %.txt: %.m4 ../macros.m4
-	m4 ../macros.m4 $< >$@
+	$(M4) ../macros.m4 $< >$@
 
 install: $(ALL)
 	cp -f *.php $(HTML_DIR)/

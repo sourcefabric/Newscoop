@@ -5,10 +5,10 @@ MY_TARGETS=view.php del.php do_del.php add.php do_add.php edit.php do_edit.php u
 all: $(MY_TARGETS)
 
 %.php: %.m4 ../../../../../macros.m4
-	m4 ../../../../../macros.m4 $< >$@
+	$(M4) ../../../../../macros.m4 $< >$@
 
 %.sh: %.m4 ../../../../../macros.m4
-	m4 ../../../../../macros.m4 $< >$@
+	$(M4) ../../../../../macros.m4 $< >$@
 
 install: $(ALL)
 	mkdir -p $(PRIV_DIR6)

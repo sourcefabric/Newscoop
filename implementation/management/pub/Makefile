@@ -8,7 +8,7 @@ subsystem: all
 all: $(MY_TARGETS)
 
 %.php: %.m4 ../macros.m4
-	m4 ../macros.m4 $< >$@
+	$(M4) ../macros.m4 $< >$@
 
 install: $(ALL)
 	mkdir -p $(PRIV_DIR2)

@@ -8,7 +8,7 @@ popup.m4: popup.in
 	cat popup.in >popup.m4
 
 %.php: %.m4 ../macros.m4 popup.m4
-	m4 ../macros.m4 popup.m4 $< >$@
+	$(M4) ../macros.m4 popup.m4 $< >$@
 
 install: $(ALL)
 	mkdir -p $(PRIV_DIR2)
