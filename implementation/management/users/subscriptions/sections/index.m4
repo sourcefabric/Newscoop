@@ -46,7 +46,7 @@ E_CURRENT
 
 <P><!sql setdefault SSectOffs 0><!sql if $SSectOffs < 0><!sql set SSectOffs 0><!sql endif><!sql set NUM_ROWS 0>dnl
 
-<!sql query "SELECT DISTINCT Sub.*, Sec.Name FROM SubsSections as Sub, Sections as Sec WHERE IdSubscription=?Subs AND Sub.SectionNumber = Sec.Number ORDER BY SectionNumber LIMIT $SSectOffs, 11" q_ssect>dnl
+<!sql query "SELECT DISTINCT Sub.*, Sec.Name FROM SubsSections as Sub, Sections as Sec WHERE IdSubscription=?Subs AND Sub.SectionNumber = Sec.Number AND Sec.IdPublication=~Pub ORDER BY SectionNumber LIMIT $SSectOffs, 11" q_ssect>dnl
 <!sql if $NUM_ROWS>dnl
 <!sql set nr $NUM_ROWS>dnl
 <!sql set i 10>dnl
