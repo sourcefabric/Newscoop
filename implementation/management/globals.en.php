@@ -32,6 +32,7 @@ regGS("Go up","Go up:en");
 regGS("Configure", "Configure:en");
 regGS("Image archive", "Image Archive:en");
 regGS("URL","URL");
+regGS("Order", "Order:en");
 
 regGS("Duplicate", "Duplicate:en");
 regGS("Select destination", "Select destination:en");
@@ -78,7 +79,7 @@ regGS("Previous","Previous:en");
 regGS("Translate","Translate:en");
 regGS("Details","Details:en");
 regGS("View","View:en");
-regGS("Automatic publishing","Automatic publishing:en");
+regGS("Automatic publishing","Automatic Publishing:en");
 regGS("Time","Time:en");
 regGS("Action","Action:en");
 regGS("Schedule a new publish action","Schedule a new publish action:en");
