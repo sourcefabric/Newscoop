@@ -36,6 +36,7 @@ if ($is_image) {
 } 
 elseif (($extension == '.php') || ($extension == '')) {
 	// Requested file is not an image
+	header("Content-type: text/html; charset=UTF-8");
 
 	// If they arent trying to login in...
 	if (($call_script != '/login.php') && ($call_script != '/do_login.php')) {
