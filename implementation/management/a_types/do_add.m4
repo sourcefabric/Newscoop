@@ -68,7 +68,11 @@ X_AUDIT(<*61*>, <*getGS('The article type $1 has been added.',$cName)*>)
 	*>)
 <?php 
     todef ('Back');
-    if ($correct && $created) { ?>dnl
+    if ($correct && $created) {
+		$params = array($operation_attr=>$operation_create, "article_type"=>"$cName");
+		$msg = build_reset_cache_msg($cache_type_article_types, $params);
+		send_message($SERVER_ADDRESS, server_port(), $msg, $err_msg);
+?>dnl
 	B_MSGBOX_BUTTONS
 		REDIRECT(<*New field*>, <*Add new field*>, <*X_ROOT/a_types/fields/add.php?AType=<?php  print encURL($cName); ?>*>)
 		REDIRECT(<*New type*>, <*Add another*>, <*X_ROOT/a_types/add.php*>)
