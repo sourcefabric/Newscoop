@@ -1,16 +1,8 @@
--- phpMyAdmin SQL Dump
--- version 2.6.0-pl3
--- http://www.phpmyadmin.net
+-- MySQL dump 9.11
 --
--- Host: localhost
--- Generation Time: Nov 22, 2004 at 12:03 AM
--- Server version: 4.0.18
--- PHP Version: 4.3.4
---
--- Database: `campsite`
---
-
--- --------------------------------------------------------
+-- Host: localhost    Database: campsite
+-- ------------------------------------------------------
+-- Server version	4.0.20
 
 --
 -- Table structure for table `Aliases`
@@ -23,14 +15,12 @@ CREATE TABLE `Aliases` (
   `IdPublication` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`Id`),
   UNIQUE KEY `Name` (`Name`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) TYPE=MyISAM;
 
 --
 -- Dumping data for table `Aliases`
 --
 
-
--- --------------------------------------------------------
 
 --
 -- Table structure for table `ArticleImages`
@@ -49,8 +39,6 @@ CREATE TABLE `ArticleImages` (
 -- Dumping data for table `ArticleImages`
 --
 
-
--- --------------------------------------------------------
 
 --
 -- Table structure for table `ArticleIndex`
@@ -71,9 +59,26 @@ CREATE TABLE `ArticleIndex` (
 -- Dumping data for table `ArticleIndex`
 --
 
-INSERT INTO ArticleImages VALUES (0, 0, 0);
 
--- --------------------------------------------------------
+--
+-- Table structure for table `ArticlePublish`
+--
+
+DROP TABLE IF EXISTS `ArticlePublish`;
+CREATE TABLE `ArticlePublish` (
+  `NrArticle` int(10) unsigned NOT NULL default '0',
+  `IdLanguage` int(10) unsigned NOT NULL default '0',
+  `PublishTime` datetime NOT NULL default '0000-00-00 00:00:00',
+  `Publish` enum('P','U') default NULL,
+  `FrontPage` enum('S','R') default NULL,
+  `SectionPage` enum('S','R') default NULL,
+  PRIMARY KEY  (`NrArticle`,`IdLanguage`,`PublishTime`)
+) TYPE=MyISAM;
+
+--
+-- Dumping data for table `ArticlePublish`
+--
+
 
 --
 -- Table structure for table `ArticleTopics`
@@ -90,8 +95,6 @@ CREATE TABLE `ArticleTopics` (
 -- Dumping data for table `ArticleTopics`
 --
 
-
--- --------------------------------------------------------
 
 --
 -- Table structure for table `Articles`
@@ -132,8 +135,6 @@ CREATE TABLE `Articles` (
 --
 
 
--- --------------------------------------------------------
-
 --
 -- Table structure for table `AutoId`
 --
@@ -152,9 +153,7 @@ CREATE TABLE `AutoId` (
 -- Dumping data for table `AutoId`
 --
 
-INSERT INTO `AutoId` (`DictionaryId`, `ClassId`, `ArticleId`, `KeywordId`, `LogTStamp`, `TopicId`) VALUES (0, 0, 0, 0, '0000-00-00 00:00:00', 0);
-
--- --------------------------------------------------------
+INSERT INTO `AutoId` (`DictionaryId`, `ClassId`, `ArticleId`, `KeywordId`, `LogTStamp`, `TopicId`) VALUES (0,0,0,0,'0000-00-00 00:00:00',0);
 
 --
 -- Table structure for table `Classes`
@@ -174,8 +173,6 @@ CREATE TABLE `Classes` (
 --
 
 
--- --------------------------------------------------------
-
 --
 -- Table structure for table `Countries`
 --
@@ -193,248 +190,7 @@ CREATE TABLE `Countries` (
 -- Dumping data for table `Countries`
 --
 
-INSERT INTO `Countries` (`Code`, `IdLanguage`, `Name`) VALUES ('AR', 1, 'Argentina'),
-('AG', 1, 'Antigua And Barbuda'),
-('AQ', 1, 'Antarctica'),
-('AI', 1, 'Anguilla'),
-('AO', 1, 'Angola'),
-('AD', 1, 'Andorra'),
-('AS', 1, 'American Samoa'),
-('DZ', 1, 'Algeria'),
-('AL', 1, 'Albania'),
-('AF', 1, 'Afghanistan'),
-('AM', 1, 'Armenia'),
-('AW', 1, 'Aruba'),
-('AU', 1, 'Australia'),
-('AT', 1, 'Austria'),
-('AZ', 1, 'Azerbaijan'),
-('BS', 1, 'Bahamas'),
-('BH', 1, 'Bahrain'),
-('BD', 1, 'Bangladesh'),
-('BB', 1, 'Barbados'),
-('BY', 1, 'Belarus'),
-('BE', 1, 'Belgium'),
-('BZ', 1, 'Belize'),
-('BJ', 1, 'Benin'),
-('BM', 1, 'Bermuda'),
-('BT', 1, 'Bhutan'),
-('BO', 1, 'Bolivia'),
-('BA', 1, 'Bosnia And Herzegovina'),
-('BW', 1, 'Botswana'),
-('BV', 1, 'Bouvet Island'),
-('BR', 1, 'Brazil'),
-('IO', 1, 'British Indian Ocean Territory'),
-('BN', 1, 'Brunei Darussalam'),
-('BG', 1, 'Bulgaria'),
-('BF', 1, 'Burkina Faso'),
-('BI', 1, 'Burundi'),
-('KH', 1, 'Cambodia'),
-('CM', 1, 'Cameroon'),
-('CA', 1, 'Canada'),
-('CV', 1, 'Cape Verde'),
-('KY', 1, 'Cayman Islands'),
-('CF', 1, 'Central African Republic'),
-('TD', 1, 'Chad'),
-('CL', 1, 'Chile'),
-('CN', 1, 'China'),
-('CX', 1, 'Christmas Island'),
-('CC', 1, 'Cocos (Keeling) Islands'),
-('CO', 1, 'Colombia'),
-('KM', 1, 'Comoros'),
-('CG', 1, 'Congo'),
-('CD', 1, 'Congo, The Democratic Republic Of The'),
-('CK', 1, 'Cook Islands'),
-('CR', 1, 'Costa Rica'),
-('CI', 1, 'Cote Divoire'),
-('HR', 1, 'Croatia'),
-('CU', 1, 'Cuba'),
-('CY', 1, 'Cyprus'),
-('CZ', 1, 'Czech Republic'),
-('DK', 1, 'Denmark'),
-('DJ', 1, 'Djibouti'),
-('DM', 1, 'Dominica'),
-('DO', 1, 'Dominican Republic'),
-('TP', 1, 'East Timor'),
-('EC', 1, 'Ecuador'),
-('EG', 1, 'Egypt'),
-('SV', 1, 'El Salvador'),
-('GQ', 1, 'Equatorial Guinea'),
-('ER', 1, 'Eritrea'),
-('EE', 1, 'Estonia'),
-('ET', 1, 'Ethiopia'),
-('FK', 1, 'Falkland Islands (Malvinas)'),
-('FO', 1, 'Faroe Islands'),
-('FJ', 1, 'Fiji'),
-('FI', 1, 'Finland'),
-('FR', 1, 'France'),
-('FX', 1, 'France, Metropolitan'),
-('GF', 1, 'French Guiana'),
-('PF', 1, 'French Polynesia'),
-('TF', 1, 'French Southern Territories'),
-('GA', 1, 'Gabon'),
-('GM', 1, 'Gambia'),
-('GE', 1, 'Georgia'),
-('DE', 1, 'Germany'),
-('GH', 1, 'Ghana'),
-('GI', 1, 'Gibraltar'),
-('GR', 1, 'Greece'),
-('GL', 1, 'Greenland'),
-('GD', 1, 'Grenada'),
-('GP', 1, 'Guadeloupe'),
-('GU', 1, 'Guam'),
-('GT', 1, 'Guatemala'),
-('GN', 1, 'Guinea'),
-('GW', 1, 'Guinea-bissau'),
-('GY', 1, 'Guyana'),
-('HT', 1, 'Haiti'),
-('HM', 1, 'Heard Island And Mcdonald Islands'),
-('VA', 1, 'Holy See (Vatican City State)'),
-('HN', 1, 'Honduras'),
-('HK', 1, 'Hong Kong'),
-('HU', 1, 'Hungary'),
-('IS', 1, 'Iceland'),
-('IN', 1, 'India'),
-('ID', 1, 'Indonesia'),
-('IR', 1, 'Iran, Islamic Republic Of'),
-('IQ', 1, 'Iraq'),
-('IE', 1, 'Ireland'),
-('IL', 1, 'Israel'),
-('IT', 1, 'Italy'),
-('JM', 1, 'Jamaica'),
-('JP', 1, 'Japan'),
-('JO', 1, 'Jordan'),
-('KZ', 1, 'Kazakstan'),
-('KE', 1, 'Kenya'),
-('KI', 1, 'Kiribati'),
-('KP', 1, 'Korea, Democratic Peoples Republic Of'),
-('KR', 1, 'Korea, Republic Of'),
-('KW', 1, 'Kuwait'),
-('KG', 1, 'Kyrgyzstan'),
-('LA', 1, 'Lao Peoples Democratic Republic'),
-('LV', 1, 'Latvia'),
-('LB', 1, 'Lebanon'),
-('LS', 1, 'Lesotho'),
-('LR', 1, 'Liberia'),
-('LY', 1, 'Libyan Arab Jamahiriya'),
-('LI', 1, 'Liechtenstein'),
-('LT', 1, 'Lithuania'),
-('LU', 1, 'Luxembourg'),
-('MO', 1, 'Macau'),
-('MK', 1, 'Macedonia, The Former Yugoslav Republic Of'),
-('MG', 1, 'Madagascar'),
-('MW', 1, 'Malawi'),
-('MY', 1, 'Malaysia'),
-('MV', 1, 'Maldives'),
-('ML', 1, 'Mali'),
-('MT', 1, 'Malta'),
-('MH', 1, 'Marshall Islands'),
-('MQ', 1, 'Martinique'),
-('MR', 1, 'Mauritania'),
-('MU', 1, 'Mauritius'),
-('YT', 1, 'Mayotte'),
-('MX', 1, 'Mexico'),
-('FM', 1, 'Micronesia, Federated States Of'),
-('MD', 1, 'Moldova, Republic Of'),
-('MC', 1, 'Monaco'),
-('MN', 1, 'Mongolia'),
-('MS', 1, 'Montserrat'),
-('MA', 1, 'Morocco'),
-('MZ', 1, 'Mozambique'),
-('MM', 1, 'Myanmar'),
-('NA', 1, 'Namibia'),
-('NR', 1, 'Nauru'),
-('NP', 1, 'Nepal'),
-('NL', 1, 'Netherlands'),
-('AN', 1, 'Netherlands Antilles'),
-('NC', 1, 'New Caledonia'),
-('NZ', 1, 'New Zealand'),
-('NI', 1, 'Nicaragua'),
-('NE', 1, 'Niger'),
-('NG', 1, 'Nigeria'),
-('NU', 1, 'Niue'),
-('NF', 1, 'Norfolk Island'),
-('MP', 1, 'Northern Mariana Islands'),
-('NO', 1, 'Norway'),
-('OM', 1, 'Oman'),
-('PK', 1, 'Pakistan'),
-('PW', 1, 'Palau'),
-('PS', 1, 'Palestinian Territory, Occupied'),
-('PA', 1, 'Panama'),
-('PG', 1, 'Papua New Guinea'),
-('PY', 1, 'Paraguay'),
-('PE', 1, 'Peru'),
-('PH', 1, 'Philippines'),
-('PN', 1, 'Pitcairn'),
-('PL', 1, 'Poland'),
-('PT', 1, 'Portugal'),
-('PR', 1, 'Puerto Rico'),
-('QA', 1, 'Qatar'),
-('RE', 1, 'Reunion'),
-('RO', 1, 'Romania'),
-('RU', 1, 'Russian Federation'),
-('RW', 1, 'Rwanda'),
-('SH', 1, 'Saint Helena'),
-('KN', 1, 'Saint Kitts And Nevis'),
-('LC', 1, 'Saint Lucia'),
-('PM', 1, 'Saint Pierre And Miquelon'),
-('VC', 1, 'Saint Vincent And The Grenadines'),
-('WS', 1, 'Samoa'),
-('SM', 1, 'San Marino'),
-('ST', 1, 'Sao Tome And Principe'),
-('SA', 1, 'Saudi Arabia'),
-('SN', 1, 'Senegal'),
-('CS', 1, 'Serbia and Montenegro'),
-('SC', 1, 'Seychelles'),
-('SL', 1, 'Sierra Leone'),
-('SG', 1, 'Singapore'),
-('SK', 1, 'Slovakia'),
-('SI', 1, 'Slovenia'),
-('SB', 1, 'Solomon Islands'),
-('SO', 1, 'Somalia'),
-('ZA', 1, 'South Africa'),
-('GS', 1, 'South Georgia And The South Sandwich Islands'),
-('ES', 1, 'Spain'),
-('LK', 1, 'Sri Lanka'),
-('SD', 1, 'Sudan'),
-('SR', 1, 'Suriname'),
-('SJ', 1, 'Svalbard And Jan Mayen'),
-('SZ', 1, 'Swaziland'),
-('SE', 1, 'Sweden'),
-('CH', 1, 'Switzerland'),
-('SY', 1, 'Syrian Arab Republic'),
-('TW', 1, 'Taiwan, Province Of China'),
-('TJ', 1, 'Tajikistan'),
-('TZ', 1, 'Tanzania, United Republic Of'),
-('TH', 1, 'Thailand'),
-('TG', 1, 'Togo'),
-('TK', 1, 'Tokelau'),
-('TO', 1, 'Tonga'),
-('TT', 1, 'Trinidad And Tobago'),
-('TN', 1, 'Tunisia'),
-('TR', 1, 'Turkey'),
-('TM', 1, 'Turkmenistan'),
-('TC', 1, 'Turks And Caicos Islands'),
-('TV', 1, 'Tuvalu'),
-('UG', 1, 'Uganda'),
-('UA', 1, 'Ukraine'),
-('AE', 1, 'United Arab Emirates'),
-('GB', 1, 'United Kingdom'),
-('US', 1, 'United States'),
-('UM', 1, 'United States Minor Outlying Islands'),
-('UY', 1, 'Uruguay'),
-('UZ', 1, 'Uzbekistan'),
-('VU', 1, 'Vanuatu'),
-('VE', 1, 'Venezuela'),
-('VN', 1, 'Vietnam'),
-('VG', 1, 'Virgin Islands, British'),
-('VI', 1, 'Virgin Islands, U.S.'),
-('WF', 1, 'Wallis And Futuna'),
-('EH', 1, 'Western Sahara'),
-('YE', 1, 'Yemen'),
-('ZM', 1, 'Zambia'),
-('ZW', 1, 'Zimbabwe');
-
--- --------------------------------------------------------
+INSERT INTO `Countries` (`Code`, `IdLanguage`, `Name`) VALUES ('AR',1,'Argentina'),('AG',1,'Antigua And Barbuda'),('AQ',1,'Antarctica'),('AI',1,'Anguilla'),('AO',1,'Angola'),('AD',1,'Andorra'),('AS',1,'American Samoa'),('DZ',1,'Algeria'),('AL',1,'Albania'),('AF',1,'Afghanistan'),('AM',1,'Armenia'),('AW',1,'Aruba'),('AU',1,'Australia'),('AT',1,'Austria'),('AZ',1,'Azerbaijan'),('BS',1,'Bahamas'),('BH',1,'Bahrain'),('BD',1,'Bangladesh'),('BB',1,'Barbados'),('BY',1,'Belarus'),('BE',1,'Belgium'),('BZ',1,'Belize'),('BJ',1,'Benin'),('BM',1,'Bermuda'),('BT',1,'Bhutan'),('BO',1,'Bolivia'),('BA',1,'Bosnia And Herzegovina'),('BW',1,'Botswana'),('BV',1,'Bouvet Island'),('BR',1,'Brazil'),('IO',1,'British Indian Ocean Territory'),('BN',1,'Brunei Darussalam'),('BG',1,'Bulgaria'),('BF',1,'Burkina Faso'),('BI',1,'Burundi'),('KH',1,'Cambodia'),('CM',1,'Cameroon'),('CA',1,'Canada'),('CV',1,'Cape Verde'),('KY',1,'Cayman Islands'),('CF',1,'Central African Republic'),('TD',1,'Chad'),('CL',1,'Chile'),('CN',1,'China'),('CX',1,'Christmas Island'),('CC',1,'Cocos (Keeling) Islands'),('CO',1,'Colombia'),('KM',1,'Comoros'),('CG',1,'Congo'),('CD',1,'Congo, The Democratic Republic Of The'),('CK',1,'Cook Islands'),('CR',1,'Costa Rica'),('CI',1,'Cote Divoire'),('HR',1,'Croatia'),('CU',1,'Cuba'),('CY',1,'Cyprus'),('CZ',1,'Czech Republic'),('DK',1,'Denmark'),('DJ',1,'Djibouti'),('DM',1,'Dominica'),('DO',1,'Dominican Republic'),('TP',1,'East Timor'),('EC',1,'Ecuador'),('EG',1,'Egypt'),('SV',1,'El Salvador'),('GQ',1,'Equatorial Guinea'),('ER',1,'Eritrea'),('EE',1,'Estonia'),('ET',1,'Ethiopia'),('FK',1,'Falkland Islands (Malvinas)'),('FO',1,'Faroe Islands'),('FJ',1,'Fiji'),('FI',1,'Finland'),('FR',1,'France'),('FX',1,'France, Metropolitan'),('GF',1,'French Guiana'),('PF',1,'French Polynesia'),('TF',1,'French Southern Territories'),('GA',1,'Gabon'),('GM',1,'Gambia'),('GE',1,'Georgia'),('DE',1,'Germany'),('GH',1,'Ghana'),('GI',1,'Gibraltar'),('GR',1,'Greece'),('GL',1,'Greenland'),('GD',1,'Grenada'),('GP',1,'Guadeloupe'),('GU',1,'Guam'),('GT',1,'Guatemala'),('GN',1,'Guinea'),('GW',1,'Guinea-bissau'),('GY',1,'Guyana'),('HT',1,'Haiti'),('HM',1,'Heard Island And Mcdonald Islands'),('VA',1,'Holy See (Vatican City State)'),('HN',1,'Honduras'),('HK',1,'Hong Kong'),('HU',1,'Hungary'),('IS',1,'Iceland'),('IN',1,'India'),('ID',1,'Indonesia'),('IR',1,'Iran, Islamic Republic Of'),('IQ',1,'Iraq'),('IE',1,'Ireland'),('IL',1,'Israel'),('IT',1,'Italy'),('JM',1,'Jamaica'),('JP',1,'Japan'),('JO',1,'Jordan'),('KZ',1,'Kazakstan'),('KE',1,'Kenya'),('KI',1,'Kiribati'),('KP',1,'Korea, Democratic Peoples Republic Of'),('KR',1,'Korea, Republic Of'),('KW',1,'Kuwait'),('KG',1,'Kyrgyzstan'),('LA',1,'Lao Peoples Democratic Republic'),('LV',1,'Latvia'),('LB',1,'Lebanon'),('LS',1,'Lesotho'),('LR',1,'Liberia'),('LY',1,'Libyan Arab Jamahiriya'),('LI',1,'Liechtenstein'),('LT',1,'Lithuania'),('LU',1,'Luxembourg'),('MO',1,'Macau'),('MK',1,'Macedonia, The Former Yugoslav Republic Of'),('MG',1,'Madagascar'),('MW',1,'Malawi'),('MY',1,'Malaysia'),('MV',1,'Maldives'),('ML',1,'Mali'),('MT',1,'Malta'),('MH',1,'Marshall Islands'),('MQ',1,'Martinique'),('MR',1,'Mauritania'),('MU',1,'Mauritius'),('YT',1,'Mayotte'),('MX',1,'Mexico'),('FM',1,'Micronesia, Federated States Of'),('MD',1,'Moldova, Republic Of'),('MC',1,'Monaco'),('MN',1,'Mongolia'),('MS',1,'Montserrat'),('MA',1,'Morocco'),('MZ',1,'Mozambique'),('MM',1,'Myanmar'),('NA',1,'Namibia'),('NR',1,'Nauru'),('NP',1,'Nepal'),('NL',1,'Netherlands'),('AN',1,'Netherlands Antilles'),('NC',1,'New Caledonia'),('NZ',1,'New Zealand'),('NI',1,'Nicaragua'),('NE',1,'Niger'),('NG',1,'Nigeria'),('NU',1,'Niue'),('NF',1,'Norfolk Island'),('MP',1,'Northern Mariana Islands'),('NO',1,'Norway'),('OM',1,'Oman'),('PK',1,'Pakistan'),('PW',1,'Palau'),('PS',1,'Palestinian Territory, Occupied'),('PA',1,'Panama'),('PG',1,'Papua New Guinea'),('PY',1,'Paraguay'),('PE',1,'Peru'),('PH',1,'Philippines'),('PN',1,'Pitcairn'),('PL',1,'Poland'),('PT',1,'Portugal'),('PR',1,'Puerto Rico'),('QA',1,'Qatar'),('RE',1,'Reunion'),('RO',1,'Romania'),('RU',1,'Russian Federation'),('RW',1,'Rwanda'),('SH',1,'Saint Helena'),('KN',1,'Saint Kitts And Nevis'),('LC',1,'Saint Lucia'),('PM',1,'Saint Pierre And Miquelon'),('VC',1,'Saint Vincent And The Grenadines'),('WS',1,'Samoa'),('SM',1,'San Marino'),('ST',1,'Sao Tome And Principe'),('SA',1,'Saudi Arabia'),('SN',1,'Senegal'),('CS',1,'Serbia and Montenegro'),('SC',1,'Seychelles'),('SL',1,'Sierra Leone'),('SG',1,'Singapore'),('SK',1,'Slovakia'),('SI',1,'Slovenia'),('SB',1,'Solomon Islands'),('SO',1,'Somalia'),('ZA',1,'South Africa'),('GS',1,'South Georgia And The South Sandwich Islands'),('ES',1,'Spain'),('LK',1,'Sri Lanka'),('SD',1,'Sudan'),('SR',1,'Suriname'),('SJ',1,'Svalbard And Jan Mayen'),('SZ',1,'Swaziland'),('SE',1,'Sweden'),('CH',1,'Switzerland'),('SY',1,'Syrian Arab Republic'),('TW',1,'Taiwan, Province Of China'),('TJ',1,'Tajikistan'),('TZ',1,'Tanzania, United Republic Of'),('TH',1,'Thailand'),('TG',1,'Togo'),('TK',1,'Tokelau'),('TO',1,'Tonga'),('TT',1,'Trinidad And Tobago'),('TN',1,'Tunisia'),('TR',1,'Turkey'),('TM',1,'Turkmenistan'),('TC',1,'Turks And Caicos Islands'),('TV',1,'Tuvalu'),('UG',1,'Uganda'),('UA',1,'Ukraine'),('AE',1,'United Arab Emirates'),('GB',1,'United Kingdom'),('US',1,'United States'),('UM',1,'United States Minor Outlying Islands'),('UY',1,'Uruguay'),('UZ',1,'Uzbekistan'),('VU',1,'Vanuatu'),('VE',1,'Venezuela'),('VN',1,'Vietnam'),('VG',1,'Virgin Islands, British'),('VI',1,'Virgin Islands, U.S.'),('WF',1,'Wallis And Futuna'),('EH',1,'Western Sahara'),('YE',1,'Yemen'),('ZM',1,'Zambia'),('ZW',1,'Zimbabwe');
 
 --
 -- Table structure for table `Dictionary`
@@ -454,8 +210,6 @@ CREATE TABLE `Dictionary` (
 --
 
 
--- --------------------------------------------------------
-
 --
 -- Table structure for table `Errors`
 --
@@ -472,31 +226,7 @@ CREATE TABLE `Errors` (
 -- Dumping data for table `Errors`
 --
 
-INSERT INTO `Errors` (`Number`, `IdLanguage`, `Message`) VALUES (4000, 1, 'Internal error.'),
-(4001, 1, 'Username not specified.'),
-(4002, 1, 'Invalid username.'),
-(4003, 1, 'Password not specified.'),
-(4004, 1, 'Invalid password.'),
-(2000, 1, 'Internal error'),
-(2001, 1, 'Username is not specified. Please fill out login name field.'),
-(2002, 1, 'You are not a reader.'),
-(2003, 1, 'Publication not specified.'),
-(2004, 1, 'There are other subscriptions not payed.'),
-(2005, 1, 'Time unit not specified.'),
-(3000, 1, 'Internal error.'),
-(3001, 1, 'Username already exists.'),
-(3002, 1, 'Name is not specified. Please fill out name field.'),
-(3003, 1, 'Username is not specified. Please fill out login name field.'),
-(3004, 1, 'Password is not specified. Please fill out password field.'),
-(3005, 1, 'EMail is not specified. Please fill out EMail field.'),
-(3006, 1, 'EMail address already exists. Please try to login with your old account.'),
-(3007, 1, 'Invalid user identifier'),
-(3008, 1, 'No country specified. Please select a country.'),
-(3009, 1, 'Password (again) is not specified. Please fill out password (again) field.'),
-(3010, 1, 'Passwords do not match. Please fill out the same password to both password fields.'),
-(3011, 1, 'Password is too simple. Please choose a better password (at least 6 characters).');
-
--- --------------------------------------------------------
+INSERT INTO `Errors` (`Number`, `IdLanguage`, `Message`) VALUES (4000,1,'Internal error.'),(4001,1,'Username not specified.'),(4002,1,'Invalid username.'),(4003,1,'Password not specified.'),(4004,1,'Invalid password.'),(2000,1,'Internal error'),(2001,1,'Username is not specified. Please fill out login name field.'),(2002,1,'You are not a reader.'),(2003,1,'Publication not specified.'),(2004,1,'There are other subscriptions not payed.'),(2005,1,'Time unit not specified.'),(3000,1,'Internal error.'),(3001,1,'Username already exists.'),(3002,1,'Name is not specified. Please fill out name field.'),(3003,1,'Username is not specified. Please fill out login name field.'),(3004,1,'Password is not specified. Please fill out password field.'),(3005,1,'EMail is not specified. Please fill out EMail field.'),(3006,1,'EMail address already exists. Please try to login with your old account.'),(3007,1,'Invalid user identifier'),(3008,1,'No country specified. Please select a country.'),(3009,1,'Password (again) is not specified. Please fill out password (again) field.'),(3010,1,'Passwords do not match. Please fill out the same password to both password fields.'),(3011,1,'Password is too simple. Please choose a better password (at least 6 characters).');
 
 --
 -- Table structure for table `Events`
@@ -516,69 +246,7 @@ CREATE TABLE `Events` (
 -- Dumping data for table `Events`
 --
 
-INSERT INTO `Events` (`Id`, `Name`, `Notify`, `IdLanguage`) VALUES (1, 'Add Publication', 'N', 1),
-(2, 'Delete Publication', 'N', 1),
-(11, 'Add Issue', 'N', 1),
-(12, 'Delete Issue', 'N', 1),
-(13, 'Change Issue Template', 'N', 1),
-(14, 'Change issue status', 'N', 1),
-(15, 'Add Issue Translation', 'N', 1),
-(21, 'Add Section', 'N', 1),
-(22, 'Delete section', 'N', 1),
-(31, 'Add Article', 'Y', 1),
-(32, 'Delete article', 'N', 1),
-(33, 'Change article field', 'N', 1),
-(34, 'Change article properties', 'N', 1),
-(35, 'Change article status', 'Y', 1),
-(41, 'Add Image', 'Y', 1),
-(42, 'Delete image', 'N', 1),
-(43, 'Change image properties', 'N', 1),
-(51, 'Add User', 'N', 1),
-(52, 'Delete User', 'N', 1),
-(53, 'Changes Own Password', 'N', 1),
-(54, 'Change User Password', 'N', 1),
-(55, 'Change User Permissions', 'N', 1),
-(56, 'Change user information', 'N', 1),
-(61, 'Add article type', 'N', 1),
-(62, 'Delete article type', 'N', 1),
-(71, 'Add article type field', 'N', 1),
-(72, 'Delete article type field', 'N', 1),
-(81, 'Add dictionary class', 'N', 1),
-(82, 'Delete dictionary class', 'N', 1),
-(91, 'Add dictionary keyword', 'N', 1),
-(92, 'Delete dictionary keyword', 'N', 1),
-(101, 'Add language', 'N', 1),
-(102, 'Delete language', 'N', 1),
-(103, 'Modify language', 'N', 1),
-(112, 'Delete templates', 'N', 1),
-(111, 'Add templates', 'N', 1),
-(121, 'Add user type', 'N', 1),
-(122, 'Delete user type', 'N', 1),
-(123, 'Change user type', 'N', 1),
-(3, 'Change publication information', 'N', 1),
-(36, 'Change article template', 'N', 1),
-(57, 'Add IP Group', 'N', 1),
-(58, 'Delete IP Group', 'N', 1),
-(131, 'Add country', 'N', 1),
-(132, 'Add country translation', 'N', 1),
-(133, 'Change country name', 'N', 1),
-(134, 'Delete country', 'N', 1),
-(4, 'Add default subscription time', 'N', 1),
-(5, 'Delete default subscription time', 'N', 1),
-(6, 'Change default subscription time', 'N', 1),
-(113, 'Edit template', 'N', 1),
-(114, 'Create template', 'N', 1),
-(115, 'Duplicate template', 'N', 1),
-(141, 'Add topic', 'N', 1),
-(142, 'Delete topic', 'N', 1),
-(143, 'Update topic', 'N', 1),
-(144, 'Add topic to article', 'N', 1),
-(145, 'Delete topic from article', 'N', 1),
-(151, 'Add alias', 'N', 1),
-(152, 'Delete alias', 'N', 1),
-(153, 'Update alias', 'N', 1);
-
--- --------------------------------------------------------
+INSERT INTO `Events` (`Id`, `Name`, `Notify`, `IdLanguage`) VALUES (1,'Add Publication','N',1),(2,'Delete Publication','N',1),(11,'Add Issue','N',1),(12,'Delete Issue','N',1),(13,'Change Issue Template','N',1),(14,'Change issue status','N',1),(15,'Add Issue Translation','N',1),(21,'Add Section','N',1),(22,'Delete section','N',1),(31,'Add Article','Y',1),(32,'Delete article','N',1),(33,'Change article field','N',1),(34,'Change article properties','N',1),(35,'Change article status','Y',1),(41,'Add Image','Y',1),(42,'Delete image','N',1),(43,'Change image properties','N',1),(51,'Add User','N',1),(52,'Delete User','N',1),(53,'Changes Own Password','N',1),(54,'Change User Password','N',1),(55,'Change User Permissions','N',1),(56,'Change user information','N',1),(61,'Add article type','N',1),(62,'Delete article type','N',1),(71,'Add article type field','N',1),(72,'Delete article type field','N',1),(81,'Add dictionary class','N',1),(82,'Delete dictionary class','N',1),(91,'Add dictionary keyword','N',1),(92,'Delete dictionary keyword','N',1),(101,'Add language','N',1),(102,'Delete language','N',1),(103,'Modify language','N',1),(112,'Delete templates','N',1),(111,'Add templates','N',1),(121,'Add user type','N',1),(122,'Delete user type','N',1),(123,'Change user type','N',1),(3,'Change publication information','N',1),(36,'Change article template','N',1),(57,'Add IP Group','N',1),(58,'Delete IP Group','N',1),(131,'Add country','N',1),(132,'Add country translation','N',1),(133,'Change country name','N',1),(134,'Delete country','N',1),(4,'Add default subscription time','N',1),(5,'Delete default subscription time','N',1),(6,'Change default subscription time','N',1),(113,'Edit template','N',1),(114,'Create template','N',1),(115,'Duplicate template','N',1),(141,'Add topic','N',1),(142,'Delete topic','N',1),(143,'Update topic','N',1),(144,'Add topic to article','N',1),(145,'Delete topic from article','N',1),(151,'Add alias','N',1),(152,'Delete alias','N',1),(153,'Update alias','N',1);
 
 --
 -- Table structure for table `Images`
@@ -596,14 +264,32 @@ CREATE TABLE `Images` (
   `Location` enum('local','remote') NOT NULL default 'local',
   `URL` varchar(255) NOT NULL default '',
   PRIMARY KEY  (`Id`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) TYPE=MyISAM;
 
 --
 -- Dumping data for table `Images`
 --
 
 
--- --------------------------------------------------------
+--
+-- Table structure for table `IssuePublish`
+--
+
+DROP TABLE IF EXISTS `IssuePublish`;
+CREATE TABLE `IssuePublish` (
+  `IdPublication` int(10) unsigned NOT NULL default '0',
+  `NrIssue` int(10) unsigned NOT NULL default '0',
+  `IdLanguage` int(10) unsigned NOT NULL default '0',
+  `PublishTime` datetime NOT NULL default '0000-00-00 00:00:00',
+  `Action` enum('P','U') NOT NULL default 'P',
+  `PublishArticles` enum('Y','N') NOT NULL default 'Y',
+  PRIMARY KEY  (`IdPublication`,`NrIssue`,`IdLanguage`,`PublishTime`)
+) TYPE=MyISAM;
+
+--
+-- Dumping data for table `IssuePublish`
+--
+
 
 --
 -- Table structure for table `Issues`
@@ -630,8 +316,6 @@ CREATE TABLE `Issues` (
 --
 
 
--- --------------------------------------------------------
-
 --
 -- Table structure for table `KeywordClasses`
 --
@@ -651,8 +335,6 @@ CREATE TABLE `KeywordClasses` (
 --
 
 
--- --------------------------------------------------------
-
 --
 -- Table structure for table `KeywordIndex`
 --
@@ -668,8 +350,6 @@ CREATE TABLE `KeywordIndex` (
 -- Dumping data for table `KeywordIndex`
 --
 
-
--- --------------------------------------------------------
 
 --
 -- Table structure for table `Languages`
@@ -703,29 +383,13 @@ CREATE TABLE `Languages` (
   `WDay7` varchar(140) NOT NULL default '',
   PRIMARY KEY  (`Id`),
   UNIQUE KEY `Name` (`Name`)
-) TYPE=MyISAM AUTO_INCREMENT=17 ;
+) TYPE=MyISAM;
 
 --
 -- Dumping data for table `Languages`
 --
 
-INSERT INTO `Languages` (`Id`, `Name`, `CodePage`, `OrigName`, `Code`, `Month1`, `Month2`, `Month3`, `Month4`, `Month5`, `Month6`, `Month7`, `Month8`, `Month9`, `Month10`, `Month11`, `Month12`, `WDay1`, `WDay2`, `WDay3`, `WDay4`, `WDay5`, `WDay6`, `WDay7`) VALUES (1, 'English', 'ISO_8859-1', 'English', 'en', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'),
-(5, 'German', 'ISO_8859-1', 'Deutsch', 'de', 'Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember', 'Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'),
-(6, 'Austrian', 'IS0_8859-1', 'Deutsch (Österreich)', 'at', 'Jänner', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember', 'Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'),
-(9, 'Portuguese', 'ISO_8859-1', 'Português', 'pt', 'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro', 'Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'),
-(12, 'French', 'ISO_8859-1', 'Français', 'fr', 'Janvier', 'Février', 'Mars', 'Avril', 'Peut', 'Juin', 'Juli', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre', 'Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'),
-(13, 'Spanish', 'ISO_8859-1', 'Español', 'es', 'Enero', 'Febrero', 'Marcha', 'Abril', 'Puede', 'Junio', 'Juli', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre', 'Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'),
-(14, 'Italian', 'ISO_8859-1', 'Italiano', 'it', 'Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre', 'Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'),
-(2, 'Romanian', 'ISO_8859-2', 'Română', 'ro', 'Ianuarie', 'Februarie', 'Martie', 'Aprilie', 'Mai', 'Iunie', 'Iulie', 'August', 'Septembrie', 'Octombrie', 'Noiembrie', 'Decembrie', 'Duminică', 'Luni', 'Marţi', 'Miercuri', 'Joi', 'Vineri', 'Sâmbătă'),
-(7, 'Croatian', 'ISO_8859-2', 'Hrvatski', 'hr', 'Siječanj', 'Veljača', 'Ožujak', 'Travanj', 'Svibanj', 'Lipanj', 'Srpanj', 'Kolovoz', 'Rujan', 'Listopad', 'Studeni', 'Prosinac', 'Nedjelja', 'Ponedjeljak', 'Utorak', 'Srijeda', 'Četvrtak', 'Petak', 'Subota'),
-(8, 'Czech', 'ISO_8859-2', 'Český', 'cz', 'Leden', 'Únor', 'Březen', 'Duben', 'Květen', 'Červen', 'Červenec', 'Srpen', 'Září', 'Říjen', 'Listopad', 'Prosinec', 'Neděle', 'Pondělí', 'Úterý', 'Středa', 'Čtvrtek', 'Pátek', 'Sobota'),
-(11, 'Serbo-Croatian', 'ISO_8859-2', 'Srpskohrvatski', 'sh', 'Januar', 'Februar', 'Mart', 'April', 'Maj', 'Juni', 'Juli', 'Avgust', 'Septembar', 'Oktobar', 'Novembar', 'Decembar', 'Nedjelja', 'Ponedeljak', 'Utorak', 'Srijeda', 'Četvrtak', 'Petak', 'Subota'),
-(10, 'Serbian (Cyrillic)', 'ISO_8859-5', 'Српски (Ћирилица)', 'sr', 'јануар', 'фебруар', 'март', 'април', 'мај', 'јун', 'јул', 'август', 'септембар', 'октобар', 'новембар', 'децембар', 'Недеља', 'Понедељак', 'Уторак', 'Среда', 'Четвртак', 'Петак', 'Субота'),
-(15, 'Russian', 'ISO_8859-5', 'Русский', 'ru', 'январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь', 'воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'),
-(3, 'Hebrew', 'ISO_8859-9', 'øàè÷øàè', 'he', '÷øà èâëéçâëòç ëòéç', 'ëòéç ëòé', 'çëòéçëòéå456', '÷øàè÷øàèøà', 'ãëğãâëé', 'ñòéâëòé', 'âëòé', 'âëòéã÷øòùãâòùã', 'âùãâùã/''ø÷øé', 'âëòéëòéç', 'éöéòúêçìêóçì', 'âëòéçéìòéç', 'åïíôåïíàèå', 'ïàèåïéçêúîöúõîöúî', 'äğîáäğîäğá', 'æñáäãùãâë', 'ëòéëòéçòéìêì', 'éçìêéçíåèïíè', '÷øàè÷øàè'),
-(16, 'Chinese', 'UTF-8', '中文', 'zh', '一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月', '星期', '星期', '星期', '星期', '星期', '星期', '星期');
-
--- --------------------------------------------------------
+INSERT INTO `Languages` (`Id`, `Name`, `CodePage`, `OrigName`, `Code`, `Month1`, `Month2`, `Month3`, `Month4`, `Month5`, `Month6`, `Month7`, `Month8`, `Month9`, `Month10`, `Month11`, `Month12`, `WDay1`, `WDay2`, `WDay3`, `WDay4`, `WDay5`, `WDay6`, `WDay7`) VALUES (1,'English','ISO_8859-1','English','en','January','February','March','April','May','June','July','August','September','October','November','December','Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'),(5,'German','ISO_8859-1','Deutsch','de','Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember','Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'),(6,'Austrian','IS0_8859-1','Deutsch (Österreich)','at','Jänner','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember','Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'),(9,'Portuguese','ISO_8859-1','Português','pt','Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro','Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'),(12,'French','ISO_8859-1','Français','fr','Janvier','Février','Mars','Avril','Peut','Juin','Juli','Août','Septembre','Octobre','Novembre','Décembre','Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'),(13,'Spanish','ISO_8859-1','Español','es','Enero','Febrero','Marcha','Abril','Puede','Junio','Juli','Agosto','Septiembre','Octubre','Noviembre','Diciembre','Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'),(14,'Italian','ISO_8859-1','Italiano','it','Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre','Domenica','Lunedì','Martedì','Mercoledì','Giovedì','Venerdì','Sabato'),(2,'Romanian','ISO_8859-2','Română','ro','Ianuarie','Februarie','Martie','Aprilie','Mai','Iunie','Iulie','August','Septembrie','Octombrie','Noiembrie','Decembrie','Duminică','Luni','Marţi','Miercuri','Joi','Vineri','Sâmbătă'),(7,'Croatian','ISO_8859-2','Hrvatski','hr','Siječanj','Veljača','Ožujak','Travanj','Svibanj','Lipanj','Srpanj','Kolovoz','Rujan','Listopad','Studeni','Prosinac','Nedjelja','Ponedjeljak','Utorak','Srijeda','Četvrtak','Petak','Subota'),(8,'Czech','ISO_8859-2','Český','cz','Leden','Únor','Březen','Duben','Květen','Červen','Červenec','Srpen','Září','Říjen','Listopad','Prosinec','Neděle','Pondělí','Úterý','Středa','Čtvrtek','Pátek','Sobota'),(11,'Serbo-Croatian','ISO_8859-2','Srpskohrvatski','sh','Januar','Februar','Mart','April','Maj','Juni','Juli','Avgust','Septembar','Oktobar','Novembar','Decembar','Nedjelja','Ponedeljak','Utorak','Srijeda','Četvrtak','Petak','Subota'),(10,'Serbian (Cyrillic)','ISO_8859-5','Српски (Ћирилица)','sr','јануар','фебруар','март','април','мај','јун','јул','август','септембар','октобар','новембар','децембар','Недеља','Понедељак','Уторак','Среда','Четвртак','Петак','Субота'),(15,'Russian','ISO_8859-5','Русский','ru','январь','февраль','март','апрель','май','июнь','июль','август','сентябрь','октябрь','ноябрь','декабрь','воскресенье','понедельник','вторник','среда','четверг','пятница','суббота'),(3,'Hebrew','ISO_8859-9','øàè÷øàè','he','÷øà èâëéçâëòç ëòéç','ëòéç ëòé','çëòéçëòéå456','÷øàè÷øàèøà','ãëğãâëé','ñòéâëòé','âëòé','âëòéã÷øòùãâòùã','âùãâùã/\'ø÷øé','âëòéëòéç','éöéòúêçìêóçì','âëòéçéìòéç','åïíôåïíàèå','ïàèåïéçêúîöúõîöúî','äğîáäğîäğá','æñáäãùãâë','ëòéëòéçòéìêì','éçìêéçíåèïíè','÷øàè÷øàè'),(16,'Chinese','UTF-8','中文','zh','一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月','星期','星期','星期','星期','星期','星期','星期');
 
 --
 -- Table structure for table `Log`
@@ -744,8 +408,6 @@ CREATE TABLE `Log` (
 -- Dumping data for table `Log`
 --
 
-
--- --------------------------------------------------------
 
 --
 -- Table structure for table `Publications`
@@ -767,14 +429,12 @@ CREATE TABLE `Publications` (
   PRIMARY KEY  (`Id`),
   UNIQUE KEY `Alias` (`IdDefaultAlias`),
   UNIQUE KEY `Name` (`Name`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) TYPE=MyISAM;
 
 --
 -- Dumping data for table `Publications`
 --
 
-
--- --------------------------------------------------------
 
 --
 -- Table structure for table `Sections`
@@ -800,8 +460,6 @@ CREATE TABLE `Sections` (
 --
 
 
--- --------------------------------------------------------
-
 --
 -- Table structure for table `SubsByIP`
 --
@@ -818,8 +476,6 @@ CREATE TABLE `SubsByIP` (
 -- Dumping data for table `SubsByIP`
 --
 
-
--- --------------------------------------------------------
 
 --
 -- Table structure for table `SubsDefTime`
@@ -838,8 +494,6 @@ CREATE TABLE `SubsDefTime` (
 -- Dumping data for table `SubsDefTime`
 --
 
-
--- --------------------------------------------------------
 
 --
 -- Table structure for table `SubsSections`
@@ -861,8 +515,6 @@ CREATE TABLE `SubsSections` (
 --
 
 
--- --------------------------------------------------------
-
 --
 -- Table structure for table `Subscriptions`
 --
@@ -878,14 +530,12 @@ CREATE TABLE `Subscriptions` (
   `Type` enum('T','P') NOT NULL default 'T',
   PRIMARY KEY  (`Id`),
   UNIQUE KEY `IdUser` (`IdUser`,`IdPublication`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) TYPE=MyISAM;
 
 --
 -- Dumping data for table `Subscriptions`
 --
 
-
--- --------------------------------------------------------
 
 --
 -- Table structure for table `TemplateTypes`
@@ -897,18 +547,13 @@ CREATE TABLE `TemplateTypes` (
   `Name` char(20) NOT NULL default '',
   PRIMARY KEY  (`Id`),
   UNIQUE KEY `Name` (`Name`)
-) TYPE=MyISAM AUTO_INCREMENT=5 ;
+) TYPE=MyISAM;
 
 --
 -- Dumping data for table `TemplateTypes`
 --
 
-INSERT INTO `TemplateTypes` (`Id`, `Name`) VALUES (1, 'default'),
-(2, 'issue'),
-(3, 'section'),
-(4, 'article');
-
--- --------------------------------------------------------
+INSERT INTO `TemplateTypes` (`Id`, `Name`) VALUES (1,'default'),(2,'issue'),(3,'section'),(4,'article');
 
 --
 -- Table structure for table `Templates`
@@ -922,14 +567,12 @@ CREATE TABLE `Templates` (
   `Level` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`Id`),
   UNIQUE KEY `Name` (`Name`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) TYPE=MyISAM;
 
 --
 -- Dumping data for table `Templates`
 --
 
-
--- --------------------------------------------------------
 
 --
 -- Table structure for table `TimeUnits`
@@ -947,12 +590,7 @@ CREATE TABLE `TimeUnits` (
 -- Dumping data for table `TimeUnits`
 --
 
-INSERT INTO `TimeUnits` (`Unit`, `IdLanguage`, `Name`) VALUES ('D', 1, 'days'),
-('W', 1, 'weeks'),
-('M', 1, 'months'),
-('Y', 1, 'years');
-
--- --------------------------------------------------------
+INSERT INTO `TimeUnits` (`Unit`, `IdLanguage`, `Name`) VALUES ('D',1,'days'),('W',1,'weeks'),('M',1,'months'),('Y',1,'years');
 
 --
 -- Table structure for table `Topics`
@@ -973,8 +611,6 @@ CREATE TABLE `Topics` (
 --
 
 
--- --------------------------------------------------------
-
 --
 -- Table structure for table `URLTypes`
 --
@@ -986,16 +622,13 @@ CREATE TABLE `URLTypes` (
   `Description` mediumblob NOT NULL,
   PRIMARY KEY  (`Id`),
   UNIQUE KEY `Name` (`Name`)
-) TYPE=MyISAM AUTO_INCREMENT=3 ;
+) TYPE=MyISAM;
 
 --
 -- Dumping data for table `URLTypes`
 --
 
-INSERT INTO `URLTypes` (`Id`, `Name`, `Description`) VALUES (1, 'template path', ''),
-(2, 'short names', '');
-
--- --------------------------------------------------------
+INSERT INTO `URLTypes` (`Id`, `Name`, `Description`) VALUES (1,'template path',''),(2,'short names','');
 
 --
 -- Table structure for table `UserPerm`
@@ -1044,9 +677,7 @@ CREATE TABLE `UserPerm` (
 -- Dumping data for table `UserPerm`
 --
 
-INSERT INTO `UserPerm` (`IdUser`, `ManagePub`, `DeletePub`, `ManageIssue`, `DeleteIssue`, `ManageSection`, `DeleteSection`, `AddArticle`, `ChangeArticle`, `DeleteArticle`, `AddImage`, `ChangeImage`, `DeleteImage`, `ManageTempl`, `DeleteTempl`, `ManageUsers`, `ManageSubscriptions`, `DeleteUsers`, `ManageUserTypes`, `ManageArticleTypes`, `DeleteArticleTypes`, `ManageLanguages`, `DeleteLanguages`, `ManageDictionary`, `DeleteDictionary`, `ManageCountries`, `DeleteCountries`, `ManageClasses`, `MailNotify`, `ViewLogs`, `ManageLocalizer`, `ManageIndexer`, `Publish`, `ManageTopics`) VALUES (1, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'N', 'N', 'Y', 'Y', 'N', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y');
-
--- --------------------------------------------------------
+INSERT INTO `UserPerm` (`IdUser`, `ManagePub`, `DeletePub`, `ManageIssue`, `DeleteIssue`, `ManageSection`, `DeleteSection`, `AddArticle`, `ChangeArticle`, `DeleteArticle`, `AddImage`, `ChangeImage`, `DeleteImage`, `ManageTempl`, `DeleteTempl`, `ManageUsers`, `ManageSubscriptions`, `DeleteUsers`, `ManageUserTypes`, `ManageArticleTypes`, `DeleteArticleTypes`, `ManageLanguages`, `DeleteLanguages`, `ManageDictionary`, `DeleteDictionary`, `ManageCountries`, `DeleteCountries`, `ManageClasses`, `MailNotify`, `ViewLogs`, `ManageLocalizer`, `ManageIndexer`, `Publish`, `ManageTopics`) VALUES (1,'Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','N','N','Y','Y','N','Y','Y','Y','Y','Y','Y');
 
 --
 -- Table structure for table `UserTypes`
@@ -1096,12 +727,7 @@ CREATE TABLE `UserTypes` (
 -- Dumping data for table `UserTypes`
 --
 
-INSERT INTO `UserTypes` (`Name`, `Reader`, `ManagePub`, `DeletePub`, `ManageIssue`, `DeleteIssue`, `ManageSection`, `DeleteSection`, `AddArticle`, `ChangeArticle`, `DeleteArticle`, `AddImage`, `ChangeImage`, `DeleteImage`, `ManageTempl`, `DeleteTempl`, `ManageUsers`, `ManageSubscriptions`, `DeleteUsers`, `ManageUserTypes`, `ManageArticleTypes`, `DeleteArticleTypes`, `ManageLanguages`, `DeleteLanguages`, `ManageDictionary`, `DeleteDictionary`, `ManageCountries`, `DeleteCountries`, `ManageClasses`, `MailNotify`, `ViewLogs`, `ManageLocalizer`, `ManageIndexer`, `Publish`, `ManageTopics`) VALUES ('Reader', 'Y', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'),
-('Administrator', 'N', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'N', 'N', 'Y', 'Y', 'N', 'N', 'Y', 'Y', 'N', 'Y', 'Y'),
-('Editor', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'Y', 'N', 'N', 'N', 'N', 'N'),
-('Chief Editor', 'N', 'N', 'N', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'N', 'N', 'N', 'N', 'Y', 'Y', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'Y', 'Y', 'Y', 'N', 'Y');
-
--- --------------------------------------------------------
+INSERT INTO `UserTypes` (`Name`, `Reader`, `ManagePub`, `DeletePub`, `ManageIssue`, `DeleteIssue`, `ManageSection`, `DeleteSection`, `AddArticle`, `ChangeArticle`, `DeleteArticle`, `AddImage`, `ChangeImage`, `DeleteImage`, `ManageTempl`, `DeleteTempl`, `ManageUsers`, `ManageSubscriptions`, `DeleteUsers`, `ManageUserTypes`, `ManageArticleTypes`, `DeleteArticleTypes`, `ManageLanguages`, `DeleteLanguages`, `ManageDictionary`, `DeleteDictionary`, `ManageCountries`, `DeleteCountries`, `ManageClasses`, `MailNotify`, `ViewLogs`, `ManageLocalizer`, `ManageIndexer`, `Publish`, `ManageTopics`) VALUES ('Reader','Y','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N'),('Administrator','N','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','N','N','Y','Y','N','N','Y','Y','N','Y','Y'),('Editor','N','N','N','N','N','N','N','Y','Y','Y','Y','Y','Y','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','Y','N','N','N','N','N'),('Chief Editor','N','N','N','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','N','N','N','N','Y','Y','N','N','N','N','N','N','N','N','Y','Y','Y','N','Y');
 
 --
 -- Table structure for table `Users`
@@ -1149,10 +775,11 @@ CREATE TABLE `Users` (
   `Text3` mediumblob NOT NULL,
   PRIMARY KEY  (`Id`),
   UNIQUE KEY `UName` (`UName`)
-) TYPE=MyISAM AUTO_INCREMENT=2 ;
+) TYPE=MyISAM;
 
 --
 -- Dumping data for table `Users`
 --
 
-INSERT INTO `Users` (`Id`, `KeyId`, `Name`, `UName`, `Password`, `EMail`, `Reader`, `City`, `StrAddress`, `State`, `CountryCode`, `Phone`, `Fax`, `Contact`, `Phone2`, `Title`, `Gender`, `Age`, `PostalCode`, `Employer`, `EmployerType`, `Position`, `Interests`, `How`, `Languages`, `Improvements`, `Pref1`, `Pref2`, `Pref3`, `Pref4`, `Field1`, `Field2`, `Field3`, `Field4`, `Field5`, `Text1`, `Text2`, `Text3`) VALUES (1, 745943461, 'Administrator', 'admin', '2c380f066e0e45d1', '', 'N', '', '', '', '', '', '', '', '', 'Mr.', 'M', '0-17', '', '', '', '', '', '', '', '', 'N', 'N', 'N', 'N', '', '', '', '', '', '', '', '');
+INSERT INTO `Users` (`Id`, `KeyId`, `Name`, `UName`, `Password`, `EMail`, `Reader`, `City`, `StrAddress`, `State`, `CountryCode`, `Phone`, `Fax`, `Contact`, `Phone2`, `Title`, `Gender`, `Age`, `PostalCode`, `Employer`, `EmployerType`, `Position`, `Interests`, `How`, `Languages`, `Improvements`, `Pref1`, `Pref2`, `Pref3`, `Pref4`, `Field1`, `Field2`, `Field3`, `Field4`, `Field5`, `Text1`, `Text2`, `Text3`) VALUES (1,745943461,'Administrator','admin','2c380f066e0e45d1','','N','','','','','','','','','Mr.','M','0-17','','','','','','','','','N','N','N','N','','','','','','','','');
+
