@@ -24,7 +24,7 @@ get_img.o: get_img.cpp readconf.h globals.h
 readconf.o: readconf.cpp readconf.h globals.h
 
 clean:
-	rm -f *~ core $(OBJ) dir_conf.h $(LINKS) configure.h $(TARGET)
+	rm -f *~ core $(OBJ) $(LINKS) configure.h $(TARGET)
 
 install: $(ALL)
 	cp -f get_img $(CGI_COMMON_DIR)/
