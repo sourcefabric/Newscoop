@@ -56,73 +56,72 @@ $articles =& ArticleImage::GetArticlesThatUseImage($ImageId);
 	</TD>
 </TR>
 </TABLE>
-<!--<HR NOSHADE SIZE="1" COLOR="BLACK">-->
 
 <CENTER><IMG SRC="<?php echo $imageObj->getImageUrl(); ?>" BORDER="0" ALT="<?php echo htmlspecialchars($imageObj->getDescription()); ?>"></CENTER>
 <P>
 <FORM NAME="dialog" METHOD="POST" ACTION="do_edit.php?<?php echo $imageNav->getSearchLink(); ?>" ENCTYPE="multipart/form-data">
-<CENTER><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" BGCOLOR="#C0D0FF" ALIGN="CENTER">
-	<TR>
-		<TD COLSPAN="2">
-			<B><?php  putGS("Change image information"); ?></B>
-			<HR NOSHADE SIZE="1" COLOR="BLACK">
-		</TD>
-	</TR>
-	<TR>
-		<TD ALIGN="RIGHT" ><?php  putGS("Description"); ?>:</TD>
-		<TD align="left">
-		<INPUT TYPE="TEXT" NAME="cDescription" VALUE="<?php echo htmlspecialchars($imageObj->getDescription()); ?>" SIZE="32" MAXLENGTH="128" class="input_text">
-		</TD>
-	</TR>
-	<TR>
-		<TD ALIGN="RIGHT" ><?php  putGS("Photographer"); ?>:</TD>
-		<TD align="left">
-		<INPUT TYPE="TEXT" NAME="cPhotographer" VALUE="<?php echo htmlspecialchars($imageObj->getPhotographer());?>" SIZE="32" MAXLENGTH="64" class="input_text">
-		</TD>
-	</TR>
-	<TR>
-		<TD ALIGN="RIGHT" ><?php  putGS("Place"); ?>:</TD>
-		<TD align="left">
-		<INPUT TYPE="TEXT" NAME="cPlace" VALUE="<?php echo htmlspecialchars($imageObj->getPlace()); ?>" SIZE="32" MAXLENGTH="64" class="input_text">
-		</TD>
-	</TR>
-	<TR>
-		<TD ALIGN="RIGHT" ><?php  putGS("Date"); ?>:</TD>
-		<TD align="left">
-		<INPUT TYPE="TEXT" NAME="cDate" VALUE="<?php echo htmlspecialchars($imageObj->getDate()); ?>" SIZE="11" MAXLENGTH="10" class="input_text"> <?php putGS('YYYY-MM-DD'); ?>
-		</TD>
-	</TR>
-    <?php
-    if ($imageObj->getLocation() == 'remote') {
-    ?>
-	<TR>
-		<TD ALIGN="RIGHT" ><?php  putGS("URL"); ?>:</TD>
-		<TD align="left">
-		<INPUT TYPE="TEXT" NAME="cURL" VALUE="<?php echo htmlspecialchars($imageObj->getUrl()); ?>" SIZE="32" class="input_text">
-		</TD>
-	</TR>
-    <?php
-    } else {
-    ?>
-	<TR>
-		<TD ALIGN="RIGHT"><?php  putGS("Image"); ?>:</TD>
-		<TD align="left">
-		<INPUT TYPE="TEXT" NAME="cImage" SIZE="32" MAXLENGTH="64" VALUE="<?php echo basename($imageObj->getImageStorageLocation()); ?>" DISABLED class="input_text">
-		</TD>
-	</TR>
-    <?php
-    }
-    ?>
-	<TR>
-		<TD COLSPAN="2">
-		<DIV ALIGN="CENTER">
-		<INPUT TYPE="HIDDEN" NAME="image_id" VALUE="<?php echo $imageObj->getImageId(); ?>">
-		<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save changes'); ?>" class="button">
-		<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='index.php?<?php echo $imageNav->getSearchLink(); ?>'" class="button">
-		</DIV>
-		</TD>
-	</TR>
-</TABLE></CENTER>
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" ALIGN="CENTER" class="table_input">
+<TR>
+	<TD COLSPAN="2">
+		<B><?php  putGS("Change image information"); ?></B>
+		<HR NOSHADE SIZE="1" COLOR="BLACK">
+	</TD>
+</TR>
+<TR>
+	<TD ALIGN="RIGHT" ><?php  putGS("Description"); ?>:</TD>
+	<TD align="left">
+	<INPUT TYPE="TEXT" NAME="cDescription" VALUE="<?php echo htmlspecialchars($imageObj->getDescription()); ?>" SIZE="32" MAXLENGTH="128" class="input_text">
+	</TD>
+</TR>
+<TR>
+	<TD ALIGN="RIGHT" ><?php  putGS("Photographer"); ?>:</TD>
+	<TD align="left">
+	<INPUT TYPE="TEXT" NAME="cPhotographer" VALUE="<?php echo htmlspecialchars($imageObj->getPhotographer());?>" SIZE="32" MAXLENGTH="64" class="input_text">
+	</TD>
+</TR>
+<TR>
+	<TD ALIGN="RIGHT" ><?php  putGS("Place"); ?>:</TD>
+	<TD align="left">
+	<INPUT TYPE="TEXT" NAME="cPlace" VALUE="<?php echo htmlspecialchars($imageObj->getPlace()); ?>" SIZE="32" MAXLENGTH="64" class="input_text">
+	</TD>
+</TR>
+<TR>
+	<TD ALIGN="RIGHT" ><?php  putGS("Date"); ?>:</TD>
+	<TD align="left">
+	<INPUT TYPE="TEXT" NAME="cDate" VALUE="<?php echo htmlspecialchars($imageObj->getDate()); ?>" SIZE="11" MAXLENGTH="10" class="input_text"> <?php putGS('YYYY-MM-DD'); ?>
+	</TD>
+</TR>
+<?php
+if ($imageObj->getLocation() == 'remote') {
+?>
+<TR>
+	<TD ALIGN="RIGHT" ><?php  putGS("URL"); ?>:</TD>
+	<TD align="left">
+	<INPUT TYPE="TEXT" NAME="cURL" VALUE="<?php echo htmlspecialchars($imageObj->getUrl()); ?>" SIZE="32" class="input_text">
+	</TD>
+</TR>
+<?php
+} else {
+?>
+<TR>
+	<TD ALIGN="RIGHT"><?php  putGS("Image"); ?>:</TD>
+	<TD align="left">
+	<INPUT TYPE="TEXT" NAME="cImage" SIZE="32" MAXLENGTH="64" VALUE="<?php echo basename($imageObj->getImageStorageLocation()); ?>" DISABLED class="input_text">
+	</TD>
+</TR>
+<?php
+}
+?>
+<TR>
+	<TD COLSPAN="2">
+	<DIV ALIGN="CENTER">
+	<INPUT TYPE="HIDDEN" NAME="image_id" VALUE="<?php echo $imageObj->getImageId(); ?>">
+	<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save changes'); ?>" class="button">
+	<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='index.php?<?php echo $imageNav->getSearchLink(); ?>'" class="button">
+	</DIV>
+	</TD>
+</TR>
+</TABLE>
 </FORM>
 <P>
 <?php
@@ -130,10 +129,13 @@ if (count($articles) > 0) {
 	// image is in use //////////////////////////////////////////////////////////////////
 	?>
 	<center>
-	<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" bgcolor="white" width="50%">
-	  <tr><td bgcolor="#C0D0FF" colspan="2"><b><?php putGS('Previously used in Articles'); ?></b></td></tr>
+	<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" width="50%" class="table_list">
+	<tr class="table_list_header">
+		<td colspan="2"><?php putGS('Used in articles'); ?>:</td>
+	</tr>
 	<?php
 	$color = 0;
+	$previousArticleId = -1;
 	foreach ($articles as $article) {
 		echo '<tr ';
 		if ($color) { 
@@ -143,9 +145,16 @@ if (count($articles) > 0) {
 			$color=1; 
 			echo 'class="list_row_odd"';
 		} 
-		echo '><td>'.htmlspecialchars($article->getTitle())."</td>
-			  <td width=\"10%\" align=\"center\"><a href=\"/$ADMIN/pub/issues/sections/articles/edit.php?Pub=".htmlspecialchars($article->getPublicationId()).'&Issue='.$article->getIssueId().'&Section='.$article->getSectionId().'&Article='.$article->getArticleId().'&Language='.$article->getLanguageId().'&sLanguage='.$article->getLanguageId().'">'.getGS('Edit').'</a></td>
-				   </tr>';
+		echo '>';
+		if ($article->getArticleId() == $previousArticleId) {
+			echo '<td style="padding-left: 20px;">';
+		}
+		else {
+			echo '<td>';
+		}
+		echo htmlspecialchars($article->getTitle())."</td>
+			  <td width=\"10%\" align=\"center\"><a href=\"/$ADMIN/pub/issues/sections/articles/edit.php?Pub=".htmlspecialchars($article->getPublicationId()).'&Issue='.$article->getIssueId().'&Section='.$article->getSectionId().'&Article='.$article->getArticleId().'&Language='.$article->getLanguageId().'&sLanguage='.$article->getLanguageId().'">'.getGS('Edit').'</a></td></tr>';
+		$previousArticleId = $article->getArticleId();
 	}
 	?>
 	</table>
