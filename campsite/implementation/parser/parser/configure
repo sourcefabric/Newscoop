@@ -139,11 +139,11 @@ case "\$1" in
 	fi
 	;;
   stop)
-	output=\`killall ${APP_NAME}_server\`
+	output=\`${KILLALL} ${APP_NAME}_server\`
 	[ \$? -ne 0 ] && echo \$output && exit 1
 	;;
   reload|restart)
-	killall ${APP_NAME}_server &> /dev/null
+	${KILLALL} ${APP_NAME}_server &> /dev/null
 	\$0 start
 	;;
   status)
