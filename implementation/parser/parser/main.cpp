@@ -326,7 +326,7 @@ int main(int argc, char** argv)
 {
 	nMainThreadPid = 0;
 	bool bRunAsDaemon = true;
-	int nMaxThreads = 20;
+	int nMaxThreads = 40;
 	ProcessArgs(argc, argv, bRunAsDaemon, nMaxThreads);
 	StartWatchDog(bRunAsDaemon);
 	signal(SIGTERM, SIG_DFL);
