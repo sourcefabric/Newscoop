@@ -4,7 +4,7 @@ regGS("No article types.","Sin tipo de artículo");
 regGS("Delete article type $1","Borrar tipo de artículo $1");
 regGS("You do not have the right to add article types.","No tiene derecho a agregar tipos de artículo.");
 regGS("Adding new article type","Agregando nuevo tipo de artículo");
-regGS("The $1 field may only contain letters.","El campo $1 sólo puede contener letras.");
+regGS("The $1 field may only contain letters and underscore (_) character.","El campo $1 sólo puede contener letras.");
 regGS("The article type $1 already exists.","El tipo de artículo $1 ya existe");
 regGS("The article type $1 has been added.","El tipo de articulo $1 ha sido agregado.");
 regGS("Delete article type","Borrar tipo de artículo");

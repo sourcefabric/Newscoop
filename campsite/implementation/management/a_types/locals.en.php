@@ -9,7 +9,7 @@ regGS("You do not have the right to add article types.","You do not have the rig
 
 // -- do_add.m4
 regGS("Adding new article type","Adding new article type:en");
-regGS("The $1 field may only contain letters.","The $1 field may only contain letters.:en");
+regGS("The $1 field may only contain letters and underscore (_) character.","The $1 field may only contain letters and underscore (_) character.:en");
 regGS("The article type $1 already exists.","The article type $1 already exists.:en");
 regGS("The article type $1 has been added.","The article type $1 has been added.:en");
 
