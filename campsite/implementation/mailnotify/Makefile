@@ -1,7 +1,5 @@
 include ../../make.env
 
-PACKAGE_DIR=$(BIN_PACKAGE_DIR)/implementation/mailnotify
-
 DEPENDENCES= sql_macros.h configure.h
 
 INCLUDE_PATH=-I$(MYSQL_H_PATH)
@@ -38,8 +36,8 @@ readconf.o: readconf.cpp readconf.h
 	g++ -c -o $@ $(CFLAGS) $<
 
 install: $(ALL)
-	mkdir -p $(CONF_DIR)
-	echo -e "SERVER $(EVENT_HANDLERS_SMTP_SERVER)\nWRAPPER $(BIN_DIR)/smtp_wrapper" > $(CONF_DIR)/smtp.conf
+	mkdir -p $(ETC_DIR)
+	echo -e "SERVER $(EVENT_HANDLERS_SMTP_SERVER)\nWRAPPER $(BIN_DIR)/smtp_wrapper" > $(ETC_DIR)/smtp.conf
 	$(MAKE) -C smtp_wrapper install
 	./install_mailnotify
 

@@ -1,4 +1,4 @@
-export PRIV_DIR2=$(PRIV_DIR)/topics
+export PRIV_DIR2=$(PRIV_COMMON_DIR)/topics
 
 MY_TARGETS=index.php add.php do_add.php del.php do_del.php edit.php do_edit.php
 

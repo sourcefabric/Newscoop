@@ -1,4 +1,4 @@
-export PRIV_DIR2=$(PRIV_DIR)/localizer
+export PRIV_DIR2=$(PRIV_COMMON_DIR)/localizer
 
 MY_TARGETS=dummy
 

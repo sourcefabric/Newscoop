@@ -6,14 +6,14 @@ cd ../../.. && . ./configure --define_start_env && cd implementation/parser/pars
 install_conf --set
 [ $? -ne 0 ] && echo "Error reading install configuration" && exit 1
 
-if ! var_not_modified APP_NAME || [ ! -f $APP_NAME ]; then
+if [ ! -f campsite ]; then
 echo -n -e "\tWriting start/stop script..."
-cat > ${APP_NAME} << EOF
+cat > campsite << EOF
 #!/bin/bash
 #
 #	/etc/init.d/campsite
 #
-# Starts/stops the $APP_NAME daemon
+# Starts/stops the campsite daemon
 #
 # chkconfig: 2345 95 7
 
@@ -44,7 +44,7 @@ cat > ${APP_NAME} << EOF
 
 # Source function library.
 
-export CAMPSITECTL=$BIN_DIR/${APP_NAME}ctl
+export CAMPSITECTL=$BIN_DIR/campsitectl
 
 test -x \$CAMPSITECTL || exit 0
 
@@ -54,17 +54,17 @@ test -x \$CAMPSITECTL || exit 0
 case "\$1" in
   start)
 	# Check if atd is already running
-	procs=\`ps -C "${APP_NAME}_server" | grep -w "${APP_NAME}_server" | grep -v grep | wc -l\`
+	procs=\`ps -C "campsite_server" | grep -w "campsite_server" | grep -v grep | wc -l\`
 	if [ \$procs -gt 0 ]; then
-	    echo "${APP_NAME} daemon is already started"
+	    echo "campsite daemon is already started"
 	else
-	    echo -n 'Starting $APP_NAME daemon: '
+	    echo -n 'Starting campsite daemon: '
 	    \$CAMPSITECTL start
 	    if [ \$? -ne 0 ]; then echo "ERROR"; else echo "OK"; fi
 	fi
 	;;
   stop)
-	echo -n 'Stopping $APP_NAME daemon: '
+	echo -n 'Stopping campsite daemon: '
 	\$CAMPSITECTL stop
 	if [ \$? -ne 0 ]; then echo "ERROR"; else echo "OK"; fi
 	;;
@@ -77,19 +77,18 @@ case "\$1" in
 	\$CAMPSITECTL status
 	;;
   *)
-	echo "Usage: /etc/init.d/$APP_NAME {start|stop|restart|reload|status}"
+	echo "Usage: /etc/init.d/campsite {start|stop|restart|reload|status}"
 	exit 1
 esac
 exit 0
 EOF
 [ $? -ne 0 ] && echo "ERROR" && exit 1
 echo OK
-save_var APP_NAME
-fi # end if ! var_not_modified APP_NAME || [ ! -f $APP_NAME ]
+fi # end if [ ! -f campsite ]
 
-if ! var_not_modified APP_NAME BIN_DIR || [ ! -f ${APP_NAME}ctl ]; then
+if ! var_not_modified BIN_DIR || [ ! -f campsitectl ]; then
 echo -n -e "\tWriting server control script..."
-cat > ${APP_NAME}ctl << EOF
+cat > campsitectl << EOF
 #!/bin/bash
 
 ################################################################################
@@ -117,8 +116,8 @@ cat > ${APP_NAME}ctl << EOF
 #
 ################################################################################
 
-export CAMPSITE_SERVER=${APP_NAME}_server
-export CAMPSITE_SERVER_PATH=$BIN_DIR/${APP_NAME}_server
+export CAMPSITE_SERVER=campsite_server
+export CAMPSITE_SERVER_PATH=$BIN_DIR/campsite_server
 
 test -x \$CAMPSITE_SERVER_PATH || exit 0
 
@@ -152,9 +151,9 @@ case "\$1" in
   status)
 	procs=\`ps ax | grep -w "\$CAMPSITE_SERVER" | grep -v grep | grep -v -w ps | wc -l\`
 	if [ \$procs -gt 0 ]; then
-	    echo "${APP_NAME} server is running"
+	    echo "campsite server is running"
 	else
-	    echo "${APP_NAME} server is not running"
+	    echo "campsite server is not running"
 	fi
 	;;
   *)
@@ -167,11 +166,11 @@ EOF
 # done writing control file; check if ok
 [ $? -ne 0 ] && echo "ERROR" && exit 1
 echo OK
-save_var APP_NAME BIN_DIR
-fi # end if ! var_not_modified APP_NAME BIN_DIR || [ ! -f $APP_NAME ]
+save_var BIN_DIR
+fi # end if ! var_not_modified BIN_DIR || [ ! -f campsite ]
 
-var_not_modified APP_NAME && [ -f srvdef.h ] && exit 0
-save_var APP_NAME BIN_DIR
+[ -f srvdef.h ] && exit 0
+save_var BIN_DIR
 
 echo -n -e "\tWriting srvdef.h header..."
 cat > srvdef.h << EOF
@@ -186,9 +185,7 @@ WARNING!!! This file is generated. Do not edit!
 #ifndef _SRVDEF_H
 #define _SRVDEF_H
 
-#define DATABASE_CONF_FILE "$CONF_DIR/database.conf"
-#define PARSER_CONF_FILE "$CONF_DIR/parser.conf"
-#define TOL_SRV_PORT $PARSER_DEFAULT_PORT
+#define ETC_FILE "$ETC_DIR"
 #define MAX_THREADS 40
 
 #endif

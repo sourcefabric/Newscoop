@@ -5,8 +5,7 @@
 
 install_conf --set
 
-var_not_modified APP_NAME && [ -f configure.h ] && exit 0
-save_var APP_NAME
+[ -f configure.h ] && exit 0
 
 echo -n -e "\tWriting configure.h header..."
 cat > configure.h << EOF
@@ -22,13 +21,11 @@ WARNING!!! This file is generated. Do not edit!
 #define _CONFIGURE_H
 
 #define MAX_TRIES 5
-#define DATABASE_CONF_FILE "${CONF_DIR}/database.conf"
-#define SMTP_CONF_FILE "${CONF_DIR}/smtp.conf"
+#define ETC_DIR "$ETC_DIR"
 
 #endif
 EOF
 [ $? -ne 0 ] && echo "ERROR" && exit 1
 echo OK
-chmod o-rwx configure.h
 
 exit 0

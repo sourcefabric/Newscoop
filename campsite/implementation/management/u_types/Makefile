@@ -1,4 +1,4 @@
-export PRIV_DIR2=$(PRIV_DIR)/u_types
+export PRIV_DIR2=$(PRIV_COMMON_DIR)/u_types
 
 MY_TARGETS=index.php add.php do_add.php del.php do_del.php access.php do_access.php
 
