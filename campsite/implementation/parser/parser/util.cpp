@@ -147,7 +147,9 @@ int GetArticleTypeAttributes(CTypeAttributesMap** ta_h) throw(bad_alloc)
 	MYSQL_ROW row;
 	while ((row = mysql_fetch_row(*res)))
 	{
-		if (row[0][0] != 'X')			// select only those tables whose name start with X
+		if (row[0] == NULL)
+			continue;
+		if (row[0][0] != 'X')	// select only those tables whose name start with X
 			continue;
 
 		// these tables contain the fields of every type of article
