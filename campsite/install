@@ -95,7 +95,7 @@ install_campsite()
     echo "For a complete installation log read install_log file."
     echo -n -e "\nStarting campsite_server daemon..."
     UTIL_BIN=`cat ./Makefile|grep UTIL_BIN|grep -w export|cut -f 2 -d "=" 2> /dev/null`
-    $UTIL_BIN/campsitectl start
+    $UTIL_BIN/campsitectl restart
     err_code=$?
     if [ $err_code -ne 0 ]; then
 	echo "ERROR"

@@ -45,9 +45,17 @@ E_CURRENT
 
 <P>
 B_DIALOG({Add new subscription}, {POST}, {do_add.xql})
+
 	B_DIALOG_INPUT({Section:})
-		<INPUT TYPE="TEXT" NAME="cSection" SIZE="5" MAXLENGTH="5">
+		<SELECT NAME="cSection">
+		<OPTION VALUE=0>All sections</OPTION>
+<!sql query "SELECT DISTINCT Number, Name FROM Sections WHERE IdPublication=?Pub" q_sect>dnl
+<!sql print_loop q_sect>dnl
+		<OPTION VALUE="<!sql print ~q_sect.Number>"><!sql print ~q_sect.Name></OPTION>
+<!sql done>dnl
+		</SELECT>
 	E_DIALOG_INPUT
+
 	B_DIALOG_INPUT({Start:})
 		<INPUT TYPE="TEXT" NAME="cStartDate" SIZE="10" VALUE="<!sql ftime "%Y-%m-%d">" MAXLENGTH="10"> (YYYY-MM-DD)
 	E_DIALOG_INPUT
@@ -61,6 +69,7 @@ B_DIALOG({Add new subscription}, {POST}, {do_add.xql})
 		<INPUT TYPE="IMAGE" NAME="OK" SRC="X_ROOT/img/button/save.gif" BORDER="0">
 		<A HREF="X_ROOT/users/subscriptions/sections/?Pub=<!sql print #Pub>&User=<!sql print #User>&Subs=<!sql print #Subs>"><IMG SRC="X_ROOT/img/button/cancel.gif" BORDER="0" ALT="Cancel"></A>
 	E_DIALOG_BUTTONS
+	<tr><td colspan=2 width=250>WARNING: If you subscribe to all sections, the periods for previously added sections will be overriden!</td></tr>
 E_DIALOG
 <P>
 

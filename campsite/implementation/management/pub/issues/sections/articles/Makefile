@@ -3,7 +3,7 @@ export INSTALL_DIR5=$(INSTALL_DIR4)/articles
 subsystem: all
 	$(MAKE) -C images
 
-all: index.xql add.xql do_add.xql del.xql do_del.xql edit.xql edit_b.xql preview.xql status.xql do_status.xql upload.xql translate.xql do_translate.xql empty.xql list.xql do_edit.xql do_unlock.xql
+all: index.xql add.xql do_add.xql del.xql do_del.xql edit.xql edit_b.xql edit_t.xql preview.xql status.xql do_status.xql upload.xql translate.xql do_translate.xql empty.xql list.xql do_edit.xql do_edit_t.xql do_unlock.xql
 
 %.xql: %.m4 ../../../../macros.m4
 	m4 ../../../../macros.m4 $< >$@
