@@ -1,6 +1,28 @@
 <?php
 $ImgPrefix = '/images/cms-image-';
 
+function orE($input)
+{
+	if (empty($input)) {
+		return 'unknown';
+	} else {
+		return $input;
+	}
+}
+
+function trColor()
+{
+	global $color;
+
+	if ($color) {
+		$color = 0;
+		return 'BGCOLOR="#D0D0B0"';
+	} else {
+		$color = 1;
+		return 'BGCOLOR="#D0D0D0"';
+	}
+}
+
 function cImgLink()
 {
 	global $S, $de, $ph, $pl, $da, $O, $ImgOffs, $lpp, $D;
