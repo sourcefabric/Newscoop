@@ -301,6 +301,7 @@ function create_site($p_defined_parameters)
 	$instance_dirs = array('WWW_DIR'=>$instance_www_dir,
 		'HTML_DIR'=>$instance_www_dir . "/html",
 		'IMAGES_DIR'=>$instance_www_dir . "/html/images",
+		'THUMBNAILS_DIR'=>$instance_www_dir . "/html/images/thumbnails",
 		'TEMPLATES_DIR'=>$instance_www_dir . "/html/look",
 		'CGI_DIR'=>$instance_www_dir . "/cgi-bin",
 		'SCRIPT_DIR'=>$instance_www_dir . "/script",
