@@ -4,18 +4,6 @@ cd ../../..
 . ./make.env
 cd implementation/management/root
 
-echo -n -e "\t\tWriting db_connect.php..."
-cat > db_connect.php << EOF
-<?php
-mysql_connect("$DATABASE_SERVER", "$DATABASE_USER", "$DATABASE_PASSWORD");
-mysql_select_db("$DATABASE_NAME");
-?>
-EOF
-[ $? -ne 0 ] && echo "ERROR" && exit 1
-echo OK
-chmod o-rwx db_connect.php
-
-
 echo -n -e "\t\tWriting config.php..."
 cat > config.php << EOF
 <?php
@@ -27,4 +15,3 @@ cat > config.php << EOF
 EOF
 [ $? -ne 0 ] && echo "ERROR" && exit 1
 echo OK
-chmod o-rwx db_connect.php
