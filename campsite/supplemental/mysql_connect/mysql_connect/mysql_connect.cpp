@@ -25,8 +25,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <stdlib.h>
 #include <string.h>
-#include <iostream.h>
+#include <iostream>
 #include <mysql/mysql.h>
+
+using std::cout;
+using std::endl;
 
 int main(int argc, char** argv)
 {
