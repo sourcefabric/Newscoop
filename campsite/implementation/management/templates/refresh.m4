@@ -1,4 +1,3 @@
-B_HTML
 INCLUDE_PHP_LIB(<*$ADMIN_DIR/templates*>)dnl
 B_DATABASE
 
@@ -16,7 +15,6 @@ CHECK_ACCESS(<*ManageTempl*>)dnl
 <?php  } ?>dnl
 
 B_HEAD
- X_EXPIRES
  <?php
      if ($What) { ?>
   X_TITLE(<*Select template*>)
