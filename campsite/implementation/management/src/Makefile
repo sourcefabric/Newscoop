@@ -2,7 +2,7 @@ INCLUDE_PATH=-I$(MYSQL_H_PATH)
 CFLAGS=-Wall $(INCLUDE_PATH)
 CXXFLAGS=$(CFLAGS)
 LDFLAGS=-L$(LIBMYSQLCLIENT_PATH)
-LIBS=-lmysqlclient -lm -lz -lcrypt
+LIBS=-lmysqlclient -lm -lz $(LIBCRYPT_LINK)
 
 OBJ=get_img.o url_util.o parse_file.o process_i.o process_t.o cleanb.o readconf.o
 TARGET=get_img process_i process_t cleanb
