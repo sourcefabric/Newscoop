@@ -71,17 +71,6 @@ B_MSGBOX(<*Delete article*>)
     query ("SELECT COUNT(*) FROM Articles WHERE IdPublication=$Pub AND NrIssue=$Issue AND NrSection=$Section AND Number=$Article", 'q_nr');
     fetchRowNum($q_nr);
     
-    if (getNumVar($q_nr,0) == "1") {
-	query ("SELECT COUNT(*) FROM Images WHERE IdPublication=$Pub AND NrIssue=$Issue AND NrSection=$Section AND NrArticle=$Article", 'q_img');
-	fetchRowNum($q_img);
-	
-	if (getNumVar($q_img,0) != 0) {
-	    $del= 0;
-	    ?>
-	<LI><? putGS('There are $1 image(s) left.',getNumVar($q_img,0) ); ?></LI>
-	<? }
-    }
-    
     $AFFECTED_ROWS=0;
     if ($del)
 	query ("DELETE FROM Articles WHERE IdPublication=$Pub AND NrIssue=$Issue AND NrSection=$Section AND Number=$Article AND IdLanguage=$sLanguage");
@@ -89,11 +78,13 @@ B_MSGBOX(<*Delete article*>)
     if ($AFFECTED_ROWS > 0) {
 	query ("DELETE FROM X".getSVar($q_art,'Type')." WHERE NrArticle=$Article AND IdLanguage=$sLanguage");
 	query ("DELETE FROM ArticleIndex WHERE IdPublication=$Pub AND NrIssue=$Issue AND NrSection=$Section AND NrArticle=$Article AND IdLanguage=$sLanguage");
+	query ("DELETE FROM ArticleTopics WHERE NrArticle = $Article");
+	query ("DELETE FROM Images WHERE NrArticle = $Article");
 	$del= 1;
     } else {
 	$del= 0;
     }
-    
+
     if ($del) { ?>dnl
 		<LI><? putGS('The article $1 ($2) has been deleted.','<B>'.getHVar($q_art,'Name'),getHVar($q_slang,'Name').'</B>' ); ?></LI>
 X_AUDIT(<*32*>, <*getGS('Article $1 ($2) deleted from $3. $4 from $5. $6 ($7) of $8',getSVar($q_art,'Name'),getSVar($q_slang,'Name'),getSVar($q_sect,'Number'),getSVar($q_sect,'Name'),getSVar($q_iss,'Number'),getSVar($q_iss,'Name'),getSVar($q_lang,'Name'),getSVar($q_pub,'Name') )*>)
