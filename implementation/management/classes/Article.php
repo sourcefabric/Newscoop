@@ -329,7 +329,7 @@ class Article extends DatabaseObject {
 	function unlock() {
 		global $Campsite;
 		$queryStr = 'UPDATE Articles '
-					.' SET LockUser=0'
+					.' SET LockUser=0, LockTime=0'
 					.' WHERE '. $this->getKeyWhereClause();
 		$Campsite['db']->Execute($queryStr);		
 	} // fn unlock
@@ -1085,6 +1085,18 @@ class Article extends DatabaseObject {
 		return $articles;
 	} // fn GetArticles
 	
+	
+	/**
+	 * Unlock all articles by the given user.
+	 * @param int p_userId
+	 * @return void
+	 */
+	function UnlockByUser($p_userId) {
+		global $Campsite;
+		$queryStr = 'UPDATE Articles SET LockUser=0, LockTime=0'
+					." WHERE LockUser=$p_userId";
+		$Campsite['db']->Execute($queryStr);
+	} // fn UnlockByUser
 } // class Article
 
 ?>
