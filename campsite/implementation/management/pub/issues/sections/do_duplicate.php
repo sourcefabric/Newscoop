@@ -18,14 +18,14 @@ if (!$User->hasPermission("AddArticle")) {
 	exit;
 }
 
-$Pub = Input::get('Pub', 'int', 0);
-$Issue = Input::get('Issue', 'int', 0);
-$Section = Input::get('Section', 'int', 0);
-$Language = Input::get('Language', 'int', 0);
-$DestPublication = Input::get('destination_publication', 'int', 0, true);
-$DestIssue = Input::get('destination_issue', 'int', 0, true);
-$DestSection = Input::get('destination_section', 'int', 0, true);
-$BackLink = Input::get('Back', 'string', "/$ADMIN/pub/issues/sections/index.php", true);
+$Pub = Input::Get('Pub', 'int', 0);
+$Issue = Input::Get('Issue', 'int', 0);
+$Section = Input::Get('Section', 'int', 0);
+$Language = Input::Get('Language', 'int', 0);
+$DestPublication = Input::Get('destination_publication', 'int', 0, true);
+$DestIssue = Input::Get('destination_issue', 'int', 0, true);
+$DestSection = Input::Get('destination_section', 'int', 0, true);
+$BackLink = Input::Get('Back', 'string', "/$ADMIN/pub/issues/sections/index.php", true);
 
 $publicationObj =& new Publication($Pub);
 if (!$publicationObj->exists()) {

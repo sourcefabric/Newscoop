@@ -16,14 +16,14 @@ if (!$User->hasPermission('Publish')) {
 }
 
 // Get input
-$Pub = Input::get('Pub', 'int', 0);
-$Issue = Input::get('Issue', 'int', 0);
-$Language = Input::get('Language', 'int', 0);
-$publish_date = trim(Input::get('publish_date', 'string', ''));
-$action = trim(Input::get('action', 'string', ''));
-$publish_articles = trim(Input::get('publish_articles', 'string', ''));
-$publish_hour = trim(Input::get('publish_hour', 'string', ''));
-$publish_min = trim(Input::get('publish_min', 'string', ''));
+$Pub = Input::Get('Pub', 'int', 0);
+$Issue = Input::Get('Issue', 'int', 0);
+$Language = Input::Get('Language', 'int', 0);
+$publish_date = trim(Input::Get('publish_date', 'string', ''));
+$action = trim(Input::Get('action', 'string', ''));
+$publish_articles = trim(Input::Get('publish_articles', 'string', ''));
+$publish_hour = trim(Input::Get('publish_hour', 'string', ''));
+$publish_min = trim(Input::Get('publish_min', 'string', ''));
 
 $correct = $publish_date != "" && $publish_hour != ""
 	&& $publish_min != "" && ($action == "P" || $action == "U");

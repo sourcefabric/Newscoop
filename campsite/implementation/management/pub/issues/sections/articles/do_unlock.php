@@ -6,15 +6,15 @@ if (!$access) {
 	header("Location: /$ADMIN/logout.php");
 	exit;
 }
-$PublicationId = Input::get('Pub', 'int', 0);
-$IssueId  = Input::get('Issue', 'int', 0);
-$SectionId = Input::get('Section', 'int', 0);
-$InterfaceLanguageId = Input::get('Language', 'int', 0);
-$ArticleLanguageId = Input::get('sLanguage', 'int', 0);
-$ArticleId = Input::get('Article', 'int', 0);
+$PublicationId = Input::Get('Pub', 'int', 0);
+$IssueId  = Input::Get('Issue', 'int', 0);
+$SectionId = Input::Get('Section', 'int', 0);
+$InterfaceLanguageId = Input::Get('Language', 'int', 0);
+$ArticleLanguageId = Input::Get('sLanguage', 'int', 0);
+$ArticleId = Input::Get('Article', 'int', 0);
 
-if (!Input::isValid()) {
-	header("Location: /$ADMIN/logout.php");
+if (!Input::IsValid()) {
+	CampsiteInterface::DisplayError(array('Invalid input: $1', Input::GetErrorString()));
 	exit;	
 }
 
@@ -25,7 +25,7 @@ $articleObj =& new Article($PublicationId, $IssueId, $SectionId, $ArticleLanguag
 if (!$User->hasPermission('ChangeArticle') 
 	&& (($articleObj->getUserId() != $User->getId()) 
 		|| ($articleObj->getPublished() != 'N'))) {
-	header("Location: /$ADMIN/logout.php");
+	CampsiteInterface::DisplayError("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only changed by authorized users.");
 	exit;	
 }
 

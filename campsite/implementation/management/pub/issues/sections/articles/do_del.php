@@ -9,39 +9,39 @@ if (!$access) {
 	exit;
 }
 if (!$User->hasPermission('DeleteArticle')) {
-	header("Location: /$ADMIN/ad.php?ADReason=".urlencode(getGS("You do not have the right to delete articles.")));
+	CampsiteInterface::DisplayError("You do not have the right to delete articles.");
 	exit;
 }
 
 // Get input
-$Pub = Input::get('Pub', 'int', 0);
-$Issue = Input::get('Issue', 'int', 0);
-$Section = Input::get('Section', 'int', 0);
-$Language = Input::get('Language', 'int', 0);
-$sLanguage = Input::get('sLanguage', 'int', 0);
-$Article = Input::get('Article', 'int', 0);
-$BackLink = Input::get('Back', 'string', "/$ADMIN/pub/issues/sections/articles/index.php", true);
+$Pub = Input::Get('Pub', 'int', 0);
+$Issue = Input::Get('Issue', 'int', 0);
+$Section = Input::Get('Section', 'int', 0);
+$Language = Input::Get('Language', 'int', 0);
+$sLanguage = Input::Get('sLanguage', 'int', 0);
+$Article = Input::Get('Article', 'int', 0);
+$BackLink = Input::Get('Back', 'string', "/$ADMIN/pub/issues/sections/articles/index.php", true);
 
-if (!Input::isValid()) {
-	header("Location: /$ADMIN/logout.php");
+if (!Input::IsValid()) {
+	CampsiteInterface::DisplayError(array('Invalid input: $1', Input::GetErrorString()), $BackLink);
 	exit;	
 }
 
 $publicationObj =& new Publication($Pub);
 if (!$publicationObj->exists()) {
-	header("Location: /$ADMIN/ad.php?ADReason=".urlencode(getGS('Publication does not exist.')));
+	CampsiteInterface::DisplayError('Publication does not exist.', $BackLink);
 	exit;	
 }
 
 $issueObj =& new Issue($Pub, $Language, $Issue);
 if (!$issueObj->exists()) {
-	header("Location: /$ADMIN/ad.php?ADReason=".urlencode(getGS('Issue does not exist.')));
+	CampsiteInterface::DisplayError('Issue does not exist.', $BackLink);
 	exit;	
 }
 
 $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
 if (!$sectionObj->exists()) {
-	header("Location: /$ADMIN/ad.php?ADReason=".urlencode(getGS('Section does not exist.')));
+	CampsiteInterface::DisplayError('Section does not exist.', $BackLink);
 	exit;	
 }
 
@@ -50,7 +50,7 @@ $sLanguageObj =& new Language($sLanguage);
 
 $articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
 if (!$articleObj->exists()) {
-	header("Location: /$ADMIN/ad.php?ADReason=".urlencode(getGS('Article does not exist.')));
+	CampsiteInterface::DisplayError('Article does not exist.', $BackLink);
 	exit;		
 }
 

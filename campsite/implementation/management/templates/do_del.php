@@ -12,9 +12,9 @@ if (!$User->hasPermission('DeleteTempl')) {
 	exit;
 }
 
-$Path = Input::get('Path', 'string', '');
-$Name = Input::get('Name', 'string', '');
-$What = Input::get('What', 'int', 0);
+$Path = Input::Get('Path', 'string', '');
+$Name = Input::Get('Name', 'string', '');
+$What = Input::Get('What', 'int', 0);
 
 $dir = decURL(decS($Path))."/".decURL(decS($Name));
 $file = $Campsite['HTML_DIR']."/look/".decURL($Path)."/".$Name;

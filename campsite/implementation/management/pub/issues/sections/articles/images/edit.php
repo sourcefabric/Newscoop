@@ -16,16 +16,16 @@ if (!$access) {
 	exit;
 }
 
-$PublicationId = Input::get('PublicationId', 'int', 0);
-$IssueId = Input::get('IssueId', 'int', 0);
-$SectionId = Input::get('SectionId', 'int', 0);
-$InterfaceLanguageId = Input::get('InterfaceLanguageId', 'int', 0);
-$ArticleLanguageId = Input::get('ArticleLanguageId', 'int', 0);
-$ArticleId = Input::get('ArticleId', 'int', 0);
-$ImageId = Input::get('ImageId', 'int', 0);
-$ImageTemplateId = Input::get('ImageTemplateId', 'int', 0);
+$PublicationId = Input::Get('PublicationId', 'int', 0);
+$IssueId = Input::Get('IssueId', 'int', 0);
+$SectionId = Input::Get('SectionId', 'int', 0);
+$InterfaceLanguageId = Input::Get('InterfaceLanguageId', 'int', 0);
+$ArticleLanguageId = Input::Get('ArticleLanguageId', 'int', 0);
+$ArticleId = Input::Get('ArticleId', 'int', 0);
+$ImageId = Input::Get('ImageId', 'int', 0);
+$ImageTemplateId = Input::Get('ImageTemplateId', 'int', 0);
 
-if (!Input::isValid()) {
+if (!Input::IsValid()) {
 	CampsiteInterface::DisplayError(array('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
 	exit;	
 }

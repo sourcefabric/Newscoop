@@ -25,15 +25,15 @@ if ($User->hasPermission("ChangeArticle")) {
 else {
 	todefnum('What',1);
 }
-$NArtOffs = Input::get('NArtOffs', 'int', 0, true);
+$NArtOffs = Input::Get('NArtOffs', 'int', 0, true);
 if ($NArtOffs<0) {
 	$NArtOffs=0;
 }
-$ArtOffs = Input::get('ArtOffs', 'int', 0, true);
+$ArtOffs = Input::Get('ArtOffs', 'int', 0, true);
 if ($ArtOffs < 0) {
 	$ArtOffs=0; 
 }
-$showSections = Input::get('show_sections', 'int', 1, true);
+$showSections = Input::Get('show_sections', 'int', 1, true);
 
 $NumDisplayArticles=15;
 list($YourArticles, $NumYourArticles) = Article::GetArticlesByUser($User->getId(), $ArtOffs, 

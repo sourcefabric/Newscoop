@@ -4,8 +4,8 @@ require_once('CampsiteInterface.php');
 require_once('classes/common.php');
 load_common_include_files($ADMIN_DIR);
 require_once('classes/Input.php');
-$ADReason = Input::get('ADReason', 'string', getGS('You do not have the right to access this page.'), true);
-$BackLink = Input::get('Back', 'string', "/$ADMIN/home.php", true);
+$ADReason = Input::Get('ADReason', 'string', getGS('You do not have the right to access this page.'), true);
+$BackLink = Input::Get('Back', 'string', "/$ADMIN/home.php", true);
 ?>
 <p>
 <CENTER>

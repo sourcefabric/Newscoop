@@ -18,26 +18,26 @@ if (!$access) {
 	exit;
 }
 
-$OrderBy = Input::get('order_by', 'string', 'id', true);
-$OrderDirection = Input::get('order_direction', 'string', 'ASC', true);
-$view = Input::get('view', 'string', 'thumbnail', true);
-$ImageOffset = Input::get('image_offset', 'int', 0, true);
-$SearchDescription = Input::get('search_description', 'string', '', true);
-$SearchPhotographer = Input::get('search_photographer', 'string', '', true);
-$SearchPlace = Input::get('search_place', 'string', '', true);
-$SearchDate = Input::get('search_date', 'string', '', true);
-$SearchInUse = Input::get('search_inuse', 'string', '', true);
-$SearchUploadedBy = Input::get('search_uploadedby', 'int', '', true);
+$OrderBy = Input::Get('order_by', 'string', 'id', true);
+$OrderDirection = Input::Get('order_direction', 'string', 'ASC', true);
+$view = Input::Get('view', 'string', 'thumbnail', true);
+$ImageOffset = Input::Get('image_offset', 'int', 0, true);
+$SearchDescription = Input::Get('search_description', 'string', '', true);
+$SearchPhotographer = Input::Get('search_photographer', 'string', '', true);
+$SearchPlace = Input::Get('search_place', 'string', '', true);
+$SearchDate = Input::Get('search_date', 'string', '', true);
+$SearchInUse = Input::Get('search_inuse', 'string', '', true);
+$SearchUploadedBy = Input::Get('search_uploadedby', 'int', '', true);
 	
-$PublicationId = Input::get('Pub', 'int', 0);
-$IssueId = Input::get('Issue', 'int', 0);
-$SectionId = Input::get('Section', 'int', 0);
-$InterfaceLanguageId = Input::get('Language', 'int', 0);
-$ArticleLanguageId = Input::get('sLanguage', 'int', 0);
-$ArticleId = Input::get('Article', 'int', 0);
+$PublicationId = Input::Get('Pub', 'int', 0);
+$IssueId = Input::Get('Issue', 'int', 0);
+$SectionId = Input::Get('Section', 'int', 0);
+$InterfaceLanguageId = Input::Get('Language', 'int', 0);
+$ArticleLanguageId = Input::Get('sLanguage', 'int', 0);
+$ArticleId = Input::Get('Article', 'int', 0);
 
-if (!Input::isValid()) {
-	header("Location: /$ADMIN/logout.php");
+if (!Input::IsValid()) {
+	CampsiteInterface::DisplayError(array('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
 	exit;	
 }
 

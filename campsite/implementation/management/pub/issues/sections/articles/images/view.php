@@ -15,20 +15,18 @@ if (!$access) {
 	header("Location: /$ADMIN/logout.php");
 	exit;
 }
-$PublicationId = Input::get('Pub', 'int', 0);
-$IssueId = Input::get('Issue', 'int', 0);
-$SectionId = Input::get('Section', 'int', 0);
-$InterfaceLanguageId = Input::get('Language', 'int', 0);
-$ArticleLanguageId = Input::get('sLanguage', 'int', 0);
-$ArticleId = Input::get('Article', 'int', 0);
-$ImageId = Input::get('ImageId', 'int', 0);
-$BackLink = Input::get('BackLink', 'string', 'index.php', true);
-
-// Security
-if ( ($BackLink != "index.php") && ($BackLink != "search.php")) {
-	header("Location: /$ADMIN/logout.php");
-	exit;	
+$PublicationId = Input::Get('Pub', 'int', 0);
+$IssueId = Input::Get('Issue', 'int', 0);
+$SectionId = Input::Get('Section', 'int', 0);
+$InterfaceLanguageId = Input::Get('Language', 'int', 0);
+$ArticleLanguageId = Input::Get('sLanguage', 'int', 0);
+$ArticleId = Input::Get('Article', 'int', 0);
+$ImageId = Input::Get('ImageId', 'int', 0);
+$BackLink = Input::Get('BackLink', 'string', 'index.php', true);
+if (!Input::IsValid()) {
+	CampsiteInterface::DisplayError(array('Invalid input: $1', Input::GetErrorString()), $BackLink);	
 }
+
 $publicationObj =& new Publication($PublicationId);
 $issueObj =& new Issue($PublicationId, $InterfaceLanguageId, $IssueId);
 $sectionObj =& new Section($PublicationId, $IssueId, $InterfaceLanguageId, $SectionId);
@@ -95,7 +93,7 @@ $imageObj =& new Image($ImageId);
 <br>
 <CENTER><IMG SRC="<?php echo $imageObj->getImageUrl(); ?>" BORDER="0" ALT="<?php  echo htmlspecialchars($imageObj->getDescription()); ?>">
 <br><br>
-<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/images/<?php p($BackLink); ?>?Pub=<?php  p($PublicationId); ?>&Issue=<?php  p($IssueId); ?>&Article=<?php  p($ArticleId); ?>&Language=<?php  p($InterfaceLanguageId); ?>&sLanguage=<?php  p($ArticleLanguageId); ?>&Section=<?php  p($SectionId); ?>" >&lt;-- Back</a>
+<A HREF="<?php echo $BackLink; ?>" >&lt;-- Back</a>
 </CENTER>
 <P>
 

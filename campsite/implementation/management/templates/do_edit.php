@@ -13,9 +13,9 @@ if (!$User->hasPermission('ManageTempl')) {
 	exit;
 }
 
-$Path = Input::get('Path', 'string', '');
-$Name = Input::get('Name', 'string', '');
-$cField = Input::get('cField', 'string', '');
+$Path = Input::Get('Path', 'string', '');
+$Name = Input::Get('Name', 'string', '');
+$cField = Input::Get('cField', 'string', '');
 
 $filename = $Campsite['HTML_DIR']."/look/".decURL($Path)."/$Name";
 $fd = fopen ($filename, "w");

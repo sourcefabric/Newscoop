@@ -9,58 +9,58 @@ if (!$access) {
 	exit;
 }
 if (!$User->hasPermission('AddArticle')) {
-	header("Location: /$ADMIN/ad.php?ADReason=".urlencode(getGS("You do not have the right to add articles." )));
+	CampsiteInterface::DisplayError("You do not have the right to add articles.");
 	exit;
 }
 
 // Get input
-$Pub = Input::get('Pub', 'int', 0);
-$Issue = Input::get('Issue', 'int', 0);
-$Section = Input::get('Section', 'int', 0);
-$Language = Input::get('Language', 'int', 0);
-$cName = trim(Input::get('cName', 'string', ''));
-$cType = trim(Input::get('cType', 'string', ''));
-$cLanguage = trim(Input::get('cLanguage', 'int', 0));
-$cFrontPage = Input::get('cFrontPage', 'string', 'N', true);
-$cSectionPage = Input::get('cSectionPage', 'string', 'N', true);
-$cKeywords = Input::get('cKeywords', 'string', '', true);
+$Pub = Input::Get('Pub', 'int', 0);
+$Issue = Input::Get('Issue', 'int', 0);
+$Section = Input::Get('Section', 'int', 0);
+$Language = Input::Get('Language', 'int', 0);
+$cName = trim(Input::Get('cName', 'string', ''));
+$cType = trim(Input::Get('cType', 'string', ''));
+$cLanguage = trim(Input::Get('cLanguage', 'int', 0));
+$cFrontPage = Input::Get('cFrontPage', 'string', 'N', true);
+$cSectionPage = Input::Get('cSectionPage', 'string', 'N', true);
+$cKeywords = Input::Get('cKeywords', 'string', '', true);
 
 // Check input
 if ($cName == "") {
-	header("Location: /$ADMIN/ad.php?ADReason=".urlencode(getGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>')));
+	CampsiteInterface::DisplayError(array('You must complete the $1 field.','<B>'.getGS('Name').'</B>'));
 	exit;
 }
     
 if ($cType == "") {
-	header("Location: /$ADMIN/ad.php?ADReason=".urlencode(getGS('You must select an article type.')));
+	CampsiteInterface::DisplayError('You must select an article type.');
 	exit;
 }
     
 if ($cLanguage == "") {
-	header("Location: /$ADMIN/ad.php?ADReason=".urlencode(getGS('You must select a language.')));
+	CampsiteInterface::DisplayError('You must select a language.');
 	exit;
 }
 
-if (!Input::isValid()) {
-	header("Location: /$ADMIN/logout.php");
+if (!Input::IsValid()) {
+	CampsiteInterface::DisplayError(array('Invalid input: $1', Input::GetErrorString()));
 	exit;	
 }
 
 $publicationObj =& new Publication($Pub);
 if (!$publicationObj->exists()) {
-	header("Location: /$ADMIN/ad.php?ADReason=".urlencode(getGS('Publication does not exist.')));
+	CampsiteInterface::DisplayError('Publication does not exist.');
 	exit;	
 }
 
 $issueObj =& new Issue($Pub, $Language, $Issue);
 if (!$issueObj->exists()) {
-	header("Location: /$ADMIN/ad.php?ADReason=".urlencode(getGS('Issue does not exist.')));
+	CampsiteInterface::DisplayError('Issue does not exist.');
 	exit;	
 }
 
 $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
 if (!$sectionObj->exists()) {
-	header("Location: /$ADMIN/ad.php?ADReason=".urlencode(getGS('Section does not exist.')));
+	CampsiteInterface::DisplayError('Section does not exist.');
 	exit;	
 }
 

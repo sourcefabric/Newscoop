@@ -30,18 +30,16 @@
         <TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
             <TD ALIGN="center">
                 <A HREF="<?php echo 
-                CampsiteInterface::ArticleUrl($articleObj, $InterfaceLanguageId, "images/view.php")
+                CampsiteInterface::ArticleUrl($articleObj, $InterfaceLanguageId, "images/view.php", $_SERVER['REQUEST_URI'])
                 .'&ImageId='.$image['id']
-                .'&'.$imageNav->getSearchLink()
-                .'&BackLink=search.php'; ?>">
+                .'&'.$imageNav->getSearchLink(); ?>">
                   <img src="<?php echo $image['thumbnail_url']; ?>" border="0">
                 </a>
             </TD>
             <TD style="padding-left: 5px;">
-                <A HREF="<?php echo CampsiteInterface::ArticleUrl($articleObj, $InterfaceLanguageId, "images/view.php") 
+                <A HREF="<?php echo CampsiteInterface::ArticleUrl($articleObj, $InterfaceLanguageId, "images/view.php", $_SERVER['REQUEST_URI']) 
                 .'&ImageId='.$image['id']
-                .'&'.$imageNav->getSearchLink()
-                .'&BackLink=search.php'; ?>"><?php echo htmlspecialchars($image['description']); ?></A>
+                .'&'.$imageNav->getSearchLink(); ?>"><?php echo htmlspecialchars($image['description']); ?></A>
             </TD>
             <TD style="padding-left: 5px;">
                 <?php
