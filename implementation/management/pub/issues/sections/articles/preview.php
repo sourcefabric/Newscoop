@@ -1,46 +1,32 @@
-<HTML>
-<?php  include ("../../../../lib_campsite.php");
-    $globalfile=selectLanguageFile('../../../..','globals');
-    $localfile=selectLanguageFile('.','locals');
-    @include ($globalfile);
-    @include ($localfile);
-    include ("../../../../languages.php");   ?>
-<?php  require_once("$DOCUMENT_ROOT/db_connect.php"); ?>
+<?php  
+require_once($_SERVER['DOCUMENT_ROOT']. "/priv/pub/issues/sections/articles/article_common.php");
+list($access, $User, $XPerm) = check_basic_access($_REQUEST);
+$Pub = isset($_REQUEST["Pub"])?$_REQUEST["Pub"]:0;
+$Issue = isset($_REQUEST["Issue"])?$_REQUEST["Issue"]:0;
+$Section = isset($_REQUEST["Section"])?$_REQUEST["Section"]:0;
+$Language = isset($_REQUEST["Language"])?$_REQUEST["Language"]:0;
+$sLanguage = isset($_REQUEST["sLanguage"])?$_REQUEST["sLanguage"]:0;
+$Article = isset($_REQUEST["Article"])?$_REQUEST["Article"]:0;
 
+$articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
+$issueObj =& new Issue($Pub, $Language, $Issue);
+$templateObj =& new Template($issueObj->getArticleTemplateId());
 
-<?php 
-    todefnum('TOL_UserId');
-    todefnum('TOL_UserKey');
-    query ("SELECT * FROM Users WHERE Id=$TOL_UserId AND KeyId=$TOL_UserKey", 'Usr');
-    $access=($NUM_ROWS != 0);
-    if ($NUM_ROWS) {
-	fetchRow($Usr);
-	query ("SELECT * FROM UserPerm WHERE IdUser=".getVar($Usr,'Id'), 'XPerm');
-	 if ($NUM_ROWS){
-	 	fetchRow($XPerm);
-	 }
-	 else $access = 0;						//added lately; a non-admin can enter the administration area; he exists but doesn't have ANY rights
-	 $xpermrows= $NUM_ROWS;
-    }
-    else {
-	query ("SELECT * FROM UserPerm WHERE 1=0", 'XPerm');
-    }
 ?>
-    
-
-
+<HTML>
 <HEAD>
     <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
 	<META HTTP-EQUIV="Expires" CONTENT="now">
-        <META HTTP-EQUIV="Set-Cookie" CONTENT="TOL_Access=all; path=/">
+    <META HTTP-EQUIV="Set-Cookie" CONTENT="TOL_Access=all; path=/">
 	<META HTTP-EQUIV="Set-Cookie" CONTENT="TOL_Preview=on; path=/">
-	<TITLE><?php  putGS("Preview article"); ?></TITLE>
-<?php  if ($access == 0) { ?>	<META HTTP-EQUIV="Refresh" CONTENT="0; URL=/priv/logout.php">
-<?php  } ?></HEAD>
+	<TITLE><?php putGS("Preview article"); ?></TITLE>
+	<?php if ($access == 0) { ?>
+	<META HTTP-EQUIV="Refresh" CONTENT="0; URL=/priv/logout.php">
+	<?php  } ?>
+</HEAD>
 
 <?php  
-    if ($access) {
+if ($access) {
 
         todefnum('Pub');
         todefnum('Issue');
@@ -61,12 +47,18 @@
 		fetchRow($q_pub);
 		query ("SELECT * FROM Issues WHERE IdPublication=$Pub AND Number=$Issue AND IdLanguage=$Language", 'q_iss');
 		fetchRow($q_iss);
-	        if (($NUM_ROWS !=0)&&(getVar($q_iss,'SingleArticle') != "")) {
-		    ?><FRAMESET ROWS="60%,*" BORDER="2">
-<FRAME SRC="<?php  pgetVar($q_iss,'SingleArticle'); ?>?IdPublication=<?php  p($Pub); ?>&NrIssue=<?php  p($Issue); ?>&NrSection=<?php  p($Section); ?>&NrArticle=<?php  p($Article); ?>&IdLanguage=<?php  p($sLanguage); ?>" NAME="body" FRAMEBORDER="1">
-<FRAME NAME="e" SRC="empty.php" FRAMEBORDER="1">
-</FRAMESET>
-<?php  } else { ?><STYLE>
+if (($NUM_ROWS !=0)&&($templateObj->getName() != "")) {
+	?>
+	<!--<FRAMESET ROWS="60%,*" BORDER="2">-->
+	<FRAMESET ROWS="100%">
+		<FRAME SRC="<?php print "/look/".$templateObj->getName(); ?>?IdPublication=<?php p($Pub); ?>&NrIssue=<?php p($Issue); ?>&NrSection=<?php p($Section); ?>&NrArticle=<?php p($Article); ?>&IdLanguage=<?php p($sLanguage); ?>" NAME="body" FRAMEBORDER="1">
+		<!--<FRAME NAME="e" SRC="empty.php" FRAMEBORDER="1">-->
+	</FRAMESET>
+	<?php  
+} 
+else { 
+	?>
+	<STYLE>
 	BODY { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
 	SMALL { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 8pt; }
 	FORM { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
