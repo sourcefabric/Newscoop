@@ -44,7 +44,7 @@ public:
 	// Needs a database connection pointer to read the publication parameters from
 	// the database.
 	CURLTemplatePath(const CMsgURLRequest& p_rcoURLMessage, MYSQL* p_pDBConn)
-		: m_pDBConn(p_pDBConn), m_bTemplateSet(false), m_bValidTemplate(false)
+		: m_pDBConn(p_pDBConn), m_bValidTemplate(false), m_bTemplateSet(false)
 		{ setURL(p_rcoURLMessage); }
 
 	// CURLTemplatePath(): copy constructor
