@@ -2131,12 +2131,16 @@ int CActIf::takeAction(CContext& c, sockstream& fs)
 				field = buf.str();
 				value = "1";
 			}
-			else if (case_comp(param.attribute(), "Public") == 0
-			         || case_comp(param.attribute(), "OnFrontPage") == 0
-			         || case_comp(param.attribute(), "OnSection") == 0)
+			else if (case_comp(param.attribute(), "Public") == 0)
 			{
 				field = param.attribute() + " = 'Y'";
 				value = "1";
+			}
+			else if (case_comp(param.attribute(), "OnFrontPage") == 0
+			         || case_comp(param.attribute(), "OnSection") == 0)
+			{
+				field = param.attribute() + " = 'Y'";
+				value = param.value();
 			}
 			else if (case_comp(param.attribute(), "translated_to") == 0)
 			{
@@ -2195,7 +2199,17 @@ int CActIf::takeAction(CContext& c, sockstream& fs)
 		value = param.value();
 	}
 	if (param.operation())
-		run_first = param.applyOp(row[0], value);
+	{
+		if (case_comp(param.attribute(), "OnFrontPage") == 0
+		    || case_comp(param.attribute(), "OnSection") == 0)
+		{
+			run_first = param.applyOp(Switch::valName(((Switch::SwitchVal)strtol(row[0], NULL, 10))), value);
+		}
+		else
+		{
+			run_first = param.applyOp(row[0], value);
+		}
+	}
 	else
 		run_first = row[0] == value;
 	run_first = m_bNegated ? !run_first : run_first;
