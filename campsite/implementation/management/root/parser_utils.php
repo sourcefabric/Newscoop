@@ -1,23 +1,30 @@
 <?php
 
+global $DEBUG;
+
+$DEBUG = false;
+
 function send_message_to_parser($msg, $close_socket = false)
 {
 	global $Campsite;
 
+	debug_msg("URL request message:");
+	debug_msg("<pre>\n" . htmlspecialchars($msg) . "</pre>", false);
+
 	$size = sprintf("%04x", strlen($msg));
-// 	echo "size: " . $size . "\n";
-// 	echo "<p>parser port: " . $Campsite['PARSER_PORT'] . "</p>\n";
+	debug_msg("size: " . $size);
+	debug_msg("parser port: " . $Campsite['PARSER_PORT']);
 
 	@$socket = fsockopen('127.0.0.1', $Campsite['PARSER_PORT'], $errno, $errstr, 30);
 	if (!$socket) {
 		die("$errstr ($errno)\n");
 	} else {
-		// echo "OK.\n</pre>\n";
+		debug_msg("OK.");
 	}
 	$final_msg = "0001 $size $msg";
-// 	echo "<p>final msg size: " . strlen($final_msg) . "</p>\n";
+	debug_msg("final msg size: " . strlen($final_msg));
 	$size_wrote = fwrite($socket, $final_msg);
-// 	echo "<p>wrote: $size_wrote</p>\n";
+	debug_msg("wrote: $size_wrote");
 
 	if ($close_socket) {
 		fclose($socket);
@@ -36,6 +43,7 @@ function read_parser_output($socket)
 		echo $str;
 	} while ($str != "");
 	fclose($socket);
+	debug_msg("size read: $size_read");
 	return $size_read;
 }
 
@@ -46,6 +54,13 @@ function xmlescape($message)
 
 function create_url_request_message($env_vars, $parameters, $cookies)
 {
+	debug_msg("parameters:");
+	foreach ($parameters as $name=>$value)
+		debug_msg("&nbsp;&nbsp;$name = $value");
+	debug_msg("cookies:");
+	foreach ($cookies as $name=>$value)
+		debug_msg("&nbsp;&nbsp;$name = $value");
+
 	$msg = "<CampsiteMessage MessageType=\"URLRequest\">\n";
 	$msg .= "\t<HTTPHost>" . xmlescape($env_vars['HTTP_HOST']) . "</HTTPHost>\n";
 	$msg .= "\t<DocumentRoot>" . xmlescape($env_vars['DOCUMENT_ROOT']) . "</DocumentRoot>\n";
@@ -99,7 +114,10 @@ function read_get_parameters(&$query_string)
 
 function read_post_parameters(&$query_string)
 {
+	if (is_array($_POST))
+		return $_POST;
 	$query_string = file_get_contents("php://stdin");
+	debug_msg("query string: $query_string");
 	return read_get_parameters($query_string);
 }
 
@@ -142,6 +160,20 @@ function create_language_links($p_document_root = "")
 		if (!is_link($link))
 			symlink($index_file, $link);
 	}
+}
+
+function debug_msg($msg, $format_html = true)
+{
+	global $DEBUG;
+
+	if (!$DEBUG)
+		return;
+
+	if ($format_html)
+		echo "<p>";
+	echo $msg;
+	if ($format_html)
+		echo "</p>\n";
 }
 
 ?>
