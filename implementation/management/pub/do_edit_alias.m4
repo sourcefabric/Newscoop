@@ -76,6 +76,9 @@ B_MSGBOX(<*Editing alias*>)
 	}
 
 	if ($updated) {
+		$params = array($operation_attr=>$operation_modify, "IdPublication"=>"$cPub" );
+		$msg = build_reset_cache_msg($cache_type_publications, $params);
+		send_message($SERVER_ADDRESS, server_port(), $msg, $err_msg);
 ?>dnl
 		<LI><?php  putGS('The site alias for publication $1 has been modified to $2.', '<B>'.getHVar($q_pub,'Name').'</B>', '<B>'.$cName.'</B>'); ?></LI>
 		X_AUDIT(<*153*>, <*getGS('The site alias for publication $1 has been modified to $2.',getVar($q_pub,'Name'), $cName)*>)
