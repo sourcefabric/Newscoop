@@ -1180,10 +1180,7 @@ int CActURLParameters::takeAction(CContext& c, sockstream& fs)
 		URLPrintNParam(P_SLSTART, (ResetList(CLV_SECTION_LIST) ? 0 : c.SListStart()), fs, first);
 	if (c.LMode() == LM_NORMAL || (c.Level() != CLV_ARTICLE_LIST && c.Level() != CLV_ROOT))
 		URLPrintNParam(P_ALSTART, (ResetList(CLV_ARTICLE_LIST) ? 0 : c.AListStart()), fs, first);
-	if (c.LMode() == LM_NORMAL || (c.Level() != CLV_SEARCHRESULT_LIST && c.Level() != CLV_ROOT))
-		URLPrintNParam(P_SRLSTART, (ResetList(CLV_SEARCHRESULT_LIST) ? 0 : c.SrListStart()),
-		               fs, first);
-	if (c.Level() == CLV_SEARCHRESULT_LIST)
+	if (c.Level() == CLV_SEARCHRESULT_LIST && (c.LMode() == LM_PREV || c.LMode() == LM_NEXT))
 	{
 		if (!first)
 			fs << "&";
