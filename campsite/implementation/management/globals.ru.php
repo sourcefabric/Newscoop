@@ -231,5 +231,6 @@ regGS("No articles","Нет статей:ru");
 regGS("---Select article---","---Выберите статью---:ru");
 regGS("Duplicate","Дублировать:ru");
 regGS("You do not have the right to add articles.","Вы не имеете права добавления статей:ru");
+regGS("Add new field","Добавить новый тип:ru");
 
 ?>

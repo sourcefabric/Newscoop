@@ -230,5 +230,6 @@ regGS("No articles","无文章");
 regGS("---Select article---","－－选择文章－－");
 regGS("Duplicate","复制");
 regGS("You do not have the right to add articles.","您无权添加文章");
+regGS("Add new field","增加新字段");
 
 ?>

@@ -231,5 +231,6 @@ regGS("No articles","Нема чланака");
 regGS("---Select article---","--- Изаберите чланак ---");
 regGS("Duplicate","Дуплирај");
 regGS("You do not have the right to add articles.","Немате право да додајете чланке");
+regGS("Add new field","Додај ново поље");
 
 ?>
