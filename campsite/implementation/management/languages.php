@@ -16,5 +16,6 @@ registerLanguage('Romanian','ro','ISO_8859-2');
 registerLanguage('Russian','ru','ISO_8859-5');
 registerLanguage('Serbian (Cyrillic)','sr','ISO_8859-5');
 registerLanguage('Spanish','es','ISO_8859-1');
+registerLanguage('Arabic','ar','UTF-8');
 
 ?>
