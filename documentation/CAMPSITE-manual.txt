@@ -1,8 +1,8 @@
 CAMPSITE
 Web Automation Tool User Guide
-CAMPSITE version: 2.1.3 and newer versions
+CAMPSITE version: 2.1.4 and newer versions
 Maintained and distributed under GNU/GPL by CAMPWARE http://www.campware.org
-Manual version: July 2, 2003
+Manual version: October 20, 2003
 Language: English
 ©1999-2003 Media Development Loan Fund
 http://www.mdlf.org - http://www.mdlf-camp.net
@@ -258,13 +258,36 @@ While CAMPSITE's default language is English, you are by no means limited to pub
 The language module enables you to configure support for languages that you wish to publish in. If your tongues of choice happen to be absent from the list of CAMPSITE's pre-configured languages, you can configure your own languages.
 To do so, enter the Languages module and click on 'Add new language'. You should enter the language name (both in English and in the language itself), its code (e.g. hr for Croatian), the code page your will be saving your templates in on your local machine (e.g. if you are working on a Windows machine on your Russian Cyrillic template in an editor, you will want to specify KOI-8 or Windows-1251), and the names of months and days of the week in the language you are configuring.
 [NOTE TO ADMINISTRATOR: You may want to limit the number of languages configured on your server in order to spare your users from long drop-down language menus. Sometimes less is more, if you know what we mean.]
+Code refers to the two-letter ISO 639-1 code name for your language. English, for example, is "en", German is "de", Spanish is "es", Chinese is "zh" and so on. If you don't know your code, this web page can help: http://lcweb.loc.gov/standards/iso639-2/englangn.html.
+Code page refers to the ISO code page for your character set. CAMPSITE supports Unicode, and its code page is UTF-8. We recommend Unicode, but if you wish to use another code page, you can input it here. You can get a list of code pages and languages here: http://www.w3.org/International/O-charset-lang.html.
+For more on language and localization, visit this web address: http://tlt.its.psu.edu/suggestions/international/links.html
 2.1.2 Countries
 This module determines how country lists will appear in user-profile forms. The module allows you to create country lists in different languages. When you click on 'Add new country', you will be prompted to enter the country's name in a language of your choice as well as the country's code. The language drop down menu will contain as many languages as you had defined in the Languages module (see section 2.1.1).
 [N.B. The language you are asked to specify is the language in which you are entering a country's name, *NOT* the language spoken in the country!]
 2.1.3 The Localizer
 The localizer is a new module of CAMPSITE that is introduced in version 2.1. The module allows you to create your own localization of CAMPSITE's back end user interface by simply translating individual strings that appear in the interface.
-To do so, enter the Localizer, scroll down to the bottom of the window and select a language in which you want to create localization files from the drop down menu (the menu will contain as many languages as you have had configured in the Languages module) and then press the 'Create files' button. This will create a range of globals.xx.php files and locals.xx.php files, which will be visible in the left frame of the Localizer. Select one of the newly created files, and the strings related to that particular part of the interface will be shown in the right frame. You can interrupt the translation process at any time. Just press save at the bottom of the frame and exit the localizer. When you return, you'll find all the non-translated strings in red and you can continue from where you left off.
-[NOTE: Localization currently works for the entire user interface, minus the OK and Cancel buttons. The CAMPFIRE Java editor is fully localizable, but that is done outside the localizer (CAMPFIRE strings have to be compiled separately; the localization text file is available from http://). For more information on how to become a localization volunteer for CAMPSITE and CAMPFIRE, please send an e-mail to <contact@campware.org>.]
+The first step is to check the Languages menu (see above). Enter the Localizer, scroll down to the bottom of the window and select a language in which you want to create localization files from the drop down menu (the menu will contain as many languages as you have had configured in the Languages module) and then press the 'Create files' button. This will create a range of globals.xx.php files and locals.xx.php files, which will be visible in the left frame of the Localizer (xx refers to the two-letter language code you input in the Languages module).
+Select one of the newly created files, and the strings related to that particular part of the interface will be shown in the right frame. You can interrupt the translation process at any time. Just press save at the bottom of the frame and exit the localizer. When you return, you'll find all the non-translated strings in red and you can continue from where you left off:
+[NOTE: Localization currently works for the entire user interface, minus log messages. The CAMPFIRE Java editor is fully localizable, but that is done outside the localizer (CAMPFIRE strings have to be compiled separately; the localization text file is available from http://). For more information on how to become a localization volunteer for CAMPSITE and CAMPFIRE, please send an e-mail to <contact@campware.org>.]
+2.1.3.1 Operating system regional settings and the Campfire editor
+You may see squares in the Campfire editor where your text should be. If this happens, check your regional settings in your operating system to make sure they support the language you want to work in. For Windows 95/98/2000 XP, this is in Control Panels -> Regional options ->  Locale. Make sure the locale you're in is set here. For example, if you want to use the settings for Chinese (Hong Kong), select this from the menu. The Campfire editor will then display the characters correctly. If you want to use differrent languages, such as English and Czech, you can set this in the "Languages" panel in the same menu.
+2.1.3.2 Submitting a language localization
+We actively encourage CAMPSITE users to submit their language localizations. This makes CAMPSITE more useful around the world. If you'd like to submit your localization, here's what you have to do:
+1.Go to campsite source directory and run the following command:
+./translation --make_package <language_code>
+CAMPSITE will create a file in the campsite source directory called translation-<language_code>.tar.gz. For example, the Chinese language code is zh, so the file would be called translation-zh.tar.gz
+2.Localize the Campfire editor; here's what you have to do:
+- Go to the campsite/implementation/java/resources directory
+- Copy the Campfire_en.properties file to Campfire_<language_code>.properties For example, Campfire_zh.properties for Chinese.
+- Edit this file in any Unicode-friendly text editor
+- In this file, replace the english translation on the right part of the "=" with your translation
+- Save the file, and make sure it's saved as Unicode
+Here you have two options. You can either:
+- Copy this file to the [campsite_html_dir]/priv/pub/issues/sections/articles/java/resources directory
+      - or -
+- Reinstall CAMPSITE from the sources you installed it in the first place, taking care not to change settings
+3.E-mail the two translated files to us at campsite-support@campware.org
+The current list of language localizations can be found in the latest  CAMPSITE version at the campware site (http://www.campware.org). Even if a language localization exists, it may not address your particular needs or regional differences. For example, the differences in Spanish between that used in Spain and that used in Guatemala.
 2.1.4 User Management
 CAMPSITE's user management module allows you to control access to the back end and the front end of your publication(s). In other words, the module, which features a search option, allows you to define who will have the right to manage and edit content on your site and who will be allowed to read it.
 IMPORTANT: Initially CAMPSITE has only one user: admin with admn00 password. This user is needed by the email notifiers: end of subscription and event notifier so it must not be deleted. You should set the email address of this user after installation because it is used as reply to address in the notification emails.
@@ -1466,9 +1489,10 @@ None.
 Purpose:
 Generate the form and default data fields for subscription. Inside this can be used Edit and Select statements to generate fields for every section on issue.
 Syntax:
-Subscription <template_name> <button_name> [<total_field_name> <evaluate_button_name>]
+Subscription <subscription_type> <template_name> <button_name> [<total_field_name> <evaluate_button_name>]
 <list_of_instructions>
 EndSubscription
+<subscription_type> has two values: "by_publication" and "by_section"
 <template_name> is the name of the next template to be requested from subscription form. 
 <button_name> is the name of the button for submitting the form. 
 <total_field_name> is the name of the field where the total payment is written. 
@@ -1540,13 +1564,16 @@ Select
 <subscription_expression>
 |<user_expression>
 |<search_expression>
+|<login_expression>
 <subscription_expression> = Subscription section
 Generates a multiple select list for selecting sections in subscription form.
 <user_expression> = User 
 country |title |gender |age |employertype |pref1 |pref2 |pref3 |pref4
 The parameters (country, title, gender...) are fields describing the user information; they are self-explaining; pref1-pref4 are extra fields for storing some extra information; the publication administrator sets their meaning. Generates pop-up list or radio-button for selecting values for the above fields.
 <search_expression> = Search mode |level
-Generates a check box for selecting the search mode (match one or all keywords).
+Generates a check box for selecting the search mode (match at lease one or all keywords).
+<login_expression> = Login RememberUser
+Generates a check box; if checked the user session will be permanently remembered so the user will not have to login again.
 Constraints:
 Select Subscription can be used inside Subscription-EndSubscription statement only.
 Select User can be used inside User-EndUser statement only.
