@@ -1,8 +1,8 @@
 CAMPSITE
 Web Automation Tool User Guide
-CAMPSITE version: 2.1.3 and newer versions
+CAMPSITE version: 2.1.4 and newer versions
 Maintained and distributed under GNU/GPL by CAMPWARE http://www.campware.org
-Manual version: July 2, 2003
+Manual version: October 20, 2003
 Language: English
 ©1999-2003 Media Development Loan Fund
 http://www.mdlf.org - http://www.mdlf-camp.net
@@ -1489,9 +1489,10 @@ None.
 Purpose:
 Generate the form and default data fields for subscription. Inside this can be used Edit and Select statements to generate fields for every section on issue.
 Syntax:
-Subscription <template_name> <button_name> [<total_field_name> <evaluate_button_name>]
+Subscription <subscription_type> <template_name> <button_name> [<total_field_name> <evaluate_button_name>]
 <list_of_instructions>
 EndSubscription
+<subscription_type> has two values: "by_publication" and "by_section"
 <template_name> is the name of the next template to be requested from subscription form. 
 <button_name> is the name of the button for submitting the form. 
 <total_field_name> is the name of the field where the total payment is written. 

@@ -5,7 +5,7 @@
 	<TITLE>CAMPSITE manual Version 2.1</TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
 	<META NAME="CREATED" CONTENT="20020913;19124500">
-	<META NAME="CHANGED" CONTENT="20031005;294500">
+	<META NAME="CHANGED" CONTENT="20031019;15170600">
 	<STYLE>
 	<!--
 		@page { size: 21.59cm 27.94cm }
@@ -43,10 +43,10 @@
 <P STYLE="margin-top: 0.42cm; margin-bottom: 0.5cm; page-break-after: avoid">
 <FONT FACE="Albany, sans-serif"><FONT SIZE=4>Web Automation Tool User
 Guide</FONT></FONT></P>
-<P CLASS="western">CAMPSITE version: 2.1.3 and newer versions</P>
+<P CLASS="western">CAMPSITE version: 2.1.4 and newer versions</P>
 <P CLASS="western">Maintained and distributed under GNU/GPL by
 CAMPWARE <A HREF="http://www.campware.org/">http://www.campware.org</A></P>
-<P CLASS="western">Manual version: July 2, 2003</P>
+<P CLASS="western">Manual version: October 20, 2003</P>
 <P CLASS="western">Language: English</P>
 <P CLASS="western">&copy;1999-2003 Media Development Loan Fund</P>
 <P CLASS="western"><A HREF="http://www.mdlf.org/" TARGET="_blank">http://www.mdlf.org</A>
@@ -4069,9 +4069,12 @@ subscription. Inside this can be used Edit and Select statements to
 generate fields for every section on issue.</P>
 <P CLASS="western">Syntax:</P>
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">Subscription
-&lt;template_name&gt; &lt;button_name&gt; [&lt;total_field_name&gt;
+&lt;subscription_type&gt; &lt;template_name&gt; &lt;button_name&gt;
+[&lt;total_field_name&gt;
 &lt;evaluate_button_name&gt;]<BR>&lt;list_of_instructions&gt;<BR>EndSubscription</FONT></P>
 <UL>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">&lt;subscription_type&gt;
+	has two values: &ldquo;by_publication&rdquo; and &ldquo;by_section&rdquo;</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">&lt;template_name&gt;
 	is the name of the next template to be requested from subscription
 	form. 
@@ -4241,14 +4244,14 @@ or search forms.</P>
 sections in subscription form.</P>
 <TABLE WIDTH=703 BORDER=0 CELLPADDING=2 CELLSPACING=0>
 	<COL WIDTH=248>
-	<COL WIDTH=447>
+	<COL WIDTH=446>
 	<TR>
 		<TD WIDTH=248 VALIGN=TOP>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono"><FONT SIZE=2 STYLE="font-size: 11pt"><FONT SIZE=3>&lt;user_expression&gt;
 			= User</FONT> </FONT></FONT>
 			</P>
 		</TD>
-		<TD WIDTH=447>
+		<TD WIDTH=446>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono"><FONT SIZE=3>country
 			|title |gender |age |employertype |pref1 |pref2 |pref3 |pref4</FONT></FONT></P>
 		</TD>
