@@ -1,17 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
 <html>
 <head>
-	
   <meta http-equiv="CONTENT-TYPE"
  content="text/html; charset=iso-8859-15">
   <title></title>
-	 	
   <meta name="GENERATOR" content="OpenOffice.org 1.0.1  (Linux)">
-	
   <meta name="CREATED" content="20021107;14593600">
-	
   <meta name="CHANGED" content="20030402;15595400">
-	
   <style>
 	<!--
 		@page { size: 21.59cm 27.94cm; margin-left: 3.18cm; margin-right: 3.18cm; margin-top: 2.54cm; margin-bottom: 2.54cm }
@@ -29,7 +24,8 @@
 <h3>1. Viewing publications</h3>
 <h4>1.1. &#8220;You don't have permission to access file on the server&#8221;</h4>
 <p style="margin-bottom: 0.5cm;">Error message: "<i>You don't have
-permission to access /cgi-bin/tpl_cgi/look/&lt;template_name&gt; on this
+permission to access /cgi-bin/tpl_cgi/look/&lt;template_name&gt; on
+this
 server.</i>"</p>
 <p style="margin-bottom: 0.5cm;">Explanations:</p>
 <p style="margin-top: 0cm;">a) apache configuration error: the
@@ -83,7 +79,8 @@ start</font></p>
 mandrake, suse etc.)</p>
 <p style="margin-bottom: 0.5cm;">Here &#8220;campsite&#8221; is the name of the
 instance installed. If your campsite instance has another name just
-replace campsite with your instance name. If this problem comes up after
+replace campsite with your instance name. If this problem comes up
+after
 every reboot add the command to your rc.local file in /etc/rc.d/
 directory.</p>
 <h4>1.3. &#8220;404 Not Found&#8221;</h4>
@@ -91,20 +88,22 @@ directory.</p>
 server.&#8221;</p>
 <p style="margin-top: 0cm;">where [url] can be:</p>
 <ol>
-	<li>
+  <li>
     <p style="margin-top: 0cm;">http://[host]/priv/</p>
-	</li>
+  </li>
   <li>
     <p style="margin-top: 0cm;">http://[host]/cgi-bin/upload_i</p>
-	</li>
+  </li>
   <li>
     <p style="margin-top: 0cm;">http://[host]/cgi-bin/get_img</p>
   </li>
 </ol>
 <p style="margin-bottom: 0.5cm;">In case 1 the HTML_DIR attribute was
 not set properly at install time. This attribute must have the same
-value as the DocumentRoot attribute in the apache configuration file. If
-a virtual host was set for CAMPSITE then the HTML_DIR must be set to the
+value as the DocumentRoot attribute in the apache configuration file.
+If
+a virtual host was set for CAMPSITE then the HTML_DIR must be set to
+the
 document root of this particular host. HTML_DIR attribute is in the
 ADMIN_INTERFACE module.</p>
 <p style="margin-bottom: 0.5cm;">In cases 2 and 3 the CGI_DIR attribute
@@ -116,7 +115,8 @@ ADMIN_INTERFACE module.</p>
 <h4>1.4. Warning: mysql_num_rows(): supplied argument is not a valid
 MySQL result resource in /var/www/html/priv/lib_campsite.php on line 16</h4>
 <p>This message is printed when the CAMPSITE database was corrupted or
-was not installed properly. In this case you should try to reinstall it;
+was not installed properly. In this case you should try to reinstall
+it;
 type the following commands:</p>
 <p style="margin-top: 0cm;"><font face="Fixed, monospace">cd
 [campsite_source_directory]/implementation/database</font></p>
@@ -128,14 +128,14 @@ type the following commands:</p>
 [user] -p [install_name] &lt; campsite-db.sql</font></p>
 <p>You must replace:</p>
 <ul>
-	<li>
+  <li>
     <p style="margin-top: 0cm;">[campsite_source_directory] with the
-	directory where you installed the campsite sources</p>
-	</li>
+directory where you installed the campsite sources</p>
+  </li>
   <li>
     <p style="margin-top: 0cm;">[install_name] with the application
-	name you supplied at install time; the default value is &#8220;campsite&#8221;</p>
-	</li>
+name you supplied at install time; the default value is &#8220;campsite&#8221;</p>
+  </li>
   <li>
     <p style="margin-top: 0cm;">[user] with a valid mysql user</p>
   </li>
@@ -175,7 +175,21 @@ and the final "include_path" directive should look like:
 php include path but the "register_globals" directive was set to "Off".<br>
 </p>
 <p>Fix: edit the "php.ini" file, set the "register_globals" directive
-to "On" and restart the apache server.</p>
+to "On" and restart the apache server.<br>
+</p>
+<h4>1.7. You do no have access to the /priv/ directory!</h4>
+<p>This message pops up because of apache missconfiguration, more
+specific: "DirectoryIndex" directive.</p>
+<p>Examples of <span style="font-weight: bold;">invalid configuration</span>:<br>
+DirectoryIndex /priv/templates/idx.php<br>
+</p>
+DirectoryIndex /priv/templates/idx.php index.html index.htm index.php
+...<br>
+<p>A valid configuration would look like this:</p>
+DirectoryIndex index.html index.htm index.php /priv/templates/idx.php<br>
+<p>Note that "/priv/templates/idx.php" must be on the last position in
+the list! Also, the list must contain "index.php".<br>
+</p>
 <p> </p>
 <p> </p>
 <p style="font-weight: bold;"> </p>
@@ -184,16 +198,17 @@ to "On" and restart the apache server.</p>
 <p>The stat program was not found by the CAMPSITE install scripts. The
 package containing stat binary must be installed:</p>
 <ul>
-	<li>
+  <li>
     <p style="margin-top: 0cm;">fileutils package on Mandrake</p>
-	</li>
+  </li>
   <li>
     <p style="margin-top: 0cm;">stat package on RedHat, Suse, Debian</p>
   </li>
 </ul>
 <h4>2.2. &#8220;premature end of script&#8221; error</h4>
 <p style="margin-bottom: 0.5cm;">tpl_cgi keeps terminating with errors
-when it is called by campfire, and the apache error_log has a 'premature
+when it is called by campfire, and the apache error_log has a
+'premature
 end of script' error.</p>
 <p style="margin-bottom: 0.5cm;">The installer does not set the cgi-bin
 directory permission properly; running the following commands will fix
@@ -203,19 +218,20 @@ the problem:</p>
 <p style="margin-top: 0cm;"><font face="Fixed, monospace">chmod 750
 [CGI_DIR]</font></p>
 <p>where [HTTP_USER] should be replaced by the apache user,
-[HTTP_GROUP] should be replaced by the apache group and [CGI_DIR] should
+[HTTP_GROUP] should be replaced by the apache group and [CGI_DIR]
+should
 be replaced by the cgi directory.</p>
 <h4>2.3 &#8220;file libmysqlclient.a not found&#8221;</h4>
 <p>MySQL development libraries were not installed or were installed in
 a non-standard directory and the CAMPSITE installer was not able to
 detect them. Install:</p>
 <ol>
-	<li>
-    <p style="margin-top: 0cm;">libmysql10-devel package on Mandrake
-	Linux</p>
-	</li>
   <li>
-    <p style="margin-top: 0cm;">mysql-devel package on Redhat and 	SuSe
+    <p style="margin-top: 0cm;">libmysql10-devel package on Mandrake
+Linux</p>
+  </li>
+  <li>
+    <p style="margin-top: 0cm;">mysql-devel package on Redhat and SuSe
 Linux</p>
   </li>
 </ol>
@@ -227,12 +243,13 @@ libmysqlclient.a library to the path list in line 714:</p>
 "[my_path]:/usr/lib:/usr....&#8221;</p>
 <h4>2.4 &#8220;file libz.so not found&#8221;</h4>
 <p>Zlib development libraries were not installed or were installed in a
-non-standard directory and the CAMPSITE installer was not able to detect
+non-standard directory and the CAMPSITE installer was not able to
+detect
 them. Install:</p>
 <ol start="3">
-	<li>
+  <li>
     <p style="margin-top: 0cm;">zlib1-devel package on Mandrake Linux</p>
-	</li>
+  </li>
   <li>
     <p style="margin-top: 0cm;">zlib package on Redhat and SuSe Linux</p>
   </li>
