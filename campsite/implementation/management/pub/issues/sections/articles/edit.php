@@ -35,11 +35,12 @@ if ($User->hasPermission('ChangeArticle') || (($articleObj->getUserId() == $User
 	$edit_ok= 0;
 	// If the article is not locked by a user or its been locked by the current user.
 	if (($articleObj->getLockedByUser() == 0) 
-		|| ($articleObj->getLockedByUser() == $User->getId())) {
+		|| ($articleObj->getLockedByUser() == $User->getId())
+		|| ($LockOk)) {
 		// Lock the article
 		$articleObj->lock($User->getId());
-	    $edit_ok= 1;
-	} 
+		$edit_ok= 1;
+	}
 }
 
 if ($User->hasPermission('AddArticle')) { 
