@@ -40,13 +40,11 @@ else{?>dnl
 <?php }?>dnl
 B_HEADER_BUTTONS
 X_HBUTTON(<*Templates*>, <*templates/?Path=<?php  pencURL(decS($Path)); ?>*>)
-X_HBUTTON(<*Home*>, <*home.php*>)
-X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
 B_CURRENT
-X_CURRENT(<*Path*>, <*<B><?php  pencHTML(decURL($Path)); ?></B>*>)
+X_CURRENT(<*Path*>, <*<?php  pencHTML(decURL($Path)); ?>*>)
 E_CURRENT
 
 <P>

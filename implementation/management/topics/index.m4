@@ -23,8 +23,6 @@ B_BODY
 
 B_HEADER(<*Topics*>)
 B_HEADER_BUTTONS
-X_HBUTTON(<*Home*>, <*home.php*>)
-X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
@@ -58,7 +56,7 @@ B_CURRENT
 		$Path=$Top."/".$Path;
 		if($Path == '') $Path="/";
 	?>
-	X_CURRENT(<*Topic*>, <*<B><?php p($Path);?></B>*>)
+	X_CURRENT(<*Topic*>, <*<?php p($Path);?>*>)
 E_CURRENT
 <P>
 

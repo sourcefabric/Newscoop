@@ -22,8 +22,6 @@ B_BODY
 B_HEADER(<*Delete user account*>)
 B_HEADER_BUTTONS
 X_HBUTTON(<*Users*>, <*users/*>)
-X_HBUTTON(<*Home*>, <*home.php*>)
-X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 

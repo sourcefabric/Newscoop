@@ -22,8 +22,6 @@ B_BODY
 B_HEADER(<*Changing user password*>)
 B_HEADER_BUTTONS
 X_HBUTTON(<*Users*>, <*users/*>)
-X_HBUTTON(<*Home*>, <*home.php*>)
-X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
@@ -35,7 +33,7 @@ E_HEADER
     ?>dnl
 
 B_CURRENT
-X_CURRENT(<*User account*>, <*<B><?php  pgetHVar($users,'UName'); ?></B>*>)
+X_CURRENT(<*User account*>, <*<?php  pgetHVar($users,'UName'); ?>*>)
 E_CURRENT
 
 <?php  $ok= 1; ?>dnl
