@@ -29,6 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <dirent.h>
 #include <sys/stat.h> 
 #include <unistd.h>
+#include <signal.h>
+#include <sys/wait.h>
 
 #include "ccampsiteinstance.h"
 
@@ -43,18 +45,56 @@ using std::endl;
 
 bool CCampsiteInstance::isRunning() const
 {
+	int nStatus;
+	if (m_bRunning)
+	{
+		waitpid(m_nChildPID, &nStatus, WNOHANG);
+		m_bRunning = !WIFEXITED(nStatus);
+		if (!m_bRunning)
+		{
+			CCampsiteInstanceRegister::get().unsetPID(m_nChildPID);
+			m_nChildPID = 0;
+		}
+	}
 	return m_bRunning;
 }
 
 pid_t CCampsiteInstance::run() throw (RunException)
 {
-	return -1;
+	if (m_bRunning)
+		return m_nChildPID;
+	pid_t nPid = fork();
+	if (nPid == 0) // this is the child - call InstanceFunction
+	{
+		m_pInstanceFunction(m_coAttributes);
+		exit(0);
+	}
+	else  // this is the parent, register PID
+	{
+		CCampsiteInstanceRegister::get().insert(*this);
+		m_nChildPID = nPid;
+		m_bRunning = true;
+	}
+	return nPid;
 }
 
 void CCampsiteInstance::stop()
 {
 	if (!m_bRunning)
 		return;
+	for (int nIt = 1; nIt <= 10; nIt++)
+	{
+		kill(m_nChildPID, 15);
+		usleep(100);
+		if (!isRunning())
+			break;
+	}
+	if (isRunning())
+	{
+		kill(m_nChildPID, 9);
+	}
+	m_nChildPID = 0;
+	m_bRunning = false;
 }
 
 const CCampsiteInstanceMap& CCampsiteInstance::readFromDirectory(const string& p_rcoDir,
@@ -142,6 +182,21 @@ CCampsiteInstanceRegister g_coCampsiteInstanceRegister;
 CCampsiteInstanceRegister& CCampsiteInstanceRegister::get()
 {
 	return g_coCampsiteInstanceRegister;
+}
+
+void CCampsiteInstanceRegister::insert(CCampsiteInstance& p_rcoCampsiteInstance)
+{
+#ifdef _REENTRANT
+	CMutexHandler coLockHandler(&m_coMutex);
+#endif
+	const string& rcoName = p_rcoCampsiteInstance.getName();
+	if (has(rcoName) && getCampsiteInstance(rcoName) != &p_rcoCampsiteInstance)
+	{
+		erase(rcoName);
+	}
+	m_coCCampsiteInstances[rcoName] = &p_rcoCampsiteInstance;
+	if (p_rcoCampsiteInstance.isRunning())
+		m_coInstancePIDs[p_rcoCampsiteInstance.getPID()] = rcoName;
 }
 
 void CCampsiteInstanceRegister::erase(pid_t p_nInstancePID)
