@@ -1,8 +1,6 @@
 #!/bin/bash
 
-cd ../..
-. ./make.env
-cd implementation/management
+. ../../make.env
 
 echo -n -e "\t\tWriting macros.m4..."
 cat > macros.m4 << EOF
