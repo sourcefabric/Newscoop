@@ -28,6 +28,45 @@ if ($access) {
 		$access = 0;
 	}
 }
+
+todef('publish_date');
+todefnum('publish_hour');
+todefnum('publish_min');
+todef('action');
+todef('publish_articles');
+if ($access) {
+	global $created;
+
+	$publish_date = trim($publish_date);
+	$publish_hour = trim($publish_hour);
+	$publish_min = trim($publish_min);
+
+	$correct = trim($publish_date) != "" && trim($publish_hour) != ""
+		&& trim($publish_min) != "" && ($action == "P" || $action == "U");
+
+	if ($publish_articles != "Y" && $publish_articles != "N")
+		$publish_articles = "N";
+
+	$created = 0;
+	if ($correct) {
+		$action_str = $action == "P" ? "Publish" : "Unpublish";
+		$publish_time = $publish_date . " " . $publish_hour . ":" . $publish_min . ":00";
+		$sql = "select * from IssuePublish where IdPublication = $Pub and NrIssue = $Issue and IdLanguage = $Language and PublishTime = '$publish_time'";
+		query($sql, 'q_issp');
+		if ($NUM_ROWS > 0) {
+			$sql = "update IssuePublish set Action = '$action', PublishArticles = '$publish_articles' where IdPublication = $Pub and NrIssue = $Issue and IdLanguage = $Language and PublishTime = '$publish_time'";
+			query($sql);
+			$created = 1;
+		} else {
+			$sql = "INSERT IGNORE INTO IssuePublish SET IdPublication = $Pub, NrIssue = $Issue, IdLanguage = $Language, PublishTime = '$publish_time', Action = '$action', PublishArticles = '$publish_articles'";
+			query ($sql);
+			$created = $AFFECTED_ROWS > 0;
+		}
+	}
+	if ($created)
+		header("Location: /$ADMIN/pub/issues/autopublish.php?Pub=$Pub&Issue=$Issue&Language=$Language");
+}
+
 ?>
 
 <HEAD>
@@ -36,18 +75,7 @@ if ($access) {
 	<META HTTP-EQUIV="Refresh" CONTENT="0; URL=/<?php echo $ADMIN; ?>/ad.php?ADReason=<?php  print encURL(getGS("You do not have the right to schedule issues or articles for automatic publishing." )); ?>">
 <?php } ?></HEAD>
 
-<?php if ($access) { ?><STYLE>
-	BODY { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	SMALL { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 8pt; }
-	FORM { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	TH { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	TD { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	BLOCKQUOTE { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	UL { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	LI { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	A  { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; text-decoration: none; color: darkblue; }
-	ADDRESS { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 8pt; }
-</STYLE>
+<?php if ($access) { ?>
 
 <BODY  BGCOLOR="WHITE" TEXT="BLACK" LINK="DARKBLUE" ALINK="RED" VLINK="DARKBLUE">
 
@@ -56,19 +84,20 @@ if ($access) {
 	todefnum('Issue');
 	todefnum('Language');
 ?>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
 	<TR>
-		<TD ROWSPAN="2" WIDTH="1%"><IMG SRC="/<?php echo $ADMIN; ?>/img/sign_big.gif" BORDER="0"></TD>
-		<TD>
-		    <DIV STYLE="font-size: 12pt"><B><?php  putGS("Scheduling a new publish action"); ?></B></DIV>
-		    <HR NOSHADE SIZE="1" COLOR="BLACK">
+		<TD><?php  putGS("Scheduling a new publish action"); ?></TD>
+		<TD ALIGN=RIGHT>
+			<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
+			<TR>
+				<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/?Pub=<?php p($Pub); ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Issues"); ?>"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/?Pub=<?php p($Pub); ?>" ><B><?php  putGS("Issues");  ?></B></A></TD>
+				<TD><A HREF="/<?php echo $ADMIN; ?>/pub/" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Publications"); ?>"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/pub/" ><B><?php  putGS("Publications");  ?></B></A></TD>
+				<TD><A HREF="/<?php echo $ADMIN; ?>/home.php" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Home"); ?>"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/home.php" ><B><?php  putGS("Home");  ?></B></A></TD>
+				<TD><A HREF="/<?php echo $ADMIN; ?>/logout.php" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Logout"); ?>"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/logout.php" ><B><?php  putGS("Logout");  ?></B></A></TD>
+			</TR>
+			</TABLE>
 		</TD>
 	</TR>
-	<TR><TD ALIGN=RIGHT><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0"><TR><TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/?Pub=<?php p($Pub); ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Issues"); ?>"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/?Pub=<?php p($Pub); ?>" ><B><?php  putGS("Issues");  ?></B></A></TD>
-<TD><A HREF="/<?php echo $ADMIN; ?>/pub/" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Publications"); ?>"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/pub/" ><B><?php  putGS("Publications");  ?></B></A></TD>
-<TD><A HREF="/<?php echo $ADMIN; ?>/home.php" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Home"); ?>"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/home.php" ><B><?php  putGS("Home");  ?></B></A></TD>
-<TD><A HREF="/<?php echo $ADMIN; ?>/logout.php" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Logout"); ?>"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/logout.php" ><B><?php  putGS("Logout");  ?></B></A></TD>
-</TR></TABLE></TD></TR>
 </TABLE>
 
 <?php
@@ -87,16 +116,7 @@ if ($access) {
 
 </TR></TABLE>
 
-<?php
-	todef('publish_date');
-	todefnum('publish_hour');
-	todefnum('publish_min');
-	todef('action');
-	todef('publish_articles');
-
-	$correct= 1;
-	$created= 0;
-?><P>
+<P>
 <CENTER><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" BGCOLOR="#C0D0FF" ALIGN="CENTER">
 	<TR>
 		<TD COLSPAN="2">
@@ -107,10 +127,6 @@ if ($access) {
 	<TR>
 		<TD COLSPAN="2"><BLOCKQUOTE>
 <?php
-	$publish_date = trim($publish_date);
-	$publish_hour = trim($publish_hour);
-	$publish_min = trim($publish_min);
-
 	if ($publish_date == "" || $publish_date == " ") {
 	$correct= 0; ?>	<LI><?php putGS('You must complete the $1 field.','<B>'.getGS('Date').'</B>' ); ?></LI>
 	<?php }
@@ -123,25 +139,6 @@ if ($access) {
 	$correct= 0; ?>	<LI><?php putGS('You must select an action.'); ?></LI>
     <?php }
 
-	if ($publish_articles != "Y" && $publish_articles != "N")
-		$publish_articles = "N";
-
-	if ($correct) {
-		$action_str = $action == "P" ? "Publish" : "Unpublish";
-		$publish_time = $publish_date . " " . $publish_hour . ":" . $publish_min . ":00";
-		$sql = "select * from IssuePublish where IdPublication = $Pub and NrIssue = $Issue and IdLanguage = $Language and PublishTime = '$publish_time'";
-		query($sql, 'q_issp');
-		if ($NUM_ROWS > 0) {
-			$sql = "update IssuePublish set Action = '$action', PublishArticles = '$publish_articles' where IdPublication = $Pub and NrIssue = $Issue and IdLanguage = $Language and PublishTime = '$publish_time'";
-			query($sql);
-			$created = 1;
-		} else {
-			$sql = "INSERT IGNORE INTO IssuePublish SET IdPublication = $Pub, NrIssue = $Issue, IdLanguage = $Language, PublishTime = '$publish_time', Action = '$action', PublishArticles = '$publish_articles'";
-			query ($sql);
-			$created = $AFFECTED_ROWS > 0;
-		}
-	}
-
 	if ($correct) {
 		if ($created) { ?>			<LI><?php putGS('The $1 action has been scheduled on $2', getGS($action_str), $publish_time); ?></LI>
 		<?php } else { ?>			<LI><?php putGS('There was an error scheduling the $1 action on $2', getGS($action_str), $publish_time); ?></LI>
@@ -152,7 +149,7 @@ if ($access) {
 	<TR>
 		<TD COLSPAN="2">
 		<DIV ALIGN="CENTER">
-	<INPUT TYPE="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/pub/issues/autopublish.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>'">
+	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/pub/issues/autopublish.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>'">
 		</DIV>
 		</TD>
 	</TR>
