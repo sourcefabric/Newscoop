@@ -243,6 +243,7 @@ string CAction::dateFormat(const char* p_pchDate, const char* p_pchFormat, long 
 		return string(p_pchDate);
 	int nMonth = atol(row[0]);
 	int nWDay = (atol(row[1]) + 2) % 7;
+	nWDay = nWDay == 0 ? 7 : nWDay;
 
 	coQuery.str("");
 	coQuery << "select ";
