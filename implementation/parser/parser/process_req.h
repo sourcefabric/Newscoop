@@ -43,19 +43,6 @@ using std::bad_alloc;
 #define PARAM_NR 36
 #define ERR_NR 6
 
-class RunException : public exception
-{
-private:
-	string m_coMsg;
-
-public:
-	RunException(const string& p_rcoMsg) : m_coMsg(p_rcoMsg) {}
-
-	virtual ~RunException() throw() {}
-
-	virtual const char* what() const throw() { return m_coMsg.c_str(); }
-};
-
 // RunParser:
 //   - prepare the context: read cgi environment into context, read user subscriptions
 //     into context
