@@ -179,6 +179,8 @@ private:
 	String2String fields;						// fields/article type to print
 	string current_field;						// current printing field from article
 	string current_art_type;					// current article type
+	long int m_nTopicId;						// topic numeric identifier
+	long int m_nDefTopicId;						// topic numeric identifier
 
 	static const string emptystring;
 
@@ -416,6 +418,14 @@ public:
 	void SetCurrentArtType(const string &f)
 	{
 		current_art_type = f;
+	}
+	void SetTopic(long int t)
+	{
+		m_nTopicId = t;
+	}
+	void SetDefTopic(long int t)
+	{
+		m_nDefTopicId = t;
 	}
 
 	const string& UserInfo(const string&);
@@ -672,6 +682,15 @@ public:
 	{
 		return subtitles;
 	}
+	long int Topic() const
+	{
+		return m_nTopicId;
+	}
+	long int DefTopic() const
+	{
+		return m_nDefTopicId;
+	}
+	
 	void PrintSubs();
 };
 
