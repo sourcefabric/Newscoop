@@ -14,6 +14,13 @@ regGS("Click to view image","Click to view image:en");
 regGS("Date<BR><SMALL>(yyyy-mm-dd)</SMALL>","Date<BR><SMALL>(yyyy-mm-dd)</SMALL>:en");
 regGS("Delete image $1","Delete image $1:en");
 regGS("No images.","No images.:en");
+regGS("Thumbnail", "Thumbnail:en");
+regGS("Description<BR><SMALL>(Click to view details)</SMALL>", "Description<BR><SMALL>(Click to view details)</SMALL>:en");
+regGS("In use", "In use:en");
+regGS("Galery", "Galery:en");
+regGS("Text only", "Text only:en");
+regGS("$1 images found", "$1 images found:en");
+regGS("Identifier", "Identifier:en");
 
 // -- view.m4
 regGS("View image","View image:en");
