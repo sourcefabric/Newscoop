@@ -20,6 +20,14 @@ class DatabaseObject {
 	
 	
 	function DatabaseObject() {
+		if (count($this->m_columnNames) == 0) {
+			// Automatically initialize column names
+			foreach ($this as $varName => $value) {
+				if (substr($varName, 0, 2) != "m_") {
+					$this->m_columnNames[] = $varName;
+				}
+			}
+		}
 	} // constructor
 	
 	
