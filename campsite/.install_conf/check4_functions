@@ -711,7 +711,7 @@ return 0
 check4_libmysqlclient()
 {
 is_checked libmysqlclient && return 0
-check4_file libmysqlclient.a --file --path "/usr/lib:/usr/lib/mysql:/usr/local/lib:/usr/local/lib/mysql:/usr/local/mysql/lib"
+check4_file libmysqlclient.a --file --path "/usr/lib:/usr/lib/mysql:/usr/local/mysql:/usr/local/lib:/usr/local/lib/mysql:/usr/local/mysql/lib"
 result=$? && [ $result -ne 0 ] && return 1
 export LIBMYSQLCLIENT=$file_path
 export LIBMYSQLCLIENT_PATH=`cut_last_dirs $LIBMYSQLCLIENT 1`
