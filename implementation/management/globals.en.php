@@ -157,6 +157,7 @@ regGS("Access denied", "Access denied:en");
 regGS("There was an error reading the language parameter.", "There was an error reading the language parameter.:en");
 regGS("There was an error reading the publication parameter.", "There was an error reading the publication parameter.:en");
 regGS("There was an error reading the issue parameter.", "There was an error reading the issue parameter.:en");
+regGS("There was an error reading request parameters.", "There was an error reading request parameters.:en");
 
 // -- other errors
 regGS("Invalid article identifier", "Invalid article identifier:en");
@@ -322,6 +323,8 @@ regGS("Days","Days:en");
 regGS("(YYYY-MM-DD)","(YYYY-MM-DD):en");
 regGS("The sections were added successfully.", "The sections were added successfully.:en");
 regGS("The sections could not be added successfully. Some of them were already added !", "The sections could not be added successfully. Some of them were already added !:en");
+regGS("This article cannot be previewed. Please make sure it has the article template selected.", "This article cannot be previewed. Please make sure it has the article template selected.:en");
+regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "This article cannot be previewed. Please make sure it has the front page template selected.:en");
 
 // -- buttons
  
