@@ -1,8 +1,7 @@
 export PRIV_DIR4=$(PRIV_DIR3)/sections
 
 MY_TARGETS=index.php add.php do_add.php del.php do_del.php add_article.php \
-    edit.php do_edit.php duplicate.php i0.php pub.php i1.php \
-    iss.php i2.php dupform.php do_duplicate.php copyright.php
+    edit.php do_edit.php pub.php dupform.php do_duplicate.php
 
 subsystem: all
 	$(MAKE) -C articles
