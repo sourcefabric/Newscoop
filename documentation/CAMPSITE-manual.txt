@@ -180,9 +180,9 @@ Select the character set for Log and dump Log table data:
 Selecting the character set for Log table data: decide which language you use most often when logging in to CAMPSITE admin interface and read the character set of the language from Languages.
 
 2.Convert files to UTF:
-Convert tables.sql and data_nolang.sql:
+Convert tables.sql:
 iconv -f ISO_8859-1 -t UTF8 tables.sql > tables_utf.sql
-iconv -f ISO_8859-1 -t UTF8 data_nolang.sql > data_nolang_utf.sql
+Warning!!! data_nolang.sql must not be converted to UTF8.
 For every character set used repeat the following steps:
 a)iconv -f [charsetn] -t UTF8 data_[charsetn]_1.sql > data_[charsetn]_1_utf.sql
 b)iconv -f [charsetn] -t UTF8 data_[charsetn]_2.sql > data_[charsetn]_2_utf.sql
@@ -195,7 +195,7 @@ where [log_charset] is the character set selected for Log table.
 
 3.Restore the database:
 mysql ... [database] < tables_utf.sql
-mysql ... [database] < data_nolang_utf.sql
+mysql ... [database] < data_nolang.sql
 For every character set used repeat the following steps:
 	mysql ... [database] < data_[charsetn]_1_utf.sql
 	mysql ... [database] < data_[charsetn]_2_utf.sql
