@@ -31,9 +31,9 @@ install: $(ALL)
 	mkdir -p $(HTML_COMMON_DIR)/look
 	mkdir -p $(PRIV_COMMON_DIR)/img
 	cp -fr img/* $(PRIV_COMMON_DIR)/img
-	mkdir -p $(PRIV_COMMON_DIR)/css
+	mkdir -p $(HTML_COMMON_DIR)/css
 	cp -f css/*.css $(HTML_COMMON_DIR)
-	mkdir -p $(PRIV_COMMON_DIR)/classes
+	mkdir -p $(HTML_COMMON_DIR)/classes
 	cp -f classes/*.php $(HTML_COMMON_DIR)
 	mkdir -p $(HTML_COMMON_DIR)/images/thumbnails
 	#cp -rf article_import $(PRIV_COMMON_DIR)
