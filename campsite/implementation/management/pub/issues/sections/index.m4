@@ -89,7 +89,7 @@ B_LIST
 		X_LIST_TH(<*Nr*>, <*1%*>)
 		X_LIST_TH(<*Name<BR><SMALL>(click to see articles)</SMALL>*>)
 	<?php  if ($msa != 0) { ?>
-		X_LIST_TH(<*Change*>, <*1%*>)
+		X_LIST_TH(<*Configure*>, <*1%*>)
 	<?php 	} ?>
 	<?php  if ($msa != 0 && $aaa != 0) { ?>
 		X_LIST_TH(<*Duplicate*>, <*1%*>)
@@ -110,7 +110,7 @@ B_LIST
 		E_LIST_ITEM
 	<?php  if ($msa != 0) { ?>
 		B_LIST_ITEM(<*CENTER*>)
-			<A HREF="X_ROOT/pub/issues/sections/edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  pgetUVar($q_sect,'NrIssue'); ?>&Section=<?php  pgetUVar($q_sect,'Number'); ?>&Language=<?php  pgetUVar($q_sect,'IdLanguage'); ?>"><?php  putGS("Change"); ?></A>
+			<A HREF="X_ROOT/pub/issues/sections/edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  pgetUVar($q_sect,'NrIssue'); ?>&Section=<?php  pgetUVar($q_sect,'Number'); ?>&Language=<?php  pgetUVar($q_sect,'IdLanguage'); ?>"><?php  putGS("Configure"); ?></A>
 		E_LIST_ITEM
 	<?php 	} ?>
 	<?php  if ($msa != 0 && $aaa != 0) { ?>
