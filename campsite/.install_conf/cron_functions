@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 . ${INSTALL_CONF}/check4_functions
 
@@ -39,17 +39,32 @@ while [ "$1" != "" ]; do
     shift 1
 done
 installed=false
-cat "$file" | grep "$binary" &> /dev/null
+if [ $BSD -eq 1 ]; then
+	crontab -u $ROOT_USER -l | grep "$binary" &> /dev/null
+else
+	cat "$file" | grep "$binary" &> /dev/null
+fi
 [ $? -eq 0 ] && installed=true
 $installed && ! $force && return 0
 if $installed; then
     uninstall_cron_task "$binary" "$file"
     [ $? -ne 0 ] && return 3
 fi
-echo "$minute $hour $day_of_mon $mon $day_of_week $user $binary" > $file
-if [ ! -f "$file" ]; then
-    echo "invalid file or unable to create file"
-    return 2
+if [ $BSD -eq 1 ]; then
+	echo crontab -u $ROOT_USER -l >/tmp/cron.tmp
+	crontab -u $ROOT_USER -l >/tmp/cron.tmp
+	echo "$minute $hour $day_of_mon $mon $day_of_week $binary" >> /tmp/cron.tmp
+	crontab -u $ROOT_USER /tmp/cron.tmp
+	if [ $? -ne 0 ]; then
+	    echo "error installing cron task for $ROOT_USER"
+	fi
+	rm /tmp/cron.tmp
+else
+	echo "$minute $hour $day_of_mon $mon $day_of_week $user $binary" > $file
+	if [ ! -f "$file" ]; then
+	    echo "invalid file or unable to create file"
+	    return 2
+	fi
 fi
 return $?
 }
@@ -63,14 +78,23 @@ if [ "$binary" = "" ] || [ "$file" = "" ]; then
     echo "invalid parameters"
     return 1
 fi
-if [ ! -f "$file" ]; then
-    echo "invalid file"
-    return 2
-fi
 installed=false
+if [ $BSD -eq 1 ]; then
+	file="/tmp/cron.tmp"
+	crontab -u $ROOT_USER -l >"$file"
+fi
+if [ ! -f "$file" ]; then
+   echo "invalid file"
+   return 2
+fi
 cat "$file" | grep "$binary" &> /dev/null
 [ $? -eq 0 ] && installed=true
 ! $installed && return 0
+if [ $BSD -eq 1 ]; then
+	cat "$file" | grep -v "$binary" >/tmp/cron.tmp2
+	crontab -u $ROOT_USER /tmp/cron.tmp2
+	rm -f /tmp/cron.tmp2
+fi
 rm -f "$file"
 return $?
 }
