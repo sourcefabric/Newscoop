@@ -6,7 +6,9 @@ class ArticleTopic extends DatabaseObject {
 	var $m_dbTableName = 'ArticleTopics';
 	var $m_columnNames = array('NrArticle', 'TopicId');
 	
-	function ArticleTopic() { }
+	function ArticleTopic() {
+		parent::DatabaseObject($this->m_columnNames);
+	} // constructor
 	
 	/**
 	 * @return int
