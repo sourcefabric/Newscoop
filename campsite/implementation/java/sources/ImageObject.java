@@ -9,7 +9,7 @@
  * Copyright (C)2000,2001  Media Development Loan Fund                        
  * contact: contact@campware.org - http://www.campware.org                    
  * Campware encourages further development. Please let us know.               
- *                                                                            
+ *
  * This program is free software; you can redistribute it and/or              
  * modify it under the terms of the GNU General Public License                
  * as published by the Free Software Foundation; either version 2             
@@ -101,8 +101,8 @@ public final class ImageObject extends CampHtmlObject {
         String alignWay, altText, imageName;
         String toParse;
         
-        toParse=s.toUpperCase();
-        
+        toParse=toCampUpperCase(s);
+
         
         // here we find image name
         if (s.equals("?")) return null;
