@@ -570,8 +570,8 @@ public:
 	// destructor
 	~Topic();
 
-	// name: return name of the topic
-	const string& name(const string&) const;
+	// name: return name of the topic in the given language
+	const string& name(const string& p_rcoLang) const;
 
 	// value: return string containing topic value: "name:language"
 	string strValue(const string& p_rcoLang) const;
