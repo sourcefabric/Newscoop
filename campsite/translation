@@ -64,6 +64,7 @@ fi
 USER_NAME=`id -un`
 GROUP_NAME=`id -gn`
 my_id=`id -u`
+. ./configure --define_start_env > /dev/null
 if [ $my_id -ne 0 ] && ! $USER_INSTALL; then
     echo -e "\nPlease supply root password."
     while true; do
