@@ -7,7 +7,7 @@ INCLUDE_PATH=-I$(MYSQL_H_PATH)
 CFLAGS=-Wall -O3 -fomit-frame-pointer -malign-jumps=4 -malign-loops=4 -malign-functions=4 $(INCLUDE_PATH)
 CXXFLAGS=$(CFLAGS)
 LDFLAGS=-L$(LIBMYSQLCLIENT_PATH)
-LDLIBS=-lmysqlclient -lm -lz -lcrypt
+LDLIBS=-lmysqlclient -lm -lz $(LIBCRYPT_LINK)
 
 LINKS=globals.h readconf.h readconf.cpp
 
