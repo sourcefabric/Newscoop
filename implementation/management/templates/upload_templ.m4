@@ -5,17 +5,12 @@ CHECK_BASIC_ACCESS
 CHECK_ACCESS(<*ManageTempl*>)
 
 B_HEAD
-	X_TITLE(<*Upload template*>)
 <?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to upload templates.*>)
 <?php  } ?>dnl
 E_HEAD
 
 <?php  if ($access) { ?>dnl
-B_STYLE
-E_STYLE
-
-B_BODY
 
 B_HEADER(<*Upload template*>)
 B_HEADER_BUTTONS
@@ -30,7 +25,6 @@ X_CURRENT(<*Path*>, <*<?php  pencHTML(decURL($Path)); ?>*>)
 E_CURRENT
 
 <P>
-
 B_DIALOG(<*Upload template*>, <*POST*>, <*do_upload_templ.php*>, <*multipart/form-data*>)
 	B_DIALOG_INPUT(<*Template charset*>)
 		<INPUT TYPE="HIDDEN" NAME="Path" VALUE="<?php  pencHTML(decS($Path)); ?>">
@@ -54,7 +48,7 @@ B_DIALOG(<*Upload template*>, <*POST*>, <*do_upload_templ.php*>, <*multipart/for
 ?>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*File*>)
-		<P><INPUT TYPE="FILE" class="input_text" NAME="File" SIZE="32" MAXLENGTH="128">
+		<P><INPUT TYPE="FILE" NAME="File" SIZE="32" MAXLENGTH="128">
 	E_DIALOG_INPUT
 	B_DIALOG_BUTTONS
 		SUBMIT(<*Save*>, <*Save changes*>)
@@ -62,7 +56,7 @@ B_DIALOG(<*Upload template*>, <*POST*>, <*do_upload_templ.php*>, <*multipart/for
     if ($Back != "") { ?>dnl
 		REDIRECT(<*Cancel*>, <*Cancel*>, <*<?php  p($Back); ?>*>)
 <?php  } else { ?>dnl
-		REDIRECT(<*Cancel*>, <*Cancel*>, <*<?php  pencHTML(decS($Path)); ?>*>)
+		REDIRECT(<*Cancel*>, <*Cancel*>, <*<?php echo "/$ADMIN/templates?Path=".encHTML(decS($Path)); ?>*>)
 <?php  } ?>dnl
 	E_DIALOG_BUTTONS
 E_DIALOG
