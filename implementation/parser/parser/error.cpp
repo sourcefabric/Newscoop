@@ -82,11 +82,12 @@ void CError::init()
 	messages[PERR_INCLUDE_CICLE] = "include cicle: template "
 	        "already included from this/other templates; ignoring";
 	messages[PERR_INVALID_DATE_FORM] = "invalid date form; "
-            "valid combinations: %M(Month name), %W(Weekday name), %Y(Year, numeric, "
-            "4 digits), %y(Year, numeric, 2 digits), %m(Month, numeric: 01..12), %c(Month, "
-            "numeric: 1..12), %d(Day of the month, numeric: 00..31), %e(Day of the month, "
-            "numeric: 0..31), %j(Day of year: 001..366), %D(Day of the month with "
-            "english suffix: 1st, 2nd, 3rd, etc.), %%(% character";
+	        "valid combinations: %M (Month name), %W (Weekday name), %Y (Year, numeric, "
+	        "4 digits), %y (Year, numeric, 2 digits), %m (Month, numeric: 01..12), %c (Month, "
+	        "numeric: 1..12), %d (Day of the month, numeric: 00..31), %e (Day of the month, "
+	        "numeric: 0..31), %j (Day of year: 001..366), %D (Day of the month with "
+	        "english suffix: 1st, 2nd, 3rd, etc.), %w (Day of the week, numeric: 0-7),"
+	        " %% (% character)";
 	messages[PERR_INVALID_TEMPLATE] = "invalid template specified";
 	messages[PERR_INTERNAL] = "parser internal error (report bug to http://bugs.campware.org)";
 	// map errors
