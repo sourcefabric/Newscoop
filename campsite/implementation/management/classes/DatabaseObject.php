@@ -158,7 +158,14 @@ class DatabaseObject {
 			}
 		}
 		else {
-			$this->m_data =& $p_recordSet;
+			foreach ($this->getColumnNames() as $dbColumnName) {
+				if (isset($p_recordSet[$dbColumnName])) {
+					$this->m_data[$dbColumnName] = $p_recordSet[$dbColumnName];
+				}
+				else {
+					$this->m_data[$dbColumnName] = null;
+				}
+			}
 		}
 		return true;
 	} // fn fetch
@@ -396,16 +403,27 @@ class DatabaseObject {
 	 * @param array $p_columns
 	 *		Array of (Column_Name => Value)
 	 *
+	 * @param boolean p_commit
+	 *		If set to true, the value will be written to the database immediately.
+	 *		If set to false, the value will not be written to the database.
+	 *		Default is true.
+	 *
+	 * @param boolean p_isSql
+	 *		Set this to TRUE if the values of p_columns contains SQL commands.
+	 *		There is no way to know what the result of the command is,
+	 *		so we will need to refetch the row from the database in
+	 *		order to update the internal variable's value.
+	 *
 	 * @return boolean
-	 *		Return true if the database was updated, false otherwise.
+	 *		Return TRUE if the database was updated, FALSE otherwise.
+	 *		This means that if p_commit is FALSE, this function will 
+	 *		always return false.
 	 */
-	function update($p_columns = null) {
+	function update($p_columns = null, $p_commit = true, $p_isSql = false) {
 		global $Campsite;
-		if (is_null($p_columns)) {
+		if (!is_array($p_columns)) {
 			return false;
 		}
-        $queryStr = 'UPDATE ' . $this->m_dbTableName
-        			.' SET ';
         $setColumns = array();
         foreach ($p_columns as $columnName => $columnValue) {
         	if (!array_key_exists($columnName, $this->m_data)) {
@@ -413,13 +431,22 @@ class DatabaseObject {
         		return false;
         	}
         	$setColumns[] = $columnName . "='". $columnValue ."'";
-        	$this->m_data[$columnName] = $columnValue;
+        	if (!$p_isSql) {
+        		$this->m_data[$columnName] = $columnValue;
+        	}
         }
-        $queryStr .= implode(',', $setColumns);
-        $queryStr .= ' WHERE ' . $this->getKeyWhereClause();
-        $queryStr .= ' LIMIT 1';
-        $Campsite['db']->Execute($queryStr);
-		$databaseChanged = ($Campsite['db']->Affected_Rows() > 0);
+        $databaseChanged = false;
+        if ($p_commit) {
+	        $queryStr = 'UPDATE ' . $this->m_dbTableName
+	        			.' SET '.implode(',', $setColumns)
+	        			.' WHERE ' . $this->getKeyWhereClause()
+	        			.' LIMIT 1';
+	        $Campsite['db']->Execute($queryStr);
+			$databaseChanged = ($Campsite['db']->Affected_Rows() > 0);
+        }
+        if ($p_isSql) {
+        	$this->fetch();
+        }
 		return $databaseChanged;
 	} // fn update
 	
