@@ -1,9 +1,9 @@
-#!/bin/sh
+#!/bin/bash
 
 mkdir -p $BIN_DIR
 cp -f notifyendsubs $BIN_DIR
 cp -f notifyevents $BIN_DIR
-chown $ROOT_USER.$ROOT_GROUP $BIN_DIR/notifyendsubs $BIN_DIR/notifyevents
+chown $ROOT_USER:$ROOT_GROUP $BIN_DIR/notifyendsubs $BIN_DIR/notifyevents
 chmod 750 $BIN_DIR/notifyendsubs
 chmod 750 $BIN_DIR/notifyevents
 
