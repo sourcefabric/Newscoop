@@ -2635,8 +2635,9 @@ int CActUser::takeAction(CContext& c, sockstream& fs)
 	{
 		return ERR_INVALID_FIELD;
 	}
+
 	fs << "<form name=\"user\" action=\"" << pcoURL->getURIPath() << "\" method=POST>\n";
-	c.URL()->getFormString();
+	fs << c.URL()->getFormString();
 	if (c.SubsType() != ST_NONE)
 		fs << "<input type=hidden name=\"SubsType\" value=\""
 		<< (c.SubsType() == ST_TRIAL ? "trial" : "paid") << "\">\n";
