@@ -1,29 +1,29 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/config.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/DatabaseObject.php");
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/config.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DatabaseObject.php');
 
 class Section extends DatabaseObject {
-	var $m_dbTableName = "Sections";
-	var $m_keyColumnNames = array("IdPublication", 
-								  "NrIssue",
-								  "IdLanguage",
-								  "Number");
+	var $m_dbTableName = 'Sections';
+	var $m_keyColumnNames = array('IdPublication', 
+								  'NrIssue',
+								  'IdLanguage',
+								  'Number');
 	var $m_columnNames = array(
-		"IdPublication",
-		"NrIssue",
-		"IdLanguage",
-		"Number",
-		"Name",
-		"ShortName",
-		"SectionTplId",
-		"ArticleTplId");
+		'IdPublication',
+		'NrIssue',
+		'IdLanguage',
+		'Number',
+		'Name',
+		'ShortName',
+		'SectionTplId',
+		'ArticleTplId');
 	
 	function Section($p_publication, $p_issue, $p_language, $p_section = null) {
 		parent::DatabaseObject($this->m_columnNames);
-		$this->setProperty("IdPublication", $p_publication, false);
-		$this->setProperty("NrIssue", $p_issue, false);
-		$this->setProperty("IdLanguage", $p_language, false);
-		$this->setProperty("Number", $p_section, false);
+		$this->setProperty('IdPublication', $p_publication, false);
+		$this->setProperty('NrIssue', $p_issue, false);
+		$this->setProperty('IdLanguage', $p_language, false);
+		$this->setProperty('Number', $p_section, false);
 		if (!is_null($p_section)) {
 			$this->fetch();
 		}
@@ -32,14 +32,14 @@ class Section extends DatabaseObject {
 	
 	function GetSectionsInIssue($p_publicationId, $p_issueId, $p_languageId) {
 		global $Campsite;
-		$queryStr = "SELECT * FROM Sections"
+		$queryStr = 'SELECT * FROM Sections'
 					." WHERE IdPublication='".$p_publicationId."'"
 					." AND NrIssue='".$p_issueId."'"
 					." AND IdLanguage='".$p_languageId."'";
-		$query = $Campsite["db"]->Execute($queryStr);
+		$query = $Campsite['db']->Execute($queryStr);
 		$sections = array();
 		while ($row = $query->FetchRow()) {
-			$tmpSection =& new Section($row["IdPublication"], $row["NrIssue"], $row["IdLanguage"]);
+			$tmpSection =& new Section($row['IdPublication'], $row['NrIssue'], $row['IdLanguage']);
 			$tmpSection->fetch($row);
 			$sections[] = $tmpSection;
 		}
@@ -47,32 +47,32 @@ class Section extends DatabaseObject {
 	} // fn GetSectionsInIssue
 	
 	function getPublicationId() {
-		return $this->getProperty("IdPublication");
+		return $this->getProperty('IdPublication');
 	} // fn getPublicationId
 	
 	
 	function getIssueId() {
-		return $this->getProperty("NrIssue");
+		return $this->getProperty('NrIssue');
 	} // fn getIssueId
 	
 	
 	function getLanguageId() {
-		return $this->getProperty("IdLanguage");
+		return $this->getProperty('IdLanguage');
 	} // fn getLanguageId
 	
 	
 	function getSectionId() {
-		return $this->getProperty("Number");
+		return $this->getProperty('Number');
 	} // fn getSectionId
 
 	
 	function getName() {
-		return $this->getProperty("Name");
+		return $this->getProperty('Name');
 	} // fn getName
 	
 	
 	function getShortName() {
-		return $this->getProperty("ShortName");
+		return $this->getProperty('ShortName');
 	} // fn getShortName
 	
 } // class Section
