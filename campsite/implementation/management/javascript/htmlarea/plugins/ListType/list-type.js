@@ -6,7 +6,7 @@
 // Distributed under the same terms as HTMLArea itself.
 // This notice MUST stay intact for use (see license.txt).
 //
-// $Id: list-type.js,v 1.1 2004/09/11 02:43:24 paul Exp $
+// $Id: list-type.js,v 1.2 2004/10/09 12:33:27 paul Exp $
 
 function ListType(editor) {
 	this.editor = editor;
@@ -38,14 +38,14 @@ function ListType(editor) {
 	for (i = 0; !found && i < toolbar.length; ++i) {
 		a = toolbar[i];
 		for (j = 0; j < a.length; ++j) {
-			if (a[j] == "unorderedlist") {
+			if (a[j] == "orderedlist") {
 				found = true;
 				break;
 			}
 		}
 	}
 	if (found)
-		a.splice(j, 0, "space", "ListType", "space");
+		a.splice(j+1, 0, "space", "ListType", "space");
 };
 
 ListType._pluginInfo = {
