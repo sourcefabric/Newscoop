@@ -36,8 +36,10 @@ c_upgrade=""
 c_define_start_env=""
 root_only=false
 read_only=false
+defaults=false
 while [ "$1" != "" ]; do
     case $1 in
+    --defaults) defaults=true ;;
     --define_start_env) c_define_start_env=--define_start_env ;;
     --upgrade) c_upgrade=--upgrade ;;
     --root_user) export ROOT_USER=$2; shift 1 ;;
@@ -57,6 +59,36 @@ while [ "$1" != "" ]; do
     shift 1
 done
 
+
+# set the directory where campsite is located and install conf directory
+cdir=`pwd`
+[ $? -ne 0 ] && echo "Error reading campsite directory" && exit 1
+export CAMPSITE_PACKAGE_DIR=$cdir
+export INSTALL_CONF=${CAMPSITE_PACKAGE_DIR}/.install_conf
+. ${INSTALL_CONF}/install_functions
+
+
+# set version, release date and install log
+campsite_version=`cat ${CAMPSITE_PACKAGE_DIR}/README | grep -w ^version | grep ":" | cut -f 2 -d ":"`
+[ $? -ne 0 ] && echo "Error reading campsite version" && exit 1
+export CAMPSITE_VERSION=`echo -n $campsite_version`
+release_date=`cat ${CAMPSITE_PACKAGE_DIR}/README | grep -w ^release | grep ":" | cut -f 2 -d ":"`
+[ $? -ne 0 ] && echo "Error reading campsite release date" && exit 1
+export CAMPSITE_RELEASE_DATE=release_date
+export INSTALL_LOG=${CAMPSITE_PACKAGE_DIR}/install_log
+
+
+# if defaults was set read them from configuration files
+if $defaults; then
+    install_conf --reset
+    modules_conf --set
+    for mod in $configurable_modules; do
+        modules_conf --reset $mod
+    done
+fi
+
+
+# set install directories
 [ "$CAMPSITE_DIR" = "" ] && export CAMPSITE_DIR=$PREFIX_DIR/campsite
 [ "$BIN_DIR" = "" ] && export BIN_DIR=$CAMPSITE_DIR/bin
 [ "$ETC_DIR" = "" ] && export ETC_DIR=$CAMPSITE_DIR/etc
@@ -66,11 +98,6 @@ HTML_COMMON_DIR=$WWW_COMMON_DIR/html
 PRIV_COMMON_DIR=$WWW_COMMON_DIR/html/priv
 CGI_COMMON_DIR=$WWW_COMMON_DIR/cgi-bin
 
-cdir=`pwd`
-[ $? -ne 0 ] && echo "Error reading campsite directory" && exit 1
-export CAMPSITE_PACKAGE_DIR=$cdir
-export INSTALL_CONF=${CAMPSITE_PACKAGE_DIR}/.install_conf
-. ${INSTALL_CONF}/install_functions
 
 if [ "$c_define_start_env" != "--define_start_env" ]; then
     for m in pwd make m4 mkdir ls chown chmod cut cat grep stat which cp rm clear gcc gpp locate; do
@@ -78,14 +105,6 @@ if [ "$c_define_start_env" != "--define_start_env" ]; then
         [ $? -ne 0 ] && echo $output && exit 1
     done
 fi
-
-campsite_version=`cat ${CAMPSITE_PACKAGE_DIR}/README | grep -w ^version | grep ":" | cut -f 2 -d ":"`
-[ $? -ne 0 ] && echo "Error reading campsite version" && exit 1
-export CAMPSITE_VERSION=`echo -n $campsite_version`
-release_date=`cat ${CAMPSITE_PACKAGE_DIR}/README | grep -w ^release | grep ":" | cut -f 2 -d ":"`
-[ $? -ne 0 ] && echo "Error reading campsite release date" && exit 1
-export CAMPSITE_RELEASE_DATE=release_date
-export INSTALL_LOG=${CAMPSITE_PACKAGE_DIR}/install_log
 
 
 if [ "$c_define_start_env" != "--define_start_env" ]; then
