@@ -173,7 +173,7 @@ for mod in $MODULES_LIST; do
 done
 echo "done"
 if [ "$root_only" = "false" ]; then
-    for dir in implementation supplemental; do
+    for dir in implementation; do
 	if [ -x ${dir}/configure ]; then
 	    echo "Configuring $dir ..."
 	    cd $dir && ./configure
