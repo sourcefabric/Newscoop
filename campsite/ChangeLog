@@ -1,5 +1,6 @@
 2.1.2
     - Ported campsite to FreeBSD (thanks to Richard Airlie)
+    - Started the port to OpenBSD (thanks to Richard Airlie)
     - Small bug fixes
     - Manual updates relative to the FreeBSD port
     - Manual update: 2.1.4 User management: write about the admin user and it's
