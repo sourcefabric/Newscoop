@@ -38,6 +38,7 @@ CActSearch, CActWith methods.
 #include <fstream>
 #include <typeinfo>
 #include <sstream>
+#include <set>
 
 #include "util.h"
 #include "actions.h"
@@ -46,6 +47,7 @@ CActSearch, CActWith methods.
 #include "data_types.h"
 #include "attributes_impl.h"
 
+using std::set;
 using std::cout;
 using std::endl;
 using std::stringstream;
@@ -615,6 +617,7 @@ int CActList::WriteArtParam(string& s, CContext& c, string& table)
 		w = "Published = 'Y'";
 	table = "Articles";
 	bool bTopic = false;
+	set<string> coNotTopics;
 	stringstream buf;
 	for (pl_i = mod_param.begin(); pl_i != mod_param.end(); ++pl_i)
 	{
@@ -646,8 +649,7 @@ int CActList::WriteArtParam(string& s, CContext& c, string& table)
 			}
 			else
 			{
-				AppendConstraint(topic_not_equal_op, "ArticleTopics.TopicId", (*pl_i)->operation()->symbol(),
-				                 buf.str(), "and");
+				coNotTopics.insert(buf.str());
 			}
 		}
 		else if ((*pl_i)->attrType() != "")
@@ -706,8 +708,27 @@ int CActList::WriteArtParam(string& s, CContext& c, string& table)
 		w += " and (" + typef_w + ")";
 	if (topic_equal_op != "")
 		w += " and (" + topic_equal_op + ")";
-	if (topic_not_equal_op != "")
-		w += " and (ArticleTopics.NrArticle is NULL or (" + topic_not_equal_op + "))";
+	if (!coNotTopics.empty())
+	{
+		string coQuery = "select NrArticle from ArticleTopics where ";
+		StringSet::const_iterator coIt = coNotTopics.begin();
+		for (; coIt != coNotTopics.end(); ++coIt)
+			coQuery += string(coIt != coNotTopics.begin() ? " or " : "") + "TopicId = " + *coIt;
+		SQLQuery(&m_coSql, coQuery.c_str());
+		StoreResult(&m_coSql, qRes);
+		if (mysql_num_rows(*qRes) > 0)
+		{
+			MYSQL_ROW row;
+			bool first = true;
+			w += " and Articles.Number not in (";
+			while ((row = mysql_fetch_row(*qRes)) != NULL)
+			{
+				w += string(first ? "" : ", ") + row[0];
+				first = false;
+			}
+			w += ")";
+		}
+	}
 	if (w.length())
 		s = string(" where ") + w;
 	return RES_OK;
