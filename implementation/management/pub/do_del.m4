@@ -60,13 +60,6 @@ B_MSGBOX(<*Deleting publication*>)
 	<LI><?php  putGS('There are $1 article(s) left.',getNumVar($q_art,0)); ?></LI>
     <?php  }
     
-    query ("SELECT COUNT(*) FROM Images WHERE IdPublication=$Pub", 'q_img');
-    fetchRowNum($q_img);
-    if (getNumVar($q_img,0) != 0) {
-	$del= 0; ?>dnl
-	<LI><?php  putGS('There are $1 image(s) left.',getNumVar($q_img,0)); ?></LI>
-    <?php  }
-    
     query ("SELECT COUNT(*) FROM Subscriptions WHERE IdPublication=$Pub", 'q_subs');
     fetchRowNum($q_subs);
     if (getNumVar($q_subs,0) != 0) {
@@ -77,12 +70,11 @@ B_MSGBOX(<*Deleting publication*>)
     $AFFECTED_ROWS=0;
     
 	if ($del) {
-		$sql = "SELECT * FROM Publications WHERE Id = " . $Pub;
-		query($sql, 'q_pubs');
-		fetchRow($q_pubs);
-		$alias = getVar($q_pubs, 'IdDefaultAlias');
-		query("DELETE FROM Aliases WHERE Id = " . $alias);
+		query("DELETE FROM Aliases WHERE IdPublication = " . $Pub);
 		query("DELETE FROM Publications WHERE Id = " . $Pub);
+		$params = array($operation_attr=>$operation_delete, "IdPublication"=>"$Pub" );
+		$msg = build_reset_cache_msg($cache_type_publications, $params);
+		send_message($SERVER_ADDRESS, server_port(), $msg, $err_msg);
 	}
 
     if ($AFFECTED_ROWS > 0) { ?>dnl
