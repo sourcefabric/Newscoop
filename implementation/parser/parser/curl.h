@@ -103,6 +103,8 @@ public:
 
 	void replaceValue(const string& p_rcoParameter, const string& p_rcoValue);
 
+	bool isSet(const string& p_rcoParameter) const;
+
 	const string& getValue(const string& p_rcoParameter) const;
 
 	const string& getNextValue(const string& p_rcoParameter) const;
@@ -194,6 +196,11 @@ inline void CURL::setValue(const string& p_rcoParameter, const string& p_rcoValu
 inline void CURL::replaceValue(const string& p_rcoParameter, long p_nValue)
 {
 	replaceValue(p_rcoParameter, (string)Integer(p_nValue));
+}
+
+inline bool CURL::isSet(const string& p_rcoParameter) const
+{
+	return m_coParamMap.find(p_rcoParameter) != m_coParamMap.end();
 }
 
 inline bool CURL::equalTo(const CURL* p_pcoURL) const
