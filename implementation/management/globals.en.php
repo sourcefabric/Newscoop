@@ -27,7 +27,7 @@ regGS("Topics","Topics:en");
 regGS("Path","Path:en");
 regGS("Go up","Go up:en");
 regGS("Configure", "Configure:en");
-regGS("Image Archive", "Image Archive:en");
+regGS("Image archive", "Image Archive:en");
 regGS("URL","URL");
 
 regGS("Duplicate", "Duplicate:en");
@@ -177,6 +177,15 @@ regGS("Description","Description:en");
 regGS("Photographer","Photographer:en");
 regGS("Place","Place:en");
 regGS("Date","Date:en");
+regGS("Thumbnail", "Thumbnail:en");
+regGS("In use", "In use:en");
+regGS("Identifier", "Identifier:en");
+regGS("Uploaded by", "Uploaded by:en");
+regGS("Additional searches", "Additional searches:en");
+regGS("Most Recently Added", "Most Recently Added:en");
+regGS("Most Recently Modified", "Most Recently Modified:en");
+regGS("$1 images found", "$1 images found:en");
+regGS("Reset search conditions","Reset search conditions");
 
 regGS("Publ. no.","Publ. no.:en");
 regGS("Issue no.","Issue no.:en");
@@ -302,13 +311,13 @@ regGS("The sections could not be added successfully. Some of them were already a
 
 // -- buttons
  
-regGS("Add another", "Add another:en");
+regGS("Add another", "Add Another:en");
 regGS("Cancel", "Cancel:en");
 regGS("Done", "Done:en");
-regGS("New field", "New field:en");
+regGS("New field", "New Field:en");
 regGS("OK", "OK:en");
-regGS("Save changes", "Save changes:en");
+regGS("Save changes", "Save Changes:en");
 regGS("Search", "Search:en");
-regGS("Add new field","Add new field:en");
+regGS("Add new field","Add New Field:en");
 
 ?>
