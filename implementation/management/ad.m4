@@ -1,18 +1,4 @@
-B_HTML
 INCLUDE_PHP_LIB(<*$ADMIN_DIR*>)
-B_HEAD
-	X_EXPIRES
-	X_TITLE(<*Access denied*>)
-E_HEAD
-
-B_STYLE
-E_STYLE
-
-B_BODY
-
-B_HEADER(<*Access denied*>)
-X_HEADER_NO_BUTTONS
-E_HEADER
 
 <?php  todef('ADReason',getGS('You do not have the right to access this page.'));?>dnl
 B_MSGBOX(<*Access denied*>, <**>, <*red*>)
