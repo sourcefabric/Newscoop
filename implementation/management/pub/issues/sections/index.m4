@@ -81,13 +81,14 @@ E_CURRENT
     if ($NUM_ROWS) {
 	$nr= $NUM_ROWS;
 	$i=$lpp;
-                if($nr < $lpp) $i = $nr;
+	if($nr < $lpp) $i = $nr;
 	$color=0;
 ?>dnl
 B_LIST
 	B_LIST_HEADER
 		X_LIST_TH(<*Nr*>, <*1%*>)
 		X_LIST_TH(<*Name<BR><SMALL>(click to see articles)</SMALL>*>)
+		X_LIST_TH(<*Short Name*>)
 	<?php  if ($msa != 0) { ?>
 		X_LIST_TH(<*Configure*>, <*1%*>)
 	<?php 	} ?>
@@ -107,6 +108,9 @@ B_LIST
 		E_LIST_ITEM
 		B_LIST_ITEM
 			<A HREF="X_ROOT/pub/issues/sections/articles/?Pub=<?php  p($Pub); ?>&Issue=<?php  pgetUVar($q_sect,'NrIssue'); ?>&Section=<?php  pgetUVar($q_sect,'Number'); ?>&Language=<?php  pgetUVar($q_sect,'IdLanguage'); ?>"><?php  pgetHVar($q_sect,'Name'); ?></A>
+		E_LIST_ITEM
+		B_LIST_ITEM
+			<?php  pgetHVar($q_sect,'ShortName'); ?>
 		E_LIST_ITEM
 	<?php  if ($msa != 0) { ?>
 		B_LIST_ITEM(<*CENTER*>)

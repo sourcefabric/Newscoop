@@ -85,7 +85,7 @@ E_CURRENT
     if ($IssOffs < 0) $IssOffs= 0;
     $lpp=20;
 
-    query ("SELECT Name, IdLanguage, abs(IdLanguage-$IdLang) as IdLang, Number, Name, PublicationDate, if($mia, 'Publish', 'No') as Pub, Published FROM Issues WHERE IdPublication=$Pub ORDER BY Number DESC, IdLang ASC LIMIT $IssOffs, ".($lpp+1), 'q_iss');
+    query ("SELECT Name, IdLanguage, abs(IdLanguage-$IdLang) as IdLang, Number, Name, PublicationDate, if($mia, 'Publish', 'No') as Pub, Published, ShortName FROM Issues WHERE IdPublication=$Pub ORDER BY Number DESC, IdLang ASC LIMIT $IssOffs, ".($lpp+1), 'q_iss');
     if ($NUM_ROWS) {
 	$nr= $NUM_ROWS;
 	$i=$lpp;
@@ -96,6 +96,7 @@ B_LIST
 	<?php  if ($mia != 0) { ?>
 		X_LIST_TH(<*Nr*>, <*1%*>)
 		X_LIST_TH(<*Name<BR><SMALL>(click to see sections)</SMALL>*>)
+		X_LIST_TH(<*Short Name*>)
 		X_LIST_TH(<*Language*>)
 		X_LIST_TH(<*Published<BR><SMALL>(yyyy-mm-dd)</SMALL>*>, <*1%*>)
 		X_LIST_TH(<*Translate*>, <*1%*>)
@@ -129,6 +130,9 @@ B_LIST
 		E_LIST_ITEM
 		B_LIST_ITEM
 			<A HREF="X_ROOT/pub/issues/sections/?Pub=<?php  pencURL($Pub); ?>&Issue=<?php  pgetUVar($q_iss,'Number'); ?>&Language=<?php  pgetUVar($q_iss,'IdLanguage'); ?>"><?php  pgetHVar($q_iss,'Name'); ?></A>
+		E_LIST_ITEM
+		B_LIST_ITEM
+			<?php  pgetHVar($q_iss,'ShortName'); ?>
 		E_LIST_ITEM
 		B_LIST_ITEM
 	<?php  query ("SELECT Name FROM Languages WHERE Id=".getVar($q_iss,'IdLanguage'), 'language');

@@ -20,10 +20,11 @@ E_STYLE
 B_BODY
 
 <?php 
-    todef('cName');
-    todefnum('cNumber');
-    todefnum('cLang');
-    todefnum('cPub');
+	todef('cName');
+	todefnum('cNumber');
+	todefnum('cLang');
+	todefnum('cPub');
+	todef('cShortName');
 ?>dnl
 B_HEADER(<*Adding new issue*>)
 B_HEADER_BUTTONS
@@ -43,45 +44,50 @@ B_CURRENT
 X_CURRENT(<*Publication*>, <*<B><?php  pgetHVar($publ,'Name'); ?></B>*>)
 E_CURRENT
 
-<?php 
-    $correct= 1;
-    $created= 0;
-?>dnl
 <P>
 B_MSGBOX(<*Adding new issue*>)
 	X_MSGBOX_TEXT(<*
 <?php 
-    $cName=trim($cName);
-    $cNumber=trim($cNumber);
-    
-    if ($cLang == 0) {
-	$correct= 0; ?>dnl
-		<LI><?php  putGS('You must select a language.'); ?></LI>
-    <?php  }
-    
-    if ($cName == "" || $cName == " ") {
-	$correct= 0; ?>dnl
-		<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); ?></LI>
-    <?php  }
-    
-    if ($cNumber == "" || $cNumber == " ") {
-	$correct= 0; ?>dnl
+	$correct = 1;
+	$created = 0;
+	$cName = trim($cName);
+	$cNumber = trim($cNumber);
+	if ($cLang == 0) {
+		$correct = 0;
+		echo "<LI>" . getGS('You must select a language.') . "</LI>\n";
+	}
+	if ($cName == "" || $cName == " ") {
+		$correct = 0;
+		echo "<LI>" . getGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>') . "</LI>\n";
+	}
+	if ($cShortName == "" || $cShortName == " ") {
+		$correct = 0;
+		echo "<LI>" . getGS('You must complete the $1 field.','<B>'.getGS('Short Name').'</B>') . "</LI>\n";
+	}
+	$ok = valid_short_name($cShortName);
+	if ($ok == 0) {
+		$correct = 0;
+		echo "<LI>" . getGS('The $1 field may only contain letters, digits and underscore (_) character.', '</B>' . getGS('Short Name') . '</B>') . "</LI>\n";
+	}
+	if ($cNumber == "" || $cNumber == " ") {
+		$correct = 0; ?>dnl
 		<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Number').'</B>'); ?></LI>
-    <?php  }
-    
-    if ($correct) {
-	query ("INSERT IGNORE INTO Issues SET Name='$cName', IdPublication=$cPub, IdLanguage=$cLang, Number=$cNumber");
-	$created= ($AFFECTED_ROWS > 0);
-    }
-    
-    if ($created) { ?>dnl
+<?php
+	}
+	if ($correct) {
+		$sql = "INSERT INTO Issues SET Name='$cName', IdPublication=$cPub, IdLanguage=$cLang, Number=$cNumber, ShortName='".$cShortName."'";
+		query($sql);
+		$created = ($AFFECTED_ROWS > 0);
+	}
+	if ($created) {
+?>dnl
 		<LI><?php  putGS('The issue $1 has been successfuly added.','<B>'.encHTML(decS($cName)).'</B>'); ?></LI>
-X_AUDIT(<*11*>, <*getGS('Issue $1 added in publication $2',$cName,getVar($publ,'Name'))*>)
+		X_AUDIT(<*11*>, <*getGS('Issue $1 added in publication $2',$cName,getVar($publ,'Name'))*>)
 <?php  } else {
-    if ($correct != 0) { ?>dnl
-		<LI><?php  putGS('The issue could not be added.'); ?></LI><LI><?php  putGS('Please check if another issue with the same number/language does not already exist.'); ?></LI>
+		if ($correct) { ?>dnl
+			<LI><?php  putGS('The issue could not be added.'); ?></LI><LI><?php  putGS('Please check if another issue with the same number/language does not already exist.'); ?></LI>
 <?php  }
-}
+	}
 ?>dnl
 		*>)
 <?php  if ($correct && $created) { ?>dnl

@@ -85,6 +85,9 @@ B_DIALOG(<*Configure section*>, <*POST*>, <*do_edit.php*>)
 ?>dnl
 	    </SELECT>
 	E_DIALOG_INPUT
+	B_DIALOG_INPUT(<*Short Name*>)
+		<INPUT TYPE="TEXT" NAME="cShortName" SIZE="32" MAXLENGTH="32" value="<?php  pgetHVar($q_sect,'ShortName'); ?>">
+	E_DIALOG_INPUT
  B_DIALOG_INPUT(<*Subscriptions*>)
   <SELECT NAME="cSubs">
    <OPTION VALUE="n"> --- </OPTION>

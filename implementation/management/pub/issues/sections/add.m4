@@ -67,6 +67,9 @@ B_DIALOG(<*Add new section*>, <*POST*>, <*do_add.php*>)
 	B_DIALOG_INPUT(<*Number*>)
 		<INPUT TYPE="TEXT" NAME="cNumber" VALUE="<?php  p($nr); ?>" SIZE="5" MAXLENGTH="5">
 	E_DIALOG_INPUT
+	B_DIALOG_INPUT(<*Short Name*>)
+		<INPUT TYPE="TEXT" NAME="cShortName" SIZE="32" MAXLENGTH="32">
+	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Subscriptions*>)
 		<INPUT TYPE="checkbox" NAME="cSubs"> <?php  putGS("Add section to all subscriptions."); ?>
 	E_DIALOG_INPUT

@@ -26,6 +26,7 @@ B_BODY
 	todefnum('Language');
 	todefnum('cSectionTplId');
 	todefnum('cArticleTplId');
+	todef('cShortName');
 ?>dnl
 
 B_HEADER(<*Updating section name*>)
@@ -66,11 +67,20 @@ B_MSGBOX(<*Updating section name*>)
 <?php  $correct= 0; ?>dnl
 		<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); ?></LI>
 <?php  }
-
+	if ($cShortName == "" || $cShortName == " ") {
+		$correct = 0;
+		echo "<LI>" . getGS('You must complete the $1 field.','<B>'.getGS('Short Name').'</B>') . "</LI>\n";
+	}
+	$ok = valid_short_name($cShortName);
+	if ($ok == 0) {
+		$correct= 0;
+		echo "<LI>" . getGS('The $1 field may only contain letters, digits and underscore (_) character.', '</B>' . getGS('Short Name') . '</B>') . "</LI>\n";
+	}
 	if ($correct) {
 		$sql = "UPDATE Sections SET Name='$cName'";
 		$sql .= ", SectionTplId = " . ($cSectionTplId > 0 ? $cSectionTplId : "NULL");
 		$sql .= ", ArticleTplId = " . ($cArticleTplId > 0 ? $cArticleTplId : "NULL");
+		$sql .= ", ShortName = '" . $cShortName . "'";
 		$sql .= " WHERE IdPublication=$Pub AND NrIssue=$Issue AND Number=$Section AND IdLanguage=$Language";
 		query($sql);
 		$created= ($AFFECTED_ROWS >= 0);
