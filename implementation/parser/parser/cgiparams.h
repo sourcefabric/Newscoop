@@ -56,5 +56,6 @@ Defines parameters for cgi
 #define P_SEARCH "search"
 #define P_REMEMBER_USER "RememberUser"
 #define P_TOPIC_ID "tpid"
+#define P_TEMPLATE_ID "tpl"
 
 #endif
