@@ -71,10 +71,7 @@
             </TD>
             <TD align="center">
                 <?php
-                $InUseLink = 'search.php?'
-                	.'search_inuse='.urlencode($image['in_use'])
-                	.'&view='.$view;
-                echo "<a href='$InUseLink'>".htmlspecialchars($image['in_use'])."</a>";
+                echo htmlspecialchars($image['in_use']);
                 ?>&nbsp;
             </TD>
             <?php
@@ -88,7 +85,7 @@
 				<input type="hidden" name="ArticleId" value="<?php p($ArticleId); ?>">
         		<input type="hidden" name="ImageId" value="<?php echo $image['id']; ?>">
             	<TD ALIGN="CENTER">
-					<input type="image" src="/<?php echo $ADMIN; ?>/img/icon/link_image_to_article.gif"></td>
+					<input type="image" src="/<?php echo $ADMIN; ?>/img/icon/add.png"></td>
               	</TD>
            		</form>
             	<?php
