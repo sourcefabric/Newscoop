@@ -41,10 +41,20 @@ fetchRowNum($q_now);
 
 <HEAD>
     <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
 	<META HTTP-EQUIV="Expires" CONTENT="now">
 	<TITLE><?php  putGS("Add new image"); ?></TITLE>
 	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite["website_url"] ?>/css/admin_stylesheet.css">
+	<script type="text/javascript" src="<?php echo $Campsite["website_url"] ?>/javascript/fValidate/fValidate.config.js"></script>
+    <script type="text/javascript" src="<?php echo $Campsite["website_url"] ?>/javascript/fValidate/fValidate.core.js"></script>
+    <script type="text/javascript" src="<?php echo $Campsite["website_url"] ?>/javascript/fValidate/fValidate.lang-enUS.js"></script>
+    <script type="text/javascript" src="<?php echo $Campsite["website_url"] ?>/javascript/fValidate/fValidate.validators.js"></script>
+    <script>
+    function checkAddForm(form) {
+    	retval = ((form.cURL.value != '') || (form.cImage.value != ''));
+    	retval = retval && validateForm(form, 0, 0, 0, 1, 8);
+    	return retval;
+    } // fn checkAddForm
+    </script>
 </HEAD>
 
 <BODY  BGCOLOR="WHITE" TEXT="BLACK" LINK="DARKBLUE" ALINK="RED" VLINK="DARKBLUE">
@@ -78,7 +88,7 @@ fetchRowNum($q_now);
 </TR></TABLE>
 
 <P>
-<FORM NAME="dialog" METHOD="POST" ACTION="/priv/pub/issues/sections/articles/images/do_add.php" ENCTYPE="multipart/form-data">
+<FORM NAME="dialog" METHOD="POST" ACTION="/priv/pub/issues/sections/articles/images/do_add.php" ENCTYPE="multipart/form-data" onsubmit="return checkAddForm(this);">
 <CENTER><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" BGCOLOR="#C0D0FF" ALIGN="CENTER">
 	<TR>
 		<TD COLSPAN="2">
@@ -89,13 +99,13 @@ fetchRowNum($q_now);
 	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS("Number"); ?>:</TD>
 		<TD>
-		<INPUT TYPE="TEXT" NAME="cNumber" VALUE="<?php  p($maxId); ?>" SIZE="5" MAXLENGTH="5" class="input_text">
+		<INPUT TYPE="TEXT" NAME="cNumber" VALUE="" SIZE="5" MAXLENGTH="5" class="input_text" alt="number|0" emsg="<?php putGS('Please enter a number for the image.'); ?>">
 		</TD>
 	</TR>
 	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS("Description"); ?>:</TD>
 		<TD>
-		<INPUT TYPE="TEXT" NAME="cDescription" VALUE="Image <?php  p($maxId); ?>" SIZE="32" MAXLENGTH="128" class="input_text">
+		<INPUT TYPE="TEXT" NAME="cDescription" VALUE="Image <?php  p($maxId); ?>" SIZE="32" MAXLENGTH="128" class="input_text" alt="blank" emsg="<?php putGS("Please enter a description for the image."); ?>">
 		</TD>
 	</TR>
 	<TR>
@@ -117,20 +127,26 @@ fetchRowNum($q_now);
 		</TD>
 	</TR>
 	<TR>
-		<TD ALIGN="RIGHT" ><?php  putGS("Image"); ?>:</TD>
+		<TD ALIGN="RIGHT" ><?php putGS("URL"); ?>:</TD>
 		<TD>
-		<INPUT TYPE="FILE" NAME="cImage" SIZE="32" MAXLENGTH="64" class="input_file">
+			<INPUT TYPE="TEXT" NAME="cURL" VALUE="" class="input_text" SIZE="32"> 
+		</TD>
+	</TR>
+	<TR>
+		<TD ALIGN="RIGHT" ><?php putGS("Image"); ?>:</TD>
+		<TD>
+			<INPUT TYPE="FILE" NAME="cImage" SIZE="32" MAXLENGTH="64" class="input_file" alt="file|jpg,jpeg,jpe,gif,png,tif,tiff|bok" emsg="<?php putGS("You must select an image file to upload."); ?>">
 		</TD>
 	</TR>
 	<TR>
 		<TD COLSPAN="2">
 		<DIV ALIGN="CENTER">
-	    <INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<?php  p($Pub); ?>">
-	    <INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<?php  p($Issue); ?>">
-	    <INPUT TYPE="HIDDEN" NAME="Section" VALUE="<?php  p($Section); ?>">
-	    <INPUT TYPE="HIDDEN" NAME="Article" VALUE="<?php  p($Article); ?>">
-	    <INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php  p($Language); ?>">
-	    <INPUT TYPE="HIDDEN" NAME="sLanguage" VALUE="<?php  p($sLanguage); ?>">
+	    <INPUT TYPE="HIDDEN" NAME="PublicationId" VALUE="<?php  p($Pub); ?>">
+	    <INPUT TYPE="HIDDEN" NAME="IssueId" VALUE="<?php  p($Issue); ?>">
+	    <INPUT TYPE="HIDDEN" NAME="SectionId" VALUE="<?php  p($Section); ?>">
+	    <INPUT TYPE="HIDDEN" NAME="ArticleId" VALUE="<?php  p($Article); ?>">
+	    <INPUT TYPE="HIDDEN" NAME="InterfaceLanguageId" VALUE="<?php  p($Language); ?>">
+	    <INPUT TYPE="HIDDEN" NAME="ArticleLanguageId" VALUE="<?php  p($sLanguage); ?>">
 		<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save changes'); ?>" class="button">
 		<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>"  class="button" ONCLICK="location.href='/priv/pub/issues/sections/articles/images/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&Section=<?php  p($Section); ?>'">
 		</DIV>
