@@ -60,7 +60,7 @@ X_BULLET(<*Select the issue*>)
 B_LIST
 	B_LIST_HEADER
 		X_LIST_TH(<*Nr*>, <*1%*>)
-		X_LIST_TH(<*Name<BR><SMALL>(click to select the issue)</SMALL>*>)
+		X_LIST_TH(<*Name*>)
 		X_LIST_TH(<*Language*>)
 		X_LIST_TH(<*Published<BR><SMALL>(yyyy-mm-dd)</SMALL>*>, <*1%*>)
 	E_LIST_HEADER
