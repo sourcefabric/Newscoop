@@ -300,6 +300,8 @@ function create_site($p_defined_parameters)
 	$common_html_dir = $Campsite['WWW_COMMON_DIR'] . "/html";
 	$instance_dirs = array('WWW_DIR'=>$instance_www_dir,
 		'HTML_DIR'=>$instance_www_dir . "/html",
+		'IMAGES_DIR'=>$instance_www_dir . "/html/images",
+		'TEMPLATES_DIR'=>$instance_www_dir . "/html/look",
 		'CGI_DIR'=>$instance_www_dir . "/cgi-bin",
 		'SCRIPT_DIR'=>$instance_www_dir . "/script",
 		'INCLUDE_DIR'=>$instance_www_dir . "/include");
@@ -309,27 +311,34 @@ function create_site($p_defined_parameters)
 		if (!is_dir($dir_name) && !mkdir($dir_name))
 			return "Unable to create directory $dir_name";
 
+	if ($CampsiteOld['.MODULES_HTML_DIR'] != "") {
+		$cmd = "cp -fr \"" . $CampsiteOld['.MODULES_HTML_DIR'] . "/look\" \"$html_dir\"";
+		exec($cmd);
+	}
 	// create symbolik links to configuration files
 	$link_files = array("$etc_dir/install_conf.php"=>"$html_dir/install_conf.php",
 		"$instance_etc_dir/database_conf.php"=>"$html_dir/database_conf.php",
 		"$instance_etc_dir/parser_conf.php"=>"$html_dir/parser_conf.php",
 		"$instance_etc_dir/smtp_conf.php"=>"$html_dir/smtp_conf.php",
 		"$instance_etc_dir/apache_conf.php"=>"$html_dir/apache_conf.php",
-		"$common_html_dir/index.php"=>"$html_dir/index.php");
+		"$common_html_dir/index.php"=>"$html_dir/index.php",
+		"$common_html_dir/admin.php"=>"$html_dir/admin.php",
+		"$common_html_dir/configuration.php"=>"$html_dir/configuration.php",
+		"$common_html_dir/classes"=>"$html_dir/classes",
+		"$common_html_dir/css"=>"$html_dir/css",
+		"$common_html_dir/include"=>"$html_dir/include",
+		"$common_html_dir/javascript"=>"$html_dir/javascript"
+		);
 	foreach ($link_files as $file=>$link) {
 		if (!is_link($link) && !symlink($file, $link))
 			return "Unable to create symbolic link to $file";
 	}
 
-	if ($CampsiteOld['.MODULES_HTML_DIR'] != "") {
-		$cmd = "cp -fr \"" . $CampsiteOld['.MODULES_HTML_DIR'] . "/look\" \"$html_dir\"";
-		exec($cmd);
-		$cmd = "chown " . $Campsite['APACHE_USER'] . ":" . $Campsite['APACHE_GROUP']
-			. " \"$html_dir/look\" -R";
-		exec($cmd);
-		$cmd = "chmod ug+w \"$html_dir/look\" -R";
-		exec($cmd);
-	}
+	$cmd = "chown " . $Campsite['APACHE_USER'] . ":" . $Campsite['APACHE_GROUP']
+		. " \"$instance_www_dir\" -R";
+	exec($cmd);
+	$cmd = "chmod ug+w \"$instance_www_dir\" -R";
+	exec($cmd);
 
 	return 0;
 }
