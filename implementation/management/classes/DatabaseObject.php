@@ -61,11 +61,27 @@ class DatabaseObject {
 	
 	/**
 	 * Return the column names of this table.
+	 *
+	 * @param boolean p_withTablePrefix
+	 *		Set to true if you want to prefix the column names with the table name.
+	 *		Default is false.
+	 *
 	 * @return array
 	 */	
-	function getColumnNames() { return $this->m_columnNames; }
+	function getColumnNames($p_withTablePrefix = false) { 
+		if (!$p_withTablePrefix) {
+			return $this->m_columnNames; 
+		}
+		else {
+			$prefixNames = array();
+			foreach ($this->m_columnNames as $columnName) {
+				$prefixNames[] = $this->m_dbTableName.'.'.$columnName;
+			}
+			return $prefixNames;
+		}
+	} // fn getColumnNames
 
-	
+
 	/**
 	 * Initialize the column names for this object.
 	 * All column values will be initialized to null.
@@ -478,7 +494,7 @@ class DatabaseObject {
 		global $Campsite;
         $setColumns = array();
         foreach ($this->m_data as $columnName => $columnValue) {
-        	if (!is_null($p_ignoreColumns) && !in_array($columnName, $p_ignoreColumns)) {
+        	if (is_null($p_ignoreColumns) || !in_array($columnName, $p_ignoreColumns)) {
         		$setColumns[] = $columnName . "='". $columnValue ."'";
         	}
         }
