@@ -15,6 +15,11 @@
     by default.
     - Admin interface: on adding new images forward the current language
     identifier
+    - New statement in template language: If Image <number>; tests if image
+    <number> exists
+    - If statements in template language can be negated: If not
+    - The parser server updates automatically the article types from the database
+    (in case they were modified)
 
 2.0.10
     - Fixed the 'Back to article details' bug

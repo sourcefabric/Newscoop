@@ -1089,6 +1089,13 @@ The list of forbidden statements inside List SearchResult:
 - Language
 - Publication
 
+Note!!! (This is valid only for 2.0.11 and newer versions.)
+All If statements can be negated by inserting "not" between If and its modifier (Publication, Issue etc.)
+Example:
+	If Publication defined
+and the negated version:
+	If not Publication defined
+
 3.9.1.11   If NextItems | PrevItems
 Purpose:
 It runs the first or second list of instructions depending on existing articles in a limited length list after/before the end/start of the list. It can be used only inside List instructions, especially to validate Next | Previous buttons.
@@ -1378,7 +1385,26 @@ EndIf [CurrentSubtitle]
 Constraints:
 Can be used only inside With and List Subtitles statements.
 
-3.9.1.24   Local
+3.9.1.24   If Image
+Purpose:
+If image <number> exists, it runs the first list of instructions, otherwise the second list. It may be used anywhere in the template.
+
+Syntax:
+If Image <number>
+	list of instructions
+[Else
+	list of instructions]
+EndIf [Image]
+
+The list of instructions may contain any instruction allowed in the current context. If it is used inside a list it must respect the constraints of the list (List Issue, List Section, List Article, List Search).
+
+Constraints:
+None.
+
+Note:
+The If Image statement is valid only in 2.0.11 and newer versions. It won't work in 2.0.10 or older versions.
+
+3.9.1.25   Local
 Purpose:
 Creating a temporary data context block for special conditions; the previous data context is restored outside the block.
 
