@@ -111,8 +111,8 @@ if (($errorStr == "") && $access && $hasAccess) {
 			// with <!** Link Internal IdPublication=1&...> ... <!** EndLink>
 			//
 			$text = preg_replace_callback("/(<\s*a\s*href=[\"']campsite_internal_link[?][\w&=]*[\"'][\s\w\"']*>)|(<\s*\/a\s*>)/i", "TransformLinks", $text);
-			$hasChanged |= $articleTypeObj->setColumnValue($dbColumn->getName(),
-													   $_REQUEST[$dbColumn->getName()]);
+			$hasChanged |= $articleTypeObj->setProperty($dbColumn->getName(),
+													    $_REQUEST[$dbColumn->getName()]);
 		}
 	}
 	
