@@ -51,7 +51,7 @@ private:
 	const char* m_pchMsg;
 };
 
-int Receive(CTCPSocket& p_rcoSock, char** p_ppchBuf, int& p_rnBufLen, int p_nSecTimeOut = 10,
+int Receive(CTCPSocket& p_rcoSock, char** p_ppchBuf, int& p_rnBufLen, int p_nSecTimeOut = 30,
             int p_nUSecTimeOut = 0, bool p_bLeaveOneByte = true)
 		throw (Exception, SocketErrorException);
 int CheckSMTPErrorCode(const char* p_pchBuf, int p_nExpectedCode = SMTP_OK)
@@ -63,6 +63,7 @@ int main(int argc, char** argv)
 	const char** ppchSendToList;
 	const char* pchReplyAddress = NULL;
 	const char* pchServerAddress = NULL;
+	const char* pchMyHostName = NULL;
 	int nListLen = 3;
 	int nFirstFree = 0;
 	ppchSendToList = new const char* [nListLen];
@@ -109,6 +110,7 @@ int main(int argc, char** argv)
 		cout << "Server address not specified" << endl;
 		return 1;
 	}
+	pchMyHostName = CSocket::LocalHostName();
 	CTCPSocket coSock;
 	string coStr;
 	try
@@ -118,6 +120,12 @@ int main(int argc, char** argv)
 		int nBufLen = 0;
 		int nRecLen = 0;
 		nRecLen = Receive(coSock, &pchBuf, nBufLen);
+
+		coStr = string("helo ") + pchMyHostName + "\n";
+		coSock.Send(coStr.c_str(), strlen(coStr.c_str()));
+		nRecLen = Receive(coSock, &pchBuf, nBufLen);
+		CheckSMTPErrorCode(pchBuf);
+
 		coStr = string("mail from: ") + pchReplyAddress + "\n";
 		coSock.Send(coStr.c_str(), strlen(coStr.c_str()));
 		nRecLen = Receive(coSock, &pchBuf, nBufLen);
