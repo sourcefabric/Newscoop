@@ -46,13 +46,8 @@ $articles =& ArticleImage::GetArticlesThatUseImage($ImageId);
 	<TD class="page_title">
 		<?php  putGS("Change image information"); ?>
 	</TD>
-	<TD ALIGN="RIGHT" style="padding-top: 0px; padding-right: 10px;">
-  		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
-		<TR>
-	  		<TD><A HREF="index.php?<?php echo $imageNav->getSearchLink() ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Image archive"); ?>"></A></TD>
-	  		<TD><A HREF="index.php?<?php echo $imageNav->getSearchLink(); ?>" ><B><?php  putGS("Image archive");  ?></B></A></TD>
-		</TR>
-  		</TABLE>
+	<TD ALIGN="RIGHT">
+		<A HREF="index.php?<?php echo $imageNav->getSearchLink(); ?>" class="breadcrumb"><?php  putGS("Image archive");  ?></A>
 	</TD>
 </TR>
 </TABLE>
