@@ -37,6 +37,7 @@ index etc.
 
 #include "globals.h"
 #include "cms_types.h"
+#include "curl.h"
 
 // TLMode: describe the list context mode
 //	LM_PREV: inside an "if previousitems" statement
@@ -117,8 +118,6 @@ typedef map <string, StringList, str_case_less> String2StringList;
 
 typedef map <string, StringList::iterator, str_case_less> String2StringListIt;
 
-typedef map <string, string, str_case_less> String2String;
-
 typedef map <string, int, str_case_less> String2Int;
 
 typedef map <string, bool, str_case_less> String2Bool;
@@ -181,6 +180,7 @@ private:
 	string current_art_type;					// current article type
 	long int m_nTopicId;						// topic numeric identifier
 	long int m_nDefTopicId;						// topic numeric identifier
+	CURL* m_pcoURL;
 
 	static const string emptystring;
 
@@ -426,6 +426,10 @@ public:
 	void SetDefTopic(long int t)
 	{
 		m_nDefTopicId = t;
+	}
+	void SetURL(CURL* p_pcoURL)
+	{
+		m_pcoURL = p_pcoURL;
 	}
 
 	const string& UserInfo(const string&);
@@ -689,6 +693,10 @@ public:
 	long int DefTopic() const
 	{
 		return m_nDefTopicId;
+	}
+	const CURL* URL() const
+	{
+		return m_pcoURL;
 	}
 	
 	void PrintSubs();
