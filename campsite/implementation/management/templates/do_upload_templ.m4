@@ -22,7 +22,7 @@ B_HEAD
     todef('Charset');
     todef('Path');
     $GLOBALS['File'] = $HTTP_POST_FILES[File][tmp_name];
-    $GLOABLS['File_name'] = $HTTP_POST_FILES[File][name];
+    $GLOBALS['File_name'] = $HTTP_POST_FILES[File][name];
     todef('UNIQUE_ID');
     ##################################################
 
