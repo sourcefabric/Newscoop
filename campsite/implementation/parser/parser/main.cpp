@@ -54,7 +54,7 @@ object.
 #include "util.h"
 #include "threadpool.h"
 #include "cms_types.h"
-#include "srvdef.h"
+#include "configure.h"
 #include "csocket.h"
 #include "ccampsiteinstance.h"
 #include "thread.h"
