@@ -458,7 +458,8 @@ int main(int argc, char** argv)
 			}
 		}
 	}
-	exit(0);
+
+	return 0;
 }
 
 int CampsiteInstanceFunc(const ConfAttrValue& p_rcoConfValues)
