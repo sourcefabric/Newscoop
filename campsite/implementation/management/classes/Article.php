@@ -173,8 +173,6 @@ class Article extends DatabaseObject {
 	} // fn delete
 	
 	
-
-	
 	/**
 	 * Lock the article with the given User ID.
 	 *
@@ -260,6 +258,32 @@ class Article extends DatabaseObject {
 		}
 		return $articles;
 	} // fn getArticlesInSection
+	
+	
+	/**
+	 * Get the section that this article is in.
+	 * @return object
+	 */
+	function getSection() {
+		global $Campsite;
+	    $queryStr = "SELECT * FROM Sections "
+	    			." WHERE IdPublication=".$this->getPublicationId()
+	    			." AND NrIssue=".$this->getIssueId()
+	    			." AND IdLanguage=".$this->getLanguageId();
+		$query = $Campsite["db"]->Execute($queryStr);
+		if ($query->RecordCount() <= 0) {
+			$queryStr = "SELECT * FROM Sections "
+						." WHERE IdPublication=".$this->getPublicationId()
+						." AND NrIssue=".$this->getIssueId()
+						." LIMIT 1";
+			$query = $Campsite["db"]->Execute($queryStr);		
+		}
+		$row = $query->FetchRow();
+		$section =& new Section($this->getPublicationId(), $this->getIssueId(),
+			$this->getLanguageId());
+		$section->fetch($row);
+	    return $section;
+	} // fn getSection
 	
 	
 	/**
@@ -402,7 +426,7 @@ class Article extends DatabaseObject {
 	
 	/**
 	 * Set the published state of the article.  
-	 * Can be "Y", "S", or "N".
+	 * Can be "Y" = "Yes", "S" = "Submitted", or "N" = "No".
 	 * @param string value
 	 */
 	function setPublished($value) {
@@ -525,6 +549,46 @@ class Article extends DatabaseObject {
 	function getArticleTypeObject() {
 		return new ArticleType($this->Type, $this->Number, $this->IdLanguage);
 	} // fn getArticleTypeObject
+	
+	
+	/**
+	 * Return the articles written by the given user, within the given range.
+	 * @return array
+	 */
+	function GetArticlesByUser($p_userId, $p_lowerLimit = 0, $p_upperLimit = 20) {
+		global $Campsite;
+		$queryStr = "SELECT * FROM Articles "
+					." WHERE IdUser=$p_userId"
+					." ORDER BY Number DESC, IdLanguage "
+					." LIMIT $p_lowerLimit, $p_upperLimit";
+		$query = $Campsite["db"]->Execute($queryStr);
+		$articles = array();
+		while ($row = $query->FetchRow()) {
+			$tmpArticle =& new Article($row["IdPublication"], $row["NrIssue"],
+				$row["NrSection"], $row["IdLanguage"]);
+			$tmpArticle->fetch($row);
+			$articles[] = $tmpArticle;
+		}
+		return $articles;
+	} // fn GetArticlesByUser
+	
+	
+	function GetSubmittedArticles($p_lowerLimit = 0, $p_upperLimit = 20) {
+		global $Campsite;
+		$queryStr = "SELECT * FROM Articles"
+	    			." WHERE Published = 'S' "
+	    			." ORDER BY Number DESC, IdLanguage "
+	    			." LIMIT $p_lowerLimit, $p_upperLimit";
+		$query = $Campsite["db"]->Execute($queryStr);
+		$articles = array();
+		while ($row = $query->FetchRow()) {
+			$tmpArticle =& new Article($row["IdPublication"], $row["NrIssue"],
+				$row["NrSection"], $row["IdLanguage"]);
+			$tmpArticle->fetch($row);
+			$articles[] = $tmpArticle;
+		}
+		return $articles;
+	} // fn GetSubmittedArticles
 	
 } // class Article
 
