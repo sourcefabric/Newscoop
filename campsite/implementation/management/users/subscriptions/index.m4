@@ -88,7 +88,7 @@ B_LIST
 <?php  if (getVar($q_subs,'Active') == "Y") { ?>Yes<?php  } else { ?>No<?php  } ?></A>
 		E_LIST_ITEM
 		B_LIST_ITEM(<*CENTER*>)
-			X_BUTTON(<*<?php  putGS('Delete subscriptions to $1',getHVar($q_pub,'Name') ); ?>*>, <*icon/x.gif*>, <*users/subscriptions/del.php?User=<?php  p($User); ?>&Subs=<?php  pgetUVar($q_subs,'Id'); ?>*>)
+			X_BUTTON(<*<?php  putGS('Delete subscriptions to $1',getHVar($q_pub,'Name') ); ?>*>, <*icon/delete.png*>, <*users/subscriptions/del.php?User=<?php  p($User); ?>&Subs=<?php  pgetUVar($q_subs,'Id'); ?>*>)
 		E_LIST_ITEM
 	E_LIST_TR
 <?php 

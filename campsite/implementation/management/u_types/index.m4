@@ -68,7 +68,7 @@ B_LIST
 			<A HREF="access.php?UType=<?php  pgetUVar($UTypes,'Name'); ?>"><?php  putGS('Change'); ?></A>
 		E_LIST_ITEM
 		B_LIST_ITEM(<*CENTER*>)
-			X_BUTTON(<*Delete user type <?php  pgetHVar($UTypes,'Name'); ?>*>, <*icon/x.gif*>, <*u_types/del.php?UType=<?php  pgetUVar($UTypes,'Name'); ?>*>)
+			X_BUTTON(<*Delete user type <?php  pgetHVar($UTypes,'Name'); ?>*>, <*icon/delete.png*>, <*u_types/del.php?UType=<?php  pgetUVar($UTypes,'Name'); ?>*>)
 		E_LIST_ITEM
 	<?php  } ?>
 	E_LIST_TR
