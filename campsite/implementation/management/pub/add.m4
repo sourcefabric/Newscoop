@@ -47,12 +47,11 @@ B_DIALOG(<*Add new publication*>, <*POST*>, <*do_add.php*>)
 	B_DIALOG_INPUT(<*Default language*>)
 	    <SELECT NAME="cLanguage">
 	    <?
-		query ("SELECT Id, Name FROM Languages", 'q_lang');
-		print "SELECT Id, Name FROM Languages<br>";
+		query ("SELECT Id, OrigName FROM Languages", 'q_lang');
 		    $nr=$NUM_ROWS;
 		    for($loop=0;$loop<$nr;$loop++) {
 			fetchRow($q_lang);
-			pcomboVar(getVar($q_lang,'Id'),getVar($q_def_lang,'IdLang'),getVar($q_lang,'Name'));
+			pcomboVar(getVar($q_lang,'Id'),getVar($q_def_lang,'IdLang'),getVar($q_lang,'OrigName'));
 		    }
 	    ?>dnl
 	    </SELECT>
@@ -63,14 +62,19 @@ B_DIALOG(<*Add new publication*>, <*POST*>, <*do_add.php*>)
 	B_DIALOG_INPUT(<*Time Unit*>)
 	    <SELECT NAME="cTimeUnit">
 <?
-	query ("SELECT Unit, Name FROM TimeUnits WHERE IdLanguage=$IdLang", 'q_unit');
-	print "SELECT Unit, Name FROM TimeUnits WHERE IdLanguage=$IdLang<br>";
-		    $nr=$NUM_ROWS;
-		    for($loop=0;$loop<$nr;$loop++) {
-			fetchRow($q_unit);
-			pcomboVar(getVar($q_unit,'Unit'),'',getVar($q_unit,'Name'));
-		    }
-		?>dnl
+	$q = "SELECT t.Unit, t.Name FROM TimeUnits as t, Languages as l WHERE t.IdLanguage = l.Id and l.Code = '" . $TOL_Language . "' order by t.Unit asc";
+	query($q, 'q_unit');
+	$nr = $NUM_ROWS;
+	if ($nr == 0) {
+		$q = "SELECT t.Unit, t.Name FROM TimeUnits as t, Languages as l WHERE t.IdLanguage = l.Id and l.Code = 'en' order by t.Unit asc";
+		query($q, 'q_unit');
+		$nr = $NUM_ROWS;
+	}
+	for($loop=0;$loop<$nr;$loop++) {
+		fetchRow($q_unit);
+		pcomboVar(getVar($q_unit,'Unit'),getVar($q_pub,'TimeUnit'),getVar($q_unit,'Name'));
+	}
+?>dnl
 	    </SELECT>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Unit Cost*>)
