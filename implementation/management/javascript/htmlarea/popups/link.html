@@ -4,7 +4,6 @@
   <title>Insert/Modify Link</title>
   <script type="text/javascript" src="popup.js"></script>
   <script type="text/javascript">
-    window.resizeTo(400, 200);
 
 I18N = window.opener.HTMLArea.I18N.dialogs;
 
@@ -45,13 +44,17 @@ function Init() {
   target_select.onchange = onTargetChanged;
   document.getElementById("f_href").focus();
   document.getElementById("f_href").select();
+  window.resizeTo(400, 190);
 };
 
 function onOK() {
   var required = {
-    // f_href shouldn't be required or otherwise removing the link by entering an empty
-    // url isn't possible anymore.
-    // "f_href": i18n("You must enter the URL where this link points to")
+    // f_href shouldn't be required or otherwise removing the link by entering an empty
+
+    // url isn't possible anymore.
+
+    // "f_href": i18n("You must enter the URL where this link points to")
+
   };
   for (var i in required) {
     var el = document.getElementById(i);
