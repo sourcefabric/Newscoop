@@ -40,5 +40,6 @@ regGS("The keyword could not be changed.","The keyword could not be changed.:en"
 // log
 regGS("Keyword $1 changed","Keyword $1 changed:en");
 
+regGS("Keyword Infotypes", "Keyword Infotypes:en");
 
 ?>
