@@ -29,12 +29,19 @@
         ?>
         <TR <?php  if ($color) { $color=0; ?>BGCOLOR="#D0D0B0"<?php  } else { $color=1; ?>BGCOLOR="#D0D0D0"<?php  } ?>>
             <TD ALIGN="center">
-                <A HREF="<?php echo CampsiteInterface::ArticleUrl($articleObj, $InterfaceLanguageId, "images/view.php").'&image_id='.$image['id'].'&'.$imageNav->getSearchLink(); ?>">
+                <A HREF="<?php echo 
+                CampsiteInterface::ArticleUrl($articleObj, $InterfaceLanguageId, "images/view.php")
+                .'&ImageId='.$image['id']
+                .'&'.$imageNav->getSearchLink()
+                .'&BackLink=search.php'; ?>">
                   <img src="<?php echo $image['thumbnail_url']; ?>" border="0">
                 </a>
             </TD>
             <TD style="padding-left: 5px;">
-                <A HREF="search.php?image_id=<?php  echo $image['id'].$imageNav->getSearchLink();?>"><?php echo htmlspecialchars($image['description']); ?></A>
+                <A HREF="<?php echo CampsiteInterface::ArticleUrl($articleObj, $InterfaceLanguageId, "images/view.php") 
+                .'&ImageId='.$image['id']
+                .'&'.$imageNav->getSearchLink()
+                .'&BackLink=search.php'; ?>"><?php echo htmlspecialchars($image['description']); ?></A>
             </TD>
             <TD style="padding-left: 5px;">
                 <?php
