@@ -5,7 +5,7 @@
 	<TITLE>CAMPSITE manual Version 2.1</TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.1  (Linux)">
 	<META NAME="CREATED" CONTENT="20020913;19124500">
-	<META NAME="CHANGED" CONTENT="20021102;124800">
+	<META NAME="CHANGED" CONTENT="20030128;14210000">
 	<STYLE>
 	<!--
 		@page { size: 21.59cm 27.94cm }
@@ -341,8 +341,7 @@ structure update requires no special knowledge the database and
 templates conversion to UTF-8 requires UNIX/Linux administration
 knowledge. The future versions of CAMPSITE should provide a tool that
 will automate this process, making it easier.</FONT></P>
-<H2 CLASS="western"><A NAME="1.3.1"></A><FONT FACE="Times, serif">1.3.1.
-Compatibility issues</FONT></H2>
+<H3 CLASS="western"><A NAME="1.3.1"></A>1.3.1. Compatibility issues</H3>
 <P CLASS="western"><FONT FACE="Times, serif">Since CAMPSITE 2.1 uses
 UTF-8 encoding the older database and templates must be converted;
 the database conversion is more complex and error prone while the
@@ -352,64 +351,206 @@ character set to UTF-8 can be achieved by using standard iconv tool;
 for usage type &ldquo;man iconv&rdquo;.</FONT></P>
 <P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif"><B>Converting
 the database</B> can be done in three steps:</FONT></P>
-<UL>
+<OL>
 	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif">dumping
-	the old database into different files &ndash; one for every
-	different character set</FONT></P>
+	the old database into different files</FONT></P>
 	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif">converting
 	the files from their character sets to UTF-8</FONT></P>
 	<LI><P CLASS="western"><FONT FACE="Times, serif">reconstructing the
 	database from the files</FONT></P>
-</UL>
-<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif">Dumping the
-old database into different files:</FONT></P>
+</OL>
+<P CLASS="western"><FONT FACE="Times, serif"><FONT COLOR="#dc2300"><B>Important!!!</B>
+The database upgrade must take place <B>before</B><SPAN STYLE="font-weight: medium">
+CAMPSITE application upgrade. If the application upgrade already took
+place, &ldquo;ArticleTopics&rdquo; and &ldquo;Topics&rdquo; tables
+must be added to the list of tables that need not be converted to
+UTF.</SPAN></FONT></FONT></P>
+<P CLASS="western"><FONT FACE="Times, serif">Open a shell session and
+type all the following commands described below at the command
+prompt.</FONT> Shell commands are written in <I>italic</I> style.</P>
+<OL>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif">Dumping
+	the old database into different files</FONT></P>
+</OL>
 <UL>
-	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif">dump
-	tables structure only: mysqldump ... &lt;database&gt; -d &gt;
-	tables.sql</FONT></P>
-	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif">dump
-	tables data which is not dependent on language:</FONT></P>
-	<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif">mysqldump
-	... -t --tables ArticleTopics AutoId Errors Events Images
-	KeywordIndex Log SubsByIP SubsDefTime SubsSections Subscriptions
-	UserPerm UserTypes Users &gt; data_nolang.sql</FONT></P>
-	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif">dump
-	tables data dependent on language; issue one command for every
-	character set in the database; group languages having the same
-	character set:</FONT></P>
-	<P CLASS="western">mysqldump ... -t --tables ArticleIndex Articles
-	Classes Countries Dictionary Issues KeywordClasses Publications
-	Sections TimeUnits Topics &lt;article_type_tables&gt;
-	--where=&rdquo;IdLanguage = &lt;l1&gt; or IdLanguage = &lt;l2&gt;...&rdquo;
-	&gt; data_charset1.sql</P>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif">Dump
+	tables structure only:</FONT></P>
+	<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif"><I>mysqldump
+	... [database] -d &gt; tables.sql</I></FONT></P>
 </UL>
-<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif">Converting
-the files from their character sets to UTF-8:</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif">where
+[database] should be replaced by the name of the CAMPSITE database
+and &ldquo;...&rdquo; with other needed parameters (user, host etc.)</FONT></P>
 <UL>
-	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif">for
-	every generated file issue the following command:</FONT></P>
-	<P CLASS="western">iconv -f &lt;charset&gt; -t UTF-8 &lt;file_name&gt;
-	&gt; &lt;file_name&gt;.utf8; tables.sql and data_nolang.sql use
-	ISO_8859-1 character set.</P>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif">Dump
+	data for tables that need not be converted to UTF:</FONT></P>
+	<UL>
+		<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif"><I>mysqldump
+		... [database] -t --tables ArticleIndex AutoId, \</I></FONT></P>
+		<UL>
+			<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif"><I>Images
+			KeywordIndex SubsByIP SubsDefTime SubsSections Subscriptions \</I></FONT></P>
+			<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif"><I>UserPerm
+			UserTypes Users &gt; data_nolang.sql</I></FONT></P>
+		</UL>
+	</UL>
 </UL>
-<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif">Reconstructing
-the database from the files:</FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><FONT FACE="Times, serif">Don't
+forget to add &ldquo;ArticleTopics&rdquo; and &ldquo;Topics&rdquo; to
+the list of tables if CAMPSITE upgrade took place already.</FONT></P>
 <UL>
-	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif">for
-	every utf8 file issue the following command:</FONT></P>
-	<P CLASS="western">mysql ... &lt; &lt;file_name&gt;, starting with
-	tables.sql</P>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif">Dump
+	data for tables that should be converted to UTF</FONT></P>
+	<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif">Group
+	languages having the same character set (see Languages in admin
+	interface and read the following  note below). For every character
+	set used repeat the following steps:</FONT></P>
 </UL>
+<OL TYPE=a>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif">select
+	all the languages in the character set and compose the where clause:</FONT></P>
+	<OL>
+		<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif">&quot;IdLanguage
+		= [l1] or IdLanguage = [l2] ...&quot;</FONT></P>
+	</OL>
+	<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif">where [l1],
+	[l2] are the language identifiers. In order to read the language
+	identifiers and character sets log in to CAMPSITE database and run
+	the following sql: &ldquo;select Name, Id, CodePage, from
+	Languages&rdquo;.</FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif"><I>mysqldump
+	... [database] -t --tables Articles Classes Countries \</I></FONT></P>
+	<OL>
+		<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif"><I>Dictionary
+		Errors Events Issues KeywordClasses Sections TimeUnits \</I></FONT></P>
+		<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif"><I>--where=&quot;IdLanguage
+		= [l1] or IdLanguage = [l2]...&quot; &gt; data_[charsetn]_1.sql</I></FONT></P>
+	</OL>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif"><I>mysqldump
+	... [database] -t --tables Publications \</I></FONT></P>
+	<OL>
+		<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif"><I>--where=&quot;IdDefaultLanguage
+		= [l1] or IdDefaultLanguage = [l2]...&quot; \</I></FONT></P>
+		<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif"><I>&gt;
+		data_[charsetn]_2.sql</I></FONT></P>
+	</OL>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif"><I>mysqldump
+	... [database] -t --tables Languages \</I></FONT></P>
+	<OL>
+		<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif"><I>--where=&quot;Id
+		= [l1] or Id = [l2]...&quot; &gt; data_[charsetn]_3.sql</I></FONT></P>
+	</OL>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif">make a
+	list of all X tables (tables whose names start with X) and dump
+	their data:</FONT></P>
+	<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif"><I>mysqldump
+	... [database] -t --tables [list_of_X_tables] \</I></FONT></P>
+	<OL>
+		<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif"><I>--where=&quot;IdLanguage
+		= [l1] or IdLanguage = [l2]...&quot; &gt; data_[charsetn]_4.sql</I></FONT></P>
+	</OL>
+</OL>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif">Replace [l1],
+[l2] with language identifiers, [database] with CAMPSITE database
+name, &ldquo;...&rdquo; in mysqldump command with other needed
+parameters (user, host etc.), [charsetn] with the name of the
+character set (ISO-8859-1,  ISO-8859-2 etc.), [list_of_X_tables] with
+the list of tables whose names start with X; these are article
+content tables.</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT COLOR="#0000ff"><FONT FACE="Times, serif">Note:
+In order to simplify the conversion all not used languages except
+English may be deleted. If only one language is used and it's
+character set is ISO-8859-1 there is no need to group languages by
+character set: just delete not used languages and perform the steps
+b-d described above and remove &ldquo;--where&rdquo; clause from
+commands.</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif">Select the
+character set for Log and dump Log table data:</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif">	<I>mysqldump
+... [database] -t --tables Log &gt; data_log.sql</I></FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif">Selecting the
+character set for Log table data: decide which language you use most
+often when logging in to CAMPSITE admin interface and read the
+character set of the language from Languages.</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<OL START=2>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif">Convert
+	files to UTF:</FONT></P>
+	<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif">Convert
+	tables.sql and data_nolang.sql:</FONT></P>
+	<OL>
+		<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif"><I>iconv -f
+		ISO_8859-1 -t UTF8 tables.sql &gt; tables_utf.sql</I></FONT></P>
+		<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif"><I>iconv -f
+		ISO_8859-1 -t UTF8 data_nolang.sql &gt; data_nolang_utf.sql</I></FONT></P>
+	</OL>
+</OL>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif">For every
+character set used repeat the following steps:</FONT></P>
+<OL TYPE=a>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif"><I>iconv
+	-f [charsetn] -t UTF8 data_[charsetn]_1.sql &gt;
+	data_[charsetn]_1_utf.sql</I></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif"><I>iconv
+	-f [charsetn] -t UTF8 data_[charsetn]_2.sql &gt;
+	data_[charsetn]_2_utf.sql</I></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif"><I>iconv
+	-f [charsetn] -t UTF8 data_[charsetn]_3.sql &gt;
+	data_[charsetn]_3_utf.sql</I></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif"><I>iconv
+	-f [charsetn] -t UTF8 data_[charsetn]_4.sql &gt;
+	data_[charsetn]_4_utf.sql</I></FONT></P>
+</OL>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif">Convert Log
+table data:</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif">	<I>iconv -f
+[log_charset] -t UTF8 data_log.sql &gt; data_log_utf.sql</I></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><FONT FACE="Times, serif">where
+[log_charset] is the character set selected for Log table.</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<OL START=3>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif">Restore
+	the database:</FONT></P>
+	<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif"><I>mysql ...
+	[database] &lt; tables_utf.sql</I></FONT></P>
+	<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif"><I>mysql ...
+	[database] &lt; data_nolang_utf.sql</I></FONT></P>
+</OL>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif">For every
+character set used repeat the following steps:</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif"><I>	mysql ...
+[database] &lt; data_[charsetn]_1_utf.sql</I></FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif"><I>	mysql ...
+[database] &lt; data_[charsetn]_2_utf.sql</I></FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif"><I>	mysql ...
+[database] &lt; data_[charsetn]_3_utf.sql</I></FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif"><I>	mysql ...
+[database] &lt; data_[charsetn]_4_utf.sql</I></FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif">Restore Log
+table data:</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif"><I>	mysql ...
+[database] &lt; data_log_utf.sql</I></FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
 <P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif"><B>Converting
 the templates</B> to UTF-8: issue the following commands for every
 template in the /look/ directory:</FONT></P>
-<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif">	iconv -f
-&lt;charset&gt; -t UTF-8 &lt;template_name&gt; &gt;
-&lt;template_name&gt;.utf8</FONT></P>
-<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif">	mv -f
-&lt;template_name&gt;.utf8 &lt;template_name&gt;</FONT></P>
-<P CLASS="western">where &lt;charset&gt; must be replaced by the
-template character set.</P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif">	<I>iconv -f
+[charset] -t UTF-8 [template_name] &gt; [template_name].utf8</I></FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="Times, serif">	<I>mv -f
+[template_name].utf8 [template_name]</I></FONT></P>
+<P CLASS="western">where [charset] must be replaced by the template
+character set and [template_name] by the template being processed.</P>
 <P CLASS="western"><B>Updating templates structure</B>: Some
 attributes of <A HREF="#3.9.3.3">List Article</A> statement are no
 longer supported in version 2.1, so all templates using those
