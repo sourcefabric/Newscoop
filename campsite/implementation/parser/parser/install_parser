@@ -34,18 +34,18 @@ echo "Stop old version server (if installed)"
 test -f $BIN_DIR/$CAMPSITECTL && $BIN_DIR/$CAMPSITECTL stop
 rm -f $BIN_DIR/$CAMPSITE_SERVER
 cp -f $CAMPSITE_SERVER $BIN_DIR
-chown ${ROOT_USER}.${HTTP_GROUP} ${BIN_DIR}/$CAMPSITE_SERVER
+chown ${ROOT_USER}:${HTTP_GROUP} ${BIN_DIR}/$CAMPSITE_SERVER
 chmod 755 $BIN_DIR/$CAMPSITE_SERVER
 chmod +s $BIN_DIR/$CAMPSITE_SERVER
 cp -f $CAMPSITECTL $BIN_DIR
-chown ${ROOT_USER}.${ROOT_GROUP} ${BIN_DIR}/$CAMPSITECTL
+chown ${ROOT_USER}:${ROOT_GROUP} ${BIN_DIR}/$CAMPSITECTL
 chmod 755 $BIN_DIR/$CAMPSITECTL
 
 if $USER_INSTALL; then exit 0; fi
 
 if [ -d $RC_INIT ]; then
 	cp -f $CAMPSITEINIT $RC_INIT
-	chown ${ROOT_USER}.${ROOT_GROUP} ${RC_INIT}/$CAMPSITEINIT
+	chown ${ROOT_USER}:${ROOT_GROUP} ${RC_INIT}/$CAMPSITEINIT
 	[ $? -ne 0 ] && echo "ERROR installing start/stop script" && exit 1
 	chmod 755 $RC_INIT$CAMPSITEINIT
 	ln -s $RC_INIT$CAMPSITEINIT /etc/rc.d/rc3.d/S95$CAMPSITEINIT
