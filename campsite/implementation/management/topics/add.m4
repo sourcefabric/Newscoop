@@ -51,13 +51,13 @@ B_DIALOG(<*Add new topic*>, <*POST*>, <*do_add.php*>)
 	E_DIALOG_INPUT
 	
 	B_DIALOG_BUTTONS
-		<INPUT TYPE="IMAGE" NAME="OK" SRC="X_ROOT/img/button/save.gif" BORDER="0">
+		SUBMIT(<*Save*>, <*Save changes*>)
 <?
     todef('Back');
     if ($Back != "") { ?>dnl
-		<A HREF="<? print($Back); ?>"><IMG SRC="X_ROOT/img/button/cancel.gif" BORDER="0" ALT="Cancel"></A>
+		REDIRECT(<*Cancel*>, <*Cancel*>, <*<? print($Back); ?>*>)
 <? } else { ?>dnl
-		<A HREF="X_ROOT/topics/index.php?IdCateg=<?p($IdCateg);?>"><IMG SRC="X_ROOT/img/button/cancel.gif" BORDER="0" ALT="Cancel"></A>
+		REDIRECT(<*Cancel*>, <*Cancel*>, <*X_ROOT/topics/index.php?IdCateg=<?p($IdCateg);?>*>)
 <? } ?>dnl
 
 	E_DIALOG_BUTTONS

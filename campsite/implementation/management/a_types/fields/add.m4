@@ -47,8 +47,8 @@ B_DIALOG(<*Add new field*>, <*POST*>, <*do_add.php*>)
 	E_DIALOG_INPUT
 	B_DIALOG_BUTTONS
 		<INPUT TYPE="HIDDEN" NAME="AType" VALUE="<? print encHTML($AType); ?>">
-		<INPUT TYPE="IMAGE" NAME="OK" SRC="X_ROOT/img/button/save.gif" BORDER="0">
-		<A HREF="X_ROOT/a_types/fields/?AType=<? print encURL($AType); ?>"><IMG SRC="X_ROOT/img/button/cancel.gif" BORDER="0" ALT="Cancel"></A>
+		SUBMIT(<*OK*>, <*Save changes*>)
+		REDIRECT(<*Cancel*>, <*Cancel*>, <*X_ROOT/a_types/fields/?AType=<? print encURL($AType); ?>*>)
 	E_DIALOG_BUTTONS
 E_DIALOG
 <P>

@@ -75,8 +75,8 @@ B_DIALOG(<*Translate country name*>, <*POST*>, <*do_translate.php*>)
 	B_DIALOG_BUTTONS
 		<INPUT TYPE=HIDDEN NAME=cCode VALUE="<? print encHTML(decS($Code)); ?>">
 		<INPUT TYPE=HIDDEN NAME=Language VALUE="<? print $Language; ?>">
-		<INPUT TYPE="IMAGE" NAME="OK" SRC="X_ROOT/img/button/save.gif" BORDER="0">
-		<A HREF="X_ROOT/country/"><IMG SRC="X_ROOT/img/button/cancel.gif" BORDER="0" ALT="Cancel"></A>
+		SUBMIT(<*Save*>, <*Save changes*>)
+		REDIRECT(<*Cancel*>, <*Cancel*>, <*X_ROOT/country/*>)
 	E_DIALOG_BUTTONS
 E_DIALOG
 <P>

@@ -45,7 +45,7 @@ B_MSGBOX(<*Deleting field*>)
 	X_MSGBOX_TEXT(<*<LI><? putGS('The field $1 has been deleted.','<B>'.encHTML($Field).'</B>' ); ?></LI>*>)
 X_AUDIT(<*72*>, <*getGS('Article type field $1 deleted',encHTML($Field))*>)
 	B_MSGBOX_BUTTONS
-		<A HREF="X_ROOT/a_types/fields/?AType=<? print encURL($AType); ?>"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/a_types/fields/?AType=<? print encURL($AType); ?>*>)
 	E_MSGBOX_BUTTONS
 E_MSGBOX
 <P>

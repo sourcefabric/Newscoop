@@ -48,7 +48,7 @@ X_AUDIT(<*82*>, <*getGS('Infotype $1 deleted',encHTML($cName))*>)
 	X_MSGBOX_TEXT(<*<LI><? putGS('The infotype could not be deleted.'); ?></LI>*>)
 <? } ?>
 	B_MSGBOX_BUTTONS
-		<A HREF="X_ROOT/infotype/"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/infotype/*>)
 	E_MSGBOX_BUTTONS
 E_MSGBOX
 <P>

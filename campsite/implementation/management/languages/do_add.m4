@@ -90,10 +90,10 @@ X_AUDIT(<*101*>, <*getGS('Language $1 added',$cName)*>)
 	B_MSGBOX_BUTTONS
 <? todef('Back');
     if (($correct) && ($created)) { ?>dnl
-		<A HREF="X_ROOT/languages/add.php<? if ($Back) { ?>?Back=<? print encURL($Back); } ?>"><IMG SRC="X_ROOT/img/button/add_another.gif" BORDER="0" ALT="Add another language"></A>
-		<A HREF="X_ROOT/languages/"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
+		REDIRECT(<*New*>, <*Add another language*>, <*X_ROOT/languages/add.php<? if ($Back) { ?>?Back=<? print encURL($Back); } ?>*>)
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/languages/*>)
 <? } else { ?>
-		<A HREF="X_ROOT/languages/add.php<? if ($Back) { ?>?Back=<? print encURL($Back); } ?>"><IMG SRC="X_ROOT/img/button/ok.gif" BORDER="0" ALT="OK"></A>
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/languages/add.php<? if ($Back) { ?>?Back=<? print encURL($Back); } ?>*>)
 <? } ?>dnl
 	E_MSGBOX_BUTTONS
 E_MSGBOX

@@ -42,8 +42,8 @@ B_MSGBOX(<*Delete IP Group*>)
 		<FORM METHOD="GET" ACTION="do_ipdel.php">
 		<INPUT TYPE="HIDDEN" NAME="User" VALUE="<? p($User); ?>">
 		<INPUT TYPE="HIDDEN" NAME="StartIP" VALUE="<? p($StartIP); ?>">
-		<INPUT TYPE="IMAGE" NAME="Yes" SRC="X_ROOT/img/button/yes.gif" BORDER="0">
-		<A HREF="X_ROOT/users/ipaccesslist.php?User=<? p($User); ?>"><IMG SRC="X_ROOT/img/button/no.gif" BORDER="0" ALT="No"></A>
+		SUBMIT(<*Yes*>, <*Yes*>)
+		REDIRECT(<*No*>, <*No*>, <*X_ROOT/users/ipaccesslist.php?User=<? p($User); ?>*>)
 		</FORM>
 	E_MSGBOX_BUTTONS
 E_MSGBOX

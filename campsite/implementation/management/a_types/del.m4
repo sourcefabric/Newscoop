@@ -34,8 +34,8 @@ B_MSGBOX(<*Delete article type*>)
 	B_MSGBOX_BUTTONS
 		<FORM METHOD="POST" ACTION="do_del.php">
 		<INPUT TYPE="HIDDEN" NAME="AType" VALUE="<? print encHTML($AType); ?>">
-		<INPUT TYPE="IMAGE" NAME="Yes" SRC="X_ROOT/img/button/yes.gif" BORDER="0">
-		<A HREF="X_ROOT/a_types/"><IMG SRC="X_ROOT/img/button/no.gif" BORDER="0" ALT="No"></A>
+		SUBMIT(<*Yes*>, <*Yes*>)
+		REDIRECT(<*No*>, <*No*>, <*X_ROOT/a_types/*>)
 		</FORM>
 	E_MSGBOX_BUTTONS
 E_MSGBOX

@@ -132,14 +132,14 @@ X_AUDIT(<*31*>, <*getGS('Article $1 added to $2. $3 from $4. $5 of $6', encHTML(
 <? todef('Back');
     
     if ($created) { ?>dnl
-		<A HREF="X_ROOT/pub/issues/sections/articles/edit.php?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Section=<? p($Section); ?>&Article=<? p($Article); ?>&Language=<? p($Language); ?>&sLanguage=<? p($cLanguage); ?>"><IMG SRC="X_ROOT/img/button/yes.gif" BORDER="0" ALT="Yes"></A>
+		REDIRECT(<*Yes*>, <*Yes*>, <*X_ROOT/pub/issues/sections/articles/edit.php?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Section=<? p($Section); ?>&Article=<? p($Article); ?>&Language=<? p($Language); ?>&sLanguage=<? p($cLanguage); ?>*>)
 <? if ($Back != "") { ?>dnl
-		<A HREF="<? p($Back); ?>"><IMG SRC="X_ROOT/img/button/no.gif" BORDER="0" ALT="No"></A>
+		REDIRECT(<*No*>, <*No*>, <*<? p($Back); ?>*>)
 <? } else { ?>dnl
-		<A HREF="X_ROOT/pub/issues/sections/articles/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Section=<? p($Section); ?>&Language=<? p($Language); ?>"><IMG SRC="X_ROOT/img/button/no.gif" BORDER="0" ALT="No"></A>
+		REDIRECT(<*No*>, <*No*>, <*X_ROOT/pub/issues/sections/articles/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Section=<? p($Section); ?>&Language=<? p($Language); ?>*>)
 <? } ?>dnl
 <? } else { ?>dnl
-		<A HREF="X_ROOT/pub/issues/sections/articles/translate.php?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Section=<? p($Section); ?>&Language=<? p($Language); ?>&Article=<? p($Article); ?><? if ($Back != "") { ?>&Back=<? pencURL($Back); } ?>"><IMG SRC="X_ROOT/img/button/ok.gif" BORDER="0" ALT="OK"></A>
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/pub/issues/sections/articles/translate.php?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Section=<? p($Section); ?>&Language=<? p($Language); ?>&Article=<? p($Article); ?><? if ($Back != "") { ?>&Back=<? pencURL($Back); } ?>*>)
 <? } ?>dnl
 	E_MSGBOX_BUTTONS
 E_MSGBOX

@@ -61,12 +61,12 @@ X_AUDIT(<*91*>, <*getGS('Keyword $1 added',decS($cKeyword))*>)
 <?
     if ($correct && $created) { ?>dnl
 	B_MSGBOX_BUTTONS
-		<A HREF="X_ROOT/glossary/translate.php?Keyword=<? print encURL($cId); ?>"><IMG SRC="X_ROOT/img/button/add_another.gif" BORDER="0" ALT="Add another keyword"></A>
-		<A HREF="X_ROOT/glossary/"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
+		REDIRECT(<*New*>, <*Add another*>, <*X_ROOT/glossary/translate.php?Keyword=<? print encURL($cId); ?>*>)
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/glossary/*>)
 	E_MSGBOX_BUTTONS
 <? } else { ?>
 	B_MSGBOX_BUTTONS
-		<A HREF="X_ROOT/glossary/translate.php?Keyword=<? print encURL($cId); ?>"><IMG SRC="X_ROOT/img/button/ok.gif" BORDER="0" ALT="OK"></A>
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/glossary/translate.php?Keyword=<? print encURL($cId); ?>*>)
 	E_MSGBOX_BUTTONS
 <? } ?>dnl
 E_MSGBOX

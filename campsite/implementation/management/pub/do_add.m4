@@ -78,12 +78,12 @@ X_AUDIT(<*1*>, <*getGS('Publication $1 added',$cName)*>)
 		*>)
 <? if ($correct && $created) { ?>dnl
 	B_MSGBOX_BUTTONS
-		<A HREF="X_ROOT/pub/add.php"><IMG SRC="X_ROOT/img/button/add_another.gif" BORDER="0" ALT="Add another publication"></A>
-		<A HREF="X_ROOT/pub/"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
+		REDIRECT(<*another*>, <*Add another*>, <*X_ROOT/pub/add.php*>)
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/pub/*>)
 	E_MSGBOX_BUTTONS
 <? } else { ?>
 	B_MSGBOX_BUTTONS
-		<A HREF="X_ROOT/pub/add.php"><IMG SRC="X_ROOT/img/button/ok.gif" BORDER="0" ALT="OK"></A>
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/pub/add.php*>)
 	E_MSGBOX_BUTTONS
 <? } ?>dnl
 E_MSGBOX

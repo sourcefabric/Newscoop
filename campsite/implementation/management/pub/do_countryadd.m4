@@ -77,12 +77,12 @@ X_AUDIT(<*4*>, <*getGS('The default subscription time for $1 has been added.',ge
 		*>)
 <? if ($correct && $created) { ?>dnl
 	B_MSGBOX_BUTTONS
-		<A HREF="X_ROOT/pub/countryadd.php?Pub=<? pencURL($cPub); ?>&Language=<? pencURL($Language); ?>"><IMG SRC="X_ROOT/img/button/add_another.gif" BORDER="0" ALT="Add another country"></A>
-		<A HREF="X_ROOT/pub/deftime.php?Pub=<? pencURL($cPub); ?>"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
+		REDIRECT(<*new*>, <*Add another*>, <*X_ROOT/pub/countryadd.php?Pub=<? pencURL($cPub); ?>&Language=<? pencURL($Language); ?>*>)
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/pub/deftime.php?Pub=<? pencURL($cPub); ?>*>)
 	E_MSGBOX_BUTTONS
 <? } else { ?>
 	B_MSGBOX_BUTTONS
-		<A HREF="X_ROOT/pub/countryadd.php?Pub=<? pencURL($cPub); ?>&Language=<? pencURL($Language); ?>"><IMG SRC="X_ROOT/img/button/ok.gif" BORDER="0" ALT="OK"></A>
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/pub/countryadd.php?Pub=<? pencURL($cPub); ?>&Language=<? pencURL($Language); ?>*>)
 	E_MSGBOX_BUTTONS
 <? } ?>dnl
 E_MSGBOX

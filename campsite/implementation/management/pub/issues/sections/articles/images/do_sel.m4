@@ -100,7 +100,7 @@ X_AUDIT(<*42*>, <*getGS('The image $1 has been added.',getHVar($q_img,'Descripti
 	X_MSGBOX_TEXT(<*<LI><? putGS('The image $1 could not be added.','<B>'.getHVar($q_img,'Description').'</B>'); ?></LI>*>)
 <? } ?>dnl
 	B_MSGBOX_BUTTONS
-	<A HREF="/cgi-bin/cleanb?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Section=<? p($Section); ?>&Article=<? p($Article); ?>&Language=<? p($Language); ?>&sLanguage=<? p($sLanguage); ?>&Number=<? p($Number); ?>&NrArticle=<? p($Article); ?>"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
+	REDIRECT(<*Done*>, <*Done*>, <*/cgi-bin/cleanb?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Section=<? p($Section); ?>&Article=<? p($Article); ?>&Language=<? p($Language); ?>&sLanguage=<? p($sLanguage); ?>&Number=<? p($Number); ?>&NrArticle=<? p($Article); ?>*>)
 		</FORM>
 	E_MSGBOX_BUTTONS
 E_MSGBOX

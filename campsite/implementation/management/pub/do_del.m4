@@ -88,9 +88,9 @@ X_AUDIT(<*2*>, <*getGS('Publication $1 deleted',getHVar($q_pub,'Name'))*>)
 	*>)
 	B_MSGBOX_BUTTONS
 <? if ($AFFECTED_ROWS > 0) { ?>dnl
-		<A HREF="X_ROOT/pub/"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/pub/*>)
 <? } else { ?>dnl
-		<A HREF="X_ROOT/pub/"><IMG SRC="X_ROOT/img/button/ok.gif" BORDER="0" ALT="OK"></A>
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/pub/*>)
 <? } ?>dnl
 	E_MSGBOX_BUTTONS
 E_MSGBOX

@@ -39,8 +39,8 @@ B_MSGBOX(<*Delete user account*>)
 	B_MSGBOX_BUTTONS
 		<FORM METHOD="POST" ACTION="do_del.php">
 		<INPUT TYPE="HIDDEN" NAME="User" VALUE="<? pencHTML($User); ?>">
-		<INPUT TYPE="IMAGE" NAME="Yes" SRC="X_ROOT/img/button/yes.gif" BORDER="0">
-		<A HREF="X_ROOT/users/"><IMG SRC="X_ROOT/img/button/no.gif" BORDER="0" ALT="No"></A>
+		SUBMIT(<*Yes*>, <*Yes*>)
+		REDIRECT(<*No*>, <*No*>, <*X_ROOT/users/*>)
 		</FORM>
 	E_MSGBOX_BUTTONS
 E_MSGBOX

@@ -44,7 +44,7 @@ E_CURRENT
 B_MSGBOX(<*Uploading template*>)
 	X_MSGBOX_TEXT(<* <LI> <? p($FSresult)?> </LI> *>)
 	B_MSGBOX_BUTTONS
-		<A HREF="<? pencHTML(decS($Path)); ?>"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
+		REDIRECT(<*Done*>, <*Done*>, <*<? pencHTML(decS($Path)); ?>*>)
 	E_MSGBOX_BUTTONS
 E_MSGBOX
 <P>

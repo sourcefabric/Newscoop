@@ -67,9 +67,9 @@ B_MSGBOX(<*Deleting topic*>)
 
 	B_MSGBOX_BUTTONS
 <? if ($AFFECTED_ROWS > 0) { ?>dnl
-		<A HREF="X_ROOT/topics/index.php?IdCateg=<?p($IdCateg);?>"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/topics/index.php?IdCateg=<?p($IdCateg);?>*>)
 <? } else { ?>dnl
-		<A HREF="X_ROOT/topics/index.php?IdCateg=<?p($IdCateg);?>"><IMG SRC="X_ROOT/img/button/ok.gif" BORDER="0" ALT="OK"></A>
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/topics/index.php?IdCateg=<?p($IdCateg);?>*>)
 <? } ?>dnl
 	E_MSGBOX_BUTTONS
 E_MSGBOX

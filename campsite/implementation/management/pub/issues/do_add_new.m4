@@ -86,12 +86,12 @@ X_AUDIT(<*11*>, <*getGS('Issue $1 added in publication $2',$cName,getVar($publ,'
 		*>)
 <? if ($correct && $created) { ?>dnl
 	B_MSGBOX_BUTTONS
-		<A HREF="X_ROOT/pub/issues/add_new.php?Pub=<? pencURL($cPub); ?>"><IMG SRC="X_ROOT/img/button/add_another.gif" BORDER="0" ALT="Add another issue"></A>
-		<A HREF="X_ROOT/pub/issues/?Pub=<? pencURL($cPub); ?>"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
+		REDIRECT(<*Another*>, <*Add another*>, <*X_ROOT/pub/issues/add_new.php?Pub=<? pencURL($cPub); ?>*>)
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/pub/issues/?Pub=<? pencURL($cPub); ?>*>)
 	E_MSGBOX_BUTTONS
 <? } else { ?>dnl
 	B_MSGBOX_BUTTONS
-		<A HREF="X_ROOT/pub/issues/add_new.php?Pub=<? pencURL($cPub); ?>"><IMG SRC="X_ROOT/img/button/ok.gif" BORDER="0" ALT="OK"></A>
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/pub/issues/add_new.php?Pub=<? pencURL($cPub); ?>*>)
 	E_MSGBOX_BUTTONS
 <? } ?>dnl
 E_MSGBOX

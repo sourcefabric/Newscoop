@@ -77,12 +77,12 @@ X_AUDIT(<*57*>, <*getGS('IP Group $1 added for user $2',encHTML($cStartIP1).'.'.
 <? 
 if (($correct) && ($created)) { ?>dnl
 	B_MSGBOX_BUTTONS
-		<A HREF="X_ROOT/users/ipadd.php?User=<? p($User); ?>"><IMG SRC="X_ROOT/img/button/add_another.gif" BORDER="0" ALT="Add another IP Group"></A>
-		<A HREF="X_ROOT/users/ipaccesslist.php?User=<? p($User); ?>"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
+		REDIRECT(<*New*>, <*Add another*>, <*X_ROOT/users/ipadd.php?User=<? p($User); ?>*>)
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/users/ipaccesslist.php?User=<? p($User); ?>*>)
 	E_MSGBOX_BUTTONS
 <? } else { ?>
 	B_MSGBOX_BUTTONS
-		<A HREF="X_ROOT/users/ipaccesslist.php?User=<? p($User); ?>"><IMG SRC="X_ROOT/img/button/ok.gif" BORDER="0" ALT="OK"></A>
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/users/ipaccesslist.php?User=<? p($User); ?>*>)
 	E_MSGBOX_BUTTONS
 <? } ?>dnl
 E_MSGBOX

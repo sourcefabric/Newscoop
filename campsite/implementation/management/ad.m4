@@ -18,7 +18,7 @@ E_HEADER
 B_MSGBOX(<*Access denied*>, <**>, <*red*>)
 	X_MSGBOX_TEXT(<*<font color=red><li><? print encHTML($ADReason); ?></li></font>*>)
 	B_MSGBOX_BUTTONS
-		<A HREF="X_ROOT/home.php"><IMG SRC="X_ROOT/img/button/ok.gif" BORDER="0" ALT="OK"></A>
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/home.php*>)
 	E_MSGBOX_BUTTONS
 E_DIALOG
 

@@ -85,10 +85,10 @@ X_AUDIT(<*121*>, <*getGS('User type $1 added',encHTML(decS($cName)));*>)
 	B_MSGBOX_BUTTONS
 <? todef('Back');
     if (($correct) && ($created)) {?>dnl
-		<A HREF="X_ROOT/u_types/add.php<? if ($Back != "") print '?Back='.encURL($Back); ?>"><IMG SRC="X_ROOT/img/button/add_another.gif" BORDER="0" ALT="Add another user type"></A>
-		<A HREF="X_ROOT/u_types/"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
+		REDIRECT(<*New*>, <*Add another*>, <*X_ROOT/u_types/add.php<? if ($Back != "") print '?Back='.encURL($Back); ?>*>)
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/u_types/*>)
 <? } else { ?>
-		<A HREF="X_ROOT/u_types/add.php<? if ($Back != "") print '?Back='.encURL($Back); ?>"><IMG SRC="X_ROOT/img/button/ok.gif" BORDER="0" ALT="OK"></A>
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/u_types/add.php<? if ($Back != "") print '?Back='.encURL($Back); ?>*>)
 <? } ?>dnl
 	E_MSGBOX_BUTTONS
 E_MSGBOX

@@ -66,8 +66,8 @@ B_MSGBOX(<*Delete section*>)
 		<INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<? p($Issue); ?>">
 		<INPUT TYPE="HIDDEN" NAME="Section" VALUE="<? p($Section); ?>">
 		<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<? p($Language); ?>">
-		<INPUT TYPE="IMAGE" NAME="Yes" SRC="X_ROOT/img/button/yes.gif" BORDER="0">
-		<A HREF="X_ROOT/pub/issues/sections/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>"><IMG SRC="X_ROOT/img/button/no.gif" BORDER="0" ALT="No"></A>
+		SUBMIT(<*Yes*>, <*Yes*>)
+		REDIRECT(<*No*>, <*No*>, <*X_ROOT/pub/issues/sections/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>*>)
 		</FORM>
 	E_MSGBOX_BUTTONS
 E_MSGBOX

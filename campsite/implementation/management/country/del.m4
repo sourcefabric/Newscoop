@@ -46,8 +46,8 @@ B_MSGBOX(<*Delete country*>)
 		<FORM METHOD="POST" ACTION="do_del.php">
 		<INPUT TYPE="HIDDEN" NAME="Code" VALUE="<? print encHTML(decS($Code)); ?>">
 		<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<? print $Language; ?>">
-		<INPUT TYPE="IMAGE" NAME="Yes" SRC="X_ROOT/img/button/yes.gif" BORDER="0">
-		<A HREF="X_ROOT/country/"><IMG SRC="X_ROOT/img/button/no.gif" BORDER="0" ALT="No"></A>
+		SUBMIT(<*Yes*>, <*Yes*>)
+		REDIRECT(<*No*>, <*No*>, <*X_ROOT/country/*>)
 		</FORM>
 	E_MSGBOX_BUTTONS
 E_MSGBOX

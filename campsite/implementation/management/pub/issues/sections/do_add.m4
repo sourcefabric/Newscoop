@@ -100,10 +100,10 @@ X_AUDIT(<*21*>, <*getGS('Section $1 added to issue $2. $3 ($4) of $5',$cName,get
 		*>)
 	B_MSGBOX_BUTTONS
 <? if ($correct && $created) { ?>dnl
-		<A HREF="X_ROOT/pub/issues/sections/add.php?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>"><IMG SRC="X_ROOT/img/button/add_another.gif" BORDER="0" ALT="Add another issue"></A>
-		<A HREF="X_ROOT/pub/issues/sections/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
+		REDIRECT(<*Add another*>, <*Add another*>, <*X_ROOT/pub/issues/sections/add.php?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>*>)
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/pub/issues/sections/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>*>)
 <? } else { ?>
-		<A HREF="X_ROOT/pub/issues/sections/add.php?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>"><IMG SRC="X_ROOT/img/button/ok.gif" BORDER="0" ALT="OK"></A>
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/pub/issues/sections/add.php?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>*>)
 <? } ?>dnl
 	E_MSGBOX_BUTTONS
 E_MSGBOX
