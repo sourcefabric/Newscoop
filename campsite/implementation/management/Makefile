@@ -4,7 +4,7 @@ ALL=$(shell if [ "$(PACKAGE_TYPE)" = "source" ]; then echo all; else echo dummy;
 
 PACKAGE_DIR=$(BIN_PACKAGE_DIR)/implementation
 
-MY_TARGETS=ad.php index.php login.php logout.php menu.php home.php
+MY_TARGETS=ad.php index.php login.php logout.php 
 
 all: $(MY_TARGETS)
 	$(MAKE) -C root
@@ -39,6 +39,7 @@ install: $(ALL)
 	cp -rf javascript $(HTML_DIR)
 	cp -rf classes $(HTML_DIR)
 	cp -rf imagearchive $(PRIV_DIR)
+	cp -rf include $(HTML_DIR)
 	mkdir -p $(SCRIPT_DIR)
 	cp -fr img/* $(PRIV_DIR)/img
 	cp -f *.php $(PRIV_DIR)/
@@ -61,6 +62,7 @@ install: $(ALL)
 	chown -R $(HTTP_USER):$(HTTP_GROUP) $(HTML_DIR)/look
 	chown -R $(HTTP_USER):$(HTTP_GROUP) $(HTML_DIR)/javascript
 	chown -R $(HTTP_USER):$(HTTP_GROUP) $(HTML_DIR)/classes
+	chown -R $(HTTP_USER):$(HTTP_GROUP) $(HTML_DIR)/include
 	chown -R $(HTTP_USER):$(HTTP_GROUP) $(PRIV_DIR)/imagearchive
 	chown -R $(HTTP_USER):$(HTTP_GROUP) $(PRIV_DIR) 
 	chown -R $(HTTP_USER):$(HTTP_GROUP) $(SCRIPT_DIR)
