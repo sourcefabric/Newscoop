@@ -241,6 +241,20 @@ string CURLShortNames::setTemplate(const string& p_rcoTemplate) throw (InvalidVa
 	return m_coTemplate;
 }
 
+string CURLShortNames::setTemplate(long int p_nTemplateId) throw (InvalidValue)
+{
+	string coSql = string("select Name from Templates where Id = ")
+	             + (string)Integer(p_nTemplateId);
+	CMYSQL_RES coRes;
+	MYSQL_ROW qRow = QueryFetchRow(m_pDBConn, coSql.c_str(), coRes);
+	if (qRow == NULL)
+		throw InvalidValue("template identifier", (string)Integer(p_nTemplateId));
+	m_coTemplate = qRow[0];
+	m_bValidTemplate = true;
+	m_bTemplateSet = true;
+	return m_coTemplate;
+}
+
 string CURLShortNames::getTemplate() const
 {
 	if (m_bValidTemplate)

@@ -80,6 +80,8 @@ public:
 
 	virtual string setTemplate(const string& p_rcoTemplate) throw (InvalidValue);
 
+	virtual string setTemplate(long int p_nTemplateId) throw (InvalidValue);
+
 	virtual string getTemplate() const;
 
 private:
