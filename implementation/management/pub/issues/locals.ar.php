@@ -5,7 +5,6 @@ regGS("Front Page Template<BR><SMALL>(click to change)</SMALL>","    ( نموذ�
 regGS("Single Article Template<BR><SMALL>(click to change)</SMALL>","  (نموذج المقال المنفرد <br> (إضغط لتغييره");
 regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>","نشر<br> (السنة، الشهر، اليوم");
 regGS("Delete issue $1","الغاء  الإصدار$1");
-regGS("Click here to set...","إضغط هنا للاختيار");
 regGS("Change issue status","بدّل وضع الإصدار");
 regGS("You do not have the right to change issues.","لا يحق لك تغيير الإصدارات");
 regGS("Are you sure you want to change the issue $1 status from $2 to $3?","هل أنت متأكد من أنك تريد تغيير وضع الإصدار  $1 من $2 إلى $3؟");

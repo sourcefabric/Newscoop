@@ -5,7 +5,6 @@ regGS("Front Page Template<BR><SMALL>(click to change)</SMALL>","Шаблон т
 regGS("Single Article Template<BR><SMALL>(click to change)</SMALL>","Шаблон отдельной статьи<BR><SMALL>(щелкните для изменения)</SMALL>:ru");
 regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>","Опубликовано<BR><SMALL>(гггг-мм-дд)</SMALL>:ru");
 regGS("Delete issue $1","Удаление выпуска $1:ru");
-regGS("Click here to set...","Щелкните здесь, чтобы установить...");
 regGS("Change issue status","Изменить статус выпуска:ru");
 regGS("You do not have the right to change issues.","Вы не имеете права изменить выпуск.:ru");
 regGS("Are you sure you want to change the issue $1 status from $2 to $3?","Вы уверены, что хотите поменять статус выпуска $1 с $2 на $3?:ru");

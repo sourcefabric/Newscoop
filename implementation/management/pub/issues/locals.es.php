@@ -5,7 +5,6 @@ regGS("Front Page Template<BR><SMALL>(click to change)</SMALL>","Plantilla de Po
 regGS("Single Article Template<BR><SMALL>(click to change)</SMALL>","Plantilla de Artículos Individuales");
 regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>","Publicado");
 regGS("Delete issue $1","Borrar edición $1");
-regGS("Click here to set...","Click aquí para escoger...");
 regGS("Change issue status","Cambiar estatus de edición ");
 regGS("You do not have the right to change issues.","No tiene derecho a cambiar estatus de edición");
 regGS("Are you sure you want to change the issue $1 status from $2 to $3?","Esta seguro que desea cambiar el status de la edición $1 de $2 a $3?");
