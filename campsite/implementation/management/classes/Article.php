@@ -240,31 +240,29 @@ class Article extends DatabaseObject {
 		$articleCopy->m_data['NrSection'] = $this->m_data['NrSection']; 
 		$articleCopy->m_data['IdLanguage'] = $p_languageId; 
 		$articleCopy->m_data['Number'] = $this->m_data['Number']; 
+		$values = array();
+		// Copy some attributes
+		$values['ShortName'] = $this->m_data['ShortName'];
+		$values['Name'] = $p_name;
+		$values['Type'] = $this->m_data['Type'];
+		$values['IsIndexed'] = $this->m_data['IsIndexed'];		
+		$values['OnFrontPage'] = $this->m_data['OnFrontPage'];
+		$values['OnSection'] = $this->m_data['OnFrontPage'];
+		$values['Public'] = $this->m_data['Public'];
+		$values['ArticleOrder'] = $this->m_data['ArticleOrder'];
+		// Change some attributes
+		$values['LockUser'] = 0;
+		$values['LockTime'] = 0;
+		$values['IdUser'] = $p_userId;
+		$values['Published'] = 'N';
 
 		// Create the record
-		$success = $articleCopy->__create();
+		$success = $articleCopy->__create($values);
 		if (!$success) {
 			return;
 		}
-	
-		// Change some attributes
+
 		$articleCopy->setProperty('UploadDate', 'NOW()', true, true);
-		$articleCopy->m_data['LockUser'] = 0;
-		$articleCopy->m_data['LockTime'] = 0;
-		$articleCopy->m_data['IdUser'] = $p_userId;
-		$articleCopy->m_data['Name'] = $p_name;
-		$articleCopy->m_data['Published'] = 'N';
-			
-		// Copy some attributes
-		$articleCopy->m_data['Type'] = $this->m_data['Type'];
-		$articleCopy->m_data['ShortName'] = $this->m_data['ShortName'];
-		$articleCopy->m_data['IsIndexed'] = $this->m_data['IsIndexed'];		
-		$articleCopy->m_data['OnFrontPage'] = $this->m_data['OnFrontPage'];
-		$articleCopy->m_data['OnSection'] = $this->m_data['OnFrontPage'];
-		$articleCopy->m_data['Public'] = $this->m_data['Public'];
-		$articleCopy->m_data['ArticleOrder'] = $this->m_data['ArticleOrder'];
-		
-		$articleCopy->commit();
 
 		// Insert an entry into the article type table.
 		$articleCopyData =& new ArticleType($articleCopy->m_data['Type'], 
