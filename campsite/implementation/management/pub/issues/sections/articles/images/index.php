@@ -43,7 +43,7 @@ $languageObj =& new Language($Language);
     <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<META HTTP-EQUIV="Expires" CONTENT="now">
 	<TITLE><?php  putGS('Article Image List'); ?></TITLE>
-	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['website_url'] ?>/css/admin_stylesheet.css">
+	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL'] ?>/css/admin_stylesheet.css">
 </HEAD>
 
 <BODY>
