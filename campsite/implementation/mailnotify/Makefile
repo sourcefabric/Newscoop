@@ -20,11 +20,11 @@ links: dummy
 	    if [ ! -L $$l ]; then ln -s ../parser/parser/$$l; fi; \
 	done
 
-notifyendsubs: notifyendsubs.o readconf.o ccampsiteinstance.o mutex.o
+notifyendsubs: notifyendsubs.o ccampsiteinstance.o mutex.o readconf.o
 	g++ -o notifyendsubs notifyendsubs.o readconf.o ccampsiteinstance.o mutex.o $(LDFLAGS) $(LDLIBS)
 	strip notifyendsubs
 
-notifyevents: notifyevents.o readconf.o ccampsiteinstance.o mutex.o
+notifyevents: notifyevents.o ccampsiteinstance.o mutex.o readconf.o
 	g++ -o notifyevents notifyevents.o readconf.o ccampsiteinstance.o mutex.o $(LDFLAGS) $(LDLIBS)
 	strip notifyevents
 
@@ -32,8 +32,20 @@ clean: dummy
 	rm -f $(LINKS) *.o configure.h *~ notifyendsubs notifyevents
 	$(MAKE) -C smtp_wrapper clean
 
-%.o: %.cpp $(DEPENDENCES) ccampsiteinstance.h readconf.h globals.h configure.h
-	g++ -c -o $@ $(CFLAGS) $<
+ccampsiteinstance.o: ccampsiteinstance.cpp $(DEPENDENCES) ccampsiteinstance.h readconf.h globals.h configure.h
+	g++ -c -o ccampsiteinstance.o $(CFLAGS) ccampsiteinstance.cpp
+
+mutex.o: mutex.cpp $(DEPENDENCES) ccampsiteinstance.h readconf.h globals.h configure.h
+	g++ -c -o mutex.o $(CFLAGS) mutex.cpp
+
+readconf.o: readconf.cpp $(DEPENDENCES) ccampsiteinstance.h readconf.h globals.h configure.h
+	g++ -c -o readconf.o $(CFLAGS) readconf.cpp
+
+notifyevents.o: notifyevents.cpp $(DEPENDENCES) ccampsiteinstance.h readconf.h globals.h configure.h
+	g++ -c -o notifyevents.o $(CFLAGS) notifyevents.cpp
+
+notifyendsubs.o: notifyendsubs.cpp $(DEPENDENCES) ccampsiteinstance.h readconf.h globals.h configure.h
+	g++ -c -o notifyendsubs.o $(CFLAGS) notifyendsubs.cpp
 
 install: all
 	mkdir -p "$(ETC_DIR)"
