@@ -78,8 +78,12 @@ B_MSGBOX(<*Adding new publication*>)
 			query($sql);
 			$created = ($AFFECTED_ROWS > 0);
 			if ($created) {
-				$sql = "UPDATE Aliases SET IdPublication = " . mysql_insert_id() . " WHERE Id = " . $cDefaultAlias;
+				$pub_id = mysql_insert_id();
+				$sql = "UPDATE Aliases SET IdPublication = " . $pub_id . " WHERE Id = " . $cDefaultAlias;
 				query($sql);
+				$params = array( "operation"=>"create", "IdPublication"=>"$pub_id" );
+				$msg = build_reset_cache_msg($cache_type_publications, $params);
+				send_message($SERVER_ADDRESS, server_port(), $msg, $err_msg);
 			} else {
 				$sql = "DELETE FROM Aliases WHERE Id = " . $cDefaultAlias;
 				query($sql);
