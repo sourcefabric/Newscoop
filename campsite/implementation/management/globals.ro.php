@@ -84,6 +84,7 @@ regGS("Add new article","Adaugă articol nou");
 regGS("Status","Stare");
 regGS("No such article.","Articolul nu există");
 regGS("Published","Publicat");
+regGS("Not published","Nepublicat");
 regGS("Submitted","Anunţat");
 regGS("New","Nou");
 regGS("Article","Articol");
