@@ -364,7 +364,7 @@ int WriteCharset(TOLContext& c, MYSQL* pSql, fstream& fs)
 	StoreResult(pSql, coSqlRes);
 	CheckForRows(*coSqlRes, 1);
 	FetchRow(*coSqlRes, row);
-	fs << "<META HTTP-EQUIV=\"charset\" CONTENT=\"" << row[0] << "\">\n";
+	fs << "<META HTTP-EQUIV=\"Content-Type\" content=\"text/html; charset=" << row[0] << "\">" << endl;
 	return 0;
 }
 
