@@ -115,7 +115,7 @@ $issueLanguage =& new Language($sLanguage);
 	</td>
 	
 	<td style="padding: 6px;">
-		<input type="file" name="filename" size="55" value="" alt="file|sxw" emsg="The file name must have an extension of .sxw">
+		<input type="file" name="filename" size="55" value="" alt="file|sxw" emsg="The file name must have an extension of .sxw" class="input_file">
 	</td>
 	
 </tr>
