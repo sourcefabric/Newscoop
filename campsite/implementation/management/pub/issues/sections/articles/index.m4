@@ -137,7 +137,7 @@ E_CURRENT
     if ($ArtOffs < 0) $ArtOffs= 0;
     todefnum('lpp', 20);
 
-	$sql = "SELECT *, abs($Language - IdLanguage) as LangOrd FROM Articles WHERE IdPublication=$Pub AND NrIssue=$Issue AND NrSection=$Section $ll ORDER BY Number, LangOrd asc, ArticleOrder ASC $oo LIMIT $ArtOffs, ".($lpp+1);
+	$sql = "SELECT *, abs($Language - IdLanguage) as LangOrd FROM Articles WHERE IdPublication=$Pub AND NrIssue=$Issue AND NrSection=$Section $ll ORDER BY ArticleOrder asc $oo LIMIT $ArtOffs, ".($lpp+1);
 	query($sql, 'q_art');
     if ($NUM_ROWS) {
 	$nr= $NUM_ROWS;
