@@ -1,8 +1,8 @@
 <?php  
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
-load_common_include_files();
+load_common_include_files($ADMIN_DIR);
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/User.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/priv/CampsiteInterface.php');
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
 list($validUser, $user) = User::Login($_REQUEST["UserName"], $_REQUEST["UserPassword"]);
 $selectLanguage = isset($_REQUEST["selectlanguage"])?$_REQUEST["selectlanguage"]:"";
 if ($selectlanguage == "") {
@@ -15,7 +15,7 @@ if ($validUser) {
 	setcookie("TOL_UserId", $user->getId());
 	setcookie("TOL_UserKey", $user->getKeyId());
 	setcookie("TOL_Language", $selectLanguage);
-	header("Location: /priv/index.php");
+	header("Location: /$ADMIN/index.php");
 	exit;
 }
 ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
@@ -31,7 +31,7 @@ if ($validUser) {
 <BODY  BGCOLOR="WHITE" TEXT="BLACK" LINK="DARKBLUE" ALINK="RED" VLINK="DARKBLUE">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%">
 <TR>
-	<TD ROWSPAN="2" WIDTH="1%"><IMG SRC="/priv/img/sign_big.gif" BORDER="0"></TD>
+	<TD ROWSPAN="2" WIDTH="1%"><IMG SRC="/<?php echo $ADMIN; ?>/img/sign_big.gif" BORDER="0"></TD>
 	<TD>
 	    <DIV STYLE="font-size: 12pt"><B><?php  putGS("Login failed"); ?></B></DIV>
 	    <HR NOSHADE SIZE="1" COLOR="BLACK">
@@ -41,8 +41,8 @@ if ($validUser) {
 	<TD ALIGN=RIGHT>
 		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
 		<TR>
-			<TD><A HREF="/priv/login.php" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Login"); ?>"></A></TD>
-			<TD><A HREF="/priv/login.php" ><B><?php  putGS("Login");  ?></B></A></TD>
+			<TD><A HREF="/<?php echo $ADMIN; ?>/login.php" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Login"); ?>"></A></TD>
+			<TD><A HREF="/<?php echo $ADMIN; ?>/login.php" ><B><?php  putGS("Login");  ?></B></A></TD>
 		</TR>
 		</TABLE>
 	</TD>
