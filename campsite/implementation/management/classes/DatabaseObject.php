@@ -242,6 +242,9 @@ class DatabaseObject {
 	
 	/**
 	 * Create the record in the database for this object.
+	 * This will use the currently set index values for the key.
+	 * No other values are set unless they are passed in through 
+	 * the $p_values parameter.
 	 *
 	 * @param array p_values
 	 *		Extra values to be set at create time, in the form of:
