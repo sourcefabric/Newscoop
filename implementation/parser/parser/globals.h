@@ -75,9 +75,9 @@ inline InvalidValue::InvalidValue(const string& p_rcoName, const string& p_rcoVa
 
 // other useful functions
 string int2string(int p_nValue);
-string long2string(long p_nValue);
+string long2string(lint p_nValue);
 string uint2string(int p_nValue);
-string ulong2string(unsigned long p_nValue);
+string ulong2string(ulint p_nValue);
 
 #include <sstream>
 
@@ -91,7 +91,7 @@ inline string int2string(int p_nValue)
 	return coStr.str();
 }
 
-inline string long2string(long p_nValue)
+inline string long2string(lint p_nValue)
 {
 	stringstream coStr("");
 	coStr << p_nValue;
@@ -105,7 +105,7 @@ inline string uint2string(int p_nValue)
 	return coStr.str();
 }
 
-inline string ulong2string(unsigned long p_nValue)
+inline string ulong2string(ulint p_nValue)
 {
 	stringstream coStr("");
 	coStr << p_nValue;

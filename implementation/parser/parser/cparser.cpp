@@ -218,7 +218,7 @@ const CCLexem* CCLex::getCLexem()
 				return IdentifyAtom();
 			}
 			CurrLexem.text_start = text_start;
-			CurrLexem.text_len = index - (unsigned long)(text_start - in_buf);
+			CurrLexem.text_len = index - (ulint)(text_start - in_buf);
 			CurrLexem.res = CMS_CLEX_NONE;
 			return &CurrLexem;
 		}
@@ -258,7 +258,7 @@ const CCLexem* CCLex::getCLexem()
 				CurrLexem.Identifier[0] = 0;
 				if (text_start)
 				{
-					CurrLexem.text_len = index - (unsigned long)(text_start - in_buf)
+					CurrLexem.text_len = index - (ulint)(text_start - in_buf)
 					                     - strlen(CTokenStart);
 					CurrLexem.text_start = text_start;
 				}

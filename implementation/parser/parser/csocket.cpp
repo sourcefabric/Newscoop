@@ -52,8 +52,8 @@ static pthread_mutex_t threadsafe_gethost_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 #define ptrsize (sizeof(void*))
 #define ROUND_TO_PTR_BOUNDARY( buff, roundup, buflen ) 						\
-	if( (roundup = ptrsize - ((unsigned long)buff % ptrsize)) != ptrsize ){	\
-		buff = (char*)(unsigned long)buff + roundup;						\
+	if( (roundup = ptrsize - ((ulint)buff % ptrsize)) != ptrsize ){	\
+		buff = (char*)(ulint)buff + roundup;						\
 		if( (buflen -= roundup) < 0 )										\
 			return -1;														\
 	}
@@ -573,7 +573,7 @@ struct hostent* CSocket::GetHostInfo(const char* name_or_addr)
 {
 	struct hostent* h;
 	struct hostent* ph = 0;
-	u_long addr;
+	ulint addr;
 	int nErrNo;
 #ifdef _REENTRANT
 	char pchErrMsg[100];
@@ -880,7 +880,7 @@ CTCPSocket::CTCPSocket(char* local_ip, int lport, int backlog) EXCEPTION_DEF(thr
 		: CConnectedSocket(SOCK_STREAM, PF_INET)
 {
 
-	unsigned long addr;
+	ulint addr;
 	if ((addr = inet_addr(local_ip)) != INADDR_ANY || lport != 0)
 	{
 		struct sockaddr_in s;
@@ -988,7 +988,7 @@ CTCPSocket* CServerSocket::Accept() EXCEPTION_DEF(throw(SocketErrorException))
 CUDPSocket::CUDPSocket(const char* local_ip, const int lport, int backlog)
 EXCEPTION_DEF(throw(SocketErrorException)): CSocket(SOCK_DGRAM, PF_INET)
 {
-	unsigned long addr;
+	ulint addr;
 	if ((addr = inet_addr(local_ip)) != INADDR_ANY || lport != 0)
 	{
 		struct sockaddr_in s;
@@ -1064,7 +1064,7 @@ EXCEPTION_DEF(throw(SocketErrorException))
 CUDPConnSocket::CUDPConnSocket(char* local_ip, int lport)
 EXCEPTION_DEF(throw(SocketErrorException)): CConnectedSocket(SOCK_DGRAM, PF_INET)
 {
-	unsigned long addr;
+	ulint addr;
 	if ((addr = inet_addr(local_ip)) != INADDR_ANY || lport != 0)
 	{
 		struct sockaddr_in s;
