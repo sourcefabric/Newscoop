@@ -29,7 +29,7 @@ define(<*TMP_HEAD*>, <*<HEAD>
     <META http-equiv="Content-Type" content="text/html" charset="<?php  p($languages[$TOL_Language]['charset']); ?>">
 *>)dnl
 define(<*B_HEAD*>, <*<HEAD>
-	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite["website_url"] ?>/css/admin_stylesheet.css">
+	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
 *>)dnl
 define(<*E_HEAD*>, <*</HEAD>*>)dnl
 define(<*X_TITLE*>, <*<TITLE><?php  putGS("$1"); ?></TITLE>*>)dnl
