@@ -48,7 +48,7 @@ class AboutFrame extends CampDialog{
         addCompo(new JLabel("Attila Egyedi"));
 //        addCompo(new JLabel(" "));
         addCompo(new JLabel("Maintained and distributed under GNU GPL by CAMPWARE"));
-        addCompo(new JLabel("Copyright © 1999-2003 MDLF"));
+        addCompo(new JLabel("Copyright © 1999-2004 MDLF"));
         
         
         addButton(ok);
