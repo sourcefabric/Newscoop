@@ -1124,16 +1124,16 @@ int CActURLParameters::takeAction(CContext& c, sockstream& fs)
 	{
 		coURL = c.DefURL()->getQueryString();
 		fs << coURL;
+		first = coURL == "";
 		URLPrintParam(P_TOPIC_ID, c.DefTopic(), fs, first);
 	}
 	else
 	{
 		coURL = c.URL()->getQueryString();
 		fs << coURL;
+		first = coURL == "";
 		URLPrintParam(P_TOPIC_ID, c.Topic(), fs, first);
 	}
-	if (coURL != "")
-		first = false;
 	if (c.SubsType() != ST_NONE)
 		fs << (first ? "" : "&") << P_SUBSTYPE << "="
 		<< (c.SubsType() == ST_TRIAL ? "trial" : "paid");
@@ -1199,9 +1199,15 @@ int CActFormParameters::takeAction(CContext& c, sockstream& fs)
 	        && c.Section() < 0 && c.Article() < 0)
 		return ERR_NOPARAM;
 	if (fromstart)
+	{
 		fs << c.DefURL()->getFormString();
+		FormPrintParam(P_TOPIC_ID, c.DefTopic(), fs);
+	}
 	else
+	{
 		fs << c.URL()->getFormString();
+		FormPrintParam(P_TOPIC_ID, c.Topic(), fs);
+	}
 	if (c.LMode() == LM_PREV)
 	{
 		FormPrintParam(P_ILSTART, c.IPrevStart(), fs);
@@ -1533,8 +1539,14 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 	{
 		if (case_comp(field, "template") == 0)
 		{
-			fs << "/" << CPublication::getIssueTemplate(c.Language(), c.Publication(), 
-			                                            c.Issue(), &m_coSql);
+			try {
+				fs << "/look/" << CPublication::getIssueTemplate(c.Language(), c.Publication(), 
+				                                            c.Issue(), &m_coSql);
+			}
+			catch (InvalidValue& rcoEx)
+			{
+				return ERR_NODATA;
+			}
 			return RES_OK;
 		}
 		table = "Issues";
@@ -1548,8 +1560,14 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 	{
 		if (case_comp(field, "template") == 0)
 		{
-			fs << "/" << CPublication::getSectionTemplate(c.Language(), c.Publication(), 
-			                                              c.Issue(), c.Section(), &m_coSql);
+			try {
+				fs << "/look/" << CPublication::getSectionTemplate(c.Language(), c.Publication(), 
+				                                              c.Issue(), c.Section(), &m_coSql);
+			}
+			catch (InvalidValue& rcoEx)
+			{
+				return ERR_NODATA;
+			}
 			return RES_OK;
 		}
 		table = "Sections";
@@ -1567,8 +1585,14 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 	{ // CMS_ST_ARTICLE
 		if (case_comp(field, "template") == 0)
 		{
-			fs << "/" << CPublication::getArticleTemplate(c.Language(), c.Publication(), 
-			                                              c.Issue(), c.Section(), &m_coSql);
+			try {
+				fs << "/look/" << CPublication::getArticleTemplate(c.Language(), c.Publication(), 
+				                                              c.Issue(), c.Section(), &m_coSql);
+			}
+			catch (InvalidValue& rcoEx)
+			{
+				return ERR_NODATA;
+			}
 			return RES_OK;
 		}
 		table = "Articles";
