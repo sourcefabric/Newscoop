@@ -29,7 +29,7 @@ define(<*TMP_HEAD*>, <*<HEAD>
     <META http-equiv="Content-Type" content="text/html" charset="<?php  p($languages[$TOL_Language]['charset']); ?>">
 *>)dnl
 define(<*B_HEAD*>, <*<HEAD>
-    <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite["website_url"] ?>/css/admin_stylesheet.css">
 *>)dnl
 define(<*E_HEAD*>, <*</HEAD>*>)dnl
 define(<*X_TITLE*>, <*<TITLE><?php  putGS("$1"); ?></TITLE>*>)dnl
@@ -38,18 +38,8 @@ define(<*X_EXPIRES*>, <*<META HTTP-EQUIV="Expires" CONTENT="now">*>)dnl
 define(<*X_REFRESH*>, <*<META HTTP-EQUIV="Refresh" CONTENT="$1">*>)dnl
 define(<*X_LOGOUT*>, <*X_REFRESH(0; URL=X_ROOT/logout.php)*>)dnl
 define(<*X_AD*>, <*X_REFRESH(0; URL=X_ROOT/ad.php?ADReason=<?php  print encURL(getGS("$1" ifelse(<*$2*>, <**>, <**>, <*,$2*>))); ?>)*>)dnl
-define(<*B_STYLE*>, <*<STYLE>
-	BODY { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	SMALL { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 8pt; }
-	FORM { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	TH { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	TD { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	BLOCKQUOTE { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	UL { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	LI { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	A  { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; text-decoration: none; color: darkblue; }
-	ADDRESS { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 8pt; }*>)dnl
-define(<*E_STYLE*>, <*</STYLE>*>)dnl
+define(<*B_STYLE*>, <* *>)dnl
+define(<*E_STYLE*>, <* *>)dnl
 define(<*B_BODY*>, <*<BODY $1 BGCOLOR="WHITE" TEXT="BLACK" LINK="DARKBLUE" ALINK="RED" VLINK="DARKBLUE">*>)dnl
 define(<*B_BODY_SPECIAL*>, <*<BODY BGCOLOR="WHITE" TEXT="BLACK" LINK="DARKBLUE" ALINK="RED" VLINK="DARKBLUE" ONUNLOAD="check()">*>)dnl
 define(<*E_BODY*>, <*</BODY>*>)dnl
@@ -66,16 +56,14 @@ define(<*X_BUTTON*>, <*<A HREF="X_ROOT/$3"><IMG SRC="X_ROOT/img/$2" BORDER="0" A
 dnl
 dnl *** Header ****
 dnl
-define(<*B_HEADER*>, <*<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%">
+define(<*B_HEADER*>, <*<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
 	<TR>
-		<TD ROWSPAN="2" WIDTH="1%"><IMG SRC="X_ROOT/img/sign_big.gif" BORDER="0"></TD>
 		<TD>
-		    <DIV STYLE="font-size: 12pt"><B><?php  putGS("$1"); ?></B></DIV>
-		    X_HR
+		    <?php  putGS("$1"); ?>
 		</TD>
-	</TR>*>)dnl
+*>)dnl
 define(<*X_HEADER_NO_BUTTONS*>, <*	<TR><TD>&nbsp;</TD></TR>*>)dnl
-define(<*B_HEADER_BUTTONS*>, <*	<TR><TD ALIGN=RIGHT><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0"><TR>dnl*>)dnl
+define(<*B_HEADER_BUTTONS*>, <*	<TD ALIGN=RIGHT><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0"><TR>dnl*>)dnl
 define(<*X_HBUTTON*>, <*<TD><A HREF="X_ROOT/$2" ifelse(<*$3*>, <**>, <**>, <*TARGET="$3"*>)><IMG SRC="X_ROOT/img/tol.gif" BORDER="0" ALT="<?php  putGS("$1"); ?>"></A></TD><TD><A HREF="X_ROOT/$2" ifelse(<*$3*>, <**>, <**>, <*TARGET="$3"*>)><B><?php  putGS("$1");  ?></B></A></TD>*>)dnl
 define(<*E_HEADER_BUTTONS*>, <*</TR></TABLE></TD></TR>*>)dnl
 define(<*E_HEADER*>, <*</TABLE>*>)dnl
@@ -160,8 +148,8 @@ define(<*E_DIALOG_BUTTONS*>, <*	</DIV>
 	</TR>*>)dnl
 define(<*E_DIALOG*>, <*</TABLE></CENTER>
 </FORM>*>)dnl
-define(<*SUBMIT*>, <*<INPUT TYPE="submit" NAME="$1" VALUE="<?php  putGS('$2'); ?>">*>)dnl
-define(<*REDIRECT*>, <*<INPUT TYPE="button" NAME="$1" VALUE="<?php  putGS('$2'); ?>" ONCLICK="location.href='$3'">*>)dnl
+define(<*SUBMIT*>, <*<INPUT TYPE="submit" class="button" NAME="$1" VALUE="<?php  putGS('$2'); ?>">*>)dnl
+define(<*REDIRECT*>, <*<INPUT TYPE="button" class="button" NAME="$1" VALUE="<?php  putGS('$2'); ?>" ONCLICK="location.href='$3'">*>)dnl
 dnl
 dnl *** Message box ***
 dnl
