@@ -31,6 +31,6 @@ if (function_exists ("incModFile")) {
 	</script>
 	<META HTTP-EQUIV="Expires" CONTENT="now">
 </HEAD>
-<BODY OnLoad="parent.location='/priv/login.php'">
+<BODY OnLoad="parent.location='/<?php echo $ADMIN; ?>/login.php'">
 </BODY>
 </HTML>
