@@ -2588,10 +2588,10 @@ int CActUser::takeAction(CContext& c, sockstream& fs)
 	    };
 	if (c.Key() <= 0 && !add)
 		return ERR_NOKEY;
-	fs << "<form action=\"" << tpl_file << "\" method=POST><input type=hidden "
-	"name=\"" P_IDLANG "\" value=\"" << c.Language() << "\"><input type=hidden"
-	" name=\"" P_IDPUBL "\" value=\"" << c.Publication() << "\"><input "
-	"type=hidden name=\"" P_NRISSUE "\" value=\"" << c.Issue() << "\">";
+	fs << "<form name=\"user\" action=\"" << tpl_file << "\" method=POST>"
+	"<input type=hidden name=\"" P_IDLANG "\" value=\"" << c.Language()
+	<< "\"><input type=hidden name=\"" P_IDPUBL "\" value=\"" << c.Publication()
+	<< "\"><input type=hidden name=\"" P_NRISSUE "\" value=\"" << c.Issue() << "\">";
 	if (c.SubsType() != ST_NONE)
 		fs << "<input type=hidden name=\"SubsType\" value=\""
 		<< (c.SubsType() == ST_TRIAL ? "trial" : "paid") << "\">";
