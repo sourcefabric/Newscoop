@@ -612,7 +612,11 @@ apache_bin_path="$bin_path"
 if [ "$apache_conf_path" != "" ]; then
     conf_paths=$apache_conf_path
 else
-    conf_paths="/etc/${apache_bin_name}/conf /etc/${apache_bin_name} "`cut_last_dirs "${apache_bin_path}"`/conf
+    conf_paths=""
+    for bn in $bin_names; do
+	conf_paths="$conf_paths /etc/${bn}/conf /etc/${bn} "
+    done
+    conf_paths="$conf_paths "`cut_last_dirs "${apache_bin_path}"`/conf
 fi
 cf_path=""
 cf_paths=""
