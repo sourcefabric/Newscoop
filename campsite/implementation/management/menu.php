@@ -41,7 +41,7 @@ foreach ($preConfigMenu as $item) {
 	}
 }
 $numConfigMenuItems = count($configMenu);
-$numConfigMenuColumns = ($numConfigMenuItems/3) + ((($numConfigMenuItems%3) !=0)?1:0);
+$numConfigMenuColumns = ($numConfigMenuItems/2) + ($numConfigMenuItems%2);
 
 $preUserMenu = array();
 $preUserMenu[] = array('title'=>'Users', 
@@ -136,7 +136,6 @@ foreach ($preObsoleteMenu as $item) {
 								$count = 0;
 								foreach ($configMenu as $menuItem) {
 									if (($count % ($numConfigMenuColumns)) == 0) {
-										
 										echo "</tr><tr>";
 									}
 									?>
