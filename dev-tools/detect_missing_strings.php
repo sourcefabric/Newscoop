@@ -30,7 +30,7 @@ function processDirScript($file, $langCode, &$missingStrings, &$errors)
 	global $gStrings, $gLangCode;
 
 	$fileContent = file_get_contents($file);
-	$funcNames = array("getGS", "putGS");
+	$funcNames = array("getGS", "putGS", "DisplayError");
 	foreach ($funcNames as $index=>$func) {
 		$text = $fileContent;
 		while (true) {
@@ -72,7 +72,7 @@ function processDirScript($file, $langCode, &$missingStrings, &$errors)
 				continue; // if end of message not set continue
 
 			$msg = stripslashes(substr($msg, 0, $endMsg));
-			if (!in_array($msg, $gStrings) && !in_array($msg, $missingStrings))
+			if (!array_key_exists($msg, $gStrings) && !in_array($msg, $missingStrings))
 				$missingStrings[] = $msg;
 		}
 	}
