@@ -1,11 +1,8 @@
 CAMPSITE
-Web Automation Tool 
-User Guide
-
-CAMPSITE version: 2.1.0 and newer versions
-Maintained and distributed under GNU/GPL by CAMPWARE
-http://www.campware.org
-Manual version: 1 November 2002 
+Web Automation Tool User Guide
+CAMPSITE version: 2.1.1 and newer versions
+Maintained and distributed under GNU/GPL by CAMPWARE http://www.campware.org
+Manual version: February 10, 2003 
 Language: English
 ©1999-2002 Media Development Loan Fund
 http://www.mdlf.org - http://www.mdlf-camp.net
@@ -36,7 +33,7 @@ COPYRIGHT
 2.2.5 Creating articles within a section
 2.2.6 Editing articles: Edit Article Details view
 2.2.7 Editing body-type fields: Working with CAMPFIRE
-2.2.8 Publishing articles
+2.2.8 Publishing articles4
 2.2.9 Setting the finalized publication live
 2.3. GLOSSARY
 2.3.1 Creating 'Infotypes'
@@ -76,20 +73,20 @@ COPYRIGHT
 
 INTRODUCTION
 CAMPSITE is a multilingual, Unicode-based content management system, featuring easy localization of the backend user interface. CAMPSITE was designed for medium-to-large-size online news publications. Issues, copy flow, back archives, as well as subscription management are fully implemented features. At the core of CAMPSITE is CAMPFIRE, a near-WYSIWYG Java editor based on Unicode, which allows journalists and editors to publish content and control layout online in their native character sets. Formatting can be altered in a similar way as in editors such as Wordpad, meaning that absolutely no HTML knowledge is necessary for formatting and inputting text.
-The original CAMPSITE concept was developed by Center for Advanced Media-Prague (CAMP) in collaboration with Transitions Online, which started using CAMPSITE in late 2000. DNT-Cluj (http://www.dntcj.ro) and Recognos (http://www.recognos.com), software companies based in Cluj, Romania accomplished the original coding and part of the further development. Current core development is taken care of by CAMP New Media Fellows. For a detailed revision history, go to http://www.campware.org/campsite. CAMPSITE in action can be seen, among other locations, on the web sites of Transitions Online (http://www.tol.cz), Fluter (http://www.fluter.de), Feral Tribune (http://www.feral.hr) and Reporter (http://www.reporter-magazin.com).
+The original CAMPSITE concept was developed by Center for Advanced Media-Prague (CAMP) in collaboration with Transitions Online, which started using CAMPSITE in late 2000. DNT-Cluj (http://www.dntcj.ro) and Recognos (http://www.recognos.com), software companies based in Cluj, Romania accomplished the original coding and part of the further development. Current core development is taken care of by CAMP New Media Fellows. For a detailed revision history, go to http://www.campware.org. CAMPSITE in action can be seen, among other locations, on the web sites of Transitions Online (http://www.tol.cz), Fluter (http://www.fluter.de), Feral Tribune (http://www.feral.hr) and Reporter (http://www.reporter-magazin.com).
 Test drives of CAMPSITE are available soon at the campware project site (http://www.campware.org). Mail us for any related questions at contact@campware.org.
 CAMPSITE tech specs in a nutshell:
 CAMPSITE server: 
 runs on a Linux server, originally tested on RedHat 7.0 and Mandrake 8.0 and has proven compatible with RedHat 7.1, 7.2, 8.0, Mandrake 8.1, 8.2, 9.0 and Debian
 requires an Apache web server to be running, and its virtual servers to be configured by the administrator.
 needs a MySQL database server for Linux to be able to store data. The tests were made on MySQL v.3.23.36.
-requires PHP (version 3.0 and up) to be running 
+requires PHP (version 3.0 and up) to be running.
 CAMPSITE client side:
 runs on top of standard Java Virtual Machine Plugin (plugin version 1.3.1 and up) in Netscape under Unix (tested on version 6.2), Netscape under Windows (versions 6.2 and up),and MS Internet Explorer (versions 5.0 and up). On Macintosh it works in Internet Explorer under OS X.
 COPYRIGHT
 CAMPSITE is a Unicode-based multilingual web content management system for news publications. CAMPFIRE is a Unicode-based java-based near-WYSIWYG text editor. 
 Copyright ©1999-2002 Media Development Loan Fund.
-Contact: http://www.campware.org 
+Contact: http://www.campware.org
 Campware encourages further development and financial contributions. Please let us know at contact@campware.org.
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version. This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
@@ -110,33 +107,33 @@ When installing on Red Hat, look for the section 'Standard Binary RPMs' which ha
 Here is what you need to do.
 1.2.1 Configure the Web server
 First you need to change the behavior of the http daemon (the Web server). The configuration file, called httpd.conf, is normally found in the /etc/httpd/conf/ folder (N.B. non-standard installation of the Apache server can change the location of the file). The changes you have to apply to the file are:
-- activate the DirectoryIndex directive and add to it the following option:
+activate the DirectoryIndex directive and add to it the following option:
 /priv/templates/idx.php
-- activate the IndexIgnore directive and set it to
+activate the IndexIgnore directive and set it to
 IndexIgnore *
-- add the following lines:
-AddHandler tpl_handler .tpl 
+add the following lines:
+AddHandler tpl_handler .tpl
 Action tpl_handler /cgi-bin/tpl_cgi /priv/templates/idx.php
-- make sure that the server has the rights to read, write and execute in the folder where the file are stored and uploaded. Standardly, the user and group should be set as 'httpd'; the rights should be set as 'rwx' for the user and 'rw' for the group. Consult the Linux Administration Guide for further information. Furthermore, the Web server should have activated the UniqueID option (the mod_unique_id should be loaded)
-- restart the httpd daemon:
+make sure that the server has the rights to read, write and execute in the folder where the file are stored and uploaded. Standardly, the user and group should be set as 'httpd'; the rights should be set as 'rwx' for the user and 'rw' for the group. Consult the Linux Administration Guide for further information. Furthermore, the Web server should have activated the UniqueID option (the mod_unique_id should be loaded)
+restart the httpd daemon:
 killall httpd
 {PATH}/httpd
 or
 /etc/rc.d/init.d/httpd restart
 1.2.2 Customize the application framework
-1.Copy the CAMPSITE archive in a directory on the server. 
-2.Unarchive it using the command: tar xzvf <campsite_archive> 
-3.Enter campsite directory. 
-4.Run './install', answer the install questions and wait for the application to be installed. 
+1.Copy the CAMPSITE archive in a directory on the server.
+2.Unarchive it using the command: tar xzvf <campsite_archive>.
+3.Enter campsite directory.
+4.Run './install', answer the install questions and wait for the application to be installed.
 1.2.3 The CAMPFIRE Java Editor
-At the heart of CAMPSITE's client interface, lies CAMPFIRE, a text editor implemented as a signed Java Applet. For this applet to work, you need to have the standard Java Virtual Machine plugin (version 1.3.1) installed on your Unix or Windows client machine (it may well already be there) and it is native on Macintosh OS X systems. 
-If you don't already have the plugin on a Windows machine, CAMPFIRE will automatically download the .exe version of the plugin from the Sun Microsystems's website and you will be prompted to initialize installation will start automatically (please be patient, the plugin is rather large). 
-In either case, make sure to make sure you click on 'Grant always' option in the popup window asking you 'Do you want to install and run signed applet distributed by "Campsite team"'(if you do otherwise, you will not be able to cut and paste within the editor). 
+At the heart of CAMPSITE's client interface, lies CAMPFIRE, a text editor implemented as a signed Java Applet. For this applet to work, you need to have the standard Java Virtual Machine plugin (version 1.3.1) installed on your Unix or Windows client machine (it may well already be there) and it is native on Macintosh OS X systems.
+If you don't already have the plugin on a Windows machine, CAMPFIRE will automatically download the .exe version of the plugin from the Sun Microsystems's website and you will be prompted to initialize installation will start automatically (please be patient, the plugin is rather large).
+In either case, make sure to make sure you click on 'Grant always' option in the popup window asking you 'Do you want to install and run signed applet distributed by "Campsite team"'(if you do otherwise, you will not be able to cut and paste within the editor).
 1.2.4 KNOWN LIMITATIONS
 Apple Macintosh: CAMPFIRE currently works only on Internet Explorer under OS X. We are working on expanding the range of browsers it works with. System 9.x and lower are not supported.
 Localizer: There are several known problems related to the localizer at this time. Action buttons like Save Changes or Cancel are only in English, for the moment. Similarly, some dropdown lists like Language or Country are not translated into the local language either at this stage. These are all known and documented problems and our development team will be resolving these issues in future releases.
 1.3. UPGRADING FROM VERSIONS 1.x or 2.0
-Upgrading from 1.x or 2.0 versions of Campsite requires three actions to be performed before the installation: 
+Upgrading from 1.x or 2.0 versions of Campsite requires three actions to be performed before the installation:
 database conversion to UTF-8 character set
 templates conversion to UTF-8 character set
 templates structure update
@@ -216,20 +213,20 @@ where [charset] must be replaced by the template character set and [template_nam
 Updating templates structure: Some attributes of List Article statement are no longer supported in version 2.1, so all templates using those attributes must be updated.
 Attributes no longer supported:
 - IsOn|IsNotOn FrontPage
-- IsOn|IsNotOn Section 
-Replacing unsupported attributes: 
+- IsOn|IsNotOn Section
+Replacing unsupported attributes:
 - "IsOn FrontPage" replaced by: "OnFrontPage is on"
 - "IsNotOn FrontPage" replaced by: "OnFrontPage is off"
 - "IsOn Section" replaced by: "OnSection is on"
-- "IsNotOn Section" replaced by: "OnSection is off" 
-For details see List of Articles. 
+- "IsNotOn Section" replaced by: "OnSection is off"
+For details see List of Articles.
 1.3.2. New template language features
 a. New attributes to "If Issue" statement:
 - name <string_operator> <string_value>
 - publish_date <date_operator> <date_value>
-For details see If Issue. 
-b. New attributes to "List Issue" statement: 
-- publish_date <date_operator> <date_value> 
+For details see If Issue.
+b. New attributes to "List Issue" statement:
+- publish_date <date_operator> <date_value>
 For details see List of Issues.
 c. New attributes to "If Article" statement:
 - name <string_operator> <string_value>
@@ -256,18 +253,17 @@ adding content and managing your publications
 Your first step on the road to bringing your publications online with CAMPSITE is to configure the publishing environment. This involves setting up parameters such as languages that you are or will be publishing in, definition of typical user types, and the very structure of your publication(s).
 After you log in for the first time with the default user name (admin) and password (admn00) you will reach administrator's interface.
 The left frame contains a list of modules that you can access, while the right frame displays the currently selected module.
-CAMPSITE appears differently to different users. Each user sees only the options that he or she has the right to access or alter. A typical backend user (an editor or journalist) will get to see only a fraction of the options available to a fully authorized user (such as the default administrator).
-On top of that, each user is able to choose his interface language. The default language is English, but you can either use one of the localized versions we supply (at the moment, we supply the German, Russian, and Czech versions) or create your own (see The Localizer section below).
+CAMPSITE appears differently to different users. Each user sees only the options that he or she has the right to access or alter. A typical backend user (an editor or journalist) will get to see only a fraction of the options available to a fully authorized user (such as the default administrator). On top of that, each user is able to choose his interface language. The default language is English, but you can either use one of the localized versions we supply (at the moment, we supply the German, Russian, and Czech versions) or create your own (see The Localizer section below).
 2.1.1 Languages
 While CAMPSITE's default language is English, you are by no means limited to publishing in that language only. It's actually very much au contraire.
 The language module enables you to configure support for languages that you wish to publish in. If your tongues of choice happen to be absent from the list of CAMPSITE's pre-configured languages, you can configure your own languages.
-To do so, enter the Languages module and click on 'Add new language'. You should enter the language name (both in English and in the language itself), its code (e.g. hr for Croatian), the code page your will be saving your templates in on your local machine (e.g. if you are working on a Windows machine on your Russian cyrillic template in an editor, you will want to specify KOI-8 or Windows-1251), and the names of months and days of the week in the language you are configuring. 
+To do so, enter the Languages module and click on 'Add new language'. You should enter the language name (both in English and in the language itself), its code (e.g. hr for Croatian), the code page your will be saving your templates in on your local machine (e.g. if you are working on a Windows machine on your Russian cyrillic template in an editor, you will want to specify KOI-8 or Windows-1251), and the names of months and days of the week in the language you are configuring.
 [NOTE TO ADMINISTRATOR: You may want to limit the number of languages configured on your server in order to spare your users from long drop-down language menus. Sometimes less is more, if you know what we mean.]
 2.1.2 Countries
-This module determines how country lists will appear in user-profile forms. The module allows you to create country lists in different languages. When you click on 'Add new country', you will be prompted to enter the country's name in a language of your choice as well as the country's code . The language dropdown menu will contain as many languages as you had defined in the Languages module (see section 2.1.1).
+This module determines how country lists will appear in user-profile forms. The module allows you to create country lists in different languages. When you click on 'Add new country', you will be prompted to enter the country's name in a language of your choice as well as the country's code. The language dropdown menu will contain as many languages as you had defined in the Languages module (see section 2.1.1).
 [N.B. The language you are asked to specify is the language in which you are entering a country's name, *NOT* the language spoken in the country!]
 2.1.3 The Localizer
-The localizer is a new module of CAMPSITE that is introduced in version 2.1. The module allows you to create your own localization of CAMPSITE's backend user interface by simply translating individual strings that appear in the interface. 
+The localizer is a new module of CAMPSITE that is introduced in version 2.1. The module allows you to create your own localization of CAMPSITE's backend user interface by simply translating individual strings that appear in the interface.
 To do so, enter the Localizer, scroll down to the bottom of the window and select a language in which you want to create localization files from the dropdown menu (the menu will contain as many languages as you have had configured in the Languages module) and then press the 'Create files' button. This will create a range of globals.xx.php files and locals.xx.php files, which will be visible in the left frame of the Localizer. Select one of the newly created files, and the strings related to that particular part of the interface will be shown in the right frame. You can interrupt the translation process at any time. Just press save at the bottom of the frame and exit the localizer. When you return, you'll find all the non-translated strings in red and you can continue from where you left off.
 [NOTE: Localization currently works for the entire user interface, minus the OK and Cancel buttons. The CAMPFIRE Java editor is fully localizable, but that is done outside the localizer (CAMPFIRE strings have to be compiled separately; the localization text file is available from http://). For more information on how to become a localization volunteer for CAMPSITE and CAMPFIRE, please send an e-mail to <contact@campware.org>.]
 2.1.4 User Management
@@ -282,29 +278,18 @@ Editor - standard backend user with rights limited to basic article management a
 Reader - the profile limited to viewing the site, i.e. front end only.
 To create your custom user profiles, click on 'User types' and then on 'Add new user type'. Then proceed to select the rights that you want included for this type of user.
 2.1.4.2 Backend Access: Creating Users
-To add a user, click on 'Users' and choose 'Add new user account'.
-You should specify the full name of the user, user name, password, and choose a predefined user type (i.e. one of the default types or your custom user types). 
+To add a user, click on 'Users' and choose 'Add new user account'. You should specify the full name of the user, user name, password, and choose a predefined user type (i.e. one of the default types or your custom user types).
 If you would like to further fine tune the rights assigned to a particular user, go to 'Users' and click on 'Rights' in the same row with the user's name.
-
 2.1.4.3 Front-End Access: Subscription
-CAMPSITE allows you to control public access to your publication(s) through its built-in subscription module, more on which you can read more in section 2.5). 
-[TIP: If you want to have all your content freely accessible, you can bypass this feature by structuring your templates in a special way. For more information on that, go to the section Creating Templates for your Publication.] 
+CAMPSITE allows you to control public access to your publication(s) through its built-in subscription module, more on which you can read more in section 2.5).
+[TIP: If you want to have all your content freely accessible, you can bypass this feature by structuring your templates in a special way. For more information on that, go to the section Creating Templates for your Publication.]
 For now, you should know that all articles you create in your publication(s) are by default available to subscribers only. Publication editors or administrators have the right to make an article accessible to non-subscribers.
-
-The way it works from readers' side is as follows:
-If a reader tries to access a non-public article, she is informed that she is not allowed to read the article but is provided with an option to subscribe immediately to that article or other articles or the whole publication. A temporarysubscription is activated immediately (the duration of that temporary subscription is determined by the value you set for the 'Pay Time', For more information, see section 2.5). During this period, the reader has a chance to effect the payment and consequently have her subscription extended by the administrator. 
-
-The publication's administrator is automatically notified of all new subscriptions by e-mail. 
-Subscribers also receive automatically generated e-mail reminders that their subscription is expiring 14 days before the event. 
-
+The way it works from readers' side is as follows: If a reader tries to access a non-public article, she is informed that she is not allowed to read the article but is provided with an option to subscribe immediately to that article or other articles or the whole publication. A temporarysubscription is activated immediately (the duration of that temporary subscription is determined by the value you set for the 'Pay Time', For more information, see section 2.5). During this period, the reader has a chance to effect the payment and consequently have her subscription extended by the administrator.
+The publication's administrator is automatically notified of all new subscriptions by e-mail. Subscribers also receive automatically generated e-mail reminders that their subscription is expiring 14 days before the event.
 [NOTE: The text of the subscription-expiry message is hardcoded in the current version of CAMPSITE and it reads as follows:
 "Dear <reader>,
-This is an automatically generated e-mail message. Your <subs_type> subscription (started on
-<start_date>) to publication <publication> will expire as follows:
-<section> on <exp_date> (remained <rem_days> days) - started on <start_date>
-<section> on <exp_date> (remained <rem_days> days) - started on <start_date>
+This is an automatically generated e-mail message. Your <subs_type> subscription (started on <start_date>) to publication <publication> will expire on <date> (in <number> days).
 Please enter the site http://<pub_site> to update subscription."
-
 Future versions of CAMPSITE (as of version 2.2) will allow for customization of the message and for its translation into multiple languages.]
 2.2. Creating publications
 CAMPSITE has a clear four-tier hierarchical structure, which conforms to the traditional structure of news publications. Each publication is thus made up of issues; each issue is in turn made up of sections, which are themselves comprised of articles.
@@ -318,7 +303,7 @@ Name of the publication (e.g. "Prague Times")
 Site - the name of the server (or IP address) on which your publication will be hosted (e.g. www.praguetimes.net) and on which it will ultimately be accessible to readers.
 Language - the default language of the publication
 The rest of fields are related to subscriptions, and if you would like to leave the decisions on whether and how much are you going to charge for your publication for later, you may just skip those and return to them at some later stage (preferably after you read section 2.5 where subscription is covered in greater detail). But even at this stage, perhaps you'd like to know what they mean:
-Pay Period - time within which the reader has to pay for his subscription, because his temporary automatic subscription is expiring in that many days (If you don't want to allow any automatic free access to your site, you will set this value to "0").. 
+Pay Period - time within which the reader has to pay for his subscription, because his temporary automatic subscription is expiring in that many days (If you don't want to allow any automatic free access to your site, you will set this value to "0").
 Time unit - select the unit in which you will measure the duration of trial or paid subscriptions to your publication from the dropdown menu (days, weeks, months, years)
 Unit cost - the cost of each time unit
 Currency - the monetary unit you will be charging in for your publication
@@ -337,6 +322,7 @@ Whichever option you choose, that is to replicate the structure of the last issu
 [TIP: While you can always go back and change the name and the default language of an issue at any time, the issue number cannot be changed once it is specified. If you are planning to add older issues of your newspaper/static-HTML site at a later stage to the same CAMPSITE publication, you may consider continuing the series. For example, if you just published issue 154 of the "Prague Times" in static HTML before moving to CAMPSITE, you could assign number 155 to the first issue you are creating within CAMPSITE.]
 2.2.3 Adding new sections to an issue
 By clicking on an issue, you will enter the Sections view in which you will have the option of adding new sections to the current issue by clicking on 'Add new section'. You should specify the name and section number (within the issue). While you can come back later and change the name of the section, the section number can be chosen only at the time when the new section is added.
+In 2.1.1. version a new feature was implemented: update subscriptions when adding/editing/deleting sections.  If "Add section to all subscriptions" was checked all subscriptions will have this section added to them. On delete, if "Delete section from all subscriptions" was checked all subscriptions will have this section removed from them. The sections can be added to or deleted from subscriptions when editing the section too.
 2.2.4 Defining article types
 The next step in setting up your publication is to define the types of articles that you intend to publish on your site. What you are actually doing at this stage is specifying the way articles will appear to the person who will be adding content to your publications. For example, a feature story is likely to have more components than a brief news item. To create an article type, click on 'Article types' and then select 'Add new article type'. First, you should pick a name for your article type (N.B. only letters are allowed, no spaces or special characters). Then you can start adding fields to the article type by clicking on 'New field' option (or proceed to add other article types by choosing 'Add another'). You will be requested to specify the name of the field (e.g. Author, Date, Deck, Body, Author, Biography -- remember no spaces or special characters are allowed!).
 [TIP: Try to give intuitive names to your article types and fields within them, because chances are that you will not be the only person doing the publishing. For example, if you have an article type that you would like to use in your sports section, call it Sportsarticle, not Sp or Artic or anything equally cryptic. It will save you time and nerves when journalists and admin staff start doing all of the posting (and all of the consequent asking). Similarly, when creating an article type, try to make the sequence of fields logical, i.e. close to the way they will appear to the readers on the site (e.g. Author - Date -Deck - Articlebody - Bibliography). At this stage of development, CAMPSITE does not allow reordering of fields within article types.]
@@ -381,7 +367,7 @@ CAMPFIRE allows contributors (journalists or editors) without any technical or H
 Chances are that anyone who has ever worked with a text editor should find CAMPFIRE intuitive to use. CAMPFIRE features a toolbar with buttons from which main functions can be performed, while additional features can be accessed from pull-down menus.
 All text-formatting features are fully WYSIWYG, except align justify. The non-WYSIWYG features are insertion of images, subheads/page breaks and CAMPSITE Glossary keywords (see section 2.3).
 From left to right on the toolbar, in order of appearance, the buttons are:
-New - clears the editor;
+New - clears the editor
 Save - which saves the article field that is being edited
 Preview - allows you to preview the whole article, not just the field you are editing
 Cut
@@ -395,7 +381,7 @@ Underline
 Align left
 Align center
 Align right
-Insert image - inserts an image placeholder into the text. When you click on it, you are prompted to select one of the images you previously uploaded for that particular article. You can also specify the alignment (none, left, right, centered), alt text (the text that shows up when you go over an image with a mouse within a browser), and the caption for that will appear under the image..
+Insert image - inserts an image placeholder into the text. When you click on it, you are prompted to select one of the images you previously uploaded for that particular article. You can also specify the alignment (none, left, right, centered), alt text (the text that shows up when you go over an image with a mouse within a browser), and the caption for that will appear under the image.
 Insert subhead allows subheads in your text to become page breaks. This command inserts a code around the subhead you select, which the parser will interpret as a page break and parse the subhead on a new page (N.B. This feature has to be enabled in your templates; see Part 3 of this manual for more details).
 Internal link button allows you to create links to other articles that you have already created within CAMPSITE. The actual procedure is analogous to the one with external links.
 External link allows you to create an absolute link in the text. You do so by highlighting (selecting) the segment of the text that you would like to link to a web page (URL) of your choice and clicking on the External link button. This will invoke a popup window that will prompt you to provide the URL and you can specify where you want the link to open (e.g. a new window). (N.B. you can use this feature to create mailto links as well).
@@ -404,14 +390,13 @@ Glossary keywords
 Font color
 Font size, which is self-explanatory
 Clear all attributes (which clears all formatting and links from the selected text)
-
-NOTE: CAMPFIRE only handles left, right, and centered alignment, because current browsers do not treat consistently the <JUSTIFY> option, so if you would like to have your articles justified, your teplate designer should specify that in your publication's article templates.
+NOTE: CAMPFIRE only handles left, right, and centered alignment, because current browsers do not treat consistently the <JUSTIFY> option, so if you would like to have your articles justified, your template designer should specify that in your publication's article templates.
 2.2.7.1 The Preview function
 Through CAMPFIRE, contributors can feed information into CAMPSITE's database. The layout of the article for the general audience, however, will most probably different than what you see as a contributor. The layout that readers will ultimately see when they visit your web site is controlled by templates, which are described in more detail in Part 3 of this manual.
 [NOTE: the preview function only works once you saved (uploaded) the text form the CAMPFIRE editor, because the preview will display the most recent material in the database.]
 To use the preview function you need to have the templates created and properly configured, as they are displaying the information from the database to the readers, adding additional layout (navigation, banners, etc.) on the way. If, for example, you have used CAMPFIRE to add information in the field 'biography', but the template does not include the 'biography' in the final layout, the preview function will not display this information.
 2.2.7.2 Previewing article and publication layouts
-To be able to preview article and publication layouts, go to the issues view and select the appropriate front-page and single-article templates (your template designer should have designed and uploaded these after having gone through the section 3 of this manual) 
+To be able to preview article and publication layouts, go to the issues view and select the appropriate front-page and single-article templates (your template designer should have designed and uploaded these after having gone through the section 3 of this manual).
 The front-page layout depends on a special stand-alone template that can be changed independently. All changes to the template can be previewed as soon as the template has been uploaded.
 Individual articles can be previewed from the 'Articles' area. Simply click 'Preview' to open an extra window with the page your readers/site visitors will be seeing.
 NOTE: At the bottom of the preview window, you can see information about the parser. If any problems occur while generating the web pages, the CAMPSITE parser will display error messages. These should help you to identify the problem in the template structure.
@@ -456,7 +441,7 @@ In plain English, topics are subject matters of articles. A topic can have subto
 At present, the Topics user interface is admittedly counterintuitive for the end user (journalist/editor). Next versions of CAMPSITE will have this sorted out.
 2.5. Configuring the Subscription Module
 CAMPSITE allows you to control access to your site in two ways:
-Standard UserName:Password pairs, which is suitable for individual users;
+Standard UserName:Password pairs, which is suitable for individual users
 IP Address access, which most institutional subscribers (libraries, universities, NGOs, companies, etc.) tend to prefer
 As CAMPSITE handles subscriptions at publication level, all subscription-related variables are customizable from the Publications view. Columns 'Subscription default time' and 'Info' are relevant in this context.
 The 'Subscription default time' parameter allows you to set default trial-subscription duration (Trial time) and the default duration of paid subscription (Paid time) for individual countries. To do so, click on Change in the 'Subscription default time' column. You will then have the option to Add new country, i.e. create subscription preferences for a given country.
@@ -513,7 +498,7 @@ As the rest of the HTML layout remains as it is, a simple template might look li
 The reason we can reduce the templates to such a simple solution is, because CAMPSITE will remember where it comes from and where it is. So by the time the user arrives at one particular article, CAMPSITE knows the publication, the issue, the section, and even the article ID and can simply generate the HTML page from the database by using the environmental variables together with the layout information in the template.
 Obviously, your design can be far more advanced than this page. And CAMPSITE can also perform far more advanced functions than this. In order to get a feel for this, let's jump into the next example, building the navigation. (A full list of tag commands can be found at the end of this chapter.)
 3.4. Generating a Navigation Template: navigationtemplate.tpl
-As described above, the template structure can be nested, meaning one template can call another template. This, for example, makes a lot of sense for the navigation. To jump between sections, you might only need one navigation template that can be used by all other templates (article, section, home page). 
+As described above, the template structure can be nested, meaning one template can call another template. This, for example, makes a lot of sense for the navigation. To jump between sections, you might only need one navigation template that can be used by all other templates (article, section, home page).
 To nest another template within another, use the following CAMPSITE tag:
 <!** include navigationtemplate.tpl>
 The 'include' command is CAMPSITE lingo; the name of the template needs to be adjusted to whatever you called it. Let's assume we add this tag in the article template we created earlier, and we can now go on and build the template.
@@ -569,7 +554,7 @@ This will make sure that the only articles that will be used which have this fea
 <a href="articletemplate.tpl?<!** urlparameters>"><!** print article name></a>
 We can then add more information from the database with the 'print article' command. HTML code goes in-between.
 <!** end list>
-Then we need to end the listing with the 'end list' command. So here we will list all the ones which are marked. But what if the editors checked more than one article, but your design only works with ONE article on the top, not all of them? 
+Then we need to end the listing with the 'end list' command. So here we will list all the ones which are marked. But what if the editors checked more than one article, but your design only works with ONE article on the top, not all of them?
 3.5.2 Displaying only the most recent feature article on a section page
 To use just the most recent article from the 'feature' articles in the section, use the following tag:
 <!** list length 1 article onsection is on order bynumber desc>
@@ -604,7 +589,7 @@ What do we need to do?
 <!** list length 3 section number greater 2>
 This will select the sections 3, 4, and 5.
 <!** list length 1 article order bynumber desc>
-This line orders the entries from newest to oldest and only returns the newest article, because the length of the list is set to one. 
+This line orders the entries from newest to oldest and only returns the newest article, because the length of the list is set to one.
 <!** print section name>
 <!** print article title>
 ...to print the most recent for each section.
@@ -623,15 +608,15 @@ So, now we need to take the second articles for each section to go into the colu
 Instructions within CAMPSITE lingo fall into two categories: those that do not generate output but only select the environment for the rest of the instructions, and those that print a certain information from the database according to the environment set by the first type of instructions.
 3.8.1 Runtime parameters
 The information selected also depends on the runtime parameters. These parameters are:
-language identifier (IdLang) which sets the current language 
-publication identifier (IdPubl) which sets the current publication 
-issue number (NrIssue) which sets the current issue 
-section number (NrSection) which sets the current section 
-article number (NrArticle) which sets the article 
+language identifier (IdLang) which sets the current language
+publication identifier (IdPubl) which sets the current publication
+issue number (NrIssue) which sets the current issue
+section number (NrSection) which sets the current section
+article number (NrArticle) which sets the article
 3.8.2 Other parameters
 and also some special parameters:
-the keywords parameter, which specifies that keywords will be used as filters in a List SearchResult statement; it is used for the local search engine 
-a list index start, that specifies the starting index for a each type of list: Issue (ILStart), Section (SLStart), Article (ALStart), Article search (SRLstart) 
+the keywords parameter, which specifies that keywords will be used as filters in a List SearchResult statement; it is used for the local search engine
+a list index start, that specifies the starting index for a each type of list: Issue (ILStart), Section (SLStart), Article (ALStart), Article search (SRLstart)
 All runtime parameters form the so-called "data context" within which each article is positioned.
 3.9. Structure of CAMPSITE templates
 The structure of the CAMPSITE templates is simple. It is a continuous row of either HTML language or the commands used by CAMPSITE to pull content out of the database. Any template in its most simplified form looks like this:
@@ -787,7 +772,7 @@ EndList [Issue]
 where
 length <integer_value> where <integer_value> specifies list_length forces the list to have at most list_length items. If the list contains more items than list_length items the ones not fitting in can be listed using If NextItems/PreviousItems statements.
 columns <integer_value> where <integer_value> specifies columns_number sets an environment variable. This is incremented as if the items would be placed in a table cell. The counting starts from one and the variable is incremented for every new element. When it reaches the maximum value it is reset to one. This is very usefull in building tables of data. For details see If List.
-<list_of_instructions> may contain any statement except: "Language", "Publication", "List Issue", "Issue". 
+<list_of_instructions> may contain any statement except: "Language", "Publication", "List Issue", "Issue".
 <list_of_issue_constraints> =
 [<issue_constraint>] <list_of_issue_constraints> 
 | <issue_constraint>
@@ -810,17 +795,17 @@ bydate desc|asc
 |bynumber desc|asc
 where year stands for year, mon_nr for month number (1..12), mday for month day (1..31), yday for year day (1..365), wday for week day (1..7), hour for hour, min for minute and sec for second.
 Any parameter used in <list_of_issue_constraints> can only be used once.
-Inside the List the following environment variables are modified: 
-language: if not defined before list start 
-publication: if not defined before list start 
-issue 
+Inside the List the following environment variables are modified:
+language: if not defined before list start
+publication: if not defined before list start
+issue
 The environment is restored after the list ends.
 Constraints:
 Inside List Issue the following statements are forbidden:
-Language 
-Publication 
-List Issue 
-Issue 
+Language
+Publication
+List Issue
+Issue
 List Issue statement can not be used inside List Section, List Article, List Subtittle, List SearchResults statements.
 3.9.3.2 List of Sections
 Purpose:
@@ -831,9 +816,9 @@ List [length <integer_value>] [column <integer_value>]
 [ForEmptyList [<list_of_instructions>]]
 EndList [Section]
 where
-length <integer_value> where <integer_value> specifies list_length forces the list to have at most list_length items. If the list contains more items than list_length items the ones not fitting in can be listed using If NextItems/PreviousItems statements. 
-columns <integer_value> where <integer_value> specifies columns_number sets an environment variable. This is incremented as if the items would be placed in a table cell. The counting starts from one and the variable is incremented for every new element. When it reaches the maximum value it is reset to one. This is very usefull in building tables of data. For details see If List. 
-<list_of_instructions> may contain any statement except: "Language", "Publication", "List Issue", "Issue", "List Section", "Section". 
+length <integer_value> where <integer_value> specifies list_length forces the list to have at most list_length items. If the list contains more items than list_length items the ones not fitting in can be listed using If NextItems/PreviousItems statements.
+columns <integer_value> where <integer_value> specifies columns_number sets an environment variable. This is incremented as if the items would be placed in a table cell. The counting starts from one and the variable is incremented for every new element. When it reaches the maximum value it is reset to one. This is very usefull in building tables of data. For details see If List.
+<list_of_instructions> may contain any statement except: "Language", "Publication", "List Issue", "Issue", "List Section", "Section".
 <list_of_section_constraints> =
 [<section_constraint>] <list_of_section_constraints> 
 | <section_constraint>
@@ -844,12 +829,12 @@ Any parameter used in <list_of_section_constraints> can only be used once.
 Inside List Section, the data context is defined by the constraints applied to the current section for every processed line. The data context is restored after the list processing.
 Constraints:
 Inside List Section the following statements are forbidden:
-Language 
-Publication 
-List Issue 
-Issue 
-List Section 
-Section 
+Language
+Publication
+List Issue
+Issue
+List Section
+Section
 List Section statement cannot be used inside List Article, List Subtitle, List SearchResult statements.
 3.9.3.3 List of Articles
 Purpose:
@@ -862,9 +847,9 @@ List [length <integer_value>] [column <integer_value>]
 [ForEmptyList [<list_of_instructions>]]
 EndList [Article]
 where
-length <integer_value> where <integer_value> specifies list_length forces the list to have at most list_length items. If the list contains more items than list_length items the ones not fitting in can be listed using If NextItems/PreviousItems statements. 
-columns <integer_value> where <integer_value> specifies columns_number sets an environment variable. This is incremented as if the items would be placed in a table cell. The counting starts from one and the variable is incremented for every new element. When it reaches the maximum value it is reset to one. This is very useful in building tables of data. For details see If List. 
-<list_of_instructions> may contain any statement except: "Language", "Publication", "List Issue", "Issue", "List Section", "Section", "List Article", "Article". 
+length <integer_value> where <integer_value> specifies list_length forces the list to have at most list_length items. If the list contains more items than list_length items the ones not fitting in can be listed using If NextItems/PreviousItems statements.
+columns <integer_value> where <integer_value> specifies columns_number sets an environment variable. This is incremented as if the items would be placed in a table cell. The counting starts from one and the variable is incremented for every new element. When it reaches the maximum value it is reset to one. This is very useful in building tables of data. For details see If List.
+<list_of_instructions> may contain any statement except: "Language", "Publication", "List Issue", "Issue", "List Section", "Section", "List Article", "Article".
 <list_of_article_constraints> =
 [<article_constraint>] <list_of_article_constraints> 
 | <article_constraint>
@@ -878,13 +863,13 @@ name <string_operator> <string_value>
 |public <switch_operator> <switch_value> 
 |[<article_type>] <article_type_attribute> <attribute_type_operator> <attribute_type_value> 
 |topic is|not <string_value>
-name, number, upload_date are self explaining article attributes 
-keyword: all articles containing the specified keyword (and respecting all the other constraints) will be in the list 
-OnFrontPage: articles having "Show article on front page" flag in <switch_operator> relation with <switch_value> will be selected; for details see Creating articles within a section 
-OnSection: articles having "Show article on section page" flag in <switch_operator> relation with <switch_value> will be selected; for details see Creating articles within a section 
-public: articles having "Allow users without subscription..." flag in <switch_operator> relation with <switch_value> will be selected 
-... <article_type_attribute> ...: articles being of <article_type> and having <article_type_attribute> in <attribute_type_operator> relation with <attribute_type_value> will be selected; for details see Defining article types 
-topic: if "is" operator is used, articles having specified topic in their list of topics will be selected; if "not" operator is uses articles not having specified topic in their list of topics will be selected 
+name, number, upload_date are self explaining article attributes
+keyword: all articles containing the specified keyword (and respecting all the other constraints) will be in the list
+OnFrontPage: articles having "Show article on front page" flag in <switch_operator> relation with <switch_value> will be selected; for details see Creating articles within a section
+OnSection: articles having "Show article on section page" flag in <switch_operator> relation with <switch_value> will be selected; for details see Creating articles within a section
+public: articles having "Allow users without subscription..." flag in <switch_operator> relation with <switch_value> will be selected
+... <article_type_attribute> ...: articles being of <article_type> and having <article_type_attribute> in <attribute_type_operator> relation with <attribute_type_value> will be selected; for details see Defining article types
+topic: if "is" operator is used, articles having specified topic in their list of topics will be selected; if "not" operator is uses articles not having specified topic in their list of topics will be selected
 <list_of_article_type_constraints> =
 [<article_type_constraint>] <list_of_article_type_constraints> 
 | <article_type_constraint>
@@ -913,20 +898,20 @@ List [length <integer_value>] [column <integer_value>]
 [ForEmptyList [<list_of_instructions>]]
 EndList [Article]
 where
-length <integer_value> where <integer_value> specifies list_length forces the list to have at most list_length items. If the list contains more items than list_length items the ones not fitting in can be listed using If NextItems/PreviousItems statements. 
-columns <integer_value> where <integer_value> specifies columns_number sets an environment variable. This is incremented as if the items would be placed in a table cell. The counting starts from one and the variable is incremented for every new element. When it reaches the maximum value it is reset to one. This is very usefull in building tables of data. For details see If List. 
-<list_of_instructions> may contain any statement except: "Language", "Publication", "List Issue", "Issue", "List Section", "Section", "List Article", "Article". 
+length <integer_value> where <integer_value> specifies list_length forces the list to have at most list_length items. If the list contains more items than list_length items the ones not fitting in can be listed using If NextItems/PreviousItems statements.
+columns <integer_value> where <integer_value> specifies columns_number sets an environment variable. This is incremented as if the items would be placed in a table cell. The counting starts from one and the variable is incremented for every new element. When it reaches the maximum value it is reset to one. This is very usefull in building tables of data. For details see If List.
+<list_of_instructions> may contain any statement except: "Language", "Publication", "List Issue", "Issue", "List Section", "Section", "List Article", "Article".
 Inside the List, the data context is defined by the constraints applied to the current article for every processed line. The data context is restored after the list processing. In List Subtitles statement the NextItems and PreviousItems statements don't work in the expected manner, because they refer to the list of article, the most inner level for publication components. In the same template one can use list of articles which are treated as lists of paragraphs, so a new option was needed and is called NextSubtitle (and PrevSubtitle respectively).
 Constraints:
 Inside List Subtitle the following statements are forbidden:
-Language 
-Publication 
-List Issue 
-Issue 
-List Section 
-Section 
-List Article 
-Article 
+Language
+Publication
+List Issue
+Issue
+List Section
+Section
+List Article
+Article
 3.9.3.5 List Search Result
 Purpose:
 Select the list of articles after searching database for given keywords. The Publication, Language, Issue, Section, Article parameters may not be defined outside List SearchResult statement; inside the statement however, all these parameters are defined. The code between "List .. Article.. " statement and "ForEmptyList" (if used) or "EndList" is repeated for every article in the list. When the list of article is empty the code in between "ForEmptyList" and "EndList" is executed once.
@@ -936,23 +921,23 @@ List [length <integer_value>] [column <integer_value>]
 <list_of_instructions> [ForEmptyList [<list_of_instructions>]]
 EndList [SearchResult]
 where
-length <integer_value> where <integer_value> specifies list_length forces the list to have at most list_length items. If the list contains more items than list_length items the ones not fitting in can be listed using If NextItems/PreviousItems statements. 
-columns <integer_value> where <integer_value> specifies columns_number sets an environment variable. This is incremented as if the items would be placed in a table cell. The counting starts from one and the variable is incremented for every new element. When it reaches the maximum value it is reset to one. This is very usefull in building tables of data. For details see If List. 
-<list_of_instructions> may contain any statement except: "Language", "Publication". 
+length <integer_value> where <integer_value> specifies list_length forces the list to have at most list_length items. If the list contains more items than list_length items the ones not fitting in can be listed using If NextItems/PreviousItems statements.
+columns <integer_value> where <integer_value> specifies columns_number sets an environment variable. This is incremented as if the items would be placed in a table cell. The counting starts from one and the variable is incremented for every new element. When it reaches the maximum value it is reset to one. This is very usefull in building tables of data. For details see If List.
+<list_of_instructions> may contain any statement except: "Language", "Publication".
 <order_condition> =
 bydate desc|asc 
 |bynumber desc|asc
 Inside the List, the data context is defined by the constraints applied to the current article for every processed line. The data context is restored after the list processing.
 Constraints:
 Inside List SearchResult the following statements are forbidden:
-Language 
-Publication 
-Note!!! (This is valid only for 2.0.11 and newer versions.) 
-All If statements can be negated by inserting "not" between If and its modifier (Publication, Issue etc.) 
-Example: 
-  <**If Publication defined> 
-and the negated version: 
-  <**If not Publication defined> 
+Language
+Publication
+Note!!! (This is valid only for 2.0.11 and newer versions.)
+All If statements can be negated by inserting "not" between If and its modifier (Publication, Issue etc.)
+Example:
+  <**If Publication defined>
+and the negated version:
+  <**If not Publication defined>
 3.9.3.6 If NextItems | PreviousItems
 Purpose:
 It runs the first or second list of instructions depending on existing articles in a limited length list after/before the end/start of the list. It can be used only inside List statements, especially to validate Next | Previous buttons.
@@ -1006,7 +991,7 @@ Draw table head
 <!** Else>
 Draw table row
 <!** EndIf>
-Building a table: 
+Building a table:
 <!** List columns 3 ... > 
     <!** If List start> <-- start table --> <table> <!** EndIf> 
     <!** If List column 1> <-- start new row --> <tr> <!** EndIf> 
@@ -1037,10 +1022,10 @@ name <string_operator> <string_value>
 |identifier <integer_operator> <integer_value> 
 |defined 
 |fromstart
-name: the if condition is true if actual publication name is in <string_operator> relation with <string_value> 
-identifier: the if condition is true if actual publication identifier is <integer_value> 
-defined: the if condition is true if publication parameter is defined 
-fromstart: the if condition is true if actual value of publication parameter is equal with the value from template start 
+name: the if condition is true if actual publication name is in <string_operator> relation with <string_value>
+identifier: the if condition is true if actual publication identifier is <integer_value>
+defined: the if condition is true if publication parameter is defined
+fromstart: the if condition is true if actual value of publication parameter is equal with the value from template start
 The list of instructions may contain any instruction allowed in the current context. If it is used inside a list, it must respect the constraints of the list (List Issue, List Section, List Article, List Subtitle, List SearchResult).
 Constraints:
 None.
@@ -1059,11 +1044,11 @@ name <string_operator> <string_value>
 |publish_date <date_operator> <date_value> 
 |iscurrent |defined |fromstart
 name: the if condition is true if actual issue name is in <string_operator> relation with <string_value> 
-number: the if condition is true if actual issue number is in <integer_operator> relation with <integer_value> 
-publish_date: the if condition is true if actual issue publish date is in <date_operator> relation with <date_value> 
-defined: the if condition is true if issue parameter is defined 
-fromstart: the if condition is true if actual value of issue parameter is equal with the value from template start 
-iscurrent: the if condition is true if actual issue is the current issue (the last published issue) 
+number: the if condition is true if actual issue number is in <integer_operator> relation with <integer_value>
+publish_date: the if condition is true if actual issue publish date is in <date_operator> relation with <date_value>
+defined: the if condition is true if issue parameter is defined
+fromstart: the if condition is true if actual value of issue parameter is equal with the value from template start
+iscurrent: the if condition is true if actual issue is the current issue (the last published issue)
 Example:
 <!** If Issue number is 1>
 This is Issue number 1
@@ -1116,7 +1101,7 @@ type: the condition is true if article type is <string_value>
 name: the condition is true if article name is in <string_operator> relation with <string_value>
 upload_date: the condition is true if article upload date is in <date_operator> relation with <date_value>
 has_keyword: the condition is true if specified keyword is in article keywords list
-public: the condition is true if the article is public (has the public flag set).
+public: the condition is true if the article is public (has the public flag set)
 OnFrontPage: the condition is true if "Show article on front page" flag is in <switch_operator> relation with <switch_value>
 OnSection: the condition is true if "Show article on section page" flag is in <switch_operator> relation with <switch_value>
 defined: the condition is true if article parameter is defined
@@ -1147,11 +1132,11 @@ If Subscription <condition>
 EndIf
 where
 <condition> = ok | error | trial | paid | action
-ok: the if condition is true if subscription action was taken and its result is success 
-error: the if condition is true if subscription action was taken and its result is error 
-trial: the if condition is true if subscription action was taken and its type is trial 
-paid: the if condition is true if subscription action was taken and its type is paid 
-action: the if condition is true if subscription action was taken 
+ok: the if condition is true if subscription action was taken and its result is success
+error: the if condition is true if subscription action was taken and its result is error
+trial: the if condition is true if subscription action was taken and its type is trial
+paid: the if condition is true if subscription action was taken and its type is paid
+action: the if condition is true if subscription action was taken
 The list of instructions may contain any instruction allowed in current context. If it is used inside a list it must respect the constraints of the list (List Issue, List Section, List Article, List Subtitle, List SearchResult).
 Constraints:
 None.
@@ -1165,9 +1150,9 @@ If Login <condition>
 EndIf
 where
 <condition> = ok | error | action
-ok: the if condition is true if login action was taken and its result is success 
-error: the if condition is true if login action was taken and its result is error 
-action: the if condition is true if login action was taken 
+ok: the if condition is true if login action was taken and its result is success
+error: the if condition is true if login action was taken and its result is error
+action: the if condition is true if login action was taken
 The list of instructions may contain any instruction allowed in current context. If it is used inside a list it must respect the constraints of the list (List Issue, List Section, List Article, List Subtitle, List SearchResult).
 Constraints:
 Cannot be used inside Login-EndLogin statement.
@@ -1189,14 +1174,14 @@ addok
 |addaction
 |modifyaction 
 |loggedin
-addok: the if condition is true if user add action was taken and its result is success 
-modifyok: the if condition is true if user modify action was taken and its result is success 
-adderror: the if condition is true if user add action was taken and its result is error 
-modifyerror: the if condition is true if user modify action was taken and its result is error 
-addaction: the if condition is true if user add action was taken 
-modifyaction: the if condition is true if user modify action was taken 
-defined: the if condition is true if user is defined (user cookie exists); this doesn't necessary mean that the user is properly logged in 
-loggedin: the if condition is true if user is properly logged in 
+addok: the if condition is true if user add action was taken and its result is success
+modifyok: the if condition is true if user modify action was taken and its result is success
+adderror: the if condition is true if user add action was taken and its result is error
+modifyerror: the if condition is true if user modify action was taken and its result is error
+addaction: the if condition is true if user add action was taken
+modifyaction: the if condition is true if user modify action was taken
+defined: the if condition is true if user is defined (user cookie exists); this doesn't necessary mean that the user is properly logged in
+loggedin: the if condition is true if user is properly logged in
 The list of instructions may contain any instruction allowed in the current context. If it is used inside a list it must respect the constraints of the list (List Issue, List Section, List Article, List Subtitle, List SearchResult).
 Constraints:
 Cannot be used inside User-EndUser statement.
@@ -1222,7 +1207,7 @@ The list of instructions may contain any instruction allowed in the current cont
 Constraints:
 None.
 Note:
-The If Image statement is valid only in 2.0.11 and newer versions. It won't work in 2.0.10 or older versions. 
+The If Image statement is valid only in 2.0.11 and newer versions. It won't work in 2.0.10 or older versions.
 3.9.3.20 If Language
 Purpose:
 Depending on the given condition, it runs the first or second list of instructions. It may be used anywhere in the template.
@@ -1231,7 +1216,7 @@ If Language condition
 <list_of_instructions>
 [Else [<list_of_instructions>]]
 EndIf [Section]
-where 
+where
 <condition> = 
 number <integer_operator> <integer_value> 
 |name <string_operator> <string_value> 
@@ -1239,15 +1224,15 @@ number <integer_operator> <integer_value>
 |code <string_operator> <string_value> 
 |defined
 |fromstart
-defined: the if condition is true if language parameter is defined 
-fromstart: the if condition is true if actual value of language parameter is equal with the value from template start 
-number: the if condition is true if operation: number <integer_operator> <integer_value> is true 
-name, englname, code: the if condition is true if operation: name|englname|code <string_operator> <string_value> is true 
+defined: the if condition is true if language parameter is defined
+fromstart: the if condition is true if actual value of language parameter is equal with the value from template start
+number: the if condition is true if operation: number <integer_operator> <integer_value> is true
+name, englname, code: the if condition is true if operation: name|englname|code <string_operator> <string_value> is true
 The list of instructions may contain any instruction allowed in the current context. If it is used inside a list it must respect the constraints of the list (List Issue, List Section, List Article, List Subtitle, List SearchResult).
 Constraints:
 None.
 Note:
-The If Language statement is valid only in 2.0.12 and newer versions. It won't work in 2.0.11 or older versions. 
+The If Language statement is valid only in 2.0.12 and newer versions. It won't work in 2.0.11 or older versions.
 3.9.3.21 With
 Purpose:
 Used to access a body field of a certain type of articles. When working with subtitles this statement is mandatory. See also List Subtitle, If PrevSubtitles, If NextSubtitles
@@ -1256,8 +1241,8 @@ With <article_type> <body_field>
 <list_of_instructions>
 EndWith
 where 
-<article_type> identifies a valid article type 
-<body_field> identifies a valid field of the given article type 
+<article_type> identifies a valid article type
+<body_field> identifies a valid field of the given article type
 The list of instructions may contain any instruction allowed in the current context. If it is used inside a list it must respect the constraints of the list (List Issue, List Section, List Article, List Subtitle, List SearchResult).
 Constraints:
 None.
@@ -1284,18 +1269,18 @@ reset_issue_list
 | reset_article_list
 | reset_searchresult_list 
 | reset_subtitle_list
-<image_number> is an <integer_value> representing a valid number of article image 
-allsubtitles: following this link the whole article will be printed, instead of one subtitle. 
-fromstart: prints the parameters received at the start of template, not the current ones (useful when building sitemaps) 
-reset_issue_list: reset list counters for all the lists (issue, section, article, searchresult, subtitle) 
-reset_section_list: reset list counters for the following lists: section, article, searchresult, subtitle 
-reset_article_list: reset list counters for the following lists: article, searchresult, subtitle 
-reset_searchresult_list: reset list counters for the following lists: searchresult, subtitle 
-reset_subtitle_list: reset list counters for the following lists: subtitle 
-image: print image parameters in order to show an image in template 
+<image_number> is an <integer_value> representing a valid number of article image
+allsubtitles: following this link the whole article will be printed, instead of one subtitle.
+fromstart: prints the parameters received at the start of template, not the current ones (useful when building sitemaps)
+reset_issue_list: reset list counters for all the lists (issue, section, article, searchresult, subtitle)
+reset_section_list: reset list counters for the following lists: section, article, searchresult, subtitle
+reset_article_list: reset list counters for the following lists: article, searchresult, subtitle
+reset_searchresult_list: reset list counters for the following lists: searchresult, subtitle
+reset_subtitle_list: reset list counters for the following lists: subtitle
+image: print image parameters in order to show an image in template
 Example:
 Suppose the data context is set to Language 1 (identifier), Publication 2 (identifier), Issue 3 (number), Section 6 (number). The printed string is:
-IdLanguage=1&IdPublication=2&NrIssue=3&NrSection=6 
+IdLanguage=1&IdPublication=2&NrIssue=3&NrSection=6
 for URLParameters, and
 <input type=hidden name=IdLanguage value="1">
 <input type=hidden name=IdPublication value="2">
@@ -1303,7 +1288,7 @@ for URLParameters, and
 <input type=hidden name=NrSection value="6">
 for FormParameters respectively.
 If Image is specified on URLParameters, the parameters for <image_number> of the article specified in the data context will be printed.
-Example: 
+Example:
 IdPublication=2&NrIssue=3&NrSection=6&NrArticle&NrImage=4
 Constraints:
 None.
@@ -1325,76 +1310,76 @@ where
 | <login_expression> 
 | <user_expression>
 | <subtitle_expression>
-<language_expression> = Language name |number |englname |code |codepage 
-name: language name 
-number: language identifier in the CAMPSITE database 
-englname: language name in English 
-code: language international code 
-codepage: page code corresponding to the language 
-For details on language see languages. 
-<publication_expression> = Publication name |identifier |site 
-name: publication name 
-identifier: publication identifier in the CAMPSITE database 
-site: publication site (see also Creating a new publication) 
-For details on publication see Creating a new publication. 
-<issue_expression> = Issue name |number |<date_attribute> |date <date_format> |template 
-name: issue name 
-number: issue identifier in the CAMPSITE database 
-<date_attribute>: print an issue publish date field (year, month, day etc.); see details 
-date <date_format>: print issue publish date using the given format; see details 
-template: print the full path of the issue template file 
-For details on issue see Creating a new issue. 
-<section_expression> = Section name |number 
-name: section name 
-number: section identifier in the CAMPSITE database 
+<language_expression> = Language name |number |englname |code |codepage
+name: language name
+number: language identifier in the CAMPSITE database
+englname: language name in English
+code: language international code
+codepage: page code corresponding to the language
+For details on language see languages.
+<publication_expression> = Publication name |identifier |site
+name: publication name
+identifier: publication identifier in the CAMPSITE database
+site: publication site (see also Creating a new publication)
+For details on publication see Creating a new publication.
+<issue_expression> = Issue name |number |<date_attribute> |date <date_format> |template
+name: issue name
+number: issue identifier in the CAMPSITE database
+<date_attribute>: print an issue publish date field (year, month, day etc.); see details
+date <date_format>: print issue publish date using the given format; see details
+template: print the full path of the issue template file
+For details on issue see Creating a new issue.
+<section_expression> = Section name |number
+name: section name
+number: section identifier in the CAMPSITE database
 For details on section see Add new sections to an issue 
 
 <article_expression> = Article 
 name |number |keywords |type |<date_attribute> |upload_date [<date_format>] 
 |[<article_type>] <article_type_attribute> [<date_format>] |template
 name: article name
-number: article identifier in the CAMPSITE database 
-keywords: article keywords 
-type: article type (see details) 
-<date_attribute>: print an article upload date field (year, month, day etc.); see details 
-upload_date [<date_format>]: print article upload date using the given format; see details 
-[<article_type>] <article_type_attribute> [<date_format>]: print an article field specific to a certain article type (see Defining article types); if the field type is date a date format may be specified; see date format details 
-template: print the full path of the article template file 
-For details on article see Creating articles within a section and Editing articles: Edit Article Details view 
+number: article identifier in the CAMPSITE database
+keywords: article keywords
+type: article type (see details)
+<date_attribute>: print an article upload date field (year, month, day etc.); see details
+upload_date [<date_format>]: print article upload date using the given format; see details
+[<article_type>] <article_type_attribute> [<date_format>]: print an article field specific to a certain article type (see Defining article types); if the field type is date a date format may be specified; see date format details
+template: print the full path of the article template file
+For details on article see Creating articles within a section and Editing articles: Edit Article Details view.
 
-<image_expression> = Image 
+<image_expression> = Image
 photographer |place |description |<date_attribute> 
 |date [<date_format>]
-photographer, place, description are fields describing the image 
-<date_attribute>: 
-date [<date_format>]: 
-<list_expression> = List row |column |index 
-row: list row; if column is not specified in list statement or has value 1 row takes the value of the element number in the list 
-column: list column; if column is not specified in list statement it will have a vallue of 1 for every list element 
-index: element number in the list; if list length is specified index will take the value of list_length * number_of_steps_from_list_start * elment_number where 
-list_length is the maximum length of the list 
-number_of_steps_from_list_start is how many steps the list start moved from the "whole list" start 
-elment_number is the number of the element in the current list 
-For details on list see If List 
+photographer, place, description are fields describing the image
+<date_attribute>: see Date - <date_attribute>
+date [<date_format>]: see Date - <date_format>
+<list_expression> = List row |column |index
+row: list row; if column is not specified in list statement or has value 1 row takes the value of the element number in the list
+column: list column; if column is not specified in list statement it will have a vallue of 1 for every list element
+index: element number in the list; if list length is specified index will take the value of list_length * number_of_steps_from_list_start * elment_number where
+list_length is the maximum length of the list
+number_of_steps_from_list_start is how many steps the list start moved from the "whole list" start
+elment_number is the number of the element in the current list
+For details on list see If List
 
-<subscription_expression> = Subscription 
+<subscription_expression> = Subscription
 expdate [<date_format>] |unit |unitcost |currency |trialtime |paidtime |totalcost |error
-expdate, unit, unitcost, currency, trialtime, paidtime, totalcost are fields describing the publication subscription 
-error: if subscription action took place (after submitting a subscription form) it prints the error message (if there was an errror) 
-For details on subscription see CONFIGURING THE SUBSCRIPTION MODULE 
-<login_expression> = Login error 
-error: if login action took place (after submitting a login form) it prints the error message (if there was an errror) 
+expdate, unit, unitcost, currency, trialtime, paidtime, totalcost are fields describing the publication subscription
+error: if subscription action took place (after submitting a subscription form) it prints the error message (if there was an errror)
+For details on subscription see CONFIGURING THE SUBSCRIPTION MODULE
+<login_expression> = Login error
+error: if login action took place (after submitting a login form) it prints the error message (if there was an errror)
 
-<user_expression> = User 
+<user_expression> = User
 adderror |modifyerror |name |uname |email |city |straddress |state |country |phone |fax |contact |phone2 |PostalCode |Employer |Position |Interests |How |Languages |Improvements |Field1 |Field2 |Field3 |Field4 |Field5 |Text1 |Text2 |Text3 |Title |Age
-adderror: if user add action took place (after submitting a user subscription form) it prints the error message (if there was an errror) 
-modifyerror: if user modify action took place (after submitting a user info form) it prints the error message (if there was an errror) 
-the other parameters (name, uname, email, city...) are fields describing the user information; they are self-explaining; Field1-Field5, Text1-Text3 are extra fields for storing some extra information; the publication administrator sets their meaning 
+adderror: if user add action took place (after submitting a user subscription form) it prints the error message (if there was an errror)
+modifyerror: if user modify action took place (after submitting a user info form) it prints the error message (if there was an errror)
+the other parameters (name, uname, email, city...) are fields describing the user information; they are self-explaining; Field1-Field5, Text1-Text3 are extra fields for storing some extra information; the publication administrator sets their meaning
 <subtitle_expression> = Subtitle name
-name: print subtitle name (see also Editing body-type fields: Working with CAMPFIRE) 
+name: print subtitle name (see also Editing body-type fields: Working with CAMPFIRE)
 Constraints:
-Print List can be used only inside List-EndList statement. 
-Print Login can be used only outside Login-EndLogin statement. 
+Print List can be used only inside List-EndList statement.
+Print Login can be used only outside Login-EndLogin statement.
 3.9.4.3 Date
 Purpose:
 Prints the current date according to format or only a date attribute.
@@ -1494,19 +1479,19 @@ Edit
 |<login_expression>
 |<search_expression>
 <subscription_expression> = Subscription time
-Generates an input field for editing the subscription time. 
+Generates an input field for editing the subscription time.
 <user_expression> = User 
 name |uname |password |passwordagain |email |city |straddress |state |phone |fax |contact |phone2 |postalcode |employer |position |interests |how |languages |improvements |field1 |field2 |field3 |field4 |field5 |text1 |text2 |text3
-The parameters (name, uname, email, city...) are fields describing the user information; they are self-explaining; Field1-Field5, Text1-Text3 are extra fields for storing some extra information; the publication administrator sets their meaning. Edit User generates an text input for editing the selected field. 
-<login_expression> = Login uname |password 
-Generates a text input for editing login user name or password. 
+The parameters (name, uname, email, city...) are fields describing the user information; they are self-explaining; Field1-Field5, Text1-Text3 are extra fields for storing some extra information; the publication administrator sets their meaning. Edit User generates an text input for editing the selected field.
+<login_expression> = Login uname |password
+Generates a text input for editing login user name or password.
 <search_expression> = Search keywords
-Generates a text input for editing the search keywords. 
+Generates a text input for editing the search keywords.
 Constraints:
-Edit Subscription can be used inside Subscription-EndSubscription statement only. 
-Edit User can be used inside User-EndUser statement only. 
-Edit Login can be used inside Login-EndLogin statement only. 
-Edit Search can be used inside Search-EndSearch statement only. 
+Edit Subscription can be used inside Subscription-EndSubscription statement only.
+Edit User can be used inside User-EndUser statement only.
+Edit Login can be used inside Login-EndLogin statement only.
+Edit Search can be used inside Search-EndSearch statement only.
 3.9.4.9 Select
 Purpose:
 Generate input data pop-up list, list, radio button or checkbox for subscription, user or search forms.
@@ -1516,95 +1501,95 @@ Select
 |<user_expression>
 |<search_expression>
 <subscription_expression> = Subscription section
-Generates a multiple select list for selecting sections in subscription form. 
+Generates a multiple select list for selecting sections in subscription form.
 <user_expression> = User 
 country |title |gender |age |employertype |pref1 |pref2 |pref3 |pref4
-The parameters (country, title, gender...) are fields describing the user information; they are self-explaining; pref1-pref4 are extra fields for storing some extra information; the publication administrator sets their meaning. Generates pop-up list or radio-button for selecting values for the above fields. 
+The parameters (country, title, gender...) are fields describing the user information; they are self-explaining; pref1-pref4 are extra fields for storing some extra information; the publication administrator sets their meaning. Generates pop-up list or radio-button for selecting values for the above fields.
 <search_expression> = Search mode |level
-Generates a checkbox for selecting the search mode (match one or all keywords). 
+Generates a checkbox for selecting the search mode (match one or all keywords).
 Constraints:
-Select Subscription can be used inside Subscription-EndSubscription statement only. 
-Select User can be used inside User-EndUser statement only. 
-Select Search can be used inside Search-EndSearch statement only. 
+Select Subscription can be used inside Subscription-EndSubscription statement only.
+Select User can be used inside User-EndUser statement only.
+Select Search can be used inside Search-EndSearch statement only.
 
 4. APENDIX I - ALPHABETIC LIST OF LANGUAGE STATEMENTS
-Article (3.9.2.5) 
-Date (3.9.4.3) 
-Edit Login (3.9.4.8) 
-Edit Search (3.9.4.8) 
-Edit Subscription (3.9.4.8) 
-Edit User (3.9.4.8) 
-Form (3.9.4.1) 
-If Allowed (3.9.3.14) 
-If Article (3.9.3.13) 
-If CurrentSubtitle (3.9.3.18) 
-If Image (3.9.3.19) 
-If Issue (3.9.3.11) 
-If Language (3.9.3.20) 
-If List (3.9.3.8) 
-If Login (3.9.3.16) 
-If NextItems (3.9.3.6) 
-If NextSubtitles (3.9.3.7) 
-If PreviousItems (3.9.3.6) 
-If PrevSubtitles (3.9.3.7) 
-If Publication (3.9.3.10) 
-If Section (3.9.3.12) 
-If Subscription (3.9.3.15) 
-If User (3.9.3.17) 
-Include (3.9.3.9) 
-Issue (3.9.2.3) 
-Language (3.9.2.1) 
-List Article (3.9.3.3) 
-List Issue (3.9.3.1) 
-List SearchResult (3.9.3.5) 
-List Section (3.9.3.2) 
-List Subtitle (3.9.3.4) 
-Local (3.9.2.6) 
-Login (3.9.4.6) 
-Print Article (3.9.4.2) 
-Print Image (3.9.4.2) 
-Print Issue (3.9.4.2) 
-Print Language (3.9.4.2) 
-Print List (3.9.4.2) 
-Print Login (3.9.4.2) 
-Print Publication (3.9.4.2) 
-Print Section (3.9.4.2) 
-Print Subscription (3.9.4.2) 
-Print Subtitle (3.9.4.2) 
-Print User (3.9.4.2) 
-Publication (3.9.2.2) 
-Search (3.9.4.7) 
-Section (3.9.2.4) 
-Select Search (3.9.4.9) 
-Select Subscription (3.9.4.9) 
-Select User (3.9.4.9) 
-Subscription (3.9.4.4) 
-URLParameters (3.9.4.1) 
-User (3.9.4.5) 
-With (3.9.3.21) 
+Article (3.9.2.5)
+Date (3.9.4.3)
+Edit Login (3.9.4.8)
+Edit Search (3.9.4.8)
+Edit Subscription (3.9.4.8)
+Edit User (3.9.4.8)
+Form (3.9.4.1)
+If Allowed (3.9.3.14)
+If Article (3.9.3.13)
+If CurrentSubtitle (3.9.3.18)
+If Image (3.9.3.19)
+If Issue (3.9.3.11)
+If Language (3.9.3.20)
+If List (3.9.3.8)
+If Login (3.9.3.16)
+If NextItems (3.9.3.6)
+If NextSubtitles (3.9.3.7)
+If PreviousItems (3.9.3.6)
+If PrevSubtitles (3.9.3.7)
+If Publication (3.9.3.10)
+If Section (3.9.3.12)
+If Subscription (3.9.3.15)
+If User (3.9.3.17)
+Include (3.9.3.9)
+Issue (3.9.2.3)
+Language (3.9.2.1)
+List Article (3.9.3.3)
+List Issue (3.9.3.1)
+List SearchResult (3.9.3.5)
+List Section (3.9.3.2)
+List Subtitle (3.9.3.4)
+Local (3.9.2.6)
+Login (3.9.4.6)
+Print Article (3.9.4.2)
+Print Image (3.9.4.2)
+Print Issue (3.9.4.2)
+Print Language (3.9.4.2)
+Print List (3.9.4.2)
+Print Login (3.9.4.2)
+Print Publication (3.9.4.2)
+Print Section (3.9.4.2)
+Print Subscription (3.9.4.2)
+Print Subtitle (3.9.4.2)
+Print User (3.9.4.2)
+Publication (3.9.2.2)
+Search (3.9.4.7)
+Section (3.9.2.4)
+Select Search (3.9.4.9)
+Select Subscription (3.9.4.9)
+Select User (3.9.4.9)
+Subscription (3.9.4.4)
+URLParameters (3.9.4.1)
+User (3.9.4.5)
+With (3.9.3.21)
 5. APPENDIX II - CHARACTER SETS AND LANGUAGES
 Covering non-ASCII character sets requires standards to make such special characters cross-platform compatible. Some standards have been set over the past years and are already implemented in most browsers. These are:
 Code Page Character Set
-ISO-8859-1 Latin 1 I 
-ISO-8859-2 Latin 2 
-ISO-8859-3 Latin 3 
-ISO-8859-4 Baltic 
-ISO-8859-5 Cyrillic 
-ISO-8859-6 Arabic 
-ISO-8859-7 Greek 
-ISO-8859-8 Hebrew 
-ISO-8859-9 Turkish 
-ISO-8859-15 Latin 9 
+ISO-8859-1 Latin 1 I
+ISO-8859-2 Latin 2
+ISO-8859-3 Latin 3
+ISO-8859-4 Baltic
+ISO-8859-5 Cyrillic
+ISO-8859-6 Arabic
+ISO-8859-7 Greek
+ISO-8859-8 Hebrew
+ISO-8859-9 Turkish
+ISO-8859-15 Latin 9
 Multilingual support has been developed in various projects, independently from each other, resulting in some confusion and a lack of consistent standards. Recently those efforts have been channeled into a new universal standard called Unicode. Unicode tries to encapsulate all previously defined character sets, expanding the bytes used to represent each character. For more information on the Unicode project, see the official web site: http://www.unicode.org/
 Because different vendors had already created different versions of Unicode characters, we have endowed CAMPSITE with a generic translation table so that characters represented with one byte can be seen within this application without any special configurations on the client side.
-IMPORTANT: The configuration of your local machine must be set for multilingual support. 
+IMPORTANT: The configuration of your local machine must be set for multilingual support.
 Below you can find the best matches for individual languages and the appropriate character sets:
-Latin1 covers most West European languages, such as French (fr), Spanish (es), Catalan (ca), Basque (eu), Portuguese (pt), Italian (it), Albanian (sq), Rhaeto-Romanic (rm), Dutch (nl), German (de), Danish (da), Swedish (sv), Norwegian (no), Finnish (fi), Faroese (fo), Icelandic (is), Irish (ga), Scottish (gd), and English (en), incidentally also Afrikaans (af) and Swahili (sw), thus in effect also the entire American continent, Australia and much of Africa. The most notable exceptions are Zulu (zu) and other Bantu languages using Latin Extended-B letters, and of course Arabic in North Africa, and Guarani (gn) missing GEIUY with ~ tilde. The lack of the ligatures Dutch IJ, French OE and ,,German` quotation marks is considered tolerable. The lack of the new C=-resembling Euro currency symbol U+20AC has opened the discussion of a new Latin0. 
+Latin1 covers most West European languages, such as French (fr), Spanish (es), Catalan (ca), Basque (eu), Portuguese (pt), Italian (it), Albanian (sq), Rhaeto-Romanic (rm), Dutch (nl), German (de), Danish (da), Swedish (sv), Norwegian (no), Finnish (fi), Faroese (fo), Icelandic (is), Irish (ga), Scottish (gd), and English (en), incidentally also Afrikaans (af) and Swahili (sw), thus in effect also the entire American continent, Australia and much of Africa. The most notable exceptions are Zulu (zu) and other Bantu languages using Latin Extended-B letters, and of course Arabic in North Africa, and Guarani (gn) missing GEIUY with ~ tilde. The lack of the ligatures Dutch IJ, French OE and ,,German` quotation marks is considered tolerable. The lack of the new C=-resembling Euro currency symbol U+20AC has opened the discussion of a new Latin0.
 Latin1 has also been adopted as the first page of ISO 10646 (Unicode).
 Latin1 is HTML's base charset but HTML has now been globalized through RFC 2070.
-Latin2 covers the languages of Central and Eastern Europe: Czech (cs), Hungarian (hu), Polish (pl), Romanian (ro), Croatian (hr), Slovak (sk), Slovenian (sl), Sorbian. For Romanian the S and T had better use commas instead of cedilla as in Turkish: the U+015F LATIN SMALL LETTER S WITH CEDILLA at =BA ought to be read as U+0219 LATIN SMALL LETTER S WITH COMMA BELOW etc. The German Umlaute äöüß are found at exactly the same positions in Latin1, Latin2, Latin3, Latin4, Latin5, Latin6. Thus you can write German and Polish with Latin2 or German and Turkish with Latin5 but there is no 8bit charset to properly mix German and Russian, for instance. 
-Latin3 is popular with authors of Esperanto (eo) and Maltese (mt), and it covered Turkish before the introduction of Latin5 in 1988. 
-Latin4 introduced letters for Estonian (et), the Baltic languages Latvian (lv, Lettish) and Lithuanian (lt), Greenlandic (kl) and Lappish. Note that Latvian requires the cedilla on the =BB U+0123 LATIN SMALL LETTER G WITH CEDILLA to jump on top. Latin4 was followed by Latin6. 
+Latin2 covers the languages of Central and Eastern Europe: Czech (cs), Hungarian (hu), Polish (pl), Romanian (ro), Croatian (hr), Slovak (sk), Slovenian (sl), Sorbian. For Romanian the S and T had better use commas instead of cedilla as in Turkish: the U+015F LATIN SMALL LETTER S WITH CEDILLA at =BA ought to be read as U+0219 LATIN SMALL LETTER S WITH COMMA BELOW etc. The German Umlaute äöüß are found at exactly the same positions in Latin1, Latin2, Latin3, Latin4, Latin5, Latin6. Thus you can write German and Polish with Latin2 or German and Turkish with Latin5 but there is no 8bit charset to properly mix German and Russian, for instance.
+Latin3 is popular with authors of Esperanto (eo) and Maltese (mt), and it covered Turkish before the introduction of Latin5 in 1988.
+Latin4 introduced letters for Estonian (et), the Baltic languages Latvian (lv, Lettish) and Lithuanian (lt), Greenlandic (kl) and Lappish. Note that Latvian requires the cedilla on the =BB U+0123 LATIN SMALL LETTER G WITH CEDILLA to jump on top. Latin4 was followed by Latin6.
 Latin5: With these Cyrillic letters you can type Bulgarian (bg), Belarusian (be), Macedonian (mk), Russian (ru), Serbian (sr) and pre-1990 (no ghe with upturn) Ukrainian (uk). The ordering is based on the (incompatibly) revised GOST 19768 of 1987 with the Russian letters except for ë sorted by Russian alphabet (ABVGDE). Some still prefer to use in their applications the Ukrainian character set, KOI8-U.
 Latin6: This is the Arabic alphabet. Unfortunately the basic alphabet for Arabic (ar) does not containing the four extra letters for Persian (fa) nor the eight extra letters for Pakistani Urdu (ur). This fixed font is not well-suited for text display. Each Arabic letter occurs in up to four (2²) presentation forms: initial, medial, final or separate. To make Arabic text legible you'll need a display engine that analyses the context and combines the appropriate glyphs on top of a handler for the reverse writing direction shared with Hebrew. Introduced in 1992, Latin6 rearranged the Latin4 characters, dropped some symbols and the Latvian &rcedil;, added the last missing Inuit (Greenlandic Eskimo) and non-Skolt Sami (Lappish) letters and reintroduced the Icelandic ðýþ to cover the entire Nordic area. Skolt Sami still needs a few more accents. Note that RFC 1345 and GNU recode contain errors and use a preliminary and different latin6.
 6. APPENDIX III - ISO 639 LANGUAGE CODES
@@ -2049,12 +2034,12 @@ yourserver# exit
 [that's all...]
 8. APPENDIX V - BACKING UP DATABASES IN MYSQL
 In order to make a backup of your CAMPSITE database, do the following:
-1.type: mysqldump -u <db_user> -p <password> campsite > yourname-db.sql 
+1.type: mysqldump -u <db_user> -p <password> campsite > yourname-db.sql
 In order to delete your CAMPSITE database from MySQL, do the following:
-1.type: mysqladmin -u <db_user> -p <password> drop campsite 
-2.confirm with 'y' 
+1.type: mysqladmin -u <db_user> -p <password> drop campsite
+2.confirm with 'y'
 In order to load your backed up CAMPSITE database, do the following:
-1.create the campsite database by typing: mysqladmin -u <db_user> -p <password> create campsite 
+1.create the campsite database by typing: mysqladmin -u <db_user> -p <password> create campsite
 2.edit the backup file you created and add the first line: use campsite;
-(make sure you finish the line with a semicolon and do not start the line with a hash, which would mean it is only a comment). 
-3.load the database by typing: mysql -u <db_user> -p <password> campsite < yourname-db.sql 
+(make sure you finish the line with a semicolon and do not start the line with a hash, which would mean it is only a comment).
+3.load the database by typing: mysql -u <db_user> -p <password> campsite < yourname-db.sql
