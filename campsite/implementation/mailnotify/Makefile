@@ -6,7 +6,10 @@ PACKAGE_DIR=$(BIN_PACKAGE_DIR)/implementation/mailnotify
 
 DEPENDENCES= sql_macros.h configure.h
 
-CFLAGS= -Wall
+INCLUDE_PATH=-I$(MYSQL_H_PATH)
+
+CFLAGS= -Wall $(INCLUDE_PATH)
+CXXFLAGS=$(CFLAGS)
 
 LINKS=globals.h readconf.h readconf.cpp
 
@@ -19,11 +22,11 @@ links: dummy
 	done
 
 notifyendsubs: notifyendsubs.o readconf.o
-	g++ -o notifyendsubs notifyendsubs.o readconf.o -L$(LIBMYSQLCLIENT_PATH) -lmysqlclient -lnsl -lm -lz -lcrypt
+	g++ -o notifyendsubs notifyendsubs.o readconf.o -L$(LIBMYSQLCLIENT_PATH) -lmysqlclient $(NSL_LINK) -lm -lz -lcrypt
 	strip notifyendsubs
 
 notifyevents: notifyevents.o readconf.o
-	g++ -o notifyevents notifyevents.o readconf.o -L$(LIBMYSQLCLIENT_PATH) -lmysqlclient -lnsl -lm -lz -lcrypt
+	g++ -o notifyevents notifyevents.o readconf.o -L$(LIBMYSQLCLIENT_PATH) -lmysqlclient $(NSL_LINK) -lm -lz -lcrypt
 	strip notifyevents
 
 clean: dummy
