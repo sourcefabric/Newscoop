@@ -150,6 +150,6 @@ sockstream& CError::Print(sockstream& fs, bool p_bPrintContext)
 			else
 				fs << "(" << required << ");";
 	}
-	fs << "</font><br>";
+	fs << "</font>\\\n<br>";
 	return fs;
 }
