@@ -2,9 +2,12 @@
     - Added Chinese translation thanks to Andrew Lih and Tian Fawei at Hong Kong
     University, Journalism and Media Studies Centre
     - Implemented article/section duplication feature
+    - Implemented a small extension API in order to allow the Phorum modules to
+    work with campsite (thanks to Sebastian Goebel)
+    - Implemented ordering by name in issues and articles lists
     - Added a technical FAQ for troubleshooting
     - Added Arabic translation
-    - Small bug fixes
+    - Many bug fixes
 
 2.1.4
     - Changed the image buttons to text buttons which are easy to translate
