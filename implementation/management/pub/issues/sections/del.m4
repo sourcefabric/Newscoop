@@ -57,7 +57,7 @@ B_MSGBOX(<*Delete section*>)
 		<FORM METHOD="POST" ACTION="do_del.php">
 	X_MSGBOX_TEXT(<*<LI><?php  putGS('Are you sure you want to delete the section $1?','<B>'.getHVar($q_sect,'Name').'</B>'); ?></LI>*>)
 	B_DIALOG_INPUT(<*Subscriptions*>)
-		<INPUT TYPE="checkbox" checked NAME="cSubs"> <?php  putGS("Delete section from all subscriptions."); ?>
+		<INPUT TYPE="checkbox" checked NAME="cSubs" class="input_checkbox"> <?php  putGS("Delete section from all subscriptions."); ?>
 	E_DIALOG_INPUT
 	B_MSGBOX_BUTTONS
 		<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<?php  p($Pub); ?>">
