@@ -272,7 +272,9 @@ class Image extends DatabaseObject {
             $cmd = CAMPSITE_THUMBNAIL_COMMAND.' '.$target.' '.$thumbnail;
             #echo $cmd;
             system($cmd);
-            chmod($thumbnail, 0644);
+            if (file_exists($thumbnail)) {
+            	chmod($thumbnail, 0644);
+            }
         }
         return $image;
 	} // fn OnImageUpload
