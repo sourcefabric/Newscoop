@@ -5,7 +5,7 @@
 	<TITLE>CAMPSITE manual Version 2.1</TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.1  (Linux)">
 	<META NAME="CREATED" CONTENT="20020913;19124500">
-	<META NAME="CHANGED" CONTENT="20030304;16524200">
+	<META NAME="CHANGED" CONTENT="20030313;21312600">
 	<STYLE>
 	<!--
 		@page { size: 21.59cm 27.94cm }
@@ -520,14 +520,15 @@ from Languages.</P>
 </P>
 <OL START=2>
 	<LI><P STYLE="margin-top: 0cm">Convert files to UTF:</P>
-	<P STYLE="margin-top: 0cm">Convert tables.sql and data_nolang.sql:</P>
+	<P STYLE="margin-top: 0cm">Convert tables.sql:</P>
 	<OL>
 		<P STYLE="margin-top: 0cm"><I>iconv -f ISO_8859-1 -t UTF8
 		tables.sql &gt; tables_utf.sql</I></P>
-		<P STYLE="margin-top: 0cm"><I>iconv -f ISO_8859-1 -t UTF8
-		data_nolang.sql &gt; data_nolang_utf.sql</I></P>
 	</OL>
 </OL>
+<P STYLE="margin-top: 0cm"><SPAN STYLE="font-style: normal">Warning!!!
+</SPAN><I>data_nolang.sql</I><SPAN STYLE="font-style: normal"> <B>must
+not</B> be converted to UTF8.</SPAN></P>
 <P STYLE="margin-top: 0cm">For every character set used repeat the
 following steps:</P>
 <OL TYPE=a>
@@ -554,7 +555,7 @@ the character set selected for Log table.</P>
 	<P STYLE="margin-top: 0cm"><I>mysql ... [database] &lt;
 	tables_utf.sql</I></P>
 	<P STYLE="margin-top: 0cm"><I>mysql ... [database] &lt;
-	data_nolang_utf.sql</I></P>
+	data_nolang.sql</I></P>
 </OL>
 <P STYLE="margin-top: 0cm">For every character set used repeat the
 following steps:</P>
