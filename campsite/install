@@ -82,12 +82,12 @@ if [ ! -x ./configure ]; then
 fi
 go_to_install=false
 upgrade=""
-interactive="--interactive"
+do_interactive="--interactive"
 while [ "$1" != "" ]; do
     case $1 in
     --go_to_install) go_to_install=true ;;
     --upgrade) upgrade=--upgrade ;;
-    --not_interactive) interactive=""
+    --not_interactive) do_interactive=""
     esac
     shift 1
 done
@@ -120,7 +120,7 @@ if [ $my_id -ne 0 ]; then
     echo -e "\nYou are not logged in as root. Without root access this application"
     echo "can not be installed. You will be prompted later for root password."
 fi
-configure_campsite $upgrade $interactive
+configure_campsite $upgrade $do_interactive
 do_configure $upgrade --apache_conf_path "$apache_conf_path" --apache_bin_path "$apache_bin_path"
 compile_sources
 if [ $my_id -ne 0 ] && ! $USER_INSTALL; then
