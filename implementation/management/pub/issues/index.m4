@@ -70,7 +70,7 @@ E_CURRENT
     if ($IssOffs < 0) $IssOffs= 0;
     $lpp=20;
 
-    query ("SELECT Name, IdLanguage, abs(IdLanguage-$IdLang) as IdLang, Number, Name, if(Published='Y', PublicationDate, if($mia, 'Publish', 'No')) as Pub, FrontPage, SingleArticle  FROM Issues WHERE IdPublication=$Pub ORDER BY Number DESC, IdLang ASC LIMIT $IssOffs, ".($lpp+1), 'q_iss');
+    query ("SELECT Name, IdLanguage, abs(IdLanguage-$IdLang) as IdLang, Number, Name, PublicationDate, if($mia, 'Publish', 'No') as Pub, Published, FrontPage, SingleArticle  FROM Issues WHERE IdPublication=$Pub ORDER BY Number DESC, IdLang ASC LIMIT $IssOffs, ".($lpp+1), 'q_iss');
     if ($NUM_ROWS) {
 	$nr= $NUM_ROWS;
 	$i=$lpp;
@@ -127,25 +127,25 @@ B_LIST
 	 ?>dnl
 		E_LIST_ITEM
 		B_LIST_ITEM
-			<A HREF="<? p(tplRedirect(getHVar($q_iss,'FrontPage')));?>/?What=1&Pub=<? pencURL($Pub); ?>&Issue=<? pgetUVar($q_iss,'Number'); ?>&Language=<? pgetUVar($q_iss,'IdLanguage'); ?>"><? if (getVar($q_iss,'FrontPage') != "") { pdecURL(getHVar($q_iss,'FrontPage')); } else { ?>Click here to set...<? } ?></A>
+			<A HREF="<? p(tplRedirect(getHVar($q_iss,'FrontPage')));?>/?What=1&Pub=<? pencURL($Pub); ?>&Issue=<? pgetUVar($q_iss,'Number'); ?>&Language=<? pgetUVar($q_iss,'IdLanguage'); ?>"><? if (getVar($q_iss,'FrontPage') != "") { pdecURL(getHVar($q_iss,'FrontPage')); } else { putGS("Click here to set..."); } ?></A>
 		E_LIST_ITEM
 		B_LIST_ITEM
-			<A HREF="<? p(tplRedirect(getHVar($q_iss,'SingleArticle')));?>/?What=2&Pub=<? pencURL($Pub); ?>&Issue=<? pgetUVar($q_iss,'Number'); ?>&Language=<? pgetUVar($q_iss,'IdLanguage'); ?>"><? if (getVar($q_iss,'SingleArticle') != "") { pdecURL(getHVar($q_iss,'SingleArticle')); } else { ?>Click here to set...<? } ?></A>
+			<A HREF="<? p(tplRedirect(getHVar($q_iss,'SingleArticle')));?>/?What=2&Pub=<? pencURL($Pub); ?>&Issue=<? pgetUVar($q_iss,'Number'); ?>&Language=<? pgetUVar($q_iss,'IdLanguage'); ?>"><? if (getVar($q_iss,'SingleArticle') != "") { pdecURL(getHVar($q_iss,'SingleArticle')); } else { putGS("Click here to set..."); } ?></A>
 		E_LIST_ITEM
 		B_LIST_ITEM(<*CENTER*>)
-			<A HREF="X_ROOT/pub/issues/status.php?Pub=<? pencURL($Pub); ?>&Issue=<? pgetUVar($q_iss,'Number'); ?>&Language=<? pgetUVar($q_iss,'IdLanguage'); ?>"><? pgetHVar($q_iss,'Pub'); ?></A>
+			<A HREF="X_ROOT/pub/issues/status.php?Pub=<? pencURL($Pub); ?>&Issue=<? pgetUVar($q_iss,'Number'); ?>&Language=<? pgetUVar($q_iss,'IdLanguage'); ?>"><? if (getHVar($q_iss, 'Published') == 'Y') pgetHVar($q_iss,'PublicationDate'); else print putGS(getHVar($q_iss,'Pub')); ?></A>
 		E_LIST_ITEM
 		B_LIST_ITEM(<*CENTER*>)
 	<? if ($IssNr == getVar($q_iss,'Number')) { ?>dnl
 			&nbsp;
 	<? } else { ?>dnl
-			<A HREF="X_ROOT/pub/issues/translate.php?Pub=<? pencURL($Pub); ?>&Issue=<? pgetUVar($q_iss,'Number'); ?>&Language=<? pgetUVar($q_iss,'IdLanguage'); ?>">Translate</A>
+			<A HREF="X_ROOT/pub/issues/translate.php?Pub=<? pencURL($Pub); ?>&Issue=<? pgetUVar($q_iss,'Number'); ?>&Language=<? pgetUVar($q_iss,'IdLanguage'); ?>"><? putGS("Translate"); ?></A>
 	<? } ?>dnl
 		E_LIST_ITEM
 		B_LIST_ITEM(<*CENTER*>)
-			<A HREF="X_ROOT/pub/issues/edit.php?Pub=<? pencURL($Pub); ?>&Issue=<? pgetUVar($q_iss,'Number'); ?>&Language=<? pgetUVar($q_iss,'IdLanguage'); ?>">Change</A>
+			<A HREF="X_ROOT/pub/issues/edit.php?Pub=<? pencURL($Pub); ?>&Issue=<? pgetUVar($q_iss,'Number'); ?>&Language=<? pgetUVar($q_iss,'IdLanguage'); ?>"><? putGS("Change"); ?></A>
                 E_LIST_ITEM 		B_LIST_ITEM(<*CENTER*>)
-			<A HREF="" ONCLICK="window.open('X_ROOT/pub/issues/preview.php?Pub=<? pencURL($Pub); ?>&Issue=<? pgetUVar($q_iss,'Number'); ?>&Language=<? pgetUVar($q_iss,'IdLanguage'); ?>', 'fpreview', PREVIEW_OPT); return false">Preview</A>
+			<A HREF="" ONCLICK="window.open('X_ROOT/pub/issues/preview.php?Pub=<? pencURL($Pub); ?>&Issue=<? pgetUVar($q_iss,'Number'); ?>&Language=<? pgetUVar($q_iss,'IdLanguage'); ?>', 'fpreview', PREVIEW_OPT); return false"><? putGS("Preview"); ?></A>
 		E_LIST_ITEM
 <? } else { ?>
 		B_LIST_ITEM(<*RIGHT*>)
@@ -171,7 +171,7 @@ B_LIST
 			<? pgetHVar($q_iss,'Pub'); ?>
 		E_LIST_ITEM
 		B_LIST_ITEM(<*CENTER*>)
-			<A HREF="" ONCLICK="window.open('X_ROOT/pub/issues/preview.php?Pub=<? pencURL($Pub); ?>&Issue=<? pgetUVar($q_iss,'Number'); ?>&Language=<? pgetUVar($q_iss,'IdLanguage'); ?>', 'fpreview', PREVIEW_OPT); return false">Preview</A>
+			<A HREF="" ONCLICK="window.open('X_ROOT/pub/issues/preview.php?Pub=<? pencURL($Pub); ?>&Issue=<? pgetUVar($q_iss,'Number'); ?>&Language=<? pgetUVar($q_iss,'IdLanguage'); ?>', 'fpreview', PREVIEW_OPT); return false"><? putGS("Preview"); ?></A>
 		E_LIST_ITEM
 <? }
     

@@ -95,7 +95,7 @@ B_DIALOG(<*Add new article*>, <*POST*>, <*do_add.php*>)
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cSectionPage"*>)
 		<? putGS('Show article on section page'); ?>
 	E_DIALOG_INPUT
-	X_DIALOG_TEXT(<*Enter keywords, comma separated*>)
+	X_DIALOG_TEXT(<* <?putGS("Enter keywords, comma separated");?>*>)
 	B_DIALOG_INPUT(<*Keywords*>)
 		<INPUT TYPE="TEXT" NAME="cKeywords" SIZE="32" MAXLENGTH="255">
 	E_DIALOG_INPUT

@@ -85,7 +85,7 @@ E_HEADER
 
 <? if ($What) { ?>dnl
 
-X_BULLET(<*<? putGS('Your articles'); ?>:*>)
+X_BULLET(<*Your articles*>)
 
 <?
     todefnum('ArtOffs');
@@ -154,7 +154,7 @@ E_LIST
 
 <? } else { ?>dnl
 
-X_BULLET(<*<? putGS('Submitted articles'); ?>:*>)
+X_BULLET(<*Submitted articles*>)
 <?
     todefnum('NArtOffs');
     if ($NArtOffs<0) $NArtOffs=0;

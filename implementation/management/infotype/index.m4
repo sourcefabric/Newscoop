@@ -124,7 +124,7 @@ B_LIST
 	<? if ($mca != 0) { ?> 
 		B_LIST_ITEM(<*CENTER*>)
 <? if (getVar($q_cls,'Id') != $kwdid) { ?>dnl
-			<A HREF="X_ROOT/infotype/translate.php?Class=<? pgetUVar($q_cls,'Id'); ?>">Translate</A>
+			<A HREF="X_ROOT/infotype/translate.php?Class=<? pgetUVar($q_cls,'Id'); ?>"><? putGS("Translate"); ?></A>
 <? } ?>&nbsp;
 		E_LIST_ITEM
 		B_LIST_ITEM(<*CENTER*>)

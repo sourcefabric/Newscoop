@@ -50,12 +50,12 @@ E_CURRENT
 B_MSGBOX(<*Change issue status*>)
 	<?
 	    if (getVar($q_iss,'Published') == "Y") {
-		$t2='Published';
-		$t3='Not published';
+		$t2=getGS('Published');
+		$t3=getGS('Not published');
 	    }
 	    else {
-		$t2='Not published';
-		$t3='Published';
+		$t2=getGS('Not published');
+		$t3=getGS('Published');
 	    }
 	    ?>
 	X_MSGBOX_TEXT(<*<LI><? putGS('Are you sure you want to change the issue $1 status from $2 to $3?','<B>'.getHVar($q_iss,'Number').'. '.getHVar($q_iss,'Name').' ('.getHVar($q_lang,'Name').')</B>',"<B>$t2</B>","<B>$t3</B>"); ?></LI>*>)
