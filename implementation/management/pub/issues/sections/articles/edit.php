@@ -48,7 +48,7 @@ if ($User->hasPermission('ChangeArticle') || (($articleObj->getUserId() == $User
 	    $edit_ok = 1;
 	} 
 	// If the user who locked the article doesnt exist anymore, unlock the article.
-	if (!$lockUserObj->exists()) {
+	if (($articleObj->getLockedByUser() != 0) && !$lockUserObj->exists()) {
 		$articleObj->unlock();
 		$edit_ok = 1;
 	}
