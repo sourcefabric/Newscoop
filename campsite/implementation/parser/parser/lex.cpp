@@ -467,6 +467,13 @@ int CStatementMap::InitStatements()
 	pcoCtx->insertAttr(new CAttribute("reset_searchresult_list"));
 	pcoCtx->insertAttr(new CAttribute("reset_subtitle_list"));
 	pcoCtx->insertAttr(new CStringAttr("template"));
+	pcoCtx->insertAttr(new CIntegerAttr("image"));
+	pcoCtx->insertAttr(new CAttribute("root_level"));
+	pcoCtx->insertAttr(new CAttribute("language"));
+	pcoCtx->insertAttr(new CAttribute("publication"));
+	pcoCtx->insertAttr(new CAttribute("issue"));
+	pcoCtx->insertAttr(new CAttribute("section"));
+	pcoCtx->insertAttr(new CAttribute("article"));
 	pcoSt->insertCtx(pcoCtx);
 
 	this->insert(pcoSt);
@@ -747,9 +754,35 @@ int CStatementMap::InitStatements()
 
 	pcoCtx = new CStatementContext(CMS_CT_DEFAULT);
 	pcoCtx->insertAttr(new CStringAttr("template"));
+	pcoCtx->insertAttr(new CAttribute("root_level"));
+	pcoCtx->insertAttr(new CAttribute("language"));
+	pcoCtx->insertAttr(new CAttribute("publication"));
 	pcoCtx->insertAttr(new CAttribute("issue"));
 	pcoCtx->insertAttr(new CAttribute("section"));
 	pcoCtx->insertAttr(new CAttribute("article"));
+	pcoSt->insertCtx(pcoCtx);
+
+	this->insert(pcoSt);
+
+	// URL statement
+	pcoSt = new CStatement(CMS_ST_URL, ST_URL);
+
+	pcoCtx = new CStatementContext(CMS_CT_DEFAULT);
+	pcoCtx->insertAttr(new CStringAttr("template"));
+	pcoCtx->insertAttr(new CIntegerAttr("image"));
+	pcoCtx->insertAttr(new CAttribute("root_level"));
+	pcoCtx->insertAttr(new CAttribute("language"));
+	pcoCtx->insertAttr(new CAttribute("publication"));
+	pcoCtx->insertAttr(new CAttribute("issue"));
+	pcoCtx->insertAttr(new CAttribute("section"));
+	pcoCtx->insertAttr(new CAttribute("article"));
+	pcoCtx->insertAttr(new CAttribute("allsubtitles"));
+	pcoCtx->insertAttr(new CAttribute("fromstart"));
+	pcoCtx->insertAttr(new CAttribute("reset_issue_list"));
+	pcoCtx->insertAttr(new CAttribute("reset_section_list"));
+	pcoCtx->insertAttr(new CAttribute("reset_article_list"));
+	pcoCtx->insertAttr(new CAttribute("reset_searchresult_list"));
+	pcoCtx->insertAttr(new CAttribute("reset_subtitle_list"));
 	pcoSt->insertCtx(pcoCtx);
 
 	this->insert(pcoSt);
