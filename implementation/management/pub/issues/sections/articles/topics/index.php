@@ -55,7 +55,7 @@ if (!$articleObj->exists()) {
 $languageObj =& new Language($Language);
 $sLanguageObj =& new Language($sLanguage);
 
-$articleTopics =& ArticleTopic::GetArticleTopics($Article);
+$articleTopics =& ArticleTopic::GetArticleTopics($Article, $sLanguage);
 $articleTopicsIds = DbObjectArray::GetColumn($articleTopics, 'Id');
 
 $viewTopic =& new Topic($TopicId);
@@ -77,7 +77,7 @@ if ($searchTopicsString != '') {
 	$totalSubtopics = count($subtopics);
 }
 else {
-	$subtopics =& $viewTopic->getSubtopics(
+	$subtopics =& $viewTopic->getSubtopics($sLanguage, 
 		array('LIMIT' => array('START' => $TopicOffset, 'MAX_ROWS'=>($TopicsPerPage))));
 	$totalSubtopics = count($viewTopic->getSubtopics());
 }
@@ -151,7 +151,7 @@ if (count($articleTopics) > 0) {
 		<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php  p($Language); ?>">
 		<INPUT TYPE="HIDDEN" NAME="sLanguage" VALUE="<?php  p($sLanguage); ?>">
 		<INPUT TYPE="HIDDEN" NAME="IdCateg" VALUE="<?php  p($TopicId); ?>">
-		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="#C0D0FF">
+		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="3" class="table_input">
 		<TR>
 			<TD><?php  putGS('Topic'); ?>:</TD>
 			<TD><INPUT TYPE="TEXT" NAME="search_topics_string" SIZE="8" MAXLENGTH="20" value="<?php p($searchTopicsString); ?>" class="input_text"></TD>
