@@ -4,6 +4,7 @@ echo "Content-type: text/html; charset=UTF-8\n\n";
 
 global $_SERVER;
 global $Campsite;
+global $DEBUG;
 
 // initialize needed global variables
 $_SERVER['DOCUMENT_ROOT'] = getenv("DOCUMENT_ROOT");
@@ -23,22 +24,11 @@ $env_vars["REQUEST_URI"] = getenv("REQUEST_URI");
 $parameters = read_parameters($query_string);
 $cookies = read_cookies($cookies_string);
 
-// echo "<p>request method: " . getenv("REQUEST_METHOD") . "</p>\n";
-// echo "<p>query string: $query_string</p>\n";
-// echo "<p>cookies string: $cookies_string</p>\n";
-// echo "<p>parameters:</p>\n";
-// foreach ($parameters as $name=>$value)
-// 	echo "<p>&nbsp;&nbsp;$name = $value</p>\n";
-// echo "<p>cookies:</p>\n";
-// foreach ($cookies as $name=>$value)
-// 	echo "<p>&nbsp;&nbsp;$name = $value</p>\n";
+debug_msg("request method: " . getenv("REQUEST_METHOD"));
+debug_msg("query string: $query_string");
+debug_msg("cookies string: $cookies_string");
 
 $msg = create_url_request_message($env_vars, $parameters, $cookies);
-// echo "<p>URL request message:</p>\n";
-// echo "<pre>\n" . htmlspecialchars($msg) . "\n";
-
-$socket = send_message_to_parser($msg);
-$size_read = read_parser_output($socket);
-// echo "<p>size read: $size_read</p>\n";
+read_parser_output(send_message_to_parser($msg));
 
 ?>
