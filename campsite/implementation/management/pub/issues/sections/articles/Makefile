@@ -1,20 +1,10 @@
 export PRIV_DIR5=$(PRIV_DIR4)/articles
 
-MY_TARGETS=index.php add.php do_add.php del.php do_del.php edit_b.php \
-    edit_b_ns.php edit_b_apple.php edit_b_firebird.php edit_t.php preview.php \
-    status.php do_status.php upload.php translate.php do_translate.php empty.php \
-    list.php do_edit_t.php do_unlock.php duplicate.php i0.php pub.php \
-    fduplicate.php copyright.php i1.php iss.php i2.php sect.php i3.php dupform.php \
-    do_duplicate.php order.php
-
 subsystem: all
 	$(MAKE) -C images
 	$(MAKE) -C topics
 
-all: $(MY_TARGETS)
-
-%.php: %.m4 ../../../../macros.m4
-	$(M4) ../../../../macros.m4 $< >$@
+all: ;
 
 install: $(ALL)
 	mkdir -p $(PRIV_DIR5)
@@ -24,7 +14,6 @@ install: $(ALL)
 
 clean:
 	rm -f *~
-	if [ "$(PACKAGE_TYPE)" = "source" ]; then rm -f $(MY_TARGETS); fi
 	$(MAKE) -C images clean
 	$(MAKE) -C topics clean
 
