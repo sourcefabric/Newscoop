@@ -1,4 +1,3 @@
-B_HTML
 INCLUDE_PHP_LIB(<*$ADMIN_DIR/u_types*>)
 B_DATABASE
 
@@ -6,7 +5,6 @@ CHECK_BASIC_ACCESS
 CHECK_ACCESS(<*ManageUserTypes*>)
 
 B_HEAD
-	X_EXPIRES
 	X_TITLE(<*Change user type permissions*>)
 <?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to change user type permissions.*>)
@@ -35,7 +33,7 @@ E_HEADER
     if ($NUM_ROWS) { ?>
 B_DIALOG(<*Change user type permissions*>, <*POST*>, <*do_access.php*>)
 	B_DIALOG_INPUT(<*Name*>)
-		<INPUT TYPE="TEXT" NAME="cName" VALUE="<?php  encHTML(pgetHVar($uperm,'Name')); ?>" SIZE="32" MAXLENGTH="32">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cName" VALUE="<?php  encHTML(pgetHVar($uperm,'Name')); ?>" SIZE="32" MAXLENGTH="32">
 	E_DIALOG_INPUT
 	B_DIALOG_PACKEDINPUT
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cReader"<?php  checkedIfY($uperm,'Reader'); ?>>*>)

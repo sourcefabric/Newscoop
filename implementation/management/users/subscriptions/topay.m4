@@ -1,4 +1,3 @@
-B_HTML
 INCLUDE_PHP_LIB(<*$ADMIN_DIR/users/subscriptions*>)
 B_DATABASE
 
@@ -6,7 +5,6 @@ CHECK_BASIC_ACCESS
 CHECK_ACCESS(<*ManageSubscriptions*>)
 
 B_HEAD
-	X_EXPIRES
 	X_TITLE(<*Change subscription status*>)
 <?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to change subscriptions status.*>)
@@ -52,7 +50,7 @@ E_CURRENT
 <P>
 B_DIALOG(<*Update payment*>, <*POST*>, <*do_topay.php*>)
         B_DIALOG_INPUT(<*Left to pay*>)
-            <INPUT TYPE="TEXT" NAME="cToPay" VALUE="<?php  pgetHVar($q_subs,'ToPay'); ?>" SIZE=10> <?php  pgetHVar($q_subs,'Currency'); ?>
+            <INPUT TYPE="TEXT" class="input_text" NAME="cToPay" VALUE="<?php  pgetHVar($q_subs,'ToPay'); ?>" SIZE=10> <?php  pgetHVar($q_subs,'Currency'); ?>
         E_DIALOG_INPUT
         B_DIALOG_BUTTONS
             <INPUT TYPE="HIDDEN" NAME="User" VALUE="<?php  p($User); ?>">

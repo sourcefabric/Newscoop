@@ -1,4 +1,3 @@
-B_HTML
 INCLUDE_PHP_LIB(<*$ADMIN_DIR/users/subscriptions*>)
 B_DATABASE
 
@@ -6,7 +5,6 @@ CHECK_BASIC_ACCESS
 CHECK_ACCESS(<*ManageSubscriptions*>)
 
 B_HEAD
-	X_EXPIRES
 	X_TITLE(<*Add new subscription*>)
 <?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to add subscriptions.*>)
@@ -60,7 +58,7 @@ B_DIALOG(<*Add new subscription*>, <*POST*>, <*do_add.php*>)
 		</SELECT>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Start*>)
-		<INPUT TYPE="TEXT" NAME="cStartDate" SIZE="10" VALUE="<?php  p(date("Y-m-d")); ?>" MAXLENGTH="10"><?php  putGS('(YYYY-MM-DD)'); ?>
+		<INPUT TYPE="TEXT" class="input_text" NAME="cStartDate" SIZE="10" VALUE="<?php  p(date("Y-m-d")); ?>" MAXLENGTH="10"><?php  putGS('(YYYY-MM-DD)'); ?>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Subscription Type*>)
 		<SELECT NAME="sType">
@@ -70,7 +68,7 @@ B_DIALOG(<*Add new subscription*>, <*POST*>, <*do_add.php*>)
 		</SELECT>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Days*>)
-		<INPUT TYPE="TEXT" NAME="cDays" SIZE="5" MAXLENGTH="5">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cDays" SIZE="5" MAXLENGTH="5">
 	E_DIALOG_INPUT
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cActive" CHECKED>*>)
 		Active
