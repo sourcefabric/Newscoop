@@ -7,7 +7,6 @@ PACKAGE_TYPE=`cat $CAMPSITE_PACKAGE_DIR/.package_type`
 [ "$PACKAGE_TYPE" = "binary" ] && exit 0
 
 install_conf --set
-export CONF_DIR=/etc/campsite.d/${APP_NAME}
 
 var_not_modified APP_NAME && [ -f configure.h ] && exit 0
 save_var APP_NAME

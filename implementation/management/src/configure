@@ -9,8 +9,6 @@ PACKAGE_TYPE=`cat $CAMPSITE_PACKAGE_DIR/.package_type`
 var_not_modified APP_NAME && [ -f configure.h ] && [ -f dir_conf.h ] && exit 0
 save_var APP_NAME
 
-export CONF_DIR=/etc/campsite.d/$APP_NAME
-
 echo -n -e "\t\tWriting configure.h header..."
 cat > configure.h << EOF
 /******************************************************************************
