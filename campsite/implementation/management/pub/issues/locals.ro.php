@@ -7,7 +7,7 @@ regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>","Publicat");
 regGS("Delete issue $1","Şterge ediţia $1");
 regGS("Change issue status","Modifică starea ediţiei");
 regGS("You do not have the right to change issues.","Nu aveţi dreptul de a modifica ediţia");
-regGS("Are you sure you want change the issue $1 status from $2 to $3?","Doriţi să schimbaţi starea ediţiei $1 de la $2 la $3?");
+regGS("Are you sure you want to change the issue $1 status from $2 to $3?","Doriţi să schimbaţi starea ediţiei $1 de la $2 la $3?");
 regGS("Changing issue status","Modific starea ediţiei");
 regGS("Status of the issue $1 has been changed from $2 to $3","Starea ediţiei $1 a fost schimbată de la $2 la $3");
 regGS("Issue $1 Published: $2  changed status","Starea ediţiei $1 publicată în $2 a fost modificată");

@@ -6,7 +6,7 @@ regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>","Veröffentlicht (jjjj-mm-tt)")
 regGS("Delete issue $1","Ausgabe $1 löschen");
 regGS("Change issue status","Status der Ausgabe ändern");
 regGS("You do not have the right to change issues.","Keine Berechtigung Ausgaben zu ändern");
-regGS("Are you sure you want change the issue $1 status from $2 to $3?","Ausgabe $1 wirklich von $2 auf $3 ändern?");
+regGS("Are you sure you want to change the issue $1 status from $2 to $3?","Ausgabe $1 wirklich von $2 auf $3 ändern?");
 regGS("Changing issue status","Status der Ausgabe wird geändert");
 regGS("Status of the issue $1 has been changed from $2 to $3","Status der Ausgabe $1 wurde von $2 auf $3 geändert");
 regGS("Issue $1 Published: $2  changed status","Status von Ausgabe $1 veröffentlicht am $2 wurde verändert");

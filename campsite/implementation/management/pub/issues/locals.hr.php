@@ -7,7 +7,7 @@ regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>","Objavljeno<br><small>(gggg-mm-
 regGS("Delete issue $1","Izbriši izdanje $1");
 regGS("Change issue status","Promijeni status izdanja");
 regGS("You do not have the right to change issues.","Nemate pravo mijenjati izdanja.");
-regGS("Are you sure you want change the issue $1 status from $2 to $3?","Da li ste sigurni da želite promijeniti status izdanja $1 sa $2 na $3?");
+regGS("Are you sure you want to change the issue $1 status from $2 to $3?","Da li ste sigurni da želite promijeniti status izdanja $1 sa $2 na $3?");
 regGS("Changing issue status","Mijenjanje statusa izdanja");
 regGS("Status of the issue $1 has been changed from $2 to $3","Status izdanja $1 je promijenjen sa $2 na $3");
 regGS("Issue $1 Published: $2  changed status","Izdanje $1 objavljeno: $2 je promijenilo status");

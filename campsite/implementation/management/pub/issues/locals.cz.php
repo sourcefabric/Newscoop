@@ -6,7 +6,7 @@ regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>","Zveřejněno (rrrr-mm-dd)");
 regGS("Delete issue $1","Smazat vydání $1");
 regGS("Change issue status","Změnit stav vydání");
 regGS("You do not have the right to change issues.","Nemáte právo měnit vydání");
-regGS("Are you sure you want change the issue $1 status from $2 to $3?","Určitě chcete změnit stav vydání $1 z $2 na $3?");
+regGS("Are you sure you want to change the issue $1 status from $2 to $3?","Určitě chcete změnit stav vydání $1 z $2 na $3?");
 regGS("Changing issue status","Změna stavu vydání");
 regGS("Status of the issue $1 has been changed from $2 to $3","Stav vydání $1 byl změněn z $2 na $3");
 regGS("Issue $1 Published: $2  changed status","Vydání $1 zveřejněno: $2 změněn stav");

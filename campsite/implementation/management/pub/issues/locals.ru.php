@@ -6,7 +6,7 @@ regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>","Опубликовано<BR><S
 regGS("Delete issue $1","Удаление выпуска $1:ru");
 regGS("Change issue status","Изменить статус выпуска:ru");
 regGS("You do not have the right to change issues.","Вы не имеете права изменить выпуск.:ru");
-regGS("Are you sure you want change the issue $1 status from $2 to $3?","Вы уверены, что хотите поменять статус выпуска $1 с $2 на $3?:ru");
+regGS("Are you sure you want to change the issue $1 status from $2 to $3?","Вы уверены, что хотите поменять статус выпуска $1 с $2 на $3?:ru");
 regGS("Changing issue status","Изменение статуса выпуска:ru");
 regGS("Status of the issue $1 has been changed from $2 to $3","Статус выпуска $1 был изменен с $2 на $3:ru");
 regGS("Issue $1 Published: $2  changed status","Выпуск $1 Опубликован: $2  Измененный статус:ru");
