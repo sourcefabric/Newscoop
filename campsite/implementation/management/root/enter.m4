@@ -12,7 +12,7 @@ B_DATABASE<**>
 	<TITLE>Welcome to <?php  pgetHVar($Publication,'Name'); ?></TITLE>
 </HEAD>
 
-<BODY BGCOLOR="WHITE" TEXT="BLACK" LINK="DARKBLUE" ALINK="RED" VLINK="DARKBLUE">
+<BODY>
 <H1><?php  pgetHVar($Publication,'Name'); ?></H1>
 
 

@@ -52,7 +52,7 @@ function ArticleTop($p_articleObj, $p_interfaceLanguageId, $p_title, $p_includeL
 	<TITLE><?php putGS($p_title); ?></TITLE>
 </HEAD>
 
-<BODY BGCOLOR="WHITE" TEXT="BLACK" LINK="DARKBLUE" ALINK="RED" VLINK="DARKBLUE">
+<BODY>
 
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
 <TR>

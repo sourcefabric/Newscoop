@@ -7,7 +7,7 @@ B_DATABASE<**>
     <TITLE>Dictionary</TITLE>
 </HEAD>
 
-<BODY BGCOLOR="WHITE" TEXT="BLACK" LINK="DARKBLUE" ALINK="RED" VLINK="DARKBLUE">
+<BODY>
 
 <?php  
     query("SELECT * FROM KeywordClasses WHERE IdDictionary=$keyword AND IdClasses=$class AND IdLanguage=$IdLanguage", 'kc');

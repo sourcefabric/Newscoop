@@ -30,7 +30,7 @@ if ($ok)
 	header("Location: /$ADMIN/templates?Path=" . encURL("$cPath/$cName"));
 ?>
 
-<BODY  BGCOLOR="WHITE" TEXT="BLACK" LINK="DARKBLUE" ALINK="RED" VLINK="DARKBLUE">
+<BODY>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
 	<TR>
 		<TD class="page_title">

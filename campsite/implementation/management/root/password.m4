@@ -23,7 +23,7 @@ B_DATABASE<**>
 
 </HEAD>
 
-<BODY BGCOLOR="WHITE" TEXT="BLACK" LINK="DARKBLUE" ALINK="RED" VLINK="DARKBLUE">
+<BODY>
 <H1><?php  pgetHVar($Publication,'Name'); ?></H1>
 
 <FORM METHOD="POST" ACTION="change_password.php">

@@ -26,7 +26,7 @@ B_DATABASE<**>
 </HEAD>
 
 <?php  if($AFFECTED_ROWS <= 0){ ?>dnl
-<BODY BGCOLOR="WHITE" TEXT="BLACK" LINK="DARKBLUE" ALINK="RED" VLINK="DARKBLUE">
+<BODY>
 <H1><?php  pgetHVar($Publication,'Name'); ?></H1>
 
 <BLOCKQUOTE>

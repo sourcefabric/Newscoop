@@ -34,7 +34,7 @@ if ($access) {
 	else 
 		$pb=0;
 ?>
-<BODY  BGCOLOR="WHITE" TEXT="BLACK" LINK="DARKBLUE" ALINK="RED" VLINK="DARKBLUE">
+<BODY>
 <?php
 	todefnum('Pub');
 	todefnum('Issue');
