@@ -15,7 +15,7 @@ smtp_wrapper: smtp_wrapper.o csocket.o mutex.o
 	strip smtp_wrapper
 
 clean: dummy
-	rm -f *.o *~ $(LINKS)
+	rm -f *.o *~ $(LINKS) smtp_wrapper
 
 smtp_wrapper.o: smtp_wrapper.cpp
 	g++ -c -o smtp_wrapper.o $(CFLAGS) smtp_wrapper.cpp
