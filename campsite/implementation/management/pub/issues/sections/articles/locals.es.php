@@ -45,6 +45,11 @@ regGS("This article has been locked by $1 ($2) at","Este artículo ha sido bloqu
 regGS("Now is $1","Ahora es $1");
 regGS("Are you sure you want to unlock it?","¿Esta seguro que desea bloquearlo?");
 regGS("Edit article","Editar Artículo");
+regGS("Duplicate article","Duplicar articulo");
+regGS("Duplicating article","Duplicando articulo");
+regGS("The destination section is the same as the source section.","La seccion destino es la misma que la seccion fuente.");
+regGS("The article $1 has been duplicated as $2","El articulo $1 ha sido duplicado como $2");
+regGS("The article $1 could not be duplicated","El articulo $1 no pudo ser duplicado");
 
 
 ?>
