@@ -50,11 +50,11 @@ typedef set <string, str_case_less> StringSet;
 class CPublication
 {
 public:
-	CPublication(long p_nId, MYSQL* p_DBConn);
+	CPublication(id_type p_nId, MYSQL* p_DBConn);
 
-	long getId() const { return m_nId; }
+	id_type getId() const { return m_nId; }
 
-	long getLanguageId() const { return m_nIdLanguage; }
+	id_type getLanguageId() const { return m_nIdLanguage; }
 
 	void addAlias(const string& p_rcoAlias) { m_coAliases.insert(p_rcoAlias); }
 
@@ -71,34 +71,34 @@ public:
 
 	const string& getURLTypeName() const { return m_coURLTypeName; }
 
-	static string getTemplate(long p_nLanguage, long p_nPublication, long p_nIssue, long p_nSection,
-	                          long p_nArticle, MYSQL* p_DBConn, bool p_bIsPublished = true);
+	static string getTemplate(id_type p_nLanguage, id_type p_nPublication, id_type p_nIssue, id_type p_nSection,
+	                          id_type p_nArticle, MYSQL* p_DBConn, bool p_bIsPublished = true);
 
-	static string getIssueTemplate(long p_nLanguage, long p_nPublication, long p_nIssue, 
+	static string getIssueTemplate(id_type p_nLanguage, id_type p_nPublication, id_type p_nIssue, 
 	                               MYSQL* p_DBConn);
 
-	static string getSectionTemplate(long p_nLanguage, long p_nPublication, long p_nIssue,
-	                                 long p_nSection, MYSQL* p_DBConn);
+	static string getSectionTemplate(id_type p_nLanguage, id_type p_nPublication, id_type p_nIssue,
+	                                 id_type p_nSection, MYSQL* p_DBConn);
 
-	static string getArticleTemplate(long p_nLanguage, long p_nPublication, long p_nIssue,
-	                                 long p_nSection, MYSQL* p_DBConn);
+	static string getArticleTemplate(id_type p_nLanguage, id_type p_nPublication, id_type p_nIssue,
+	                                 id_type p_nSection, MYSQL* p_DBConn);
 
-	static long getTemplateId(const string& p_rcoTemplate, MYSQL* p_DBConn) throw(InvalidValue);
+	static id_type getTemplateId(const string& p_rcoTemplate, MYSQL* p_DBConn) throw(InvalidValue);
 
-	string getIssueTemplate(long p_nIssue, MYSQL* p_DBConn) const;
+	string getIssueTemplate(id_type p_nIssue, MYSQL* p_DBConn) const;
 
-	string getSectionTemplate(long p_nIssue, long p_nSection, MYSQL* p_DBConn) const;
+	string getSectionTemplate(id_type p_nIssue, id_type p_nSection, MYSQL* p_DBConn) const;
 
-	string getArticleTemplate(long p_nIssue, long p_nSection, MYSQL* p_DBConn) const;
+	string getArticleTemplate(id_type p_nIssue, id_type p_nSection, MYSQL* p_DBConn) const;
 
 private:
-	long m_nId;
-	long m_nIdLanguage;
+	id_type m_nId;
+	id_type m_nIdLanguage;
 	StringSet m_coAliases;
 	string m_coURLTypeName;
 
 private:
-	void BuildFromDB(long p_nId, MYSQL* p_DBConn) throw(InvalidValue);
+	void BuildFromDB(id_type p_nId, MYSQL* p_DBConn) throw(InvalidValue);
 };
 
 
@@ -109,7 +109,7 @@ inline const CURLType* CPublication::getURLType() const
 	return CURLTypeRegister::getInstance().getURLType(m_coURLTypeName);
 }
 
-inline CPublication::CPublication(long p_nId, MYSQL* p_DBConn)
+inline CPublication::CPublication(id_type p_nId, MYSQL* p_DBConn)
 {
 	BuildFromDB(p_nId, p_DBConn); 
 	CPublicationsRegister::getInstance().insert(*this);
@@ -123,19 +123,19 @@ inline void CPublication::setURLType(const string& p_rcoURLTypeName)
 }
 
 
-inline string CPublication::getIssueTemplate(long p_nIssue, MYSQL* p_DBConn) const
+inline string CPublication::getIssueTemplate(id_type p_nIssue, MYSQL* p_DBConn) const
 {
 	return getIssueTemplate(m_nIdLanguage, m_nId, p_nIssue, p_DBConn);
 }
 
 
-inline string CPublication::getSectionTemplate(long p_nIssue, long p_nSection, MYSQL* p_DBConn) const
+inline string CPublication::getSectionTemplate(id_type p_nIssue, id_type p_nSection, MYSQL* p_DBConn) const
 {
 	return getSectionTemplate(m_nIdLanguage, m_nId, p_nIssue, p_nSection, p_DBConn);
 }
 
 
-inline string CPublication::getArticleTemplate(long p_nIssue, long p_nSection, MYSQL* p_DBConn) const
+inline string CPublication::getArticleTemplate(id_type p_nIssue, id_type p_nSection, MYSQL* p_DBConn) const
 {
 	return getArticleTemplate(m_nIdLanguage, m_nId, p_nIssue, p_nSection, p_DBConn);
 }

@@ -104,11 +104,11 @@ using std::list;
 using std::string;
 using std::less;
 
-typedef set <long int> LIntSet;
+typedef set <lint> LIntSet;
 
-typedef map <long int, LIntSet, less <long int> > LInt2LIntSet;
+typedef map <lint, LIntSet, less <lint> > LInt2LIntSet;
 
-typedef map <string, long int, str_case_less> String2LInt;
+typedef map <string, lint, str_case_less> String2LInt;
 
 typedef set <string, str_case_less> StringSet;
 
@@ -125,68 +125,68 @@ typedef map <string, bool, str_case_less> String2Bool;
 class CContext
 {
 private:
-	String2String userinfo;		// informations about user (name, address, email etc.)
-	unsigned long int ip;		// client IP
-	long int user_id;			// user identifier
-	unsigned long int key;		// user key (used for authentication purposes)
-	bool is_reader;				// true if user is reader
-	bool access_by_ip;			// true is access is by IP
-	TAccess access;				// access type
-	CLevel level;				// level (root, issue list etc.)
-	long int language_id, def_language_id;		// current and default(from template start) language
-	long int publication_id, def_publication_id;// current and default publication
-	long int issue_nr, def_issue_nr;			// current and default issue
-	long int section_nr, def_section_nr;		// current and default section
-	long int article_nr, def_article_nr;		// current and default article
-	long int i_list_start, s_list_start;		// list start index for issue, section, article
-	long int a_list_start, sr_list_start;		// and search lists
-	String2LInt st_list_start;					// list start index for subtitle list
-	long int list_index;						// current list index
-	long int list_row;							// current list row (table construction)
-	long int list_column;						// current list column
-	long int list_length;						// list length
-	long int i_prev_start, i_next_start;		// list start index for issue, section, article,
-	long int s_prev_start, s_next_start;		// and search lists in previous and next contexts
-	long int a_prev_start, a_next_start;
-	long int sr_prev_start, sr_next_start;
-	String2LInt st_prev_start, st_next_start;	// list start index for subtitles list in previous
-												// and next context
-	TLMode lmode;								// list mode (PREV, NORMAL, NEXT)
-	TStMode stmode;								// subtitles list mode
-	LInt2LIntSet subs;							// user subscriptions
-	StringSet keywords;							// keywords to search for
-	string str_keywords;						// the string of keywords
-	StringSet::iterator kw_i;					// keywords iterator; memorise the current element
-	bool do_subscribe;							// true if subscribe process occured
-	TSubsType subs_type;						// subscription type
-	bool by_publication;						// subscription by: publication or sections
-	long int subs_res;							// subscription result
-	bool adduser;								// true if add user process occured
-	bool modifyuser;							// true if modify user process occured
-	long int adduser_res, modifyuser_res;		// add/modify user result
-	bool login;									// true if login process occured
-	long int login_res;							// login result
-	bool search;								// true if search process occured
-	long int search_res;						// search result
-	bool search_and;							// true if search for all keywords
-	int search_level;							// search level: 0 - all, 1 - issue, 2 - section
-	String2StringList subtitles;				// current article body field subtitles/field
-	String2StringListIt subtitles_it;			// subtitles iterator: current subtitle/field
-	String2Int start_subtitle;					// start subtitle/field to print
-	String2Int default_start_subtitle;			// start subtitle/field supplied as a parameter
-	String2Bool all_subtitles;					// print all subtitles/field
-	String2String fields;						// fields/article type to print
-	string current_field;						// current printing field from article
-	string current_art_type;					// current article type
-	long int m_nTopicId;						// topic numeric identifier
-	long int m_nDefTopicId;						// topic numeric identifier
+	String2String userinfo;					// informations about user (name, address, email etc.)
+	ulint ip;						// client IP
+	id_type user_id;						// user identifier
+	ulint key;						// user key (used for authentication purposes)
+	bool is_reader;							// true if user is reader
+	bool access_by_ip;						// true is access is by IP
+	TAccess access;							// access type
+	CLevel level;							// level (root, issue list etc.)
+	id_type language_id, def_language_id;	// current and default(from template start) language
+	id_type publication_id, def_publication_id;// current and default publication
+	id_type issue_nr, def_issue_nr;			// current and default issue
+	id_type section_nr, def_section_nr;		// current and default section
+	id_type article_nr, def_article_nr;		// current and default article
+	id_type i_list_start, s_list_start;		// list start index for issue, section, article
+	id_type a_list_start, sr_list_start;	// and search lists
+	String2LInt st_list_start;				// list start index for subtitle list
+	lint list_index;					// current list index
+	lint list_row;						// current list row (table construction)
+	lint list_column;					// current list column
+	lint list_length;					// list length
+	lint i_prev_start, i_next_start;	// list start index for issue, section, article,
+	lint s_prev_start, s_next_start;	// and search lists in previous and next contexts
+	lint a_prev_start, a_next_start;
+	lint sr_prev_start, sr_next_start;
+	String2LInt st_prev_start, st_next_start;// list start index for subtitles list in previous
+											// and next context
+	TLMode lmode;							// list mode (PREV, NORMAL, NEXT)
+	TStMode stmode;							// subtitles list mode
+	LInt2LIntSet subs;						// user subscriptions
+	StringSet keywords;						// keywords to search for
+	string str_keywords;					// the string of keywords
+	StringSet::iterator kw_i;				// keywords iterator; memorise the current element
+	bool do_subscribe;						// true if subscribe process occured
+	TSubsType subs_type;					// subscription type
+	bool by_publication;					// subscription by: publication or sections
+	lint subs_res;						// subscription result
+	bool adduser;							// true if add user process occured
+	bool modifyuser;						// true if modify user process occured
+	lint adduser_res, modifyuser_res;	// add/modify user result
+	bool login;								// true if login process occured
+	lint login_res;						// login result
+	bool search;							// true if search process occured
+	lint search_res;					// search result
+	bool search_and;						// true if search for all keywords
+	int search_level;						// search level: 0 - all, 1 - issue, 2 - section
+	String2StringList subtitles;			// current article body field subtitles/field
+	String2StringListIt subtitles_it;		// subtitles iterator: current subtitle/field
+	String2Int start_subtitle;				// start subtitle/field to print
+	String2Int default_start_subtitle;		// start subtitle/field supplied as a parameter
+	String2Bool all_subtitles;				// print all subtitles/field
+	String2String fields;					// fields/article type to print
+	string current_field;					// current printing field from article
+	string current_art_type;				// current article type
+	id_type m_nTopicId;						// topic numeric identifier
+	id_type m_nDefTopicId;					// topic numeric identifier
 	CURL* m_pcoURL;
 	CURL* m_pcoDefURL;
 
 	static const string emptystring;
 
-	void SetURLValue(const string& p_coParam, unsigned long int p_nValue);
-	void SetDefURLValue(const string& p_coParam, unsigned long int p_nValue);
+	void SetURLValue(const string& p_coParam, id_type p_nValue);
+	void SetDefURLValue(const string& p_coParam, id_type p_nValue);
 	void EraseURLParam(const string& p_coParam);
 	void EraseDefURLParam(const string& p_coParam);
 
@@ -205,11 +205,11 @@ public:
 
 	void SetUserInfo(const string&, const string&);
 
-	void SetIP(unsigned long int i) { ip = i; }
+	void SetIP(ulint i) { ip = i; }
 
-	void SetUser(long int u) { user_id = u; }
+	void SetUser(id_type u) { user_id = u; }
 
-	void SetKey(unsigned long int k) { key = k; }
+	void SetKey(ulint k) { key = k; }
 
 	void SetReader(bool r)
 	{
@@ -227,134 +227,134 @@ public:
 	{
 		level = l;
 	}
-	void SetLanguage(long int l)
+	void SetLanguage(id_type l)
 	{
 		SetURLValue(P_IDLANG, l);
 		EraseURLParam(P_NRARTICLE);
 		language_id = l;
 	}
-	void SetDefLanguage(long int l)
+	void SetDefLanguage(id_type l)
 	{
 		SetDefURLValue(P_IDLANG, l);
 		EraseDefURLParam(P_NRARTICLE);
 		def_language_id = l;
 	}
-	void SetPublication(long int p)
+	void SetPublication(id_type p)
 	{
 		SetURLValue(P_IDPUBL, p);
 		EraseURLParam(P_NRARTICLE);
 		publication_id = p;
 	}
-	void SetDefPublication(long int p)
+	void SetDefPublication(id_type p)
 	{
 		SetDefURLValue(P_IDPUBL, p);
 		EraseDefURLParam(P_NRARTICLE);
 		def_publication_id = p;
 	}
-	void SetIssue(long int i)
+	void SetIssue(id_type i)
 	{
 		SetURLValue(P_NRISSUE, i);
 		EraseURLParam(P_NRARTICLE);
 		issue_nr = i;
 	}
-	void SetDefIssue(long int i)
+	void SetDefIssue(id_type i)
 	{
 		SetDefURLValue(P_NRISSUE, i);
 		EraseDefURLParam(P_NRARTICLE);
 		def_issue_nr = i;
 	}
-	void SetSection(long int s)
+	void SetSection(id_type s)
 	{
 		SetURLValue(P_NRSECTION, s);
 		EraseURLParam(P_NRARTICLE);
 		section_nr = s;
 	}
-	void SetDefSection(long int s)
+	void SetDefSection(id_type s)
 	{
 		SetDefURLValue(P_NRSECTION, s);
 		EraseDefURLParam(P_NRARTICLE);
 		def_section_nr = s;
 	}
-	void SetArticle(long int a)
+	void SetArticle(id_type a)
 	{
 		SetURLValue(P_NRARTICLE, a);
 		article_nr = a;
 	}
-	void SetDefArticle(long int a)
+	void SetDefArticle(id_type a)
 	{
 		SetDefURLValue(P_NRARTICLE, a);
 		def_article_nr = a;
 	}
-	void SetIListStart(long int i)
+	void SetIListStart(lint i)
 	{
 		i_list_start = i;
 	}
-	void SetSListStart(long int i)
+	void SetSListStart(lint i)
 	{
 		s_list_start = i;
 	}
-	void SetAListStart(long int i)
+	void SetAListStart(lint i)
 	{
 		a_list_start = i;
 	}
-	void SetSrListStart(long int i)
+	void SetSrListStart(lint i)
 	{
 		sr_list_start = i;
 	}
-	void SetStListStart(long int, const string& = "");
-	void SetListStart(long int, CLevel, const string& = "");
-	void SetListIndex(long int i)
+	void SetStListStart(lint, const string& = "");
+	void SetListStart(lint, CLevel, const string& = "");
+	void SetListIndex(lint i)
 	{
 		list_index = i;
 	}
-	void SetListRow(long int i)
+	void SetListRow(lint i)
 	{
 		list_row = i;
 	}
-	void SetListColumn(long int i)
+	void SetListColumn(lint i)
 	{
 		list_column = i;
 	}
-	void SetListLength(long int i)
+	void SetListLength(lint i)
 	{
 		list_length = i;
 	}
-	void SetIPrevStart(long int i)
+	void SetIPrevStart(lint i)
 	{
 		i_prev_start = i;
 	}
-	void SetINextStart(long int i)
+	void SetINextStart(lint i)
 	{
 		i_next_start = i;
 	}
-	void SetSPrevStart(long int i)
+	void SetSPrevStart(lint i)
 	{
 		s_prev_start = i;
 	}
-	void SetSNextStart(long int i)
+	void SetSNextStart(lint i)
 	{
 		s_next_start = i;
 	}
-	void SetAPrevStart(long int i)
+	void SetAPrevStart(lint i)
 	{
 		a_prev_start = i;
 	}
-	void SetANextStart(long int i)
+	void SetANextStart(lint i)
 	{
 		a_next_start = i;
 	}
-	void SetSrPrevStart(long int i)
+	void SetSrPrevStart(lint i)
 	{
 		sr_prev_start = i;
 	}
-	void SetSrNextStart(long int i)
+	void SetSrNextStart(lint i)
 	{
 		sr_next_start = i;
 	}
-	void SetStPrevStart(long int, const string& = "");
-	void SetStNextStart(long int, const string& = "");
-	void SetPrevStart(long int, CLevel, const string& = "");
-	void SetNextStart(long int, CLevel, const string& = "");
+	void SetStPrevStart(lint, const string& = "");
+	void SetStNextStart(lint, const string& = "");
+	void SetPrevStart(lint, CLevel, const string& = "");
+	void SetNextStart(lint, CLevel, const string& = "");
 	void SetLMode(TLMode lm)
 	{
 		lmode = lm;
@@ -363,7 +363,7 @@ public:
 	{
 		stmode = sm;
 	}
-	void SetSubs(long int, long int);
+	void SetSubs(id_type, id_type);
 	void SetKeyword(const string& k)
 	{
 		keywords.insert(k);
@@ -388,7 +388,7 @@ public:
 	{
 		by_publication = bp;
 	}
-	void SetSubsRes(long int r)
+	void SetSubsRes(lint r)
 	{
 		subs_res = r;
 	}
@@ -400,11 +400,11 @@ public:
 	{
 		modifyuser = mu;
 	}
-	void SetAddUserRes(long int ur)
+	void SetAddUserRes(lint ur)
 	{
 		adduser_res = ur;
 	}
-	void SetModifyUserRes(long int ur)
+	void SetModifyUserRes(lint ur)
 	{
 		modifyuser_res = ur;
 	}
@@ -412,7 +412,7 @@ public:
 	{
 		login = l;
 	}
-	void SetLoginRes(long int lr)
+	void SetLoginRes(lint lr)
 	{
 		login_res = lr;
 	}
@@ -420,7 +420,7 @@ public:
 	{
 		search = s;
 	}
-	void SetSearchRes(long int sr)
+	void SetSearchRes(lint sr)
 	{
 		search_res = sr;
 	}
@@ -446,13 +446,13 @@ public:
 	{
 		current_art_type = f;
 	}
-	void SetTopic(long int t) throw(InvalidValue)
+	void SetTopic(id_type t) throw(InvalidValue)
 	{
 		if (!Topic::isValid(t))
 			throw InvalidValue("topic identifier", (string)Integer(t));
 		m_nTopicId = t;
 	}
-	void SetDefTopic(long int t) throw(InvalidValue)
+	void SetDefTopic(id_type t) throw(InvalidValue)
 	{
 		if (!Topic::isValid(t))
 			throw InvalidValue("topic identifier", (string)Integer(t));
@@ -469,15 +469,15 @@ public:
 
 	const string& UserInfo(const string&);
 	bool IsUserInfo(const string&);
-	unsigned long int IP() const
+	ulint IP() const
 	{
 		return ip;
 	}
-	long int User() const
+	id_type User() const
 	{
 		return user_id;
 	}
-	unsigned long int Key() const
+	ulint Key() const
 	{
 		return key;
 	}
@@ -497,116 +497,116 @@ public:
 	{
 		return level;
 	}
-	long int Language() const
+	id_type Language() const
 	{
 		return language_id;
 	}
-	long int DefLanguage() const
+	id_type DefLanguage() const
 	{
 		return def_language_id;
 	}
-	long int Publication() const
+	id_type Publication() const
 	{
 		return publication_id;
 	}
-	long int DefPublication() const
+	id_type DefPublication() const
 	{
 		return def_publication_id;
 	}
-	long int Issue() const
+	id_type Issue() const
 	{
 		return issue_nr;
 	}
-	long int DefIssue() const
+	id_type DefIssue() const
 	{
 		return def_issue_nr;
 	}
-	long int Section() const
+	id_type Section() const
 	{
 		return section_nr;
 	}
-	long int DefSection() const
+	id_type DefSection() const
 	{
 		return def_section_nr;
 	}
-	long int Article() const
+	id_type Article() const
 	{
 		return article_nr;
 	}
-	long int DefArticle() const
+	id_type DefArticle() const
 	{
 		return def_article_nr;
 	}
-	long int IListStart() const
+	lint IListStart() const
 	{
 		return i_list_start;
 	}
-	long int SListStart() const
+	lint SListStart() const
 	{
 		return s_list_start;
 	}
-	long int SrListStart() const
+	lint SrListStart() const
 	{
 		return sr_list_start;
 	}
-	long int StListStart(const string& = "");
-	long int AListStart() const
+	lint StListStart(const string& = "");
+	lint AListStart() const
 	{
 		return a_list_start;
 	}
-	long int ListStart(CLevel, const string& = "");
-	long int ListIndex() const
+	lint ListStart(CLevel, const string& = "");
+	lint ListIndex() const
 	{
 		return list_index;
 	}
-	long int ListRow() const
+	lint ListRow() const
 	{
 		return list_row;
 	}
-	long int ListColumn() const
+	lint ListColumn() const
 	{
 		return list_column;
 	}
-	long int ListLength() const
+	lint ListLength() const
 	{
 		return list_length;
 	}
-	long int IPrevStart() const
+	lint IPrevStart() const
 	{
 		return i_prev_start;
 	}
-	long int INextStart() const
+	lint INextStart() const
 	{
 		return i_next_start;
 	}
-	long int SPrevStart() const
+	lint SPrevStart() const
 	{
 		return s_prev_start;
 	}
-	long int SNextStart() const
+	lint SNextStart() const
 	{
 		return s_next_start;
 	}
-	long int APrevStart() const
+	lint APrevStart() const
 	{
 		return a_prev_start;
 	}
-	long int ANextStart() const
+	lint ANextStart() const
 	{
 		return a_next_start;
 	}
-	long int SrPrevStart() const
+	lint SrPrevStart() const
 	{
 		return sr_prev_start;
 	}
-	long int SrNextStart() const
+	lint SrNextStart() const
 	{
 		return sr_next_start;
 	}
-	long int StPrevStart(const string& = "");
-	long int StNextStart(const string& = "");
-	long int PrevStart(CLevel, const string& = "");
-	long int NextStart(CLevel, const string& = "");
+	lint StPrevStart(const string& = "");
+	lint StNextStart(const string& = "");
+	lint PrevStart(CLevel, const string& = "");
+	lint NextStart(CLevel, const string& = "");
 	TLMode LMode() const
 	{
 		return lmode;
@@ -615,7 +615,7 @@ public:
 	{
 		return stmode;
 	}
-	bool IsSubs(long int, long int);
+	bool IsSubs(id_type, id_type);
 	bool NoKeywords() const
 	{
 		return keywords.empty();
@@ -641,7 +641,7 @@ public:
 	{
 		return by_publication;
 	}
-	long int SubsRes() const
+	lint SubsRes() const
 	{
 		return subs_res;
 	}
@@ -653,11 +653,11 @@ public:
 	{
 		return modifyuser;
 	}
-	long int AddUserRes() const
+	lint AddUserRes() const
 	{
 		return adduser_res;
 	}
-	long int ModifyUserRes() const
+	lint ModifyUserRes() const
 	{
 		return modifyuser_res;
 	}
@@ -665,7 +665,7 @@ public:
 	{
 		return login;
 	}
-	long int LoginRes() const
+	lint LoginRes() const
 	{
 		return login_res;
 	}
@@ -673,7 +673,7 @@ public:
 	{
 		return search;
 	}
-	long int SearchRes() const
+	lint SearchRes() const
 	{
 		return search_res;
 	}
@@ -681,7 +681,7 @@ public:
 	{
 		return search_and;
 	}
-	long int SearchLevel()
+	lint SearchLevel()
 	{
 		return search_level;
 	}
@@ -721,11 +721,11 @@ public:
 	{
 		return subtitles;
 	}
-	long int Topic() const
+	id_type Topic() const
 	{
 		return m_nTopicId;
 	}
-	long int DefTopic() const
+	id_type DefTopic() const
 	{
 		return m_nDefTopicId;
 	}
@@ -741,13 +741,13 @@ public:
 	void PrintSubs();
 };
 
-inline void CContext::SetURLValue(const string& p_coParam, unsigned long int p_nValue)
+inline void CContext::SetURLValue(const string& p_coParam, id_type p_nValue)
 {
 	if (m_pcoURL != NULL)
 		m_pcoURL->replaceValue(p_coParam, p_nValue);
 }
 
-inline void CContext::SetDefURLValue(const string& p_coParam, unsigned long int p_nValue)
+inline void CContext::SetDefURLValue(const string& p_coParam, id_type p_nValue)
 {
 	if (m_pcoDefURL != NULL)
 		m_pcoDefURL->replaceValue(p_coParam, p_nValue);

@@ -54,7 +54,7 @@ class Integer
 {
 public:
 	// default constructor
-	Integer(long int p_nVal = 0) : m_nValue(p_nVal) {}
+	Integer(lint p_nVal = 0) : m_nValue(p_nVal) {}
 
 	// conversion from string
 	Integer(const string& p_rcoVal) throw(InvalidValue) { m_nValue = string2int(p_rcoVal); }
@@ -63,7 +63,7 @@ public:
 	operator string() const;
 
 	// int conversion operator
-	operator long int() const { return m_nValue; }
+	operator lint() const { return m_nValue; }
 
 	// comparison operators
 	bool operator ==(const Integer& p_rcoOther) const
@@ -85,10 +85,10 @@ public:
 	{ return m_nValue <= p_rcoOther.m_nValue; }
 
 	// string2int: converts string to int; throws InvalidValue if unable to convert
-	static long int string2int(const string&) throw(InvalidValue);
+	static lint string2int(const string&) throw(InvalidValue);
 
 private:
-	long int m_nValue;
+	lint m_nValue;
 };
 
 
@@ -426,7 +426,7 @@ public:
 		const string& name() const { return m_coItem; }
 
 		// item value
-		long int value() const { return m_pcoEnum->itemValue(m_coItem); }
+		lint value() const { return m_pcoEnum->itemValue(m_coItem); }
 
 		// comparison operator
 		bool operator ==(const Item& p_rcoVal) const
@@ -450,16 +450,16 @@ public:
 
 public:
 	// Enum constructor: initialise it from a string (name) and a list of pair values; the list
-	// must be ordered by the data type: long int; if the data value is -1 it is automatically
+	// must be ordered by the data type: lint; if the data value is -1 it is automatically
 	// generated; throws InvalidValue if list contains two or more pairs having the same key or
 	// is not ordered
-	Enum(const string&, const list<pair<string, long int> >&) throw(InvalidValue, bad_alloc);
+	Enum(const string&, const list<pair<string, lint> >&) throw(InvalidValue, bad_alloc);
 
 	// returns an item identified by name; throws InvalidValue if invalid item name
 	Item item(const string& p_rcoVal) const throw(InvalidValue);
 
 	// returns the value of an item identified by name; throws InvalidValue if invalid item name
-	long int itemValue(const string& p_rcoVal) const throw(InvalidValue);
+	lint itemValue(const string& p_rcoVal) const throw(InvalidValue);
 
 	// name: return enum type name
 	const string& name() const { return m_coName; }
@@ -477,7 +477,7 @@ public:
 	static bool isValid(const string& p_rcoEnum);
 
 	// registerEnum: add enum to enum types
-	static void registerEnum(const string&, const list<pair<string, long int> >&)
+	static void registerEnum(const string&, const list<pair<string, lint> >&)
 		throw(InvalidValue, bad_alloc);
 
 private:
@@ -517,7 +517,7 @@ public:
 		{ return Topic::topic(m_nId)->name(p_rcoLang); }
 
 		// id: return numerical identifier of the topic
-		long int id() const
+		lint id() const
 		{ return Topic::topic(m_nId)->id(); }
 
 		// value: return string containing topic value: "name:language"
@@ -563,7 +563,7 @@ public:
 			: m_nId(p_pcoTopic->id()), m_coLanguage(p_rcoLang) {}
 
 	private:
-		long int m_nId;
+		lint m_nId;
 		string m_coLanguage;
 	};
 
@@ -577,7 +577,7 @@ public:
 	string strValue(const string& p_rcoLang) const;
 
 	// id: return numerical identifier of the topic
-	long int id() const { return m_nTopicId; }
+	lint id() const { return m_nTopicId; }
 
 	// parent: return pointer to parent const topic
 	const Topic* parent() const { return m_pcoParent; }
@@ -589,7 +589,7 @@ public:
 	// isRoot: return true if topic is root (has no parent)
 	bool isRoot() const { return m_pcoParent == NULL; }
 
-	bool isA(long int) const;
+	bool isA(lint) const;
 
 	// childrenNames: return string containing children names
 	string childrenNames(const string&) const;
@@ -604,7 +604,7 @@ public:
 	static const string& values();
 
 	// isValid: returns true if topic id is valid
-	static bool isValid(long int p_nId);
+	static bool isValid(lint p_nId);
 
 	// isValid: returns true if topic value (name:lang) is valid
 	static bool isValid(const string& p_rcoValue);
@@ -616,7 +616,7 @@ public:
 	static Item item(const string& p_rcoValue) throw(InvalidValue);
 
 	// topic: return pointer to const topic identified by id
-	static const Topic* topic(long int p_nId);
+	static const Topic* topic(lint p_nId);
 
 	// topic: return pointer to const topic identified by value (name:lang)
 	static const Topic* topic(const string& p_rcoValue);
@@ -628,13 +628,13 @@ public:
 
 	static void clearInvalid();
 
-	static void setNames(const CStringMap&, long int);
+	static void setNames(const CStringMap&, lint);
 
-	static const Topic* setTopic(const string& p_rcoTopic, long int p_nId,
-	                             long int p_nParentId = -1);
+	static const Topic* setTopic(const string& p_rcoTopic, lint p_nId,
+	                             lint p_nParentId = -1);
 
-	static const Topic* setTopic(const string& p_rcoName, const string& p_rcoLang, long int p_nId,
-	                             long int p_nParentId = -1);
+	static const Topic* setTopic(const string& p_rcoName, const string& p_rcoLang, lint p_nId,
+	                             lint p_nParentId = -1);
 
 	static bool valuesChanged() { return s_bValuesChanged; }
 
@@ -647,7 +647,7 @@ private:
 
 private:
 	// constructor
-	Topic(const string& p_rcoName, const string& p_rcoLang, long int p_nId, Topic* p_pcoParent);
+	Topic(const string& p_rcoName, const string& p_rcoLang, lint p_nId, Topic* p_pcoParent);
 
 	// forbid instantiation from other topic object
 	Topic(const Topic&);
@@ -657,7 +657,7 @@ private:
 
 private:
 	CStringMap m_coNames;		// topic names (language:name)
-	long int m_nTopicId;		// topic numeric identifier
+	lint m_nTopicId;		// topic numeric identifier
 	Topic* m_pcoParent;			// pointer to parent topic
 	CTopicMap* m_pcoChildren;	// pointer to children topics map (subtopics)
 
@@ -692,7 +692,7 @@ inline string Topic::strValue(const string& p_rcoLang) const
 	return val;
 }
 
-inline bool Topic::isA(long int p_nId) const
+inline bool Topic::isA(lint p_nId) const
 {
 	if (p_nId == m_nTopicId)
 		return true;
@@ -701,8 +701,8 @@ inline bool Topic::isA(long int p_nId) const
 	return false;
 }
 
-inline const Topic* Topic::setTopic(const string& p_rcoTopic, long int p_nId,
-                                    long int p_nParentId)
+inline const Topic* Topic::setTopic(const string& p_rcoTopic, lint p_nId,
+                                    lint p_nParentId)
 {
 	string::size_type nSplit = p_rcoTopic.find(':');
 	string coName = p_rcoTopic.substr(0, nSplit);

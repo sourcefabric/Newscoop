@@ -247,9 +247,9 @@ const CContext& CContext::operator =(const CContext& s)
 //		content(field) .If field is empty ("") set the subtitles start element to value for the
 //		current article content
 // Parameters:
-//		long int value - start element from list
+//		lint value - start element from list
 //		const string& field - field (from database) to set the start element for
-void CContext::SetStListStart(long int value, const string& field)
+void CContext::SetStListStart(lint value, const string& field)
 {
 	string actualField = (field == "" ? current_field : field);
 	if (actualField == "")
@@ -276,9 +276,9 @@ void CContext::SetStListStart(long int value, const string& field)
 //		content(field) in "previous" context. If field is empty ("") set the subtitles start
 //		element to value for the current article content
 // Parameters:
-//		long int value - start element from list
+//		lint value - start element from list
 //		const string& field - field (from database) to set the start element for
-void CContext::SetStPrevStart(long int value, const string& field)
+void CContext::SetStPrevStart(lint value, const string& field)
 {
 	string actualField = (field == "" ? current_field : field);
 	if (actualField == "")
@@ -294,9 +294,9 @@ void CContext::SetStPrevStart(long int value, const string& field)
 //		content(field) in "next" context. If field is empty ("") set the subtitles start
 //		element to value for the current article content
 // Parameters:
-//		long int value - start element from list
+//		lint value - start element from list
 //		const string& field - field (from database) to set the start element for
-void CContext::SetStNextStart(long int value, const string& field)
+void CContext::SetStNextStart(lint value, const string& field)
 {
 	string actualField = (field == "" ? current_field : field);
 	if (actualField == "")
@@ -312,10 +312,10 @@ void CContext::SetStNextStart(long int value, const string& field)
 //		set it for the given article content(field). If field is empty ("") set the subtitles
 //		start element to value for the current article content
 // Parameters:
-//		long int value - start element from list
+//		lint value - start element from list
 //		CLevel l - list level
 //		const string& field - field (from database) to set the start element for
-void CContext::SetListStart(long int value, CLevel l, const string& field)
+void CContext::SetListStart(lint value, CLevel l, const string& field)
 {
 	if (l == CLV_ROOT)
 		return ;
@@ -336,10 +336,10 @@ void CContext::SetListStart(long int value, CLevel l, const string& field)
 //		If field is empty ("") set the subtitles start element to value for the current
 //		article content
 // Parameters:
-//		long int value - start element from list
+//		lint value - start element from list
 //		CLevel l - list level
 //		const string& field - field (from database) to set the start element for
-void CContext::SetPrevStart(long int val, CLevel l, const string& field)
+void CContext::SetPrevStart(lint val, CLevel l, const string& field)
 {
 	if (l == CLV_ROOT)
 		return ;
@@ -360,10 +360,10 @@ void CContext::SetPrevStart(long int val, CLevel l, const string& field)
 //		If field is empty ("") set the subtitles start element to value for the current
 //		article content
 // Parameters:
-//		long int value - start element from list
+//		lint value - start element from list
 //		CLevel l - list level
 //		const string& field - field (from database) to set the start element for
-void CContext::SetNextStart(long int val, CLevel l, const string& field)
+void CContext::SetNextStart(lint val, CLevel l, const string& field)
 {
 	if (l == CLV_ROOT)
 		return ;
@@ -390,9 +390,9 @@ void CContext::SetUserInfo(const string& attr, const string& value)
 }
 
 // SetSubs: set subscription for current user
-//		long int p - publication identifier
-//		long int s - section identifier
-void CContext::SetSubs(long int p, long int s)
+//		id_type p - publication identifier
+//		id_type s - section identifier
+void CContext::SetSubs(id_type p, id_type s)
 {
 	LInt2LIntSet::iterator p_i;
 	p_i = subs.find(p);
@@ -513,7 +513,7 @@ void CContext::SetField(const string& f, const string& at)
 //		If the field is empty ("") perform the action for the current field
 // Parameters:
 //		const string& field - field (article content)
-long int CContext::StListStart(const string& field)
+lint CContext::StListStart(const string& field)
 {
 	string actualField = (field == "" ? current_field : field);
 	if (actualField == "")
@@ -529,7 +529,7 @@ long int CContext::StListStart(const string& field)
 //		(article content). If the field is empty ("") perform the action for the current field
 // Parameters:
 //		const string& field - field (article content)
-long int CContext::StPrevStart(const string &field)
+lint CContext::StPrevStart(const string &field)
 {
 	string actualField = (field == "" ? current_field : field);
 	if (actualField == "")
@@ -545,7 +545,7 @@ long int CContext::StPrevStart(const string &field)
 //		(article content). If the field is empty ("") perform the action for the current field
 // Parameters:
 //		const string& field - field (article content)
-long int CContext::StNextStart(const string &field)
+lint CContext::StNextStart(const string &field)
 {
 	string actualField = (field == "" ? current_field : field);
 	if (actualField == "")
@@ -562,7 +562,7 @@ long int CContext::StNextStart(const string &field)
 // Parameters:
 //		CLevel l - list level
 //		const string& field - field (article content)
-long int CContext::ListStart(CLevel l, const string& field)
+lint CContext::ListStart(CLevel l, const string& field)
 {
 	switch (l)
 	{
@@ -586,7 +586,7 @@ long int CContext::ListStart(CLevel l, const string& field)
 // Parameters:
 //		CLevel l - list level
 //		const string& field - field (article content)
-long int CContext::PrevStart(CLevel l, const string& field)
+lint CContext::PrevStart(CLevel l, const string& field)
 {
 	switch (l)
 	{
@@ -610,7 +610,7 @@ long int CContext::PrevStart(CLevel l, const string& field)
 // Parameters:
 //		CLevel l - list level
 //		const string& field - field (article content)
-long int CContext::NextStart(CLevel l, const string& field)
+lint CContext::NextStart(CLevel l, const string& field)
 {
 	switch (l)
 	{
@@ -650,9 +650,9 @@ bool CContext::IsUserInfo(const string& attr)
 
 // IsSubs: return true if the subscription to given publication/section exists
 // Parameters:
-//		long int publication_id - publication identifier
-//		long int section_id - section identifier
-bool CContext::IsSubs(long int publication_id, long int section_id)
+//		id_type publication_id - publication identifier
+//		id_type section_id - section identifier
+bool CContext::IsSubs(id_type publication_id, id_type section_id)
 {
 	LInt2LIntSet::iterator p_i = subs.find(publication_id);
 	if (p_i == subs.end())

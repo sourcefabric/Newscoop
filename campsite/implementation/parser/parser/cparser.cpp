@@ -133,7 +133,7 @@ int CCLex::AppendOnAtom()
 }
 
 // CCLex constructor
-CCLex::CCLex(const char* i, long int bl)
+CCLex::CCLex(const char* i, lint bl)
 		: CurrLexem(CMS_CLEX_NONE, CMS_CDT_NONE)
 {
 	text_start = in_buf = i;
@@ -171,7 +171,7 @@ const CCLex& CCLex::operator =(const CCLex& s)
 }
 
 // reset: reset lex
-void CCLex::reset(const char* b, long int bl)
+void CCLex::reset(const char* b, lint bl)
 {
 	if (b != NULL)
 	{
@@ -218,7 +218,7 @@ const CCLexem* CCLex::getCLexem()
 				return IdentifyAtom();
 			}
 			CurrLexem.text_start = text_start;
-			CurrLexem.text_len = index - (unsigned long int)(text_start - in_buf);
+			CurrLexem.text_len = index - (unsigned long)(text_start - in_buf);
 			CurrLexem.res = CMS_CLEX_NONE;
 			return &CurrLexem;
 		}
@@ -258,7 +258,7 @@ const CCLexem* CCLex::getCLexem()
 				CurrLexem.Identifier[0] = 0;
 				if (text_start)
 				{
-					CurrLexem.text_len = index - (unsigned long int)(text_start - in_buf)
+					CurrLexem.text_len = index - (unsigned long)(text_start - in_buf)
 					                     - strlen(CTokenStart);
 					CurrLexem.text_start = text_start;
 				}
@@ -421,12 +421,12 @@ const CCLexem* CCParser::WaitForStatementEnd()
 // MakeImageLink: write image link
 // Parameters:
 //		const CContext& p_rcoContext - context
-//		long int p_nImageNr - image number
+//		lint p_nImageNr - image number
 //		const char* p_pchAlign - html parameter (align)
 //		const char* p_pchAlt - html parameter (alt)
 //		const char* p_pchImgTitle - image subtitle
 //		sockstream& p_rcoOut - output stream
-void CCParser::MakeImageLink(const CContext& p_rcoContext, long int p_rcoImageNr,
+void CCParser::MakeImageLink(const CContext& p_rcoContext, lint p_rcoImageNr,
 							   const char* p_pchAlign, const char* p_pchAlt, const char* p_pchImgTitle, sockstream& p_rcoOut)
 {
 
@@ -456,19 +456,19 @@ void CCParser::MakeImageLink(const CContext& p_rcoContext, long int p_rcoImageNr
 //		const CContext& p_rcoContext - context
 //		const char* p_pchClass - class name
 //		const char* p_pchKey - keyword
-//		long int p_nKeyLen - keyword length
+//		lint p_nKeyLen - keyword length
 //		sockstream& p_rcoOut - output stream
 //		MYSQL* p_SQL - pointer to MySQL connection
 void CCParser::MakeClassLink(const CContext& p_rcoContext, const char* p_pchClass,
-							   const char* p_pchKey, long int p_nKeyLen, sockstream& p_rcoOut,
+							   const char* p_pchKey, lint p_nKeyLen, sockstream& p_rcoOut,
 							   MYSQL* p_SQL)
 {
 	if (p_SQL == NULL)
 		return ;
 	char* pchCleanKey;
 	char* pchUnescKey;
-	long int nCleanKeyLen;
-	long int nUnescKeyLen;
+	lint nCleanKeyLen;
+	lint nUnescKeyLen;
 	HTMLClean(pchCleanKey, nCleanKeyLen, p_pchKey, p_nKeyLen);
 	HTMLUnescape(pchUnescKey, nUnescKeyLen, pchCleanKey, nCleanKeyLen);
 	char* pchTmpBuf = new char [350 + 2 * strlen(p_pchClass) + 2 * strlen(pchUnescKey)];
@@ -520,11 +520,11 @@ void CCParser::MakeClassLink(const CContext& p_rcoContext, const char* p_pchClas
 // HTMLClean: clean the input string of html code
 // Paramters:
 //		char*& p_pchCleanKey - cleaned string
-//		long int& p_nCleanKeyLen - cleaned string length
+//		lint& p_nCleanKeyLen - cleaned string length
 //		const char* p_pchKey - string to clean
-//		long int p_nKeyLen - string to clean length
-void CCParser::HTMLClean(char*& p_pchCleanKey, long int& p_nCleanKeyLen, const char* p_pchKey,
-						   long int p_nKeyLen)
+//		lint p_nKeyLen - string to clean length
+void CCParser::HTMLClean(char*& p_pchCleanKey, lint& p_nCleanKeyLen, const char* p_pchKey,
+						   lint p_nKeyLen)
 {
 	int html = 0;
 	int s_index = 0;
@@ -552,13 +552,13 @@ void CCParser::HTMLClean(char*& p_pchCleanKey, long int& p_nCleanKeyLen, const c
 
 // HTMLUnescape: unescape input html string
 //		char*& unesc - unescaped string
-//		long int& unesc_len - unescaped string length
+//		lint& unesc_len - unescaped string length
 //		const char* str - string to unescape
-//		long int str_len - string to unescape length
-void CCParser::HTMLUnescape(char*& unesc, long int& unesc_len, const char* str, long int str_len)
+//		lint str_len - string to unescape length
+void CCParser::HTMLUnescape(char*& unesc, lint& unesc_len, const char* str, lint str_len)
 {
-	long int s_index = 0;
-	long int d_index = 0;
+	lint s_index = 0;
+	lint d_index = 0;
 	unesc = (char*)new char[str_len + 1];
 	for (; s_index < str_len; s_index++)
 		if (str[s_index] == '&')
@@ -596,13 +596,13 @@ void CCParser::HTMLUnescape(char*& unesc, long int& unesc_len, const char* str, 
 // CGIEscape: escape input string for URL use
 // Parameters:
 //		char*& esc - escaped string
-//		long int& esc_len - escaped string length
+//		lint& esc_len - escaped string length
 //		const char* str - string to escape
-//		long int str_len - string to escape length
-void CCParser::CGIEscape(char*& esc, long int& esc_len, const char* str, long int str_len)
+//		lint str_len - string to escape length
+void CCParser::CGIEscape(char*& esc, lint& esc_len, const char* str, lint str_len)
 {
-	long int s_index = 0;
-	long int d_index = 0;
+	lint s_index = 0;
+	lint d_index = 0;
 	esc = (char*)new char[3 * str_len + 1];
 	for (; s_index < str_len; s_index++)
 		if (str[s_index] == ' ')
@@ -651,7 +651,7 @@ const CCLexem* CCParser::DoParse(CContext& p_rcoContext, sockstream& p_rcoOut,
 			RequireAtom(l);
 			if (l->res != CMS_CLEX_IDENTIFIER || l->atom_dt != CMS_CDT_NUMBER)
 				continue;
-			long int img_nr = atol(l->Identifier);
+			lint img_nr = atol(l->Identifier);
 			l = clex.getCLexem();
 			DEBUGLexem("parse 3", l);
 			string align;
