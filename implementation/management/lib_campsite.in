@@ -605,6 +605,19 @@ function valid_field_name($name)
  return true;
 }
 
+function valid_short_name($name)
+{
+ if (strlen($name) == 0)
+  return false;
+ for ($i = 0; $i < strlen($name); $i++) {
+  $c = $name[$i];
+  $ok = ($c >= 'A' && $c <= 'Z') || ($c >= 'a' && $c <= 'z') || $c == '_' || ($c >= '0' && $c <= '9');
+  if (!$ok)
+      return false;
+ }
+ return true;
+}
+
 if (file_exists ($_SERVER['DOCUMENT_ROOT'].'/priv/modules/admin/priv_functions.php'))
   include ($_SERVER['DOCUMENT_ROOT'].'/priv/modules/admin/priv_functions.php');
 ?>
