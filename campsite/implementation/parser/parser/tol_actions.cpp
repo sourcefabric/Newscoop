@@ -368,9 +368,9 @@ int TOLActInclude::TakeAction(TOLContext& c, fstream& fs)
 				return ERR_NOHASHENT;
 			}
 		}
+		TOLParser::UnlockHash();
 		(*ph_i)->SetDebug(*m_coDebug);
 		(*ph_i)->Parse();
-		TOLParser::UnlockHash();
 		(*ph_i)->SetDebug(*m_coDebug);
 		return (*ph_i)->WriteOutput(c, fs);
 	}

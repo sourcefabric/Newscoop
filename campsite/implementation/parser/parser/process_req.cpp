@@ -295,9 +295,9 @@ int RunParser(MYSQL* p_pSQL, CGIParams* p_pParams, fstream& p_rOs) throw(Excepti
 			coPHash.insert_unique(new TOLParser(p_pParams->m_pchPathTranslated,
 			                                    p_pParams->m_pchDocumentRoot));
 		ph_i = coPHash.find(p_pParams->m_pchPathTranslated);
+		TOLParser::UnlockHash();
 		if (ph_i == coPHash.end())
 			throw Exception("Parser hash error");
-		TOLParser::UnlockHash();
 		(*ph_i)->SetDebug(bTechDebug);
 		int nParseRes = (*ph_i)->Parse();
 		WriteCharset((*pcoCtx), p_pSQL, p_rOs);
