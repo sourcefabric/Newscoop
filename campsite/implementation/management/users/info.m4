@@ -1,4 +1,3 @@
-B_HTML
 INCLUDE_PHP_LIB(<*$ADMIN_DIR/users*>)
 B_DATABASE
 
@@ -6,7 +5,6 @@ CHECK_BASIC_ACCESS
 CHECK_ACCESS(<*ManageUsers*>)
 
 B_HEAD
-	X_EXPIRES
 	X_TITLE(<*Change user account information*>)
 <?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to change user account information.*>)
@@ -44,7 +42,7 @@ E_CURRENT
 <P>
 B_DIALOG(<*Change user account information*>, <*POST*>, <*do_info.php*>)
 	B_DIALOG_INPUT(<*Full Name*>)
-		<INPUT TYPE="TEXT" NAME="Name" VALUE="<?php  pgetHVar($users,'Name'); ?>" SIZE="32" MAXLENGTH="64">
+		<INPUT TYPE="TEXT" class="input_text" NAME="Name" VALUE="<?php  pgetHVar($users,'Name'); ?>" SIZE="32" MAXLENGTH="64">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Title*>)
 		<SELECT NAME="Title">
@@ -69,19 +67,19 @@ B_DIALOG(<*Change user account information*>, <*POST*>, <*do_info.php*>)
 		</SELECT>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*E-Mail*>)
-		<INPUT TYPE="TEXT" NAME="EMail" VALUE="<?php  pgetHVar($users,'EMail'); ?>" SIZE="32" MAXLENGTH="128">
+		<INPUT TYPE="TEXT" class="input_text" NAME="EMail" VALUE="<?php  pgetHVar($users,'EMail'); ?>" SIZE="32" MAXLENGTH="128">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*City*>)
-		<INPUT TYPE="TEXT" NAME="City" VALUE="<?php  pgetHVar($users,'City'); ?>" SIZE="32" MAXLENGTH="60">
+		<INPUT TYPE="TEXT" class="input_text" NAME="City" VALUE="<?php  pgetHVar($users,'City'); ?>" SIZE="32" MAXLENGTH="60">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Street Address*>)
-		<INPUT TYPE="TEXT" NAME="StrAddress" VALUE="<?php  pgetHVar($users,'StrAddress'); ?>" SIZE="50" MAXLENGTH="255">
+		<INPUT TYPE="TEXT" class="input_text" NAME="StrAddress" VALUE="<?php  pgetHVar($users,'StrAddress'); ?>" SIZE="50" MAXLENGTH="255">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Postal Code*>)
-		<INPUT TYPE="TEXT" NAME="PostalCode" VALUE="<?php  pgetHVar($users,'PostalCode'); ?>" SIZE="10" MAXLENGTH="10">
+		<INPUT TYPE="TEXT" class="input_text" NAME="PostalCode" VALUE="<?php  pgetHVar($users,'PostalCode'); ?>" SIZE="10" MAXLENGTH="10">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*State*>)
-		<INPUT TYPE="TEXT" NAME="State" VALUE="<?php  pgetHVar($users,'State'); ?>" SIZE="32" MAXLENGTH="32">
+		<INPUT TYPE="TEXT" class="input_text" NAME="State" VALUE="<?php  pgetHVar($users,'State'); ?>" SIZE="32" MAXLENGTH="32">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Country*>)
 		<SELECT NAME="CountryCode">
@@ -100,19 +98,19 @@ B_DIALOG(<*Change user account information*>, <*POST*>, <*do_info.php*>)
 		</SELECT>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Phone*>)
-		<INPUT TYPE="TEXT" NAME="Phone" VALUE="<?php  pgetHVar($users,'Phone'); ?>" SIZE="20" MAXLENGTH="20">
+		<INPUT TYPE="TEXT" class="input_text" NAME="Phone" VALUE="<?php  pgetHVar($users,'Phone'); ?>" SIZE="20" MAXLENGTH="20">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Fax*>)
-		<INPUT TYPE="TEXT" NAME="Fax" VALUE="<?php  pgetHVar($users,'Fax'); ?>" SIZE="20" MAXLENGTH="20">
+		<INPUT TYPE="TEXT" class="input_text" NAME="Fax" VALUE="<?php  pgetHVar($users,'Fax'); ?>" SIZE="20" MAXLENGTH="20">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Contact Person*>)
-		<INPUT TYPE="TEXT" NAME="Contact" VALUE="<?php  pgetHVar($users,'Contact'); ?>" SIZE="32" MAXLENGTH="64">
+		<INPUT TYPE="TEXT" class="input_text" NAME="Contact" VALUE="<?php  pgetHVar($users,'Contact'); ?>" SIZE="32" MAXLENGTH="64">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Second Phone*>)
-		<INPUT TYPE="TEXT" NAME="Phone2" VALUE="<?php  pgetHVar($users,'Phone2'); ?>" SIZE="20" MAXLENGTH="20">
+		<INPUT TYPE="TEXT" class="input_text" NAME="Phone2" VALUE="<?php  pgetHVar($users,'Phone2'); ?>" SIZE="20" MAXLENGTH="20">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Employer*>)
-		<INPUT TYPE="TEXT" NAME="Employer" VALUE="<?php  pgetHVar($users,'Employer'); ?>" SIZE="30" MAXLENGTH="30">
+		<INPUT TYPE="TEXT" class="input_text" NAME="Employer" VALUE="<?php  pgetHVar($users,'Employer'); ?>" SIZE="30" MAXLENGTH="30">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Employer Type*>)
 		<SELECT NAME="EmployerType">
@@ -125,7 +123,7 @@ B_DIALOG(<*Change user account information*>, <*POST*>, <*do_info.php*>)
 		</SELECT>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Position*>)
-		<INPUT TYPE="TEXT" NAME="Position" VALUE="<?php  pgetHVar($users,'Position'); ?>" SIZE="30" MAXLENGTH="30">
+		<INPUT TYPE="TEXT" class="input_text" NAME="Position" VALUE="<?php  pgetHVar($users,'Position'); ?>" SIZE="30" MAXLENGTH="30">
 	E_DIALOG_INPUT
 	B_DIALOG_BUTTONS
 		<INPUT TYPE="HIDDEN" NAME="User" VALUE="<?php  pencHTML($User); ?>">

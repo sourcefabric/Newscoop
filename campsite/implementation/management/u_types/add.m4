@@ -1,4 +1,3 @@
-B_HTML
 INCLUDE_PHP_LIB(<*$ADMIN_DIR/u_types*>)
 B_DATABASE
 
@@ -29,7 +28,7 @@ E_HEADER
 <P>
 B_DIALOG(<*Add new user type*>, <*POST*>, <*do_add.php*>)
 	B_DIALOG_INPUT(<*Name*>)
-		<INPUT TYPE="TEXT" NAME="cName" SIZE="32" MAXLENGTH="32">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cName" SIZE="32" MAXLENGTH="32">
 	E_DIALOG_INPUT
 	B_DIALOG_PACKEDINPUT
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cReader">*>)

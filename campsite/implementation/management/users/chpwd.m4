@@ -1,11 +1,9 @@
-B_HTML
 INCLUDE_PHP_LIB(<*$ADMIN_DIR/users*>)
 B_DATABASE
 
 CHECK_BASIC_ACCESS
 
 B_HEAD
-	X_EXPIRES
 	X_TITLE(<*Change your password*>)
 <?php  if ($access == 0) { ?>dnl
 	X_LOGOUT
@@ -28,13 +26,13 @@ E_HEADER
 <P>
 B_DIALOG(<*Change your password*>, <*POST*>, <*do_chpwd.php*>)
 	B_DIALOG_INPUT(<*Old password*>)
-		<INPUT TYPE="PASSWORD" NAME="cOldPass" SIZE="32" MAXLENGTH="32">
+		<INPUT TYPE="PASSWORD" class="input_text" NAME="cOldPass" SIZE="32" MAXLENGTH="32">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*New password*>)
-		<INPUT TYPE="PASSWORD" NAME="cNewPass1" SIZE="32" MAXLENGTH="32">
+		<INPUT TYPE="PASSWORD" class="input_text" NAME="cNewPass1" SIZE="32" MAXLENGTH="32">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Confirm new password*>)
-		<INPUT TYPE="PASSWORD" NAME="cNewPass2" SIZE="32" MAXLENGTH="32">
+		<INPUT TYPE="PASSWORD" class="input_text" NAME="cNewPass2" SIZE="32" MAXLENGTH="32">
 	E_DIALOG_INPUT
 	B_DIALOG_BUTTONS
 		SUBMIT(<*Save*>, <*Save changes*>)

@@ -34,20 +34,6 @@ if ($access) {
 	else 
 		$pb=0;
 ?>
-
-<STYLE>
-	BODY { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	SMALL { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 8pt; }
-	FORM { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	TH { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	TD { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	BLOCKQUOTE { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	UL { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	LI { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	A  { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; text-decoration: none; color: darkblue; }
-	ADDRESS { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 8pt; }
-</STYLE>
-
 <BODY  BGCOLOR="WHITE" TEXT="BLACK" LINK="DARKBLUE" ALINK="RED" VLINK="DARKBLUE">
 <?php
 	todefnum('Pub');
@@ -121,15 +107,15 @@ if ($access) {
 	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS("Date"); ?>:</TD>
 		<TD>
-		<INPUT TYPE="TEXT" NAME="publish_date" SIZE="10" MAXLENGTH="10" VALUE="<?php p($publish_date); ?>">
+		<INPUT TYPE="TEXT" class="input_text" NAME="publish_date" SIZE="10" MAXLENGTH="10" VALUE="<?php p($publish_date); ?>">
 		<?php putGS('YYYY-MM-DD'); ?>
 		</TD>
 	</TR>
 	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS("Time"); ?>:</TD>
 		<TD>
-		<INPUT TYPE="TEXT" NAME="publish_hour" SIZE="2" MAXLENGTH="2" VALUE="<?php p($publish_hour); ?>"> :
-		<INPUT TYPE="TEXT" NAME="publish_min" SIZE="2" MAXLENGTH="2" VALUE="<?php p($publish_min); ?>">
+		<INPUT TYPE="TEXT" class="input_text" NAME="publish_hour" SIZE="2" MAXLENGTH="2" VALUE="<?php p($publish_hour); ?>"> :
+		<INPUT TYPE="TEXT" class="input_text" NAME="publish_min" SIZE="2" MAXLENGTH="2" VALUE="<?php p($publish_min); ?>">
 		</TD>
 	</TR>
 	<TR>
