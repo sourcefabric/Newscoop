@@ -126,6 +126,9 @@ echo -n "Writing make.env file..."
 make_env=${CAMPSITE_PACKAGE_DIR}/.make.env.tmp
 rm -f "$make_env"
 cat > "$make_env" << EOF
+export USER_INSTALL=$USER_INSTALL
+export BSD=$BSD
+export OPENBSD=$OPENBSD
 export ROOT_USER=$ROOT_USER
 export ROOT_GROUP=$ROOT_GROUP
 export APACHE_USER=$APACHE_USER
