@@ -104,11 +104,19 @@ function IsValidInput($p_array) {
 		if (!isset($_REQUEST[$varName])) {
 			return false;
 		}
-		switch ($type) {
+		switch (strtolower($type)) {
 		case 'int':
 			if (!is_numeric($_REQUEST[$varName])) {
 				return false;
 			}
+			break;
+		case 'string':
+			if (!is_string($_REQUEST[$varName])) {
+				return false;
+			}
+			break;
+		default: 
+			return false;
 		}
 	}
 	return true;
@@ -328,14 +336,22 @@ function regGS($key,$value) {
 	}
 } // fn regGS
 
+
 function dSystem($s) {
 //    print ("<BR>Executing <BR>$s<BR>");
     system($s);
 }
 
-function p($s) {
-    print $s;
-}
+
+/** 
+ * An alias for "print()".
+ * @param string p_string
+ * @return void
+ */
+function p($p_string) {
+    print $p_string;
+} // fn p
+
 
 function ifYthenCHECKED($q,$f) {
 	if (getVar($q,$f)=='Y') {
@@ -908,77 +924,6 @@ function template_is_used($template_name)
 	return false;
 }
 
-function move_article_rel($pub_id, $lang_id, $issue, $section, $article, $dir, $nr_pos = 1)
-{
-	$sql = "select * from Articles where IdPublication = " . $pub_id . " and NrIssue = "
-	     . $issue . " and NrSection = " . $section . " and Number = " . $article
-	     . " and IdLanguage = " . $lang_id;
-	$res = mysql_query($sql);
-	$row = mysql_fetch_array($res);
-	if (!$row)
-		return false;
-	$art_order = $row['ArticleOrder'];
-	$comp = $dir == "up" ? "<=" : ">=";
-	$ord = $dir == "up" ? "desc" : "asc";
-	$sql = "select * from Articles where IdPublication = " . $pub_id . " and NrIssue = "
-	     . $issue . " and NrSection = " . $section . " and ArticleOrder " . $comp . " "
-	     . $art_order . " and IdLanguage = " . $lang_id . " order by ArticleOrder " . $ord
-	     . " limit " . $nr_pos . ", 1";
-	$res = mysql_query($sql);
-	$row = mysql_fetch_array($res);
-	if (!$row)
-		return false;
-	$prev_order = $row['ArticleOrder'] + ($dir == "up" ? 0 : 1);
-	$prev_number = $row['Number'];
-	$sql = "update Articles set ArticleOrder = ArticleOrder + 1 where IdPublication = "
-	     . $pub_id . " and NrIssue = " . $issue . " and NrSection = " . $section
-	     . " and ArticleOrder >= " . $prev_order;
-	$res = mysql_query($sql);
-	$sql = "update Articles set ArticleOrder = " . $prev_order . " where IdPublication = "
-	     . $pub_id . " and NrIssue = " . $issue . " and NrSection = " . $section
-	     . " and Number = " . $article;
-	$res = mysql_query($sql);
-	return true;
-}
-
-function move_article_abs($pub_id, $lang_id, $issue, $section, $article, $pos = 1)
-{
-	$sql = "select * from Articles where IdPublication = " . $pub_id . " and NrIssue = "
-	     . $issue . " and NrSection = " . $section . " and Number = " . $article
-	     . " and IdLanguage = " . $lang_id;
-	$res = mysql_query($sql);
-	$row = mysql_fetch_array($res);
-	if (!$row)
-		return false;
-	$art_order = $row['ArticleOrder'];
-	$sql = "select * from Articles where IdPublication = " . $pub_id . " and NrIssue = "
-	     . $issue . " and NrSection = " . $section . " and IdLanguage = " . $lang_id
-	     . " order by ArticleOrder asc limit " . ($pos - 1) . ", 1";
-	$res = mysql_query($sql);
-	$row = mysql_fetch_array($res);
-	if (!$row)
-		return false;
-	$prev_order = $row['ArticleOrder'];
-	$prev_number = $row['Number'];
-	if ($prev_order == $art_order)
-		return true;
-	if ($prev_order > $art_order) {
-		$comp = ">";
-		$new_order = $prev_order + 1;
-	} else {
-		$comp = ">=";
-		$new_order = $prev_order;
-	}
-	$sql = "update Articles set ArticleOrder = ArticleOrder + 1 where IdPublication = "
-	     . $pub_id . " and NrIssue = " . $issue . " and NrSection = " . $section
-	     . " and ArticleOrder " . $comp . " " . $prev_order;
-	$res = mysql_query($sql);
-	$sql = "update Articles set ArticleOrder = " . $new_order . " where IdPublication = "
-	     . $pub_id . " and NrIssue = " . $issue . " and NrSection = " . $section
-	     . " and Number = " . $article;
-	$res = mysql_query($sql);
-	return true;
-}
 
 if (file_exists ($_SERVER['DOCUMENT_ROOT'].'/priv/modules/admin/priv_functions.php'))
   include ($_SERVER['DOCUMENT_ROOT'].'/priv/modules/admin/priv_functions.php');
