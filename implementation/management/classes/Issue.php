@@ -4,29 +4,35 @@ require_once($_SERVER['DOCUMENT_ROOT']."/classes/DatabaseObject.php");
 
 class Issue extends DatabaseObject {
 	var $m_dbTableName = "Issues";
-	var $m_primaryKeyColumnNames = array("IdPublication", "Number", "IdLanguage");
-	var $IdPublication;
-	var $Number;
-	var $IdLanguage;
-	var $Name;
-	var $PublicationDate;
-	var $Published;
-	var $IssueTplId;
-	var $SectionTplId;
-	var $ArticleTplId;
-	var $ShortName;	
+	var $m_keyColumnNames = array("IdPublication", "Number", "IdLanguage");
+	var $m_columnNames = array(
+		"IdPublication",
+		"Number",
+		"IdLanguage",
+		"Name",
+		"PublicationDate",
+		"Published",
+		"IssueTplId",
+		"SectionTplId",
+		"ArticleTplId",
+		"ShortName");
 	
 	function Issue($p_publicationId, $p_languageId, $p_issueId = null) {
-		parent::DatabaseObject();
-		$this->IdPublication = $p_publicationId;
-		$this->IdLanguage = $p_languageId;
-		$this->Number = $p_issueId;
+		parent::DatabaseObject($this->m_columnNames);
+		$this->setProperty("IdPublication", $p_publicationId, false);
+		$this->setProperty("IdLanguage", $p_languageId, false);
+		$this->setProperty("Number", $p_issueId, false);
 		if (!is_null($p_issueId)) {
 			$this->fetch();
 		}
 	} // ctor
 
-	function getAllIssues() {
+	
+	/**
+	 * Get all issues in the database.
+	 * @return array
+	 */
+	function GetAllIssues() {
 		global $Campsite;
 		$queryStr = "SELECT * FROM Issues ";
 		$query = $Campsite["db"]->Execute($queryStr);
@@ -37,9 +43,10 @@ class Issue extends DatabaseObject {
 			$issues[] = $tmpIssue;
 		}
 		return $issues;		
-	} // fn getAllIssues
+	} // fn GetAllIssues
 	
-	function getIssuesInPublication($p_publicationId, $p_languageId) {
+	
+	function GetIssuesInPublication($p_publicationId, $p_languageId) {
 		global $Campsite;
 		$queryStr = "SELECT * FROM Issues "
 					." WHERE IdPublication='".$p_publicationId."'"
@@ -52,41 +59,46 @@ class Issue extends DatabaseObject {
 			$issues[] = $tmpIssue;
 		}
 		return $issues;
-	} // fn getAllIssuesInPublication
+	} // fn GetAllIssuesInPublication
+	
 	
 	function getPublicationId() {
-		return $this->IdPublication;
+		return $this->getProperty("IdPublication");
 	} // fn getPublicationId
 	
 	
 	function getLanguageId() {
-		return $this->IdLanguage;
+		return $this->getProperty("IdLanguage");
 	} // fn getLanguageId
 	
 	
 	function getIssueId() {
-		return $this->Number;
+		return $this->getProperty("Number");
 	} // fn getIssueId
 	
 	
 	function getName() {
-		return $this->Name;
+		return $this->getProperty("Name");
 	} // fn getName
 	
+	
 	function getShortName() {
-		return $this->ShortName;
+		return $this->getProperty("ShortName");
 	}
+	
 	
 	function getArticleTemplateId() {
-		return $this->ArticleTplId;
+		return $this->getProperty("ArticleTplId");
 	}
+	
 	
 	function getSectionTemplateId() {
-		return $this->SectionTplId;
+		return $this->getProperty("SectionTplId");
 	}
 	
+	
 	function getIssueTemplateId() {
-		return $this->IssueTplId;
+		return $this->getProperty("IssueTplId");
 	}
 } // class Issue
 
