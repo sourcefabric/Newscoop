@@ -64,7 +64,7 @@ done
 [ "$WWW_COMMON_DIR" = "" ] && export WWW_COMMON_DIR=$CAMPSITE_DIR/www-common
 HTML_COMMON_DIR=$WWW_COMMON_DIR/html
 PRIV_COMMON_DIR=$WWW_COMMON_DIR/html/priv
-CGI_COMMON_DIR=$WWW_COMMON_DIR/cgi
+CGI_COMMON_DIR=$WWW_COMMON_DIR/cgi-bin
 SCRIPT_COMMON_DIR=$WWW_COMMON_DIR/script
 INCLUDE_COMMON_DIR=$WWW_COMMON_DIR/include
 
@@ -83,7 +83,7 @@ fi
 
 campsite_version=`cat ${CAMPSITE_PACKAGE_DIR}/README | grep -w ^version | grep ":" | cut -f 2 -d ":"`
 [ $? -ne 0 ] && echo "Error reading campsite version" && exit 1
-export CAMPSITE_VERSION=$campsite_version
+export CAMPSITE_VERSION=`echo -n $campsite_version`
 release_date=`cat ${CAMPSITE_PACKAGE_DIR}/README | grep -w ^release | grep ":" | cut -f 2 -d ":"`
 [ $? -ne 0 ] && echo "Error reading campsite release date" && exit 1
 export CAMPSITE_RELEASE_DATE=release_date
@@ -114,7 +114,10 @@ make_env=${CAMPSITE_PACKAGE_DIR}/make.env
 cat > $make_env << EOF
 export ROOT_USER=$ROOT_USER
 export ROOT_GROUP=$ROOT_GROUP
+export APACHE_USER=$APACHE_USER
+export APACHE_GROUP=$APACHE_GROUP
 export INSTALL_CONF=$INSTALL_CONF
+export CAMPSITE_DIR=$CAMPSITE_DIR
 export BIN_DIR=$BIN_DIR
 export ETC_DIR=$ETC_DIR
 export WWW_DIR=$WWW_DIR
@@ -131,7 +134,6 @@ export MAKE=$MAKE
 export M4=$M4
 export IMPLEMENTATION_PARTS=$IMPLEMENTATION_PARTS
 export SUPPLEMENTAL_PARTS=$SUPPLEMENTAL_PARTS
-export INSTALL_CONF=$CAMPSITE_PACKAGE_DIR/.install_conf
 export HAVE_GETHOSTBYADDR_R=$HAVE_GETHOSTBYADDR_R
 export HAVE_GETHOSTBYNAME_R=$HAVE_GETHOSTBYNAME_R
 export HAVE_GETSERVBYNAME_R=$HAVE_GETSERVBYNAME_R
@@ -142,7 +144,7 @@ export NSL_LINK=$NSL_LINK
 export KILLALL=$KILLALL
 export PARSER_START_PORT=$PARSER_START_PORT
 export XML_INCLUDE=$XML_INCLUDE
-export XML_LINK=$XML_LINK
+export XML_LINK="$XML_LINK"
 EOF
 [ $? -ne 0 ] && echo "ERROR" && exit 1
 [ "$GPP" != "" ] && echo "export GPP=$GPP" >> $make_env
@@ -191,7 +193,7 @@ else # else if define start env
     prepare_install_env || exit 1
     install_conf --set || exit 1
     modules_conf --set || exit 1
-    for m in apache gethostbyaddr_r gethostbyname_r getservbyname_r killall libpthread mysql_h libcrypt libnsl xml libmysqlclient gcc; do
+    for m in apache gethostbyaddr_r gethostbyname_r getservbyname_r killall libpthread mysql_h libcrypt libnsl xml libmysqlclient gcc m4 make; do
 	check4_${m}
     done
 
@@ -199,6 +201,9 @@ fi # end if define start env
 
 export ROOT_USER=$ROOT_USER
 export ROOT_GROUP=$ROOT_GROUP
+export APACHE_USER=$APACHE_USER
+export APACHE_GROUP=$APACHE_GROUP
+export CAMPSITE_DIR=$CAMPSITE_DIR
 export BIN_DIR=$BIN_DIR
 export ETC_DIR=$ETC_DIR
 export WWW_DIR=$WWW_DIR
@@ -227,6 +232,6 @@ export NSL_LINK=$NSL_LINK
 export KILLALL=$KILLALL
 export PARSER_START_PORT=$PARSER_START_PORT
 export XML_INCLUDE=$XML_INCLUDE
-export XML_LINK=$XML_LINK
+export XML_LINK="$XML_LINK"
 
 echo "Configuration done"
