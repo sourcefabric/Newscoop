@@ -38,11 +38,11 @@ $publicationObj =& new Publication($Pub);
 
 $articleCopy = $articleObj->copy($DestPublication, $DestIssue, $DestSection, $User->getId());
 
-$logtext = getGS('Article $1 added to $2. $3 from $4. $5 of $6', 
-	$articleCopy->getName(), $sectionObj->getSectionId(), 
-	$sectionObj->getName(), $issueObj->getIssueId(), 
-	$issueObj->getName(), $publicationObj->getName() ); 
-Log::Message($logtext, $User->getUserName(), 31);
+$logtext = getGS('Article $1 added to $2. $3 from $4. $5 of $6',
+	$articleCopy->getName(), $sectionObj->getSectionId(),
+	$sectionObj->getName(), $issueObj->getIssueId(),
+	$issueObj->getName(), $publicationObj->getName() );
+Log::Message($logtext, $User->getUserName(), 155);
 
 header("Location: ".CampsiteInterface::ArticleUrl($articleCopy, $Language, "edit.php", $Back));
 exit;
