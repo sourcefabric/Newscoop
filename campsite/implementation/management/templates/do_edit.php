@@ -45,8 +45,7 @@ if ($nField == 0 || $res > 0) {
 </TR></TABLE>
 <P>
 
-<CENTER>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" BGCOLOR="#C0D0FF" ALIGN="CENTER">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" ALIGN="CENTER" class="table_input">
 	<TR>
 		<TD COLSPAN="2">
 			<B> <?php  putGS("Edit template"); ?> </B>
@@ -68,7 +67,7 @@ if ($nField == 0 || $res > 0) {
 		</DIV>
 		</TD>
 	</TR>
-</TABLE></CENTER>
+</TABLE>
 <P>
 <?php
 CampsiteInterface::CopyrightNotice();

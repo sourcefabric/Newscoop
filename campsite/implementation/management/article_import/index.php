@@ -91,7 +91,7 @@ $issueLanguage =& new Language($sLanguage);
 </tr>
 </table>
 
-<table border="0" align="center" cellspacing="0" BGCOLOR="#C0D0FF">
+<table border="0" align="center" cellspacing="0" class="table_input">
 <form method="POST" action="CommandProcessor.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 0);" enctype="multipart/form-data">
 <input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
 <input type="hidden" name="form_name" value="upload_article_form">

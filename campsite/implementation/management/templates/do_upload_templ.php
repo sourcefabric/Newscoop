@@ -48,7 +48,7 @@ if ($res) {
 </TR></TABLE>
 
 <P>
-<CENTER><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" BGCOLOR="#C0D0FF" ALIGN="CENTER">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" ALIGN="CENTER" class="table_input">
 	<TR>
 		<TD COLSPAN="2">
 			<B> <?php  putGS("Uploading template"); ?> </B>
@@ -65,7 +65,7 @@ if ($res) {
 		</DIV>
 		</TD>
 	</TR>
-</TABLE></CENTER>
+</TABLE>
 <P>
 <?php
 CampsiteInterface::CopyrightNotice();

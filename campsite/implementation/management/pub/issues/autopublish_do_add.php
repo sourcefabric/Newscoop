@@ -120,7 +120,7 @@ if ($access) {
 </TABLE>
 
 <P>
-<CENTER><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" BGCOLOR="#C0D0FF" ALIGN="CENTER">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" ALIGN="CENTER" class="table_input">
 	<TR>
 		<TD COLSPAN="2">
 			<B> <?php  putGS("Scheduling a new publish action"); ?> </B>
@@ -156,7 +156,7 @@ if ($access) {
 		</DIV>
 		</TD>
 	</TR>
-</TABLE></CENTER>
+</TABLE>
 <P>
 
 <?php } else { ?><BLOCKQUOTE>
