@@ -41,6 +41,7 @@ int main()
   if ((result = SQLConnection(&sql)) != RES_OK)
     return result;
   
+  long int notifiedIndex = 0;
   sprintf(buf, "select Publications.Name, Publications.IdDefaultLanguage, "
           "Users.Title, Users.Name, Users.EMail, Subscriptions.Id, "
           "Subscriptions.Type, Publications.Id, Publications.Site from "
@@ -80,10 +81,10 @@ int main()
     mysql_free_result(res_pub);
     
     sprintf(buf, "select StartDate, DATE_FORMAT(StartDate, '%%M %%D, %%Y'), "
-            "PayedDays, TO_DAYS(StartDate), TO_DAYS(now()), DATE_FORMAT("
-            "ADDDATE(StartDate, INTERVAL PayedDays DAY), '%%M %%D, %%Y') from "
+            "PaidDays, TO_DAYS(StartDate), TO_DAYS(now()), DATE_FORMAT("
+            "ADDDATE(StartDate, INTERVAL PaidDays DAY), '%%M %%D, %%Y') from "
             "SubsSections where IdSubscription = %ld and NoticeSent = 'N' "
-            "group by StartDate, PayedDays", id_subs);
+            "group by StartDate, PaidDays", id_subs);
     SQLQuery(sql, buf);
     StoreResult(sql, res_sec);
     int num_rows = mysql_num_rows(res_sec);
@@ -98,20 +99,20 @@ int main()
     while ((row_sec = mysql_fetch_row(res_sec))) {
       const char *sd = row_sec[0];
       const char *sdf = row_sec[1];
-      long int payed_days = atol(row_sec[2]);
+      long int paid_days = atol(row_sec[2]);
       long int sd_days = atol(row_sec[3]);
       long int now_days = atol(row_sec[4]);
       const char *edf = row_sec[5];
-      if (now_days > (payed_days + sd_days))
+      if (now_days > (paid_days + sd_days))
         continue;
-      long int remained_days = payed_days + sd_days - now_days;
+      long int remained_days = paid_days + sd_days - now_days;
       if (remained_days > 14)
         continue;
       notify = true;
       if (num_rows == 1) {
         sprintf(buf, "select count(*) from SubsSections where IdSubscription ="
-                " %ld and NoticeSent = 'N' and StartDate = '%s' and PayedDays "
-                "= %ld", id_subs, sd, payed_days);
+                " %ld and NoticeSent = 'N' and StartDate = '%s' and PaidDays "
+                "= %ld", id_subs, sd, paid_days);
         SQLQuery(sql, buf);
         StoreResult(sql, res_sec_nr);
         MYSQL_ROW row_sec_nr = mysql_fetch_row(res_sec_nr);
@@ -121,7 +122,7 @@ int main()
       if (counter == 0)
         sprintf(text, "Dear %s %s,\n\nThis is a automate generated mail.\n\n"
                 "Your %s subscription (started on %s) to publication %s",
-                user_title, user_name, subs_type[0] == 'P' ? "payed" : "trial",
+                user_title, user_name, subs_type[0] == 'P' ? "paid" : "trial",
                 sdf, pub_name);
       if (subs_sections == pub_sections && num_rows == 1) {
         sprintf(text+strlen(text), " will expire on %s (in %ld days).\n",
@@ -129,9 +130,9 @@ int main()
       } else {
         sprintf(buf, "select Sections.Name, Sections.Number from Sections, "
                 "SubsSections where IdSubscription = %ld and NoticeSent = 'N' "
-                "and StartDate = '%s' and PayedDays = %ld and IdPublication = "
+                "and StartDate = '%s' and PaidDays = %ld and IdPublication = "
                 "%ld and NrIssue = %ld and IdLanguage = %ld and Number = "
-                "SectionNumber", id_subs, sd, payed_days, id_pub, issue_nr,
+                "SectionNumber", id_subs, sd, paid_days, id_pub, issue_nr,
                 id_lang);
         SQLQuery(sql, buf);
         StoreResult(sql, res_date_sec);
@@ -174,7 +175,9 @@ int main()
       sprintf(buf+strlen(buf), " and (%s)", sections);
     SQLQuery(sql, buf);
     mysql_free_result(res_sec);
+    notifiedIndex++;
   }
+  printf("%ld users notified\n", notifiedIndex);
 }
 
 int SQLConnection(MYSQL **sql)

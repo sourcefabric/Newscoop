@@ -77,7 +77,7 @@ B_MSGBOX({Adding new article})
 <!sql if $correct>dnl
 	<!sql query "UPDATE AutoId SET ArticleId=LAST_INSERT_ID(ArticleId + 1)">dnl
 	<!sql set AFFECTED_ROWS 0>dnl
-	<!sql query "INSERT IGNORE INTO Articles SET IdPublication=?Pub, NrIssue=?Issue, NrSection = ?Section, Number = LAST_INSERT_ID(), IdLanguage=?cLanguage, Type='?cType', Name='?cName', Keywords='?cKeywords', OnFrontPage='?cFrontPage', OnSection='?cSectionPage', UploadDate=NOW(), IdUser=@Usr.Id">dnl
+	<!sql query "INSERT IGNORE INTO Articles SET IdPublication=?Pub, NrIssue=?Issue, NrSection = ?Section, Number = LAST_INSERT_ID(), IdLanguage=?cLanguage, Type='?cType', Name='?cName', Keywords='?cKeywords', OnFrontPage='?cFrontPage', OnSection='?cSectionPage', UploadDate=NOW(), IdUser=@Usr.Id, Public='Y'">dnl
 	<!sql if $AFFECTED_ROWS>dnl
 		<!sql set AFFECTED_ROWS 0>dnl
 		<!sql query "INSERT IGNORE INTO X?cType SET NrArticle=LAST_INSERT_ID(), IdLanguage=?cLanguage">

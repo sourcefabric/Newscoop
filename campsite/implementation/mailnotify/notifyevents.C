@@ -35,7 +35,7 @@ int SQLConnection(MYSQL **sql);
 
 int main()
 {
-  char buf[2000], text[10000], command[200], *last_tstamp;
+  char buf[2000], text[10000], command[200], *last_tstamp = 0;
   MYSQL *sql = 0;
   int result;
   if ((result = SQLConnection(&sql)) != RES_OK)
@@ -85,7 +85,9 @@ int main()
       continue;
     MYSQL_ROW row_usr;
     while ((row_usr = mysql_fetch_row(res_usr))) {
-      sprintf(command, "/bin/mail -s \"%s\" %s", event, email);
+      if (row_usr[0] == NULL || row_usr[0][0] == 0)
+        continue;
+      sprintf(command, "/bin/mail -s \"%s\" %s", event, row_usr[0]);
       FILE *os = popen(command, "w");
       if (os == NULL)
         return -1;
@@ -94,9 +96,12 @@ int main()
     }
   }
   mysql_free_result(res);
-  sprintf(buf, "update AutoId set LogTStamp = '%s'", last_tstamp);
-  mysql_query(sql, buf);
-  free(last_tstamp);
+  if (last_tstamp != 0 && last_tstamp[0] != 0)
+  {
+    sprintf(buf, "update AutoId set LogTStamp = '%s'", last_tstamp);
+    mysql_query(sql, buf);
+    free(last_tstamp);
+  }
   return 0;
 }
 

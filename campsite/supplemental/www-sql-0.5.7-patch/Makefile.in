@@ -30,7 +30,7 @@ YACC = @YACC@
 
 CFLAGS = @CFLAGS@
 CPPFLAGS = -I@srcdir@ @REINC@ @DEFS@
-LDFLAGS = -lm @SOCK_LIB@ @LIBS@
+LDFLAGS = -lm -lz @SOCK_LIB@ @LIBS@
 
 DISTFILES = lib/COPYING.LIB lib/regex.c lib/regex.h \
  lib/xmalloc.c lib/xmalloc.diff lib/xstrdup.c COPYING Changelog \

@@ -38,6 +38,7 @@ E_CURRENT
 <!sql query "SELECT Id, Name FROM Languages ORDER BY Name" q_lang>dnl
 <!sql query "SELECT MAX(Number) + 1 FROM Issues WHERE IdPublication=?Pub" q_nr>dnl
 <!sql if @q_nr.0 == ""><!sql set nr 1><!sql else><!sql setexpr nr @q_nr.0><!sql endif>dnl
+<!sql query "SELECT IdDefaultLanguage from Publications where Id=?Pub" q_deflang>dnl
 <P>
 B_DIALOG({Add new issue}, {POST}, {do_add_new.xql})
 	B_DIALOG_INPUT({Name:})
@@ -45,7 +46,9 @@ B_DIALOG({Add new issue}, {POST}, {do_add_new.xql})
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT({Language:})
 		<SELECT NAME="cLang">
-		<!sql print_rows q_lang "<OPTION VALUE=\"~q_lang.Id\">~q_lang.Name">
+		<!sql print_loop q_lang>
+		<OPTION VALUE="<!sql print ~q_lang.Id>"<!sql if ~q_lang.Id == ~q_deflang.IdDefaultLanguage> selected<!sql endif>><!sql print ~q_lang.Name>
+		<!sql done>
 		</SELECT>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT({Number:})

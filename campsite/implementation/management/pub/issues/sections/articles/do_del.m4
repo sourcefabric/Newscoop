@@ -73,6 +73,7 @@ B_MSGBOX({Delete article})
 <!sql endif>dnl
 <!sql if $AFFECTED_ROWS>dnl
 <!sql query "DELETE FROM X?q_art.Type WHERE NrArticle=?Article AND IdLanguage=?sLanguage">dnl
+<!sql query "DELETE FROM ArticleIndex WHERE IdPublication=?Pub AND NrIssue=?Issue AND NrSection=?Section AND NrArticle=?Article AND IdLanguage=?sLanguage">dnl
 <!sql set del 1>dnl
 <!sql else>dnl
 <!sql set del 0>dnl
