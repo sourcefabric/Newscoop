@@ -1,8 +1,0 @@
-#!/bin/bash
-
-. ../../../.install_conf/check4_functions
-
-check4_gpp && check4_socket_h
-[ $? -ne 0 ] && exit 1
-
-exit 0
