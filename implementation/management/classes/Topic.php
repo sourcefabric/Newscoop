@@ -79,11 +79,14 @@ class Topic extends DatabaseObject {
 	 * @param array p_sqlOptions
 	 * @return array
 	 */
-	function getSubtopics($p_sqlOptions = null) {
+	function getSubtopics($p_languageId = null, $p_sqlOptions = null) {
 		global $Campsite;
 		$queryStr = 'SELECT * FROM Topics '
-					.' WHERE ParentId = '.$this->m_data['Id']
-					.' ORDER BY Name ';
+					.' WHERE ParentId = '.$this->m_data['Id'];
+		if (!is_null($p_languageId)) {
+			$queryStr .= ' AND LanguageId='.$p_languageId;
+		}
+		$queryStr .= ' ORDER BY Name ';
 		$queryStr = DatabaseObject::ProcessOptions($queryStr, $p_sqlOptions);
 		$subtopics = DbObjectArray::Create('Topic', $queryStr);
 		return $subtopics;
