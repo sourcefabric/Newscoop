@@ -727,7 +727,7 @@ if $USER_INSTALL; then
 fi
 conf_files="${conf_path}/${conf_file} ${conf_path}/commonhttpd.conf ${conf_path}/common${apache_bin_name}.conf"
 
-user_line=`grep -h -w -m 1 ^User ${conf_files} 2> /dev/null`
+user_line=`grep -h -w ^User ${conf_files} 2> /dev/null`
 if [ "$user_line" = "" ]; then
     echo "Invalid apache configuration files. Aborting."
     return 1
@@ -739,7 +739,7 @@ for w in $user_line; do
 done
 if [ "$APACHE_USER" != "" ]; then
     user_lines=`grep -h -w ^User ${conf_files} 2> /dev/null`
-    user_line=`echo "$user_lines" | grep -m 1 "$APACHE_USER" 2> /dev/null`
+    user_line=`echo "$user_lines" | grep "$APACHE_USER" 2> /dev/null`
     if [ "$user_line" = "" ]; then
 	echo "WARNING!!! The apache user '$APACHE_USER' is not valid; valid apache user is '$apache_user'";
     fi
@@ -747,7 +747,7 @@ else
     export APACHE_USER=$apache_user
 fi
 
-group_line=`grep -h -w -m 1 ^Group ${conf_files} 2> /dev/null`
+group_line=`grep -h -w ^Group ${conf_files} 2> /dev/null`
 if [ "$group_line" = "" ]; then
     echo "Invalid apache configuration files. Aborting."
     return 1
@@ -759,7 +759,7 @@ for w in $group_line; do
 done
 if [ "$APACHE_GROUP" != "" ]; then
     group_lines=`grep -h -w ^Group ${conf_files} 2> /dev/null`
-    group_line=`echo "$group_lines" | grep -m 1 "$APACHE_GROUP" 2> /dev/null`
+    group_line=`echo "$group_lines" | grep "$APACHE_GROUP" 2> /dev/null`
     if [ "$group_line" = "" ]; then
 	echo "WARNING!!! The apache group '$APACHE_GROUP' is not valid; valid apache group is '$apache_group'";
     fi

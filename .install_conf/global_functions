@@ -303,7 +303,7 @@ else
 	[ "$search_path" != "" ] && export PATH=$old_path
     else
 	if [ "$search_path" = "" ]; then
-	    file_path=`locate "$file_name" | grep -w "$file_name" -m 1 2> /dev/null`
+	    file_path=`locate "$file_name" | grep -w "$file_name" 2> /dev/null`
             result=$?
 	else
 	    for dir in `path_dirs $search_path`; do
