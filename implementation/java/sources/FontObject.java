@@ -5,8 +5,8 @@
  *
  * CAMPSITE is a Unicode-enabled multilingual web content                     
  * management system for news publications.                                   
- * CAMPFIRE is a Unicode-enabled java-based near WYSIWYG text editor.         
- * Copyright (C)2000,2001  Media Development Loan Fund                        
+ * CAMPFIRE is a Unicode-enabled java-based near WYSIWYG text editor.
+ * Copyright (C)2000,2001  Media Development Loan Fund
  * contact: contact@campware.org - http://www.campware.org                    
  * Campware encourages further development. Please let us know.               
  *                                                                            
@@ -14,7 +14,7 @@
  * modify it under the terms of the GNU General Public License                
  * as published by the Free Software Foundation; either version 2             
  * of the License, or (at your option) any later version.                     
- *                                                                            
+ *
  * This program is distributed in the hope that it will be useful,            
  * but WITHOUT ANY WARRANTY; without even the implied warranty of             
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the               
@@ -56,20 +56,20 @@ public final class FontObject extends CampHtmlObject {
 	    int end;
 	    int color,size,last;
 	    int mode;//1 color 2 size
-	    if ((end=(ret.toUpperCase()).indexOf("</FONT>"))!=-1)
+	    if ((end=toCampUpperCase(ret).indexOf("</FONT>"))!=-1)
 	    {
-	        color=ret.toUpperCase().lastIndexOf("<FONT COLOR",end);
-	        size=ret.toUpperCase().lastIndexOf("<FONT SIZE",end);
+	        color=toCampUpperCase(ret).lastIndexOf("<FONT COLOR",end);
+	        size=toCampUpperCase(ret).lastIndexOf("<FONT SIZE",end);
 	        if (color==-1)
 	        {
 	            if (size==-1)
 	            {
 	                System.out.println("</FONT> without known opener at position "+charPosition(ret,end));
-        	        int er=ret.toUpperCase().lastIndexOf("<FONT",end);
+        	        int er=toCampUpperCase(ret).lastIndexOf("<FONT",end);
         	        if (er!=-1)
         	        {
         	        ret=cutString(ret,end,"</FONT>");
-        	        int fin=ret.toUpperCase().indexOf(">",er);
+        	        int fin=toCampUpperCase(ret).indexOf(">",er);
     	            ret=cutString(ret,er,ret.substring(er,fin));
     	            }
 	                mode=-1;

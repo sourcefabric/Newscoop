@@ -6,7 +6,7 @@
  * CAMPSITE is a Unicode-enabled multilingual web content                     
  * management system for news publications.                                   
  * CAMPFIRE is a Unicode-enabled java-based near WYSIWYG text editor.         
- * Copyright (C)2000,2001  Media Development Loan Fund                        
+ * Copyright (C)2000,2001  Media Development Loan Fund
  * contact: contact@campware.org - http://www.campware.org                    
  * Campware encourages further development. Please let us know.               
  *                                                                            
@@ -108,7 +108,7 @@ public final class InternalLinkObject extends CampHtmlObject {
         String alignWay, altText, imageName;
         String toParse;
         
-        toParse=s.toUpperCase();
+        toParse=toCampUpperCase(s);
         
         // here we find language id
         i=toParse.indexOf("IDLANGUAGE=");

@@ -54,6 +54,27 @@ public class CampHtmlObject{
         objList=new Vector();
     }
 
+
+	protected String toCampUpperCase(String big){
+	    String work=new String(big);
+	    String sw= new String("ß");
+	    String with= new String("s");
+	    StringBuffer t;
+
+	    int i;
+	    while ((i=work.indexOf(sw))!=-1)
+	    {
+	        t=new StringBuffer();
+	        t.append(work.substring(0,i));
+	        t.append(with);
+	        t.append(work.substring(i+sw.length()));
+	        work=new String(t);
+	    }
+
+	    work= work.toUpperCase();
+	    return work;
+	}
+
 	protected String cutString(String s,int start,String toCut){
 	    StringBuffer sb=new StringBuffer();
 	    int length=toCut.length();
@@ -64,7 +85,7 @@ public class CampHtmlObject{
 
 	protected int firstTag(String s,String tag,int si){
 	    int idx=-1;
-	    String upp=s.toUpperCase();
+	    String upp=toCampUpperCase(s);
 	    idx=upp.indexOf(tag,si);
 	    return idx;
 	}
