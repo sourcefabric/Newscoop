@@ -127,7 +127,7 @@ test -x \$CAMPSITE_SERVER_PATH || exit 0
 #
 case "\$1" in
   start)
-	srv_proc=\`ps -C "\$CAMPSITE_SERVER" | grep -w "\$CAMPSITE_SERVER" | grep -v grep | wc -l\`
+	srv_proc=\`ps -C "\$CAMPSITE_SERVER" | grep -w "\$CAMPSITE_SERVER" | grep -v grep | grep -v -w ps | wc -l\`
 	if [ \$srv_proc -ne 0 ]; then
 	    exit 0
 	fi
@@ -136,7 +136,7 @@ case "\$1" in
 	if [ \$err_code -ne 0 ]; then
 	    exit 1
 	fi
-	srv_proc=\`ps -C "\$CAMPSITE_SERVER" | grep -w "\$CAMPSITE_SERVER" | grep -v grep | wc -l\`
+	srv_proc=\`ps -C "\$CAMPSITE_SERVER" | grep -w "\$CAMPSITE_SERVER" | grep -v grep | grep -v -w ps | wc -l\`
 	if [ \$srv_proc -eq 0 ]; then
 	    exit 1
 	fi
@@ -150,7 +150,7 @@ case "\$1" in
 	\$0 start
 	;;
   status)
-	procs=\`ps -C "\$CAMPSITE_SERVER" | grep -w "\$CAMPSITE_SERVER" | grep -v grep | wc -l\`
+	procs=\`ps -C "\$CAMPSITE_SERVER" | grep -w "\$CAMPSITE_SERVER" | grep -v grep | grep -v -w ps | wc -l\`
 	if [ \$procs -gt 0 ]; then
 	    echo "${APP_NAME} server is running"
 	else
