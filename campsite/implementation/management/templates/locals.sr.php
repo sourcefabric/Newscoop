@@ -39,7 +39,6 @@ regGS("The upload of $1 was successful !","Аплоуд $1 успешно око
 regGS("Template $1 uploaded","Шаблон $1 је аплоудован");
 regGS("Create new template","Креирај нови шаблон");
 regGS("Creating new template","Креирање новог шаблона");
-regGS("Duplicate","Дуплирај");
 regGS("Duplicate template","Дуплирај шаблон");
 regGS("Edit template","Уреди шаблон");
 regGS("Template","Шаблон");

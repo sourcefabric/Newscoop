@@ -39,7 +39,6 @@ regGS("The upload of $1 was successful !","Aploud $1 je uspešno okončan");
 regGS("Template $1 uploaded","Šablon $1 je aploudovan");
 regGS("Create new template","Kreiraj novi šablon");
 regGS("Creating new template","Kreiranje novog šablona");
-regGS("Duplicate","Dupliraj");
 regGS("Duplicate template","Dupliraj šablon");
 regGS("Edit template","Uredi šablon");
 regGS("Template","Šablon");

@@ -39,7 +39,6 @@ regGS("The upload of $1 was successful !","Trasferul fişierului $1 a fost făcu
 regGS("Template $1 uploaded","Fişierul $1 a fost transferat");
 regGS("Create new template","Crează şablon");
 regGS("Creating new template","Creez şablon");
-regGS("Duplicate","Duplică");
 regGS("Duplicate template","Copiază şablon");
 regGS("Edit template","Editează şablon");
 regGS("Template","Şablon");

@@ -37,7 +37,6 @@ regGS("The upload of $1 was successful !","Osvježavanje $1 uspjelo!");
 regGS("Template $1 uploaded","Predložak $1 je osvježen");
 regGS("Create new template","Napravi novi predložak");
 regGS("Creating new template","Kreiranje novog predloška");
-regGS("Duplicate","Napravi kopiju");
 regGS("Duplicate template","Napravi kopiju predloška");
 regGS("Edit template","Uredi predložak");
 regGS("Template","Predložak");
