@@ -49,7 +49,7 @@ bool CCampsiteInstance::isRunning() const
 	if (m_bRunning)
 	{
 		waitpid(m_nChildPID, &nStatus, WNOHANG);
-		m_bRunning = !WIFEXITED(nStatus);
+		m_bRunning = !WIFEXITED(nStatus) && !WIFSIGNALED(nStatus);
 		if (!m_bRunning)
 		{
 			CCampsiteInstanceRegister::get().unsetPID(m_nChildPID);
@@ -61,6 +61,13 @@ bool CCampsiteInstance::isRunning() const
 
 pid_t CCampsiteInstance::run() throw (RunException)
 {
+#ifdef _DEBUG_SOURCE
+#warning *******************************************************************************
+#warning This compilation option is for source code debugging, do not use in production!
+#warning *******************************************************************************
+	m_pInstanceFunction(m_coAttributes);
+	return 0;
+#else
 	if (m_bRunning)
 		return m_nChildPID;
 	pid_t nPid = fork();
@@ -76,6 +83,7 @@ pid_t CCampsiteInstance::run() throw (RunException)
 		m_bRunning = true;
 	}
 	return nPid;
+#endif
 }
 
 void CCampsiteInstance::stop()
