@@ -74,6 +74,7 @@ E_CURRENT
     todefnum('lpp', 10);
 
     query ("SELECT * FROM ArticleTopics, Topics WHERE ArticleTopics.NrArticle = $Article and ArticleTopics.TopicId = Topics.Id ORDER BY Topics.Name LIMIT $ArtTopicOffs, ".($lpp+1), 'q_topic');
+    $art_topics = array();
     if ($NUM_ROWS) {
 	$nr= $NUM_ROWS;
 	$i=$lpp;
@@ -101,7 +102,8 @@ B_LIST
 	<? } ?>
 	E_LIST_TR
 <?
-    $i--;
+	$art_topics[] = getVar($q_topic, "TopicId");
+	$i--;
     }
 }
 ?>dnl
@@ -201,7 +203,16 @@ B_LIST
 			<A HREF="index.php?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Section=<? p($Section); ?>&Article=<? p($Article); ?>&Language=<? p($Language); ?>&sLanguage=<? p($sLanguage); ?>&ArtTopicOffs=<? p($ArtTopicOffs); ?>&IdCateg=<?pgetVar($categ,'Id');?>"><? pgetHVar($categ,'Name'); ?></A>
 		E_LIST_ITEM
 		B_LIST_ITEM(<*CENTER*>)
+		<?
+		$curr_topic = getVar($categ, "Id");
+		if (!in_array($curr_topic, $art_topics)) {
+		?>
 			X_BUTTON(<*<? putGS('Add topic $1 to article',getHVar($categ,'Name')); ?>*>, <*icon/image.gif*>, <*pub/issues/sections/articles/topics/do_add.php?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Section=<? p($Section); ?>&Article=<? p($Article); ?>&Language=<? p($Language); ?>&sLanguage=<? p($sLanguage); ?>&ArtTopicOffs=<? p($ArtTopicOffs); ?>&IdCateg=<?p($IdCateg);?>&AddTopic=<? pgetVar($categ,'Id'); ?>*>)
+		<?
+		} else {
+		    echo "&nbsp;";
+		}
+		?>
 		E_LIST_ITEM
     E_LIST_TR
 <?
