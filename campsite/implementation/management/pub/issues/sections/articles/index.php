@@ -156,21 +156,21 @@ if ($numUniqueArticlesDisplayed > 0) {
 ?>
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" WIDTH="100%" class="table_list">
 <TR class="table_list_header">
-	<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("Name<BR><SMALL>(click to edit)</SMALL>"); ?></B></TD>
-	<TD ALIGN="center" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Type"); ?></B></TD>
-	<TD ALIGN="center" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Language"); ?></B></TD>
-	<TD ALIGN="center" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Status"); ?></B></TD>
+	<TD ALIGN="LEFT" VALIGN="TOP"  ><?php  putGS("Name<BR><SMALL>(click to edit)</SMALL>"); ?></TD>
+	<TD ALIGN="center" VALIGN="TOP" WIDTH="1%" ><?php  putGS("Type"); ?></TD>
+	<TD ALIGN="center" VALIGN="TOP" WIDTH="1%" ><?php  putGS("Language"); ?></TD>
+	<TD ALIGN="center" VALIGN="TOP" WIDTH="1%" ><?php  putGS("Status"); ?></TD>
 	<?php if ($User->hasPermission('Publish')) { ?>
-	<TD ALIGN="center" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Order"); ?></B></TD>
-	<TD ALIGN="center" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Automatic publishing"); ?></B></TD>
+	<TD ALIGN="center" VALIGN="TOP" WIDTH="1%" ><?php  putGS("Order"); ?></TD>
+	<TD ALIGN="center" VALIGN="TOP" WIDTH="1%" ><?php  putGS("Automatic publishing"); ?></TD>
 	<?php } ?>	
-	<TD ALIGN="center" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Preview"); ?></B></TD>
-	<TD ALIGN="center" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Translate"); ?></B></TD>
+	<TD ALIGN="center" VALIGN="TOP" WIDTH="1%" ><?php  putGS("Preview"); ?></TD>
+	<TD ALIGN="center" VALIGN="TOP" WIDTH="1%" ><?php  putGS("Translate"); ?></TD>
 	<?php  if ($User->hasPermission('AddArticle')) { ?>
-	<TD ALIGN="center" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Duplicate"); ?></B></TD>
+	<TD ALIGN="center" VALIGN="TOP" WIDTH="1%" ><?php  putGS("Duplicate"); ?></TD>
 	<?php  } ?>
 	<?php  if ($User->hasPermission('DeleteArticle')) { ?>
-	<TD ALIGN="center" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Delete"); ?></B></TD>
+	<TD ALIGN="center" VALIGN="TOP" WIDTH="1%" ><?php  putGS("Delete"); ?></TD>
 	<?php  } ?>	
 </TR>
 <?php 
