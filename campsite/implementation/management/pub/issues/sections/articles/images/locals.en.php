@@ -15,6 +15,8 @@ regGS("Link Image to Article", "<nobr>Link Image to Article</nobr>:en");
 regGS("Please enter a number for the image.", "Please enter a number for the image.:en");
 regGS("Please enter a description for the image.", "Please enter a description for the image.:en");
 regGS("You must select an image file to upload.", "You must select an image file to upload.:en");
+regGS("There are currently no images associated with this article.", "There are currently no images associated with this article.:en");
+regGS('Click one of the "Add Image" links above to add one.', 'Click one of the "Add Image" links above to add one.:en');
 
 // -- view.m4
 regGS("View image","View image:en");
