@@ -710,13 +710,20 @@ return 0
 # Parameters: none
 # Variables set:
 #	LIBCRYPT - libcrypt full path
+#	LIBCRYPT_LINK - added to gcc line to link with libcrypt
 #	output - error message (if any)
 check4_libcrypt()
 {
 is_checked libcrypt && return 0
-check4_file libcrypt.so --file --path "/usr/lib:/usr/local/lib"
-result=$? && [ $result -ne 0 ] && return 1
-export LIBCRYPT=$file_path
+if [ $OPENBSD -eq 1 ]; then
+	export LIBCRYPT=
+	export LIBCRYPT_LINK=
+else
+	check4_file libcrypt.so --file --path "/usr/lib:/usr/local/lib"
+	result=$? && [ $result -ne 0 ] && return 1
+	export LIBCRYPT=$file_path
+	export LIBCRYPT_LINK=-lcrypt
+fi
 set_checked libcrypt
 return 0
 }
@@ -921,3 +928,30 @@ done
 set_checked getservbyname_r
 }
 # END OF check4_getservbyname
+
+# FUNCTION: check4_killall
+# Description: check for killall
+# Parameters: none
+# Variables set:
+#	KILLALL - name of killall program
+#	output - error message (if any)
+check4_killall()
+{
+is_checked killall && return 0
+if [ $OPENBSD -eq 1 ]; then
+	KILLALL_CMD=zap
+else
+	KILLALL_CMD=killall
+fi
+check4_file $KILLALL_CMD --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
+result=$? && [ $result -ne 0 ] && return 1
+
+if [ $OPENBSD -eq 1 ]; then
+	export KILLALL="${KILLALL_CMD} -y"
+else
+	export KILLALL=$KILLALL_CMD
+fi
+set_checked killall
+return 0
+}
+# END OF check4_make
