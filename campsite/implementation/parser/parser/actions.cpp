@@ -1815,7 +1815,9 @@ int CActIf::takeAction(CContext& c, sockstream& fs)
 	}
 	else if (modifier == CMS_ST_SUBTITLE)
 	{
-		run_first = (c.DefaultStartSubtitle() + 1) == atol(param.value().c_str()) && !c.AllSubtitles();
+		buf.str("");
+		buf << (c.StartSubtitle() + 1);
+		run_first = param.applyOp(buf.str().c_str());
 		run_first = m_bNegated ? !run_first : run_first;
 		if (run_first)
 			runActions(block, c, fs);
