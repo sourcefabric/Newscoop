@@ -1166,4 +1166,28 @@ public:
 	virtual int takeAction(CContext& c, sockstream& fs);
 };
 
+// CActURIPath: URIPath action - corresponding to URIPath
+// statement (see manual)
+class CActURIPath : public CAction
+{
+public:
+	// constructor
+	CActURIPath() {}
+	
+	// destructor
+	virtual ~CActURIPath() {}
+
+	// action: return action identifier
+	virtual TAction action() const { return CMS_ACT_URIPATH; }
+
+	// clone this object
+	virtual CAction* clone() const { return new CActURIPath(*this); }
+
+	// takeAction: performs the action
+	// Parametes:
+	//		CContext& c - current context
+	//		sockstream& fs - output stream
+	virtual int takeAction(CContext& c, sockstream& fs);
+};
+
 #endif
