@@ -38,8 +38,8 @@ using std::less;
 
 class CPublication;
 
-typedef map <long, CPublication*, less<long> > CPublicationsMap;
-typedef map <string, long, less<string> > CPublicationsAliases;
+typedef map <id_type, CPublication*, less<id_type> > CPublicationsMap;
+typedef map <string, id_type, less<string> > CPublicationsAliases;
 
 
 /**
@@ -57,11 +57,13 @@ public:
 
 	void insert(CPublication& p_rcoPublication);
 
-	void erase(long p_nPublicationId);
+	void erase(id_type p_nPublicationId);
 
-	bool has(long p_nPublicationId) const;
+	bool has(id_type p_nPublicationId) const;
 
 	const CPublication* getPublication(const string& p_rcoAlias) const;
+
+	const CPublication* getPublication(id_type p_nPublicationId) const;
 
 private:
 	CPublicationsMap m_coPublications;
@@ -84,7 +86,7 @@ inline CPublicationsRegister& CPublicationsRegister::getInstance()
 	return g_coPublicationsRegister;
 }
 
-inline void CPublicationsRegister::erase(long p_nPublicationId)
+inline void CPublicationsRegister::erase(id_type p_nPublicationId)
 {
 #ifdef _REENTRANT
 	CMutexHandler coLockHandler(&m_coMutex);
@@ -92,7 +94,7 @@ inline void CPublicationsRegister::erase(long p_nPublicationId)
 	m_coPublications.erase(p_nPublicationId);
 }
 
-inline bool CPublicationsRegister::has(long p_nPublicationId) const
+inline bool CPublicationsRegister::has(id_type p_nPublicationId) const
 {
 #ifdef _REENTRANT
 	CMutexHandler coLockHandler(&m_coMutex);
@@ -112,6 +114,17 @@ inline const CPublication* CPublicationsRegister::getPublication(const string& p
 		if (coIt2 != m_coPublications.end())
 			return (*coIt2).second;
 	}
+	return NULL;
+}
+
+inline const CPublication* CPublicationsRegister::getPublication(id_type p_nPublicationId) const
+{
+#ifdef _REENTRANT
+	CMutexHandler coLockHandler(&m_coMutex);
+#endif
+	CPublicationsMap::const_iterator coIt2 = m_coPublications.find(p_nPublicationId);
+	if (coIt2 != m_coPublications.end())
+		return (*coIt2).second;
 	return NULL;
 }
 
