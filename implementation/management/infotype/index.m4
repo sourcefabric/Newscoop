@@ -120,11 +120,11 @@ B_LIST
 	<?php  if ($mca != 0) { ?> 
 		B_LIST_ITEM(<*CENTER*>)
 <?php  if (getVar($q_cls,'Id') != $kwdid) { ?>dnl
-			<A HREF="X_ROOT/infotype/translate.php?Class=<?php  pgetUVar($q_cls,'Id'); ?>"><?php  putGS("Translate"); ?></A>
+			<A HREF="X_ROOT/infotype/translate.php?Infotype=<?php  pgetUVar($q_cls,'Id'); ?>"><?php  putGS("Translate"); ?></A>
 <?php  } ?>&nbsp;
 		E_LIST_ITEM
 		B_LIST_ITEM(<*CENTER*>)
-			X_BUTTON(<*<?php  putGS('Delete glossary infotype $1',getHVar($q_cls,'Name')); ?>*>, <*icon/x.gif*>, <*infotype/del.php?Class=<?php  pgetUVar($q_cls,'Id'); ?>&Lang=<?php  pgetUVar($q_cls,'IdLanguage'); ?>*>)
+			X_BUTTON(<*<?php  putGS('Delete glossary infotype $1',getHVar($q_cls,'Name')); ?>*>, <*icon/x.gif*>, <*infotype/del.php?Infotype=<?php  pgetUVar($q_cls,'Id'); ?>&Lang=<?php  pgetUVar($q_cls,'IdLanguage'); ?>*>)
 		E_LIST_ITEM
 	<?php  }
 if (getVar($q_cls,'Id') != $kwdid)

@@ -24,9 +24,9 @@ E_HEADER_BUTTONS
 E_HEADER
 
 <?php 
-    todefnum('Class');
+    todefnum('Infotype');
     todefnum('Lang');
-    query ("SELECT Name FROM Classes WHERE Id=$Class AND IdLanguage=$Lang", 'c');
+    query ("SELECT Name FROM Classes WHERE Id=$Infotype AND IdLanguage=$Lang", 'c');
 ?>dnl
 <P>
 <?php  if ($NUM_ROWS) { 
@@ -36,7 +36,7 @@ B_MSGBOX(<*Delete infotype*>)
 	X_MSGBOX_TEXT(<*<LI><?php  putGS('Are you sure you want to delete the infotype $1?','<B>'.getHVar($c,'Name').'</B>'); ?></LI>*>)
 	B_MSGBOX_BUTTONS
 		<FORM METHOD="POST" ACTION="do_del.php">
-		<INPUT TYPE="HIDDEN" NAME="Class" VALUE="<?php  print encHTML(decS($Class)); ?>">
+		<INPUT TYPE="HIDDEN" NAME="Infotype" VALUE="<?php  print encHTML(decS($Infotype)); ?>">
 		<INPUT TYPE="HIDDEN" NAME="Lang" VALUE="<?php  print encHTML(decS($Lang)); ?>">
 		<INPUT TYPE="HIDDEN" NAME="cName" VALUE="<?php  pgetHVar($c,'Name'); ?>">
 		SUBMIT(<*Yes*>, <*Yes*>)
