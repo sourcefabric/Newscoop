@@ -76,8 +76,8 @@ B_MSGBOX(<*Adding new alias*>)
 
 	if ($created) {
 ?>dnl
-		<LI><?php  putGS('The site alias for publication $1 has been added.', '<B>'.getHVar($q_pub,'Name').'</B>'); ?></LI>
-		X_AUDIT(<*4*>, <*getGS('The site alias for publication $1 has been added.',getVar($q_pub,'Name'))*>)
+		<LI><?php  putGS('The site alias $1 has been added to publication $2.', '<B>'.$cName.'</B>', '<B>'.getHVar($q_pub,'Name').'</B>'); ?></LI>
+		X_AUDIT(<*151*>, <*getGS('The site alias $1 has been added to publication $2.',$cName,getVar($q_pub,'Name'))*>)
 <?php
 	} else {
 		if ($correct != 0) {
