@@ -1,0 +1,9 @@
+<?php
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
+load_common_include_files("$ADMIN_DIR/templates");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/Language.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/User.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/Template.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/Input.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
+?>
