@@ -139,6 +139,20 @@ class DatabaseObject {
 	
 	
 	/**
+	 *
+	 *
+	 */
+	function keyValuesExist() {
+		foreach ($this->m_primaryKeyColumnNames as $columnName) {
+			if (!$this->$columnName) {
+				return false;
+			}
+		}
+		return true;
+	} // fn keyValuesExist
+	
+	
+	/**
 	 * Create the record in the database for this object.
 	 *
 	 * @param array p_values
@@ -202,6 +216,9 @@ class DatabaseObject {
 	function setProperty($p_dbColumnName, $p_value, $p_refetch = false) {
 		global $Campsite;
 		if ($p_value == $this->$p_dbColumnName) {
+			return false;
+		}
+		if (!$this->keyValuesExist()) {
 			return false;
 		}
 		$queryStr = "UPDATE ".$this->m_dbTableName
