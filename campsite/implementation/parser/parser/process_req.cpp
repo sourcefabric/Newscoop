@@ -134,7 +134,10 @@ int RunParser(MYSQL* p_pSQL, CGIParams* p_pParams, sockstream& p_rOs) throw(RunE
 				pcoCtx->SetStListStart(atol(pchStr), coField);
 			sprintf(pchBuf, "ST_PS%d", i);
 			if ((pchStr = pcoCgi->GetFirst(pchBuf)))
+			{
 				pcoCtx->SetStartSubtitle(atol(pchStr), coField);
+				pcoCtx->SetDefaultStartSubtitle(atol(pchStr), coField);
+			}
 			sprintf(pchBuf, "ST_AS%d", i);
 			if ((pchStr = pcoCgi->GetFirst(pchBuf)))
 				pcoCtx->SetAllSubtitles(atol(pchStr), coField);
