@@ -27,6 +27,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "curl.h"
 
 
+void CURL::replaceValue(const string& p_rcoParameter, const string& p_rcoValue)
+{
+	PreSetValue(p_rcoParameter, p_rcoValue);
+	String2StringMMap::iterator coIt = m_coParamMap.find(p_rcoParameter);
+	while (coIt != m_coParamMap.end())
+	{
+		m_coParamMap.erase(coIt);
+		coIt = m_coParamMap.find(p_rcoParameter);
+	}
+	m_coParamMap.insert(pair<string, string>(p_rcoParameter, p_rcoValue));
+	PostSetValue(p_rcoParameter, p_rcoValue);
+}
+
 // readQueryString(): static method; reads the parameters from the query string
 String2StringMMap* CURL::readQueryString(const string& p_rcoQueryString,
                                          String2StringMMap* p_pcoParams)
