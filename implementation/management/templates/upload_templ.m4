@@ -30,8 +30,9 @@ B_DIALOG(<*Upload template*>, <*POST*>, <*do_upload_templ.php*>, <*multipart/for
 		<INPUT TYPE="HIDDEN" NAME="Path" VALUE="<?php  pencHTML(decS($Path)); ?>">
 		<INPUT TYPE="HIDDEN" NAME="UNIQUE_ID" VALUE="1">
 <?php 
-	echo "<SELECT NAME=\"Charset\" class=\"input_select\"><OPTION VALUE=\"\">-- ".getGS("Select a language/character set");
-	echo " --<OPTION VALUE=\"UTF-8\">".getGS("All languages")."/UTF-8";
+	echo "<SELECT NAME=\"Charset\" class=\"input_select\">\n";
+	echo "<OPTION VALUE=\"\">-- ".getGS("Select a language/character set")." --</OPTION>\n";
+	echo "<OPTION VALUE=\"UTF-8\">".getGS("All languages")."/UTF-8</OPTION>\n";
 	query("SELECT CodePage, OrigName, Code FROM Languages", 'q_lang');
 	$nr=$NUM_ROWS;
 	for($loop=0;$loop<$nr;$loop++) {
@@ -42,7 +43,7 @@ B_DIALOG(<*Upload template*>, <*POST*>, <*do_upload_templ.php*>, <*multipart/for
 		echo "\t<OPTION VALUE=\"$codePage\"";
 		if ($TOL_Language == $code)
 			echo " SELECTED";
-		echo ">$origName/$codePage\n";
+		echo ">$origName/$codePage</OPTION>\n";
 	}
 	echo "</SELECT>\n";
 ?>
