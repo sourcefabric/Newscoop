@@ -21,6 +21,7 @@ if ($etc_dir == "" || $type == "" || ($type == "-a" && $archive_file == "")
 
 // include install configuration file
 require_once("$etc_dir/install_conf.php");
+require_once($Campsite['BIN_DIR'] . "/cli_script_lib.php");
 
 if ($type == "-a") {
 	// copy the archive to a temporary directory to read the instance name
@@ -62,7 +63,7 @@ if ($type == "-i") {
 }
 
 // backup old database dump if exists
-if (is_file("$backup_dir/$instance_name-database.sql")) {}
+//if (is_file("$backup_dir/$instance_name-database.sql")) {}
 
 // extract packages
 $html_dir = $Campsite['WWW_DIR'] . "/$instance_name/html";
@@ -74,57 +75,12 @@ foreach ($packages as $index=>$package) {
 	case "$instance_name-conf.tar.gz": $dest_dir = $etc_dir; break;
 	default: $dest_dir = $html_dir; break;
 	}
-	$cmd = "pushd " . escapeshellarg($dest_dir)
-		. " > /dev/null && tar --keep-newer-files -x -z -f "
-		. escapeshellarg($package) . " 2> /dev/null && popd > /dev/null";
+	$cmd = "pushd " . escapeshellarg($dest_dir) . " && tar xzf "
+		. escapeshellarg($package) . "  && popd > /dev/null";
 	exec_command($cmd);
 }
 
 // remove packages
 exec_command("rm -f $backup_dir/*.tar.gz");
-
-
-
-function exec_command($cmd, $err_msg = "", $print_output = true)
-{
-	exec($cmd, $output, $result);
-	if ($result != 0) {
-		if (!$print_output)
-			$output = array();
-		if ($err_msg != "") {
-			$my_output[] = $msg;
-			$output = array_merge($my_output, $output);
-		}
-		exit_with_error($output);
-	}
-}
-
-
-function create_dir($dir_name, $msg = "")
-{
-	if ($msg == "")
-		$msg = "Unable to create directory $dir_name.";
-	if (!is_dir($dir_name) && !mkdir($dir_name))
-		exit_with_error($msg);
-	return 0;
-}
-
-
-function file_name($file_path)
-{
-	$slash_pos = strrpos($file_path, '/');
-	if (!$slash_pos)
-		return $file_path;
-	return substr($file_path, $slash_pos + 1);
-}
-
-
-function exit_with_error($error_str)
-{
-	if (is_array($error_str))
-		$error_str = implode("\n", $error_str);
-	echo "$error_str\n";
-	exit(1);
-}
 
 ?>
