@@ -14,41 +14,14 @@ CHECK_BASIC_ACCESS
 CHECK_ACCESS(<*ManageTempl*>)dnl
 <?php  } ?>dnl
 
-B_HEAD
- <?php
-     if ($What) { ?>
-  X_TITLE(<*Select template*>)
-     <?php  } else { ?>
-  X_TITLE(<*Templates management*>)
- <?php  } ?>
-<?php
-    if ($access == 0) {
- if ($What) { ?>dnl
- X_AD(<*You do not have the right to change default templates.*>)
-<?php  } else { ?>dnl
- X_LOGOUT
-<?php  }
-    }
-?>dnl
-E_HEAD
-
 <?php
 if ($access) {
 
 SET_ACCESS(<*mta*>, <*ManageTempl*>)
 SET_ACCESS(<*dta*>, <*DeleteTempl*>)
 ?>dnl
-B_STYLE
-E_STYLE
-
-B_BODY
 
 <?php
-    if ($What) { ?>
- B_HEADER(<*Select template*>)
-    <?php  } else { ?>
- B_HEADER(<*Templates*>)
-    <?php  } ?>
 B_HEADER_BUTTONS
 <?php  if ($What) { ?>dnl
 X_HBUTTON(<*Issues*>, <*pub/issues/?Pub=<?php  pencURL($Pub); ?>*>)
