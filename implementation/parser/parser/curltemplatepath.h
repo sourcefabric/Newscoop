@@ -44,7 +44,7 @@ public:
 	// Needs a database connection pointer to read the publication parameters from
 	// the database.
 	CURLTemplatePath(const CMsgURLRequest& p_rcoURLMessage, MYSQL* p_pDBConn)
-		: m_pDBConn(p_pDBConn)
+		: m_pDBConn(p_pDBConn), m_bTemplateSet(false), m_bValidTemplate(false)
 		{ setURL(p_rcoURLMessage); }
 
 	// CURLTemplatePath(): copy constructor
@@ -73,6 +73,10 @@ public:
 	// getQueryString(): returns the query string
 	virtual string getQueryString() const;
 
+	virtual string getFormString() const;
+
+	virtual string getTemplate() const;
+
 private:
 	// buildURI(): internal method; builds the URI string from object attributes
 	void buildURI() const;
@@ -85,10 +89,12 @@ private:
 	mutable string m_coURIPath;  // caches the path component of the URI
 	mutable string m_coQueryString;  // caches the query string component of the URI
 	mutable MYSQL* m_pDBConn;  // caches the connection to the database
+	mutable bool m_bValidTemplate;
+	mutable string m_coTemplate;
 
 private:
 	string m_coHTTPHost;  // stores the HTTP host attribute
-	string m_coTemplate;
+	bool m_bTemplateSet;
 };
 
 
