@@ -1,7 +1,7 @@
 OBJ_FILES=main.o csocket.o readconf.o
 
 LDFLAGS=
-LDLIBS=
+LDLIBS=$(PTHREAD_LINK)
 
 DEPENDENCES=globals.h exceptions.h csocket.h srvdef.h readconf.h tpl_cgi.h
 
@@ -40,11 +40,11 @@ readconf.o: readconf.cpp $(DEPENDENCES)
 install: $(ALL)
 	mkdir -p $(CGI_DIR)
 	cp -f $(TPL_CGI) $(CGI_DIR)
-	chown $(ROOT_USER).$(HTTP_GROUP) $(CGI_DIR)/$(TPL_CGI)
+	chown $(ROOT_USER):$(HTTP_GROUP) $(CGI_DIR)/$(TPL_CGI)
 	chmod 750 $(CGI_DIR)/$(TPL_CGI)
 	mkdir -p $(CONF_DIR)
 	echo -e "PARSER_IP $(ADMIN_INTERFACE_PARSER_IP)\nPARSER_PORT $(ADMIN_INTERFACE_PARSER_PORT)\n" > $(CONF_DIR)/tpl_cgi.conf
-	chown $(ROOT_USER).$(HTTP_GROUP) $(CONF_DIR)/tpl_cgi.conf
+	chown $(ROOT_USER):$(HTTP_GROUP) $(CONF_DIR)/tpl_cgi.conf
 	chmod 640 $(CONF_DIR)/tpl_cgi.conf
 
 uninstall: dummy
