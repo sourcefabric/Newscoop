@@ -247,8 +247,6 @@ public:
 
 	const string& getPathTranslated() const { return m_coPathTranslated; }
 
-	const string& getPathInfo() const { return m_coPathInfo; }
-
 	const string& getReqestMethod() const { return m_coRequestMethod; }
 
 	const string& getReqestURI() const { return m_coRequestURI; }
@@ -269,7 +267,6 @@ private:
 	string m_coDocumentRoot;
 	string m_coRemoteAddress;
 	string m_coPathTranslated;
-	string m_coPathInfo;
 	string m_coRequestMethod;
 	string m_coRequestURI;
 
