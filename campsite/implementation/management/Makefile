@@ -32,9 +32,9 @@ install: $(ALL)
 	mkdir -p $(PRIV_COMMON_DIR)/img
 	cp -fr img/* $(PRIV_COMMON_DIR)/img
 	mkdir -p $(HTML_COMMON_DIR)/css
-	cp -f css/*.css $(HTML_COMMON_DIR)
+	cp -f css/*.css $(HTML_COMMON_DIR)/css
 	mkdir -p $(HTML_COMMON_DIR)/classes
-	cp -f classes/*.php $(HTML_COMMON_DIR)
+	cp -f classes/*.php $(HTML_COMMON_DIR)/classes
 	mkdir -p $(HTML_COMMON_DIR)/images/thumbnails
 	#cp -rf article_import $(PRIV_COMMON_DIR)
 	cp -rf javascript $(HTML_COMMON_DIR)
