@@ -39,12 +39,12 @@ modules_conf --set DATABASE
 use_pass=false
 [ "$DATABASE_PASSWORD" != "" ] && use_pass=true
 
-echo "mysqladmin create $DATABASE_NAME -h $DATABASE_SERVER -P $DATABASE_PORT -u $DATABASE_USER $password"
+echo "mysqladmin -h $DATABASE_SERVER -P $DATABASE_PORT -u $DATABASE_USER $password create $DATABASE_NAME"
 if $use_pass; then
-    mysqladmin create $DATABASE_NAME -h $DATABASE_SERVER -P $DATABASE_PORT -u $DATABASE_USER --password="$DATABASE_PASSWORD"
+    mysqladmin -h $DATABASE_SERVER -P $DATABASE_PORT -u $DATABASE_USER --password="$DATABASE_PASSWORD" create $DATABASE_NAME
     result=$?
 else
-    mysqladmin create $DATABASE_NAME -h $DATABASE_SERVER -P $DATABASE_PORT -u $DATABASE_USER
+    mysqladmin -h $DATABASE_SERVER -P $DATABASE_PORT -u $DATABASE_USER create $DATABASE_NAME
     result=$?
 fi
 if [ "$result" != "0" ]; then
@@ -95,7 +95,7 @@ if [ "$result" != "0" ]; then
 else
     echo -n "Creating campsite database..."
     if $use_pass; then
-	mysql -h $DATABASE_SERVER -P $DATABASE_PORT -u $DATABASE_USER --password="$DATABASE_PASSWORD" DATABASE_NAME < campsite-db.sql 1> /dev/null
+	mysql -h $DATABASE_SERVER -P $DATABASE_PORT -u $DATABASE_USER --password="$DATABASE_PASSWORD" $DATABASE_NAME < campsite-db.sql 1> /dev/null
     else
 	mysql -h $DATABASE_SERVER -P $DATABASE_PORT -u $DATABASE_USER $DATABASE_NAME < campsite-db.sql 1> /dev/null
     fi
