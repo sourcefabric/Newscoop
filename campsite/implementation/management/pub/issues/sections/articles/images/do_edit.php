@@ -50,13 +50,13 @@ if (!$articleObj->userCanModify($User)) {
 
 $imageObj =& new Image($Image);
 $attributes = array();
-$attributes['Description'] = $_REQUEST['cDescription'];
+$attributes['Description'] = $Description;
 if (trim($attributes['Description']) == '') {
 	$attributes['Description'] = 'None';
 }
-$attributes['Photographer'] = $_REQUEST['cPhotographer'];
-$attributes['Place'] = $_REQUEST['cPlace'];
-$attributes['Date'] = $_REQUEST['cDate'];
+$attributes['Photographer'] = $Photographer;
+$attributes['Place'] = $Place;
+$attributes['Date'] = $Date;
 $imageObj->update($attributes);
 ArticleImage::SetTemplateId($Article, $Image, $ImageTemplateId);
 

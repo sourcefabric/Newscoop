@@ -29,6 +29,11 @@ $Language = Input::Get('Language', 'int', 0);
 $sLanguage = Input::Get('sLanguage', 'int', 0);
 $Article = Input::Get('Article', 'int', 0);
 $ImageTemplateId = Input::Get('cNumber', 'int', 0);
+$cDescription = Input::Get('cDescription');
+$cPhotographer = Input::Get('cPhotographer');
+$cPlace = Input::Get('cPlace');
+$cDate = Input::Get('cDate');
+$cURL = Input::Get('cURL', 'string', '', true);
 
 if (!Input::IsValid()) {
 	CampsiteInterface::DisplayError(array('Invalid input: $1', Input::GetErrorString()));
@@ -44,12 +49,12 @@ if (ArticleImage::TemplateIdInUse($Article, $ImageTemplateId)) {
 }
 
 $attributes = array();
-$attributes['Description'] = $_REQUEST['cDescription'];
-$attributes['Photographer'] = $_REQUEST['cPhotographer'];
-$attributes['Place'] = $_REQUEST['cPlace'];
-$attributes['Date'] = $_REQUEST['cDate'];
-if (!empty($_REQUEST['cURL'])) {
-	$image =& Image::OnAddRemoteImage($_REQUEST['cURL'], $attributes, $User->getId());
+$attributes['Description'] = $cDescription;
+$attributes['Photographer'] = $cPhotographer;
+$attributes['Place'] = $cPlace;
+$attributes['Date'] = $cDate;
+if (!empty($cURL)) {
+	$image =& Image::OnAddRemoteImage($cURL, $attributes, $User->getId());
 }
 elseif (!empty($_FILES['cImage'])) {
 	$image =& Image::OnImageUpload($_FILES['cImage'], $attributes, $User->getId());

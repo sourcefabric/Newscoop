@@ -157,8 +157,11 @@ $Section = Input::Get('Section', 'int', 0);
 $Language = Input::Get('Language', 'int', 0);
 $sLanguage = Input::Get('sLanguage', 'int', 0);
 $Article = Input::Get('Article', 'int', 0);
-
-$BackLink = "/$ADMIN/pub/issues/sections/articles/index.php?Pub=$Pub&Issue=$Issue&Language=$Language&Section=$Section";
+$cOnFrontPage = Input::Get('cOnFrontPage', 'string', '', true);
+$cOnSection = Input::Get('cOnSection', 'string', '', true);
+$cPublic = Input::Get('cPublic', 'string', '', true);
+$cKeywords = Input::Get('cKeywords');
+$cName = Input::Get('cName');
 
 if (!Input::IsValid()) {
 	CampsiteInterface::DisplayError(array('Invalid input: $1', Input::GetErrorString()), $BackLink);
@@ -171,9 +174,22 @@ if (!$articleObj->exists()) {
 	CampsiteInterface::DisplayError('No such article.', $BackLink);
 }
 
+$articleTypeObj =& $articleObj->getArticleTypeObject();
+$dbColumns = $articleTypeObj->getUserDefinedColumns();
+
+$articleFields = array();
+foreach ($dbColumns as $dbColumn) {
+	if (isset($_REQUEST[$dbColumn->getName()])) {
+		$articleFields[$dbColumn->getName()] = Input::Get($dbColumn->getName());
+	}
+}
+
+$BackLink = "/$ADMIN/pub/issues/sections/articles/index.php?Pub=$Pub&Issue=$Issue&Language=$Language&Section=$Section";
+
 if (!$articleObj->userCanModify($User)) {
 	$errorStr = "You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only changed by authorized users.";
 	CampsiteInterface::DisplayError($errorStr, $BackLink);
+	exit;
 }
 // Only users with a lock on the article can change it.
 if ($User->getId() != $articleObj->getLockedByUser()) {
@@ -192,49 +208,39 @@ $languageObj =& new Language($Language);
 
 // Update the article
 $hasChanged = false;
-$articleTypeObj =& $articleObj->getArticleTypeObject();
-$dbColumns = $articleTypeObj->getUserDefinedColumns();
-
-// TODO: Verify the input
 
 // Update the article & check if it has been changed.
-$hasChanged |= $articleObj->setOnFrontPage(isset($_REQUEST["cOnFrontPage"]));
-$hasChanged |= $articleObj->setOnSection(isset($_REQUEST["cOnSection"]));
-$hasChanged |= $articleObj->setIsPublic(isset($_REQUEST["cPublic"]));
-$hasChanged |= $articleObj->setKeywords($_REQUEST['cKeywords']);
-$hasChanged |= $articleObj->setTitle($_REQUEST["cName"]);
+$hasChanged |= $articleObj->setOnFrontPage(!empty($cOnFrontPage));
+$hasChanged |= $articleObj->setOnSection(!empty($cOnSection));
+$hasChanged |= $articleObj->setIsPublic(!empty($cPublic));
+$hasChanged |= $articleObj->setKeywords($cKeywords);
+$hasChanged |= $articleObj->setTitle($cName);
 $hasChanged |= $articleObj->setIsIndexed(false);
-foreach ($dbColumns as $dbColumn) {
-	if (isset($_REQUEST[$dbColumn->getName()])) {
-		$text = $_REQUEST[$dbColumn->getName()];
-		if (ini_get("magic_quotes_gpc")) {
-			$text = stripslashes($text);
-		}
-		// Replace <span class="subhead"> ... </span> with <!** Title> ... <!** EndTitle>
-		$text = preg_replace_callback("/(<\s*span[^>]*class\s*=\s*[\"']campsite_subhead[\"'][^>]*>|<\s*span|<\s*\/\s*span\s*>)/i", "TransformSubheads", $text);
-		
-		// Replace <a href="campsite_internal_link?IdPublication=1&..." ...> ... </a>
-		// with <!** Link Internal IdPublication=1&...> ... <!** EndLink>
-		//
-		$text = preg_replace_callback("/(<\s*a\s*href=[\"']campsite_internal_link[?][\w&=]*[\"'][\s\w\"']*>)|(<\s*\/a\s*>)/i", "TransformInternalLinks", $text);
-		$hasChanged |= $articleTypeObj->setProperty($dbColumn->getName(), $text);
+foreach ($articleFields as $dbColumnName => $text) {
+	// Replace <span class="subhead"> ... </span> with <!** Title> ... <!** EndTitle>
+	$text = preg_replace_callback("/(<\s*span[^>]*class\s*=\s*[\"']campsite_subhead[\"'][^>]*>|<\s*span|<\s*\/\s*span\s*>)/i", "TransformSubheads", $text);
+	
+	// Replace <a href="campsite_internal_link?IdPublication=1&..." ...> ... </a>
+	// with <!** Link Internal IdPublication=1&...> ... <!** EndLink>
+	//
+	$text = preg_replace_callback("/(<\s*a\s*href=[\"']campsite_internal_link[?][\w&=]*[\"'][\s\w\"']*>)|(<\s*\/a\s*>)/i", "TransformInternalLinks", $text);
+	$hasChanged |= $articleTypeObj->setProperty($dbColumnName, $text);
 
-		// Replace <a href="http://xyz.com" target="_blank"> ... </a>
-		// with <!** Link external "http://xyz.com" TARGET "_blank"> ... <!** EndLink>
-		//
-		$text = preg_replace_callback("/(<\s*a\s*href=[\"'][^\"']*[\"']\s*(target\s*=\s['\"][_\w]*['\"])?[\s\w\"']*>)|(<\s*\/a\s*>)/i", "TransformExternalLinks", $text);
-		$hasChanged |= $articleTypeObj->setProperty($dbColumn->getName(), $text);
+	// Replace <a href="http://xyz.com" target="_blank"> ... </a>
+	// with <!** Link external "http://xyz.com" TARGET "_blank"> ... <!** EndLink>
+	//
+	$text = preg_replace_callback("/(<\s*a\s*href=[\"'][^\"']*[\"']\s*(target\s*=\s['\"][_\w]*['\"])?[\s\w\"']*>)|(<\s*\/a\s*>)/i", "TransformExternalLinks", $text);
+	$hasChanged |= $articleTypeObj->setProperty($dbColumnName, $text);
 
-		// Replace <img src="A" align="B" alt="C" sub="D">
-		// with <!** Image [image_template_id] align=B alt="C" sub="D">
-		//
-		$srcAttr = "(src\s*=\s*[\"'][^'\"]*[\"'])";
-		$altAttr = "(alt\s*=\s*['\"][^'\"]*['\"])";
-		$alignAttr = "(align\s*=\s*['\"][^'\"]*['\"])";
-		$subAttr = "(sub\s*=\s*['\"][^'\"]*['\"])";
-		$text = preg_replace_callback("/<\s*img\s*(($srcAttr|$altAttr|$alignAttr|$subAttr)\s*)*[\s\w\"']*\/>/i", "TransformImageTags", $text);
-		$hasChanged |= $articleTypeObj->setProperty($dbColumn->getName(), $text);
-	}
+	// Replace <img src="A" align="B" alt="C" sub="D">
+	// with <!** Image [image_template_id] align=B alt="C" sub="D">
+	//
+	$srcAttr = "(src\s*=\s*[\"'][^'\"]*[\"'])";
+	$altAttr = "(alt\s*=\s*['\"][^'\"]*['\"])";
+	$alignAttr = "(align\s*=\s*['\"][^'\"]*['\"])";
+	$subAttr = "(sub\s*=\s*['\"][^'\"]*['\"])";
+	$text = preg_replace_callback("/<\s*img\s*(($srcAttr|$altAttr|$alignAttr|$subAttr)\s*)*[\s\w\"']*\/>/i", "TransformImageTags", $text);
+	$hasChanged |= $articleTypeObj->setProperty($dbColumnName, $text);
 }
 
 if ($hasChanged) {
