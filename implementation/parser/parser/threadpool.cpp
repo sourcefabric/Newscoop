@@ -37,6 +37,7 @@ Implementation of the classes defined in threadpool.h
 #include "threadpool.h"
 
 using std::cout;
+using std::cerr;
 using std::endl;
 
 typedef struct ThreadLocal
@@ -129,9 +130,12 @@ CThreadPool::~CThreadPool()
 void CThreadPool::startThread(bool p_bUserDefArg, void* p_pArg)
 throw(ExThreadNotFree, ExThreadErrCreate)
 {
-	CMutexHandler coMh(&m_coMutex);
+	LockMutex();
 	if (m_nWorkingThreads >= m_nMaxThreads)		// is there any free (not working) thread?
+	{
+		UnlockMutex();
 		throw ExThreadNotFree();
+	}
 	UInt nIndex = 0;
 	bool bCreate = m_nWorkingThreads >= m_nCreatedThreads;
 	for (nIndex = 0; nIndex < m_nMaxThreads; nIndex++)	// search the pool for a free thread
@@ -142,15 +146,60 @@ throw(ExThreadNotFree, ExThreadErrCreate)
 			m_pThreads[nIndex].m_pArg = p_bUserDefArg ? p_pArg : m_pArg;
 			if (bCreate)
 				CreateThread(nIndex);
-			m_pThreads[nIndex].m_bWorking = true;
-			m_nWorkingThreads++;
 			break;
 		}
 	}
 	if (nIndex >= m_nMaxThreads)
+	{
+		UnlockMutex();
 		throw ExThreadNotFree();
+	}
 	Debug("StartThread: starting", false, 0, true, nIndex);
 	sem_post(&(m_pThreads[nIndex].m_Start));	// let the thread start
+	m_pThreads[nIndex].m_bWorking = true;
+	m_nWorkingThreads++;
+	Debug("StartThread: started", false, 0, true, nIndex);
+	UnlockMutex();
+}
+
+// killIdleThreads: kills idle threads
+void CThreadPool::killIdleThreads() throw(ExThread)
+{
+	LockMutex();
+	int nFreeThreads  = m_nMaxThreads - m_nWorkingThreads;
+	if (nFreeThreads == 0)
+	{
+		UnlockMutex();
+		return;
+	}
+	for (UInt nIndex = 0; nIndex < m_nMaxThreads; nIndex++)	// search the pool for idle threads
+	{
+		if (m_pThreads[nIndex].m_bWorking || !m_pThreads[nIndex].m_bCreated)
+			continue;
+		Debug("killIdleThreads: kill ", true, (const void*)m_pThreads[nIndex].m_nThread, true, nIndex);
+		pthread_kill(m_pThreads[nIndex].m_nThread, SIGKILL);
+		m_pThreads[nIndex].m_nThread = 0;
+		m_pThreads[nIndex].m_bWorking = false;
+		m_pThreads[nIndex].m_bCreated = false;
+		sem_init(&(m_pThreads[nIndex].m_Start), 0, 0);
+	}
+	UnlockMutex();
+}
+
+// killAllThreads: kills all threads
+void CThreadPool::killAllThreads() throw(ExThread)
+{
+	LockMutex();
+	for (UInt nIndex = 0; nIndex < m_nMaxThreads; nIndex++)	// search the pool for idle threads
+	{
+		Debug("killAllThreads: kill ", true, (const void*)m_pThreads[nIndex].m_nThread, true, nIndex);
+		pthread_kill(m_pThreads[nIndex].m_nThread, SIGKILL);
+		m_pThreads[nIndex].m_nThread = 0;
+		m_pThreads[nIndex].m_bWorking = false;
+		m_pThreads[nIndex].m_bCreated = false;
+		sem_init(&(m_pThreads[nIndex].m_Start), 0, 0);
+	}
+	UnlockMutex();
 }
 
 // waitFreeThread: returns when there is at least one free thread
@@ -234,7 +283,7 @@ void* CThreadPool::ThreadRoutine(void* p_pThreadLocal)
 	    || pThreadLocal->m_pcoThreadPool->m_pStartRoutine == 0
 	    || pThreadLocal->m_pcoThreadPool->m_nMaxThreads <= pThreadLocal->m_nThreadNr)
 	{
-		cout << "threadRoutine: invalid parameter\n";
+		cerr << "threadRoutine: invalid parameter\n";
 		return NULL;
 	}
 	pthread_cleanup_push(CleanRoutine, p_pThreadLocal);		// set the thread clean routine
@@ -275,7 +324,7 @@ void CThreadPool::CleanRoutine(void* p_pThreadLocal)
 	        || pThreadLocal->m_pcoThreadPool == 0
 	        || pThreadLocal->m_pcoThreadPool->m_pThreads == 0)
 	{
-		cout << "cleanRoutine: invalid parameter";
+		cerr << "cleanRoutine: invalid parameter";
 		return ;
 	}
 	CThreadPool* pcoThreadPool = pThreadLocal->m_pcoThreadPool;
