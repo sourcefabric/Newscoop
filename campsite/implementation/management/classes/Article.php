@@ -77,8 +77,8 @@ class Article extends DatabaseObject {
 	 * @param int p_articleId
 	 *		Not required when creating an article.
 	 */
-	function Article($p_publicationId, $p_issueId, $p_sectionId, 
-					 $p_languageId, $p_articleId = null) 
+	function Article($p_publicationId = null, $p_issueId = null, $p_sectionId = null, 
+					 $p_languageId = null, $p_articleId = null) 
 	{
 		parent::DatabaseObject($this->m_columnNames);
 		$this->m_data['IdPublication'] = $p_publicationId;
@@ -86,7 +86,9 @@ class Article extends DatabaseObject {
 		$this->m_data['NrSection'] = $p_sectionId;
 		$this->m_data['IdLanguage'] = $p_languageId;
 		$this->m_data['Number'] = $p_articleId;
-		if (!is_null($p_articleId)) {
+		if (!is_null($p_publicationId) && !is_null($p_issueId)
+			&& !is_null($p_sectionId) && !is_null($p_languageId) 
+			&& !is_null($p_articleId)) {
 			$this->fetch();
 		}
 	} // constructor
@@ -587,51 +589,6 @@ class Article extends DatabaseObject {
 		return $articles;
 	} // fn GetSubmittedArticles
 	
-	
-	/**
-	 * Get all the images that belong to this article.
-	 * @return array
-	 */
-	function getImages() {
-		global $Campsite;
-		$queryStr = 'SELECT Images.Id FROM Images, ArticleImages'
-					.' WHERE ArticleImages.NrArticle='.$this->getArticleId()
-					.' AND ArticleImages.IdImage=Images.Id';
-		$imagesIds =& $Campsite['db']->GetCol($queryStr);
-		$images = array();
-		if (is_array($imagesIds)) {
-			foreach ($imagesIds as $imageId) {
-				$images[] = new Image($imageId);
-			}
-		}
-		return $images;
-	} // fn getImages
-	
-	
-	/**
-	 * @param int p_imageId
-	 * @return void
-	 */
-	function associateImage($p_imageId) {
-		global $Campsite;
-		$queryStr = 'INSERT IGNORE INTO ArticleImages(NrArticle, IdImage, Number)'
-					." VALUES('".$this->getArticleId()."', '".$p_imageId."','".$p_imageId."')";
-		$Campsite['db']->Execute($queryStr);
-	} // fn associateImage
-
-	
-	/**
-	 * Disassociate the image from all articles.
-	 *
-	 * @param int p_imageId
-	 * @return void
-	 */
-	function OnImageDelete($p_imageId) {
-		global $Campsite;
-		$queryStr = 'DELETE FROM ArticleImages'
-					." WHERE IdImage='".$p_imageId."'";
-		$Campsite['db']->Execute($queryStr);
-	} // fn OnImageRemoved
 	
 } // class Article
 
