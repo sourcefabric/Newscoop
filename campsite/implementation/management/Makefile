@@ -83,7 +83,7 @@ install: $(ALL)
 	chmod -R g+r $(HTML_COMMON_DIR)/images
 
 clean: dummy
-	rm -f *~ macros.m4 .env_vars $(MY_TARGETS)
+	rm -f *~ macros.m4 $(MY_TARGETS)
 	$(MAKE) -C root clean
 	$(MAKE) -C src clean
 	$(MAKE) -C pub clean
