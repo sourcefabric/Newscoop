@@ -239,7 +239,7 @@ function putGS($p_translateString) {
 
 
 /**
- * Translate the given string and print it.  This function accepts a variable
+ * Translate the given string and return it.  This function accepts a variable
  * number of parameters and works something like printf().
  *
  * @param string p_translateString
@@ -484,7 +484,7 @@ function duplicate_article($article_no, $language_id, $user_id, $dst_pub, $dst_i
 	}
 	$row_art = mysql_fetch_assoc($res_art);
 	$name = $row_art['Name'];
-	
+
 	while (true) {
 		$sql = "select * from Articles where IdPublication = " . $dst_pub . " and NrIssue = " . $dst_issue
 		. " and NrSection = " . $dst_section . " and IdLanguage = " . $language_id . " and Name = '"
@@ -497,7 +497,7 @@ function duplicate_article($article_no, $language_id, $user_id, $dst_pub, $dst_i
 		}
 	}
 	$new_name = $row_art['Name'];
-	
+
 	$sql = "select * from Sections where IdPublication = " . $dst_pub . " and NrIssue = " . $dst_issue
 	. " and IdLanguage = " . $row_art['IdLanguage'] . " and Number = " . $dst_section;
 	$res_test = mysql_query($sql);
@@ -505,7 +505,7 @@ function duplicate_article($article_no, $language_id, $user_id, $dst_pub, $dst_i
 		$msg = "Invalid destination section selected";
 		return 0;
 	}
-	
+
 	// change some attributes
 	$row_art['IdPublication'] = $dst_pub;
 	$row_art['NrIssue'] = $dst_issue;
@@ -514,7 +514,7 @@ function duplicate_article($article_no, $language_id, $user_id, $dst_pub, $dst_i
 	$row_art['Published'] = 'N';
 	$row_art['UploadDate'] = $row_art['cdate'];
 	$row_art['IsIndexed'] = 'N';
-	
+
 	$sql = "select * from X" . $row_art['Type'] . " where NrArticle = " . $article_no . " and IdLanguage = "
 	. $language_id;
 	$res_art_data = mysql_query($sql);
@@ -523,14 +523,14 @@ function duplicate_article($article_no, $language_id, $user_id, $dst_pub, $dst_i
 		return 0;
 	}
 	$row_art_data = mysql_fetch_assoc($res_art_data);
-	
+
 	$topics = array();
 	$sql = "select * from ArticleTopics where NrArticle = " . $article_no;
 	$res_topics = mysql_query($sql);
 	while($row_topics = mysql_fetch_assoc($res_topics)) {
 		$topics[] = $row_topics['TopicId'];
 	}
-	
+
 	$images = array();
 	$sql = "select * from Images where NrArticle = " . $article_no;
 	$res_images = mysql_query($sql);
@@ -547,7 +547,7 @@ function duplicate_article($article_no, $language_id, $user_id, $dst_pub, $dst_i
 		$image['Image'] = $row_images['Image'];
 		$images[] = $image;
 	}
-	
+
 	$sql = "select * from AutoId";
 	$res_autoid = mysql_query($sql);
 	if (mysql_num_rows($res_autoid) == 0) {
@@ -557,7 +557,7 @@ function duplicate_article($article_no, $language_id, $user_id, $dst_pub, $dst_i
 	$row_autoid = mysql_fetch_assoc($res_autoid);
 	$row_art['Number'] = 1 + $row_autoid['ArticleId'];
 	$row_art_data['NrArticle'] = $row_art['Number'];
-	
+
 	$fields = "";
 	$values = "";
 	reset($row_art);
@@ -571,7 +571,7 @@ function duplicate_article($article_no, $language_id, $user_id, $dst_pub, $dst_i
 		$values = $values . "'" . mysql_escape_string($value) . "'";
 	}
 	$i_art = "insert into Articles (" . $fields . ") values(" . $values . ")";
-	
+
 	$fields = "";
 	$values = "";
 	reset($row_art_data);
@@ -582,14 +582,14 @@ function duplicate_article($article_no, $language_id, $user_id, $dst_pub, $dst_i
 		$values = $values . "'" . mysql_escape_string($value) . "'";
 	}
 	$i_art_data = "insert into X" . $row_art['Type'] . " (" . $fields . ") values(" . $values . ")";
-	
+
 	$i_topics = array();
 	reset($topics);
 	foreach($topics as $key=>$topic) {
 		$i_topics[] = "insert into ArticleTopics (NrArticle, TopicId) values(" . $row_art['Number']
 		      . ", " . $topic . ")";
 	}
-	
+
 	$i_images = array();
 	reset($images);
 	foreach($images as $key=>$image) {
@@ -607,7 +607,7 @@ function duplicate_article($article_no, $language_id, $user_id, $dst_pub, $dst_i
 		}
 		$i_images[] = "insert into Images (" . $fields . ") values(" . $values . ")";
 	}
-	
+
 	$u_autoid = "update AutoId set ArticleId = " . $row_art['Number'];
 	if (!mysql_query($u_autoid)) {
 		$msg = "Internal database error";
@@ -627,7 +627,7 @@ function duplicate_article($article_no, $language_id, $user_id, $dst_pub, $dst_i
 	foreach($i_images as $key=>$i_image) {
 		mysql_query($i_image);
 	}
-	
+
 	return $row_art['Number'];
 } // fn duplicate_article
 
