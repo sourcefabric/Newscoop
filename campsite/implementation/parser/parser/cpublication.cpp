@@ -107,10 +107,20 @@ string CPublication::getSectionTemplate(long p_nLanguage, long p_nPublication, l
                                         long p_nSection, MYSQL* p_DBConn)
 {
 	stringstream coSql;
+	CMYSQL_RES coRes;
+	if (p_nSection > 0)
+	{
+		coSql << "select t.Name from Sections as s, Templates as t where s.SectionTplId = t.Id "
+		      << "and s.IdPublication = " << p_nPublication << " and NrIssue = " << p_nIssue
+		      << " and IdLanguage = " << p_nLanguage << " and Number = " << p_nSection;
+		MYSQL_ROW qRow = QueryFetchRow(p_DBConn, coSql.str().c_str(), coRes);
+		if (qRow != NULL)
+			return string(qRow[0]);
+		coSql.str("");
+	}
 	coSql << "select t.Name from Issues as i, Templates as t where i.SectionTplId = t.Id "
 	      << "and i.IdPublication = " << p_nPublication << " and Number = " << p_nIssue
 	      << " and IdLanguage = " << p_nLanguage;
-	CMYSQL_RES coRes;
 	MYSQL_ROW qRow = QueryFetchRow(p_DBConn, coSql.str().c_str(), coRes);
 	if (qRow == NULL)
 		throw InvalidValue("issue number", ((string)Integer(p_nIssue)).c_str());
@@ -121,10 +131,20 @@ string CPublication::getArticleTemplate(long p_nLanguage, long p_nPublication, l
                                         long p_nSection, MYSQL* p_DBConn)
 {
 	stringstream coSql;
+	CMYSQL_RES coRes;
+	if (p_nSection > 0)
+	{
+		coSql << "select t.Name from Sections as s, Templates as t where s.ArticleTplId = t.Id "
+		      << "and s.IdPublication = " << p_nPublication << " and NrIssue = " << p_nIssue
+		      << " and IdLanguage = " << p_nLanguage << " and Number = " << p_nSection;
+		MYSQL_ROW qRow = QueryFetchRow(p_DBConn, coSql.str().c_str(), coRes);
+		if (qRow != NULL)
+			return string(qRow[0]);
+		coSql.str("");
+	}
 	coSql << "select t.Name from Issues as i, Templates as t where i.ArticleTplId = t.Id "
 	      << "and i.IdPublication = " << p_nPublication << " and Number = " << p_nIssue
 	      << " and IdLanguage = " << p_nLanguage;
-	CMYSQL_RES coRes;
 	MYSQL_ROW qRow = QueryFetchRow(p_DBConn, coSql.str().c_str(), coRes);
 	if (qRow == NULL)
 		throw InvalidValue("issue number", ((string)Integer(p_nSection)).c_str());
