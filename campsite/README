@@ -1,11 +1,11 @@
 CAMPSITE / CAMPFIRE
-version     : 2.1.2
-release date: April, 23 2003
+version     : 2.1.4
+release date: October 20, 2003
 contact     : contact@campware.org
 url         : http://www.campware.org
 copyright   : (c)1999-2003 Media Development Loan Fund
 support     : mailto: campsite-support@campware.org; subject: subscribe
-manual      : http://www.campware.org/look/campware/download/manual-2.1.2.tar.gz
+manual      : http://www.campware.org/look/campware/download/manual-2.1.4.tar.gz
 
 INTRODUCTION
 
@@ -52,15 +52,15 @@ Implementing CAMPSITE for your purposes requires the following technical set-up,
 nothing out of the ordinary.
 
 CAMPSITE server:
-- runs on a Linux server, tested with RedHat 7.0 and Mandrake 8.0
+- runs on a GNU/Linux server, tested with RedHat 7.0 and Mandrake 8.0
 - needs an Apache web to be running, and its virtual servers configured by the
   administrator.
-- for data storage it is needed a MySQL database server for Linux. The tests
+- for data storage it is needed a MySQL database server for GNU/Linux. The tests
   were made on MySQL v.3.23.xx.
 
 CAMPSITE client:
-- tested on Netscape, Mozilla and Konqueror under Linux, Netscape and Internet
-  Explorer under Macintosh and Windows.
+- tested on Netscape, Mozilla and Konqueror under GNU/Linux, Netscape and
+  Internet Explorer under Macintosh and Windows.
 - has a client Editor interface implemented as a Java Applet
   (browser-compatibility reason).
 
