@@ -139,6 +139,8 @@ private:
 	cpChar text_start;						// html text start
 	int TempIndex;							// temporary buffer index of current character
 	int LexemStarted;						// true if reading lexem
+	int QuotedLexem;						// true if LexemStarted is true and the new lexem
+											// is quoted
 	int isEOF;								// true if end of text buffer
 	long int buf_len;						// input text buffer length
 	long int text_len;						// html text length
