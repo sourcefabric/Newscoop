@@ -47,7 +47,7 @@ if (!$User->hasPermission('ChangeArticle')
 	exit;		
 }
 
-ArticleImage::DisassociateImageFromArticle($ImageId, $ArticleId, $ImageTemplateId);
+ArticleImage::RemoveImageFromArticle($ImageId, $ArticleId, $ImageTemplateId);
 
 $logtext = getGS('Image $1 unlinked from $2', $ImageId, $ArticleId); 
 Log::Message($logtext, $User->getUserName(), 42);
