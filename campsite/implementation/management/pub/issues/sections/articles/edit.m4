@@ -248,13 +248,11 @@ B_DIALOG(<*Edit article details*>, <*POST*>, <*do_edit.php*>)
 	E_DIALOG_PACKEDINPUT
 	B_DIALOG_INPUT(<*Keywords*>)
 		<INPUT TYPE="TEXT" NAME="cKeywords" VALUE="<?php  pgetHVar($q_art,'Keywords'); ?>" SIZE="64" MAXLENGTH="255">
-	<?php 
-	## added by sebastian
+	E_DIALOG_INPUT
+	<?php
 	if (function_exists ("incModFile"))
 		incModFile ();
 	?>
-	E_DIALOG_INPUT
-
 <INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<?php  p($Pub); ?>">
 <INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<?php  p($Issue); ?>">
 <INPUT TYPE="HIDDEN" NAME="Section" VALUE="<?php  p($Section); ?>">
