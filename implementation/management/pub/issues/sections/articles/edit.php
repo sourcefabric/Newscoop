@@ -325,6 +325,14 @@ if ($edit_ok) { ?>
 		<HR NOSHADE SIZE="1" COLOR="BLACK"> 
 	</TD>
 </TR>
+	<TR>
+		<TD COLSPAN="2">
+		<DIV ALIGN="CENTER">
+		<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save changes'); ?>">
+		<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='/priv/pub/issues/sections/articles/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Language=<?php  p($Language); ?>'">
+		</DIV>
+		</TD>
+	</TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
 	<TD>
@@ -435,7 +443,7 @@ if ($edit_ok) { ?>
 				<tr bgcolor=LightBlue>
 					<td><textarea name="<?php print $dbColumn->getName() ?>" 
 								  id="<?php print $dbColumn->getName() ?>" 
-								  rows="20" cols="80" ><?php print $text; ?></textarea>
+								  rows="20" cols="75" ><?php print $text; ?></textarea>
 					</td>
 				</tr>
 				</table>
