@@ -75,6 +75,16 @@ regGS("Previous","Previous:en");
 regGS("Translate","Translate:en");
 regGS("Details","Details:en");
 regGS("View","View:en");
+regGS("Automatic publishing","Automatic publishing:en");
+regGS("Time","Time:en");
+regGS("Action","Action:en");
+regGS("Schedule a new publish action","Schedule a new publish action:en");
+regGS("No entries.","No entries.:en");
+regGS("Scheduling a new publish action","Scheduling a new publish action:en");
+regGS("Delete scheduled publish action","Delete scheduled publish action:en");
+regGS("The action scheduled on $1 has been deleted.","The action scheduled on $1 has been deleted.:en");
+regGS("The $1 action has been scheduled on $2","The $1 action has been scheduled on $2:en");
+regGS("Date/Time", "Date/Time:en");
 
 regGS("days","days:en");
 
