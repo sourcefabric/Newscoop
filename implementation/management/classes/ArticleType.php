@@ -62,7 +62,7 @@ class ArticleType extends DatabaseObject {
 		unset($tmpData['IdLanguage']);
 		$setQuery = array();
 		foreach ($tmpData as $key => $data) {
-			$setQuery[] = $key."='".addslashes($data)."'";
+			$setQuery[] = $key."='".mysql_real_escape_string($data)."'";
 		}		
 		$queryStr = 'UPDATE '.$this->m_dbTableName.' SET '.implode(',', $setQuery)
 				." WHERE NrArticle=$p_destArticleId ";

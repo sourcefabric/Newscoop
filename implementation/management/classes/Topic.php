@@ -115,7 +115,7 @@ class Topic extends DatabaseObject {
 	 * @return array
 	 */
 	function GetByName($p_name)  {
-		$p_name = addslashes($p_name);
+		$p_name = mysql_real_escape_string($p_name);
 		$queryStr = "SELECT * FROM Topics WHERE Name LIKE '%$p_name%'";
 		$matchTopics =& DbObjectArray::Create('Topic', $queryStr);
 		return $matchTopics;

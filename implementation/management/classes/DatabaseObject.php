@@ -228,7 +228,7 @@ class DatabaseObject {
 	function getKeyWhereClause() {
 		$whereParts = array();
 		foreach ($this->m_keyColumnNames as $columnName) {
-			$whereParts[] = '`' . $columnName . "`='". addslashes($this->m_data[$columnName]) ."'";
+			$whereParts[] = '`' . $columnName . "`='".mysql_real_escape_string($this->m_data[$columnName]) ."'";
 		}
 		return implode(' AND ', $whereParts);		
 	} // fn getKeyWhereClause
@@ -276,7 +276,7 @@ class DatabaseObject {
 			$columnNames = array_keys($this->getKey());
 			$columnValues = array_values($this->getKey());
 			foreach ($columnValues as $tmpKey => $tmpValue) {
-				$columnValues[$tmpKey] = "'".addslashes($tmpValue)."'";
+				$columnValues[$tmpKey] = "'".mysql_real_escape_string($tmpValue)."'";
 			}
 		}
 		elseif (!$this->m_keyIsAutoIncrement) {
@@ -292,7 +292,7 @@ class DatabaseObject {
 			foreach ($p_values as $columnName => $value) {
 				// Construct value string for the SET clause.
 				$columnNames[] = $columnName;
-				$columnValues[] = "'".addslashes($value)."'";
+				$columnValues[] = "'".mysql_real_escape_string($value)."'";
 				$this->m_data[$columnName] = $value;
 			}
 		}
@@ -426,7 +426,7 @@ class DatabaseObject {
 		if ($p_commit) {
 			$value = $p_value;
 			if (!$p_isSql) {
-				$value = "'".addslashes($p_value)."'";
+				$value = "'".mysql_real_escape_string($p_value)."'";
 			}
 			$queryStr = 'UPDATE '.$this->m_dbTableName
 						.' SET `'. $p_dbColumnName.'`='.$value
@@ -495,7 +495,7 @@ class DatabaseObject {
         		//return new PEAR_Error('Column name '.$columnName.' does not exist.');
         		return false;
         	}
-        	$setColumns[] = $columnName . "='". addslashes($columnValue) ."'";
+        	$setColumns[] = $columnName . "='". mysql_real_escape_string($columnValue) ."'";
         	if (!$p_isSql) {
         		$this->m_data[$columnName] = $columnValue;
         	}
@@ -536,7 +536,7 @@ class DatabaseObject {
         $setColumns = array();
         foreach ($this->m_data as $columnName => $columnValue) {
         	if (is_null($p_ignoreColumns) || !in_array($columnName, $p_ignoreColumns)) {
-        		$setColumns[] = $columnName . "='". addslashes($columnValue) ."'";
+        		$setColumns[] = $columnName . "='". mysql_real_escape_string($columnValue) ."'";
         	}
         }
         $databaseChanged = false;
