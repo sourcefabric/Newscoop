@@ -1,10 +1,9 @@
 #!/bin/bash
 
-[ "$CAMPSITE_PACKAGE_DIR" = "" ] && cd ../../.. && . ./configure --define_start_env && cd implementation/management/root
+cd ../../..
+. ./make.env
+cd implementation/management/root
 . ${INSTALL_CONF}/conf_functions
-
-modules_conf --set DATABASE
-[ $? -ne 0 ] && echo "Error reading DATABASE module configuration" && exit 1
 
 database_vars="DATABASE_SERVER DATABASE_USER DATABASE_PASSWORD DATABASE_NAME"
 var_not_modified $database_vars && [ -f db_connect.php ] && exit 0
