@@ -1,6 +1,7 @@
 BODY, TH, TD, FORM, BLOCKQUOTE, UL, LI { 
 	font-family: Tahoma, Arial, Helvetica, sans-serif; 
 	font-size: 10pt; 
+	color: #00008b;
 }
 
 SMALL, ADDRESS { 
@@ -11,6 +12,35 @@ SMALL, ADDRESS {
 A { 
 	font-family: Tahoma, Arial, Helvetica, sans-serif; 
 	font-size: 10pt; 
-	text-decoration: none; 
+	text-decoration: none;
 	color: darkblue; 
+}
+
+hr {
+	color: #00008b;	
+}
+
+.button {
+	font-family: Tahoma, Arial, Helvetica, sans-serif; 
+	font-size: 10pt;
+	/*border: 1px solid #00008b; */
+	border: 1px solid #ffffff; 
+	background-color: #00008b; 
+	color: white; 
+	font-weight: bold;	
+}
+
+.input_text {
+	border: 1px solid #00008b; 
+	background-color: #f0f0ff; 
+	text-indent: 3px;
+}
+
+.input_checkbox { }
+
+.input_radio { }
+
+.input_file {
+	border: 1px solid #00008b; 
+	background-color: #f0f0ff; 
 }
