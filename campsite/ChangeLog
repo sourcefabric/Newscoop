@@ -5,6 +5,7 @@
     name
     - Increased the maximum keyword length in the search engine
     - Fixed memory leaks (used valgrind to detect them)
+    - Added Firebird specific article body field edit script
 
 2.1.2
     - Ported campsite to FreeBSD (thanks to Richard Airlie)
