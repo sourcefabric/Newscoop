@@ -137,6 +137,7 @@ fi
 
 else # else if define start env
 
+    check4_make
     prepare_install_env
     install_conf --set
     modules_conf --set
