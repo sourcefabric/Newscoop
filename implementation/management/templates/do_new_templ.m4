@@ -70,6 +70,8 @@ B_MSGBOX(<*Creating new template*>)
 	
 	if ($ok) {
 		putGS('The template $1 has been created.','<b>'.$cName.'</B>');
+		$templates_dir = $DOCUMENT_ROOT . '/look/';
+		register_templates($templates_dir, $errors);
 	}
 	else {
 	    putGS('The template $1 could not be created.','<b>'.$cName.'</B>');
