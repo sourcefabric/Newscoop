@@ -23,6 +23,11 @@
     - Fixed event notify bug: mailnotify used to send all the emails to the event
     originator
     - Order can be used now in Issue, SearchResult and Article lists
+    - Fixed parser crash bug: when encountered invalid identifier for Language,
+    Publication, Issue, Section, Article, Print, If, Subscription, Edit
+    - Fixed parser bug: on Issue statement select the current issue according to
+    access rights
+    - Added more debug information on Local statement
 
 2.0.10
     - Fixed the 'Back to article details' bug
