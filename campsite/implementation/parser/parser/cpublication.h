@@ -83,6 +83,8 @@ public:
 	static string getArticleTemplate(long p_nLanguage, long p_nPublication, long p_nIssue,
 	                                 long p_nSection, MYSQL* p_DBConn);
 
+	static long getTemplateId(const string& p_rcoTemplate, MYSQL* p_DBConn) throw(InvalidValue);
+
 	string getIssueTemplate(long p_nIssue, MYSQL* p_DBConn) const;
 
 	string getSectionTemplate(long p_nIssue, long p_nSection, MYSQL* p_DBConn) const;
