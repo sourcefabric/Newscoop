@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef TOL_KWD_H__
 #define TOL_KWD_H__
 
-#define MAX_KWD	16
+#define MAX_KWD	69
 
 struct kwd_t {
   char *k;
