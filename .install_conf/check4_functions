@@ -845,7 +845,7 @@ mysql_init(mysql);
 EOF
 g++ -o $test_file ${test_file}.cpp -lm -lz -L$LIBMYSQLCLIENT_PATH -lmysqlclient
 result=$?
-rm -f ${test_file}.* ${test_file}
+rm -f ${test_file}.o ${test_file}.cpp ${test_file}
 [ $result -ne 0 ] && output="Could not find mysqlclient library. Please install mysql-devel package." && return 1
 set_checked libmysqlclient
 return 0
@@ -889,7 +889,7 @@ pthread_create(0, 0, 0, 0);
 EOF
 g++ -o $test_file ${test_file}.cpp -L$LIBPTHREAD_PATH $PTHREAD_LINK
 result=$?
-rm -f ${test_file}*
+rm -f ${test_file} ${test_file}.o ${test_file}.cpp
 [ $result -ne 0 ] && output="Could not find threading library. Please install glibc-devel package." && return 1
 set_checked libpthread
 return 0
