@@ -34,16 +34,16 @@ if (!Input::isValid()) {
 $articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
 $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
 $issueObj =& new Issue($Pub, $Language, $Issue);
-$languageObj =& new Language($Language);
 $publicationObj =& new Publication($Pub);
 
-$articleObj->copy($DestPublication, $DestIssue, $DestSection, $User->getId());
+$articleCopy = $articleObj->copy($DestPublication, $DestIssue, $DestSection, $User->getId());
 
-//$logtext = getGS('Article $1 added to $2. $3 from $4. $5 of $6', 
-//	encHTML(decS($new_name)), getHVar($q_sect,'Number'), 
-//	getHVar($q_sect,'Name'), getHVar($q_iss,'Number'), 
-//	getHVar($q_iss,'Name'), getHVar($q_pub,'Name') ); 
-//Log::Message($logtext, $User->getUserName(), 31);
-header('Location: '.$BackLink."?Pub=$Pub&Issue=$Issue&Section=$Section&Language=$Language");
+$logtext = getGS('Article $1 added to $2. $3 from $4. $5 of $6', 
+	$articleCopy->getName(), $sectionObj->getSectionId(), 
+	$sectionObj->getName(), $issueObj->getIssueId(), 
+	$issueObj->getName(), $publicationObj->getName() ); 
+Log::Message($logtext, $User->getUserName(), 31);
+
+header("Location: ".CampsiteInterface::ArticleUrl($articleCopy, $Language, "edit.php", $Back));
 exit;
 ?>
