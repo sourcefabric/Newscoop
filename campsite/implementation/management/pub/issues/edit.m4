@@ -67,8 +67,53 @@ B_DIALOG(<*Change issue details*>, <*POST*>, <*do_edit.php*>)
 ?>dnl
 	    </SELECT>
 	E_DIALOG_INPUT
+<?php
+	if (getVar($publ, 'Published') == 'Y') {
+?>
 	B_DIALOG_INPUT(<*Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>*>)
 		<INPUT TYPE="TEXT" NAME="cPublicationDate" SIZE="10" MAXLENGTH="10" value="<?php  pgetHVar($publ,'PublicationDate'); ?>">
+	E_DIALOG_INPUT
+<?php
+	}
+?>
+	B_DIALOG_INPUT(<*Front Page Template*>)
+		<SELECT NAME="cIssueTplId">
+			<OPTION VALUE="0">---</OPTION>
+<?php 
+	query ("SELECT Id, Name FROM Templates ORDER BY Level ASC, Name ASC", 'q_iss_tpl');
+	$nr=$NUM_ROWS;
+	for($loop=0;$loop<$nr;$loop++) {
+		fetchRow($q_iss_tpl);
+		pcomboVar(getVar($q_iss_tpl,'Id'),getVar($publ,'IssueTplId'),getVar($q_iss_tpl,'Name'));
+	}
+?>dnl
+	    </SELECT>
+	E_DIALOG_INPUT
+	B_DIALOG_INPUT(<*Section Template*>)
+		<SELECT NAME="cSectionTplId">
+			<OPTION VALUE="0">---</OPTION>
+<?php 
+	query ("SELECT Id, Name FROM Templates ORDER BY Level ASC, Name ASC", 'q_sect_tpl');
+	$nr=$NUM_ROWS;
+	for($loop=0;$loop<$nr;$loop++) {
+		fetchRow($q_sect_tpl);
+		pcomboVar(getVar($q_sect_tpl,'Id'),getVar($publ,'SectionTplId'),getVar($q_sect_tpl,'Name'));
+	}
+?>dnl
+	    </SELECT>
+	E_DIALOG_INPUT
+	B_DIALOG_INPUT(<*Article Template*>)
+		<SELECT NAME="cArticleTplId">
+			<OPTION VALUE="0">---</OPTION>
+<?php 
+	query ("SELECT Id, Name FROM Templates ORDER BY Level ASC, Name ASC", 'q_art_tpl');
+	$nr=$NUM_ROWS;
+	for($loop=0;$loop<$nr;$loop++) {
+		fetchRow($q_art_tpl);
+		pcomboVar(getVar($q_art_tpl,'Id'),getVar($publ,'ArticleTplId'),getVar($q_art_tpl,'Name'));
+	}
+?>dnl
+	    </SELECT>
 	E_DIALOG_INPUT
 	B_DIALOG_BUTTONS
 		<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<?php  pencHTML($Pub); ?>">
