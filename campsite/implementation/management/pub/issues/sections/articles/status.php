@@ -164,7 +164,7 @@
 		<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php  p($Language); ?>">
 		<INPUT TYPE="HIDDEN" NAME="sLanguage" VALUE="<?php  p($sLanguage); ?>"><P>
 		<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save changes'); ?>">
-<?php  todef('Back'); ?>		<INPUT TYPE="HIDDEN" NAME="Back" VALUE="<?php  pencHTML($Back); ?>">
+<?php  todef('Back'); ?>		<INPUT TYPE="HIDDEN" NAME="Back" VALUE="<?php echo $Back; ?>">
 <?php  if ($Back != "") { ?>		<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='<?php  p($Back); ?>'">
 <?php  } else { ?>		<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='/priv/pub/issues/sections/articles/edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&sLanguage=<?php  p($sLanguage); ?>'">
 <?php  } ?>		</FORM>

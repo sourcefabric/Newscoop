@@ -186,7 +186,7 @@
 		<INPUT TYPE="HIDDEN" NAME="cOnSection" VALUE="<?php  pgetHVar($q_art,'OnSection'); ?>">
 		<INPUT TYPE="HIDDEN" NAME="cPublic" VALUE="<?php  pgetHVar($q_art,'Public'); ?>">
 		<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save changes'); ?>">
-<?php  todef('Back'); ?>		<INPUT TYPE="HIDDEN" NAME="Back" VALUE="<?php  pencHTML($Back); ?>">
+<?php  todef('Back'); ?>		<INPUT TYPE="HIDDEN" NAME="Back" VALUE="<?php echo $Back; ?>">
 <?php  if ($Back != "") { ?>		<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='<?php  p($Back); ?>'">
 <?php  } else { ?>		<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='/priv/pub/issues/sections/articles/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>&Section=<?php  p($Section); ?>'">
 <?php  } ?>		</DIV>
