@@ -1,5 +1,8 @@
 <?php 
 
+// -- autopublish.php
+regGS("Article automatic publishing schedule", "Article automatic publishing schedule:en");
+
 // -- index.php
 regGS("Delete article $1","Delete article $1:en");
 regGS("Order","Order:en");
