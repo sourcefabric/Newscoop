@@ -1,4 +1,5 @@
 <?
+
 regGS("CAMPSITE","CAMPSITE:ru");
 regGS("Home","Начало:ru");
 regGS("Logout","Выход:ru");
@@ -79,10 +80,12 @@ regGS("No such topic.","Нет такой темы.");
 regGS("You must select a language.","Вы должны выбрать язык.:ru");
 regGS("No such section.","Нет такой секции:ru");
 regGS("No articles.","Статьи отсутствуют:ru");
+regGS("Access denied","Доступ запрещен:ru");
 regGS("Add new article","Добавить новую статью:ru");
 regGS("Status","Статус:ru");
 regGS("No such article.","Нет такой статьи:ru");
 regGS("Published","Опубликовано:ru");
+regGS("Not published","");
 regGS("Submitted","Отправлено:ru");
 regGS("New","Новая:ru");
 regGS("Article","Статья:ru");
@@ -183,6 +186,7 @@ regGS("The topic $1 could not be deleted.","Невозможно удалить 
 regGS("Yes","Да:ru");
 regGS("No","Нет:ru");
 regGS("No issues.","Нет выпусков:ru");
+regGS("Back to article details","Назад к параметрам статьи:ru");
 regGS("Adding new topic","Добавление новой темы:ru");
 regGS("Topic $1 added","Добавлена тема $1:ru");
 regGS("The topic could not be added.","Невозможно добавить тему.:ru");
@@ -208,6 +212,6 @@ regGS("Days","Дней:ru");
 regGS("(YYYY-MM-DD)","(ГГГГ-ММ-ДД):ru");
 regGS("The sections were added successfully.","Секции были успешно добавлены.:ru");
 regGS("The sections could not be added successfully. Some of them were already added !","Секции не могут быть добавлены. Некоторые из них уже были добавлены !:ru");
-regGS("Back to article details","Назад к параметрам статьи:ru");
+
 
 ?>

@@ -86,7 +86,6 @@ regGS("Preview","Preview:en");
 regGS("You must complete the $1 field.","You must complete the $1 field.:en");
 
 
-
 // -- common errors
 regGS("No such language.","No such language.:en");
 regGS("No such infotype.","No such infotype.:en");
@@ -95,10 +94,12 @@ regGS("No such publication.","No such publication.:en");
 regGS("No such country.","No such country.:en");
 regGS("No such issue.","No such issue.:en");
 regGS("No such topic.","No such topic.:en");
-
 regGS("You must select a language.","You must select a language.:en");
 regGS("No such section.","No such section.:en");
 regGS("No articles.","No articles.:en");
+regGS("Access denied", "Access denied:en");
+
+// -- input messages
 regGS("Add new article","Add new article:en");
 regGS("Status","Status:en");
 regGS("No such article.","No such article.:en");

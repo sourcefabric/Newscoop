@@ -1,4 +1,5 @@
 <?
+
 regGS("CAMPSITE","CAMPSITE");
 regGS("Home","Domů");
 regGS("Logout","Odhlásit");
@@ -79,10 +80,12 @@ regGS("No such topic.","Téma neexistuje");
 regGS("You must select a language.","Vyberte jazyk");
 regGS("No such section.","Rubrika neexistuje");
 regGS("No articles.","Články neexistují");
+regGS("Access denied","Přístup zamítnut");
 regGS("Add new article","Přidat nový článek");
 regGS("Status","Status");
 regGS("No such article.","Článek neexistuje");
 regGS("Published","Zveřejněno");
+regGS("Not published","");
 regGS("Submitted","Podáno");
 regGS("New","Nový");
 regGS("Article","Článek");
@@ -183,6 +186,7 @@ regGS("The topic $1 could not be deleted.","Téma $1 nemohlo být smazáno");
 regGS("Yes","Ano");
 regGS("No","Ne");
 regGS("No issues.","Vydání neexistuje");
+regGS("Back to article details","Zpět na detaily článku");
 regGS("Adding new topic","Přidání nového témata");
 regGS("Topic $1 added","Téma $1 bylo přidáno");
 regGS("The topic could not be added.","Téma nemohlo být přidáno");
@@ -208,6 +212,6 @@ regGS("Days","Dny");
 regGS("(YYYY-MM-DD)","(RRRR-MM-DD)");
 regGS("The sections were added successfully.","Rubriky byly úspěšně přidány");
 regGS("The sections could not be added successfully. Some of them were already added !","Rubriky nebyly úspěšně přidány. Některé již byly přidány! ");
-regGS("Back to article details","Zpět na detaily článku");
+
 
 ?>
