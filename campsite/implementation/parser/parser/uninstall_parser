@@ -27,7 +27,7 @@
 
 rm -f $BIN_DIR/$CAMPSITE_SERVER
 rm -f $BIN_DIR/$CAMPSITECTL
-rm -f $CONF_DIR/parser.conf
+rm -f $ETC_DIR/parser.conf
 
 if $USER_INSTALL; then exit 0; fi
 
