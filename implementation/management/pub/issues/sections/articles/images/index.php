@@ -68,17 +68,22 @@ $languageObj =& new Language($Language);
 	</TD>
 </TR>
 </TABLE>
-<!--<HR NOSHADE SIZE="1" COLOR="BLACK">-->
 
-<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="1" WIDTH="100%"><TR>
-<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP">&nbsp;<?php putGS('Publication'); ?>:</TD><TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><?php echo htmlspecialchars($publicationObj->getName()); ?></B></TD>
+<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="1" WIDTH="100%" class="current_location_table">
+<TR>
+	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php putGS('Publication'); ?>:</TD>
+	<TD VALIGN="TOP" class="current_location_content"><B><?php echo htmlspecialchars($publicationObj->getName()); ?></B></TD>
 
-<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP">&nbsp;<?php putGS('Issue'); ?>:</TD><TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><?php echo htmlspecialchars($issueObj->getIssueId()); ?>. <?php echo htmlspecialchars($issueObj->getName()); ?> (<?php echo htmlspecialchars($languageObj->getName()); ?>)</B></TD>
+	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php putGS('Issue'); ?>:</TD>
+	<TD VALIGN="TOP" class="current_location_content"><B><?php echo htmlspecialchars($issueObj->getIssueId()); ?>. <?php echo htmlspecialchars($issueObj->getName()); ?> (<?php echo htmlspecialchars($languageObj->getName()); ?>)</B></TD>
 
-<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP">&nbsp;<?php putGS('Section'); ?>:</TD><TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><?php echo htmlspecialchars($sectionObj->getSectionId()); ?>. <?php echo htmlspecialchars($sectionObj->getName()); ?></B></TD>
+	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php putGS('Section'); ?>:</TD>
+	<TD VALIGN="TOP" class="current_location_content"><B><?php echo htmlspecialchars($sectionObj->getSectionId()); ?>. <?php echo htmlspecialchars($sectionObj->getName()); ?></B></TD>
 
-<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP">&nbsp;<?php putGS('Article'); ?>:</TD><TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><?php echo htmlspecialchars($articleObj->getTitle()); ?></B></TD>
-</TR></TABLE>
+	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php putGS('Article'); ?>:</TD>
+	<TD VALIGN="TOP" class="current_location_content"><B><?php echo htmlspecialchars($articleObj->getTitle()); ?></B></TD>
+</TR>
+</TABLE>
 
 <table>
 <tr>
@@ -134,7 +139,7 @@ if (count($articleImages) <= 0) {
 }
 
 if (count($articleImages) > 0) {
-	?><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" WIDTH="100%">
+	?><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" WIDTH="100%" class="table_list">
 	<TR BGCOLOR="#C0D0FF">
 		<TD ALIGN="LEFT" VALIGN="TOP" width="1%" nobr><B><?php putGS('Number'); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP" width="1%"><B><?php putGS('Thumbnail'); ?></B></TD>
@@ -161,7 +166,7 @@ if (count($articleImages) > 0) {
 	foreach ($articleImages as $articleImage) {
 		$image =& $articleImage->getImage();
 	?>	
-	<TR <?php  if (($imageCount%2)==0) { ?>BGCOLOR="#D0D0B0"<?php  } else { ?>BGCOLOR="#D0D0D0"<?php  } ?>>
+	<TR <?php  if (($imageCount%2)==0) { ?>class="list_row_even"<?php  } else { ?>class="list_row_odd"<?php  } ?>>
 		<TD ALIGN="center"><?php echo $articleImage->getTemplateId(); ?></td>
 		<TD ALIGN="center">
 			<a href="<?php echo CampsiteInterface::ArticleUrl($articleObj, $Language, "images/view.php") . "&ImageId=".$image->getImageId(); ?>">
@@ -186,7 +191,7 @@ if (count($articleImages) > 0) {
 		</TD>
 	<?php  if ($User->hasPermission('ChangeImage')) { ?>
 		<TD ALIGN="CENTER">
-			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/images/edit.php?PublicationId=<?php  p($Pub); ?>&IssueId=<?php  p($Issue); ?>&SectionId=<?php  p($Section); ?>&ArticleId=<?php  p($Article); ?>&ImageId=<?php echo $image->getImageId(); ?>&InterfaceLanguageId=<?php  p($Language); ?>&ArticleLanguageId=<?php  p($sLanguage); ?>&ImageTemplateId=<?php p($articleImage->getTemplateId()); ?>"><?php  putGS('Change');?></A>
+			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/images/edit.php?PublicationId=<?php  p($Pub); ?>&IssueId=<?php  p($Issue); ?>&SectionId=<?php  p($Section); ?>&ArticleId=<?php  p($Article); ?>&ImageId=<?php echo $image->getImageId(); ?>&InterfaceLanguageId=<?php  p($Language); ?>&ArticleLanguageId=<?php  p($sLanguage); ?>&ImageTemplateId=<?php p($articleImage->getTemplateId()); ?>"><img src="/<?php echo $ADMIN; ?>/img/icon/edit.png" alt="<?php  putGS('Change');?>" border="0"></A>
 		</TD>
 	<?php  }
 	    if ($User->hasPermission('ChangeArticle')) { ?>

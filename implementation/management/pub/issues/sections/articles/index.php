@@ -93,16 +93,16 @@ $previousArticleId = 0;
 </TR>
 </TABLE>
 
-<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="1" WIDTH="100%">
+<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="1" WIDTH="100%" class="current_location_table">
 <TR>
-	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP">&nbsp;<?php  putGS("Publication"); ?>:</TD>
-	<TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><?php p(htmlspecialchars($publicationObj->getName())); ?></B></TD>
+	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php  putGS("Publication"); ?>:</TD>
+	<TD VALIGN="TOP" class="current_location_content"><B><?php p(htmlspecialchars($publicationObj->getName())); ?></B></TD>
 
-	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP">&nbsp;<?php  putGS("Issue"); ?>:</TD>
-	<TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><?php p($issueObj->getIssueId()); ?>. <?php  p(htmlspecialchars($issueObj->getName())); ?> (<?php p(htmlspecialchars($languageObj->getName())); ?>)</B></TD>
+	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php  putGS("Issue"); ?>:</TD>
+	<TD VALIGN="TOP" class="current_location_content"><B><?php p($issueObj->getIssueId()); ?>. <?php  p(htmlspecialchars($issueObj->getName())); ?> (<?php p(htmlspecialchars($languageObj->getName())); ?>)</B></TD>
 
-	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP">&nbsp;<?php  putGS("Section"); ?>:</TD>
-	<TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><?php p($sectionObj->getSectionId()); ?>. <?php  p(htmlspecialchars($sectionObj->getName())); ?></B></TD>
+	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php  putGS("Section"); ?>:</TD>
+	<TD VALIGN="TOP" class="current_location_content"><B><?php p($sectionObj->getSectionId()); ?>. <?php  p(htmlspecialchars($sectionObj->getName())); ?></B></TD>
 </TR>
 </TABLE>
 
@@ -155,7 +155,7 @@ if ($numUniqueArticlesDisplayed > 0) {
 	$counter = 0;
 	$color = 0;
 ?>
-<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" WIDTH="100%">
+<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" WIDTH="100%" class="table_list">
 <TR BGCOLOR="#C0D0FF">
 	<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("Name<BR><SMALL>(click to edit)</SMALL>"); ?></B></TD>
 	<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Type"); ?></B></TD>
@@ -184,7 +184,7 @@ foreach ($allArticles as $articleObj) {
 		break;
 	}
 	?>	
-	<TR <?php  if ($color) { $color=0; ?>BGCOLOR="#D0D0B0"<?php  } else { $color=1; ?>BGCOLOR="#D0D0D0"<?php  } ?>>
+	<TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 		<TD <?php if ($articleObj->getArticleId() == $previousArticleId) { ?>style="padding-left: 20px;"<?php } ?>>
 		<?php
 		// Can the user edit the article?

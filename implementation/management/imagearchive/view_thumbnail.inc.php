@@ -1,4 +1,4 @@
-<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" WIDTH="100%">
+<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" WIDTH="100%" class="table_list">
     <TR BGCOLOR="#C0D0FF">
         <TD ALIGN="LEFT" VALIGN="TOP" WIDTH="5%">
           <table border="0" cellspacing="0" cellpadding="0"><tr><td style="padding: 3px;"><B><a href="<?php echo $IdHref; ?>"><?php  putGS("Thumbnail"); ?></a></B></td><td align="left"><a href="<?php echo $IdHref; ?>"><?php echo $IdOrderIcon; ?></a></td></tr></table>
@@ -27,7 +27,7 @@
     $color = 0;
     foreach ($imageData as $image) {
         ?>
-        <TR <?php  if ($color) { $color=0; ?>BGCOLOR="#D0D0B0"<?php  } else { $color=1; ?>BGCOLOR="#D0D0D0"<?php  } ?>>
+        <TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
             <TD ALIGN="center">
                 <A HREF="edit.php?image_id=<?php  echo $image['id'].$imageNav->getSearchLink(); ?>">
                   <img src="<?php echo $image['thumbnail_url']; ?>" border="0">
