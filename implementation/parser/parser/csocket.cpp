@@ -34,6 +34,8 @@ Implementation of the classes defined in csocket.h
 #include <ctype.h>
 #include <string.h>
 #include <pthread.h>
+#include <map>
+#include <functional>
 
 #include "globals.h"
 
@@ -268,14 +270,150 @@ getservbyname_r (const char *name, const char *proto, struct servent *result, ch
 }
 #endif
 
-///////////////////////////////////////////////////////////////////////////////////
-////////////////////////// CSocket implementatation ///////////////////////////////
+// CSocket implementatation
 
-///////////////////////////////////////////////////////////////////////////////////
+#ifdef _REENTRANT
+#include "mutex.h"
+#endif
+
+using std::map;
+using std::less;
+
+// class CSocketMap: used to store all existing sockets; this way they can be closed all at once in
+//   case a signal was received
+class CSocketMap
+{
+public:
+	// default constructor (empty)
+	CSocketMap() {}
+	~CSocketMap();
+
+	// insert socket into map
+	void insert(CSocket*);
+
+	// delete socket from map
+	void erase(CSocket*);
+
+	// find socket with given identifier; returns pointer to CSocket class
+	CSocket* find(SOCKET) const;
+
+	// returns true if socket is in map
+	bool has(const CSocket*) const;
+
+	// returns map size
+	int size() const;
+
+	// returns true if map is empty
+	bool isEmpty() const;
+
+	// clears the map; if the parameter is true closes all sockets
+	void clear(bool = true);
+
+private:
+	map<SOCKET, CSocket*, less<SOCKET> > m_coSocketMap;
+#ifdef _REENTRANT
+	// if threaded use a mutex to get access to the map
+	mutable CMutex m_coAccessMutex;
+#endif
+};
+
+// destructor
+inline CSocketMap::~CSocketMap()
+{
+	clear();
+}
+
+// insert socket into map
+inline void CSocketMap::insert(CSocket* p_pcoSocket)
+{
+#ifdef _REENTRANT
+	CMutexHandler coAccessHandler(&m_coAccessMutex);
+#endif
+	m_coSocketMap[(SOCKET)*p_pcoSocket] = p_pcoSocket;
+}
+
+// delete socket from map
+inline void CSocketMap::erase(CSocket* p_pcoSocket)
+{
+#ifdef _REENTRANT
+	CMutexHandler coAccessHandler(&m_coAccessMutex);
+#endif
+	p_pcoSocket->Close();
+	m_coSocketMap.erase((SOCKET)*p_pcoSocket);
+}
+
+// find socket with given identifier; returns pointer to CSocket class
+inline CSocket* CSocketMap::find(SOCKET p_nSOCKET) const
+{
+#ifdef _REENTRANT
+	CMutexHandler coAccessHandler(&m_coAccessMutex);
+#endif
+	map<SOCKET, CSocket*, less<SOCKET> >::const_iterator coIt = m_coSocketMap.find(p_nSOCKET);
+	if (coIt == m_coSocketMap.end())
+		return NULL;
+	return (*coIt).second;
+}
+
+// returns true if socket is in map
+inline bool CSocketMap::has(const CSocket* p_pcoSocket) const
+{
+#ifdef _REENTRANT
+	CMutexHandler coAccessHandler(&m_coAccessMutex);
+#endif
+	return m_coSocketMap.find((SOCKET)*p_pcoSocket) != m_coSocketMap.end();
+}
+
+// returns map size
+inline int CSocketMap::size() const
+{
+#ifdef _REENTRANT
+	CMutexHandler coAccessHandler(&m_coAccessMutex);
+#endif
+	return m_coSocketMap.size();
+}
+
+// returns true if map is empty
+inline bool CSocketMap::isEmpty() const
+{
+#ifdef _REENTRANT
+	CMutexHandler coAccessHandler(&m_coAccessMutex);
+#endif
+	return m_coSocketMap.empty();
+}
+
+// clears the map; if the parameter is true closes all sockets
+void CSocketMap::clear(bool p_bCloseSockets)
+{
+#ifdef _REENTRANT
+	CMutexHandler coAccessHandler(&m_coAccessMutex);
+#endif
+	if (p_bCloseSockets) {
+		map<SOCKET, CSocket*, less<SOCKET> >::iterator coIt;
+		for (coIt = m_coSocketMap.begin(); coIt != m_coSocketMap.end(); ++coIt)
+		{
+			(*coIt).second->Close();
+		}
+	}
+	m_coSocketMap.clear();
+}
+
+// declare map to store the sockets
+static CSocketMap g_coSocketmap;
+
+bool CSocket::s_bRegisterSockets = true;
+#ifdef _REENTRANT
+// if threaded use a mutex to get access to the static member s_bRegisterSockets
+CMutex CSocket::m_coAccessMutex;
+#endif
+
 // CSocket constructor
 // if exceptions enabled throws SocketErrorException on failure to create socket
-///////////////////////////////////////////////////////////////////////////////////
-CSocket::CSocket(int type, int domain, int protocol) EXCEPTION_DEF(throw(SocketErrorException))
+CSocket::CSocket(int type, int domain, int protocol)
+#ifdef _REENTRANT
+	EXCEPTION_DEF(throw(SocketErrorException, ExMutex))
+#else
+	EXCEPTION_DEF(throw(SocketErrorException))
+#endif
 {
 	if ((sock = socket(domain, type, protocol)) == -1)
 	{
@@ -289,14 +427,101 @@ CSocket::CSocket(int type, int domain, int protocol) EXCEPTION_DEF(throw(SocketE
 			THROW_EX(throw SocketErrorException("Not enough memory", ENOMEM));
 		}
 	}
+	RegisterSocket();
 }
 
-////////////////////////////////////////////////////////////////////////////////////
+CSocket::~CSocket()
+{
+	Close();
+#ifdef _REENTRANT
+	try
+	{
+#endif
+		UnregisterSocket();
+#ifdef _REENTRANT
+	}
+	catch (ExMutex& coEx)
+	{
+	}
+#endif
+}
+
+void CSocket::RegisterSocket()
+#ifdef _REENTRANT
+	EXCEPTION_DEF(throw (ExMutex))
+#else
+	EXCEPTION_DEF(throw ())
+#endif
+{
+#ifdef _REENTRANT
+	CMutexHandler coAccessHandler(&m_coAccessMutex);
+#endif
+	if (s_bRegisterSockets)
+		g_coSocketmap.insert(this);
+}
+
+void CSocket::UnregisterSocket()
+#ifdef _REENTRANT
+	EXCEPTION_DEF(throw (ExMutex))
+#else
+	EXCEPTION_DEF(throw ())
+#endif
+{
+#ifdef _REENTRANT
+	CMutexHandler coAccessHandler(&m_coAccessMutex);
+#endif
+	if (s_bRegisterSockets)
+		g_coSocketmap.erase(this);
+}
+
+// setRegister: if parameter is true register all sockets that are created; closeAllSockets will
+//   not work for unregistered sockets
+void CSocket::setRegister(bool p_bRegisterSockets)
+#ifdef _REENTRANT
+	EXCEPTION_DEF(throw (ExMutex))
+#else
+	EXCEPTION_DEF(throw ())
+#endif
+{
+#ifdef _REENTRANT
+	CMutexHandler coAccessHandler(&m_coAccessMutex);
+#endif
+	s_bRegisterSockets = p_bRegisterSockets;
+}
+
+bool CSocket::getRegister()
+#ifdef _REENTRANT
+	EXCEPTION_DEF(throw (ExMutex))
+#else
+	EXCEPTION_DEF(throw ())
+#endif
+{
+#ifdef _REENTRANT
+	CMutexHandler coAccessHandler(&m_coAccessMutex);
+#endif
+	bool bRegisterSockets = s_bRegisterSockets;
+	return bRegisterSockets;
+}
+
+// closeAllSockets: needed for closing registered sockets in case a signal was received
+void CSocket::closeAllSockets()
+#ifdef _REENTRANT
+	EXCEPTION_DEF(throw (ExMutex))
+#else
+	EXCEPTION_DEF(throw ())
+#endif
+{
+#ifdef _REENTRANT
+	CMutexHandler coAccessHandler(&m_coAccessMutex);
+#endif
+	if (s_bRegisterSockets)
+		g_coSocketmap.clear(true);
+}
+
 // GetLocal()
 // returns a pointer to struct sockaddr_in filled with the local end point of an socket
 // returns NULL if cannot complete the operation
 // if exceptions enabled throws SocketException on error
-/////////////////////////////////////////////////////////////////////////////////////
 const struct sockaddr_in* CSocket::GetLocal() EXCEPTION_DEF(throw(SocketException))
 {
 	static struct sockaddr_in s;
@@ -309,12 +534,10 @@ const struct sockaddr_in* CSocket::GetLocal() EXCEPTION_DEF(throw(SocketExceptio
 	return &s;
 }
 
-////////////////////////////////////////////////////////////////////////////////////
 // LocalIP()
 // returns a string containing the Local IP address of the scoket
 // returns NULL  if cannot complete
 // Throws SocketException if exceptions enabled and cannot complete
-////////////////////////////////////////////////////////////////////////////////////
 const char* CSocket::LocalIP() EXCEPTION_DEF(throw(SocketException))
 {
 	const struct sockaddr_in* l;
@@ -326,12 +549,10 @@ const char* CSocket::LocalIP() EXCEPTION_DEF(throw(SocketException))
 	return inet_ntoa(l->sin_addr);
 }
 
-////////////////////////////////////////////////////////////////////////////////////
 // LocalPort()
 // returns the Local Port of the socket
 // returns (-errno) if it cannot complete
 // Throws SocketException if exceptions enabled and cannot complete
-////////////////////////////////////////////////////////////////////////////////////
 const int CSocket::LocalPort() EXCEPTION_DEF(throw(SocketException))
 {
 	const struct sockaddr_in* l;
@@ -343,12 +564,10 @@ const int CSocket::LocalPort() EXCEPTION_DEF(throw(SocketException))
 	return ntohs(l->sin_port);
 }
 
-////////////////////////////////////////////////////////////////////////////////////
 // CSocket static member GetHostInfo
 // Returns a pointer to a  hostent structure for the argument or NULL for error
 // throws HostNotFound if cannot resolve name or address if exceptions enabled
 // throws MalformedAddress if invalid address
-////////////////////////////////////////////////////////////////////////////////////
 struct hostent* CSocket::GetHostInfo(const char* name_or_addr)
 			EXCEPTION_DEF(throw(HostNotFound, MalformedAddress))
 {
@@ -397,12 +616,10 @@ struct hostent* CSocket::GetHostInfo(const char* name_or_addr)
 	}
 }
 
-////////////////////////////////////////////////////////////////////////////////////
 // static member HostName
 // Returns a string with the host name for the IP address or name parameter
 // throws HostNotFound if cannot resolve name or address
 // throws MalformedAddress if invalid address
-////////////////////////////////////////////////////////////////////////////////////
 const char* CSocket::HostName(const char* name_or_addr) EXCEPTION_DEF(throw(SocketException))
 {
 	struct hostent* h;
@@ -418,13 +635,11 @@ const char* CSocket::HostName(const char* name_or_addr) EXCEPTION_DEF(throw(Sock
 	return (const char*) name;
 }
 
-////////////////////////////////////////////////////////////////////////////////////
 // static member IPAddress
 // Returns the index'th IP address for the host <name>=IP or hostname
 // throws HostNotFound if cannot resolve name or address
 // throws MalformedAddress if invalid address
 // throws AddressRange if the index is out of range
-////////////////////////////////////////////////////////////////////////////////////
 IPAddr CSocket::IPAddress(const char* name, const int index) EXCEPTION_DEF(throw(SocketException))
 {
 	struct in_addr in;
@@ -446,12 +661,10 @@ IPAddr CSocket::IPAddress(const char* name, const int index) EXCEPTION_DEF(throw
 	return NULL;
 }
 
-////////////////////////////////////////////////////////////////////////////////////
 // static member IPCount
 // Returns the number of IP addresses for the host <name>=IP or hostname
 // throws HostNotFound if cannot resolve name or address
 // throws MalformedAddress if invalid address
-////////////////////////////////////////////////////////////////////////////////////
 const int CSocket::IPCount(const char* name_or_addr) EXCEPTION_DEF(throw(SocketException))
 {
 	struct hostent* h = GetHostInfo(name_or_addr);
@@ -466,12 +679,10 @@ const int CSocket::IPCount(const char* name_or_addr) EXCEPTION_DEF(throw(SocketE
 	return (count);
 }
 
-////////////////////////////////////////////////////////////////////////////////////
 // static member AliasCount
 // Returns the number of Aliases for the host <name>=IP or hostname
 // throws HostNotFound if cannot resolve name or address
 // throws MalformedAddress if invalid address
-////////////////////////////////////////////////////////////////////////////////////
 const int CSocket::AliasCount(const char* name_or_addr) EXCEPTION_DEF(throw(SocketException))
 {
 	struct hostent* h = GetHostInfo(name_or_addr);
@@ -486,13 +697,11 @@ const int CSocket::AliasCount(const char* name_or_addr) EXCEPTION_DEF(throw(Sock
 	return count;
 }
 
-////////////////////////////////////////////////////////////////////////////////////
 // static member Alias -
 // Returns the index'th Alias for the host <name>=IP or hostname
 // throws HostNotFound if cannot resolve name or address
 // throws MalformedAddress if invalid address
 // throws AddressRange if the index is out of range
-////////////////////////////////////////////////////////////////////////////////////
 const char* CSocket::Alias(const char* name, const int index) EXCEPTION_DEF(throw(SocketException))
 {
 	char* alias;
@@ -513,12 +722,10 @@ const char* CSocket::Alias(const char* name, const int index) EXCEPTION_DEF(thro
 	return NULL;
 }
 
-////////////////////////////////////////////////////////////////////////////////////
 // static member ServByName -
 // returns the integer identifying the port assigned to the service
 // returns -1 on error (not found)
 // throws ServNotFound if cannot find the requested service
-////////////////////////////////////////////////////////////////////////////////////
 const int CSocket::ServByName(const char* service, const char *protocol)
 EXCEPTION_DEF(throw(ServNotFound))
 {
@@ -538,10 +745,8 @@ EXCEPTION_DEF(throw(ServNotFound))
 	return sp->s_port;
 }
 
-////////////////////////////////////////////////////////////////////////////////////
 // static member LocalHostName() - returns the Name of the local host
 // throws no exceptions
-////////////////////////////////////////////////////////////////////////////////////
 const char* CSocket::LocalHostName() EXCEPTION_DEF(throw())
 {
 	static char name[100];
@@ -553,16 +758,13 @@ const char* CSocket::LocalHostName() EXCEPTION_DEF(throw())
 	return (const char*) name;
 }
 
-///////////////////////////////////////////////////////////////////////////////////
-////////////////////////// CConnectedSocket Implementatation //////////////////////
+// CConnectedSocket Implementatation
 
-///////////////////////////////////////////////////////////////////////////////////
 // GetRemote() - method
 // returns a pointer to a struct sockaddr_in of the remote end of the socket
 // returns NULL if socket is not connected or cannot complete operation
 // throws SocketErrorException if not enough resources to complete operation
 // throws NotConnected if not connected
-///////////////////////////////////////////////////////////////////////////////////
 const struct sockaddr_in* CConnectedSocket::GetRemote() EXCEPTION_DEF(throw(SocketErrorException))
 {
 	static struct sockaddr_in remote;
@@ -582,7 +784,7 @@ const struct sockaddr_in* CConnectedSocket::GetRemote() EXCEPTION_DEF(throw(Sock
 		case ENOTCONN:
 			THROW_EX(throw NotConnected("Socket not connected"));
 		default:
-			THROW_EX(throw SocketErrorException("Not enougb resources to complete operation", errno));
+			THROW_EX(throw SocketErrorException("Not enough resources to complete operation", errno));
 			return result;
 		}
 	}
@@ -591,13 +793,11 @@ const struct sockaddr_in* CConnectedSocket::GetRemote() EXCEPTION_DEF(throw(Sock
 	return result;
 }
 
-///////////////////////////////////////////////////////////////////////////////////////
 // RemoteIP() - method
 // returns a string containing the remote end IP address connected to the socket
 // returns NULL if socket is not connected or cannot complete operation
 // throws SocketErrorException if not enough resources to complete operation
 // throws NotConnected if not connected
-////////////////////////////////////////////////////////////////////////////////////////
 char* CConnectedSocket::RemoteIP() EXCEPTION_DEF(throw(SocketErrorException))
 {
 	const struct sockaddr_in* l = GetRemote();
@@ -608,13 +808,11 @@ char* CConnectedSocket::RemoteIP() EXCEPTION_DEF(throw(SocketErrorException))
 	return inet_ntoa(l->sin_addr);
 }
 
-///////////////////////////////////////////////////////////////////////////////////////
 // RemotePort() - method        !!!! (errno set on exit)
 // returns the remote port of the peer
 // returns (-errno) if socket is not connected or cannot complete operation
 // throws SocketErrorException if not enough resources to complete operation
 // throws NotConnected if not connected
-////////////////////////////////////////////////////////////////////////////////////////
 int CConnectedSocket::RemotePort() EXCEPTION_DEF(throw(SocketErrorException))
 {
 	const struct sockaddr_in* l = GetRemote();
@@ -625,11 +823,9 @@ int CConnectedSocket::RemotePort() EXCEPTION_DEF(throw(SocketErrorException))
 	return ntohs(l->sin_port);
 }
 
-///////////////////////////////////////////////////////////////////////////////////
 // IsConnected() - tests if connected to a host
 // returns TRUE (>0) if connected or 0 if cannot complete or not connected
 // throws SocketErrorException if cannot complete operation (test)
-///////////////////////////////////////////////////////////////////////////////////
 int CConnectedSocket::IsConnected() EXCEPTION_DEF(throw(SocketErrorException))
 {
 	const struct sockaddr_in* l;
@@ -648,11 +844,9 @@ int CConnectedSocket::IsConnected() EXCEPTION_DEF(throw(SocketErrorException))
 	return (l != NULL);
 }
 
-///////////////////////////////////////////////////////////////////////////////////
 // Send() - Send data to the remote end         (sets errno)
 // returns the number of bytes written or -1 if error
 // throws SocketErrorException on error
-///////////////////////////////////////////////////////////////////////////////////
 int CConnectedSocket::Send(const char* message, int len, int flags)
 EXCEPTION_DEF(throw(SocketErrorException))
 {
@@ -664,13 +858,10 @@ EXCEPTION_DEF(throw(SocketErrorException))
 	return n;
 }
 
-///////////////////////////////////////////////////////////////////////////////////
 // Recv() - read data from the remote end       (sets errno)
 // returns the number of bytes read or -1 if error
 // throws SocketErrorException on error
-///////////////////////////////////////////////////////////////////////////////////
-int CConnectedSocket::Recv(char* message, int len, int flags)
-EXCEPTION_DEF(throw(SocketErrorException))
+int CConnectedSocket::Recv(char* message, int len, int flags) EXCEPTION_DEF(throw(SocketErrorException))
 {
 	int n = recv(sock, message, len, flags);
 #ifdef _EXCEPTIONS_
@@ -680,16 +871,12 @@ EXCEPTION_DEF(throw(SocketErrorException))
 	return n;
 }
 
-////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////// CTCPSocket Implementation ///////////////////////////////
+// CTCPSocket Implementation
 
-///////////////////////////////////////////////////////////////////////////////////
 // CTCPSocket constructor
 // if exceptions enabled throws SocketErrorException on failure to create socket
 // or if cannot bind to SPECIFIED (if any) local address
-///////////////////////////////////////////////////////////////////////////////////
-CTCPSocket::CTCPSocket(char* local_ip, int lport, int backlog)
-EXCEPTION_DEF(throw(SocketErrorException))
+CTCPSocket::CTCPSocket(char* local_ip, int lport, int backlog) EXCEPTION_DEF(throw(SocketErrorException))
 		: CConnectedSocket(SOCK_STREAM, PF_INET)
 {
 
@@ -723,13 +910,11 @@ EXCEPTION_DEF(throw(SocketErrorException))
 	}
 }
 
-///////////////////////////////////////////////////////////////////////////////////
 // Connect() - connects the socket to the remote host and port (errno set on exit)
 // returns 1 if success or 0 in failure
 // throws SocketErrorException on failure to connect if network Unreachable or
 // if interrupted by a signal.
 // throws ConnectException if other cases of failure to connect !
-///////////////////////////////////////////////////////////////////////////////////
 int CTCPSocket::Connect(const char* remote, int port) EXCEPTION_DEF(throw(SocketErrorException))
 {
 	struct sockaddr_in server;
@@ -781,14 +966,11 @@ int CTCPSocket::Connect(const char* remote, int port) EXCEPTION_DEF(throw(Socket
 	return 1;
 }
 
-////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////// CTCPSocket Implementation ///////////////////////////////
+// CTCPSocket Implementation
 
-///////////////////////////////////////////////////////////////////////////////////
 // Accept() - listens for connections on the socket (sets errno)
 // returns a pointer to a CTCPSocket used for further communications
 // throws SocketErrorException on any error (with the errno code)
-///////////////////////////////////////////////////////////////////////////////////
 CTCPSocket* CServerSocket::Accept() EXCEPTION_DEF(throw(SocketErrorException))
 {
 	SOCKET cs;
@@ -801,8 +983,7 @@ CTCPSocket* CServerSocket::Accept() EXCEPTION_DEF(throw(SocketErrorException))
 	return ps;
 }
 
-////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////// CUDPPSocket Implementation ///////////////////////////////
+// CUDPPSocket Implementation
 
 CUDPSocket::CUDPSocket(const char* local_ip, const int lport, int backlog)
 EXCEPTION_DEF(throw(SocketErrorException)): CSocket(SOCK_DGRAM, PF_INET)
@@ -836,11 +1017,9 @@ EXCEPTION_DEF(throw(SocketErrorException)): CSocket(SOCK_DGRAM, PF_INET)
 	}
 }
 
-///////////////////////////////////////////////////////////////////////////////////
 // SendTO() - Send data to the remote end       (sets errno)
 // returns the number of bytes written or -1 if error
 // throws SocketErrorException on error
-///////////////////////////////////////////////////////////////////////////////////
 int CUDPSocket::SendTo(const char* message, int len, const char* host, unsigned int port, int flags)
 EXCEPTION_DEF(throw(SocketErrorException))
 {
@@ -857,11 +1036,9 @@ EXCEPTION_DEF(throw(SocketErrorException))
 	return n;
 }
 
-///////////////////////////////////////////////////////////////////////////////////
 // Recvfrom() - read data from the remote end   (sets errno)
 // returns the number of bytes read or -1 if error
 // throws SocketErrorException on error
-///////////////////////////////////////////////////////////////////////////////////
 int CUDPSocket::RecvFrom(char* message, int len, int flags, char* FromIP, unsigned int* fromport)
 EXCEPTION_DEF(throw(SocketErrorException))
 {
@@ -879,14 +1056,11 @@ EXCEPTION_DEF(throw(SocketErrorException))
 	return n;
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////// CUDPConnSocket Implementation ////////////////////////////////
+// CUDPConnSocket Implementation
 
-///////////////////////////////////////////////////////////////////////////////////
 // CUDPConnSocket constructor
 // if exceptions enabled throws SocketErrorException on failure to create socket
 // or if cannot bind to SPECIFIED (if any) local address
-///////////////////////////////////////////////////////////////////////////////////
 CUDPConnSocket::CUDPConnSocket(char* local_ip, int lport)
 EXCEPTION_DEF(throw(SocketErrorException)): CConnectedSocket(SOCK_DGRAM, PF_INET)
 {
@@ -914,12 +1088,10 @@ EXCEPTION_DEF(throw(SocketErrorException)): CConnectedSocket(SOCK_DGRAM, PF_INET
 	}
 }
 
-///////////////////////////////////////////////////////////////////////////////////
 // Connect() - connects the socket to the remote host and port (errno set on exit)
 // returns 1 if success or 0 in failure
 // throws SocketErrorException on failure to connect if network Unreachable or
 // if interrupted by a signal.
-///////////////////////////////////////////////////////////////////////////////////
 int CUDPConnSocket::Connect(const char* remote_addr, int port) EXCEPTION_DEF(throw(SocketErrorException))
 {
 	struct sockaddr_in server;
