@@ -78,7 +78,7 @@ $showObsoleteMenu = ($User->hasPermission("ManageDictionary")
 	    	['<img src="/<?php p($ADMIN); ?>/img/icon/localizer.png" width="22" height="22" />', '<?php putGS('Localizer'); ?>', '/<?php p($ADMIN); ?>/localizer/',  ],
 	    	<?php } ?>
 	    	<?php if ($User->hasPermission("ViewLogs")) { ?>
-	    	['<img src="/<?php p($ADMIN); ?>/img/icon/logs.png" width="22" height="22" />', '<?php putGS('Logs'); ?>', 'logs/', ]
+	    	['<img src="/<?php p($ADMIN); ?>/img/icon/logs.png" />', '<?php putGS('Logs'); ?>', '/<?php p($ADMIN); ?>/logs/', ]
 	    	<?php } ?>
 	    ],
 	    <?php } // if ($showConfigureMenu) ?>
