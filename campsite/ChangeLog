@@ -1,3 +1,7 @@
+2.1.5
+    - Added Chinese translation thanks to Andrew Lih and Tian Fawei at Hong Kong
+    University, Journalism and Media Studies Centre
+
 2.1.4
     - Changed the image buttons to text buttons which are easy to translate
     - Fixed bug 178: Some admin rights not added by default when admin account
