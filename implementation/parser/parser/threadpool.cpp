@@ -43,20 +43,20 @@ using std::endl;
 typedef struct ThreadLocal
 {
 	CThreadPool* m_pcoThreadPool;
-	UInt m_nThreadNr;
+	uint m_nThreadNr;
 
-	ThreadLocal(CThreadPool* p_pcoThreadPool, UInt p_nThreadNr)
+	ThreadLocal(CThreadPool* p_pcoThreadPool, uint p_nThreadNr)
 		: m_pcoThreadPool(p_pcoThreadPool), m_nThreadNr(p_nThreadNr) {}
 } ThreadLocal;
 
 // Constructor
 // Parameters:
-//		UInt p_nMinThr - the number of threads to create in advance
-//		UInt p_nMaxThr - number of maximum threads to create
+//		uint p_nMinThr - the number of threads to create in advance
+//		uint p_nMaxThr - number of maximum threads to create
 //		void* (*p_pStartRoutine)(void *) - pointer to thread start routine
 //		void* p_pArg - pointer to parameter to pass to thread start routine
 // Throws ExThread exception on error
-CThreadPool::CThreadPool(UInt p_nMinThr, UInt p_nMaxThr, void* (*p_pStartRoutine)(void *),
+CThreadPool::CThreadPool(uint p_nMinThr, uint p_nMaxThr, void* (*p_pStartRoutine)(void *),
                          void* p_pArg) throw(ExThread)
 	: m_nMinThreads(p_nMinThr), m_nMaxThreads(p_nMaxThr), m_pStartRoutine(p_pStartRoutine), m_pArg(p_pArg)
 {
@@ -72,7 +72,7 @@ CThreadPool::CThreadPool(UInt p_nMinThr, UInt p_nMaxThr, void* (*p_pStartRoutine
 		if (m_pThreads == 0)
 			throw ExThread(ThreadSvAbort, "Unable to initialize thread array.");
 		LockMutex();
-		for (UInt nIndex = 0; nIndex < m_nMaxThreads; nIndex++)
+		for (uint nIndex = 0; nIndex < m_nMaxThreads; nIndex++)
 		{
 			m_pThreads[nIndex].m_bCreated = false;
 			m_pThreads[nIndex].m_bWorking = false;
@@ -100,13 +100,13 @@ CThreadPool::~CThreadPool()
 {
 	try
 	{
-		for (UInt nIndex = 0; nIndex < m_nMaxThreads; nIndex++)
+		for (uint nIndex = 0; nIndex < m_nMaxThreads; nIndex++)
 			if (m_pThreads[nIndex].m_bCreated)
 				pthread_kill(m_pThreads[nIndex].m_nThread, SIGTERM);
 		for (; m_nCreatedThreads > 0;)
 			usleep(1000);
 		LockMutex();
-		for (UInt nIndex = 0; nIndex < m_nMaxThreads; nIndex++)
+		for (uint nIndex = 0; nIndex < m_nMaxThreads; nIndex++)
 			sem_destroy(&(m_pThreads[nIndex].m_Start));
 		if (m_pThreads != 0)
 			delete m_pThreads;
@@ -136,7 +136,7 @@ throw(ExThreadNotFree, ExThreadErrCreate)
 		UnlockMutex();
 		throw ExThreadNotFree();
 	}
-	UInt nIndex = 0;
+	uint nIndex = 0;
 	bool bCreate = m_nWorkingThreads >= m_nCreatedThreads;
 	for (nIndex = 0; nIndex < m_nMaxThreads; nIndex++)	// search the pool for a free thread
 	{
@@ -172,7 +172,7 @@ void CThreadPool::killIdleThreads() throw(ExThread)
 		UnlockMutex();
 		return;
 	}
-	for (UInt nIndex = 0; nIndex < m_nMaxThreads; nIndex++)	// search the pool for idle threads
+	for (uint nIndex = 0; nIndex < m_nMaxThreads; nIndex++)	// search the pool for idle threads
 	{
 		if (m_pThreads[nIndex].m_bWorking || !m_pThreads[nIndex].m_bCreated)
 			continue;
@@ -190,7 +190,7 @@ void CThreadPool::killIdleThreads() throw(ExThread)
 void CThreadPool::killAllThreads() throw(ExThread)
 {
 	LockMutex();
-	for (UInt nIndex = 0; nIndex < m_nMaxThreads; nIndex++)	// search the pool for idle threads
+	for (uint nIndex = 0; nIndex < m_nMaxThreads; nIndex++)	// search the pool for idle threads
 	{
 		Debug("killAllThreads: kill ", true, (const void*)m_pThreads[nIndex].m_nThread, true, nIndex);
 		pthread_kill(m_pThreads[nIndex].m_nThread, SIGKILL);
@@ -204,16 +204,16 @@ void CThreadPool::killAllThreads() throw(ExThread)
 
 // waitFreeThread: returns when there is at least one free thread
 // Parameters:
-//		ULInt p_nUSec - time out (microseconds); 0 if wait forever
+//		ulint p_nUSec - time out (microseconds); 0 if wait forever
 // Returns true if at least one thread is free, false otherwise
-bool CThreadPool::waitFreeThread(ULInt p_nUSec) const
+bool CThreadPool::waitFreeThread(ulint p_nUSec) const
 {
 	LockMutex();
 	int nFreeThreads  = m_nMaxThreads - m_nWorkingThreads;
 	UnlockMutex();
 	if (nFreeThreads > 0)
 		return true;
-	ULInt nSleepTime = p_nUSec != 0 ? p_nUSec : 200000;
+	ulint nSleepTime = p_nUSec != 0 ? p_nUSec : 200000;
 	bool bLoop = p_nUSec == 0;
 	if (bLoop)
 		cout << "start loop waiting for free threads" << endl;
@@ -237,7 +237,7 @@ bool CThreadPool::waitFreeThread(ULInt p_nUSec) const
 }
 
 inline void CThreadPool::Debug(const char* p_pchArg1, bool p_bArg, const void* p_pchArg2, bool p_bIndex,
-                               UInt p_nIndex)
+                               uint p_nIndex)
 {
 #ifdef _DEBUG
 	cout << '[' << pthread_self() << ", ";
@@ -248,7 +248,7 @@ inline void CThreadPool::Debug(const char* p_pchArg1, bool p_bArg, const void* p
 	cout << ", c=" << m_nCreatedThreads << ", w=" << m_nWorkingThreads << "]: "
 	     << (p_pchArg1 != 0 ? p_pchArg1 : "");
 	if (p_bArg)
-		cout << (ULInt)p_pchArg2;
+		cout << (ulint)p_pchArg2;
 	cout << endl;
 #endif
 }
@@ -288,7 +288,7 @@ void* CThreadPool::ThreadRoutine(void* p_pThreadLocal)
 	}
 	pthread_cleanup_push(CleanRoutine, p_pThreadLocal);		// set the thread clean routine
 	CThreadPool* pcoThreadPool = pThreadLocal->m_pcoThreadPool;
-	UInt nThreadNr = pThreadLocal->m_nThreadNr;
+	uint nThreadNr = pThreadLocal->m_nThreadNr;
 	ThreadInfo* pThreadInfo = &(pcoThreadPool->m_pThreads[nThreadNr]);
 	for (; ; )				// endless loop; run until the thread is killed
 	{
@@ -328,7 +328,7 @@ void CThreadPool::CleanRoutine(void* p_pThreadLocal)
 		return ;
 	}
 	CThreadPool* pcoThreadPool = pThreadLocal->m_pcoThreadPool;
-	UInt nThreadNr = pThreadLocal->m_nThreadNr;
+	uint nThreadNr = pThreadLocal->m_nThreadNr;
 	ThreadInfo* pThreadInfo = &(pcoThreadPool->m_pThreads[nThreadNr]);
 	delete pThreadLocal;
 	try
@@ -347,8 +347,8 @@ void CThreadPool::CleanRoutine(void* p_pThreadLocal)
 }
 
 // CreateThread: create a new thread
-// Parameters: UInt p_nIndex - position in the pool
-void CThreadPool::CreateThread(UInt p_nIndex) throw(ExThreadNotFree, ExThreadErrCreate)
+// Parameters: uint p_nIndex - position in the pool
+void CThreadPool::CreateThread(uint p_nIndex) throw(ExThreadNotFree, ExThreadErrCreate)
 {
 	try
 	{

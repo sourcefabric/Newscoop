@@ -107,7 +107,7 @@ public:
 	// threads to create, pointer to thread start routine, pointer to parameter to pass to
 	// thread start routine
 	// Throws ExThread exception on error
-	CThreadPool(UInt p_nMinThr, UInt p_nMaxThr, void* (*p_pStartRoutine)(void*), void* p_pArg)
+	CThreadPool(uint p_nMinThr, uint p_nMaxThr, void* (*p_pStartRoutine)(void*), void* p_pArg)
 	throw (ExThread);
 	
 	// Destructor
@@ -123,25 +123,25 @@ public:
 	throw(ExThreadNotFree, ExThreadErrCreate);
 	
 	// Returns the number of created threads
-	UInt createdThreads() const
+	uint createdThreads() const
 	{
 		return m_nCreatedThreads;
 	}
 	
 	// Returns the number of working threads
-	UInt workingThreads() const
+	uint workingThreads() const
 	{
 		return m_nWorkingThreads;
 	}
 	
 	// Returns the minimun number of created threads
-	UInt minThreads() const
+	uint minThreads() const
 	{
 		return m_nMinThreads;
 	}
 	
 	// Returns the number of maximum threads
-	UInt maxThreads() const
+	uint maxThreads() const
 	{
 		return m_nMaxThreads;
 	}
@@ -151,9 +151,9 @@ public:
 	
 	// waitFreeThread: returns when there is at least one free thread
 	// Parameters:
-	//		ULInt p_nUSec - time out (microseconds); 0 if wait forever
+	//		ulint p_nUSec - time out (microseconds); 0 if wait forever
 	// Returns true if at least one thread is free, false otherwise
-	bool waitFreeThread(ULInt p_nUSec = 0) const;
+	bool waitFreeThread(ulint p_nUSec = 0) const;
 
 	// killIdleThreads: kills idle threads
 	void killIdleThreads() throw(ExThread);
@@ -162,22 +162,22 @@ public:
 	void killAllThreads() throw(ExThread);
 
 private:
-	UInt m_nMinThreads; 					// min threads to create
-	UInt m_nMaxThreads; 					// max threads to create
+	uint m_nMinThreads; 					// min threads to create
+	uint m_nMaxThreads; 					// max threads to create
 	void* (*m_pStartRoutine)(void*); 		// pointer to thread start routine
 	void* m_pArg; 							// pointer to start routine argument
-	UInt m_nCreatedThreads; 				// number of created threads
-	UInt m_nWorkingThreads; 				// number of working threads
+	uint m_nCreatedThreads; 				// number of created threads
+	uint m_nWorkingThreads; 				// number of working threads
 	ThreadInfo* m_pThreads; 				// array of threads
 	mutable CMutex m_coMutex;				// mutex used to lock access to member variables
 
 	void Debug(const char* p_pchArg1, bool p_bArg, const void* p_pchArg2, bool p_bIndex = false,
-	           UInt p_nIndex = 0);
+	           uint p_nIndex = 0);
 	void LockMutex() const throw (ExThread);
 	void UnlockMutex() const throw (ExThread);
 	static void* ThreadRoutine(void* p_pThreadLocal);
 	static void CleanRoutine(void* p_pThreadLocal);
-	void CreateThread(UInt p_nIndex) throw(ExThreadNotFree, ExThreadErrCreate);
+	void CreateThread(uint p_nIndex) throw(ExThreadNotFree, ExThreadErrCreate);
 };
 
 // isFreeThread: returns true if there is at least one free (not working) thread
