@@ -26,6 +26,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "cmessagefactory.h"
 
+
+CMessageFactoryRegister gcoMessageFactoryRegister;
+
+
 void CMessageFactoryRegister::insert(CMessageFactory* p_pcoMessageFactory)
 {
 	if (p_pcoMessageFactory == NULL)
@@ -44,6 +48,7 @@ void CMessageFactoryRegister::insert(CMessageFactory* p_pcoMessageFactory)
 	}
 }
 
+
 CMessage* CMessageFactoryRegister::createMessage(char* p_pchMsgContent)
 	throw (out_of_range, xml_parse_error, invalid_message_content, bad_alloc)
 {
@@ -56,4 +61,10 @@ CMessage* CMessageFactoryRegister::createMessage(char* p_pchMsgContent)
 		throw out_of_range(coStr.str());
 	}
 	return (*coIt).second->createMessage(p_pchMsgContent);
+}
+
+
+CMessageFactoryRegister& CMessageFactoryRegister::getInstance()
+{
+	return gcoMessageFactoryRegister;
 }
