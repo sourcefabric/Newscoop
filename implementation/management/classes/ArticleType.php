@@ -60,16 +60,26 @@ class ArticleType extends DatabaseObject {
 	 */
 	function setColumnValue($p_columnName, $p_columnValue, $p_refetch = false) {
 		global $Campsite;
-		$queryStr = "UPDATE ".$this->m_dbTableName
-					." SET ".$p_columnName."=".$p_columnValue
-					." WHERE ".$this->getKeyWhereClause();
+		if (!isset($this->$p_columnName) || ($p_columnValue == $this->$p_columnName)) {
+			return false;
+		}
+		$queryStr = "UPDATE ".$this->m_dbTableName;
+		if (!$p_refetch) {
+			$queryStr .= " SET ".$p_columnName."='".$p_columnValue."'";
+		}
+		else {
+			$queryStr .= " SET ".$p_columnName."=".$p_columnValue;
+		}
+		$queryStr .= " WHERE ".$this->getKeyWhereClause();
 		$Campsite["db"]->Execute($queryStr);
+		$databaseChanged = ($Campsite["db"]->Affected_Rows() > 0);
 		if ($p_refetch) {
 			$this->fetch();
 		}
 		else {
 			$this->$p_columnName = $p_columnValue;
 		}
+		return $databaseChanged;
 	} // fn setColumnValue
 	
 	
