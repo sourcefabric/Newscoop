@@ -50,7 +50,7 @@ installed=false
 if [ $BSD -eq 1 ]; then
 	crontab -u $ROOT_USER -l | grep "$binary" &> /dev/null
 else
-	cat "$file" | grep "$binary" &> /dev/null
+	[ -f "$file" ] && cat "$file" | grep "$binary" &> /dev/null
 fi
 [ $? -eq 0 ] && installed=true
 $installed && ! $force && return 0
@@ -93,7 +93,7 @@ if [ $BSD -eq 1 ]; then
 fi
 if [ ! -f "$file" ]; then
    echo "invalid file"
-   return 2
+   return 0
 fi
 cat "$file" | grep "$binary" &> /dev/null
 [ $? -eq 0 ] && installed=true
