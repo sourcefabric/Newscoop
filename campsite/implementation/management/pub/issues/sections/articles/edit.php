@@ -116,7 +116,7 @@ if ($hasAccess && !$edit_ok) {
 		</TD>
 	</TR>
 	<TR>
-		<TD COLSPAN="2"><BLOCKQUOTE><LI><?php  putGS('This article has been locked by $1 ($2) at','<B>'.htmlspecialchars($lockUserObj->getName()),htmlspecialchars($lockUserObj->getUName()).'</B>' ); ?>
+		<TD COLSPAN="2"><BLOCKQUOTE><LI><?php  putGS('This article has been locked by $1 ($2) at','<B>'.htmlspecialchars($lockUserObj->getName()),htmlspecialchars($lockUserObj->getUserName()).'</B>' ); ?>
 		<B><?php print htmlspecialchars($articleObj->getLockTime()); ?></B></LI>
 		<LI><?php putGS('Now is $1','<B>'.date("Y-m-d G:i:s").'</B>'); ?></LI>
 		<LI><?php putGS('Are you sure you want to unlock it?'); ?></LI>
