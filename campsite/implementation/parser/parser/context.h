@@ -181,6 +181,7 @@ private:
 	long int m_nTopicId;						// topic numeric identifier
 	long int m_nDefTopicId;						// topic numeric identifier
 	CURL* m_pcoURL;
+	CURL* m_pcoDefURL;
 
 	static const string emptystring;
 
@@ -189,6 +190,7 @@ private:
 public:
 	// default constructor
 	CContext();
+
 	// copy constructor
 	CContext(const CContext& c) { *this = c; }
 
@@ -439,6 +441,10 @@ public:
 	void SetURL(CURL* p_pcoURL)
 	{
 		m_pcoURL = p_pcoURL;
+		if (p_pcoURL != NULL)
+			m_pcoDefURL = m_pcoURL->clone();
+		else
+			m_pcoDefURL = NULL;
 	}
 
 	const string& UserInfo(const string&);
@@ -707,6 +713,10 @@ public:
 	{
 		return m_pcoURL;
 	}
+	const CURL* DefURL() const
+	{
+		return m_pcoDefURL;
+	}
 
 	void PrintSubs();
 };
@@ -721,6 +731,8 @@ inline CContext::~CContext()
 {
 	if (m_pcoURL != NULL)
 		delete m_pcoURL;
+	if (m_pcoDefURL != NULL)
+		delete m_pcoDefURL;
 }
 
 #endif

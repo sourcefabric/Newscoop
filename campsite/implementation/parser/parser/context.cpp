@@ -85,6 +85,7 @@ CContext::CContext()
 	adduser_res = modifyuser_res = login_res = search_res = -1;
 	search_level = 0;
 	m_pcoURL = NULL;
+	m_pcoDefURL = NULL;
 	ResetKwdIt();
 }
 
@@ -155,7 +156,8 @@ int CContext::operator ==(const CContext& c) const
 	       && fields == c.fields
 	       && current_field == c.current_field
 	       && current_art_type == c.current_art_type
-	       && m_pcoURL->equalTo(c.m_pcoURL);
+	       && m_pcoURL->equalTo(c.m_pcoURL)
+	       && m_pcoDefURL->equalTo(c.m_pcoDefURL);
 }
 
 // assign operator
@@ -233,6 +235,10 @@ const CContext& CContext::operator =(const CContext& s)
 		m_pcoURL = s.m_pcoURL->clone();
 	else
 		m_pcoURL = NULL;
+	if (s.m_pcoDefURL != NULL)
+		m_pcoDefURL = s.m_pcoDefURL->clone();
+	else
+		m_pcoDefURL = NULL;
 	ResetKwdIt();
 	return *this;
 }
