@@ -60,6 +60,8 @@ public:
 
 	virtual void setValue(const string& p_rcoParameter, const string& p_rcoValue);
 
+	virtual bool equalTo(const CURL* p_pcoURL) const;
+
 	// setURL(): sets the URL object value
 	virtual void setURL(const CMsgURLRequest& p_rcoURLMessage);
 
@@ -122,6 +124,12 @@ inline void CURLShortNames::setValue(const string& p_rcoParameter, const string&
 {
 	CURL::setValue(p_rcoParameter, p_rcoValue);
 	m_bValidURI = false;
+}
+
+inline bool CURLShortNames::equalTo(const CURL* p_pcoURL) const
+{
+	return CURL::equalTo(p_pcoURL)
+		&& m_coHTTPHost == ((const CURLShortNames*)p_pcoURL)->m_coHTTPHost;
 }
 
 inline string CURLShortNames::getURI() const
