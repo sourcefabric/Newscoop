@@ -1,6 +1,6 @@
 include ../../make.env
 
-MY_TARGETS=ad.php login.php
+MY_TARGETS=login.php
 ALL=all
 
 all: $(MY_TARGETS)
