@@ -25,7 +25,7 @@ E_HEADER_BUTTONS
 E_HEADER
 
 <?php  if ($muta != 0) { ?>
-<P>X_NEW_BUTTON(<*Add new user type*>, <*add.php?Back=<?php  print encURL($REQUEST_URI); ?>*>)
+<P>X_NEW_BUTTON(<*Add new user type*>, <*add.php?Back=<?php  print urlencode($_SERVER['REQUEST_URI']); ?>*>)
 <?php  } ?>
 
 <P><?php  

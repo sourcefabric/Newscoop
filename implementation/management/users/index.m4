@@ -36,7 +36,7 @@ E_HEADER
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" WIDTH="100%">
 <TR>
 	<?php  if ($mua != 0) { ?>
-	<TD>X_NEW_BUTTON(<*Add new user account*>, <*add.php?Back=<?php  pencURL($REQUEST_URI); ?>*>)</TD>
+	<TD>X_NEW_BUTTON(<*Add new user account*>, <*add.php?Back=<?php p(urlencode($_SERVER['REQUEST_URI'])); ?>*>)</TD>
 	<?php  } ?>
 	<TD ALIGN="RIGHT">
 	B_SEARCH_DIALOG(<*GET*>, <*index.php*>)

@@ -35,7 +35,7 @@ E_HEADER_BUTTONS
 E_HEADER
 
 <?php  if ($mpa != 0) { ?>dnl
-    <P>X_NEW_BUTTON(<*Add new publication*>, <*add.php?Back=<?php  pencURL($REQUEST_URI); ?>*>)
+    <P>X_NEW_BUTTON(<*Add new publication*>, <*add.php?Back=<?php p(urlencode($_SERVER['REQUEST_URI'])); ?>*>)
 <?php  } ?>dnl
 
 <P><?php
