@@ -44,9 +44,9 @@ if ($errorStr != "") {
 	exit(0);
 }
 
-setcookie("TOL_Access", "all", null, "/$ADMIN/");
+setcookie("TOL_Access", "all", null, "/");
 if ($User->hasPermission("ManageTempl") || $User->hasPermission("DeleteTempl"))
-	setcookie("TOL_Preview", "on", null, "/$ADMIN/");
+	setcookie("TOL_Preview", "on", null, "/");
 
 $urlType = $publicationObj->getProperty('IdURLType');
 if ($urlType == 1) {
