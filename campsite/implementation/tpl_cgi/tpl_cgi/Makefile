@@ -1,12 +1,12 @@
 OBJ_FILES=main.o csocket.o readconf.o cgi.o
 
 LDFLAGS=
-LDLIBS=$(PTHREAD_LINK) -lxml2
+LDLIBS=$(PTHREAD_LINK) $(XML_LINK)
 
 DEPENDENCES=globals.h exceptions.h csocket.h srvdef.h readconf.h tpl_cgi.h cxmltree.h \
 cms_types.h threadkey.h cgib.h cgi.h
 
-CFLAGS=-Wall
+CFLAGS=-Wall $(XML_INCLUDE)
 # -D_DEBUG -g
 
 TPL_CGI=tpl_cgi
