@@ -113,11 +113,19 @@ int RunParser(MYSQL* p_pSQL, CURL* p_pcoURL, const char* p_pchRemoteIP, sockstre
 		pcoCtx->SetArticle(atol(coStr.c_str()));
 		pcoCtx->SetDefArticle(atol(coStr.c_str()));
 	}
-	if ((coStr = p_pcoURL->getValue(P_TOPIC_ID)) != "")
-	{
-		pcoCtx->SetTopic(atol(coStr.c_str()));
-		pcoCtx->SetDefTopic(atol(coStr.c_str()));
+	try {
+		if ((coStr = p_pcoURL->getValue(P_TOPIC_ID)) != "")
+		{
+			pcoCtx->SetTopic(Integer(coStr));
+			pcoCtx->SetDefTopic(Integer(coStr));
+		}
 	}
+	catch (InvalidValue& rcoEx)
+	{
+		// do nothing
+	}
+	pcoCtx->URL()->deleteParameter(P_TOPIC_ID);
+	pcoCtx->DefURL()->deleteParameter(P_TOPIC_ID);
 	if ((coStr = p_pcoURL->getValue(P_ILSTART)) != "")
 		pcoCtx->SetIListStart(atol(coStr.c_str()));
 	if ((coStr = p_pcoURL->getValue(P_SLSTART)) != "")
@@ -126,6 +134,14 @@ int RunParser(MYSQL* p_pSQL, CURL* p_pcoURL, const char* p_pchRemoteIP, sockstre
 		pcoCtx->SetAListStart(atol(coStr.c_str()));
 	if ((coStr = p_pcoURL->getValue(P_SRLSTART)) != "")
 		pcoCtx->SetSrListStart(atol(coStr.c_str()));
+	pcoCtx->URL()->deleteParameter(P_ILSTART);
+	pcoCtx->URL()->deleteParameter(P_SLSTART);
+	pcoCtx->URL()->deleteParameter(P_ALSTART);
+	pcoCtx->URL()->deleteParameter(P_SRLSTART);
+	pcoCtx->DefURL()->deleteParameter(P_ILSTART);
+	pcoCtx->DefURL()->deleteParameter(P_SLSTART);
+	pcoCtx->DefURL()->deleteParameter(P_ALSTART);
+	pcoCtx->DefURL()->deleteParameter(P_SRLSTART);
 	if ((coStr = p_pcoURL->getValue("ST_max")) != "")
 	{
 		int st_max = atol(coStr.c_str());
@@ -135,35 +151,49 @@ int RunParser(MYSQL* p_pSQL, CURL* p_pcoURL, const char* p_pchRemoteIP, sockstre
 			sprintf(pchBuf, "ST%d", i);
 			if ((coStr = p_pcoURL->getValue(pchBuf)) != "")
 				coField = coStr;
+			pcoCtx->URL()->deleteParameter(pchBuf);
+			pcoCtx->DefURL()->deleteParameter(pchBuf);
 			sprintf(pchBuf, "ST_T%d", i);
 			if ((coStr = p_pcoURL->getValue(pchBuf)) != "")
 				coArtType = coStr;
+			pcoCtx->URL()->deleteParameter(pchBuf);
+			pcoCtx->DefURL()->deleteParameter(pchBuf);
 			if (coField == "" || coArtType == "")
 				continue;
 			pcoCtx->SetField(coField, coArtType);
 			sprintf(pchBuf, "ST_LS%d", i);
 			if ((coStr = p_pcoURL->getValue(pchBuf)) != "")
 				pcoCtx->SetStListStart(atol(coStr.c_str()), coField);
+			pcoCtx->URL()->deleteParameter(pchBuf);
+			pcoCtx->DefURL()->deleteParameter(pchBuf);
 			sprintf(pchBuf, "ST_PS%d", i);
 			if ((coStr = p_pcoURL->getValue(pchBuf)) != "")
 			{
 				pcoCtx->SetStartSubtitle(atol(coStr.c_str()), coField);
 				pcoCtx->SetDefaultStartSubtitle(atol(coStr.c_str()), coField);
 			}
+			pcoCtx->URL()->deleteParameter(pchBuf);
+			pcoCtx->DefURL()->deleteParameter(pchBuf);
 			sprintf(pchBuf, "ST_AS%d", i);
 			if ((coStr = p_pcoURL->getValue(pchBuf)) != "")
 				pcoCtx->SetAllSubtitles(atol(coStr.c_str()), coField);
+			pcoCtx->URL()->deleteParameter(pchBuf);
+			pcoCtx->DefURL()->deleteParameter(pchBuf);
 		}
+		pcoCtx->URL()->deleteParameter("ST_max");
+		pcoCtx->DefURL()->deleteParameter("ST_max");
 	}
-	CheckUserInfo(p_pcoURL, *pcoCtx, ppchParams, PARAM_NR);
+	CheckUserInfo(*pcoCtx, ppchParams, PARAM_NR);
 	bool bAccessAll = false;
 	pcoCtx->SetReader(true);
 	if ((coStr = p_pcoURL->getValue(P_SEARCH)) != "")
 	{
-		int nRes = Search(*pcoCtx, p_pSQL, p_pcoURL);
+		int nRes = Search(*pcoCtx, p_pSQL);
 		if (nRes < SRERR_INTERNAL && nRes != 0)
 			nRes = SRERR_INTERNAL;
 		pcoCtx->SetSearchRes(nRes);
+		pcoCtx->URL()->deleteParameter(P_SEARCH);
+		pcoCtx->DefURL()->deleteParameter(P_SEARCH);
 	}
 	if ((coStr = p_pcoURL->getValue(P_USERADD)) != "")
 	{
@@ -176,10 +206,12 @@ int RunParser(MYSQL* p_pSQL, CURL* p_pcoURL, const char* p_pchRemoteIP, sockstre
 			<< pcoCtx->User() << "; path=/\">\n"
 			<< "<META HTTP-EQUIV=\"Set-Cookie\" CONTENT=\"TOL_UserKey="
 			<< pcoCtx->Key() << "; path=/\">\n";
+		pcoCtx->URL()->deleteParameter(P_USERADD);
+		pcoCtx->DefURL()->deleteParameter(P_USERADD);
 	}
 	else if ((coStr = p_pcoURL->getValue(P_LOGIN)) != "")
 	{
-		int nRes = Login(p_pcoURL, (*pcoCtx), p_pSQL);
+		int nRes = Login(*pcoCtx, p_pSQL);
 		if (nRes < LERR_INTERNAL && nRes != 0)
 			nRes = LERR_INTERNAL;
 		pcoCtx->SetLoginRes(nRes);
@@ -189,12 +221,16 @@ int RunParser(MYSQL* p_pSQL, CURL* p_pcoURL, const char* p_pchRemoteIP, sockstre
 			if ((coStr = p_pcoURL->getValue(P_REMEMBER_USER)) != "")
 			{
 				coExpires = "; expires=Tuesday, 31-Dec-2069 00:00:00 GMT";
+				pcoCtx->URL()->deleteParameter(P_REMEMBER_USER);
+				pcoCtx->DefURL()->deleteParameter(P_REMEMBER_USER);
 			}
 			p_rOs << "<META HTTP-EQUIV=\"Set-Cookie\" CONTENT=\"TOL_UserId="
 			<< pcoCtx->User() << "; path=/" << coExpires << "\">\n"
 			<< "<META HTTP-EQUIV=\"Set-Cookie\" CONTENT=\"TOL_UserKey="
 			<< pcoCtx->Key() << "; path=/" << coExpires << "\">\n";
 		}
+		pcoCtx->URL()->deleteParameter(P_LOGIN);
+		pcoCtx->DefURL()->deleteParameter(P_LOGIN);
 	}
 	else if (p_pcoURL->getCookies().size() > 0)
 	{
@@ -215,6 +251,8 @@ int RunParser(MYSQL* p_pSQL, CURL* p_pcoURL, const char* p_pchRemoteIP, sockstre
 		if (nRes < UERR_INTERNAL && nRes != 0)
 			nRes = UERR_INTERNAL;
 		pcoCtx->SetModifyUserRes(nRes);
+		pcoCtx->URL()->deleteParameter(P_USERMODIFY);
+		pcoCtx->DefURL()->deleteParameter(P_USERMODIFY);
 	}
 	if ((coStr = p_pcoURL->getValue(P_SUBSTYPE)) != "")
 	{
@@ -222,13 +260,17 @@ int RunParser(MYSQL* p_pSQL, CURL* p_pcoURL, const char* p_pchRemoteIP, sockstre
 			pcoCtx->SetSubsType(ST_PAID);
 		if (strcasecmp(coStr.c_str(), "trial") == 0)
 			pcoCtx->SetSubsType(ST_TRIAL);
+		pcoCtx->URL()->deleteParameter(P_SUBSTYPE);
+		pcoCtx->DefURL()->deleteParameter(P_SUBSTYPE);
 	}
 	if ((coStr = p_pcoURL->getValue(P_SUBSCRIBE)) != "")
 	{
-		int nRes = DoSubscribe(p_pcoURL, (*pcoCtx), p_pSQL);
+		int nRes = DoSubscribe((*pcoCtx), p_pSQL);
 		if (nRes < SERR_INTERNAL && nRes != 0)
 			nRes = SERR_INTERNAL;
 		pcoCtx->SetSubsRes(nRes);
+		pcoCtx->URL()->deleteParameter(P_SUBSCRIBE);
+		pcoCtx->DefURL()->deleteParameter(P_SUBSCRIBE);
 	}
 	long int nIdUserIP = -1;
 	sprintf(pchBuf, "select IdUser from SubsByIP where StartIP <= %lu and "
@@ -304,6 +346,10 @@ int RunParser(MYSQL* p_pSQL, CURL* p_pcoURL, const char* p_pchRemoteIP, sockstre
 				throw InvalidValue("template identifier", coTplId.c_str());
 			coTemplate = p_pcoURL->getDocumentRoot() + "/look/" + qRow[0];
 		}
+		else if (p_pcoURL->getTemplate() != "")
+		{
+			coTemplate = p_pcoURL->getDocumentRoot() + "/look/" + p_pcoURL->getTemplate();
+		}
 		else
 		{
 			long int nLanguage = p_pcoURL->getLanguage();
@@ -315,6 +361,8 @@ int RunParser(MYSQL* p_pSQL, CURL* p_pcoURL, const char* p_pchRemoteIP, sockstre
 		               + CPublication::getTemplate(nLanguage, nPublication, nIssue,
 		                                           nSection, nArticle, p_pSQL, !bTechDebug);
 		}
+		pcoCtx->URL()->deleteParameter(P_TEMPLATE_ID);
+		pcoCtx->DefURL()->deleteParameter(P_TEMPLATE_ID);
 		CParser::setMYSQL(p_pSQL);
 		CParser* p = CParser::parserOf(coTemplate.c_str(), coDocumentRoot.c_str());
 		p->setDebug(bTechDebug);
@@ -377,19 +425,22 @@ int WriteCharset(CContext& c, MYSQL* pSql, sockstream& fs)
 
 // Login: perform login action: log user in
 // Parameters:
-//		const CURL& url - url object
 //		CContext& c - current context
 //		MYSQL* pSql - pointer to MySQL connection
-int Login(const CURL* url, CContext& c, MYSQL* pSql)
+int Login(CContext& c, MYSQL* pSql)
 {
 	c.SetLogin(true);
 	string s;
 	string uname, password, q;
-	if ((s = url->getValue("LoginUName")) == "")
+	if ((s = c.URL()->getValue("LoginUName")) == "")
 		return LERR_NO_UNAME;
+	c.URL()->deleteParameter("LoginUName");
+	c.DefURL()->deleteParameter("LoginUName");
 	uname = s;
-	if ((s = url->getValue("LoginPassword")) == "")
+	if ((s = c.URL()->getValue("LoginPassword")) == "")
 		return LERR_NO_PASSWORD;
+	c.URL()->deleteParameter("LoginPassword");
+	c.DefURL()->deleteParameter("LoginPassword");
 	password = s;
 	q = "select Password, password(\"" + password + "\") from Users where UName "
 	    "= \"" + uname + "\"";
@@ -419,11 +470,10 @@ int Login(const CURL* url, CContext& c, MYSQL* pSql)
 
 // CheckUserInfo: read user informations from CGI parameters
 // Parameters:
-//		const CURL* url - url object
 //		CContext& c - current context
 //		const char* ppchParams[] - parameters to read
 //		int param_nr - parameters number
-int CheckUserInfo(const CURL* url, CContext& c, const char* ppchParams[], int param_nr)
+int CheckUserInfo(CContext& c, const char* ppchParams[], int param_nr)
 {
 	string field_pref = "User";
 	int found = 0;
@@ -432,14 +482,18 @@ int CheckUserInfo(const CURL* url, CContext& c, const char* ppchParams[], int pa
 	{
 		stringstream coPref;
 		coPref << "HasPref" << k;
-		string s = url->getValue(coPref.str());
+		string s = c.URL()->getValue(coPref.str());
+		c.URL()->deleteParameter(coPref.str());
+		c.DefURL()->deleteParameter(coPref.str());
 		if (s != "")
 			coPrefs.insert(coPref.str().substr(3));
 	}
 	for (int i = 0; i < param_nr; i++)
 	{
 		string fld = field_pref + ppchParams[i];
-		string s = url->getValue(fld);
+		string s = c.URL()->getValue(fld);
+		c.URL()->deleteParameter(fld);
+		c.DefURL()->deleteParameter(fld);
 		if (s == "")
 			continue;
 		c.SetUserInfo(string(ppchParams[i]), string(s));
@@ -582,10 +636,9 @@ int ModifyUser(CContext& c, MYSQL* pSql, const char* ppchParams[], int param_nr,
 
 // DoSubscribe: perform subscribe action (subscribe user to a certain publication)
 // Parameters:
-//		const CURL* url - url object
 //		CContext& c - current context
 //		MYSQL* pSql - pointer to MySQL connection
-int DoSubscribe(const CURL* url, CContext& c, MYSQL* pSql)
+int DoSubscribe(CContext& c, MYSQL* pSql)
 {
 	if (c.SubsType() == ST_NONE)
 		return SERR_TYPE_NOT_SPECIFIED;
@@ -655,8 +708,10 @@ int DoSubscribe(const CURL* url, CContext& c, MYSQL* pSql)
 	}
 	bool by_publication = false;
 	double to_pay = 0;
-	if ((s = url->getValue("by")) != "" && strcasecmp(s.c_str(), "publication") == 0)
+	if ((s = c.URL()->getValue("by")) != "" && strcasecmp(s.c_str(), "publication") == 0)
 	{
+		c.URL()->deleteParameter("by");
+		c.DefURL()->deleteParameter("by");
 		by_publication = true;
 		sprintf(pchBuf, "select Number from Issues where IdPublication = %ld and "
 		        "Published = 'Y' and IdLanguage = %ld order by Number DESC limit 0, 1",
@@ -701,14 +756,15 @@ int DoSubscribe(const CURL* url, CContext& c, MYSQL* pSql)
 			to_pay += unit_cost * time_units;
 		}
 	}
-	if ((s = url->getValue(P_CB_SUBS)) != "" && !by_publication)
+	if ((s = c.URL()->getValue(P_CB_SUBS)) != "" && !by_publication)
+	{
 		while (s != "")
 		{
 			long int section = atol(s.c_str());
 			sprintf(pchBuf, "%s%s", P_TX_SUBS, s.c_str());
-			if ((s = url->getValue(pchBuf)) == "")
+			if ((s = c.URL()->getValue(pchBuf)) == "")
 			{
-				s = url->getNextValue(P_CB_SUBS);
+				s = c.URL()->getNextValue(P_CB_SUBS);
 				continue;
 			}
 			long int time_units = atol(s.c_str());
@@ -746,8 +802,11 @@ int DoSubscribe(const CURL* url, CContext& c, MYSQL* pSql)
 				        "StartDate, Days, PaidDays) values(%ld, %ld, now(), %ld, %ld)",
 				        id_subscription, section, req_days, paid_time);
 			SQLQuery(pSql, pchBuf);
-			s = url->getNextValue(P_CB_SUBS);
+			s = c.URL()->getNextValue(P_CB_SUBS);
 		}
+		c.URL()->deleteParameter(P_CB_SUBS);
+		c.DefURL()->deleteParameter(P_CB_SUBS);
+	}
 	if (c.SubsType() != ST_TRIAL)
 	{
 		sprintf(pchBuf, "update Subscriptions set ToPay = ToPay + %f, Currency = '%s' "
@@ -804,20 +863,25 @@ void SetReaderAccess(CContext& c, MYSQL* pSql)
 // Parameters:
 //		CContext& c - current context
 //		MYSQL* pSql - pointer to MySQL connection
-//		const CURL* p_pcoURL - pointer to the URL object
-int Search(CContext& c, MYSQL* pSql, const CURL* p_pcoURL)
+int Search(CContext& c, MYSQL* pSql)
 {
 	c.SetSearch(true);
 	string s;
-	if ((s = p_pcoURL->getValue("SearchKeywords")) == "")
+	if ((s = c.URL()->getValue("SearchKeywords")) == "")
 		return SRERR_NO_KEYWORDS;
+	c.URL()->deleteParameter("SearchKeywords");
+	c.DefURL()->deleteParameter("SearchKeywords");
 	ParseKeywords(s.c_str(), c);
 	c.SetStrKeywords(s.c_str());
-	if ((s = p_pcoURL->getValue("SearchMode")) != "" && strcasecmp(s.c_str(), "on") == 0)
+	if ((s = c.URL()->getValue("SearchMode")) != "" && strcasecmp(s.c_str(), "on") == 0)
 		c.SetSearchAnd(true);
+	c.URL()->deleteParameter("SearchMode");
+	c.DefURL()->deleteParameter("SearchMode");
 	int level = 0;
-	if ((s = p_pcoURL->getValue("SearchLevel")) != "")
+	if ((s = c.URL()->getValue("SearchLevel")) != "")
 		level = atol(s.c_str());
+	c.URL()->deleteParameter("SearchLevel");
+	c.DefURL()->deleteParameter("SearchLevel");
 	if (level < 0 || level > 2)
 		return SRERR_INVALID_LEVEL;
 	c.SetSearchLevel(level);
