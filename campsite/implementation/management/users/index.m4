@@ -55,7 +55,7 @@ E_HEADER
     if ($UserOffs < 0) $UserOffs= 0;
     todefnum('lpp', 20);
 
-    query ("SELECT * FROM Users WHERE Name LIKE '%$sUname%' AND Reader LIKE '$sType%' LIMIT $UserOffs, ".($lpp+1), 'Users');
+    query ("SELECT * FROM Users WHERE Name LIKE '%$sUname%' AND Reader LIKE '$sType%' ORDER BY Name ASC LIMIT $UserOffs, ".($lpp+1), 'Users');
     if ($NUM_ROWS) {
 	$nr= $NUM_ROWS;
 	$i=$lpp;
