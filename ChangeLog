@@ -22,3 +22,8 @@ new in 2.0.0 (March 13th 2001):
 new in 2.0.6 (May, 14th 2001)
     - Fixed search list order bug. The parser did not list in the requested
     order the list of searched articles.
+
+new in 2.0.8
+    - Fixed internal links bug (select proper template according to link
+    publication)
+    - Fixed incorrect parsing of "list ... article ... keyword <keyword>" bug
