@@ -1,5 +1,5 @@
 B_HTML
-INCLUDE_PHP_LIB(<*..*>)dnl
+INCLUDE_PHP_LIB(<*$ADMIN_DIR/templates*>)dnl
 B_DATABASE
 
 <?php  todefnum('What'); ?>dnl

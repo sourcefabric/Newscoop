@@ -1,5 +1,5 @@
 B_HTML
-INCLUDE_PHP_LIB(<*..*>)
+INCLUDE_PHP_LIB(<*$ADMIN_DIR/templates*>)
 <?php
     require('./lib_upload.php');
 ?>

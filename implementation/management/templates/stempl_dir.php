@@ -40,7 +40,7 @@ if (isset($dirs)) {
 	    else
 		$c="#D0D0D0";
 	    
-	    print "<TR BGCOLOR='$c'><TD><TABLE BORDER='0' CELLSPACING='1' CELLPADDING='0'><TR><TD><IMG SRC='/priv/img/icon/dir.gif' BORDER='0'></TD><TD><A HREF='".encURL($j)."/?$params'>$j</A></TD></TR></TABLE></TD>";
+	    print "<TR BGCOLOR='$c'><TD><TABLE BORDER='0' CELLSPACING='1' CELLPADDING='0'><TR><TD><IMG SRC='/$ADMIN/img/icon/dir.gif' BORDER='0'></TD><TD><A HREF='".encURL($j)."/?$params'>$j</A></TD></TR></TABLE></TD>";
 	    
     }
 }
@@ -68,9 +68,9 @@ if (isset($files)) {
 	    else
 		$c="#D0D0D0";
 	    
-	    print "<TR BGCOLOR='$c'><TD><TABLE BORDER='0' CELLSPACING='1' CELLPADDING='0'><TR><TD><IMG SRC='/priv/img/icon/generic.gif' BORDER='0'></TD><TD>$j</TD></TR></TABLE></TD>";
+	    print "<TR BGCOLOR='$c'><TD><TABLE BORDER='0' CELLSPACING='1' CELLPADDING='0'><TR><TD><IMG SRC='/$ADMIN/img/icon/generic.gif' BORDER='0'></TD><TD>$j</TD></TR></TABLE></TD>";
 	    
-	    print "<TD ALIGN='CENTER'><A HREF='/priv/pub/issues/set.php?$params&Path=".encURL($listbasedir).encURL($j)."'><IMG SRC='/priv/img/icon/image.gif' BORDER='0' ALT='".getGS('Set template')."'></A></TD></TR>";
+	    print "<TD ALIGN='CENTER'><A HREF='/$ADMIN/pub/issues/set.php?$params&Path=".encURL($listbasedir).encURL($j)."'><IMG SRC='/$ADMIN/img/icon/image.gif' BORDER='0' ALT='".getGS('Set template')."'></A></TD></TR>";
     }
 }
 else{
