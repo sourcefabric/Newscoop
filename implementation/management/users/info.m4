@@ -43,7 +43,7 @@ B_DIALOG(<*Change user account information*>, <*POST*>, <*do_info.php*>)
 		<INPUT TYPE="TEXT" class="input_text" NAME="Name" VALUE="<?php  pgetHVar($users,'Name'); ?>" SIZE="32" MAXLENGTH="64">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Title*>)
-		<SELECT NAME="Title">
+		<SELECT NAME="Title" class="input_select">
 		    <OPTION VALUE="Mr."<?php  if(getVar($users,'Title')== "Mr.") { ?> SELECTED<?php  } ?>><?php  putGS('Mr.'); ?></OPTION>
 		    <OPTION VALUE="Mrs."<?php  if(getVar($users,'Title')== "Mrs.") { ?> SELECTED<?php  } ?>><?php  putGS('Mrs.'); ?></OPTION>
 		    <OPTION VALUE="Ms."<?php  if(getVar($users,'Title')== "Ms.") { ?> SELECTED<?php  } ?>><?php  putGS('Ms.'); ?></OPTION>
@@ -55,7 +55,7 @@ B_DIALOG(<*Change user account information*>, <*POST*>, <*do_info.php*>)
 		<INPUT TYPE=RADIO NAME=Gender VALUE="F"<?php  if(getVar($users,'Gender')== "F") { ?> CHECKED<?php  } ?>><?php  putGS('Female'); ?>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Age*>)
-		<SELECT NAME="Age">
+		<SELECT NAME="Age" class="input_select">
 		    <OPTION VALUE="0-17"<?php  if(getVar($users,'Age')== "0-17") { ?> SELECTED<?php  } ?>><?php  putGS('under 18'); ?></OPTION>
 		    <OPTION VALUE="18-24"<?php  if(getVar($users,'Age')== "18-24") { ?> SELECTED<?php  } ?>>18-24</OPTION>
 		    <OPTION VALUE="25-39"<?php  if(getVar($users,'Age')== "25-39") { ?> SELECTED<?php  } ?>>25-39</OPTION>
@@ -80,7 +80,7 @@ B_DIALOG(<*Change user account information*>, <*POST*>, <*do_info.php*>)
 		<INPUT TYPE="TEXT" class="input_text" NAME="State" VALUE="<?php  pgetHVar($users,'State'); ?>" SIZE="32" MAXLENGTH="32">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Country*>)
-		<SELECT NAME="CountryCode">
+		<SELECT NAME="CountryCode" class="input_select">
 <?php 
     query ("SELECT * FROM Countries where IdLanguage = 1", 'countries'); 
     fetchRow($countries);
@@ -111,7 +111,7 @@ B_DIALOG(<*Change user account information*>, <*POST*>, <*do_info.php*>)
 		<INPUT TYPE="TEXT" class="input_text" NAME="Employer" VALUE="<?php  pgetHVar($users,'Employer'); ?>" SIZE="30" MAXLENGTH="30">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Employer Type*>)
-		<SELECT NAME="EmployerType">
+		<SELECT NAME="EmployerType" class="input_select">
 		<OPTION VALUE=""<?php  if(getVar($users,'EmployerType')== "") { ?> SELECTED<?php  } ?>></OPTION>
 		<OPTION VALUE="Corporate"<?php  if(getVar($users,'EmployerType')== "Corporate") { ?> SELECTED<?php  } ?>><?php  putGS('Corporate'); ?></OPTION>
 		<OPTION VALUE="NGO"<?php  if(getVar($users,'EmployerType')== "NGO") { ?> SELECTED<?php  } ?>><?php  putGS('Non-Governmental Organisation'); ?></OPTION>

@@ -42,7 +42,7 @@ B_DIALOG(<*Add new publication*>, <*POST*>, <*do_add.php*>)
 		<INPUT TYPE="TEXT" class="input_text" NAME="cSite" VALUE="<?php  pencHTML($HTTP_HOST); ?>" SIZE="32" MAXLENGTH="255">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Default language*>)
-	    <SELECT NAME="cLanguage">
+	    <SELECT NAME="cLanguage" class="input_select">
 	    <?php 
 		query ("SELECT Id, OrigName FROM Languages", 'q_lang');
 		    $nr=$NUM_ROWS;
@@ -54,7 +54,7 @@ B_DIALOG(<*Add new publication*>, <*POST*>, <*do_add.php*>)
 	    </SELECT>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*URL Type*>)
-		<SELECT NAME="cURLType">
+		<SELECT NAME="cURLType" class="input_select">
 <?php
 	$sql = "SELECT * FROM URLTypes";
 	query ($sql, 'q_urltype');
@@ -73,7 +73,7 @@ B_DIALOG(<*Add new publication*>, <*POST*>, <*do_add.php*>)
 		<INPUT TYPE="TEXT" class="input_text" NAME="cPayTime" VALUE="" SIZE="5" MAXLENGTH="5">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Time Unit*>)
-	    <SELECT NAME="cTimeUnit">
+	    <SELECT NAME="cTimeUnit" class="input_select">
 <?php 
 	$q = "SELECT t.Unit, t.Name FROM TimeUnits as t, Languages as l WHERE t.IdLanguage = l.Id and l.Code = '" . $TOL_Language . "' order by t.Unit asc";
 	query($q, 'q_unit');

@@ -38,7 +38,7 @@ E_HEADER
 	<TD ALIGN="RIGHT">
 	B_SEARCH_DIALOG(<*GET*>, <*index.php*>)
 		<TD><?php  putGS('Language') ?>:</TD>
-		<TD><SELECT NAME="sLanguage"><OPTION><?php 
+		<TD><SELECT NAME="sLanguage" class="input_select"><OPTION><?php 
 		    query ("SELECT Id, Name FROM Languages ORDER BY Name", 'ls');
 		    $nr=$NUM_ROWS;
 		    for($loop=0;$loop<$nr;$loop++) {

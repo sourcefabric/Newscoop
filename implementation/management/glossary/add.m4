@@ -30,7 +30,7 @@ B_DIALOG(<*Add new keyword*>, <*POST*>, <*do_add.php*>)
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Language*>)
 		<?php  query ("SELECT Id, Name FROM Languages ORDER BY Name", 'q'); ?>
-		<SELECT NAME="cLang"><?php 
+		<SELECT NAME="cLang" class="input_select"><?php 
 
 		    $nr=$NUM_ROWS;
 		    for($loop=0;$loop<$nr;$loop++) {

@@ -60,7 +60,7 @@ B_DIALOG(<*Add new user account*>, <*POST*>, <*do_add.php*>)
 		<INPUT TYPE="TEXT" class="input_text" NAME="cName" SIZE="32" MAXLENGTH="64" VALUE="<?php  pencHTML($cName); ?>">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Title*>)
-		<SELECT NAME="cTitle">
+		<SELECT NAME="cTitle" class="input_select">
 		<OPTION VALUE="Mr." X_SLCTD(<*$cTitle*>, <*'Mr.'*>)><?php  putGS('Mr.'); ?></OPTION>
 		<OPTION VALUE="Mrs." X_SLCTD(<*$cTitle*>, <*'Mrs.'*>)><?php  putGS('Mrs.'); ?></OPTION>
 		<OPTION VALUE="Ms." X_SLCTD(<*$cTitle*>, <*'Ms.'*>)><?php  putGS('Ms.'); ?></OPTION>
@@ -72,7 +72,7 @@ B_DIALOG(<*Add new user account*>, <*POST*>, <*do_add.php*>)
 		<INPUT TYPE=RADIO NAME=cGender VALUE="F" X_CHKD(<*$cGender*>, <*'F'*>)><?php  putGS('Female'); ?>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Age*>)
-		<SELECT NAME="cAge">
+		<SELECT NAME="cAge" class="input_select">
 		<OPTION VALUE="0-17"  X_SLCTD(<*x$cAge*>, <*'x0-17*>')><?php  putGS('under 18'); ?></OPTION>
 		<OPTION VALUE="18-24" X_SLCTD(<*x$cAge*>, <*'x18-24'*>)>18-24</OPTION>
 		<OPTION VALUE="25-39" X_SLCTD(<*x$cAge*>, <*'x25-39'*>)>25-39</OPTION>
@@ -106,7 +106,7 @@ B_DIALOG(<*Add new user account*>, <*POST*>, <*do_add.php*>)
 		<INPUT TYPE="TEXT" class="input_text" NAME="cState" SIZE="32" MAXLENGTH="32" VALUE="<?php  pencHTML($cState); ?>">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Country*>)
-		<SELECT NAME="cCountryCode">
+		<SELECT NAME="cCountryCode" class="input_select">
 <?php  
     query ("SELECT Name, Code FROM Countries WHERE IdLanguage = 1", 'countries');
     $nr=$NUM_ROWS;
@@ -132,7 +132,7 @@ B_DIALOG(<*Add new user account*>, <*POST*>, <*do_add.php*>)
 		<INPUT TYPE="TEXT" class="input_text" NAME="cEmployer" SIZE="30" MAXLENGTH="30" VALUE="<?php  pencHTML($cEmployer); ?>">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Employer Type*>)
-		<SELECT NAME="cEmployerType">
+		<SELECT NAME="cEmployerType" class="input_select">
 		<OPTION></OPTION>
 		<OPTION VALUE="Corporate" X_SLCTD(<*$cEmployerType*>, <*'Corporate'*>)><?php  putGS('Corporate'); ?></OPTION>
 		<OPTION VALUE="NGO" X_SLCTD(<*$cEmployerType*>, <*'NGO'*>)><?php  putGS('Non-Governmental Organisation'); ?></OPTION>
@@ -148,7 +148,7 @@ B_DIALOG(<*Add new user account*>, <*POST*>, <*do_add.php*>)
 		<?php  
 		    query ("SELECT Name FROM UserTypes ORDER BY Name", 'q');
 		?>
-		<SELECT NAME="cType">
+		<SELECT NAME="cType" class="input_select">
 			<?php 
 			    $nr=$NUM_ROWS;
 			    for($loop=0;$loop<$nr;$loop++) {

@@ -43,7 +43,7 @@ E_CURRENT
 B_DIALOG(<*Add new country default subscription time*>, <*POST*>, <*do_countryadd.php*>)
 	<INPUT TYPE=HIDDEN NAME=cPub VALUE="<?php  pencHTML($Pub); ?>">
 	B_DIALOG_INPUT(<*Country*>)
-	    <SELECT NAME="cCountryCode">
+	    <SELECT NAME="cCountryCode" class="input_select">
 <?php 
     query ("SELECT Code, Name FROM Countries WHERE IdLanguage = $Language", 'q_ctr');
     $nr=$NUM_ROWS;

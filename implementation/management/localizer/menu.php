@@ -149,7 +149,7 @@ print '</PRE>';
 ?>
 <form action="index.php" method="post">
 
-<SELECT NAME=newlang>
+<SELECT NAME="newlang" class="input_select">
 <?php
 
     $Languages=mysql_query ("SELECT Id, Name, OrigName, CodePage, Code FROM Languages ORDER BY Name");

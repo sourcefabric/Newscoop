@@ -52,7 +52,7 @@ B_DIALOG(<*Change issue details*>, <*POST*>, <*do_edit.php*>)
 		<INPUT TYPE="TEXT" class="input_text" NAME="cName" SIZE="32" MAXLENGTH="64" value="<?php  pgetHVar($publ,'Name'); ?>">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Language*>)
-	    <SELECT NAME="cLang">
+	    <SELECT NAME="cLang" class="input_select">
 <?php 
     query ("SELECT Id, Name FROM Languages", 'q_lang');
     $nr=$NUM_ROWS;
@@ -73,7 +73,7 @@ B_DIALOG(<*Change issue details*>, <*POST*>, <*do_edit.php*>)
 	}
 ?>
 	B_DIALOG_INPUT(<*Front Page Template*>)
-		<SELECT NAME="cIssueTplId">
+		<SELECT NAME="cIssueTplId" class="input_select">
 			<OPTION VALUE="0">---</OPTION>
 <?php 
 	query ("SELECT Id, Name FROM Templates ORDER BY Level ASC, Name ASC", 'q_iss_tpl');
@@ -86,7 +86,7 @@ B_DIALOG(<*Change issue details*>, <*POST*>, <*do_edit.php*>)
 	    </SELECT>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Section Template*>)
-		<SELECT NAME="cSectionTplId">
+		<SELECT NAME="cSectionTplId" class="input_select">
 			<OPTION VALUE="0">---</OPTION>
 <?php 
 	query ("SELECT Id, Name FROM Templates ORDER BY Level ASC, Name ASC", 'q_sect_tpl');
@@ -99,7 +99,7 @@ B_DIALOG(<*Change issue details*>, <*POST*>, <*do_edit.php*>)
 	    </SELECT>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Article Template*>)
-		<SELECT NAME="cArticleTplId">
+		<SELECT NAME="cArticleTplId" class="input_select">
 			<OPTION VALUE="0">---</OPTION>
 <?php 
 	query ("SELECT Id, Name FROM Templates ORDER BY Level ASC, Name ASC", 'q_art_tpl');

@@ -40,7 +40,7 @@ E_HEADER
 	B_SEARCH_DIALOG(<*GET*>, <*index.php*>)
 		<TD><?php  putGS('Keyword'); ?>:</TD>
 		<TD><INPUT TYPE="TEXT" class="input_text" NAME="sKeyword" VALUE="<?php  print encHTML(decS($sKeyword)); ?>" SIZE="16" MAXLENGTH="32"></TD>
-		<TD><SELECT NAME="sLang"><OPTION><?php 
+		<TD><SELECT NAME="sLang" class="input_select"><OPTION><?php 
 		    query ("SELECT Id, Name FROM Languages ORDER BY Name", 'ls');
 
 		    $nr=$NUM_ROWS;

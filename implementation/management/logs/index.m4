@@ -31,7 +31,7 @@ E_HEADER
 	<TD ALIGN="RIGHT">
 	B_SEARCH_DIALOG(<*GET*>, <*index.php*>)
 		<TD><?php  putGS('Event'); ?>:</TD>
-		<TD><SELECT NAME="sEvent"><OPTION VALUE="0"><?php 
+		<TD><SELECT NAME="sEvent" class="input_select"><OPTION VALUE="0"><?php 
 		    query ("SELECT Id, Name FROM Events ORDER BY Id", 'ee');
 		    $nr=$NUM_ROWS;
 		    for ($loop=0;$loop<$nr;$loop++) {

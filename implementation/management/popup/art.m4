@@ -36,7 +36,7 @@ X_PSEP2
 <FORM NAME="FORM_ART" METHOD="GET">
 <?php 
     if ($NUM_ROWS) { ?>dnl
-<SELECT NAME="art" ONCHANGE="var f = this.form.art; var v = f.options[f.selectedIndex].value; var x = 'X_ROOT/popup/img.php?lang=<?php  pencURL($lang); ?>&amp;pub=<?php  pencURL($pub); ?>&amp;iss=<?php  pencURL($iss); ?>&amp;ssect=<?php  pencURL($ssect); ?>&amp;' + v; if (v != 0) { parent.frames[1].location.href = x; }">
+<SELECT NAME="art" class="input_select" ONCHANGE="var f = this.form.art; var v = f.options[f.selectedIndex].value; var x = 'X_ROOT/popup/img.php?lang=<?php  pencURL($lang); ?>&amp;pub=<?php  pencURL($pub); ?>&amp;iss=<?php  pencURL($iss); ?>&amp;ssect=<?php  pencURL($ssect); ?>&amp;' + v; if (v != 0) { parent.frames[1].location.href = x; }">
 	<OPTION VALUE="0"><?php  putGS('---Select article---'); ?>
 	<?php 
 		    $nr=$NUM_ROWS;
@@ -50,7 +50,7 @@ X_PSEP2
 	?>
 </SELECT>
 <?php  } else { ?>dnl
-<SELECT DISABLED><OPTION><?php  putGS('No articles'); ?></SELECT>
+<SELECT class="input_select" DISABLED><OPTION><?php  putGS('No articles'); ?></SELECT>
 <?php  } ?>dnl
 </FORM>
 E_PBAR

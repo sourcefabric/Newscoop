@@ -54,7 +54,7 @@ B_DIALOG(<*Add new issue*>, <*POST*>, <*do_add_new.php*>)
 		<INPUT TYPE="TEXT" class="input_text" NAME="cName" SIZE="32" MAXLENGTH="64">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Language*>)
-		<SELECT NAME="cLang"><?php 
+		<SELECT NAME="cLang" class="input_select"><?php 
     for($loop=0;$loop<$rownr;$loop++) {
 	fetchRow($q_lang);
 	pcomboVar(getHVar($q_lang,'Id'), $IdLang, getHVar($q_lang,'Name'));

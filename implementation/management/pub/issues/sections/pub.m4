@@ -25,7 +25,7 @@ E_STYLE
 		<TD ALIGN="LEFT">
 <FORM NAME="FORM_PUB" METHOD="GET">
 <?php  if ($NUM_ROWS) { ?>dnl
-<SELECT NAME="pub" ONCHANGE="var f = this.form.pub; var v = f.options[f.selectedIndex].value; var x = 'X_ROOT/pub/issues/sections/i1.php?Language=<?php  pencURL($Language); ?>&Pub=<?php  pencURL($Pub); ?>&Issue=<?php  pencURL($Issue); ?>&Section=<?php  pencURL($Section); ?>&dstPub=' + v; if (v != 0) { parent.frames[1].location.href = x; }">
+<SELECT NAME="pub" class="input_select" ONCHANGE="var f = this.form.pub; var v = f.options[f.selectedIndex].value; var x = 'X_ROOT/pub/issues/sections/i1.php?Language=<?php  pencURL($Language); ?>&Pub=<?php  pencURL($Pub); ?>&Issue=<?php  pencURL($Issue); ?>&Section=<?php  pencURL($Section); ?>&dstPub=' + v; if (v != 0) { parent.frames[1].location.href = x; }">
 	<OPTION VALUE="0"><?php  putGS('---Select publication---'); ?>
 <?php 
 	$nr=$NUM_ROWS;
@@ -36,7 +36,7 @@ E_STYLE
 ?>
 </SELECT>
 <?php  } else { ?>dnl
-<SELECT DISABLED><OPTION><?php  putGS('No publications'); ?></SELECT>
+<SELECT class="input_select" DISABLED><OPTION><?php  putGS('No publications'); ?></SELECT>
 <?php  } ?>dnl
 </FORM>
 		</TD>

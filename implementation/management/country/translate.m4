@@ -54,7 +54,7 @@ B_DIALOG(<*Translate country name*>, <*POST*>, <*do_translate.php*>)
 		<INPUT TYPE="TEXT" class="input_text" NAME="cName" SIZE="32" MAXLENGTH="64">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Language*>)
-		<SELECT NAME="cLanguage">
+		<SELECT NAME="cLanguage" class="input_select">
 <?php 
     query ("SELECT Id, Name FROM Languages ORDER BY Name", 'q_lang');
     $nr=$NUM_ROWS;
