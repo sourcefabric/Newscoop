@@ -4,7 +4,7 @@ ALL=$(shell if [ "$(PACKAGE_TYPE)" = "source" ]; then echo all; else echo dummy;
 
 PACKAGE_DIR=$(BIN_PACKAGE_DIR)/implementation
 
-MY_TARGETS=ad.php index.php login.php do_login.php logout.php menu.php home.php
+MY_TARGETS=ad.php index.php login.php logout.php menu.php home.php
 
 all: $(MY_TARGETS)
 	$(MAKE) -C root
