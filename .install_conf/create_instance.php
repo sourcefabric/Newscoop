@@ -363,26 +363,25 @@ function fill_missing_parameters(&$p_defined_parameters)
 
 	// read old configuration
 	$db_name = $p_defined_parameters['--db_name'];
-	if (is_dir("/etc/campsite.d/$db_name"))
-		$old_conf_dir = "/etc/campsite.d/$db_name";
+	$old_conf_dir = "/etc/campsite.d/$db_name";
 	if (is_dir("/usr/local/etc/campsite.d/$db_name"))
 		$old_conf_dir = "/usr/local/etc/campsite.d/$db_name";
 
 	$CampsiteOld = array();
-	if (read_old_config($old_conf_dir, 'database', $CampsiteOld) == 0) {
+	if (read_old_config($old_conf_dir, 'database', $CampsiteOld)) {
 		$p_defined_parameters['--db_server_address'] = $CampsiteOld['DATABASE_SERVER'];
 		$p_defined_parameters['--db_server_port'] = $CampsiteOld['DATABASE_PORT'];
 		$p_defined_parameters['--db_user'] = $CampsiteOld['DATABASE_USER'];
 		$p_defined_parameters['--db_password'] = $CampsiteOld['DATABASE_PASSWORD'];
 	}
-	if (read_old_config($old_conf_dir, 'parser', $CampsiteOld) == 0) {
+	if (read_old_config($old_conf_dir, 'parser', $CampsiteOld)) {
 		$p_defined_parameters['--parser_port'] = $CampsiteOld['PARSER_PORT'];
 		$p_defined_parameters['--parser_max_threads'] = $CampsiteOld['PARSER_THREADS'];
 	}
-	if (read_old_config($old_conf_dir, 'smtp', $CampsiteOld) == 0) {
+	if (read_old_config($old_conf_dir, 'smtp', $CampsiteOld)) {
 		$p_defined_parameters['--smtp_server_address'] = $CampsiteOld['SMTP_SERVER'];
 	}
-	if (read_old_config("$old_conf_dir/install", '.modules', $CampsiteOld) == 0) {
+	if (read_old_config("$old_conf_dir/install", '.modules', $CampsiteOld)) {
 		$p_defined_parameters['--smtp_server_address'] = $CampsiteOld['SMTP_SERVER'];
 	}
 }
@@ -454,10 +453,10 @@ function define_globals()
 function read_old_config($conf_dir, $module_name, &$variables)
 {
 	$conf_file = "$conf_dir/$module_name.conf";
-	if (!is_file)
-		return "File $conf_file does not exist";
+	if (!is_file($conf_file))
+		return false;
 	if (!$lines = file($conf_file))
-		return "Unable to read configuration file $conf_file";
+		return false;
 
 	$module_name = strtoupper($module_name);
 	foreach ($lines as $index=>$line) {
@@ -468,7 +467,7 @@ function read_old_config($conf_dir, $module_name, &$variables)
 			$value = trim(substr($value, 0, $res));
 		$variables[$module_name . "_" . $var_name] = $value;
 	}
-	return 0;
+	return true;
 }
 
 
