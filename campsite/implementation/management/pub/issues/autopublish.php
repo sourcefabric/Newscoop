@@ -97,7 +97,7 @@ if ($access) {
 
 <P>
 <FORM NAME="dialog" METHOD="POST" ACTION="autopublish_do_add.php" >
-<CENTER><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" BGCOLOR="#C0D0FF" ALIGN="CENTER">
+<CENTER><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" ALIGN="CENTER" class="table_input">
 	<TR>
 		<TD COLSPAN="2">
 			<B><?php  putGS("Schedule a new publish action"); ?></B>
@@ -161,8 +161,8 @@ if ($access) {
 	$nr= $NUM_ROWS;
 	$i=$lpp;
 	$color= 0;
-	?><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" WIDTH="100%">
-	<TR BGCOLOR="#C0D0FF">
+	?><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" WIDTH="100%" class="table_list">
+	<TR class="table_list_header">
 		<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("Date/Time"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("Action"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("Publish articles"); ?></B></TD>

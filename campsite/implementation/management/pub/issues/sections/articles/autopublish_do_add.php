@@ -91,7 +91,7 @@ if ($articleObj->getPublished() != 'N') {
 
 <P>
 <CENTER>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" BGCOLOR="#C0D0FF" ALIGN="CENTER">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box" ALIGN="CENTER">
 <TR>
 	<TD COLSPAN="2">
 		<B> <?php  putGS("Scheduling a new publish action"); ?> </B>
@@ -131,7 +131,7 @@ if ($articleObj->getPublished() != 'N') {
 <P>
 
 <?php } else { ?><BLOCKQUOTE>
-	<CENTER><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" BGCOLOR="#C0D0FF" ALIGN="CENTER">
+	<CENTER><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box" ALIGN="CENTER">
 	<TR>
 		<TD COLSPAN="2">
 			<B> <?php  putGS("Scheduling a new publish action"); ?> </B>
