@@ -15,8 +15,8 @@ X_HEADER_NO_BUTTONS
 E_HEADER
 
 <? todef('ADReason',getGS('You do not have the right to access this page.'));?>dnl
-B_MSGBOX(<*Access denied*>)
-	X_MSGBOX_TEXT(<*<LI><? print encHTML($ADReason); ?></LI>*>)
+B_MSGBOX(<*Access denied*>, <**>, <*red*>)
+	X_MSGBOX_TEXT(<*<font color=red><li><? print encHTML($ADReason); ?></li></font>*>)
 	B_MSGBOX_BUTTONS
 		<A HREF="X_ROOT/home.php"><IMG SRC="X_ROOT/img/button/ok.gif" BORDER="0" ALT="OK"></A>
 	E_MSGBOX_BUTTONS
