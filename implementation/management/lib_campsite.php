@@ -824,7 +824,7 @@ function template_is_used($template_name)
 	return false;
 }
 
-function move_article($pub_id, $lang_id, $issue, $section, $article, $dir, $nr_pos = 1)
+function move_article_rel($pub_id, $lang_id, $issue, $section, $article, $dir, $nr_pos = 1)
 {
 	$sql = "select * from Articles where IdPublication = " . $pub_id . " and NrIssue = "
 	     . $issue . " and NrSection = " . $section . " and Number = " . $article
@@ -844,15 +844,54 @@ function move_article($pub_id, $lang_id, $issue, $section, $article, $dir, $nr_p
 	$row = mysql_fetch_array($res);
 	if (!$row)
 		return false;
-	$prev_order = $row['ArticleOrder'];
+	$prev_order = $row['ArticleOrder'] + ($dir == "up" ? 0 : 1);
 	$prev_number = $row['Number'];
+	$sql = "update Articles set ArticleOrder = ArticleOrder + 1 where IdPublication = "
+	     . $pub_id . " and NrIssue = " . $issue . " and NrSection = " . $section
+	     . " and IdLanguage = " . $lang_id . " and ArticleOrder >= " . $prev_order;
+	$res = mysql_query($sql);
 	$sql = "update Articles set ArticleOrder = " . $prev_order . " where IdPublication = "
 	     . $pub_id . " and NrIssue = " . $issue . " and NrSection = " . $section
 	     . " and Number = " . $article . " and IdLanguage = " . $lang_id;
 	$res = mysql_query($sql);
-	$sql = "update Articles set ArticleOrder = " . $art_order . " where IdPublication = "
+	return true;
+}
+
+function move_article_abs($pub_id, $lang_id, $issue, $section, $article, $pos = 1)
+{
+	$sql = "select * from Articles where IdPublication = " . $pub_id . " and NrIssue = "
+	     . $issue . " and NrSection = " . $section . " and Number = " . $article
+	     . " and IdLanguage = " . $lang_id;
+	$res = mysql_query($sql);
+	$row = mysql_fetch_array($res);
+	if (!$row)
+		return false;
+	$art_order = $row['ArticleOrder'];
+	$sql = "select * from Articles where IdPublication = " . $pub_id . " and NrIssue = "
+	     . $issue . " and NrSection = " . $section . " and IdLanguage = " . $lang_id
+	     . " order by ArticleOrder asc limit " . ($pos - 1) . ", 1";
+	$res = mysql_query($sql);
+	$row = mysql_fetch_array($res);
+	if (!$row)
+		return false;
+	$prev_order = $row['ArticleOrder'];
+	$prev_number = $row['Number'];
+	if ($prev_order == $art_order)
+		return true;
+	if ($prev_order > $art_order) {
+		$comp = ">";
+		$new_order = $prev_order + 1;
+	} else {
+		$comp = ">=";
+		$new_order = $prev_order;
+	}
+	$sql = "update Articles set ArticleOrder = ArticleOrder + 1 where IdPublication = "
 	     . $pub_id . " and NrIssue = " . $issue . " and NrSection = " . $section
-	     . " and Number = " . $prev_number . " and IdLanguage = " . $lang_id;
+	     . " and IdLanguage = " . $lang_id . " and ArticleOrder " . $comp . " " . $prev_order;
+	$res = mysql_query($sql);
+	$sql = "update Articles set ArticleOrder = " . $new_order . " where IdPublication = "
+	     . $pub_id . " and NrIssue = " . $issue . " and NrSection = " . $section
+	     . " and Number = " . $article . " and IdLanguage = " . $lang_id;
 	$res = mysql_query($sql);
 	return true;
 }
