@@ -11,7 +11,7 @@ CFLAGS=-Wall $(XML_INCLUDE)
 
 TPL_CGI=tpl_cgi
 
-LINKS=csocket.h csocket.cpp exceptions.h globals.h srvdef.h readconf.h readconf.cpp \
+LINKS=csocket.h csocket.cpp exceptions.h srvdef.h readconf.h readconf.cpp \
 cxmltree.h cxmltree.cpp cms_types.h threadkey.h mutex.cpp mutex.h
 
 all: links $(TPL_CGI)
