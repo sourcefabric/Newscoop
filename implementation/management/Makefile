@@ -32,12 +32,12 @@ all: $(MY_TARGETS)
 install: $(ALL)
 	mkdir -p $(CGI_DIR)
 	mkdir -p $(HTML_DIR)/look
-	mkdir -p $(HTML_DIR)/javascript
 	mkdir -p $(PRIV_DIR)/img
 	mkdir -p $(PRIV_DIR)/img/buttons
 	mkdir -p $(PRIV_DIR)/img/icons
 	cp -rf article_import $(PRIV_DIR)
 	cp -rf javascript $(HTML_DIR)
+	cp -rf classes $(HTML_DIR)
 	mkdir -p $(SCRIPT_DIR)
 	cp -fr img/* $(PRIV_DIR)/img
 	cp -f *.php $(PRIV_DIR)/
@@ -67,6 +67,9 @@ install: $(ALL)
 	chmod -R u+rw $(HTML_DIR)/javascript
 	chmod -R g+r $(HTML_DIR)/javascript
 	chmod -R o-rwx $(HTML_DIR)/javascript
+	chmod -R u+rw $(HTML_DIR)/classes
+	chmod -R g+r $(HTML_DIR)/classes
+	chmod -R o-rwx $(HTML_DIR)/classes
 	chmod -R u+rw $(PRIV_DIR)
 	chmod -R g+rw $(PRIV_DIR)
 	chmod -R o-rwx $(PRIV_DIR)
