@@ -482,20 +482,21 @@ int CheckUserInfo(CContext& c, const char* ppchParams[], int param_nr)
 	{
 		stringstream coPref;
 		coPref << "HasPref" << k;
+		if (!c.URL()->isSet(coPref.str()))
+			continue;
 		string s = c.URL()->getValue(coPref.str());
 		c.URL()->deleteParameter(coPref.str());
 		c.DefURL()->deleteParameter(coPref.str());
-		if (s != "")
-			coPrefs.insert(coPref.str().substr(3));
+		coPrefs.insert(coPref.str().substr(3));
 	}
 	for (int i = 0; i < param_nr; i++)
 	{
 		string fld = field_pref + ppchParams[i];
+		if (!c.URL()->isSet(fld))
+			continue;
 		string s = c.URL()->getValue(fld);
 		c.URL()->deleteParameter(fld);
 		c.DefURL()->deleteParameter(fld);
-		if (s == "")
-			continue;
 		c.SetUserInfo(string(ppchParams[i]), string(s));
 		if (strncasecmp(ppchParams[i], "Pref", 4) == 0)
 			coPrefs.erase(ppchParams[i]);
@@ -601,7 +602,6 @@ int ModifyUser(CContext& c, MYSQL* pSql, const char* ppchParams[], int param_nr,
 		int slen = strlen(s.c_str()) > 5000 ? 5000 : strlen(s.c_str());
 		mysql_escape_string(pchBuf, s.c_str(), slen);
 		if (i < err_nr && s == "") return errs[i];
-		if (s == "") continue;
 		if (i == 4)
 		{
 			password = pchBuf;
