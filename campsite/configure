@@ -205,6 +205,33 @@ else
     mv "$make_env" "./make.env"
 fi
 echo "done"
+
+campsite_configure_h=${INSTALL_CONF}/configure.h
+if [ ! -f "$campsite_configure_h" ] || [ "$campsite_configure_h" -ot "./make.env" ]; then
+echo -n -e "Writing configure.h header..."
+rm -f "$campsite_configure_h"
+cat > "$campsite_configure_h" << EOF
+/******************************************************************************
+
+    Defines the configuration directory
+
+    WARNING!!! This file is generated. Do not edit!
+
+******************************************************************************/
+
+#ifndef _CONFIGURE_H
+#define _CONFIGURE_H
+
+#define ETC_DIR "$ETC_DIR"
+
+#endif
+EOF
+[ $? -ne 0 ] && echo "ERROR" && exit 1
+echo OK
+else
+echo "Header file configure.h is up to date."
+fi
+
 if [ "$root_only" = "false" ]; then
     for dir in implementation; do
 	if [ -x ${dir}/configure ]; then
