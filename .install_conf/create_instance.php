@@ -60,7 +60,10 @@ function create_instance($p_arguments, &$p_errors)
 		return false;
 	}
 
-	if (!($res = create_database($defined_parameters)) == 0) {
+	$instance_etc_dir = $defined_parameters['--etc_dir'] . "/" . $defined_parameters['--db_name'];
+	require_once($instance_etc_dir . "/database_conf.php");
+	if (!$defined_parameters['--no_database']
+		&& !($res = create_database($defined_parameters)) == 0) {
 		$p_errors[] = $res;
 		return false;
 	}
@@ -134,8 +137,6 @@ function create_database($p_defined_parameters)
 	global $Campsite, $CampsiteVars;
 
 	$db_name = $p_defined_parameters['--db_name'];
-	$instance_etc_dir = $p_defined_parameters['--etc_dir'] . "/" . $db_name;
-	require_once($instance_etc_dir . "/database_conf.php");
 	$db_dir = $Campsite['CAMPSITE_DIR'] . "/instance/database";
 
 	$db_user = $Campsite['DATABASE_USER'];
@@ -477,12 +478,17 @@ function read_cmdline_parameters($p_arguments, &$p_errors)
 	global $g_instance_parameters, $g_mandatory_parameters, $g_parameters_defaults;
 	define_globals();
 
+	$defined_parameters = array();
 	$p_errors = array();
 	for ($arg_n = 1; $arg_n < sizeof($p_arguments); $arg_n++) {
 		// read the parameter name
 		$param_name = $p_arguments[$arg_n];
 		if (!in_array($param_name, $g_instance_parameters)) {
 			$p_errors[] = "Invalid parameter '$param_name'";
+			continue;
+		}
+		if ($param_name == "--no_database") {
+			$defined_parameters['--no_database'] = true;
 			continue;
 		}
 		// read the parameter value
@@ -492,7 +498,7 @@ function read_cmdline_parameters($p_arguments, &$p_errors)
 			break;
 		}
 		$param_val = $p_arguments[$arg_n];
-	
+
 		// set the parameter value in $defined_parameters array
 		$defined_parameters[$param_name] = $param_val;
 		if (array_key_exists($param_name, $g_mandatory_parameters))
@@ -516,8 +522,8 @@ function define_globals()
 	// global variables
 	$g_instance_parameters = array('--etc_dir', '--db_server_address', '--db_server_port',
 		'--db_name', '--db_user', '--db_password', '--parser_port',
-		'--parser_max_threads', '--smtp_server_address',
-		'--smtp_server_port', '--apache_user', '--apache_group');
+		'--parser_max_threads', '--smtp_server_address', '--smtp_server_port',
+		'--apache_user', '--apache_group', '--no_database');
 	$g_mandatory_parameters = array('--etc_dir'=>false);
 	$g_parameters_defaults = array(
 		'--db_server_address'=>'localhost',
@@ -530,7 +536,8 @@ function define_globals()
 		'--smtp_server_address'=>'___DEFAULT_SMTP_SERVER_ADDRESS',
 		'--smtp_server_port'=>'___DEFAULT_SMTP_SERVER_PORT',
 		'--apache_user'=>'___APACHE_USER',
-		'--apache_group'=>'___APACHE_GROUP'
+		'--apache_group'=>'___APACHE_GROUP',
+		'--no_database'=>false
 	);
 }
 
