@@ -9,7 +9,7 @@
 // Version 3.0 developed by Mihai Bazon.
 //   http://dynarch.com/mishoo
 //
-// $Id: htmlarea.js,v 1.1 2004/09/11 02:43:24 paul Exp $
+// $Id: htmlarea.js,v 1.2 2005/03/21 05:32:10 paul Exp $
 
 if (typeof _editor_url == "string") {
 	// Leave exactly one backslash at the end of _editor_url
@@ -77,7 +77,7 @@ HTMLArea.Config = function () {
 	this.height = "auto";
 
 	// enable creation of a status bar?
-	this.statusBar = true;
+	this.statusBar = false;
 
 	// maximum size of the undo queue
 	this.undoSteps = 20;
