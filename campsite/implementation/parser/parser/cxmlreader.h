@@ -211,7 +211,10 @@ inline const char* CXMLReader::getAttributeValue(const char* p_pchAttribute)
 // Returns the current node content
 inline const char* CXMLReader::elementContent() const
 {
-	return (const char*) xmlTextReaderConstValue(m_pReader);
+	const char* pchContent = (const char*) xmlTextReaderConstValue(m_pReader);
+	if (pchContent == NULL)
+		return "";
+	return pchContent;
 }
 
 #endif // CXMLREADER_H
