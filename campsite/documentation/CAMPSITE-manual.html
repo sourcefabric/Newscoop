@@ -1456,14 +1456,14 @@
   List Issue statement; inside the statement however, all these parameters are 
   defined.</P>
 <P>Syntax:</P>
-<P><font face="Courier New, Courier, mono">List [length &lt;value&gt;] [columns 
-  &lt;value&gt;] Issue [&lt;issue_constraint&gt;]<br>
+<P><font face="Courier New, Courier, mono">List [length &lt;value&gt;] [columns
+  &lt;value&gt;] Issue [&lt;issue_constraint&gt;] [order &lt;order_condition&gt;]<br>
 list of instructions
   </font><i><br>
   </i><font face="Courier New, Courier, mono">[ForEmptyList [list of instructions]]<br>
   EndList [Issue]</font></P>
 <P>where</P>
-<P><font face="Courier New, Courier, mono">&lt;issue_constraint&gt; = number is|not|greater|smaller 
+<P><font face="Courier New, Courier, mono">&lt;issue_constraint&gt; = number is|not|greater|smaller
   &lt;value&gt;<br>
   | name is|not &lt;value&gt;<br>
   | &lt;date_constraint&gt;</font></P>
@@ -1476,12 +1476,15 @@ list of instructions
   |hour is|not|greater|smaller <br>
   |min is|not|greater|smaller <br>
   |sec is|not|greater|smaller</font></P>
-<P>where year stands for year, mon_nr for month number (1..12), mday for month 
-  day (1..31), yday for year day (1..365), wday for week day (1..7), hour for hour, 
+<P><font face="Courier New, Courier, mono"><br>
+  &lt;order_condition&gt;=bydate desc|asc<br>
+  |bynumber desc|asc</font><P>
+<P>where year stands for year, mon_nr for month number (1..12), mday for month
+  day (1..31), yday for year day (1..365), wday for week day (1..7), hour for hour,
   min for minute and sec for second.</P>
 <P>Any parameter used in &lt;issue_constraint&gt; list can only be used once.</P>
-<P>Inside the List, the parameter context is defined by the constraints applied 
-  to the current issue for every processed line. The parameter context is restored 
+<P>Inside the List, the parameter context is defined by the constraints applied
+  to the current issue for every processed line. The parameter context is restored
   after the list processing.</P>
 <P>Constraints:</P>
 <P>The list of forbidden statements inside List Issue:</P>
@@ -1531,22 +1534,22 @@ Section statement cannot be used inside List Article, List Subtitle, List
 SearchResult statements.</span></p>
 <P>3.9.1.8 <b>List of Articles<a name="3.9.1.8"></a></b></P>
 <P>Purpose:</P>
-<P>Select the list of articles according to the given constraints and current 
-  environmental parameters. The Publication, Language, Issue, Section, Article 
-  parameters may not be defined outside List Article statement; inside the statement 
+<P>Select the list of articles according to the given constraints and current
+  environmental parameters. The Publication, Language, Issue, Section, Article
+  parameters may not be defined outside List Article statement; inside the statement
   however, all these parameters are defined.</P>
 <P>Syntax:</P>
-<P><font face="Courier New, Courier, mono">List [length &lt;value&gt;] [column 
+<P><font face="Courier New, Courier, mono">List [length &lt;value&gt;] [column
   &lt;value&gt;] Article [&lt;article_constraint&gt;] [&lt;article_type_constraint&gt;]<br>
   [order &lt;order_condition&gt;]</font><br>
   <i>list of instructions<br>
   </i><font face="Courier New, Courier, mono">[ForEmptyList [list of instructions]]<br>
   EndList [Article]</font></P>
 <P>where</P>
-<P><font face="Courier New, Courier, mono">&lt;article_type_constraint&gt;=type 
+<P><font face="Courier New, Courier, mono">&lt;article_type_constraint&gt;=type
   is|not &lt;value&gt;</font></P>
 <P>and</P>
-<P><font face="Courier New, Courier, mono">&lt;article_constraint&gt;=name is|not 
+<P><font face="Courier New, Courier, mono">&lt;article_constraint&gt;=name is|not
   &lt;value&gt;<br>
   |number is|not|greater|smaller &lt;value&gt;<br>
   |keyword &lt;value&gt;<br>
@@ -1554,8 +1557,8 @@ SearchResult statements.</span></p>
 <P>and</P>
 <P><font face="Courier New, Courier, mono">&lt;order_condition&gt;=bydate desc|asc<br>
   |bynumber desc|asc</font></P>
-<P>Inside the List, the data context is defined by the constraints applied to 
-  the current article for every processed line. The data context is restored after 
+<P>Inside the List, the data context is defined by the constraints applied to
+  the current article for every processed line. The data context is restored after
   the list processing.</P>
 <P>Constraints:</P>
 <P>The list of forbidden statements inside List Issue:</P>
@@ -1576,22 +1579,22 @@ Article statement cannot be used inside List Subtitle, List SearchResult
 statements.</span></p>
 <P>3.9.1.9 <b>List of Subtitles<a name="3.9.1.9"></a></b></P>
 <P>Purpose:</P>
-<P>Select the list of subtitles according to the given constraints and current 
-  environmental parameters. The article if not specified somewhere else, is treated 
+<P>Select the list of subtitles according to the given constraints and current
+  environmental parameters. The article if not specified somewhere else, is treated
   as group of paragraphs. The markup for a new paragraph is the subtitle.</P>
 <P>Syntax:</P>
-<P><font face="Courier New, Courier, mono">List [length &lt;value&gt;] [column 
+<P><font face="Courier New, Courier, mono">List [length &lt;value&gt;] [column
   &lt;value&gt;] Subtitle</font><br>
 <font face="Courier New, Courier, mono">list of instructions</font>
   <i><br>
   </i><font face="Courier New, Courier, mono">[ForEmptyList [list of instructions]]<br>
   EndList [Article]</font></P>
-<P>Inside the List, the data context is defined by the constraints applied to 
-  the current article for every processed line. The data context is restored after 
-  the list processing. Here it doesn't function the nextitems an previousitems 
-  in the expected manner, because they refer to the list of article, the most 
-  inner level for publication components. In the same template one can use list 
-  of articles which are treated as lists of paragraphs, so a new option was needed 
+<P>Inside the List, the data context is defined by the constraints applied to
+  the current article for every processed line. The data context is restored after
+  the list processing. Here it doesn't function the nextitems an previousitems
+  in the expected manner, because they refer to the list of article, the most
+  inner level for publication components. In the same template one can use list
+  of articles which are treated as lists of paragraphs, so a new option was needed
   and is called nextsubtitle (and prevsubtitle respectively).</P>
 <P>Constraints:</P>
 <P>The list of forbidden statements inside List Issue:</P>
@@ -1613,11 +1616,14 @@ statements.</span></p>
   parameters are defined.</P>
 <P>Syntax:</P>
 <P><font face="Courier New, Courier, mono">List [length &lt;value&gt;] [column
-  &lt;value&gt;] SearchResult</font><br>
+  &lt;value&gt;] SearchResult [order &lt;order_condition&gt;]</font><br>
 <font face="Courier New, Courier, mono">list of instructions</font>
   <i><br>
   </i><font face="Courier New, Courier, mono">[ForEmptyList [list of instructions]]<br>
   EndList [SearchResult]</font></P>
+<P>where</P>
+<P><font face="Courier New, Courier, mono">&lt;order_condition&gt;=bydate desc|asc<br>
+  |bynumber desc|asc</font></P>
 <P>Inside the List, the data context is defined by the constraints applied to
   the current article for every processed line. The data context is restored after
   the list processing.</P>

@@ -950,7 +950,7 @@ Purpose:
 Select the list of issues according to the given constraints and current environmental parameters. The Publication, Language, Issue parameters may not be defined outside List Issue statement; inside the statement however, all these parameters are defined.
 
 Syntax:
-List [length <value>] [columns <value>] Issue [<issue_constraint>]
+List [length <value>] [columns <value>] Issue [<issue_constraint>] [order <order_condition>]
 list of instructions
 [ForEmptyList [list of instructions]]
 EndList [Issue]
@@ -969,6 +969,9 @@ where
 |hour is|not|greater|smaller
 |min is|not|greater|smaller
 |sec is|not|greater|smaller
+
+<order_condition>=bydate desc|asc
+ |bynumber desc|asc
 
 WHERE YEAR STANDS FOR YEAR, MON_NR FOR MONTH NUMBER (1..12), MDAY FOR MONTH DAY (1..31), YDAY FOR YEAR DAY (1..365), WDAY FOR WEEK DAY (1..7), HOUR FOR HOUR, MIN FOR MINUTE AND SEC FOR SECOND.
 Any parameter used in <issue_constraint> list can only be used once.
@@ -1076,12 +1079,14 @@ Purpose:
 Select the list of articles after searching database for given keywords. The Publication, Language, Issue, Section, Article parameters may not be defined outside List SearchResult statement; inside the statement however, all these parameters are defined.
 
 Syntax:
-List [length <value>] [column <value>] SearchResult
-list of instructions
-
+List [length <value>] [column <value>] SearchResult [order <order_condition>]
+  list of instructions
 [ForEmptyList [list of instructions]]
-
 EndList [SearchResult]
+
+where
+<order_condition>=bydate desc|asc
+ |bynumber desc|asc
 
 Inside the List, the data context is defined by the constraints applied to the current article for every processed line. The data context is restored after the list processing.
 
