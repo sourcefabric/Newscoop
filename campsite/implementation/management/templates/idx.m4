@@ -31,7 +31,20 @@ B_HEAD
 ?>dnl
 E_HEAD
 
-<? if ($access) { 
+<?
+
+$dotpos=strrpos($REQUEST_URI,"?");
+$dotpos = $dotpos ? $dotpos: strlen($REQUEST_URI);
+$myurl=substr ($REQUEST_URI,0,$dotpos);
+$myurl1=substr ($REQUEST_URI,$dotpos+1);
+
+if (strncmp($myurl, "/look/", 6) != 0) {
+    $access = FALSE;
+?>
+X_XAD(<*You do no have access to the $1 directory!*>, <**>, <*$myurl*>)
+<?
+}
+if ($access) { 
 
 SET_ACCESS(<*mta*>, <*ManageTempl*>)
 SET_ACCESS(<*dta*>, <*DeleteTempl*>)
@@ -65,14 +78,6 @@ E_HEADER
 	if ($What) 
 	    query ("SELECT Name FROM Publications WHERE Id=$Pub", 'q_pub');
 	if (($NUM_ROWS != 0) || ($What == 0)) {
-//				query ("SELECT SUBSTRING_INDEX('$REQUEST_URI', '?', 1), SUBSTRING_INDEX('$REQUEST_URI', '?', -1)", 'q_url');
-//				fetchRowNum($q_url);
-//				$myurl=getNumVar($q_url,0);
-//				$myurl1=getNumVar($q_url,1);
-		$dotpos=strrpos($REQUEST_URI,"?");
-		$dotpos = $dotpos ? $dotpos: strlen($REQUEST_URI);
-		$myurl=substr ($REQUEST_URI,0,$dotpos);
-		$myurl1=substr ($REQUEST_URI,$dotpos+1);
    ?>dnl
 B_CURRENT
 <? if ($What) { ?>dnl
