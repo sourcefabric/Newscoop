@@ -2,6 +2,7 @@
     - Implemented new "Topic", "If Topic" and "Print Topic" statements
     - Added new environment attribute: topic; this affects articles lists and
     is forwarded as an URL parameter
+    - Added new attributes to "List Issue" statement
     - Many bug fixes
 
 2.1.5
