@@ -4,11 +4,9 @@
 regGS("No language.","No language.:en");
 regGS("Delete language $1","Delete language $1:en");
 
-
 // -- add.m4
 regGS("You do not have the right to add languages.","You do not have the right to add languages.:en");
 regGS("Please enter the translation for time units.", "Please enter the translation for time units.:en");
-
 
 // -- do_add.m4
 regGS("Adding new language","Adding new language:en");
@@ -18,14 +16,10 @@ regGS("The language could not be added.","The language could not be added.:en");
 // log
 regGS("Language $1 added","Language $1 added:en");
 
-
-
 // -- del.m4
 regGS("Delete language","Delete language:en");
 regGS("You do not have the right to delete languages.","You do not have the right to delete languages.:en");
 regGS("Are you sure you want to delete the language $1?","Are you sure you want to delete the language $1?:en");
-
-
 
 // -- do_del.m4
 regGS("Deleting language","Deleting language:en");
@@ -35,13 +29,11 @@ regGS("The language $1 could not be deleted.","The language $1 could not be dele
 // log
 regGS("Language $1 deleted","Language $1 deleted:en");
 
-
 // -- modify.m4
 regGS("Edit language","Edit language:en");
 regGS("You do not have the right to edit languages.","You do not have the right to edit languages.:en");
 regGS("Please enter the translation for month names.","Please enter the translation for month names.:en");
 regGS("Please enter the translation for week day names.","Please enter the translation for week day names.:en");
-
 
 // -- do_modify.m4
 regGS("Updating language information","Updating language information:en");
@@ -71,5 +63,7 @@ regGS("Friday","Friday:en");
 regGS("Saturday","Saturday:en");
 regGS("Sunday","Sunday:en");
 
+regGS("You do not have the right to add new languages.", "You do not have the right to add new languages.:en");
+regGS("Add another language", "Add another language:en");
 
 ?>
