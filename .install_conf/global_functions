@@ -313,7 +313,7 @@ else
 	fi
     fi
     if [ $result -ne 0 ]; then
-	output="$file_type $file_name not found" && echo $output
+	output="$file_type $file_name not found in $search_path" && echo $output
 	return 1
     fi
 fi
@@ -330,21 +330,35 @@ return 0
 #	$3	- header to look in
 #	$4	- path(s) to header
 #	$5	- symbol to find
-#	
+#
 # Variables set:
 #	output - error message (if any)
 check4_symbol_and_prototype()
 {
 check4_file $1 --file --path $2
 if [ $? -eq 0 ]; then
-	found=`strings $file_path | grep -w $5 2>/dev/null`
-	if [ $? -eq 0 ]; then
+	res=1
+	libs=`strings $file_path | grep ^GROUP | cut -f 2 -d "(" | cut -f 1 -d ")"`
+	if [ "$libs" = "" ]; then
+		found=`strings $file_path | grep -w $5 2>/dev/null`
+		res=$?
+	else
+		for l in $libs; do
+			found=`strings $l | grep -w $5 2>/dev/null`
+			[ $? -eq 0 ] && res=0
+		done
+	fi
+	if [ $res -eq 0 ]; then
 		check4_file $3 --file --path $4
-		if [ $? -eq 0 ]; then
+		res=$?
+		if [ $res -eq 0 ]; then
 			found=`grep -w $5 $file_path 2>/dev/null`
-			if [ $? -eq 0 ]; then
-				return 0;
+			res=$?
+			if [ $res -eq 0 ]; then
+				return 0
 			fi
+		else
+			echo $msg
 		fi
 	fi
 fi
