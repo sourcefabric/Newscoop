@@ -1,85 +1,94 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
 	"http://www.w3.org/TR/REC-html40/loose.dtd">
 <HTML>
-<?php  include ("../../../../lib_campsite.php");
-    $globalfile=selectLanguageFile('../../../..','globals');
-    $localfile=selectLanguageFile('.','locals');
-    @include ($globalfile);
-    @include ($localfile);
-    include ("../../../../languages.php");   ?>
-<?php  require_once("$DOCUMENT_ROOT/db_connect.php"); ?>
-
-
-<?php 
-    todefnum('TOL_UserId');
-    todefnum('TOL_UserKey');
-    query ("SELECT * FROM Users WHERE Id=$TOL_UserId AND KeyId=$TOL_UserKey", 'Usr');
-    $access=($NUM_ROWS != 0);
-    if ($NUM_ROWS) {
-	fetchRow($Usr);
-	query ("SELECT * FROM UserPerm WHERE IdUser=".getVar($Usr,'Id'), 'XPerm');
-	 if ($NUM_ROWS){
-	 	fetchRow($XPerm);
-	 }
-	 else $access = 0;						//added lately; a non-admin can enter the administration area; he exists but doesn't have ANY rights
-	 $xpermrows= $NUM_ROWS;
-    }
-    else {
-	query ("SELECT * FROM UserPerm WHERE 1=0", 'XPerm');
-    }
-?>
+<?php
+	require_once ("../../../../lib_campsite.php");
+	$globalfile=selectLanguageFile('../../../..','globals');
+	$localfile=selectLanguageFile('.','locals');
+	@include ($globalfile);
+	@include ($localfile);
+	require_once ("../../../../languages.php");
+	require_once("$DOCUMENT_ROOT/db_connect.php");
+	require_once ("../../../../CampsiteInterface.php");
+	require_once("$DOCUMENT_ROOT/classes/config.php");
     
-
-
+	todefnum('TOL_UserId');
+	todefnum('TOL_UserKey');
+	query ("SELECT * FROM Users WHERE Id=$TOL_UserId AND KeyId=$TOL_UserKey", 'Usr');
+	$access=($NUM_ROWS != 0);
+	if ($NUM_ROWS) {
+		fetchRow($Usr);
+		query ("SELECT * FROM UserPerm WHERE IdUser=".getVar($Usr,'Id'), 'XPerm');
+		if ($NUM_ROWS)
+			fetchRow($XPerm);
+		else
+			$access = 0; //added lately; a non-admin can enter the administration area; he exists but doesn't have ANY rights
+		$xpermrows= $NUM_ROWS;
+	} else {
+		query ("SELECT * FROM UserPerm WHERE 1=0", 'XPerm');
+	}
+?>
 <HEAD>
     <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
 <script>
 <!--
-/*
-A slightly modified version of "Break-out-of-frames script"
-By JavaScript Kit (http://javascriptkit.com)
-*/
-
+/* A slightly modified version of "Break-out-of-frames script"
+   By JavaScript Kit (http://javascriptkit.com)                     */
 if (window != top.fmain && window != top) {
 	if (top.fmenu)
 		top.fmain.location.href=location.href
 	else
 		top.location.href=location.href
 }
-// -->
+-->
 </script>
 
-	<META HTTP-EQUIV="Expires" CONTENT="now">
-	<TITLE><?php  putGS("Articles"); ?></TITLE>
-<?php  if ($access == 0) { ?>	<META HTTP-EQUIV="Refresh" CONTENT="0; URL=/priv/logout.php">
-<?php  }
-    
-    query ("SELECT Id, Name FROM Languages WHERE 1=0", 'ls');
-    query ("SELECT * FROM Articles WHERE 1=0", 'q_art');
-?></HEAD>
+<META HTTP-EQUIV="Expires" CONTENT="now">
+<TITLE><?php  putGS("Articles"); ?></TITLE>
+<?php if ($access == 0) { ?>
+<META HTTP-EQUIV="Refresh" CONTENT="0; URL=/priv/logout.php">
+<?php }
+	query ("SELECT Id, Name FROM Languages WHERE 1=0", 'ls');
+	query ("SELECT * FROM Articles WHERE 1=0", 'q_art');
+?>
+</HEAD>
+<?php
+if ($access) {
 
-<?php  if ($access) {
+	if (getVar($XPerm,'AddArticle') == "Y")
+		$aaa=1;
+	else 
+		$aaa=0;
 
-   if (getVar($XPerm,'AddArticle') == "Y")
-	$aaa=1;
-    else 
-	$aaa=0;
-    
+	if (getVar($XPerm,'ChangeArticle') == "Y")
+		$caa=1;
+	else 
+		$caa=0;
 
-   if (getVar($XPerm,'ChangeArticle') == "Y")
-	$caa=1;
-    else 
-	$caa=0;
-    
+	if (getVar($XPerm,'DeleteArticle') == "Y")
+		$daa=1;
+	else
+		$daa=0;
 
-   if (getVar($XPerm,'DeleteArticle') == "Y")
-	$daa=1;
-    else 
-	$daa=0;
-    
+	if (getVar($XPerm,'Publish') == "Y")
+		$pa=1;
+	else 
+		$pa=0;
 
-?><STYLE>
+	todefnum('Pub');
+	todefnum('Issue');
+	todefnum('Section');
+	todefnum('Article');
+	todefnum('Language');
+	todefnum('sLanguage');
+	$sql = "select count(*) as nr_art from Articles where IdPublication = $Pub and "
+	     . "NrIssue = $Issue and NrSection = $Section and IdLanguage = $Language";
+	query($sql, 'art_count');
+	fetchRow($art_count);
+	$art_count = getVar($art_count, 'nr_art');
+
+?>
+<STYLE>
 	BODY { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
 	SMALL { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 8pt; }
 	FORM { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
@@ -93,14 +102,7 @@ if (window != top.fmain && window != top) {
 </STYLE>
 
 <BODY  BGCOLOR="WHITE" TEXT="BLACK" LINK="DARKBLUE" ALINK="RED" VLINK="DARKBLUE">
-
-<?php 
-    todefnum('Pub');
-    todefnum('Issue');
-    todefnum('Section');
-    todefnum('Language');
-    todefnum('sLanguage');
-?><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%">
 	<TR>
 		<TD ROWSPAN="2" WIDTH="1%"><IMG SRC="/priv/img/sign_big.gif" BORDER="0"></TD>
 		<TD>
@@ -187,7 +189,7 @@ if (window != top.fmain && window != top) {
     if ($ArtOffs < 0) $ArtOffs= 0;
     todefnum('lpp', 20);
 
-	$sql = "SELECT *, abs($Language - IdLanguage) as LangOrd FROM Articles WHERE IdPublication=$Pub AND NrIssue=$Issue AND NrSection=$Section $ll ORDER BY Number DESC $oo LIMIT $ArtOffs, ".($lpp+1);
+	$sql = "SELECT *, abs($Language - IdLanguage) as LangOrd FROM Articles WHERE IdPublication=$Pub AND NrIssue=$Issue AND NrSection=$Section $ll ORDER BY ArticleOrder ASC $oo LIMIT $ArtOffs, ".($lpp+1);
 	query($sql, 'q_art');
     if ($NUM_ROWS) {
 	$nr= $NUM_ROWS;
@@ -199,7 +201,7 @@ if (window != top.fmain && window != top) {
 		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Type"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Language"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Status"); ?></B></TD>
-		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Images"); ?></B></TD>
+		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Order"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Preview"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Translate"); ?></B></TD>
 <?php  if ($aaa != 0) { ?>		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Duplicate"); ?></B></TD>
@@ -223,14 +225,46 @@ if (window != top.fmain && window != top) {
     pgetHVar($q_ail,'Name');
 ?>		</TD>
 		<TD ALIGN="CENTER">
-<?php  if (getVar($q_art,'Published') == "Y") { ?>			<A HREF="/priv/pub/issues/sections/articles/status.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  pgetUVar($q_art,'Number'); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  pgetUVar($q_art,'IdLanguage'); ?>&Back=<?php  pencURL($REQUEST_URI); ?>"><?php  putGS("Published"); ?></A>
-<?php  } elseif (getVar($q_art,'Published') == "N") { ?>			<A HREF="/priv/pub/issues/sections/articles/status.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  pgetUVar($q_art,'Number'); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  pgetUVar($q_art,'IdLanguage'); ?>&Back=<?php  pencURL($REQUEST_URI); ?>"><?php  putGS("New"); ?></A>
-<?php  } else { ?>			<A HREF="/priv/pub/issues/sections/articles/status.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  pgetUVar($q_art,'Number'); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  pgetUVar($q_art,'IdLanguage'); ?>&Back=<?php  pencURL($REQUEST_URI); ?>"><?php  putGS("Submitted"); ?></A>
+<?php  if (getVar($q_art,'Published') == "Y") { ?>
+	<A HREF="/priv/pub/issues/sections/articles/status.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  pgetUVar($q_art,'Number'); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  pgetUVar($q_art,'IdLanguage'); ?>&Back=<?php  pencURL($REQUEST_URI); ?>"><?php  putGS("Published"); ?></A>
+<?php  } elseif (getVar($q_art,'Published') == "N") { ?>
+	<A HREF="/priv/pub/issues/sections/articles/status.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  pgetUVar($q_art,'Number'); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  pgetUVar($q_art,'IdLanguage'); ?>&Back=<?php  pencURL($REQUEST_URI); ?>"><?php  putGS("New"); ?></A>
+<?php  } else { ?>
+	<A HREF="/priv/pub/issues/sections/articles/status.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  pgetUVar($q_art,'Number'); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  pgetUVar($q_art,'IdLanguage'); ?>&Back=<?php  pencURL($REQUEST_URI); ?>"><?php  putGS("Submitted"); ?></A>
 <?php  } ?>		</TD>
-		<TD ALIGN="CENTER">
-<?php  if (getVar($q_art,'Number') != $kwdid) { ?>			<A HREF="/priv/pub/issues/sections/articles/images/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  pgetUVar($q_art,'Number'); ?>&Language=<?php  p($Language);?>&sLanguage=<?php  pgetUVar($q_art,'IdLanguage'); ?>"><?php  putGS("Images"); ?></A>
-<?php  } else { ?>		&nbsp;
-<?php  } ?>		</TD>
+
+<?php // article order link ?>
+		<?php  if ($pa != 0) { ?>		<TD ALIGN="CENTER" NOWRAP>
+		<?php if ($ArtOffs <= 0 && $loop == 0) { ?>
+		<img src="/priv/img/up-dis.png">
+		<?php } else { ?>
+		<A HREF="/priv/pub/issues/sections/articles/move.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  pgetUVar($q_art,'Number'); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  pgetUVar($q_art,'IdLanguage'); ?>&move=up_rel&pos=1&ArtOffs=<?php  p($ArtOffs); ?>"><img src="/priv/img/up.png" width="20" height="20" border="0"></A>
+		<?php } ?>
+		<?php if ($nr < $lpp+1 && $loop >= ($nr-1)) { ?>
+		<img src="/priv/img/down-dis.png">
+		<?php } else { ?>
+		<A HREF="/priv/pub/issues/sections/articles/move.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  pgetUVar($q_art,'Number'); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  pgetUVar($q_art,'IdLanguage'); ?>&move=down_rel&pos=1&ArtOffs=<?php  p($ArtOffs); ?>"><img src="/priv/img/down.png" width="20" height="20" border="0"></A>
+		<?php } ?>
+		<select name="pos" onChange="location=this.options[this.selectedIndex].value">
+		<?php
+		$mlink = "/priv/pub/issues/sections/articles/move.php?Pub=$Pub&Issue=$Issue"
+		       . "&Section=$Section&Article=" . getUVar($q_art,'Number')
+		       . "&Language=$Language&sLanguage=" . getUVar($q_art,'IdLanguage')
+		       . "&ArtOffs=$ArtOffs";
+		$current_index = $ArtOffs + $loop + 1;
+		for ($j = 1; $j <= $art_count; $j++) {
+			if ($current_index != $j) {
+				$vlink = $mlink . "&move=abs&pos=$j";
+				echo "\t\t<option value=\"$vlink\">$j</option>\n";
+			} else {
+				echo "\t\t<option value=\"$mlink\" selected>$j</option>\n";
+			}
+		}
+		?>
+		</select>
+		</TD>
+<?php  } ?>
+
 		<TD ALIGN="CENTER">
 			<A HREF="" ONCLICK="window.open('/priv/pub/issues/sections/articles/preview.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  pgetUVar($q_art,'Number'); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  pgetUVar($q_art,'IdLanguage'); ?>', 'fpreview', 'resizable=yes, menubar=yes, toolbar=yes, width=680, height=560'); return false"><?php  putGS("Preview"); ?></A>
 		</TD>
@@ -279,10 +313,12 @@ if (window != top.fmain && window != top) {
 	<LI><?php  putGS('No such section.'); ?></LI>
 </BLOCKQUOTE>
 <?php  } ?>
-<HR NOSHADE SIZE="1" COLOR="BLACK">
-<a STYLE='font-size:8pt;color:#000000' href='http://www.campware.org' target='campware'>CAMPSITE  2.1.5 &copy 1999-2004 MDLF, maintained and distributed under GNU GPL by CAMPWARE</a>
-</BODY>
 <?php  } ?>
+<?php
+$ci = new CampsiteInterface;
+$ci->CopyrightNotice();
+?>
+</BODY>
 
 </HTML>
 
