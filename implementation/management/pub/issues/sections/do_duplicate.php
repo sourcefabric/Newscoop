@@ -2,6 +2,7 @@
 
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/pub/issues/sections/section_common.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
 
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
@@ -63,7 +64,7 @@ if ($correct) {
 		'ShortName'=>$sectionObj->getShortName(),
 		'SectionTplId'=>$sectionObj->getProperty('SectionTplId'),
 		'ArticleTplId'=>$sectionObj->getProperty('ArticleTplId'));
-	if ($sectionObj->exists()) {
+	if ($dstSectionObj->exists()) {
 		$dstSectionObj->update($dstSectionCols);
 	} else {
 		$dstSectionObj->create($dstSectionCols);
@@ -75,10 +76,12 @@ if ($correct) {
 	$logtext = getGS('Section $1 has been duplicated to $2. $3 of $4',
 		$sectionObj->getName(), $DestIssue, $dstIssueObj->getName(),
 		$dstPublicationObj->getName());
-	Log::Message($logtext, $User->getUserName(), 31);
+	Log::Message($logtext, $User->getUserName(), 154);
+	$created = true;
+	SectionTop($dstSectionObj, $Language, "Duplicating section");
+} else {
+	SectionTop($sectionObj, $Language, "Duplicating section");
 }
-
-SectionTop($sectionObj, $Language, "Duplicating section");
 
 ?>
 <P>
@@ -105,7 +108,7 @@ SectionTop($sectionObj, $Language, "Duplicating section");
 		<TD COLSPAN="2">
 		<DIV ALIGN="CENTER">
 <?php  if ($created) { ?>
-	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/pub/issues/sections/?Pub=<?php  p($DestPublication); ?>&Issue=<?php  p($DestIssue); ?>&Section=<?php  p($DestSection); ?>&Language=<?php  p($Language); ?>'">
+	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/pub/issues/sections/articles/?Pub=<?php  p($DestPublication); ?>&Issue=<?php  p($DestIssue); ?>&Section=<?php  p($DestSection); ?>&Language=<?php  p($Language); ?>'">
 <?php  } else { ?>
 	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/pub/issues/sections/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>'">
 <?php  } ?>		</DIV>
