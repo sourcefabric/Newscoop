@@ -8,7 +8,7 @@ all: ;
 
 install: $(ALL)
 	mkdir -p $(PRIV_DIR5)
-	cp -f *.php $(PRIV_DIR5)/
+	cp -f *.php *.css $(PRIV_DIR5)/
 	$(MAKE) -C images install
 	$(MAKE) -C topics install
 
