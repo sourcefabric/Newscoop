@@ -39,6 +39,7 @@
     publication (not just the selected one)
     - Fixed subscription process bug: the parser doesn't process subscription
     statement when modifying/updating the subscription
+    - Fixed notification of subscription end bug
 
 2.0.10
     - Fixed the 'Back to article details' bug
