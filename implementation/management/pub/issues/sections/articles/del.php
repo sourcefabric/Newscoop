@@ -137,12 +137,12 @@
 		<INPUT TYPE="HIDDEN" NAME="Article" VALUE="<?php  p($Article); ?>">
 		<INPUT TYPE="HIDDEN" NAME="sLanguage" VALUE="<?php  p($sLanguage); ?>">
 		<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php  p($Language); ?>">
-		<INPUT TYPE="submit" NAME="Yes" VALUE="<?php  putGS('Yes'); ?>">
+		<INPUT TYPE="submit" NAME="Yes" VALUE="<?php  putGS('Yes'); ?>" class="button">
 <?php 
     todef('Back');
 
-    if ($Back != "") { ?>		<INPUT TYPE="button" NAME="No" VALUE="<?php  putGS('No'); ?>" ONCLICK="location.href='<?php  p($Back); ?>'">
-<?php  } else { ?>		<INPUT TYPE="button" NAME="No" VALUE="<?php  putGS('No'); ?>" ONCLICK="location.href='<?php  p($Back); ?>/priv/pub/issues/sections/articles/edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&sLanguage=<?php  p($sLanguage); ?>'">
+    if ($Back != "") { ?>		<INPUT TYPE="button" NAME="No" VALUE="<?php  putGS('No'); ?>" class="button" ONCLICK="location.href='<?php  p($Back); ?>'">
+<?php  } else { ?>		<INPUT TYPE="button" NAME="No" VALUE="<?php  putGS('No'); ?>" class="button" ONCLICK="location.href='<?php  p($Back); ?>/priv/pub/issues/sections/articles/edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&sLanguage=<?php  p($sLanguage); ?>'">
 <?php  } ?>		</FORM>
 		</DIV>
 		</TD>
