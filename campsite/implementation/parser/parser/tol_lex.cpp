@@ -686,6 +686,21 @@ void TOLLex::Reset(cpChar i, ULInt bl)
 	m_bLexemStarted = m_bIsEOF = false;
 }
 
+// UpdateArticleTypes: update article types structure from database
+bool TOLLex::UpdateArticleTypes()
+{
+	TOLStatementHash::iterator coIt = s_coStatements.find(ST_ARTICLE);
+	if (coIt == s_coStatements.end())
+	{
+		return false;
+	}
+	TOLTypeAttributesHash* pcoArticleTypeAttributes = NULL;
+	GetArticleTypeAttributes(&pcoArticleTypeAttributes);
+	bool bModified = (*coIt).UpdateTypes(pcoArticleTypeAttributes);
+	delete pcoArticleTypeAttributes;
+	return bModified;
+}
+
 // assign operator
 const TOLLex& TOLLex::operator =(const TOLLex& s)
 {
@@ -877,15 +892,18 @@ const TOLLexem* TOLLex::GetLexem()
 }
 
 // PrintStatements: print lex statements (for test purposes)
-void TOLLex::PrintStatements() const
+void TOLLex::PrintStatements()
 {
 	TOLAttributeHash::iterator ah_iterator;
 	TOLStatementContextHash::iterator sch_iterator;
 	TOLTypeAttributesHash::iterator ta_iterator;
 	TOLStatementHash::iterator s_iterator;
-	for (s_iterator = s_coStatements.begin(); s_iterator != s_coStatements.end(); ++(s_iterator))
+	int nIndex;
+	for (nIndex = 1, s_iterator = s_coStatements.begin();
+	     s_iterator != s_coStatements.end();
+	     nIndex++, ++(s_iterator))
 	{
-		cout << "Statement " << (*s_iterator).m_pchIdentifier << "\n";
+		cout << nIndex << ". " << (*s_iterator).m_pchIdentifier << "\n";
 		for (ta_iterator = (*s_iterator).type_attributes.begin();
 		        ta_iterator != (*s_iterator).type_attributes.end();
 		        ++(ta_iterator))

@@ -2336,6 +2336,18 @@ void TOLParser::Reset()
 	m_coOpMutex.Unlock();
 }
 
+// Reset: reset all the parsers in the hash
+void TOLParser::ResetHash()
+{
+	LockHash();
+	TOLParserHash::iterator coIt = m_coPHash.begin();
+	for (; coIt != m_coPHash.end(); ++coIt)
+	{
+		(*coIt)->Reset();
+	}
+	UnlockHash();
+}
+
 // Parse: start the parser; return the parse result
 // Parameters:
 //		bool force = false - if true, force reparsing of template; if false, do not
@@ -2367,6 +2379,8 @@ int TOLParser::Parse(bool force)
 int TOLParser::WriteOutput(const TOLContext& c, fstream& fs)
 {
 	m_coOpMutex.Lock();
+	if (!parsed)
+		Parse();
 	TOLPActionList::iterator al_i;
 	clearWriteErrors();
 	TOLContext lc = c;
