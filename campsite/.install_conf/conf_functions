@@ -578,6 +578,8 @@ for part in $parts; do
 	[ "$part_type" = "supplemental" ] && add_to_list_var $part_name SUPPLEMENTAL_PARTS
     fi
 done
+export IMPLEMENTATION_PARTS=`echo $IMPLEMENTATION_PARTS`
+export SUPPLEMENTAL_PARTS=`echo $SUPPLEMENTAL_PARTS`
 return 0
 }
 # END OF set_module_parts
