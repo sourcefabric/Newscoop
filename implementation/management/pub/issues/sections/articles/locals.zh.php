@@ -42,6 +42,6 @@ regGS("This article cannot be previewed. Please make sure it has a <B><I>single 
 regGS("This article has been locked by $1 ($2) at","文章已被$1 ($2) 锁定在");
 regGS("Now is $1","现在是$1");
 regGS("Are you sure you want to unlock it?","你确认要解锁？");
-regGS("Edit Article","编辑文章");
+regGS("Edit article","编辑文章");
 
 ?>

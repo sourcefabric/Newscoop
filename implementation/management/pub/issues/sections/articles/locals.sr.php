@@ -44,7 +44,7 @@ regGS("This article cannot be previewed. Please make sure it has a <B><I>single 
 regGS("This article has been locked by $1 ($2) at","Овај чланак је закључан од стране $1 ($2) у");
 regGS("Now is $1","Сада је $1");
 regGS("Are you sure you want to unlock it?","Да ли сте сигурни да желите да га откључате?");
-regGS("Edit Article","Уреди чланак");
+regGS("Edit article","Уреди чланак");
 
 
 ?>
