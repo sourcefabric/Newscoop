@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <string.h>
 #include <stdio.h>
 #include <iostream>
+#include <sstream>
 
 #include "globals.h"
 #include "csocket.h"
@@ -41,13 +42,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cxmltree.h"
 #include "cgi.h"
 
+
 #define RECV_BUF_LEN	(1000)
+
 
 using std::cout;
 using std::endl;
+using std::stringstream;
+using std::ios_base;
+
 
 char* ReadPOSTQuery();
-int ReadParameters(char** p_ppchParams, int* p_pnSize, const char** p_ppchErrMsg);
+int ReadParameters(char** p_ppchMsg, int* p_pnSize, const char** p_ppchErrMsg);
+
 
 void ReadConf(string& p_rcoIP, int& p_rnPort)
 {
@@ -70,6 +77,7 @@ void ReadConf(string& p_rcoIP, int& p_rnPort)
 	}
 }
 
+
 int main()
 {
 	cout << "Content-type: text/html; charset=UTF-8\n\n";
@@ -79,9 +87,9 @@ int main()
 	nPort = nPort != 0 ? nPort : TOL_SRV_PORT;
 	int nErrNo;
 	int nSize;
-	char* pchParams;
+	char* pchMsg;
 	const char* pchErrMsg;
-	if ((nErrNo = ReadParameters(&pchParams, &nSize, &pchErrMsg)) != 0)
+	if ((nErrNo = ReadParameters(&pchMsg, &nSize, &pchErrMsg)) != 0)
 	{
 #ifdef _DEBUG
 		if (pchErrMsg == 0)
@@ -91,6 +99,14 @@ int main()
 #endif
 		return 1;
 	}
+	stringstream coMsg;
+	coMsg << "   1 ";
+	coMsg.width(4);
+	coMsg.fill(' ');
+	coMsg.setf(ios_base::hex, ios_base::basefield);
+	coMsg << nSize;
+	coMsg << " " << pchMsg;
+	cout << coMsg.str();
 	struct timeval tVal = { 0, 0 };
 	tVal.tv_sec = 60;
 	fd_set clSet;
@@ -99,7 +115,8 @@ int main()
 	try
 	{
 		coSock.Connect(coIP.c_str(), nPort);
-		coSock.Send(pchParams, nSize);
+		coSock.Send(coMsg.str().c_str(), nSize+10);
+		return 0;
 		FD_SET((SOCKET)coSock, &clSet);
 		for (;;)
 		{
@@ -137,6 +154,7 @@ int main()
 	return 0;
 }
 
+
 class ExReadParams
 {
 public:
@@ -152,7 +170,8 @@ private:
 	const char* m_pchErrMsg;
 };
 
-int ReadParameters(char** p_ppchParams, int* p_pnSize, const char** p_ppchErrMsg)
+
+int ReadParameters(char** p_ppchMsg, int* p_pnSize, const char** p_ppchErrMsg)
 {
 	char* pchHTTPHost = 0;
 	char* pchDocumentRoot = 0;
@@ -256,7 +275,7 @@ int ReadParameters(char** p_ppchParams, int* p_pnSize, const char** p_ppchErrMsg
 			free(pchQueryString);
 		if (pchHttpCookie != NULL)
 			free(pchHttpCookie);
-		*p_ppchParams = NULL;
+		*p_ppchMsg = NULL;
 		*p_ppchErrMsg = rcoEx.ErrMsg();
 		int nErrNo = rcoEx.ErrNo();
 		return nErrNo;
@@ -311,10 +330,12 @@ int ReadParameters(char** p_ppchParams, int* p_pnSize, const char** p_ppchErrMsg
 		if (nStart >= coCookies.size())
 			break;
 	}
-//	coTree.saveToFile("-", "UTF-8");
+	
+	coTree.saveToMemory(p_ppchMsg, p_pnSize);
 
 	return 0;
 }
+
 
 char* ReadPOSTQuery()
 {
