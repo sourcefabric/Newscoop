@@ -17,9 +17,6 @@ if (!$access) {
 	exit;
 }
 
-setcookie("TOL_Access", "all", time());
-setcookie("TOL_Preview", "on", time());
-
 $Language = Input::get('Language', 'int', 0);
 $Pub = Input::get('Pub', 'int', 0);
 $Issue = Input::get('Issue', 'int', 0);
@@ -39,14 +36,17 @@ if ($errorStr == "") {
 	if (!$issueObj->exists())
 		$errorStr = getGS('There was an error reading the issue parameter.');
 }
+if ($errorStr == "" && ($templateId = $issueObj->getIssueTemplateId()) == 0)
+	$errorStr = 'This issue cannot be previewed. Please make sure it has the front page template selected.';
 
 if ($errorStr != "") {
 	header("Location: /$ADMIN/ad_popup.php?ADReason=".urlencode($errorStr));
 	exit(0);
 }
 
-if (($templateId = $issueObj->getIssueTemplateId()) == 0)
-	$errorStr = getGS('This issue cannot be previewed. Please make sure it has a $1 template selected.','<B><I>'.getGS('front page').'</I></B>');
+setcookie("TOL_Access", "all", null, "/$ADMIN/");
+if ($User->hasPermission("ManageTempl") || $User->hasPermission("DeleteTempl"))
+	setcookie("TOL_Preview", "on", null, "/$ADMIN/");
 
 $urlType = $publicationObj->getProperty('IdURLType');
 if ($urlType == 1) {
@@ -57,63 +57,20 @@ if ($urlType == 1) {
 	$url = "/" . $languageObj->getCode() . "/" . $issueObj->getShortName();
 }
 
+if ($User->hasPermission("ManageTempl") || $User->hasPermission("DeleteTempl")) {
+	// Show dual-pane view for those with template management priviledges
 ?>
-
-<?php if ($errorStr == "") { ?>
-
 <FRAMESET ROWS="60%,*" BORDER="1">
-<FRAME SRC="<?php echo $url; ?>" NAME="body" FRAMEBORDER="1" MARGINWIDTH="0" MARGINHEIGHT="0">
-<FRAME NAME="e" SRC="empty.php" FRAMEBORDER="1" MARGINWIDTH="0" MARGINHEIGHT="0">
+	<FRAME SRC="<?php echo $url; ?>" NAME="body" FRAMEBORDER="1">
+	<FRAME NAME="e" SRC="empty.php" FRAMEBORDER="1">
 </FRAMESET>
-
-<?php } else { ?>
-
-<HTML>
-<HEAD>
-	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
-	<TITLE><?php  putGS("Preview issue"); ?></TITLE>
-</HEAD>
-
-<BODY>
-
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
-	<TR>
-		<TD class="page_title">
-		    <?php  putGS("Preview issue"); ?>
-		</TD>
-
-	<TR><TD>&nbsp;</TD></TR>
-</TABLE>
-
-<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="1" WIDTH="100%" class="current_location_table"><TR>
-<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php  putGS("Publication"); ?>:</TD><TD VALIGN="TOP" class="current_location_content"><?php  echo $publicationObj->getName(); ?></TD>
-
-<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php  putGS("Issue"); ?>:</TD><TD VALIGN="TOP" class="current_location_content"><?php echo $publicationObj->getName(); ?>. <?php echo $publicationObj->getName(); ?> (<?php echo $languageObj->getName(); ?>)</TD>
-
-</TR></TABLE>
-
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box" ALIGN="CENTER" style="margin-top: 50px; margin-bottom: 50px;">
-<TR>
-	<TD>
-		<B><font color="red"><?php  putGS("Error"); ?> </font></B>
-		<HR NOSHADE SIZE="1" COLOR="BLACK">
-	</TD>
-</TR>
-<TR>
-	<TD>
-		<font color="red"><li><?php echo $errorStr; ?></li></font>
-	</TD>
-</TR>
-<TR>
-	<TD align="center">
-		<a href="javascript:self.close()"><b><?php  putGS('Close'); ?></b></a>
-	</TD>
-</TR>
-</TABLE>
-
-<?php CampsiteInterface::CopyrightNotice(); ?>
-</BODY>
-
-</HTML>
-
-<?php } ?>
+<?php
+} else {
+	// Show single pane for everyone else.
+?>
+	<FRAMESET ROWS="100%">
+		<FRAME SRC="<?php print $url; ?>" NAME="body" FRAMEBORDER="1">
+	</FRAMESET>
+<?php
+}
+?>
