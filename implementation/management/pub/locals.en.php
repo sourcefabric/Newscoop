@@ -49,6 +49,7 @@ regGS("Select the publication","Select the publication:en");
 // -- countryadd.m4
 regGS("Add new country default subscription time","Add new country default subscription time:en");
 regGS("You do not have the right to manage publications.","You do not have the right to manage publications.:en");
+regGS("Please check if another entry with the same country code exists already.", "Please check if another entry with the same country code exists already.:en");
 
 // -- do_countryadd.m4
 regGS("Adding new country default subscription time","Adding new country default subscription time:en");
