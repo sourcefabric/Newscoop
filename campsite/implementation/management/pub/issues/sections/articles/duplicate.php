@@ -69,7 +69,7 @@ ArticleTop($articleObj, $Language, "Duplicate article");
 
 <P>
 <CENTER>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" BGCOLOR="#C0D0FF" ALIGN="CENTER">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" ALIGN="CENTER" class="table_input">
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
 	<TD>
@@ -202,7 +202,7 @@ ArticleTop($articleObj, $Language, "Duplicate article");
 		<?php  
 		} 
 		else { 
-			?><SELECT DISABLED><OPTION><?php  putGS('No sections'); ?></SELECT>
+			?><SELECT class="input_select" DISABLED><OPTION><?php  putGS('No sections'); ?></SELECT>
 			<?php  
 		}
 		?>
@@ -235,4 +235,6 @@ ArticleTop($articleObj, $Language, "Duplicate article");
 	</td>
 </tr>
 </table>
+<p>
+
 <?php CampsiteInterface::CopyrightNotice(); ?>
