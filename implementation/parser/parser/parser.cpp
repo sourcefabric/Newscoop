@@ -328,7 +328,8 @@ void CParser::MapTpl() throw (ExStat)
 				UnMapTpl();
 				if ((m_nTplFD = open(tpl.c_str(), O_RDONLY)) < 0)
 					throw ExStat(EMAP_EOPENFILE);
-				m_pchTplBuf = (const char*)mmap(0, last_tpl_stat.st_size, PROT_READ, MAP_SHARED, m_nTplFD, 0);
+				m_pchTplBuf = (const char*)mmap(0, last_tpl_stat.st_size, PROT_READ, 
+				                                MAP_SHARED, m_nTplFD, 0);
 				close(m_nTplFD);
 				m_nTplFD = -1;
 				if (m_pchTplBuf == MAP_FAILED || m_pchTplBuf == NULL)
@@ -649,12 +650,14 @@ inline int CParser::HInclude(CActionList& al)
 	catch (ExStat& rcoEx)
 	{
 		nErrCode = rcoEx.ErrNr();
-		SetPError(parse_err, PERR_INVALID_TEMPLATE, MODE_PARSE, "", lex.prevLine(), lex.prevColumn());
+		SetPError(parse_err, PERR_INVALID_TEMPLATE, MODE_PARSE, "",
+		          lex.prevLine(), lex.prevColumn());
 	}
 	catch (ExMutex& rcoEx)
 	{
 		nErrCode = ERR_NOACCESS;
-		SetPError(parse_err, PERR_INVALID_TEMPLATE, MODE_PARSE, "", lex.prevLine(), lex.prevColumn());
+		SetPError(parse_err, PERR_INVALID_TEMPLATE, MODE_PARSE, "",
+		          lex.prevLine(), lex.prevColumn());
 	}
 	al.insert(al.end(), new CActInclude(itpl_name, &m_coPMap));
 	WaitForStatementEnd(true);
@@ -808,7 +811,7 @@ inline int CParser::HURLParameters(CActionList& al)
 {
 	l = lex.getLexem();
 	DEBUGLexem("urlparam", l);
-	long int img = -1, nTemplate = -1;
+	lint img = -1, nTemplate = -1;
 	bool fromstart = false, allsubtitles = false;
 	CLevel nResetList = CLV_ROOT;
 	TPubLevel nLevel = CMS_PL_SUBTITLE;
@@ -895,7 +898,7 @@ inline int CParser::HURLParameters(CActionList& al)
 string CParser::getTemplatePath(bool p_nAddTrailingSlash) const
 {
 	string tpl_path = tpl;
-	long int pos = tpl_path.rfind('/');
+	lint pos = tpl_path.rfind('/');
 	if (pos != string::npos)
 	{
 		tpl_path.erase(pos);
@@ -992,7 +995,8 @@ inline int CParser::HPrint(CActionList& al, int lv, int sublv)
 				pImgAttrType = st->findAttr("number", CMS_CT_PRINT);
 			CLOSE_TRY
 			CATCH(InvalidAttr &rcoEx)
-				SetPError(parse_err, PERR_INTERNAL, MODE_PARSE, "", lex.prevLine(), lex.prevColumn());
+				SetPError(parse_err, PERR_INTERNAL, MODE_PARSE, "",
+				          lex.prevLine(), lex.prevColumn());
 			END_CATCH
 			if (pImgAttrType->validValue(l->atom()->identifier()))
 			{
@@ -1059,7 +1063,7 @@ inline int CParser::HList(CActionList& al, int level, int sublevel)
 	if (level >= LV_LARTICLE)
 		FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE,
 		            LARTICLE_STATEMENTS, lex.prevLine(), lex.prevColumn());
-	long int lines = 0, columns = 0;
+	lint lines = 0, columns = 0;
 	RequireAtom(l);
 	// check for List attributes
 	while (dynamic_cast<const CStatement*>(l->atom()) == NULL)
@@ -1629,7 +1633,7 @@ inline int CParser::HSubscription(CActionList& al, int lv, int sublv)
 		tpl_name = l->atom()->identifier();
 	else
 		tpl_name = getTemplateInternalPath(true) + l->atom()->identifier();
-	long int nTemplate = CPublication::getTemplateId(tpl_name, MYSQLConnection());
+	id_type nTemplate = CPublication::getTemplateId(tpl_name, MYSQLConnection());
 	RequireAtom(l);
 	button_name = l->atom()->identifier();
 	l = lex.getLexem();
@@ -1816,7 +1820,7 @@ inline int CParser::HUser(CActionList& al, int lv, int sublv)
 		tpl_name = l->atom()->identifier();
 	else
 		tpl_name = getTemplateInternalPath(true) + l->atom()->identifier();
-	long int nTemplate = CPublication::getTemplateId(tpl_name, MYSQLConnection());
+	id_type nTemplate = CPublication::getTemplateId(tpl_name, MYSQLConnection());
 	RequireAtom(l);
 	string button_name = l->atom()->identifier();
 	int res;
@@ -1856,7 +1860,7 @@ inline int CParser::HLogin(CActionList& al, int lv, int sublv)
 		tpl_name = l->atom()->identifier();
 	else
 		tpl_name = getTemplateInternalPath(true) + l->atom()->identifier();
-	long int nTemplate = CPublication::getTemplateId(tpl_name, MYSQLConnection());
+	id_type nTemplate = CPublication::getTemplateId(tpl_name, MYSQLConnection());
 	RequireAtom(l);
 	string button_name = l->atom()->identifier();
 	int res;
@@ -1896,7 +1900,7 @@ inline int CParser::HSearch(CActionList& al, int lv, int sublv)
 		tpl_name = l->atom()->identifier();
 	else
 		tpl_name = getTemplateInternalPath(true) + l->atom()->identifier();
-	long int nTemplate = CPublication::getTemplateId(tpl_name, MYSQLConnection());
+	id_type nTemplate = CPublication::getTemplateId(tpl_name, MYSQLConnection());
 	RequireAtom(l);
 	string button_name = l->atom()->identifier();
 	int res;
@@ -1961,7 +1965,7 @@ inline int CParser::HWith(CActionList& al, int lv, int sublv)
 //		CActionList& al - reference to actions list
 inline int CParser::HURIPath(CActionList& al)
 {
-	long int nTemplate = -1;
+	id_type nTemplate = -1;
 	TPubLevel nLevel = CMS_PL_SUBTITLE;
 	const CLexem *l;
 	StringSet ah;
@@ -2233,7 +2237,7 @@ CParser::~CParser()
 string CParser::getTemplateInternalPath(bool p_nAddTrailingSlash) const
 {
 	string tpl_ipath = getTemplatePath(false);
-	long int pos = tpl_ipath.find("/look/");
+	lint pos = tpl_ipath.find("/look/");
 	if (pos != string::npos)
 		tpl_ipath.erase(0, pos + 6);
 	if (p_nAddTrailingSlash && tpl_ipath != "")

@@ -129,7 +129,7 @@ private:
 	StringSet parent_tpl;		// parent templates including this template (empty if none)
 	StringSet child_tpl;		// child templates included by this template (empty if none)
 	String2String fields;		//
-	ULInt m_nTplFileLen;		// template file length
+	ulint m_nTplFileLen;		// template file length
 	int m_nTplFD;				// template file descriptor
 	const char* m_pchTplBuf;	// buffer mapped to template file
 	CRWMutex m_coOpMutex;		// mutex used to control parser operations

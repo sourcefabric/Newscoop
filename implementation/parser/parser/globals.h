@@ -37,12 +37,10 @@ Global types
 using std::exception;
 using std::string;
 
-typedef unsigned int UInt;
-typedef unsigned long int ULInt;
-typedef unsigned long ULong;
 typedef unsigned int uint;
 typedef unsigned long int ulint;
-typedef unsigned long ulong;
+typedef long int lint;
+typedef lint id_type;
 
 // exception classes
 class InvalidValue : public exception
