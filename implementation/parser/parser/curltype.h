@@ -51,7 +51,7 @@ class CURLType
 public:
 	virtual ~CURLType() {}
 
-	virtual string getTypeName() const { return string("cucu"); };
+	virtual string getTypeName() const = 0;
 
 	virtual CURL* getURL(const CMsgURLRequest& p_rcoMsg) const = 0;
 
