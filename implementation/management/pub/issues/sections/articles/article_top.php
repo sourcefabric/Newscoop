@@ -115,16 +115,16 @@ if ($p_includeLinks) {
 
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="1" WIDTH="100%">
 <TR>
-	<TD ALIGN="RIGHT" NOWRAP VALIGN="TOP">&nbsp;<?php putGS("Publication"); ?>:</TD>
+	<TD ALIGN="RIGHT" NOWRAP VALIGN="TOP" width="1%">&nbsp;<?php putGS("Publication"); ?>:</TD>
 	<TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><?php print htmlspecialchars($publicationObj->getName()); ?></B></TD>
 
-	<TD ALIGN="RIGHT" NOWRAP VALIGN="TOP">&nbsp;<?php putGS("Issue"); ?>:</TD>
+	<TD ALIGN="RIGHT" NOWRAP VALIGN="TOP" width="1%">&nbsp;<?php putGS("Issue"); ?>:</TD>
 	<TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><?php print htmlspecialchars($issueObj->getIssueId()); ?>. <?php  print htmlspecialchars($issueObj->getName()); ?> (<?php print htmlspecialchars($issueLanguageObj->getName()) ?>)</B></TD>
 
-	<TD ALIGN="RIGHT" NOWRAP VALIGN="TOP">&nbsp;<?php putGS("Section"); ?>:</TD>
+	<TD ALIGN="RIGHT" NOWRAP VALIGN="TOP" width="1%">&nbsp;<?php putGS("Section"); ?>:</TD>
 	<TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><?php print $sectionObj->getSectionId(); ?>. <?php  print htmlspecialchars($sectionObj->getName()); ?></B></TD>
 
-	<TD ALIGN="RIGHT" NOWRAP VALIGN="TOP">&nbsp;<?php putGS("Article"); ?>:</TD>
+	<TD ALIGN="RIGHT" NOWRAP VALIGN="TOP" width="1%">&nbsp;<?php putGS("Article"); ?>:</TD>
 	<TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><?php print htmlspecialchars($p_articleObj->getTitle()); ?> (<?php print htmlspecialchars($articleLanguageObj->getName()); ?>)</B></TD>
 </TR>
 </TABLE>
