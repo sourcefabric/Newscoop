@@ -6,6 +6,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT']."/classes/Issue.php");
 	require_once($_SERVER['DOCUMENT_ROOT']."/classes/Publication.php");
 	require_once($_SERVER['DOCUMENT_ROOT']."/classes/Language.php");
+	require_once($_SERVER['DOCUMENT_ROOT']."/classes/User.php");
 	
 	list($access, $User, $XPerm) = check_basic_access($_REQUEST);
     $Pub = isset($_REQUEST["Pub"])?$_REQUEST["Pub"]:0;
@@ -23,6 +24,8 @@
     if (!$articleObj->exists()) {
     	$errorStr = 'No such article.';
     }
+
+    $lockUserObj =& new User($articleObj->getLockedByUser());
     
     // Fetch section
     $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
@@ -230,22 +233,18 @@ if ($hasAccess && !$edit_ok) {
 			<HR NOSHADE SIZE="1" COLOR="BLACK">
 		</TD>
 	</TR>
-	<?php 
-	query ("SELECT *, NOW() AS Now FROM Users WHERE Id=".$articleObj->getLockedByUser(), 'q_luser');
-	fetchRow($q_luser);
-	?>	
 	<TR>
-		<TD COLSPAN="2"><BLOCKQUOTE><LI><?php  putGS('This article has been locked by $1 ($2) at','<B>'.getHVar($q_luser,'Name'),getHVar($q_luser,'UName').'</B>' ); ?>
+		<TD COLSPAN="2"><BLOCKQUOTE><LI><?php  putGS('This article has been locked by $1 ($2) at','<B>'.encHTML($lockUserObj->getName()),encHTML($lockUserObj->getUName()).'</B>' ); ?>
 		<B><?php print encHTML($articleObj->getLockTime()); ?></B></LI>
-		<LI><?php  putGS('Now is $1','<B>'.getHVar($q_luser,'Now').'</B>'); ?></LI>
-		<LI><?php  putGS('Are you sure you want to unlock it?'); ?></LI>
+		<LI><?php putGS('Now is $1','<B>'.date("Y-m-d G:i:s").'</B>'); ?></LI>
+		<LI><?php putGS('Are you sure you want to unlock it?'); ?></LI>
 		</BLOCKQUOTE></TD>
 	</TR>
 	<TR>
 		<TD COLSPAN="2">
 		<DIV ALIGN="CENTER">
-		<INPUT TYPE="button" NAME="Yes" VALUE="<?php  putGS('Yes'); ?>" ONCLICK="location.href='<?php  p($REQUEST_URI); ?>&LockOk=1'">
-		<INPUT TYPE="button" NAME="No" VALUE="<?php  putGS('No'); ?>" ONCLICK="location.href='/priv/pub/issues/sections/articles/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>&Section=<?php  p($Section); ?>'">
+		<INPUT TYPE="button" NAME="Yes" VALUE="<?php  putGS('Yes'); ?>" ONCLICK="location.href='<?php p($REQUEST_URI); ?>&LockOk=1'">
+		<INPUT TYPE="button" NAME="No" VALUE="<?php  putGS('No'); ?>" ONCLICK="location.href='/priv/pub/issues/sections/articles/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php p($Language); ?>&Section=<?php  p($Section); ?>'">
 		</DIV>
 		</TD>
 	</TR>
@@ -397,25 +396,32 @@ if ($edit_ok) { ?>
 		</TD>
 	</TR>
 
-<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<?php  p($Pub); ?>">
-<INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<?php  p($Issue); ?>">
-<INPUT TYPE="HIDDEN" NAME="Section" VALUE="<?php  p($Section); ?>">
-<INPUT TYPE="HIDDEN" NAME="Article" VALUE="<?php  p($Article); ?>">
-<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php  p($Language); ?>">
-<INPUT TYPE="HIDDEN" NAME="sLanguage" VALUE="<?php  p($sLanguage); ?>">
-<INPUT TYPE="HIDDEN" NAME="query" VALUE="">
+	<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<?php  p($Pub); ?>">
+	<INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<?php  p($Issue); ?>">
+	<INPUT TYPE="HIDDEN" NAME="Section" VALUE="<?php  p($Section); ?>">
+	<INPUT TYPE="HIDDEN" NAME="Article" VALUE="<?php  p($Article); ?>">
+	<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php  p($Language); ?>">
+	<INPUT TYPE="HIDDEN" NAME="sLanguage" VALUE="<?php  p($sLanguage); ?>">
 
-<?php 
+	<?php 
+	// Display the article type fields.
 	foreach ($dbColumns as $dbColumn) {
-		if (stristr($dbColumn->getType(), "char")) { ?>
+		if (stristr($dbColumn->getType(), "char")) { 
+			// Single line text fields
+			?>
 			<TR>
 				<TD ALIGN="RIGHT" ><?php pencHTML($dbColumn->getPrintName()); ?>:</TD>
 				<TD>
-		        <INPUT NAME="<?php pencHTML($dbColumn->getName()); ?>" TYPE="TEXT" VALUE="<?php print $articleType->getColumnValue($dbColumn->getName()) ?>" SIZE="64" MAXLENGTH="100">
+		        <INPUT NAME="<?php pencHTML($dbColumn->getName()); ?>" 
+					   TYPE="TEXT" 
+					   VALUE="<?php print $articleType->getColumnValue($dbColumn->getName()) ?>" 
+					   SIZE="64" 
+					   MAXLENGTH="100">
 				</TD>
 			</TR>
 			<?php  
 		} elseif (stristr($dbColumn->getType(), "date")) { 
+			// Date fields
 			if ($articleType->getColumnValue($dbColumn->getName()) == "0000-00-00") {
 				$articleType->setColumnValue($dbColumn->getName(), "CURDATE()", true);
 			}
@@ -423,14 +429,17 @@ if ($edit_ok) { ?>
 			<TR>
 				<TD ALIGN="RIGHT" ><?php pencHTML($dbColumn->getPrintName()); ?>:</TD>
 				<TD>
-				<INPUT NAME="<?php  pencHTML($dbColumn->getName()); ?>" TYPE="TEXT" VALUE="<?php pencHTML($articleType->getColumnValue($dbColumn->getName())); ?>" SIZE="10" MAXLENGTH="10"> 
-				<?php  
-				putGS('YYYY-MM-DD'); 
-				?>
+				<INPUT NAME="<?php pencHTML($dbColumn->getName()); ?>" 
+					   TYPE="TEXT" 
+					   VALUE="<?php pencHTML($articleType->getColumnValue($dbColumn->getName())); ?>" 
+					   SIZE="10" 
+					   MAXLENGTH="10"> 
+				<?php putGS('YYYY-MM-DD'); ?>
 				</TD>
 			</TR>
 			<?php
 		} elseif (stristr($dbColumn->getType(), "blob")) {
+			// Multiline text fields
 			?>
 			<TR>
 			<TD ALIGN="RIGHT" VALIGN="TOP"><BR><?php pencHTML($dbColumn->getPrintName()); ?>:<BR> 
@@ -439,14 +448,17 @@ if ($edit_ok) { ?>
 				<HR NOSHADE SIZE="1" COLOR="BLACK">
 				<table width=100% border=2>
 				<tr bgcolor=LightBlue>
-					<td><textarea id="<?php print $dbColumn->getName() ?>" rows="20" cols="80" style="width: 100%;"><?php print $articleType->getColumnValue($dbColumn->getName()); ?></textarea></td>
+					<td><textarea name="<?php print $dbColumn->getName() ?>" 
+								  id="<?php print $dbColumn->getName() ?>" 
+								  rows="20" cols="80" style="width: 100%;"><?php print $articleType->getColumnValue($dbColumn->getName()); ?></textarea>
+					</td>
 				</tr>
 				</table>
 			<BR><P>
 			</TD>
 			</TR>
 			<?php  
-		} 
+		}
 	} // foreach ($dbColumns as $dbColumn)  
 	?>
 	<TR>
