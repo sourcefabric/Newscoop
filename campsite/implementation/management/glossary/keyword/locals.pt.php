@@ -1,4 +1,4 @@
-<?
+<?php 
 regGS("Add new keyword infotype","Adicionar Palavra-Chave a uma Informação-Tipo");
 regGS("Unlink infotype","Desassociar da Informação-Tipo");
 regGS("No infotypes for this keyword.","Não existem Informações-Tipo para esta Palavra-Chave");

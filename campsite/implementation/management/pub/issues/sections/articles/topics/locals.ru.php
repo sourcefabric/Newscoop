@@ -1,4 +1,4 @@
-<?
+<?php 
 regGS("Add","Добавить:ru");
 regGS("Delete topic $1 from article","Удалить тему $1 из статьи:ru");
 regGS("Article topics","Темы статьи:ru");

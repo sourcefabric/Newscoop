@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>","Ime<br><small>(kliknite da vidite rubriku)</small>");
 regGS("Front Page Template<BR><SMALL>(click to change)</SMALL>","Predložak za glavnu stranicu<br><small>(kliknite da promijenite)</small>");

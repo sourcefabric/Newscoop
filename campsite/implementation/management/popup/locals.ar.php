@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("No languages","لا لغة");
 regGS("---Select language---","اختر اللغة");

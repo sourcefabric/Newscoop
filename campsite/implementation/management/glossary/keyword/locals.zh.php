@@ -1,4 +1,4 @@
-<?
+<?php 
 regGS("Add new keyword infotype","增加新关键字内容类型");
 regGS("Unlink infotype","断开内容类型链接");
 regGS("No infotypes for this keyword.","无此关键字的内容类型");

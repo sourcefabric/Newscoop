@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("No countries.","Sin países");
 regGS("You do not have the right to add countries.","No tiene derecho para agregar países");

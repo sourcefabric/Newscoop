@@ -1,4 +1,4 @@
-<?
+<?php 
 regGS("No article types.","Нет типов статей.:ru");
 regGS("Delete article type $1","Удалиь тип статей $1:ru");
 regGS("You do not have the right to add article types.","Вы не имеете права удаления типов статей:ru");

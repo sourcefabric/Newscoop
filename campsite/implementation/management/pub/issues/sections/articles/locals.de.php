@@ -1,4 +1,4 @@
-<?
+<?php 
 regGS("Delete article $1","Artikel $1 löschen");
 regGS("Show article on front page","Artikel auf der Startseite anzeigen");
 regGS("Show article on section page","Artikel in der Rubrik anzeigen");

@@ -1,4 +1,4 @@
-<?
+<?php 
 regGS("Glossary infotypes","");
 regGS("Add new glossary infotype","");
 regGS("Delete glossary infotype $1","");

@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("Add","أضف");
 regGS("Delete topic $1 from article","إلغي الموضوع $1 من المقال");

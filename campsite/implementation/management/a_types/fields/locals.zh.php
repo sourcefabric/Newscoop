@@ -1,4 +1,4 @@
-<?
+<?php 
 regGS("Article type fields","文章类型字段");
 regGS("Article type","文章类型");
 regGS("No fields.","无字段");

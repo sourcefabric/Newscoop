@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("Add new keyword infotype","Додај нови инфотип за кључну реч");
 regGS("Unlink infotype","Раскини везу инфотипа");

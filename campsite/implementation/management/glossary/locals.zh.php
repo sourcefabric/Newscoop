@@ -1,4 +1,4 @@
-<?
+<?php 
 regGS("Add new keyword","增加新关键字");
 regGS("No keywords.","无关键字");
 regGS("You do not have the right to add keywords.","您无权增加关键字");

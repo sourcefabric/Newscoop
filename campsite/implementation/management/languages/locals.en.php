@@ -1,4 +1,4 @@
-<?
+<?php 
 
 // -- index.m4
 regGS("No language.","No language.:en");

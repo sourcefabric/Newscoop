@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>","Název publikace");
 regGS("Front Page Template<BR><SMALL>(click to change)</SMALL>","Šablona titulní strany");

@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("Add section to all subscriptions.","Adicionar Secção a todas as Assinaturas");
 regGS("Delete section from all subscriptions.","Eliminar Secção de todas as Assinaturas");

@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("Add new keyword","Agregar nueva palabra clave");
 regGS("No keywords.","Sin palabras claves");

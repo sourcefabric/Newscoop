@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("Select template","Выберите шаблон:ru");
 regGS("Templates management","Управление шаблонами:ru");

@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>","Name (zum Betrachten der Rubrik anklicken)");
 regGS("Front Page Template<BR><SMALL>(click to change)</SMALL>","Template der Startseite");

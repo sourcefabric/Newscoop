@@ -1,4 +1,4 @@
-<?
+<?php 
 regGS("CAMPSITE","CAMPSITE");
 regGS("Home","首页");
 regGS("Logout","注销");

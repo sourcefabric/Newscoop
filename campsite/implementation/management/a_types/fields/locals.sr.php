@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("Article type fields","Поља за тип чланка ");
 regGS("Article type","Тип чланка");

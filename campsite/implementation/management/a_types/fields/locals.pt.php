@@ -1,4 +1,4 @@
-<?
+<?php 
 regGS("Article type fields","Campo para este Tipo de Artigo");
 regGS("Article type","Tipo de Artigo");
 regGS("Add new field","Adicionar novo Campo");

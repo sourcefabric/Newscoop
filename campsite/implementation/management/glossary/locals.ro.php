@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("Add new keyword","Adaugă cuvânt cheie");
 regGS("No keywords.","Nu există cuvinte cheie");

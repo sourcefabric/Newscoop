@@ -1,4 +1,4 @@
-<?
+<?php 
 regGS("Add new keyword infotype","Dodaj novu ključnu riječ <i>infotype</i>");
 regGS("Unlink infotype","Oslobodi <i>infotype</i>");
 regGS("No infotypes for this keyword.","Nema <i>infotypes</i> za tu ključnu riječ.");

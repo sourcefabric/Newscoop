@@ -1,4 +1,4 @@
-<?
+<?php 
 regGS("Add new keyword infotype","Добавить новый класс ключевых слов:ru");
 regGS("Unlink infotype","Отвязать класс:ru");
 regGS("No infotypes for this keyword.","Нет классов для этого ключевого слова.:ru");

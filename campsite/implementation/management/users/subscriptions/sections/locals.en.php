@@ -1,4 +1,4 @@
-<?
+<?php 
 
 // -- index.m4
 regGS("Subscribed sections","Subscribed sections:en");

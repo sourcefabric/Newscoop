@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("Name<BR><SMALL>(click to see issues)</SMALL>","Ime<br><small>(kliknite za pregled izdanja)</small>");
 regGS("Delete publication $1","Obriši publikaciju $1");

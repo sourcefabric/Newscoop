@@ -1,4 +1,4 @@
-<?
+<?php 
 regGS("Article type fields","Artikeltypen-Felder");
 regGS("Article type","Artikeltyp");
 regGS("No fields.","Keine Felder");

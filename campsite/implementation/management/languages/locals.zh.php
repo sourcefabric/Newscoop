@@ -1,4 +1,4 @@
-<?
+<?php 
 regGS("No language.","无语言");
 regGS("Delete language $1","删除语言$1");
 regGS("You do not have the right to add languages.","您无权添加语言");

@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>","Назив<br><small>(кликните за преглед рубрика)</small>");
 regGS("Front Page Template<BR><SMALL>(click to change)</SMALL>","Шаблон за прву страну");

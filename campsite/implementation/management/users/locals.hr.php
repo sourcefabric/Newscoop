@@ -1,4 +1,4 @@
-<?
+<?php 
 regGS("User management","Upravljanje korisnicima");
 regGS("Set","Postavi");
 regGS("Update","Osvježi");

@@ -1,4 +1,4 @@
-<?
+<?php 
 regGS("Add new keyword","Přidat klíčové slovo");
 regGS("No keywords.","Žádná klíčová slova");
 regGS("You do not have the right to add keywords.","Nemáte právo přidat klíčová slova");

@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("Add new keyword","Dodavanje nove ključne riječi");
 regGS("No keywords.","Nema ključnih riječi.");

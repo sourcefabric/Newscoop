@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("Name<BR><SMALL>(click to see issues)</SMALL>","Nombre");
 regGS("Delete publication $1","Borrar publicación $1");
@@ -28,6 +28,7 @@ regGS("The publication could not be added.","La publicación no pudo ser agregad
 regGS("Select the publication","Seleccionar la publicación");
 regGS("Add new country default subscription time","Agregar nuevo país defecto de tiempo de suscripción");
 regGS("You do not have the right to manage publications.","No tiene derecho a manejar las publicaciones");
+regGS("Please check if another entry with the same country code exists already.","Por favor verifique si otra entrada con el mismo codigo de pais ya existe.");
 regGS("Adding new country default subscription time","Agregando nuevo país de tiempo de suscripción");
 regGS("You must select a country.","Debe seleccionar un país");
 regGS("The default subscription time for $1 has been added.","El tiempo de suscripción defecto para $1 ha sido agregado");

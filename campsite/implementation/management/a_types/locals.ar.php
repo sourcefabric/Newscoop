@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("No article types.","لا  نماذج للمقال");
 regGS("Delete article type $1","نوع المقال  $1");

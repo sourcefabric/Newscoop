@@ -1,4 +1,4 @@
-<?
+<?php 
 regGS("Add new keyword infotype","Neuen Keyword.Infotyp hinzufügen");
 regGS("Unlink infotype","Infotyp entknüpfen");
 regGS("No infotypes for this keyword.","Kein Infotyp für dieses Keyword");

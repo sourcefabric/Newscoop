@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("User management","Evidenţa utilizatorilor");
 regGS("Set","Actualizează");

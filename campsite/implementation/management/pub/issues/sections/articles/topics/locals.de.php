@@ -1,4 +1,4 @@
-<?
+<?php 
 regGS("Add","Hinzufügen");
 regGS("Delete topic $1 from article","Thema $1 aus Artikel löschen");
 regGS("Article topics","Artikelthemen");

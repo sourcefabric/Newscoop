@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("Article type fields","Câmpurile tipului de articol");
 regGS("Article type","Tipul de articol");

@@ -1,4 +1,4 @@
-<?
+<?php 
 
 regGS("Name<BR><SMALL>(click to see articles)</SMALL>","Rubrike<br><small>(kliknite da vidite pojednačne članke)</small>");
 regGS("Delete section $1","Izbriši rubriku $1");
