@@ -1,4 +1,3 @@
-B_HTML
 INCLUDE_PHP_LIB(<*$ADMIN_DIR/templates*>)
 B_DATABASE
 
@@ -6,7 +5,6 @@ CHECK_BASIC_ACCESS
 CHECK_ACCESS(<*ManageTempl*>)
 
 B_HEAD
-	X_EXPIRES
 	X_TITLE(<*Upload template*>)
 <?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to upload templates.*>)
@@ -38,7 +36,7 @@ B_DIALOG(<*Upload template*>, <*POST*>, <*do_upload_templ.php*>, <*multipart/for
 		<INPUT TYPE="HIDDEN" NAME="Path" VALUE="<?php  pencHTML(decS($Path)); ?>">
 		<INPUT TYPE="HIDDEN" NAME="UNIQUE_ID" VALUE="1">
 <?php 
-	echo "<SELECT NAME=\"Charset\"><OPTION VALUE=\"\">-- ".getGS("Select a language/character set");
+	echo "<SELECT NAME=\"Charset\" class=\"input_select\"><OPTION VALUE=\"\">-- ".getGS("Select a language/character set");
 	echo " --<OPTION VALUE=\"UTF-8\">".getGS("All languages")."/UTF-8";
 	query("SELECT CodePage, OrigName, Code FROM Languages", 'q_lang');
 	$nr=$NUM_ROWS;
@@ -56,7 +54,7 @@ B_DIALOG(<*Upload template*>, <*POST*>, <*do_upload_templ.php*>, <*multipart/for
 ?>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*File*>)
-		<P><INPUT TYPE="FILE" NAME="File" SIZE="32" MAXLENGTH="128">
+		<P><INPUT TYPE="FILE" class="input_text" NAME="File" SIZE="32" MAXLENGTH="128">
 	E_DIALOG_INPUT
 	B_DIALOG_BUTTONS
 		SUBMIT(<*Save*>, <*Save changes*>)
