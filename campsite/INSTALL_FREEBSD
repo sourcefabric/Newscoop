@@ -1,6 +1,5 @@
 Additional installation notes for FreeBSD
 
-
 BEFORE INSTALLATION:
 
 1. Campsite requires that you have 'bash' installed, with the bash executable
@@ -14,15 +13,6 @@ gmake is available from the FreeBSD ports tree under devel/gmake.
 4. You should of course ensure that all other required Campsite components
 as listed in the Campsite manual (apache, mysql, php) are installed and
 correctly configured.
-5. It is recommended that you change the 'configure' file in the Campsite
-directory so that the line:
-	export CONF_DIR=$PREFIX/etc/campsite.d/$APP_NAME
-
-is changed to:
-	export CONF_DIR=/usr/local/etc/campsite.d/$APP_NAME
-
-This ensures that Campsite config files are stored in /usr/local/etc instead
-of /etc -- probably quite desirable on most FreeBSD systems.
 
 
 INSTALLATION
@@ -38,13 +28,6 @@ defaults in the configuration of the various modules, but that these should
 always be checked by the user. (This applies when installing Campsite on
 any architecture). You can change all necessary variables interactively in
 the installer.
-
-In particular, note that:
-	- PARSER_USER and PARSER_GROUP should be the same as the user and group
-	  you use for apache.
-	- ADMIN_INTERFACE_HTML_DIR and ADMIN_INTERFACE_CGI_DIR specify where you
-	  wish to install the campsite html and cgi files. On a machine with
-	  virtual hosts you will likely want to choose these directories carefully.
 
 
 UNINSTALLATION
@@ -71,23 +54,13 @@ satisfy dependencies:
 3) prepare campsite sources for compilation
 # mkdir /usr/local/src
 # cd /usr/local/src
-# fetch http://www.campware.org/look/campware/download/campsite-2.1.5.tar.gz
-# tar -fxz campsite-2.1.5.tar.gz
+# fetch http://www.campware.org/look/campware/download/campsite-2.2.0.tar.gz
+# tar -fxz campsite-2.2.0.tar.gz
 
 4) FreeBSD has bash binary in /usr/local/bin, while linux has it in /bin
 # ln -s /usr/local/bin/bash /bin/bash
 
-5) campsite creates directory /etc/campsite.d which holds info about 
-each instalation, but FreeBSD prefers to keep it in 
-/usr/local/etc/campsite.d
-Even if you follow the FreeBSD readme in campsite and reconfigure the 
-path in config.h in campsite sources, the binary tries using the path in 
-/etc. If the path is not there (you followed the readme and redirected 
-it to /usr/local/etc) campsite refuses to start.
-therefore I make following symbolic link:
-#ln -s /usr/local/etc/campsite.d /etc/campsite.d
-
-6) You need working virtual host  in apache prior instalation. Note, 
+6) You need working virtual host in apache prior instalation. Note,
 that it is NOT ALLOWED to move campsite to different folder. If you want 
 so, you have to recompile it using the new destination.
 
@@ -103,23 +76,19 @@ some working configuration)
 <VirtualHost *:80>
     ServerName www.example.cz
     ServerAdmin webmaster@example.cz
-    DocumentRoot /usr/local/www/virtual/www.example.cz/html/
-    ErrorLog /var/log/httpd/www.example.cz-error_log
-    CustomLog /var/log/httpd/www.example.cz-access_log combined
+    DocumentRoot /usr/local/campsite/www/example/html/
+    ErrorLog /var/log/httpd/example-error_log
+    CustomLog /var/log/httpd/example-access_log combined
     AddHandler tpl_handler .tpl
     Action tpl_handler /cgi-bin/tpl_cgi
     IndexIgnore *
-    DirectoryIndex index.html index.htm index.shtml index.php index.php4 
-index.php3 index.cgi  /priv/templates/idx.php index.tpl
+    DirectoryIndex index.html index.php index.php4 index.cgi index.tpl
     Alias /icons/ /usr/local/www/virtual/www.example.cz/icons
-    ScriptAlias /cgi-bin/ /usr/local/www/virtual/www.example.cz/cgi-bin/
-    ScriptAlias /search/ /usr/local/www/virtual/www.example.cz/cgi-bin/
+    ScriptAlias /cgi-bin/ /usr/local/campsite/www/example/cgi-bin/
+    ScriptAlias /search/ /usr/local/campsite/www/example/cgi-bin/
 </VirtualHost>
 
---- note, that /var/log/httpd dir needs to be created and 
-/usr/local/www/virtual/www.example.cz with subdirs too.
-
-c) Start Apache and Mysql. At this point you can set password for root 
+c) Start Apache and Mysql. At this point you can set password for root
 in MySQL and create user campsite with some password (for MySQL)
 I set it personaly in following way:
 - create database campsite
@@ -158,15 +127,8 @@ This is not the problem, as install asks you for entering the path to
 httpd.conf
 b) the preconfigured values on almost all modules are bad, so go through 
 configuration
-- DATABASE: You need to specify your campsite user and password. other 
-values are ok.
 - PARSER: User and Group are www on FreeBSD, so change both to www
-- EVENT HANDLER: Should be pointed to working SMTP server which allow 
-the machine send emails. If you have it on the same server, the 
-localhost is fine
-- ADMIN INTERFACE: all path should go to proper virtual host so change 
-/var/www/html to /usr/local/www/virtual/www.example.cz/html etc.
-c) Install than should be able to go through. If not, you probably 
+c) Install than should be able to go through. If not, you probably
 missed something mentioned above.
 
 8) Now the campsite shall be installed, but you need to ensure that it 
@@ -196,14 +158,3 @@ After you create all of them:
 and editing conf files in apache
 you need to go through above described process for each instance you 
 wish to use.
-
-BUT THERE IS ONE IMPORTANT DIFFERENCE!!!!!!!!!!!!!
-
-When setting PARSER and ADMIN INTERFACE modules, you need to change PORT 
-settings.
-There are 2 basic rules for this:
-1) One instance of campsite has to have the same port for both, parser 
-and admin interface
-2) Two instances of campsite must not share the same port.
-
-And that is all. No more, no less.
