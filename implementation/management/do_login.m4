@@ -36,7 +36,7 @@ B_HEAD
      *>
  ?>
  X_COOKIE(<*TOL_Language=<?php  p($selectlanguage); ?>*>)
- X_REFRESH(<*0; URL=X_ROOT/*>)
+ X_REFRESH(<*0; URL=X_ROOT/index.php*>)
 <?php  } ?>dnl
 E_HEAD
 
