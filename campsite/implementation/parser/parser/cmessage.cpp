@@ -143,7 +143,15 @@ void CMsgURLRequest::setContent(char* p_pchContent)
 		if (strcasecmp(coAttr.c_str(), "string") != 0)
 			nSize = strtol(coReader.getAttributeValue("Size"), NULL, 10);
 
-		coReader.nextElement("#text");
+		try {
+			pchElement = coReader.nextElement("#text");
+		}
+		catch (invalid_message_content& rcoEx)
+		{
+			setParameter(coName, string(""));
+			pchElement = coReader.nextElement();
+			continue;
+		}
 		const char* pchContent = coReader.elementContent();
 		if (strcasecmp(coAttr.c_str(), "string") == 0)
 			setParameter(coName, string(pchContent));
