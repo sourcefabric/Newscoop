@@ -1,6 +1,6 @@
 <?php  
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
-load_common_include_files();
+load_common_include_files("$ADMIN_DIR/pub/issues/sections/articles/images");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Issue.php');
@@ -9,11 +9,11 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Publication.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/priv/CampsiteInterface.php');
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
 
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
-	header('Location: /priv/logout.php');
+	header("Location: /$ADMIN/logout.php");
 	exit;
 }
 //$PublicationId = array_get_value($_REQUEST, 'PublicationId', 0);
@@ -33,7 +33,7 @@ $ImageId = Input::get('ImageId', 'int', 0);
 $InterfaceLanguageId = Input::get('InterfaceLanguageId', 'int', 0);
 
 if (!Input::isValid()) {
-	header('Location: /priv/logout.php');
+	header("Location: /$ADMIN/logout.php");
 	exit;		
 }
 
@@ -43,7 +43,7 @@ $articleObj =& new Article($PublicationId, $IssueId, $SectionId, $ArticleLanguag
 // or the user created this article and it hasnt been published yet.
 if (!$User->hasPermission('ChangeArticle') || !$User->hasPermission('DeleteImage')
 	|| (($articleObj->getUserId() == $User->getId()) && ($articleObj->getPublished() == 'N'))) {
-	header('Location: /priv/logout.php');
+	header("Location: /$ADMIN/logout.php");
 	exit;		
 }
 
