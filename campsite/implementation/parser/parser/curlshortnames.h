@@ -83,8 +83,8 @@ public:
 	virtual string getTemplate() const;
 
 private:
-	// buildURI(): internal method; builds the URI string from object attributes
-	void buildURI() const;
+	// BuildURI(): internal method; builds the URI string from object attributes
+	void BuildURI() const;
 
 	virtual void PreSetValue(const string& p_rcoParameter, const string& p_rcoValue)
 	{ m_bValidURI = false; }
@@ -132,14 +132,14 @@ inline bool CURLShortNames::equalTo(const CURL* p_pcoURL) const
 inline string CURLShortNames::getURIPath() const
 {
 	if (!m_bValidURI)
-		buildURI();
+		BuildURI();
 	return m_coURIPath;
 }
 
 inline string CURLShortNames::getURI() const
 {
 	if (!m_bValidURI)
-		buildURI();
+		BuildURI();
 	if (m_coQueryString == "")
 		return m_coURIPath;
 	return m_coURIPath + "?" + m_coQueryString;
