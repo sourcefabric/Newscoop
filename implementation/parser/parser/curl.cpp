@@ -120,4 +120,5 @@ String2StringMMap* CURL::readQueryString(const string& p_rcoQueryString,
 		if (nStart >= p_rcoQueryString.size())
 			break;
 	}
+	return p_pcoParams;
 }
