@@ -49,6 +49,10 @@ CURLTemplatePath::CURLTemplatePath(const CURLTemplatePath& p_rcoSrc)
 // setURL(): sets the URL object value
 void CURLTemplatePath::setURL(const CMsgURLRequest& p_rcoURLMessage)
 {
+	m_coTemplate = "";
+	m_bTemplateSet = false;
+	m_coDocumentRoot = p_rcoURLMessage.getDocumentRoot();
+	m_coPathTranslated = p_rcoURLMessage.getPathTranslated();
 	m_coHTTPHost = p_rcoURLMessage.getHTTPHost();
 	string coURI = p_rcoURLMessage.getReqestURI();
 	m_bValidURI = true;
@@ -67,7 +71,11 @@ void CURLTemplatePath::setURL(const CMsgURLRequest& p_rcoURLMessage)
 	m_coURIPath = (nQMark != string::npos) ? coURI.substr(0, nQMark) : coURI;
 	m_coQueryString = (nQMark != string::npos) ? coURI.substr(nQMark) : "";
 
-	m_coTemplate = m_coURIPath;
+	if (strncmp(m_coURIPath.c_str(), "/look/", 6) != 0)
+		throw InvalidValue("template name", m_coURIPath);
+	m_coTemplate = m_coURIPath.substr(6);
+	CPublication::getTemplateId(m_coTemplate, m_pDBConn);
+	m_bTemplateSet = true;
 
 	// read parameters
 	const String2Value& coParams = p_rcoURLMessage.getParameters().getMap();
@@ -147,18 +155,8 @@ string CURLTemplatePath::getTemplate() const
 {
 	if (m_bValidTemplate)
 		return m_coTemplate;
-	if (getValue(P_TEMPLATE_ID) != "")
-	{
-		string coSql = string("select Name from Templates where Id = ") + getValue(P_TEMPLATE_ID);
-		CMYSQL_RES coRes;
-		MYSQL_ROW qRow = QueryFetchRow(m_pDBConn, coSql.c_str(), coRes);
-		m_coTemplate = qRow[0];
-	}
-	else
-	{
-		m_coTemplate = CPublication::getTemplate(getLanguage(), getPublication(), getIssue(),
-		                                         getSection(), getArticle(), m_pDBConn, false);
-	}
+	m_coTemplate = CPublication::getTemplate(getLanguage(), getPublication(), getIssue(),
+	                                         getSection(), getArticle(), m_pDBConn, false);
 	return m_coTemplate;
 }
 
