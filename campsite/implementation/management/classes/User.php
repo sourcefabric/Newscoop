@@ -72,34 +72,68 @@ class User extends DatabaseObject {
 	} // fn fetch
 	
 	
+	/**
+	 * @return int
+	 */
 	function getId() {
 		return $this->getProperty('Id');
 	} // fn getId
 	
+	
+	/**
+	 *
+	 * @return int
+	 */
 	function getKeyId() {
 		return $this->getProperty('KeyId');
 	} // fn getKeyId
 	
+	
+	/**
+	 * Get the real name of the user.
+	 * @return string
+	 */
 	function getName() {
 		return $this->getProperty('Name');
 	} // fn getName
 	
+	
+	/**
+	 * Get the login name of the user.
+	 * @return string
+	 */
 	function getUserName() {
 		return $this->getProperty('UName');
 	} // fn getUName
 
 	
+	/**
+	 * Return true if the user has the permission specified.
+	 * The database column names from the table UserPerm are used
+	 * as the permission strings.
+	 *
+	 * @param string p_permissionString
+	 *
+	 * @return boolean
+	 */
 	function hasPermission($p_permissionString) {
 		return (isset($this->m_permissions[$p_permissionString])
 				&& $this->m_permissions[$p_permissionString]);
 	} // fn hasPermission
 	
-	function isAdmin() {
-		return (count($this->m_permissions) > 0);
-	}
 	
 	/**
-	 * This is a static function.
+	 * @return boolean
+	 */
+	function isAdmin() {
+		return (count($this->m_permissions) > 0);
+	} // fn isAdmin
+	
+	
+	/**
+	 * This is a static function.  Check if the user is allowed
+	 * to access the site.
+	 *
 	 * @return array
 	 * 		An array of two elements: 
 	 *		boolean - whether the login was successful
@@ -107,18 +141,16 @@ class User extends DatabaseObject {
 	 */
 	function Login($p_userName, $p_userPassword) {
 		global $Campsite;
-		$queryStr = 'SELECT Id FROM Users '
+		$queryStr = 'SELECT * FROM Users '
 					." WHERE UName='$p_userName' "
 					." AND Password=PASSWORD('$p_userPassword') "
 					." AND Reader='N'";
 		$row = $Campsite['db']->GetRow($queryStr);
 		if ($row) {
 			// Generate the Key ID
-			$queryStr2 = 'UPDATE Users '
-						.' SET KeyId=RAND()*1000000000+RAND()*1000000+RAND()*1000'
-						.' WHERE Id='.$row['Id'];
-			$Campsite['db']->Execute($queryStr2);
-			$user =& new User($row['Id']);
+			$user =& new User();
+			$user->fetch($row);
+			$user->setProperty('KeyId', 'RAND()*1000000000+RAND()*1000000+RAND()*1000', true, true);
 			return array(true, $user);
 		}
 		else {
