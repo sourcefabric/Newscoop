@@ -3,6 +3,7 @@
     (3.9.3.22) and "print search" (3.9.4.2)
     - Parser used to abort improperly when it couldn't resolve the allowed hosts
     name
+    - Increased the maximum keyword length in the search engine
 
 2.1.2
     - Ported campsite to FreeBSD (thanks to Richard Airlie)
