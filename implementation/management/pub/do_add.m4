@@ -28,54 +28,78 @@ E_HEADER_BUTTONS
 E_HEADER
 
 <?php 
-    todef('cName');
-    todef('cSite');
-    todefnum('cLanguage');
-    todefnum('cPayTime');
-    todefnum('cTimeUnit');
-    todefnum('cUnitCost');
-    todefnum('cCurrency');
-    todefnum('cPaid');
-    todefnum('cTrial');
+	todef('cName');
+	todef('cSite');
+	todefnum('cLanguage');
+	todefnum('cPayTime');
+	todefnum('cTimeUnit');
+	todefnum('cUnitCost');
+	todefnum('cCurrency');
+	todefnum('cPaid');
+	todefnum('cTrial');
 
-    $correct= 1;
-    $created= 0;
+	$correct = 1;
+	$created = 0;
 ?>dnl
 <P>
 B_MSGBOX(<*Adding new publication*>)
 	X_MSGBOX_TEXT(<*
 <?php 
-    $cName=trim($cName);
-    $cSite=trim($cSite);
-//!sql query "SELECT TRIM('?cName'), TRIM('?cSite')" q_tr>dnl
+	$cName = trim($cName);
+	$cSite = trim($cSite);
 
-    if ($cName == "" || $cName == " ") {
-	$correct= 0; ?>dnl
-		<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); ?></LI>
-    <?php  }
-    
-    if ($cSite == "" || $cSite == " ") {
-	$correct=0; ?>dnl
-		<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Site').'</B>'); ?></LI>
-    <?php  }
-
-    if ($correct) {
-	$AFFECTED_ROWS=0;
-	query ("INSERT IGNORE INTO Publications SET Name='$cName', Site='$cSite', IdDefaultLanguage=$cLanguage, PayTime='$cPayTime', TimeUnit='$cTimeUnit', UnitCost='$cUnitCost', Currency='$cCurrency', PaidTime='$cPaid', TrialTime='$cTrial'");
-	$created= ($AFFECTED_ROWS > 0);
-    }
-
-    if ($created) { ?>dnl
-		<LI><?php  putGS('The publication $1 has been successfuly added.',"<B>".encHTML(decS($cName))."</B>"); ?></LI>
-X_AUDIT(<*1*>, <*getGS('Publication $1 added',$cName)*>)
-<?php 
-    } else {
-	if ($correct != 0) { ?>dnl
-		<LI><?php  putGS('The publication could not be added.'); ?></LI><LI><?php  putGS('Please check if another publication with the same or the same site name does not already exist.'); ?></LI>
-<?php  }
-}
+	if ($cName == "" || $cName == " ") {
+		$correct= 0;
 ?>dnl
-		*>)
+		<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); ?></LI>
+<?php
+	}
+
+	if ($cSite == "" || $cSite == " ") {
+		$correct = 0;
+?>dnl
+		<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Site').'</B>'); ?></LI>
+<?php
+	}
+
+	if ($correct) {
+		$sql = "SELECT COUNT(*) AS alias_count FROM Aliases WHERE Name = '" . $cSite . "'";
+		query($sql, 'q_alias_count');
+		fetchRow($q_alias_count);
+		$aliases_nr = getVar($q_alias_count, 'alias_count');
+		if ($aliases_nr == 0) {
+			$sql = "INSERT INTO Aliases (Name) VALUES('" . $cSite . "')";
+			query($sql);
+			$cDefaultAlias = mysql_insert_id();
+		}
+		if ($aliases_nr == 0 && $cDefaultAlias > 0) {
+			$AFFECTED_ROWS = 0;
+			$sql = "INSERT INTO Publications SET Name='$cName', IdDefaultAlias='$cDefaultAlias', IdDefaultLanguage=$cLanguage, IdURLType=$cURLType, PayTime='$cPayTime', TimeUnit='$cTimeUnit', UnitCost='$cUnitCost', Currency='$cCurrency', PaidTime='$cPaid', TrialTime='$cTrial'";
+			query($sql);
+			$created = ($AFFECTED_ROWS > 0);
+			if ($created) {
+				$sql = "UPDATE Aliases SET IdPublication = " . mysql_insert_id() . " WHERE Id = " . $cDefaultAlias;
+				query($sql);
+			} else {
+				$sql = "DELETE FROM Aliases WHERE Id = " . $cDefaultAlias;
+				query($sql);
+			}
+		}
+	}
+
+	if ($created) {
+?>dnl
+		<LI><?php  putGS('The publication $1 has been successfuly added.', "<B>".encHTML(decS($cName))."</B>"); ?></LI>
+		X_AUDIT(<*1*>, <*getGS('Publication $1 added',$cName)*>)
+<?php 
+	} else {
+		if ($correct != 0) { ?>dnl
+			<LI><?php  putGS('The publication could not be added.'); ?></LI><LI><?php  putGS('Please check if another publication with the same or the same site name does not already exist.'); ?></LI>
+<?php
+		}
+	}
+?>dnl
+	*>)
 <?php  if ($correct && $created) { ?>dnl
 	B_MSGBOX_BUTTONS
 		REDIRECT(<*another*>, <*Add another*>, <*X_ROOT/pub/add.php*>)
