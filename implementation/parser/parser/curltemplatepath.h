@@ -75,6 +75,8 @@ public:
 
 	virtual string getFormString() const;
 
+	virtual string setTemplate(const string& p_rcoTemplate) throw (InvalidValue);
+
 	virtual string getTemplate() const;
 
 private:
