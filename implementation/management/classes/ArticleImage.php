@@ -121,15 +121,15 @@ class ArticleImage extends DatabaseObject {
 	 *
 	 * @return void
 	 */
-	function AssociateImageWithArticle($p_imageId, $p_articleId, $p_templateId = null) {
+	function AddImageToArticle($p_imageId, $p_articleId, $p_templateId = null) {
 		global $Campsite;
 		if (is_null($p_templateId)) {
 			$p_templateId = ArticleImage::GetUnusedTemplateId($p_articleId);
 		}
 		$queryStr = 'INSERT IGNORE INTO ArticleImages(NrArticle, IdImage, Number)'
-					." VALUES('".$p_articleId."', '".$p_imageId."','".$p_templateId."')";
+					.' VALUES('.$p_articleId.', '.$p_imageId.', '.$p_templateId.')';
 		$Campsite['db']->Execute($queryStr);
-	} // fn AssociateImageWithArticle
+	} // fn AddImageToArticle
 
 	
 	/**
@@ -158,7 +158,7 @@ class ArticleImage extends DatabaseObject {
 	 *
 	 * @return void
 	 */
-	function DisassociateImageFromArticle($p_imageId, $p_articleId, $p_templateId) {
+	function RemoveImageFromArticle($p_imageId, $p_articleId, $p_templateId) {
 		global $Campsite;
 		$queryStr = 'DELETE FROM ArticleImages'
 					.' WHERE NrArticle='.$p_articleId
@@ -166,7 +166,7 @@ class ArticleImage extends DatabaseObject {
 					.' AND Number='.$p_templateId
 					.' LIMIT 1';
 		$Campsite['db']->Execute($queryStr);
-	} // fn DisassociateImageFromArticle
+	} // fn RemoveImageFromArticle
 
 	
 	/**
