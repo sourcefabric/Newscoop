@@ -15,9 +15,7 @@ smtp_wrapper: smtp_wrapper.o csocket.o mutex.o
 	strip smtp_wrapper
 
 clean: dummy
-	rm -f *.o *~
-	if [ "$(PACKAGE_TYPE)" = "source" ]; then rm -f smtp_wrapper; fi
-	for l in $(LINKS); do rm -f $$l; done
+	rm -f *.o *~ $(LINKS)
 
 smtp_wrapper.o: smtp_wrapper.cpp
 	g++ -c -o smtp_wrapper.o $(CFLAGS) smtp_wrapper.cpp
@@ -36,11 +34,6 @@ install: $(ALL)
 
 uninstall: dummy
 	rm -f $(BIN_DIR)/smtp_wrapper
-
-package: $(ALL)
-	mkdir -p $(PACKAGE_DIR)/smtp_wrapper/smtp_wrapper
-	cp -f Makefile $(PACKAGE_DIR)/smtp_wrapper/smtp_wrapper
-	cp -f smtp_wrapper $(PACKAGE_DIR)/smtp_wrapper/smtp_wrapper
 
 dummy:
 

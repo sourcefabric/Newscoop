@@ -3,9 +3,6 @@
 [ "$CAMPSITE_PACKAGE_DIR" = "" ] && cd ../.. && . ./configure --define_start_env && cd implementation/management
 . ${INSTALL_CONF}/conf_functions
 
-PACKAGE_TYPE=`cat $CAMPSITE_PACKAGE_DIR/.package_type`
-[ "$PACKAGE_TYPE" = "binary" ] && exit 0
-
 in_modified=false
 if [ -f macros.m4 ]; then
     in_stat=`stat macros.in -t | cut -f 13 -d " "`

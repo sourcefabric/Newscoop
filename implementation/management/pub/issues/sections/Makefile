@@ -18,12 +18,5 @@ install: $(ALL)
 	$(MAKE) -C articles install
 
 clean:
-	rm -f *~
-	if [ "$(PACKAGE_TYPE)" = "source" ]; then rm -f $(MY_TARGETS); fi
+	rm -f *~ $(MY_TARGETS)
 	$(MAKE) -C articles clean
-
-package: $(ALL)
-	mkdir -p $(PACKAGE_DIR)/sections
-	cp -f Makefile $(PACKAGE_DIR)/sections
-	cp -f *.php $(PACKAGE_DIR)/sections
-	$(MAKE) -C articles package PACKAGE_DIR=$(PACKAGE_DIR)/sections

@@ -101,7 +101,6 @@ unset CHECKED_DEPENDENCIES
 unset CHECKED_MODULES
 unset CONFIGURED_MODULES
 unset INSTALL_CONFIGURED
-unset PACKAGE_TYPE
 unset PREPARED_MOD_ENV
 modules_conf --unset
 install_conf --unset
@@ -170,8 +169,7 @@ read_module_deps()
 {
 validate_module $1
 [ $? -ne 0 ] && return 1
-fields="4"
-[ "$PACKAGE_TYPE" = "source" ] && fields="${fields} 5"
+fields="4 5"
 found_mod_deps=""
 mod_deps=""
 for fld in $fields; do
@@ -434,17 +432,12 @@ in_list DATABASE $PREPARED_MOD_ENV && return 0
 output_err="Error preparing environment for DATABASE module."
 echo -e "*** Preparing DATABASE environment..."
 mysql_connect=${CAMPSITE_PACKAGE_DIR}/supplemental/mysql_connect/mysql_connect/mysql_connect
-if [ "$PACKAGE_TYPE" = "binary" ]; then
-    check4_file $mysql_connect --executable
-    [ $? -ne 0 ] && echo $output_err && return 1
-else
-    pushd `pwd` &> /dev/null
-    cd ${CAMPSITE_PACKAGE_DIR}/supplemental/mysql_connect
-    ./configure && $MAKE && check4_file $mysql_connect --executable
-    result=$?
-    popd &> /dev/null
-    [ $result -ne 0 ] && echo $output_err && return 1
-fi
+pushd `pwd` &> /dev/null
+cd ${CAMPSITE_PACKAGE_DIR}/supplemental/mysql_connect
+./configure && $MAKE && check4_file $mysql_connect --executable
+result=$?
+popd &> /dev/null
+[ $result -ne 0 ] && echo $output_err && return 1
 export MYSQL_CONNECT=$mysql_connect
 add_to_list_var DATABASE PREPARED_MOD_ENV
 echo "DATABASE environment OK"
@@ -483,17 +476,12 @@ smtp_wrapper=${CAMPSITE_PACKAGE_DIR}/implementation/mailnotify/smtp_wrapper/smtp
 check4_gethostbyaddr_r
 check4_gethostbyname_r
 check4_getservbyname_r
-if [ "$PACKAGE_TYPE" = "binary" ]; then
-    check4_file $smtp_wrapper --executable
-    [ $? -ne 0 ] && echo $output_err && return 1
-else
-    pushd `pwd` &> /dev/null
-    cd ${CAMPSITE_PACKAGE_DIR}/implementation/mailnotify/smtp_wrapper
-    ./configure && $MAKE && check4_file $smtp_wrapper --executable
-    result=$?
-    popd &> /dev/null
-    [ $result -ne 0 ] && echo $output_err && return 1
-fi
+pushd `pwd` &> /dev/null
+cd ${CAMPSITE_PACKAGE_DIR}/implementation/mailnotify/smtp_wrapper
+./configure && $MAKE && check4_file $smtp_wrapper --executable
+result=$?
+popd &> /dev/null
+[ $result -ne 0 ] && echo $output_err && return 1
 export SMTP_WRAPPER=$smtp_wrapper
 add_to_list_var EVENT_HANDLERS PREPARED_MOD_ENV
 echo "EVENT_HANDLERS environment OK"

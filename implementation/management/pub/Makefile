@@ -16,12 +16,5 @@ install: $(ALL)
 	$(MAKE) -C issues install
 
 clean:
-	rm -f *~
-	if [ "$(PACKAGE_TYPE)" = "source" ]; then rm -f $(MY_TARGETS); fi
+	rm -f *~ $(MY_TARGETS)
 	$(MAKE) -C issues clean
-
-package: $(ALL)
-	mkdir -p $(PACKAGE_DIR)/pub
-	cp -f Makefile $(PACKAGE_DIR)/pub
-	cp -f *.php $(PACKAGE_DIR)/pub
-	$(MAKE) -C issues package PACKAGE_DIR=$(PACKAGE_DIR)/pub

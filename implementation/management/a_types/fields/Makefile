@@ -12,10 +12,4 @@ install: $(ALL)
 	cp -f *.php $(PRIV_DIR3)/
 
 clean:
-	rm -f *~
-	if [ "$(PACKAGE_TYPE)" = "source" ]; then rm -f $(MY_TARGETS); fi
-
-package: $(ALL)
-	mkdir -p $(PACKAGE_DIR)/fields
-	cp -f Makefile $(PACKAGE_DIR)/fields
-	cp -f *.php $(PACKAGE_DIR)/fields
+	rm -f *~ $(MY_TARGETS)

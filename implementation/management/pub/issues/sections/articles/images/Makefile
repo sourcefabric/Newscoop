@@ -8,8 +8,3 @@ install: $(ALL)
 
 clean:
 	rm -f *~
-
-package: $(ALL)
-	mkdir -p $(PACKAGE_DIR)/images
-	cp -f Makefile $(PACKAGE_DIR)/images
-	cp -f *.php $(PACKAGE_DIR)/images

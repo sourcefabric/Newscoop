@@ -16,10 +16,3 @@ clean:
 	rm -f *~
 	$(MAKE) -C images clean
 	$(MAKE) -C topics clean
-
-package: $(ALL)
-	mkdir -p $(PACKAGE_DIR)/articles
-	cp -f Makefile $(PACKAGE_DIR)/articles
-	cp -f *.php $(PACKAGE_DIR)/articles
-	$(MAKE) -C images package PACKAGE_DIR=$(PACKAGE_DIR)/articles
-	$(MAKE) -C topics package PACKAGE_DIR=$(PACKAGE_DIR)/articles

@@ -16,12 +16,5 @@ install: $(ALL)
 	$(MAKE) -C fields install
 
 clean:
-	rm -f *~
-	if [ "$(PACKAGE_TYPE)" = "source" ]; then rm -f $(MY_TARGETS); fi
+	rm -f *~ $(MY_TARGETS)
 	$(MAKE) -C fields clean
-
-package: $(ALL)
-	mkdir -p $(PACKAGE_DIR)/a_types
-	cp -f Makefile $(PACKAGE_DIR)/a_types
-	cp -f *.php $(PACKAGE_DIR)/a_types
-	$(MAKE) -C fields package PACKAGE_DIR=$(PACKAGE_DIR)/a_types

@@ -1,7 +1,5 @@
 include ../../make.env
 
-ALL=$(shell if [ "$(PACKAGE_TYPE)" = "source" ]; then echo all; else echo dummy; fi)
-
 PACKAGE_DIR=$(BIN_PACKAGE_DIR)/implementation
 
 MY_TARGETS=ad.php login.php logout.php 
@@ -93,8 +91,7 @@ install: $(ALL)
 	chmod -R g+r $(HTML_DIR)/images
 
 clean: dummy
-	rm -f *~ macros.m4 .env_vars
-	if [ "$(PACKAGE_TYPE)" = "source" ]; then rm -f $(MY_TARGETS); fi
+	rm -f *~ macros.m4 .env_vars $(MY_TARGETS)
 	$(MAKE) -C root clean
 	$(MAKE) -C src clean
 	$(MAKE) -C pub clean
@@ -117,28 +114,5 @@ uninstall: dummy
 	rm -f $(CGI_DIR)/upload_i
 	$(MAKE) -C src uninstall
 	$(MAKE) -C templates uninstall
-
-package: $(ALL)
-	@if [ "$(PACKAGE_TYPE)" = "binary" ]; then echo "This is a binary package"; exit 1; fi
-	mkdir -p $(PACKAGE_DIR)/management
-	cp -f Makefile $(PACKAGE_DIR)/management
-	cp -f configure $(PACKAGE_DIR)/management
-	cp -f *.php $(PACKAGE_DIR)/management
-	cp -fr img $(PACKAGE_DIR)/management
-	$(MAKE) -C a_types package PACKAGE_DIR=$(PACKAGE_DIR)/management
-	$(MAKE) -C infotype package PACKAGE_DIR=$(PACKAGE_DIR)/management
-	$(MAKE) -C country package PACKAGE_DIR=$(PACKAGE_DIR)/management
-	$(MAKE) -C glossary package PACKAGE_DIR=$(PACKAGE_DIR)/management
-	$(MAKE) -C languages package PACKAGE_DIR=$(PACKAGE_DIR)/management
-	$(MAKE) -C logs package PACKAGE_DIR=$(PACKAGE_DIR)/management
-	$(MAKE) -C popup package PACKAGE_DIR=$(PACKAGE_DIR)/management
-	$(MAKE) -C pub package PACKAGE_DIR=$(PACKAGE_DIR)/management
-	$(MAKE) -C root package PACKAGE_DIR=$(PACKAGE_DIR)/management
-	$(MAKE) -C src package PACKAGE_DIR=$(PACKAGE_DIR)/management
-	$(MAKE) -C templates package PACKAGE_DIR=$(PACKAGE_DIR)/management
-	$(MAKE) -C topics package PACKAGE_DIR=$(PACKAGE_DIR)/management	
-	$(MAKE) -C u_types package PACKAGE_DIR=$(PACKAGE_DIR)/management
-	$(MAKE) -C users package PACKAGE_DIR=$(PACKAGE_DIR)/management
-	$(MAKE) -C localizer package PACKAGE_DIR=$(PACKAGE_DIR)/management
 
 dummy:

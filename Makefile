@@ -77,26 +77,4 @@ uninstall: dummy
 	    mv -f .campsite.reg $(CAMPSITE_REGISTER); \
 	fi
 
-package: dummy
-	@if [ "$(PACKAGE_TYPE)" = "binary" ]; then echo "This is a binary package"; exit 1; fi
-	rm -fr $(BIN_PACKAGE_DIR)
-	mkdir -p $(BIN_PACKAGE_DIR)
-	echo "binary" > $(BIN_PACKAGE_DIR)/.package_type
-	cp -f configure $(BIN_PACKAGE_DIR)
-	cp -f Makefile $(BIN_PACKAGE_DIR)
-	cp -f install $(BIN_PACKAGE_DIR)
-	cp -f uninstall $(BIN_PACKAGE_DIR)
-	cp -f AUTHORS $(BIN_PACKAGE_DIR)
-	cp -f COPYING $(BIN_PACKAGE_DIR)
-	cp -f INSTALL $(BIN_PACKAGE_DIR)
-	cp -f README $(BIN_PACKAGE_DIR)
-	cp -f ChangeLog $(BIN_PACKAGE_DIR)
-	cp -f thisisacampsite.gif $(BIN_PACKAGE_DIR)
-	cp -fr ./documentation $(BIN_PACKAGE_DIR)
-	cp -fr ./.install_conf $(BIN_PACKAGE_DIR)
-	$(MAKE) -C implementation package
-	$(MAKE) -C supplemental package
-	cd .package; tar czf campsite-$(CAMPSITE_VERSION).$(PROCESSOR_TYPE).tar.gz campsite; mv campsite-*.tar.gz ..; cd ..; rm -fr .package
-	echo "Packge file built: campsite-$(CAMPSITE_VERSION).$(PROCESSOR_TYPE).tar.gz."
-
 dummy:

@@ -33,21 +33,12 @@ broker.o: broker.cpp kwd.h broker.h configure.h readconf.h globals.h
 readconf.o: readconf.cpp readconf.h globals.h
 
 clean: dummy
-	rm -f *.o *~ configure.h $(LINKS) .env_vars
-	if [ "$(PACKAGE_TYPE)" = "source" ]; then rm -f gather broker; fi
+	rm -f *.o *~ configure.h $(LINKS) .env_vars gather broker
 
 install: $(ALL)
 	./install_search
 
 uninstall: dummy
 	./uninstall_search
-
-package: $(ALL)
-	@if [ "$(PACKAGE_TYPE)" = "binary" ]; then echo "This is a binary package"; exit 1; fi
-	mkdir -p $(PACKAGE_DIR)/search
-	cp -f Makefile $(PACKAGE_DIR)/search
-	cp -f configure $(PACKAGE_DIR)/search
-	cp -f gather $(PACKAGE_DIR)/search
-	cp -f uninstall_search $(PACKAGE_DIR)/search
 
 dummy:

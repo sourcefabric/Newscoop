@@ -26,9 +26,7 @@ $(TPL_CGI): $(OBJ_FILES)
 	strip $(TPL_CGI)
 
 clean: dummy
-	rm -f *.o *~ tpl_cgi.h .env_vars
-	for l in $(LINKS); do rm -f $$l; done
-	if [ "$(PACKAGE_TYPE)" = "source" ]; then rm -f $(TPL_CGI); fi
+	rm -f *.o *~ tpl_cgi.h .env_vars $(TPL_CGI) $(LINKS)
 
 main.o: main.cpp $(DEPENDENCES)
 	g++ -c -o main.o $(CFLAGS) main.cpp
@@ -57,11 +55,5 @@ install: $(ALL)
 
 uninstall: dummy
 	rm -f $(CGI_DIR)/$(TPL_CGI) $(CONF_DIR)/tpl_cgi.conf
-
-package: $(ALL)
-	mkdir -p $(PACKAGE_DIR)/tpl_cgi
-	cp -f Makefile $(PACKAGE_DIR)/tpl_cgi
-	cp -f configure $(PACKAGE_DIR)/tpl_cgi
-	cp -f $(TPL_CGI) $(PACKAGE_DIR)/tpl_cgi
 
 dummy:

@@ -16,12 +16,5 @@ install: $(ALL)
 	$(MAKE) -C keyword install
 
 clean:
-	rm -f *~
-	if [ "$(PACKAGE_TYPE)" = "source" ]; then rm -f $(MY_TARGETS); fi
+	rm -f *~ $(MY_TARGETS)
 	$(MAKE) -C keyword clean
-
-package: $(ALL)
-	mkdir -p $(PACKAGE_DIR)/glossary
-	cp -f Makefile $(PACKAGE_DIR)/glossary
-	cp -f *.php $(PACKAGE_DIR)/glossary
-	$(MAKE) -C keyword package PACKAGE_DIR=$(PACKAGE_DIR)/glossary
