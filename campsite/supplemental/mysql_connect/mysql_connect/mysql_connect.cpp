@@ -65,7 +65,7 @@ int main(int argc, char** argv)
 	}
 	if (pchDatabaseName == NULL)
 	{
-		char* pchServerInfo = mysql_get_server_info(pMySQL);
+		const char* pchServerInfo = mysql_get_server_info(pMySQL);
 		if (pchServerInfo == NULL)
 		{
 			cout << "Error retreiving MySQL server info" << endl;
@@ -89,7 +89,7 @@ int main(int argc, char** argv)
 		cout << "Invalid database name " << pchDatabaseName << endl;
 		return 6;
 	}
-	char* pchServerInfo = mysql_get_server_info(pMySQL);
+	const char* pchServerInfo = mysql_get_server_info(pMySQL);
 	if (pchServerInfo == NULL)
 	{
 		cout << "Error retreiving MySQL server info" << endl;
