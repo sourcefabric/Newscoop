@@ -83,6 +83,7 @@ main(int argc, char **argv)
 	int		NrArticle = 0;
 	int		Number = 0;
 	int		Language = 0;
+	int		sLanguage = 0;
 	char *		magic_id = 0;
 
 	struct form_item_t *	fi;
@@ -168,6 +169,12 @@ main(int argc, char **argv)
 	if (fi && fi->content_p)
 		Language = atoi(fi->content_p);
 
+	fi = get_form_item("sLanguage");
+	if (fi && fi->content_p)
+		sLanguage = atoi(fi->content_p);
+		
+		
+
 	fi = get_form_item("cImage");
 	if (!fi || !fi->content_type_p || !fi->content_p) {
 		fprintf(stderr, "<LI>No content</LI>\n");
@@ -217,8 +224,8 @@ main(int argc, char **argv)
 		die();
 	}
 
-	printf("<META HTTP-EQUIV=\"Refresh\" CONTENT=\"0; URL="ROOT_DIR"/pub/issues/sections/articles/images/?Pub=%u&Issue=%u&Section=%u&Article=%u&Language=%u\">",
-		IdPublication, NrIssue, NrSection, NrArticle, Language);
+	printf("<META HTTP-EQUIV=\"Refresh\" CONTENT=\"0; URL="ROOT_DIR"/pub/issues/sections/articles/images/?Pub=%u&Issue=%u&Section=%u&Article=%u&Language=%u&sLanguage=%u\">",
+		IdPublication, NrIssue, NrSection, NrArticle, Language, sLanguage);
 
 	fflush(stdout);
 	mysql_close(&mysql);

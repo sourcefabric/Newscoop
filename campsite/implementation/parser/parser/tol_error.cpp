@@ -44,65 +44,55 @@ const string TOLError::error_word = "Error";
 void TOLError::init()
 {
 	// generic errors
-	messages.insert(Int2String::value_type(ERR_NOTYPE, "There is no such type of attribute."));
-	messages.insert(Int2String::value_type(ERR_NOMEM, "Error trying to alloc memory."));
-	messages.insert(Int2String::value_type(ERR_SQLCONNECT, "Error connecting to MYSQL server."));
-	messages.insert(Int2String::value_type(ERR_QUERY, "Internal error (query)"));
-	messages.insert(Int2String::value_type(ERR_NODATA, "Required data doesn't exist in database"));
-	messages.insert(Int2String::value_type(ERR_NOHASH, ""));
-	messages.insert(Int2String::value_type(ERR_NOHASHENT, ""));
-	messages.insert(Int2String::value_type(ERR_NOOP, ""));
-	messages.insert(Int2String::value_type(ERR_NOPARAM, ""));
-	messages.insert(Int2String::value_type(ERR_NOLISTINDEX, ""));
-	messages.insert(Int2String::value_type(ERR_NOACCESS, ""));
-	messages.insert(Int2String::value_type(ERR_INVALID_FIELD, ""));
-	messages.insert(Int2String::value_type(ERR_NOKEY, "User key missing."));
-	messages.insert(Int2String::value_type(ERR_LOCKHASH, "Error locking/unlocking parser hash."));
+	messages[ERR_NOTYPE] = "There is no such type of attribute.";
+	messages[ERR_NOMEM] = "Error trying to alloc memory.";
+	messages[ERR_SQLCONNECT] = "Error connecting to MYSQL server.";
+	messages[ERR_QUERY] = "Internal error (query)";
+	messages[ERR_NODATA] = "Required data doesn't exist in database";
+	messages[ERR_NOHASH] = "";
+	messages[ERR_NOHASHENT] = "";
+	messages[ERR_NOOP] = "";
+	messages[ERR_NOPARAM] = "";
+	messages[ERR_NOLISTINDEX] = "";
+	messages[ERR_NOACCESS] = "";
+	messages[ERR_INVALID_FIELD] = "";
+	messages[ERR_NOKEY] = "User key missing.";
+	messages[ERR_LOCKHASH] = "Error locking/unlocking parser hash.";
 	// parser errors
-	messages.insert(Int2String::value_type(PERR_ATOM_MISSING, "internal error: atom missing."));
-	messages.insert(Int2String::value_type(PERR_STATEMENT_MISSING, "statement missing"));
-	messages.insert(Int2String::value_type(PERR_ATOM_NOT_STATEMENT, "found atom, need statement"));
-	messages.insert(Int2String::value_type(PERR_IDENTIFIER_MISSING, "missing identifier"));
-	messages.insert(Int2String::value_type(PERR_WRONG_STATEMENT,
-	                                       "this statement is not allowed here"));
-	messages.insert(Int2String::value_type(PERR_NO_ATOM_IN_LEXEM,
-	                                       "internal error (no atom in lexem)"));
-	messages.insert(Int2String::value_type(PERR_END_STATEMENT_MISSING,
-	                                       "found identifier; need end statement"));
-	messages.insert(Int2String::value_type(PERR_NOT_VALUE, "need value, not statement"));
-	messages.insert(Int2String::value_type(PERR_INVALID_ATTRIBUTE, "not a valid attribute"));
-	messages.insert(Int2String::value_type(PERR_INVALID_STATEMENT, "not a valid statement"));
-	messages.insert(Int2String::value_type(PERR_INVALID_OPERATOR, "not a valid operator"));
-	messages.insert(Int2String::value_type(PERR_EOS_MISSING, "end of statement mising"));
-	messages.insert(Int2String::value_type(PERR_DATA_TYPE, "invalid value type"));
-	messages.insert(Int2String::value_type(PERR_ATTRIBUTE_REDEF,
-	                                       "attribute was already defined"));
-	messages.insert(Int2String::value_type(PERR_INV_TYPE_VAL,
-	                                       "invalid value of type attribute"));
-	messages.insert(Int2String::value_type(PERR_UNEXPECTED_EOF, "Unexpected end of file."
-	                                       " check for missing EndIf or EndList"));
-	messages.insert(Int2String::value_type(PERR_INVALID_VALUE, "invalid value"));
-	messages.insert(Int2String::value_type(PERR_INCLUDE_CICLE, "include cicle: template "
-	                                       "already included from this/other templates; ignoring"));
-	messages.insert(Int2String::value_type(PERR_INVALID_DATE_FORM, "invalid date form; "
-	                                       "valid combinations: %M(Month name), "
-	                                       "%W(Weekday name), %Y(Year, numeric, "
-	                                       "4 digits), %y(Year, numeric, 2 digits), "
-	                                       "%m(Month, numeric: 01..12), %c(Month, "
-	                                       "numeric: 1..12), %d(Day of the month, "
-	                                       "numeric: 00..31), %e(Day of the month, "
-	                                       "numeric: 0..31), %j(Day of year: "
-	                                       "001..366), %D(Day of the month with "
-	                                       "english suffix: 1st, 2nd, 3rd, etc.), "
-	                                       "%%(% character"));
+	messages[PERR_ATOM_MISSING] = "internal error: atom missing.";
+	messages[PERR_STATEMENT_MISSING] = "statement missing";
+	messages[PERR_ATOM_NOT_STATEMENT] = "found atom, need statement";
+	messages[PERR_IDENTIFIER_MISSING] = "missing identifier";
+	messages[PERR_WRONG_STATEMENT] = "this statement is not allowed here";
+	messages[PERR_NO_ATOM_IN_LEXEM] = "internal error (no atom in lexem)";
+	messages[PERR_END_STATEMENT_MISSING] = "found identifier; need end statement";
+	messages[PERR_NOT_VALUE] = "need value, not statement";
+	messages[PERR_INVALID_ATTRIBUTE] = "not a valid attribute";
+	messages[PERR_INVALID_STATEMENT] = "not a valid statement";
+	messages[PERR_INVALID_OPERATOR] = "not a valid operator";
+	messages[PERR_EOS_MISSING] = "end of statement mising";
+	messages[PERR_DATA_TYPE] = "invalid value type";
+	messages[PERR_ATTRIBUTE_REDEF] = "attribute was already defined";
+	messages[PERR_INV_TYPE_VAL] = "invalid value of type attribute";
+	messages[PERR_UNEXPECTED_EOF] = "Unexpected end of file."
+	        " Check for missing EndIf or EndList";
+	messages[PERR_INVALID_VALUE] = "invalid value";
+	messages[PERR_INCLUDE_CICLE] = "include cicle: template "
+	        "already included from this/other templates; ignoring";
+	messages[PERR_INVALID_DATE_FORM] = "invalid date form; "
+            "valid combinations: %M(Month name), %W(Weekday name), %Y(Year, numeric, "
+            "4 digits), %y(Year, numeric, 2 digits), %m(Month, numeric: 01..12), %c(Month, "
+            "numeric: 1..12), %d(Day of the month, numeric: 00..31), %e(Day of the month, "
+            "numeric: 0..31), %j(Day of year: 001..366), %D(Day of the month with "
+            "english suffix: 1st, 2nd, 3rd, etc.), %%(% character";
 	// map errors
-	messages.insert(Int2String::value_type(EMAP_STAT, "Unable to stat template file"));
-	messages.insert(Int2String::value_type(EMAP_NOTREGFILE, "Not a regular file"));
-	messages.insert(Int2String::value_type(EMAP_EOPENFILE, "Unable to open template file"));
-	messages.insert(Int2String::value_type(EMAP_FAILED, "Unable to map file into memory"));
+	messages[EMAP_STAT] = "Unable to stat template file";
+	messages[EMAP_NOTREGFILE] = "Not a regular file";
+	messages[EMAP_EOPENFILE] = "Unable to open template file";
+	messages[EMAP_FAILED] = "Unable to map file into memory";
 	// define modes
-	modes.insert(Int2String::value_type(MODE_PARSE, "parsing"));
-	modes.insert(Int2String::value_type(MODE_WRITE, "writing output"));
+	modes[MODE_PARSE] = "parsing";
+	modes[MODE_WRITE] = "writing output";
 }
 
 // Constructor
