@@ -78,13 +78,13 @@ define(<*E_MENU*>, <*</TABLE>*>)dnl
 dnl
 dnl *** Home Page Menu ***
 dnl
-define(<*B_HOME_MENU*>, <*<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="2" ALIGN="CENTER">define(<*X_HOME_MENU_P*>, <*$1*>)*>)dnl
+define(<*B_HOME_MENU*>, <*<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="2" ALIGN="CENTER" class="table_input">define(<*X_HOME_MENU_P*>, <*$1*>)*>)dnl
 define(<*B_HOME_MENU_HEADER*>, <*<TR>*>)dnl
 define(<*X_HOME_MENU_TH*>, <*<TD WIDTH="1%" VALIGN="TOP"><A HREF="$2"><IMG SRC="X_ROOT/img/tol.gif" BORDER="0"></A></TD><TD WIDTH="X_HOME_MENU_P"><B><A HREF="$2">$1</A></B></TD>*>)dnl
 define(<*X_HOME_MENU_TH_EMPTY*>, <*<TD COLSPAN="2">&nbsp;</TD>*>)dnl
 define(<*E_HOME_MENU_HEADER*>, <*</TR>*>)dnl
 define(<*B_HOME_MENU_BODY*>, <*<TR>*>)dnl
-define(<*B_HOME_MENU_TD*>, <*<TD></TD><TD VALIGN="TOP" BGCOLOR="#C0D0FF">*>)dnl
+define(<*B_HOME_MENU_TD*>, <*<TD></TD><TD VALIGN="TOP">*>)dnl
 define(<*X_HOME_MENU_ITEM*>, <*$1*>)dnl
 define(<*E_HOME_MENU_TD*>, <*</TD>*>)dnl
 define(<*X_HOME_MENU_TD_EMPTY*>, <*<TD COLSPAN="2">&nbsp;</TD>*>)dnl
