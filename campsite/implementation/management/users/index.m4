@@ -43,7 +43,7 @@ E_HEADER
 	<TD ALIGN="RIGHT">
 	B_SEARCH_DIALOG(<*GET*>, <*index.php*>)
 		<TD><?php  putGS('User name'); ?>:</TD>
-		<TD><INPUT TYPE="TEXT" NAME="sUname" VALUE="<?php  pencHTML($sUname); ?>" SIZE="16" MAXLENGTH="32"></TD>
+		<TD><INPUT TYPE="TEXT" class="input_text" NAME="sUname" VALUE="<?php  pencHTML($sUname); ?>" SIZE="16" MAXLENGTH="32"></TD>
 		<TD><SELECT NAME="sType"><OPTION><OPTION VALUE="Y" <?php  if ($sType == "Y") { ?>SELECTED<?php  } ?>><?php  putGS('Reader'); ?><OPTION VALUE="N" <?php  if ($sType == "N") { ?>SELECTED<?php  } ?>><?php  putGS('Staff'); ?></SELECT></TD>
 		<TD>SUBMIT(<*Search*>, <*Search*>)</TD>
 	E_SEARCH_DIALOG
