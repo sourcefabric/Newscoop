@@ -85,12 +85,12 @@ class CCampsiteInstance
 		static void VerifyDir(const string& p_rcoDir) throw (ConfException);
 
 	private:
-		pid_t m_nChildPID;
+		mutable pid_t m_nChildPID;
 		string m_coName;
 		string m_coConfDir;
 		InstanceFunction m_pInstanceFunction;
 		ConfAttrValue m_coAttributes;
-		bool m_bRunning;
+		mutable bool m_bRunning;
 };
 
 
@@ -129,6 +129,8 @@ class CCampsiteInstanceRegister
 
 		void erase(pid_t p_nInstancePID);
 
+		void unsetPID(pid_t p_nInstancePID);
+
 		void erase(const string& p_rcoInstanceName);
 
 		bool has(pid_t p_nInstancePID) const;
@@ -157,15 +159,12 @@ inline const CCampsiteInstanceMap& CCampsiteInstanceRegister::getCampsiteInstanc
 	return m_coCCampsiteInstances;
 }
 
-inline void CCampsiteInstanceRegister::insert(CCampsiteInstance& p_rcoCampsiteInstance)
+inline void CCampsiteInstanceRegister::unsetPID(pid_t p_nInstancePID)
 {
 #ifdef _REENTRANT
 	CMutexHandler coLockHandler(&m_coMutex);
 #endif
-	const string& rcoName = p_rcoCampsiteInstance.getName();
-	m_coCCampsiteInstances[rcoName] = &p_rcoCampsiteInstance;
-	if (p_rcoCampsiteInstance.isRunning())
-		m_coInstancePIDs[p_rcoCampsiteInstance.getPID()] = rcoName;
+	m_coInstancePIDs.erase(p_nInstancePID);
 }
 
 inline bool CCampsiteInstanceRegister::has(pid_t p_nInstancePID) const
