@@ -164,7 +164,8 @@ class ArticleImage extends DatabaseObject {
 	
 	
 	/**
-	 * Remove the linkage between the given image and the given article.
+	 * Remove the linkage between the given image and the given article and remove
+	 * the image tags from the article text.
 	 *
 	 * @param int p_imageId
 	 * @param int p_articleId
@@ -174,6 +175,7 @@ class ArticleImage extends DatabaseObject {
 	 */
 	function RemoveImageFromArticle($p_imageId, $p_articleId, $p_templateId) {
 		global $Campsite;
+		ArticleImage::RemoveImageTagsFromArticleText($p_articleId, $p_templateId);
 		$queryStr = 'DELETE FROM ArticleImages'
 					.' WHERE NrArticle='.$p_articleId
 					.' AND IdImage='.$p_imageId
@@ -184,16 +186,57 @@ class ArticleImage extends DatabaseObject {
 
 	
 	/**
-	 * Disassociate the image from all articles.
+	 * Remove the image tags in the article text.
+	 *
+	 * @param int p_imageId
+	 * @param int p_articleId
+	 * @param int p_templateId
+	 * @return void
+	 */
+	function RemoveImageTagsFromArticleText($p_articleId, $p_templateId) {
+		// Get all the articles
+		$articles =& Article::GetArticles(null, null, null, null, $p_articleId);
+		
+		// The REGEX
+		$altAttr = "(alt\s*=\s*[\"][^\"]*[\"])";
+		$alignAttr = "(align\s*=\s*\w*)";
+		$subAttr = "(sub\s*=\s*[\"][^\"]*[\"])";
+		$matchString = "/<!\*\*\s*Image\s*$p_templateId\s*(($altAttr|$alignAttr|$subAttr)\s*)*>/i";
+
+		// Replace the article tag in each one with the empty string
+		foreach ($articles as $article) {
+			$articleTypeObj =& $article->getArticleTypeObject();
+			$dbColumns =& $articleTypeObj->getUserDefinedColumns();
+			foreach ($dbColumns as $dbColumn) {
+				$originalText = $articleTypeObj->getProperty($dbColumn->getName());
+				$newText = preg_replace($matchString, '', $originalText);
+				if ($originalText != $newText) {
+					$articleTypeObj->setProperty($dbColumn->getName(), $newText);
+				}
+			}
+		}
+	} // fn RemoveImageTagsFromArticleText
+	
+	
+	/**
+	 * This is called when an image is deleted.
+	 * It will disassociate the image from all articles.
 	 *
 	 * @param int p_imageId
 	 * @return void
 	 */
 	function OnImageDelete($p_imageId) {
 		global $Campsite;
-		$queryStr = 'DELETE FROM ArticleImages'
-					." WHERE IdImage='".$p_imageId."'";
-		$Campsite['db']->Execute($queryStr);
+		// Get the articles that use this image.
+		$queryStr = "SELECT * FROM ArticleImages WHERE IdImage=$p_imageId";
+		$rows = $Campsite['db']->GetAll($queryStr);
+		if (is_array($rows)) {
+			foreach ($rows as $row) {
+				ArticleImage::RemoveImageTagsFromArticleText($row['NrArticle'], $row['Number']);
+			}
+			$queryStr = "DELETE FROM ArticleImages WHERE IdImage=$p_imageId";
+			$Campsite['db']->Execute($queryStr);
+		}
 	} // fn OnImageDelete
 	
 	
