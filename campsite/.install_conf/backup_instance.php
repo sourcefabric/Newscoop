@@ -7,10 +7,17 @@ if ($etc_dir == "")
 	die("Please supply the configuration directory as the first argument.\n");
 if ($instance_name == "")
 	die("Please supply the instance name as the second argument.\n");
+$silent = $GLOBALS['argv'][3] == "--silent_exit";
 
 // include install_conf.php file
 require_once("$etc_dir/install_conf.php");
 require_once($Campsite['BIN_DIR'] . "/cli_script_lib.php");
+if (!is_file("$etc_dir/$instance_name/database_conf.php")) {
+	if ($silent)
+		exit(0);
+	echo "Database configuration file does not exist, can't backup\n";
+	exit(1);
+}
 require_once("$etc_dir/$instance_name/database_conf.php");
 $html_dir = $Campsite['WWW_DIR'] . "/$instance_name/html";
 $backup_dir = $Campsite['CAMPSITE_DIR'] . "/backup/$instance_name";
