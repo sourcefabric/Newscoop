@@ -174,7 +174,7 @@ class CActionList;
 //		takeAction: performs the action
 class CAction
 {
-private:
+protected:
 	static TK_MYSQL m_coSql;		// key variable: pointer to MySQL connection
 	static TK_bool m_coDebug;		// key variable: print debug info(true/false)
 
