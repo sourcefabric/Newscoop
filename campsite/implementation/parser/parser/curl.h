@@ -1,0 +1,164 @@
+/******************************************************************************
+
+CAMPSITE is a Unicode-enabled multilingual web content
+management system for news publications.
+CAMPFIRE is a Unicode-enabled java-based near WYSIWYG text editor.
+Copyright (C)2000,2001  Media Development Loan Fund
+contact: contact@campware.org - http://www.campware.org
+Campware encourages further development. Please let us know.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+******************************************************************************/
+
+
+#ifndef CURL_H
+#define CURL_H
+
+
+#include <string>
+#include <map>
+
+
+using std::string;
+using std::map;
+
+
+#include "cgiparams.h"
+#include "globals.h"
+#include "cms_types.h"
+#include "data_types.h"
+#include "cmessage.h"
+
+
+/**
+  * class CURL
+  * store the URL parameters; return URL string; the derived classes will implement
+  * the setURL, getURL methods; CURL(string) just calls setURL
+  */
+
+class CURL
+{
+public:
+	CURL() : m_bValidURI(false) { }
+
+	virtual ~CURL() {}
+
+	void setMethod(const string& p_rcoMethod) { m_coMethod = p_rcoMethod; }
+
+	const string& getMethod() const { return m_coMethod; }
+
+	void setId(long p_nId) { setValue("url_id", p_nId); }
+
+	long getId() const throw(InvalidValue) { return getIntValue("url_id"); }
+
+	void setLanguage(long p_nLanguage) { setValue(P_IDLANG, p_nLanguage); }
+
+	long getLanguage() const throw(InvalidValue) { return getIntValue(P_IDLANG); }
+
+	void setPublication(long p_nPublication) { setValue(P_IDPUBL, p_nPublication); }
+
+	long getPublication() const throw(InvalidValue) { return getIntValue(P_IDPUBL); }
+
+	void setIssue(long p_nIssue) { setValue(P_NRISSUE, p_nIssue); }
+
+	long getIssue() const throw(InvalidValue) { return getIntValue(P_NRISSUE); }
+
+	void setSection(long p_nSection) { setValue(P_NRSECTION, p_nSection); }
+
+	long getSection() const throw(InvalidValue) { return getIntValue(P_NRSECTION); }
+
+	void setArticle(long p_nArticle) { setValue(P_NRARTICLE, p_nArticle); }
+
+	long getArticle() const throw(InvalidValue) { return getIntValue(P_NRARTICLE); }
+
+	void setValue(const string& p_rcoParameter, long p_nValue);
+
+	void setValue(const string& p_rcoParameter, const string& p_rcoValue);
+
+	string getValue(string p_rcoParameter) const;
+
+	long getIntValue(string p_rcoParameter) const throw(InvalidValue);
+
+	void setCookie(const string& p_rcoName, const string& p_rcoValue);
+
+	string getCookie(string p_rcoName) const;
+
+	const String2String& getCookies() const;
+
+	virtual void setURL(const CMsgURLRequest& p_rcoMsg) = 0;
+
+	virtual string getURL() const = 0;
+
+	virtual string getURI() const = 0;
+
+	virtual string getURLType() const = 0;
+
+	virtual string getQueryString() const = 0;
+
+protected:
+	mutable bool m_bValidURI;
+	string m_coMethod;
+	String2String m_coParamMap;
+	String2String m_coCookies;
+};
+
+
+// CURL inline methods
+
+inline void CURL::setValue(const string& p_rcoParameter, long p_nValue)
+{
+	setValue(p_rcoParameter, (string)Integer(p_nValue));
+	m_bValidURI = false;
+}
+
+inline void CURL::setValue(const string& p_rcoParameter, const string& p_rcoValue)
+{
+	m_coParamMap[p_rcoParameter] = p_rcoValue;
+	m_bValidURI = false;
+}
+
+inline string CURL::getValue(string p_rcoParameter) const
+{
+	String2String::const_iterator coIt = m_coParamMap.find(p_rcoParameter);
+	if (coIt == m_coParamMap.end())
+		return string("");
+	return (*coIt).second;
+}
+
+inline long CURL::getIntValue(string p_rcoParameter) const throw(InvalidValue)
+{
+	return Integer(getValue(p_rcoParameter));
+}
+
+inline void CURL::setCookie(const string& p_rcoName, const string& p_rcoValue)
+{
+	m_coCookies[p_rcoName] = p_rcoValue;
+}
+
+inline string CURL::getCookie(string p_rcoName) const
+{
+	String2String::const_iterator coIt = m_coCookies.find(p_rcoName);
+	if (coIt == m_coCookies.end())
+		return string("");
+	return (*coIt).second;
+}
+
+inline const String2String& CURL::getCookies() const
+{
+	return m_coCookies;
+}
+
+#endif // CURL_H
