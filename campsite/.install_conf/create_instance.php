@@ -1,10 +1,12 @@
 <?php
 
-
-global $Campsite, $info_messages;
-$info_messages = array();
+global $Campsite, $CampsiteVars, $CampsiteOld, $info_messages;
 $Campsite = array();
+$CampsiteVars = array();
+$CampsiteOld = array();
+$info_messages = array();
 
+$errors = array();
 if (!create_instance($GLOBALS['argv'], $errors)) {
 	foreach($errors as $index=>$error)
 		echo "$error\n";
@@ -326,7 +328,7 @@ function create_site($p_defined_parameters)
 		if (!is_dir($dir_name) && !mkdir($dir_name))
 			return "Unable to create directory $dir_name";
 
-	if ($CampsiteOld['.MODULES_HTML_DIR'] != "") {
+	if (isset($CampsiteOld['.MODULES_HTML_DIR'])) {
 		$cmd = "cp -fr \"" . $CampsiteOld['.MODULES_HTML_DIR'] . "/look\" \"$html_dir\"";
 		exec($cmd);
 	}
