@@ -12,11 +12,10 @@ if ($instance_name == "")
 // include install_conf.php file
 require_once("$etc_dir/install_conf.php");
 require_once($Campsite['BIN_DIR'] . "/cli_script_lib.php");
-require_once("$etc_dir/$instance_name/database_conf.php");
 
 if (!$no_backup) {
 	// backup instance
-	$cmd = $Campsite['BIN_DIR'] . "/backup_instance \$'$instance_name'";
+	$cmd = $Campsite['BIN_DIR'] . "/backup_instance \$'$instance_name' --silent_exit";
 	exec_command($cmd);
 }
 
@@ -25,14 +24,19 @@ $www_dir = $Campsite['WWW_DIR'] . "/$instance_name";
 $cmd = "rm -fr \$'$www_dir'";
 exec_command($cmd);
 
-// remove etc directory
-$etc_dir = $Campsite['ETC_DIR'] . "/$instance_name";
-$cmd = "rm -fr \$'$etc_dir'";
-exec_command($cmd);
+// check if the database conf file exists
+$database_conf_file = "$etc_dir/$instance_name/database_conf.php";
+if (!is_file($database_conf_file))
+	exit(0);
 
 // drop database
-if (($res = connect_to_database()) != 0)
+require_once($database_conf_file);
+if (connect_to_database() != 0)
 	exit_with_error($res);
-mysql_query("DROP DATABASE $p_db_name");
+mysql_query("DROP DATABASE $instance_name");
+
+// remove etc directory
+$cmd = "rm -fr \$'$etc_dir/$instance_name'";
+exec_command($cmd);
 
 ?>
