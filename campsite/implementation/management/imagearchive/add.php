@@ -37,17 +37,11 @@ fetchRowNum($q_now);
 	<TD class="page_title">
 	    <?php  putGS('Add new image'); ?>
 	</TD>
-	<TD ALIGN="RIGHT" style="padding-top: 5px; padding-right: 10px;">
-		<table cellpadding="1" cellspacing="0">
-		<tr>
-	  		<TD><A HREF="index.php?<?php echo $imageNav->getSearchLink(); ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS('Image archive'); ?>"></A></TD>
-	  		<TD><A HREF="index.php?<?php echo $imageNav->getSearchLink(); ?>" ><B><?php  putGS('Image archive');  ?></B></A></TD>
-	  	</tr>
-	  	</table>
-	  </td>
+	<TD ALIGN="RIGHT">
+	  	<A HREF="index.php?<?php echo $imageNav->getSearchLink(); ?>" class="breadcrumb"><?php  putGS('Image archive');  ?></A>
+	</td>
 </TR>
 </TABLE>
-<!--<HR NOSHADE SIZE="1" COLOR="BLACK">-->
 
 <P>
 <FORM NAME="dialog" METHOD="POST" ACTION="do_add.php?<?php echo $imageNav->getSearchLink(); ?>" ENCTYPE="multipart/form-data">
