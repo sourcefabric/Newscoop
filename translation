@@ -56,6 +56,8 @@ if [ "$to_do" = "print_usage" ]; then
     exit 2
 fi
 
+params="$to_do $LANG $FILE"
+
 if [ ! -x ./configure ]; then
     echo -e "Install script must be started from campsite directory!\nAborting..."
     exit 2
@@ -71,7 +73,7 @@ if [ $my_id -ne 0 ] && ! $USER_INSTALL; then
 	echo -n "Root password: "
 	archive_path=`pwd`
 	usr_grp="--user \"$USER_NAME\" --group \"$GROUP_NAME\""
-	su - --command="echo \"\"; cd $archive_path; ./translation $* $usr_grp" 2> /dev/null
+	su - --command="echo \"\"; cd $archive_path; ./translation $params $usr_grp" 2> /dev/null
 	err_code=$?
 	if [ $err_code -ne 0 ] && [ $err_code -ne 2 ]; then
 	    echo -n -e "\nThe password was not correct. Try again (Y/N) ? [Y]: "
