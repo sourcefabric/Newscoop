@@ -5,6 +5,9 @@ cp -f gather $BIN_DIR
 chown $ROOT_USER.$ROOT_GROUP $BIN_DIR/gather
 chmod 750 $BIN_DIR/gather
 [ $? -ne 0 ] && exit 1
+
+if $USER_INSTALL; then exit 0; fi
+
 . ${INSTALL_CONF}/cron_functions
 if [ -f /etc/crontab ]; then
     uninstall_cron_task "$BIN_DIR/gather" /etc/crontab

@@ -1,6 +1,9 @@
 #!/bin/sh
 
 rm -f ${BIN_DIR}/gather
+
+if $USER_INSTALL; then exit 0; fi
+
 . ${INSTALL_CONF}/cron_functions
 if [ -f /etc/crontab ]; then
     uninstall_cron_task "$BIN_DIR/gather" /etc/crontab

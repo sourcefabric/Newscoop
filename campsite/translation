@@ -61,10 +61,10 @@ if [ ! -x ./configure ]; then
     exit 2
 fi
 
+USER_NAME=`id -un`
+GROUP_NAME=`id -gn`
 my_id=`id -u`
-if [ $my_id -ne 0 ]; then
-    USER_NAME=`id -un`
-    GROUP_NAME=`id -gn`
+if [ $my_id -ne 0 ] && ! $USER_INSTALL; then
     echo -e "\nPlease supply root password."
     while true; do
 	echo -n "Root password: "

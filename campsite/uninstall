@@ -138,7 +138,7 @@ fi
 configure_campsite $*
 backup_database $not_interactive $no_db_backup
 rm -f uninstall_log
-if [ $my_id -ne 0 ]; then
+if [ $my_id -ne 0 ] && ! $USER_INSTALL; then
     echo -e "\nIt is time to login as root. Please supply password."
     while true; do
 	echo -n "Root password: "

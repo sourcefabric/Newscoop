@@ -3,6 +3,9 @@
 rm -f $BIN_DIR/notifyendsubs
 rm -f $BIN_DIR/notifyevents
 rm -f $CONF_DIR/smtp.conf
+
+if $USER_INSTALL; then exit 0; fi
+
 . ${INSTALL_CONF}/cron_functions
 if [ -f /etc/crontab ]; then
     uninstall_cron_task "$BIN_DIR/notifyendsubs" /etc/crontab

@@ -43,7 +43,7 @@ cat > ${APP_NAME} << EOF
 
 # Source function library.
 
-CAMPSITECTL=/usr/local/${APP_NAME}/${APP_NAME}ctl
+CAMPSITECTL=$BIN_DIR/${APP_NAME}ctl
 
 test -x \$CAMPSITECTL || exit 0
 
@@ -85,7 +85,7 @@ echo OK
 save_var APP_NAME
 fi # end if ! var_not_modified APP_NAME || [ ! -f $APP_NAME ]
 
-if ! var_not_modified APP_NAME ROOT_BIN_DIR || [ ! -f ${APP_NAME}ctl ]; then
+if ! var_not_modified APP_NAME BIN_DIR || [ ! -f ${APP_NAME}ctl ]; then
 echo -n -e "\tWriting server control script..."
 cat > ${APP_NAME}ctl << EOF
 #!/bin/bash
@@ -115,7 +115,7 @@ cat > ${APP_NAME}ctl << EOF
 #
 ################################################################################
 
-CAMPSITE_SERVER=${ROOT_BIN_DIR}/${APP_NAME}/${APP_NAME}_server
+CAMPSITE_SERVER=$BIN_DIR/${APP_NAME}_server
 
 test -x \$CAMPSITE_SERVER || exit 0
 
@@ -162,14 +162,14 @@ exit 0
 EOF
 [ $? -ne 0 ] && echo "ERROR" && exit 1
 echo OK
-save_var APP_NAME ROOT_BIN_DIR
-fi # end if ! var_not_modified APP_NAME ROOT_BIN_DIR || [ ! -f $APP_NAME ]
+save_var APP_NAME BIN_DIR
+fi # end if ! var_not_modified APP_NAME BIN_DIR || [ ! -f $APP_NAME ]
 
 PACKAGE_TYPE=`cat $CAMPSITE_PACKAGE_DIR/.package_type`
 [ "$PACKAGE_TYPE" = "binary" ] && exit 0
 
 var_not_modified APP_NAME && [ -f srvdef.h ] && exit 0
-save_var APP_NAME ROOT_BIN_DIR
+save_var APP_NAME BIN_DIR
 
 echo -n -e "\tWriting srvdef.h header..."
 cat > srvdef.h << EOF
