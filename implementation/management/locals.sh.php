@@ -1,12 +1,12 @@
 <?
 
-regGS("Please enter your user name and password","Ukucajte vaše ime i lozinku");
-regGS("You do not have the right to access this page.","Nemate pravo da pristupite ovoj stranici");
-regGS("Login failed","Login nije uspeo");
-regGS("Pease make sure that you typed the correct user name and password.","Proverite da li ste ukucali ispravno korisničko ime i lozinku");
-regGS("If your problem persists please contact the site administrator $1","Ukoliko vam se ovaj problem ponavlja, obratite se administratoru vašeg sajta");
-regGS("Name<BR><SMALL>(click to edit article)</SMALL>","Ime<br><small>(kliknite na ime da uđete u članak)</small>");
-regGS("Welcome $1!","Ulogovani korisnik: $1 ");
+regGS("Please enter your user name and password","Unesite svoje korisničko ime i lozinku");
+regGS("You do not have the right to access this page.","Nemate pravo pristupa ovoj strani");
+regGS("Login failed","Neuspešna prijava");
+regGS("Pease make sure that you typed the correct user name and password.","Proverite da li ste ispravno upisali korisničko ime i lozinku");
+regGS("If your problem persists please contact the site administrator $1","Ako se problem ponovi kontaktirajte administratora sajta $1");
+regGS("Name<BR><SMALL>(click to edit article)</SMALL>","Naslov<br><small> (kliknite za uređenje članka)</small>");
+regGS("Welcome $1!","Prijavljeni ste kao $1");
 regGS("Localizer","Lokalizator");
 
 
