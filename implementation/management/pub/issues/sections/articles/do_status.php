@@ -1,227 +1,58 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
-	"http://www.w3.org/TR/REC-html40/loose.dtd">
-<HTML>
-<?php  include ("../../../../lib_campsite.php");
-    $globalfile=selectLanguageFile('../../../..','globals');
-    $localfile=selectLanguageFile('.','locals');
-    @include ($globalfile);
-    @include ($localfile);
-    include ("../../../../languages.php");   ?>
-<?php  require_once("$DOCUMENT_ROOT/db_connect.php"); ?>
+<?php
+require_once($_SERVER['DOCUMENT_ROOT']. "/priv/pub/issues/sections/articles/article_common.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/Log.php");
 
+// Check permissions
+list($access, $User) = check_basic_access($_REQUEST);
+if (!$access) {
+	header("Location: /priv/logout.php");
+	exit;
+}
 
-<?php 
-    todefnum('TOL_UserId');
-    todefnum('TOL_UserKey');
-    todef('Status');
-    query ("SELECT * FROM Users WHERE Id=$TOL_UserId AND KeyId=$TOL_UserKey", 'Usr');
-    $access=($NUM_ROWS != 0);
-    if ($NUM_ROWS) {
-	fetchRow($Usr);
-	query ("SELECT * FROM UserPerm WHERE IdUser=".getVar($Usr,'Id'), 'XPerm');
-	 if ($NUM_ROWS){
-	 	fetchRow($XPerm);
-	 }
-	 else $access = 0;						//added lately; a non-admin can enter the administration area; he exists but doesn't have ANY rights
-	 $xpermrows= $NUM_ROWS;
-    }
-    else {
-	query ("SELECT * FROM UserPerm WHERE 1=0", 'XPerm');
-    }
+$Pub = Input::get('Pub', 'int', 0);
+$Issue = Input::get('Issue', 'int', 0);
+$Section = Input::get('Section', 'int', 0);
+$Language = Input::get('Language', 'int', 0);
+$Article = Input::get('Article', 'int', 0);
+$sLanguage = Input::get('sLanguage', 'int', 0);
+$Status = Input::get('Status', 'string', 'N');
+$Back = Input::get('Back', 'string', '/priv/pub/issues/sections/articles/index.php', true);
+
+if (!Input::isValid()) {
+	header("Location: /priv/logout.php");
+	exit;	
+}
+
+if ( ($Status != 'N') && ($Status != 'S') && ($Status != 'Y')) {
+	header("Location: /priv/logout.php");
+	exit;		
+}
+
+$articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
+$sectionObj =& new Section($Pub, $Issue, $Language, $Section);
+$issueObj =& new Issue($Pub, $Language, $Issue);
+$languageObj =& new Language($Language);
+$publicationObj =& new Publication($Pub);
+
+$userIsArticleOwner = ($User->getId() == $articleObj->getUserId());
+$articleIsNew = ($articleObj->getPublished() == 'N');
+
+$access = false;
+// A publisher can change the status in any way he sees fit.
+// A user who owns the article may submit it.
+if ($User->hasPermission('Publish') || ($userIsArticleOwner && $articleIsNew && ($Status == 'S') )) {
+	$access = true;
+}
+if (!$access) {
+	header("Location: /priv/ad.php?ADReason=".urlencode(getGS("You do not have the right to change this article status. Once submitted an article can only changed by authorized users." )));
+	exit;	
+}
+
+$articleObj->setPublished($Status);
+
+$logtext = getGS('Article $1 status from $2. $3 from $4. $5 ($6) of $7 changed', $articleObj->getTitle(), $sectionObj->getSectionId(), $sectionObj->getName(), $issueObj->getIssueId(), $issueObj->getName(), $languageObj->getName(), $publicationObj->getName() ); 
+Log::Message($logtext, $User->getUserName(), 35); 
+
+header('Location: '.$Back);
+exit;
 ?>
-    
-
-<?php  
-   if (getVar($XPerm,'Publish') == "Y")
-	$pa=1;
-    else 
-	$pa=0;
-     ?>
-
-<HEAD>
-    <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-	<META HTTP-EQUIV="Expires" CONTENT="now">
-	<TITLE><?php  putGS("Changing article status"); ?></TITLE>
-<?php  if ($access == 0) { ?>	<META HTTP-EQUIV="Refresh" CONTENT="0; URL=/priv/logout.php">
-<?php  } ?></HEAD>
-
-<?php  if ($access) { ?><STYLE>
-	BODY { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	SMALL { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 8pt; }
-	FORM { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	TH { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	TD { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	BLOCKQUOTE { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	UL { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	LI { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
-	A  { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; text-decoration: none; color: darkblue; }
-	ADDRESS { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 8pt; }
-</STYLE>
-
-<BODY  BGCOLOR="WHITE" TEXT="BLACK" LINK="DARKBLUE" ALINK="RED" VLINK="DARKBLUE">
-
-<?php  
-    todefnum('Pub');
-    todefnum('Issue');
-    todefnum('Section');
-    todefnum('Article');
-    todefnum('Language');
-    todefnum('sLanguage');
-?><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%">
-	<TR>
-		<TD ROWSPAN="2" WIDTH="1%"><IMG SRC="/priv/img/sign_big.gif" BORDER="0"></TD>
-		<TD>
-		    <DIV STYLE="font-size: 12pt"><B><?php  putGS("Changing article status"); ?></B></DIV>
-		    <HR NOSHADE SIZE="1" COLOR="BLACK">
-		</TD>
-	</TR>
-	<TR><TD ALIGN=RIGHT><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0"><TR><TD><A HREF="/priv/pub/issues/sections/articles/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>&Section=<?php  p($Section); ?>" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Articles"); ?>"></A></TD><TD><A HREF="/priv/pub/issues/sections/articles/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>&Section=<?php  p($Section); ?>" ><B><?php  putGS("Articles");  ?></B></A></TD>
-<TD><A HREF="/priv/pub/issues/sections/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Sections"); ?>"></A></TD><TD><A HREF="/priv/pub/issues/sections/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>" ><B><?php  putGS("Sections");  ?></B></A></TD>
-<TD><A HREF="/priv/pub/issues/?Pub=<?php  p($Pub); ?>" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Issues"); ?>"></A></TD><TD><A HREF="/priv/pub/issues/?Pub=<?php  p($Pub); ?>" ><B><?php  putGS("Issues");  ?></B></A></TD>
-<TD><A HREF="/priv/pub/" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Publications"); ?>"></A></TD><TD><A HREF="/priv/pub/" ><B><?php  putGS("Publications");  ?></B></A></TD>
-<TD><A HREF="/priv/home.php" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Home"); ?>"></A></TD><TD><A HREF="/priv/home.php" ><B><?php  putGS("Home");  ?></B></A></TD>
-<TD><A HREF="/priv/logout.php" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Logout"); ?>"></A></TD><TD><A HREF="/priv/logout.php" ><B><?php  putGS("Logout");  ?></B></A></TD>
-</TR></TABLE></TD></TR>
-</TABLE>
-
-<?php 
-    query ("SELECT * FROM Articles WHERE IdPublication=$Pub AND NrIssue=$Issue AND NrSection=$Section AND Number=$Article AND IdLanguage=$sLanguage", 'q_art');
-    if ($NUM_ROWS) {
-	query ("SELECT * FROM Sections WHERE IdPublication=$Pub AND NrIssue=$Issue AND IdLanguage=$Language AND Number=$Section", 'q_sect');
-	if ($NUM_ROWS) {
-	    query ("SELECT * FROM Issues WHERE IdPublication=$Pub AND Number=$Issue AND IdLanguage=$Language", 'q_iss');
-	    if ($NUM_ROWS) {
-		query ("SELECT * FROM Publications WHERE Id=$Pub", 'q_pub');
-		if ($NUM_ROWS) {
-		    query ("SELECT Name FROM Languages WHERE Id=$Language", 'q_lang');
-		    query ("SELECT Name FROM Languages WHERE Id=$sLanguage", 'q_slang');
-
-		    fetchRow($q_art);
-		    fetchRow($q_sect);
-		    fetchRow($q_iss);
-		    fetchRow($q_pub);
-		    fetchRow($q_lang);
-		    fetchRow($q_slang);
-?><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="1" WIDTH="100%"><TR>
-<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP">&nbsp;<?php  putGS("Publication"); ?>:</TD><TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><?php  pgetHVar($q_pub,'Name'); ?></B></TD>
-
-<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP">&nbsp;<?php  putGS("Issue"); ?>:</TD><TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><?php  pgetHVar($q_iss,'Number'); ?>. <?php  pgetHVar($q_iss,'Name'); ?> (<?php  pgetHVar($q_lang,'Name'); ?>)</B></TD>
-
-<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP">&nbsp;<?php  putGS("Section"); ?>:</TD><TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><?php  pgetHVar($q_sect,'Number'); ?>. <?php  pgetHVar($q_sect,'Name'); ?></B></TD>
-
-</TR></TABLE>
-
-
-	<?php  if($xpermrows) {
-		$xaccess=(getvar($XPerm,'ChangeArticle') == "Y");
-		if($xaccess =='') $xaccess = 0;
-	}
-	else $xaccess = 0;
-	?>
-	
-
-
-<?php 
-    query ("SELECT ($xaccess != 0) or ((".getVar($q_art,'IdUser')." = ".getVar($Usr,'Id').") and ('".getVar($q_art,'Published')."' = 'N'))", 'q_xperm');
-    fetchRowNum($q_xperm);
-    if (getNumVar($q_xperm,0)) { ?><P>
-
-<CENTER><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" BGCOLOR="#C0D0FF" ALIGN="CENTER">
-	<TR>
-		<TD COLSPAN="2">
-			<B> <?php  putGS("Changing article status"); ?> </B>
-			<HR NOSHADE SIZE="1" COLOR="BLACK">
-		</TD>
-	</TR>
-<?php 
- 	if ((getVar($q_art,'Published') == "Y") && $pa){
-		query ("DELETE FROM ArticleIndex WHERE IdPublication=$Pub AND NrIssue=$Issue AND NrSection=$Section AND NrArticle=$Article AND IdLanguage=$sLanguage");
-		//check the deletion
- 	}
-	
-	if (!(((getVar($q_art,'Published') == "Y") || ($Status == "Y")) && ($pa == 0))){
-		query ("UPDATE Articles SET LockUser=0, Published='$Status', IsIndexed='N' WHERE IdPublication=$Pub AND NrIssue=$Issue AND NrSection=$Section AND Number=$Article AND IdLanguage=$sLanguage");
-		if ($AFFECTED_ROWS > 0) { ?>			<?php  if (getVar($q_art,'Published') == "Y")	$stat=getGS('Published');
-			else if (getVar($q_art,'Published')== "S") $stat=getGS('Submitted');
-			else $stat=getGS('New');
-
-			if($Status == "Y") $newstat=getGS('Published');
-			else if ($Status== "S") $newstat=getGS('Submitted');
-			else $newstat=getGS('New');
-			?>
-
-			<TR>
-		<TD COLSPAN="2"><BLOCKQUOTE><LI><?php  putGS('Status of the article $1 ($2) has been changed from $3 to $4.','<B>'.getHVar($q_art,'Name'),getHVar($q_slang,'Name').'</B>',"<B>$stat</B>","<B>$newstat</B>"); ?></LI></BLOCKQUOTE></TD>
-	</TR>
-			<?php  $logtext = getGS('Article $1 status from $2. $3 from $4. $5 ($6) of $7 changed',getSVar($q_art,'Name'),getSVar($q_sect,'Number'),getSVar($q_sect,'Name'),getSVar($q_iss,'Number'),getSVar($q_iss,'Name'),getSVar($q_lang,'Name'),getSVar($q_pub,'Name') ); query ("INSERT INTO Log SET TStamp=NOW(), IdEvent=35, User='".getVar($Usr,'UName')."', Text='$logtext'"); ?>
-		<?php  } else { ?>			<TR>
-		<TD COLSPAN="2"><BLOCKQUOTE><LI><?php  putGS('Status of the article $1 ($2) could not be changed.','<B>'.getHVar($q_art,'Name'),getHVar($q_slang,'Name').'</B>'); ?></LI></BLOCKQUOTE></TD>
-	</TR>
-		<?php }
-	} else {?>		<TR>
-		<TD COLSPAN="2"><BLOCKQUOTE><?php  putGS('You do not have the right to change this article status. Once submitted an article can only changed by authorized users.'); ?></BLOCKQUOTE></TD>
-	</TR>
-	<?php  } ?>
-	<TR>
-		<TD COLSPAN="2">
-		<DIV ALIGN="CENTER">
-<?php 
-    todef('Back');
-if ($AFFECTED_ROWS > 0) { 
-    if ($Back != "") { ?>		<INPUT TYPE="button" NAME="Done" VALUE="<?php  putGS('Done'); ?>" ONCLICK="location.href='<?php  p($Back); ?>'">
-<?php  } else { ?>		<INPUT TYPE="button" NAME="Done" VALUE="<?php  putGS('Done'); ?>" ONCLICK="location.href='/priv/pub/issues/sections/articles/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>&Section=<?php  p($Section); ?>'">
-<?php  } ?><?php  } else { ?><?php  if ($Back != "") { ?>		<INPUT TYPE="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='<?php  p($Back); ?>'">
-<?php  } else { ?>		<INPUT TYPE="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/priv/pub/issues/sections/articles/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>&Section=<?php  p($Section); ?>'">
-<?php  } ?><?php  } ?>		</DIV>
-		</TD>
-	</TR>
-</TABLE></CENTER>
-
-<P>
-<?php  } else { ?>    
-<P>
-<CENTER><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" BGCOLOR="#C0D0FF" ALIGN="CENTER">
-	<TR>
-		<TD COLSPAN="2">
-			<B> <font color="red"><?php  putGS("Access denied"); ?> </font></B>
-			<HR NOSHADE SIZE="1" COLOR="BLACK">
-		</TD>
-	</TR>
-	<TR>
-		<TD COLSPAN="2"><BLOCKQUOTE><font color=red><li><?php  putGS("You do not have the right to change this article status. Once submitted an article can only changed by authorized users." ); ?></li></font></BLOCKQUOTE></TD>
-	</TR>
-	<TR>
-		<TD COLSPAN="2">
-		<DIV ALIGN="CENTER">
-		<A HREF="/priv/pub/issues/sections/articles/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>&Section=<?php  p($Section); ?>"><IMG SRC="/priv/img/button/ok.gif" BORDER="0" ALT="OK"></A>
-		</DIV>
-		</TD>
-	</TR>
-</TABLE></CENTER>
-</FORM>
-<P>
-
-<?php  } ?>
-<?php  } else { ?><BLOCKQUOTE>
-	<LI><?php  putGS('No such publication.'); ?></LI>
-</BLOCKQUOTE>
-<?php  } ?>
-<?php  } else { ?><BLOCKQUOTE>
-	<LI><?php  putGS('No such issue.'); ?></LI>
-</BLOCKQUOTE>
-<?php  } ?>
-<?php  } else { ?><BLOCKQUOTE>
-	<LI><?php  putGS('No such section.'); ?></LI>
-</BLOCKQUOTE>
-<?php  } ?>
-<?php  } else { ?><BLOCKQUOTE>
-	<LI><?php  putGS('No such article.'); ?></LI>
-</BLOCKQUOTE>
-<?php  } ?>
-<HR NOSHADE SIZE="1" COLOR="BLACK">
-<a STYLE='font-size:8pt;color:#000000' href='http://www.campware.org' target='campware'>CAMPSITE  2.1.5 &copy 1999-2004 MDLF, maintained and distributed under GNU GPL by CAMPWARE</a>
-</BODY>
-<?php  } ?>
-
-</HTML>
