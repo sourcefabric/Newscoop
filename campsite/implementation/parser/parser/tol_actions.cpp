@@ -329,6 +329,8 @@ int TOLActLanguage::TakeAction(TOLContext& c, fstream& fs)
 	StoreResult(&m_coSql, res);
 	CheckForRows(*res, 1);
 	FetchRow(*res, row);
+	if (row[0] == NULL)
+		return -1;
 	c.SetLanguage(strtol(row[0], 0, 10));
 	return RES_OK;
 }
@@ -423,6 +425,8 @@ int TOLActPublication::TakeAction(TOLContext& c, fstream& fs)
 	StoreResult(&m_coSql, res);
 	CheckForRows(*res, 1);
 	FetchRow(*res, row);
+	if (row[0] == NULL)
+		return -1;
 	c.SetPublication(strtol(row[0], 0, 10));
 	return RES_OK;
 }
@@ -472,6 +476,8 @@ int TOLActIssue::TakeAction(TOLContext& c, fstream& fs)
 	else
 		return -1;
 	SetNrField("IdPublication", c.Publication(), &m_coBuf, w);
+	if (c.Access() == A_PUBLISHED)
+		AppendConstraint(w, "Published", "=", "Y");
 	if (w != "")
 		coQuery += "where ";
 	coQuery += w;
@@ -480,6 +486,8 @@ int TOLActIssue::TakeAction(TOLContext& c, fstream& fs)
 	StoreResult(&m_coSql, res);
 	CheckForRows(*res, 1);
 	FetchRow(*res, row);
+	if (row[0] == NULL)
+		return -1;
 	c.SetIssue(strtol(row[0], 0, 10));
 	return RES_OK;
 	TK_CATCH_ERR
@@ -527,6 +535,8 @@ int TOLActSection::TakeAction(TOLContext& c, fstream& fs)
 	StoreResult(&m_coSql, res);
 	CheckForRows(*res, 1);
 	FetchRow(*res, row);
+	if (row[0] == NULL)
+		return -1;
 	c.SetSection(strtol(row[0], 0, 10));
 	return RES_OK;
 }
@@ -574,6 +584,8 @@ int TOLActArticle::TakeAction(TOLContext& c, fstream& fs)
 	StoreResult(&m_coSql, res);
 	CheckForRows(*res, 1);
 	FetchRow(*res, row);
+	if (row[0] == NULL)
+		return -1;
 	c.SetArticle(strtol(row[0], 0, 10));
 	return RES_OK;
 }
@@ -944,7 +956,7 @@ int TOLActList::TakeAction(TOLContext& c, fstream& fs)
 			string st = "";
 			if (modifier != TOL_LMOD_SUBTITLE)
 			{
-				if ((row = mysql_fetch_row(*res)) == 0)
+				if ((row = mysql_fetch_row(*res)) == NULL)
 					break;
 				lc.SetLanguage(strtol(row[1], 0, 10));
 				lc.SetPublication(strtol(row[2], 0, 10));
@@ -1209,6 +1221,8 @@ int TOLActPrint::BlobField(cpChar table, cpChar field)
 	StoreResult(&m_coSql, res);
 	CheckForRows(*res, 1);
 	FetchRow(*res, row);
+	if (row[1] == NULL)
+		return -1;
 	if (strstr(row[1], "blob"))
 		result = 0;
 	return result;
@@ -1227,6 +1241,8 @@ int TOLActPrint::DateField(cpChar table, cpChar field)
 	StoreResult(&m_coSql, res);
 	CheckForRows(*res, 1);
 	FetchRow(*res, row);
+	if (row[1] == NULL)
+		return -1;
 	if (strncmp(row[1], "date", 4) == 0)
 		result = 0;
 	return result;
@@ -1834,14 +1850,16 @@ int TOLActIf::TakeAction(TOLContext& c, fstream& fs)
 	}
 	else if (modifier == TOL_IMOD_IMAGE)
 	{
-		sprintf(&m_coBuf, "select count(*) from Images where IdPublication = %d and NrIssue = %d"
-		        " and NrSection = %d and NrArticle = %d and Number = %d", c.Publication(),
-		        c.Issue(), c.Section(), c.Article(), atoi(param.Attribute()));
+		sprintf(&m_coBuf, "select count(*) from Images where IdPublication = %ld and NrIssue = %ld"
+		        " and NrSection = %ld and NrArticle = %ld and Number = %ld", c.Publication(),
+		        c.Issue(), c.Section(), c.Article(), atol(param.Attribute()));
 		DEBUGAct("TakeAction()", &m_coBuf, fs);
 		SQLQuery(&m_coSql, &m_coBuf);
 		StoreResult(&m_coSql, res);
 		CheckForRows(*res, 1);
 		FetchRow(*res, row);
+		if (row[0] == NULL)
+			return -1;
 		run_first = atoi(row[0]) > 0;
 		run_first = m_bNegated ? !run_first : run_first;
 		if (run_first)
@@ -2059,7 +2077,13 @@ int TOLActLocal::TakeAction(TOLContext& c, fstream& fs)
 {
 	TOLContext lc = c;
 	for (TOLPActionList::iterator al_i = block.begin(); al_i != block.end(); ++al_i)
-		(*al_i)->TakeAction(lc, fs);
+	{
+		if (DoDebug())
+			fs << "<!-- Local: taking action " << (*al_i)->ClassName() << " -->\n";
+		int res = (*al_i)->TakeAction(lc, fs);
+		if (DoDebug())
+			fs << "<!-- Local: action " << (*al_i)->ClassName() << " result: " << res << " -->\n";
+	}
 	return RES_OK;
 }
 
@@ -2091,6 +2115,8 @@ int TOLActSubscription::TakeAction(TOLContext& c, fstream& fs)
 	StoreResult(&m_coSql, res);
 	CheckForRows(*res, 1);
 	FetchRow(*res, row);
+	if (row[0] == NULL)
+		return -1;
 	double unit_cost = atof(row[0]);
 	string currency = row[1];
 	sprintf(&m_coBuf, "select count(*) from Sections where IdPublication = %ld and "
@@ -2099,6 +2125,8 @@ int TOLActSubscription::TakeAction(TOLContext& c, fstream& fs)
 	res = mysql_store_result(&m_coSql);
 	CheckForRows(*res, 1);
 	row = mysql_fetch_row(*res);
+	if (row[0] == NULL)
+		return -1;
 	long int nos = atol(row[0]);
 	TOLContext lc = c;
 	lc.SetByPublication(by_publication);
@@ -2167,6 +2195,8 @@ int TOLActEdit::TakeAction(TOLContext& c, fstream& fs)
 			StoreResult(&m_coSql, res);
 			CheckForRows(*res, 1);
 			FetchRow(*res, row);
+			if (row[1] == NULL)
+				return -1;
 			cpChar r = strchr(row[1], '(');
 			if (r == 0 || *r == 0)
 				return RES_OK;
