@@ -88,7 +88,7 @@ regGS("No such keyword.","No existe palabra clave");
 regGS("Publication does not exist.","No existe publicación");
 regGS("No such country.","No existe país");
 regGS("No such issue.","No existe edición");
-regGS("No such topic.","No existe tema");
+regGS("Topic does not exist.","No existe tema");
 regGS("You must select a language.","Debe seleccionar un idioma");
 regGS("No such section.","No existe sección");
 regGS("No articles.","Sin articulos");

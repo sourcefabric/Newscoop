@@ -76,7 +76,7 @@ regGS("No such keyword.","Stichwort nicht vorhanden");
 regGS("Publication does not exist.","Publikation nicht vorhanden");
 regGS("No such country.","Land nicht vorhanden");
 regGS("No such issue.","Ausgabe nicht vorhanden");
-regGS("No such topic.","Thema existiert nicht");
+regGS("Topic does not exist.","Thema existiert nicht");
 regGS("You must select a language.","Sprache muss gewählt werden");
 regGS("No such section.","Rubrik nicht vorhanden");
 regGS("No articles.","Keine Artikel");

@@ -88,7 +88,7 @@ regGS("No such keyword.","Cuvântul cheie nu există");
 regGS("Publication does not exist.","Publicaţia nu există");
 regGS("No such country.","Ţara nu există");
 regGS("No such issue.","Ediţia nu există");
-regGS("No such topic.","Topicul nu există");
+regGS("Topic does not exist.","Topicul nu există");
 regGS("You must select a language.","Trebuie să selectaţi o limbă");
 regGS("No such section.","Secţiunea nu există");
 regGS("No articles.","Nu există articole");

@@ -90,7 +90,7 @@ regGS("No such keyword.","Palavra-Chave Desconhecida.");
 regGS("Publication does not exist.","Publicação Desconhecida.");
 regGS("No such country.","País Desconhecido.");
 regGS("No such issue.","Edição Desconhecida.");
-regGS("No such topic.","Tema Desconhecido.");
+regGS("Topic does not exist.","Tema Desconhecido.");
 regGS("You must select a language.","Seleccione o Idioma.");
 regGS("No such section.","Secção Desconhecida.");
 regGS("No articles.","Não existem Artigos");
