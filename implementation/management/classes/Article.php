@@ -101,6 +101,11 @@ class Article extends DatabaseObject {
 	
 	
 	/**
+	 * A way for internal functions to call the superclass create function.
+	 */
+	function __create($p_values = null) { return parent::create($p_values); }
+	
+	/**
 	 * Create an article in the database.  Use the SET functions to
 	 * change individual values.
 	 *
@@ -217,6 +222,62 @@ class Article extends DatabaseObject {
 	} // fn copy
 	
 
+	/**
+	 * Create a copy of the article, but make it a translation
+	 * of the current one.
+	 *
+	 * @param int p_languageId
+	 * @param int p_userId
+	 * @param string p_name
+	 * @return Article
+	 */
+	function createTranslation($p_languageId, $p_userId, $p_name) {
+		global $Campsite;
+		// Construct the duplicate article object.
+		$articleCopy =& new Article();
+		$articleCopy->m_data['IdPublication'] = $this->m_data['IdPublication']; 
+		$articleCopy->m_data['NrIssue'] = $this->m_data['NrIssue']; 
+		$articleCopy->m_data['NrSection'] = $this->m_data['NrSection']; 
+		$articleCopy->m_data['IdLanguage'] = $p_languageId; 
+		$articleCopy->m_data['Number'] = $this->m_data['Number']; 
+
+		// Create the record
+		$success = $articleCopy->__create();
+		if (!$success) {
+			return;
+		}
+	
+		// Change some attributes
+		$articleCopy->setProperty('UploadDate', 'NOW()', true, true);
+		$articleCopy->m_data['LockUser'] = 0;
+		$articleCopy->m_data['LockTime'] = 0;
+		$articleCopy->m_data['IdUser'] = $p_userId;
+		$articleCopy->m_data['Name'] = $p_name;
+		$articleCopy->m_data['Published'] = 'N';
+			
+		// Copy some attributes
+		$articleCopy->m_data['Type'] = $this->m_data['Type'];
+		$articleCopy->m_data['ShortName'] = $this->m_data['ShortName'];
+		$articleCopy->m_data['IsIndexed'] = $this->m_data['IsIndexed'];		
+		$articleCopy->m_data['OnFrontPage'] = $this->m_data['OnFrontPage'];
+		$articleCopy->m_data['OnSection'] = $this->m_data['OnFrontPage'];
+		$articleCopy->m_data['Public'] = $this->m_data['Public'];
+		$articleCopy->m_data['ArticleOrder'] = $this->m_data['ArticleOrder'];
+		
+		$articleCopy->commit();
+
+		// Insert an entry into the article type table.
+		$articleCopyData =& new ArticleType($articleCopy->m_data['Type'], 
+			$articleCopy->m_data['Number'], $articleCopy->m_data['IdLanguage']);
+		$articleCopyData->create();
+		
+		$origArticleData =& $this->getArticleTypeObject();
+		$origArticleData->copyToExistingRecord($articleCopy->getArticleId(), $p_languageId);
+		
+		return $articleCopy;
+	} // fn createTranslation
+	
+	
 	function getMaxArticleOrder() {
 		global $Campsite;
 		$queryStr = 'SELECT MAX(ArticleOrder) FROM Articles '
@@ -317,8 +378,6 @@ class Article extends DatabaseObject {
 	/**
 	 * Return an array of Langauge objects, one for each
 	 * type of language the article is written in.
-	 * TODO: change this to a function that returns the set of all 
-	 * articles, one for each language.
 	 *
 	 * @return array
 	 */
@@ -331,11 +390,40 @@ class Article extends DatabaseObject {
 	 				.' AND Number='.$this->m_data['Number'];
 	 	$languageIds = $Campsite['db']->GetCol($queryStr);
 	 	$languages = array();
-		foreach ($languageIds as $languageId) {
-			$languages[] =& new Language($languageId);
-		}
+	 	if (is_array($languageIds)) {
+			foreach ($languageIds as $languageId) {
+				$languages[] =& new Language($languageId);
+			}
+	 	}
 		return $languages;
 	} // fn getLanguages
+	
+	
+	/**
+	 * Return an array of Article objects, one for each
+	 * type of language the article is written in.
+	 *
+	 * @return array
+	 */
+	function getTranslations() {
+		global $Campsite;
+	 	$queryStr = 'SELECT '. implode(',', $this->m_columnNames).' FROM Articles '
+	 				.' WHERE IdPublication='.$this->m_data['IdPublication']
+	 				.' AND NrIssue='.$this->m_data['NrIssue']
+	 				.' AND NrSection='.$this->m_data['NrSection']
+	 				.' AND Number='.$this->m_data['Number'];
+	 	$rows = $Campsite['db']->GetAll($queryStr);
+	 	$articles = array();
+	 	if (is_array($rows)) {
+			foreach ($rows as $row) {
+				$tmpArticle =& new Article($row['IdPublication'], $row['NrIssue'], 
+					$row['NrSection'], $row['IdLanguage']);
+				$tmpArticle->fetch($row);
+				$articles[] =& $tmpArticle;
+			}
+	 	}
+		return $articles;
+	} // fn getTranslations
 	
 	
 	/**
@@ -368,11 +456,13 @@ class Article extends DatabaseObject {
 	 				.' WHERE Articles.IdLanguage = Languages.Id';
 	 	$rows = $Campsite['db']->GetAll($queryStr);
 	 	$languages = array();
-		foreach ($rows as $row) {
-			$tmpLanguage =& new Language();
-			$tmpLanguage->fetch($row);
-			$languages[] =& $tmpLanguage;
-		}
+	 	if (is_array($rows)) {
+			foreach ($rows as $row) {
+				$tmpLanguage =& new Language();
+				$tmpLanguage->fetch($row);
+				$languages[] =& $tmpLanguage;
+			}
+	 	}
 		return $languages;		
 	} // fn GetAllLanguages
 	
