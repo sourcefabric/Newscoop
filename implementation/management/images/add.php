@@ -51,6 +51,9 @@
 <?php  } ?></HEAD>
 
 <?php  if ($access) {
+
+query ('SELECT MAX(Id)+1 AS Id FROM Images', 'max_id');
+fetchRow($max_id);
 ?><STYLE>
 	BODY { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
 	SMALL { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 8pt; }
@@ -97,7 +100,7 @@
 	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS("Description"); ?>:</TD>
 		<TD align="left">
-		<INPUT TYPE="TEXT" NAME="cDescription" VALUE="Image <?php  p($nr); ?>" SIZE="32" MAXLENGTH="128">
+		<INPUT TYPE="TEXT" NAME="cDescription" VALUE="Image <?php  pgetVar($max_id,'Id'); ?>" SIZE="32" MAXLENGTH="128">
 		</TD>
 	</TR>
 	<TR>

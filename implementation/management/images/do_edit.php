@@ -59,8 +59,14 @@
     todef('cPhotographer');
     todef('cPlace');
 	todef('cDate');
-							
-	require_once('image_functions.inc.php');
+	todef('cURL');
+	todef('cImageName', $_FILES['cImage']['name']);
+	todef('cImageTemp', $_FILES['cImage']['tmp_name']);
+	todef('cImageType', $_FILES['cImage']['type']);
+	todef('cImageError', $_FILES['cImage']['error']);
+	todef('cImageSize', $_FILES['cImage']['size']);
+
+	include('image_functions.inc.php');
 	$Link = cImgLink();
 ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%">
@@ -82,8 +88,8 @@
 	</TD></TR>
 </TABLE>
 
-<?php 
-query ("SELECT Description, Photographer, Place, Date, ContentType FROM Images WHERE Id=$Id", 'q_img');
+<?php
+query ("SELECT Id FROM Images WHERE Id=$Id", 'q_img');
 if ($NUM_ROWS) {
 	fetchRow($q_img);
 ?>
@@ -98,8 +104,18 @@ if ($NUM_ROWS) {
 	<TR>
 		<TD COLSPAN="2"><BLOCKQUOTE>
 <?php
-	query ("UPDATE Images SET Description='$cDescription', Photographer='$cPhotographer', Place='$cPlace', Date='$cDate' WHERE Id=$Id");
-	if ($AFFECTED_ROWS > 0) { ?>	<LI><?php  putGS('Image information has been updated.'); ?></LI>
+	if ($cURL) {
+		// remote image
+		$query = "UPDATE Images SET Description='$cDescription', Photographer='$cPhotographer', Place='$cPlace', Date='$cDate', Location='remote', URL='$cURL' WHERE Id=$Id";
+		query ($query);
+		@unlink($_SERVER[DOCUMENT_ROOT].$ImgPrefix.$Id);  // maybee it was an local file
+	} else {
+		// local image
+		$query = "UPDATE Images SET Description='$cDescription', Photographer='$cPhotographer', Place='$cPlace', Date='$cDate', Location='local', URL='' WHERE Id=$Id";
+		query ($query);
+		move_uploaded_file ($cImageTemp, $_SERVER[DOCUMENT_ROOT].$ImgPrefix.$Id);
+	}
+	if ($AFFECTED_ROWS > 0 || !$cURL) { ?>	<LI><?php  putGS('Image information has been updated.'); ?></LI>
 <?php  $logtext = getGS('Changed image properties of $1',encHTML($cDescription)); query ("INSERT INTO Log SET TStamp=NOW(), IdEvent=43, User='".getVar($Usr,'UName')."', Text='$logtext'"); ?>
 <?php  } else { ?>	<LI><?php  putGS('Image information could not be updated.'); ?></LI>
 <?php  } ?>	</BLOCKQUOTE></TD>

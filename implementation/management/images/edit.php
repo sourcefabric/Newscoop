@@ -76,7 +76,7 @@
 </TABLE>
 
 <?php 
-query ("SELECT Id, Description, Photographer, Place, Date, ContentType FROM Images WHERE Id=$Id", 'q_img');
+query ("SELECT Id, Description, Photographer, Place, Date, URL, ContentType FROM Images WHERE Id = $Id", 'q_img');
 if ($NUM_ROWS) {
 	fetchRow($q_img);
 
@@ -84,7 +84,7 @@ if ($NUM_ROWS) {
 	$Link = cImgLink();
 ?>
 <P>
-<FORM NAME="dialog" METHOD="POST" ACTION="do_edit.php?<?php echo $Link['SO']; ?>" >
+<FORM NAME="dialog" METHOD="POST" ACTION="do_edit.php?<?php echo $Link['SO']; ?>" ENCTYPE="multipart/form-data">
 <CENTER><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" BGCOLOR="#C0D0FF" ALIGN="CENTER">
 	<TR>
 		<TD COLSPAN="2">
@@ -94,26 +94,38 @@ if ($NUM_ROWS) {
 	</TR>
 	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS("Description"); ?>:</TD>
-		<TD>
+		<TD align="left">
 		<INPUT TYPE="TEXT" NAME="cDescription" VALUE="<?php  pgetHVar($q_img,'Description'); ?>" SIZE="32" MAXLENGTH="128">
 		</TD>
 	</TR>
 	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS("Photographer"); ?>:</TD>
-		<TD>
+		<TD align="left">
 		<INPUT TYPE="TEXT" NAME="cPhotographer" VALUE="<?php  pgetHVar($q_img,'Photographer') ;?>" SIZE="32" MAXLENGTH="64">
 		</TD>
 	</TR>
 	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS("Place"); ?>:</TD>
-		<TD>
+		<TD align="left">
 		<INPUT TYPE="TEXT" NAME="cPlace" VALUE="<?php  pgetHVar($q_img,'Place'); ?>" SIZE="32" MAXLENGTH="64">
 		</TD>
 	</TR>
 	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS("Date"); ?>:</TD>
-		<TD>
+		<TD align="left">
 		<INPUT TYPE="TEXT" NAME="cDate" VALUE="<?php  pgetHVar($q_img,'Date'); ?>" SIZE="10" MAXLENGTH="10"><?php putGS('YYYY-MM-DD'); ?>
+		</TD>
+	</TR>
+	<TR>
+		<TD ALIGN="RIGHT" ><?php  putGS("URL"); ?>:</TD>
+		<TD align="left">
+		<INPUT TYPE="TEXT" NAME="cURL" VALUE="<?php  pgetHVar($q_img,'URL') ;?>" SIZE="32" MAXLENGTH="64">
+		</TD>
+	</TR>
+	<TR>
+		<TD ALIGN="RIGHT" ><?php  putGS("Image"); ?>:</TD>
+		<TD align="left">
+		<INPUT TYPE="FILE" NAME="cImage" SIZE="32" MAXLENGTH="64">
 		</TD>
 	</TR>
 	<TR>
