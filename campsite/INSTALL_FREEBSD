@@ -4,7 +4,7 @@ BEFORE INSTALLATION:
 1. Campsite requires that you have 'bash' installed, with the bash executable
 located at /bin/bash. If you have installed bash from ports you may wish to
 simply:
-	 ln -s /usr/local/bin/bash /bin/bash
+	ln -s /usr/local/bin/bash /bin/bash
 2. Campsite requires that you have 'stat' installed. Stat is available from the
 FreeBSD ports tree under sysutils/stat.
 3. To build under FreeBSD, Campsite requires that you have 'gmake' installed.
@@ -12,6 +12,15 @@ gmake is available from the FreeBSD ports tree under devel/gmake.
 4. You should of course ensure that all other required Campsite components
 as listed in the Campsite manual (apache, mysql, php) are installed and
 correctly configured.
+5. It is recommended that you change the 'configure' file in the Campsite
+directory so that the line:
+	export CONF_DIR=$PREFIX/etc/campsite.d/$APP_NAME
+
+is changed to:
+	export CONF_DIR=/usr/local/etc/campsite.d/$APP_NAME
+
+This ensures that Campsite config files are stored in /usr/local/etc instead
+of /etc -- probably quite desirable on most FreeBSD systems.
 
 INSTALLATION
 Follow the installation guide in the Campsite manual -- the installation
