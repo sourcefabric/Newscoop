@@ -38,6 +38,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "srvdef.h"
 #include "tpl_cgi.h"
 #include "readconf.h"
+#include "cxmltree.h"
+#include "cgi.h"
 
 #define RECV_BUF_LEN	(1000)
 
@@ -152,11 +154,13 @@ private:
 
 int ReadParameters(char** p_ppchParams, int* p_pnSize, const char** p_ppchErrMsg)
 {
+	char* pchHTTPHost = 0;
 	char* pchDocumentRoot = 0;
 	char* pchIP = 0;
 	char* pchPathTranslated = 0;
 	char* pchPathInfo = 0;
 	char* pchRequestMethod = 0;
+	char* pchRequestURI = 0;
 	char* pchQueryString = 0;
 	char* pchHttpCookie = 0;
 	char* pchParams = 0;
@@ -164,6 +168,11 @@ int ReadParameters(char** p_ppchParams, int* p_pnSize, const char** p_ppchErrMsg
 	try
 	{
 		char* pchTmp;
+		if ((pchTmp = getenv("HTTP_HOST")) == NULL)
+		{
+			throw ExReadParams(-1,"Can not get HTTP HOST");
+		}
+		pchHTTPHost = strdup(pchTmp);
 		if ((pchTmp = getenv("DOCUMENT_ROOT")) == NULL)
 		{
 			throw ExReadParams(-1,"Can not get DOCUMENT ROOT");
@@ -193,6 +202,11 @@ int ReadParameters(char** p_ppchParams, int* p_pnSize, const char** p_ppchErrMsg
 			throw ExReadParams(-7, "Can not get REQUEST_METHOD");
 		}
 		pchRequestMethod = strdup(pchTmp);
+		if ((pchTmp = getenv("REQUEST_URI")) == NULL)
+		{
+			throw ExReadParams(-7, "Can not get REQUEST_URI");
+		}
+		pchRequestURI = strdup(pchTmp);
 		if (strcmp(pchRequestMethod, "GET") == 0)
 		{
 			if ((pchTmp = getenv("QUERY_STRING")) == NULL)
@@ -224,6 +238,8 @@ int ReadParameters(char** p_ppchParams, int* p_pnSize, const char** p_ppchErrMsg
 	}
 	catch (ExReadParams& rcoEx)
 	{
+		if (pchHTTPHost != NULL)
+			free(pchHTTPHost);
 		if (pchDocumentRoot != NULL)
 			free(pchDocumentRoot);
 		if (pchIP != NULL)
@@ -234,6 +250,8 @@ int ReadParameters(char** p_ppchParams, int* p_pnSize, const char** p_ppchErrMsg
 			free(pchPathInfo);
 		if (pchRequestMethod != NULL)
 			free(pchRequestMethod);
+		if (pchRequestURI != NULL)
+			free(pchRequestURI);
 		if (pchQueryString != NULL)
 			free(pchQueryString);
 		if (pchHttpCookie != NULL)
@@ -243,26 +261,58 @@ int ReadParameters(char** p_ppchParams, int* p_pnSize, const char** p_ppchErrMsg
 		int nErrNo = rcoEx.ErrNo();
 		return nErrNo;
 	}
-	int nIndex = 4;
-	strcpy(pchParams + nIndex, pchDocumentRoot);
-	nIndex += strlen(pchDocumentRoot) + 1;
-	strcpy(pchParams + nIndex, pchIP);
-	nIndex += strlen(pchIP) + 1;
-	strcpy(pchParams + nIndex, pchPathTranslated);
-	nIndex += strlen(pchPathTranslated) + 1;
-	strcpy(pchParams + nIndex, pchPathInfo);
-	nIndex += strlen(pchPathInfo) + 1;
-	strcpy(pchParams + nIndex, pchRequestMethod);
-	nIndex += strlen(pchRequestMethod) + 1;
-	strcpy(pchParams + nIndex, pchQueryString);
-	nIndex += strlen(pchQueryString) + 1;
-	strcpy(pchParams + nIndex, pchHttpCookie);	
-	int* pnSize = (int*)pchParams;
-	*pnSize = nParamsBufSize - 4;
-	*p_ppchParams = pchParams;
-	*p_pnSize = nParamsBufSize;
-	*p_ppchErrMsg = NULL;
-	
+	CXMLTree coTree("CampsiteMessage");
+	CXMLTree::iterator coRootIt = coTree.getRootNode();
+	coTree.addAttribute(coRootIt, "MessageType", "URLRequest");
+	coTree.addAttribute(coRootIt, "MessageId", "11234");
+	coTree.newChild(coRootIt, "HTTPHost", pchHTTPHost);
+	coTree.newChild(coRootIt, "DocumentRoot", pchDocumentRoot);
+	coTree.newChild(coRootIt, "RemoteAddress", pchIP);
+	coTree.newChild(coRootIt, "PathTranslated", pchPathTranslated);
+	coTree.newChild(coRootIt, "PathInfo", pchPathInfo);
+	coTree.newChild(coRootIt, "RequestMethod", pchRequestMethod);
+	coTree.newChild(coRootIt, "RequestURI", pchRequestURI);
+	CXMLTree::iterator coNodeIt;
+	coNodeIt = coTree.newChild(coRootIt, "Parameters");
+	string::size_type nStart = 0;
+	string coQueryString = pchQueryString;
+	CGI coCgi(pchRequestMethod, pchQueryString);
+	coCgi.ResetIterator();
+	const char* pchParam;
+	const char* pchValue;
+	while (coCgi.GetNextParameter(&pchParam, &pchValue))
+	{
+		CXMLTree::iterator coParamIt = coTree.newChild(coNodeIt, "Parameter", pchValue);
+		coTree.addAttribute(coParamIt, "Name", pchParam);
+		coTree.addAttribute(coParamIt, "Type", "string");
+	}
+	string coCookies = pchHttpCookie;
+	coNodeIt = coTree.newChild(coRootIt, "Cookies");
+	nStart = 0;
+	while (true)
+	{
+		// read the parameter name
+		string::size_type nIndex = coCookies.find('=', nStart);
+		if (nIndex == string::npos)
+			break;
+		string coCookie = coCookies.substr(nStart, nIndex - nStart);
+
+		// read the parameter value
+		nStart = nIndex + 1;
+		nIndex = coCookies.find(";", nStart);
+		nIndex = nIndex == string::npos ? coCookies.size() : nIndex;
+		string coValue = coCookies.substr(nStart, nIndex - nStart);
+
+		CXMLTree::iterator coParamIt = coTree.newChild(coNodeIt, "Cookie", coValue.c_str());
+		coTree.addAttribute(coParamIt, "Name", coCookie.c_str());
+
+		// prepare for the next iteration
+		nStart = nIndex + 1;
+		if (nStart >= coCookies.size())
+			break;
+	}
+//	coTree.saveToFile("-", "UTF-8");
+
 	return 0;
 }
 
