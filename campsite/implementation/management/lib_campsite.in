@@ -1,23 +1,28 @@
+## added by sebastian ###########################
+$DOCUMENT_ROOT = $_SERVER[DOCUMENT_ROOT];
+$_PARMS = array_merge ($_GET, $_POST, $_COOKIE);
+#################################################
+
 function query($qs,$r='',$setvars=true)
 {
-//	print "query: $qs<br>";
+// print "query: $qs<br>";
     $a=mysql_query($qs);
-//    	print "query res: $a<br>";
+//     print "query res: $a<br>";
     $fl=strtoupper(substr($qs,0,1));
     $GLOBALS['NUM_ROWS']=0;
     $GLOBALS['AFFECTED_ROWS']=0;
     if ($setvars) {
-	//print $fl;
+ //print $fl;
         if ($fl=='S')
-	    $GLOBALS['NUM_ROWS']=mysql_num_rows($a);
+     $GLOBALS['NUM_ROWS']=mysql_num_rows($a);
         else
-	    $GLOBALS['AFFECTED_ROWS']=mysql_affected_rows();
-	//print "num=".$GLOBALS['NUM_ROWS']." aff=".$GLOBALS['AFFECTED_ROWS'];
+     $GLOBALS['AFFECTED_ROWS']=mysql_affected_rows();
+ //print "num=".$GLOBALS['NUM_ROWS']." aff=".$GLOBALS['AFFECTED_ROWS'];
     }
     if ($r!='')
         $GLOBALS[$r]=$a;
     if (isset($GLOBALS['debug']))
-	print $qs.$a;
+ print $qs.$a;
 }
 
 function encURL($s)
@@ -57,26 +62,42 @@ function pencHTML($s)
 //    print htmlentities($s);
 }
 
-function todef($s,$v='')
-{
-    if (!isset($GLOBALS[$s]))
-	$GLOBALS[$s]=$v;
-    if (!get_magic_quotes_gpc())
-	$GLOBALS[$s] = mysql_escape_string($GLOBALS[$s]);
+## changed by sebastian #################################
+function todef($s,$v='') {
+  global $_PARMS;
+
+  if (!isset($_PARMS[$s])) {
+      $GLOBALS[$s] = $v;
+  }
+  else {
+    $GLOBALS[$s] = $_PARMS[$s];
+  }
+
+  if (!get_magic_quotes_gpc()) {
+    $GLOBALS[$s] = mysql_escape_string($GLOBALS[$s]);
+  }
 }
+#########################################################
 
 function encSQL($s)
 {
     if (!get_magic_quotes_gpc())
-	return mysql_escape_string($s);
+ return mysql_escape_string($s);
     return $s;
 }
 
-function todefnum($s,$v=0)
-{
-	if (!isset($GLOBALS[$s]))
-		$GLOBALS[$s]=$v;
+## changed by sebastian #################################
+function todefnum($s,$v=0) {
+  global $_PARMS;
+
+  if (!isset($_PARMS[$s])) {
+      $GLOBALS[$s] = $v;
+  }
+  else {
+    $GLOBALS[$s] = $_PARMS[$s];
+  }
 }
+#########################################################
 
 function fetchRow($q)
 {
@@ -141,24 +162,24 @@ function pgetVar($q,$s)
 function todefradio($s)
 {
     if (!isset($GLOBALS[$s]))
-	$GLOBALS[$s]='';
+ $GLOBALS[$s]='';
     if ($GLOBALS[$s]=='on')
-	$GLOBALS[$s]='Y';
+ $GLOBALS[$s]='Y';
     else
-	$GLOBALS[$s]='N';
+ $GLOBALS[$s]='N';
 }
 
 function checkedIfY($qh,$field)
 {
     if (getVar($qh,$field) == 'Y')
-	print " CHECKED";
+ print " CHECKED";
 }
 
 function pcomboVar($val, $actval, $toprint)
 {
     print '<OPTION VALUE="'.encHTML($val).'"';
     if (!strcmp($val,$actval))
-	print ' SELECTED';
+ print ' SELECTED';
     print '>'.encHTML($toprint);
 }
 
@@ -177,14 +198,14 @@ function putGS($s)
     global $gs,$TOL_Language;
     $nr=func_num_args();
     if (!isset($gs[$s]) || ($gs[$s]==''))
-	$my="$s (not translated)";
+ $my="$s (not translated)";
     else
         $my= $gs[$s];
     if ($nr>1)
         for ($i=1;$i<$nr;$i++){
-		$name='$'.$i;
-		$val=func_get_arg($i);
-		$my=str_replace($name,$val,$my);
+  $name='$'.$i;
+  $val=func_get_arg($i);
+  $my=str_replace($name,$val,$my);
         }
     echo $my;
 }
@@ -194,14 +215,14 @@ function getGS($s)
     global $gs,$TOL_Language;
     $nr=func_num_args();
     if (!isset($gs[$s]) || ($gs[$s]=='') )
-	$my="$s (not translated)";
+ $my="$s (not translated)";
     else
         $my= $gs[$s];
     if ($nr>1)
         for ($i=1;$i<$nr;$i++){
-		$name='$'.$i;
-		$val=func_get_arg($i);
-		$my=str_replace($name,$val,$my);
+  $name='$'.$i;
+  $val=func_get_arg($i);
+  $my=str_replace($name,$val,$my);
         }
     return  $my;
 }
@@ -210,14 +231,14 @@ function regGS($key,$value)
 {
     global $gs,$PHP_SELF,$TOL_Language;
     if (isset($gs[$key])) {
-	if ($key!='')
-		print "The global string is already set in $PHP_SELF: $key<BR>";
+ if ($key!='')
+  print "The global string is already set in $PHP_SELF: $key<BR>";
     }
     else{
-	if (substr($value,strlen($value)-3)==":$TOL_Language"){
-	    $value=substr($value,0,strlen($value)-3);
-	}
-	$gs[$key]=$value;
+ if (substr($value,strlen($value)-3)==":$TOL_Language"){
+     $value=substr($value,0,strlen($value)-3);
+ }
+ $gs[$key]=$value;
     }
 }
 
@@ -235,14 +256,14 @@ function p($s)
 function ifYthenCHECKED($q,$f)
 {
     if (getVar($q,$f)=='Y')
-	echo ' CHECKED';
+ echo ' CHECKED';
 }
 
 function selectLanguageFile($path, $name)
 {
     global $TOL_Language;
     if (!isset($TOL_Language)){
-	$TOL_Language='en';
+ $TOL_Language='en';
     }
     $loclang=$TOL_Language;
     return "$path/$name.$loclang.php";
@@ -252,7 +273,7 @@ function pLanguageCode()
 {
     global $TOL_Language;
     if (!isset($TOL_Language)){
-	$TOL_Language='en';
+ $TOL_Language='en';
     }
     print $TOL_Language;
 }
@@ -274,328 +295,329 @@ function pencParam($s)
 
 function add_subs_section($publication_id, $section_nr)
 {
-	// retrieve the default trial and paid time of the subscriptions
-	$dd_query = "select TimeUnit, TrialTime, PaidTime from Publications where Id = "
-	          . $publication_id;
-	query($dd_query, 'dd');
-	if ($GLOBALS['NUM_ROWS'] < 0)
-		return -1;
-	if ($GLOBALS['NUM_ROWS'] == 0)
-		return 0;
-	fetchRowNum($GLOBALS['dd']);
-	$time_unit = getNumVar($GLOBALS['dd'], 0);
-	$trial_time = getNumVar($GLOBALS['dd'], 1);
-	$paid_time = getNumVar($GLOBALS['dd'], 2);
+ // retrieve the default trial and paid time of the subscriptions
+ $dd_query = "select TimeUnit, TrialTime, PaidTime from Publications where Id = "
+           . $publication_id;
+ query($dd_query, 'dd');
+ if ($GLOBALS['NUM_ROWS'] < 0)
+  return -1;
+ if ($GLOBALS['NUM_ROWS'] == 0)
+  return 0;
+ fetchRowNum($GLOBALS['dd']);
+ $time_unit = getNumVar($GLOBALS['dd'], 0);
+ $trial_time = getNumVar($GLOBALS['dd'], 1);
+ $paid_time = getNumVar($GLOBALS['dd'], 2);
 
-	switch($time_unit){
-	case 'D':
-		$trial_days = $trial_time;
-		$paid_days = $paid_time;
-		break;
-	case 'W':
-		$trial_days = $trial_time * 7;
-		$paid_days = $paid_time * 7;
-		break;
-	case 'M':
-		$trial_days = $trial_time * 30;
-		$paid_days = $paid_time * 30;
-		break;
-	case 'Y':
-		$trial_days = $trial_time * 365;
-		$paid_days = $paid_time * 365;
-		break;
-	}
+ switch($time_unit){
+ case 'D':
+  $trial_days = $trial_time;
+  $paid_days = $paid_time;
+  break;
+ case 'W':
+  $trial_days = $trial_time * 7;
+  $paid_days = $paid_time * 7;
+  break;
+ case 'M':
+  $trial_days = $trial_time * 30;
+  $paid_days = $paid_time * 30;
+  break;
+ case 'Y':
+  $trial_days = $trial_time * 365;
+  $paid_days = $paid_time * 365;
+  break;
+ }
 
-	$default_days['T'] = $default_paid_days['T'] = $trial_days;
-	$default_days['P'] = $default_paid_days['P'] = $paid_days;
+ $default_days['T'] = $default_paid_days['T'] = $trial_days;
+ $default_days['P'] = $default_paid_days['P'] = $paid_days;
 
-	// read active subscriptions to the given publication
-	$subs_query = "select subs.Id, subs.Type, sect.StartDate, sect.Days, sect.PaidDays, "
-	            . "abs(sect.SectionNumber - " . $section_nr . ") as sect_diff from "
-	            . "Subscriptions as subs left join SubsSections as sect on subs.Id = "
-	            . "sect.IdSubscription where subs.IdPublication = " . $publication_id
-	            . " and subs.Active = 'Y' " . "order by subs.Id asc, sect_diff asc";
-	query($subs_query, 'subs');
-	$subs_nr = $GLOBALS['NUM_ROWS'];
-	$subs_id = -1;
-	$subs_type = "";
-	$start_date = "";
-	$days = -1;
-	$paid_days = -1;
-	$sect_diff = -1;
-	$subs_count = 0;
-	for ($index = 0; $index < $subs_nr; $index++)
-	{
-		fetchRowNum($GLOBALS['subs']);
-		$n_subs_id = getNumVar($GLOBALS['subs'], 0);
-		$n_subs_type = getNumVar($GLOBALS['subs'], 1);
-		$n_start_date = getNumVar($GLOBALS['subs'], 2);
-		$n_days = getNumVar($GLOBALS['subs'], 3);
-		$n_paid_days = getNumVar($GLOBALS['subs'], 4);
-		$n_sect_diff = getNumVar($GLOBALS['subs'], 5);
+ // read active subscriptions to the given publication
+ $subs_query = "select subs.Id, subs.Type, sect.StartDate, sect.Days, sect.PaidDays, "
+             . "abs(sect.SectionNumber - " . $section_nr . ") as sect_diff from "
+             . "Subscriptions as subs left join SubsSections as sect on subs.Id = "
+             . "sect.IdSubscription where subs.IdPublication = " . $publication_id
+             . " and subs.Active = 'Y' " . "order by subs.Id asc, sect_diff asc";
+ query($subs_query, 'subs');
+ $subs_nr = $GLOBALS['NUM_ROWS'];
+ $subs_id = -1;
+ $subs_type = "";
+ $start_date = "";
+ $days = -1;
+ $paid_days = -1;
+ $sect_diff = -1;
+ $subs_count = 0;
+ for ($index = 0; $index < $subs_nr; $index++)
+ {
+  fetchRowNum($GLOBALS['subs']);
+  $n_subs_id = getNumVar($GLOBALS['subs'], 0);
+  $n_subs_type = getNumVar($GLOBALS['subs'], 1);
+  $n_start_date = getNumVar($GLOBALS['subs'], 2);
+  $n_days = getNumVar($GLOBALS['subs'], 3);
+  $n_paid_days = getNumVar($GLOBALS['subs'], 4);
+  $n_sect_diff = getNumVar($GLOBALS['subs'], 5);
 
-		if (($n_subs_id != $subs_id && $subs_id != -1) || $index == ($subs_nr - 1))
-		{
-			if ($start_date == "")
-			{
-				$start_date = "now()";
-				$days = $default_days[$subs_type];
-				$paid_days = $default_paid_days[$subs_type];
-			}
-			else
-				$start_date = "'" . $start_date . "'";
-			$insert_query = "insert into SubsSections set IdSubscription = " . $subs_id
-			              . ", SectionNumber = " . $section_nr . ", StartDate = "
-			              . $start_date . ", Days = " . $days . ", PaidDays = " . $paid_days;
-			query($insert_query);
-			$subs_count ++;
+  if (($n_subs_id != $subs_id && $subs_id != -1) || $index == ($subs_nr - 1))
+  {
+   if ($start_date == "")
+   {
+    $start_date = "now()";
+    $days = $default_days[$subs_type];
+    $paid_days = $default_paid_days[$subs_type];
+   }
+   else
+    $start_date = "'" . $start_date . "'";
+   $insert_query = "insert into SubsSections set IdSubscription = " . $subs_id
+                 . ", SectionNumber = " . $section_nr . ", StartDate = "
+                 . $start_date . ", Days = " . $days . ", PaidDays = " . $paid_days;
+   query($insert_query);
+   $subs_count ++;
 
-			$sect_diff = 1;
-			$subs_id = $n_subs_id;
-			$subs_type = $n_subs_type;
-			$start_date = $n_start_date;
-			$days = $n_days;
-			$paid_days = $n_paid_days;
-			continue;
-		}
+   $sect_diff = 1;
+   $subs_id = $n_subs_id;
+   $subs_type = $n_subs_type;
+   $start_date = $n_start_date;
+   $days = $n_days;
+   $paid_days = $n_paid_days;
+   continue;
+  }
 
-		if ($n_sect_diff < $sect_diff || $sect_diff == -1)
-		{
-			$start_date = $n_start_date;
-			$days = $n_days;
-			$paid_days = $n_paid_days;
-		}
+  if ($n_sect_diff < $sect_diff || $sect_diff == -1)
+  {
+   $start_date = $n_start_date;
+   $days = $n_days;
+   $paid_days = $n_paid_days;
+  }
 
-		$subs_id = $n_subs_id;
-		$subs_type = $n_subs_type;
-		$sect_diff = $n_sect_diff;
-	}
+  $subs_id = $n_subs_id;
+  $subs_type = $n_subs_type;
+  $sect_diff = $n_sect_diff;
+ }
 
-	return $subs_count;
+ return $subs_count;
 }
 
 function del_subs_section($publication_id, $section_nr)
 {
-	$subs_query = "select Id from Subscriptions where IdPublication = " . $publication_id;
-	query($subs_query, 'subs');
-	if ($GLOBALS['NUM_ROWS'] < 0)
-		return -1;
-	if ($GLOBALS['NUM_ROWS'] == 0)
-		return 0;
-	$subs_nr = $GLOBALS['NUM_ROWS'];
-	for ($index = 0; $index < $subs_nr; $index++)
-	{
-		fetchRowNum($GLOBALS['subs']);
-		$subs_id = getNumVar($GLOBALS['subs'], 0);
-		$del_query = "delete from SubsSections where IdSubscription = " . $subs_id
-		           . " and SectionNumber = " . $section_nr;
-		query($del_query);
-	}
-	return $index;
+ $subs_query = "select Id from Subscriptions where IdPublication = " . $publication_id;
+ query($subs_query, 'subs');
+ if ($GLOBALS['NUM_ROWS'] < 0)
+  return -1;
+ if ($GLOBALS['NUM_ROWS'] == 0)
+  return 0;
+ $subs_nr = $GLOBALS['NUM_ROWS'];
+ for ($index = 0; $index < $subs_nr; $index++)
+ {
+  fetchRowNum($GLOBALS['subs']);
+  $subs_id = getNumVar($GLOBALS['subs'], 0);
+  $del_query = "delete from SubsSections where IdSubscription = " . $subs_id
+             . " and SectionNumber = " . $section_nr;
+  query($del_query);
+ }
+ return $index;
 }
 
 function limitchars($text, $lim, $break, $tail)
 {
 //  $text = split("$break", $text);
-	// If you want this function case insensitive
-	// replace above line with these two lines
-	$text=preg_replace("/$break/i", strtolower($break), $text);
-	$text = split(strtolower("$break"), $text);
-	if (strlen(implode("$break", $text)) >= $lim)
-	{
-		$i = 0;
-		$add_str = "";
-		while($i <= count($text))
-		{
-			$add_str = $text[$i];
-			$out[] = $add_str;
-			if(strlen(implode("$break", $out)) >= $lim - strlen($break) - strlen($add_str))
-				break;
-			$add_str = "";
-			$i++;
-		}
-		$text = implode("$break", $out);
-		if (substr($text, 0, -strlen($break)) == $break)
-			$text = substr($text, 0, -strlen($break));
-		$text = "$text$tail";
-	} else {
-		$text=implode("$break", $text);
-	}
-	return $text;
+ // If you want this function case insensitive
+ // replace above line with these two lines
+ $text=preg_replace("/$break/i", strtolower($break), $text);
+ $text = split(strtolower("$break"), $text);
+ if (strlen(implode("$break", $text)) >= $lim)
+ {
+  $i = 0;
+  $add_str = "";
+  while($i <= count($text))
+  {
+   $add_str = $text[$i];
+   $out[] = $add_str;
+   if(strlen(implode("$break", $out)) >= $lim - strlen($break) - strlen($add_str))
+    break;
+   $add_str = "";
+   $i++;
+  }
+  $text = implode("$break", $out);
+  if (substr($text, 0, -strlen($break)) == $break)
+   $text = substr($text, 0, -strlen($break));
+  $text = "$text$tail";
+ } else {
+  $text=implode("$break", $text);
+ }
+ return $text;
 }
 
 function duplicate_article($article_no, $language_id, $user_id, $dst_pub, $dst_issue, $dst_section , &$msg,
-	&$name, &$new_name)
+ &$name, &$new_name)
 {
-	$sql = "select *, current_date() as cdate from Articles where Number = " . $article_no
-	     . " and IdLanguage = " . $language_id;
-	$res_art = mysql_query($sql);
-	if (mysql_num_rows($res_art) == 0) {
-		$msg = "Invalid article identifier";
-		return 0;
-	}
-	$row_art = mysql_fetch_assoc($res_art);
-	$name = $row_art['Name'];
+ $sql = "select *, current_date() as cdate from Articles where Number = " . $article_no
+      . " and IdLanguage = " . $language_id;
+ $res_art = mysql_query($sql);
+ if (mysql_num_rows($res_art) == 0) {
+  $msg = "Invalid article identifier";
+  return 0;
+ }
+ $row_art = mysql_fetch_assoc($res_art);
+ $name = $row_art['Name'];
 
-	while (true) {
-		$sql = "select * from Articles where IdPublication = " . $dst_pub . " and NrIssue = " . $dst_issue
-		     . " and NrSection = " . $dst_section . " and IdLanguage = " . $language_id . " and Name = '"
-		     . mysql_escape_string($row_art['Name']) . "'";
-		$res_dup = mysql_query($sql);
-		if ($row_dup = mysql_fetch_assoc($res_dup)) {
-			$row_art['Name'] = $row_art['Name'] . " (duplicate)";
-		} else {
-			break;
-		}
-	}
-	$new_name = $row_art['Name'];
+ while (true) {
+  $sql = "select * from Articles where IdPublication = " . $dst_pub . " and NrIssue = " . $dst_issue
+       . " and NrSection = " . $dst_section . " and IdLanguage = " . $language_id . " and Name = '"
+       . mysql_escape_string($row_art['Name']) . "'";
+  $res_dup = mysql_query($sql);
+  if ($row_dup = mysql_fetch_assoc($res_dup)) {
+   $row_art['Name'] = $row_art['Name'] . " (duplicate)";
+  } else {
+   break;
+  }
+ }
+ $new_name = $row_art['Name'];
 
-	$sql = "select * from Sections where IdPublication = " . $dst_pub . " and NrIssue = " . $dst_issue
-	     . " and IdLanguage = " . $row_art['IdLanguage'] . " and Number = " . $dst_section;
-	$res_test = mysql_query($sql);
-	if (mysql_num_rows($res_test) == 0) {
-		$msg = "Invalid destination section selected";
-		return 0;
-	}
+ $sql = "select * from Sections where IdPublication = " . $dst_pub . " and NrIssue = " . $dst_issue
+      . " and IdLanguage = " . $row_art['IdLanguage'] . " and Number = " . $dst_section;
+ $res_test = mysql_query($sql);
+ if (mysql_num_rows($res_test) == 0) {
+  $msg = "Invalid destination section selected";
+  return 0;
+ }
 
-	// change some attributes
-	$row_art['IdPublication'] = $dst_pub;
-	$row_art['NrIssue'] = $dst_issue;
-	$row_art['NrSection'] = $dst_section;
-	$row_art['IdUser'] = $user_id;
-	$row_art['Published'] = 'N';
-	$row_art['UploadDate'] = $row_art['cdate'];
-	$row_art['IsIndexed'] = 'N';
+ // change some attributes
+ $row_art['IdPublication'] = $dst_pub;
+ $row_art['NrIssue'] = $dst_issue;
+ $row_art['NrSection'] = $dst_section;
+ $row_art['IdUser'] = $user_id;
+ $row_art['Published'] = 'N';
+ $row_art['UploadDate'] = $row_art['cdate'];
+ $row_art['IsIndexed'] = 'N';
 
-	$sql = "select * from X" . $row_art['Type'] . " where NrArticle = " . $article_no . " and IdLanguage = "
-	     . $language_id;
-	$res_art_data = mysql_query($sql);
-	if (mysql_num_rows($res_art_data) == 0) {
-		$msg = "Invalid article identifier";
-		return 0;
-	}
-	$row_art_data = mysql_fetch_assoc($res_art_data);
+ $sql = "select * from X" . $row_art['Type'] . " where NrArticle = " . $article_no . " and IdLanguage = "
+      . $language_id;
+ $res_art_data = mysql_query($sql);
+ if (mysql_num_rows($res_art_data) == 0) {
+  $msg = "Invalid article identifier";
+  return 0;
+ }
+ $row_art_data = mysql_fetch_assoc($res_art_data);
 
-	$topics = array();
-	$sql = "select * from ArticleTopics where NrArticle = " . $article_no;
-	$res_topics = mysql_query($sql);
-	while($row_topics = mysql_fetch_assoc($res_topics)) {
-		$topics[] = $row_topics['TopicId'];
-	}
+ $topics = array();
+ $sql = "select * from ArticleTopics where NrArticle = " . $article_no;
+ $res_topics = mysql_query($sql);
+ while($row_topics = mysql_fetch_assoc($res_topics)) {
+  $topics[] = $row_topics['TopicId'];
+ }
 
-	$images = array();
-	$sql = "select * from Images where NrArticle = " . $article_no;
-	$res_images = mysql_query($sql);
-	while($row_images = mysql_fetch_assoc($res_images)) {
-		$image['IdPublication'] = $dst_pub;
-		$image['NrIssue'] = $dst_issue;
-		$image['NrSection'] = $dst_section;
-		$image['Number'] = $row_images['Number'];
-		$image['Description'] = $row_images['Description'];
-		$image['Photographer'] = $row_images['Photographer'];
-		$image['Place'] = $row_images['Place'];
-		$image['Date'] = $row_images['Date'];
-		$image['ContentType'] = $row_images['ContentType'];
-		$image['Image'] = $row_images['Image'];
-		$images[] = $image;
-	}
+ $images = array();
+ $sql = "select * from Images where NrArticle = " . $article_no;
+ $res_images = mysql_query($sql);
+ while($row_images = mysql_fetch_assoc($res_images)) {
+  $image['IdPublication'] = $dst_pub;
+  $image['NrIssue'] = $dst_issue;
+  $image['NrSection'] = $dst_section;
+  $image['Number'] = $row_images['Number'];
+  $image['Description'] = $row_images['Description'];
+  $image['Photographer'] = $row_images['Photographer'];
+  $image['Place'] = $row_images['Place'];
+  $image['Date'] = $row_images['Date'];
+  $image['ContentType'] = $row_images['ContentType'];
+  $image['Image'] = $row_images['Image'];
+  $images[] = $image;
+ }
 
-	$sql = "select * from AutoId";
-	$res_autoid = mysql_query($sql);
-	if (mysql_num_rows($res_autoid) == 0) {
-		$msg = "Internal error: identifiers not initialized";
-		return 0;
-	}
-	$row_autoid = mysql_fetch_assoc($res_autoid);
-	$row_art['Number'] = 1 + $row_autoid['ArticleId'];
-	$row_art_data['NrArticle'] = $row_art['Number'];
+ $sql = "select * from AutoId";
+ $res_autoid = mysql_query($sql);
+ if (mysql_num_rows($res_autoid) == 0) {
+  $msg = "Internal error: identifiers not initialized";
+  return 0;
+ }
+ $row_autoid = mysql_fetch_assoc($res_autoid);
+ $row_art['Number'] = 1 + $row_autoid['ArticleId'];
+ $row_art_data['NrArticle'] = $row_art['Number'];
 
-	$fields = "";
-	$values = "";
-	reset($row_art);
-	foreach($row_art as $field=>$value) {
-		if ($field == 'cdate')
-			continue;
-		$fields = $fields == "" ? "" : $fields . ", ";
-		$values = $values == "" ? "" : $values . ", ";
-		$fields = $fields . $field;
-		$values = $values . "'" . mysql_escape_string($value) . "'";
-	}
-	$i_art = "insert into Articles (" . $fields . ") values(" . $values . ")";
+ $fields = "";
+ $values = "";
+ reset($row_art);
+ foreach($row_art as $field=>$value) {
+  if ($field == 'cdate')
+   continue;
+  $fields = $fields == "" ? "" : $fields . ", ";
+  $values = $values == "" ? "" : $values . ", ";
+  $fields = $fields . $field;
+  $values = $values . "'" . mysql_escape_string($value) . "'";
+ }
+ $i_art = "insert into Articles (" . $fields . ") values(" . $values . ")";
 
-	$fields = "";
-	$values = "";
-	reset($row_art_data);
-	foreach($row_art_data as $field=>$value) {
-		$fields = $fields == "" ? "" : $fields . ", ";
-		$values = $values == "" ? "" : $values . ", ";
-		$fields = $fields . $field;
-		$values = $values . "'" . mysql_escape_string($value) . "'";
-	}
-	$i_art_data = "insert into X" . $row_art['Type'] . " (" . $fields . ") values(" . $values . ")";
+ $fields = "";
+ $values = "";
+ reset($row_art_data);
+ foreach($row_art_data as $field=>$value) {
+  $fields = $fields == "" ? "" : $fields . ", ";
+  $values = $values == "" ? "" : $values . ", ";
+  $fields = $fields . $field;
+  $values = $values . "'" . mysql_escape_string($value) . "'";
+ }
+ $i_art_data = "insert into X" . $row_art['Type'] . " (" . $fields . ") values(" . $values . ")";
 
-	$i_topics = array();
-	reset($topics);
-	foreach($topics as $key=>$topic) {
-		$i_topics[] = "insert into ArticleTopics (NrArticle, TopicId) values(" . $row_art['Number']
-		            . ", " . $topic . ")";
-	}
+ $i_topics = array();
+ reset($topics);
+ foreach($topics as $key=>$topic) {
+  $i_topics[] = "insert into ArticleTopics (NrArticle, TopicId) values(" . $row_art['Number']
+              . ", " . $topic . ")";
+ }
 
-	$i_images = array();
-	reset($images);
-	foreach($images as $key=>$image) {
-		$fields = "NrArticle";
-		$values = $row_art['Number'];
-		reset($image);
-		foreach($image as $field=>$value) {
-			if ($field == "NrArticle")
-				continue;
-			$fields = $fields == "" ? "" : $fields . ", ";
-			$values = $values == "" ? "" : $values . ", ";
-			$fields = $fields . $field;
-			$values = $values . "'" . mysql_escape_string($value) . "'";
-		}
-		$i_images[] = "insert into Images (" . $fields . ") values(" . $values . ")";
-	}
+ $i_images = array();
+ reset($images);
+ foreach($images as $key=>$image) {
+  $fields = "NrArticle";
+  $values = $row_art['Number'];
+  reset($image);
+  foreach($image as $field=>$value) {
+   if ($field == "NrArticle")
+    continue;
+   $fields = $fields == "" ? "" : $fields . ", ";
+   $values = $values == "" ? "" : $values . ", ";
+   $fields = $fields . $field;
+   $values = $values . "'" . mysql_escape_string($value) . "'";
+  }
+  $i_images[] = "insert into Images (" . $fields . ") values(" . $values . ")";
+ }
 
-	$u_autoid = "update AutoId set ArticleId = " . $row_art['Number'];
-	if (!mysql_query($u_autoid)) {
-		$msg = "Internal database error";
-		return 0;
-	}
-	if (!mysql_query($i_art)) {
-		$msg = "Internal database error";
-		return 0;
-	}
-	if (!mysql_query($i_art_data)) {
-		$msg = "Internal database error";
-		return 0;
-	}
-	foreach($i_topics as $key=>$i_topic) {
-		mysql_query($i_topic);
-	}
-	foreach($i_images as $key=>$i_image) {
-		mysql_query($i_image);
-	}
+ $u_autoid = "update AutoId set ArticleId = " . $row_art['Number'];
+ if (!mysql_query($u_autoid)) {
+  $msg = "Internal database error";
+  return 0;
+ }
+ if (!mysql_query($i_art)) {
+  $msg = "Internal database error";
+  return 0;
+ }
+ if (!mysql_query($i_art_data)) {
+  $msg = "Internal database error";
+  return 0;
+ }
+ foreach($i_topics as $key=>$i_topic) {
+  mysql_query($i_topic);
+ }
+ foreach($i_images as $key=>$i_image) {
+  mysql_query($i_image);
+ }
 
-	return $row_art['Number'];
+ return $row_art['Number'];
 }
 
 function valid_field_name($name)
 {
-	if (strlen($name) == 0)
-		return false;
-	for ($i = 0; $i < strlen($name); $i++) {
-		$c = $name[$i];
-		$ok = ($c >= 'A' && $c <= 'Z') || ($c >= 'a' && $c <= 'z') || $c == '_';
-		if (!$ok)
-	    	return false;
-	}
-	return true;
+ if (strlen($name) == 0)
+  return false;
+ for ($i = 0; $i < strlen($name); $i++) {
+  $c = $name[$i];
+  $ok = ($c >= 'A' && $c <= 'Z') || ($c >= 'a' && $c <= 'z') || $c == '_';
+  if (!$ok)
+      return false;
+ }
+ return true;
 }
 
-## added by sebastian
-if (file_exists ("$DOCUMENT_ROOT/priv/modules/admin/priv_functions.php"))
-	include ("$DOCUMENT_ROOT/priv/modules/admin/priv_functions.php");
+## added by sebastian ###############################################################
+if (file_exists ($_SERVER[DOCUMENT_ROOT].'/priv/modules/admin/priv_functions.php'))
+  include ($_SERVER[DOCUMENT_ROOT].'/priv/modules/admin/priv_functions.php');
+#####################################################################################
 
 ?>
