@@ -32,6 +32,8 @@
     - Small enhancement on template list: print files/directories in alphabetical
     order
     - Fixed small bug on install/uninstall scripts
+    - Fixed parser crash on empty search
+    - Fixed login/subscription password field size
 
 2.0.10
     - Fixed the 'Back to article details' bug
