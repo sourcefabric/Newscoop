@@ -15,7 +15,7 @@ function TransformSubheads($match) {
 	global $g_spanCounter;
 	// This matches '<span class="campsite_subhead">'
 	if (preg_match("/<\s*span[^>]*class\s*=\s*[\"']campsite_subhead[\"'][^>]*>/i", $match[0])) {
-		echo "matched ".htmlspecialchars($match[0]);
+		//echo "matched ".htmlspecialchars($match[0]);
 		$g_spanCounter = 1;
 		return "<!** Title>";
 	}
