@@ -2,7 +2,7 @@
 /**
  * The main GUI for the ImageManager.
  * @author $Author: paul $
- * @version $Id: manager.php,v 1.2 2004/11/15 02:54:34 paul Exp $
+ * @version $Id: manager.php,v 1.3 2005/03/20 17:17:25 paul Exp $
  * @package ImageManager
  */
 
@@ -54,29 +54,34 @@
 <?php } ?>
 	<div id="messages" style="display: none;"><span id="message"></span><img SRC="img/dots.gif" width="22" height="12" alt="..." /></div>
 <?php } // if ($IMConfig["show_dirs"]) ?>
-	<iframe src="images.php" name="imgManager" id="imgManager" class="imageFrame" scrolling="auto" title="Image Selection" frameborder="0"></iframe>
+	<iframe src="images.php?article_id=<?php echo $_REQUEST['article_id']; ?>" name="imgManager" id="imgManager" class="imageFrame" scrolling="auto" title="Image Selection" frameborder="0"></iframe>
 </div>
 </fieldset>
 <!-- image properties -->
 	<table class="inputTable">
+		<input type="hidden" id="f_url" value="" />
+		<input type="hidden" id="f_vert" value="" />
+		<input type="hidden" id="f_horiz" value="" />
+		<input type="hidden" id="f_border" value="" />
 		<tr>
-			<td align="right"><label for="f_url">Image File</label></td>
-			<td><input type="text" id="f_url" class="largelWidth" value="" /></td>
+			<td align="right"><label for="f_alt">Alt</label></td>
+			<td><input type="text" id="f_alt" class="largelWidth" value="" /></td>
+			<!--<td align="right"><label for="f_url">Image File</label></td>-->
+			<!--<td><input type="text" id="f_url" class="largelWidth" value="" /></td>-->
 			<td rowspan="3" align="right">&nbsp;</td>
 			<td align="right"><label for="f_width">Width</label></td>
 			<td><input type="text" id="f_width" class="smallWidth" value="" onchange="javascript:checkConstrains('width');"/></td>
 			<td rowspan="2" align="right"><img src="img/locked.gif" id="imgLock" width="25" height="32" alt="Constrained Proportions" /></td>
 			<td rowspan="3" align="right">&nbsp;</td>
-			<td align="right"><label for="f_vert">V Space</label></td>
-			<td><input type="text" id="f_vert" class="smallWidth" value="" /></td>
+			<!--<td align="right"><label for="f_vert">V Space</label></td>-->
+			<!--<td><input type="text" id="f_vert" class="smallWidth" value="" /></td>-->
 		</tr>		
 		<tr>
-			<td align="right"><label for="f_alt">Alt</label></td>
-			<td><input type="text" id="f_alt" class="largelWidth" value="" /></td>
+			<td colspan="2"></td>
 			<td align="right"><label for="f_height">Height</label></td>
 			<td><input type="text" id="f_height" class="smallWidth" value="" onchange="javascript:checkConstrains('height');"/></td>
-			<td align="right"><label for="f_horiz">H Space</label></td>
-			<td><input type="text" id="f_horiz" class="smallWidth" value="" /></td>
+			<!--<td align="right"><label for="f_horiz">H Space</label></td>-->
+			<!--<td><input type="text" id="f_horiz" class="smallWidth" value="" /></td>-->
 		</tr>
 		<tr>
 <?php if($IMConfig['allow_upload'] == true) { ?>
@@ -84,7 +89,7 @@
 			<td>
 				<table cellpadding="0" cellspacing="0" border="0">
                   <tr>
-                    <td><input type="file" name="upload" id="upload"/></td>
+                    <td><input type="file" name="upload" id="upload" class="input_file"/></td>
                     <td>&nbsp;<button type="submit" name="submit" onclick="doUpload();"/>Upload</button></td>
                   </tr>
                 </table>
@@ -107,8 +112,8 @@
 				  <option value="top"                          >Top</option>
 				</select>
 			</td>
-			<td align="right"><label for="f_border">Border</label></td>
-			<td><input type="text" id="f_border" class="smallWidth" value="" /></td>
+			<!--<td align="right"><label for="f_border">Border</label></td>-->
+			<!--<td><input type="text" id="f_border" class="smallWidth" value="" /></td>-->
 		</tr>
 		<tr> 
          <td colspan="4" align="right">
@@ -122,7 +127,7 @@
 <!--// image properties -->	
 	<div style="text-align: right;"> 
           <hr />
-		  <button type="button" class="buttons" onclick="return refresh();">Refresh</button>
+		  <!--<button type="button" class="buttons" onclick="return refresh();">Refresh</button>-->
           <button type="button" class="buttons" onclick="return onOK();">OK</button>
           <button type="button" class="buttons" onclick="return onCancel();">Cancel</button>
     </div>
