@@ -2,7 +2,7 @@
 
 mkdir -p $BIN_DIR
 cp -f gather $BIN_DIR
-chown $ROOT_USER:$ROOT_GROUP $BIN_DIR/gather
+chown $ROOT_USER:$APACHE_GROUP $BIN_DIR/gather
 chmod 750 $BIN_DIR/gather
 [ $? -ne 0 ] && exit 1
 
