@@ -19,6 +19,7 @@ E_STYLE
 B_BODY
 
 <?
+    SET_ACCESS(<*pa*>, <*Publish*>)
     todefnum('Pub');
     todefnum('Issue');
     todefnum('Section');
@@ -68,7 +69,8 @@ CHECK_XACCESS(<*ChangeArticle*>)
 <?
     query ("SELECT ($xaccess != 0) or ((".getVar($q_art,'IdUser')." = ".getVar($Usr,'Id').") and ('".getVar($q_art,'Published')."' = 'N'))", 'q_xperm');
     fetchRowNum($q_xperm);
-    if (getNumVar($q_xperm,0)) { ?>dnl
+    $has_access = getNumVar($q_xperm,0) && ($pa || getVar($q_art,'Published') == "N");
+    if ($has_access) { ?>dnl
 <p>
 B_MSGBOX(<*Change article status*>)
 	<?
@@ -82,11 +84,11 @@ B_MSGBOX(<*Change article status*>)
 	X_MSGBOX_TEXT(<*<LI><? putGS('Change the status of article $1 ($2) from $3 to', '<B>'.getHVar($q_art,'Name'), getHVar($q_slang,'Name').'</B>', '<B>'.$stat.'</B>' ); ?></LI>*>)
 	B_MSGBOX_BUTTONS
 		<FORM METHOD="POST" ACTION="do_status.php"><br>
-		<? if (getVar($q_art,'Published') == "N") {
+		<? if (getVar($q_art,'Published') == "N" && $pa) {
 			$check= 1;
 		}
 		else $check= 0; ?>
-		<TABLE><? if (getVar($q_art,'Published') != "Y") { ?><TR><TD ALIGN=LEFT><INPUT <? if ($check == 0) { ?>CHECKED <?  $check= 1;  }else $check=0; ?> TYPE="RADIO" NAME='Status' value='Y'> <B><? putGS('Published'); ?></B></TD></TR> <? } ?>
+		<TABLE><? if (getVar($q_art,'Published') != "Y" && $pa) { ?><TR><TD ALIGN=LEFT><INPUT <? if ($check == 0) { ?>CHECKED <?  $check= 1;  }else $check=0; ?> TYPE="RADIO" NAME='Status' value='Y'> <B><? putGS('Published'); ?></B></TD></TR> <? } ?>
 		<? if (getVar($q_art,'Published') != "S") { ?><TR><TD ALIGN=LEFT><INPUT <? if ($check == 0) { ?>CHECKED<? $check= 1;  } ?> TYPE="RADIO" NAME='Status' value='S'> <B><? putGS('Submitted'); ?></B></TD></TR> <? } ?>
 		<? if (getVar($q_art,'Published') != "N") { ?><TR><TD ALIGN=LEFT><INPUT <? if ($check == 0) { ?>CHECKED<? $check= 1;  } ?> TYPE="RADIO" NAME='Status' value='N'> <B><? putGS('New'); ?></B></TD></TR><? } ?></TABLE>
 
