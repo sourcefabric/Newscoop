@@ -123,7 +123,7 @@ if ($articleObj->getPublished() != 'N') {
 	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS("Front page"); ?>:</TD>
 		<TD>
-		<SELECT NAME="front_page_action">
+		<SELECT NAME="front_page_action" class="input_select">
 			<OPTION VALUE=" ">---</OPTION>
 			<OPTION VALUE="S" <?php if ($frontPageAction == "S") echo "SELECTED"; ?>><?php putGS("Show on front page"); ?></OPTION>
 			<OPTION VALUE="R" <?php if ($frontPageAction == "R") echo "SELECTED"; ?>><?php putGS("Remove from front page"); ?></OPTION>
@@ -133,7 +133,7 @@ if ($articleObj->getPublished() != 'N') {
 	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS("Section page"); ?>:</TD>
 		<TD>
-		<SELECT NAME="section_page_action">
+		<SELECT NAME="section_page_action" class="input_select">
 			<OPTION VALUE=" ">---</OPTION>
 			<OPTION VALUE="S" <?php if ($sectionPageAction == "S") echo "SELECTED"; ?>><?php putGS("Show on section page"); ?></OPTION>
 			<OPTION VALUE="R" <?php if ($sectionPageAction == "R") echo "SELECTED"; ?>><?php putGS("Remove from section page"); ?></OPTION>

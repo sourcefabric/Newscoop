@@ -42,7 +42,7 @@ B_DIALOG(<*Add new subscription*>, <*POST*>, <*do_add.php*>)
     query ("SELECT Id, Name FROM Publications ORDER BY Name", 'q_pub');
     $nr=$NUM_ROWS;
 ?>dnl
-		<SELECT NAME="cPub">
+		<SELECT NAME="cPub" class="input_select">
 		<?php 
 		    for($loop=0;$loop<$nr;$loop++) {
 			fetchRow($q_pub);
@@ -52,14 +52,14 @@ B_DIALOG(<*Add new subscription*>, <*POST*>, <*do_add.php*>)
 		</SELECT>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Sections*>)
-		<SELECT NAME="bAddSect"><OPTION VALUE="Y"><?php  putGS('Add sections now'); ?><OPTION VALUE="N"><?php  putGS('Add sections later'); ?>
+		<SELECT NAME="bAddSect" class="input_select"><OPTION VALUE="Y"><?php  putGS('Add sections now'); ?><OPTION VALUE="N"><?php  putGS('Add sections later'); ?>
 		</SELECT>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Start*>)
 		<INPUT TYPE="TEXT" class="input_text" NAME="cStartDate" SIZE="10" VALUE="<?php  p(date("Y-m-d")); ?>" MAXLENGTH="10"><?php  putGS('(YYYY-MM-DD)'); ?>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Subscription Type*>)
-		<SELECT NAME="sType">
+		<SELECT NAME="sType" class="input_select">
 		<OPTION VALUE="PN"><?php  putGS("Paid (confirm payment now)"); ?></OPTION>
 		<OPTION VALUE="PL"><?php  putGS("Paid (payment will be confirmed later)"); ?></OPTION>
 		<OPTION VALUE="T"><?php  putGS("Trial"); ?></OPTION>

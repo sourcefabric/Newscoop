@@ -28,7 +28,7 @@ E_STYLE
 		<TD ALIGN="LEFT">
 <FORM NAME="FORM_ISS" METHOD="GET">
 <?php  if ($NUM_ROWS) { ?>dnl
-<SELECT NAME="iss" ONCHANGE="var f = this.form.iss; var v = f.options[f.selectedIndex].value; var x = 'X_ROOT/pub/issues/sections/i2.php?Language=<?php  pencURL($Language); ?>&Pub=<?php  pencURL($Pub); ?>&Issue=<?php  pencURL($Issue); ?>&Section=<?php  pencURL($Section); ?>&dstPub=<?php  pencURL($dstPub); ?>&dstIssue=' + v; if (v != 0) { parent.frames[1].location.href = x; }">
+<SELECT NAME="iss" class="input_select" ONCHANGE="var f = this.form.iss; var v = f.options[f.selectedIndex].value; var x = 'X_ROOT/pub/issues/sections/i2.php?Language=<?php  pencURL($Language); ?>&Pub=<?php  pencURL($Pub); ?>&Issue=<?php  pencURL($Issue); ?>&Section=<?php  pencURL($Section); ?>&dstPub=<?php  pencURL($dstPub); ?>&dstIssue=' + v; if (v != 0) { parent.frames[1].location.href = x; }">
 	<OPTION VALUE="0"><?php  putGS('---Select issue---'); ?>
 <?php 
 	$nr=$NUM_ROWS;
@@ -39,7 +39,7 @@ E_STYLE
 ?>
 </SELECT>
 <?php  } else { ?>dnl
-<SELECT DISABLED><OPTION><?php  putGS('No issues'); ?></SELECT>
+<SELECT class="input_select" DISABLED><OPTION><?php  putGS('No issues'); ?></SELECT>
 <?php  } ?>dnl
 </FORM>
 		</TD>

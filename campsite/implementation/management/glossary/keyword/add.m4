@@ -47,7 +47,7 @@ E_CURRENT
 <P>
 B_DIALOG(<*Add keyword infotype*>, <*POST*>, <*do_add.php*>)
 	B_DIALOG_INPUT(<*Infotype*>)
-	    <SELECT NAME="cClass" SIZE="5">
+	    <SELECT NAME="cClass" SIZE="5" class="input_select">
 <?php 
     $nr=$NUM_ROWS;
     for($loop=0;$loop<$nr;$loop++) { 

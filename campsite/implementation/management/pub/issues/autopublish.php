@@ -124,7 +124,7 @@ if ($access) {
 	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS("Action"); ?>:</TD>
 		<TD>
-		<SELECT NAME="action">
+		<SELECT NAME="action" class="input_select">
 			<OPTION VALUE=" ">---</OPTION>
 			<OPTION VALUE="P" <?php if ($action == "P") echo "SELECTED"; ?>><?php putGS("Publish"); ?></OPTION>
 			<OPTION VALUE="U" <?php if ($action == "U") echo "SELECTED"; ?>><?php putGS("Unpublish"); ?></OPTION>
@@ -134,7 +134,7 @@ if ($access) {
 	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS("Publish articles"); ?>:</TD>
 		<TD>
-		<SELECT NAME="publish_articles">
+		<SELECT NAME="publish_articles" class="input_select">
 			<OPTION VALUE="Y" <?php if ($publish_articles == "Y") echo "SELECTED"; ?>><?php putGS("Yes"); ?></OPTION>
 			<OPTION VALUE="N" <?php if ($publish_articles == "N") echo "SELECTED"; ?>><?php putGS("No"); ?></OPTION>
 		</SELECT>

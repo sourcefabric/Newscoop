@@ -52,7 +52,7 @@ X_PSEP2
 <INPUT TYPE="HIDDEN" NAME="Section" VALUE="<?php  pencURL($ssect); ?>">
 <INPUT TYPE="HIDDEN" NAME="Article" VALUE="<?php  pencURL($art); ?>">
 <INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php  pencURL($lang); ?>">
-<SELECT NAME="Image"><?php 
+<SELECT NAME="Image" class="input_select"><?php 
 		    $nr=$NUM_ROWS;
 		    for($loop=0;$loop<$nr;$loop++) {
 			fetchRow($q_img);
@@ -66,7 +66,7 @@ X_NEW_BUTTON(<*View*>, <*javascript:void(document.FORM_IMG.submit())*>)
 </TD></TR>
 </TABLE>
 <?php  } else { ?>dnl
-<SELECT DISABLED><OPTION><?php  putGS('No images'); ?></SELECT>
+<SELECT class="input_select" DISABLED><OPTION><?php  putGS('No images'); ?></SELECT>
 <?php  } ?>dnl
 </FORM>
 E_PBAR

@@ -48,7 +48,7 @@ E_CURRENT
 B_DIALOG(<*Add new subscription*>, <*POST*>, <*do_add.php*>)
 
 	B_DIALOG_INPUT(<*Section*>)
-		<SELECT NAME="cSection">
+		<SELECT NAME="cSection" class="input_select">
 		<OPTION VALUE=0>All sections</OPTION>
 <?php  
     query ("SELECT DISTINCT Number, Name FROM Sections WHERE IdPublication=$Pub",'q_sect');

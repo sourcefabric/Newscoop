@@ -32,7 +32,7 @@ B_DIALOG(<*Add new country*>, <*POST*>, <*do_add.php*>)
 		<INPUT TYPE="TEXT" class="input_text" NAME="cName" SIZE="32" MAXLENGTH="64">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Language*>)
-			<SELECT NAME="cLanguage">
+			<SELECT NAME="cLanguage" class="input_select">
 <?php  query ("SELECT Id, Name FROM Languages ORDER BY Id", 'q_lng');
     for($loop=0;$loop<$NUM_ROWS;$loop++) {
 	fetchRow($q_lng);

@@ -53,7 +53,7 @@ B_DIALOG(<*Translate keyword*>, <*POST*>, <*do_translate.php*>)
 		<INPUT TYPE="TEXT" class="input_text" NAME="cKeyword" SIZE="32" MAXLENGTH="64">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Language*>)
-		<SELECT NAME="cLang"><?php 
+		<SELECT NAME="cLang" class="input_select"><?php 
 		    for($loop2=0;$loop2<$nr2;$loop2++) {
 			fetchRow($languages);
 			pcomboVar(getVar($languages,'Id'),'',getVar($languages,'Name'));

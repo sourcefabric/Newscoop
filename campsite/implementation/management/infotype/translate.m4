@@ -52,7 +52,7 @@ B_DIALOG(<*Translate keyword*>, <*POST*>, <*do_translate.php*>)
 		<INPUT TYPE="TEXT" class="input_text" NAME="cName" SIZE="32" MAXLENGTH="64">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Language*>)
-		<SELECT NAME="cLang"><?php 
+		<SELECT NAME="cLang" class="input_select"><?php 
 		
 		    for($loop=0;$loop<$nr_lang;$loop++) {
 			fetchRow($languages);

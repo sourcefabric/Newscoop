@@ -35,7 +35,7 @@ B_DIALOG(<*Add new field*>, <*POST*>, <*do_add.php*>)
 		<INPUT TYPE="TEXT" class="input_text" NAME="cName" SIZE="32" MAXLENGTH="32">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Type*>)
-		<SELECT NAME="cType">
+		<SELECT NAME="cType" class="input_select">
 			<OPTION VALUE="1"><?php  putGS('Text'); ?>
 			<OPTION VALUE="2"><?php  putGS('Date'); ?>
 			<OPTION VALUE="3"><?php  putGS('Article body'); ?>

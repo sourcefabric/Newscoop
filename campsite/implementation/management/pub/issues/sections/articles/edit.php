@@ -299,7 +299,7 @@ if ($edit_ok) { ?>
 		<TR>
 			<TD><?php  putGS('Language'); ?>:</TD>
 			<TD>
-				<SELECT NAME="sLanguage">
+				<SELECT NAME="sLanguage" class="input_select">
 				<?php 
 					$articleLanguages = $articleObj->getLanguages();
 					foreach ($articleLanguages as $articleLanguage) {

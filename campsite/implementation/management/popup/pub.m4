@@ -32,7 +32,7 @@ B_PBAR
 X_PSEP2
 <FORM NAME="FORM_PUB" METHOD="GET">
 <?php  if ($NUM_ROWS) { ?>dnl
-<SELECT NAME="pub" ONCHANGE="f = this.form.pub; var v = f.options[f.selectedIndex].value; var x = 'X_ROOT/popup/i2.php?lang=<?php  pencURL($lang); ?>&pub=' + v; if (v != 0) { parent.frames[1].location.href = x; }">
+<SELECT NAME="pub" class="input_select" ONCHANGE="f = this.form.pub; var v = f.options[f.selectedIndex].value; var x = 'X_ROOT/popup/i2.php?lang=<?php  pencURL($lang); ?>&pub=' + v; if (v != 0) { parent.frames[1].location.href = x; }">
 	<OPTION VALUE="0"><?php  putGS('---Select publication---'); ?>
 		<?php 
 		    $nr=$NUM_ROWS;
@@ -43,7 +43,7 @@ X_PSEP2
 		?>
 </SELECT>
 <?php  } else { ?>dnl
-<SELECT DISABLED><OPTION><?php  putGS('No publications'); ?></SELECT>
+<SELECT class="input_select" DISABLED><OPTION><?php  putGS('No publications'); ?></SELECT>
 <?php  } ?>dnl
 </FORM>
 E_PBAR

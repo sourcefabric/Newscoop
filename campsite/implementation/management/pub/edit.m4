@@ -56,7 +56,7 @@ B_DIALOG(<*Configure publication*>, <*POST*>, <*do_edit.php*>)
 		<INPUT TYPE="TEXT" class="input_text" NAME="cName" VALUE="<?php  pgetHVar($q_pub,'Name'); ?>" SIZE="32" MAXLENGTH="255">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Default Site Alias*>)
-		<SELECT NAME="cDefaultAlias">
+		<SELECT NAME="cDefaultAlias" class="input_select">
 <?php
 	$sql = "SELECT * FROM Aliases WHERE IdPublication = " . $Pub;
 	query ($sql, 'q_alias');
@@ -70,7 +70,7 @@ B_DIALOG(<*Configure publication*>, <*POST*>, <*do_edit.php*>)
 	<a href="X_ROOT/pub/aliases.php?Pub=<?php echo $Pub ?>"><?php putGS("Edit aliases"); ?></a>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Default language*>)
-		<SELECT NAME="cLanguage">
+		<SELECT NAME="cLanguage" class="input_select">
 <?php 
 	query ("SELECT Id, OrigName FROM Languages", 'q_lang');
 	$nr=$NUM_ROWS;
@@ -83,7 +83,7 @@ B_DIALOG(<*Configure publication*>, <*POST*>, <*do_edit.php*>)
 	<a href="X_ROOT/languages/"><?php putGS("Edit languages"); ?></a>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*URL Type*>)
-		<SELECT NAME="cURLType">
+		<SELECT NAME="cURLType" class="input_select">
 <?php
 	$sql = "SELECT * FROM URLTypes";
 	query ($sql, 'q_urltype');
@@ -102,7 +102,7 @@ B_DIALOG(<*Configure publication*>, <*POST*>, <*do_edit.php*>)
 		<INPUT TYPE="TEXT" class="input_text" NAME="cPayTime" VALUE="<?php  pgetHVar($q_pub,'PayTime'); ?>" SIZE="5" MAXLENGTH="5"> <?php  p($tunit); ?>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Time Unit*>)
-	    <SELECT NAME="cTimeUnit">
+	    <SELECT NAME="cTimeUnit" class="input_select">
 <?php 
 	$q = "SELECT t.Unit, t.Name FROM TimeUnits as t, Languages as l WHERE t.IdLanguage = l.Id and l.Code = '" . $TOL_Language . "' order by t.Unit asc";
 	query($q, 'q_unit');
