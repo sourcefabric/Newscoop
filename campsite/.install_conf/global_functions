@@ -298,12 +298,12 @@ else
 	[ "$WHICH" = "" ] && export WHICH=`which which 2> /dev/null`
 	[ "$WHICH" = "" ] && output="could not find which binary" && echo $output && return 1
 	[ "$search_path" != "" ] && export PATH=$search_path
-	file_path=`$WHICH $file_name 2> /dev/null`
+	file_path=`$WHICH "$file_name" 2> /dev/null`
 	result=$?
 	[ "$search_path" != "" ] && export PATH=$old_path
     else
 	if [ "$search_path" = "" ]; then
-	    file_path=`locate -n 1 $file_name | grep -w $file_name 2> /dev/null`
+	    file_path=`locate "$file_name" | grep -w "$file_name" -m 1 2> /dev/null`
             result=$?
 	else
 	    for dir in `path_dirs $search_path`; do
