@@ -43,6 +43,6 @@ var cmThemeOffice =
 var cmThemeOfficeHSplit = [_cmNoAction, ''];
 var cmThemeOfficeMainHSplit = [_cmNoAction, ''];
 var cmThemeOfficeMainVSplit = [_cmNoAction, ''];
-//var cmThemeOfficeHSplit = [_cmNoAction, '<td class="ThemeOfficeMenuItemLeft"></td><td colspan="2"><div class="ThemeOfficeMenuSplit"></div></td>'];
+var cmThemeOfficeHSplit = [_cmNoAction, '<td class="ThemeOfficeMenuItemLeft"></td><td colspan="2"><div class="ThemeOfficeMenuSplit"></div></td>'];
 //var cmThemeOfficeMainHSplit = [_cmNoAction, '<td class="ThemeOfficeMainItemLeft"></td><td colspan="2"><div class="ThemeOfficeMenuSplit"></div></td>'];
 //var cmThemeOfficeMainVSplit = [_cmNoAction, '<img src ="'+cmThemeOfficeBase + 'vertical_bar.gif">'];
