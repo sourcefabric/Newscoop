@@ -185,7 +185,13 @@ void* MyThreadRoutine(void* p_pArg)
 		{
 			throw RunException("Error on select");
 		}
+#ifdef _DEBUG
+		cout << "MyThreadRoutine: reading message" << endl;
+#endif
 		CMessage* pcoMessage = readMessage(pcoClSock, CMessageFactoryRegister::getInstance());
+#ifdef _DEBUG
+		cout << "received message " << pcoMessage->getMessageTypeId() << endl;
+#endif
 		if (pcoMessage->getMessageTypeId() == 2) {
 			resetCache((CMsgResetCache*)pcoMessage);
 			return NULL;
@@ -193,10 +199,16 @@ void* MyThreadRoutine(void* p_pArg)
 		if (pcoMessage->getMessageTypeId() != 1)
 			return NULL;
 		string coAlias = ((CMsgURLRequest*)pcoMessage)->getHTTPHost();
+#ifdef _DEBUG
+		cout << "alias: " << coAlias << endl;
+#endif
 		const CPublication* pcoPub = CPublicationsRegister::getInstance().getPublication(coAlias);
 		const CURLType* pcoURLType = pcoPub->getURLType();
 		CURL* pcoURL = pcoURLType->getURL(*((CMsgURLRequest*)pcoMessage));
 		string coRemoteAddress = ((CMsgURLRequest*)pcoMessage)->getRemoteAddress();
+#ifdef _DEBUG
+		cout << "url type: " << pcoURLType->getTypeName() << endl;
+#endif
 
 		outbuf coOutBuf((SOCKET)*pcoClSock);
 		sockstream coOs(&coOutBuf);
@@ -555,6 +567,9 @@ int CampsiteInstanceFunc(const ConfAttrValue& p_rcoConfValues)
 		CMessageFactoryRegister::getInstance().insert(new CRestartServerMessageFactory());
 
 		CServerSocket coServer("0.0.0.0", nPort);
+#ifdef _DEBUG
+		cout << "finished initializations" << endl;
+#endif
 #ifndef _DEBUG_SOURCE
 		g_pcoThreadPool = new CThreadPool(1, nMaxThreads, MyThreadRoutine, NULL);
 #endif	
@@ -565,6 +580,9 @@ int CampsiteInstanceFunc(const ConfAttrValue& p_rcoConfValues)
 			{
 				pcoClSock = coServer.Accept();
 				char* pchRemoteIP = pcoClSock->RemoteIP();
+#ifdef _DEBUG
+				cout << "received request from " << pchRemoteIP << endl;
+#endif
 				if (case_comp(pchRemoteIP, "127.0.0.1") != 0)
 				{
 					cerr << "Not allowed host (" << pchRemoteIP << ") connected" << endl;
