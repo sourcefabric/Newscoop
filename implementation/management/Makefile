@@ -59,6 +59,7 @@ install: $(ALL)
 	chown $(HTTP_USER):$(HTTP_GROUP) $(HTML_DIR)/*.php
 	chown -R $(HTTP_USER):$(HTTP_GROUP) $(HTML_DIR)/look
 	chown -R $(HTTP_USER):$(HTTP_GROUP) $(HTML_DIR)/javascript
+	chown -R $(HTTP_USER):$(HTTP_GROUP) $(HTML_DIR)/classes
 	chown -R $(HTTP_USER):$(HTTP_GROUP) $(PRIV_DIR) 
 	chown -R $(HTTP_USER):$(HTTP_GROUP) $(SCRIPT_DIR)
 	chmod u+rw $(HTML_DIR)/*.php
