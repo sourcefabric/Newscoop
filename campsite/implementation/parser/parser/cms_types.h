@@ -110,14 +110,15 @@ typedef enum _TAction {
     CMS_ACT_DATE = 0x000c,
     CMS_ACT_TEXT = 0x000d,
     CMS_ACT_LOCAL = 0x000e,
-    CMS_ACT_SUBSCRIPTION = 0x00f,
+    CMS_ACT_SUBSCRIPTION = 0x000f,
     CMS_ACT_EDIT = 0x0010,
     CMS_ACT_SELECT = 0x0011,
     CMS_ACT_USER = 0x0012,
     CMS_ACT_LOGIN = 0x0013,
     CMS_ACT_SEARCH = 0x0014,
     CMS_ACT_WITH = 0x0015,
-    CMS_ACT_TOPIC = 0x0016
+    CMS_ACT_TOPIC = 0x0016,
+    CMS_ACT_URIPATH = 0x0017
 } TAction;
 
 typedef enum _TSubsUnit {
