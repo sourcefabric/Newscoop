@@ -1,4 +1,3 @@
-B_HTML
 INCLUDE_PHP_LIB(<*$ADMIN_DIR/templates*>)
 B_DATABASE
 
@@ -6,18 +5,12 @@ CHECK_BASIC_ACCESS
 CHECK_ACCESS(<*DeleteTempl*>)
 
 <?php 
-    todef('Path');
-    todef('Name');
-    todefnum('What');
+todef('Path');
+todef('Name');
+todefnum('What');
 ?>dnl
 
 B_HEAD
-	X_EXPIRES
-	<?php  if ($What == 1){?>dnl
-		X_TITLE(<*Delete templates*>)
-	<?php  }
-	else ?>  X_TITLE(<*Delete folders*>)
-	
 <?php  if ($access == 0) {
 	if ($What == 1){  ?> dnl
 		X_AD(<*You do not have the right to delete templates.*>)
@@ -26,18 +19,14 @@ B_HEAD
 <?php  } ?>dnl
 E_HEAD
 
-<?php  if ($access) { ?>dnl
-B_STYLE
-E_STYLE
-
-B_BODY
-
-<?php 	 if ($What == 1){?>
+<?php
+if ($access) {
+	if ($What == 1){ ?>
 		B_HEADER(<*Delete templates*>)
-	<?php }dnl
-	else {?>
+<?php
+	} else { ?>
 		 B_HEADER(<*Delete folders*>)
-	<?php }?>dnl
+<?php } ?>dnl
 
 B_HEADER_BUTTONS
 X_HBUTTON(<*Templates*>, <*templates/?Path=<?php  pencURL(decS($Path)); ?>*>)
@@ -47,7 +36,6 @@ E_HEADER
 B_CURRENT
 X_CURRENT(<*Path*>, <*<?php  pencHTML(decURL($Path)); ?>*>)
 E_CURRENT
-
 <P>
 
 <?php 	 if ($What == 1){?>dnl
@@ -68,7 +56,7 @@ E_CURRENT
 		<INPUT TYPE="HIDDEN" NAME="Name" VALUE="<?php  pencHTML(decS($Name)); ?>">
 		<INPUT TYPE="HIDDEN" NAME="What" VALUE="<?php  p($What); ?>">
 		SUBMIT(<*Yes*>, <*Yes*>)
-		REDIRECT(<*No*>, <*No*>, <*<?php  pencHTML(decS($Path)); ?>*>)
+		REDIRECT(<*No*>, <*No*>, <*<?php echo "/$ADMIN/templates?Path=".encHTML(decS($Path)); ?>*>)
 		</FORM>
 	E_MSGBOX_BUTTONS
 E_MSGBOX
