@@ -54,5 +54,6 @@ Defines parameters for cgi
 #define P_SUBSTYPE "SubsType"
 #define P_KEYWORD "keyword"
 #define P_SEARCH "search"
+#define P_REMEMBER_USER "RememberUser"
 
 #endif

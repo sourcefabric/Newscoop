@@ -63,9 +63,9 @@ X_AUDIT(<*133*>, <*getGS('Country name $1 changed',$cName)*>)
 	*>)
 	B_MSGBOX_BUTTONS
 <? if ($AFFECTED_ROWS > 0) { ?>dnl
-		<A HREF="X_ROOT/country/"><IMG SRC="X_ROOT/img/button/ok.gif" BORDER="0" ALT="No"></A>
+		REDIRECT(<*No*>, <*OK*>, <*X_ROOT/country/*>)
 <? } else { ?>dnl
-		<A HREF="X_ROOT/country/edit.php?Code=<? print encURL(decS($Code)); ?>&Language=<? print encHTML($Language); ?>"><IMG SRC="X_ROOT/img/button/ok.gif" BORDER="0" ALT="OK"></A>
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/country/edit.php?Code=<? print encURL(decS($Code)); ?>&Language=<? print encHTML($Language); ?>*>)
 <? } ?>dnl
 	E_MSGBOX_BUTTONS
 E_MSGBOX

@@ -68,13 +68,33 @@ class HtmlParser{
     }
 
 	
+	private String toCampUpperCase(String big){
+	    String work=new String(big);
+	    String sw= new String("ß");
+	    String with= new String("s");
+	    StringBuffer t;
+
+	    int i;
+	    while ((i=work.indexOf(sw))!=-1)
+	    {
+	        t=new StringBuffer();
+	        t.append(work.substring(0,i));
+	        t.append(with);
+	        t.append(work.substring(i+sw.length()));
+	        work=new String(t);
+	    }
+
+	    work= work.toUpperCase();
+	    return work;
+	}
+
 	private String replacer(String big,String small,String with,boolean ignoreCase,boolean insImg){
 	    String work=new String(big);
 	    String upper;
 	    String sw;
 	    StringBuffer t;
-	    if (!ignoreCase) sw=new String(small); else sw=small.toUpperCase();
-	    if (!ignoreCase) upper=work; else upper=work.toUpperCase();
+	    if (!ignoreCase) sw=new String(small); else sw=toCampUpperCase(small);
+	    if (!ignoreCase) upper=work; else upper=toCampUpperCase(work);
 	    int i;
 	    while ((i=upper.indexOf(sw))!=-1)
 	    {
@@ -83,11 +103,11 @@ class HtmlParser{
 	        t.append(with);
 	        t.append(work.substring(i+small.length()));
 	        work=new String(t);
-    	    if (!ignoreCase) upper=work; else upper=work.toUpperCase();
+    	    	if (!ignoreCase) upper=work; else upper=toCampUpperCase(work);
 	    }
 	    return work;
 	}
-	
+
 	private String deTager(String big){
 	    StringBuffer s=new StringBuffer();
 	    boolean isTag=false;
@@ -173,9 +193,9 @@ class HtmlParser{
 	    StringBuffer t;
 	    int sp;
 	    int cp;
-	    while((sp=ret.toUpperCase().indexOf(open.toUpperCase()))!=-1)
+	    while((sp=toCampUpperCase(ret).indexOf(toCampUpperCase(open)))!=-1)
 	    {
-	        cp=ret.toUpperCase().indexOf(close.toUpperCase());
+	        cp=toCampUpperCase(ret).indexOf(toCampUpperCase(close));
 	        //textPane.setCaretPosition(charPosition(ret,sp));
 	        textPane.setSelectionStart(charPosition(ret,sp));
 	        textPane.setSelectionEnd(charPosition(ret,cp));
@@ -219,14 +239,17 @@ class HtmlParser{
 	    String justStyle;
         
         parent.showStatus("parsing html ...");
-	    translateUnicode();
-		
+//	    translateUnicode();
+
+
+
 		// remove enters
 		fromHtml=replacer(fromHtml,"\n","",false,false);
 		// restore \n from brs
 		fromHtml=deJustifyer(fromHtml);
 		fromHtml=replacer(fromHtml,"<BR>","\n",true,false);
-		
+
+
 		forText=new String(fromHtml);
 		forText=replacer(forText,"<DD>",tabChar,true,false);
 //		forText=deCampTager(forText);
@@ -332,7 +355,7 @@ class HtmlParser{
 
 	private boolean isTag(String s,String tag,int si){
 	    int idx=-1;
-	    String upp=s.toUpperCase();
+	    String upp=toCampUpperCase(s);
 	    idx=upp.indexOf(tag,si);
 	    if (idx==si)
 	       return true;

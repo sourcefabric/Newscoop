@@ -55,10 +55,10 @@ B_DIALOG(<*Edit template*>, <*POST*>, <*do_edit.php*>)
 
 	B_DIALOG_BUTTONS
 <? if ($dta != 0) { ?>
-	<INPUT TYPE="IMAGE" SRC="X_ROOT/img/button/save.gif" BORDER="0" ALT="OK"></A>
-	<A HREF="<? pencHTML(decS($Path)); ?>"><IMG SRC="X_ROOT/img/button/cancel.gif" BORDER="0" ALT="Cancel"></A>
+	SUBMIT(<*Save*>, <*Save changes*>)
+	REDIRECT(<*Cancel*>, <*Cancel*>, <*<? pencHTML(decS($Path)); ?>*>)
 <? } else { ?>
-	<A HREF="<? pencHTML(decS($Path)); ?>"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
+	REDIRECT(<*Done*>, <*Done*>, <*<? pencHTML(decS($Path)); ?>*>)
 <? } ?>
 	E_DIALOG_BUTTONS
 
@@ -75,10 +75,10 @@ B_DIALOG(<*Edit template*>, <*POST*>, <*do_edit.php*>)
 
 	B_DIALOG_BUTTONS
 <? if ($dta != 0) { ?>
-	<INPUT TYPE="IMAGE" SRC="X_ROOT/img/button/save.gif" BORDER="0" ALT="OK"></A>
-	<A HREF="<? pencHTML(decS($Path)); ?>"><IMG SRC="X_ROOT/img/button/cancel.gif" BORDER="0" ALT="Cancel"></A>
+	SUBMIT(<*Save*>, <*Save changes*>)
+	REDIRECT(<*Cancel*>, <*Cancel*>, <*<? pencHTML(decS($Path)); ?>*>)
 <? } else { ?>
-	<A HREF="<? pencHTML(decS($Path)); ?>"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
+	REDIRECT(<*Done*>, <*Done*>, <*<? pencHTML(decS($Path)); ?>*>)
 <? } ?>
 	E_DIALOG_BUTTONS
 E_DIALOG

@@ -73,13 +73,13 @@ X_AUDIT(<*61*>, <*getGS('The article type $1 has been added.',$cName)*>)
     todef ('Back');
     if ($correct && $created) { ?>dnl
 	B_MSGBOX_BUTTONS
-		<A HREF="X_ROOT/a_types/fields/add.php?AType=<? print encURL($cName); ?>"><IMG SRC="X_ROOT/img/button/new_field.gif" BORDER="0" ALT="Add field"></A>
-		<A HREF="X_ROOT/a_types/add.php"><IMG SRC="X_ROOT/img/button/add_another.gif" BORDER="0" ALT="Add another article type"></A>
-		<A HREF="X_ROOT/a_types/"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
+		REDIRECT(<*New field*>, <*Add new field*>, <*X_ROOT/a_types/fields/add.php?AType=<? print encURL($cName); ?>*>)
+		REDIRECT(<*New type*>, <*Add another*>, <*X_ROOT/a_types/add.php*>)
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/a_types/*>)
 	E_MSGBOX_BUTTONS
 <? } else { ?>dnl
 	B_MSGBOX_BUTTONS
-		<A HREF="X_ROOT/a_types/add.php<? if ($Back != "") { ?>?Back=<? print encURL($Back); } ?>"><IMG SRC="X_ROOT/img/button/ok.gif" BORDER="0" ALT="OK"></A>
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/a_types/add.php<? if ($Back != "") { ?>?Back=<? print encURL($Back); } ?>*>)
 	E_MSGBOX_BUTTONS
 <? } ?>dnl
 E_MSGBOX

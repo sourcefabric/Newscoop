@@ -60,19 +60,22 @@ B_DIALOG(<*Change issue details*>, <*POST*>, <*do_edit.php*>)
 <?
     query ("SELECT Id, Name FROM Languages", 'q_lang');
     $nr=$NUM_ROWS;
-    for($loop=0;$loop<$nr;$loop++) { 
+    for($loop=0;$loop<$nr;$loop++) {
 	fetchRow($q_lang);
 	pcomboVar(getVar($q_lang,'Id'),getVar($publ,'IdLanguage'),getVar($q_lang,'Name'));
     }
-?>dnl	
+?>dnl
 	    </SELECT>
+	E_DIALOG_INPUT
+	B_DIALOG_INPUT(<*Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>*>)
+		<INPUT TYPE="TEXT" NAME="cPublicationDate" SIZE="10" MAXLENGTH="10" value="<? pgetHVar($publ,'PublicationDate'); ?>">
 	E_DIALOG_INPUT
 	B_DIALOG_BUTTONS
 		<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<? pencHTML($Pub); ?>">
 		<INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<? pencHTML($Issue); ?>">
 		<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<? pencHTML($Language); ?>">
-		<INPUT TYPE="IMAGE" NAME="OK" SRC="X_ROOT/img/button/save.gif" BORDER="0">
-		<A HREF="X_ROOT/pub/issues/?Pub=<? pencURL($Pub); ?>"><IMG SRC="X_ROOT/img/button/cancel.gif" BORDER="0" ALT="Cancel"></A>
+		SUBMIT(<*Save*>, <*Save changes*>)
+		REDIRECT(<*Cancel*>, <*Cancel*>, <*X_ROOT/pub/issues/?Pub=<? pencURL($Pub); ?>*>)
 	E_DIALOG_BUTTONS
 E_DIALOG
 <P>

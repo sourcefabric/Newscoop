@@ -93,9 +93,9 @@ X_AUDIT(<*55*>, <*getGS('Permissions for $1 changed',getHVar($uacc,'UName'))*>)
 	B_MSGBOX_BUTTONS
 <?
     if ($AFFECTED_ROWS > 0) { ?>dnl
-		<A HREF="X_ROOT/users/"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/users/*>)
 <? } else { ?>dnl
-		<A HREF="X_ROOT/users/access.php?User=<? pencURL($User); ?>"><IMG SRC="X_ROOT/img/button/ok.gif" BORDER="0" ALT="OK"></A>
+		REDIRECT(<OK**>, <*OK*>, <*X_ROOT/users/access.php?User=<? pencURL($User); ?>*>)
 <? } ?>dnl
 	E_MSGBOX_BUTTONS
 E_MSGBOX

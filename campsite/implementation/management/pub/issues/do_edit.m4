@@ -22,6 +22,7 @@ B_BODY
 <?
     todef('cName');
     todefnum('cLang');
+    todefnum('cPublicationDate');
     todefnum('Pub');
     todefnum('Issue');
     todefnum('Language');
@@ -76,7 +77,7 @@ B_MSGBOX(<*Changing issue's details*>)
     
     if ($correct) {
 	
-	query ("UPDATE Issues SET Name='$cName', IdLanguage=$cLang WHERE IdPublication=$Pub AND Number=$Issue");
+	query ("UPDATE Issues SET Name='$cName', IdLanguage=$cLang, PublicationDate='$cPublicationDate' WHERE IdPublication=$Pub AND Number=$Issue");
 	$created= ($AFFECTED_ROWS > 0);
     }
     
@@ -94,11 +95,11 @@ X_AUDIT(<*11*>, <*getGS('Issue $1 updated in publication $2',$cName,getVar($publ
 		*>)
 <? if ($correct && $created) { ?>dnl
 	B_MSGBOX_BUTTONS
-		<A HREF="X_ROOT/pub/issues/?Pub=<? pencURL($Pub); ?>"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/pub/issues/?Pub=<? pencURL($Pub); ?>*>)
 	E_MSGBOX_BUTTONS
 <? } else { ?>dnl
 	B_MSGBOX_BUTTONS
-		<A HREF="X_ROOT/pub/issues/edit.php?Pub=<? pencURL($Pub); ?>&Issue=<? pencURL($Issue); ?>&Language=<? pencURL($Language); ?>"><IMG SRC="X_ROOT/img/button/ok.gif" BORDER="0" ALT="OK"></A>
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/pub/issues/edit.php?Pub=<? pencURL($Pub); ?>&Issue=<? pencURL($Issue); ?>&Language=<? pencURL($Language); ?>*>)
 	E_MSGBOX_BUTTONS
 <? } ?>dnl
 E_MSGBOX

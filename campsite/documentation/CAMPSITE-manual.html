@@ -5,7 +5,7 @@
 	<TITLE>CAMPSITE manual Version 2.1</TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.2  (Linux)">
 	<META NAME="CREATED" CONTENT="20020913;19124500">
-	<META NAME="CHANGED" CONTENT="20030414;16332100">
+	<META NAME="CHANGED" CONTENT="20031019;15170600">
 	<STYLE>
 	<!--
 		@page { size: 21.59cm 27.94cm }
@@ -27,7 +27,7 @@
 		H4.western { font-family: "Times New Roman", serif }
 		H4.cjk { font-family: "HG Mincho Light J"; font-weight: medium }
 		H4.ctl { font-weight: medium }
-		TD P { margin-top: 0.5cm; margin-bottom: 0cm; color: #000000; page-break-before: auto }
+		TD P { margin-bottom: 0cm; color: #000000; page-break-before: auto }
 		TD P.western { font-family: "Times", serif; font-weight: medium }
 		BLOCKQUOTE { color: #000000; page-break-before: auto }
 		BLOCKQUOTE.western { font-family: "Times", serif; font-weight: medium }
@@ -43,10 +43,10 @@
 <P STYLE="margin-top: 0.42cm; margin-bottom: 0.5cm; page-break-after: avoid">
 <FONT FACE="Albany, sans-serif"><FONT SIZE=4>Web Automation Tool User
 Guide</FONT></FONT></P>
-<P CLASS="western">CAMPSITE version: 2.1.1 and newer versions</P>
+<P CLASS="western">CAMPSITE version: 2.1.4 and newer versions</P>
 <P CLASS="western">Maintained and distributed under GNU/GPL by
 CAMPWARE <A HREF="http://www.campware.org/">http://www.campware.org</A></P>
-<P CLASS="western">Manual version: March 4, 2003</P>
+<P CLASS="western">Manual version: October 20, 2003</P>
 <P CLASS="western">Language: English</P>
 <P CLASS="western">&copy;1999-2003 Media Development Loan Fund</P>
 <P CLASS="western"><A HREF="http://www.mdlf.org/" TARGET="_blank">http://www.mdlf.org</A>
@@ -55,145 +55,145 @@ CAMPWARE <A HREF="http://www.campware.org/">http://www.campware.org</A></P>
 Contents</B></P>
 <P CLASS="western"><A HREF="#introduction"><FONT FACE="Nimbus Roman No9 L">INTRODUCTION</FONT></A></P>
 <P CLASS="western"><A HREF="#copyright"><FONT FACE="Nimbus Roman No9 L">COPYRIGHT</FONT></A></P>
-<P CLASS="western"><FONT FACE="Nimbus Roman No9 L">1. </FONT><A HREF="#1."><FONT FACE="Nimbus Roman No9 L">INSTALLATION
+<P CLASS="western"><FONT FACE="Nimbus Roman No9 L">1. </FONT><A HREF="#1"><FONT FACE="Nimbus Roman No9 L">INSTALLATION
 GUIDE</FONT></A></P>
 <BLOCKQUOTE CLASS="western" STYLE="margin-right: -0.02cm"><FONT FACE="Nimbus Roman No9 L">1.1.
-</FONT><CITE CLASS="western"><A HREF="#1.1."><FONT FACE="Nimbus Roman No9 L">REQUIREMENTS</FONT></A></CITE><FONT FACE="Nimbus Roman No9 L"><BR>1.2.
-</FONT><A HREF="#1.2."><FONT FACE="Nimbus Roman No9 L">TODO</FONT></A></BLOCKQUOTE>
+</FONT><CITE CLASS="western"><A HREF="#1_1"><FONT FACE="Nimbus Roman No9 L">REQUIREMENTS</FONT></A></CITE><FONT FACE="Nimbus Roman No9 L"><BR>1.2.
+</FONT><A HREF="#1_2"><FONT FACE="Nimbus Roman No9 L">TODO</FONT></A></BLOCKQUOTE>
 <BLOCKQUOTE CLASS="western" STYLE="margin-left: 4cm; margin-right: 0.02cm">
-<FONT FACE="Nimbus Roman No9 L">1.2.1 </FONT><A HREF="#1.2.1"><FONT FACE="Nimbus Roman No9 L">Configure
+<FONT FACE="Nimbus Roman No9 L">1.2.1 </FONT><A HREF="#1_2_1"><FONT FACE="Nimbus Roman No9 L">Configure
 the Web server</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>1.2.2
-</FONT><A HREF="#1.2.2"><FONT FACE="Nimbus Roman No9 L">Customize the
+</FONT><A HREF="#1_2_2"><FONT FACE="Nimbus Roman No9 L">Customize the
 application framework</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>1.2.3
-</FONT><A HREF="#1.2.3"><FONT FACE="Nimbus Roman No9 L">The CAMPFIRE
-Java Editor</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>1.2.4 </FONT><A HREF="#1.2.4"><FONT FACE="Nimbus Roman No9 L">KNOWN
+</FONT><A HREF="#1_2_3"><FONT FACE="Nimbus Roman No9 L">The CAMPFIRE
+Java Editor</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>1.2.4 </FONT><A HREF="#1_2_4"><FONT FACE="Nimbus Roman No9 L">KNOWN
 LIMITATIONS: Apple Macintosh</FONT></A></BLOCKQUOTE>
 <BLOCKQUOTE CLASS="western" STYLE="margin-right: -0.02cm"><FONT FACE="Nimbus Roman No9 L">1.3
-</FONT><A HREF="#1.3."><FONT FACE="Nimbus Roman No9 L">UPGRADING FROM
+</FONT><A HREF="#1_3"><FONT FACE="Nimbus Roman No9 L">UPGRADING FROM
 VERSIONS 1.x or 2.0</FONT></A></BLOCKQUOTE>
 <BLOCKQUOTE CLASS="western" STYLE="margin-left: 4cm; margin-right: 0cm">
-<FONT FACE="Nimbus Roman No9 L">1.3.1 </FONT><A HREF="#1.3.1"><FONT FACE="Nimbus Roman No9 L">Compatibility
-issues</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>1.3.2 </FONT><A HREF="#1.3.2"><FONT FACE="Nimbus Roman No9 L">New
+<FONT FACE="Nimbus Roman No9 L">1.3.1 </FONT><A HREF="#1_3_1"><FONT FACE="Nimbus Roman No9 L">Compatibility
+issues</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>1.3.2 </FONT><A HREF="#1_3_2"><FONT FACE="Nimbus Roman No9 L">New
 template language features</FONT></A></BLOCKQUOTE>
-<P CLASS="western"><FONT FACE="Nimbus Roman No9 L">2. </FONT><A HREF="#2."><FONT FACE="Nimbus Roman No9 L">BRINGING
+<P CLASS="western"><FONT FACE="Nimbus Roman No9 L">2. </FONT><A HREF="#2"><FONT FACE="Nimbus Roman No9 L">BRINGING
 YOUR PUBLICATIONS ONLINE WITH CAMPSITE</FONT></A></P>
 <BLOCKQUOTE CLASS="western" STYLE="margin-right: -0.02cm"><FONT FACE="Nimbus Roman No9 L">2.1.
-</FONT><A HREF="#2.1."><FONT FACE="Nimbus Roman No9 L">CONFIGURING
-THE PUBLISHING ENVIRONMENT</FONT></A></BLOCKQUOTE>
+</FONT><A HREF="#2_1"><FONT FACE="Nimbus Roman No9 L">CONFIGURING THE
+PUBLISHING ENVIRONMENT</FONT></A></BLOCKQUOTE>
 <BLOCKQUOTE CLASS="western" STYLE="margin-left: 4cm; margin-right: -0.02cm">
-<FONT FACE="Nimbus Roman No9 L">2.1.1 </FONT><A HREF="#2.1.1"><FONT FACE="Nimbus Roman No9 L">Languages</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>2.1.2
-</FONT><A HREF="#2.1.2"><FONT FACE="Nimbus Roman No9 L">Countries</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>2.1.3
-</FONT><A HREF="#2.1.3"><FONT FACE="Nimbus Roman No9 L">The
-localizer</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>2.1.4 </FONT><A HREF="#2.1.4"><FONT FACE="Nimbus Roman No9 L">User
+<FONT FACE="Nimbus Roman No9 L">2.1.1 </FONT><A HREF="#2_1_1"><FONT FACE="Nimbus Roman No9 L">Languages</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>2.1.2
+</FONT><A HREF="#2_1_2"><FONT FACE="Nimbus Roman No9 L">Countries</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>2.1.3
+</FONT><A HREF="#2_1_3"><FONT FACE="Nimbus Roman No9 L">The
+localizer</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>2.1.4 </FONT><A HREF="#2_1_4"><FONT FACE="Nimbus Roman No9 L">User
 Management</FONT></A></BLOCKQUOTE>
 <BLOCKQUOTE CLASS="western" STYLE="margin-right: 0cm"><FONT FACE="Nimbus Roman No9 L">2.2.
-</FONT><A HREF="#2.2."><FONT FACE="Nimbus Roman No9 L">CREATING
+</FONT><A HREF="#2_2"><FONT FACE="Nimbus Roman No9 L">CREATING
 PUBLICATIONS</FONT></A></BLOCKQUOTE>
 <BLOCKQUOTE CLASS="western" STYLE="margin-left: 4cm; margin-right: 0cm">
-<FONT FACE="Nimbus Roman No9 L">2.2.1 </FONT><A HREF="#2.2.1"><FONT FACE="Nimbus Roman No9 L">Creating
+<FONT FACE="Nimbus Roman No9 L">2.2.1 </FONT><A HREF="#2_2_1"><FONT FACE="Nimbus Roman No9 L">Creating
 a new publication</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>2.2.2
-</FONT><A HREF="#2.2.2"><FONT FACE="Nimbus Roman No9 L">Creating a
-new issue</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>2.2.3 </FONT><A HREF="#2.2.3"><FONT FACE="Nimbus Roman No9 L">Add
+</FONT><A HREF="#2_2_2"><FONT FACE="Nimbus Roman No9 L">Creating a
+new issue</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>2.2.3 </FONT><A HREF="#2_2_3"><FONT FACE="Nimbus Roman No9 L">Add
 new sections to an issue</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>2.2.4
-</FONT><A HREF="#2.2.4"><FONT FACE="Nimbus Roman No9 L">Defining
+</FONT><A HREF="#2_2_4"><FONT FACE="Nimbus Roman No9 L">Defining
 article types</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>2.2.5
-</FONT><A HREF="#2.2.5"><FONT FACE="Nimbus Roman No9 L">Creating
+</FONT><A HREF="#2_2_5"><FONT FACE="Nimbus Roman No9 L">Creating
 articles within a section</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>2.2.6
-</FONT><A HREF="#2.2.6"><FONT FACE="Nimbus Roman No9 L">Editing
+</FONT><A HREF="#2_2_6"><FONT FACE="Nimbus Roman No9 L">Editing
 articles: Edit Article Details view</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>2.2.7
-</FONT><A HREF="#2.2.7"><FONT FACE="Nimbus Roman No9 L">Editing
+</FONT><A HREF="#2_2_7"><FONT FACE="Nimbus Roman No9 L">Editing
 body-type fields: Working with CAMPFIRE</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>2.2.8
-</FONT><A HREF="#2.2.8"><FONT FACE="Nimbus Roman No9 L">Publishing
-articles4</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>2.2.9 </FONT><A HREF="#2.2.9"><FONT FACE="Nimbus Roman No9 L">Setting
+</FONT><A HREF="#2_2_8"><FONT FACE="Nimbus Roman No9 L">Publishing
+articles</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>2.2.9 </FONT><A HREF="#2_2_9"><FONT FACE="Nimbus Roman No9 L">Setting
 the finalized publication live</FONT></A></BLOCKQUOTE>
 <BLOCKQUOTE CLASS="western" STYLE="margin-right: -0.02cm"><FONT FACE="Nimbus Roman No9 L">2.3.
-</FONT><A HREF="#2.3."><FONT FACE="Nimbus Roman No9 L">GLOSSARY</FONT></A></BLOCKQUOTE>
+</FONT><A HREF="#2_3"><FONT FACE="Nimbus Roman No9 L">GLOSSARY</FONT></A></BLOCKQUOTE>
 <BLOCKQUOTE CLASS="western" STYLE="margin-left: 4cm; margin-right: -0.02cm">
-<FONT FACE="Nimbus Roman No9 L">2.3.1 </FONT><A HREF="#2.3.1"><FONT FACE="Nimbus Roman No9 L">Creating
+<FONT FACE="Nimbus Roman No9 L">2.3.1 </FONT><A HREF="#2_3_1"><FONT FACE="Nimbus Roman No9 L">Creating
 'Infotypes'</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>2.3.2
-</FONT><A HREF="#2.3.2"><FONT FACE="Nimbus Roman No9 L">Adding
+</FONT><A HREF="#2_3_2"><FONT FACE="Nimbus Roman No9 L">Adding
 keywords to the Glossary</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>2.3.3
-</FONT><A HREF="#2.3.3"><FONT FACE="Nimbus Roman No9 L">Marking
+</FONT><A HREF="#2_3_3"><FONT FACE="Nimbus Roman No9 L">Marking
 Glossary keywords in articles</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>2.3.4
-</FONT><A HREF="#2.3.4"><FONT FACE="Nimbus Roman No9 L">What pays the
+</FONT><A HREF="#2_3_4"><FONT FACE="Nimbus Roman No9 L">What pays the
 piper, will see the surfer</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>2.3.5
-</FONT><A HREF="#2.3.5"><FONT FACE="Nimbus Roman No9 L">Known
+</FONT><A HREF="#2_3_5"><FONT FACE="Nimbus Roman No9 L">Known
 Limitations of the Glossary</FONT></A></BLOCKQUOTE>
 <BLOCKQUOTE CLASS="western" STYLE="margin-right: 0cm"><FONT FACE="Nimbus Roman No9 L">2.4.
-</FONT><A HREF="#2.4."><FONT FACE="Nimbus Roman No9 L">TOPICS</FONT></A></BLOCKQUOTE>
+</FONT><A HREF="#2_4"><FONT FACE="Nimbus Roman No9 L">TOPICS</FONT></A></BLOCKQUOTE>
 <BLOCKQUOTE CLASS="western" STYLE="margin-right: 0cm"><FONT FACE="Nimbus Roman No9 L">2.5.
-</FONT><A HREF="#2.5."><FONT FACE="Nimbus Roman No9 L">CONFIGURING
-THE SUBSCRIPTION MODULE</FONT></A></BLOCKQUOTE>
+</FONT><A HREF="#2_5"><FONT FACE="Nimbus Roman No9 L">CONFIGURING THE
+SUBSCRIPTION MODULE</FONT></A></BLOCKQUOTE>
 <BLOCKQUOTE CLASS="western" STYLE="margin-left: 4cm; margin-right: 0cm">
-<FONT FACE="Nimbus Roman No9 L">2.5.1 </FONT><A HREF="#2.5.1"><FONT FACE="Nimbus Roman No9 L">Username:Password
+<FONT FACE="Nimbus Roman No9 L">2.5.1 </FONT><A HREF="#2_5_1"><FONT FACE="Nimbus Roman No9 L">Username:Password
 Access</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>2.5.2
-</FONT><A HREF="#2.5.2"><FONT FACE="Nimbus Roman No9 L">Customizing
+</FONT><A HREF="#2_5_2"><FONT FACE="Nimbus Roman No9 L">Customizing
 Subscription Interface for Readers</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>2.5.3
-</FONT><A HREF="#2.5.3"><FONT FACE="Nimbus Roman No9 L">IP
+</FONT><A HREF="#2_5_3"><FONT FACE="Nimbus Roman No9 L">IP
 Address-based Subscriptions</FONT></A></BLOCKQUOTE>
-<P CLASS="western"><FONT FACE="Nimbus Roman No9 L">3. </FONT><A HREF="#3."><FONT FACE="Nimbus Roman No9 L">CREATING
+<P CLASS="western"><FONT FACE="Nimbus Roman No9 L">3. </FONT><A HREF="#3"><FONT FACE="Nimbus Roman No9 L">CREATING
 TEMPLATES FOR YOUR PUBLICATION</FONT></A></P>
 <BLOCKQUOTE CLASS="western" STYLE="margin-right: 0cm"><FONT FACE="Nimbus Roman No9 L">3.1.
-</FONT><A HREF="#3.1."><FONT FACE="Nimbus Roman No9 L">MODULAR
+</FONT><A HREF="#3_1"><FONT FACE="Nimbus Roman No9 L">MODULAR
 STRUCTURE OF TEMPLATES</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>3.2.
-</FONT><A HREF="#3.2."><FONT FACE="Nimbus Roman No9 L">FIXED
+</FONT><A HREF="#3_2"><FONT FACE="Nimbus Roman No9 L">FIXED
 FRAMEWORK: COMMUNICATING WITH YOUR DATABASE</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>3.3.
-</FONT><A HREF="#3.3."><FONT FACE="Nimbus Roman No9 L">BUILDING AN
+</FONT><A HREF="#3_3"><FONT FACE="Nimbus Roman No9 L">BUILDING AN
 ARTICLE TEMPLATE: ARTICLETEMPLATE.TPL</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>3.4.
-</FONT><A HREF="#3.4."><FONT FACE="Nimbus Roman No9 L">GENERATING A
+</FONT><A HREF="#3_4"><FONT FACE="Nimbus Roman No9 L">GENERATING A
 NAVIGATION TEMPLATE: NAVIGATIONTEMPLATE.TPL</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>3.5.
-</FONT><A HREF="#3.5."><FONT FACE="Nimbus Roman No9 L">BUILDING THE
+</FONT><A HREF="#3_5"><FONT FACE="Nimbus Roman No9 L">BUILDING THE
 SECTION TEMPLATE: SECTIONTEMPLATE.TPL</FONT></A></BLOCKQUOTE>
 <BLOCKQUOTE CLASS="western" STYLE="margin-left: 4cm; margin-right: 0cm">
-<FONT FACE="Nimbus Roman No9 L">3.5.1 </FONT><A HREF="#3.5.1"><FONT FACE="Nimbus Roman No9 L">The
+<FONT FACE="Nimbus Roman No9 L">3.5.1 </FONT><A HREF="#3_5_1"><FONT FACE="Nimbus Roman No9 L">The
 'Feature' article of the section</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>3.5.2
-</FONT><A HREF="#3.5.2"><FONT FACE="Nimbus Roman No9 L">Displaying
+</FONT><A HREF="#3_5_2"><FONT FACE="Nimbus Roman No9 L">Displaying
 only the most recent feature article on a section page</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>3.5.3
-</FONT><A HREF="#3.5.3"><FONT FACE="Nimbus Roman No9 L">Including
+</FONT><A HREF="#3_5_3"><FONT FACE="Nimbus Roman No9 L">Including
 Images in the Section Listing</FONT></A></BLOCKQUOTE>
 <BLOCKQUOTE CLASS="western" STYLE="margin-right: 0cm"><FONT FACE="Nimbus Roman No9 L">3.6.
-</FONT><A HREF="#3.6."><FONT FACE="Nimbus Roman No9 L">BUILDING THE
+</FONT><A HREF="#3_6"><FONT FACE="Nimbus Roman No9 L">BUILDING THE
 HOME PAGE TEMPLATE: HOME.TPL</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>3.7.
-</FONT><A HREF="#3.7."><FONT FACE="Nimbus Roman No9 L">SOME HINTS:
+</FONT><A HREF="#3_7"><FONT FACE="Nimbus Roman No9 L">SOME HINTS:
 POWERFUL LISTS AND ORDERING</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>3.8.
-</FONT><A HREF="#3.8."><FONT FACE="Nimbus Roman No9 L">ENVIRONMENTAL
+</FONT><A HREF="#3_8"><FONT FACE="Nimbus Roman No9 L">ENVIRONMENTAL
 CONTROL WITH CAMPSITE TEMPLATES</FONT></A></BLOCKQUOTE>
 <BLOCKQUOTE CLASS="western" STYLE="margin-left: 4cm; margin-right: 0cm">
-<FONT FACE="Nimbus Roman No9 L">3.8.1 </FONT><A HREF="#3.8.1"><FONT FACE="Nimbus Roman No9 L">Runtime
-parameters</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>3.8.2 </FONT><A HREF="#3.8.2"><FONT FACE="Nimbus Roman No9 L">Other
+<FONT FACE="Nimbus Roman No9 L">3.8.1 </FONT><A HREF="#3_8_1"><FONT FACE="Nimbus Roman No9 L">Runtime
+parameters</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>3.8.2 </FONT><A HREF="#3_8_2"><FONT FACE="Nimbus Roman No9 L">Other
 parameters</FONT></A></BLOCKQUOTE>
 <BLOCKQUOTE CLASS="western" STYLE="margin-right: 0cm"><FONT FACE="Nimbus Roman No9 L">3.9.
-</FONT><A HREF="#3.9."><FONT FACE="Nimbus Roman No9 L">STRUCTURE OF
+</FONT><A HREF="#3_9"><FONT FACE="Nimbus Roman No9 L">STRUCTURE OF
 CAMPSITE TEMPLATES</FONT></A></BLOCKQUOTE>
 <BLOCKQUOTE CLASS="western" STYLE="margin-left: 4cm; margin-right: 0cm">
-<FONT FACE="Nimbus Roman No9 L">3.9.1 </FONT><A HREF="#3.9.1"><FONT FACE="Nimbus Roman No9 L">Language
+<FONT FACE="Nimbus Roman No9 L">3.9.1 </FONT><A HREF="#3_9_1"><FONT FACE="Nimbus Roman No9 L">Language
 Elements. Conventions</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>3.9.2
-</FONT><A HREF="#3.9.2"><FONT FACE="Nimbus Roman No9 L">'Define-environment'
-instructions</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>3.9.3 </FONT><A HREF="#3.9.3"><FONT FACE="Nimbus Roman No9 L">Flow
+</FONT><A HREF="#3_9_2"><FONT FACE="Nimbus Roman No9 L">'Define-environment'
+instructions</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>3.9.3 </FONT><A HREF="#3_9_3"><FONT FACE="Nimbus Roman No9 L">Flow
 control instructions</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>3.9.4
-</FONT><A HREF="#3.9.4"><FONT FACE="Nimbus Roman No9 L">Printable
+</FONT><A HREF="#3_9_4"><FONT FACE="Nimbus Roman No9 L">Printable
 information</FONT></A></BLOCKQUOTE>
-<P CLASS="western"><FONT FACE="Nimbus Roman No9 L">4. </FONT><A HREF="#4."><FONT FACE="Nimbus Roman No9 L">APENDIX
+<P CLASS="western"><FONT FACE="Nimbus Roman No9 L">4. </FONT><A HREF="#4"><FONT FACE="Nimbus Roman No9 L">APENDIX
 I - ALPHABETIC LIST OF LANGUAGE STATEMENTS</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>5.
-</FONT><A HREF="#5."><FONT FACE="Nimbus Roman No9 L">APPENDIX II -
+</FONT><A HREF="#5"><FONT FACE="Nimbus Roman No9 L">APPENDIX II -
 CHARACTER SETS AND LANGUAGES</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>6.
-</FONT><A HREF="#7."><FONT FACE="Nimbus Roman No9 L">APPENDIX IV:
+</FONT><A HREF="#6"><FONT FACE="Nimbus Roman No9 L">APPENDIX IV:
 INSTALLING CAMPSITE ON A STANDARD RED HAT 7.0 SERVER</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>7.
-</FONT><A HREF="#8."><FONT FACE="Nimbus Roman No9 L">APPENDIX V -
+</FONT><A HREF="#7"><FONT FACE="Nimbus Roman No9 L">APPENDIX V -
 BACKING UP DATABASES IN MYSQL</FONT></A></P>
 <HR SIZE=1 NOSHADE>
 <H1 CLASS="western"><A NAME="introduction"></A><FONT FACE="Times, serif">INTRODUCTION</FONT></H1>
 <P CLASS="western">CAMPSITE is a multilingual, Unicode-based content
-management system, featuring easy localization of the backend user
-interface. CAMPSITE was designed for medium-to-large-size online news
-publications. Issues, copy flow, back archives, as well as
-subscription management are fully implemented features. At the core
-of CAMPSITE is CAMPFIRE, a near-WYSIWYG Java editor based on Unicode,
-which allows journalists and editors to publish content and control
-layout online in their native character sets. Formatting can be
-altered in a similar way as in editors such as Wordpad, meaning that
-absolutely no HTML knowledge is necessary for formatting and
-inputting text.</P>
+management system, featuring easy localization of the<SPAN LANG="en-US">
+backed </SPAN>user interface. CAMPSITE was designed for
+medium-to-large-size online news publications. Issues, copy flow,
+back archives, as well as subscription management are fully
+implemented features. At the core of CAMPSITE is CAMPFIRE, a
+near-WYSIWYG Java editor based on Unicode, which allows journalists
+and editors to publish content and control layout online in their
+native character sets. Formatting can be altered in a similar way as
+in editors such as Wordpad, meaning that absolutely no HTML knowledge
+is necessary for formatting and inputting text.</P>
 <P CLASS="western">The original CAMPSITE concept was developed by
 Center for Advanced Media-Prague (CAMP) in collaboration with
 Transitions Online, which started using CAMPSITE in late 2000.
@@ -214,9 +214,9 @@ related questions at contact@campware.org.</P>
 </P>
 <UL>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">runs on a Linux
-	server, originally tested on RedHat 7.0 and Mandrake 8.0 and has
-	proven compatible with RedHat 7.1, 7.2, 8.0, Mandrake 8.1, 8.2, 9.0
-	and Debian</P>
+	server, originally tested on RedHat 7.0 and Mandrake 8.0 and has<SPAN LANG="en-US">
+	proved </SPAN>compatible with RedHat 7.1, 7.2, 8.0, Mandrake 8.1,
+	8.2, 9.0 and Debian</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">requires an Apache
 	web server to be running, and its virtual servers to be configured
 	by the administrator.</P>
@@ -253,15 +253,15 @@ WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
 General Public License for more details.</P>
 <HR SIZE=1 NOSHADE>
-<H1 CLASS="western"><A NAME="1."></A>1. <FONT FACE="Times, serif">INSTALLATION
+<H1 CLASS="western"><A NAME="1"></A>1. <FONT FACE="Times, serif">INSTALLATION
 GUIDE</FONT></H1>
-<H2 CLASS="western"><A NAME="1.1."></A><FONT FACE="Times, serif">1.1.
+<H2 CLASS="western"><A NAME="1_1"></A><FONT FACE="Times, serif">1.1.
 Requirements</FONT></H2>
 <P CLASS="western">The server part of the application runs on a Linux
 computer. It was originally developed and tested on RedHat 7.0
-release and works on all subsequent releases, and it has proven
-compatible with Mandrake 8.0 and higher as well as on Debian 2.0 and
-up.</P>
+release and works on all subsequent releases, and it has<SPAN LANG="en-US">
+proved </SPAN>compatible with Mandrake 8.0 and higher as well as on
+Debian 2.0 and up.</P>
 <P CLASS="western">Before installing CAMPSITE, make sure you have two
 other applications up and running:</P>
 <P CLASS="western">1. Apache web server -- your http daemon, serving
@@ -289,9 +289,9 @@ on the MySQL website.</P>
 'Standard Binary RPMs' which have been compiled especially for Red
 Hat and should cause the least hassle. You can install these files on
 prompt level by typing 'rpm -t nameoffile.rpm' (without the '').</P>
-<H2 CLASS="western"><A NAME="1.2."></A>1.2. TODO</H2>
+<H2 CLASS="western"><A NAME="1_2"></A>1.2. TODO</H2>
 <P CLASS="western">Here is what you need to do.</P>
-<H3 CLASS="western"><A NAME="1.2.1"></A>1.2.1 Configure the Web
+<H3 CLASS="western"><A NAME="1_2_1"></A>1.2.1 Configure the Web
 server</H3>
 <P CLASS="western">First you need to change the behavior of the http
 daemon (the Web server). The configuration file, called httpd.conf,
@@ -334,7 +334,7 @@ file). The changes you have to apply to the file are:</P>
 <P CLASS="western" STYLE="margin-top: 0cm">or</P>
 <P CLASS="western"><FONT FACE="Courier, monospace">/etc/rc.d/init.d/httpd
 restart</FONT></P>
-<H3 CLASS="western"><A NAME="1.2.2"></A>1.2.2 Customize the
+<H3 CLASS="western"><A NAME="1_2_2"></A>1.2.2 Customize the
 application framework</H3>
 <OL>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">Copy the CAMPSITE
@@ -347,7 +347,7 @@ application framework</H3>
 	answer the install questions and wait for the application to be
 	installed.</P>
 </OL>
-<H3 CLASS="western"><A NAME="1.2.3"></A>1.2.3 The CAMPFIRE Java
+<H3 CLASS="western"><A NAME="1_2_3"></A>1.2.3 The CAMPFIRE Java
 Editor</H3>
 <P CLASS="western">At the heart of CAMPSITE's client interface, lies
 CAMPFIRE, a text editor implemented as a signed Java Applet. For this
@@ -365,7 +365,7 @@ on 'Grant always' option in the popup window asking you 'Do you want
 to install and run signed applet distributed by &ldquo;Campsite
 team&rdquo;'(if you do otherwise, you will not be able to cut and
 paste within the editor).</P>
-<H3 CLASS="western"><A NAME="1.2.4"></A>1.2.4 KNOWN LIMITATIONS</H3>
+<H3 CLASS="western"><A NAME="1_2_4"></A>1.2.4 KNOWN LIMITATIONS</H3>
 <P CLASS="western"><B>Apple Macintosh</B>: CAMPFIRE currently works
 only on Internet Explorer under OS X. We are working on expanding the
 range of browsers it works with. System 9.x and lower are not
@@ -373,11 +373,12 @@ supported.</P>
 <P CLASS="western" STYLE="page-break-before: auto"><B>Localizer</B>:
 There are several known problems related to the localizer at this
 time. Action buttons like Save Changes or Cancel are only in English,
-for the moment. Similarly, some dropdown lists like Language or
-Country are not translated into the local language either at this
-stage. These are all known and documented problems and our
-development team will be resolving these issues in future releases.</P>
-<H2 CLASS="western"><A NAME="1.3."></A>1.3. UPGRADING FROM VERSIONS
+for the moment. Similarly, some<SPAN LANG="en-US"> drop down </SPAN>lists
+like Language or Country are not translated into the local language
+either at this stage. These are all known and documented problems and
+our development team will be resolving these issues in future
+releases.</P>
+<H2 CLASS="western"><A NAME="1_3"></A>1.3. UPGRADING FROM VERSIONS
 1.x or 2.0</H2>
 <P CLASS="western" STYLE="margin-top: 0cm">Upgrading from 1.x or 2.0
 versions of Campsite requires three actions to be performed before
@@ -395,7 +396,7 @@ special knowledge the database and templates conversion to UTF-8
 requires UNIX/Linux administration knowledge. The future versions of
 CAMPSITE should provide a tool that will automate this process,
 making it easier.</P>
-<H3 CLASS="western"><A NAME="1.3.1"></A>1.3.1. Compatibility issues</H3>
+<H3 CLASS="western"><A NAME="1_3_1"></A>1.3.1. Compatibility issues</H3>
 <P CLASS="western">Since CAMPSITE 2.1 uses UTF-8 encoding the older
 database and templates must be converted; the database conversion is
 more complex and error prone while the templates conversion requires
@@ -472,8 +473,8 @@ the list of tables if CAMPSITE upgrade took place already.</P>
 	character sets log in to CAMPSITE database and run the following
 	sql: &ldquo;select Name, Id, CodePage from Languages&rdquo;.</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm"><I>mysqldump ... -t
-	&ndash;tables --where=&quot;IdLanguage = [l1] or IdLanguage =
-	[l2]...&quot; \</I></P>
+	--tables --where=&quot;IdLanguage = [l1] or IdLanguage = [l2]...&quot;
+	\</I></P>
 	<OL>
 		<P CLASS="western" STYLE="margin-top: 0cm"><I>[database] Articles
 		Classes Countries Dictionary Errors Issues \</I></P>
@@ -601,7 +602,7 @@ UTF-8 [template_name] &gt; [template_name].utf8</I></P>
 <P CLASS="western">where [charset] must be replaced by the template
 character set and [template_name] by the template being processed.</P>
 <P CLASS="western"><B>Updating templates structure</B>: Some
-attributes of <A HREF="#3.9.3.3">List Article</A> statement are no
+attributes of <A HREF="#3_9_3_3">List Article</A> statement are no
 longer supported in version 2.1, so all templates using those
 attributes must be updated.</P>
 <P CLASS="western">Attributes no longer supported:</P>
@@ -620,21 +621,21 @@ Section</B>&quot;</FONT><FONT FACE="Nimbus Roman No9 L"> replaced by:
 <FONT FACE="Courier, monospace">&quot;<B>IsNotOn Section</B>&quot;</FONT><FONT FACE="Nimbus Roman No9 L">
 replaced by: </FONT><FONT FACE="Courier, monospace">&quot;<B>OnSection
 is off</B>&quot;</FONT></BLOCKQUOTE>
-<P CLASS="western">For details see <A HREF="#3.9.3.3">List of
+<P CLASS="western">For details see <A HREF="#3_9_3_3">List of
 Articles</A>.</P>
-<H3 CLASS="western"><A NAME="1.3.2"></A>1.3.2. New template language
+<H3 CLASS="western"><A NAME="1_3_2"></A>1.3.2. New template language
 features</H3>
 <P CLASS="western">a. New attributes to &quot;If Issue&quot;
 statement:</P>
 <BLOCKQUOTE CLASS="western"><FONT FACE="Courier, monospace">- name
 &lt;string_operator&gt; &lt;string_value&gt;<BR>- publish_date
 &lt;date_operator&gt; &lt;date_value&gt;</FONT></BLOCKQUOTE>
-<P CLASS="western">For details see <A HREF="#3.9.3.11">If Issue</A>.</P>
+<P CLASS="western">For details see <A HREF="#3_9_3_11">If Issue</A>.</P>
 <P CLASS="western">b. New attributes to &quot;List Issue&quot;
 statement:</P>
 <BLOCKQUOTE CLASS="western">- <FONT FACE="Courier, monospace">publish_date
 &lt;date_operator&gt; &lt;date_value&gt;</FONT></BLOCKQUOTE>
-<P CLASS="western">For details see <A HREF="#3.9.3.1">List of Issues</A>.</P>
+<P CLASS="western">For details see <A HREF="#3_9_3_1">List of Issues</A>.</P>
 <P CLASS="western">c. New attributes to &quot;If Article&quot;
 statement:</P>
 <BLOCKQUOTE CLASS="western"><FONT FACE="Courier, monospace">- name
@@ -644,8 +645,7 @@ statement:</P>
 &lt;switch_value&gt;<BR>- OnSection &lt;switch_operator&gt;
 &lt;switch_value&gt;<BR>- translated_to &lt;string_value&gt;<BR>-
 &lt;article_field&gt; &lt;field_type_operator&gt; &lt;field_type_value&gt;</FONT></BLOCKQUOTE>
-<P CLASS="western">For details see <A HREF="#3.9.3.13">If Article</A>.
-</P>
+<P CLASS="western">For details see <A HREF="#3_9_3_13">If Article</A>.</P>
 <P CLASS="western">d. New attributes to &quot;List Article&quot;
 statement: 
 </P>
@@ -655,10 +655,10 @@ public &lt;switch_operator&gt; &lt;switch_value&gt;</FONT><BR><FONT FACE="Courie
 &lt;article_field&gt; &lt;field_type_operator&gt; &lt;field_type_value&gt;
 </FONT>
 </BLOCKQUOTE>
-<P CLASS="western">For details see <A HREF="#3.9.3.3">List of
+<P CLASS="western">For details see <A HREF="#3_9_3_3">List of
 Articles</A>. 
 </P>
-<H1 CLASS="western"><A NAME="2."></A>2. BRINGING YOUR PUBLICATIONS
+<H1 CLASS="western"><A NAME="2"></A>2. BRINGING YOUR PUBLICATIONS
 ONLINE WITH CAMPSITE</H1>
 <P CLASS="western">CAMPSITE enables you to publish (host) multiple
 multilingual publications (web sites) on the same server. The process
@@ -676,7 +676,7 @@ can be roughly divided in four steps:</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">adding content and
 	managing your publications</P>
 </UL>
-<H2 CLASS="western"><A NAME="2.1."></A><FONT FACE="Times, serif">2.1.
+<H2 CLASS="western"><A NAME="2_1"></A><FONT FACE="Times, serif">2.1.
 Configuring the publishing environment</FONT></H2>
 <P CLASS="western">Your first step on the road to bringing your
 publications online with CAMPSITE is to configure the publishing
@@ -691,14 +691,15 @@ can access, while the right frame displays the currently selected
 module.</P>
 <P CLASS="western">CAMPSITE appears differently to different users.
 Each user sees only the options that he or she has the right to
-access or alter. A typical backend user (an editor or journalist)
-will get to see only a fraction of the options available to a fully
-authorized user (such as the default administrator). On top of that,
-each user is able to choose his interface language. The default
-language is English, but you can either use one of the localized
-versions we supply (at the moment, we supply the German, Russian, and
-Czech versions) or create your own (see The Localizer section below).</P>
-<H3 CLASS="western"><A NAME="2.1.1"></A><FONT FACE="Times, serif">2.1.1
+access or alter. A typical<SPAN LANG="en-US"> backed </SPAN>user (an
+editor or journalist) will get to see only a fraction of the options
+available to a fully authorized user (such as the default
+administrator). On top of that, each user is able to choose his
+interface language. The default language is English, but you can
+either use one of the localized versions we supply (at the moment, we
+supply the German, Russian, and Czech versions) or create your own
+(see The Localizer section below).</P>
+<H3 CLASS="western"><A NAME="2_1_1"></A><IMG SRC="CAMPSITE-manual_html_m4af947a1.png" NAME="Graphic1" ALIGN=LEFT HSPACE=6 WIDTH=311 HEIGHT=350 BORDER=0><BR CLEAR=LEFT><FONT FACE="Times, serif">2.1.1
 Languages</FONT></H3>
 <P CLASS="western">While CAMPSITE's default language is English, you
 are by no means limited to publishing in that language only. It's
@@ -711,65 +712,153 @@ languages, you can configure your own languages.</P>
 'Add new language'. You should enter the language name (both in
 English and in the language itself), its code (e.g. hr for Croatian),
 the code page your will be saving your templates in on your local
-machine (e.g. if you are working on a Windows machine on your Russian
-cyrillic template in an editor, you will want to specify KOI-8 or
-Windows-1251), and the names of months and days of the week in the
+machine (e.g. if you are working on a Windows machine on your Russian<SPAN LANG="en-US">
+Cyrillic </SPAN>template in an editor, you will want to specify KOI-8
+or Windows-1251), and the names of months and days of the week in the
 language you are configuring.</P>
-<P CLASS="western">[NOTE TO ADMINISTRATOR: You may want to limit the
-number of languages configured on your server in order to spare your
-users from long drop-down language menus. Sometimes less is more, if
-you know what we mean.]</P>
-<H3 CLASS="western"><A NAME="2.1.2"></A><FONT FACE="Times, serif">2.1.2
+<P CLASS="western"><IMG SRC="CAMPSITE-manual_html_m6aaa028f.png" NAME="Graphic2" ALIGN=LEFT VSPACE=11 WIDTH=686 HEIGHT=511 BORDER=0><BR CLEAR=LEFT>[NOTE
+TO ADMINISTRATOR: You may want to limit the number of languages
+configured on your server in order to spare your users from long
+drop-down language menus. Sometimes less is more, if you know what we
+mean.]</P>
+<P CLASS="western">Code refers to the two-letter ISO 639-1 code name
+for your language. English, for example, is &ldquo;en&rdquo;, German
+is &ldquo;de&rdquo;, Spanish is &ldquo;es&rdquo;, Chinese is &ldquo;zh&rdquo;
+and so on. If you don't know your code, this web page can help:
+http://lcweb.loc.gov/standards/iso639-2/englangn.html.</P>
+<P CLASS="western">Code page refers to the ISO code page for your
+character set. CAMPSITE supports Unicode, and its code page is UTF-8.
+We recommend Unicode, but if you wish to use another code page, you
+can input it here. You can get a list of code pages and languages
+here: http://www.w3.org/International/O-charset-lang.html.</P>
+<P CLASS="western">For more on language and localization, visit this
+web address:
+http://tlt.its.psu.edu/suggestions/international/links.html</P>
+<H3 CLASS="western"><A NAME="2_1_2"></A><FONT FACE="Times, serif">2.1.2
 Countries</FONT></H3>
 <P CLASS="western">This module determines how country lists will
 appear in user-profile forms. The module allows you to create country
 lists in different languages. When you click on 'Add new country',
 you will be prompted to enter the country's name in a language of
-your choice as well as the country's code. The language dropdown menu
-will contain as many languages as you had defined in the Languages
-module (see section 2.1.1).</P>
+your choice as well as the country's code. The language<SPAN LANG="en-US">
+drop down </SPAN>menu will contain as many languages as you had
+defined in the Languages module (see section 2.1.1).</P>
 <P CLASS="western">[N.B. The language you are asked to specify is the
 language in which you are entering a country's name, *NOT* the
 language spoken in the country!]</P>
-<H3 CLASS="western"><A NAME="2.1.3"></A>2.1.3 The Localizer</H3>
-<P CLASS="western">The localizer is a new module of CAMPSITE that is
-introduced in version 2.1. The module allows you to create your own
-localization of CAMPSITE's backend user interface by simply
-translating individual strings that appear in the interface.</P>
-<P CLASS="western">To do so, enter the Localizer, scroll down to the
-bottom of the window and select a language in which you want to
-create localization files from the dropdown menu (the menu will
+<H3 CLASS="western"><A NAME="2_1_3"></A>2.1.3 The Localizer</H3>
+<P CLASS="western"><IMG SRC="CAMPSITE-manual_html_m644cd199.png" NAME="Graphic3" ALIGN=LEFT HSPACE=6 WIDTH=446 HEIGHT=543 BORDER=0><BR CLEAR=LEFT>The
+localizer is a new module of CAMPSITE that is introduced in version
+2.1. The module allows you to create your own localization of
+CAMPSITE's<SPAN LANG="en-US"> back end </SPAN>user interface by
+simply translating individual strings that appear in the interface.</P>
+<P CLASS="western">The first step is to check the Languages menu (see
+above). Enter the Localizer, scroll down to the bottom of the window
+and select a language in which you want to create localization files
+from the<SPAN LANG="en-US"> drop down </SPAN>menu (the menu will
 contain as many languages as you have had configured in the Languages
 module) and then press the 'Create files' button. This will create a
 range of globals.xx.php files and locals.xx.php files, which will be
-visible in the left frame of the Localizer. Select one of the newly
-created files, and the strings related to that particular part of the
-interface will be shown in the right frame. You can interrupt the
-translation process at any time. Just press save at the bottom of the
-frame and exit the localizer. When you return, you'll find all the
-non-translated strings in red and you can continue from where you
-left off.</P>
-<P CLASS="western">[NOTE: Localization currently works for the entire
-user interface, minus the OK and Cancel buttons. The CAMPFIRE Java
-editor is fully localizable, but that is done outside the localizer
-(CAMPFIRE strings have to be compiled separately; the localization
-text file is available from http://). For more information on how to
-become a localization volunteer for CAMPSITE and CAMPFIRE, please
-send an e-mail to &lt;contact@campware.org&gt;.]</P>
-<H3 CLASS="western"><A NAME="2.1.4"></A>2.1.4 User Management</H3>
+visible in the left frame of the Localizer (xx refers to the
+two-letter language code you input in the Languages module).</P>
+<P CLASS="western">Select one of the newly created files, and the
+strings related to that particular part of the interface will be
+shown in the right frame. You can interrupt the translation process
+at any time. Just press save at the bottom of the frame and exit the
+localizer. When you return, you'll find all the non-translated
+strings in red and you can continue from where you left off:</P>
+<P CLASS="western"><IMG SRC="CAMPSITE-manual_html_500a9170.png" NAME="Graphic4" ALIGN=LEFT VSPACE=11 WIDTH=703 HEIGHT=449 BORDER=0><BR CLEAR=LEFT>[NOTE:
+Localization currently works for the entire user interface, minus log
+messages. The CAMPFIRE Java editor is fully localizable, but that is
+done outside the localizer (CAMPFIRE strings have to be compiled
+separately; the localization text file is available from http://).
+For more information on how to become a localization volunteer for
+CAMPSITE and CAMPFIRE, please send an e-mail to
+&lt;contact@campware.org&gt;.]</P>
+<H4 CLASS="western"><A NAME="2_1_4_11"></A><FONT FACE="Times, serif">2.1.3.1<SPAN LANG="en-US">
+Operating system regional settings and the Campfire editor</SPAN></FONT></H4>
+<P CLASS="western"><FONT FACE="Nimbus Roman No9 L">You may see
+squares in the Campfire editor where your text should be. If this
+happens, check your regional settings in your operating system to
+make sure they support the language you want to work in. For Windows
+95/98/2000 XP, this is in Control Panels -&gt; Regional options -&gt;
+ Locale. Make sure the locale you're in is set here. For example, if
+you want to use the settings for Chinese (Hong Kong), select this
+from the menu. The Campfire editor will then display the characters
+correctly. If you want to use differrent languages, such as English
+and Czech, you can set this in the &quot;Languages&quot; panel in the
+same menu.</FONT></P>
+<H4 CLASS="western"><A NAME="2_1_4_111"></A><FONT FACE="Times, serif">2.1.3.2<SPAN LANG="en-US">
+Submitting a language localization</SPAN></FONT></H4>
+<P CLASS="western"><FONT FACE="Nimbus Roman No9 L">We actively
+encourage CAMPSITE users to submit their language localizations. This
+makes CAMPSITE more useful around the world. If you'd like to submit
+your localization, here's what you have to do:</FONT></P>
+<OL>
+	<LI><P CLASS="western"><FONT FACE="Nimbus Roman No9 L">Go to
+	campsite source directory and run the following command:</FONT></P>
+	<P CLASS="western"><FONT FACE="Nimbus Roman No9 L">./translation
+	--make_package &lt;language_code&gt;</FONT></P>
+</OL>
+<P CLASS="western"><FONT FACE="Nimbus Roman No9 L">CAMPSITE will
+create a file in the campsite source directory called
+translation-&lt;language_code&gt;.tar.gz. For example, the Chinese
+language code is zh, so the file would be called
+<A HREF="http://translation-zh.tar.gz/">translation-zh.tar.gz</A></FONT></P>
+<OL START=2>
+	<LI><P CLASS="western"><FONT FACE="Nimbus Roman No9 L">Localize the
+	Campfire editor; here's what you have to do:</FONT></P>
+	<P CLASS="western"><FONT FACE="Nimbus Roman No9 L">- Go to the
+	campsite/implementation/java/resources directory</FONT></P>
+	<P CLASS="western"><FONT FACE="Nimbus Roman No9 L">- Copy the
+	Campfire_en.properties file to Campfire_&lt;language_code&gt;.properties
+	For example, Campfire_zh.properties for Chinese.</FONT></P>
+	<P CLASS="western"><FONT FACE="Nimbus Roman No9 L">- Edit this file
+	in any Unicode-friendly text editor</FONT></P>
+	<P CLASS="western"><FONT FACE="Nimbus Roman No9 L">- In this file,
+	replace the english translation on the right part of the &ldquo;=&rdquo;
+	with your translation</FONT></P>
+	<P CLASS="western"><FONT FACE="Nimbus Roman No9 L">- Save the file,
+	and make sure it's saved as Unicode</FONT></P>
+</OL>
+<P CLASS="western"><FONT FACE="Nimbus Roman No9 L">Here you have two
+options. You can either:</FONT></P>
+<OL START=2>
+	<P CLASS="western"><FONT FACE="Nimbus Roman No9 L">- Copy this file
+	to the
+	[campsite_html_dir]/priv/pub/issues/sections/articles/java/resources
+	directory</FONT></P>
+	<P CLASS="western"><FONT FACE="Nimbus Roman No9 L">      - or -</FONT></P>
+	<P CLASS="western"><FONT FACE="Nimbus Roman No9 L">- Reinstall
+	CAMPSITE from the sources you installed it in the first place,
+	taking care not to change settings</FONT></P>
+</OL>
+<OL START=3>
+	<LI><P CLASS="western"><FONT FACE="Nimbus Roman No9 L">E-mail the
+	two translated files to us at <A HREF="mailto:campsite-support@campware.org">campsite-support@campware.org</A></FONT></P>
+</OL>
+<P CLASS="western"><FONT FACE="Nimbus Roman No9 L">The current list
+of language localizations can be found in the latest  CAMPSITE
+version at the campware site (<A HREF="http://www.campware.org/">http://www.campware.org</A>).
+Even if a language localization exists, it may not address your
+particular needs or regional differences. For example, the
+differences in Spanish between that used in Spain and that used in
+Guatemala.</FONT></P>
+<H3 CLASS="western"><A NAME="2_1_4"></A>2.1.4 User Management</H3>
 <P CLASS="western">CAMPSITE's user management module allows you to
-control access to the backend and the front end of your
-publication(s). In other words, the module, which features a search
-option, allows you to define who will have the right to manage and
-edit content on your site and who will be allowed to read it.</P>
+control access to the<SPAN LANG="en-US"> back end </SPAN>and the
+front end of your publication(s). In other words, the module, which
+features a search option, allows you to define who will have the
+right to manage and edit content on your site and who will be allowed
+to read it.</P>
 <P CLASS="western">IMPORTANT: Initially CAMPSITE has only one user:
 admin with admn00 password. This user is needed by the email
 notifiers: end of subscription and event notifier so it must not be
 deleted. You should set the email address of this user after
 installation because it is used as reply to address in the
 notification emails.</P>
-<H4 CLASS="western"><A NAME="2.1.4.1"></A><FONT FACE="Times, serif">2.1.4.1
-Backend Access: Creating User Types</FONT></H4>
+<H4 CLASS="western"><A NAME="2_1_4_1"></A><FONT FACE="Times, serif">2.1.4.1<SPAN LANG="en-US">
+Back end </SPAN>Access: Creating User Types</FONT></H4>
 <P CLASS="western">A user is generally defined by the list of the
 tasks he or she has and is allowed to do in a system. In CAMPSITE,
 this list of tasks ranges from creating, managing, and editing
@@ -788,17 +877,17 @@ three default user types:</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">Chief Editor - user
 	with higher editorial rights (e.g. has a right to create and delete
 	issues)</P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm">Editor - standard
-	backend user with rights limited to basic article management and
-	editing (normally assigned to journalists and editors)</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Editor - standard<SPAN LANG="en-US">
+	back end </SPAN>user with rights limited to basic article management
+	and editing (normally assigned to journalists and editors)</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">Reader - the profile
 	limited to viewing the site, i.e. front end only.</P>
 </UL>
 <P CLASS="western">To create your custom user profiles, click on
 'User types' and then on 'Add new user type'. Then proceed to select
 the rights that you want included for this type of user.</P>
-<H4 CLASS="western" STYLE="line-height: 100%"><A NAME="2.1.4.11"></A><FONT FACE="Times, serif">2.1.4.2
-Backend Access: Creating Users</FONT></H4>
+<H4 CLASS="western" STYLE="line-height: 100%"><A NAME="2_1_4_2"></A><FONT FACE="Times, serif">2.1.4.2<SPAN LANG="en-US">
+Back end </SPAN>Access: Creating Users</FONT></H4>
 <P CLASS="western">To add a user, click on 'Users' and choose 'Add
 new user account'. You should specify the full name of the user, user
 name, password, and choose a predefined user type (i.e. one of the
@@ -806,11 +895,11 @@ default types or your custom user types).</P>
 <P CLASS="western">If you would like to further fine tune the rights
 assigned to a particular user, go to 'Users' and click on 'Rights' in
 the same row with the user's name.</P>
-<H4 CLASS="western"><A NAME="2.1.4.2"></A><FONT FACE="Times, serif">2.1.4.3
+<H4 CLASS="western"><A NAME="2_1_4_3"></A><FONT FACE="Times, serif">2.1.4.3
 Front-End Access: Subscription</FONT></H4>
 <P CLASS="western">CAMPSITE allows you to control public access to
 your publication(s) through its built-in subscription module, more on
-which you can read more in section 2.5).</P>
+which you can read more in section <A HREF="#2_5">2.5</A>).</P>
 <P CLASS="western">[TIP: If you want to have all your content freely
 accessible, you can bypass this feature by structuring your templates
 in a special way. For more information on that, go to the section
@@ -823,8 +912,8 @@ article accessible to non-subscribers.</P>
 If a reader tries to access a non-public article, she is informed
 that she is not allowed to read the article but is provided with an
 option to subscribe immediately to that article or other articles or
-the whole publication. A temporarysubscription is activated
-immediately (the duration of that temporary subscription is
+the whole publication. A<SPAN LANG="en-US"> temporary subscription </SPAN>is
+activated immediately (the duration of that temporary subscription is
 determined by the value you set for the 'Pay Time', For more
 information, see section 2.5). During this period, the reader has a
 chance to effect the payment and consequently have her subscription
@@ -834,8 +923,8 @@ notified of all new subscriptions by e-mail. Subscribers also receive
 automatically generated e-mail reminders that their subscription is
 expiring 14<B> days </B>before the event.</P>
 <P CLASS="western">[NOTE: The text of the subscription-expiry message
-is hardcoded in the current version of CAMPSITE and it reads as
-follows:</P>
+is<SPAN LANG="en-US"> hard coded </SPAN>in the current version of
+CAMPSITE and it reads as follows:</P>
 <P CLASS="western">&quot;Dear &lt;reader&gt;,</P>
 <P CLASS="western">This is an automatically generated e-mail message.
 Your &lt;subs_type&gt; subscription (started on &lt;start_date&gt;)
@@ -846,7 +935,7 @@ update subscription.&quot;</P>
 <P CLASS="western">Future versions of CAMPSITE (as of version 2.2)
 will allow for customization of the message and for its translation
 into multiple languages.]</P>
-<H2 CLASS="western"><A NAME="2.2."></A><FONT FACE="Times, serif">2.2.
+<H2 CLASS="western"><A NAME="2_2"></A><FONT FACE="Times, serif">2.2.
 Creating publications</FONT></H2>
 <P CLASS="western">CAMPSITE has a clear four-tier hierarchical
 structure, which conforms to the traditional structure of news
@@ -866,7 +955,7 @@ By clicking the name of an issue, you enter its list of sections. By
 clicking the name of a section you enter the article list. By
 clicking the article name you enter the article structure and can
 edit the different components (fields) of the article.</P>
-<H3 CLASS="western"><A NAME="2.2.1"></A><FONT FACE="Times, serif">2.2.1
+<H3 CLASS="western"><A NAME="2_2_1"></A><FONT FACE="Times, serif">2.2.1
 Creating a new publication</FONT></H3>
 <P CLASS="western">To create a new publication, you need to enter the
 Publications module. Once you are there, click on 'Add new
@@ -893,7 +982,7 @@ a list of publications hosted on this particular CAMPSITE server.]</P>
 and if you would like to leave the decisions on whether and how much
 are you going to charge for your publication for later, you may just
 skip those and return to them at some later stage (preferably after
-you read section <A HREF="#2.4">2.5</A> where subscription is covered
+you read section <A HREF="#2_5">2.5</A> where subscription is covered
 in greater detail). But even at this stage, perhaps you'd like to
 know what they mean:</P>
 <UL>
@@ -904,8 +993,8 @@ know what they mean:</P>
 	will set this value to &quot;0&quot;).</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">Time unit - select
 	the unit in which you will measure the duration of trial or paid
-	subscriptions to your publication from the dropdown menu (days,
-	weeks, months, years)</P>
+	subscriptions to your publication from the<SPAN LANG="en-US"> drop
+	down </SPAN>menu (days, weeks, months, years)</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">Unit cost - the cost
 	of each time unit</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">Currency - the
@@ -921,15 +1010,16 @@ altered or fine-tuned at a later stage.</P>
 hosted on the same server (computer), but to make different
 publications directly accessible to readers, you need to specify
 different virtual web servers. For example, if you want to add
-another publication (e.g. &quot;Moldovan Contemporary Political
-Thought&quot;) onto the server on which you are hosting your &quot;Prague
-Times&quot; publication, you need to assign it a different virtual
-web server name (e.g. www.moldovanthought.com)]</P>
+another publication (e.g. &quot;<SPAN LANG="en-US">Moldovan</SPAN>
+Contemporary Political Thought&quot;) onto the server on which you
+are hosting your &quot;Prague Times&quot; publication, you need to
+assign it a different virtual web server name (e.g.
+www.moldovanthought.com)]</P>
 <P CLASS="western">If you have virtual hosts set up in your Apache
 configuration, you can start a new publication and specify the URL
 for this virtual host, which will then allow readers to access your
 publication through that address.]</P>
-<H3 CLASS="western"><A NAME="2.2.2"></A><FONT FACE="Times, serif">2.2.2
+<H3 CLASS="western"><A NAME="2_2_2"></A><FONT FACE="Times, serif">2.2.2
 Creating a new issue</FONT></H3>
 <P CLASS="western">Once you have successfully created your first
 publication, click on its name (e.g. &quot;Prague Times&quot;). This
@@ -976,7 +1066,7 @@ series. For example, if you just published issue 154 of the &quot;Prague
 Times&quot; in static HTML before moving to CAMPSITE, you could
 assign number 155 to the first issue you are creating within
 CAMPSITE.]</P>
-<H3 CLASS="western"><A NAME="2.2.3"></A>2.2.3 Adding new sections to
+<H3 CLASS="western"><A NAME="2_2_3"></A>2.2.3 Adding new sections to
 an issue</H3>
 <P CLASS="western">By clicking on an issue, you will enter the
 Sections view in which you will have the option of adding new
@@ -992,7 +1082,7 @@ will have this section added to them. On delete, if &ldquo;Delete
 section from all subscriptions&rdquo; was checked all subscriptions
 will have this section removed from them. The sections can be added
 to or deleted from subscriptions when editing the section too.</P>
-<H3 CLASS="western"><A NAME="2.2.4"></A><FONT FACE="Times, serif">2.2.4
+<H3 CLASS="western"><A NAME="2_2_4"></A><FONT FACE="Times, serif">2.2.4
 Defining article types</FONT></H3>
 <P CLASS="western">The next step in setting up your publication is to
 define the types of articles that you intend to publish on your site.
@@ -1052,7 +1142,7 @@ type.</P>
 to a article types, deleting them may cause improper functioning of
 templates that refer to these fields. Article-type management is best
 left exclusively to expert users (e.g. administrators)</P>
-<H3 CLASS="western"><A NAME="2.2.5"></A><FONT FACE="Times, serif">2.2.5
+<H3 CLASS="western"><A NAME="2_2_5"></A><FONT FACE="Times, serif">2.2.5
 Creating articles within a section</FONT></H3>
 <P CLASS="western">Once you are in the Articles view within a section
 (you get there by clicking on a section name), you can create new
@@ -1066,15 +1156,16 @@ see a dialog box with the following fields/options:</P>
 	field is mandatory, because it determines how your article will be
 	known to the database and appear in the Articles view. You, however,
 	have the liberty of renaming the article at any time. Type: you have
-	to select one of the available article types from the dropdown menu.
-	The choice you make at this stage CANNOT be altered later.</P>
+	to select one of the available article types from the<SPAN LANG="en-US">
+	drop down </SPAN>menu. The choice you make at this stage CANNOT be
+	altered later.</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm"><B>Language</B>:
 	select the language in which you want to create your article from
-	the dropdown menu. The list of languages will contain the languages
-	you have defined in the Languages module (see section 2.1.1). The
-	language choice you make at this stage is final, though you can
-	always create a version in another language with the Translate
-	option in the Articles view.</P>
+	the<SPAN LANG="en-US"> drop down </SPAN>menu. The list of languages
+	will contain the languages you have defined in the Languages module
+	(see section 2.1.1). The language choice you make at this stage is
+	final, though you can always create a version in another language
+	with the Translate option in the Articles view.</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm"><B>Show article on
 	front page</B>: Tick this box if you would like the article to be
 	displayed on your publication's front (home) page. You can alter
@@ -1100,7 +1191,7 @@ webmaster/template designer define a default behavior of articles.
 For example, if a template doesn't provide a handler for a specific
 article type, or you don't know the list of fields of an article
 type, you can be sure that there is a field called 'name'.</P>
-<H3 CLASS="western"><A NAME="2.2.6"></A><FONT FACE="Times, serif">2.2.6
+<H3 CLASS="western"><A NAME="2_2_6"></A><FONT FACE="Times, serif">2.2.6
 Editing articles: Edit Article Details view</FONT></H3>
 <P CLASS="western">If you choose to edit your newly created article
 right away you will be led to the Edit Article Details view. This is
@@ -1131,7 +1222,7 @@ on section page, respectively), plus another option: Allow users
 without subscriptions to view the article. You should tick the latter
 if you want to make your article visible to viewers who have not
 subscribed to your publication (for more on subscriptions, see
-section<A HREF="#2.2.4"> 2.5</A>).</P>
+section <A HREF="#2_5">2.5</A>).</P>
 <P CLASS="western">In addition to these system-determined fields and
 options, you may see any number and combination of different fields
 that you had made when you created a given article type.</P>
@@ -1181,21 +1272,22 @@ the following seven buttons:</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm"><B>Delete</B>, which
 	is self-explanatory</P>
 </UL>
-<H3 CLASS="western"><A NAME="2.2.7"></A><FONT FACE="Times, serif">2.2.7
+<H3 CLASS="western"><A NAME="2_2_7"></A><FONT FACE="Times, serif">2.2.7
 Editing body-type fields: Working with CAMPFIRE</FONT></H3>
 <P CLASS="western">CAMPFIRE allows contributors (journalists or
 editors) without any technical or HTML knowledge to perform extensive
 formatting procedures.</P>
 <P CLASS="western">Chances are that anyone who has ever worked with a
 text editor should find CAMPFIRE intuitive to use. CAMPFIRE features
-a toolbar with buttons from which main functions can be performed,
-while additional features can be accessed from pull-down menus.</P>
+a<SPAN LANG="en-US"> tool bar </SPAN>with buttons from which main
+functions can be performed, while additional features can be accessed
+from pull-down menus.</P>
 <P CLASS="western">All text-formatting features are fully WYSIWYG,
 except align justify. The non-WYSIWYG features are insertion of
 images, subheads/page breaks and CAMPSITE Glossary keywords (see
 section 2.3).</P>
-<P CLASS="western">From left to right on the toolbar, in order of
-appearance, the buttons are:</P>
+<P CLASS="western">From left to right on the <SPAN LANG="en-US">tool
+bar</SPAN>, in order of appearance, the buttons are:</P>
 <UL>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">New - clears the
 	editor</P>
@@ -1242,8 +1334,8 @@ appearance, the buttons are:</P>
 	link to open (e.g. a new window). (N.B. you can use this feature to
 	create mailto links as well).</P>
 </UL>
-<P CLASS="western">All of these functions are also available from the
-dropdown menus. The menus four five important extra options:</P>
+<P CLASS="western">All of these functions are also available from the<SPAN LANG="en-US">
+drop down </SPAN>menus. The menus four five important extra options:</P>
 <UL>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">Glossary keywords</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">Font color</P>
@@ -1257,7 +1349,7 @@ centered alignment, because current browsers do not treat
 consistently the &lt;JUSTIFY&gt; option, so if you would like to have
 your articles justified, your template designer should specify that
 in your publication's article templates.</P>
-<H4 CLASS="western"><A NAME="2.2.7.1"></A>2.2.7.1 The Preview
+<H4 CLASS="western"><A NAME="2_2_7_1"></A>2.2.7.1 The Preview
 function</H4>
 <P CLASS="western">Through CAMPFIRE, contributors can feed
 information into CAMPSITE's database. The layout of the article for
@@ -1275,7 +1367,7 @@ layout (navigation, banners, etc.) on the way. If, for example, you
 have used CAMPFIRE to add information in the field 'biography', but
 the template does not include the 'biography' in the final layout,
 the preview function will not display this information.</P>
-<H4 CLASS="western"><A NAME="2.2.7.2"></A>2.2.7.2 Previewing article
+<H4 CLASS="western"><A NAME="2_2_7_2"></A>2.2.7.2 Previewing article
 and publication layouts</H4>
 <P CLASS="western">To be able to preview article and publication
 layouts, go to the issues view and select the appropriate front-page
@@ -1294,15 +1386,15 @@ see information about the parser. If any problems occur while
 generating the web pages, the CAMPSITE parser will display error
 messages. These should help you to identify the problem in the
 template structure.</P>
-<H3 CLASS="western"><A NAME="2.2.8"></A><FONT FACE="Times, serif">2.2.8
+<H3 CLASS="western"><A NAME="2_2_8"></A><FONT FACE="Times, serif">2.2.8
 Publishing articles</FONT></H3>
 <P CLASS="western">CAMPSITE's copy-flow control feature operates by
 means of assigning three statuses to an article: 
 </P>
 <UL>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm">- new</P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm">- submitted</P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm">- published</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">new</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">submitted</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">published</P>
 </UL>
 <P CLASS="western">When you create an article, it is set to 'New'. If
 you change the status to 'Submit', then - via email - the editors
@@ -1318,7 +1410,7 @@ site as easily as you can publish them.</P>
 <P CLASS="western">NOTE: Only authorized users are allowed to publish
 articles, so you may not be able to access that option if your
 administrator has not granted you such rights.</P>
-<H3 CLASS="western"><A NAME="2.2.9"></A><FONT FACE="Times, serif">2.2.9
+<H3 CLASS="western"><A NAME="2_2_9"></A><FONT FACE="Times, serif">2.2.9
 Setting the finalized publication live</FONT></H3>
 <P CLASS="western">All the above functions, such as adding articles,
 editing, previewing, can be done internally, without any material
@@ -1329,13 +1421,13 @@ status of the issue, by selecting the 'Publish' option from the
 Issues view. In addition, you can set the 'Published' flag on or off
 for each article, hiding it, if necessary, even if the issue is
 already published.</P>
-<H2 CLASS="western"><A NAME="2.3."></A><FONT FACE="Times, serif">2.3.
+<H2 CLASS="western"><A NAME="2_3"></A><FONT FACE="Times, serif">2.3.
 Glossary</FONT></H2>
 <P CLASS="western">The Glossary is in our view one of the two
-insufficiently developed but fully funcitonal and potentially
-powerful features of CAMPSITE (the other one is Topics, of which more
-in section 2.4). For this reason, Glossary-related rights are
-unchecked from all default users (including the default
+insufficiently developed but fully<SPAN LANG="en-US"> functional </SPAN>and
+potentially powerful features of CAMPSITE (the other one is Topics,
+of which more in section 2.4). For this reason, Glossary-related
+rights are unchecked from all default users (including the default
 administrator) or user types. If you would like to try your luck with
 the Glossary, you would need to return those rights to the users you
 configure on your system (you've learned how to do that in section
@@ -1371,9 +1463,9 @@ then assign the appropriate infotype (e.g. 'private life' or
 <P CLASS="western">To make use of the Glossary function in your daily
 editing, you need to do the following:</P>
 <UL>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm">- define keywords
-	(e.g. Helmut Kohl)</P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm">- create the related
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">define keywords (e.g.
+	Helmut Kohl)</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">create the related
 	Infotypes (e.g. Love Life, Career, Hobbies)</P>
 </UL>
 <P CLASS="western">Once these steps have been taken, you will be able
@@ -1387,13 +1479,13 @@ regularly (i.e. no link is displayed).</P>
 time and will be dynamically included in the display. The marked
 keyword will always trigger the parser to search through the current
 version of the Glossary and display the most up to date information.</P>
-<H3 CLASS="western"><A NAME="2.3.1"></A>2.3.1 Creating 'Glossary
+<H3 CLASS="western"><A NAME="2_3_1"></A>2.3.1 Creating 'Glossary
 Infotypes'</H3>
 <P CLASS="western">From the Home view, select 'Glossary Infotypes'
 where you can add new Infotypes. Here you can also translate the
 Infotypes into any of the languages defined in CAMPSITE (see section
 2.1.1).</P>
-<H3 CLASS="western"><A NAME="2.3.2"></A>2.3.2 Adding keywords to the
+<H3 CLASS="western"><A NAME="2_3_2"></A>2.3.2 Adding keywords to the
 Glossary</H3>
 <P CLASS="western">Choose Glossary from the navigation bar on the
 left, then select 'Add new keyword'. You will be prompted to type the
@@ -1406,7 +1498,7 @@ associate the keyword with more than one infotype.</P>
 <P CLASS="western">You can also translate the keyword into other
 languages. This will generate a new keyword in the listing, using the
 same Infotypes.</P>
-<H3 CLASS="western"><A NAME="2.3.3"></A><FONT FACE="Times, serif">2.3.3
+<H3 CLASS="western"><A NAME="2_3_3"></A><FONT FACE="Times, serif">2.3.3
 Marking keywords in the articles</FONT></H3>
 <P CLASS="western">When writing or editing material in the CAMPFIRE
 editor, you select the word you want to make a keyword, choose
@@ -1418,7 +1510,7 @@ active link in the article. This will only happen if the same word
 has been defined as a keyword, as described above. Only then the
 parser will find the word in the keyword list and build the link,
 opening the pop-up window with further information.</P>
-<H3 CLASS="western"><A NAME="2.3.4"></A><FONT FACE="Times, serif">2.3.4
+<H3 CLASS="western"><A NAME="2_3_4"></A><FONT FACE="Times, serif">2.3.4
 What pays the piper, will see the surfer</FONT></H3>
 <P CLASS="western">As the parser is going through the text, it will
 first find the marked keyword, then check in the Glossary if such a
@@ -1431,7 +1523,7 @@ offered as further reading.</P>
 the same word in the Glossary entry, no link will appear. However,
 once this keyword is added to the Glossary, the parser will generate
 a link. Marked keywords are like sleeping beauties.</P>
-<H3 CLASS="western"><A NAME="2.3.5"></A><FONT FACE="Times, serif">2.3.5
+<H3 CLASS="western"><A NAME="2_3_5"></A><FONT FACE="Times, serif">2.3.5
 Known Limitations of the Glossary Module</FONT></H3>
 <P CLASS="western">In its present incarnation (CAMPSITE version 2.1),
 Glossary is functional, but its appearance is still, shall we say,
@@ -1441,26 +1533,27 @@ administrators to alter the layout of the popup windows. In other
 words, you can use it, but you might want to see if the appearance of
 the pop-up window would not strongly conflict with your overall
 design. If you like the Glossary's promise and would like to further
-its development, please let us knowat <A HREF="mailto:contact@campware.org">contact@campware.org</A>.
+its development, please let us<SPAN LANG="en-US"> know at
+</SPAN><A HREF="mailto:contact@campware.org">contact@campware.org</A>.
 We will fix in the coming versions, but if you can't wait, financial
 and in-kind contributions are more than welcome.</P>
-<H2 CLASS="western"><A NAME="2.4."></A>2.4. Topics</H2>
+<H2 CLASS="western"><A NAME="2_4"></A>2.4. Topics</H2>
 <P CLASS="western">The Topics were introduced into CAMPSITE to add
 another level of freedom to the web designer/producer in site design.
 The projected topic features will enable designers to make
-portal-like, crosslinked sites, as any topics can be subtopic of more
-different topics.</P>
+portal-like,<SPAN LANG="en-US"> cross linked </SPAN>sites, as any
+topics can be subtopic of more different topics.</P>
 <P CLASS="western">In plain English, topics are subject matters of
 articles. A topic can have subtopics, like: the sports topic can have
-football, basketball, and waterpolo as subtopics. An article may have
-several topics attached to it, so that the article can be displayed
-in certain article lists.</P>
-<H3 CLASS="western"><A NAME="2.4.1"></A>2.4.1 Known limitations of
+football, basketball, and<SPAN LANG="en-US"> water polo </SPAN>as
+subtopics. An article may have several topics attached to it, so that
+the article can be displayed in certain article lists.</P>
+<H3 CLASS="western"><A NAME="2_4_1"></A>2.4.1 Known limitations of
 Topics</H3>
 <P CLASS="western">At present, the Topics user interface is
 admittedly counterintuitive for the end user (journalist/editor).
 Next versions of CAMPSITE will have this sorted out.</P>
-<H2 CLASS="western"><A NAME="2.5."></A><FONT FACE="Times, serif">2.5.
+<H2 CLASS="western"><A NAME="2_5"></A><FONT FACE="Times, serif">2.5.
 Configuring the Subscription Module</FONT></H2>
 <P CLASS="western">CAMPSITE allows you to control access to your site
 in two ways:</P>
@@ -1498,7 +1591,7 @@ your publication:</P>
 	the currency is changed meanwhile, the information about the user's
 	debt is correctly recorded.</P>
 </UL>
-<H3 CLASS="western"><A NAME="2.5.1"></A><FONT FACE="Times, serif"><FONT COLOR="#000000">2.5.1</FONT>
+<H3 CLASS="western"><A NAME="2_5_1"></A><FONT FACE="Times, serif"><FONT COLOR="#000000">2.5.1</FONT>
 Username:Password Access</FONT></H3>
 <P CLASS="western">CAMPSITE allows readers to subscribe to one
 publication at a time. Within a publication itself, the level of
@@ -1527,7 +1620,7 @@ allows him to manage publications) has 7 days to confirm the payment.
 The confirmation is made from the main menu, by selecting User and
 then Subscriptions. The confirmation consists in changing the payment
 status (from 'no' to 'yes').</P>
-<H3 CLASS="western"><A NAME="2.5.2"></A><FONT FACE="Times, serif"><FONT COLOR="#000000">2.5.2
+<H3 CLASS="western"><A NAME="2_5_2"></A><FONT FACE="Times, serif"><FONT COLOR="#000000">2.5.2
 </FONT>Customizing Subscription Interface for Readers</FONT></H3>
 <P CLASS="western">The subscription interface for the user is
 customizable. Depending on the user's status, several steps must be
@@ -1551,7 +1644,7 @@ are three possible scenarios:</P>
 </UL>
 <P CLASS="western">Template designer can customize all those forms by
 means of CAMPSITE's description language (see Part 3 of this manual).</P>
-<H3 CLASS="western"><A NAME="2.5.3"></A><FONT FACE="Times, serif"><FONT COLOR="#000000">2.5.3
+<H3 CLASS="western"><A NAME="2_5_3"></A><FONT FACE="Times, serif"><FONT COLOR="#000000">2.5.3
 </FONT>IP Address-based Subscriptions</FONT></H3>
 <P CLASS="western">Subscriptions can also be created through the
 administration interface. This is normally done for two purposes:</P>
@@ -1572,7 +1665,7 @@ must be assigned as if he were coming from an appropriate IP address.
 It is not necessary to add anything to the templates or to inform the
 users who will be accessing the site through IP address
 authentication of the existence of this UserId:Password pair.</P>
-<H1 CLASS="western"><A NAME="3."></A>3. CREATING TEMPLATES FOR YOUR
+<H1 CLASS="western"><A NAME="3"></A>3. CREATING TEMPLATES FOR YOUR
 PUBLICATION</H1>
 <P CLASS="western">When implementing CAMPSITE, chances are you will
 already have a rather clear outline of the structure of your
@@ -1595,7 +1688,7 @@ time keep the content independent of the layout. This is done by
 means of templates. Those templates are nothing more than HTML files
 containing embedded CAMPSITE description-language tags, which creates
 the link between the view and the content.</P>
-<H2 CLASS="western"><A NAME="3.1."></A>3.1. Modular Structure of
+<H2 CLASS="western"><A NAME="3_1"></A>3.1. Modular Structure of
 Templates</H2>
 <P CLASS="western">A glance at all articles of an online publication
 reveals that generally there are many layout similarities even across
@@ -1629,7 +1722,7 @@ specific the folder names and information.</P>
 redundancy to zero and therefore the layout work minimal. Any design
 changes need to be made only once in the templates, never even twice,
 if you make full use of this modularity potential.</P>
-<H2 CLASS="western"><A NAME="3.2."></A>3.2. Fixed Framework:
+<H2 CLASS="western"><A NAME="3_2"></A>3.2. Fixed Framework:
 Communicating with Your Database</H2>
 <P CLASS="western">Templates are in-between your content database and
 your audience on the web. Therefore they need to mediate between
@@ -1648,7 +1741,7 @@ different views depending on the given parameters.</P>
 <P CLASS="western">The following will cover some examples on how to
 build templates. Further down you can find a complete list of
 available commands used by CAMPSITE templates.</P>
-<H2 CLASS="western"><A NAME="3.3."></A>3.3. Building an article
+<H2 CLASS="western"><A NAME="3_3"></A>3.3. Building an article
 template: articletemplate.tpl</H2>
 <P CLASS="western">Building an article template is the easiest
 option. All you need to do is generate your HTML layout and
@@ -1681,7 +1774,7 @@ than this page. And CAMPSITE can also perform far more advanced
 functions than this. In order to get a feel for this, let's jump into
 the next example, building the navigation. (A full list of tag
 commands can be found at the end of this chapter.)</P>
-<H2 CLASS="western"><A NAME="3.4."></A>3.4. Generating a Navigation
+<H2 CLASS="western"><A NAME="3_4"></A>3.4. Generating a Navigation
 Template: navigationtemplate.tpl</H2>
 <P CLASS="western">As described above, the template structure can be
 nested, meaning one template can call another template. This, for
@@ -1726,7 +1819,7 @@ section number 1&gt;</FONT></P>
 <P CLASS="western">The above tag would set the local section
 parameter to 1, which will be looked up in the CAMPSITE database
 under section entries (each section is assigned a number when it is
-created, see section <A HREF="#2.2.3">2.2.3</A> of this manual).</P>
+created, see section <A HREF="#2_2_3">2.2.3</A> of this manual).</P>
 <P CLASS="western">Now we have set all necessary values for the link:
 we will link to section 1 in the current issue. All we need to do now
 is create the link to the section, or - to be more precise - the
@@ -1773,7 +1866,7 @@ correlate with the names of the sections, as you assigned them when
 building the publication in the first place.</P>
 <P CLASS="western">Now we can advance into a more conditional
 environment, the section pages.</P>
-<H2 CLASS="western"><A NAME="3.5."></A>3.5. Building the Section
+<H2 CLASS="western"><A NAME="3_5"></A>3.5. Building the Section
 Template: sectiontemplate.tpl</H2>
 <P CLASS="western">The main function of the section page is to
 provide a table of content for all articles in a section. Each
@@ -1810,7 +1903,7 @@ particular way. If you want to make sure the newest article is on the
 top of the list, you need to tell CAMPSITE to order the listing:</P>
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;!**
 list article order bynumber desc&gt;</FONT></P>
-<H3 CLASS="western"><A NAME="3.5.1"></A>3.5.1 The 'Feature' article
+<H3 CLASS="western"><A NAME="3_5_1"></A>3.5.1 The 'Feature' article
 of the section</H3>
 <P CLASS="western">Most likely, one or more articles are the main
 (feature) articles in each section. (Editors mark those articles as
@@ -1837,7 +1930,7 @@ end list&gt;</FONT></P>
 list' command. So here we will list all the ones which are marked.
 But what if the editors checked more than one article, but your
 design only works with ONE article on the top, not all of them?</P>
-<H3 CLASS="western"><A NAME="3.5.2"></A>3.5.2 Displaying only the
+<H3 CLASS="western"><A NAME="3_5_2"></A>3.5.2 Displaying only the
 most recent feature article on a section page</H3>
 <P CLASS="western">To use just the most recent article from the
 'feature' articles in the section, use the following tag:</P>
@@ -1891,7 +1984,7 @@ list article onsection is off order bynumber desc&gt;<BR>...<BR>&lt;!**
 endlist&gt;</FONT></P>
 <P CLASS="western">Again, include your HTML with the other variables
 in-between.</P>
-<H3 CLASS="western"><A NAME="3.5.3"></A>3.5.3 Including Images in the
+<H3 CLASS="western"><A NAME="3_5_3"></A>3.5.3 Including Images in the
 Section Listing</H3>
 <P CLASS="western">As seen above, the sectiontemplate.tpl will always
 pull information out of the database and display it in a list format.
@@ -1908,12 +2001,12 @@ print article sectionimage&gt;</FONT></P>
 the database. And in our case that means it will create the image tag
 including the image. You could even generate a little subtitle for
 the image in this field when entering the article text and images.</P>
-<H2 CLASS="western"><A NAME="3.6."></A>3.6. Building the home page
+<H2 CLASS="western"><A NAME="3_6"></A>3.6. Building the home page
 template: home.tpl</H2>
 <P CLASS="western">...is more or less the same, just needs some more
 practice, so this is your chance to practice...</P>
-<H2 CLASS="western"><A NAME="3.7."></A>3.7. Some hints: powerful
-lists and ordering</H2>
+<H2 CLASS="western"><A NAME="3_7"></A>3.7. Some hints: powerful lists
+and ordering</H2>
 <P CLASS="western">Listing and ordering are two powerful functions in
 CAMPSITE lingo. In the following example we would like to automate an
 update for the sections 3, 4 and 5. Whenever an editor posts some new
@@ -1948,14 +2041,14 @@ list length 3 section number greater 2&gt;<BR>&lt;!** list length 2
 article order bynumber desc&gt;<BR>&lt;!** if list index 1&gt;&lt;!**
 else&gt;<BR>&lt;!** print section name&gt;<BR>&lt;!** print article
 title&gt;<BR>&lt;!** endlist&gt;<BR>&lt;!** endlist&gt;</FONT></P>
-<H2 CLASS="western"><A NAME="3.8."></A>3.8. Environmental control
-with CAMPSITE templates</H2>
+<H2 CLASS="western"><A NAME="3_8"></A>3.8. Environmental control with
+CAMPSITE templates</H2>
 <P CLASS="western">Instructions within CAMPSITE lingo fall into two
 categories: those that do not generate output but only select the
 environment for the rest of the instructions, and those that print a
 certain information from the database according to the environment
 set by the first type of instructions.</P>
-<H3 CLASS="western"><A NAME="3.8.1"></A>3.8.1 Runtime parameters</H3>
+<H3 CLASS="western"><A NAME="3_8_1"></A>3.8.1 Runtime parameters</H3>
 <P CLASS="western">The information selected also depends on the
 runtime parameters. These parameters are:</P>
 <UL>
@@ -1970,7 +2063,7 @@ runtime parameters. These parameters are:</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">article number
 	(NrArticle) which sets the article</P>
 </UL>
-<H3 CLASS="western"><A NAME="3.8.2"></A>3.8.2 Other parameters</H3>
+<H3 CLASS="western"><A NAME="3_8_2"></A>3.8.2 Other parameters</H3>
 <P CLASS="western">and also some special parameters:</P>
 <UL>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">the keywords
@@ -1984,7 +2077,7 @@ runtime parameters. These parameters are:</P>
 </UL>
 <P CLASS="western">All runtime parameters form the so-called &quot;data
 context&quot; within which each article is positioned.</P>
-<H2 CLASS="western"><A NAME="3.9."></A>3.9. Structure of CAMPSITE
+<H2 CLASS="western"><A NAME="3_9"></A>3.9. Structure of CAMPSITE
 templates</H2>
 <P CLASS="western">The structure of the CAMPSITE templates is simple.
 It is a continuous row of either HTML language or the commands used
@@ -2084,10 +2177,11 @@ parameters this template will print different information. For
 example, if only NrIssue parameter is specified, this template will
 select all articles to be shown on the front page, for the given
 issue number, for all publications.</P>
-<H3 CLASS="western"><A NAME="3.9.1"></A>3.9.1 Language Elements.
+<H3 CLASS="western"><A NAME="3_9_1"></A>3.9.1 Language Elements.
 Conventions</H3>
-<P CLASS="western">In the following subchapters describing the
-template language we used the following conventions:</P>
+<P CLASS="western">In the following<SPAN LANG="en-US"> sub chapters
+</SPAN>describing the template language we used the following
+conventions:</P>
 <UL>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">identifiers in
 	between '&lt;' and '&gt;' must be replaced in the template according
@@ -2100,8 +2194,8 @@ template language we used the following conventions:</P>
 	not in between '&lt;' and '&gt;' are language keywords and must be
 	written as in the language description</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">any language
-	identifier can be written in between '&quot;' character; identifiers
-	containing spaces and must be written in between '&quot;'</P>
+	identifier can be written in between &ldquo;&rdquo; character;
+	identifiers containing spaces and must be written in between &ldquo;&rdquo;</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">identifiers enclosed
 	by '[' and ']' characters are not mandatory in the statement</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">sequences of
@@ -2112,7 +2206,7 @@ template language we used the following conventions:</P>
 <UL>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">statements: they are
 	keywords with a special meaning that define actions taken by
-	template parser; click <A HREF="#4.">here</A> for a list of
+	template parser; click <A HREF="#4">here</A> for a list of
 	statements</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">attributes: are
 	keywords describing statement features; they are used to specify
@@ -2173,11 +2267,11 @@ The operators list corresponding to defined types:</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">topic:
 	&lt;topic_operator&gt; = is | not</P>
 </UL>
-<H3 CLASS="western"><A NAME="3.9.2"></A>3.9.2 'Define-environment'
+<H3 CLASS="western"><A NAME="3_9_2"></A>3.9.2 'Define-environment'
 instructions</H3>
 <P CLASS="western">'Define-environment' instructions modify the
 runtime environment by changing one or more variables of it.</P>
-<H4 CLASS="western"><A NAME="3.9.2.1"></A>3.9.2.1 Language</H4>
+<H4 CLASS="western"><A NAME="3_9_2_1"></A>3.9.2.1 Language</H4>
 <P CLASS="western">Purpose:</P>
 <P CLASS="western">Sets the runtime environment language to the one
 selected by English name. From this statement on the language is the
@@ -2191,7 +2285,7 @@ variable is not modified.</P>
 is the English name of selected language.</P>
 <P CLASS="western">Constraints:</P>
 <P CLASS="western">Can not be used inside any List statement.</P>
-<H4 CLASS="western"><A NAME="3.9.2.2"></A>3.9.2.2 Publication</H4>
+<H4 CLASS="western"><A NAME="3_9_2_2"></A>3.9.2.2 Publication</H4>
 <P CLASS="western">Purpose:</P>
 <P CLASS="western">Sets the runtime environment publication to the
 one selected by the statement constraint. If the statement constraint
@@ -2219,7 +2313,7 @@ provided on template start. If publication parameter was not defined
 on template start it's value from now on is undefined.</P>
 <P CLASS="western">Constraints:</P>
 <P CLASS="western">Cannot be used inside any List statement.</P>
-<H4 CLASS="western"><A NAME="3.9.2.3"></A>3.9.2.3 Issue</H4>
+<H4 CLASS="western"><A NAME="3_9_2_3"></A>3.9.2.3 Issue</H4>
 <P CLASS="western">Purpose:</P>
 <P CLASS="western">Sets the runtime environment issue to the one
 selected by the statement constraint. If the statement constraint is
@@ -2243,7 +2337,7 @@ on template start. If issue parameter was not defined on template
 start it's value from now on is undefined.</P>
 <P CLASS="western">Constraints:</P>
 <P CLASS="western">Cannot be used inside any List statement.</P>
-<H4 CLASS="western"><A NAME="3.9.2.4"></A>3.9.2.4 Section</H4>
+<H4 CLASS="western"><A NAME="3_9_2_4"></A>3.9.2.4 Section</H4>
 <P CLASS="western">Purpose:</P>
 <P CLASS="western">Sets the runtime environment section to the one
 selected by the statement constraint. If the statement constraint is
@@ -2271,7 +2365,7 @@ template start it's value from now on is undefined.</P>
 <P CLASS="western">Constraints:</P>
 <P CLASS="western">It can't be used inside &quot;List Section&quot;
 and &quot;List Article&quot; statements.</P>
-<H4 CLASS="western"><A NAME="3.9.2.5"></A>3.9.2.5 Article</H4>
+<H4 CLASS="western"><A NAME="3_9_2_5"></A>3.9.2.5 Article</H4>
 <P CLASS="western">Purpose:</P>
 <P CLASS="western">Sets the runtime environment section to the one
 selected by the statement constraint. If the statement constraint is
@@ -2293,7 +2387,7 @@ template start it's value from now on is undefined.</P>
 <P CLASS="western">Constraints:</P>
 <P CLASS="western">Cannot be used inside &quot;List Article&quot;
 statement.</P>
-<H4 CLASS="western"><A NAME="3.9.2.6"></A>3.9.2.6 Local</H4>
+<H4 CLASS="western"><A NAME="3_9_2_6"></A>3.9.2.6 Local</H4>
 <P CLASS="western">Purpose:</P>
 <P CLASS="western">Creating a temporary data context block for
 special conditions; the previous data context is restored outside the
@@ -2306,9 +2400,9 @@ list it must respect the constraints of the list (List Issue, List
 Section, List Article, List Subtitle, List SearchResult).</P>
 <P CLASS="western">Constraints:</P>
 <P CLASS="western">None.</P>
-<H3 CLASS="western"><A NAME="3.9.3"></A>3.9.3 Flow control
+<H3 CLASS="western"><A NAME="3_9_3"></A>3.9.3 Flow control
 instructions</H3>
-<H4 CLASS="western"><A NAME="3.9.3.1"></A>3.9.3.1 List of Issues</H4>
+<H4 CLASS="western"><A NAME="3_9_3_1"></A>3.9.3.1 List of Issues</H4>
 <P CLASS="western">Purpose:</P>
 <P CLASS="western">Select the list of issues according to the given
 constraints and current environmental parameters. The Publication,
@@ -2331,7 +2425,7 @@ is executed once.</P>
 &lt;integer_value&gt;</FONT> where &lt;integer_value&gt; specifies
 <I>list_length</I> forces the list to have at most <I>list_length</I>
 items. If the list contains more items than <I>list_length</I> items
-the ones not fitting in can be listed using <A HREF="#3.9.3.6">If
+the ones not fitting in can be listed using <A HREF="#3_9_3_6">If
 NextItems/PreviousItems</A> statements.</P>
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">columns
 &lt;integer_value&gt;</FONT> where &lt;integer_value&gt; specifies
@@ -2339,8 +2433,8 @@ NextItems/PreviousItems</A> statements.</P>
 incremented as if the items would be placed in a table cell. The
 counting starts from one and the variable is incremented for every
 new element. When it reaches the maximum value it is reset to one.
-This is very usefull in building tables of data. For details see <A HREF="#3.9.3.8">If
-List</A>.</P>
+This is very<SPAN LANG="en-US"> useful </SPAN>in building tables of
+data. For details see <A HREF="#3_9_3_8">If List</A>.</P>
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;list_of_instructions&gt;</FONT>
 may contain any statement except: &quot;Language&quot;,
 &quot;Publication&quot;, &quot;List Issue&quot;, &quot;Issue&quot;.</P>
@@ -2448,7 +2542,7 @@ forbidden:</P>
 </UL>
 <P CLASS="western">List Issue statement can not be used inside List
 Section, List Article, List Subtittle, List SearchResults statements.</P>
-<H4 CLASS="western"><A NAME="3.9.3.2"></A>3.9.3.2 List of Sections</H4>
+<H4 CLASS="western"><A NAME="3_9_3_2"></A>3.9.3.2 List of Sections</H4>
 <P CLASS="western">Purpose:</P>
 <P CLASS="western">Select the list of sections according to the given
 constraints and current environmental parameters. The Publication,
@@ -2472,7 +2566,7 @@ is executed once.</P>
 &lt;integer_value&gt;</FONT> where &lt;integer_value&gt; specifies
 <I>list_length</I> forces the list to have at most <I>list_length</I>
 items. If the list contains more items than <I>list_length</I> items
-the ones not fitting in can be listed using <A HREF="#3.9.3.6">If
+the ones not fitting in can be listed using <A HREF="#3_9_3_6">If
 NextItems/PreviousItems</A> statements.</P>
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">columns
 &lt;integer_value&gt;</FONT> where &lt;integer_value&gt; specifies
@@ -2480,36 +2574,35 @@ NextItems/PreviousItems</A> statements.</P>
 incremented as if the items would be placed in a table cell. The
 counting starts from one and the variable is incremented for every
 new element. When it reaches the maximum value it is reset to one.
-This is very usefull in building tables of data. For details see <A HREF="#3.9.3.8">If
-List</A>.</P>
+This is very<SPAN LANG="en-US"> useful </SPAN>in building tables of
+data. For details see <A HREF="#3_9_3_8">If List</A>.</P>
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;list_of_instructions&gt;</FONT>
 may contain any statement except: &quot;Language&quot;,
 &quot;Publication&quot;, &quot;List Issue&quot;, &quot;Issue&quot;,
 &quot;List Section&quot;, &quot;Section&quot;.</P>
-<TABLE WIDTH=858 BORDER=0 CELLPADDING=2 CELLSPACING=0>
-	<COL WIDTH=314>
-	<COL WIDTH=536>
+<TABLE WIDTH=703 BORDER=0 CELLPADDING=2 CELLSPACING=0>
+	<COL WIDTH=308>
+	<COL WIDTH=387>
 	<TR>
-		<TD WIDTH=314 VALIGN=TOP>
+		<TD WIDTH=308 VALIGN=TOP>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;list_of_section_constraints&gt;
 			=</FONT></P>
 		</TD>
-		<TD WIDTH=536>
+		<TD WIDTH=387>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">[&lt;section_constraint&gt;]
 			&lt;list_of_section_constraints&gt; <BR>| &lt;section_constraint&gt;</FONT></P>
 		</TD>
 	</TR>
 </TABLE>
 <TABLE WIDTH=678 BORDER=0 CELLPADDING=2 CELLSPACING=0>
-	<COL WIDTH=234>
-	<COL WIDTH=436>
+	<COL WIDTH=230>
+	<COL WIDTH=440>
 	<TR>
-		<TD WIDTH=234 VALIGN=TOP>
+		<TD WIDTH=230 VALIGN=TOP>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;section_constraint&gt;
-			= </FONT>
-			</P>
+			=</FONT></P>
 		</TD>
-		<TD WIDTH=436>
+		<TD WIDTH=440>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">name
 			</FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;string_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
 			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;string_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
@@ -2538,7 +2631,7 @@ forbidden:</P>
 <P CLASS="western"><FONT FACE="Times New Roman"><FONT SIZE=2 STYLE="font-size: 11pt">List
 Section statement cannot be used inside List Article, List Subtitle,
 List SearchResult statements.</FONT></FONT></P>
-<H4 CLASS="western"><A NAME="3.9.3.3"></A>3.9.3.3 List of Articles</H4>
+<H4 CLASS="western"><A NAME="3_9_3_3"></A>3.9.3.3 List of Articles</H4>
 <P CLASS="western">Purpose:</P>
 <P CLASS="western">Select the list of articles according to the given
 constraints and current environmental parameters. The Publication,
@@ -2563,7 +2656,7 @@ and &quot;EndList&quot; is executed once.</P>
 &lt;integer_value&gt;</FONT> where &lt;integer_value&gt; specifies
 <I>list_length</I> forces the list to have at most <I>list_length</I>
 items. If the list contains more items than <I>list_length</I> items
-the ones not fitting in can be listed using <A HREF="#3.9.3.6">If
+the ones not fitting in can be listed using <A HREF="#3_9_3_6">If
 NextItems/PreviousItems</A> statements.</P>
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">columns
 &lt;integer_value&gt;</FONT> where &lt;integer_value&gt; specifies
@@ -2571,36 +2664,36 @@ NextItems/PreviousItems</A> statements.</P>
 incremented as if the items would be placed in a table cell. The
 counting starts from one and the variable is incremented for every
 new element. When it reaches the maximum value it is reset to one.
-This is very useful in building tables of data. For details see <A HREF="#3.9.3.8">If
+This is very useful in building tables of data. For details see <A HREF="#3_9_3_8">If
 List</A>.</P>
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;list_of_instructions&gt;</FONT>
 may contain any statement except: &quot;Language&quot;,
 &quot;Publication&quot;, &quot;List Issue&quot;, &quot;Issue&quot;,
 &quot;List Section&quot;, &quot;Section&quot;, &quot;List Article&quot;,
 &quot;Article&quot;.</P>
-<TABLE WIDTH=858 BORDER=0 CELLPADDING=2 CELLSPACING=0>
-	<COL WIDTH=314>
-	<COL WIDTH=536>
+<TABLE WIDTH=703 BORDER=0 CELLPADDING=2 CELLSPACING=0>
+	<COL WIDTH=307>
+	<COL WIDTH=388>
 	<TR>
-		<TD WIDTH=314 VALIGN=TOP>
+		<TD WIDTH=307 VALIGN=TOP>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;list_of_article_constraints&gt;
 			=</FONT></P>
 		</TD>
-		<TD WIDTH=536>
+		<TD WIDTH=388>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">[&lt;article_constraint&gt;]
 			&lt;list_of_article_constraints&gt; <BR>| &lt;article_constraint&gt;</FONT></P>
 		</TD>
 	</TR>
 </TABLE>
-<TABLE WIDTH=1075 BORDER=0 CELLPADDING=2 CELLSPACING=0>
-	<COL WIDTH=222>
-	<COL WIDTH=845>
+<TABLE WIDTH=703 BORDER=0 CELLPADDING=2 CELLSPACING=0>
+	<COL WIDTH=220>
+	<COL WIDTH=475>
 	<TR>
-		<TD WIDTH=222 VALIGN=TOP>
+		<TD WIDTH=220 VALIGN=TOP>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;article_constraint&gt;
 			=</FONT></P>
 		</TD>
-		<TD WIDTH=845>
+		<TD WIDTH=475>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">name
 			</FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;string_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
 			</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;string_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
@@ -2630,12 +2723,12 @@ may contain any statement except: &quot;Language&quot;,
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">OnFrontPage: articles
 	having &quot;Show article on front page&quot; flag in
 	&lt;switch_operator&gt; relation with &lt;switch_value&gt; will be
-	selected; for details see <A HREF="#2.2.5">Creating articles within
+	selected; for details see <A HREF="#2_2_5">Creating articles within
 	a section</A></P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">OnSection: articles
 	having &quot;Show article on section page&quot; flag in
 	&lt;switch_operator&gt; relation with &lt;switch_value&gt; will be
-	selected; for details see <A HREF="#2.2.5">Creating articles within
+	selected; for details see <A HREF="#2_2_5">Creating articles within
 	a section</A></P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">public: articles
 	having &quot;Allow users without subscription...&quot; flag in
@@ -2645,7 +2738,7 @@ may contain any statement except: &quot;Language&quot;,
 	&lt;article_type_attribute&gt; ...: articles being of &lt;article_type&gt;
 	and having &lt;article_type_attribute&gt; in
 	&lt;attribute_type_operator&gt; relation with &lt;attribute_type_value&gt;
-	will be selected; for details see <A HREF="#2.2.4">Defining article
+	will be selected; for details see <A HREF="#2_2_4">Defining article
 	types</A></P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">topic: if &quot;is&quot;
 	operator is used, articles having specified topic in their list of
@@ -2653,15 +2746,26 @@ may contain any statement except: &quot;Language&quot;,
 	articles not having specified topic in their list of topics will be
 	selected</P>
 </UL>
-<TABLE WIDTH=1008 BORDER=0 CELLPADDING=2 CELLSPACING=0>
-	<COL WIDTH=364>
-	<COL WIDTH=636>
+<P CLASS="western" STYLE="margin-top: 0cm"><BR>
+</P>
+<P CLASS="western" STYLE="margin-top: 0cm"><B>Note on topics</B>: the
+topic name must be written in the following format:
+&ldquo;&lt;topic_name&gt;:&lt;language_code&gt;&rdquo;. CAMPSITE is
+able to store topics in multiple languages, yet the user interface
+managing the topics wasn't updated and it is only capable of managing
+topics in English language. All the topics are automatically assigned
+the English language.</P>
+<P CLASS="western">Examples of valid topic names: &ldquo;sports:en&rdquo;,
+&ldquo;health:en&rdquo; etc.</P>
+<TABLE WIDTH=703 BORDER=0 CELLPADDING=2 CELLSPACING=0>
+	<COL WIDTH=353>
+	<COL WIDTH=342>
 	<TR>
-		<TD WIDTH=364 VALIGN=TOP>
-			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;list_of_article_type_constraints&gt;
+		<TD WIDTH=353 VALIGN=TOP>
+			<P CLASS="western" STYLE="margin-left: 0cm; margin-right: 0cm"><FONT FACE="Courier New, Courier, mono">&lt;list_of_article_type_constraints&gt;
 			=</FONT></P>
 		</TD>
-		<TD WIDTH=636>
+		<TD WIDTH=342>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">[&lt;article_type_constraint&gt;]
 			&lt;list_of_article_type_constraints&gt; <BR>|
 			&lt;article_type_constraint&gt;</FONT></P>
@@ -2706,7 +2810,7 @@ forbidden:</P>
 <P CLASS="western"><FONT FACE="Times New Roman"><FONT SIZE=2 STYLE="font-size: 11pt">List
 Article statement cannot be used inside List Subtitle, List
 SearchResult statements.</FONT></FONT></P>
-<H4 CLASS="western"><A NAME="3.9.3.4"></A>3.9.3.4 List of Subtitles</H4>
+<H4 CLASS="western"><A NAME="3_9_3_4"></A>3.9.3.4 List of Subtitles</H4>
 <P CLASS="western">Purpose:</P>
 <P CLASS="western">Select the list of subtitles according to the
 given constraints and current environmental parameters. The article
@@ -2728,7 +2832,7 @@ list. When the list of article is empty the code in between
 &lt;integer_value&gt;</FONT> where &lt;integer_value&gt; specifies
 <I>list_length</I> forces the list to have at most <I>list_length</I>
 items. If the list contains more items than <I>list_length</I> items
-the ones not fitting in can be listed using <A HREF="#3.9.3.6">If
+the ones not fitting in can be listed using <A HREF="#3_9_3_6">If
 NextItems/PreviousItems</A> statements.</P>
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">columns
 &lt;integer_value&gt;</FONT> where &lt;integer_value&gt; specifies
@@ -2736,8 +2840,8 @@ NextItems/PreviousItems</A> statements.</P>
 incremented as if the items would be placed in a table cell. The
 counting starts from one and the variable is incremented for every
 new element. When it reaches the maximum value it is reset to one.
-This is very usefull in building tables of data. For details see <A HREF="#3.9.3.8">If
-List</A>.</P>
+This is very<SPAN LANG="en-US"> useful </SPAN>in building tables of
+data. For details see <A HREF="#3_9_3_8">If List</A>.</P>
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;list_of_instructions&gt;</FONT>
 may contain any statement except: &quot;Language&quot;,
 &quot;Publication&quot;, &quot;List Issue&quot;, &quot;Issue&quot;,
@@ -2765,7 +2869,7 @@ forbidden:</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">List Article</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">Article</P>
 </UL>
-<H4 CLASS="western"><A NAME="3.9.3.5"></A>3.9.3.5 List Search Result</H4>
+<H4 CLASS="western"><A NAME="3_9_3_5"></A>3.9.3.5 List Search Result</H4>
 <P CLASS="western">Purpose:</P>
 <P CLASS="western">Select the list of articles after searching
 database for given keywords. The Publication, Language, Issue,
@@ -2789,7 +2893,7 @@ is executed once.</P>
 &lt;integer_value&gt;</FONT> where &lt;integer_value&gt; specifies
 <I>list_length</I> forces the list to have at most <I>list_length</I>
 items. If the list contains more items than <I>list_length</I> items
-the ones not fitting in can be listed using <A HREF="#3.9.3.6">If
+the ones not fitting in can be listed using <A HREF="#3_9_3_6">If
 NextItems/PreviousItems</A> statements.</P>
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">columns
 &lt;integer_value&gt;</FONT> where &lt;integer_value&gt; specifies
@@ -2797,8 +2901,8 @@ NextItems/PreviousItems</A> statements.</P>
 incremented as if the items would be placed in a table cell. The
 counting starts from one and the variable is incremented for every
 new element. When it reaches the maximum value it is reset to one.
-This is very usefull in building tables of data. For details see <A HREF="#3.9.3.8">If
-List</A>.</P>
+This is very<SPAN LANG="en-US"> useful </SPAN>in building tables of
+data. For details see <A HREF="#3_9_3_8">If List</A>.</P>
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;list_of_instructions&gt;</FONT>
 may contain any statement except: &quot;Language&quot;,
 &quot;Publication&quot;.</P>
@@ -2824,17 +2928,16 @@ line. The data context is restored after the list processing.</P>
 are forbidden:</P>
 <UL>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">Language</P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm">Publication</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">Publicatio<FONT COLOR="#000000">n</FONT></P>
 </UL>
-<P CLASS="western"><B><FONT SIZE=4><FONT COLOR="#ff0000">Note!!!</FONT></FONT>
-(This is valid only for 2.0.11 and newer versions.)</B></P>
+<H4 CLASS="western"><B>Note</B> for If statements</H4>
 <P CLASS="western">All <B>If</B> statements can be negated by
 inserting &quot;not&quot; between If and its modifier (Publication,
 Issue etc.)</P>
 <P CLASS="western">Example:<BR>&nbsp;&nbsp;<FONT FACE="Courier New, Courier, mono">&lt;**If
 Publication defined&gt;</FONT><BR>and the negated version:<BR>&nbsp;&nbsp;<FONT FACE="Courier New, Courier, mono">&lt;**If
 not Publication defined&gt;</FONT></P>
-<H4 CLASS="western"><A NAME="3.9.3.6"></A>3.9.3.6 If NextItems |
+<H4 CLASS="western"><A NAME="3_9_3_6"></A>3.9.3.6 If NextItems |
 PreviousItems</H4>
 <P CLASS="western">Purpose:</P>
 <P CLASS="western">It runs the first or second list of instructions
@@ -2843,36 +2946,39 @@ the end/start of the list. It can be used only inside List
 statements, especially to validate Next | Previous buttons.</P>
 <P CLASS="western">Syntax:</P>
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">If [not]
-NextItems|PreviousItems [&lt;list_of_instructions&gt;]<BR>[Else
+NextItems|PreviousItems</FONT></P>
+<P CLASS="western" STYLE="margin-top: 0cm; page-break-before: auto"><FONT FACE="Courier, monospace">[&lt;list_of_instructions&gt;]<BR>[Else
 [&lt;list_of_instructions&gt;]]<BR>EndIf [NextItems|PreviousItems]</FONT></P>
 <P CLASS="western">Constraints:</P>
 <P CLASS="western">Can be used only inside List statement. It can not
 be used inside ForEmptyList block of List statement. Also, If
-NextItems can not be used inside If PreviousItems and viceversa.</P>
-<H4 CLASS="western"><A NAME="3.9.3.7"></A>3.9.3.7 If NextSubtitles |
+NextItems can not be used inside If PreviousItems and <SPAN LANG="en-US">vice
+versa.</SPAN></P>
+<H4 CLASS="western"><A NAME="3_9_3_7"></A>3.9.3.7 If NextSubtitles |
 PrevSubtitles</H4>
 <P CLASS="western">Purpose:</P>
 <P CLASS="western">It runs the first or second list of instructions
 depending on existing paragraphs (marked with their subtitles) in a
-<A HREF="#3.9.3.21">With statement</A>. It can be used only inside
+<A HREF="#3_9_3_21">With statement</A>. It can be used only inside
 With statement, especially to validate Next | Previous buttons.</P>
 <P CLASS="western">Syntax:</P>
-<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If
-NextSubtitles | PrevSubtitles [&lt;list_of_instructions&gt;]<BR>[Else
-[&lt;list_of_instructions&gt;]]<BR>EndIf [NextSubtitles |
-PrevSubtitles]</FONT></P>
+<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If [not]
+NextSubtitles | PrevSubtitles</FONT></P>
+<P CLASS="western" STYLE="margin-top: 0cm"><FONT FACE="Courier, monospace">[&lt;list_of_instructions&gt;]<BR>[Else
+[&lt;list_of_instructions&gt;]]<BR>EndIf
+[NextSubtitles|PrevSubtitles]</FONT></P>
 <P CLASS="western">Constraints:</P>
 <P CLASS="western">Can be used only inside With statement. Also, If
 NextSubtitles can not be used inside If PrevSubtitles and vice versa.</P>
-<H4 CLASS="western"><A NAME="3.9.3.8"></A>3.9.3.8 If List</H4>
+<H4 CLASS="western"><A NAME="3_9_3_8"></A>3.9.3.8 If List</H4>
 <P CLASS="western">Purpose:</P>
 <P CLASS="western">Depending on the given condition, it runs the
 first or second list of instructions. It can be used inside List
 instructions. It is used to <A HREF="#building_a_table">build tables</A>
 from lists.</P>
 <P CLASS="western">Syntax:</P>
-<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If List
-&lt;condition&gt;<BR>&lt;list_of_instructions&gt;<BR>[Else
+<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If [not]
+List &lt;condition&gt;<BR>&lt;list_of_instructions&gt;<BR>[Else
 [&lt;list_of_instructions&gt;]]<BR>EndIf [List]</FONT></P>
 <P CLASS="western">where</P>
 <TABLE WIDTH=428 BORDER=0 CELLPADDING=2 CELLSPACING=0>
@@ -2930,7 +3036,7 @@ end table --&gt; &lt;/table&gt; &lt;!** EndIf&gt; <BR>&lt;!**
 EndList&gt;</FONT></P>
 <P CLASS="western">Constraints:</P>
 <P CLASS="western">Can only be used only inside List statements.</P>
-<H4 CLASS="western"><A NAME="3.9.3.9"></A>3.9.3.9 Include</H4>
+<H4 CLASS="western"><A NAME="3_9_3_9"></A>3.9.3.9 Include</H4>
 <P CLASS="western">Purpose:</P>
 <P CLASS="western">Specify the text file to be included in a certain
 position of the current template. This instruction passes data
@@ -2944,16 +3050,16 @@ starts with a letter, or relative to the server's document root, if
 the path starts with a '/'.</P>
 <P CLASS="western">Constraints:</P>
 <P CLASS="western">None.</P>
-<H4 CLASS="western"><A NAME="3.9.3.10"></A>3.9.3.10 If Publication</H4>
+<H4 CLASS="western"><A NAME="3_9_3_10"></A>3.9.3.10 If Publication</H4>
 <P CLASS="western">Purpose:</P>
 <P CLASS="western">Depending on the given condition, it runs the
 first or second list of instructions. It may be used anywhere in the
 template. It is used when printing information for a certain
 publication.</P>
 <P CLASS="western">Syntax:</P>
-<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If
+<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If [not]
 Publication &lt;condition&gt;</FONT><BR><FONT FACE="Courier New, Courier, mono">&lt;list_of_instructions&gt;</FONT><BR><FONT FACE="Courier New, Courier, mono">[Else
-[&lt;list_of_instructions&gt;]]<BR>EndIf [Section]</FONT></P>
+[&lt;list_of_instructions&gt;]]<BR>EndIf [Publication]</FONT></P>
 <TABLE WIDTH=618 BORDER=0 CELLPADDING=2 CELLSPACING=0>
 	<COL WIDTH=144>
 	<COL WIDTH=466>
@@ -2992,15 +3098,15 @@ list, it must respect the constraints of the list (List Issue, List
 Section, List Article, List Subtitle, List SearchResult).</P>
 <P CLASS="western">Constraints:</P>
 <P CLASS="western">None.</P>
-<H4 CLASS="western"><A NAME="3.9.3.11"></A>3.9.3.11 If Issue</H4>
+<H4 CLASS="western"><A NAME="3_9_3_11"></A>3.9.3.11 If Issue</H4>
 <P CLASS="western">Purpose:</P>
 <P CLASS="western">Depending on the given condition, it runs the
 first or second list of instructions. It may be used anywhere in the
 template. It is used when printing information for a certain issue.</P>
 <P CLASS="western">Syntax:</P>
-<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If Issue
-&lt;condition&gt;<BR>&lt;list_of_instructions&gt;<BR>[Else
-[&lt;list_of_instructions&gt;]]<BR>EndIf [Section]</FONT></P>
+<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If [not]
+Issue &lt;condition&gt;<BR>&lt;list_of_instructions&gt;<BR>[Else
+[&lt;list_of_instructions&gt;]]<BR>EndIf [Issue]</FONT></P>
 <P CLASS="western">where 
 </P>
 <TABLE WIDTH=588 BORDER=0 CELLPADDING=2 CELLSPACING=0>
@@ -3053,15 +3159,15 @@ list, it must respect the constraints of the list (List Issue, List
 Section, List Article, List Subtitle, List SearchResult).</P>
 <P CLASS="western">Constraints:</P>
 <P CLASS="western">None.</P>
-<H4 CLASS="western"><A NAME="3.9.3.12"></A>3.9.3.12 If Section 
+<H4 CLASS="western"><A NAME="3_9_3_12"></A>3.9.3.12 If Section 
 </H4>
 <P CLASS="western">Purpose:</P>
 <P CLASS="western">Depending on the given condition, it runs the
 first or second list of instructions. It may be used anywhere in the
 template. It is used when printing information for a certain section.</P>
 <P CLASS="western">Syntax:</P>
-<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If Section
-&lt;condition&gt;<BR>&lt;list_of_instructions&gt;<BR>[Else
+<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If [not]
+Section &lt;condition&gt;<BR>&lt;list_of_instructions&gt;<BR>[Else
 [&lt;list_of_instructions&gt;]]<BR>EndIf [Section]</FONT></P>
 <P CLASS="western">The list of instructions may contain any
 instruction allowed in the current context. If it is used inside a
@@ -3077,7 +3183,7 @@ Section, List Article, List Subtitle, List SearchResult).</P>
 				=</FONT></P>
 			</TD>
 			<TD WIDTH=413>
-				<P CLASS="western" STYLE="margin-top: 0cm"><FONT FACE="Courier, monospace">number
+				<P CLASS="western"><FONT FACE="Courier, monospace">number
 				</FONT><A HREF="#operators"><FONT FACE="Courier, monospace">&lt;integer_operator&gt;</FONT></A><FONT FACE="Courier, monospace">
 				</FONT><A HREF="#attr_types"><FONT FACE="Courier, monospace">&lt;integer_value&gt;</FONT><FONT FACE="Courier New, Courier, mono"><BR></FONT></A><FONT FACE="Courier, monospace">|
 				name </FONT><A HREF="#operators"><FONT FACE="Courier, monospace">&lt;string_operator&gt;</FONT></A><FONT FACE="Courier, monospace">
@@ -3103,15 +3209,15 @@ Section, List Article, List Subtitle, List SearchResult).</P>
 </UL>
 <P CLASS="western">Constraints:</P>
 <P CLASS="western">None.</P>
-<H4 CLASS="western"><A NAME="3.9.3.13"></A>3.9.3.13 If Article</H4>
+<H4 CLASS="western"><A NAME="3_9_3_13"></A>3.9.3.13 If Article</H4>
 <P CLASS="western">Purpose:</P>
 <P CLASS="western">Depending on the given condition, it runs the
 first (for true) or second (for false) list of instructions. It may
 be used anywhere in the template. It is used when printing
 information from different types of article.</P>
 <P CLASS="western">Syntax:</P>
-<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If Article
-&lt;condition&gt;<BR>&lt;list_of_instructions&gt;<BR>[Else
+<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If [not]
+Article &lt;condition&gt;<BR>&lt;list_of_instructions&gt;<BR>[Else
 [&lt;list_of_instructions&gt;]]<BR>EndIf [Article]</FONT></P>
 <P CLASS="western">where</P>
 <TABLE WIDTH=703 BORDER=0 CELLPADDING=2 CELLSPACING=0>
@@ -3175,7 +3281,7 @@ information from different types of article.</P>
 	article is of &lt;article_type&gt; and &lt;article_type_attribute&gt;
 	is in &lt;attribute_type_operator&gt; relation with
 	&lt;attribute_type_value&gt;. &lt;article_type_attribute&gt; is an
-	attribute specific to an article type; for details see <A HREF="#2.2.4">Defining
+	attribute specific to an article type; for details see <A HREF="#2_2_4">Defining
 	article types</A></P>
 </UL>
 <P CLASS="western">The list of instructions may contain any
@@ -3184,7 +3290,7 @@ list it must respect the constraints of the list (List Issue, List
 Section, List Article, List Subtitle, List SearchResult).</P>
 <P CLASS="western">Constraints:</P>
 <P CLASS="western">None.</P>
-<H4 CLASS="western"><A NAME="3.9.3.14"></A>3.9.3.14 If Allowed</H4>
+<H4 CLASS="western"><A NAME="3_9_3_14"></A>3.9.3.14 If Allowed</H4>
 <P CLASS="western">Purpose:</P>
 <P CLASS="western">It is used when printing article protected
 information. It is true when the reader has access to the article
@@ -3193,16 +3299,16 @@ to, the result is false. If true, runs the first list of instructions
 and the second list on false. It is true if the reader has an active
 subscription including the article section or the article is public.</P>
 <P CLASS="western">Syntax:</P>
-<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If
+<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If [not]
 Allowed<BR>&lt;list_of_instructions&gt;<BR>[Else
-[&lt;list_of_instructions&gt;]]<BR>EndIf</FONT></P>
+[&lt;list_of_instructions&gt;]]<BR>EndIf [Allowed]</FONT></P>
 <P CLASS="western">The list of instructions may contain any
 instruction allowed in current context. If it is used inside a list
 it must respect the constraints of the list (List Issue, List
 Section, List Article, List Subtitle, List SearchResult).</P>
 <P CLASS="western">Constraints:</P>
 <P CLASS="western">None.</P>
-<H4 CLASS="western"><A NAME="3.9.3.15"></A>3.9.3.15 If Subscription</H4>
+<H4 CLASS="western"><A NAME="3_9_3_15"></A>3.9.3.15 If Subscription</H4>
 <P CLASS="western">Purpose:</P>
 <P CLASS="western">Depending on the given condition, it runs the
 first, the second list of instructions or neither of them. If the
@@ -3212,9 +3318,9 @@ the template containing If Subscription must follow a template
 containing Subscription). It may be used anywhere in the template. It
 is used to describe the subscription result.</P>
 <P CLASS="western">Syntax:</P>
-<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If
+<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If [not]
 Subscription &lt;condition&gt;<BR>&lt;list_of_instructions&gt;<BR>[Else
-[&lt;list_of_instructions&gt;]]<BR>EndIf</FONT></P>
+[&lt;list_of_instructions&gt;]]<BR>EndIf [Subscription]</FONT></P>
 <P CLASS="western">where</P>
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;condition&gt;
 = ok | error | trial | paid | action</FONT></P>
@@ -3239,7 +3345,7 @@ it must respect the constraints of the list (List Issue, List
 Section, List Article, List Subtitle, List SearchResult).</P>
 <P CLASS="western">Constraints:</P>
 <P CLASS="western">None.</P>
-<H4 CLASS="western"><A NAME="3.9.3.16"></A>3.9.3.16 If Login</H4>
+<H4 CLASS="western"><A NAME="3_9_3_16"></A>3.9.3.16 If Login</H4>
 <P CLASS="western">Purpose:</P>
 <P CLASS="western">Depending on the given condition, it runs the
 first, the second list of instructions or neither of them. If the
@@ -3249,9 +3355,9 @@ template containing If Login must follow a template containing
 Login). It may be used anywhere in the template. It is used to
 describe the subscription result.</P>
 <P CLASS="western">Syntax:</P>
-<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If Login
-&lt;condition&gt;<BR>&lt;list_of_instructions&gt;<BR>[Else
-[&lt;list_of_instructions&gt;]]<BR>EndIf</FONT></P>
+<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If [not]
+Login &lt;condition&gt;<BR>&lt;list_of_instructions&gt;<BR>[Else
+[&lt;list_of_instructions&gt;]]<BR>EndIf [Login]</FONT></P>
 <P CLASS="western">where</P>
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;condition&gt;
 = ok | error | action</FONT></P>
@@ -3269,7 +3375,7 @@ it must respect the constraints of the list (List Issue, List
 Section, List Article, List Subtitle, List SearchResult).</P>
 <P CLASS="western">Constraints:</P>
 <P CLASS="western">Cannot be used inside Login-EndLogin statement.</P>
-<H4 CLASS="western"><A NAME="3.9.3.17"></A>3.9.3.17 If User</H4>
+<H4 CLASS="western"><A NAME="3_9_3_17"></A>3.9.3.17 If User</H4>
 <P CLASS="western">Purpose:</P>
 <P CLASS="western">Depending on given condition, it runs the first,
 the second list of instructions or none. If the User event didn't
@@ -3278,9 +3384,9 @@ certain order to be followed; that is, the template containing If
 User must follow a template containing User). It may be used anywhere
 in template. It is used to describe the subscription result.</P>
 <P CLASS="western">Syntax:</P>
-<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If User
-&lt;condition&gt;<BR>&lt;list_of_instructions&gt;<BR>[Else
-[&lt;list_of_instructions&gt;]]<BR>EndIf</FONT></P>
+<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If [not]
+User &lt;condition&gt;<BR>&lt;list_of_instructions&gt;<BR>[Else
+[&lt;list_of_instructions&gt;]]<BR>EndIf [User]</FONT></P>
 <P CLASS="western">where</P>
 <TABLE WIDTH=298 BORDER=0 CELLPADDING=2 CELLSPACING=0>
 	<COL WIDTH=144>
@@ -3327,7 +3433,7 @@ list it must respect the constraints of the list (List Issue, List
 Section, List Article, List Subtitle, List SearchResult).</P>
 <P CLASS="western">Constraints:</P>
 <P CLASS="western">Cannot be used inside User-EndUser statement.</P>
-<H4 CLASS="western"><A NAME="3.9.3.18"></A>3.9.3.18 If
+<H4 CLASS="western"><A NAME="3_9_3_18"></A>3.9.3.18 If
 CurrentSubtitle</H4>
 <P CLASS="western">Purpose:</P>
 <P CLASS="western">Depending on the given condition, it runs the
@@ -3336,20 +3442,20 @@ of subtitle (while printing an article). It runs the first list of
 instructions when the index of subtitles list equals the number of
 the current subtitle (selected for printing).</P>
 <P CLASS="western">Syntax:</P>
-<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If
+<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If [not]
 CurrentSubtitle<BR>&lt;list_of_instructions&gt;<BR>[Else
 [&lt;list_of_instructions&gt;]]<BR>EndIf [CurrentSubtitle]</FONT></P>
 <P CLASS="western">Constraints:</P>
 <P CLASS="western">Can be used only inside With and List Subtitles
 statements.</P>
-<H4 CLASS="western"><A NAME="3.9.3.19"></A>3.9.3.19 If Image</H4>
+<H4 CLASS="western"><A NAME="3_9_3_19"></A>3.9.3.19 If Image</H4>
 <P CLASS="western">Purpose:</P>
 <P CLASS="western">If image exists, it runs the first list of
 instructions, otherwise the second list. It may be used anywhere in
 the template.</P>
 <P CLASS="western">Syntax:</P>
-<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If Image
-</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;integer_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono"><BR>&lt;list_of_instructions&gt;<BR>[Else
+<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If [not]
+Image </FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;integer_value&gt;</FONT></A><FONT FACE="Courier New, Courier, mono"><BR>&lt;list_of_instructions&gt;<BR>[Else
 [&lt;list_of_instructions&gt;]]<BR>EndIf [Image]</FONT></P>
 <P CLASS="western">The list of instructions may contain any
 instruction allowed in the current context. If it is used inside a
@@ -3357,18 +3463,15 @@ list it must respect the constraints of the list (List Issue, List
 Section, List Article, List Subtitle, List SearchResult).</P>
 <P CLASS="western">Constraints:</P>
 <P CLASS="western">None.</P>
-<P CLASS="western"><FONT SIZE=4><B>Note:</B></FONT></P>
-<P CLASS="western">The If Image statement is valid only in 2.0.11 and
-newer versions. It won't work in 2.0.10 or older versions.</P>
-<H4 CLASS="western"><A NAME="3.9.3.20"></A>3.9.3.20 If Language</H4>
+<H4 CLASS="western"><A NAME="3_9_3_20"></A>3.9.3.20 If Language</H4>
 <P CLASS="western">Purpose:</P>
 <P CLASS="western">Depending on the given condition, it runs the
 first or second list of instructions. It may be used anywhere in the
 template.</P>
 <P CLASS="western">Syntax:</P>
-<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If
-Language condition<BR>&lt;list_of_instructions&gt;<BR>[Else
-[&lt;list_of_instructions&gt;]]<BR>EndIf [Section]</FONT></P>
+<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If [not]
+Language &lt;condition&gt;<BR>&lt;list_of_instructions&gt;<BR>[Else
+[&lt;list_of_instructions&gt;]]<BR>EndIf [Language]</FONT></P>
 <P CLASS="western" STYLE="font-weight: medium; page-break-before: auto">
 where</P>
 <TABLE WIDTH=588 BORDER=0 CELLPADDING=2 CELLSPACING=0>
@@ -3409,7 +3512,8 @@ where</P>
 	the if condition is true if operation: <FONT FACE="Courier New, Courier, mono">name|englname|code
 	</FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;string_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
 	</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;string_value&gt;</FONT></A>
-	is true</P>
+	is true where englname is the English name of the language, name is
+	the original language name</P>
 </UL>
 <P CLASS="western">The list of instructions may contain any
 instruction allowed in the current context. If it is used inside a
@@ -3417,14 +3521,11 @@ list it must respect the constraints of the list (List Issue, List
 Section, List Article, List Subtitle, List SearchResult).</P>
 <P CLASS="western">Constraints:</P>
 <P CLASS="western">None.</P>
-<P CLASS="western"><FONT COLOR="#ff0000"><FONT SIZE=4><B>Note:</B></FONT></FONT></P>
-<P CLASS="western">The If Language statement is valid only in 2.0.12
-and newer versions. It won't work in 2.0.11 or older versions.</P>
-<H4 CLASS="western"><A NAME="3.9.3.21"></A>3.9.3.21 With</H4>
+<H4 CLASS="western"><A NAME="3_9_3_21"></A>3.9.3.21 With</H4>
 <P CLASS="western">Purpose:</P>
 <P CLASS="western">Used to access a body field of a certain type of
 articles. When working with subtitles this statement is mandatory.
-See also <A HREF="#3.9.3.4">List Subtitle</A>, <A HREF="#3.9.3.7">If
+See also <A HREF="#3_9_3_4">List Subtitle</A>, <A HREF="#3_9_3_7">If
 PrevSubtitles, If NextSubtitles</A></P>
 <P CLASS="western">Syntax:</P>
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">With
@@ -3441,8 +3542,64 @@ list it must respect the constraints of the list (List Issue, List
 Section, List Article, List Subtitle, List SearchResult).</P>
 <P CLASS="western">Constraints:</P>
 <P CLASS="western">None.</P>
-<H3 CLASS="western"><A NAME="3.9.4"></A>3.9.4 Printable information</H3>
-<H4 CLASS="western"><A NAME="3.9.4.1"></A>3.9.4.1 URL, Form</H4>
+<H4 CLASS="western"><A NAME="3_9_3_22"></A>3.9.3.22 If Search</H4>
+<P CLASS="western">Purpose:</P>
+<P CLASS="western">Depending on the given condition, it runs the
+first or second list of instructions. It may be used anywhere in the
+template.</P>
+<P CLASS="western">Syntax:</P>
+<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If [not]
+Search &lt;condition&gt;<BR>&lt;list_of_instructions&gt;<BR>[Else
+[&lt;list_of_instructions&gt;]]<BR>EndIf [Search]</FONT></P>
+<P CLASS="western" STYLE="font-weight: medium; page-break-before: auto">
+where</P>
+<P CLASS="western" STYLE="margin-top: 0cm"><FONT FACE="Courier, monospace">&lt;condition&gt;
+= ok | error | action</FONT></P>
+<UL>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">ok: the if condition
+	is true if search action was taken and its result is success</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">error: the if
+	condition is true if search action was taken and its result is error</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">action: the if
+	condition is true if search action was taken</P>
+</UL>
+<P CLASS="western">The list of instructions may contain any
+instruction allowed in the current context. If it is used inside a
+list it must respect the constraints of the list (List Issue, List
+Section, List Article, List Subtitle, List SearchResult).</P>
+<P CLASS="western">Constraints:</P>
+<P CLASS="western">None.</P>
+<H4 CLASS="western"><A NAME="3_9_3_23"></A>3.9.3.23 If Subtitle</H4>
+<P CLASS="western">Purpose:</P>
+<P CLASS="western">Depending on the given condition, it runs the
+first or second list of instructions. It may be used anywhere in the
+template.</P>
+<P CLASS="western">Syntax:</P>
+<P CLASS="western"><FONT FACE="Courier New, Courier, mono">If [not]
+Subtitle &lt;condition&gt;<BR>&lt;list_of_instructions&gt;<BR>[Else
+[&lt;list_of_instructions&gt;]]<BR>EndIf [Search]</FONT></P>
+<P CLASS="western" STYLE="font-weight: medium; page-break-before: auto">
+where</P>
+<P CLASS="western" STYLE="margin-top: 0cm"><FONT FACE="Courier, monospace">&lt;condition&gt;
+= <FONT FACE="Courier New, Courier, mono">number </FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;integer_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
+</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;integer_value&gt;</FONT></A></FONT></P>
+<UL>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">number: the if
+	condition is true if operation: <FONT FACE="Courier New, Courier, mono">number
+	</FONT><A HREF="#operators"><FONT FACE="Courier New, Courier, mono">&lt;integer_operator&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
+	</FONT><A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;integer_value&gt;</FONT></A>
+	is true</P>
+</UL>
+<P CLASS="western" STYLE="margin-top: 0cm"><BR>
+</P>
+<P CLASS="western">The list of instructions may contain any
+instruction allowed in the current context. If it is used inside a
+list it must respect the constraints of the list (List Issue, List
+Section, List Article, List Subtitle, List SearchResult).</P>
+<P CLASS="western">Constraints:</P>
+<P CLASS="western">None.</P>
+<H3 CLASS="western"><A NAME="3_9_4"></A>3.9.4 Printable information</H3>
+<H4 CLASS="western"><A NAME="3_9_4_1"></A>3.9.4.1 URL, Form</H4>
 <P CLASS="western">Purpose:</P>
 <P CLASS="western">URLParameters prints the runtime environment
 parameters in URL format. It prints only data context parameters and
@@ -3509,7 +3666,7 @@ representing a valid number of article image</P>
 	one subtitle.</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">fromstart: prints the
 	parameters received at the start of template, not the current ones
-	(useful when building sitemaps)</P>
+	(useful when building <SPAN LANG="en-US">site maps</SPAN>)</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">reset_issue_list:
 	reset list counters for all the lists (issue, section, article,
 	searchresult, subtitle)</P>
@@ -3545,7 +3702,7 @@ data context will be printed.</P>
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">IdPublication=2&amp;NrIssue=3&amp;NrSection=6&amp;NrArticle&amp;NrImage=4</FONT></P>
 <P CLASS="western">Constraints:</P>
 <P CLASS="western">None.</P>
-<H4 CLASS="western"><A NAME="3.9.4.2"></A>3.9.4.2 Print</H4>
+<H4 CLASS="western"><A NAME="3_9_4_2"></A>3.9.4.2 Print</H4>
 <P CLASS="western">Purpose:</P>
 <P CLASS="western">Print the selected information.</P>
 <P CLASS="western">Syntax:</P>
@@ -3572,6 +3729,8 @@ data context will be printed.</P>
 			</FONT><A HREF="#p_login_expr"><FONT FACE="Courier New, Courier, mono">&lt;login_expression&gt;</FONT></A><FONT FACE="Courier New, Courier, mono">
 			<BR>| </FONT><A HREF="#p_user_expr"><FONT FACE="Courier New, Courier, mono">&lt;user_expression&gt;</FONT></A><FONT FACE="Courier New, Courier, mono"><BR>|
 			</FONT><A HREF="#p_subt_expr"><FONT FACE="Courier New, Courier, mono">&lt;subtitle_expression&gt;</FONT></A></P>
+			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">|
+			</FONT><A HREF="#p_search_expr"><FONT FACE="Courier New, Courier, mono">&lt;search_expression&gt;</FONT></A></P>
 		</TD>
 	</TR>
 </TABLE>
@@ -3589,7 +3748,7 @@ Language name |number |englname |code |codepage</FONT></P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">codepage: page code
 	corresponding to the language</P>
 </UL>
-<P CLASS="western">For details on language see <A HREF="#2.1.1">languages</A>.</P>
+<P CLASS="western">For details on language see <A HREF="#2_1_1">languages</A>.</P>
 <P CLASS="western"><A NAME="p_pub_expr"></A><FONT FACE="Courier, monospace">&lt;publication_expression&gt;
 = Publication name |identifier |site</FONT></P>
 <UL>
@@ -3598,9 +3757,9 @@ Language name |number |englname |code |codepage</FONT></P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">identifier:
 	publication identifier in the CAMPSITE database</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">site: publication
-	site (see also <A HREF="#2.2.1">Creating a new publication</A>)</P>
+	site (see also <A HREF="#2_2_1">Creating a new publication</A>)</P>
 </UL>
-<P CLASS="western">For details on publication see <A HREF="#2.2.1">Creating
+<P CLASS="western">For details on publication see <A HREF="#2_2_1">Creating
 a new publication</A>.</P>
 <P CLASS="western"><A NAME="p_issue_expr"></A><FONT FACE="Courier New">&lt;</FONT><FONT FACE="Courier, monospace">issue_expression&gt;
 = Issue name |number |&lt;date_attribute&gt; |date &lt;date_format&gt;
@@ -3617,7 +3776,7 @@ a new publication</A>.</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">template: print the
 	full path of the issue template file</P>
 </UL>
-<P CLASS="western">For details on issue see <A HREF="#2.2.2">Creating
+<P CLASS="western">For details on issue see <A HREF="#2_2_2">Creating
 a new issue</A>.</P>
 <P CLASS="western"><A NAME="p_sect_expr"></A><FONT FACE="Courier, monospace">&lt;section_expression&gt;
 = Section name |number</FONT></P>
@@ -3626,7 +3785,7 @@ a new issue</A>.</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">number: section
 	identifier in the CAMPSITE database</P>
 </UL>
-<P CLASS="western">For details on section see <A HREF="#2.2.3">Add
+<P CLASS="western">For details on section see <A HREF="#2_2_3">Add
 new sections to an issue</A> 
 </P><A NAME="p_art_expr"></A>
 <TABLE WIDTH=703 BORDER=0 CELLPADDING=2 CELLSPACING=0>
@@ -3653,7 +3812,7 @@ new sections to an issue</A>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">keywords: article
 	keywords</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">type: article type
-	(see <A HREF="#2.2.4">details</A>)</P>
+	(see <A HREF="#2_2_4">details</A>)</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">&lt;date_attribute&gt;:
 	print an article upload date field (year, month, day etc.); see
 	<A HREF="#date_attribute">details</A></P>
@@ -3662,14 +3821,14 @@ new sections to an issue</A>
 	format; see <A HREF="#date_format">details</A></P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">[&lt;article_type&gt;]
 	&lt;article_type_attribute&gt; [&lt;date_format&gt;]: print an
-	article field specific to a certain article type (see <A HREF="#2.2.4">Defining
+	article field specific to a certain article type (see <A HREF="#2_2_4">Defining
 	article types</A>); if the field type is date a date format may be
 	specified; see <A HREF="#date_format">date format details</A></P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">template: print the
 	full path of the article template file</P>
 </UL>
-<P CLASS="western">For details on article see <A HREF="#2.2.5">Creating
-articles within a section</A> and <A HREF="#2.2.6">Editing articles:
+<P CLASS="western">For details on article see <A HREF="#2_2_5">Creating
+articles within a section</A> and <A HREF="#2_2_6">Editing articles:
 Edit Article Details view.</A></P><A NAME="p_img_expr"></A>
 <TABLE WIDTH=798 BORDER=0 CELLPADDING=2 CELLSPACING=0>
 	<COL WIDTH=274>
@@ -3681,15 +3840,22 @@ Edit Article Details view.</A></P><A NAME="p_img_expr"></A>
 		</TD>
 		<TD WIDTH=516>
 			<P CLASS="western"><FONT FACE="Courier, monospace"><FONT SIZE=2 STYLE="font-size: 11pt"><FONT FACE="Courier New, Courier, mono">[&lt;image_number&gt;]
-			</FONT>photographer |place |description |&lt;date_attribute&gt;
-			|date [&lt;date_format&gt;]</FONT></FONT></P>
+			</FONT>photographer</FONT></FONT></P>
+			<P CLASS="western"><FONT FACE="Courier, monospace"><FONT SIZE=2 STYLE="font-size: 11pt">|<FONT FACE="Courier New, Courier, mono">[&lt;image_number&gt;]
+			</FONT>place</FONT></FONT></P>
+			<P CLASS="western"><FONT FACE="Courier, monospace"><FONT SIZE=2 STYLE="font-size: 11pt">|<FONT FACE="Courier New, Courier, mono">[&lt;image_number&gt;]
+			</FONT>description</FONT></FONT></P>
+			<P CLASS="western"><FONT FACE="Courier, monospace"><FONT SIZE=2 STYLE="font-size: 11pt">|<FONT FACE="Courier New, Courier, mono">[&lt;image_number&gt;]
+			</FONT>&lt;date_attribute&gt;</FONT></FONT></P>
+			<P CLASS="western"><FONT FACE="Courier, monospace"><FONT SIZE=2 STYLE="font-size: 11pt">|<FONT FACE="Courier New, Courier, mono">[&lt;image_number&gt;]
+			</FONT>date [&lt;date_format&gt;]</FONT></FONT></P>
 		</TD>
 	</TR>
 </TABLE>
 <P CLASS="western" STYLE="margin-top: 0cm"><FONT FACE="Nimbus Roman No9 L">&lt;image_number&gt;
 is</FONT> an <A HREF="#attr_types"><FONT FACE="Courier New, Courier, mono">&lt;integer_value&gt;</FONT></A>
 representing a valid number of the article image; a default image
-number (1) is used if &lt;image_number&gt; was ommited.</P>
+number (1) is used if &lt;image_number&gt; was omitted.</P>
 <UL>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">photographer, place,
 	description are fields describing the image</P>
@@ -3705,11 +3871,11 @@ number (1) is used if &lt;image_number&gt; was ommited.</P>
 	column is not specified in list statement or has value 1 row takes
 	the value of the element number in the list</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">column: list column;
-	if column is not specified in list statement it will have a vallue
-	of 1 for every list element</P>
+	if column is not specified in list statement it will have a<SPAN LANG="en-US">
+	value </SPAN>of 1 for every list element</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">index: element number
 	in the list; if list length is specified index will take the value
-	of list_length * number_of_steps_from_list_start * elment_number
+	of list_length * number_of_steps_from_list_start * <SPAN LANG="en-US">element</SPAN>_number
 	where</P>
 	<UL>
 		<LI><P CLASS="western" STYLE="margin-top: 0cm">list_length is the
@@ -3717,11 +3883,11 @@ number (1) is used if &lt;image_number&gt; was ommited.</P>
 		<LI><P CLASS="western" STYLE="margin-top: 0cm">number_of_steps_from_list_start
 		is how many steps the list start moved from the &quot;whole list&quot;
 		start</P>
-		<LI><P CLASS="western" STYLE="margin-top: 0cm">elment_number is the
-		number of the element in the current list</P>
+		<LI><P CLASS="western" STYLE="margin-top: 0cm"><SPAN LANG="en-US">element</SPAN>_number
+		is the number of the element in the current list</P>
 	</UL>
 </UL>
-<P CLASS="western">For details on list see <A HREF="#3.9.3.8">If List</A></P><A NAME="p_subs_expr"></A>
+<P CLASS="western">For details on list see <A HREF="#3_9_3_8">If List</A></P><A NAME="p_subs_expr"></A>
 <TABLE WIDTH=703 BORDER=0 CELLPADDING=2 CELLSPACING=0>
 	<COL WIDTH=365>
 	<COL WIDTH=330>
@@ -3743,16 +3909,16 @@ number (1) is used if &lt;image_number&gt; was ommited.</P>
 	describing the publication subscription</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">error: if
 	subscription action took place (after submitting a subscription
-	form) it prints the error message (if there was an errror)</P>
+	form) it prints the error message (if there was an <SPAN LANG="en-US">error</SPAN>)</P>
 </UL>
-<P CLASS="western">For details on subscription see <A HREF="#2.4.">CONFIGURING
+<P CLASS="western">For details on subscription see <A HREF="#2_5">CONFIGURING
 THE SUBSCRIPTION MODULE</A></P>
 <P CLASS="western"><A NAME="p_login_expr"></A><FONT FACE="Courier, monospace">&lt;login_expression&gt;
 = Login error</FONT></P>
 <UL>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">error: if login
 	action took place (after submitting a login form) it prints the
-	error message (if there was an errror)</P>
+	error message (if there was an <SPAN LANG="en-US">error</SPAN>)</P>
 </UL><A NAME="p_user_expr"></A>
 <TABLE WIDTH=703 BORDER=0 CELLPADDING=2 CELLSPACING=0>
 	<COL WIDTH=226>
@@ -3773,23 +3939,37 @@ THE SUBSCRIPTION MODULE</A></P>
 </TABLE>
 <P CLASS="western" STYLE="margin-top: 0cm">adderror: if user add
 action took place (after submitting a user subscription form) it
-prints the error message (if there was an errror)</P>
+prints the error message (if there was an <SPAN LANG="en-US">error</SPAN>)</P>
 <UL>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm">modifyerror: if user
-	modify action took place (after submitting a user info form) it
-	prints the error message (if there was an errror)</P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm">the other parameters
-	(name, uname, email, city...) are fields describing the user
-	information; they are self-explaining; Field1-Field5, Text1-Text3
-	are extra fields for storing some extra information; the publication
-	administrator sets their meaning</P>
+	<UL>
+		<LI><P CLASS="western" STYLE="margin-top: 0cm">modifyerror: if user
+		modify action took place (after submitting a user info form) it
+		prints the error message (if there was an <SPAN LANG="en-US">error</SPAN>)</P>
+		<LI><P CLASS="western" STYLE="margin-top: 0cm">the other parameters
+		(name, uname, email, city...) are fields describing the user
+		information; they are self-explaining; Field1-Field5, Text1-Text3
+		are extra fields for storing some extra information; the
+		publication administrator sets their meaning</P>
+	</UL>
 </UL>
 <P CLASS="western"><A NAME="p_subt_expr"></A><FONT FACE="Courier, monospace">&lt;subtitle_expression&gt;
 = Subtitle name</FONT></P>
 <UL>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm">name: print subtitle
-	name (see also <A HREF="#2.2.7">Editing body-type fields: Working
-	with CAMPFIRE</A>)</P>
+	<UL>
+		<LI><P CLASS="western" STYLE="margin-top: 0cm">name: print subtitle
+		name (see also <A HREF="#2_2_7">Editing body-type fields: Working
+		with CAMPFIRE</A>)</P>
+	</UL>
+</UL>
+<P CLASS="western"><A NAME="p_search_expr"></A><FONT FACE="Courier, monospace">&lt;search_expression&gt;
+= Search error | keywords</FONT></P>
+<UL>
+	<UL>
+		<LI><P CLASS="western" STYLE="margin-top: 0cm">error: print error
+		message if the search action generated an error</P>
+		<LI><P CLASS="western" STYLE="margin-top: 0cm">keywords: print the
+		keywords the user inputted</P>
+	</UL>
 </UL>
 <P CLASS="western">Constraints:</P>
 <UL>
@@ -3798,7 +3978,7 @@ prints the error message (if there was an errror)</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">Print Login can be
 	used only outside Login-EndLogin statement.</P>
 </UL>
-<H4 CLASS="western"><A NAME="3.9.4.3"></A>3.9.4.3 Date</H4>
+<H4 CLASS="western"><A NAME="3_9_4_3"></A>3.9.4.3 Date</H4>
 <P CLASS="western">Purpose:</P>
 <P CLASS="western">Prints the current date according to format or
 only a date attribute.</P>
@@ -3882,16 +4062,19 @@ characters have special meaning:</P>
 </UL>
 <P CLASS="western">Constraints:</P>
 <P CLASS="western">None.</P>
-<H4 CLASS="western"><A NAME="3.9.4.4"></A>3.9.4.4 Subscription</H4>
+<H4 CLASS="western"><A NAME="3_9_4_4"></A>3.9.4.4 Subscription</H4>
 <P CLASS="western">Purpose:</P>
 <P CLASS="western">Generate the form and default data fields for
 subscription. Inside this can be used Edit and Select statements to
 generate fields for every section on issue.</P>
 <P CLASS="western">Syntax:</P>
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">Subscription
-&lt;template_name&gt; &lt;button_name&gt; [&lt;total_field_name&gt;
+&lt;subscription_type&gt; &lt;template_name&gt; &lt;button_name&gt;
+[&lt;total_field_name&gt;
 &lt;evaluate_button_name&gt;]<BR>&lt;list_of_instructions&gt;<BR>EndSubscription</FONT></P>
 <UL>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm">&lt;subscription_type&gt;
+	has two values: &ldquo;by_publication&rdquo; and &ldquo;by_section&rdquo;</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">&lt;template_name&gt;
 	is the name of the next template to be requested from subscription
 	form. 
@@ -3911,7 +4094,7 @@ generate fields for every section on issue.</P>
 <P CLASS="western">Cannot be used inside User-EndUser, Login-EndLogin
 statements. Can not be used within itself (ex.: subscription in
 subscription).</P>
-<H4 CLASS="western"><A NAME="3.9.4.5"></A>3.9.4.5 User</H4>
+<H4 CLASS="western"><A NAME="3_9_4_5"></A>3.9.4.5 User</H4>
 <P CLASS="western">Purpose:</P>
 <P CLASS="western">Generate the form and data fields for adding new
 user;</P>
@@ -3930,7 +4113,7 @@ user;</P>
 <P CLASS="western">Can not be used inside
 Subscription-EndSubscription, Login-EndLogin statements. Can not be
 used within itself (ex.: user in user).</P>
-<H4 CLASS="western"><A NAME="3.9.4.6"></A>3.9.4.6 Login</H4>
+<H4 CLASS="western"><A NAME="3_9_4_6"></A>3.9.4.6 Login</H4>
 <P CLASS="western">Purpose:</P>
 <P CLASS="western">Generate the form and data fields for logging in a
 user.</P>
@@ -3949,7 +4132,7 @@ user.</P>
 <P CLASS="western">Can not be used inside
 Subscription-EndSubscription, User-EndUser statements. Cannot be used
 within itself (e.g. login in login).</P>
-<H4 CLASS="western"><A NAME="3.9.4.7"></A>3.9.4.7 Search</H4>
+<H4 CLASS="western"><A NAME="3_9_4_7"></A>3.9.4.7 Search</H4>
 <P CLASS="western">Purpose:</P>
 <P CLASS="western">Generate the search form and data fields.</P>
 <P CLASS="western">Syntax:</P>
@@ -3971,7 +4154,7 @@ List Section, List Article).</P>
 <P CLASS="western">Constraints:</P>
 <P CLASS="western">Can not be used within itself (e.g. search in
 search).</P>
-<H4 CLASS="western"><A NAME="3.9.4.8"></A>3.9.4.8 Edit</H4>
+<H4 CLASS="western"><A NAME="3_9_4_8"></A>3.9.4.8 Edit</H4>
 <P CLASS="western">Purpose:</P>
 <P CLASS="western">Generate the input text fields for subscription,
 user add/modify, login or search forms.</P>
@@ -4035,10 +4218,11 @@ keywords.</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">Edit Search can be
 	used inside Search-EndSearch statement only.</P>
 </UL>
-<H4 CLASS="western"><A NAME="3.9.4.9"></A>3.9.4.9 Select</H4>
+<H4 CLASS="western"><A NAME="3_9_4_9"></A>3.9.4.9 Select</H4>
 <P CLASS="western">Purpose:</P>
 <P CLASS="western">Generate input data pop-up list, list, radio
-button or checkbox for subscription, user or search forms.</P>
+button or<SPAN LANG="en-US"> check box </SPAN>for subscription, user
+or search forms.</P>
 <P CLASS="western">Syntax:</P>
 <TABLE WIDTH=338 BORDER=0 CELLPADDING=2 CELLSPACING=0>
 	<COL WIDTH=74>
@@ -4050,6 +4234,7 @@ button or checkbox for subscription, user or search forms.</P>
 		</TD>
 		<TD WIDTH=256>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;subscription_expression&gt;<BR>|&lt;user_expression&gt;<BR>|&lt;search_expression&gt;</FONT></P>
+			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">|&lt;login_expression&gt;</FONT></P>
 		</TD>
 	</TR>
 </TABLE>
@@ -4058,16 +4243,16 @@ button or checkbox for subscription, user or search forms.</P>
 <P CLASS="western">Generates a multiple select list for selecting
 sections in subscription form.</P>
 <TABLE WIDTH=703 BORDER=0 CELLPADDING=2 CELLSPACING=0>
-	<COL WIDTH=221>
-	<COL WIDTH=474>
+	<COL WIDTH=248>
+	<COL WIDTH=446>
 	<TR>
-		<TD WIDTH=221 VALIGN=TOP>
-			<P CLASS="western"><FONT FACE="Courier New, Courier, mono"><FONT SIZE=2 STYLE="font-size: 11pt">&lt;user_expression&gt;
-			= User </FONT></FONT>
+		<TD WIDTH=248 VALIGN=TOP>
+			<P CLASS="western"><FONT FACE="Courier New, Courier, mono"><FONT SIZE=2 STYLE="font-size: 11pt"><FONT SIZE=3>&lt;user_expression&gt;
+			= User</FONT> </FONT></FONT>
 			</P>
 		</TD>
-		<TD WIDTH=474>
-			<P CLASS="western"><FONT FACE="Courier New, Courier, mono"><FONT SIZE=2 STYLE="font-size: 11pt">country
+		<TD WIDTH=446>
+			<P CLASS="western"><FONT FACE="Courier New, Courier, mono"><FONT SIZE=3>country
 			|title |gender |age |employertype |pref1 |pref2 |pref3 |pref4</FONT></FONT></P>
 		</TD>
 	</TR>
@@ -4079,8 +4264,13 @@ publication administrator sets their meaning. Generates pop-up list
 or radio-button for selecting values for the above fields.</P>
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;search_expression&gt;
 = Search mode |level</FONT></P>
-<P CLASS="western">Generates a checkbox for selecting the search mode
-(match one or all keywords).</P>
+<P CLASS="western">Generates a<SPAN LANG="en-US"> check box </SPAN>for
+selecting the search mode (match at lease one or all keywords).</P>
+<P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;login_expression&gt;
+= Login RememberUser</FONT></P>
+<P CLASS="western">Generates a<SPAN LANG="en-US"> check box; if
+checked the user session will be permanently remembered so the user
+will not have to login again</SPAN>.</P>
 <P CLASS="western">Constraints:</P>
 <UL>
 	<LI><P CLASS="western" STYLE="margin-top: 0cm">Select Subscription
@@ -4091,119 +4281,123 @@ or radio-button for selecting values for the above fields.</P>
 	used inside Search-EndSearch statement only.</P>
 </UL>
 <HR SIZE=1 NOSHADE>
-<H1 CLASS="western"><A NAME="4."></A>4. APENDIX I - ALPHABETIC LIST
-OF LANGUAGE STATEMENTS</H1>
+<H1 CLASS="western"><A NAME="4"></A>4. APENDIX I - ALPHABETIC LIST OF
+LANGUAGE STATEMENTS</H1>
 <UL>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.2.5">Article
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_2_5">Article
 	(3.9.2.5)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.3">Date
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_4_3">Date
 	(3.9.4.3)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.8">Edit
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_4_8">Edit
 	Login (3.9.4.8)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.8">Edit
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_4_8">Edit
 	Search (3.9.4.8)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.8">Edit
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_4_8">Edit
 	Subscription (3.9.4.8)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.8">Edit
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_4_8">Edit
 	User (3.9.4.8)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.1">Form
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_4_1">Form
 	(3.9.4.1)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.3.14">If
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_3_14">If
 	Allowed (3.9.3.14)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.3.13">If
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_3_13">If
 	Article (3.9.3.13)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.3.18">If
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_3_18">If
 	CurrentSubtitle (3.9.3.18)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.3.19">If
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_3_19">If
 	Image (3.9.3.19)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.3.11">If
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_3_11">If
 	Issue (3.9.3.11)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.3.20">If
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_3_20">If
 	Language (3.9.3.20)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.3.8">If
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_3_8">If
 	List (3.9.3.8)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.3.16">If
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_3_16">If
 	Login (3.9.3.16)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.3.6">If
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_3_6">If
 	NextItems (3.9.3.6)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.3.7">If
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_3_7">If
 	NextSubtitles (3.9.3.7)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.3.6">If
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_3_6">If
 	PreviousItems (3.9.3.6)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.3.7">If
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_3_7">If
 	PrevSubtitles (3.9.3.7)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.3.10">If
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_3_10">If
 	Publication (3.9.3.10)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.3.12">If
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_3_22">If
+	Search (3.9.3.22)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_3_12">If
 	Section (3.9.3.12)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.3.15">If
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_3_15">If
 	Subscription (3.9.3.15)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.3.17">If
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_3_23">If
+	Subtitle (3.9.3.23)</A></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_3_17">If
 	User (3.9.3.17)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.3.9">Include
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_3_9">Include
 	(3.9.3.9)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.2.3">Issue
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_2_3">Issue
 	(3.9.2.3)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.2.1">Language
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_2_1">Language
 	(3.9.2.1)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.3.3">List
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_3_3">List
 	Article (3.9.3.3)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.3.1">List
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_3_1">List
 	Issue (3.9.3.1)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.3.5">List
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_3_5">List
 	SearchResult (3.9.3.5)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.3.2">List
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_3_2">List
 	Section (3.9.3.2)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.3.4">List
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_3_4">List
 	Subtitle (3.9.3.4)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.2.6">Local
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_2_6">Local
 	(3.9.2.6)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.6">Login
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_4_6">Login
 	(3.9.4.6)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.2">Print
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_4_2">Print
 	Article (3.9.4.2)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.2">Print
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_4_2">Print
 	Image (3.9.4.2)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.2">Print
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_4_2">Print
 	Issue (3.9.4.2)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.2">Print
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_4_2">Print
 	Language (3.9.4.2)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.2">Print
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_4_2">Print
 	List (3.9.4.2)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.2">Print
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_4_2">Print
 	Login (3.9.4.2)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.2">Print
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_4_2">Print
 	Publication (3.9.4.2)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.2">Print
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_4_2">Print
 	Section (3.9.4.2)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.2">Print
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_4_2">Print
 	Subscription (3.9.4.2)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.2">Print
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_4_2">Print
 	Subtitle (3.9.4.2)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.2">Print
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_4_2">Print
 	User (3.9.4.2)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.2.2">Publication
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_2_2">Publication
 	(3.9.2.2)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.7">Search
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_4_7">Search
 	(3.9.4.7)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.2.4">Section
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_2_4">Section
 	(3.9.2.4)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.9">Select
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_4_9">Select
 	Search (3.9.4.9)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.9">Select
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_4_9">Select
 	Subscription (3.9.4.9)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.9">Select
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_4_9">Select
 	User (3.9.4.9)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.4">Subscription
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_4_4">Subscription
 	(3.9.4.4)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.1">URLParameters
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_4_1">URLParameters
 	(3.9.4.1)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.4.5">User
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_4_5">User
 	(3.9.4.5)</A></P>
-	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3.9.3.21">With
+	<LI><P CLASS="western" STYLE="margin-top: 0cm"><A HREF="#3_9_3_21">With
 	(3.9.3.21)</A></P>
 </UL>
-<H1 CLASS="western"><A NAME="5."></A>5. APPENDIX II - CHARACTER SETS
+<H1 CLASS="western"><A NAME="5"></A>5. APPENDIX II - CHARACTER SETS
 AND LANGUAGES</H1>
 <P CLASS="western">Covering non-ASCII character sets requires
 standards to make such special characters cross-platform compatible.
@@ -4249,7 +4443,7 @@ Africa. The most notable exceptions are Zulu (zu) and other Bantu
 languages using Latin Extended-B letters, and of course Arabic in
 North Africa, and Guarani (gn) missing GEIUY with ~ tilde. The lack
 of the ligatures Dutch IJ, French OE and ,,German` quotation marks is
-considered tolerable. The lack of the new C=-resembling Euro currency
+considered tolerable. The lack of the new resembling Euro currency
 symbol U+20AC has opened the discussion of a new Latin0.</P>
 <P CLASS="western">Latin1 has also been adopted as the first page of
 ISO 10646 (Unicode).</P>
@@ -4296,8 +4490,8 @@ added the last missing Inuit (Greenlandic Eskimo) and non-Skolt Sami
 to cover the entire Nordic area. Skolt Sami still needs a few more
 accents. Note that RFC 1345 and GNU recode contain errors and use a
 preliminary and different latin6.</P>
-<H1 CLASS="western">6. APPENDIX IV: INSTALLING CAMPSITE ON A STANDARD
-RED HAT 7.0 SERVER</H1>
+<H1 CLASS="western"><A NAME="6"></A>6. APPENDIX IV: INSTALLING
+CAMPSITE ON A STANDARD RED HAT 7.0 SERVER</H1>
 <P CLASS="western">The following is a possible session, which would
 install CAMPSITE on your remote host. All text in square brackets is
 comment only, not to be typed.</P>
@@ -4326,7 +4520,8 @@ return some lines with pid numbers for the httpd. If not, start httpd
 manually (see above)]<BR>yourserver# exit<BR>yourserver# cd
 campsite<BR>yourserver# install<BR>yourserver# exit<BR>[that's
 all...]</FONT></P>
-<H1 CLASS="western">7. APPENDIX V - BACKING UP DATABASES IN MYSQL</H1>
+<H1 CLASS="western"><A NAME="7"></A>7. APPENDIX V - BACKING UP
+DATABASES IN MYSQL</H1>
 <P CLASS="western">In order to make a backup of your CAMPSITE
 database, do the following:</P>
 <OL>

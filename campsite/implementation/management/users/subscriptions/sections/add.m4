@@ -75,8 +75,8 @@ B_DIALOG(<*Add new subscription*>, <*POST*>, <*do_add.php*>)
 		<INPUT TYPE="HIDDEN" NAME="User" VALUE="<? p($User); ?>">
 		<INPUT TYPE="HIDDEN" NAME="Subs" VALUE="<? p($Subs); ?>">
 		<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<? p($Pub); ?>">
-		<INPUT TYPE="IMAGE" NAME="OK" SRC="X_ROOT/img/button/save.gif" BORDER="0">
-		<A HREF="X_ROOT/users/subscriptions/sections/?Pub=<? p($Pub); ?>&User=<? p($User); ?>&Subs=<? p($Subs); ?>"><IMG SRC="X_ROOT/img/button/cancel.gif" BORDER="0" ALT="Cancel"></A>
+		SUBMIT(<*Save*>, <*Save changes*>)
+		REDIRECT(<*Cancel*>, <*Cancel*>, <*X_ROOT/users/subscriptions/sections/?Pub=<? p($Pub); ?>&User=<? p($User); ?>&Subs=<? p($Subs); ?>*>)
 	E_DIALOG_BUTTONS
 	<!--<tr><td colspan=2 width=250><? putGS('WARNING: If you subscribe to all sections, the periods for previously added sections will be overriden!'); ?></td></tr>-->
 E_DIALOG

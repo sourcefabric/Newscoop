@@ -63,13 +63,13 @@ typedef struct CGIParams
 
 	~CGIParams()
 	{
-		delete m_pchDocumentRoot;
-		delete m_pchIP;
-		delete m_pchPathTranslated;
-		delete m_pchPathInfo;
-		delete m_pchRequestMethod;
-		delete m_pchQueryString;
-		delete m_pchHttpCookie;
+		delete []m_pchDocumentRoot;
+		delete []m_pchIP;
+		delete []m_pchPathTranslated;
+		delete []m_pchPathInfo;
+		delete []m_pchRequestMethod;
+		delete []m_pchQueryString;
+		delete []m_pchHttpCookie;
 	}
 } CGIParams;
 

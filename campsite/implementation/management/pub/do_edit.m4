@@ -97,9 +97,9 @@ X_AUDIT(<*3*>, <*getGS('Publication $1 changed',$cName)*>)
 		*>)
 	B_MSGBOX_BUTTONS
 <? if ($correct && $created) { ?>dnl
-		<A HREF="X_ROOT/pub/"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/pub/*>)
 <? } else { ?>
-		<A HREF="X_ROOT/pub/edit.php?Pub=<? pencURL($Pub); ?>"><IMG SRC="X_ROOT/img/button/ok.gif" BORDER="0" ALT="OK"></A>
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/pub/edit.php?Pub=<? pencURL($Pub); ?>*>)
 <? } ?>dnl
 	E_MSGBOX_BUTTONS
 E_MSGBOX

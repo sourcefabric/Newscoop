@@ -155,8 +155,8 @@ B_DIALOG(<*Edit user account permissions*>, <*POST*>, <*do_access.php*>)
 	E_DIALOG_PACKEDINPUT
 	B_DIALOG_BUTTONS
 		<INPUT TYPE="HIDDEN" NAME="User" VALUE="<? pencHTML($User); ?>">
-		<A HREF="javascript:void(do_submit())"><IMG SRC="X_ROOT/img/button/save.gif" BORDER="0" ALT="OK"></A>
-		<A HREF="X_ROOT/users/"><IMG SRC="X_ROOT/img/button/cancel.gif" BORDER="0"></A>
+		SUBMIT(<*Save*>, <*Save changes*>)
+		REDIRECT(<*Cancel*>, <*Cancel*>, <*X_ROOT/users/*>)
 	E_DIALOG_BUTTONS
 E_DIALOG
 <P>

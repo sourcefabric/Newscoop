@@ -70,9 +70,9 @@ B_MSGBOX(<*Changing topic name*>)
 *>)
 	B_MSGBOX_BUTTONS
 <? if ($correct && $created) { ?>dnl
-		<A HREF="X_ROOT/topics/index.php?IdCateg=<?p($IdCateg);?>"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/topics/index.php?IdCateg=<?p($IdCateg);?>*>)
 <? } else { ?>
-		<A HREF="X_ROOT/topics/edit.php?IdCateg=<? p($IdCateg); ?>&EdCateg=<? p($EdCateg); ?>"><IMG SRC="X_ROOT/img/button/ok.gif" BORDER="0" ALT="OK"></A>
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/topics/edit.php?IdCateg=<? p($IdCateg); ?>&EdCateg=<? p($EdCateg); ?>*>)
 <? } ?>dnl
 	E_MSGBOX_BUTTONS
 E_MSGBOX

@@ -37,8 +37,8 @@ B_DIALOG(<*Change your password*>, <*POST*>, <*do_chpwd.php*>)
 		<INPUT TYPE="PASSWORD" NAME="cNewPass2" SIZE="32" MAXLENGTH="32">
 	E_DIALOG_INPUT
 	B_DIALOG_BUTTONS
-		<INPUT TYPE="IMAGE" NAME="OK" SRC="X_ROOT/img/button/save.gif" BORDER="0">
-		<A HREF="X_ROOT/home.php"><IMG SRC="X_ROOT/img/button/cancel.gif" BORDER="0" ALT="Cancel"></A>
+		SUBMIT(<*Save*>, <*Save changes*>)
+		REDIRECT(<*Cancel*>, <*Cancel*>, <*X_ROOT/home.php*>)
 	E_DIALOG_BUTTONS
 E_DIALOG
 <P>

@@ -487,6 +487,8 @@ string CParser::SelectStatements(int sublevel)
 		s_str += (s_str == "" ? string("") : string(", ")) + ST_USER;
 	if ((sublevel & SUBLV_SEARCH) == 0)
 		s_str += (s_str == "" ? string("") : string(", ")) + ST_SEARCH;
+	if ((sublevel & SUBLV_LOGIN) == 0)
+		s_str += (s_str == "" ? string("") : string(", ")) + ST_LOGIN;
 	return s_str;
 }
 
@@ -635,24 +637,27 @@ inline int CParser::HInclude(CActionList& al)
 		FatalPError(parse_err, PERR_INCLUDE_CICLE, MODE_PARSE, "", lex.prevLine(), lex.prevColumn());
 	child_tpl.insert(itpl_name);
 	CParser* p;
-	if ((p = m_coPMap.find(itpl_name)) == NULL)
-		p = new CParser(itpl_name);
+	int nErrCode = 0;
 	try
 	{
+		if ((p = m_coPMap.find(itpl_name)) == NULL)
+			p = new CParser(itpl_name);
 		p->parent_tpl.insert(parent_tpl.begin(), parent_tpl.end());
 		p->parse();
 	}
 	catch (ExStat& rcoEx)
 	{
-		return rcoEx.ErrNr();
+		nErrCode = rcoEx.ErrNr();
+		SetPError(parse_err, PERR_INVALID_TEMPLATE, MODE_PARSE, "", lex.prevLine(), lex.prevColumn());
 	}
 	catch (ExMutex& rcoEx)
 	{
-		return ERR_NOACCESS;
+		nErrCode = ERR_NOACCESS;
+		SetPError(parse_err, PERR_INVALID_TEMPLATE, MODE_PARSE, "", lex.prevLine(), lex.prevColumn());
 	}
 	al.insert(al.end(), new CActInclude(itpl_name, &m_coPMap));
 	WaitForStatementEnd(true);
-	return 0;
+	return nErrCode;
 }
 
 // HPublication: parse publication statement; add CActPublication action to actions list (al)
@@ -1329,9 +1334,12 @@ inline int CParser::HIf(CActionList& al, int lv, int sublv)
 		RequireAtom(l);
 		attr = st->findAttr(l->atom()->identifier(), CMS_CT_IF);
 		RequireAtom(l);
+		ValidateOperator(l, attr);
+		string op = l->atom()->identifier();
+		RequireAtom(l);
 		ValidateDType(l, attr);
 		param = CParameter(attr->identifier(), "",
-		                   attr->compOperation(g_coEQUAL, l->atom()->identifier()));
+		                   attr->compOperation(op, l->atom()->identifier()));
 	}
 	else if (st->id() == CMS_ST_LIST)
 	{
@@ -1704,6 +1712,12 @@ inline int CParser::HSelect(CActionList& al, int lv, int sublv)
 	else if (st->id() == CMS_ST_SEARCH)
 	{
 		if ((sublv & SUBLV_SEARCH) == 0)
+			FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE,
+			            SelectStatements(sublv), lex.prevLine(), lex.prevColumn());
+	}
+	else if (st->id() == CMS_ST_LOGIN)
+	{
+		if ((sublv & SUBLV_LOGIN) == 0)
 			FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE,
 			            SelectStatements(sublv), lex.prevLine(), lex.prevColumn());
 	}

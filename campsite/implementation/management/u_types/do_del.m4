@@ -38,9 +38,9 @@ X_AUDIT(<*122*>, <*getGS('User type $1 deleted',encHTML($UType))*>)
 <? } ?>
 	B_MSGBOX_BUTTONS
 <? if ($AFFECTED_ROWS > 0) { ?>
-		<A HREF="X_ROOT/u_types/"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/u_types/*>)
 <? } else { ?>
-		<A HREF="X_ROOT/u_types/"><IMG SRC="X_ROOT/img/button/ok.gif" BORDER="0" ALT="OK"></A>
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/u_types/*>)
 <? } ?>
 	E_MSGBOX_BUTTONS
 E_MSGBOX

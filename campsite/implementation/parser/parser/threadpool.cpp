@@ -33,6 +33,7 @@ Implementation of the classes defined in threadpool.h
 #include <unistd.h>
 #include <iostream>
 
+#include "auto_ptr.h"
 #include "threadpool.h"
 
 using std::cout;
@@ -226,8 +227,8 @@ inline void CThreadPool::UnlockMutex() const throw (ExThread)
 // Returns: pointer to void (always NULL)
 void* CThreadPool::ThreadRoutine(void* p_pThreadLocal)
 {
-	ThreadLocal* pThreadLocal = (ThreadLocal*)p_pThreadLocal;
-	if (pThreadLocal == 0
+	SafeAutoPtr<ThreadLocal> pThreadLocal((ThreadLocal*)p_pThreadLocal);
+	if (pThreadLocal.get() == 0
 	    || pThreadLocal->m_pcoThreadPool == 0
 	    || pThreadLocal->m_pcoThreadPool->m_pThreads == 0
 	    || pThreadLocal->m_pcoThreadPool->m_pStartRoutine == 0

@@ -61,12 +61,12 @@ B_DIALOG(<*Upload template*>, <*POST*>, <*do_upload_templ.php*>, <*multipart/for
 		<P><INPUT TYPE="FILE" NAME="File" SIZE="32" MAXLENGTH="128">
 	E_DIALOG_INPUT
 	B_DIALOG_BUTTONS
-		<INPUT TYPE="IMAGE" NAME="OK" SRC="X_ROOT/img/button/save.gif" BORDER="0">
+		SUBMIT(<*Save*>, <*Save changes*>)
 <? todef('Back');
     if ($Back != "") { ?>dnl
-		<A HREF="<? p($Back); ?>"><IMG SRC="X_ROOT/img/button/cancel.gif" BORDER="0" ALT="Cancel"></A>
+		REDIRECT(<*Cancel*>, <*Cancel*>, <*<? p($Back); ?>*>)
 <? } else { ?>dnl
-		 <A HREF="<? pencHTML(decS($Path)); ?>"><IMG SRC="X_ROOT/img/button/cancel.gif" BORDER="0" ALT="Cancel"></A>
+		REDIRECT(<*Cancel*>, <*Cancel*>, <*<? pencHTML(decS($Path)); ?>*>)
 <? } ?>dnl
 	E_DIALOG_BUTTONS
 E_DIALOG

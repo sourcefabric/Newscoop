@@ -64,9 +64,9 @@ B_MSGBOX(<*Changing subscription status*>)
 <? } ?>dnl
 	B_MSGBOX_BUTTONS
 <? if ($AFFECTED_ROWS > 0) { ?>dnl
-		<A HREF="X_ROOT/users/subscriptions/?User=<? p($User); ?>"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/users/subscriptions/?User=<? p($User); ?>*>)
 <? } else { ?>dnl
-		<A HREF="X_ROOT/users/subscriptions/?User=<? p($User); ?>"><IMG SRC="X_ROOT/img/button/ok.gif" BORDER="0" ALT="OK"></A>
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/users/subscriptions/?User=<? p($User); ?>*>)
 <? } ?>dnl
 	E_MSGBOX_BUTTONS
 E_MSGBOX

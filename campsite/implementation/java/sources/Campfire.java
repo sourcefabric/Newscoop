@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2000,2001 Media Development Loan Fund
  *
- * CAMPSITE is a Unicode-enabled multilingual web content                     
+ * CAMPSITE is a Unicode-enabled multilingual web content
  * management system for news publications.                                   
  * CAMPFIRE is a Unicode-enabled java-based near WYSIWYG text editor.         
  * Copyright (C)2000,2001  Media Development Loan Fund                        
@@ -784,7 +784,8 @@ public class Campfire extends JApplet{
 	public void regen(){
 
         HtmlParser localParser=new HtmlParser(textPane,this,contentString);
-        if (contentString!=null){
+
+	if (contentString!=null){
             //textPane.setEnabled(false);
             localParser.parseHtml();
             //textPane.setEnabled(true); 
@@ -800,7 +801,9 @@ public class Campfire extends JApplet{
         if (retParam!=null){
             retParam= new CampURLDecoder().decode(retParam);
             try{    
+//                retParam= new String( retParam.getBytes("UTF-8"), "UTF-8");
                 retParam= new String( retParam.getBytes("UTF-8"), "UTF-8");
+
     	   }catch(Exception e){}
         }
    	    return retParam;

@@ -74,14 +74,14 @@ B_MSGBOX(<*Delete article*>)
 		<INPUT TYPE="HIDDEN" NAME="Article" VALUE="<? p($Article); ?>">
 		<INPUT TYPE="HIDDEN" NAME="sLanguage" VALUE="<? p($sLanguage); ?>">
 		<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<? p($Language); ?>">
-		<INPUT TYPE="IMAGE" NAME="Yes" SRC="X_ROOT/img/button/yes.gif" BORDER="0">
+		SUBMIT(<*Yes*>, <*Yes*>)
 <?
     todef('Back');
 
     if ($Back != "") { ?>dnl
-		<A HREF="<? p($Back); ?>"><IMG SRC="X_ROOT/img/button/no.gif" BORDER="0" ALT="No"></A>
+		REDIRECT(<*No*>, <*No*>, <*<? p($Back); ?>*>)
 <? } else { ?>dnl
-		<A HREF="X_ROOT/pub/issues/sections/articles/edit.php?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>&Section=<? p($Section); ?>&Article=<? p($Article); ?>&sLanguage=<? p($sLanguage); ?>"><IMG SRC="X_ROOT/img/button/no.gif" BORDER="0" ALT="No"></A>
+		REDIRECT(<*No*>, <*No*>, <*<? p($Back); ?>X_ROOT/pub/issues/sections/articles/edit.php?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>&Section=<? p($Section); ?>&Article=<? p($Article); ?>&sLanguage=<? p($sLanguage); ?>*>)
 <? } ?>dnl
 		</FORM>
 	E_MSGBOX_BUTTONS

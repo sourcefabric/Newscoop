@@ -51,9 +51,9 @@ X_AUDIT(<*58*>, <*getGS('The IP address group $1 has been deleted.',getHVar($ig,
 <? } ?>
 	B_MSGBOX_BUTTONS
 <? if ($del) { ?>
-		<A HREF="X_ROOT/users/ipaccesslist.php?User=<? p($User); ?>"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/users/ipaccesslist.php?User=<? p($User); ?>*>)
 <? } else { ?>
-		<A HREF="X_ROOT/users/ipaccesslist.php?User=<? p($User); ?>"><IMG SRC="X_ROOT/img/button/ok.gif" BORDER="0" ALT="OK"></A>
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/users/ipaccesslist.php?User=<? p($User); ?>*>)
 <? } ?>
 	E_MSGBOX_BUTTONS
 E_MSGBOX

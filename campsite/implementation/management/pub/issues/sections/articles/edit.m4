@@ -27,7 +27,9 @@ B_BODY
 <SCRIPT language="JavaScript">
 
 function campfire(atr){
-	if(navigator.appName.indexOf("Netscape") != -1) {
+	if(navigator.userAgent.indexOf("Firebird") != -1) {
+		location.href="/priv/pub/issues/sections/articles/edit_b_firebird.php?"+atr,null,"location=no,toolbar=no,menubar=no,scrollbars=no,resizable=yes";
+	}else if(navigator.appName.indexOf("Netscape") != -1) {
 		location.href="X_ROOT/pub/issues/sections/articles/edit_b_ns.php?"+atr,null,"location=no,toolbar=no,menubar=no,scrollbars=no,resizable=yes";
 	}else if(navigator.userAgent.indexOf("Mac") != -1) {
 		location.href="X_ROOT/pub/issues/sections/articles/edit_b_apple.php?"+atr,null,"location=no,toolbar=no,menubar=no,scrollbars=no,resizable=yes";
@@ -116,8 +118,8 @@ B_MSGBOX(<*Article is locked*>)
 		<LI><? putGS('Are you sure you want to unlock it?'); ?></LI>
 	*>)
 	B_MSGBOX_BUTTONS
-		<A HREF="<? p($REQUEST_URI); ?>&LockOk=1"><IMG SRC="X_ROOT/img/button/yes.gif" BORDER="0" ALT="Yes"></A>
-		<A HREF="X_ROOT/pub/issues/sections/articles/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>&Section=<? p($Section); ?>"><IMG SRC="X_ROOT/img/button/no.gif" BORDER="0" ALT="No"></A>
+		REDIRECT(<*Yes*>, <*Yes*>, <*<? p($REQUEST_URI); ?>&LockOk=1*>)
+		REDIRECT(<*No*>, <*No*>, <*X_ROOT/pub/issues/sections/articles/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>&Section=<? p($Section); ?>*>)
 	E_MSGBOX_BUTTONS
 E_MSGBOX
 <P>
@@ -181,7 +183,7 @@ X_NEW_BUTTON(<*Delete*>, <*X_ROOT/pub/issues/sections/articles/del.php?Pub=<? p(
     }
 ?>dnl
 </SELECT></TD>
-		<TD><INPUT TYPE="IMAGE" SRC="X_ROOT/img/button/search.gif" BORDER="0"></TD>
+		<TD>SUBMIT(<*Search*>, <*Search*>)</TD>
 		<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<? p($Pub); ?>">
 		<INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<? p($Issue); ?>">
 		<INPUT TYPE="HIDDEN" NAME="Section" VALUE="<? p($Section); ?>">
@@ -295,14 +297,8 @@ B_DIALOG(<*Edit article details*>, <*POST*>, <*do_edit.php*>)
 <? }  ?>dnl
 
 	B_DIALOG_BUTTONS
-<SCRIPT>
-	function do_submit()
-	{
-		document.dialog.submit();
-	}
-</SCRIPT>
-		X_HR
-		<A HREF="javascript:void(do_submit())"><IMG SRC="X_ROOT/img/button/save.gif" BORDER="0" ALT="OK"></A>
+		SUBMIT(<*Save*>, <*Save changes*>)
+		REDIRECT(<*Cancel*>, <*Cancel*>, <*X_ROOT/pub/issues/sections/articles/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Section=<? p($Section); ?>&Language=<? p($Language); ?>*>)
 	E_DIALOG_BUTTONS
 E_DIALOG
 

@@ -79,7 +79,7 @@ B_MSGBOX(<*Change article status*>)
 	    else
 		$stat=getGS('New');
 	?>
-	X_MSGBOX_TEXT(<*<LI><? putGS('Change the status of article $1 ($2) from $3 to',':<B>'.getHVar($q_art,'Name'),getHVar($q_slang,'Name').'</B>',"<B>$stat</B>" ); ?></LI>*>)
+	X_MSGBOX_TEXT(<*<LI><? putGS('Change the status of article $1 ($2) from $3 to', '<B>'.getHVar($q_art,'Name'), getHVar($q_slang,'Name').'</B>', '<B>'.$stat.'</B>' ); ?></LI>*>)
 	B_MSGBOX_BUTTONS
 		<FORM METHOD="POST" ACTION="do_status.php"><br>
 		<? if (getVar($q_art,'Published') == "N") {
@@ -96,13 +96,13 @@ B_MSGBOX(<*Change article status*>)
 		<INPUT TYPE="HIDDEN" NAME="Article" VALUE="<? p($Article); ?>">
 		<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<? p($Language); ?>">
 		<INPUT TYPE="HIDDEN" NAME="sLanguage" VALUE="<? p($sLanguage); ?>"><P>
-		<INPUT TYPE="IMAGE" NAME="Yes" SRC="X_ROOT/img/button/save.gif" BORDER="0">
+		SUBMIT(<*Save*>, <*Save changes*>)
 <? todef('Back'); ?>dnl
 		<INPUT TYPE="HIDDEN" NAME="Back" VALUE="<? pencHTML($Back); ?>">
 <? if ($Back != "") { ?>dnl
-		<A HREF="<? p($Back); ?>"><IMG SRC="X_ROOT/img/button/cancel.gif" BORDER="0" ALT="Cancel"></A>
+		REDIRECT(<*Cancel*>, <*Cancel*>, <*<? p($Back); ?>*>)
 <? } else { ?>dnl
-		<A HREF="X_ROOT/pub/issues/sections/articles/edit.php?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>&Section=<? p($Section); ?>&Article=<? p($Article); ?>&sLanguage=<? p($sLanguage); ?>"><IMG SRC="X_ROOT/img/button/cancel.gif" BORDER="0" ALT="Cancel"></A>
+		REDIRECT(<*Cancel*>, <*Cancel*>, <*X_ROOT/pub/issues/sections/articles/edit.php?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>&Section=<? p($Section); ?>&Article=<? p($Article); ?>&sLanguage=<? p($sLanguage); ?>*>)
 <? } ?>dnl
 		</FORM>
 	E_MSGBOX_BUTTONS

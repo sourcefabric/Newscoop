@@ -79,10 +79,10 @@ B_MSGBOX(<*Creating new folder*>)
 		*>)
 	B_MSGBOX_BUTTONS
 <? if ($correct) { ?>dnl
-		<A HREF="X_ROOT/templates/new_dir.php?Path=<? pencURL(decS($cPath)); ?>"><IMG SRC="X_ROOT/img/button/add_another.gif" BORDER="0" ALT="Create another folder"></A>
-		<A HREF="<? p(decS($cPath)); ?>"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
+		REDIRECT(<*New*>, <*Add another*>, <*X_ROOT/templates/new_dir.php?Path=<? pencURL(decS($cPath)); ?>*>)
+		REDIRECT(<*Done*>, <*Done*>, <*<? p(decS($cPath)); ?>*>)
 <? } else { ?>
-		<A HREF="X_ROOT/templates/new_dir.php?Path=<? pencURL(decS($cPath)); ?>"><IMG SRC="X_ROOT/img/button/ok.gif" BORDER="0" ALT="OK"></A>
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/templates/new_dir.php?Path=<? pencURL(decS($cPath)); ?>*>)
 <? } ?>dnl
 	E_MSGBOX_BUTTONS
 E_MSGBOX

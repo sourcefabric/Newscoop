@@ -1,0 +1,41 @@
+CAMPWARE organization and development
+- Sava Tatic <sava.tatic@mdlf.org>
+- Micz Flor <micz.flor@web.de>
+- Douglas Arellanes <douglas.arellanes@mdlf.org>
+
+Original Specifications
+- Micz Flor
+- Sava Tatic
+- Aleksandar Brajanoski
+
+Core coding
+- Lucian Muresan: database, admin interface, localization, documentation
+- Mugurel Rus: campsite server, database, admin interface, install scripts,
+  documentation
+- Nenad Pandzic: campfire
+- Attila Egyedi: campfire, admin interface, localization
+- Richard Airlie: port to FreeBSD and OpenBSD, documentation updates, bug fixes
+- Micz Flor: documentation
+- Sava Tatic: documentation
+- Recognos <www.recognos.com>
+- DNT Cluj <www.dntcj.ro>
+
+User interface localization:
+- Andrei Blagorazumov (Russian) <ru-localizer@campware.org>
+- Ljuba Rankovic (Serbian and Serbo-Croatian) <sr-localizer@campware.org>,
+<sh-localizer@campware.org>
+- Marinko Filipovic and Tatjana Grujic (Croatian) <hr-localizer@campware.org>
+- Micz Flor (German) <de-localizer@campware.org>
+- Pavla Zankova (Czech) <cz-localizer@campware.org>
+- Guilherme Henrique Soares (Portuguese) <pt-localizer@campware.org>
+- Engel Sanchez and William Maas (Spanish) <es-localizer@campware.org>
+- Mugurel Rus and Lucian Muresan (Romanian) <ro-localizer@campware.org>
+
+Testing
+- Mirjana Zdjelar
+- Aleksandar Brajanoski
+- Ondra Koutek
+
+Thanks to
+- Rossz Vamos-Wentworth (helped with SuSE port)
+- all contributors who helped with bug reports and suggestions

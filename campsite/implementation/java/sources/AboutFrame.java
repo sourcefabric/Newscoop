@@ -41,14 +41,14 @@ class AboutFrame extends CampDialog{
         //super(p, title, 400, 280);
         super(p, title, 6);
 
-        addCompo(new JLabel("CAMPFIRE 2.0.0"));
+        addCompo(new JLabel("CAMPFIRE 2.0.2"));
 //        addCompo(new JLabel(" "));
         addCompo(new JLabel("Written by:"));
         addCompo(new JLabel("Nenad Pandzic"));
         addCompo(new JLabel("Attila Egyedi"));
 //        addCompo(new JLabel(" "));
         addCompo(new JLabel("Maintained and distributed under GNU GPL by CAMPWARE"));
-        addCompo(new JLabel("Copyright © 1999-2002 MDLF"));
+        addCompo(new JLabel("Copyright © 1999-2003 MDLF"));
         
         
         addButton(ok);

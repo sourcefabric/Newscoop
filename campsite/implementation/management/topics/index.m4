@@ -71,7 +71,7 @@ E_CURRENT
 	B_SEARCH_DIALOG(<*GET*>, <*index.php*>)
 		<TD><? putGS('Topic'); ?>:</TD>
 		<TD><INPUT TYPE="TEXT" NAME="cCateg" SIZE="8" MAXLENGTH="20"></TD>
-		<TD><INPUT TYPE="IMAGE" SRC="X_ROOT/img/button/search.gif" BORDER="0"></TD>
+		<TD>SUBMIT(<*Search*>, <*Search*>)</TD>
 		<INPUT TYPE="HIDDEN" NAME="IdCateg" VALUE="<? p($IdCateg); ?>">
 	E_SEARCH_DIALOG
 	</TD>

@@ -39,6 +39,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "tpl_cgi.h"
 #include "readconf.h"
 
+#define RECV_BUF_LEN	(1000)
+
 using std::cout;
 using std::endl;
 
@@ -68,7 +70,7 @@ void ReadConf(string& p_rcoIP, int& p_rnPort)
 
 int main()
 {
-	cout << "Content-type: text/html\n\n";
+	cout << "Content-type: text/html; charset=UTF-8\n\n";
 	string coIP;
 	int nPort;
 	ReadConf(coIP, nPort);
@@ -104,8 +106,8 @@ int main()
 			{
 				throw ConfException("Error on select");
 			}
-			char pchBuff[1000];
-			int nReceived = coSock.Recv(pchBuff, 1000);
+			char pchBuff[RECV_BUF_LEN + 1];	/* +1 for null char */
+			int nReceived = coSock.Recv(pchBuff, RECV_BUF_LEN);
 			if (nReceived == -1)
 				throw ConfException("Error receiving packet");
 			if (nReceived == 0)

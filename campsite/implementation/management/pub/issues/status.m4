@@ -64,8 +64,8 @@ B_MSGBOX(<*Change issue status*>)
 		<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<? pencURL($Pub); ?>">
 		<INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<? pencHTML($Issue); ?>">
 		<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<? pencHTML($Language); ?>">
-		<INPUT TYPE="IMAGE" NAME="Yes" SRC="X_ROOT/img/button/yes.gif" BORDER="0">
-		<A HREF="X_ROOT/pub/issues/?Pub=<? pencURL($Pub); ?>"><IMG SRC="X_ROOT/img/button/no.gif" BORDER="0" ALT="No"></A>
+		SUBMIT(<*Yes*>, <*Yes*>)
+		REDIRECT(<*No*>, <*No*>, <*X_ROOT/pub/issues/?Pub=<? pencURL($Pub); ?>*>)
 		</FORM>
 	E_MSGBOX_BUTTONS
 E_MSGBOX

@@ -104,13 +104,13 @@ B_DIALOG(<*Add new article*>, <*POST*>, <*do_add.php*>)
 		<INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<? p($Issue); ?>">
 		<INPUT TYPE="HIDDEN" NAME="Section" VALUE="<? p($Section); ?>">
 		<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<? p($Language); ?>">
-		<INPUT TYPE="IMAGE" NAME="OK" SRC="X_ROOT/img/button/save.gif" BORDER="0">
+		SUBMIT(<*Save*>, <*Save changes*>)
 <? todef('Back');
 
     if ($Back != "") { ?>dnl
-		<A HREF="<? p($Back); ?>"><IMG SRC="X_ROOT/img/button/cancel.gif" BORDER="0" ALT="Cancel"></A>
+		REDIRECT(<*Cancel*>, <*Cancel*>, <*<? p($Back); ?>*>)
 <? } else { ?>dnl
-		<A HREF="X_ROOT/pub/issues/sections/articles/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>&Section=<? p($Section); ?>"><IMG SRC="X_ROOT/img/button/cancel.gif" BORDER="0" ALT="Cancel"></A>
+		REDIRECT(<*Cancel*>, <*Cancel*>, <*X_ROOT/pub/issues/sections/articles/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>&Section=<? p($Section); ?>*>)
 <? } ?>dnl
 	E_DIALOG_BUTTONS
 E_DIALOG

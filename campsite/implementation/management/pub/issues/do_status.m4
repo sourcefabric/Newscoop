@@ -71,9 +71,9 @@ X_AUDIT(<*14*>, <*getGS('Issue $1 Published: $2  changed status',getVar($q_iss,'
 	B_MSGBOX_BUTTONS
 <? 
     if ($AFFECTED_ROWS > 0) { ?>dnl
-		<A HREF="X_ROOT/pub/issues/?Pub=<? pencURL($Pub); ?>"><IMG SRC="X_ROOT/img/button/done.gif" BORDER="0" ALT="Done"></A>
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/pub/issues/?Pub=<? pencURL($Pub); ?>*>)
 <? } else { ?>dnl
-		<A HREF="X_ROOT/pub/issues/status.php?Pub=<? pencURL($Pub); ?>&Issue=<? pencURL($Issue); ?>&Language=<? pencURL($Language); ?>"><IMG SRC="X_ROOT/img/button/ok.gif" BORDER="0" ALT="OK"></A>
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/pub/issues/status.php?Pub=<? pencURL($Pub); ?>&Issue=<? pencURL($Issue); ?>&Language=<? pencURL($Language); ?>*>)
 <? } ?>dnl
 	E_MSGBOX_BUTTONS
 E_MSGBOX

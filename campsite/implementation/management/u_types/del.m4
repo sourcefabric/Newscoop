@@ -39,8 +39,8 @@ B_MSGBOX(<*Delete user type*>)
 	B_MSGBOX_BUTTONS
 		<FORM METHOD="POST" ACTION="do_del.php">
 		<INPUT TYPE="HIDDEN" NAME="UType" VALUE="<? print $name; ?>">
-		<INPUT TYPE="IMAGE" SRC="X_ROOT/img/button/yes.gif" BORDER="0"></A>
-		<A HREF="X_ROOT/u_types/"><IMG SRC="X_ROOT/img/button/no.gif" BORDER="0"></A>
+		SUBMIT(<*Yes*>, <*Yes*>)
+		REDIRECT(<*No*>, <*No*>, <*X_ROOT/u_types/*>)
 		</FORM>
 	E_MSGBOX_BUTTONS
 E_MSGBOX

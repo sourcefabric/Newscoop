@@ -43,8 +43,8 @@ B_MSGBOX(<*Delete infotype*>)
 		<INPUT TYPE="HIDDEN" NAME="Class" VALUE="<? print encHTML(decS($Class)); ?>">
 		<INPUT TYPE="HIDDEN" NAME="Lang" VALUE="<? print encHTML(decS($Lang)); ?>">
 		<INPUT TYPE="HIDDEN" NAME="cName" VALUE="<? pgetHVar($c,'Name'); ?>">
-		<INPUT TYPE="IMAGE" NAME="Yes" SRC="X_ROOT/img/button/yes.gif" BORDER="0">
-		<A HREF="X_ROOT/infotype/"><IMG SRC="X_ROOT/img/button/no.gif" BORDER="0" ALT="No"></A>
+		SUBMIT(<*Yes*>, <*Yes*>)
+		REDIRECT(<*No*>, <*No*>, <*X_ROOT/infotype/*>)
 		</FORM>
 	E_MSGBOX_BUTTONS
 E_MSGBOX
