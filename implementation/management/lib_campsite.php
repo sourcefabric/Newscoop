@@ -824,6 +824,40 @@ function template_is_used($template_name)
 	return false;
 }
 
+function move_article($pub_id, $lang_id, $issue, $section, $article, $dir, $nr_pos = 1)
+{
+	$sql = "select * from Articles where IdPublication = " . $pub_id . " and NrIssue = "
+	     . $issue . " and NrSection = " . $section . " and Number = " . $article
+	     . " and IdLanguage = " . $lang_id;
+	$res = mysql_query($sql);
+	$row = mysql_fetch_array($res);
+	if (!$row)
+		return false;
+	$art_order = $row['ArticleOrder'];
+	$comp = $dir == "up" ? "<=" : ">=";
+	$ord = $dir == "up" ? "desc" : "asc";
+	$sql = "select * from Articles where IdPublication = " . $pub_id . " and NrIssue = "
+	     . $issue . " and NrSection = " . $section . " and ArticleOrder " . $comp . " "
+	     . $art_order . " and IdLanguage = " . $lang_id . " order by ArticleOrder " . $ord
+	     . " limit " . $nr_pos . ", 1";
+	$res = mysql_query($sql);
+	$row = mysql_fetch_array($res);
+	if (!$row)
+		return false;
+	$prev_order = $row['ArticleOrder'];
+	$prev_number = $row['Number'];
+	$sql = "update Articles set ArticleOrder = " . $prev_order . " where IdPublication = "
+	     . $pub_id . " and NrIssue = " . $issue . " and NrSection = " . $section
+	     . " and Number = " . $article . " and IdLanguage = " . $lang_id;
+	$res = mysql_query($sql);
+	$sql = "update Articles set ArticleOrder = " . $art_order . " where IdPublication = "
+	     . $pub_id . " and NrIssue = " . $issue . " and NrSection = " . $section
+	     . " and Number = " . $prev_number . " and IdLanguage = " . $lang_id;
+	$res = mysql_query($sql);
+	return true;
+}
+
 if (file_exists ($_SERVER['DOCUMENT_ROOT'].'/priv/modules/admin/priv_functions.php'))
   include ($_SERVER['DOCUMENT_ROOT'].'/priv/modules/admin/priv_functions.php');
+
 ?>
