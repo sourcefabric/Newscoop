@@ -32,7 +32,7 @@ class Template extends DatabaseObject {
 	
 	function getAbsoluteUrl() {
 		global $Campsite;
-		return $Campsite['website_url'].'/look/'.$this->getProperty('Name');
+		return $Campsite['WEBSITE_URL'].'/look/'.$this->getProperty('Name');
 	}
 	
 } // class Template

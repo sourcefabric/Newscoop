@@ -4,7 +4,7 @@
  */
 function load_common_include_files($current_dir) {
 	global $ADMIN_DIR;
-	require_once($_SERVER['DOCUMENT_ROOT'].'/classes/config.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
 	require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/lib_campsite.php");
 	$globalfile = selectLanguageFile($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR",'globals');
 	$localfile = selectLanguageFile($_SERVER['DOCUMENT_ROOT']."/$current_dir",'locals');
