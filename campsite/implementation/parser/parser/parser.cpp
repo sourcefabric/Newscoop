@@ -810,7 +810,8 @@ inline int CParser::HURLParameters(CActionList& al)
 	DEBUGLexem("urlparam", l);
 	long int img = -1, nTemplate = -1;
 	bool fromstart = false, allsubtitles = false;
-	CLevel reset_from_list = CLV_ROOT;
+	CLevel nResetList = CLV_ROOT;
+	TPubLevel nLevel = CMS_PL_SUBTITLE;
 	while (l->res() != CMS_LEX_END_STATEMENT)
 	{
 		if (!l->atom())
@@ -821,34 +822,20 @@ inline int CParser::HURLParameters(CActionList& al)
 		}
 		attr = st->findAttr(l->atom()->identifier(), CMS_CT_DEFAULT);
 		if (case_comp(l->atom()->identifier(), "fromstart") == 0)
-		{
 			fromstart = true;
-		}
-		else if (case_comp(l->atom()->identifier(), "allsubtitles") == 0)
-		{
+		if (case_comp(l->atom()->identifier(), "allsubtitles") == 0)
 			allsubtitles = true;
-		}
-		else if (case_comp(l->atom()->identifier(), "reset_issue_list") == 0)
-		{
-			reset_from_list = CLV_ISSUE_LIST;
-		}
-		else if (case_comp(l->atom()->identifier(), "reset_section_list") == 0)
-		{
-			reset_from_list = CLV_SECTION_LIST;
-		}
-		else if (case_comp(l->atom()->identifier(), "reset_article_list") == 0)
-		{
-			reset_from_list = CLV_ARTICLE_LIST;
-		}
-		else if (case_comp(l->atom()->identifier(), "reset_searchresult_list") == 0)
-		{
-			reset_from_list = CLV_SEARCHRESULT_LIST;
-		}
-		else if (case_comp(l->atom()->identifier(), "reset_subtitle_list") == 0)
-		{
-			reset_from_list = CLV_SUBTITLE_LIST;
-		}
-		else if (case_comp(l->atom()->identifier(), ST_IMAGE) == 0)
+		if (case_comp(l->atom()->identifier(), "reset_issue_list") == 0)
+			nResetList = CLV_ISSUE_LIST;
+		if (case_comp(l->atom()->identifier(), "reset_section_list") == 0)
+			nResetList = CLV_SECTION_LIST;
+		if (case_comp(l->atom()->identifier(), "reset_article_list") == 0)
+			nResetList = CLV_ARTICLE_LIST;
+		if (case_comp(l->atom()->identifier(), "reset_searchresult_list") == 0)
+			nResetList = CLV_SEARCHRESULT_LIST;
+		if (case_comp(l->atom()->identifier(), "reset_subtitle_list") == 0)
+			nResetList = CLV_SUBTITLE_LIST;
+		if (case_comp(l->atom()->identifier(), "image") == 0)
 		{
 			RequireAtom(l);
 			try
@@ -864,7 +851,7 @@ inline int CParser::HURLParameters(CActionList& al)
 			}
 			img = strtol(l->atom()->identifier().c_str(), 0, 10);
 		}
-		else if (case_comp(l->atom()->identifier(), "template") == 0)
+		if (case_comp(l->atom()->identifier(), "template") == 0)
 		{
 			RequireAtom(l);
 			ValidateDType(l, attr);
@@ -875,19 +862,28 @@ inline int CParser::HURLParameters(CActionList& al)
 				tpl_name = getTemplateInternalPath(true) + l->atom()->identifier();
 			nTemplate = CPublication::getTemplateId(tpl_name, MYSQLConnection());
 		}
-		else
-		{
-			string r_attrs = string(ST_IMAGE) + ", " + st->contextAttrs(CMS_CT_DEFAULT);
-			SetPError(parse_err, PERR_INVALID_ATTRIBUTE, MODE_PARSE, r_attrs,
-			          lex.prevLine(), lex.prevColumn());
-			WaitForStatementEnd(false);
-			return 0;
-		}
+		if (case_comp(l->atom()->identifier(), "root_level") == 0)
+			nLevel = CMS_PL_ROOT;
+		if (case_comp(l->atom()->identifier(), "language") == 0)
+			nLevel = CMS_PL_LANGUAGE;
+		if (case_comp(l->atom()->identifier(), "publication") == 0)
+			nLevel = CMS_PL_PUBLICATION;
+		if (case_comp(l->atom()->identifier(), "issue") == 0)
+			nLevel = CMS_PL_ISSUE;
+		if (case_comp(l->atom()->identifier(), "section") == 0)
+			nLevel = CMS_PL_SECTION;
+		if (case_comp(l->atom()->identifier(), "article") == 0)
+			nLevel = CMS_PL_ARTICLE;
 		l = lex.getLexem();
 		DEBUGLexem("urlparam2", l);
 	}
-	al.insert(al.end(),
-	          new CActURLParameters(fromstart, allsubtitles, img, reset_from_list, nTemplate));
+	if (st->id() == CMS_ST_URLPARAMETERS)
+		al.insert(al.end(),
+		          new CActURLParameters(fromstart, allsubtitles, img, nResetList, nTemplate, 
+	                                    nLevel));
+	else
+		al.insert(al.end(),
+		          new CActURL(fromstart, allsubtitles, img, nResetList, nTemplate, nLevel));
 	if (l->res() != CMS_LEX_END_STATEMENT)
 		WaitForStatementEnd(true);
 	return 0;
@@ -1965,30 +1961,40 @@ inline int CParser::HWith(CActionList& al, int lv, int sublv)
 //		CActionList& al - reference to actions list
 inline int CParser::HURIPath(CActionList& al)
 {
-	CParameterList params;
+	long int nTemplate = -1;
+	TPubLevel nLevel = CMS_PL_SUBTITLE;
 	const CLexem *l;
 	StringSet ah;
 	l = lex.getLexem();
 	while (l->res() != CMS_LEX_END_STATEMENT)
 	{
 		attr = st->findAttr(l->atom()->identifier(), CMS_CT_DEFAULT);
-		if (ah.find(attr->identifier()) != ah.end())
-			SetPError(parse_err, PERR_ATTRIBUTE_REDEF, MODE_PARSE, "",
-			          lex.prevLine(), lex.prevColumn());
 		if (case_comp(attr->identifier(), "template") == 0)
 		{
 			RequireAtom(l);
 			ValidateDType(l, attr);
-			params.insert(params.end(), new CParameter(attr->identifier(), "", NULL,
-			              l->atom()->identifier()));
+			string tpl_name;
+			if ((l->atom()->identifier())[0] == '/')
+				tpl_name = l->atom()->identifier();
+			else
+				tpl_name = getTemplateInternalPath(true) + l->atom()->identifier();
+			nTemplate = CPublication::getTemplateId(tpl_name, MYSQLConnection());
 		}
-		else
-		{
-			params.insert(params.end(), new CParameter(attr->identifier()));
-		}
+		if (case_comp(l->atom()->identifier(), "root_level") == 0)
+			nLevel = CMS_PL_ROOT;
+		if (case_comp(l->atom()->identifier(), "language") == 0)
+			nLevel = CMS_PL_LANGUAGE;
+		if (case_comp(l->atom()->identifier(), "publication") == 0)
+			nLevel = CMS_PL_PUBLICATION;
+		if (case_comp(l->atom()->identifier(), "issue") == 0)
+			nLevel = CMS_PL_ISSUE;
+		if (case_comp(l->atom()->identifier(), "section") == 0)
+			nLevel = CMS_PL_SECTION;
+		if (case_comp(l->atom()->identifier(), "article") == 0)
+			nLevel = CMS_PL_ARTICLE;
 		l = lex.getLexem();
 	}
-	al.insert(al.end(), new CActURIPath(params));
+	al.insert(al.end(), new CActURIPath(nTemplate, nLevel));
 	return 0;
 }
 
@@ -2099,6 +2105,10 @@ int CParser::LevelParser(CActionList& al, int level, int sublevel)
 			break;
 		case CMS_ST_URIPATH:
 			if ((res = HURIPath(al)))
+				return res;
+			break;
+		case CMS_ST_URL:
+			if ((res = HURLParameters(al)))
 				return res;
 			break;
 		case CMS_ST_FOREMPTYLIST:
