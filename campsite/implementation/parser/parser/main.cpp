@@ -249,21 +249,19 @@ void StartWatchDog(bool p_bRunAsDaemon)
 	while (1)
 	{
 		nMainThreadPid = fork();
+		if (nMainThreadPid == -1)
+		{
+			sleep(10);
+			continue;
+		}
 		if (nMainThreadPid != 0)
 		{
 			signal(SIGTERM, SigHandler);
-			int nStatus;
-			waitpid(nMainThreadPid, &nStatus, 0);
-			cout << "Child exited with status " << nStatus << endl;
-			sleep(5);
+			waitpid(nMainThreadPid, NULL, 0);
+			sleep(10);
 			continue;
 		}
-		if (nMainThreadPid == 0)
-			return ;
-		if (nMainThreadPid < 0)
-		{
-			sleep(10);
-		}
+		return ; // nMainThreadPid == 0
 	}
 }
 
