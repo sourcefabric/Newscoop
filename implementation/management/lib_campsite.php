@@ -1,6 +1,4 @@
 <?php
-//require_once("config.php");
-
 $DOCUMENT_ROOT = $_SERVER['DOCUMENT_ROOT'];
 
 /**

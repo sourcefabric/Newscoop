@@ -1,6 +1,6 @@
 B_HTML
 INCLUDE_PHP_LIB(<*$ADMIN_DIR*>)
-<?php require_once($_SERVER['DOCUMENT_ROOT'].'/classes/config.php'); ?>
+<?php require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php'); ?>
 B_HEAD
 	X_TITLE(<*Login*>)
 E_HEAD
