@@ -772,12 +772,12 @@ vars_list_str=""
 for var in $module_vars; do
     echo -e "\$Campsite['$var'] = '${!var}';" >> $tmp_file;
     if [ "$vars_list_str" = "" ]; then
-	vars_list_str="\"$var\"";
+	vars_list_str="'$var'";
     else
-	vars_list_str="$vars_list_str, \"$var\""
+	vars_list_str="$vars_list_str, '$var'"
     fi
 done
-echo -e "\n\$CampsiteVars['$module_name'] = array($vars_list_str);\n\n?>\n" >> $tmp_file;
+echo -e -n "\n\$CampsiteVars['$module_name'] = array($vars_list_str);\n\n?>" >> $tmp_file;
 cp -f "$tmp_file" "${INSTALL_CONF}/$module_file"
 rm -f "$tmp_file"
 [ "$module_name" != "install" ] && set_configured $module_name

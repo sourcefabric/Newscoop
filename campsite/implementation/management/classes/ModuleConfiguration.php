@@ -131,8 +131,8 @@ class ModuleConfiguration
 		fputs($file, "<?php\n\n");
 		foreach($this->m_variables as $var_name=>$value)
 			fputs($file, "\$Campsite['$var_name'] = '$value';\n");
-		fputs($file, "\n\$CampsiteVars['$moduleName'] = array(\""
-		      . implode("\", \"", $this->m_variablesList) . "\");\n\n?>");
+		fputs($file, "\n\$CampsiteVars['$moduleName'] = array('"
+		      . implode("', '", $this->m_variablesList) . "');\n\n?>");
 		fclose($file);
 		return true;
 	}
