@@ -135,7 +135,6 @@ public:
 
 	friend class TOLStatement;
 	friend class TOLLex;
-//	friend class TOLParser;
 	friend cpChar TOLAttributeValue(const TOLAttribute&);
 };
 
