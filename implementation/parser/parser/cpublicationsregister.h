@@ -61,9 +61,9 @@ public:
 
 	bool has(id_type p_nPublicationId) const;
 
-	const CPublication* getPublication(const string& p_rcoAlias) const;
+	const CPublication* getPublication(const string& p_rcoAlias) const throw (out_of_range);
 
-	const CPublication* getPublication(id_type p_nPublicationId) const;
+	const CPublication* getPublication(id_type p_nPublicationId) const throw (out_of_range);
 
 private:
 	CPublicationsMap m_coPublications;
@@ -86,14 +86,6 @@ inline CPublicationsRegister& CPublicationsRegister::getInstance()
 	return g_coPublicationsRegister;
 }
 
-inline void CPublicationsRegister::erase(id_type p_nPublicationId)
-{
-#ifdef _REENTRANT
-	CMutexHandler coLockHandler(&m_coMutex);
-#endif
-	m_coPublications.erase(p_nPublicationId);
-}
-
 inline bool CPublicationsRegister::has(id_type p_nPublicationId) const
 {
 #ifdef _REENTRANT
@@ -103,29 +95,31 @@ inline bool CPublicationsRegister::has(id_type p_nPublicationId) const
 }
 
 inline const CPublication* CPublicationsRegister::getPublication(const string& p_rcoAlias) const
+	throw (out_of_range)
 {
 #ifdef _REENTRANT
 	CMutexHandler coLockHandler(&m_coMutex);
 #endif
 	CPublicationsAliases::const_iterator coIt = m_coAliases.find(p_rcoAlias);
-	if (coIt != m_coAliases.end())
-	{
-		CPublicationsMap::const_iterator coIt2 = m_coPublications.find((*coIt).second);
-		if (coIt2 != m_coPublications.end())
-			return (*coIt2).second;
-	}
-	return NULL;
+	if (coIt == m_coAliases.end())
+		throw out_of_range(string("invalid publication alias ") + p_rcoAlias);
+	CPublicationsMap::const_iterator coIt2 = m_coPublications.find((*coIt).second);
+	if (coIt2 == m_coPublications.end())
+		throw out_of_range(string("internal error: publication missing for alias ") + p_rcoAlias);
+	return (*coIt2).second;
 }
 
 inline const CPublication* CPublicationsRegister::getPublication(id_type p_nPublicationId) const
+	throw (out_of_range)
 {
 #ifdef _REENTRANT
 	CMutexHandler coLockHandler(&m_coMutex);
 #endif
 	CPublicationsMap::const_iterator coIt2 = m_coPublications.find(p_nPublicationId);
-	if (coIt2 != m_coPublications.end())
-		return (*coIt2).second;
-	return NULL;
+	if (coIt2 == m_coPublications.end())
+		throw out_of_range(string("invalid publication identifier ")
+		                   + (string)Integer(p_nPublicationId));
+	return (*coIt2).second;
 }
 
 
