@@ -180,11 +180,6 @@ if ($hasAccess && !$edit_ok) {
 
 if ($edit_ok) { ?>
 <P>
-<STYLE>
-.action_link_container {
-	padding-left: 8px;
-}
-</STYLE>
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" WIDTH="100%">
 <TR>
 	<TD>
