@@ -3,16 +3,21 @@ read_old_conf()
 echo -n "Reading old configuration "
 cdir=`pwd`
 cd $INSTALL_CONF
-st=`stat .modules.conf -t`
-f_uid=`echo -E "$st" | cut -f 5 -d " "`
-f_gid=`echo -E "$st" | cut -f 6 -d " "`
+if [ $BSD -eq 1 ]; then
+	f_uid=`ls -l .modules.conf | cut -f4 -d\ `
+	f_gid=`ls -l .modules.conf | cut -f6 -d\ `
+else
+	st=`stat .modules.conf -t`
+	f_uid=`echo -E "$st" | cut -f 5 -d " "`
+	f_gid=`echo -E "$st" | cut -f 6 -d " "`
+fi
 cd $cdir
 mod_conf_file=$INSTALL_CONF/.modules.conf
 [ ! -f $CONF_DIR/database.conf ] && return 1
 read_database_conf < $CONF_DIR/database.conf
 if [ $? -eq 0 ]; then
     set_module_config DATABASE < $mod_conf_file
-    chown ${f_uid}.${f_gid} $INSTALL_CONF/.modules.conf
+    chown ${f_uid}:${f_gid} $INSTALL_CONF/.modules.conf
     [ $? -ne 0 ] && return 1
 else
     return 1
@@ -24,7 +29,7 @@ if in_list PARSER $NEED_CONFIG_MODULES; then
     read_parser_conf < $CONF_DIR/parser.conf
     if [ $? -eq 0 ]; then
 	set_module_config PARSER < $mod_conf_file
-	chown ${f_uid}.${f_gid} $INSTALL_CONF/.modules.conf
+	chown ${f_uid}:${f_gid} $INSTALL_CONF/.modules.conf
 	[ $? -ne 0 ] && return 1
     else
 	return 1
@@ -37,7 +42,7 @@ if in_list ADMIN_INTERFACE $NEED_CONFIG_MODULES; then
     read_tpl_cgi_conf < $CONF_DIR/tpl_cgi.conf
     if [ $? -eq 0 ]; then
 	set_module_config ADMIN_INTERFACE < $mod_conf_file
-	chown ${f_uid}.${f_gid} $INSTALL_CONF/.modules.conf
+	chown ${f_uid}:${f_gid} $INSTALL_CONF/.modules.conf
 	[ $? -ne 0 ] && return 1
     else
 	return 1
@@ -50,7 +55,7 @@ if in_list EVENT_HANDLERS $NEED_CONFIG_MODULES; then
     read_smtp_conf < $CONF_DIR/smtp.conf
     if [ $? -eq 0 ]; then
 	set_module_config EVENT_HANDLERS < $mod_conf_file
-	chown ${f_uid}.${f_gid} $INSTALL_CONF/.modules.conf
+	chown ${f_uid}:${f_gid} $INSTALL_CONF/.modules.conf
 	[ $? -ne 0 ] && return 1
     else
 	return 1
