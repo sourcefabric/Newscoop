@@ -27,6 +27,8 @@ regGS("Topics","Topics:en");
 regGS("Path","Path:en");
 regGS("Go up","Go up:en");
 regGS("Configure", "Configure:en");
+regGS("Image archive", "Image archive:en");
+regGS("URL","URL");
 
 regGS("Duplicate", "Duplicate:en");
 regGS("Select destination", "Select destination:en");
