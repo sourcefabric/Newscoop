@@ -42,18 +42,18 @@ X_CURRENT({User account:}, {<B><!sql print ~q_usr.UName></B>})
 X_CURRENT({Publication:}, {<B><!sql print ~q_pub.Name></B>})
 E_CURRENT
 
-<P>X_NEW_BUTTON({Add new subscription}, {add.xql?Subs=<!sql print #Subs>&Pub=<!sql print #Pub>&User=<!sql print #User>})
+<P>X_NEW_BUTTON({Add new section to subscription}, {add.xql?Subs=<!sql print #Subs>&Pub=<!sql print #Pub>&User=<!sql print #User>})
 
 <P><!sql setdefault SSectOffs 0><!sql if $SSectOffs < 0><!sql set SSectOffs 0><!sql endif><!sql set NUM_ROWS 0>dnl
 
-<!sql query "SELECT * FROM SubsSections WHERE IdSubscription=?Subs ORDER BY SectionNumber LIMIT $SSectOffs, 11" q_ssect>dnl
+<!sql query "SELECT DISTINCT Sub.*, Sec.Name FROM SubsSections as Sub, Sections as Sec WHERE IdSubscription=?Subs AND Sub.SectionNumber = Sec.Number AND Sec.IdPublication=~Pub ORDER BY SectionNumber LIMIT $SSectOffs, 11" q_ssect>dnl
 <!sql if $NUM_ROWS>dnl
 <!sql set nr $NUM_ROWS>dnl
 <!sql set i 10>dnl
 <!sql set color 0>dnl
 B_LIST
 	B_LIST_HEADER
-		X_LIST_TH({Section Number})
+		X_LIST_TH({Section (Number.Name)})
 		X_LIST_TH({Start Date}<BR><SMALL>(yyyy-mm-dd)</SMALL>)
 		X_LIST_TH({Days})
 		X_LIST_TH({Paid Days})
@@ -64,7 +64,7 @@ B_LIST
 <!sql if $i>dnl
 	B_LIST_TR
 		B_LIST_ITEM
-			<!sql print ~q_ssect.SectionNumber>
+			<!sql print ~q_ssect.SectionNumber.~q_ssect.Name>
 		E_LIST_ITEM
 		B_LIST_ITEM
 			<!sql print ~q_ssect.StartDate>
@@ -100,7 +100,7 @@ B_LIST
 E_LIST
 <!sql else>dnl
 <BLOCKQUOTE>
-	<LI>No subscriptions.</LI>
+	<LI>No sections in current subscriptions.</LI>
 </BLOCKQUOTE>
 <!sql endif>dnl
 

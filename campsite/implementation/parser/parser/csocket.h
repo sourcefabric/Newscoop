@@ -121,7 +121,7 @@ public:
 	const struct sockaddr_in* GetRemote() EXCEPTION_DEF(throw (SocketErrorException));
 	char* RemoteIP() EXCEPTION_DEF(throw (SocketErrorException));
 	int RemotePort() EXCEPTION_DEF(throw (SocketErrorException));
-	virtual int Connect(char* remote_addr, int port) = 0;
+	virtual int Connect(const char* remote_addr, int port) = 0;
 	virtual int Send(const char* message, int len, int flags = 0)
 	EXCEPTION_DEF(throw (SocketErrorException));
 	virtual int Recv(char* buffer, int len, int flags = 0)
@@ -141,7 +141,7 @@ public:
 	CTCPSocket(SOCKET s) : CConnectedSocket(s)
 	{}
 
-	virtual int Connect(char *remote_addr, int port) EXCEPTION_DEF(throw (SocketErrorException));
+	virtual int Connect(const char* remote, int port) EXCEPTION_DEF(throw (SocketErrorException));
 	void dummy()
 	{}
 };
@@ -185,7 +185,7 @@ class CUDPConnSocket : public CConnectedSocket
 public:
 	CUDPConnSocket(char* local_ip = "0.0.0.0", int lport = 0)
 	EXCEPTION_DEF(throw (SocketErrorException));
-	virtual int Connect(char* remote_addr, int port) EXCEPTION_DEF(throw (SocketErrorException));
+	virtual int Connect(const char* remote_addr, int port) EXCEPTION_DEF(throw (SocketErrorException));
 	//virtual int Reconnect(char *remote_addr,int port) EXCEPTION_DEF(throw (SocketErrorException));
 };
 

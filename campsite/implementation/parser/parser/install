@@ -26,6 +26,9 @@
 ################################################################################
 
 mkdir -p $UTIL_BIN
+echo "Stop old version server (if installed)"
+test -f $UTIL_BIN/$CAMPSITECTL && $UTIL_BIN/$CAMPSITECTL stop
+rm -f $UTIL_BIN/$CAMPSITE_SERVER
 cp -f $CAMPSITE_SERVER $UTIL_BIN
 cp -f $CAMPSITECTL $UTIL_BIN
 if [ -d $RC_INIT ]; then

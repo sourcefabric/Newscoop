@@ -7,9 +7,9 @@ check_if_installed()
     program=$1
     shift
     while [ "$1" != "" ]; do
-        if [ "$1" == "--continue" ]; then
+        if [ "$1" = "--continue" ]; then
 	    continue="Y"
-	elif [ "$1" == "--path" ]; then
+	elif [ "$1" = "--path" ]; then
 	    shift
 	    if [ "$1" != "" ]; then
 		PATH=$PATH:$1
@@ -32,7 +32,7 @@ check_if_installed()
 	    echo "You can go on installing but the application won't work without it."
 	    echo -n "Do you want to go on installing (Y/N) ? [Y]: "
 	    read yn
-	    if [ "$yn" == "" ]; then
+	    if [ "$yn" = "" ]; then
 		yn="Y"
 	    fi
 	    if [ "${yn:0:1}" != "Y" ] && [ "${yn:0:1}" != "y" ]; then
@@ -95,7 +95,7 @@ install_campsite()
     echo "For a complete installation log read install_log file."
     echo -n -e "\nStarting campsite_server daemon..."
     UTIL_BIN=`cat ./Makefile|grep UTIL_BIN|grep -w export|cut -f 2 -d "=" 2> /dev/null`
-    $UTIL_BIN/campsitectl start
+    $UTIL_BIN/campsitectl restart
     err_code=$?
     if [ $err_code -ne 0 ]; then
 	echo "ERROR"
@@ -120,7 +120,7 @@ install_campsite()
 
 # start execution
 my_id=`id -u`
-if [ "$1" == "go_to_install" ] && [ $my_id -eq 0 ]; then
+if [ "$1" = "go_to_install" ] && [ $my_id -eq 0 ]; then
     install_campsite
     exit 0
 fi
@@ -128,7 +128,7 @@ version=`cat ./README | grep -w ^version | grep ":" | cut -f 2 -d ":"`
 version=`echo $version`
 release_date=`cat ./README | grep -w ^release | grep ":" | cut -f 2 -d ":"`
 release_date=`echo $release_date`
-if [ "$1" == "--version" ]; then
+if [ "$1" = "--version" ]; then
     echo -e "CAMPSITE $version, released on $release_date"
     exit 0
 fi
@@ -149,7 +149,7 @@ if [ $my_id -ne 0 ]; then
         if [ $err_code -ne 0 ]; then
 	    echo -n -e "\nThe password was not correct. Try again (Y/N) ? [Y]: "
 	    read yn
-	    if [ "$yn" == "" ]; then
+	    if [ "$yn" = "" ]; then
 		yn="Y"
 	    fi
 	    if [ "${yn:0:1}" != "Y" ] && [ "${yn:0:1}" != "y" ]; then

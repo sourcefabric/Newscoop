@@ -39,7 +39,8 @@ E_HEADER
 <!sql query "SELECT Name FROM Publications WHERE Id=?Pub" q_pub>dnl
 <!sql if $NUM_ROWS>dnl
 <!sql set NUM_ROWS 0>dnl
-<!sql query "SELECT * FROM SubsSections WHERE IdSubscription=?Subs AND SectionNumber=?Sect" q_ssub>dnl
+<!--sql query "SELECT * FROM SubsSections WHERE IdSubscription=?Subs AND SectionNumber=?Sect" q_ssub-->dnl
+<!sql query "SELECT DISTINCT Sub.*, Sec.Name FROM SubsSections as Sub, Sections as Sec WHERE IdSubscription=?Subs AND SectionNumber=?Sect AND Sub.SectionNumber = Sec.Number" q_ssub>dnl
 <!sql if $NUM_ROWS>dnl
 
 B_CURRENT
@@ -49,8 +50,9 @@ E_CURRENT
 
 <P>
 B_DIALOG({Change subscription}, {POST}, {do_change.xql})
+
 	B_DIALOG_INPUT({Section:})
-		<!sql print ~Sect>
+		<!sql print ?q_ssub.Name>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT({Start:})
 		<INPUT TYPE="TEXT" NAME="cStartDate" SIZE="10" VALUE="<!sql print ~q_ssub.StartDate>" MAXLENGTH="10"> (YYYY-MM-DD)
