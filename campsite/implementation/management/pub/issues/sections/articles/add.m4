@@ -70,7 +70,10 @@ B_DIALOG({Add new article}, {POST}, {do_add.xql})
 	B_DIALOG_INPUT({Language:})
 			<SELECT NAME="cLanguage">
 <!sql query "SELECT Id, Name FROM Languages" q_lng>dnl
-<!sql print_rows q_lng "				<OPTION VALUE=\"~q_lng.Id\">~q_lng.Name">
+<!sql query "SELECT IdDefaultLanguage from Publications where Id=?Pub" q_deflang>dnl
+<!sql print_loop q_lng>
+				<OPTION VALUE="<!sql print ~q_lng.Id>"<!sql if ~q_lng.Id == ~q_deflang.IdDefaultLanguage> selected<!sql endif>><!sql print ~q_lng.Name>
+<!sql done>
 <!sql free q_lng>dnl
 			</SELECT>
 	E_DIALOG_INPUT

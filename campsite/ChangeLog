@@ -34,6 +34,9 @@
     - Fixed small bug on install/uninstall scripts
     - Fixed parser crash on empty search
     - Fixed login/subscription password field size
+    - Select the publication language when adding a new issue or article
+    - Fixed bug: listing subscription sections showed section from all the
+    publication (not just the selected one)
 
 2.0.10
     - Fixed the 'Back to article details' bug
