@@ -99,7 +99,7 @@ B_DIALOG(<*Configure publication*>, <*POST*>, <*do_edit.php*>)
 	<tr><td colspan=2><HR NOSHADE SIZE="1" COLOR="BLACK"></td></tr>
 	<tr><td colspan=2><b><?php putGS("Subscriptions defaults"); ?></b></td></tr>
 	B_DIALOG_INPUT(<*Pay Period*>)
-		<INPUT TYPE="TEXT" NAME="cPayTime" VALUE="<?php  pgetHVar($q_pub,'PayTime'); ?>" SIZE="5" MAXLENGTH="5"> <?php  p($tunit); ?>
+		<INPUT TYPE="TEXT" class="input_text" NAME="cPayTime" VALUE="<?php  pgetHVar($q_pub,'PayTime'); ?>" SIZE="5" MAXLENGTH="5"> <?php  p($tunit); ?>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Time Unit*>)
 	    <SELECT NAME="cTimeUnit">
