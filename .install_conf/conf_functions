@@ -731,7 +731,15 @@ if [ "$admin_selected" = "true" ]; then
 	return 1
     fi
 fi
-check4_apache $1
+acp=""
+if [ "$APACHE_CONF_PATH" != "" ]; then
+    acp="--apache_conf_path $APACHE_CONF_PATH"
+fi
+abp=""
+if [ "$APACHE_BIN_PATH" != "" ]; then
+    abp="--apache_bin_path $APACHE_BIN_PATH"
+fi
+check4_apache $1 $acp $abp
 [ $? -ne 0 ] && return 1
 if [ "$PARSER_USER" != "$APACHE_USER" ] || [ "$PARSER_GROUP" != "$APACHE_GROUP" ]; then
     echo -e "ERROR\nParser process user/group is not the same as apache user/group."

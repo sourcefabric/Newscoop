@@ -2,6 +2,8 @@
 
 export ROOT_USER=root
 export ROOT_GROUP=root
+export APACHE_CONF_PATH=""
+export APACHE_BIN_PATH=""
 c_upgrade=""
 c_define_start_env=""
 root_only=false
@@ -12,6 +14,8 @@ while [ "$1" != "" ]; do
     --upgrade) c_upgrade=--upgrade ;;
     --root_user) export ROOT_USER=$2; shift 1 ;;
     --root_group) export ROOT_GROUP=$2; shift 1 ;;
+    --apache_conf_path) export APACHE_CONF_PATH=$2; shift 1 ;;
+    --apache_bin_path) export APACHE_BIN_PATH=$2; shift 1 ;;
     --root_only) root_only=true ;;
     --read_only) read_only=true ;;
     esac
