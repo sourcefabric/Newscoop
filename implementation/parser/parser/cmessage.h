@@ -38,6 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cxmlreader.h"
 
 
+using std::multimap;
 using std::exception;
 using std::bad_cast;
 using std::string;
@@ -114,7 +115,7 @@ private:
 };
 
 
-typedef map <string, CValue*, less<string> > String2Value;
+typedef multimap <string, CValue*, less<string> > String2Value;
 
 
 class CParameterMap
@@ -176,6 +177,19 @@ private:
 	CParameterMap m_coParameters;
 };
 
+
+// CParameterMap inline methods
+
+inline void CParameterMap::insert(const string& p_rcoParameter, const string& p_rcoValue)
+{
+	m_coParameters.insert(pair<string, CValue*>(p_rcoParameter, new CStringValue(p_rcoValue)));
+}
+
+inline void CParameterMap::insert(const string& p_rcoParameter, pair<long, const char*> p_Value)
+{
+	m_coParameters.insert(pair<string, CValue*>(p_rcoParameter,
+	                      new CBinaryStringValue(p_Value.first, p_Value.second)));
+}
 
 // CMessage inline methods
 
