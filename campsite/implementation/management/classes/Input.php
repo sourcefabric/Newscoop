@@ -3,6 +3,29 @@ global $g_inputErrors;
 $g_inputErrors = array();
 
 class Input {
+	/**
+	 * Please see: http://ca.php.net/manual/en/function.get-magic-quotes-gpc.php
+	 * specifically the user note by php at kaiundina dot de, for why this is 
+	 * so complicated.
+	 * 
+	 * @param array p_array
+	 * @return array
+	 */
+	function CleanMagicQuotes($p_array) {
+	   $gpcList = array();
+	  
+	   foreach ($p_array as $key => $value) {
+	       $decodedKey = stripslashes($key);
+	       if (is_array($value)) {
+	           $decodedValue = Input::CleanMagicQuotes($value);
+	       } else {
+	           $decodedValue = stripslashes($value);
+	       }
+	       $gpcList[$decodedKey] = $decodedValue;
+	   }
+	   return $gpcList;
+	} // fn CleanMagicQuotes
+	
 	
 	/**
 	 * Get an input value from the $_REQUEST array and check its type.
@@ -35,6 +58,15 @@ class Input {
 				$g_inputErrors[$p_varName] = 'not set';
 			}
 			return $p_defaultValue;
+		}
+		// Clean the slashes
+		if (get_magic_quotes_gpc()) {
+			if (is_array($_REQUEST[$p_varName])) {
+				$_REQUEST[$p_varName] = Input::CleanMagicQuotes($_REQUEST[$p_varName]);
+			}
+			else {
+				$_REQUEST[$p_varName] = stripslashes($_REQUEST[$p_varName]);
+			}
 		}
 		switch (strtolower($p_type)) {
 		case 'int':
