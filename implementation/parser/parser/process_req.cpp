@@ -40,9 +40,11 @@ Implementation of functions for client request processing
 #include "util.h"
 #include "auto_ptr.h"
 #include "curl.h"
+#include "cpublication.h"
 
 using std::stringstream;
 using std::endl;
+
 
 // RunParser:
 //   - prepare the context: read cgi environment into context, read user subscriptions
@@ -81,6 +83,7 @@ int RunParser(MYSQL* p_pSQL, CURL* p_pcoURL, const char* p_pchRemoteIP, sockstre
 	        UERR_NO_PASSWORD, UERR_NO_PASSWORD_AGAIN
 	    };
 	SafeAutoPtr<CContext> pcoCtx(new CContext);
+	pcoCtx->SetURL(p_pcoURL);
 	string coStr;
 	bool bDebug = false, bPreview = false, bTechDebug = false;
 	char pchBuf[300];
@@ -289,9 +292,31 @@ int RunParser(MYSQL* p_pSQL, CURL* p_pcoURL, const char* p_pchRemoteIP, sockstre
 	}
 	try
 	{
+		string coDocumentRoot = p_pcoURL->getDocumentRoot();
+		string coTemplate;
+		string coTplId = p_pcoURL->getValue(P_TEMPLATE_ID);
+		if (coTplId != "")
+		{
+			string coQuery = string("select Name from Templates where Id = ") + coTplId;
+			CMYSQL_RES coRes;
+			MYSQL_ROW qRow = QueryFetchRow(p_pSQL, coQuery.c_str(), coRes);
+			if (qRow == NULL)
+				throw InvalidValue("template identifier", coTplId.c_str());
+			coTemplate = p_pcoURL->getDocumentRoot() + "/look/" + qRow[0];
+		}
+		else
+		{
+			long int nLanguage = p_pcoURL->getLanguage();
+			long int nPublication = p_pcoURL->getPublication();
+			long int nIssue = p_pcoURL->getIssue();
+			long int nSection = p_pcoURL->getSection();
+			long int nArticle = p_pcoURL->getArticle();
+			coTemplate = p_pcoURL->getDocumentRoot() + "/look/"
+		               + CPublication::getTemplate(nLanguage, nPublication, nIssue,
+		                                           nSection, nArticle, p_pSQL, !bTechDebug);
+		}
 		CParser::setMYSQL(p_pSQL);
-		CParser* p = CParser::parserOf(p_pcoURL->getPathTranslated().c_str(),
-			                           p_pcoURL->getDocumentRoot().c_str());
+		CParser* p = CParser::parserOf(coTemplate.c_str(), coDocumentRoot.c_str());
 		p->setDebug(bTechDebug);
 // no need to write the charset anymore: tpl_cgi will print it
 //		WriteCharset((*pcoCtx), p_pSQL, p_rOs);
