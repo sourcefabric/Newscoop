@@ -71,6 +71,11 @@ B_MENU
     X_MENU_ITEM(<*Localizer*>, <*localizer/*>)
 <? } ?>dnl
     X_MENU_BAR
+<?
+## added by sebastian
+if (function_exists ("incModFile"))
+	incModFile ($TOL_UserId);
+?>
     X_MENU_ITEM(<*Logout*>, <*logout.php*>)
 E_MENU
 

@@ -30,26 +30,31 @@ E_HEADER_BUTTONS
 E_HEADER
 
 <?
-    todefnum('User');
-    query ("SELECT UName FROM Users WHERE Id=$User", 'uu');
-    if ($NUM_ROWS) {
-	fetchRow($uu);
-	$del= 1;
-	query ("DELETE FROM Users WHERE Id=$User");
-	if ($AFFECTED_ROWS > 0) {
-	    query ("DELETE FROM UserPerm WHERE IdUser=$User");
-	    query ("SELECT Id FROM Subscriptions WHERE IdUser=$User", 's');
-	    $nr=$NUM_ROWS;
-	    for($loop=0;$loop<$nr;$loop++) {
-		fetchRowNum($s);
-		query ("DELETE FROM SubsSections WHERE IdSubscription=".encS(getNumVar($s,0)) );
-	    }
-	    
-	    query ("DELETE FROM Subscriptions WHERE IdUser=$User");
-	    query ("DELETE FROM SubsByIP WHERE IdUser=$User");
-	} else {
-	    $del= 0;
-	}
+	todefnum('User');
+
+	## added by sebastian
+	if (function_exists ("incModFile"))
+		incModFile ($User);
+
+	query ("SELECT UName FROM Users WHERE Id=$User", 'uu');
+	if ($NUM_ROWS) {
+		fetchRow($uu);
+		$del= 1;
+		query ("DELETE FROM Users WHERE Id=$User");
+		if ($AFFECTED_ROWS > 0) {
+			query ("DELETE FROM UserPerm WHERE IdUser=$User");
+			query ("SELECT Id FROM Subscriptions WHERE IdUser=$User", 's');
+			$nr=$NUM_ROWS;
+			for($loop=0;$loop<$nr;$loop++) {
+				fetchRowNum($s);
+				query ("DELETE FROM SubsSections WHERE IdSubscription=".encS(getNumVar($s,0)) );
+			}
+
+			query ("DELETE FROM Subscriptions WHERE IdUser=$User");
+			query ("DELETE FROM SubsByIP WHERE IdUser=$User");
+		} else {
+			$del= 0;
+		}
 	?>dnl
 <P>
 B_MSGBOX(<*Deleting user account*>)

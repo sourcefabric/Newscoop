@@ -70,6 +70,13 @@ B_DIALOG(<*Add new section*>, <*POST*>, <*do_add.php*>)
 	B_DIALOG_INPUT(<*Subscriptions*>)
 		<INPUT TYPE="checkbox" NAME="cSubs"> <? putGS("Add section to all subscriptions."); ?>
 	E_DIALOG_INPUT
+
+<?
+	## added by sebastian
+	if (function_exists ("incModFile"))
+		incModFile ();
+?>
+
 	B_DIALOG_BUTTONS
 		<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<? p($Pub); ?>">
 		<INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<? p($Issue); ?>">

@@ -75,6 +75,13 @@ B_DIALOG(<*Change section name*>, <*POST*>, <*do_edit.php*>)
 			<OPTION VALUE="d"><? putGS("Delete section from all subscriptions."); ?></OPTION>
 		</SELECT>
 	E_DIALOG_INPUT
+
+	<?
+	## added by sebastian
+	if (function_exists ("incModFile"))
+		incModFile ();
+	?>
+
 	B_DIALOG_BUTTONS
 		<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<? p($Pub); ?>">
 		<INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<? p($Issue); ?>">

@@ -71,19 +71,24 @@ B_MSGBOX(<*Delete article*>)
     query ("SELECT COUNT(*) FROM Articles WHERE IdPublication=$Pub AND NrIssue=$Issue AND NrSection=$Section AND Number=$Article", 'q_nr');
     fetchRowNum($q_nr);
     
-    $AFFECTED_ROWS=0;
-    if ($del)
-	query ("DELETE FROM Articles WHERE IdPublication=$Pub AND NrIssue=$Issue AND NrSection=$Section AND Number=$Article AND IdLanguage=$sLanguage");
+	$AFFECTED_ROWS=0;
+	if ($del)
+		query ("DELETE FROM Articles WHERE IdPublication=$Pub AND NrIssue=$Issue AND NrSection=$Section AND Number=$Article AND IdLanguage=$sLanguage");
 
-    if ($AFFECTED_ROWS > 0) {
-	query ("DELETE FROM X".getSVar($q_art,'Type')." WHERE NrArticle=$Article AND IdLanguage=$sLanguage");
-	query ("DELETE FROM ArticleIndex WHERE IdPublication=$Pub AND NrIssue=$Issue AND NrSection=$Section AND NrArticle=$Article AND IdLanguage=$sLanguage");
-	query ("DELETE FROM ArticleTopics WHERE NrArticle = $Article");
-	query ("DELETE FROM Images WHERE NrArticle = $Article");
-	$del= 1;
+	if ($AFFECTED_ROWS > 0) {
+
+		## added by sebastian
+		if (function_exists ("incModFile"))
+			incModFile ();
+
+		query ("DELETE FROM X".getSVar($q_art,'Type')." WHERE NrArticle=$Article AND IdLanguage=$sLanguage");
+		query ("DELETE FROM ArticleIndex WHERE IdPublication=$Pub AND NrIssue=$Issue AND NrSection=$Section AND NrArticle=$Article AND IdLanguage=$sLanguage");
+		query ("DELETE FROM ArticleTopics WHERE NrArticle = $Article");
+		query ("DELETE FROM Images WHERE NrArticle = $Article");
+		$del= 1;
     } else {
-	$del= 0;
-    }
+		$del= 0;
+	}
 
     if ($del) { ?>dnl
 		<LI><? putGS('The article $1 ($2) has been deleted.','<B>'.getHVar($q_art,'Name'),getHVar($q_slang,'Name').'</B>' ); ?></LI>

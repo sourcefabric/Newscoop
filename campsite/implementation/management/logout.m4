@@ -20,6 +20,13 @@ if (window != top.fmain && window != top) {
 	X_TITLE(<*Logout*>)
 	X_COOKIE(<*TOL_UserId=0*>)
 	X_COOKIE(<*TOL_UserKey=0*>)
+
+<?
+## added by sebastian
+if (function_exists ("incModFile"))
+	incModFile ();
+?>
+
 E_HEAD
 <BODY OnLoad="parent.location='X_ROOT/login.php'">
 </BODY>
