@@ -190,10 +190,10 @@ gethostbyaddr_r( const char *addr, int length, int type, struct hostent *result,
 	struct hostent *host;
 	*h_errnop = 0;
 
-	pthread_mutex_lock( &threadsafe_gethost_mutex );
-
 	if( bufstart>=buflen )
 		return NULL;
+
+	pthread_mutex_lock( &threadsafe_gethost_mutex );
 
 	buffer+=bufstart;
 	buflen-=bufstart;
@@ -219,10 +219,10 @@ gethostbyname_r (const char *name, struct hostent *result, char *buffer, int buf
 	struct hostent *host;
 	*h_errnop = 0;
 
-	pthread_mutex_lock( &threadsafe_gethost_mutex );
-
 	if( bufstart>=buflen )
 		return NULL;
+
+	pthread_mutex_lock( &threadsafe_gethost_mutex );
 
 	buffer+=bufstart;
 	buflen-=bufstart;
@@ -247,10 +247,10 @@ getservbyname_r (const char *name, const char *proto, struct servent *result, ch
 {
 	struct servent *serv;
 
-	pthread_mutex_lock( &threadsafe_gethost_mutex );
-
 	if( bufstart>=buflen )
 		return NULL;
+
+	pthread_mutex_lock( &threadsafe_gethost_mutex );
 
 	buffer+=bufstart;
 	buflen-=bufstart;
