@@ -1,13 +1,12 @@
 <?
 
-regGS("Add section to all subscriptions.","Add section to all subscriptions.");
-regGS("Delete section from all subscriptions.","Delete section from all subscriptions.");
-regGS("A total of $1 subscriptions were updated.","A total of $1 subscriptions were updated.");
+regGS("Add section to all subscriptions.","Add section to all subscriptions.:en");
+regGS("Delete section from all subscriptions.","Delete section from all subscriptions.:en");
+regGS("A total of $1 subscriptions were updated.","A total of $1 subscriptions were updated.:en");
 
 // -- index.m4
 regGS("Name<BR><SMALL>(click to see articles)</SMALL>","Name<BR><SMALL>(click to see articles)</SMALL>:en");
 regGS("Delete section $1","Delete section $1:en");
-regGS("No sections.","No sections.:en");
 
 // -- do_add.m4
 regGS("Adding new section","Adding new section:en");
@@ -45,5 +44,18 @@ regGS("The section could not be changed.","The section could not be changed.:en"
 regGS("Section $1 updated to issue $2. $3 ($4) of $5","Section $1 updated to issue $2. $3 ($4) of $5:en");
 regGS("Name<BR><SMALL>(click to add article)</SMALL>","Name<BR><SMALL>(click to add article)</SMALL>:en");
 
-?>
+// -- duplicate.m4
+regGS("Duplicate section", "Duplicate section:en");
 
+// -- dupform.m4
+regGS("The destination issue is the same as the source issue.", "The destination issue is the same as the source issue.:en");
+regGS("Destination section number", "Destination section number:en");
+
+regGS("Error updating subscriptions.", "Error updating subscriptions.:en");
+
+// -- do_duplicate.m4
+regGS("Duplicating section", "Duplicating section:en");
+regGS("The section $1 could not be duplicated", "The section $1 could not be duplicated:en");
+regGS("Section $1 has been duplicated to $2. $3 of $4", "Section $1 has been duplicated to $2. $3 of $4:en");
+
+?>
