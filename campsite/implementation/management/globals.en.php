@@ -27,6 +27,23 @@ regGS("Topics","Topics:en");
 regGS("Path","Path:en");
 regGS("Go up","Go up:en");
 
+regGS("Duplicate", "Duplicate:en");
+regGS("Select destination", "Select destination:en");
+
+regGS("No languages","No languages:en");
+regGS("---Select language---","---Select language---:en");
+
+regGS("No publications","No publications:en");
+regGS("---Select publication---","---Select publication---:en");
+
+regGS("No issues","No issues:en");
+regGS("---Select issue---","---Select issue---:en");
+
+regGS("No sections","No sections:en");
+regGS("---Select section---","---Select section---:en");
+
+regGS("No articles","No articles:en");
+regGS("---Select article---","---Select article---:en");
 
 // -- input fields
 regGS("Language","Language:en");
@@ -80,11 +97,9 @@ regGS("Info","Info:en");
 regGS("Trial Period","Trial Period:en");
 regGS("Paid Period","Paid Period:en");
 
-
 regGS("Preview","Preview:en");
 
 regGS("You must complete the $1 field.","You must complete the $1 field.:en");
-
 
 // -- common errors
 regGS("No such language.","No such language.:en");
@@ -98,6 +113,13 @@ regGS("You must select a language.","You must select a language.:en");
 regGS("No such section.","No such section.:en");
 regGS("No articles.","No articles.:en");
 regGS("Access denied", "Access denied:en");
+
+// -- other errors
+regGS("Invalid article identifier", "Invalid article identifier:en");
+regGS("Invalid destination section selected", "Invalid destination section selected:en");
+regGS("Internal error: identifiers not initialized", "Internal error: identifiers not initialized:en");
+regGS("Internal database error", "Internal database error:en");
+regGS("Invalid parameters received", "Invalid parameters received:en");
 
 // -- input messages
 regGS("Add new article","Add new article:en");
@@ -237,6 +259,7 @@ regGS("The topic $1 has been successfuly updated.", "The topic $1 has been succe
 regGS("The topic $1 has been deleted.", "The topic $1 has been deleted.:en");
 regGS("There are $1 articles using the topic.", "There are $1 articles using the topic.:en");
 regGS("You must fill in the $1 field.","You must fill in the $1 field.:en");
+regGS("You do not have the right to add articles.","You do not have the right to add articles.:en");
 
 regGS("Start","Start:en");
 regGS("Days","Days:en");
