@@ -12,6 +12,7 @@ function HtmlArea_Campsite($dbColumns) {
 <!-- Load the HTMLArea file -->
 <script type="text/javascript" src="/javascript/htmlarea/htmlarea.js"></script>
 
+<!-- Special Campsite functionality -->
 <script type="text/javascript">
 function CampsiteSubhead(editor, objectName, object) {
 	parent = editor.getParentElement();
@@ -28,9 +29,9 @@ function CampsiteSubhead(editor, objectName, object) {
 } // fn CampsiteSubhead
 
 /** 
+ * Handler for creating an internal campsite link.
  * This is a copy of the _createlink function, except that it calls 
  * a different popup window.
- *
  */
 function CampsiteInternalLink(editor, objectName, object, link) {
 	var outparam = null;
@@ -102,12 +103,14 @@ HTMLArea.loadPlugin("ListType");
 
 initdocument = function () {
 	<?php
-	foreach ($dbColumns as $dbColumn) {
+	foreach ($dbColumns as $dbColumn) {	
 		if (stristr($dbColumn->getType(), "blob")) {
 			?>
 			var editor = new HTMLArea("<?php print $dbColumn->getName(); ?>");
  			var config = editor.config;
-			config.pageStyle = "@import url(article_stylesheet.css);";
+ 			// Import our custom CSS - watch out for newlines though!
+ 			// They will break the editor.
+			config.pageStyle = "<?php echo str_replace("\n", "", file_get_contents("article_stylesheet.css")); ?>";
 	 		config.registerButton({
 	 			// The ID of the button.
 				id        : "campsite-subhead", 
@@ -153,7 +156,8 @@ initdocument = function () {
 		
 				[ "justifyleft", "justifycenter", "justifyright", "justifyfull", "separator",
 				  "outdent", "indent", "separator",
-				  "unorderedlist", "orderedlist", "separator", "inserthorizontalrule", "campsite-subhead", "campsite-internal-link", "createlink", "insertimage" ],
+				  "unorderedlist", "orderedlist", "separator", 
+				  "inserthorizontalrule", "campsite-subhead", "campsite-internal-link", "createlink", "insertimage" ],
 				  ["copy", "cut", "paste", "space", "separator", "undo", "redo", "separator", "lefttoright", "righttoleft", "separator", "htmlmode", "popupeditor"]
 			];
 			editor.registerPlugin(ListType);
