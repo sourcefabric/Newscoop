@@ -45,6 +45,11 @@ regGS("This article has been locked by $1 ($2) at","Articolul a fost blocat de $
 regGS("Now is $1","Acum este $1");
 regGS("Are you sure you want to unlock it?","Doriţi să îl deblocaţi?");
 regGS("Edit article","Editează articol");
+regGS("Duplicate article","Duplică articolul");
+regGS("Duplicating article","Duplic articolul");
+regGS("The destination section is the same as the source section.","Secţiunea destinaţie este aceeaşi cu cea sursă");
+regGS("The article $1 has been duplicated as $2","Articolul $1 a fost duplicat");
+regGS("The article $1 could not be duplicated","Articolul $1 nu poate fi duplicat");
 
 
 ?>
