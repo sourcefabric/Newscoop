@@ -43,31 +43,31 @@ typedef map <string, id_type, less<string> > CPublicationsAliases;
 
 
 /**
-  * class CPublicationsRegister
-  * store publications metadata classes; for retrieving the CURLType based on the
-  * site name; static class
-  */
+ * class CPublicationsRegister
+ * store publications metadata classes; for retrieving the CURLType based on the
+ * site name; static class
+ */
 
 class CPublicationsRegister
 {
-public:
-	CPublicationsRegister() {}
+	public:
+		CPublicationsRegister() {}
 
-	static CPublicationsRegister& getInstance();
+		static CPublicationsRegister& getInstance();
 
-	void insert(CPublication& p_rcoPublication);
+		void insert(CPublication& p_rcoPublication);
 
-	void erase(id_type p_nPublicationId);
+		void erase(id_type p_nPublicationId);
 
-	bool has(id_type p_nPublicationId) const;
+		bool has(id_type p_nPublicationId) const;
 
-	const CPublication* getPublication(const string& p_rcoAlias) const throw (out_of_range);
+		const CPublication* getPublication(const string& p_rcoAlias) const throw (out_of_range);
 
-	const CPublication* getPublication(id_type p_nPublicationId) const throw (out_of_range);
+		const CPublication* getPublication(id_type p_nPublicationId) const throw (out_of_range);
 
-private:
-	CPublicationsMap m_coPublications;
-	CPublicationsAliases m_coAliases;
+	private:
+		CPublicationsMap m_coPublications;
+		CPublicationsAliases m_coAliases;
 
 #ifdef _REENTRANT
 	mutable CMutex m_coMutex;
@@ -95,7 +95,7 @@ inline bool CPublicationsRegister::has(id_type p_nPublicationId) const
 }
 
 inline const CPublication* CPublicationsRegister::getPublication(const string& p_rcoAlias) const
-	throw (out_of_range)
+		throw (out_of_range)
 {
 #ifdef _REENTRANT
 	CMutexHandler coLockHandler(&m_coMutex);
@@ -110,7 +110,7 @@ inline const CPublication* CPublicationsRegister::getPublication(const string& p
 }
 
 inline const CPublication* CPublicationsRegister::getPublication(id_type p_nPublicationId) const
-	throw (out_of_range)
+		throw (out_of_range)
 {
 #ifdef _REENTRANT
 	CMutexHandler coLockHandler(&m_coMutex);
@@ -118,7 +118,7 @@ inline const CPublication* CPublicationsRegister::getPublication(id_type p_nPubl
 	CPublicationsMap::const_iterator coIt2 = m_coPublications.find(p_nPublicationId);
 	if (coIt2 == m_coPublications.end())
 		throw out_of_range(string("invalid publication identifier ")
-		                   + (string)Integer(p_nPublicationId));
+				+ (string)Integer(p_nPublicationId));
 	return (*coIt2).second;
 }
 
