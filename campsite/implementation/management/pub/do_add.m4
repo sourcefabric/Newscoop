@@ -80,7 +80,7 @@ B_MSGBOX(<*Adding new publication*>)
 				query($sql);
 				$params = array($operation_attr=>$operation_create, "IdPublication"=>"$pub_id");
 				$msg = build_reset_cache_msg($cache_type_publications, $params);
-				send_message($SERVER_ADDRESS, server_port(), $msg, $err_msg);
+				send_message("127.0.0.1", server_port(), $msg, $err_msg);
 			} else {
 				$sql = "DELETE FROM Aliases WHERE Id = " . $cDefaultAlias;
 				query($sql);

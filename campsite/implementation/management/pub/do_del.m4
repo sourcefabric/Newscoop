@@ -70,7 +70,7 @@ B_MSGBOX(<*Deleting publication*>)
 		query("DELETE FROM Publications WHERE Id = " . $Pub);
 		$params = array($operation_attr=>$operation_delete, "IdPublication"=>"$Pub" );
 		$msg = build_reset_cache_msg($cache_type_publications, $params);
-		send_message($SERVER_ADDRESS, server_port(), $msg, $err_msg);
+		send_message("127.0.0.1", server_port(), $msg, $err_msg);
 	}
 
     if ($AFFECTED_ROWS > 0) { ?>dnl
