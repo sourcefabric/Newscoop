@@ -9,10 +9,6 @@ if (!$access) {
 	exit;
 }
 
-if (!$User->hasPermission("AddArticle")) {
-	header("Location: /$ADMIN/ad.php?ADReason=".urlencode(getGS("You do not have the right to add articles." )));
-	exit;
-}
 
 $Pub = Input::get('Pub', 'int', 0);
 $Issue = Input::get('Issue', 'int', 0);
@@ -26,8 +22,13 @@ $DestIssue = Input::get('destination_issue', 'int', 0);
 $DestSection = Input::get('destination_section', 'int', 0);
 $BackLink = Input::get('Back', 'string', "/$ADMIN/pub/issues/sections/articles/index.php", true);
 
+if (!$User->hasPermission("AddArticle")) {
+	CampsiteInterface::DisplayError("You do not have the right to add articles.", $BackLink);
+	exit;
+}
+
 if (!Input::isValid()) {
-	header("Location: /$ADMIN/logout.php");
+	CampsiteInterface::DisplayError(array("Invalid input: $1", Input::GetErrorString()), $BackLink);
 	exit;	
 }
 
@@ -44,6 +45,6 @@ $logtext = getGS('Article $1 added to $2. $3 from $4. $5 of $6',
 	$issueObj->getName(), $publicationObj->getName() );
 Log::Message($logtext, $User->getUserName(), 155);
 
-header("Location: ".CampsiteInterface::ArticleUrl($articleCopy, $Language, "edit.php", $Back));
+header("Location: ".CampsiteInterface::ArticleUrl($articleCopy, $Language, "edit.php", $BackLink));
 exit;
 ?>
