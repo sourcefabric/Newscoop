@@ -126,7 +126,6 @@ void CMsgURLRequest::setContent(char* p_pchContent)
 	m_coDocumentRoot = coReader.nextElementContent("DocumentRoot", 1);
 	m_coRemoteAddress = coReader.nextElementContent("RemoteAddress", 1);
 	m_coPathTranslated = coReader.nextElementContent("PathTranslated", 1);
-	m_coPathInfo = coReader.nextElementContent("PathInfo", 1);
 	m_coRequestMethod = coReader.nextElementContent("RequestMethod", 1);
 	m_coRequestURI = coReader.nextElementContent("RequestURI", 1);
 
