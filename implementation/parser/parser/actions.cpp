@@ -47,6 +47,7 @@ CActSearch, CActWith methods.
 #include "data_types.h"
 #include "attributes_impl.h"
 #include "cpublication.h"
+#include "auto_ptr.h"
 
 using std::set;
 using std::cout;
@@ -1197,23 +1198,10 @@ int CActFormParameters::takeAction(CContext& c, sockstream& fs)
 	if (c.Language() < 0 && c.Publication() < 0 && c.Issue() < 0
 	        && c.Section() < 0 && c.Article() < 0)
 		return ERR_NOPARAM;
-	FormPrintParam(P_IDLANG, c.Language(), fs);
 	if (fromstart)
-	{
-		FormPrintParam(P_IDPUBL, c.DefPublication(), fs);
-		FormPrintParam(P_NRISSUE, c.DefIssue(), fs);
-		FormPrintParam(P_NRSECTION, c.DefSection(), fs);
-		FormPrintParam(P_NRARTICLE, c.DefArticle(), fs);
-		FormPrintParam(P_TOPIC_ID, c.DefTopic(), fs);
-	}
+		fs << c.DefURL()->getFormString();
 	else
-	{
-		FormPrintParam(P_IDPUBL, c.Publication(), fs);
-		FormPrintParam(P_NRISSUE, c.Issue(), fs);
-		FormPrintParam(P_NRSECTION, c.Section(), fs);
-		FormPrintParam(P_NRARTICLE, c.Article(), fs);
-		FormPrintParam(P_TOPIC_ID, c.Topic(), fs);
-	}
+		fs << c.URL()->getFormString();
 	if (c.LMode() == LM_PREV)
 	{
 		FormPrintParam(P_ILSTART, c.IPrevStart(), fs);
@@ -2328,9 +2316,17 @@ int CActSubscription::takeAction(CContext& c, sockstream& fs)
 	if (row[0] == NULL)
 		return -1;
 	long int nos = atol(row[0]);
+	SafeAutoPtr<CURL> pcoURL(c.URL()->clone());
+	try {
+		pcoURL->setTemplate(tpl_file);
+	}
+	catch (InvalidValue& rcoEx)
+	{
+		return ERR_INVALID_FIELD;
+	}
 	CContext lc = c;
 	lc.SetByPublication(by_publication);
-	fs << "<form action=\"" << tpl_file << "\" name=\"f1\" method=POST>";
+	fs << "<form action=\"" << pcoURL->getURIPath() << "\" name=\"f1\" method=POST>\n";
 	if (c.SubsType() == ST_PAID && total != "")
 		fs << "<script>\nvar sum;\nvar i;\n\n"
 		"function f(){\n"
@@ -2343,22 +2339,20 @@ int CActSubscription::takeAction(CContext& c, sockstream& fs)
 		"}\n</script>\n";
 	runActions(block, lc, fs);
 	if (c.SubsType() == ST_PAID && total != "" && !by_publication)
-		fs << total << " <input type=text name=suma size=10 READONLY> " << currency;
-	fs << "<input type=hidden name=\"" P_IDPUBL "\" value=\"" << c.Publication()
-	<< "\"><input type=hidden name=\"" P_IDLANG "\" value=\"" << c.Language()
-	<< "\"><input type=hidden name=\"" P_NRISSUE "\" value=\"" << c.Issue() << "\">";
+		fs << total << " <input type=text name=suma size=10 READONLY> " << currency << endl;
+	fs << c.URL()->getFormString();
 	if (c.SubsType() == ST_PAID && total != "" && !by_publication)
 		fs << "<input type=hidden name=\"unitcost\" value=\"" << unit_cost
-		<< "\"><input type=hidden name=nos value=\"" << nos << "\">"
-		<< "<p><input type=button value=\"" << evaluate << "\" onclick=\"f()\"> ";
+		<< "\">\n<input type=hidden name=nos value=\"" << nos << "\">\n"
+		<< "<p><input type=button value=\"" << evaluate << "\" onclick=\"f()\"></p>\n";
 	if (c.SubsType() == ST_PAID)
-		fs << "<input type=hidden name=SubsType value=\"paid\"> ";
+		fs << "<input type=hidden name=SubsType value=\"paid\">\n";
 	else
-		fs << "<input type=hidden name=SubsType value=\"trial\">";
+		fs << "<input type=hidden name=SubsType value=\"trial\">\n";
 	if (by_publication)
-		fs << "<input type=hidden name=by value=publication>";
-	fs << " <input type=submit name=\"" P_SUBSCRIBE "\" value=\"" << button_name
-	   << "\"></form>";
+		fs << "<input type=hidden name=by value=publication>\n";
+	fs << "<input type=submit name=\"" P_SUBSCRIBE "\" value=\"" << button_name
+	   << "\">\n</form>\n";
 	return RES_OK;
 	TK_CATCH_ERR
 }
@@ -2609,13 +2603,19 @@ int CActUser::takeAction(CContext& c, sockstream& fs)
 	    };
 	if (c.Key() <= 0 && !add)
 		return ERR_NOKEY;
-	fs << "<form name=\"user\" action=\"" << tpl_file << "\" method=POST>"
-	"<input type=hidden name=\"" P_IDLANG "\" value=\"" << c.Language()
-	<< "\"><input type=hidden name=\"" P_IDPUBL "\" value=\"" << c.Publication()
-	<< "\"><input type=hidden name=\"" P_NRISSUE "\" value=\"" << c.Issue() << "\">";
+	SafeAutoPtr<CURL> pcoURL(c.URL()->clone());
+	try {
+		pcoURL->setTemplate(tpl_file);
+	}
+	catch (InvalidValue& rcoEx)
+	{
+		return ERR_INVALID_FIELD;
+	}
+	fs << "<form name=\"user\" action=\"" << pcoURL->getURIPath() << "\" method=POST>\n";
+	c.URL()->getFormString();
 	if (c.SubsType() != ST_NONE)
 		fs << "<input type=hidden name=\"SubsType\" value=\""
-		<< (c.SubsType() == ST_TRIAL ? "trial" : "paid") << "\">";
+		<< (c.SubsType() == ST_TRIAL ? "trial" : "paid") << "\">\n";
 	CContext lc = c;
 	if (!add)
 	{
@@ -2634,7 +2634,7 @@ int CActUser::takeAction(CContext& c, sockstream& fs)
 	}
 	runActions(block, lc, fs);
 	fs << "<input type=submit name=\"" << (add ? P_USERADD : P_USERMODIFY)
-	<< "\" value=\"" << button_name << "\"></form>";
+	<< "\" value=\"" << button_name << "\">\n</form>\n";
 	return RES_OK;
 	TK_CATCH_ERR
 }
@@ -2645,7 +2645,7 @@ int CActUser::takeAction(CContext& c, sockstream& fs)
 //		sockstream& fs - output stream	
 int CActLogin::takeAction(CContext& c, sockstream& fs)
 {
-	CURL* pcoURL = c.URL()->clone();
+	SafeAutoPtr<CURL> pcoURL(c.URL()->clone());
 	try {
 		pcoURL->setTemplate(tpl_file);
 	}
@@ -2654,11 +2654,10 @@ int CActLogin::takeAction(CContext& c, sockstream& fs)
 		return ERR_INVALID_FIELD;
 	}
 	CContext lc = c;
-	fs << "\n<form action=\"" << pcoURL->getURIPath() << "\" method=POST>\n";
-	fs << pcoURL->getFormString();
+	fs << "<form action=\"" << pcoURL->getURIPath() << "\" method=POST>\n";
+	fs << c.URL()->getFormString();
 	runActions(block, lc, fs);
-	fs << "\t<input type=submit name=\"" P_LOGIN "\" value=\"" << button_name << "\">\n</form>\n";
-	delete pcoURL;
+	fs << "<input type=submit name=\"" P_LOGIN "\" value=\"" << button_name << "\">\n</form>\n";
 	return RES_OK;
 }
 
@@ -2668,14 +2667,19 @@ int CActLogin::takeAction(CContext& c, sockstream& fs)
 //		sockstream& fs - output stream	
 int CActSearch::takeAction(CContext& c, sockstream& fs)
 {
+	SafeAutoPtr<CURL> pcoURL(c.URL()->clone());
+	try {
+		pcoURL->setTemplate(tpl_file);
+	}
+	catch (InvalidValue& rcoEx)
+	{
+		return ERR_INVALID_FIELD;
+	}
 	CContext lc = c;
-	fs << "<form action=\"" << tpl_file << "\" method=POST><input type=hidden "
-	"name=\"" P_IDLANG "\" value=\"" << c.Language() << "\"><input type=hidden"
-	" name=\"" P_IDPUBL "\" value=\"" << c.Publication() << "\"><input type="
-	"hidden name=\"" P_NRISSUE "\" value=\"" << c.Issue() << "\"><input "
-	"type=hidden name=\"" P_NRSECTION "\" value=\"" << c.Section() << "\">";
+	fs << "<form action=\"" << pcoURL->getURIPath() << "\" method=POST>\n";
+	fs << c.URL()->getFormString();
 	runActions(block, lc, fs);
-	fs << "<input type=submit name=\"" P_SEARCH "\" value=\"" << button_name << "\"></form>";
+	fs << "<input type=submit name=\"" P_SEARCH "\" value=\"" << button_name << "\">\n</form>\n";
 	return RES_OK;
 }
 
