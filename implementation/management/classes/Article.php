@@ -205,7 +205,7 @@ class Article extends DatabaseObject {
 		$articleCopy->m_data['OnSection'] = $this->m_data['OnFrontPage'];
 		$articleCopy->m_data['Keywords'] = $this->m_data['Keywords'];
 		$articleCopy->m_data['Public'] = $this->m_data['Public'];
-		$articleCopy->m_data['ArticleOrder'] = ($this->getMaxArticleOrder()+1);
+		$articleCopy->m_data['ArticleOrder'] = $this->m_data['Number'];
 		
 		$articleCopy->commit();
 
@@ -276,17 +276,6 @@ class Article extends DatabaseObject {
 	} // fn createTranslation
 	
 	
-	function getMaxArticleOrder() {
-		global $Campsite;
-		$queryStr = 'SELECT MAX(ArticleOrder) FROM Articles '
-					.' WHERE IdPublication='.$this->m_data['IdPublication']
-					.' AND NrIssue='.$this->m_data['NrIssue']
-					.' AND NrSection='.$this->m_data['NrSection']
-					.' AND IdLanguage='.$this->m_data['IdLanguage'];
-		return $Campsite['db']->GetOne($queryStr);
-	} // fn getMaxArticleOrder
-	
-	
 	/**
 	 * Delete article from database.  This will 
 	 * only delete one specific translation of the article.
@@ -345,34 +334,6 @@ class Article extends DatabaseObject {
 	} // fn unlock
 	
 	
-//	/**
-//	 * Create and return an array representation of an article for use in a template.
-//	 * @return array
-//	 */
-//	function getTemplateVar() {
-//		$templateVar = array();
-//		$templateVar['publication_id'] = $this->IdPublication;
-//		$templateVar['issue_id'] = $this->NrIssue;
-//		$templateVar['section_id'] = $this->NrSection;
-//		$templateVar['article_id'] = $this->Number;
-//		$templateVar['language_id'] = $this->IdLanguage;
-//		$templateVar['article_type'] = $this->Type;
-//		$templateVar['user_id'] = $this->IdUser;
-//		$templateVar['title'] = $this->Name;
-//		$templateVar['on_front_page'] = $this->OnFrontPage;
-//		$templateVar['on_section'] = $this->OnSection;
-//		$templateVar['published'] = $this->Published;
-//		$templateVar['upload_date'] = $this->UploadDate;
-//		$templateVar['keywords'] = $this->Keywords;
-//		$templateVar['is_public'] = $this->Public;
-//		$templateVar['is_indexed'] = $this->IsIndexed;
-//		$templateVar['locked_by_user'] = $this->LockUser;
-//		$templateVar['lock_time'] = $this->LockTime;
-//		$templateVar['short_name'] = $this->ShortName;
-//		return $templateVar;
-//	} // fn getTemplateVar
-
-
 	/**
 	 * Return an array of Langauge objects, one for each
 	 * type of language the article is written in.
@@ -441,98 +402,6 @@ class Article extends DatabaseObject {
 	
 	
 	/**
-	 * Get the list of all languages that articles have been written in.
-	 * @return array
-	 */
-	function GetAllLanguages() {
-		global $Campsite;
-		$tmpLanguage =& new Language();
-		$languageColumns = $tmpLanguage->getColumnNames(true);
-		$languageColumns = implode(",", $languageColumns);
-	 	$queryStr = 'SELECT DISTINCT(IdLanguage), '.$languageColumns
-	 				.' FROM Articles, Languages '
-	 				.' WHERE Articles.IdLanguage = Languages.Id';
-	 	$rows = $Campsite['db']->GetAll($queryStr);
-	 	$languages = array();
-	 	if (is_array($rows)) {
-			foreach ($rows as $row) {
-				$tmpLanguage =& new Language();
-				$tmpLanguage->fetch($row);
-				$languages[] =& $tmpLanguage;
-			}
-	 	}
-		return $languages;		
-	} // fn GetAllLanguages
-	
-	
-	/**
-	 * Get a list of articles.  You can be as specific or as general as you
-	 * like with the parameters: e.g. specifying only p_publication will get
-	 * you all the articles in a particular publication.  Specifying all 
-	 * parameters will get you all the articles in a particular section with
-	 * the given language.
-	 *
-	 * @param int p_publicationId
-	 * @param int p_issueId
-	 * @param int p_sectionId
-	 * @param int p_languageId
-	 *
-	 * @param int p_preferredLanguage
-	 *		If specified, list this language before others.
-	 *
-	 * @param array p_sqlLimit
-	 *		Set the terms for the LIMIT clause.
-	 *
-	 * @return array
-	 *		Return an array of Article objects.
-	 */
-	function GetArticles($p_publicationId = null, $p_issueId = null, 
-						 $p_sectionId = null, $p_languageId = null, 
-						 $p_preferredLanguage = null, $p_sqlLimit = null) {
-		global $Campsite;
-		$queryStr = 'SELECT *';
-		if (!is_null($p_preferredLanguage)) {
-			$queryStr .= ", abs($p_preferredLanguage - IdLanguage) as LanguageOrder ";
-		}
-		$queryStr .= ' FROM Articles';
-		$whereClause = array();
-		if (!is_null($p_publicationId)) {
-			$whereClause[] = "IdPublication=$p_publicationId";			
-		}
-		if (!is_null($p_issueId)) {
-			$whereClause[] = "NrIssue=$p_issueId";
-		}
-		if (!is_null($p_sectionId)) {
-			$whereClause[] = "NrSection=$p_sectionId";
-		}
-		if (!is_null($p_languageId)) {
-			$whereClause[] = "IdLanguage='".$p_languageId."'";
-		}
-		if (count($whereClause) > 0) {
-			$queryStr .= ' WHERE ' . implode(' AND ', $whereClause);
-		}
-		$orderBy = ' ORDER BY ArticleOrder ASC, Number DESC ';
-		if (!is_null($p_preferredLanguage)) {
-			$orderBy .= ', LanguageOrder ASC, IdLanguage ASC';
-		}
-		$queryStr .= $orderBy;
-		if (!is_null($p_sqlLimit)) {
-			$queryStr .= ' LIMIT ' . $p_sqlLimit;
-		}
-		
-		$query = $Campsite['db']->Execute($queryStr);
-		$articles = array();
-		while ($row = $query->FetchRow()) {
-			$tmpArticle =& new Article($row['IdPublication'], $row['NrIssue'],
-				$row['NrSection'], $row['IdLanguage']);
-			$tmpArticle->fetch($row);
-			$articles[] = $tmpArticle;
-		}
-		return $articles;
-	} // fn GetArticles
-	
-	
-	/**
 	 * Get the section that this article is in.
 	 * @return object
 	 */
@@ -558,6 +427,111 @@ class Article extends DatabaseObject {
 	} // fn getSection
 	
 	
+	/**
+	 * Change the article's position in the order sequence
+	 * relative to its current position.
+	 *
+	 * @param string p_direction
+	 * 		Can be "up" or "down".
+	 *
+	 * @param int p_spacesToMove
+	 *		The number of spaces to move the article.
+	 *
+	 * @return boolean
+	 */
+	function moveRelative($p_direction, $p_spacesToMove = 1)	{
+		global $Campsite;
+		
+		// Get the article that is in the final position where this
+		// article will be moved to.
+		$compareOperator = ($p_direction == 'up') ? '<' : '>';
+		$order = ($p_direction == 'up') ? 'desc' : 'asc';
+		$queryStr = 'SELECT DISTINCT(Number), ArticleOrder FROM Articles '
+					.' WHERE IdPublication='.$this->m_data['IdPublication']
+					.' AND NrIssue='.$this->m_data['NrIssue']
+					.' AND NrSection='.$this->m_data['NrSection']
+					.' AND ArticleOrder '.$compareOperator.' '.$this->m_data['ArticleOrder']
+					//.' AND IdLanguage='.$this->m_data['IdLanguage']
+					.' ORDER BY ArticleOrder ' . $order
+		     		.' LIMIT '.($p_spacesToMove-1).', 1';
+		$destRow = $Campsite['db']->GetRow($queryStr);
+		if (!$destRow) {
+			return false;
+		}
+		// Shift all articles one space between the source and destination article.
+		$operator = ($p_direction == 'up') ? '+' : '-';
+		$minArticleOrder = min($destRow['ArticleOrder'], $this->m_data['ArticleOrder']);
+		$maxArticleOrder = max($destRow['ArticleOrder'], $this->m_data['ArticleOrder']);
+		$queryStr = 'UPDATE Articles SET ArticleOrder = ArticleOrder '.$operator.' 1 '
+					.' WHERE IdPublication = '. $this->m_data['IdPublication']
+					.' AND NrIssue = ' . $this->m_data['NrIssue']
+					.' AND NrSection = ' . $this->m_data['NrSection']
+		     		.' AND ArticleOrder >= '.$minArticleOrder
+		     		.' AND ArticleOrder <= '.$maxArticleOrder;
+		$Campsite['db']->Execute($queryStr);
+		
+		// Change position of this article to the destination position.
+		$queryStr = 'UPDATE Articles SET ArticleOrder = ' . $destRow['ArticleOrder']
+					.' WHERE IdPublication = '. $this->m_data['IdPublication']
+					.' AND NrIssue = ' . $this->m_data['NrIssue']
+					.' AND NrSection = ' . $this->m_data['NrSection']
+		     		.' AND Number = ' . $this->m_data['Number'];
+		$Campsite['db']->Execute($queryStr);
+
+		return true;
+	} // fn moveRelative
+	
+	
+	/**
+	 * 
+	 * @param int p_position
+	 * @return boolean
+	 */
+	function moveAbsolute($p_moveToPosition = 1) {
+		global $Campsite;
+		// Get the article that is in the location we are moving
+		// this one to.
+		$queryStr = 'SELECT DISTINCT(Number), ArticleOrder FROM Articles '
+					.' WHERE IdPublication='.$this->m_data['IdPublication']
+					.' AND NrIssue='.$this->m_data['NrIssue']
+					.' AND NrSection='.$this->m_data['NrSection']
+		     		.' ORDER BY ArticleOrder ASC LIMIT '.($p_moveToPosition - 1).', 1';
+		$destRow = $Campsite['db']->GetRow($queryStr);
+		if (!$destRow) {
+			return false;
+		}
+		if ($destRow['ArticleOrder'] == $this->m_data['ArticleOrder']) {
+			return true;
+		}
+		if ($destRow['ArticleOrder'] > $this->m_data['ArticleOrder']) {
+			$operator = '-';
+		} else {
+			$operator = '+';
+		}
+		// Reorder all the other articles in this section
+		$minArticleOrder = min($destRow['ArticleOrder'], $this->m_data['ArticleOrder']);
+		$maxArticleOrder = max($destRow['ArticleOrder'], $this->m_data['ArticleOrder']);
+		$queryStr = 'UPDATE Articles '
+					.' SET ArticleOrder = ArticleOrder '.$operator.' 1 '
+					.' WHERE IdPublication='.$this->m_data['IdPublication']
+					.' AND NrIssue='.$this->m_data['NrIssue']
+					.' AND NrSection='.$this->m_data['NrSection']
+		     		.' AND ArticleOrder >= '.$minArticleOrder
+		     		.' AND ArticleOrder <= '.$maxArticleOrder;
+		$Campsite['db']->Execute($queryStr);
+		
+		// Reposition this article.
+		$queryStr = 'UPDATE Articles '
+					.' SET ArticleOrder='.$destRow['ArticleOrder']
+					.' WHERE IdPublication='.$this->m_data['IdPublication']
+					.' AND NrIssue='.$this->m_data['NrIssue']
+					.' AND NrSection='.$this->m_data['NrSection']
+		     		.' AND Number='.$this->m_data['Number'];
+		$Campsite['db']->Execute($queryStr);
+		return true;
+	} // fn moveAbsolute
+	
+
 	/**
 	 * Get the name of the dynamic article type table.
 	 *
@@ -660,6 +634,14 @@ class Article extends DatabaseObject {
 	function setUserId($value) {
 		return parent::setProperty('IdUser', $value);
 	}
+	
+	
+	/**
+	 * @return int
+	 */
+	function getOrder() {
+		return $this->getProperty('ArticleOrder');
+	} // fn getOrder
 	
 	
 	/**
@@ -828,6 +810,64 @@ class Article extends DatabaseObject {
 	} // fn getArticleTypeObject
 	
 	
+//	/**
+//	 * Create and return an array representation of an article for use in a template.
+//	 * @return array
+//	 */
+//	function getTemplateVar() {
+//		$templateVar = array();
+//		$templateVar['publication_id'] = $this->IdPublication;
+//		$templateVar['issue_id'] = $this->NrIssue;
+//		$templateVar['section_id'] = $this->NrSection;
+//		$templateVar['article_id'] = $this->Number;
+//		$templateVar['language_id'] = $this->IdLanguage;
+//		$templateVar['article_type'] = $this->Type;
+//		$templateVar['user_id'] = $this->IdUser;
+//		$templateVar['title'] = $this->Name;
+//		$templateVar['on_front_page'] = $this->OnFrontPage;
+//		$templateVar['on_section'] = $this->OnSection;
+//		$templateVar['published'] = $this->Published;
+//		$templateVar['upload_date'] = $this->UploadDate;
+//		$templateVar['keywords'] = $this->Keywords;
+//		$templateVar['is_public'] = $this->Public;
+//		$templateVar['is_indexed'] = $this->IsIndexed;
+//		$templateVar['locked_by_user'] = $this->LockUser;
+//		$templateVar['lock_time'] = $this->LockTime;
+//		$templateVar['short_name'] = $this->ShortName;
+//		return $templateVar;
+//	} // fn getTemplateVar
+
+
+	/***************************************************************************/
+	/* Static Functions                                                        */
+	/***************************************************************************/
+	
+	/**
+	 * Return the number of unique (language-independant) articles according
+	 * to the given parameters.
+	 */
+	function GetNumUniqueArticles($p_publicationId = null, $p_issueId = null, 
+								  $p_sectionId = null) {
+		global $Campsite;
+		$queryStr = 'SELECT COUNT(DISTINCT(Number)) FROM Articles';
+		$whereClause = array();
+		if (!is_null($p_publicationId)) {
+			$whereClause[] = "IdPublication=$p_publicationId";			
+		}
+		if (!is_null($p_issueId)) {
+			$whereClause[] = "NrIssue=$p_issueId";
+		}
+		if (!is_null($p_sectionId)) {
+			$whereClause[] = "NrSection=$p_sectionId";
+		}
+		if (count($whereClause) > 0) {
+			$queryStr .= ' WHERE ' . implode(' AND ', $whereClause);
+		}
+		$result = $Campsite['db']->GetOne($queryStr);
+		return $result;
+	} // fn GetNumUniqueArticles
+	
+	
 	/**
 	 * Return an array of (array(Articles), int) where
 	 * the array of articles are those written by the given user, within the given range,
@@ -892,103 +932,145 @@ class Article extends DatabaseObject {
 	
 	
 	/**
-	 * Change the article's position in the order sequence
-	 * relative to its current position.
-	 *
-	 * @param string p_direction
-	 * 		Can be "up" or "down".
-	 *
-	 * @param int p_position
-	 *		The number of spaces to move the article.
-	 *
-	 * @return boolean
+	 * Get the list of all languages that articles have been written in.
+	 * @return array
 	 */
-	function moveRelative($p_direction, $p_position = 1)	{
+	function GetAllLanguages() {
 		global $Campsite;
-		$comparison = ($p_direction == 'up') ? '<=' : '>=';
-		$order = ($p_direction == 'up') ? 'desc' : 'asc';
-		// Get the other articles
-		$queryStr = 'SELECT * FROM Articles '
-					.' WHERE IdPublication='.$this->m_data['IdPublication']
-					.' AND NrIssue='.$this->m_data['NrIssue']
-					.' AND NrSection='.$this->m_data['NrSection']
-					.' AND ArticleOrder '.$comparison.' '.$this->m_data['ArticleOrder']
-					.' AND IdLanguage='.$this->m_data['IdLanguage']
-					.' ORDER BY ArticleOrder ' . $order
-		     		.' LIMIT '.$p_position.', 1';
-		$row = $Campsite['db']->GetRow($queryStr);
-		if (!$row) {
-			return false;
-		}
-		// If we're moving up, keep the current article in place and
-		// move all the others down.
-		$prevOrder = $row['ArticleOrder'] + (($p_direction == 'up') ? 0 : 1);
-		$prevNumber = $row['Number'];
-		// Reorder all the other articles in this section
-		$queryStr = 'UPDATE Articles SET ArticleOrder = ArticleOrder + 1 '
-					.' WHERE IdPublication = '. $this->m_data['IdPublication']
-					.' AND NrIssue = ' . $this->m_data['NrIssue']
-					.' AND NrSection = ' . $this->m_data['NrSection']
-		     		.' AND ArticleOrder >= ' . $prevOrder;
-		$Campsite['db']->Execute($queryStr);
-		// Change position of this article
-		$queryStr = 'UPDATE Articles SET ArticleOrder = ' . $prevOrder 
-					.' WHERE IdPublication = '. $this->m_data['IdPublication']
-					.' AND NrIssue = ' . $this->m_data['NrIssue']
-					.' AND NrSection = ' . $this->m_data['NrSection']
-		     		.' AND Number = ' . $this->m_data['Number'];
-		$Campsite['db']->Execute($queryStr);
-		return true;
-	} // fn moveRelative
+		$tmpLanguage =& new Language();
+		$languageColumns = $tmpLanguage->getColumnNames(true);
+		$languageColumns = implode(",", $languageColumns);
+	 	$queryStr = 'SELECT DISTINCT(IdLanguage), '.$languageColumns
+	 				.' FROM Articles, Languages '
+	 				.' WHERE Articles.IdLanguage = Languages.Id';
+	 	$rows = $Campsite['db']->GetAll($queryStr);
+	 	$languages = array();
+	 	if (is_array($rows)) {
+			foreach ($rows as $row) {
+				$tmpLanguage =& new Language();
+				$tmpLanguage->fetch($row);
+				$languages[] =& $tmpLanguage;
+			}
+	 	}
+		return $languages;		
+	} // fn GetAllLanguages
 	
 	
 	/**
-	 * 
-	 * @param int p_position
-	 * @return boolean
+	 * Get a list of articles.  You can be as specific or as general as you
+	 * like with the parameters: e.g. specifying only p_publication will get
+	 * you all the articles in a particular publication.  Specifying all 
+	 * parameters will get you all the articles in a particular section with
+	 * the given language.
+	 *
+	 * @param int p_publicationId
+	 * @param int p_issueId
+	 * @param int p_sectionId
+	 * @param int p_languageId
+	 *
+	 * @param int p_preferredLanguage
+	 *		If specified, list this language before others.
+	 *
+	 * @param array p_sqlLimit
+	 *		Set the terms for the LIMIT clause.
+	 *
+	 * @return array
+	 *		Return an array of Article objects.
 	 */
-	function moveAbsolute($p_position = 1) {
+	function GetArticles($p_publicationId = null, $p_issueId = null, 
+						 $p_sectionId = null, $p_languageId = null, 
+						 $p_preferredLanguage = null, $p_numRows = null,
+						 $p_startAt = '', $p_numRowsIsUniqueRows = false) {
 		global $Campsite;
-		$queryStr = 'SELECT * FROM Articles '
-					.' WHERE IdPublication='.$this->m_data['IdPublication']
-					.' AND NrIssue='.$this->m_data['NrIssue']
-					.' AND NrSection='.$this->m_data['NrSection']
-					.' AND IdLanguage='.$this->m_data['IdLanguage']
-		     		.' ORDER BY ArticleOrder ASC LIMIT '.($p_position - 1).', 1';
-		$row = $Campsite['db']->GetRow($queryStr);
-		if (!$row) {
-			return false;
+		
+		$whereClause = array();
+		if (!is_null($p_publicationId)) {
+			$whereClause[] = "IdPublication=$p_publicationId";			
 		}
-		$prevOrder = $row['ArticleOrder'];
-		$prevNumber = $row['Number'];
-		if ($prevOrder == $this->m_data['ArticleOrder']) {
-			return true;
+		if (!is_null($p_issueId)) {
+			$whereClause[] = "NrIssue=$p_issueId";
 		}
-		if ($prevOrder > $this->m_data['ArticleOrder']) {
-			$comparison = ">";
-			$newOrder = $prevOrder + 1;
-		} else {
-			$comparison = ">=";
-			$newOrder = $prevOrder;
+		if (!is_null($p_sectionId)) {
+			$whereClause[] = "NrSection=$p_sectionId";
 		}
-		// Reorder all the other articles in this section
-		$queryStr = 'UPDATE Articles '
-					.' SET ArticleOrder = ArticleOrder + 1 '
-					.' WHERE IdPublication='.$this->m_data['IdPublication']
-					.' AND NrIssue='.$this->m_data['NrIssue']
-					.' AND NrSection='.$this->m_dataa['NrSection']
-		     		.' AND ArticleOrder '.$comparison.' '.$prevOrder;
-		$Campsite['db']->Execute($queryStr);
-		// Reposition this article.
-		$queryStr = 'UPDATE Articles '
-					.' SET ArticleOrder='.$newOrder
-					.' WHERE IdPublication='.$this->m_data['IdPublication']
-					.' AND NrIssue='.$this->m_data['NrIssue']
-					.' AND NrSection='.$this->m_data['NrSection']
-		     		.' AND Number='.$this->m_data['Number'];
-		$Campsite['db']->Execute($queryStr);
-		return true;
-	} // fn moveAbsolute
+		if (!is_null($p_languageId)) {
+			$whereClause[] = "IdLanguage=$p_languageId";
+		}
+
+		if ($p_numRowsIsUniqueRows) {
+			$queryStr1 = 'SELECT DISTINCT(Number) FROM Articles ';
+			if (count($whereClause) > 0) {
+				$queryStr1 .= ' WHERE '. implode(' AND ', $whereClause);
+			}
+			if ($p_startAt !== '') {
+				$p_startAt .= ',';
+			}
+			$queryStr1 .= ' ORDER BY ArticleOrder ASC, Number DESC ';
+			if (!is_null($p_numRows)) {
+				$queryStr1 .= ' LIMIT '.$p_startAt.$p_numRows;
+			}
+			$uniqueArticleNumbers = $Campsite['db']->GetCol($queryStr1);
+		}
+		
+		$queryStr2 = 'SELECT *';
+		// This causes the preferred language to be listed first.
+		if (!is_null($p_preferredLanguage)) {
+			$queryStr2 .= ", abs($p_preferredLanguage - IdLanguage) as LanguageOrder ";
+		}
+		$queryStr2 .= ' FROM Articles';
+		
+		// If selecting unique rows, specify those rows in the 
+		// WHERE clause.
+		$uniqueRowsClause = '';
+		if ($p_numRowsIsUniqueRows) {
+			foreach ($uniqueArticleNumbers as $uniqueNumber) {
+				$tmpClause[] = "Number = $uniqueNumber";
+			}
+			$uniqueRowsClause = '(' .implode(' OR ', $tmpClause).')';
+		}
+		
+		// Add the WHERE clause.
+		if ((count($whereClause) > 0) || ($uniqueRowsClause != '')) {
+			$queryStr2 .= ' WHERE ';
+			if (count($whereClause) > 0) {
+				$queryStr2 .= '(' . implode(' AND ', $whereClause) .')';
+			}
+			if ($uniqueRowsClause != '') {
+				if (count($whereClause) > 0) {
+					$queryStr2 .= ' AND ';
+				}
+				$queryStr2 .= $uniqueRowsClause;
+			}
+		}
+		
+		// ORDER BY clause
+		$orderBy = ' ORDER BY ArticleOrder ASC, Number DESC ';
+		if (!is_null($p_preferredLanguage)) {
+			$orderBy .= ', LanguageOrder ASC, IdLanguage ASC';
+		}
+		$queryStr2 .= $orderBy;
+		
+		// If not using the unique rows option,
+		// use the limit clause to set the number of rows returned.
+		if (!$p_numRowsIsUniqueRows) {
+			if ($p_startAt !== '') {
+				$p_startAt .= ',';
+			}
+			if (!is_null($p_numRows)) {
+				$queryStr2 .= ' LIMIT '.$p_startAt.$p_numRows;
+			}
+		}
+				
+		$query = $Campsite['db']->Execute($queryStr2);
+		$articles = array();
+		while ($row = $query->FetchRow()) {
+			$tmpArticle =& new Article($row['IdPublication'], $row['NrIssue'],
+				$row['NrSection'], $row['IdLanguage']);
+			$tmpArticle->fetch($row);
+			$articles[] = $tmpArticle;
+		}
+		return $articles;
+	} // fn GetArticles
 	
 } // class Article
 
