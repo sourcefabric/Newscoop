@@ -1,6 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
 load_common_include_files("$ADMIN_DIR/imagearchive");
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ImageSearch.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
@@ -13,13 +14,22 @@ if (!$access) {
 	exit;
 }
 // Check input 
-$imageNav =& new ImageNav($_REQUEST, CAMPSITE_IMAGEARCHIVE_IMAGES_PER_PAGE, $_REQUEST['view']);
-if (!isset($_REQUEST['cDescription']) || !isset($_REQUEST['cPhotographer'])
-	|| !isset($_REQUEST['cPlace']) || !isset($_REQUEST['cDate'])) {
+$cDescription = Input::Get('cDescription');
+$cPhotographer = Input::Get('cPhotographer');
+$cPlace = Input::Get('cPlace');
+$cDate = Input::Get('cDate');
+$cURL = Input::Get('cURL', 'string', '', true);
+$view = Input::Get('view', 'string', 'thumbnail', true);
+
+$imageNav =& new ImageNav(CAMPSITE_IMAGEARCHIVE_IMAGES_PER_PAGE, $view);
+$imageNav->clearSearchStrings();
+$imageNav->setProperty('order_by', 'time_created');
+
+if (!Input::IsValid()) {
 	header('Location: index.php?'.$imageNav->getSearchLink());
 	exit;	
 }
-if (empty($_REQUEST['cURL']) && !isset($_FILES['cImage'])) {
+if (empty($cURL) && !isset($_FILES['cImage'])) {
 	header('Location: index.php?'.$imageNav->getSearchLink());
 	exit;	
 }
@@ -27,14 +37,13 @@ if (!$User->hasPermission('AddImage')) {
 	header("Location: /$ADMIN/logout.php");
 	exit;	
 }
-$view = isset($_REQUEST['view'])?$_REQUEST['view']:'thumbnail';
 $attributes = array();
-$attributes['Description'] = $_REQUEST['cDescription'];
-$attributes['Photographer'] = $_REQUEST['cPhotographer'];
-$attributes['Place'] = $_REQUEST['cPlace'];
-$attributes['Date'] = $_REQUEST['cDate'];
-if (!empty($_REQUEST['cURL'])) {
-	$image =& Image::OnAddRemoteImage($_REQUEST['cURL'], $attributes, $User->getId());
+$attributes['Description'] = $cDescription;
+$attributes['Photographer'] = $cPhotographer;
+$attributes['Place'] = $cPlace;
+$attributes['Date'] = $cDate;
+if (!empty($cURL)) {
+	$image =& Image::OnAddRemoteImage($cURL, $attributes, $User->getId());
 }
 else {
 	$image =& Image::OnImageUpload($_FILES['cImage'], $attributes, $User->getId());
