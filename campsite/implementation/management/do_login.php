@@ -31,12 +31,13 @@ if ($validUser) {
 </HEAD>
 
 <BODY>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
 <TR>
-	<TD ROWSPAN="2" WIDTH="1%"><IMG SRC="/<?php echo $ADMIN; ?>/img/sign_big.gif" BORDER="0"></TD>
-	<TD>
+	<TD ROWSPAN="2" WIDTH="1%">
+		<IMG SRC="/<?php echo $ADMIN; ?>/img/sign_big.gif" BORDER="0">
+	</TD>
+	<TD class="page_title">
 	    <DIV STYLE="font-size: 12pt"><B><?php  putGS("Login failed"); ?></B></DIV>
-	    <HR NOSHADE SIZE="1" COLOR="BLACK">
 	</TD>
 </TR>
 <TR>
