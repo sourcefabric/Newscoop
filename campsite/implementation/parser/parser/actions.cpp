@@ -171,8 +171,8 @@ inline void CAction::DEBUGAct(const char* method, const char* expl, sockstream& 
 // The returned string must be deallocated by the user using delete operator.
 // Parameters:
 //		const char* src - source string
-//		UInt p_nLength - string length
-char* CAction::SQLEscapeString(const char* src, UInt p_nLength)
+//		ulint p_nLength - string length
+char* CAction::SQLEscapeString(const char* src, ulint p_nLength)
 {
 	char* pchDst = new char[2 * p_nLength + 1];
 	if (pchDst == NULL)
@@ -230,8 +230,8 @@ int CAction::runActions(CActionList& al, CContext& c, sockstream& fs)
 // Parameters:
 //		const char* p_pchDate - date to format
 //		const char* p_pchFormat - format of the date
-//		long int p_nLanguageId - language to use
-string CAction::dateFormat(const char* p_pchDate, const char* p_pchFormat, long int p_nLanguageId)
+//		id_type p_nLanguageId - language to use
+string CAction::dateFormat(const char* p_pchDate, const char* p_pchFormat, id_type p_nLanguageId)
 {
 	if (p_pchFormat == NULL || *p_pchFormat == 0)
 		return string(p_pchDate);
@@ -669,8 +669,8 @@ int CActList::WriteArtParam(string& s, CContext& c, string& table)
 			buf << ((const CTopicCompOperation*)(*pl_i)->operation())->secondId();
 			if ((*pl_i)->operation()->symbol() == g_coEQUAL_Symbol)
 			{
-				AppendConstraint(topic_equal_op, "ArticleTopics.TopicId", (*pl_i)->operation()->symbol(),
-				                 buf.str(), "or");
+				AppendConstraint(topic_equal_op, "ArticleTopics.TopicId", 
+				                 (*pl_i)->operation()->symbol(), buf.str(), "or");
 			}
 			else
 			{
@@ -881,8 +881,8 @@ int CActList::WriteLimit(string& s, CContext& c)
 // modifier
 // Parameters:
 //		CContext& c - current context
-// 		long int value - value to be set
-void CActList::SetContext(CContext& c, long int value)
+// 		id_type value - value to be set
+void CActList::SetContext(CContext& c, id_type value)
 {
 	if (modifier == CMS_ST_ISSUE)
 		c.SetIssue(value);
@@ -926,7 +926,7 @@ int CActList::takeAction(CContext& c, sockstream& fs)
 	CContext lc = c;
 	lc.SetLMode(LM_NORMAL);
 	lc.SetLevel(IMod2Level(modifier));
-	long int listlength;
+	lint listlength;
 	if (lc.ListStart(lc.Level()) < 0)
 		lc.SetListStart(0, lc.Level());
 	CMYSQL_RES res(NULL);
@@ -998,7 +998,7 @@ int CActList::takeAction(CContext& c, sockstream& fs)
 		                lc.ListStart(lc.Level()) - length : 0, lc.Level());
 	}
 	lc.SetListLength(listlength - (length > 0 && listlength > length ? 1 : 0));
-	if (listlength > (long int)length && length > 0)
+	if (listlength > (lint)length && length > 0)
 		lc.SetNextStart(lc.ListStart(lc.Level()) + length, lc.Level());
 	for (int i = 0; (length > 0 && i < length) || length == 0; i++)
 	{
@@ -1046,7 +1046,7 @@ void CActURLParameters::PrintSubtitlesURL(CContext& c, sockstream& fs, bool& fir
 	for (st_index = 1, it = c.Fields().begin(); it != c.Fields().end(); ++it, ++st_index)
 	{
 		// compute the start subtitle
-		long int start_subtitle;
+		lint start_subtitle;
 		if (reset_from_list > 0)
 			start_subtitle = 0;
 		else if (c.LMode() == LM_NORMAL && c.Level() == CLV_SUBTITLE_LIST)
@@ -1167,9 +1167,11 @@ int CActURLParameters::takeAction(CContext& c, sockstream& fs)
 		if (c.Level() == CLV_ISSUE_LIST)
 			URLPrintNParam(P_ILSTART, (ResetList(CLV_ISSUE_LIST) ? 0 : c.INextStart()), fs, first);
 		if (c.Level() == CLV_SECTION_LIST)
-			URLPrintNParam(P_SLSTART, (ResetList(CLV_SECTION_LIST) ? 0 : c.SNextStart()), fs, first);
+			URLPrintNParam(P_SLSTART, (ResetList(CLV_SECTION_LIST) ? 0 : c.SNextStart()),
+			               fs, first);
 		if (c.Level() == CLV_ARTICLE_LIST)
-			URLPrintNParam(P_ALSTART, (ResetList(CLV_ARTICLE_LIST) ? 0 : c.ANextStart()), fs, first);
+			URLPrintNParam(P_ALSTART, (ResetList(CLV_ARTICLE_LIST) ? 0 : c.ANextStart()),
+			               fs, first);
 		if (c.Level() == CLV_SEARCHRESULT_LIST)
 			URLPrintNParam(P_SRLSTART, (ResetList(CLV_SEARCHRESULT_LIST) ? 0 : c.SrNextStart()),
 			               fs, first);
@@ -1390,7 +1392,7 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 		else
 		{ // error
 			buf << "select Message from Errors where Number = " << c.SubsRes() << " and "
-			       "(IdLanguage = " << c.Language() << " or IdLanguage = 1) order by IdLanguage desc";
+			    "(IdLanguage = " << c.Language() << " or IdLanguage = 1) order by IdLanguage desc";
 		}
 		DEBUGAct("takeAction()", buf.str().c_str(), fs);
 		SQLQuery(&m_coSql, buf.str().c_str());
@@ -1509,8 +1511,8 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 	}
 	if (modifier == CMS_ST_ARTICLE && attr == "SingleArticle")
 	{
-		buf << "select " << attr
-		    << " from Issues where IdPublication = " << c.Publication() << " and Number = " << c.Issue();
+		buf << "select " << attr << " from Issues where IdPublication = "
+		     << c.Publication() << " and Number = " << c.Issue();
 		SQLQuery(&m_coSql, buf.str().c_str());
 		res = mysql_store_result(&m_coSql);
 		CheckForRows(*res, 1);
@@ -1546,7 +1548,7 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 		{
 			try {
 				fs << "/look/" << CPublication::getIssueTemplate(c.Language(), c.Publication(), 
-				                                            c.Issue(), &m_coSql);
+				                                                 c.Issue(), &m_coSql);
 			}
 			catch (InvalidValue& rcoEx)
 			{
@@ -1644,7 +1646,7 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 		StoreResult(&m_coSql, res2);
 		CheckForRows(*res2, 1);
 		FetchRow(*res2, row2);
-		unsigned long* lengths = mysql_fetch_lengths(*res2);
+		ulint* lengths = mysql_fetch_lengths(*res2);
 		if (blob == 0)
 		{
 			cparser.setDebug(*m_coDebug);
@@ -2063,7 +2065,7 @@ int CActIf::takeAction(CContext& c, sockstream& fs)
 	}
 	if (case_comp(param.attribute(), "number") == 0)
 	{
-		long int nVal = 0;
+		id_type nVal = 0;
 		if (modifier == CMS_ST_LANGUAGE)
 			nVal = c.Language();
 		else if (modifier == CMS_ST_ISSUE)
@@ -2082,7 +2084,7 @@ int CActIf::takeAction(CContext& c, sockstream& fs)
 	}
 	if (case_comp(param.attribute(), "identifier") == 0)
 	{
-		long int nVal = 0;
+		id_type nVal = 0;
 		if (modifier == CMS_ST_PUBLICATION)
 			nVal = c.Publication();
 		else
@@ -2243,7 +2245,8 @@ int CActIf::takeAction(CContext& c, sockstream& fs)
 		if (case_comp(param.attribute(), "OnFrontPage") == 0
 		    || case_comp(param.attribute(), "OnSection") == 0)
 		{
-			run_first = param.applyOp(Switch::valName(((Switch::SwitchVal)strtol(row[0], NULL, 10))), value);
+			run_first = param.applyOp(Switch::valName(((Switch::SwitchVal)strtol(row[0], 
+			                          NULL, 10))), value);
 		}
 		else
 		{
@@ -2347,7 +2350,7 @@ int CActSubscription::takeAction(CContext& c, sockstream& fs)
 	row = mysql_fetch_row(*res);
 	if (row[0] == NULL)
 		return -1;
-	long int nos = atol(row[0]);
+	lint nos = atol(row[0]);
 	SafeAutoPtr<CURL> pcoURL(c.URL()->clone());
 	try {
 		pcoURL->setTemplate(m_nTemplateId);
