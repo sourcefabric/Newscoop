@@ -18,7 +18,6 @@ regGS("Delete publication","إلغاء المنشور");
 regGS("You do not have the right to delete publications.","لا يحق لك إلغاء المنشورات");
 regGS("Are you sure you want to delete the publication $1?","هل أنت متأكد من أنك تريد إلغاء المنشور $1");
 regGS("Deleting publication","إلغاء المنشور");
-regGS("There are $1 image(s) left."," (  صورة $1 متبقية (صور متبقية");
 regGS("There are $1 subscription(s) left.","اشتراك $1 (اشتراكات) متبقية");
 regGS("The publication $1 has been deleted."," إلغاء المنشور $1");
 regGS("The publication $1 could not be deleted.","لا  يمكن إلغاء المنشور$1");

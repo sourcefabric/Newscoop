@@ -18,7 +18,6 @@ regGS("Delete publication","Obriši publikaciju");
 regGS("You do not have the right to delete publications.","Nemate pravo da brišete publikacije");
 regGS("Are you sure you want to delete the publication $1?","Sigurni ste da želite da obrišete publikaciju $1?");
 regGS("Deleting publication","Brisanje publikacije");
-regGS("There are $1 image(s) left.","Preostalo je $1 slika");
 regGS("There are $1 subscription(s) left.","Preostalo je $1 pretplata");
 regGS("The publication $1 has been deleted.","Publikacija $1 je obrisana");
 regGS("The publication $1 could not be deleted.","Publikacija $1 ne možebiti obrisana");

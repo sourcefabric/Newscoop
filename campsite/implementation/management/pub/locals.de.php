@@ -18,7 +18,6 @@ regGS("Delete publication","Publikation löschen");
 regGS("You do not have the right to delete publications.","Keine Berechtigung Publikationen zu löschen");
 regGS("Are you sure you want to delete the publication $1?","Sicher, dass Publikation $1 gelöscht werden soll?");
 regGS("Deleting publication","Publikation wird gelöscht");
-regGS("There are $1 image(s) left.","$1 Bild(er) noch vorhanden");
 regGS("There are $1 subscription(s) left.","$1 Abonement(s) noch vorhanden");
 regGS("The publication $1 has been deleted.","Publikation $1 wurde gelöscht");
 regGS("The publication $1 could not be deleted.","Publikation $1 konnte nicht gelöscht werden");

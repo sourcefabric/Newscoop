@@ -18,7 +18,6 @@ regGS("Delete publication","Удалить публикацию:ru");
 regGS("You do not have the right to delete publications.","Вы не имеете права удалять публикации.:ru");
 regGS("Are you sure you want to delete the publication $1?","Вы уверены, что хотите удалить публикацию $1?:ru");
 regGS("Deleting publication","Удаление публикации:ru");
-regGS("There are $1 image(s) left.","Осталось картинок $1.:ru");
 regGS("There are $1 subscription(s) left.","Осталось подписок: $1.:ru");
 regGS("The publication $1 has been deleted.","Публикация $1 была удалена.:ru");
 regGS("The publication $1 could not be deleted.","Не удалось удалить публикацию $1.:ru");
