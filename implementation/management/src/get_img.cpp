@@ -79,11 +79,11 @@ void ReadConf()
   try
   {
     ConfAttrValue coDBConf(DATABASE_CONF_FILE);
-    SQL_SERVER = coDBConf.valueOf("SERVER");
-    SQL_SRV_PORT = atoi(coDBConf.valueOf("PORT").c_str());
-    SQL_USER = coDBConf.valueOf("USER");
-    SQL_PASSWORD = coDBConf.valueOf("PASSWORD");
-    SQL_DATABASE = coDBConf.valueOf("NAME");
+    SQL_SERVER = coDBConf.ValueOf("SERVER");
+    SQL_SRV_PORT = atoi(coDBConf.ValueOf("PORT").c_str());
+    SQL_USER = coDBConf.ValueOf("USER");
+    SQL_PASSWORD = coDBConf.ValueOf("PASSWORD");
+    SQL_DATABASE = coDBConf.ValueOf("NAME");
   }
   catch (ConfException& rcoEx)
   {

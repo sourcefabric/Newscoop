@@ -25,6 +25,7 @@ B_BODY
 B_HEADER(<*Unlink infotype from keyword*>)
 B_HEADER_BUTTONS
 X_HBUTTON(<*Keyword infotypes*>, <*glossary/keyword/?Keyword=<?php  pencURL($Keyword); ?>&Language=<?php  pencURL($Language); ?>*>)
+<td class="breadcrumb_separator">&nbsp;</td>
 X_HBUTTON(<*Glossary*>, <*glossary/*>)
 E_HEADER_BUTTONS
 E_HEADER

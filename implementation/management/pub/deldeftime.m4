@@ -20,6 +20,7 @@ B_BODY
 B_HEADER(<*Delete subscription default time*>)
 B_HEADER_BUTTONS
 X_HBUTTON(<*Subscriptions*>, <*pub/deftime.php?Pub=<?php  pencURL($Pub); ?>&Language=<?php  pencURL($Language); ?>*>)
+<td class="breadcrumb_separator">&nbsp;</td>
 X_HBUTTON(<*Publications*>, <*pub/*>)
 E_HEADER_BUTTONS
 E_HEADER

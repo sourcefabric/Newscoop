@@ -22,6 +22,7 @@ B_BODY
 B_HEADER(<*Deleting IP Group*>)
 B_HEADER_BUTTONS
 X_HBUTTON(<*IP Access List*>, <*users/ipaccesslist.php?User=<?php  p($User); ?>*>)
+<td class="breadcrumb_separator">&nbsp;</td>
 X_HBUTTON(<*Users*>, <*users/*>)
 E_HEADER_BUTTONS
 E_HEADER

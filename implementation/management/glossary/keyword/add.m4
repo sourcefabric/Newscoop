@@ -26,6 +26,7 @@ B_BODY
 B_HEADER(<*Add keyword infotype*>)
 B_HEADER_BUTTONS
 X_HBUTTON(<*Keyword infotype*>, <*glossary/keyword/?Keyword=<?php  print encURL($Keyword); ?>&Language=<?php  print encURL($Language); ?>*>)
+<td class="breadcrumb_separator">&nbsp;</td>
 X_HBUTTON(<*Glossary*>, <*glossary/*>)
 E_HEADER_BUTTONS
 E_HEADER

@@ -26,6 +26,7 @@ B_BODY
 B_HEADER(<*Changing subscription status*>)
 B_HEADER_BUTTONS
 X_HBUTTON(<*Subscriptions*>, <*users/subscriptions/?User=<?php  p($User); ?>*>)
+<td class="breadcrumb_separator">&nbsp;</td>
 X_HBUTTON(<*Users*>, <*users/*>)
 E_HEADER_BUTTONS
 E_HEADER
