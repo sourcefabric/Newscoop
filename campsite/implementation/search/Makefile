@@ -5,10 +5,10 @@ INCLUDE_PATH=-I$(MYSQL_H_PATH)
 CFLAGS=-Wall -O3 -fomit-frame-pointer -falign-jumps=4 -falign-loops=4 -falign-functions=4 $(INCLUDE_PATH)
 CXXFLAGS=$(CFLAGS)
 LDFLAGS=-L$(LIBMYSQLCLIENT_PATH)
-LDLIBS=-lmysqlclient -lm -lz $(LIBCRYPT_LINK)
+LDLIBS=-lmysqlclient -lm -lz $(LIBCRYPT_LINK) $(PTHREAD_LINK)
 
 LINKS=globals.h readconf.h readconf.cpp cms_types.h threadkey.h ccampsiteinstance.h \
- ccampsiteinstance.cpp
+ ccampsiteinstance.cpp mutex.h mutex.cpp
 
 all: links gather
 
@@ -17,14 +17,18 @@ links: dummy
 	    if [ ! -L $$l ]; then ln -s ../parser/parser/$$l; fi; \
 	done
 
-gather: gather.o kwd.o readconf.o
-	g++ -o gather gather.o kwd.o readconf.o $(LDFLAGS) $(LDLIBS)
+gather: gather.o kwd.o readconf.o ccampsiteinstance.o mutex.o
+	g++ -o gather gather.o kwd.o readconf.o ccampsiteinstance.o mutex.o $(LDFLAGS) $(LDLIBS)
 
-gather.o: gather.cpp kwd.h configure.h readconf.h globals.h
+gather.o: gather.cpp kwd.h configure.h readconf.h globals.h ccampsiteinstance.h mutex.h
 
 kwd.o: kwd.cpp kwd.h
 
+ccampsiteinstance.o: ccampsiteinstance.cpp ccampsiteinstance.h globals.h
+
 readconf.o: readconf.cpp readconf.h globals.h
+
+mutex.o: mutex.cpp mutex.h globals.h
 
 clean: dummy
 	rm -f *.o *~ configure.h $(LINKS) gather
