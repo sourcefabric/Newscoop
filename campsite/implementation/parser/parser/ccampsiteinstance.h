@@ -58,7 +58,7 @@ class CCampsiteInstance
 			RegisterInstance();
 		}
 
-		~CCampsiteInstance() { stop(); }
+		~CCampsiteInstance() { stop(); UnregisterInstance(); }
 
 		void setInstanceFunction(InstanceFunction p_pInstFunc) throw (RunException);
 
@@ -81,6 +81,8 @@ class CCampsiteInstance
 		const ConfAttrValue& ReadConf() throw (ConfException);
 
 		void RegisterInstance();
+
+		void UnregisterInstance();
 
 		static void VerifyDir(const string& p_rcoDir) throw (ConfException);
 
@@ -137,10 +139,10 @@ class CCampsiteInstanceRegister
 
 		bool has(const string& p_rcoInstanceName) const;
 
-		const CCampsiteInstance* getCampsiteInstance(pid_t p_rcoInstancePID) const
+		CCampsiteInstance* getCampsiteInstance(pid_t p_rcoInstancePID) const
 				throw (InvalidValue);
 
-		const CCampsiteInstance* getCampsiteInstance(const string& p_rcoInstanceName) const throw (InvalidValue);
+		CCampsiteInstance* getCampsiteInstance(const string& p_rcoInstanceName) const throw (InvalidValue);
 
 	private:
 		CCampsiteInstanceMap m_coCCampsiteInstances;
