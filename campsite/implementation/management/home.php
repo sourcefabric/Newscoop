@@ -169,7 +169,7 @@ $NumSubmittedArticles = count($SubmittedArticles);
 			 ?>
 		<TR <?php if ($color) { $color=0; ?>BGCOLOR="#D0D0B0"<?php  } else { $color=1; ?>BGCOLOR="#D0D0D0"<?php  } ?>>
 			<TD>
-				<?php CampsiteInterface::ArticleLink($YourArticle, $section->getLanguageId(), "edit.php"); ?>
+				<?php echo CampsiteInterface::ArticleLink($YourArticle, $section->getLanguageId(), "edit.php"); ?>
 				<?php p(htmlspecialchars($YourArticle->getTitle()));?>
 				</A>
 			</TD>
@@ -181,18 +181,18 @@ $NumSubmittedArticles = count($SubmittedArticles);
 			<TD>
 				<?php 
 				if ($YourArticle->getPublished() == "Y") { ?>
-					<?php CampsiteInterface::ArticleLink($YourArticle, $section->getLanguageId(), "status.php", $REQUEST_URI);?>
+					<?php echo CampsiteInterface::ArticleLink($YourArticle, $section->getLanguageId(), "status.php", $REQUEST_URI);?>
 					<?php  putGS('Published'); ?>
 					</A>
 					<?php  
 				} 
 				elseif ($YourArticle->getPublished() == "N") { ?>
-					<?php CampsiteInterface::ArticleLink($YourArticle, $section->getLanguageId(), "status.php", $REQUEST_URI); ?>
+					<?php echo CampsiteInterface::ArticleLink($YourArticle, $section->getLanguageId(), "status.php", $REQUEST_URI); ?>
 					<?php  putGS('New'); ?>
 					</A><?php  
 				} 
 				else { ?>
-					<?php CampsiteInterface::ArticleLink($YourArticle, $section->getLanguageId(), "status.php", $REQUEST_URI); ?>
+					<?php echo CampsiteInterface::ArticleLink($YourArticle, $section->getLanguageId(), "status.php", $REQUEST_URI); ?>
 					<?php  putGS('Submitted'); ?>
 					</A>
 					<?php  
@@ -250,7 +250,7 @@ $NumSubmittedArticles = count($SubmittedArticles);
 			?>	
 		<TR <?php if ($color) { $color=0; ?>BGCOLOR="#D0D0B0"<?php  } else { $color=1; ?>BGCOLOR="#D0D0D0"<?php  } ?>>
 			<TD>
-			<?php CampsiteInterface::ArticleLink($SubmittedArticle, $section->getLanguageId(), "edit.php"); ?>
+			<?php echo CampsiteInterface::ArticleLink($SubmittedArticle, $section->getLanguageId(), "edit.php"); ?>
 			<?php p(htmlspecialchars($SubmittedArticle->getTitle())); ?>
 			</A>
 			</TD>
