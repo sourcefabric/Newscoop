@@ -305,7 +305,7 @@ public:
 	// FindType: return pointer to type (special) attributes valid for a given type
 	// Parameters:
 	//		cpChar p_chType - type name
-	const TOLTypeAttributes* FindType(cpChar p_chType);
+	TOLTypeAttributes* FindType(cpChar p_chType);
 	
 	// FindTypeAttr: return pointer to attribute and pointer to type attributes containig found
 	//		attribute
@@ -315,8 +315,8 @@ public:
 	//		TContext p_Context - context
 	//		const TOLTypeAttributes** p_ppcoTypeAttributes [out] - pointer to pointer to type
 	//			(special) attributes
-	const TOLAttribute* FindTypeAttr(cpChar p_pchAttr, cpChar p_chType,
-			TContext p_Context, const TOLTypeAttributes** p_ppcoTypeAttributes);
+	TOLAttribute* FindTypeAttr(cpChar p_pchAttr, cpChar p_chType,
+			TContext p_Context, TOLTypeAttributes** p_ppcoTypeAttributes);
 
 	friend class TOLLex;
 	friend class TOLParser;

@@ -1,4 +1,43 @@
-new in 2.0.0 (March 13th 2001):
+2.0.11
+    - When adding a new subscription to a publication add the sections too
+    - Admin interface, subscription-section: the section is now selectable
+    from a list instead of letting you type the section number
+    - Admin interface, subscription-section: print the name of the section
+    name instead of the number
+    - New text only editor for article body type fields
+    - Admin interface: print more sections per page (20)
+    - Admin interface: print the description for date-type fields (YYYY-MM-DD)
+    - When deleting article: delete the links from search keywords to articles
+    too
+    - Admin interface: adding new issue detects if there was an old structure
+    or not and selects the appropriate link accordingly
+    - The newly added articles are Public to everybody (not just to subscribers)
+    by default.
+    - Admin interface: on adding new images forward the current language
+    identifier
+
+2.0.10
+    - Fixed the 'Back to article details' bug
+    - Removed the weird message from 'Old images'
+    - Fixed the language selection in lists bug
+
+2.0.9
+    - Fixed incorrect timestamp update on event notify
+    - Fixed mysqlclient library link problem on RedHat systems
+
+2.0.8
+    - Fixed internal links bug (select proper template according to link
+    publication)
+    - Fixed incorrect parsing of "list ... article ... keyword <keyword>" bug
+
+2.0.6 (May, 14th 2001)
+    - Fixed search list order bug. The parser did not list in the requested
+    order the list of searched articles.
+
+2.0.1-2.0.5
+    - Fixed install bugs
+
+2.0.0 (March 13th 2001):
     - New items: README, implementation/tpl_cgi, documentation/example,
     documentation/http-config
     - General:
@@ -18,39 +57,3 @@ new in 2.0.0 (March 13th 2001):
         - This is a small cgi; it receives requests, connects to
         campsite_server, read the response from campsite_server and forwards
         the response (HTML page)
-
-new in 2.0.6 (May, 14th 2001)
-    - Fixed search list order bug. The parser did not list in the requested
-    order the list of searched articles.
-
-new in 2.0.8
-    - Fixed internal links bug (select proper template according to link
-    publication)
-    - Fixed incorrect parsing of "list ... article ... keyword <keyword>" bug
-
-new in 2.0.9
-    - Fixed incorrect timestamp update on event notify
-    - Fixed mysqlclient library link problem on RedHat systems
-
-new in 2.0.10
-    - Fixed the 'Back to article details' bug
-    - Removed the weird message from 'Old images'
-    - Fixed the language selection in lists bug
-
-new in 2.0.11
-    - When adding a new subscription to a publication add the sections too
-    - Admin interface, subscription-section: the section is now selectable
-    from a list instead of letting you type the section number
-    - Admin interface, subscription-section: print the name of the section
-    name instead of the number
-    - New text only editor for article body type fields
-    - Admin interface: print more sections per page (20)
-    - Admin interface: print the description for date-type fields (YYYY-MM-DD)
-    - When deleting article: delete the links from search keywords to articles
-    too
-    - Admin interface: adding new issue detects if there was an old structure
-    or not and selects the appropriate link accordingly
-    - The newly added articles are Public to everybody (not just to subscribers)
-    by default.
-    - Admin interface: on adding new images forward the current language
-    identifier

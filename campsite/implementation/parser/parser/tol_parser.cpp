@@ -1071,12 +1071,13 @@ inline int TOLParser::HPrint(TOLPActionList& al, int lv, int sublv)
 		            PrintStatements(lv, sublv), lex.PrevLine(), lex.PrevColumn());
 	RequireAtom(l);
 	const TOLAttribute* attr = NULL;
-	const TOLTypeAttributes* pTa = NULL;
-	const TOLTypeAttributes* pTa2 = NULL;
+	TOLAttribute* tattr = NULL;
+	TOLTypeAttributes* pTa = NULL;
+	TOLTypeAttributes* pTa2 = NULL;
 	string a_req, format;
-	if ((attr = st->FindAttr(l->m_pcoAtom->Identifier(), TOL_CT_PRINT)) == 0
-	    && (attr = st->FindTypeAttr(l->m_pcoAtom->Identifier(), "", TOL_CT_PRINT, &pTa)) == 0
-	    && (pTa2 = st->FindType(l->m_pcoAtom->Identifier())) == 0)
+	if ((attr = st->FindAttr(l->m_pcoAtom->Identifier(), TOL_CT_PRINT)) == NULL
+	    && (tattr = st->FindTypeAttr(l->m_pcoAtom->Identifier(), "", TOL_CT_PRINT, &pTa)) == NULL
+	    && (pTa2 = st->FindType(l->m_pcoAtom->Identifier())) == NULL)
 	{
 		st->PrintAttrs(a_req, TOL_CT_PRINT);
 		st->PrintTypes(a_req);
@@ -1084,23 +1085,34 @@ inline int TOLParser::HPrint(TOLPActionList& al, int lv, int sublv)
 		SetPError(parse_err, PERR_INVALID_ATTRIBUTE, MODE_PARSE,
 		          a_req.c_str(), lex.PrevLine(), lex.PrevColumn());
 		WaitForStatementEnd(false);
+		delete tattr;
+		delete pTa;
+		delete pTa2;
 		return 0;
 	}
-	if (pTa2)
+	if (pTa2 != NULL)
 	{
 		RequireAtom(l);
-		const TOLTypeAttributes *pTa3 = 0;
-		if ((attr = st->FindTypeAttr(l->m_pcoAtom->Identifier(), pTa2->type_value,
-		                             TOL_CT_PRINT, &pTa3)) == 0)
+		TOLTypeAttributes* pTa3 = NULL;
+		if ((tattr = st->FindTypeAttr(l->m_pcoAtom->Identifier(), pTa2->type_value,
+		                             TOL_CT_PRINT, &pTa3)) == NULL)
 		{
 			st->PrintTAttrs(a_req, pTa2->type_value, TOL_CT_PRINT);
 			SetPError(parse_err, PERR_INVALID_ATTRIBUTE, MODE_PARSE,
 			          a_req.c_str(), lex.PrevLine(), lex.PrevColumn());
 			WaitForStatementEnd(false);
+			delete tattr;
+			delete pTa;
+			delete pTa2;
+			delete pTa3;
 			return 0;
 		}
+		delete pTa3;
 	}
-	if (attr->DataType() == TOL_DT_DATE)
+	TDataType attrDataType = (attr != NULL) ? attr->DataType() : tattr->DataType();
+	const char* attrIdentifier = (attr != NULL) ? attr->Identifier() : tattr->Identifier();
+	const char* attrAttribute = (attr != NULL) ? attr->Attribute() : tattr->Attribute();
+	if (attrDataType == TOL_DT_DATE)
 	{
 		l = lex.GetLexem();
 		DEBUGLexem("print", l);
@@ -1115,19 +1127,25 @@ inline int TOLParser::HPrint(TOLPActionList& al, int lv, int sublv)
 				SetPError(parse_err, PERR_INVALID_DATE_FORM, MODE_PARSE,
 				          "", lex.PrevLine(), lex.PrevColumn());
 				WaitForStatementEnd(true);
+				delete tattr;
+				delete pTa;
+				delete pTa2;
 				return 0;
 			}
 		}
 	}
-	if (strcasecmp(attr->Identifier(), "mon_name") == 0)
+	if (strcasecmp(attrIdentifier, "mon_name") == 0)
 		format = "%M";
-	if (strcasecmp(attr->Identifier(), "wday_name") == 0)
+	if (strcasecmp(attrIdentifier, "wday_name") == 0)
 		format = "%W";
 	al.insert(al.end(),
-	          new TOLActPrint(attr->Attribute(), (TPrintModifier)St2PMod(st->statement),
+	          new TOLActPrint(attrAttribute, (TPrintModifier)St2PMod(st->statement),
 	                          pTa2 ? pTa2->type_value : (pTa ? pTa->type_value : 0), format));
 	if (l->m_Res != TOL_LEX_END_STATEMENT)
 		WaitForStatementEnd(true);
+	delete tattr;
+	delete pTa;
+	delete pTa2;
 	return 0;
 }
 
@@ -1228,10 +1246,14 @@ inline int TOLParser::HList(TOLPActionList& al, int level, int sublevel, const T
 			{
 				ValidateOperator(op_i, l, attr->DataType(), "");
 				RequireAtom(l);
-				const TOLTypeAttributes* ta;
+				TOLTypeAttributes* ta;
 				if ((ta = st->FindType(l->m_pcoAtom->Identifier())) == NULL)
+				{
+					delete ta;
 					FatalPError(parse_err, PERR_INV_TYPE_VAL, MODE_PARSE, "",
 					            lex.PrevLine(), lex.PrevColumn());
+				}
+				delete ta;
 				params.insert(params.end(), TOLParameter(attr->Attribute(),
 				              l->m_pcoAtom->Identifier(), (TOperator)(*op_i).second));
 				l = lex.GetLexem();
@@ -1567,13 +1589,16 @@ inline int TOLParser::HIf(TOLPActionList& al, int lv, int sublv, const TOLLexem*
 			RequireAtom(l);
 			if (attr->Class() == TOL_TYPE_ATTR)
 			{
-				if (ist->FindType(l->m_pcoAtom->Identifier()) == 0)
+				TOLTypeAttributes* ta;
+				if ((ta = ist->FindType(l->m_pcoAtom->Identifier())) == 0)
 				{
+					delete ta;
 					string t;
 					ist->PrintTypes(t);
 					FatalPError(parse_err, PERR_INV_TYPE_VAL, MODE_PARSE,
 					            t, lex.PrevLine(), lex.PrevColumn());
 				}
+				delete ta;
 				param = TOLParameter(attr->Attribute(), l->m_pcoAtom->Identifier(), TOL_OP_IS);
 			}
 			else
@@ -1993,9 +2018,10 @@ inline int TOLParser::HWith(TOLPActionList& al, int lv, int sublv)
 	TOLStatement* ist = &(*lex.s_coStatements.find(ST_ARTICLE));
 	const TOLLexem* l;
 	RequireAtom(l);
-	const TOLTypeAttributes* ta = ist->FindType(l->m_pcoAtom->Identifier());
-	if (ta == 0)
+	TOLTypeAttributes* ta = ist->FindType(l->m_pcoAtom->Identifier());
+	if (ta == NULL)
 	{
+		delete ta;
 		string what;
 		ist->PrintTypes(what);
 		FatalPError(parse_err, PERR_INV_TYPE_VAL, MODE_PARSE,
@@ -2003,15 +2029,18 @@ inline int TOLParser::HWith(TOLPActionList& al, int lv, int sublv)
 	}
 	string art_type = l->m_pcoAtom->Identifier();
 	RequireAtom(l);
-	const TOLAttribute* a = ist->FindTypeAttr(l->m_pcoAtom->Identifier(), art_type.c_str(),
+	TOLAttribute* a = ist->FindTypeAttr(l->m_pcoAtom->Identifier(), art_type.c_str(),
 	                        TOL_CT_WITH, &ta);
-	if (a == 0)
+	delete ta;
+	if (a == NULL)
 	{
+		delete a;
 		string what;
 		ist->PrintTAttrs(what, art_type.c_str(), TOL_CT_WITH);
 		FatalPError(parse_err, PERR_INVALID_ATTRIBUTE, MODE_PARSE,
 		            what.c_str(), lex.PrevLine(), lex.PrevColumn());
 	}
+	delete a;
 	string field = l->m_pcoAtom->Identifier();
 	WaitForStatementEnd(true);
 	TOLActWith* aloc = new TOLActWith(art_type, field);

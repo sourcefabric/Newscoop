@@ -231,11 +231,11 @@ const TOLAttribute* TOLStatement::FindAttr(cpChar p_pchAttr, TContext p_Context)
 // FindType: return pointer to type (special) attributes valid for a given type
 // Parameters:
 //		cpChar p_chType - type name
-const TOLTypeAttributes* TOLStatement::FindType(cpChar p_chType)
+TOLTypeAttributes* TOLStatement::FindType(cpChar p_chType)
 {
 	TOLTypeAttributesHash::iterator ta_h = type_attributes.find(p_chType);
 	if (ta_h != type_attributes.end())
-		return &(*ta_h);
+		return new TOLTypeAttributes(*ta_h);
 	return NULL;
 }
 
@@ -247,8 +247,8 @@ const TOLTypeAttributes* TOLStatement::FindType(cpChar p_chType)
 //		TContext p_Context - context
 //		const TOLTypeAttributes** p_ppcoTypeAttributes [out] - pointer to pointer to type (special)
 //			attributes
-const TOLAttribute* TOLStatement::FindTypeAttr(cpChar p_pchAttr, cpChar p_chType,
-		TContext p_Context, const TOLTypeAttributes** p_ppcoTypeAttributes)
+TOLAttribute* TOLStatement::FindTypeAttr(cpChar p_pchAttr, cpChar p_chType,
+		TContext p_Context, TOLTypeAttributes** p_ppcoTypeAttributes)
 {
 	*p_ppcoTypeAttributes = NULL;
 	if (p_chType == NULL)
@@ -267,8 +267,8 @@ const TOLAttribute* TOLStatement::FindTypeAttr(cpChar p_pchAttr, cpChar p_chType
 		a_i = (*sc_i).attributes.find(p_pchAttr);
 		if (a_i != (*sc_i).attributes.end())
 		{
-			*p_ppcoTypeAttributes = &(*ta_h);
-			return &(*a_i);
+			*p_ppcoTypeAttributes = new TOLTypeAttributes(*ta_h);
+			return new TOLAttribute(*a_i);
 		}
 	}
 	else
@@ -281,8 +281,8 @@ const TOLAttribute* TOLStatement::FindTypeAttr(cpChar p_pchAttr, cpChar p_chType
 			a_i = (*sc_i).attributes.find(p_pchAttr);
 			if (a_i != (*sc_i).attributes.end())
 			{
-				*p_ppcoTypeAttributes = &(*ta_h);
-				return &(*a_i);
+				*p_ppcoTypeAttributes = new TOLTypeAttributes(*ta_h);
+				return new TOLAttribute(*a_i);
 			}
 		}
 	}
