@@ -106,6 +106,11 @@ int RunParser(MYSQL* p_pSQL, CGIParams* p_pParams, sockstream& p_rOs) throw(RunE
 		pcoCtx->SetArticle(atol(pchStr));
 		pcoCtx->SetDefArticle(atol(pchStr));
 	}
+	if ((pchStr = pcoCgi->GetFirst(P_TOPIC_ID)) != NULL)
+	{
+		pcoCtx->SetTopic(atol(pchStr));
+		pcoCtx->SetDefTopic(atol(pchStr));
+	}
 	if ((pchStr = pcoCgi->GetFirst(P_ILSTART)) != NULL)
 		pcoCtx->SetIListStart(atol(pchStr));
 	if ((pchStr = pcoCgi->GetFirst(P_SLSTART)) != NULL)
