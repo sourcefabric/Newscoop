@@ -62,13 +62,12 @@ if ($access) {
 }?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
 	<TR>
-		<TD><?php putGS("Issues"); ?></TD>
+		<TD class="page_title"><?php putGS("Issues"); ?></TD>
 		<TD ALIGN=RIGHT>
 			<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
 			<TR>
-				<TD><A HREF="/<?php echo $ADMIN; ?>/pub/" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Publications"); ?>"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/pub/" ><B><?php  putGS("Publications");  ?></B></A></TD>
-				<TD><A HREF="/<?php echo $ADMIN; ?>/home.php" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Home"); ?>"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/home.php" ><B><?php  putGS("Home");  ?></B></A></TD>
-				<TD><A HREF="/<?php echo $ADMIN; ?>/logout.php" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Logout"); ?>"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/logout.php" ><B><?php  putGS("Logout");  ?></B></A></TD>
+				<TD><A HREF="/<?php echo $ADMIN; ?>/pub/" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Publications"); ?>"></A></TD>
+				<TD><A HREF="/<?php echo $ADMIN; ?>/pub/" ><B><?php  putGS("Publications");  ?></B></A></TD>
 			</TR>
 			</TABLE>
 		</TD>
@@ -79,10 +78,13 @@ if ($access) {
     if ($NUM_ROWS) { 
 	fetchRow($q_pub);
 	$IdLang = getVar($q_pub,'IdDefaultLanguage');
-?><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="1" WIDTH="100%"><TR>
-<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP">&nbsp;<?php  putGS("Publication"); ?>:</TD><TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><?php  pgetHVar($q_pub,'Name'); ?></B></TD>
-
-</TR></TABLE>
+?>
+<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="1" WIDTH="100%" class="current_location_table">
+<TR>
+	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php  putGS("Publication"); ?>:</TD>
+	<TD VALIGN="TOP" class="current_location_content"><B><?php  pgetHVar($q_pub,'Name'); ?></B></TD>
+</TR>
+</TABLE>
 
 <?php  if ($mia != 0) {
 	query ("SELECT MAX(Number) FROM Issues WHERE IdPublication=$Pub", 'q_nr');
@@ -104,7 +106,7 @@ if ($access) {
 	$nr= $NUM_ROWS;
 	$i=$lpp;
 	$color=0;
-?><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" WIDTH="100%">
+?><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" WIDTH="100%" class="table_list">
 	<TR BGCOLOR="#C0D0FF">
 	<?php  if ($mia != 0) { ?>
 		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Nr"); ?></B></TD>
@@ -113,7 +115,7 @@ if ($access) {
 		<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("Language"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>"); ?></B></TD>
 	<? if ($publish) { ?>
-		<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("Automatic publishing"); ?></B></TD>
+		<TD ALIGN="center" VALIGN="TOP" width="1%"><B><?php  putGS("Automatic publishing"); ?></B></TD>
 	<? } ?>
 		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Translate"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Configure"); ?></B></TD> 
@@ -160,17 +162,17 @@ if ($access) {
 		</TD>
 	<? if ($publish) { ?>
 		<TD ALIGN="CENTER">
-			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/autopublish.php?Pub=<? pencURL($Pub); ?>&Issue=<? pgetUVar($q_iss,'Number'); ?>&Language=<? pgetUVar($q_iss,'IdLanguage'); ?>"><? putGS("Automatic publishing"); ?></A>
+			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/autopublish.php?Pub=<? pencURL($Pub); ?>&Issue=<? pgetUVar($q_iss,'Number'); ?>&Language=<? pgetUVar($q_iss,'IdLanguage'); ?>"><img src="/<?php echo $ADMIN; ?>/img/icon/automatic_publishing.png" alt="<? putGS("Automatic publishing"); ?>" border="0"></A>
 		</TD>
 	<? } ?>
 		<TD ALIGN="CENTER">
-			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/translate.php?Pub=<?php  pencURL($Pub); ?>&Issue=<?php  pgetUVar($q_iss,'Number'); ?>&Language=<?php  pgetUVar($q_iss,'IdLanguage'); ?>"><?php  putGS("Translate"); ?></A>
+			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/translate.php?Pub=<?php  pencURL($Pub); ?>&Issue=<?php  pgetUVar($q_iss,'Number'); ?>&Language=<?php  pgetUVar($q_iss,'IdLanguage'); ?>"><img src="/<?php echo $ADMIN; ?>/img/icon/translate.png" alt="<?php  putGS("Translate"); ?>" border="0"></A>
 		</TD>
 		<TD ALIGN="CENTER">
-			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/edit.php?Pub=<?php  pencURL($Pub); ?>&Issue=<?php  pgetUVar($q_iss,'Number'); ?>&Language=<?php  pgetUVar($q_iss,'IdLanguage'); ?>"><?php  putGS("Configure"); ?></A>
+			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/edit.php?Pub=<?php  pencURL($Pub); ?>&Issue=<?php  pgetUVar($q_iss,'Number'); ?>&Language=<?php  pgetUVar($q_iss,'IdLanguage'); ?>"><img src="/<?php echo $ADMIN; ?>/img/icon/configure.png" alt="<?php  putGS("Configure"); ?>" border="0"></A>
 		</TD>
 		<TD ALIGN="CENTER">
-			<A HREF="" ONCLICK="window.open('/<?php echo $ADMIN; ?>/pub/issues/preview.php?Pub=<?php  pencURL($Pub); ?>&Issue=<?php  pgetUVar($q_iss,'Number'); ?>&Language=<?php  pgetUVar($q_iss,'IdLanguage'); ?>', 'fpreview', 'resizable=yes, menubar=yes, toolbar=yes, width=680, height=560'); return false"><?php  putGS("Preview"); ?></A>
+			<A HREF="" ONCLICK="window.open('/<?php echo $ADMIN; ?>/pub/issues/preview.php?Pub=<?php  pencURL($Pub); ?>&Issue=<?php  pgetUVar($q_iss,'Number'); ?>&Language=<?php  pgetUVar($q_iss,'IdLanguage'); ?>', 'fpreview', 'resizable=yes, menubar=yes, toolbar=yes, width=680, height=560'); return false"><img src="/<?php echo $ADMIN; ?>/img/icon/preview.png" alt="<?php  putGS("Preview"); ?>" border="0"></A>
 		</TD>
 <?php  } else { ?>
 		<TD ALIGN="RIGHT">

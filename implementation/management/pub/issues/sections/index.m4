@@ -31,8 +31,6 @@ B_HEADER(<*Sections*>)
 B_HEADER_BUTTONS
 X_HBUTTON(<*Issues*>, <*pub/issues/?Pub=<?php  pencURL($Pub); ?>*>)
 X_HBUTTON(<*Publications*>, <*pub/*>)
-X_HBUTTON(<*Home*>, <*home.php*>)
-X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
@@ -47,8 +45,8 @@ E_HEADER
 	    fetchRow($q_language);
 ?>dnl
 B_CURRENT
-X_CURRENT(<*Publication*>, <*<B><?php  pgetHVar($q_pub,'Name'); ?></B>*>)
-X_CURRENT(<*Issue*>, <*<B><?php  pgetHVar($q_iss,'Number'); ?>. <?php  pgetHVar($q_iss,'Name'); ?> (<?php  pgetHVar($q_language,'Name'); ?>)</B>*>)
+X_CURRENT(<*Publication*>, <*<?php  pgetHVar($q_pub,'Name'); ?>*>)
+X_CURRENT(<*Issue*>, <*<?php  pgetHVar($q_iss,'Number'); ?>. <?php  pgetHVar($q_iss,'Name'); ?> (<?php  pgetHVar($q_language,'Name'); ?>)*>)
 E_CURRENT
 
 <?php  if ($msa != 0) { ?>
@@ -97,7 +95,7 @@ B_LIST
 		E_LIST_ITEM
 	<?php  if ($msa != 0) { ?>
 		B_LIST_ITEM(<*CENTER*>)
-			<A HREF="X_ROOT/pub/issues/sections/edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  pgetUVar($q_sect,'NrIssue'); ?>&Section=<?php  pgetUVar($q_sect,'Number'); ?>&Language=<?php  pgetUVar($q_sect,'IdLanguage'); ?>"><?php  putGS("Configure"); ?></A>
+			<A HREF="X_ROOT/pub/issues/sections/edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  pgetUVar($q_sect,'NrIssue'); ?>&Section=<?php  pgetUVar($q_sect,'Number'); ?>&Language=<?php  pgetUVar($q_sect,'IdLanguage'); ?>"><img src="/<?php echo $ADMIN; ?>/img/icon/configure.png" alt="<?php  putGS("Configure"); ?>" border="0"></A>
 		E_LIST_ITEM
 	<?php 	} ?>
 	<?php  if ($msa != 0 && $aaa != 0) { ?>

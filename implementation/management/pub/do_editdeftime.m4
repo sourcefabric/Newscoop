@@ -29,8 +29,6 @@ B_HEADER(<*Changing default subscription time*>)
 B_HEADER_BUTTONS
 X_HBUTTON(<*Subscriptions*>, <*pub/deftime.php?Pub=<?php  pencURL($Pub); ?>*>)
 X_HBUTTON(<*Publications*>, <*pub/*>)
-X_HBUTTON(<*Home*>, <*home.php*>)
-X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
@@ -47,8 +45,8 @@ E_HEADER
         fetchRow($q_ctr);
 ?>dnl
 B_CURRENT
-X_CURRENT(<*Publication*>, <*<B><?php  pgetHVar($q_pub,'Name'); ?></B>*>)
-X_CURRENT(<*Country*>, <*<B><?php  pgetHVar($q_ctr,'Name'); ?></B>*>)
+X_CURRENT(<*Publication*>, <*<?php  pgetHVar($q_pub,'Name'); ?>*>)
+X_CURRENT(<*Country*>, <*<?php  pgetHVar($q_ctr,'Name'); ?>*>)
 E_CURRENT
 
 <P>

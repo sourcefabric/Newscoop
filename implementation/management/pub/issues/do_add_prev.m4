@@ -29,8 +29,6 @@ B_HEADER(<*Copying previous issue*>)
 B_HEADER_BUTTONS
 X_HBUTTON(<*Issues*>, <*pub/issues/?Pub=<?php  pencURL($cPub); ?>*>)
 X_HBUTTON(<*Publications*>, <*pub/*>)
-X_HBUTTON(<*Home*>, <*home.php*>)
-X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
@@ -40,7 +38,7 @@ E_HEADER
 	fetchRow($publ);
 ?>dnl
 B_CURRENT
-X_CURRENT(<*Publication*>, <*<B><?php  pgetHVar($publ,'Name'); ?></B>*>)
+X_CURRENT(<*Publication*>, <*<?php  pgetHVar($publ,'Name'); ?>*>)
 E_CURRENT
 
 <P>
