@@ -101,7 +101,7 @@ if (count($articleTopics) > 0) {
 	<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" WIDTH="100%" class="table_list">
 	<TR class="table_list_header">
 		<TD ALIGN="LEFT" VALIGN="TOP" style="padding: 5px;"><B><?php  putGS("Topic name"); ?></B></TD>
-		<?php  if ($User->hasPermission('ChangeArticle')) { ?>
+		<?php  if ($articleObj->userCanModify($User)) { ?>
 		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" style="padding: 5px;"><B><?php  putGS("Delete"); ?></B></TD>
 		<?php  } ?>
 	</TR>
@@ -118,7 +118,7 @@ if (count($articleTopics) > 0) {
 				}
 				?>&nbsp;
 			</TD>
-			<?php  if ($User->hasPermission('ChangeArticle')) { ?>
+			<?php  if ($articleObj->userCanModify($User)) { ?>
 			<TD ALIGN="CENTER">
 				<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/topics/do_del.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&DelTopic=<?php p($topic->getTopicId()); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&IdCateg=<?php p($TopicId); ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/delete.png" BORDER="0" ALT="<?php  putGS('Delete topic $1 from article', htmlspecialchars($topic->getName())); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the topic $1?', htmlspecialchars($topic->getName())); ?>');"></A>
 			</TD>

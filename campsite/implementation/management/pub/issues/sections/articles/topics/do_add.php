@@ -9,10 +9,6 @@ if (!$access) {
 	header("Location: /$ADMIN/logout.php");
 	exit;
 }
-if (!$User->hasPermission('ChangeArticle')) {
-	CampsiteInterface::DisplayError("You do not have the right to add topics to article.");
-	exit;	
-}
 
 $Pub = Input::Get('Pub', 'int', 0);
 $Issue = Input::Get('Issue', 'int', 0);
@@ -62,6 +58,11 @@ $topic =& new Topic($AddTopicId, $sLanguage);
 if (!$topic->exists()) {
 	CampsiteInterface::DisplayError('Topic does not exist.');
 	exit;		
+}
+
+if (!$articleObj->userCanModify($User)) {
+	CampsiteInterface::DisplayError("You do not have the right to add topics to article.");
+	exit;	
 }
 
 ArticleTopic::AddTopicToArticle($AddTopicId, $Article);
