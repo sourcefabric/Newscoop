@@ -67,8 +67,12 @@ B_MENU
     X_MENU_ITEM(<*Logs*>, <*logs/*>)
 <?php  } ?>dnl
 <?php  if ($mlza) { ?>dnl
-    X_MENU_BAR
-    X_MENU_ITEM(<*Localizer*>, <*localizer/*>)
+	X_MENU_BAR
+	X_MENU_ITEM(<*Localizer*>, <*localizer/*>)
+<?php  } ?>dnl
+<?php  if (1) { ?>dnl
+  X_MENU_BAR
+  X_MENU_ITEM(<*Image archive*>, <*images/*>)
 <?php  } ?>dnl
     X_MENU_BAR
 <?php 
