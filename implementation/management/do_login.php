@@ -2,6 +2,7 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
 load_common_include_files($ADMIN_DIR);
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/User.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
 list($validUser, $user) = User::Login($_REQUEST["UserName"], $_REQUEST["UserPassword"]);
 $selectLanguage = isset($_REQUEST["selectlanguage"])?$_REQUEST["selectlanguage"]:"";
@@ -15,6 +16,7 @@ if ($validUser) {
 	setcookie("TOL_UserId", $user->getId());
 	setcookie("TOL_UserKey", $user->getKeyId());
 	setcookie("TOL_Language", $selectLanguage);
+	Article::UnlockByUser($user->getId());
 	header("Location: /$ADMIN/index.php");
 	exit;
 }
