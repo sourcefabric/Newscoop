@@ -13,6 +13,20 @@ function HtmlArea_Campsite($dbColumns) {
 <script type="text/javascript" src="/javascript/htmlarea/htmlarea.js"></script>
 
 <script type="text/javascript">
+function CampsiteSubhead(editor, objectName, object) {
+	parent = editor.getParentElement();
+	if ((parent.tagName.toLowerCase() == "span") && 
+		(parent.className.toLowerCase()=="campsite_subhead")) {
+		editor.selectNodeContents(parent);
+		//editor._doc.execCommand("unlink", false, null);
+		editor.updateToolbar();
+		return false;
+	}
+	else {
+		editor.surroundHTML('<span class="campsite_subhead">', '</span>');
+	}
+} // fn CampsiteSubhead
+
 /** 
  * This is a copy of the _createlink function, except that it calls 
  * a different popup window.
@@ -32,45 +46,53 @@ function CampsiteInternalLink(editor, objectName, object, link) {
 		f_title  : link.title,
 		f_target : link.target
 		};
+		// Pass the arguments to the popup window so that it
+		// can populate the dropdown controls.
 		popupWindowTarget += "?" + outparam["f_href"].replace("campsite_internal_link?", "");
 	}
-	editor._popupDialog(popupWindowTarget, function(param) {
-		if (!param)
-			return false;
-		var a = link;
-		if (!a) try {
-			editor._doc.execCommand("createlink", false, param.f_href);
-			a = editor.getParentElement();
-			var sel = editor._getSelection();
-			var range = editor._createRange(sel);
-			if (!HTMLArea.is_ie) {
-				a = range.startContainer;
-				if (!/^a$/i.test(a.tagName)) {
-					a = a.nextSibling;
-					if (a == null)
-						a = range.startContainer.parentNode;
+	editor._popupDialog(popupWindowTarget, 
+		function(param) {
+			// This function is called when the OK button
+			// is clicked in the popup window.
+			if (!param)
+				return false;
+			var a = link;
+			if (!a) try {
+				// Create a link normally in the editor
+				editor._doc.execCommand("createlink", false, param.f_href);
+				a = editor.getParentElement();
+				var sel = editor._getSelection();
+				var range = editor._createRange(sel);
+				if (!HTMLArea.is_ie) {
+					a = range.startContainer;
+					if (!/^a$/i.test(a.tagName)) {
+						a = a.nextSibling;
+						if (a == null)
+							a = range.startContainer.parentNode;
+					}
+				}
+			} catch(e) {}
+			else {
+				// Unlink the text if it is linked already
+				var href = param.f_href.trim();
+				editor.selectNodeContents(a);
+				if (href == "") {
+					editor._doc.execCommand("unlink", false, null);
+					editor.updateToolbar();
+					return false;
+				}
+				else {
+					a.href = href;
 				}
 			}
-		} catch(e) {}
-		else {
-			var href = param.f_href.trim();
-			editor.selectNodeContents(a);
-			if (href == "") {
-				editor._doc.execCommand("unlink", false, null);
-				editor.updateToolbar();
+			if (!(a && /^a$/i.test(a.tagName)))
 				return false;
-			}
-			else {
-				a.href = href;
-			}
-		}
-		if (!(a && /^a$/i.test(a.tagName)))
-			return false;
-		a.target = param.f_target.trim();
-		a.title = param.f_title.trim();
-		editor.selectNodeContents(a);
-		editor.updateToolbar();
-	}, outparam);
+			a.target = param.f_target.trim();
+			a.title = param.f_title.trim();
+			editor.selectNodeContents(a);
+			editor.updateToolbar();
+		}, 
+		outparam);
 };
 
 //<![CDATA[
@@ -97,7 +119,7 @@ initdocument = function () {
 				// FALSE = disabled in text mode
 				textMode  : false,
 				// Called when the button is clicked.
-				action    : function(editor) {editor.surroundHTML('<span class="campsite_subhead">', '</span>');},
+				action    : CampsiteSubhead,
 				// The button will be disabled if outside 
 				// the specified element.
 				context   : ''
