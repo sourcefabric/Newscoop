@@ -5,7 +5,7 @@
 	<TITLE>CAMPSITE manual Version 2.1</TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.1.0  (Linux)">
 	<META NAME="CREATED" CONTENT="20020913;19124500">
-	<META NAME="CHANGED" CONTENT="20031203;18114400">
+	<META NAME="CHANGED" CONTENT="20040325;18491400">
 	<STYLE>
 	<!--
 		@page { size: 8.5in 11in }
@@ -46,9 +46,9 @@ Guide</FONT></FONT></P>
 <P CLASS="western">CAMPSITE version: 2.1.5 and newer versions</P>
 <P CLASS="western">Maintained and distributed under GNU/GPL by
 CAMPWARE <A HREF="http://www.campware.org/">http://www.campware.org</A></P>
-<P CLASS="western">Manual version: December 10, 2003</P>
+<P CLASS="western">Manual version: March 26, 2004</P>
 <P CLASS="western">Language: English</P>
-<P CLASS="western">&copy;1999-2003 Media Development Loan Fund</P>
+<P CLASS="western">&copy;1999-2004 Media Development Loan Fund</P>
 <P CLASS="western"><A HREF="http://www.mdlf.org/" TARGET="_blank">http://www.mdlf.org</A>
 - <A HREF="http://www.mdlf-camp.net/" TARGET="_blank">http://www.mdlf-camp.net</A></P>
 <P CLASS="western" STYLE="page-break-before: auto"><B>Table of
@@ -239,7 +239,7 @@ related questions at contact@campware.org.</P>
 content management system for news publications. CAMPFIRE is a
 Unicode-based java-based near-WYSIWYG text editor. 
 </P>
-<P CLASS="western">Copyright &copy;1999-2003 Media Development Loan
+<P CLASS="western">Copyright &copy;1999-2004 Media Development Loan
 Fund.</P>
 <P CLASS="western">Contact: http://www.campware.org</P>
 <P CLASS="western">Campware encourages further development and
@@ -1044,20 +1044,29 @@ details).</P>
 issue you just created, including adding or deleting sections or
 adding new article types, changing field choices within article
 types, etc.</P>
-<P CLASS="western">[NOTE: If you are copying the structure of an old
-issue, you need to connect the new issue to a front-page template
-(see Section 3 of this manual). If you are not bent on changing the
-look of your publication, just select the old template; If you wish
-to alter the visual layout of your publication, you should select a
-new template that you have meanwhile created. Regardless of your
-choice, old issues will keep their original layout (unless you go
-back and change their template associations manually for each of
-them).</P>
-<P CLASS="western">Whichever option you choose, that is to replicate
-the structure of the last issue or create a brand new structure, you
-will be able to change the name, the default language and the number
-of the issue.]</P>
-<P CLASS="western">[TIP: While you can always go back and change the
+<P CLASS="western">NOTE: It is possible to keep the look for the old
+editions and in the same time to have a new look for the new ones.
+There are a few steps you have to take:</P>
+<OL>
+	<LI><P CLASS="western">template directories: create the new
+	templates in a separate directory</P>
+	<LI><P CLASS="western">admin interface: select the new issue and
+	article templates for the issue (e.g. template /new/issue.tpl and
+	/new/article.tpl) and leave the old issues as they are</P>
+	<LI><P CLASS="western">editing templates: when creating links to
+	issue and article templates use &quot;<A HREF="#p_issue_expr">Print
+	Issue Template</A>&quot; and &quot;<A HREF="#p_art_expr">Print
+	Article Template</A>&quot; instead of manually writing the template
+	path:</P>
+</OL>
+<P CLASS="western">&lt;a href=&quot;&lt;!** print issue
+template&gt;?&lt;!** urlparameters&gt;&quot;&gt;link&lt;/a&gt;</P>
+<P CLASS="western">instead of:</P>
+<P CLASS="western">&lt;a href=&quot;/look/old/issue.tpl?&lt;!**
+urlparameters&gt;&quot;&gt;link&lt;/a&gt;</P>
+<P CLASS="western">This step is specially important for the search
+template!</P>
+<P CLASS="western">TIP: While you can always go back and change the
 name and the default language of an issue at any time, the issue
 number cannot be changed once it is specified. If you are planning to
 add older issues of your newspaper/static-HTML site at a later stage
@@ -1065,7 +1074,7 @@ to the same CAMPSITE publication, you may consider continuing the
 series. For example, if you just published issue 154 of the &quot;Prague
 Times&quot; in static HTML before moving to CAMPSITE, you could
 assign number 155 to the first issue you are creating within
-CAMPSITE.]</P>
+CAMPSITE.</P>
 <H3 CLASS="western"><A NAME="2_2_3"></A>2.2.3 Adding new sections to
 an issue</H3>
 <P CLASS="western">By clicking on an issue, you will enter the
@@ -2512,6 +2521,8 @@ may contain any statement except: &quot;Language&quot;,
 		<TD WIDTH=186>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">bydate
 			desc|asc <BR>|bynumber desc|asc</FONT></P>
+			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">|byname
+			desc|asc</FONT></P>
 		</TD>
 	</TR>
 </TABLE>
@@ -2787,6 +2798,8 @@ the English language.</P>
 		<TD WIDTH=186>
 			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">bydate
 			desc|asc <BR>|bynumber desc|asc</FONT></P>
+			<P CLASS="western"><FONT FACE="Courier New, Courier, mono">|byname
+			desc|asc</FONT></P>
 		</TD>
 	</TR>
 </TABLE>
