@@ -16,7 +16,7 @@ if (!$access) {
 // Initialize input variables ///////////////////////////////////////////////////
 $OrderBy = Input::Get('order_by', 'string', 'id', true);
 $OrderDirection = Input::Get('order_direction', 'string', 'ASC', true);
-$view = Input::Get('view', 'thumbnail', true);
+$view = Input::Get('view', 'string', 'thumbnail', true);
 $ImageOffset = Input::Get('image_offset', 'int', 0, true);
 $SearchDescription = Input::Get('search_description', 'string', '', true);
 $SearchPhotographer = Input::Get('search_photographer', 'string', '', true);
