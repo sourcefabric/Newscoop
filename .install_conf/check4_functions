@@ -672,7 +672,7 @@ if [ "$group_line" = "" ]; then
     return 1
 fi
 i=1
-for w in $user_line; do
+for w in $group_line; do
     [ $i -eq 2 ] && export APACHE_GROUP=$w && break
     i=`expr $i + 1`
 done
