@@ -262,7 +262,6 @@ int ReadParameters(char** p_ppchMsg, int* p_pnSize, const char** p_ppchErrMsg)
 	CXMLTree coTree("CampsiteMessage");
 	CXMLTree::iterator coRootIt = coTree.getRootNode();
 	coTree.addAttribute(coRootIt, "MessageType", "URLRequest");
-	coTree.addAttribute(coRootIt, "MessageId", "11234");
 	coTree.newChild(coRootIt, "HTTPHost", pchHTTPHost);
 	coTree.newChild(coRootIt, "DocumentRoot", pchDocumentRoot);
 	coTree.newChild(coRootIt, "RemoteAddress", pchIP);
