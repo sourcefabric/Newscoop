@@ -1,6 +1,7 @@
 2.1.3
-    - Updated the manual: some statements were not documented: "if search"
-    (3.9.3.22) and "print search" (3.9.4.2)
+    - Manual updates: some statements were not documented: "If Search"
+    (3.9.3.22), "Print Search" (3.9.4.2), "If Subtitle" (3.9.3.23); manual
+    corrections
     - Parser used to abort improperly when it couldn't resolve the allowed hosts
     name
     - Increased the maximum keyword length in the search engine
@@ -9,7 +10,6 @@
     - Modified the subtitle printing behavior: printing the field inside the
     subtitle list will display the current subtitle in the list instead of the
     subtitle set at the beginning of the template
-    - Documented "If Subtitle" template language statement in the manual
 
 2.1.2
     - Ported campsite to FreeBSD (thanks to Richard Airlie)
