@@ -155,6 +155,8 @@ define(<*E_DIALOG_BUTTONS*>, <*	</DIV>
 	</TR>*>)dnl
 define(<*E_DIALOG*>, <*</TABLE></CENTER>
 </FORM>*>)dnl
+define(<*SUBMIT*>, <*<INPUT TYPE="submit" NAME="$1" VALUE="<? putGS('$2'); ?>">*>)dnl
+define(<*REDIRECT*>, <*<INPUT TYPE="button" NAME="$1" VALUE="<? putGS('$2'); ?>" ONCLICK="location.href='$3'">*>)dnl
 dnl
 dnl *** Message box ***
 dnl
