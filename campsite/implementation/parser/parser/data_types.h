@@ -481,6 +481,7 @@ public:
 
 private:
 	Enum(const string& p_rcoEnum) : m_coName(p_rcoEnum) {}
+	static void initMap();
 
 private:
 	string m_coName;
