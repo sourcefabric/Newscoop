@@ -581,7 +581,7 @@ while [ "$1" != "" ]; do
     shift 1
 done
 [ "$bin_paths" = "" ] && bin_paths="/sbin /usr/sbin /usr/local/apache/bin /home/apache/bin /home/httpd/bin /opt/apache/bin"
-bin_names="apache httpd httpd2"
+bin_names="apache httpd httpd2 apache2 httpds"
 for bn in $bin_names; do
     bin_path=`which "$bn" 2> /dev/null`
     [ $? -eq 0 ] && apache_bin_name="$bn" && break
@@ -647,9 +647,18 @@ if [ "$cf_path" = "" ]; then
 	    echo "Could not find apache configuration file in$cf_paths"
 	    return 1
 	fi
-	read_path_with_test path_to_conf_directory --exp "fill in the path to apache configuration file" --file "${apache_bin_name}.conf"
-	[ $? -ne 0 ] && return 1
-	conf_path=$path_to_conf_directory
+	found=false
+	while ! $found; do
+	    read_path_with_test path_to_conf_directory --exp "fill in the path to apache configuration file"
+	    [ $? -ne 0 ] && return 1
+	    conf_path=$path_to_conf_directory
+	    for cf_fn in $bin_names; do
+		if [ -f "${conf_path}/${cf_fn}.conf" ]; then
+		    found=true
+		    break
+		fi
+	    done
+	done
     else
 	echo "Could not find apache configuration file in$cf_paths"
 	return 1
