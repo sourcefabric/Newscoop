@@ -35,7 +35,7 @@ regGS("Changed image properties of $1","Changed image properties of $1:en");
 // -- del.m4
 regGS("Delete image","Delete image:en");
 regGS("You do not have the right to delete images","You do not have the right to delete images:en");
-regGS("Are you sure you want to delete the image $1?","Are you sure you want to delete the image \\'$1\\'?:en");
+regGS("Are you sure you want to delete the image $1?","Are you sure you want to delete the image $1?:en");
 
 // -- do_del.m4
 regGS("Deleting image","Deleting image:en");
