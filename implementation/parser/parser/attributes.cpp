@@ -34,7 +34,7 @@ Implementation of type of attributes classes
 // OperatorsMap destructor
 template <class Operator> OperatorsMap<Operator>::~OperatorsMap()
 {
-	map<string, Operator*>::iterator coIt;
+	typename map<string, Operator*>::iterator coIt;
 	for (coIt = m_coOperators.begin(); coIt != m_coOperators.end(); ++coIt)
 	{
 		delete (*coIt).second;
