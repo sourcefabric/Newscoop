@@ -33,10 +33,7 @@ install: $(ALL)
 	mkdir -p $(CGI_DIR)
 	mkdir -p $(HTML_DIR)/look
 	mkdir -p $(PRIV_DIR)/img
-	mkdir -p $(PRIV_DIR)/img/buttons
-	mkdir -p $(PRIV_DIR)/img/icons
-	mkdir -p $(HTML_DIR)/images/thumbnails_big
-	mkdir -p $(HTML_DIR)/images/thumbnails_small
+	mkdir -p $(HTML_DIR)/images/thumbnails
 	cp -rf article_import $(PRIV_DIR)
 	cp -rf javascript $(HTML_DIR)
 	cp -rf classes $(HTML_DIR)
