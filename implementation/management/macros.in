@@ -101,7 +101,7 @@ dnl
 dnl *** List ***
 dnl
 define(<*B_LIST*>, <*<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" WIDTH="100%" class="table_list">*>)dnl
-define(<*B_LIST_HEADER*>, <*<TR BGCOLOR="#C0D0FF">*>)dnl
+define(<*B_LIST_HEADER*>, <*<TR class="table_list_header">*>)dnl
 define(<*X_LIST_TH*>, <*<TD ALIGN="LEFT" VALIGN="TOP" ifelse(<*$2*>, <**>, <**>, <*WIDTH="$2"*>) ifelse(<*$3*>, <**>, <**>, <*$3*>)><B><?php  putGS("$1"); ?></B></TD>*>)dnl
 define(<*E_LIST_HEADER*>, <*</TR>*>)dnl
 define(<*B_LIST_TR*>, <*<TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>*>)dnl

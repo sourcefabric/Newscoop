@@ -99,7 +99,7 @@ if (count($articleTopics) > 0) {
 	$color= 0;
 	?>
 	<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" WIDTH="100%" class="table_list">
-	<TR BGCOLOR="#C0D0FF">
+	<TR class="table_list_header">
 		<TD ALIGN="LEFT" VALIGN="TOP" style="padding: 5px;"><B><?php  putGS("Topic name"); ?></B></TD>
 		<?php  if ($User->hasPermission('ChangeArticle')) { ?>
 		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" style="padding: 5px;"><B><?php  putGS("Delete"); ?></B></TD>
@@ -174,7 +174,7 @@ if (count($subtopics) > 0) {
 	$color= 0;
 	?>
 	<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" WIDTH="100%" class="table_list">
-	<TR BGCOLOR="#C0D0FF">
+	<TR class="table_list_header">
 		<TD ALIGN="LEFT" VALIGN="TOP"  style="padding: 5px;"><B><?php  putGS("Name"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" style="padding: 5px;" ><B><?php  putGS("Add"); ?></B></TD>
 	</TR>

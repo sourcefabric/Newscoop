@@ -1,5 +1,5 @@
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" WIDTH="100%" class="table_list">
-    <TR BGCOLOR="#C0D0FF">
+    <TR class="table_list_header">
         <TD ALIGN="LEFT" VALIGN="TOP" WIDTH="5%">
           <table border="0" cellspacing="0" cellpadding="0"><tr><td style="padding: 3px;"><B><a href="<?php echo $IdHref; ?>"><?php  putGS("Thumbnail"); ?></a></B></td><td align="left"><a href="<?php echo $IdHref; ?>"><?php echo $IdOrderIcon; ?></a></td></tr></table>
         </TD>
