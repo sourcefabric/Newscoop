@@ -1,6 +1,6 @@
 CAMPSITE / CAMPFIRE
-version       : 2.0.0
-release date  : 15 march 2001
+version       : 2.0.9
+release date  : July, 3rd 2001
 contact       : contact@campware.org
 url           : http://www.campware.org/campsite/
 copyright     : (c)1999-2001 Media Development Loan Fund
@@ -13,15 +13,15 @@ INTRODUCTION
 CAMPSITE is a content management system with multi-lingual
 Unicode support, designed for medium to large sized online
 publications. Issues, back archives, as well as subscription
-management are fully implemented features. At the core of 
-management system sits the CAMPFIRE, a Java program supporting 
-Unicode fonts, allowing contributors and editors to control 
+management are fully implemented features. At the core of
+management system sits the CAMPFIRE, a Java program supporting
+Unicode fonts, allowing contributors and editors to control
 layout online in their native font face. Style features can be
 assigned via buttons - similar to editors such as Wordpad - 
 meaning no HTML knowledge is necessary for formatting text.
 
 We encourage further development of this software and would 
-like to make any progress accessible to all other users. 
+like to make any progress accessible to all other users.
 Please contact us if you have or intend to developed this 
 software further.
 

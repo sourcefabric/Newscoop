@@ -1,19 +1,33 @@
-* Tuesday, March 13th 2001
-    New items: README, implementation/tpl_cgi, documentation/example, documentation/http-config
-    Removed items: implementation/http-config
-    General:
+new in 2.0.0 (March 13th 2001):
+    - New items: README, implementation/tpl_cgi, documentation/example,
+    documentation/http-config
+    - General:
         - Changed Makefiles in order to compile on Redhat 7.0
-    implementation/parser:
+        implementation/parser:
         - The parser is now campsite_server, a multithreaded daemon.
         - Made campsitectl (start, stop, restart, show status) campsite_server.
         - Made campsite rc script for Sys V like systems (ex. RedHat)
-        - Made install script to install campsitectl, campsite scripts for automatic start of campsite_server on
-                system startup.
-        - The parser prints formatted date, month name (mon_name) and weekday name (wday_name) in
-                current language (not in English only).
-    documentation:
-        - Updated campsite-guide (changes made on: URLParameters, Print Issue Article Image
-                Subscription, Date)
-    implementation/tpl_cgi:
-        - This is a small cgi; it receives requests, connects to campsite_server, read the response from
-                campsite_server and forwards the response (HTML page)
+        - Made install script to install campsitectl, campsite scripts for
+        automatic start of campsite_server on system startup.
+        - The parser prints formatted date, month name (mon_name) and weekday
+        name (wday_name) in current language (not in English only).
+    - documentation:
+        - Updated campsite-guide (changes made on: URLParameters, Print Issue
+        Article Image Subscription, Date)
+    - implementation/tpl_cgi:
+        - This is a small cgi; it receives requests, connects to
+        campsite_server, read the response from campsite_server and forwards
+        the response (HTML page)
+
+new in 2.0.6 (May, 14th 2001)
+    - Fixed search list order bug. The parser did not list in the requested
+    order the list of searched articles.
+
+new in 2.0.8
+    - Fixed internal links bug (select proper template according to link
+    publication)
+    - Fixed incorrect parsing of "list ... article ... keyword <keyword>" bug
+
+new in 2.0.9
+    - Fixed incorrect timestamp update on event notify
+    - Fixed mysqlclient library link problem on RedHat systems

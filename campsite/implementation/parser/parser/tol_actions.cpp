@@ -145,10 +145,10 @@ pthread_once_t TOLAction::m_InitControl = PTHREAD_ONCE_INIT;
 // Init: initialise operators map
 void TOLAction::Init()
 {
-	m_coOpMap.insert(Int2String::value_type((int)TOL_OP_IS, "="));
-	m_coOpMap.insert(Int2String::value_type((int)TOL_OP_IS_NOT, "!="));
-	m_coOpMap.insert(Int2String::value_type((int)TOL_OP_GREATER, ">"));
-	m_coOpMap.insert(Int2String::value_type((int)TOL_OP_SMALLER, "<"));
+	m_coOpMap[(int)TOL_OP_IS] = "=";
+	m_coOpMap[(int)TOL_OP_IS_NOT] = "!=";
+	m_coOpMap[(int)TOL_OP_GREATER] = ">";
+	m_coOpMap[(int)TOL_OP_SMALLER] = "<";
 }
 
 // DEBUGAct: print debug information
@@ -673,7 +673,7 @@ int TOLActList::WriteArtParam(string& s, TOLContext& c, string& table)
 //		string& table - string containig tables used in query
 int TOLActList::WriteSrcParam(string& s, TOLContext& c, string& table)
 {
-	table = "ArticleIndex, KeywordIndex";
+	table = "Articles, ArticleIndex, KeywordIndex";
 	string w = "";
 	c.ResetKwdIt();
 	cpChar k;
@@ -694,14 +694,16 @@ int TOLActList::WriteSrcParam(string& s, TOLContext& c, string& table)
 	}
 	if (w != "")
 		w += ")";
-	CheckFor("IdPublication", c.Publication(), &m_coBuf, w);
+	CheckFor("Articles.IdPublication", c.Publication(), &m_coBuf, w);
 	if (c.SearchLevel() >= 1)
-		CheckFor("NrIssue", c.Issue(), &m_coBuf, w);
+		CheckFor("Articles.NrIssue", c.Issue(), &m_coBuf, w);
 	if (c.SearchLevel() >= 2)
-		CheckFor("NrSection", c.Section(), &m_coBuf, w);
+		CheckFor("Articles.NrSection", c.Section(), &m_coBuf, w);
 	if (w != "")
 		w += " and ";
-	w += "ArticleIndex.IdKeyword = KeywordIndex.Id";
+	w += "ArticleIndex.IdKeyword = KeywordIndex.Id"
+	     " and Articles.Number = ArticleIndex.NrArticle"
+	     " and Articles.IdLanguage = ArticleIndex.IdLanguage";
 	s = string(" where ") + w;
 	return RES_OK;
 }
@@ -712,11 +714,11 @@ int TOLActList::WriteSrcParam(string& s, TOLContext& c, string& table)
 //		string& s - string to add conditions to (order clause)
 int TOLActList::WriteOrdParam(string& s)
 {
+	TOLParameterList::iterator pl_i;
 	if (modifier != TOL_LMOD_SEARCHRESULT)
 	{
 		s = " order by IdLanguage desc";
-		TOLParameterList::iterator pl_i;
-		for (pl_i = ord_param.begin(); pl_i != ord_param.end(); ++(pl_i))
+		for (pl_i = ord_param.begin(); pl_i != ord_param.end(); ++pl_i)
 		{
 			s += string(", ") + (*pl_i).Attribute() + string(" ");
 			if (strlen((*pl_i).Value()))
@@ -724,7 +726,21 @@ int TOLActList::WriteOrdParam(string& s)
 		}
 	}
 	else
-		s = " order by IdPublication, IdLanguage, NrIssue, NrSection, NrArticle";
+	{
+		s = " order by Articles.IdPublication asc, ArticleIndex.IdLanguage desc";
+		for (pl_i = ord_param.begin(); pl_i != ord_param.end(); ++pl_i)
+		{
+			s += string(", ");
+			if ((*pl_i).Attribute() == "Number")
+				s += string("NrArticle") + string(" ");
+			else
+				s += (*pl_i).Attribute() + string(" ");
+			if (strlen((*pl_i).Value()))
+				s += (*pl_i).Value();
+			if ((*pl_i).Attribute() != "Number")
+				s += ", NrArticle asc";
+		}
+	}
 	return RES_OK;
 }
 
@@ -753,6 +769,7 @@ int TOLActList::RunBlock(TOLPActionList& al, TOLContext& c, fstream& fs)
 {
 	for (TOLPActionList::iterator al_i = al.begin(); al_i != al.end(); ++al_i)
 		(*al_i)->TakeAction(c, fs);
+	return RES_OK;
 }
 
 // SetContext: set the context current Issue, Section or Article depending of list
@@ -879,11 +896,13 @@ int TOLActList::TakeAction(TOLContext& c, fstream& fs)
 		WriteOrdParam(order);
 		WriteLimit(limit, lc);
 		if (modifier == TOL_LMOD_SEARCHRESULT)
-			fields = "select NrArticle, IdLanguage, IdPublication";
+			fields = "select NrArticle, Articles.IdLanguage, Articles.IdPublication";
+		else if (modifier == TOL_LMOD_ARTICLE)
+			fields = "select Number, Articles.IdLanguage, IdPublication";
 		else
 			fields = "select Number, IdLanguage, IdPublication";
 		if (modifier == TOL_LMOD_ARTICLE || modifier == TOL_LMOD_SEARCHRESULT)
-			fields += ", NrIssue, NrSection";
+			fields += ", Articles.NrIssue, Articles.NrSection";
 		else if (modifier == TOL_LMOD_SECTION)
 			fields += ", NrIssue";
 		string grfield;

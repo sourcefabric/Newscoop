@@ -45,14 +45,14 @@ using namespace std;
 class TOLAtom
 {
 protected:
-	char Identifier[ID_MAXLEN + 1];		// atom identifier
+	char m_pchIdentifier[ID_MAXLEN + 1];		// atom identifier
 
 public:
 	// constructor
 	TOLAtom(cpChar id = "")
 	{
-		strncpy(Identifier, id, ID_MAXLEN);
-		Identifier[strlen(id) > ID_MAXLEN ? ID_MAXLEN : strlen(id)] = 0;
+		strncpy(m_pchIdentifier, id, ID_MAXLEN);
+		m_pchIdentifier[strlen(id) > ID_MAXLEN ? ID_MAXLEN : strlen(id)] = 0;
 	}
 	// copy-constructor
 	TOLAtom(const TOLAtom& source)
@@ -68,10 +68,10 @@ public:
 	{
 		return "TOLAtom";
 	}
-	// GetIdentifier: return pointer to string: atom identifier
-	cpChar GetIdentifier() const
+	// Identifier: return pointer to string: atom identifier
+	cpChar Identifier() const
 	{
-		return Identifier;
+		return m_pchIdentifier;
 	}
 	// assign operator
 	virtual const TOLAtom& operator =(const TOLAtom&);
@@ -81,7 +81,6 @@ public:
 	friend class TOLAttribute;
 	friend class TOLStatement;
 	friend class TOLLex;
-	friend class TOLParser;
 };
 
 // TOLAttribute: an attribute is an atom that name a statement feature; it may require a
@@ -109,8 +108,21 @@ public:
 	// Attribute: returns the attribute name: DBField if defined, Identifier otherwise
 	cpChar Attribute() const
 	{
-		return DBField[0] != 0 ? DBField : Identifier;
+		return DBField[0] != 0 ? DBField : m_pchIdentifier;
 	}
+	
+	// DataType: returns the data type of attribute
+	TDataType DataType() const
+	{
+		return DType;
+	}
+	
+	// Class: returns the attribute class
+	TOLAttrClass Class() const
+	{
+		return attr_class;
+	}
+	
 	// ClassName: return pointer to a string: class name
 	virtual cpChar ClassName() const
 	{
@@ -123,13 +135,12 @@ public:
 
 	friend class TOLStatement;
 	friend class TOLLex;
-	friend class TOLParser;
 	friend cpChar TOLAttributeValue(const TOLAttribute&);
 };
 
 inline cpChar TOLAttributeValue(const TOLAttribute& a)
 {
-	return a.Identifier;
+	return a.m_pchIdentifier;
 }
 
 // TOLStatementContext: define context of statement usage and valid attributes
@@ -314,7 +325,7 @@ public:
 
 inline cpChar TOLStatementValue(const TOLStatement& s)
 {
-	return s.Identifier;
+	return s.m_pchIdentifier;
 }
 
 #endif
