@@ -89,4 +89,36 @@ regGS("Name<BR><SMALL>(click to select the publication)</SMALL>","Name<BR><SMALL
 regGS("The publication $1 has been successfuly added.","The publication $1 has been successfuly added.:en");
 regGS("Publication $1 added", "Publication $1 added");
 
+// aliases
+regGS("Add new alias", "Add new alias:en");
+regGS("Alias (click to edit)", "Alias (click to edit):en");
+regGS("Edit aliases", "Edit aliases:en");
+regGS("Publication Aliases", "Publication Aliases:en");
+
+// add_alias
+regGS("Back to aliases", "Back to aliases:en");
+
+// do_add_alias
+regGS("Adding new alias", "Adding new alias:en");
+regGS("The site alias for publication $1 has been added.", "The site alias for publication $1 has been added.:en");
+regGS("The site alias $1 could not be added.", "The site alias $1 could not be added.:en");
+regGS("Another alias with the same name exists already.", "Another alias with the same name exists already.:en");
+
+// edit_alias
+regGS("Edit alias", "Edit alias:en");
+
+// do_edit_alias
+regGS("Editing alias", "Editing alias:en");
+regGS("The site alias for publication $1 has been modified to $2.", "The site alias for publication $1 has been modified to $2.:en");
+
+// del_alias
+regGS("Delete alias", "Delete alias:en");
+regGS("No such alias.", "No such alias.:en");
+regGS("Are you sure you want to delete the alias $1?", "Are you sure you want to delete the alias $1?:en");
+
+// do_del_alias
+regGS("Deleting alias", "Deleting alias:en");
+regGS("The alias $1 could not be deleted.", "The alias $1 could not be deleted.:en");
+regGS("The alias $1 has been deleted from publication $2.", "The alias $1 has been deleted from publication $2.:en");
+
 ?>
