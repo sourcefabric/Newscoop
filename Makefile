@@ -29,11 +29,10 @@ install: dummy
 	chown $(ROOT_USER):$(APACHE_GROUP) "$(BIN_DIR)/create_instance.php"
 	chmod 644 "$(BIN_DIR)/create_instance.php"
 	cp -f "$(INSTALL_CONF)/install_conf.php" "$(ETC_DIR)"
-	chown $(ROOT_USER):$(APACHE_GROUP) "$(ETC_DIR)/install_conf.php"
-	chmod 644 "$(ETC_DIR)/install_conf.php"
+	cp -f "$(INSTALL_CONF)/vhost-template.conf" "$(ETC_DIR)"
 	cp -f "$(INSTALL_CONF)/parser_conf.php" "$(ETC_DIR)"
-	chown $(ROOT_USER):$(APACHE_GROUP) "$(ETC_DIR)/parser_conf.php"
-	chmod 644 "$(ETC_DIR)/parser_conf.php"
+	chown $(ROOT_USER):$(APACHE_GROUP) $(ETC_DIR)/*
+	chmod 644 $(ETC_DIR)/*
 	$(MAKE) -C implementation install
 
 test_install:
