@@ -132,5 +132,15 @@ hr {
 	/*background-color: #C0D0FF;*/
 	background-color: #d5e2ee;
 	border: 1px solid #8baed1;
-	/*background-color: #FFFFDD;*/
+}
+
+.message_box {
+	/* background-color: #C0D0FF; */
+	background-color: #d5e2ee;
+	border: 1px solid #8baed1;
+}
+
+.search_dialog {
+	background-color: #d5e2ee;
+	border: 1px solid #8baed1;
 }
