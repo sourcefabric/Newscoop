@@ -466,6 +466,7 @@ int CStatementMap::InitStatements()
 	pcoCtx->insertAttr(new CAttribute("reset_article_list"));
 	pcoCtx->insertAttr(new CAttribute("reset_searchresult_list"));
 	pcoCtx->insertAttr(new CAttribute("reset_subtitle_list"));
+	pcoCtx->insertAttr(new CStringAttr("template"));
 	pcoSt->insertCtx(pcoCtx);
 
 	this->insert(pcoSt);
