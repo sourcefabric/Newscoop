@@ -56,6 +56,22 @@ B_DIALOG(<*Add new publication*>, <*POST*>, <*do_add.php*>)
 	    ?>dnl
 	    </SELECT>
 	E_DIALOG_INPUT
+	B_DIALOG_INPUT(<*URL Type*>)
+		<SELECT NAME="cURLType">
+<?php
+	$sql = "SELECT * FROM URLTypes";
+	query ($sql, 'q_urltype');
+	$nr=$NUM_ROWS;
+	for($loop=0;$loop<$nr;$loop++) {
+		fetchRow($q_urltype);
+		pcomboVar(getVar($q_urltype,'Id'),getVar($q_pub,'IdURLType'),getVar($q_urltype,'Name'));
+	}
+?>dnl
+	    </SELECT>
+	E_DIALOG_INPUT
+
+	<tr><td colspan=2><HR NOSHADE SIZE="1" COLOR="BLACK"></td></tr>
+	<tr><td colspan=2><b><?php putGS("Subscriptions defaults"); ?></b></td></tr>
 	B_DIALOG_INPUT(<*Pay Period*>)
 		<INPUT TYPE="TEXT" NAME="cPayTime" VALUE="" SIZE="5" MAXLENGTH="5">
 	E_DIALOG_INPUT
@@ -78,16 +94,16 @@ B_DIALOG(<*Add new publication*>, <*POST*>, <*do_add.php*>)
 	    </SELECT>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Unit Cost*>)
-		<INPUT TYPE="TEXT" NAME="cUnitCost" VALUE="" SIZE="20" MAXLENGTH="32">
+		<INPUT TYPE="TEXT" NAME="cUnitCost" VALUE="" SIZE="10" MAXLENGTH="10">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Currency*>)
-		<INPUT TYPE="TEXT" NAME="cCurrency" VALUE="" SIZE="20" MAXLENGTH="32">
+		<INPUT TYPE="TEXT" NAME="cCurrency" VALUE="" SIZE="10" MAXLENGTH="10">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Paid Period*>)
-		<INPUT TYPE="TEXT" NAME="cPaid" VALUE="" SIZE="20" MAXLENGTH="32">
+		<INPUT TYPE="TEXT" NAME="cPaid" VALUE="" SIZE="10" MAXLENGTH="10">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Trial Period*>)
-		<INPUT TYPE="TEXT" NAME="cTrial" VALUE="" SIZE="20" MAXLENGTH="32">
+		<INPUT TYPE="TEXT" NAME="cTrial" VALUE="" SIZE="10" MAXLENGTH="10">
 	E_DIALOG_INPUT
 	B_DIALOG_BUTTONS
 		SUBMIT(<*Save*>, <*Save changes*>)
