@@ -5,10 +5,6 @@ cd ../../..
 cd implementation/management/root
 . ${INSTALL_CONF}/conf_functions
 
-database_vars="DATABASE_SERVER DATABASE_USER DATABASE_PASSWORD DATABASE_NAME"
-var_not_modified $database_vars && [ -f db_connect.php ] && exit 0
-save_var $database_vars
-
 echo -n -e "\t\tWriting db_connect.php..."
 cat > db_connect.php << EOF
 <?php

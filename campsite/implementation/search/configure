@@ -7,9 +7,6 @@ cd implementation/search
 
 [ "$PACKAGE_TYPE" = "binary" ] && exit 0
 
-var_not_modified APP_NAME && [ -f configure.h ] && exit 0
-save_var APP_NAME
-
 echo -n -e "\tWriting configure.h header..."
 cat > configure.h << EOF
 /******************************************************************************
