@@ -159,7 +159,7 @@ int CStatementMap::InitStatements()
 
 	// register statements
 	CTypeAttributesMap* pcoArticleTypeAttributes = NULL;
-	GetArticleTypeAttributes(&pcoArticleTypeAttributes);
+//	GetArticleTypeAttributes(&pcoArticleTypeAttributes);
 
 	CStatement* pcoSt = NULL;
 	CStatementContext* pcoCtx = NULL;
