@@ -13,6 +13,7 @@ $Section = Input::get('Section', 'int', 0);
 $Language = Input::get('Language', 'int', 0);
 $sLanguage = Input::get('sLanguage', 'int', 0);
 $Article = Input::get('Article', 'int', 0);
+$Saved = Input::get('saved', 'int', 0, true);
 $LockOk = Input::get('LockOk', 'string', 0, true);
 
 if (!Input::isValid()) {
@@ -139,11 +140,32 @@ if ($hasAccess && !$edit_ok) {
 		</TD>
 	</TR>
 	<TR>
-		<TD COLSPAN="2"><BLOCKQUOTE><LI><?php  putGS('This article has been locked by $1 ($2) at','<B>'.htmlspecialchars($lockUserObj->getName()),htmlspecialchars($lockUserObj->getUserName()).'</B>' ); ?>
-		<B><?php print htmlspecialchars($articleObj->getLockTime()); ?></B></LI>
-		<LI><?php putGS('Now is $1','<B>'.date("Y-m-d G:i:s").'</B>'); ?></LI>
-		<LI><?php putGS('Are you sure you want to unlock it?'); ?></LI>
-		</BLOCKQUOTE></TD>
+		<TD COLSPAN="2" align="center">
+			<BLOCKQUOTE>
+				<?PHP
+				$diffSeconds = time() - strtotime($articleObj->getLockTime());
+				$hours = floor($diffSeconds/3600);
+				$diffSeconds -= $hours * 3600;
+				$minutes = floor($diffSeconds/60);
+				?>
+				<?php  
+				if ($hours > 0) {
+					putGS('This article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.',
+						  '<B>'.htmlspecialchars($lockUserObj->getName()),
+						  htmlspecialchars($lockUserObj->getUserName()).'</B>',
+						  $hours, $minutes); 
+				}
+				else {
+					putGS('This article has been locked by $1 ($2) $3 minute(s) ago.',
+						  '<B>'.htmlspecialchars($lockUserObj->getName()),
+						  htmlspecialchars($lockUserObj->getUserName()).'</B>',
+						  $minutes);
+				}
+				?>
+				<br>
+				<?php putGS('Are you sure you want to unlock it?'); ?>
+			</BLOCKQUOTE>
+		</TD>
 	</TR>
 	<TR>
 		<TD COLSPAN="2">
@@ -280,7 +302,7 @@ if ($edit_ok) { ?>
 				<TD class="action_link_container">
 					<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 					<TR>
-						<TD><a href="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/do_del.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php p($Section); ?>&Article=<?php p($Article); ?>&Language=<?php p($Language); ?>&sLanguage=<?php p($sLanguage); ?>" onclick="return confirm('<?php htmlspecialchars(putGS('Are you sure you want to delete the article $1 ($2)?', '&quot;'.htmlspecialchars($articleObj->getTitle(), ENT_QUOTES).'&quot;', htmlspecialchars($sLanguageObj->getName(), ENT_QUOTES) )); ?>');"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/delete.gif" BORDER="0"></A></TD>
+						<TD><a href="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/do_del.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php p($Section); ?>&Article=<?php p($Article); ?>&Language=<?php p($Language); ?>&sLanguage=<?php p($sLanguage); ?>" onclick="return confirm('<?php htmlspecialchars(putGS('Are you sure you want to delete the article $1 ($2)?', '&quot;'.htmlspecialchars($articleObj->getTitle(), ENT_QUOTES).'&quot;', htmlspecialchars($sLanguageObj->getName(), ENT_QUOTES) )); ?>');"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/delete.png" BORDER="0"></A></TD>
 						<TD style="padding-left: 6px;"><a href="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/do_del.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php p($Section); ?>&Article=<?php p($Article); ?>&Language=<?php p($Language); ?>&sLanguage=<?php p($sLanguage); ?>" onclick="return confirm('<?php htmlspecialchars(putGS('Are you sure you want to delete the article $1 ($2)?', '&quot;'.htmlspecialchars($articleObj->getTitle(), ENT_QUOTES).'&quot;', htmlspecialchars($sLanguageObj->getName(), ENT_QUOTES))); ?>');"><B><?php  putGS("Delete"); ?></B></A></TD>
 					</TR>
 					</TABLE>
@@ -333,6 +355,23 @@ if ($edit_ok) { ?>
 	</TD>
 </TR>
 </TABLE>
+
+<?php if ($Saved > 0) { ?>
+<TABLE BORDER="0" cellpadding="0" cellspacing="0" align="center">
+<tr>
+	<td class="info_message" style="font-weight: bold; font-size: 14pt; color: #239f34;">
+		<?php 
+		if ($Saved == 1) {
+			putGS('The article has been updated.'); 
+		}
+		elseif ($Saved == 2) {
+			putGS('The article cannot be updated or no changes have been made.');
+		}
+		?>
+	</td>
+</tr>
+</table>
+<?php } ?>
 
 <FORM NAME="dialog" METHOD="POST" ACTION="do_edit.php">
 <INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<?php  p($Pub); ?>">
@@ -389,19 +428,19 @@ if ($edit_ok) { ?>
 	<TD>&nbsp;</TD><TD>
 	<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%">
 	<TR>
-		<TD ALIGN="RIGHT" ><INPUT TYPE="CHECKBOX" NAME="cOnFrontPage"<?php  if ($articleObj->onFrontPage()) { ?> class="input_checkbox" CHECKED<?php  } ?>></TD>
+		<TD ALIGN="RIGHT" ><INPUT TYPE="CHECKBOX" NAME="cOnFrontPage" class="input_checkbox" <?php  if ($articleObj->onFrontPage()) { ?> CHECKED<?php  } ?>></TD>
 		<TD>
 		<?php  putGS('Show article on front page'); ?>
 		</TD>
 	</TR>
 	<TR>
-		<TD ALIGN="RIGHT" ><INPUT TYPE="CHECKBOX" NAME="cOnSection"<?php  if ($articleObj->onSection()) { ?> class="input_checkbox" CHECKED<?php  } ?>></TD>
+		<TD ALIGN="RIGHT" ><INPUT TYPE="CHECKBOX" NAME="cOnSection" class="input_checkbox" <?php  if ($articleObj->onSection()) { ?> CHECKED<?php  } ?>></TD>
 		<TD>
 		<?php  putGS('Show article on section page'); ?>
 		</TD>
 	</TR>
 	<TR>
-		<TD ALIGN="RIGHT" ><INPUT TYPE="CHECKBOX" NAME="cPublic"<?php  if ($articleObj->isPublic()) { ?> class="input_checkbox" CHECKED<?php  } ?>></TD>
+		<TD ALIGN="RIGHT" ><INPUT TYPE="CHECKBOX" NAME="cPublic" class="input_checkbox" <?php  if ($articleObj->isPublic()) { ?> CHECKED<?php  } ?>></TD>
 		<TD>
 		<?php putGS('Allow users without subscriptions to view the article'); ?>
 		</TD>
