@@ -71,33 +71,37 @@ public:
 
 	const string& getDocumentRoot() const { return m_coDocumentRoot; }
 
-	void setId(long p_nId) { setValue("url_id", p_nId); }
+	void setId(long p_nId) { replaceValue("url_id", p_nId); }
 
 	long getId() const throw(InvalidValue) { return getIntValue("url_id"); }
 
-	void setLanguage(long p_nLanguage) { setValue(P_IDLANG, p_nLanguage); }
+	void setLanguage(long p_nLanguage) { replaceValue(P_IDLANG, p_nLanguage); }
 
 	long getLanguage() const throw(InvalidValue) { return getIntValue(P_IDLANG); }
 
-	void setPublication(long p_nPublication) { setValue(P_IDPUBL, p_nPublication); }
+	void setPublication(long p_nPublication) { replaceValue(P_IDPUBL, p_nPublication); }
 
 	long getPublication() const throw(InvalidValue) { return getIntValue(P_IDPUBL); }
 
-	void setIssue(long p_nIssue) { setValue(P_NRISSUE, p_nIssue); }
+	void setIssue(long p_nIssue) { replaceValue(P_NRISSUE, p_nIssue); }
 
 	long getIssue() const throw(InvalidValue) { return getIntValue(P_NRISSUE); }
 
-	void setSection(long p_nSection) { setValue(P_NRSECTION, p_nSection); }
+	void setSection(long p_nSection) { replaceValue(P_NRSECTION, p_nSection); }
 
 	long getSection() const throw(InvalidValue) { return getIntValue(P_NRSECTION); }
 
-	void setArticle(long p_nArticle) { setValue(P_NRARTICLE, p_nArticle); }
+	void setArticle(long p_nArticle) { replaceValue(P_NRARTICLE, p_nArticle); }
 
 	long getArticle() const throw(InvalidValue) { return getIntValue(P_NRARTICLE); }
 
-	virtual void setValue(const string& p_rcoParameter, long p_nValue);
+	void setValue(const string& p_rcoParameter, long p_nValue);
 
-	virtual void setValue(const string& p_rcoParameter, const string& p_rcoValue);
+	void setValue(const string& p_rcoParameter, const string& p_rcoValue);
+
+	void replaceValue(const string& p_rcoParameter, long p_nValue);
+
+	void replaceValue(const string& p_rcoParameter, const string& p_rcoValue);
 
 	string getValue(string p_rcoParameter) const;
 
@@ -115,6 +119,8 @@ public:
 
 	virtual string getURL() const = 0;
 
+	virtual string getURIPath() const = 0;
+
 	virtual string getURI() const = 0;
 
 	virtual string getURLType() const = 0;
@@ -128,6 +134,10 @@ public:
 protected:
 	// ReadQueryString(): internal method; reads the parameters from the query string
 	void ReadQueryString(const string& p_rcoQueryString);
+
+	virtual void PreSetValue(const string& p_rcoParameter, const string& p_rcoValue) {}
+
+	virtual void PostSetValue(const string& p_rcoParameter, const string& p_rcoValue) {}
 
 protected:
 	string m_coMethod;
@@ -154,7 +164,14 @@ inline void CURL::setValue(const string& p_rcoParameter, long p_nValue)
 
 inline void CURL::setValue(const string& p_rcoParameter, const string& p_rcoValue)
 {
+	PreSetValue(p_rcoParameter, p_rcoValue);
 	m_coParamMap.insert(pair<string, string>(p_rcoParameter, p_rcoValue));
+	PostSetValue(p_rcoParameter, p_rcoValue);
+}
+
+inline void CURL::replaceValue(const string& p_rcoParameter, long p_nValue)
+{
+	replaceValue(p_rcoParameter, (string)Integer(p_nValue));
 }
 
 inline bool CURL::equalTo(const CURL* p_pcoURL) const
