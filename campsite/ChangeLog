@@ -40,6 +40,7 @@
     - Fixed subscription process bug: the parser doesn't process subscription
     statement when modifying/updating the subscription
     - Fixed notification of subscription end bug
+    - Fixed reading ALT image property in article body
 
 2.0.10
     - Fixed the 'Back to article details' bug
