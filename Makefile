@@ -30,19 +30,19 @@ install: dummy
 	$(MAKE) -C implementation install
 	$(MAKE) -C supplemental install
 	if [ -d $(BIN_DIR) ]; then \
-	    chown $(ROOT_USER).$(HTTP_GROUP) $(BIN_DIR); \
+	    chown $(ROOT_USER):$(HTTP_GROUP) $(BIN_DIR); \
 	    chmod 755 $(BIN_DIR); \
 	fi
 	if [ -d $(CGI_DIR) ]; then \
-	    chown $(HTTP_USER).$(HTTP_GROUP) $(CGI_DIR); \
+	    chown $(HTTP_USER):$(HTTP_GROUP) $(CGI_DIR); \
 	    chmod 755 $(CGI_DIR); \
 	fi
 	if [ -d $(PRIV_DIR) ]; then \
-	    chown $(HTTP_USER).$(HTTP_GROUP) $(PRIV_DIR); \
+	    chown $(HTTP_USER):$(HTTP_GROUP) $(PRIV_DIR); \
 	    chmod 755 $(PRIV_DIR); \
 	fi
 	if [ -d $(SCRIPT_DIR) ]; then \
-	    chown $(ROOT_USER).$(HTTP_GROUP) $(SCRIPT_DIR); \
+	    chown $(ROOT_USER):$(HTTP_GROUP) $(SCRIPT_DIR); \
 	    chmod 755 $(SCRIPT_DIR); \
 	fi
 	if grep $(APP_NAME) $(CAMPSITE_REGISTER); then \
