@@ -159,7 +159,7 @@ void* MyThreadRoutine(void* p_pArg)
 {
 	if (p_pArg == 0)
 	{
-		cout << "MyThreadRoutine: Invalid arg\n";
+		cerr << "MyThreadRoutine: Invalid arg\n";
 		return NULL;
 	}
 
@@ -288,7 +288,7 @@ void ProcessArgs(int argc, char** argv, bool& p_rbRunAsDaemon, string& p_rcoConf
 		{
 			if (++i < argc)
 			{
-				cout << "You did not specify the configuration directory.";
+				cerr << "You did not specify the configuration directory.";
 				exit(1);
 			}
 			else
@@ -310,7 +310,7 @@ void ProcessArgs(int argc, char** argv, bool& p_rbRunAsDaemon, string& p_rcoConf
 #if (__GNUC__ < 3)
 void my_terminate()
 {
-	cout << "uncought exception. terminate." << endl;
+	cerr << "uncought exception. terminate." << endl;
 	abort();
 }
 #endif
@@ -319,14 +319,13 @@ CThreadPool* g_pcoThreadPool = NULL;
 
 void sigterm_handler(int p_nSigNum)
 {
-	cout << p_nSigNum << " signal received (child)" << endl;
 #ifdef _DEBUG
-	cout << p_nSigNum << " signal received" << endl;
+	cerr << p_nSigNum << " signal received (child)" << endl;
 #endif
 	if (g_pcoThreadPool == NULL)
 	{
 #ifdef _DEBUG
-		cout << "pointer to thread pool object is null" << endl;
+		cerr << "pointer to thread pool object is null" << endl;
 #endif
 		exit(0);
 	}
@@ -334,13 +333,13 @@ void sigterm_handler(int p_nSigNum)
 	if (nWorkingThreads == 0)
 	{
 #ifdef _DEBUG
-		cout << "there are no working threads" << endl << "closing all sockets" << endl;
+		cerr << "there are no working threads" << endl << "closing all sockets" << endl;
 #endif
 		CSocket::closeAllSockets();
 		exit(0);
 	}
 #ifdef _DEBUG
-	cout << "waiting for " << nWorkingThreads << " thread(s) to finish" << endl;
+	cerr << "waiting for " << nWorkingThreads << " thread(s) to finish" << endl;
 #endif
 	for (int i = 1; i < 20 && nWorkingThreads > 0; i++)
 	{
@@ -348,11 +347,11 @@ void sigterm_handler(int p_nSigNum)
 		nWorkingThreads = g_pcoThreadPool->workingThreads();
 	}
 #ifdef _DEBUG
-	cout << "killing idle threads" << endl;
+	cerr << "killing idle threads" << endl;
 #endif
 	g_pcoThreadPool->killIdleThreads();
 #ifdef _DEBUG
-	cout << endl << "closing all sockets" << endl;
+	cerr << endl << "closing all sockets" << endl;
 #endif
 	CSocket::closeAllSockets();
 	if (nWorkingThreads > 0)
@@ -368,14 +367,18 @@ void sigterm_handler(int p_nSigNum)
 
 void parent_sig_handler(int p_nSigNum)
 {
-	cout << p_nSigNum << " signal received (parent)" << endl;
+#ifdef _DEBUG
+	cerr << p_nSigNum << " signal received (parent)" << endl;
+#endif
 
 	const CCampsiteInstanceMap& rcoInstances =
 			CCampsiteInstanceRegister::get().getCampsiteInstances();
 	CCampsiteInstanceMap::const_iterator coIt = rcoInstances.begin();
 	for (; coIt != rcoInstances.end(); ++coIt)
 	{
-		cout << "stopping instance: " << (*coIt).second->getName() << endl;
+#ifdef _DEBUG
+		cerr << "stopping instance: " << (*coIt).second->getName() << endl;
+#endif
 		(*coIt).second->stop();
 	}
 
@@ -418,10 +421,12 @@ int main(int argc, char** argv)
 	bool bRunAsDaemon;
 	string coConfDir;
 	ProcessArgs(argc, argv, bRunAsDaemon, coConfDir);
+#ifndef _DEBUG_SOURCE
 	if (bRunAsDaemon)
 		StartDaemon();
 
 	set_signals(parent_sig_handler);
+#endif
 
 	if (coConfDir == "")
 		coConfDir = ETC_FILE;
@@ -431,21 +436,26 @@ int main(int argc, char** argv)
 	CCampsiteInstanceMap::const_iterator coIt = rcoInstances.begin();
 	for (; coIt != rcoInstances.end(); ++coIt)
 	{
-		cout << "instance: " << (*coIt).second->getName() << endl;
 		(*coIt).second->run();
 	}
 	while (true)
 	{
 		int nStatus;
 		pid_t nChildPID = waitpid(-1, &nStatus, 0);
-		cout << "child " << nChildPID << " exited with status " << nStatus << endl;
-		try {
-			CCampsiteInstance* pcoInstance = 
-					CCampsiteInstanceRegister::get().getCampsiteInstance(nChildPID);
-			pcoInstance->run();
-		}
-		catch (InvalidValue& rcoEx) {
-			cout << "child " << nChildPID << " not found" << endl;
+		cerr << "child " << nChildPID << " exited with status " << nStatus << endl;
+		cerr << "waiting 10 seconds for " << nChildPID << endl;
+		sleep(10);
+		for (coIt = rcoInstances.begin(); coIt != rcoInstances.end(); ++coIt)
+		{
+			if (!(*coIt).second->isRunning())
+			{
+				cerr << "starting instance " << (*coIt).second->getName() << endl;
+				(*coIt).second->run();
+			}
+			else
+			{
+				cerr << "instance " << (*coIt).second->getName() << " running" << endl;
+			}
 		}
 	}
 	exit(0);
@@ -485,26 +495,30 @@ int CampsiteInstanceFunc(const ConfAttrValue& p_rcoConfValues)
 	SQL_PASSWORD = p_rcoConfValues.valueOf("DATABASE_PASSWORD");
 	SQL_DATABASE = p_rcoConfValues.valueOf("DATABASE_NAME");
 
+#ifdef _DEBUG_SOURCE
 	cout << "max threads: " << nMaxThreads << ", port: " << nPort << ", user id: "
 			<< nUserId << ", group id: " << nGroupId << endl;
 	cout << "sql server: " << SQL_SERVER << ", sql port: " << SQL_SRV_PORT
 			<< ", sql user: " << SQL_USER << ", sql password: " << SQL_PASSWORD
 			<< ", db name: " << SQL_DATABASE << endl;
+#endif
 
 	nPort = nPort > 0 ? nPort : 2001;
 	nMaxThreads = nMaxThreads > 0 ? nMaxThreads : MAX_THREADS;
-// 	if (setuid(nUserId) != 0)
-// 	{
-// 		cout << "Error setting user id " << nUserId << endl;
-// 		exit (1);
-// 	}
-// 	if (setgid(nGroupId) != 0)
-// 	{
-// 		cout << "Error setting group id " << nGroupId << endl;
-// 		exit (1);
-// 	}
+#ifndef _DEBUG_SOURCE
+	if (setuid(nUserId) != 0)
+	{
+		cerr << "Error setting user id " << nUserId << endl;
+		exit (1);
+	}
+	if (setgid(nGroupId) != 0)
+	{
+		cerr << "Error setting group id " << nGroupId << endl;
+		exit (1);
+	}
 
 	set_signals(sigterm_handler, true, true, false);
+#endif
 
 #if (__GNUC__ < 3)
 	set_terminate(my_terminate);
@@ -536,7 +550,9 @@ int CampsiteInstanceFunc(const ConfAttrValue& p_rcoConfValues)
 		CMessageFactoryRegister::getInstance().insert(new CRestartServerMessageFactory());
 
 		CServerSocket coServer("0.0.0.0", nPort);
+#ifndef _DEBUG_SOURCE
 		g_pcoThreadPool = new CThreadPool(1, nMaxThreads, MyThreadRoutine, NULL);
+#endif	
 		CTCPSocket* pcoClSock = NULL;
 		for (; ; )
 		{
@@ -544,7 +560,7 @@ int CampsiteInstanceFunc(const ConfAttrValue& p_rcoConfValues)
 			{
 				pcoClSock = coServer.Accept();
 				char* pchRemoteIP = pcoClSock->RemoteIP();
-				if (pchRemoteIP != "127.0.0.1")
+				if (case_comp(pchRemoteIP, "127.0.0.1") != 0)
 				{
 					cerr << "Not allowed host (" << pchRemoteIP << ") connected" << endl;
 					delete pcoClSock;
@@ -552,8 +568,15 @@ int CampsiteInstanceFunc(const ConfAttrValue& p_rcoConfValues)
 				}
 				if (pcoClSock == 0)
 					throw SocketErrorException("Accept error");
+#ifdef _DEBUG_SOURCE
+#warning *******************************************************************************
+#warning This compilation option is for source code debugging, do not use in production!
+#warning *******************************************************************************
+				MyThreadRoutine((void*)pcoClSock);
+#else
 				g_pcoThreadPool->waitFreeThread();
 				g_pcoThreadPool->startThread(true, (void*)pcoClSock);
+#endif
 			}
 			catch (ExThread& coEx)
 			{
