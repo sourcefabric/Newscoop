@@ -143,6 +143,8 @@ public:
 
 	virtual string setTemplate(const string& p_rcoTemplate) throw (InvalidValue) = 0;
 
+	virtual string setTemplate(long int p_nTemplateId) throw (InvalidValue) = 0;
+
 	virtual string getTemplate() const = 0;
 
 	// readQueryString(): static method; reads the parameters from the query string
@@ -221,8 +223,10 @@ inline long CURL::getIntValue(const string& p_rcoParameter) const throw(InvalidV
 
 inline void CURL::deleteParameter(const string& p_rcoParameter)
 {
+	PreSetValue(p_rcoParameter, string(""));
 	m_coParamIterators.erase(p_rcoParameter);
 	m_coParamMap.erase(p_rcoParameter);
+	PostSetValue(p_rcoParameter, string(""));
 }
 
 inline const String2StringMMap& CURL::getParameters() const
