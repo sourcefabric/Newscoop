@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CXMLREADER_H
 
 
-#include <libxml/xmlreader.h>
+#include <xmlreader.h>
 #include <string>
 #include <stdexcept>
 
