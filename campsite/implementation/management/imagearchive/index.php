@@ -25,7 +25,7 @@ $SearchDate = Input::Get('search_date', 'string', '', true);
 $SearchInUse = Input::Get('search_inuse', 'string', '', true);
 $SearchUploadedBy = Input::Get('search_uploadedby', 'string', '', true);
 
-$imageNav =& new ImageNav($_REQUEST, CAMPSITE_IMAGEARCHIVE_IMAGES_PER_PAGE, $view);
+$imageNav =& new ImageNav(CAMPSITE_IMAGEARCHIVE_IMAGES_PER_PAGE, $view);
 
 ///////////////////////////////////////////////////////////////////////
 
@@ -86,7 +86,7 @@ case 'id':
 ///////////////////////////////////////////////////////////////////////
 
 $TotalImages = Image::GetTotalImages();
-$imageSearch =& new ImageSearch($_REQUEST, CAMPSITE_IMAGEARCHIVE_IMAGES_PER_PAGE);
+$imageSearch =& new ImageSearch(CAMPSITE_IMAGEARCHIVE_IMAGES_PER_PAGE);
 $imageSearch->run();
 $imageData =& $imageSearch->getImages();
 $NumImagesFound = $imageSearch->getNumImagesFound();
