@@ -35,10 +35,12 @@ class ArticleType extends DatabaseObject {
 					." LIKE 'F%'";
 		$queryArray = $Campsite['db']->GetAll($queryStr);
 		$metadata = array();
-		foreach ($queryArray as $row) {
-			$columnMetadata =& new DbColumn($this->m_dbTableName);
-			$columnMetadata->fetch($row);
-			$metadata[] =& $columnMetadata;
+		if (is_array($queryArray)) {
+			foreach ($queryArray as $row) {
+				$columnMetadata =& new DbColumn($this->m_dbTableName);
+				$columnMetadata->fetch($row);
+				$metadata[] =& $columnMetadata;
+			}
 		}
 		return $metadata;
 	} // fn getUserDefinedColumns
