@@ -60,16 +60,22 @@ B_MSGBOX(<*Deleting section*>)
 <?
     $del= 1;
     query ("SELECT COUNT(*) FROM Articles WHERE IdPublication=$Pub AND NrIssue=$Issue AND NrSection=$Section AND IdLanguage=$Language", 'q_art');
-    fetchRowNum($q_art);
-    if (getNumVar($q_art,0) != 0) {
-	$del= 0; ?>dnl
-	<LI><? putGS('There are $1 article(s) left.',getNumVar($q_art,0) ); ?></LI>
-    <? }
+	fetchRowNum($q_art);
+	if (getNumVar($q_art,0) != 0) {
+		$del= 0; ?>dnl
+		<LI><? putGS('There are $1 article(s) left.',getNumVar($q_art,0) ); ?></LI>
+<?
+	}
 
-    if ($del)
+	if ($del)
 	query ("DELETE FROM Sections WHERE IdPublication=$Pub AND NrIssue=$Issue AND IdLanguage=$Language AND Number=$Section");
 
-    if ($AFFECTED_ROWS > 0) { ?>dnl
+	if ($AFFECTED_ROWS > 0) {
+
+		## added by sebastian
+		if (function_exists ("incModFile"))
+			incModFile ();
+?>dnl
 		<LI><? putGS('The section $1 has been deleted.','<B>'.gethVar($q_sect,'Name').'</B>'); ?></LI>
 	<?
 		if ($cSubs != "") {

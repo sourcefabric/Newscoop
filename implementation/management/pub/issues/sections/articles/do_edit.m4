@@ -92,10 +92,14 @@ B_MSGBOX(<*Changing article details*>)
 <?
     query ("UPDATE Articles SET Name='$cName', OnFrontPage='$cOnFrontPage', OnSection='$cOnSection', Keywords='$cKeywords', Public='$cPublic', IsIndexed='N' WHERE IdPublication=$Pub AND NrIssue=$Issue AND NrSection=$Section AND Number=$Article AND IdLanguage=$sLanguage");
 //        print ("UPDATE Articles SET Name='$cName', OnFrontPage='$cOnFrontPage', OnSection='$cOnSection', Keywords='$cKeywords', Public='$cPublic', IsIndexed='N' WHERE IdPublication=$Pub AND NrIssue=$Issue AND NrSection=$Section AND Number=$Article AND IdLanguage=$sLanguage<br>");
-    if ($AFFECTED_ROWS > 0)
-	$chngd= 1;
+	if ($AFFECTED_ROWS > 0)
+		$chngd= 1;
 
-    query ("SHOW COLUMNS FROM X".getSVar($q_art,'Type')." LIKE 'F%'", 'q_fld');
+	## added by sebastian
+	if (function_exists ("incModFile"))
+		incModFile ();
+    
+	query ("SHOW COLUMNS FROM X".getSVar($q_art,'Type')." LIKE 'F%'", 'q_fld');
     $nr=$NUM_ROWS;
     $query = "";
     $first = true;

@@ -27,6 +27,10 @@ B_HEAD
 	X_COOKIE(<*TOL_UserId=<? print getVar ($usrs,'Id'); ?>*>)
 	X_COOKIE(<*TOL_UserKey=<? print getVar ($usrs,'KeyId'); ?>*>)
 	<?
+	## added by sebastian
+	if (function_exists ("incModFile"))
+		incModFile ();
+
 	    if (!isset($selectlanguage))<*
 		$selectlanguage='en';
 	    *>

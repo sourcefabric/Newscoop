@@ -144,6 +144,12 @@ B_DIALOG(<*Edit user account permissions*>, <*POST*>, <*do_access.php*>)
 		<? putGS('User may manage topics'); ?>
 	E_DIALOG_INPUT
 
+	<?
+	## added by sebastian
+	if (function_exists ("incModFile"))
+		incModFile ($User);
+	?>
+
 <SCRIPT>
 	function do_submit()
 	{
