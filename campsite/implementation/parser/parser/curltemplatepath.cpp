@@ -127,6 +127,7 @@ string CURLTemplatePath::getFormString() const
 
 string CURLTemplatePath::setTemplate(const string& p_rcoTemplate) throw (InvalidValue)
 {
+	m_bValidURI = false;
 	if (p_rcoTemplate == "")
 	{
 		m_bValidTemplate = false;
@@ -156,6 +157,7 @@ string CURLTemplatePath::setTemplate(const string& p_rcoTemplate) throw (Invalid
 
 string CURLTemplatePath::setTemplate(long int p_nTemplateId) throw (InvalidValue)
 {
+	m_bValidURI = false;
 	string coSql = string("select Name from Templates where Id = ")
 	             + (string)Integer(p_nTemplateId);
 	CMYSQL_RES coRes;
