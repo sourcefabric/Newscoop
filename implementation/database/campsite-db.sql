@@ -1,20 +1,20 @@
 -- phpMyAdmin SQL Dump
 -- version 2.6.0-pl3
 -- http://www.phpmyadmin.net
--- 
+--
 -- Host: localhost
 -- Generation Time: Nov 22, 2004 at 12:03 AM
 -- Server version: 4.0.18
 -- PHP Version: 4.3.4
--- 
+--
 -- Database: `campsite`
--- 
+--
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `Aliases`
--- 
+--
 
 DROP TABLE IF EXISTS `Aliases`;
 CREATE TABLE `Aliases` (
@@ -25,16 +25,16 @@ CREATE TABLE `Aliases` (
   UNIQUE KEY `Name` (`Name`)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Dumping data for table `Aliases`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `ArticleImages`
--- 
+--
 
 DROP TABLE IF EXISTS `ArticleImages`;
 CREATE TABLE `ArticleImages` (
@@ -45,16 +45,16 @@ CREATE TABLE `ArticleImages` (
   UNIQUE KEY `ArticleImage` (`NrArticle`,`Number`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `ArticleImages`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `ArticleIndex`
--- 
+--
 
 DROP TABLE IF EXISTS `ArticleIndex`;
 CREATE TABLE `ArticleIndex` (
@@ -67,16 +67,17 @@ CREATE TABLE `ArticleIndex` (
   PRIMARY KEY  (`IdPublication`,`IdLanguage`,`IdKeyword`,`NrIssue`,`NrSection`,`NrArticle`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `ArticleIndex`
--- 
+--
 
+INSERT INTO ArticleImages VALUES (0, 0, 0);
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `ArticleTopics`
--- 
+--
 
 DROP TABLE IF EXISTS `ArticleTopics`;
 CREATE TABLE `ArticleTopics` (
@@ -85,16 +86,16 @@ CREATE TABLE `ArticleTopics` (
   PRIMARY KEY  (`NrArticle`,`TopicId`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `ArticleTopics`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `Articles`
--- 
+--
 
 DROP TABLE IF EXISTS `Articles`;
 CREATE TABLE `Articles` (
@@ -126,16 +127,16 @@ CREATE TABLE `Articles` (
   KEY `ArticleOrderIdx` (`ArticleOrder`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `Articles`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `AutoId`
--- 
+--
 
 DROP TABLE IF EXISTS `AutoId`;
 CREATE TABLE `AutoId` (
@@ -147,17 +148,17 @@ CREATE TABLE `AutoId` (
   `TopicId` int(10) unsigned NOT NULL default '0'
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `AutoId`
--- 
+--
 
 INSERT INTO `AutoId` (`DictionaryId`, `ClassId`, `ArticleId`, `KeywordId`, `LogTStamp`, `TopicId`) VALUES (0, 0, 0, 0, '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `Classes`
--- 
+--
 
 DROP TABLE IF EXISTS `Classes`;
 CREATE TABLE `Classes` (
@@ -168,16 +169,16 @@ CREATE TABLE `Classes` (
   UNIQUE KEY `IdLanguage` (`IdLanguage`,`Name`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `Classes`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `Countries`
--- 
+--
 
 DROP TABLE IF EXISTS `Countries`;
 CREATE TABLE `Countries` (
@@ -188,9 +189,9 @@ CREATE TABLE `Countries` (
   UNIQUE KEY `IdLanguage` (`IdLanguage`,`Name`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `Countries`
--- 
+--
 
 INSERT INTO `Countries` (`Code`, `IdLanguage`, `Name`) VALUES ('AR', 1, 'Argentina'),
 ('AG', 1, 'Antigua And Barbuda'),
@@ -435,9 +436,9 @@ INSERT INTO `Countries` (`Code`, `IdLanguage`, `Name`) VALUES ('AR', 1, 'Argenti
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `Dictionary`
--- 
+--
 
 DROP TABLE IF EXISTS `Dictionary`;
 CREATE TABLE `Dictionary` (
@@ -448,16 +449,16 @@ CREATE TABLE `Dictionary` (
   UNIQUE KEY `Id` (`Id`,`IdLanguage`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `Dictionary`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `Errors`
--- 
+--
 
 DROP TABLE IF EXISTS `Errors`;
 CREATE TABLE `Errors` (
@@ -467,9 +468,9 @@ CREATE TABLE `Errors` (
   PRIMARY KEY  (`Number`,`IdLanguage`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `Errors`
--- 
+--
 
 INSERT INTO `Errors` (`Number`, `IdLanguage`, `Message`) VALUES (4000, 1, 'Internal error.'),
 (4001, 1, 'Username not specified.'),
@@ -497,9 +498,9 @@ INSERT INTO `Errors` (`Number`, `IdLanguage`, `Message`) VALUES (4000, 1, 'Inter
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `Events`
--- 
+--
 
 DROP TABLE IF EXISTS `Events`;
 CREATE TABLE `Events` (
@@ -511,9 +512,9 @@ CREATE TABLE `Events` (
   UNIQUE KEY `Name` (`Name`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `Events`
--- 
+--
 
 INSERT INTO `Events` (`Id`, `Name`, `Notify`, `IdLanguage`) VALUES (1, 'Add Publication', 'N', 1),
 (2, 'Delete Publication', 'N', 1),
@@ -579,9 +580,9 @@ INSERT INTO `Events` (`Id`, `Name`, `Notify`, `IdLanguage`) VALUES (1, 'Add Publ
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `Images`
--- 
+--
 
 DROP TABLE IF EXISTS `Images`;
 CREATE TABLE `Images` (
@@ -597,16 +598,16 @@ CREATE TABLE `Images` (
   PRIMARY KEY  (`Id`)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Dumping data for table `Images`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `Issues`
--- 
+--
 
 DROP TABLE IF EXISTS `Issues`;
 CREATE TABLE `Issues` (
@@ -624,16 +625,16 @@ CREATE TABLE `Issues` (
   UNIQUE KEY `ShortName` (`IdPublication`,`IdLanguage`,`ShortName`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `Issues`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `KeywordClasses`
--- 
+--
 
 DROP TABLE IF EXISTS `KeywordClasses`;
 CREATE TABLE `KeywordClasses` (
@@ -645,16 +646,16 @@ CREATE TABLE `KeywordClasses` (
   KEY `IdClasses` (`IdClasses`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `KeywordClasses`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `KeywordIndex`
--- 
+--
 
 DROP TABLE IF EXISTS `KeywordIndex`;
 CREATE TABLE `KeywordIndex` (
@@ -663,16 +664,16 @@ CREATE TABLE `KeywordIndex` (
   PRIMARY KEY  (`Keyword`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `KeywordIndex`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `Languages`
--- 
+--
 
 DROP TABLE IF EXISTS `Languages`;
 CREATE TABLE `Languages` (
@@ -704,9 +705,9 @@ CREATE TABLE `Languages` (
   UNIQUE KEY `Name` (`Name`)
 ) TYPE=MyISAM AUTO_INCREMENT=17 ;
 
--- 
+--
 -- Dumping data for table `Languages`
--- 
+--
 
 INSERT INTO `Languages` (`Id`, `Name`, `CodePage`, `OrigName`, `Code`, `Month1`, `Month2`, `Month3`, `Month4`, `Month5`, `Month6`, `Month7`, `Month8`, `Month9`, `Month10`, `Month11`, `Month12`, `WDay1`, `WDay2`, `WDay3`, `WDay4`, `WDay5`, `WDay6`, `WDay7`) VALUES (1, 'English', 'ISO_8859-1', 'English', 'en', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'),
 (5, 'German', 'ISO_8859-1', 'Deutsch', 'de', 'Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember', 'Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'),
@@ -726,9 +727,9 @@ INSERT INTO `Languages` (`Id`, `Name`, `CodePage`, `OrigName`, `Code`, `Month1`,
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `Log`
--- 
+--
 
 DROP TABLE IF EXISTS `Log`;
 CREATE TABLE `Log` (
@@ -739,16 +740,16 @@ CREATE TABLE `Log` (
   KEY `IdEvent` (`IdEvent`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `Log`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `Publications`
--- 
+--
 
 DROP TABLE IF EXISTS `Publications`;
 CREATE TABLE `Publications` (
@@ -768,16 +769,16 @@ CREATE TABLE `Publications` (
   UNIQUE KEY `Name` (`Name`)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Dumping data for table `Publications`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `Sections`
--- 
+--
 
 DROP TABLE IF EXISTS `Sections`;
 CREATE TABLE `Sections` (
@@ -794,16 +795,16 @@ CREATE TABLE `Sections` (
   UNIQUE KEY `ShortName` (`IdPublication`,`NrIssue`,`IdLanguage`,`ShortName`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `Sections`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `SubsByIP`
--- 
+--
 
 DROP TABLE IF EXISTS `SubsByIP`;
 CREATE TABLE `SubsByIP` (
@@ -813,16 +814,16 @@ CREATE TABLE `SubsByIP` (
   PRIMARY KEY  (`IdUser`,`StartIP`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `SubsByIP`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `SubsDefTime`
--- 
+--
 
 DROP TABLE IF EXISTS `SubsDefTime`;
 CREATE TABLE `SubsDefTime` (
@@ -833,16 +834,16 @@ CREATE TABLE `SubsDefTime` (
   PRIMARY KEY  (`CountryCode`,`IdPublication`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `SubsDefTime`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `SubsSections`
--- 
+--
 
 DROP TABLE IF EXISTS `SubsSections`;
 CREATE TABLE `SubsSections` (
@@ -855,16 +856,16 @@ CREATE TABLE `SubsSections` (
   PRIMARY KEY  (`IdSubscription`,`SectionNumber`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `SubsSections`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `Subscriptions`
--- 
+--
 
 DROP TABLE IF EXISTS `Subscriptions`;
 CREATE TABLE `Subscriptions` (
@@ -879,16 +880,16 @@ CREATE TABLE `Subscriptions` (
   UNIQUE KEY `IdUser` (`IdUser`,`IdPublication`)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Dumping data for table `Subscriptions`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `TemplateTypes`
--- 
+--
 
 DROP TABLE IF EXISTS `TemplateTypes`;
 CREATE TABLE `TemplateTypes` (
@@ -898,9 +899,9 @@ CREATE TABLE `TemplateTypes` (
   UNIQUE KEY `Name` (`Name`)
 ) TYPE=MyISAM AUTO_INCREMENT=5 ;
 
--- 
+--
 -- Dumping data for table `TemplateTypes`
--- 
+--
 
 INSERT INTO `TemplateTypes` (`Id`, `Name`) VALUES (1, 'default'),
 (2, 'issue'),
@@ -909,9 +910,9 @@ INSERT INTO `TemplateTypes` (`Id`, `Name`) VALUES (1, 'default'),
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `Templates`
--- 
+--
 
 DROP TABLE IF EXISTS `Templates`;
 CREATE TABLE `Templates` (
@@ -923,16 +924,16 @@ CREATE TABLE `Templates` (
   UNIQUE KEY `Name` (`Name`)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Dumping data for table `Templates`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `TimeUnits`
--- 
+--
 
 DROP TABLE IF EXISTS `TimeUnits`;
 CREATE TABLE `TimeUnits` (
@@ -942,9 +943,9 @@ CREATE TABLE `TimeUnits` (
   PRIMARY KEY  (`Unit`,`IdLanguage`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `TimeUnits`
--- 
+--
 
 INSERT INTO `TimeUnits` (`Unit`, `IdLanguage`, `Name`) VALUES ('D', 1, 'days'),
 ('W', 1, 'weeks'),
@@ -953,9 +954,9 @@ INSERT INTO `TimeUnits` (`Unit`, `IdLanguage`, `Name`) VALUES ('D', 1, 'days'),
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `Topics`
--- 
+--
 
 DROP TABLE IF EXISTS `Topics`;
 CREATE TABLE `Topics` (
@@ -967,16 +968,16 @@ CREATE TABLE `Topics` (
   UNIQUE KEY `Name` (`LanguageId`,`Name`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `Topics`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `URLTypes`
--- 
+--
 
 DROP TABLE IF EXISTS `URLTypes`;
 CREATE TABLE `URLTypes` (
@@ -987,18 +988,18 @@ CREATE TABLE `URLTypes` (
   UNIQUE KEY `Name` (`Name`)
 ) TYPE=MyISAM AUTO_INCREMENT=3 ;
 
--- 
+--
 -- Dumping data for table `URLTypes`
--- 
+--
 
 INSERT INTO `URLTypes` (`Id`, `Name`, `Description`) VALUES (1, 'template path', ''),
 (2, 'short names', '');
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `UserPerm`
--- 
+--
 
 DROP TABLE IF EXISTS `UserPerm`;
 CREATE TABLE `UserPerm` (
@@ -1039,17 +1040,17 @@ CREATE TABLE `UserPerm` (
   PRIMARY KEY  (`IdUser`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `UserPerm`
--- 
+--
 
 INSERT INTO `UserPerm` (`IdUser`, `ManagePub`, `DeletePub`, `ManageIssue`, `DeleteIssue`, `ManageSection`, `DeleteSection`, `AddArticle`, `ChangeArticle`, `DeleteArticle`, `AddImage`, `ChangeImage`, `DeleteImage`, `ManageTempl`, `DeleteTempl`, `ManageUsers`, `ManageSubscriptions`, `DeleteUsers`, `ManageUserTypes`, `ManageArticleTypes`, `DeleteArticleTypes`, `ManageLanguages`, `DeleteLanguages`, `ManageDictionary`, `DeleteDictionary`, `ManageCountries`, `DeleteCountries`, `ManageClasses`, `MailNotify`, `ViewLogs`, `ManageLocalizer`, `ManageIndexer`, `Publish`, `ManageTopics`) VALUES (1, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'N', 'N', 'Y', 'Y', 'N', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y');
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `UserTypes`
--- 
+--
 
 DROP TABLE IF EXISTS `UserTypes`;
 CREATE TABLE `UserTypes` (
@@ -1091,9 +1092,9 @@ CREATE TABLE `UserTypes` (
   PRIMARY KEY  (`Name`)
 ) TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `UserTypes`
--- 
+--
 
 INSERT INTO `UserTypes` (`Name`, `Reader`, `ManagePub`, `DeletePub`, `ManageIssue`, `DeleteIssue`, `ManageSection`, `DeleteSection`, `AddArticle`, `ChangeArticle`, `DeleteArticle`, `AddImage`, `ChangeImage`, `DeleteImage`, `ManageTempl`, `DeleteTempl`, `ManageUsers`, `ManageSubscriptions`, `DeleteUsers`, `ManageUserTypes`, `ManageArticleTypes`, `DeleteArticleTypes`, `ManageLanguages`, `DeleteLanguages`, `ManageDictionary`, `DeleteDictionary`, `ManageCountries`, `DeleteCountries`, `ManageClasses`, `MailNotify`, `ViewLogs`, `ManageLocalizer`, `ManageIndexer`, `Publish`, `ManageTopics`) VALUES ('Reader', 'Y', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'),
 ('Administrator', 'N', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'N', 'N', 'Y', 'Y', 'N', 'N', 'Y', 'Y', 'N', 'Y', 'Y'),
@@ -1102,9 +1103,9 @@ INSERT INTO `UserTypes` (`Name`, `Reader`, `ManagePub`, `DeletePub`, `ManageIssu
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `Users`
--- 
+--
 
 DROP TABLE IF EXISTS `Users`;
 CREATE TABLE `Users` (
@@ -1150,8 +1151,8 @@ CREATE TABLE `Users` (
   UNIQUE KEY `UName` (`UName`)
 ) TYPE=MyISAM AUTO_INCREMENT=2 ;
 
--- 
+--
 -- Dumping data for table `Users`
--- 
+--
 
 INSERT INTO `Users` (`Id`, `KeyId`, `Name`, `UName`, `Password`, `EMail`, `Reader`, `City`, `StrAddress`, `State`, `CountryCode`, `Phone`, `Fax`, `Contact`, `Phone2`, `Title`, `Gender`, `Age`, `PostalCode`, `Employer`, `EmployerType`, `Position`, `Interests`, `How`, `Languages`, `Improvements`, `Pref1`, `Pref2`, `Pref3`, `Pref4`, `Field1`, `Field2`, `Field3`, `Field4`, `Field5`, `Text1`, `Text2`, `Text3`) VALUES (1, 745943461, 'Administrator', 'admin', '2c380f066e0e45d1', '', 'N', '', '', '', '', '', '', '', '', 'Mr.', 'M', '0-17', '', '', '', '', '', '', '', '', 'N', 'N', 'N', 'N', '', '', '', '', '', '', '', '');
