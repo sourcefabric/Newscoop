@@ -55,9 +55,6 @@ for m in pwd make m4 mkdir ls chown chmod cut cat grep stat which cp rm clear gc
     [ $? -ne 0 ] && echo $output && exit 1
 done
 
-export PACKAGE_TYPE=`cat ./.package_type`
-[ $? -ne 0 ] && echo "Error reading package type" && exit 1
-[ "$PACKAGE_TYPE" != "source" ] && [ "$PACKAGE_TYPE" != "binary" ] && echo "Invalid package type $PACKAGE_TYPE" && exit 1
 campsite_version=`cat ${CAMPSITE_PACKAGE_DIR}/README | grep -w ^version | grep ":" | cut -f 2 -d ":"`
 [ $? -ne 0 ] && echo "Error reading campsite version" && exit 1
 export CAMPSITE_VERSION=$campsite_version
@@ -94,7 +91,6 @@ cat > $make_env << EOF
 export ROOT_USER=$ROOT_USER
 export ROOT_GROUP=$ROOT_GROUP
 export APP_NAME=$APP_NAME
-export PACKAGE_TYPE=$PACKAGE_TYPE
 export CGI_DIR=$PREFIX/$ADMIN_INTERFACE_CGI_DIR
 export SCRIPT_DIR=$PREFIX/$ADMIN_INTERFACE_SCRIPT_DIR
 export HTML_DIR=$PREFIX/$ADMIN_INTERFACE_HTML_DIR

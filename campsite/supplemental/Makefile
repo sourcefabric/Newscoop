@@ -1,7 +1,5 @@
 include ../make.env
 
-ALL=$(shell if [ "$(PACKAGE_TYPE)" = "source" ]; then echo all; fi)
-
 PACKAGE_DIR=$(BIN_PACKAGE_DIR)/supplemental
 
 all:
@@ -20,10 +18,5 @@ clean:
 
 uninstall: dummy
 	$(MAKE) -C mysql_connect uninstall
-
-package: $(ALL)
-	@if [ "$(PACKAGE_TYPE)" = "binary" ]; then echo "This is a binary package"; exit 1; fi
-	cp -f Makefile $(PACKAGE_DIR)
-	$(MAKE) -C mysql_connect package PACKAGE_DIR=$(PACKAGE_DIR)
 
 dummy:

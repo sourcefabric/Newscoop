@@ -47,8 +47,7 @@ process_t.o: process_t.cpp parse_file.h url_util.h dir_conf.h
 cleanb.o: cleanb.cpp parse_file.h dir_conf.h
 
 clean:
-	rm -f *~ core $(OBJ) dir_conf.h $(LINKS) configure.h .env_vars
-	if [ "$(PACKAGE_TYPE)" = "source" ]; then rm -f $(TARGET); fi
+	rm -f *~ core $(OBJ) dir_conf.h $(LINKS) configure.h .env_vars $(TARGET)
 
 install: $(ALL)
 	cp -f get_img $(CGI_DIR)/
@@ -67,14 +66,5 @@ install: $(ALL)
 
 uninstall:
 	rm -f $(CGI_DIR)/get_img $(SCRIPT_DIR)/process_i $(SCRIPT_DIR)/process_t $(CGI_DIR)/cleanb
-
-package: $(ALL)
-	mkdir -p $(PACKAGE_DIR)/src
-	cp -f Makefile $(PACKAGE_DIR)/src
-	cp -f configure $(PACKAGE_DIR)/src
-	cp -f get_img $(PACKAGE_DIR)/src
-	cp -f process_i $(PACKAGE_DIR)/src
-	cp -f process_t $(PACKAGE_DIR)/src
-	cp -f cleanb $(PACKAGE_DIR)/src
 
 dummy:

@@ -20,7 +20,6 @@ do_configure()
 compile_sources()
 {
     echo -e "\nSTEP 2"
-    [ "$PACKAGE_TYPE" = "binary" ] && echo "Binary package. Skipping compilation." && return 0
     echo -n "Compiling sources (this may take a while, please wait)..."
     echo -e "###############################################\n\tCompiling sources\n" >> install_log
     $MAKE all >> install_log 2>&1

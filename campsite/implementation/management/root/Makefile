@@ -12,13 +12,6 @@ install: $(ALL)
 	cp -f *.php $(HTML_DIR)/
 
 clean:
-	rm -f *~ db_connect.php config.php .env_vars
-	if [ "$(PACKAGE_TYPE)" = "source" ]; then rm -f $(MY_TARGETS); fi
-
-package: $(ALL)
-	mkdir -p $(PACKAGE_DIR)/root
-	cp -f Makefile $(PACKAGE_DIR)/root
-	cp -f configure $(PACKAGE_DIR)/root
-	cp -f *.php $(PACKAGE_DIR)/root
+	rm -f *~ db_connect.php config.php .env_vars $(MY_TARGETS)
 
 dummy:

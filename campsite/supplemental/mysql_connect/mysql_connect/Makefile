@@ -11,8 +11,7 @@ mysql_connect: mysql_connect.o
 	g++ -o mysql_connect mysql_connect.o $(LDFLAGS) $(LDLIBS)
 
 clean:
-	rm -f *.o *~
-	if [ "$(PACKAGE_TYPE)" = "source" ]; then rm -f mysql_connect; fi
+	rm -f *.o *~ mysql_connect
 
 mysql_connect.o: mysql_connect.cpp
 	g++ -c -o mysql_connect.o $(CFLAGS) $(INCLUDE_PATH) mysql_connect.cpp
@@ -25,11 +24,6 @@ install: $(ALL)
 
 uninstall: dummy
 	rm -f $(BIN_DIR)/mysql_connect
-
-package: $(ALL)
-	mkdir -p $(PACKAGE_DIR)/mysql_connect
-	cp -f Makefile $(PACKAGE_DIR)/mysql_connect
-	cp -f mysql_connect $(PACKAGE_DIR)/mysql_connect
 
 dummy:
 

@@ -18,15 +18,8 @@ install: $(ALL)
 	cp -f *.php $(PRIV_DIR2)/
 
 clean:
-	rm -f *~
-	if [ "$(PACKAGE_TYPE)" = "source" ]; then rm -f $(MY_TARGETS); fi
+	rm -f *~ $(MY_TARGETS)
 
 uninstall: dummy
-
-package: $(ALL)
-	mkdir -p $(PACKAGE_DIR)/templates
-	cp -f Makefile $(PACKAGE_DIR)/templates
-	cp -f *.php $(PACKAGE_DIR)/templates
-	cp -f *.sh $(PACKAGE_DIR)/templates
 
 dummy:

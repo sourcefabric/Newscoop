@@ -3,9 +3,6 @@
 [ "$CAMPSITE_PACKAGE_DIR" = "" ] && cd ../../.. && . ./configure --define_start_env && cd implementation/tpl_cgi/tpl_cgi
 . ${INSTALL_CONF}/conf_functions
 
-PACKAGE_TYPE=`cat $CAMPSITE_PACKAGE_DIR/.package_type`
-[ "$PACKAGE_TYPE" = "binary" ] && exit 0
-
 install_conf --set
 [ $? -ne 0 ] && echo "Error reading install configuration" && exit 1
 

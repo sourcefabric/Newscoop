@@ -16,12 +16,5 @@ install: $(ALL)
 	$(MAKE) -C sections install
 
 clean:
-	rm -f *~
-	if [ "$(PACKAGE_TYPE)" = "source" ]; then rm -f $(MY_TARGETS); fi
+	rm -f *~ $(MY_TARGETS)
 	$(MAKE) -C sections clean
-
-package: $(ALL)
-	mkdir -p $(PACKAGE_DIR)/issues
-	cp -f Makefile $(PACKAGE_DIR)/issues
-	cp -f *.php $(PACKAGE_DIR)/issues
-	$(MAKE) -C sections package PACKAGE_DIR=$(PACKAGE_DIR)/issues

@@ -16,14 +16,7 @@ install: $(ALL)
 	$(MAKE) -C subscriptions install
 
 clean:
-	rm -f *~
-	if [ "$(PACKAGE_TYPE)" = "source" ]; then rm -f $(MY_TARGETS); fi
+	rm -f *~ $(MY_TARGETS)
 	$(MAKE) -C subscriptions clean
-
-package: $(ALL)
-	mkdir -p $(PACKAGE_DIR)/users
-	cp -f Makefile $(PACKAGE_DIR)/users
-	cp -f *.php $(PACKAGE_DIR)/users
-	$(MAKE) -C subscriptions package PACKAGE_DIR=$(PACKAGE_DIR)/users
 
 dummy:
