@@ -150,16 +150,15 @@ $uploadedByUsers =& Image::GetUploadUsers();
 	<TD ALIGN="RIGHT" style="padding-right: 10px; padding-top: 0px;">
 	 	<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
 		<TR>
-			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/images/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&Section=<?php  p($Section); ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Images"); ?>"></A></TD>
-			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/images/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&Section=<?php  p($Section); ?>" ><B><?php  putGS("Images");  ?></B></A></TD>
-			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>&Section=<?php  p($Section); ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Articles"); ?>"></A></TD>
-			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>&Section=<?php  p($Section); ?>" ><B><?php  putGS("Articles");  ?></B></A></TD>
-			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Sections"); ?>"></A></TD>
-			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>" ><B><?php  putGS("Sections");  ?></B></A></TD>
-			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/?Pub=<?php  p($Pub); ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Issues"); ?>"></A></TD>
-			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/?Pub=<?php  p($Pub); ?>" ><B><?php  putGS("Issues");  ?></B></A></TD>
-			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Publications"); ?>"></A></TD>
-			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/" ><B><?php  putGS("Publications");  ?></B></A></TD>
+			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/images/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&Section=<?php  p($Section); ?>" class="breadcrumb"><?php  putGS("Images");  ?></A></TD>
+			<td class="breadcrumb_separator">&nbsp;</td>
+			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>&Section=<?php  p($Section); ?>" class="breadcrumb"><?php  putGS("Articles");  ?></A></TD>
+			<td class="breadcrumb_separator">&nbsp;</td>
+			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>" class="breadcrumb"><?php  putGS("Sections");  ?></A></TD>
+			<td class="breadcrumb_separator">&nbsp;</td>
+			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/?Pub=<?php  p($Pub); ?>" class="breadcrumb"><?php  putGS("Issues");  ?></A></TD>
+			<td class="breadcrumb_separator">&nbsp;</td>
+			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/" class="breadcrumb"><?php  putGS("Publications");  ?></A></TD>
 		</TR>
 	</TABLE>
 	</TD>
@@ -184,9 +183,9 @@ $uploadedByUsers =& Image::GetUploadUsers();
 
 <table>
 <tr>
-    <td><?php echo CampsiteInterface::ArticleLink($articleObj, $InterfaceLanguageId, 'images/index.php') ?><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php putGS("Back to Article Image List"); ?>"></a></td>
+    <td><?php echo CampsiteInterface::ArticleLink($articleObj, $InterfaceLanguageId, 'images/index.php') ?><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/back.png" BORDER="0" ALT="<?php putGS("Back to Article Image List"); ?>"></a></td>
     <td><?php echo CampsiteInterface::ArticleLink($articleObj, $InterfaceLanguageId, 'images/index.php') ?><b><?php echo putGS('Back to Article Image List'); ?></b></a></td>
-    <td><?php echo CampsiteInterface::ArticleLink($articleObj, $InterfaceLanguageId, 'edit.php') ?><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php putGS("Back to article details"); ?>"></a></td>
+    <td><?php echo CampsiteInterface::ArticleLink($articleObj, $InterfaceLanguageId, 'edit.php') ?><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/back.png" BORDER="0" ALT="<?php putGS("Back to article details"); ?>"></a></td>
     <td><?php echo CampsiteInterface::ArticleLink($articleObj, $InterfaceLanguageId, 'edit.php') ?><b><?php echo putGS('Back to article details'); ?></b></a></td>
 </tr>
 <tr>
