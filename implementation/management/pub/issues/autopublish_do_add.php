@@ -2,87 +2,54 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
 load_common_include_files("$ADMIN_DIR/pub/issues");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 
-todefnum('TOL_UserId');
-todefnum('TOL_UserKey');
-query ("SELECT * FROM Users WHERE Id=$TOL_UserId AND KeyId=$TOL_UserKey", 'Usr');
-$access=($NUM_ROWS != 0);
-if ($NUM_ROWS) {
-	fetchRow($Usr);
-	query ("SELECT * FROM UserPerm WHERE IdUser=".getVar($Usr,'Id'), 'XPerm');
-	if ($NUM_ROWS){
-		fetchRow($XPerm);
-	} else
-		$access = 0;	//added lately; a non-admin can enter the administration area; he exists but doesn't have ANY rights
-	$xpermrows= $NUM_ROWS;
-} else {
-	query ("SELECT * FROM UserPerm WHERE 1=0", 'XPerm');
+// Check permissions
+list($access, $User) = check_basic_access($_REQUEST);
+if (!$access) {
+	header("Location: /$ADMIN/logout.php");
+	exit;
+}
+if (!$User->hasPermission('Publish')) {
+	header("Location: /$ADMIN/ad.php?ADReason=".urlencode(getGS("You do not have the right to schedule issues or articles for automatic publishing." )));
+	exit;
 }
 
-if ($access) {
-	query ("SELECT Publish FROM UserPerm WHERE IdUser=".getVar($Usr,'Id'), 'Perm');
-	if ($NUM_ROWS) {
-		fetchRow($Perm);
-		$access = (getVar($Perm,'Publish') == "Y");
+// Get input
+$Pub = Input::get('Pub', 'int', 0);
+$Issue = Input::get('Issue', 'int', 0);
+$Language = Input::get('Language', 'int', 0);
+$publish_date = trim(Input::get('publish_date', 'string', ''));
+$action = trim(Input::get('action', 'string', ''));
+$publish_articles = trim(Input::get('publish_articles', 'string', ''));
+$publish_hour = trim(Input::get('publish_hour', 'string', ''));
+$publish_min = trim(Input::get('publish_min', 'string', ''));
+
+$correct = $publish_date != "" && $publish_hour != ""
+	&& $publish_min != "" && ($action == "P" || $action == "U");
+
+if ($publish_articles != "Y" && $publish_articles != "N")
+	$publish_articles = "N";
+
+$created = 0;
+if ($correct) {
+	$action_str = $action == "P" ? "Publish" : "Unpublish";
+	$publish_time = $publish_date . " " . $publish_hour . ":" . $publish_min . ":00";
+	$sql = "select * from IssuePublish where IdPublication = $Pub and NrIssue = $Issue and IdLanguage = $Language and PublishTime = '$publish_time'";
+	query($sql, 'q_issp');
+	if ($NUM_ROWS > 0) {
+		$sql = "update IssuePublish set Action = '$action', PublishArticles = '$publish_articles' where IdPublication = $Pub and NrIssue = $Issue and IdLanguage = $Language and PublishTime = '$publish_time'";
+		query($sql);
+		$created = 1;
 	} else {
-		$access = 0;
+		$sql = "INSERT IGNORE INTO IssuePublish SET IdPublication = $Pub, NrIssue = $Issue, IdLanguage = $Language, PublishTime = '$publish_time', Action = '$action', PublishArticles = '$publish_articles'";
+		query ($sql);
+		$created = $AFFECTED_ROWS > 0;
 	}
 }
+if ($created)
+	header("Location: /$ADMIN/pub/issues/autopublish.php?Pub=$Pub&Issue=$Issue&Language=$Language");
 
-todef('publish_date');
-todefnum('publish_hour');
-todefnum('publish_min');
-todef('action');
-todef('publish_articles');
-if ($access) {
-	global $created;
-
-	$publish_date = trim($publish_date);
-	$publish_hour = trim($publish_hour);
-	$publish_min = trim($publish_min);
-
-	$correct = trim($publish_date) != "" && trim($publish_hour) != ""
-		&& trim($publish_min) != "" && ($action == "P" || $action == "U");
-
-	if ($publish_articles != "Y" && $publish_articles != "N")
-		$publish_articles = "N";
-
-	$created = 0;
-	if ($correct) {
-		$action_str = $action == "P" ? "Publish" : "Unpublish";
-		$publish_time = $publish_date . " " . $publish_hour . ":" . $publish_min . ":00";
-		$sql = "select * from IssuePublish where IdPublication = $Pub and NrIssue = $Issue and IdLanguage = $Language and PublishTime = '$publish_time'";
-		query($sql, 'q_issp');
-		if ($NUM_ROWS > 0) {
-			$sql = "update IssuePublish set Action = '$action', PublishArticles = '$publish_articles' where IdPublication = $Pub and NrIssue = $Issue and IdLanguage = $Language and PublishTime = '$publish_time'";
-			query($sql);
-			$created = 1;
-		} else {
-			$sql = "INSERT IGNORE INTO IssuePublish SET IdPublication = $Pub, NrIssue = $Issue, IdLanguage = $Language, PublishTime = '$publish_time', Action = '$action', PublishArticles = '$publish_articles'";
-			query ($sql);
-			$created = $AFFECTED_ROWS > 0;
-		}
-	}
-	if ($created)
-		header("Location: /$ADMIN/pub/issues/autopublish.php?Pub=$Pub&Issue=$Issue&Language=$Language");
-}
-
-?>
-
-<HEAD>
-	<TITLE><?php  putGS("Scheduling a new publish action"); ?></TITLE>
-<?php if ($access == 0) { ?>
-	<META HTTP-EQUIV="Refresh" CONTENT="0; URL=/<?php echo $ADMIN; ?>/ad.php?ADReason=<?php  print encURL(getGS("You do not have the right to schedule issues or articles for automatic publishing." )); ?>">
-<?php } ?></HEAD>
-
-<?php if ($access) { ?>
-
-<BODY>
-
-<?php
-	todefnum('Pub');
-	todefnum('Issue');
-	todefnum('Language');
 ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
 	<TR>
@@ -167,9 +134,7 @@ if ($access) {
 	<LI><?php putGS('No such issue.'); ?></LI>
 </BLOCKQUOTE>
 <?php } ?>
-<?php }
-CampsiteInterface::CopyrightNotice();
-?>
+<?php CampsiteInterface::CopyrightNotice(); ?>
 </BODY>
 
 </HTML>

@@ -2,64 +2,24 @@
 
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
 load_common_include_files("$ADMIN_DIR/pub/issues");
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 
-todefnum('TOL_UserId');
-todefnum('TOL_UserKey');
-query ("SELECT * FROM Users WHERE Id=$TOL_UserId AND KeyId=$TOL_UserKey", 'Usr');
-$access=($NUM_ROWS != 0);
-if ($NUM_ROWS) {
-	fetchRow($Usr);
-	query ("SELECT * FROM UserPerm WHERE IdUser=".getVar($Usr,'Id'), 'XPerm');
-	if ($NUM_ROWS){
-		fetchRow($XPerm);
-	} else
-		$access = 0;	//added lately; a non-admin can enter the administration area
-						// he exists but doesn't have ANY rights
-	$xpermrows = $NUM_ROWS;
-} else {
-	query ("SELECT * FROM UserPerm WHERE 1=0", 'XPerm');
+// Check permissions
+list($access, $User) = check_basic_access($_REQUEST);
+if (!$access) {
+	header("Location: /$ADMIN/logout.php");
+	exit;
 }
-?>
 
-<HEAD>
-	<TITLE><?php  putGS("Issues"); ?></TITLE>
-<?php  if ($access == 0) { ?>	<META HTTP-EQUIV="Refresh" CONTENT="0; URL=/<?php echo $ADMIN; ?>/logout.php">
-<?php  }
-    query ("SELECT * FROM Issues WHERE 1=0", 'q_iss');
-?></HEAD>
+$Pub = Input::get('Pub', 'int', 0);
+$IssOffs = Input::get('IssOffs', 'int', 0);
 
-<?php
-if ($access) {
-
-	if (getVar($XPerm,'ManageIssue') == "Y")
-		$mia=1;
-	else 
-		$mia=0;
-
-	if (getVar($XPerm,'DeleteIssue') == "Y")
-		$dia=1;
-	else 
-		$dia=0;
-
-	if (getVar($XPerm,'Publish') == "Y")
-		$publish=1;
-	else 
-		$publish=0;
+$mia = $User->hasPermission('ManageIssue');
+$dia = $User->hasPermission('DeleteIssue');
+$publish = $User->hasPermission('Publish');
 
 ?>
-<BODY>
-
-<?php  todefnum('Pub'); ?>
-<?php  function tplRedirect($s){
-	if (file_exists(getenv("DOCUMENT_ROOT")."/".decURL($s))){
-		$dotpos=strrpos($s,"/");
-		if($dotpos){
-			$tplpath=substr ($s,0,$dotpos);
-		} else $tplpath="/look";
-	}
-	else $tplpath="/look";
-	return $tplpath;
-}?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
 	<TR>
 		<TD class="page_title"><?php putGS("Issues"); ?></TD>
@@ -73,8 +33,9 @@ if ($access) {
 	</TR>
 </TABLE>
 
-<?php   query ("SELECT Name, IdDefaultLanguage FROM Publications WHERE Id=$Pub", 'q_pub');
-    if ($NUM_ROWS) { 
+<?php
+query ("SELECT Name, IdDefaultLanguage FROM Publications WHERE Id=$Pub", 'q_pub');
+if ($NUM_ROWS) {
 	fetchRow($q_pub);
 	$IdLang = getVar($q_pub,'IdDefaultLanguage');
 ?>
@@ -85,26 +46,29 @@ if ($access) {
 </TR>
 </TABLE>
 
-<?php  if ($mia != 0) {
-	query ("SELECT MAX(Number) FROM Issues WHERE IdPublication=$Pub", 'q_nr');
-	fetchRowNum($q_nr);
-	if (getNumVar($q_nr,0) == "") { ?>
+<?php
+	if ($mia != 0) {
+		query ("SELECT MAX(Number) FROM Issues WHERE IdPublication=$Pub", 'q_nr');
+		fetchRowNum($q_nr);
+		if (getNumVar($q_nr,0) == "") {
+?>
 	<P><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1"><TR><TD><A HREF="add_new.php?Pub=<?php  pencURL($Pub); ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/add.png" BORDER="0"></A></TD><TD><A HREF="add_new.php?Pub=<?php  pencURL($Pub); ?>" ><B><?php  putGS("Add new issue"); ?></B></A></TD></TR></TABLE>
 	<?php  } else { ?>	<P><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1"><TR><TD><A HREF="qadd.php?Pub=<?php  pencURL($Pub); ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/add.png" BORDER="0"></A></TD><TD><A HREF="qadd.php?Pub=<?php  pencURL($Pub); ?>" ><B><?php  putGS("Add new issue"); ?></B></A></TD></TR></TABLE>
-	<?php  }
-    }
-    $IssNr= "xxxxxxxxx";
+<?php  }
+	}
+	$IssNr= "xxxxxxxxx";
 ?>
 <P><?php 
-    todefnum('IssOffs');
-    if ($IssOffs < 0) $IssOffs= 0;
-    $lpp=20;
+	if ($IssOffs < 0)
+		$IssOffs= 0;
+	$lpp=20;
 
-    query ("SELECT Name, IdLanguage, abs(IdLanguage-$IdLang) as IdLang, Number, Name, PublicationDate, if($mia, 'Publish', 'No') as Pub, Published, ShortName FROM Issues WHERE IdPublication=$Pub ORDER BY Number DESC, IdLang ASC LIMIT $IssOffs, ".($lpp+1), 'q_iss');
-    if ($NUM_ROWS) {
-	$nr= $NUM_ROWS;
-	$i=$lpp;
-	$color=0;
+	$sql = "SELECT Name, IdLanguage, abs(IdLanguage-$IdLang) as IdLang, Number, Name, PublicationDate, Published, ShortName FROM Issues WHERE IdPublication=$Pub ORDER BY Number DESC, IdLang ASC LIMIT $IssOffs, ".($lpp+1);
+	query($sql, 'q_iss');
+	if ($NUM_ROWS) {
+		$nr = $NUM_ROWS;
+		$i = $lpp;
+		$color = 0;
 ?><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" WIDTH="100%" class="table_list">
 	<TR class="table_list_header">
 	<?php  if ($mia != 0) { ?>
@@ -157,7 +121,7 @@ if ($access) {
 	    } 
 	 ?>		</TD>
 		<TD ALIGN="CENTER">
-			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/status.php?Pub=<?php  pencURL($Pub); ?>&Issue=<?php  pgetUVar($q_iss,'Number'); ?>&Language=<?php  pgetUVar($q_iss,'IdLanguage'); ?>"><?php  if (getHVar($q_iss, 'Published') == 'Y') pgetHVar($q_iss,'PublicationDate'); else print putGS(getHVar($q_iss,'Pub')); ?></A>
+			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/status.php?Pub=<?php  pencURL($Pub); ?>&Issue=<?php  pgetUVar($q_iss,'Number'); ?>&Language=<?php  pgetUVar($q_iss,'IdLanguage'); ?>"><?php  if (getHVar($q_iss, 'Published') == 'Y') pgetHVar($q_iss,'PublicationDate'); else print putGS("Publish"); ?></A>
 		</TD>
 	<?php if ($publish) { ?>
 		<TD ALIGN="CENTER">
@@ -188,7 +152,7 @@ if ($access) {
 		}
 	?>		</TD>
 		<TD ALIGN="CENTER">
-			<?php  if (getHVar($q_iss, 'Published') == 'Y') pgetHVar($q_iss,'PublicationDate'); else print putGS(getHVar($q_iss,'Pub')); ?>
+			<?php  if (getHVar($q_iss, 'Published') == 'Y') pgetHVar($q_iss,'PublicationDate'); else print putGS("No"); ?>
 		</TD>
 		<TD ALIGN="CENTER">
 			<A HREF="" ONCLICK="window.open('/<?php echo $ADMIN; ?>/pub/issues/preview.php?Pub=<?php  pencURL($Pub); ?>&Issue=<?php  pgetUVar($q_iss,'Number'); ?>&Language=<?php  pgetUVar($q_iss,'IdLanguage'); ?>', 'fpreview', 'resizable=yes, menubar=yes, toolbar=yes, width=680, height=560'); return false"><?php  putGS("Preview"); ?></A>
@@ -223,9 +187,7 @@ if ($access) {
 	<LI><?php  putGS('No such publication.'); ?></LI>
 </BLOCKQUOTE>
 <?php  } ?>
-<HR NOSHADE SIZE="1" COLOR="BLACK">
-<a STYLE='font-size:8pt;color:#000000' href='http://www.campware.org' target='campware'>CAMPSITE  2.2.0 &copy 1999-2004 MDLF, maintained and distributed under GNU GPL by CAMPWARE</a>
+<?php CampsiteInterface::CopyrightNotice(); ?>
 </BODY>
-<?php  } ?>
 
 </HTML>

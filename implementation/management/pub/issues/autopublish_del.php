@@ -2,59 +2,32 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
 load_common_include_files("$ADMIN_DIR/pub/issues");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 
-todefnum('TOL_UserId');
-todefnum('TOL_UserKey');
-query ("SELECT * FROM Users WHERE Id=$TOL_UserId AND KeyId=$TOL_UserKey", 'Usr');
-$access=($NUM_ROWS != 0);
-if ($NUM_ROWS) {
-	fetchRow($Usr);
-	query ("SELECT * FROM UserPerm WHERE IdUser=".getVar($Usr,'Id'), 'XPerm');
-	if ($NUM_ROWS){
-		fetchRow($XPerm);
-	} else {
-		$access = 0; //added lately; a non-admin can enter the administration area;
-		             // he/she exists but doesn't have ANY rights
-	}
-	$xpermrows= $NUM_ROWS;
-} else {
-	query ("SELECT * FROM UserPerm WHERE 1=0", 'XPerm');
+// Check permissions
+list($access, $User) = check_basic_access($_REQUEST);
+if (!$access) {
+	header("Location: /$ADMIN/logout.php");
+	exit;
+}
+if (!$User->hasPermission('Publish')) {
+	header("Location: /$ADMIN/ad.php?ADReason=".urlencode(getGS("You do not have the right to schedule issues or articles for automatic publishing." )));
+	exit;
 }
 
-if ($access) {
-	query ("SELECT Publish FROM UserPerm WHERE IdUser=".getVar($Usr,'Id'), 'Perm');
-	if ($NUM_ROWS) {
-		fetchRow($Perm);
-		$access = (getVar($Perm,'Publish') == "Y");
-	}
-	else $access = 0;
-}
+$Pub = Input::get('Pub', 'int', 0);
+$Issue = Input::get('Issue', 'int', 0);
+$Language = Input::get('Language', 'int', 0);
+$publish_time = trim(Input::get('publish_time', 'string', ''));
 
-todefnum('Pub');
-todefnum('Issue');
-todefnum('Language');
-todef('publish_time');
+$AFFECTED_ROWS=0;
+$sql = "DELETE FROM IssuePublish WHERE IdPublication = $Pub AND NrIssue = $Issue AND IdLanguage = $Language AND PublishTime = '$publish_time'";
+query ($sql);
+$del = $AFFECTED_ROWS > 0;
+if ($del)
+	header("Location: /$ADMIN/pub/issues/autopublish.php?Pub=$Pub&Issue=$Issue&Language=$Language");
 
-if ($access) {
-	$AFFECTED_ROWS=0;
-	$sql = "DELETE FROM IssuePublish WHERE IdPublication = $Pub AND NrIssue = $Issue AND IdLanguage = $Language AND PublishTime = '$publish_time'";
-	query ($sql);
-	$del = $AFFECTED_ROWS > 0;
-	if ($del)
-		header("Location: /$ADMIN/pub/issues/autopublish.php?Pub=$Pub&Issue=$Issue&Language=$Language");
-}
 ?>
-
-<HEAD>
-	<TITLE><?php  putGS("Delete scheduled publish action"); ?></TITLE>
-<?php if ($access == 0) { ?>
-	<META HTTP-EQUIV="Refresh" CONTENT="0; URL=/<?php echo $ADMIN; ?>/ad.php?ADReason=<?php  print encURL(getGS("You do not have the right to schedule issues or articles for automatic publishing." )); ?>">
-<?php } ?>
-</HEAD>
-
-<?php if ($access) { ?>
-
-<BODY>
 
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
 	<TR>
@@ -127,9 +100,7 @@ if ($access) {
 	<LI>No such issue.</LI>
 </BLOCKQUOTE>
 <?php } ?>
-<?php }
-CampsiteInterface::CopyrightNotice();
-?>
+<?php CampsiteInterface::CopyrightNotice(); ?>
 </BODY>
 
 </HTML>
