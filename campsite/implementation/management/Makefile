@@ -38,6 +38,7 @@ install: $(ALL)
 	cp -rf article_import $(PRIV_DIR)
 	cp -rf javascript $(HTML_DIR)
 	cp -rf classes $(HTML_DIR)
+	cp -rf css $(HTML_DIR)
 	cp -rf imagearchive $(PRIV_DIR)
 	cp -rf include $(HTML_DIR)
 	mkdir -p $(SCRIPT_DIR)
@@ -62,6 +63,7 @@ install: $(ALL)
 	chown -R $(HTTP_USER):$(HTTP_GROUP) $(HTML_DIR)/look
 	chown -R $(HTTP_USER):$(HTTP_GROUP) $(HTML_DIR)/javascript
 	chown -R $(HTTP_USER):$(HTTP_GROUP) $(HTML_DIR)/classes
+	chown -R $(HTTP_USER):$(HTTP_GROUP) $(HTML_DIR)/css
 	chown -R $(HTTP_USER):$(HTTP_GROUP) $(HTML_DIR)/include
 	chown -R $(HTTP_USER):$(HTTP_GROUP) $(PRIV_DIR)/imagearchive
 	chown -R $(HTTP_USER):$(HTTP_GROUP) $(PRIV_DIR) 
@@ -75,6 +77,9 @@ install: $(ALL)
 	chmod -R u+rw $(HTML_DIR)/classes
 	chmod -R g+r $(HTML_DIR)/classes
 	chmod -R o-rwx $(HTML_DIR)/classes
+	chmod -R u+rw $(HTML_DIR)/css
+	chmod -R g+r $(HTML_DIR)/css
+	chmod -R o-rwx $(HTML_DIR)/css
 	chmod -R u+rw $(PRIV_DIR)/imagearchive
 	chmod -R g+r $(PRIV_DIR)/imagearchive
 	chmod -R o-rwx $(PRIV_DIR)/imagearchive
