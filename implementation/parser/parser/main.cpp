@@ -332,7 +332,8 @@ void ResolveNames(string& p_rcoAllowedHosts, StringSet& p_rcoAllowedIPs) throw (
 		struct hostent* pHost = gethostbyname(coWord.c_str());
 		if (pHost == NULL)
 		{
-			throw RunException("Unable to resolve name");
+			string errMsg = string("Unable to resolve name ") + coWord;
+			throw RunException(errMsg.c_str());
 		}
 		for (char** ppIP = pHost->h_addr_list; *ppIP != 0; ppIP++)
 		{
@@ -392,6 +393,11 @@ void ReadConf(int& p_rnThreads, int& p_rnPort, StringSet& p_rcoAllowed, int& p_r
 	catch (SocketException& rcoEx)
 	{
 		cout << "Error starting server: " << rcoEx.Message() << endl;
+		exit(1);
+	}
+	catch (RunException& rcoEx)
+	{
+		cout << "Error starting server: " << rcoEx.what() << endl;
 		exit(1);
 	}
 }
