@@ -12,8 +12,6 @@ install_conf --set
 var_not_modified APP_NAME && [ -f tpl_cgi.h ] && exit 0
 save_var APP_NAME
 
-export CONF_DIR=/etc/campsite.d/${APP_NAME}
-
 echo -n -e "\tWriting tpl_cgi.h header..."
 cat > tpl_cgi.h << EOF
 /******************************************************************************

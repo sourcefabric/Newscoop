@@ -6,8 +6,6 @@
 install_conf --set
 [ $? -ne 0 ] && echo "Error reading install configuration" && exit 1
 
-export CONF_DIR=/etc/campsite.d/${APP_NAME}
-
 if ! var_not_modified APP_NAME || [ ! -f $APP_NAME ]; then
 echo -n -e "\tWriting start/stop script..."
 cat > ${APP_NAME} << EOF
