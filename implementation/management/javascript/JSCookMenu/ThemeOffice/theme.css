@@ -7,7 +7,6 @@
 	padding: 0;
 	white-space: nowrap;
 	cursor:	default;
-	background-color: yellow;
 }
 
 .ThemeOfficeSubMenuTable
@@ -54,7 +53,9 @@
 
 .ThemeOfficeMainItem
 {
-	background-color:	#EFEBDE;
+	/*background-color:	#EFEBDE;*/
+	background-color: #d5e2ee;
+	border: 1px solid #8baed1;
 }
 
 .ThemeOfficeMainItemHover,.ThemeOfficeMainItemActive
@@ -82,7 +83,7 @@
 
 td.ThemeOfficeMainItemHover,td.ThemeOfficeMainItemActive
 {
-	padding:	0px;
+	/*padding:	0px;*/
 	border:		1px solid #3169C6;
 }
 
