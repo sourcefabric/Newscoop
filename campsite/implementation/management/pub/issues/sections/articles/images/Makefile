@@ -1,6 +1,6 @@
 export PRIV_DIR6=$(PRIV_DIR5)/images
 
-MY_TARGETS=upload_i.sh
+MY_TARGETS=upload_i.sh index.php
 
 all: $(MY_TARGETS)
 
@@ -12,6 +12,7 @@ all: $(MY_TARGETS)
 
 install: $(ALL)
 	mkdir -p $(PRIV_DIR6)
+	cp -f *.php $(PRIV_DIR6)
 	cp -f upload_i.sh $(CGI_DIR)/upload_i
 	chmod 755 $(CGI_DIR)/upload_i
 
