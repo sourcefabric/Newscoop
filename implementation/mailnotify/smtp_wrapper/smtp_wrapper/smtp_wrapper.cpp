@@ -24,7 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ******************************************************************************/
 
 #include <string>
-#include <iostream.h>
+#include <iostream>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/time.h>
@@ -35,6 +35,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define SMTP_PORT 25
 #define SMTP_OK 250
+
+using std::cout;
+using std::cin;
+using std::endl;
 
 class Exception
 {

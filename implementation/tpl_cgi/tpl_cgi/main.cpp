@@ -31,13 +31,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-#include <iostream.h>
+#include <iostream>
 
 #include "globals.h"
 #include "csocket.h"
 #include "srvdef.h"
 #include "tpl_cgi.h"
 #include "readconf.h"
+
+using std::cout;
+using std::endl;
 
 char* ReadPOSTQuery();
 int ReadParameters(char** p_ppchParams, int* p_pnSize, const char** p_ppchErrMsg);
