@@ -7,7 +7,7 @@ LIBS=-lmysqlclient -lm -lz $(LIBCRYPT_LINK)
 OBJ=get_img.o url_util.o parse_file.o process_i.o process_t.o cleanb.o readconf.o
 TARGET=get_img process_i process_t cleanb
 
-LINKS=globals.h readconf.h readconf.cpp
+LINKS=globals.h readconf.h readconf.cpp cms_types.h threadkey.h
 
 all: links $(TARGET)
 
