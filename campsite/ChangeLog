@@ -1,3 +1,10 @@
+2.1.1
+    - Improved template management user interface; allow users whithout write
+    right to view the template
+    - Login file checks for guest_include.php; if found, it is included
+    - Fixed bug 86 (at install time the script checks for apache user instead
+    of group; if user and group are not the same it fails)
+
 2.1.0
     - The application is divided into modules that can be installed on
     different systems (increased scalability)
