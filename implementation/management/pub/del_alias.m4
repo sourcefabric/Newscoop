@@ -25,8 +25,8 @@ E_HEADER
 
 <TABLE>
 <TR>
-	<TD>X_NEW_BUTTON(<*Back to publication*>, <*edit.php?Pub=<?php  pencURL($Pub); ?>*>)</TD>
-	<TD>X_NEW_BUTTON(<*Back to aliases*>, <*aliases.php?Pub=<?php  pencURL($Pub); ?>*>)</TD>
+	<TD>X_BACK_BUTTON(<*Back to publication*>, <*edit.php?Pub=<?php  pencURL($Pub); ?>*>)</TD>
+	<TD>X_BACK_BUTTON(<*Back to aliases*>, <*aliases.php?Pub=<?php  pencURL($Pub); ?>*>)</TD>
 </TR>
 </TABLE>
 

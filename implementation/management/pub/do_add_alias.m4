@@ -41,8 +41,8 @@ E_CURRENT
 
 <TABLE>
 <TR>
-	<TD>X_NEW_BUTTON(<*Back to publication*>, <*edit.php?Pub=<?php  pencURL($cPub); ?>*>)</TD>
-	<TD>X_NEW_BUTTON(<*Back to aliases*>, <*aliases.php?Pub=<?php  pencURL($cPub); ?>*>)</TD>
+	<TD>X_BACK_BUTTON(<*Back to publication*>, <*edit.php?Pub=<?php  pencURL($cPub); ?>*>)</TD>
+	<TD>X_BACK_BUTTON(<*Back to aliases*>, <*aliases.php?Pub=<?php  pencURL($cPub); ?>*>)</TD>
 </TR>
 </TABLE>
 
