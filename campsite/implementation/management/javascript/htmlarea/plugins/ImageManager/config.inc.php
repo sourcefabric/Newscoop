@@ -2,7 +2,7 @@
 /**
  * Image Manager configuration file.
  * @author $Author: paul $
- * @version $Id: config.inc.php,v 1.3 2004/11/15 02:53:18 paul Exp $
+ * @version $Id: config.inc.php,v 1.4 2005/03/20 17:28:34 paul Exp $
  * @package ImageManager
  */
 
@@ -15,7 +15,7 @@
        PHP must be able to create files in this directory.
 	   Able to create directories is nice, but not necessary.
 */
-$IMConfig['base_dir'] = '/var/www/html/images/';
+$IMConfig['base_dir'] = '/usr/local/campsite/www/campsite/html/images/';
 
 /*
  The URL to the above path, the web browser needs to be able to see it.
@@ -122,7 +122,7 @@ $IMConfig['allow_upload'] = false;
 
  NOTE: If uploading is not allowed, this parameter is ignored.
 */
-$IMConfig['validate_images'] = true;
+$IMConfig['validate_images'] = false;
 
 /*
  The default thumbnail if the thumbnails can not be created, either
@@ -133,8 +133,8 @@ $IMConfig['default_thumbnail'] = 'img/default.gif';
 /*
   Thumbnail dimensions.
 */
-$IMConfig['thumbnail_width'] = 96;
-$IMConfig['thumbnail_height'] = 96;
+$IMConfig['thumbnail_width'] = 64;
+$IMConfig['thumbnail_height'] = 64;
 
 /*
   Image Editor temporary filename prefix.
