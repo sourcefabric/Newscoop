@@ -85,7 +85,9 @@ int main()
       continue;
     MYSQL_ROW row_usr;
     while ((row_usr = mysql_fetch_row(res_usr))) {
-      sprintf(command, "/bin/mail -s \"%s\" %s", event, email);
+      if (row_usr[0] == NULL || row_usr[0][0] == 0)
+        continue;
+      sprintf(command, "/bin/mail -s \"%s\" %s", event, row_usr[0]);
       FILE *os = popen(command, "w");
       if (os == NULL)
         return -1;
