@@ -742,11 +742,14 @@ int CStatementMap::InitStatements()
 	CLOSE_TRY
 	CATCH(InvalidValue &rcoEx)
 		cout << "InitStatements: " << rcoEx.what() << endl;
+		return false;
 	END_CATCH
 	catch(...)
 	{
 		cout << "InitStatements: some unknown exception" << endl;
+		return false;
 	}
+	return true;
 }
 
 // constructor
