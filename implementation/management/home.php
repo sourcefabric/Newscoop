@@ -125,7 +125,7 @@ list($SubmittedArticles, $NumSubmittedArticles) = Article::GetSubmittedArticles(
 				<?php  putGS("Your articles"); ?>
 			</TD>
 		</TR>
-		<TR BGCOLOR="#C0D0FF">
+		<TR class="table_list_header">
 			<TD ALIGN="LEFT" VALIGN="TOP" width="450px"><B><?php  putGS("Name<BR><SMALL>(click to edit article)</SMALL>"); ?></B></TD>
 			<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="100px" ><B><?php  putGS("Language"); ?></B></TD>
 			<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="100px" ><B><?php  putGS("Status"); ?></B></TD>
@@ -137,7 +137,7 @@ list($SubmittedArticles, $NumSubmittedArticles) = Article::GetSubmittedArticles(
 			$section =& $YourArticle->getSection();
 			$language =& new Language($YourArticle->getLanguageId());
 			 ?>
-		<TR <?php if ($color) { $color=0; ?>BGCOLOR="#D0D0B0"<?php  } else { $color=1; ?>BGCOLOR="#D0D0D0"<?php  } ?>>
+		<TR <?php if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 			<TD width="450px">
 				<?php 
 				if ($User->hasPermission('ChangeArticle') || ($YourArticle->getPublished() == 'N')) {
@@ -222,7 +222,7 @@ list($SubmittedArticles, $NumSubmittedArticles) = Article::GetSubmittedArticles(
 			</td>
 		</tr>
 		
-		<TR BGCOLOR="#C0D0FF">
+		<TR class="table_list_header">
 			<TD ALIGN="LEFT" VALIGN="TOP" width="550px"><B><?php  putGS("Name<BR><SMALL>(click to edit article)</SMALL>"); ?></B></TD>
 			<TD ALIGN="LEFT" VALIGN="TOP" width="100px"><B><?php  putGS("Language"); ?></B></TD>
 		</TR>
@@ -232,7 +232,7 @@ list($SubmittedArticles, $NumSubmittedArticles) = Article::GetSubmittedArticles(
 			$section =& $SubmittedArticle->getSection();
 			$language =& new Language($SubmittedArticle->getLanguageId());
 			?>	
-		<TR <?php if ($color) { $color=0; ?>BGCOLOR="#D0D0B0"<?php  } else { $color=1; ?>BGCOLOR="#D0D0D0"<?php  } ?>>
+		<TR <?php if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 			<TD width="550px">
 			<?php echo CampsiteInterface::ArticleLink($SubmittedArticle, $section->getLanguageId(), "edit.php"); ?>
 			<?php p(htmlspecialchars($SubmittedArticle->getTitle())); ?>
