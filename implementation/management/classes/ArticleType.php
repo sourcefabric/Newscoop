@@ -10,6 +10,7 @@ class ArticleType extends DatabaseObject {
 	var $IdLanguage;
 	
 	function ArticleType($p_articleType, $p_articleId, $p_languageId) {
+		parent::DatabaseObject();
 		$this->m_dbTableName = "X".$p_articleType;
 		$this->NrArticle = $p_articleId;
 		$this->IdLanguage = $p_languageId;
