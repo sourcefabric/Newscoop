@@ -12,7 +12,9 @@ $Campsite['db']->SetFetchMode(ADODB_FETCH_ASSOC);
 $Campsite['db']->Connect('localhost', 'root', '', 'campsite');
 
 $scheme = (substr($_SERVER['REQUEST_URI'], 0, 5) == 'https')?'https://':'http://';
-$Campsite['website_url'] = $scheme.$_SERVER['SERVER_NAME'];
+
+$Campsite['hostname'] = $_SERVER['SERVER_NAME'];
+$Campsite['website_url'] = $scheme.$Campsite['hostname'];
 
 $Campsite['version'] = '2.2';
 ?>
