@@ -15,7 +15,7 @@ if (!$access) {
     <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<TITLE><?php putGS("CAMPSITE"); ?></TITLE>
 </HEAD>
-<FRAMESET COLS="150,*" BORDER="0">
+<FRAMESET ROWS="90,*" BORDER="0">
     <FRAME SRC="menu.php" NAME="fmenu" FRAMEBORDER="0" MARGINWIDTH="0" SCROLLING="AUTO">
     <FRAME SRC="home.php" NAME="fmain" FRAMEBORDER="0" MARGINWIDTH="0" SCROLLING="AUTO">
 </FRAMESET>
