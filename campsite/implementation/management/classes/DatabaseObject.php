@@ -35,6 +35,11 @@ class DatabaseObject {
 	 */
 	var $m_data = array();
 
+	/**
+	 * TRUE if the object exists in the database.
+	 * @var boolean
+	 */
+	var $m_exists = false;
 	
 	/**
 	 * DatabaseObject represents a row in a database table.
@@ -175,8 +180,10 @@ class DatabaseObject {
 				foreach ($this->getColumnNames() as $dbColumnName) {
 					$this->m_data[$dbColumnName] = $resultSet[$dbColumnName];
 				}
+				$this->m_exists = true;
 			}
 			else {
+				$this->m_exists = false;
 				return false;
 			}
 		}
@@ -200,6 +207,9 @@ class DatabaseObject {
 	 * @return boolean
 	 */
 	function exists() {
+		if ($this->m_exists) {
+			return true;
+		}
 		global $Campsite;
 		$queryStr = 'SELECT `'.$this->m_keyColumnNames[0].'`';
 		$queryStr .= ' FROM ' . $this->m_dbTableName;
@@ -218,7 +228,7 @@ class DatabaseObject {
 	function getKeyWhereClause() {
 		$whereParts = array();
 		foreach ($this->m_keyColumnNames as $columnName) {
-			$whereParts[] = '`' . $columnName . "`='". $this->m_data[$columnName] ."'";
+			$whereParts[] = '`' . $columnName . "`='". addslashes($this->m_data[$columnName]) ."'";
 		}
 		return implode(' AND ', $whereParts);		
 	} // fn getKeyWhereClause
@@ -265,6 +275,9 @@ class DatabaseObject {
 			// If the key values exist, use those.
 			$columnNames = array_keys($this->getKey());
 			$columnValues = array_values($this->getKey());
+			foreach ($columnValues as $tmpKey => $tmpValue) {
+				$columnValues[$tmpKey] = "'".addslashes($tmpValue)."'";
+			}
 		}
 		elseif (!$this->m_keyIsAutoIncrement) {
 			// We dont have the key values and
@@ -279,7 +292,7 @@ class DatabaseObject {
 			foreach ($p_values as $columnName => $value) {
 				// Construct value string for the SET clause.
 				$columnNames[] = $columnName;
-				$columnValues[] = "'".$value."'";
+				$columnValues[] = "'".addslashes($value)."'";
 				$this->m_data[$columnName] = $value;
 			}
 		}
@@ -290,6 +303,7 @@ class DatabaseObject {
 		// Create the row.
 		$Campsite['db']->Execute($queryStr);
 		$success = ($Campsite['db']->Affected_Rows() > 0);
+		$this->m_exists = $success;
 		
 		// Fetch the row ID if it is auto-increment
 		if ($this->m_keyIsAutoIncrement) {
@@ -314,7 +328,11 @@ class DatabaseObject {
 					.' WHERE ' . $this->getKeyWhereClause()
 					.' LIMIT 1';
 		$Campsite['db']->Execute($queryStr);
-		return ($Campsite['db']->Affected_Rows() > 0);
+		$wasDeleted = ($Campsite['db']->Affected_Rows() > 0);
+		// Always set "exists" to false because if a row wasnt 
+		// deleted it means it probably didnt exist in the first place.
+		$this->m_exists = false;
+		return $wasDeleted;
 	} // fn delete
 
 
@@ -339,6 +357,9 @@ class DatabaseObject {
 							.' FROM '.$this->m_dbTableName
 							.' WHERE '.$this->getKeyWhereClause();
 				$this->m_data[$p_dbColumnName] = $Campsite['db']->GetOne($queryStr);
+				if ($this->m_data[$p_dbColumnName] !== false) {
+					$this->m_exists = true;
+				}
 			}
 			return $this->m_data[$p_dbColumnName];
 		}
@@ -380,7 +401,12 @@ class DatabaseObject {
 		}
 		// Check that the value is a valid column name.
 		if (!array_key_exists($p_dbColumnName, $this->m_data)) {
-			return false;
+			if (in_array($p_dbColumnName, $this->m_columnNames)) {
+				$this->m_data[$p_dbColumnName] = null;
+			}
+			else {
+				return false;
+			}
 		}
 		// If the value hasnt changed, dont update it.
 		if ($p_value == $this->m_data[$p_dbColumnName]) {
@@ -395,14 +421,17 @@ class DatabaseObject {
 		if ($p_commit) {
 			$value = $p_value;
 			if (!$p_isSql) {
-				$value = "'".$p_value."'";
+				$value = "'".addslashes($p_value)."'";
 			}
 			$queryStr = 'UPDATE '.$this->m_dbTableName
 						.' SET `'. $p_dbColumnName.'`='.$value
 						.' WHERE '.$this->getKeyWhereClause()
 						.' LIMIT 1';
-			$Campsite['db']->Execute($queryStr);
+			$result = $Campsite['db']->Execute($queryStr);
 			$databaseChanged = ($Campsite['db']->Affected_Rows() > 0);
+			if ($result !== false) {
+				$this->m_exists = true;
+			}
 		}
 		// Store the value locally.
 		if (!$p_isSql) {
@@ -416,8 +445,9 @@ class DatabaseObject {
 						.' FROM '.$this->m_dbTableName
 						.' WHERE '.$this->getKeyWhereClause();
 			$value = $Campsite['db']->GetOne($queryStr);
-			if ($value) {
+			if ($value !== false) {
 				$this->m_data[$p_dbColumnName] = $value;
+				$this->m_exists = true;
 			}
 			else {
 				$errorMsg = $Campsite['db']->ErrorMsg();
@@ -460,7 +490,7 @@ class DatabaseObject {
         		//return new PEAR_Error('Column name '.$columnName.' does not exist.');
         		return false;
         	}
-        	$setColumns[] = $columnName . "='". $columnValue ."'";
+        	$setColumns[] = $columnName . "='". addslashes($columnValue) ."'";
         	if (!$p_isSql) {
         		$this->m_data[$columnName] = $columnValue;
         	}
@@ -471,8 +501,11 @@ class DatabaseObject {
 	        			.' SET '.implode(',', $setColumns)
 	        			.' WHERE ' . $this->getKeyWhereClause()
 	        			.' LIMIT 1';
-	        $Campsite['db']->Execute($queryStr);
+	        $result = $Campsite['db']->Execute($queryStr);
 			$databaseChanged = ($Campsite['db']->Affected_Rows() > 0);
+			if ($result !== false) {
+				$this->m_exists = true;
+			}
         }
         if ($p_isSql) {
         	$this->fetch();
@@ -498,7 +531,7 @@ class DatabaseObject {
         $setColumns = array();
         foreach ($this->m_data as $columnName => $columnValue) {
         	if (is_null($p_ignoreColumns) || !in_array($columnName, $p_ignoreColumns)) {
-        		$setColumns[] = $columnName . "='". $columnValue ."'";
+        		$setColumns[] = $columnName . "='". addslashes($columnValue) ."'";
         	}
         }
         $databaseChanged = false;
@@ -506,8 +539,12 @@ class DatabaseObject {
 	        		.' SET '.implode(',', $setColumns)
 	        		.' WHERE ' . $this->getKeyWhereClause()
 	        		.' LIMIT 1';
-        $Campsite['db']->Execute($queryStr);
-		return ($Campsite['db']->Affected_Rows() > 0);
+        $result = $Campsite['db']->Execute($queryStr);
+		$success = ($Campsite['db']->Affected_Rows() > 0);
+		if ($result !== false) {
+			$this->m_exists = true;
+		}
+		return $success;
 	} // fn commit
 
 	
