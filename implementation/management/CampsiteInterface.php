@@ -11,12 +11,16 @@ class CampsiteInterface {
 	function CopyrightNotice() {
 		global $Campsite;
 		?>
-		<TABLE width="100%" style="border-top: 1px solid black;"><tr><td style="padding-left: 5px;">
-		<a style="font-size:8pt; color: black;" href="http://www.campware.org" target="campware">
-		Campsite <?php echo $Campsite['VERSION'] ?> &copy 1999-2005 MDLF, 
-		maintained and distributed under GNU GPL by CAMPWARE
-		</a>
-		</td></tr></table>
+		<TABLE width="100%" style="border-top: 1px solid black; margin-top: 10px;">
+		<tr>
+			<td style="padding-left: 5px;">
+				<a style="font-size:8pt; color: black;" href="http://www.campware.org" target="campware">
+				Campsite <?php echo $Campsite['VERSION'] ?> &copy 1999-2005 MDLF, 
+				maintained and distributed under GNU GPL by CAMPWARE
+				</a>
+			</td>
+		</tr>
+		</table>
 		</BODY>
 		</HTML>		
 		<?php
@@ -47,6 +51,7 @@ class CampsiteInterface {
     	</select>
 		<?php
 	} // fn CreateSelect
+	
 	
 	/**
 	 * Create a HTML HREF link to an article.
@@ -101,17 +106,31 @@ class CampsiteInterface {
 	
 	
 	/**
-	 * Display an error and close the page with the copyright notice.
+	 * Redirect to the error page and show the given error message.
+	 * You can also give a back link for the user to go back to when they
+	 * click OK on that screen.
+	 *
+	 * @param mixed p_errorStr
+	 *		This can be a string or an array.  An array is for the case when the
+	 *		error string requires arguments.
+	 *
+	 * @param string p_backLink
+	 *
+	 * @return void
 	 */
-	function DisplayError($errorStr) {
-		?>
-		<br>
-		<BLOCKQUOTE>
-		<UL><LI><?php putGS($errorStr); ?></LI></UL>
-		</BLOCKQUOTE>
-		<br>
-		<?php
-		CampsiteInterface::CopyrightNotice();
+	function DisplayError($p_errorStr, $p_backLink = null) {
+		global $ADMIN;
+		$location = 'ad.php?ADReason='.urlencode(getGS($p_errorStr));
+		if (!is_null($p_backLink)) {
+			$location .= '&Back='.$p_backLink;
+		}
+		if (is_array($p_errorStr)) {
+			$p_errorStr = call_user_func_array('getGS', $p_errorStr);
+		}
+		else {
+			$p_errorStr = getGS($p_errorStr);
+		}
+		header("Location: /$ADMIN/ad.php?ADReason=".urlencode($p_errorStr).'&Back='.urlencode($p_backLink));
 	} // fn DisplayError
 	
 } // class CampsiteInterface
