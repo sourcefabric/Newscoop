@@ -27,7 +27,9 @@ B_BODY
 <SCRIPT language="JavaScript">
 
 function campfire(atr){
-	if(navigator.appName.indexOf("Netscape") != -1) {
+	if(navigator.userAgent.indexOf("Firebird") != -1) {
+		location.href="/priv/pub/issues/sections/articles/edit_b_firebird.php?"+atr,null,"location=no,toolbar=no,menubar=no,scrollbars=no,resizable=yes";
+	}else if(navigator.appName.indexOf("Netscape") != -1) {
 		location.href="X_ROOT/pub/issues/sections/articles/edit_b_ns.php?"+atr,null,"location=no,toolbar=no,menubar=no,scrollbars=no,resizable=yes";
 	}else if(navigator.userAgent.indexOf("Mac") != -1) {
 		location.href="X_ROOT/pub/issues/sections/articles/edit_b_apple.php?"+atr,null,"location=no,toolbar=no,menubar=no,scrollbars=no,resizable=yes";
