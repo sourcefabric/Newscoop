@@ -434,8 +434,9 @@ function define_globals()
 		'--db_name', '--db_user', '--db_password', '--parser_port',
 		'--parser_max_threads', '--smtp_server_address',
 		'--smtp_server_port', '--apache_user', '--apache_group');
-	$g_mandatory_parameters = array('--etc_dir'=>false, '--db_server_address'=>false);
+	$g_mandatory_parameters = array('--etc_dir'=>false);
 	$g_parameters_defaults = array(
+		'--db_server_address'=>'localhost',
 		'--db_server_port'=>'0',
 		'--db_name'=>'campsite',
 		'--db_user'=>'root',
