@@ -56,5 +56,3 @@ regGS("Country name $1 translated","Country name $1 translated:en");
 
 
 ?>
-
-
