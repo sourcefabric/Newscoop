@@ -62,7 +62,7 @@ long int Integer::string2int(const string& p_rcoVal) throw(InvalidValue)
 
 // Switch implementation
 
-string Switch::s_coValName[2] = { "ON", "OFF" };
+string Switch::s_coValName[2] = { "OFF", "ON" };
 
 Switch::SwitchVal Switch::string2SwitchVal(const string& p_rcoVal) throw(InvalidValue)
 {
