@@ -71,6 +71,24 @@ public:
 
 	const string& getURLTypeName() const { return m_coURLTypeName; }
 
+	static string getTemplate(long p_nLanguage, long p_nPublication, long p_nIssue,
+	                          long p_nSection, MYSQL* p_DBConn);
+
+	static string getIssueTemplate(long p_nLanguage, long p_nPublication, long p_nIssue, 
+	                               MYSQL* p_DBConn);
+
+	static string getSectionTemplate(long p_nLanguage, long p_nPublication, long p_nIssue,
+	                                 long p_nSection, MYSQL* p_DBConn);
+
+	static string getArticleTemplate(long p_nLanguage, long p_nPublication, long p_nIssue,
+	                                 long p_nSection, MYSQL* p_DBConn);
+
+	string getIssueTemplate(long p_nIssue, MYSQL* p_DBConn) const;
+
+	string getSectionTemplate(long p_nIssue, long p_nSection, MYSQL* p_DBConn) const;
+
+	string getArticleTemplate(long p_nIssue, long p_nSection, MYSQL* p_DBConn) const;
+
 private:
 	long m_nId;
 	long m_nIdLanguage;
@@ -100,6 +118,24 @@ inline void CPublication::setURLType(const string& p_rcoURLTypeName)
 	if (!CURLTypeRegister::getInstance().has(p_rcoURLTypeName))
 		throw InvalidValue();
 	m_coURLTypeName = p_rcoURLTypeName;
+}
+
+
+inline string CPublication::getIssueTemplate(long p_nIssue, MYSQL* p_DBConn) const
+{
+	return getIssueTemplate(m_nIdLanguage, m_nId, p_nIssue, p_DBConn);
+}
+
+
+inline string CPublication::getSectionTemplate(long p_nIssue, long p_nSection, MYSQL* p_DBConn) const
+{
+	return getSectionTemplate(m_nIdLanguage, m_nId, p_nIssue, p_nSection, p_DBConn);
+}
+
+
+inline string CPublication::getArticleTemplate(long p_nIssue, long p_nSection, MYSQL* p_DBConn) const
+{
+	return getArticleTemplate(m_nIdLanguage, m_nId, p_nIssue, p_nSection, p_DBConn);
 }
 
 

@@ -31,6 +31,55 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "util.h"
 
 
+string CPublication::getTemplate(long p_nLanguage, long p_nPublication, long p_nIssue,
+                                 long p_nSection, MYSQL* p_DBConn)
+{
+}
+
+
+string CPublication::getIssueTemplate(long p_nLanguage, long p_nPublication, long p_nIssue, 
+                                      MYSQL* p_DBConn)
+{
+	stringstream coSql;
+	coSql << "select t.Name from Issues as i, Templates as t where i.IssueTplId = t.Id "
+	      << "and i.IdPublication = " << p_nPublication << " and Number = " << p_nIssue
+	      << " and IdLanguage = " << p_nLanguage;
+	CMYSQL_RES coRes;
+	MYSQL_ROW qRow = QueryFetchRow(p_DBConn, coSql.str().c_str(), coRes);
+	if (qRow == NULL)
+		throw InvalidValue("issue number", ((string)Integer(p_nIssue)).c_str());
+	return string(qRow[0]);
+}
+
+string CPublication::getSectionTemplate(long p_nLanguage, long p_nPublication, long p_nIssue,
+                                        long p_nSection, MYSQL* p_DBConn)
+{
+	stringstream coSql;
+	coSql << "select t.Name from Issues as i, Templates as t where i.SectionTplId = t.Id "
+	      << "and i.IdPublication = " << p_nPublication << " and Number = " << p_nIssue
+	      << " and IdLanguage = " << p_nLanguage;
+	CMYSQL_RES coRes;
+	MYSQL_ROW qRow = QueryFetchRow(p_DBConn, coSql.str().c_str(), coRes);
+	if (qRow == NULL)
+		throw InvalidValue("issue number", ((string)Integer(p_nIssue)).c_str());
+	return string(qRow[0]);
+}
+
+string CPublication::getArticleTemplate(long p_nLanguage, long p_nPublication, long p_nIssue,
+                                        long p_nSection, MYSQL* p_DBConn)
+{
+	stringstream coSql;
+	coSql << "select t.Name from Issues as i, Templates as t where i.ArticleTplId = t.Id "
+	      << "and i.IdPublication = " << p_nPublication << " and Number = " << p_nIssue
+	      << " and IdLanguage = " << p_nLanguage;
+	CMYSQL_RES coRes;
+	MYSQL_ROW qRow = QueryFetchRow(p_DBConn, coSql.str().c_str(), coRes);
+	if (qRow == NULL)
+		throw InvalidValue("issue number", ((string)Integer(p_nSection)).c_str());
+	return string(qRow[0]);
+}
+
+
 void CPublication::BuildFromDB(long p_nId, MYSQL* p_DBConn) throw(InvalidValue)
 {
 	m_nId = p_nId;
