@@ -2,10 +2,10 @@
 <HTML>
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-1">
-	<TITLE>CAMPSITE manual Version 2.1</TITLE>
+	<TITLE>CAMPSITE manual Version 2.2</TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.1.3  (Linux)">
 	<META NAME="CREATED" CONTENT="20020913;19124500">
-	<META NAME="CHANGED" CONTENT="20050301;15093200">
+	<META NAME="CHANGED" CONTENT="20050324;20383800">
 	<STYLE>
 	<!--
 		@page { size: 8.5in 11in }
@@ -45,14 +45,14 @@
 </HEAD>
 <BODY LANG="en-US" TEXT="#000000" LINK="#0000ff" VLINK="#000099" BGCOLOR="#ffffff" DIR="LTR">
 <P STYLE="margin-top: 0.17in; margin-bottom: 0.2in; page-break-after: avoid">
-<FONT FACE="Albany, sans-serif"><FONT SIZE=4>CAMPSITE</FONT></FONT></P>
+<FONT FACE="Albany, sans-serif"><FONT SIZE=4>Campsite</FONT></FONT></P>
 <P STYLE="margin-top: 0.17in; margin-bottom: 0.2in; page-break-after: avoid">
 <FONT FACE="Albany, sans-serif"><FONT SIZE=4>Web Automation Tool User
 Guide</FONT></FONT></P>
-<P CLASS="western">CAMPSITE version: 2.1.7 and newer versions</P>
+<P CLASS="western">Campsite version: 2.2.0 and newer versions</P>
 <P CLASS="western">Maintained and distributed under GNU/GPL by
 CAMPWARE <A HREF="http://www.campware.org/">http://www.campware.org</A></P>
-<P CLASS="western">Manual version: March 4, 2005</P>
+<P CLASS="western">Manual version: March 24, 2005</P>
 <P CLASS="western">Language: English</P>
 <P CLASS="western">&copy;1999-2005 Media Development Loan Fund</P>
 <P CLASS="western"><A HREF="http://www.mdlf.org/" TARGET="_blank">http://www.mdlf.org</A>
@@ -70,10 +70,7 @@ GUIDE</FONT></A></P>
 <FONT FACE="Nimbus Roman No9 L">1.2.1 </FONT><A HREF="#1_2_1"><FONT FACE="Nimbus Roman No9 L">Configure
 the Web server</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>1.2.2
 </FONT><A HREF="#1_2_2"><FONT FACE="Nimbus Roman No9 L">Customize the
-application framework</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>1.2.3
-</FONT><A HREF="#1_2_3"><FONT FACE="Nimbus Roman No9 L">The CAMPFIRE
-Java Editor</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>1.2.4 </FONT><A HREF="#1_2_4"><FONT FACE="Nimbus Roman No9 L">KNOWN
-LIMITATIONS: Apple Macintosh</FONT></A></BLOCKQUOTE>
+application framework</FONT></A></BLOCKQUOTE>
 <BLOCKQUOTE CLASS="western" STYLE="margin-right: -0.01in"><FONT FACE="Nimbus Roman No9 L">1.3
 </FONT><A HREF="#1_3"><FONT FACE="Nimbus Roman No9 L">UPGRADING FROM
 VERSIONS 1.x or 2.0</FONT></A></BLOCKQUOTE>
@@ -82,7 +79,7 @@ VERSIONS 1.x or 2.0</FONT></A></BLOCKQUOTE>
 issues</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>1.3.2 </FONT><A HREF="#1_3_2"><FONT FACE="Nimbus Roman No9 L">New
 template language features</FONT></A></BLOCKQUOTE>
 <P CLASS="western"><FONT FACE="Nimbus Roman No9 L">2. </FONT><A HREF="#2"><FONT FACE="Nimbus Roman No9 L">BRINGING
-YOUR PUBLICATIONS ONLINE WITH CAMPSITE</FONT></A></P>
+YOUR PUBLICATIONS ONLINE WITH Campsite</FONT></A></P>
 <BLOCKQUOTE CLASS="western" STYLE="margin-right: -0.01in"><FONT FACE="Nimbus Roman No9 L">2.1.
 </FONT><A HREF="#2_1"><FONT FACE="Nimbus Roman No9 L">CONFIGURING THE
 PUBLISHING ENVIRONMENT</FONT></A></BLOCKQUOTE>
@@ -163,14 +160,14 @@ HOME PAGE TEMPLATE: HOME.TPL</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>3.7.
 </FONT><A HREF="#3_7"><FONT FACE="Nimbus Roman No9 L">SOME HINTS:
 POWERFUL LISTS AND ORDERING</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>3.8.
 </FONT><A HREF="#3_8"><FONT FACE="Nimbus Roman No9 L">ENVIRONMENTAL
-CONTROL WITH CAMPSITE TEMPLATES</FONT></A></BLOCKQUOTE>
+CONTROL WITH Campsite TEMPLATES</FONT></A></BLOCKQUOTE>
 <BLOCKQUOTE CLASS="western" STYLE="margin-left: 1.58in; margin-right: 0in">
 <FONT FACE="Nimbus Roman No9 L">3.8.1 </FONT><A HREF="#3_8_1"><FONT FACE="Nimbus Roman No9 L">Runtime
 parameters</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>3.8.2 </FONT><A HREF="#3_8_2"><FONT FACE="Nimbus Roman No9 L">Other
 parameters</FONT></A></BLOCKQUOTE>
 <BLOCKQUOTE CLASS="western" STYLE="margin-right: 0in"><FONT FACE="Nimbus Roman No9 L">3.9.
 </FONT><A HREF="#3_9"><FONT FACE="Nimbus Roman No9 L">STRUCTURE OF
-CAMPSITE TEMPLATES</FONT></A></BLOCKQUOTE>
+Campsite TEMPLATES</FONT></A></BLOCKQUOTE>
 <BLOCKQUOTE CLASS="western" STYLE="margin-left: 1.58in; margin-right: 0in">
 <FONT FACE="Nimbus Roman No9 L">3.9.1 </FONT><A HREF="#3_9_1"><FONT FACE="Nimbus Roman No9 L">Language
 Elements. Conventions</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>3.9.2
@@ -184,67 +181,64 @@ I - ALPHABETIC LIST OF LANGUAGE STATEMENTS</FONT></A><FONT FACE="Nimbus Roman No
 </FONT><A HREF="#5"><FONT FACE="Nimbus Roman No9 L">APPENDIX II -
 CHARACTER SETS AND LANGUAGES</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>6.
 </FONT><A HREF="#6"><FONT FACE="Nimbus Roman No9 L">APPENDIX IV:
-INSTALLING CAMPSITE ON A STANDARD RED HAT 7.0 SERVER</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>7.
+INSTALLING Campsite ON A STANDARD RED HAT 7.0 SERVER</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>7.
 </FONT><A HREF="#7"><FONT FACE="Nimbus Roman No9 L">APPENDIX V -
 BACKING UP DATABASES IN MYSQL</FONT></A></P>
 <HR SIZE=1 NOSHADE>
 <H1 CLASS="western"><A NAME="introduction"></A><FONT FACE="Times, serif">INTRODUCTION</FONT></H1>
-<P CLASS="western">CAMPSITE is a multilingual, Unicode-based content
-management system, featuring easy localization of the<SPAN LANG="en-US">
-backed </SPAN>user interface. CAMPSITE was designed for
-medium-to-large-size online news publications. Issues, copy flow,
-back archives, as well as subscription management are fully
-implemented features. At the core of CAMPSITE is CAMPFIRE, a
-near-WYSIWYG Java editor based on Unicode, which allows journalists
-and editors to publish content and control layout online in their
-native character sets. Formatting can be altered in a similar way as
-in editors such as Wordpad, meaning that absolutely no HTML knowledge
-is necessary for formatting and inputting text.</P>
-<P CLASS="western">The original CAMPSITE concept was developed by
-Center for Advanced Media-Prague (CAMP) in collaboration with
-Transitions Online, which started using CAMPSITE in late 2000.
-DNT-Cluj (http://www.dntcj.ro) and Recognos
-(http://www.recognos.com), software companies based in Cluj, Romania
-accomplished the original coding and part of the further development.
-Current core development is taken care of by CAMP New Media Fellows.
-For a detailed revision history, go to http://www.campware.org.
-CAMPSITE in action can be seen, among other locations, on the web
-sites of Transitions Online (http://www.tol.cz), Fluter
-(http://www.fluter.de), Feral Tribune (http://www.feral.hr) and
-Reporter (http://www.reporter-magazin.com).</P>
-<P CLASS="western">Test drives of CAMPSITE are available at the
-campware project site (http://www.campware.org). Mail us for any
-related questions at contact@campware.org.</P>
-<P CLASS="western">CAMPSITE tech specs in a nutshell:</P>
-<P CLASS="western" STYLE="margin-top: 0in">CAMPSITE server: 
+<P CLASS="western">Campsite is a Unicode-based, multilingual content
+management system (CMS) for news websites. Its easily localizable
+user interface was built with the end user
+(journalist/editor/publisher) in mind and it can be configured to
+suit different profiles of end users &ndash; to each according his or
+her own technological prowess. Campsite follows the print-newspaper
+publishing paradigm, so it structures sites by default as
+Publications&gt; Issues &gt; Sections &gt; Articles. . Campsite works
+best for medium-to-large-size online news publications, but it is
+capable of handling nimbler sites too. Some of its main features are
+automatic creation of archives, copy flow, and built-in subscription
+support. 
+</P>
+<P CLASS="western">The original Campsite concept was developed by
+Micz Flor and Sava Tati&#263; for Center for Advanced Media-Prague
+(CAMP) in collaboration with Aleksandar Brajanoski from Transitions
+Online, the first site to go live on Campsite in late 2000. Developer
+teams at DNT-Cluj (http://www.dntcj.ro) and Recognos
+(http://www.recognos.com), software companies based in Cluj, Romania,
+wrote the original code and contributed to the development of the
+concept. Lucian Mure&#351;an, Attila Egyedi, and Nenad Pand&#382;i&#263;
+have contributed to the code in the past. Current core development is
+handled by Mugur Rus, Paul Baranowski, and Sebastian G&ouml;bel. 
+</P>
+<P CLASS="western">Campsite in action can be seen, among other
+locations, on the web sites of Transitions Online
+(http://www.tol.cz), Fluter (http://www.fluter.de), AmmanNet
+(http://ammannet.net), and Feral Tribune (http://www.feral.hr).</P>
+<P CLASS="western">Campsite tech specs in a nutshell:</P>
+<P CLASS="western" STYLE="margin-top: 0in">Campsite server: 
 </P>
 <UL>
-	<LI><P CLASS="western" STYLE="margin-top: 0in">runs on a Linux
-	server, originally tested on RedHat 7.0 and Mandrake 8.0 and has<SPAN LANG="en-US">
-	proved </SPAN>compatible with RedHat 7.1, 7.2, 8.0, 9.0; Mandrake
-	8.1, 8.2, 9.0, 9.1, 9.2 and Debian</P>
-	<LI><P CLASS="western" STYLE="margin-top: 0in">requires an Apache
-	web server to be running, and its virtual servers to be configured
-	by the administrator.</P>
-	<LI><P CLASS="western" STYLE="margin-top: 0in">needs a MySQL
-	database server for Linux to be able to store data. The tests were
-	made on MySQL v.3.23.36.</P>
-	<LI><P CLASS="western" STYLE="margin-top: 0in">requires PHP (version
-	3.0 and up) to be running.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0in"><SPAN STYLE="background: #ffff00">runs
+	on a GNU/Linux server, tested with Fedora 3.0 and Mandrake 10.1 and
+	has proved compatible with RedHat 9.0, Mandrake 10.0 and Debian</SPAN></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0in"><SPAN STYLE="background: #ffff00">requires
+	an Apache web server to be running, and its virtual servers to be
+	configured by the administrator.</SPAN></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0in"><SPAN STYLE="background: #ffff00">needs
+	a MySQL database server for Linux to be able to store data. The
+	tests were made on MySQL v.4.0.</SPAN></P>
+	<LI><P CLASS="western" STYLE="margin-top: 0in"><SPAN STYLE="background: #ffff00">requires
+	PHP (version 4.0 and up) to be running.</SPAN></P>
 </UL>
-<P CLASS="western">CAMPSITE client side:</P>
+<P CLASS="western">Campsite client side:</P>
 <UL>
-	<LI><P CLASS="western" STYLE="margin-top: 0in">runs on top of
-	standard Java Virtual Machine Plugin (plugin version 1.3.1 and up)
-	in Netscape under Unix (tested on version 6.2), Netscape under
-	Windows (versions 6.2 and up),and MS Internet Explorer (versions 5.0
-	and up). On Macintosh it works in Internet Explorer under OS X.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0in">works in most modern
+	Web browsers: Mozilla, Mozilla Firefox, MS Internet Explorer. No
+	plugins are necessary as of version 2.2.</P>
 </UL>
 <P CLASS="western"><A NAME="copyright"></A><FONT FACE="Times, serif"><B>COPYRIGHT</B></FONT></P>
-<P CLASS="western">CAMPSITE is a Unicode-based multilingual web
-content management system for news publications. CAMPFIRE is a
-Unicode-based java-based near-WYSIWYG text editor. 
-</P>
+<P CLASS="western">Campsite is a Unicode-based multilingual web
+content management system for news publications.</P>
 <P CLASS="western">Copyright &copy;1999-2005 Media Development Loan
 Fund.</P>
 <P CLASS="western">Contact: http://www.campware.org</P>
@@ -263,12 +257,11 @@ General Public License for more details.</P>
 GUIDE</FONT></H1>
 <H2 CLASS="western"><A NAME="1_1"></A><FONT FACE="Times, serif">1.1.
 Requirements</FONT></H2>
-<P CLASS="western">The server part of the application runs on a Linux
-computer. It was originally developed and tested on RedHat 7.0
-release and works on all subsequent releases, and it has<SPAN LANG="en-US">
-proved </SPAN>compatible with Mandrake 8.0 and higher as well as on
-Debian 2.0 and up.</P>
-<P CLASS="western">Before installing CAMPSITE, make sure you have two
+<P CLASS="western"><SPAN STYLE="background: #ffff00">The server part
+of the application runs on a Linux computer. It was originally
+developed and tested on Fedora 3.0 and Mandrake 10.1 and has proved
+compatible with RedHat 9.0, Mandrake 10.0 and Debian</SPAN></P>
+<P CLASS="western">Before installing Campsite, make sure you have two
 other applications up and running:</P>
 <P CLASS="western">1. Apache web server -- your http daemon, serving
 your web site to the world (http://www.apache.org). You will need
@@ -278,11 +271,11 @@ site. Installing Apache will generate the httpd.conf file referred to
 further down. This file contains all relevant information for Apache
 to handle the content on your Linux server. The adjustments described
 below need to be made in order to tell Apache about the procedures
-for CAMPSITE files and templates.</P>
+for Campsite files and templates.</P>
 <P CLASS="western"><FONT FACE="Nimbus Roman No9 L">2. MySQL Database
-Server - this application handles the CAMPSITE database. You will
-need MySQL 3.23.x or newer (</FONT><A HREF="http://www.mysql.com/">http://www.mysql.com</A><FONT FACE="Nimbus Roman No9 L">).</FONT></P>
-<P CLASS="western">Three components of MySQL are needed for CAMPSITE:</P>
+Server - this application handles the Campsite database. You will
+need MySQL 4.0 or newer (</FONT><A HREF="http://www.mysql.com/">http://www.mysql.com</A><FONT FACE="Nimbus Roman No9 L">).</FONT></P>
+<P CLASS="western">Three components of MySQL are needed for Campsite:</P>
 <UL>
 	<LI><P CLASS="western" STYLE="margin-top: 0in">the server</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in">client programs</P>
@@ -308,7 +301,7 @@ file). The changes you have to apply to the file are:</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in">activate the
 	DirectoryIndex directive and add to it the following option:</P>
 	<P CLASS="western" STYLE="margin-top: 0in; font-weight: medium; page-break-before: auto">
-	/priv/templates/idx.php</P>
+	/<SPAN STYLE="background: #ffff00">priv/templates/idx.php</SPAN></P>
 </UL>
 <UL>
 	<LI><P CLASS="western" STYLE="margin-top: 0in">activate the
@@ -343,49 +336,20 @@ restart</FONT></P>
 <H3 CLASS="western"><A NAME="1_2_2"></A>1.2.2 Customize the
 application framework</H3>
 <OL>
-	<LI><P CLASS="western" STYLE="margin-top: 0in">Copy the CAMPSITE
+	<LI><P CLASS="western" STYLE="margin-top: 0in">Copy the Campsite
 	archive in a directory on the server.</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in">Unarchive it using
-	the command: tar xzvf &lt;campsite_archive&gt;.</P>
-	<LI><P CLASS="western" STYLE="margin-top: 0in">Enter campsite
+	the command: tar xzvf &lt;Campsite_archive&gt;.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0in">Enter Campsite
 	directory.</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in">Run './install',
 	answer the install questions and wait for the application to be
 	installed.</P>
 </OL>
-<H3 CLASS="western"><A NAME="1_2_3"></A>1.2.3 The CAMPFIRE Java
-Editor</H3>
-<P CLASS="western">At the heart of CAMPSITE's client interface, lies
-CAMPFIRE, a text editor implemented as a signed Java Applet. For this
-applet to work, you need to have the standard Java Virtual Machine
-plugin (version 1.3.1) installed on your Unix or Windows client
-machine (it may well already be there) and it is native on Macintosh
-OS X systems.</P>
-<P CLASS="western">If you don't already have the plugin on a Windows
-machine, CAMPFIRE will automatically download the .exe version of the
-plugin from the Sun Microsystems's website and you will be prompted
-to initialize installation will start automatically (please be
-patient, the plugin is rather large).</P>
-<P CLASS="western">In either case, make sure to make sure you click
-on 'Grant always' option in the popup window asking you 'Do you want
-to install and run signed applet distributed by &ldquo;Campsite
-team&rdquo;'(if you do otherwise, you will not be able to cut and
-paste within the editor).</P>
-<H3 CLASS="western"><A NAME="1_2_4"></A>1.2.4 KNOWN LIMITATIONS</H3>
-<P CLASS="western"><B>Apple Macintosh</B>: CAMPFIRE currently works
-only on Internet Explorer under OS X. We are working on expanding the
-range of browsers it works with. System 9.x and lower are not
-supported.</P>
-<P CLASS="western" STYLE="page-break-before: auto"><B>Localizer</B>:
-There are several known problems related to the localizer at this
-time. Action buttons like Save Changes or Cancel are only in English,
-for the moment. Similarly, some<SPAN LANG="en-US"> drop down </SPAN>lists
-like Language or Country are not translated into the local language
-either at this stage. These are all known and documented problems and
-our development team will be resolving these issues in future
-releases.</P>
-<H2 CLASS="western"><A NAME="1_3"></A>1.3. UPGRADING FROM VERSIONS
-1.x or 2.0</H2>
+<H3 CLASS="western"><BR><BR>
+</H3>
+<H3 CLASS="western"><A NAME="1_3"></A>1.3. UPGRADING FROM VERSIONS
+1.x or 2.0</H3>
 <P CLASS="western" STYLE="margin-top: 0in">Upgrading from 1.x or 2.0
 versions of Campsite requires three actions to be performed before
 the installation:</P>
@@ -400,10 +364,10 @@ the installation:</P>
 <P CLASS="western">While the templates structure update requires no
 special knowledge the database and templates conversion to UTF-8
 requires UNIX/Linux administration knowledge. The future versions of
-CAMPSITE should provide a tool that will automate this process,
+Campsite should provide a tool that will automate this process,
 making it easier.</P>
 <H3 CLASS="western"><A NAME="1_3_1"></A>1.3.1. Compatibility issues</H3>
-<P CLASS="western">Since CAMPSITE 2.1 uses UTF-8 encoding the older
+<P CLASS="western">Since Campsite 2.1 uses UTF-8 encoding the older
 database and templates must be converted; the database conversion is
 more complex and error prone while the templates conversion requires
 only the issuing of one shell command.</P>
@@ -421,7 +385,7 @@ three steps:</P>
 	database from the files</P>
 </OL>
 <P CLASS="western" STYLE="page-break-before: auto"><FONT COLOR="#dc2300">Important!!!
-The database upgrade must take place before CAMPSITE application
+The database upgrade must take place before Campsite application
 upgrade. If the application upgrade already took place,
 &ldquo;ArticleTopics&rdquo; and &ldquo;Topics&rdquo; tables must be
 added to the list of tables that need not be converted to UTF.</FONT></P>
@@ -440,7 +404,7 @@ style.</P>
 	[database] &gt; tables.sql</I></P>
 </UL>
 <P CLASS="western" STYLE="margin-top: 0in">where [database] should be
-replaced by the name of the CAMPSITE database and &ldquo;...&rdquo;
+replaced by the name of the Campsite database and &ldquo;...&rdquo;
 with other needed parameters (user, host etc.)</P>
 <UL>
 	<LI><P CLASS="western" STYLE="margin-top: 0in">Dump data for tables
@@ -458,7 +422,7 @@ with other needed parameters (user, host etc.)</P>
 </UL>
 <P CLASS="western" STYLE="margin-top: 0in; font-style: normal">Don't
 forget to add &ldquo;ArticleTopics&rdquo; and &ldquo;Topics&rdquo; to
-the list of tables if CAMPSITE upgrade took place already.</P>
+the list of tables if Campsite upgrade took place already.</P>
 <UL>
 	<LI><P CLASS="western" STYLE="margin-top: 0in">Dump data for tables
 	that should be converted to UTF</P>
@@ -476,7 +440,7 @@ the list of tables if CAMPSITE upgrade took place already.</P>
 	</OL>
 	<P CLASS="western" STYLE="margin-top: 0in">where [l1], [l2] are the
 	language identifiers. In order to read the language identifiers and
-	character sets log in to CAMPSITE database and run the following
+	character sets log in to Campsite database and run the following
 	sql: &ldquo;select Name, Id, CodePage from Languages&rdquo;.</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in"><I>mysqldump ... -t
 	--tables --where=&quot;IdLanguage = [l1] or IdLanguage = [l2]...&quot;
@@ -512,7 +476,7 @@ the list of tables if CAMPSITE upgrade took place already.</P>
 	</OL>
 </OL>
 <P CLASS="western" STYLE="margin-top: 0in">Replace [l1], [l2] with
-language identifiers, [database] with CAMPSITE database name, &ldquo;...&rdquo;
+language identifiers, [database] with Campsite database name, &ldquo;...&rdquo;
 in mysqldump command with other needed parameters (user, host etc.),
 [charsetn] with the name of the character set (ISO-8859-1, 
 ISO-8859-2 etc.), [list_of_X_tables] with the list of tables whose
@@ -534,7 +498,7 @@ for Log and dump Log table data:</P>
 --tables [database] Log &gt; data_log.sql</I></P>
 <P CLASS="western" STYLE="margin-top: 0in">Selecting the character
 set for Log table data: decide which language you use most often when
-logging in to CAMPSITE admin interface and read the character set of
+logging in to Campsite admin interface and read the character set of
 the language from Languages.</P>
 <P CLASS="western" STYLE="margin-top: 0in"><BR>
 </P>
@@ -665,8 +629,8 @@ public &lt;switch_operator&gt; &lt;switch_value&gt;</FONT><BR><FONT FACE="Courie
 Articles</A>. 
 </P>
 <H1 CLASS="western"><A NAME="2"></A>2. BRINGING YOUR PUBLICATIONS
-ONLINE WITH CAMPSITE</H1>
-<P CLASS="western">CAMPSITE enables you to publish (host) multiple
+ONLINE WITH Campsite</H1>
+<P CLASS="western">Campsite enables you to publish (host) multiple
 multilingual publications (web sites) on the same server. The process
 can be roughly divided in four steps:</P>
 <UL>
@@ -685,17 +649,18 @@ can be roughly divided in four steps:</P>
 <H2 CLASS="western"><A NAME="2_1"></A><FONT FACE="Times, serif">2.1.
 Configuring the publishing environment</FONT></H2>
 <P CLASS="western">Your first step on the road to bringing your
-publications online with CAMPSITE is to configure the publishing
+publications online with Campsite is to configure the publishing
 environment. This involves setting up parameters such as languages
 that you are or will be publishing in, definition of typical user
 types, and the very structure of your publication(s).</P>
 <P CLASS="western">After you log in for the first time with the
 default user name (admin) and password (admn00) you will reach
-administrator's interface.</P>
-<P CLASS="western">The left frame contains a list of modules that you
-can access, while the right frame displays the currently selected
-module.</P>
-<P CLASS="western">CAMPSITE appears differently to different users.
+administrator's interface. (You will login at
+http://yourdomain.net/admin).</P>
+<P CLASS="western">The drop-down menu on the top contains a list of
+functions that you can access, while the right frame displays the
+currently selected module.</P>
+<P CLASS="western">Campsite appears differently to different users.
 Each user sees only the options that he or she has the right to
 access or alter. A typical<SPAN LANG="en-US"> backed </SPAN>user (an
 editor or journalist) will get to see only a fraction of the options
@@ -707,12 +672,12 @@ supply the German, Russian, and Czech versions) or create your own
 (see The Localizer section below).</P>
 <H3 CLASS="western"><A NAME="2_1_1"></A><IMG SRC="CAMPSITE-manual_html_m4af947a1.png" NAME="Graphic1" ALIGN=LEFT HSPACE=6 WIDTH=311 HEIGHT=350 BORDER=0><BR CLEAR=LEFT><FONT FACE="Times, serif">2.1.1
 Languages</FONT></H3>
-<P CLASS="western">While CAMPSITE's default language is English, you
+<P CLASS="western">While Campsite's default language is English, you
 are by no means limited to publishing in that language only. It's
 actually very much au contraire.</P>
 <P CLASS="western">The language module enables you to configure
 support for languages that you wish to publish in. If your tongues of
-choice happen to be absent from the list of CAMPSITE's pre-configured
+choice happen to be absent from the list of Campsite's pre-configured
 languages, you can configure your own languages.</P>
 <P CLASS="western">To do so, enter the Languages module and click on
 'Add new language'. You should enter the language name (both in
@@ -733,7 +698,7 @@ is &ldquo;de&rdquo;, Spanish is &ldquo;es&rdquo;, Chinese is &ldquo;zh&rdquo;
 and so on. If you don't know your code, this web page can help:
 http://lcweb.loc.gov/standards/iso639-2/englangn.html.</P>
 <P CLASS="western">Code page refers to the ISO code page for your
-character set. CAMPSITE supports Unicode, and its code page is UTF-8.
+character set. Campsite supports Unicode, and its code page is UTF-8.
 We recommend Unicode, but if you wish to use another code page, you
 can input it here. You can get a list of code pages and languages
 here: http://www.w3.org/International/O-charset-lang.html.</P>
@@ -754,9 +719,9 @@ language in which you are entering a country's name, *NOT* the
 language spoken in the country!]</P>
 <H3 CLASS="western"><A NAME="2_1_3"></A>2.1.3 The Localizer</H3>
 <P CLASS="western"><IMG SRC="CAMPSITE-manual_html_m644cd199.png" NAME="Graphic3" ALIGN=LEFT HSPACE=6 WIDTH=446 HEIGHT=543 BORDER=0><BR CLEAR=LEFT>The
-localizer is a new module of CAMPSITE that is introduced in version
+localizer is a new module of Campsite that is introduced in version
 2.1. The module allows you to create your own localization of
-CAMPSITE's<SPAN LANG="en-US"> back end </SPAN>user interface by
+Campsite's<SPAN LANG="en-US"> back end </SPAN>user interface by
 simply translating individual strings that appear in the interface.</P>
 <P CLASS="western">The first step is to check the Languages menu (see
 above). Enter the Localizer, scroll down to the bottom of the window
@@ -779,35 +744,24 @@ messages. The CAMPFIRE Java editor is fully localizable, but that is
 done outside the localizer (CAMPFIRE strings have to be compiled
 separately; the localization text file is available from http://).
 For more information on how to become a localization volunteer for
-CAMPSITE and CAMPFIRE, please send an e-mail to
+Campsite and CAMPFIRE, please send an e-mail to
 &lt;contact@campware.org&gt;.]</P>
-<H4 CLASS="western"><A NAME="2_1_4_11"></A><FONT FACE="Times, serif">2.1.3.1<SPAN LANG="en-US">
-Operating system regional settings and the Campfire editor</SPAN></FONT></H4>
-<P CLASS="western"><FONT FACE="Nimbus Roman No9 L">You may see
-squares in the Campfire editor where your text should be. If this
-happens, check your regional settings in your operating system to
-make sure they support the language you want to work in. For Windows
-95/98/2000 XP, this is in Control Panels -&gt; Regional options -&gt;
- Locale. Make sure the locale you're in is set here. For example, if
-you want to use the settings for Chinese (Hong Kong), select this
-from the menu. The Campfire editor will then display the characters
-correctly. If you want to use differrent languages, such as English
-and Czech, you can set this in the &quot;Languages&quot; panel in the
-same menu.</FONT></P>
-<H4 CLASS="western"><A NAME="2_1_4_111"></A><FONT FACE="Times, serif">2.1.3.2<SPAN LANG="en-US">
+<H4 CLASS="western"><BR><BR>
+</H4>
+<H4 CLASS="western"><A NAME="2_1_4_111"></A><FONT FACE="Times, serif">2.1.3.1<SPAN LANG="en-US">
 Submitting a language localization</SPAN></FONT></H4>
 <P CLASS="western"><FONT FACE="Nimbus Roman No9 L">We actively
-encourage CAMPSITE users to submit their language localizations. This
-makes CAMPSITE more useful around the world. If you'd like to submit
+encourage Campsite users to submit their language localizations. This
+makes Campsite more useful around the world. If you'd like to submit
 your localization, here's what you have to do:</FONT></P>
 <OL>
 	<LI><P CLASS="western"><FONT FACE="Nimbus Roman No9 L">Go to
-	campsite source directory and run the following command:</FONT></P>
+	Campsite source directory and run the following command:</FONT></P>
 	<P CLASS="western"><FONT FACE="Nimbus Roman No9 L">./translation
 	--make_package &lt;language_code&gt;</FONT></P>
 </OL>
-<P CLASS="western"><FONT FACE="Nimbus Roman No9 L">CAMPSITE will
-create a file in the campsite source directory called
+<P CLASS="western"><FONT FACE="Nimbus Roman No9 L">Campsite will
+create a file in the Campsite source directory called
 translation-&lt;language_code&gt;.tar.gz. For example, the Chinese
 language code is zh, so the file would be called
 <A HREF="http://translation-zh.tar.gz/">translation-zh.tar.gz</A></FONT></P>
@@ -815,7 +769,7 @@ language code is zh, so the file would be called
 	<LI><P CLASS="western"><FONT FACE="Nimbus Roman No9 L">Localize the
 	Campfire editor; here's what you have to do:</FONT></P>
 	<P CLASS="western"><FONT FACE="Nimbus Roman No9 L">- Go to the
-	campsite/implementation/java/resources directory</FONT></P>
+	Campsite/implementation/java/resources directory</FONT></P>
 	<P CLASS="western"><FONT FACE="Nimbus Roman No9 L">- Copy the
 	Campfire_en.properties file to Campfire_&lt;language_code&gt;.properties
 	For example, Campfire_zh.properties for Chinese.</FONT></P>
@@ -832,32 +786,32 @@ options. You can either:</FONT></P>
 <OL START=2>
 	<P CLASS="western"><FONT FACE="Nimbus Roman No9 L">- Copy this file
 	to the
-	[campsite_html_dir]/priv/pub/issues/sections/articles/java/resources
+	[Campsite_html_dir]/priv/pub/issues/sections/articles/java/resources
 	directory</FONT></P>
 	<P CLASS="western">      <FONT FACE="Nimbus Roman No9 L">- or -</FONT></P>
 	<P CLASS="western"><FONT FACE="Nimbus Roman No9 L">- Reinstall
-	CAMPSITE from the sources you installed it in the first place,
+	Campsite from the sources you installed it in the first place,
 	taking care not to change settings</FONT></P>
 </OL>
 <OL START=3>
 	<LI><P CLASS="western"><FONT FACE="Nimbus Roman No9 L">E-mail the
-	two translated files to us at <A HREF="mailto:campsite-support@campware.org">campsite-support@campware.org</A></FONT></P>
+	two translated files to us at <A HREF="Campsite-support@campware.org">Campsite-support@campware.org</A></FONT></P>
 </OL>
 <P CLASS="western"><FONT FACE="Nimbus Roman No9 L">The current list
-of language localizations can be found in the latest  CAMPSITE
+of language localizations can be found in the latest  Campsite
 version at the campware site (<A HREF="http://www.campware.org/">http://www.campware.org</A>).
 Even if a language localization exists, it may not address your
 particular needs or regional differences. For example, the
 differences in Spanish between that used in Spain and that used in
 Guatemala.</FONT></P>
 <H3 CLASS="western"><A NAME="2_1_4"></A>2.1.4 User Management</H3>
-<P CLASS="western">CAMPSITE's user management module allows you to
+<P CLASS="western">Campsite's user management module allows you to
 control access to the<SPAN LANG="en-US"> back end </SPAN>and the
 front end of your publication(s). In other words, the module, which
 features a search option, allows you to define who will have the
 right to manage and edit content on your site and who will be allowed
 to read it.</P>
-<P CLASS="western">IMPORTANT: Initially CAMPSITE has only one user:
+<P CLASS="western">IMPORTANT: Initially Campsite has only one user:
 admin with admn00 password. This user is needed by the email
 notifiers: end of subscription and event notifier so it must not be
 deleted. You should set the email address of this user after
@@ -866,15 +820,15 @@ notification emails.</P>
 <H4 CLASS="western"><A NAME="2_1_4_1"></A><FONT FACE="Times, serif">2.1.4.1<SPAN LANG="en-US">
 Back end </SPAN>Access: Creating User Types</FONT></H4>
 <P CLASS="western">A user is generally defined by the list of the
-tasks he or she has and is allowed to do in a system. In CAMPSITE,
+tasks he or she has and is allowed to do in a system. In Campsite,
 this list of tasks ranges from creating, managing, and editing
 publications, sections, and articles, to template management and
 definition of the publishing environment.</P>
-<P CLASS="western">To simplify user management, CAMPSITE allows you
+<P CLASS="western">To simplify user management, Campsite allows you
 to create generic user types, which can then be assigned to multiple
 users, instead of taking care of every single access right for every
 single user.</P>
-<P CLASS="western">CAMPSITE comes &quot;out of the box&quot; with
+<P CLASS="western">Campsite comes &quot;out of the box&quot; with
 three default user types:</P>
 <UL>
 	<LI><P CLASS="western" STYLE="margin-top: 0in">Administrator - user
@@ -903,7 +857,7 @@ assigned to a particular user, go to 'Users' and click on 'Rights' in
 the same row with the user's name.</P>
 <H4 CLASS="western"><A NAME="2_1_4_3"></A><FONT FACE="Times, serif">2.1.4.3
 Front-End Access: Subscription</FONT></H4>
-<P CLASS="western">CAMPSITE allows you to control public access to
+<P CLASS="western">Campsite allows you to control public access to
 your publication(s) through its built-in subscription module, more on
 which you can read more in section <A HREF="#2_5">2.5</A>).</P>
 <P CLASS="western">[TIP: If you want to have all your content freely
@@ -930,7 +884,7 @@ automatically generated e-mail reminders that their subscription is
 expiring 14<B> days </B>before the event.</P>
 <P CLASS="western">[NOTE: The text of the subscription-expiry message
 is<SPAN LANG="en-US"> hard coded </SPAN>in the current version of
-CAMPSITE and it reads as follows:</P>
+Campsite and it reads as follows:</P>
 <P CLASS="western">&quot;Dear &lt;reader&gt;,</P>
 <P CLASS="western">This is an automatically generated e-mail message.
 Your &lt;subs_type&gt; subscription (started on &lt;start_date&gt;)
@@ -938,17 +892,17 @@ to publication &lt;publication&gt; will expire on &lt;date&gt; (in
 &lt;number&gt; days).</P>
 <P CLASS="western">Please enter the site http://&lt;pub_site&gt; to
 update subscription.&quot;</P>
-<P CLASS="western">Future versions of CAMPSITE (as of version 2.2)
+<P CLASS="western">Future versions of Campsite (as of version 2.2)
 will allow for customization of the message and for its translation
 into multiple languages.]</P>
 <H2 CLASS="western"><A NAME="2_2"></A><FONT FACE="Times, serif">2.2.
 Creating publications</FONT></H2>
-<P CLASS="western">CAMPSITE has a clear four-tier hierarchical
+<P CLASS="western">Campsite has a clear four-tier hierarchical
 structure, which conforms to the traditional structure of news
 publications. Each publication is thus made up of issues; each issue
 is in turn made up of sections, which are themselves comprised of
 articles.</P>
-<P CLASS="western">CAMPSITE's user interface is straightforward. A
+<P CLASS="western">Campsite's user interface is straightforward. A
 site map is present on every screen, which enables easy navigation
 between different levels. Each module of the publication is
 associated to a level. By clicking on the name of the module, you
@@ -972,7 +926,7 @@ want to ask your site administrator to alter your access rights. Bear
 in mind, however, that a good administrator would be reluctant to
 hand over those rights to more than a handful of people. If you are
 not among those select few, your Publications view will only contain
-a list of publications hosted on this particular CAMPSITE server.]</P>
+a list of publications hosted on this particular Campsite server.]</P>
 <P CLASS="western">At this point, you should specify the following:</P>
 <UL>
 	<LI><P CLASS="western" STYLE="margin-top: 0in">Name of the
@@ -1012,7 +966,7 @@ know what they mean:</P>
 </UL>
 <P CLASS="western">Any of the data entered on this screen can be
 altered or fine-tuned at a later stage.</P>
-<P CLASS="western">[NOTE: CAMPSITE allows multiple publications to be
+<P CLASS="western">[NOTE: Campsite allows multiple publications to be
 hosted on the same server (computer), but to make different
 publications directly accessible to readers, you need to specify
 different virtual web servers. For example, if you want to add
@@ -1076,11 +1030,11 @@ template!</P>
 name and the default language of an issue at any time, the issue
 number cannot be changed once it is specified. If you are planning to
 add older issues of your newspaper/static-HTML site at a later stage
-to the same CAMPSITE publication, you may consider continuing the
+to the same Campsite publication, you may consider continuing the
 series. For example, if you just published issue 154 of the &quot;Prague
-Times&quot; in static HTML before moving to CAMPSITE, you could
+Times&quot; in static HTML before moving to Campsite, you could
 assign number 155 to the first issue you are creating within
-CAMPSITE.</P>
+Campsite.</P>
 <H3 CLASS="western"><A NAME="2_2_3"></A>2.2.3 Adding new sections to
 an issue</H3>
 <P CLASS="western">By clicking on an issue, you will enter the
@@ -1123,7 +1077,7 @@ doing all of the posting (and all of the consequent asking).
 Similarly, when creating an article type, try to make the sequence of
 fields logical, i.e. close to the way they will appear to the readers
 on the site (e.g. Author - Date -Deck - Articlebody - Bibliography).
-At this stage of development, CAMPSITE does not allow reordering of
+At this stage of development, Campsite does not allow reordering of
 fields within article types.]</P>
 <P CLASS="western">After you name the field, you have to specify its
 type. There are three options:</P>
@@ -1139,12 +1093,12 @@ type. There are three options:</P>
 	type of field can be up to 16MB in size (database space, however, is
 	used optimally, as the database server adjusts the size on the disk
 	to be sure the field fits, so there is no waste of space). More
-	important, this type of field is edited with CAMPSITE's near-WYSIWYG
+	important, this type of field is edited with Campsite's near-WYSIWYG
 	Java editor -- CAMPFIRE. CAMPFIRE enables you to enter text in any
 	character set, and even in multiple character sets. Text entered
 	through CAMPFIRE is independent of the format and character set
 	specified by the template. Moreover, CAMPFIRE allows you to insert
-	images, links, and formatting tags, as well as special CAMPSITE
+	images, links, and formatting tags, as well as special Campsite
 	Glossary tags (for more on Glossary, see section 2.3).</P>
 </UL>
 <P CLASS="western">After you have specified the field type, you can
@@ -1251,7 +1205,7 @@ enter data in any other way, you may get incorrect results.</P>
 <P CLASS="western">Body-type fields usually contain the bulk of an
 article's content (the main narrative part of the text,
 bibliographies, author biographies etc.). To edit them, you have to
-launch CAMPFIRE, CAMPSITE's Java editor. You can do so by clicking on
+launch CAMPFIRE, Campsite's Java editor. You can do so by clicking on
 the 'Edit' button near the left corner of each body-type field. You
 can edit one body-type field at a time.</P>
 <P CLASS="western">Above the article structure, you will always see
@@ -1264,10 +1218,10 @@ the following seven buttons:</P>
 	article.</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in"><B>Topics </B>- this
 	is an advanced feature that lets you select from a list of topics
-	and subtopics predefined by your CAMPSITE administrator or
+	and subtopics predefined by your Campsite administrator or
 	high-ranking editor (e.g. users with rights that correspond to the
 	default Administrator or Chief Editor user types that come &ldquo;out
-	of the box&rdquo; with CAMPSITE). Topics allow you to attach
+	of the box&rdquo; with Campsite). Topics allow you to attach
 	additional attributes to your article, which may be used by the
 	aforementioned power users on your system to display articles in a
 	certain way. If they have not decided to make use of this feature,
@@ -1276,7 +1230,7 @@ the following seven buttons:</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in"><B>Unlock</B>, which
 	you can use to withdraw your reservation of the article (e.g. when
 	you are finished with your editing). The unlocking is in principle
-	done automatically, but since CAMPSITE is a server-based application
+	done automatically, but since Campsite is a server-based application
 	accessed through web browsers, a number of events (computer crashes,
 	line falling, etc.) could prevent this from happening.</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in"><B>Preview</B>, which
@@ -1288,8 +1242,8 @@ the following seven buttons:</P>
 	is self-explanatory</P>
 </UL>
 <H3 CLASS="western"><A NAME="2_2_7"></A><FONT FACE="Times, serif">2.2.7
-Editing body-type fields: Working with CAMPFIRE</FONT></H3>
-<P CLASS="western">CAMPFIRE allows contributors (journalists or
+Editing body-type fields: Working with HMLArea</FONT></H3>
+<P CLASS="western">HTMLArea allows contributors (journalists or
 editors) without any technical or HTML knowledge to perform extensive
 formatting procedures.</P>
 <P CLASS="western">Chances are that anyone who has ever worked with a
@@ -1299,7 +1253,7 @@ functions can be performed, while additional features can be accessed
 from pull-down menus.</P>
 <P CLASS="western">All text-formatting features are fully WYSIWYG,
 except align justify. The non-WYSIWYG features are insertion of
-images, subheads/page breaks and CAMPSITE Glossary keywords (see
+images, subheads/page breaks and Campsite Glossary keywords (see
 section 2.3).</P>
 <P CLASS="western">From left to right on the <SPAN LANG="en-US">tool
 bar</SPAN>, in order of appearance, the buttons are:</P>
@@ -1338,7 +1292,7 @@ bar</SPAN>, in order of appearance, the buttons are:</P>
 	manual for more details).</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in">Internal link button
 	allows you to create links to other articles that you have already
-	created within CAMPSITE. The actual procedure is analogous to the
+	created within Campsite. The actual procedure is analogous to the
 	one with external links.</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in">External link allows
 	you to create an absolute link in the text. You do so by
@@ -1367,7 +1321,7 @@ in your publication's article templates.</P>
 <H4 CLASS="western"><A NAME="2_2_7_1"></A>2.2.7.1 The Preview
 function</H4>
 <P CLASS="western">Through CAMPFIRE, contributors can feed
-information into CAMPSITE's database. The layout of the article for
+information into Campsite's database. The layout of the article for
 the general audience, however, will most probably different than what
 you see as a contributor. The layout that readers will ultimately see
 when they visit your web site is controlled by templates, which are
@@ -1398,12 +1352,12 @@ uploaded.</P>
 the page your readers/site visitors will be seeing.</P>
 <P CLASS="western">NOTE: At the bottom of the preview window, you can
 see information about the parser. If any problems occur while
-generating the web pages, the CAMPSITE parser will display error
+generating the web pages, the Campsite parser will display error
 messages. These should help you to identify the problem in the
 template structure.</P>
 <H3 CLASS="western"><A NAME="2_2_8"></A><FONT FACE="Times, serif">2.2.8
 Publishing articles</FONT></H3>
-<P CLASS="western">CAMPSITE's copy-flow control feature operates by
+<P CLASS="western">Campsite's copy-flow control feature operates by
 means of assigning three statuses to an article: 
 </P>
 <UL>
@@ -1414,7 +1368,7 @@ means of assigning three statuses to an article:
 <P CLASS="western">When you create an article, it is set to 'New'. If
 you change the status to 'Submit', then - via email - the editors
 will be informed to check the new submission. Editors will also be
-informed on new submissions when they login into CAMPSITE. Once the
+informed on new submissions when they login into Campsite. Once the
 editors are happy with the way the article reads and appears, they
 can alter its status to 'Published'. It is only then article becomes
 visible on your web site (provided that you have previously published
@@ -1440,7 +1394,7 @@ already published.</P>
 Glossary</FONT></H2>
 <P CLASS="western">The Glossary is in our view one of the two
 insufficiently developed but fully<SPAN LANG="en-US"> functional </SPAN>and
-potentially powerful features of CAMPSITE (the other one is Topics,
+potentially powerful features of Campsite (the other one is Topics,
 of which more in section 2.4). For this reason, Glossary-related
 rights are unchecked from all default users (including the default
 administrator) or user types. If you would like to try your luck with
@@ -1498,7 +1452,7 @@ version of the Glossary and display the most up to date information.</P>
 Infotypes'</H3>
 <P CLASS="western">From the Home view, select 'Glossary Infotypes'
 where you can add new Infotypes. Here you can also translate the
-Infotypes into any of the languages defined in CAMPSITE (see section
+Infotypes into any of the languages defined in Campsite (see section
 2.1.1).</P>
 <H3 CLASS="western"><A NAME="2_3_2"></A>2.3.2 Adding keywords to the
 Glossary</H3>
@@ -1540,10 +1494,10 @@ once this keyword is added to the Glossary, the parser will generate
 a link. Marked keywords are like sleeping beauties.</P>
 <H3 CLASS="western"><A NAME="2_3_5"></A><FONT FACE="Times, serif">2.3.5
 Known Limitations of the Glossary Module</FONT></H3>
-<P CLASS="western">In its present incarnation (CAMPSITE version 2.1),
+<P CLASS="western">In its present incarnation (Campsite version 2.1),
 Glossary is functional, but its appearance is still, shall we say,
 rather sobering. We thus consider it as a feature under development,
-particularly regarding the lack of possibility for CAMPSITE
+particularly regarding the lack of possibility for Campsite
 administrators to alter the layout of the popup windows. In other
 words, you can use it, but you might want to see if the appearance of
 the pop-up window would not strongly conflict with your overall
@@ -1553,7 +1507,7 @@ its development, please let us<SPAN LANG="en-US"> know at
 We will fix in the coming versions, but if you can't wait, financial
 and in-kind contributions are more than welcome.</P>
 <H2 CLASS="western"><A NAME="2_4"></A>2.4. Topics</H2>
-<P CLASS="western">The Topics were introduced into CAMPSITE to add
+<P CLASS="western">The Topics were introduced into Campsite to add
 another level of freedom to the web designer/producer in site design.
 The projected topic features will enable designers to make
 portal-like,<SPAN LANG="en-US"> cross linked </SPAN>sites, as any
@@ -1567,10 +1521,10 @@ the article can be displayed in certain article lists.</P>
 Topics</H3>
 <P CLASS="western">At present, the Topics user interface is
 admittedly counterintuitive for the end user (journalist/editor).
-Next versions of CAMPSITE will have this sorted out.</P>
+Next versions of Campsite will have this sorted out.</P>
 <H2 CLASS="western"><A NAME="2_5"></A><FONT FACE="Times, serif">2.5.
 Configuring the Subscription Module</FONT></H2>
-<P CLASS="western">CAMPSITE allows you to control access to your site
+<P CLASS="western">Campsite allows you to control access to your site
 in two ways:</P>
 <UL>
 	<LI><P CLASS="western" STYLE="margin-top: 0in">Standard
@@ -1579,7 +1533,7 @@ in two ways:</P>
 	which most institutional subscribers (libraries, universities, NGOs,
 	companies, etc.) tend to prefer</P>
 </UL>
-<P CLASS="western">As CAMPSITE handles subscriptions at publication
+<P CLASS="western">As Campsite handles subscriptions at publication
 level, all subscription-related variables are customizable from the
 Publications view. Columns 'Subscription default time' and 'Info' are
 relevant in this context.</P>
@@ -1608,7 +1562,7 @@ your publication:</P>
 </UL>
 <H3 CLASS="western"><A NAME="2_5_1"></A><FONT FACE="Times, serif"><FONT COLOR="#000000">2.5.1</FONT>
 Username:Password Access</FONT></H3>
-<P CLASS="western">CAMPSITE allows readers to subscribe to one
+<P CLASS="western">Campsite allows readers to subscribe to one
 publication at a time. Within a publication itself, the level of
 subscription is the section. The reader is able to select any section
 from the list of the publication's sections, and for each of them
@@ -1658,7 +1612,7 @@ are three possible scenarios:</P>
 	are active; a login form must be supplied for such a user.</P>
 </UL>
 <P CLASS="western">Template designer can customize all those forms by
-means of CAMPSITE's description language (see Part 3 of this manual).</P>
+means of Campsite's description language (see Part 3 of this manual).</P>
 <H3 CLASS="western"><A NAME="2_5_3"></A><FONT FACE="Times, serif"><FONT COLOR="#000000">2.5.3
 </FONT>IP Address-based Subscriptions</FONT></H3>
 <P CLASS="western">Subscriptions can also be created through the
@@ -1682,12 +1636,12 @@ users who will be accessing the site through IP address
 authentication of the existence of this UserId:Password pair.</P>
 <H1 CLASS="western"><A NAME="3"></A>3. CREATING TEMPLATES FOR YOUR
 PUBLICATION</H1>
-<P CLASS="western">When implementing CAMPSITE, chances are you will
+<P CLASS="western">When implementing Campsite, chances are you will
 already have a rather clear outline of the structure of your
 publication online, or - even better - have a running web version
-already in HTML. Either way, to migrate your publication to CAMPSITE,
+already in HTML. Either way, to migrate your publication to Campsite,
 you will have to generate customized templates for your content. Such
-templates will be incorporating the CAMPSITE tags used to pull
+templates will be incorporating the Campsite tags used to pull
 information from the database into the HTML page readable by web
 browsers.</P>
 <P CLASS="western">The following sections will guide you step by step
@@ -1697,18 +1651,18 @@ your web site. This can be done with any HTML editor of your choice.
 However, the following will cover the transformation of an existing
 HTML design into templates and NOT web design itself... this isn't
 web design lecture.</P>
-<P CLASS="western">One of the main goals of CAMPSITE is to offer a
+<P CLASS="western">One of the main goals of Campsite is to offer a
 fully customizable layout for online publications and at the same
 time keep the content independent of the layout. This is done by
 means of templates. Those templates are nothing more than HTML files
-containing embedded CAMPSITE description-language tags, which creates
+containing embedded Campsite description-language tags, which creates
 the link between the view and the content.</P>
 <H2 CLASS="western"><A NAME="3_1"></A>3.1. Modular Structure of
 Templates</H2>
 <P CLASS="western">A glance at all articles of an online publication
 reveals that generally there are many layout similarities even across
 different sections of the publication. Taking advantage of such
-similarities is what the template structure of CAMPSITE was meant to
+similarities is what the template structure of Campsite was meant to
 do. In other words: design features that remain the same for all
 articles only need to be specified once, e.g. the navigation from an
 article back to section and home, font type and size, background
@@ -1755,7 +1709,7 @@ section, article or just a few customized templates that generate
 different views depending on the given parameters.</P>
 <P CLASS="western">The following will cover some examples on how to
 build templates. Further down you can find a complete list of
-available commands used by CAMPSITE templates.</P>
+available commands used by Campsite templates.</P>
 <H2 CLASS="western"><A NAME="3_3"></A>3.3. Building an article
 template: articletemplate.tpl</H2>
 <P CLASS="western">Building an article template is the easiest
@@ -1778,14 +1732,14 @@ subtitle&gt;&lt;/h3&gt;<BR>&lt;i&gt;Written by &lt;!** print article
 authorname&gt; on the &lt;!**print article date&gt;&lt;/i&gt;&lt;p&gt;<BR>&lt;!**
 print article text&gt;<BR>&lt;/body&gt;<BR>&lt;/html&gt;</FONT></FONT></P>
 <P CLASS="western">The reason we can reduce the templates to such a
-simple solution is, because CAMPSITE will remember where it comes
+simple solution is, because Campsite will remember where it comes
 from and where it is. So by the time the user arrives at one
-particular article, CAMPSITE knows the publication, the issue, the
+particular article, Campsite knows the publication, the issue, the
 section, and even the article ID and can simply generate the HTML
 page from the database by using the environmental variables together
 with the layout information in the template.</P>
 <P CLASS="western">Obviously, your design can be far more advanced
-than this page. And CAMPSITE can also perform far more advanced
+than this page. And Campsite can also perform far more advanced
 functions than this. In order to get a feel for this, let's jump into
 the next example, building the navigation. (A full list of tag
 commands can be found at the end of this chapter.)</P>
@@ -1797,10 +1751,10 @@ example, makes a lot of sense for the navigation. To jump between
 sections, you might only need one navigation template that can be
 used by all other templates (article, section, home page).</P>
 <P CLASS="western">To nest another template within another, use the
-following CAMPSITE tag:</P>
+following Campsite tag:</P>
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;!**
 include navigationtemplate.tpl&gt;</FONT></P>
-<P CLASS="western">The 'include' command is CAMPSITE lingo; the name
+<P CLASS="western">The 'include' command is Campsite lingo; the name
 of the template needs to be adjusted to whatever you called it. Let's
 assume we add this tag in the article template we created earlier,
 and we can now go on and build the template.</P>
@@ -1809,7 +1763,7 @@ like the navigation is to take control over the environmental
 variables. Our navigation needs to follow some standard rules and
 should not be affected too much by the environmental setting of the
 current position of the user.</P>
-<P CLASS="western">In terms of CAMPSITE lingo, we need to introduce a
+<P CLASS="western">In terms of Campsite lingo, we need to introduce a
 'local' tag, which allows us to specify some environmental variables
 for a local section inside the template. In other words, we can
 switch off the environmental variables, set our own and then switch
@@ -1832,7 +1786,7 @@ would want to link to. This is done with the 'section number' tag.</P>
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;!**
 section number 1&gt;</FONT></P>
 <P CLASS="western">The above tag would set the local section
-parameter to 1, which will be looked up in the CAMPSITE database
+parameter to 1, which will be looked up in the Campsite database
 under section entries (each section is assigned a number when it is
 created, see section <A HREF="#2_2_3">2.2.3</A> of this manual).</P>
 <P CLASS="western">Now we have set all necessary values for the link:
@@ -1850,7 +1804,7 @@ look/reporter/logo.gif).</P>
 <P CLASS="western">Then we need to pass the parameters to the
 template, which allows the parser to fill the page with content from
 the database. So the template is followed by '?' (indicating that
-other variables are following) and then the CAMPSITE tag
+other variables are following) and then the Campsite tag
 'urlparameters' will include all the information (such as language,
 publication, etc.) but using the local settings we adjusted earlier
 (current issue and section 1). Finally, we need to end the local
@@ -1899,7 +1853,7 @@ list article&gt;<BR>&lt;a href=&quot;articletemplate.tpl?&lt;!**
 urlparameters&gt;&quot;&gt;&lt;!** print article name&gt;&lt;/a&gt;<BR>&lt;!**
 endlist&gt;</FONT></P>
 <P CLASS="western">This will list all articles in the section.
-Remember that CAMPSITE will pass on its own environment variables,
+Remember that Campsite will pass on its own environment variables,
 such as 'publication' and 'issue', to each template. The 'list
 article' command already knows what section to list. The second line
 will create the link, using the name of the article. 
@@ -1915,7 +1869,7 @@ underneath the deck.</P>
 <P CLASS="western">To close the listing, use the 'endlist' tag.</P>
 <P CLASS="western">This example will order the articles in no
 particular way. If you want to make sure the newest article is on the
-top of the list, you need to tell CAMPSITE to order the listing:</P>
+top of the list, you need to tell Campsite to order the listing:</P>
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;!**
 list article order bynumber desc&gt;</FONT></P>
 <H3 CLASS="western"><A NAME="3_5_1"></A>3.5.1 The 'Feature' article
@@ -2023,7 +1977,7 @@ practice, so this is your chance to practice...</P>
 <H2 CLASS="western"><A NAME="3_7"></A>3.7. Some hints: powerful lists
 and ordering</H2>
 <P CLASS="western">Listing and ordering are two powerful functions in
-CAMPSITE lingo. In the following example we would like to automate an
+Campsite lingo. In the following example we would like to automate an
 update for the sections 3, 4 and 5. Whenever an editor posts some new
 articles in either of these sections and publishes them, we want the
 home page to display a link to the newest article in the center
@@ -2057,8 +2011,8 @@ article order bynumber desc&gt;<BR>&lt;!** if list index 1&gt;&lt;!**
 else&gt;<BR>&lt;!** print section name&gt;<BR>&lt;!** print article
 title&gt;<BR>&lt;!** endlist&gt;<BR>&lt;!** endlist&gt;</FONT></P>
 <H2 CLASS="western"><A NAME="3_8"></A>3.8. Environmental control with
-CAMPSITE templates</H2>
-<P CLASS="western">Instructions within CAMPSITE lingo fall into two
+Campsite templates</H2>
+<P CLASS="western">Instructions within Campsite lingo fall into two
 categories: those that do not generate output but only select the
 environment for the rest of the instructions, and those that print a
 certain information from the database according to the environment
@@ -2092,22 +2046,22 @@ runtime parameters. These parameters are:</P>
 </UL>
 <P CLASS="western">All runtime parameters form the so-called &quot;data
 context&quot; within which each article is positioned.</P>
-<H2 CLASS="western"><A NAME="3_9"></A>3.9. Structure of CAMPSITE
+<H2 CLASS="western"><A NAME="3_9"></A>3.9. Structure of Campsite
 templates</H2>
-<P CLASS="western">The structure of the CAMPSITE templates is simple.
+<P CLASS="western">The structure of the Campsite templates is simple.
 It is a continuous row of either HTML language or the commands used
-by CAMPSITE to pull content out of the database. Any template in its
+by Campsite to pull content out of the database. Any template in its
 most simplified form looks like this:</P>
-<P CLASS="western"><I>[HTML text] [CAMPSITE Instruction] [HTML text ]
-[CAMPSITE Instruction] ....</I></P>
+<P CLASS="western"><I>[HTML text] [Campsite Instruction] [HTML text ]
+[Campsite Instruction] ....</I></P>
 <P CLASS="western">The following example is an HTML beginning of a
-CAMPSITE template. In general, the best way to go about making
+Campsite template. In general, the best way to go about making
 templates is to finish the HTML layout work, then identify the chunks
-that do not need any changes and insert CAMPSITE tags in-between to
+that do not need any changes and insert Campsite tags in-between to
 customize the layout.</P>
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;html&gt;&lt;body&gt;&lt;h1&gt;template
 1&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;</FONT></P>
-<P CLASS="western">This template does not contain CAMPSITE
+<P CLASS="western">This template does not contain Campsite
 Instructions. Taking this example a little bit further, the above
 example could be asked to display the day of the month.</P>
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;html&gt;&lt;body&gt;
@@ -2116,14 +2070,14 @@ example could be asked to display the day of the month.</P>
 <P CLASS="western">HTML text: <FONT FACE="Courier New, Courier, mono">&lt;html&gt;&lt;body&gt;
 </FONT>
 </P>
-<P CLASS="western">CAMPSITE Instruction: <FONT FACE="Courier New, Courier, mono">&lt;!**
+<P CLASS="western">Campsite Instruction: <FONT FACE="Courier New, Courier, mono">&lt;!**
 Date mday&gt; </FONT>
 </P>
 <P CLASS="western">HTML text: <FONT FACE="Courier New, Courier, mono">&lt;/body&gt;&lt;/html&gt;</FONT></P>
 <P CLASS="western">... and will print the day of the month (numeric)
 for the current date. You can see the most important format standard
-that will follow all work through the pages to come, the CAMPSITE
-tag. Requests to CAMPSITE to replace a part of the template with
+that will follow all work through the pages to come, the Campsite
+tag. Requests to Campsite to replace a part of the template with
 information from the database is always inside the &lt;!** &gt; tag.</P>
 <P CLASS="western">Template 3:</P>
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">&lt;html&gt;&lt;body&gt;<BR>&lt;!**
@@ -2143,7 +2097,7 @@ Print Article name&gt;<BR>&lt;!** EndList&gt;<BR>&lt;/body&gt;&lt;/html&gt;</FON
 	</TR>
 	<TR>
 		<TD WIDTH=178>
-			<P CLASS="western">CAMPSITE Instruction</P>
+			<P CLASS="western">Campsite Instruction</P>
 		</TD>
 		<TD WIDTH=271>
 			<P CLASS="western">&lt;!** List Article OnFrontPage Is On&gt;</P>
@@ -2160,7 +2114,7 @@ Print Article name&gt;<BR>&lt;!** EndList&gt;<BR>&lt;/body&gt;&lt;/html&gt;</FON
 	</TR>
 	<TR>
 		<TD WIDTH=178>
-			<P CLASS="western">CAMPSITE Instruction</P>
+			<P CLASS="western">Campsite Instruction</P>
 		</TD>
 		<TD WIDTH=271>
 			<P CLASS="western">&lt;!** Print Article name&gt; 
@@ -2169,7 +2123,7 @@ Print Article name&gt;<BR>&lt;!** EndList&gt;<BR>&lt;/body&gt;&lt;/html&gt;</FON
 	</TR>
 	<TR>
 		<TD WIDTH=178>
-			<P CLASS="western">CAMPSITE Instruction</P>
+			<P CLASS="western">Campsite Instruction</P>
 		</TD>
 		<TD WIDTH=271>
 			<P CLASS="western">&lt;!** EndList&gt;</P>
@@ -2786,7 +2740,7 @@ may contain any statement except: &quot;Language&quot;,
 </P>
 <P CLASS="western" STYLE="margin-top: 0in"><B>Note on topics</B>: the
 topic name must be written in the following format:
-&ldquo;&lt;topic_name&gt;:&lt;language_code&gt;&rdquo;. CAMPSITE is
+&ldquo;&lt;topic_name&gt;:&lt;language_code&gt;&rdquo;. Campsite is
 able to store topics in multiple languages, yet the user interface
 managing the topics wasn't updated and it is only capable of managing
 topics in English language. All the topics are automatically assigned
@@ -3797,7 +3751,7 @@ Language name |number |englname |code |codepage</FONT></P>
 <UL>
 	<LI><P CLASS="western" STYLE="margin-top: 0in">name: language name</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in">number: language
-	identifier in the CAMPSITE database</P>
+	identifier in the Campsite database</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in">englname: language
 	name in English</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in">code: language
@@ -3812,7 +3766,7 @@ Language name |number |englname |code |codepage</FONT></P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in">name: publication
 	name</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in">identifier:
-	publication identifier in the CAMPSITE database</P>
+	publication identifier in the Campsite database</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in">site: publication
 	site (see also <A HREF="#2_2_1">Creating a new publication</A>)</P>
 </UL>
@@ -3824,7 +3778,7 @@ a new publication</A>.</P>
 <UL>
 	<LI><P CLASS="western" STYLE="margin-top: 0in">name: issue name</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in">number: issue
-	identifier in the CAMPSITE database</P>
+	identifier in the Campsite database</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in">&lt;date_attribute&gt;:
 	print an issue publish date field (year, month, day etc.); see
 	<A HREF="#date_attribute">details</A></P>
@@ -3840,7 +3794,7 @@ a new issue</A>.</P>
 <UL>
 	<LI><P CLASS="western" STYLE="margin-top: 0in">name: section name</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in">number: section
-	identifier in the CAMPSITE database</P>
+	identifier in the Campsite database</P>
 </UL>
 <P CLASS="western">For details on section see <A HREF="#2_2_3">Add
 new sections to an issue</A> 
@@ -3850,7 +3804,7 @@ new sections to an issue</A>
 	<COL WIDTH=437>
 	<TR>
 		<TD WIDTH=257 VALIGN=TOP>
-			<P CLASS="western"><FONT FACE="Courier New"><FONT SIZE=2 STYLE="font-size: 11pt"><FONT FACE="Courier, monospace">&lt;article_expression&gt;=Article</FONT></FONT></FONT></P>
+			<P CLASS="western"><FONT FACE="Courier, monospace"><FONT SIZE=2 STYLE="font-size: 11pt">&lt;article_expression&gt;=Article</FONT></FONT></P>
 		</TD>
 		<TD WIDTH=437>
 			<P CLASS="western"><FONT FACE="Courier, monospace"><FONT SIZE=2 STYLE="font-size: 11pt">name
@@ -3863,7 +3817,7 @@ new sections to an issue</A>
 <UL>
 	<LI><P CLASS="western" STYLE="margin-top: 0in">name: article name</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in">number: article
-	identifier in the CAMPSITE database</P>
+	identifier in the Campsite database</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in">keywords: article
 	keywords</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in">type: article type
@@ -3890,7 +3844,7 @@ Edit Article Details view.</A></P><A NAME="p_img_expr"></A>
 	<COL WIDTH=406>
 	<TR>
 		<TD WIDTH=229 VALIGN=TOP>
-			<P CLASS="western"><FONT SIZE=2 STYLE="font-size: 11pt"><FONT FACE="Courier, monospace">&lt;image_expression&gt;=Image</FONT></FONT></P>
+			<P CLASS="western"><FONT FACE="Courier, monospace"><FONT SIZE=2 STYLE="font-size: 11pt">&lt;image_expression&gt;=Image</FONT></FONT></P>
 		</TD>
 		<TD WIDTH=406>
 			<P CLASS="western"><FONT FACE="Courier, monospace"><FONT SIZE=2 STYLE="font-size: 11pt"><FONT FACE="Courier New, Courier, mono">[&lt;image_number&gt;]
@@ -4489,7 +4443,7 @@ to encapsulate all previously defined character sets, expanding the
 bytes used to represent each character. For more information on the
 Unicode project, see the official web site: http://www.unicode.org/</P>
 <P CLASS="western">Because different vendors had already created
-different versions of Unicode characters, we have endowed CAMPSITE
+different versions of Unicode characters, we have endowed Campsite
 with a generic translation table so that characters represented with
 one byte can be seen within this application without any special
 configurations on the client side.</P>
@@ -4556,17 +4510,17 @@ to cover the entire Nordic area. Skolt Sami still needs a few more
 accents. Note that RFC 1345 and GNU recode contain errors and use a
 preliminary and different latin6.</P>
 <H1 CLASS="western"><A NAME="6"></A>6. APPENDIX IV: INSTALLING
-CAMPSITE ON A STANDARD RED HAT 7.0 SERVER</H1>
+Campsite ON A STANDARD RED HAT 7.0 SERVER</H1>
 <P CLASS="western">The following is a possible session, which would
-install CAMPSITE on your remote host. All text in square brackets is
+install Campsite on your remote host. All text in square brackets is
 comment only, not to be typed.</P>
 <P CLASS="western"><FONT FACE="Courier New, Courier, mono">localhost$
 telnet youserverIP<BR>Red Hat Linux release 7.0 (Guiness)<BR>Kernel
 2.2.16-22 onan i386<BR>login : user<BR>Password: userpwd<BR>Last
 login...<BR>yourserver# wget
-http://www.campware.org/look/campware/download/campsite-latest.tar.gz<BR>yourserver#
-gzip -df campsite-latest.tar.gz<BR>yourserver# tar -xf
-campsite-latest.tar<BR>[Now you need to edit the httpd.conf file.
+http://www.campware.org/look/campware/download/Campsite-latest.tar.gz<BR>yourserver#
+gzip -df Campsite-latest.tar.gz<BR>yourserver# tar -xf
+Campsite-latest.tar<BR>[Now you need to edit the httpd.conf file.
 Locate the file first by typing]<BR>yourserver$ su<BR>yourserver$
 passowrd: pwdsu<BR>yourserver# updatedb [if you haven't generated the
 database for locating yet]<BR>yourserver# locate httpd.conf [Make a
@@ -4575,7 +4529,7 @@ backup copy, always a good idea.]<BR>yourserver# cp
 location might vary, depending on your configuration and system
 version]<BR>[Now open and edit the config file, you can see the
 changes that need to be done in the INSTALL file which is located in
-the campsite folder. Then you need to restart the http
+the Campsite folder. Then you need to restart the http
 daemon:]<BR>yourserver# kill -HUP `cat /var/run/httpd.pid` [the ``
 need to be angled from top left to bottom right.]<BR>[Check if mysql
 and httpd are running:]<BR>yourserver# ps -A | grep mysql [this
@@ -4583,37 +4537,37 @@ should return some lines with pid numbers for the mysqld. If not,
 start mysql manually]<BR>yourserver# ps -A | grep httpd [this should
 return some lines with pid numbers for the httpd. If not, start httpd
 manually (see above)]<BR>yourserver# exit<BR>yourserver# cd
-campsite<BR>yourserver# install<BR>yourserver# exit<BR>[that's
+Campsite<BR>yourserver# install<BR>yourserver# exit<BR>[that's
 all...]</FONT></P>
 <H1 CLASS="western"><A NAME="7"></A>7. APPENDIX V - BACKING UP
 DATABASES IN MYSQL</H1>
-<P CLASS="western">In order to make a backup of your CAMPSITE
+<P CLASS="western">In order to make a backup of your Campsite
 database, do the following:</P>
 <OL>
 	<LI><P CLASS="western" STYLE="margin-top: 0in">type: <FONT FACE="Courier New, Courier, mono">mysqldump
-	-u &lt;db_user&gt; -p &lt;password&gt; campsite &gt; yourname-db.sql</FONT></P>
+	-u &lt;db_user&gt; -p &lt;password&gt; Campsite &gt; yourname-db.sql</FONT></P>
 </OL>
-<P CLASS="western">In order to delete your CAMPSITE database from
+<P CLASS="western">In order to delete your Campsite database from
 MySQL, do the following:</P>
 <OL>
 	<LI><P CLASS="western" STYLE="margin-top: 0in">type: <FONT FACE="Courier New, Courier, mono">mysqladmin
-	-u &lt;db_user&gt; -p &lt;password&gt; drop campsite</FONT></P>
+	-u &lt;db_user&gt; -p &lt;password&gt; drop Campsite</FONT></P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in">confirm with 'y'</P>
 </OL>
-<P CLASS="western">In order to load your backed up CAMPSITE database,
+<P CLASS="western">In order to load your backed up Campsite database,
 do the following:</P>
 <OL>
-	<LI><P CLASS="western" STYLE="margin-top: 0in">create the campsite
+	<LI><P CLASS="western" STYLE="margin-top: 0in">create the Campsite
 	database by typing: <FONT FACE="Courier New, Courier, mono">mysqladmin
-	-u &lt;db_user&gt; -p &lt;password&gt; create campsite</FONT></P>
+	-u &lt;db_user&gt; -p &lt;password&gt; create Campsite</FONT></P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in">edit the backup file
 	you created and add the first line: <FONT FACE="Courier New, Courier, mono">use
-	campsite;</FONT><BR>(make sure you finish the line with a semicolon
+	Campsite;</FONT><BR>(make sure you finish the line with a semicolon
 	and do not start the line with a hash, which would mean it is only a
 	comment).</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in">load the database by
 	typing: <FONT FACE="Courier New, Courier, mono">mysql -u &lt;db_user&gt;
-	-p &lt;password&gt; campsite &lt; yourname-db.sql</FONT></P>
+	-p &lt;password&gt; Campsite &lt; yourname-db.sql</FONT></P>
 </OL>
 </BODY>
 </HTML>
