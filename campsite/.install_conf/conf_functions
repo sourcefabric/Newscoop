@@ -671,7 +671,7 @@ inst_deps=`read_install_deps $1`
 [ $? -ne 0 ] && echo "$inst_deps" && return 1
 for inst_dep in $inst_deps; do
     check4_${inst_dep} $1
-    [ $? -ne 0 ] && return 1
+    [ $? -ne 0 ] && echo $output && return 1
 done
 echo "OK"
 return 0
