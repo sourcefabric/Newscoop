@@ -768,7 +768,7 @@ Constraints:
 It can't be used inside "List Section" and "List Article" statements.
 3.9.2.5 Article
 Purpose:
-Sets the runtime environment section to the one selected by the statement constraint. If the statement constraint is not valid the section is not changed.
+Sets the runtime environment article to the one selected by the statement constraint. If the statement constraint is not valid the section is not changed.
 Syntax:
 Article name <article_name>
 Select the article having the specified name. If the supplied name is not a valid one, this parameter is not modified.
@@ -788,6 +788,18 @@ EndLocal
 The list of instructions may contain any instruction allowed in the current context. If it is used inside a list it must respect the constraints of the list (List Issue, List Section, List Article, List Subtitle, List SearchResult).
 Constraints:
 None.
+3.9.2.7 Topic
+Purpose:
+Sets the runtime environment topic to the one selected by the statement constraint. If the statement constraint is not valid the topic is not changed.
+Syntax:
+Topic name <topic_name>
+Select the topic having the specified name. If the supplied name is not a valid one, this parameter is not modified.
+Topic off
+Deselect topic; the topic is not defined after this instruction.
+Topic default
+The topic selected is the one provided by the parameter from template start. If this parameter was not defined on template start it's value from now on is undefined.
+Constraints:
+Cannot be used inside "List Article" statement.
 3.9.3 Flow control instructions
 3.9.3.1 List of Issues
 Purpose:
@@ -1114,7 +1126,7 @@ Constraints:
 None.
 3.9.3.13 If Article
 Purpose:
-Depending on the given condition, it runs the first (for true) or second (for false) list of instructions. It may be used anywhere in the template. It is used when printing information from different types of article.
+Depending on the given condition, it runs the first (for true) or second (for false) list of instructions. It may be used anywhere in the template. It is used when printing information for different types of articles.
 Syntax:
 If [not] Article <condition>
 <list_of_instructions>
@@ -1309,6 +1321,21 @@ number: the if condition is true if operation: number <integer_operator> <intege
 The list of instructions may contain any instruction allowed in the current context. If it is used inside a list it must respect the constraints of the list (List Issue, List Section, List Article, List Subtitle, List SearchResult).
 Constraints:
 None.
+3.9.3.24 If Topic
+Purpose:
+Depending on the given condition, it runs the first (for true) or second (for false) list of instructions. It may be used anywhere in the template.
+Syntax:
+If [not] Topic <condition>
+<list_of_instructions>
+[Else [<list_of_instructions>]]
+EndIf [Topic]
+where
+<condition> = 
+name <string_operator> <string_value>
+name: the condition is true if topic name is in <string_operator> relation with <string_value>
+The list of instructions may contain any instruction allowed in the current context. If it is used inside a list it must respect the constraints of the list (List Issue, List Section, List Article, List Subtitle, List SearchResult).
+Constraints:
+None.
 3.9.4 Printable information
 3.9.4.1 URL, Form
 Purpose:
@@ -1374,6 +1401,7 @@ where
 | <user_expression>
 | <subtitle_expression>
 | <search_expression>
+| <topic_expression>
 <language_expression> = Language name |number |englname |code |codepage
 name: language name
 number: language identifier in the CAMPSITE database
@@ -1448,6 +1476,8 @@ name: print subtitle name (see also Editing body-type fields: Working with CAMPF
 <search_expression> = Search error | keywords
 error: print error message if the search action generated an error
 keywords: print the keywords the user inputted
+<topic_expression> = Topic name
+name: print topic name in the language of the environment
 Constraints:
 Print List can be used only inside List-EndList statement.
 Print Login can be used only outside Login-EndLogin statement.
@@ -1613,6 +1643,7 @@ If Search (3.9.3.22)
 If Section (3.9.3.12)
 If Subscription (3.9.3.15)
 If Subtitle (3.9.3.23)
+If Topic (3.9.3.24)
 If User (3.9.3.17)
 Include (3.9.3.9)
 Issue (3.9.2.3)
@@ -1634,6 +1665,7 @@ Print Publication (3.9.4.2)
 Print Section (3.9.4.2)
 Print Subscription (3.9.4.2)
 Print Subtitle (3.9.4.2)
+Print Topic (3.9.4.2)
 Print User (3.9.4.2)
 Publication (3.9.2.2)
 Search (3.9.4.7)
@@ -1642,6 +1674,7 @@ Select Search (3.9.4.9)
 Select Subscription (3.9.4.9)
 Select User (3.9.4.9)
 Subscription (3.9.4.4)
+Topic (3.9.2.7)
 URLParameters (3.9.4.1)
 User (3.9.4.5)
 With (3.9.3.21)
