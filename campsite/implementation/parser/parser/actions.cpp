@@ -2740,6 +2740,38 @@ int CActWith::takeAction(CContext& c, sockstream& fs)
 //		sockstream& fs - output stream	
 int CActURIPath::takeAction(CContext& c, sockstream& fs)
 {
-	fs << c.URL()->getURIPath();
+	SafeAutoPtr<CURL> pcoURL;
+	if (!params.empty())
+	{
+		pcoURL.reset(c.URL()->clone());
+		CParameterList::const_iterator coIt = params.begin();
+		for (; coIt != params.end(); ++ coIt)
+		{
+			if (case_comp((*coIt)->attribute(), "template") == 0)
+			{
+				pcoURL->setTemplate((*coIt)->value());
+			}
+			if (case_comp((*coIt)->attribute(), "issue") == 0)
+			{
+				pcoURL->deleteParameter(P_NRSECTION);
+				pcoURL->deleteParameter(P_NRARTICLE);
+				c.SetCurrentField("");
+			}
+			if (case_comp((*coIt)->attribute(), "section") == 0)
+			{
+				pcoURL->deleteParameter(P_NRARTICLE);
+				c.SetCurrentField("");
+			}
+			if (case_comp((*coIt)->attribute(), "article") == 0)
+			{
+				c.SetCurrentField("");
+			}
+		}
+		fs << pcoURL->getURIPath();
+	}
+	else
+	{
+		fs << c.URL()->getURIPath();
+	}
 	return RES_OK;
 }
