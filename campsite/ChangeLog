@@ -6,6 +6,9 @@
     - Increased the maximum keyword length in the search engine
     - Fixed memory leaks (used valgrind to detect them)
     - Added Firebird specific article body field edit script
+    - Modified the subtitle printing behavior: printing the field inside the
+    subtitle list will display the current subtitle in the list instead of the
+    subtitle set at the beginning of the template
 
 2.1.2
     - Ported campsite to FreeBSD (thanks to Richard Airlie)
