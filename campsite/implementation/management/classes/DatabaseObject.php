@@ -10,6 +10,13 @@ class DatabaseObject {
 	var $m_dbTableName = '';
 
 	/**
+	 * The names of the columns in the database table.
+	 * Redefine this in the subclass.
+	 * @var array
+	 */
+	var $m_columnNames = array();
+	
+	/**
 	 * The column names used for the key.
 	 * Redefine this in the subclass.
 	 * @var array
@@ -56,7 +63,7 @@ class DatabaseObject {
 	 * Return the column names of this table.
 	 * @return array
 	 */	
-	function getColumnNames() { return array_keys($this->m_data); }
+	function getColumnNames() { return $this->m_columnNames; }
 
 	
 	/**
@@ -311,8 +318,7 @@ class DatabaseObject {
 			if ($p_forceFetchFromDatabase) {
 				$queryStr = 'SELECT '.$p_dbColumnName
 							.' FROM '.$this->m_dbTableName
-							.' WHERE '.$this->getKeyWhereClause()
-							.' LIMIT 1';
+							.' WHERE '.$this->getKeyWhereClause();
 				$this->m_data[$p_dbColumnName] = $Campsite['db']->GetOne($queryStr);
 			}
 			return $this->m_data[$p_dbColumnName];
@@ -389,9 +395,14 @@ class DatabaseObject {
 			// to create the new value.
 			$queryStr = 'SELECT '.$p_dbColumnName
 						.' FROM '.$this->m_dbTableName
-						.' WHERE '.$this->getKeyWhereClause()
-						.' LIMIT 1';
-			$this->m_data[$p_dbColumnName] = $Campsite['db']->GetOne($queryStr);
+						.' WHERE '.$this->getKeyWhereClause();
+			$value = $Campsite['db']->GetOne($queryStr);
+			if ($value) {
+				$this->m_data[$p_dbColumnName] = $value;
+			}
+			else {
+				$errorMsg = $Campsite['db']->ErrorMsg();
+			}
 		}
 		return $databaseChanged;
 	} // fn setProperty
@@ -449,7 +460,37 @@ class DatabaseObject {
         }
 		return $databaseChanged;
 	} // fn update
+
 	
+	/**
+	 * Commit the data stored in memory to the database.
+	 * This is useful if you make a bunch of setProperty() calls at once
+	 * and you dont want to update the database every time.  Instead you
+	 * can set all the variables without committing them, then call this function.
+	 *
+	 * @param array p_ignoreColumns
+	 *		Specify column names to ignore when doing the commit.
+	 *
+	 * @return boolean
+	 *		Return TRUE if the database was updated, false otherwise.
+	 */
+	function commit($p_ignoreColumns = null) {
+		global $Campsite;
+        $setColumns = array();
+        foreach ($this->m_data as $columnName => $columnValue) {
+        	if (!is_null($p_ignoreColumns) && !in_array($columnName, $p_ignoreColumns)) {
+        		$setColumns[] = $columnName . "='". $columnValue ."'";
+        	}
+        }
+        $databaseChanged = false;
+		$queryStr = 'UPDATE ' . $this->m_dbTableName
+	        		.' SET '.implode(',', $setColumns)
+	        		.' WHERE ' . $this->getKeyWhereClause()
+	        		.' LIMIT 1';
+        $Campsite['db']->Execute($queryStr);
+		return ($Campsite['db']->Affected_Rows() > 0);
+	} // fn commit
+		
 } // class DatabaseObject
 
 ?>
