@@ -45,6 +45,7 @@ void CMessageFactoryRegister::insert(CMessageFactory* p_pcoMessageFactory)
 }
 
 CMessage* CMessageFactoryRegister::createMessage(char* p_pchMsgContent)
+	throw (out_of_range, xml_parse_error, invalid_message_content, bad_alloc)
 {
 	uint nMsgId = strtol(p_pchMsgContent, NULL, 16);;
 	MessageFactoryMap::const_iterator coIt = m_coMessageFactories.find(nMsgId);
