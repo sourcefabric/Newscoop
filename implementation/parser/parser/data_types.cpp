@@ -31,7 +31,7 @@ Implementation of data types: Integer, String, Switch, Date, Time, DateTime, Enu
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <values.h>
+#include <limits.h>
 
 #include "data_types.h"
 #include "auto_ptr.h"
