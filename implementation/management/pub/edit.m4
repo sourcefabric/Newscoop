@@ -69,7 +69,7 @@ B_DIALOG(<*Change publication information*>, <*POST*>, <*do_edit.php*>)
 		fetchRow($q_alias);
 		pcomboVar(getVar($q_alias,'Id'),getVar($q_pub,'IdDefaultAlias'),getVar($q_alias,'Name'));
 	}
-?>dnl
+?>
 	    </SELECT>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Default language*>)
@@ -82,7 +82,8 @@ B_DIALOG(<*Change publication information*>, <*POST*>, <*do_edit.php*>)
 		pcomboVar(getVar($q_lang,'Id'),getVar($q_pub,'IdDefaultLanguage'),getVar($q_lang,'OrigName'));
 	}
 ?>dnl
-	    </SELECT>
+	    </SELECT>&nbsp;
+	<a href="/priv/languages"><?php putGS("Edit languages"); ?></a>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*URL Type*>)
 		<SELECT NAME="cURLType">
@@ -133,6 +134,7 @@ B_DIALOG(<*Change publication information*>, <*POST*>, <*do_edit.php*>)
 	B_DIALOG_INPUT(<*Trial Period*>)
 		<INPUT TYPE="TEXT" NAME="cTrial" VALUE="<?php  pgetHVar($q_pub,'TrialTime'); ?>" SIZE="10" MAXLENGTH="10"> <?php  p($tunit); ?>
 	E_DIALOG_INPUT
+	<tr><td colspan=2 align=center><a href="deftime.php?Pub=<?php echo $Pub; ?>"><?php putGS("Countries defaults"); ?></a></td></tr>
 
 	B_DIALOG_BUTTONS
 		<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<?php  pencHTML($Pub); ?>">
