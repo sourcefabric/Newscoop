@@ -148,10 +148,10 @@ Important!!! The database upgrade must take place before CAMPSITE application up
 Open a shell session and type all the following commands described below at the command prompt. Shell commands are written in italic style.
 1.Dumping the old database into different files
 Dump tables structure only:
-mysqldump ... [database] -d > tables.sql
+mysqldump ... -d [database] > tables.sql
 where [database] should be replaced by the name of the CAMPSITE database and "..." with other needed parameters (user, host etc.)
 Dump data for tables that need not be converted to UTF:
-mysqldump ... [database] -t --tables ArticleIndex AutoId Events \
+mysqldump ... -t --tables [database] ArticleIndex AutoId Events \
 Images KeywordIndex SubsByIP SubsDefTime SubsSections Subscriptions \
 UserPerm UserTypes Users > data_nolang.sql
 Don't forget to add "ArticleTopics" and "Topics" to the list of tables if CAMPSITE upgrade took place already.
@@ -160,23 +160,23 @@ Group languages having the same character set (see Languages in admin interface 
 a)select all the languages in the character set and compose the where clause:
 "IdLanguage = [l1] or IdLanguage = [l2] ..."
 where [l1], [l2] are the language identifiers. In order to read the language identifiers and character sets log in to CAMPSITE database and run the following sql: "select Name, Id, CodePage from Languages".
-b)mysqldump ... [database] -t --tables Articles Classes Countries \
-Dictionary Errors Issues KeywordClasses Sections TimeUnits \
---where="IdLanguage = [l1] or IdLanguage = [l2]..." > data_[charsetn]_1.sql
-c)mysqldump ... [database] -t --tables Publications \
+b)mysqldump ... -t -tables --where="IdLanguage = [l1] or IdLanguage = [l2]..." \
+[database] Articles Classes Countries Dictionary Errors Issues \
+KeywordClasses Sections TimeUnits > data_[charsetn]_1.sql
+c)mysqldump ... [database] -t --tables \
 --where="IdDefaultLanguage = [l1] or IdDefaultLanguage = [l2]..." \
-> data_[charsetn]_2.sql
-d)mysqldump ... [database] -t --tables Languages \
---where="Id = [l1] or Id = [l2]..." > data_[charsetn]_3.sql
+Publications > data_[charsetn]_2.sql
+d)mysqldump ... -t --tables --where="Id = [l1] or Id = [l2]..." [database] \
+Languages > data_[charsetn]_3.sql
 e)make a list of all X tables (tables whose names start with X) and dump their data:
-mysqldump ... [database] -t --tables [list_of_X_tables] \
---where="IdLanguage = [l1] or IdLanguage = [l2]..." > data_[charsetn]_4.sql
+mysqldump ... -t --tables --where="IdLanguage = [l1] or IdLanguage = [l2]..." \
+[database] [list_of_X_tables] > data_[charsetn]_4.sql
 Replace [l1], [l2] with language identifiers, [database] with CAMPSITE database name, "..." in mysqldump command with other needed parameters (user, host etc.), [charsetn] with the name of the character set (ISO-8859-1,  ISO-8859-2 etc.), [list_of_X_tables] with the list of tables whose names start with X; these are article content tables.
 
 Note: In order to simplify the conversion all not used languages except English may be deleted. If only one language is used and it's character set is ISO-8859-1 there is no need to group languages by character set: just delete not used languages and perform the steps b-d described above and remove "--where" clause from commands.
 
 Select the character set for Log and dump Log table data:
-	mysqldump ... [database] -t --tables Log > data_log.sql
+	mysqldump ... -t --tables [database] Log > data_log.sql
 Selecting the character set for Log table data: decide which language you use most often when logging in to CAMPSITE admin interface and read the character set of the language from Languages.
 
 2.Convert files to UTF:
