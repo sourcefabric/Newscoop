@@ -5,17 +5,6 @@ require_once($_SERVER['DOCUMENT_ROOT']."/classes/DatabaseObject.php");
 class Publication extends DatabaseObject {
 	var $m_dbTableName = "Publications";
 	var $m_primaryKeyColumnNames = array("Id");
-//	var $m_columnNames = array("Id",
-//							   "Name",
-//							   "IdDefaultLanguage",
-//							   "PayTime",
-//							   "TimeUnit",
-//							   "UnitCost",
-//							   "Currency",
-//							   "TrialTime",
-//							   "PaidTime",
-//							   "IdDefaultAlias",
-//							   "IdURLType");
 	var $Id;
 	var $Name;
 	var $IdDefaultLanguage;
@@ -45,6 +34,19 @@ class Publication extends DatabaseObject {
 	function getName() {
 		return $this->Name;
 	} // fn getName
-		
+
+	function getAllPublications() {
+		global $Campsite;
+		$queryStr = "SELECT * FROM Publications";
+		$query = $Campsite["db"]->Execute($queryStr);
+		$publications = array();
+		while ($row = $query->FetchRow()) {
+			$tmpPub =& new Publication();
+			$tmpPub->fetch($row);
+			$publications[] = $tmpPub;
+		}
+		return $publications;
+	} // fn getAllPublications
+	
 } // class Publication
 ?>
