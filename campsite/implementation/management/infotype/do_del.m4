@@ -24,17 +24,17 @@ E_HEADER_BUTTONS
 E_HEADER
 
 <?php 
-    todefnum('Class');
+    todefnum('Infotype');
     todefnum('Lang');
 ?>dnl
 <P>
 <?php 
-    query ("DELETE FROM Classes  WHERE Id=$Class AND IdLanguage=$Lang");
+    query ("DELETE FROM Classes  WHERE Id=$Infotype AND IdLanguage=$Lang");
     $affnr=$AFFECTED_ROWS;
-    query ("SELECT COUNT(*) FROM Classes WHERE Id=$Class", 'q_cnt');
+    query ("SELECT COUNT(*) FROM Classes WHERE Id=$Infotype", 'q_cnt');
     fetchRowNum($q_cnt);
     if (getNumVar($q_cnt,0) == 0)
-	query ("DELETE FROM KeywordClasses WHERE IdClasses=$Class");
+	query ("DELETE FROM KeywordClasses WHERE IdClasses=$Infotype");
 ?>dnl
 B_MSGBOX(<*Deleting infotype*>)
 <?php  if ($affnr > 0) { ?>

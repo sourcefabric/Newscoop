@@ -27,11 +27,11 @@ E_HEADER
 
 <?php 
     todefnum('Infotype');
-    query ("SELECT Name FROM Classes WHERE Id=$Class", 'c');
+    query ("SELECT Name FROM Classes WHERE Id=$Infotype", 'c');
     $nr=$NUM_ROWS;
     if ($NUM_ROWS) {
 	$NUM_ROWS= 0;
-	query ("SELECT Languages.Id, Languages.Name FROM Languages LEFT JOIN Classes ON Classes.Id = $Class AND Classes.IdLanguage = Languages.Id WHERE Classes.Id IS NULL ORDER BY Name", 'languages');
+	query ("SELECT Languages.Id, Languages.Name FROM Languages LEFT JOIN Classes ON Classes.Id = $Infotype AND Classes.IdLanguage = Languages.Id WHERE Classes.Id IS NULL ORDER BY Name", 'languages');
 	$nr_lang=$NUM_ROWS;
 	if ($NUM_ROWS) { ?>dnl
 <P>
@@ -61,7 +61,7 @@ B_DIALOG(<*Translate keyword*>, <*POST*>, <*do_translate.php*>)
 		?></SELECT>
 	E_DIALOG_INPUT
 	B_DIALOG_BUTTONS
-		<INPUT TYPE="HIDDEN" NAME="cId" VALUE="<?php  print encHTML($Class); ?>">
+		<INPUT TYPE="HIDDEN" NAME="cId" VALUE="<?php  print encHTML($Infotype); ?>">
 		SUBMIT(<*Save*>, <*Save changes*>)
 		REDIRECT(<*Cancel*>, <*Cancel*>, <*X_ROOT/infotype/*>)
 	E_DIALOG_BUTTONS
