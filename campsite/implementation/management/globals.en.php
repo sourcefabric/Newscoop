@@ -4,6 +4,9 @@ regGS("CAMPSITE","CAMPSITE:en");
 regGS("Home","Home:en");
 regGS("Logout","Logout:en");
 
+regGS("Content","Content:en");
+regGS("Obsolete","Obsolete:en");
+regGS("Publishing environment","Publishing environment:en");
 regGS("Fields","Fields:en");
 regGS("Delete","Delete:en");
 regGS("Type","Type:en");
