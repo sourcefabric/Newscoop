@@ -49,6 +49,9 @@ B_BODY
     todefnum('Section');
     todefnum('Language');
     todefnum('sLanguage');
+	todefnum('Article');
+	todefnum('move_up');
+	todefnum('move_down');
 ?>dnl
 B_HEADER(<*Articles*>)
 B_HEADER_BUTTONS
@@ -61,6 +64,10 @@ E_HEADER_BUTTONS
 E_HEADER
 
 <?php 
+	if ($move_up > 0)
+		move_article_rel($Pub, $Language, $Issue, $Section, $Article, 'up');
+	if ($move_down > 0)
+		move_article_rel($Pub, $Language, $Issue, $Section, $Article, 'down');
     if ($sLanguage == "")
 	$sLanguage= 0;
 
@@ -125,9 +132,9 @@ E_CURRENT
 <P><?php 
     todefnum('ArtOffs');
     if ($ArtOffs < 0) $ArtOffs= 0;
-    todefnum('lpp', 20);
+    todefnum('lpp', 3);
 
-	$sql = "SELECT *, abs($Language - IdLanguage) as LangOrd FROM Articles WHERE IdPublication=$Pub AND NrIssue=$Issue AND NrSection=$Section $ll ORDER BY Number DESC $oo LIMIT $ArtOffs, ".($lpp+1);
+	$sql = "SELECT *, abs($Language - IdLanguage) as LangOrd FROM Articles WHERE IdPublication=$Pub AND NrIssue=$Issue AND NrSection=$Section $ll ORDER BY ArticleOrder ASC $oo LIMIT $ArtOffs, ".($lpp+1);
 	query($sql, 'q_art');
     if ($NUM_ROWS) {
 	$nr= $NUM_ROWS;
@@ -140,7 +147,7 @@ B_LIST
 		X_LIST_TH(<*Type*>, <*1%*>)
 		X_LIST_TH(<*Language*>, <*1%*>)
 		X_LIST_TH(<*Status*>, <*1%*>)
-		X_LIST_TH(<*Images*>, <*1%*>)
+		X_LIST_TH(<*Order*>, <*80*>)
 		X_LIST_TH(<*Preview*>, <*1%*>)
 		X_LIST_TH(<*Translate*>, <*1%*>)
 <?php  if ($aaa != 0) { ?>dnl
@@ -150,10 +157,16 @@ B_LIST
 		X_LIST_TH(<*Delete*>, <*1%*>)
 <?php  } ?>dnl
 	E_LIST_HEADER
-<?php 
-    for($loop=0;$loop<$nr;$loop++) {
+<?php
+	$first_article = $ArtOffs == 0;
+	$last_article = false;
+	$art_index = $ArtOffs;
+	for($loop=0;$loop<$nr;$loop++) {
 	fetchRow($q_art);
-	if ($i) { ?>dnl
+	if ($i) {
+		$art_index++;
+		$last_article = ($loop + 1) == $nr;
+?>dnl
 	B_LIST_TR
 		B_LIST_ITEM
 			<?php  if (getVar($q_art,'Number') == $kwdid) { ?>&nbsp;<?php  } ?><A HREF="X_ROOT/pub/issues/sections/articles/edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  pgetUVar($q_art,'Number'); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  pgetUVar($q_art,'IdLanguage'); ?>"><?php  pgetHVar($q_art,'Name'); ?>&nbsp;</A>
@@ -178,10 +191,25 @@ B_LIST
 			<A HREF="X_ROOT/pub/issues/sections/articles/status.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  pgetUVar($q_art,'Number'); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  pgetUVar($q_art,'IdLanguage'); ?>&Back=<?php  pencURL($REQUEST_URI); ?>"><?php  putGS("Submitted"); ?></A>
 <?php  } ?>dnl
 		E_LIST_ITEM
-		B_LIST_ITEM(<*CENTER*>)
-<?php  if (getVar($q_art,'Number') != $kwdid) { ?>dnl
-			<A HREF="X_ROOT/pub/issues/sections/articles/images/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  pgetUVar($q_art,'Number'); ?>&Language=<?php  p($Language);?>&sLanguage=<?php  pgetUVar($q_art,'IdLanguage'); ?>"><?php  putGS("Images"); ?></A>
-<?php  } else { ?>dnl
+		B_LIST_ITEM(<*LEFT*>)
+<?php  if (getVar($q_art,'Number') != $kwdid) {
+			echo "<table border=\"0\"><tr><td>";
+			if (!$first_article) {
+?>dnl
+				<A HREF="X_ROOT/pub/issues/sections/articles/index.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  pgetUVar($q_art,'Number'); ?>&Language=<?php  p($Language);?>&sLanguage=<?php  pgetUVar($q_art,'IdLanguage'); ?>&move_up=1&ArtOffs=<?php  p($ArtOffs); ?>"><img src="/priv/img/up.png" align="left" border="0"></A>
+<?php		} else { ?>
+				<img src="/priv/img/empty.png" align="left" border="0">
+<?php		} ?>
+</td><td>
+<A HREF="X_ROOT/pub/issues/sections/articles/order.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  pgetUVar($q_art,'Number'); ?>&Language=<?php  p($Language);?>&sLanguage=<?php  pgetUVar($q_art,'IdLanguage'); ?>&ArtOffs=<?php  p($ArtOffs); ?>"><B><?php echo $art_index; ?></B></A>
+</td><td>
+<?php		if (!$last_article) { ?>
+				<A HREF="X_ROOT/pub/issues/sections/articles/index.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  pgetUVar($q_art,'Number'); ?>&Language=<?php  p($Language);?>&sLanguage=<?php  pgetUVar($q_art,'IdLanguage'); ?>&move_down=1&ArtOffs=<?php  p($ArtOffs); ?>"><img src="/priv/img/down.png" align="left" border="0"></A>
+<?php		} else { ?>
+				<img src="/priv/img/empty.png" align="left" border="0">
+<?php		}
+			echo "</td></tr></table>\n";
+		} else { ?>dnl
 		&nbsp;
 <?php  } ?>dnl
 		E_LIST_ITEM
@@ -205,6 +233,7 @@ B_LIST
 			X_BUTTON(<*<?php  putGS('Delete article $1',getHVar($q_art,'Name')); ?>*>, <*icon/x.gif*>, <*pub/issues/sections/articles/del.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  pgetUVar($q_art,'Number'); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  pgetUVar($q_art,'IdLanguage'); ?>&Back=<?php  pencURL($REQUEST_URI); ?>*>)
 		E_LIST_ITEM
 	<?php  }
+		$first_article = false;
 		if (getVar($q_art,'Number') != $kwdid)
 			$kwdid=getVar($q_art,'Number');
 		?>dnl
