@@ -10,7 +10,20 @@ class ArticleImage extends DatabaseObject {
 	var $m_columnNames = array('NrArticle', 'IdImage', 'Number');
 	var $m_image = null;
 	
-	function ArticleImage() { }
+	function ArticleImage($p_articleId = null, $p_imageId = null, $p_templateId = null) { 
+		if (!is_null($p_articleId) && !is_null($p_imageId)) {
+			$this->m_data['NrArticle'] = $p_articleId;
+			$this->m_data['IdImage'] = $p_imageId;
+			$this->fetch();
+		}
+		elseif (!is_null($p_articleId) && !is_null($p_templateId)) {
+			$this->m_data['NrArticle'] = $p_articleId;
+			$this->m_data['Number'] = $p_templateId;
+			$this->m_keyColumnNames = array('NrArticle', 'Number');
+			$this->fetch();
+		}
+	} // constructor
+	
 	
 	/**
 	 * @return int
