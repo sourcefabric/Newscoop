@@ -16,7 +16,7 @@ function create_instance($p_arguments, &$p_errors)
 
 	$p_errors = array();
 	// read parameters
-	if (!$defined_parameters = read_parameters($p_arguments, $p_errors))
+	if (!$defined_parameters = read_cmdline_parameters($p_arguments, $p_errors))
 		return false;
 
 	$etc_dir = $defined_parameters['--etc_dir'];
@@ -58,6 +58,11 @@ function create_instance($p_arguments, &$p_errors)
 		$p_errors[] = $res;
 		return false;
 	}
+
+	// create language links
+	$html_dir = $Campsite['WWW_DIR'] . "/" . $Campsite['DATABASE_NAME'] . "/html";
+	require_once("$html_dir/parser_utils.php");
+	create_language_links($html_dir);
 
 	return true;
 }
@@ -425,7 +430,7 @@ function generate_parser_port($p_defined_parameters)
 }
 
 
-function read_parameters($p_arguments, &$p_errors)
+function read_cmdline_parameters($p_arguments, &$p_errors)
 {
 	global $g_instance_parameters, $g_mandatory_parameters, $g_parameters_defaults;
 	define_globals();
