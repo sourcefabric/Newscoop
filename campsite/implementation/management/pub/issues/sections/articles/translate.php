@@ -17,30 +17,30 @@ $sLanguage = Input::get('sLanguage', 'int', 0);
 $BackLink = Input::get('Back', 'string', "/$ADMIN/pub/issues/sections/articles/", true);
 
 if (!Input::isValid()) {
-	header("Location: /$ADMIN/logout.php");
+	CampsiteInterface::DisplayError(array('Invalid input: $1', Input::GetErrorString()), $BackLink);
 	exit;	
 }
 $publicationObj =& new Publication($Pub);
 if (!$publicationObj->exists()) {
-	header("Location: /$ADMIN/logout.php");
+	CampsiteInterface::DisplayError('No such publication.', $BackLink);
 	exit;	
 }
 
 $issueObj =& new Issue($Pub, $Language, $Issue);
 if (!$issueObj->exists()) {
-	header("Location: /$ADMIN/logout.php");
+	CampsiteInterface::DisplayError('No such issue.', $BackLink);
 	exit;	
 }
 
 $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
 if (!$sectionObj->exists()) {
-	header("Location: /$ADMIN/logout.php");
+	CampsiteInterface::DisplayError('No such section.', $BackLink);
 	exit;		
 }
 
 $articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
 if (!$articleObj->exists()) {
-	header("Location: /$ADMIN/ad.php?ADReason=".urlencode(getGS('Article does not exist.')));
+	CampsiteInterface::DisplayError('Article does not exist.', $BackLink);
 	exit;
 }
 
@@ -49,7 +49,8 @@ if ($User->hasPermission('ChangeArticle') || (($articleObj->getUserId() == $User
 	$access= true;
 }
 if (!$access) {
-	header("Location: /$ADMIN/ad.php?ADReason=".urlencode(getGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only changed by authorized users.")));
+	$errorStr = 'You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only changed by authorized users.';
+	CampsiteInterface::DisplayError($errorStr, $BackLink);
 	exit;	
 }
 
@@ -72,7 +73,8 @@ ArticleTop($articleObj, $Language, "Translate article", true, true);
 <INPUT TYPE="HIDDEN" NAME="Section" VALUE="<?php  p($Section); ?>">
 <INPUT TYPE="HIDDEN" NAME="Article" VALUE="<?php  p($Article); ?>">
 <INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php  p($Language); ?>">
-<INPUT TYPE="HIDDEN" NAME="sLanguage" VALUE="<?php  p($articleObj->getLanguageId()); ?>">
+<INPUT TYPE="HIDDEN" NAME="sLanguage" VALUE="<?php  p($sLanguage); ?>">
+<INPUT TYPE="HIDDEN" NAME="ArticleLanguage" VALUE="<?php  p($articleObj->getLanguageId()); ?>">
 <INPUT TYPE="HIDDEN" NAME="Back" VALUE="<?php echo $BackLink; ?>">
 <CENTER>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" ALIGN="CENTER" class="table_input">
