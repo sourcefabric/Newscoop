@@ -110,10 +110,9 @@ the installer.
 In particular, note that:
 	- PARSER_USER and PARSER_GROUP should be the same as the user and group
 	  you use for apache.
-	- ADMIN_INTERFACE_HTML_DIR, ADMIN_INTERFACE_CGI_DIR, and
-	  ADMIN_INTERFACE_SCRIPT_DIR specify where you wish to install the campsite
-	  html, cgi, and scripts. On a machine with virtual hosts you will likely
-	  want to choose these directories carefully.
+	- ADMIN_INTERFACE_HTML_DIR and ADMIN_INTERFACE_CGI_DIR specify where you
+	  wish to install the campsite html and cgi files. On a machine with
+	  virtual hosts you will likely want to choose these directories carefully.
 
 ####################################################################
 
@@ -135,7 +134,6 @@ DATABASE_NAME=INST01 - must be the same as APP_NAME
 PARSER_PORT=2002 (2003, 2004... - increase the port number with every instance)
 ADMIN_INTERFACE_HTML_DIR=/var/www/INST01/html
 ADMIN_INTERFACE_CGI_DIR=/var/www/INST01/cgi-bin
-ADMIN_INTERFACE_SCRIPT_DIR=/var/www/INST01/script
 ADMIN_INTERFACE_PARSER_PORT=2002 (2003, 2004...) - must be the same as PARSER_PORT
 
 Apache configuration:

@@ -38,7 +38,6 @@ install: $(ALL)
 	cp -rf css $(HTML_COMMON_DIR)
 	cp -rf imagearchive $(PRIV_COMMON_DIR)
 	cp -rf include $(HTML_COMMON_DIR)
-	mkdir -p $(SCRIPT_COMMON_DIR)
 	cp -fr img/* $(PRIV_COMMON_DIR)/img
 	cp -f *.php $(PRIV_COMMON_DIR)/
 	$(MAKE) -C root install
@@ -59,7 +58,6 @@ install: $(ALL)
 	chown $(APACHE_USER):$(APACHE_GROUP) $(HTML_COMMON_DIR)/*.php
 	chown -R $(APACHE_USER):$(APACHE_GROUP) $(HTML_COMMON_DIR)/*
 	chown -R $(APACHE_USER):$(APACHE_GROUP) $(PRIV_COMMON_DIR)
-	chown -R $(APACHE_USER):$(APACHE_GROUP) $(SCRIPT_COMMON_DIR)
 	chmod u+rw $(HTML_COMMON_DIR)/*.php
 	chmod g+r $(HTML_COMMON_DIR)/*.php
 	chmod o-rwx $(HTML_COMMON_DIR)/*.php
@@ -78,9 +76,6 @@ install: $(ALL)
 	chmod -R u+rw $(PRIV_COMMON_DIR)
 	chmod -R g+rw $(PRIV_COMMON_DIR)
 	chmod -R o-rwx $(PRIV_COMMON_DIR)
-	chmod -R u+rw $(SCRIPT_COMMON_DIR)
-	chmod -R g+r $(SCRIPT_COMMON_DIR)
-	chmod -R o-rwx $(SCRIPT_COMMON_DIR)
 	chmod -R u+rw $(HTML_COMMON_DIR)/images
 	chmod -R g+r $(HTML_COMMON_DIR)/images
 
