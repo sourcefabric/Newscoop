@@ -103,15 +103,25 @@ public:
 
 	void replaceValue(const string& p_rcoParameter, const string& p_rcoValue);
 
-	string getValue(string p_rcoParameter) const;
+	const string& getValue(const string& p_rcoParameter) const;
 
-	long getIntValue(string p_rcoParameter) const throw(InvalidValue);
+	const string& getNextValue(const string& p_rcoParameter) const;
+
+	long getIntValue(const string& p_rcoParameter) const throw(InvalidValue);
+
+	void resetParamValuesIndex(const string& p_rcoParameter = string("")) const;
+
+	void deleteParameter(const string& p_rcoParameter);
+
+	const String2StringMMap& getParameters() const;
 
 	void setCookie(const string& p_rcoName, const string& p_rcoValue);
 
-	string getCookie(string p_rcoName) const;
+	string getCookie(const string& p_rcoName) const;
 
 	const String2String& getCookies() const;
+
+	void deleteCookie(const string& p_rcoName);
 
 	virtual bool equalTo(const CURL* p_pcoURL) const;
 
@@ -146,11 +156,17 @@ protected:
 	virtual void PostSetValue(const string& p_rcoParameter, const string& p_rcoValue) {}
 
 protected:
+	typedef map<string, String2StringMMap::const_iterator, less<string> > String2MMapIt;
+
+protected:
 	string m_coMethod;
 	string m_coPathTranslated;
 	string m_coDocumentRoot;
 	String2StringMMap m_coParamMap;
 	String2String m_coCookies;
+
+private:
+	mutable String2MMapIt m_coParamIterators;
 };
 
 
@@ -188,18 +204,21 @@ inline bool CURL::equalTo(const CURL* p_pcoURL) const
 		&& m_coCookies == p_pcoURL->m_coCookies;
 }
 
-inline string CURL::getValue(string p_rcoParameter) const
-{
-	String2StringMMap::const_iterator coIt = m_coParamMap.find(p_rcoParameter);
-	if (coIt == m_coParamMap.end())
-		return string("");
-	return (*coIt).second;
-}
-
-inline long CURL::getIntValue(string p_rcoParameter) const throw(InvalidValue)
+inline long CURL::getIntValue(const string& p_rcoParameter) const throw(InvalidValue)
 {
 	string coValue = getValue(p_rcoParameter);
 	return coValue != "" ? (long)Integer(coValue) : 0;
+}
+
+inline void CURL::deleteParameter(const string& p_rcoParameter)
+{
+	m_coParamIterators.erase(p_rcoParameter);
+	m_coParamMap.erase(p_rcoParameter);
+}
+
+inline const String2StringMMap& CURL::getParameters() const
+{
+	return m_coParamMap; 
 }
 
 inline void CURL::setCookie(const string& p_rcoName, const string& p_rcoValue)
@@ -207,7 +226,7 @@ inline void CURL::setCookie(const string& p_rcoName, const string& p_rcoValue)
 	m_coCookies[p_rcoName] = p_rcoValue;
 }
 
-inline string CURL::getCookie(string p_rcoName) const
+inline string CURL::getCookie(const string& p_rcoName) const
 {
 	String2String::const_iterator coIt = m_coCookies.find(p_rcoName);
 	if (coIt == m_coCookies.end())
@@ -215,14 +234,19 @@ inline string CURL::getCookie(string p_rcoName) const
 	return (*coIt).second;
 }
 
-inline const String2String& CURL::getCookies() const
+inline void CURL::deleteCookie(const string& p_rcoName)
 {
-	return m_coCookies;
+	m_coCookies.erase(p_rcoName);
 }
 
 inline void CURL::ReadQueryString(const string& p_rcoQueryString)
 {
 	CURL::readQueryString(p_rcoQueryString, &m_coParamMap);
+}
+
+inline const String2String& CURL::getCookies() const
+{
+	return m_coCookies;
 }
 
 #endif // CURL_H
