@@ -18,15 +18,11 @@ $path = Input::get('Path', 'string', '');
 
 <BODY BGCOLOR="WHITE" TEXT="BLACK" LINK="DARKBLUE" ALINK="RED" VLINK="DARKBLUE">
 
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
 	<TR>
-		<TD ROWSPAN="2" WIDTH="1%"><IMG SRC="/admin/img/sign_big.gif" BORDER="0"></TD>
 		<TD>
-			<DIV STYLE="font-size: 12pt"><B><?php  putGS("Templates"); ?></B></DIV>
-			<HR NOSHADE SIZE="1" COLOR="BLACK">
+			<?php  putGS("Templates"); ?>
 		</TD>
-	</TR>
-	<TR>
 		<TD ALIGN=RIGHT>
 			<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
 				<TR>
