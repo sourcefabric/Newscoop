@@ -85,6 +85,21 @@ regGS("Delete scheduled publish action","Delete scheduled publish action:en");
 regGS("The action scheduled on $1 has been deleted.","The action scheduled on $1 has been deleted.:en");
 regGS("The $1 action has been scheduled on $2","The $1 action has been scheduled on $2:en");
 regGS("Date/Time", "Date/Time:en");
+regGS("You must select an action.", "You must select an action.:en");
+regGS("There was an error scheduling the $1 action on $2", "There was an error scheduling the $1 action on $2:en");
+regGS("You do not have the right to schedule issues or articles for automatic publishing.", "You do not have the right to schedule issues or articles for automatic publishing.:en");
+regGS("The action scheduled on $1 could not be deleted.", "The action scheduled on $1 could not be deleted.:en");
+regGS("Front page","Front page:en");
+regGS("Section page","Section page:en");
+regGS("Show on front page","Show on front page:en");
+regGS("Remove from front page","Remove from front page:en");
+regGS("Show on section page","Show on section page:en");
+regGS("Remove from section page","Remove from section page:en");
+regGS("Actions","Actions:en");
+regGS("Publishing","Publishing:en");
+regGS("Show","Show:en");
+regGS("Remove","Remove:en");
+regGS("The $1 actions have been scheduled on $2", "The $1 actions have been scheduled on $2:en");
 
 regGS("days","days:en");
 
