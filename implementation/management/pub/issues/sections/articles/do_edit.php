@@ -56,7 +56,7 @@ function TransformLinks($match) {
 } // fn TransformLinks
 
 
-list($access, $User, $XPerm) = check_basic_access($_REQUEST);
+list($access, $User) = check_basic_access($_REQUEST);
 $Pub = isset($_REQUEST["Pub"])?$_REQUEST["Pub"]:0;
 $Issue = isset($_REQUEST["Issue"])?$_REQUEST["Issue"]:0;
 $Section = isset($_REQUEST["Section"])?$_REQUEST["Section"]:0;
@@ -67,8 +67,8 @@ $Article = isset($_REQUEST["Article"])?$_REQUEST["Article"]:0;
 // If the user has the ability to change the article OR
 // the user created the article and it hasnt been published.
 $hasAccess = false;
-if ($XPerm['ChangeArticle'] 
-	|| (($articleObj->getUserId() == $User['Id']) 
+if ($User->hasPermission('ChangeArticle')
+	|| (($articleObj->getUserId() == $User->getId()) 
 		&& ($articleObj->getPublished() == 'N'))) {
 	$hasAccess = true;
 }
