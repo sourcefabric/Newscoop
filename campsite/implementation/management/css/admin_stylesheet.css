@@ -100,9 +100,12 @@ hr {
 
 .table_list_header {
 	background-color: #8baed1;
-	/*color: #FFF;*/
 	color: white;
 	font-weight: bold;	
+}
+
+.table_list_header td {
+	color: white;
 }
 
 .list_row_odd {
