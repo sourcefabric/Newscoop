@@ -67,15 +67,21 @@ $issueLanguage =& new Language($sLanguage);
 </TR></TABLE></TD></TR>
 </TABLE>
 
-<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="1" WIDTH="100%"><TR>
-<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP">&nbsp;<? putGS("Publication"); ?>:</TD><TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><? echo $publicationObj->getName(); ?></B></TD>
+<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="1" WIDTH="100%" class="current_location_table">
+<TR>
+	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<? putGS("Publication"); ?>:</TD>
+	<TD VALIGN="TOP" class="current_location_content"><? echo $publicationObj->getName(); ?></TD>
 
-<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP">&nbsp;<? putGS("Issue"); ?>:</TD><TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><? echo $issueObj->getNumber(); ?>. <? echo $issueObj->getName(); ?> (<? echo $issueLanguage->getName(); ?>)</B></TD>
+	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<? putGS("Issue"); ?>:</TD>
+	<TD VALIGN="TOP" class="current_location_content"><? echo $issueObj->getNumber(); ?>. <? echo $issueObj->getName(); ?> (<? echo $issueLanguage->getName(); ?>)</TD>
 
-<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP">&nbsp;<? putGS("Section"); ?>:</TD><TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><? echo $sectionObj->getNumber(); ?>. <? echo $sectionObj->getName(); ?></B></TD>
+	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<? putGS("Section"); ?>:</TD>
+	<TD VALIGN="TOP" class="current_location_content"><? echo $sectionObj->getNumber(); ?>. <? echo $sectionObj->getName(); ?></TD>
 
-<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP">&nbsp;<? putGS("Article"); ?>:</TD><TD BGCOLOR="#D0D0B0" VALIGN="TOP"><B><? echo $articleObj->getTitle(); ?> (<? echo $articleLanguage->getName(); ?>)</B></TD>
-</TR></TABLE>
+	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<? putGS("Article"); ?>:</TD>
+	<TD VALIGN="TOP" class="current_location_content"><? echo $articleObj->getTitle(); ?> (<? echo $articleLanguage->getName(); ?>)</TD>
+</TR>
+</TABLE>
 
 <table width="100%" border="0">
 <tr>
