@@ -1,5 +1,4 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/config.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
 load_common_include_files($ADMIN_DIR);
 todefnum('TOL_UserId');
@@ -14,25 +13,25 @@ $counter_reset = false;
 $counter_resets = 0;
 $preConfigMenu = array();
 $preConfigMenu[] = array('title'=>'Article Types', 
-					  'link' => 'a_types/', 
+					  'link' => "/$ADMIN/a_types/",
 					  'permission' => 'ManageArticleTypes'); 
 $preConfigMenu[] = array('title' => 'Topics', 
-					  'link' => 'topics/',
+					  'link' => "/$ADMIN/topics/",
 					  'permission' => 'ManageTopics'); 
 $preConfigMenu[] = array('title' => 'Languages', 
-					  'link' => 'languages/',
+					  'link' => "/$ADMIN/languages/",
 					  'permission' => 'ManageLanguages' ); 
 $preConfigMenu[] = array('title' => 'Templates', 
-					  'link' => 'templates/',
+					  'link' => "/$ADMIN/templates/",
 					  'permission' => 'ManageLanguages'); 
 $preConfigMenu[] = array('title' => 'Countries', 
-					  'link' => 'country/',
+					  'link' => "/$ADMIN/country/",
 					  'permission' => 'ManageCountries'); 
 $preConfigMenu[] = array('title' => 'Logs', 
-					  'link' => 'logs/',
+					  'link' => "/$ADMIN/logs/",
 					  'permission' => 'ViewLogs'); 
 $preConfigMenu[] = array('title' => 'Localizer', 
-					  'link' => 'localizer/',
+					  'link' => "/$ADMIN/localizer/",
 					  'permission' => 'ManageLocalizer'); 
 $configMenu = array();
 foreach ($preConfigMenu as $item) {
@@ -45,10 +44,10 @@ $numConfigMenuColumns = ($numConfigMenuItems/2) + ($numConfigMenuItems%2);
 
 $preUserMenu = array();
 $preUserMenu[] = array('title'=>'Users', 
-					  'link' => 'users/', 
+					  'link' => "/$ADMIN/users/",
 					  'permission' => 'ManageUsers'); 
 $preUserMenu[] = array('title' => 'User Types', 
-					  'link' => 'u_types/',
+					  'link' => "/$ADMIN/u_types/",
 					  'permission' => 'ManageUserTypes'); 
 $userMenu = array();
 foreach ($preUserMenu as $item) {
@@ -59,10 +58,10 @@ foreach ($preUserMenu as $item) {
 
 $preObsoleteMenu = array();
 $preObsoleteMenu[] = array('title'=>'Glossary', 
-					  'link' => 'glossary/', 
+					  'link' => "/$ADMIN/glossary/",
 					  'permission' => 'ManageDictionary'); 
 $preObsoleteMenu[] = array('title' => 'Infotype', 
-					  'link' => 'infotype/',
+					  'link' => "/$ADMIN/infotype/",
 					  'permission' => 'ManageClasses'); 
 $obsoleteMenu = array();
 foreach ($preObsoleteMenu as $item) {
@@ -72,14 +71,9 @@ foreach ($preObsoleteMenu as $item) {
 }
 
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
-	"http://www.w3.org/TR/REC-html40/loose.dtd">
-<HTML>
 <HEAD>
-    <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<!--<META HTTP-EQUIV="Expires" CONTENT="now">-->
-	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite["website_url"] ?>/css/admin_stylesheet.css">	
-	<TITLE><?php  putGS("Menu"); ?></TITLE>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite["website_url"] ?>/css/admin_stylesheet.css">
 </HEAD>
 
 <BODY>
@@ -108,12 +102,12 @@ foreach ($preObsoleteMenu as $item) {
 						</td>
 					</tr>
 					<tr>
-						<TD ALIGN="left"><A HREF="pub/" TARGET="fmain"><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Publications"); ?>"></A></TD>
-						<TD align="left" NOWRAP><A HREF="pub/" ONCLICK="" TARGET="fmain"><?php  putGS("Publications"); ?></A></TD>
+						<TD ALIGN="left"><A HREF="/<?php echo $ADMIN; ?>/pub/"><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Publications"); ?>"></A></TD>
+						<TD align="left" NOWRAP><A HREF="/<?php echo $ADMIN; ?>/pub/" ONCLICK=""><?php  putGS("Publications"); ?></A></TD>
 					</tr>
 					<tr>
-						<TD ALIGN="left"><A HREF="imagearchive/" TARGET="fmain"><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Image archive"); ?>"></A></TD>
-						<TD align="left" NOWRAP><A HREF="imagearchive/" ONCLICK="" TARGET="fmain"><?php  putGS("Image archive"); ?></A></TD>
+						<TD ALIGN="left"><A HREF="/<?php echo $ADMIN; ?>/imagearchive/"><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Image archive"); ?>"></A></TD>
+						<TD align="left" NOWRAP><A HREF="/<?php echo $ADMIN; ?>/imagearchive/" ONCLICK=""><?php  putGS("Image archive"); ?></A></TD>
 					</tr>
 					</table>
 				</td>
@@ -139,8 +133,8 @@ foreach ($preObsoleteMenu as $item) {
 										echo "</tr><tr>";
 									}
 									?>
-									<TD ALIGN="RIGHT"><A HREF="<?php p($menuItem['link']) ?>" TARGET="fmain"><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php putGS($menuItem['title']); ?>"></A></TD>
-									<TD NOWRAP><A HREF="<?php p($menuItem['link']); ?>" TARGET="fmain"><?php  putGS($menuItem['title']); ?></A></TD>
+									<TD ALIGN="RIGHT"><A HREF="<?php p($menuItem['link']) ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php putGS($menuItem['title']); ?>"></A></TD>
+									<TD NOWRAP><A HREF="<?php p($menuItem['link']); ?>"><?php  putGS($menuItem['title']); ?></A></TD>
 								<?php
 									$count++;
 								} 
@@ -166,8 +160,8 @@ foreach ($preObsoleteMenu as $item) {
 						<?php
 						foreach ($userMenu as $menuItem) { ?>
 							<tr>
-								<TD ALIGN="left"><A HREF="<?php p($menuItem['link']) ?>" TARGET="fmain"><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php putGS($menuItem['title']); ?>"></A></TD>
-								<TD align="left" NOWRAP><A HREF="<?php p($menuItem['link']); ?>" TARGET="fmain"><?php  putGS($menuItem['title']); ?></A></TD>
+								<TD ALIGN="left"><A HREF="<?php p($menuItem['link']) ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php putGS($menuItem['title']); ?>"></A></TD>
+								<TD align="left" NOWRAP><A HREF="<?php p($menuItem['link']); ?>"><?php  putGS($menuItem['title']); ?></A></TD>
 							</tr>
 							<?php 
 						}
@@ -190,8 +184,8 @@ foreach ($preObsoleteMenu as $item) {
 						foreach ($obsoleteMenu as $menuItem) {
 							if ($User->hasPermission($menuItem['permission'])) { ?>
 							<tr>
-								<TD ALIGN="left"><A HREF="<?php p($menuItem['link']) ?>" TARGET="fmain"><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php putGS($menuItem['title']); ?>"></A></TD>
-								<TD align="left" NOWRAP><A HREF="<?php p($menuItem['link']); ?>" TARGET="fmain"><?php  putGS($menuItem['title']); ?></A></TD>
+								<TD ALIGN="left"><A HREF="<?php p($menuItem['link']) ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php putGS($menuItem['title']); ?>"></A></TD>
+								<TD align="left" NOWRAP><A HREF="<?php p($menuItem['link']); ?>"><?php  putGS($menuItem['title']); ?></A></TD>
 							</tr>
 							<?php 
 							} 
@@ -211,22 +205,20 @@ foreach ($preObsoleteMenu as $item) {
 	<TD WIDTH="1%" VALIGN="TOP" style="height: 75px; border-left: 1px solid black; padding-left: 5px; padding-right: 5px;">
 		<TABLE CELLSPACING="1" CELLPADDING="1" BGCOLOR="#D0D0B0" width="100%" height="100%">
 		<TR>
-			<TD ALIGN="left"><A HREF="home.php" ONCLICK="" TARGET="fmain"><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Home"); ?>"></A></TD>
-			<TD NOWRAP><A HREF="home.php" ONCLICK="" TARGET="fmain"><?php  putGS("Home"); ?></A></TD>
+			<TD ALIGN="left"><A HREF="/<?php echo $ADMIN; ?>/" ONCLICK=""><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Home"); ?>"></A></TD>
+			<TD NOWRAP><A HREF="/<?php echo $ADMIN; ?>/" ONCLICK=""><?php  putGS("Home"); ?></A></TD>
 		</tr>
 		
 		<tr>
-			<TD ALIGN="left"><A HREF="" ONCLICK="window.open('/<?php echo $ADMIN; ?>/popup/', 'fpopup', 'menu=no,width=500,height=410'); return false;" TARGET="fmain"><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Quick Menu"); ?>"></A></TD>
-			<TD NOWRAP><A HREF="" ONCLICK="window.open('/<?php echo $ADMIN; ?>/popup/', 'fpopup', 'menu=no,width=500,height=410'); return false;" TARGET="fmain"><?php  putGS("Quick Menu"); ?></A></TD>
+			<TD ALIGN="left"><A HREF="" ONCLICK="window.open('/<?php echo $ADMIN; ?>/popup/', 'fpopup', 'menu=no,width=500,height=410'); return false;"><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Quick Menu"); ?>"></A></TD>
+			<TD NOWRAP><A HREF="" ONCLICK="window.open('/<?php echo $ADMIN; ?>/popup/', 'fpopup', 'menu=no,width=500,height=410'); return false;"><?php  putGS("Quick Menu"); ?></A></TD>
 		</TR>
 		
 		<TR>
-			<TD ALIGN="RIGHT"><A HREF="logout.php" ONCLICK="" TARGET="fmain"><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Logout"); ?>"></A></TD>
-			<TD NOWRAP COLSPAN="3" ALIGN="LEFT"><A HREF="logout.php" ONCLICK="" TARGET="fmain"><?php  putGS("Logout"); ?></A></TD>
+			<TD ALIGN="RIGHT"><A HREF="/<?php echo $ADMIN; ?>/logout.php" ONCLICK=""><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Logout"); ?>"></A></TD>
+			<TD NOWRAP COLSPAN="3" ALIGN="LEFT"><A HREF="/<?php echo $ADMIN; ?>/logout.php" ONCLICK=""><?php  putGS("Logout"); ?></A></TD>
 		</TR>
 		</TABLE>
 	</TD>
 </tr>
 </table>
-</BODY>
-</HTML>
