@@ -52,9 +52,10 @@ class ArticleType extends DatabaseObject {
 	/**
 	 * Copy the row in the database.
 	 * @param int p_destArticleId
+	 * @param int p_destLanguageId
 	 * @return void
 	 */
-	function copyToExistingRecord($p_destArticleId) {
+	function copyToExistingRecord($p_destArticleId, $p_destLanguageId = null) {
 		global $Campsite;
 		$tmpData = $this->m_data;
 		unset($tmpData['NrArticle']);
@@ -64,7 +65,13 @@ class ArticleType extends DatabaseObject {
 			$setQuery[] = $key."='".addslashes($data)."'";
 		}		
 		$queryStr = 'UPDATE '.$this->m_dbTableName.' SET '.implode(',', $setQuery)
-				." WHERE NrArticle=$p_destArticleId AND IdLanguage=".$this->m_data['IdLanguage'];
+				." WHERE NrArticle=$p_destArticleId ";
+		if (!is_null($p_destLanguageId)) {
+			$queryStr .= " AND IdLanguage=".$p_destLanguageId;
+		}
+		else {
+			$queryStr .= " AND IdLanguage=".$this->m_data['IdLanguage'];
+		}
 		$Campsite['db']->Execute($queryStr);
 	} // fn copyToExistingRecord
 	
