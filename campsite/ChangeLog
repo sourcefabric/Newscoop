@@ -1,6 +1,8 @@
 2.1.5
     - Added Chinese translation thanks to Andrew Lih and Tian Fawei at Hong Kong
     University, Journalism and Media Studies Centre
+    - Implemented article/section duplication feature
+    - Small bug fixes
 
 2.1.4
     - Changed the image buttons to text buttons which are easy to translate
