@@ -27,7 +27,7 @@ function ismodified(){
 ?>dnl
 E_HEAD
 
-<? if ($access) { 
+<? if ($access) {
 SET_ACCESS(<*dla*>, <*DeleteArticle*>)
 ?>dnl
 
@@ -165,14 +165,14 @@ X_NEW_BUTTON(<*Edit details*>, <*X_ROOT/pub/issues/sections/articles/edit.php?Pu
 	$table= substr ( getNumVar($q_fld1,0),1);
 	$posc=strpos(getNumVar($q_fld1,1),'char');
 	$posd=strpos(getNumVar($q_fld1,1),'date');
-	
+
 	if (!($posc === false))
 	    $type=0;
 	elseif (!($posd === false))
 	    $type=1;
 	else
 	    $type=2;
-	
+
 	$Field=$table;
 
 	if ($eField == "")
@@ -199,11 +199,11 @@ X_NEW_BUTTON(<*Edit details*>, <*X_ROOT/pub/issues/sections/articles/edit.php?Pu
 <TD>
 <OBJECT name="campeditor" classid="clsid:8AD9C840-044E-11D1-B3E9-00805F499D93"
     width="100%" height="420" align="baseline"
-    codebase="http://java.sun.com/products/plugin/autodl/j2re-1_3_1_02-win.exe">
+    codebase="http://java.sun.com/products/plugin/autodl/jinstall-1_4_0-win.cab">
    <PARAM NAME="code" VALUE="Campfire.class">
    <PARAM NAME="codebase" VALUE="java/">
    <PARAM NAME="archive" VALUE="campfire.jar">
-    <PARAM NAME="type" VALUE="application/x-java-applet;version=1.3">
+    <PARAM NAME="type" VALUE="application/x-java-applet;jpi-version=1.4">
     <PARAM NAME="model" VALUE="models/HyaluronicAcid.xyz">
     <PARAM NAME="scriptable" VALUE="true">
 <PARAM NAME="port" VALUE="<? p($SERVER_PORT); ?>">

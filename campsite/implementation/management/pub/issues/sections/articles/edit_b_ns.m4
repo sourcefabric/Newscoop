@@ -27,7 +27,7 @@ function ismodified(){
 ?>dnl
 E_HEAD
 
-<? if ($access) { 
+<? if ($access) {
 SET_ACCESS(<*dla*>, <*DeleteArticle*>)
 ?>dnl
 
@@ -165,14 +165,14 @@ X_NEW_BUTTON(<*Edit details*>, <*X_ROOT/pub/issues/sections/articles/edit.php?Pu
 	$table= substr ( getNumVar($q_fld1,0),1);
 	$posc=strpos(getNumVar($q_fld1,1),'char');
 	$posd=strpos(getNumVar($q_fld1,1),'date');
-	
+
 	if (!($posc === false))
 	    $type=0;
 	elseif (!($posd === false))
 	    $type=1;
 	else
 	    $type=2;
-	
+
 	$Field=$table;
 
 	if ($eField == "")
@@ -197,10 +197,10 @@ X_NEW_BUTTON(<*Edit details*>, <*X_ROOT/pub/issues/sections/articles/edit.php?Pu
 </TR>
 <TR>
 <TD>
-<EMBED id="campeditor" type="application/x-java-applet;version=1.3" width="660"
-height="420" align="baseline" code="Campfire.class" codebase="java/" archive="campfire.jar"
+<EMBED id="campeditor" type="application/x-java-applet;jpi-version=1.4" width="660"
+height="420" align="baseline" code="Campfire.class" codebase="html/" archive="campfire.jar"
 model="models/HyaluronicAcid.xyz"
-pluginspage="http://java.sun.com/products/plugin/1.3/plugin-install.html"
+pluginspage="http://java.sun.com/products/plugin/1.4/plugin-install.html"
 mayscript="true"
 port="<? p($SERVER_PORT); ?>"
 script="X_ROOT/pub/issues/sections/articles/upload.php"
