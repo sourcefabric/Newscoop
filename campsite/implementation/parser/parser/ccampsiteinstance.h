@@ -139,6 +139,8 @@ class CCampsiteInstanceRegister
 
 		bool has(const string& p_rcoInstanceName) const;
 
+		bool isEmpty() const { return m_coCCampsiteInstances.empty(); }
+
 		CCampsiteInstance* getCampsiteInstance(pid_t p_rcoInstancePID) const
 				throw (InvalidValue);
 
