@@ -200,10 +200,14 @@ string CURLShortNames::getFormString() const
 	for (; coIt != m_coParamMap.end(); ++coIt)
 	{
 		string coParam = (*coIt).first;
-		const char* pchValue = EscapeHTML((*coIt).second.c_str());
-		coFormString += string("<input type=\"hidden\" name=\"") + coParam + "\" value=\""
-		             + pchValue + "\">\n";
-		delete []pchValue;
+		if (coParam != P_IDLANG && coParam != P_IDPUBL && coParam != P_NRISSUE
+			&& coParam != P_NRSECTION && coParam != P_NRARTICLE)
+		{
+			const char* pchValue = EscapeHTML((*coIt).second.c_str());
+			coFormString += string("<input type=\"hidden\" name=\"") + coParam + "\" value=\""
+			             + pchValue + "\">\n";
+			delete []pchValue;
+		}
 	}
 	return coFormString;
 }
