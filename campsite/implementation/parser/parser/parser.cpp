@@ -898,7 +898,7 @@ inline int CParser::HURLParameters(CActionList& al)
 string CParser::getTemplatePath(bool p_nAddTrailingSlash) const
 {
 	string tpl_path = tpl;
-	lint pos = tpl_path.rfind('/');
+	ulint pos = tpl_path.rfind('/');
 	if (pos != string::npos)
 	{
 		tpl_path.erase(pos);
@@ -2237,7 +2237,7 @@ CParser::~CParser()
 string CParser::getTemplateInternalPath(bool p_nAddTrailingSlash) const
 {
 	string tpl_ipath = getTemplatePath(false);
-	lint pos = tpl_ipath.find("/look/");
+	ulint pos = tpl_ipath.find("/look/");
 	if (pos != string::npos)
 		tpl_ipath.erase(0, pos + 6);
 	if (p_nAddTrailingSlash && tpl_ipath != "")

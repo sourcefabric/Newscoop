@@ -164,7 +164,7 @@ string CURLTemplatePath::setTemplate(const string& p_rcoTemplate) throw (Invalid
 	if (bRelativePath)
 	{
 		getTemplate();
-		lint nSlashPos = m_coTemplate.rfind('/');
+		ulint nSlashPos = m_coTemplate.rfind('/');
 		if (nSlashPos != string::npos)
 			coTemplate = m_coTemplate.substr(0, nSlashPos) + "/" + p_rcoTemplate;
 	}
