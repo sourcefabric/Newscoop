@@ -3,6 +3,8 @@
     - Fixed bug 178: Some admin rights not added by default when admin account
     created
     - Improved the manual (2.1. Configuring the publishing environment)
+    - Improved the template parser behavior: display error message when an
+    invalid template was included (previously it would display an empty page)
     - Other bug fixes
 
 2.1.3
