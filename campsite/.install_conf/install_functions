@@ -217,8 +217,12 @@ while true; do
     all_ok=true
     for cc_mod in $NEED_CONFIG_MODULES; do
 	echo -e -n "\t${cc_index}. ["
-	if in_list $cc_mod $CHECKED_MODULES; then echo -n "X"
-	else echo -n " "; all_ok=false; fi
+	if in_list $cc_mod $CHECKED_MODULES; then
+	    echo -n "X"
+	else
+	    echo -n " "
+	    all_ok=false
+	fi
 	echo "] $cc_mod"
 	cc_index=`expr $cc_index + 1`
     done
