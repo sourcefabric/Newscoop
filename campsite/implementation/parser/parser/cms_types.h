@@ -111,7 +111,8 @@ typedef enum _TAction {
     CMS_ACT_USER = 0x0012,
     CMS_ACT_LOGIN = 0x0013,
     CMS_ACT_SEARCH = 0x0014,
-    CMS_ACT_WITH = 0x0015
+    CMS_ACT_WITH = 0x0015,
+    CMS_ACT_TOPIC = 0x0016
 } TAction;
 
 typedef enum _TSubsUnit {
