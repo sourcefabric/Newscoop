@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 configure_campsite()
 {
@@ -83,7 +83,7 @@ uninstall_campsite()
 	fi
     fi
     echo -e "###############################################\n\tUninstalling campsite\n" >> uninstall_log
-    make uninstall >> uninstall_log 2>&1
+    $MAKE uninstall >> uninstall_log 2>&1
     err_code=$?
     if [ $err_code -ne 0 ]; then
 	echo "ERROR."
@@ -100,6 +100,11 @@ uninstall_campsite()
 
 # start execution
 my_id=`id -u`
+if [ "`uname | grep BSD`" != "" ]; then
+	export BSD=1
+else
+	export BSD=0
+fi;
 go_to_uninstall=false
 force_uninstall=false
 not_interactive=""
