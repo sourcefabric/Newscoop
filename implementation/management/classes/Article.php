@@ -1,9 +1,8 @@
 <?
-//require_once("$DOCUMENT_ROOT/db_connect.php");
-require_once("$DOCUMENT_ROOT/classes/config.php");
-require_once("$DOCUMENT_ROOT/priv/lib_campsite.php");
-require_once("$DOCUMENT_ROOT/classes/DatabaseObject.php");
-require_once("$DOCUMENT_ROOT/classes/ArticleType.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/config.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/DatabaseObject.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/ArticleType.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/Language.php");
 
 class Article extends DatabaseObject {
 	/**
@@ -469,6 +468,36 @@ class Article extends DatabaseObject {
 	} // fn setShortName
 	
 	
+	function getLanguages() {
+		global $Campsite;
+	 	$queryStr = "SELECT IdLanguage FROM Articles "
+	 				." WHERE IdPublication=".$this->IdPublication
+	 				." AND NrIssue=".$this->NrIssue
+	 				." AND NrSection=".$this->NrSection
+	 				." AND Number=".$this->Number;
+	 	$languageIds = $Campsite["db"]->GetCol($queryStr);
+	 	$languages = array();
+		foreach ($languageIds as $languageId) {
+			$languages[] =& new Language($languageId);
+		}
+		return $languages;
+	} // fn getLanguages
+	
+	
+	function getArticleTypeObject() {
+		return new ArticleType($this->Type, $this->Number, $this->IdLanguage);
+	} // fn getArticleTypeObject
+
+	
+	function lock($p_userId) {
+		global $Campsite;
+		$queryStr = "UPDATE Articles "
+					." SET LockUser=".$p_userId
+					.", LockTime=NOW() "
+					." WHERE ". $this->getKeyWhereClause();
+		$Campsite["db"]->Execute($queryStr);
+	} // fn lock
+
 } // class Article
 
 ?>
