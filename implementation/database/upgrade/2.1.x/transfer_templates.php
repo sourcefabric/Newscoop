@@ -1,21 +1,17 @@
-#!/usr/bin/php
-
 <?php
 
-$db_name = 'campsite';
-$db_user = 'root';
-$db_passwd = '';
-$db_host = 'localhost';
+require_once("database_conf.php");
+require_once("install_conf.php");
+if (!is_array($Campsite)) {
+	echo "Invalid configuration file(s)";
+	exit(1);
+}
 
-$templates_dir = '/var/www/html/look/';
-
-if ($argc == 1)
-	echo "Running with default configuration: \n"
-		. "\tdb_name = " . $db_name . "\n"
-		. "\tdb_user = " . $db_user . "\n"
-		. "\tdb_passwd = " . $db_passwd . "\n"
-		. "\tdb_host = " . $db_host . "\n"
-		. "\ttemplates_dir = " . $templates_dir . "\n";
+$db_name = $Campsite['DATABASE_NAME'];
+$db_user = $Campsite['DATABASE_USER'];
+$db_passwd = $Campsite['DATABASE_PASSWORD'];
+$db_host = $Campsite['DATABASE_SERVER_ADDRESS'];
+$templates_dir = $Campsite['WWW_DIR'] . "/$db_name/html/look";
 
 if ($argc > 1) {
 	$usage = "Usage: transfer_templates.php [-d <db_name>] [-u <user>]\n"
@@ -68,6 +64,7 @@ transfer_templates($templates_dir, $templates_dir);
 update_issues();
 $sql = "CREATE TABLE TransferTemplates (Done int NOT NULL);";
 mysql_query($sql);
+echo "Templates transfered successfuly\n";
 
 
 function transfer_templates($dir, $root_dir, $level = 0)
