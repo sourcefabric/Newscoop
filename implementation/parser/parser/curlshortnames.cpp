@@ -261,8 +261,8 @@ string CURLShortNames::getTemplate() const
 	return m_coTemplate;
 }
 
-// buildURI(): internal method; builds the URI string from object attributes
-void CURLShortNames::buildURI() const
+// BuildURI(): internal method; builds the URI string from object attributes
+void CURLShortNames::BuildURI() const
 {
 	if (m_bValidURI)
 		return;
