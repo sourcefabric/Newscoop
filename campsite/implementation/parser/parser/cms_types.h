@@ -39,6 +39,7 @@ Define global types.
 #include <unistd.h>
 #include <fstream>
 #include <iostream>
+#include <exception>
 #if (__GNUC__ < 3)
 #include <streambuf.h>
 #else
@@ -196,6 +197,19 @@ private:
 };
 
 typedef std::ostream sockstream;
+
+class RunException : public std::exception
+{
+	private:
+		string m_coMsg;
+
+	public:
+		RunException(const string& p_rcoMsg) : m_coMsg(p_rcoMsg) {}
+
+		virtual ~RunException() throw() {}
+
+		virtual const char* what() const throw() { return m_coMsg.c_str(); }
+};
 
 int case_comp(const string& p_rcoS1, const string& p_rcoS2);
 inline int case_comp(const string& p_rcoS1, const string& p_rcoS2)
