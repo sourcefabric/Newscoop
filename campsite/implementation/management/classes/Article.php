@@ -156,6 +156,9 @@ class Article extends DatabaseObject {
 			$this->m_data['IdLanguage']);
 		$articleData->delete();
 		
+		// Delete image pointers
+		ArticleImage::OnArticleDelete($this->m_data['Number']);
+		
 		// Delete row from Articles table.
 		parent::delete();
 	} // fn delete
@@ -176,6 +179,20 @@ class Article extends DatabaseObject {
 		$Campsite['db']->Execute($queryStr);
 	} // fn lock
 
+	
+	/**
+	 * Unlock the article so anyone can edit it.
+	 * @return void
+	 */
+	function unlock() {
+		global $Campsite;
+		$queryStr = 'UPDATE Articles '
+					.' SET LockUser=0'
+					.' WHERE '. $this->getKeyWhereClause();
+		$Campsite['db']->Execute($queryStr);		
+	} // fn unlock
+	
+	
 //	/**
 //	 * Create and return an array representation of an article for use in a template.
 //	 * @return array
@@ -509,13 +526,6 @@ class Article extends DatabaseObject {
 		return $this->getProperty('LockTime');
 	} // fn getLockTime
 
-	
-	/**
-	 *
-	 */
-	function setLockTime() {
-		// TODO
-	} // fn setLockTime
 	
 	/**
 	 * @return string
