@@ -42,6 +42,7 @@
     - Fixed notification of subscription end bug
     - Fixed reading ALT image property in article body
     - Fixed some incorrect parser hash locks
+    - Fixed incorrect use of is, not, greater, smaller operators in if statements
 
 2.0.10
     - Fixed the 'Back to article details' bug
