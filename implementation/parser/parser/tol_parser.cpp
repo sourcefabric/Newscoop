@@ -1398,7 +1398,13 @@ inline int TOLParser::HIf(TOLPActionList& al, int lv, int sublv, const TOLLexem*
 	TOLParameter param("", "", TOL_NO_OP);
 	TIfModifier modifier;
 	intHash rc_hash(4, intHashFn, intEqual, intValue);
+	bool bNegated = false;
 	RequireAtom(l);
+	if (strcasecmp(l->m_pcoAtom->Identifier(), "not") == 0)
+	{
+		bNegated = true;
+		RequireAtom(l);
+	}
 	CheckForAtomType(l->m_pcoAtom, CL_TOLSTATEMENT, PERR_ATOM_NOT_STATEMENT,
 	                 IfStatements(lv, sublv), lex.PrevLine(), lex.PrevColumn());
 	TOLStatement *ist = &(*lex.s_coStatements.find(l->m_pcoAtom->Identifier()));
@@ -1550,6 +1556,13 @@ inline int TOLParser::HIf(TOLPActionList& al, int lv, int sublv, const TOLLexem*
 			first = false;
 		} while (1);
 	}
+	else if (ist->statement == TOL_ST_IMAGE)
+	{
+		RequireAtom(l);
+		ValidateDType(l, TOL_DT_NUMBER, 1);
+		param = TOLParameter(l->m_pcoAtom->Identifier(), "", TOL_NO_OP);
+		modifier = TOL_IMOD_IMAGE;
+	}
 	else if (ist->statement == TOL_ST_PUBLICATION)
 	{
 		RequireAtom(l);
@@ -1631,7 +1644,7 @@ inline int TOLParser::HIf(TOLPActionList& al, int lv, int sublv, const TOLLexem*
 	}
 	if (l->m_Res != TOL_LEX_END_STATEMENT)
 		WaitForStatementEnd(true);
-	TOLActIf *ai = new TOLActIf(modifier, param);
+	TOLActIf* ai = new TOLActIf(modifier, param, bNegated);
 	ai->rc_hash = rc_hash;
 	int last_st, res;
 	if ((res = LevelParser(ai->block, lv, sublv, last_st)))
