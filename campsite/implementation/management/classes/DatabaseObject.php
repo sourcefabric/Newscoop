@@ -509,7 +509,32 @@ class DatabaseObject {
         $Campsite['db']->Execute($queryStr);
 		return ($Campsite['db']->Affected_Rows() > 0);
 	} // fn commit
-		
+
+	
+	/**
+	 * 
+	 * @param string p_queryStr
+	 * @param array p_sqlOptions
+	 *		Available options:
+	 *		LIMIT => [max_rows_to_fetch]
+	 *		LIMIT => array('START'=>[Starting_index],'MAX_ROWS'=>[Max_rows_to_fetch]
+	 * @return string
+	 */
+	function ProcessOptions($p_queryStr, $p_sqlOptions) {
+		if (!is_null($p_sqlOptions)) {
+			if (isset($p_sqlOptions['LIMIT'])) {
+				if (is_array($p_sqlOptions['LIMIT'])) {
+					$p_queryStr .= ' LIMIT '.$p_sqlOptions['LIMIT']['START']
+						.','.$p_sqlOptions['LIMIT']['MAX_ROWS'];
+				}
+				else {
+					$p_queryStr .= ' LIMIT '.$p_sqlOptions['LIMIT'];					
+				}
+			}
+		}
+		return $p_queryStr;
+	} // fn ProcessOptions
+	
 } // class DatabaseObject
 
 ?>
