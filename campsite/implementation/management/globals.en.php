@@ -264,7 +264,7 @@ regGS("There are $1 publication(s) left.","There are $1 publication(s) left.:en"
 regGS("There are $1 keyword(s) left.","There are $1 keywords(s) left.:en");
 regGS("There are $1 countries left.","There are $1 countries left.:en");
 
-regGS("Name<BR><SMALL>(click to edit)</SMALL>","Name<BR><SMALL>(click to edit)</SMALL>:en");
+regGS("Name<BR><SMALL>(click to edit)</SMALL>","Name <SMALL>(click to edit)</SMALL>:en");
 regGS("User account","User account:en");
 regGS("No such user account.","No such user account.:en");
 
