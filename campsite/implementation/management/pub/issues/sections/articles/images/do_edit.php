@@ -43,12 +43,7 @@ $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
 
 // This file can only be accessed if the user has the right to change articles
 // or the user created this article and it hasnt been published yet.
-$access = false;
-if ($User->hasPermission('ChangeArticle') 
-	|| (($articleObj->getUserId() == $User->getId()) && ($articleObj->getPublished() == 'N'))) {
-	$access = true;
-}
-if (!$access) {	
+if (!$articleObj->userCanModify($User)) {	
 	CampsiteInterface::DisplayError('You do not have the right to change the article.');
 	exit;		
 }

@@ -54,11 +54,7 @@ if (!$articleObj->exists()) {
 	exit;
 }
 
-$access = false;
-if ($User->hasPermission('ChangeArticle') || (($articleObj->getUserId() == $User->getId()) && ($articleObj->getPublished() == 'N'))) {
-	$access= true;
-}
-if (!$access) {
+if (!$articleObj->userCanModify($User)) {
 	$errorStr = 'You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only changed by authorized users.';
 	CampsiteInterface::DisplayError($errorStr, $BackLink);
 	exit;	
