@@ -52,7 +52,7 @@ distclean: clean
 	rm -f make.env
 
 uninstall: dummy
-#	$(MAKE) -C implementation uninstall
+	$(MAKE) -C implementation uninstall
 	rm -f "$(BIN_DIR)/campsite_config" "$(BIN_DIR)/cli_script_lib.php"
 	rm -f "$(BIN_DIR)/create_instance" "$(BIN_DIR)/create_instance.php"
 	rm -f "$(BIN_DIR)/backup_instance" "$(BIN_DIR)/backup_instance.php"
