@@ -8,8 +8,8 @@ LIBS= -lnsl -lm -lz -lcrypt -lpthread -L/usr/lib/mysql -lmysqlclient
 
 DEPENDANCES= *.h
 
-CFLAGS= -D_REENTRANT
-# -Wall -D_DEBUG -g
+CFLAGS= -D_REENTRANT -Wall
+# -D_DEBUG -g
 
 export CAMPSITE_SERVER=campsite_server
 export CAMPSITECTL=campsitectl

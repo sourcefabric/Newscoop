@@ -9,7 +9,7 @@ path_to_bin_program=parser
 [General]
 AMChanged=false
 author=
-debug_args=-d
+debug_args=
 dir_where_make_will_be_called=
 email=
 kdevprj_version=1.3

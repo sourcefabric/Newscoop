@@ -2118,7 +2118,22 @@ int TOLActSubscription::TakeAction(TOLContext& c, fstream& fs)
 {
 	TK_TRY
 	if (c.SubsType() == ST_NONE)
-		return RES_OK;
+	{
+		sprintf(&m_coBuf, "select Subs.Type, Usr.CountryCode from Subscriptions as Subs, "
+		        "Users as Usr where Subs.IdUser = Usr.Id and IdUser = %ld and IdPublication = %ld",
+		        c.User(), c.Publication());
+		SQLQuery(&m_coSql, &m_coBuf);
+		StoreResult(&m_coSql, res);
+		CheckForRows(*res, 1);
+		FetchRow(*res, row);
+		if (row[0] == NULL || row[1] == NULL)
+			return -1;
+		if (row[0][0] == 'T')
+			c.SetSubsType(ST_TRIAL);
+		else
+			c.SetSubsType(ST_PAID);
+		c.SetUserInfo("CountryCode", row[1]);
+	}
 	sprintf(&m_coBuf, "select UnitCost, Currency from Publications where Id = %ld",
 			c.Publication());
 	SQLQuery(&m_coSql, &m_coBuf);

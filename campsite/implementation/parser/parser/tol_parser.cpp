@@ -2265,7 +2265,15 @@ TOLParser::TOLParser(cpChar p_pchTpl, string dr)
 	m_pchTplBuf = NULL;
 	pthread_once(&m_OpMapControl, OpMapInit);
 	memset((void*)&tpl_stat, 0, sizeof(tpl_stat));
+try
+{
 	MapTpl();
+}
+catch (ExStat)
+{
+	m_coOpMutex.Unlock();
+	return;
+}
 	UnMapTpl();
 	m_coOpMutex.Unlock();
 }

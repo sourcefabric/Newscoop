@@ -330,7 +330,7 @@ int main(int argc, char** argv)
 	ProcessArgs(argc, argv, bRunAsDaemon, nMaxThreads);
 	StartWatchDog(bRunAsDaemon);
 	signal(SIGTERM, SIG_DFL);
-	void (*old_terminate)() = set_terminate(my_terminate);
+	set_terminate(my_terminate);
 	try
 	{
 		CServerSocket coServer("0.0.0.0", TOL_SRV_PORT);
