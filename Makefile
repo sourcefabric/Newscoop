@@ -45,8 +45,7 @@ default_instance:
 
 clean:
 	$(MAKE) -C implementation clean
-	rm -f install_log uninstall_log
-	rm -fr .package
+	rm -f install_log uninstall_log "$(INSTALL_CONF)/create_instance"
 
 distclean: clean
 	rm -f make.env
