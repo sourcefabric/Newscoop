@@ -454,6 +454,8 @@ function define_globals()
 function read_old_config($conf_dir, $module_name, &$variables)
 {
 	$conf_file = "$conf_dir/$module_name.conf";
+	if (!is_file)
+		return "File $conf_file does not exist";
 	if (!$lines = file($conf_file))
 		return "Unable to read configuration file $conf_file";
 
