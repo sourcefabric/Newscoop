@@ -10,6 +10,7 @@ registerLanguage('Serbo-Croatian','sh','ISO_8859-2');
 registerLanguage('Croatian','hr','ISO_8859-2');
 registerLanguage('Czech','cz','ISO_8859-2');
 registerLanguage('German','de','ISO_8859-1');
+registerLanguage('Portuguese','pt','ISO_8859-1');
 registerLanguage('Romanian','ro','ISO_8859-2');
 registerLanguage('Russian','ru','ISO_8859-5');
 registerLanguage('Serbian (Cyrillic)','sr','ISO_8859-5');
