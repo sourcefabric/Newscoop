@@ -246,7 +246,7 @@ foreach ($allArticles as $articleObj) {
 			if (($articleObj->getArticleId() == $previousArticleId) || ($numUniqueArticles <= 1))  {
 				?>
 				<TD ALIGN="CENTER" valign="middle" NOWRAP></TD>
-				<?
+				<?php
 			}
 			else {
 				?>

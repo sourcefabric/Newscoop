@@ -113,9 +113,9 @@ if ($access) {
 		<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("Short Name"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("Language"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>"); ?></B></TD>
-	<? if ($publish) { ?>
+	<?php if ($publish) { ?>
 		<TD ALIGN="center" VALIGN="TOP" width="1%"><B><?php  putGS("Automatic publishing"); ?></B></TD>
-	<? } ?>
+	<?php } ?>
 		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Translate"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Configure"); ?></B></TD> 
 		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Preview"); ?></B></TD>
@@ -159,11 +159,11 @@ if ($access) {
 		<TD ALIGN="CENTER">
 			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/status.php?Pub=<?php  pencURL($Pub); ?>&Issue=<?php  pgetUVar($q_iss,'Number'); ?>&Language=<?php  pgetUVar($q_iss,'IdLanguage'); ?>"><?php  if (getHVar($q_iss, 'Published') == 'Y') pgetHVar($q_iss,'PublicationDate'); else print putGS(getHVar($q_iss,'Pub')); ?></A>
 		</TD>
-	<? if ($publish) { ?>
+	<?php if ($publish) { ?>
 		<TD ALIGN="CENTER">
-			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/autopublish.php?Pub=<? pencURL($Pub); ?>&Issue=<? pgetUVar($q_iss,'Number'); ?>&Language=<? pgetUVar($q_iss,'IdLanguage'); ?>"><img src="/<?php echo $ADMIN; ?>/img/icon/automatic_publishing.png" alt="<? putGS("Automatic publishing"); ?>" border="0"></A>
+			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/autopublish.php?Pub=<?php pencURL($Pub); ?>&Issue=<?php pgetUVar($q_iss,'Number'); ?>&Language=<?php pgetUVar($q_iss,'IdLanguage'); ?>"><img src="/<?php echo $ADMIN; ?>/img/icon/automatic_publishing.png" alt="<?php putGS("Automatic publishing"); ?>" border="0"></A>
 		</TD>
-	<? } ?>
+	<?php } ?>
 		<TD ALIGN="CENTER">
 			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/translate.php?Pub=<?php  pencURL($Pub); ?>&Issue=<?php  pgetUVar($q_iss,'Number'); ?>&Language=<?php  pgetUVar($q_iss,'IdLanguage'); ?>"><img src="/<?php echo $ADMIN; ?>/img/icon/translate.png" alt="<?php  putGS("Translate"); ?>" border="0"></A>
 		</TD>
