@@ -73,4 +73,3 @@ regGS("Sunday","Sunday:en");
 
 
 ?>
-
