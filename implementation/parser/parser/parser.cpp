@@ -53,17 +53,17 @@ using std::endl;
 #define ROOT_STATEMENTS ST_PUBLICATION ", " ST_ISSUE ", " ST_SECTION ", "\
 ST_ARTICLE ", " ST_LIST ", " ST_INCLUDE ", " ST_IF ", " ST_URLPARAMETERS ", "\
 ST_FORMPARAMETERS ", " ST_PRINT ", " ST_DATE ", " ST_LOCAL ", "\
-ST_SUBSCRIPTION ", " ST_EDIT ", " ST_SELECT ", " ST_USER ", " ST_SEARCH
+ST_SUBSCRIPTION ", " ST_EDIT ", " ST_SELECT ", " ST_USER ", " ST_SEARCH ", " ST_TOPIC
 
 #define LISSUE_STATEMENTS ST_LIST ", " ST_SECTION ", " ST_ARTICLE ", "\
 ST_URLPARAMETERS ", " ST_FORMPARAMETERS ", " ST_PRINT ST_DATE ", "\
 ST_INCLUDE ", " ST_IF ", " ST_LOCAL ", " ST_SUBSCRIPTION ", " ST_EDIT\
-", " ST_SELECT ", " ST_USER ", " ST_SEARCH
+", " ST_SELECT ", " ST_USER ", " ST_SEARCH ", " ST_TOPIC
 
 #define LSECTION_STATEMENTS ST_LIST ", " ST_ARTICLE ", " ST_URLPARAMETERS\
 ", " ST_FORMPARAMETERS ", " ST_PRINT ST_DATE ", " ST_INCLUDE ", " ST_IF\
 "," ST_LOCAL ", " ST_SUBSCRIPTION ", " ST_EDIT ", " ST_SELECT ", " ST_USER\
-", " ST_SEARCH
+", " ST_SEARCH ", " ST_TOPIC
 
 #define LARTICLE_STATEMENTS ST_URLPARAMETERS ", " ST_FORMPARAMETERS ", "\
 ST_PRINT ", " ST_DATE ", " ST_INCLUDE ", " ST_IF ", " ST_LOCAL ", "\
@@ -96,6 +96,7 @@ ST_SEARCHRESULT
 #define SUBLV_SEARCHRESULT 16384
 #define SUBLV_WITH 32768
 #define SUBLV_IFLANGUAGE 65536
+#define SUBLV_IFTOPIC 131072
 
 
 // macro definition
@@ -417,8 +418,7 @@ string CParser::IfStatements(int level, int sublevel)
 	else
 		s_str = ST_PREVIOUSITEMS ", " ST_NEXTITEMS ", " ST_LIST ", " ST_PUBLICATION
 		        ", " ST_ISSUE ", " ST_SECTION ", " ST_ARTICLE ", " ST_ALLOWED;
-	s_str += ", " ST_IF " " ST_PUBLICATION "|" ST_ISSUE "|" ST_SECTION
-	         "|" ST_ARTICLE", " ST_SUBSCRIPTION;
+	s_str += ", " ST_SUBSCRIPTION ", " ST_TOPIC;
 	if ((sublevel & SUBLV_USER) == 0)
 		s_str += ", " ST_USER;
 	if ((sublevel & SUBLV_LOGIN) == 0)
@@ -689,7 +689,7 @@ inline int CParser::HPublication(CActionList& al, int level, int sublevel)
 	return 0;
 }
 
-// HIssue: parse include statement; add CActIssue action to actions list (al)
+// HIssue: parse issue statement; add CActIssue action to actions list (al)
 // Parameters:
 //		CActionList& al - reference to actions list
 //		int level - current level
@@ -719,7 +719,7 @@ inline int CParser::HIssue(CActionList& al, int level, int sublevel)
 	return 0;
 }
 
-// HSection: parse include statement; add CActSection action to actions list (al)
+// HSection: parse section statement; add CActSection action to actions list (al)
 // Parameters:
 //		CActionList& al - reference to actions list
 //		int level - current level
@@ -748,7 +748,7 @@ inline int CParser::HSection(CActionList& al, int level, int sublevel)
 	return 0;
 }
 
-// HArticle: parse include statement; add CActArticle action to actions list (al)
+// HArticle: parse article statement; add CActArticle action to actions list (al)
 // Parameters:
 //		CActionList& al - reference to actions list
 //		int level - current level
@@ -770,6 +770,32 @@ inline int CParser::HArticle(CActionList& al, int level, int sublevel)
 	}
 	else
 		al.insert(al.end(), new CActArticle(CParameter(attr->attribute(), "", NULL)));
+	WaitForStatementEnd(true);
+	return 0;
+}
+
+// HTopic: parse topic statement; add CActTopic action to actions list (al)
+// Parameters:
+//		CActionList& al - reference to actions list
+//		int level - current level
+//		int sublevel - current sublevel
+inline int CParser::HTopic(CActionList& al, int level, int sublevel)
+{
+	if ((sublevel & SUBLV_LOCAL) == 0)
+		CheckForLevel(level, LV_ROOT | LV_LISSUE | LV_LSECTION, lex.prevLine(), lex.prevColumn());
+	RequireAtom(l);
+	attr = st->findAttr(l->atom()->identifier(), CMS_CT_DEFAULT);
+	if (case_comp(l->atom()->identifier(), "off") != 0
+	    && case_comp(l->atom()->identifier(), "default") != 0)
+	{
+		RequireAtom(l);
+		ValidateDType(l, attr);
+		CParameter param(attr->attribute(), "",
+		                 attr->compOperation(g_coEQUAL, l->atom()->identifier()));
+		al.insert(al.end(), new CActTopic(param));
+	}
+	else
+		al.insert(al.end(), new CActTopic(CParameter(attr->attribute(), "", NULL)));
 	WaitForStatementEnd(true);
 	return 0;
 }
@@ -998,6 +1024,18 @@ inline int CParser::HPrint(CActionList& al, int lv, int sublv)
 	return 0;
 }
 
+// IsTopicStatement: returns true if the given lexem is the topic statement
+inline bool CParser::IsTopicStatement(const CLexem* p_pcoLexem) const
+{
+	if (p_pcoLexem == NULL)
+		return false;
+	if (p_pcoLexem->res() != CMS_LEX_STATEMENT)
+		return false;
+	if (dynamic_cast<const CStatement*>(p_pcoLexem->atom()) == NULL)
+		return false;
+	return (((const CStatement*)p_pcoLexem->atom())->id() == CMS_ST_TOPIC);
+}
+
 // HList: parse list statement; add CActList action to actions list (al)
 // All statements between List and EndList statements are parsed, added as actions
 // in CActList's list of actions
@@ -1059,7 +1097,8 @@ inline int CParser::HList(CActionList& al, int level, int sublevel)
 	CParameterList params;
 	l = lex.getLexem();
 	DEBUGLexem("hlist1", l);
-	while (l->res() == CMS_LEX_IDENTIFIER && mod != CMS_ST_SEARCHRESULT && mod != CMS_ST_SUBTITLE)
+	while (mod != CMS_ST_SEARCHRESULT && mod != CMS_ST_SUBTITLE
+	       && (l->res() == CMS_LEX_IDENTIFIER || (IsTopicStatement(l) && mod == CMS_ST_ARTICLE)))
 	{
 		StringSet ah;
 		StringSet::iterator ah_i;
@@ -1413,7 +1452,7 @@ inline int CParser::HIf(CActionList& al, int lv, int sublv)
 			param = CParameter(attr->attribute());
 		sublv |= SUBLV_IFISSUE;
 	}
-	else if (st->id() == CMS_ST_SECTION || st->id() == CMS_ST_ARTICLE
+	else if (st->id() == CMS_ST_SECTION || st->id() == CMS_ST_ARTICLE || st->id() == CMS_ST_TOPIC
 	         || st->id() == CMS_ST_LANGUAGE || st->id() == CMS_ST_PUBLICATION)
 	{
 		RequireAtom(l);
@@ -1478,6 +1517,10 @@ inline int CParser::HIf(CActionList& al, int lv, int sublv)
 		else if (st->id() == CMS_ST_PUBLICATION)
 		{
 			sublv |= SUBLV_IFPUBLICATION;
+		}
+		else if (st->id() == CMS_ST_TOPIC)
+		{
+			sublv |= SUBLV_IFTOPIC;
 		}
 	}
 	if (l->res() != CMS_LEX_END_STATEMENT)
@@ -1926,6 +1969,9 @@ int CParser::LevelParser(CActionList& al, int level, int sublevel)
 			break;
 		case CMS_ST_ARTICLE:
 			HArticle(al, level, sublevel);
+			break;
+		case CMS_ST_TOPIC:
+			HTopic(al, level, sublevel);
 			break;
 		case CMS_ST_LIST:
 			if ((res = HList(al, level, sublevel)))
