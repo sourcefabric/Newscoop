@@ -119,6 +119,7 @@ export MYSQL_H_PATH=$MYSQL_H_PATH
 export LIBCRYPT_LINK=$LIBCRYPT_LINK
 export NSL_LINK=$NSL_LINK
 export KILLALL=$KILLALL
+export PARSER_DEFAULT_PORT=2001
 EOF
 [ $? -ne 0 ] && echo "ERROR" && exit 1
 [ "$GPP" != "" ] && echo "export GPP=$GPP" >> $make_env
@@ -196,5 +197,6 @@ export MYSQL_H_PATH=$MYSQL_H_PATH
 export LIBCRYPT_LINK=$LIBCRYPT_LINK
 export NSL_LINK=$NSL_LINK
 export KILLALL=$KILLALL
+export PARSER_DEFAULT_PORT=2001
 
 echo "Configuration done"
