@@ -297,7 +297,7 @@ action="print"
 [ "$1" = "--unset" ] && action="unset" && shift 1
 conf_file=`cd "$INSTALL_CONF"; php -q module_conf_file.php "install"`
 if [ ! -f "$INSTALL_CONF/$conf_file" ]; then
-    continue
+    return 1
 fi
 inst_conf=`cd "$INSTALL_CONF"; php -q export_conf.php "install"`
 if [ $? -ne 0 ]; then
