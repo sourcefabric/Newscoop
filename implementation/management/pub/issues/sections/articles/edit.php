@@ -413,6 +413,13 @@ if ($edit_ok) { ?>
 			<?php
 		} elseif (stristr($dbColumn->getType(), "blob")) {
 			// Multiline text fields
+			// Transform Campsite-specific tags into editor-friendly tags.
+			$text = $articleType->getColumnValue($dbColumn->getName());
+			
+			$text = preg_replace("/<!\*\*\s*Title\s*>/i", "<span class=\"campsite_subhead\">", $text);
+			$text = preg_replace("/<!\*\*\s*EndTitle\s*>/i", "</span>", $text);
+			$text = preg_replace("/<!\*\*\s*Link\s*Internal\s*[\w&]*\s*>/i", "<a href=\"campsite_internal_link?\7\">", $text);
+			$text = preg_replace("/<!\*\*\s*EndLink\s*>/i", "</a>", $text);
 			?>
 			<TR>
 			<TD ALIGN="RIGHT" VALIGN="TOP"><BR><?php echo htmlspecialchars($dbColumn->getPrintName()); ?>:<BR> 
@@ -423,7 +430,7 @@ if ($edit_ok) { ?>
 				<tr bgcolor=LightBlue>
 					<td><textarea name="<?php print $dbColumn->getName() ?>" 
 								  id="<?php print $dbColumn->getName() ?>" 
-								  rows="20" cols="80" ><?php print $articleType->getColumnValue($dbColumn->getName()); ?></textarea>
+								  rows="20" cols="80" ><?php print $text; ?></textarea>
 					</td>
 				</tr>
 				</table>
