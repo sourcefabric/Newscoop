@@ -35,4 +35,9 @@ regGS("You do not have the right to add images","You do not have the right to ad
 // -- do_sel.m4
 regGS("The image $1 has been added.","The image $1 has been added.:en");
 
+regGS("You do not have the right to change the article.", "You do not have the right to change the article.:en");
+regGS("Image $1 linked to article $2", "Image $1 linked to article $2:en");
+regGS("Image $1 unlinked from $2", "Image $1 unlinked from $2:en");
+regGS("Unlink image $1", "Unlink image $1:en");
+
 ?>
