@@ -6,13 +6,20 @@ if (!$access) {
 	header("Location: /priv/logout.php");
 	exit;
 }
-$Pub = isset($_REQUEST["Pub"])?$_REQUEST["Pub"]:0;
-$Issue = isset($_REQUEST["Issue"])?$_REQUEST["Issue"]:0;
-$Section = isset($_REQUEST["Section"])?$_REQUEST["Section"]:0;
-$Language = isset($_REQUEST["Language"])?$_REQUEST["Language"]:0;
-$sLanguage = isset($_REQUEST["sLanguage"])?$_REQUEST["sLanguage"]:0;
-$Article = isset($_REQUEST["Article"])?$_REQUEST["Article"]:0;
-$LockOk = isset($_REQUEST["LockOk"])?$_REQUEST["LockOk"]:0;
+
+$Pub = Input::get('Pub', 'int', 0);
+$Issue = Input::get('Issue', 'int', 0);
+$Section = Input::get('Section', 'int', 0);
+$Language = Input::get('Language', 'int', 0);
+$sLanguage = Input::get('sLanguage', 'int', 0);
+$Article = Input::get('Article', 'int', 0);
+$LockOk = Input::get('LockOk', 'string', 0, true);
+
+if (!Input::isValid()) {
+	header("Location: /priv/logout.php");
+	exit;	
+}
+
 $errorStr = "";
 
 // Fetch article
@@ -22,7 +29,8 @@ if (!$articleObj->exists()) {
 }
 $articleType =& $articleObj->getArticleTypeObject();
 $lockUserObj =& new User($articleObj->getLockedByUser());
-$issueLanguageObj =& new Language($Language);
+$languageObj =& new Language($Language);
+$sLanguageObj =& new Language($sLanguage);
 $issueObj =& new Issue($Pub, $Language, $Issue);
 $articleTemplate =& new Template($issueObj->getArticleTemplateId());
 
@@ -152,8 +160,8 @@ if ($edit_ok) { ?>
 				<TD>
 					<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 					<TR>
-						<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $issueLanguageObj->getLanguageId(), "status.php", $REQUEST_URI); ?><IMG SRC="/priv/img/tol.gif" BORDER="0"></A></TD>
-						<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $issueLanguageObj->getLanguageId(), "status.php", $REQUEST_URI); ?><B><?php  putGS("Unpublish"); ?></B></A></TD>
+						<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $languageObj->getLanguageId(), "status.php", $REQUEST_URI); ?><IMG SRC="/priv/img/tol.gif" BORDER="0"></A></TD>
+						<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $languageObj->getLanguageId(), "status.php", $REQUEST_URI); ?><B><?php  putGS("Unpublish"); ?></B></A></TD>
 					</TR>
 					</TABLE>
 				</TD>
@@ -166,27 +174,31 @@ if ($edit_ok) { ?>
 				<TD>
 					<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 					<TR>
-						<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $issueLanguageObj->getLanguageId(), "status.php", $REQUEST_URI); ?><IMG SRC="/priv/img/tol.gif" BORDER="0"></A></TD>
-						<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $issueLanguageObj->getLanguageId(), "status.php", $REQUEST_URI); ?><B><?php  putGS("Publish"); ?></B></A></TD>
+						<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $languageObj->getLanguageId(), "status.php", $REQUEST_URI); ?><IMG SRC="/priv/img/tol.gif" BORDER="0"></A></TD>
+						<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $languageObj->getLanguageId(), "status.php", $REQUEST_URI); ?><B><?php  putGS("Publish"); ?></B></A></TD>
 					</TR>
 					</TABLE>
 				</TD>
 				<?php
 			} 
 		} 
-		else { 
-			?>
-			<TD>
-				<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
-				<TR>
-					<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $issueLanguageObj->getLanguageId(), "status.php", $REQUEST_URI); ?>
-					<IMG SRC="/priv/img/tol.gif" BORDER="0"></A></TD>
-					<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $issueLanguageObj->getLanguageId(), "status.php", $REQUEST_URI); ?><B><?php  putGS("Submit"); ?></B></A></TD>
-				</TR>
-				</TABLE>
-			</TD>
-			<?php  
+		elseif ($articleObj->getPublished() == "N") { 
+			if ($articleObj->getUserId() == $User->getId()) {
+				?>
+				<TD>
+					<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
+					<TR>
+						<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $languageObj->getLanguageId(), "status.php", $REQUEST_URI); ?>
+						<IMG SRC="/priv/img/tol.gif" BORDER="0"></A></TD>
+						<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $languageObj->getLanguageId(), "status.php", $REQUEST_URI); ?><B><?php  putGS("Submit"); ?></B></A></TD>
+					</TR>
+					</TABLE>
+				</TD>
+				<?php  
+			}
 		} 
+		
+		if ($User->hasPermission('AddImage') || $User->hasPermission('DeleteImage') || $User->hasPermission('ChangeArticle') || $User->hasPermission('ChangeImage')) {
 		?>
 			<TD>
 				<!-- Images Link -->
@@ -197,13 +209,15 @@ if ($edit_ok) { ?>
 				</TR>
 				</TABLE>
 			</TD>
-			
+		<?php
+		}
+		?>
 			<TD>
 				<!-- Topics Link -->
 				<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 				<TR>
-					<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $issueLanguageObj->getLanguageId(), "topics/"); ?><IMG SRC="/priv/img/tol.gif" BORDER="0"></A></TD>
-					<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $issueLanguageObj->getLanguageId(), "topics/"); ?><B><?php  putGS("Topics"); ?></B></A></TD>
+					<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $languageObj->getLanguageId(), "topics/"); ?><IMG SRC="/priv/img/tol.gif" BORDER="0"></A></TD>
+					<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $languageObj->getLanguageId(), "topics/"); ?><B><?php  putGS("Topics"); ?></B></A></TD>
 				</TR>
 				</TABLE>
 			</TD>
@@ -212,8 +226,8 @@ if ($edit_ok) { ?>
 				<!-- Unlock Link -->
 				<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 				<TR>
-					<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $issueLanguageObj->getLanguageId(), "do_unlock.php"); ?><IMG SRC="/priv/img/tol.gif" BORDER="0"></A></TD>
-					<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $issueLanguageObj->getLanguageId(), "do_unlock.php"); ?><B><?php  putGS("Unlock"); ?></B></A></TD>
+					<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $languageObj->getLanguageId(), "do_unlock.php"); ?><IMG SRC="/priv/img/tol.gif" BORDER="0"></A></TD>
+					<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $languageObj->getLanguageId(), "do_unlock.php"); ?><B><?php  putGS("Unlock"); ?></B></A></TD>
 				</TR>
 				</TABLE>
 			</TD>
@@ -236,8 +250,8 @@ if ($edit_ok) { ?>
 				<TD>
 					<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 					<TR>
-						<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $issueLanguageObj->getLanguageId(), "translate.php", $REQUEST_URI); ?><IMG SRC="/priv/img/tol.gif" BORDER="0"></A></TD>
-						<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $issueLanguageObj->getLanguageId(), "translate.php", $REQUEST_URI); ?><B><?php  putGS("Translate"); ?></B></A></TD>
+						<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $languageObj->getLanguageId(), "translate.php", $REQUEST_URI); ?><IMG SRC="/priv/img/tol.gif" BORDER="0"></A></TD>
+						<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $languageObj->getLanguageId(), "translate.php", $REQUEST_URI); ?><B><?php  putGS("Translate"); ?></B></A></TD>
 					</TR>
 					</TABLE>
 				</TD>
@@ -249,8 +263,8 @@ if ($edit_ok) { ?>
 				<TD>
 					<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 					<TR>
-						<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $issueLanguageObj->getLanguageId(), "del.php", $REQUEST_URI); ?><IMG SRC="/priv/img/tol.gif" BORDER="0"></A></TD>
-						<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $issueLanguageObj->getLanguageId(), "del.php", $REQUEST_URI); ?><B><?php  putGS("Delete"); ?></B></A></TD>
+						<TD><a href="/priv/pub/issues/sections/articles/do_del.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php p($Section); ?>&Article=<?php p($Article); ?>&Language=<?php p($Language); ?>&sLanguage=<?php p($sLanguage); ?>" onclick="return confirm('<?php htmlspecialchars(putGS('Are you sure you want to delete the article $1 ($2)?',$articleObj->getTitle(),$sLanguageObj->getName())); ?>');"><IMG SRC="/priv/img/tol.gif" BORDER="0"></A></TD>
+						<TD><a href="/priv/pub/issues/sections/articles/do_del.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php p($Section); ?>&Article=<?php p($Article); ?>&Language=<?php p($Language); ?>&sLanguage=<?php p($sLanguage); ?>" onclick="return confirm('<?php htmlspecialchars(putGS('Are you sure you want to delete the article $1 ($2)?',$articleObj->getTitle(),$sLanguageObj->getName())); ?>');"><B><?php  putGS("Delete"); ?></B></A></TD>
 					</TR>
 					</TABLE>
 				</TD>
@@ -262,8 +276,8 @@ if ($edit_ok) { ?>
 				<TD>
 					<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 					<TR>
-						<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $issueLanguageObj->getLanguageId(), "fduplicate.php"); ?><IMG SRC="/priv/img/tol.gif" BORDER="0"></A></TD>
-						<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $issueLanguageObj->getLanguageId(), "fduplicate.php"); ?><B><?php  putGS("Duplicate"); ?></B></A></TD>
+						<TD><A HREF="<?php echo CampsiteInterface::ArticleUrl($articleObj, $languageObj->getLanguageId(), "duplicate.php"); ?>&Back=edit.php"><IMG SRC="/priv/img/tol.gif" BORDER="0"></A></TD>
+						<TD><A HREF="<?php echo CampsiteInterface::ArticleUrl($articleObj, $languageObj->getLanguageId(), "duplicate.php"); ?>&Back=edit.php"><B><?php  putGS("Duplicate"); ?></B></A></TD>
 					</TR>
 					</TABLE>
 				</TD>
@@ -281,7 +295,7 @@ if ($edit_ok) { ?>
 		<INPUT TYPE="HIDDEN" NAME="Section" VALUE="<?php  p($Section); ?>">
 		<INPUT TYPE="HIDDEN" NAME="Article" VALUE="<?php  p($Article); ?>">
 		<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php  p($Language); ?>">
-		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" BGCOLOR="#C0D0FF">
+		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="3" BGCOLOR="#C0D0FF">
 		<TR>
 			<TD><?php  putGS('Language'); ?>:</TD>
 			<TD>
@@ -304,6 +318,13 @@ if ($edit_ok) { ?>
 </TABLE>
 
 <FORM NAME="dialog" METHOD="POST" ACTION="do_edit.php">
+<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<?php  p($Pub); ?>">
+<INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<?php  p($Issue); ?>">
+<INPUT TYPE="HIDDEN" NAME="Section" VALUE="<?php  p($Section); ?>">
+<INPUT TYPE="HIDDEN" NAME="Article" VALUE="<?php  p($Article); ?>">
+<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php  p($Language); ?>">
+<INPUT TYPE="HIDDEN" NAME="sLanguage" VALUE="<?php  p($sLanguage); ?>">
+
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" BGCOLOR="#C0D0FF" align="center">
 <TR>
 	<TD COLSPAN="2">
@@ -377,13 +398,6 @@ if ($edit_ok) { ?>
 			<INPUT TYPE="TEXT" NAME="cKeywords" VALUE="<?php print htmlspecialchars($articleObj->getKeywords()); ?>" class="input_text" SIZE="64" MAXLENGTH="255">
 		</TD>
 	</TR>
-
-	<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<?php  p($Pub); ?>">
-	<INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<?php  p($Issue); ?>">
-	<INPUT TYPE="HIDDEN" NAME="Section" VALUE="<?php  p($Section); ?>">
-	<INPUT TYPE="HIDDEN" NAME="Article" VALUE="<?php  p($Article); ?>">
-	<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php  p($Language); ?>">
-	<INPUT TYPE="HIDDEN" NAME="sLanguage" VALUE="<?php  p($sLanguage); ?>">
 
 	<?php 
 	// Display the article type fields.
