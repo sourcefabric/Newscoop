@@ -1,7 +1,7 @@
 /**
  * Functions for the ImageManager, used by manager.php only	
  * @author $Author: paul $
- * @version $Id: manager.js,v 1.2 2005/03/20 17:14:38 paul Exp $
+ * @version $Id: manager.js,v 1.3 2005/03/24 16:20:52 paul Exp $
  * @package ImageManager
  */
 	
@@ -65,8 +65,11 @@
 	function onOK() 
 	{
 		// pass data back to the calling window
-		var fields = ["f_url", "f_alt", "f_align", "f_border", "f_horiz", "f_vert", "f_height", "f_width"];
+		//var fields = ["f_url", "f_alt", "f_align", "f_border", 
+		//			  "f_horiz", "f_vert", "f_height", "f_width"];
+		var fields = ["f_url", "f_alt", "f_align", "f_caption"];
 		var param = new Object();
+		//var debugMsg = "";
 		for (var i in fields) 
 		{
 			var id = fields[i];
@@ -75,7 +78,9 @@
 				param[id] = makeURL(base_url,el.value);
 			else
 				param[id] = el.value;
+			//debugMsg += id + ":" + param[id];
 		}
+		//alert(debugMsg);
 		__dlg_close(param);
 		return false;
 	};
