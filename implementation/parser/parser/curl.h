@@ -72,10 +72,10 @@ public:
 
 	const string& getPathTranslated() const { return m_coPathTranslated; }
 
-	const string& getDocumentRoot() const { return m_coDocumentRoot; }
-
 	void setDocumentRoot(const string& p_coDocumentRoot)
 		{ m_coDocumentRoot = p_coDocumentRoot; }
+
+	const string& getDocumentRoot() const { return m_coDocumentRoot; }
 
 	void setId(long p_nId) { setValue("url_id", p_nId); }
 
