@@ -325,6 +325,7 @@ function create_site($p_defined_parameters)
 		"$common_html_dir/admin.php"=>"$html_dir/admin.php",
 		"$common_html_dir/db_connect.php"=>"$html_dir/db_connect.php",
 		"$common_html_dir/configuration.php"=>"$html_dir/configuration.php",
+		"$common_html_dir/parser_utils.php"=>"$html_dir/parser_utils.php",
 		"$common_html_dir/classes"=>"$html_dir/classes",
 		"$common_html_dir/css"=>"$html_dir/css",
 		"$common_html_dir/include"=>"$html_dir/include",
