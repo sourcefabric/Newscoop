@@ -64,8 +64,8 @@ $counter_resets = 0;
 	<td valign="top" align="left" width="100%" style="padding-top: 0px; ">
 		<table border="0" cellpadding="0" cellspacing="0">
 		<tr>
-			<td style="padding-left: 10px; padding-right: 20px; font-size: 14pt; font-weight: bold; color: black; font-style: Verdana;" align="left" valign="middle">
-				<IMG SRC="/admin/img/sign_big.gif" BORDER="0">
+			<td style="padding-left: 10px; padding-right: 20px; padding-top: 2px; padding-bottom: 2px; font-size: 14pt; font-weight: bold; color: black; font-style: Verdana;" align="left" valign="middle">
+				<IMG SRC="/admin/img/sign_big.gif" BORDER="0" align="middle">
 				Campsite v<?php p($Campsite['version']); ?>
 			</td>
 			<td style="padding-left: 5px;">
