@@ -214,7 +214,17 @@ if ($edit_ok) { ?>
 				</TR>
 				</TABLE>
 			</TD>
-		</TR>		
+			<? if ($User->hasPermission('Publish')) { ?>
+			<TD>
+				<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
+				<TR>
+					<TD><?php CampsiteInterface::ArticleLink($articleObj, $issueLanguageObj->getLanguageId(), "autopublish.php"); ?><IMG SRC="/priv/img/tol.gif" BORDER="0"></A></TD>
+					<TD><?php CampsiteInterface::ArticleLink($articleObj, $issueLanguageObj->getLanguageId(), "autopublish.php"); ?><B><?php  putGS("Automatic publishing"); ?></B></A></TD>
+				</TR>
+				</TABLE>
+			</TD>
+			<? } ?>
+		</TR>
 		
 		<TR>
 			<TD>
