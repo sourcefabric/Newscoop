@@ -32,7 +32,7 @@ class Input {
 		
 		if (!isset($_REQUEST[$p_varName])) {
 			if (!$p_errorsOk) {
-				$g_inputErrors[] = array($p_varName, 'not set');
+				$g_inputErrors[$p_varName] = 'not set';
 			}
 			return $p_defaultValue;
 		}
@@ -40,7 +40,7 @@ class Input {
 		case 'int':
 			if (!is_numeric($_REQUEST[$p_varName])) {
 				if (!$p_errorsOk) {
-					$g_inputErrors[] = array($p_varName, 'type');
+					$g_inputErrors[$p_varName] = 'Incorrect type.  Expected type '.$p_type.', but received type '.gettype($_REQUEST[$p_varName]).'.';
 				}
 				return $p_defaultValue;
 			}
@@ -48,7 +48,7 @@ class Input {
 		case 'string':
 			if (!is_string($_REQUEST[$p_varName])) {
 				if (!$errorsOk) {
-					$g_inputErrors[] = array($p_varName, 'type');
+					$g_inputErrors[$p_varName] = $g_inputErrors[$p_varName] = 'Incorrect type.  Expected type '.$p_type.', but received type '.gettype($_REQUEST[$p_varName]).'.';
 				}
 				return $p_defaultValue;
 			}
