@@ -1,6 +1,6 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/priv/lib_campsite.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/lib_campsite.php");
 
 /**
  * Common header for all article screens.
@@ -74,7 +74,7 @@ function ArticleTop($p_articleObj, $p_interfaceLanguageId, $p_title, $p_includeL
 
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%">
 <TR>
-	<!--<TD ROWSPAN="2" WIDTH="1%"><IMG SRC="/priv/img/sign_big.gif" BORDER="0"></TD>-->
+	<!--<TD ROWSPAN="2" WIDTH="1%"><IMG SRC="/<?php echo $ADMIN; ?>/img/sign_big.gif" BORDER="0"></TD>-->
 	<TD style="padding-left: 10px; padding-top: 10px;">
 	    <DIV STYLE="font-size: 12pt"><B><?php putGS($p_title); ?></B></DIV>
 	    <!--<HR NOSHADE SIZE="1" COLOR="BLACK">-->
@@ -88,28 +88,28 @@ if ($p_includeLinks) {
 		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
 		<TR>
 			<!-- "Articles" Link -->
-			<TD><A HREF="/priv/pub/issues/sections/articles/?Pub=<?php p($p_articleObj->getPublicationId()); ?>&Issue=<?php p($p_articleObj->getIssueId()); ?>&Language=<?php p($p_interfaceLanguageId); ?>&Section=<?php p($p_articleObj->getSectionId()); ?>" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php putGS("Articles"); ?>"></A></TD>
-			<TD><A HREF="/priv/pub/issues/sections/articles/?Pub=<?php p($p_articleObj->getPublicationId()); ?>&Issue=<?php p($p_articleObj->getIssueId()); ?>&Language=<?php p($p_interfaceLanguageId); ?>&Section=<?php p($p_articleObj->getSectionId()); ?>" ><B><?php putGS("Articles");  ?></B></A></TD>
+			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/?Pub=<?php p($p_articleObj->getPublicationId()); ?>&Issue=<?php p($p_articleObj->getIssueId()); ?>&Language=<?php p($p_interfaceLanguageId); ?>&Section=<?php p($p_articleObj->getSectionId()); ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php putGS("Articles"); ?>"></A></TD>
+			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/?Pub=<?php p($p_articleObj->getPublicationId()); ?>&Issue=<?php p($p_articleObj->getIssueId()); ?>&Language=<?php p($p_interfaceLanguageId); ?>&Section=<?php p($p_articleObj->getSectionId()); ?>" ><B><?php putGS("Articles");  ?></B></A></TD>
 			
 			<!-- "Sections" link -->
-			<TD><A HREF="/priv/pub/issues/sections/?Pub=<?php p($p_articleObj->getPublicationId()); ?>&Issue=<?php p($p_articleObj->getIssueId()); ?>&Language=<?php p($p_interfaceLanguageId); ?>"><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php putGS("Sections"); ?>"></A></TD>
-			<TD><A HREF="/priv/pub/issues/sections/?Pub=<?php p($p_articleObj->getPublicationId()); ?>&Issue=<?php p($p_articleObj->getIssueId()); ?>&Language=<?php p($p_interfaceLanguageId); ?>"><B><?php putGS("Sections"); ?></B></A></TD>
+			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/?Pub=<?php p($p_articleObj->getPublicationId()); ?>&Issue=<?php p($p_articleObj->getIssueId()); ?>&Language=<?php p($p_interfaceLanguageId); ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php putGS("Sections"); ?>"></A></TD>
+			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/?Pub=<?php p($p_articleObj->getPublicationId()); ?>&Issue=<?php p($p_articleObj->getIssueId()); ?>&Language=<?php p($p_interfaceLanguageId); ?>"><B><?php putGS("Sections"); ?></B></A></TD>
 			
 			<!-- "Issues" Link -->
-			<TD><A HREF="/priv/pub/issues/?Pub=<?php p($p_articleObj->getPublicationId()); ?>" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php putGS("Issues"); ?>"></A></TD>
-			<TD><A HREF="/priv/pub/issues/?Pub=<?php p($p_articleObj->getPublicationId()); ?>"><B><?php putGS("Issues"); ?></B></A></TD>
+			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/?Pub=<?php p($p_articleObj->getPublicationId()); ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php putGS("Issues"); ?>"></A></TD>
+			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/?Pub=<?php p($p_articleObj->getPublicationId()); ?>"><B><?php putGS("Issues"); ?></B></A></TD>
 			
 			<!-- "Publications" Link -->
-			<TD><A HREF="/priv/pub/" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Publications"); ?>"></A></TD>
-			<TD><A HREF="/priv/pub/" ><B><?php  putGS("Publications");  ?></B></A></TD>
+			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Publications"); ?>"></A></TD>
+			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/" ><B><?php  putGS("Publications");  ?></B></A></TD>
 			
 			<!-- "Home" Link -->
-<!--			<TD><A HREF="/priv/home.php" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Home"); ?>"></A></TD>
-			<TD><A HREF="/priv/home.php" ><B><?php putGS("Home"); ?></B></A></TD>
+<!--			<TD><A HREF="/<?php echo $ADMIN; ?>/home.php" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Home"); ?>"></A></TD>
+			<TD><A HREF="/<?php echo $ADMIN; ?>/home.php" ><B><?php putGS("Home"); ?></B></A></TD>
 -->			
 			<!-- "Logout" Link -->
-<!--			<TD><A HREF="/priv/logout.php" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php putGS("Logout"); ?>"></A></TD>
-			<TD><A HREF="/priv/logout.php" ><B><?php putGS("Logout");  ?></B></A></TD>
+<!--			<TD><A HREF="/<?php echo $ADMIN; ?>/logout.php" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php putGS("Logout"); ?>"></A></TD>
+			<TD><A HREF="/<?php echo $ADMIN; ?>/logout.php" ><B><?php putGS("Logout");  ?></B></A></TD>
 -->		</TR>
 		</TABLE>
 	</TD>

@@ -287,14 +287,14 @@ foreach ($allArticles as $articleObj) {
 					<tr>
 						<td>
 							<?php if (($ArticleOffset <= 0) && ($uniqueArticleCounter == 1)) { ?>
-								<img src="/priv/img/up-dis.png">
+								<img src="/<?php echo $ADMIN; ?>/img/up-dis.png">
 							<?php } else { ?>
 								<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/do_move.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($articleObj->getArticleId()); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php p($articleObj->getLanguageId()); ?>&move=up_rel&pos=1&ArtOffs=<?php p($ArticleOffset); ?>"><img src="/<?php echo $ADMIN; ?>/img/up.png" width="20" height="20" border="0"></A>
 							<?php } ?>
 						</td>
 						<td>
 							<?php if (($uniqueArticleCounter+$ArticleOffset) >= $numUniqueArticles) { ?>
-								<img src="/priv/img/down-dis.png">
+								<img src="/<?php echo $ADMIN; ?>/img/down-dis.png">
 							<?php } else { ?>
 								<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/do_move.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($articleObj->getArticleId()); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php p($articleObj->getLanguageId()); ?>&move=down_rel&pos=1&ArtOffs=<?php p($ArticleOffset); ?>"><img src="/<?php echo $ADMIN; ?>/img/down.png" width="20" height="20" border="0"></A>
 							<?php } ?>
