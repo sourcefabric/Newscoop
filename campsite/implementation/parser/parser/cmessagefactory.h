@@ -68,6 +68,28 @@ public:
 };
 
 
+class CResetCacheMessageFactory : public CMessageFactory
+{
+public:
+	virtual CMessage* createMessage(char* p_pchMsgContent) const
+		throw (out_of_range, xml_parse_error, invalid_message_content, bad_alloc)
+		{ return new CMsgResetCache(p_pchMsgContent); }
+
+	virtual uint getMessageTypeId() const { return CMsgResetCache::messageTypeId(); }
+};
+
+
+class CRestartServerMessageFactory : public CMessageFactory
+{
+public:
+	virtual CMessage* createMessage(char* p_pchMsgContent) const
+		throw (out_of_range, xml_parse_error, invalid_message_content, bad_alloc)
+		{ return new CMsgRestartServer(p_pchMsgContent); }
+
+	virtual uint getMessageTypeId() const { return CMsgRestartServer::messageTypeId(); }
+};
+
+
 class CMessageFactoryRegister
 {
 public:
