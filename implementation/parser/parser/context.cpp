@@ -84,6 +84,7 @@ CContext::CContext()
 	adduser = modifyuser = login = search = search_and = false;
 	adduser_res = modifyuser_res = login_res = search_res = -1;
 	search_level = 0;
+	m_pcoURL = NULL;
 	ResetKwdIt();
 }
 
@@ -153,7 +154,8 @@ int CContext::operator ==(const CContext& c) const
 	       && subtitles == c.subtitles
 	       && fields == c.fields
 	       && current_field == c.current_field
-	       && current_art_type == c.current_art_type;
+	       && current_art_type == c.current_art_type
+	       && m_pcoURL->equalTo(c.m_pcoURL);
 }
 
 // assign operator
@@ -227,6 +229,7 @@ const CContext& CContext::operator =(const CContext& s)
 	fields = s.fields;
 	current_field = s.current_field;
 	current_art_type = s.current_art_type;
+	m_pcoURL = s.m_pcoURL->clone();
 	ResetKwdIt();
 	return *this;
 }
