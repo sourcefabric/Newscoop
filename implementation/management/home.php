@@ -7,8 +7,6 @@ require_once($_SERVER['DOCUMENT_ROOT']."/classes/Language.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/priv/CampsiteInterface.php");
 
 load_common_include_files();
-todefnum('TOL_UserId');
-todefnum('TOL_UserKey');
 list($access, $User) = check_basic_access($_REQUEST);	
 if (!$access) {
 	header("Location: /priv/logout.php");
@@ -32,13 +30,11 @@ todefnum('ArtOffs');
 if ($ArtOffs < 0) {
 	$ArtOffs=0; 
 }
-$NumDisplayArticles=20;
-$YourArticles = Article::GetArticlesByUser($User->getId(), $ArtOffs, 
-	$NumDisplayArticles+1);
-$NumYourArticles = count($YourArticles);
+$NumDisplayArticles=15;
+list($YourArticles, $NumYourArticles) = Article::GetArticlesByUser($User->getId(), $ArtOffs, 
+	$NumDisplayArticles);
 
-$SubmittedArticles = Article::GetSubmittedArticles($NArtOffs, $NumDisplayArticles+1);
-$NumSubmittedArticles = count($SubmittedArticles);
+list($SubmittedArticles, $NumSubmittedArticles) = Article::GetSubmittedArticles($NArtOffs, $NumDisplayArticles);
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
 	"http://www.w3.org/TR/REC-html40/loose.dtd">
@@ -146,32 +142,41 @@ $NumSubmittedArticles = count($SubmittedArticles);
 		</TABLE>
 	</TD>
 	
-	<TD VALIGN="TOP">
+	<TD VALIGN="TOP" align="right">
 		<?php  if ($What) { ?>
-		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
-		<TR>
-			<TD><IMG SRC="/priv/img/tol.gif" BORDER="0"></TD>
-			<TD><?php  putGS("Your articles"); ?></TD>
-		</TR>
-		</TABLE>
 
-		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" WIDTH="100%">
+		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3">
+		<TR>
+			<TD colspan="3">
+				<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
+					<TD><IMG SRC="/priv/img/tol.gif" BORDER="0"></TD>
+					<TD><b><?php  putGS("Your articles"); ?></b></TD>
+				</TABLE>
+			</TD>
+		</TR>
 		<TR BGCOLOR="#C0D0FF">
-			<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("Name<BR><SMALL>(click to edit article)</SMALL>"); ?></B></TD>
-			<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="10%" ><B><?php  putGS("Language"); ?></B></TD>
-			<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="10%" ><B><?php  putGS("Status"); ?></B></TD>
+			<TD ALIGN="LEFT" VALIGN="TOP" width="450px"><B><?php  putGS("Name<BR><SMALL>(click to edit article)</SMALL>"); ?></B></TD>
+			<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="100px" ><B><?php  putGS("Language"); ?></B></TD>
+			<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="100px" ><B><?php  putGS("Status"); ?></B></TD>
 		</TR>
 
 		<?php 
+		$color = 0;
 		foreach ($YourArticles as $YourArticle) {
 			$section =& $YourArticle->getSection();
 			$language =& new Language($YourArticle->getLanguageId());
 			 ?>
 		<TR <?php if ($color) { $color=0; ?>BGCOLOR="#D0D0B0"<?php  } else { $color=1; ?>BGCOLOR="#D0D0D0"<?php  } ?>>
-			<TD>
-				<?php echo CampsiteInterface::ArticleLink($YourArticle, $section->getLanguageId(), "edit.php"); ?>
-				<?php p(htmlspecialchars($YourArticle->getTitle()));?>
-				</A>
+			<TD width="450px">
+				<?php 
+				if ($User->hasPermission('ChangeArticle') || ($YourArticle->getPublished() == 'N')) {
+					echo CampsiteInterface::ArticleLink($YourArticle, $section->getLanguageId(), "edit.php"); 
+				}
+				p(htmlspecialchars($YourArticle->getTitle()));
+				if ($User->hasPermission('ChangeArticle') || ($YourArticle->getPublished() == 'N')) {
+					echo '</a>';
+				}
+				?>
 			</TD>
 			
 			<TD>
@@ -180,23 +185,31 @@ $NumSubmittedArticles = count($SubmittedArticles);
 			
 			<TD>
 				<?php 
-				if ($YourArticle->getPublished() == "Y") { ?>
-					<?php echo CampsiteInterface::ArticleLink($YourArticle, $section->getLanguageId(), "status.php", $REQUEST_URI);?>
-					<?php  putGS('Published'); ?>
-					</A>
-					<?php  
+				$changeStatusLink = CampsiteInterface::ArticleLink($YourArticle, $section->getLanguageId(), "status.php", $REQUEST_URI);
+				if ($YourArticle->getPublished() == "Y") { 
+					if ($User->hasPermission('Publish')) {
+						echo $changeStatusLink;
+					}
+					putGS('Published'); 
+					if ($User->hasPermission('Publish')) {
+						echo '</a>';
+					}
 				} 
-				elseif ($YourArticle->getPublished() == "N") { ?>
-					<?php echo CampsiteInterface::ArticleLink($YourArticle, $section->getLanguageId(), "status.php", $REQUEST_URI); ?>
-					<?php  putGS('New'); ?>
-					</A><?php  
+				elseif ($YourArticle->getPublished() == 'S') { 
+					if ($User->hasPermission('Publish')) {
+						echo $changeStatusLink; 
+					}
+					putGS('Submitted'); 
+					if ($User->hasPermission('Publish')) {
+						echo '</a>';
+					}
 				} 
-				else { ?>
-					<?php echo CampsiteInterface::ArticleLink($YourArticle, $section->getLanguageId(), "status.php", $REQUEST_URI); ?>
-					<?php  putGS('Submitted'); ?>
-					</A>
-					<?php  
-				} ?>		
+				elseif ($YourArticle->getPublished() == "N") { 
+					echo $changeStatusLink;
+					putGS('New'); 
+					echo '</A>';
+				} 
+				?>
 			</TD>
 		</TR>
 		<?php 
@@ -214,7 +227,7 @@ $NumSubmittedArticles = count($SubmittedArticles);
 					<B><A HREF="home.php?ArtOffs=<?php print ($ArtOffs - $NumDisplayArticles); ?>&What=1"><?php p(htmlspecialchars("<< ")); putGS('Previous'); ?></A></B>
 					<?php  
 				} 
-				if ( $NumYourArticles < ($NumDisplayArticles+1) ) { 
+				if ( ($ArtOffs + $NumDisplayArticles) >= $NumYourArticles ) { 
 					?>
 					| <?php putGS('Next'); p(htmlspecialchars(" >>"));
 				} 
@@ -228,28 +241,33 @@ $NumSubmittedArticles = count($SubmittedArticles);
 		</TABLE>
 		<?php  
 		} // if ($What)
-		else { ?>
-		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
-		<TR>
-			<TD><IMG SRC="/priv/img/tol.gif" BORDER="0"></TD>
-			<TD><?php putGS("Submitted articles"); ?></TD>
-		</TR>
-		</TABLE>
-		<?php 
-		    $color=0;
-		?>
-		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" WIDTH="100%">
+		else { 
+			// Submitted articles
+			?>
+		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3">
+		<tr>
+			<td colspan="2">
+				<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
+				<TR>
+					<TD><IMG SRC="/priv/img/tol.gif" BORDER="0"></TD>
+					<TD><b><?php putGS("Submitted articles"); ?></b></TD>
+				</TR>
+				</TABLE>			
+			</td>
+		</tr>
+		
 		<TR BGCOLOR="#C0D0FF">
-			<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Name<BR><SMALL>(click to edit article)</SMALL>"); ?></B></TD>
-			<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="10%" ><B><?php  putGS("Language"); ?></B></TD>
+			<TD ALIGN="LEFT" VALIGN="TOP" width="550px"><B><?php  putGS("Name<BR><SMALL>(click to edit article)</SMALL>"); ?></B></TD>
+			<TD ALIGN="LEFT" VALIGN="TOP" width="100px"><B><?php  putGS("Language"); ?></B></TD>
 		</TR>
 		<?php 
+	    $color=0;
 		foreach ($SubmittedArticles as $SubmittedArticle) {
 			$section =& $SubmittedArticle->getSection();
 			$language =& new Language($SubmittedArticle->getLanguageId());
 			?>	
 		<TR <?php if ($color) { $color=0; ?>BGCOLOR="#D0D0B0"<?php  } else { $color=1; ?>BGCOLOR="#D0D0D0"<?php  } ?>>
-			<TD>
+			<TD width="550px">
 			<?php echo CampsiteInterface::ArticleLink($SubmittedArticle, $section->getLanguageId(), "edit.php"); ?>
 			<?php p(htmlspecialchars($SubmittedArticle->getTitle())); ?>
 			</A>
@@ -271,10 +289,10 @@ $NumSubmittedArticles = count($SubmittedArticles);
 				putGS('Previous'); 
 			} 
 			else { ?>
-				<B><A HREF="home.php?NArtOffs=<?php print ($NArtOffs - $NumDisplayArticles); ?>&What=0"><?php htmlspecialchars("<< "); putGS('Previous'); ?></A></B>
+				<B><A HREF="home.php?NArtOffs=<?php print ($NArtOffs - $NumDisplayArticles); ?>&What=0"><?php p(htmlspecialchars("<< ")); putGS('Previous'); ?></A></B>
 				<?php  
     		}
-    		if ($NumSubmittedArticles < $NumDisplayArticles+1) { ?>
+    		if (($NArtOffs + $NumDisplayArticles) >= $NumSubmittedArticles) { ?>
     	 		| <?php  putGS('Next'); p(htmlspecialchars(" >>")); 
     		} 
     		else { ?>
