@@ -25,7 +25,9 @@ install: dummy
 	chmod 755 "$(CAMPSITE_DIR)/instance"
 	$(MAKE) -C implementation install
 	$(MAKE) -C supplemental install
-	echo "$(CAMPSITE_VERSION)" >> "$(CAMPSITE_DIR)/$(CAMPSITE_REGISTER)"
+	cp -f "$(INSTALL_CONF)/create_instance.php" "$(BIN_DIR)"
+	chown $(ROOT_USER):$(APACHE_GROUP) "$(BIN_DIR)/create_instance.php"
+	chmod 644 "$(BIN_DIR)/create_instance.php"
 
 clean:
 	$(MAKE) -C implementation clean
