@@ -237,7 +237,7 @@ void TOLContext::SetStListStart(long int value, const string& field)
 	it = st_list_start.find(actualField);
 	if (it != st_list_start.end())
 		st_list_start.erase(it);
-	st_list_start.insert(String2LInt::value_type(actualField, value));
+	st_list_start[actualField] = value;
 	String2StringList::iterator it2;
 	it2 = subtitles.find(actualField);
 	if (it2 == subtitles.end())
@@ -266,7 +266,7 @@ void TOLContext::SetStPrevStart(long int value, const string& field)
 	it = st_prev_start.find(actualField);
 	if (it != st_prev_start.end())
 		st_prev_start.erase(it);
-	st_prev_start.insert(String2LInt::value_type(actualField, value));
+	st_prev_start[actualField] = value;
 }
 
 // SetStNextStart: set the subtitles list start element to value for the given article
@@ -284,7 +284,7 @@ void TOLContext::SetStNextStart(long int value, const string& field)
 	it = st_next_start.find(actualField);
 	if (it != st_next_start.end())
 		st_next_start.erase(it);
-	st_next_start.insert(String2LInt::value_type(actualField, value));
+	st_next_start[actualField] = value;
 }
 
 // SetListStart: set the start element in a list to value; if the level (l) is CLV_SUBTITLE_LIST
@@ -365,7 +365,7 @@ void TOLContext::SetNextStart(long int val, CLevel l, const string& field)
 void TOLContext::SetUserInfo(const string& attr, const string& value)
 {
 	if (userinfo.find(attr) == userinfo.end())
-		userinfo.insert(string2string::value_type(attr, value));
+		userinfo[attr] = value;
 }
 
 // SetSubs: set subscription for current user
@@ -398,7 +398,7 @@ void TOLContext::AppendSubtitle(const string& subtitle, const string& field)
 	it = subtitles.find(actualField);
 	if (it == subtitles.end())
 	{
-		subtitles.insert(String2StringList::value_type(actualField, StringList()));
+		subtitles[actualField] = StringList();
 		it = subtitles.find(actualField);
 	}
 	if (it == subtitles.end())
@@ -438,7 +438,7 @@ void TOLContext::SetStartSubtitle(int subtitle_nr, const string& field)
 	if (it != start_subtitle.end())
 		(*it).second = subtitle_nr;
 	else
-		start_subtitle.insert(String2Int::value_type(actualField, subtitle_nr));
+		start_subtitle[actualField] = subtitle_nr;
 }
 
 // SetAllSubtitles: set all_subtitles value to true/false for the given field (article content)
@@ -457,7 +457,7 @@ void TOLContext::SetAllSubtitles(bool a, const string& field)
 	if (it != all_subtitles.end())
 		(*it).second = a;
 	else
-		all_subtitles.insert(String2Int::value_type(actualField, a));
+		all_subtitles[actualField] = a;
 }
 
 // SetField: add field/article type pair to fields list
@@ -468,7 +468,7 @@ void TOLContext::SetField(const string& f, const string& at)
 {
 	if (f == "" || at == "")
 		return ;
-	fields.insert(string2string::value_type(f, at));
+	fields[f] = at;
 }
 
 // StListStart: return subtitles list start for the given field (article content)
@@ -673,7 +673,7 @@ const string& TOLContext::NextSubtitle(const string& field)
 	String2StringListIt::iterator it2 = subtitles_it.find(actualField);
 	if (it2 == subtitles_it.end())
 	{
-		subtitles_it.insert(String2StringListIt::value_type(actualField, (*it).second.begin()));
+		subtitles_it[actualField] = (*it).second.begin();
 		it2 = subtitles_it.find(actualField);
 	}
 	if (it2 == subtitles_it.end())
@@ -702,7 +702,7 @@ const string& TOLContext::CurrentSubtitle(const string& field)
 	it2 = subtitles_it.find(actualField);
 	if (it2 == subtitles_it.end())
 	{
-		subtitles_it.insert(String2StringListIt::value_type(actualField, (*it).second.begin()));
+		subtitles_it[actualField] = (*it).second.begin();
 		it2 = subtitles_it.find(actualField);
 	}
 	if (it2 == subtitles_it.end())
@@ -730,7 +730,7 @@ const string& TOLContext::SelectSubtitle(int index, const string& field)
 	it2 = subtitles_it.find(actualField);
 	if (it2 != subtitles_it.end())
 		subtitles_it.erase(it2);
-	subtitles_it.insert(String2StringListIt::value_type(actualField, (*it).second.begin()));
+	subtitles_it[actualField] = (*it).second.begin();
 	it2 = subtitles_it.find(actualField);
 	if (it2 == subtitles_it.end())
 		return emptystring;

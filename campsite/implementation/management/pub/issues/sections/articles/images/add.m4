@@ -119,6 +119,7 @@ E_DIALOG
 
 X_HR
 X_COPYRIGHT
+
 E_BODY
 <!sql endif>dnl
 

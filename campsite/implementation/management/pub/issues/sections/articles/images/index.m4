@@ -62,7 +62,8 @@ E_CURRENT
 
 <table>
 <!sql if $aia != 0>
-<tr><td>X_NEW_BUTTON({Add new image}, {add.xql?Pub=<!sql print #Pub>&Issue=<!sql print #Issue>&Section=<!sql print #Section>&Article=<!sql print #Article>&Language=<!sql print #Language>&sLanguage=<!sql print#sLanguage>})</td>
+
+<tr><td>X_NEW_BUTTON({Add new image}, {add.xql?Pub=<!sql print #Pub>&Issue=<!sql print #Issue>&Section=<!sql print #Section>&Article=<!sql print #Article>&Language=<!sql print #Language>&sLanguage=<!sql print #sLanguage>})</td>
 <td>X_NEW_BUTTON({Select an old image}, {select.xql?Pub=<!sql print #Pub>&Issue=<!sql print #Issue>&Section=<!sql print #Section>&Article=<!sql print #Article>&Language=<!sql print #Language>&sLanguage=<!sql print #sLanguage>})</td></tr>
 <!sql endif>
 <tr><td>X_NEW_BUTTON({Back to article details}, {../edit.xql?Pub=<!sql print #Pub>&Issue=<!sql print #Issue>&Section=<!sql print #Section>&Article=<!sql print #Article>&Language=<!sql print #Language>&sLanguage=<!sql print #sLanguage>})</td></tr>

@@ -145,10 +145,10 @@ pthread_once_t TOLAction::m_InitControl = PTHREAD_ONCE_INIT;
 // Init: initialise operators map
 void TOLAction::Init()
 {
-	m_coOpMap.insert(Int2String::value_type((int)TOL_OP_IS, "="));
-	m_coOpMap.insert(Int2String::value_type((int)TOL_OP_IS_NOT, "!="));
-	m_coOpMap.insert(Int2String::value_type((int)TOL_OP_GREATER, ">"));
-	m_coOpMap.insert(Int2String::value_type((int)TOL_OP_SMALLER, "<"));
+	m_coOpMap[(int)TOL_OP_IS] = "=";
+	m_coOpMap[(int)TOL_OP_IS_NOT] = "!=";
+	m_coOpMap[(int)TOL_OP_GREATER] = ">";
+	m_coOpMap[(int)TOL_OP_SMALLER] = "<";
 }
 
 // DEBUGAct: print debug information
@@ -329,6 +329,8 @@ int TOLActLanguage::TakeAction(TOLContext& c, fstream& fs)
 	StoreResult(&m_coSql, res);
 	CheckForRows(*res, 1);
 	FetchRow(*res, row);
+	if (row[0] == NULL)
+		return -1;
 	c.SetLanguage(strtol(row[0], 0, 10));
 	return RES_OK;
 }
@@ -423,6 +425,8 @@ int TOLActPublication::TakeAction(TOLContext& c, fstream& fs)
 	StoreResult(&m_coSql, res);
 	CheckForRows(*res, 1);
 	FetchRow(*res, row);
+	if (row[0] == NULL)
+		return -1;
 	c.SetPublication(strtol(row[0], 0, 10));
 	return RES_OK;
 }
@@ -472,6 +476,8 @@ int TOLActIssue::TakeAction(TOLContext& c, fstream& fs)
 	else
 		return -1;
 	SetNrField("IdPublication", c.Publication(), &m_coBuf, w);
+	if (c.Access() == A_PUBLISHED)
+		AppendConstraint(w, "Published", "=", "Y");
 	if (w != "")
 		coQuery += "where ";
 	coQuery += w;
@@ -480,6 +486,8 @@ int TOLActIssue::TakeAction(TOLContext& c, fstream& fs)
 	StoreResult(&m_coSql, res);
 	CheckForRows(*res, 1);
 	FetchRow(*res, row);
+	if (row[0] == NULL)
+		return -1;
 	c.SetIssue(strtol(row[0], 0, 10));
 	return RES_OK;
 	TK_CATCH_ERR
@@ -527,6 +535,8 @@ int TOLActSection::TakeAction(TOLContext& c, fstream& fs)
 	StoreResult(&m_coSql, res);
 	CheckForRows(*res, 1);
 	FetchRow(*res, row);
+	if (row[0] == NULL)
+		return -1;
 	c.SetSection(strtol(row[0], 0, 10));
 	return RES_OK;
 }
@@ -574,6 +584,8 @@ int TOLActArticle::TakeAction(TOLContext& c, fstream& fs)
 	StoreResult(&m_coSql, res);
 	CheckForRows(*res, 1);
 	FetchRow(*res, row);
+	if (row[0] == NULL)
+		return -1;
 	c.SetArticle(strtol(row[0], 0, 10));
 	return RES_OK;
 }
@@ -673,7 +685,7 @@ int TOLActList::WriteArtParam(string& s, TOLContext& c, string& table)
 //		string& table - string containig tables used in query
 int TOLActList::WriteSrcParam(string& s, TOLContext& c, string& table)
 {
-	table = "ArticleIndex, KeywordIndex";
+	table = "Articles, ArticleIndex, KeywordIndex";
 	string w = "";
 	c.ResetKwdIt();
 	cpChar k;
@@ -694,14 +706,16 @@ int TOLActList::WriteSrcParam(string& s, TOLContext& c, string& table)
 	}
 	if (w != "")
 		w += ")";
-	CheckFor("IdPublication", c.Publication(), &m_coBuf, w);
+	CheckFor("Articles.IdPublication", c.Publication(), &m_coBuf, w);
 	if (c.SearchLevel() >= 1)
-		CheckFor("NrIssue", c.Issue(), &m_coBuf, w);
+		CheckFor("Articles.NrIssue", c.Issue(), &m_coBuf, w);
 	if (c.SearchLevel() >= 2)
-		CheckFor("NrSection", c.Section(), &m_coBuf, w);
+		CheckFor("Articles.NrSection", c.Section(), &m_coBuf, w);
 	if (w != "")
 		w += " and ";
-	w += "ArticleIndex.IdKeyword = KeywordIndex.Id";
+	w += "ArticleIndex.IdKeyword = KeywordIndex.Id"
+	     " and Articles.Number = ArticleIndex.NrArticle"
+	     " and Articles.IdLanguage = ArticleIndex.IdLanguage";
 	s = string(" where ") + w;
 	return RES_OK;
 }
@@ -712,19 +726,36 @@ int TOLActList::WriteSrcParam(string& s, TOLContext& c, string& table)
 //		string& s - string to add conditions to (order clause)
 int TOLActList::WriteOrdParam(string& s)
 {
+	TOLParameterList::iterator pl_i;
 	if (modifier != TOL_LMOD_SEARCHRESULT)
 	{
 		s = " order by IdLanguage desc";
-		TOLParameterList::iterator pl_i;
-		for (pl_i = ord_param.begin(); pl_i != ord_param.end(); ++(pl_i))
+		for (pl_i = ord_param.begin(); pl_i != ord_param.end(); ++pl_i)
 		{
-			s += string(", ") + (*pl_i).Attribute() + string(" ");
+			const char* pchAttribute = (*pl_i).Attribute();
+			if (strcasecmp(pchAttribute, "bydate") == 0)
+				pchAttribute = modifier == TOL_LMOD_ISSUE ? "PublicationDate" : "UploadDate";
+			s += string(", ") + pchAttribute + " ";
 			if (strlen((*pl_i).Value()))
 				s += (*pl_i).Value();
 		}
 	}
-	else
-		s = " order by IdPublication, IdLanguage, NrIssue, NrSection, NrArticle";
+	else // modifier == TOL_LMOD_SEARCHRESULT
+	{
+		s = " order by Articles.IdPublication asc, ArticleIndex.IdLanguage desc";
+		for (pl_i = ord_param.begin(); pl_i != ord_param.end(); ++pl_i)
+		{
+			s += string(", ");
+			if ((*pl_i).Attribute() == "Number")
+				s += string("NrArticle") + string(" ");
+			else
+				s += (*pl_i).Attribute() + string(" ");
+			if (strlen((*pl_i).Value()))
+				s += (*pl_i).Value();
+			if ((*pl_i).Attribute() != "Number")
+				s += ", NrArticle asc";
+		}
+	}
 	return RES_OK;
 }
 
@@ -753,6 +784,7 @@ int TOLActList::RunBlock(TOLPActionList& al, TOLContext& c, fstream& fs)
 {
 	for (TOLPActionList::iterator al_i = al.begin(); al_i != al.end(); ++al_i)
 		(*al_i)->TakeAction(c, fs);
+	return RES_OK;
 }
 
 // SetContext: set the context current Issue, Section or Article depending of list
@@ -879,11 +911,13 @@ int TOLActList::TakeAction(TOLContext& c, fstream& fs)
 		WriteOrdParam(order);
 		WriteLimit(limit, lc);
 		if (modifier == TOL_LMOD_SEARCHRESULT)
-			fields = "select NrArticle, IdLanguage, IdPublication";
+			fields = "select NrArticle, MAX(Articles.IdLanguage), Articles.IdPublication";
+		else if (modifier == TOL_LMOD_ARTICLE)
+			fields = "select Number, MAX(Articles.IdLanguage), IdPublication";
 		else
-			fields = "select Number, IdLanguage, IdPublication";
+			fields = "select Number, MAX(IdLanguage), IdPublication";
 		if (modifier == TOL_LMOD_ARTICLE || modifier == TOL_LMOD_SEARCHRESULT)
-			fields += ", NrIssue, NrSection";
+			fields += ", Articles.NrIssue, Articles.NrSection";
 		else if (modifier == TOL_LMOD_SECTION)
 			fields += ", NrIssue";
 		string grfield;
@@ -922,7 +956,7 @@ int TOLActList::TakeAction(TOLContext& c, fstream& fs)
 			string st = "";
 			if (modifier != TOL_LMOD_SUBTITLE)
 			{
-				if ((row = mysql_fetch_row(*res)) == 0)
+				if ((row = mysql_fetch_row(*res)) == NULL)
 					break;
 				lc.SetLanguage(strtol(row[1], 0, 10));
 				lc.SetPublication(strtol(row[2], 0, 10));
@@ -1187,6 +1221,8 @@ int TOLActPrint::BlobField(cpChar table, cpChar field)
 	StoreResult(&m_coSql, res);
 	CheckForRows(*res, 1);
 	FetchRow(*res, row);
+	if (row[1] == NULL)
+		return -1;
 	if (strstr(row[1], "blob"))
 		result = 0;
 	return result;
@@ -1205,6 +1241,8 @@ int TOLActPrint::DateField(cpChar table, cpChar field)
 	StoreResult(&m_coSql, res);
 	CheckForRows(*res, 1);
 	FetchRow(*res, row);
+	if (row[1] == NULL)
+		return -1;
 	if (strncmp(row[1], "date", 4) == 0)
 		result = 0;
 	return result;
@@ -1593,7 +1631,9 @@ int TOLActIf::TakeAction(TOLContext& c, fstream& fs)
 	int run;
 	if (modifier == TOL_IMOD_ALLOWED)
 	{
-		if (AccessAllowed(c, fs))
+		run_first = AccessAllowed(c, fs);
+		run_first = m_bNegated ? !run_first : run_first;
+		if (run_first)
 			RunBlock(block, c, fs);
 		else
 			RunBlock(sec_block, c, fs);
@@ -1619,7 +1659,8 @@ int TOLActIf::TakeAction(TOLContext& c, fstream& fs)
 				run_first = true;
 			}
 		}
-		if (run_first == true)
+		run_first = m_bNegated ? !run_first : run_first;
+		if (run_first)
 			RunBlock(block, c, fs);
 		else
 			RunBlock(sec_block, c, fs);
@@ -1627,26 +1668,46 @@ int TOLActIf::TakeAction(TOLContext& c, fstream& fs)
 	}
 	else if (modifier == TOL_IMOD_PREVIOUSITEMS)
 	{
-		if (c.PrevStart(c.Level()) >= 0)
+		run_first = c.PrevStart(c.Level()) >= 0;
+		run_first = m_bNegated ? !run_first : run_first;
+		if (run_first)
 		{
-			c.SetLMode(LM_PREV);
+			if (!m_bNegated)
+				c.SetLMode(LM_PREV);
 			RunBlock(block, c, fs);
-			c.SetLMode(LM_NORMAL);
+			if (!m_bNegated)
+				c.SetLMode(LM_NORMAL);
 		}
 		else
+		{
+			if (m_bNegated)
+				c.SetLMode(LM_PREV);
 			RunBlock(sec_block, c, fs);
+			if (m_bNegated)
+				c.SetLMode(LM_NORMAL);
+		}
 		return RES_OK;
 	}
 	else if (modifier == TOL_IMOD_NEXTITEMS)
 	{
-		if (c.NextStart(c.Level()) >= 0)
+		run_first = c.NextStart(c.Level()) >= 0;
+		run_first = m_bNegated ? !run_first : run_first;
+		if (run_first)
 		{
-			c.SetLMode(LM_NEXT);
+			if (!m_bNegated)
+				c.SetLMode(LM_NEXT);
 			RunBlock(block, c, fs);
-			c.SetLMode(LM_NORMAL);
+			if (!m_bNegated)
+				c.SetLMode(LM_NORMAL);
 		}
 		else
+		{
+			if (m_bNegated)
+				c.SetLMode(LM_NEXT);
 			RunBlock(sec_block, c, fs);
+			if (m_bNegated)
+				c.SetLMode(LM_NORMAL);
+		}
 		return RES_OK;
 	}
 	else if (modifier == TOL_IMOD_SUBSCRIPTION)
@@ -1687,9 +1748,9 @@ int TOLActIf::TakeAction(TOLContext& c, fstream& fs)
 			run = c.ModifyUser() ? 0 : 1;
 		if (strcasecmp(param.Attribute(), "loggedin") == 0)
 			run = (c.User() >= 0 && c.Key() > 0) ? 0 : 1;
-		if (run == 0)
+		if ((run == 0 && !m_bNegated) || (run == 1 && m_bNegated))
 			RunBlock(block, c, fs);
-		else if (run == 1)
+		else if ((run == 1 && !m_bNegated) || (run == 0 && m_bNegated))
 			RunBlock(sec_block, c, fs);
 		return RES_OK;
 	}
@@ -1702,9 +1763,9 @@ int TOLActIf::TakeAction(TOLContext& c, fstream& fs)
 			run = c.LoginRes() == 0 ? 0 : 1;
 		if (strcasecmp(param.Attribute(), "error") == 0 && c.Login())
 			run = c.LoginRes() != 0 ? 0 : 1;
-		if (run == 0)
+		if ((run == 0 && !m_bNegated) || (run == 1 && m_bNegated))
 			RunBlock(block, c, fs);
-		else if (run == 1)
+		else if ((run == 1 && !m_bNegated) || (run == 0 && m_bNegated))
 			RunBlock(sec_block, c, fs);
 		return RES_OK;
 	}
@@ -1717,39 +1778,61 @@ int TOLActIf::TakeAction(TOLContext& c, fstream& fs)
 			run = c.SearchRes() == 0 ? 0 : 1;
 		if (strcasecmp(param.Attribute(), "error") == 0 && c.Search())
 			run = c.SearchRes() != 0 ? 0 : 1;
-		if (run == 0)
+		if ((run == 0 && !m_bNegated) || (run == 1 && m_bNegated))
 			RunBlock(block, c, fs);
-		else if (run == 1)
+		else if ((run == 1 && !m_bNegated) || (run == 0 && m_bNegated))
 			RunBlock(sec_block, c, fs);
 		return RES_OK;
 	}
 	else if (modifier == TOL_IMOD_PREVSUBTITLES)
 	{
-		if (c.StartSubtitle() > 0 && !c.AllSubtitles())
+		run_first = c.StartSubtitle() > 0 && !c.AllSubtitles();
+		run_first = m_bNegated ? !run_first : run_first;
+		if (run_first)
 		{
-			c.SetStMode(STM_PREV);
+			if (!m_bNegated)
+				c.SetStMode(STM_PREV);
 			RunBlock(block, c, fs);
-			c.SetStMode(STM_NORMAL);
+			if (!m_bNegated)
+				c.SetStMode(STM_NORMAL);
 		}
 		else
+		{
+			if (m_bNegated)
+				c.SetStMode(STM_PREV);
 			RunBlock(sec_block, c, fs);
+			if (m_bNegated)
+				c.SetStMode(STM_NORMAL);
+		}
 		return RES_OK;
 	}
 	else if (modifier == TOL_IMOD_NEXTSUBTITLES)
 	{
-		if (c.StartSubtitle() < (c.SubtitlesNumber() - 1) && !c.AllSubtitles())
+		run_first = c.StartSubtitle() < (c.SubtitlesNumber() - 1) && !c.AllSubtitles();
+		run_first = m_bNegated ? !run_first : run_first;
+		if (run_first)
 		{
-			c.SetStMode(STM_NEXT);
+			if (!m_bNegated)
+				c.SetStMode(STM_NEXT);
 			RunBlock(block, c, fs);
-			c.SetStMode(STM_NORMAL);
+			if (!m_bNegated)
+				c.SetStMode(STM_NORMAL);
 		}
 		else
+		{
+			if (m_bNegated)
+				c.SetStMode(STM_NEXT);
 			RunBlock(sec_block, c, fs);
+			if (m_bNegated)
+				c.SetStMode(STM_NORMAL);
+		}
 		return RES_OK;
 	}
 	else if (modifier == TOL_IMOD_SUBTITLE)
 	{
-		if ((c.StartSubtitle() + 1) == atol(param.Value()) && !c.AllSubtitles())
+		run_first = (c.StartSubtitle() + 1) == atol(param.Value()) && !c.AllSubtitles();
+		run_first = m_bNegated ? !run_first : run_first;
+		if (run_first)
 			RunBlock(block, c, fs);
 		else
 			RunBlock(sec_block, c, fs);
@@ -1757,7 +1840,29 @@ int TOLActIf::TakeAction(TOLContext& c, fstream& fs)
 	}
 	else if (modifier == TOL_IMOD_CURRENTSUBTITLE)
 	{
-		if ((c.StartSubtitle() ) == (c.ListIndex() - 1) && !c.AllSubtitles())
+		run_first = (c.StartSubtitle() ) == (c.ListIndex() - 1) && !c.AllSubtitles();
+		run_first = m_bNegated ? !run_first : run_first;
+		if (run_first)
+			RunBlock(block, c, fs);
+		else
+			RunBlock(sec_block, c, fs);
+		return RES_OK;
+	}
+	else if (modifier == TOL_IMOD_IMAGE)
+	{
+		sprintf(&m_coBuf, "select count(*) from Images where IdPublication = %ld and NrIssue = %ld"
+		        " and NrSection = %ld and NrArticle = %ld and Number = %ld", c.Publication(),
+		        c.Issue(), c.Section(), c.Article(), atol(param.Attribute()));
+		DEBUGAct("TakeAction()", &m_coBuf, fs);
+		SQLQuery(&m_coSql, &m_coBuf);
+		StoreResult(&m_coSql, res);
+		CheckForRows(*res, 1);
+		FetchRow(*res, row);
+		if (row[0] == NULL)
+			return -1;
+		run_first = atoi(row[0]) > 0;
+		run_first = m_bNegated ? !run_first : run_first;
+		if (run_first)
 			RunBlock(block, c, fs);
 		else
 			RunBlock(sec_block, c, fs);
@@ -1775,6 +1880,7 @@ int TOLActIf::TakeAction(TOLContext& c, fstream& fs)
 			run_first = c.Article() >= 0;
 		else
 			return RES_OK;
+		run_first = m_bNegated ? !run_first : run_first;
 		if (run_first)
 			RunBlock(block, c, fs);
 		else
@@ -1793,6 +1899,7 @@ int TOLActIf::TakeAction(TOLContext& c, fstream& fs)
 			run_first = c.Article() == c.DefArticle();
 		else
 			return RES_OK;
+		run_first = m_bNegated ? !run_first : run_first;
 		if (run_first)
 			RunBlock(block, c, fs);
 		else
@@ -1857,7 +1964,9 @@ int TOLActIf::TakeAction(TOLContext& c, fstream& fs)
 	StoreResult(&m_coSql, res);
 	CheckForRows(*res, 1);
 	FetchRow(*res, row);
-	if (value == row[0])
+	run_first = value == row[0];
+	run_first = m_bNegated ? !run_first : run_first;
+	if (run_first)
 		RunBlock(block, c, fs);
 	else
 		RunBlock(sec_block, c, fs);
@@ -1968,7 +2077,13 @@ int TOLActLocal::TakeAction(TOLContext& c, fstream& fs)
 {
 	TOLContext lc = c;
 	for (TOLPActionList::iterator al_i = block.begin(); al_i != block.end(); ++al_i)
-		(*al_i)->TakeAction(lc, fs);
+	{
+		if (DoDebug())
+			fs << "<!-- Local: taking action " << (*al_i)->ClassName() << " -->\n";
+		int res = (*al_i)->TakeAction(lc, fs);
+		if (DoDebug())
+			fs << "<!-- Local: action " << (*al_i)->ClassName() << " result: " << res << " -->\n";
+	}
 	return RES_OK;
 }
 
@@ -2000,6 +2115,8 @@ int TOLActSubscription::TakeAction(TOLContext& c, fstream& fs)
 	StoreResult(&m_coSql, res);
 	CheckForRows(*res, 1);
 	FetchRow(*res, row);
+	if (row[0] == NULL)
+		return -1;
 	double unit_cost = atof(row[0]);
 	string currency = row[1];
 	sprintf(&m_coBuf, "select count(*) from Sections where IdPublication = %ld and "
@@ -2008,6 +2125,8 @@ int TOLActSubscription::TakeAction(TOLContext& c, fstream& fs)
 	res = mysql_store_result(&m_coSql);
 	CheckForRows(*res, 1);
 	row = mysql_fetch_row(*res);
+	if (row[0] == NULL)
+		return -1;
 	long int nos = atol(row[0]);
 	TOLContext lc = c;
 	lc.SetByPublication(by_publication);
@@ -2076,6 +2195,8 @@ int TOLActEdit::TakeAction(TOLContext& c, fstream& fs)
 			StoreResult(&m_coSql, res);
 			CheckForRows(*res, 1);
 			FetchRow(*res, row);
+			if (row[1] == NULL)
+				return -1;
 			cpChar r = strchr(row[1], '(');
 			if (r == 0 || *r == 0)
 				return RES_OK;

@@ -53,10 +53,10 @@ E_CURRENT
 <!sql endif>
 
 <P><!sql setdefault SectOffs 0><!sql if $SectOffs < 0><!sql set SectOffs 0><!sql endif><!sql set NUM_ROWS 0>dnl
-<!sql query "SELECT * FROM Sections WHERE IdPublication=?Pub AND NrIssue=?Issue AND IdLanguage=?Language ORDER BY Number LIMIT $SectOffs, 11" q_sect>dnl
+<!sql query "SELECT * FROM Sections WHERE IdPublication=?Pub AND NrIssue=?Issue AND IdLanguage=?Language ORDER BY Number LIMIT $SectOffs, 21" q_sect>dnl
 <!sql if $NUM_ROWS>dnl
 <!sql set nr $NUM_ROWS>dnl
-<!sql set i 10>dnl
+<!sql set i 20>dnl
 <!sql set color 0>dnl
 B_LIST
 	B_LIST_HEADER
@@ -97,12 +97,12 @@ B_LIST
 <!sql if ($SectOffs <= 0)>dnl
 		X_PREV_I
 <!sql else>dnl
-		X_PREV_A({index.xql?Pub=<!sql print #Pub>&Language=<!sql print #Language>&Issue=<!sql print #Issue>&SectOffs=<!sql eval ($SectOffs - 10)>})
+		X_PREV_A({index.xql?Pub=<!sql print #Pub>&Language=<!sql print #Language>&Issue=<!sql print #Issue>&SectOffs=<!sql eval ($SectOffs - 20)>})
 <!sql endif>dnl
-<!sql if $nr < 11>dnl
+<!sql if $nr < 21>dnl
 		X_NEXT_I
 <!sql else>dnl
-		X_NEXT_A({index.xql?Pub=<!sql print #Pub>&Issue=<!sql print #Issue>&Language=<!sql print #Language>&SectOffs=<!sql eval ($SectOffs + 10)>})
+		X_NEXT_A({index.xql?Pub=<!sql print #Pub>&Issue=<!sql print #Issue>&Language=<!sql print #Language>&SectOffs=<!sql eval ($SectOffs + 20)>})
 <!sql endif>dnl
 	E_LIST_FOOTER
 E_LIST
