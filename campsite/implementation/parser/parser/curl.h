@@ -34,6 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 using std::string;
 using std::map;
+using std::multimap;
 
 
 #include "cgiparams.h"
@@ -42,6 +43,8 @@ using std::map;
 #include "data_types.h"
 #include "cmessage.h"
 
+
+typedef multimap <string, string, str_case_less> String2StringMMap;
 
 /**
   * class CURL
@@ -63,6 +66,16 @@ public:
 	void setMethod(const string& p_rcoMethod) { m_coMethod = p_rcoMethod; }
 
 	const string& getMethod() const { return m_coMethod; }
+
+	void setPathTranslated(const string& p_coPathTranslated)
+		{ m_coPathTranslated = p_coPathTranslated; }
+
+	const string& getPathTranslated() const { return m_coPathTranslated; }
+
+	const string& getDocumentRoot() const { return m_coDocumentRoot; }
+
+	void setDocumentRoot(const string& p_coDocumentRoot)
+		{ m_coDocumentRoot = p_coDocumentRoot; }
 
 	void setId(long p_nId) { setValue("url_id", p_nId); }
 
@@ -114,13 +127,19 @@ public:
 
 	virtual string getQueryString() const = 0;
 
+	// readQueryString(): static method; reads the parameters from the query string
+	static String2StringMMap* readQueryString(const string& p_rcoQueryString,
+	                                          String2StringMMap* p_pcoParams = NULL);
+
 protected:
-	// readQueryString(): internal method; reads the parameters from the query string
-	void readQueryString(const string& p_rcoQueryString);
+	// ReadQueryString(): internal method; reads the parameters from the query string
+	void ReadQueryString(const string& p_rcoQueryString);
 
 protected:
 	string m_coMethod;
-	String2String m_coParamMap;
+	string m_coPathTranslated;
+	string m_coDocumentRoot;
+	String2StringMMap m_coParamMap;
 	String2String m_coCookies;
 };
 
@@ -141,7 +160,7 @@ inline void CURL::setValue(const string& p_rcoParameter, long p_nValue)
 
 inline void CURL::setValue(const string& p_rcoParameter, const string& p_rcoValue)
 {
-	m_coParamMap[p_rcoParameter] = p_rcoValue;
+	m_coParamMap.insert(pair<string, string>(p_rcoParameter, p_rcoValue));
 }
 
 inline bool CURL::equalTo(const CURL* p_pcoURL) const
@@ -154,7 +173,7 @@ inline bool CURL::equalTo(const CURL* p_pcoURL) const
 
 inline string CURL::getValue(string p_rcoParameter) const
 {
-	String2String::const_iterator coIt = m_coParamMap.find(p_rcoParameter);
+	String2StringMMap::const_iterator coIt = m_coParamMap.find(p_rcoParameter);
 	if (coIt == m_coParamMap.end())
 		return string("");
 	return (*coIt).second;
@@ -181,6 +200,11 @@ inline string CURL::getCookie(string p_rcoName) const
 inline const String2String& CURL::getCookies() const
 {
 	return m_coCookies;
+}
+
+inline void CURL::ReadQueryString(const string& p_rcoQueryString)
+{
+	CURL::readQueryString(p_rcoQueryString, &m_coParamMap);
 }
 
 #endif // CURL_H
