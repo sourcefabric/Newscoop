@@ -1,5 +1,5 @@
 B_HTML
-INCLUDE_PHP_LIB(<*..*>)
+INCLUDE_PHP_LIB(<*$ADMIN_DIR/pub*>)
 B_DATABASE
 
 <?php 
@@ -71,7 +71,7 @@ B_DIALOG(<*Configure publication*>, <*POST*>, <*do_edit.php*>)
 	}
 ?>
 	    </SELECT>&nbsp;
-	<a href="/priv/pub/aliases.php?Pub=<?php echo $Pub ?>"><?php putGS("Edit aliases"); ?></a>
+	<a href="X_ROOT/pub/aliases.php?Pub=<?php echo $Pub ?>"><?php putGS("Edit aliases"); ?></a>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Default language*>)
 		<SELECT NAME="cLanguage">
@@ -84,7 +84,7 @@ B_DIALOG(<*Configure publication*>, <*POST*>, <*do_edit.php*>)
 	}
 ?>dnl
 	    </SELECT>&nbsp;
-	<a href="/priv/languages/"><?php putGS("Edit languages"); ?></a>
+	<a href="X_ROOT/languages/"><?php putGS("Edit languages"); ?></a>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*URL Type*>)
 		<SELECT NAME="cURLType">
