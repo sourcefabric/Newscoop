@@ -1,6 +1,6 @@
 export PRIV_DIR6=$(PRIV_DIR5)/images
 
-MY_TARGETS=upload_i.sh index.php
+MY_TARGETS=upload_i.sh
 
 all: $(MY_TARGETS)
 
