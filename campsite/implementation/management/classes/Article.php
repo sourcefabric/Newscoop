@@ -1,66 +1,66 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/config.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/DatabaseObject.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/ArticleType.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Language.php");
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/config.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DatabaseObject.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleType.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
 
 class Article extends DatabaseObject {
 	/**
 	 * The column names used for the primary key.
 	 * @var array
 	 */
-	var $m_keyColumnNames = array("IdPublication",
-						   		  "NrIssue",
-							   	  "NrSection",
-							   	  "Number",
-							   	  "IdLanguage");
+	var $m_keyColumnNames = array('IdPublication',
+						   		  'NrIssue',
+							   	  'NrSection',
+							   	  'Number',
+							   	  'IdLanguage');
 
-	var $m_dbTableName = "Articles";
+	var $m_dbTableName = 'Articles';
 	
 	var $m_columnNames = array(
 		// int - Publication ID 
-		"IdPublication", 
+		'IdPublication', 
 		
 		// int -Issue ID
-		"NrIssue", 
+		'NrIssue', 
 		
 		// int - Section ID
-		"NrSection", 
+		'NrSection', 
 
 		// int - Article ID
-		"Number", 
+		'Number', 
 
 		// int - Language ID,
-		"IdLanguage",
+		'IdLanguage',
 
 		// string - Article Type
-		"Type",
+		'Type',
 	
 		// int - User ID of user who created the article
-		"IdUser",
+		'IdUser',
 	
 		// string - The title of the article.
-		"Name",
+		'Name',
 	
 		// string
 		// Whether the article is on the front page or not.
-	  	// This is represented as "N" or "Y".
-		"OnFrontPage",
+	  	// This is represented as 'N' or 'Y'.
+		'OnFrontPage',
 	
 		/**
 		 * Whether or not the article is on the section or not.
-		 * This is represented as "N" or "Y".
+		 * This is represented as 'N' or 'Y'.
 		 * @var string
 		 */
-		"OnSection",
-		"Published",
-		"UploadDate",
-		"Keywords",
-		"Public",
-		"IsIndexed",
-		"LockUser",
-		"LockTime",
-		"ShortName");
+		'OnSection',
+		'Published',
+		'UploadDate',
+		'Keywords',
+		'Public',
+		'IsIndexed',
+		'LockUser',
+		'LockTime',
+		'ShortName');
 		
 	/**
 	 * Construct by passing in the primary key to access the article in 
@@ -81,15 +81,15 @@ class Article extends DatabaseObject {
 					 $p_languageId, $p_articleId = null) 
 	{
 		parent::DatabaseObject($this->m_columnNames);
-		$this->m_data["IdPublication"] = $p_publicationId;
-		$this->m_data["NrIssue"] = $p_issueId;
-		$this->m_data["NrSection"] = $p_sectionId;
-		$this->m_data["IdLanguage"] = $p_languageId;
-		$this->m_data["Number"] = $p_articleId;
+		$this->m_data['IdPublication'] = $p_publicationId;
+		$this->m_data['NrIssue'] = $p_issueId;
+		$this->m_data['NrSection'] = $p_sectionId;
+		$this->m_data['IdLanguage'] = $p_languageId;
+		$this->m_data['Number'] = $p_articleId;
 		if (!is_null($p_articleId)) {
 			$this->fetch();
 		}
-	} // ctor
+	} // constructor
 	
 	
 	/**
@@ -105,41 +105,41 @@ class Article extends DatabaseObject {
 	function create($p_name, $p_shortName, $p_articleType) {
 		global $Campsite;
 		// Create the article ID.
-		$queryStr = "UPDATE AutoId SET ArticleId=LAST_INSERT_ID(ArticleId + 1)";
-		$Campsite["db"]->Execute($queryStr);
-		if ($Campsite["db"]->Affected_Rows() <= 0) {
+		$queryStr = 'UPDATE AutoId SET ArticleId=LAST_INSERT_ID(ArticleId + 1)';
+		$Campsite['db']->Execute($queryStr);
+		if ($Campsite['db']->Affected_Rows() <= 0) {
 			// If we were not able to get an ID, dont try to create the article.
 			return;
 		}
-		$this->m_data["Number"] = $Campsite["db"]->Insert_ID();
+		$this->m_data['Number'] = $Campsite['db']->Insert_ID();
 		
 		// Create the record
-		$values = array("Name" => $p_name, 
-						"ShortName" => $p_shortName,
-						"Type" => $p_articleType,
-						"Public" => 'Y');
+		$values = array('Name' => $p_name, 
+						'ShortName' => $p_shortName,
+						'Type' => $p_articleType,
+						'Public' => 'Y');
 		$success = parent::create($values);
 		if (!$success) {
 			return;
 		}
-		$this->setProperty("UploadDate", "NOW()", true, true);
-//		$queryStr = "UPDATE ".$this->m_dbTableName
-//					. " SET UploadDate=NOW()"
-//					. " WHERE " . $this->getKeyWhereClause();
-//		$Campsite["db"]->Execute($queryStr);
+		$this->setProperty('UploadDate', 'NOW()', true, true);
+//		$queryStr = 'UPDATE '.$this->m_dbTableName
+//					. ' SET UploadDate=NOW()'
+//					. ' WHERE ' . $this->getKeyWhereClause();
+//		$Campsite['db']->Execute($queryStr);
 		
 		$this->fetch();
 	
 		// Added by sebastian
 		// Paul asks: what does this do? 
-		if (function_exists ("incModFile")) {
+		if (function_exists ('incModFile')) {
 			incModFile ();
 		}
 
 		// Insert an entry into the article type table.
-		$articleData =& new ArticleType($this->m_data["Type"], 
-			$this->m_data["Number"], 
-			$this->m_data["IdLanguage"]);
+		$articleData =& new ArticleType($this->m_data['Type'], 
+			$this->m_data['Number'], 
+			$this->m_data['IdLanguage']);
 		$articleData->create();
 	} // fn create
 
@@ -149,9 +149,9 @@ class Article extends DatabaseObject {
 	 */
 	function delete() {
 		// Delete row from article type table.
-		$articleData =& new ArticleType($this->m_data["Type"], 
-			$this->m_data["Number"], 
-			$this->m_data["IdLanguage"]);
+		$articleData =& new ArticleType($this->m_data['Type'], 
+			$this->m_data['Number'], 
+			$this->m_data['IdLanguage']);
 		$articleData->delete();
 		
 		// Delete row from Articles table.
@@ -167,11 +167,11 @@ class Article extends DatabaseObject {
 	 */
 	function lock($p_userId) {
 		global $Campsite;
-		$queryStr = "UPDATE Articles "
-					." SET LockUser=".$p_userId
-					.", LockTime=NOW() "
-					." WHERE ". $this->getKeyWhereClause();
-		$Campsite["db"]->Execute($queryStr);
+		$queryStr = 'UPDATE Articles '
+					.' SET LockUser='.$p_userId
+					.', LockTime=NOW() '
+					.' WHERE '. $this->getKeyWhereClause();
+		$Campsite['db']->Execute($queryStr);
 	} // fn lock
 
 //	/**
@@ -180,24 +180,24 @@ class Article extends DatabaseObject {
 //	 */
 //	function getTemplateVar() {
 //		$templateVar = array();
-//		$templateVar["publication_id"] = $this->IdPublication;
-//		$templateVar["issue_id"] = $this->NrIssue;
-//		$templateVar["section_id"] = $this->NrSection;
-//		$templateVar["article_id"] = $this->Number;
-//		$templateVar["language_id"] = $this->IdLanguage;
-//		$templateVar["article_type"] = $this->Type;
-//		$templateVar["user_id"] = $this->IdUser;
-//		$templateVar["title"] = $this->Name;
-//		$templateVar["on_front_page"] = $this->OnFrontPage;
-//		$templateVar["on_section"] = $this->OnSection;
-//		$templateVar["published"] = $this->Published;
-//		$templateVar["upload_date"] = $this->UploadDate;
-//		$templateVar["keywords"] = $this->Keywords;
-//		$templateVar["is_public"] = $this->Public;
-//		$templateVar["is_indexed"] = $this->IsIndexed;
-//		$templateVar["locked_by_user"] = $this->LockUser;
-//		$templateVar["lock_time"] = $this->LockTime;
-//		$templateVar["short_name"] = $this->ShortName;
+//		$templateVar['publication_id'] = $this->IdPublication;
+//		$templateVar['issue_id'] = $this->NrIssue;
+//		$templateVar['section_id'] = $this->NrSection;
+//		$templateVar['article_id'] = $this->Number;
+//		$templateVar['language_id'] = $this->IdLanguage;
+//		$templateVar['article_type'] = $this->Type;
+//		$templateVar['user_id'] = $this->IdUser;
+//		$templateVar['title'] = $this->Name;
+//		$templateVar['on_front_page'] = $this->OnFrontPage;
+//		$templateVar['on_section'] = $this->OnSection;
+//		$templateVar['published'] = $this->Published;
+//		$templateVar['upload_date'] = $this->UploadDate;
+//		$templateVar['keywords'] = $this->Keywords;
+//		$templateVar['is_public'] = $this->Public;
+//		$templateVar['is_indexed'] = $this->IsIndexed;
+//		$templateVar['locked_by_user'] = $this->LockUser;
+//		$templateVar['lock_time'] = $this->LockTime;
+//		$templateVar['short_name'] = $this->ShortName;
 //		return $templateVar;
 //	} // fn getTemplateVar
 
@@ -207,15 +207,17 @@ class Article extends DatabaseObject {
 	 * type of language the article is written in.
 	 * TODO: change this to a function that returns the set of all 
 	 * articles, one for each language.
+	 *
+	 * @return array
 	 */
 	function getLanguages() {
 		global $Campsite;
-	 	$queryStr = "SELECT IdLanguage FROM Articles "
-	 				." WHERE IdPublication=".$this->m_data["IdPublication"]
-	 				." AND NrIssue=".$this->m_data["NrIssue"]
-	 				." AND NrSection=".$this->m_data["NrSection"]
-	 				." AND Number=".$this->m_data["Number"];
-	 	$languageIds = $Campsite["db"]->GetCol($queryStr);
+	 	$queryStr = 'SELECT IdLanguage FROM Articles '
+	 				.' WHERE IdPublication='.$this->m_data['IdPublication']
+	 				.' AND NrIssue='.$this->m_data['NrIssue']
+	 				.' AND NrSection='.$this->m_data['NrSection']
+	 				.' AND Number='.$this->m_data['Number'];
+	 	$languageIds = $Campsite['db']->GetCol($queryStr);
 	 	$languages = array();
 		foreach ($languageIds as $languageId) {
 			$languages[] =& new Language($languageId);
@@ -229,16 +231,16 @@ class Article extends DatabaseObject {
 	 */
 	function getArticlesInSection($p_publicationId, $p_issueId, $p_sectionId, $p_languageId) {
 		global $Campsite;
-		$queryStr = "SELECT * FROM Articles"
+		$queryStr = 'SELECT * FROM Articles'
 					." WHERE IdPublication='".$p_publicationId."'"
 					." AND NrIssue='".$p_issueId."'"
 					." AND NrSection='".$p_sectionId."'"
 					." AND IdLanguage='".$p_languageId."'";
-		$query = $Campsite["db"]->Execute($queryStr);
+		$query = $Campsite['db']->Execute($queryStr);
 		$articles = array();
 		while ($row = $query->FetchRow()) {
-			$tmpArticle =& new Article($row["IdPublication"], $row["NrIssue"],
-				$row["NrSection"], $row["IdLanguage"]);
+			$tmpArticle =& new Article($row['IdPublication'], $row['NrIssue'],
+				$row['NrSection'], $row['IdLanguage']);
 			$tmpArticle->fetch($row);
 			$articles[] = $tmpArticle;
 		}
@@ -252,17 +254,17 @@ class Article extends DatabaseObject {
 	 */
 	function getSection() {
 		global $Campsite;
-	    $queryStr = "SELECT * FROM Sections "
-	    			." WHERE IdPublication=".$this->getPublicationId()
-	    			." AND NrIssue=".$this->getIssueId()
-	    			." AND IdLanguage=".$this->getLanguageId();
-		$query = $Campsite["db"]->Execute($queryStr);
+	    $queryStr = 'SELECT * FROM Sections '
+	    			.' WHERE IdPublication='.$this->getPublicationId()
+	    			.' AND NrIssue='.$this->getIssueId()
+	    			.' AND IdLanguage='.$this->getLanguageId();
+		$query = $Campsite['db']->Execute($queryStr);
 		if ($query->RecordCount() <= 0) {
-			$queryStr = "SELECT * FROM Sections "
-						." WHERE IdPublication=".$this->getPublicationId()
-						." AND NrIssue=".$this->getIssueId()
-						." LIMIT 1";
-			$query = $Campsite["db"]->Execute($queryStr);	
+			$queryStr = 'SELECT * FROM Sections '
+						.' WHERE IdPublication='.$this->getPublicationId()
+						.' AND NrIssue='.$this->getIssueId()
+						.' LIMIT 1';
+			$query = $Campsite['db']->Execute($queryStr);	
 		}
 		$row = $query->FetchRow();
 		$section =& new Section($this->getPublicationId(), $this->getIssueId(),
@@ -278,7 +280,7 @@ class Article extends DatabaseObject {
 	 * @return string
 	 */
 	function getArticleTypeTableName() {
-		return "X".$this->m_data["Type"];
+		return 'X'.$this->m_data['Type'];
 	} // fn getArticleTypeTableName
 	
 	
@@ -286,7 +288,7 @@ class Article extends DatabaseObject {
 	 * @return int
 	 */
 	function getPublicationId() {
-		return $this->getProperty("IdPublication");
+		return $this->getProperty('IdPublication');
 	} // fn getPublicationId
 	
 	
@@ -294,7 +296,7 @@ class Article extends DatabaseObject {
 	 * @return int
 	 */
 	function getIssueId() {
-		return $this->getProperty("NrIssue");
+		return $this->getProperty('NrIssue');
 	} // fn getIssueId
 	
 	
@@ -302,7 +304,7 @@ class Article extends DatabaseObject {
 	 * @return int
 	 */
 	function getSectionId() {
-		return $this->getProperty("NrSection");
+		return $this->getProperty('NrSection');
 	} // fn getSectionId
 	
 	
@@ -310,7 +312,7 @@ class Article extends DatabaseObject {
 	 * @return int
 	 */
 	function getLanguageId() {
-		return $this->getProperty("IdLanguage");
+		return $this->getProperty('IdLanguage');
 	} // fn getLanguageId
 	
 	
@@ -318,7 +320,7 @@ class Article extends DatabaseObject {
 	 * @return int
 	 */ 
 	function getArticleId() {
-		return $this->getProperty("Number");
+		return $this->getProperty('Number');
 	} // fn getArticleId
 	
 	
@@ -326,7 +328,7 @@ class Article extends DatabaseObject {
 	 * @return string
 	 */
 	function getTitle() {
-		return $this->getProperty("Name");
+		return $this->getProperty('Name');
 	} // fn getTitle
 	
 	
@@ -338,7 +340,7 @@ class Article extends DatabaseObject {
 	 * @return void
 	 */
 	function setTitle($p_title) {
-		return parent::setProperty("Name", $p_title);
+		return parent::setProperty('Name', $p_title);
 	} // fn setTitle
 
 	
@@ -347,7 +349,7 @@ class Article extends DatabaseObject {
 	 * @return string
 	 */
 	function getType() {
-		return $this->getProperty("Type");
+		return $this->getProperty('Type');
 	} // fn getType
 	
 
@@ -356,7 +358,7 @@ class Article extends DatabaseObject {
 	 * @return int
 	 */
 	function getUserId() {
-		return $this->getProperty("IdUser");
+		return $this->getProperty('IdUser');
 	} // fn getUserId
 	
 	
@@ -364,7 +366,7 @@ class Article extends DatabaseObject {
 	 * @param int value
 	 */
 	function setUserId($value) {
-		return parent::setProperty("IdUser", $value);
+		return parent::setProperty('IdUser', $value);
 	}
 	
 	
@@ -373,7 +375,7 @@ class Article extends DatabaseObject {
 	 * @return boolean
 	 */
 	function onFrontPage() {
-		return ($this->getProperty("OnFrontPage") == 'Y');
+		return ($this->getProperty('OnFrontPage') == 'Y');
 	} // fn onFrontPage
 	
 	
@@ -381,7 +383,7 @@ class Article extends DatabaseObject {
 	 * @param boolean value
 	 */
 	function setOnFrontPage($p_value) {
-		return parent::setProperty("OnFrontPage", $p_value?"Y":"N");
+		return parent::setProperty('OnFrontPage', $p_value?'Y':'N');
 	} // fn setOnFrontPage
 	
 	
@@ -389,7 +391,7 @@ class Article extends DatabaseObject {
 	 * @return boolean
 	 */
 	function onSection() {
-		return ($this->getProperty("OnSection") == 'Y');
+		return ($this->getProperty('OnSection') == 'Y');
 	} // fn onSection
 	
 	
@@ -397,26 +399,26 @@ class Article extends DatabaseObject {
 	 * @param boolean value
 	 */
 	function setOnSection($p_value) {
-		return parent::setProperty("OnSection", $p_value?"Y":"N");
+		return parent::setProperty('OnSection', $p_value?'Y':'N');
 	} // fn setOnSection
 	
 	
 	/**
 	 * @return string
-	 * 		Can be "Y", "S", or "N".
+	 * 		Can be 'Y', 'S', or 'N'.
 	 */
 	function getPublished() {
-		return $this->getProperty("Published");
+		return $this->getProperty('Published');
 	} // fn isPublished
 	
 	
 	/**
 	 * Set the published state of the article.  
-	 * Can be "Y" = "Yes", "S" = "Submitted", or "N" = "No".
+	 * Can be 'Y' = 'Yes', 'S' = 'Submitted', or 'N' = 'No'.
 	 * @param string value
 	 */
 	function setPublished($p_value) {
-		return parent::setProperty("Published", $p_value);
+		return parent::setProperty('Published', $p_value);
 	} // fn setIsPublished
 	
 	
@@ -425,7 +427,7 @@ class Article extends DatabaseObject {
 	 * @return string
 	 */
 	function getUploadDate() {
-		return $this->getProperty("UploadDate");
+		return $this->getProperty('UploadDate');
 	} // fn getUploadDate
 	
 	
@@ -433,7 +435,7 @@ class Article extends DatabaseObject {
 	 * @return string
 	 */
 	function getKeywords() {
-		return $this->getProperty("Keywords");
+		return $this->getProperty('Keywords');
 	} // fn getKeywords
 	
 	
@@ -441,7 +443,7 @@ class Article extends DatabaseObject {
 	 * @param string $value
 	 */
 	function setKeywords($p_value) {
-		return parent::setProperty("Keywords", $p_value);
+		return parent::setProperty('Keywords', $p_value);
 	} // fn setKeywords
 	
 	
@@ -449,7 +451,7 @@ class Article extends DatabaseObject {
 	 * @return boolean
 	 */
 	function isPublic() {
-		return ($this->getProperty("Public") == 'Y');
+		return ($this->getProperty('Public') == 'Y');
 	} // fn isPublic
 	
 	
@@ -458,7 +460,7 @@ class Article extends DatabaseObject {
 	 * @param boolean value
 	 */
 	function setIsPublic($p_value) {
-		return parent::setProperty("Public", $p_value?"Y":"N");
+		return parent::setProperty('Public', $p_value?'Y':'N');
 	} // fn setIsPublic
 	
 	
@@ -466,7 +468,7 @@ class Article extends DatabaseObject {
 	 * @return boolean
 	 */
 	function isIndexed() {
-		return ($this->getProperty("IsIndexed") == 'Y');
+		return ($this->getProperty('IsIndexed') == 'Y');
 	} // fn isIndexed
 	
 	
@@ -474,7 +476,7 @@ class Article extends DatabaseObject {
 	 * @param boolean value
 	 */
 	function setIsIndexed($p_value) {
-		return parent::setProperty("IsIndexed", $p_value?"Y":"N");
+		return parent::setProperty('IsIndexed', $p_value?'Y':'N');
 	} // fn setIsIndexed
 	
 	
@@ -483,7 +485,7 @@ class Article extends DatabaseObject {
 	 * @return int
 	 */
 	function getLockedByUser() {
-		return $this->getProperty("LockUser");
+		return $this->getProperty('LockUser');
 	} // fn getLockedByUser
 	
 	
@@ -491,7 +493,7 @@ class Article extends DatabaseObject {
 	 * @param int value
 	 */
 	function setLockedByUser($p_value) {
-		return parent::setProperty("LockUser", $p_value);
+		return parent::setProperty('LockUser', $p_value);
 	} // fn setLockedByUser
 	
 	
@@ -502,7 +504,7 @@ class Article extends DatabaseObject {
 	 *		In the form of YYYY-MM-DD HH:MM:SS
 	 */
 	function getLockTime() {
-		return $this->getProperty("LockTime");
+		return $this->getProperty('LockTime');
 	} // fn getLockTime
 
 	
@@ -517,7 +519,7 @@ class Article extends DatabaseObject {
 	 * @return string
 	 */
 	function getShortName() {
-		return $this->getProperty("ShortName");
+		return $this->getProperty('ShortName');
 	} // fn getShortName
 	
 	
@@ -525,7 +527,7 @@ class Article extends DatabaseObject {
 	 * @param string value
 	 */
 	function setShortName($p_value) {
-		return parent::setProperty("ShortName", $p_value);
+		return parent::setProperty('ShortName', $p_value);
 	} // fn setShortName
 	
 	
@@ -535,9 +537,9 @@ class Article extends DatabaseObject {
 	 * @return ArticleType
 	 */
 	function getArticleTypeObject() {
-		return new ArticleType($this->getProperty("Type"), 
-			$this->getProperty("Number"), 
-			$this->getProperty("IdLanguage"));
+		return new ArticleType($this->getProperty('Type'), 
+			$this->getProperty('Number'), 
+			$this->getProperty('IdLanguage'));
 	} // fn getArticleTypeObject
 	
 	
@@ -547,38 +549,89 @@ class Article extends DatabaseObject {
 	 */
 	function GetArticlesByUser($p_userId, $p_lowerLimit = 0, $p_upperLimit = 20) {
 		global $Campsite;
-		$queryStr = "SELECT * FROM Articles "
+		$queryStr = 'SELECT * FROM Articles '
 					." WHERE IdUser=$p_userId"
-					." ORDER BY Number DESC, IdLanguage "
+					.' ORDER BY Number DESC, IdLanguage '
 					." LIMIT $p_lowerLimit, $p_upperLimit";
-		$query = $Campsite["db"]->Execute($queryStr);
+		$query = $Campsite['db']->Execute($queryStr);
 		$articles = array();
 		while ($row = $query->FetchRow()) {
-			$tmpArticle =& new Article($row["IdPublication"], $row["NrIssue"],
-				$row["NrSection"], $row["IdLanguage"]);
+			$tmpArticle =& new Article($row['IdPublication'], $row['NrIssue'],
+				$row['NrSection'], $row['IdLanguage']);
 			$tmpArticle->fetch($row);
 			$articles[] = $tmpArticle;
 		}
 		return $articles;
 	} // fn GetArticlesByUser
 	
-	
+
+	/**
+	 * @param int p_lowerLimit
+	 * @param int p_upperLimit
+	 * @return array
+	 */
 	function GetSubmittedArticles($p_lowerLimit = 0, $p_upperLimit = 20) {
 		global $Campsite;
-		$queryStr = "SELECT * FROM Articles"
+		$queryStr = 'SELECT * FROM Articles'
 	    			." WHERE Published = 'S' "
-	    			." ORDER BY Number DESC, IdLanguage "
+	    			.' ORDER BY Number DESC, IdLanguage '
 	    			." LIMIT $p_lowerLimit, $p_upperLimit";
-		$query = $Campsite["db"]->Execute($queryStr);
+		$query = $Campsite['db']->Execute($queryStr);
 		$articles = array();
 		while ($row = $query->FetchRow()) {
-			$tmpArticle =& new Article($row["IdPublication"], $row["NrIssue"],
-				$row["NrSection"], $row["IdLanguage"]);
+			$tmpArticle =& new Article($row['IdPublication'], $row['NrIssue'],
+				$row['NrSection'], $row['IdLanguage']);
 			$tmpArticle->fetch($row);
 			$articles[] = $tmpArticle;
 		}
 		return $articles;
 	} // fn GetSubmittedArticles
+	
+	
+	/**
+	 * Get all the images that belong to this article.
+	 * @return array
+	 */
+	function getImages() {
+		global $Campsite;
+		$queryStr = 'SELECT Images.Id FROM Images, ArticleImages'
+					.' WHERE ArticleImages.NrArticle='.$this->getArticleId()
+					.' AND ArticleImages.IdImage=Images.Id';
+		$imagesIds =& $Campsite['db']->GetCol($queryStr);
+		$images = array();
+		if (is_array($imagesIds)) {
+			foreach ($imagesIds as $imageId) {
+				$images[] = new Image($imageId);
+			}
+		}
+		return $images;
+	} // fn getImages
+	
+	
+	/**
+	 * @param int p_imageId
+	 * @return void
+	 */
+	function associateImage($p_imageId) {
+		global $Campsite;
+		$queryStr = 'INSERT IGNORE INTO ArticleImages(NrArticle, IdImage, Number)'
+					." VALUES('".$this->getArticleId()."', '".$p_imageId."','".$p_imageId."')";
+		$Campsite['db']->Execute($queryStr);
+	} // fn associateImage
+
+	
+	/**
+	 * Disassociate the image from all articles.
+	 *
+	 * @param int p_imageId
+	 * @return void
+	 */
+	function OnImageDelete($p_imageId) {
+		global $Campsite;
+		$queryStr = 'DELETE FROM ArticleImages'
+					." WHERE IdImage='".$p_imageId."'";
+		$Campsite['db']->Execute($queryStr);
+	} // fn OnImageRemoved
 	
 } // class Article
 
