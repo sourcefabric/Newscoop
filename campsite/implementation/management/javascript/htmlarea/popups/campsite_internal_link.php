@@ -7,7 +7,7 @@
  *	 set in the POST.
  * 
  */
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/config.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/db_connect.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Language.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Publication.php");
@@ -20,7 +20,7 @@ $maxSelectLength = 80;
 <html>
 <head>
 <title>Insert Campsite Internal Link</title>
-<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite["website_url"] ?>/stylesheet.css">
+<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/stylesheet.css">
 <style type="text/css">
 html, body {
   background: ButtonFace;
@@ -216,7 +216,7 @@ function onCancel() {
     	$options = array();
     	$options[0] = "?";
     	if (($languageId != 0) && ($publicationId != 0) && ($issueId != 0) && ($sectionId != 0)) {
-	    	$articles = Article::getArticlesInSection($publicationId, $issueId, $sectionId, $languageId);
+	    	$articles = Article::GetArticles($publicationId, $issueId, $sectionId, $languageId);
 	    	foreach ($articles as $article) {
 	    		$options[$article->getArticleId()] = substr($article->getTitle(), 0, $maxSelectLength);
 	    	}
