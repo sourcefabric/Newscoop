@@ -21,7 +21,12 @@ $InterfaceLanguageId = array_get_value($_REQUEST, "Language", 0);
 $ArticleLanguageId = array_get_value($_REQUEST, "sLanguage", 0);
 $ArticleId = array_get_value($_REQUEST, "Article", 0);
 $ImageId = array_get_value($_REQUEST, "ImageId", 0);
-
+$BackLink = array_get_value($_REQUEST, "BackLink", "index.php");
+// Security
+if ( ($BackLink != "index.php") && ($BackLink != "search.php")) {
+	header("Location: /priv/logout.php");
+	exit;	
+}
 $publicationObj =& new Publication($PublicationId);
 $issueObj =& new Issue($PublicationId, $InterfaceLanguageId, $IssueId);
 $sectionObj =& new Section($PublicationId, $IssueId, $InterfaceLanguageId, $SectionId);
@@ -77,7 +82,7 @@ $imageObj =& new Image($ImageId);
 <br>
 <CENTER><IMG SRC="<?php echo $imageObj->getImageUrl(); ?>" BORDER="0" ALT="<?php  echo htmlspecialchars($imageObj->getDescription()); ?>">
 <br><br>
-<A HREF="/priv/pub/issues/sections/articles/images/?Pub=<?php  p($PublicationId); ?>&Issue=<?php  p($IssueId); ?>&Article=<?php  p($ArticleId); ?>&Language=<?php  p($InterfaceLanguageId); ?>&sLanguage=<?php  p($ArticleLanguageId); ?>&Section=<?php  p($SectionId); ?>" >&lt;-- Back</a>
+<A HREF="/priv/pub/issues/sections/articles/images/<?php p($BackLink); ?>?Pub=<?php  p($PublicationId); ?>&Issue=<?php  p($IssueId); ?>&Article=<?php  p($ArticleId); ?>&Language=<?php  p($InterfaceLanguageId); ?>&sLanguage=<?php  p($ArticleLanguageId); ?>&Section=<?php  p($SectionId); ?>" >&lt;-- Back</a>
 </CENTER>
 <P>
 
