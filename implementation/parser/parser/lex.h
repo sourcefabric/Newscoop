@@ -85,6 +85,7 @@ using std::map;
 #define CMS_ST_WITH 38
 #define CMS_ST_ENDWITH 39
 #define CMS_ST_CURRENTSUBTITLE 40
+#define CMS_ST_TOPIC 41
 
 // statement names
 #define ST_LANGUAGE "Language"
@@ -127,6 +128,7 @@ using std::map;
 #define ST_WITH "With"
 #define ST_ENDWITH "EndWith"
 #define ST_CURRENTSUBTITLE "CurrentSubtitle"
+#define ST_TOPIC "Topic"
 
 // The lexem returned by lex class
 class CLexem
