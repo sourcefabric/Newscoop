@@ -1,7 +1,5 @@
 #!/bin/bash
 
-[ -f tpl_cgi.h ] && exit 0
-
 cd ../../..
 . ./make.env
 cd implementation/tpl_cgi/tpl_cgi

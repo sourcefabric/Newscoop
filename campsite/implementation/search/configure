@@ -1,7 +1,5 @@
 #!/bin/bash
 
-[ -f configure.h ] && exit 0
-
 cd ../..
 . ./make.env
 cd implementation/search

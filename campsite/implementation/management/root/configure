@@ -1,7 +1,5 @@
 #!/bin/bash
 
-[ -f db_connect.php ] && exit 0
-
 cd ../../..
 . ./make.env
 cd implementation/management/root
