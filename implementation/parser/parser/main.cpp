@@ -163,10 +163,12 @@ void* MyThreadRoutine(void* p_pArg)
 		return NULL;
 	}
 
+#ifndef _DEBUG_SOURCE
 	// block all signals
 	sigset_t nSigMask;
 	sigfillset(&nSigMask);
 	pthread_sigmask(SIG_SETMASK, &nSigMask, NULL);
+#endif
 
 	CAction::initTempMembers();
 	CTCPSocket* pcoClSock = (CTCPSocket*)p_pArg;
