@@ -80,25 +80,25 @@ class Article extends DatabaseObject {
 	 * Map of database column names to internal variable names.
 	 * @var array
 	 */
-	var $m_columnNames = array("IdPublication",
-							   "NrIssue",
-							   "NrSection",
-							   "Number",
-							   "IdLanguage",
-							   "Type",
-					 	  	   "Name",
-					 	  	   "IdUser",
-					  	  	   "OnFrontPage",
-					 	  	   "OnSection",
-					 	  	   "Published",
-					 	  	   "UploadDate",
-					 	  	   "Keywords",
-					 	  	   "Public",
-					 	  	   "IsIndexed",
-					 	  	   "LockUser",
-					 	  	   "LockTime",
-					 	  	   "ShortName"
-					 			);
+//	var $m_columnNames = array("IdPublication",
+//							   "NrIssue",
+//							   "NrSection",
+//							   "Number",
+//							   "IdLanguage",
+//							   "Type",
+//					 	  	   "Name",
+//					 	  	   "IdUser",
+//					  	  	   "OnFrontPage",
+//					 	  	   "OnSection",
+//					 	  	   "Published",
+//					 	  	   "UploadDate",
+//					 	  	   "Keywords",
+//					 	  	   "Public",
+//					 	  	   "IsIndexed",
+//					 	  	   "LockUser",
+//					 	  	   "LockTime",
+//					 	  	   "ShortName"
+//					 			);
 	
 	/**
 	 * The column names used for the primary key.
@@ -130,6 +130,7 @@ class Article extends DatabaseObject {
 	function Article($p_publicationId, $p_issueId, $p_sectionId, 
 					 $p_languageId, $p_articleId = null) 
 	{
+		parent::DatabaseObject();
 		$this->IdPublication = $p_publicationId;
 		$this->NrIssue = $p_issueId;
 		$this->NrSection = $p_sectionId;

@@ -2,9 +2,7 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/config.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/DatabaseObject.php");
 
-class UserPerm {
-	var $IdUser;
-	
+class UserPerm extends DatabaseObject {
 	/**
 	 * @var string
 	 */
@@ -15,42 +13,42 @@ class UserPerm {
 	 */
 	var $m_primaryKeyColumnNames = array("IdUser");
 	
-	var $m_columnNames = array(
-							"ManagePub",
-							"DeletePub",
-							"ManageIssue",
-							"DeleteIssue",
-							"ManageSection",
-							"DeleteSection",
-							"AddArticle",
-							"ChangeArticle",
-							"DeleteArticle",
-							"AddImage",
-							"ChangeImage",
-							"DeleteImage",
-							"ManageTempl",
-							"DeleteTempl",
-							"ManageUsers",
-							"ManageSubscriptions",
-							"DeleteUsers",
-							"ManageUserTypes",
-							"ManageArticleTypes",
-							"DeleteArticleTypes",
-							"ManageLanguages",
-							"DeleteLanguages",
-							"ManageDictionary",
-							"DeleteDictionary",
-							"ManageCountries",
-							"DeleteCountries",
-							"ManageClasses",
-							"MailNotify",
-							"ViewLogs",
-							"ManageLocalizer",
-							"Publish",
-							"ManageTopics"
-						);
-	
-	
+//	var $m_columnNames = array(
+//							"ManagePub",
+//							"DeletePub",
+//							"ManageIssue",
+//							"DeleteIssue",
+//							"ManageSection",
+//							"DeleteSection",
+//							"AddArticle",
+//							"ChangeArticle",
+//							"DeleteArticle",
+//							"AddImage",
+//							"ChangeImage",
+//							"DeleteImage",
+//							"ManageTempl",
+//							"DeleteTempl",
+//							"ManageUsers",
+//							"ManageSubscriptions",
+//							"DeleteUsers",
+//							"ManageUserTypes",
+//							"ManageArticleTypes",
+//							"DeleteArticleTypes",
+//							"ManageLanguages",
+//							"DeleteLanguages",
+//							"ManageDictionary",
+//							"DeleteDictionary",
+//							"ManageCountries",
+//							"DeleteCountries",
+//							"ManageClasses",
+//							"MailNotify",
+//							"ViewLogs",
+//							"ManageLocalizer",
+//							"Publish",
+//							"ManageTopics"
+//						);
+
+	var $IdUser;	
 	var $ManagePub = "N";
 	var $DeletePub = "N";
 	var $ManageIssue = "N";
@@ -85,6 +83,7 @@ class UserPerm {
 	var $ManageTopics = "N";
 	
 	function UserPerm($p_userId, $p_userKey) {
+		parent::DatabaseObject();
 		$this->IdUser = $p_userId;
 	} // constructor
 	
