@@ -2,13 +2,12 @@ B_HTML
 INCLUDE_PHP_LIB(<*..*>)dnl
 B_DATABASE
 
-<?php 
+<?php
     todefnum('Issue');
     todefnum('Pub');
     todefnum('What');
-    ## added by sebastian ########################
+    todefnum('Language');
     todef('REQUEST_URI', $_SERVER[REQUEST_URI]);
-    ##############################################
 ?>dnl
 CHECK_BASIC_ACCESS
 <?php  if ($What != 0) { ?>dnl
@@ -17,13 +16,13 @@ CHECK_ACCESS(<*ManageTempl*>)dnl
 
 B_HEAD
  X_EXPIRES
- <?php 
+ <?php
      if ($What) { ?>
   X_TITLE(<*Select template*>)
      <?php  } else { ?>
   X_TITLE(<*Templates management*>)
  <?php  } ?>
-<?php 
+<?php
     if ($access == 0) {
  if ($What) { ?>dnl
  X_AD(<*You do not have the right to change default templates.*>)
@@ -34,7 +33,7 @@ B_HEAD
 ?>dnl
 E_HEAD
 
-<?php 
+<?php
 
 $dotpos=strrpos($REQUEST_URI,"?");
 $dotpos = $dotpos ? $dotpos: strlen($REQUEST_URI);
@@ -45,7 +44,7 @@ if (strncmp($myurl, "/look/", 6) != 0) {
     $access = FALSE;
 ?>
 X_XAD(<*You do no have access to the $1 directory!*>, <**>, <*$myurl*>)
-<?php 
+<?php
 }
 if ($access) {
 
@@ -57,7 +56,7 @@ E_STYLE
 
 B_BODY
 
-<?php 
+<?php
     if ($What) { ?>
  B_HEADER(<*Select template*>)
     <?php  } else { ?>
@@ -73,7 +72,7 @@ X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<?php 
+<?php
     $NUM_ROWS=0;
     if ($What)
  query ("SELECT Name, FrontPage, SingleArticle FROM Issues WHERE IdPublication=$Pub AND Number=$Issue AND IdLanguage=$Language", 'q_iss');
@@ -85,7 +84,7 @@ E_HEADER
 B_CURRENT
 <?php  if ($What) { ?>dnl
 X_CURRENT(<*Publication*>, <*<B><?php  fetchRow($q_pub); pgetHVar($q_pub,'Name'); ?></B>*>)
-X_CURRENT(<*Issue*>, <*<B><?php  pencURL($Issue); ?>. <?php  fetchRow($q_iss); pgetHVar($q_iss,'Name'); ?> (<?php 
+X_CURRENT(<*Issue*>, <*<B><?php  pencURL($Issue); ?>. <?php  fetchRow($q_iss); pgetHVar($q_iss,'Name'); ?> (<?php
     query ("SELECT Name FROM Languages WHERE Id=$Language", 'q_language');
     $nr=$NUM_ROWS;
     for($loop=0;$loop<$nr;$loop++) {
@@ -103,7 +102,7 @@ E_CURRENT
 <TR>
 
 
-<?php 
+<?php
     if ($myurl != "LOOK_PATH/") {
  if ($What) { ?>dnl
 <TD>X_NEW_BUTTON(<*Go up*>, <*../?What=<?php  pencURL($What); ?>&Pub=<?php  pencURL($Pub); ?>&Issue=<?php  pencURL($Issue); ?>&Language=<?php  pencURL($Language); ?>*>)</TD>
@@ -139,7 +138,7 @@ E_CURRENT
 <?php  } ?>dnl
 </TABLE>
 <P>
-<?php 
+<?php
     // 'What' at this level selects the usage of templates:
     // 0 - you are in the templates management module (create, delete, edit, upload, duplicate etc)
     // 1, 2 - select a template for viewing with it the font page (1) and an independent article (2)
