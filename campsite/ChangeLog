@@ -1,3 +1,7 @@
+2.1.6
+    - Implemented new "Topic", "If Topic" and "Print Topic" statements
+    - Small bug fixes
+
 2.1.5
     - Added Chinese translation thanks to Andrew Lih and Tian Fawei at Hong Kong
     University, Journalism and Media Studies Centre
