@@ -3,14 +3,16 @@ OBJ_FILES=main.o csocket.o readconf.o
 LDFLAGS=
 LDLIBS=$(PTHREAD_LINK)
 
-DEPENDENCES=globals.h exceptions.h csocket.h srvdef.h readconf.h tpl_cgi.h
+DEPENDENCES=globals.h exceptions.h csocket.h srvdef.h readconf.h tpl_cgi.h cxmltree.h \
+cms_types.h threadkey.h
 
 CFLAGS=-Wall
 # -D_DEBUG -g
 
 TPL_CGI=tpl_cgi
 
-LINKS=csocket.h csocket.cpp exceptions.h globals.h srvdef.h readconf.h readconf.cpp
+LINKS=csocket.h csocket.cpp exceptions.h globals.h srvdef.h readconf.h readconf.cpp \
+cxmltree.h cxmltree.cpp cms_types.h threadkey.h
 
 all: links $(TPL_CGI)
 
