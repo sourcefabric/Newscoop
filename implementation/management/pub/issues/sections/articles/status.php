@@ -27,7 +27,8 @@ $articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
 // and it is new.  
 $userIsArticleOwner = ($User->getId() == $articleObj->getUserId());
 $articleIsNew = ($articleObj->getPublished() == 'N');
-$access = ($User->hasPermission('Publish') || ($userIsArticleOwner && $articleIsNew ));
+$access = ($User->hasPermission('Publish') || $User->hasPermission('ChangeArticle') 
+			|| ($userIsArticleOwner && $articleIsNew ));
 if (!$access) {
 	header("Location: /priv/ad.php?ADReason=".urlencode(getGS("You do not have the right to change this article status. Once submitted an article can only changed by authorized users." )));
 	exit;	
