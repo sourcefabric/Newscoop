@@ -126,7 +126,7 @@ SectionTop($sectionObj, $Language, "Duplicate section");
 			}
 			?>
 			><?php p(htmlspecialchars($tmpIssue->getName())); ?></option>
-			<?			
+			<?php
 		}
 		?>
 		</SELECT>
