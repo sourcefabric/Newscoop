@@ -13,6 +13,7 @@ Core coding
 - Mugurel Rus: campsite server, database, admin interface, install scripts,
   documentation
 - Nenad Pandzic: campfire
+- Sebastian Gobel: admin interface
 - Attila Egyedi: campfire, admin interface, localization
 - Richard Airlie: port to FreeBSD and OpenBSD, documentation updates, bug fixes
 - Micz Flor: documentation
