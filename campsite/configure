@@ -3,12 +3,12 @@
 export PREFIX=
 export USER_INSTALL=false
 
-if [ "`uname | grep BSD`" != "" ]; then
+if [ "`uname | grep BSD &> /dev/null`" != "" ]; then
     export BSD=1
 else
     export BSD=0
 fi;
-if [ "`uname | grep OpenBSD`" != "" ]; then
+if [ "`uname | grep OpenBSD &> /dev/null`" != "" ]; then
     export OPENBSD=1
 else
     export OPENBSD=0
@@ -44,14 +44,20 @@ while [ "$1" != "" ]; do
     shift 1
 done
 
-export PACKAGE_TYPE=`cat ./.package_type`
-[ $? -ne 0 ] && echo "Error reading package type" && exit 1
-[ "$PACKAGE_TYPE" != "source" ] && [ "$PACKAGE_TYPE" != "binary" ] && echo "Invalid package type $PACKAGE_TYPE" && exit 1
 cdir=`pwd`
 [ $? -ne 0 ] && echo "Error reading campsite directory" && exit 1
 export CAMPSITE_PACKAGE_DIR=$cdir
-export INSTALL_LOG=${CAMPSITE_PACKAGE_DIR}/install_log
 export INSTALL_CONF=${CAMPSITE_PACKAGE_DIR}/.install_conf
+. ${INSTALL_CONF}/install_functions
+
+for m in pwd make m4 mkdir ls chown chmod cut cat grep stat which cp rm clear gcc gpp locate; do
+    check4_$m
+    [ $? -ne 0 ] && echo $output && exit 1
+done
+
+export PACKAGE_TYPE=`cat ./.package_type`
+[ $? -ne 0 ] && echo "Error reading package type" && exit 1
+[ "$PACKAGE_TYPE" != "source" ] && [ "$PACKAGE_TYPE" != "binary" ] && echo "Invalid package type $PACKAGE_TYPE" && exit 1
 campsite_version=`cat ${CAMPSITE_PACKAGE_DIR}/README | grep -w ^version | grep ":" | cut -f 2 -d ":"`
 [ $? -ne 0 ] && echo "Error reading campsite version" && exit 1
 export CAMPSITE_VERSION=$campsite_version
@@ -59,8 +65,8 @@ release_date=`cat ${CAMPSITE_PACKAGE_DIR}/README | grep -w ^release | grep ":" |
 [ $? -ne 0 ] && echo "Error reading campsite release date" && exit 1
 export CAMPSITE_RELEASE_DATE=release_date
 export ROOT_BIN_DIR=/usr/local
+export INSTALL_LOG=${CAMPSITE_PACKAGE_DIR}/install_log
 
-. ${INSTALL_CONF}/conf_functions
 
 if [ "$c_define_start_env" != "--define_start_env" ]; then
 
@@ -72,11 +78,8 @@ if [ "$read_only" = "false" ]; then
 	[ $? -ne 0 ] && exit 1
     done
 else
-    check4_make
-    check4_m4
-    check4_killall
-    prepare_install_env
-    install_conf --set
+    prepare_install_env && [ $? -ne 0 ] && exit 1
+    install_conf --set && [ $? -ne 0 ] && exit 1
     for sel_mod in $SELECTED_MODULES; do
 	prepare_${sel_mod}_env
     done
@@ -163,12 +166,9 @@ fi
 
 else # else if define start env
 
-    check4_make
-    check4_m4
-    check4_killall
-    prepare_install_env
-    install_conf --set
-    modules_conf --set
+    prepare_install_env && [ $? -ne 0 ] && exit 1
+    install_conf --set && [ $? -ne 0 ] && exit 1
+    modules_conf --set && [ $? -ne 0 ] && exit 1
 
 fi # end if define start env
 
