@@ -309,8 +309,8 @@ CStatementMap::CStatementMap()
 	pcoCtx->insertAttr(new CDateAttr("upload_date", "UploadDate"));
 	pcoCtx->insertAttr(new CAttribute("has_keyword"));
 	pcoCtx->insertAttr(new CAttribute("public", "Public"));
-	pcoCtx->insertAttr(new CAttribute("OnFrontPage", "OnFrontPage"));
-	pcoCtx->insertAttr(new CAttribute("OnSection", "OnSection"));
+	pcoCtx->insertAttr(new CSwitchAttr("OnFrontPage", "OnFrontPage"));
+	pcoCtx->insertAttr(new CSwitchAttr("OnSection", "OnSection"));
 	pcoCtx->insertAttr(new CAttribute("defined"));
 	pcoCtx->insertAttr(new CStringAttr("type", "Type", CMS_TYPE_ATTR));
 	pcoCtx->insertAttr(new CAttribute("fromstart"));
