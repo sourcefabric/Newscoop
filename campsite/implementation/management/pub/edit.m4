@@ -2,6 +2,7 @@ INCLUDE_PHP_LIB(<*$ADMIN_DIR/pub*>)
 B_DATABASE
 
 <?php 
+    todefnum('Pub');
     query ("SELECT Id, Name FROM Languages WHERE 1=0", 'q_lang');
 ?>dnl
 CHECK_BASIC_ACCESS
@@ -17,7 +18,7 @@ B_HEAD
     query ("SELECT Unit, Name FROM TimeUnits WHERE 1=0", 'q_unit');
     query("SELECT  Id as IdLang FROM Languages WHERE code='$TOL_Language'", 'q_def_lang');
 	if($NUM_ROWS == 0){
-		query("SELECT IdDefaultLanguage as IdLang  FROM Publications WHERE Id=1", 'q_def_lang');
+		query("SELECT IdDefaultLanguage as IdLang  FROM Publications WHERE Id=$Pub", 'q_def_lang');
 	}
 	fetchRow($q_def_lang);
 	$IdLang = getVar($q_def_lang,'IdLang');
@@ -25,21 +26,13 @@ B_HEAD
 E_HEAD
 
 <?php  if ($access) { ?>dnl
-B_STYLE
-E_STYLE
 
-B_BODY
-
-<?php 
-    todefnum('Pub');
-?>
 B_HEADER(<*Configure publication*>)
 B_HEADER_BUTTONS
 X_HBUTTON(<*Publications*>, <*pub/*>)
 E_HEADER_BUTTONS
 E_HEADER
-
-<?php 
+<?php
     query ("SELECT * FROM Publications WHERE Id=$Pub", 'q_pub');
     if ($NUM_ROWS) { 
 	fetchRow($q_pub);
@@ -47,8 +40,11 @@ E_HEADER
 B_CURRENT
 X_CURRENT(<*Publication*>, <*<?php  pgetHVar($q_pub,'Name'); ?>*>)
 E_CURRENT
-	<?php query ("SELECT Unit, Name FROM TimeUnits WHERE (IdLanguage=$IdLang or IdLanguage = 1) and Unit='".getHVar($q_pub,'TimeUnit')."' order by IdLanguage desc", 'q_tunit');
-		fetchRow($q_tunit); $tunit =getVar($q_tunit,'Name'); ?>dnl
+<?php
+	$sql = "SELECT Unit, Name FROM TimeUnits WHERE (IdLanguage=$IdLang or IdLanguage = 1) and Unit='".getHVar($q_pub,'TimeUnit')."' order by IdLanguage desc";
+	query($sql, 'q_tunit');
+	fetchRow($q_tunit); $tunit =getVar($q_tunit,'Name');
+?>dnl
 <P>
 B_DIALOG(<*Configure publication*>, <*POST*>, <*do_edit.php*>)
 	<tr><td colspan=2><b><?php putGS("General attributes"); ?></b></td></tr>
