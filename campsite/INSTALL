@@ -62,7 +62,7 @@ INSTALLATION - the usual procedure
    The configuration file of Apache is usually called httpd.conf and
    found in the /etc/httpd/conf/ folder. You need to:
 
-   - activate the DirectoryIndex directive and add the following:
+   - activate the DirectoryIndex directive and add the following at the end:
         /priv/templates/idx.php
    - activate the IndexIgnore directive and set it to
         IndexIgnore *
