@@ -11,7 +11,7 @@ INCLUDE_PATH=-I$(MYSQL_H_PATH)
 CFLAGS= -Wall $(INCLUDE_PATH)
 CXXFLAGS=$(CFLAGS)
 
-LINKS=globals.h readconf.h readconf.cpp
+LINKS=globals.h readconf.h readconf.cpp cms_types.h threadkey.h
 
 all: links notifyendsubs notifyevents
 	$(MAKE) -C smtp_wrapper
