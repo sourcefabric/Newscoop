@@ -36,7 +36,7 @@ CREATE TABLE Aliases (
 
 
 -- Run transfer_templates.php script now!!!
-system ./transfer_templates.php
+system php ./transfer_templates.php
 
 -- Verify if the script ran without errors
 SELECT * FROM TransferTemplates;
