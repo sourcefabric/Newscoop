@@ -155,6 +155,12 @@ public:
 	// Returns true if at least one thread is free, false otherwise
 	bool waitFreeThread(ULInt p_nUSec = 0) const;
 
+	// killIdleThreads: kills idle threads
+	void killIdleThreads() throw(ExThread);
+
+	// killAllThreads: kills all threads
+	void killAllThreads() throw(ExThread);
+
 private:
 	UInt m_nMinThreads; 					// min threads to create
 	UInt m_nMaxThreads; 					// max threads to create
