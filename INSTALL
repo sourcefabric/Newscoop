@@ -4,6 +4,7 @@ http://www.campware.org
 CONTENTS:
    * PREPARATION - applications you need to have installed
    * INSTALLATION - the usual procedure
+   * INSTALLATION of multiple instances
    * IN DEPTH - example installation
 
 ####################################################################
@@ -113,6 +114,57 @@ In particular, note that:
 	  ADMIN_INTERFACE_SCRIPT_DIR specify where you wish to install the campsite
 	  html, cgi, and scripts. On a machine with virtual hosts you will likely
 	  want to choose these directories carefully.
+
+####################################################################
+
+INSTALLATION of multiple instances
+
+I would recommend to create a web directory for every instance:
+/var/www/INST01 and inside to create html and cgi-bin directories:
+
+/var/www/INST01/html
+/var/www/INST01/cgi-bin
+
+Also, you'll have to change the parser listening port for every instance; so 
+the final instance configuration should look like:
+
+CAMPSITE configuration:
+
+APP_NAME=INST01
+DATABASE_NAME=INST01 - must be the same as APP_NAME
+PARSER_PORT=2002 (2003, 2004... - increase the port number with every instance)
+ADMIN_INTERFACE_HTML_DIR=/var/www/INST01/html
+ADMIN_INTERFACE_CGI_DIR=/var/www/INST01/cgi-bin
+ADMIN_INTERFACE_SCRIPT_DIR=/var/www/INST01/script
+ADMIN_INTERFACE_PARSER_PORT=2002 (2003, 2004...) - must be the same as PARSER_PORT
+
+Apache configuration:
+
+<VirtualHost [virtual_host_address]>
+	DocumentRoot /var/www/INST01/html
+	ScriptAlias /cgi-bin/ /var/www/INST01/cgi-bin/
+	ServerName INST01.mydom.com
+	DirectoryIndex index.php ... index.shtml /priv/templates/idx.php
+	<Directory /var/www/INST01/html>
+		Options -Indexes FollowSymLinks MultiViews
+		AllowOverride All
+		<IfModule mod_access.c>
+			Order allow,deny
+			Allow from all
+		</IfModule>
+	</Directory>
+	<Directory /var/www/cgi-bin>
+		AllowOverride All
+		Options ExecCGI
+		<IfModule mod_access.c>
+			Order allow,deny
+			Allow from all
+		</IfModule>
+	</Directory>
+	AddHandler tpl_handler .tpl
+	Action tpl_handler /cgi-bin/tpl_cgi
+</VirtualHost>
+
 
 ####################################################################
 
