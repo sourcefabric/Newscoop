@@ -618,8 +618,10 @@ else
     esac
 fi
 cf_path=""
+cf_paths=""
 for bn in $bin_names; do
     for conf_path in $conf_paths; do
+	cf_paths="$cf_paths ${conf_path}/${bn}.conf"
 	if [ -f "${conf_path}/${bn}.conf" ]; then
 	    cf_path="${conf_path}/${bn}.conf"
 	    break
@@ -630,14 +632,14 @@ if [ "$cf_path" = "" ]; then
     if $interactive; then
 	choice_yn "Could not find apache conf directory. Do you want to supply one?" y
 	if [ "$choice" = "N" ]; then
-	    echo "Could not find apache configuration file."
+	    echo "Could not find apache configuration file in$cf_paths"
 	    return 1
 	fi
 	read_path_with_test path_to_conf_directory --exp "fill in the path to apache configuration file" --file "${apache_bin_name}.conf"
 	[ $? -ne 0 ] && return 1
 	conf_path=$path_to_conf_directory
     else
-	echo "Could not find apache configuration file."
+	echo "Could not find apache configuration file in$cf_paths"
 	return 1
     fi
 fi
