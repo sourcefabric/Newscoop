@@ -2,7 +2,7 @@
     - Implemented new "Topic", "If Topic" and "Print Topic" statements
     - Added new environment attribute: topic; this affects articles lists and
     is forwarded as an URL parameter
-    - Small bug fixes
+    - Many bug fixes
 
 2.1.5
     - Added Chinese translation thanks to Andrew Lih and Tian Fawei at Hong Kong
