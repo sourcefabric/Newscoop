@@ -35,7 +35,8 @@ CURLTemplatePath::CURLTemplatePath(const CURLTemplatePath& p_rcoSrc)
 	: CURL(p_rcoSrc)
 {
 	m_bValidURI = p_rcoSrc.m_bValidURI;
-	m_coURI = p_rcoSrc.m_coURI;
+	m_coURIPath = p_rcoSrc.m_coURIPath;
+	m_coQueryString = p_rcoSrc.m_coQueryString;
 	m_pDBConn = p_rcoSrc.m_pDBConn;
 	m_coHTTPHost = p_rcoSrc.m_coHTTPHost;
 }
@@ -45,7 +46,7 @@ CURLTemplatePath::CURLTemplatePath(const CURLTemplatePath& p_rcoSrc)
 void CURLTemplatePath::setURL(const CMsgURLRequest& p_rcoURLMessage)
 {
 	m_coHTTPHost = p_rcoURLMessage.getHTTPHost();
-	m_coURI = p_rcoURLMessage.getReqestURI();
+	string coURI = p_rcoURLMessage.getReqestURI();
 	m_bValidURI = true;
 
 	CMYSQL_RES coRes;
@@ -58,10 +59,11 @@ void CURLTemplatePath::setURL(const CMsgURLRequest& p_rcoURLMessage)
 	setPublication(nPublication);
 
 	// prepare the path string
-	string::size_type nQMark = m_coURI.find('?');
-	string coPath = (nQMark != string::npos) ? m_coURI.substr(0, nQMark) : m_coURI;
+	string::size_type nQMark = coURI.find('?');
+	m_coURIPath = (nQMark != string::npos) ? coURI.substr(0, nQMark) : coURI;
+	m_coQueryString = (nQMark != string::npos) ? coURI.substr(nQMark) : "";
 
-	m_coTemplate = coPath;
+	m_coTemplate = m_coURIPath;
 
 	// read parameters
 	const String2Value& coParams = p_rcoURLMessage.getParameters().getMap();
@@ -107,11 +109,9 @@ void CURLTemplatePath::buildURI() const
 // 		throw InvalidValue("publication identifier", getValue(P_IDPUBL));
 // 	m_coURI = string("/") + qRow[0] + "/";
 
-	m_coURI = m_coTemplate;
+	m_coURIPath = m_coTemplate;
 
-	string coQueryString = getQueryString();
-	if (coQueryString != "")
-		m_coURI += string("?") + coQueryString;
+	m_coQueryString = getQueryString();
 
 	m_bValidURI = true;
 }
