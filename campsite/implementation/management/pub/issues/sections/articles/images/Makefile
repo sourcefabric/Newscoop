@@ -1,6 +1,6 @@
 export PRIV_DIR6=$(PRIV_DIR5)/images
 
-MY_TARGETS=view.php del.php do_del.php add.php do_add.php edit.php do_edit.php upload_i.sh index.php select.php viewsel.php do_sel.php
+MY_TARGETS=upload_i.sh index.php
 
 all: $(MY_TARGETS)
 
