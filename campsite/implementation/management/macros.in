@@ -32,9 +32,7 @@ define(<*X_COOKIE*>, <*<META HTTP-EQUIV="Set-Cookie" CONTENT="$1; path=/">*>)dnl
 define(<*X_EXPIRES*>, <*<META HTTP-EQUIV="Expires" CONTENT="now">*>)dnl
 define(<*X_REFRESH*>, <*<META HTTP-EQUIV="Refresh" CONTENT="$1">*>)dnl
 define(<*X_LOGOUT*>, <*X_REFRESH(0; URL=X_ROOT/logout.php)*>)dnl
-define(<*X_AD*>, <*<? $ad_reason ="$1";
-		//$url_ad_reason=encURL($ad_reason);
-		?>X_REFRESH(0; URL=X_ROOT/ad.php?ADReason=<? print encURL(getGS($ad_reason)); ?>)*>)dnl
+define(<*X_AD*>, <*X_REFRESH(10; URL=X_ROOT/ad.php?ADReason=<? print encURL(getGS("$1" ifelse(<*$2*>, <**>, <**>, <*,$2*>))); ?>)*>)dnl
 define(<*B_STYLE*>, <*<STYLE>
 	BODY { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 10pt; }
 	SMALL { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 8pt; }
@@ -160,10 +158,10 @@ define(<*E_DIALOG*>, <*</TABLE></CENTER>
 dnl
 dnl *** Message box ***
 dnl
-define(<*B_MSGBOX*>, <*<CENTER><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" BGCOLOR="#C0D0FF" ALIGN="CENTER">
+define(<*B_MSGBOX*>, <*<CENTER><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" ifelse(<*$2*>, <**>, <*BGCOLOR="#C0D0FF"*>, <*BGCOLOR="$2"*>) ALIGN="CENTER">
 	<TR>
 		<TD COLSPAN="2">
-			<B><? putGS("$1"); ?></B>
+			<B> ifelse(<*$3*>, <**>, <**>, <*<font color="$3">*>)<? putGS("$1"); ?> ifelse(<*$3*>, <**>, <**>, <*</font>*>)</B>
 			X_HR
 		</TD>
 	</TR>*>)dnl
@@ -241,8 +239,8 @@ define(<*SET_ACCESS*>, <*
     *>)dnl
 define(<*X_XAD*>, <*
 <P>
-B_MSGBOX(<*Access denied!*>)
-	X_MSGBOX_TEXT(<*<LI><? putGS("$1"); ?></LI>*>)
+B_MSGBOX(<*Access denied*>, <**>, <*red*>)
+	X_MSGBOX_TEXT(<*<font color=red><li><? putGS("$1" ifelse(<*$3*>, <**>, <**>, <*, $3*>)); ?></li></font>*>)
 	B_MSGBOX_BUTTONS
 		<A HREF="X_ROOT/$2"><IMG SRC="X_ROOT/img/button/ok.gif" BORDER="0" ALT="OK"></A>
 	E_MSGBOX_BUTTONS
