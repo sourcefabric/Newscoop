@@ -179,6 +179,8 @@ inline CURL::CURL(const CURL& p_rcoSrc)
 	m_coMethod = p_rcoSrc.m_coMethod;
 	m_coParamMap = p_rcoSrc.m_coParamMap;
 	m_coCookies = p_rcoSrc.m_coCookies;
+	m_coDocumentRoot = p_rcoSrc.m_coDocumentRoot;
+	m_coPathTranslated = p_rcoSrc.m_coPathTranslated;
 }
 
 inline void CURL::setValue(const string& p_rcoParameter, long p_nValue)
