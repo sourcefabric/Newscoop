@@ -92,3 +92,35 @@ hr {
 	padding-left: 12px;
 	font-size: 12pt;
 }
+
+.table_list {
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.list_row_odd {
+	/*background-color: #D0D0B0;*/
+	background-color: #C0C0C0;
+}
+
+.list_row_even {
+	background-color: #D0D0D0;
+}
+
+.current_location_table {
+	/* background-color: #D0D0B0; */
+	border-bottom: 1px dotted black;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+.current_location_title {
+	/* background-color: #D0D0B0; */
+	/*border-bottom: 1px dotted black;*/
+}
+
+.current_location_content {
+	/* background-color: #D0D0B0; */
+	/*border-bottom: 1px dotted black;*/
+	font-weight: bold;
+}
