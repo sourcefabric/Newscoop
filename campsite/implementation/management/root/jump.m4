@@ -1,4 +1,4 @@
-INCLUDE_PHP_LIB(<*./priv*>)
+INCLUDE_PHP_LIB(<**>)
 <HTML>
 	<HEAD>
 B_DATABASE<**>dnl

@@ -1,5 +1,5 @@
 <HTML>
-INCLUDE_PHP_LIB(<*./priv*>)
+INCLUDE_PHP_LIB(<**>)
 B_DATABASE<**>
 
 <HEAD>
