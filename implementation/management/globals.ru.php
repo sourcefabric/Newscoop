@@ -76,7 +76,7 @@ regGS("No such keyword.","Нет такого ключевого слова.:ru"
 regGS("Publication does not exist.","Нет такой публикации.:ru");
 regGS("No such country.","Нет такой страны.:ru");
 regGS("No such issue.","Нет такого выпуска.:ru");
-regGS("No such topic.","Нет такой темы.");
+regGS("Topic does not exist.","Нет такой темы.");
 regGS("You must select a language.","Вы должны выбрать язык.:ru");
 regGS("No such section.","Нет такой секции:ru");
 regGS("No articles.","Статьи отсутствуют:ru");

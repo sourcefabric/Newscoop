@@ -75,7 +75,7 @@ regGS("No such keyword.","无此关键字");
 regGS("Publication does not exist.","无此出版物");
 regGS("No such country.","无此国家");
 regGS("No such issue.","无此问题");
-regGS("No such topic.","无此主题");
+regGS("Topic does not exist.","无此主题");
 regGS("You must select a language.","您必须选择一种语言");
 regGS("No such section.","无此区");
 regGS("No articles.","无此文字");

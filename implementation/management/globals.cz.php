@@ -76,7 +76,7 @@ regGS("No such keyword.","Klíčové slovo neexistuje");
 regGS("Publication does not exist.","Publikace neexistuje");
 regGS("No such country.","Země neexistuje");
 regGS("No such issue.","Vydání neexistuje");
-regGS("No such topic.","Téma neexistuje");
+regGS("Topic does not exist.","Téma neexistuje");
 regGS("You must select a language.","Vyberte jazyk");
 regGS("No such section.","Rubrika neexistuje");
 regGS("No articles.","Články neexistují");

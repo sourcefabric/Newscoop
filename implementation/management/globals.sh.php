@@ -76,7 +76,7 @@ regGS("No such keyword.","Nema te ključne reči");
 regGS("Publication does not exist.","Nema takve publikacije");
 regGS("No such country.","Nema te države");
 regGS("No such issue.","Nema tog izdanja");
-regGS("No such topic.","Nema takve teme");
+regGS("Topic does not exist.","Nema takve teme");
 regGS("You must select a language.","Morate izabrati jezik");
 regGS("No such section.","Ta rubrika ne postoji");
 regGS("No articles.","Nema članka");

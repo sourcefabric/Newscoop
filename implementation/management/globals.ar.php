@@ -76,7 +76,7 @@ regGS("No such keyword.","كلمة المفتاح غير محددة");
 regGS("Publication does not exist.","منشور غير محدد");
 regGS("No such country.","بلد غير محدد");
 regGS("No such issue.","إصدار غير محدد");
-regGS("No such topic.","موضوع غير محدد");
+regGS("Topic does not exist.","موضوع غير محدد");
 regGS("You must select a language.","يجب إختيار لغة");
 regGS("No such section.","باب غير موجود");
 regGS("No articles.","ليس هناك مقالات");
