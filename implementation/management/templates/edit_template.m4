@@ -26,6 +26,15 @@ X_CURRENT(<*Path*>, <*<B><A HREF="/<?php echo $ADMIN; ?>/templates?Path=<?php pe
 X_CURRENT(<*Template*>, <*<B><?php  pencHTML(decURL($Name)); ?></B>*>)
 E_CURRENT
 
+<?php 
+	$filename = $Campsite['HTML_DIR']."/look/".decURL($Path)."/$Name";
+	$filesize = @filesize($filename);
+	if ($filesize === false) {
+?>
+	X_AD(<*Invalid template file $1*>, <* decURL($Path)."/$Name" *>)
+<?php
+	} else {
+?>
 <P>
 B_DIALOG(<*Edit template*>, <*POST*>, <*do_edit.php*>)
 	B_DIALOG_BUTTONS
@@ -37,15 +46,15 @@ B_DIALOG(<*Edit template*>, <*POST*>, <*do_edit.php*>)
 <?php  } ?>
 	E_DIALOG_BUTTONS
 
-<?php 
-	$filename = $Campsite['HTML_DIR']."/look/".decURL($Path)."/$Name";
-	if (filesize($filename) > 0) {
-		$fd = fopen ($filename, "r");
-		$contents = fread ($fd, filesize ($filename));
-		fclose ($fd);
-	} else {
-		$contents = "";
-	}
+<?php
+		if ($filesize > 0) {
+			$fd = fopen ($filename, "r");
+			$contents = fread ($fd, filesize ($filename));
+			fclose ($fd);
+		} else {
+			$contents = "";
+		}
+		echo "<p>I'm in";
 ?>
 
 	<TR><TD><TEXTAREA ROWS="25" COLS="85" NAME="cField" WRAP="NO"><?php  p(decS($contents)) ?></TEXTAREA></TD></TR>
@@ -61,6 +70,9 @@ B_DIALOG(<*Edit template*>, <*POST*>, <*do_edit.php*>)
 <?php  } ?>
 	E_DIALOG_BUTTONS
 E_DIALOG
+<?php
+	}
+?>
 
 X_COPYRIGHT
 E_BODY
