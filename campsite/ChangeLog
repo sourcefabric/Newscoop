@@ -1,3 +1,8 @@
+2.0.13
+    - Correct the apache configuration in the manual
+    - Fix "pure virtual method" error in the parser
+    - Fix thread synchronization bug: return from the run method after the new thread start
+
 2.0.12
     - Set login username/password fields to size 10
     - Add If Language statement (see manual: 3.9.1.26)
@@ -34,7 +39,7 @@
     - Fixed parser bug: on Issue statement select the current issue according to
     access rights
     - Added more debug information on Local statement
-    - Fixed bug on template list: didn't print properly file names containg spaces
+    - Fixed bug on template list: didn't print properly file names containing spaces
     - Small enhancement on template list: print files/directories in alphabetical
     order
     - Fixed small bug on install/uninstall scripts
