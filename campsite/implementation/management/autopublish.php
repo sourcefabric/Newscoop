@@ -20,10 +20,18 @@ function publish_articles($datetime)
 	while ($row = mysql_fetch_assoc($res)) {
 		$article = $row['NrArticle'];
 		$language = $row['IdLanguage'];
-		$action = $row['Action'];
+		$publish = $row['Publish'];
+		$front_page = $row['FrontPage'];
+		$section_page = $row['SectionPage'];
 
-		$state = $action == 'P' ? 'Y' : 'S';
-		$sql = "update Articles set Published = '" . $state . "' where Number = " . $article
+		if ($publish == 'P' || $publish == 'U')
+			$set[] = "Published = '" . ($publish == 'P' ? 'Y' : 'S') . "'";
+		if ($front_page == 'S' || $front_page == 'R')
+			$set[] = "OnFrontPage = '" . ($front_page == 'S' ? 'Y' : 'N') . "'";
+		if ($section_page == 'S' || $section_page == 'R')
+			$set[] = "OnSection = '" . ($section_page == 'S' ? 'Y' : 'N') . "'";
+		$set_str = implode(', ', $set);
+		$sql = "update Articles set $set_str where Number = " . $article
 		     . " and IdLanguage = " . $language;
 		mysql_query($sql);
 	}
@@ -51,8 +59,8 @@ function publish_issues($datetime)
 
 		$state = $action == 'P' ? 'Y' : 'S';
 		if ($publish_articles == 'Y') {
-			$art_sql = "select * from Articles where IdPublication = " . $pub . " and NrIssue = " . $issue
-			     . " and IdLanguage = " . $language;
+			$art_sql = "select * from Articles where IdPublication = " . $pub
+			         . " and NrIssue = " . $issue . " and IdLanguage = " . $language;
 			$art_res = mysql_query($art_sql);
 			while ($art_res && $art_row = mysql_fetch_assoc($art_res)) {
 				$article = $art_row['Number'];
