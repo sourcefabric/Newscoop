@@ -7,6 +7,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Issue.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Section.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Publication.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/priv/CampsiteInterface.php');
 
 list($access, $User) = check_basic_access($_REQUEST);
@@ -14,14 +15,28 @@ if (!$access) {
 	header('Location: /priv/logout.php');
 	exit;
 }
-$PublicationId = isset($_REQUEST['PublicationId'])?$_REQUEST['PublicationId']:0;
-$IssueId = isset($_REQUEST['IssueId'])?$_REQUEST['IssueId']:0;
-$SectionId = isset($_REQUEST['SectionId'])?$_REQUEST['SectionId']:0;
-$InterfaceLanguageId = isset($_REQUEST['InterfaceLanguageId'])?$_REQUEST['InterfaceLanguageId']:0;
-$ArticleLanguageId = isset($_REQUEST['ArticleLanguageId'])?$_REQUEST['ArticleLanguageId']:0;
-$ArticleId = isset($_REQUEST['ArticleId'])?$_REQUEST['ArticleId']:0;
-$ImageId = isset($_REQUEST['ImageId'])?$_REQUEST['ImageId']:0;
-$ImageTemplateId = isset($_REQUEST['ImageTemplateId'])?$_REQUEST['ImageTemplateId']:0;
+//$PublicationId = isset($_REQUEST['PublicationId'])?$_REQUEST['PublicationId']:0;
+//$IssueId = isset($_REQUEST['IssueId'])?$_REQUEST['IssueId']:0;
+//$SectionId = isset($_REQUEST['SectionId'])?$_REQUEST['SectionId']:0;
+//$InterfaceLanguageId = isset($_REQUEST['InterfaceLanguageId'])?$_REQUEST['InterfaceLanguageId']:0;
+//$ArticleLanguageId = isset($_REQUEST['ArticleLanguageId'])?$_REQUEST['ArticleLanguageId']:0;
+//$ArticleId = isset($_REQUEST['ArticleId'])?$_REQUEST['ArticleId']:0;
+//$ImageId = isset($_REQUEST['ImageId'])?$_REQUEST['ImageId']:0;
+//$ImageTemplateId = isset($_REQUEST['ImageTemplateId'])?$_REQUEST['ImageTemplateId']:0;
+
+$PublicationId = Input::get('PublicationId', 'int', 0);
+$IssueId = Input::get('IssueId', 'int', 0);
+$SectionId = Input::get('SectionId', 'int', 0);
+$InterfaceLanguageId = Input::get('InterfaceLanguageId', 'int', 0);
+$ArticleLanguageId = Input::get('ArticleLanguageId', 'int', 0);
+$ArticleId = Input::get('ArticleId', 'int', 0);
+$ImageId = Input::get('ImageId', 'int', 0);
+$ImageTemplateId = Input::get('ImageTemplateId', 'int', 0);
+
+if (!Input::isValid()) {
+	header('Location: /priv/logout.php');
+	exit;	
+}
 
 $publicationObj =& new Publication($PublicationId);
 $issueObj =& new Issue($PublicationId, $InterfaceLanguageId, $IssueId);
