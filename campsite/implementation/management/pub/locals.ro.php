@@ -25,6 +25,7 @@ regGS("The publication $1 could not be deleted.","Publicaţia $1 nu poate fi şt
 regGS("Publication $1 deleted","Publicaţia $1 a fost ştearsă");
 regGS("Adding new publication","Adaug publicaţie");
 regGS("The publication could not be added.","Publicaţia nu poate fi adăugată");
+regGS("Select the publication","Selectaţi publicaţia");
 regGS("Add new country default subscription time","Adaugă timp implicit de subscriere la ţară");
 regGS("You do not have the right to manage publications.","Nu aveţi dreptul de a modifica publicaţii");
 regGS("Adding new country default subscription time","Adaug timp implicit de subscriere la ţară");

@@ -10,6 +10,7 @@ regGS("Adding new section","Adaug secţiune nouă");
 regGS("You do not have the right to add sections.","Nu aveţi dreptul să adăugaţi secţiuni");
 regGS("The section $1 has been successfuly added.","Secţiunea $1 a fost adăugată");
 regGS("Please check if another section with the same number does not already exist.","Verificaţi dacă există o altă secţiune cu acelaşi număr");
+regGS("Select the section","Selectaţi secţiunea");
 regGS("Section $1 added to issue $2. $3 ($4) of $5","Secţiunea $1 a fost adăugată la ediţia $2. $3 ($4) din $5");
 regGS("Delete section","Şterge secţiunea");
 regGS("You do not have the right to delete sections.","Nu aveţi dreptul să ştergeţi secţiuni");

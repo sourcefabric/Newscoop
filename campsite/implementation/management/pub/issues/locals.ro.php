@@ -5,6 +5,7 @@ regGS("Front Page Template<BR><SMALL>(click to change)</SMALL>","Şablonul pagin
 regGS("Single Article Template<BR><SMALL>(click to change)</SMALL>","Şablonul pentru afişarea articolelor");
 regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>","Publicat");
 regGS("Delete issue $1","Şterge ediţia $1");
+regGS("Click here to set...","Apăsaţi aici pentru a salva...");
 regGS("Change issue status","Modifică starea ediţiei");
 regGS("You do not have the right to change issues.","Nu aveţi dreptul de a modifica ediţia");
 regGS("Are you sure you want to change the issue $1 status from $2 to $3?","Doriţi să schimbaţi starea ediţiei $1 de la $2 la $3?");
@@ -44,6 +45,7 @@ regGS("No previous issue.","Nu există ediţie anterioară");
 regGS("Copy structure from issue nr $1","Copiază structura de la ediţia nr $1");
 regGS("Copying previous issue","Copiez ediţia anterioară");
 regGS("Copying done.","Copierea terminată cu succes");
+regGS("Select the issue","Selectaţi ediţia");
 regGS("New issue $1 from $2 in publication $3","Ediţia nouă $1 din $2 în publicaţia $3");
 regGS("Adding new issue","Adaug ediţie nouă");
 regGS("Issue $1 added in publication $2","Ediţia $1 a fost adăugată în publicaţia $2");

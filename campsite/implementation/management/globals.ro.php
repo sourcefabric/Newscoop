@@ -212,6 +212,13 @@ regGS("Days","Zile");
 regGS("(YYYY-MM-DD)","(AAAA/LL/ZZ)");
 regGS("The sections were added successfully.","Secţiunile au fost adăugate cu succes");
 regGS("The sections could not be added successfully. Some of them were already added !","Sectiunile nu pot fi adăugate. Unele există deja!");
+regGS("Add another","Adaugă altul");
+regGS("Cancel","Anulare");
+regGS("Done","OK");
+regGS("New field","Câmp nou");
+regGS("OK","OK");
+regGS("Save changes","Salvează modificările");
+regGS("Search","Caută");
 
 
 ?>
