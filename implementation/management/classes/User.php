@@ -5,12 +5,13 @@ require_once($_SERVER['DOCUMENT_ROOT']."/classes/DatabaseObject.php");
 class User extends DatabaseObject {
 	var $m_dbTableName = "Users";
 	var $m_primaryKeyColumnNames = array("Id");
+	var $m_permissions = array();
 	var $Id;
 	var $KeyId;
 	var $Name;
 	var $UName;
 	var $Password;
-	var $Email;
+	var $EMail;
 	var $Reader;
 	var $City;
 	var $StrAddress;
@@ -52,6 +53,23 @@ class User extends DatabaseObject {
 		}
 	} // constructor
 	
+	
+	function fetch($p_recordSet = null) {
+		global $Campsite;
+		parent::fetch($p_recordSet);
+		// Fetch the user's permissions.
+		$queryStr = "SELECT * FROM UserPerm "
+					." WHERE IdUser=".$this->Id;
+		$permissions = $Campsite["db"]->GetRow($queryStr);
+		if ($permissions) {
+			// Make m_permissions a boolean array.
+			foreach ($permissions as $key => $value) {
+				$this->m_permissions[$key] = ($value == 'Y');
+			}
+		}
+	} // fn fetch
+	
+	
 	function getId() {
 		return $this->Id;
 	} // fn getId
@@ -68,8 +86,22 @@ class User extends DatabaseObject {
 		return $this->UName;
 	} // fn getUName
 
+	
+	function hasPermission($p_permissionString) {
+		return (isset($this->m_permissions[$p_permissionString])
+				&& $this->m_permissions[$p_permissionString]);
+	} // fn hasPermission
+	
+	function isAdmin() {
+		return (count($this->m_permissions) > 0);
+	}
+	
 	/**
 	 * This is a static function.
+	 * @return array
+	 * 		An array of two elements: 
+	 *		boolean - whether the login was successful
+	 *		object - if successful, the user object
 	 */
 	function login($p_userName, $p_userPassword) {
 		global $Campsite;
