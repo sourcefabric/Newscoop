@@ -70,7 +70,7 @@
 	<TR><TD ALIGN=RIGHT>
 	  <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
 		<TR>
-		  <TD><A HREF="<?php echo _DIR_; ?>" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Image Archive"); ?>"></A></TD><TD><A HREF="<?php echo _DIR_; ?>" ><B><?php  putGS("Image Archive");  ?></B></A></TD>
+		  <TD><A HREF="<?php echo CAMPSITE_IMAGEARCHIVE_DIR; ?>" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Image Archive"); ?>"></A></TD><TD><A HREF="<?php echo CAMPSITE_IMAGEARCHIVE_DIR; ?>" ><B><?php  putGS("Image Archive");  ?></B></A></TD>
 		  <TD><A HREF="/priv/home.php" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Home"); ?>"></A></TD><TD><A HREF="/priv/home.php" ><B><?php  putGS("Home");  ?></B></A></TD>
 		  <TD><A HREF="/priv/logout.php" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Logout"); ?>"></A></TD><TD><A HREF="/priv/logout.php" ><B><?php  putGS("Logout");  ?></B></A></TD>
 		</TR>
@@ -151,7 +151,7 @@ if ($NUM_ROWS) {
 		<DIV ALIGN="CENTER">
 		<INPUT TYPE="HIDDEN" NAME="Id" VALUE="<?php  p($Id); ?>">
 		<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save changes'); ?>">
-		<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='<?php echo _DIR_; ?>index.php?<?php echo $Link['SO']; ?>'">
+		<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='<?php echo CAMPSITE_IMAGEARCHIVE_DIR; ?>index.php?<?php echo $Link['SO']; ?>'">
 		</DIV>
 		</TD>
 	</TR>
