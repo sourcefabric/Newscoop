@@ -33,6 +33,8 @@ Define global types.
 #define _CMS_TYPES
 
 #include <string>
+#include <map>
+#include <functional>
 #include <mysql/mysql.h>
 #include <unistd.h>
 #include <fstream>
@@ -46,6 +48,9 @@ Define global types.
 #include "threadkey.h"
 
 using std::string;
+using std::map;
+using std::less;
+using std::binary_function;
 
 // TDataType: data types recognised by template parser
 typedef enum {
@@ -178,5 +183,25 @@ private:
 };
 
 typedef std::ostream sockstream;
+
+int case_comp(const string& p_rcoS1, const string& p_rcoS2);
+inline int case_comp(const string& p_rcoS1, const string& p_rcoS2)
+{
+	return strcasecmp(p_rcoS1.c_str(), p_rcoS2.c_str());
+}
+
+int case_comp(const string& p_rcoS1, const string& p_rcoS2, int len);
+inline int case_comp(const string& p_rcoS1, const string& p_rcoS2, int len)
+{
+	return strcasecmp(p_rcoS1.substr(0, len).c_str(), p_rcoS2.substr(0, len).c_str());
+}
+
+struct str_case_less : public binary_function<string, string, bool>
+{
+	bool operator ()(const string& first, const string& second) const
+	{ return case_comp(first, second) < 0; }
+};
+
+typedef map <string, string, str_case_less> String2String;
 
 #endif
