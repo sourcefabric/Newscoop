@@ -1,4 +1,3 @@
-B_HTML
 INCLUDE_PHP_LIB(<*$ADMIN_DIR/a_types/fields*>)
 B_DATABASE
 <?php 
@@ -12,7 +11,6 @@ CHECK_BASIC_ACCESS
 CHECK_ACCESS(<*ManageArticleTypes*>)
 
 B_HEAD
-	X_EXPIRES
 	X_TITLE(<*Adding new field*>)
 	<?php  if ($access == 0) { ?>
 		X_AD(<*You do not have the right to add article type fields.*>)

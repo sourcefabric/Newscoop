@@ -1,4 +1,3 @@
-B_HTML
 INCLUDE_PHP_LIB(<*$ADMIN_DIR/a_types*>)
 B_DATABASE
 
@@ -6,7 +5,6 @@ B_DATABASE
 CHECK_BASIC_ACCESS
 
 B_HEAD
-	X_EXPIRES
 	X_TITLE(<*Article Types*>)
 <?php  if ($access == 0) { ?>dnl
 	X_LOGOUT

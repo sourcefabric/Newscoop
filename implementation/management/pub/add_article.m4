@@ -5,7 +5,6 @@ CHECK_BASIC_ACCESS
 CHECK_ACCESS(<*AddArticle*>)
 
 B_HEAD
-	X_EXPIRES
 	X_TITLE(<*Add new article*>)
 <?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to add articles.*>)

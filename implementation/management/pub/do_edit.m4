@@ -5,7 +5,6 @@ CHECK_BASIC_ACCESS
 CHECK_ACCESS(<*ManagePub*>)
 
 B_HEAD
-	X_EXPIRES
 	X_TITLE(<*Changing publication information*>)
 <?php
 if ($access == 0) {

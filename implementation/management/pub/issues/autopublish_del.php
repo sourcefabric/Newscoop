@@ -32,8 +32,6 @@ if ($access) {
 ?>
 
 <HEAD>
-	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<META HTTP-EQUIV="Expires" CONTENT="now">
 	<TITLE><?php  putGS("Delete scheduled publish action"); ?></TITLE>
 <?php if ($access == 0) { ?>
 	<META HTTP-EQUIV="Refresh" CONTENT="0; URL=/<?php echo $ADMIN; ?>/ad.php?ADReason=<?php  print encURL(getGS("You do not have the right to schedule issues or articles for automatic publishing." )); ?>">

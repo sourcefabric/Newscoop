@@ -5,7 +5,6 @@ CHECK_BASIC_ACCESS
 CHECK_ACCESS(<*DeletePub*>)
 
 B_HEAD
-	X_EXPIRES
 	X_TITLE(<*Delete publication*>)
 <?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to delete publications.*>)

@@ -1,4 +1,3 @@
-B_HTML
 INCLUDE_PHP_LIB(<*$ADMIN_DIR/pub/issues*>)
 B_DATABASE
 
@@ -7,7 +6,6 @@ CHECK_ACCESS(<*ManageIssue*>)
 CHECK_XACCESS(<*Publish*>)
 
 B_HEAD
-	X_EXPIRES
 	X_TITLE(<*Changing issue status*>)
 <?php  if ($access == 0 || $xaccess == 0) { ?>dnl
 	X_XAD(<*You do not have the right to change issues.*>, <*pub/issues/?Pub=<?php  p($Pub); ?>&Language=<?php  p($Language); ?> ?>*>)

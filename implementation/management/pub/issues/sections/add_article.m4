@@ -1,4 +1,3 @@
-B_HTML
 INCLUDE_PHP_LIB(<*$ADMIN_DIR/pub/issues/sections*>)
 B_DATABASE
 
@@ -6,7 +5,6 @@ B_DATABASE
 CHECK_BASIC_ACCESS
 
 B_HEAD
-	X_EXPIRES
 	X_TITLE(<*Add new article*>)
 <?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to add articles.*>)

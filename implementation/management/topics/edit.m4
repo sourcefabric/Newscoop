@@ -1,4 +1,3 @@
-B_HTML
 INCLUDE_PHP_LIB(<*$ADMIN_DIR/topics*>)
 B_DATABASE
 
@@ -9,7 +8,6 @@ CHECK_BASIC_ACCESS
 CHECK_ACCESS(<*ManageTopics*>)
 
 B_HEAD
-	X_EXPIRES
 	X_TITLE(<*Change topic name*>)
 <?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to change topic name.*>)
