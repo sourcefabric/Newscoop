@@ -46,6 +46,7 @@ CURLShortNames::CURLShortNames(const CURLShortNames& p_rcoSrc)
 void CURLShortNames::setURL(const CMsgURLRequest& p_rcoURLMessage)
 {
 	m_coDocumentRoot = p_rcoURLMessage.getDocumentRoot();
+	m_coPathTranslated = p_rcoURLMessage.getPathTranslated();
 	m_coHTTPHost = p_rcoURLMessage.getHTTPHost();
 	m_coURI = p_rcoURLMessage.getReqestURI();
 	m_bValidURI = true;
@@ -156,21 +157,6 @@ void CURLShortNames::setURL(const CMsgURLRequest& p_rcoURLMessage)
 	String2Value::const_iterator coIt = coParams.begin();
 	for (; coIt != coParams.end(); ++coIt)
 		setValue((*coIt).first, (*coIt).second->asString());
-
-	string coTplId = getValue(P_TEMPLATE_ID);
-	if (coTplId != "")
-	{
-		coQuery = string("select Name from Templates where Id = ") + coTplId;
-		qRow = QueryFetchRow(m_pDBConn, coQuery.c_str(), coRes);
-		if (qRow == NULL)
-			throw InvalidValue("template identifier", coTplId.c_str());
-		m_coPathTranslated = qRow[0];
-	}
-	else
-	{
-		m_coPathTranslated = CPublication::getTemplate(nLanguage, nPublication, nIssue,
-		                                               nSection, m_pDBConn);
-	}
 
 	// read cookies
 	const String2String& coCookies = p_rcoURLMessage.getCookies();
