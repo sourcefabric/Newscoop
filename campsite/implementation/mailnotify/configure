@@ -1,13 +1,12 @@
 #!/bin/bash
 
-[ "$CAMPSITE_PACKAGE_DIR" = "" ] && cd ../.. && . ./configure --define_start_env && cd implementation/mailnotify
-. ${INSTALL_CONF}/conf_functions
-
-install_conf --set
-
 [ -f configure.h ] && exit 0
 
-echo -n -e "\tWriting configure.h header..."
+cd ../..
+. ./make.env
+cd implementation/mailnotify
+
+echo -n -e "\t\tWriting configure.h header..."
 cat > configure.h << EOF
 /******************************************************************************
 
