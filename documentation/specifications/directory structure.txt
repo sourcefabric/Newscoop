@@ -69,7 +69,7 @@ WWW directories of campsite instances
 
 Configuration Files
 
-Description of database_config.php file
+Description of database_conf.php file
 
 - format:
 <?php
@@ -86,18 +86,18 @@ $campsite_local_vars['database_config.php'] = array("DATABASE_NAME",
 
 ?>
 
-- path: [etc_dir]/[instance_name]/database_config.php
+- path: [etc_dir]/[instance_name]/database_conf.php
 
 - owner: [apache_user]:[apache_user]
 - rights: owner: read/write, group: read/write, other: none
 
 
-Description of path_config.php file
+Description of path_conf.php file
 
 - format:
 <?php
 
-$Campsite["CAMPSITE_DIR"] = "[campsite_dir]");
+$Campsite["CAMPSITE_DIR"] = "[campsite_dir]"); // default = /usr/local/bin
 $Campsite["BIN_DIR"] = "[bin_dir]"); // default = CAMPSITE_DIR . "/bin"
 $Campsite["ETC_DIR"] = "[etc_dir]"); // default = CAMPSITE_DIR . "/etc"
 $Campsite["WWW_DIR"] = "[www_dir]"); // default = CAMPSITE_DIR . "/www"
@@ -118,6 +118,6 @@ $campsite_local_vars['path_config.php'] = array("CAMPSITE_DIR", "BIN_DIR",
 
 ?>
 
-- path: [etc_dir]/path_config.php
+- path: [etc_dir]/path_conf.php
 - owner: [apache_user]:[apache_user]
 - rights: owner: read/write, group: read/write, other: read
