@@ -387,7 +387,7 @@ if ($edit_ok) { ?>
 				<TD>
 		        <INPUT NAME="<?php echo htmlspecialchars($dbColumn->getName()); ?>" 
 					   TYPE="TEXT" 
-					   VALUE="<?php print $articleType->getColumnValue($dbColumn->getName()) ?>" 
+					   VALUE="<?php print $articleType->getProperty($dbColumn->getName()) ?>" 
 					   SIZE="64" 
 					   MAXLENGTH="100">
 				</TD>
@@ -395,8 +395,8 @@ if ($edit_ok) { ?>
 			<?php  
 		} elseif (stristr($dbColumn->getType(), "date")) { 
 			// Date fields
-			if ($articleType->getColumnValue($dbColumn->getName()) == "0000-00-00") {
-				$articleType->setColumnValue($dbColumn->getName(), "CURDATE()", true);
+			if ($articleType->getProperty($dbColumn->getName()) == "0000-00-00") {
+				$articleType->setProperty($dbColumn->getName(), "CURDATE()", true, true);
 			}
 			?>		
 			<TR>
@@ -404,7 +404,7 @@ if ($edit_ok) { ?>
 				<TD>
 				<INPUT NAME="<?php echo htmlspecialchars($dbColumn->getName()); ?>" 
 					   TYPE="TEXT" 
-					   VALUE="<?php echo htmlspecialchars($articleType->getColumnValue($dbColumn->getName())); ?>" 
+					   VALUE="<?php echo htmlspecialchars($articleType->getProperty($dbColumn->getName())); ?>" 
 					   SIZE="10" 
 					   MAXLENGTH="10"> 
 				<?php putGS('YYYY-MM-DD'); ?>
@@ -414,7 +414,7 @@ if ($edit_ok) { ?>
 		} elseif (stristr($dbColumn->getType(), "blob")) {
 			// Multiline text fields
 			// Transform Campsite-specific tags into editor-friendly tags.
-			$text = $articleType->getColumnValue($dbColumn->getName());
+			$text = $articleType->getProperty($dbColumn->getName());
 			
 			$text = preg_replace("/<!\*\*\s*Title\s*>/i", "<span class=\"campsite_subhead\">", $text);
 			$text = preg_replace("/<!\*\*\s*EndTitle\s*>/i", "</span>", $text);
