@@ -1,7 +1,17 @@
+/******************************************************
+Font families:
+	Arial, Helvetica, sans-serif; 
+	Courier New, Courier, mono; 
+	Geneva, Arial, Helvetica, sans-serif; 
+	Times New Roman, Times, serif;
+	Verdana, Arial, Helvetica, sans-serif; 
+
+******************************************************/
 BODY, TH, TD, FORM, BLOCKQUOTE, UL, LI { 
 	font-family: Tahoma, Arial, Helvetica, sans-serif; 
 	font-size: 10pt; 
-	color: #00008b;
+	/* color: #00008b; */
+	color: black;
 }
 
 SMALL, ADDRESS { 
@@ -17,25 +27,37 @@ A {
 }
 
 hr {
-	color: #00008b;	
+	/* color: #00008b;	*/
+	color: black;
 }
 
 .button {
-	/*font-family: Arial, Helvetica, sans-serif; */
-	/*font-family: Courier New, Courier, mono; */
 	font-family: Verdana, Arial, Helvetica, sans-serif; 
-	/*font-family: Geneva, Arial, Helvetica, sans-serif; */
-	/*font-family: Times New Roman, Times, serif; */
 	font-size: 10pt;
 	/*border: 1px solid #00008b; */
-	border: 1px solid #ffffff; 
-	background-color: #00008b; 
-	color: white; 
+	border: 1px solid grey; 
+	background-color: #EEEEEE; 
+	color: #333333; 
+	font-weight: bold;	
+}
+
+.button_disabled {
+	font-family: Verdana, Arial, Helvetica, sans-serif; 
+	font-size: 10pt;
+	border: 1px dashed white; 
+	background-color: #EEEEEE; 
+	color: grey; 
 	font-weight: bold;	
 }
 
 .input_text {
-	border: 1px solid #00008b; 
+	border: 1px solid #444444; 
+	background-color: #f0f0ff; 
+	text-indent: 3px;
+}
+
+.input_text_disabled {
+	border: 1px solid grey; 
 	background-color: #f0f0ff; 
 	text-indent: 3px;
 }
@@ -44,9 +66,7 @@ hr {
 
 .input_radio { }
 
-.input_select {
-	border: 1px solid #00008b; 
-}
+.input_select { }
 
 .input_file {
 	border: 1px solid #00008b; 
