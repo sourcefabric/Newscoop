@@ -57,6 +57,10 @@ function TransformLinks($match) {
 
 
 list($access, $User) = check_basic_access($_REQUEST);
+if (!$access) {
+	header("Location: /priv/logout.php");
+	exit;
+}
 $Pub = isset($_REQUEST["Pub"])?$_REQUEST["Pub"]:0;
 $Issue = isset($_REQUEST["Issue"])?$_REQUEST["Issue"]:0;
 $Section = isset($_REQUEST["Section"])?$_REQUEST["Section"]:0;
@@ -121,7 +125,7 @@ if (($errorStr == "") && $access && $hasAccess) {
 		incModFile ();
 	}
 }
-ArticleTop($articleObj, $languageObj->getLanguageId(), "Changing article details", $access);
+ArticleTop($articleObj, $languageObj->getLanguageId(), "Changing article details");
 
 if (!$access) { 
 	?>

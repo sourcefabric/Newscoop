@@ -1,6 +1,10 @@
 <?php  
 require_once($_SERVER['DOCUMENT_ROOT']. "/priv/pub/issues/sections/articles/article_common.php");
 list($access, $User) = check_basic_access($_REQUEST);
+if (!$access) {
+	header("Location: /priv/logout.php");
+	exit;
+}
 $Pub = isset($_REQUEST["Pub"])?$_REQUEST["Pub"]:0;
 $Issue = isset($_REQUEST["Issue"])?$_REQUEST["Issue"]:0;
 $Section = isset($_REQUEST["Section"])?$_REQUEST["Section"]:0;
@@ -38,7 +42,7 @@ if ($access) {
 		}
 	} 
 	else { 
-		ArticleTop($articleObj, $issueObj->getLanguageId(), "Preview article", $access, false);
+		ArticleTop($articleObj, $issueObj->getLanguageId(), "Preview article", false);
 		CampsiteInterface::DisplayError('This article cannot be previewed. Please make sure it has a <B><I>single article</I></B> template selected.');
 	}
 } 
