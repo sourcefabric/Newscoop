@@ -1418,10 +1418,10 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 		fs << row[0];
 		return RES_OK;
 	}
-	buf.str("");
+	buf.str("");	
 	string w, table, field;
 	w = table = "";
-	field = attr;
+	field = attr;	
 	bool need_lang = false;
 	if (modifier == CMS_ST_IMAGE)
 	{
@@ -1430,6 +1430,7 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 		SetNrField("NrIssue", c.Issue(), buf, w);
 		SetNrField("NrSection", c.Section(), buf, w);
 		SetNrField("NrArticle", c.Article(), buf, w);
+		SetNrField("Number", image, buf, w);
 	}
 	else if (modifier == CMS_ST_PUBLICATION)
 	{
