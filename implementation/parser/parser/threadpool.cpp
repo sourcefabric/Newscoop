@@ -159,27 +159,31 @@ throw(ExThreadNotFree, ExThreadErrCreate)
 bool CThreadPool::waitFreeThread(ULInt p_nUSec) const
 {
 	LockMutex();
-	bool bIsFree = m_nWorkingThreads < m_nMaxThreads;
+	int nFreeThreads  = m_nMaxThreads - m_nWorkingThreads;
 	UnlockMutex();
-	if (bIsFree)
-	{
+	if (nFreeThreads > 0)
 		return true;
-	}
-	ULInt nSleepTime = p_nUSec != 0 ? p_nUSec : 100000;
+	ULInt nSleepTime = p_nUSec != 0 ? p_nUSec : 200000;
 	bool bLoop = p_nUSec == 0;
 	if (bLoop)
-		cout << "loop" << endl;
-	while (bLoop)
+		cout << "start loop waiting for free threads" << endl;
+	while (true)
 	{
+		cout << "waiting " << nSleepTime << " microseconds for a free thread" << endl;
 		usleep(nSleepTime);
 		LockMutex();
-		if ((bIsFree = m_nWorkingThreads < m_nMaxThreads) == true)
+		if ((nFreeThreads = (m_nMaxThreads - m_nWorkingThreads)) > 0) {
+			cout << nFreeThreads << " thread(s) free after " << nSleepTime << " microseconds" << endl;
+			UnlockMutex();
 			break;
-		cout << "working: " << m_nWorkingThreads << ", max: " << m_nMaxThreads << endl;
+		}
+		cout << "working threads: " << m_nWorkingThreads << ", max threads: " << m_nMaxThreads << endl;
 		UnlockMutex();
+		if (!bLoop)
+			break;
+		nSleepTime += 200000;
 	}
-	UnlockMutex();
-	return bIsFree;
+	return nFreeThreads > 0;
 }
 
 inline void CThreadPool::Debug(const char* p_pchArg1, bool p_bArg, const void* p_pchArg2, bool p_bIndex,
