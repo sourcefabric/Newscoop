@@ -74,5 +74,6 @@ regGS("The following templates had been registered but are missing from the temp
 regGS("The following templates were registered and used but are missing from the templates directory:", "The following templates were registered and used but are missing from the templates directory::en");
 
 regGS("You do not have the right to modify templates.","You do not have the right to modify templates.:en");
+regGS("Invalid template file $1", "Invalid template file $1:en");
 
 ?>
