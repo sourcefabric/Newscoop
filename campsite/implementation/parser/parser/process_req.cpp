@@ -481,6 +481,8 @@ int Login(CContext& c, MYSQL* pSql)
 //		int param_nr - parameters number
 int CheckUserInfo(CContext& c, const char* ppchParams[], int param_nr)
 {
+	if (ppchParams == NULL || param_nr <= 0)
+		return 0;
 	string field_pref = "User";
 	int found = 0;
 	set <string, less<string> > coPrefs;
@@ -497,13 +499,15 @@ int CheckUserInfo(CContext& c, const char* ppchParams[], int param_nr)
 	}
 	for (int i = 0; i < param_nr; i++)
 	{
+		if (ppchParams[i] == NULL)
+			continue;
 		string fld = field_pref + ppchParams[i];
 		if (!c.URL()->isSet(fld))
 			continue;
 		string s = c.URL()->getValue(fld);
 		c.URL()->deleteParameter(fld);
 		c.DefURL()->deleteParameter(fld);
-		c.SetUserInfo(string(ppchParams[i]), string(s));
+		c.SetUserInfo(string(ppchParams[i]), s);
 		if (strncasecmp(ppchParams[i], "Pref", 4) == 0)
 			coPrefs.erase(ppchParams[i]);
 		found ++;
@@ -525,12 +529,16 @@ int CheckUserInfo(CContext& c, const char* ppchParams[], int param_nr)
 int AddUser(CContext& c, MYSQL* pSql, const char* ppchParams[], int param_nr,
             const int errs[], int err_nr)
 {
+	if (ppchParams == NULL || param_nr <= 0)
+		return -1;
 	c.SetAddUser(true);
 	string field_pref = "User", q, fn, fv, uname, email, password;
 	fn = "KeyId";
 	fv = "RAND()*1000000000+RAND()*1000000+RAND()*1000";
 	for (int i = 0; i < param_nr; i++)
 	{
+		if (ppchParams[i] == NULL)
+			continue;
 		string s = c.UserInfo(string(ppchParams[i]));
 		char pchBuf[10000];
 		mysql_escape_string(pchBuf, s.c_str(), strlen(s.c_str()));
@@ -543,7 +551,8 @@ int AddUser(CContext& c, MYSQL* pSql, const char* ppchParams[], int param_nr,
 		}
 		if (i == 1) email = s;
 		if (i == 3) uname = s;
-		fn += string(", ") + (i == 5 ? ppchParams[i - 1] : ppchParams[i]);
+		const char* pchPrevParam = i > 0 && ppchParams[i - 1] ? ppchParams[i - 1] : "";
+		fn += string(", ") + (i == 5 ? pchPrevParam : ppchParams[i]);
 		if (i == 5)
 		{
 			if (password != pchBuf)
@@ -596,12 +605,17 @@ int AddUser(CContext& c, MYSQL* pSql, const char* ppchParams[], int param_nr,
 int ModifyUser(CContext& c, MYSQL* pSql, const char* ppchParams[], int param_nr,
                const int errs[], int err_nr)
 {
+	if (ppchParams == NULL || param_nr <= 0)
+		return -1;
 	char pchBuf[10000];
 	c.SetModifyUser(true);
 	string field_pref = "User", q, f, password;
 	bool first = true;
 	for (int i = 0; i < param_nr; i++)
 	{
+		if (ppchParams[i] == NULL)
+			continue;
+		const char* pchPrevParam = i > 0 && ppchParams[i - 1] ? ppchParams[i - 1] : "";
 		if (!c.IsUserInfo(string(ppchParams[i])) || i == 3)
 			continue;
 		string s = c.UserInfo(string(ppchParams[i]));
@@ -614,7 +628,7 @@ int ModifyUser(CContext& c, MYSQL* pSql, const char* ppchParams[], int param_nr,
 			continue;
 		}
 		if (!first) f += ", ";
-		f += string((i == 5 ? ppchParams[i - 1] : ppchParams[i])) + " = ";
+		f += string((i == 5 ? pchPrevParam : ppchParams[i])) + " = ";
 		if (i == 5)
 		{
 			if (password != pchBuf)
@@ -872,25 +886,33 @@ void SetReaderAccess(CContext& c, MYSQL* pSql)
 int Search(CContext& c, MYSQL* pSql)
 {
 	c.SetSearch(true);
-	string s;
-	if ((s = c.URL()->getValue("SearchKeywords")) == "")
-		return SRERR_NO_KEYWORDS;
+
+	string coKeywords = c.URL()->getValue("SearchKeywords");
 	c.URL()->deleteParameter("SearchKeywords");
 	c.DefURL()->deleteParameter("SearchKeywords");
-	ParseKeywords(s.c_str(), c);
-	c.SetStrKeywords(s.c_str());
-	if ((s = c.URL()->getValue("SearchMode")) != "" && strcasecmp(s.c_str(), "on") == 0)
-		c.SetSearchAnd(true);
+
+	string coSearchMode = c.URL()->getValue("SearchMode");
 	c.URL()->deleteParameter("SearchMode");
 	c.DefURL()->deleteParameter("SearchMode");
-	int level = 0;
-	if ((s = c.URL()->getValue("SearchLevel")) != "")
-		level = atol(s.c_str());
+
+	string coLevel = c.URL()->getValue("SearchLevel");
 	c.URL()->deleteParameter("SearchLevel");
 	c.DefURL()->deleteParameter("SearchLevel");
-	if (level < 0 || level > 2)
-		return SRERR_INVALID_LEVEL;
+
+	if (coKeywords == "")
+		return SRERR_NO_KEYWORDS;
+
+	ParseKeywords(coKeywords.c_str(), c);
+	c.SetStrKeywords(coKeywords.c_str());
+
+	if (coSearchMode != "" && strcasecmp(coSearchMode.c_str(), "on") == 0)
+		c.SetSearchAnd(true);
+
+	int level = coLevel != "" ? atol(coLevel.c_str()) : 0;
+	level = level < 0 ? 0 : level;
+	level = level > 2 ? 2 : level;
 	c.SetSearchLevel(level);
+
 	return 0;
 }
 
