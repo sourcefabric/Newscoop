@@ -1,16 +1,16 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']. "/priv/pub/issues/sections/articles/article_common.php");
+require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/pub/issues/sections/articles/article_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Log.php");
 
 // Check permissions
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
-	header("Location: /priv/logout.php");
+	header("Location: /$ADMIN/logout.php");
 	exit;
 }
 
 if (!$User->hasPermission("AddArticle")) {
-	header("Location: /priv/ad.php?ADReason=".urlencode(getGS("You do not have the right to add articles." ))); 	
+	header("Location: /$ADMIN/ad.php?ADReason=".urlencode(getGS("You do not have the right to add articles." )));
 	exit;
 }
 
@@ -24,10 +24,10 @@ $sLanguage = $Language;
 $DestPublication = Input::get('destination_publication', 'int', 0);
 $DestIssue = Input::get('destination_issue', 'int', 0);
 $DestSection = Input::get('destination_section', 'int', 0);
-$BackLink = Input::get('Back', 'string', '/priv/pub/issues/sections/articles/index.php', true);
+$BackLink = Input::get('Back', 'string', "/$ADMIN/pub/issues/sections/articles/index.php", true);
 
 if (!Input::isValid()) {
-	header("Location: /priv/logout.php");
+	header("Location: /$ADMIN/logout.php");
 	exit;	
 }
 

@@ -1,5 +1,5 @@
 B_HTML
-INCLUDE_PHP_LIB(<*../../..*>)
+INCLUDE_PHP_LIB(<*$ADMIN_DIR/pub/issues/sections*>)
 B_DATABASE
 
 <?php  query ("SELECT * FROM Sections WHERE 1=0", 'q_sect'); ?>dnl

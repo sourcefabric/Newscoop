@@ -1,15 +1,15 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']. "/priv/pub/issues/sections/articles/article_common.php");
+require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/pub/issues/sections/articles/article_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Log.php");
 
 // Check permissions
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
-	header("Location: /priv/logout.php");
+	header("Location: /$ADMIN/logout.php");
 	exit;
 }
 if (!$User->hasPermission('DeleteArticle')) {
-	header("Location: /priv/ad.php?ADReason=".urlencode(getGS("You do not have the right to delete articles.")));
+	header("Location: /$ADMIN/ad.php?ADReason=".urlencode(getGS("You do not have the right to delete articles.")));
 	exit;
 }
 
@@ -20,28 +20,28 @@ $Section = Input::get('Section', 'int', 0);
 $Language = Input::get('Language', 'int', 0);
 $sLanguage = Input::get('sLanguage', 'int', 0);
 $Article = Input::get('Article', 'int', 0);
-$BackLink = Input::get('Back', 'string', '/priv/pub/issues/sections/articles/index.php', true);
+$BackLink = Input::get('Back', 'string', "/$ADMIN/pub/issues/sections/articles/index.php", true);
 
 if (!Input::isValid()) {
-	header("Location: /priv/logout.php");
+	header("Location: /$ADMIN/logout.php");
 	exit;	
 }
 
 $publicationObj =& new Publication($Pub);
 if (!$publicationObj->exists()) {
-	header("Location: /priv/ad.php?ADReason=".urlencode(getGS('Publication does not exist.')));
+	header("Location: /$ADMIN/ad.php?ADReason=".urlencode(getGS('Publication does not exist.')));
 	exit;	
 }
 
 $issueObj =& new Issue($Pub, $Language, $Issue);
 if (!$issueObj->exists()) {
-	header("Location: /priv/ad.php?ADReason=".urlencode(getGS('Issue does not exist.')));
+	header("Location: /$ADMIN/ad.php?ADReason=".urlencode(getGS('Issue does not exist.')));
 	exit;	
 }
 
 $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
 if (!$sectionObj->exists()) {
-	header("Location: /priv/ad.php?ADReason=".urlencode(getGS('Section does not exist.')));
+	header("Location: /$ADMIN/ad.php?ADReason=".urlencode(getGS('Section does not exist.')));
 	exit;	
 }
 
@@ -50,7 +50,7 @@ $sLanguageObj =& new Language($sLanguage);
 
 $articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
 if (!$articleObj->exists()) {
-	header("Location: /priv/ad.php?ADReason=".urlencode(getGS('Article does not exist.')));
+	header("Location: /$ADMIN/ad.php?ADReason=".urlencode(getGS('Article does not exist.')));
 	exit;		
 }
 

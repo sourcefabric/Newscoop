@@ -1,14 +1,14 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
-load_common_include_files();
+load_common_include_files("$ADMIN_DIR/imagearchive");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ImageSearch.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/priv/CampsiteInterface.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/priv/imagearchive/include.inc.php');
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/imagearchive/include.inc.php");
 
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
-	header('Location: /priv/logout.php');
+	header("Location: /$ADMIN/logout.php");
 	exit;
 }
 
@@ -31,10 +31,10 @@ $imageNav =& new ImageNav($_REQUEST, CAMPSITE_IMAGEARCHIVE_IMAGES_PER_PAGE, $vie
 // build the links for ordering (search results) //////////////////////
 if ($OrderDirection == 'DESC') {
 	$ReverseOrderDirection = "ASC";
-	$OrderSign = '<img src="/priv/img/icon/search_order_direction_down.gif" border="0">';
+	$OrderSign = "<img src=\"/$ADMIN/img/icon/search_order_direction_down.gif\" border=\"0\">";
 } else {
 	$ReverseOrderDirection = "DESC";
-	$OrderSign = '<img src="/priv/img/icon/search_order_direction_up.gif" border="0">';
+	$OrderSign = "<img src=\"/$ADMIN/img/icon/search_order_direction_up.gif\" border=\"0\">";
 }
 
 $IdHref  = 'index.php?order_by=id'
@@ -106,7 +106,7 @@ $uploadedByUsers =& Image::GetUploadUsers();
 
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%">
 	<TR>
-		<TD ROWSPAN="2" WIDTH="1%"><IMG SRC="/priv/img/sign_big.gif" BORDER="0"></TD>
+		<TD ROWSPAN="2" WIDTH="1%"><IMG SRC="/<?php echo $ADMIN; ?>/img/sign_big.gif" BORDER="0"></TD>
 		<TD>
 			<DIV STYLE="font-size: 12pt"><B><?php putGS('Image archive'); ?></B></DIV>
 			<HR NOSHADE SIZE="1" COLOR="BLACK">
@@ -115,8 +115,8 @@ $uploadedByUsers =& Image::GetUploadUsers();
 	<TR><TD ALIGN=RIGHT>
 	  <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
 		<TR>
-			<TD><A HREF="/priv/home.php" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS('Home'); ?>"></A></TD><TD><A HREF="/priv/home.php" ><B><?php putGS('Home');  ?></B></A></TD>
-			<TD><A HREF="/priv/logout.php" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS('Logout'); ?>"></A></TD><TD><A HREF="/priv/logout.php" ><B><?php putGS('Logout');  ?></B></A></TD>
+			<TD><A HREF="/<?php echo $ADMIN; ?>/home.php" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS('Home'); ?>"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/home.php" ><B><?php putGS('Home');  ?></B></A></TD>
+			<TD><A HREF="/<?php echo $ADMIN; ?>/logout.php" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS('Logout'); ?>"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/logout.php" ><B><?php putGS('Logout');  ?></B></A></TD>
 		</TR>
 	</TABLE>
   </TD></TR>
@@ -126,16 +126,16 @@ $uploadedByUsers =& Image::GetUploadUsers();
   <tr>
 <?php
 if ($User->hasPermission('AddImage')) { ?>
-    <td><A HREF="add.php?<?php echo $imageNav->getSearchLink(); ?>"><IMG SRC="/priv/img/tol.gif" BORDER="0" alt="<?php  putGS('Add new image'); ?>"></A></TD><TD><A HREF="add.php?<?php echo $imageNav->getSearchLink(); ?>"><B><?php  putGS('Add new image'); ?></B></A></TD>
+    <td><A HREF="add.php?<?php echo $imageNav->getSearchLink(); ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" alt="<?php  putGS('Add new image'); ?>"></A></TD><TD><A HREF="add.php?<?php echo $imageNav->getSearchLink(); ?>"><B><?php  putGS('Add new image'); ?></B></A></TD>
 <?php } ?>
     
-    <td><a href="index.php?view=<?php echo $view; ?>"><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php putGS("Reset search conditions"); ?>"></a></td><td><a href="index.php?view=<?php echo $view; ?>"><b><?php echo putGS('Reset search conditions'); ?></b></a></td>
+    <td><a href="index.php?view=<?php echo $view; ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php putGS("Reset search conditions"); ?>"></a></td><td><a href="index.php?view=<?php echo $view; ?>"><b><?php echo putGS('Reset search conditions'); ?></b></a></td>
 
     <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
     <td><B><?php putGS('View', 'View'); ?>:</b></td>
-    <td><A HREF="index.php?<?php echo $imageNav->getSearchLink(); ?>&view=thumbnail"><IMG SRC="/priv/img/tol.gif" BORDER="0" alt="<?php  putGS('Thumbnail'); ?>"></A></TD><TD><A HREF="index.php?<?php echo $imageNav->getSearchLink(); ?>&view=thumbnail"><B><?php putGS('Thumbnail'); ?></B></A></TD>
-    <td><A HREF="index.php?<?php echo $imageNav->getSearchLink(); ?>&view=gallery"><IMG SRC="/priv/img/tol.gif" BORDER="0" alt="<?php  putGS('Gallery'); ?>"></A></TD><TD><A HREF="index.php?<?php echo $imageNav->getSearchLink(); ?>&view=gallery"><B><?php putGS('Gallery'); ?></B></A></TD>
-    <td><A HREF="index.php?<?php echo $imageNav->getSearchLink(); ?>&view=flat"><IMG SRC="/priv/img/tol.gif" BORDER="0" alt="<?php  putGS('Text only'); ?>"></A></TD><TD><A HREF="index.php?<?php echo $imageNav->getSearchLink(); ?>&view=flat"><B><?php  putGS('Text only'); ?></B></A></TD>
+    <td><A HREF="index.php?<?php echo $imageNav->getSearchLink(); ?>&view=thumbnail"><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" alt="<?php  putGS('Thumbnail'); ?>"></A></TD><TD><A HREF="index.php?<?php echo $imageNav->getSearchLink(); ?>&view=thumbnail"><B><?php putGS('Thumbnail'); ?></B></A></TD>
+    <td><A HREF="index.php?<?php echo $imageNav->getSearchLink(); ?>&view=gallery"><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" alt="<?php  putGS('Gallery'); ?>"></A></TD><TD><A HREF="index.php?<?php echo $imageNav->getSearchLink(); ?>&view=gallery"><B><?php putGS('Gallery'); ?></B></A></TD>
+    <td><A HREF="index.php?<?php echo $imageNav->getSearchLink(); ?>&view=flat"><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" alt="<?php  putGS('Text only'); ?>"></A></TD><TD><A HREF="index.php?<?php echo $imageNav->getSearchLink(); ?>&view=flat"><B><?php  putGS('Text only'); ?></B></A></TD>
   </tr>
 </table>
 

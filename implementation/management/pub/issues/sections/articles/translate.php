@@ -1,10 +1,10 @@
 <?php 
-require_once($_SERVER['DOCUMENT_ROOT'].'/priv/pub/issues/sections/articles/article_common.php');
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/pub/issues/sections/articles/article_common.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DbObjectArray.php');
 
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
-	header("Location: /priv/logout.php");
+	header("Location: /$ADMIN/logout.php");
 	exit;
 }
 
@@ -13,33 +13,33 @@ $Issue = Input::get('Issue', 'int', 0);
 $Section = Input::get('Section', 'int', 0);
 $Language = Input::get('Language', 'int', 0);
 $sLanguage = Input::get('sLanguage', 'int', 0);
-$BackLink = Input::get('Back', 'string', '/priv/pub/issues/sections/articles/', true);
+$BackLink = Input::get('Back', 'string', "/$ADMIN/pub/issues/sections/articles/", true);
 
 if (!Input::isValid()) {
-	header("Location: /priv/logout.php");
+	header("Location: /$ADMIN/logout.php");
 	exit;	
 }
 $publicationObj =& new Publication($Pub);
 if (!$publicationObj->exists()) {
-	header("Location: /priv/logout.php");
+	header("Location: /$ADMIN/logout.php");
 	exit;	
 }
 
 $issueObj =& new Issue($Pub, $Language, $Issue);
 if (!$issueObj->exists()) {
-	header("Location: /priv/logout.php");
+	header("Location: /$ADMIN/logout.php");
 	exit;	
 }
 
 $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
 if (!$sectionObj->exists()) {
-	header("Location: /priv/logout.php");
+	header("Location: /$ADMIN/logout.php");
 	exit;		
 }
 
 $articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
 if (!$articleObj->exists()) {
-	header("Location: /priv/ad.php?ADReason=".urlencode(getGS('Article does not exist.')));
+	header("Location: /$ADMIN/ad.php?ADReason=".urlencode(getGS('Article does not exist.')));
 	exit;
 }
 
@@ -48,7 +48,7 @@ if ($User->hasPermission('ChangeArticle') || (($articleObj->getUserId() == $User
 	$access= true;
 }
 if (!$access) {
-	header("Location: /priv/ad.php?ADReason=".urlencode(getGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only changed by authorized users.")));
+	header("Location: /$ADMIN/ad.php?ADReason=".urlencode(getGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only changed by authorized users.")));
 	exit;	
 }
 

@@ -1,16 +1,16 @@
 <?php  
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
-load_common_include_files();
-require_once($_SERVER['DOCUMENT_ROOT'].'/priv/imagearchive/include.inc.php');
+load_common_include_files("$ADMIN_DIR/imagearchive");
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/imagearchive/include.inc.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ImageSearch.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/priv/CampsiteInterface.php');
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
 
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
-	header('Location: /priv/logout.php');
+	header("Location: /$ADMIN_DIR/logout.php");
 	exit;
 }
 $ImageId = isset($_REQUEST['image_id'])?$_REQUEST['image_id']:0;
@@ -22,7 +22,7 @@ if (!is_numeric($ImageId) || ($ImageId <= 0)) {
 
 // This file can only be accessed if the user has the right to change images.
 if (!$User->hasPermission('ChangeImage')) {
-	header('Location: /priv/logout.php');
+	header("Location: /$ADMIN_DIR/logout.php");
 	exit;		
 }
 
@@ -43,7 +43,7 @@ $articles =& ArticleImage::GetArticlesThatUseImage($ImageId);
 <BODY  BGCOLOR="WHITE" TEXT="BLACK" LINK="DARKBLUE" ALINK="RED" VLINK="DARKBLUE">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%">
 	<TR>
-		<TD ROWSPAN="2" WIDTH="1%"><IMG SRC="/priv/img/sign_big.gif" BORDER="0"></TD>
+		<TD ROWSPAN="2" WIDTH="1%"><IMG SRC="/<?php echo $ADMIN; ?>/img/sign_big.gif" BORDER="0"></TD>
 		<TD>
 			<DIV STYLE="font-size: 12pt"><B><?php  putGS("Change image information"); ?></B></DIV>
 			<HR NOSHADE SIZE="1" COLOR="BLACK">
@@ -52,9 +52,9 @@ $articles =& ArticleImage::GetArticlesThatUseImage($ImageId);
 	<TR><TD ALIGN=RIGHT>
 	  <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
 		<TR>
-		  <TD><A HREF="index.php?<?php echo $imageNav->getSearchLink() ?>" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Image archive"); ?>"></A></TD><TD><A HREF="index.php?<?php echo $imageNav->getSearchLink(); ?>" ><B><?php  putGS("Image archive");  ?></B></A></TD>
-		  <TD><A HREF="/priv/home.php" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Home"); ?>"></A></TD><TD><A HREF="/priv/home.php" ><B><?php  putGS("Home");  ?></B></A></TD>
-		  <TD><A HREF="/priv/logout.php" ><IMG SRC="/priv/img/tol.gif" BORDER="0" ALT="<?php  putGS("Logout"); ?>"></A></TD><TD><A HREF="/priv/logout.php" ><B><?php  putGS("Logout");  ?></B></A></TD>
+		  <TD><A HREF="index.php?<?php echo $imageNav->getSearchLink() ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Image archive"); ?>"></A></TD><TD><A HREF="index.php?<?php echo $imageNav->getSearchLink(); ?>" ><B><?php  putGS("Image archive");  ?></B></A></TD>
+		  <TD><A HREF="/<?php echo $ADMIN; ?>/home.php" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Home"); ?>"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/home.php" ><B><?php  putGS("Home");  ?></B></A></TD>
+		  <TD><A HREF="/<?php echo $ADMIN; ?>/logout.php" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Logout"); ?>"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/logout.php" ><B><?php  putGS("Logout");  ?></B></A></TD>
 		</TR>
 	  </TABLE>
 	</TD></TR>
@@ -145,8 +145,8 @@ if (count($articles) > 0) {
 			$color=1; 
 			echo 'BGCOLOR="#D0D0D0"';
 		} 
-		echo '><td>'.htmlspecialchars($article->getTitle()).'</td>
-			  <td width="10%" align="center"><a href="/priv/pub/issues/sections/articles/edit.php?Pub='.htmlspecialchars($article->getPublicationId()).'&Issue='.$article->getIssueId().'&Section='.$article->getSectionId().'&Article='.$article->getArticleId().'&Language='.$article->getLanguageId().'&sLanguage='.$article->getLanguageId().'">'.getGS('Edit').'</a></td>
+		echo '><td>'.htmlspecialchars($article->getTitle())."</td>
+			  <td width=\"10%\" align=\"center\"><a href=\"/$ADMIN/pub/issues/sections/articles/edit.php?Pub=".htmlspecialchars($article->getPublicationId()).'&Issue='.$article->getIssueId().'&Section='.$article->getSectionId().'&Article='.$article->getArticleId().'&Language='.$article->getLanguageId().'&sLanguage='.$article->getLanguageId().'">'.getGS('Edit').'</a></td>
 				   </tr>';
 	}
 	?>
