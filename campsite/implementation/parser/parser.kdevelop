@@ -2,14 +2,14 @@
 <kdevelop>
   <general>
     <author>Mugur Rus</author>
-    <email></email>
+    <email/>
     <projectmanagement>KDevCustomProject</projectmanagement>
     <primarylanguage>C++</primarylanguage>
     <keywords/>
     <projectdirectory>.</projectdirectory>
     <absoluteprojectpath>false</absoluteprojectpath>
-    <version></version>
-    <description></description>
+    <version/>
+    <description/>
     <ignoreparts/>
     <secondaryLanguages/>
   </general>
@@ -40,20 +40,20 @@
       <directoryradio>build</directoryradio>
       <customdirectory>/</customdirectory>
       <mainprogram>parser/campsite_server</mainprogram>
-      <programargs></programargs>
+      <programargs/>
       <terminal>false</terminal>
       <autocompile>true</autocompile>
       <envvars/>
     </run>
     <build>
       <buildtool>make</buildtool>
-      <builddir></builddir>
+      <builddir/>
     </build>
     <make>
       <abortonerror>false</abortonerror>
       <numberofjobs>1</numberofjobs>
       <dontact>false</dontact>
-      <makebin></makebin>
+      <makebin/>
       <selectedenvironment>default</selectedenvironment>
       <environments>
         <default/>
@@ -90,12 +90,12 @@
   </cppsupportpart>
   <kdevdebugger>
     <general>
-      <programargs></programargs>
-      <gdbpath></gdbpath>
-      <dbgshell></dbgshell>
-      <configGdbScript></configGdbScript>
-      <runShellScript></runShellScript>
-      <runGdbScript></runGdbScript>
+      <programargs/>
+      <gdbpath/>
+      <dbgshell/>
+      <configGdbScript/>
+      <runShellScript/>
+      <runGdbScript/>
       <breakonloadinglibs>true</breakonloadinglibs>
       <separatetty>false</separatetty>
       <floatingtoolbar>false</floatingtoolbar>
