@@ -58,7 +58,7 @@ public:
 
 	const Operator& operator [](const string& p_rcoName) const throw(InvalidOperator)
 	{
-		map<string, Operator*, str_case_less>::const_iterator coIt;
+		typename map<string, Operator*, str_case_less>::const_iterator coIt;
 		if ((coIt = m_coOperators.find(p_rcoName)) == m_coOperators.end())
 			throw InvalidOperator();
 		return *(*coIt).second;
