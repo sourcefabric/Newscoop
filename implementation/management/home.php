@@ -41,23 +41,17 @@ list($SubmittedArticles, $NumSubmittedArticles) = Article::GetSubmittedArticles(
 	<TITLE><?php  putGS("Home"); ?></TITLE>
 </HEAD>
 <BODY  BGCOLOR="WHITE" TEXT="BLACK" LINK="DARKBLUE" ALINK="RED" VLINK="DARKBLUE">
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
 <TR>
-	<TD ROWSPAN="2" WIDTH="1%"><IMG SRC="/<?php echo $ADMIN; ?>/img/sign_big.gif" BORDER="0"></TD>
-	<TD>
-	    <DIV STYLE="font-size: 12pt"><B><?php  putGS("Home"); ?></B></DIV>
-	    <HR NOSHADE SIZE="1" COLOR="BLACK">
+	<TD class="page_title" width="1%">
+	    <?php  putGS("Home"); ?>
 	</TD>
-</TR>
-<TR>
-	<TD ALIGN=RIGHT><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0"><TR><TD><A HREF="/<?php echo $ADMIN; ?>/logout.php" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php  putGS("Logout"); ?>"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/logout.php" ><B><?php  putGS("Logout");  ?></B></A></TD></TR></TABLE></TD>
+	<TD style="font-size: 9pt; padding-right: 10px; padding-top: 0px; padding-bottom: 2px;" valign="bottom" align="right"><?php  putGS('Welcome $1!','<B>'.htmlspecialchars($User->getName()).'</B>'); ?></TD>
 </TR>
 </TABLE>
+<!--<HR NOSHADE SIZE="1" COLOR="BLACK">-->
 
 <TABLE BORDER="0" CELLSPACING="4" CELLPADDING="2" WIDTH="100%">
-<TR>
-	<TD COLSPAN="2" BGCOLOR=#D0D0B0><?php  putGS('Welcome $1!','<B>'.htmlspecialchars($User->getName()).'</B>'); ?></TD>
-</TR>
 <TR>
     <TD VALIGN="TOP">
 		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
