@@ -56,7 +56,7 @@ B_MSGBOX(<*Deleting topic*>)
 	if ($AFFECTED_ROWS > 0) {
 		$params = array($operation_attr=>$operation_delete, "tpid"=>"$DelCateg");
 		$msg = build_reset_cache_msg($cache_type_topics, $params);
-		send_message($SERVER_ADDRESS, server_port(), $msg, $err_msg);
+		send_message("127.0.0.1", server_port(), $msg, $err_msg);
 ?>dnl
 		<LI><?php  putGS('The topic $1 has been deleted.','<B>'.getHVar($q_cat,'Name').'</B>'); ?></LI>
 		X_AUDIT(<*142*>, <*getGS('Topic $1 deleted',getHVar($q_cat,'Name'))*>)

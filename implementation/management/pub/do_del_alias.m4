@@ -47,7 +47,7 @@ B_MSGBOX(<*Deleting alias*>)
 	if ($AFFECTED_ROWS > 0) {
 		$params = array($operation_attr=>$operation_modify, "IdPublication"=>"$Pub" );
 		$msg = build_reset_cache_msg($cache_type_publications, $params);
-		send_message($SERVER_ADDRESS, server_port(), $msg, $err_msg);
+		send_message("127.0.0.1", server_port(), $msg, $err_msg);
 ?>dnl
 		<LI><?php  putGS('The alias $1 has been deleted from publication $2.','<B>'.$alias_name.'</B>','<B>'.$pub_name.'</B>'); ?></LI>
 		X_AUDIT(<*152*>, <*getGS('The alias $1 has been deleted from publication $2.',$alias_name,$pub_name)*>)

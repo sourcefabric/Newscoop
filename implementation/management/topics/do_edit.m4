@@ -56,7 +56,7 @@ B_MSGBOX(<*Changing topic name*>)
 	if ($updated) {
 		$params = array($operation_attr=>$operation_modify, "tpid"=>"$EdCateg");
 		$msg = build_reset_cache_msg($cache_type_topics, $params);
-		send_message($SERVER_ADDRESS, server_port(), $msg, $err_msg);
+		send_message("127.0.0.1", server_port(), $msg, $err_msg);
 ?>dnl
 		<LI><?php  putGS('The topic $1 has been successfuly updated.',"<B>".encHTML(decS($cName))."</B>"); ?></LI>
 		X_AUDIT(<*143*>, <*getGS('Topic $1 updated',$cName)*>)

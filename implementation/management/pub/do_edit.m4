@@ -99,7 +99,7 @@ B_MSGBOX(<*Changing publication information*>)
 	if ($updated) {
 		$params = array($operation_attr=>$operation_modify, "IdPublication"=>"$Pub" );
 		$msg = build_reset_cache_msg($cache_type_publications, $params);
-		send_message($SERVER_ADDRESS, server_port(), $msg, $err_msg);
+		send_message("127.0.0.1", server_port(), $msg, $err_msg);
 ?>dnl
 		<LI><?php  putGS('The publication $1 has been successfuly updated.', "<B>" 
 		                 . encHTML(decS($cName)) . "</B>"); ?></LI>

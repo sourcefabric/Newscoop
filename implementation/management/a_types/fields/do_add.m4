@@ -72,7 +72,7 @@ B_MSGBOX(<*Adding new field*>)
     if ($created) {
 		$params = array($operation_attr=>$operation_modify, "article_type"=>"$AType");
 		$msg = build_reset_cache_msg($cache_type_article_types, $params);
-		send_message($SERVER_ADDRESS, server_port(), $msg, $err_msg);
+		send_message("127.0.0.1", server_port(), $msg, $err_msg);
 ?>dnl
 	<LI><?php  putGS('The field $1 has been created.','<B>'.encHTML(decS($cName)).'</B>'); ?></LI>
 X_AUDIT(<*71*>, <*getGS('Article type field $1 created', decS($cName))*>)

@@ -42,7 +42,7 @@ B_MSGBOX(<*Deleting article type*>)
 		query($sql);
 		$params = array($operation_attr=>$operation_delete, "article_type"=>"$AType");
 		$msg = build_reset_cache_msg($cache_type_article_types, $params);
-		send_message($SERVER_ADDRESS, server_port(), $msg, $err_msg);
+		send_message("127.0.0.1", server_port(), $msg, $err_msg);
 	}
     if ($del) { ?>dnl
 	<LI><?php  putGS('The article type $1 has been deleted.','<B>'.encHTML($AType).'</B>'); ?></LI>

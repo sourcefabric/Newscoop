@@ -53,7 +53,7 @@ B_MSGBOX(<*Adding new topic*>)
 	if ($created) {
 		$params = array($operation_attr=>$operation_create, "tpid"=>"$topic_id");
 		$msg = build_reset_cache_msg($cache_type_topics, $params);
-		send_message($SERVER_ADDRESS, server_port(), $msg, $err_msg);
+		send_message("127.0.0.1", server_port(), $msg, $err_msg);
 ?>dnl
 		<LI><?php  putGS('The topic $1 has been successfuly added.',"<B>".encHTML(decS($cName))."</B>"); ?></LI>
 		X_AUDIT(<*141*>, <*getGS('Topic $1 added',$cName)*>)
