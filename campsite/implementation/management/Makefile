@@ -1,6 +1,7 @@
 include ../../make.env
 
-MY_TARGETS=ad.php login.php logout.php 
+MY_TARGETS=ad.php login.php
+ALL=all
 
 all: $(MY_TARGETS)
 	$(MAKE) -C root
