@@ -224,8 +224,53 @@ X_NEW_BUTTON(<*Duplicate*>, <*X_ROOT/pub/issues/sections/articles/fduplicate.php
 </TD></TR>
 </TABLE>
 
-
-B_DIALOG(<*Edit article details*>, <*POST*>, <*do_edit.php*>)
+<FORM NAME="dialog" METHOD="POST" ACTION="do_edit.php">
+<CENTER><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" BGCOLOR="#C0D0FF" ALIGN="CENTER">
+	<TR>
+		<TD COLSPAN="2">
+			<!-- Paul Baranowski: BEGIN new code -->
+			<table cellpadding="0" cellspacing="0" width="100%">
+			<tr>
+				<td align="left">
+					<B><? putGS("Edit article details"); ?></B>
+				</td>
+				<td align="right">
+					<? 
+					// Check if everything needed for Article Import is available.
+					
+					// Libraries
+					$zipLibAvailable = function_exists("zip_open");
+					$xsltLibAvailable = function_exists("xslt_create");
+					@<*include*>("XML/Parser.php");
+					$xmlLibAvailable = class_exists("XML_Parser");
+					$xmlLibAvailable |= function_exists("xml_parser_create");
+					// Verify this article type has the body & intro fields.
+					$introSupport = false;
+					$bodySupport = false;
+					$queryStr = "SHOW COLUMNS FROM X".getVar($q_art,'Type');
+					$result = mysql_query($queryStr);
+					while ($row = mysql_fetch_assoc($result)) {
+						if ($row["Field"] == "Fintro") {
+							$introSupport = true;
+						}
+						if ($row["Field"] == "Fbody") {
+							$bodySupport = true;
+						}
+					}
+					if ($zipLibAvailable && $xsltLibAvailable && $xmlLibAvailable 
+						&& $introSupport && $bodySupport) {
+					?>
+					<b><a href="/priv/article_import/index.php?Pub=<?p($Pub);?>&Issue=<?p($Issue);?>&Section=<?p($Section);?>&Article=<?p($Article)?>&Language=<?p($Language);?>&sLanguage=<?p($sLanguage);?>">Import Article</a></b>
+					<?
+					}
+					?>
+				</td>
+			</tr>
+			</table>
+			<HR NOSHADE SIZE="1" COLOR="BLACK"> 
+			<!-- Paul Baranowski: END new code -->
+		</TD>
+	</TR>
 	B_DIALOG_INPUT(<*Name*>)
 		<INPUT TYPE="TEXT" NAME="cName" SIZE="64" MAXLENGTH="140" VALUE="<?php  pgetHVar($q_art,'Name'); ?>">
 	E_DIALOG_INPUT
