@@ -231,5 +231,6 @@ regGS("No articles","Žádné články");
 regGS("---Select article---","---Vyber článek---");
 regGS("Duplicate","Duplikovat");
 regGS("You do not have the right to add articles.","Nemáte právo přidat článek");
+regGS("Add new field","Přidat pole");
 
 ?>
