@@ -288,3 +288,20 @@ TOLAttribute* TOLStatement::FindTypeAttr(cpChar p_pchAttr, cpChar p_chType,
 	}
 	return NULL;
 }
+
+// UpdateTypes: set the types hash
+// Parameters:
+//		const TOLTypeAttributesHash* p_pcoTypeAttributes - pointer to types hash
+bool TOLStatement::UpdateTypes(const TOLTypeAttributesHash* p_pcoTypeAttributes)
+{
+	if (p_pcoTypeAttributes == NULL)
+	{
+		return false;
+	}
+	if (type_attributes != *p_pcoTypeAttributes)
+	{
+		type_attributes = *p_pcoTypeAttributes;
+		return true;
+	}
+	return false;
+}

@@ -276,7 +276,9 @@ public:
 	virtual const TOLStatement& operator =(const TOLStatement&);
 	// compare operator
 	virtual bool operator ==(const TOLStatement&) const;
-	
+
+	// Id: returns statement identifier
+	int Id() const { return statement; }	
 	// PrintAttrs: print valid attributes for a given context
 	// Parameters:
 	//		string& p_rcoOutString [out] - string to write attributes to
@@ -318,6 +320,11 @@ public:
 	TOLAttribute* FindTypeAttr(cpChar p_pchAttr, cpChar p_chType,
 			TContext p_Context, TOLTypeAttributes** p_ppcoTypeAttributes);
 
+	// UpdateTypes: set the types hash
+	// Parameters:
+	//		const TOLTypeAttributesHash* p_pcoTypeAttributes - pointer to types hash
+	bool UpdateTypes(const TOLTypeAttributesHash* p_pcoTypeAttributes);
+			
 	friend class TOLLex;
 	friend class TOLParser;
 	friend cpChar TOLStatementValue(const TOLStatement&);
