@@ -172,10 +172,17 @@ int RunParser(MYSQL* p_pSQL, CGIParams* p_pParams, sockstream& p_rOs) throw(RunE
 			nRes = LERR_INTERNAL;
 		pcoCtx->SetLoginRes(nRes);
 		if (nRes == 0)
+		{
+			string coExpires = "";
+			if ((pchStr = pcoCgi->GetFirst(P_REMEMBER_USER)))
+			{
+				coExpires = "; expires=Tuesday, 31-Dec-2069 00:00:00 GMT";
+			}
 			p_rOs << "<META HTTP-EQUIV=\"Set-Cookie\" CONTENT=\"TOL_UserId="
-			<< pcoCtx->User() << "; path=/\">\n"
+			<< pcoCtx->User() << "; path=/" << coExpires << "\">\n"
 			<< "<META HTTP-EQUIV=\"Set-Cookie\" CONTENT=\"TOL_UserKey="
-			<< pcoCtx->Key() << "; path=/\">\n";
+			<< pcoCtx->Key() << "; path=/" << coExpires << "\">\n";
+		}
 	}
 	else if ((pchStr = p_pParams->m_pchHttpCookie) != 0 && *pchStr != 0)
 	{
