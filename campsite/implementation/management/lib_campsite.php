@@ -1,6 +1,6 @@
 <?php
 
-$scriptBase='/var/www/script';
+require_once("config.php");
 
 $DOCUMENT_ROOT = $_SERVER['DOCUMENT_ROOT'];
 
@@ -622,6 +622,13 @@ function valid_short_name($name)
  return true;
 }
 
+$cache_types = array();
+
+$cache_type_all = 'all';
+$cache_type_publications = 'publications';
+$cache_type_topics = 'topics';
+$cache_type_article_types = 'article_types';
+
 function build_reset_cache_msg($type, $parameters)
 {
 	$msg = "<CampsiteMessage MessageType=\"ResetCache\">\n";
@@ -644,6 +651,32 @@ function build_restart_server_msg()
 	$size = sprintf("%04x", strlen($msg));
 	$msg = "0003 " . $size . " " . $msg;
 	return $msg;
+}
+
+function server_port()
+{
+	global $SERVER_PORT, $SERVER_DEFAULT_PORT;
+
+	return $SERVER_PORT == 0 ? $SERVER_DEFAULT_PORT : $SERVER_PORT;
+}
+
+function send_message($address, $server_port, $msg, &$err_msg, $socket = false, $close_socket = true)
+{
+	if (!$socket) {
+		@$socket = fsockopen($address, $server_port, $errno, $errstr, 30);
+		if (!$socket) {
+			$err_msg = "Unable to connect to server: " . $errstr . " (" . $errno . ")";
+			return false;
+		}
+	}
+
+	fwrite($socket, $msg);
+	fflush($socket);
+	if ($close_socket) {
+		fclose($socket);
+		return true;
+	}
+	return $socket;
 }
 
 function verify_templates($templates_dir, &$missing_templates, &$deleted_templates, $errors)
@@ -742,32 +775,6 @@ function register_templates($dir, $root_dir, &$errors, $level = 0)
 		$count++;
 	}
 	return $count;
-}
-
-function server_port()
-{
-	global $SERVER_PORT, $SERVER_DEFAULT_PORT;
-
-	return $SERVER_PORT == 0 ? $SERVER_DEFAULT_PORT : $SERVER_PORT;
-}
-
-function send_message($address, $server_port, $msg, &$err_msg, $socket = false, $close_socket = true)
-{
-	if (!$socket) {
-		@$socket = fsockopen($address, $server_port, $errno, $errstr, 30);
-		if (!$socket) {
-			$err_msg = "Unable to connect to server: " . $errstr . " (" . $errno . ")";
-			return false;
-		}
-	}
-
-	fwrite($socket, $msg);
-	fflush($socket);
-	if ($close_socket) {
-		fclose($socket);
-		return true;
-	}
-	return $socket;
 }
 
 if (file_exists ($_SERVER['DOCUMENT_ROOT'].'/priv/modules/admin/priv_functions.php'))
