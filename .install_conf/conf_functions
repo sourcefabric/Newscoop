@@ -239,6 +239,7 @@ modules_conf()
 {
 action="print"
 [ "$1" = "--set" ] && action="set" && shift 1
+[ "$1" = "--reset" ] && action="reset" && shift 1
 [ "$1" = "--unset" ] && action="unset" && shift 1
 configurable_modules=""
 modules=`modules_list $*`
@@ -262,6 +263,14 @@ for m in $modules; do
         return 1
     fi
     if [ "$action" = "set" ]; then
+	for param in $inst_param_list; do
+	    if [ "${!param}" = "" ]; then
+		line=`echo "$inst_conf" | grep "$param"`
+		$line
+	    fi
+	done
+    fi
+    if [ "$action" = "reset" ]; then
 	$mod_conf
     fi
     if [ "$action" = "unset" ]; then
@@ -929,7 +938,7 @@ while true; do
 		    if [ $? -ne 0 ]; then
 			message=$output
 		    fi
-		    modules_conf --set PARSER
+		    modules_conf --reset PARSER
 		fi
 		break
 	    fi
@@ -980,7 +989,7 @@ while true; do
 		    if [ $? -ne 0 ]; then
 			message=$output
 		    fi
-		    install_conf --set
+		    install_conf --reset
 		fi
 		break
 	    fi
