@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ################################################################################
 #
@@ -66,10 +66,10 @@ if [ "$result" != "0" ]; then
     fi
     echo "Upgrading database from $upgrade_dir..."
     if $use_pass; then
-	mysql -f $DATABASE_NAME -h $DATABASE_SERVER -P $DATABASE_PORT -u $DATABASE_USER --password="$DATABASE_PASSWORD" < $upgrade_dir/tables.sql
+	mysql -f -h $DATABASE_SERVER -P $DATABASE_PORT -u $DATABASE_USER --password="$DATABASE_PASSWORD" $DATABASE_NAME < $upgrade_dir/tables.sql
 	result=$?
     else
-	mysql -f $DATABASE_NAME -h $DATABASE_SERVER -P $DATABASE_PORT -u $DATABASE_USER < $upgrade_dir/tables.sql
+	mysql -f -h $DATABASE_SERVER -P $DATABASE_PORT -u $DATABASE_USER $DATABASE_NAME < $upgrade_dir/tables.sql
 	result=$?
     fi
     if [ $result -ne 0 ]; then
@@ -77,10 +77,10 @@ if [ "$result" != "0" ]; then
 	exit 1
     fi
     if $use_pass; then
-	mysql -f $DATABASE_NAME -h $DATABASE_SERVER -P $DATABASE_PORT -u $DATABASE_USER --password="$DATABASE_PASSWORD" < $upgrade_dir/data-required.sql
+	mysql -f -h $DATABASE_SERVER -P $DATABASE_PORT -u $DATABASE_USER --password="$DATABASE_PASSWORD" $DATABASE_NAME < $upgrade_dir/data-required.sql
 	result=$?
     else
-	mysql -f $DATABASE_NAME -h $DATABASE_SERVER -P $DATABASE_PORT -u $DATABASE_USER < $upgrade_dir/data-required.sql
+	mysql -f -h $DATABASE_SERVER -P $DATABASE_PORT -u $DATABASE_USER $DATABASE_NAME < $upgrade_dir/data-required.sql
 	result=$?
     fi
     if [ $result -ne 0 ]; then
@@ -88,16 +88,16 @@ if [ "$result" != "0" ]; then
 	exit 1
     fi
     if $use_pass; then
-	mysql -f $DATABASE_NAME -h $DATABASE_SERVER -P $DATABASE_PORT -u $DATABASE_USER --password="$DATABASE_PASSWORD" < $upgrade_dir/data-optional.sql
+	mysql -f -h $DATABASE_SERVER -P $DATABASE_PORT -u $DATABASE_USER --password="$DATABASE_PASSWORD" $DATABASE_NAME < $upgrade_dir/data-optional.sql
     else
-	mysql -f $DATABASE_NAME -h $DATABASE_SERVER -P $DATABASE_PORT -u $DATABASE_USER < $upgrade_dir/data-optional.sql
+	mysql -f -h $DATABASE_SERVER -P $DATABASE_PORT -u $DATABASE_USER $DATABASE_NAME < $upgrade_dir/data-optional.sql
     fi
 else
     echo -n "Creating campsite database..."
     if $use_pass; then
-	mysql $DATABASE_NAME -h $DATABASE_SERVER -P $DATABASE_PORT -u $DATABASE_USER --password="$DATABASE_PASSWORD" < campsite-db.sql 1> /dev/null
+	mysql -h $DATABASE_SERVER -P $DATABASE_PORT -u $DATABASE_USER --password="$DATABASE_PASSWORD" DATABASE_NAME < campsite-db.sql 1> /dev/null
     else
-	mysql $DATABASE_NAME -h $DATABASE_SERVER -P $DATABASE_PORT -u $DATABASE_USER < campsite-db.sql 1> /dev/null
+	mysql -h $DATABASE_SERVER -P $DATABASE_PORT -u $DATABASE_USER $DATABASE_NAME < campsite-db.sql 1> /dev/null
     fi
     [ $? -ne 0 ] && exit 1
 fi
