@@ -3,6 +3,12 @@
 . ../../../make.env
 . ${INSTALL_CONF}/conf_functions
 
+if [ -f srvdef.h ]; then
+    if [ "./srvdef.h" -ot "../../../make.env" ]; then
+	exit 0
+    fi
+fi
+
 echo -n -e "\t\tWriting start/stop script..."
 cat > campsite << EOF
 #!/bin/bash
