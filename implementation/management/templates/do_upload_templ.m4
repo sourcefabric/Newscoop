@@ -56,7 +56,12 @@ B_MSGBOX(<*Uploading template*>)
  E_MSGBOX_BUTTONS
 E_MSGBOX
 <P>
-<?php        $fileName=$GLOBALS["File"."_name"]; ?>
+
+<?php
+	$fileName=$GLOBALS["File"."_name"];
+	$templates_dir = $DOCUMENT_ROOT . '/look/';
+	register_templates($templates_dir, $errors);
+?>
 
 X_AUDIT(<*111*>, <*getGS('Template $1 uploaded', encHTML(decS($fileName)))*>)
 
