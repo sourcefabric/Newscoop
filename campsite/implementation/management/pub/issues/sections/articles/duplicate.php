@@ -112,7 +112,7 @@ ArticleTop($articleObj, $Language, "Duplicate article");
 		<?php 
 		foreach ($allPublications as $tmpPublication) {
 			?><option value="<?php p($tmpPublication->getPublicationId());?>" <?php if ($tmpPublication->getPublicationId() == $DestPublication) {	?>selected<?php	} ?>><?php p(htmlspecialchars($tmpPublication->getName())); ?></option>
-			<?
+			<?php
 		}
 		?>
 		</SELECT>
@@ -153,7 +153,7 @@ ArticleTop($articleObj, $Language, "Duplicate article");
 			}
 			?>
 			><?php p(htmlspecialchars($tmpIssue->getName())); ?></option>
-			<?			
+			<?php
 		}
 		?>
 		</SELECT>
