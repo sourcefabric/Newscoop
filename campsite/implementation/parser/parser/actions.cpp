@@ -446,10 +446,10 @@ int CActIssue::takeAction(CContext& c, sockstream& fs)
 			return ERR_NOMEM;
 		AppendConstraint(w, param.attribute(), param.opSymbol(), pchVal, "and");
 		delete []pchVal;
-		SetNrField("IdLanguage", c.Language(), buf, w);
 	}
 	else
 		return -1;
+	SetNrField("IdLanguage", c.Language(), buf, w);
 	SetNrField("IdPublication", c.Publication(), buf, w);
 	if (c.Access() == A_PUBLISHED)
 		AppendConstraint(w, "Published", "=", "Y", "and");
