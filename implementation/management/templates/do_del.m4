@@ -59,33 +59,42 @@ else {?>dnl
 <?php }?>dnl
 	X_MSGBOX_TEXT(<*
 <?php 
-	$dir=decURL(decS($Path)).decURL(decS($Name));
+	$dir = decURL(decS($Path)).decURL(decS($Name));
 	$file = $DOCUMENT_ROOT.decURL($Path).$Name;
+	$file_path = $DOCUMENT_ROOT.decURL($Path);
+	$templates_dir = $DOCUMENT_ROOT.'/look/';
 	$olderr =  error_reporting(0);
 
-    if ($What=='0') {
-	$msg_ok="The folder has been deleted.";
-	$msg_fail="The folder could not be deleted.";
-	$res= rmdir($file);
-    } else {
-	$msg_ok="The template has been deleted.";
-	$msg_fail="The template could not be deleted.";
-	$res = unlink($file);
-    }
+	if ($What=='0') {
+		$msg_ok="The folder has been deleted.";
+		$msg_fail="The folder could not be deleted.";
+		$res= rmdir($file);
+	} else {
+		$template_path = template_path($Path, $Name);
+		if (template_is_used($template_path) == false) {
+			$msg_ok="The template has been deleted.";
+			$msg_fail="The template could not be deleted.";
+			$res = unlink($file);
+			verify_templates($templates_dir, $mt, $dt, $errors);
+		} else {
+			$msg_fail = "The template $1 is in use and can not be deleted.";
+			$res = 0;
+		}
+	}
 
-    	error_reporting($olderr);
+	error_reporting($olderr);
 
-    if($res == 0) $msg=$msg_fail;
-    else $msg=$msg_ok;
+	if ($res == 0) $msg = $msg_fail;
+	else $msg = $msg_ok;
 
-    print "<LI>";
-    putGS($msg);
-    print "</li>";
-    
-    
+	print "<LI>";
+	putGS($msg, $template_path);
+	print "</li>";
 ?>
-X_AUDIT(<*112*>, <*getGS('Templates deleted from $1',encHTML(decS($Path)).encHTML(decS($Name)) )*>)
 	*>)
+<?php if ($res != 0) { ?>
+	X_AUDIT(<*112*>, <*getGS('Templates deleted from $1',encHTML(decS($Path)).encHTML(decS($Name)) )*>)
+<?php } ?>
 	B_MSGBOX_BUTTONS
 		REDIRECT(<*Done*>, <*Done*>, <*<?php  p(decS($Path)); ?>*>)
 	E_MSGBOX_BUTTONS
