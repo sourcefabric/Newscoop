@@ -1,6 +1,8 @@
 2.1.3
     - Updated the manual: some statements were not documented: "if search"
     (3.9.3.22) and "print search" (3.9.4.2)
+    - Parser used to abort improperly when it couldn't resolve the allowed hosts
+    name
 
 2.1.2
     - Ported campsite to FreeBSD (thanks to Richard Airlie)
