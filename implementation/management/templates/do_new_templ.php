@@ -8,7 +8,7 @@ if (!$access) {
 }
 
 if (!$User->hasPermission('ManageTempl')) {
-	header("Location: /$ADMIN/ad.php?ADReason=".encURL(getGS("You do not have the right to delete templates.")));
+	header("Location: /$ADMIN/ad.php?ADReason=".encURL(getGS("You do not have the right to modify templates.")));
 	exit;
 }
 
