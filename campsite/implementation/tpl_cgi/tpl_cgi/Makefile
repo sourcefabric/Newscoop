@@ -10,7 +10,7 @@ CFLAGS=-Wall
 
 TPL_CGI=tpl_cgi
 
-LINKS=csocket.h csocket.cpp exceptions.h globals.h srvdef.h readconf.h readconf.cpp mutex.cpp mutex.h
+LINKS=csocket.h csocket.cpp exceptions.h srvdef.h readconf.h readconf.cpp mutex.cpp mutex.h
 
 all: links $(TPL_CGI)
 
