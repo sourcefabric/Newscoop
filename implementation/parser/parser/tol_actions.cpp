@@ -720,12 +720,15 @@ int TOLActList::WriteOrdParam(string& s)
 		s = " order by IdLanguage desc";
 		for (pl_i = ord_param.begin(); pl_i != ord_param.end(); ++pl_i)
 		{
-			s += string(", ") + (*pl_i).Attribute() + string(" ");
+			const char* pchAttribute = (*pl_i).Attribute();
+			if (strcasecmp(pchAttribute, "bydate") == 0)
+				pchAttribute = modifier == TOL_LMOD_ISSUE ? "PublicationDate" : "UploadDate";
+			s += string(", ") + pchAttribute + " ";
 			if (strlen((*pl_i).Value()))
 				s += (*pl_i).Value();
 		}
 	}
-	else
+	else // modifier == TOL_LMOD_SEARCHRESULT
 	{
 		s = " order by Articles.IdPublication asc, ArticleIndex.IdLanguage desc";
 		for (pl_i = ord_param.begin(); pl_i != ord_param.end(); ++pl_i)

@@ -1294,9 +1294,11 @@ inline int TOLParser::HList(TOLPActionList& al, int level, int sublevel, const T
 		l = lex.GetLexem();
 		DEBUGLexem("hlist3", l);
 	}
-	// check for order params (Article)
+	// check for order params (Article, SearchResult, Issue)
 	TOLParameterList ord_params;
-	if ((st->statement == TOL_ST_ARTICLE || st->statement == TOL_ST_SEARCHRESULT)
+	if ((st->statement == TOL_ST_ARTICLE
+	     || st->statement == TOL_ST_SEARCHRESULT
+	     || st->statement == TOL_ST_ISSUE)
 	    && l->m_Res == TOL_LEX_STATEMENT)
 	{
 		CheckForAtom(l);

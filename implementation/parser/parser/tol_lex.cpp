@@ -277,7 +277,7 @@ void TOLLex::InitStatements()
 	sch.clear();
 
 	ah.clear();
-	ah.insert_unique(TOLAttribute("bydate", TOL_DT_ORDER, "UploadDate"));
+	ah.insert_unique(TOLAttribute("bydate", TOL_DT_ORDER));
 	ah.insert_unique(TOLAttribute("bynumber", TOL_DT_ORDER, "Number"));
 	sch.insert_unique(TOLStatementContext(TOL_CT_LIST, ah));
 
