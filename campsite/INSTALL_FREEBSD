@@ -1,0 +1,39 @@
+Additional installation notes for FreeBSD
+
+BEFORE INSTALLATION:
+1. Campsite requires that you have 'bash' installed, with the bash executable
+located at /bin/bash. If you have installed bash from ports you may wish to
+simply:
+	 ln -s /usr/local/bin/bash /bin/bash
+2. Campsite requires that you have 'stat' installed. Stat is available from the
+FreeBSD ports tree under sysutils/stat.
+3. To build under FreeBSD, Campsite requires that you have 'gmake' installed.
+gmake is available from the FreeBSD ports tree under devel/gmake.
+4. You should of course ensure that all other required Campsite components
+as listed in the Campsite manual (apache, mysql, php) are installed and
+correctly configured.
+
+INSTALLATION
+Follow the installation guide in the Campsite manual -- the installation
+procedure on FreeBSD is exactly the same. Pay particular attention to the
+following, however:
+
+1. The mysqld should be running before you attempt to install.
+2. You should run the install script as root, either using su or sudo.
+3. Be aware that the Campsite installer does its best to pick reasonable
+defaults in the configuration of the various modules, but that these should
+always be checked by the user. (This applies when installing Campsite on
+any architecture). You can change all necessary variables interactively in
+the installer.
+
+In particular, note that:
+	- PARSER_USER and PARSER_GROUP should be the same as the user and group
+	  you use for apache.
+	- ADMIN_INTERFACE_HTML_DIR, ADMIN_INTERFACE_CGI_DIR, and
+	  ADMIN_INTERFACE_SCRIPT_DIR specify where you wish to install the campsite
+	  html, cgi, and scripts. On a machine with virtual hosts you will likely
+	  want to choose these directories carefully.
+
+UNINSTALLATION
+Follow the guide in the Campsite manual -- the uninstallation procedure for
+FreeBSD is exactly the same.
