@@ -1,4 +1,4 @@
-MY_TARGETS=index.php enter.php password.php sub_pub.php dictionary.php robots.php jump.php
+MY_TARGETS=enter.php password.php sub_pub.php dictionary.php robots.php jump.php
 
 all: $(MY_TARGETS)
 
@@ -10,10 +10,9 @@ all: $(MY_TARGETS)
 
 install: $(ALL)
 	cp -f *.php $(HTML_DIR)/
-	cp -f db_connect.php $(HTML_DIR)/
 
 clean:
-	rm -f *~ db_connect.php .env_vars
+	rm -f *~ db_connect.php config.php .env_vars
 	if [ "$(PACKAGE_TYPE)" = "source" ]; then rm -f $(MY_TARGETS); fi
 
 package: $(ALL)
