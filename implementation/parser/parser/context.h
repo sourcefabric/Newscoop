@@ -430,12 +430,16 @@ public:
 	{
 		current_art_type = f;
 	}
-	void SetTopic(long int t)
+	void SetTopic(long int t) throw(InvalidValue)
 	{
+		if (!Topic::isValid(t))
+			throw InvalidValue("topic identifier", (string)Integer(t));
 		m_nTopicId = t;
 	}
-	void SetDefTopic(long int t)
+	void SetDefTopic(long int t) throw(InvalidValue)
 	{
+		if (!Topic::isValid(t))
+			throw InvalidValue("topic identifier", (string)Integer(t));
 		m_nDefTopicId = t;
 	}
 	void SetURL(CURL* p_pcoURL)
@@ -709,11 +713,11 @@ public:
 	{
 		return m_nDefTopicId;
 	}
-	const CURL* URL() const
+	CURL* URL() const
 	{
 		return m_pcoURL;
 	}
-	const CURL* DefURL() const
+	CURL* DefURL() const
 	{
 		return m_pcoDefURL;
 	}
