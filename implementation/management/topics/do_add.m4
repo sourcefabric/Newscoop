@@ -44,12 +44,20 @@ B_MSGBOX(<*Adding new topic*>)
 
 	 if ($correct) {
 		$AFFECTED_ROWS=0;
-		query ("UPDATE AutoId SET TopicId=LAST_INSERT_ID(TopicId + 1)");
-		query ("INSERT IGNORE INTO Topics SET Id = LAST_INSERT_ID(), Name='".decS($cName)."', ParentId = '$IdCateg', LanguageId = 1");
+		query ("UPDATE AutoId SET TopicId = LAST_INSERT_ID(TopicId + 1)");
+		query ("INSERT INTO Topics SET Id = LAST_INSERT_ID(), Name='".decS($cName)."', ParentId = '$IdCateg', LanguageId = 1");
 		$created= ($AFFECTED_ROWS > 0);
+		$sql = "select Id from Topics where Name = '".$cName."' and LanguageId = 1";
+		query($sql, 'q_topic_id');
+		fetchRow($q_topic_id);
+		$topic_id = getVar($q_topic_id, 'Id');
 	}
 
-	if ($created) { ?>dnl
+	if ($created) {
+		$params = array($operation_attr=>$operation_create, "tpid"=>"$topic_id");
+		$msg = build_reset_cache_msg($cache_type_topics, $params);
+		send_message($SERVER_ADDRESS, server_port(), $msg, $err_msg);
+?>dnl
 		<LI><?php  putGS('The topic $1 has been successfuly added.',"<B>".encHTML(decS($cName))."</B>"); ?></LI>
 		X_AUDIT(<*141*>, <*getGS('Topic $1 added',$cName)*>)
 	<?php 
