@@ -70,7 +70,8 @@ B_DIALOG(<*Change publication information*>, <*POST*>, <*do_edit.php*>)
 		pcomboVar(getVar($q_alias,'Id'),getVar($q_pub,'IdDefaultAlias'),getVar($q_alias,'Name'));
 	}
 ?>
-	    </SELECT>
+	    </SELECT>&nbsp;
+	<a href="/priv/pub/aliases.php?Pub=<?php echo $Pub ?>"><?php putGS("Edit aliases"); ?></a>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Default language*>)
 		<SELECT NAME="cLanguage">
