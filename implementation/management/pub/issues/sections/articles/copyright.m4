@@ -1,6 +1,0 @@
-B_HTML
-INCLUDE_PHP_LIB(<*../../../..*>)
-
-X_COPYRIGHT
-
-E_HTML
