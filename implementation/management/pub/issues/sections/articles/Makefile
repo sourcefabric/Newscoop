@@ -13,6 +13,5 @@ install: $(ALL)
 	$(MAKE) -C topics install
 
 clean:
-	rm -f *~
 	$(MAKE) -C images clean
 	$(MAKE) -C topics clean
