@@ -427,28 +427,20 @@ const CCLexem* CCParser::WaitForStatementEnd()
 //		const char* p_pchImgTitle - image subtitle
 //		sockstream& p_rcoOut - output stream
 void CCParser::MakeImageLink(const CContext& p_rcoContext, lint p_rcoImageNr,
-							   const char* p_pchAlign, const char* p_pchAlt, const char* p_pchImgTitle, sockstream& p_rcoOut)
+							 const char* p_pchAlign, const char* p_pchAlt,
+							 const char* p_pchImgTitle, sockstream& p_rcoOut)
 {
-
-	string under_image;
-	
-	under_image= string("<CAPTION ALIGN=BOTTOM CLASS=\"caption\">")
-	+  string(p_pchImgTitle) + string("</CAPTION>")
-;
-
-	p_rcoOut << "<table border=0 cellspacing=0 cellpadding=0 " << (p_pchAlign ? p_pchAlign : "") << ">"
-	<< (strlen(p_pchImgTitle)>0 ? under_image : "")
-	<< "<tr>" << "<td>"
-	<< "<img src=\"/cgi-bin/get_img?" << P_NRARTICLE << "=" << p_rcoContext.Article()
-	<< "&" << P_NRIMAGE << "=" << p_rcoImageNr << P_NRSECTION << "=" << p_rcoContext.Section()
-	<< "&" << P_NRISSUE << "=" << p_rcoContext.Issue() << "&" << P_IDPUBL << "="
-	<< p_rcoContext.Publication() << "\" " << (p_pchAlign ? p_pchAlign : "") << " "
-	<< (p_pchAlt ? p_pchAlt : "") << " BORDER=0 HSPACE=5 VSPACE=5>"
-	<< "</td>" << "</tr>"
-	<< "</table>";
-
-
-
+	p_rcoOut << "<table border=0 cellspacing=0 cellpadding=0 " << p_pchAlign << ">\n"
+	         << "<tr><td><img src=\"/cgi-bin/get_img?" << P_NRARTICLE << "=" 
+	         << p_rcoContext.Article() << "&" << P_NRIMAGE << "=" << p_rcoImageNr
+	         << P_NRSECTION << "=" << p_rcoContext.Section() << "&" << P_NRISSUE << "="
+	         << p_rcoContext.Issue() << "&" << P_IDPUBL << "="
+	         << p_rcoContext.Publication() << "\" " << p_pchAlt
+	         << " BORDER=0 HSPACE=5 VSPACE=5></td></tr>\n";
+	if (strlen(p_pchImgTitle) > 0)
+		p_rcoOut << "<tr><td><font size=\"1\" face=\"arial\">" << p_pchImgTitle
+		         << "</font></td></tr>\n";
+	p_rcoOut << "</table>\n";
 }
 
 // MakeClassLink: write class popup link
