@@ -162,6 +162,10 @@ const ConfAttrValue& CCampsiteInstance::ReadConf() throw (ConfException)
 	string coDatabaseConfFile = m_coConfDir + "/database_conf.php";
 	m_coAttributes.open(coDatabaseConfFile);
 
+	// read email server configuration
+	string coSMTPConfFile = m_coConfDir + "/smtp_conf.php";
+	m_coAttributes.open(coSMTPConfFile);
+
 	return m_coAttributes;
 }
 
