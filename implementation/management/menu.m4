@@ -72,7 +72,7 @@ B_MENU
 <?php  } ?>dnl
 <?php  if (1) { ?>dnl
   X_MENU_BAR
-  X_MENU_ITEM(<*Image archive*>, <*images/*>)
+  X_MENU_ITEM(<*Image archive*>, <*imagearchive/*>)
 <?php  } ?>dnl
     X_MENU_BAR
 <?php 
