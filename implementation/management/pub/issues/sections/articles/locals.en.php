@@ -5,6 +5,7 @@ regGS("Article automatic publishing schedule", "Article automatic publishing sch
 
 // -- index.php
 regGS("Delete article $1","Delete article $1:en");
+regGS("$1 articles found","$1 articles found:en");
 
 // -- move.php
 regGS("Moving article '$1' up one position...","Moving article '$1' up one position...:en");
