@@ -97,7 +97,7 @@ E_CURRENT
 
 <?
     if ($sLanguage) {
-	$ll= "AND IdLanguage=$Language";
+	$ll= "AND IdLanguage=$sLanguage";
 	$oo= "";
     } else {
 	$ll= "";
@@ -111,7 +111,9 @@ E_CURRENT
     if ($ArtOffs < 0) $ArtOffs= 0;
     todefnum('lpp', 20);
 
-	query ("SELECT *, abs($Language - IdLanguage) as LangOrd FROM Articles WHERE IdPublication=$Pub AND NrIssue=$Issue AND NrSection=$Section $ll ORDER BY Number DESC $oo LIMIT $ArtOffs, ".($lpp+1), 'q_art');
+	$sql = "SELECT *, abs($Language - IdLanguage) as LangOrd FROM Articles WHERE IdPublication=$Pub AND NrIssue=$Issue AND NrSection=$Section $ll ORDER BY Number DESC $oo LIMIT $ArtOffs, ".($lpp+1);
+	query($sql, 'q_art');
+	echo "<p>sql: " . $sql;
     if ($NUM_ROWS) {
 	$nr= $NUM_ROWS;
 	$i= $lpp;
