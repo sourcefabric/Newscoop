@@ -136,7 +136,7 @@ B_MSGBOX(<*Article is locked*>)
 		<LI><?php  putGS('Are you sure you want to unlock it?'); ?></LI>
 	*>)
 	B_MSGBOX_BUTTONS
-		REDIRECT(<*Yes*>, <*Yes*>, <*<?php  p($REQUEST_URI); ?>&LockOk=1*>)
+		REDIRECT(<*Yes*>, <*Yes*>, <*X_ROOT/pub/issues/sections/articles/edit.php?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&sLanguage=<? p($sLanguage); ?>&Language=<? p($Language); ?>&Section=<? p($Section); ?>&Article=<? p($Article); ?>&LockOk=1*>)
 		REDIRECT(<*No*>, <*No*>, <*X_ROOT/pub/issues/sections/articles/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>&Section=<?php  p($Section); ?>*>)
 	E_MSGBOX_BUTTONS
 E_MSGBOX
