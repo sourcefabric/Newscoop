@@ -11,4 +11,6 @@ $Campsite["db"] = ADONewConnection("mysql"); # eg 'mysql' or 'postgres'
 $Campsite["db"]->SetFetchMode(ADODB_FETCH_ASSOC);
 $Campsite["db"]->Connect("localhost", "root", "", "campsite");
 
+$scheme = (substr($_SERVER['REQUEST_URI'], 0, 5) == "https")?"https://":"http://";
+$Campsite["website_url"] = $scheme.$_SERVER['SERVER_NAME'];
 ?>
