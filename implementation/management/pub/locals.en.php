@@ -100,7 +100,7 @@ regGS("Back to aliases", "Back to aliases:en");
 
 // do_add_alias
 regGS("Adding new alias", "Adding new alias:en");
-regGS("The site alias for publication $1 has been added.", "The site alias for publication $1 has been added.:en");
+regGS("The site alias $1 has been added to publication $2.", "The site alias $1 has been added to publication $2.:en");
 regGS("The site alias $1 could not be added.", "The site alias $1 could not be added.:en");
 regGS("Another alias with the same name exists already.", "Another alias with the same name exists already.:en");
 
@@ -110,6 +110,7 @@ regGS("Edit alias", "Edit alias:en");
 // do_edit_alias
 regGS("Editing alias", "Editing alias:en");
 regGS("The site alias for publication $1 has been modified to $2.", "The site alias for publication $1 has been modified to $2.:en");
+regGS("The site alias $1 could not be modified.", "The site alias $1 could not be modified.:en");
 
 // del_alias
 regGS("Delete alias", "Delete alias:en");
