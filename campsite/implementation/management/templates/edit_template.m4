@@ -40,14 +40,12 @@ B_BODY
 B_HEADER(<*Edit template*>)
 B_HEADER_BUTTONS
 
-X_HBUTTON(<*Home*>, <*home.php*>)
-X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
 B_CURRENT
-X_CURRENT(<*Path*>, <*<B><A HREF="<?php  pencHTML(decURL($Path)); ?>"><?php  pencHTML(decURL($Path)); ?></A></B>*>)
-X_CURRENT(<*Template*>, <*<B><?php  pencHTML(decURL($Name)); ?></B>*>)
+X_CURRENT(<*Path*>, <*<A HREF="<?php  pencHTML(decURL($Path)); ?>"><?php  pencHTML(decURL($Path)); ?></A>*>)
+X_CURRENT(<*Template*>, <*<?php  pencHTML(decURL($Name)); ?>*>)
 E_CURRENT
 
 

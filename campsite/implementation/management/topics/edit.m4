@@ -28,8 +28,6 @@ B_BODY
 ?>
 B_HEADER(<*Change topic name*>)
 B_HEADER_BUTTONS
-X_HBUTTON(<*Home*>, <*home.php*>)
-X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
@@ -39,7 +37,7 @@ E_HEADER
 	fetchRow($q_cat);
 ?>dnl
 B_CURRENT
-X_CURRENT(<*Topic*>, <*<B><?php  pgetHVar($q_cat,'Name'); ?></B>*>)
+X_CURRENT(<*Topic*>, <*<?php  pgetHVar($q_cat,'Name'); ?>*>)
 E_CURRENT
 
 <P>

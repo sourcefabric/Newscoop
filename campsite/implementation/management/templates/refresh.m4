@@ -56,8 +56,6 @@ B_HEADER_BUTTONS
 X_HBUTTON(<*Issues*>, <*pub/issues/?Pub=<?php  pencURL($Pub); ?>*>)
 X_HBUTTON(<*Publications*>, <*pub/*>)
 <?php  } ?>dnl
-X_HBUTTON(<*Home*>, <*home.php*>)
-X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
@@ -72,15 +70,15 @@ E_HEADER
    ?>dnl
 B_CURRENT
 <?php  if ($What) { ?>dnl
-X_CURRENT(<*Publication*>, <*<B><?php  fetchRow($q_pub); pgetHVar($q_pub,'Name'); ?></B>*>)
-X_CURRENT(<*Issue*>, <*<B><?php  pencURL($Issue); ?>. <?php  fetchRow($q_iss); pgetHVar($q_iss,'Name'); ?> (<?php
+X_CURRENT(<*Publication*>, <*<?php  fetchRow($q_pub); pgetHVar($q_pub,'Name'); ?>*>)
+X_CURRENT(<*Issue*>, <*<?php  pencURL($Issue); ?>. <?php  fetchRow($q_iss); pgetHVar($q_iss,'Name'); ?> (<?php
     query ("SELECT Name FROM Languages WHERE Id=$Language", 'q_language');
     $nr=$NUM_ROWS;
     for($loop=0;$loop<$nr;$loop++) {
  fetchRowNum($q_language);
  pencHTML( getNumVar($q_language,0));
     }
-?>)</B>*>)
+?>)*>)
 <?php  } ?>dnl
 
 <P>

@@ -20,8 +20,6 @@ B_BODY
 B_HEADER(<*Edit user account permissions*>)
 B_HEADER_BUTTONS
 X_HBUTTON(<*Users*>, <*users/*>)
-X_HBUTTON(<*Home*>, <*home.php*>)
-X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
@@ -37,7 +35,7 @@ E_HEADER
 	    ?>dnl
 
 B_CURRENT
-X_CURRENT(<*User account*>, <*<B><?php  pgetHVar($uacc,'UName'); ?></B>*>)
+X_CURRENT(<*User account*>, <*<?php  pgetHVar($uacc,'UName'); ?>*>)
 E_CURRENT
 
 <P>

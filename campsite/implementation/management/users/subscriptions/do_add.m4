@@ -37,8 +37,6 @@ B_HEADER(<*Adding subscription*>)
 B_HEADER_BUTTONS
 X_HBUTTON(<*Subscriptions*>, <*users/subscriptions/?User=<?php  p($User); ?>*>)
 X_HBUTTON(<*Users*>, <*users/*>)
-X_HBUTTON(<*Home*>, <*home.php*>)
-X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
@@ -49,7 +47,7 @@ E_HEADER
 ?>dnl
 
 B_CURRENT
-X_CURRENT(<*User account*>, <*<B><?php  pgetHVar($q_usr,'UName'); ?></B>*>)
+X_CURRENT(<*User account*>, <*<?php  pgetHVar($q_usr,'UName'); ?>*>)
 E_CURRENT
 
 <P>

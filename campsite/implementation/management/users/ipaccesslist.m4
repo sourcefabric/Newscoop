@@ -22,8 +22,6 @@ B_BODY
 B_HEADER(<*User IP access list management*>)
 B_HEADER_BUTTONS
 X_HBUTTON(<*Users*>, <*users/*>)
-X_HBUTTON(<*Home*>, <*home.php*>)
-X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
@@ -34,7 +32,7 @@ E_HEADER
 	fetchRow($users);
     ?>dnl
 B_CURRENT
-X_CURRENT(<*User account*>, <*<B><?php  pgetHVar($users,'Name'); ?></B>*>)
+X_CURRENT(<*User account*>, <*<?php  pgetHVar($users,'Name'); ?>*>)
 E_CURRENT
 <P>
 <?php  } ?>

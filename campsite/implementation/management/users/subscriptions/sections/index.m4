@@ -28,8 +28,6 @@ B_HEADER(<*Subscribed sections*>)
 B_HEADER_BUTTONS
 X_HBUTTON(<*Subscriptions*>, <*users/subscriptions/?User=<?php  p($User); ?>*>)
 X_HBUTTON(<*Users*>, <*users/*>)
-X_HBUTTON(<*Home*>, <*home.php*>)
-X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
@@ -50,8 +48,8 @@ E_HEADER
 ?>dnl
 
 B_CURRENT
-X_CURRENT(<*User account*>, <*<B><?php  pgetHVar($q_usr,'UName'); ?></B>*>)
-X_CURRENT(<*Publication*>, <*<B><?php  pgetHVar($q_pub,'Name'); ?></B>*>)
+X_CURRENT(<*User account*>, <*<?php  pgetHVar($q_usr,'UName'); ?>*>)
+X_CURRENT(<*Publication*>, <*<?php  pgetHVar($q_pub,'Name'); ?>*>)
 E_CURRENT
 
 <P><table><tr><td valign=top>X_NEW_BUTTON(<*Add new section to subscription*>, <*add.php?Subs=<?php  p($Subs); ?>&Pub=<?php  p($Pub); ?>&User=<?php  p($User); ?>*>)</td>
