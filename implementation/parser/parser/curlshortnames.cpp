@@ -40,12 +40,17 @@ CURLShortNames::CURLShortNames(const CURLShortNames& p_rcoSrc)
 	m_coQueryString = p_rcoSrc.m_coQueryString;
 	m_pDBConn = p_rcoSrc.m_pDBConn;
 	m_coHTTPHost = p_rcoSrc.m_coHTTPHost;
+	m_coTemplate = p_rcoSrc.m_coTemplate;
+	m_bTemplateSet = p_rcoSrc.m_bTemplateSet;
+	m_bValidTemplate = p_rcoSrc.m_bValidTemplate;
 }
 
 
 // setURL(): sets the URL object value
 void CURLShortNames::setURL(const CMsgURLRequest& p_rcoURLMessage)
 {
+	m_coTemplate = "";
+	m_bTemplateSet = false;
 	m_coDocumentRoot = p_rcoURLMessage.getDocumentRoot();
 	m_coPathTranslated = p_rcoURLMessage.getPathTranslated();
 	m_coHTTPHost = p_rcoURLMessage.getHTTPHost();
@@ -188,6 +193,25 @@ string CURLShortNames::getQueryString() const
 	return coQueryString;
 }
 
+string CURLShortNames::getFormString() const
+{
+	string coFormString;
+	String2String::const_iterator coIt = m_coParamMap.begin();
+	for (; coIt != m_coParamMap.end(); ++coIt)
+	{
+		string coParam = (*coIt).first;
+		if (coParam != P_IDLANG && coParam != P_IDPUBL && coParam != P_NRISSUE
+			&& coParam != P_NRSECTION && coParam != P_NRARTICLE)
+		{
+			const char* pchValue = EscapeHTML((*coIt).second.c_str());
+			coFormString += string("<input type=\"hidden\" name=\"") + coParam + "\" value=\""
+			             + pchValue + "\">";
+			delete []pchValue;
+		}
+	}
+	return coFormString;
+}
+
 // buildURI(): internal method; builds the URI string from object attributes
 void CURLShortNames::buildURI() const
 {
@@ -249,4 +273,23 @@ void CURLShortNames::buildURI() const
 
 	m_coQueryString = getQueryString();
 	m_bValidURI = true;
+}
+
+string CURLShortNames::getTemplate() const
+{
+	if (m_bValidTemplate)
+		return m_coTemplate;
+	if (getValue(P_TEMPLATE_ID) != "")
+	{
+		string coSql = string("select Name from Templates where Id = ") + getValue(P_TEMPLATE_ID);
+		CMYSQL_RES coRes;
+		MYSQL_ROW qRow = QueryFetchRow(m_pDBConn, coSql.c_str(), coRes);
+		m_coTemplate = qRow[0];
+	}
+	else
+	{
+		m_coTemplate = CPublication::getTemplate(getLanguage(), getPublication(), getIssue(),
+		                                         getSection(), getArticle(), m_pDBConn, false);
+	}
+	return m_coTemplate;
 }
