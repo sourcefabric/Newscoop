@@ -22,15 +22,15 @@ function writeFile($newfile,$fen){
 }
 
 
-function regGS($key,$val){
-    global $setit,$for,$en;
-    if ($setit==1){
- $en["$key"]=$val;
-    }
-    else{
- $for["$key"]=$val;
-    }
-}
+// function regGS($key,$val){
+//     global $setit,$for,$en;
+//     if ($setit==1){
+//  $en["$key"]=$val;
+//     }
+//     else{
+//  $for["$key"]=$val;
+//     }
+// }
 
 function createArrays($fen,$dirname,$newlang){
     global $setit,$for,$en;
@@ -63,32 +63,33 @@ function verifyFile($fen,$dirname,$newlang){
 
 
 function parseFolder($dirname, $depth){
-    global $createnew,$newlang,$langarray;
-    $handle=opendir($dirname);
-    $space=3;
-    while (($file = readdir($handle))!==false) {
-        $fullname=$dirname."/".$file;
-        $filetype=filetype($fullname);
-        $isdir=false;
-        $isfile=false;
-        // avoiding the links
-        if ($filetype=="dir") $isdir=true;
-        else if ($filetype!="link") $isfile=true;
-        // if it's a file
-        if ($isfile){
-            // filling the array
-            $files[]=$file;
-        }
-        // if it's a directory but not the .. or .
-        else if ($isdir&&$file!="."&&$file!=".."){
-            // filling the array
-            $dirs[]=$file;
-        }
-    }
-    //$isfileforlang=false;
-    if (isset($files)){
-        for($i=0;$i<count($files);$i++){
-     $filen=$files[$i];
+	global $createnew,$newlang,$langarray, $Campsite, $ADMIN;
+	$full_dir = $Campsite['HTML_COMMON_DIR'] . "/priv/$dirname";
+	$handle=opendir($full_dir);
+	$space=3;
+	while (($file = readdir($handle))!==false) {
+		$fullname=$full_dir."/".$file;
+		$filetype=filetype($fullname);
+		$isdir=false;
+		$isfile=false;
+		// avoiding the links
+		if ($filetype=="dir") $isdir=true;
+		else if ($filetype!="link") $isfile=true;
+		// if it's a file
+		if ($isfile){
+			// filling the array
+			$files[]=$file;
+		}
+		// if it's a directory but not the .. or .
+		else if ($isdir&&$file!="."&&$file!=".."){
+			// filling the array
+			$dirs[]=$file;
+		}
+	}
+	//$isfileforlang=false;
+	if (isset($files)){
+		for($i=0;$i<count($files);$i++){
+			$filen=$files[$i];
 
 
      if ( ( (strpos($filen,'locals')===0) ||
@@ -104,22 +105,21 @@ function parseFolder($dirname, $depth){
         &&
         (substr($filen,strlen($filen)-4)==='.php')
         &&
-        (substr($filen,strlen($filen)-6)!='en.php' || substr($dirname,3,7)=='modules')  //enable editing english files for modules
+        (substr($filen,strlen($filen)-6)!='en.php' || substr($dirname,1,7)=='modules')  //enable editing english files for modules
         ){
 
         if ( (strpos($filen,'globals')===0) ){
       $langarray[]=substr($filen,8,2);
   }
 
-
-        print str_repeat(' ',$depth*$space)."<a href='display.php?file=$filen&dir=$dirname' target=panel>$filen</a>\n";
+        print str_repeat(' ',$depth*$space)."<a href='/$ADMIN/localizer/?display=on&file=$filen&dir=$dirname'>$filen</a>\n";
         usleep (0); //usleep(0) seems to be senseless, but needet for a strange behavior of PHP in combination with IE
      }
         }//for
 
  if (isset($filesinen)&&($createnew)){
      foreach($filesinen as $fen){
-  verifyFile(substr($fen,0,strlen($fen)-6),$dirname,$newlang);
+  verifyFile(substr($fen,0,strlen($fen)-6),$full_dir,$newlang);
   //print substr($fen,0,strlen($fen)-6);
      }
  }
@@ -132,13 +132,6 @@ function parseFolder($dirname, $depth){
     }
 }
 
-?>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-</head>
-<body>
-<?php
 
 if (isset($_REQUEST['newlang'])){
     $newlang = trim($_REQUEST['newlang']);
@@ -163,7 +156,7 @@ $langfile.='}'."\n";
 
 
 print '<PRE>';
-parseFolder('..', 0);
+parseFolder("", 0);
 print '</PRE>';
 
 ?>
@@ -213,5 +206,3 @@ if ($createnew){ ?>
 
 }
 ?>
-</body>
-</html>
