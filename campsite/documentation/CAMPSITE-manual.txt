@@ -870,6 +870,9 @@ OnSection: articles having "Show article on section page" flag in <switch_operat
 public: articles having "Allow users without subscription..." flag in <switch_operator> relation with <switch_value> will be selected
 ... <article_type_attribute> ...: articles being of <article_type> and having <article_type_attribute> in <attribute_type_operator> relation with <attribute_type_value> will be selected; for details see Defining article types
 topic: if "is" operator is used, articles having specified topic in their list of topics will be selected; if "not" operator is uses articles not having specified topic in their list of topics will be selected
+
+Note on topics: the topic name must be written in the following format: "<topic_name>:<language_code>". CAMPSITE is able to store topics in multiple languages, yet the user interface managing the topics wasn't updated and it is only capable of managing topics in English language. All the topics are automatically assigned the English language.
+Examples of valid topic names: "sports:en", "health:en" etc.
 <list_of_article_type_constraints> =
 [<article_type_constraint>] <list_of_article_type_constraints> 
 | <article_type_constraint>
