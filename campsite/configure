@@ -140,7 +140,7 @@ export NSL_LINK=$NSL_LINK
 export KILLALL=$KILLALL
 export PARSER_START_PORT=$PARSER_START_PORT
 export XML_INCLUDE=$XML_INCLUDE
-export XML_LINK="$XML_LINK"
+export XML_LINK=$XML_LINK
 EOF
 [ $? -ne 0 ] && echo "ERROR" && exit 1
 [ "$GPP" != "" ] && echo "export GPP=$GPP" >> $make_env
@@ -226,6 +226,6 @@ export NSL_LINK=$NSL_LINK
 export KILLALL=$KILLALL
 export PARSER_START_PORT=$PARSER_START_PORT
 export XML_INCLUDE=$XML_INCLUDE
-export XML_LINK="$XML_LINK"
+export XML_LINK=$XML_LINK
 
 echo "Configuration done"
