@@ -1,10 +1,10 @@
-OBJ_FILES=main.o csocket.o readconf.o
+OBJ_FILES=main.o csocket.o readconf.o cgi.o
 
 LDFLAGS=
-LDLIBS=$(PTHREAD_LINK)
+LDLIBS=$(PTHREAD_LINK) -lxml2
 
 DEPENDENCES=globals.h exceptions.h csocket.h srvdef.h readconf.h tpl_cgi.h cxmltree.h \
-cms_types.h threadkey.h
+cms_types.h threadkey.h cgib.h cgi.h
 
 CFLAGS=-Wall
 # -D_DEBUG -g
@@ -38,6 +38,9 @@ csocket.o: csocket.cpp $(DEPENDENCES)
 
 readconf.o: readconf.cpp $(DEPENDENCES)
 	g++ -c -o readconf.o $(CFLAGS) readconf.cpp
+
+cgi.o: cgi.cpp $(DEPENDENCES)
+	g++ -c -o cgi.o $(CFLAGS) cgi.cpp
 
 install: $(ALL)
 	mkdir -p $(CGI_DIR)
