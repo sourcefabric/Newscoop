@@ -43,6 +43,7 @@ Implementation of functions for client request processing
 #include "cpublication.h"
 
 using std::stringstream;
+using std::cout;
 using std::endl;
 
 
@@ -365,6 +366,9 @@ int RunParser(MYSQL* p_pSQL, CURL* p_pcoURL, const char* p_pchRemoteIP, sockstre
 		pcoCtx->URL()->deleteParameter(P_TEMPLATE_ID);
 		pcoCtx->DefURL()->deleteParameter(P_TEMPLATE_ID);
 		CParser::setMYSQL(p_pSQL);
+#ifdef _DEBUG
+		cout << "running parser for " << coTemplate << " (" << coDocumentRoot << ")" << endl;
+#endif
 		CParser* p = CParser::parserOf(coTemplate.c_str(), coDocumentRoot.c_str());
 		p->setDebug(bTechDebug);
 // no need to write the charset anymore: tpl_cgi will print it
