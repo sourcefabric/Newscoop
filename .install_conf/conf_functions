@@ -531,7 +531,7 @@ prepare_install_env()
 {
 output_err="Error preparing install environment."
 echo -e -n "Preparing install environment..."
-export CAMPSITE_REGISTER=/etc/campsite.reg
+export CAMPSITE_REGISTER=$PREFIX/etc/campsite.reg
 export CHECKED_DEPENDENCIES=""
 export CHECKED_MODULES=""
 export CONFIGURED_MODULES=""
