@@ -199,12 +199,15 @@ if [ -f "./make.env" ]; then
     if [ $? -ne 0 ]; then
 	rm -f "./make.env"
 	mv "$make_env" "./make.env"
+	echo "done"
+    else
+	echo "up to date"
     fi
     rm -f "$make_env"
 else
     mv "$make_env" "./make.env"
+    echo "done"
 fi
-echo "done"
 
 campsite_configure_h=${INSTALL_CONF}/configure.h
 if [ ! -f "$campsite_configure_h" ] || [ "$campsite_configure_h" -ot "./make.env" ]; then
@@ -227,7 +230,7 @@ cat > "$campsite_configure_h" << EOF
 #endif
 EOF
 [ $? -ne 0 ] && echo "ERROR" && exit 1
-echo OK
+echo "done"
 else
 echo "Header file configure.h is up to date."
 fi
