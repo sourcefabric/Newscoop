@@ -34,9 +34,9 @@ if (!$articleObj->exists()) {
 if ($errorStr != "")
 	CampsiteInterface::DisplayError($errorStr, null, true);
 
-setcookie("TOL_Access", "all", null, "/$ADMIN/");
+setcookie("TOL_Access", "all", null, "/");
 if ($User->hasPermission("ManageTempl") || $User->hasPermission("DeleteTempl"))
-	setcookie("TOL_Preview", "on", null, "/$ADMIN/");
+	setcookie("TOL_Preview", "on", null, "/");
 
 $templateObj =& new Template($templateId);
 
