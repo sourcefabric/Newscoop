@@ -1,4 +1,4 @@
-$DOCUMENT_ROOT = $_SERVER[DOCUMENT_ROOT];
+$DOCUMENT_ROOT = $_SERVER['DOCUMENT_ROOT'];
 
 function query($qs,$r='',$setvars=true)
 {
@@ -605,6 +605,6 @@ function valid_field_name($name)
  return true;
 }
 
-if (file_exists ($_SERVER[DOCUMENT_ROOT].'/priv/modules/admin/priv_functions.php'))
-  include ($_SERVER[DOCUMENT_ROOT].'/priv/modules/admin/priv_functions.php');
+if (file_exists ($_SERVER['DOCUMENT_ROOT'].'/priv/modules/admin/priv_functions.php'))
+  include ($_SERVER['DOCUMENT_ROOT'].'/priv/modules/admin/priv_functions.php');
 ?>

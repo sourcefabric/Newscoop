@@ -1,5 +1,5 @@
 <?php
-require_once($_SERVER[DOCUMENT_ROOT].'/db_connect.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
 
 function writeFile($newfile,$fen){
     global $for,$en;
@@ -140,8 +140,8 @@ function parseFolder($dirname, $depth){
 <body>
 <?php
 
-if (isset($_REQUEST[newlang])){
-    $newlang = trim($_REQUEST[newlang]);
+if (isset($_REQUEST['newlang'])){
+    $newlang = trim($_REQUEST['newlang']);
 }
 
 if ( (isset($newlang)) && ($newlang!='') && (strlen($newlang)>1) &&($newlang!='en') ){
