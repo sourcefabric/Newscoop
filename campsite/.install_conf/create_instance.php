@@ -33,14 +33,14 @@ function create_instance($p_arguments, &$p_errors)
 	$etc_dir = $defined_parameters['--etc_dir'];
 	// check if etc directory was valid
 	if (!is_dir($etc_dir)) {
-		echo "Invalid etc directory " . $defined_parameters['--etc_dir'] . "\n";
+		$p_errors[] = "Invalid etc directory " . $defined_parameters['--etc_dir'];
 		return false;
 	}
 
 	// check if install_conf.php and parser_conf.php files exist
 	if (!is_file($etc_dir . "/install_conf.php")
 		|| !is_file($etc_dir . "/parser_conf.php")) {
-		echo "Configuration file(s) are missing\n";
+		$p_errors = "Configuration file(s) are missing";
 		return false;
 	}
 
@@ -49,7 +49,7 @@ function create_instance($p_arguments, &$p_errors)
 
 	if (!is_array($CampsiteVars['install']) || !is_array($CampsiteVars['parser'])
 		|| !is_array($Campsite)) {
-		echo "Invalid configuration file(s) format\n";
+		$p_errors = "Invalid configuration file(s) format";
 		return false;
 	}
 
@@ -152,18 +152,21 @@ function create_database($p_defined_parameters)
 		return "Unable to connect to database server";
 
 	$db_exists = database_exists($db_name);
-	if ($db_exists) {
+	$db_is_empty = is_empty_database($db_name);
+	if ($db_exists && !$db_is_empty) {
 		if (!($res = backup_database($db_name, $p_defined_parameters)) == 0)
 			return $res;
 		if (!($res = upgrade_database($db_name, $p_defined_parameters)) == 0) {
 			restore_database($db_name, $p_defined_parameters);
 			return $res . "\nThere was an error when upgrading the database; "
-				. "the old database was restored.";
+				. "the old database was restored.\nA backup of the old database is in "
+				. $Campsite['CAMPSITE_DIR'] . "/backup/$db_name directory.";
 		}
 	} else {
-		if (!mysql_query("CREATE DATABASE " . $db_name))
+		if (!$db_exists && !mysql_query("CREATE DATABASE " . $db_name))
 			return "Unable to create the database " . $db_name;
-		$cmd = "mysql -u $db_user";
+		$cmd = "mysql --user=$db_user --host=" . $Campsite['DATABASE_SERVER_ADDRESS']
+			. " --port=" . $Campsite['DATABASE_SERVER_PORT'];
 		if ($db_password != "")
 			$cmd .= " --password=\"$db_password\"";
 		$cmd .= " $db_name < \"$db_dir/campsite-db.sql\" 2>&1";
@@ -207,7 +210,9 @@ function upgrade_database($p_db_name, $p_defined_parameters)
 			return "Unable to create link to install configuration file";
 
 		// run upgrade scripts
-		$cmd_prefix = "cd \"$upgrade_dir\"; mysql -u $db_user";
+		$cmd_prefix = "cd \"$upgrade_dir\"; mysql --user=$db_user --host="
+			. $Campsite['DATABASE_SERVER_ADDRESS']
+			. " --port=" . $Campsite['DATABASE_SERVER_PORT'];
 		if ($db_password != "")
 			$cmd_prefix .= " --password=\"$db_password\"";
 		$cmd_prefix .= " $p_db_name < \"";
@@ -238,7 +243,8 @@ function detect_database_version($p_db_name, &$version)
 	while ($row = mysql_fetch_row($res)) {
 		if (in_array($row[0], array("ArticleTopics", "Topics")))
 			$version = $version < "2.1.x" ? "2.1.x" : $version;
-		if (in_array($row[0], array("URLTypes", "TemplateTypes", "Templates", "Aliases")))
+		if (in_array($row[0], array("URLTypes", "TemplateTypes", "Templates", "Aliases",
+				"ArticlePublish", "IssuePublish")))
 			$version = "2.2.x";
 	}
 
@@ -267,7 +273,9 @@ function backup_database($p_db_name, $p_defined_parameters)
 	if (!is_dir($backup_dir) && !mkdir($backup_dir))
 		return "Unable to create database backup directory $backup_dir";
 
-	$cmd = "mysqldump -u " . $Campsite['DATABASE_USER'];
+	$cmd = "mysqldump --user=" . $Campsite['DATABASE_USER'] . " --host="
+		. $Campsite['DATABASE_SERVER_ADDRESS'] . " --port="
+		. $Campsite['DATABASE_SERVER_PORT'] . " --add-drop-table -e -Q";
 	if ($Campsite['DATABASE_PASSWORD'] != "")
 		$cmd .= " --password=\"" . $Campsite['DATABASE_PASSWORD'] . "\"";
 	$cmd .= " $p_db_name > \"$backup_dir/$p_db_name-database.sql\"";
@@ -279,6 +287,30 @@ function backup_database($p_db_name, $p_defined_parameters)
 }
 
 
+function clean_database($db_name)
+{
+	if (!mysql_select_db($db_name))
+		return "clean_database: can't select the database";
+	if (!($res = mysql_query("show tables")))
+		return "Can not clean the database: can't read tables";
+	while ($row = mysql_fetch_row($res)) {
+		$table_name = $row[0];
+		mysql_query("drop table `" . mysql_escape_string($table_name) . "`");
+	}
+	return 0;
+}
+
+
+function is_empty_database($db_name)
+{
+	if (!mysql_select_db($db_name))
+		return "is_empty_database: can't select the database";
+	if (!($res = mysql_query("show tables")))
+		return "is_empty_database: can't read tables";
+	return mysql_num_rows($res) == 0;
+}
+
+
 function restore_database($p_db_name, $p_defined_parameters)
 {
 	global $Campsite, $CampsiteVars;
@@ -287,11 +319,17 @@ function restore_database($p_db_name, $p_defined_parameters)
 	if (!is_file($backup_file))
 		return "Can't restore database: backup file not found";
 
-	if (database_exists($p_db_name))
-		mysql_query("DROP DATABASE $p_db_name");
-	mysql_query("CREATE DATABASE $p_db_name");
+	if (database_exists($p_db_name)) {
+		if (($clean = clean_database($p_db_name)) !== 0)
+			return $clean;
+	} else {
+		if (!mysql_query("CREATE DATABASE $p_db_name"))
+			return "Unable to restore database: can't create the database";
+	}
 
-	$cmd = "mysql -u " . $Campsite['DATABASE_USER'];
+	$cmd = "mysql --user=" . $Campsite['DATABASE_USER'] . " --host="
+		. $Campsite['DATABASE_SERVER_ADDRESS']
+		. " --port=" . $Campsite['DATABASE_SERVER_PORT'];
 	if ($Campsite['DATABASE_PASSWORD'] != "")
 		$cmd .= " --password=\"" . $Campsite['DATABASE_PASSWORD'] . "\"";
 	$cmd .= " $p_db_name < \"$backup_file\"";
