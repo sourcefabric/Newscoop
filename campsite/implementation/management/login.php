@@ -27,9 +27,9 @@ require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
 </tr>
 </TABLE>
 
-<P>
+<CENTER>
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input" ALIGN="CENTER" style="margin-top: 20px;">
 <FORM NAME="dialog" METHOD="POST" ACTION="do_login.php" >
-<CENTER><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input" ALIGN="CENTER">
 	<TR>
 		<TD COLSPAN="2">
 			<B><?php  putGS("Login"); ?></B>
@@ -72,10 +72,9 @@ require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
 		</DIV>
 		</TD>
 	</TR>
-</TABLE></CENTER>
 </FORM>
-<P>
+</TABLE>
+</CENTER>
 <?php  if (file_exists("./guest_include.php")) require("./guest_include.php"); ?>
-
 </BODY>
 </HTML>
