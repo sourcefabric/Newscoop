@@ -1,5 +1,6 @@
 <?php  
-require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/pub/issues/sections/articles/article_common.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/pub/issues/sections/articles/article_common.php");
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticlePublish.php');
 
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
@@ -261,6 +262,22 @@ if ($edit_ok) { ?>
 				<TR>
 					<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $languageObj->getLanguageId(), "do_unlock.php"); ?><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/unlock.png" BORDER="0"></A></TD>
 					<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $languageObj->getLanguageId(), "do_unlock.php"); ?><B><?php  putGS("Unlock"); ?></B></A></TD>
+				</TR>
+				</TABLE>
+			</TD>
+		<?php } ?>
+
+		<?php 
+		if ($User->hasPermission('Publish')) { 
+			$automaticPublishingActive = (count(ArticlePublish::GetArticleEvents(
+				$articleObj->getArticleId(), $articleObj->getLanguageId())) > 0);
+			?>
+			<TD class="action_link_container">
+				<!-- Autopublish Link -->
+				<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
+				<TR>
+					<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $languageObj->getLanguageId(), "autopublish.php", $_SERVER['REQUEST_URI']); ?><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/<?php if ($automaticPublishingActive) { ?>automatic_publishing_active.png<?php } else { ?>automatic_publishing.png<?php } ?>" BORDER="0"></A></TD>
+					<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $languageObj->getLanguageId(), "autopublish.php", $_SERVER['REQUEST_URI']); ?><B><?php  putGS("Automatic publishing"); ?></B></A></TD>
 				</TR>
 				</TABLE>
 			</TD>
