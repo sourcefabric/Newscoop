@@ -298,7 +298,7 @@ foreach ($allArticles as $articleObj) {
 			<?php if ($articleObj->getPublished() != 'N') { 
 				$events =& ArticlePublish::GetArticleEvents($articleObj->getArticleId(),
 					$articleObj->getLanguageId());?>
-			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/autopublish.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($articleObj->getArticleId()); ?>&Language=<?php  p($Language);?>&sLanguage=<?php p($articleObj->getLanguageId()); ?>"><img src="/<?php p($ADMIN); ?>/img/icon/<?php p((count($events) > 0) ? 'automatic_publishing_active.png':'automatic_publishing.png'); ?>" alt="<?php  putGS("Automatic publishing"); ?>" border="0" width="22" height="22"></A>
+			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/autopublish.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($articleObj->getArticleId()); ?>&Language=<?php  p($Language);?>&sLanguage=<?php p($articleObj->getLanguageId()); ?>&Back=<?php p(urlencode($_SERVER['REQUEST_URI'])); ?>"><img src="/<?php p($ADMIN); ?>/img/icon/<?php p((count($events) > 0) ? 'automatic_publishing_active.png':'automatic_publishing.png'); ?>" alt="<?php  putGS("Automatic publishing"); ?>" border="0" width="22" height="22"></A>
 			<?php 
 			} else { ?>
 				&nbsp;<?PHP
