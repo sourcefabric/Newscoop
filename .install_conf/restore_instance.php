@@ -12,10 +12,10 @@ if ($etc_dir == "" || $type == "" || ($type == "-a" && $archive_file == "")
 	echo "Invalid parameters received; usage:\n"
 		. "\tphp restore_backup.php [etc_dir] [type] [archive_name/instance_name]\n"
 		. "\twhere [etc_dir] = campsite etc directory\n"
-		. "\t[type] = restore type: -a from archive file, -i instance name\n"
-		. "\t[archive_name] = archive file name, use with -a type\n"
-		. "\t[instance_name] = instance to be restored, use with -i type\n"
-		. "\t\tThe archive file must be in backup/[instance_name] directory.\n";
+		. "\t\t[type] = restore type: -a from archive file, -i instance name\n"
+		. "\t\t[archive_name] = archive file name, use with -a type\n"
+		. "\t\t[instance_name] = instance to be restored, use with -i type\n"
+		. "\t\t\tThe archive file must be in backup/[instance_name] directory.\n";
 	exit(1);
 }
 
@@ -106,7 +106,8 @@ $cmd = "pushd " . escapeshellarg($backup_dir) . " && tar xzf "
 exec_command($cmd);
 
 // restore the database and create language links
-restore_database($instance_name, $database_dump_file);
+if (($res = restore_database($instance_name, $database_dump_file)) !== 0)
+	exit_with_error($res);
 require_once("$html_dir/parser_utils.php");
 create_language_links($html_dir);
 
@@ -123,11 +124,16 @@ function restore_database($p_db_name, $dump_file)
 	if (!is_file($dump_file))
 		return "Can't restore database: dump file not found";
 
-	if (database_exists($p_db_name))
-		mysql_query("DROP DATABASE $p_db_name");
-	mysql_query("CREATE DATABASE $p_db_name");
+	if (database_exists($p_db_name)) {
+		clean_database($p_db_name);
+	} else {
+		if (!mysql_query("CREATE DATABASE $p_db_name"))
+			return "Can't create database $p_db_name";
+	}
 
-	$cmd = "mysql -u " . $Campsite['DATABASE_USER'];
+	$cmd = "mysql -u " . $Campsite['DATABASE_USER'] . " --host="
+		. $Campsite['DATABASE_SERVER_ADDRESS'] . " --port="
+		. $Campsite['DATABASE_SERVER_PORT'];
 	if ($Campsite['DATABASE_PASSWORD'] != "")
 		$cmd .= " --password=\"" . $Campsite['DATABASE_PASSWORD'] . "\"";
 	$cmd .= " $p_db_name < \"$dump_file\"";
