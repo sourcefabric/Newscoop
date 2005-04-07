@@ -35,6 +35,7 @@ install: dummy
 	install -C --mode=660 --owner=$(ROOT_USER) --group=$(APACHE_GROUP) "$(INSTALL_CONF)/install_conf.php" "$(ETC_DIR)"
 	install -C --mode=660 --owner=$(ROOT_USER) --group=$(APACHE_GROUP) "$(INSTALL_CONF)/vhost-template.conf" "$(ETC_DIR)"
 	install -C --mode=660 --owner=$(ROOT_USER) --group=$(APACHE_GROUP) "$(INSTALL_CONF)/parser_conf.php" "$(ETC_DIR)"
+	install -C --mode=644 --owner=$(ROOT_USER) --group=$(APACHE_GROUP) "$(INSTALL_CONF)/campsite_version.php" "$(HTML_COMMON_DIR)"
 	$(MAKE) -C implementation install
 
 test_install:
