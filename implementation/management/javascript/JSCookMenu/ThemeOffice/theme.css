@@ -53,13 +53,14 @@
 
 .ThemeOfficeMainItem
 {
-	background-color: #fce2cc;
-	border: 1px solid #F57F1E; 
+	/*background-color:	#EFEBDE;*/
+	background-color: #d5e2ee;
+	border: 1px solid #8baed1;
 }
 
 .ThemeOfficeMainItemHover,.ThemeOfficeMainItemActive
 {
-	background-color: #F8B87B;
+	background-color:	#C6D3EF;
 }
 
 .ThemeOfficeMenuItem
@@ -69,7 +70,7 @@
 
 .ThemeOfficeMenuItemHover,.ThemeOfficeMenuItemActive
 {
-	background-color: #fce2cc;
+	background-color:	#C6D3EF;
 }
 
 
@@ -82,13 +83,96 @@
 
 td.ThemeOfficeMainItemHover,td.ThemeOfficeMainItemActive
 {
-	border: 1px solid #ffebd7; 
+	/*padding:	0px;*/
+	border:		1px solid #3169C6;
 }
 
 .ThemeOfficeMainFolderLeft,.ThemeOfficeMainItemLeft,
 .ThemeOfficeMainFolderText,.ThemeOfficeMainItemText,
 .ThemeOfficeMainFolderRight,.ThemeOfficeMainItemRight
 {
+	background-color:	inherit;
+}
+
+/* vertical main menu sub components */
+
+td.ThemeOfficeMainFolderLeft,td.ThemeOfficeMainItemLeft
+{
+	padding-top:	2px;
+	padding-bottom:	2px;
+	padding-left:	0px;
+	padding-right:	2px;
+
+	border-top:	1px solid #3169C6;
+	border-bottom:	1px solid #3169C6;
+	border-left:	1px solid #3169C6;
+
+	background-color:	inherit;
+}
+
+td.ThemeOfficeMainFolderText,td.ThemeOfficeMainItemText
+{
+	padding-top:	2px;
+	padding-bottom:	2px;
+	padding-left:	5px;
+	padding-right:	5px;
+
+	border-top:	1px solid #3169C6;
+	border-bottom:	1px solid #3169C6;
+
+	background-color:	inherit;
+	white-space:	nowrap;
+}
+
+td.ThemeOfficeMainFolderRight,td.ThemeOfficeMainItemRight
+{
+	padding-top:	2px;
+	padding-bottom:	2px;
+	padding-left:	0px;
+	padding-right:	0px;
+
+	border-top:	1px solid #3169C6;
+	border-bottom:	1px solid #3169C6;
+	border-right:	1px solid #3169C6;
+
+	background-color:	inherit;
+}
+
+tr.ThemeOfficeMainItem td.ThemeOfficeMainFolderLeft,
+tr.ThemeOfficeMainItem td.ThemeOfficeMainItemLeft
+{
+	padding-top:	3px;
+	padding-bottom:	3px;
+	padding-left:	1px;
+	padding-right:	2px;
+
+	white-space:	nowrap;
+
+	border:		0;
+	background-color:	inherit;
+}
+
+tr.ThemeOfficeMainItem td.ThemeOfficeMainFolderText,
+tr.ThemeOfficeMainItem td.ThemeOfficeMainItemText
+{
+	padding-top:	3px;
+	padding-bottom:	3px;
+	padding-left:	5px;
+	padding-right:	5px;
+
+	border:		0;
+	background-color:	inherit;
+}
+
+tr.ThemeOfficeMainItem td.ThemeOfficeMainItemRight,
+tr.ThemeOfficeMainItem td.ThemeOfficeMainFolderRight
+{
+	padding-top:	3px;
+	padding-bottom:	3px;
+	padding-left:	0px;
+	padding-right:	1px;
+
+	border:		0;
 	background-color:	inherit;
 }
 
@@ -101,9 +185,9 @@ td.ThemeOfficeMainItemHover,td.ThemeOfficeMainItemActive
 	padding-left:	1px;
 	padding-right:	3px;
 
-	border-top:	1px solid #F8B87B;
-	border-bottom:	1px solid #F8B87B;
-	border-left:	1px solid #F8B87B;
+	border-top:	1px solid #3169C6;
+	border-bottom:	1px solid #3169C6;
+	border-left:	1px solid #3169C6;
 
 	background-color:	inherit;
 	white-space:	nowrap;
@@ -116,8 +200,8 @@ td.ThemeOfficeMainItemHover,td.ThemeOfficeMainItemActive
 	padding-left:	5px;
 	padding-right:	5px;
 
-	border-top:	1px solid #F8B87B;
-	border-bottom:	1px solid #F8B87B;
+	border-top:	1px solid #3169C6;
+	border-bottom:	1px solid #3169C6;
 
 	background-color:	inherit;
 	white-space:	nowrap;
@@ -130,9 +214,9 @@ td.ThemeOfficeMainItemHover,td.ThemeOfficeMainItemActive
 	padding-left:	0px;
 	padding-right:	0px;
 
-	border-top:	1px solid #F8B87B;
-	border-bottom:	1px solid #F8B87B;
-	border-right:	1px solid #F8B87B;
+	border-top:	1px solid #3169C6;
+	border-bottom:	1px solid #3169C6;
+	border-right:	1px solid #3169C6;
 
 	background-color:	inherit;
 	white-space:	nowrap;
