@@ -82,9 +82,11 @@ function backup_database($db_name, $dest_file, &$output)
 
 	$user = $Campsite['DATABASE_USER'];
 	$password = $Campsite['DATABASE_PASSWORD'];
-	$cmd = "mysqldump --add-drop-table -c -e -Q -u $user";
+	$cmd = "mysqldump --add-drop-table -c -e -Q --user=$user --host="
+		. $Campsite['DATABASE_SERVER_ADDRESS']
+		. " --port=" . $Campsite['DATABASE_SERVER_PORT'];
 	if ($password != "")
-		$cmd .= " -p=$password";
+		$cmd .= " --password=$password";
 	$cmd .= " $db_name > $dest_file";
 	exec($cmd, $output, $result);
 	return $result;
@@ -121,6 +123,28 @@ function connect_to_database($db_name = "")
 	if ($db_name != "" && !mysql_select_db($db_name))
 		return "Unable to select database $db_name";
 
+	return 0;
+}
+
+function is_empty_database($db_name)
+{
+	if (!mysql_select_db($db_name))
+		return "is_empty_database: can't select the database";
+	if (!($res = mysql_query("show tables")))
+		return "is_empty_database: can't read tables";
+	return mysql_num_rows($res) == 0;
+}
+
+function clean_database($db_name)
+{
+	if (!mysql_select_db($db_name))
+		return "clean_database: can't select the database";
+	if (!($res = mysql_query("show tables")))
+		return "Can not clean the database: can't read tables";
+	while ($row = mysql_fetch_row($res)) {
+		$table_name = $row[0];
+		mysql_query("drop table `" . mysql_escape_string($table_name) . "`");
+	}
 	return 0;
 }
 
