@@ -31,30 +31,23 @@ if ($validUser) {
 </HEAD>
 
 <BODY>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" align="center">
 <TR>
-	<TD ROWSPAN="2" WIDTH="1%">
+	<TD align="center" style="padding-top: 50px;">
 		<IMG SRC="/<?php echo $ADMIN; ?>/img/sign_big.gif" BORDER="0">
-	</TD>
-	<TD class="page_title">
-	    <DIV STYLE="font-size: 12pt"><B><?php  putGS("Login failed"); ?></B></DIV>
-	</TD>
-</TR>
-<TR>
-	<TD ALIGN=RIGHT>
-		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
-		<TR>
-			<TD><A HREF="/<?php echo $ADMIN; ?>/login.php" ><B><?php  putGS("Login");  ?></B></A></TD>
-		</TR>
-		</TABLE>
 	</TD>
 </TR>
 </TABLE>
-
-<BLOCKQUOTE>
-	<LI><?php  putGS('Login failed'); ?></LI>
-	<LI><?php  putGS('Pease make sure that you typed the correct user name and password.'); ?></LI>
-	<LI><?php  putGS('If your problem persists please contact the site administrator $1','<A HREF="mailto:'.encURL($SERVER_ADMIN).'">'.encHTML($SERVER_ADMIN) );?></A></LI>
-</BLOCKQUOTE>
-
-<?php CampsiteInterface::CopyrightNotice(); ?>
+<table class="message_box" align="center" style="margin-top: 25px;" cellpadding="6">
+<tr>
+	<td align="center">
+		<DIV STYLE="font-size: 12pt"><B><?php  putGS("Login failed"); ?></B></DIV><br>
+		<?php  putGS('Pease make sure that you typed the correct user name and password.'); ?><br>
+		<?php  putGS('If your problem persists please contact the site administrator $1','<A HREF="mailto:'.encURL($SERVER_ADMIN).'">'.encHTML($SERVER_ADMIN) );?></A>
+		<p>
+		<A HREF="/<?php echo $ADMIN; ?>/login.php" ><B><?php  putGS("Login");  ?></B></A>
+	</td>
+</tr>
+</table>
+</body>
+</html>
