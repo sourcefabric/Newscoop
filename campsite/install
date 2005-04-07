@@ -63,7 +63,7 @@ install_campsite()
     echo "Please configure apache server before using CAMPSITE application; make sure"
     echo -e "the crond daemon is running; read INSTALL file and follow the instructions.\n"
     echo "To enter the CAMPSITE administration site start a browser and type in the"
-    echo "following URL: http://localhost/priv/."
+    echo "following URL: http://localhost/admin/."
     if [ -f ./campsite_upgrade ]; then
 	echo -e "\nYour older database was preserved. You should log in to the CAMPSITE"
 	echo "administration site using the old user and password."
