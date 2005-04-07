@@ -188,7 +188,7 @@ foreach ($publications as $publication) {
 </HEAD>
 
 <BODY>
-<table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-bottom: 2px solid #fce2cc;"> 
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-bottom: 2px solid #D5E2EE;"> 
 <tr>
 	<td valign="top" align="left" width="70%" style="padding-top: 0px; ">
 		<table border="0" cellpadding="0" cellspacing="0">
