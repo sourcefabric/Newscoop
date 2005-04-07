@@ -209,6 +209,17 @@ else
     echo "done"
 fi
 
+campsite_version_php=${INSTALL_CONF}/campsite_version.php
+if [ ! -f "$campsite_version_php" ] || [ "$campsite_version_php" -ot "./make.env" ]; then
+echo -n -e "Writing campsite_version.php script..."
+rm -f "$campsite_version_php"
+echo -e -n "<?php\n\n\$Campsite['VERSION'] = '$CAMPSITE_VERSION';\n\n?>" > "$campsite_version_php"
+[ $? -ne 0 ] && echo "ERROR" && exit 1
+echo "done"
+else
+echo "The file campsite_version.php is up to date."
+fi
+
 campsite_configure_h=${INSTALL_CONF}/configure.h
 if [ ! -f "$campsite_configure_h" ] || [ "$campsite_configure_h" -ot "./make.env" ]; then
 echo -n -e "Writing configure.h header..."
