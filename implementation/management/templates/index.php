@@ -9,7 +9,14 @@ if (!$access) {
 }
 
 $path = Input::Get('Path', 'string', '');
+foreach (split("/", $path) as $index=>$dir) {
+	if ($dir == "..") {
+		$path = "";
+		break;
+	}
+}
 $print_path = $path != "" ? $path : "/";
+
 register_templates($Campsite['HTML_DIR'] . "/look", $errors);
 verify_templates($Campsite['HTML_DIR'] . "/look", $mt, $dt, $errors);
 
