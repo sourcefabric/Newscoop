@@ -504,7 +504,9 @@ inline bool CEnumAttr::validValue(const string& p_rcoVal) const
 {
 	try
 	{
-		Enum::enumObj(m_coEnumType)->item(p_rcoVal);
+		Enum* pcoEnum = Enum::enumObj(m_coEnumType);
+		pcoEnum->item(p_rcoVal);
+		delete pcoEnum;
 		return true;
 	}
 	catch (InvalidValue& rcoEx)
