@@ -83,7 +83,7 @@ CMessage* readMessage(CTCPSocket* p_pcoClSock, CMessageFactoryRegister& p_rcoMFR
 
 	pchContent[10] = 0;
 	uint nDataSize = strtol(pchContent + 5, NULL, 16);
-	char *pchMsg = new char[nDataSize + 10];
+	char *pchMsg = new char[nDataSize + 11];
 	memcpy(pchMsg, pchContent, 10);
 	uint nReceived = p_pcoClSock->Recv(pchMsg + 10, nDataSize, 0);
 	pchMsg[nReceived + 10] = 0;
