@@ -1,9 +1,9 @@
-// I18N constants
+﻿// I18N constants
 
 // LANG: "en", ENCODING: UTF-8 | windows-1256
 // Author: Raed Neshiewat, http://tamamtech.com
 
-﻿// FOR TRANSLATORS:
+// FOR TRANSLATORS:
 //
 //   1. PLEASE PUT YOUR CONTACT INFO IN THE ABOVE LINE
 //      (at least a valid email address)
