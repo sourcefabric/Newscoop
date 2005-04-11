@@ -14,8 +14,10 @@ if (($question_mark = strpos($call_script, '?')) !== false) {
 	$call_script = substr($call_script, 0, $question_mark);
 }
 
+// Remove all attempts to get at other parts of the file system
+$call_script = str_replace('/../', '/', $call_script);
+
 $is_image = (strstr($call_script, '/img/') !== false);
-//$extension = strtolower(substr($call_script, strlen($call_script) - 4));
 $extension = '';
 if (($extension_start = strrpos($call_script, '.')) !== false) {
 	$extension = strtolower(substr($call_script, $extension_start));
