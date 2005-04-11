@@ -58,7 +58,7 @@ define(<*X_NEXT_I*>, <* | <?php  putGS('Next'); ?> &gt;&gt;*>)dnl
 define(<*X_NEXT_A*>, <* | <B><A HREF="$1"><?php  putGS('Next'); ?> &gt;&gt</A></B>*>)dnl
 define(<*X_PREV_I*>, <*&lt;&lt; <?php  putGS('Previous'); ?>*>)dnl
 define(<*X_PREV_A*>, <*<B><A HREF="$1">&lt;&lt; <?php  putGS('Previous'); ?></A></B>*>)dnl
-define(<*X_BUTTON*>, <*<A HREF="X_ROOT/$3"><IMG SRC="X_ROOT/img/$2" BORDER="0" ALT="$1"></A>*>)dnl
+define(<*X_BUTTON*>, <*<A HREF="X_ROOT/$3"><IMG SRC="X_ROOT/img/$2" BORDER="0" ALT="$1" TITLE="$1"></A>*>)dnl
 dnl
 dnl *** Header ****
 dnl

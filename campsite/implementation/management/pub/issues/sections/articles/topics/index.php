@@ -120,7 +120,7 @@ if (count($articleTopics) > 0) {
 			</TD>
 			<?php  if ($articleObj->userCanModify($User)) { ?>
 			<TD ALIGN="CENTER">
-				<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/topics/do_del.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&DelTopic=<?php p($topic->getTopicId()); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&IdCateg=<?php p($TopicId); ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/delete.png" BORDER="0" ALT="<?php  putGS('Delete topic $1 from article', htmlspecialchars($topic->getName())); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the topic $1?', htmlspecialchars($topic->getName())); ?>');"></A>
+				<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/topics/do_del.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&DelTopic=<?php p($topic->getTopicId()); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&IdCateg=<?php p($TopicId); ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/delete.png" BORDER="0" ALT="<?php  putGS('Delete'); ?>" title="<?php  putGS('Delete'); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the topic $1?', htmlspecialchars($topic->getName())); ?>');"></A>
 			</TD>
 			<?php  } ?>
 		</TR>
@@ -196,7 +196,7 @@ if (count($subtopics) > 0) {
 		<?php 
 		if (!in_array($subtopic->getTopicId(), $articleTopicsIds)) {
 		?>
-			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/topics/do_add.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&IdCateg=<?php p($TopicId);?>&AddTopic=<?php p($subtopic->getTopicId()); ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/add_topic_to_article.png" BORDER="0" ALT="<?php  putGS('Add topic $1 to article', htmlspecialchars($subtopic->getName())); ?>"></A>
+			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/topics/do_add.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&IdCateg=<?php p($TopicId);?>&AddTopic=<?php p($subtopic->getTopicId()); ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/add_topic_to_article.png" BORDER="0" ALT="<?php  putGS('Add'); ?>" title="<?php  putGS('Add'); ?>"></A>
 		<?php 
 		} else {
 		    echo "&nbsp;";
