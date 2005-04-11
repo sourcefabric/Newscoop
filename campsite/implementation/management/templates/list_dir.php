@@ -1,7 +1,7 @@
 <?php  function isTpl($s){
 	$dotpos=strrpos($s,".");
 	$ext=substr($s,$dotpos+1);
-        return ($ext == 'tpl' || $ext=='TPL' || $ext == 'php' || $ext == 'htm' || $ext == 'html' || $ext == 'php3' || $ext == 'php4');
+	return ($ext == 'tpl' || $ext=='TPL' || $ext == 'php' || $ext == 'htm' || $ext == 'html' || $ext == 'php3' || $ext == 'php4' || $ext == 'txt');
 }  ?>
 
 <TABLE BORDER="0" CELLSPACING="2" CELLPADDING="0" WIDTH="100%">
@@ -16,33 +16,39 @@
 ?>
 </TR>
 <?php 
-    $c="";
-	// once entered here, in the TemplateManagement, because the parameter What is 0 by default, even if the value set before is still set
-	// its meaning is lost, so we can use the variable to switch between file and folders; let's say 0 is for folders and 1 for files
-	// we only need it when deleting items
-	
-    $basedir="$DOCUMENT_ROOT".decURL($listbasedir);
+$c="";
+// once entered here, in the TemplateManagement, because the parameter What is 0 by default, even if the value set before is still set
+// its meaning is lost, so we can use the variable to switch between file and folders; let's say 0 is for folders and 1 for files
+// we only need it when deleting items
 
-    $handle=opendir($basedir);
-    while (($file = readdir($handle))!=false) {
+foreach (split("/", $listbasedir) as $index=>$dir) {
+	if ($dir == "..") {
+		$listbasedir = "";
+		break;
+	}
+}
+$basedir=$_SERVER['DOCUMENT_ROOT']."/look/".decURL($listbasedir);
+
+$handle=opendir($basedir);
+while (($file = readdir($handle))!=false) {
 	$full="$basedir/$file";
-        $filetype=filetype($full);
-        $isdir=false;
-        $isfile=false;
-        // avoiding the links
-        if ($filetype=="dir") $isdir=true;
-        else if ($filetype!="link") $isfile=true;
-        // if it's a file
-        if ($isfile){
-            // filling the array with filenames
-            $files[]=$file;
-        }
-        // if it's a directory but not  '..' or '.'
-        else if ($isdir && $file != "." && $file != ".."){
-            // filling the array with directory names
-            $dirs[]=$file;
-        }
-    }
+	$filetype=filetype($full);
+	$isdir=false;
+	$isfile=false;
+	// avoiding the links
+	if ($filetype=="dir") $isdir=true;
+	else if ($filetype!="link") $isfile=true;
+	// if it's a file
+	if ($isfile){
+		// filling the array with filenames
+		$files[]=$file;
+	}
+	// if it's a directory but not  '..' or '.'
+	else if ($isdir && $file != "." && $file != ".."){
+		// filling the array with directory names
+		$dirs[]=$file;
+	}
+}
     
 if (isset($dirs)) {
     sort($dirs);
