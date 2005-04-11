@@ -150,7 +150,7 @@ E_CURRENT
 	// 0 - you are in the templates management module (create, delete, edit, upload, duplicate etc)
 	// 1, 2 - select a template for viewing with it the font page (1) and an independent article (2)
 
-	$listbasedir=substr ($myurl, 6, 0);
+	$listbasedir=substr ($myurl, 6);
 	if ($What) {
 		$params=$myurl1;
 		include ('./stempl_dir.php');
