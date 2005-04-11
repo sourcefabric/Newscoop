@@ -141,10 +141,10 @@ function encSQL($s) {
  */
 function todefnum($p_varName, $p_defaultValue=0) {
 	if (!isset($_REQUEST[$p_varName])) {
-		$GLOBALS[$p_varName] = $p_defaultValue;
+		$GLOBALS[$p_varName] = (int)$p_defaultValue;
 	}
 	else {
-		$GLOBALS[$p_varName] = $_REQUEST[$p_varName];
+		$GLOBALS[$p_varName] = (int)$_REQUEST[$p_varName];
 	}
 } // fn todefnum
 
