@@ -35,6 +35,7 @@ HTMLArea.I18N = {
 		indent:					"Inspringing vergroten",
 		forecolor:				"Tekstkleur",
 		hilitecolor:			"Achtergrondkleur",
+		horizontalrule:	"Horizontale lijn",
 		inserthorizontalrule:	"Horizontale lijn",
 		createlink:				"Hyperlink invoegen/aanpassen",
 		insertimage:			"Afbeelding invoegen/aanpassen",
