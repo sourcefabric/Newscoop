@@ -76,7 +76,7 @@ if (isset($files)) {
 	    
 	    print "<TR BGCOLOR='$c'><TD><TABLE BORDER='0' CELLSPACING='1' CELLPADDING='0'><TR><TD><IMG SRC='/priv/img/icon/generic.gif' BORDER='0'></TD><TD>$j</TD></TR></TABLE></TD>";
 	    
-	    print "<TD ALIGN='CENTER'><A HREF='/priv/pub/issues/set.php?$params&Path=".encURL($listbasedir).encURL($j)."'><IMG SRC='/priv/img/icon/image.gif' BORDER='0' ALT='".getGS('Set template')."'></A></TD></TR>";
+	    print "<TD ALIGN='CENTER'><A HREF='/priv/pub/issues/set.php?$params&Path=".encURL("/look/$listbasedir").encURL($j)."'><IMG SRC='/priv/img/icon/image.gif' BORDER='0' ALT='".getGS('Set template')."'></A></TD></TR>";
     }
 }
 else{
