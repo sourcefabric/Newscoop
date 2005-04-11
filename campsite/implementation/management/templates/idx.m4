@@ -40,6 +40,13 @@ $dotpos = $dotpos ? $dotpos: strlen($REQUEST_URI);
 $myurl=substr ($REQUEST_URI,0,$dotpos);
 $myurl1=substr ($REQUEST_URI,$dotpos+1);
 
+foreach (split("/", $myurl) as $index=>$dir) {
+	if ($dir == "..") {
+		$myurl = "/look/";
+		break;
+	}
+}
+
 if (strncmp($myurl, "/look/", 6) != 0) {
     $access = FALSE;
 ?>
@@ -139,21 +146,17 @@ E_CURRENT
 </TABLE>
 <P>
 <?php
-    // 'What' at this level selects the usage of templates:
-    // 0 - you are in the templates management module (create, delete, edit, upload, duplicate etc)
-    // 1, 2 - select a template for viewing with it the font page (1) and an independent article (2)
+	// 'What' at this level selects the usage of templates:
+	// 0 - you are in the templates management module (create, delete, edit, upload, duplicate etc)
+	// 1, 2 - select a template for viewing with it the font page (1) and an independent article (2)
 
-    if ($What) {
-
- $listbasedir=$myurl;
- $params=$myurl1;
- include ('./stempl_dir.php');
-    }
-    else {
-     //dSystem( "$scriptBase/list '$myurl' $mta $dta $DOCUMENT_ROOT");
- $listbasedir=$myurl;
- include ('./list_dir.php');
-    }
+	$listbasedir=substr ($myurl, 6, 0);
+	if ($What) {
+		$params=$myurl1;
+		include ('./stempl_dir.php');
+	} else {
+		include ('./list_dir.php');
+	}
 
 } else {
 ?>dnl
