@@ -73,7 +73,7 @@ B_LIST
 			<?php  pgetHVar($IPs,'Addresses'); ?>
 		E_LIST_ITEM
 		B_LIST_ITEM(<*CENTER*>)
-			X_BUTTON(<*<?php  putGS('Delete IP Group $1',getHVar($IPs,'StartIP') ); ?>*>, <*icon/delete.png*>, <*users/ipdel.php?User=<?php  p($User); ?>&StartIP=<?php  pgetVar($IPs,'StartIP'); ?>*>)
+			X_BUTTON(<*<?php  putGS('Delete'); ?>*>, <*icon/delete.png*>, <*users/ipdel.php?User=<?php  p($User); ?>&StartIP=<?php  pgetVar($IPs,'StartIP'); ?>*>)
 		E_LIST_ITEM
 	E_LIST_TR
 <?php  
