@@ -80,18 +80,21 @@ B_MSGBOX(<*Duplicate template*>)
 	}
 	$ok=0;
 	if (!($exists)) {
-		$filename = "$DOCUMENT_ROOT".decURL($cPath)."$Name";
-		$fd = fopen ($filename, "r");
-		$contents = fread ($fd, filesize ($filename));
-		fclose ($fd);
-		
-		$filename = "$DOCUMENT_ROOT".decURL($cPath)."$cName";
-		$fd = fopen ($filename, "w");
-		$res=fwrite ($fd, $contents);
-		fclose ($fd);
-		if ($res==true) {
-                             $ok = 1;
-  		}
+		if (filesize ($filename) > 0) {
+			$filename = "$DOCUMENT_ROOT".decURL($cPath)."$Name";
+			$fd = fopen ($filename, "r");
+			$contents = fread ($fd, filesize ($filename));
+			fclose ($fd);
+
+			$filename = "$DOCUMENT_ROOT".decURL($cPath)."$cName";
+			$fd = fopen ($filename, "w");
+			$res=fwrite ($fd, $contents);
+			fclose ($fd);
+		} else {
+			$filename = "$DOCUMENT_ROOT".decURL($cPath)."$cName";
+			$res = touch ($filename);
+		}
+		$ok = $res==true;
 	}
 	
 	if ($ok) {
