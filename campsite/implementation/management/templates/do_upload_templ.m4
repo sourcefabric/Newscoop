@@ -21,7 +21,7 @@ $debugLevelLow=false;
 todef('Charset');
 todef('Path');
 
-foreach (split("/", $cPath) as $index=>$dir) {
+foreach (split("/", $Path) as $index=>$dir) {
 	if ($dir == "..") {
 		$Path = "";
 		$access = 0;
@@ -29,7 +29,7 @@ foreach (split("/", $cPath) as $index=>$dir) {
 	}
 }
 
-if (strncmp($cPath, "/look/", 6) != 0) {
+if (strncmp($Path, "/look/", 6) != 0) {
 	$access = 0;
 ?>
 	X_AD(<*You do not have the right to edit scripts outside the templates directory.*>)
