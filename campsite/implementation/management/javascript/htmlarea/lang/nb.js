@@ -24,6 +24,7 @@ HTMLArea.I18N = {
 		forecolor:      "Skriftfarge",
 		backcolor:      "Bakgrunnsfarge",
 		horizontalrule: "Horisontal linje",
+		inserthorizontalrule: "Horisontal linje",
 		createlink:     "Sett inn lenke",
 		insertimage:    "Sett inn bilde",
 		inserttable:    "Sett inn tabell",
