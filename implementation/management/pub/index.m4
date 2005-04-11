@@ -95,7 +95,7 @@ B_LIST
             <?php  pgetHVar($publ,'URLType'); ?>&nbsp;
         E_LIST_ITEM
         B_LIST_ITEM(<*CENTER*>)
-            <A HREF="X_ROOT/pub/edit.php?Pub=<?php  pgetUVar($publ,'Id'); ?>"><img src="/<?php echo $ADMIN; ?>/img/icon/configure.png" alt="<?php  putGS("Configure"); ?>" border="0"></A>
+            <A HREF="X_ROOT/pub/edit.php?Pub=<?php  pgetUVar($publ,'Id'); ?>"><img src="/<?php echo $ADMIN; ?>/img/icon/configure.png" alt="<?php  putGS("Configure"); ?>" title="<?php  putGS("Configure"); ?>"  border="0"></A>
         E_LIST_ITEM
 <?php  }
     if ($dpa != 0) { ?>dnl
