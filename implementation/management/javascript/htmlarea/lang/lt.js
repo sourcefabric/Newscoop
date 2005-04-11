@@ -28,6 +28,7 @@ HTMLArea.I18N = {
 		forecolor:      "Šrifto spalva",
 		hilitecolor:    "Fono spalva",
 		horizontalrule: "Horizontali linija",
+		inserthorizontalrule: "Horizontali linija",
 		createlink:     "Įterpti nuorodą",
 		insertimage:    "Įterpti paveiksliuką",
 		inserttable:    "Įterpti lentelę",
