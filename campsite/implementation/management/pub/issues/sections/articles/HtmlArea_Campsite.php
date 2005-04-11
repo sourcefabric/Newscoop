@@ -12,7 +12,7 @@ function HtmlArea_Campsite($p_dbColumns, $p_user) {
 <script type="text/javascript">
 	//<![CDATA[
       _editor_url = "/javascript/htmlarea/";
-      _editor_lang = "en";
+      _editor_lang = "<?php p($_REQUEST['TOL_Language']); ?>";
       _campsite_article_id = <?php echo $_REQUEST['Article']; ?>;
 	//]]>
 </script>    
@@ -125,11 +125,15 @@ initdocument = function () {
  			// Import our custom CSS - watch out for newlines though!
  			// They will break the editor.
 			config.pageStyle = "<?php echo str_replace("\n", "", file_get_contents($stylesheetFile)); ?>";
+			subheadTooltip = "Subhead";
+			if (typeof HTMLArea.I18N.tooltips['campsite_subhead'] != "undefined") {
+				subheadTooltip = HTMLArea.I18N.tooltips['campsite_subhead'];
+			}
 	 		config.registerButton({
 	 			// The ID of the button.
 				id        : "campsite-subhead", 
 				// The tooltip.
-				tooltip   : "Subhead",
+				tooltip   : subheadTooltip,
 				// Image to be displayed in the toolbar.
 				image     : "/javascript/htmlarea/images/campsite_subhead.gif",
 				// TRUE = enabled in text mode
@@ -142,11 +146,15 @@ initdocument = function () {
 				context   : ''
 				});
 				
+			internalLinkTooltip = "Internal Link";
+			if (typeof HTMLArea.I18N.tooltips['campsite_internal_link'] != "undefined") {
+				internalLinkTooltip = HTMLArea.I18N.tooltips['campsite_internal_link'];
+			}
 	 		config.registerButton({
 	 			// The ID of the button.
 				id        : "campsite-internal-link", 
 				// The tooltip.
-				tooltip   : "Internal Link",
+				tooltip   : internalLinkTooltip,
 				// Image to be displayed in the toolbar.
 				image     : "/javascript/htmlarea/images/campsite_internal_link.gif",
 				// TRUE = enabled in text mode
