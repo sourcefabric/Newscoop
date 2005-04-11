@@ -36,6 +36,7 @@ HTMLArea.I18N = {
 		forecolor:      "Font Color",
 		hilitecolor:    "Background Color",
 		horizontalrule: "Horizontal Rule",
+		inserthorizontalrule: "Horizontal Rule",
 		createlink:     "Insert Web Link",
 		insertimage:    "Insert/Modify Image",
 		inserttable:    "Insert Table",
@@ -50,7 +51,9 @@ HTMLArea.I18N = {
 		copy:           "Copy selection",
 		paste:          "Paste from clipboard",
 		lefttoright:    "Direction left to right",
-		righttoleft:    "Direction right to left"
+		righttoleft:    "Direction right to left",
+		campsite_subhead: "Subhead",
+		campsite_internal_link: "Internal Link"
 	},
 
 	buttons: {
