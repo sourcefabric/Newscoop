@@ -14,19 +14,31 @@ B_HEAD
 <?php  if ($access == 0) { ?>dnl
  X_AD(<*You do not have the right to upload templates.*>)
 <?php  } else {
-    $debugLevelHigh=false;
-    $debugLevelLow=false;
 
-    ## added by sebastian ############################
-    todef('Charset');
-    todef('Path');
-    $GLOBALS['File'] = $HTTP_POST_FILES[File][tmp_name];
-    $GLOBALS['File_name'] = $HTTP_POST_FILES[File][name];
-    todef('UNIQUE_ID');
-    ##################################################
+$debugLevelHigh=false;
+$debugLevelLow=false;
 
-    doUpload("File",$Charset,$DOCUMENT_ROOT.'/'.decS($Path));
+todef('Charset');
+todef('Path');
 
+foreach (split("/", $cPath) as $index=>$dir) {
+	if ($dir == "..") {
+		$Path = "";
+		$access = 0;
+		break;
+	}
+}
+
+if (strncmp($cPath, "/look/", 6) != 0) {
+	$access = 0;
+?>
+	X_AD(<*You do not have the right to edit scripts outside the templates directory.*>)
+<?php
+} else {
+	$GLOBALS['File'] = $HTTP_POST_FILES[File][tmp_name];
+	$GLOBALS['File_name'] = $HTTP_POST_FILES[File][name];
+	todef('UNIQUE_ID');
+	doUpload("File",$Charset,$DOCUMENT_ROOT.'/'.decS($Path));
 } ?>dnl
 E_HEAD
 
@@ -59,10 +71,11 @@ E_MSGBOX
 
 X_AUDIT(<*111*>, <*getGS('Template $1 uploaded', encHTML(decS($fileName)))*>)
 
+<?php  } ?>dnl
+<?php  } ?>dnl
 X_HR
 X_COPYRIGHT
 E_BODY
-<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

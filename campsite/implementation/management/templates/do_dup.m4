@@ -13,14 +13,37 @@ B_HEAD
 <?php  } ?>dnl
 E_HEAD
 
-<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
 
-<?php  todef('cPath'); ?>dnl
-<?php  todef('Name'); ?>dnl
+<?php
+todef('cPath');
+todef('Name');
+todef('cName');
+$correct= 1;
+$created= 0;
+
+foreach (split("/", $cPath) as $index=>$dir) {
+	if ($dir == "..") {
+		$cPath = "";
+		$Name = "";
+		$cName = "";
+		$access = 0;
+		break;
+	}
+}
+
+if (strncmp($cPath, "/look/", 6) != 0) {
+	$access = 0;
+?>
+	X_AD(<*You do not have the right to edit scripts outside the templates directory.*>)
+<?php
+}
+
+if ($access) {
+?>dnl
 
 B_HEADER(<*Duplicate template*>)
 B_HEADER_BUTTONS
@@ -35,11 +58,6 @@ X_CURRENT(<*Path*>, <*<B><?php  pencHTML(decURL($cPath)); ?></B>*>)
 X_CURRENT(<*Template*>, <*<B><?php  pencHTML(decURL($Name)); ?></B>*>)
 E_CURRENT
 
-<?php  
-    todef('cName');
-    $correct= 1;
-    $created= 0;
-?>dnl
 <P>
 B_MSGBOX(<*Duplicate template*>)
 	X_MSGBOX_TEXT(<*

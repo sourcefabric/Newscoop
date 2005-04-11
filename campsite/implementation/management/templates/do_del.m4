@@ -5,12 +5,7 @@ B_DATABASE
 CHECK_BASIC_ACCESS
 CHECK_ACCESS(<*DeleteTempl*>)
 
-<?php 
-    todef('Path');
-    todef('Name');
-    todefnum('What');
-?>dnl
-
+<?php todefnum('What'); ?>
 B_HEAD
 	X_EXPIRES
 	<?php  if ($What == 1) {?>dnl
@@ -25,12 +20,33 @@ B_HEAD
 <?php  } ?>dnl
 E_HEAD
 
-<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
 
+<?php
+todef('Path');
+todef('Name');
+
+foreach (split("/", $Path) as $index=>$dir) {
+	if ($dir == "..") {
+		$Path = "";
+		$Name = "";
+		$access = 0;
+		break;
+	}
+}
+
+if (strncmp($Path, "/look/", 6) != 0) {
+	$access = 0;
+?>
+	X_AD(<*You do not have the right to edit scripts outside the templates directory.*>)
+<?php
+}
+
+if ($access) { ?>dnl
+?>
 
 <?php if ($What == 1){?>dnl
 	B_HEADER(<*Deleting template*>)

@@ -27,19 +27,20 @@ E_HEAD
 <?php
 todef('Path');
 todef('Name');
+
+foreach (split("/", $Path) as $index=>$dir) {
+	if ($dir == "..") {
+		$Path = "";
+		$Name = "";
+		break;
+	}
+}
+
 if (strncmp($Path, "/look/", 6) != 0) {
 	$access = 0;
 ?>
 	X_AD(<*You do not have the right to edit scripts outside the templates directory.*>)
 <?php
-}
-
-foreach (split("/", $Path) as $index=>$dir) {
-	if ($dir == "..") {
-		$Path = "/look/";
-		$Name = "";
-		break;
-	}
 }
 
 if ($access) {
@@ -67,9 +68,13 @@ E_CURRENT
 <?php
 	$filename = "$DOCUMENT_ROOT".decURL($Path)."$Name";
 	if (is_file($filename)) {
-		$fd = fopen ($filename, "r");
-		$contents = fread ($fd, filesize ($filename));
-		fclose ($fd);
+		if (filesize ($filename) > 0) {
+			$fd = fopen ($filename, "r");
+			$contents = fread ($fd, filesize ($filename));
+			fclose ($fd);
+		} else {
+			$contents = "";
+		}
 ?>
 
 B_DIALOG(<*Edit template*>, <*POST*>, <*do_edit.php*>)

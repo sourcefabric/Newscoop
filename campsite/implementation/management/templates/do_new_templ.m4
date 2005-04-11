@@ -13,13 +13,36 @@ B_HEAD
 <?php  } ?>dnl
 E_HEAD
 
-<?php  if ($access) { ?>dnl
 B_STYLE
 E_STYLE
 
 B_BODY
 
-<?php  todef('cPath'); ?>dnl
+<?php
+todef('cPath');
+todef('cName');
+$correct= 1;
+$created= 0;
+
+foreach (split("/", $cPath) as $index=>$dir) {
+	if ($dir == "..") {
+		$cPath = "";
+		$cName = "";
+		$access = 0;
+		break;
+	}
+}
+
+if (strncmp($cPath, "/look/", 6) != 0) {
+	$access = 0;
+?>
+	X_AD(<*You do not have the right to edit scripts outside the templates directory.*>)
+<?php
+}
+
+if ($access) {
+?>dnl
+
 B_HEADER(<*Creating new template*>)
 B_HEADER_BUTTONS
 X_HBUTTON(<*Templates*>, <*templates/?Path=<?php  pencURL(decS($cPath)); ?>*>)
@@ -32,21 +55,17 @@ B_CURRENT
 X_CURRENT(<*Path*>, <*<B><?php  pencHTML(decURL($cPath)); ?></B>*>)
 E_CURRENT
 
-<?php  
-    todef('cName');
-    $correct= 1;
-    $created= 0;
-?>dnl
 <P>
 B_MSGBOX(<*Creating new template*>)
 	X_MSGBOX_TEXT(<*
 <?php  
-    if ($cName == "") { 
+if ($cName == "") {
 	$correct= 0; ?>dnl
 		<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); ?></LI>
-<?php  }
+<?php
+}
 
-    if ($correct) {
+if ($correct) {
 	$cName=decS($cName);
 	$cName=strtr($cName,'?~#%*&|"\'\\/<>', '_____________');
 	$newTempl=$DOCUMENT_ROOT.decURL($cPath).$cName;
@@ -54,29 +73,24 @@ B_MSGBOX(<*Creating new template*>)
 
 	if (file_exists($newTempl)) {
 	    $exists=1;
-						//if (!is_dir($newTempl))
-						//$exists=0;
 	}
-	
+
 	$ok=0;
-	
 	if (!($exists)) {
 		$res = touch ($newTempl);
 		if ($res==true) {
-                             $ok = 1;
-  		}
-	
+			$ok = 1;
+		}
 	}
-	
+
 	if ($ok) {
 		putGS('The template $1 has been created.','<b>'.$cName.'</B>');
+	} else {
+		putGS('The template $1 could not be created.','<b>'.$cName.'</B>');
+		$correct=0;
 	}
-	else {
-	    putGS('The template $1 could not be created.','<b>'.$cName.'</B>');
-	    $correct=0;
-	}
-	
-    }
+
+}
 ?>dnl
 		*>)
 		
