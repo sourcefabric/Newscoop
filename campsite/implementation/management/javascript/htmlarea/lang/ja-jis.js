@@ -25,6 +25,7 @@ HTMLArea.I18N = {
 		forecolor:      "文字色",
 		backcolor:      "背景色",
 		horizontalrule: "水平線",
+		inserthorizontalrule: "水平線",
 		createlink:     "リンク作成",
 		insertimage:    "画像挿入",
 		inserttable:    "テーブル挿入",

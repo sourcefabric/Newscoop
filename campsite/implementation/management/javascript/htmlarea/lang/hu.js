@@ -36,6 +36,7 @@ HTMLArea.I18N = {
 		forecolor:      "Karakterszín",
 		hilitecolor:    "Háttérszín",
 		horizontalrule: "Elválasztó vonal",
+		inserthorizontalrule: "Elválasztó vonal",
 		createlink:     "Hiperhivatkozás beszúrása",
 		insertimage:    "Kép beszúrása",
 		inserttable:    "Táblázat beszúrása",
