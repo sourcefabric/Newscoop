@@ -28,6 +28,7 @@ HTMLArea.I18N = {
 		forecolor:      "Burtu krâsa",
 		hilitecolor:    "Fona krâsa",
 		horizontalrule: "Horizontâla atdalîtâjsvîtra",
+		inserthorizontalrule: "Horizontâla atdalîtâjsvîtra",
 		createlink:     "Ievietot hipersaiti",
 		insertimage:    "Ievietot attçlu",
 		inserttable:    "Ievietot tabulu",
