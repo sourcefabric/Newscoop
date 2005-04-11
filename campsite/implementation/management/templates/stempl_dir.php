@@ -5,30 +5,36 @@
 <TD  ><B> <?php  putGS('Folders'); ?> </B></TD>
 </TR>
 <?php 
-    $c="";
+$c="";
     
-    $basedir=decURL("$DOCUMENT_ROOT$listbasedir");
+foreach (split("/", $listbasedir) as $index=>$dir) {
+	if ($dir == "..") {
+		$listbasedir = "";
+		break;
+	}
+}
+$basedir=$_SERVER['DOCUMENT_ROOT']."/look/".decURL($listbasedir);
 
-    $handle=opendir($basedir);
-    while (($file = readdir($handle))!=false) {
+$handle=opendir($basedir);
+while (($file = readdir($handle))!=false) {
 	$full="$basedir/$file";
-        $filetype=filetype($full);
-        $isdir=false;
-        $isfile=false;
-        // avoiding the links
-        if ($filetype=="dir") $isdir=true;
-        else if ($filetype!="link") $isfile=true;
-        // if it's a file
-        if ($isfile){
-            // filling the array
-            $files[]=$file;
-        }
-        // if it's a directory but not the .. or .
-        else if ($isdir&&$file!="."&&$file!=".."){
-            // filling the array
-            $dirs[]=$file;
-        }
-    }
+	$filetype=filetype($full);
+	$isdir=false;
+	$isfile=false;
+	// avoiding the links
+	if ($filetype=="dir") $isdir=true;
+	else if ($filetype!="link") $isfile=true;
+	// if it's a file
+	if ($isfile){
+		// filling the array
+		$files[]=$file;
+	}
+	// if it's a directory but not the .. or .
+	else if ($isdir&&$file!="."&&$file!=".."){
+		// filling the array
+		$dirs[]=$file;
+	}
+}
     
 if (isset($dirs)) {
 	sort($dirs);
