@@ -42,6 +42,7 @@ HTMLArea.I18N = {
 		forecolor:      "Couleur de police",
 		hilitecolor:    "Surlignage",
 		horizontalrule: "Ligne horizontale",
+		inserthorizontalrule: "Ligne horizontale",
 		createlink:     "Insérer un hyperlien",
 		insertimage:    "Insérer/Modifier une image",
 		inserttable:    "Insérer un tableau",

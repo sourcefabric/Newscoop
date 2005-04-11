@@ -27,6 +27,7 @@ HTMLArea.I18N = {
 		forecolor:      "Colore del Carattere",
 		hilitecolor:    "Colore di Sfondo",
 		horizontalrule: "Linea Orizzontale",
+		inserthorizontalrule: "Linea Orizzontale",
 		createlink:     "Inserisci un Link",
 		insertimage:    "Inserisci un'Immagine",
 		inserttable:    "Inserisci una Tabella",
