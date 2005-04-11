@@ -34,6 +34,14 @@ if (strncmp($Path, "/look/", 6) != 0) {
 <?php
 }
 
+foreach (split("/", $Path) as $index=>$dir) {
+	if ($dir == "..") {
+		$Path = "/look/";
+		$Name = "";
+		break;
+	}
+}
+
 if ($access) {
 	SET_ACCESS(<*mta*>, <*ManageTempl*>)
 	SET_ACCESS(<*dta*>, <*DeleteTempl*>)
@@ -56,6 +64,13 @@ X_CURRENT(<*Path*>, <*<B><A HREF="<?php  pencHTML(decURL($Path)); ?>"><?php  pen
 X_CURRENT(<*Template*>, <*<B><?php  pencHTML(decURL($Name)); ?></B>*>)
 E_CURRENT
 
+<?php
+	$filename = "$DOCUMENT_ROOT".decURL($Path)."$Name";
+	if (is_file($filename)) {
+		$fd = fopen ($filename, "r");
+		$contents = fread ($fd, filesize ($filename));
+		fclose ($fd);
+?>
 
 B_DIALOG(<*Edit template*>, <*POST*>, <*do_edit.php*>)
 
@@ -67,13 +82,6 @@ B_DIALOG(<*Edit template*>, <*POST*>, <*do_edit.php*>)
 	REDIRECT(<*Done*>, <*Done*>, <*<?php  pencHTML(decS($Path)); ?>*>)
 <?php  } ?>
 	E_DIALOG_BUTTONS
-
-<?php 
-	$filename = "$DOCUMENT_ROOT".decURL($Path)."$Name";
-	$fd = fopen ($filename, "r");
-	$contents = fread ($fd, filesize ($filename));
-	fclose ($fd);
-?>
 
 	<TR><TD><TEXTAREA ROWS="28" COLS="90" NAME="cField" WRAP="NO"><?php  p(decS($contents)) ?></TEXTAREA></TD></TR>
 	<INPUT TYPE="HIDDEN" NAME="Path" VALUE="<?php  p($Path); ?>">
@@ -89,12 +97,18 @@ B_DIALOG(<*Edit template*>, <*POST*>, <*do_edit.php*>)
 	E_DIALOG_BUTTONS
 E_DIALOG
 
-
+<?php
+	} else {
+?>dnl
+		X_REFRESH(<*/look/*>)
+<?php
+	}
+}
+?>dnl
 
 X_HR
 X_COPYRIGHT
 E_BODY
-<?php  } ?>dnl
 
 E_DATABASE
 E_HTML
