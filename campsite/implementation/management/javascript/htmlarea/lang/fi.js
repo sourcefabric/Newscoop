@@ -23,6 +23,7 @@ HTMLArea.I18N = {
 		indent:         	"Pienenn‰ sisennyst‰",
 		forecolor:      	"Fontin v‰ri",
 		hilitecolor:    	"Taustav‰ri",
+		horizontalrule: 	"Vaakaviiva",
 		inserthorizontalrule: 	"Vaakaviiva",
 		createlink:     	"Lis‰‰ Linkki",
 		insertimage:    	"Lis‰‰ Kuva",

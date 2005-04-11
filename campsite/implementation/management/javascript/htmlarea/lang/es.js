@@ -23,6 +23,7 @@ HTMLArea.I18N = {
 		indent:         "Disminuir Sangría",
 		forecolor:      "Color del Texto",
 		hilitecolor:    "Color del Fondo",
+		horizontalrule: "Línea Horizontal",
 		inserthorizontalrule: "Línea Horizontal",
 		createlink:     "Insertar Enlace",
 		insertimage:    "Insertar Imagen",
