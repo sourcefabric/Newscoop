@@ -28,7 +28,8 @@ function check_basic_access($p_request) {
 	$user = array();
 	
 	// Check for required info.
-	if (!isset($p_request['TOL_UserId']) || !isset($p_request['TOL_UserKey'])) {
+	if (!isset($p_request['TOL_UserId']) || !isset($p_request['TOL_UserKey'])
+	 	|| !is_numeric($p_request['TOL_UserId']) || !is_numeric($p_request['TOL_UserKey'])) {
 		return array($access, $user, $XPerm);
 	}
     
