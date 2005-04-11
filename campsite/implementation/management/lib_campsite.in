@@ -86,10 +86,10 @@ function encSQL($s)
 function todefnum($s,$v=0)
 {
   if (!isset($_REQUEST[$s])) {
-      $GLOBALS[$s] = $v;
+      $GLOBALS[$s] = (int)$v;
   }
   else {
-    $GLOBALS[$s] = $_REQUEST[$s];
+    $GLOBALS[$s] = (int)$_REQUEST[$s];
   }
 }
 
