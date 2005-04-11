@@ -26,6 +26,7 @@ HTMLArea.I18N = {
 		forecolor:      "Màu Chữ",
 		backcolor:      "Màu Nền",
 		horizontalrule: "Dòng Kẻ Ngang",
+		inserthorizontalrule: "Dòng Kẻ Ngang",
 		createlink:     "Tạo Liên Kết",
 		insertimage:    "Chèn Ảnh",
 		inserttable:    "Chèn Bảng",
