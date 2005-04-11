@@ -26,6 +26,7 @@ HTMLArea.I18N = {
 		indent:               "Øke innrykk",
 		forecolor:            "Tekstfarge",
 		hilitecolor:          "Bakgrundsfarge",
+		horizontalrule: "Vannrett linje",
 		inserthorizontalrule: "Vannrett linje",
 		createlink:           "Lag lenke",
 		insertimage:          "Sett inn bilde",
