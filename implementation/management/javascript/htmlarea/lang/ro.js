@@ -36,6 +36,7 @@ HTMLArea.I18N = {
 		forecolor:      "Culoarea textului",
 		hilitecolor:    "Culoare de fundal",
 		horizontalrule: "Linie orizontală",
+		inserthorizontalrule: "Linie orizontală",
 		createlink:     "Inserează/modifică link",
 		insertimage:    "Inserează/modifică imagine",
 		inserttable:    "Inserează un tabel",
