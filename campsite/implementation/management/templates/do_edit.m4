@@ -32,21 +32,31 @@ B_HEAD
 ?>dnl
 E_HEAD
 
+B_STYLE
+E_STYLE
+
+B_BODY
+
 <?php
+foreach (split("/", $Path) as $index=>$dir) {
+	if ($dir == "..") {
+		$Path = "";
+		$Name = "";
+		break;
+	}
+}
+
 if (strncmp($Path, "/look/", 6) != 0) {
 	$access = 0;
 ?>
 	X_AD(<*You do not have the right to edit scripts outside the templates directory.*>)
 <?php
 }
+
 if ($access) {
 	SET_ACCESS(<*mta*>, <*ManageTempl*>)
 	SET_ACCESS(<*dta*>, <*DeleteTempl*>)
 ?>dnl
-B_STYLE
-E_STYLE
-
-B_BODY
 
 B_HEADER(<*Edit template*>)
 B_HEADER_BUTTONS
@@ -67,18 +77,22 @@ B_MSGBOX(<*Edit template*>)
 <?php 
 	if($dta){
 		$filename = "$DOCUMENT_ROOT".decURL($Path)."$Name";
-		$fd = fopen ($filename, "w");
-		$nField = str_replace("\\r", "\r", $cField);
-		$nField = str_replace("\\n", "\n", $nField);
-		$nField = decS($nField);
-		$res = fwrite ($fd, $nField);
+		if (is_file($filename)) {
+			$fd = fopen ($filename, "w");
+			$nField = str_replace("\\r", "\r", $cField);
+			$nField = str_replace("\\n", "\n", $nField);
+			$nField = decS($nField);
+			$res = fwrite ($fd, $nField);
+		} else {
+			$res = 0;
+		}
 		if($res >  0){ ?>dnl
 			X_MSGBOX_TEXT(<* <LI><?php putGS('The template has been saved.'); ?></LI> *>)
 		<?php  }
 		else { ?>dnl
 			X_MSGBOX_TEXT(<* <LI><?php  putGS('The template could not be saved'); ?></LI> *>)
 		<?php  }
-		fclose ($fd);
+		@fclose ($fd);
 	?>dnl
 	X_AUDIT(<*113*>, <*getGS('Template $1 was changed',encHTML(decS($Path)).encHTML(decS($Name)) )*>)	
 		B_MSGBOX_BUTTONS
