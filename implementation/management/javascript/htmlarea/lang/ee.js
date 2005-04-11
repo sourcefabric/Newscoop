@@ -35,6 +35,7 @@ HTMLArea.I18N = {
 		indent:         "Suurenda taanet",
 		forecolor:      "Fondi värv",
 		hilitecolor:    "Tausta värv",
+		horizontalrule: "Horisontaaljoon",
 		inserthorizontalrule: "Horisontaaljoon",
 		createlink:     "Lisa viit",
 		insertimage:    "Lisa pilt",
