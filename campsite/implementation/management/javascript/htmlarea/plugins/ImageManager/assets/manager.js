@@ -1,7 +1,7 @@
 /**
  * Functions for the ImageManager, used by manager.php only	
  * @author $Author: paul $
- * @version $Id: manager.js,v 1.3 2005/03/24 16:20:52 paul Exp $
+ * @version $Id: manager.js,v 1.4 2005/04/12 22:16:13 paul Exp $
  * @package ImageManager
  */
 	
@@ -44,6 +44,7 @@
 		{
 			document.getElementById("f_url").value = param["f_url"];
 			document.getElementById("f_alt").value = param["f_alt"];
+			document.getElementById("f_caption").value = param["f_caption"];
 			document.getElementById("f_border").value = param["f_border"];
 			document.getElementById("f_vert").value = param["f_vert"];
 			document.getElementById("f_horiz").value = param["f_horiz"];
