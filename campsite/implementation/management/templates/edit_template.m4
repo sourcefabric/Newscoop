@@ -14,11 +14,20 @@ B_HEAD
 E_HEAD
 
 <?php
+require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/templates/template_common.php");
 if ($access) {
 	SET_ACCESS(<*mta*>, <*ManageTempl*>)
 	SET_ACCESS(<*dta*>, <*DeleteTempl*>)
+	if ($mta == 0 && $dta == 0) {
+		header("Location: /$ADMIN/");
+		exit;
+	}
 	todef('Path');
 	todef('Name');
+	if (!Template::IsValidPath($Path)) {
+		header("Location: /$ADMIN/templates/");
+		exit;
+	}
 ?>
 
 B_CURRENT
