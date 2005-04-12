@@ -34,6 +34,25 @@ class Template extends DatabaseObject {
 		global $Campsite;
 		return $Campsite['WEBSITE_URL'].'/look/'.$this->getProperty('Name');
 	}
-	
+
+	/**
+	 * Returns true if the template path was valid
+	 * @param string p_path
+	 * @return bool
+	 */
+	function IsValidPath($p_path)
+	{
+		global $Campsite;
+
+		foreach (split("/", $p_path) as $index=>$dir) {
+			if ($dir == "..")
+				return false;
+		}
+
+		if (!is_dir($Campsite['HTML_DIR'] . "/look/$p_path"))
+			return false;
+
+		return true;
+	}
 } // class Template
 ?>
