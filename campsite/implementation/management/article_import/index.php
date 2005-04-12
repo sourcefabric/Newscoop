@@ -1,36 +1,35 @@
-<?
-require_once("common.php");
-require_once("Article.php");
-require_once("Section.php");
-require_once("Issue.php");
-require_once("Publication.php");
-require_once("Language.php");
+<?php
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Section.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Issue.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Publication.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
 
 $rootDirectory = $ADMIN_DIR;
 
-//echo $TOL_UserId;exit;
-//$access = check_basic_access($TOL_UserId, $TOL_UserKey);
-$access = 1;
-
-// Check input
-if (!isset($_REQUEST["Pub"]) 
-	|| (!isset($_REQUEST["Issue"]))
-	|| (!isset($_REQUEST["Section"]))
-	|| (!isset($_REQUEST["Language"]))
-	|| (!isset($_REQUEST["sLanguage"]))
-	|| (!isset($_REQUEST["Article"]))) {
-	echo "Missing Input!!!<br>";exit;
+list($access, $User) = check_basic_access($_REQUEST);
+if (!$access) {
+	header("Location: /$ADMIN/logout.php");
+	exit;
 }
-$Pub = $_REQUEST["Pub"];
-$Issue = $_REQUEST["Issue"];
-$Section = $_REQUEST["Section"];
-$Language = $_REQUEST["Language"];
-$sLanguage = $_REQUEST["sLanguage"];
-$Article = $_REQUEST["Article"];
 
-$articleObj =& new Article($Pub, $Issue, $Section, $Article, $sLanguage);
+$Pub = Input::Get('Pub', 'int', 0);
+$Issue = Input::Get('Issue', 'int', 0);
+$Section = Input::Get('Section', 'int', 0);
+$Language = Input::Get('Language', 'int', 0);
+$sLanguage = Input::Get('sLanguage', 'int', 0);
+$Article = Input::Get('Article', 'int', 0);
+
+if (!Input::IsValid()) {
+	header("Location: /$ADMIN/logout.php");
+	exit;
+}
+
+$articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
 $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
-$issueObj =& new Issue($Pub, $Issue, $Language);
+$issueObj =& new Issue($Pub, $Language, $Issue);
 $publicationObj =& new Publication($Pub);
 $articleLanguage =& new Language($Language);
 $issueLanguage =& new Language($sLanguage);
@@ -40,15 +39,12 @@ $issueLanguage =& new Language($sLanguage);
 <HTML>
 <HEAD>
     <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <script type="text/javascript" src="/<?php echo $ADMIN; ?>/article_import/javascript/fValidate.config.js"></script>
-    <script type="text/javascript" src="/<?php echo $ADMIN; ?>/article_import/javascript/fValidate.core.js"></script>
-    <script type="text/javascript" src="/<?php echo $ADMIN; ?>/article_import/javascript/fValidate.lang-enUS.js"></script>
-    <script type="text/javascript" src="/<?php echo $ADMIN; ?>/article_import/javascript/fValidate.validators.js"></script>
-	<TITLE>Article Import<?php //putGS("$1"); ?></TITLE>
-	<?php  if ($access == 0) { ?>
-		<META HTTP-EQUIV="Refresh" CONTENT="0; URL=<?php echo $rootDirectory ?>/logout.php">
-	<? } ?>
-	<LINK rel="stylesheet" type="text/css" href="stylesheet.css">
+    <script type="text/javascript" src="/javascript/fValidate/fValidate.config.js"></script>
+    <script type="text/javascript" src="/javascript/fValidate/fValidate.core.js"></script>
+    <script type="text/javascript" src="/javascript/fValidate/fValidate.lang-enUS.js"></script>
+    <script type="text/javascript" src="/javascript/fValidate/fValidate.validators.js"></script>
+	<TITLE><?php putGS("Article Import"); ?></TITLE>
+	<LINK rel="stylesheet" type="text/css" href="/css/admin_stylesheet.css">
 </HEAD>
 
 <BODY>
@@ -57,37 +53,44 @@ $issueLanguage =& new Language($sLanguage);
 	<TD class="page_title">
 	    <?php putGS("Article Import"); ?>
 	</TD>
-</TR>
-	<TR>
-		<TD ALIGN=RIGHT><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
+	<TD ALIGN=RIGHT>
+		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
 		<TR>
 			<TD>
-				<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>&Section=<? p($Section); ?>" >
-				<IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<? putGS("Articles"); ?>"></A>
+				<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>&Section=<?php p($Section); ?>" class="breadcrumb">
+				<?php putGS("Articles");  ?></A>
 			</TD>
+			<td class="breadcrumb_separator">&nbsp;</td>
 			<TD>
-				<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>&Section=<? p($Section); ?>" >
-				<B><? putGS("Articles");  ?></B></A>
+				<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>" class="breadcrumb" ><?php putGS("Sections");  ?></A>
 			</TD>
-<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<? putGS("Sections"); ?>"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Language=<? p($Language); ?>" ><B><? putGS("Sections");  ?></B></A></TD>
-<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/?Pub=<? p($Pub); ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<? putGS("Issues"); ?>"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/?Pub=<? p($Pub); ?>" ><B><? putGS("Issues");  ?></B></A></TD>
-<TD><A HREF="/<?php echo $ADMIN; ?>/pub/" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<? putGS("Publications"); ?>"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/pub/" ><B><? putGS("Publications");  ?></B></A></TD>
-</TR></TABLE></TD></TR>
+			<td class="breadcrumb_separator">&nbsp;</td>
+			<TD>
+				<A HREF="/<?php echo $ADMIN; ?>/pub/issues/?Pub=<?php p($Pub); ?>" class="breadcrumb" ><?php putGS("Issues");  ?></A>
+			</TD>
+			<td class="breadcrumb_separator">&nbsp;</td>
+			<TD>
+				<A HREF="/<?php echo $ADMIN; ?>/pub/" class="breadcrumb"><?php putGS("Publications");  ?></A>
+			</TD>
+		</TR>
+		</TABLE>
+	</TD>
+</TR>
 </TABLE>
 
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="1" WIDTH="100%" class="current_location_table">
 <TR>
-	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<? putGS("Publication"); ?>:</TD>
-	<TD VALIGN="TOP" class="current_location_content"><? echo $publicationObj->getName(); ?></TD>
+	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php putGS("Publication"); ?>:</TD>
+	<TD VALIGN="TOP" class="current_location_content"><?php echo htmlspecialchars($publicationObj->getName()); ?></TD>
 
-	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<? putGS("Issue"); ?>:</TD>
-	<TD VALIGN="TOP" class="current_location_content"><? echo $issueObj->getNumber(); ?>. <? echo $issueObj->getName(); ?> (<? echo $issueLanguage->getName(); ?>)</TD>
+	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php putGS("Issue"); ?>:</TD>
+	<TD VALIGN="TOP" class="current_location_content"><?php echo $issueObj->getIssueId(); ?>. <?php echo htmlspecialchars($issueObj->getName()); ?> (<?php echo htmlspecialchars($issueLanguage->getName()); ?>)</TD>
 
-	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<? putGS("Section"); ?>:</TD>
-	<TD VALIGN="TOP" class="current_location_content"><? echo $sectionObj->getNumber(); ?>. <? echo $sectionObj->getName(); ?></TD>
+	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php putGS("Section"); ?>:</TD>
+	<TD VALIGN="TOP" class="current_location_content"><?php echo $sectionObj->getSectionId(); ?>. <?php echo htmlspecialchars($sectionObj->getName()); ?></TD>
 
-	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<? putGS("Article"); ?>:</TD>
-	<TD VALIGN="TOP" class="current_location_content"><? echo $articleObj->getTitle(); ?> (<? echo $articleLanguage->getName(); ?>)</TD>
+	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php putGS("Article"); ?>:</TD>
+	<TD VALIGN="TOP" class="current_location_content"><?php echo htmlspecialchars($articleObj->getTitle()); ?> (<?php echo htmlspecialchars($articleLanguage->getName()); ?>)</TD>
 </TR>
 </TABLE>
 
@@ -103,13 +106,13 @@ $issueLanguage =& new Language($sLanguage);
 <form method="POST" action="CommandProcessor.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 0);" enctype="multipart/form-data">
 <input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
 <input type="hidden" name="form_name" value="upload_article_form">
-<input type="hidden" name="Pub" value="<? echo $Pub ?>">
-<input type="hidden" name="Issue" value="<? echo $Issue ?>">
-<input type="hidden" name="Section" value="<? echo $Section ?>">
-<input type="hidden" name="Article" value="<? echo $Article ?>">
-<input type="hidden" name="Language" value="<? echo $Language ?>">
+<input type="hidden" name="Pub" value="<?php echo $Pub ?>">
+<input type="hidden" name="Issue" value="<?php echo $Issue ?>">
+<input type="hidden" name="Section" value="<?php echo $Section ?>">
+<input type="hidden" name="Article" value="<?php echo $Article ?>">
+<input type="hidden" name="Language" value="<?php echo $Language ?>">
 <!-- BEGIN: The following fields are needed for edit.php -->
-<input type="hidden" name="sLanguage" value="<? echo $sLanguage ?>">
+<input type="hidden" name="sLanguage" value="<?php echo $sLanguage ?>">
 <!-- END -->
 <tr>
 	<td align="left" colspan="2" style="padding: 6px">
@@ -132,10 +135,10 @@ $issueLanguage =& new Language($sLanguage);
 		<table width="100%">
 		<tr>
 			<td align="right" style="padding: 3px;" >
-				<INPUT type="submit" name="Submit" value="Upload">
+				<INPUT type="submit" name="Submit" value="Upload" class="button">
 			</td>
 			<td align="left" style="padding: 3px;">
-				<INPUT type="button" name="Cancel" value="Cancel" ONCLICK="location.href='/<?php echo $ADMIN; ?>/pub/issues/sections/articles/edit.php?Pub=<? p($Pub); ?>&Issue=<? p($Issue); ?>&Section=<? p($Section); ?>&Article=<? p($Article) ?>&Language=<? p($Language); ?>&sLanguage=<? p($sLanguage) ?>'">
+				<INPUT type="button" name="Cancel" value="Cancel" class="button" ONCLICK="location.href='/<?php echo $ADMIN; ?>/pub/issues/sections/articles/edit.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php p($Section); ?>&Article=<?php p($Article) ?>&Language=<?php p($Language); ?>&sLanguage=<?php p($sLanguage) ?>'">
 			</td>
 		</tr>
 		</table>
