@@ -540,9 +540,9 @@ if ($edit_ok) { ?>
 			
 			// External Links
 			// Match the case when there is a target with the link
-			$text = preg_replace("/<!\*\*\s*Link\s*external\s*(['\"][^'\"]*['\"])\s*(target)\s*(['\"][^'\"]*['\"])\s*>/i", '<a href=$1 $3=$4>', $text);
+			//$text = preg_replace("/<!\*\*\s*Link\s*external\s*(['\"][^'\"]*['\"])\s*(target)\s*(['\"][^'\"]*['\"])\s*>/i", '<a href=$1 $3=$4>', $text);
 			// Match the case when there isnt a target
-			$text = preg_replace("/<!\*\*\s*Link\s*external\s*(['\"][^'\"]*['\"])\s*>/i", '<a href=$1>', $text);
+			//$text = preg_replace("/<!\*\*\s*Link\s*external\s*(['\"][^'\"]*['\"])\s*>/i", '<a href=$1>', $text);
 			
 			// Images
 			preg_match_all("/<!\*\*\s*Image\s*([\d]*)\s*/i",$text, $imageMatches);
