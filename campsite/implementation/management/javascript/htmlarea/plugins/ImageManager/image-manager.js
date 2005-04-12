@@ -1,7 +1,7 @@
 /**
  * The ImageManager plugin javascript.
  * @author $Author: paul $
- * @version $Id: image-manager.js,v 1.4 2005/04/12 22:14:29 paul Exp $
+ * @version $Id: image-manager.js,v 1.5 2005/04/12 22:49:55 paul Exp $
  * @package ImageManager
  */
 
@@ -79,7 +79,7 @@ HTMLArea.prototype._insertImage = function(image) {
 				imageTag += ' sub="'+param.f_caption.replace(/\"/g, "&quot")+'"';
 			}
 			imageTag += ' />';
-			alert(imageTag);
+			//alert(imageTag);
 			editor.insertHTML(imageTag);
 		} else {
 			// Image was modified.
