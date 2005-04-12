@@ -14,6 +14,10 @@ if (!$User->hasPermission('ManageTempl')) {
 }
 
 $Path = Input::Get('Path', 'string', '');
+if (!Template::IsValidPath($Path)) {
+	header("Location: /$ADMIN/templates/");
+	exit;
+}
 $Name = Input::Get('Name', 'string', '');
 $cField = Input::Get('cField', 'string', '');
 

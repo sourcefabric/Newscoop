@@ -15,6 +15,10 @@ if (!$User->hasPermission('ManageTempl')) {
 }
 
 $Path = Input::Get('Path', 'string', '');
+if (!Template::IsValidPath($Path)) {
+	header("Location: /$ADMIN/templates/");
+	exit;
+}
 $Charset = Input::Get('Charset', 'string', '');
 $UNIQUE_ID = Input::Get('UNIQUE_ID', 'string', '');
 $Id = Input::Get('Id', 'int', 0);

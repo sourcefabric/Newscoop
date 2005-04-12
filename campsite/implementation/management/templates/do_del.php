@@ -13,6 +13,10 @@ if (!$User->hasPermission('DeleteTempl')) {
 }
 
 $Path = Input::Get('Path', 'string', '');
+if (!Template::IsValidPath($Path)) {
+	header("Location: /$ADMIN/templates/");
+	exit;
+}
 $Name = Input::Get('Name', 'string', '');
 $What = Input::Get('What', 'int', 0);
 
