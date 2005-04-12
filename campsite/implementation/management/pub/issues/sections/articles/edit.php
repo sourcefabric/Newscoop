@@ -403,12 +403,11 @@ if ($edit_ok) { ?>
 			</td>
 			<td align="right">
 				<?php 
-				if (false) {
-				//if ($zipLibAvailable && $xsltLibAvailable && $xmlLibAvailable 
-				//		&& $introSupport && $bodySupport) {
+				if ($zipLibAvailable && $xsltLibAvailable && $xmlLibAvailable 
+						&& $introSupport && $bodySupport) {
 					// Article Import Link
 					?>
-					<b><a href="/<?php echo $ADMIN; ?>/article_import/index.php?Pub=<?p($Pub);?>&Issue=<?p($Issue);?>&Section=<?p($Section);?>&Article=<?p($Article)?>&Language=<?p($Language);?>&sLanguage=<?p($sLanguage);?>">Import Article</a></b>
+					<b><a href="/<?php echo $ADMIN; ?>/article_import/index.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php p($Section); ?>&Article=<?php p($Article); ?>&Language=<?php p($Language); ?>&sLanguage=<?php p($sLanguage); ?>">Import Article</a></b>
 					<?php
 				}
 				?>
