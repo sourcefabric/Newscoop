@@ -13,6 +13,10 @@ if (!$User->hasPermission('ManageTempl')) {
 }
 
 $cPath = Input::Get('cPath', 'string', '');
+if (!Template::IsValidPath($cPath)) {
+	header("Location: /$ADMIN/templates/");
+	exit;
+}
 $cName = Input::Get('cName', 'string', '');
 $correct = trim($cName) != "";
 if ($correct) {
