@@ -24,7 +24,7 @@ $Language = Input::Get('Language', 'int', 0);
 $sLanguage = Input::Get('sLanguage', 'int', 0);
 $Article = Input::Get('Article', 'int', 0);
 $Image = Input::Get('Image', 'int', 0);
-$ImageTemplateId = Input::Get('cNumber', 'int', 0);
+$ImageTemplateId = Input::Get('cNumber', 'int', 0, true);
 $Description = Input::Get('cDescription', 'string', 'None', true);
 $Photographer = Input::Get('cPhotographer', 'string', '', true);
 $Place = Input::Get('cPlace', 'string', '', true);
@@ -58,7 +58,9 @@ $attributes['Photographer'] = $Photographer;
 $attributes['Place'] = $Place;
 $attributes['Date'] = $Date;
 $imageObj->update($attributes);
-ArticleImage::SetTemplateId($Article, $Image, $ImageTemplateId);
+if (is_numeric($ImageTemplateId) && ($ImageTemplateId > 0)) {
+	ArticleImage::SetTemplateId($Article, $Image, $ImageTemplateId);
+}
 
 $logtext = getGS('Changed image properties of $1',$attributes['Description']); 
 Log::Message($logtext, $User->getUserName(), 43);
