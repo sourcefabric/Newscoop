@@ -1,7 +1,7 @@
 /**
  * Functions for the image listing, used by images.php only	
  * @author $Author: paul $
- * @version $Id: images.js,v 1.2 2005/03/24 16:18:32 paul Exp $
+ * @version $Id: images.js,v 1.3 2005/04/12 22:15:45 paul Exp $
  * @package ImageManager
  */
 
@@ -47,11 +47,15 @@
 	{
 		var topDoc = window.top.document;
 		
-		var obj = topDoc.getElementById('f_url');  obj.value = filename;
+		var obj = topDoc.getElementById('f_url');  
+		obj.value = filename;
 		//var obj = topDoc.getElementById('f_width');  obj.value = width;
 		//var obj = topDoc.getElementById('f_width'); obj.value = width;
 		//var obj = topDoc.getElementById('f_height'); obj.value = height;
-		var obj = topDoc.getElementById('f_alt'); obj.value = alt;
+		var obj = topDoc.getElementById('f_alt'); 
+		obj.value = alt;
+		var obj = topDoc.getElementById('f_caption'); 
+		obj.value = alt;
 		//var obj = topDoc.getElementById('orginal_width'); obj.value = width;
 		//var obj = topDoc.getElementById('orginal_height'); obj.value = height;		
 	}
