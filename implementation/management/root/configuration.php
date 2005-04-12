@@ -1,7 +1,5 @@
 <?php
 
-ini_set('magic_quotes_gpc', '0');
-
 global $Campsite, $ADMIN_DIR, $ADMIN;
 
 $configuration_files = array("install_conf.php", 
@@ -17,8 +15,6 @@ unset($configuration_files);
 
 $Campsite['HTML_COMMON_DIR'] = $Campsite['WWW_COMMON_DIR'] . "/html";
 $Campsite['CGI_COMMON_DIR'] = $Campsite['WWW_COMMON_DIR'] . "/cgi-bin";
-
-//$db_name = $Campsite['DATABASE_NAME'];
 $Campsite['HTML_DIR'] = $Campsite['WWW_DIR'].'/'.$Campsite['DATABASE_NAME'].'/html';
 $Campsite['CGI_DIR'] = $Campsite['WWW_DIR'].'/'.$Campsite['DATABASE_NAME'].'/cgi-bin';
 
