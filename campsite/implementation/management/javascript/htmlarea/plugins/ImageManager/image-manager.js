@@ -1,7 +1,7 @@
 /**
  * The ImageManager plugin javascript.
  * @author $Author: paul $
- * @version $Id: image-manager.js,v 1.3 2005/03/24 16:10:12 paul Exp $
+ * @version $Id: image-manager.js,v 1.4 2005/04/12 22:14:29 paul Exp $
  * @package ImageManager
  */
 
@@ -45,67 +45,57 @@ HTMLArea.prototype._insertImage = function(image) {
 		if (image && !/^img$/i.test(image.tagName))
 			image = null;
 	}
-	if (image) outparam = {
-		f_url    : HTMLArea.is_ie ? image.src : image.getAttribute("src"),
-		f_alt    : image.alt,
-		f_border : image.border,
-		f_align  : image.align,
-		f_vert   : image.vspace,
-		f_horiz  : image.hspace,
-		f_width  : image.width,
-		f_height  : image.height
-	};
-
+	if (image) {
+		outparam = {
+			f_url    : HTMLArea.is_ie ? image.src : image.getAttribute("src"),
+			f_alt    : image.alt,
+			f_border : image.border,
+			f_align  : image.align,
+			f_vert   : image.vspace,
+			f_horiz  : image.hspace,
+			f_width  : image.width,
+			f_height  : image.height,
+			f_caption : HTMLArea.is_ie ? image.sub : image.getAttribute("sub").replace(/\&quot;/g, '"')
+		};
+	}
 	var manager = _editor_url + 'plugins/ImageManager/manager.php?article_id='+_campsite_article_id;
 
 	Dialog(manager, function(param) {
 		//alert("Inside IM_InsertImage");
 		if (!param) {	// user must have pressed Cancel
-			//alert("User pressed cancel");
 			return false;
 		}
 		var img = image;
 		if (!img) {
-	//		var sel = editor._getSelection();
-	//		var range = editor._createRange(sel);
-	//		editor._doc.execCommand("insertimage", false, param.f_url);
-	//		if (HTMLArea.is_ie) {
-	//			img = range.parentElement();
-	//			// wonder if this works...
-	//			if (img.tagName.toLowerCase() != "img") {
-	//				img = img.previousSibling;
-	//			}
-	//		} else {
-	//			img = range.startContainer.previousSibling;
-	//		}
+			// Image was added.
 			var imageTag = '<img src="'+param.f_url+'"';
 			if (param.f_alt) {
-				imageTag += ' alt="'+escape(param.f_alt)+'"';			
+				imageTag += ' alt="'+param.f_alt.replace(/\"/g, "&quot;")+'"';			
 			}
 			if (param.f_align) {
 				imageTag += ' align="'+param.f_align+'"';
 			}
 			if (param.f_caption) {
-				imageTag += ' sub="'+escape(param.f_caption)+'"';
+				imageTag += ' sub="'+param.f_caption.replace(/\"/g, "&quot")+'"';
 			}
-			imageTag += '>';
-			//alert(imageTag);
+			imageTag += ' />';
+			alert(imageTag);
 			editor.insertHTML(imageTag);
-	
 		} else {
-			//alert("img exists already, set attributes");
+			// Image was modified.
 			img.src = param.f_url;
 			for (field in param) {
 				var value = param[field];
-				//alert(field+' : '+value+', img.src: '+img.src+'img.alt: '+img.alt);
+				//alert(field+' : '+value);
 				switch (field) {
-				    case "f_alt"    : img.alt	 = escape(value); break;
+				    case "f_alt"    : img.alt	 = value.replace(/\"/g, "&quot;"); break;
+				    case "f_caption": img.setAttribute("sub", value.replace(/\"/g, "&quot;")); break;
 				    case "f_border" : img.border = parseInt(value || "0"); break;
 				    case "f_align"  : img.align	 = value; break;
 				    case "f_vert"   : img.vspace = parseInt(value || "0"); break;
 				    case "f_horiz"  : img.hspace = parseInt(value || "0"); break;
 					case "f_width"  : img.width = parseInt(value || "0"); break;
-					case "f_height"  : img.height = parseInt(value || "0"); break;
+					case "f_height" : img.height = parseInt(value || "0"); break;
 				}
 			}	
 		}
