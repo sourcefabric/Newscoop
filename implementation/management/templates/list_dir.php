@@ -62,7 +62,7 @@ if (isset($dirs)) {
 			$color = 1;
 			$tr_class = "class=\"list_row_odd\"";
 		}
-		print "<TR $tr_class><TD valign=\"center\"><IMG SRC='/$ADMIN/img/icon/folder.png' BORDER='0'>&nbsp;<A HREF='?Path=$listbasedir/".encURL($j)."'>$j</A></TD>";
+		print "<TR $tr_class><TD valign=\"center\"><IMG SRC='/$ADMIN/img/icon/folder.png' BORDER='0'>&nbsp;<A HREF='?Path=".encURL("$listbasedir/$j")."'>$j</A></TD>";
 
 		if ($dta != 0)
 			print '<TD ALIGN="CENTER"><A HREF="/'.$ADMIN.'/templates/del.php?What=0&Path='.encURL($listbasedir).'&Name='.encURL($j).'"><IMG SRC="/'.$ADMIN.'/img/icon/delete.png" BORDER="0" ALT="'.getGS('Delete folder').'" TITLE="'.getGS('Delete folder').'"></A></TD></TR>';
