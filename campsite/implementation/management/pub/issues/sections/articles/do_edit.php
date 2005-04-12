@@ -7,6 +7,11 @@ require_once($_SERVER['DOCUMENT_ROOT']. "/classes/ArticleImage.php");
 global $g_spanCounter;
 $g_spanCounter = -1;
 
+// This is used in TransformInternalLinks() to figure out when
+// the internal link tag closes.
+global $g_internalLinkCounter;
+$g_internalLinkCounter = 0;
+
 /**
  * This function is a callback for preg_replace_callback();
  * It will replace <span class="campsite_subhead">...</span>
@@ -44,16 +49,29 @@ function TransformSubheads($match) {
  * @return string
  */
 function TransformInternalLinks($p_match) {
+	global $g_internalLinkCounter;
 	// This matches '</a>'
 	if (preg_match("/<\s*\/a\s*>/i", $p_match[0])) {
-		$retval = "<!** EndLink>";
-		return $retval;
+		// Check if we are closing an internal link
+		if ($g_internalLinkCounter > 0) {
+			// Replace the HTML tag with a template tag
+			$retval = "<!** EndLink>";
+			$g_internalLinkCounter = 0;
+			return $retval;
+		}
+		else {
+			// Leave the HTML tag as is (for external links).
+			return '</a>';
+		}
 	}
 	// This matches '<a href="campsite_internal_link?IdPublication=1&..." ...>'
 	elseif (preg_match("/<\s*a\s*href=[\"']campsite_internal_link[?][\w&=]*[\"'][\s\w\"']*>/i", $p_match[0])) {
+		// Replace the HTML tag with a template tag
 		$url = split("\"", $p_match[0]);
 		$parsedUrl = parse_url($url[1]);
 		$retval = "<!** Link Internal ".$parsedUrl["query"].">";
+		// Mark that we are now inside an internal link.
+		$g_internalLinkCounter = 1;
 		return $retval;
 	}	
 } // fn TransformInternalLinks
@@ -66,28 +84,28 @@ function TransformInternalLinks($p_match) {
  * @param array p_match
  * @return string
  */
-function TransformExternalLinks($p_match) {
-	// This matches '</a>'
-	if (preg_match("/<\s*\/a\s*>/i", $p_match[0])) {
-		$retval = "<!** EndLink>";
-		return $retval;
-	}
-	// This matches '<a href="xyz.com" ...>'
-	elseif (preg_match("/<\s*a\s*href=[\"'][^'\"]*[\"']\s*(target\s*=\s['\"][_\w]*['\"])?[\s\w\"']*>/i", $p_match[0])) {
-		$url = split("\"", $p_match[0]);
-		$link = $url[1];
-		$target = null;
-		if (isset($url[2]) && (stristr($url[2], 'target') !== false)) {
-			$target = $url[3];
-		}
-		$retval = '<!** Link external "'.$link.'"';
-		if (!is_null($target)) {
-			$retval .= 'target="'.$target.'"';
-		}
-		$retval .= '>';
-		return $retval;
-	}	
-} // fn TransformExternalLinks
+//function TransformExternalLinks($p_match) {
+//	// This matches '</a>'
+//	if (preg_match("/<\s*\/a\s*>/i", $p_match[0])) {
+//		$retval = "<!** EndLink>";
+//		return $retval;
+//	}
+//	// This matches '<a href="xyz.com" ...>'
+//	elseif (preg_match("/<\s*a\s*href=[\"'][^'\"]*[\"']\s*(target\s*=\s['\"][_\w]*['\"])?[\s\w\"']*>/i", $p_match[0])) {
+//		$url = split("\"", $p_match[0]);
+//		$link = $url[1];
+//		$target = null;
+//		if (isset($url[2]) && (stristr($url[2], 'target') !== false)) {
+//			$target = $url[3];
+//		}
+//		$retval = '<!** Link external "'.$link.'"';
+//		if (!is_null($target)) {
+//			$retval .= 'target="'.$target.'"';
+//		}
+//		$retval .= '>';
+//		return $retval;
+//	}	
+//} // fn TransformExternalLinks
 
 
 /**
@@ -224,13 +242,13 @@ foreach ($articleFields as $dbColumnName => $text) {
 	// with <!** Link Internal IdPublication=1&...> ... <!** EndLink>
 	//
 	$text = preg_replace_callback("/(<\s*a\s*href=[\"']campsite_internal_link[?][\w&=]*[\"'][\s\w\"']*>)|(<\s*\/a\s*>)/i", "TransformInternalLinks", $text);
-	$hasChanged |= $articleTypeObj->setProperty($dbColumnName, $text);
+	//$hasChanged |= $articleTypeObj->setProperty($dbColumnName, $text);
 
 	// Replace <a href="http://xyz.com" target="_blank"> ... </a>
 	// with <!** Link external "http://xyz.com" TARGET "_blank"> ... <!** EndLink>
 	//
-	$text = preg_replace_callback("/(<\s*a\s*href=[\"'][^\"']*[\"']\s*(target\s*=\s['\"][_\w]*['\"])?[\s\w\"']*>)|(<\s*\/a\s*>)/i", "TransformExternalLinks", $text);
-	$hasChanged |= $articleTypeObj->setProperty($dbColumnName, $text);
+	//$text = preg_replace_callback("/(<\s*a\s*href=[\"'][^\"']*[\"']\s*(target\s*=\s['\"][_\w]*['\"])?[\s\w\"']*>)|(<\s*\/a\s*>)/i", "TransformExternalLinks", $text);
+	//$hasChanged |= $articleTypeObj->setProperty($dbColumnName, $text);
 
 	// Replace <img src="A" align="B" alt="C" sub="D">
 	// with <!** Image [image_template_id] align=B alt="C" sub="D">
