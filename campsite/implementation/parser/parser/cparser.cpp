@@ -623,7 +623,6 @@ const CCLexem* CCParser::DoParse(CContext& p_rcoContext, sockstream& p_rcoOut,
 									 MYSQL* p_SQL, bool do_append, int& index,
                                      int start_st, bool all, bool p_bWrite)
 {
-	char pchTmpBuf[500];
 	const CCLexem* l;
 	while (1)
 	{
@@ -753,34 +752,28 @@ const CCLexem* CCParser::DoParse(CContext& p_rcoContext, sockstream& p_rcoOut,
 				target = string(l->Identifier);
 				l = WaitForStatementEnd();
 			}
-			if (mode == "internal")
+			if (case_comp(mode, "internal") == 0)
 			{
+				CContext rcoContext = p_rcoContext;
 				String2StringMMap* pcoParams = CURL::readQueryString(link);
 				String2StringMMap::const_iterator coIt = pcoParams->find(P_IDLANG);
 				if (coIt == pcoParams->end())
 					return l;
-				string coLangId = (*coIt).second;
+				rcoContext.SetLanguage(atol((*coIt).second.c_str()));
 				if ((coIt = pcoParams->find(P_IDPUBL)) == pcoParams->end())
 					return l;
-				string coPubId = (*coIt).second;
+				rcoContext.SetPublication(atol((*coIt).second.c_str()));
 				if ((coIt = pcoParams->find(P_NRISSUE)) == pcoParams->end())
 					return l;
-				string coIssueId = (*coIt).second;
-				sprintf(pchTmpBuf, "select SingleArticle from Issues where IdPublication = %ld"
-						" and Number = %ld and IdLanguage = %ld", atol(coPubId.c_str()),
-				        atol(coIssueId.c_str()), atol(coLangId.c_str()));
-				if (mysql_query(p_SQL, pchTmpBuf) != 0)
+				rcoContext.SetIssue(atol((*coIt).second.c_str()));
+				if ((coIt = pcoParams->find(P_NRSECTION)) == pcoParams->end())
 					return l;
-				CMYSQL_RES res = mysql_store_result(p_SQL);
-				if (*res == NULL)
+				rcoContext.SetSection(atol((*coIt).second.c_str()));
+				if ((coIt = pcoParams->find(P_NRARTICLE)) == pcoParams->end())
 					return l;
-				MYSQL_ROW row;
-				if (mysql_num_rows(*res) == 0)
-				{
-					return l;
-				}
-				row = mysql_fetch_row(*res);
-				link = string(row[0]) + "?" + link;
+				rcoContext.SetArticle(atol((*coIt).second.c_str()));
+				
+				link = rcoContext.URL()->getURI();
 			}
 			if (local_write)
 				p_rcoOut << "<a href=\"" << link << "\" TARGET=\"" << target << "\">";
