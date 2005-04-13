@@ -107,7 +107,7 @@ function read_get_parameters(&$query_string)
 	foreach ($pairs as $index=>$pair) {
 		$pair_array = explode("=", $pair);
 		if (trim($pair_array[0]) != "")
-			$parameters[trim($pair_array[0])] = trim($pair_array[1]);
+			$parameters[trim($pair_array[0])] = urldecode(trim($pair_array[1]));
 	}
 	return $parameters;
 }
