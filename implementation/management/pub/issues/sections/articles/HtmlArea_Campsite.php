@@ -114,13 +114,17 @@ HTMLArea.loadPlugin("ListType");
 <?php } ?>
 
 initdocument = function () {
+	var editorArray = new Array();
 	<?php
 	$stylesheetFile = $Campsite['HTML_COMMON_DIR'] 
 		.'/priv/pub/issues/sections/articles/article_stylesheet.css';
+	$htmlAreaFields = array();
 	foreach ($p_dbColumns as $dbColumn) {	
 		if (stristr($dbColumn->getType(), "blob")) {
+			$htmlAreaFields[] = $dbColumn->getName();
 			?>
 			var editor = new HTMLArea("<?php print $dbColumn->getName(); ?>");
+			editorArray['<?php print $dbColumn->getName(); ?>'] = editor;
  			var config = editor.config;
  			// Import our custom CSS - watch out for newlines though!
  			// They will break the editor.
@@ -253,6 +257,24 @@ initdocument = function () {
 		  	editor.registerPlugin(TableOperations);
 		  	<?php } ?>
 			editor.generate();
+			<?php
+		}
+	}
+	
+	// Warning: you are about to witness a huge hack!
+	// This quickly flips the htmlareas between text mode
+	// and wysiwyg mode so that when there are more than
+	// one on a page, they are all editable.
+	if (count($htmlAreaFields) > 0) {
+		array_pop($htmlAreaFields);
+		$count = 1;
+		foreach ($htmlAreaFields as $field) {
+			?>
+			setTimeout(function() {
+					editorArray["<?php p($field) ?>"].setMode();
+					editorArray["<?php p($field) ?>"].setMode();
+				}, (1000-(<?php p($count++); ?>*100)));
+				
 			<?php
 		}
 	}
