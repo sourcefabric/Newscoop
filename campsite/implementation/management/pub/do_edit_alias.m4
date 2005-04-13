@@ -20,7 +20,7 @@ B_BODY
 <?php
 	todefnum('cAlias');
 	todefnum('cPub');
-	todefnum('cName');
+	todef('cName');
 	$correct = 1;
 	$updated = 0;
 ?>
