@@ -6,7 +6,7 @@ regGS("Adding new country","Додавање нове државе");
 regGS("The country $1 has been created","Држава $1 је креирана");
 regGS("The country $1 could not be created","Држава $1 не може бити креирана");
 regGS("Country $1 added","Држава $1 је додата");
-regGS("Delete country","Обришите државу");
+regGS("Delete country","Обриши државу");
 regGS("You do not have the right to delete countries.","Немате право да бришете државе");
 regGS("Are you sure you want to delete the country $1?","Сигурни сте да желите да обришете државу $1?");
 regGS("Deleting country","Брисање државе");
@@ -25,6 +25,7 @@ regGS("You do not have the right to translate country names.","Немате пр
 regGS("The country name $1 has been translated","Име државе $1 је преведено");
 regGS("The country name $1 could not be translated","Име државе $1 не може бити преведено");
 regGS("Country name $1 translated","Име државе $1 преведено");
+regGS("Add New Country","Додај нову државу");
 
 
 ?>

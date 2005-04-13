@@ -23,6 +23,7 @@ regGS("Changing keyword","Мењање кључне речи");
 regGS("The keyword has been changed.","Кључна реч је промењена");
 regGS("The keyword could not be changed.","Кључна реч не може бити промењена");
 regGS("Keyword $1 changed","Кључна реч $1 је промењена");
+regGS("Keyword Infotypes","Инфотипи за кључну реч");
 
 
 ?>

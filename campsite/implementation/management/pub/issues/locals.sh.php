@@ -1,10 +1,10 @@
 <?php 
 
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>","Naziv<br><small>(kliknite za pregled rubrika)</small>");
-regGS("Front Page Template<BR><SMALL>(click to change)</SMALL>","Šablon za prvu stranu");
-regGS("Single Article Template<BR><SMALL>(click to change)</SMALL>","Šablon za stranu sa člankom");
 regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>","Objavljen<br><small>(gggg-mm-dd)</small>");
 regGS("Delete issue $1","Obriši izdanje $1");
+regGS("Publish articles","Objavi članke");
+regGS("Issue automatic publishing schedule","Raspored automatskog objavljivanja izdanja");
 regGS("Change issue status","Promeni status izdanja");
 regGS("You do not have the right to change issues.","Nemate pravo da promenenite podatke o izdanju");
 regGS("Are you sure you want to change the issue $1 status from $2 to $3?","Da li ste sigurni da želite da promenite status izdanja $1 iz $2 u $3?");
@@ -17,12 +17,14 @@ regGS("You do not have the right to add issues.","Nemate pravo da dodajete izdan
 regGS("The issue $1 has been successfuly added.","Izdanje $1 je uspešno dodato");
 regGS("The issue could not be added.","Izdanje ne može biti dodato");
 regGS("Please check if another issue with the same number/language does not already exist.","Proverite da li postoji izdanje zavedeno pod istim brojem/jezikom");
-regGS("Issue $1 added","Izdanje $1 je dodato");
 regGS("Change issue details","Promeni detalje o izdanju");
 regGS("You do not have the right to change issue details.","Nemate pravo da menjate podatke o izdanju");
+regGS("Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>","Datum objavljivanja<br><small>(gggg-mm-dd)</small>");
+regGS("Front Page Template","Šablon za prvu stranu");
 regGS("Updating issue","Menjanje izdanja");
 regGS("Changing issue's details","Promena podataka o izdanju");
 regGS("The issue $1 has been successfuly changed.","Izdanje $1 je uspešno promenjeno");
+regGS("Issue $1 added","Izdanje $1 je dodato");
 regGS("The issue could not be changed.","Izdanje ne može biti izmenjeno");
 regGS("Issue $1 updated in publication $2","Izdanje $1 je izmenjeno u publikaciji $2");
 regGS("Delete issue","Obriši izdanje");
@@ -48,9 +50,6 @@ regGS("Select the issue","Izaberite izdanje");
 regGS("New issue $1 from $2 in publication $3","Novo izdanje $1 iz $2 u publikaciji $3");
 regGS("Adding new issue","Dodavanje novog izdanja");
 regGS("Issue $1 added in publication $2","Izdanje $1 dodato u publikaciju $2");
-regGS("Preview issue","Pregled izdanja");
-regGS("This issue cannot be previewed. Please make sure it has a $1 template selected.","Ovo izdanje ne može biti pregledano. Proverite da li ima $1 izabran šablon");
-regGS("front page","početna strana");
 regGS("Changing issue template","Menjanje šablona za izdanje");
 regGS("You do not have the right to change issue templates.","Nemate pravo da menjate šablone za izdanje");
 regGS("Changing issue template for front page","Menjanje šablona izdanja za početnu stranu");
@@ -59,6 +58,7 @@ regGS("The template has been successfully changed.","Šablon je uspešno promenj
 regGS("Issue template for publication $1 changed to $2","Šablon izdanja za publikaciju $1 promenjen u $2");
 regGS("Issue template for single articles from $1 changed to $2","Šablon izdanja za stranu sa tekstom iz $1 promenjen u $2");
 regGS("The template could not be changed.","Šablon ne može biti promenjen");
+regGS("Delete entry","Obriši unos");
 
 
 ?>

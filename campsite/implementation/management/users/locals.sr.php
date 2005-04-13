@@ -101,6 +101,7 @@ regGS("No such IP Group.","Нема такве IP групе");
 regGS("Deleting IP Group","Брисање IP групе");
 regGS("The IP address group $1 has been deleted.","Група заснована на IP адреси $1 је обрисана");
 regGS("The IP Group could not be deleted.","IP група не може бити обрисана");
+regGS("No IP Group.","Нема ИП групе.");
 
 
 ?>

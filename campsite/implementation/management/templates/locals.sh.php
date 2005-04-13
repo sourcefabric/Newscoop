@@ -6,20 +6,20 @@ regGS("Creating new folder","Pravljenje novog foldera");
 regGS("You do not have the right to create new folders.","Nemate pravo da pravite nove foldere");
 regGS("The folder $1 has been created","Folder $1 je napravljen");
 regGS("The folder $1 could not be created","Folder $1 ne može biti napravljen");
-regGS("A file or folder having the name $1 already exists","");
+regGS("A file or folder having the name $1 already exists","Fajl ili folder sa imenom $1 već postoji");
 regGS("Delete templates","Obriši šablone");
 regGS("Delete folders","Obriši foldere");
 regGS("You do not have the right to delete templates.","Nemate pravo da brišete šablone");
 regGS("Are you sure you want to delete the folder $1 from $2?","Da li ste sigurni da želite da obrišete folder $1 iz $2?");
 regGS("Are you sure you want to delete the template $1 from folder $2?","Da li ste sigurni da želite da obrišete šablon $1 iz foldera $2?");
-regGS("The template $1 is in use and can not be deleted.","");
+regGS("The template $1 is in use and can not be deleted.","Šablon $1 je u upotrebi i ne može biti obrisan.");
 regGS("Deleting template","Brisanje šablona");
 regGS("Deleting folder","Brisanje foldera");
 regGS("The folder has been deleted.","Folder je izbrisan");
 regGS("The folder could not be deleted.","Folder ne može biti izbrisan");
 regGS("The template has been deleted.","Šablon je izbrisan");
 regGS("The template could not be deleted.","Šablon ne može biti izbrisan");
-regGS("Template $1 was deleted","");
+regGS("Template $1 was deleted","Šablon $1 je obrisan");
 regGS("Delete folder","Obriši folder");
 regGS("Folders","Folderi");
 regGS("No folders.","Nema foldera");
@@ -49,8 +49,14 @@ regGS("Error converting the template to UTF-8 charset.","Greška pri prevođenju
 regGS("Template charset","Kodni raspored šablona");
 regGS("Select a language/character set","Izaberi jezik/kodni raspored");
 regGS("All languages","Svi jezici");
-regGS("You do not have the right to modify templates.","");
-regGS("Invalid template file $1","");
+regGS("You do not have the right to modify templates.","Nemate pravo da menjate šablone.");
+regGS("Invalid template file $1","Pogrešno ime šablona $1");
+regGS("You do not have the right to create folders.","Nemate pravo da pravite foldere.");
+regGS("You do not have the right to upload templates.","Nemate pravo da aploudujete šablone.");
+regGS("You do not have the right to delete folders.","Nemate pravo da brišete foldere.");
+regGS("You do not have the right to create templates.","Nemate pravo da pravite šablone.");
+regGS("Duplicate file","Dupliraj fajl");
+regGS("Delete file","Obriši fajl");
 
 
 ?>

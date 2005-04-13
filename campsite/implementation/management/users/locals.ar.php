@@ -101,6 +101,7 @@ regGS("No such IP Group.","ليس هناك مجموعة مماثلة من برو
 regGS("Deleting IP Group"," الغاء مجموعة بروتوكول الإنترنت");
 regGS("The IP address group $1 has been deleted.","تم الغاء مجموعة عنوان بروتوكول الإنترنت  $1");
 regGS("The IP Group could not be deleted.","لا يمكن إلغاء مجموعة بروتوكول الإنترنت");
+regGS("No IP Group.","لا يوجد مجموعة بروتوكول الإنترنت");
 
 
 ?>
