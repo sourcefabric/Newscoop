@@ -25,7 +25,7 @@ E_HEADER
 
 <P>
 <?php 
-    todefnum('UType');
+    todef('UType');
     query ("SELECT * FROM UserTypes WHERE Name='$UType'", 'uperm');
     fetchRow($uperm);
     if ($NUM_ROWS) { ?>
