@@ -30,7 +30,7 @@ E_HEADER_BUTTONS
 E_HEADER
 
 <?php 
-    todefnum('Infotype');
+    todefnum('Class');
     query ("SELECT Name FROM Classes WHERE Id=$Class", 'c');
     $nr=$NUM_ROWS;
     if ($NUM_ROWS) {
