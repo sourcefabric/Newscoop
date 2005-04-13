@@ -1,6 +1,7 @@
 <?
-require_once('DocBookParser.php');
-require_once('Article.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/article_import/DocBookParser.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 
 // Command processor
 if ($_REQUEST["form_name"] == "upload_article_form") {
@@ -8,24 +9,17 @@ if ($_REQUEST["form_name"] == "upload_article_form") {
 }
 
 function upload_article_handler(&$request, &$session, &$files) {
-	
-	// Check input
-	if (!isset($request["Pub"]) 
-		|| (!isset($request["Issue"]))
-		|| (!isset($request["Section"]))
-		|| (!isset($request["Language"]))
-		|| (!isset($request["sLanguage"]))
-		|| (!isset($request["Article"]))
-		|| (!isset($files["filename"]))) {
+	$publication = Input::Get('Pub', 'int', 0);
+	$issue = Input::Get('Issue', 'int', 0);
+	$section = Input::Get('Section', 'int', 0);
+	$language = Input::Get('Language', 'int', 0);
+	$sLanguage = Input::Get('sLanguage', 'int', 0);
+	$articleNumber = Input::Get('Article', 'int', 0);
+
+	if (!Input::IsValid()) {
 		echo "Input Error: Missing input";
 		return;
 	}
-	$publication = $request["Pub"];
-	$issue = $request["Issue"];
-	$section = $request["Section"];
-	$language = $request["Language"];
-	$sLanguage = $request["sLanguage"];
-	$articleNumber = $request["Article"];
 	
 	// Unzip the sxw file to get the content.
 	$zip = zip_open($files["filename"]["tmp_name"]);
@@ -66,7 +60,7 @@ function upload_article_handler(&$request, &$session, &$files) {
 			$article->setBody($docBookParser->getBody());
 			
 			// Go back to the "Edit Article" page.
-			header("Location: /$ADMIN/pub/issues/sections/articles/edit.php?Pub=".$publication."&Issue=".$issue."&Section=".$section."&Article=".$articleNumber."&Language=".$language."&sLanguage=".$sLanguage);
+			header("Location: /$ADMIN/pub/issues/sections/articles/edit.php?Pub=$publication&Issue=$issue&Section=$section&Article=$articleNumber&Language=$language&sLanguage=$sLanguage");
 		} // if (!is_null($xml))
 	} // if ($zip)
 	
