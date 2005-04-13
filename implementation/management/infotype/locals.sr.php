@@ -18,6 +18,7 @@ regGS("Deleting infotype","Брисање инфотипа");
 regGS("Infotype $1 deleted","Инфотип $1 је обрисан");
 regGS("Translate infotype","Преведи инфотип");
 regGS("Check if the translation does not already exist.","Проверите да ли превод већ не постоји");
+regGS("Glossary Classes","Класе глоасра");
 
 
 ?>

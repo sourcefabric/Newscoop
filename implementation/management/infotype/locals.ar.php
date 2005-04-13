@@ -18,6 +18,7 @@ regGS("Deleting infotype","إلغاء نوع المعلومات");
 regGS("Infotype $1 deleted","تم إلغاء نوع المعلومات $1");
 regGS("Translate infotype","ترجم نوع المعلومات");
 regGS("Check if the translation does not already exist.","الرجاء التأكد من أن الترجمة غير موجودة أصلا");
+regGS("Glossary Classes","أصناف الفهرس");
 
 
 ?>

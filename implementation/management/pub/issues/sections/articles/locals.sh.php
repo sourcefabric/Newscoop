@@ -1,8 +1,8 @@
 <?php 
 
-regGS("Article automatic publishing schedule","");
+regGS("Article automatic publishing schedule","Raspored automatskog objavljivanja članaka");
 regGS("Delete article $1","Obriši članak $1");
-regGS("$1 articles found","");
+regGS("$1 articles found","Pronađeno je $1 članaka");
 regGS("Show article on front page","Prikaži članak na početnoj strani");
 regGS("Show article on section page","Prikaži članak na strani rubrike");
 regGS("Enter keywords, comma separated","Unesite ključne reči (razdvojene zarezima)");
@@ -19,15 +19,16 @@ regGS("Translate article","Prevedi članak");
 regGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only changed by authorized users.","Nemate pravo da menjate članak. Možete pregledati jedino sopstvene članke, a jednom prijavljeni članak može biti menjan samo od strane ovlašćenih korisnika");
 regGS("Edit article details","Prikaži detalje članka");
 regGS("Allow users without subscriptions to view the article","Dozvoli korisnicima bez pretplate da čitaju članak");
-regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.","");
-regGS("The article has been locked by $1 ($2) $3 minute(s) ago.","");
-regGS("Could not save the article.  It has been locked by $1 $2 hours and $3 minutes ago.","");
+regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.","Članak je zaključao $1 ($2) pre $3 časova i $4 minuta. ");
+regGS("The article has been locked by $1 ($2) $3 minute(s) ago.","Članak je zaključao $1 ($2) pre $3 minuta. ");
+regGS("Could not save the article.  It has been locked by $1 $2 hours and $3 minutes ago.","Članak ne može biti snimljen jer ga je zaključao $1 pre $2 sati i $3 minuta");
 regGS("Are you sure you want to unlock it?","Da li ste sigurni da želite da ga otključate?");
-regGS("Article is locked","");
+regGS("Article is locked","Članak je zaključan");
 regGS("The article has been updated.","Članak je izmenjen");
 regGS("The article cannot be updated or no changes have been made.","Članak ne može biti izmenjen ili nema šta da se izmeni");
-regGS("Duplicate article","");
-regGS("The destination section is the same as the source section.","");
+regGS("Duplicate article","Dupliraj članak");
+regGS("The destination section is the same as the source section.","Ciljna rubrika je ista kao matična.");
+regGS("The article is new; it is not possible to schedule it for automatic publishing.","Članak ima status novi; nemoguće je zakazati akciju automatskog objavljivanja.");
 
 
 ?>

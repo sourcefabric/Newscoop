@@ -3,11 +3,17 @@
 regGS("Name<BR><SMALL>(click to see issues)</SMALL>"," الاسم (اضغط لترى الإصدارات)");
 regGS("Delete publication $1","الغاء المنشور $1");
 regGS("No publications.","لا يوجد منشور");
+regGS("Default Site Alias","أسم الموقع الإفتراضي");
+regGS("URL Type","نوع الرابط");
 regGS("Country<BR><SMALL>(click to edit)</SMALL>","البلد<br> (اضغط للتعديل(");
 regGS("Delete entry $1","الغاء بيانات الدخول $1");
 regGS("No entries defined.","بيانات الدخول غير محددة");
-regGS("Change publication information","بدّل المعلومات الخاصة بالمنشور");
+regGS("Back to publication","العودة إلى المنشور");
+regGS("Configure publication","إعدادات المنشور");
 regGS("You do not have the right to edit publication information.","لا يحق لك تحرير المعلومات الخاصة بالمنشور");
+regGS("General attributes","الخصائص العامة");
+regGS("Subscriptions defaults","إفتراضيات الإشتراكات");
+regGS("Countries defaults","إفتراضيات الدول");
 regGS("Changing publication information","تبديل المعلومات الخاصة بالمنشور");
 regGS("You do not have the right to change publication information.","لا يحق لك تغيير المعلومات الخاصة بالمنشور");
 regGS("The publication $1 has been successfuly updated.","تم تحديث المنشور $1 بنجاح");
@@ -27,6 +33,7 @@ regGS("The publication could not be added.","لا يمكن إضافة المنش
 regGS("Select the publication","اختر المنشور");
 regGS("Add new country default subscription time","أضف مدّة الاشتراك الأصلية خاصة بالبلد الجديد");
 regGS("You do not have the right to manage publications.","لا يحق لك إدارة المنشورات");
+regGS("Please check if another entry with the same country code exists already.","الرجاء التأكد من عدم وجود إدخال أخر بنفس رمز الدولة");
 regGS("Adding new country default subscription time","إضافة مدّة اشتراك الأصلية خاصة بالبلد الجديد");
 regGS("You must select a country.","اختر بلداً");
 regGS("The default subscription time for $1 has been added."," تمت إضافة مدّة الاشتراك الأصلية ل $1 ");
@@ -46,6 +53,27 @@ regGS("Subscription default time for $1 deleted","تمّ الغاء مدّة ا�
 regGS("Name<BR><SMALL>(click to select the publication)</SMALL>","الاسم (اضغط هنا لاختيار المنشور");
 regGS("The publication $1 has been successfuly added.","تمت إضافة المنشور$1 ");
 regGS("Publication $1 added","أضيف المنشور $1");
+regGS("Add new alias","أضف اسم مستعار جديد");
+regGS("Alias (click to edit)","الاسم المستعار ( اضغط للتعديل)");
+regGS("Edit aliases","تعديل الاسم المستعار");
+regGS("Publication Aliases","اسم المنشور المستعار");
+regGS("Back to aliases","العودة للاسماء المستعارة");
+regGS("Adding new alias","اضافة اسم مستعار جديد");
+regGS("The site alias $1 has been added to publication $2.","تم اضافة اسم الموقع المستعار 1$الى المنشور 2$");
+regGS("The site alias $1 could not be added.","لم يتم اضافة اسم الموقع المستعار 1$");
+regGS("Another alias with the same name exists already.","هنالك اسم مستعار آخر بنفس الاسم");
+regGS("Edit alias","تعديل الاسم المستعار");
+regGS("Editing alias","تعديل الاسم المستعار");
+regGS("The site alias for publication $1 has been modified to $2.","تم تعديل اسم الموقع المستعار للمنشور 1$ الى 2$");
+regGS("The site alias $1 could not be modified.","لم يتم تعديل اسم الموقع المستعار 1$");
+regGS("Delete alias","حذف الاسم المستعار");
+regGS("No such alias.","لا يوجد هكذا اسم مستعار");
+regGS("Are you sure you want to delete the alias $1?","هل انت متأكد من حذف الاسم المستعار 1$؟");
+regGS("Deleting alias","حذف الاسم المستعار");
+regGS("The alias $1 could not be deleted.","لم يتم حذف الاسم المستعار 1$");
+regGS("The alias $1 has been deleted from publication $2.","تم حذف الاسم المستعار 1$ من  المنشور 2$");
+regGS("$1 is the default publication alias, it can not be deleted.","لا يمكن الغاء الاسم المستعار 1$ لانه الاسم الافتراضي");
+regGS("You do not have the right to add publications.","لا تملك صلاحية اضافة منشورات");
 
 
 ?>

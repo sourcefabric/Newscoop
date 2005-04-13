@@ -18,8 +18,8 @@ regGS("The language $1 could not be deleted.","Jezik $1 ne može biti obrisan");
 regGS("Language $1 deleted","Jezik $1 je obrisan");
 regGS("Edit language","Uredi jezik");
 regGS("You do not have the right to edit languages.","Nemate pravo da uređujete jezike");
-regGS("Please enter the translation for month names.","Unesite prevode za imena meseci");
-regGS("Please enter the translation for week day names.","Unesite prevode za imena dana");
+regGS("Please enter the translation for month names.","Unesi prevode za imena meseci");
+regGS("Please enter the translation for week day names.","Unesi prevode za imena dana");
 regGS("Updating language information","Menjanje podataka o jeziku");
 regGS("Language information has been successfuly updated.","Podaci o jeziku su uspešno promenjeni");
 regGS("Language $1 modified","Jezik $1 je modifikovan");
@@ -44,6 +44,8 @@ regGS("Thursday","četvrtak");
 regGS("Friday","petak");
 regGS("Saturday","subota");
 regGS("Sunday","nedelja");
+regGS("You do not have the right to add new languages.","Nemate pravo da dodajete nove jezike");
+regGS("Add another language","Dodaj sledeći jezik");
 
 
 ?>

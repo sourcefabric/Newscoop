@@ -23,6 +23,7 @@ regGS("Changing keyword","تغيير كلمة المفتاح");
 regGS("The keyword has been changed.","تم تغيير كلمة المفتاح");
 regGS("The keyword could not be changed.","لا يمكن تغيير كلمة المفتاح");
 regGS("Keyword $1 changed"," تغيير كلمة المفتاح $1");
+regGS("Keyword Infotypes","نوع معلومات الكلمة الرئيسية");
 
 
 ?>

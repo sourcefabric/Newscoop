@@ -1,10 +1,10 @@
 <?php 
 
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>","      ( الاسم <br> (إضغط لترى الإصدارات");
-regGS("Front Page Template<BR><SMALL>(click to change)</SMALL>","    ( نموذج الصفحة الرئيسية <br> (إضغط لتغييره");
-regGS("Single Article Template<BR><SMALL>(click to change)</SMALL>","  (نموذج المقال المنفرد <br> (إضغط لتغييره");
 regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>","نشر<br> (السنة، الشهر، اليوم");
 regGS("Delete issue $1","الغاء  الإصدار$1");
+regGS("Publish articles","نشر المقالات");
+regGS("Issue automatic publishing schedule","جدول النشر الآلي للعدد");
 regGS("Change issue status","بدّل وضع الإصدار");
 regGS("You do not have the right to change issues.","لا يحق لك تغيير الإصدارات");
 regGS("Are you sure you want to change the issue $1 status from $2 to $3?","هل أنت متأكد من أنك تريد تغيير وضع الإصدار  $1 من $2 إلى $3؟");
@@ -17,13 +17,14 @@ regGS("You do not have the right to add issues.","لا يحق لك إضافة إ
 regGS("The issue $1 has been successfuly added.","تمت إضافة الإصدار $1");
 regGS("The issue could not be added.","لا يمكن إضافة الإصدار");
 regGS("Please check if another issue with the same number/language does not already exist.","    الرجاء التأكد من عدم وجود إصدار يحمل الرقم نفسه/ اللغة نفسها");
-regGS("Issue $1 added","أضيف الإصدار $1");
 regGS("Change issue details","بدّل تفاصيل الإصدار");
 regGS("You do not have the right to change issue details.","لا يحق لك تغيير تفاصيل الإصدار");
 regGS("Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>","تاريخ النشر <br>");
+regGS("Front Page Template","قالب الصفحة الأمامية");
 regGS("Updating issue","تحديث الإصدار");
 regGS("Changing issue's details","تغيير تفاصيل الإصدار");
 regGS("The issue $1 has been successfuly changed.","تم تغيير الإصدار $1");
+regGS("Issue $1 added","أضيف الإصدار $1");
 regGS("The issue could not be changed.","لا يمكن تغيير الإصدار");
 regGS("Issue $1 updated in publication $2"," تحديث الإصدار $1 في المنشور $2");
 regGS("Delete issue","إلغ الإصدار");
@@ -49,9 +50,6 @@ regGS("Select the issue","إختر الإصدار");
 regGS("New issue $1 from $2 in publication $3","إصدار $1 جديد من $2 في المنشور $3");
 regGS("Adding new issue","إضافة إصدار جديد");
 regGS("Issue $1 added in publication $2","أضيف الإصدار$1 في المنشور$2");
-regGS("Preview issue","معاينة الإصدار قبل الطبع");
-regGS("This issue cannot be previewed. Please make sure it has a $1 template selected.","لا  يمكن معاينة الإصدار. الرجاء التأكد من اختيار نموذج $1");
-regGS("front page","الصفحة الرئيسية");
 regGS("Changing issue template","تغيير نموذج الإصدار");
 regGS("You do not have the right to change issue templates.","لا يحق لك تغيير نماذج الإصدار");
 regGS("Changing issue template for front page","تغيير نموذج الإصدار للصفحة الرئيسية");
@@ -60,6 +58,7 @@ regGS("The template has been successfully changed.","تم تغيير النمو�
 regGS("Issue template for publication $1 changed to $2","تغيير  نموذج الإصدار من المنشور$1  إلى $2");
 regGS("Issue template for single articles from $1 changed to $2"," تغيير نموذج الإصدار للمقالات المنفردة من $1  إلى $2");
 regGS("The template could not be changed.","لا يمكن تغيير النموذج");
+regGS("Delete entry","إلغاء المدخل");
 
 
 ?>

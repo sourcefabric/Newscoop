@@ -3,7 +3,7 @@
 regGS("No language.","Нема језика");
 regGS("Delete language $1","Обриши језик $1");
 regGS("You do not have the right to add languages.","Немате право да додајете језике");
-regGS("Please enter the translation for time units.","Унесите превод временских јединица");
+regGS("Please enter the translation for time units.","Унеситпревод временских јединица");
 regGS("Adding new language","Додавање новог језика");
 regGS("The language $1 has been successfuly added.","Језик $1 успешно је додат");
 regGS("Please check if a language with the same name does not already exist.","Проверите да ли језик са истим именом већ не постоји");
@@ -18,8 +18,8 @@ regGS("The language $1 could not be deleted.","Језик $1 не може би�
 regGS("Language $1 deleted","Језик $1 је обрисан");
 regGS("Edit language","Уреди језик");
 regGS("You do not have the right to edit languages.","Немате право да уређујете језике");
-regGS("Please enter the translation for month names.","Унесите преводе за имена месеци");
-regGS("Please enter the translation for week day names.","Унесите преводе за имена дана");
+regGS("Please enter the translation for month names.","Унеси преводе за имена месеци");
+regGS("Please enter the translation for week day names.","Унеси преводе за имена дана");
 regGS("Updating language information","Мењање података о језику");
 regGS("Language information has been successfuly updated.","Подаци о језику су успешно промењени");
 regGS("Language $1 modified","Језик $1 је модификован");
@@ -44,6 +44,8 @@ regGS("Thursday","четвртак");
 regGS("Friday","петак");
 regGS("Saturday","субота");
 regGS("Sunday","недеља");
+regGS("You do not have the right to add new languages.","Немате право да додајете нове језике.");
+regGS("Add another language","Додај нови језик");
 
 
 ?>

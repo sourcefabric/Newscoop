@@ -44,6 +44,8 @@ regGS("Thursday","الخميس");
 regGS("Friday","الجمعة");
 regGS("Saturday","السبت");
 regGS("Sunday","الأحد");
+regGS("You do not have the right to add new languages.","لا تملك صلاحية إضافة لغات جديدة");
+regGS("Add another language","أضف لغة جديدة");
 
 
 ?>

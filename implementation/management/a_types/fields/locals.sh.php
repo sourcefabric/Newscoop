@@ -5,7 +5,7 @@ regGS("Article type","Tip članka");
 regGS("No fields.","Nema definisanih polja");
 regGS("Delete field $1","Obriši polje $1");
 regGS("Article body","Složen tekst");
-regGS("Text","Teskt");
+regGS("Text","Tekst");
 regGS("Adding new field","Dodavanje novog polja");
 regGS("You do not have the right to add article type fields.","Nemate pravo da dodajete polja za tip članka");
 regGS("The field $1 already exists.","Polje $1 već postoji");
