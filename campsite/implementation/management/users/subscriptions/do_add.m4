@@ -22,9 +22,9 @@ B_BODY
 <?php 
     todefnum('User');
     todefnum('cPub');
-    todefnum('cActive');
+    todef('cActive');
     todef('bAddSect');
-    todefnum('cStartDate');
+    todef('cStartDate');
     todefnum('cDays');
     todefnum('Subs');
     todef('sType');
