@@ -22,7 +22,7 @@ B_BODY
 <?php 
     todef('cName');
     todefnum('cLang');
-    todefnum('cPublicationDate');
+    todef('cPublicationDate');
     todefnum('Pub');
     todefnum('Issue');
     todefnum('Language');
