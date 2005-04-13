@@ -92,30 +92,17 @@ run:
 
 /usr/local/campsite/bin/create_instance --db_name [instance_name]
 
-You'll also need to set up a new virtual host in apache for this instance.
-Apache configuration:
+- Edit the file "[instance_name]-vhost.conf" from the instance configuration
+directory (/usr/local/campsite/etc/[instance_name]) and replace $SERVER_ADDRESS
+and $SERVER_NAME with the appropriate values. Your system administrator should
+provide the server address and server name. The server name must also be
+registered in the DNS (Domain Name Service).
 
-<VirtualHost [virtual_host_address]>
-	DocumentRoot /usr/local/campsite/www/[instance_name]/html
-	ScriptAlias /cgi-bin/ /usr/local/campsite/www/[instance_name]/cgi-bin/
-	ServerName INST01.mydom.com
-	DirectoryIndex index.php index.html
-	<Directory /usr/local/campsite/www/[instance_name]/html>
-		Options -Indexes FollowSymLinks MultiViews
-		AllowOverride All
-		<IfModule mod_access.c>
-			Order allow,deny
-			Allow from all
-		</IfModule>
-	</Directory>
-	<Directory /usr/local/campsite/www/[instance_name]/cgi-bin/>
-		AllowOverride All
-		Options ExecCGI
-		<IfModule mod_access.c>
-			Order allow,deny
-			Allow from all
-		</IfModule>
-	</Directory>
-	AddHandler tpl_handler .tpl
-	Action tpl_handler /cgi-bin/tpl_cgi
-</VirtualHost>
+- Include the file "[instance_name]-vhost.conf" in the main apache
+configuration file.
+
+- Restart the apache server:
+	killall httpd
+	{PATH}/httpd
+or
+	/etc/rc.d/init.d/httpd restart
