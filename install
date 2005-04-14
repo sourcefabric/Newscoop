@@ -112,10 +112,10 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 if [ "$1" = "--version" ]; then
-    echo -e "CAMPSITE $CAMPSITE_VERSION, released on $CAMPSITE_RELEASE_DATE"
+    echo -e "CAMPSITE $CAMPSITE_VERSION $RELEASE_NAME, released on $CAMPSITE_RELEASE_DATE"
     exit 0
 fi
-echo -e "\nInstalling CAMPSITE $CAMPSITE_VERSION"
+echo -e "\nInstalling CAMPSITE $CAMPSITE_VERSION $RELEASE_NAME"
 configure_campsite $upgrade $do_interactive
 do_configure $upgrade --apache_conf_path "$apache_conf_path" --apache_bin_path "$apache_bin_path"
 compile_sources
