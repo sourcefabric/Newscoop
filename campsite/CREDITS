@@ -9,15 +9,23 @@ Original Specifications
 - Aleksandar Brajanoski
 
 Core coding
-- Lucian Muresan: database, admin interface, localization, documentation
 - Mugurel Rus: campsite server, database, admin interface, install scripts,
   documentation
-- Nenad Pandzic: campfire
+- Paul Baranowski: admin interface, redesign, HTMLArea adaptation  
 - Sebastian Gobel: admin interface
-- Attila Egyedi: campfire, admin interface, localization
-- Richard Airlie: port to FreeBSD and OpenBSD, documentation updates, bug fixes
 - Micz Flor: documentation
 - Sava Tatic: documentation
+
+Heavy Testing and Feature I
+- Aleksandar Brajanoski
+- Ondra Koutek
+
+Former contributors
+- Lucian Muresan: database, admin interface, localization, documentation
+- Nenad Pandzic: Campfire
+- Attila Egyedi: campfire, admin interface, localization
+- Richard Airlie: first port to FreeBSD and OpenBSD, documentation updates, bug fixes
+- Mirjana Zdjelar: testing
 - Recognos <www.recognos.com>
 - DNT Cluj <www.dntcj.ro>
 
@@ -32,10 +40,7 @@ User interface localization:
 - Engel Sanchez and William Maas (Spanish) <es-localizer@campware.org>
 - Mugurel Rus and Lucian Muresan (Romanian) <ro-localizer@campware.org>
 
-Testing
-- Mirjana Zdjelar
-- Aleksandar Brajanoski
-- Ondra Koutek
+
 
 Thanks to
 - Rossz Vamos-Wentworth (helped with SuSE port)
