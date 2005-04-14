@@ -37,11 +37,21 @@ export INSTALL_CONF=${CAMPSITE_PACKAGE_DIR}/.install_conf
 
 
 # set version, release date and install log
-campsite_version=`cat ${CAMPSITE_PACKAGE_DIR}/README | grep -w ^version | grep ":" | cut -f 2 -d ":"`
+version_string=`cat ${CAMPSITE_PACKAGE_DIR}/README | grep -w ^version | grep ":" | cut -f 2 -d ":"`
 [ $? -ne 0 ] && echo "Error reading campsite version" && exit 1
-export CAMPSITE_VERSION=`echo -n $campsite_version`
-release_date=`cat ${CAMPSITE_PACKAGE_DIR}/README | grep -w ^release | grep ":" | cut -f 2 -d ":"`
-[ $? -ne 0 ] && echo "Error reading campsite release date" && exit 1
+CAMPSITE_VERSION=
+RELEASE_NAME=
+for v in $version_string; do
+    if [ "$CAMPSITE_VERSION" = "" ]; then
+	CAMPSITE_VERSION=$v
+    else
+	if [ "$RELEASE_NAME" = "" ]; then
+	    RELEASE_NAME=$v
+	else
+	    RELEASE_NAME="$RELEASE_NAME $v"
+	fi
+    fi
+done
 export CAMPSITE_RELEASE_DATE=release_date
 export INSTALL_LOG=${CAMPSITE_PACKAGE_DIR}/install_log
 
@@ -147,6 +157,7 @@ export CGI_COMMON_DIR=$CGI_COMMON_DIR
 export HTML_COMMON_DIR=$HTML_COMMON_DIR
 export PRIV_COMMON_DIR=$PRIV_COMMON_DIR
 export CAMPSITE_VERSION=$CAMPSITE_VERSION
+export RELEASE_NAME=$RELEASE_NAME
 export OLD_CAMPSITE_REGISTER=$OLD_CAMPSITE_REGISTER
 export PROCESSOR_TYPE=\`uname -m\`
 export MAKE=$MAKE
@@ -213,7 +224,9 @@ campsite_version_php=${INSTALL_CONF}/campsite_version.php
 if [ ! -f "$campsite_version_php" ] || [ "$campsite_version_php" -ot "./make.env" ]; then
 echo -n -e "Writing campsite_version.php script..."
 rm -f "$campsite_version_php"
-echo -e -n "<?php\n\n\$Campsite['VERSION'] = '$CAMPSITE_VERSION';\n\n?>" > "$campsite_version_php"
+version_str=$CAMPSITE_VERSION
+[ "$RELEASE_NAME" != "" ] && version_str="$CAMPSITE_VERSION $RELEASE_NAME"
+echo -e -n "<?php\n\n\$Campsite['VERSION'] = '$version_str';\n\n?>" > "$campsite_version_php"
 [ $? -ne 0 ] && echo "ERROR" && exit 1
 echo "done"
 else
@@ -283,6 +296,7 @@ export CGI_COMMON_DIR=$CGI_COMMON_DIR
 export HTML_COMMON_DIR=$HTML_COMMON_DIR
 export PRIV_COMMON_DIR=$PRIV_COMMON_DIR
 export CAMPSITE_VERSION=$CAMPSITE_VERSION
+export RELEASE_NAME=$RELEASE_NAME
 export OLD_CAMPSITE_REGISTER=/etc/campsite.reg
 export PROCESSOR_TYPE=`uname -m`
 export MAKE=$MAKE
