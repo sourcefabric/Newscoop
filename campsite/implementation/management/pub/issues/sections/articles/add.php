@@ -38,49 +38,12 @@ $allLanguages = Language::GetAllLanguages();
 if (function_exists ("incModFile")) {
 	incModFile ();
 }
+
+$topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
+				  'Section' => $sectionObj);
+CampsiteInterface::ContentTop('Add new article', $topArray);
+
 ?>
-<HEAD>
-	<TITLE><?php  putGS("Add new article"); ?></TITLE>
-	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
-</HEAD>
-
-<BODY>
-
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
-<TR>
-	<TD class="page_title">
-	    <?php  putGS("Add new article"); ?>
-	</TD>
-	<TD ALIGN="RIGHT" valign="middle">
-		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" >
-		<TR>
-			<?php if ($Wiz == 0) { ?>
-			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>&Section=<?php  p($Section); ?>" class="breadcrumb"><?php  putGS("Articles");  ?></A></TD>
-			<td class="breadcrumb_separator">&nbsp;</td>
-			<?php  } ?>
-			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/<?php  if ($Wiz) { ?>add_article.php<?php  } ?>?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>" class="breadcrumb"><?php  putGS("Sections");  ?></A></TD>
-			<td class="breadcrumb_separator">&nbsp;</td>
-			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/<?php  if ($Wiz) { ?>add_article.php<?php  } ?>?Pub=<?php  p($Pub); ?>" class="breadcrumb"><?php  putGS("Issues");  ?></A></TD>
-			<td class="breadcrumb_separator">&nbsp;</td>
-			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/<?php  if ($Wiz) { ?>add_article.php<?php  } ?>" class="breadcrumb"><?php  putGS("Publications");  ?></A></TD>
-		</TR>
-		</TABLE>
-	</TD>
-</TR>
-</TABLE>
-
-<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="1" WIDTH="100%" class="current_location_table">
-<TR>
-	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php  putGS("Publication"); ?>:</TD>
-	<TD VALIGN="TOP" class="current_location_content"><?php p(htmlspecialchars($publicationObj->getName())); ?></TD>
-
-	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php  putGS("Issue"); ?>:</TD>
-	<TD VALIGN="TOP" class="current_location_content"><?php p($issueObj->getIssueId()); ?>. <?php  p(htmlspecialchars($issueObj->getName())); ?> (<?php p(htmlspecialchars($languageObj->getName())); ?>)</TD>
-
-	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php  putGS("Section"); ?>:</TD>
-	<TD VALIGN="TOP" class="current_location_content"><?php p($sectionObj->getSectionId()); ?>. <?php  p(htmlspecialchars($sectionObj->getName())); ?></TD>
-</TR>
-</TABLE>
 
 <P>
 <FORM NAME="dialog" METHOD="POST" ACTION="do_add.php" >
