@@ -82,7 +82,9 @@ else {
 	$totalSubtopics = count($viewTopic->getSubtopics());
 }
 
-ArticleTop($articleObj, $Language, "Article topics");
+$topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
+				  'Section' => $sectionObj, 'Article'=>$articleObj);
+CampsiteInterface::ContentTop('Article topics', $topArray);
 ?>
 
 <p>
