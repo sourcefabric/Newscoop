@@ -28,6 +28,11 @@ class Publication extends DatabaseObject {
 	} // fn getName
 
 	
+	function getLanguageId() {
+		return $this->getProperty('IdDefaultLanguage');
+	} // fn getLanguageId
+	
+	
 	/**
 	 * Return all publications as an array of Publication objects.
 	 * @return array
