@@ -1,4 +1,6 @@
 <?php
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/lib_campsite.php");
 /**
  * Note: These functions should eventually become templates.
  *
@@ -134,5 +136,129 @@ class CampsiteInterface {
 		exit;
 	} // fn DisplayError
 	
+	
+
+	/**
+	 * Common header for all content screens.
+	 *
+	 * @param string p_title
+	 *		The title of the page.  This should have a translation in the language files.
+	 *
+	 * @param array p_objArray
+	 *		This represents your current location in the content tree.  This
+	 * 		can have the following index values, each containing the appropriate object:
+	 *		'Pub', 'Issue', 'Section', 'Article'
+	 *
+	 * @param boolean p_includeLinks
+	 *		Whether to include the links underneath the title or not.  Default TRUE.
+	 *
+	 * @param boolean p_fValidate
+	 *		Whether to include the fValidate javascript files in the HTML header. Default FALSE.
+	 *
+	 * @param array p_extraBreadcrumbs
+	 *		An array in the form 'text' => 'link' for more breadcrumbs.
+	 *
+	 * @return void
+	 */
+	function ContentTop($p_title, $p_objArray, $p_includeLinks = true, $p_fValidate = false, $p_extraBreadcrumbs = null) {
+		global $Campsite;
+		global $ADMIN;
+		$publicationObj = array_get_value($p_objArray, 'Pub', null);
+		$issueObj = array_get_value($p_objArray, 'Issue', null);
+		$sectionObj = array_get_value($p_objArray, 'Section', null);
+		$articleObj = array_get_value($p_objArray, 'Article', null);
+		?>
+	<HEAD>
+		<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
+		<?php if ($p_fValidate) { ?>
+		<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.config.js"></script>
+	    <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.core.js"></script>
+	    <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.lang-enUS.js"></script>
+	    <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.validators.js"></script>	
+		<?php } ?>
+		<TITLE><?php putGS($p_title); ?></TITLE>
+	</HEAD>
+	
+	<BODY>
+	
+	<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
+	<TR>
+		<TD class="page_title">
+		    <?php putGS($p_title); ?>
+		</TD>
+	<?php 
+	if ($p_includeLinks) {
+	?>
+		<TD ALIGN="right">
+			<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
+			<TR>
+				<?php 
+				if (is_array($p_extraBreadcrumbs)) {
+					foreach ($p_extraBreadcrumbs as $text => $link) {
+						?>
+						<TD><A HREF="<?php echo $link; ?>" class="breadcrumb" ><?php putGS($text); ?></A></TD>
+						<td class="breadcrumb_separator">&nbsp;</td>
+						<?php
+					}
+				}
+				if (!is_null($articleObj)) {
+				?>
+				<!-- "Articles" Link -->
+				<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/?Pub=<?php p($sectionObj->getPublicationId()); ?>&Issue=<?php p($sectionObj->getIssueId()); ?>&Language=<?php p($issueObj->getLanguageId()); ?>&Section=<?php p($sectionObj->getSectionId()); ?>" class="breadcrumb" ><?php putGS("Articles");  ?></A></TD>
+				<td class="breadcrumb_separator">&nbsp;</td>
+				<?php
+				}
+				if (!is_null($sectionObj)) { ?>
+				<!-- "Sections" link -->
+				<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/?Pub=<?php p($issueObj->getPublicationId()); ?>&Issue=<?php p($issueObj->getIssueId()); ?>&Language=<?php p($issueObj->getLanguageId()); ?>" class="breadcrumb"><?php putGS("Sections"); ?></A></TD>
+				<td class="breadcrumb_separator">&nbsp;</td>
+				<?PHP
+				}
+				if (!is_null($issueObj)) { ?>
+				<!-- "Issues" Link -->
+				<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/?Pub=<?php p($issueObj->getPublicationId()); ?>" class="breadcrumb"><?php putGS("Issues"); ?></A></TD>
+				<td class="breadcrumb_separator">&nbsp;</td>
+				<?PHP
+				}
+				?>
+				<!-- "Publications" Link -->
+				<TD><A HREF="/<?php echo $ADMIN; ?>/pub/" class="breadcrumb" ><?php  putGS("Publications");  ?></A></TD>
+			</TR>
+			</TABLE>
+		</TD>
+	<?php
+	} // if ($p_includeLinks)
+	?>
+	</TR>
+	</TABLE>
+	
+	<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="1" WIDTH="100%" class="current_location_table">
+	<TR>
+		<?php if (!is_null($publicationObj)) { ?>
+		<TD ALIGN="RIGHT" NOWRAP VALIGN="TOP" width="1%" class="current_location_title">&nbsp;<?php putGS("Publication"); ?>:</TD>
+		<TD VALIGN="TOP" class="current_location_content"><?php print htmlspecialchars($publicationObj->getName()); ?></TD>
+		<?php
+		}
+		if (!is_null($issueObj)) { ?>
+		<TD ALIGN="RIGHT" NOWRAP VALIGN="TOP" width="1%" class="current_location_title">&nbsp;<?php putGS("Issue"); ?>:</TD>
+		<TD VALIGN="TOP" class="current_location_content"><?php print $issueObj->getIssueId(); ?>. <?php  print htmlspecialchars($issueObj->getName()); ?> (<?php print htmlspecialchars($issueObj->getLanguageName()) ?>)</TD>
+		<?PHP
+		}
+		if (!is_null($sectionObj)) { ?>
+		<TD ALIGN="RIGHT" NOWRAP VALIGN="TOP" width="1%" class="current_location_title">&nbsp;<?php putGS("Section"); ?>:</TD>
+		<TD VALIGN="TOP" class="current_location_content"><?php print $sectionObj->getSectionId(); ?>. <?php  print htmlspecialchars($sectionObj->getName()); ?></TD>
+		<?PHP
+		}
+		if (!is_null($articleObj)) { ?>
+		<TD ALIGN="RIGHT" NOWRAP VALIGN="TOP" width="1%" class="current_location_title">&nbsp;<?php putGS("Article"); ?>:</TD>
+		<TD VALIGN="TOP" class="current_location_content"><?php print htmlspecialchars($articleObj->getTitle()); ?> (<?php print htmlspecialchars($articleObj->getLanguageName()); ?>)</TD>
+		<?PHP
+		}
+		?>
+	</TR>
+	</TABLE>
+		<?php
+	} // fn ContentTop
+
 } // class CampsiteInterface
 ?>
