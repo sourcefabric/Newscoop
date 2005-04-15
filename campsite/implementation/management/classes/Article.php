@@ -380,7 +380,7 @@ class Article extends DatabaseObject {
 	function getLanguageName() {
 		if (is_null($this->m_languageName)) {
 			$language =& new Language($this->m_data['IdLanguage']);
-			$this->m_languageName = $language->getName();
+			$this->m_languageName = $language->getNativeName();
 		}
 		return $this->m_languageName;
 	} // fn getLanguageName
