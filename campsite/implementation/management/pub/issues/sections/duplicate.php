@@ -52,10 +52,11 @@ $languageObj =& new Language($Language);
 $allPublications =& Publication::GetAllPublications();
 $allIssues = array();
 if ($DestPublication > 0) {
-	$allIssues =& Issue::GetIssuesInPublication($DestPublication);
+	$allIssues =& Issue::GetIssues($DestPublication);
 }
 
-SectionTop($sectionObj, $Language, "Duplicate section");
+$topArray = array('Pub' => $publicationObj, 'Issue'=>$issueObj, 'Section' => $sectionObj);
+CampsiteInterface::ContentTop('Duplicate section', $topArray);
 ?>
 
 <P>
@@ -142,12 +143,11 @@ SectionTop($sectionObj, $Language, "Duplicate section");
 </tr>
 
 <FORM NAME="SECT_DUP" METHOD="POST" action="do_duplicate.php">
-<?php if ($DestPublication > 0 && $DestIssue > 0) { ?>
 <tr>
 	<td><?php putGS("Destination section number"); ?>:</td>
-	<td><input type="text" class="input_text" name="destination_section" value="<?php echo $Section; ?>"></td>
+	<td><input type="text" class="input_text" name="destination_section" value="<?php echo $Section; ?>" <?php if ($DestPublication <= 0 || $DestIssue <= 0) { ?>disabled<?php } ?>>
+	</td>
 </tr>
-<?php } ?>
 
 <tr>
 	<td colspan="2"><?php 
