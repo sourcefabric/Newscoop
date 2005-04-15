@@ -174,7 +174,7 @@ function onCancel() {
     	$options = array();
     	$options[0] = "?";
     	if (($languageId != 0) && ($publicationId != 0)) {
-	    	$issues = Issue::GetIssuesInPublication($publicationId, $languageId);
+	    	$issues = Issue::GetIssues($publicationId, $languageId);
 	    	foreach ($issues as $issue) {
 	    		$options[$issue->getIssueId()] = substr($issue->getName(), 0, $maxSelectLength);
 	    	}
@@ -195,7 +195,7 @@ function onCancel() {
     	$options = array();
     	$options[0] = "?";
     	if (($languageId != 0) && ($publicationId != 0) && ($issueId != 0)) {
-	    	$sections = Section::GetSectionsInIssue($publicationId, $issueId, $languageId);
+	    	$sections = Section::GetSections($publicationId, $issueId, $languageId);
 	    	foreach ($sections as $section) {
 	    		$options[$section->getSectionId()] = substr($section->getName(), 0, $maxSelectLength);
 	    	}
