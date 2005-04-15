@@ -57,14 +57,16 @@ $sLanguageObj =& new Language($sLanguage);
 $allPublications =& Publication::GetAllPublications();
 $allIssues = array();
 if ($DestPublication > 0) {
-	$allIssues =& Issue::GetIssuesInPublication($DestPublication);
+	$allIssues =& Issue::GetIssues($DestPublication);
 }
 $allSections = array();
 if ($DestIssue > 0) {
-	$allSections =& Section::GetSectionsInIssue($DestPublication, $DestIssue, $Language);
+	$allSections =& Section::GetSections($DestPublication, $DestIssue, $Language);
 }
 
-ArticleTop($articleObj, $Language, "Duplicate article");
+$topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
+				  'Section' => $sectionObj, 'Article'=>$articleObj);
+CampsiteInterface::ContentTop("Duplicate article", $topArray);
 ?>
 
 <P>
