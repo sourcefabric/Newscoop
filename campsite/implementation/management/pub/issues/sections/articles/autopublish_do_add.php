@@ -85,7 +85,9 @@ else {
 	header("Location: /$ADMIN/pub/issues/sections/articles/autopublish.php?Pub=$Pub&Issue=$Issue&Section=$Section&Article=$Article&Language=$Language&sLanguage=$sLanguage");
 	exit;
 }
-ArticleTop($articleObj, $Language, "Scheduling a new publish action");
+$topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
+				  'Section' => $sectionObj, 'Article'=>$articleObj);
+CampsiteInterface::ContentTop("Scheduling a new publish action", $topArray);
 if ($articleObj->getPublished() != 'N') {
 ?>
 
