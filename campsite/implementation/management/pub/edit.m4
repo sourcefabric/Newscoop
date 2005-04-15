@@ -18,7 +18,7 @@ B_HEAD
     query ("SELECT Id, Name FROM Languages WHERE 1=0", 'q_lang');
 
     query ("SELECT Unit, Name FROM TimeUnits WHERE 1=0", 'q_unit');
-    $sql = "SELECT Id as IdLang FROM Languages WHERE code=''";
+    $sql = "SELECT Id as IdLang FROM Languages WHERE code='$TOL_Language'";
 	query($sql, 'q_def_lang');
 	if($NUM_ROWS == 0){
 		query("SELECT IdDefaultLanguage as IdLang  FROM Publications WHERE Id=1", 'q_def_lang');
