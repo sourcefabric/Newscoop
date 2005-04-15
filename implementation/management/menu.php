@@ -42,7 +42,7 @@ foreach ($publications as $publication) {
 			array('ORDER BY'=>array('Number'=>'DESC'), 'LIMIT' => '5'));
 	foreach ($issues[$publication->getPublicationId()] as $issue) {
 		$sections[$issue->getPublicationId()][$issue->getIssueId()][$issue->getLanguageId()] = 
-			Section::GetSectionsInIssue($issue->getPublicationId(), 
+			Section::GetSections($issue->getPublicationId(), 
 				$issue->getIssueId(), 
 				$issue->getLanguageId());
 	}
