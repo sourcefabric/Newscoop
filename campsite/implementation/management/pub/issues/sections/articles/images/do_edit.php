@@ -38,7 +38,6 @@ if (!Input::IsValid()) {
 $articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
 $publicationObj =& new Publication($Pub);
 $issueObj =& new Issue($Pub, $Language, $Issue);
-$languageObj =& new Language($Language);
 $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
 
 // This file can only be accessed if the user has the right to change articles
