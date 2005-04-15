@@ -85,11 +85,15 @@ class Issue extends DatabaseObject {
 		}
 		
 		$queryStr .= ' FROM Issues ';
+		$whereClause = array();
 		if (!is_null($p_publicationId)) {
-			$queryStr .= " WHERE IdPublication='".$p_publicationId."'";
+			$whereClause[] = "IdPublication=$p_publicationId";
 		}
 		if (!is_null($p_languageId)) {
-			$queryStr .= " AND IdLanguage='".$p_languageId."'";
+			$whereClause[] = "IdLanguage=$p_languageId";
+		}
+		if (count($whereClause) > 0) {
+			$queryStr .= ' WHERE '.implode(' AND ', $whereClause);
 		}
 		$queryStr = DatabaseObject::ProcessOptions($queryStr, $p_sqlOptions);
 		$issues =& DbObjectArray::Create('Issue', $queryStr);
