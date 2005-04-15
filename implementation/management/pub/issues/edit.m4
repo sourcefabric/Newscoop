@@ -55,11 +55,11 @@ B_DIALOG(<*Change issue details*>, <*POST*>, <*do_edit.php*>)
 	B_DIALOG_INPUT(<*Language*>)
 	    <SELECT NAME="cLang" class="input_select">
 <?php 
-    query ("SELECT Id, Name FROM Languages", 'q_lang');
+    query ("SELECT Id, OrigName FROM Languages", 'q_lang');
     $nr=$NUM_ROWS;
     for($loop=0;$loop<$nr;$loop++) {
 	fetchRow($q_lang);
-	pcomboVar(getVar($q_lang,'Id'),getVar($publ,'IdLanguage'),getVar($q_lang,'Name'));
+	pcomboVar(getVar($q_lang,'Id'),getVar($publ,'IdLanguage'),getVar($q_lang,'OrigName'));
     }
 ?>dnl
 	    </SELECT>
