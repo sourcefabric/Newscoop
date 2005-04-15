@@ -1,4 +1,6 @@
 <?php
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DatabaseObject.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DbObjectArray.php');
 
 class Template extends DatabaseObject {
 	var $m_dbTableName = 'Templates';
@@ -14,21 +16,36 @@ class Template extends DatabaseObject {
 		}
 	} // constructor
 	
+	
+	function GetAllTemplates($p_sqlOptions = null) {
+		$queryStr = "SELECT * FROM Templates";
+		if (!is_null($p_sqlOptions)) {
+			$queryStr = DatabaseObject::ProcessOptions($queryStr, $p_sqlOptions);
+		}
+		$templates =& DbObjectArray::Create('Template', $queryStr);
+		return $templates;
+	} // fn GetAllTemplates
+	
+	
 	function getTemplateId() {
 		return $this->getProperty('Id');
-	}
+	} // fn getTemplateId
+	
 	
 	function getName() {
 		return $this->getProperty('Name');
-	}
+	} // fn getName
+	
 	
 	function getType() {
 		return $this->getProperty('Type');
-	}
+	} // fn  getType
+	
 	
 	function getLevel() {
 		return $this->getProperty('Level');
-	}
+	} // fn getLevel
+	
 	
 	function getAbsoluteUrl() {
 		global $Campsite;
