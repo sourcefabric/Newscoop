@@ -296,7 +296,11 @@ else
     result=0
     if [ "$file_type" = "executable" ]; then
 	export PATH="$PATH:/bin:/usr/bin:/usr/local/bin"
-	[ "$WHICH" = "" ] && export WHICH=`which --skip-alias which 2> /dev/null`
+	if [ "$WHICH" = "" ]; then
+	    for p in /bin/which /usr/bin/which /usr/local/bin/which; do
+		[ -x $"$p" ] && WHICH=$p && break
+	    done
+	fi
 	[ "$WHICH" = "" ] && output="could not find which binary" && echo $output && return 1
 	[ "$search_path" != "" ] && export PATH=$search_path
 	file_path=`$WHICH "$file_name" 2> /dev/null`
