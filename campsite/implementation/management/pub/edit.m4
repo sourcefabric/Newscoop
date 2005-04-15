@@ -4,6 +4,7 @@ B_DATABASE
 
 <?php 
     query ("SELECT Id, Name FROM Languages WHERE 1=0", 'q_lang');
+	todef('TOL_Language');
 ?>dnl
 CHECK_BASIC_ACCESS
 CHECK_ACCESS(<*ManagePub*>)
@@ -17,7 +18,8 @@ B_HEAD
     query ("SELECT Id, Name FROM Languages WHERE 1=0", 'q_lang');
 
     query ("SELECT Unit, Name FROM TimeUnits WHERE 1=0", 'q_unit');
-    query("SELECT  Id as IdLang FROM Languages WHERE code='$TOL_Language'", 'q_def_lang');
+    $sql = "SELECT Id as IdLang FROM Languages WHERE code=''";
+	query($sql, 'q_def_lang');
 	if($NUM_ROWS == 0){
 		query("SELECT IdDefaultLanguage as IdLang  FROM Publications WHERE Id=1", 'q_def_lang');
 	}
@@ -51,7 +53,9 @@ E_HEADER
 B_CURRENT
 X_CURRENT(<*Publication*>, <*<B><?php  pgetHVar($q_pub,'Name'); ?></B>*>)
 E_CURRENT
-	<?php query ("SELECT Unit, Name FROM TimeUnits WHERE (IdLanguage=$IdLang or IdLanguage = 1) and Unit='".getHVar($q_pub,'TimeUnit')."' order by IdLanguage desc", 'q_tunit');
+	<?php
+	$sql = "SELECT Unit, Name FROM TimeUnits WHERE (IdLanguage=$IdLang or IdLanguage = 1) and Unit='".getHVar($q_pub,'TimeUnit')."' order by IdLanguage desc";
+	query($sql, 'q_tunit');
 		fetchRow($q_tunit); $tunit =getVar($q_tunit,'Name'); ?>dnl
 <P>
 B_DIALOG(<*Change publication information*>, <*POST*>, <*do_edit.php*>)

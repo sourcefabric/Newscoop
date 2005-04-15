@@ -27,7 +27,10 @@ X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<?php  todef('Path'); ?>dnl
+<?php
+	todef('TOL_Language');
+	todef('Path');
+?>dnl
 
 B_CURRENT
 X_CURRENT(<*Path*>, <*<B><?php  pencHTML(decURL($Path)); ?></B>*>)
