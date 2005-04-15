@@ -38,8 +38,8 @@ $issues = array();
 $sections = array();
 foreach ($publications as $publication) {
 	$issues[$publication->getPublicationId()] =& 
-		Issue::GetIssuesInPublication($publication->getPublicationId(), 
-		null, array('ORDER BY'=>array('Number'=>'DESC'), 'LIMIT' => '5'));
+		Issue::GetIssues($publication->getPublicationId(), null, null, 
+			array('ORDER BY'=>array('Number'=>'DESC'), 'LIMIT' => '5'));
 	foreach ($issues[$publication->getPublicationId()] as $issue) {
 		$sections[$issue->getPublicationId()][$issue->getIssueId()][$issue->getLanguageId()] = 
 			Section::GetSectionsInIssue($issue->getPublicationId(), 
