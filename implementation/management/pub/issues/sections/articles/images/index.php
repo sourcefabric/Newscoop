@@ -1,15 +1,9 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
 load_common_include_files("$ADMIN_DIR/pub/issues/sections/articles/images");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/pub/issues/sections/articles/article_common.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleImage.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Issue.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Section.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Publication.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
 
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
@@ -33,56 +27,12 @@ $publicationObj =& new Publication($Pub);
 $issueObj =& new Issue($Pub, $Language, $Issue);
 $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
 $articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
-$languageObj =& new Language($Language);
+
+$topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
+				  'Section' => $sectionObj, 'Article'=>$articleObj);
+CampsiteInterface::ContentTop('Article Image List', $topArray);
 
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
-	"http://www.w3.org/TR/REC-html40/loose.dtd">
-<HTML>
-<HEAD>
-    <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<META HTTP-EQUIV="Expires" CONTENT="now">
-	<TITLE><?php  putGS('Article Image List'); ?></TITLE>
-	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL'] ?>/css/admin_stylesheet.css">
-</HEAD>
-
-<BODY>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
-<TR>
-	<TD class="page_title">
-	    <?php putGS('Article Image List'); ?>
-	</TD>
-	<TD ALIGN="RIGHT">
-		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
-		<TR>
-			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>&Section=<?php p($Section); ?>" class="breadcrumb"><?php putGS('Articles');  ?></A></TD>
-			<td class="breadcrumb_separator">&nbsp;</td>
-			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>" class="breadcrumb"><?php putGS('Sections'); ?></A></TD>
-			<td class="breadcrumb_separator">&nbsp;</td>
-			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/?Pub=<?php p($Pub); ?>" class="breadcrumb"><?php putGS('Issues'); ?></A></TD>
-			<td class="breadcrumb_separator">&nbsp;</td>
-			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/" class="breadcrumb"><?php putGS('Publications'); ?></A></TD>
-		</TR>
-		</TABLE>
-	</TD>
-</TR>
-</TABLE>
-
-<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="1" WIDTH="100%" class="current_location_table">
-<TR>
-	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php putGS('Publication'); ?>:</TD>
-	<TD VALIGN="TOP" class="current_location_content"><?php echo htmlspecialchars($publicationObj->getName()); ?></TD>
-
-	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php putGS('Issue'); ?>:</TD>
-	<TD VALIGN="TOP" class="current_location_content"><?php echo $issueObj->getIssueId(); ?>. <?php echo htmlspecialchars($issueObj->getName()); ?> (<?php echo htmlspecialchars($languageObj->getName()); ?>)</TD>
-
-	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php putGS('Section'); ?>:</TD>
-	<TD VALIGN="TOP" class="current_location_content"><?php echo $sectionObj->getSectionId(); ?>. <?php echo htmlspecialchars($sectionObj->getName()); ?></TD>
-
-	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php putGS('Article'); ?>:</TD>
-	<TD VALIGN="TOP" class="current_location_content"><?php echo htmlspecialchars($articleObj->getTitle()); ?></TD>
-</TR>
-</TABLE>
 
 <table>
 <tr>
