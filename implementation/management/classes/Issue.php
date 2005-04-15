@@ -2,6 +2,7 @@
 require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DatabaseObject.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DbObjectArray.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
 
 class Issue extends DatabaseObject {
 	var $m_dbTableName = 'Issues';
@@ -17,6 +18,7 @@ class Issue extends DatabaseObject {
 		'SectionTplId',
 		'ArticleTplId',
 		'ShortName');
+	var $m_languageName = null;
 	
 	/**
 	 * 
@@ -36,45 +38,64 @@ class Issue extends DatabaseObject {
 
 	
 	/**
-	 * Get all issues in the database.
-	 * @return array
+	 * Return the total number of issues in the database.
+	 *
+	 * @param int p_publicationId
+	 *		If specified, return the total number of issues in the given publication.
+	 *
+	 * @return int
 	 */
-	function GetAllIssues() {
-		//global $Campsite;
-		$queryStr = 'SELECT * FROM Issues ';
-		$issues =& DbObjectArray::Create('Issue', $queryStr);
-//		$query = $Campsite['db']->Execute($queryStr);
-//		$issues = array();
-//		while ($row = $query->FetchRow($queryStr)) {
-//			$tmpIssue =& new Issue();
-//			$tmpIssue->fetch($row);
-//			$issues[] = $tmpIssue;
-//		}
-		return $issues;		
-	} // fn GetAllIssues
-	
+	function GetNumIssues($p_publicationId = null) {
+		global $Campsite;
+		$queryStr = 'SELECT COUNT(*) FROM Issues ';
+		if (is_numeric($p_publicationId)) {
+			$queryStr .= " WHERE IdPublication=$p_publicationId";
+		}
+		$total = $Campsite['db']->GetOne($queryStr);
+		return $total;				
+	} // fn GetNumIssues
+
 	
 	/**
 	 * Get all the issues in the given publication as return them as an array 
 	 * of Issue objects.
 	 *
 	 * @param int p_publicationId
+	 * 		The publication ID.
+	 *
 	 * @param int p_languageId
+	 *		(Optional) Only show issues for this language.
+	 *
+	 * @param int p_preferredLanguage
+	 *		(Optional) List this language before others.  This will override any 'ORDER BY' sql
+	 *		options you have.
+	 *
 	 * @param array p_sqlOptions
 	 *
 	 * @return array
 	 */
-	function GetIssuesInPublication($p_publicationId, $p_languageId = null, $p_sqlOptions = null) {
-		$queryStr = 'SELECT * FROM Issues '
-					." WHERE IdPublication='".$p_publicationId."'";
+	function GetIssues($p_publicationId = null, $p_languageId = null, $p_preferredLanguage = null, $p_sqlOptions = null) {
+		$queryStr = 'SELECT * ';
+		if (!is_null($p_preferredLanguage)) {
+			$tmpIssue =& new Issue();
+			$columnNames = $tmpIssue->getColumnNames();
+			$queryStr = 'SELECT '.implode(',', $columnNames)
+				.", abs(IdLanguage-$p_preferredLanguage) as LanguageOrder";
+			$p_sqlOptions['ORDER BY'] = array('Number' => 'DESC', 'LanguageOrder' => 'ASC');
+		}
+		
+		$queryStr .= ' FROM Issues ';
+		if (!is_null($p_publicationId)) {
+			$queryStr .= " WHERE IdPublication='".$p_publicationId."'";
+		}
 		if (!is_null($p_languageId)) {
 			$queryStr .= " AND IdLanguage='".$p_languageId."'";
 		}
 		$queryStr = DatabaseObject::ProcessOptions($queryStr, $p_sqlOptions);
 		$issues =& DbObjectArray::Create('Issue', $queryStr);
 		return $issues;
-	} // fn GetAllIssuesInPublication
-	
+	} // fn GetIssues
+		
 	
 	/**
 	 * @return int
@@ -90,6 +111,20 @@ class Issue extends DatabaseObject {
 	function getLanguageId() {
 		return $this->getProperty('IdLanguage');
 	} // fn getLanguageId
+
+	
+	/**
+	 * A simple way to get the name of the language the article is 
+	 * written in.  The value is cached in case there are multiple
+	 * calls to this function.
+	 */
+	function getLanguageName() {
+		if (is_null($this->m_languageName)) {
+			$language =& new Language($this->m_data['IdLanguage']);
+			$this->m_languageName = $language->getNativeName();
+		}
+		return $this->m_languageName;		
+	} // fn getLanguageName
 	
 	
 	/**
@@ -138,6 +173,16 @@ class Issue extends DatabaseObject {
 	function getIssueTemplateId() {
 		return $this->getProperty('IssueTplId');
 	} // fn getIssueTemplateId
+	
+	
+	function getPublished() {
+		return $this->getProperty('Published');
+	}
+	
+	
+	function getPublicationDate() {
+		return $this->getProperty('PublicationDate');
+	}
 } // class Issue
 
 ?>
