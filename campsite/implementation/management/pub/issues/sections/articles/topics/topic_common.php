@@ -10,5 +10,5 @@ require_once($_SERVER['DOCUMENT_ROOT']."/classes/User.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Template.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Input.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
-require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/pub/issues/sections/articles/article_top.php");
+//require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/pub/issues/sections/articles/article_top.php");
 ?>
