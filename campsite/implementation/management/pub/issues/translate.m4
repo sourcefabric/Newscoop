@@ -47,7 +47,7 @@ X_CURRENT(<*Publication*>, <*<?php  pgetHVar($q_pub,'Name'); ?>*>)
 E_CURRENT
 
 <?php 
-    query ("SELECT Languages.Id, Languages.Name FROM Languages LEFT JOIN Issues ON Issues.IdPublication = $Pub AND Issues.Number=$Issue AND Issues.IdLanguage = Languages.Id WHERE Issues.IdPublication IS NULL ORDER BY Name", 'q_lang');
+    query ("SELECT Languages.Id, Languages.OrigName FROM Languages LEFT JOIN Issues ON Issues.IdPublication = $Pub AND Issues.Number=$Issue AND Issues.IdLanguage = Languages.Id WHERE Issues.IdPublication IS NULL", 'q_lang');
     if ($NUM_ROWS) { 
         $nrlang=$NUM_ROWS;
 ?>dnl
@@ -71,7 +71,7 @@ B_DIALOG(<*Add new translation*>, <*POST*>, <*do_translate.php*>)
 		<SELECT NAME="cLang" class="input_select"><?php 
 	for($loop2=0;$loop2<$nrlang;$loop2++) { 
 		fetchRow($q_lang);
-		pcomboVar(getHVar($q_lang,'Id'),'',getHVar($q_lang,'Name'));
+		pcomboVar(getHVar($q_lang,'Id'),'',getHVar($q_lang,'OrigName'));
         }
 	    ?>
 		</SELECT>

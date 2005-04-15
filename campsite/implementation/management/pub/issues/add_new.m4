@@ -40,7 +40,7 @@ E_CURRENT
 	fetchRow($q_lang);
 	$IdLang = getVar($q_lang,'IdLang');
 
-	query ("SELECT Id, Name FROM Languages ORDER BY Name", 'q_lang');
+	query ("SELECT Id, OrigName FROM Languages ORDER BY Name", 'q_lang');
 	$rownr=$NUM_ROWS;
 	query ("SELECT MAX(Number) + 1 FROM Issues WHERE IdPublication=$Pub", 'q_nr');
 	fetchRowNum($q_nr);
@@ -58,7 +58,7 @@ B_DIALOG(<*Add new issue*>, <*POST*>, <*do_add_new.php*>)
 		<SELECT NAME="cLang" class="input_select"><?php 
     for($loop=0;$loop<$rownr;$loop++) {
 	fetchRow($q_lang);
-	pcomboVar(getHVar($q_lang,'Id'), $IdLang, getHVar($q_lang,'Name'));
+	pcomboVar(getHVar($q_lang,'Id'), $IdLang, getHVar($q_lang,'OrigName'));
     }
 ?>
 		</SELECT>
