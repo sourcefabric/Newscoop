@@ -54,7 +54,9 @@ $languageObj =& new Language($Language);
 $sLanguageObj =& new Language($sLanguage);
 $articleEvents =& ArticlePublish::GetArticleEvents($Article, $sLanguage);
 
-ArticleTop($articleObj, $Language, "Article automatic publishing schedule");
+$topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
+				  'Section' => $sectionObj, 'Article'=>$articleObj);
+CampsiteInterface::ContentTop("Article automatic publishing schedule", $topArray);
 
 if ($articleObj->getPublished() != 'N') {
 	if ($publishTime == '') {

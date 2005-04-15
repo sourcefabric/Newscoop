@@ -25,6 +25,9 @@ if (!$articleObj->exists()) {
 	CampsiteInterface::DisplayError('Article does not exist.', $BackLink);
 	exit;		
 }
+$publicationObj =& new Publication($Pub);
+$issueObj =& new Issue($Pub, $Language, $Issue);
+$sectionObj =& new Section($Pub, $Issue, $Language, $Section);
 
 // You are allowed to change the status of an article
 // if you have publish permissions, OR you created the article
@@ -45,7 +48,9 @@ else {
 	$statusWord = getGS('New');
 }
 
-ArticleTop($articleObj, $Language, "Change article status");
+$topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
+				  'Section' => $sectionObj, 'Article'=>$articleObj);
+CampsiteInterface::ContentTop('Change article status', $topArray);
 ?>
 
 <p>

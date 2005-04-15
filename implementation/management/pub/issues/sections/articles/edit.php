@@ -33,7 +33,9 @@ $articleType =& $articleObj->getArticleTypeObject();
 $lockUserObj =& new User($articleObj->getLockedByUser());
 $languageObj =& new Language($Language);
 $sLanguageObj =& new Language($sLanguage);
+$publicationObj =& new Publication($Pub);
 $issueObj =& new Issue($Pub, $Language, $Issue);
+$sectionObj =& new Section($Pub, $Issue, $Language, $Section);
 $articleTemplate =& new Template($issueObj->getArticleTemplateId());
 
 // If the user has the ability to change the article OR
@@ -94,7 +96,9 @@ foreach ($dbColumns as $dbColumn) {
 }
 
 // Begin Display of page
-ArticleTop($articleObj, $Language, "Edit article details");
+$topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
+				  'Section' => $sectionObj, 'Article'=>$articleObj);
+CampsiteInterface::ContentTop("Edit article details", $topArray);
 HtmlArea_Campsite($dbColumns, $User);
 
 if ($errorStr != "") {

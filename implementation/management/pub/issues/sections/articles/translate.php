@@ -60,7 +60,9 @@ $allLanguages = Language::getAllLanguages();
 $articleLanguages = $articleObj->getLanguages();
 $articleLanguages = DbObjectArray::GetColumn($articleLanguages, "Id");
 
-ArticleTop($articleObj, $Language, "Translate article", true, true);
+$topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
+				  'Section' => $sectionObj, 'Article'=>$articleObj);
+CampsiteInterface::ContentTop('Translate article', $topArray, true, true);
 ?>
 <P>
 <FORM NAME="dialog" METHOD="POST" ACTION="do_translate.php" >
