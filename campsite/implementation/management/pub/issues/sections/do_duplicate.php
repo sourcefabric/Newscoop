@@ -22,8 +22,8 @@ $Pub = Input::Get('Pub', 'int', 0);
 $Issue = Input::Get('Issue', 'int', 0);
 $Section = Input::Get('Section', 'int', 0);
 $Language = Input::Get('Language', 'int', 0);
-$DestPublication = Input::Get('destination_publication', 'int', 0, true);
-$DestIssue = Input::Get('destination_issue', 'int', 0, true);
+$DestPublication = Input::Get('destination_publication', 'int', 0);
+$DestIssue = Input::Get('destination_issue', 'int', 0);
 $DestSection = Input::Get('destination_section', 'int', 0, true);
 $BackLink = Input::Get('Back', 'string', "/$ADMIN/pub/issues/sections/index.php", true);
 
@@ -50,7 +50,7 @@ $languageObj =& new Language($Language);
 $allPublications =& Publication::GetAllPublications();
 $allIssues = array();
 if ($DestPublication > 0) {
-	$allIssues =& Issue::GetIssuesInPublication($DestPublication);
+	$allIssues =& Issue::GetIssues($DestPublication);
 }
 
 $correct = ($Language > 0) && ($Pub > 0) && ($Issue > 0) && ($Section > 0)
@@ -78,9 +78,11 @@ if ($correct) {
 		$dstPublicationObj->getName());
 	Log::Message($logtext, $User->getUserName(), 154);
 	$created = true;
-	SectionTop($dstSectionObj, $Language, "Duplicating section");
+	$topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 'Section' => $dstSectionObj);
+	CampsiteInterface::ContentTop('Duplicating section', $topArray);
 } else {
-	SectionTop($sectionObj, $Language, "Duplicating section");
+	$topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 'Section' => $sectionObj);
+	CampsiteInterface::ContentTop('Duplicating section', $topArray);
 }
 
 ?>
