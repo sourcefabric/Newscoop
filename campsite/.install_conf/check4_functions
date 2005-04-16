@@ -228,27 +228,6 @@ return 0
 }
 # END OF check4_stat
 
-# FUNCTION: check4_which
-# Description: check if which executable is installed
-# Parameters: none
-# Variables set:
-#	WHICH - which full path
-#	output - error message (if any)
-check4_which()
-{
-is_checked which && return 0
-check4_file which --file --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
-result=$?
-if [ $result -ne 0 ] || [ ! -x $file_path ]; then
-    output="Could not find 'which' utility. Please install 'which' package."
-    return 1
-fi
-export WHICH=$file_path
-set_checked which
-return 0
-}
-# END OF check4_which
-
 # FUNCTION: check4_cp
 # Description: check if cp executable is installed
 # Parameters: none
@@ -638,8 +617,8 @@ done
 [ "$bin_paths" = "" ] && bin_paths="/sbin /usr/sbin /usr/local/apache/bin /home/apache/bin /home/httpd/bin /opt/apache/bin"
 bin_names="apache httpd httpd2 apache2 httpds"
 for bn in $bin_names; do
-    bin_path=`which "$bn" 2> /dev/null`
-    [ $? -eq 0 ] && apache_bin_name="$bn" && break
+    check4_file --executable $"$bn" &> /dev/null
+    [ $? -eq 0 ] && bin_path=$file_path && apache_bin_name="$bn" && break
     bin_path=""
 done
 if [ "$bin_path" = "" ]; then
@@ -1045,7 +1024,7 @@ pear_dir=`pear config-get php_dir | cut -f 2 -d "="`
 result=$? && [ $result -ne 0 ] && echo "$pear_dir" && return 1
 export PEAR=$file_path
 export PEAR_DIR=$pear_dir
-set_checked
+set_checked pear
 return 0
 }
 
@@ -1058,10 +1037,12 @@ return 0
 check4_php_cli()
 {
 is_checked php_cli && return 0
-check4_file php --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
-result=$? && [ $result -ne 0 ] && return 1
-export PHP=$file_path
-set_checked
+export PHP=
+for p in /bin /usr/bin /usr/loca/bin /opt/bin; do
+    [ -x "$p/php" ] && export PHP="$p/php" && break
+done
+[ "$PHP" = "" ] && output="php CLI (Command Line Interface) not found. Please install this package" && return 1
+set_checked php_cli
 return 0
 }
 
