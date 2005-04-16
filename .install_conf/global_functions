@@ -295,15 +295,8 @@ if $absolute_path; then
 else
     result=0
     if [ "$file_type" = "executable" ]; then
-	export PATH="$PATH:/bin:/usr/bin:/usr/local/bin"
-	if [ "$WHICH" = "" ]; then
-	    for p in /bin/which /usr/bin/which /usr/local/bin/which; do
-		[ -x $"$p" ] && WHICH=$p && break
-	    done
-	fi
-	[ "$WHICH" = "" ] && output="could not find which binary" && echo $output && return 1
 	[ "$search_path" != "" ] && export PATH=$search_path
-	file_path=`$WHICH "$file_name" 2> /dev/null`
+	file_path=`$"$PHP" $"$INSTALL_CONF/is_executable.php" $"$file_name"`
 	result=$?
 	[ "$search_path" != "" ] && export PATH=$old_path
     else
@@ -318,6 +311,7 @@ else
 	fi
     fi
     if [ $result -ne 0 ]; then
+	[ "$search_path" = "" ] && search_path=$PATH
 	output="$file_type $file_name not found in $search_path" && echo $output
 	return 1
     fi
