@@ -66,6 +66,10 @@ if [ ! -x ./configure ]; then
 fi
 
 . ./configure --define_start_env > /dev/null
+if [ $? -ne 0 ]; then
+    echo "Configure error. Make sure you configured campsite properly and try again."
+    exit 2
+fi
 my_id=`id -u`
 if [ $my_id -ne 0 ] && ! $USER_INSTALL; then
     USER_NAME=`id -un`
