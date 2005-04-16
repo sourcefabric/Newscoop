@@ -99,15 +99,14 @@ CGI_COMMON_DIR=$WWW_COMMON_DIR/cgi-bin
 
 if [ "$c_define_start_env" != "--define_start_env" ]; then
 
-for m in pwd make m4 mkdir ls chown chmod cut cat grep stat which cp rm clear gcc gpp locate; do
+for m in php_cli pwd make m4 mkdir ls chown chmod cut cat grep stat cp rm clear gcc gpp locate; do
     check4_$m
     [ $? -ne 0 ] && echo $output && exit 1
 done
 
 if [ "$read_only" = "false" ]; then
-    do_install_full_config $c_define_start_env $c_upgrade
-    [ $? -ne 0 ] && exit 1
-    modules_conf --set
+    do_install_full_config $c_define_start_env $c_upgrade || exit 1
+    modules_conf --set || exit 1
     for mod in $configurable_modules; do
 	do_module_full_config $mod $c_define_start_env $c_upgrade || exit 1
     done
@@ -115,7 +114,7 @@ else
     prepare_install_env || exit 1
     install_conf --set || exit 1
     for mod in $MODULES_LIST; do
-	prepare_${mod}_env
+	prepare_${mod}_env || exit 1
     done
     modules_conf --set $mod || exit 1
 fi
@@ -276,7 +275,7 @@ else # else if define start env
     prepare_install_env || exit 1
     install_conf --set || exit 1
     modules_conf --set || exit 1
-    for m in apache gethostbyaddr_r gethostbyname_r getservbyname_r killall libpthread mysql_h libcrypt libnsl xml libmysqlclient gcc m4 make; do
+    for m in php_cli apache killall libpthread mysql_h libcrypt libnsl xml libmysqlclient gcc m4 make; do
 	check4_${m}
 	[ $? -ne 0 ] && exit 1
     done
@@ -305,9 +304,6 @@ export IMPLEMENTATION_PARTS=$IMPLEMENTATION_PARTS
 export SUPPLEMENTAL_PARTS=$SUPPLEMENTAL_PARTS
 export OLD_CAMPSITE_REGISTER=$OLD_CAMPSITE_REGISTER
 export INSTALL_CONF=$INSTALL_CONF
-export HAVE_GETHOSTBYADDR_R=$HAVE_GETHOSTBYADDR_R
-export HAVE_GETHOSTBYNAME_R=$HAVE_GETHOSTBYNAME_R
-export HAVE_GETSERVBYNAME_R=$HAVE_GETSERVBYNAME_R
 export PTHREAD_LINK=$PTHREAD_LINK
 export MYSQL_H_PATH=$MYSQL_H_PATH
 export LIBCRYPT_LINK=$LIBCRYPT_LINK
