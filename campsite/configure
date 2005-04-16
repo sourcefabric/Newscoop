@@ -130,6 +130,7 @@ cat > "$campsite_config_script" << EOF
 [ "\$1" = "--etc_dir" ] && echo -n "$ETC_DIR"
 [ "\$1" = "--www_dir" ] && echo -n "$WWW_DIR"
 [ "\$1" = "--www_common_dir" ] && echo -n "$WWW_COMMON_DIR"
+[ "\$1" = "--php_cli" ] && echo -n "$PHP"
 EOF
 [ $? -ne 0 ] && echo "ERROR" && exit 1
 chmod +x "$campsite_config_script"
@@ -312,5 +313,3 @@ export KILLALL=$KILLALL
 export PARSER_START_PORT=$PARSER_START_PORT
 export XML_INCLUDE="$XML_INCLUDE"
 export XML_LINK="$XML_LINK"
-
-echo "Configuration done"
