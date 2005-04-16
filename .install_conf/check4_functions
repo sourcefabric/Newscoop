@@ -1006,7 +1006,7 @@ fi
 set_checked killall
 return 0
 }
-# END OF check4_make
+# END OF check4_killall
 
 # FUNCTION: check4_pear
 # Description: check if pear is installed
@@ -1027,6 +1027,7 @@ export PEAR_DIR=$pear_dir
 set_checked pear
 return 0
 }
+# END OF check4_pear
 
 # FUNCTION: check4_php_cli
 # Description: check if php cli (command line interface) is installed
@@ -1041,10 +1042,27 @@ export PHP=
 for p in /bin /usr/bin /usr/loca/bin /opt/bin; do
     [ -x "$p/php" ] && export PHP="$p/php" && break
 done
-[ "$PHP" = "" ] && output="php CLI (Command Line Interface) not found. Please install this package" && return 1
+[ "$PHP" = "" ] && output="PHP CLI (Command Line Interface) not found. Please install this package" && return 1
 set_checked php_cli
 return 0
 }
+# END OF check4_php_cli
+
+# FUNCTION: check4_php_myslq
+# Description: check if php mysql module was installed
+# Parameters: none
+# Variables set:
+#	output - error message (if any)
+check4_php_mysql()
+{
+is_checked php_mysql && return 0
+check4_php_cli || return 1
+$"$PHP" -r "if (function_exists('mysql_connect')) { exit(0); } else { exit(1); }"
+[ $? -ne 0 ] && output="PHP MySQL extension was not installed. Please install it." && return 1
+set_checked php_mysql
+return 0
+}
+
 
 # FUNCTION: check4_
 # Description: check if  is installed
@@ -1061,3 +1079,4 @@ return 0
 #set_checked
 #return 0
 #}
+# END OF check4_
