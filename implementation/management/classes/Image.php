@@ -33,8 +33,8 @@ class Image extends DatabaseObject {
 	 */
 	function Image($p_imageId = null) 	{
 		parent::DatabaseObject($this->m_columnNames);
-		if (!is_null($p_imageId)) {
-			$this->setProperty('Id', $p_imageId, false);
+		$this->m_data['Id'] = $p_imageId;
+		if ($this->keyValuesExist()) {
 			$this->fetch();
 		}
 	} // constructor

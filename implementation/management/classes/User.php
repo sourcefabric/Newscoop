@@ -50,9 +50,11 @@ class User extends DatabaseObject {
 	
 	function User($p_userId = null) {
 		parent::DatabaseObject($this->m_columnNames);
-		$this->setProperty('Id', $p_userId, false);
-		if (!is_null($p_userId) && ($p_userId > 0)) {
-			$this->fetch();
+		if (is_numeric($p_userId) && ($p_userId > 0)) {
+			$this->m_data['Id'] = $p_userId;
+			if ($this->keyValuesExist()) {
+				$this->fetch();
+			}
 		}
 	} // constructor
 	

@@ -11,8 +11,8 @@ class Publication extends DatabaseObject {
 	
 	function Publication($p_publicationId = null) {
 		parent::DatabaseObject($this->m_columnNames);
-		$this->setProperty('Id', $p_publicationId, false);
-		if (!is_null($p_publicationId)) {
+		$this->m_data['Id'] = $p_publicationId;
+		if ($this->keyValuesExist()) {
 			$this->fetch();
 		}
 	} // constructor
