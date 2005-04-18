@@ -4,11 +4,9 @@
 
 configure_campsite()
 {
-cc_upgrade=""
 cc_interactive=""
 while [ "$1" != "" ]; do
     case $1 in
-    --upgrade) cc_upgrade="$1" ;;
     --interactive) cc_interactive="$1" ;;
     esac
     shift 1
@@ -21,35 +19,31 @@ echo "campsite they must be configured."
 echo ""
 choice_yn "Do you want to read the description of campsite modules?" N
 if [ "$choice" = "Y" ]; then
-    clear
-    echo "Campsite modules description:"
+    echo -e "\nCampsite modules description:"
     modules_desc
-    echo -n -e "\nPress ENTER when ready"
+    echo -e "\nPress ENTER when ready"
     read
-    clear
 fi
 
 fi # interactive
 
 prepare_install_env || exit 1
 check_install_deps || exit 1
-check_install_config $cc_upgrade
-if $is_installed && [ "$cc_upgrade" != "--upgrade" ]; then
-    [ "$cc_interactive" != "--interactive" ] && exit 1
-    echo "There is another older campsite instance already installed."
-    choice_yn "Do you want to upgrade the current installation?" Y
-    if [ "$choice" = "Y" ]; then
-	cc_upgrade=--upgrade
-	export upgrade=--upgrade
-	modules_conf --set || return 1
-    else
-	echo "Installing new instance of campsite..."
-    fi
+check_install_config
+if $is_installed; then
+    echo -e "\nNOTE: Install found one or more older Campsite instance(s) already installed."
+    echo "If you want to upgrade older instances run:"
+    echo -e "\t$BIN_DIR/create_instance --db_name [instance_name]"
+    echo "script after finishing this install. Replace [instance_name] with"
+    echo "the Campsite instance name you want to upgrade. Run create_instance"
+    echo "script with --help option to get a list of available options."
+    echo -e "\nPress ENTER to continue"
+    read
 fi
 
 if [ "$cc_interactive" = "--interactive" ]; then
 
-configure_install $cc_upgrade
+configure_install
 [ $? -ne 0 ] && echo "Error configuring install parameters" && exit 1
 install_conf --set
 . $"$INSTALL_CONF/../configure" --define_start_env &> /dev/null
