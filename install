@@ -72,14 +72,8 @@ install_campsite()
     echo -e "the crond daemon is running; read INSTALL file and follow the instructions.\n"
     echo "To enter the Campsite administration site start a browser and type in the"
     echo "following URL: http://[\$SERVER_NAME]/admin/."
-    if [ -f ./campsite_upgrade ]; then
-	echo -e "\nYour older database was preserved. You should log in to the CAMPSITE"
-	echo "administration site using the old user and password."
-    else
-        echo -e "Fill in \"admin\" and \"admn00\" user and password respectivelly to log in."
-	echo "You should change the password as soon as possible."
-    fi
-    rm -f ./campsite_upgrade
+    echo -e "Fill in \"admin\" and \"admn00\" user and password respectivelly to log in."
+    echo "You should change the password as soon as possible."
 }
 
 
@@ -89,12 +83,10 @@ if [ ! -x ./configure ]; then
     exit 1
 fi
 go_to_install=false
-upgrade=""
 do_interactive="--interactive"
 while [ "$1" != "" ]; do
     case $1 in
     --go_to_install) go_to_install=true ;;
-    --upgrade) upgrade=--upgrade ;;
     --not_interactive) do_interactive=""
     esac
     shift 1
@@ -105,13 +97,14 @@ if [ "`uname | grep BSD`" != "" ]; then
 else
 	export BSD=0
 fi;
+echo -n "Preparing install scripts..."
 . ./configure --define_start_env
 [ $? -ne 0 ] && exit 1
+echo "done"
 if [ "$go_to_install" = "true" ] && [ $my_id -eq 0 ]; then
     install_campsite
     exit 0
 fi
-#clear
 . ${INSTALL_CONF}/install_functions
 if [ $? -ne 0 ]; then
     echo "Error reading install files."
@@ -124,8 +117,8 @@ if [ "$1" = "--version" ]; then
     exit 0
 fi
 echo -e "\nInstalling CAMPSITE $CAMPSITE_VERSION $RELEASE_NAME"
-configure_campsite $upgrade $do_interactive
-do_configure $upgrade --apache_conf_path "$apache_conf_path" --apache_bin_path "$apache_bin_path"
+configure_campsite $do_interactive
+do_configure --apache_conf_path "$apache_conf_path" --apache_bin_path "$apache_bin_path"
 compile_sources
 make test_install &> /dev/null
 if [ $? -ne 0 ] && [ $my_id -ne 0 ] && ! $USER_INSTALL; then
