@@ -60,7 +60,6 @@ unset_env_vars()
 {
 unset MODULES_LIST
 unset IMPLEMENTATION_PARTS
-unset SUPPLEMENTAL_PARTS
 unset CAMPSITE_VERSION
 unset INSTALL_CONF
 unset CAMPSITE_PACKAGE_DIR
@@ -342,8 +341,7 @@ return 0
 # FUNCTION: prepare_DATABASE_env
 # Description: prepare the environment for DATABASE module
 # Parameters: none
-# Variables set:
-#	none
+# Variables set: none
 prepare_DATABASE_env()
 {
 in_list DATABASE $PREPARED_MOD_ENV && return 0
@@ -429,7 +427,7 @@ return 0
 # FUNCTION: prepare_install_env
 # Description: prepare the install environment
 # Parameters: none
-# Variables set:
+# Variables set: none
 prepare_install_env()
 {
 output_err="Error preparing install environment."
@@ -443,7 +441,6 @@ modules_list=`modules_list`
 [ $? -ne 0 ] && echo "Error reading selected modules" && exit 1
 export MODULES_LIST=$modules_list
 export IMPLEMENTATION_PARTS=""
-export SUPPLEMENTAL_PARTS=""
 for mod in $MODULES_LIST; do
     set_module_parts $mod
     [ $? -ne 0 ] && echo $output_err && return 1
@@ -577,10 +574,8 @@ return 0
 
 # FUNCTION: check_DATABASE_config
 # Description: check if DATABASE module configuration is valid
-# Parameters:
-#	$1=--upgrade - configure for upgrade
+# Parameters: none
 # Variables set:
-#	mysql_version - mysql server version
 #	output - output error message (if any)
 check_DATABASE_config()
 {
@@ -661,30 +656,17 @@ return 0
 
 # FUNCTION: check_install_config
 # Description: check if install configuration is valid
-# Parameters:
-#	$1=--upgrade - configure for upgrade
+# Parameters: none
 # Variables set:
 #	is_installed - true if application was installed, false otherwise
 check_install_config()
 {
-ic_upgrade=false
 is_installed=false
 err_code=0
 err_msg="OK"
-while [ "$1" != "" ]; do
-    case $1 in
-    --upgrade) ic_upgrade=true ;;
-    --define_start_env) ic_upgrade=true ;;
-    esac
-    shift 1
-done
 echo -n "Testing install configuration..."
 if [ -f "$OLD_CAMPSITE_REGISTER" ]; then
     is_installed=true
-    if ! $ic_upgrade; then
-	echo -e "ERROR\nThere is an older installation of campsite.\nUse --upgrade parameter for upgrade."
-	return 1
-    fi
 fi
 echo "OK"
 return 0
@@ -695,17 +677,14 @@ return 0
 # Description: perform a full configuration of module
 # Parameters:
 #	$1 - module to perform configuration for
-#	--upgrade - configure for upgrade
 # Variables set: none
 do_module_full_config()
 {
 fc_mod=$1
 shift 1
-mfc_upgrade=""
 define_start_env=false
 while [ "$1" != "" ]; do
     case $1 in
-    --upgrade) mfc_upgrade=--upgrade ;;
     --define_start_env) define_start_env=true ;;
     esac
     shift 1
@@ -720,7 +699,7 @@ if [ "$preconf_mod" != "" ]; then
 	    check_module_deps $fc_pmod && modules_conf --set $fc_pmod && prepare_${fc_pmod}_env
 	    [ $? -ne 0 ] && return 1
 	    if [ "$define_start_env" = "false" ]; then
-		check_${fc_pmod}_config $mfc_upgrade
+		check_${fc_pmod}_config
 		[ $? -ne 0 ] && return 1
 	    fi
 	fi
@@ -729,7 +708,7 @@ fi
 check_module_deps $fc_mod && modules_conf --set $fc_mod && prepare_${fc_mod}_env
 [ $? -ne 0 ] && return 1
 if [ "$define_start_env" = "false" ]; then
-    check_${fc_mod}_config $mfc_upgrade
+    check_${fc_mod}_config
     [ $? -ne 0 ] && return 1
 fi
 set_configured $fc_mod
@@ -868,7 +847,6 @@ if [ $? -ne 0 ]; then
     echo "$output"
     return 1
 fi
-#clear
 echo "Current $module configuration:"
 modules_conf $module
 [ $? -ne 0 ] && return 1
@@ -883,7 +861,6 @@ return 0
 # Variables set: none
 install_config_menu()
 {
-#clear
 echo "Current install configuration:"
 install_conf $module
 echo -e "\nSelect\t1 - to modify configuration\n\t0 - to exit"
@@ -944,7 +921,6 @@ while true; do
 	    fi
 	done ;;
     0)
-#	clear
 	message=""
 	return 0 ;;
     *)
@@ -958,12 +934,10 @@ return 0
 # FUNCTION: configure_install
 # Description: prints a menu for install configuration and performs
 #	according to input
-# Parameters: --upgrade - set upgrade mode
+# Parameters: none
 # Variables set: none
 configure_install()
 {
-ci_upgrade=""
-[ "$1" = "--upgrade" ] && ci_upgrade="--upgrade"
 message=""
 while true; do
     echo " " && install_config_menu
@@ -975,7 +949,7 @@ while true; do
 	message=""
 	while true; do
 	    read_install_conf
-	    check_install_config $ci_upgrade
+	    check_install_config
 	    result=$?
 	    if [ $result -ne 0 ]; then
 		choice_yn "Invalid install configuration. Try again?" y
@@ -995,13 +969,12 @@ while true; do
 	    fi
 	done ;;
     0)
-	check_install_config $ci_upgrade
+	check_install_config
 	result=$?
 	if [ $result -ne 0 ]; then
 	    echo "Invalid install configuration. Aborting..."
 	    return 1
 	fi
-#	clear
 	message=""
 	return 0 ;;
     *)
