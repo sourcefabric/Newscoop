@@ -24,7 +24,7 @@ if (!Input::IsValid()) {
 	exit;	
 }
 $publicationObj =& new Publication($Pub);
-$allIssues = Issue::GetIssues($Pub, null, $publicationObj->getLanguageId(), array('LIMIT' => array('START' => $IssOffs, 'MAX_ROWS'=> $ItemsPerPage)));
+$allIssues = Issue::GetIssues($Pub, null, null, $publicationObj->getLanguageId(), array('LIMIT' => array('START' => $IssOffs, 'MAX_ROWS'=> $ItemsPerPage)));
 $totalIssues = Issue::GetNumIssues($Pub);
 
 CampsiteInterface::ContentTop('Issues', array('Pub' => $publicationObj));
@@ -99,7 +99,7 @@ foreach ($allIssues as $issue) {
 	 	?>
  	</TD>
  	
-	<TD>
+	<TD <?php if ($currentIssue == $issue->getIssueId()) { ?> style="padding-left: 20px;" <?php } ?>>
 		<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($issue->getIssueId()); ?>&Language=<?php p($issue->getLanguageId()); ?>"><?php p(htmlspecialchars($issue->getName())); ?></A>
 	</TD>
 	
