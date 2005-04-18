@@ -24,8 +24,8 @@ class ArticleType extends DatabaseObject {
 			$this->m_columnNames[] = $columnMetaData->getName();
 		}
 		parent::DatabaseObject($this->m_columnNames);
-		$this->setProperty('NrArticle', $p_articleId, false);
-		$this->setProperty('IdLanguage', $p_languageId, false);
+		$this->m_data['NrArticle'] = $p_articleId;
+		$this->m_data['IdLanguage'] = $p_languageId;
 		if ($this->exists()) {
 			$this->fetch();
 		}
