@@ -42,6 +42,14 @@ class DatabaseObject {
 	var $m_exists = null;
 	
 	/**
+	 * If the key values of an object are changed, we need to remember the old
+	 * values in order to change to the new values.  This is the array of the
+	 * old values.
+	 * @var array
+	 */
+	var $m_oldKeyValues = array();
+	
+	/**
 	 * DatabaseObject represents a row in a database table.
 	 * This class is meant to be subclassed in order to implement a
 	 * specific table in the database.
@@ -131,7 +139,12 @@ class DatabaseObject {
 	
 	
 	/**
-	 * Set the key column names and optionally the values as well.
+	 * This function has two modes of operation:
+	 * You can change the columns used for the key values,
+	 * or you can change the key values themselves.
+	 * Changing key values is tricky because you have to remember the old
+	 * values in order to set the new values.
+	 *
 	 * @param array p_columnNames
 	 *		Can be either:
 	 *		[0] => 'column name 1', [1] => 'column name 2', ...
@@ -141,16 +154,33 @@ class DatabaseObject {
 	 * @return void
 	 */
 	function setKey($p_columnNames) {
-		if (isset($p_columnNames[0])) {
-			$this->m_keyColumnNames = array_values($p_columnNames);
-		}
-		else {
-			$this->m_keyColumnNames = array_keys($p_columnNames);
-			foreach ($this->m_keyColumnNames as $columnName) {
-				$this->m_data[$columnName] = $p_columnNames[$columnName];
+		if (is_array($p_columnNames)) {
+			if (isset($p_columnNames[0])) {
+				$this->m_keyColumnNames = array_values($p_columnNames);
+			}
+			else {
+				$this->m_keyColumnNames = array_keys($p_columnNames);
+				foreach ($this->m_keyColumnNames as $columnName) {
+					$this->modifyKeyValue($columnName, $p_columnNames[$columnName]);
+				}
 			}
 		}
 	} // fn setKey
+	
+
+	/**
+	 * Remember the old value of the key.
+	 * @param string p_columnName
+	 * @param string p_value
+	 * @return void
+	 */
+	function modifyKeyValue($p_columnName, $p_value) {
+		if (!isset($this->m_oldKeyValues[$p_columnName])) {
+			$this->m_oldKeyValues[$p_columnName] = $this->m_data[$p_columnName];
+		}
+		$this->m_data[$p_columnName] = $p_value;
+	} // fn modifyKeyValue
+	
 	
 	/**
 	 * Fetch a single record from the database for the given key.
@@ -197,6 +227,8 @@ class DatabaseObject {
 				}
 			}
 		}
+		// Reset old key values - we are now synced with the database.
+		$this->m_oldKeyValues = array();
 		return true;
 	} // fn fetch
 	
@@ -228,8 +260,14 @@ class DatabaseObject {
 	function getKeyWhereClause() {
 		$whereParts = array();
 		foreach ($this->m_keyColumnNames as $columnName) {
-			$whereParts[] = '`' . $columnName . "`='".mysql_real_escape_string($this->m_data[$columnName]) ."'";
-		}
+			if (isset($this->m_oldKeyValues[$columnName])) {
+				$whereParts[] = '`' . $columnName . "`='".mysql_real_escape_string($this->m_oldKeyValues[$columnName]) ."'";
+			}
+			else {
+				$whereParts[] = '`' . $columnName . "`='"
+					.mysql_real_escape_string($this->m_data[$columnName]) ."'";					
+			}
+		}			
 		return implode(' AND ', $whereParts);		
 	} // fn getKeyWhereClause
 	
@@ -358,6 +396,12 @@ class DatabaseObject {
 								.' FROM '.$this->m_dbTableName
 								.' WHERE '.$this->getKeyWhereClause();
 					$this->m_data[$p_dbColumnName] = $Campsite['db']->GetOne($queryStr);
+					// Special case for key values
+					if (in_array($p_dbColumnName, $this->m_oldKeyValues)) {
+						// Key value is now synced with database.
+						unset($this->m_oldKeyValues[$p_dbColumnName]);
+					}
+					// Remember that this row exists.
 					if ($this->m_data[$p_dbColumnName] !== false) {
 						$this->m_exists = true;
 					}
@@ -420,6 +464,16 @@ class DatabaseObject {
 		// If we dont have the key to this row, we cant update it.
 		if ($p_commit && !$this->keyValuesExist()) {
 			return false;
+		}
+		// Special case if we are modifying a key value -
+		// we need to remember the old key value if we are going to commit
+		// later on.
+		if (!$p_commit && in_array($p_dbColumnName, $this->m_keyColumnNames)) {
+			// Remember the old value so we can tell the database which row
+			// we are changing.
+			if (!isset($this->m_oldKeyValues[$p_dbColumnName])) {
+				$this->m_oldKeyValues[$p_dbColumnName] = $this->m_data[$p_dbColumnName];
+			}
 		}
 		// Commit value to the database if requested.
 		$databaseChanged = false;
@@ -486,22 +540,34 @@ class DatabaseObject {
 	 */
 	function update($p_columns = null, $p_commit = true, $p_isSql = false) {
 		global $Campsite;
+		
+		// Check input
 		if (!is_array($p_columns)) {
 			return false;
 		}
+
         $setColumns = array();
         foreach ($p_columns as $columnName => $columnValue) {
-        	if (!array_key_exists($columnName, $this->m_data)) {
-        		//return new PEAR_Error('Column name '.$columnName.' does not exist.');
-        		return false;
-        	}
-        	$setColumns[] = $columnName . "='". mysql_real_escape_string($columnValue) ."'";
-        	if (!$p_isSql) {
-        		$this->m_data[$columnName] = $columnValue;
+        	// Set the value only if the column name exists.
+        	if (array_key_exists($columnName, $this->m_data)) {
+	        	// Special case if we are setting a key value -
+	        	// if we are going to commit later, then we need to 
+	        	// remember the old key values.
+	        	if (!$p_commit && in_array($columnName, $this->m_keyColumnNames)) {
+					// Remember the old value so we can tell the database which row
+					// we are changing.
+	        		if (!isset($this->m_oldKeyValues[$columnName])) {
+	        			$this->m_oldKeyValues[$columnName] = $this->m_data[$columnName];
+	        		}
+	        	}
+	        	$setColumns[] = $columnName . "='". mysql_real_escape_string($columnValue) ."'";
+	        	if (!$p_isSql) {
+	        		$this->m_data[$columnName] = $columnValue;
+	        	}
         	}
         }
         $databaseChanged = false;
-        if ($p_commit) {
+        if ($p_commit && (count($setColumns) > 0)) {
 	        $queryStr = 'UPDATE ' . $this->m_dbTableName
 	        			.' SET '.implode(',', $setColumns)
 	        			.' WHERE ' . $this->getKeyWhereClause()
@@ -512,8 +578,9 @@ class DatabaseObject {
 				$this->m_exists = true;
 			}
         }
-        if ($p_isSql) {
+        if ($p_isSql && (count($setColumns) > 0)) {
         	$this->fetch();
+        	$this->m_oldKeyValues = array();
         }
 		return $databaseChanged;
 	} // fn update
