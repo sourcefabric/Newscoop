@@ -103,8 +103,6 @@ if [ $? -ne 0 ]; then
     exit 2
 fi
 
-#clear
-
 . ${INSTALL_CONF}/install_functions
 if [ $? -ne 0 ]; then
     echo "Error reading install files."
