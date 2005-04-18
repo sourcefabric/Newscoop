@@ -52,7 +52,7 @@ $urlType = $publicationObj->getProperty('IdURLType');
 if ($urlType == 1) {
 	$templateObj = & new Template($templateId);
 	$url = "/look/" . $templateObj->getName()
-		. "?IdLanguage=$Language&IdPublication=$Publication&NrIssue=$Issue";
+		. "?IdLanguage=$Language&IdPublication=$Pub&NrIssue=$Issue";
 } else {
 	$url = "/" . $languageObj->getCode() . "/" . $issueObj->getShortName();
 }
