@@ -18,7 +18,7 @@ $Issue = Input::Get('Issue', 'int');
 $Language = Input::Get('Language', 'int');
 
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError('Invalid Input: $1', Input::GetErrorString());	
+	CampsiteInterface::DisplayError(array('Invalid Input: $1', Input::GetErrorString()));
 	exit;
 }
 
