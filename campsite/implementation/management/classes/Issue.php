@@ -28,10 +28,10 @@ class Issue extends DatabaseObject {
 	 */
 	function Issue($p_publicationId = null, $p_languageId = null, $p_issueId = null) {
 		parent::DatabaseObject($this->m_columnNames);
-		$this->setProperty('IdPublication', $p_publicationId, false);
-		$this->setProperty('IdLanguage', $p_languageId, false);
-		$this->setProperty('Number', $p_issueId, false);
-		if (!is_null($p_publicationId) && !is_null($p_languageId) && !is_null($p_issueId)) {
+		$this->m_data['IdPublication'] = $p_publicationId;
+		$this->m_data['IdLanguage'] = $p_languageId;
+		$this->m_data['Number'] = $p_issueId;
+		if ($this->keyValuesExist()) {
 			$this->fetch();
 		}
 	} // constructor
@@ -64,7 +64,10 @@ class Issue extends DatabaseObject {
 	 * 		The publication ID.
 	 *
 	 * @param int p_languageId
-	 *		(Optional) Only show issues for this language.
+	 *		(Optional) Only return issues with this language.
+	 *
+	 * @param int p_issueId
+	 *		(Optional) Only return issues with this Issue ID.
 	 *
 	 * @param int p_preferredLanguage
 	 *		(Optional) List this language before others.  This will override any 'ORDER BY' sql
@@ -74,7 +77,7 @@ class Issue extends DatabaseObject {
 	 *
 	 * @return array
 	 */
-	function GetIssues($p_publicationId = null, $p_languageId = null, $p_preferredLanguage = null, $p_sqlOptions = null) {
+	function GetIssues($p_publicationId = null, $p_languageId = null, $p_issueId = null, $p_preferredLanguage = null, $p_sqlOptions = null) {
 		$queryStr = 'SELECT * ';
 		if (!is_null($p_preferredLanguage)) {
 			$tmpIssue =& new Issue();
@@ -91,6 +94,9 @@ class Issue extends DatabaseObject {
 		}
 		if (!is_null($p_languageId)) {
 			$whereClause[] = "IdLanguage=$p_languageId";
+		}
+		if (!is_null($p_issueId)) {
+			$whereClause[] = "Number=$p_issueId";
 		}
 		if (count($whereClause) > 0) {
 			$queryStr .= ' WHERE '.implode(' AND ', $whereClause);
@@ -228,7 +234,26 @@ class Issue extends DatabaseObject {
 	
 	function getPublicationDate() {
 		return $this->getProperty('PublicationDate');
-	}
+	} // fn getPublicationDate
+	
+	
+	/**
+	 * Get all the languages to which this issue has not been translated.
+	 * @return array
+	 */
+	function getUnusedLanguages() {
+		$tmpLanguage =& new Language();
+		$columnNames = $tmpLanguage->getColumnNames(true);
+		$queryStr = "SELECT ".implode(',', $columnNames)
+					." FROM Languages LEFT JOIN Issues "
+					." ON Issues.IdPublication = ".$this->m_data['IdPublication']
+					." AND Issues.Number= ".$this->m_data['Number']
+					." AND Issues.IdLanguage = Languages.Id "
+					." WHERE Issues.IdPublication IS NULL";
+		$languages =& DbObjectArray::Create('Language', $queryStr);
+		return $languages;
+	} // fn getUsusedLanguages
+	
 } // class Issue
 
 ?>
