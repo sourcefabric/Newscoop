@@ -1,99 +1,55 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
+
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
 load_common_include_files("$ADMIN_DIR/pub/issues");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/IssuePublish.php');
 
-todefnum('TOL_UserId');
-todefnum('TOL_UserKey');
-query ("SELECT * FROM Users WHERE Id=$TOL_UserId AND KeyId=$TOL_UserKey", 'Usr');
-$access=($NUM_ROWS != 0);
-if ($NUM_ROWS) {
-	fetchRow($Usr);
-	query ("SELECT * FROM UserPerm WHERE IdUser=".getVar($Usr,'Id'), 'XPerm');
-	if ($NUM_ROWS){
-		fetchRow($XPerm);
-	} else
-		$access = 0;	//added lately; a non-admin can enter the administration area; he exists but doesn't have ANY rights
-	$xpermrows= $NUM_ROWS;
-} else {
-	query ("SELECT * FROM UserPerm WHERE 1=0", 'XPerm');
+// Check permissions
+list($access, $User) = check_basic_access($_REQUEST);
+if (!$access) {
+	header("Location: /$ADMIN/logout.php");
+	exit;
 }
-?>
 
-<HEAD>
-	<TITLE><?php  putGS("Issue automatic publishing schedule"); ?></TITLE>
-<?php if ($access == 0) { ?>	<META HTTP-EQUIV="Refresh" CONTENT="0; URL=/<?php echo $ADMIN; ?>/logout.php">
-<?php }
-    query ("SELECT * FROM Images WHERE 1=0", 'q_img');
-?></HEAD>
+if (!$User->hasPermission('ManageIssue')) {
+	CampsiteInterface::DisplayError('You do not have the right to change issues.');
+	exit;
+}
+$Pub = Input::Get('Pub', 'int');
+$Issue = Input::Get('Issue', 'int');
+$Language = Input::Get('Language', 'int');
+$publish_time = Input::Get('publish_time', 'string', '', true);
 
-<?php
-if ($access) {
-	if (getVar($XPerm,'Publish') == "Y")
-		$pb=1;
-	else 
-		$pb=0;
-?>
-<BODY>
-<?php
-	todefnum('Pub');
-	todefnum('Issue');
-	todefnum('Language');
-	todef('publish_time');
-?>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
-	<TR>
-		<TD><?php  putGS("Issue automatic publishing schedule"); ?></TD>
-		<TD ALIGN=RIGHT>
-			<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
-			<TR>
-				<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/?Pub=<?php p($Pub); ?>" class="breadcrumb"><?php  putGS("Issues");  ?></A></TD>
-				<td class="breadcrumb_separator">&nbsp;</td>
-				<TD><A HREF="/<?php echo $ADMIN; ?>/pub/" class="breadcrumb"><?php  putGS("Publications");  ?></A></TD>
-			</TR>
-			</TABLE>
-		</TD>
-	</TR>
-</TABLE>
+if (!Input::IsValid()) {
+	CampsiteInterface::DisplayError(array('Invalid Input: $1', Input::GetErrorString()));
+	exit;
+}
+$publicationObj =& new Publication($Pub);
+$issueObj =& new Issue($Pub, $Language, $Issue);
 
-<?php
-	query ("SELECT * FROM Issues WHERE IdPublication=$Pub AND Number=$Issue AND IdLanguage=$Language", 'q_iss');
-	if ($NUM_ROWS) {
-		query ("SELECT * FROM Publications WHERE Id=$Pub", 'q_pub');
-		if ($NUM_ROWS) {
-		    query ("SELECT Name FROM Languages WHERE Id=$Language", 'q_lang');
-
-		    fetchRow($q_iss);
-		    fetchRow($q_pub);
-		    fetchRow($q_lang);
-?>
-<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="1" WIDTH="100%" class="current_location_table">
-<TR>
-	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php  putGS("Publication"); ?>:</TD>
-	<TD VALIGN="TOP" class="current_location_content"><?php pgetHVar($q_pub,'Name'); ?></TD>
-
-	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php  putGS("Issue"); ?>:</TD>
-	<TD VALIGN="TOP" class="current_location_content"><?php pgetHVar($q_iss,'Number'); ?>. <?php pgetHVar($q_iss,'Name'); ?> (<?php pgetHVar($q_lang,'Name'); ?>)</TD>
-</TR>
-</TABLE>
-
-<?php
-	if ($publish_time == "")
-		$publish_time = date("Y-m-d H:i");
-	if ($publish_time != "") {
-		$sql = "select * from IssuePublish where IdPublication = $Pub and NrIssue = $Issue and IdLanguage = $Language and PublishTime = '$publish_time'";
-		query($sql, 'q_autop');
-		if ($NUM_ROWS > 0) {
-			fetchRow($q_autop);
-			$action = getVar($q_autop, 'Action');
-			$publish_articles = getVar($q_autop, 'PublishArticles');
-		}
-		$datetime = explode(" ", trim($publish_time));
-		$publish_date = $datetime[0];
-		$publish_time = explode(":", trim($datetime[1]));
-		$publish_hour = $publish_time[0];
-		$publish_min = $publish_time[1];
+if ($publish_time == "") {
+	$publish_time = date("Y-m-d H:i");
+}
+$action = '';
+$publish_articles = '';
+if ($publish_time != '') {
+	$issuePublishObj =& new IssuePublish($Pub, $Issue, $Language, $publish_time);
+	if ($issuePublishObj->exists()) {
+		$action = $issuePublishObj->getPublishAction();
+		$publish_articles = $issuePublishObj->getPublishArticlesAction();
 	}
+	$datetime = explode(" ", trim($publish_time));
+	$publish_date = $datetime[0];
+	$publish_time = explode(":", trim($datetime[1]));
+	$publish_hour = $publish_time[0];
+	$publish_min = $publish_time[1];
+}
+$allEvents =& IssuePublish::GetIssueEvents($Pub, $Issue, $Language);
+
+CampsiteInterface::ContentTop('Issue automatic publishing schedule', array('Pub' => $publicationObj, 'Issue' => $issueObj));
+
 ?>
 
 <P>
@@ -111,7 +67,7 @@ if ($access) {
 	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS("Date"); ?>:</TD>
 		<TD>
-		<INPUT TYPE="TEXT" class="input_text" NAME="publish_date" SIZE="10" MAXLENGTH="10" VALUE="<?php p($publish_date); ?>">
+		<INPUT TYPE="TEXT" class="input_text" NAME="publish_date" SIZE="11" MAXLENGTH="10" VALUE="<?php p($publish_date); ?>">
 		<?php putGS('YYYY-MM-DD'); ?>
 		</TD>
 	</TR>
@@ -153,79 +109,60 @@ if ($access) {
 </FORM>
 </P>
 
-<P><?php
-	todefnum('Offs', 0);
-	todefnum('lpp', 10);
-
-	query ("SELECT * FROM IssuePublish WHERE IdPublication = $Pub AND NrIssue = $Issue AND IdLanguage = $Language ORDER BY PublishTime DESC LIMIT $Offs, ".($lpp+1), 'q_autop');
-	if ($NUM_ROWS) {
-	$nr= $NUM_ROWS;
-	$i=$lpp;
+<P>
+<?php
+if (count($allEvents) > 0) {
 	$color= 0;
-	?><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" WIDTH="100%" class="table_list">
+	?>
+	<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" WIDTH="100%" class="table_list">
 	<TR class="table_list_header">
 		<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("Date/Time"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("Action"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("Publish articles"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Delete"); ?></B></TD>
 	</TR>
-<?php
-    for($loop=0; $loop<$nr; $loop++) {
-	fetchRow($q_autop);
-	if ($i) {
-		$url_publish_time = encURL(getVar($q_autop,'PublishTime'));
-		?>	<TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
+	
+	<?php
+	foreach ($allEvents as $event) {
+		$url_publish_time = encURL($event->getPublishTime());
+		?>	
+		<TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
+		
 		<TD >
-			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/autopublish.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>&publish_time=<?php echo $url_publish_time; ?>"><?php pgetHVar($q_autop,'PublishTime'); ?></A>
+			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/autopublish.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>&publish_time=<?php echo $url_publish_time; ?>"><?php p(htmlspecialchars($event->getPublishTime())); ?></A>
 		</TD>
+		
 		<TD >
-<?php
-	$action = getVar($q_autop,'Action');
-	if ($action == "P")
-		putGS("Publish");
-	else
-		putGS("Unpublish");
-?>&nbsp;
+			<?php
+				$action = $event->getPublishAction();
+				if ($action == "P") {
+					putGS("Publish");
+				}
+				else {
+					putGS("Unpublish");
+				}
+			?>&nbsp;
 		</TD>
+		
 		<TD >
-<?php
-	$publish_articles = getVar($q_autop,'PublishArticles');
-	if ($publish_articles == "Y")
-		putGS("Yes");
-	else
-		putGS("No");
-?>&nbsp;
+			<?php
+				$publish_articles = $event->getPublishArticlesAction();
+				if ($publish_articles == "Y") {
+					putGS("Yes");
+				}
+				else {
+					putGS("No");
+				}
+			?>&nbsp;
 		</TD>
+		
 		<TD ALIGN="CENTER">
 			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/autopublish_del.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>&publish_time=<?php echo $url_publish_time; ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/delete.png" BORDER="0" ALT="<?php putGS('Delete entry'); ?>"></A>
 		</TD>
-	<?php } ?>
+		
+	<?php } // foreach ?>
 	</TR>
 <?php
-    $i--;
-    }
-?>	<TR><TD COLSPAN="2" NOWRAP>
-<?php if ($Offs <= 0) { ?>		&lt;&lt; <?php  putGS('Previous'); ?>
-<?php } else { ?>		<B><A HREF="autopublish.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>&Offs=<?php p($Offs - $lpp); ?>">&lt;&lt; <?php  putGS('Previous'); ?></A></B>
-<?php } ?><?php if ($nr < $lpp+1) { ?>		 | <?php  putGS('Next'); ?> &gt;&gt;
-<?php } else { ?>		 | <B><A HREF="autopublish.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>&Offs=<?php p($Offs + $lpp); ?>"><?php  putGS('Next'); ?> &gt;&gt</A></B>
-<?php } ?>	</TD></TR>
-</TABLE>
-<?php } else { ?><BLOCKQUOTE>
-	<LI><?php putGS('No entries.'); ?></LI>
-</BLOCKQUOTE>
-<?php } ?>
-<?php } else { ?><BLOCKQUOTE>
-	<LI><?php putGS('Publication does not exist.'); ?></LI>
-</BLOCKQUOTE>
-<?php } ?>
-<?php } else { ?><BLOCKQUOTE>
-	<LI><?php putGS('No such issue.'); ?></LI>
-</BLOCKQUOTE>
-<?php } ?>
-<?php }
+} // if 
 CampsiteInterface::CopyrightNotice();
 ?>
-</BODY>
-
-</HTML>
