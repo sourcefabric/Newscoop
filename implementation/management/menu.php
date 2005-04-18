@@ -38,7 +38,7 @@ $issues = array();
 $sections = array();
 foreach ($publications as $publication) {
 	$issues[$publication->getPublicationId()] =& 
-		Issue::GetIssues($publication->getPublicationId(), null, null, 
+		Issue::GetIssues($publication->getPublicationId(), null, null, null, 
 			array('ORDER BY'=>array('Number'=>'DESC'), 'LIMIT' => '5'));
 	foreach ($issues[$publication->getPublicationId()] as $issue) {
 		$sections[$issue->getPublicationId()][$issue->getIssueId()][$issue->getLanguageId()] = 
