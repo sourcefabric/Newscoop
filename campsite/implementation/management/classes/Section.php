@@ -29,7 +29,7 @@ class Section extends DatabaseObject {
 		$this->m_data['NrIssue'] = $p_issueId;
 		$this->m_data['IdLanguage'] = $p_languageId;
 		$this->m_data['Number'] = $p_sectionId;
-		if (!is_null($p_publicationId) && !is_null($p_issueId) && !is_null($p_languageId) && !is_null($p_sectionId)) {
+		if ($this->keyValuesExist()) {
 			$this->fetch();
 		}
 	} // fn Section
@@ -92,7 +92,7 @@ class Section extends DatabaseObject {
 			$whereClause[] = "NrIssue=$p_issueId";
 		}
 		if (!is_null($p_languageId)) {
-			$whereClause = "IdLanguage=$p_languageId";
+			$whereClause[] = "IdLanguage=$p_languageId";
 		}
 		if (count($whereClause) > 0) {
 			$queryStr .= ' WHERE '.implode(' AND ', $whereClause);
