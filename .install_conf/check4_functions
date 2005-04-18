@@ -211,23 +211,6 @@ return 0
 }
 # END OF check4_grep
 
-# FUNCTION: check4_stat
-# Description: check if stat executable is installed
-# Parameters: none
-# Variables set:
-#	STAT - stat full path
-#	output - error message (if any)
-check4_stat()
-{
-is_checked stat && return 0
-check4_file stat --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
-result=$? && [ $result -ne 0 ] && output="Could not find stat utility. Install fileutils package on Mandrake, stat package on RedHat, SuSE, Debian." && return 1
-export STAT=$file_path
-set_checked stat
-return 0
-}
-# END OF check4_stat
-
 # FUNCTION: check4_cp
 # Description: check if cp executable is installed
 # Parameters: none
