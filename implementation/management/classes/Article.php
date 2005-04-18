@@ -93,9 +93,7 @@ class Article extends DatabaseObject {
 		$this->m_data['NrSection'] = $p_sectionId;
 		$this->m_data['IdLanguage'] = $p_languageId;
 		$this->m_data['Number'] = $p_articleId;
-		if (!is_null($p_publicationId) && !is_null($p_issueId)
-			&& !is_null($p_sectionId) && !is_null($p_languageId) 
-			&& !is_null($p_articleId)) {
+		if ($this->keyValuesExist()) {
 			$this->fetch();
 		}
 	} // constructor
