@@ -181,7 +181,49 @@ class Issue extends DatabaseObject {
 	
 	function getPublished() {
 		return $this->getProperty('Published');
-	}
+	} // fn getPublished
+	
+	
+	/**
+	 * Set the published state of the issue.
+	 *
+	 * @param string p_value
+	 *		Can be NULL, 'Y', 'N', TRUE, FALSE.
+	 *		If set to NULL, the current value will be reversed.
+	 *
+	 * @return void
+	 */
+	function setPublished($p_value = null) {
+		$doPublish = null;
+		if (is_null($p_value)) {
+			if ($this->m_data['Published'] == 'Y') {
+				$doPublish = false;
+			}
+			else {
+				$doPublish = true;
+			}
+		}
+		else {
+			if (is_string($p_value)) {
+				$p_value = strtoupper($p_value);
+			}
+			if (($this->m_data['Published'] == 'N') && (($p_value == 'Y') || ($p_value === true))) {
+				$doPublish = true;
+			}
+			elseif (($this->m_data['Published'] == 'Y') && (($p_value == 'N') || ($p_value === false))) {
+				$doPublish = false;
+			}
+		}
+		if (!is_null($doPublish)) {
+			if ($doPublish) {
+				$this->setProperty('Published', 'Y', true);
+				$this->setProperty('PublicationDate', 'NOW()', true, true);
+			}
+			else {
+				$this->setProperty('Published', 'N', true);			
+			}
+		}
+	} // fn setPublished
 	
 	
 	function getPublicationDate() {
