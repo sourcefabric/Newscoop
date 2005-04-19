@@ -6,8 +6,8 @@ GET_IMG_OBJ_FILES=get_img.o readconf.o cgi.o cgi_common.o
 CLEAN_XML_INCLUDE=$(shell echo -n "$(XML_INCLUDE)")
 CLEAN_XML_LINK=$(shell echo -n "$(XML_LINK)")
 
-LDFLAGS=
-LDLIBS=$(PTHREAD_LINK) $(CLEAN_XML_LINK)
+LDFLAGS=-L$(LIBMYSQLCLIENT_PATH)
+LDLIBS=-lmysqlclient $(PTHREAD_LINK) $(CLEAN_XML_LINK)
 
 DEPENDENCIES=globals.h exceptions.h csocket.h readconf.h cxmltree.h \
 cms_types.h threadkey.h cgib.h cgi.h mutex.h cgi_common.h
