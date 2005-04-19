@@ -1,6 +1,6 @@
 export PRIV_DIR3=$(PRIV_DIR2)/issues
 
-MY_TARGETS=qadd.php add_new.php do_add_new.php add_prev.php do_add_prev.php del.php do_del.php translate.php do_translate.php add_article.php edit.php do_edit.php
+MY_TARGETS=qadd.php add_new.php do_add_new.php add_prev.php do_add_prev.php do_del.php do_translate.php add_article.php 
 
 subsystem: all
 	$(MAKE) -C sections
