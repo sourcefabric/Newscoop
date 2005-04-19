@@ -34,6 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <iostream>
 #include <sstream>
 #include <sys/mman.h>
+#include <curl/curl.h>
 
 
 #include "globals.h"
@@ -47,6 +48,7 @@ using std::endl;
 using std::stringstream;
 
 
+void ReadFileFromURL(const string& p_rcoURL, const string& p_rcoContentType);
 void PushFile(const string& p_rcoFilePath, const string& p_rcoContentType);
 void ExitWithError(string p_coError);
 MYSQL_RES* QueryResult(const string& p_rcoQuery, MYSQL p_MySQL);
@@ -107,12 +109,36 @@ int main()
 	string coFileName = row[0];
 	string coURL = row[1];
 	string coContentType = row[2];
-
-	string coFilePath = string(getenv("DOCUMENT_ROOT")) + "/images/" + coFileName;
-	PushFile(coFilePath, coContentType);
-
 	mysql_close(&mysql);
+
+	if (coURL != "")
+	{
+		ReadFileFromURL(coURL, coContentType);
+	}
+	else
+	{
+		string coFilePath = string(getenv("DOCUMENT_ROOT")) + "/images/" + coFileName;
+		PushFile(coFilePath, coContentType);
+	}
+
 	return 0;
+}
+
+
+void ReadFileFromURL(const string& p_rcoURL, const string& p_rcoContentType)
+{
+	CURL *curl;
+	CURLcode res;
+
+	curl = curl_easy_init();
+	if(curl) {
+		curl_easy_setopt(curl, CURLOPT_URL, p_rcoURL.c_str());
+		write(1, "Content-type: ", strlen("Content-type: "));
+		write(1, p_rcoContentType.c_str(), p_rcoContentType.size());
+		write(1, "; Expires: now\n\n", strlen("; Expires: now\n\n"));
+		curl_easy_perform(curl);
+		curl_easy_cleanup(curl);
+	}
 }
 
 
