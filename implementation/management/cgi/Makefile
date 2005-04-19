@@ -5,14 +5,17 @@ GET_IMG_OBJ_FILES=get_img.o readconf.o cgi.o cgi_common.o
 
 CLEAN_XML_INCLUDE=$(shell echo -n "$(XML_INCLUDE)")
 CLEAN_XML_LINK=$(shell echo -n "$(XML_LINK)")
+CLEAN_CURL_LINK=$(shell echo -n "$(CURL_LINK)")
 
-LDFLAGS=-L$(LIBMYSQLCLIENT_PATH)
-LDLIBS=-lmysqlclient $(PTHREAD_LINK) $(CLEAN_XML_LINK)
+TPL_CGI_LDFLAGS=
+TPL_CGI_LDLIBS=$(PTHREAD_LINK) $(CLEAN_XML_LINK)
+GET_IMG_LDFLAGS=-L$(LIBMYSQLCLIENT_PATH)
+GET_IMG_LDLIBS=-lmysqlclient $(PTHREAD_LINK) $(CLEAN_CURL_LINK)
 
 DEPENDENCIES=globals.h exceptions.h csocket.h readconf.h cxmltree.h \
 cms_types.h threadkey.h cgib.h cgi.h mutex.h cgi_common.h
 
-CFLAGS=-Wall $(CLEAN_XML_INCLUDE)
+CFLAGS=-Wall $(CLEAN_XML_INCLUDE) $(CLEAN_CURL_CFLAGS)
 # -D_DEBUG -g
 
 TPL_CGI=tpl_cgi
@@ -29,11 +32,11 @@ links: dummy
 	done
 
 $(TPL_CGI): $(TPL_CGI_OBJ_FILES)
-	g++ -o $(TPL_CGI) $(TPL_CGI_OBJ_FILES) $(LDFLAGS) $(LDLIBS)
+	g++ -o $(TPL_CGI) $(TPL_CGI_OBJ_FILES) $(TPL_CGI_LDFLAGS) $(TPL_CGI_LDLIBS)
 	strip $(TPL_CGI)
 
 $(GET_IMG): $(GET_IMG_OBJ_FILES)
-	g++ -o $(GET_IMG) $(GET_IMG_OBJ_FILES) $(LDFLAGS) $(LDLIBS)
+	g++ -o $(GET_IMG) $(GET_IMG_OBJ_FILES) $(GET_IMG_LDFLAGS) $(GET_IMG_LDLIBS)
 	strip $(GET_IMG)
 
 clean: dummy
