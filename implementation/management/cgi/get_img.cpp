@@ -32,6 +32,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <string.h>
 #include <stdio.h>
 #include <iostream>
+#include <sstream>
+#include <sys/mman.h>
 
 
 #include "globals.h"
@@ -42,41 +44,116 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 using std::cout;
 using std::endl;
-//using std::ios_base;
+using std::stringstream;
 
 
-void ReadConf();
-int ReadParameters(char** p_ppchMsg, int* p_pnSize, const char** p_ppchErrMsg);
+void PushFile(const string& p_rcoFilePath, const string& p_rcoContentType);
+void ExitWithError(string p_coError);
+MYSQL_RES* QueryResult(const string& p_rcoQuery, MYSQL p_MySQL);
+void ReadConf(string& p_rcoServer, ulint& p_rcoPort, string& p_rcoUser,
+	string& p_rcoPassword, string& p_rcoDatabaseName);
+int ReadParameters(ulint& p_nArticle, ulint& p_nImage, const char** p_ppchErrMsg);
+void die_mysql(MYSQL *mysql, const char *message);
 
 
 int main()
 {
-	ReadConf();
-	char* pchMsg;
-	int nSize;
+	string coServer, coUser, coPassword, coDatabaseName;
+	ulint nPort;
+	ReadConf(coServer, nPort, coUser, coPassword, coDatabaseName);
+
+	ulint nArticle, nImage;
 	const char* pchErrMsg;
-	if (ReadParameters(&pchMsg, &nSize, &pchErrMsg) != 0)
+	if (ReadParameters(nArticle, nImage, &pchErrMsg) != 0)
 	{
 		if (pchErrMsg == 0)
 			pchErrMsg = "Error reading parameters";
+		ExitWithError(pchErrMsg);
+	}
+
+	MYSQL mysql;
+	MYSQL_RES *res;
+	MYSQL_ROW row;
+	mysql_init(&mysql);
+	if (!mysql_real_connect(&mysql, coServer.c_str(), coUser.c_str(),
+			coPassword.c_str(), coDatabaseName.c_str(), nPort, 0, 0))
+		die_mysql(&mysql, "connect");
+
+	stringstream coQuery;
+	coQuery << "SELECT IdImage FROM ArticleImages WHERE NrArticle = " << nArticle
+		<< " AND Number = " << nImage;
+	res = QueryResult(coQuery.str(), mysql);
+	if (!(row = mysql_fetch_row(res)))
+	{
+		if (mysql_errno(&mysql))
+			die_mysql(&mysql, "fetch_row");
 		cout << "Content-type: text/html; charset=UTF-8\n\n";
-		cout << "<html>\n<head>\n<title>REQUEST ERROR</title>\n</head>\n"
-			 << "<body>\n" << pchErrMsg << "\n</body>\n</html>\n";
+		cout << "Could not find image " << nImage << " of article " << nArticle << endl;
 		return 0;
 	}
-	try
+	ulint nImageId = atol(row[0]);
+
+	coQuery.str("");
+	coQuery << "SELECT ImageFileName, URL, ContentType FROM Images WHERE Id = " << nImageId;
+	res = QueryResult(coQuery.str(), mysql);
+	if (!(row = mysql_fetch_row(res)))
 	{
-	}
-	catch (ConfException& rcoEx)
-	{
+		if (mysql_errno(&mysql))
+			die_mysql(&mysql, "fetch_row");
 		cout << "Content-type: text/html; charset=UTF-8\n\n";
-		cout << "<html>\n" << rcoEx.what() << "\n</html>" << endl;
+		cout << "Could not find image with id " << nImageId << endl;
+		return 0;
 	}
+	string coFileName = row[0];
+	string coURL = row[1];
+	string coContentType = row[2];
+
+	string coFilePath = string(getenv("DOCUMENT_ROOT")) + "/images/" + coFileName;
+	PushFile(coFilePath, coContentType);
+
+	mysql_close(&mysql);
 	return 0;
 }
 
 
-void ReadConf()
+void PushFile(const string& p_rcoFilePath, const string& p_rcoContentType)
+{
+	struct stat StatBuf;
+	if (stat(p_rcoFilePath.c_str(), &StatBuf) == -1)
+		ExitWithError(string("Unable to stat file ") + p_rcoFilePath);
+	off_t nSize = StatBuf.st_size;
+	int nFD = open(p_rcoFilePath.c_str(), O_RDONLY);
+	if (nFD == -1)
+		ExitWithError(string("Unable to open file ") + p_rcoFilePath);
+	void* pMap = mmap(0, nSize, PROT_READ, MAP_SHARED, nFD, 0);
+	write(1, "Content-type: ", strlen("Content-type: "));
+	write(1, p_rcoContentType.c_str(), p_rcoContentType.size());
+	write(1, "; Expires: now\n\n", strlen("; Expires: now\n\n"));
+	write(1, pMap, nSize);
+}
+
+
+void ExitWithError(string p_coError)
+{
+	cout << "Content-type: text/html; charset=UTF-8\n\n";
+	cout << "<p>" << p_coError << "</p>" << endl;
+	exit(0);
+}
+
+
+MYSQL_RES* QueryResult(const string& p_rcoQuery, MYSQL p_MySQL)
+{
+	MYSQL_RES* pRes;
+	if (mysql_real_query(&p_MySQL, p_rcoQuery.c_str(), p_rcoQuery.size()))
+		die_mysql(&p_MySQL, "query");
+	if (!(pRes = mysql_store_result(&p_MySQL)))
+		die_mysql(&p_MySQL, "store_result");
+	return pRes;
+}
+
+
+void ReadConf(string& p_rcoServer, ulint& p_nPort, string& p_rcoUser,
+	string& p_rcoPassword, string& p_rcoDatabaseName)
 {
 	char* pchDocumentRoot = getenv("DOCUMENT_ROOT");
 	try
@@ -84,6 +161,11 @@ void ReadConf()
 		// read database configuration
 		string coDatabaseConfFile = string(pchDocumentRoot) + "/database_conf.php";
 		ConfAttrValue m_coAttributes(coDatabaseConfFile);
+		p_rcoServer = m_coAttributes.valueOf("DATABASE_SERVER_ADDRESS");
+		p_nPort = atoi(m_coAttributes.valueOf("DATABASE_SERVER_PORT").c_str());
+		p_rcoUser = m_coAttributes.valueOf("DATABASE_USER");
+		p_rcoPassword = m_coAttributes.valueOf("DATABASE_PASSWORD");
+		p_rcoDatabaseName = m_coAttributes.valueOf("DATABASE_NAME");
 	}
 	catch (ConfException& rcoEx)
 	{
@@ -94,19 +176,13 @@ void ReadConf()
 }
 
 
-int ReadParameters(char** p_ppchMsg, int* p_pnSize, const char** p_ppchErrMsg)
+int ReadParameters(ulint& p_nArticle, ulint& p_nImage, const char** p_ppchErrMsg)
 {
-	char* pchDocumentRoot = 0;
 	char* pchRequestMethod = 0;
 	char* pchQueryString = 0;
 	try
 	{
 		char* pchTmp;
-		if ((pchTmp = getenv("DOCUMENT_ROOT")) == NULL)
-		{
-			throw ExReadParams(-1,"Can not get DOCUMENT ROOT");
-		}
-		pchDocumentRoot = strdup(pchTmp);
 		if ((pchTmp = getenv("REQUEST_METHOD")) == NULL)
 		{
 			throw ExReadParams(-7, "Can not get REQUEST_METHOD");
@@ -131,8 +207,6 @@ int ReadParameters(char** p_ppchMsg, int* p_pnSize, const char** p_ppchErrMsg)
 	}
 	catch (ExReadParams& rcoEx)
 	{
-		if (pchDocumentRoot != NULL)
-			free(pchDocumentRoot);
 		if (pchRequestMethod != NULL)
 			free(pchRequestMethod);
 		if (pchQueryString != NULL)
@@ -147,7 +221,18 @@ int ReadParameters(char** p_ppchMsg, int* p_pnSize, const char** p_ppchErrMsg)
 	const char* pchValue;
 	while (coCgi.GetNextParameter(&pchParam, &pchValue))
 	{
+		if (strcasecmp(pchParam, "NrArticle") == 0)
+			p_nArticle = atol(pchValue);
+		if (strcasecmp(pchParam, "NrImage") == 0)
+			p_nImage = atol(pchValue);
 	}
 
 	return 0;
+}
+
+void die_mysql(MYSQL *mysql, const char *message)
+{
+	cout << "Content-type: text/html; charset=UTF-8\n\n";
+	cout << "get_img: " << message << mysql_error(mysql) << endl;
+	exit(1);
 }
