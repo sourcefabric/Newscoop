@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 [ "$1" = "" ] && echo "Invalid directory" && exit 1
 
