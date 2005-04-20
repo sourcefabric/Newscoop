@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 bin_path=`dirname $0`
 if [ "$bin_path" = "." ] || [ "$bin_path" = "" ]; then
