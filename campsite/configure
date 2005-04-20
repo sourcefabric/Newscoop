@@ -316,7 +316,7 @@ else # else if define start env
     prepare_install_env || exit 1
     for m in apache killall; do
 	check4_${m}
-	[ $? -ne 0 ] && exit 1
+	[ $? -ne 0 ] && echo $output && exit 1
     done
 
 fi # end if define start env
