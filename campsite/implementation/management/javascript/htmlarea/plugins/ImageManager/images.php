@@ -2,7 +2,7 @@
 /**
  * Show a list of images in a long horizontal table.
  * @author $Author: paul $
- * @version $Id: images.php,v 1.5 2005/03/24 16:11:39 paul Exp $
+ * @version $Id: images.php,v 1.6 2005/04/20 13:59:52 paul Exp $
  * @package ImageManager
  */
 
@@ -101,7 +101,7 @@ function drawNoResults()
 ?>
 <table width="100%">
   <tr>
-    <td class="noResult">No Images Found</td>
+    <td class="noResult"><script>document.write(i18n("No Images Found"));</script></td>
   </tr>
 </table>
 <?php	
