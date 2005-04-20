@@ -13,10 +13,15 @@
 //       that states what encoding is necessary.)
 
 ImageManager.I18N = {
-	"Image Manager"									: "Image Manager",
-	"Crop"											: "Crop"
+	"Insert Image"				: "Insert Image",
+	"Alt"						: "Alt",
+	"Caption"					: "Caption",
+	"Align"						: "Align",
+	"Not Set"					: "Not Set",
+	"Left"						: "Left",
+	"Right"						: "Right",
+	"Middle"					: "Middle",
+	"OK"						: "OK",
+	"Cancel"					: "Cancel",
+	"No Images Found"			: "No Images Found",	
 };
-/*
-
-
-*/
