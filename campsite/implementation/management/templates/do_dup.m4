@@ -72,7 +72,8 @@ B_MSGBOX(<*Duplicate template*>)
 	$cName=strtr($cName,'?~#%*&|"\'\\/<>', '_____________');
 	$newTempl=$DOCUMENT_ROOT.decURL($cPath).$cName;
 	$exists=0;
-				//trebe studiata logica de mai jos .. imi ajunge test de existentza ? director cu numele asta poate exista ?
+	// trebe studiata logica de mai jos .. imi ajunge test de existentza ?
+	// director cu numele asta poate exista ?
 	if (file_exists($newTempl)) {
 	    $exists=1;
 						//if (!is_dir($newTempl))
@@ -80,8 +81,8 @@ B_MSGBOX(<*Duplicate template*>)
 	}
 	$ok=0;
 	if (!($exists)) {
+		$filename = "$DOCUMENT_ROOT".decURL($cPath)."$Name";
 		if (filesize ($filename) > 0) {
-			$filename = "$DOCUMENT_ROOT".decURL($cPath)."$Name";
 			$fd = fopen ($filename, "r");
 			$contents = fread ($fd, filesize ($filename));
 			fclose ($fd);
@@ -91,7 +92,6 @@ B_MSGBOX(<*Duplicate template*>)
 			$res=fwrite ($fd, $contents);
 			fclose ($fd);
 		} else {
-			$filename = "$DOCUMENT_ROOT".decURL($cPath)."$cName";
 			$res = touch ($filename);
 		}
 		$ok = $res==true;
