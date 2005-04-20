@@ -51,7 +51,7 @@ if [ -d $"$RC_INIT" ]; then
 	ln -s $"$RC_INIT/$CAMPSITEINIT" $"/etc/rc6.d/K50$CAMPSITEINIT"
 elif [ -d /etc/rc.d ]; then
 	if [ ! -f /etc/rc.d/rc.local ]; then
-		echo -e "#!/bin/sh\n" > /etc/rc.d/rc.local
+		echo -e "#!/bin/bash\n" > /etc/rc.d/rc.local
 	fi
 	grep -w $CAMPSITECTL /etc/rc.d/rc.local > /dev/null
 	if [ "$?" != "0" ]; then
