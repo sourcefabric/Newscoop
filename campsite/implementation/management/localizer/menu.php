@@ -136,9 +136,9 @@ $langarray[]='en';
 $langfile='';
 
 $langfile.="<?php \n\n";
-$langfile.='function registerLanguage($name,$code,$charset){'."\n\n";
+$langfile.='function registerLanguage($p_name, $p_code, $p_charset, $p_origName = null){'."\n\n";
 $langfile.="\t".'global $languages;'."\n";
-$langfile.="\t".'$languages["$code"]=array("name"=>$name,"charset"=>$charset);'."\n";
+$langfile.="\t".'$languages["$p_code"]=array("name"=>$p_name,"charset"=>$p_charset,"orig_name"=>$p_origName);'."\n";
 $langfile.='}'."\n";
 
 
@@ -162,7 +162,7 @@ print '</PRE>';
   print '<OPTION VALUE="'.$arr['Code'].'">'.$arr['OrigName'].'('.$arr['Code'].")\n";
      }
      if (in_array($arr['Code'],$langarray)){
-  $langfile.='registerLanguage(\''. $arr['Name']."','".$arr['Code']."','".$arr['CodePage']."');\n";
+  $langfile.='registerLanguage(\''. $arr['Name']."', '".$arr['Code']."', '".$arr['CodePage']."', '".$arr['OrigName']."');\n";
      }
  }
     }
