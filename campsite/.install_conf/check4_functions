@@ -59,15 +59,16 @@ return 0
 check4_make()
 {
 is_checked make && return 0
-if [ $BSD -eq 1 ]; then
-    check4_file gmake --executable --path "/bin:/usr/bin:/usr/local/bin"
-else
-    check4_file make --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
-fi
-result=$? && [ $result -ne 0 ] && output="Could not find make utility. Please install make package." && return 1
-export MAKE=$file_path
-set_checked make
-return 0
+for make_cmd in make gmake; do
+    check4_file $make_cmd --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
+    if [ $? -eq 0 ]; then
+	export MAKE=$file_path
+	set_checked make
+	return 0
+    fi
+done
+output="Could not find make utility. Please install make package."
+return 1
 }
 # END OF check4_make
 
