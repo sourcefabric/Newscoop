@@ -1,5 +1,10 @@
 <?php
 
+if (!is_array($GLOBALS['argv'])) {
+	echo "Can't read command line arguments\n";
+	exit(1);
+}
+
 global $Campsite, $CampsiteVars, $CampsiteOld, $info_messages;
 $Campsite = array();
 $CampsiteVars = array();

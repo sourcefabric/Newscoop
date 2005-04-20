@@ -1,5 +1,10 @@
 <?php
 
+if (!is_array($GLOBALS['argv'])) {
+	echo "Can't read command line arguments\n";
+	exit(1);
+}
+
 $param = $GLOBALS['argv'][1];
 if ($param == "") {
 	echo "please specify the executable name\n";
