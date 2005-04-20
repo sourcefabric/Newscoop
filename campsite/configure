@@ -162,7 +162,7 @@ echo -n "Writing campsite_config script..."
 campsite_config_script=${INSTALL_CONF}/campsite_config
 rm -f "$campsite_config_script"
 cat > "$campsite_config_script" << EOF
-#!/bin/sh
+#!/bin/bash
 
 [ "\$1" = "--campsite_dir" ] && echo -n "$CAMPSITE_DIR"
 [ "\$1" = "--bin_dir" ] && echo -n "$BIN_DIR"
