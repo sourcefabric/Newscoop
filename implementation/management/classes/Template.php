@@ -10,17 +10,20 @@ class Template extends DatabaseObject {
 	
 	function Template($p_templateId = null) {
 		parent::DatabaseObject($this->m_columnNames);
-		$this->setProperty('Id', $p_templateId, false);
-		if (!is_null($p_templateId)) {
+		$this->m_data['Id'] = $p_templateId;
+		if ($this->keyValuesExist()) {
 			$this->fetch();
 		}
 	} // constructor
 	
 	
 	function GetAllTemplates($p_sqlOptions = null) {
-		$queryStr = "SELECT * FROM Templates";
+		$queryStr = 'SELECT * FROM Templates';
 		if (!is_null($p_sqlOptions)) {
 			$queryStr = DatabaseObject::ProcessOptions($queryStr, $p_sqlOptions);
+		}
+		else {
+			$queryStr .= ' ORDER BY Level ASC, Name ASC';
 		}
 		$templates =& DbObjectArray::Create('Template', $queryStr);
 		return $templates;
