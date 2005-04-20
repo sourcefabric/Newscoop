@@ -1,17 +1,65 @@
+<?php
+require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/lib_campsite.php");
+include($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/languages.php");
+
+// Special case for the login screen:
+// We have to figure out what language to use.
+// If they havent logged in before, we should try to display the
+// language as set by the browser.  If the user has logged in before,
+// use the language that they previously used.
+$defaultLanguage = null;
+if (!isset($_REQUEST['TOL_Language'])) {
+	// Get the browser languages
+	$browserLanguageStr = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
+	$browserLanguageArray = split("[,;]", $browserLanguageStr);
+	$browserLanguagePrefs = array();
+	foreach ($browserLanguageArray as $tmpLang) {
+		if (!(substr($tmpLang, 0, 2) == 'q=')) {
+			$browserLanguagePrefs[] = $tmpLang;
+		}
+	}
+	// Try to match preference exactly.
+	foreach ($browserLanguagePrefs as $pref) {
+		if (array_key_exists($pref, $languages)) {
+			$defaultLanguage = $pref;
+			break;
+		}
+	}	
+	// Try to match two-letter language code.
+	if (is_null($defaultLanguage)) {
+		foreach ($browserLanguagePrefs as $pref) {
+			if (array_key_exists(substr($pref, 0, 2), $languages)) {
+				$defaultLanguage = $pref;
+				break;
+			}	
+		}
+	}
+	
+	// Default to english if we dont find anything that matches.
+	if (is_null($defaultLanguage)) {
+		$defaultLanguage = 'en';
+	}
+	// HACK: the function regGS() strips off the ":en" from
+	// english language strings, but only if it knows that
+	// the language being displayed is english...and it knows
+	// via the cookie.
+	$_COOKIE['TOL_Language'] = $defaultLanguage;
+}
+else {
+	$defaultLanguage = $_REQUEST['TOL_Language'];
+}
+
+// Load the language files.
+$globalfile = $_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/globals.$defaultLanguage.php";
+$localfile = $_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/locals.$defaultLanguage.php";
+require_once($globalfile);
+require_once($localfile);
+?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
 	"http://www.w3.org/TR/REC-html40/loose.dtd">
 <HTML>
-<?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
-require_once($Campsite['HTML_DIR']."/$ADMIN_DIR/lib_campsite.php");
-$globalfile=selectLanguageFile($Campsite['HTML_DIR'] . "/$ADMIN_DIR",'globals');
-$localfile=selectLanguageFile("$ADMIN_DIR","locals");
-@include_once($globalfile);
-@include_once($localfile);
-require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/languages.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
-?>
-<?php require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php'); ?>
 <HEAD>
 	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
 
@@ -56,11 +104,19 @@ require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
 		<TD>
 		<SELECT name="selectlanguage" class="input_select">
 		    <?php 
-			foreach($languages as $key=>$larr){
-			    //$lcode=key($larr[]);
-			    $lval=$larr['name'];
-			    print "<option value='$key'>$lval";
+			foreach($languages as $languageCode => $languageAttrs){
+			    $languageName = isset($languageAttrs['orig_name'])?
+			    	$languageAttrs['orig_name']:$languageAttrs['name'];
+			    $languageName = htmlspecialchars($languageName);
+			    print "<option value=\"$languageCode\"";
+			    if ($languageCode == $defaultLanguage) {
+			    	print " selected ";
+			    }
+			    print ">$languageName</option>";
 			}
+			unset($languageCode);
+			unset($languageAttrs);
+			unset($languageName);
 		    ?>
 		</select>
 		</TD>
