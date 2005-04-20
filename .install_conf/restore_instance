@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 bin_path=`dirname $0`
 if [ "$bin_path" = "." ] || [ "$bin_path" = "" ]; then
@@ -7,6 +7,7 @@ if [ "$bin_path" = "." ] || [ "$bin_path" = "" ]; then
 	PHP=`./campsite_config --php_cli`
 else
 	script_call="$bin_path/restore_instance.php"
+	ETC_DIR=`$bin_path/campsite_config --etc_dir`
 	PHP=`$bin_path/campsite_config --php_cli`
 fi
 
