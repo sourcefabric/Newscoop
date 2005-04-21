@@ -207,12 +207,12 @@ function upgrade_database($p_db_name, $p_defined_parameters)
 		$upgrade_dir = $campsite_dir . "/instance/database/upgrade/$db_version/";
 		$db_conf_file = $etc_dir . "/$p_db_name/database_conf.php";
 		$link = $upgrade_dir . "/database_conf.php";
-		unlink($link);
+		@unlink($link);
 		if (!is_link($link) && !symlink($db_conf_file, $link))
 			return "Unable to create link to database configuration file";
 		$install_conf_file = $etc_dir . "/install_conf.php";
 		$link = $upgrade_dir . "/install_conf.php";
-		unlink($link);
+		@unlink($link);
 		if (!is_link($link) && !symlink($install_conf_file, $link))
 			return "Unable to create link to install configuration file";
 
