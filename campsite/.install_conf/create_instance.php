@@ -620,7 +620,9 @@ function read_old_config($conf_dir, $module_name, &$variables)
 	foreach ($lines as $index=>$line) {
 		$ids = explode(" ", $line);
 		$var_name = trim($ids[0]);
-		$value = trim($ids[1]);
+		if ($var_name == "")
+			continue;
+		$value = @isset($ids[1]) ? trim($ids[1]) : "";
 		if ($res = strpos($value, "{"))
 			$value = trim(substr($value, 0, $res));
 		$variables[$module_name . "_" . $var_name] = $value;
