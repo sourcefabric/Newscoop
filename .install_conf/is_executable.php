@@ -5,7 +5,7 @@ if (!is_array($GLOBALS['argv'])) {
 	exit(1);
 }
 
-$param = $GLOBALS['argv'][1];
+$param = isset($GLOBALS['argv'][1]) ? trim($GLOBALS['argv'][1]) : "";
 if ($param == "") {
 	echo "please specify the executable name\n";
 	exit(1);
