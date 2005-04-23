@@ -2,6 +2,9 @@
 
 . ${INSTALL_CONF}/check4_functions
 
+check4_php_cli
+[ $? -ne 0 ] && echo $output && exit 1
+
 ###########################################################
 ## Functions for manipulating configuration variables
 ###########################################################
@@ -57,7 +60,6 @@ unset_env_vars()
 {
 unset MODULES_LIST
 unset IMPLEMENTATION_PARTS
-unset SUPPLEMENTAL_PARTS
 unset CAMPSITE_VERSION
 unset INSTALL_CONF
 unset CAMPSITE_PACKAGE_DIR
@@ -244,12 +246,12 @@ action="print"
 configurable_modules=""
 modules=`modules_list $*`
 for m in $modules; do
-    conf_file=`cd "$INSTALL_CONF"; php -q module_conf_file.php "$m"`
+    conf_file=`cd "$INSTALL_CONF"; $"$PHP" -q module_conf_file.php "$m"`
     if [ ! -f "$INSTALL_CONF/$conf_file" ]; then
 	continue
     fi
     configurable_modules="$configurable_modules $m"
-    mod_conf=`cd "$INSTALL_CONF"; php -q export_conf.php "$m"`
+    mod_conf=`cd "$INSTALL_CONF"; $"$PHP" -q export_conf.php "$m"`
     if [ $? -ne 0 ]; then
         echo "$mod_conf"
         return 1
@@ -257,7 +259,7 @@ for m in $modules; do
     if [ "$action" = "print" ]; then
 	echo "$mod_conf" | cut -f 2 -d " "
     fi
-    mod_param_list=`cd "$INSTALL_CONF"; php -q export_module_params.php "$m"`
+    mod_param_list=`cd "$INSTALL_CONF"; $"$PHP" -q export_module_params.php "$m"`
     if [ $? -ne 0 ]; then
         echo "$mod_param_list"
         return 1
@@ -295,11 +297,11 @@ action="print"
 [ "$1" = "--set" ] && action="set" && shift 1
 [ "$1" = "--reset" ] && action="reset" && shift 1
 [ "$1" = "--unset" ] && action="unset" && shift 1
-conf_file=`cd "$INSTALL_CONF"; php -q module_conf_file.php "install"`
+conf_file=`cd "$INSTALL_CONF"; $"$PHP" -q module_conf_file.php "install"`
 if [ ! -f "$INSTALL_CONF/$conf_file" ]; then
     return 1
 fi
-inst_conf=`cd "$INSTALL_CONF"; php -q export_conf.php "install"`
+inst_conf=`cd "$INSTALL_CONF"; $"$PHP" -q export_conf.php "install"`
 if [ $? -ne 0 ]; then
     echo "$inst_conf"
     return 1
@@ -307,7 +309,7 @@ fi
 if [ "$action" = "print" ]; then
     echo "$inst_conf" | cut -f 2 -d " "
 fi
-inst_param_list=`cd "$INSTALL_CONF"; php -q export_module_params.php "install"`
+inst_param_list=`cd "$INSTALL_CONF"; $"$PHP" -q export_module_params.php "install"`
 if [ $? -ne 0 ]; then
     echo "$inst_param_list"
     return 1
@@ -339,15 +341,12 @@ return 0
 # FUNCTION: prepare_DATABASE_env
 # Description: prepare the environment for DATABASE module
 # Parameters: none
-# Variables set:
-#	MYSQL_CONNECT - mysql_connect binary full path
+# Variables set: none
 prepare_DATABASE_env()
 {
 in_list DATABASE $PREPARED_MOD_ENV && return 0
-output_err="Error preparing environment for DATABASE module."
-echo "*** Preparing DATABASE environment..."
+echo "*** Preparing DATABASE environment...OK"
 add_to_list_var DATABASE PREPARED_MOD_ENV
-echo "DATABASE environment OK"
 return 0
 }
 # END OF prepare_DATABASE_env
@@ -359,11 +358,14 @@ return 0
 prepare_PARSER_env()
 {
 in_list PARSER $PREPARED_MOD_ENV && return 0
+echo -n "*** Preparing PARSER environment..."
 check4_gethostbyaddr_r
+[ $? -ne 0 ] && echo "ERROR" && return 1
 check4_gethostbyname_r
+[ $? -ne 0 ] && echo "ERROR" && return 1
 check4_getservbyname_r
-output_err="Error preparing environment for PARSER module."
-echo -e "*** Preparing PARSER environment...OK"
+[ $? -ne 0 ] && echo "ERROR" && return 1
+echo "OK"
 add_to_list_var PARSER PREPARED_MOD_ENV
 return 0
 }
@@ -403,7 +405,6 @@ return 0
 prepare_SEARCH_ENGINE_env()
 {
 in_list SEARCH_ENGINE $PREPARED_MOD_ENV && return 0
-output_err="Error preparing environment for SEARCH_ENGINE module."
 echo -e "*** Preparing SEARCH_ENGINE environment...OK"
 add_to_list_var SEARCH_ENGINE PREPARED_MOD_ENV
 return 0
@@ -417,7 +418,6 @@ return 0
 prepare_ADMIN_INTERFACE_env()
 {
 in_list ADMIN_INTERFACE $PREPARED_MOD_ENV && return 0
-output_err="Error preparing environment for ADMIN_INTERFACE module."
 echo -e "*** Preparing ADMIN_INTERFACE environment...OK"
 add_to_list_var ADMIN_INTERFACE PREPARED_MOD_ENV
 return 0
@@ -427,11 +427,10 @@ return 0
 # FUNCTION: prepare_install_env
 # Description: prepare the install environment
 # Parameters: none
-# Variables set:
+# Variables set: none
 prepare_install_env()
 {
 output_err="Error preparing install environment."
-echo -e -n "Preparing install environment..."
 export OLD_CAMPSITE_REGISTER=/etc/campsite.reg
 export CHECKED_DEPENDENCIES=""
 export CHECKED_MODULES=""
@@ -442,14 +441,12 @@ modules_list=`modules_list`
 [ $? -ne 0 ] && echo "Error reading selected modules" && exit 1
 export MODULES_LIST=$modules_list
 export IMPLEMENTATION_PARTS=""
-export SUPPLEMENTAL_PARTS=""
 for mod in $MODULES_LIST; do
     set_module_parts $mod
     [ $? -ne 0 ] && echo $output_err && return 1
 done
 set_need_config_modules
 [ $? -ne 0 ] && echo $output_err && return 1
-echo "OK"
 return 0
 }
 # END OF prepare_install_env
@@ -527,7 +524,7 @@ fi
 if [ "$1" != "--config" ]; then
     return 0
 fi
-conf_file=`cd "$INSTALL_CONF"; php -q module_conf_file.php "$module"`
+conf_file=`cd "$INSTALL_CONF"; $"$PHP" -q module_conf_file.php "$module"`
 if [ ! -f "$INSTALL_CONF/$conf_file" ]; then
     echo "Module $module is not configurable"
     return 1
@@ -577,10 +574,8 @@ return 0
 
 # FUNCTION: check_DATABASE_config
 # Description: check if DATABASE module configuration is valid
-# Parameters:
-#	$1=--upgrade - configure for upgrade
+# Parameters: none
 # Variables set:
-#	mysql_version - mysql server version
 #	output - output error message (if any)
 check_DATABASE_config()
 {
@@ -661,30 +656,17 @@ return 0
 
 # FUNCTION: check_install_config
 # Description: check if install configuration is valid
-# Parameters:
-#	$1=--upgrade - configure for upgrade
+# Parameters: none
 # Variables set:
 #	is_installed - true if application was installed, false otherwise
 check_install_config()
 {
-ic_upgrade=false
 is_installed=false
 err_code=0
 err_msg="OK"
-while [ "$1" != "" ]; do
-    case $1 in
-    --upgrade) ic_upgrade=true ;;
-    --define_start_env) ic_upgrade=true ;;
-    esac
-    shift 1
-done
 echo -n "Testing install configuration..."
 if [ -f "$OLD_CAMPSITE_REGISTER" ]; then
     is_installed=true
-    if ! $ic_upgrade; then
-	echo -e "ERROR\nThere is an older installation of campsite.\nUse --upgrade parameter for upgrade."
-	return 1
-    fi
 fi
 echo "OK"
 return 0
@@ -695,17 +677,14 @@ return 0
 # Description: perform a full configuration of module
 # Parameters:
 #	$1 - module to perform configuration for
-#	--upgrade - configure for upgrade
 # Variables set: none
 do_module_full_config()
 {
 fc_mod=$1
 shift 1
-mfc_upgrade=""
 define_start_env=false
 while [ "$1" != "" ]; do
     case $1 in
-    --upgrade) mfc_upgrade=--upgrade ;;
     --define_start_env) define_start_env=true ;;
     esac
     shift 1
@@ -720,7 +699,7 @@ if [ "$preconf_mod" != "" ]; then
 	    check_module_deps $fc_pmod && modules_conf --set $fc_pmod && prepare_${fc_pmod}_env
 	    [ $? -ne 0 ] && return 1
 	    if [ "$define_start_env" = "false" ]; then
-		check_${fc_pmod}_config $mfc_upgrade
+		check_${fc_pmod}_config
 		[ $? -ne 0 ] && return 1
 	    fi
 	fi
@@ -729,7 +708,7 @@ fi
 check_module_deps $fc_mod && modules_conf --set $fc_mod && prepare_${fc_mod}_env
 [ $? -ne 0 ] && return 1
 if [ "$define_start_env" = "false" ]; then
-    check_${fc_mod}_config $mfc_upgrade
+    check_${fc_mod}_config
     [ $? -ne 0 ] && return 1
 fi
 set_configured $fc_mod
@@ -765,7 +744,7 @@ return $result
 set_module_config()
 {
 module=$1
-module_file=`cd "$INSTALL_CONF"; php -q module_conf_file.php "$module"`
+module_file=`cd "$INSTALL_CONF"; $"$PHP" -q module_conf_file.php "$module"`
 tmp_file=".$$.$module_file"
 module_name=`echo "$module_file" | cut -f 1 -d "_"`
 if [ "$module_name" != "install" ]; then
@@ -775,7 +754,7 @@ if [ "$module_name" != "install" ]; then
 	return 1
     fi
 fi
-module_vars=`cd "$INSTALL_CONF"; php -q export_module_params.php "$module"`
+module_vars=`cd "$INSTALL_CONF"; $"$PHP" -q export_module_params.php "$module"`
 echo -e "<?php\n" > $tmp_file;
 vars_list_str=""
 for var in $module_vars; do
@@ -868,7 +847,6 @@ if [ $? -ne 0 ]; then
     echo "$output"
     return 1
 fi
-#clear
 echo "Current $module configuration:"
 modules_conf $module
 [ $? -ne 0 ] && return 1
@@ -883,7 +861,6 @@ return 0
 # Variables set: none
 install_config_menu()
 {
-#clear
 echo "Current install configuration:"
 install_conf $module
 echo -e "\nSelect\t1 - to modify configuration\n\t0 - to exit"
@@ -911,7 +888,7 @@ module_check=$1
 shift 1
 message=""
 while true; do
-    module_config_menu "$module"
+    echo " " && module_config_menu "$module"
     echo $message
     echo -n -e "Option: "
     read -r option
@@ -944,7 +921,6 @@ while true; do
 	    fi
 	done ;;
     0)
-#	clear
 	message=""
 	return 0 ;;
     *)
@@ -958,15 +934,13 @@ return 0
 # FUNCTION: configure_install
 # Description: prints a menu for install configuration and performs
 #	according to input
-# Parameters: --upgrade - set upgrade mode
+# Parameters: none
 # Variables set: none
 configure_install()
 {
-ci_upgrade=""
-[ "$1" = "--upgrade" ] && ci_upgrade="--upgrade"
 message=""
 while true; do
-    install_config_menu
+    echo " " && install_config_menu
     echo $message
     echo -n -e "Option: "
     read -r option
@@ -975,7 +949,7 @@ while true; do
 	message=""
 	while true; do
 	    read_install_conf
-	    check_install_config $ci_upgrade
+	    check_install_config
 	    result=$?
 	    if [ $result -ne 0 ]; then
 		choice_yn "Invalid install configuration. Try again?" y
@@ -995,13 +969,12 @@ while true; do
 	    fi
 	done ;;
     0)
-	check_install_config $ci_upgrade
+	check_install_config
 	result=$?
 	if [ $result -ne 0 ]; then
 	    echo "Invalid install configuration. Aborting..."
 	    return 1
 	fi
-#	clear
 	message=""
 	return 0 ;;
     *)

@@ -1,3 +1,6 @@
+2.2.1
+    - Many bug fixes
+
 2.2.0
     - Improve management of multiple instances of CAMPSITE on a single server
     (new instances can be created without reinstalling Campsite)

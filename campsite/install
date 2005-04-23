@@ -4,7 +4,7 @@ do_configure()
 {
     rm -f install_log
     echo -e "\nSTEP 1"
-    echo -n "Configuring campsite (this may take a while, please wait)..."
+    echo -n "Configuring Campsite (this may take a while, please wait)..."
     echo -e "###############################################\n\tConfiguring campsite\n" >> install_log
     ./configure $* >> install_log 2>&1
     err_code=$?
@@ -36,42 +36,44 @@ compile_sources()
 install_campsite()
 {
     echo -e "\nSTEP 3"
-    echo -n "Installing CAMPSITE..."
+    echo -n "Installing Campsite..."
     echo -e "\n\n###############################################\n\tInstalling campsite\n" >> install_log
     $MAKE install >> install_log 2>&1
-    $MAKE default_instance >> install_log 2>&1
-    err_code=$?
-    if [ $err_code -ne 0 ]; then
-	rm -f ./campsite_upgrade
+    if [ $? -ne 0 ]; then
 	echo "ERROR."
 	echo "Read install_log for more information on installation error."
 	echo "Please report bug to http://bugs.campware.org"
 	exit 1
     fi
-    echo -e "done\n\nCAMPSITE was installed successfully."
-    echo "For a complete installation log read install_log file."
-    echo -n -e "\nStarting campsite_server daemon..."
-    "$BIN_DIR/campsitectl" stop &> /dev/null
-    "$BIN_DIR/campsitectl" start
-    err_code=$?
-    if [ $err_code -ne 0 ]; then
-	echo "ERROR"
+    def_instance_res=`$MAKE default_instance`
+    if [ $? -ne 0 ]; then
+	echo -e "\n$def_instance_res\n"
+	echo "Error creating the default Campsite instance. This usually happens when"
+	echo "MySQL configuration is different from the default one or you did not"
+	echo "install an email server. Run:"
+	echo "$BIN_DIR/create_instance --help"
+	echo "to find out how to set Campsite instance parameters."
+	echo -e "\nIMPORTANT!!!"
     else
-	echo "done"
+	echo -e "done\n\nCampsite was installed successfully."
+	echo "For a complete installation log read install_log file."
+	echo -n -e "\nStarting campsite_server daemon..."
+	"$BIN_DIR/campsitectl" stop &> /dev/null
+	"$BIN_DIR/campsitectl" start
+	if [ $? -ne 0 ]; then
+	    echo "ERROR"
+	else
+	    echo "done"
+	fi
+	echo -e "\nIMPORTANT!!!"
+	echo -e "$def_instance_res\n"
     fi
-    echo -e "\nIMPORTANT!!!"
-    echo "Please configure apache server before using CAMPSITE application; make sure"
+    echo "Please configure apache server before using Campsite application; make sure"
     echo -e "the crond daemon is running; read INSTALL file and follow the instructions.\n"
-    echo "To enter the CAMPSITE administration site start a browser and type in the"
-    echo "following URL: http://localhost/admin/."
-    if [ -f ./campsite_upgrade ]; then
-	echo -e "\nYour older database was preserved. You should log in to the CAMPSITE"
-	echo "administration site using the old user and password."
-    else
-        echo -e "Fill in \"admin\" and \"admn00\" user and password respectivelly to log in."
-	echo "You should change the password as soon as possible."
-    fi
-    rm -f ./campsite_upgrade
+    echo "To enter the Campsite administration site start a browser and type in the"
+    echo "following URL: http://[\$SERVER_NAME]/admin/."
+    echo -e "Fill in \"admin\" and \"admn00\" user and password respectivelly to log in."
+    echo "You should change the password as soon as possible."
 }
 
 
@@ -81,12 +83,10 @@ if [ ! -x ./configure ]; then
     exit 1
 fi
 go_to_install=false
-upgrade=""
 do_interactive="--interactive"
 while [ "$1" != "" ]; do
     case $1 in
     --go_to_install) go_to_install=true ;;
-    --upgrade) upgrade=--upgrade ;;
     --not_interactive) do_interactive=""
     esac
     shift 1
@@ -97,13 +97,14 @@ if [ "`uname | grep BSD`" != "" ]; then
 else
 	export BSD=0
 fi;
+echo -n "Preparing install scripts..."
 . ./configure --define_start_env
 [ $? -ne 0 ] && exit 1
+echo "done"
 if [ "$go_to_install" = "true" ] && [ $my_id -eq 0 ]; then
     install_campsite
     exit 0
 fi
-#clear
 . ${INSTALL_CONF}/install_functions
 if [ $? -ne 0 ]; then
     echo "Error reading install files."
@@ -116,12 +117,12 @@ if [ "$1" = "--version" ]; then
     exit 0
 fi
 echo -e "\nInstalling CAMPSITE $CAMPSITE_VERSION $RELEASE_NAME"
-configure_campsite $upgrade $do_interactive
-do_configure $upgrade --apache_conf_path "$apache_conf_path" --apache_bin_path "$apache_bin_path"
+configure_campsite $do_interactive
+do_configure --apache_conf_path "$apache_conf_path" --apache_bin_path "$apache_bin_path"
 compile_sources
 make test_install &> /dev/null
 if [ $? -ne 0 ] && [ $my_id -ne 0 ] && ! $USER_INSTALL; then
-    echo -e "\nThe root password is needed in order to install campsite. Please supply password."
+    echo -e "\nThe root password is needed in order to install campsite."
     while true; do
 	echo -n "Root password: "
 	archive_path=`pwd`

@@ -19,7 +19,7 @@ B_BODY
 
 <?php 
 	todefnum('cPub');
-	todefnum('cName');
+	todef('cName');
 	$correct = 1;
 	$created = 0;
 ?>

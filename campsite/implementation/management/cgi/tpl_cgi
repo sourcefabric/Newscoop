@@ -1,4 +1,0 @@
-#!/bin/sh
-
-php_script=$PWD/tpl_cgi.php
-php $php_script

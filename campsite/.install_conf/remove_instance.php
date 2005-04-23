@@ -1,8 +1,14 @@
 <?php
 
-$etc_dir = trim($GLOBALS['argv'][1]);
-$instance_name = trim($GLOBALS['argv'][2]);
-$no_backup = $GLOBALS['argv'][3] == '--no_backup';
+if (!is_array($GLOBALS['argv'])) {
+	echo "Can't read command line arguments\n";
+	exit(1);
+}
+
+$etc_dir = isset($GLOBALS['argv'][1]) ? trim($GLOBALS['argv'][1]) : "";
+$instance_name = isset($GLOBALS['argv'][2]) ? trim($GLOBALS['argv'][2]) : "";
+$arg3 = isset($GLOBALS['argv'][3]) ? trim($GLOBALS['argv'][3]) : "";
+$no_backup = $arg3 == '--no_backup';
 
 if ($etc_dir == "")
 	die("Please supply the configuration directory as the first argument.\n");

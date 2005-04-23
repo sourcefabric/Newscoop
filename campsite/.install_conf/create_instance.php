@@ -1,5 +1,10 @@
 <?php
 
+if (!is_array($GLOBALS['argv'])) {
+	echo "Can't read command line arguments\n";
+	exit(1);
+}
+
 global $Campsite, $CampsiteVars, $CampsiteOld, $info_messages;
 $Campsite = array();
 $CampsiteVars = array();
@@ -202,10 +207,12 @@ function upgrade_database($p_db_name, $p_defined_parameters)
 		$upgrade_dir = $campsite_dir . "/instance/database/upgrade/$db_version/";
 		$db_conf_file = $etc_dir . "/$p_db_name/database_conf.php";
 		$link = $upgrade_dir . "/database_conf.php";
+		@unlink($link);
 		if (!is_link($link) && !symlink($db_conf_file, $link))
 			return "Unable to create link to database configuration file";
 		$install_conf_file = $etc_dir . "/install_conf.php";
 		$link = $upgrade_dir . "/install_conf.php";
+		@unlink($link);
 		if (!is_link($link) && !symlink($install_conf_file, $link))
 			return "Unable to create link to install configuration file";
 
@@ -435,8 +442,8 @@ function create_virtual_host(&$p_defined_parameters)
 	fwrite($res, $new_file_content);
 	fclose($res);
 
-	$info_messages[] = "The apache virtual host configuration file $instance_vhost was created.";
-	$info_messages[] = "Please edit it and replace \$SERVER_ADDRESS and \$SERVER_NAME with appropriate values.";
+	$info_messages[] = "The apache virtual host configuration file:\n\t$instance_vhost\nwas created.";
+	$info_messages[] = "Please edit it and replace \$SERVER_ADDRESS and \$SERVER_NAME with\nappropriate values.";
 
 	return 0;
 }
@@ -613,7 +620,9 @@ function read_old_config($conf_dir, $module_name, &$variables)
 	foreach ($lines as $index=>$line) {
 		$ids = explode(" ", $line);
 		$var_name = trim($ids[0]);
-		$value = trim($ids[1]);
+		if ($var_name == "")
+			continue;
+		$value = @isset($ids[1]) ? trim($ids[1]) : "";
 		if ($res = strpos($value, "{"))
 			$value = trim(substr($value, 0, $res));
 		$variables[$module_name . "_" . $var_name] = $value;

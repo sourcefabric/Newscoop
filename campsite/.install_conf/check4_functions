@@ -59,15 +59,16 @@ return 0
 check4_make()
 {
 is_checked make && return 0
-if [ $BSD -eq 1 ]; then
-    check4_file gmake --executable --path "/bin:/usr/bin:/usr/local/bin"
-else
-    check4_file make --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
-fi
-result=$? && [ $result -ne 0 ] && output="Could not find make utility. Please install make package." && return 1
-export MAKE=$file_path
-set_checked make
-return 0
+for make_cmd in make gmake; do
+    check4_file $make_cmd --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
+    if [ $? -eq 0 ]; then
+	export MAKE=$file_path
+	set_checked make
+	return 0
+    fi
+done
+output="Could not find make utility. Please install make package."
+return 1
 }
 # END OF check4_make
 
@@ -210,44 +211,6 @@ set_checked grep
 return 0
 }
 # END OF check4_grep
-
-# FUNCTION: check4_stat
-# Description: check if stat executable is installed
-# Parameters: none
-# Variables set:
-#	STAT - stat full path
-#	output - error message (if any)
-check4_stat()
-{
-is_checked stat && return 0
-check4_file stat --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
-result=$? && [ $result -ne 0 ] && output="Could not find stat utility. Install fileutils package on Mandrake, stat package on RedHat, SuSE, Debian." && return 1
-export STAT=$file_path
-set_checked stat
-return 0
-}
-# END OF check4_stat
-
-# FUNCTION: check4_which
-# Description: check if which executable is installed
-# Parameters: none
-# Variables set:
-#	WHICH - which full path
-#	output - error message (if any)
-check4_which()
-{
-is_checked which && return 0
-check4_file which --file --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
-result=$?
-if [ $result -ne 0 ] || [ ! -x $file_path ]; then
-    output="Could not find 'which' utility. Please install 'which' package."
-    return 1
-fi
-export WHICH=$file_path
-set_checked which
-return 0
-}
-# END OF check4_which
 
 # FUNCTION: check4_cp
 # Description: check if cp executable is installed
@@ -531,25 +494,47 @@ return 0
 # END OF check4_semaphore_h
 
 # FUNCTION: check4_xml
-# Description: check if xml library and header files were installed
+# Description: check if XML library and header files were installed
 # Parameters: none
 # Variables set:
-#	XML_INCLUDE - compiler flags for xml library
-#	XML_LINK - link flags for xml library
+#	XML_VERSION - XML library version
+#	XML_INCLUDE - compiler flags for XML library
+#	XML_LINK - link flags for XML library
 #	output - error message (if any)
 check4_xml()
 {
 is_checked xml && return 0
 check4_file xml2-config --executable --path "/usr/bin:/usr/local/bin:/opt/bin"
 result=$? && [ $result -ne 0 ] && output="Could not find XML development files. Please install libxml2-devel package." && return 1
-export XML_VERSION=`xml2-config --version`
+export XML_VERSION=`$file_path --version`
 if [ "$XML_VERSION" "<" "2.6.0" ]; then
     output="The XML library is older than 2.6.0. Please install 2.6.0 or newer version."
     return 1
 fi
-export XML_INCLUDE=`xml2-config --cflags`
-export XML_LINK=`xml2-config --libs`
+export XML_INCLUDE=`$file_path --cflags`
+export XML_LINK=`$file_path --libs`
 set_checked xml
+return 0
+}
+# END OF check4_semaphore_h
+
+# FUNCTION: check4_curl
+# Description: check if CURL library and header files were installed
+# Parameters: none
+# Variables set:
+#	CURL_VERSION - CURL library version
+#	CURL_CFLAGS - compiler flags for CURL library
+#	CURL_LINK - link flags for CURL library
+#	output - error message (if any)
+check4_curl()
+{
+is_checked curl && return 0
+check4_file curl-config --executable --path "/usr/bin:/usr/local/bin:/opt/bin"
+result=$? && [ $result -ne 0 ] && output="Could not find CURL development files. Please install libcurl-devel package." && return 1
+export CURL_VERSION=`$file_path --version`
+export CURL_CFLAGS=`$file_path --cflags`
+export CURL_LINK=`$file_path --libs`
+set_checked curl
 return 0
 }
 # END OF check4_semaphore_h
@@ -638,8 +623,8 @@ done
 [ "$bin_paths" = "" ] && bin_paths="/sbin /usr/sbin /usr/local/apache/bin /home/apache/bin /home/httpd/bin /opt/apache/bin"
 bin_names="apache httpd httpd2 apache2 httpds"
 for bn in $bin_names; do
-    bin_path=`which "$bn" 2> /dev/null`
-    [ $? -eq 0 ] && apache_bin_name="$bn" && break
+    check4_file --executable $"$bn" &> /dev/null
+    [ $? -eq 0 ] && bin_path=$file_path && apache_bin_name="$bn" && break
     bin_path=""
 done
 if [ "$bin_path" = "" ]; then
@@ -1027,7 +1012,7 @@ fi
 set_checked killall
 return 0
 }
-# END OF check4_make
+# END OF check4_killall
 
 # FUNCTION: check4_pear
 # Description: check if pear is installed
@@ -1045,9 +1030,10 @@ pear_dir=`pear config-get php_dir | cut -f 2 -d "="`
 result=$? && [ $result -ne 0 ] && echo "$pear_dir" && return 1
 export PEAR=$file_path
 export PEAR_DIR=$pear_dir
-set_checked
+set_checked pear
 return 0
 }
+# END OF check4_pear
 
 # FUNCTION: check4_php_cli
 # Description: check if php cli (command line interface) is installed
@@ -1058,12 +1044,31 @@ return 0
 check4_php_cli()
 {
 is_checked php_cli && return 0
-check4_file php --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
-result=$? && [ $result -ne 0 ] && return 1
-export PHP=$file_path
-set_checked
+export PHP=
+for p in /bin /usr/bin /usr/local/bin /opt/bin; do
+    [ -x "$p/php" ] && export PHP="$p/php" && break
+done
+[ "$PHP" = "" ] && output="PHP CLI (Command Line Interface) not found. Please install this package" && return 1
+set_checked php_cli
 return 0
 }
+# END OF check4_php_cli
+
+# FUNCTION: check4_php_myslq
+# Description: check if php mysql module was installed
+# Parameters: none
+# Variables set:
+#	output - error message (if any)
+check4_php_mysql()
+{
+is_checked php_mysql && return 0
+check4_php_cli || return 1
+$"$PHP" -q $"$INSTALL_CONF/php_mysql_exists.php"
+[ $? -ne 0 ] && output="PHP MySQL extension was not installed. Please install it." && return 1
+set_checked php_mysql
+return 0
+}
+
 
 # FUNCTION: check4_
 # Description: check if  is installed
@@ -1080,3 +1085,4 @@ return 0
 #set_checked
 #return 0
 #}
+# END OF check4_

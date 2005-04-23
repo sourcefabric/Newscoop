@@ -1,4 +1,0 @@
-#!/bin/sh
-
-php_script=$PWD/get_img.php
-php $php_script

@@ -1,13 +1,19 @@
 <?php
 
-$etc_dir = trim($GLOBALS['argv'][1]);
-$instance_name = trim($GLOBALS['argv'][2]);
+if (!is_array($GLOBALS['argv'])) {
+	echo "Can't read command line arguments\n";
+	exit(1);
+}
+
+$etc_dir = isset($GLOBALS['argv'][1]) ? trim($GLOBALS['argv'][1]) : "";
+$instance_name = isset($GLOBALS['argv'][2]) ? trim($GLOBALS['argv'][2]) : "";
+$arg3 = isset($GLOBALS['argv'][3]) ? trim($GLOBALS['argv'][3]) : "";
 
 if ($etc_dir == "")
 	die("Please supply the configuration directory as the first argument.\n");
 if ($instance_name == "")
 	die("Please supply the instance name as the second argument.\n");
-$silent = $GLOBALS['argv'][3] == "--silent_exit";
+$silent = $arg3 == "--silent_exit";
 
 // include install_conf.php file
 require_once("$etc_dir/install_conf.php");

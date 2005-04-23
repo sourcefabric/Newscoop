@@ -46,7 +46,7 @@ test_install:
 	rmdir "$(CAMPSITE_DIR)/test"
 
 default_instance:
-	"$(BIN_DIR)/create_instance"
+	@"$(BIN_DIR)/create_instance"
 
 clean:
 	$(MAKE) -C implementation clean

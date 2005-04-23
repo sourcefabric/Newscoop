@@ -76,6 +76,11 @@ INSTALLATION - the usual procedure
    If you are not already logged in as root the installer will prompt
    you for the root password when necessary. Without root access it
    can not install the CAMPSITE application.
+   
+   IMPORTANT!!!
+   If your MySQL configuration is not the default one you'll have to run
+   the create instance script separatelly, after installation. Read 
+   instructions from install script.
 
 Be aware that the Campsite installer does its best to pick reasonable
 defaults in the configuration of the various modules, but that these should
