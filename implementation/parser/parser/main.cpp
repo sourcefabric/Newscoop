@@ -434,7 +434,7 @@ int CampsiteInstanceFunc(const ConfAttrValue& p_rcoConfValues);
 //		char** argv - arguments list
 int main(int argc, char** argv)
 {
-	bool bRunAsDaemon;
+	bool bRunAsDaemon = true;
 	string coConfDir;
 	ProcessArgs(argc, argv, bRunAsDaemon, coConfDir);
 #ifndef _DEBUG_SOURCE
