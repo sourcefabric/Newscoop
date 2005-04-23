@@ -15,3 +15,5 @@ EOF
 [ $? -ne 0 ] && echo "ERROR" && exit 1
 echo OK
 chmod o-rwx db_connect.php
+
+exit 0

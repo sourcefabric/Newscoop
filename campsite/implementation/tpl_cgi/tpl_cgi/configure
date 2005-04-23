@@ -26,3 +26,5 @@ WARNING!!! This file is generated. Do not edit!
 EOF
 [ $? -ne 0 ] && echo "ERROR" && exit 1
 echo OK
+
+exit 0

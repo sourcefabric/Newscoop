@@ -190,3 +190,5 @@ EOF
 # done writing srvdef.h; check if ok
 [ $? -ne 0 ] && echo "ERROR" && exit 1
 echo OK
+
+exit 0

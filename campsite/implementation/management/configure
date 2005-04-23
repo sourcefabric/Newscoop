@@ -42,3 +42,5 @@ for dir in $cdirs; do
 	[ $result -ne 0 ] && exit 1
     fi
 done
+
+exit 0

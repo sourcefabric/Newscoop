@@ -31,3 +31,5 @@ echo -n -e "\t\tWriting dir_conf.h header..."
 $M4 ../macros.m4 dir_conf.m4 > dir_conf.h
 [ $? -ne 0 ] && echo "ERROR" && exit 1
 echo OK
+
+exit 0
