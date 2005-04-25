@@ -75,23 +75,17 @@ B_MSGBOX(<*Changing publication information*>)
 		<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Site').'</B>'); ?></LI>
 <?php
 	}
-	if ($cUnitCost == "" || $cUnitCost == " ") {
-		$correct= 0;
-?>dnl
-		<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Unit Cost').'</B>'); ?></LI>
-<?php
-	}
-	if ($cCurrency == "" || $cCurrency == " ") {
-		$correct= 0;
-?>dnl
-		<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Currency').'</B>'); ?></LI>
-<?php
-	}
 	if ($correct) {
 		$sql = "UPDATE Publications SET Name = '$cName', IdDefaultAlias = '$cDefaultAlias', "
 		     . "IdDefaultLanguage = $cLanguage, IdURLType = '$cURLType', PayTime = '$cPayTime', "
-		     . "TimeUnit = '$cTimeUnit', UnitCost = '$cUnitCost', Currency = '$cCurrency', "
-		     . "PaidTime = '$cPaid', TrialTime = '$cTrial' WHERE Id = $Pub";
+		     . "TimeUnit = '$cTimeUnit', PaidTime = '$cPaid', TrialTime = '$cTrial'";
+		if ($cUnitCost != '') {
+			$sql .= ", UnitCost = '$cUnitCost' ";
+		}
+		if ($cCurrency != '') {
+			$sql .= ", Currency = '$cCurrency' ";
+		}
+		$sql .= " WHERE Id=$Pub";
 		query($sql);
 		$updated = ($AFFECTED_ROWS >= 0);
 	}
