@@ -1545,8 +1545,12 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 	{
 		if (c.Publication() < 0)
 			return ERR_NOPARAM;
-		table = "Publications as p, Aliases as a";
-		w = "p.IdDefaultAlias = a.Id";
+		table = "Publications as p";
+		if (field == "a.Name")
+		{
+			table += ", Aliases as a";
+			w = "p.IdDefaultAlias = a.Id";
+		}
 		SetNrField("p.Id", c.Publication(), buf, w);
 	}
 	else if (modifier == CMS_ST_ISSUE)
@@ -1627,8 +1631,6 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 		w += (w != "" ? string(" and ") : string("")) + buf.str();
 	}
 	string coQuery = string("select ");
-	if (modifier == CMS_ST_PUBLICATION)
-		coQuery += string("p.");
 	coQuery += field + " from " + table;
 	if (w != "")
 		coQuery += string(" where ") + w;
