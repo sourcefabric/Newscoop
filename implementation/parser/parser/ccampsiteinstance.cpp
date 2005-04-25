@@ -48,8 +48,9 @@ bool CCampsiteInstance::isRunning() const
 	int nStatus;
 	if (m_bRunning)
 	{
-		waitpid(m_nChildPID, &nStatus, WNOHANG);
-		m_bRunning = !WIFEXITED(nStatus) && !WIFSIGNALED(nStatus);
+		int nRes = waitpid(m_nChildPID, &nStatus, WNOHANG);
+		m_bRunning = nRes >= 0;
+//		m_bRunning = !WIFEXITED(nStatus) && !WIFSIGNALED(nStatus);
 		if (!m_bRunning)
 		{
 			CCampsiteInstanceRegister::get().unsetPID(m_nChildPID);
