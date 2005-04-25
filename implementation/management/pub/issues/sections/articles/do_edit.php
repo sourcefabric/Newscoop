@@ -65,11 +65,24 @@ function TransformInternalLinks($p_match) {
 		}
 	}
 	// This matches '<a href="campsite_internal_link?IdPublication=1&..." ...>'
-	elseif (preg_match("/<\s*a\s*href=[\"']campsite_internal_link[?][\w&=]*[\"'][\s\w\"']*>/i", $p_match[0])) {
+	elseif (preg_match("/<\s*a\s*(((href\s*=\s*[\"']campsite_internal_link[?][\w&=]*[\"'])|(target\s*=\s*['\"][_\w]*['\"]))[\s]*)*[\s\w\"']*>/i", $p_match[0])) {
+		
+		// Get the URL
+		preg_match("/href\s*=\s*[\"'](campsite_internal_link[?][\w&=]*)[\"']/i", $p_match[0], $url);
+		$url = isset($url[1])?$url[1]:'';
+		$parsedUrl = parse_url($url);
+		
+		// Get the target, if there is one
+		preg_match("/target\s*=\s*[\"']([_\w]*)[\"']/i", $p_match[0], $target);
+		$target = isset($target[1])?$target[1]:null;
+		
 		// Replace the HTML tag with a template tag
-		$url = split("\"", $p_match[0]);
-		$parsedUrl = parse_url($url[1]);
-		$retval = "<!** Link Internal ".$parsedUrl["query"].">";
+		$retval = "<!** Link Internal ".$parsedUrl["query"];
+		if (!is_null($target)) {
+			$retval .= " TARGET ".$target;
+		}
+		$retval .= ">";
+		
 		// Mark that we are now inside an internal link.
 		$g_internalLinkCounter = 1;
 		return $retval;
@@ -241,7 +254,7 @@ foreach ($articleFields as $dbColumnName => $text) {
 	// Replace <a href="campsite_internal_link?IdPublication=1&..." ...> ... </a>
 	// with <!** Link Internal IdPublication=1&...> ... <!** EndLink>
 	//
-	$text = preg_replace_callback("/(<\s*a\s*href=[\"']campsite_internal_link[?][\w&=]*[\"'][\s\w\"']*>)|(<\s*\/a\s*>)/i", "TransformInternalLinks", $text);
+	$text = preg_replace_callback("/(<\s*a\s*(((href\s*=\s*[\"']campsite_internal_link[?][\w&=]*[\"'])|(target\s*=\s*['\"][_\w]*['\"]))[\s]*)*[\s\w\"']*>)|(<\s*\/a\s*>)/i", "TransformInternalLinks", $text);
 	//$hasChanged |= $articleTypeObj->setProperty($dbColumnName, $text);
 
 	// Replace <a href="http://xyz.com" target="_blank"> ... </a>
