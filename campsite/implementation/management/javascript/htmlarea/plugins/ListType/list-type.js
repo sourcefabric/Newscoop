@@ -6,28 +6,35 @@
 // Distributed under the same terms as HTMLArea itself.
 // This notice MUST stay intact for use (see license.txt).
 //
-// $Id: list-type.js,v 1.2 2004/10/09 12:33:27 paul Exp $
+// $Id: list-type.js,v 1.3 2005/04/25 15:02:35 paul Exp $
+
+//Translation
+function listtype_i18n(str) {
+	if(ListType.I18N)
+	  return (ListType.I18N[str] || str);
+	else
+		return str;
+};
 
 function ListType(editor) {
 	this.editor = editor;
 	var cfg = editor.config;
 	var toolbar = cfg.toolbar;
 	var self = this;
-	var i18n = ListType.I18N;
 	var options = {};
-	options[i18n["Decimal"]] = "decimal";
-	options[i18n["Lower roman"]] = "lower-roman";
-	options[i18n["Upper roman"]] = "upper-roman";
-	options[i18n["Lower latin"]] = "lower-alpha";
-	options[i18n["Upper latin"]] = "upper-alpha";
+	options[listtype_i18n("Decimal")] = "decimal";
+	options[listtype_i18n("Lower roman")] = "lower-roman";
+	options[listtype_i18n("Upper roman")] = "upper-roman";
+	options[listtype_i18n("Lower latin")] = "lower-alpha";
+	options[listtype_i18n("Upper latin")] = "upper-alpha";
 	if (!HTMLArea.is_ie)
 		// IE doesn't support this property; even worse, it complains
 		// with a gross error message when we tried to select it,
 		// therefore let's hide it from the damn "browser".
-		options[i18n["Lower greek"]] = "lower-greek";
+		options[listtype_i18n("Lower greek")] = "lower-greek";
 	var obj = {
 		id            : "ListType",
-		tooltip       : i18n["ListStyleTooltip"],
+		tooltip       : listtype_i18n("ListStyleTooltip"),
 		options       : options,
 		action        : function(editor) { self.onSelect(editor, this); },
 		refresh       : function(editor) { self.updateValue(editor, this); },
