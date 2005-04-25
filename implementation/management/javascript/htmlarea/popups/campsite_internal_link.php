@@ -7,20 +7,40 @@
  *	 set in the POST.
  * 
  */
-require_once($_SERVER['DOCUMENT_ROOT']."/db_connect.php");
+require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Language.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Publication.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Issue.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Section.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Article.php");
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Publication.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Issue.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Section.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
+load_common_include_files("$ADMIN_DIR");
 
 $maxSelectLength = 60;
+$languageId = Input::get('IdLanguage', 'int', 0, true);
+$publicationId = Input::get('IdPublication', 'int', 0, true);
+$sectionId = Input::get('NrSection', 'int', 0, true);
+$issueId = Input::get('NrIssue', 'int', 0, true);
+$articleId = Input::get('NrArticle', 'int', 0, true);
+$target = Input::get('target', 'string', '', true);
+
+$languages =& Language::getAllLanguages();
+$publications = Publication::GetAllPublications();
+if (($languageId != 0) && ($publicationId != 0)) {
+	$issues = Issue::GetIssues($publicationId, $languageId);
+}
+if (($languageId != 0) && ($publicationId != 0) && ($issueId != 0)) {
+	$sections = Section::GetSections($publicationId, $issueId, $languageId);
+}
+if (($languageId != 0) && ($publicationId != 0) && ($issueId != 0) && ($sectionId != 0)) {
+	$articles = Article::GetArticles($publicationId, $issueId, $sectionId, $languageId);
+}
 ?>
 <html>
 <head>
 <title>Insert Campsite Internal Link</title>
-<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/stylesheet.css">
 <style type="text/css">
 html, body {
   background: ButtonFace;
@@ -80,9 +100,22 @@ function Init() {
 	__dlg_translate(I18N);
 	// This function gets the arguments passed to the window and sizes the window.
 	__dlg_init();
-	//var param = window.dialogArguments;
+	var param = window.dialogArguments;
+	var target_select = document.getElementById("f_target");
+	if (param) {
+		targetValue = param["f_target"];
+		if ((param["f_target"] != "") && (param["f_target"] != "_blank") 
+			&& (param["f_target"] != "_self") && (param["f_target"] != "_top")) {
+			targetValue = "_other";
+			target_select.selectedIndex = 4;
+			otherTextBox = document.getElementById("f_other_target");
+			otherTextBox.value = param["f_target"];
+			otherTextBox.style.visibility = "visible";
+		}
+		comboSelectValue(target_select, targetValue);
+	}
 
-	window.resizeTo(500, 220);
+	window.resizeTo(500, 250);
 };
 
 function onOK() {
@@ -95,13 +128,16 @@ function onOK() {
 	sectionId = sectionElement ? sectionElement.value : 0;
 	articleElement = document.getElementById("NrArticle");
 	articleId = articleElement? articleElement.value : 0;
+	targetElement = document.getElementById("f_target");
+	target = targetElement ? targetElement.value : '';
+	
+	// User must at least specify language and publication.
 	if ((languageId <= 0) || (publicationId <= 0)) {
 		alert("You must specify the language and the publication.");
-		// They must at least specify language and publication.
-		//__dlg_close(null);
 		return false;		
 	}
-	// pass data back to the calling window
+	
+	// Pass data back to the calling window.
 	var param = new Object();
 	param["f_href"] = "campsite_internal_link?IdPublication="+publicationId
 					  +"&IdLanguage="+languageId;
@@ -114,8 +150,18 @@ function onOK() {
 	if (articleId > 0) {
 		param["f_href"] += "&NrArticle=" + articleId;
 	}
+	if (target != '') {
+		if (target == "_other") {
+		    param["f_target"] = document.getElementById("f_other_target").value;
+		}
+		else {
+			param["f_target"] = target;
+		}
+	}
+	else {
+		param["f_target"] = "";
+	}
 	param["f_title"] = "";
-	param["f_target"] = "";
 	__dlg_close(param);
 	return false;
 };
@@ -123,6 +169,18 @@ function onOK() {
 function onCancel() {
 	__dlg_close(null);
 	return false;
+};
+
+function onTargetChanged(selectElement) {
+	var f = document.getElementById("f_other_target");
+	if (selectElement.value == "_other") {
+		f.style.visibility = "visible";
+		f.select();
+		f.focus();
+	} 
+	else {
+		f.style.visibility = "hidden";
+	}
 };
 </script>
 </head>
@@ -135,8 +193,6 @@ function onCancel() {
 	<td class="label">Language:</td>
     <td>
     	<?php
-    	$languages =& Language::getAllLanguages();
-    	$languageId = isset($_REQUEST["IdLanguage"]) ? $_REQUEST["IdLanguage"] : 0;
     	$extras = 'id="IdLanguage" onchange="this.form.submit();"';
     	$options = array();
     	$options[0] = "?";
@@ -148,16 +204,14 @@ function onCancel() {
     </td>
   </tr>
 <tr>
-	<td class="label">Publication:</td>
+	<td class="label"><?php putGS("Publication"); ?>:</td>
     <td>
     	<?php
-    	$publications = Publication::GetAllPublications();
     	$options = array();
     	$options[0] = "?";
     	foreach ($publications as $publication) {
     		$options[$publication->getPublicationId()] = substr($publication->getName(), 0, $maxSelectLength);
     	}
-    	$publicationId = isset($_REQUEST["IdPublication"]) ? $_REQUEST["IdPublication"] : 0;
     	$extras = 'id="IdPublication" onchange="this.form.submit()"';
     	if ($languageId == 0){
     		$extras .= ' disabled';
@@ -170,11 +224,9 @@ function onCancel() {
 	<td class="label">Issue:</td>
 	<td>
     	<?php
-    	$issueId = isset($_REQUEST["NrIssue"]) ? $_REQUEST["NrIssue"] : 0;
     	$options = array();
     	$options[0] = "?";
     	if (($languageId != 0) && ($publicationId != 0)) {
-	    	$issues = Issue::GetIssues($publicationId, $languageId);
 	    	foreach ($issues as $issue) {
 	    		$options[$issue->getIssueId()] = substr($issue->getName(), 0, $maxSelectLength);
 	    	}
@@ -191,11 +243,9 @@ function onCancel() {
 	<td class="label">Section:</td>
 	<td>
     	<?php
-    	$sectionId = isset($_REQUEST["NrSection"]) ? $_REQUEST["NrSection"] : 0;
     	$options = array();
     	$options[0] = "?";
     	if (($languageId != 0) && ($publicationId != 0) && ($issueId != 0)) {
-	    	$sections = Section::GetSections($publicationId, $issueId, $languageId);
 	    	foreach ($sections as $section) {
 	    		$options[$section->getSectionId()] = substr($section->getName(), 0, $maxSelectLength);
 	    	}
@@ -212,11 +262,9 @@ function onCancel() {
 	<td class="label">Article:</td>
 	<td>
     	<?php
-    	$articleId = isset($_REQUEST["NrArticle"]) ? $_REQUEST["NrArticle"] : 0;
     	$options = array();
     	$options[0] = "?";
     	if (($languageId != 0) && ($publicationId != 0) && ($issueId != 0) && ($sectionId != 0)) {
-	    	$articles = Article::GetArticles($publicationId, $issueId, $sectionId, $languageId);
 	    	foreach ($articles as $article) {
 	    		$options[$article->getArticleId()] = substr($article->getTitle(), 0, $maxSelectLength);
 	    	}
@@ -227,6 +275,27 @@ function onCancel() {
     	}
     	CampsiteInterface::CreateSelect("NrArticle", $options, $articleId, $extras, true);
     	?>
+	</td>
+</tr>
+<tr>
+	<td class="label">Target:</td>
+	<td>
+		<table cellpadding="0" cellspacing="0">
+		<tr>
+			<td>
+				<select id="f_target" onchange="onTargetChanged(this);">
+		      	<option value="">None (use implicit)</option>
+		      	<option value="_blank">New window (_blank)</option>
+		      	<option value="_self">Same frame (_self)</option>
+		      	<option value="_top">Top frame (_top)</option>
+		      	<option value="_other">Other</option>
+		    	</select>
+		    </td>
+		    <td>
+    			<input type="text" name="f_other_target" id="f_other_target" size="10" style="visibility: hidden" />
+    		</td>
+    	</tr>
+    	</table>
 	</td>
 </tr>
 </table>
