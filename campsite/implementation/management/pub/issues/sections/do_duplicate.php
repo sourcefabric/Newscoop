@@ -60,10 +60,18 @@ if ($correct) {
 	$dstPublicationObj =& new Publication($DestPublication);
 	$dstIssueObj =& new Issue($DestPublication, $Language, $DestIssue);
 	$dstSectionObj =& new Section($DestPublication, $DestIssue, $Language, $DestSection);
-	$dstSectionCols = array('Name'=>$sectionObj->getName(),
-		'ShortName'=>$sectionObj->getShortName(),
-		'SectionTplId'=>$sectionObj->getProperty('SectionTplId'),
-		'ArticleTplId'=>$sectionObj->getProperty('ArticleTplId'));
+	if ($Pub == $DestPublication && $Issue == $DestIssue) {
+		$shortName = $DestSection;
+		$sectionName = $sectionObj->getName() . " (duplicate)";
+	} else {
+		$shortName = $sectionObj->getShortName();
+		$sectionName = $sectionObj->getName();
+	}
+	$dstSectionCols = array('Name'=>$sectionName, 'ShortName'=>$shortName);
+	if ($sectionObj->getProperty('SectionTplId') != "")
+		$dstSectionCols['SectionTplId'] = $sectionObj->getProperty('SectionTplId');
+	if ($sectionObj->getProperty('ArticleTplId') != "")
+		$dstSectionCols['ArticleTplId'] = $sectionObj->getProperty('ArticleTplId');
 	if ($dstSectionObj->exists()) {
 		$dstSectionObj->update($dstSectionCols);
 	} else {
