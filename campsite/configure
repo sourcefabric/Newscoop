@@ -146,7 +146,7 @@ done
 if [ "$read_only" = "false" ]; then
     do_install_full_config $c_define_start_env || exit 1
     modules_conf --set || exit 1
-    for mod in $configurable_modules; do
+    for mod in $modules; do
 	do_module_full_config $mod $c_define_start_env || exit 1
     done
 else
