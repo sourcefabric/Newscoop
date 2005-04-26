@@ -1068,7 +1068,22 @@ $"$PHP" -q $"$INSTALL_CONF/php_mysql_exists.php"
 set_checked php_mysql
 return 0
 }
+# END OF check4_php_myslq
 
+# FUNCTION: check4_convert
+# Description: check if ImageMagic package was installed
+# Parameters: none
+# Variables set:
+#	output - error message (if any)
+check4_convert()
+{
+is_checked convert && return 0
+check4_file convert --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
+[ $? -ne 0 ] && output="ImageMagic package was not installed. Please install it." && return 1
+set_checked convert
+return 0
+}
+# END OF check4_convert
 
 # FUNCTION: check4_
 # Description: check if  is installed
