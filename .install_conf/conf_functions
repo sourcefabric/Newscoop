@@ -385,12 +385,6 @@ smtp_wrapper=${CAMPSITE_PACKAGE_DIR}/implementation/mailnotify/smtp_wrapper/smtp
 check4_gethostbyaddr_r
 check4_gethostbyname_r
 check4_getservbyname_r
-pushd `pwd` &> /dev/null
-cd ${CAMPSITE_PACKAGE_DIR}/implementation/mailnotify/smtp_wrapper
-./configure && $MAKE && check4_file $smtp_wrapper --executable
-result=$?
-popd &> /dev/null
-[ $result -ne 0 ] && echo $output_err && return 1
 export SMTP_WRAPPER=$smtp_wrapper
 add_to_list_var EVENT_HANDLERS PREPARED_MOD_ENV
 echo "EVENT_HANDLERS environment OK"
