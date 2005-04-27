@@ -43,6 +43,7 @@ regGS('URL','URL');
 regGS('Order', 'Order:en');
 regGS('Hide', 'Hide:en');
 regGS('Duplicate', 'Duplicate:en');
+regGS('Insert Internal Link', 'Insert Internal Link:en');
 
 regGS('Select destination', 'Select destination:en');
 regGS('No languages','No languages:en');
