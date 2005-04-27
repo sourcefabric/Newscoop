@@ -66,8 +66,8 @@ cgi_common.o: cgi_common.cpp $(DEPENDENCIES)
 
 install: all
 	mkdir -p $(CGI_COMMON_DIR)
-	install --mode=750 --owner=$(ROOT_USER) --group=$(APACHE_GROUP) "$(TPL_CGI)" "$(CGI_COMMON_DIR)"
-	install --mode=750 --owner=$(ROOT_USER) --group=$(APACHE_GROUP) "$(GET_IMG)" "$(CGI_COMMON_DIR)"
+	install -m 750 -o $(ROOT_USER) -g $(APACHE_GROUP) "$(TPL_CGI)" "$(CGI_COMMON_DIR)"
+	install -m 750 -o $(ROOT_USER) -g $(APACHE_GROUP) "$(GET_IMG)" "$(CGI_COMMON_DIR)"
 
 uninstall: dummy
 	rm -f $(CGI_COMMON_DIR)/$(TPL_CGI)
