@@ -402,7 +402,7 @@ void parent_sig_handler(int p_nSigNum)
 }
 
 
-void set_signals(sighandler_t p_sigHandler, bool p_bSetTERM = true, 
+void set_signals(sig_t p_sigHandler, bool p_bSetTERM = true,
 				 bool p_bSetHUP = true, bool p_bSetINT = true)
 {
 	// mask most signals
