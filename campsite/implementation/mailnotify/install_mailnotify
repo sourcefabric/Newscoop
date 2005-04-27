@@ -1,8 +1,8 @@
 #!/bin/bash
 
 mkdir -p $"$BIN_DIR"
-install --owner=$ROOT_USER --group=$APACHE_GROUP --mode=750 notifyendsubs $"$BIN_DIR"
-install --owner=$ROOT_USER --group=$APACHE_GROUP --mode=750 notifyevents $"$BIN_DIR"
+install -o $ROOT_USER -g $APACHE_GROUP -m 750 notifyendsubs $"$BIN_DIR"
+install -o $ROOT_USER -g $APACHE_GROUP -m 750 notifyevents $"$BIN_DIR"
 
 if $USER_INSTALL; then exit 0; fi
 
