@@ -6,7 +6,7 @@ install:
 	mkdir -p "$(CAMPSITE_DIR)/instance/database"
 	cp -f campsite-db.sql "$(CAMPSITE_DIR)/instance/database"
 	cp -fr upgrade "$(CAMPSITE_DIR)/instance/database"
-	chown "$(APACHE_USER):$(APACHE_GROUP)" "$(CAMPSITE_DIR)/instance" -R
+	chown -R "$(APACHE_USER):$(APACHE_GROUP)" "$(CAMPSITE_DIR)/instance"
 
 drop-db: uninstall
 
