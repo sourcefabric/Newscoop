@@ -128,7 +128,6 @@ int main()
 void ReadFileFromURL(const string& p_rcoURL, const string& p_rcoContentType)
 {
 	CURL *curl;
-	CURLcode res;
 
 	curl = curl_easy_init();
 	if(curl) {
