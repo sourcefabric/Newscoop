@@ -5,6 +5,7 @@ GET_IMG_OBJ_FILES=get_img.o readconf.o cgi.o cgi_common.o
 
 CLEAN_XML_INCLUDE=$(shell echo -n "$(XML_INCLUDE)")
 CLEAN_XML_LINK=$(shell echo -n "$(XML_LINK)")
+CLEAN_CURL_FLAGS=$(shell echo -n "$(CURL_FLAGS)")
 CLEAN_CURL_LINK=$(shell echo -n "$(CURL_LINK)")
 
 TPL_CGI_LDFLAGS=
@@ -44,6 +45,9 @@ clean: dummy
 
 tpl_cgi.o: tpl_cgi.cpp $(DEPENDENCIES)
 	g++ -c -o tpl_cgi.o $(CFLAGS) tpl_cgi.cpp
+
+get_img.o: get_img.cpp $(DEPENDENCIES)
+	g++ -c -o get_img.o $(CFLAGS) get_img.cpp
 
 csocket.o: csocket.cpp $(DEPENDENCIES)
 	g++ -c -o csocket.o $(CFLAGS) csocket.cpp
