@@ -40,7 +40,7 @@ if (($languageId != 0) && ($publicationId != 0) && ($issueId != 0) && ($sectionI
 ?>
 <html>
 <head>
-<title>Insert Campsite Internal Link</title>
+<title><?php putGS("Insert Internal Link"); ?></title>
 <style type="text/css">
 html, body {
   background: ButtonFace;
@@ -185,12 +185,12 @@ function onTargetChanged(selectElement) {
 </script>
 </head>
 <body onload="Init()">
-<div class="title">Insert Campsite Internal Link</div>
+<div class="title"><?php putGS("Insert Internal Link"); ?></div>
 <?php //print_r($_REQUEST); ?>
 <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
 <table border="0" style="width: 100%;" id="main_table">
 <tr>
-	<td class="label">Language:</td>
+	<td class="label"><?php putGS("Language"); ?>:</td>
     <td>
     	<?php
     	$extras = 'id="IdLanguage" onchange="this.form.submit();"';
@@ -221,7 +221,7 @@ function onTargetChanged(selectElement) {
 	</td>
 </tr>
 <tr>
-	<td class="label">Issue:</td>
+	<td class="label"><?php putGS("Issue"); ?>:</td>
 	<td>
     	<?php
     	$options = array();
@@ -240,7 +240,7 @@ function onTargetChanged(selectElement) {
 	</td>
 </tr>
 <tr>
-	<td class="label">Section:</td>
+	<td class="label"><?php putGS("Section"); ?>:</td>
 	<td>
     	<?php
     	$options = array();
@@ -259,7 +259,7 @@ function onTargetChanged(selectElement) {
 	</td>
 </tr>
 <tr>
-	<td class="label">Article:</td>
+	<td class="label"><?php putGS("Article"); ?>:</td>
 	<td>
     	<?php
     	$options = array();
