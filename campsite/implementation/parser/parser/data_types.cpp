@@ -560,7 +560,7 @@ public:
 	// destructor
 	~CTopicIdTable() { clear(); }
 
-	Topic* find(lint p_nId) const { return (*(map<lint, Topic*>::find(p_nId))).second; }
+	Topic* find(lint p_nId) const;
 
 	void insert(Topic*);
 
@@ -579,6 +579,14 @@ private:
 	// forbid assignment
 	const CTopicIdTable& operator =(const CTopicIdTable&);
 };
+
+inline Topic* CTopicIdTable::find(lint p_nId) const
+{
+	map<lint, Topic*>::const_iterator coIt = map<lint, Topic*>::find(p_nId);
+	if (coIt != map<lint, Topic*>::end())
+		return (*coIt).second;
+	return NULL;
+}
 
 inline void CTopicIdTable::insert(Topic* p_pcoTopic)
 {
