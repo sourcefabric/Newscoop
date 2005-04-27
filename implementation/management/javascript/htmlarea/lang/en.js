@@ -52,6 +52,7 @@ HTMLArea.I18N = {
 		paste:          "Paste from clipboard",
 		lefttoright:    "Direction left to right",
 		righttoleft:    "Direction right to left",
+		popupeditor:	"Minimize Editor",
 		campsite_subhead: "Subhead",
 		campsite_internal_link: "Internal Link"
 	},
@@ -80,6 +81,7 @@ HTMLArea.I18N = {
 	},
 
 	dialogs: {
+		// "Insert Link" popup
 		"Cancel"                                            : "Cancel",
 		"Insert/Modify Link"                                : "Insert/Modify Link",
 		"New window (_blank)"                               : "New window (_blank)",
@@ -91,6 +93,37 @@ HTMLArea.I18N = {
 		"Title (tooltip):"                                  : "Title (tooltip):",
 		"Top frame (_top)"                                  : "Top frame (_top)",
 		"URL:"                                              : "URL:",
-		"You must enter the URL where this link points to"  : "You must enter the URL where this link points to"
+		"You must enter the URL where this link points to"  : "You must enter the URL where this link points to",
+		
+		// "Insert Table" popup
+		"Insert Table"										: "Insert Table",
+		"Rows:"												: "Rows:",
+		"Cols:"												: "Cols:",
+		"Width:"											: "Width:",
+		"Percent"											: "Percent",
+		"Pixels"											: "Pixels",
+		"Em"												: "Em",
+		"Layout"											: "Layout",
+		"Alignment:"										: "Alignment:",
+		"Not set"											: "Not set",
+		"Left"												: "Left",
+		"Right"												: "Right",
+		"Texttop"											: "Texttop",
+		"Absmiddle"											: "Absmiddle",
+		"Baseline"											: "Baseline",
+		"Absbottom"											: "Absbottom",
+		"Bottom"											: "Bottom",
+		"Middle"											: "Middle",
+		"Top"												: "Top",
+		"Border thickness:"									: "Border thickness:",
+		"Spacing"											: "Spacing",
+		"Cell spacing:"										: "Cell spacing:",
+		"Cell padding:"										: "Cell padding:",
+		
+		// "Select Color" popup
+		"Select Color"										: "Select Color",
+		
+		// "Fullscreen HTMLArea" popup
+		"Fullscreen HTMLArea"								: "Fullscreen HTMLArea"
 	}
 };
