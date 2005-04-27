@@ -133,12 +133,19 @@ void ReadConf(string& p_rcoIP, int& p_rnPort)
 	try
 	{
 		// the parser IP address is always localhost
-		p_rcoIP = "127.0.0.1";
+		char pchHostName[1000];
+		gethostname(pchHostName, 1000);
+		p_rcoIP = CSocket::IPAddress(pchHostName);
 
 		// read parser configuration
 		string coParserConfFile = string(pchDocumentRoot) + "/parser_conf.php";
 		ConfAttrValue m_coAttributes(coParserConfFile);
 		p_rnPort = atoi(m_coAttributes.valueOf("PARSER_PORT").c_str());
+	}
+	catch (SocketErrorException& rcoEx)
+	{
+		cout << "<html>\n" << rcoEx.Message() << "\n</html>" << endl;
+		exit(0);
 	}
 	catch (ConfException& rcoEx)
 	{
