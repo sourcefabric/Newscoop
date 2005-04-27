@@ -132,8 +132,8 @@ function create_configuration_files($p_defined_parameters)
 	if (!($res = $apache_module->save($instance_etc_dir)) == 0)
 		return $res;
 
-	$cmd = "chown \"" . $Campsite['APACHE_USER'] . ":" . $Campsite['APACHE_GROUP']
-		. "\" \"$instance_etc_dir\" -R 2>&1";
+	$cmd = "chown -R \"" . $Campsite['APACHE_USER'] . ":" . $Campsite['APACHE_GROUP']
+		. "\" \"$instance_etc_dir\" 2>&1";
 	exec($cmd, $output, $res);
 	if ($res != 0)
 		return implode("\n", $output);
@@ -406,10 +406,10 @@ function create_site($p_defined_parameters)
 	$cp_cmd = "cp -f $common_cgi_dir/* $cgi_dir";
 	exec($cp_cmd);
 
-	$cmd = "chown " . $Campsite['APACHE_USER'] . ":" . $Campsite['APACHE_GROUP']
-		. " \"$instance_www_dir\" -R";
+	$cmd = "chown -R " . $Campsite['APACHE_USER'] . ":" . $Campsite['APACHE_GROUP']
+		. " \"$instance_www_dir\"";
 	exec($cmd);
-	$cmd = "chmod ug+w \"$instance_www_dir\" -R";
+	$cmd = "chmod -R ug+w \"$instance_www_dir\"";
 	exec($cmd);
 
 	return 0;
