@@ -60,7 +60,7 @@ check4_make()
 {
 is_checked make && return 0
 for make_cmd in gmake make; do
-    check4_file $make_cmd --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
+    check4_file $make_cmd --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin" &> /dev/null
     if [ $? -eq 0 ]; then
 	export MAKE=$file_path
 	set_checked make
