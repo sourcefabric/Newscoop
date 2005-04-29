@@ -45,7 +45,7 @@ if (!isset($_REQUEST['TOL_Language'])) {
 	// english language strings, but only if it knows that
 	// the language being displayed is english...and it knows
 	// via the cookie.
-	$_COOKIE['TOL_Language'] = $defaultLanguage;
+	$_REQUEST['TOL_Language'] = $defaultLanguage;
 }
 else {
 	$defaultLanguage = $_REQUEST['TOL_Language'];
