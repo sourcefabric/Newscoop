@@ -85,28 +85,35 @@ int main()
 	fd_set clSet;
 	FD_ZERO(&clSet);
 	CTCPSocket coSock;
+	ulint nTotalReceived = 0;
 	try
 	{
-		coSock.Connect(coIP.c_str(), nPort);
-		coSock.Send(coMsg.str().c_str(), nSize+10);
-		FD_SET((SOCKET)coSock, &clSet);
-		for (;;)
+		for (int nRepeat = 0; nRepeat < 10; nRepeat++)
 		{
-			if (select(FD_SETSIZE, &clSet, NULL, NULL, &tVal) == -1
-				|| !FD_ISSET((SOCKET)*coSock, &clSet))
+			coSock.Connect(coIP.c_str(), nPort);
+			coSock.Send(coMsg.str().c_str(), nSize+10);
+			FD_SET((SOCKET)coSock, &clSet);
+			for (;;)
 			{
-				throw ConfException("Error on select");
+				if (select(FD_SETSIZE, &clSet, NULL, NULL, &tVal) == -1
+					|| !FD_ISSET((SOCKET)*coSock, &clSet))
+				{
+					throw ConfException("Error on select");
+				}
+				char pchBuff[RECV_BUF_LEN + 1];	/* +1 for null char */
+				int nReceived = coSock.Recv(pchBuff, RECV_BUF_LEN);
+				if (nReceived == -1)
+					throw ConfException("Error receiving packet");
+				if (nReceived == 0)
+					break;
+				pchBuff[nReceived] = 0;
+				nTotalReceived += nReceived;
+				cout << pchBuff;
 			}
-			char pchBuff[RECV_BUF_LEN + 1];	/* +1 for null char */
-			int nReceived = coSock.Recv(pchBuff, RECV_BUF_LEN);
-			if (nReceived == -1)
-				throw ConfException("Error receiving packet");
-			if (nReceived == 0)
+			coSock.Shutdown();
+			if (nTotalReceived > 0)
 				break;
-			pchBuff[nReceived] = 0;
-			cout << pchBuff;
 		}
-		coSock.Shutdown();
 	}
 	catch (ConfException& rcoEx)
 	{
