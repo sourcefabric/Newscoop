@@ -1,11 +1,18 @@
 <?php
 
-$etc_dir = trim($GLOBALS['argv'][1]);
-$type = trim($GLOBALS['argv'][2]);
+if (!is_array($GLOBALS['argv'])) {
+	echo "Can't read command line arguments\n";
+	exit(1);
+}
+
+$etc_dir = isset($GLOBALS['argv'][1]) ? trim($GLOBALS['argv'][1]) : "";
+$type = isset($GLOBALS['argv'][2]) ? trim($GLOBALS['argv'][2]) : "";
+$arg3 = isset($GLOBALS['argv'][3]) ? trim($GLOBALS['argv'][3]) : "";
+
 if ($type == "-a")
-	$archive_file = trim($GLOBALS['argv'][3]);
+	$archive_file = $arg3;
 if ($type == "-i")
-	$instance_name = trim($GLOBALS['argv'][3]);
+	$instance_name = $arg3;
 
 if ($etc_dir == "" || $type == "" || ($type == "-a" && $archive_file == "")
 	|| ($type == "-i" && $instance_name == "") || ($type != '-a' && $type != '-i')) {

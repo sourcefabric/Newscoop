@@ -93,7 +93,6 @@ int UpdateTopics(bool& p_rbUpdated)
 	if (q_res)
 		return ERR_QUERY;
 	StoreResult(sql, res);
-	CheckForRows(*res, 1);
 	id_type nLastId = -1;
 	CStringMap coValues;
 	Topic::setUpdated(false);
@@ -118,7 +117,8 @@ int UpdateTopics(bool& p_rbUpdated)
 		}
 		coValues[pchLangCode] = pchTopicName;
 	}
-	Topic::setNames(coValues, nLastId);
+	if (nLastId != -1)
+		Topic::setNames(coValues, nLastId);
 	Topic::clearInvalid();
 	p_rbUpdated = Topic::valuesChanged();
 	return 0;

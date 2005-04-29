@@ -29,6 +29,11 @@ debug_msg("query string: $query_string");
 debug_msg("cookies string: $cookies_string");
 
 $msg = create_url_request_message($env_vars, $parameters, $cookies);
-read_parser_output(send_message_to_parser($msg));
+for ($i = 1; $i <= 10; $i++) {
+	$size_read = read_parser_output(send_message_to_parser($msg));
+	if ($size_read > 0)
+		break;
+	usleep(200000);
+}
 
 ?>

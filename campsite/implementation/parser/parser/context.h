@@ -448,13 +448,13 @@ public:
 	}
 	void SetTopic(id_type t) throw(InvalidValue)
 	{
-		if (!Topic::isValid(t))
+		if (t != -1 && !Topic::isValid(t))
 			throw InvalidValue("topic identifier", (string)Integer(t));
 		m_nTopicId = t;
 	}
 	void SetDefTopic(id_type t) throw(InvalidValue)
 	{
-		if (!Topic::isValid(t))
+		if (t != -1 && !Topic::isValid(t))
 			throw InvalidValue("topic identifier", (string)Integer(t));
 		m_nDefTopicId = t;
 	}

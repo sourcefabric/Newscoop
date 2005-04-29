@@ -23,7 +23,8 @@ X_HBUTTON(<*Publications*>, <*pub/*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<?php 
+<?php
+	todef('TOL_Language');
 	query ("SELECT Unit, Name FROM TimeUnits WHERE 1=0", 'q_unit');
 	query("SELECT Id as IdLang FROM Languages WHERE code='$TOL_Language'", 'q_def_lang');
 	if($NUM_ROWS == 0){

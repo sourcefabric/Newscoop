@@ -119,7 +119,7 @@ function transfer_images($p_destDir) {
 //	mysql_query($transferQuery);
 	
 	$thumbnailCommand = 'convert -sample 64x64';
-	$queryStr = "SELECT Id FROM ImagesDup";
+	$queryStr = "SELECT Id, Image FROM ImagesDup";
 	$query = mysql_query($queryStr);
 	//mkdir($p_destDir, 0755);
 	while ($row = mysql_fetch_assoc($query)) {
@@ -129,8 +129,10 @@ function transfer_images($p_destDir) {
 		if (file_exists($tmpImageFile)) {
 			@unlink($tmpImageFile);
 		}
-		$queryStr2 = "SELECT Image INTO dumpfile '$tmpImageFile' from ImagesDup where Id = ".$row['Id'];
-		mysql_query($queryStr2);
+		$handle = fopen($tmpImageFile, 'a');
+		fwrite($handle, $row['Image']);
+		fclose($handle);
+
 		// Figure out the image type
 		$imageInfo = getimagesize($tmpImageFile);
 		switch($imageInfo[2]) {

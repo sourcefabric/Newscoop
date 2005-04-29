@@ -30,10 +30,15 @@ export APACHE_BIN_PATH=""
 
 # set the directory where campsite is located and install conf directory
 cdir=`pwd`
-[ $? -ne 0 ] && echo "Error reading campsite directory" && exit 1
+[ $? -ne 0 ] && echo "Error reading campsite directory: pwd command does not exist" && exit 1
 export CAMPSITE_PACKAGE_DIR=$cdir
 export INSTALL_CONF=${CAMPSITE_PACKAGE_DIR}/.install_conf
 . ${INSTALL_CONF}/install_functions
+
+for m in php_cli make mkdir chown chmod cut cat grep cp rm locate; do
+    check4_$m
+    [ $? -ne 0 ] && echo $output && exit 1
+done
 
 
 # set version, release date and install log
@@ -64,20 +69,53 @@ for mod in $configurable_modules; do
 done
 
 
+display_help()
+{
+    echo -e "\nSystem specific parameters:"
+    echo -e "    --root_user [my_root_user]: set the root user to my_root_user"
+    echo -e "    --root_group [my_root_group]: set the root group to my_root_group"
+    echo -e "\n\nApache configuration parameters:"
+    echo -e "Use these options in case you have a custom apache install."
+    echo -e "    --apache_user [my_apache_user]: set the apache user to my_apache_user"
+    echo -e "    --apache_group [my_apache_group]: set the apache group to my_apache_group"
+    echo -e "    --apache_conf_path [apache_conf_path]: set the apache configuration path"
+    echo -e "    --apache_bin_path [apache_bin_path]: set the apache daemon path"
+    echo -e "\n\nInstall directories:"
+    echo -e "    --prefix [prefix_dir]: use [prefix_dir] as the base directory; campsite"
+    echo -e "        directory will be created here"
+    echo -e "    --campsite_dir [campsite_dir]: set the campsite install directory"
+    echo -e "        (overrides --prefix option)"
+    echo -e "    --bin_dir [bin_dir]: set the campsite binaries directory"
+    echo -e "    --etc_dir [etc_dir]: set the campsite configuration directory"
+    echo -e "    --www_dir [www_dir]: set the campsite WWW directory; instance document root"
+    echo -e "        and cgi directories will be installed here."
+    echo -e "    --www_common_dir [www_common_dir]: set the campsite WWW common directory;"
+    echo -e "        document root and cgi directories containing files common to all"
+    echo -e "        instances will be installed here."
+    echo -e "\n\nOther:"
+    echo -e "    --parser_start_port [start_port]: the template engine (parser) creates a"
+    echo -e "        network connection in order to listen for template requests. Each"
+    echo -e "        instance will be assigned one network port automatically. This specifies"
+    echo -e "        the first value from which to start assigning ports."
+    echo -e "    --read_only: do not make any changes to configuration files"
+    echo -e "    --help: print this help and exit"
+    exit 0
+}
+
+
 # read user install options
-c_upgrade=""
 c_define_start_env=""
 root_only=false
 read_only=false
 while [ "$1" != "" ]; do
     case $1 in
     --define_start_env) c_define_start_env=--define_start_env ;;
-    --upgrade) c_upgrade=--upgrade ;;
     --root_user) export ROOT_USER=$2; shift 1 ;;
     --root_group) export ROOT_GROUP=$2; shift 1 ;;
+    --apache_user) export APACHE_USER=$2; shift 1 ;;
+    --apache_group) export APACHE_GROUP=$2; shift 1 ;;
     --apache_conf_path) export APACHE_CONF_PATH=$2; shift 1 ;;
     --apache_bin_path) export APACHE_BIN_PATH=$2; shift 1 ;;
-    --root_only) root_only=true ;;
     --read_only) read_only=true ;;
     --prefix) export PREFIX_DIR=$2; shift 1 ;;
     --campsite_dir) export CAMPSITE_DIR=$2; shift 1 ;;
@@ -86,6 +124,7 @@ while [ "$1" != "" ]; do
     --www_dir) export WWW_DIR=$2; shift 1 ;;
     --www_common_dir) export WWW_COMMON_DIR=$2; shift 1 ;;
     --parser_start_port) export PARSER_START_PORT=$2; shift 1 ;;
+    --help) display_help; exit 0 ;;
     esac
     shift 1
 done
@@ -99,23 +138,22 @@ CGI_COMMON_DIR=$WWW_COMMON_DIR/cgi-bin
 
 if [ "$c_define_start_env" != "--define_start_env" ]; then
 
-for m in pwd make m4 mkdir ls chown chmod cut cat grep stat which cp rm clear gcc gpp locate; do
+for m in ls m4 gcc gpp pear curl; do
     check4_$m
     [ $? -ne 0 ] && echo $output && exit 1
 done
 
 if [ "$read_only" = "false" ]; then
-    do_install_full_config $c_define_start_env $c_upgrade
-    [ $? -ne 0 ] && exit 1
-    modules_conf --set
-    for mod in $configurable_modules; do
-	do_module_full_config $mod $c_define_start_env $c_upgrade || exit 1
+    do_install_full_config $c_define_start_env || exit 1
+    modules_conf --set || exit 1
+    for mod in $modules; do
+	do_module_full_config $mod $c_define_start_env || exit 1
     done
 else
     prepare_install_env || exit 1
     install_conf --set || exit 1
     for mod in $MODULES_LIST; do
-	prepare_${mod}_env
+	prepare_${mod}_env || exit 1
     done
     modules_conf --set $mod || exit 1
 fi
@@ -124,13 +162,14 @@ echo -n "Writing campsite_config script..."
 campsite_config_script=${INSTALL_CONF}/campsite_config
 rm -f "$campsite_config_script"
 cat > "$campsite_config_script" << EOF
-#!/bin/sh
+#!/bin/bash
 
 [ "\$1" = "--campsite_dir" ] && echo -n "$CAMPSITE_DIR"
 [ "\$1" = "--bin_dir" ] && echo -n "$BIN_DIR"
 [ "\$1" = "--etc_dir" ] && echo -n "$ETC_DIR"
 [ "\$1" = "--www_dir" ] && echo -n "$WWW_DIR"
 [ "\$1" = "--www_common_dir" ] && echo -n "$WWW_COMMON_DIR"
+[ "\$1" = "--php_cli" ] && echo -n "$PHP"
 EOF
 [ $? -ne 0 ] && echo "ERROR" && exit 1
 chmod +x "$campsite_config_script"
@@ -163,7 +202,6 @@ export PROCESSOR_TYPE=\`uname -m\`
 export MAKE=$MAKE
 export M4=$M4
 export IMPLEMENTATION_PARTS=$IMPLEMENTATION_PARTS
-export SUPPLEMENTAL_PARTS=$SUPPLEMENTAL_PARTS
 export HAVE_GETHOSTBYADDR_R=$HAVE_GETHOSTBYADDR_R
 export HAVE_GETHOSTBYNAME_R=$HAVE_GETHOSTBYNAME_R
 export HAVE_GETSERVBYNAME_R=$HAVE_GETSERVBYNAME_R
@@ -175,6 +213,10 @@ export KILLALL=$KILLALL
 export PARSER_START_PORT=$PARSER_START_PORT
 export XML_INCLUDE="$XML_INCLUDE"
 export XML_LINK="$XML_LINK"
+export CURL_CFLAGS="$CURL_CFLAGS"
+export CURL_LINK="$CURL_LINK"
+export PHP=$PHP
+export PEAR=$PEAR
 EOF
 [ $? -ne 0 ] && echo "ERROR" && exit 1
 [ "$GPP" != "" ] && echo "export GPP=$GPP" >> $make_env
@@ -259,26 +301,22 @@ else
 echo "Header file configure.h is up to date."
 fi
 
-if [ "$root_only" = "false" ]; then
-    for dir in implementation; do
-	if [ -x ${dir}/configure ]; then
-	    echo "Configuring $dir ..."
-	    cd $dir && ./configure
-	    result=$?
-	    cd ..
-	    [ $result -ne 0 ] && echo "ERROR configuring $dir" && exit 1
-	fi
-    done
-fi
+for dir in implementation; do
+    if [ -x ${dir}/configure ]; then
+        echo "Configuring $dir ..."
+        cd $dir && ./configure
+        result=$?
+        cd ..
+        [ $result -ne 0 ] && echo "ERROR configuring $dir" && exit 1
+    fi
+done
 
 else # else if define start env
 
     prepare_install_env || exit 1
-    install_conf --set || exit 1
-    modules_conf --set || exit 1
-    for m in apache gethostbyaddr_r gethostbyname_r getservbyname_r killall libpthread mysql_h libcrypt libnsl xml libmysqlclient gcc m4 make; do
+    for m in apache killall; do
 	check4_${m}
-	[ $? -ne 0 ] && exit 1
+	[ $? -ne 0 ] && echo $output && exit 1
     done
 
 fi # end if define start env
@@ -299,22 +337,11 @@ export CAMPSITE_VERSION=$CAMPSITE_VERSION
 export RELEASE_NAME=$RELEASE_NAME
 export OLD_CAMPSITE_REGISTER=/etc/campsite.reg
 export PROCESSOR_TYPE=`uname -m`
-export MAKE=$MAKE
-export M4=$M4
 export IMPLEMENTATION_PARTS=$IMPLEMENTATION_PARTS
-export SUPPLEMENTAL_PARTS=$SUPPLEMENTAL_PARTS
 export OLD_CAMPSITE_REGISTER=$OLD_CAMPSITE_REGISTER
 export INSTALL_CONF=$INSTALL_CONF
-export HAVE_GETHOSTBYADDR_R=$HAVE_GETHOSTBYADDR_R
-export HAVE_GETHOSTBYNAME_R=$HAVE_GETHOSTBYNAME_R
-export HAVE_GETSERVBYNAME_R=$HAVE_GETSERVBYNAME_R
-export PTHREAD_LINK=$PTHREAD_LINK
-export MYSQL_H_PATH=$MYSQL_H_PATH
-export LIBCRYPT_LINK=$LIBCRYPT_LINK
-export NSL_LINK=$NSL_LINK
 export KILLALL=$KILLALL
 export PARSER_START_PORT=$PARSER_START_PORT
-export XML_INCLUDE="$XML_INCLUDE"
-export XML_LINK="$XML_LINK"
+export PHP=$PHP
+export MAKE=$MAKE
 
-echo "Configuration done"

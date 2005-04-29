@@ -1114,6 +1114,8 @@ int CActURLParameters::takeAction(CContext& c, sockstream& fs)
 		if (c.Publication() < 0 || c.Issue() < 0 || c.Section() < 0 || c.Article() < 0)
 			return ERR_NOPARAM;
 		URLPrintParam(P_NRIMAGE, image_nr, fs, first);
+		URLPrintParam(P_NRARTICLE, c.Article(), fs, first);
+		return 0;
 	}
 	else
 	{
@@ -1543,8 +1545,12 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 	{
 		if (c.Publication() < 0)
 			return ERR_NOPARAM;
-		table = "Publications as p, Aliases as a";
-		w = "p.IdDefaultAlias = a.Id";
+		table = "Publications as p";
+		if (field == "a.Name")
+		{
+			table += ", Aliases as a";
+			w = "p.IdDefaultAlias = a.Id";
+		}
 		SetNrField("p.Id", c.Publication(), buf, w);
 	}
 	else if (modifier == CMS_ST_ISSUE)
@@ -1625,8 +1631,6 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 		w += (w != "" ? string(" and ") : string("")) + buf.str();
 	}
 	string coQuery = string("select ");
-	if (modifier == CMS_ST_PUBLICATION)
-		coQuery += string("p.");
 	coQuery += field + " from " + table;
 	if (w != "")
 		coQuery += string(" where ") + w;
@@ -1986,9 +1990,8 @@ int CActIf::takeAction(CContext& c, sockstream& fs)
 	}
 	else if (modifier == CMS_ST_IMAGE)
 	{
-		buf << "select count(*) from Images where IdPublication = " << c.Publication()
-		    << " and NrIssue = " << c.Issue() << " and NrSection = " << c.Section()
-		    << " and NrArticle = " << c.Article() << " and Number = " << param.attribute();
+		buf << "select count(*) from ArticleImages where NrArticle = " << c.Article()
+				<< " and Number = " << param.attribute();
 		DEBUGAct("takeAction()", buf.str().c_str(), fs);
 		SQLQuery(&m_coSql, buf.str().c_str());
 		StoreResult(&m_coSql, res);

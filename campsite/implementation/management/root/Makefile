@@ -10,7 +10,7 @@ all: $(MY_TARGETS)
 %.txt: %.m4 ../macros.m4
 	$(M4) ../macros.m4 $< >$@
 
-install: $(ALL)
+install: all
 	cp -f *.php $(HTML_COMMON_DIR)/
 
 clean:

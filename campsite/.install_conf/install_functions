@@ -4,11 +4,9 @@
 
 configure_campsite()
 {
-cc_upgrade=""
 cc_interactive=""
 while [ "$1" != "" ]; do
     case $1 in
-    --upgrade) cc_upgrade="$1" ;;
     --interactive) cc_interactive="$1" ;;
     esac
     shift 1
@@ -21,38 +19,35 @@ echo "campsite they must be configured."
 echo ""
 choice_yn "Do you want to read the description of campsite modules?" N
 if [ "$choice" = "Y" ]; then
-    clear
-    echo "Campsite modules description:"
+    echo -e "\nCampsite modules description:"
     modules_desc
-    echo -n -e "\nPress ENTER when ready"
+    echo -e "\nPress ENTER when ready"
     read
-    clear
 fi
 
 fi # interactive
 
 prepare_install_env || exit 1
 check_install_deps || exit 1
-check_install_config $cc_upgrade
-if $is_installed && [ "$cc_upgrade" != "--upgrade" ]; then
-    [ "$cc_interactive" != "--interactive" ] && exit 1
-    echo "There is another older campsite instance already installed."
-    choice_yn "Do you want to upgrade the current installation?" Y
-    if [ "$choice" = "Y" ]; then
-	cc_upgrade=--upgrade
-	export upgrade=--upgrade
-	modules_conf --set || return 1
-    else
-	echo "Installing new instance of campsite..."
-    fi
+check_install_config
+if $is_installed; then
+    echo -e "\nNOTE: Install found one or more older Campsite instance(s) already installed."
+    echo "If you want to upgrade older instances run:"
+    echo -e "\t$BIN_DIR/create_instance --db_name [instance_name]"
+    echo "script after finishing this install. Replace [instance_name] with"
+    echo "the Campsite instance name you want to upgrade. Run create_instance"
+    echo "script with --help option to get a list of available options."
+    echo -e "\nPress ENTER to continue"
+    read
 fi
 
 if [ "$cc_interactive" = "--interactive" ]; then
 
-configure_install $cc_upgrade
+configure_install
 [ $? -ne 0 ] && echo "Error configuring install parameters" && exit 1
 install_conf --set
-. $INSTALL_CONF/../configure --define_start_env &> /dev/null
+. $"$INSTALL_CONF/../configure" --define_start_env &> /dev/null
+[ $? -ne 0 ] && echo "Error configuring install environment" && exit 1
 
 export MODULES_LIST="DATABASE PARSER EVENT_HANDLERS SEARCH_ENGINE ADMIN_INTERFACE"
 echo "Please wait while checking modules configuration..."
@@ -77,8 +72,8 @@ for cc_mod in $NEED_CONFIG_MODULES; do
 done
 cc_err_msg=""
 while true; do
-#    clear
-    echo "The forward list shows modules that need to be configured."
+    echo -e "\nThe following list shows modules that are configurable."
+    echo "Modules not shown in this list are not configurable at this stage."
     echo "Modules checked with X have a valid configuration."
     cc_index=1
     all_ok=true
@@ -124,8 +119,7 @@ while true; do
 done
 choice_yn "\nCampsite configuration is completed. Do you want to review it?" Y
 if [ "$choice" = "Y" ]; then
-    clear
-    echo "Install configuration"
+    echo -e "\nInstall configuration"
     install_conf
     echo -e "\nTo continue press ENTER"
     read

@@ -1,7 +1,8 @@
 INCLUDE_PHP_LIB(<*$ADMIN_DIR/pub*>)
 B_DATABASE
 
-<?php 
+<?php
+	todef('TOL_Language');
     todefnum('Pub');
     query ("SELECT Id, Name FROM Languages WHERE 1=0", 'q_lang');
 ?>dnl

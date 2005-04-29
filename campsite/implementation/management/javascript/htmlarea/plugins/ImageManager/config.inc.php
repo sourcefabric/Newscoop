@@ -1,8 +1,8 @@
 <?php
 /**
  * Image Manager configuration file.
- * @author $Author: paul $
- * @version $Id: config.inc.php,v 1.4 2005/03/20 17:28:34 paul Exp $
+ * @author $Author: mugur $
+ * @version $Id: config.inc.php,v 1.4.2.1 2005/04/26 13:07:30 mugur Exp $
  * @package ImageManager
  */
 
@@ -15,7 +15,7 @@
        PHP must be able to create files in this directory.
 	   Able to create directories is nice, but not necessary.
 */
-$IMConfig['base_dir'] = '/usr/local/campsite/www/campsite/html/images/';
+$IMConfig['base_dir'] = $_SERVER['DOCUMENT_ROOT'] . '/images/';
 
 /*
  The URL to the above path, the web browser needs to be able to see it.

@@ -77,6 +77,7 @@ B_LIST
     $desc=getNumVar($q_col,1);
     $desc=str_replace('mediumblob',getGS('Article body'),$desc);
     $desc=str_replace('varchar(100)',getGS('Text'),$desc);
+    $desc=str_replace('varbinary(100)',getGS('Text'),$desc);
     $desc=str_replace('date',getGS('Date'),$desc);
     print encHTML($desc);
 ?>&nbsp;

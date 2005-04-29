@@ -402,7 +402,7 @@ void parent_sig_handler(int p_nSigNum)
 }
 
 
-void set_signals(sighandler_t p_sigHandler, bool p_bSetTERM = true, 
+void set_signals(sig_t p_sigHandler, bool p_bSetTERM = true,
 				 bool p_bSetHUP = true, bool p_bSetINT = true)
 {
 	// mask most signals
@@ -434,7 +434,7 @@ int CampsiteInstanceFunc(const ConfAttrValue& p_rcoConfValues);
 //		char** argv - arguments list
 int main(int argc, char** argv)
 {
-	bool bRunAsDaemon;
+	bool bRunAsDaemon = true;
 	string coConfDir;
 	ProcessArgs(argc, argv, bRunAsDaemon, coConfDir);
 #ifndef _DEBUG_SOURCE
@@ -576,6 +576,12 @@ int CampsiteInstanceFunc(const ConfAttrValue& p_rcoConfValues)
 		g_pcoThreadPool = new CThreadPool(1, nMaxThreads, MyThreadRoutine, NULL);
 #endif	
 		CTCPSocket* pcoClSock = NULL;
+		char pchHostName[1000];
+		gethostname(pchHostName, 1000);
+		struct hostent* ph = gethostbyname(pchHostName);
+		struct in_addr in;
+		memcpy(&in.s_addr, ph->h_addr_list[0], sizeof(struct in_addr));
+		IPAddr pchLocalIP = (IPAddr) inet_ntoa(in);
 		for (; ; )
 		{
 			try
@@ -587,7 +593,8 @@ int CampsiteInstanceFunc(const ConfAttrValue& p_rcoConfValues)
 				cout << "*****   received request from " << pchRemoteIP << endl;
 				cout << "**********************************************" << endl;
 #endif
-				if (case_comp(pchRemoteIP, "127.0.0.1") != 0)
+				if (case_comp(pchRemoteIP, pchLocalIP) != 0
+					&& case_comp(pchRemoteIP, "127.0.0.1") != 0)
 				{
 					cerr << "Not allowed host (" << pchRemoteIP << ") connected" << endl;
 					delete pcoClSock;

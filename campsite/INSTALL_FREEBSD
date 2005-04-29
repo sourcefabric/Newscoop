@@ -21,9 +21,10 @@ Follow the installation guide in the Campsite manual -- the installation
 procedure on FreeBSD is exactly the same. Pay particular attention to the
 following, however:
 
-1. The mysqld should be running before you attempt to install.
-2. You should run the install script as root, either using su or sudo.
-3. Be aware that the Campsite installer does its best to pick reasonable
+1. If running the install scripts manually (./configure && make ...) run
+gmake instead of make. The latter doesn't accept old syntax of variable
+declaration.
+2. Be aware that the Campsite installer does its best to pick reasonable
 defaults in the configuration of the various modules, but that these should
 always be checked by the user. (This applies when installing Campsite on
 any architecture). You can change all necessary variables interactively in
@@ -54,100 +55,34 @@ satisfy dependencies:
 3) prepare campsite sources for compilation
 # mkdir /usr/local/src
 # cd /usr/local/src
-# fetch http://www.campware.org/look/campware/download/campsite-2.2.0.tar.gz
-# tar -fxz campsite-2.2.0.tar.gz
+# fetch http://www.campware.org/look/campware/download/campsite-2.2.2.tar.gz
+# tar -fxz campsite-2.2.2.tar.gz
 
 4) FreeBSD has bash binary in /usr/local/bin, while linux has it in /bin
 # ln -s /usr/local/bin/bash /bin/bash
 
-6) You need working virtual host in apache prior instalation. Note,
-that it is NOT ALLOWED to move campsite to different folder. If you want 
-so, you have to recompile it using the new destination.
+5) You need working virtual host in apache after instalation. Note,
+that it is NOT ALLOWED to move campsite to different folder after
+installation. If you want so, you have to recompile it using the new
+destination.
 
---- at this part I will not describe commands, but will try to lead you 
-by explanation instead
-
-a) edit /usr/local/etc/apache2/httpd.conf and enable Name Virtual Host 
-(it is almost on the bottom of the file)
-NameVirtualHost *:80
-
-b) create new virtual host for the campsite site (I will copy and paste 
-some working configuration)
-<VirtualHost *:80>
-    ServerName www.example.cz
-    ServerAdmin webmaster@example.cz
-    DocumentRoot /usr/local/campsite/www/example/html/
-    ErrorLog /var/log/httpd/example-error_log
-    CustomLog /var/log/httpd/example-access_log combined
-    AddHandler tpl_handler .tpl
-    Action tpl_handler /cgi-bin/tpl_cgi
-    IndexIgnore *
-    DirectoryIndex index.html index.php index.php4 index.cgi index.tpl
-    Alias /icons/ /usr/local/www/virtual/www.example.cz/icons
-    ScriptAlias /cgi-bin/ /usr/local/campsite/www/example/cgi-bin/
-    ScriptAlias /search/ /usr/local/campsite/www/example/cgi-bin/
-</VirtualHost>
-
-c) Start Apache and Mysql. At this point you can set password for root
-in MySQL and create user campsite with some password (for MySQL)
-I set it personaly in following way:
-- create database campsite
-- create user campsite@localhost with no rights
-- add database rights to user campsite to have full rights above 
-database campsite except of changing rights
-!!!!!!!!!!! at this point do not forget to add file access to the user 
-campsite, or you will not be allowed to upload pictures
-- reload database rights
-
-d) Now you are almost ready to start compiling the campsite. I said almost.
-there are some minor changes in campsite sources you need to do on FreeBSD:
-
-What file: /usr/local/src/campsite/configure
-Where: line 103
-Line should look like: export CONF_DIR=/usr/local/etc/campsite.d/$APP_NAME
-Why: This will direct configuration files to /usr/local/etc instead to /etc
-
-What file: /usr/local/src/campsite/.install_conf/check4_functions
-Where: line 667
-Line should look like: user_line=`grep -h -w ^User 
-${conf_path}/httpd.conf 2> /dev/null`
-Where: line 677
-Line should look like: group_line=`grep -h -w ^Group 
-${conf_path}/httpd.conf 2> /dev/null`
-Why: Apache on FreeBSD has several conf files in his config directory, 
-so you have to specify, the user and group are defined in httpd.conf and 
-not elsewhere.
-
-e) Now you are able to start campsite install script
-
-7) Starting install script has several minor difficulties I met:
-a) When trying to find out apache config file, it fails, as it is not in 
-/etc/httpd like on Linux, but in /usr/local/etc/apache2
-This is not the problem, as install asks you for entering the path to 
-httpd.conf
-b) the preconfigured values on almost all modules are bad, so go through 
-configuration
-- PARSER: User and Group are www on FreeBSD, so change both to www
-c) Install than should be able to go through. If not, you probably
-missed something mentioned above.
-
-8) Now the campsite shall be installed, but you need to ensure that it 
-starts after reboot. Linux launches it from /etc/rc.d/rc.local script, 
-however freeBSD ignores this file. Above that the syntax of the file is 
+6) Start install script; now the campsite shall be installed, but you need to
+ensure that it starts after reboot. Linux launches it from /etc/rc.d/rc.local
+script, however freeBSD ignores this file. Above that the syntax of the file is
 not working on FreeBSD.
 I decided to forget this file and do the startup in FreeBSD way myself. 
 The file can be deleted.
-- campsite startup script is in /usr/local/campsite/campsitectl
+- campsite startup script is in /usr/local/campsite/bin/campsitectl
 - FreeBSD expect similar script in /usr/local/etc/rc.d but the script 
 needs to have suffix .sh
 therefore I just did:
-# ln -s /usr/local/campsite/campsitectl /usr/local/etc/rc.d/campsitectl.sh
+# ln -s /usr/local/campsite/bin/campsitectl /usr/local/etc/rc.d/campsitectl.sh
 
 And that should be it.
----------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 Now I will try to write several notes about using multiple campsite 
 instances on a single server:
-----------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 First you need to understand, that instances needs to be independent. 
 Therefore you need to have database for each and apache virtual host for 
 each.

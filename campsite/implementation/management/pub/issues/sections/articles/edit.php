@@ -469,7 +469,7 @@ if ($edit_ok) { ?>
 	<?php 
 	// Display the article type fields.
 	foreach ($dbColumns as $dbColumn) {
-		if (stristr($dbColumn->getType(), "char")) { 
+		if (stristr($dbColumn->getType(), "char") || stristr($dbColumn->getType(), "varbinary")) { 
 			// Single line text fields
 			?>
 			<TR>

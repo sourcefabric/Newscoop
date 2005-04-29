@@ -18,7 +18,10 @@ X_HBUTTON(<*Templates*>, <*templates/?Path=<?php  pencURL(decS($Path)); ?>*>)
 E_HEADER_BUTTONS
 E_HEADER
 
-<?php  todef('Path'); ?>dnl
+<?php
+	todef('TOL_Language');
+	todef('Path');
+?>dnl
 
 B_CURRENT
 X_CURRENT(<*Path*>, <*<?php  pencHTML(decURL($Path)); ?>*>)
@@ -29,7 +32,7 @@ B_DIALOG(<*Upload template*>, <*POST*>, <*do_upload_templ.php*>, <*multipart/for
 	B_DIALOG_INPUT(<*Template charset*>)
 		<INPUT TYPE="HIDDEN" NAME="Path" VALUE="<?php  pencHTML(decS($Path)); ?>">
 		<INPUT TYPE="HIDDEN" NAME="UNIQUE_ID" VALUE="1">
-<?php 
+<?php
 	echo "<SELECT NAME=\"Charset\" class=\"input_select\">\n";
 	echo "<OPTION VALUE=\"\">-- ".getGS("Select a language/character set")." --</OPTION>\n";
 	echo "<OPTION VALUE=\"UTF-8\">".getGS("All languages")."/UTF-8</OPTION>\n";
