@@ -1,0 +1,9 @@
+a.anchor {
+  width: 18px;
+  height: 18px;
+  background: url(img/insert-anchor.gif) no-repeat;
+  border: 1px dotted blue;
+}
+
+/* For Gecko browsers we need the following code to make anchor visible */
+a.anchor:before { content:url(img/placeholder.gif); }

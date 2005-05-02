@@ -1,0 +1,97 @@
+<html>
+<head>
+
+  <!--------------------------------------:noTabs=true:tabSize=2:indentSize=2:--
+    --  Xinha example menu.  This file is used by full_example.html within a
+    --  frame to provide a menu for generating example editors using
+    --  full_example-body.html, and full_example.js.
+    --
+    --  $HeadURL: http://svn.xinha.python-hosting.com/trunk/examples/full_example-menu.html $
+    --  $LastChangedDate: 2005-03-21 13:49:25 +1200 (Mon, 21 Mar 2005) $
+    --  $LastChangedRevision: 43 $
+    --  $LastChangedBy: yermol $
+    --------------------------------------------------------------------------->
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Example of Xinha</title>
+  <link rel="stylesheet" href="full_example.css" />
+  <style type="text/css">
+    label { display:block; }
+  </style>
+</head>
+
+<body>
+  <h1>Xinha Examples</h1>
+
+  <p>
+    Select from the options below and click the Show Example button to show working examples
+    on the right.
+  </p>
+
+  <form action="full_example-body.html" target="body">
+    <fieldset>
+      <legend>Plugins</legend>
+      <label>
+        <input type="checkbox" name="plugins" value="CSS"  /> CSS
+      </label>
+      <label>
+        <input type="checkbox" name="plugins" value="DynamicCSS"  /> DynamicCSS
+      </label>
+      <label>
+        <input type="checkbox" name="plugins" value="FullPage"  /> FullPage
+      </label>
+      <label>
+        <input type="checkbox" name="plugins" value="FullScreen" checked /> FullScreen
+      </label>
+      <label>
+        <input type="checkbox" name="plugins" value="CharacterMap" checked /> CharacterMap
+      </label>
+      <label>
+        <input type="checkbox" name="plugins" value="ContextMenu" checked /> ContextMenu
+      </label>
+      <label>
+        <input type="checkbox" name="plugins" value="ListType" checked /> ListType
+      </label>
+
+      <label>
+        <input type="checkbox" name="plugins" value="Stylist" checked /> Stylist
+      </label>
+
+      <label>
+        <input type="checkbox" name="plugins" value="TableOperations" checked /> TableOperations
+      </label>
+
+      <label>
+        <input type="checkbox" name="plugins" value="InsertAnchor" checked /> InsertAnchor
+      </label>
+    </fieldset>
+
+    <fieldset>
+      <legend>PHP Plugins</legend>
+      <p>
+        These plugins require PHP in order to run.  Some may have versions in other languages.
+      </p>
+      <label>
+        <input type="checkbox" name="plugins" value="SuperClean"  />  SuperClean <small>(PHP)</small>
+      </label>
+      <label>
+        <input type="checkbox" name="plugins" value="SpellChecker" /> SpellChecker <small>(PHP)</small>
+      </label>
+      <label>
+        <input type="checkbox" name="plugins" value="HtmlTidy"  />    HtmlTidy <small>(PHP)</small>
+      </label>
+      <label>
+        <input type="checkbox" name="plugins" value="Linker"  />       Linker <small>(PHP)</small>
+      </label>
+      <label>
+        <input type="checkbox" name="plugins" value="ImageManager"  />        ImageManager <small>(PHP)</small>
+      </label>
+    </fieldset>
+
+    <label>Number of Editors: <input type="text" name="num" value="1" /></label>
+
+    <input type="submit" value="Show Example" />
+  </form>
+
+</body>
+</html>
