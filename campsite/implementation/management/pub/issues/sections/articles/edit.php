@@ -99,7 +99,7 @@ foreach ($dbColumns as $dbColumn) {
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
 				  'Section' => $sectionObj, 'Article'=>$articleObj);
 CampsiteInterface::ContentTop("Edit article details", $topArray);
-HtmlArea_Campsite($dbColumns, $User);
+editor_load_xinha($dbColumns, $User);
 
 if ($errorStr != "") {
 	CampsiteInterface::DisplayError($errorStr);
@@ -473,7 +473,7 @@ if ($edit_ok) { ?>
 	<?php 
 	// Display the article type fields.
 	foreach ($dbColumns as $dbColumn) {
-		if (stristr($dbColumn->getType(), "char") || stristr($dbColumn->getType(), "varbinary")) { 
+		if (stristr($dbColumn->getType(), "char")) { 
 			// Single line text fields
 			?>
 			<TR>
