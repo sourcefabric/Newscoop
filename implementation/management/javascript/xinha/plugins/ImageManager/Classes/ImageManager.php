@@ -2,7 +2,7 @@
 /**
  * ImageManager, list images, directories, and thumbnails.
  * @author $Author: paul $
- * @version $Id: ImageManager.php,v 1.1 2005/05/02 17:39:57 paul Exp $
+ * @version $Id: ImageManager.php,v 1.2 2005/05/03 20:30:19 paul Exp $
  * @package ImageManager
  */
 
@@ -13,7 +13,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
 /**
  * ImageManager Class.
  * @author $Author: paul $
- * @version $Id: ImageManager.php,v 1.1 2005/05/02 17:39:57 paul Exp $
+ * @version $Id: ImageManager.php,v 1.2 2005/05/03 20:30:19 paul Exp $
  */
 class ImageManager 
 {
@@ -161,17 +161,19 @@ class ImageManager
 		$articleImages =& ArticleImage::GetImagesByArticleId($articleId);
 		foreach ($articleImages as $articleImage) {
 			$image =& $articleImage->getImage();
-			$img = $this->getImageInfo($image->getImageStorageLocation());
-			$entry = basename($image->getImageStorageLocation());
+			$img = $this->getImageInfo($image->getImageUrl());
+			//$entry = basename($image->getImageStorageLocation());
 			if (is_array($img) || !$this->config['validate_images']) {
-				$file['url'] = Files::makePath($this->config['base_url'],$path).$entry;
-				$file['relative'] = $path.$entry;
-				$file['fullpath'] = $fullpath.$entry;
+				$file['url'] = $image->getImageUrl();
+				//$file['url'] = Files::makePath($this->config['base_url'],$path).$entry;
+				//$file['relative'] = $path.$entry;
+				//$file['fullpath'] = $fullpath.$entry;
 				$file['image'] = $img;
 				$file['image_object'] = $image;
 				$file['alt'] = htmlspecialchars($image->getDescription(), ENT_QUOTES);
 				//$file['stat'] = stat($fullpath.$entry);
-				$files[$entry] = $file;
+				//$files[$entry] = $file;
+				$files[$articleImage->getTemplateId()] = $file;
 			}
 			
 		}
