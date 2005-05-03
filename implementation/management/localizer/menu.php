@@ -1,67 +1,59 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
 
-function writeFile($newfile,$fen){
-    global $for,$en;
-    $s="<?php \n";
-    while( list($key,$value) = each($en) ){
- if (isset($for["$key"])){
-     $newval=$for["$key"];
- }
- else{
-     $newval='';
- }
- $s.="regGS(\"$key\",\"$newval\");\n";
-    }
-    $s.="\n?>";
-    print "Writing to $fen\n";
-    $fh=fopen($newfile,'w');
-    fwrite($fh,$s);
-    fclose($fh);
-
+function writeFile($newfile, $fen, &$for, &$en)
+{
+	$s = "<?php \n";
+	while(is_array($en) && list($key, $value) = each($en)) {
+		if (isset($for["$key"])) {
+			$newval = $for["$key"];
+		} else {
+			$newval = '';
+		}
+		$s .= "regGS(\"$key\",\"$newval\");\n";
+	}
+	$s .= "\n?>";
+//	echo "Writing to $fen: $s\n";
+	$fh = fopen($newfile, 'w');
+	fwrite($fh, $s);
+	fclose($fh);
 }
 
+function createArrays($fen, $dirname, $newlang)
+{
+	global $gs;
 
-// function regGS($key,$val){
-//     global $setit,$for,$en;
-//     if ($setit==1){
-//  $en["$key"]=$val;
-//     }
-//     else{
-//  $for["$key"]=$val;
-//     }
-// }
+	$gs = array();
+	include("$dirname/$fen"."en.php");
+	$en = $gs;
 
-function createArrays($fen,$dirname,$newlang){
-    global $setit,$for,$en;
-    unset($for);
-    unset($en);
-    $setit=1;
-    include("$dirname/$fen"."en.php");
-    $setit=2;
-    $foreignfile="$dirname/$fen$newlang.php";
-    include("$foreignfile");
-    writeFile($foreignfile,$fen);
+	$gs = array();
+	$foreignfile = "$dirname/$fen$newlang.php";
+	include("$foreignfile");
+	$for = $gs;
+
+	writeFile($foreignfile, $fen, $for, $en);
 }
 
-function verifyFile($fen,$dirname,$newlang){
-    $check="$dirname/$fen$newlang.php";
-    $fh=@fopen($check,'r');
-    if ($fh!=null){
-        fclose($fh);
-    } else {
-        print "Creating empty $fen\n";
-        $fh=fopen($check,'w');
-        fwrite($fh,"<?php \n?>");
-        fclose($fh);
-    }
-    createArrays($fen,$dirname,$newlang);
+function verifyFile($fen,$dirname,$newlang)
+{
+	$check = "$dirname/$fen$newlang.php";
+	$fh = @fopen($check,'r');
+	if ($fh != null) {
+		fclose($fh);
+	} else {
+//		echo "Creating empty $fen\n";
+		$fh = fopen($check, 'w');
+		fwrite($fh, "<?php \n?>");
+		fclose($fh);
+	}
+	createArrays($fen, $dirname, $newlang);
 }
 
-
-
-function parseFolder($dirname, $depth){
+function parseFolder($dirname, $depth)
+{
 	global $createnew, $newlang, $langarray, $Campsite, $ADMIN;
+
 	$full_dir = $Campsite['HTML_COMMON_DIR'] . "/priv/$dirname";
 	$handle = opendir($full_dir);
 	$space = 3;
@@ -98,7 +90,7 @@ function parseFolder($dirname, $depth){
 				//enable editing english files for modules
 				) {
 				if (strpos($filen, 'globals') === 0) {
-					$langarray[]=substr($filen,8,2);
+					$langarray[] = substr($filen,8,2);
 				}
 
 				print str_repeat(' ', $depth*$space)."<a href='/$ADMIN/localizer/?display=on&file=$filen&dir=$dirname'>$filen</a>\n";
@@ -107,30 +99,30 @@ function parseFolder($dirname, $depth){
 			}
 		} //for
 
-		if (isset($filesinen)&&($createnew)) {
+		if (isset($filesinen) && ($createnew)) {
 			foreach($filesinen as $fen) {
-				verifyFile(substr($fen,0,strlen($fen)-6),$full_dir,$newlang);
+				verifyFile(substr($fen, 0, strlen($fen) - 6), $full_dir, $newlang);
 			}
 		}
 	}
-	if (isset($dirs)) {
-		for($i=0;$i<count($dirs);$i++) {
-			parseFolder("$dirname/".$dirs[$i],$depth+1);
+	if (isset($dirs) && is_array($dirs)) {
+		for($i = 0; $i < count($dirs); $i++) {
+			parseFolder("$dirname/".$dirs[$i], $depth + 1);
 		}
 	}
 }
 
 
-if (isset($_REQUEST['newlang'])){
-    $newlang = trim($_REQUEST['newlang']);
+if (isset($_REQUEST['newlang'])) {
+	$newlang = trim($_REQUEST['newlang']);
 }
 
-if ( (isset($newlang)) && ($newlang!='') && (strlen($newlang)>1) &&($newlang!='en') ){
-    $createnew=true;
-    print "creating files for: $newlang";
-    $langarray[]=$newlang;
+if ( (isset($newlang)) && ($newlang!='') && (strlen($newlang)>1) &&($newlang!='en') ) {
+	$createnew=true;
+//	echo "creating files for: $newlang";
+	$langarray[]=$newlang;
 }else{
-    $createnew=false;
+	$createnew=false;
 }
 $langarray[]='en';
 $langfile='';
@@ -152,21 +144,20 @@ print '</PRE>';
 <SELECT NAME="newlang" class="input_select">
 <?php
 
-    $Languages=mysql_query ("SELECT Id, Name, OrigName, CodePage, Code FROM Languages ORDER BY Name");
-    $NUM_ROWS=mysql_num_rows($Languages);
-    if ($NUM_ROWS) {
- $nr= $NUM_ROWS;
-        for($loop=0;$loop<$nr;$loop++) {
-     $arr=mysql_fetch_array($Languages,MYSQL_ASSOC);
-     if ($arr['Code']!='en'){
-  print '<OPTION VALUE="'.$arr['Code'].'">'.$arr['OrigName'].'('.$arr['Code'].")\n";
-     }
-     if (in_array($arr['Code'],$langarray)){
-  $langfile.='registerLanguage(\''. $arr['Name']."', '".$arr['Code']."', '".$arr['CodePage']."', '".$arr['OrigName']."');\n";
-     }
- }
-    }
-
+$Languages=mysql_query ("SELECT Id, Name, OrigName, CodePage, Code FROM Languages ORDER BY Name");
+$NUM_ROWS=mysql_num_rows($Languages);
+if ($NUM_ROWS) {
+	$nr= $NUM_ROWS;
+	for($loop=0;$loop<$nr;$loop++) {
+		$arr=mysql_fetch_array($Languages,MYSQL_ASSOC);
+		if ($arr['Code']!='en') {
+			print '<OPTION VALUE="'.$arr['Code'].'">'.$arr['OrigName'].'('.$arr['Code'].")\n";
+		}
+		if (in_array($arr['Code'],$langarray)) {
+			$langfile.='registerLanguage(\''. $arr['Name']."', '".$arr['Code']."', '".$arr['CodePage']."', '".$arr['OrigName']."');\n";
+		}
+	}
+}
 $langfile.="\n".'?>';
 
 ?>
@@ -175,12 +166,12 @@ $langfile.="\n".'?>';
 </form>
 
 <?php
-if ($createnew){
-    $langf=fopen($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/languages.php",'w');
-    fwrite($langf,$langfile);
-    fclose($langf);
+if ($createnew) {
+	$langf = fopen($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/languages.php", 'w');
+	fwrite($langf,$langfile);
+	fclose($langf);
 }
-if ($createnew){ ?>
+if ($createnew && false){ ?>
     <SCRIPT>
  document.location.href='index.php';
     </SCRIPT>
