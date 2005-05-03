@@ -2,7 +2,7 @@
 /**
  * The main GUI for the ImageManager.
  * @author $Author: paul $
- * @version $Id: manager.php,v 1.1 2005/05/02 17:39:57 paul Exp $
+ * @version $Id: manager.php,v 1.2 2005/05/03 20:32:25 paul Exp $
  * @package ImageManager
  */
 
@@ -19,16 +19,13 @@ $manager = new ImageManager($IMConfig);
 <head>
   	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
  	<link href="assets/manager.css" rel="stylesheet" type="text/css" />	
-	<script type="text/javascript" src="assets/popup.js"></script>
+	<script type="text/javascript" src="../../popups/popup.js"></script>
 	<script type="text/javascript" src="assets/dialog.js"></script>
 	<script type="text/javascript">
 	/*<![CDATA[*/
 		window.resizeTo(600, 460);
-		if(window.opener)
+		if(window.opener) {
 			HTMLArea = window.opener.HTMLArea;
-		function Init() {
-			alert("init()");
-			__dlg_translate('ImageManager');
 		}
 		//var thumbdir = "<?php echo $IMConfig['thumbnail_dir']; ?>";
 		//var base_url = "<?php echo $manager->getBaseURL(); ?>";
@@ -37,7 +34,7 @@ $manager = new ImageManager($IMConfig);
 	<script type="text/javascript" src="assets/manager.js"></script>
 	<title>Insert Image</title>
 </head>
-<body onload="Init();">
+<body>
 	<div class="title">Insert Image</div>
 	<form action="images.php" id="uploadForm" method="post" enctype="multipart/form-data">
 	<fieldset><!--<legend><script>document.write(i18n("Image Manager"));</script></legend>-->
@@ -64,10 +61,10 @@ $manager = new ImageManager($IMConfig);
 				<td><input type="text" id="f_caption" class="largelWidth" value="" /></td>
 			</tr>		
 			<tr>
-				<td align="right"><label for="f_align">Alignment</label></td>
+				<td align="right"><label for="f_align">Alignment:</label></td>
 				<td>
 					<select size="1" id="f_align"  title="Positioning of this image">
-						<option value="none">Not Set</option>
+						<option value="none">Not set</option>
 					  	<option value="left">Left</option>
 					  	<option value="right">Right</option>
 					  	<option value="middle">Middle</option>
