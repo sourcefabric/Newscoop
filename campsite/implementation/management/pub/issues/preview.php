@@ -44,6 +44,8 @@ if ($errorStr != "") {
 	exit(0);
 }
 
+setcookie("TOL_UserId", $User->getId(), null, "/");
+setcookie("TOL_UserKey", $User->getKeyId(), null, "/");
 setcookie("TOL_Access", "all", null, "/");
 if ($User->hasPermission("ManageTempl") || $User->hasPermission("DeleteTempl"))
 	setcookie("TOL_Preview", "on", null, "/");
