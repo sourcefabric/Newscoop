@@ -56,7 +56,7 @@ function CampsiteInternalLink(editor, objectName, object, link) {
 			}
 		}
 	}
-	popupWindowTarget = "campsite_internal_link.php";
+	popupWindowTarget = "campsite_internal_link.php?TOL_Language=<?php p($_REQUEST["TOL_Language"]); ?>";
 	if (!link) {
     	var sel = editor._getSelection();
     	var range = editor._createRange(sel);
@@ -87,7 +87,7 @@ function CampsiteInternalLink(editor, objectName, object, link) {
 	    };
 		// Pass the arguments to the popup window so that it
 		// can populate the dropdown controls.
-		popupWindowTarget += "?" + outparam["f_href"].replace("campsite_internal_link?", "") + "&TOL_Language=<?php p($_REQUEST["TOL_Language"]); ?>";
+		popupWindowTarget += "&" + outparam["f_href"].replace("campsite_internal_link?", "");
 	}
 	editor._popupDialog(popupWindowTarget, function(param) {
     	if (!param) {
