@@ -40,7 +40,7 @@ if (($languageId != 0) && ($publicationId != 0) && ($issueId != 0) && ($sectionI
 ?>
 <html>
 <head>
-<title><?php putGS("Insert Internal Link"); ?></title>
+<title>Insert Internal Link</title>
 <style type="text/css">
 html, body {
   background: ButtonFace;
@@ -92,9 +92,14 @@ table .label {
 <script type="text/javascript">
 
 function Init() {
-	__dlg_translate('HTMLArea');
+	__dlg_translate('Campsite');
 	// This function gets the arguments passed to the window and sizes the window.
 	__dlg_init();
+	
+	// Make sure that the proper translation appears in the drop down
+	document.getElementById("f_target").selectedIndex = 1;
+	document.getElementById("f_target").selectedIndex = 0;
+	
 	var param = window.dialogArguments;
 	var target_select = document.getElementById("f_target");
 	if (param) {
@@ -178,7 +183,7 @@ function onTargetChanged(selectElement) {
 </script>
 </head>
 <body onload="Init()">
-<div class="title"><?php putGS("Insert Internal Link"); ?></div>
+<div class="title">Insert Internal Link</div>
 <?php //print_r($_REQUEST); ?>
 <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
 <table border="0" style="width: 100%;" id="main_table">
