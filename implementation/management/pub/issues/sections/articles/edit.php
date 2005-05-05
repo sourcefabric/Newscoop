@@ -79,7 +79,7 @@ if ($User->hasPermission('AddArticle')) {
 // Check if everything needed for Article Import is available.
 $zipLibAvailable = function_exists("zip_open");
 $xsltLibAvailable = function_exists("xslt_create");
-@include("XML/Parser.php");
+@include_once("XML/Parser.php");
 $xmlLibAvailable = class_exists("XML_Parser");
 $xmlLibAvailable |= function_exists("xml_parser_create");
 // Verify this article type has the body & intro fields.
