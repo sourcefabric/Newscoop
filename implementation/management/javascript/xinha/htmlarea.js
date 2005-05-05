@@ -183,7 +183,7 @@ HTMLArea.Config = function () {
 
   // intercept ^V and use the HTMLArea paste command
   // If false, then passes ^V through to browser editor widget
-  this.htmlareaPaste = false;
+  this.htmlareaPaste = HTMLArea.is_gecko ? false : true;
 
   this.mozParaHandler = 'best'; // set to 'built-in', 'dirty' or 'best'
                                 // built-in: will (may) use 'br' instead of 'p' tags
@@ -3047,8 +3047,19 @@ HTMLArea.prototype.execCommand = function(cmdID, UI, param) {
       case "paste":
     try {
       this._doc.execCommand(cmdID, UI, param);
-      if (this.config.killWordOnPaste)
-        this._wordClean();
+      if (this.config.killWordOnPaste) {
+      	if (this.plugins["SuperClean"].instance) {
+      		superCleanOptions = new Array();
+      		superCleanOptions.word_clean = true;
+      		superCleanOptions.faces = true;
+      		superCleanOptions.sizes = true;
+      		superCleanOptions.colors = true;
+      		this._superClean(superCleanOptions, null);
+      	}
+      	else {
+        	this._wordClean();
+      	}
+      }
     } catch (e) {
       if (HTMLArea.is_gecko) {
         alert(HTMLArea._lc("The Paste button does not work in Mozilla based web browsers (technical security reasons). Press CTRL-V on your keyboard to paste directly."));
@@ -4604,6 +4615,21 @@ HTMLArea._lc = function(string, context)
 
   if(typeof HTMLArea._lc_catalog[context][string] == 'undefined')
   {
+  	// If we are looking at a plugin language file,
+  	// we now check to see if the string is in the
+  	// main translation file so as not to duplicate translation strings. 
+  	if (context != 'HTMLArea') {
+  		// Load the main language file if it isnt loaded already.
+		if(typeof HTMLArea._lc_catalog['HTMLArea'] == 'undefined')
+		{
+		  HTMLArea._lc_catalog['HTMLArea'] = HTMLArea._loadlang('HTMLArea');
+		}
+  		// Look for the string in the main language file
+		if(typeof HTMLArea._lc_catalog['HTMLArea'][string] != 'undefined') 
+		{
+		  return HTMLArea._lc_catalog['HTMLArea'][string];
+		}
+  	}
     return string; // Indicate it's untranslated
   }
   else
