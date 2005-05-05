@@ -194,6 +194,7 @@ HTMLArea.prototype._superClean = function(opts, obj)
     if(editor._editMode != modeWhenDone)
     {
       editor.setMode(modeWhenDone);
+      editor.updateToolbar();
     }
     editor._superclean_on = false;
     frm.parentNode.removeChild(frm);
