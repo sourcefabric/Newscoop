@@ -159,7 +159,7 @@ xinha_init = xinha_init ? xinha_init : function()
 	<?php } ?>
    'FullScreen',
 //   'Stylist',
-//   'SuperClean',
+   'SuperClean',
   ];
 	// THIS BIT OF JAVASCRIPT LOADS THE PLUGINS, NO TOUCHING  :)
 	if(!HTMLArea.loadPlugins(xinha_plugins, xinha_init)) return;
@@ -289,6 +289,7 @@ xinha_init = xinha_init ? xinha_init : function()
 		  	"separator",
 		<?php } ?>
 			"killword",
+			"removeformat",
 		<?php if ($p_user->hasPermission('EditorSourceView')) { ?>
 		  	"htmlmode", 
 		<?php } ?>
