@@ -86,9 +86,9 @@ int main()
 	FD_ZERO(&clSet);
 	CTCPSocket coSock;
 	ulint nTotalReceived = 0;
-	try
+	for (int nRepeat = 0; nRepeat < 10 && nTotalReceived == 0; nRepeat++)
 	{
-		for (int nRepeat = 0; nRepeat < 10; nRepeat++)
+		try
 		{
 			coSock.Connect(coIP.c_str(), nPort);
 			coSock.Send(coMsg.str().c_str(), nSize+10);
@@ -98,12 +98,12 @@ int main()
 				if (select(FD_SETSIZE, &clSet, NULL, NULL, &tVal) == -1
 					|| !FD_ISSET((SOCKET)*coSock, &clSet))
 				{
-					throw ConfException("Error on select");
+					throw SocketErrorException("Error on select");
 				}
 				char pchBuff[RECV_BUF_LEN + 1];	/* +1 for null char */
 				int nReceived = coSock.Recv(pchBuff, RECV_BUF_LEN);
 				if (nReceived == -1)
-					throw ConfException("Error receiving packet");
+					throw SocketErrorException("Error receiving packet");
 				if (nReceived == 0)
 					break;
 				pchBuff[nReceived] = 0;
@@ -111,24 +111,17 @@ int main()
 				cout << pchBuff;
 			}
 			coSock.Shutdown();
-			if (nTotalReceived > 0)
-				break;
 		}
-	}
-	catch (ConfException& rcoEx)
-	{
-		cout << "<html>\n" << rcoEx.what() << "\n</html>" << endl;
-		coSock.Shutdown();
-	}
-	catch (ConnectRefused& rcoEx)
-	{
-		cout << "<html>\n" << rcoEx.Message() << " " << rcoEx.Host() << "\n</html>" << endl;
-		coSock.Shutdown();
-	}
-	catch (SocketErrorException& rcoEx)
-	{
-		cout << "<html>\n" << rcoEx.Message() << "\n</html>" << endl;
-		coSock.Shutdown();
+		catch (ConnectRefused& rcoEx)
+		{
+			cout << "<html>\n" << rcoEx.Message() << " " << rcoEx.Host() << "\n</html>" << endl;
+			coSock.Shutdown();
+		}
+		catch (SocketErrorException& rcoEx)
+		{
+			cout << "<html>\n" << rcoEx.Message() << "\n</html>" << endl;
+			coSock.Shutdown();
+		}
 	}
 	return 0;
 }
@@ -148,11 +141,6 @@ void ReadConf(string& p_rcoIP, int& p_rnPort)
 		string coParserConfFile = string(pchDocumentRoot) + "/parser_conf.php";
 		ConfAttrValue m_coAttributes(coParserConfFile);
 		p_rnPort = atoi(m_coAttributes.valueOf("PARSER_PORT").c_str());
-	}
-	catch (SocketErrorException& rcoEx)
-	{
-		cout << "<html>\n" << rcoEx.Message() << "\n</html>" << endl;
-		exit(0);
 	}
 	catch (ConfException& rcoEx)
 	{
