@@ -110,17 +110,17 @@ int main()
 				nTotalReceived += nReceived;
 				cout << pchBuff;
 			}
-			coSock.Shutdown();
+			coSock.Close();
 		}
 		catch (ConnectRefused& rcoEx)
 		{
 			cout << "<html>\n" << rcoEx.Message() << " " << rcoEx.Host() << "\n</html>" << endl;
-			coSock.Shutdown();
+			coSock.Close();
 		}
 		catch (SocketErrorException& rcoEx)
 		{
 			cout << "<html>\n" << rcoEx.Message() << "\n</html>" << endl;
-			coSock.Shutdown();
+			coSock.Close();
 		}
 	}
 	return 0;
