@@ -579,9 +579,14 @@ int CampsiteInstanceFunc(const ConfAttrValue& p_rcoConfValues)
 		char pchHostName[1000];
 		gethostname(pchHostName, 1000);
 		struct hostent* ph = gethostbyname(pchHostName);
-		struct in_addr in;
-		memcpy(&in.s_addr, ph->h_addr_list[0], sizeof(struct in_addr));
-		IPAddr pchLocalIP = (IPAddr) inet_ntoa(in);
+		StringSet coHostAddrs;
+		coHostAddrs.insert("127.0.0.1");
+		for(int nIndex = 0; ph->h_addr_list[nIndex] != 0; nIndex++)
+		{
+			struct in_addr in;
+			memcpy(&in.s_addr, ph->h_addr_list[nIndex], sizeof(struct in_addr));
+			coHostAddrs.insert(inet_ntoa(in));
+		}
 		for (; ; )
 		{
 			try
@@ -593,8 +598,7 @@ int CampsiteInstanceFunc(const ConfAttrValue& p_rcoConfValues)
 				cout << "*****   received request from " << pchRemoteIP << endl;
 				cout << "**********************************************" << endl;
 #endif
-				if (case_comp(pchRemoteIP, pchLocalIP) != 0
-					&& case_comp(pchRemoteIP, "127.0.0.1") != 0)
+				if (coHostAddrs.find(pchRemoteIP) == coHostAddrs.end())
 				{
 					cerr << "Not allowed host (" << pchRemoteIP << ") connected" << endl;
 					delete pcoClSock;
