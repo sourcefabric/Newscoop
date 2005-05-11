@@ -143,13 +143,7 @@ private:
 	MYSQL_RES* m_pRes;
 };
 
-inline MYSQL_ROW QueryFetchRow(MYSQL* p_pDBConn, const string& p_rcoQuery, CMYSQL_RES& p_rcoQRes)
-{
-	if (mysql_query(p_pDBConn, p_rcoQuery.c_str()) != 0)
-		return NULL;
-	p_rcoQRes = mysql_store_result(p_pDBConn);
-	return mysql_fetch_row(*p_rcoQRes);
-}
+MYSQL_ROW QueryFetchRow(MYSQL* p_pDBConn, const string& p_rcoQuery, CMYSQL_RES& p_rcoQRes);
 
 // Macros used on database operations
 
