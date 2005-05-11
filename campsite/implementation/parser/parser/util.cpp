@@ -37,6 +37,9 @@ Implementation of general purpose functions
 #include <sys/mman.h>
 #include <string>
 #include <mysql/mysql.h>
+#include <iostream>
+using std::cout;
+using std::endl;
 
 #include "util.h"
 #include "atoms_impl.h"
@@ -343,4 +346,29 @@ const char* const EscapeHTML(const char *src)
 		}
 	dst[dstI] = 0;
 	return dst;
+}
+
+MYSQL_ROW QueryFetchRow(MYSQL* p_pDBConn, const string& p_rcoQuery, CMYSQL_RES& p_rcoQRes)
+{
+	if (p_pDBConn == NULL)
+		p_pDBConn = MYSQLConnection();
+	for (int nAttempt = 0; nAttempt < 10; nAttempt++)
+	{
+		if (mysql_query(p_pDBConn, p_rcoQuery.c_str()) != 0)
+		{
+#ifdef _DEBUG
+			cout << "QueryFetchRow: error querying the database server" << endl;
+#endif
+			if (nAttempt >= 9)
+				return NULL;
+		}
+		else
+		{
+			break;
+		}
+		usleep(100000);
+		p_pDBConn = MYSQLConnection();
+	}
+	p_rcoQRes = mysql_store_result(p_pDBConn);
+	return mysql_fetch_row(*p_rcoQRes);
 }
