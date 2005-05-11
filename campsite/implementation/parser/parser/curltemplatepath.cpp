@@ -24,6 +24,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ******************************************************************************/
 
 
+#include <iostream>
+using std::cout;
+using std::endl;
+
+
 #include "util.h"
 #include "curltemplatepath.h"
 #include "data_types.h"
@@ -62,8 +67,14 @@ void CURLTemplatePath::setURL(const CMsgURLRequest& p_rcoURLMessage)
 	string coQuery = string("select IdPublication from Aliases where Name = '")
 	               + m_coHTTPHost + "'";
 	MYSQL_ROW qRow = QueryFetchRow(m_pDBConn, coQuery.c_str(), coRes);
+#ifdef _DEBUG
+	cout << "CURLTemplatePath alias query: " << coQuery << endl;
+#endif
 	if (qRow == NULL)
+	{
+		cout << "CURLTemplatePath query: result is NULL" << endl;
 		throw InvalidValue("site alias", m_coHTTPHost.c_str());
+	}
 	id_type nPublication = Integer(qRow[0]);
 	setPublication(nPublication);
 
@@ -86,8 +97,11 @@ void CURLTemplatePath::setURL(const CMsgURLRequest& p_rcoURLMessage)
 			coQuery = string("select IdDefaultLanguage from Publications where Id = ")
 					+ getValue(P_IDPUBL);
 			qRow = QueryFetchRow(m_pDBConn, coQuery.c_str(), coRes);
+#ifdef _DEBUG
+			cout << "CURLTemplatePath def lang query: " << coQuery << endl;
+#endif
 			if (qRow == NULL)
-				throw InvalidValue("site alias", m_coHTTPHost.c_str());
+				throw InvalidValue("publication identifier", getValue(P_IDPUBL));
 			setValue(P_IDLANG, qRow[0]);
 		}
 		if (0 == getIssue())
