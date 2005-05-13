@@ -159,6 +159,8 @@ function create_language_links($p_document_root = "")
 			unlink($link);
 		if (!is_link($link))
 			symlink($index_file, $link);
+		chown($link, $Campsite['APACHE_USER']);
+		chgrp($link, $Campsite['APACHE_GROUP']);
 	}
 }
 
