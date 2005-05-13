@@ -35,9 +35,10 @@ install: dummy
 	install -m 644 -o $(ROOT_USER) -g $(APACHE_GROUP) "$(INSTALL_CONF)/restore_instance.php" "$(BIN_DIR)"
 	install -m 644 -o $(ROOT_USER) -g $(APACHE_GROUP) "$(INSTALL_CONF)/remove_instance.php" "$(BIN_DIR)"
 	install -m 644 -o $(ROOT_USER) -g $(APACHE_GROUP) "$(INSTALL_CONF)/cli_script_lib.php" "$(BIN_DIR)"
-	install -m 660 -o $(ROOT_USER) -g $(APACHE_GROUP) "$(INSTALL_CONF)/install_conf.php" "$(ETC_DIR)"
-	install -m 660 -o $(ROOT_USER) -g $(APACHE_GROUP) "$(INSTALL_CONF)/vhost-template.conf" "$(ETC_DIR)"
-	install -m 660 -o $(ROOT_USER) -g $(APACHE_GROUP) "$(INSTALL_CONF)/parser_conf.php" "$(ETC_DIR)"
+	install -m 755 -o $(ROOT_USER) -g $(APACHE_GROUP) "$(INSTALL_CONF)/update_instances" "$(BIN_DIR)"
+	install -m 640 -o $(ROOT_USER) -g $(APACHE_GROUP) "$(INSTALL_CONF)/install_conf.php" "$(ETC_DIR)"
+	install -m 640 -o $(ROOT_USER) -g $(APACHE_GROUP) "$(INSTALL_CONF)/vhost-template.conf" "$(ETC_DIR)"
+	install -m 640 -o $(ROOT_USER) -g $(APACHE_GROUP) "$(INSTALL_CONF)/parser_conf.php" "$(ETC_DIR)"
 	install -m 644 -o $(ROOT_USER) -g $(APACHE_GROUP) "$(INSTALL_CONF)/campsite_version.php" "$(HTML_COMMON_DIR)"
 	$(MAKE) -C implementation install
 	$(BIN_DIR)/update_instances
@@ -63,7 +64,7 @@ uninstall: dummy
 	rm -f "$(BIN_DIR)/create_instance" "$(BIN_DIR)/create_instance.php"
 	rm -f "$(BIN_DIR)/backup_instance" "$(BIN_DIR)/backup_instance.php"
 	rm -f "$(BIN_DIR)/restore_instance" "$(BIN_DIR)/restore_instance.php"
-	rm -f "$(BIN_DIR)/remove_instance" "$(BIN_DIR)/remove_instance.php"
+	rm -f "$(BIN_DIR)/remove_instance" "$(BIN_DIR)/remove_instance.php" "$(BIN_DIR)/update_instances"
 	rm -f "$(ETC_DIR)/install_conf.php" "$(ETC_DIR)/parser_conf.php" "$(ETC_DIR)/vhost-template.conf"
 	rmdir --ignore-fail-on-non-empty "$(BIN_DIR)"
 	rmdir --ignore-fail-on-non-empty "$(ETC_DIR)"
