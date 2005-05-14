@@ -36,7 +36,7 @@ compile_sources()
 install_campsite()
 {
     echo -e "\nSTEP 3"
-    echo -n "Installing Campsite..."
+    echo -e "Installing Campsite...\n"
     echo -e "\n\n###############################################\n\tInstalling campsite\n" >> install_log
     $MAKE install >> install_log 2>&1
     if [ $? -ne 0 ]; then
@@ -45,17 +45,32 @@ install_campsite()
 	echo "Please report bug to http://bugs.campware.org"
 	exit 1
     fi
-    def_instance_res=`$MAKE default_instance`
-    if [ $? -ne 0 ]; then
-	echo -e "\n$def_instance_res\n"
-	echo "Error creating the default Campsite instance. This usually happens when"
+    def_inst_error=0
+    do_install=
+    while true; do
+	install_default_instance $do_install
+	if [ $? -ne 0 ]; then
+	    echo "There were errors creating the default instance"
+	    choice_yn "Do you want to try again?" "Y"
+	    if [ $? -ne 0 ]; then
+		def_inst_error=1
+		break
+	    else
+		do_install=Y
+	    fi
+	else
+	    break
+	fi
+    done
+    if [ $def_inst_error -ne 0 ]; then
+	echo -e "\nError creating the default Campsite instance. This usually happens when"
 	echo "MySQL configuration is different from the default one or you did not"
 	echo "install an email server. Run:"
 	echo "$BIN_DIR/create_instance --help"
 	echo "to find out how to set Campsite instance parameters."
 	echo -e "\nIMPORTANT!!!"
     else
-	echo -e "done\n\nCampsite was installed successfully."
+	echo -e "\nCampsite was installed successfully."
 	echo "For a complete installation log read install_log file."
 	echo -n -e "\nStarting campsite_server daemon..."
 	"$BIN_DIR/campsitectl" stop &> /dev/null
@@ -65,15 +80,18 @@ install_campsite()
 	else
 	    echo "done"
 	fi
-	echo -e "\nIMPORTANT!!!"
-	echo -e "$def_instance_res\n"
+	echo -e "\nIMPORTANT!!!\n"
     fi
     echo "Please configure apache server before using Campsite application; make sure"
     echo -e "the crond daemon is running; read INSTALL file and follow the instructions.\n"
-    echo "To enter the Campsite administration site start a browser and type in the"
-    echo "following URL: http://[\$SERVER_NAME]/admin/."
-    echo -e "Fill in \"admin\" and \"admn00\" user and password respectivelly to log in."
-    echo "You should change the password as soon as possible."
+    if [ "$DEF_INST_INSTALLED" = "Y" ]; then
+	echo "To enter the Campsite administration site start a browser and type in the"
+	echo "following URL: http://[\$SERVER_NAME]/admin/."
+	echo -e "Fill in \"admin\" and \"admn00\" user and password respectivelly to log in."
+	echo "You should change the password as soon as possible."
+    else
+	echo "Run create_instance script in order to complete Campsite install."
+    fi
 }
 
 
