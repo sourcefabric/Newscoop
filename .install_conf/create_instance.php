@@ -469,6 +469,8 @@ function fill_missing_parameters(&$p_defined_parameters)
 	define_globals();
 
 	// read existing configuration (if exists)
+	if ($p_defined_parameters['--db_name'] == "")
+		$p_defined_parameters['--db_name'] = $g_parameters_defaults['--db_name'];
 	$db_name = $p_defined_parameters['--db_name'];
 	$etc_dir = $p_defined_parameters['--etc_dir'];
 	$instance_etc_dir = "$etc_dir/$db_name";
@@ -496,10 +498,20 @@ function fill_missing_parameters(&$p_defined_parameters)
 	if (file_exists("$instance_etc_dir/smtp_conf.php")) {
 		require_once("$instance_etc_dir/smtp_conf.php");
 		if (!isset($p_defined_parameters['--smtp_server_address']))
-			$p_defined_parameters['--smtp_server_address'] = $Campsite['SMTP_SERVER_ADDRESS'];
+			$p_defined_parameters['--smtp_server_address'] =
+				$Campsite['SMTP_SERVER_ADDRESS'];
 		if (!isset($p_defined_parameters['--smtp_server_port']))
 			$p_defined_parameters['--smtp_server_port'] = $Campsite['SMTP_SERVER_PORT'];
 		$smtp_defined = true;
+	}
+	$apache_defined = false;
+	if (file_exists("$instance_etc_dir/apache_conf.php")) {
+		require_once("$instance_etc_dir/apache_conf.php");
+		if (!isset($p_defined_parameters['--apache_user']))
+			$p_defined_parameters['--apache_user'] = $Campsite['APACHE_USER'];
+		if (!isset($p_defined_parameters['--apache_group']))
+			$p_defined_parameters['--apache_group'] = $Campsite['APACHE_GROUP'];
+		$apache_defined = true;
 	}
 
 	// read old configuration
@@ -521,8 +533,19 @@ function fill_missing_parameters(&$p_defined_parameters)
 	if (!$smtp_defined && read_old_config($old_conf_dir, 'smtp', $CampsiteOld)) {
 		$p_defined_parameters['--smtp_server_address'] = $CampsiteOld['SMTP_SERVER'];
 	}
+	if (!$apache_defined && read_old_config($old_conf_dir, 'parser', $CampsiteOld)) {
+		$p_defined_parameters['--apache_user'] = $CampsiteOld['USER'];
+		$p_defined_parameters['--apache_group'] = $CampsiteOld['GROUP'];
+	}
 
-	foreach ($g_instance_parameters as $param_index=>$param_name)
+	$params = array('--db_server_address'=>'DATABASE_SERVER_ADDRESS',
+		'--db_server_port'=>'DATABASE_SERVER_PORT', '--db_user'=>'DATABASE_USER',
+		'--db_password'=>'DATABASE_PASSWORD', '--db_name'=>'DATABASE_NAME',
+		'--parser_port'=>'PARSER_PORT', '--parser_max_threads'=>'PARSER_MAX_THREADS',
+		'--smtp_server_address'=>'SMTP_SERVER_ADDRESS',
+		'--smtp_server_port'=>'SMTP_SERVER_PORT',
+		'--apache_user'=>'APACHE_USER', '--apache_group'=>'APACHE_GROUP');
+	foreach ($g_instance_parameters as $param_index=>$param_name) {
 		if (!array_key_exists($param_name, $p_defined_parameters)) {
 			$param_value = $g_parameters_defaults[$param_name];
 			if (strncmp($param_value, "___", 3) == 0) {
@@ -530,10 +553,13 @@ function fill_missing_parameters(&$p_defined_parameters)
 			}
 			$p_defined_parameters[$param_name] = $param_value;
 		}
+		$Campsite[$params[$param_name]] = $p_defined_parameters[$param_name];
+	}
 
 	// if the parser port was not defined yet calculate it
 	if ($p_defined_parameters['--parser_port'] == 0) {
-		$p_defined_parameters['--parser_port'] = generate_parser_port($p_defined_parameters);
+		$p_defined_parameters['--parser_port'] =
+			generate_parser_port($p_defined_parameters);
 	}
 }
 
@@ -555,7 +581,8 @@ function generate_parser_port($p_defined_parameters)
 		if ($file_name == "." || $file_name == ".." || !is_dir("$etc_dir/$file_name"))
 			continue;
 		require_once("$etc_dir/$file_name/parser_conf.php");
-		if ($file_name == $p_defined_parameters['--db_name']) {
+		if ($file_name == $p_defined_parameters['--db_name']
+			&& $Campsite['PARSER_PORT'] != 0) {
 			return $Campsite['PARSER_PORT'];
 		}
 		if ($max_port_value < $Campsite['PARSER_PORT'])
