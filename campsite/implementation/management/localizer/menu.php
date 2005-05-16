@@ -10,6 +10,8 @@ function writeFile($newfile, $fen, &$for, &$en)
 		} else {
 			$newval = '';
 		}
+		$key = str_replace('"', '\"', stripslashes($key));
+		$newval = str_replace('"', '\"', stripslashes($newval));
 		$s .= "regGS(\"$key\",\"$newval\");\n";
 	}
 	$s .= "\n?>";
