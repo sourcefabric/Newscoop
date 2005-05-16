@@ -40,6 +40,8 @@ while (list ($key,$value)=each($base)) {
 
 	if ($key!='') {
 		print "$pre$value$post<BR>\n";
+		$key = htmlspecialchars($key);
+		$insval = htmlspecialchars($insval);
 		print "<input name=base$nr type=hidden value=\"$key\">\n";
 		print "<input name=translation$nr type=text class=\"input_text\" size=50 value=\"$insval\"><BR><HR>\n";
 		$nr++;
