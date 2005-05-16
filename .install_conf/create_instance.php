@@ -664,7 +664,7 @@ function define_globals()
 		'--apache_user', '--apache_group', '--no_database');
 	$g_mandatory_parameters = array('--etc_dir'=>false);
 	$g_parameters_defaults = array(
-		'--db_server_address'=>'localhost',
+		'--db_server_address'=>'___DEFAULT_DATABASE_SERVER_ADDRESS',
 		'--db_server_port'=>'0',
 		'--db_name'=>'campsite',
 		'--db_user'=>'root',
