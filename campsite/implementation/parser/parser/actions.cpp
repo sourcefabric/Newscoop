@@ -1534,12 +1534,9 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 	bool need_lang = false;
 	if (modifier == CMS_ST_IMAGE)
 	{
-		table = "Images";
-		SetNrField("IdPublication", c.Publication(), buf, w);
-		SetNrField("NrIssue", c.Issue(), buf, w);
-		SetNrField("NrSection", c.Section(), buf, w);
-		SetNrField("NrArticle", c.Article(), buf, w);
-		SetNrField("Number", image, buf, w);
+		table = "ArticleImages as ai left join Images as i on ai.IdImage = i.Id";
+		SetNrField("ai.NrArticle", c.Article(), buf, w);
+		SetNrField("ai.Number", image, buf, w);
 	}
 	else if (modifier == CMS_ST_PUBLICATION)
 	{
