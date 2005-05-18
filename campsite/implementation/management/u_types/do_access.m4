@@ -50,10 +50,7 @@ todefradio('cManageArticleTypes');
 todefradio('cDeleteArticleTypes');
 todefradio('cManageLanguages');
 todefradio('cDeleteLanguages');
-todefradio('cManageClasses');
 todefradio('cMailNotify');
-todefradio('cManageDictionary');
-todefradio('cDeleteDictionary');
 todefradio('cManageCountries');
 todefradio('cDeleteCountries');
 todefradio('cViewLogs');
@@ -125,9 +122,6 @@ B_MSGBOX(<*Updating user type permissions*>)
 			." ManageLanguages='$cManageLanguages', "
 			." DeleteLanguages='$cDeleteLanguages', "
 			." MailNotify='$cMailNotify', "
-			." ManageClasses='$cManageClasses', "
-			." ManageDictionary='$cManageDictionary', "
-			." DeleteDictionary='$cDeleteDictionary', "
 			." ManageCountries='$cManageCountries', "
 			." DeleteCountries='$cDeleteCountries', "
 			." ViewLogs='$cViewLogs' , "

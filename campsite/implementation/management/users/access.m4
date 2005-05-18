@@ -107,15 +107,6 @@ B_DIALOG(<*Edit user account permissions*>, <*POST*>, <*do_access.php*>)
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cDeleteLanguages" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'DeleteLanguages'); ?>>*>)
 		<?php  putGS('User may delete languages'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManageClasses" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'ManageClasses'); ?>>*>)
-		<?php  putGS('User may manage glossary infotypes'); ?>
-	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManageDictionary" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'ManageDictionary'); ?>>*>)
-		<?php  putGS('User may add/change glossary entries'); ?>
-	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cDeleteDictionary" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'DeleteDictionary'); ?>>*>)
-		<?php  putGS('User may delete glossary entries'); ?>
-	E_DIALOG_INPUT
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManageCountries" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'ManageCountries'); ?>>*>)
 		<?php  putGS('User may add/change country entries'); ?>
 	E_DIALOG_INPUT

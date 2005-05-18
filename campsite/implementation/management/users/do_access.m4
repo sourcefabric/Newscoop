@@ -51,9 +51,6 @@ todefradio('cDeleteArticleTypes');
 todefradio('cManageLanguages');
 todefradio('cDeleteLanguages');
 todefradio('cMailNotify');
-todefradio('cManageClasses');
-todefradio('cManageDictionary');
-todefradio('cDeleteDictionary');
 todefradio('cManageCountries');
 todefradio('cDeleteCountries');
 todefradio('cViewLogs');
@@ -126,9 +123,6 @@ $queryStr = "UPDATE UserPerm SET "
 	." ManageLanguages='$cManageLanguages', "
 	." DeleteLanguages='$cDeleteLanguages', "
 	." MailNotify='$cMailNotify', "
-	." ManageClasses='$cManageClasses', "
-	." ManageDictionary='$cManageDictionary', "
-	." DeleteDictionary='$cDeleteDictionary', "
 	." ManageCountries='$cManageCountries', "
 	." DeleteCountries='$cDeleteCountries', "
 	." ViewLogs='$cViewLogs' , "
