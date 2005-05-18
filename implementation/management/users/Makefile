@@ -1,6 +1,6 @@
 export PRIV_DIR2=$(PRIV_COMMON_DIR)/users
 
-MY_TARGETS=index.php add.php do_add.php del.php do_del.php chpwd.php do_chpwd.php access.php do_access.php info.php do_info.php passwd.php do_passwd.php ipaccesslist.php ipadd.php do_ipadd.php ipdel.php do_ipdel.php
+MY_TARGETS=add.php do_add.php del.php do_del.php chpwd.php do_chpwd.php access.php do_access.php info.php do_info.php passwd.php do_passwd.php ipaccesslist.php ipadd.php do_ipadd.php ipdel.php do_ipdel.php
 
 subsystem: all
 	$(MAKE) -C subscriptions
