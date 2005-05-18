@@ -98,15 +98,6 @@ B_DIALOG(<*Add new user type*>, <*POST*>, <*do_add.php*>)
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cDeleteLanguages" class="input_checkbox">*>)
 		<?php  putGS('User may delete languages'); ?>
 	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManageClasses" class="input_checkbox">*>)
-		<?php  putGS('User may manage glossary infotypes'); ?>
-	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManageDictionary" class="input_checkbox">*>)
-		<?php  putGS('User may add/change glossary entries'); ?>
-	E_DIALOG_INPUT
-	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cDeleteDictionary" class="input_checkbox">*>)
-		<?php  putGS('User may delete glossary entries'); ?>
-	E_DIALOG_INPUT
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cMailNotify" class="input_checkbox">*>)
 		<?php  putGS('User will be notified on several events'); ?>
 	E_DIALOG_INPUT

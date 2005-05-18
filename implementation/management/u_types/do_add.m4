@@ -49,10 +49,7 @@ todefradio('cManageArticleTypes');
 todefradio('cDeleteArticleTypes');
 todefradio('cManageLanguages');
 todefradio('cDeleteLanguages');
-todefradio('cManageClasses');
 todefradio('cMailNotify');
-todefradio('cManageDictionary');
-todefradio('cDeleteDictionary');
 todefradio('cViewLogs');
 
 $correct=1;
@@ -66,7 +63,7 @@ B_MSGBOX(<*Adding new user type*>)
 		<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); ?></LI>
 <?php  } 
     if ($correct) {
-	query ("INSERT IGNORE INTO UserTypes SET Name='$cName', Reader='$cReader', ManagePub='$cManagePub', DeletePub='$cDeletePub', ManageIssue='$cManageIssue', DeleteIssue='$cDeleteIssue', ManageSection='$cManageSection', DeleteSection='$cDeleteSection', AddArticle='$cAddArticle', ChangeArticle='$cChangeArticle', DeleteArticle='$cDeleteArticle', AddImage='$cAddImage', ChangeImage='$cChangeImage', DeleteImage='$cDeleteImage', ManageTempl='$cManageTempl', DeleteTempl='$cDeleteTempl', ManageUsers='$cManageUsers', ManageSubscriptions='$cManageSubscriptions', DeleteUsers='$cDeleteUsers', ManageUserTypes='$cManageUserTypes', ManageArticleTypes='$cManageArticleTypes', DeleteArticleTypes='$cDeleteArticleTypes', ManageLanguages='$cManageLanguages', DeleteLanguages='$cDeleteLanguages', ManageClasses='$cManageClasses', MailNotify='$cMailNotify', ManageDictionary='$cManageDictionary', DeleteDictionary='$cDeleteDictionary', ViewLogs='$cViewLogs' ");
+	query ("INSERT IGNORE INTO UserTypes SET Name='$cName', Reader='$cReader', ManagePub='$cManagePub', DeletePub='$cDeletePub', ManageIssue='$cManageIssue', DeleteIssue='$cDeleteIssue', ManageSection='$cManageSection', DeleteSection='$cDeleteSection', AddArticle='$cAddArticle', ChangeArticle='$cChangeArticle', DeleteArticle='$cDeleteArticle', AddImage='$cAddImage', ChangeImage='$cChangeImage', DeleteImage='$cDeleteImage', ManageTempl='$cManageTempl', DeleteTempl='$cDeleteTempl', ManageUsers='$cManageUsers', ManageSubscriptions='$cManageSubscriptions', DeleteUsers='$cDeleteUsers', ManageUserTypes='$cManageUserTypes', ManageArticleTypes='$cManageArticleTypes', DeleteArticleTypes='$cDeleteArticleTypes', ManageLanguages='$cManageLanguages', DeleteLanguages='$cDeleteLanguages', MailNotify='$cMailNotify', ViewLogs='$cViewLogs'");
 	$created= ($AFFECTED_ROWS > 0);
     }
     if ($created) { ?>dnl
