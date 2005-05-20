@@ -375,6 +375,12 @@ function pencParam($s) {
     print encParam($s);
 }
 
+function printSelected($var_value, $current_value)
+{
+	if ($var_value == $current_value)
+		echo " selected";
+}
+
 function add_subs_section($publication_id, $section_nr) {
 	// retrieve the default trial and paid time of the subscriptions
 	$dd_query = "select TimeUnit, TrialTime, PaidTime from Publications where Id = "
