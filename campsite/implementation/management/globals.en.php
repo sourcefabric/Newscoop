@@ -44,6 +44,15 @@ regGS('Order', 'Order:en');
 regGS('Hide', 'Hide:en');
 regGS('Duplicate', 'Duplicate:en');
 regGS('Insert Internal Link', 'Insert Internal Link:en');
+regGS('Subscription', 'Subscription:en');
+regGS('expires', 'expires:en');
+regGS('starts', 'starts:en');
+regGS('before', 'before:en');
+regGS('after', 'after:en');
+regGS('on', 'on:en');
+regGS('status', 'status:en');
+regGS('active', 'active:en');
+regGS('inactive', 'inactive:en');
 
 regGS('Select destination', 'Select destination:en');
 regGS('No languages','No languages:en');
@@ -109,7 +118,6 @@ regGS('Publishing','Publishing:en');
 regGS('Show','Show:en');
 regGS('Remove','Remove:en');
 regGS('The $1 actions have been scheduled on $2', 'The $1 actions have been scheduled on $2:en');
-
 regGS('days','days:en');
 
 
@@ -164,6 +172,7 @@ regGS('There was an error reading the language parameter.', 'There was an error 
 regGS('There was an error reading the publication parameter.', 'There was an error reading the publication parameter.:en');
 regGS('There was an error reading the issue parameter.', 'There was an error reading the issue parameter.:en');
 regGS('There was an error reading request parameters.', 'There was an error reading request parameters.:en');
+regGS('Invalid value of user type parameter', 'Invalid value of user type parameter:en');
 
 // -- other errors
 regGS('Invalid article identifier', 'Invalid article identifier:en');
