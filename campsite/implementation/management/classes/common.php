@@ -21,7 +21,10 @@ function load_common_include_files($p_currentDir) {
  * @param array p_request
  * @return array
  */
-function check_basic_access($p_request) {
+function check_basic_access($p_request, $p_exit = true)
+{
+	global $ADMIN;
+
 	require_once($_SERVER['DOCUMENT_ROOT'].'/classes/User.php');
 	$access = false;
 	$XPerm = array();
@@ -48,6 +51,10 @@ function check_basic_access($p_request) {
 			// A non-admin can enter the administration area;
 			// they exist but do not have ANY rights.
 			$access = 0;
+			if ($p_exit) {
+				header("Location: /$ADMIN/logout.php");
+				exit(0);
+			}
 		}
 	}
 	return array($access, $user);
