@@ -1,6 +1,7 @@
 <?php 
 // -- index.m4
-regGS("User management","User management:en");
+regGS("Staff management","Staff management:en");
+regGS("Readers management","Readers management:en");
 regGS("Set","Set:en");
 regGS("Update","Update:en");
 regGS("Rights","Rights:en");
@@ -9,6 +10,7 @@ regGS("User Name","User Name:en");
 regGS("Full Name","Full Name:en");
 regGS("Staff","Staff:en");
 regGS("Delete user $1","Delete user $1:en");
+regGS("User list is empty.","User list is empty.");
 
 // -- add.m4
 regGS("You do not have the right to create user accounts.","You do not have the right to create user accounts.:en");
