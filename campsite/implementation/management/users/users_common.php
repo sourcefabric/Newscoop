@@ -33,10 +33,12 @@ function read_user_common_parameters()
 	$full_name = Input::Get('full_name', 'string', '');
 	$user_name = Input::Get('user_name', 'string', '');
 	$email = Input::Get('email', 'string', '');
-	$subscription_how = Input::Get('subscription_how', 'string', '');
-	$subscription_when = Input::Get('subscription_when', 'string', '');
-	$subscription_date = Input::Get('subscription_date', 'string', '');
-	$subscription_status = Input::Get('subscription_status', 'string', '');
+	if ($uType == "Readers") {
+		$subscription_how = Input::Get('subscription_how', 'string', '');
+		$subscription_when = Input::Get('subscription_when', 'string', '');
+		$subscription_date = Input::Get('subscription_date', 'string', '');
+		$subscription_status = Input::Get('subscription_status', 'string', '');
+	}
 }
 
 function compute_user_rights($User, &$canManage, &$canDelete)
