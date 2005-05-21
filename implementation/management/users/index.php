@@ -58,7 +58,7 @@ if ($canManage) {
 		<select name="subscription_when" class="input_select" style="width: 100px;">
 			<option value="before" <?php printSelected($subscription_when, 'before'); ?>><?php putGS("before"); ?></option>
 			<option value="after" <?php printSelected($subscription_when, 'after'); ?>><?php putGS("after"); ?></option>
-			<option value="after" <?php printSelected($subscription_when, 'on'); ?>><?php putGS("on"); ?></option>
+			<option value="on" <?php printSelected($subscription_when, 'on'); ?>><?php putGS("on"); ?></option>
 		</select>
 		<input type="text" name="subscription_date" value="<?php pencHTML($subscription_date); ?>" class="input_text" style="width: 100px;">
 		&nbsp;<?php putGS('(yyyy-mm-dd)'); ?>&nbsp;&nbsp;
@@ -75,7 +75,37 @@ if ($canManage) {
 </TABLE>
 
 <?php
-$sql = "SELECT * FROM Users WHERE Name LIKE '%$sUname%' AND Reader = '$isReader' ORDER BY Name ASC LIMIT $userOffs, ".($lpp+1);
+$sql = "SELECT u.* FROM Users as u";
+if ($subscription_date != "" || $subscription_status != "") {
+	$sql .= " left join Subscriptions as s on u.Id = s.IdUser";
+	if ($subscription_date != "")
+		$sql .= " left join SubsSections as ss on s.Id = ss.IdSubscription";
+}
+$sql .= " where u.Reader = '$isReader'";
+if ($full_name != '')
+	$sql .= " and Name like '%" . mysql_escape_string($full_name) . "%'";
+if ($user_name != '')
+	$sql .= " and UName like '%" . mysql_escape_string($user_name) . "%'";
+if ($email != '')
+	$sql .= " and EMail like '%" . mysql_escape_string($email) . "%'";
+if ($subscription_date != '') {
+	$ss_field = "TO_DAYS(ss.StartDate) - TO_DAYS('$subscription_date')";
+	if ($subscription_how == 'expires') {
+		$ss_field .= " + Days";
+	}
+	switch ($subscription_when) {
+	case 'before': $comp_sign = "<="; break;
+	case 'after': $comp_sign = ">="; break;
+	case 'on': $comp_sign = "="; break;
+	}
+	$sql .= " and ($ss_field) $comp_sign 0";
+}
+if ($subscription_status != "")
+	$sql .= " and s.Active = '" . ($subscription_status == 'active' ? 'Y' : 'N') . "'";
+if ($subscription_date != "")
+	$sql .= " group by s.Id";
+$sql .= " order by Name asc limit $userOffs, " . ($lpp + 1);
+//echo "<p>sql: $sql</p>\n";
 query($sql, 'Users');
 if ($NUM_ROWS) {
 	$nr = $NUM_ROWS;
