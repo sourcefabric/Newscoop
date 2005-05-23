@@ -8,7 +8,6 @@ regGS("Rights","Rights:en");
 regGS("IP Access","IP Access:en");
 regGS("User Name","User Name:en");
 regGS("Full Name","Full Name:en");
-regGS("Staff","Staff:en");
 regGS("Delete user $1","Delete user $1:en");
 regGS("User list is empty.","User list is empty.");
 
