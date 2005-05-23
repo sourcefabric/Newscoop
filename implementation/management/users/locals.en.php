@@ -55,8 +55,9 @@ regGS("Please check if an account with the same user name does not already exist
 regGS("User account $1 created","User account $1 created:en");
 
 // -- passwd.m4
-regGS("Change user password","Change user password:en");
+regGS("Change password","Change password:en");
 regGS("You do not have the right to change user passwords.","You do not have the right to change user passwords.:en");
+regGS("Old Password", "Old Password:en");
 
 // -- do_passwd.m4
 regGS("Changing user password","Changing user password:en");
