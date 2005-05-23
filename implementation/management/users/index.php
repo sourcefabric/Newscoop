@@ -129,7 +129,7 @@ for($loop = 0; $loop < $last; $loop++) {
 		<TD>
 <?php
 	if ($canManage)
-		echo "<a href=\"info.php?" . get_user_urlparams($userId, false, true) . "\">";
+		echo "<a href=\"edit.php?" . get_user_urlparams($userId, false, true) . "\">";
 	pgetHVar($Users,'Name');
 	if ($canManage)
 		echo "</a>";
