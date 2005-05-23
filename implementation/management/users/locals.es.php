@@ -47,7 +47,7 @@ regGS("The user account $1 has been created.","La cuenta de usuario $1 ha sido c
 regGS("The user account could not be created.","La cuenta de usuario no pudo ser creada");
 regGS("Please check if an account with the same user name does not already exist.","Favor revise si una cuenta con el mismo nombre no existe ya");
 regGS("User account $1 created","Cuenta de usuario $1 creada");
-regGS("Change user password","Cambiar clave de usuario");
+regGS("Change password","Cambiar clave de usuario");
 regGS("You do not have the right to change user passwords.","No tiene derechos para cambiar claves de usuario");
 regGS("Changing user password","Cambiando claves de usuario");
 regGS("The password could not be changed.","La clave no pudo ser cambiada");

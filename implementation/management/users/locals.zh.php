@@ -46,7 +46,7 @@ regGS("The user account $1 has been created.","帐户$1已产生");
 regGS("The user account could not be created.","此帐户不能创建");
 regGS("Please check if an account with the same user name does not already exist.","请检查是否同样的用户名已存在");
 regGS("User account $1 created","帐户$1已产生");
-regGS("Change user password","改变密码");
+regGS("Change password","改变密码");
 regGS("You do not have the right to change user passwords.","您无权修改密码");
 regGS("Changing user password","正在改变密码");
 regGS("The password could not be changed.","密码不能改变");

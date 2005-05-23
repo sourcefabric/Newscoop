@@ -46,7 +46,7 @@ regGS("The user account $1 has been created.","Uživatelský účet $1 byl vytvo
 regGS("The user account could not be created.","Uživatelský účet $1 nemohl být vytvořen");
 regGS("Please check if an account with the same user name does not already exist.","Prosím zkontrolujte, zda účet se stejným uživatelským jménem již neexistuje");
 regGS("User account $1 created","Uživatelský účet $1 byl vytvořen");
-regGS("Change user password","Změnit uživatelské heslo");
+regGS("Change password","Změnit uživatelské heslo");
 regGS("You do not have the right to change user passwords.","Nemáte právo měnit uživatelská hesla");
 regGS("Changing user password","Změna uživatelského hesla");
 regGS("The password could not be changed.","Heslo nemohlo být změněno");

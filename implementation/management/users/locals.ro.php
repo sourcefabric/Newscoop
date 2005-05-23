@@ -47,7 +47,7 @@ regGS("The user account $1 has been created.","Contul de utilizator $1 a fost cr
 regGS("The user account could not be created.","Contul de utilizator nu poate fi creat");
 regGS("Please check if an account with the same user name does not already exist.","Verificaţi dacă un cont cu acelaşi nume de utilizator există deja");
 regGS("User account $1 created","Contul de utilizator $1 a fost creat");
-regGS("Change user password","Schimbă parola");
+regGS("Change password","Schimbă parola");
 regGS("You do not have the right to change user passwords.","Nu aveţi dreptul să schimbaţi parola utilizatorului");
 regGS("Changing user password","Schimb parola");
 regGS("The password could not be changed.","Parola nu poate fi schimbată");

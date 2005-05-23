@@ -47,7 +47,7 @@ regGS("The user account $1 has been created.","  $1 تم وضع اشتراك ل�
 regGS("The user account could not be created.","لا يمكن وضع اشتراك للمستخدم");
 regGS("Please check if an account with the same user name does not already exist.","الرجاء التأكد من أن اشتراكاّ باسم هذا المستخدم غير موجود مسبقاً");
 regGS("User account $1 created","  $1 تم وضع اشتراك للمستخدم");
-regGS("Change user password","تغيير كلمة سرّ المستخدم");
+regGS("Change password","تغيير كلمة سرّ المستخدم");
 regGS("You do not have the right to change user passwords.","لا يحق تغيير كلمة سرّ المستخدم");
 regGS("Changing user password","تغيير كلمة سرّ المستخدم");
 regGS("The password could not be changed.","لا يمكن تغيير كلمة السرّ");
