@@ -1,12 +1,3 @@
-<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" WIDTH="100%" class="table_list">
-<tr class="table_list_header">
-	<td colspan="5">
-		<?php putGS("Subscriptions"); ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<?php $addURI = "/$ADMIN/users/subscriptions/add.php?User=".$editUser->getId(); ?>
-		<A HREF="<?php echo $addURI; ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/add.png" BORDER="0"></A>&nbsp;
-		<A HREF="<?php echo $addURI; ?>"><B><?php putGS("Add new subscription"); ?></B></A>
-	</td>
-</tr>
 <?php
 
 check_basic_access($_REQUEST);
@@ -14,6 +5,21 @@ if (!isset($editUser) || gettype($editUser) != 'object' || $editUser->getUserNam
 	CampsiteInterface::DisplayError('No such user account.',$_SERVER['REQUEST_URI']);
 	exit;
 }
+
+?>
+<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" WIDTH="100%" class="table_list">
+<tr class="table_list_header">
+	<td colspan="5" align="left">
+		<?php putGS("Subscriptions"); ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</tr>
+<tr class="table_list_header">
+	<td colspan="5" align="right">
+		<?php $addURI = "/$ADMIN/users/subscriptions/add.php?User=".$editUser->getId(); ?>
+		<A HREF="<?php echo $addURI; ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/add.png" BORDER="0"></A>&nbsp;
+		<A HREF="<?php echo $addURI; ?>"><B><?php putGS("Add new subscription"); ?></B></A>
+	</td>
+</tr>
+<?php
 
 query ("SELECT * FROM Subscriptions WHERE IdUser=" . $editUser->getId() . " ORDER BY Id DESC", 'q_subs');
 if ($NUM_ROWS) {
@@ -61,6 +67,7 @@ if ($NUM_ROWS) {
 }
 ?>
 <?php  } else { ?>
-<tr class="list_row_even"><td><?php  putGS('No subscriptions.'); ?></td></tr>
+<tr class="list_row_odd"><td colspan="5"><?php  putGS('No subscriptions.'); ?></td></tr>
 <?php  } ?>
 </TABLE>
+<br>
