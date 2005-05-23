@@ -53,6 +53,8 @@ regGS('on', 'on:en');
 regGS('status', 'status:en');
 regGS('active', 'active:en');
 regGS('inactive', 'inactive:en');
+regGS('Readers', 'Readers:en');
+regGS('Staff', 'Staff:en');
 
 regGS('Select destination', 'Select destination:en');
 regGS('No languages','No languages:en');
@@ -85,7 +87,10 @@ regGS('Section','Section:en');
 regGS('Keywords','Keywords:en');
 regGS('Topic','Topic:en');
 regGS('Short Name', 'Short Name:en');
-
+regGS("Left to pay","Left to pay:en");
+regGS("Active","Active:en");
+regGS('Paid', 'Paid:en');
+regGS('Trial', 'Trial:en');
 
 regGS('Next','Next:en');
 regGS('Previous','Previous:en');
@@ -333,6 +338,7 @@ regGS('Yes','Yes:en');
 regGS('No','No:en');
 regGS('Close','Close:en');
 regGS('No issues.','No issues.:en');
+regGS("No subscriptions.", "No subscriptions.:en");
 
 regGS('Back to article details','Back to Edit Article:en');
 regGS('Adding new topic','Adding new topic:en');
