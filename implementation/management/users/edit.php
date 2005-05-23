@@ -19,15 +19,15 @@ if ($editUser->getUserName() == '') {
 }
 
 ?>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
-<TR>
-	<TD class="page_title"><?php  putGS("Change user account information"); ?></TD>
-	<TD align="right"><A HREF="/<?php echo $ADMIN; ?>/users/?<?php echo get_user_urlparams(); ?>" class="breadcrumb" ><?php putGS($uType);  ?></A></TD>
-</TR>
-</TABLE>
+<table border="0" cellspacing="0" cellpadding="1" width="100%" class="page_title_container">
+<tr>
+	<td class="page_title"><?php  putGS("Change user account information"); ?></td>
+	<td align="right"><a href="/<?php echo $ADMIN; ?>/users/?<?php echo get_user_urlparams(); ?>" class="breadcrumb" ><?php putGS($uType);  ?></a></td>
+</tr>
+</table>
 <table border="0">
 <tr>
-	<td rowspan="2" valign="top">
+	<td rowspan="3" valign="top">
 		<?php require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/info.php"); ?>
 	</td>
 	<td valign="top" height="1%">
@@ -39,14 +39,17 @@ if ($uType == 'Readers')
 ?>
 	</td>
 </tr>
+<?php if ($uType == 'Readers') { ?>
 <tr>
-	<td valign="top">
-<?php
-if ($uType == 'Readers')
-	require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/ipaccesslist.php");
-?>
+	<td valign="top" height="1%">
+	<?php require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/ipaccesslist.php"); ?>
 	</td>
 </tr>
-
+<?php } ?>
+<tr>
+	<td valign="top">
+	<?php require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/passwd.php"); ?>
+	</td>
+</tr>
 </table>
 <?php CampsiteInterface::CopyrightNotice(); ?>
