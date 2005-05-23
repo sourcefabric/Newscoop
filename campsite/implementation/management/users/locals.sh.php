@@ -47,7 +47,7 @@ regGS("The user account $1 has been created.","Kreiran je korisnički nalog za $
 regGS("The user account could not be created.","Korisnički nalog ne može biti kreiran");
 regGS("Please check if an account with the same user name does not already exist.","Proveri da li nalog pod tim korisničkim imenom već ne postoji");
 regGS("User account $1 created","Kreiran je korisnički nalog za $1");
-regGS("Change user password","Promeni lozinku");
+regGS("Change password","Promeni lozinku");
 regGS("You do not have the right to change user passwords.","Nemate pravo da menjate korisničke lozinke");
 regGS("Changing user password","Menjanje korisničke lozinke");
 regGS("The password could not be changed.","Lozinka ne može biti promenjena");
