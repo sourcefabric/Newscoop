@@ -8,10 +8,8 @@ function load_common_include_files($p_currentDir) {
 	global $ADMIN_DIR;
 	require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
 	require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/lib_campsite.php");
-	$globalfile = selectLanguageFile($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR",'globals');
-	$localfile = selectLanguageFile($_SERVER['DOCUMENT_ROOT']."/$p_currentDir",'locals');
-	require_once($globalfile);
-	require_once($localfile);
+	selectLanguageFile($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR",'globals');
+	selectLanguageFile($_SERVER['DOCUMENT_ROOT']."/$p_currentDir",'locals');
 	require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/languages.php");
 } // fn load_common_include_files
 
@@ -24,6 +22,7 @@ function load_common_include_files($p_currentDir) {
 function check_basic_access($p_request, $p_exit = true)
 {
 	global $ADMIN;
+
 
 	require_once($_SERVER['DOCUMENT_ROOT'].'/classes/User.php');
 	$access = false;
@@ -55,6 +54,7 @@ function check_basic_access($p_request, $p_exit = true)
 				header("Location: /$ADMIN/logout.php");
 				exit(0);
 			}
+
 		}
 	}
 	return array($access, $user);
