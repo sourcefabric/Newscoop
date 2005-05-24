@@ -293,13 +293,13 @@ function putGS($p_translateString) {
  * @return string
  */
 function getGS($p_translateString) {
-	global $gs, $TOL_Language;
+	global $g_translationStrings, $TOL_Language;
 	$numFunctionArgs = func_num_args();
-	if (!isset($gs[$p_translateString]) || ($gs[$p_translateString]=='')) {
+	if (!isset($g_translationStrings[$p_translateString]) || ($g_translationStrings[$p_translateString]=='')) {
 		$translatedString = "$p_translateString (not translated)";
 	}
 	else {
-		$translatedString = $gs[$p_translateString];
+		$translatedString = $g_translationStrings[$p_translateString];
 	}
 	if ($numFunctionArgs > 1) {
 		for ($i = 1; $i < $numFunctionArgs; $i++){
@@ -311,17 +311,18 @@ function getGS($p_translateString) {
 	return $translatedString;
 } // fn getGS
 
-function regGS($key, $value) {
-	global $gs;
-	if (isset($gs[$key])) {
-		if ($key != '') {
-			print "<p>The global string '$key (" . $gs[$key] . ")' was already set.</p>";
+function regGS($key,$value) {
+	global $g_translationStrings;
+	if (isset($g_translationStrings[$key])) {
+		if ($key!='') {
+			print "The global string is already set in $_SERVER[PHP_SELF]: $key<BR>";
 		}
-	} else {
-		if (substr($value, strlen($value)-3) == (":".$_REQUEST["TOL_Language"])) {
-			$value = substr($value, 0, strlen($value)-3);
+	}
+	else{
+		if (substr($value,strlen($value)-3)==(":".$_REQUEST["TOL_Language"])){
+			$value=substr($value,0,strlen($value)-3);
 		}
-		$gs[$key] = $value;
+		$g_translationStrings[$key]=$value;
 	}
 } // fn regGS
 
@@ -349,10 +350,13 @@ function ifYthenCHECKED($q,$f) {
 }
 
 function selectLanguageFile($path, $name) {
-	if (!isset($_REQUEST["TOL_Language"])){
-		$_REQUEST["TOL_Language"] = 'en';
-	}
-	return "$path/$name.".$_REQUEST["TOL_Language"].".php";
+//	if (!isset($_REQUEST["TOL_Language"])){
+//		$_REQUEST["TOL_Language"] = 'en';
+//	}
+//	return "$path/$name.".$_REQUEST["TOL_Language"].".php";
+    require_once('localizer/Localizer.php');
+    //require_once('localizer/helpfunctions.php');
+    Localizer::LoadLanguageFilesAbs($path, $name);
 } // fn selectLanguageFile
 
 function pLanguageCode() {
@@ -371,14 +375,14 @@ function encParam($s) {
     return str_replace("\"", "%22", str_replace("&", "%26", str_replace(";", "%3B", str_replace("%", "%25", $s))));
 }
 
-function pencParam($s) {
-    print encParam($s);
+function printSelected($var_value, $current_value) {
+	if ($var_value == $current_value) {
+   		echo " selected";
+	}
 }
 
-function printSelected($var_value, $current_value)
-{
-	if ($var_value == $current_value)
-		echo " selected";
+function pencParam($s) {
+    print encParam($s);
 }
 
 function add_subs_section($publication_id, $section_nr) {
