@@ -18,14 +18,16 @@ if ($userId > 0) {
 		CampsiteInterface::DisplayError('No such user account.');
 		exit;
 	}
+	$title = "Change user account information";
 } else {
 	$editUser = new User();
+	$title = "Add new user account";
 }
 
 ?>
 <table border="0" cellspacing="0" cellpadding="1" width="100%" class="page_title_container">
 <tr>
-	<td class="page_title"><?php  putGS("Change user account information"); ?></td>
+	<td class="page_title"><?php putGS($title); ?></td>
 	<td align="right"><a href="/<?php echo $ADMIN; ?>/users/?<?php echo get_user_urlparams(); ?>" class="breadcrumb" ><?php putGS($uType);  ?></a></td>
 </tr>
 </table>
