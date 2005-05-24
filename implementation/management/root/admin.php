@@ -63,18 +63,28 @@ elseif (($extension == '.php') || ($extension == '')) {
 	}
 	$needs_menu = ! in_array($call_script, $no_menu_scripts);
 
-	$menu = '';
+	$_top_menu = '';
 	if ($needs_menu) {
 		ob_start();
 		echo "<html><table width=\"100%\">\n<tr><td>\n";
 		require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/menu.php");
 		echo "</td></tr>\n<tr><td>\n";
-		$menu = ob_get_clean();
+		$_top_menu = ob_get_clean();
 	}
+	
+	// Clean up the global namespace before we call the script
+	unset($is_image);
+	unset($extension);
+	unset($extension_start);
+	unset($question_mark);
+	unset($no_menu_scripts);
+	unset($request_uri);
+	
+	// Call the script
 	ob_start();
 	require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/$call_script");
 	$content = ob_get_clean();
-	echo $menu . $content;
+	echo $_top_menu . $content;
 	
 	if ($needs_menu) {
 		echo "</td></tr>\n</table>\n</html>\n";
