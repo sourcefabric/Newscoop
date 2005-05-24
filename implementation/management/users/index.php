@@ -20,7 +20,7 @@ $isReader = $uType == 'Readers' ? 'Y' : 'N';
 <TR>
 <?php
 if ($canManage) {
-	$addLink = "add.php?" . get_user_urlparams(0, true, true);
+	$addLink = "edit.php?" . get_user_urlparams(0, true, true);
 ?>
 	<TD><A HREF="<?php echo $addLink; ?>">
 		<IMG SRC="/admin/img/icon/add.png" BORDER="0">
