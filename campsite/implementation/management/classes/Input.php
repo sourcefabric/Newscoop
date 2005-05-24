@@ -89,6 +89,15 @@ class Input {
 				return $p_defaultValue;
 			}
 			break;
+		case 'array':
+			if (!is_array($_REQUEST[$p_varName])) {
+				if (!$errorsOk) {
+					$g_inputErrors[$p_varName] = 'Incorrect type.  Expected type '.$p_type
+						.', but received type '.gettype($_REQUEST[$p_varName]).'.'
+						.' Value is "'.$_REQUEST[$p_varName].'".';
+				}
+				return $p_defaultValue;
+			}
 		}
 		return $_REQUEST[$p_varName];
 	} // fn get
