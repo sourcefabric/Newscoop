@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+	<Id>en_English</Id>
+	<item>
+		<key>success</key>
+		<value>success</value>
+	</item>
+	<item>
+		<key>fail</key>
+		<value>fail</value>
+	</item>
+	<item>
+		<key>edit</key>
+		<value>edit</value>
+	</item>
+	<item>
+		<key>delete</key>
+		<value>delete</value>
+	</item>
+	<item>
+		<key>The following strings are not used:</key>
+		<value>The following strings are not used:</value>
+	</item>
+	<item>
+		<key>ok</key>
+		<value>ok</value>
+	</item>
+	<item>
+		<key>There are no source strings</key>
+		<value>There are no source strings</value>
+	</item>
+	<item>
+		<key>The following strings are missing from the translation files:</key>
+		<value>The following strings are missing from the translation files:</value>
+	</item>
+	<item>
+		<key>Converting...</key>
+		<value>Converting...</value>
+	</item>
+	<item>
+		<key>Click Here to Convert</key>
+		<value>Click Here to Convert</value>
+	</item>
+	<item>
+		<key>Are you sure you want to delete this entry?</key>
+		<value>Are you sure you want to delete this entry?</value>
+	</item>
+	<item>
+		<key>All strings have been translated.</key>
+		<value>All strings have been translated.</value>
+	</item>
+	<item>
+		<key>After &quot;$1&quot;</key>
+		<value>After &quot;$1&quot;</value>
+	</item>
+	<item>
+		<key>Add</key>
+		<value>Add</value>
+	</item>
+	<item>
+		<key>At the end</key>
+		<value>At the end</value>
+	</item>
+	<item>
+		<key>At the beginning</key>
+		<value>At the beginning</value>
+	</item>
+	<item>
+		<key>Hide translated strings?</key>
+		<value>Hide translated strings?</value>
+	</item>
+	<item>
+		<key>Translate to:</key>
+		<value>Translate to:</value>
+	</item>
+	<item>
+		<key>User Subscriptions Sections</key>
+		<value>User Subscriptions Sections</value>
+	</item>
+	<item>
+		<key>User Subscriptions</key>
+		<value>User Subscriptions</value>
+	</item>
+	<item>
+		<key>Image Archive</key>
+		<value>Image Archive</value>
+	</item>
+	<item>
+		<key>Article Type Fields</key>
+		<value>Article Type Fields</value>
+	</item>
+	<item>
+		<key>Article Topics</key>
+		<value>Article Topics</value>
+	</item>
+	<item>
+		<key>Article Images</key>
+		<value>Article Images</value>
+	</item>
+	<item>
+		<key>Localizer</key>
+		<value>Localizer</value>
+	</item>
+	<item>
+		<key>$1 file already exist in $2</key>
+		<value>$1 file already exist in $2</value>
+	</item>
+	<item>
+		<key>edit &quot;$1&quot;</key>
+		<value>edit &quot;$1&quot;</value>
+	</item>
+	<item>
+		<key>edit &apos;$1&apos;</key>
+		<value>edit &apos;$1&apos;</value>
+	</item>
+	<item>
+		<key>create new language file $1</key>
+		<value>create new language file $1</value>
+	</item>
+	<item>
+		<key>create new language file in</key>
+		<value>create new language file in</value>
+	</item>
+	<item>
+		<key>entrys:</key>
+		<value>entrys:</value>
+	</item>
+	<item>
+		<key>$1 and $2 files already exist in $3</key>
+		<value>$1 and $2 files already exist in $3</value>
+	</item>
+	<item>
+		<key>name</key>
+		<value>name</value>
+	</item>
+	<item>
+		<key>native name</key>
+		<value>native name</value>
+	</item>
+	<item>
+		<key>code</key>
+		<value>code</value>
+	</item>
+	<item>
+		<key>manage languages</key>
+		<value>manage languages</value>
+	</item>
+	<item>
+		<key>choose language</key>
+		<value>choose language</value>
+	</item>
+	<item>
+		<key>cannot read $1</key>
+		<value>cannot read $1</value>
+	</item>
+	<item>
+		<key>go</key>
+		<value>go</value>
+	</item>
+	<item>
+		<key>back</key>
+		<value>back</value>
+	</item>
+	<item>
+		<key>and select file type</key>
+		<value>and select file type</value>
+	</item>
+	<item>
+		<key>and enter a positive integer value</key>
+		<value>and enter a positive integer value</value>
+	</item>
+	<item>
+		<key>save to file</key>
+		<value>save to file</value>
+	</item>
+	<item>
+		<key>create language files</key>
+		<value>create language files</value>
+	</item>
+	<item>
+		<key>Add new string:</key>
+		<value>Add new string:</value>
+	</item>
+	<item>
+		<key>at position:</key>
+		<value>at position:</value>
+	</item>
+	<item>
+		<key>Save</key>
+		<value>Save</value>
+	</item>
+	<item>
+		<key>Translate from:</key>
+		<value>Translate from:</value>
+	</item>
+	<item>
+		<key>Screen:</key>
+		<value>Screen:</value>
+	</item>
+</language>
