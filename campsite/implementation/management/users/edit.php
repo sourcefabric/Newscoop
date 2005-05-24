@@ -12,10 +12,14 @@ $typeParam = 'uType=' . urlencode($uType);
 $isReader = $uType == 'Readers' ? 'Y' : 'N';
 
 $userId = Input::Get('User', 'int', 0);
-$editUser = new User($userId);
-if ($editUser->getUserName() == '') {
-	CampsiteInterface::DisplayError('No such user account.',$_SERVER['REQUEST_URI']);
-	exit;
+if ($userId > 0) {
+	$editUser = new User($userId);
+	if ($editUser->getUserName() == '') {
+		CampsiteInterface::DisplayError('No such user account.');
+		exit;
+	}
+} else {
+	$editUser = new User();
 }
 
 ?>
@@ -25,11 +29,12 @@ if ($editUser->getUserName() == '') {
 	<td align="right"><a href="/<?php echo $ADMIN; ?>/users/?<?php echo get_user_urlparams(); ?>" class="breadcrumb" ><?php putGS($uType);  ?></a></td>
 </tr>
 </table>
-<table border="0">
+<table border="0" align="center">
 <tr>
-	<td rowspan="3" valign="top">
+	<td rowspan="3" valign="top" align="center">
 		<?php require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/info.php"); ?>
 	</td>
+<?php if ($userId > 0) { ?>
 	<td valign="top" height="1%">
 <?php
 if ($uType == 'Staff')
@@ -48,8 +53,9 @@ if ($uType == 'Readers')
 <?php } ?>
 <tr>
 	<td valign="top">
-	<?php require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/passwd.php"); ?>
+		<?php require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/passwd.php"); ?>
 	</td>
+<?php } ?>
 </tr>
 </table>
 <?php CampsiteInterface::CopyrightNotice(); ?>
