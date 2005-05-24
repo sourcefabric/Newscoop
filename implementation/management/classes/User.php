@@ -131,7 +131,33 @@ class User extends DatabaseObject {
 	function isAdmin() {
 		return (count($this->m_permissions) > 0);
 	} // fn isAdmin
+
+
+	/**
+	 * @return boolean
+	 */
+	function isValidPassword($p_password) {
+		global $Campsite;
+		$queryStr = 'SELECT * FROM Users '
+				. " WHERE Id = '".mysql_real_escape_string($this->getId())."' "
+				. " AND Password = PASSWORD('".mysql_real_escape_string($p_password)."')";
+		$row = $Campsite['db']->GetRow($queryStr);
+		if ($row)
+			return true;
+		return false;
+	}
 	
+	
+	/**
+	 * @return boolean
+	 */
+	function setPassword($p_password) {
+		global $Campsite;
+		$queryStr = "SELECT PASSWORD('".mysql_real_escape_string($p_password)."') AS PWD";
+		$row = $Campsite['db']->GetRow($queryStr);
+		$this->setProperty('Password', $row['PWD']);
+	}
+
 	
 	/**
 	 * This is a static function.  Check if the user is allowed
