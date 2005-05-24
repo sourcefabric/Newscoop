@@ -57,8 +57,8 @@ install: $(ALL)
 	chmod -R g+r $(HTML_COMMON_DIR)/*
 	$(PEAR) install Archive_Tar Console_Getopt XML_RPC PEAR Net_Socket
 	$(PEAR) upgrade Archive_Tar Console_Getopt XML_RPC PEAR Net_Socket
-	$(PEAR) install Net_URL HTTP_Request HTTP_Client
-	$(PEAR) upgrade Net_URL HTTP_Request HTTP_Client
+	$(PEAR) install Net_URL HTTP_Request HTTP_Client File File_Find XML_Util XML_Parser
+	$(PEAR) upgrade Net_URL HTTP_Request HTTP_Client File File_Find XML_Util XML_Parser
 
 clean: dummy
 	$(MAKE) -C root clean
