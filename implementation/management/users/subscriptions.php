@@ -41,10 +41,10 @@ if ($NUM_ROWS) {
 <?php 
 		query ("SELECT Name FROM Publications WHERE Id=".getSVar($q_subs,'IdPublication'), 'q_pub');
 		fetchRow($q_pub);
-?>			<A HREF="/admin/users/subscriptions/sections/?Subs=<?php pgetUVar($q_subs,'Id'); ?>&Pub=<?php pgetUVar($q_subs,'IdPublication'); ?>&User=<?php  echo $editUser->getId(); ?>"><?php pgetHVar($q_pub,'Name'); ?></A>&nbsp;
+?>			<A HREF="/<?php echo $ADMIN; ?>/users/subscriptions/sections/?Subs=<?php pgetUVar($q_subs,'Id'); ?>&Pub=<?php pgetUVar($q_subs,'IdPublication'); ?>&User=<?php  echo $editUser->getId(); ?>"><?php pgetHVar($q_pub,'Name'); ?></A>&nbsp;
 		</TD>
 		<TD >
-			<A HREF="/admin/users/subscriptions/topay.php?User=<?php echo $editUser->getId(); ?>&Subs=<?php pgetUVar($q_subs,'Id'); ?>">
+			<A HREF="/<?php echo $ADMIN; ?>/users/subscriptions/topay.php?User=<?php echo $editUser->getId(); ?>&Subs=<?php pgetUVar($q_subs,'Id'); ?>">
 			<?php  pgetHVar($q_subs,'ToPay').' '.pgetHVar($q_subs,'Currency'); ?></A>
 		</TD>
 		<TD >
@@ -57,10 +57,11 @@ if ($NUM_ROWS) {
 			?>
 		</TD>
 		<TD ALIGN="CENTER">
-			<A HREF="/admin/users/subscriptions/status.php?User=<?php echo $editUser->getId(); ?>&Subs=<?php pgetUVar($q_subs,'Id'); ?>"><?php if (getVar($q_subs,'Active') == "Y") { ?>Yes<?php  } else { ?>No<?php  } ?></A>
+			<A HREF="/<?php echo $ADMIN; ?>/users/subscriptions/status.php?User=<?php echo $editUser->getId(); ?>&Subs=<?php pgetUVar($q_subs,'Id'); ?>"><?php if (getVar($q_subs,'Active') == "Y") { ?>Yes<?php  } else { ?>No<?php  } ?></A>
 		</TD>
 		<TD ALIGN="CENTER">
-			<A HREF="/admin/users/subscriptions/del.php?User=<?php echo $editUser->getId(); ?>&Subs=<?php pgetUVar($q_subs,'Id'); ?>"><IMG SRC="/admin/img/icon/delete.png" BORDER="0" ALT="<?php putGS('Delete subscriptions to $1',getHVar($q_pub,'Name') ); ?>" TITLE="<?php  putGS('Delete subscriptions to $1',getHVar($q_pub,'Name') ); ?>"></A>
+			<A HREF="/<?php echo $ADMIN; ?>/users/subscriptions/del.php?User=<?php echo $editUser->getId(); ?>&Subs=<?php pgetUVar($q_subs,'Id'); ?>">
+			<IMG SRC="/<?php echo $ADMIN; ?>/img/icon/delete.png" BORDER="0" ALT="<?php putGS('Delete subscriptions to $1',getHVar($q_pub,'Name') ); ?>" TITLE="<?php  putGS('Delete subscriptions to $1',getHVar($q_pub,'Name') ); ?>"></A>
 		</TD>
 	</TR>
 <?php 
