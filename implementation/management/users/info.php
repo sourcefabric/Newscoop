@@ -1,21 +1,30 @@
 <?php
 
 check_basic_access($_REQUEST);
-if (!isset($editUser) || gettype($editUser) != 'object' || $editUser->getUserName() == '') {
-	CampsiteInterface::DisplayError('No such user account.',$_SERVER['REQUEST_URI']);
+if (!isset($editUser) || gettype($editUser) != 'object') {
+	CampsiteInterface::DisplayError('No such user account.');
 	exit;
 }
 
+if ($editUser->getUserName() == '')
+	$action = 'do_add.php';
+else
+	$action = 'do_info.php';
+
 ?>
-<P><FORM NAME="dialog" METHOD="POST" ACTION="do_info.php" >
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input" ALIGN="CENTER">
+<P><form name="dialog" method="POST" action="<?php echo $action; ?>">
+<input type="hidden" name="uType" value="<?php echo $uType; ?>">
+<?php if ($editUser->getUserName() != '') { ?>
+<input type="hidden" name="User" value="<?php echo $editUser->getId(); ?>">
+<?php } ?>
+<table border="0" cellspacing="0" cellpadding="6" class="table_input" align="center">
 	<tr>
 		<td align="right" nowrap><?php putGS("User name"); ?>:</td>
 		<td align="left" nowrap><b><?php pencHTML($editUser->getUserName()); ?></b></td>
 	</tr>
 	<TR>
 		<TD ALIGN="RIGHT" nowrap><?php  putGS("Full Name"); ?>:</TD>
-		<TD><INPUT TYPE="TEXT" class="input_text" NAME="Name" VALUE="<?php pencHTML($editUser->getUserName()); ?>" SIZE="32" MAXLENGTH="64">
+		<TD><INPUT TYPE="TEXT" class="input_text" NAME="Name" VALUE="<?php pencHTML($editUser->getName()); ?>" SIZE="32" MAXLENGTH="64">
 		</TD>
 	</TR>
 	<TR>
@@ -79,8 +88,6 @@ if (!isset($editUser) || gettype($editUser) != 'object' || $editUser->getUserNam
 	<TR>
 		<TD ALIGN="RIGHT" nowrap><?php  putGS("Country"); ?>:</TD>
 		<TD>
-<?php
-?>
 <?php
 	$countries_list[""] = "";
 	query ("SELECT Code, Name FROM Countries where IdLanguage = 1", 'countries');
@@ -147,9 +154,8 @@ if (!isset($editUser) || gettype($editUser) != 'object' || $editUser->getUserNam
 	<TR>
 		<TD COLSPAN="2">
 		<DIV ALIGN="CENTER">
-		<INPUT TYPE="HIDDEN" NAME="User" VALUE="<?php  pencHTML($User); ?>">
 		<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save changes'); ?>">
-		<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='/admin/users/'">
+		<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php putGS('Cancel'); ?>" ONCLICK="location.href='<?php echo "/$ADMIN/users/?" . get_user_urlparams(); ?>'">
 		</DIV>
 		</TD>
 	</TR>
