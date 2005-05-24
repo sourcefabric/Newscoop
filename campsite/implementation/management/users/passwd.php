@@ -3,9 +3,6 @@
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/users_common.php");
 
 list($access, $User) = check_basic_access($_REQUEST);
-
-read_user_common_parameters(); // $uType, $userOffs, $lpp, search parameters
-verify_user_type();
 compute_user_rights($User, &$canManage, &$canDelete);
 if (!$canManage) {
 	CampsiteInterface::DisplayError('You do not have the right to change user account information.');
