@@ -112,12 +112,15 @@ if ($NUM_ROWS) {
 	$last = $nr > $lpp ? $lpp : $nr;
 ?><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" WIDTH="100%" class="table_list">
 	<TR class="table_list_header">
-		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Full Name"); ?></B></TD>
-		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("User Name"); ?></B></TD>
-		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("E-Mail"); ?></B></TD>
-	<?php if ($User->hasPermission('DeleteUsers')) { ?>
-		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Delete"); ?></B></TD>
-	<?php } ?>
+		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php putGS("Full Name"); ?></B></TD>
+		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php putGS("User Name"); ?></B></TD>
+		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php putGS("E-Mail"); ?></B></TD>
+<?php if ($uType == "Readers" && $User->hasPermission("ManageSubscriptions")) { ?>
+		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php putGS("Subscriptions"); ?></B></TD>
+<?php } ?>
+<?php if ($canDelete) { ?>
+		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%"><B><?php putGS("Delete"); ?></B></TD>
+<?php } ?>
 	</TR>
 <?php 
 for($loop = 0; $loop < $last; $loop++) {
@@ -147,6 +150,10 @@ for($loop = 0; $loop < $last; $loop++) {
 ?>
 		<TD><a href="?<?php echo get_user_urlparams(); ?>">
 			<?php pgetHVar($Users,'EMail'); ?></TD>
+<?php if ($uType == "Readers" && $User->hasPermission("ManageSubscriptions")) { ?>
+		<td><a href="<?php echo "/$ADMIN/users/subscriptions/?User=$userId"; ?>">
+			<?php putGS("Subscriptions"); ?></td>
+<?php } ?>
 <?php
 	$email = $old_email;
 	if ($canDelete) { ?>
