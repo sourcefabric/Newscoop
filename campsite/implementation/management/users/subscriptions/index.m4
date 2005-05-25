@@ -23,7 +23,7 @@ B_BODY
 <?php  todefnum('User'); ?>dnl
 B_HEADER(<*Subscriptions*>)
 B_HEADER_BUTTONS
-X_HBUTTON(<*Users*>, <*users/*>)
+X_HBUTTON(<*Readers*>, <*users/?uType=Readers*>)
 E_HEADER_BUTTONS
 E_HEADER
 
