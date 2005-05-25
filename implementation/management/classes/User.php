@@ -73,6 +73,28 @@ class User extends DatabaseObject {
 			}
 		}
 	} // fn fetch
+
+
+	function setUserType($p_userType)
+	{
+		global $Campsite;
+		// Fetch the user type's permissions.
+		$queryStr = "SELECT * FROM UserTypes WHERE Name = '"
+			.mysql_real_escape_string($p_userType)."'";
+		$permissions = $Campsite['db']->GetRow($queryStr);
+		if ($permissions) {
+			// Make m_permissions a boolean array.
+			foreach ($permissions as $key => $value) {
+				$this->m_permissions[$key] = ($value == 'Y');
+				if ($key != 'Name' && $key != 'Reader')
+					$values .= ", '" . mysql_real_escape_string($value) . "'";
+			}
+			if ($this->exists()) {
+				$queryStr = "INSERT IGNORE INTO UserPerm VALUES(".$this->getId()."$values)";
+				$Campsite['db']->Query($queryStr);
+			}
+		}
+	}
 	
 	
 	/**
