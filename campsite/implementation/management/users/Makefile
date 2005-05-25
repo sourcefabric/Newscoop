@@ -2,7 +2,7 @@ include ../../../make.env
 
 export PRIV_DIR2=$(PRIV_COMMON_DIR)/users
 
-MY_TARGETS=add.php do_add.php del.php do_del.php access.php do_access.php ipadd.php do_ipadd.php ipdel.php do_ipdel.php
+MY_TARGETS=add.php del.php do_del.php access.php do_access.php ipadd.php do_ipadd.php ipdel.php do_ipdel.php
 
 subsystem: all
 	$(MAKE) -C subscriptions
