@@ -27,7 +27,8 @@ $showConfigureMenu = ($showPublishingEnvironmentMenu
 $showUserMenu = ($User->hasPermission("ManageUsers") 
 	|| $User->hasPermission("DeleteUsers") 
 	|| $User->hasPermission("ManageSubscriptions") 
-	|| $User->hasPermission("ManageUserTypes"));
+	|| $User->hasPermission("ManageUserTypes")
+	|| $User->hasPermission("ManageReaders"));
 	
 $showObsoleteMenu = ($User->hasPermission("ManageDictionary") 
 	|| $User->hasPermission("DeleteDictionary") 
@@ -162,8 +163,11 @@ foreach ($publications as $publication) {
 	    <?php if ($showUserMenu) { ?>
 	    _cmSplit,
 	    ['<img src="/<?php p($ADMIN); ?>/img/icon/users.png" width="22" height="22" align="middle" />', ' <?php putGS('Users'); ?>', '', '', '',
-	    	<?php if ($User->hasPermission("ManageUsers") || $User->hasPermission("DeleteUsers") || $User->hasPermission("ManageSubscriptions")) { ?>
-	    	['<img src="/<?php p($ADMIN); ?>/img/icon/users.png" width="22" height="22" />', '<?php putGS('Users'); ?>', '/<?php p($ADMIN); ?>/users/' ], 
+	    	<?php if ($User->hasPermission("ManageUsers") || $User->hasPermission("DeleteUsers")) { ?>
+	    	['<img src="/<?php p($ADMIN); ?>/img/icon/users.png" width="22" height="22" />', '<?php putGS('Staff'); ?>', '/<?php p($ADMIN); ?>/users/?uType=Staff' ],
+	    	<?php } ?>
+	    	<?php if ($User->hasPermission("ManageReaders") || $User->hasPermission("ManageSubscriptions")) { ?>
+	    	['<img src="/<?php p($ADMIN); ?>/img/icon/users.png" width="22" height="22" />', '<?php putGS('Readers'); ?>', '/<?php p($ADMIN); ?>/users/?uType=Readers' ],
 	    	<?php } ?>
 	    	<?php if ($User->hasPermission("ManageUserTypes")) { ?>
 	    	['<img src="/<?php p($ADMIN); ?>/img/icon/user_types.png" width="22" height="22" />', '<?php putGS('User Types'); ?>', '/<?php p($ADMIN); ?>/u_types/' ], 
