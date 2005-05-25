@@ -22,7 +22,7 @@ B_HEADER(<*Add new subscription*>)
 B_HEADER_BUTTONS
 X_HBUTTON(<*Subscriptions*>, <*users/subscriptions/?User=<?php  p($User); ?>*>)
 <td class="breadcrumb_separator">&nbsp;</td>
-X_HBUTTON(<*Users*>, <*users/*>)
+X_HBUTTON(<*Readers*>, <*users/?uType=Readers*>)
 E_HEADER_BUTTONS
 E_HEADER
 

@@ -28,7 +28,7 @@ X_HBUTTON(<*Sections*>, <*users/subscriptions/sections/?User=<?php  p($User); ?>
 <td class="breadcrumb_separator">&nbsp;</td>
 X_HBUTTON(<*Subscriptions*>, <*users/subscriptions/?User=<?php  p($User); ?>*>)
 <td class="breadcrumb_separator">&nbsp;</td>
-X_HBUTTON(<*Users*>, <*users/*>)
+X_HBUTTON(<*Readers*>, <*users/?uType=Readers*>)
 E_HEADER_BUTTONS
 E_HEADER
 
@@ -68,6 +68,9 @@ B_DIALOG(<*Add new subscription*>, <*POST*>, <*do_add.php*>)
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Days*>)
 		<INPUT TYPE="TEXT" class="input_text" NAME="cDays" SIZE="5" MAXLENGTH="5">
+	E_DIALOG_INPUT
+	B_DIALOG_INPUT(<*Paid Days*>)
+		<INPUT TYPE="TEXT" class="input_text" NAME="cPaidDays" SIZE="5" MAXLENGTH="5">
 	E_DIALOG_INPUT
 	B_DIALOG_BUTTONS
 		<INPUT TYPE="HIDDEN" NAME="User" VALUE="<?php  p($User); ?>">
