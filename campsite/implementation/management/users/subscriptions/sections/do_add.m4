@@ -26,7 +26,6 @@ B_BODY
     todef('cStartDate');
     todefnum('cSection');
     todefnum('cDays');
-    todefnum('cPaidDays');
     todefnum('Success',1);
 ?>dnl
 B_HEADER(<*Adding sections*>)
@@ -62,9 +61,9 @@ E_CURRENT
 <P>
 B_MSGBOX(<*Adding sections to subscription*>)
 
-<?php 
+<?php
     if ($cSection != 0) {
-	$sql = "INSERT IGNORE INTO SubsSections SET IdSubscription=$Subs, SectionNumber='$cSection', StartDate='$cStartDate', Days='$cDays', PaidDays='$cPaidDays'";
+	$sql = "INSERT IGNORE INTO SubsSections SET IdSubscription=$Subs, SectionNumber='$cSection', StartDate='$cStartDate', Days='$cDays', PaidDays='$cDays'";
 	query($sql);
 	if ($AFFECTED_ROWS > 0) { ?>dnl
 	X_MSGBOX_TEXT(<*<LI><?php  putGS('The section was added successfully.'); ?></LI>*>)
@@ -87,7 +86,7 @@ B_MSGBOX(<*Adding sections to subscription*>)
 	fetchRowNum($q_sect);
 	$tval=encS(getNumVar($q_sect,0));
 
-	query ("INSERT IGNORE INTO SubsSections SET IdSubscription=$Subs, SectionNumber='$tval', StartDate='$cStartDate', Days='$cDays', PaidDays='$cPaidDays'");
+	query ("INSERT IGNORE INTO SubsSections SET IdSubscription=$Subs, SectionNumber='$tval', StartDate='$cStartDate', Days='$cDays', PaidDays='$cDays'");
 	if ($AFFECTED_ROWS == 0)
 	    $Success= 0;
     }
@@ -101,7 +100,7 @@ B_MSGBOX(<*Adding sections to subscription*>)
 <?php  if ($Success) { ?>dnl
 		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/users/subscriptions/sections/?Pub=<?php  p($Pub); ?>&User=<?php  p($User); ?>&Subs=<?php  p($Subs); ?>*>)
 <?php  } else { ?>dnl
-		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/users/subscriptions/sections/add.php?Pub=<?php  p($Pub); ?>&User=<?php  p($User); ?>&Subs=<?php  p($Subs); ?>*>)
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/users/subscriptions/sections/?Pub=<?php  p($Pub); ?>&User=<?php  p($User); ?>&Subs=<?php  p($Subs); ?>*>)
 <?php  } ?>dnl
 	E_MSGBOX_BUTTONS
 <?php  } ?>

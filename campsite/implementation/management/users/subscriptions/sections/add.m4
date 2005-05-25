@@ -69,9 +69,6 @@ B_DIALOG(<*Add new subscription*>, <*POST*>, <*do_add.php*>)
 	B_DIALOG_INPUT(<*Days*>)
 		<INPUT TYPE="TEXT" class="input_text" NAME="cDays" SIZE="5" MAXLENGTH="5">
 	E_DIALOG_INPUT
-	B_DIALOG_INPUT(<*Paid Days*>)
-		<INPUT TYPE="TEXT" class="input_text" NAME="cPaidDays" SIZE="5" MAXLENGTH="5">
-	E_DIALOG_INPUT
 	B_DIALOG_BUTTONS
 		<INPUT TYPE="HIDDEN" NAME="User" VALUE="<?php  p($User); ?>">
 		<INPUT TYPE="HIDDEN" NAME="Subs" VALUE="<?php  p($Subs); ?>">
