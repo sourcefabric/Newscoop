@@ -23,6 +23,9 @@ B_BODY
     todefnum('Subs');
     todefnum('Sect');
     todefnum('Pub');
+    todef('cStartDate');
+    todefnum('cDays');
+    todefnum('cPaidDays');
     todefnum('User');
 ?>dnl
 B_HEADER(<*Updating subscription*>)
@@ -31,7 +34,7 @@ X_HBUTTON(<*Sections*>, <*users/subscriptions/sections/?User=<?php  p($User); ?>
 <td class="breadcrumb_separator">&nbsp;</td>
 X_HBUTTON(<*Subscriptions*>, <*users/subscriptions/?User=<?php  p($User); ?>*>)
 <td class="breadcrumb_separator">&nbsp;</td>
-X_HBUTTON(<*Users*>, <*users/*>)
+X_HBUTTON(<*Readers*>, <*users/?uType=Readers*>)
 E_HEADER_BUTTONS
 E_HEADER
 
@@ -67,13 +70,13 @@ B_MSGBOX(<*Changing subscription*>)
     if (!$isPaid)
 	$cPaidDays = $cDays;
     query ("UPDATE SubsSections SET StartDate='$cStartDate', Days='$cDays', PaidDays='$cPaidDays' WHERE IdSubscription=$Subs $sectCond");
-    if ($AFFECTED_ROWS > 0) { ?>dnl
+    if ($AFFECTED_ROWS >= 0) { ?>dnl
 	X_MSGBOX_TEXT(<*<LI><?php  putGS('The subscription has been updated.'); ?></LI>*>)
 <?php  } else { ?>dnl
 	X_MSGBOX_TEXT(<*<LI><?php  putGS('The subscription could not be updated.'); ?></LI>*>)
 <?php  } ?>dnl
 	B_MSGBOX_BUTTONS
-<?php  if ($AFFECTED_ROWS > 0) { ?>dnl
+<?php  if ($AFFECTED_ROWS >= 0) { ?>dnl
 		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/users/subscriptions/sections/?Pub=<?php  p($Pub); ?>&User=<?php  p($User); ?>&Subs=<?php  p($Subs); ?>*>)
 <?php  } else { ?>dnl
 		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/users/subscriptions/sections/change.php?Pub=<?php  p($Pub); ?>&User=<?php  p($User); ?>&Subs=<?php  p($Subs); ?>&Sect=<?php  p($Sect); ?>*>)
