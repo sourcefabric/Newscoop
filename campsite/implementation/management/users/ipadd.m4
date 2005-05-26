@@ -19,9 +19,9 @@ B_BODY
 
 B_HEADER(<*Add new IP address group*>)
 B_HEADER_BUTTONS
-X_HBUTTON(<*IP Access List*>, <*users/ipaccesslist.php?User=<?php todefnum ('User'); p($User); ?>*>)
+X_HBUTTON(<*Edit reader data*>, <*users/edit.php?uType=Readers&User=<?php todefnum ('User'); p($User); ?>*>)
 <td class="breadcrumb_separator">&nbsp;</td>
-X_HBUTTON(<*Users*>, <*users/*>)
+X_HBUTTON(<*Readers*>, <*users/?uType=Readers*>)
 E_HEADER_BUTTONS
 E_HEADER
 
@@ -39,7 +39,7 @@ B_DIALOG(<*Add new IP address group*>, <*POST*>, <*do_ipadd.php*>)
     E_DIALOG_INPUT
     B_DIALOG_BUTTONS
         SUBMIT(<*Save*>, <*Save changes*>)
-        REDIRECT(<*Cancel*>, <*Cancel*>, <*X_ROOT/users/ipaccesslist.php?User=<?php  p($User); ?>*>)
+        REDIRECT(<*Cancel*>, <*Cancel*>, <*X_ROOT/users/edit.php?uType=Readers&User=<?php  p($User); ?>*>)
     E_DIALOG_BUTTONS
 E_DIALOG
 <P>
