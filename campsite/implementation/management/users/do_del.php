@@ -9,7 +9,7 @@ read_user_common_parameters(); // $uType, $userOffs, $lpp, search parameters
 verify_user_type();
 compute_user_rights($User, &$canManage, &$canDelete);
 if (!$canDelete) {
-	CampsiteInterface::DisplayError('You do not have the right to change user account information.');
+	CampsiteInterface::DisplayError('You do not have the right to delete user accounts.');
 	exit;
 }
 
