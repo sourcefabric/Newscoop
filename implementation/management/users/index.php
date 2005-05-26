@@ -158,7 +158,7 @@ for($loop = 0; $loop < $last; $loop++) {
 	$email = $old_email;
 	if ($canDelete) { ?>
 		<TD ALIGN="CENTER">
-			<A HREF="/admin/users/del.php?<?php echo get_user_urlparams($userId, false, true); ?>">
+			<A HREF="/admin/users/do_del.php?<?php echo get_user_urlparams($userId, false, true); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the user account $1 ?', getVar($Users, 'UName')); ?>');">
 				<IMG SRC="/admin/img/icon/delete.png" BORDER="0" ALT="<?php putGS('Delete user $1',getHVar($Users,'Name')); ?>" TITLE="<?php  putGS('Delete user $1',getHVar($Users,'Name')); ?>">
 			</A>
 		</TD>
