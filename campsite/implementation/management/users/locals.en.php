@@ -5,6 +5,7 @@ regGS("Readers management","Readers management:en");
 regGS("Set","Set:en");
 regGS("Update","Update:en");
 regGS("Rights","Rights:en");
+regGS("Edit user rights","Edit user rights:en");
 regGS("IP Access","IP Access:en");
 regGS("User Name","User Name:en");
 regGS("Full Name","Full Name:en");
