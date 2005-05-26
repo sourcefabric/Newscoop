@@ -40,15 +40,14 @@ if ($NUM_ROWS) {
 <?php
 	for($loop=0;$loop<$nr;$loop++) {
 		fetchRow($IPs);
+		$ip = getVar($IPs, 'ip0') . '.' . getVar($IPs , 'ip1') . '.'
+			. getVar($IPs, 'ip2') . '.' . getVar($IPs, 'ip3');
 		?>	<tr <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
-		<TD>
-			<?php  p(getHVar($IPs,'ip0').'.'.getHVar($IPs,'ip1').'.'.getHVar($IPs,'ip2').'.'.getHVar($IPs,'ip3') ); ?>
-		</td>
-		<td>
-			<?php  pgetHVar($IPs,'Addresses'); ?>
-		</td>
+		<td><?php echo $ip; ?></td>
+		<td><?php pgetHVar($IPs,'Addresses'); ?></td>
 		<td align="center">
-			<a href="/<?php echo $ADMIN; ?>/users/ipdel.php?User=<?php echo $editUser->getId(); ?>&StartIP=<?php  pgetVar($IPs,'StartIP'); ?>"><img src="/<?php echo $ADMIN; ?>/img/icon/delete.png" border="0" ALT="<?php putGS('Delete'); ?>" title="<?php putGS('Delete'); ?>"></a>
+			<a href="/<?php echo $ADMIN; ?>/users/do_ipdel.php?User=<?php echo $editUser->getId(); ?>&StartIP=<?php  pgetVar($IPs,'StartIP'); ?>"  onclick="return confirm('<?php putGS('Are you sure you want to delete the IP Group $1?', $ip); ?>');">
+			<img src="/<?php echo $ADMIN; ?>/img/icon/delete.png" border="0" ALT="<?php putGS('Delete'); ?>" title="<?php putGS('Delete'); ?>"></a>
 		</td>
 	</tr>
 <?php  
