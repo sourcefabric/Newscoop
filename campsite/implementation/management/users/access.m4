@@ -19,7 +19,7 @@ B_BODY
 
 B_HEADER(<*Edit user account permissions*>)
 B_HEADER_BUTTONS
-X_HBUTTON(<*Users*>, <*users/*>)
+X_HBUTTON(<*Staff*>, <*users/?uType=Staff*>)
 E_HEADER_BUTTONS
 E_HEADER
 
@@ -237,9 +237,9 @@ B_DIALOG(<*Edit user account permissions*>, <*POST*>, <*do_access.php*>)
 
 	E_DIALOG_PACKEDINPUT
 	B_DIALOG_BUTTONS
-		<INPUT TYPE="HIDDEN" NAME="User" VALUE="<?php  pencHTML($User); ?>">
+		<INPUT TYPE="HIDDEN" NAME="User" VALUE="<?php pencHTML($User); ?>">
 		SUBMIT(<*Save*>, <*Save changes*>)
-		REDIRECT(<*Cancel*>, <*Cancel*>, <*X_ROOT/users/*>)
+		REDIRECT(<*Cancel*>, <*Cancel*>, <*X_ROOT/users/edit.php?uType=Staff&User=<?php pencHTML($User); ?>*>)
 	E_DIALOG_BUTTONS
 E_DIALOG
 <P>
@@ -262,4 +262,3 @@ E_BODY
 
 E_DATABASE
 E_HTML
-

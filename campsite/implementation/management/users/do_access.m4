@@ -21,7 +21,7 @@ B_BODY
 
 B_HEADER(<*Updating user account permissions*>)
 B_HEADER_BUTTONS
-X_HBUTTON(<*Users*>, <*users/*>)
+X_HBUTTON(<*Staff*>, <*users/?uType=Staff*>)
 E_HEADER_BUTTONS
 E_HEADER
 
@@ -160,7 +160,7 @@ query($queryStr);
 	if (function_exists ("incModFile"))
 		incModFile ($User);
 
-	if ($AFFECTED_ROWS > 0) { ?>dnl
+	if ($AFFECTED_ROWS >= 0) { ?>dnl
 		X_AUDIT(<*55*>, <*getGS('Permissions for $1 changed',getHVar($uacc,'UName'))*>)
 		X_MSGBOX_TEXT(<*<LI><?php  putGS('User account permissions have been successfuly updated.'); ?></LI>*>)
 <?php 	} else { ?>dnl
@@ -168,10 +168,10 @@ query($queryStr);
 <?php 	} ?>*>)
 	B_MSGBOX_BUTTONS
 <?php 
-    if ($AFFECTED_ROWS > 0) { ?>dnl
-		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/users/*>)
+    if ($AFFECTED_ROWS >= 0) { ?>dnl
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/users/edit.php?uType=Staff&User=<?php  pencURL($User); ?>*>)
 <?php  } else { ?>dnl
-		REDIRECT(<OK**>, <*OK*>, <*X_ROOT/users/access.php?User=<?php  pencURL($User); ?>*>)
+		REDIRECT(<OK**>, <*OK*>, <*X_ROOT/users/edit.php?uType=Staff&User=<?php  pencURL($User); ?>*>)
 <?php  } ?>dnl
 	E_MSGBOX_BUTTONS
 E_MSGBOX
