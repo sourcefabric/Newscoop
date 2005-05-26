@@ -122,6 +122,7 @@ regGS("You do not have the right to add IP address groups.","You do not have the
 regGS("Start IP","Start IP:en");
 regGS("Number of addresses","Number of addresses:en");
 regGS("IP Access List","IP Access List:en");
+regGS("Edit reader data", "Edit reader data:en");
 
 // -- do_ipadd.m4
 regGS("Adding new IP Group","Adding new IP Group:en");
@@ -129,6 +130,8 @@ regGS("The IP Group $1 has been created.","The IP Group $1 has been created.:en"
 regGS("IP Group $1 added for user $2","IP Group $1 added for user $2:en");
 regGS("The IP Group could not be created.","The IP Group could not be created.:en");
 regGS("Please check if an account with the same IP Group does not already exist.","Please check if an account with the same IP Group does not already exist.:en");
+regGS("There was an error creating the IP address group.", "There was an error creating the IP address group.:en");
+regGS("An IP address group having the $1 start address already exists.", "An IP address group having the $1 start address already exists.:en");
 
 // -- ipdel.m4
 regGS("Delete IP Group","Delete IP Group:en");
