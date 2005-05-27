@@ -9,7 +9,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/include/XML_Serializer/Unserializer.php
 require_once('display.inc.php');
 require_once('helpfunctions.php');
 
-require_once('require.inc.php');
+require_once('LocalizerConfig.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
 require_once('LocalizerLanguage.php');
 
@@ -50,8 +50,7 @@ class Localizer {
 
     
     function GetMode() {
-	    $defaultLang =& new LocalizerLanguage(LOCALIZER_PREFIX, 
-	    	realpath(LOCALIZER_BASE_DIR.LOCALIZER_ADMIN_DIR), LOCALIZER_DEFAULT_LANG);
+	    $defaultLang =& new LocalizerLanguage(LOCALIZER_PREFIX, '', LOCALIZER_DEFAULT_LANG);
 	    if ($defaultLang->loadGsFile()) {
 	    	return 'php';
 	    }
@@ -264,14 +263,16 @@ class Localizer {
 	            	// Detect files directly
 	            	$languageCodes = Localizer::_FindLangFilesIds('/');
 	            	$languages = array();
-	            	foreach ($languageCodes as $code) {
-	            		$parts = explode('_', $code);
-	            		$language = array();
-	            		$language['Id'] = $code;
-	            		$language['Name'] = $parts[1];
-	            		$language['NativeName'] = $parts[1];
-	            		$language['Code'] = $parts[0];
-	            		$languages[] = $language;
+	            	if (is_array($languageCodes)) {
+		            	foreach ($languageCodes as $code) {
+		            		$parts = explode('_', $code);
+		            		$language = array();
+		            		$language['Id'] = $code;
+		            		$language['Name'] = $parts[1];
+		            		$language['NativeName'] = $parts[1];
+		            		$language['Code'] = $parts[0];
+		            		$languages[] = $language;
+		            	}
 	            	}
 	            }
 	            break;
