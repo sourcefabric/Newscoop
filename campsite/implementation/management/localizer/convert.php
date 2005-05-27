@@ -12,7 +12,7 @@ The following files will be converted:<br>
 <div style="width: 700px; height: 400px; overflow: auto; border: 1px solid black;">
 <table>
 <?php
-foreach($list as $pathname) {
+foreach ($list as $pathname) {
 	echo "<tr><td>$pathname</td></tr>";
 }
 ?>
@@ -21,6 +21,6 @@ foreach($list as $pathname) {
 <br>
 <form>
 <input type="hidden" name="action" value="convert_confirm">
-<input type="submit" name="submit_button" value="<?php putGS("Click Here to Convert"); ?>" class="button">
+<input type="button" name="submit_button" value="<?php putGS("Click Here to Convert"); ?>" class="button" onclick="this.form.submit();">
 </form>
 </center>
