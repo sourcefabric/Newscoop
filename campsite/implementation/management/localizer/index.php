@@ -3,7 +3,7 @@
 include_once($_SERVER['DOCUMENT_ROOT']."/configuration.php");
 include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
 include_once($_SERVER['DOCUMENT_ROOT']."/classes/Input.php");
-include_once('require.inc.php');
+include_once('Localizer.php');
 
 $localizer =& Localizer::getInstance();
 Localizer::LoadLanguageFiles('/localizer', 'locals');
@@ -16,6 +16,7 @@ $action = Input::Get('action', 'string', 'translate', true);
 
 // Show the converstion screen if this is the first time the
 // user is using the new localizer.
+//echo Localizer::GetMode()."<br>";
 if (Localizer::GetMode() == 'php') {
 	$action = 'convert';
 }
@@ -40,32 +41,7 @@ if (isset($_REQUEST['find_translation_strings'])) {
 <?php
 switch ($action) {
 case 'convert': 
-    $startdir = LOCALIZER_BASE_DIR.LOCALIZER_ADMIN_DIR;
-    $pattern  = '/^(locals|globals)\.[a-z]{2,2}\.php$/';
-    $sep = "|";
-    $list = Localizer::SearchFilesRecursive($startdir, $pattern, $sep);
-    $list = explode($sep, $list);
-
-    ?>
-    <center>
-    <b>Before using the new localizer, you must first convert the language file format.<b><br>
-    The following files will be converted:<br>
-    <div style="width: 700px; height: 400px; overflow: auto; border: 1px solid black;">
-    <table>
-    <?php
-    foreach($list as $pathname) {
-    	echo "<tr><td>$pathname</td></tr>";
-    }
-    ?>
-    </table>
-    </div>
-    <br>
-    <form>
-    <input type="hidden" name="action" value="convert_confirm">
-    <input type="submit" name="submit_button" value="<?php putGS("Click Here to Convert"); ?>" class="button">
-    </form>
-    </center>
-    <?php
+	include('convert.php');
     break;
     
 case 'convert_confirm':
