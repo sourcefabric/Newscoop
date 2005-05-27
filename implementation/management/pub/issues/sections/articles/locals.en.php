@@ -41,12 +41,9 @@ regGS("You do not have the right to change this article.  You may only edit your
 // -- edit.m4
 regGS("Edit article details","Edit Article:en");
 regGS("Allow users without subscriptions to view the article","Allow users without subscriptions to view the article:en");
-regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", 
-	  "The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.:en");
-regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", 
-	  "The article has been locked by $1 ($2) $3 minute(s) ago.:en");
-regGS("Could not save the article.  It has been locked by $1 $2 hours and $3 minutes ago.",
-	  "Could not save the article.  It has been locked by $1 $2 hours and $3 minutes ago.");
+regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.:en");
+regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "The article has been locked by $1 ($2) $3 minute(s) ago.:en");
+regGS("Could not save the article.  It has been locked by $1 $2 hours and $3 minutes ago.", "Could not save the article.  It has been locked by $1 $2 hours and $3 minutes ago.");
 regGS("Are you sure you want to unlock it?","Are you sure you want to unlock it?:en");
 regGS("Article is locked", "Article is locked:en");
 
