@@ -46,8 +46,8 @@ function translationForm($p_request) {
 	
 	$screens = array();
 	$screens[] = "";
-	$screens["/"] = "Home - Locals";
-	$screens["/globals"] = "Home - Globals";
+	$screens["/"] = getGS("Home");
+	$screens["/globals"] = getGS("Globals");
 	$screens["/pub"] = getGS("Publications");
 	$screens["/pub/issues"] = getGS("Issues");
 	$screens["/pub/issues/sections"] = getGS("Sections");
@@ -160,12 +160,11 @@ function translationForm($p_request) {
 	
 	<?PHP
 	$missingStrings = Localizer::FindMissingStrings($directory);
-	if (count($missingStrings) > 0) {
+	if ((count($missingStrings) > 0)  && ($screenDropDownSelection != '/globals')) {
 		?>
 		<table align="center" style="background-color: #D0DB63; border: 1px solid #357654;" width="600px">
         <form action="index.php" target="<?php echo LOCALIZER_PANEL_FRAME; ?>" method="post">
         <input type="hidden" name="action" value="add_missing_translation_strings">
-        <!--<input type="hidden" name="Id" value="<?php echo $sourceLang->getLocalizerLanguageCode(); ?>">-->
         <input type="hidden" name="base" value="<?php echo $base; ?>">
         <input type="hidden" name="dir" value="<?php echo $screenDropDownSelection; ?>">
 		<tr>
