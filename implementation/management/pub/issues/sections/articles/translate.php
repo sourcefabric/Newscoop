@@ -98,10 +98,15 @@ CampsiteInterface::ContentTop('Translate article', $topArray, true, true);
 	<SELECT NAME="cLanguage" class="input_select">
 	<?php 
 	// Show all the languages that have not yet been translated.
+	$displayLanguages = array();
 	foreach ($allLanguages as $language) {
 		if (!in_array($language->getLanguageId(), $articleLanguages)) {
-			pcomboVar($language->getLanguageId(), '', $language->getName());
+			$displayLanguages[$language->getLanguageId()] = $language->getNativeName(); 
 		}
+	}
+	asort($displayLanguages);
+	foreach ($displayLanguages as $tmpLangId => $nativeName) {
+		pcomboVar($tmpLangId, '', $nativeName);
 	}
 	?>
 	</SELECT>
