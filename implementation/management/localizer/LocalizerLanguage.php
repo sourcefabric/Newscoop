@@ -1,5 +1,5 @@
 <?PHP
-require_once('require.inc.php');
+require_once('LocalizerConfig.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
 
 class LocalizerLanguage {
@@ -514,7 +514,8 @@ class LocalizerLanguage {
      */
     function loadGsFile() {
     	$this->m_mode = 'php';
-        $this->m_filePath = $this->getFilePath('php');         
+        $this->m_filePath = $this->getFilePath('php');     
+        //echo $this->m_filePath."<BR>";    
         if (file_exists($this->m_filePath)) {
 	        $lines = file($this->m_filePath);
 	        foreach ($lines as $line) {
