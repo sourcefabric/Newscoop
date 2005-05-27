@@ -62,77 +62,8 @@ class Display {
     }
     
 
-//    function createLangMenu ($currId)
-//    {
-//        $languages = Localizer::GetLanguages();
-//
-//        $menu .= '
-//          <form name="selLang" action="'.LOCALIZER_MENU_SCRIPT.'" target="'.LOCALIZER_MENU_FRAME.'" method="post">
-//            <input type="hidden" name="action" value="createLangFilesRec">
-//            <SELECT NAME="Id">';
-//
-//        $menu .= Display::_langMenuOptions($languages, $currId);
-//
-//        $menu .= '
-//            </select>
-//            <br>
-//            <input type="submit" value="'.getGS('create language files').'">
-//          </form>';
-//
-//        return $menu;
-//    }
-
-//    function createTOLLangMenu ($currId)
-//    {
-//        $languages = Localizer::GetLanguages();
-//
-//        $menu .= '
-//          <form name="selTOLLang" action="'._FRAME_SCRIPT_.'" target="'._PARENT_FRAME_.'" method="post">
-//            <SELECT NAME="TOL_Language">';
-//
-//        $menu .= Display::_langMenuOptions($languages, $currId);
-//
-//        $menu .= '
-//            </select>
-//            <br>
-//            <input type="submit" value="'.getGS('choose language').'">
-//          </form>';
-//
-//        return $menu;
-//    }
-
-
-//    function createIdLangMenu($currId) {
-//        $languages = Localizer::GetLanguages();
-//
-//        $menu .= '
-//          <form name="selTOLLang" action="'._FRAME_SCRIPT_.'" target="'._PARENT_FRAME_.'" method="post">
-//            translate to:
-//            <SELECT NAME="Id" onChange="submit()">';
-//
-//        $menu .= Display::_langMenuOptions($languages, $currId);
-//
-//        $menu .= '
-//            </select>
-//          </form>';
-//
-//        return $menu;
-//    }
-
-//    function manageLangButton() {
-//        $html = '
-//            <form action="'.LOCALIZER_PANEL_SCRIPT.'" target="'.LOCALIZER_PANEL_FRAME.'" method="post">
-//              <input type="hidden" name="action" value="manageLanguages">
-//              <input type="submit" value="'.getGS('manage languages').'">
-//            </form>';
-//
-//        return $html;
-//    }
-
-    
     function manageLangForm() {
-    	$localizer =& Localizer::getInstance();
-        $languages = $localizer->getLanguages();
+        $languages = Localizer::GetLanguages();
 
         $html .= '
             <table border="1">
@@ -199,34 +130,7 @@ class Display {
 //    }
 
     
-        
-//    function addEntry2XML($file, $pos, $amount) {
-//        // check input
-//        if (!isInt($amount)) {
-//            return getGS('go').' <a href="JavaScript:history.back()">'.getGS('back').'</a> '.getGS('and enter a positive integer value');
-//        }
-//
-//        $html .= '
-//            <form action="index.php" target="'.LOCALIZER_PANEL_FRAME.'" method="post">
-//             <table border="0">
-//              <input type="hidden" name="action" value="addEntry2XML">
-//              <input type="hidden" name="Id" value="'.$file['Id'].'">
-//              <input type="hidden" name="base" value="'.$file['base'].'">
-//              <input type="hidden" name="dir" value="'.$file['dir'].'">
-//              <input type="hidden" name="pos" value="'.$pos.'">';
-//
-//        for($n=1; $n<=$amount; $n++) {
-//            $html .= "<tr><td><input name='newKey[$n]' size='50'></td></tr>";
-//        }
-//
-//        $html .=
-//            '<tr><td><input type="submit" value="'.getGS('save to file').'"></td></tr>
-//             </table>
-//            </form>';
-//    	return $html;
-//    }
-
-    
+            
     function newLangFilePref($dir) {
         // at first check if default files already exists
         $handle = opendir ($dir);
