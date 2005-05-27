@@ -3,8 +3,8 @@ require_once('PEAR.php');
 require_once('DB.php');
 require_once('File.php');
 require_once('File/Find.php');
-require_once('XML/Serializer.php');
-require_once('XML/Unserializer.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/include/XML_Serializer/Serializer.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/include/XML_Serializer/Unserializer.php');
 
 require_once('display.inc.php');
 require_once('helpfunctions.php');
