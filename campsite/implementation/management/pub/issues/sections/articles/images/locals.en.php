@@ -14,9 +14,8 @@ regGS("Please enter a description for the image.", "Please enter a description f
 regGS("You must select an image file to upload.", "You must select an image file to upload.:en");
 regGS("There are currently no images associated with this article.", "There are currently no images associated with this article.:en");
 regGS('Click one of the "Add Image" links above to add one.', 'Click one of the "Add Image" links above to add one.:en');
-regGS('Are you sure you want to remove the image \\\'$1\\\' from the article?',
-	  'Are you sure you want to remove the image \\\'$1\\\' from the article?');
-regGS('Are you sure you want to delete the image \\\'$1\\\'?','Are you sure you want to delete the image \\\'$1\\\'?');
+regGS("Are you sure you want to remove the image \\\'$1\\\' from the article?", "Are you sure you want to remove the image \\\'$1\\\' from the article?");
+regGS("Are you sure you want to delete the image \\\'$1\\\'?","Are you sure you want to delete the image \\\'$1\\\'?");
 
 // -- edit.m4
 regGS("Change image information","Change image information:en");
