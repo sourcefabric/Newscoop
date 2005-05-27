@@ -121,6 +121,15 @@ class LocalizerLanguage {
 
 
     /**
+     * Return the total number of strings in the translation table.
+     * @return int
+     */
+    function getNumStrings() {
+    	return count($this->m_translationTable);
+    } // fn getNumStrings
+    
+    
+    /**
      * Get the language code that is in the form <two_letter_language_code>_<english_name_of_language>.
      *
      * @return string
@@ -182,11 +191,6 @@ class LocalizerLanguage {
 	function getTranslationTable() {
 		return $this->m_translationTable;
 	}
-	
-	
-//	function allTranslated() {
-//		return $this->m_status;
-//	}
 	
 	
 	/**
@@ -472,23 +476,64 @@ class LocalizerLanguage {
         $defaultLanguage->loadXmlFile();
         $defaultTranslationTable = $defaultLanguage->getTranslationTable();
     	$count = 0;
+    	$modified = false;
     	foreach ($defaultTranslationTable as $key => $value) {
-    		//echo "move $key to $count<br>";
-    		$this->moveString($key, $count);
+    		if ($this->getPosition($key) != $count) {
+    			$this->moveString($key, $count);
+    			$modified = true;
+    		}
     		$count++;
     	}
-    }
+    	return $modified;
+    } // fn fixPositions
+    
+    
+    /**
+     * Sync with the default language file.  This means
+     * adding any missing strings and fixing the positions of the strings to 
+     * be the same as the default language file.
+     */
+    function syncToDefault() {
+        $defaultLanguage =& new LocalizerLanguage($this->m_prefix, $this->m_directory, LOCALIZER_DEFAULT_LANG);
+        $defaultLanguage->loadXmlFile();
+        $defaultTranslationTable = $defaultLanguage->getTranslationTable();
+    	$count = 0;
+    	$modified = false;
+    	foreach ($defaultTranslationTable as $key => $value) {
+    		if (!isset($this->m_translationTable[$key])) {
+    			$this->addString($key, '', $count);
+    			$modified = true;
+    		}
+    		$count++;
+    	}
+    	return ($this->fixPositions() || $modified);
+    } // fn syncToDefault
+    
+    
+    /**
+     * Find the keys/values that match the given keyword.
+     *
+     * @param string p_keyword
+     *
+     * @return array
+     */
+    function search($p_keyword) {
+    	$matches = array();
+    	foreach ($this->m_translationTable as $key => $value) {
+    		if (empty($p_keyword) || stristr($key, $p_keyword) || stristr($value, $p_keyword)) {
+    			$matches[$key] = $value;
+    		}
+    	}
+    	return $matches;
+    } // fn search
     
     
     /**
      * Load a language file of the given type.
      *
-     * @param string p_prefix
-     *
-     * @param string p_directory
-     *
      * @param string p_type
      *		If not specified, it will use the current mode.
+     *
      * @return boolean
      */
     function loadFile($p_type = null) {
@@ -501,8 +546,42 @@ class LocalizerLanguage {
     	elseif (!empty($this->m_mode)) {
     		return $this->loadFile($this->m_mode);
     	}
+    	else {
+    		$mode = Localizer::GetMode();
+    		if (!is_null($mode)) {
+    			return $this->loadFile($mode);
+    		}    		
+    	}
     	return false;
     } // fn loadFile
+    
+    
+    /**
+     * Save the translation table as the given type.
+     *
+     * @param string p_type
+     *		If not specified, it will use the current mode.
+     *
+     * @return boolean
+     */
+    function saveFile($p_type = null) {
+    	if ($p_type == 'xml') {
+    		return $this->saveAsXml();
+    	}
+    	elseif ($p_type == 'php') {
+    		return $this->saveAsGs();
+    	}
+    	elseif (!empty($this->m_mode)) {
+    		return $this->saveFile($this->m_mode);
+    	}
+    	else {
+    		$mode = Localizer::GetMode();
+    		if (!is_null($mode)) {
+    			return $this->saveFile($mode);
+    		}
+    	}
+    	return false;    	
+    } // fn saveFile
     
     
     /**
@@ -558,7 +637,8 @@ class LocalizerLanguage {
         if (PEAR::isError(File::write($this->m_filePath, $data, FILE_MODE_WRITE))) {
         	echo "<br>error writing file<br>";
             return FALSE;
-        }        
+        }
+        File::close($this->m_filePath, FILE_MODE_WRITE);
         return $data;    	
     } // fn saveAsGs
     
@@ -576,8 +656,7 @@ class LocalizerLanguage {
         $this->m_filePath = $this->getFilePath('xml');
         if (file_exists($this->m_filePath)) {
             $xml = File::readAll($this->m_filePath);
-	        // Needed if same file should be read second time
-            File::rewind($this->m_filePath, FILE_MODE_READ);
+            File::close($this->m_filePath, FILE_MODE_READ);
 	        $unserializer =& new XML_Unserializer($this->m_unserializeOptions);
 	        $unserializer->unserialize($xml);
 	        $translationArray = $unserializer->getUnserializedData();
@@ -622,11 +701,15 @@ class LocalizerLanguage {
         }
         
         $this->m_filePath = $this->getFilePath('xml');
+        //echo "Saving as ".$this->m_filePath."<Br>";
         // write data to file        
         if (PEAR::isError(File::write($this->m_filePath, $xml, FILE_MODE_WRITE))) {
         	echo "<br>error writing file<br>";
             return FALSE;
         }        
+        
+        File::close($this->m_filePath, FILE_MODE_WRITE);
+        
         return $xml;
     } // fn saveAsXml
 
