@@ -13,12 +13,6 @@ require_once('LocalizerConfig.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
 require_once('LocalizerLanguage.php');
 
-/*
-echo "PATH_INFO: ".$_SERVER[PATH_INFO];
-echo "<br>FILE: ".__FILE__;
-echo "<br>DOCROOT: ".$_SERVER[DOCUMENT_ROOT];
-echo "<br>SCRIPT_NAME: ".$_SERVER[SCRIPT_NAME];    */
-
 class Localizer {
 
     var $m_languageDefs = null;
@@ -436,12 +430,9 @@ class Localizer {
         	// Load the language file
         	$source =& new LocalizerLanguage($p_prefix, $p_directory, $p_languageCode);
         	$source->loadXmlFile();
-        	//$source->dumpToHtml();
     		foreach ($p_data as $pair) {
-    			//print_r($pair);echo "<br>";
     			$source->updateString($pair['key'], $pair['key'], $pair['value']);
     		}
-    		//$source->dumpToHtml();
         	// Save the file
 			$source->saveAsXml();        	
         }
@@ -464,7 +455,6 @@ class Localizer {
 
         	$count = 0;
         	foreach ($defaultTranslationTable as $key => $value) {
-        		//echo "move $key to $count<br>";
         		$source->moveString($key, $count);
         		$count++;
         	}
@@ -494,11 +484,21 @@ class Localizer {
         	$source->loadXmlFile();
         	if (is_array($p_newKey)) {
         		foreach ($p_newKey as $key) {
-        			$source->addString($key, $key, $p_position);
+        			if ($Id == LOCALIZER_DEFAULT_LANG) {
+        				$source->addString($key, $key, $p_position);
+        			}
+        			else {
+        				$source->addString($key, '', $p_position);
+        			}
         		}
         	}
         	else {
-        		$source->addString($p_newKey, $p_newKey, $p_position);        		
+       			if ($Id == LOCALIZER_DEFAULT_LANG) {
+	        		$source->addString($p_newKey, $p_newKey, $p_position);
+       			}
+       			else {
+	        		$source->addString($p_newKey, '', $p_position);       				
+       			}
         	}
 			$source->saveAsXml();
         }
