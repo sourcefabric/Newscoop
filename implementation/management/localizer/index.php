@@ -160,31 +160,9 @@ case 'delete_unused_translation_strings':
     require_once("translate.php");    
     translationForm($_REQUEST);
 	break;
-	
-//case 'newLangFilePref':
-//    $output .= Display::newLangFilePref($_REQUEST['dir'], $_REQUEST['denied']);
-//	break;
-
-//case 'newLangFileForm':
-//    $output .= Display::newLangFileForm($_REQUEST['amount'], $_REQUEST['base'], $_REQUEST['dir']);
-//	break;
-
-//case 'storeNewLangFile':
-//    $file = array('dir'         => $_REQUEST['dir'],
-//                  'base'        => $_REQUEST['base'],
-//                  'Id'          => LOCALIZER_DEFAULT_LANG
-//            );
-//
-//    Localizer::AddStringAtPosition($_REQUEST['base'], $_REQUEST['dir'], 'new', $_REQUEST['newKey']);
-//	break;
-
-//case 'manageLanguages':
-//    $output .= Display::manageLangForm();
-//	break;
 
 } // switch
 
-//echo $error['msg'].$output;
 ?>
 </body>
 </html>
