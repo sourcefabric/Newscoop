@@ -4,12 +4,14 @@
  * @param array $p_request
  */
 function translationForm($p_request) {
-	if (!isset($p_request['localizer_target_language'])) {
-		$p_request['localizer_target_language'] = LOCALIZER_DEFAULT_LANG;
-	}
-	if (!isset($p_request['localizer_source_language'])) {
+	$localizerTargetLanguage = Input::Get('localizer_target_language', 'string', LOCALIZER_DEFAULT_LANG, true);
+//	if (!isset($p_request['localizer_target_language'])) {
+//		$p_request['localizer_target_language'] = LOCALIZER_DEFAULT_LANG;
+//	}
+	$localizerSourceLanguage = Input::Get('localizer_source_language', 'string', '', true);
+	if (empty($localizerSourceLanguage)) {
 		$tmpLanguage =& new LocalizerLanguage(null, null, $p_request['TOL_Language']);
-		$p_request['localizer_source_language'] = $tmpLanguage->getLocalizerLanguageCode();
+		$localizerSourceLanguage = $tmpLanguage->getLocalizerLanguageCode();
 	}
 	
 	$directory = $p_request['dir'];
@@ -25,8 +27,8 @@ function translationForm($p_request) {
 
 	// Load the language files.
 	//echo "Base: $base, Directory: $directory<br>";
-	$sourceLang =& new LocalizerLanguage($base, $directory, $p_request['localizer_source_language']);
-	$targetLang =& new LocalizerLanguage($base, $directory, $p_request['localizer_target_language']);
+	$sourceLang =& new LocalizerLanguage($base, $directory, $localizerSourceLanguage);
+	$targetLang =& new LocalizerLanguage($base, $directory, $localizerTargetLanguage);
 	$defaultLang =& new LocalizerLanguage($base, $directory, LOCALIZER_DEFAULT_LANG);
 	
 	// If the language files do not exist, create them.
@@ -53,8 +55,9 @@ function translationForm($p_request) {
     }
     
     $defaultStrings = $defaultLang->getTranslationTable();
-    if (!empty($p_request['search_string'])) {
-    	$sourceStrings = $sourceLang->search($p_request['search_string']);
+    $searchString = Input::Get('search_string', 'string', '', true);
+    if (!empty($searchString)) {
+    	$sourceStrings = $sourceLang->search($searchString);
     }
     else {
     	$sourceStrings = $sourceLang->getTranslationTable();
@@ -65,8 +68,8 @@ function translationForm($p_request) {
 	// Build the drop-down menu for selecting which section of the interface to translate.
 	$screens = array();
 	$screens[] = "";
-	$screens["/"] = getGS("Home");
 	$screens["/globals"] = getGS("Globals");
+	$screens["/"] = getGS("Home");
 	$screens["/pub"] = getGS("Publications");
 	$screens["/pub/issues"] = getGS("Issues");
 	$screens["/pub/issues/sections"] = getGS("Sections");
@@ -86,6 +89,12 @@ function translationForm($p_request) {
 	$screens["/u_types"] = getGS("User Types");
 	$screens["/users/subscriptions"] = getGS("User Subscriptions");
 	$screens["/users/subscriptions/sections"] = getGS("User Subscriptions Sections");			
+	
+	// Whether to show translated strings or not.
+	$hideTranslated = '';
+    if (isset($p_request['hide_translated'])) { 
+    	$hideTranslated = "CHECKED";
+    } 
 	?>
 	<table width="100%">
 	<tr>
@@ -96,7 +105,27 @@ function translationForm($p_request) {
 	    <INPUT TYPE="hidden" name="action" value="translate">
 	    <INPUT TYPE="hidden" name="base" value="<?php echo $base; ?>">
 	    <INPUT TYPE="hidden" name="localizer_lang_id" value="<?php echo $targetLang->getLocalizerLanguageCode(); ?>">
+	    <input type="hidden" name="search_string" value="<?php echo htmlspecialchars($searchString); ?>">
 		<tr>
+			<td>
+				<table>
+				<tr>
+					<td>
+						<?php putGS('Screen:'); ?>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<?PHP
+						$extras = ' onchange="this.form.submit();" ';
+						$extras .= ' class="input_select"';
+						CampsiteInterface::CreateSelect('dir', $screens, $screenDropDownSelection, $extras, true);
+						?>
+					</td>
+				</tr>
+				</table>
+			</td>
+
 			<td>
 				<table>
 				<tr>
@@ -131,37 +160,12 @@ function translationForm($p_request) {
 				</table>
 			</td>
 
-			<td>
-				<table>
-				<tr>
-					<td>
-						<?php putGS('Screen:'); ?>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<?PHP
-						$extras = ' onchange="this.form.submit();" ';
-						$extras .= ' class="input_select"';
-						CampsiteInterface::CreateSelect('dir', $screens, $screenDropDownSelection, $extras, true);
-						?>
-					</td>
-				</tr>
-				</table>
-			</td>
 		</tr>
 		<tr>
 			<td align="center" colspan="3">
 				<table>
 				<tr>
 					<td>
-						<?php
-						// submit button will override hidden input field.
-						$hideTranslated = "";
-			            if (isset($p_request['hide_translated'])) { 
-			            	$hideTranslated = "CHECKED";
-			            } 
-						?>
 			           	<input type="checkbox" name="hide_translated" value="" <?php echo $hideTranslated; ?> class="input_checkbox" onchange="this.form.submit();"><?php putGS('Hide translated strings?'); ?>
 					</td>					
 				</tr>
@@ -182,6 +186,9 @@ function translationForm($p_request) {
 	        <input type="hidden" name="action" value="translate">
 	        <input type="hidden" name="base" value="<?php echo $base; ?>">
 	        <input type="hidden" name="dir" value="<?php echo $screenDropDownSelection; ?>">
+	        <?php if (!empty($hideTranslated)) { ?>
+	        <input type="hidden" name="hide_translated" value="on">
+	        <?php } ?>
 	        <input type="hidden" name="localizer_source_language" value="<?php echo $sourceLang->getLocalizerLanguageCode(); ?>">
 	        <input type="hidden" name="localizer_target_language" value="<?php echo $targetLang->getLocalizerLanguageCode(); ?>">
 			<tr>
@@ -190,7 +197,7 @@ function translationForm($p_request) {
 				</td>
 				
 				<td style="padding-left: 10px;">
-					<input type="text" name="search_string" value="<?php if (isset($p_request['search_string'])) { echo $p_request['search_string']; } ?>" class="input_text" size="50">
+					<input type="text" name="search_string" value="<?php echo $searchString; ?>" class="input_text" size="50">
 				</td>
 
 				<td width="1%" nowrap>
@@ -215,6 +222,9 @@ function translationForm($p_request) {
         <input type="hidden" name="action" value="add_missing_translation_strings">
         <input type="hidden" name="base" value="<?php echo $base; ?>">
         <input type="hidden" name="dir" value="<?php echo $screenDropDownSelection; ?>">
+        <?php if (!empty($hideTranslated)) { ?>
+        <input type="hidden" name="hide_translated" value="on">
+        <?php } ?>
         <input type="hidden" name="localizer_source_language" value="<?php echo $sourceLang->getLocalizerLanguageCode(); ?>">
         <input type="hidden" name="localizer_target_language" value="<?php echo $targetLang->getLocalizerLanguageCode(); ?>">
 		<tr>
@@ -250,6 +260,9 @@ function translationForm($p_request) {
         <input type="hidden" name="action" value="delete_unused_translation_strings">
         <input type="hidden" name="base" value="<?php echo $base; ?>">
         <input type="hidden" name="dir" value="<?php echo $screenDropDownSelection; ?>">
+        <?php if (!empty($hideTranslated)) { ?>
+        <input type="hidden" name="hide_translated" value="on">
+        <?php } ?>
         <input type="hidden" name="localizer_source_language" value="<?php echo $sourceLang->getLocalizerLanguageCode(); ?>">
         <input type="hidden" name="localizer_target_language" value="<?php echo $targetLang->getLocalizerLanguageCode(); ?>">
 		<tr>
@@ -284,17 +297,14 @@ function translationForm($p_request) {
     <INPUT TYPE="hidden" name="action" value="save_translation">
     <INPUT TYPE="hidden" name="base" value="<?php echo LOCALIZER_PREFIX; ?>">
     <INPUT TYPE="hidden" name="dir" value="<?php echo $screenDropDownSelection; ?>">
+    <?php if (!empty($hideTranslated)) { ?>
+    <input type="hidden" name="hide_translated" value="on">
+    <?php } ?>
     <INPUT TYPE="hidden" name="localizer_target_language" value="<?php echo $targetLang->getLocalizerLanguageCode(); ?>">
     <INPUT TYPE="hidden" name="localizer_source_language" value="<?php echo $sourceLang->getLocalizerLanguageCode(); ?>">
-    <INPUT TYPE="hidden" name="search_string" value="<?php if (!empty($p_request['search_string'])) { echo $p_request['search_string']; } ?>">
+    <INPUT TYPE="hidden" name="search_string" value="<?php echo $searchString; ?>">
 	<?PHP 
 	$foundUntranslatedString = false;
-	if (count($sourceStrings) <= 0) {
-		$foundUntranslatedString = true;
-		?>
-		<tr><td align="center" style="padding-top: 150px;"><?php putGS("No source strings found.");?> </td></tr>
-		<?php
-	}
 	$count = 0;
 	foreach ($sourceStrings as $sourceKey => $sourceValue) { 	
 	    if (!empty($targetStrings[$sourceKey])) {
@@ -351,9 +361,13 @@ function translationForm($p_request) {
 	        if ($targetLang->getLocalizerLanguageCode() == LOCALIZER_DEFAULT_LANG) {     
 				echo "<td>";
 	            $fileparms = "localizer_target_language=".$targetLang->getLocalizerLanguageCode()
-	           		."localizer_source_language=".$sourceLang->getLocalizerLanguageCode()
+	           		."&localizer_source_language=".$sourceLang->getLocalizerLanguageCode()
 	            	."&base=".$base
-	            	."&dir=".urlencode($screenDropDownSelection);
+	            	."&dir=".urlencode($screenDropDownSelection)
+	            	."&search_string=".urlencode($searchString);
+	        	if (!empty($hideTranslated)) { 
+	        		$fileparms .= "&hide_translated=on";
+	        	}
 	
 	            if ($count == 0) {
 	            	// swap last and first entry
@@ -375,7 +389,7 @@ function translationForm($p_request) {
 	            	."&string=".urlencode($sourceKey);
 	            $moveUpLink    = LOCALIZER_PANEL_SCRIPT."?action=move_string&pos1=$count&pos2=$prev&$fileparms";
 	            $moveDownLink  = LOCALIZER_PANEL_SCRIPT."?action=move_string&pos1=$count&pos2=$next&$fileparms";
-    			if (empty($p_request['search_string'])) {
+    			if (empty($searchString)) {
 				?>
 	            <a href="<?php echo $moveUpLink; ?>" target="<?php echo LOCALIZER_PANEL_FRAME; ?>"><img src="<?php echo LOCALIZER_ICONS_DIR; ?>/up.png" border="0"></a>
 	            </td>
@@ -396,10 +410,29 @@ function translationForm($p_request) {
 	    }
 	    $count++;
 	}
-	if (!$foundUntranslatedString) {
-		?>
-		<tr><td valign="middle"><?php putGS("All strings have been translated."); ?></td></tr>
-		<?php	
+	if (count($sourceStrings) <= 0) {
+		if (empty($searchString)) {
+			?>
+			<tr><td align="center" style="padding-top: 150px;"><?php putGS("No source strings found.");?> </td></tr>
+			<?php
+		}
+		else {
+			?>
+			<tr><td align="center" style="padding-top: 150px;"><?php putGS("No matches found.");?> </td></tr>
+			<?php			
+		}
+	}
+	elseif (!$foundUntranslatedString) {
+		if (empty($searchString)) {
+			?>
+			<tr><td align="center" style="padding-top: 150px;"><?php putGS("All strings have been translated."); ?></td></tr>
+			<?php	
+		}
+		else {
+			?>
+			<tr><td align="center" style="padding-top: 150px;"><?php putGS("No matches found.");?> </td></tr>
+			<?php			
+		}
 	}
 	?>
 	</table>
