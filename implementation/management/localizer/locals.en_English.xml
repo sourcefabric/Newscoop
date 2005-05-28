@@ -2,12 +2,20 @@
 <language>
 	<Id>en_English</Id>
 	<item>
-		<key>success</key>
-		<value>success</value>
-	</item>
-	<item>
 		<key>fail</key>
 		<value>fail</value>
+	</item>
+	<item>
+		<key>No source strings found.</key>
+		<value>No source strings found.</value>
+	</item>
+	<item>
+		<key>Globals</key>
+		<value>Globals</value>
+	</item>
+	<item>
+		<key>success</key>
+		<value>success</value>
 	</item>
 	<item>
 		<key>edit</key>
@@ -20,14 +28,6 @@
 	<item>
 		<key>The following strings are not used:</key>
 		<value>The following strings are not used:</value>
-	</item>
-	<item>
-		<key>ok</key>
-		<value>ok</value>
-	</item>
-	<item>
-		<key>There are no source strings</key>
-		<value>There are no source strings</value>
 	</item>
 	<item>
 		<key>The following strings are missing from the translation files:</key>
@@ -50,20 +50,8 @@
 		<value>All strings have been translated.</value>
 	</item>
 	<item>
-		<key>After &quot;$1&quot;</key>
-		<value>After &quot;$1&quot;</value>
-	</item>
-	<item>
 		<key>Add</key>
 		<value>Add</value>
-	</item>
-	<item>
-		<key>At the end</key>
-		<value>At the end</value>
-	</item>
-	<item>
-		<key>At the beginning</key>
-		<value>At the beginning</value>
 	</item>
 	<item>
 		<key>Hide translated strings?</key>
@@ -102,32 +90,12 @@
 		<value>Localizer</value>
 	</item>
 	<item>
-		<key>$1 file already exist in $2</key>
-		<value>$1 file already exist in $2</value>
-	</item>
-	<item>
 		<key>edit &quot;$1&quot;</key>
 		<value>edit &quot;$1&quot;</value>
 	</item>
 	<item>
 		<key>edit &apos;$1&apos;</key>
 		<value>edit &apos;$1&apos;</value>
-	</item>
-	<item>
-		<key>create new language file $1</key>
-		<value>create new language file $1</value>
-	</item>
-	<item>
-		<key>create new language file in</key>
-		<value>create new language file in</value>
-	</item>
-	<item>
-		<key>entrys:</key>
-		<value>entrys:</value>
-	</item>
-	<item>
-		<key>$1 and $2 files already exist in $3</key>
-		<value>$1 and $2 files already exist in $3</value>
 	</item>
 	<item>
 		<key>name</key>
@@ -142,48 +110,8 @@
 		<value>code</value>
 	</item>
 	<item>
-		<key>manage languages</key>
-		<value>manage languages</value>
-	</item>
-	<item>
-		<key>choose language</key>
-		<value>choose language</value>
-	</item>
-	<item>
 		<key>cannot read $1</key>
 		<value>cannot read $1</value>
-	</item>
-	<item>
-		<key>go</key>
-		<value>go</value>
-	</item>
-	<item>
-		<key>back</key>
-		<value>back</value>
-	</item>
-	<item>
-		<key>and select file type</key>
-		<value>and select file type</value>
-	</item>
-	<item>
-		<key>and enter a positive integer value</key>
-		<value>and enter a positive integer value</value>
-	</item>
-	<item>
-		<key>save to file</key>
-		<value>save to file</value>
-	</item>
-	<item>
-		<key>create language files</key>
-		<value>create language files</value>
-	</item>
-	<item>
-		<key>Add new string:</key>
-		<value>Add new string:</value>
-	</item>
-	<item>
-		<key>at position:</key>
-		<value>at position:</value>
 	</item>
 	<item>
 		<key>Save</key>
@@ -196,5 +124,9 @@
 	<item>
 		<key>Screen:</key>
 		<value>Screen:</value>
+	</item>
+	<item>
+		<key>No matches found.</key>
+		<value>No matches found.</value>
 	</item>
 </language>
