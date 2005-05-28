@@ -343,13 +343,10 @@ class LocalizerLanguage {
     	// Does the old string exist?
     	if (!isset($this->m_translationTable[$p_oldKey])) {
     		return $this->addString($p_newKey, $p_value, $p_position);
-    		//echo "Not found: $p_oldKey<br>";
-    		//return true;
     	}
     	if ($p_oldKey == $p_newKey) {
 	    	// Just updating the value
     		if (!is_null($p_value) && ($p_value != $this->m_translationTable[$p_oldKey])) {
-		    	//echo "updating the value!!! key: $p_oldKey, old value: '".$this->m_translationTable[$p_oldKey]."', new value: '$p_value'<BR>";
     			$this->m_translationTable[$p_oldKey] = $p_value;
     			return true;
     		}
@@ -408,7 +405,6 @@ class LocalizerLanguage {
 		if ($startPosition == $p_endPosition) {
 			return true;
 		} 	
-		
     	// Delete the string in the old position
     	$result = $this->deleteStringAtPosition($startPosition);
     	if (!$result) {
@@ -416,11 +412,6 @@ class LocalizerLanguage {
     	}
     	$key = $result['key'];
     	$value = $result['value'];
-    	
-    	// Adjust the destination position because the old string was deleted.
-    	if ($startPosition < $p_endPosition) {
-    		$p_endPosition--;
-    	}
     	
     	// Add the string in the new position
     	$result = $this->addString($key, $value, $p_endPosition);
