@@ -381,5 +381,6 @@ regGS('OK', 'OK:en');
 regGS('Save changes', 'Save:en');
 regGS('Search', 'Search:en');
 regGS('Add new field','Add New Field:en');
+regGS('Add new', 'Add new:en');
 
 ?>
