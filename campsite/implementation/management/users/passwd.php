@@ -17,10 +17,10 @@ if ($editUser->getUserName() == '') {
 }
 
 ?>
-<FORM NAME="dialog" METHOD="POST" ACTION="do_passwd.php" >
+<form name="dialog" method="post" action="do_passwd.php" >
 <input type="hidden" name="uType" value="<?php echo $uType; ?>">
 <input type="hidden" name="User" value="<?php echo $editUser->getId(); ?>">
-<CENTER><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input" ALIGN="CENTER">
+<p><table border="0" cellspacing="0" cellpadding="6" class="table_input" align="center" width="95%">
 	<TR>
 		<TD COLSPAN="2">
 			<B><?php putGS("Change password"); ?></B>
@@ -53,8 +53,8 @@ if ($editUser->getUserName() == '') {
 		<INPUT TYPE="HIDDEN" NAME="User" VALUE="<?php echo $editUser->getId(); ?>">
 		<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save changes'); ?>">
 		<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='<?php echo "/$ADMIN/users/?" . get_user_urlparams(); ?>'">
-		</DIV>
-		</TD>
-	</TR>
-</TABLE></CENTER>
-</FORM>
+		</div>
+		</td>
+	</tr>
+</table></p>
+</form>
