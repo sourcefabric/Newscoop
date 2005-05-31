@@ -7,19 +7,10 @@ if (!isset($editUser) || gettype($editUser) != 'object' || $editUser->getUserNam
 }
 
 ?>
-<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" WIDTH="100%" class="table_list">
-	<tr class="table_list_header">
-		<td colspan="3" align="left">
-			 <?php putGS('User IP access list management'); ?>
-		</td>
-	</tr>
-	<tr class="table_list_header">
-		<td align="right" colspan="3" align="right">
-			<a href="ipadd.php?User=<?php echo $editUser->getId(); ?>">
-			<img src="/<?php echo $ADMIN; ?>/img/icon/add.png" BORDER="0"></a>&nbsp;
-			<a href="ipadd.php?User=<?php echo $editUser->getId(); ?>" ><B><?php putGS("Add new IP address group"); ?></b></a>
-		</td>
-	</tr>
+<table border="0" cellspacing="1" cellpadding="3" width="100%" class="table_list">
+<tr class="table_list_header">
+	<td colspan="3" align="left"><?php putGS('User IP access list management'); ?></td>
+</tr>
 <?php
 
 query ("SELECT Name FROM Users WHERE Id=" . $editUser->getId(), 'users');
@@ -55,5 +46,34 @@ if ($NUM_ROWS) {
 } else {
 ?><tr class="list_row_odd"><td colspan="3"><?php  putGS('No records.'); ?></td></tr>
 <?php } ?>
+<tr>
+	<td colspan="3" align="center">
+		<form name="dialog" method="POST" action="do_ipadd.php" >
+		<input type="hidden" name="User" value="<?php echo $editUser->getId(); ?>">
+		<table border="0" cellspacing="0" cellpadding="3" class="table_input" align="center" width="100%">
+			<tr>
+				<td align="right" width="1%" nowrap><?php  putGS("Start IP"); ?>:</td>
+				<td nowrap>
+				<input type="text" class="input_text" name="cStartIP1" size="3" maxlength="3">.
+				<input type="text" class="input_text" name="cStartIP2" size="3" maxlength="3">.
+				<input type="text" class="input_text" name="cStartIP3" size="3" maxlength="3">.
+				<input type="text" class="input_text" name="cStartIP4" size="3" maxlength="3">
+				</td>
+			</tr>
+			<tr>
+				<td align="right" ><?php  putGS("Number of addresses"); ?>:</TD>
+				<td><input type="text" class="input_text" name="cAddresses" size="10" maxlength="10"></td>
+			</tr>
+			<tr>
+				<td colspan="2" nowrap>
+				<div align="center">
+				<input type="submit" class="button" name="Save" value="<?php putGS('Add new'); ?>">
+				</div>
+				</td>
+			</tr>
+		</table>
+		</form>
+	</td>
+</tr>
 </table>
 <br>
