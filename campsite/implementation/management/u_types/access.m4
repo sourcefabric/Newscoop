@@ -82,6 +82,9 @@ B_DIALOG(<*Change user type permissions*>, <*POST*>, <*do_access.php*>)
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManageUsers"<?php  checkedIfY($uperm,'ManageUsers'); ?> class="input_checkbox">*>)
 		<?php  putGS('User may add/change user accounts and passwords'); ?>
 	E_DIALOG_INPUT
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManageReaders"<?php  checkedIfY($uperm,'ManageReaders'); ?> class="input_checkbox">*>)
+		<?php  putGS('User may add/change subscribers accounts and passwords'); ?>
+	E_DIALOG_INPUT
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cDeleteUsers"<?php  checkedIfY($uperm,'DeleteUsers'); ?> class="input_checkbox">*>)
 		<?php  putGS('User may delete user accounts'); ?>
 	E_DIALOG_INPUT
