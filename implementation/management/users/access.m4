@@ -89,6 +89,9 @@ B_DIALOG(<*Edit user account permissions*>, <*POST*>, <*do_access.php*>)
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cDeleteUsers" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'DeleteUsers'); ?>>*>)
 		<?php  putGS('User may delete user accounts'); ?>
 	E_DIALOG_INPUT
+	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManageReaders" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'ManageReaders'); ?>>*>)
+		<?php  putGS('User may add/change subscribers accounts and passwords'); ?>
+	E_DIALOG_INPUT
 	B_X_DIALOG_INPUT(<*<INPUT TYPE="CHECKBOX" NAME="cManageSubscriptions" class="input_checkbox"<?php  ifYthenCHECKED($uperm,'ManageSubscriptions'); ?>>*>)
 		<?php  putGS('User may manage user subscriptions'); ?>
 	E_DIALOG_INPUT

@@ -43,6 +43,7 @@ todefradio('cDeleteImage');
 todefradio('cManageTempl');
 todefradio('cDeleteTempl');
 todefradio('cManageUsers');
+todefradio('cManageReaders');
 todefradio('cManageSubscriptions');
 todefradio('cDeleteUsers');
 todefradio('cManageUserTypes');
@@ -114,6 +115,7 @@ B_MSGBOX(<*Updating user type permissions*>)
 			." ManageTempl='$cManageTempl', "
 			." DeleteTempl='$cDeleteTempl', "
 			." ManageUsers='$cManageUsers', "
+			." ManageReaders='$cManageReaders', "
 			." ManageSubscriptions='$cManageSubscriptions', "
 			." DeleteUsers='$cDeleteUsers', "
 			." ManageUserTypes='$cManageUserTypes', "
