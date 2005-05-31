@@ -20,7 +20,7 @@ if ($editUser->getUserName() == '') {
 <form name="dialog" method="post" action="do_passwd.php" >
 <input type="hidden" name="uType" value="<?php echo $uType; ?>">
 <input type="hidden" name="User" value="<?php echo $editUser->getId(); ?>">
-<p><table border="0" cellspacing="0" cellpadding="6" class="table_input" align="center" width="95%">
+<table border="0" cellspacing="0" cellpadding="6" class="table_input" align="center" width="95%">
 	<TR>
 		<TD COLSPAN="2">
 			<B><?php putGS("Change password"); ?></B>
@@ -56,5 +56,5 @@ if ($editUser->getUserName() == '') {
 		</div>
 		</td>
 	</tr>
-</table></p>
+</table>
 </form>
