@@ -7,16 +7,17 @@ if (!isset($editUser) || gettype($editUser) != 'object' || $editUser->getUserNam
 }
 
 ?>
-<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" WIDTH="100%" class="table_list">
+<table border="0" cellspacing="1" cellpadding="3" width="100%" class="table_list">
 <tr class="table_list_header">
 	<td colspan="5" align="left">
-		<?php putGS("Subscriptions"); ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</tr>
-<tr class="table_list_header">
-	<td colspan="5" align="right">
-		<?php $addURI = "/$ADMIN/users/subscriptions/add.php?User=".$editUser->getId(); ?>
-		<A HREF="<?php echo $addURI; ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/add.png" BORDER="0"></A>&nbsp;
-		<A HREF="<?php echo $addURI; ?>"><B><?php putGS("Add new subscription"); ?></B></A>
+		<table width="100%"><tr class="table_list_header">
+			<td align="left"><?php putGS("Subscriptions"); ?></td>
+			<td align="right" nowrap>
+				<?php $addURI = "/$ADMIN/users/subscriptions/add.php?User=".$editUser->getId(); ?>
+				<A HREF="<?php echo $addURI; ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/add.png" BORDER="0"></A>&nbsp;
+				<A HREF="<?php echo $addURI; ?>"><B><?php putGS("Add new"); ?></B></A>
+			</td>
+		</tr></table>
 	</td>
 </tr>
 <?php
