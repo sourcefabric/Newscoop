@@ -33,10 +33,15 @@ if ($userId > 0) {
 </table>
 <table border="0" align="center">
 <tr>
-	<td rowspan="3" valign="top" align="center">
+	<td rowspan="3" valign="top" align="center" height="1%">
 		<?php require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/info.php"); ?>
 	</td>
 <?php if ($userId > 0) { ?>
+	<td valign="top" height="1%">
+		<?php require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/passwd.php"); ?>
+	</td>
+</tr>
+<tr>
 	<td valign="top" height="1%">
 <?php
 if ($uType == 'Staff')
@@ -46,16 +51,11 @@ if ($uType == 'Readers')
 ?>
 	</td>
 </tr>
-<?php if ($uType == 'Readers') { ?>
-<tr>
-	<td valign="top" height="1%">
-	<?php require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/ipaccesslist.php"); ?>
-	</td>
-</tr>
-<?php } ?>
 <tr>
 	<td valign="top">
-		<?php require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/passwd.php"); ?>
+<?php if ($uType == 'Readers') { ?>
+	<?php require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/ipaccesslist.php"); ?>
+<?php } ?>
 	</td>
 <?php } ?>
 </tr>
