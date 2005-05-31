@@ -284,6 +284,7 @@ regGS('User may insert horizontal rules', 'User may insert horizontal rules:en')
 regGS('User may change the font color', 'User may change the font color:en');
 regGS('User may use superscripts', 'User may use superscripts:en');
 regGS('User may use subscripts', 'User may use subscripts:en');
+regGS('User may add/change subscribers accounts and passwords', 'User may add/change subscribers accounts and passwords:en');
 regGS('Updating user types permissions', 'Updating user types permissions:en');
 
 regGS('Adding new translation','Adding new translation:en');
