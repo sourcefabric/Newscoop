@@ -7,6 +7,7 @@ if (!isset($editUser) || gettype($editUser) != 'object' || $editUser->getUserNam
 }
 
 ?>
+<br>
 <table border="0" cellspacing="1" cellpadding="3" width="100%" class="table_list">
 <tr class="table_list_header">
 	<td colspan="5" align="left">
@@ -71,5 +72,5 @@ if ($NUM_ROWS) {
 <?php  } else { ?>
 <tr class="list_row_odd"><td colspan="5"><?php  putGS('No subscriptions.'); ?></td></tr>
 <?php  } ?>
-</TABLE>
+</table>
 <br>
