@@ -2,7 +2,7 @@ include ../../../make.env
 
 export PRIV_DIR2=$(PRIV_COMMON_DIR)/users
 
-MY_TARGETS=add.php access.php do_access.php
+MY_TARGETS=add.php access.php
 
 subsystem: all
 	$(MAKE) -C subscriptions
