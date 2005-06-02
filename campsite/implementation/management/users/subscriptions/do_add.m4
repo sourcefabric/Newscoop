@@ -79,7 +79,7 @@ B_MSGBOX(<*Adding subscription*>)
 	if($success_subs && ($bAddSect == 'Y')){
 		query ("SELECT DISTINCT Number FROM Sections where IdPublication=$cPub", 'q_sect');
 		$nr=$NUM_ROWS;
-		if ($nr ) $success_sect = 1;
+		$success_sect = 1;
 		for($loop=0;$loop<$nr;$loop++) {
 			fetchRowNum($q_sect);
 			$tval=encS(getNumVar($q_sect,0));
