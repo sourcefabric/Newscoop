@@ -40,7 +40,7 @@ B_DIALOG(<*Add new publication*>, <*POST*>, <*do_add.php*>)
 		<INPUT TYPE="TEXT" class="input_text" NAME="cName" SIZE="32" MAXLENGTH="255">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Site*>)
-		<INPUT TYPE="TEXT" class="input_text" NAME="cSite" VALUE="<?php  pencHTML($HTTP_HOST); ?>" SIZE="32" MAXLENGTH="255">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cSite" VALUE="<?php pencHTML($_SERVER['HTTP_HOST']); ?>" SIZE="32" MAXLENGTH="255">
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Default language*>)
 	    <SELECT NAME="cLanguage" class="input_select">
@@ -62,7 +62,7 @@ B_DIALOG(<*Add new publication*>, <*POST*>, <*do_add.php*>)
 	$nr=$NUM_ROWS;
 	for($loop=0;$loop<$nr;$loop++) {
 		fetchRow($q_urltype);
-		pcomboVar(getVar($q_urltype,'Id'),getVar($q_pub,'IdURLType'),getVar($q_urltype,'Name'));
+		pcomboVar(getVar($q_urltype,'Id'),0,getVar($q_urltype,'Name'));
 	}
 ?>dnl
 	    </SELECT>
@@ -86,7 +86,7 @@ B_DIALOG(<*Add new publication*>, <*POST*>, <*do_add.php*>)
 	}
 	for($loop=0;$loop<$nr;$loop++) {
 		fetchRow($q_unit);
-		pcomboVar(getVar($q_unit,'Unit'),getVar($q_pub,'TimeUnit'),getVar($q_unit,'Name'));
+		pcomboVar(getVar($q_unit,'Unit'),0,getVar($q_unit,'Name'));
 	}
 ?>dnl
 	    </SELECT>
