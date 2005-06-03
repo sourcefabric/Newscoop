@@ -72,6 +72,7 @@ function get_user_urlparams($userId = 0, $print_back_link = false, $strip_search
 	else
 		$params = & $params_search;
 
+	$url = '';
 	if ($userId > 0)
 		$url = 'User=' . $userId;
 	foreach ($params as $index=>$param) {
