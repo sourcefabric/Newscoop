@@ -7,7 +7,7 @@ B_DATABASE
     todefnum('Pub');
     todefnum('What');
     todefnum('Language');
-    todef('REQUEST_URI', $_SERVER[REQUEST_URI]);
+    todef('REQUEST_URI', $_SERVER['REQUEST_URI']);
 ?>dnl
 CHECK_BASIC_ACCESS
 <?php  if ($What != 0) { ?>dnl
