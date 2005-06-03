@@ -191,6 +191,7 @@ if ($editUser->getUserName() == '') {
 <?php query ("SELECT Name FROM UserTypes WHERE Reader = 'N' ORDER BY Name ASC", 'q'); ?>
 		<select name="Type" class="input_select">
 <?php
+	$Type = Input::Get('Type', 'string', '');
 	$nr = $NUM_ROWS;
 	for($loop = 0; $loop < $nr; $loop++) {
 		fetchRow($q);
