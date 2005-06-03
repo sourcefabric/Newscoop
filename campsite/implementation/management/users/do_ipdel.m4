@@ -30,7 +30,7 @@ E_HEADER
 
 <?php 
     todefnum('User');
-    todefnum('StartIP');
+    todef('StartIP');
     query ("SELECT (StartIP & 0xff000000) >> 24 as ip0, (StartIP & 0x00ff0000) >> 16 as ip1, (StartIP & 0x0000ff00) >> 8 as ip2, StartIP & 0x000000ff as ip3, Addresses FROM SubsByIP WHERE IdUser=$User and StartIP=$StartIP", 'ig');
     $onlyone= 0;
     if ($NUM_ROWS) {
