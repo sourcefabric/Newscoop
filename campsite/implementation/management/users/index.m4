@@ -32,8 +32,12 @@ E_HEADER_BUTTONS
 E_HEADER
 
 <?php 
-    todef('sUname');
-    todef('sType');
+    todef('sUname', '');
+    if (!isset($sUname))
+    	$sUname = '';
+    todef('sType', '');
+    if (!isset($sType))
+    	$sType = '';
 ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" WIDTH="100%">
 <TR>

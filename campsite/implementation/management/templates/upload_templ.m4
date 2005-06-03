@@ -19,9 +19,10 @@ E_STYLE
 
 B_BODY
 
+<?php todef('Path', ''); ?>
 B_HEADER(<*Upload template*>)
 B_HEADER_BUTTONS
-X_HBUTTON(<*Templates*>, <*templates/?Path=<?php  pencURL(decS($Path)); ?>*>)
+X_HBUTTON(<*Templates*>, <*templates/?Path=<?php pencURL(decS($Path)); ?>*>)
 X_HBUTTON(<*Home*>, <*home.php*>)
 X_HBUTTON(<*Logout*>, <*logout.php*>)
 E_HEADER_BUTTONS
@@ -33,7 +34,7 @@ E_HEADER
 ?>dnl
 
 B_CURRENT
-X_CURRENT(<*Path*>, <*<B><?php  pencHTML(decURL($Path)); ?></B>*>)
+X_CURRENT(<*Path*>, <*<B><?php pencHTML(decURL($Path)); ?></B>*>)
 E_CURRENT
 
 <P>
@@ -65,8 +66,8 @@ B_DIALOG(<*Upload template*>, <*POST*>, <*do_upload_templ.php*>, <*multipart/for
 	E_DIALOG_INPUT
 	B_DIALOG_BUTTONS
 		SUBMIT(<*Save*>, <*Save changes*>)
-<?php  todef('Back');
-    if ($Back != "") { ?>dnl
+<?php  todef('Back','');
+    if (isset($Back) && $Back != "") { ?>dnl
 		REDIRECT(<*Cancel*>, <*Cancel*>, <*<?php  p($Back); ?>*>)
 <?php  } else { ?>dnl
 		REDIRECT(<*Cancel*>, <*Cancel*>, <*<?php  pencHTML(decS($Path)); ?>*>)

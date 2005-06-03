@@ -31,27 +31,31 @@ E_HEADER_BUTTONS
 E_HEADER
 
 <?php 
-todef('cName');
-todef('cTitle');
-todef('cGender');
-todef('cAge');
-todef('cUName');
-todef('cPass1');
-todef('cPass2');
-todef('cEMail');
-todef('cCity');
-todef('cStrAddress');
-todef('cState');
-todef('cCountryCode');
-todef('cPhone');
-todef('cFax');
-todef('cContact');
-todef('cPhone2');
-todef('cPostalCode');
-todef('cEmployer');
-todef('cEmployerType');
-todef('cPosition');
-todef('cType');
+todef('cName', ' ');
+todef('cTitle', ' ');
+todef('cGender', ' ');
+todef('cAge', ' ');
+todef('cUName', ' ');
+todef('cPass1', '');
+if (!isset($cPass1))
+	$cPass1 = '';
+todef('cPass2', '');
+if (!isset($cPass2))
+	$cPass2 = '';
+todef('cEMail', ' ');
+todef('cCity', ' ');
+todef('cStrAddress', ' ');
+todef('cState', ' ');
+todef('cCountryCode', ' ');
+todef('cPhone', ' ');
+todef('cFax', ' ');
+todef('cContact', ' ');
+todef('cPhone2', ' ');
+todef('cPostalCode', ' ');
+todef('cEmployer', ' ');
+todef('cEmployerType', ' ');
+todef('cPosition', ' ');
+todef('cType', ' ');
 
 ?>
 
