@@ -1,17 +1,29 @@
 <?php    
+function LanguageMenu($languages, $currId) {
+	$options = '';
+    foreach($languages as $key=>$val) {
+        if ($currId == $val['Id']) {
+            $curr = 'selected';
+        } 
+        else {
+            $curr = '';
+        }
+        $options .= '<option value="'.$val['Id'].'" '.$curr.'>'.$val['NativeName'].'</option>';
+    }
+    return $options;
+}                
+
 /**
  * Creates a form for translation.
  * @param array $p_request
  */
 function translationForm($p_request) {
-	$localizerTargetLanguage = Input::Get('localizer_target_language', 'string', LOCALIZER_DEFAULT_LANG, true);
-//	if (!isset($p_request['localizer_target_language'])) {
-//		$p_request['localizer_target_language'] = LOCALIZER_DEFAULT_LANG;
-//	}
+    global $g_localizerConfig;
+	$localizerTargetLanguage = Input::Get('localizer_target_language', 'string', $g_localizerConfig['DEFAULT_LANGUAGE'], true);
 	$localizerSourceLanguage = Input::Get('localizer_source_language', 'string', '', true);
 	if (empty($localizerSourceLanguage)) {
 		$tmpLanguage =& new LocalizerLanguage(null, null, $p_request['TOL_Language']);
-		$localizerSourceLanguage = $tmpLanguage->getLocalizerLanguageCode();
+		$localizerSourceLanguage = $tmpLanguage->getLanguageId();
 	}
 	
 	$directory = $p_request['dir'];
@@ -29,7 +41,7 @@ function translationForm($p_request) {
 	//echo "Base: $base, Directory: $directory<br>";
 	$sourceLang =& new LocalizerLanguage($base, $directory, $localizerSourceLanguage);
 	$targetLang =& new LocalizerLanguage($base, $directory, $localizerTargetLanguage);
-	$defaultLang =& new LocalizerLanguage($base, $directory, LOCALIZER_DEFAULT_LANG);
+	$defaultLang =& new LocalizerLanguage($base, $directory, $g_localizerConfig['DEFAULT_LANGUAGE']);
 	
 	// If the language files do not exist, create them.
 	$mode = Localizer::GetMode();
@@ -63,7 +75,7 @@ function translationForm($p_request) {
     	$sourceStrings = $sourceLang->getTranslationTable();
     }
 	$targetStrings = $targetLang->getTranslationTable();
-	$languages = Localizer::GetLanguages($sourceLang->getMode());
+	$languages = Localizer::GetAllLanguages($sourceLang->getMode());
 	
 	// Build the drop-down menu for selecting which section of the interface to translate.
 	$screens = array();
@@ -104,7 +116,7 @@ function translationForm($p_request) {
 		<form action="index.php" method="post">
 	    <INPUT TYPE="hidden" name="action" value="translate">
 	    <INPUT TYPE="hidden" name="base" value="<?php echo $base; ?>">
-	    <INPUT TYPE="hidden" name="localizer_lang_id" value="<?php echo $targetLang->getLocalizerLanguageCode(); ?>">
+	    <INPUT TYPE="hidden" name="localizer_lang_id" value="<?php echo $targetLang->getLanguageId(); ?>">
 	    <input type="hidden" name="search_string" value="<?php echo htmlspecialchars($searchString); ?>">
 		<tr>
 			<td>
@@ -136,7 +148,7 @@ function translationForm($p_request) {
 				<tr>
 					<td>
 		        		<SELECT NAME="localizer_source_language" onchange="this.form.submit();" class="input_select">
-		        		<?php echo Display::LanguageMenu($languages, $p_request['localizer_source_language']); ?>
+		        		<?php echo LanguageMenu($languages, $p_request['localizer_source_language']); ?>
 		        		</select>
 					</td>
 				</tr>
@@ -153,7 +165,7 @@ function translationForm($p_request) {
 				<tr>
 					<td>
 				        <SELECT NAME="localizer_target_language" onChange="this.form.submit();" class="input_select">
-				    	<?php echo Display::LanguageMenu($languages, $p_request['localizer_target_language']); ?>
+				    	<?php echo LanguageMenu($languages, $p_request['localizer_target_language']); ?>
 				        </select>
 					</td>
 				</tr>
@@ -189,11 +201,11 @@ function translationForm($p_request) {
 	        <?php if (!empty($hideTranslated)) { ?>
 	        <input type="hidden" name="hide_translated" value="on">
 	        <?php } ?>
-	        <input type="hidden" name="localizer_source_language" value="<?php echo $sourceLang->getLocalizerLanguageCode(); ?>">
-	        <input type="hidden" name="localizer_target_language" value="<?php echo $targetLang->getLocalizerLanguageCode(); ?>">
+	        <input type="hidden" name="localizer_source_language" value="<?php echo $sourceLang->getLanguageId(); ?>">
+	        <input type="hidden" name="localizer_target_language" value="<?php echo $targetLang->getLanguageId(); ?>">
 			<tr>
 				<td width="1%" style="padding-left: 5px;">
-					<img src="<?php echo LOCALIZER_ICONS_DIR; ?>/preview.png">
+					<img src="<?php echo $g_localizerConfig['ICONS_DIR']; ?>/preview.png">
 				</td>
 				
 				<td style="padding-left: 10px;">
@@ -218,18 +230,18 @@ function translationForm($p_request) {
 	if ((count($missingStrings) > 0)  && ($screenDropDownSelection != '/globals')) {
 		?>
 		<table align="center" style="background-color: #EDFFDF; border: 1px solid #357654;" width="600px">
-        <form action="index.php" target="<?php echo LOCALIZER_PANEL_FRAME; ?>" method="post">
+        <form action="index.php" method="post">
         <input type="hidden" name="action" value="add_missing_translation_strings">
         <input type="hidden" name="base" value="<?php echo $base; ?>">
         <input type="hidden" name="dir" value="<?php echo $screenDropDownSelection; ?>">
         <?php if (!empty($hideTranslated)) { ?>
         <input type="hidden" name="hide_translated" value="on">
         <?php } ?>
-        <input type="hidden" name="localizer_source_language" value="<?php echo $sourceLang->getLocalizerLanguageCode(); ?>">
-        <input type="hidden" name="localizer_target_language" value="<?php echo $targetLang->getLocalizerLanguageCode(); ?>">
+        <input type="hidden" name="localizer_source_language" value="<?php echo $sourceLang->getLanguageId(); ?>">
+        <input type="hidden" name="localizer_target_language" value="<?php echo $targetLang->getLanguageId(); ?>">
 		<tr>
 			<td width="1%">
-				<img src="<?php echo LOCALIZER_ICONS_DIR; ?>/add.png">
+				<img src="<?php echo $g_localizerConfig['ICONS_DIR']; ?>/add.png">
 			</td>
 			
 			<td width="98%">
@@ -256,18 +268,18 @@ function translationForm($p_request) {
 	if ((count($unusedStrings) > 0) && ($screenDropDownSelection != '/globals')) {
 		?>
 		<table align="center" style="background-color: #FFE0DF; border: 1px solid #C51325; margin-top: 3px;" width="600px">
-        <form action="index.php" target="<?php echo LOCALIZER_PANEL_FRAME; ?>" method="post">
+        <form action="index.php" method="post">
         <input type="hidden" name="action" value="delete_unused_translation_strings">
         <input type="hidden" name="base" value="<?php echo $base; ?>">
         <input type="hidden" name="dir" value="<?php echo $screenDropDownSelection; ?>">
         <?php if (!empty($hideTranslated)) { ?>
         <input type="hidden" name="hide_translated" value="on">
         <?php } ?>
-        <input type="hidden" name="localizer_source_language" value="<?php echo $sourceLang->getLocalizerLanguageCode(); ?>">
-        <input type="hidden" name="localizer_target_language" value="<?php echo $targetLang->getLocalizerLanguageCode(); ?>">
+        <input type="hidden" name="localizer_source_language" value="<?php echo $sourceLang->getLanguageId(); ?>">
+        <input type="hidden" name="localizer_target_language" value="<?php echo $targetLang->getLanguageId(); ?>">
 		<tr>
 			<td width="1%">
-				<img src="<?php echo LOCALIZER_ICONS_DIR; ?>/delete.png">
+				<img src="<?php echo $g_localizerConfig['ICONS_DIR']; ?>/delete.png">
 			</td>
 			
 			<td width="98%">
@@ -291,24 +303,24 @@ function translationForm($p_request) {
 	}	
 	?>
 	<!-- Begin translated strings box -->
-	<div style="overflow: auto; width: 600px; height: 350px; border: 1px solid black; margin-top: 5px;">
-	<table border="0" align="left" width="100%">
+	<div style="overflow: auto; width: 90%; height: 350px; border: 1px solid black; margin-top: 5px;">
+	<table border="0" style="padding-left: 5px;">
 	<form action="index.php" method="post">
     <INPUT TYPE="hidden" name="action" value="save_translation">
-    <INPUT TYPE="hidden" name="base" value="<?php echo LOCALIZER_PREFIX; ?>">
+    <INPUT TYPE="hidden" name="base" value="<?php echo $g_localizerConfig['FILENAME_PREFIX']; ?>">
     <INPUT TYPE="hidden" name="dir" value="<?php echo $screenDropDownSelection; ?>">
     <?php if (!empty($hideTranslated)) { ?>
     <input type="hidden" name="hide_translated" value="on">
     <?php } ?>
-    <INPUT TYPE="hidden" name="localizer_target_language" value="<?php echo $targetLang->getLocalizerLanguageCode(); ?>">
-    <INPUT TYPE="hidden" name="localizer_source_language" value="<?php echo $sourceLang->getLocalizerLanguageCode(); ?>">
+    <INPUT TYPE="hidden" name="localizer_target_language" value="<?php echo $targetLang->getLanguageId(); ?>">
+    <INPUT TYPE="hidden" name="localizer_source_language" value="<?php echo $sourceLang->getLanguageId(); ?>">
     <INPUT TYPE="hidden" name="search_string" value="<?php echo $searchString; ?>">
 	<?PHP 
 	$foundUntranslatedString = false;
 	$count = 0;
 	foreach ($sourceStrings as $sourceKey => $sourceValue) { 	
 	    if (!empty($targetStrings[$sourceKey])) {
-	        $targetValueDisplay = Display::ToWebString($targetStrings[$sourceKey], 0, 1, 0);
+	        $targetValueDisplay = str_replace('"', '&#34;', $targetStrings[$sourceKey]);
 	        $pre  = '';
 	        $post = '';
 	    } else {
@@ -333,35 +345,34 @@ function translationForm($p_request) {
 	    	// Display string
 	    	?>
 	        <tr>
-	        	<td style="padding-top: 7px;">
+	        	<td style="padding-top: 7px;" width="500px">
 				<?php 
             	// If the string exists in the source language, display that
 	            if (!empty($sourceValue)) {
 	            	?>
-	                <b><?php echo $sourceLang->getLocalizerLanguageCode(); ?>:</b> <?php echo $pre.htmlspecialchars($sourceValue).$post; ?>
+	                <b><?php echo $sourceLang->getLanguageId(); ?>:</b> <?php echo $pre.htmlspecialchars($sourceValue).$post; ?>
 	                <?php
 	            } 
 	            // Otherwise, display it in the default language.
 	            else {
 	            	?>
-	                <b><?php echo LOCALIZER_DEFAULT_LANG; ?>:</b> <?php echo $pre.$defaultStrings[$sourceKey].$post; ?>
+	                <b><?php echo $g_localizerConfig['DEFAULT_LANGUAGE']; ?>:</b> <?php echo $pre.$defaultStrings[$sourceKey].$post; ?>
 	                <?php
 	            }
 				?>
 				</td>
 			</tr>
 			<tr>
-			<td>
-		        <input name="data[<?php echo $count; ?>][key]" type="hidden" value="<?php echo $sourceKeyDisplay; ?>">
-		        <input name="data[<?php echo $count; ?>][value]" type="text" size="<?php echo LOCALIZER_INPUT_SIZE; ?>" value="<?php echo $targetValueDisplay; ?>" class="input_text">
-	        </td>
+				<td>
+			        <input name="data[<?php echo $count; ?>][key]" type="hidden" value="<?php echo $sourceKeyDisplay; ?>">
+			        <input name="data[<?php echo $count; ?>][value]" type="text" size="<?php echo $g_localizerConfig['INPUT_SIZE']; ?>" value="<?php echo $targetValueDisplay; ?>" class="input_text">
+		        </td>
 	        
 			<?php
 			// default language => can change keys
-	        if ($targetLang->getLocalizerLanguageCode() == LOCALIZER_DEFAULT_LANG) {     
-				echo "<td>";
-	            $fileparms = "localizer_target_language=".$targetLang->getLocalizerLanguageCode()
-	           		."&localizer_source_language=".$sourceLang->getLocalizerLanguageCode()
+	        if ($targetLang->getLanguageId() == $g_localizerConfig['DEFAULT_LANGUAGE']) {     
+	            $fileparms = "localizer_target_language=".$targetLang->getLanguageId()
+	           		."&localizer_source_language=".$sourceLang->getLanguageId()
 	            	."&base=".$base
 	            	."&dir=".urlencode($screenDropDownSelection)
 	            	."&search_string=".urlencode($searchString);
@@ -385,22 +396,23 @@ function translationForm($p_request) {
 	            	$next = $count+1;
 	            }
 	
-	            $removeLink    = LOCALIZER_PANEL_SCRIPT."?action=remove_string&pos=$count&$fileparms"
+	            $removeLink    = "?action=remove_string&pos=$count&$fileparms"
 	            	."&string=".urlencode($sourceKey);
-	            $moveUpLink    = LOCALIZER_PANEL_SCRIPT."?action=move_string&pos1=$count&pos2=$prev&$fileparms";
-	            $moveDownLink  = LOCALIZER_PANEL_SCRIPT."?action=move_string&pos1=$count&pos2=$next&$fileparms";
+	            $moveUpLink    = "?action=move_string&pos1=$count&pos2=$prev&$fileparms";
+	            $moveDownLink  = "?action=move_string&pos1=$count&pos2=$next&$fileparms";
     			if (empty($searchString)) {
 				?>
-	            <a href="<?php echo $moveUpLink; ?>" target="<?php echo LOCALIZER_PANEL_FRAME; ?>"><img src="<?php echo LOCALIZER_ICONS_DIR; ?>/up.png" border="0"></a>
+				<td>
+	            <a href="<?php echo $moveUpLink; ?>"><img src="<?php echo $g_localizerConfig['ICONS_DIR']; ?>/up.png" border="0"></a>
 	            </td>
 	           	<td>
-	            <a href="<?php echo $moveDownLink; ?>" target="<?php echo LOCALIZER_PANEL_FRAME; ?>"><img src="<?php echo LOCALIZER_ICONS_DIR; ?>/down.png" border="0"></a>
+	            <a href="<?php echo $moveDownLink; ?>"><img src="<?php echo $g_localizerConfig['ICONS_DIR']; ?>/down.png" border="0"></a>
        	        </td>
        	        <?php
 	            }
 	            ?>
-	            <td>
-	            <a href="<?php echo $removeLink; ?>" onClick="return confirm('<?php putGS('Are you sure you want to delete this entry?'); ?>');" target="<?php echo LOCALIZER_PANEL_FRAME; ?>"><img src="<?php echo LOCALIZER_ICONS_DIR; ?>/delete.png" border="0" vspace="4"></a>
+	            <td align="left">
+	            <a href="<?php echo $removeLink; ?>" onClick="return confirm('<?php putGS('Are you sure you want to delete this entry?'); ?>');"><img src="<?php echo $g_localizerConfig['ICONS_DIR']; ?>/delete.png" border="0" vspace="4"></a>
 	            </td>
 				</tr>
 	            <?php 
