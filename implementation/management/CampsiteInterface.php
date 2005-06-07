@@ -10,7 +10,8 @@ class CampsiteInterface {
 	/**
 	 * Display the copyright notice and close the HTML page.
 	 */
-	function CopyrightNotice() {
+	function CopyrightNotice() 
+	{
 		global $Campsite;
 		?>
 		<TABLE width="100%" style="border-top: 1px solid black; margin-top: 10px;">
@@ -33,7 +34,8 @@ class CampsiteInterface {
 	 * Create a HTML SELECT drop down box.
 	 *
 	 */
-	function CreateSelect($p_name, $p_options, $p_selected = null, $p_extras ="", $p_valuesIncluded = false) {
+	function CreateSelect($p_name, $p_options, $p_selected = null, $p_extras ="", $p_valuesIncluded = false) 
+	{
 		?>
     	<select name="<?php echo $p_name ?>" <?php echo $p_extras ?>>
     	<?php
@@ -70,7 +72,8 @@ class CampsiteInterface {
 	 * @param string p_backLink
 	 *		I'm not entirely sure what this is for.  I put it in for backward compatibility.
 	 */
-	function ArticleLink($p_articleObj, $p_interfaceLanguageId, $p_targetFileName = "", $p_backLink = "") {
+	function ArticleLink($p_articleObj, $p_interfaceLanguageId, $p_targetFileName = "", $p_backLink = "") 
+	{
 		$str = '<A HREF="'.CampsiteInterface::ArticleUrl($p_articleObj, $p_interfaceLanguageId, $p_targetFileName, $p_backLink).'">';
 		return $str;
 	} // fn ArticleLink
@@ -89,9 +92,12 @@ class CampsiteInterface {
 	 *		Which file in the "articles" directory to call.
 	 *
 	 * @param string p_backLink
-	 *		I'm not entirely sure what this is for.  I put it in for backward compatibility.
+	 *		A URL to get back to the previous page the user was on.
+	 *
+	 * @param string p_extraParams
 	 */
-	function ArticleUrl($p_articleObj, $p_interfaceLanguageId, $p_targetFileName = "", $p_backLink = "") {
+	function ArticleUrl($p_articleObj, $p_interfaceLanguageId, $p_targetFileName = "", $p_backLink = "", $p_extraParams = null) 
+	{
 		global $ADMIN;
 		$str = "/$ADMIN/pub/issues/sections/articles/".$p_targetFileName
 			."?Pub=".$p_articleObj->getPublicationId()
@@ -102,7 +108,10 @@ class CampsiteInterface {
 			."&sLanguage=".$p_articleObj->getLanguageId();
 		if ($p_backLink != "") { 
 			$str .="&Back=".urlencode($p_backLink);
-		} 
+		}
+		if (!is_null($p_extraParams)) {
+		    $str .= $p_extraParams;
+		}
 		return $str;
 	} // fn ArticleUrl
 	
@@ -120,7 +129,8 @@ class CampsiteInterface {
 	 *
 	 * @return void
 	 */
-	function DisplayError($p_errorStr, $p_backLink = null, $popup = false) {
+	function DisplayError($p_errorStr, $p_backLink = null, $popup = false) 
+	{
 		global $ADMIN;
 		$script = $popup ? 'ad_popup.php' : 'ad.php';
 		if (is_array($p_errorStr)) {
@@ -160,7 +170,8 @@ class CampsiteInterface {
 	 *
 	 * @return void
 	 */
-	function ContentTop($p_title, $p_objArray, $p_includeLinks = true, $p_fValidate = false, $p_extraBreadcrumbs = null) {
+	function ContentTop($p_title, $p_objArray, $p_includeLinks = true, $p_fValidate = false, $p_extraBreadcrumbs = null) 
+	{
 		global $Campsite;
 		global $ADMIN;
 		$publicationObj = array_get_value($p_objArray, 'Pub', null);
