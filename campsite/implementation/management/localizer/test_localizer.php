@@ -52,16 +52,16 @@ $localizerLanguage->deleteStringAtPosition(2);
 $localizerLanguage->dumpToHtml();
 
 echo "Save to xml...<br>";
-$xml = $localizerLanguage->saveAsXml();
+$xml = $localizerLanguage->saveFile('xml');
 echo "<pre>".htmlspecialchars($xml)."</pre>";
 
 echo "Save as GS...<br>";
-$gs = $localizerLanguage->saveAsGs();
+$gs = $localizerLanguage->saveFile('gs');
 echo "<pre>".htmlspecialchars($gs)."</pre>";
 
 echo "Load XML...<br>";
 $xmlLang =& new LocalizerLanguage('locals', '/localizer', 'xx');
-$result = $xmlLang->loadXmlFile();
+$result = $xmlLang->loadFile('xml');
 if (!$result) {
 	echo "Error!  Could not load XML file.<br>";
 }
@@ -71,7 +71,7 @@ else {
 
 echo "<br>Load GS...<br>";
 $gsLang =& new LocalizerLanguage('locals', '/localizer', 'xx');
-$result = $gsLang->loadGsFile();
+$result = $gsLang->loadFile('gs');
 if (!$result) {
 	echo "Error!  Could not load GS file.<br>";
 }
@@ -90,4 +90,11 @@ if (!$gsLang->equal($xmlLang)) {
 else {
 	echo "Success! They are equal<br>";	
 }
+
+echo "Testing ability to get languages in the base directory...<br>";
+$languages = Localizer::GetLanguagesInDirectory('locals', '/');
+echo "<pre>";
+print_r($languages);
+echo "</pre>";
+
 ?>
