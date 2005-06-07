@@ -69,6 +69,41 @@ function pencHTML($s) {
 
 
 /**
+ * Compute the difference between two string times.
+ *
+ * @param string p_time1
+ *      Any string that can be converted with strtotime();
+ *
+ * @param string p_time2
+ *      (optional) Any string that can be converted with strtotime();
+ *      If not specified, the current time is used.
+ *
+ * @return array
+ *      An array of (days, hours, minutes, seconds)
+ */
+function camp_time_diff_str($p_time1, $p_time2 = null) {
+    // Convert the string times into absolute seconds
+    $p_time1 = strtotime($p_time1);
+    if (is_null($p_time2)) {
+        $p_time2 = time();
+    }
+    else {
+        $p_time2 = strtotime($p_time2);
+    }
+    
+    // Compute the absolute difference between the times.
+    $diffSeconds = abs($p_time1 - $p_time2);
+    $days = floor($diffSeconds/86400);
+    $diffSeconds -= ($days * 86400);
+	$hours = floor($diffSeconds/3600);
+	$diffSeconds -= $hours * 3600;
+	$minutes = floor($diffSeconds/60);
+	$diffSeconds -= $minutes * 60;
+	return array('days' => $days, 'hours' => $hours, 'minutes' => $minutes, 'seconds' => $seconds);
+} // fn camp_time_diff_str
+	
+
+/**
  * Return a value from the array, or if the value does not exist,
  * return the given default value.
  *
@@ -276,11 +311,11 @@ function decS($s) {
  *
  * @return void
  */
-function putGS($p_translateString) {
-	$args = func_get_args();
-	//array_unshift($args, $p_translateString);
-	echo call_user_func_array("getGS", $args);
-} // fn putGS
+//function putGS($p_translateString) {
+//	$args = func_get_args();
+//	//array_unshift($args, $p_translateString);
+//	echo call_user_func_array("getGS", $args);
+//} // fn putGS
 
 
 /**
@@ -292,39 +327,39 @@ function putGS($p_translateString) {
  *
  * @return string
  */
-function getGS($p_translateString) {
-	global $g_translationStrings, $TOL_Language;
-	$numFunctionArgs = func_num_args();
-	if (!isset($g_translationStrings[$p_translateString]) || ($g_translationStrings[$p_translateString]=='')) {
-		$translatedString = "$p_translateString (not translated)";
-	}
-	else {
-		$translatedString = $g_translationStrings[$p_translateString];
-	}
-	if ($numFunctionArgs > 1) {
-		for ($i = 1; $i < $numFunctionArgs; $i++){
-			$name = '$'.$i;
-			$val = func_get_arg($i);
-			$translatedString = str_replace($name, $val, $translatedString);
-		}
-	}
-	return $translatedString;
-} // fn getGS
-
-function regGS($key,$value) {
-	global $g_translationStrings;
-	if (isset($g_translationStrings[$key])) {
-		if ($key!='') {
-			print "The global string is already set in $_SERVER[PHP_SELF]: $key<BR>";
-		}
-	}
-	else{
-		if (substr($value,strlen($value)-3)==(":".$_REQUEST["TOL_Language"])){
-			$value=substr($value,0,strlen($value)-3);
-		}
-		$g_translationStrings[$key]=$value;
-	}
-} // fn regGS
+//function getGS($p_translateString) {
+//	global $g_translationStrings, $TOL_Language;
+//	$numFunctionArgs = func_num_args();
+//	if (!isset($g_translationStrings[$p_translateString]) || ($g_translationStrings[$p_translateString]=='')) {
+//		$translatedString = "$p_translateString (not translated)";
+//	}
+//	else {
+//		$translatedString = $g_translationStrings[$p_translateString];
+//	}
+//	if ($numFunctionArgs > 1) {
+//		for ($i = 1; $i < $numFunctionArgs; $i++){
+//			$name = '$'.$i;
+//			$val = func_get_arg($i);
+//			$translatedString = str_replace($name, $val, $translatedString);
+//		}
+//	}
+//	return $translatedString;
+//} // fn getGS
+//
+//function regGS($key,$value) {
+//	global $g_translationStrings;
+//	if (isset($g_translationStrings[$key])) {
+//		if ($key!='') {
+//			print "The global string is already set in $_SERVER[PHP_SELF]: $key<BR>";
+//		}
+//	}
+//	else{
+//		if (substr($value,strlen($value)-3)==(":".$_REQUEST["TOL_Language"])){
+//			$value=substr($value,0,strlen($value)-3);
+//		}
+//		$g_translationStrings[$key]=$value;
+//	}
+//} // fn regGS
 
 
 function dSystem($s) {
@@ -349,22 +384,17 @@ function ifYthenCHECKED($q,$f) {
 	}
 }
 
-function selectLanguageFile($path, $name) {
-//	if (!isset($_REQUEST["TOL_Language"])){
-//		$_REQUEST["TOL_Language"] = 'en';
-//	}
-//	return "$path/$name.".$_REQUEST["TOL_Language"].".php";
-    require_once('localizer/Localizer.php');
-    //require_once('localizer/helpfunctions.php');
-    Localizer::LoadLanguageFilesAbs($path, $name);
-} // fn selectLanguageFile
 
-function pLanguageCode() {
-	if (!isset($_REQUEST["TOL_Language"])){
-		$_REQUEST["TOL_Language"] = 'en';
-	}
-	print $_REQUEST["TOL_Language"];
-} // fn pLanguageCode
+/**
+ * Load the global and local language files.
+ * @param string p_path
+ * @param string p_name
+ * @return void
+ */
+function selectLanguageFile($p_path, $p_name) {
+    require_once('localizer/Localizer.php');
+    Localizer::LoadLanguageFilesAbs($p_path, $p_name);
+} // fn selectLanguageFile
 
 
 function decSlashes($s) {
