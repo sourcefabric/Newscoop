@@ -57,6 +57,7 @@ $articlePublishObj =& new ArticlePublish($Article, $sLanguage, $publishTime);
 if ($articlePublishObj->exists()) {
 	$articlePublishObj->delete();
 }
-header("Location: /$ADMIN/pub/issues/sections/articles/autopublish.php?Pub=$Pub&Issue=$Issue&Section=$Section&Article=$Article&Language=$Language&sLanguage=$sLanguage");
+$redirect = CampsiteInterface::ArticleUrl($articleObj, $Language, "autopublish.php", $BackLink);
+header("Location: $redirect");
 exit;
 ?>
