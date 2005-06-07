@@ -185,3 +185,7 @@ hr {
 .action_link_container {
 	padding-left: 8px;
 }
+
+.article_locked {
+    background-color: #FFDFDF;
+}
