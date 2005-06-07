@@ -307,6 +307,30 @@ class Article extends DatabaseObject {
 	
 	
 	/**
+	 * Get the time the article was locked.
+	 *
+	 * @return string
+	 *		In the form of YYYY-MM-DD HH:MM:SS
+	 */
+	function getLockTime() {
+		return $this->getProperty('LockTime');
+	} // fn getLockTime
+
+	
+	/**
+	 * Return TRUE if the article is locked, FALSE if it isnt.
+	 * @return boolean
+	 */
+	function isLocked() {
+	    if ( ($this->m_data['LockUser'] == 0) && ($this->m_data['LockTime'] == 0) ) {
+	        return false;
+	    } else {
+	        return true;
+	    }
+	} // fn isLocked
+	
+	
+	/**
 	 * Lock the article with the given User ID.
 	 *
 	 * @param int p_userId
@@ -796,17 +820,6 @@ class Article extends DatabaseObject {
 		return parent::setProperty('LockUser', $p_value);
 	} // fn setLockedByUser
 	
-	
-	/**
-	 * Get the time the article was locked.
-	 *
-	 * @return string
-	 *		In the form of YYYY-MM-DD HH:MM:SS
-	 */
-	function getLockTime() {
-		return $this->getProperty('LockTime');
-	} // fn getLockTime
-
 	
 	/**
 	 * @return string
