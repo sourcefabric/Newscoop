@@ -53,6 +53,18 @@ $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj,
 CampsiteInterface::ContentTop('Change article status', $topArray);
 ?>
 
+<table>
+<tr>
+	<td>
+		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
+		<TR>
+			<TD><A HREF="edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/back.png" BORDER="0"></A></TD>
+			<TD><A HREF="edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>" ><B><?php  putGS('Back to article details'); ?></B></A></TD>
+		</TR>
+		</TABLE>
+	</td>
+</tr>
+</table>
 <p>
 <CENTER>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" ALIGN="CENTER" class="table_input">
