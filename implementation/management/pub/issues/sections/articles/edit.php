@@ -15,7 +15,7 @@ $Language = Input::Get('Language', 'int', 0);
 $sLanguage = Input::Get('sLanguage', 'int', 0);
 $Article = Input::Get('Article', 'int', 0);
 $Saved = Input::Get('Saved', 'int', 0, true);
-$LockOk = Input::Get('LockOk', 'string', 0, true);
+$Unlock = Input::Get('Unlock', 'string', false, true);
 
 if (!Input::IsValid()) {
 	CampsiteInterface::DisplayError(array('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
@@ -49,7 +49,8 @@ if ($articleObj->userCanModify($User)) {
 	// Automatic unlocking
 	//
 	// If the article hasnt been touched in 24 hours
-	if ( (time() - strtotime($articleObj->getLockTime())) > 86400) {
+	$timeDiff = camp_time_diff_str($articleObj->getLockTime());
+	if ( $timeDiff['days'] > 0 ) {
 		$articleObj->unlock();
 		$edit_ok = 1;		
 	}
@@ -60,13 +61,18 @@ if ($articleObj->userCanModify($User)) {
 	}
 	
 	// Automatic locking
-	// If the article is not locked by a user or its been locked by the current user.
-	if (($articleObj->getLockedByUser() == 0) 
-		|| ($articleObj->getLockedByUser() == $User->getId())) {
-		// Lock the article
-		$articleObj->lock($User->getId());
-	    $edit_ok = 1;
+	// If the article has not been unlocked and is not locked by a user.
+	if ($Unlock === false) {
+	    if (!$articleObj->isLocked()) {
+    		// Lock the article
+    		$articleObj->lock($User->getId());
+	    }
 	} 
+	
+	// If the article is locked by the current user, OK to edit.
+	if ($articleObj->getLockedByUser() == $User->getId()) {
+	    $edit_ok = 1;
+	}
 }
 
 if ($User->hasPermission('AddArticle')) { 
@@ -148,21 +154,18 @@ if ($hasAccess && !$edit_ok) {
 		<TD COLSPAN="2" align="center">
 			<BLOCKQUOTE>
 				<?PHP
-				$diffSeconds = time() - strtotime($articleObj->getLockTime());
-				$hours = floor($diffSeconds/3600);
-				$diffSeconds -= $hours * 3600;
-				$minutes = floor($diffSeconds/60);
-				if ($hours > 0) {
+				$timeDiff = camp_time_diff_str($articleObj->getLockTime());
+				if ($timeDiff['hours'] > 0) {
 					putGS('The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.',
 						  '<B>'.htmlspecialchars($lockUserObj->getName()),
 						  htmlspecialchars($lockUserObj->getUserName()).'</B>',
-						  $hours, $minutes); 
+						  $timeDiff['hours'], $timeDiff['minutes']); 
 				}
 				else {
 					putGS('The article has been locked by $1 ($2) $3 minute(s) ago.',
 						  '<B>'.htmlspecialchars($lockUserObj->getName()),
 						  htmlspecialchars($lockUserObj->getUserName()).'</B>',
-						  $minutes);
+						  $timeDiff['minutes']);
 				}
 				?>
 				<br>
@@ -343,32 +346,6 @@ if ($edit_ok) { ?>
 		</TABLE>
 	</TD>
 	
-	<TD ALIGN="RIGHT">
-		<FORM METHOD="GET" ACTION="edit.php" NAME="">
-		<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<?php  p($Pub); ?>">
-		<INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<?php  p($Issue); ?>">
-		<INPUT TYPE="HIDDEN" NAME="Section" VALUE="<?php  p($Section); ?>">
-		<INPUT TYPE="HIDDEN" NAME="Article" VALUE="<?php  p($Article); ?>">
-		<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php  p($Language); ?>">
-		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="3" class="table_input">
-		<TR>
-			<TD><?php  putGS('Language'); ?>:</TD>
-			<TD>
-				<SELECT NAME="sLanguage" class="input_select">
-				<?php 
-					$articleLanguages = $articleObj->getLanguages();
-					foreach ($articleLanguages as $articleLanguage) {
-					    pcomboVar($articleLanguage->getLanguageId(), $sLanguage, htmlspecialchars($articleLanguage->getName()));
-					}
-				?></SELECT>
-			</TD>
-			<TD>
-				<INPUT TYPE="submit" NAME="Search" VALUE="<?php  putGS('Search'); ?>" class="button">
-			</TD>
-		</TR>
-		</TABLE>
-		</FORM>
-	</TD>
 </TR>
 </TABLE>
 
@@ -389,6 +366,7 @@ if ($edit_ok) { ?>
 </table>
 <?php } ?>
 
+
 <FORM NAME="dialog" METHOD="POST" ACTION="do_edit.php">
 <INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<?php  p($Pub); ?>">
 <INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<?php  p($Issue); ?>">
@@ -396,7 +374,6 @@ if ($edit_ok) { ?>
 <INPUT TYPE="HIDDEN" NAME="Article" VALUE="<?php  p($Article); ?>">
 <INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php  p($Language); ?>">
 <INPUT TYPE="HIDDEN" NAME="sLanguage" VALUE="<?php  p($sLanguage); ?>">
-
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" align="center" class="table_input">
 <TR>
 	<TD COLSPAN="2">
@@ -405,22 +382,43 @@ if ($edit_ok) { ?>
 			<td align="left">
 				<B><?php putGS("Edit article details"); ?></B>
 			</td>
-			<td align="right">
-				<?php 
-				if ($zipLibAvailable && $xsltLibAvailable && $xmlLibAvailable 
-						&& $introSupport && $bodySupport) {
-					// Article Import Link
-					?>
-					<b><a href="/<?php echo $ADMIN; ?>/article_import/index.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php p($Section); ?>&Article=<?php p($Article); ?>&Language=<?php p($Language); ?>&sLanguage=<?php p($sLanguage); ?>">Import Article</a></b>
-					<?php
-				}
+        	<TD ALIGN="RIGHT">
+        		<?php 
+        		$languageUrl = "edit.php?Pub=$Pub&Issue=$Issue&Section=$Section"
+        		              ."&Article=$Article&Language=$Language&sLanguage=";
+        		?>
+        		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="3">
+        		<TR>
+        			<TD><?php  putGS('Language'); ?>:</TD>
+        			<TD>
+        				<SELECT NAME="sLanguage" class="input_select" onchange="dest = '<?php p($languageUrl); ?>'+this.options[this.selectedIndex].value; location.href=dest;">
+        				<?php 
+        					$articleLanguages = $articleObj->getLanguages();
+        					foreach ($articleLanguages as $articleLanguage) {
+        					    pcomboVar($articleLanguage->getLanguageId(), $sLanguage, htmlspecialchars($articleLanguage->getName()));
+        					}
+        				?></SELECT>
+        			</TD>
+        		</TR>
+        		</TABLE>
+        	</TD>
+			<?php 
+			if ($zipLibAvailable && $xsltLibAvailable && $xmlLibAvailable 
+					&& $introSupport && $bodySupport) {
+				// Article Import Link
 				?>
-			</td>
+    			<td align="right">
+				<b><a href="/<?php echo $ADMIN; ?>/article_import/index.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php p($Section); ?>&Article=<?php p($Article); ?>&Language=<?php p($Language); ?>&sLanguage=<?php p($sLanguage); ?>">Import Article</a></b>
+    			</td>
+				<?php
+			}
+			?>
 		</tr>
 		</table>
 		<HR NOSHADE SIZE="1" COLOR="BLACK"> 
 	</TD>
 </TR>
+
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
 	<TD>
@@ -596,7 +594,7 @@ if ($edit_ok) { ?>
 	<TR>
 		<TD COLSPAN="2">
 		<DIV ALIGN="CENTER">
-		<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save changes'); ?>" class="button">
+		<INPUT TYPE="button" NAME="Save" VALUE="<?php  putGS('Save changes'); ?>" class="button" onclick="this.form.submit();">
 		<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" class="button" ONCLICK="location.href='/<?php echo $ADMIN; ?>/pub/issues/sections/articles/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Language=<?php  p($Language); ?>'">
 		</DIV>
 		</TD>
