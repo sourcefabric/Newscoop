@@ -1,41 +1,40 @@
 <?PHP
+require_once('PEAR.php');
 require_once('LocalizerConfig.php');
+require_once('LocalizerFileFormat.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
 
 class LocalizerLanguage {
 	var $m_translationTable = array();
-	var $m_twoLetterLanguageCode = '';
-	var $m_localizerLanguageCode = '';
-	var $m_mode = 'php';
+	var $m_languageCode = '';
+	var $m_countryCode = '';
+	var $m_languageId = '';
+	var $m_mode = '';
 	var $m_prefix = '';
 	var $m_directory = '';
-	var $m_status = false;
 	var $m_filePath = '';
-    var $m_unserializeOptions = array();
-    var $m_serializeOptions = array(
-     						// indent with tabs
-                           	"indent"           => "\t",       
-                           	// root tag
-                           	"rootName"         => "language",  
-                           	// tag for values with numeric keys 
-                           	"defaultTagName"   => "item", 
-                           	#"typeHints"        => true,
-                           	"keyAttribute"     => "position",
-                           	"addDecl"          => true,
-                           	"encoding"         => LOCALIZER_ENCODING,
-                           	"indentAttributes" => true,
-                           	"mode"             => 'simplexml'
-            				);
 	
 	/**
 	 * A LocalizerLanguage is basically a translation table.
-	 * It can load and save different types of translation files.
 	 *
-	 * @param string p_languageCode
+	 * You can use this class to manipulate the translation table: 
+	 * such as add, delete, and move strings.
+	 *
+	 * @param string p_prefix
+	 *		The beginning of the file name, up to the first dot ('.').
+	 *
+	 * @param string p_directory
+	 *		The location of the language file, relative to LOCALIZER_BASE_DIR.
+	 *
+	 * @param string p_languageId
+	 *		The language ID for this language, which can be in one of two forms:
+	 *      1) The two-letter language code (e.g. "en").
+	 *      2) The two-letter language code, underscore, two-letter country code
+	 *         (e.g. "en_US")
 	 */
-	function LocalizerLanguage($p_prefix, $p_directory, $p_languageCode = null) {
-		if (!is_null($p_languageCode)) {
-			$this->setLanguageCode($p_languageCode);
+	function LocalizerLanguage($p_prefix, $p_directory, $p_languageId = null) {
+		if (!is_null($p_languageId)) {
+			$this->setLanguageId($p_languageId);
 		}
 		$this->m_prefix = $p_prefix;
 		$this->m_directory = $p_directory;
@@ -43,7 +42,25 @@ class LocalizerLanguage {
 	
 
 	/**
-	 * This will return 'php' or 'xml'
+	 * Return the filename prefix.
+	 * @return string
+	 */
+	function getPrefix() {
+	    return $this->m_prefix;
+	} // fn getPrefix
+	
+	
+	/**
+	 * Return the directory where the translation file is stored.
+	 * @return string
+	 */
+	function getDirectory() {
+	    return $this->m_directory;
+	} // fn getDirectory
+	
+	
+	/**
+	 * This will return 'gs' or 'xml'
 	 * @return string
 	 */
 	function getMode() {
@@ -52,13 +69,13 @@ class LocalizerLanguage {
 	
 	
 	/**
-	 * Set the mode to be 'xml' or 'php'.
+	 * Set the mode to be 'xml' or 'gs'.
 	 * @param string p_value
 	 * @return void
 	 */
 	function setMode($p_value) {
 		$p_value = strtolower($p_value);
-		if (($p_value == 'xml') || ($p_value == 'php')) {
+		if (($p_value == 'xml') || ($p_value == 'gs')) {
 			$this->m_mode = $p_value;
 		}
 	} // fn setMode
@@ -66,29 +83,33 @@ class LocalizerLanguage {
 	
 	/**
 	 * Set the language code - this can take either the two-letter language code
-	 * or the extended version and it will figure out its counterpart.
+	 * or the LL_CC extended version , where LL is the language code and CC
+	 * is the country code.
 	 *
 	 * @param string p_languageId
 	 * @return void
 	 */
-	function setLanguageCode($p_languageId) {
+	function setLanguageId($p_languageId) {	    
 		if (strlen($p_languageId) > 2) {
-			$this->m_twoLetterLanguageCode = substr($p_languageId, 0, 2);
-			$this->m_localizerLanguageCode = $p_languageId;
+			$this->m_languageCode = substr($p_languageId, 0, 2);
+			$this->m_countryCode = substr($p_languageId, 3, 2);
+			$this->m_languageId = $p_languageId;
 		}
 		else {
-			$this->m_twoLetterLanguageCode = $p_languageId;
-			if ($this->m_twoLetterLanguageCode == 'en') {
-				$this->m_localizerLanguageCode = 'en_English';
+			$this->m_languageCode = $p_languageId;
+			$this->m_languageId = $p_languageId;
+			if ($this->m_languageCode == 'en') {
+			    $this->m_countryCode = 'US';
+				$this->m_languageId = 'en_US';
 			}
-			else {
-				$this->m_localizerLanguageCode = LocalizerLanguage::_GetLocalizerLanguageNameFromDb($p_languageId);
-				if (empty($this->m_localizerLanguageCode)) {
-					$this->m_localizerLanguageCode = $p_languageId;
-				}
-			}
+//			else {
+//				$this->m_languageId = LocalizerLanguage::_GetLocalizerLanguageNameFromDb($p_languageId);
+//				if (empty($this->m_languageId)) {
+//					$this->m_languageId = $p_languageId;
+//				}
+//			}
 		}		
-	} // fn setLanguageCode
+	} // fn setLanguageId
 	
 	
 	/**
@@ -98,11 +119,11 @@ class LocalizerLanguage {
 	 * @param string p_twoLetterLanguageCode
 	 * @return string
 	 */
-    function _GetLocalizerLanguageNameFromDb($p_twoLetterLanguageCode) {
-    	global $Campsite;
-        $query = 'SELECT CONCAT(Code, "_", Name) AS Id WHERE Code="'.$p_twoLetterLanguageCode.'"';
-        return $Campsite['db']->getOne($query);
-    } // fn _GetLanguageName
+//    function _GetLocalizerLanguageNameFromDb($p_twoLetterLanguageCode) {
+//    	global $Campsite;
+//        $query = 'SELECT CONCAT(Code, "_", Local) AS Id WHERE Code="'.$p_twoLetterLanguageCode.'"';
+//        return $Campsite['db']->getOne($query);
+//    } // fn _GetLanguageName
 
     
     /** 
@@ -134,20 +155,29 @@ class LocalizerLanguage {
      *
      * @return string
      */
-	function getLocalizerLanguageCode() {
-		return $this->m_localizerLanguageCode;
-	} // fn getLocalizerLanguageCode
+	function getLanguageId() {
+		return $this->m_languageId;
+	} // fn getLanguageId
 	
 	
 	/**
 	 * Get the two-letter language code for the translation table.
 	 * @return string
 	 */
-	function getTwoLetterLanguageCode() {
-		return $this->m_twoLetterLanguageCode;
-	} // fn getTwoLetterLanguageCode
+	function getLanguageCode() {
+		return $this->m_languageCode;
+	} // fn getLanguageCode
 	
 
+	/**
+	 * Get the two-letter country code.
+	 * @return string
+	 */
+	function getCountryCode() {
+	    return $this->m_countryCode;
+	} // fn getCountryCode
+	
+	
 	/**
 	 * Return the file path for the last file loaded.
 	 * @return string
@@ -155,6 +185,15 @@ class LocalizerLanguage {
 	function getSourceFile() {
 		return $this->m_filePath;
 	} // fn getSourceFile
+	
+	
+	/**
+	 * This is only for use by the LocalizerFileFormat functions.
+	 * @access private
+	 */
+	function _setSourceFile($p_value) {
+	    $this->m_filePath = $p_value;
+	} // fn _setSourceFile
 	
 	
 	/**
@@ -197,25 +236,29 @@ class LocalizerLanguage {
 	 * Get the full path to the translation file.
 	 *
 	 * @param string p_mode
-	 *		Either 'php' or 'xml'.
+	 *		Either 'gs' or 'xml'.
      * @return string
      */
     function getFilePath($p_mode = null) {
+        global $g_localizerConfig;
     	if (is_null($p_mode)) {
     		$p_mode = $this->m_mode;
     	}    	
     	if ($p_mode == 'xml') {
-        	$relativePath = $this->m_directory.'/'.$this->m_prefix.'.'.$this->m_localizerLanguageCode.'.xml';
+        	$relativePath = $this->m_directory.'/'.$this->m_prefix.'.'.$this->m_languageId.'.xml';
     	}
     	else {
-    		$relativePath = $this->m_directory.'/'.$this->m_prefix.'.'.$this->m_twoLetterLanguageCode.'.php';
+    		$relativePath = $this->m_directory.'/'.$this->m_prefix.'.'.$this->m_languageCode.'.php';
     	}
-    	return LOCALIZER_BASE_DIR.LOCALIZER_ADMIN_DIR.$relativePath;
+    	return $g_localizerConfig['BASE_DIR'].$relativePath;
     } // fn getFilePath
 
     
     /**
      * Return TRUE if the given string exists in the translation table.
+     *
+     * @param string p_string
+     *
      * @return boolean
      */
     function keyExists($p_string) {
@@ -463,8 +506,11 @@ class LocalizerLanguage {
      * with the positions of the string in the default language translation table.
      */
     function fixPositions() {
-        $defaultLanguage =& new LocalizerLanguage($this->m_prefix, $this->m_directory, LOCALIZER_DEFAULT_LANG);
-        $defaultLanguage->loadXmlFile();
+        global $g_localizerConfig;
+        $defaultLanguage =& new LocalizerLanguage($this->m_prefix, 
+                                                  $this->m_directory, 
+                                                  $g_localizerConfig['DEFAULT_LANGUAGE']);
+        $defaultLanguage->loadFile(Localizer::GetMode());
         $defaultTranslationTable = $defaultLanguage->getTranslationTable();
     	$count = 0;
     	$modified = false;
@@ -485,8 +531,11 @@ class LocalizerLanguage {
      * be the same as the default language file.
      */
     function syncToDefault() {
-        $defaultLanguage =& new LocalizerLanguage($this->m_prefix, $this->m_directory, LOCALIZER_DEFAULT_LANG);
-        $defaultLanguage->loadXmlFile();
+        global $g_localizerConfig;
+        $defaultLanguage =& new LocalizerLanguage($this->m_prefix, 
+                                                  $this->m_directory, 
+                                                  $g_localizerConfig['DEFAULT_LANGUAGE']);
+        $defaultLanguage->loadFile(Localizer::GetMode());
         $defaultTranslationTable = $defaultLanguage->getTranslationTable();
     	$count = 0;
     	$modified = false;
@@ -528,21 +577,24 @@ class LocalizerLanguage {
      * @return boolean
      */
     function loadFile($p_type = null) {
-    	if ($p_type == 'xml') {
-    		return $this->loadXmlFile();
-    	}
-    	elseif ($p_type == 'php') {
-    		return $this->loadGsFile();
-    	}
-    	elseif (!empty($this->m_mode)) {
-    		return $this->loadFile($this->m_mode);
-    	}
-    	else {
-    		$mode = Localizer::GetMode();
-    		if (!is_null($mode)) {
-    			return $this->loadFile($mode);
-    		}    		
-    	}
+        if (is_null($p_type)) {
+            if (!empty($this->m_mode)) {
+                $p_type = $this->m_mode;
+            }
+            else {
+        		$p_type = Localizer::GetMode();
+        		if (is_null($p_type)) {
+        		    return false;
+        		}
+            }
+        }
+        $className = 'LocalizerFileFormat_'.strtoupper($p_type);
+        if (class_exists($className)) {
+            $object =& new $className();
+            if (method_exists($object, 'load')) {
+                return $object->load($this);
+            }
+        }
     	return false;
     } // fn loadFile
     
@@ -556,154 +608,29 @@ class LocalizerLanguage {
      * @return boolean
      */
     function saveFile($p_type = null) {
-    	if ($p_type == 'xml') {
-    		return $this->saveAsXml();
-    	}
-    	elseif ($p_type == 'php') {
-    		return $this->saveAsGs();
-    	}
-    	elseif (!empty($this->m_mode)) {
-    		return $this->saveFile($this->m_mode);
-    	}
-    	else {
-    		$mode = Localizer::GetMode();
-    		if (!is_null($mode)) {
-    			return $this->saveFile($mode);
-    		}
-    	}
-    	return false;    	
+        // Figure out the current mode.
+        if (is_null($p_type)) {
+            if (!empty($this->m_mode)) {
+                $p_type = $this->m_mode;
+            }
+            else {
+        		$p_type = Localizer::GetMode();
+        		if (is_null($p_type)) {
+        		    return false;
+        		}
+            }
+        }
+        // Save in the requested mode.
+        $className = 'LocalizerFileFormat_'.strtoupper($p_type);
+        if (class_exists($className)) {
+            $object =& new $className();
+            if (method_exists($object, 'save')) {
+                return $object->save($this);
+            }
+        }
+    	return false;
     } // fn saveFile
     
-    
-    /**
-     * Read old-style translation file into our translation table.
-     * @param string p_file
-     * @param string p_langCode
-     *		The two-letter language code of the file.
-     * @return void
-     */
-    function loadGsFile() {
-    	$this->m_mode = 'php';
-        $this->m_filePath = $this->getFilePath('php');     
-        //echo $this->m_filePath."<BR>";    
-        if (file_exists($this->m_filePath)) {
-	        $lines = file($this->m_filePath);
-	        foreach ($lines as $line) {
-	        	if (strstr($line, "regGS")) {
-			        $line = preg_replace('/regGS/', '$this->registerString', $line);
-	        		$success = @eval($line);
-	        		if ($success === FALSE) {
-	        			echo "Error evaluating: ".htmlspecialchars($line)."<br>";
-	        		}
-	        	}
-	        }
-	        return true;
-        }
-        else {
-        	return false;
-        }
-    } // fn loadGsFile
-
-    
-    /**
-     * Save the translation table to a GS file.
-     *
-     * @param string p_prefix
-     *		File name prefix
-     *
-     * @param string p_directory
-     *		The directory to save in, relative to SERVER_ROOT.
-     *
-     * @return string
-     *		File contents
-     */
-    function saveAsGs() {
-    	$data = "<?php\n";
-    	foreach ($this->m_translationTable as $key => $value) {
-    		$data .= "regGS('$key', '$value');\n";
-    	}
-    	$data .= "?>";
-        $this->m_filePath = $this->getFilePath('php');
-        // write data to file        
-        if (PEAR::isError(File::write($this->m_filePath, $data, FILE_MODE_WRITE))) {
-        	echo "<br>error writing file<br>";
-            return FALSE;
-        }
-        File::close($this->m_filePath, FILE_MODE_WRITE);
-        return $data;    	
-    } // fn saveAsGs
-    
-
-    /**
-     * Read an XML-format translation file into the translation table.
-     *
-     * @param string p_prefix
-     * @param string p_directory
-     *
-     * @return boolean
-     */
-    function loadXmlFile() {
-    	$this->m_mode = 'xml';
-        $this->m_filePath = $this->getFilePath('xml');
-        if (file_exists($this->m_filePath)) {
-            $xml = File::readAll($this->m_filePath);
-            File::close($this->m_filePath, FILE_MODE_READ);
-	        $unserializer =& new XML_Unserializer($this->m_unserializeOptions);
-	        $unserializer->unserialize($xml);
-	        $translationArray = $unserializer->getUnserializedData();
-	        $this->m_translationTable = array();
-	        if (isset($translationArray['item'])) {
-		        foreach ($translationArray['item'] as $translationPair) {
-		        	$this->m_translationTable[$translationPair['key']] = $translationPair['value'];
-		        }
-	        }
-	        return true;
-        }    	
-        else {
-        	return false;
-        }
-    } // fn loadXmlFile
-    
-
-    /**
-     * Save the translation table to an XML file, 
-     * specified by the parameter.
-     *
-     * @param array p_file
-     *
-     * @return boolean
-     *		TRUE on success, FALSE on failure.
-     */
-    function saveAsXml() {
-    	$saveData = array();
-    	$saveData["Id"] = $this->getLocalizerLanguageCode();
-		$saveTranslationTable = array();
-		foreach ($this->m_translationTable as $key => $value) {
-			$saveTranslationTable[] = array('key' => $key, 'value' => $value);
-		}
-    	$saveData = array_merge($saveData, $saveTranslationTable);
-    	
-        $serializer =& new XML_Serializer($this->m_serializeOptions);
-        $serializer->serialize($saveData);
-        $xml = $serializer->getSerializedData();
-        if (PEAR::isError($xml)) {
-        	echo "<br>error serializing data<br>";
-            return FALSE;
-        }
-        
-        $this->m_filePath = $this->getFilePath('xml');
-        //echo "Saving as ".$this->m_filePath."<Br>";
-        // write data to file        
-        if (PEAR::isError(File::write($this->m_filePath, $xml, FILE_MODE_WRITE))) {
-        	echo "<br>error writing file<br>";
-            return FALSE;
-        }        
-        
-        File::close($this->m_filePath, FILE_MODE_WRITE);
-        
-        return $xml;
-    } // fn saveAsXml
-
     
     /**
      * Erase all the values in the translation table, but 
@@ -726,7 +653,7 @@ class LocalizerLanguage {
     	if (!empty($this->m_filePath)) {
     		echo "<b>File: ".$this->m_filePath."</b><br>";
     	}
-    	echo "<b>Language Code: ".$this->m_localizerLanguageCode."</b><br>";
+    	echo "<b>Language Code: ".$this->m_languageId."</b><br>";
     	echo "<table>";
     	foreach ($this->m_translationTable as $key => $value) {
     		echo "<tr><td>'$key'</td><td>'$value'</td></tr>";
