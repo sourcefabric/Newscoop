@@ -28,7 +28,7 @@ if (!$articleObj->userCanModify($User)) {
 }
 
 $articleObj->unlock();
-header('Location: '.CampsiteInterface::ArticleUrl($articleObj, $InterfaceLanguageId, "edit.php"));
+header('Location: '.CampsiteInterface::ArticleUrl($articleObj, $InterfaceLanguageId, "edit.php", "", "&Unlock=true"));
 exit;
 
 ?>
