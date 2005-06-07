@@ -198,7 +198,7 @@ foreach ($publications as $publication) {
 		<table border="0" cellpadding="0" cellspacing="0">
 		<tr>
 			<td style="padding-left: 3px; padding-right: 10px; padding-top: 0px; padding-bottom: 2px; font-size: 14pt; font-weight: bold; color: black; font-style: Verdana;" align="left" valign="middle" nowrap>
-				<IMG SRC="/admin/img/sign_big.gif" BORDER="0" align="middle">
+				<a href="/<?php p($ADMIN) ?>/home.php"><IMG SRC="/admin/img/sign_big.gif" BORDER="0" align="middle"></a>
 			</td>
 			<td style="padding-left: 20px; padding-top: 6px;" valign="top">
 			<DIV ID="myMenuID"></DIV>
