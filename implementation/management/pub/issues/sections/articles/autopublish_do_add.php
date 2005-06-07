@@ -24,8 +24,10 @@ $publishMinute = trim(Input::Get('publish_min', 'int', 0));
 $publishAction = Input::Get('publish_action', 'string', '', true);
 $frontPageAction = Input::Get('front_page_action', 'string', '', true);
 $sectionPageAction = Input::Get('section_page_action', 'string', '', true);
-$BackLink = Input::Get('Back', 'string', "/$ADMIN/pub/issues/sections/articles/index.php", true);
-
+$BackLink = Input::Get('Back', 'string', "/$ADMIN/pub/issues/sections/articles/index.php"
+                       ."?Pub=$Pub&Issue=$Issue&Section=$Section&sLanguage=$sLanguage&Language=$Language", 
+                       true);
+                       
 if (!Input::IsValid()) {
 	CampsiteInterface::DisplayError(array('Invalid input: $1', Input::GetErrorString()), $BackLink);
 	exit;	
@@ -82,7 +84,8 @@ else {
 	if ($sectionPageAction == "S" || $sectionPageAction == "R") {
 		$articlePublishObj->setSectionPageAction($sectionPageAction);
 	}
-	header("Location: /$ADMIN/pub/issues/sections/articles/autopublish.php?Pub=$Pub&Issue=$Issue&Section=$Section&Article=$Article&Language=$Language&sLanguage=$sLanguage");
+	$redirect = CampsiteInterface::ArticleUrl($articleObj, $Language, "autopublish.php", $BackLink);
+	header("Location: $redirect");
 	exit;
 }
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 

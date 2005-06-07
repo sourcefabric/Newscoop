@@ -19,7 +19,9 @@ $Language = Input::Get('Language', 'int', 0);
 $sLanguage = Input::Get('sLanguage', 'int', 0);
 $Article = Input::Get('Article', 'int', 0);
 $publishTime = Input::Get('publish_time', 'string', '', true);
-$BackLink = Input::Get('Back', 'string', "/$ADMIN/pub/issues/sections/articles/index.php", true);
+$BackLink = Input::Get('Back', 'string', "/$ADMIN/pub/issues/sections/articles/index.php"
+                       ."?Pub=$Pub&Issue=$Issue&Section=$Section&sLanguage=$sLanguage&Language=$Language", 
+                       true);
 
 if (!Input::IsValid()) {
 	CampsiteInterface::DisplayError(array('Invalid input: $1', Input::GetErrorString()), $BackLink);
@@ -107,6 +109,7 @@ if ($articleObj->getPublished() != 'N') {
 	<INPUT TYPE="HIDDEN" NAME="Article" VALUE="<?php echo $Article; ?>">
 	<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php echo $Language; ?>">
 	<INPUT TYPE="HIDDEN" NAME="sLanguage" VALUE="<?php echo $sLanguage; ?>">
+	<INPUT type="hidden" name="Back" value="<?php echo $BackLink; ?>">
 	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS("Date"); ?>:</TD>
 		<TD>
@@ -223,7 +226,7 @@ if ($articleObj->getPublished() != 'N') {
 		</TD>
 		
 		<TD ALIGN="CENTER">
-			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/autopublish_del.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php p($Section); ?>&Article=<?php p($Article); ?>&Language=<?php p($Language); ?>&sLanguage=<?php p($sLanguage); ?>&publish_time=<?php echo $url_publish_time; ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/x.gif" BORDER="0" ALT="<?php putGS('Delete entry'); ?>"></A>
+			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/autopublish_del.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php p($Section); ?>&Article=<?php p($Article); ?>&Language=<?php p($Language); ?>&sLanguage=<?php p($sLanguage); ?>&publish_time=<?php echo $url_publish_time; ?>&Back=<?php p(urlencode($BackLink)); ?>" onclick="return confirm('<?php putGS("Are you sure you want to delete this scheduled action?"); ?>');"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/x.gif" BORDER="0" ALT="<?php putGS('Delete'); ?>"></A>
 		</TD>
 	</TR>
 	<?php
