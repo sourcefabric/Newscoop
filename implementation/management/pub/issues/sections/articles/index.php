@@ -147,10 +147,43 @@ foreach ($allArticles as $articleObj) {
 	if ($uniqueArticleCounter > $ArticlesPerPage) {
 		break;
 	}
+	$timeDiff = camp_time_diff_str($articleObj->getLockTime());
+	if ($articleObj->isLocked() && ($timeDiff['days'] <= 0)) {
+	    $rowClass = "article_locked";
+	}
+	else {
+    	if ($color) { 
+    	    $color=0; 
+    	    $rowClass = "list_row_even";
+    	} else { 
+    	    $color=1; 
+    	    $rowClass = "list_row_odd";
+    	} 
+	}
 	?>	
-	<TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
+	<TR class="<?php p($rowClass); ?>">
 		<TD <?php if ($articleObj->getArticleId() == $previousArticleId) { ?>style="padding-left: 20px;"<?php } ?>>
+		
 		<?php
+		if ($articleObj->isLocked() && ($timeDiff['days'] <= 0)) {
+            $lockUserObj =& new User($articleObj->getLockedByUser());
+			if ($timeDiff['hours'] > 0) {
+				$lockInfo = getGS('The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.',
+					  htmlspecialchars($lockUserObj->getName()),
+					  htmlspecialchars($lockUserObj->getUserName()),
+					  $timeDiff['hours'], $timeDiff['minutes']); 
+			}
+			else {
+				$lockInfo = getGS('The article has been locked by $1 ($2) $3 minute(s) ago.',
+					  htmlspecialchars($lockUserObj->getName()),
+					  htmlspecialchars($lockUserObj->getUserName()),
+					  $timeDiff['minutes']);
+			}
+		    
+		    ?>
+		    <img src="/<?php echo $ADMIN; ?>/img/icon/lock.png" width="22" height="22" border="0" alt="<?php  p($lockInfo); ?>" title="<?php p($lockInfo); ?>">
+		    <?
+		}
 		// Can the user edit the article?
 		$userCanEdit = $articleObj->userCanModify($User);
 		if ($userCanEdit) { ?>
