@@ -44,7 +44,7 @@ elseif (($extension == '.php') || ($extension == '')) {
 	if (($call_script != '/login.php') && ($call_script != '/do_login.php')) {
 		// Check if the user is logged in already
 		require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
-		load_common_include_files($ADMIN_DIR);
+		//load_common_include_files($ADMIN_DIR);
 		list($access, $User) = check_basic_access($_REQUEST);
 		if (!$access) {
 			// If not logged in, show the login screen.
