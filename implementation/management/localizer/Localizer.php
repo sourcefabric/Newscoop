@@ -184,11 +184,11 @@ class Localizer {
 		$localData =& new LocalizerLanguage($g_localizerConfig['FILENAME_PREFIX'], 
 		                                    $p_directory, 
 		                                    $g_localizerConfig['DEFAULT_LANGUAGE']);
-		$localData->loadXmlFile();
+		$localData->loadFile(Localizer::GetMode());
         $globaldata =& new LocalizerLanguage($g_localizerConfig['FILENAME_PREFIX_GLOBAL'], 
                                              '/', 
-                                             $g_localizerConfig['DEFAULT_LANG']);
-        $globaldata->loadXmlFile();
+                                             $g_localizerConfig['DEFAULT_LANGUAGE']);
+        $globaldata->loadFile(Localizer::GetMode());
 
         $returnValue = array();
         foreach ($p_data as $key) {
@@ -217,24 +217,8 @@ class Localizer {
         $files = File_Find::mapTreeMultiple($g_localizerConfig['BASE_DIR'].$p_directory, 1);
         $className = "LocalizerFileFormat_".strtoupper(Localizer::GetMode());
         $fileFormat = new $className();
-        $languages = $fileFormat->getLanguagesInDirectory();
+        $languages = $fileFormat->getLanguagesInDirectory($p_prefix, $p_directory);
         return $languages;
-//        foreach ($files as $key => $filename) {
-//            if (Localizer::GetMode() == 'xml') {
-//                if (preg_match("/$p_prefix\.[a-z]{2}_[^.]*\.xml/", $filename)) {
-//                    list($lost, $code, $lost, $lost) = explode('.', $filename);
-//                    $langIds[] = $code;
-//                }
-//            }
-//            elseif (Localizer::GetMode() == 'gs') {
-//                if (preg_match("/$p_prefix\.[a-z]{2}\.php/", $filename)) {
-//                    list($lost, $code, $lost) = explode('.', $filename);
-//                    $langIds[] = $code;
-//                }                
-//            }
-//        }
-//
-//        return $langIds;
     } // fn GetLanguagesInDirectory
 
     
@@ -249,14 +233,14 @@ class Localizer {
         $filePattern = '/(.*).php/';                                               
         // but do not scan the language files
         $fileExcludePattern = '/(';
-        global $g_localizerFileTypes;
-        foreach ($g_localizerFileTypes as $type) {
+        $patterns = array();
+        foreach ($g_localizerConfig['FILE_TYPES'] as $type) {
             $className = 'LocalizerFileFormat_'.strtoupper($type);
             $object =& new $className;
-            $fileExcludePattern .= '('.$object->getFilePattern().')';
+            $patterns[] = '('.$object->getFilePattern().')';
         }
-        $fileExcludePattern .= ')/';
-        //$fileDisquPattern = '/('.LOCALIZER_FILENAME_PREFIX.'|'.LOCALIZER_FILENAME_PREFIX_GLOBAL.').(.*).(xml|php)/';      
+        $fileExcludePattern .= implode('|', $patterns).')/';
+
         // like getGS('edit "$1"', ...);  '
         $functPattern1 = '/(put|get)gs( )*\(( )*\'([^\']*)\'/iU';                  
         // like getGS("edit '$1'", ...);
@@ -274,11 +258,13 @@ class Localizer {
         }
         
 		// Read in all the PHP files.
+		$data = array();
         foreach ($filelist as $name) {                                                  
             $data = array_merge($data, file($g_localizerConfig['BASE_DIR'].$p_directory.'/'.$name));
         }
 
        	// Collect all matches
+       	$matches = array();
         foreach ($data as $line) {
             if (preg_match_all($functPattern1, $line, $m)) {                            
                 foreach ($m[4] as $match) {
@@ -434,7 +420,7 @@ class Localizer {
         	$source->loadFile(Localizer::GetMode());
         	if (is_array($p_newKey)) {
         		foreach ($p_newKey as $key) {
-        			if ($Id == $g_localizerConfig['DEFAULT_LANGUAGE']) {
+        			if ($language->getLanguageId() == $g_localizerConfig['DEFAULT_LANGUAGE']) {
         				$source->addString($key, $key, $p_position);
         			}
         			else {
@@ -516,20 +502,18 @@ class Localizer {
      *		An array of LanguageMetadata objects.
      */
     function GetAllLanguages($p_mode = null) {
-    	if (is_null($this->m_languageDefs)) {
-    		if (is_null($p_mode)) {
-    			$p_mode = Localizer::GetMode();
-    		}
-    		$className = "LocalizerFileFormat_".strtoupper($p_mode);
-    		if (class_exists($className)) {
-    		    $object =& new $className();
-    		    if (method_exists($object, "getLanguages")) {
-    		        $languages = $object->getLanguages();
-    		    }
-    		}
-	        $this->m_languageDefs =& $languages;
-	    	return $languages;
-    	}
+		if (is_null($p_mode)) {
+			$p_mode = Localizer::GetMode();
+		}
+		$className = "LocalizerFileFormat_".strtoupper($p_mode);
+		if (class_exists($className)) {
+		    $object =& new $className();
+		    if (method_exists($object, "getLanguages")) {
+		        $languages = $object->getLanguages();
+		    }
+		}
+        //$this->m_languageDefs =& $languages;
+    	return $languages;
     } // fn GetAllLanguages	
 
 } // class Localizer
