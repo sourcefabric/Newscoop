@@ -36,12 +36,12 @@ $logtext = getGS('Issue $1 Published: $2  changed status',$issueObj->getIssueId(
 Log::Message($logtext, $User->getUserName(), 14);
 
 if ($issueObj->getPublished() == 'Y') {
-	$t2=getGS('Published');
-	$t3=getGS('Not published');
-}
-else {
 	$t2=getGS('Not published');
 	$t3=getGS('Published');
+}
+else {
+	$t2=getGS('Published');
+	$t3=getGS('Not published');
 } 
 
 CampsiteInterface::ContentTop('Changing issue status', array('Pub' => $publicationObj, 'Issue' => $issueObj));
