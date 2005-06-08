@@ -19,6 +19,7 @@ $Article = Input::Get('Article', 'int', 0);
 $TopicId = Input::Get('IdCateg', 'int', 0, true);
 $TopicOffset = Input::Get('CatOffs', 'int', 0, true);
 $AddTopicId = Input::Get('AddTopic', 'int', 0);
+$AddTopicLanguage = Input::Get('AddTopicLanguage', 'int', 0);
 
 if ($TopicOffset < 0) {
 	$TopicOffset = 0;
@@ -54,7 +55,7 @@ if (!$articleObj->exists()) {
 	exit;		
 }
 
-$topic =& new Topic($AddTopicId, $sLanguage);
+$topic =& new Topic($AddTopicId, $AddTopicLanguage);
 if (!$topic->exists()) {
 	CampsiteInterface::DisplayError('Topic does not exist.');
 	exit;		
