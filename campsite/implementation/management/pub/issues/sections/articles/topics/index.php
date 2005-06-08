@@ -20,7 +20,7 @@ $TopicOffset = Input::Get('CatOffs', 'int', 0, true);
 if ($TopicOffset < 0) {
 	$TopicOffset = 0;
 }
-$TopicsPerPage = Input::Get('lpp', 'int', 10, true);
+$TopicsPerPage = Input::Get('lpp', 'int', 20, true);
 $searchTopicsString = trim(Input::Get('search_topics_string', 'string', '', true));
 
 if (!Input::IsValid()) {
@@ -55,7 +55,7 @@ if (!$articleObj->exists()) {
 $languageObj =& new Language($Language);
 $sLanguageObj =& new Language($sLanguage);
 
-$articleTopics =& ArticleTopic::GetArticleTopics($Article, $sLanguage);
+$articleTopics =& ArticleTopic::GetArticleTopics($Article);
 $articleTopicsIds = DbObjectArray::GetColumn($articleTopics, 'Id');
 
 $viewTopic =& new Topic($TopicId);
@@ -77,7 +77,7 @@ if ($searchTopicsString != '') {
 	$totalSubtopics = count($subtopics);
 }
 else {
-	$subtopics =& $viewTopic->getSubtopics($sLanguage, 
+	$subtopics =& $viewTopic->getSubtopics(null, /*$sLanguage, */
 		array('LIMIT' => array('START' => $TopicOffset, 'MAX_ROWS'=>($TopicsPerPage))));
 	$totalSubtopics = count($viewTopic->getSubtopics());
 }
@@ -198,7 +198,7 @@ if (count($subtopics) > 0) {
 		<?php 
 		if (!in_array($subtopic->getTopicId(), $articleTopicsIds)) {
 		?>
-			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/topics/do_add.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&IdCateg=<?php p($TopicId);?>&AddTopic=<?php p($subtopic->getTopicId()); ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/add_topic_to_article.png" BORDER="0" ALT="<?php  putGS('Add'); ?>" title="<?php  putGS('Add'); ?>"></A>
+			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/topics/do_add.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&IdCateg=<?php p($TopicId);?>&AddTopic=<?php p($subtopic->getTopicId()); ?>&AddTopicLanguage=<?php p($subtopic->getLanguageId()); ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/add_topic_to_article.png" BORDER="0" ALT="<?php  putGS('Add'); ?>" title="<?php  putGS('Add'); ?>"></A>
 		<?php 
 		} else {
 		    echo "&nbsp;";
