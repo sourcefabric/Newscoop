@@ -98,34 +98,10 @@ class LocalizerLanguage {
 		else {
 			$this->m_languageCode = $p_languageId;
 			$this->m_languageId = $p_languageId;
-			if ($this->m_languageCode == 'en') {
-			    $this->m_countryCode = 'US';
-				$this->m_languageId = 'en_US';
-			}
-//			else {
-//				$this->m_languageId = LocalizerLanguage::_GetLocalizerLanguageNameFromDb($p_languageId);
-//				if (empty($this->m_languageId)) {
-//					$this->m_languageId = $p_languageId;
-//				}
-//			}
 		}		
 	} // fn setLanguageId
 	
 	
-	/**
-	 * Given the two-letter language code, get the localizer language code using the database.
-	 *
-	 * @access private
-	 * @param string p_twoLetterLanguageCode
-	 * @return string
-	 */
-//    function _GetLocalizerLanguageNameFromDb($p_twoLetterLanguageCode) {
-//    	global $Campsite;
-//        $query = 'SELECT CONCAT(Code, "_", Local) AS Id WHERE Code="'.$p_twoLetterLanguageCode.'"';
-//        return $Campsite['db']->getOne($query);
-//    } // fn _GetLanguageName
-
-    
     /** 
      * Register a string in the translation table.
      * @param string p_key
