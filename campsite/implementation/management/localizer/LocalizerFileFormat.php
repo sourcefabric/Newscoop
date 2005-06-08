@@ -6,17 +6,17 @@ class LocalizerFileFormat {
 	function save(&$p_localizerLanguage) { }
 	function getFilePath($p_localizerLanguage) { }
 	function getFilePattern() { }
-	function getLanguagesInDirectory() { }
+	function getLanguagesInDirectory($p_prefix, $p_directory) { }
 	
 	function IsLoaded($p_filePath) {
-	   global $g_localizerLoadedFiles;
-	   if (isset($g_localizerLoadedFiles[$p_filePath])) {
-	       return true;
-	   }
-	   else {
-	       $g_localizerLoadedFiles[$p_filePath] = $p_filePath;
+//	   global $g_localizerLoadedFiles;
+//	   if (isset($g_localizerLoadedFiles[$p_filePath])) {
+//	       return true;
+//	   }
+//	   else {
+//	       $g_localizerLoadedFiles[$p_filePath] = $p_filePath;
 	       return false;
-	   }
+//	   }
 	}
 	
 	function AddLanguage($p_recursive) {
@@ -127,6 +127,9 @@ class LocalizerFileFormat_GS extends LocalizerFileFormat {
     	$data = "<?php\n";
     	$translationTable = $p_localizerLanguage->getTranslationTable();
     	foreach ($translationTable as $key => $value) {
+    	    // Escape quote characters.
+    	    $key = str_replace('"', '\"', $key);
+    	    $value = str_replace('"', '\"', $value);
     		$data .= "regGS(\"$key\", \"$value\");\n";
     	}
     	$data .= "?>";
@@ -144,8 +147,8 @@ class LocalizerFileFormat_GS extends LocalizerFileFormat {
 	
 	function getFilePattern() {
 	    global $g_localizerConfig;
-	    return '/^('.$g_localizerConfig['FILENAME_PREFIX']
-	           .'|'.$g_localizerConfig['FILENAME_PREFIX_GLOBAL'].')\.[a-z]{2,2}\.php$/';
+	    return '^('.$g_localizerConfig['FILENAME_PREFIX']
+	           .'|'.$g_localizerConfig['FILENAME_PREFIX_GLOBAL'].')\.[a-z]{2,2}\.php$';
 	} // fn getFilePattern
 	
 
@@ -181,7 +184,7 @@ class LocalizerFileFormat_GS extends LocalizerFileFormat {
         foreach ($languages as $language) {
             $tmpMetadata =& new LanguageMetadata();
             $tmpMetadata->m_englishName = $language['Name'];
-            $tmpMetadata->m_nativeName = $language['OrigName'];
+            $tmpMetadata->m_nativeName = $language['NativeName'];
             $tmpMetadata->m_languageCode = $language['LanguageCode'];
             $tmpMetadata->m_countryCode = '';
             $tmpMetadata->m_languageId = $language['LanguageCode'];
@@ -200,11 +203,11 @@ class LocalizerFileFormat_GS extends LocalizerFileFormat {
         $languageDefs = array();
         foreach ($files as $key => $filename) {
             if (preg_match("/$p_prefix\.[a-z]{2}\.php/", $filename)) {
-                list($lost, $id, $lost, $lost) = explode('.', $filename);
+                list($lost, $id, $lost) = explode('.', $filename);
         		$languageDef =& new LanguageMetadata();
         		$languageDef->m_languageId = $id;
         		$languageDef->m_languageCode = $id;
-                $languageDefs[] = $code;
+                $languageDefs[] = $languageDef;
             }
         }
         return $languageDefs;
@@ -323,8 +326,8 @@ class LocalizerFileFormat_XML extends LocalizerFileFormat {
 	 */
 	function getFilePattern() {
 	    global $g_localizerConfig;
-	    return '/^('.$g_localizerConfig['FILENAME_PREFIX']
-	           .'|'.$g_localizerConfig['FILENAME_PREFIX_GLOBAL'].')\.[a-z]{2,2}_[a-z]{2,2}\.xml$/';
+	    return '^('.$g_localizerConfig['FILENAME_PREFIX']
+	           .'|'.$g_localizerConfig['FILENAME_PREFIX_GLOBAL'].')\.[a-z]{2,2}_[a-z]{2,2}\.xml$';
 	} // fn getFilePattern
 	
 
