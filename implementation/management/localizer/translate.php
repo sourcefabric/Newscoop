@@ -1,17 +1,26 @@
 <?php    
-function LanguageMenu($languages, $currId) {
+
+/**
+ * Display a drop-down list of languages.
+ * @param array p_languageMetadata
+ * @param string p_selectedValue
+ * @return string
+ *      HTML string of <options>.
+ */
+function LanguageMenu($p_languageMetadata, $p_selectedValue) {
 	$options = '';
-    foreach($languages as $key=>$val) {
-        if ($currId == $val['Id']) {
-            $curr = 'selected';
+    foreach($p_languageMetadata as $language) {
+        if ($p_selectedValue == $language->getLanguageId()) {
+            $selectedString = 'selected';
         } 
         else {
-            $curr = '';
+            $selectedString = '';
         }
-        $options .= '<option value="'.$val['Id'].'" '.$curr.'>'.$val['NativeName'].'</option>';
+        $options .= '<option value="'.$language->getLanguageId().'" '.$selectedString.'>'.$language->getNativeName().'</option>';
     }
     return $options;
-}                
+} // fn LanguageMenu               
+
 
 /**
  * Creates a form for translation.
@@ -19,19 +28,21 @@ function LanguageMenu($languages, $currId) {
  */
 function translationForm($p_request) {
     global $g_localizerConfig;
-	$localizerTargetLanguage = Input::Get('localizer_target_language', 'string', $g_localizerConfig['DEFAULT_LANGUAGE'], true);
-	$localizerSourceLanguage = Input::Get('localizer_source_language', 'string', '', true);
+	$localizerTargetLanguage = Input::Get('localizer_target_language', 'string', 
+	                                      $g_localizerConfig['DEFAULT_LANGUAGE'], true);
+	$localizerSourceLanguage = Input::Get('localizer_source_language', 'string', 
+	                                      '', true);
 	if (empty($localizerSourceLanguage)) {
 		$tmpLanguage =& new LocalizerLanguage(null, null, $p_request['TOL_Language']);
 		$localizerSourceLanguage = $tmpLanguage->getLanguageId();
 	}
 	
-	$directory = $p_request['dir'];
+	$directory = Input::Get('dir', 'string', '', true);
 	$base = 'locals';
 	$screenDropDownSelection = $directory;
 	
 	// Special case for 'globals' file.
-	if (!isset($p_request['dir']) || ($directory == '/globals')) {
+	if (($directory == '') || ($directory == '/globals')) {
 		$base = 'globals';
 		$directory = '/';
 		$screenDropDownSelection = '/globals';
@@ -148,7 +159,7 @@ function translationForm($p_request) {
 				<tr>
 					<td>
 		        		<SELECT NAME="localizer_source_language" onchange="this.form.submit();" class="input_select">
-		        		<?php echo LanguageMenu($languages, $p_request['localizer_source_language']); ?>
+		        		<?php echo LanguageMenu($languages, $localizerSourceLanguage); ?>
 		        		</select>
 					</td>
 				</tr>
@@ -165,7 +176,7 @@ function translationForm($p_request) {
 				<tr>
 					<td>
 				        <SELECT NAME="localizer_target_language" onChange="this.form.submit();" class="input_select">
-				    	<?php echo LanguageMenu($languages, $p_request['localizer_target_language']); ?>
+				    	<?php echo LanguageMenu($languages, $localizerTargetLanguage); ?>
 				        </select>
 					</td>
 				</tr>
