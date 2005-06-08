@@ -737,9 +737,9 @@ class Article extends DatabaseObject {
 			ArticleIndex::OnArticleDelete($this->getPublicationId(), $this->getIssueId(),
 				$this->getSectionId(), $this->getLanguageId(), $this->getArticleId());
 		}
-		// If the article is being published
-		elseif ( ($this->getPublished() != 'Y') && ($p_value == 'Y') ) {
-			//ArticleIndex::
+		// Unlock the article if it changes status.
+		if ( $this->getPublished() != $p_value ) {
+			$this->unlock();
 		}
 		$this->setIsIndexed(false);
 		return parent::setProperty('Published', $p_value);
