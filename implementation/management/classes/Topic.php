@@ -41,6 +41,15 @@ class Topic extends DatabaseObject {
 	
 	
 	/**
+	 * Get the language of the topic.
+	 * @return int
+	 */
+	function getLanguageId() {
+	    return $this->getProperty('LanguageId');
+	} // fn getLanguageId
+	
+	
+	/**
 	 * @return int
 	 */
 	function getParentId() {
