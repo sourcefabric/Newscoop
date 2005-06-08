@@ -148,7 +148,7 @@ foreach ($allArticles as $articleObj) {
 		break;
 	}
 	$timeDiff = camp_time_diff_str($articleObj->getLockTime());
-	if ($articleObj->isLocked() && ($timeDiff['days'] <= 0)) {
+	if ($articleObj->isLocked() && ($timeDiff['days'] <= 0) && ($articleObj->getLockedByUser() != $User->getId())) {
 	    $rowClass = "article_locked";
 	}
 	else {
@@ -165,7 +165,7 @@ foreach ($allArticles as $articleObj) {
 		<TD <?php if ($articleObj->getArticleId() == $previousArticleId) { ?>style="padding-left: 20px;"<?php } ?>>
 		
 		<?php
-		if ($articleObj->isLocked() && ($timeDiff['days'] <= 0)) {
+		if ($articleObj->isLocked() && ($timeDiff['days'] <= 0) && ($articleObj->getLockedByUser() != $User->getId())) {
             $lockUserObj =& new User($articleObj->getLockedByUser());
 			if ($timeDiff['hours'] > 0) {
 				$lockInfo = getGS('The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.',
