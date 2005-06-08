@@ -43,7 +43,7 @@ CampsiteInterface::ContentTop('Add new translation', array('Pub' => $publication
 </TR>
 
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Issue"); ?>:</TD>
+	<TD ALIGN="RIGHT" valign="top"><?php  putGS("Issue"); ?>:</TD>
 	<TD>
 		<?php  
 		$comma = 0;
@@ -51,7 +51,7 @@ CampsiteInterface::ContentTop('Add new translation', array('Pub' => $publication
 			if ($comma) {
 			    print '<br>';
 			}
-			p(htmlspecialchars($tmpIssue->getName()));
+			p(htmlspecialchars($tmpIssue->getName() .' ('.$tmpIssue->getLanguageName().')'));
 			$comma =1;
 		}
 		?>
