@@ -41,12 +41,12 @@ if (function_exists ("incModFile")) {
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
 				  'Section' => $sectionObj);
-CampsiteInterface::ContentTop('Add new article', $topArray);
+CampsiteInterface::ContentTop('Add new article', $topArray, true, true);
 
 ?>
 
 <P>
-<FORM NAME="dialog" METHOD="POST" ACTION="do_add.php" >
+<FORM NAME="dialog" METHOD="POST" ACTION="do_add.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
 <INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<?php  p($Pub); ?>">
 <INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<?php  p($Issue); ?>">
 <INPUT TYPE="HIDDEN" NAME="Section" VALUE="<?php  p($Section); ?>">
@@ -62,13 +62,14 @@ CampsiteInterface::ContentTop('Add new article', $topArray);
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" NAME="cName" SIZE="64" MAXLENGTH="140" class="input_text">
+	<INPUT TYPE="TEXT" NAME="cName" SIZE="64" MAXLENGTH="140" class="input_text" alt="blank" emsg="<?php putGS('You must complete the $1 field.', getGS('Name')); ?>">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Type"); ?>:</TD>
 	<TD>
-		<SELECT NAME="cType" class="input_select">
+		<SELECT NAME="cType" class="input_select" alt="select" emsg="<?php putGS('You must complete the $1 field.', getGS('Article Type')); ?>">
+		<option></option>
 		<?php 
 		foreach ($allArticleTypes as $tmpType) {
 			echo '<OPTION>'.htmlspecialchars($tmpType).'</option>';
