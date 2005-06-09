@@ -5,78 +5,8 @@ class LocalizerFileFormat {
 	function load(&$p_localizerLanguage) { }	
 	function save(&$p_localizerLanguage) { }
 	function getFilePath($p_localizerLanguage) { }
-	function getFilePattern() { }
-	function getLanguagesInDirectory($p_prefix, $p_directory) { }
-	
-	function IsLoaded($p_filePath) {
-//	   global $g_localizerLoadedFiles;
-//	   if (isset($g_localizerLoadedFiles[$p_filePath])) {
-//	       return true;
-//	   }
-//	   else {
-//	       $g_localizerLoadedFiles[$p_filePath] = $p_filePath;
-	       return false;
-//	   }
-	}
-	
-	function AddLanguage($p_recursive) {
-	    
-	}
-
-    /**
-     * Get a list of all files matching the pattern given.
-     * Return an array of strings, each the full path name of a file.
-     * @return array
-     */
-    function SearchFilesRecursive($startdir, $pattern, $sep) {
-        $structure = File_Find::mapTreeMultiple($startdir);
-
-        // Transform it into a flat structure.
-        foreach ($structure as $dir => $file) {
-        	// it's a directory
-            if (is_array($file)) {
-                $filelist .= Localizer::SearchFilesRecursive($startdir.'/'.$dir, $pattern, $sep);
-            } 
-            else {
-            	// it's a file
-                if (preg_match($pattern, $file)) {
-                    $filelist .= $sep.$startdir.'/'.$file;
-                }
-            }
-        }
-        return $filelist;
-    } // fn SearchFilesRecursive
-
-
-	/**
-     * Go through subdirectorys and create language files for given Id.
-     */
-    function CreateLanguageFilesRecursive($p_languageId) {
-        global $g_localizerConfig;
-        $searchPattern = $this->getFilePattern();     
-        //$search = '/('.LOCALIZER_FILENAME_PREFIX.'|'.LOCALIZER_FILENAME_PREFIX_GLOBAL.').'.LOCALIZER_DEFAULT_LANG.'.xml/';     
-        $sep = '|';
-        $files = Localizer::SearchFilesRecursive($g_localizerConfig['BASE_DIR'], $search, $sep);
-        $files = explode($sep, $files);
-
-        foreach ($files as $pathname) {
-            if ($pathname) {
-                $fileNameParts = explode('.', basename($pathname));
-                $base = $fileNameParts[0];
-                $dir = dirname($pathname);
-                // read the default file
-                $defaultLang =& new LocalizerLanguage($base, $dir, $g_localizerConfig['DEFAULT_LANGUAGE']);
-                $defaultLang->loadFile(Localizer::GetMode());
-                $defaultLang->clearValues();
-                $defaultLang->setLanguageId($p_languageId);
-                // if file already exists -> skip
-                if (!file_exists($defaultLang->getFilePath())) {
-	                $defaultLang->saveFile(Localizer::GetMode());
-                }
-            }
-        }
-    } // fn CreateLanguageFilesRecursive
-	
+	function getFilePattern($p_languageId = null) { }
+	function getLanguagesInDirectory($p_prefix, $p_directory) { }	
 } // class LocalizerFileFormat
 
 
@@ -89,12 +19,10 @@ class LocalizerFileFormat_GS extends LocalizerFileFormat {
      *
      * @return boolean
      */
-	function load(&$p_localizerLanguage) {
+	function load(&$p_localizerLanguage) 
+	{
     	$p_localizerLanguage->setMode('gs');
         $filePath = LocalizerFileFormat_GS::GetFilePath($p_localizerLanguage);     
-	    if (LocalizerFileFormat::IsLoaded($filePath)) {
-	        return true;
-	    }
         if (file_exists($filePath)) {
 	        $lines = file($filePath);
 	        foreach ($lines as $line) {
@@ -123,7 +51,8 @@ class LocalizerFileFormat_GS extends LocalizerFileFormat {
      * @return string
      *		File contents
      */
-	function save(&$p_localizerLanguage) {
+	function save(&$p_localizerLanguage) 
+	{
     	$data = "<?php\n";
     	$translationTable = $p_localizerLanguage->getTranslationTable();
     	foreach ($translationTable as $key => $value) {
@@ -145,10 +74,23 @@ class LocalizerFileFormat_GS extends LocalizerFileFormat {
     } // fn save
     
 	
-	function getFilePattern() {
+    /**
+     * Get a regular expression that will match the name of the file.
+     * @param string p_languageId
+     *      (optional) If specified, give the pattern that will match this language ID.
+     * @return string
+     */
+	function getFilePattern($p_languageId = null) 
+	{
 	    global $g_localizerConfig;
-	    return '^('.$g_localizerConfig['FILENAME_PREFIX']
-	           .'|'.$g_localizerConfig['FILENAME_PREFIX_GLOBAL'].')\.[a-z]{2,2}\.php$';
+	    if (is_null($p_languageId)) {
+    	    return '^('.$g_localizerConfig['FILENAME_PREFIX']
+    	           .'|'.$g_localizerConfig['FILENAME_PREFIX_GLOBAL'].')\.[a-z]{2,2}\.php$';
+	    }
+	    else {
+    	    return '^('.$g_localizerConfig['FILENAME_PREFIX']
+    	           .'|'.$g_localizerConfig['FILENAME_PREFIX_GLOBAL'].')\.'.$p_languageId.'\.php$';	        
+	    }
 	} // fn getFilePattern
 	
 
@@ -157,7 +99,8 @@ class LocalizerFileFormat_GS extends LocalizerFileFormat {
 	 * @param LocalizerLanguage p_localizerLanguage
 	 * @return string
 	 */
-	function getFilePath($p_localizerLanguage) {
+	function getFilePath($p_localizerLanguage) 
+	{
 	    global $g_localizerConfig;
        	return $g_localizerConfig['BASE_DIR'].$p_localizerLanguage->getDirectory()
        	    .'/'.$p_localizerLanguage->getPrefix()
@@ -170,7 +113,8 @@ class LocalizerFileFormat_GS extends LocalizerFileFormat {
 	 * @return array
 	 *     An array of LanguageMetadata
 	 */
-	function getLanguages() {
+	function getLanguages() 
+	{
     	global $Campsite;
         $query = 'SELECT  Name, OrigName AS NativeName, Code as LanguageCode, Code AS Id
                     FROM Languages
@@ -196,7 +140,8 @@ class LocalizerFileFormat_GS extends LocalizerFileFormat {
 	/**
 	 * @return array
 	 */
-	function getLanguagesInDirectory($p_prefix, $p_directory) {
+	function getLanguagesInDirectory($p_prefix, $p_directory) 
+	{
 	    global $g_localizerConfig;
     	// Detect files directly
         $files = File_Find::mapTreeMultiple($g_localizerConfig['BASE_DIR'].$p_directory, 1);
@@ -219,7 +164,8 @@ class LocalizerFileFormat_XML extends LocalizerFileFormat {
     var $m_serializeOptions = array();
     var $m_unserializeOptions = array();
     
-    function LocalizerFileFormat_XML() {
+    function LocalizerFileFormat_XML() 
+    {
         global $g_localizerConfig;
         $this->m_serializeOptions = array(
              						// indent with tabs
@@ -242,12 +188,10 @@ class LocalizerFileFormat_XML extends LocalizerFileFormat {
      * @param LocalizerLanguage p_localizerLanguage
      * @return boolean
      */
-	function load(&$p_localizerLanguage) {
+	function load(&$p_localizerLanguage) 
+	{
     	$p_localizerLanguage->setMode('xml');
         $filePath = LocalizerFileFormat_XML::GetFilePath($p_localizerLanguage);
-        if (LocalizerFileFormat::IsLoaded($filePath)) {
-	        return true;
-	    }
         if (file_exists($filePath)) {
             $xml = File::readAll($filePath);
             File::close($filePath, FILE_MODE_READ);
@@ -275,7 +219,8 @@ class LocalizerFileFormat_XML extends LocalizerFileFormat {
      *      The XML that was written on success,
      *      FALSE on error.
      */
-	function save(&$p_localizerLanguage) {
+	function save(&$p_localizerLanguage) 
+	{
     	$saveData = array();
     	$saveData["Id"] = $p_localizerLanguage->getLanguageId();
     	$origTranslationTable =& $p_localizerLanguage->getTranslationTable();
@@ -312,7 +257,8 @@ class LocalizerFileFormat_XML extends LocalizerFileFormat {
 	 * @param LocalizerLanguage p_localizerLanguage
 	 * @return string
 	 */
-	function getFilePath($p_localizerLanguage) {
+	function getFilePath($p_localizerLanguage) 
+	{
 	    global $g_localizerConfig;
        	return $g_localizerConfig['BASE_DIR'].$p_localizerLanguage->getDirectory()
        	    .'/'.$p_localizerLanguage->getPrefix()
@@ -322,12 +268,22 @@ class LocalizerFileFormat_XML extends LocalizerFileFormat {
 
 	
 	/**
+     * Get a regular expression that will match the name of the file.
+     * @param string p_languageId
+     *      (optional) If specified, give the pattern that will match this language ID.
 	 * @return string
 	 */
-	function getFilePattern() {
+	function getFilePattern($p_languageId = null) 
+	{
 	    global $g_localizerConfig;
-	    return '^('.$g_localizerConfig['FILENAME_PREFIX']
-	           .'|'.$g_localizerConfig['FILENAME_PREFIX_GLOBAL'].')\.[a-z]{2,2}_[a-z]{2,2}\.xml$';
+	    if (is_null($p_languageId)) {
+    	    return '^('.$g_localizerConfig['FILENAME_PREFIX']
+    	           .'|'.$g_localizerConfig['FILENAME_PREFIX_GLOBAL'].')\.[a-z]{2,2}_[a-z]{2,2}\.xml$';
+	    }
+	    else {
+    	    return '^('.$g_localizerConfig['FILENAME_PREFIX']
+    	           .'|'.$g_localizerConfig['FILENAME_PREFIX_GLOBAL'].')\.'.$p_languageId.'\.xml$';	        
+	    }
 	} // fn getFilePattern
 	
 
@@ -336,7 +292,8 @@ class LocalizerFileFormat_XML extends LocalizerFileFormat {
 	 * Get all supported languages as an array of LanguageMetadata objects.
 	 * @return array
 	 */
-	function getLanguages() {
+	function getLanguages() 
+	{
 	    global $g_localizerConfig;
 	    $fileName = $g_localizerConfig['BASE_DIR']
 	               .$g_localizerConfig['LANGUAGE_METADATA_FILENAME'];
@@ -365,7 +322,8 @@ class LocalizerFileFormat_XML extends LocalizerFileFormat {
 	/**
 	 * @return array
 	 */
-	function getLanguagesInDirectory($p_prefix, $p_directory) {
+	function getLanguagesInDirectory($p_prefix, $p_directory) 
+	{
 	    global $g_localizerConfig;
     	// Detect files directly
         $files = File_Find::mapTreeMultiple($g_localizerConfig['BASE_DIR'].$p_directory, 1);
