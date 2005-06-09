@@ -7,7 +7,8 @@
  * @return string
  *      HTML string of <options>.
  */
-function LanguageMenu($p_languageMetadata, $p_selectedValue) {
+function LanguageMenu($p_languageMetadata, $p_selectedValue) 
+{
 	$options = '';
     foreach($p_languageMetadata as $language) {
         if ($p_selectedValue == $language->getLanguageId()) {
@@ -26,7 +27,8 @@ function LanguageMenu($p_languageMetadata, $p_selectedValue) {
  * Creates a form for translation.
  * @param array $p_request
  */
-function translationForm($p_request) {
+function translationForm($p_request) 
+{
     global $g_localizerConfig;
 	$localizerTargetLanguage = Input::Get('localizer_target_language', 'string', 
 	                                      $g_localizerConfig['DEFAULT_LANGUAGE'], true);
