@@ -17,7 +17,8 @@ class ArticlePublish extends DatabaseObject {
 	 * @param string p_publishTime
 	 *
 	 */
-	function ArticlePublish($p_articleId = null, $p_languageId = null, $p_publishTime = null) {
+	function ArticlePublish($p_articleId = null, $p_languageId = null, $p_publishTime = null) 
+	{
 		parent::DatabaseObject($this->m_columnNames);
 		$this->m_data['NrArticle'] = $p_articleId;
 		$this->m_data['IdLanguage'] = $p_languageId;
@@ -33,7 +34,8 @@ class ArticlePublish extends DatabaseObject {
 	 * This can be NULL for no action, 'P' for Publish, or 'U' for Unpublish.
 	 * @return mixed
 	 */ 
-	function getPublishAction() {
+	function getPublishAction() 
+	{
 		return $this->m_data['Publish'];
 	} // fn getPublishAction
 
@@ -43,7 +45,8 @@ class ArticlePublish extends DatabaseObject {
 	 * This can be NULL for no action, 'P' for Publish, or 'U' for Unpublish.	 
 	 * @return void
 	 */
-	function setPublishAction($p_value) {
+	function setPublishAction($p_value) 
+	{
 		$p_value = strtoupper($p_value);
 		if ( ($p_value == 'P') || ($p_value == 'U') ) {
 			$this->setProperty('Publish', $p_value);
@@ -59,7 +62,8 @@ class ArticlePublish extends DatabaseObject {
 	 * This can be NULL for no action, 'S' for Show, or 'R' for Remove.
 	 * @return mixed
 	 */
-	function getFrontPageAction() {
+	function getFrontPageAction() 
+	{
 		return $this->m_data['FrontPage'];
 	} // fn getFrontPageAction
 	
@@ -69,7 +73,8 @@ class ArticlePublish extends DatabaseObject {
 	 * This can be NULL for no action, 'S' for Show, or 'R' for Remove.
 	 * @return mixed
 	 */
-	function setFrontPageAction($p_value) {
+	function setFrontPageAction($p_value) 
+	{
 		$p_value = strtoupper($p_value);
 		if ( ($p_value == 'S') || ($p_value == 'R') ) {
 			$this->setProperty('FrontPage', $p_value);
@@ -85,7 +90,8 @@ class ArticlePublish extends DatabaseObject {
 	 * This can be NULL for no action, 'S' for Show, or 'R' for Remove.
 	 * @return mixed
 	 */
-	function getSectionPageAction() {
+	function getSectionPageAction() 
+	{
 		return $this->m_data['SectionPage'];
 	} // fn getSectionPageAction
 	
@@ -95,7 +101,8 @@ class ArticlePublish extends DatabaseObject {
 	 * This can be NULL for no action, 'S' for Show, or 'R' for Remove.
 	 * @return mixed
 	 */
-	function setSectionPageAction($p_value) {
+	function setSectionPageAction($p_value) 
+	{
 		$p_value = strtoupper($p_value);
 		if ( ($p_value == 'S') || ($p_value == 'R') ) {
 			$this->setProperty('SectionPage', $p_value);
@@ -110,7 +117,8 @@ class ArticlePublish extends DatabaseObject {
 	 * Get the time the event is scheduled to happen.
 	 * @return string
 	 */
-	function getPublishTime() {
+	function getPublishTime() 
+	{
 		return $this->m_data['PublishTime'];
 	} // fn getPublishTime
 	
@@ -123,7 +131,8 @@ class ArticlePublish extends DatabaseObject {
 	 * @param int p_languageId
 	 * @return array
 	 */
-	function GetArticleEvents($p_articleId, $p_languageId = null) {
+	function GetArticleEvents($p_articleId, $p_languageId = null) 
+	{
 		global $Campsite;
 		$queryStr = 'SELECT * FROM ArticlePublish '
 					." WHERE NrArticle=$p_articleId";

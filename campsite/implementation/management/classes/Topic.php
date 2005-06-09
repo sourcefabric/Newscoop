@@ -14,7 +14,8 @@ class Topic extends DatabaseObject {
 	 * @param int p_id
 	 * @param int p_languageId
 	 */
-	function Topic($p_id = null, $p_languageId = null) { 
+	function Topic($p_id = null, $p_languageId = null) 
+	{ 
 		parent::DatabaseObject($this->m_columnNames);
 		$this->m_data['Id'] = $p_id;
 		$this->m_data['LanguageId'] = $p_languageId;
@@ -27,7 +28,8 @@ class Topic extends DatabaseObject {
 	/**
 	 * @return string
 	 */
-	function getName() {
+	function getName() 
+	{
 		return $this->getProperty('Name');
 	} // fn getName
 	
@@ -35,7 +37,8 @@ class Topic extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getTopicId() {
+	function getTopicId() 
+	{
 		return $this->getProperty('Id');
 	} // fn getTopicId
 	
@@ -44,7 +47,8 @@ class Topic extends DatabaseObject {
 	 * Get the language of the topic.
 	 * @return int
 	 */
-	function getLanguageId() {
+	function getLanguageId() 
+	{
 	    return $this->getProperty('LanguageId');
 	} // fn getLanguageId
 	
@@ -52,7 +56,8 @@ class Topic extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getParentId() {
+	function getParentId() 
+	{
 		return $this->getProperty('ParentId');
 	}
 	
@@ -63,7 +68,8 @@ class Topic extends DatabaseObject {
 	 *
 	 * @return array
 	 */
-	function getPath() {
+	function getPath() 
+	{
 		global $Campsite;
 		$row = true;
 		$currentId = $this->m_data['Id'];
@@ -88,7 +94,8 @@ class Topic extends DatabaseObject {
 	 * @param array p_sqlOptions
 	 * @return array
 	 */
-	function getSubtopics($p_languageId = null, $p_sqlOptions = null) {
+	function getSubtopics($p_languageId = null, $p_sqlOptions = null) 
+	{
 		global $Campsite;
 		$queryStr = 'SELECT * FROM Topics '
 					.' WHERE ParentId = '.$this->m_data['Id'];
@@ -107,7 +114,8 @@ class Topic extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function hasSubtopics() {
+	function hasSubtopics() 
+	{
 		global $Campsite;
 		// Returned the cached value if available.
 		if (!is_null($this->m_hasSubtopics)) {
@@ -123,7 +131,8 @@ class Topic extends DatabaseObject {
 	 * @param string
 	 * @return array
 	 */
-	function GetByName($p_name)  {
+	function GetByName($p_name)  
+	{
 		$p_name = mysql_real_escape_string($p_name);
 		$queryStr = "SELECT * FROM Topics WHERE Name LIKE '%$p_name%'";
 		$matchTopics =& DbObjectArray::Create('Topic', $queryStr);

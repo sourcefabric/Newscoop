@@ -16,7 +16,8 @@ class ArticleType extends DatabaseObject {
 	 * @param int p_articleId
 	 * @param int p_languageId
 	 */
-	function ArticleType($p_articleType, $p_articleId, $p_languageId) {
+	function ArticleType($p_articleType, $p_articleId, $p_languageId) 
+	{
 		$this->m_dbTableName = 'X'.$p_articleType;
 		// Get user-defined values.
 		$dbColumns = $this->getUserDefinedColumns();
@@ -37,7 +38,8 @@ class ArticleType extends DatabaseObject {
 	 * @param int p_destArticleId
 	 * @return void
 	 */
-	function copy($p_destArticleId) {
+	function copy($p_destArticleId) 
+	{
 		global $Campsite;
 		$tmpData = $this->m_data;
 		unset($tmpData['NrArticle']);
@@ -58,7 +60,8 @@ class ArticleType extends DatabaseObject {
 	 * @param int p_destLanguageId
 	 * @return void
 	 */
-	function copyToExistingRecord($p_destArticleId, $p_destLanguageId = null) {
+	function copyToExistingRecord($p_destArticleId, $p_destLanguageId = null) 
+	{
 		global $Campsite;
 		$tmpData = $this->m_data;
 		unset($tmpData['NrArticle']);
@@ -84,7 +87,8 @@ class ArticleType extends DatabaseObject {
 	 *
 	 * @return array
 	 */
-	function getUserDefinedColumns() {
+	function getUserDefinedColumns() 
+	{
 		global $Campsite;
 		$queryStr = 'SHOW COLUMNS FROM '.$this->m_dbTableName
 					." LIKE 'F%'";
@@ -107,7 +111,8 @@ class ArticleType extends DatabaseObject {
 	 *
 	 * @return array
 	 */ 
-	function GetAllTypes() {
+	function GetAllTypes() 
+	{
 		global $Campsite;
 		$queryStr = "SHOW TABLES LIKE 'X%'";
 		$tableNames = $Campsite['db']->GetCol($queryStr);

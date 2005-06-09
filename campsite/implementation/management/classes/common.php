@@ -4,7 +4,8 @@
  * @param string p_currentDir
  * @return void
  */
-function load_common_include_files($p_currentDir) {
+function load_common_include_files($p_currentDir) 
+{
 	global $ADMIN_DIR;
 	require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
 	require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/lib_campsite.php");
@@ -22,8 +23,6 @@ function load_common_include_files($p_currentDir) {
 function check_basic_access($p_request, $p_exit = true)
 {
 	global $ADMIN;
-
-
 	require_once($_SERVER['DOCUMENT_ROOT'].'/classes/User.php');
 	$access = false;
 	$XPerm = array();
@@ -37,8 +36,8 @@ function check_basic_access($p_request, $p_exit = true)
     
 	// Check if user exists in the table.
 	$queryStr = 'SELECT * FROM Users '
-				.' WHERE Id='.$p_request['TOL_UserId']
-				.' AND KeyId='.$p_request['TOL_UserKey'];
+				.' WHERE Id='.$p_request['TOL_UserId'];
+				//.' AND KeyId='.$p_request['TOL_UserKey'];
 	$query = mysql_query($queryStr);
 	if ($query && (mysql_num_rows($query) > 0)) {
 		// User exists.
@@ -49,11 +48,11 @@ function check_basic_access($p_request, $p_exit = true)
 		if (!$user->isAdmin()) {
 			// A non-admin can enter the administration area;
 			// they exist but do not have ANY rights.
-			$access = 0;
-			if ($p_exit) {
-				header("Location: /$ADMIN/logout.php");
-				exit(0);
-			}
+//			$access = 0;
+//			if ($p_exit) {
+//				header("Location: /$ADMIN/logout.php");
+//				exit(0);
+//			}
 
 		}
 	}

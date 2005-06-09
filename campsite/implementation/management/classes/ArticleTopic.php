@@ -6,14 +6,16 @@ class ArticleTopic extends DatabaseObject {
 	var $m_dbTableName = 'ArticleTopics';
 	var $m_columnNames = array('NrArticle', 'TopicId');
 	
-	function ArticleTopic() {
+	function ArticleTopic() 
+	{
 		parent::DatabaseObject($this->m_columnNames);
 	} // constructor
 	
 	/**
 	 * @return int
 	 */
-	function getTopicId() {
+	function getTopicId() 
+	{
 		return $this->getProperty('TopicId');
 	} // fn getTopicId
 	
@@ -21,7 +23,8 @@ class ArticleTopic extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getArticleId() {
+	function getArticleId() 
+	{
 		return $this->getProperty('NrArticle');
 	} // fn getArticleId
 
@@ -32,7 +35,8 @@ class ArticleTopic extends DatabaseObject {
 	 * @param int p_articleId
 	 * @return void
 	 */
-	function AddTopicToArticle($p_topicId, $p_articleId) {
+	function AddTopicToArticle($p_topicId, $p_articleId) 
+	{
 		global $Campsite;
 		$queryStr = 'INSERT IGNORE INTO ArticleTopics(NrArticle, TopicId)'
 					.' VALUES('.$p_articleId.', '.$p_topicId.')';
@@ -46,7 +50,8 @@ class ArticleTopic extends DatabaseObject {
 	 * @param int p_articleId
 	 * @return void
 	 */
-	function RemoveTopicFromArticle($p_topicId, $p_articleId) {
+	function RemoveTopicFromArticle($p_topicId, $p_articleId) 
+	{
 		global $Campsite;
 		$queryStr = "DELETE FROM ArticleTopics WHERE NrArticle=$p_articleId AND TopicId=$p_topicId";
 		$Campsite['db']->Execute($queryStr);
@@ -58,7 +63,8 @@ class ArticleTopic extends DatabaseObject {
 	 * @param int p_articleId
 	 * @return void
 	 */
-	function OnArticleDelete($p_articleId) {
+	function OnArticleDelete($p_articleId) 
+	{
 		global $Campsite;
 		$queryStr = 'DELETE FROM ArticleTopics'
 					." WHERE NrArticle='".$p_articleId."'";
@@ -72,7 +78,8 @@ class ArticleTopic extends DatabaseObject {
 	 * @param int p_destArticleId
 	 * @return void
 	 */
-	function OnArticleCopy($p_srcArticleId, $p_destArticleId) {
+	function OnArticleCopy($p_srcArticleId, $p_destArticleId) 
+	{
 		global $Campsite;
 		$queryStr = 'SELECT * FROM ArticleTopics WHERE NrArticle='.$p_srcArticleId;
 		$rows = $Campsite['db']->GetAll($queryStr);
@@ -98,7 +105,8 @@ class ArticleTopic extends DatabaseObject {
 	 *
 	 * @return array
 	 */
-	function GetArticleTopics($p_articleId, $p_languageId = null, $p_sqlOptions = null) {
+	function GetArticleTopics($p_articleId, $p_languageId = null, $p_sqlOptions = null) 
+	{
 		global $Campsite;
 		$tmpTopic =& new Topic();
 		$columnNames = implode(',', $tmpTopic->getColumnNames(true));

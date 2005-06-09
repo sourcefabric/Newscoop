@@ -48,7 +48,8 @@ class User extends DatabaseObject {
 		'Text2',
 		'Text3');
 	
-	function User($p_userId = null) {
+	function User($p_userId = null) 
+	{
 		parent::DatabaseObject($this->m_columnNames);
 		if (is_numeric($p_userId) && ($p_userId > 0)) {
 			$this->m_data['Id'] = $p_userId;
@@ -59,7 +60,8 @@ class User extends DatabaseObject {
 	} // constructor
 	
 	
-	function fetch($p_recordSet = null) {
+	function fetch($p_recordSet = null) 
+	{
 		global $Campsite;
 		parent::fetch($p_recordSet);
 		// Fetch the user's permissions.
@@ -100,7 +102,8 @@ class User extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getId() {
+	function getId() 
+	{
 		return $this->getProperty('Id');
 	} // fn getId
 	
@@ -109,7 +112,8 @@ class User extends DatabaseObject {
 	 *
 	 * @return int
 	 */
-	function getKeyId() {
+	function getKeyId() 
+	{
 		return $this->getProperty('KeyId');
 	} // fn getKeyId
 	
@@ -118,7 +122,8 @@ class User extends DatabaseObject {
 	 * Get the real name of the user.
 	 * @return string
 	 */
-	function getName() {
+	function getName() 
+	{
 		return $this->getProperty('Name');
 	} // fn getName
 	
@@ -127,7 +132,8 @@ class User extends DatabaseObject {
 	 * Get the login name of the user.
 	 * @return string
 	 */
-	function getUserName() {
+	function getUserName() 
+	{
 		return $this->getProperty('UName');
 	} // fn getUName
 
@@ -141,7 +147,8 @@ class User extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function hasPermission($p_permissionString) {
+	function hasPermission($p_permissionString) 
+	{
 		return (isset($this->m_permissions[$p_permissionString])
 				&& $this->m_permissions[$p_permissionString]);
 	} // fn hasPermission
@@ -150,7 +157,8 @@ class User extends DatabaseObject {
 	/**
 	 * @return boolean
 	 */
-	function isAdmin() {
+	function isAdmin() 
+	{
 		return (count($this->m_permissions) > 0);
 	} // fn isAdmin
 
@@ -158,7 +166,8 @@ class User extends DatabaseObject {
 	/**
 	 * @return boolean
 	 */
-	function isValidPassword($p_password) {
+	function isValidPassword($p_password) 
+	{
 		global $Campsite;
 		$queryStr = 'SELECT * FROM Users '
 				. " WHERE Id = '".mysql_real_escape_string($this->getId())."' "
@@ -173,7 +182,8 @@ class User extends DatabaseObject {
 	/**
 	 * @return boolean
 	 */
-	function setPassword($p_password) {
+	function setPassword($p_password) 
+	{
 		global $Campsite;
 		$queryStr = "SELECT PASSWORD('".mysql_real_escape_string($p_password)."') AS PWD";
 		$row = $Campsite['db']->GetRow($queryStr);
@@ -190,7 +200,8 @@ class User extends DatabaseObject {
 	 *		boolean - whether the login was successful
 	 *		object - if successful, the user object
 	 */
-	function Login($p_userName, $p_userPassword) {
+	function Login($p_userName, $p_userPassword) 
+	{
 		global $Campsite;
 		$queryStr = 'SELECT * FROM Users '
 					." WHERE UName='$p_userName' "
