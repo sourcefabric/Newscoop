@@ -9,7 +9,8 @@ class Publication extends DatabaseObject {
 	var $m_keyIsAutoIncrement = true;
 	var $m_columnNames = array('Id', 'Name', 'IdDefaultLanguage', 'PayTime', 'TimeUnit', 'UnitCost', 'Currency', 'TrialTime', 'PaidTime', 'IdDefaultAlias', 'IdURLType');
 	
-	function Publication($p_publicationId = null) {
+	function Publication($p_publicationId = null) 
+	{
 		parent::DatabaseObject($this->m_columnNames);
 		$this->m_data['Id'] = $p_publicationId;
 		if ($this->keyValuesExist()) {
@@ -18,17 +19,20 @@ class Publication extends DatabaseObject {
 	} // constructor
 
 	
-	function getPublicationId() {
+	function getPublicationId() 
+	{
 		return $this->getProperty('Id');
 	} // fn getPublicationId
 	
 	
-	function getName() {
+	function getName() 
+	{
 		return $this->getProperty('Name');
 	} // fn getName
 
 	
-	function getLanguageId() {
+	function getLanguageId() 
+	{
 		return $this->getProperty('IdDefaultLanguage');
 	} // fn getLanguageId
 	
@@ -37,7 +41,8 @@ class Publication extends DatabaseObject {
 	 * Return all publications as an array of Publication objects.
 	 * @return array
 	 */
-	function GetAllPublications() {
+	function GetAllPublications() 
+	{
 		$queryStr = 'SELECT * FROM Publications ORDER BY Name';
 		$publications =& DbObjectArray::Create('Publication', $queryStr);
 		return $publications;

@@ -43,7 +43,8 @@ class ImageSearch {
 	 *			Search to see if the image is in use.
 	 *
 	 */
-	function ImageSearch($p_imagesPerPage = 0) {
+	function ImageSearch($p_imagesPerPage = 0) 
+	{
 		global $Campsite;
 		$this->m_orderBy = Input::Get('order_by', 'string', 'id', true);
 		$this->m_orderDirection = Input::Get('order_direction', 'string', 'ASC', true);
@@ -124,7 +125,8 @@ class ImageSearch {
 	 * @return array
 	 *		An array of Image objects.
 	 */
-	function run() {
+	function run() 
+	{
 		global $Campsite;
 		$tmpImage =& new Image();
 		$columnNames = $tmpImage->getColumnNames(true);
@@ -183,7 +185,8 @@ class ImageSearch {
 	 * Return the images that were found.
 	 * @return array
 	 */
-	function getImages() {
+	function getImages() 
+	{
 		return $this->m_imageData;
 	} // fn getImages
 	
@@ -198,7 +201,8 @@ class ImageSearch {
 	 *
 	 * @return int
 	 */
-	function getNumImagesFound() {
+	function getNumImagesFound() 
+	{
 		return $this->m_numImagesFound;
 	} // fn getNumImagesFound
 	
@@ -207,7 +211,8 @@ class ImageSearch {
 	 * The current value for the number of images shown per page.
 	 * @return int
 	 */
-	function getImagesPerPage() {
+	function getImagesPerPage() 
+	{
 		return $this->m_imagesPerPage;
 	} // fn getImagesPerPage
 	
@@ -219,7 +224,8 @@ class ImageSearch {
 	 *
 	 * @return void
 	 */
-	function setImagesPerPage($p_value) {
+	function setImagesPerPage($p_value) 
+	{
 		$this->m_imagesPerPage = $p_value;
 	} // fn setImagesPerPage
 	
@@ -249,7 +255,8 @@ class ImageNav {
 	 * @param string p_view
 	 *		Can be: ["thumbnail"|"gallery"|"flat"].  The type of display.
 	 */
-	function ImageNav($p_imagesPerPage = 0, $p_view = "thumbnail") {
+	function ImageNav($p_imagesPerPage = 0, $p_view = "thumbnail") 
+	{
 		if ($p_imagesPerPage > 0) {
 			$this->m_imagesPerPage = $p_imagesPerPage;
 		}
@@ -273,13 +280,15 @@ class ImageNav {
 	 * @param string p_value
 	 * @return void
 	 */
-	function setProperty($p_name, $p_value) {
+	function setProperty($p_name, $p_value) 
+	{
 		$this->m_input[$p_name] = $p_value;
 		$this->__buildLinks();	
 	} // fn setProperty
 	
 	
-	function clearSearchStrings() {
+	function clearSearchStrings() 
+	{
 		foreach ($this->m_searchStrings as $searchString) {
 			$this->m_input[$searchString] = '';
 		}
@@ -291,7 +300,8 @@ class ImageNav {
 	 * Build the links based on the input.
 	 * @return void
 	 */
-	function __buildLinks() {
+	function __buildLinks() 
+	{
 		$this->m_staticSearchLink = '';
 		$this->m_keywordSearchLink = '';
 		$this->m_orderByLink = '';
@@ -329,7 +339,8 @@ class ImageNav {
 	/**
 	 * @return string
 	 */
-	function getKeywordSearchLink() {
+	function getKeywordSearchLink() 
+	{
 		return $this->m_keywordSearchLink;
 	} // fn getKeywordSearchLink
 	
@@ -337,7 +348,8 @@ class ImageNav {
 	/**
 	 * @return string
 	 */
-	function getPreviousLink() {
+	function getPreviousLink() 
+	{
 		return $this->m_previousLink;
 	} // fn getPreviousLink
 	
@@ -345,7 +357,8 @@ class ImageNav {
 	/**
 	 * @return string
 	 */
-	function getNextLink() {
+	function getNextLink() 
+	{
 		return $this->m_nextLink;
 	} // fn getNextLink
 	
@@ -354,7 +367,8 @@ class ImageNav {
 	 * Produces a link to reproduce the same search.
 	 * @return string
 	 */
-	function getSearchLink() {
+	function getSearchLink() 
+	{
 		return $this->m_staticSearchLink;
 	} // fn getSearchLink
 		

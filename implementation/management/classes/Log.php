@@ -20,7 +20,8 @@ class Log extends DatabaseObject {
 	 *
 	 * @return void
 	 */
-	function Message($p_text, $p_userName = '', $p_eventId = 0) {
+	function Message($p_text, $p_userName = '', $p_eventId = 0) 
+	{
 		global $Campsite;
 		$queryStr = "INSERT INTO Log SET TStamp=NOW(), IdEvent=$p_eventId, User='$p_userName', Text='".mysql_real_escape_string($p_text)."'";
 		$Campsite['db']->Execute($queryStr);

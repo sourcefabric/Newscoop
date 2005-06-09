@@ -23,7 +23,9 @@ class Section extends DatabaseObject {
 	 * A section is a part of an issue.
 	 * @param int p_publication
 	 */
-	function Section($p_publicationId = null, $p_issueId = null, $p_languageId = null, $p_sectionId = null) {
+	function Section($p_publicationId = null, $p_issueId = null, 
+	                 $p_languageId = null, $p_sectionId = null) 
+	{
 		parent::DatabaseObject($this->m_columnNames);
 		$this->m_data['IdPublication'] = $p_publicationId;
 		$this->m_data['NrIssue'] = $p_issueId;
@@ -51,7 +53,9 @@ class Section extends DatabaseObject {
 	 *
 	 * @return array
 	 */
-	function GetSections($p_publicationId = null, $p_issueId = null, $p_languageId = null, $p_sqlOptions = null) {
+	function GetSections($p_publicationId = null, $p_issueId = null,
+	                     $p_languageId = null, $p_sqlOptions = null) 
+	{
 		$queryStr = 'SELECT * FROM Sections';
 		$whereClause = array();
 		if (!is_null($p_publicationId)) {
@@ -81,7 +85,8 @@ class Section extends DatabaseObject {
 	 * @param int p_languageId
 	 * @return int
 	 */
-	function GetTotalSections($p_publicationId = null, $p_issueId = null, $p_languageId = null) {
+	function GetTotalSections($p_publicationId = null, $p_issueId = null, $p_languageId = null) 
+	{
 		global $Campsite;
 		$queryStr = 'SELECT COUNT(*) FROM Sections';
 		$whereClause = array();
@@ -109,7 +114,8 @@ class Section extends DatabaseObject {
 	 * @param int p_languageId
 	 * @return int
 	 */
-	function GetUnusedSectionId($p_publicationId, $p_issueId, $p_languageId) {
+	function GetUnusedSectionId($p_publicationId, $p_issueId, $p_languageId) 
+	{
 		global $Campsite;
 		$queryStr = "SELECT MAX(Number) + 1 FROM Sections "
 					." WHERE IdPublication=$p_publicationId "
@@ -122,7 +128,8 @@ class Section extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getPublicationId() {
+	function getPublicationId() 
+	{
 		return $this->getProperty('IdPublication');
 	} // fn getPublicationId
 	
@@ -130,7 +137,8 @@ class Section extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getIssueId() {
+	function getIssueId() 
+	{
 		return $this->getProperty('NrIssue');
 	} // fn getIssueId
 	
@@ -138,7 +146,8 @@ class Section extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getLanguageId() {
+	function getLanguageId() 
+	{
 		return $this->getProperty('IdLanguage');
 	} // fn getLanguageId
 	
@@ -146,7 +155,8 @@ class Section extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getSectionId() {
+	function getSectionId() 
+	{
 		return $this->getProperty('Number');
 	} // fn getSectionId
 
@@ -154,7 +164,8 @@ class Section extends DatabaseObject {
 	/**
 	 * @return string
 	 */ 
-	function getName() {
+	function getName() 
+	{
 		return $this->getProperty('Name');
 	} // fn getName
 	
@@ -162,7 +173,8 @@ class Section extends DatabaseObject {
 	/**
 	 * @return string
 	 */
-	function getShortName() {
+	function getShortName() 
+	{
 		return $this->getProperty('ShortName');
 	} // fn getShortName
 	
@@ -170,7 +182,8 @@ class Section extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getArticleTemplateId() {
+	function getArticleTemplateId() 
+	{
 		return $this->getProperty('ArticleTplId');
 	} // fn getArticleTemplateId
 	
@@ -178,7 +191,8 @@ class Section extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getSectionTemplateId() {
+	function getSectionTemplateId() 
+	{
 		return $this->getProperty('SectionTplId');
 	} // fn getSectionTemplateId
 	

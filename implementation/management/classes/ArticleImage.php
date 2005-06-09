@@ -10,7 +10,8 @@ class ArticleImage extends DatabaseObject {
 	var $m_columnNames = array('NrArticle', 'IdImage', 'Number');
 	var $m_image = null;
 	
-	function ArticleImage($p_articleId = null, $p_imageId = null, $p_templateId = null) { 
+	function ArticleImage($p_articleId = null, $p_imageId = null, $p_templateId = null) 
+	{ 
 		if (!is_null($p_articleId) && !is_null($p_imageId)) {
 			$this->m_data['NrArticle'] = $p_articleId;
 			$this->m_data['IdImage'] = $p_imageId;
@@ -28,7 +29,8 @@ class ArticleImage extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getImageId() {
+	function getImageId() 
+	{
 		return $this->getProperty('IdImage');
 	} // fn getImageId
 	
@@ -36,7 +38,8 @@ class ArticleImage extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getArticleId() {
+	function getArticleId() 
+	{
 		return $this->getProperty('NrArticle');
 	} // fn getArticleId
 
@@ -44,7 +47,8 @@ class ArticleImage extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getTemplateId() {
+	function getTemplateId() 
+	{
 		return $this->getProperty('Number');
 	} // fn getTemplateId
 	
@@ -52,12 +56,14 @@ class ArticleImage extends DatabaseObject {
 	/**
 	 *
 	 */
-	function getImage() {
+	function getImage() 
+	{
 		return $this->m_image;
 	}
 	
 
-	function GetUnusedTemplateId($p_articleId) {
+	function GetUnusedTemplateId($p_articleId) 
+	{
 		global $Campsite;
 		// Get the highest template ID and add one.
 		$queryStr = "SELECT MAX(Number)+1 FROM ArticleImages WHERE NrArticle=$p_articleId";
@@ -77,7 +83,8 @@ class ArticleImage extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function TemplateIdInUse($p_articleId, $p_templateId) {
+	function TemplateIdInUse($p_articleId, $p_templateId) 
+	{
 		global $Campsite;
 		$queryStr = "SELECT Number FROM ArticleImages"
 					." WHERE NrArticle=$p_articleId AND Number=$p_templateId";
@@ -95,7 +102,8 @@ class ArticleImage extends DatabaseObject {
 	 * Get all the images that belong to this article.
 	 * @return array
 	 */
-	function GetImagesByArticleId($p_articleId) {
+	function GetImagesByArticleId($p_articleId) 
+	{
 		global $Campsite;
 		$tmpImage =& new Image();
 		$columnNames = implode(',', $tmpImage->getColumnNames());
@@ -135,7 +143,8 @@ class ArticleImage extends DatabaseObject {
 	 *
 	 * @return void
 	 */
-	function AddImageToArticle($p_imageId, $p_articleId, $p_templateId = null) {
+	function AddImageToArticle($p_imageId, $p_articleId, $p_templateId = null) 
+	{
 		global $Campsite;
 		if (is_null($p_templateId)) {
 			$p_templateId = ArticleImage::GetUnusedTemplateId($p_articleId);
@@ -155,7 +164,8 @@ class ArticleImage extends DatabaseObject {
 	 *
 	 * @return void
 	 */
-	function SetTemplateId($p_articleId, $p_imageId, $p_templateId) {
+	function SetTemplateId($p_articleId, $p_imageId, $p_templateId) 
+	{
 		global $Campsite;
 		$queryStr = "UPDATE ArticleImages SET Number=$p_templateId"
 					." WHERE NrArticle=$p_articleId AND IdImage=$p_imageId";
@@ -173,7 +183,8 @@ class ArticleImage extends DatabaseObject {
 	 *
 	 * @return void
 	 */
-	function RemoveImageFromArticle($p_imageId, $p_articleId, $p_templateId) {
+	function RemoveImageFromArticle($p_imageId, $p_articleId, $p_templateId) 
+	{
 		global $Campsite;
 		ArticleImage::RemoveImageTagsFromArticleText($p_articleId, $p_templateId);
 		$queryStr = 'DELETE FROM ArticleImages'
@@ -193,7 +204,8 @@ class ArticleImage extends DatabaseObject {
 	 * @param int p_templateId
 	 * @return void
 	 */
-	function RemoveImageTagsFromArticleText($p_articleId, $p_templateId) {
+	function RemoveImageTagsFromArticleText($p_articleId, $p_templateId)
+	{
 		// Get all the articles
 		$articles =& Article::GetArticles(null, null, null, null, $p_articleId);
 		
@@ -225,7 +237,8 @@ class ArticleImage extends DatabaseObject {
 	 * @param int p_imageId
 	 * @return void
 	 */
-	function OnImageDelete($p_imageId) {
+	function OnImageDelete($p_imageId) 
+	{
 		global $Campsite;
 		// Get the articles that use this image.
 		$queryStr = "SELECT * FROM ArticleImages WHERE IdImage=$p_imageId";
@@ -245,7 +258,8 @@ class ArticleImage extends DatabaseObject {
 	 * @param int p_articleId
 	 * @return void
 	 */
-	function OnArticleDelete($p_articleId) {
+	function OnArticleDelete($p_articleId) 
+	{
 		global $Campsite;
 		$queryStr = 'DELETE FROM ArticleImages'
 					." WHERE NrArticle='".$p_articleId."'";
@@ -259,7 +273,8 @@ class ArticleImage extends DatabaseObject {
 	 * @param int p_destArticleId
 	 * @return void
 	 */
-	function OnArticleCopy($p_srcArticleId, $p_destArticleId) {
+	function OnArticleCopy($p_srcArticleId, $p_destArticleId) 
+	{
 		global $Campsite;
 		$queryStr = 'SELECT * FROM ArticleImages WHERE NrArticle='.$p_srcArticleId;
 		$rows = $Campsite['db']->GetAll($queryStr);
@@ -277,7 +292,8 @@ class ArticleImage extends DatabaseObject {
 	 *
 	 * @return array
 	 */
-	function GetArticlesThatUseImage($p_imageId) {
+	function GetArticlesThatUseImage($p_imageId) 
+	{
 		global $Campsite;
 		$article =& new Article();
 		$columnNames = $article->getColumnNames();

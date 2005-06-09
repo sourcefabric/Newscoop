@@ -8,7 +8,8 @@ class Template extends DatabaseObject {
 	var $m_keyIsAutoIncrement = true;
 	var $m_columnNames = array('Id', 'Name', 'Type', 'Level');
 	
-	function Template($p_templateId = null) {
+	function Template($p_templateId = null) 
+	{
 		parent::DatabaseObject($this->m_columnNames);
 		$this->m_data['Id'] = $p_templateId;
 		if ($this->keyValuesExist()) {
@@ -17,7 +18,8 @@ class Template extends DatabaseObject {
 	} // constructor
 	
 	
-	function GetAllTemplates($p_sqlOptions = null) {
+	function GetAllTemplates($p_sqlOptions = null) 
+	{
 		$queryStr = 'SELECT * FROM Templates';
 		if (!is_null($p_sqlOptions)) {
 			$queryStr = DatabaseObject::ProcessOptions($queryStr, $p_sqlOptions);
@@ -30,27 +32,32 @@ class Template extends DatabaseObject {
 	} // fn GetAllTemplates
 	
 	
-	function getTemplateId() {
+	function getTemplateId() 
+	{
 		return $this->getProperty('Id');
 	} // fn getTemplateId
 	
 	
-	function getName() {
+	function getName() 
+	{
 		return $this->getProperty('Name');
 	} // fn getName
 	
 	
-	function getType() {
+	function getType() 
+	{
 		return $this->getProperty('Type');
 	} // fn  getType
 	
 	
-	function getLevel() {
+	function getLevel() 
+	{
 		return $this->getProperty('Level');
 	} // fn getLevel
 	
 	
-	function getAbsoluteUrl() {
+	function getAbsoluteUrl() 
+	{
 		global $Campsite;
 		return $Campsite['WEBSITE_URL'].'/look/'.$this->getProperty('Name');
 	}

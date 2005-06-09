@@ -58,7 +58,8 @@ class DatabaseObject {
 	 *		The column names of this table.  These are optional.
 	 *
 	 */
-	function DatabaseObject($p_columnNames = null) {
+	function DatabaseObject($p_columnNames = null) 
+	{
 		if (!is_null($p_columnNames)) {
 			$this->setColumnNames($p_columnNames);
 		}
@@ -81,7 +82,8 @@ class DatabaseObject {
 	 *
 	 * @return array
 	 */	
-	function getColumnNames($p_withTablePrefix = false) { 
+	function getColumnNames($p_withTablePrefix = false) 
+	{ 
 		if (!$p_withTablePrefix) {
 			return $this->m_columnNames; 
 		}
@@ -104,7 +106,8 @@ class DatabaseObject {
 	 *
 	 * @return void
 	 */
-	function setColumnNames($p_columnNames) {
+	function setColumnNames($p_columnNames) 
+	{
 		foreach ($p_columnNames as $columnName) {
 			$this->m_data[$columnName] = null;
 		}
@@ -129,7 +132,8 @@ class DatabaseObject {
 	 * Return the key as an array indexed by column names.
 	 * @return array
 	 */
-	function getKey() {
+	function getKey() 
+	{
 		$key = array();
 		foreach ($this->m_keyColumnNames as $columnName) {
 			$key[$columnName] = $this->m_data[$columnName];
@@ -153,7 +157,8 @@ class DatabaseObject {
 	 *
 	 * @return void
 	 */
-	function setKey($p_columnNames) {
+	function setKey($p_columnNames) 
+	{
 		if (is_array($p_columnNames)) {
 			if (isset($p_columnNames[0])) {
 				$this->m_keyColumnNames = array_values($p_columnNames);
@@ -174,7 +179,8 @@ class DatabaseObject {
 	 * @param string p_value
 	 * @return void
 	 */
-	function modifyKeyValue($p_columnName, $p_value) {
+	function modifyKeyValue($p_columnName, $p_value) 
+	{
 		if (!isset($this->m_oldKeyValues[$p_columnName])) {
 			$this->m_oldKeyValues[$p_columnName] = $this->m_data[$p_columnName];
 		}
@@ -192,7 +198,8 @@ class DatabaseObject {
 	 * @return boolean
 	 *		TRUE on success, FALSE on failure
 	 */
-	function fetch($p_recordSet = null) {
+	function fetch($p_recordSet = null) 
+	{
 		global $Campsite;
 		
 		if (is_null($p_recordSet)) {
@@ -238,7 +245,8 @@ class DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function exists() {
+	function exists() 
+	{
 		if (!is_null($this->m_exists)) {
 			return $this->m_exists;
 		}
@@ -257,7 +265,8 @@ class DatabaseObject {
 	 *
 	 * @return string
 	 */
-	function getKeyWhereClause() {
+	function getKeyWhereClause() 
+	{
 		$whereParts = array();
 		foreach ($this->m_keyColumnNames as $columnName) {
 			if (isset($this->m_oldKeyValues[$columnName])) {
@@ -278,7 +287,8 @@ class DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function keyValuesExist() {
+	function keyValuesExist() 
+	{
 		foreach ($this->m_keyColumnNames as $columnName) {
 			if (!$this->m_data[$columnName]) {
 				return false;
@@ -301,7 +311,8 @@ class DatabaseObject {
 	 * @return boolean
 	 *		TRUE if the record was added, false if not.
 	 */
-	function create($p_values = null) {
+	function create($p_values = null) 
+	{
 		global $Campsite;
 		$queryStr = 'INSERT IGNORE INTO ' . $this->m_dbTableName;
 		
@@ -360,7 +371,8 @@ class DatabaseObject {
 	 * @return boolean
 	 *		TRUE if the record was deleted, false if not.
 	 */
-	function delete() {
+	function delete() 
+	{
 		global $Campsite;
 		$queryStr = 'DELETE FROM ' . $this->m_dbTableName
 					.' WHERE ' . $this->getKeyWhereClause()
@@ -387,7 +399,8 @@ class DatabaseObject {
 	 *		Return a string if the property exists,
 	 *		return a PEAR_Error otherwise.
 	 */
-	function getProperty($p_dbColumnName, $p_forceFetchFromDatabase = false) {
+	function getProperty($p_dbColumnName, $p_forceFetchFromDatabase = false) 
+	{
 		global $Campsite;
 		if (in_array($p_dbColumnName, $this->m_columnNames)) {
 			if ($p_forceFetchFromDatabase) {
@@ -442,7 +455,8 @@ class DatabaseObject {
 	 * @return boolean
 	 *		TRUE if the database was changed, FALSE if it wasnt.
 	 */
-	function setProperty($p_dbColumnName, $p_value, $p_commit = true, $p_isSql = false) {
+	function setProperty($p_dbColumnName, $p_value, $p_commit = true, $p_isSql = false) 
+	{
 		global $Campsite;
 		// If we are not committing, the value cannot be SQL.
 		if (!$p_commit && $p_isSql) {
@@ -538,7 +552,8 @@ class DatabaseObject {
 	 *		This means that if p_commit is FALSE, this function will 
 	 *		always return false.
 	 */
-	function update($p_columns = null, $p_commit = true, $p_isSql = false) {
+	function update($p_columns = null, $p_commit = true, $p_isSql = false) 
+	{
 		global $Campsite;
 		
 		// Check input
@@ -598,7 +613,8 @@ class DatabaseObject {
 	 * @return boolean
 	 *		Return TRUE if the database was updated, false otherwise.
 	 */
-	function commit($p_ignoreColumns = null) {
+	function commit($p_ignoreColumns = null) 
+	{
 		global $Campsite;
         $setColumns = array();
         foreach ($this->m_data as $columnName => $columnValue) {
@@ -637,7 +653,8 @@ class DatabaseObject {
 	 * @return string
 	 *		Original SQL query with the options appended at the end.
 	 */
-	function ProcessOptions($p_queryStr, $p_sqlOptions) {
+	function ProcessOptions($p_queryStr, $p_sqlOptions) 
+	{
 		if (!is_null($p_sqlOptions)) {
 			if (isset($p_sqlOptions['ORDER BY'])) {
 				if (!is_array($p_sqlOptions['ORDER BY'])) {

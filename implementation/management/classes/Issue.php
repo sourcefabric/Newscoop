@@ -26,7 +26,8 @@ class Issue extends DatabaseObject {
 	 * @param int p_languageId
 	 * @param int p_issueId
 	 */
-	function Issue($p_publicationId = null, $p_languageId = null, $p_issueId = null) {
+	function Issue($p_publicationId = null, $p_languageId = null, $p_issueId = null) 
+	{
 		parent::DatabaseObject($this->m_columnNames);
 		$this->m_data['IdPublication'] = $p_publicationId;
 		$this->m_data['IdLanguage'] = $p_languageId;
@@ -45,7 +46,8 @@ class Issue extends DatabaseObject {
 	 *
 	 * @return int
 	 */
-	function GetNumIssues($p_publicationId = null) {
+	function GetNumIssues($p_publicationId = null) 
+	{
 		global $Campsite;
 		$queryStr = 'SELECT COUNT(*) FROM Issues ';
 		if (is_numeric($p_publicationId)) {
@@ -77,7 +79,12 @@ class Issue extends DatabaseObject {
 	 *
 	 * @return array
 	 */
-	function GetIssues($p_publicationId = null, $p_languageId = null, $p_issueId = null, $p_preferredLanguage = null, $p_sqlOptions = null) {
+	function GetIssues($p_publicationId = null, 
+	                   $p_languageId = null, 
+	                   $p_issueId = null, 
+	                   $p_preferredLanguage = null, 
+	                   $p_sqlOptions = null) 
+	{
 		$queryStr = 'SELECT * ';
 		if (!is_null($p_preferredLanguage)) {
 			$tmpIssue =& new Issue();
@@ -110,7 +117,8 @@ class Issue extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getPublicationId() {
+	function getPublicationId() 
+	{
 		return $this->getProperty('IdPublication');
 	} // fn getPublicationId
 	
@@ -118,7 +126,8 @@ class Issue extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getLanguageId() {
+	function getLanguageId() 
+	{
 		return $this->getProperty('IdLanguage');
 	} // fn getLanguageId
 
@@ -128,7 +137,8 @@ class Issue extends DatabaseObject {
 	 * written in.  The value is cached in case there are multiple
 	 * calls to this function.
 	 */
-	function getLanguageName() {
+	function getLanguageName() 
+	{
 		if (is_null($this->m_languageName)) {
 			$language =& new Language($this->m_data['IdLanguage']);
 			$this->m_languageName = $language->getNativeName();
@@ -140,7 +150,8 @@ class Issue extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getIssueId() {
+	function getIssueId() 
+	{
 		return $this->getProperty('Number');
 	} // fn getIssueId
 	
@@ -148,7 +159,8 @@ class Issue extends DatabaseObject {
 	/**
 	 * @return string
 	 */
-	function getName() {
+	function getName() 
+	{
 		return $this->getProperty('Name');
 	} // fn getName
 	
@@ -156,7 +168,8 @@ class Issue extends DatabaseObject {
 	/**
 	 * @return string
 	 */
-	function getShortName() {
+	function getShortName() 
+	{
 		return $this->getProperty('ShortName');
 	} // fn getShortName
 	
@@ -164,7 +177,8 @@ class Issue extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getArticleTemplateId() {
+	function getArticleTemplateId() 
+	{
 		return $this->getProperty('ArticleTplId');
 	} // fn getArticleTemplateId
 	
@@ -172,7 +186,8 @@ class Issue extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getSectionTemplateId() {
+	function getSectionTemplateId() 
+	{
 		return $this->getProperty('SectionTplId');
 	} // fn getSectionTemplateId
 	
@@ -180,12 +195,14 @@ class Issue extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getIssueTemplateId() {
+	function getIssueTemplateId() 
+	{
 		return $this->getProperty('IssueTplId');
 	} // fn getIssueTemplateId
 	
 	
-	function getPublished() {
+	function getPublished() 
+	{
 		return $this->getProperty('Published');
 	} // fn getPublished
 	
@@ -199,7 +216,8 @@ class Issue extends DatabaseObject {
 	 *
 	 * @return void
 	 */
-	function setPublished($p_value = null) {
+	function setPublished($p_value = null) 
+	{
 		$doPublish = null;
 		if (is_null($p_value)) {
 			if ($this->m_data['Published'] == 'Y') {
@@ -232,7 +250,8 @@ class Issue extends DatabaseObject {
 	} // fn setPublished
 	
 	
-	function getPublicationDate() {
+	function getPublicationDate() 
+	{
 		return $this->getProperty('PublicationDate');
 	} // fn getPublicationDate
 	
@@ -241,7 +260,8 @@ class Issue extends DatabaseObject {
 	 * Get all the languages to which this issue has not been translated.
 	 * @return array
 	 */
-	function getUnusedLanguages() {
+	function getUnusedLanguages() 
+	{
 		$tmpLanguage =& new Language();
 		$columnNames = $tmpLanguage->getColumnNames(true);
 		$queryStr = "SELECT ".implode(',', $columnNames)

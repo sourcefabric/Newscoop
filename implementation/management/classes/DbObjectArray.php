@@ -20,7 +20,8 @@ class DbObjectArray {
 	 *
 	 * @return array
 	 */
-	function Create($p_className, $p_queryStr) {
+	function Create($p_className, $p_queryStr) 
+	{
 		global $Campsite;
 		$retval = array();
 		$rows = $Campsite['db']->GetAll($p_queryStr);
@@ -43,7 +44,8 @@ class DbObjectArray {
 	 * @param string p_columnName
 	 * @return array
 	 */ 
-	function GetColumn($p_array, $p_columnName) {
+	function GetColumn($p_array, $p_columnName) 
+	{
 		$column = array();
 		if (is_array($p_array)) {
 			foreach ($p_array as $dbObject) {
@@ -61,7 +63,8 @@ class DbObjectArray {
 	 * @param array p_array
 	 * @return array
 	 */
-	function GetTable($p_array) {
+	function GetTable($p_array) 
+	{
 		$table = array();
 		if (is_array($p_array)) {
 			foreach ($p_array as $dbObject) {

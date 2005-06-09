@@ -31,7 +31,8 @@ class Image extends DatabaseObject {
 	 *
 	 *
 	 */
-	function Image($p_imageId = null) 	{
+	function Image($p_imageId = null) 	
+	{
 		parent::DatabaseObject($this->m_columnNames);
 		$this->m_data['Id'] = $p_imageId;
 		if ($this->keyValuesExist()) {
@@ -47,7 +48,8 @@ class Image extends DatabaseObject {
 	 * @return boolean
 	 *		TRUE if the record was deleted, false if not.
 	 */
-	function delete() {
+	function delete() 
+	{
 		// Delete all the references to this image.
 		ArticleImage::OnImageDelete($this->getImageId());
 		
@@ -74,7 +76,8 @@ class Image extends DatabaseObject {
 	 * @return boolean
 	 *		Return TRUE if the database was updated, false otherwise.
 	 */
-	function commit() {
+	function commit() 
+	{
 		return parent::commit(array("TimeCreated", "LastModified"));
 	} // fn commit
 	
@@ -84,7 +87,8 @@ class Image extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function inUse() {
+	function inUse() 
+	{
 		global $Campsite;
 		// It is in use only if there is an entry in both
 		// the ArticleImages table and the Articles table.
@@ -103,7 +107,8 @@ class Image extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getImageId() {
+	function getImageId() 
+	{
 		return $this->getProperty('Id');
 	} // fn getImageId
 	
@@ -111,7 +116,8 @@ class Image extends DatabaseObject {
 	/**
 	 * @return string
 	 */
-	function getDescription() {
+	function getDescription() 
+	{
 		return $this->getProperty('Description');
 	} // fn getDescription
 	
@@ -119,7 +125,8 @@ class Image extends DatabaseObject {
 	/**
 	 * @return string
 	 */
-	function getPhotographer() {
+	function getPhotographer() 
+	{
 		return $this->getProperty('Photographer');
 	} // fn getPhotographer
 	
@@ -127,7 +134,8 @@ class Image extends DatabaseObject {
 	/**
 	 * @return string
 	 */
-	function getPlace() {
+	function getPlace() 
+	{
 		return $this->getProperty('Place');
 	} // fn getPlace
 	
@@ -135,7 +143,8 @@ class Image extends DatabaseObject {
 	/**
 	 * @return string
 	 */
-	function getDate() {
+	function getDate() 
+	{
 		return $this->getProperty('Date');
 	} // fn getDate
 	
@@ -143,7 +152,8 @@ class Image extends DatabaseObject {
 	/**
 	 * @return string
 	 */
-	function getLocation() {
+	function getLocation() 
+	{
 		return $this->getProperty('Location');
 	} // fn getLocation
 	
@@ -151,7 +161,8 @@ class Image extends DatabaseObject {
 	/**
 	 * @return string
 	 */
-	function getUrl() {
+	function getUrl() 
+	{
 		return $this->getProperty('URL');
 	} // fn getUrl
 	
@@ -159,7 +170,8 @@ class Image extends DatabaseObject {
 	/**
 	 * @return string
 	 */
-	function getContentType() {
+	function getContentType() 
+	{
 		return $this->getProperty('ContentType');
 	} // fn getContentType
 	
@@ -168,7 +180,8 @@ class Image extends DatabaseObject {
 	 * Return the full path to the image file.
 	 * @return string
 	 */
-	function getImageStorageLocation() {
+	function getImageStorageLocation() 
+	{
 		global $Campsite;
 		return $Campsite['IMAGE_DIRECTORY'].$this->m_data['ImageFileName'];
 	} // fn getImageStorageLocation
@@ -178,7 +191,8 @@ class Image extends DatabaseObject {
 	 * Return the full path to the thumbnail file.
 	 * @return string
 	 */
-	function getThumbnailStorageLocation() {
+	function getThumbnailStorageLocation() 
+	{
 		global $Campsite;
 		return $Campsite['THUMBNAIL_DIRECTORY'].$this->m_data['ThumbnailFileName'];
 	} // fn getThumbnailStorageLocation
@@ -190,7 +204,8 @@ class Image extends DatabaseObject {
 	 *		The file extension for the filename.
 	 * @return string
 	 */
-	function generateThumbnailStorageLocation($p_fileExtension) {
+	function generateThumbnailStorageLocation($p_fileExtension) 
+	{
 		global $Campsite;
 	    $thumbnailStorageLocation = $Campsite['THUMBNAIL_DIRECTORY']
 	    	.$Campsite['THUMBNAIL_PREFIX'].sprintf('%09d', $this->getImageId())
@@ -205,7 +220,8 @@ class Image extends DatabaseObject {
 	 *		The file extension for the filename.
 	 * @return string
 	 */
-	function generateImageStorageLocation($p_fileExtension) {
+	function generateImageStorageLocation($p_fileExtension) 
+	{
 		global $Campsite;
 	    $imageStorageLocation = $Campsite['IMAGE_DIRECTORY']
 	    	.$Campsite['IMAGE_PREFIX'].sprintf('%09d', $this->getImageId())
@@ -218,7 +234,8 @@ class Image extends DatabaseObject {
 	 * Return the full URL to the image image.
 	 * @return string
 	 */
-	function getImageUrl() {
+	function getImageUrl() 
+	{
 		global $Campsite;
 		if ($this->m_data['Location'] == 'local') {
 			return $Campsite['IMAGE_BASE_URL'].$this->m_data['ImageFileName'];
@@ -233,7 +250,8 @@ class Image extends DatabaseObject {
 	 * Get the full URL to the thumbnail image.
 	 * @return string
 	 */
-	function getThumbnailUrl() {
+	function getThumbnailUrl() 
+	{
 		global $Campsite;
 		return $Campsite['THUMBNAIL_BASE_URL'].$this->m_data['ThumbnailFileName'];
 	} // fn getThumbnailUrl
@@ -242,7 +260,8 @@ class Image extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function GetMaxId() {
+	function GetMaxId() 
+	{
 		global $Campsite;
 		$queryStr = 'SHOW TABLE STATUS LIKE "Images"';
 		$result = $Campsite['db']->getRow($queryStr);
@@ -253,7 +272,8 @@ class Image extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function GetTotalImages() {
+	function GetTotalImages() 
+	{
 		global $Campsite;
 		$queryStr = 'SHOW TABLE STATUS LIKE "Images"';
 		$result = $Campsite['db']->getRow($queryStr);
@@ -261,7 +281,8 @@ class Image extends DatabaseObject {
 	} // fn GetTotalImages
 	
 
-	function __ImageTypeToExtension($p_imageType) {
+	function __ImageTypeToExtension($p_imageType) 
+	{
 		$extension = '';
 		switch($p_imageType) {
            case 1:  $extension = 'gif'; break;
@@ -313,7 +334,8 @@ class Image extends DatabaseObject {
 	 *		The Image object that was created or updated.
 	 *		NULL if there was an error.
 	 */
-	function OnImageUpload($p_fileVar, $p_attributes, $p_userId = null, $p_id = null) {
+	function OnImageUpload($p_fileVar, $p_attributes, $p_userId = null, $p_id = null) 
+	{
 		global $Campsite;
 		if (!is_array($p_fileVar)) {
 			return null;
@@ -397,7 +419,8 @@ class Image extends DatabaseObject {
 	 *
 	 * @return void
 	 */
-	function OnAddRemoteImage($p_url, $p_attributes, $p_userId = null, $p_id = null) {
+	function OnAddRemoteImage($p_url, $p_attributes, $p_userId = null, $p_id = null) 
+	{
 		global $Campsite;
 	    $client =& new HTTP_Client();
 	    $client->get($p_url);
@@ -484,7 +507,8 @@ class Image extends DatabaseObject {
 	 * Get an array of users who have uploaded images.
 	 * @return array
 	 */
-	function GetUploadUsers() {
+	function GetUploadUsers() 
+	{
 		global $Campsite;
 		$tmpUser =& new User();
 		$columnNames = $tmpUser->getColumnNames();
@@ -505,7 +529,8 @@ class Image extends DatabaseObject {
 	 * @param string p_url
 	 * @return Image
 	 */
-	function GetByUrl($p_url) {
+	function GetByUrl($p_url) 
+	{
 		global $Campsite;
 		$queryStr = "SELECT * FROM Images WHERE URL='".mysql_real_escape_string($p_url)."'";
 		$row = $Campsite['db']->GetRow($queryStr);
@@ -520,7 +545,8 @@ class Image extends DatabaseObject {
 	 *
 	 * @return array
 	 */
-	function toTemplate() {
+	function toTemplate() 
+	{
 		$template = array();
 		$template['id'] = $this->getImageId();
 		$template['description'] = $this->getDescription();

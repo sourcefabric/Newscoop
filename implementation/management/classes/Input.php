@@ -11,7 +11,8 @@ class Input {
 	 * @param array p_array
 	 * @return array
 	 */
-	function CleanMagicQuotes($p_array) {
+	function CleanMagicQuotes($p_array) 
+	{
 	   $gpcList = array();
 	  
 	   foreach ($p_array as $key => $value) {
@@ -50,7 +51,8 @@ class Input {
 	 *
 	 * @return mixed
 	 */
-	function Get($p_varName, $p_type = 'string', $p_defaultValue = null, $p_errorsOk = false) {
+	function Get($p_varName, $p_type = 'string', $p_defaultValue = null, $p_errorsOk = false) 
+	{
 		global $g_inputErrors;
 		
 		if (!isset($_REQUEST[$p_varName])) {
@@ -107,7 +109,8 @@ class Input {
 	 * Return FALSE if any calls to Input::Get() resulted in an error.
 	 * @return boolean
 	 */
-	function IsValid() {
+	function IsValid() 
+	{
 		global $g_inputErrors;
 		if (count($g_inputErrors) > 0) {
 			return false;
@@ -122,7 +125,8 @@ class Input {
 	 * Return a default error string.
 	 * @return string
 	 */
-	function GetErrorString() {
+	function GetErrorString() 
+	{
 		global $g_inputErrors;
 		ob_start();
 		print_r($g_inputErrors);

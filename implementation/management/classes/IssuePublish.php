@@ -17,7 +17,9 @@ class IssuePublish extends DatabaseObject {
 	 * @param string p_publishTime
 	 *
 	 */
-	function IssuePublish($p_publicationId = null, $p_issueId = null, $p_languageId = null, $p_publishTime = null) {
+	function IssuePublish($p_publicationId = null, $p_issueId = null, 
+	                      $p_languageId = null, $p_publishTime = null) 
+	{
 		parent::DatabaseObject($this->m_columnNames);
 		$this->m_data['IdPublication'] = $p_publicationId;
 		$this->m_data['NrIssue'] = $p_issueId;
@@ -34,7 +36,8 @@ class IssuePublish extends DatabaseObject {
 	 * This can be NULL for no action, 'P' for Publish, or 'U' for Unpublish.
 	 * @return mixed
 	 */ 
-	function getPublishAction() {
+	function getPublishAction() 
+	{
 		return $this->m_data['Action'];
 	} // fn getPublishAction
 
@@ -44,7 +47,8 @@ class IssuePublish extends DatabaseObject {
 	 * This can be 'P' for Publish, or 'U' for Unpublish.	 
 	 * @return void
 	 */
-	function setPublishAction($p_value) {
+	function setPublishAction($p_value) 
+	{
 		$p_value = strtoupper($p_value);
 		if ( ($p_value == 'P') || ($p_value == 'U') ) {
 			$this->setProperty('Action', $p_value);
@@ -57,7 +61,8 @@ class IssuePublish extends DatabaseObject {
 	 * This can be 'Y' for 'Yes', or 'N' for 'No'.
 	 * @return mixed
 	 */
-	function getPublishArticlesAction() {
+	function getPublishArticlesAction() 
+	{
 		return $this->m_data['PublishArticles'];
 	} // fn getPublishArticlesAction
 	
@@ -67,7 +72,8 @@ class IssuePublish extends DatabaseObject {
 	 * This can be 'Y' for Yes, or 'N' for No.
 	 * @return mixed
 	 */
-	function setPublishArticlesAction($p_value) {
+	function setPublishArticlesAction($p_value) 
+	{
 		$p_value = strtoupper($p_value);
 		if ( ($p_value == 'Y') || ($p_value == 'N') ) {
 			$this->setProperty('PublishArticles', $p_value);
@@ -79,7 +85,8 @@ class IssuePublish extends DatabaseObject {
 	 * Get the time the event is scheduled to happen.
 	 * @return string
 	 */
-	function getPublishTime() {
+	function getPublishTime() 
+	{
 		return $this->m_data['PublishTime'];
 	} // fn getPublishTime
 	
@@ -93,7 +100,8 @@ class IssuePublish extends DatabaseObject {
 	 * @param int p_language
 	 * @return array
 	 */
-	function GetIssueEvents($p_publicationId, $p_issueId, $p_languageId = null) {
+	function GetIssueEvents($p_publicationId, $p_issueId, $p_languageId = null) 
+	{
 		global $Campsite;
 		$queryStr = "SELECT * FROM IssuePublish "
 					." WHERE IdPublication = $p_publicationId "
