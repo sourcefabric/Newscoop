@@ -12,7 +12,8 @@ class Language extends DatabaseObject {
 	/** 
 	 * Constructor.
 	 */
-	function Language($p_languageId = null) {
+	function Language($p_languageId = null) 
+	{
 		parent::DatabaseObject($this->m_columnNames);
 		$this->m_data['Id'] = $p_languageId;
 		if ($this->keyValuesExist()) {
@@ -25,7 +26,8 @@ class Language extends DatabaseObject {
 	 * Return an array of all languages (array of Language objects).
 	 * @return array
 	 */
-	function GetAllLanguages() {
+	function GetAllLanguages() 
+	{
 		$queryStr = 'SELECT * FROM Languages ORDER BY Name';
 		$languages = DbObjectArray::Create('Language', $queryStr);
 		return $languages;
@@ -36,7 +38,8 @@ class Language extends DatabaseObject {
 	 * The unique ID of the language in the database.
 	 * @return int
 	 */
-	function getLanguageId() {
+	function getLanguageId() 
+	{
 		return $this->getProperty('Id');
 	} // fn getLanguageId
 	
@@ -45,7 +48,8 @@ class Language extends DatabaseObject {
 	 * Return the english name of this language.
 	 * @return string
 	 */
-	function getName() {
+	function getName() 
+	{
 		return $this->getProperty('Name');
 	} // fn getName
 	
@@ -54,7 +58,8 @@ class Language extends DatabaseObject {
 	 * Return the name of the language as written in the language itself.
 	 * @return string
 	 */ 
-	function getNativeName() {
+	function getNativeName() 
+	{
 		return $this->getProperty('OrigName');
 	} // fn get
 	
@@ -63,10 +68,20 @@ class Language extends DatabaseObject {
 	 * Get the two-letter code for this language.
 	 * @return string
 	 */
-	function getCode() {
+	function getCode() 
+	{
 		return $this->getProperty('Code');
 	} // fn getCode
 	
+	
+	/**
+	 * Get the page encoding for this language.
+	 * @return string
+	 */
+	function getCodePage() 
+	{
+	    return $this->getProperty('CodePage');
+	}
 } // class Language
 
 ?>
