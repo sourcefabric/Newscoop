@@ -32,7 +32,8 @@ class LocalizerLanguage {
 	 *      2) The two-letter language code, underscore, two-letter country code
 	 *         (e.g. "en_US")
 	 */
-	function LocalizerLanguage($p_prefix, $p_directory, $p_languageId = null) {
+	function LocalizerLanguage($p_prefix, $p_directory, $p_languageId = null) 
+	{
 		if (!is_null($p_languageId)) {
 			$this->setLanguageId($p_languageId);
 		}
@@ -45,7 +46,8 @@ class LocalizerLanguage {
 	 * Return the filename prefix.
 	 * @return string
 	 */
-	function getPrefix() {
+	function getPrefix() 
+	{
 	    return $this->m_prefix;
 	} // fn getPrefix
 	
@@ -54,7 +56,8 @@ class LocalizerLanguage {
 	 * Return the directory where the translation file is stored.
 	 * @return string
 	 */
-	function getDirectory() {
+	function getDirectory() 
+	{
 	    return $this->m_directory;
 	} // fn getDirectory
 	
@@ -63,7 +66,8 @@ class LocalizerLanguage {
 	 * This will return 'gs' or 'xml'
 	 * @return string
 	 */
-	function getMode() {
+	function getMode() 
+	{
 		return $this->m_mode;
 	} // fn getMode
 	
@@ -73,7 +77,8 @@ class LocalizerLanguage {
 	 * @param string p_value
 	 * @return void
 	 */
-	function setMode($p_value) {
+	function setMode($p_value) 
+	{
 		$p_value = strtolower($p_value);
 		if (($p_value == 'xml') || ($p_value == 'gs')) {
 			$this->m_mode = $p_value;
@@ -89,7 +94,8 @@ class LocalizerLanguage {
 	 * @param string p_languageId
 	 * @return void
 	 */
-	function setLanguageId($p_languageId) {	    
+	function setLanguageId($p_languageId) 
+	{	    
 		if (strlen($p_languageId) > 2) {
 			$this->m_languageCode = substr($p_languageId, 0, 2);
 			$this->m_countryCode = substr($p_languageId, 3, 2);
@@ -109,7 +115,8 @@ class LocalizerLanguage {
      * @param string p_languageId
      * @return void
      */
-    function registerString($p_key, $p_value) {
+    function registerString($p_key, $p_value) 
+    {
         if (substr($p_value, strlen($p_value)-3) == ":en"){
             $p_value = substr($p_value, 0, strlen($p_value)-3);
         }
@@ -121,7 +128,8 @@ class LocalizerLanguage {
      * Return the total number of strings in the translation table.
      * @return int
      */
-    function getNumStrings() {
+    function getNumStrings() 
+    {
     	return count($this->m_translationTable);
     } // fn getNumStrings
     
@@ -131,7 +139,8 @@ class LocalizerLanguage {
      *
      * @return string
      */
-	function getLanguageId() {
+	function getLanguageId() 
+	{
 		return $this->m_languageId;
 	} // fn getLanguageId
 	
@@ -140,7 +149,8 @@ class LocalizerLanguage {
 	 * Get the two-letter language code for the translation table.
 	 * @return string
 	 */
-	function getLanguageCode() {
+	function getLanguageCode() 
+	{
 		return $this->m_languageCode;
 	} // fn getLanguageCode
 	
@@ -149,7 +159,8 @@ class LocalizerLanguage {
 	 * Get the two-letter country code.
 	 * @return string
 	 */
-	function getCountryCode() {
+	function getCountryCode() 
+	{
 	    return $this->m_countryCode;
 	} // fn getCountryCode
 	
@@ -158,7 +169,8 @@ class LocalizerLanguage {
 	 * Return the file path for the last file loaded.
 	 * @return string
 	 */
-	function getSourceFile() {
+	function getSourceFile() 
+	{
 		return $this->m_filePath;
 	} // fn getSourceFile
 	
@@ -167,7 +179,8 @@ class LocalizerLanguage {
 	 * This is only for use by the LocalizerFileFormat functions.
 	 * @access private
 	 */
-	function _setSourceFile($p_value) {
+	function _setSourceFile($p_value) 
+	{
 	    $this->m_filePath = $p_value;
 	} // fn _setSourceFile
 	
@@ -179,7 +192,8 @@ class LocalizerLanguage {
 	 * @param LocalizerLanguage p_localizerLanguage
 	 * @return boolean
 	 */
-	function equal($p_localizerLanguage) {
+	function equal($p_localizerLanguage) 
+	{
 		if (count($this->m_translationTable) != count($p_localizerLanguage->m_translationTable)) {
 			return false;
 		}
@@ -203,7 +217,8 @@ class LocalizerLanguage {
 	 *
 	 * @return array
 	 */
-	function getTranslationTable() {
+	function getTranslationTable() 
+	{
 		return $this->m_translationTable;
 	}
 	
@@ -215,7 +230,8 @@ class LocalizerLanguage {
 	 *		Either 'gs' or 'xml'.
      * @return string
      */
-    function getFilePath($p_mode = null) {
+    function getFilePath($p_mode = null) 
+    {
         global $g_localizerConfig;
     	if (is_null($p_mode)) {
     		$p_mode = $this->m_mode;
@@ -237,7 +253,8 @@ class LocalizerLanguage {
      *
      * @return boolean
      */
-    function keyExists($p_string) {
+    function keyExists($p_string) 
+    {
     	return (isset($this->m_translationTable[$p_string]));
     } // fn stringExists
     
@@ -258,7 +275,8 @@ class LocalizerLanguage {
      *
      * @return boolean
      */
-    function addString($p_key, $p_value = null, $p_position = null) {
+    function addString($p_key, $p_value = null, $p_position = null) 
+    {
     	if (!is_null($p_position) 
     		&& (!is_numeric($p_position) || ($p_position < 0) 
     			|| ($p_position > count($this->m_translationTable)))) {
@@ -300,7 +318,8 @@ class LocalizerLanguage {
      * @return mixed
      *		The position of the key/value in the array, FALSE if not found.
      */
-    function getPosition($p_key = null, $p_value = null) {
+    function getPosition($p_key = null, $p_value = null) 
+    {
     	$position = 0;
     	if (!is_null($p_key)) {
 	    	foreach ($this->m_translationTable as $key => $value) {
@@ -329,7 +348,8 @@ class LocalizerLanguage {
      * 		An array of two elements, the first is the key, the second is the value.
      *		They are indexed by 'key' and 'value'.
      */
-    function getStringAtPosition($p_position) {
+    function getStringAtPosition($p_position) 
+    {
     	if (is_null($p_position) || !is_numeric($p_position) || ($p_position < 0) 
     			|| ($p_position > count($this->m_translationTable))) {
     		return false;
@@ -355,7 +375,8 @@ class LocalizerLanguage {
      * @param int p_position
      * @return boolean
      */
-    function updateString($p_oldKey, $p_newKey, $p_value = null, $p_position = null) {
+    function updateString($p_oldKey, $p_newKey, $p_value = null, $p_position = null) 
+    {
     	if (!is_string($p_oldKey) || !is_string($p_newKey)) {
     		return false;
     	}
@@ -396,7 +417,8 @@ class LocalizerLanguage {
      * @return boolean
      *		TRUE on success, FALSE on failure.
      */
-    function moveString($p_startPositionOrKey, $p_endPosition) {
+    function moveString($p_startPositionOrKey, $p_endPosition) 
+    {
     	// Check parameters
     	if (is_numeric($p_startPositionOrKey) && (($p_startPositionOrKey < 0) 
     		|| ($p_startPositionOrKey > count($this->m_translationTable)))) {
@@ -448,7 +470,8 @@ class LocalizerLanguage {
      *		The deleted string as array('key' => $key, 'value' => $value) on success,
      *		FALSE if it didnt exist.
      */
-    function deleteString($p_key) {
+    function deleteString($p_key) 
+    {
     	if (isset($this->m_translationTable[$p_key])) {
     		$value = $this->m_translationTable[$p_key];
     		unset($this->m_translationTable[$p_key]);
@@ -464,7 +487,8 @@ class LocalizerLanguage {
      * @return mixed
      *		The deleted string as array($key, $value) on success, FALSE on failure.
      */
-    function deleteStringAtPosition($p_position) {
+    function deleteStringAtPosition($p_position) 
+    {
     	if (!is_numeric($p_position) || ($p_position < 0) 
     		|| ($p_position > count($this->m_translationTable))) {
     		return false;
@@ -481,7 +505,8 @@ class LocalizerLanguage {
      * Synchronize the positions of the strings in the translation table
      * with the positions of the string in the default language translation table.
      */
-    function fixPositions() {
+    function fixPositions() 
+    {
         global $g_localizerConfig;
         $defaultLanguage =& new LocalizerLanguage($this->m_prefix, 
                                                   $this->m_directory, 
@@ -506,7 +531,8 @@ class LocalizerLanguage {
      * adding any missing strings and fixing the positions of the strings to 
      * be the same as the default language file.
      */
-    function syncToDefault() {
+    function syncToDefault() 
+    {
         global $g_localizerConfig;
         $defaultLanguage =& new LocalizerLanguage($this->m_prefix, 
                                                   $this->m_directory, 
@@ -533,7 +559,8 @@ class LocalizerLanguage {
      *
      * @return array
      */
-    function search($p_keyword) {
+    function search($p_keyword) 
+    {
     	$matches = array();
     	foreach ($this->m_translationTable as $key => $value) {
     		if (empty($p_keyword) || stristr($key, $p_keyword) || stristr($value, $p_keyword)) {
@@ -552,7 +579,8 @@ class LocalizerLanguage {
      *
      * @return boolean
      */
-    function loadFile($p_type = null) {
+    function loadFile($p_type = null) 
+    {
         if (is_null($p_type)) {
             if (!empty($this->m_mode)) {
                 $p_type = $this->m_mode;
@@ -583,7 +611,8 @@ class LocalizerLanguage {
      *
      * @return boolean
      */
-    function saveFile($p_type = null) {
+    function saveFile($p_type = null) 
+    {
         // Figure out the current mode.
         if (is_null($p_type)) {
             if (!empty($this->m_mode)) {
@@ -613,7 +642,8 @@ class LocalizerLanguage {
      * keep the keys.
      * @return void
      */
-    function clearValues() {
+    function clearValues() 
+    {
     	foreach ($this->m_translationTable as $key => $value) {
     		$this->m_translationTable[$key] = '';
     	}
@@ -624,7 +654,8 @@ class LocalizerLanguage {
      * For debugging purposes, displays the the translation table 
      * in an HTML table.
      */
-    function dumpToHtml() {
+    function dumpToHtml() 
+    {
     	echo "<pre>";
     	if (!empty($this->m_filePath)) {
     		echo "<b>File: ".$this->m_filePath."</b><br>";
