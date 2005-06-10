@@ -125,7 +125,7 @@
             if ($User->hasPermission('DeleteImage')) {
             	if (!$image['in_use']) { ?>
 	            	<TD ALIGN="CENTER">
-	                <A HREF="do_del.php?image_id=<?php echo $image['id'].'&'.$imageNav->getSearchLink(); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the image $1?', '&quot;'.javascriptspecialchars($image['description']).'&quot;'); ?>');"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/delete.png" BORDER="0" ALT="<?php putGS('Delete image $1',htmlspecialchars($image['description'])); ?>"></A>
+	                <A HREF="do_del.php?image_id=<?php echo $image['id'].'&'.$imageNav->getSearchLink(); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the image $1?', '&quot;'.camp_javascriptspecialchars($image['description']).'&quot;'); ?>');"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/delete.png" BORDER="0" ALT="<?php putGS('Delete image $1',htmlspecialchars($image['description'])); ?>"></A>
 	              	</TD>
 	            	<?php
 	         	}
