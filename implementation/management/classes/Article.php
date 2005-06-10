@@ -1,4 +1,11 @@
 <?php
+/**
+ * @package Campsite
+ */
+
+/** 
+ * Includes
+ */
 require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DatabaseObject.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DbObjectArray.php');
@@ -8,6 +15,9 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleTopic.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleIndex.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
 
+/**
+ * @package Campsite
+ */
 class Article extends DatabaseObject {
 	/**
 	 * The column names used for the primary key.
@@ -73,15 +83,11 @@ class Article extends DatabaseObject {
 	 * Construct by passing in the primary key to access the article in 
 	 * the database.
 	 *
-	 * @param int p_publicationId
-	 *
-	 * @param int p_issueId
-	 *
-	 * @param int p_sectionId
-	 *
-	 * @param int p_languageId
-	 *
-	 * @param int p_articleId
+	 * @param int $p_publicationId
+	 * @param int $p_issueId
+	 * @param int $p_sectionId
+	 * @param int $p_languageId
+	 * @param int $p_articleId
 	 *		Not required when creating an article.
 	 */
 	function Article($p_publicationId = null, $p_issueId = null, $p_sectionId = null, 
@@ -101,6 +107,7 @@ class Article extends DatabaseObject {
 	
 	/**
 	 * A way for internal functions to call the superclass create function.
+	 * @param array $p_values
 	 */
 	function __create($p_values = null) { return parent::create($p_values); }
 	
@@ -108,9 +115,8 @@ class Article extends DatabaseObject {
 	 * Create an article in the database.  Use the SET functions to
 	 * change individual values.
 	 *
-	 * @param string p_articleType
-	 * @param string p_name
-	 *
+	 * @param string $p_articleType
+	 * @param string $p_name
 	 * @return void
 	 */
 	function create($p_articleType, $p_name = null) 
@@ -153,18 +159,14 @@ class Article extends DatabaseObject {
 	/**
 	 * Create a copy of this article.
 	 *
-	 * @param int p_destPublication
+	 * @param int $p_destPublication -
 	 *		The destination publication ID.
-	 *
-	 * @param int p_destIssue
+	 * @param int $p_destIssue -
 	 *		The destination issue ID.
-	 *
-	 * @param int p_destSection
+	 * @param int $p_destSection -
 	 * 		The destination section ID.
-	 *
-	 * @param int p_userId
+	 * @param int $p_userId -
 	 *		The user creating the copy.
-	 *
 	 * @return Article
 	 *		The copied Article object.
 	 */
@@ -229,9 +231,9 @@ class Article extends DatabaseObject {
 	 * Create a copy of the article, but make it a translation
 	 * of the current one.
 	 *
-	 * @param int p_languageId
-	 * @param int p_userId
-	 * @param string p_name
+	 * @param int $p_languageId
+	 * @param int $p_userId
+	 * @param string $p_name
 	 * @return Article
 	 */
 	function createTranslation($p_languageId, $p_userId, $p_name) 
@@ -339,7 +341,7 @@ class Article extends DatabaseObject {
 	/**
 	 * Lock the article with the given User ID.
 	 *
-	 * @param int p_userId
+	 * @param int $p_userId
 	 *
 	 */
 	function lock($p_userId) 
@@ -450,10 +452,10 @@ class Article extends DatabaseObject {
 	 * Change the article's position in the order sequence
 	 * relative to its current position.
 	 *
-	 * @param string p_direction
+	 * @param string $p_direction -
 	 * 		Can be "up" or "down".
 	 *
-	 * @param int p_spacesToMove
+	 * @param int $p_spacesToMove -
 	 *		The number of spaces to move the article.
 	 *
 	 * @return boolean
@@ -505,8 +507,8 @@ class Article extends DatabaseObject {
 	
 	
 	/**
-	 * 
-	 * @param int p_position
+	 * Move the article to the given position.
+	 * @param int $p_position
 	 * @return boolean
 	 */
 	function moveAbsolute($p_moveToPosition = 1) 
@@ -651,7 +653,7 @@ class Article extends DatabaseObject {
 	/**
 	 * Set the title of the article.
 	 *
-	 * @param string title
+	 * @param string $p_title
 	 *
 	 * @return void
 	 */
@@ -710,7 +712,7 @@ class Article extends DatabaseObject {
 	
 	
 	/**
-	 * @param boolean value
+	 * @param boolean $p_value
 	 */
 	function setOnFrontPage($p_value) 
 	{
@@ -757,7 +759,7 @@ class Article extends DatabaseObject {
 	 *     'S' = 'Submitted'
 	 *     'N' = 'New'
 	 *
-	 * @param string value
+	 * @param string $p_value
 	 */
 	function setPublished($p_value) 
 	{
@@ -856,7 +858,7 @@ class Article extends DatabaseObject {
 	
 	
 	/**
-	 * @param int value
+	 * @param int $p_value
 	 */
 	function setLockedByUser($p_value) 
 	{
@@ -930,6 +932,10 @@ class Article extends DatabaseObject {
 	/**
 	 * Return the number of unique (language-independant) articles according
 	 * to the given parameters.
+	 * @param int $p_publicationId
+	 * @param int $p_issueId
+	 * @param int $p_sectionId
+	 * @return int
 	 */
 	function GetNumUniqueArticles($p_publicationId = null, $p_issueId = null, 
 								  $p_sectionId = null) 
@@ -958,6 +964,10 @@ class Article extends DatabaseObject {
 	 * Return an array of (array(Articles), int) where
 	 * the array of articles are those written by the given user, within the given range,
 	 * and the int is the total number of articles written by the user.
+	 *
+	 * @param int $p_userId
+	 * @param int $p_start
+	 * @param int $p_upperLimit
 	 *
 	 * @return array
 	 */
@@ -991,8 +1001,8 @@ class Article extends DatabaseObject {
 	 * The first element is an array of submitted articles.
 	 * The second element is the total number of submitted articles.
 	 *
-	 * @param int p_lowerLimit
-	 * @param int p_upperLimit
+	 * @param int $p_start
+	 * @param int $p_upperLimit
 	 * @return array
 	 */
 	function GetSubmittedArticles($p_start = 0, $p_upperLimit = 20) 
@@ -1044,31 +1054,31 @@ class Article extends DatabaseObject {
 	 * parameters will get you all the articles in a particular section with
 	 * the given language.
 	 *
-	 * @param int p_publicationId
+	 * @param int $p_publicationId -
 	 *		The publication ID.
 	 *
-	 * @param int p_issueId
+	 * @param int $p_issueId -
 	 *		The issue ID.
 	 *
-	 * @param int p_sectionId
-	 *		The section ID.
+	 * @param int $p_sectionId -
+	 *		The section ID. 
 	 *
-	 * @param int p_languageId
+	 * @param int $p_languageId -
 	 *		The language ID.
 	 *
-	 * @param int p_articleId
+	 * @param int $p_articleId -
 	 *		The article ID.
 	 *
-	 * @param int p_preferredLanguage
+	 * @param int $p_preferredLanguage -
 	 *		If specified, list the articles in this language before others.
 	 *
-	 * @param int p_numRows
+	 * @param int $p_numRows -
 	 *		Max number of rows to fetch.
 	 *
-	 * @param int p_startAt
+	 * @param int $p_startAt -
 	 *		Index into the result array to begin at.
 	 *
-	 * @param boolean p_numRowsIsUniqueRows
+	 * @param boolean $p_numRowsIsUniqueRows -
 	 *		Whether the number of rows stated in p_rows should be interpreted as
 	 *		the number of articles to return regardless of how many times an 
 	 *		article has been translated.  E.g. an article translated three times
@@ -1178,7 +1188,7 @@ class Article extends DatabaseObject {
 	
 	/**
 	 * Unlock all articles by the given user.
-	 * @param int p_userId
+	 * @param int $p_userId
 	 * @return void
 	 */
 	function UnlockByUser($p_userId) 

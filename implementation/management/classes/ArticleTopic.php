@@ -1,6 +1,16 @@
 <?php
+/**
+ * @package Campsite
+ */
+
+/**
+ * Includes
+ */
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DatabaseObject.php');
 
+/**
+ * @package Campsite
+ */
 class ArticleTopic extends DatabaseObject {
 	var $m_keyColumnNames = array('NrArticle','TopicId');
 	var $m_dbTableName = 'ArticleTopics';
@@ -31,8 +41,8 @@ class ArticleTopic extends DatabaseObject {
 	
 	/**
 	 * Link a topic to an article.
-	 * @param int p_topicId
-	 * @param int p_articleId
+	 * @param int $p_topicId
+	 * @param int $p_articleId
 	 * @return void
 	 */
 	function AddTopicToArticle($p_topicId, $p_articleId) 
@@ -46,8 +56,8 @@ class ArticleTopic extends DatabaseObject {
 	
 	/**
 	 * Unlink a topic from an article.
-	 * @param int p_topicId
-	 * @param int p_articleId
+	 * @param int $p_topicId
+	 * @param int $p_articleId
 	 * @return void
 	 */
 	function RemoveTopicFromArticle($p_topicId, $p_articleId) 
@@ -60,7 +70,7 @@ class ArticleTopic extends DatabaseObject {
 	
 	/**
 	 * Remove topic pointers for the given article.
-	 * @param int p_articleId
+	 * @param int $p_articleId
 	 * @return void
 	 */
 	function OnArticleDelete($p_articleId) 
@@ -74,8 +84,8 @@ class ArticleTopic extends DatabaseObject {
 	
 	/**
 	 * Copy the topic pointers
-	 * @param int p_srcArticleId
-	 * @param int p_destArticleId
+	 * @param int $p_srcArticleId
+	 * @param int $p_destArticleId
 	 * @return void
 	 */
 	function OnArticleCopy($p_srcArticleId, $p_destArticleId) 
@@ -94,13 +104,13 @@ class ArticleTopic extends DatabaseObject {
 	/**
 	 * Get the topics for the given article.
 	 *
-	 * @param int p_articleId
+	 * @param int $p_articleId
 	 *		Retrieve the topics for this article.
 	 *
-	 * @param int p_numTopics
+	 * @param int $p_numTopics
 	 *		The max number of topics to return.
 	 *
-	 * @param int p_start
+	 * @param int $p_start
 	 * 		Start listing the topics from this index.
 	 *
 	 * @return array

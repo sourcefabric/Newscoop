@@ -1,5 +1,12 @@
 <?php
+/**
+ * @package Campsite
+ */
 
+
+/**
+ * @package Campsite
+ */
 class ModuleConfiguration
 {
 	var $m_moduleName;
@@ -16,7 +23,7 @@ class ModuleConfiguration
 	/**
 	 * Return configuration file name of a given module
 	 *
-	 * @param string p_moduleName
+	 * @param string $p_moduleName
 	 *
 	 * @return string or false in case of error
 	 */
@@ -32,8 +39,8 @@ class ModuleConfiguration
 	/**
 	 * Return configuration file path of a given module, directory
 	 *
-	 * @param string p_moduleName
-	 * @param string p_directory
+	 * @param string $p_moduleName
+	 * @param string $p_directory
 	 *
 	 * @return string or false in case of error
 	 */
@@ -53,8 +60,8 @@ class ModuleConfiguration
 	/**
 	 * Read the configuration file corresponding to a specific module
 	 *
-	 * @param string p_moduleName
-	 * @param string p_directory
+	 * @param string $p_moduleName
+	 * @param string $p_directory
 	 *
 	 * @return 0 or string in case of error
 	 */
@@ -90,8 +97,8 @@ class ModuleConfiguration
 	/**
 	 * Create a module configuration object for a given module name and array of variables
 	 *
-	 * @param string p_moduleName
-	 * @param array p_variables
+	 * @param string $p_moduleName
+	 * @param array $p_variables
 	 *
 	 * @return 0 or string in case of error
 	 */
@@ -109,7 +116,7 @@ class ModuleConfiguration
 	/**
 	 * Save the configuration file corresponding to module object
 	 *
-	 * @param string p_destDirectory
+	 * @param string $p_destDirectory
 	 *
 	 * @return 0 or string in case of error
 	 */
@@ -164,7 +171,7 @@ class ModuleConfiguration
 	/**
 	 * Return the value of a given variable
 	 *
-	 * @param string p_variableName
+	 * @param string $p_variableName
 	 *
 	 * @return string or false in case of error
 	 */
@@ -180,8 +187,8 @@ class ModuleConfiguration
 	/**
 	 * Set the value of a given variable
 	 *
-	 * @param string p_variableName
-	 * @param string p_value
+	 * @param string $p_variableName
+	 * @param string $p_value
 	 *
 	 * @return bool
 	 */
@@ -198,7 +205,7 @@ class ModuleConfiguration
 	/**
 	 * Return the true if the module name was valid
 	 *
-	 * @param string p_moduleName
+	 * @param string $p_moduleName
 	 *
 	 * @return bool
 	 */

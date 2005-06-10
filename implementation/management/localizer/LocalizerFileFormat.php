@@ -1,6 +1,13 @@
 <?PHP
+/**
+ * @package Campware
+ */
 
-global $g_localizerLoadedFiles;
+/**
+ * Abstract interface for the localizer to access data from different sources.
+ * @package Campware
+ * @abstract 
+ */
 class LocalizerFileFormat {
 	function load(&$p_localizerLanguage) { }	
 	function save(&$p_localizerLanguage) { }
@@ -10,11 +17,14 @@ class LocalizerFileFormat {
 } // class LocalizerFileFormat
 
 
+/**
+ * @package Campware
+ */
 class LocalizerFileFormat_GS extends LocalizerFileFormat {
     /**
      * Load the translation table from a PHP-GS file.
      *
-     * @param LocalizerLanguage p_localizerLanguage
+     * @param LocalizerLanguage $p_localizerLanguage
      *		LocalizerLanguage object.
      *
      * @return boolean
@@ -45,7 +55,7 @@ class LocalizerFileFormat_GS extends LocalizerFileFormat {
     /**
      * Save the translation table to a PHP-GS file.
      *
-     * @param LocalizerLanguage p_localizerLanguage
+     * @param LocalizerLanguage $p_localizerLanguage
      *		LocalizerLanguage object.
      *
      * @return string
@@ -76,7 +86,7 @@ class LocalizerFileFormat_GS extends LocalizerFileFormat {
 	
     /**
      * Get a regular expression that will match the name of the file.
-     * @param string p_languageId
+     * @param string $p_languageId
      *      (optional) If specified, give the pattern that will match this language ID.
      * @return string
      */
@@ -96,7 +106,7 @@ class LocalizerFileFormat_GS extends LocalizerFileFormat {
 
 	/**
 	 * Get the full path to the translation file.
-	 * @param LocalizerLanguage p_localizerLanguage
+	 * @param LocalizerLanguage $p_localizerLanguage
 	 * @return string
 	 */
 	function getFilePath($p_localizerLanguage) 
@@ -160,6 +170,9 @@ class LocalizerFileFormat_GS extends LocalizerFileFormat {
 } // class LocalizerFileFormat_GS
 
 
+/**
+ * @package Campware
+ */
 class LocalizerFileFormat_XML extends LocalizerFileFormat {
     var $m_serializeOptions = array();
     var $m_unserializeOptions = array();
@@ -185,7 +198,7 @@ class LocalizerFileFormat_XML extends LocalizerFileFormat {
     
     /**
      * Read an XML-format translation file into the translation table.
-     * @param LocalizerLanguage p_localizerLanguage
+     * @param LocalizerLanguage $p_localizerLanguage
      * @return boolean
      */
 	function load(&$p_localizerLanguage) 
@@ -214,7 +227,7 @@ class LocalizerFileFormat_XML extends LocalizerFileFormat {
 	
     /**
      * Write a XML-format translation file.
-     * @param LocalizerLanguage p_localizerLanguage
+     * @param LocalizerLanguage $p_localizerLanguage
      * @return mixed
      *      The XML that was written on success,
      *      FALSE on error.
@@ -254,7 +267,7 @@ class LocalizerFileFormat_XML extends LocalizerFileFormat {
 	
 	/**
 	 * Get the full path to the translation file.
-	 * @param LocalizerLanguage p_localizerLanguage
+	 * @param LocalizerLanguage $p_localizerLanguage
 	 * @return string
 	 */
 	function getFilePath($p_localizerLanguage) 
@@ -269,7 +282,7 @@ class LocalizerFileFormat_XML extends LocalizerFileFormat {
 	
 	/**
      * Get a regular expression that will match the name of the file.
-     * @param string p_languageId
+     * @param string $p_languageId
      *      (optional) If specified, give the pattern that will match this language ID.
 	 * @return string
 	 */
@@ -320,6 +333,8 @@ class LocalizerFileFormat_XML extends LocalizerFileFormat {
 	
 	
 	/**
+	 * @param string $p_prefix
+	 * @param string $p_directory
 	 * @return array
 	 */
 	function getLanguagesInDirectory($p_prefix, $p_directory) 

@@ -1,14 +1,27 @@
 <?php
+/**
+ * @package Campsite
+ */
+
+/**
+ * Includes
+ */
 require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DatabaseObject.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DbObjectArray.php');
 
+/**
+ * @package Campsite
+ */
 class Publication extends DatabaseObject {
 	var $m_dbTableName = 'Publications';
 	var $m_keyColumnNames = array('Id');
 	var $m_keyIsAutoIncrement = true;
 	var $m_columnNames = array('Id', 'Name', 'IdDefaultLanguage', 'PayTime', 'TimeUnit', 'UnitCost', 'Currency', 'TrialTime', 'PaidTime', 'IdDefaultAlias', 'IdURLType');
 	
+	/**
+	 * @param int $p_publicationId
+	 */
 	function Publication($p_publicationId = null) 
 	{
 		parent::DatabaseObject($this->m_columnNames);

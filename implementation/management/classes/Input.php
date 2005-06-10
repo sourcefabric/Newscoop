@@ -1,14 +1,25 @@
 <?php
+/**
+ * @package Campsite
+ */
+
+/**
+ * @var array $g_inputErrors Used to store error messages.
+ */
 global $g_inputErrors;
 $g_inputErrors = array();
 
+
+/**
+ * @package Campsite
+ */
 class Input {
 	/**
-	 * Please see: http://ca.php.net/manual/en/function.get-magic-quotes-gpc.php
-	 * specifically the user note by php at kaiundina dot de, for why this is 
-	 * so complicated.
+	 * Please see: {@link http://ca.php.net/manual/en/function.get-magic-quotes-gpc.php 
+	 * this PHP.net page specifically the user note by php at kaiundina dot de}, 
+	 * for why this is so complicated.
 	 * 
-	 * @param array p_array
+	 * @param array $p_array
 	 * @return array
 	 */
 	function CleanMagicQuotes($p_array) 
@@ -35,17 +46,17 @@ class Input {
 	 *
 	 * Use Input::IsValid() to check if any errors were generated.
 	 *
-	 * @param string p_varName
+	 * @param string $p_varName
 	 *		The index into the $_REQUEST array.
 	 *
-	 * @param string p_type 
+	 * @param string $p_type 
 	 *		The type of data expected; can be 'int' or 'string'.  Default is 'string'.
 	 *
-	 * @param mixed p_defaultValue
+	 * @param mixed $p_defaultValue
 	 * 		The default value to return if the value is not defined in the $_REQUEST array,
 	 * 		or if the value does not match the required type.
 	 *
-	 * @param boolean p_errorsOk
+	 * @param boolean $p_errorsOk
 	 *		Set to true to ignore any errors for this variable (i.e. Input::IsValid()
 	 *		will still return true even if there are errors for this varaible).
 	 *

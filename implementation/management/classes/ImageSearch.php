@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @package Campsite
+ */
 class ImageSearch {
 	var $m_isSearch;
 	var $m_orderBy;
@@ -22,7 +25,8 @@ class ImageSearch {
 	 * Give the search criteria in the contructor, then call the run()
 	 * function to execute the search and get an array of the images found.  
 	 *
-	 * @param array p_request
+	 * @param array $p_request
+	 *     <pre>
 	 *		This array may contain the following values:
 	 *		"order_by" => ["description"|"photographer"|"place"|"date"|
 	 *					   "inuse"|"id"|"time_create"|"last_modified"]
@@ -41,7 +45,7 @@ class ImageSearch {
 	 *			The date to search for.
 	 *		"search_inuse" => boolean
 	 *			Search to see if the image is in use.
-	 *
+	 *     </pre>
 	 */
 	function ImageSearch($p_imagesPerPage = 0) 
 	{
@@ -220,7 +224,7 @@ class ImageSearch {
 	/**
 	 * Set the max number of images to return from the run() function.
 	 *
-	 * @param int p_value
+	 * @param int $p_value
 	 *
 	 * @return void
 	 */
@@ -250,9 +254,9 @@ class ImageNav {
 	
 	/**
 	 * This class is used to create links, which will be parsed by the ImageSearch class.
-	 * @param int p_imagesPerPage
+	 * @param int $p_imagesPerPage
 	 *		Number of images to show on a page.
-	 * @param string p_view
+	 * @param string $p_view
 	 *		Can be: ["thumbnail"|"gallery"|"flat"].  The type of display.
 	 */
 	function ImageNav($p_imagesPerPage = 0, $p_view = "thumbnail") 
@@ -276,8 +280,8 @@ class ImageNav {
 	
 	/**
 	 * Change a property of the links and rebuild the links.
-	 * @param string p_name
-	 * @param string p_value
+	 * @param string $p_name
+	 * @param string $p_value
 	 * @return void
 	 */
 	function setProperty($p_name, $p_value) 

@@ -1,8 +1,18 @@
 <?php 
+/**
+ * @package Campsite
+ */
+
+/**
+ * Includes
+ */
 require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DatabaseObject.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DbObjectArray.php');
 
+/**
+ * @package Campsite
+ */
 class IssuePublish extends DatabaseObject {
 	var $m_keyColumnNames = array('IdPublication', 'NrIssue', 'IdLanguage', 'PublishTime');
 	var $m_dbTableName = 'IssuePublish';
@@ -12,9 +22,10 @@ class IssuePublish extends DatabaseObject {
 	/**
 	 * This table delays an issue's publish time to a later date.
 	 *
-	 * @param int p_articleId
-	 * @param int p_languageId
-	 * @param string p_publishTime
+	 * @param int $p_articleId
+	 * @param int $p_issueId
+	 * @param int $p_languageId
+	 * @param string $p_publishTime
 	 *
 	 */
 	function IssuePublish($p_publicationId = null, $p_issueId = null, 
@@ -95,9 +106,9 @@ class IssuePublish extends DatabaseObject {
 	 * Get all the events that will change the issue's state.
 	 * Returns an array of IssuePublish objects.
 	 *
-	 * @param int p_publicationId
-	 * @param int p_issueId
-	 * @param int p_language
+	 * @param int $p_publicationId
+	 * @param int $p_issueId
+	 * @param int $p_language
 	 * @return array
 	 */
 	function GetIssueEvents($p_publicationId, $p_issueId, $p_languageId = null) 

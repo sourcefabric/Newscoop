@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @package Campsite
+ */
 class DbColumn {
 	var $m_dbTableName;
 	var $m_dbColumnName;

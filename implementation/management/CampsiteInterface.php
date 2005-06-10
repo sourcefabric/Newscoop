@@ -1,9 +1,17 @@
 <?php
+/**
+ * @package Campsite
+ */
+
+/**
+ * includes
+ */
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/lib_campsite.php");
+
 /**
  * Note: These functions should eventually become templates.
- *
+ * @package Campsite
  */
 class CampsiteInterface {
 
@@ -60,16 +68,16 @@ class CampsiteInterface {
 	/**
 	 * Create a HTML HREF link to an article.
 	 *
-	 * @param Article p_articleObj
+	 * @param Article $p_articleObj
 	 *		The article we want to display.
 	 *
-	 * @param int p_sectionLanguageId
+	 * @param int $p_sectionLanguageId
 	 *		The section language ID. 
 	 *
-	 * @param string p_targetFileName
+	 * @param string $p_targetFileName
 	 *		Which file in the "articles" directory to call.
 	 *
-	 * @param string p_backLink
+	 * @param string $p_backLink
 	 *		I'm not entirely sure what this is for.  I put it in for backward compatibility.
 	 */
 	function ArticleLink($p_articleObj, $p_interfaceLanguageId, $p_targetFileName = "", $p_backLink = "") 
@@ -82,19 +90,19 @@ class CampsiteInterface {
 	/**
 	 * Create a link to an article.
 	 *
-	 * @param Article p_articleObj
+	 * @param Article $p_articleObj
 	 *		The article we want to display.
 	 *
-	 * @param int p_interfaceLanguageId
+	 * @param int $p_interfaceLanguageId
 	 *		The language ID for the interface language. 
 	 *
-	 * @param string p_targetFileName
+	 * @param string $p_targetFileName
 	 *		Which file in the "articles" directory to call.
 	 *
-	 * @param string p_backLink
+	 * @param string $p_backLink
 	 *		A URL to get back to the previous page the user was on.
 	 *
-	 * @param string p_extraParams
+	 * @param string $p_extraParams
 	 */
 	function ArticleUrl($p_articleObj, $p_interfaceLanguageId, $p_targetFileName = "", $p_backLink = "", $p_extraParams = null) 
 	{
@@ -121,11 +129,11 @@ class CampsiteInterface {
 	 * You can also give a back link for the user to go back to when they
 	 * click OK on that screen.
 	 *
-	 * @param mixed p_errorStr
+	 * @param mixed $p_errorStr
 	 *		This can be a string or an array.  An array is for the case when the
 	 *		error string requires arguments.
 	 *
-	 * @param string p_backLink
+	 * @param string $p_backLink
 	 *
 	 * @return void
 	 */
@@ -151,21 +159,21 @@ class CampsiteInterface {
 	/**
 	 * Common header for all content screens.
 	 *
-	 * @param string p_title
+	 * @param string $p_title
 	 *		The title of the page.  This should have a translation in the language files.
 	 *
-	 * @param array p_objArray
+	 * @param array $p_objArray
 	 *		This represents your current location in the content tree.  This
 	 * 		can have the following index values, each containing the appropriate object:
 	 *		'Pub', 'Issue', 'Section', 'Article'
 	 *
-	 * @param boolean p_includeLinks
+	 * @param boolean $p_includeLinks
 	 *		Whether to include the links underneath the title or not.  Default TRUE.
 	 *
-	 * @param boolean p_fValidate
+	 * @param boolean $p_fValidate
 	 *		Whether to include the fValidate javascript files in the HTML header. Default FALSE.
 	 *
-	 * @param array p_extraBreadcrumbs
+	 * @param array $p_extraBreadcrumbs
 	 *		An array in the form 'text' => 'link' for more breadcrumbs.
 	 *
 	 * @return void
@@ -174,10 +182,10 @@ class CampsiteInterface {
 	{
 		global $Campsite;
 		global $ADMIN;
-		$publicationObj = array_get_value($p_objArray, 'Pub', null);
-		$issueObj = array_get_value($p_objArray, 'Issue', null);
-		$sectionObj = array_get_value($p_objArray, 'Section', null);
-		$articleObj = array_get_value($p_objArray, 'Article', null);
+		$publicationObj = camp_array_get_value($p_objArray, 'Pub', null);
+		$issueObj = camp_array_get_value($p_objArray, 'Issue', null);
+		$sectionObj = camp_array_get_value($p_objArray, 'Section', null);
+		$articleObj = camp_array_get_value($p_objArray, 'Article', null);
 		?>
 	<HEAD>
 		<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">

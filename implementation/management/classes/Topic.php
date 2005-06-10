@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @package Campsite
+ */
 class Topic extends DatabaseObject {
 	var $m_keyColumnNames = array('Id', 'LanguageId');
 
@@ -11,8 +14,8 @@ class Topic extends DatabaseObject {
 	
 	/**
 	 *
-	 * @param int p_id
-	 * @param int p_languageId
+	 * @param int $p_id
+	 * @param int $p_languageId
 	 */
 	function Topic($p_id = null, $p_languageId = null) 
 	{ 
@@ -91,7 +94,8 @@ class Topic extends DatabaseObject {
 	/**
 	 * Get the subtopics (as an array of Topics) for this topic.
 	 *
-	 * @param array p_sqlOptions
+	 * @param int $p_languageId
+	 * @param array $p_sqlOptions
 	 * @return array
 	 */
 	function getSubtopics($p_languageId = null, $p_sqlOptions = null) 
@@ -128,7 +132,7 @@ class Topic extends DatabaseObject {
 
 	
 	/** 
-	 * @param string
+	 * @param string $p_name
 	 * @return array
 	 */
 	function GetByName($p_name)  

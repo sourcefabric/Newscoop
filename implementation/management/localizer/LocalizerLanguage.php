@@ -1,9 +1,19 @@
 <?PHP
+/**
+ * @package Campware
+ */
+
+/**
+ * Includes
+ */
 require_once('PEAR.php');
 require_once('LocalizerConfig.php');
 require_once('LocalizerFileFormat.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
 
+/**
+ * @package Campware
+ */
 class LocalizerLanguage {
 	var $m_translationTable = array();
 	var $m_languageCode = '';
@@ -20,13 +30,13 @@ class LocalizerLanguage {
 	 * You can use this class to manipulate the translation table: 
 	 * such as add, delete, and move strings.
 	 *
-	 * @param string p_prefix
+	 * @param string $p_prefix
 	 *		The beginning of the file name, up to the first dot ('.').
 	 *
-	 * @param string p_directory
+	 * @param string $p_directory
 	 *		The location of the language file, relative to LOCALIZER_BASE_DIR.
 	 *
-	 * @param string p_languageId
+	 * @param string $p_languageId
 	 *		The language ID for this language, which can be in one of two forms:
 	 *      1) The two-letter language code (e.g. "en").
 	 *      2) The two-letter language code, underscore, two-letter country code
@@ -74,7 +84,7 @@ class LocalizerLanguage {
 	
 	/**
 	 * Set the mode to be 'xml' or 'gs'.
-	 * @param string p_value
+	 * @param string $p_value
 	 * @return void
 	 */
 	function setMode($p_value) 
@@ -91,7 +101,7 @@ class LocalizerLanguage {
 	 * or the LL_CC extended version , where LL is the language code and CC
 	 * is the country code.
 	 *
-	 * @param string p_languageId
+	 * @param string $p_languageId
 	 * @return void
 	 */
 	function setLanguageId($p_languageId) 
@@ -110,9 +120,8 @@ class LocalizerLanguage {
 	
     /** 
      * Register a string in the translation table.
-     * @param string p_key
-     * @param string p_value
-     * @param string p_languageId
+     * @param string $p_key
+     * @param string $p_value
      * @return void
      */
     function registerString($p_key, $p_value) 
@@ -189,7 +198,7 @@ class LocalizerLanguage {
 	 * Return true if this LocalizerLanguage has the exact same
 	 * translation strings as the given LocalizerLanguage.
 	 *
-	 * @param LocalizerLanguage p_localizerLanguage
+	 * @param LocalizerLanguage $p_localizerLanguage
 	 * @return boolean
 	 */
 	function equal($p_localizerLanguage) 
@@ -226,7 +235,7 @@ class LocalizerLanguage {
 	/**
 	 * Get the full path to the translation file.
 	 *
-	 * @param string p_mode
+	 * @param string $p_mode
 	 *		Either 'gs' or 'xml'.
      * @return string
      */
@@ -249,7 +258,7 @@ class LocalizerLanguage {
     /**
      * Return TRUE if the given string exists in the translation table.
      *
-     * @param string p_string
+     * @param string $p_string
      *
      * @return boolean
      */
@@ -262,14 +271,14 @@ class LocalizerLanguage {
     /**
      * Add a string to the translation table.
      *
-     * @param string p_key
+     * @param string $p_key
      *		The english translation of the string.
      *
-     * @param string p_value
+     * @param string $p_value
      *		Optional.  If not specified, the value will be set to the same
      *		value as the key.
      *
-     * @param int p_position
+     * @param int $p_position
      *		Optional.  By default the string will be added to the end of the 
      *		translation table.
      *
@@ -313,8 +322,8 @@ class LocalizerLanguage {
     
     /**
      * Get the position of a key or a value.
-     * @param string p_key
-     * @param string p_value
+     * @param string $p_key
+     * @param string $p_value
      * @return mixed
      *		The position of the key/value in the array, FALSE if not found.
      */
@@ -369,10 +378,10 @@ class LocalizerLanguage {
      * it will be added.  In this case, you can use p_position
      * to specify where to add the string.
      *
-     * @param string p_oldKey
-     * @param string p_newKey
-     * @param string p_value
-     * @param int p_position
+     * @param string $p_oldKey
+     * @param string $p_newKey
+     * @param string $p_value
+     * @param int $p_position
      * @return boolean
      */
     function updateString($p_oldKey, $p_newKey, $p_value = null, $p_position = null) 
@@ -411,8 +420,8 @@ class LocalizerLanguage {
      * Move a string to a different position in the translation array.
      * This allows similiar strings to be grouped together.
      *
-     * @param int p_startPositionOrKey
-     * @param int p_endPosition
+     * @param int $p_startPositionOrKey
+     * @param int $p_endPosition
      *
      * @return boolean
      *		TRUE on success, FALSE on failure.
@@ -465,7 +474,7 @@ class LocalizerLanguage {
     
     /**
      * Delete the string given by $p_key.
-     * @param string p_key
+     * @param string $p_key
      * @return mixed
      *		The deleted string as array('key' => $key, 'value' => $value) on success,
      *		FALSE if it didnt exist.
@@ -483,7 +492,7 @@ class LocalizerLanguage {
     
     /**
      * Delete a string at a specific position in the array.
-     * @param int p_position
+     * @param int $p_position
      * @return mixed
      *		The deleted string as array($key, $value) on success, FALSE on failure.
      */
@@ -555,7 +564,7 @@ class LocalizerLanguage {
     /**
      * Find the keys/values that match the given keyword.
      *
-     * @param string p_keyword
+     * @param string $p_keyword
      *
      * @return array
      */
@@ -574,7 +583,7 @@ class LocalizerLanguage {
     /**
      * Load a language file of the given type.
      *
-     * @param string p_type
+     * @param string $p_type
      *		If not specified, it will use the current mode.
      *
      * @return boolean
@@ -606,7 +615,7 @@ class LocalizerLanguage {
     /**
      * Save the translation table as the given type.
      *
-     * @param string p_type
+     * @param string $p_type
      *		If not specified, it will use the current mode.
      *
      * @return boolean

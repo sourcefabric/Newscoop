@@ -1,7 +1,13 @@
 <?php
-// Since the XML_Serializer package is not yet stable,
-// we must use our own package.  The package has a bug fix applied
-// that is required for the Localizer XML files to work.
+/**
+ * @package Campware
+ */
+
+/**
+ * Since the XML_Serializer package is not yet stable,
+ * we must use our own package.  The package has a bug fix applied
+ * that is required for the Localizer XML files to work.
+ */
 require_once($_SERVER['DOCUMENT_ROOT'].'/include/XML_Serializer/Serializer.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/include/XML_Serializer/Unserializer.php');
 

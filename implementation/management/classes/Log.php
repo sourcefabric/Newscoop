@@ -1,5 +1,12 @@
 <?php
+/**
+ * @package Campsite
+ */
 
+
+/**
+ * @package Campsite
+ */
 class Log extends DatabaseObject {
 	var $m_keyColumnNames = array('IdEvent');
 	var $m_keyIsAutoIncrement = false;
@@ -14,9 +21,9 @@ class Log extends DatabaseObject {
 	 * This is a static function.
 	 * Write a message to the log table.
 	 *
-	 * @param string p_text
-	 * @param string p_userName
-	 * @param int p_eventId
+	 * @param string $p_text
+	 * @param string $p_userName
+	 * @param int $p_eventId
 	 *
 	 * @return void
 	 */
