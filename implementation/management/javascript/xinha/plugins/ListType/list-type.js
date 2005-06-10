@@ -6,12 +6,11 @@
 // Distributed under the same terms as HTMLArea itself.
 // This notice MUST stay intact for use (see license.txt).
 //
-// $Id: list-type.js,v 1.1 2005/05/02 17:39:57 paul Exp $
+// $Id: list-type.js,v 1.2 2005/06/10 15:35:40 paul Exp $
 
 function ListType(editor) {
 	this.editor = editor;
 	var cfg = editor.config;
-	var toolbar = cfg.toolbar;
 	var self = this;
 	var options = {};
 	options[this._lc("Decimal numbers")] = "decimal";
@@ -25,7 +24,7 @@ function ListType(editor) {
 		// therefore let's hide it from the damn "browser".
 		options[this._lc("Lower greek letters")] = "lower-greek";
 	var obj = {
-		id            : "ListType",
+		id            : "listtype",
 		tooltip       : this._lc("Choose list style type (for ordered lists)"),
 		options       : options,
 		action        : function(editor) { self.onSelect(editor, this); },
@@ -33,19 +32,8 @@ function ListType(editor) {
 		context       : "ol"
 	};
 	cfg.registerDropdown(obj);
-	var a, i, j, found = false;
-	for (i = 0; !found && i < toolbar.length; ++i) {
-		a = toolbar[i];
-		for (j = 0; j < a.length; ++j) {
-			if (a[j] == "insertorderedlist") {
-				found = true;
-				break;
-			}
-		}
-	}
-	if (found)
-		a.splice(j+1, 0, "space", "ListType", "space");
-};
+	cfg.addToolbarElement("listtype", ["insertorderedlist","orderedlist"], 1);
+}	
 
 ListType._pluginInfo = {
 	name          : "ListType",

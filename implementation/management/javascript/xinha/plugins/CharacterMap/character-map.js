@@ -8,13 +8,10 @@
 // This notice MUST stay intact for use (see license.txt).
 
 function CharacterMap(editor) {
-        this.editor = editor;
-	        
-        var cfg = editor.config;
-	var toolbar = cfg.toolbar;
+  this.editor = editor;
+	var cfg = editor.config;
 	var self = this;
-        
-	cfg.registerButton({
+  cfg.registerButton({
                 id       : "insertcharacter",
                 tooltip  : this._lc("Insert special character"),
                 image    : editor.imgURL("ed_charmap.gif", "CharacterMap"),
@@ -23,24 +20,7 @@ function CharacterMap(editor) {
                                 self.buttonPress(editor);
                            }
             })
-
-	var a, i, j, found = false;
-	for (i = 0; !found && i < toolbar.length; ++i) {
-		a = toolbar[i];
-		for (j = 0; j < a.length; ++j) {
-			if (a[j] == "inserthorizontalrule") {
-				found = true;
-				break;
-			}
-		}
-	}
-	if (found)
-	    a.splice(j, 0, "insertcharacter");
-        else {
-            if(toolbar[1]) i = 1; else i = 0;
-            toolbar[i].splice(0, 0, "separator");
-	        toolbar[i].splice(0, 0, "insertcharacter");
-        }
+	cfg.addToolbarElement("insertcharacter", "inserthorizontalrule", 1);
 };
 
 CharacterMap._pluginInfo = {

@@ -2,28 +2,12 @@
 function SuperClean(editor, args)
 {
   this.editor = editor;
+  var superclean = this;
   editor._superclean_on = false;
-  editor.config.registerButton('superclean', this._lc("Clean Up HTML"), editor.imgURL('ed_superclean.gif', 'SuperClean'), true, function(e, objname, obj) { e._superClean(null, obj); });
+  editor.config.registerButton('superclean', this._lc("Clean Up HTML"), editor.imgURL('ed_superclean.gif', 'SuperClean'), true, function(e, objname, obj) { superclean._superClean(null, obj); });
 
   // See if we can find 'killword' and replace it with superclean
-  var t = editor.config.toolbar;
-  var done = false;
-  for(var i = 0; i < t.length && !done; i++)
-  {
-    for(var x = 0; x < t[i].length && !done; x++)
-    {
-      if(t[i][x] == 'killword')
-      {
-        t[i][x] = 'superclean';
-        done = true;
-      }
-    }
-  }
-
-  if(!done)
-  {
-    t[t.length-1].push('superclean');
-  }
+  editor.config.addToolbarElement("superclean", "killword", 0);
 }
 
 SuperClean._pluginInfo =
@@ -45,15 +29,18 @@ SuperClean.prototype._lc = function(string) {
 /** superClean combines HTMLTidy, Word Cleaning and font stripping into a single function
  *  it works a bit differently in how it asks for parameters */
 
-HTMLArea.prototype._superClean = function(opts, obj)
+SuperClean.prototype._superClean = function(opts, obj)
 {
-  var editor = this;
+  var superclean = this;
 
   // Do the clean if we got options
-  if(opts)
+  var doOK = function()
   {
-    if(opts.word_clean) this._wordClean();
-    var D = this.getInnerHTML();
+    var opts = superclean._dialog.hide();
+    var editor = superclean.editor;
+
+    if(opts.word_clean) editor._wordClean();
+    var D = editor.getInnerHTML();
     if(opts.faces)
     {
       D = D.replace(/face="[^"]*"/gi, '');
@@ -77,149 +64,17 @@ HTMLArea.prototype._superClean = function(opts, obj)
 
     D = D.replace(/(style|class)="\s*"/gi, '');
     D = D.replace(/<(font|span)\s*>/gi, '');
-    this.setHTML(D);
+    editor.setHTML(D);
 
-    if(this.config.tidy_handler && opts.tidy)
+    if(editor.config.tidy_handler && opts.tidy)
     {
-      HTMLArea._postback(this.config.tidy_handler, {'content' : this.getInnerHTML()},
+      HTMLArea._postback(editor.config.tidy_handler, {'content' : editor.getInnerHTML()},
                          function(javascriptResponse) { eval(javascriptResponse) });
     }
     return true;
   }
-
-  // If already cleaning, then cancel it
-  if(editor._superclean_on)
-  {
-    editor._superclean_on.click();
-    return true;
-  }
-
-  // Otherwise ask for options
-  var frm = document.createElement('div');
-  frm.style.backgroundColor='window';
-  frm.style.width  = this._iframe.style.width;
-  frm.style.height = this._iframe.style.height;
-
-  var win = document.createElement('div');
-  win.style.padding = '5px';
-  frm.appendChild(win);
-
-  win.appendChild(document.createTextNode(HTMLArea._lc("Please select from the following cleaning options...", "SuperClean")));
-
-  if(this.config.tidy_handler)
-  {
-    var div = document.createElement('div');
-    var lab = document.createElement('label');
-    var cb  = document.createElement('input');
-    cb.setAttribute('type', 'checkbox');
-    cb.setAttribute('name', 'tidy');
-    lab.appendChild(cb);
-    lab.appendChild(document.createTextNode(HTMLArea._lc("General tidy up and correction of some problems.", "SuperClean")));
-    div.appendChild(lab);
-    win.appendChild(div);
-  }
-
-  var div = document.createElement('div');
-  var lab = document.createElement('label');
-  var cb  = document.createElement('input');
-  cb.setAttribute('type', 'checkbox');
-  cb.setAttribute('name', 'word_clean');
-  lab.appendChild(cb);
-  lab.appendChild(document.createTextNode(HTMLArea._lc("Clean bad HTML from Microsoft Word", "SuperClean")));
-  div.appendChild(lab);
-  win.appendChild(div);
-
-  var div = document.createElement('div');
-  var lab = document.createElement('label');
-  var cb  = document.createElement('input');
-  cb.setAttribute('type', 'checkbox');
-  cb.setAttribute('name', 'faces');
-  lab.appendChild(cb);
-  lab.appendChild(document.createTextNode(HTMLArea._lc('Remove custom typefaces (font "styles").', "SuperClean")));
-  div.appendChild(lab);
-  win.appendChild(div);
-
-  var div = document.createElement('div');
-  var lab = document.createElement('label');
-  var cb  = document.createElement('input');
-  cb.setAttribute('type', 'checkbox');
-  cb.setAttribute('name', 'sizes');
-  lab.appendChild(cb);
-  lab.appendChild(document.createTextNode(HTMLArea._lc('Remove custom font sizes.', "SuperClean")));
-  div.appendChild(lab);
-  win.appendChild(div);
-
-  var div = document.createElement('div');
-  var lab = document.createElement('label');
-  var cb  = document.createElement('input');
-  cb.setAttribute('type', 'checkbox');
-  cb.setAttribute('name', 'colors');
-  lab.appendChild(cb);
-  lab.appendChild(document.createTextNode(HTMLArea._lc('Remove custom text colors.', "SuperClean")));
-  div.appendChild(lab);
-  win.appendChild(div);
-
-  var div = document.createElement('div');
-  div.style.textAlign  = 'center';
-  var but = document.createElement('input');
-  but.setAttribute('type',  'button');
-  but.setAttribute('value', HTMLArea._lc('Go', "SuperClean"));
-
-
-  // We want it in text mode when we do the clean.
-  var modeWhenDone = this._editMode;
-  if(this._editMode != 'textmode')
-  {
-    this.setMode('textmode');
-  }
-
-  // But we don't want to see the textarea
-  this._textArea.style.display = 'none';
-
-  but.onclick = function()
-  {
-    f = frm;
-    var elms = f.getElementsByTagName('input');
-    cfg = { };
-    for(var i = 0; i < elms.length; i++)
-    {
-      if(elms[i].getAttribute('type') == 'checkbox')
-      {
-        cfg[elms[i].getAttribute('name')] = elms[i].checked;
-      }
-    }
-
-    editor._superClean(cfg, obj);
-    editor._textArea.style.display = '';
-    if(editor._editMode != modeWhenDone)
-    {
-      editor.setMode(modeWhenDone);
-      editor.updateToolbar();
-    }
-    editor._superclean_on = false;
-    frm.parentNode.removeChild(frm);
-  }
-  div.appendChild(but);
-
-  var but = document.createElement('input');
-  but.setAttribute('type',  'button');
-  but.setAttribute('value', HTMLArea._lc('Cancel', "SuperClean"));
-  but.onclick = function()
-  {
-    editor._textArea.style.display = '';
-    if(editor._editMode != modeWhenDone)
-    {
-      editor.setMode(modeWhenDone);
-    }
-    editor._superclean_on = false;
-    frm.parentNode.removeChild(frm);
-
-  }
-  div.appendChild(but);
-  win.appendChild(div);
-  editor._superclean_on = but;
-
-  this._textArea.parentNode.insertBefore( frm, this._textArea );
+  var inputs = {};
+  this._dialog.show(inputs, doOK);
 }
 
 // set to the URL of a handler for html tidy, this handler
@@ -232,4 +87,95 @@ HTMLArea.prototype._superClean = function(opts, obj)
 HTMLArea.Config.prototype.tidy_handler = _editor_url + 'plugins/SuperClean/tidy.php';
 
 
+SuperClean.prototype.onGenerate = function()
+{
+  this._dialog = new SuperClean.Dialog(this);
+}
+// Inline Dialog for SuperClean
 
+
+SuperClean.Dialog = function (SuperClean)
+{
+  var  lDialog = this;
+  this.Dialog_nxtid = 0;
+  this.SuperClean = SuperClean;
+  this.id = { }; // This will be filled below with a replace, nifty
+
+  this.ready = false;
+  this.files  = false;
+  this.html   = false;
+  this.dialog = false;
+
+  // load the dTree script
+  this._prepareDialog();
+
+}
+
+SuperClean.Dialog.prototype._prepareDialog = function()
+{
+  var lDialog = this;
+  var SuperClean = this.SuperClean;
+
+  if(this.html == false)
+  {
+    HTMLArea._getback(_editor_url + 'plugins/SuperClean/dialog.html', function(txt) { lDialog.html = txt; lDialog._prepareDialog(); });
+    return;
+  }
+  var html = this.html;
+
+  // Now we have everything we need, so we can build the dialog.
+  var dialog = this.dialog = new HTMLArea.Dialog(SuperClean.editor, this.html, 'SuperClean');
+
+  this.ready = true;
+}
+
+SuperClean.Dialog.prototype._lc = SuperClean.prototype._lc;
+
+SuperClean.Dialog.prototype.show = function(inputs, ok, cancel)
+{
+  if(!this.ready)
+  {
+    var lDialog = this;
+    window.setTimeout(function() {lDialog.show(inputs,ok,cancel);},100);
+    return;
+  }
+
+  if(!this.SuperClean.editor.config.tidy_handler) {
+    this.dialog.getElementById('divTidy').style.display = 'none';
+  }
+
+  // Connect the OK and Cancel buttons
+  var dialog = this.dialog;
+  var lDialog = this;
+  if(ok)
+  {
+    this.dialog.getElementById('ok').onclick = ok;
+  }
+  else
+  {
+    this.dialog.getElementById('ok').onclick = function() {lDialog.hide();};
+  }
+
+  if(cancel)
+  {
+    this.dialog.getElementById('cancel').onclick = cancel;
+  }
+  else
+  {
+    this.dialog.getElementById('cancel').onclick = function() { lDialog.hide()};
+  }
+
+  // Show the dialog
+  this.SuperClean.editor.disableToolbar(['fullscreen','SuperClean']);
+
+  this.dialog.show(inputs);
+
+  // Init the sizes
+  this.dialog.onresize();
+}
+
+SuperClean.Dialog.prototype.hide = function()
+{
+  this.SuperClean.editor.enableToolbar();
+  return this.dialog.hide();
+}

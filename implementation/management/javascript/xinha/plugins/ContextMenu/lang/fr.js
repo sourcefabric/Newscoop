@@ -1,17 +1,5 @@
 // I18N constants
-
 // LANG: "fr", ENCODING: UTF-8
-// Author: Laurent Vilday, mokhet@mokhet.com
-
-// FOR TRANSLATORS:
-//
-//   1. PLEASE PUT YOUR CONTACT INFO IN THE ABOVE LINE
-//      (at least a valid email address)
-//
-//   2. PLEASE TRY TO USE UTF-8 FOR ENCODING;
-//      (if this is not possible, please include a comment
-//       that states what encoding is necessary.)
-
 {
   "Cut": "Couper",
   "Copy": "Copier",
@@ -29,10 +17,10 @@
   "Insert _Column Before": "I_nsérer une colonne avant",
   "Insert C_olumn After": "Insérer une colonne après",
   "De_lete Column": "_Supprimer la colonne",
-  "Justify Left": "Justifier _gauche",
-  "Justify Center": "Justifier _centre",
-  "Justify Right": "Justifier _droit",
-  "Justify Full": "Justifier p_lein",
+  "Justify Left": "Aligner à gauche",
+  "Justify Center": "Aligner au centre",
+  "Justify Right": "Aligner à droite",
+  "Justify Full": "Justifier",
   "Make lin_k...": "Convertir en lien...",
   "Remove the": "Supprimer",
   "Element...": "Élément...",
@@ -40,20 +28,20 @@
   "Insert paragraph after": "Insérer un paragraphe après",
   "Please confirm that you want to remove this element:": "Confirmer la suppression de cet élément:",
   "Remove this node from the document": "Supprimer ce noeud du document",
-  "How did you get here? (Please report!)": "Comment êtes-vous arrivé ici ? (Please report !)",
+  "How did you get here? (Please report!)": "Comment êtes-vous arrivé ici ? (Reportez le bug SVP !)",
   "Show the image properties dialog": "Afficher le dialogue des propriétés d'image",
-  "Modify URL": "Modifier le URL",
-  "Current URL is": "Le URL courant est",
+  "Modify URL": "Modifier l'URL",
+  "Current URL is": "L'URL courante est",
   "Opens this link in a new window": "Ouvrir ce lien dans une nouvelle fenêtre",
   "Please confirm that you want to unlink this element.": "Voulez-vous vraiment enlever le lien présent sur cet élément.",
-  "Link points to:": "Lier les points jusqu'à:",
+  "Link points to:": "Le lien pointe sur:",
   "Unlink the current element": "Enlever le lien sur cet élément",
-  "Show the Table Cell Properties dialog": "Afficher le dialogue des propriétés des cellules",
-  "Show the Table Row Properties dialog": "Afficher le dialogue des propriétés des rangées",
+  "Show the Table Cell Properties dialog": "Afficher la boite de propriété des cellules",
+  "Show the Table Row Properties dialog": "Afficher la boite de propriété des rangées",
   "Insert a new row before the current one": "Insérer une nouvelle rangée avant celle-ci",
   "Insert a new row after the current one": "Insérer une nouvelle rangée après celle-ci",
   "Delete the current row": "Supprimer la rangée courante",
-  "Show the Table Properties dialog": "Afficher le dialogue des propriétés de table",
+  "Show the Table Properties dialog": "Afficher la boite de propriété de tableau",
   "Insert a new column before the current one": "Insérer une nouvelle rangée avant celle-ci",
   "Insert a new column after the current one": "Insérer une nouvelle colonne après celle-ci",
   "Delete the current column": "Supprimer cette colonne",

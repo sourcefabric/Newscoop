@@ -6,7 +6,7 @@
 // Distributed under the same terms as HTMLArea itself.
 // This notice MUST stay intact for use (see license.txt).
 //
-// $Id: spell-checker.js,v 1.1 2005/05/02 17:39:57 paul Exp $
+// $Id: spell-checker.js,v 1.2 2005/06/10 15:34:43 paul Exp $
 
 HTMLArea.Config.prototype.SpellChecker = { 'backend': 'php', 'personalFilesDir' : '', 'defaultDictionary' : 'en_GB' };
 
@@ -25,46 +25,7 @@ function SpellChecker(editor) {
                self.buttonPress(editor, id);
              });
 
-  var done = false;
-  for(var i = 0; i < cfg.toolbar.length; i++)
-  {
-    if(cfg.toolbar[i].contains('htmlmode'))
-    {
-      var j = cfg.toolbar[i].indexOf('htmlmode');
-      cfg.toolbar[i].splice(j,0,id);
-      done = true;
-      break;
-    }
-  }
-
-  if(!done)
-  {
-    cfg.toolbar[0].push(id);
-  }
-
-  /*
-  // register the toolbar buttons provided by this plugin
-  var toolbar = [];
-  for (var i = 0; i < bl.length; ++i)
-  {
-    var btn = bl[i];
-    if (!btn)
-    { // toolbar.push("separator");
-    } else {
-      var id = "SC-" + btn[0];
-      cfg.registerButton(id, tt[id], editor.imgURL(btn[0] + ".gif", "SpellChecker"), false,
-             function(editor, id) {
-               // dispatch button press event
-               self.buttonPress(editor, id);
-             }, btn[1]);
-      toolbar.push(id);
-    }
-  }
-
-  for (var i = 0; i < toolbar.length; ++i) {
-    cfg.toolbar[0].push(toolbar[i]);
-  }
-  */
+  cfg.addToolbarElement("SC-spell-check", "htmlmode", 1);
 };
 
 SpellChecker._pluginInfo = {

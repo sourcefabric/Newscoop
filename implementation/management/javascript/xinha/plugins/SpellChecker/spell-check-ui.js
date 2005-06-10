@@ -6,7 +6,7 @@
 // Distributed under the same terms as HTMLArea itself.
 // This notice MUST stay intact for use (see license.txt).
 //
-// $Id: spell-check-ui.js,v 1.1 2005/05/02 17:39:57 paul Exp $
+// $Id: spell-check-ui.js,v 1.2 2005/06/10 15:34:43 paul Exp $
 
 // internationalization file was already loaded in parent ;-)
 var SpellChecker = window.opener.SpellChecker;
@@ -433,7 +433,6 @@ function finishedSpellChecking() {
       var txt = dicts[i];
       var option = document.createElement("option");
       if(txt == activeDictionary) {
-        txt = RegExp.$1;
         option.selected = true;
       }
       option.value = txt;

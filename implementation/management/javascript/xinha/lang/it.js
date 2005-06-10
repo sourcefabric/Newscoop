@@ -45,7 +45,6 @@
   "Insert/Modify Link": "Inserisci/modifica link",
   "New window (_blank)": "Nuova finestra (_blank)",
   "None (use implicit)": "Niente (usa implicito)",
-  "OK": "OK",
   "Other": "Altro",
   "Same frame (_self)": "Stessa frame (_self)",
   "Target:": "Target:",

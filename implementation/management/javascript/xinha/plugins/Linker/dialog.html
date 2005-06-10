@@ -6,6 +6,7 @@
     <legend><label><input type="radio" name="[type]" value="url" checked onclick="
       document.getElementById('[urltable]').style.display=this.checked?'':'none';
       document.getElementById('[mailtable]').style.display=this.checked?'none':'';
+      document.getElementById('[anchortable]').style.display=this.checked?'none':'';
     " /> <l10n>URL Link</l10n></label></legend>
     <table id="[urltable]" width="100%">
       <tr>
@@ -62,6 +63,7 @@
     <legend><label><input type="radio" name="[type]" value="mailto" onclick="
       document.getElementById('[mailtable]').style.display=this.checked?'':'none';
       document.getElementById('[urltable]').style.display=this.checked?'none':'';
+      document.getElementById('[anchortable]').style.display=this.checked?'none':'';
     "/> <l10n>Email Link</l10n></label></legend>
     <table id="[mailtable]" width="100%">
       <tr>
@@ -78,6 +80,24 @@
       </tr>
     </table>
   </fieldset>
+
+  <fieldset id="[anchorfieldset]">
+    <legend><label><input type="radio" name="[type]" value="anchor" onclick="
+      document.getElementById('[urltable]').style.display=this.checked?'none':'';
+      document.getElementById('[mailtable]').style.display=this.checked?'none':'';
+      document.getElementById('[anchortable]').style.display=this.checked?'':'none';
+    "/> <l10n>Anchor-Link</l10n></label></legend>
+    <table id="[anchortable]" width="100%">
+      <tr>
+        <th><label for="[anchor]"><l10n>Anchor:</l10n> </label></th>
+        <td>
+            <select name="[anchor]" id="[anchor]">
+            </select>
+        </td>
+      </tr>
+    </table>
+  </fieldset>
+
   <div style="text-align:right">
     <input type="button" id="[ok]"     value="_(OK)"     />
     <input type="button" id="[clear]"  value="_(REMOVE LINK)" onclick="this.form['[href]'].value='';this.form['[to]'].value='';document.getElementById('[ok]').click();" />

@@ -6,7 +6,7 @@
 // Distributed under the same terms as HTMLArea itself.
 // This notice MUST stay intact for use (see license.txt).
 //
-// $Id: css.js,v 1.1 2005/05/02 17:39:57 paul Exp $
+// $Id: css.js,v 1.2 2005/06/10 15:39:38 paul Exp $
 // @TODO This is the default and won't be very useful to others.
 // We should make this better.
 HTMLArea.Config.prototype.cssPluginConfig =
@@ -44,7 +44,6 @@ HTMLArea.Config.prototype.cssPluginConfig =
 function CSS(editor, params) {
 	this.editor = editor;
 	var cfg = editor.config;
-	var toolbar = cfg.toolbar;
 	var self = this;
 	var plugin_config;
   if(params && params.length)
@@ -58,8 +57,7 @@ function CSS(editor, params) {
 
   var combos = plugin_config.combos;
 
-	var first = true;
-	for (var i = combos.length; --i >= 0;) {
+	for (var i = 0; i < combos.length; i++) {
 		var combo = combos[i];
 		var id = "CSS-class" + i;
 		var css_class = {
@@ -70,14 +68,8 @@ function CSS(editor, params) {
 			context    : combo.context
 		};
 		cfg.registerDropdown(css_class);
-
-		// prepend to the toolbar
-		toolbar[1].splice(0, 0, first ? "separator" : "space");
-		toolbar[1].splice(0, 0, id);
-		if (combo.label)
-			toolbar[1].splice(0, 0, "T[" + combo.label + "]");
-		first = false;
-	}
+    cfg.addToolbarElement(["T[" + combo.label + "]", id, "separator"] , "formatblock", -1);
+ 	}
 };
 
 CSS._pluginInfo = {

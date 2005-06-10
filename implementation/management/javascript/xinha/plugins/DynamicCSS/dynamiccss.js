@@ -7,16 +7,14 @@
 // This notice MUST stay intact for use (see license.txt).
 
 function DynamicCSS(editor, args) {
-        this.editor = editor;
-
-        var cfg = editor.config;
-  var toolbar = cfg.toolbar;
+  this.editor = editor;
+  var cfg = editor.config;
   var self = this;
 
-        /*var cssArray=null;
-        var cssLength=0;
-        var lastTag=null;
-        var lastClass=null;*/
+/*var cssArray=null;
+  var cssLength=0;*/
+  var lastTag=null;
+  var lastClass=null;
 
   var css_class = {
     id         : "DynamicCSS-class",
@@ -26,10 +24,7 @@ function DynamicCSS(editor, args) {
     refresh    : function(editor) { self.updateValue(editor, this); }
   };
   cfg.registerDropdown(css_class);
-
-  toolbar[0].splice(0, 0, "separator");
-  toolbar[0].splice(0, 0, "DynamicCSS-class");
-  toolbar[0].splice(0, 0, "T[CSS]");
+  cfg.addToolbarElement(["T[CSS]", "DynamicCSS-class", "separator"] , "formatblock", -1);
 };
 
 DynamicCSS.parseStyleSheet=function(editor){
@@ -37,8 +32,11 @@ DynamicCSS.parseStyleSheet=function(editor){
 
         cssArray=DynamicCSS.cssArray;
         if(!cssArray) cssArray=new Array();
-        
-        for(i=0;i<iframe.styleSheets.length;i++){
+
+        for(i=0;i<iframe.styleSheets.length;i++)
+        {
+            if(iframe.styleSheets[i].title == "table borders") continue;
+            
             // Mozilla
             if(HTMLArea.is_gecko){
                 try{
@@ -94,8 +92,8 @@ DynamicCSS.applyCSSRule=function(cssRules,cssArray){
                     }
                     else{
                         className='none';
-                        if(tagName=='all') cssName=this._lc("Default");
-                        else cssName='<'+this._lc("Default")+'>';
+                        if(tagName=='all') cssName=HTMLArea._lc("Default", 'DynamicCSS');
+                        else cssName='<'+HTMLArea._lc("Default", 'DynamicCSS')+'>';
                     }
                     cssArray[tagName][className]=cssName;
                     DynamicCSS.cssLength++;
@@ -184,9 +182,9 @@ DynamicCSS.prototype.updateValue = function(editor, obj) {
         var tagName = parent.tagName.toLowerCase();
         var className = parent.className;
 
-        if(DynamicCSS.lastTag!=tagName || DynamicCSS.lastClass!=className){
-            DynamicCSS.lastTag=tagName;
-            DynamicCSS.lastClass=className;
+        if(this.lastTag!=tagName || this.lastClass!=className){
+            this.lastTag=tagName;
+            this.lastClass=className;
 
             var select = editor._toolbarObjects[obj.id].element;
 

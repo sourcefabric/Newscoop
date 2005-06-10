@@ -10,7 +10,7 @@
 // Version 3.0 developed by Mihai Bazon for InteractiveTools.
 //   http://dynarch.com/mishoo
 //
-// $Id: full-page.js,v 1.1 2005/05/02 17:39:57 paul Exp $
+// $Id: full-page.js,v 1.2 2005/06/10 15:39:38 paul Exp $
 
 function FullPage(editor) {
 	this.editor = editor;
@@ -25,8 +25,7 @@ function FullPage(editor) {
 			   });
 
 	// add a new line in the toolbar
-	cfg.toolbar[0].splice(0, 0, "separator");
-	cfg.toolbar[0].splice(0, 0, "FP-docprop");
+	cfg.addToolbarElement(["separator","FP-docprop"],"separator",-1);
 };
 
 FullPage._pluginInfo = {

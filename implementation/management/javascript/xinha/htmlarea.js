@@ -27,10 +27,19 @@
     --     included in the top 10 lines of the file (see the embedded edit mode)
     --
     --  $HeadURL: http://svn.xinha.python-hosting.com/trunk/htmlarea.js $
-    --  $LastChangedDate: 2005-04-20 23:56:43 +1200 (Wed, 20 Apr 2005) $
-    --  $LastChangedRevision: 80 $
-    --  $LastChangedBy: niko $
+    --  $LastChangedDate: 2005-05-25 09:30:03 +1200 (Wed, 25 May 2005) $
+    --  $LastChangedRevision: 193 $
+    --  $LastChangedBy: gogo $
     --------------------------------------------------------------------------*/
+
+HTMLArea.version =
+{
+  'Release'   : 'Trunk',
+  'Head'      : '$HeadURL: http://svn.xinha.python-hosting.com/trunk/htmlarea.js $'.replace(/^[^:]*: (.*) \$$/, '$1'),
+  'Date'      : '$LastChangedDate: 2005-05-25 09:30:03 +1200 (Wed, 25 May 2005) $'.replace(/^[^:]*: ([0-9-]*) ([0-9:]*) ([+0-9]*) \((.*)\) \$/, '$4 $2 $3'),
+  'Revision'  : '$LastChangedRevision: 193 $'.replace(/^[^:]*: (.*) \$$/, '$1'),
+  'RevisionBy': '$LastChangedBy: gogo $'.replace(/^[^:]*: (.*) \$$/, '$1')
+}
 
 if (typeof _editor_url == "string") {
   // Leave exactly one backslash at the end of _editor_url
@@ -60,7 +69,10 @@ HTMLArea.is_gecko  = (navigator.product == "Gecko");
 
 // Creates a new HTMLArea object.  Tries to replace the textarea with the given
 // ID with it.
-function HTMLArea(textarea, config) {
+function HTMLArea(textarea, config)
+{
+  if(!textarea) throw("Tried to create HTMLArea without textarea specified.");
+
   if (HTMLArea.checkSupportedBrowser()) {
     if (typeof config == "undefined") {
       this.config = new HTMLArea.Config();
@@ -68,7 +80,20 @@ function HTMLArea(textarea, config) {
       this.config = config;
     }
     this._htmlArea = null;
+
+    if(typeof textarea != 'object')
+    {
+      textarea = HTMLArea.getElementById('textarea', textarea);
+    }
     this._textArea = textarea;
+
+    // Before we modify anything, get the initial textarea size
+    this._initial_ta_size =
+    {
+      w: textarea.style.width ? textarea.style.width : textarea.offsetWidth,
+      h: textarea.style.height ? textarea.style.height : textarea.offsetHeight
+    }
+
     this._editMode = "wysiwyg";
     this.plugins = {};
     this._timerToolbar = null;
@@ -89,75 +114,42 @@ function HTMLArea(textarea, config) {
       right:
       {
         on: true,
-        div:    document.createElement('div'),
+        container:    document.createElement('td'),
         panels: [ ]
       },
       left:
       {
         on: true,
-        div:    document.createElement('div'),
+        container:    document.createElement('td'),
         panels: [ ]
       },
       top:
       {
         on: true,
-        div:    document.createElement('div'),
+        container:    document.createElement('td'),
         panels: [ ]
       },
       bottom:
       {
         on: true,
-        div:    document.createElement('div'),
+        container:    document.createElement('td'),
         panels: [ ]
       }
     };
 
     for(var i in panels)
     {
-      panels[i].div.className = 'panels ' + i;
+      panels[i].div = panels[i].container; // legacy
+      panels[i].container.className = 'panels ' + i;
     }
   }
 };
 
 HTMLArea.onload = function(){};
-HTMLArea._scripts = [];
-
-HTMLArea.loadScript = function(url, plugin) {
-  if (plugin)
-    url = HTMLArea.getPluginDir(plugin) + '/' + url;
-  this._scripts.push(url);
-};
-
-
 HTMLArea.init = function() {
-
-  var head = document.getElementsByTagName("head")[0];
-  var current = 0;
-  var savetitle = document.title;
-  var evt = HTMLArea.is_ie ? "onreadystatechange" : "onload";
-  function loadNextScript() {
-    if (current > 0 && HTMLArea.is_ie &&
-        !/loaded|complete/.test(window.event.srcElement.readyState))
-      return;
-    if (current < HTMLArea._scripts.length) {
-      var url = HTMLArea._scripts[current++];
-      document.title = "[HTMLArea: loading script " + current + "/" + HTMLArea._scripts.length + "]";
-      var script = document.createElement("script");
-      script.type = "text/javascript";
-      script.src = url;
-      script[evt] = loadNextScript;
-      head.appendChild(script);
-    } else {
-      document.title = savetitle;
-      HTMLArea.onload();
-    }
-  };
-  loadNextScript();
+    HTMLArea.onload();
 };
 
-HTMLArea.loadScript(_editor_url + "dialog.js");
-HTMLArea.loadScript(_editor_url + "inline-dialog.js");
-HTMLArea.loadScript(_editor_url + "popupwin.js");
 
 // cache some regexps
 HTMLArea.RE_tagName = /(<\/|<)\s*([^ \t\n>]+)/ig;
@@ -170,20 +162,47 @@ HTMLArea.RE_url      = /(https?:\/\/)?(([a-z0-9_]+:[a-z0-9_]+@)?[a-z0-9_-]{2,}(\
 
 HTMLArea.Config = function () {
   var cfg = this;
-  this.version = "3.0";
+  this.version = HTMLArea.version.Revision;
 
-  this.width = "toolbar";
+  // Width and Height
+  //  you may set these as follows
+  //  width = 'auto'      -- the width of the original textarea will be used
+  //  width = 'toolbar'   -- the width of the toolbar will be used
+  //  width = '<css measure>' -- use any css measurement, eg width = '75%'
+  //
+  //  height = 'auto'     -- the height of the original textarea
+  //  height = '<css measure>' -- any css measurement, eg height = '480px'
+  this.width  = "auto";
   this.height = "auto";
 
-  //language of the editor
-  this.lang = "en";
+  // the next parameter specifies whether the toolbar should be included
+  // in the size above, or are extra to it.  If false then it's recommended
+  // to have explicit pixel sizes above (or on your textarea and have auto above)
+  this.sizeIncludesBars = true;
+
+  // the next parameter specifies whether the panels should be included
+  // in the size above, or are extra to it.  If false then it's recommended
+  // to have explicit pixel sizes above (or on your textarea and have auto above)
+  this.sizeIncludesPanels = true;
+
+  // If you are using Xinha in a "Standards Mode" page (using doctype switching)
+  // then you must use pixel heights for the top and bottom panels, otherwise
+  // it won't work correctly.  Also remember that you MUST have the "px" appended
+  // to pixel lengths or it won't work either!
+  this.panel_dimensions =
+  {
+    left:   '200px', // Width
+    right:  '200px',
+    top:    '100px', // Height
+    bottom: '100px'
+  }
 
   // enable creation of a status bar?
-  this.statusBar = false;
+  this.statusBar = true;
 
   // intercept ^V and use the HTMLArea paste command
   // If false, then passes ^V through to browser editor widget
-  this.htmlareaPaste = HTMLArea.is_gecko ? false : true;
+  this.htmlareaPaste = false;
 
   this.mozParaHandler = 'best'; // set to 'built-in', 'dirty' or 'best'
                                 // built-in: will (may) use 'br' instead of 'p' tags
@@ -197,10 +216,6 @@ HTMLArea.Config = function () {
 
   // the time interval at which undo samples are taken
   this.undoTimeout = 500;	// 1/2 sec.
-
-  // the next parameter specifies whether the toolbar should be included
-  // in the size or not.
-  this.sizeIncludesToolbar = true;
 
   // if true then HTMLArea will retrieve the full HTML, starting with the
   // <HTML> tag.
@@ -254,6 +269,20 @@ HTMLArea.Config = function () {
   // remove tags (these have to be a regexp, or null if this functionality is not desired)
   this.htmlRemoveTags = null;
 
+  // Turning this on will turn all "linebreak" and "separator" items in your toolbar into soft-breaks,
+  // this means that if the items between that item and the next linebreak/separator can
+  // fit on the same line as that which came before then they will, otherwise they will
+  // float down to the next line.
+
+  // If you put a linebreak and separator next to each other, only the separator will
+  // take effect, this allows you to have one toolbar that works for both flowToolbars = true and false
+  // infact the toolbar below has been designed in this way, if flowToolbars is false then it will
+  // create explictly two lines (plus any others made by plugins) breaking at justifyleft, however if
+  // flowToolbars is false and your window is narrow enough then it will create more than one line
+  // even neater, if you resize the window the toolbars will reflow.  Niiiice.
+
+  this.flowToolbars = true;
+
   /** CUSTOMIZING THE TOOLBAR
    * -------------------------
    *
@@ -265,25 +294,17 @@ HTMLArea.Config = function () {
    */
   this.toolbar =
   [
-    ["popupeditor","separator"],
-    ["formatblock","fontname","fontsize","bold","italic","underline","strikethrough","separator"],
-    ["forecolor","hilitecolor","textindicator","separator"],
-    ["subscript","superscript"],
-    ["linebreak","justifyleft","justifycenter","justifyright","justifyfull","separator"],
-    ["insertorderedlist","insertunorderedlist","outdent","indent","separator"],
-    ["inserthorizontalrule","createlink","insertimage","inserttable","separator"],
-    ["undo","redo"], (HTMLArea.is_gecko ? [] : ["cut","copy","paste"]),["separator"],
-    ["killword","removeformat","toggleborders","lefttoright", "righttoleft", "separator","htmlmode","about"]
+    ["popupeditor"],
+    ["separator","formatblock","fontname","fontsize","bold","italic","underline","strikethrough"],
+    ["separator","forecolor","hilitecolor","textindicator"],
+    ["separator","subscript","superscript"],
+    ["linebreak","separator","justifyleft","justifycenter","justifyright","justifyfull"],
+    ["separator","insertorderedlist","insertunorderedlist","outdent","indent"],
+    ["separator","inserthorizontalrule","createlink","insertimage","inserttable"],
+    ["separator","undo","redo","selectall"], (HTMLArea.is_gecko ? [] : ["cut","copy","paste","overwrite","saveas"]),
+    ["separator","killword","removeformat","toggleborders","lefttoright", "righttoleft","separator","htmlmode","about"]
   ];
 
-  // Width of the "Right Side" panel, when present
-  this.panel_dimensions =
-  {
-    left:   '200px', // Width
-    right:  '200px',
-    top:    '100px', // Height
-    bottom: '100px'
-  }
 
   this.fontname = {
     "&mdash; font &mdash;":         '',
@@ -335,7 +356,6 @@ HTMLArea.Config = function () {
    "insert_image": "insert_image.html",
    "insert_table": "insert_table.html",
    "select_color": "select_color.html",
-   "fullscreen": "fullscreen.html",
    "about": "about.html"
   };
 
@@ -388,12 +408,11 @@ HTMLArea.Config = function () {
     cut: [ "Cut selection", ["ed_buttons_main.gif",5,0], false, cut_copy_paste ],
     copy: [ "Copy selection", ["ed_buttons_main.gif",4,0], false, cut_copy_paste ],
     paste: [ "Paste from clipboard", ["ed_buttons_main.gif",4,1], false, cut_copy_paste ],
-
+    selectall: [ "Select all", "ed_selectall.gif", false, function(e) {e.execCommand("selectall");} ],
 
 
     inserthorizontalrule: [ "Horizontal Rule", ["ed_buttons_main.gif",6,0], false, function(e) {e.execCommand("inserthorizontalrule");} ],
-    //createlink: [ "Insert Web Link", ["ed_buttons_main.gif",6,1], false, function(e) {e._createLink();} ],
-    createlink: [ "Insert Web Link", "ed_link.gif", false, function(e) {e._createLink();} ],
+    createlink: [ "Insert Web Link", ["ed_buttons_main.gif",6,1], false, function(e) {e._createLink();} ],
     insertimage: [ "Insert/Modify Image", ["ed_buttons_main.gif",6,3], false, function(e) {e.execCommand("insertimage");} ],
     inserttable: [ "Insert Table", ["ed_buttons_main.gif",6,2], false, function(e) {e.execCommand("inserttable");} ],
 
@@ -401,10 +420,20 @@ HTMLArea.Config = function () {
     htmlmode: [ "Toggle HTML Source", ["ed_buttons_main.gif",7,0], true, function(e) {e.execCommand("htmlmode");} ],
     toggleborders: [ "Toggle Borders", ["ed_buttons_main.gif",7,2], false, function(e) { e._toggleBorders() } ],
     print:         [ "Print document", ["ed_buttons_main.gif",8,1], false, function(e) {e._iframe.contentWindow.print();} ],
-    popupeditor: [ "Enlarge Editor", "fullscreen_maximize.gif", true,
+    saveas: [ "Save as", "ed_saveas.gif", false, function(e) {e.execCommand("saveas",false,"noname.htm");} ],
+    popupeditor: [ "Enlarge Editor", ["ed_buttons_main.gif",8,0], true,
       function(e, objname, obj)
       {
-        e.execCommand("popupeditor");
+        //call FullScreen-plugin (backwards-compatibility)
+        e._fullScreen();
+        if(e._isFullScreen)
+        {
+          obj.swapImage([_editor_url + cfg.imgURL + 'ed_buttons_main.gif',9,0]);
+        }
+        else
+        {
+          obj.swapImage([_editor_url + cfg.imgURL + 'ed_buttons_main.gif',8,0]);
+        }
       } ],
     about: [ "About this editor", ["ed_buttons_main.gif",8,2], true, function(e) {e.execCommand("about");} ],
     showhelp: [ "Help using editor", ["ed_buttons_main.gif",9,2], true, function(e) {e.execCommand("showhelp");} ],
@@ -412,6 +441,7 @@ HTMLArea.Config = function () {
     splitblock:    [ "Split Block", "ed_splitblock.gif", false, function(e) {e._splitBlock();} ],
     lefttoright: [ "Direction left to right", ["ed_buttons_main.gif",0,4], false, function(e) {e.execCommand("lefttoright");} ],
     righttoleft: [ "Direction right to left", ["ed_buttons_main.gif",1,4], false, function(e) {e.execCommand("righttoleft");} ],
+    overwrite: [ "Insert/Overwrite", "ed_overwrite.gif", false, function(e) {e.execCommand("overwrite");} ],
 
     wordclean:     [ "MS Word Cleaner", ["ed_buttons_main.gif",5,3], false, function(e) {e._wordClean();} ],
     clearfonts:    [ "Clear Inline Font Specifications", ["ed_buttons_main.gif",5,4], false, function(e) {e._clearFonts();} ],
@@ -550,6 +580,122 @@ HTMLArea.Config.prototype.hideSomeButtons = function(remove) {
   }
 };
 
+/** Helper Function: add buttons/drop-downs boxes with title or separator to the toolbar
+ * if the buttons/drop-downs boxes doesn't allready exists.
+ * id: button or selectbox (as array with separator or title)
+ * where: button or selectbox (as array if the first is not found take the second and so on)
+ * position:
+ * -1 = insert button (id) one position before the button (where)
+ * 0 = replace button (where) by button (id)
+ * +1 = insert button (id) one position after button (where)
+ *
+ * cfg.addToolbarElement(["T[title]", "button_id", "separator"] , ["first_id","second_id"], -1);
+*/
+
+HTMLArea.Config.prototype.addToolbarElement = function(id, where, position) {
+  var toolbar = this.toolbar;
+  var a, i, j, o, sid;
+  var idIsArray = false;
+  var whereIsArray = false;
+  var whereLength = 0;
+  var whereJ = 0;
+  var whereI = 0;
+  var exists = false;
+  var found = false;
+  // check if id and where are arrys
+  if ((id && typeof id == "object") && (id.constructor == Array)) {
+    idIsArray = true;
+  }
+  if ((where && typeof where == "object") && (where.constructor == Array)) {
+    whereIsArray = true;
+    whereLength = where.length;
+	}
+
+  if (idIsArray) { //find the button/select box in input array
+    for (i = 0; i < id.length; ++i) {
+      if ((id[i] != "separator") && (id[i].indexOf("T[") != 0)) {
+        sid = id[i];
+      }
+    }
+  } else {
+    sid = id;
+  }
+
+  for (var i = 0; !exists && !found && i < toolbar.length; ++i) {
+    a = toolbar[i]
+    for (j = 0; !found && j < a.length; ++j) {
+      if (a[i] == sid) { // check if button/select box exists
+        exists = true;
+        break;
+      }
+      if (whereIsArray) {
+        for (o = 0; o < whereLength; ++o) {
+          if(a[j] == where[o]) {
+            if (o == 0) {
+              found = true;
+              j--;
+              break;
+            } else {
+              whereI = i;
+              whereJ = j;
+              whereLength = o;
+            }
+          }
+        }
+      } else {
+        if (a[j] == where) { // find the position to insert
+          found = true;
+          break;
+        }
+      }
+    }
+  }
+
+  if (!exists) {
+    if (!found && whereIsArray) { //if check found any other as the first button
+      if (where.length != whereLength) {
+        j = whereJ;
+        a = toolbar[whereI];
+        found = true;
+      }
+    }
+    if (found) {
+      if (position == 0) { // replace the found button
+        if (idIsArray) {
+          a[j] = id[id.length-1];
+          for (i = id.length-1; --i >= 0;) {
+            a.splice(j, 0, id[i]);
+          }
+        } else {
+          a[j] = id;
+        }
+      } else { // insert before/after the found button
+        if (position < 0) {
+          j = j + position + 1; //correct position before
+        } else if (position > 0) {
+          j = j + position; //correct posion after
+        }
+        if (idIsArray) {
+          for (i = id.length; --i >= 0;) {
+            a.splice(j, 0, id[i]);
+          }
+        } else {
+           a.splice(j, 0, id);
+        }
+      }
+    }	else { // no button found
+      toolbar[0].splice(0, 0, "separator");
+      if (idIsArray) {
+        for (i = id.length; --i >= 0;) {
+          toolbar[0].splice(0, 0, id[i]);
+        }
+      } else {
+        toolbar[0].splice(0, 0, id);
+      }
+    }
+  }
+}
+
 /** Helper function: replace all TEXTAREA-s in the document with HTMLArea-s. */
 HTMLArea.replaceAll = function(config) {
   var tas = document.getElementsByTagName("textarea");
@@ -560,16 +706,7 @@ HTMLArea.replaceAll = function(config) {
 HTMLArea.replace = function(id, config)
 {
   var ta = HTMLArea.getElementById("textarea", id);
-  if (ta)
-  {
-    var taobj = new HTMLArea(ta, config);
-    taobj.generate();
-    return taobj;
-  }
-  else
-  {
-    return null;
-  };
+  return ta ? (new HTMLArea(ta, config)).generate() : null;;
 };
 
 // Creates the toolbar and appends it to the _htmlarea
@@ -577,7 +714,8 @@ HTMLArea.prototype._createToolbar = function () {
   var editor = this;	// to access this in nested functions
 
   var toolbar = document.createElement("div");
-  this._toolbar = toolbar;
+  // ._toolbar is for legacy, ._toolBar is better thanks.
+  this._toolBar = this._toolbar = toolbar;
   toolbar.className = "toolbar";
   toolbar.unselectable = "1";
 
@@ -587,6 +725,7 @@ HTMLArea.prototype._createToolbar = function () {
 
 	this._createToolbar1(editor, toolbar, tb_objects);
 	this._htmlArea.appendChild(toolbar);
+  return toolbar;
 }
 
 
@@ -601,12 +740,40 @@ HTMLArea.prototype._addToolbar = function() {
 // separate from previous createToolBar to allow dynamic change of toolbar
 HTMLArea.prototype._createToolbar1 = function (editor, toolbar, tb_objects) {
 
+  // This shouldn't be necessary, but IE seems to float outside of the container
+  // when we float toolbar sections, so we have to clear:both here as well
+  // as at the end (which we do have to do).
+  if(editor.config.flowToolbars)
+  {
+    var brk = document.createElement('div');
+    brk.style.height =
+      brk.style.width =
+      brk.style.lineHeight =
+      brk.style.fontSize = '1px';
+    brk.style.clear = 'both';
+    toolbar.appendChild(brk);
+  }
+
   // creates a new line in the toolbar
   function newLine() {
+    if(typeof tb_row != 'undefined' && tb_row.childNodes.length == 0) return;
+
     var table = document.createElement("table");
     table.border = "0px";
     table.cellSpacing = "0px";
     table.cellPadding = "0px";
+    if(editor.config.flowToolbars)
+    {
+      if(HTMLArea.is_ie)
+      {
+        table.style.styleFloat = "left";
+      }
+      else
+      {
+        table.style.cssFloat = "left";
+      }
+    }
+
     toolbar.appendChild(table);
     // TBODY is required for IE, otherwise you don't see anything
     // in the TABLE.
@@ -614,7 +781,10 @@ HTMLArea.prototype._createToolbar1 = function (editor, toolbar, tb_objects) {
     table.appendChild(tb_body);
     tb_row = document.createElement("tr");
     tb_body.appendChild(tb_row);
+
+    table.className = 'toolbarRow'; // meh, kinda.
   }; // END of function: newLine
+
   // init first line
   newLine();
 
@@ -720,6 +890,7 @@ HTMLArea.prototype._createToolbar1 = function (editor, toolbar, tb_objects) {
     var btn = null;
     switch (txt) {
         case "separator":
+          if(editor.config.flowToolbars) newLine();
       el = document.createElement("div");
       el.className = "separator";
       break;
@@ -727,9 +898,9 @@ HTMLArea.prototype._createToolbar1 = function (editor, toolbar, tb_objects) {
       el = document.createElement("div");
       el.className = "space";
       break;
-        case "linebreak":
-      newLine();
-      return false;
+      case "linebreak":
+          newLine();
+          return false;
         case "textindicator":
       el = document.createElement("div");
       el.appendChild(document.createTextNode("A"));
@@ -824,13 +995,7 @@ HTMLArea.prototype._createToolbar1 = function (editor, toolbar, tb_objects) {
     } else if (!el) {
       el = createSelect(txt);
     }
-    if (el) {
-      var tb_cell = document.createElement("td");
-      tb_row.appendChild(tb_cell);
-      tb_cell.appendChild(el);
-    } else {
-      alert("FIXME: Unknown toolbar item: " + txt);
-    }
+
     return el;
   };
 
@@ -862,10 +1027,35 @@ HTMLArea.prototype._createToolbar1 = function (editor, toolbar, tb_objects) {
       }
       else if(typeof code != 'function')
       {
-        createButton(code);
+        var tb_element = createButton(code);
+
+        if (tb_element)
+        {
+          var tb_cell = document.createElement("td");
+          tb_cell.className = 'toolbarElement';
+          tb_row.appendChild(tb_cell);
+          tb_cell.appendChild(tb_element);
+        }
+        else if (tb_element == null)
+        {
+          alert("FIXME: Unknown toolbar item: " + code);
+        }
       }
     }
   }
+
+  if(editor.config.flowToolbars)
+  {
+    var brk = document.createElement('div');
+    brk.style.height =
+      brk.style.width =
+      brk.style.lineHeight =
+      brk.style.fontSize = '1px';
+    brk.style.clear = 'both';
+    toolbar.appendChild(brk);
+  }
+
+  return toolbar;
 };
 
 use_clone_img = false;
@@ -892,7 +1082,7 @@ HTMLArea.makeBtnImg = function(imgDef, doc)
   i_contain.style.overflow = 'hidden';
   i_contain.style.width = "18px";
   i_contain.style.height = "18px";
-
+  i_contain.className    = 'buttonImageContainer';
 
   var img = null;
   if(typeof imgDef == 'string')
@@ -935,8 +1125,8 @@ HTMLArea.makeBtnImg = function(imgDef, doc)
 HTMLArea.prototype._createStatusBar = function() {
   var statusbar = document.createElement("div");
   statusbar.className = "statusBar";
-  this._htmlArea.appendChild(statusbar);
   this._statusBar = statusbar;
+
   // statusbar.appendChild(document.createTextNode(HTMLArea._lc("Path") + ": "));
   // creates a holder for the path view
   div = document.createElement("span");
@@ -944,16 +1134,61 @@ HTMLArea.prototype._createStatusBar = function() {
   div.innerHTML = HTMLArea._lc("Path") + ": ";
   this._statusBarTree = div;
   this._statusBar.appendChild(div);
-  if (!this.config.statusBar) {
+
+  div = document.createElement("span");
+  div.innerHTML = HTMLArea._lc("You are in TEXT MODE.  Use the [<>] button to switch back to WYSIWYG.");
+  div.style.display = "none";
+  this._statusBarTextMode = div;
+  this._statusBar.appendChild(div);
+
+  if (!this.config.statusBar)
+  {
     // disable it...
     statusbar.style.display = "none";
   }
+
+  return statusbar;
 };
 
 // Creates the HTMLArea object and replaces the textarea with it.
 HTMLArea.prototype.generate = function ()
 {
   var editor = this;	// we'll need "this" in some nested functions
+
+  if(typeof Dialog == 'undefined')
+  {
+    HTMLArea._loadback
+      (_editor_url + 'dialog.js', function() { editor.generate(); } );
+      return false;
+  }
+
+  if(typeof HTMLArea.Dialog == 'undefined')
+  {
+    HTMLArea._loadback
+      (_editor_url + 'inline-dialog.js', function() { editor.generate(); } );
+      return false;
+  }
+
+  if(typeof PopupWin == 'undefined')
+  {
+    HTMLArea._loadback
+      (_editor_url + 'popupwin.js', function() { editor.generate(); } );
+      return false;
+  }
+
+  //backwards-compatibility: load FullScreen-Plugin if we find a "popupeditor"-button in the toolbar
+  var toolbar = editor.config.toolbar;
+  for (var i = toolbar.length; --i >= 0;) {
+    for (var j = toolbar[i].length; --j >= 0; ) {
+      if (toolbar[i][j]=="popupeditor") {
+        if(typeof FullScreen == "undefined") {
+          HTMLArea.loadPlugin("FullScreen", function() { editor.generate(); } );
+          return false;
+        }
+        editor.registerPlugin('FullScreen');
+      }
+    }
+  }
 
   // If this is gecko, set up the paragraph handling now
   if(HTMLArea.is_gecko)
@@ -964,11 +1199,10 @@ HTMLArea.prototype.generate = function ()
       {
         if(typeof EnterParagraphs == 'undefined')
         {
-          EnterParagraphs = 'null';
-          HTMLArea._loadback
-            (_editor_url + 'plugins/EnterParagraphs/enter-paragraphs.js', function() { editor.registerPlugin('EnterParagraphs'); editor.generate(); } );
+          HTMLArea.loadPlugin("EnterParagraphs", function() { editor.generate(); } );
           return false;
         }
+        editor.registerPlugin('EnterParagraphs');
       }
       break;
 
@@ -982,309 +1216,438 @@ HTMLArea.prototype.generate = function ()
     }
   }
 
-  // get the textarea
-  var textarea = this._textArea;
-  if (typeof textarea == "string")
-  {
-    this._textArea = textarea = HTMLArea.getElementById("textarea", textarea);
-  }
-  this._ta_size =
-  {
-    w: textarea.offsetWidth,
-    h: textarea.offsetHeight
-  };
+  // create the editor framework, yah, table layout I know, but much easier
+  // to get it working correctly this way, sorry about that, patches welcome.
 
-  // create the editor framework
-  var htmlarea = document.createElement("div");
-  htmlarea.className = "htmlarea";
+  this._framework =
+  {
+    'table'     :document.createElement('table'),
+    'tbody'     :document.createElement('tbody'), // IE will not show the table if it doesn't have a tbody!
+    'tb_row'    :document.createElement('tr'),
+    'tb_cell'   :document.createElement('td'), // Toolbar
+
+    'tp_row'   :document.createElement('tr'),
+    'tp_cell'   :this._panels.top.container,   // top panel
+
+    'ler_row'   :document.createElement('tr'),
+    'lp_cell'   :this._panels.left.container,  // left panel
+    'ed_cell'   :document.createElement('td'), // editor
+    'rp_cell'   :this._panels.right.container, // right panel
+
+    'bp_row'    :document.createElement('tr'),
+    'bp_cell'   :this._panels.bottom.container,// bottom panel
+
+    'sb_row'    :document.createElement('tr'),
+    'sb_cell'   :document.createElement('td')  // status bar
+  }
+
+  var fw = this._framework;
+  fw.table.border="0";
+  fw.table.cellPadding="0";
+  fw.table.cellSpacing="0";
+
+  fw.tb_row.style.verticalAlign = 'top';
+  fw.tp_row.style.verticalAlign = 'top';
+  fw.ler_row.style.verticalAlign= 'top';
+  fw.bp_row.style.verticalAlign = 'top';
+  fw.sb_row.style.verticalAlign = 'top';
+  fw.ed_cell.style.position     = 'relative';
+  // Put the cells in the rows        set col & rowspans
+  // note that I've set all these so that all panels are showing
+  // but they will be redone in sizeEditor() depending on which
+  // panels are shown.  It's just here to clarify how the thing
+  // is put togethor.
+  fw.tb_row.appendChild(fw.tb_cell);  fw.tb_cell.colSpan = 3;
+
+  fw.tp_row.appendChild(fw.tp_cell);  fw.tp_cell.colSpan = 3;
+
+  fw.ler_row.appendChild(fw.lp_cell);
+  fw.ler_row.appendChild(fw.ed_cell);
+  fw.ler_row.appendChild(fw.rp_cell);
+
+  fw.bp_row.appendChild(fw.bp_cell);  fw.bp_cell.colSpan = 3;
+
+  fw.sb_row.appendChild(fw.sb_cell);  fw.sb_cell.colSpan = 3;
+
+  // Put the rows in the table body
+  fw.tbody.appendChild(fw.tb_row);  // Toolbar
+  fw.tbody.appendChild(fw.tp_row); // Left, Top, Right panels
+  fw.tbody.appendChild(fw.ler_row);  // Editor/Textarea
+  fw.tbody.appendChild(fw.bp_row);  // Bottom panel
+  fw.tbody.appendChild(fw.sb_row);  // Statusbar
+
+  // and body in the table
+  fw.table.appendChild(fw.tbody);
+
+
+  var htmlarea = this._framework.table;
   this._htmlArea = htmlarea;
-  if(this.config.width != 'auto' && this.config.width != 'toolbar')
-  {
-    htmlarea.style.width = this.config.width;
-  }
+  htmlarea.className = "htmlarea";
 
-  // insert the editor before the textarea.
+    // create the toolbar and put in the area
+  var toolbar = this._createToolbar();
+  this._framework.tb_cell.appendChild(toolbar);
+
+    // create the IFRAME & add to container
+  var iframe = document.createElement("iframe");
+  this._framework.ed_cell.appendChild(iframe);
+  this._iframe = iframe;
+  this._iframe.className = 'xinha_iframe';
+
+    // creates & appends the status bar
+  var statusbar = this._createStatusBar();
+  this._framework.sb_cell.appendChild(statusbar);
+
+  // insert Xinha before the textarea.
+  var textarea = this._textArea;
   textarea.parentNode.insertBefore(htmlarea, textarea);
-
-  // creates & appends the toolbar
-  this._createToolbar();
-
-  // Create containing div (to hold editor and stylist)
-  var innerEditor = document.createElement('div');
-  htmlarea.appendChild(innerEditor);
-  innerEditor.style.position = 'relative';
-  this.innerEditor = innerEditor;
+  textarea.className = 'xinha_textarea';
 
   // extract the textarea and insert it into the htmlarea
-  textarea.parentNode.removeChild(textarea);
-  innerEditor.appendChild(textarea);
-
-  // create the IFRAME & add to container
-  var iframe = document.createElement("iframe");
-  innerEditor.appendChild(iframe);
-  iframe.src = _editor_url + editor.config.URIs["blank"];
-  this._iframe = iframe;
-
-
-  // - I don't think this is required, see the .htmlarea iframe in htmlarea.css
-  // remove the default border as it keeps us from computing correctly
-  // the sizes.  (somebody tell me why doesn't this work in IE)
-  // if (!HTMLArea.is_ie) {
-  //   iframe.style.borderWidth = "0px";
-  // }
-
-
-  // Add the panels
-  for(var i in this._panels)
-  {
-    innerEditor.appendChild(this._panels[i].div);
-  }
-
-  // creates & appends the status bar
-  this._createStatusBar();
+  HTMLArea.removeFromParent(textarea);
+  this._framework.ed_cell.appendChild(textarea);
 
 
   // Set up event listeners for saving the iframe content to the textarea
-  if (textarea.form) {
-    // we have a form, on submit get the HTMLArea content and
-    // update original textarea.
-    var f = textarea.form;
-    if (typeof f.__msh_prevOnSubmit == "undefined")
-    {
-      f.__msh_prevOnSubmit = [];
-      if (typeof f.onsubmit == "function")
-      {
-        var funcref = f.onsubmit;
-        f.__msh_prevOnSubmit.push(funcref);
-        f.onsubmit = null;
-      }
+  if (textarea.form)
+  {
+    // onsubmit get the HTMLArea content and update original textarea.
+    HTMLArea.prependDom0Event
+    (
+      this._textArea.form,
+      'submit',
+      function() {editor._textArea.value = editor.outwardHtml(editor.getHTML()); return true;}
+    );
 
-      f.onsubmit = function()
-      {
-        var a = this.__msh_prevOnSubmit;
-        // call previous submit methods if they were there.
-        var allOK = true;
-        for (var i = a.length; --i >= 0;)
-        {
-          // We want the handler to be a member of the form, not the array, so that "this" will work correctly
-          this.__msh_tempEventHandler = a[i];
-          if(this.__msh_tempEventHandler() == false)
-          {
-            allOK = false;
-            break;
-          }
-        }
-        return allOK;
-      }
-    }
-    f.__msh_prevOnSubmit.push(function() {editor._textArea.value = editor.outwardHtml(editor.getHTML());});
+    var initialTAContent = textarea.value;
 
-    if (typeof f.__msh_prevOnReset == "undefined")
-    {
-      f.__msh_prevOnReset = [];
-      if (typeof f.onreset == "function")
-      {
-        var funcref = f.onreset;
-        f.__msh_prevOnReset.push(funcref);
-        f.onreset = null;
-      }
-
-      f.onreset = function()
-      {
-        var a = this.__msh_prevOnReset;
-        // call previous submit methods if they were there.
-        var allOK = true;
-        for (var i = a.length; --i >= 0;)
-        {
-          if(a[i]() == false)
-          {
-            allOK = false;
-            break;
-          }
-        }
-        return allOK;
-      }
-    }
-    f.__msh_prevOnReset.push(function() {editor.setHTML(editor._textArea.value); editor.updateToolbar();});
+    // onreset revert the HTMLArea content to the textarea content
+    HTMLArea.prependDom0Event
+    (
+      this._textArea.form,
+      'reset',
+      function() { editor.setHTML(editor.inwardHtml(initialTAContent)); editor.updateToolbar(); return true; }
+    );
   }
 
   // add a handler for the "back/forward" case -- on body.unload we save
   // the HTML content into the original textarea.
-  try {
-    HTMLArea._addEvent(window, 'unload', function() {textarea.value = editor.outwardHtml(editor.getHTML());} );
-  } catch(e) {};
+  HTMLArea.prependDom0Event(window, 'unload', function() {textarea.value = editor.outwardHtml(editor.getHTML()); return true; });
 
   // Hide textarea
   textarea.style.display = "none";
 
-  // Calculate the starting size, EXCLUDING THE TOOLBAR & STATUS BAR (always)
-  var height = null;
-  var width  = null;
+  // Initalize size
+  editor.initSize();
 
-  switch(this.config.height)
-  {
-    // "auto" means the same height as the original textarea
-    case 'auto' : { height = parseInt(this._ta_size.h);    break; }
-    // otherwise we expect it to be a PIXEL height
-    default     : { height = parseInt(this.config.height); break; }
-  }
+  // Add an event to initialize the iframe once loaded.
+  editor._iframeLoadDone = false;
+  HTMLArea._addEvent
+  (
+    this._iframe,
+    'load',
+    function(e)
+    {
+      if(! editor._iframeLoadDone)
+      {
+        editor._iframeLoadDone = true;
+        editor.initIframe();
+      }
+      return true;
+    }
+  );
 
-  switch(this.config.width)
-  {
-    // toolbar means the width is the same as the toolbar
-    case 'toolbar': {width = parseInt(this._toolbar.offsetWidth); break; }
-    // auto means the same as the textarea
-    case 'auto'   : {width = parseInt(this._ta_size.w);          break; }
-    // otherwise it is expected to be a PIXEL width
-    default       : {width = parseInt(this.config.width);        break; }
-  }
-
-  if (this.config.sizeIncludesToolbar)
-  {
-    // substract toolbar height
-    height -= this._toolbar.offsetHeight;
-    height -= this._statusBar.offsetHeight;
-  }
-
-  // Minimal size = 100x100
-  width  = Math.max(width, 100);
-  height = Math.max(height,100);
-
-  this.setInnerSize(width,height);
-  this.notifyOn('panel_change',function(){editor.setInnerSize();});
-
-
-  // IMPORTANT: we have to allow Mozilla a short time to recognize the
-  // new frame.  Otherwise we get a stupid exception.
-
-  setTimeout(function() { editor.initIframe()}, 50);
+  // Set src of iframe
+  this._iframe.src = _editor_url + editor.config.URIs["blank"];
 };
 
-  /** Size the htmlArea according to the available space
-   *   Width and Height include toolbar!
-   **/
 
-  HTMLArea.prototype.getInnerSize = function()
+  /**
+   * Size the editor according to the INITIAL sizing information.
+   * config.width
+   *    The width may be set via three ways
+   *    auto    = the width is inherited from the original textarea
+   *    toolbar = the width is set to be the same size as the toolbar
+   *    <set size> = the width is an explicit size (any CSS measurement, eg 100em should be fine)
+   *
+   * config.height
+   *    auto    = the height is inherited from the original textarea
+   *    <set size> = an explicit size measurement (again, CSS measurements)
+   *
+   * config.sizeIncludesBars
+   *    true    = the tool & status bars will appear inside the width & height confines
+   *    false   = the tool & status bars will appear outside the width & height confines
+   *
+   */
+
+  HTMLArea.prototype.initSize = function()
   {
-    return this._innerSize;
+    var editor = this;
+
+    var width  = null;
+    var height = null;
+    switch(this.config.width)
+    {
+      case 'auto':
+      {
+        width = this._initial_ta_size.w;
+      }
+      break;
+
+      case 'toolbar':
+      {
+        width = this._toolBar.offsetWidth;
+      }
+      break;
+
+      default :
+      {
+        width = this.config.width;
+      }
+      break;
+    }
+
+    switch(this.config.height)
+    {
+      case 'auto':
+      {
+        height = this._initial_ta_size.h;
+      }
+      break;
+
+      default :
+      {
+        height = this.config.height;
+      }
+      break;
+    }
+
+    this.sizeEditor(width, height, this.config.sizeIncludesBars, this.config.sizeIncludesPanels);
+
+    // The resize handler is to allow for heights specified as percentages.
+    // This has been disabled in compatmode because IE seems to throw a resize
+    // event up to the window even when you change the dimensions of elements
+    // on the page rather than the window itself.  Which can lead to
+    // huge amounts of resize events, and possibly getting into infinite loops
+    // of resize events.
+    //
+    // % widths are fine without the event because they are passed through to
+    // the browser as percentages so it's up to the browser to resize those.
+    if(!document.compatMode || document.compatMode == 'BackCompat')
+    {
+      HTMLArea._addEvent(window, 'resize', function() { editor.sizeEditor(); });
+    }
+
+    this.notifyOn('panel_change',function(){editor.sizeEditor();});
   }
 
-  HTMLArea.prototype.setInnerSize = function(width, height)
+  /**
+   *  Size the editor to a specific size, or just refresh the size (when window resizes for example)
+   *  @param width optional width (CSS specification)
+   *  @param height optional height (CSS specification)
+   *  @param includingBars optional boolean to indicate if the size should include or exclude tool & status bars
+   */
+
+  HTMLArea.prototype.sizeEditor = function(width, height, includingBars, includingPanels)
   {
-    if(typeof width == 'undefined' || width == null)
+
+    if(includingBars != null)     this._htmlArea.sizeIncludesToolbars = includingBars;
+    if(includingPanels != null)   this._htmlArea.sizeIncludesPanels   = includingPanels;
+
+    if(width != null)
     {
-      width  = this._innerSize.width;
+      this._htmlArea.style.width          = width;
+      if(!this._htmlArea.sizeIncludesPanels)
+      {
+        // Need to add some for l & r panels
+        var panel = this._panels.right;
+        if(panel.on && panel.panels.length && HTMLArea.hasDisplayedChildren(panel.div))
+        {
+          this._htmlArea.style.width = this._htmlArea.offsetWidth + parseInt(this.config.panel_dimensions.right);
+        }
+
+        var panel = this._panels.left;
+        if(panel.on && panel.panels.length && HTMLArea.hasDisplayedChildren(panel.div))
+        {
+          this._htmlArea.style.width = this._htmlArea.offsetWidth + parseInt(this.config.panel_dimensions.left);
+        }
+      }
     }
 
-    if(typeof height == 'undefined' || height == null)
+    if(height != null)
     {
-      height  = this._innerSize.height;
+      this._htmlArea.style.height         = height;
+      if(!this._htmlArea.sizeIncludesToolbars)
+      {
+        // Need to add some for toolbars
+        this._htmlArea.style.height         = this._htmlArea.offsetHeight + this._toolbar.offsetHeight + this._statusBar.offsetHeight;
+      }
+
+      if(!this._htmlArea.sizeIncludesPanels)
+      {
+        // Need to add some for l & r panels
+        var panel = this._panels.top;
+        if(panel.on && panel.panels.length && HTMLArea.hasDisplayedChildren(panel.div))
+        {
+          this._htmlArea.style.height = this._htmlArea.offsetHeight + parseInt(this.config.panel_dimensions.top);
+        }
+
+        var panel = this._panels.bottom;
+        if(panel.on && panel.panels.length && HTMLArea.hasDisplayedChildren(panel.div))
+        {
+          this._htmlArea.style.height = this._htmlArea.offsetHeight + parseInt(this.config.panel_dimensions.bottom);
+        }
+      }
     }
 
-    this._innerSize = {'width':width,'height':height};
+    // We need to set the iframe & textarea to 100% height so that the htmlarea
+    // isn't "pushed out" when we get it's height, so we can change them later.
+    if(this._iframe.style.height != '100%')   this._iframe.style.height   = '100%';
+    if(this._textArea.style.height != '100%') this._textArea.style.height = '100%';
 
-    var editorWidth  = width;
-    var editorHeight = height;
-    var editorLeft   = 0;
-    var editorTop    = 0;
+    // At this point we have this._htmlArea.style.width & this._htmlArea.style.height
+    // which are the size for the OUTER editor area, including toolbars and panels
+    // now we size the INNER area and position stuff in the right places.
+    width  = this._htmlArea.offsetWidth;
+    height = this._htmlArea.offsetHeight;
+
+    // Set colspan for toolbar, and statusbar, rowspan for left & right panels, and insert panels to be displayed
+    // into thier rows
     var panels = this._panels;
+    var col_span = 1;
 
-    var panel = panels.right;
-    if(panel.on && panel.panels.length && HTMLArea.hasDisplayedChildren(panel.div))
+    function panel_is_alive(pan)
     {
-      panel.div.style.position = 'absolute';
-      panel.div.style.width    = parseInt(this.config.panel_dimensions.right) + (HTMLArea.ie_ie ? -1 : -2) + 'px';
-      panel.div.style.height   = height + (HTMLArea.is_ie ? -1 : -1) + 'px';
-      panel.div.style.top      = '0px';
-      panel.div.style.right    = (HTMLArea.is_ie ? 1 : 2) + 'px';
-      panel.div.style.padding  = "0px";
-      panel.div.style.overflow = "auto";
-      panel.div.style.display  = 'block';
-      editorWidth -= parseInt(this.config.panel_dimensions.right) + (HTMLArea.is_ie ? 2 : 0);
+      if(panels[pan].on && panels[pan].panels.length && HTMLArea.hasDisplayedChildren(panels[pan].container))
+      {
+        return true;
+      }
+
+      // Otherwise make sure it's been removed from the framework
+      else
+      {
+        HTMLArea.removeFromParent(panels[pan].container);
+        return false;
+      }
+    }
+
+    if(panel_is_alive('left'))
+    {
+      col_span += 1;
+      if(!HTMLArea.hasParentNode(panels.left.container))
+      {
+        this._framework.ler_row.insertBefore(panels.left.container,this._framework.ed_cell);
+      }
+    }
+
+    if(panel_is_alive('top'))
+    {
+      if(!HTMLArea.hasParentNode(panels.top.container))
+      {
+        this._framework.tp_row.appendChild(panels.top.container);
+      }
+    }
+
+    if(panel_is_alive('right'))
+    {
+      col_span += 1;
+      if(!HTMLArea.hasParentNode(panels.right.container))
+      {
+        this._framework.ler_row.insertBefore(panels.right.container, this._framework.ed_cell.nextSibling);
+      }
+    }
+
+    if(panel_is_alive('bottom'))
+    {
+      if(!HTMLArea.hasParentNode(panels.bottom.container))
+      {
+        this._framework.bp_row.appendChild(panels.bottom.container);
+      }
+    }
+
+    this._framework.tb_cell.colSpan = col_span;
+    this._framework.tp_cell.colSpan = col_span;
+    this._framework.bp_cell.colSpan = col_span;
+    this._framework.sb_cell.colSpan = col_span;
+
+    // Put in the panel rows, top panel goes above editor row
+    if(!this._framework.tp_row.childNodes.length)
+    {
+      HTMLArea.removeFromParent(this._framework.tp_row);
     }
     else
     {
-      panel.div.style.display  = 'none';
+      if(!HTMLArea.hasParentNode(this._framework.tp_row))
+      {
+        this._framework.tbody.insertBefore(this._framework.tp_row, this._framework.ler_row);
+      }
     }
 
-    var panel = panels.left;
-    if(panel.on && panel.panels.length && HTMLArea.hasDisplayedChildren(panel.div))
+    // bp goes after the editor
+    if(!this._framework.bp_row.childNodes.length)
     {
-      panel.div.style.position = 'absolute';
-      panel.div.style.width    = parseInt(this.config.panel_dimensions.left) + (HTMLArea.ie_ie ? -1 : -1) + 'px';
-      panel.div.style.height   = height + (HTMLArea.is_ie ? -1 : -1) + 'px';
-      panel.div.style.top      = '0px';
-      panel.div.style.left     = (HTMLArea.is_ie ? 0 : 0) + 'px';
-      panel.div.style.padding  = "0px";
-      panel.div.style.overflow = "auto";
-      panel.div.style.display  = "block";
-      editorWidth -= parseInt(this.config.panel_dimensions.left) + (HTMLArea.is_ie ? 2 : 0);
-      editorLeft   = parseInt(this.config.panel_dimensions.left) + (HTMLArea.is_ie ? 2 : 0) + 'px';
+      HTMLArea.removeFromParent(this._framework.bp_row);
     }
     else
     {
-      panel.div.style.display  = 'none';
+      if(!HTMLArea.hasParentNode(this._framework.bp_row))
+      {
+        this._framework.tbody.insertBefore(this._framework.bp_row, this._framework.ler_row.nextSibling);
+      }
     }
 
-    var panel = panels.top;
-    if(panel.on && panel.panels.length && HTMLArea.hasDisplayedChildren(panel.div))
+    // finally if the statusbar is on, insert it
+    if(!this.config.statusBar)
     {
-      panel.div.style.position = 'absolute';
-      panel.div.style.top      = '0px';
-      panel.div.style.left     = '0px';
-      panel.div.style.width    = width  + 'px';
-      panel.div.style.height   = parseInt(this.config.panel_dimensions.top) + 'px';
-      panel.div.style.padding  = "0px";
-      panel.div.style.overflow = "auto";
-      panel.div.style.display  = "block";
-      editorHeight -= parseInt(this.config.panel_dimensions.top);
-      editorTop     = parseInt(this.config.panel_dimensions.top) + 'px';
+      HTMLArea.removeFromParent(this._framework.sb_row);
     }
     else
     {
-      panel.div.style.display  = 'none';
+      if(!HTMLArea.hasParentNode(this._framework.sb_row))
+      {
+        this._framework.table.appendChild(this._framework.sb_row);
+      }
     }
 
-    var panel = panels.bottom;
-    if(panel.on && panel.panels.length && HTMLArea.hasDisplayedChildren(panel.div))
+    // Size and set colspans, link up the framework
+    this._framework.lp_cell.style.width  = this.config.panel_dimensions.left;
+    this._framework.rp_cell.style.width  = this.config.panel_dimensions.right;
+    this._framework.tp_cell.style.height = this.config.panel_dimensions.top;
+    this._framework.bp_cell.style.height = this.config.panel_dimensions.bottom;
+    this._framework.tb_cell.style.height = this._toolBar.offsetHeight   + 'px';
+    this._framework.sb_cell.style.height = this._statusBar.offsetHeight + 'px';
+
+    // Compatability Mode (both IE and Moz), because table cell heights are
+    // ignored in compatability mode (at least in IE, moz works, but
+    // I don't think it should so we'll do this for moz too incase it changes)
+    // we have to set an explicit pixel height on the iframe so as the table
+    // cell surrounding it takes the available height.
+    // This means that the panel heights for top & bottom MUST be pixel heights
+    // if you are using Xinha in a standards mode page.
+    if( document.compatMode && document.compatMode != 'BackCompat')
     {
-      panel.div.style.position = 'absolute';
-      panel.div.style.bottom   = '0px';
-      panel.div.style.left     = '0px';
-      panel.div.style.width    = width  + 'px';
-      panel.div.style.height   = parseInt(this.config.panel_dimensions.bottom) + 'px';
-      panel.div.style.padding  = "0px";
-      panel.div.style.overflow = "auto";
-      panel.div.style.display  = "block";
-      editorHeight -= parseInt(this.config.panel_dimensions.bottom);
+      var edcellheight = height - this._toolBar.offsetHeight - this._statusBar.offsetHeight;
+      if(this._framework.tp_row.childNodes.length)
+      {
+        edcellheight  -= parseInt(this.config.panel_dimensions.top);
+      }
+
+      if(this._framework.bp_row.childNodes.length)
+      {
+        edcellheight  -= parseInt(this.config.panel_dimensions.bottom);
+      }
+      this._iframe.style.height   = edcellheight + 'px';
     }
     else
     {
-      panel.div.style.display  = 'none';
+      this._iframe.style.height   = '100%';
     }
+    this._iframe.style.width    = '100%';
 
-    // Set the dimensions of the container
-    this.innerEditor.style.width  = width  + 'px';
-    this.innerEditor.style.height = height + 'px';
-    this.innerEditor.style.position = 'relative';
+    this._textArea.style.height = this._iframe.style.height;
+    this._textArea.style.width  = this._iframe.style.width;
 
-    // and the iframe
-    this._iframe.style.width  = editorWidth  + 'px';
-    this._iframe.style.height = editorHeight + 'px';
-    this._iframe.style.position = 'absolute';
-    this._iframe.style.left = editorLeft;
-    this._iframe.style.top  = editorTop;
-
-
-    // the editor including the toolbar now have the same size as the
-    // original textarea.. which means that we need to reduce that a bit.
-    this._textArea.style.width  = editorWidth  + 'px';
-    this._textArea.style.height = editorHeight + 'px';
-    this._textArea.style.position = 'absolute';
-    this._textArea.style.left = editorLeft;
-    this._textArea.style.top  = editorTop;
-
-    this.notifyOf('resize', {'width':width,'height':height,'editorWidth':editorWidth,'editorHeight':editorHeight,'editorTop':editorTop,'editorLeft':editorLeft});
+    this.notifyOf('resize', {width:this._htmlArea.offsetWidth, height:this._htmlArea.offsetHeight});
   }
 
   HTMLArea.prototype.addPanel = function(side)
@@ -1318,18 +1681,18 @@ HTMLArea.prototype.generate = function ()
   HTMLArea.prototype.hidePanel = function(panel)
   {
     if(panel)
-  {
-    panel.style.display = 'none';
-    this.notifyOf('panel_change', {'action':'hide','panel':panel});
-  }
+    {
+      panel.style.display = 'none';
+      this.notifyOf('panel_change', {'action':'hide','panel':panel});
+    }
   }
 
   HTMLArea.prototype.showPanel = function(panel)
   {
     if(panel)
-  {
-    panel.style.display = '';
-    this.notifyOf('panel_change', {'action':'show','panel':panel});
+    {
+      panel.style.display = '';
+      this.notifyOf('panel_change', {'action':'show','panel':panel});
     }
   }
 
@@ -1381,6 +1744,14 @@ HTMLArea.prototype.generate = function ()
     return props;
   }
 
+  /*
+   * EDITOR ACTIVATION NOTES:
+   *  when a page has multiple Xinha editors, ONLY ONE should be activated at any time (this is mostly to
+   *  work around a bug in Mozilla, but also makes some sense).  No editor should be activated or focused
+   *  automatically until at least one editor has been activated through user action (by mouse-clicking in
+   *  the editor).
+   */
+
   HTMLArea.prototype.editorIsActivated = function() {
     try {
       if (HTMLArea.is_gecko) return (this._doc.designMode == 'on');
@@ -1391,11 +1762,21 @@ HTMLArea.prototype.generate = function ()
     }
   }
 
+  HTMLArea._someEditorHasBeenActivated = false;
+  HTMLArea._currentlyActiveEditor      = false;
   HTMLArea.prototype.activateEditor = function()
   {
-    if (HTMLArea.is_gecko && this._doc.designMode != 'on') {
-      try {
-    
+    // We only want ONE editor at a time to be active
+    if(HTMLArea._currentlyActiveEditor)
+    {
+      if(HTMLArea._currentlyActiveEditor == this) return true;
+      HTMLArea._currentlyActiveEditor.deactivateEditor();
+    }
+
+    if (HTMLArea.is_gecko && this._doc.designMode != 'on')
+    {
+      try
+      {
         // cannot set design mode if no display
         if (this._iframe.style.display == 'none')
         {
@@ -1409,26 +1790,49 @@ HTMLArea.prototype.generate = function ()
         }
       } catch (e) {}
     }
-    else if(!HTMLArea.is_gecko)
+    else if(!HTMLArea.is_gecko && this._doc.body.contentEditable != true)
     {
       this._doc.body.contentEditable = true;
     }
+
+    // We need to know that at least one editor on the page has been activated
+    // this is because we will not focus any editor until an editor has been activated
+    HTMLArea._someEditorHasBeenActivated = true;
+    HTMLArea._currentlyActiveEditor      = this;
+
+    var editor = this;
+    this.enableToolbar();
   }
 
   HTMLArea.prototype.deactivateEditor = function()
   {
+    // If the editor isn't active then the user shouldn't use the toolbar
+    this.disableToolbar();
+
     if (HTMLArea.is_gecko && this._doc.designMode != 'off')
     {
       try {this._doc.designMode = 'off';} catch (e) {}
     }
-    else
+    else if(!HTMLArea.is_gecko && this._doc.body.contentEditable != false)
     {
       this._doc.body.contentEditable = false;
     }
+
+    if(HTMLArea._currentlyActiveEditor != this)
+    {
+      // We just deactivated an editor that wasn't marked as the currentlyActiveEditor
+
+      return; // I think this should really be an error, there shouldn't be a situation where
+              // an editor is deactivated without first being activated.  but it probably won't
+              // hurt anything.
+    }
+
+    HTMLArea._currentlyActiveEditor = false;
   }
 
   HTMLArea.prototype.initIframe = function()
   {
+    this.disableToolbar();
     var doc = null;
     var editor = this;
     try
@@ -1450,7 +1854,6 @@ HTMLArea.prototype.generate = function ()
           alert("ERROR: IFRAME can't be initialized.");
         }
       }
-      editor.activateEditor();
     }
     catch(e)
     { // try later
@@ -1469,11 +1872,16 @@ HTMLArea.prototype.generate = function ()
       html += "<style title=\"table borders\">"
            + ".htmtableborders, .htmtableborders td, .htmtableborders th {border : 1px dashed lightgrey ! important;} \n"
            + "</style>\n";
-      html += "<style>"
-           + editor.config.pageStyle + "\n"
+      html += "<style type=\"text/css\">"
            + "html, body { border: 0px; } \n"
            + "span.macro, span.macro ul, span.macro div, span.macro p {background : #CCCCCC;}\n"
            + "</style>\n";
+
+      if(editor.config.pageStyle)
+      {
+        html += "<style type=\"text/css\">\n" + editor.config.pageStyle + "\n</style>";
+      }
+
       if(typeof editor.config.pageStyleSheets !== 'undefined')
       {
         for(style_i = 0; style_i < editor.config.pageStyleSheets.length; style_i++)
@@ -1497,21 +1905,16 @@ HTMLArea.prototype.generate = function ()
     }
     doc.write(html);
     doc.close();
-    
-    // redo it for some obscure reason that IE need it..
-    editor.activateEditor();
-    
-    // if we have multiple editors some bug in Mozilla makes some lose editing ability
-    if(HTMLArea.is_gecko)
-    {
-      HTMLArea._addEvents(
-        editor._iframe.contentWindow,
-        ["mousedown"],
-        function() { editor.activateEditor();  }
-      );
-    }
 
-    // editor.focusEditor();
+    // if we have multiple editors some bug in Mozilla makes some lose editing ability
+    HTMLArea._addEvents
+    (
+      doc,
+      ["mousedown"],
+      function() { editor.activateEditor(); return true; }
+    );
+
+
     // intercept some events; for updating the toolbar & keyboard handlers
     HTMLArea._addEvents
       (doc, ["keydown", "keypress", "mousedown", "mouseup", "drag"],
@@ -1529,12 +1932,6 @@ HTMLArea.prototype.generate = function ()
     if(typeof editor._onGenerate == "function") {
       editor._onGenerate();
     }
-
-    // update toolbar (hope this will arrive enough late...)
-    editor._timerToolbar = setTimeout(function() {
-      editor.updateToolbar();
-      editor._timerToolbar = null;
-    }, 250);
   }
 
 // Switches editor mode; parameter can be "textmode" or "wysiwyg".  If no
@@ -1552,10 +1949,12 @@ HTMLArea.prototype.setMode = function(mode) {
       // Hide the iframe
       this.deactivateEditor();
       this._iframe.style.display   = 'none';
-      this._textArea.style.display = "block";
+      this._textArea.style.display = '';
+
       if (this.config.statusBar)
       {
-        this._statusBar.innerHTML = HTMLArea._lc("You are in TEXT MODE.  Use the [<>] button to switch back to WYSIWYG.");
+        this._statusBarTree.style.display = "none";
+        this._statusBarTextMode.style.display = "";
       }
 
       this.notifyOf('modechange', {'mode':'text'});
@@ -1579,8 +1978,8 @@ HTMLArea.prototype.setMode = function(mode) {
       this.activateEditor();
       if (this.config.statusBar)
       {
-        this._statusBar.innerHTML = '';
-        this._statusBar.appendChild(this._statusBarTree);
+        this._statusBarTree.style.display = "";
+        this._statusBarTextMode.style.display = "none";
       }
 
       this.notifyOf('modechange', {'mode':'wysiwyg'});
@@ -1594,7 +1993,6 @@ HTMLArea.prototype.setMode = function(mode) {
     }
   }
   this._editMode = mode;
-  // this.focusEditor();
 
   for (var i in this.plugins) {
     var plugin = this.plugins[i].instance;
@@ -1616,13 +2014,14 @@ HTMLArea.prototype.setFullHTML = function(html) {
     if (html.match(HTMLArea.RE_body))
       this._doc.getElementsByTagName("body")[0].innerHTML = RegExp.$1;
   } else {
+    var reac = this.editorIsActivated();
+    if(reac) this.deactivateEditor();
     var html_re = /<html>((.|\n)*?)<\/html>/i;
     html = html.replace(html_re, "$1");
     this._doc.open();
     this._doc.write(html);
     this._doc.close();
-    this.activateEditor();
-    // this._doc.body.contentEditable = true;
+    if(reac) this.activateEditor();
     return true;
   }
 };
@@ -1635,6 +2034,15 @@ HTMLArea.prototype.setFullHTML = function(html) {
 // return the plugin created to allow refresh when necessary
 HTMLArea.prototype.registerPlugin = function() {
   var plugin = arguments[0];
+
+  // We can only register plugins that have been succesfully loaded
+  if
+  (
+    plugin == null
+    || typeof plugin == 'undefined'
+    || (typeof plugin == 'string' && eval('typeof ' + plugin) == 'undefined')
+  ) return false;
+
   var args = [];
   for (var i = 1; i < arguments.length; ++i)
     args.push(arguments[i]);
@@ -1679,9 +2087,9 @@ HTMLArea.loadPlugin = function(pluginName, callback) {
   {
     if(callback)
     {
-      callback();
+      callback(pluginName);
     }
-    return;
+    return true;
   }
 
   var dir = this.getPluginDir(pluginName);
@@ -1693,50 +2101,73 @@ HTMLArea.loadPlugin = function(pluginName, callback) {
 
   if(callback)
   {
-    HTMLArea._loadback(plugin_file, callback);
+    HTMLArea._loadback(plugin_file, function() { callback(pluginName); });
   }
   else
   {
     document.write("<script type='text/javascript' src='" + plugin_file + "'></script>");
   }
+  return false;
 };
 
+HTMLArea._pluginLoadStatus = { };
 HTMLArea.loadPlugins = function(plugins, callbackIfNotReady)
 {
+  // Rip the ones that are loaded and look for ones that have failed
+  var retVal = true;
   var nuPlugins = HTMLArea.cloneObject(plugins);
-
   while(nuPlugins.length)
   {
-    // Might already be loaded
-    if(eval('typeof ' + nuPlugins[nuPlugins.length-1]) != 'undefined')
+    var p = nuPlugins.pop();
+    if(typeof HTMLArea._pluginLoadStatus[p] == 'undefined')
     {
-      nuPlugins.pop();
+      // Load it
+      HTMLArea._pluginLoadStatus[p] = 'loading';
+      HTMLArea.loadPlugin(p,
+          function(plugin)
+          {
+            if(eval('typeof ' + plugin) != 'undefined')
+            {
+              HTMLArea._pluginLoadStatus[plugin] = 'ready';
+            }
+            else
+            {
+              // Actually, this won't happen, because if the script fails
+              // it will throw an exception preventing the callback from
+              // running.  This will leave it always in the "loading" state
+              // unfortunatly that means we can't fail plugins gracefully
+              // by just skipping them.
+              HTMLArea._pluginLoadStatus[plugin] = 'failed';
+            }
+          }
+      );
+      retVal = false;
     }
     else
     {
-      break;
+      switch(HTMLArea._pluginLoadStatus[p])
+      {
+        case 'failed':
+        case 'ready' :
+        break;
+
+        case 'loading':
+        default       :
+         retVal = false;
+         break;
+      }
     }
   }
 
-  if(!nuPlugins.length)
-  {
-    return true;
-  }
+  if(retVal) return true; // All done, just return
 
-  HTMLArea.loadPlugin
-  (nuPlugins.pop(),
-      function()
-      {
-        if(HTMLArea.loadPlugins(nuPlugins, callbackIfNotReady))
-        {
-          if(typeof callbackIfNotReady == 'function')
-          {
-            callbackIfNotReady();
-          }
-        }
-      }
-  );
-  return false;
+  // Waiting on plugins to load, return false now and come back a bit later
+  // if we have to callback
+  if(callbackIfNotReady)
+  {
+    setTimeout(function() { if(HTMLArea.loadPlugins(plugins, callbackIfNotReady)) callbackIfNotReady(); }, 150);
+  }
+  return retVal;
 }
 
 // refresh plugin by calling onGenerate or onGenerateOnce method.
@@ -1856,14 +2287,14 @@ HTMLArea.prototype._wordClean = function() {
     else {
       var txt = document.createTextNode(HTMLArea.getInnerText(el));
       el.parentNode.insertBefore(txt, el);
-      el.parentNode.removeChild(el);
+      HTMLArea.removeFromParent(el);
     }
     ++stats.mso_xmlel;
   };
   function checkEmpty(el) {
     if (/^(a|span|b|strong|i|em|font)$/i.test(el.tagName) &&
         !el.firstChild) {
-      el.parentNode.removeChild(el);
+      HTMLArea.removeFromParent(el);
       ++stats.empty_tags;
     }
   };
@@ -1940,12 +2371,11 @@ HTMLArea.prototype.focusEditor = function() {
       try
       {
         // We don't want to focus the field unless at least one field has been activated.
-        if(!this.editorIsActivated())
+        if(HTMLArea._someEditorHasBeenActivated)
         {
-          this.activateEditor();
-          this._iframe.contentWindow.focus();
+          this.activateEditor(); // Ensure *this* editor is activated
+          this._iframe.contentWindow.focus(); // and focus it
         }
-
       } catch (e) {} break;
       case "textmode": try { this._textArea.focus() } catch (e) {} break;
       default	   : alert("ERROR: mode " + this._editMode + " is not defined");
@@ -1991,6 +2421,7 @@ HTMLArea.prototype.redo = function() {
 
 HTMLArea.prototype.disableToolbar = function(except)
 {
+  if(this._timerToolbar) clearTimeout(this._timerToolbar);
   if(typeof except == 'undefined')
   {
     except = [ ];
@@ -2067,20 +2498,20 @@ HTMLArea.prototype.updateToolbar = function(noStatus) {
         a.href = "javascript:void(0)";
         a.el = el;
         a.editor = this;
-        a.onclick = function() {
+        HTMLArea.addDom0Event(a, 'click', function() {
           this.blur();
           this.editor.selectNodeContents(this.el);
           this.editor.updateToolbar(true);
           return false;
-        };
-        a.oncontextmenu = function() {
+        });
+        HTMLArea.addDom0Event(a, 'contextmenu',  function() {
           // TODO: add context menu here
           this.blur();
           var info = "Inline style:\n\n";
           info += this.el.style.cssText.split(/;\s*/).join(";\n");
           alert(info);
           return false;
-        };
+        });
         var txt = el.tagName.toLowerCase();
         a.title = el.style.cssText;
         if (el.id) {
@@ -2291,6 +2722,7 @@ HTMLArea.prototype.updateToolbar = function(noStatus) {
       plugin.onUpdateToolbar();
   }
 
+
 }
 
 /** Returns a node after which we can insert other nodes, in the current
@@ -2494,9 +2926,17 @@ HTMLArea.prototype._activeElement = function(sel)
     // correct, we possibly should do a simlar check to IE?
     if(! sel.isCollapsed)
     {
-      if(sel.anchorNode.nodeType == 1)
+      if(sel.anchorNode.childNodes.length > sel.anchorOffset && sel.anchorNode.childNodes[sel.anchorOffset].nodeType == 1)
+      {
+        return sel.anchorNode.childNodes[sel.anchorOffset];
+      }
+      else if(sel.anchorNode.nodeType == 1)
       {
         return sel.anchorNode;
+      }
+      else
+      {
+        return sel.anchorNode.parentNode;
       }
     }
     return null;
@@ -2692,10 +3132,10 @@ HTMLArea.prototype.selectNodeContents = function(node, pos) {
   this.focusEditor();
   this.forceRedraw();
   var range;
-  var collapsed = (typeof pos != "undefined");
+  var collapsed = typeof pos == "undefined" ? true : false;
   if (HTMLArea.is_ie) {
     // Tables and Images get selected as "objects" rather than the text contents
-    if(!collapsed && node.tagName && node.tagName.toLowerCase().match(/table|img/))
+    if(collapsed && node.tagName && node.tagName.toLowerCase().match(/table|img|input|select|textarea/))
     {
       range = this._doc.body.createControlRange();
       range.add(node);
@@ -2711,10 +3151,9 @@ HTMLArea.prototype.selectNodeContents = function(node, pos) {
     var sel = this._getSelection();
     range = this._doc.createRange();
     // Tables and Images get selected as "objects" rather than the text contents
-    if(!collapsed && node.tagName && node.tagName.toLowerCase().match(/table|img/))
+    if(collapsed && node.tagName && node.tagName.toLowerCase().match(/table|img|input|textarea|select/))
     {
       range.selectNode(node);
-      (collapsed) && range.collapse(pos);
     }
     else
     {
@@ -2794,7 +3233,14 @@ HTMLArea.prototype._createLink = function(link) {
     var range = editor._createRange(sel);
     var compare = 0;
     if (HTMLArea.is_ie) {
-      compare = range.compareEndPoints("StartToEnd", range);
+      if(sel.type == "Control")
+      {
+        compare = range.length;
+      }
+      else
+      {
+        compare = range.compareEndPoints("StartToEnd", range);
+      }
     } else {
       compare = range.compareBoundaryPoints(range.START_TO_END, range);
     }
@@ -2890,6 +3336,10 @@ HTMLArea.prototype._insertImage = function(image) {
         }
       } else {
         img = range.startContainer.previousSibling;
+        if (!img.tagName) {
+          // if the cursor is at the beginning of the document
+          img = range.startContainer.firstChild;
+        }
       }
     } else {
       img.src = param.f_url;
@@ -2996,38 +3446,22 @@ HTMLArea.prototype.execCommand = function(cmdID, UI, param) {
   var editor = this;	// for nested functions
   this.focusEditor();
   cmdID = cmdID.toLowerCase();
-  if (HTMLArea.is_gecko) try { this._doc.execCommand('useCSS', false, true); } catch (e) {};
+  if (HTMLArea.is_gecko) try { this._doc.execCommand('useCSS', false, true); } catch (e) {}; //switch useCSS off (true=off)
   switch (cmdID) {
-      case "htmlmode" : this.setMode(); break;
-      case "hilitecolor":
-    (HTMLArea.is_ie) && (cmdID = "backcolor");
-      case "forecolor":
-    this._popupDialog(editor.config.URIs["select_color"], function(color) {
-      if (color) { // selection not canceled
-        editor._doc.execCommand(cmdID, false, "#" + color);
-      }
-    }, HTMLArea._colorToRgb(this._doc.queryCommandValue(cmdID)));
-    break;
-      case "createlink":
-    this._createLink();
-    break;
-      case "popupeditor":
-    // this object will be passed to the newly opened window
-    HTMLArea._object = this;
-    var win;
-    if (HTMLArea.is_ie) {
-      {
-                                win = window.open(this.popupURL(editor.config.URIs["fullscreen"]), "ha_fullscreen",
-              "toolbar=no,location=no,directories=no,status=no,menubar=no," +
-              "scrollbars=no,resizable=yes,width=640,height=480");
-      }
-    } else {
-                            win = window.open(this.popupURL(editor.config.URIs["fullscreen"]), "ha_fullscreen",
-            "toolbar=no,menubar=no,personalbar=no,width=640,height=480," +
-            "scrollbars=no,resizable=yes");
-    }
-    win.focus()
-    break;
+    case "htmlmode" : this.setMode(); break;
+    case "hilitecolor":
+      (HTMLArea.is_ie) && (cmdID = "backcolor");
+      if (HTMLArea.is_gecko) try { editor._doc.execCommand('useCSS', false, false); } catch (e) {};//switch on useCSS (mozilla bug #279330)
+    case "forecolor":
+      this._popupDialog(editor.config.URIs["select_color"], function(color) {
+        if (color) { // selection not canceled
+          editor._doc.execCommand(cmdID, false, "#" + color);
+        }
+      }, HTMLArea._colorToRgb(this._doc.queryCommandValue(cmdID)));
+      break;
+    case "createlink":
+      this._createLink();
+      break;
       case "undo":
       case "redo":
     if (this._customUndo)
@@ -3047,19 +3481,8 @@ HTMLArea.prototype.execCommand = function(cmdID, UI, param) {
       case "paste":
     try {
       this._doc.execCommand(cmdID, UI, param);
-      if (this.config.killWordOnPaste) {
-      	if (this.plugins["SuperClean"].instance) {
-      		superCleanOptions = new Array();
-      		superCleanOptions.word_clean = true;
-      		superCleanOptions.faces = true;
-      		superCleanOptions.sizes = true;
-      		superCleanOptions.colors = true;
-      		this._superClean(superCleanOptions, null);
-      	}
-      	else {
-        	this._wordClean();
-      	}
-      }
+      if (this.config.killWordOnPaste)
+        this._wordClean();
     } catch (e) {
       if (HTMLArea.is_gecko) {
         alert(HTMLArea._lc("The Paste button does not work in Mozilla based web browsers (technical security reasons). Press CTRL-V on your keyboard to paste directly."));
@@ -3190,7 +3613,7 @@ HTMLArea.prototype._editorEvent = function(ev) {
         var rightText = textNode.nextSibling;
         if(typeof tag == 'string') tag = editor._doc.createElement(tag);
         var a = textNode.parentNode.insertBefore(tag, rightText);
-        textNode.parentNode.removeChild(textNode);
+        HTMLArea.removeFromParent(textNode);
         a.appendChild(textNode);
         rightText.data = ' ' + rightText.data;
 
@@ -3211,7 +3634,7 @@ HTMLArea.prototype._editorEvent = function(ev) {
           var t = a.firstChild;
           a.removeChild(t);
           a.parentNode.insertBefore(t, a);
-          a.parentNode.removeChild(a);
+          HTMLArea.removeFromParent(a);
           editor._unLink = null;
           editor._unlinkOnUndo = false;
         }
@@ -3350,7 +3773,7 @@ HTMLArea.prototype._editorEvent = function(ev) {
   editor._timerToolbar = setTimeout(function() {
     editor.updateToolbar();
     editor._timerToolbar = null;
-  }, 100);
+  }, 250);
 };
 
 HTMLArea.prototype.convertNode = function(el, newTagName) {
@@ -3362,12 +3785,19 @@ HTMLArea.prototype.convertNode = function(el, newTagName) {
 
 HTMLArea.prototype.ie_checkBackspace = function() {
   var sel = this._getSelection();
+  if(HTMLArea.is_ie && sel.type == 'Control')
+  {
+    var elm = this._activeElement(sel);
+    HTMLArea.removeFromParent(elm);
+    return true;
+  }
+
+  // This bit of code preseves links when you backspace over the
+  // endpoint of the link in IE.  Without it, if you have something like
+  //    link_here |
+  // where | is the cursor, and backspace over the last e, then the link
+  // will de-link, which is a bit tedious
   var range = this._createRange(sel);
-
-  // the selection must contain at least some text
-  if (range.text == "undefined") return true;
-
-  // to remove a link (should be done like this?)
   var r2 = range.duplicate();
   r2.moveStart("character", -1);
   var a = r2.parentElement();
@@ -3398,7 +3828,7 @@ HTMLArea.prototype.dom_checkBackspace = function() {
       while (SC.firstChild)
         p.appendChild(SC.firstChild);
       SC.parentNode.insertBefore(p, SC);
-      SC.parentNode.removeChild(SC);
+      HTMLArea.removeFromParent(SC);
       var r = range.cloneRange();
       r.setStartBefore(newr);
       r.setEndAfter(newr);
@@ -3745,7 +4175,7 @@ HTMLArea.prototype.fixRelativeLinks = function(html)
   }
 
 
-  if(typeof this.config.stripBaseHref != 'undefined' && this.config.stipBaseHref)
+  if(typeof this.config.stripBaseHref != 'undefined' && this.config.stripBaseHref)
   {
     var baseRe = null
     if(typeof this.config.baseHref != 'undefined' && this.config.baseHref != null)
@@ -3797,16 +4227,32 @@ HTMLArea.prototype.getInnerHTML = function() {
 
 // completely change the HTML inside
 HTMLArea.prototype.setHTML = function(html) {
-  switch (this._editMode) {
-      case "wysiwyg"  :
-    if (!this.config.fullPage)
-      this._doc.body.innerHTML = html;
-    else
-      // this._doc.documentElement.innerHTML = html;
-      this._doc.body.innerHTML = html;
+  switch (this._editMode)
+  {
+    case "wysiwyg"  :
+    {
+      if (!this.config.fullPage)
+      {
+        this._doc.body.innerHTML = html;
+      }
+      else
+      {
+        this._doc.setFullHTML(html);
+      }
+    }
     break;
-      case "textmode" : this._textArea.value = html; break;
-      default	    : alert("Mode <" + mode + "> not defined!");
+
+    case "textmode" :
+    {
+      this._textArea.value = html;
+    }
+    break;
+
+    default	        :
+    {
+      alert("Mode <" + mode + "> not defined!");
+    }
+    break;
   }
   return false;
 };
@@ -3892,12 +4338,56 @@ HTMLArea.prototype._createRange = function(sel) {
 
 // event handling
 
+/** Event Flushing
+ *  To try and work around memory leaks in the rather broken
+ *  garbage collector in IE, HTMLArea.flushEvents can be called
+ *  onunload, it will remove any event listeners (that were added
+ *  through _addEvent(s)) and clear any DOM-0 events.
+ */
+HTMLArea._eventFlushers = [ ];
+HTMLArea.flushEvents = function()
+{
+  var x = 0;
+  var e = null;
+  while(e = HTMLArea._eventFlushers.pop())
+  {
+    if(e.length == 3)
+    {
+      HTMLArea._removeEvent(e[0], e[1], e[2]);
+      x++;
+    }
+    else if (e.length == 2)
+    {
+      e[0]['on' + e[1]] = null;
+      e[0]._xinha_dom0Events[e[1]] = null;
+      x++;
+    }
+  }
+
+  if(document.all)
+  {
+    for(var i = 0; i < document.all.length; i++)
+    {
+      for(var j in document.all[i])
+      {
+        if(/^on/.test(j) && typeof document.all[i][j] == 'function')
+        {
+          document.all[i][j] = null;
+          x++;
+        }
+      }
+    }
+  }
+  alert('Flushed ' + x + ' events.');
+}
+
 HTMLArea._addEvent = function(el, evname, func) {
   if (HTMLArea.is_ie) {
     el.attachEvent("on" + evname, func);
   } else {
     el.addEventListener(evname, func, true);
   }
+  HTMLArea._eventFlushers.push([el, evname, func]);
 };
 
 HTMLArea._addEvents = function(el, evs, func) {
@@ -3930,6 +4420,85 @@ HTMLArea._stopEvent = function(ev) {
   }
 };
 
+/**
+ * Adds a standard "DOM-0" event listener to an element.
+ * The DOM-0 events are those applied directly as attributes to
+ * an element - eg element.onclick = stuff;
+ *
+ * By using this function instead of simply overwriting any existing
+ * DOM-0 event by the same name on the element it will trigger as well
+ * as the existing ones.  Handlers are triggered one after the other
+ * in the order they are added.
+ *
+ * Remember to return true/false from your handler, this will determine
+ * whether subsequent handlers will be triggered (ie that the event will
+ * continue or be canceled).
+ *
+ */
+
+HTMLArea.addDom0Event = function(el, ev, fn)
+{
+  HTMLArea._prepareForDom0Events(el, ev);
+  el._xinha_dom0Events[ev].unshift(fn);
+}
+
+
+/**
+ * See addDom0Event, the difference is that handlers registered using
+ * prependDom0Event will be triggered before existing DOM-0 events of the
+ * same name on the same element.
+ */
+
+HTMLArea.prependDom0Event = function(el, ev, fn)
+{
+  HTMLArea._prepareForDom0Events(el, ev);
+  el._xinha_dom0Events[ev].push(fn);
+}
+
+/**
+ * Prepares an element to receive more than one DOM-0 event handler
+ * when handlers are added via addDom0Event and prependDom0Event.
+ */
+HTMLArea._prepareForDom0Events = function(el, ev)
+{
+  // Create a structure to hold our lists of event handlers
+  if(typeof el._xinha_dom0Events == 'undefined')     el._xinha_dom0Events = { };
+
+  // Create a list of handlers for this event type
+  if(typeof el._xinha_dom0Events[ev] == 'undefined')
+  {
+    el._xinha_dom0Events[ev] = [ ];
+    if(typeof el['on'+ev] == 'function')
+    {
+      el._xinha_dom0Events[ev].push(el['on'+ev]);
+    }
+
+    // Make the actual event handler, which runs through
+    // each of the handlers in the list and executes them
+    // in the correct context.
+    el['on'+ev] = function(event)
+    {
+      var a = el._xinha_dom0Events[ev];
+      // call previous submit methods if they were there.
+      var allOK = true;
+      for (var i = a.length; --i >= 0;)
+      {
+        // We want the handler to be a member of the form, not the array, so that "this" will work correctly
+        el._xinha_tempEventHandler = a[i];
+        if(el._xinha_tempEventHandler(event) == false)
+        {
+          el._xinha_tempEventHandler = null;
+          allOK = false;
+          break;
+        }
+        el._xinha_tempEventHandler = null;
+      }
+      return allOK;
+    }
+
+    HTMLArea._eventFlushers.push([el, ev]);
+  }
+}
 
 HTMLArea.prototype.notifyOn = function(ev, fn)
 {
@@ -4001,7 +4570,7 @@ HTMLArea.isParaContainer = function(el)
   return el && el.nodeType == 1 && (HTMLArea._paraContainerTags.indexOf(" " + el.tagName.toLowerCase() + " ") != -1);
 }
 
-HTMLArea._closingTags = " head script style div span tr td tbody table em strong b i code cite dfn abbr acronym font a title ";
+HTMLArea._closingTags = " head script style div span tr td tbody table em strong b i code cite dfn abbr acronym font a title textarea select form ";
 HTMLArea.needsClosingTag = function(el) {
   return el && el.nodeType == 1 && (HTMLArea._closingTags.indexOf(" " + el.tagName.toLowerCase() + " ") != -1);
 };
@@ -4028,13 +4597,15 @@ HTMLArea.getHTML = function(root, outputRoot, editor){
         return HTMLArea.getHTMLWrapper(root,outputRoot,editor);
     }
     catch(e){
-        alert('Your Document is not well formed. Check JavaScript console for details.');
+        alert(HTMLArea._lc('Your Document is not well formed. Check JavaScript console for details.'));
         return editor._iframe.contentWindow.document.body.innerHTML;
     }
 }
 
-HTMLArea.getHTMLWrapper = function(root, outputRoot, editor) {
+HTMLArea.getHTMLWrapper = function(root, outputRoot, editor, indent) {
   var html = "";
+  if(!indent) indent = '';
+
   switch (root.nodeType) {
     case 10:// Node.DOCUMENT_TYPE_NODE
     case 6: // Node.ENTITY_NODE
@@ -4053,7 +4624,7 @@ HTMLArea.getHTMLWrapper = function(root, outputRoot, editor) {
     case 4: // Node.CDATA_SECTION_NODE
       // Mozilla seems to convert CDATA into a comment when going into wysiwyg mode,
       //  don't know about IE
-      html += '<![CDATA[' + root.data + ']]>';
+      html += (HTMLArea.is_ie ? ('\n' + indent) : '') + '<![CDATA[' + root.data + ']]>' ;
       break;
 
     case 5: // Node.ENTITY_REFERENCE_NODE
@@ -4063,7 +4634,7 @@ HTMLArea.getHTMLWrapper = function(root, outputRoot, editor) {
     case 7: // Node.PROCESSING_INSTRUCTION_NODE
       // PI's don't seem to survive going into the wysiwyg mode, (at least in moz)
       // so this is purely academic
-      html += '<?' + root.target + ' ' + root.data + ' ?>';
+      html += (HTMLArea.is_ie ? ('\n' + indent) : '') + '<?' + root.target + ' ' + root.data + ' ?>';
       break;
 
 
@@ -4080,7 +4651,7 @@ HTMLArea.getHTMLWrapper = function(root, outputRoot, editor) {
       outputRoot = !(editor.config.htmlRemoveTags && editor.config.htmlRemoveTags.test(root_tag));
     if (HTMLArea.is_ie && root_tag == "head") {
       if (outputRoot)
-        html += "<head>";
+        html += (HTMLArea.is_ie ? ('\n' + indent) : '') + "<head>";
       // lowercasize
       var save_multiline = RegExp.multiline;
       RegExp.multiline = true;
@@ -4088,17 +4659,17 @@ HTMLArea.getHTMLWrapper = function(root, outputRoot, editor) {
         return p1 + p2.toLowerCase();
       });
       RegExp.multiline = save_multiline;
-      html += txt;
+      html += txt + '\n';
       if (outputRoot)
-        html += "</head>";
+        html += (HTMLArea.is_ie ? ('\n' + indent) : '') + "</head>";
       break;
     } else if (outputRoot) {
       closed = (!(root.hasChildNodes() || HTMLArea.needsClosingTag(root)));
-      html = "<" + root.tagName.toLowerCase();
+      html += (HTMLArea.is_ie && HTMLArea.isBlockElement(root) ? ('\n' + indent) : '') + "<" + root.tagName.toLowerCase();
       var attrs = root.attributes;
       for (i = 0; i < attrs.length; ++i) {
         var a = attrs.item(i);
-        if (!a.specified) {
+        if (!a.specified && !(root.tagName.toLowerCase().match(/input|option/) && a.nodeName == 'value')) {
           continue;
         }
         var name = a.nodeName.toLowerCase();
@@ -4148,25 +4719,23 @@ HTMLArea.getHTMLWrapper = function(root, outputRoot, editor) {
         html += closed ? " />" : ">";
       }
     }
+    var containsBlock = false;
     for (i = root.firstChild; i; i = i.nextSibling) {
-      html += HTMLArea.getHTMLWrapper(i, true, editor);
+      if(!containsBlock && i.nodeType == 1 && HTMLArea.isBlockElement(i)) containsBlock = true;
+      html += HTMLArea.getHTMLWrapper(i, true, editor, indent + '  ');
     }
     if (outputRoot && !closed) {
-      html += "</" + root.tagName.toLowerCase() + ">";
+      html += (HTMLArea.is_ie && HTMLArea.isBlockElement(root) && containsBlock ? ('\n' + indent) : '') + "</" + root.tagName.toLowerCase() + ">";
     }
     break;
       }
       case 3: // Node.TEXT_NODE
-
-    // If a text node is alone in an element and all spaces, replace it with an non breaking one
-    // This partially undoes the damage done by moz, which translates '&nbsp;'s into spaces in the data element
-
     html = /^script|style$/i.test(root.parentNode.tagName) ? root.data : HTMLArea.htmlEncode(root.data);
     break;
 
       case 8: // Node.COMMENT_NODE
     html = "<!--" + root.data + "-->";
-    break;		// skip comments, for now.
+    break;
   }
   return html;
 };
@@ -4313,7 +4882,13 @@ HTMLArea.prototype._toggleBorders = function()
    {
      if(this.borders)
      {
-       HTMLArea._addClass(tables[ix], 'htmtableborders');
+        // flashing the display forces moz to listen (JB:18-04-2005) - #102
+        if(HTMLArea.is_gecko)
+        {
+            tables[ix].style.display="none";
+            tables[ix].style.display="table";
+        }
+        HTMLArea._addClass(tables[ix], 'htmtableborders');
      }
      else
      {
@@ -4615,22 +5190,15 @@ HTMLArea._lc = function(string, context)
 
   if(typeof HTMLArea._lc_catalog[context][string] == 'undefined')
   {
-  	// If we are looking at a plugin language file,
-  	// we now check to see if the string is in the
-  	// main translation file so as not to duplicate translation strings. 
-  	if (context != 'HTMLArea') {
-  		// Load the main language file if it isnt loaded already.
-		if(typeof HTMLArea._lc_catalog['HTMLArea'] == 'undefined')
-		{
-		  HTMLArea._lc_catalog['HTMLArea'] = HTMLArea._loadlang('HTMLArea');
-		}
-  		// Look for the string in the main language file
-		if(typeof HTMLArea._lc_catalog['HTMLArea'][string] != 'undefined') 
-		{
-		  return HTMLArea._lc_catalog['HTMLArea'][string];
-		}
-  	}
-    return string; // Indicate it's untranslated
+    if(context=='HTMLArea')
+    {
+      return string; // Indicate it's untranslated
+    }
+    else
+    {
+      //if string is not found and context is not HTMLArea try if it is in HTMLArea
+      return HTMLArea._lc(string, 'HTMLArea');
+    }
   }
   else
   {
@@ -4727,5 +5295,111 @@ HTMLArea.prototype.registerPlugins = function(plugin_names) {
     }
   }
 }
+
+/** Utility function to base64_encode some arbitrary data, uses the builtin btoa() if it exists (Moz) */
+
+HTMLArea.base64_encode =  function(input)
+{
+  var keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+  var output = "";
+  var chr1, chr2, chr3;
+  var enc1, enc2, enc3, enc4;
+  var i = 0;
+
+  do {
+    chr1 = input.charCodeAt(i++);
+    chr2 = input.charCodeAt(i++);
+    chr3 = input.charCodeAt(i++);
+
+    enc1 = chr1 >> 2;
+    enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+    enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+    enc4 = chr3 & 63;
+
+    if (isNaN(chr2)) {
+       enc3 = enc4 = 64;
+    } else if (isNaN(chr3)) {
+       enc4 = 64;
+    }
+
+    output = output + keyStr.charAt(enc1) + keyStr.charAt(enc2) +
+       keyStr.charAt(enc3) + keyStr.charAt(enc4);
+  } while (i < input.length);
+
+  return output;
+}
+
+/** Utility function to base64_decode some arbitrary data, uses the builtin atob() if it exists (Moz) */
+
+HTMLArea.base64_decode =function(input)
+{
+  var keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+  var output = "";
+  var chr1, chr2, chr3;
+  var enc1, enc2, enc3, enc4;
+  var i = 0;
+
+  // remove all characters that are not A-Z, a-z, 0-9, +, /, or =
+  input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+
+  do {
+    enc1 = keyStr.indexOf(input.charAt(i++));
+    enc2 = keyStr.indexOf(input.charAt(i++));
+    enc3 = keyStr.indexOf(input.charAt(i++));
+    enc4 = keyStr.indexOf(input.charAt(i++));
+
+    chr1 = (enc1 << 2) | (enc2 >> 4);
+    chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
+    chr3 = ((enc3 & 3) << 6) | enc4;
+
+    output = output + String.fromCharCode(chr1);
+
+    if (enc3 != 64) {
+       output = output + String.fromCharCode(chr2);
+    }
+    if (enc4 != 64) {
+       output = output + String.fromCharCode(chr3);
+    }
+  } while (i < input.length);
+
+  return output;
+}
+
+HTMLArea.removeFromParent = function(el)
+{
+  if(!el.parentNode) return;
+  var pN = el.parentNode;
+  pN.removeChild(el);
+  return el;
+}
+
+HTMLArea.hasParentNode = function(el)
+{
+  if(el.parentNode)
+  {
+    // When you remove an element from the parent in IE it makes the parent
+    // of the element a document fragment.  Moz doesn't.
+    if(el.parentNode.nodeType == 11)
+    {
+      return false;
+    }
+    return true;
+  }
+
+  return false;
+}
+
+HTMLArea.getOuterHTML = function(element)
+{
+  if(HTMLArea.is_ie)
+  {
+    return element.outerHTML;
+  }
+  else
+  {
+    return (new XMLSerializer()).serializeToString(element);
+  }
+}
+
 
 HTMLArea.init();

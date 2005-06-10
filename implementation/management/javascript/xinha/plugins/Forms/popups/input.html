@@ -1,0 +1,158 @@
+<html>
+
+<head>
+  <title>Insert/Edit Form Element INPUT</title>
+  <link rel="stylesheet" type="text/css" href="../../../popups/popup.css" />
+  <script type="text/javascript" src="../../../popups/popup.js"></script>
+
+<script type="text/javascript">
+var type;
+var tagName;
+function Init() {
+  __dlg_translate("Forms");
+	__dlg_init();
+	var param = window.dialogArguments;
+  type = param.f_type;
+  tagName = param.f_tagName;
+  height = 230;
+  var d = document;
+  d.getElementById("f_name").value = param.f_name;
+  d.getElementById("f_value").value = param.f_value;
+  d.getElementById("f_type").innerHTML = 'Form Element: INPUT (' + param.f_type + ')';
+  d.getElementById("txt").style.display = "none";
+  d.getElementById("chk").style.display = "none";
+  d.getElementById("btn").style.display = "none";
+  d.getElementById("img").style.display = "none";
+  switch (type) {
+ 	  case "text":
+	  case "password":
+		  d.getElementById("f_size").value = (param.f_size<=0)?"":param.f_size;
+			d.getElementById("f_maxlength").value = (param.f_maxlength<=0)?"":param.f_maxlength;
+      d.getElementById("txt").style.display = "block";
+      height = 250;
+			break;
+		case "checkbox":
+		case "radio": 
+      d.getElementById("f_checked").checked =param.f_checked;	
+      d.getElementById("chk").style.display = "block";
+      break;
+		case "button": 
+      d.getElementById("f_onclick").value =  param.f_onclick; 
+      d.getElementById("btn").style.display = "block";
+	    break;
+		case "image": 
+      d.getElementById("f_src").value = param.f_src;
+      d.getElementById("img").style.display = "block";
+	    break;
+    case "hidden":
+    case "reset":
+    case "submit":
+      height = 200;
+  }
+	window.resizeTo(320,height);
+	d.getElementById("f_name").focus();
+};
+
+function onOK() {
+	var d = document;
+	var el = d.getElementById("f_name");
+	if (!el.value) {
+  	alert("You must enter a Name");
+		el.focus();
+	  return false;
+	}
+	var param = new Object();
+  param["f_type"] = type;
+  param["f_name"] = d.getElementById("f_name").value;
+  param["f_value"] = d.getElementById("f_value").value;
+	switch (type) {
+		case "text":
+		case "password":
+			param["f_size"] = d.getElementById("f_size").value;
+      param["f_maxlength"] = d.getElementById("f_maxlength").value;
+      break;
+  	case "checkbox":
+		case "radio": 	param["f_checked"] = d.getElementById("f_checked").checked;	break;
+		case "button":	param["f_onclick"] = d.getElementById("f_onclick").value;	break;
+		case "image": param["f_src"] = d.getElementById("f_src").value;
+	}
+  __dlg_close(param);
+  return false;
+};
+
+function onCancel() {
+	__dlg_close(null);
+	return false;
+};
+</script>
+<style rel="stylesheet" type="text/css">
+DIV.line	{	clear: both;	}
+
+LABEL	{
+	padding-top: 3px;
+	padding-left: 3px;		
+	padding-right: 3px;	
+	}
+	
+LABEL.label	{
+	float: left;
+	width: 8em;
+	text-align: right;
+	}	
+</style>  
+</head>
+
+<body onload="Init()">
+  <div id="f_type" class="title"></div>
+  <form action="" method="get">
+    <div class="line"><label class="label" for="name">Name/ID:</label>
+    <input type="text" name="name" id="f_name" title="Name of the form input" /></div>
+    <div class="line"><label class="label" for="value">Value:</label>  
+    <input type="text" name="value" id="f_value" title="Value of the form input" /></div>
+  <div id="txt">
+	<fieldset>
+	<legend>Dimensions</legend>
+    <div class="space"></div>
+    <div class="fr">Size:</div>
+    <input type="text" name="size" id="f_size" size="5" title="Size of text box in characters" />
+    <div class="space"></div>
+    <div class="fr">Max length:</div>
+    <input type="text" name="maxlength" id="f_maxlength" size="5"	title="Maximum number of characters accepted" />
+    <div class="space"></div>
+	</fieldset>
+  </div>
+  <div id="chk">
+  <fieldset>
+  <legend>Default</legend>
+    <div class="space"></div>
+    <div class="fr">Checked</div>
+    <input name="checked" id="f_checked" type="checkbox" />
+    <div class="space"></div>
+  </fieldset>
+	</div>
+	<div id="btn">
+	<fieldset>
+	<legend> Button Script</legend>
+	  <div class="space"></div>
+    <div class="fr">'onClick'=</div>
+    <input type="text" name="onClick" id="f_onclick" title="Javascript for button click" />
+    <div class="space"></div>
+	</fieldset>
+  </div>
+	<div id="img">
+	<fieldset>
+	<legend>Image source</legend>
+	  <div class="space"></div>
+    <div class="fr">Image URL:</div>
+    <input type="text" name="src" id="f_src" title="URL of image" />
+    <div class="space"></div>
+	</fieldset>
+  </div>
+  <div id="buttons">
+    <button type="button" name="ok" onclick="return onOK();">OK</button>
+    <button type="button" name="cancel" onclick="return onCancel();">Cancel</button>
+  </div>  
+</form>
+
+</body>
+</html>

@@ -95,17 +95,18 @@ PopupWin.prototype.addButtons = function() {
 		button.innerHTML = HTMLArea._lc(btn, 'HTMLArea');
 		switch (btn.toLowerCase()) {
 		    case "ok":
-			button.onclick = function() {
+      HTMLArea.addDom0Event(button, 'click',
+			function() {
 				self.callHandler();
 				self.close();
 				return false;
-			};
+			});
 			break;
 		    case "cancel":
-			button.onclick = function() {
+			HTMLArea.addDom0Event(button, 'click',  function() {
 				self.close();
 				return false;
-			};
+			});
 			break;
 		}
 	}

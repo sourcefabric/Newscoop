@@ -1,52 +1,36 @@
 function InsertAnchor(editor) {
   this.editor = editor;
   var cfg = editor.config;
-  var bl = InsertAnchor.btnList;
   var self = this;
 
   // register the toolbar buttons provided by this plugin
-  var toolbar = [];
-  for (var i in bl) {
-    if(typeof bl[i] == 'function') continue;
-    var btn = bl[i];
-    if (!btn) {
-      toolbar.push("separator");
-    }
-    else {
-      var id = "IA-" + btn[0];
-      cfg.registerButton(id, this._lc("Insert Anchor"), editor.imgURL(btn[0] + ".gif", "InsertAnchor"), false,
-             function(editor, id) {
-               // dispatch button press event
-               self.buttonPress(editor, id);
-             }, btn[1]);
-      toolbar.push(id);
-    }
-  }
-
-  for (var i in toolbar) {
-    cfg.toolbar[0].push(toolbar[i]);
-  }
+  cfg.registerButton({
+  id       : "insert-anchor", 
+  tooltip  : this._lc("Insert Anchor"), 
+  image    : editor.imgURL("insert-anchor.gif", "InsertAnchor"),
+  textMode : false,
+  action   : function(editor) {
+               self.buttonPress(editor);
+             }
+  });
+  cfg.addToolbarElement("insert-anchor", "createlink", 1);
 }
 
 InsertAnchor._pluginInfo = {
   name          : "InsertAnchor",
-  version       : "1.0",
-  developer     : "Andre Rabold",
-  developer_url : "http://www.mr-printware.de",
-  c_owner       : "Andre Rabold",
-  sponsor       : "MR Printware GmbH",
-  sponsor_url   : "http://www.mr-printware.de",
+  origin        : "version: 1.0, by Andre Rabold, MR Printware GmbH, http://www.mr-printware.de",
+  version       : "2.0",
+  developer     : "Udo Schmal",
+  developer_url : "http://www.schaffrath-neuemedien.de",
+  c_owner       : "Udo Schmal",
+  sponsor       : "L.N.Schaffrath NeueMedien",
+  sponsor_url   : "http://www.schaffrath-neuemedien.de",
   license       : "htmlArea"
 };
 
 InsertAnchor.prototype._lc = function(string) {
     return HTMLArea._lc(string, 'InsertAnchor');
 }
-
-InsertAnchor.btnList = [
-  null, // separator
-  ["insert-anchor"]
-];
 
 InsertAnchor.prototype.onGenerate = function() {
   var style_id = "IA-style"
@@ -60,27 +44,54 @@ InsertAnchor.prototype.onGenerate = function() {
   }
 }
 
-InsertAnchor.prototype.buttonPress = function(editor, id) {
-  var anchor;
-  anchor = prompt(this._lc("Anchor name"), "");
-  if (anchor == "" || anchor == null) {
-    return;
+InsertAnchor.prototype.buttonPress = function(editor) {
+  var outparam = null;
+  var html = editor.getSelectedHTML();
+  var sel  = editor._getSelection();
+  var range  = editor._createRange(sel);
+  var  a = editor._activeElement(sel);
+  if(!(a != null && a.tagName.toLowerCase() == 'a')) {
+    a = editor._getFirstAncestor(sel, 'a'); 
   }
+  if (a != null && a.tagName.toLowerCase() == 'a')
+    outparam = { name : a.id };
+  else
+    outparam = { name : '' };
 
-  try {
-    var doc = editor._doc;
-    var alink = doc.createElement("a");
-    alink.id = anchor;
-    alink.name = anchor;
-    alink.title = anchor;
-    alink.className = "anchor";
-    if (HTMLArea.is_ie) {
-      var sel = editor._getSelection();
-      var range = editor._createRange(sel);
-      range.pasteHTML(alink.outerHTML);
-    } else {
-      editor.insertNodeAtSelection(alink);
+  editor._popupDialog( "plugin://InsertAnchor/insert_anchor", function( param ) {
+    if ( param ) {
+      var anchor = param["name"];
+      if (anchor == "" || anchor == null) {
+        if (a) {
+          var child = a.innerHTML;
+          a.parentNode.removeChild(a);
+          editor.insertHTML(child);
+        }
+        return;
+      } 
+      try {
+        var doc = editor._doc;
+        if (!a) {
+//          editor.surroundHTML('<a id="' + anchor + '" name="' + anchor + '" title="' + anchor + '" class="anchor">', '</a>');
+          a = doc.createElement("a");
+          a.id = anchor;
+          a.name = anchor;
+          a.title = anchor;
+          a.className = "anchor";
+          a.innerHTML = html;
+          if (HTMLArea.is_ie) {
+            range.pasteHTML(a.outerHTML);
+          } else {
+            editor.insertNodeAtSelection(a);
+          }
+        } else {
+          a.id = anchor;
+          a.name = anchor;
+          a.title = anchor;
+          a.className = "anchor";
+        }
+      }
+      catch (e) { }
     }
-  }
-  catch (e) { }
+  }, outparam);
 }
