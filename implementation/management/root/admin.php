@@ -1,9 +1,18 @@
 <?php
-
 require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
 
-$no_menu_scripts = array('/login.php', '/do_login.php', '/pub/issues/preview.php',
-	'/pub/issues/empty.php', '/ad_popup.php', '/pub/issues/sections/articles/preview.php',
+/** 
+ * This file is basically a hack so that we could implement the
+ * new interface without having to rewrite everything.
+ */
+
+$no_menu_scripts = array(
+    '/login.php', 
+    '/do_login.php', 
+    '/pub/issues/preview.php',
+	'/pub/issues/empty.php', 
+	'/ad_popup.php', 
+	'/pub/issues/sections/articles/preview.php',
 	'/pub/issues/sections/articles/empty.php');
 
 $request_uri = $_SERVER['REQUEST_URI'];
@@ -34,7 +43,10 @@ if ($is_image) {
     header('Expires: ' . gmdate("D, d M Y H:i:s", $expireTime) . ' GMT');
     header('Last-Modified: ' . gmdate("D, d M Y H:i:s", $currentTime) . ' GMT');
     header('Cache-Control: private, max-age=' . $secondsTillExpired . ', must-revalidate, pre-check=' . $secondsTillExpired);
-	readfile($Campsite['HTML_DIR'] . "/$ADMIN_DIR/$call_script");
+    $fileName = $Campsite['HTML_DIR'] . "/$ADMIN_DIR/$call_script";
+    if (file_exists($fileName)) {
+	   readfile($fileName);
+    }
 } 
 elseif (($extension == '.php') || ($extension == '')) {
 	// Requested file is not an image
@@ -45,7 +57,7 @@ elseif (($extension == '.php') || ($extension == '')) {
 		// Check if the user is logged in already
 		require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
 		//load_common_include_files($ADMIN_DIR);
-		list($access, $User) = check_basic_access($_REQUEST);
+		list($access, $User) = check_basic_access($_REQUEST, false);
 		if (!$access) {
 			// If not logged in, show the login screen.
 			header("Location: /$ADMIN/login.php");
@@ -63,6 +75,22 @@ elseif (($extension == '.php') || ($extension == '')) {
 	}
 	$needs_menu = ! in_array($call_script, $no_menu_scripts);
 
+	// Clean up the global namespace before we call the script
+	unset($is_image);
+	unset($extension);
+	unset($extension_start);
+	unset($question_mark);
+	unset($no_menu_scripts);
+	unset($request_uri);
+	
+	// Get the main content
+	ob_start();
+	require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/$call_script");
+	$content = ob_get_clean();
+
+	// We create the top menu AFTER the main content because
+	// of the localizer screen.  It will update the strings, which 
+	// need to be reflected immediately in the menu.
 	$_top_menu = '';
 	if ($needs_menu) {
 		ob_start();
@@ -72,18 +100,7 @@ elseif (($extension == '.php') || ($extension == '')) {
 		$_top_menu = ob_get_clean();
 	}
 	
-	// Clean up the global namespace before we call the script
-	unset($is_image);
-	unset($extension);
-	unset($extension_start);
-	unset($question_mark);
-	unset($no_menu_scripts);
-	unset($request_uri);
-	
-	// Call the script
-	ob_start();
-	require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/$call_script");
-	$content = ob_get_clean();
+
 	echo $_top_menu . $content;
 	
 	if ($needs_menu) {
