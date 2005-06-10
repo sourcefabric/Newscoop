@@ -1,33 +1,26 @@
-<?php 
-
-regGS("Article automatic publishing schedule","");
-regGS("Delete article $1","Şterge articolul $1");
-regGS("$1 articles found","");
-regGS("Show article on front page","Afişează articolul în pagina principală");
-regGS("Show article on section page","Afişează articolul în pagina secţiunii");
-regGS("Enter keywords, comma separated","Introduceţi cuvintele cheie separate de virgulă");
-regGS("You must select an article type.","Trebuie să selectaţi tipul articolului");
-regGS("Article $1 added to $2. $3 from $4. $5 of $6","Articolul $1 a fost adăugat la $2. $3 din $4. $5 din $6");
-regGS("You do not have the right to delete articles.","Nu aveţi dreptul să ştergeţi articole");
-regGS("Are you sure you want to delete the article $1 ($2)?","Doriţi să ştergeţi articolul $1 ($2)?");
-regGS("Article $1 ($2) deleted from $3. $4 from $5. $6 ($7) of $8","Articolul $1 ($2) a fost şters din $3. $4 din $5. $6 ($7) din $8");
-regGS("Change article status","Modific starea articolului");
-regGS("Change the status of article $1 ($2) from $3 to","Modific starea articolului $1 ($2) de la $3 la");
-regGS("You do not have the right to change this article status. Once submitted an article can only changed by authorized users.","Nu aveţi dreptul să modificaţi starea articolului. Odată propus un articol poate fi modificat numai de utilizatori autorizaţi.");
-regGS("Article $1 status from $2. $3 from $4. $5 ($6) of $7 changed","Starea articolului $1 din $2. $3 din $4. $5 ($6) al $7 a fost modificată");
-regGS("Translate article","Traducere articol");
-regGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only changed by authorized users.","Nu aveţi dreptul să modificaţi articolul. Puteţi să editaţi numai articolele dumneavoastră. Odată propus un articol poate fi modificat numai de utilizatori autorizaţi.");
-regGS("Edit article details","Editează articolul");
-regGS("Allow users without subscriptions to view the article","Autorizează accesul cititorilor fără subscriere la articol");
-regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.","");
-regGS("The article has been locked by $1 ($2) $3 minute(s) ago.","");
-regGS("Could not save the article.  It has been locked by $1 $2 hours and $3 minutes ago.","");
-regGS("Are you sure you want to unlock it?","Doriţi să îl deblocaţi?");
-regGS("Article is locked","");
-regGS("The article has been updated.","Articolul a fost modificat");
-regGS("The article cannot be updated or no changes have been made.","Articolul nu poate fi modificat sau nu au fost modificări");
-regGS("Duplicate article","Duplică articolul");
-regGS("The destination section is the same as the source section.","Secţiunea destinaţie este aceeaşi cu cea sursă");
-
-
+<?php
+regGS("Article Type", "");
+regGS("Are you sure you want to delete this scheduled action?", "");
+regGS("$1 articles found", "");
+regGS("Show article on front page", "Afişează articolul în pagina principală");
+regGS("Show article on section page", "Afişează articolul în pagina secţiunii");
+regGS("Enter keywords, comma separated", "Introduceţi cuvintele cheie separate de virgulă");
+regGS("Article $1 added to $2. $3 from $4. $5 of $6", "Articolul $1 a fost adăugat la $2. $3 din $4. $5 din $6");
+regGS("Are you sure you want to delete the article $1 ($2)?", "Doriţi să ştergeţi articolul $1 ($2)?");
+regGS("Article $1 ($2) deleted from $3. $4 from $5. $6 ($7) of $8", "Articolul $1 ($2) a fost şters din $3. $4 din $5. $6 ($7) din $8");
+regGS("Change article status", "Modific starea articolului");
+regGS("Change the status of article $1 ($2) from $3 to", "Modific starea articolului $1 ($2) de la $3 la");
+regGS("Article $1 status from $2. $3 from $4. $5 ($6) of $7 changed", "Starea articolului $1 din $2. $3 din $4. $5 ($6) al $7 a fost modificată");
+regGS("Translate article", "Traducere articol");
+regGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only changed by authorized users.", "Nu aveţi dreptul să modificaţi articolul. Puteţi să editaţi numai articolele dumneavoastră. Odată propus un articol poate fi modificat numai de utilizatori autorizaţi.");
+regGS("Edit article details", "Editează articolul");
+regGS("Allow users without subscriptions to view the article", "Autorizează accesul cititorilor fără subscriere la articol");
+regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "");
+regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "");
+regGS("Are you sure you want to unlock it?", "Doriţi să îl deblocaţi?");
+regGS("Article is locked", "");
+regGS("The article has been updated.", "Articolul a fost modificat");
+regGS("The article cannot be updated or no changes have been made.", "Articolul nu poate fi modificat sau nu au fost modificări");
+regGS("Duplicate article", "Duplică articolul");
+regGS("The destination section is the same as the source section.", "Secţiunea destinaţie este aceeaşi cu cea sursă");
 ?>
