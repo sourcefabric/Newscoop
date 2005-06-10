@@ -8,11 +8,11 @@ HTMLArea.Dialog = function(editor, html, localizer)
 
   this.rootElem = document.createElement('div');
   this.rootElem.className = 'dialog';
-  this.rootElem.style.position = 'relative';
+  this.rootElem.style.position = 'absolute';
   this.rootElem.style.display  = 'none';
-
-  this.width  = parseInt(this.rootElem.style.width  = this.editor._iframe.style.width);
-  this.height = parseInt(this.rootElem.style.height = this.editor._iframe.style.height);
+  this.editor._framework.ed_cell.insertBefore(this.rootElem, this.editor._framework.ed_cell.firstChild);
+  this.rootElem.style.width  = this.width  =  this.editor._framework.ed_cell.offsetWidth;
+  this.rootElem.style.height = this.height =  this.editor._framework.ed_cell.offsetHeight;
 
   var dialog = this;
   if(typeof localizer == 'function')
@@ -58,15 +58,15 @@ HTMLArea.Dialog = function(editor, html, localizer)
 
   this.rootElem.innerHTML = html;
 
-  this.editor.innerEditor.appendChild(this.rootElem);
+
 
 
   this.editor.notifyOn
    ('resize',
       function(e, args)
       {
-        dialog.width  = parseInt(dialog.rootElem.style.width  = args.editorWidth  + 'px');
-        dialog.height = parseInt(dialog.rootElem.style.height = args.editorHeight + 'px');
+        dialog.rootElem.style.width  = dialog.width  =  dialog.editor._framework.ed_cell.offsetWidth;
+        dialog.rootElem.style.height = dialog.height =  dialog.editor._framework.ed_cell.offsetHeight;
         dialog.onresize();
       }
     );
@@ -93,10 +93,6 @@ HTMLArea.Dialog.prototype.show = function(values)
 
   this.editor._textArea.style.display = 'none';
   this.editor._iframe.style.visibility   = 'hidden';
-  if (this.editor.config.statusBar)
-  {
-    this.editor._statusBar.innerHTML = '&nbsp;';
-  }
   this.rootElem.style.display   = '';
 }
 
@@ -106,16 +102,13 @@ HTMLArea.Dialog.prototype.hide = function()
   this.editor._textArea.style.display = this._restoreTo[0];
   this.editor._iframe.style.visibility   = this._restoreTo[1];
   this.editor.showPanels(this._restoreTo[2]);
-  if (this.editor.config.statusBar)
-  {
-    this.editor._statusBar.innerHTML = '';
-    this.editor._statusBar.appendChild(this.editor._statusBarTree);
-  }
+
   // Restore the selection
   if(HTMLArea.is_ie)
   {
     this._lastRange.select();
   }
+  this.editor.updateToolbar();
   return this.getValues();
 }
 
@@ -136,6 +129,7 @@ HTMLArea.Dialog.prototype.setValues = function(values)
   for(var i in values)
   {
     var elems = this.getElementsByName(i);
+    if(!elems) continue;
     for(var x = 0; x < elems.length; x++)
     {
       var e = elems[x];
@@ -260,7 +254,7 @@ HTMLArea.Dialog.prototype.getValues = function()
         }
         else
         {
-          if(i.selectedIndex)
+          if(i.selectedIndex >= 0)
           {
             v = i.options[i.selectedIndex];
           }
@@ -295,7 +289,7 @@ HTMLArea.Dialog.prototype.getValues = function()
 
             if(i.checked)
             {
-              if(v.push)
+              if(typeof v == 'object' && v.push)
               {
                 v.push(i.value);
               }

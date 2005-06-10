@@ -1,6 +1,6 @@
 // I18N for the FullPage plugin
 
-// LANG: "de", ENCODING: UTF-8
+// LANG: "nl", ENCODING: UTF-8
 
 // FOR TRANSLATORS:
 //  Nederlands: MadMiner basura@sitter.nl [2/2005]
@@ -12,7 +12,7 @@
 //       that states what encoding is necessary.)
 
 {
-        "Alternate style-sheet:":       "Wisselen van style-sheet:",
+        "Alternate style-sheet:": "Wisselen van style-sheet:",
         "Background color:": "Achtergrondkleur:",
         "Cancel": "Annuleren",
         "DOCTYPE:": "DOCTYPE:",

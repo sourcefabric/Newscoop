@@ -10,8 +10,8 @@
     --  use of the file as a boilerplate.
     --
     --  $HeadURL: http://svn.xinha.python-hosting.com/trunk/examples/full_example-body.html $
-    --  $LastChangedDate: 2005-03-05 21:42:32 +1300 (Sat, 05 Mar 2005) $
-    --  $LastChangedRevision: 35 $
+    --  $LastChangedDate: 2005-05-21 04:30:40 +1200 (Sat, 21 May 2005) $
+    --  $LastChangedRevision: 186 $
     --  $LastChangedBy: gogo $
     --------------------------------------------------------------------------->
 
@@ -59,6 +59,7 @@
        'SuperClean',
        'TableOperations'
       ];
+
              // THIS BIT OF JAVASCRIPT LOADS THE PLUGINS, NO TOUCHING  :)
              if(!HTMLArea.loadPlugins(xinha_plugins, xinha_init)) return;
 
@@ -76,19 +77,19 @@
       /** STEP 3 ***************************************************************
        * We create a default configuration to be used by all the editors.
        * If you wish to configure some of the editors differently this will be
-       * done in step 4.
+       * done in step 5.
        *
        * If you want to modify the default config you might do something like this.
        *
        *   xinha_config = new HTMLArea.Config();
-       *   xinha_config.width  = 640;
-       *   xinha_config.height = 420;
+       *   xinha_config.width  = '640px';
+       *   xinha_config.height = '420px';
        *
        *************************************************************************/
 
-       xinha_config = xinha_config ? xinha_config : new HTMLArea.Config();
+       xinha_config = xinha_config ? xinha_config() : new HTMLArea.Config();
 
-      /** STEP 3 ***************************************************************
+      /** STEP 4 ***************************************************************
        * We first create editors for the textareas.
        *
        * You can do this in two ways, either
@@ -107,18 +108,18 @@
 
       xinha_editors   = HTMLArea.makeEditors(xinha_editors, xinha_config, xinha_plugins);
 
-      /** STEP 4 ***************************************************************
+      /** STEP 5 ***************************************************************
        * If you want to change the configuration variables of any of the
        * editors,  this is the place to do that, for example you might want to
        * change the width and height of one of the editors, like this...
        *
-       *   xinha_editors.myTextArea.config.width  = 640;
-       *   xinha_editors.myTextArea.config.height = 480;
+       *   xinha_editors.myTextArea.config.width  = '640px';
+       *   xinha_editors.myTextArea.config.height = '480px';
        *
        ************************************************************************/
 
 
-      /** STEP 5 ***************************************************************
+      /** STEP 6 ***************************************************************
        * Finally we "start" the editors, this turns the textareas into
        * Xinha editors.
        ************************************************************************/
@@ -128,11 +129,12 @@
 
     window.onload = xinha_init;
   </script>
+  <link href="../skins/blue-look/skin.css" rel="Stylesheet" />
 </head>
 
-<body onload="xinha_init()">
+<body>
 
-  <form id="editors_here">
+  <form id="editors_here" onsubmit="alert(this.myTextArea0.value);">
     <textarea id="myTextArea" name="myTextArea" rows="10" cols="80" style="width:100%"></textarea>
     <textarea id="anotherOne" name="anotherOne" rows="10" cols="80" style="width:100%"></textarea>
   </form>

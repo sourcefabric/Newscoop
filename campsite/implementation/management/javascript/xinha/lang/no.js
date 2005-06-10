@@ -47,7 +47,6 @@
   "Insert/Modify Link": "Rediger lenke",
   "New window (_blank)": "Eget vindu (_blank)",
   "None (use implicit)": "Ingen (bruk standardinnstilling)",
-  "OK": "OK",
   "Other": "Annen",
   "Same frame (_self)": "Samme ramme (_self)",
   "Target:": "Mål:",

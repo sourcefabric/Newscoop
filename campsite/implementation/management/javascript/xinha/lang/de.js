@@ -42,7 +42,8 @@
         "Clear Inline Font Specifications": "Zeichensatz Formatierungen entfernen",
         "Split Block": "Block teilen",
         "Toggle Borders": "Tabellenränder ein/ausblenden",
-
+        "Save as": "speichern unter",
+        "Insert/Overwrite": "Einfügen/Überschreiben",
         "&mdash; format &mdash;": "&mdash; Format &mdash;",
         "Heading 1": "Überschrift 1",
         "Heading 2": "Überschrift 2",
@@ -60,6 +61,9 @@
         "Path": "Pfad",
         "You are in TEXT MODE.  Use the [<>] button to switch back to WYSIWYG.": "Sie sind im Text-Modus. Benutzen Sie den [<>] Knopf um in den visuellen Modus (WYSIWIG) zu gelangen.",
         "The Paste button does not work in Mozilla based web browsers (technical security reasons). Press CTRL-V on your keyboard to paste directly.": "Aus Sicherheitsgründen dürfen Skripte normalerweise nicht programmtechnisch auf Ausschneiden/Kopieren/Einfügen zugreifen. Bitte klicken Sie OK um die technische Erläuterung auf mozilla.org zu öffnen, in der erklärt wird, wie einem Skript Zugriff gewährt werden kann.",
+        
+        "You need to select some text before create a link": "Sie müssen einen Text markieren um einen Link zu erstellen",
+        "Your Document is not well formed. Check JavaScript console for details.": "Ihr Dokument ist in keinem sauberen Format. Benutzen Sie die Javascript Console für weitere Informationen.",
 
         "Alignment:": "Ausrichtung:",
         "Not set": "nicht eingestellt",
@@ -122,8 +126,5 @@
         "Alternate text:": "Alternativer Text:",
         "For browsers that don't support images": "für Browser die keine Bilder unterstützen",
         "Positioning of this image": "Positionierung dieses Bildes",
-        "Image Preview:": "Bild Voransicht:",
-        
-        // Select Color popup
-        "Select Color": "Select Color (de)"
+        "Image Preview:": "Bild Voransicht:"
 }

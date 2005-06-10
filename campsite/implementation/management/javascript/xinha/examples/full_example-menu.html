@@ -7,9 +7,9 @@
     --  full_example-body.html, and full_example.js.
     --
     --  $HeadURL: http://svn.xinha.python-hosting.com/trunk/examples/full_example-menu.html $
-    --  $LastChangedDate: 2005-03-21 13:49:25 +1200 (Mon, 21 Mar 2005) $
-    --  $LastChangedRevision: 43 $
-    --  $LastChangedBy: yermol $
+    --  $LastChangedDate: 2005-05-25 09:52:36 +1200 (Wed, 25 May 2005) $
+    --  $LastChangedRevision: 197 $
+    --  $LastChangedBy: gogo $
     --------------------------------------------------------------------------->
 
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -24,8 +24,7 @@
   <h1>Xinha Examples</h1>
 
   <p>
-    Select from the options below and click the Show Example button to show working examples
-    on the right.
+    Select from the options below and click the Show Example button.
   </p>
 
   <form action="full_example-body.html" target="body">
@@ -64,31 +63,86 @@
       <label>
         <input type="checkbox" name="plugins" value="InsertAnchor" checked /> InsertAnchor
       </label>
+
+      <label>
+        <input type="checkbox" name="plugins" value="FindReplace" checked /> FindReplace
+      </label>
+
+      <label>
+        <input type="checkbox" name="plugins" value="DoubleClick" /> DoubleClick
+      </label>
+
+      <label>
+        <input type="checkbox" name="plugins" value="CharCounter" /> CharCounter
+      </label>
+
+      <label>
+        <input type="checkbox" name="plugins" value="InsertWords" /> InsertWords
+      </label>
+
+      <label>
+        <input type="checkbox" name="plugins" value="Abbreviation" /> Abbreviation
+      </label>
+
+      <label>
+	          <input type="checkbox" name="plugins" value="FormOperations" /> FormOperations
+      </label>
+
+      <label>
+        <input type="checkbox" name="plugins" value="LangMarks" /> LangMarks
+      </label>
+
+      <label>
+        <input type="checkbox" name="plugins" value="Equation" /> Equation
+      </label>
+
+      <label>
+        <input type="checkbox" name="plugins" value="InsertSmiley" /> InsertSmiley
+      </label>
+
+      <label>
+        <input type="checkbox" name="plugins" value="EditTag" /> EditTag
+      </label>
+
+      <label>
+        <input type="checkbox" name="plugins" value="Forms" /> Forms
+      </label>
+
     </fieldset>
 
     <fieldset>
       <legend>PHP Plugins</legend>
       <p>
-        These plugins require PHP in order to run.  Some may have versions in other languages.
+        <small>These plugins require PHP in order to run.</small>
       </p>
       <label>
-        <input type="checkbox" name="plugins" value="SuperClean"  />  SuperClean <small>(PHP)</small>
+        <input type="checkbox" name="plugins" value="SuperClean"  /> SuperClean
       </label>
       <label>
-        <input type="checkbox" name="plugins" value="SpellChecker" /> SpellChecker <small>(PHP)</small>
+        <input type="checkbox" name="plugins" value="SpellChecker" /> SpellChecker
       </label>
       <label>
-        <input type="checkbox" name="plugins" value="HtmlTidy"  />    HtmlTidy <small>(PHP)</small>
+        <input type="checkbox" name="plugins" value="HtmlTidy"  /> HtmlTidy
       </label>
       <label>
-        <input type="checkbox" name="plugins" value="Linker"  />       Linker <small>(PHP)</small>
+        <input type="checkbox" name="plugins" value="Linker"  /> Linker
       </label>
       <label>
-        <input type="checkbox" name="plugins" value="ImageManager"  />        ImageManager <small>(PHP)</small>
+        <input type="checkbox" name="plugins" value="ImageManager"  /> ImageManager
       </label>
     </fieldset>
 
     <label>Number of Editors: <input type="text" name="num" value="1" /></label>
+
+    <fieldset>
+    <legend>Language</legend>
+        <select name="lang">
+        <option value="en">English</option>
+        <option value="de">German</option>
+        <option value="fr">French</option>
+        <option value="it">Italian</option>
+        </select>
+    </fieldset>
 
     <input type="submit" value="Show Example" />
   </form>

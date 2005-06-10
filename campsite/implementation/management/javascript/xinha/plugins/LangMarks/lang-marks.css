@@ -1,0 +1,20 @@
+span.el, span.en, span.fr, span.la {
+	color: red;
+	padding-right: 25px;
+	background-repeat: no-repeat;
+	background-position: right top;
+	border-bottom: 1px solid red;
+	white-space : nowrap;
+}
+span.el { /*Griechisch*/
+	background-image: url(img/el.gif);
+}
+span.en { /*Englisch*/
+	background-image: url(img/en.gif);
+}
+span.fr { /*Französisch*/
+	background-image: url(img/fr.gif);
+}
+span.la { /*Latein*/
+	background-image: url(img/la.gif);
+}

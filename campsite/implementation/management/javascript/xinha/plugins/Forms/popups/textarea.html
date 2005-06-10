@@ -1,0 +1,87 @@
+<html>
+
+<head>
+  <title>Insert/Edit Form Element TEXTAREA</title>
+  <link rel="stylesheet" type="text/css" href="../../../popups/popup.css" />
+  <script type="text/javascript" src="../../../popups/popup.js"></script>
+
+<script type="text/javascript">
+var type;
+function Init() {
+  __dlg_translate("Forms");
+	__dlg_init();
+	var param = window.dialogArguments;
+  type = param.f_type;
+  var d = document;
+  d.getElementById("f_name").value = param.f_name;
+	d.getElementById("f_value").value = param.f_value;
+	d.getElementById("f_cols").value = param.f_cols;
+	d.getElementById("f_rows").value = param.f_rows;
+	window.resizeTo(280,260);
+	d.getElementById("f_name").focus();
+};
+
+function onOK() {
+	var d = document;
+	var el = d.getElementById("f_name");
+	if (!el.value) {
+  	alert("You must enter a Name");
+		el.focus();
+	  return false;
+	}
+	var param = new Object();
+  param["f_type"] = type;
+  param["f_name"] = d.getElementById("f_name").value;
+	param["f_cols"] = d.getElementById("f_cols").value;
+  param["f_rows"] = d.getElementById("f_rows").value;
+  param["f_value"] = d.getElementById("f_value").value;
+  __dlg_close(param);
+  return false;
+};
+
+function onCancel() {
+	__dlg_close(null);
+	return false;
+};
+</script>
+<style rel="stylesheet" type="text/css">
+DIV.line	{	clear: both;	}
+
+LABEL	{
+	padding-top: 3px;
+	padding-left: 3px;		
+	padding-right: 3px;	
+	}
+	
+LABEL.label	{
+	float: left;
+	width: 8em;
+	text-align: right;
+	}	
+</style> 
+</head>
+
+<body onload="Init()">
+<div id="f_type" class="title">Form Element: TEXTAREA</div>
+<form action="" method="get">
+  <div class="line"><label class="label" for="name">Name/ID:</label>
+  <input type="text" name="name" id="f_name" title="name of the textarea" /></div>
+  <div class="space"></div>
+  <fieldset>
+	<legend>Dimensions</legend>
+    <div class="line"><label class="label" for="cols">Columns:</label>
+    <input type="text" name="cols" id="f_cols" size="5" title="Width in number of characters" /></div>
+    <div class="line"><label class="label" for="rows">Rows:</label>
+		<input type="text" name="rows" id="f_rows" size="5" title="Height in number of rows" /></div>
+	</fieldset>
+  <div class="space"></div>
+  <div class="line"><label class="label" for="name">Default contents:</label>
+  <input type="text" name="value" id="f_value" title="Default text (optional)" /></div>	  
+  <div id="buttons">
+    <button type="button" name="ok" onclick="return onOK();">OK</button>
+    <button type="button" name="cancel" onclick="return onCancel();">Cancel</button>
+  </div>  
+</form>
+
+</body>
+</html>

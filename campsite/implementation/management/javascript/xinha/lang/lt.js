@@ -43,7 +43,6 @@
   "Insert/Modify Link": "Idėti/Modifikuoti",
   "New window (_blank)": "Naujas langas (_blank)",
   "None (use implicit)": "None (use implicit)",
-  "OK": "OK",
   "Other": "Kitas",
   "Same frame (_self)": "Same frame (_self)",
   "Target:": "Target:",

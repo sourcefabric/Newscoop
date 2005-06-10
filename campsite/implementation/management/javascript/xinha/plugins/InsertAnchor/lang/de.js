@@ -5,5 +5,6 @@
 
 {
   "Insert Anchor": "Anker einfügen",
-  "Anchor name": "Name (ID)"
+  "Anchor name": "Name (ID)",
+  "Delete": "Löschen"
 }

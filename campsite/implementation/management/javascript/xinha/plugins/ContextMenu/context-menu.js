@@ -6,7 +6,7 @@
 // Distributed under the same terms as HTMLArea itself.
 // This notice MUST stay intact for use (see license.txt).
 //
-// $Id: context-menu.js,v 1.1 2005/05/02 17:39:57 paul Exp $
+// $Id: context-menu.js,v 1.2 2005/06/10 15:39:38 paul Exp $
 
 HTMLArea.loadStyle("menu.css", "ContextMenu");
 
@@ -91,7 +91,7 @@ ContextMenu.prototype.getContextMenu = function(target) {
 		    case "img":
 			img = target;
 			elmenus.push(null,
-				     [ HTMLArea._lc("Image Properties", "ContextMenu"),
+				     [ HTMLArea._lc("_Image Properties...", "ContextMenu"),
 				       function() {
 					       editor._insertImage(img);
 				       },
@@ -102,16 +102,16 @@ ContextMenu.prototype.getContextMenu = function(target) {
 		    case "a":
 			link = target;
 			elmenus.push(null,
-				     [ HTMLArea._lc("Modify Link", "ContextMenu"),
+				     [ HTMLArea._lc("_Modify Link...", "ContextMenu"),
                function() { editor.config.btnList['createlink'][3](editor); },
 				       HTMLArea._lc("Current URL is", "ContextMenu") + ': ' + link.href,
 				       config.btnList["createlink"][1] ],
 
-				     [ HTMLArea._lc("Check Link", "ContextMenu"),
+				     [ HTMLArea._lc("Chec_k Link...", "ContextMenu"),
 				       function() { window.open(link.href); },
 				       HTMLArea._lc("Opens this link in a new window", "ContextMenu") ],
 
-				     [ HTMLArea._lc("Remove Link", "ContextMenu"),
+				     [ HTMLArea._lc("_Remove Link...", "ContextMenu"),
 				       function() {
 					       if (confirm(HTMLArea._lc("Please confirm that you want to unlink this element.", "ContextMenu") + "\n" +
 							   HTMLArea._lc("Link points to:", "ContextMenu") + " " + link.href)) {
@@ -127,7 +127,7 @@ ContextMenu.prototype.getContextMenu = function(target) {
 			td = target;
 			if (!tbo) break;
 			elmenus.push(null,
-				     [ HTMLArea._lc("Cell Properties", "ContextMenu"),
+				     [ HTMLArea._lc("C_ell Properties...", "ContextMenu"),
 				       function() { tableOperation("TO-cell-prop"); },
 				       HTMLArea._lc("Show the Table Cell Properties dialog", "ContextMenu"),
 				       config.btnList["TO-cell-prop"][1] ]
@@ -137,22 +137,22 @@ ContextMenu.prototype.getContextMenu = function(target) {
 			tr = target;
 			if (!tbo) break;
 			elmenus.push(null,
-				     [ HTMLArea._lc("Row Properties", "ContextMenu"),
+				     [ HTMLArea._lc("Ro_w Properties...", "ContextMenu"),
 				       function() { tableOperation("TO-row-prop"); },
 				       HTMLArea._lc("Show the Table Row Properties dialog", "ContextMenu"),
 				       config.btnList["TO-row-prop"][1] ],
 
-				     [ HTMLArea._lc("Insert Row Before", "ContextMenu"),
+				     [ HTMLArea._lc("I_nsert Row Before", "ContextMenu"),
 				       function() { tableOperation("TO-row-insert-above"); },
 				       HTMLArea._lc("Insert a new row before the current one", "ContextMenu"),
 				       config.btnList["TO-row-insert-above"][1] ],
 
-				     [ HTMLArea._lc("Insert Row After", "ContextMenu"),
+				     [ HTMLArea._lc("In_sert Row After", "ContextMenu"),
 				       function() { tableOperation("TO-row-insert-under"); },
 				       HTMLArea._lc("Insert a new row after the current one", "ContextMenu"),
 				       config.btnList["TO-row-insert-under"][1] ],
 
-				     [ HTMLArea._lc("Delete Row", "ContextMenu"),
+				     [ HTMLArea._lc("_Delete Row", "ContextMenu"),
 				       function() { tableOperation("TO-row-delete"); },
 				       HTMLArea._lc("Delete the current row", "ContextMenu"),
 				       config.btnList["TO-row-delete"][1] ]
@@ -162,22 +162,22 @@ ContextMenu.prototype.getContextMenu = function(target) {
 			table = target;
 			if (!tbo) break;
 			elmenus.push(null,
-				     [ HTMLArea._lc("Table Properties", "ContextMenu"),
+				     [ HTMLArea._lc("_Table Properties...", "ContextMenu"),
 				       function() { tableOperation("TO-table-prop"); },
 				       HTMLArea._lc("Show the Table Properties dialog", "ContextMenu"),
 				       config.btnList["TO-table-prop"][1] ],
 
-				     [ HTMLArea._lc("Insert Column Before", "ContextMenu"),
+				     [ HTMLArea._lc("Insert _Column Before", "ContextMenu"),
 				       function() { tableOperation("TO-col-insert-before"); },
 				       HTMLArea._lc("Insert a new column before the current one", "ContextMenu"),
 				       config.btnList["TO-col-insert-before"][1] ],
 
-				     [ HTMLArea._lc("Insert Column After", "ContextMenu"),
+				     [ HTMLArea._lc("Insert C_olumn After", "ContextMenu"),
 				       function() { tableOperation("TO-col-insert-after"); },
 				       HTMLArea._lc("Insert a new column after the current one", "ContextMenu"),
 				       config.btnList["TO-col-insert-after"][1] ],
 
-				     [ HTMLArea._lc("Delete Column", "ContextMenu"),
+				     [ HTMLArea._lc("De_lete Column", "ContextMenu"),
 				       function() { tableOperation("TO-col-delete"); },
 				       HTMLArea._lc("Delete the current column", "ContextMenu"),
 				       config.btnList["TO-col-delete"][1] ]
@@ -203,7 +203,7 @@ ContextMenu.prototype.getContextMenu = function(target) {
 	}
 
 	if (selection && !link)
-		menu.push(null, [ HTMLArea._lc("Make link", "ContextMenu"),
+		menu.push(null, [ HTMLArea._lc("Make lin_k...", "ContextMenu"),
            function() { editor.config.btnList['createlink'][3](editor); },
 				  HTMLArea._lc("Create a link", "ContextMenu"),
 				  config.btnList["createlink"][1] ]);
@@ -213,7 +213,7 @@ ContextMenu.prototype.getContextMenu = function(target) {
 
 	if (!/html|body/i.test(currentTarget.tagName))
 		menu.push(null,
-			  [ HTMLArea._lc("Remove the", "ContextMenu") + " &lt;" + currentTarget.tagName + "&gt; " + HTMLArea._lc("Element", "ContextMenu"),
+			  [ HTMLArea._lc("Remove the", "ContextMenu") + " &lt;" + currentTarget.tagName + "&gt; " + HTMLArea._lc("Element...", "ContextMenu"),
 			    function() {
 				    if (confirm(HTMLArea._lc("Please confirm that you want to remove this element:", "ContextMenu") + " " +
 						currentTarget.tagName)) {

@@ -121,7 +121,7 @@ HTMLArea.prototype._fillStylist = function()
           // alert (this._getFirstAncestor(this._getSelection(), tag));
           // If we don't have an ancestor, but it's a div/span/p/hx stle, we can make one
           if(( tag == 'div' || tag == 'span' || tag == 'p'
-              || (tag.substr(0,1) == 'h' && tag.length == 2)))
+              || (tag.substr(0,1) == 'h' && tag.length == 2 && tag != 'hr')))
           {
             if(!this._selectionEmpty(this._getSelection()))
             {
@@ -452,7 +452,7 @@ HTMLArea.ripStylesFromCSSFile = function(URL)
 
 HTMLArea.ripStylesFromCSSString = function(css)
 {
-  // We are noly interested in the selectors, the rules are not important
+  // We are holy interested in the selectors, the rules are not important
   //  so we'll drop out all coments and rules
   RE_comment = /\/\*(.|\r|\n)*?\*\//g;
   RE_rule    = /\{(.|\r|\n)*?\}/g;

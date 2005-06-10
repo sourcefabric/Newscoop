@@ -54,7 +54,6 @@
   "Insert/Modify Link": "Hyperlink invoegen/aanpassen",
   "New window (_blank)": "Nieuw venster (_blank)",
   "None (use implicit)": "Geen",
-  "OK": "OK",
   "Other": "Ander",
   "Same frame (_self)": "Zelfde frame (_self)",
   "Target:": "Doel:",

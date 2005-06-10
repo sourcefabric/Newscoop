@@ -5,15 +5,16 @@
     --  from full_example-body.html.
     --
     --  $HeadURL: http://svn.xinha.python-hosting.com/trunk/examples/full_example.js $
-    --  $LastChangedDate: 2005-02-19 18:13:44 +1300 (Sat, 19 Feb 2005) $
-    --  $LastChangedRevision: 20 $
-    --  $LastChangedBy: gogo $
+    --  $LastChangedDate: 2005-05-10 19:02:00 +1200 (Tue, 10 May 2005) $
+    --  $LastChangedRevision: 142 $
+    --  $LastChangedBy: niko $
     --------------------------------------------------------------------------*/
 
   var num     = 1;
   if(window.parent && window.parent != window)
   {
     var f = window.parent.menu.document.forms[0];
+    _editor_lang = f.lang.value;
     num = parseInt(f.num.value);
     if(isNaN(num))
     {
@@ -60,6 +61,27 @@
     if(typeof DynamicCSS != 'undefined')
     {
       config.pageStyle = "@import url(dynamic.css);";
+    }
+
+    if(typeof InsertWords != 'undefined')
+    {
+      // Register the keyword/replacement list
+      var keywrds1 = new Object();
+      var keywrds2 = new Object();
+
+      keywrds1['-- Dropdown Label --'] = '';
+      keywrds1['onekey'] = 'onevalue';
+      keywrds1['twokey'] = 'twovalue';
+      keywrds1['threekey'] = 'threevalue';
+
+      keywrds2['-- Insert Keyword --'] = '';
+      keywrds2['Username'] = '%user%';
+      keywrds2['Last login date'] = '%last_login%';
+      config.InsertWords = {
+        combos : [ { options: keywrds1, context: "body" },
+               { options: keywrds2, context: "li" } ]
+      }
+
     }
 
     return config;

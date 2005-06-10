@@ -4,7 +4,7 @@ function FullScreen(editor, args)
   editor._superclean_on = false;
   cfg = editor.config;
 
-  editor.config.registerButton
+  cfg.registerButton
   ( 'fullscreen',
     this._lc("Maximize/Minimize Editor"),
     [_editor_url + cfg.imgURL + 'ed_buttons_main.gif',8,0], true,
@@ -23,24 +23,7 @@ function FullScreen(editor, args)
   );
 
   // See if we can find 'popupeditor' and replace it with fullscreen
-  var t = editor.config.toolbar;
-  var done = false;
-  for(var i = 0; i < t.length && !done; i++)
-  {
-    for(var x = 0; x < t[i].length && !done; x++)
-    {
-      if(t[i][x] == 'popupeditor')
-      {
-        t[i][x] = 'fullscreen';
-        done = true;
-      }
-    }
-  }
-
-  if(!done)
-  {
-    t[0].push('fullscreen');
-  }
+  cfg.addToolbarElement("fullscreen", "popupeditor", 0);
 }
 
 FullScreen._pluginInfo =
@@ -74,10 +57,10 @@ HTMLArea.prototype._fullScreen = function()
     e._sizing = true;
     // Width & Height of window
     var x,y;
-    if (self.innerHeight) // all except Explorer
+    if (window.innerHeight) // all except Explorer
     {
-      x = self.innerWidth;
-      y = self.innerHeight;
+      x = window.innerWidth;
+      y = window.innerHeight;
     }
     else if (document.documentElement && document.documentElement.clientHeight)
       // Explorer 6 Strict Mode
@@ -91,23 +74,7 @@ HTMLArea.prototype._fullScreen = function()
       y = document.body.clientHeight;
     }
 
-    if(!e._revertFullScreen) e._revertFullScreen = e.getInnerSize();
-
-    width = x;
-    height = y - e._toolbar.offsetHeight - (e._statusBar ? e._statusBar.offsetHeight : 0);
-    e.setInnerSize(width,height);
-
-    // IE in standards mode needs us to set the width of the tool & status bar,
-    // I have NO idea why
-    if(HTMLArea.is_ie && document.documentElement && document.documentElement.clientHeight)
-    {
-      e._toolbar.style.width = (width - 12) + 'px';
-      if(e._statusBar)
-      {
-        e._statusBar.style.width = (width - 12) + 'px';
-      }
-    }
-
+    e.sizeEditor(x + 'px',y + 'px',true,true);
     e._sizing = false;
   }
 
@@ -115,16 +82,7 @@ HTMLArea.prototype._fullScreen = function()
   {
     if(e._isFullScreen || e._sizing) return false;
     e._sizing = true;
-    e.setInnerSize(e._revertFullScreen.width, e._revertFullScreen.height);
-    if(HTMLArea.is_ie && document.documentElement && document.documentElement.clientHeight)
-    {
-      e._toolbar.style.width = '';
-      if(e._statusBar)
-      {
-        e._statusBar.style.width = '';
-      }
-    }
-    e._revertFullScreen = null;
+    e.initSize();
     e._sizing = false;
   }
 
@@ -179,6 +137,14 @@ HTMLArea.prototype._fullScreen = function()
     this._isFullScreen = false;
     sizeItDown();
 
+    // Restore all ancestor positions
+    var ancestor = this._htmlArea;
+    while((ancestor = ancestor.parentNode) && ancestor.style)
+    {
+      ancestor.style.position = ancestor._xinha_fullScreenOldPosition;
+      ancestor._xinha_fullScreenOldPosition = null;
+    }
+
     window.scroll(this._unScroll.x, this._unScroll.y);
   }
   else
@@ -192,8 +158,16 @@ HTMLArea.prototype._fullScreen = function()
     };
 
 
+    // Make all ancestors position = static
+    var ancestor = this._htmlArea;
+    while((ancestor = ancestor.parentNode) && ancestor.style)
+    {
+      ancestor._xinha_fullScreenOldPosition = ancestor.style.position;
+      ancestor.style.position = 'static';
+    }
+
     // Maximize
-    window.scroll
+    window.scroll(0,0);
     this._htmlArea.style.position = 'absolute';
     this._htmlArea.style.zIndex   = 9999;
     this._htmlArea.style.left     = 0;

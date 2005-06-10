@@ -253,16 +253,29 @@ POSSIBILITY OF SUCH DAMAGE.</pre>
 
 
 <div id="tab-area-4">
-<pre>$HeadURL: http://svn.xinha.python-hosting.com/trunk/popups/about.html $
-$LastChangedDate: 2005-02-19 19:28:39 +1300 (Sat, 19 Feb 2005) $
-$LastChangedRevision: 22 $
-$LastChangedBy: gogo $</pre>
+  <script type="text/javascript">
+    if(window.opener && window.opener.HTMLArea)
+    {
+      var ver = window.opener.HTMLArea.version;
+      document.write('<pre>'
+                      + '\nRelease: ' + ver.Release + ' (' + ver.Date + ')'
+                      + '\nHead: ' + ver.Head
+                      + '\nRevision: ' + ver.Revision
+                      + '\nLast Changed By: ' + ver.RevisionBy
+                      + '\n' +
+                      '</pre>');
+    }
+    else
+    {
+      document.write('<pre>Version information unavailable.</pre>');
+    }
+  </script>
 </div>
 
 </div></div>
 
 
-</tr></td>
+</td></tr>
 <tr style="height: 1em"><td id="tdfooter">
 
 

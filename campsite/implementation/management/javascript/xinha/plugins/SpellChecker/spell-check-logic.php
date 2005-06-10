@@ -47,6 +47,14 @@ header('Content-Type: text/html; charset=utf-8');
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" media="all" href="spell-check-style.css" />';
 
+// Lets define some values outside the condition below, in case we have an empty 
+// document.                                                                     
+$textarray = array();
+$varlines = '<script type="text/javascript">var suggested_words = { ';
+$infolines = 'var spellcheck_info = {';
+$counter = 0;
+$suggest_count = 0;
+
 if (trim($text) != "")
 {
     if ($fd = fopen($temptext, 'w'))
@@ -69,13 +77,8 @@ if (trim($text) != "")
 //print_r(htmlentities($return));
         $textlines = count($textarray);
 
-        $varlines = '<script type="text/javascript">var suggested_words = { ';
-        $infolines = 'var spellcheck_info = {';
-
         $lineindex = -1;
         $poscorrect = 0;
-        $counter = 0;
-        $suggest_count = 0;
         foreach ($returnarray as $key=>$value)
         {
             // if there is a correction here, processes it, else move the $textarray pointer to the next line
@@ -130,6 +133,7 @@ if (trim($text) != "")
      }
      else
      {
+       // This one isnt used for anything at the moment!
        $return = 'failed to open!';
      }
 }
@@ -150,8 +154,9 @@ foreach ($textarray as $key=>$value)
 }
 
 $dictionaries = str_replace(chr(10),",", shell_exec($aspelldictionaries));
+if(ereg(",$",$dictionaries))
+  $dictionaries = ereg_replace(",$","",$dictionaries);
 echo '<div id="HA-spellcheck-dictionaries">'.$dictionaries.'</div>';
 
 echo '</body></html>';
-//echo '<div id="HA-spellcheck-dictionaries">en_US,es,fr</div></body></html>';
 ?>

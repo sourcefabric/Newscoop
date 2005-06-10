@@ -7,22 +7,18 @@
 <script type="text/javascript">
 
 window.resizeTo(240, 182);
-//function _CloseOnEsc() {
-//  if (event.keyCode == 27) { window.close(); return; }
-//}
+function _CloseOnEsc() {
+  if (event.keyCode == 27) { window.close(); return; }
+}
 
-// Run on page load.
-function Init() {                                  
-  // Translate the text in this dialog.
-  __dlg_translate('HTMLArea');
-  // This can be found in popup.js.
-  __dlg_init();    
-  //document.body.onkeypress = _CloseOnEsc;
+function Init() {                                                       // run on page load
+  __dlg_translate('HTMLArea'); // Translate the text in this dialog.
+  __dlg_init();    // <!-- this can be found in popup.js -->
+  document.body.onkeypress = _CloseOnEsc;
 
   var color = window.dialogArguments;
   color = ValidateColor(color) || '000000';
-  // Set the default color.
-  View(color);                                                          
+  View(color);                                                          // set default color
 }
 
 function View(color) {                  // preview color

@@ -53,7 +53,6 @@
   "Insert/Modify Link": "Inserează/modifcă link",
   "New window (_blank)": "Fereastră nouă (_blank)",
   "None (use implicit)": "Nimic (foloseşte ce-i implicit)",
-  "OK": "Acceptă",
   "Other": "Alt target",
   "Same frame (_self)": "Aceeaşi fereastră (_self)",
   "Target:": "Ţinta:",

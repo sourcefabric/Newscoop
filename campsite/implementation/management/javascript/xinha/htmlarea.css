@@ -7,7 +7,7 @@
   border: 1px solid;
   border-color: ButtonHighlight ButtonShadow ButtonShadow ButtonHighlight;
 }
-.htmlarea .toolbar table { font-family: tahoma,verdana,sans-serif; font-size: 11px; }
+.htmlarea .toolbar table { margin: 0; font-family: tahoma,verdana,sans-serif; font-size: 11px; }
 .htmlarea .toolbar img { border: none; }
 .htmlarea .toolbar .label { padding: 0px 3px; }
 
@@ -63,15 +63,15 @@
 
 .htmlarea .toolbar .space { width: 5px; }
 
-.htmlarea .toolbar select { font: 11px Tahoma,Verdana,sans-serif; }
+.htmlarea .toolbar select, .htmlarea .toolbar option { font: 11px Tahoma,Verdana,sans-serif; height: 18px;}
 
 .htmlarea .toolbar select,
 .htmlarea .toolbar select:hover,
 .htmlarea .toolbar select:active { background: FieldFace; color: ButtonText; }
 
-.htmlarea iframe
+.htmlarea iframe.xinha_iframe, .htmlarea textarea.xinha_textarea
 {
-  border: none;
+  border: none; /*1px solid;*/
 }
 
 .htmlarea .statusBar {
@@ -231,4 +231,4 @@ form { margin: 0px; border: none; }
 .htmlarea .panels.left  h1     { border-right:none;  }
 .htmlarea .panels.right .panel { border-right:none; border-left:none; }
 .htmlarea .panels.left  h1     { border-left:none;  }
-div.htmlarea { border: 1px solid black; }
+.htmlarea { border: 1px solid black; }

@@ -54,7 +54,6 @@
   "Insert/Modify Link": "הוסף/שנה קישור",
   "New window (_blank)": "חלון חדש (_blank)",
   "None (use implicit)": "ללא (השתמש ב-frame הקיים)",
-  "OK": "OK",
   "Other": "אחר",
   "Same frame (_self)": "אותו frame (_self)",
   "Target:": "יעד:",

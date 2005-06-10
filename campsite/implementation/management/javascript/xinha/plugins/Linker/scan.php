@@ -1,7 +1,7 @@
 <?php
 
     // /home/username/foo/public_html/
-    $dir          = $_SERVER['DOCUMENT_ROOT'];
+    $dir = dirname(__FILE__)."/../..";
     $include      = '/\.(php|shtml|html|htm|shtm|cgi|txt|doc|pdf|rtf|xls|csv)$/';
     $exclude      = '';
     $dirinclude   = '';

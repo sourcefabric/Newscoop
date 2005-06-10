@@ -1,6 +1,6 @@
 // I18N constants
 
-// LANG: "en", ENCODING: UTF-8 | ISO-8859-1
+// LANG: "de", ENCODING: UTF-8
 // Author: Mihai Bazon, http://dynarch.com/mishoo
 
 // FOR TRANSLATORS:
@@ -13,5 +13,5 @@
 //       that states what encoding is necessary.)
 
 {
-  "Styles": "Styles"
+  "Styles": "Stile"
 }

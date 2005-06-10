@@ -9,7 +9,7 @@
 // Version 3.0 developed by Mihai Bazon.
 //   http://dynarch.com/mishoo
 //
-// $Id: dialog.js,v 1.1 2005/05/02 17:39:57 paul Exp $
+// $Id: dialog.js,v 1.2 2005/06/10 15:56:22 paul Exp $
 
 // Though "Dialog" looks like an object, it isn't really an object.  Instead
 // it's just namespace for protecting global symbols.
@@ -58,8 +58,10 @@ Dialog._geckoOpenModal = function(url, action, init) {
 		HTMLArea._removeEvent(w, "focus", Dialog._parentEvent);
 	};
 	capwin(window);
-	// capture other frames
-	for (var i = 0; i < window.frames.length; capwin(window.frames[i++]));
+	// capture other frames, note the exception trapping, this is because
+  // we are not permitted to add events to frames outside of the current
+  // window's domain.
+	for (var i = 0; i < window.frames.length; i++) {try { capwin(window.frames[i]); } catch(e) { } };
 	// make up a function to be called when the Dialog ends.
 	Dialog._return = function (val) {
 		if (val && action) {
@@ -67,7 +69,8 @@ Dialog._geckoOpenModal = function(url, action, init) {
 		}
 		relwin(window);
 		// capture other frames
-		for (var i = 0; i < window.frames.length; relwin(window.frames[i++]));
+		for (var i = 0; i < window.frames.length; i++) { try { relwin(window.frames[i]); } catch(e) { } };
 		Dialog._modal = null;
 	};
+  Dialog._modal.focus();
 };

@@ -54,7 +54,6 @@
   "Insert/Modify Link": "Hivatkozás Beszúrása/Módosítása",
   "New window (_blank)": "Új ablak (_blank)",
   "None (use implicit)": "Nincs (use implicit)",
-  "OK": "OK",
   "Other": "Más",
   "Same frame (_self)": "Ugyanabba a keretbe (_self)",
   "Target:": "Cél:",
