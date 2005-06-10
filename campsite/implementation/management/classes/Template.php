@@ -1,13 +1,27 @@
 <?php
+/**
+ * @package Campsite
+ */
+
+/**
+ * Includes
+ */
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DatabaseObject.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DbObjectArray.php');
 
+/**
+ * @package Campsite
+ */
 class Template extends DatabaseObject {
 	var $m_dbTableName = 'Templates';
 	var $m_keyColumnNames = array('Id');
 	var $m_keyIsAutoIncrement = true;
 	var $m_columnNames = array('Id', 'Name', 'Type', 'Level');
 	
+	/**
+	 *
+	 * @param int p_templateId
+	 */
 	function Template($p_templateId = null) 
 	{
 		parent::DatabaseObject($this->m_columnNames);
@@ -18,6 +32,9 @@ class Template extends DatabaseObject {
 	} // constructor
 	
 	
+	/**
+	 * @param array $p_sqlOptions
+	 */
 	function GetAllTemplates($p_sqlOptions = null) 
 	{
 		$queryStr = 'SELECT * FROM Templates';
@@ -64,7 +81,7 @@ class Template extends DatabaseObject {
 
 	/**
 	 * Returns true if the template path was valid
-	 * @param string p_path
+	 * @param string $p_path
 	 * @return bool
 	 */
 	function IsValidPath($p_path)

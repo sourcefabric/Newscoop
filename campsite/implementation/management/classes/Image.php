@@ -1,5 +1,11 @@
 <?php
+/**
+ * @package Campsite
+ */
 
+/**
+ * Includes
+ */
 require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DatabaseObject.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DbObjectArray.php');
@@ -7,6 +13,9 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleImage.php');
 require_once('HTTP/Client.php');
 
+/**
+ * @package Campsite
+ */
 class Image extends DatabaseObject {
 	var $m_keyColumnNames = array('Id');
 	var $m_keyIsAutoIncrement = true;
@@ -28,7 +37,7 @@ class Image extends DatabaseObject {
 		'TimeCreated');
 
 	/**
-	 *
+	 * @param int $p_imageId
 	 *
 	 */
 	function Image($p_imageId = null) 	
@@ -200,7 +209,7 @@ class Image extends DatabaseObject {
 
 	/**
 	 * Generate the full path to the thumbnail storage location on disk.
-	 * @param string p_fileExtension
+	 * @param string $p_fileExtension
 	 *		The file extension for the filename.
 	 * @return string
 	 */
@@ -216,7 +225,7 @@ class Image extends DatabaseObject {
 	
 	/**
 	 * Generate the full path to the image storage location on disk.
-	 * @param string p_fileExtension
+	 * @param string $p_fileExtension
 	 *		The file extension for the filename.
 	 * @return string
 	 */
@@ -311,22 +320,24 @@ class Image extends DatabaseObject {
 	 * the image to the appropriate place on the disk, create a thumbnail for it,
 	 * and create a database entry for the file.
 	 *
-	 * @param array p_fileVar
+	 * @param array $p_fileVar
+	 *     <pre>
 	 * 		The variable from the $_FILES array.  The array specifies the following:
 	 *		$a["name"] = original name of the file.
 	 * 		$a["type"] = the MIME type of the file, e.g. image/gif
 	 *		$a["tmp_name"] = the temporary storage location on disk of the file
 	 *		$a["size"] = size of the file, in bytes (not required)
 	 *		$a["error"] = 0 (zero) if there was no error
+	 *     </pre>
 	 *
-	 * @param array p_attributes
+	 * @param array $p_attributes
 	 *		Optional attributes which are stored in the database.
 	 *		Indexes can be the following: 'Description', 'Photographer', 'Place', 'Date'
 	 *
-	 * @param int p_userId
+	 * @param int $p_userId
 	 *		The user who uploaded the file.
 	 *
-	 * @param int p_id
+	 * @param int $p_id
 	 *		If the image already exists and we just want to update it, specify the
 	 *		current image ID here.
 	 *
@@ -404,17 +415,17 @@ class Image extends DatabaseObject {
 	 * Download the remote file and save it to disk, create a thumbnail for it,
 	 * and create a database entry for the file.
 	 *
-	 * @param string p_url
+	 * @param string $p_url
 	 *		The remote location of the file. ("http://...");
 	 *
-	 * @param array p_attributes
+	 * @param array $p_attributes
 	 *		Optional attributes which are stored in the database.
 	 *		Indexes can be the following: 'Description', 'Photographer', 'Place', 'Date'
 	 *
-	 * @param int p_userId
+	 * @param int $p_userId
 	 *		The user ID of the user who uploaded the image.
 	 *
-	 * @param int p_id
+	 * @param int $p_id
 	 *		If you are updating an image, specify its ID here.
 	 *
 	 * @return void
@@ -526,7 +537,7 @@ class Image extends DatabaseObject {
 	
 	/**
 	 * Fetch an image object by matching the URL.
-	 * @param string p_url
+	 * @param string $p_url
 	 * @return Image
 	 */
 	function GetByUrl($p_url) 

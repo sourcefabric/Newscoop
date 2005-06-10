@@ -1,9 +1,18 @@
 <?php
+/**
+ * @package Campsite
+ */
 
+/**
+ * Includes
+ */
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DatabaseObject.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
 
+/**
+ * @package Campsite
+ */
 class ArticleImage extends DatabaseObject {
 	var $m_keyColumnNames = array('NrArticle','IdImage');
 	var $m_dbTableName = 'ArticleImages';
@@ -62,6 +71,10 @@ class ArticleImage extends DatabaseObject {
 	}
 	
 
+	/**
+	 * Get a free Template ID.
+	 * @param int $p_articleId
+	 */
 	function GetUnusedTemplateId($p_articleId) 
 	{
 		global $Campsite;
@@ -78,8 +91,8 @@ class ArticleImage extends DatabaseObject {
 	/**
 	 * Return true if article already is using the given template ID, false otherwise.
 	 *
-	 * @param int p_articleId
-	 * @param int p_templateId
+	 * @param int $p_articleId
+	 * @param int $p_templateId
 	 *
 	 * @return boolean
 	 */
@@ -133,11 +146,11 @@ class ArticleImage extends DatabaseObject {
 	 * Link the given image with the given article.  The template ID
 	 * is the image's position in the template.
 	 *
-	 * @param int p_imageId
+	 * @param int $p_imageId
 	 *
-	 * @param int p_articleId
+	 * @param int $p_articleId
 	 *
-	 * @param int p_templateId
+	 * @param int $p_templateId
 	 *		Optional.  If not specified, this will be the next highest number
 	 *		of the existing values.
 	 *
@@ -158,9 +171,9 @@ class ArticleImage extends DatabaseObject {
 	/**
 	 * This call will only work for entries that already exist.
 	 *
-	 * @param int p_articleId
-	 * @param int p_imageId
-	 * @param int p_templateId
+	 * @param int $p_articleId
+	 * @param int $p_imageId
+	 * @param int $p_templateId
 	 *
 	 * @return void
 	 */
@@ -177,9 +190,9 @@ class ArticleImage extends DatabaseObject {
 	 * Remove the linkage between the given image and the given article and remove
 	 * the image tags from the article text.
 	 *
-	 * @param int p_imageId
-	 * @param int p_articleId
-	 * @param int p_templateId
+	 * @param int $p_imageId
+	 * @param int $p_articleId
+	 * @param int $p_templateId
 	 *
 	 * @return void
 	 */
@@ -199,9 +212,9 @@ class ArticleImage extends DatabaseObject {
 	/**
 	 * Remove the image tags in the article text.
 	 *
-	 * @param int p_imageId
-	 * @param int p_articleId
-	 * @param int p_templateId
+	 * @param int $p_imageId
+	 * @param int $p_articleId
+	 * @param int $p_templateId
 	 * @return void
 	 */
 	function RemoveImageTagsFromArticleText($p_articleId, $p_templateId)
@@ -234,7 +247,7 @@ class ArticleImage extends DatabaseObject {
 	 * This is called when an image is deleted.
 	 * It will disassociate the image from all articles.
 	 *
-	 * @param int p_imageId
+	 * @param int $p_imageId
 	 * @return void
 	 */
 	function OnImageDelete($p_imageId) 
@@ -255,7 +268,7 @@ class ArticleImage extends DatabaseObject {
 	
 	/**
 	 * Remove image pointers for the given article.
-	 * @param int p_articleId
+	 * @param int $p_articleId
 	 * @return void
 	 */
 	function OnArticleDelete($p_articleId) 
@@ -269,8 +282,8 @@ class ArticleImage extends DatabaseObject {
 
 	/**
 	 * Copy all the pointers for the given article.
-	 * @param int p_srcArticleId
-	 * @param int p_destArticleId
+	 * @param int $p_srcArticleId
+	 * @param int $p_destArticleId
 	 * @return void
 	 */
 	function OnArticleCopy($p_srcArticleId, $p_destArticleId) 

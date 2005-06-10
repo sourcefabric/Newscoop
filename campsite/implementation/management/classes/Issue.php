@@ -1,9 +1,19 @@
 <?php
+/**
+ * @package Campsite
+ */
+
+/**
+ * Includes
+ */
 require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DatabaseObject.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DbObjectArray.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
 
+/**
+ * @package Campsite
+ */
 class Issue extends DatabaseObject {
 	var $m_dbTableName = 'Issues';
 	var $m_keyColumnNames = array('IdPublication', 'Number', 'IdLanguage');
@@ -22,9 +32,9 @@ class Issue extends DatabaseObject {
 	
 	/**
 	 * 
-	 * @param int p_publicationId
-	 * @param int p_languageId
-	 * @param int p_issueId
+	 * @param int $p_publicationId
+	 * @param int $p_languageId
+	 * @param int $p_issueId
 	 */
 	function Issue($p_publicationId = null, $p_languageId = null, $p_issueId = null) 
 	{
@@ -41,7 +51,7 @@ class Issue extends DatabaseObject {
 	/**
 	 * Return the total number of issues in the database.
 	 *
-	 * @param int p_publicationId
+	 * @param int $p_publicationId
 	 *		If specified, return the total number of issues in the given publication.
 	 *
 	 * @return int
@@ -62,20 +72,20 @@ class Issue extends DatabaseObject {
 	 * Get all the issues in the given publication as return them as an array 
 	 * of Issue objects.
 	 *
-	 * @param int p_publicationId
+	 * @param int $p_publicationId
 	 * 		The publication ID.
 	 *
-	 * @param int p_languageId
+	 * @param int $p_languageId
 	 *		(Optional) Only return issues with this language.
 	 *
-	 * @param int p_issueId
+	 * @param int $p_issueId
 	 *		(Optional) Only return issues with this Issue ID.
 	 *
-	 * @param int p_preferredLanguage
+	 * @param int $p_preferredLanguage
 	 *		(Optional) List this language before others.  This will override any 'ORDER BY' sql
 	 *		options you have.
 	 *
-	 * @param array p_sqlOptions
+	 * @param array $p_sqlOptions
 	 *
 	 * @return array
 	 */
@@ -210,7 +220,7 @@ class Issue extends DatabaseObject {
 	/**
 	 * Set the published state of the issue.
 	 *
-	 * @param string p_value
+	 * @param string $p_value
 	 *		Can be NULL, 'Y', 'N', TRUE, FALSE.
 	 *		If set to NULL, the current value will be reversed.
 	 *

@@ -1,7 +1,7 @@
 <?php
 /**
  * Load include files.
- * @param string p_currentDir
+ * @param string $p_currentDir
  * @return void
  */
 function load_common_include_files($p_currentDir) 
@@ -17,7 +17,7 @@ function load_common_include_files($p_currentDir)
 
 /**
  * Check if user has access to this screen.
- * @param array p_request
+ * @param array $p_request
  * @return array
  */
 function check_basic_access($p_request, $p_exit = true)

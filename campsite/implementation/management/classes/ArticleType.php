@@ -1,7 +1,17 @@
 <?php
+/**
+ * @package Campsite
+ */
+
+/** 
+ * Includes
+ */
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DatabaseObject.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DbColumn.php');
 
+/**
+ * @package Campsite
+ */
 class ArticleType extends DatabaseObject {
 	var $m_columnNames = array('NrArticle', 'IdLanguage');
 	var $m_keyColumnNames = array('NrArticle', 'IdLanguage');
@@ -12,9 +22,9 @@ class ArticleType extends DatabaseObject {
 	 * to allow different publications to display their content in different
 	 * ways.  
 	 *
-	 * @param string p_articleType
-	 * @param int p_articleId
-	 * @param int p_languageId
+	 * @param string $p_articleType
+	 * @param int $p_articleId
+	 * @param int $p_languageId
 	 */
 	function ArticleType($p_articleType, $p_articleId, $p_languageId) 
 	{
@@ -35,7 +45,7 @@ class ArticleType extends DatabaseObject {
 	
 	/**
 	 * Copy the row in the database.
-	 * @param int p_destArticleId
+	 * @param int $p_destArticleId
 	 * @return void
 	 */
 	function copy($p_destArticleId) 
@@ -56,8 +66,8 @@ class ArticleType extends DatabaseObject {
 	
 	/**
 	 * Copy the row in the database.
-	 * @param int p_destArticleId
-	 * @param int p_destLanguageId
+	 * @param int $p_destArticleId
+	 * @param int $p_destLanguageId
 	 * @return void
 	 */
 	function copyToExistingRecord($p_destArticleId, $p_destLanguageId = null) 

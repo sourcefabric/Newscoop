@@ -1,6 +1,16 @@
 <?php
+/**
+ * @package Campsite
+ */
+
+/**
+ * Includes
+ */
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DatabaseObject.php');
 
+/**
+ * @package Campsite
+ */
 class ArticleIndex extends DatabaseObject {
 	var $m_keyColumnNames = array(
 		'IdPublication',
@@ -35,11 +45,11 @@ class ArticleIndex extends DatabaseObject {
 	
 	/**
 	 * Remove index pointers for the given article.
-	 * @param int p_publicationId
-	 * @param int p_issueId
-	 * @param int p_sectionId
-	 * @param int p_languageId
-	 * @param int p_articleId
+	 * @param int $p_publicationId
+	 * @param int $p_issueId
+	 * @param int $p_sectionId
+	 * @param int $p_languageId
+	 * @param int $p_articleId
 	 * @return void
 	 */
 	function OnArticleDelete($p_publicationId, $p_issueId, $p_sectionId, $p_languageId, $p_articleId) 

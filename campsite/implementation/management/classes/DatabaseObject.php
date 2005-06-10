@@ -1,6 +1,17 @@
 <?php
+/**
+ * @package Campsite
+ */
+
+/**
+ * Includes
+ */
 require_once('PEAR.php');
 
+
+/**
+ * @package Campsite
+ */
 class DatabaseObject {
 	/**
 	 * The name of the database table.
@@ -54,7 +65,7 @@ class DatabaseObject {
 	 * This class is meant to be subclassed in order to implement a
 	 * specific table in the database.
 	 *
-	 * @param array p_columnNames
+	 * @param array $p_columnNames
 	 *		The column names of this table.  These are optional.
 	 *
 	 */
@@ -76,7 +87,7 @@ class DatabaseObject {
 	/**
 	 * Return the column names of this table.
 	 *
-	 * @param boolean p_withTablePrefix
+	 * @param boolean $p_withTablePrefix
 	 *		Set to true if you want to prefix the column names with the table name.
 	 *		Default is false.
 	 *
@@ -101,7 +112,7 @@ class DatabaseObject {
 	 * Initialize the column names for this object.
 	 * All column values will be initialized to null.
 	 *
-	 * @param array p_columnNames
+	 * @param array $p_columnNames
 	 * 		The column names in the database.
 	 *
 	 * @return void
@@ -149,12 +160,13 @@ class DatabaseObject {
 	 * Changing key values is tricky because you have to remember the old
 	 * values in order to set the new values.
 	 *
-	 * @param array p_columnNames
+	 * @param array $p_columnNames
+	 *     <pre>
 	 *		Can be either:
 	 *		[0] => 'column name 1', [1] => 'column name 2', ...
 	 *		or:
 	 *		['column name 1'] => 'value', ['column name 2'] => 'value',...
-	 *
+	 *     </pre>
 	 * @return void
 	 */
 	function setKey($p_columnNames) 
@@ -175,8 +187,8 @@ class DatabaseObject {
 
 	/**
 	 * Remember the old value of the key.
-	 * @param string p_columnName
-	 * @param string p_value
+	 * @param string $p_columnName
+	 * @param string $p_value
 	 * @return void
 	 */
 	function modifyKeyValue($p_columnName, $p_value) 
@@ -191,7 +203,7 @@ class DatabaseObject {
 	/**
 	 * Fetch a single record from the database for the given key.
 	 *
-	 * @param array p_recordSet
+	 * @param array $p_recordSet
 	 *		If the record has already been fetched and we just need to 
 	 * 		assign the data to the object's internal member variable.
 	 *
@@ -304,7 +316,7 @@ class DatabaseObject {
 	 * No other values are set unless they are passed in through 
 	 * the $p_values parameter.
 	 *
-	 * @param array p_values
+	 * @param array $p_values
 	 *		Extra values to be set at create time, in the form of:
 	 *		(DB Column Name) => (value)
 	 *
@@ -389,9 +401,9 @@ class DatabaseObject {
 	/**
 	 * Return the data stored in the given column.
 	 *
-	 * @param string p_dbColumnName
+	 * @param string $p_dbColumnName
 	 *
-	 * @param boolean p_forceFetchFromDatabase
+	 * @param boolean $p_forceFetchFromDatabase
 	 *		Get the data from the database instead of cached value 
 	 *		that is stored in the object.
 	 * 
@@ -435,18 +447,18 @@ class DatabaseObject {
 	 * Set the given column name to the given value.
 	 * The object's internal variable will also be updated.
 	 *
-	 * @param string p_dbColumnName
+	 * @param string $p_dbColumnName
 	 *		The name of the column that is to be updated.
 	 *
-	 * @param string p_value
+	 * @param string $p_value
 	 *		The value to set.
 	 *
-	 * @param boolean p_commit
+	 * @param boolean $p_commit
 	 *		If set to true, the value will be written to the database immediately.
 	 *		If set to false, the value will not be written to the database.
 	 *		Default is true.
 	 *
-	 * @param boolean p_isSql
+	 * @param boolean $p_isSql
 	 *		Set this to TRUE if p_value consists of SQL commands.
 	 *		There is no way to know what the result of the command is,
 	 *		so we will need to refetch the value from the database in
@@ -536,12 +548,12 @@ class DatabaseObject {
 	 * @param array $p_columns
 	 *		Array of (Column_Name => Value)
 	 *
-	 * @param boolean p_commit
+	 * @param boolean $p_commit
 	 *		If set to true, the value will be written to the database immediately.
 	 *		If set to false, the value will not be written to the database.
 	 *		Default is true.
 	 *
-	 * @param boolean p_isSql
+	 * @param boolean $p_isSql
 	 *		Set this to TRUE if the values of p_columns contains SQL commands.
 	 *		There is no way to know what the result of the command is,
 	 *		so we will need to refetch the row from the database in
@@ -607,7 +619,7 @@ class DatabaseObject {
 	 * and you dont want to update the database every time.  Instead you
 	 * can set all the variables without committing them, then call this function.
 	 *
-	 * @param array p_ignoreColumns
+	 * @param array $p_ignoreColumns
 	 *		Specify column names to ignore when doing the commit.
 	 *
 	 * @return boolean
@@ -639,16 +651,18 @@ class DatabaseObject {
 	/**
 	 * This is used by subclasses to add extra SQL options to the end of a query.
 	 * 
-	 * @param string p_queryStr
+	 * @param string $p_queryStr
 	 *		The current SQL query.
 	 *
-	 * @param array p_sqlOptions
+	 * @param array $p_sqlOptions
+	 *     <pre>
 	 *		Available options:
 	 *		'LIMIT' => [max_rows_to_fetch]
 	 *		'LIMIT' => array('START'=>[Starting_index],'MAX_ROWS'=>[Max_rows_to_fetch]
 	 *		'ORDER BY' => [column_name]
 	 *		'ORDER BY' => array([column_name_1], [column_name_2], ...)
 	 *		'ORDER BY' => array([column_name_1]=>[ASC|DESC], [column_name_2]=>[ASC|DESC], ...)
+	 *     </pre>
 	 *
 	 * @return string
 	 *		Original SQL query with the options appended at the end.

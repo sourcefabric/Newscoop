@@ -1,20 +1,19 @@
 <?php 
 
 /**
- * 
- *
+ * @package Campsite
  */
 class DbObjectArray {
 	
 	/**
 	 * Create an array of DatabaseObjects.
 	 *
-	 * @param string p_className
+	 * @param string $p_className
 	 *		The type of objects to create.  The class
 	 *		must be a decendant of DatabaseObject and
 	 *		have a constructor that can take no parameters.
 	 *
-	 * @param string p_queryStr
+	 * @param string $p_queryStr
 	 *		The database query string that will fetch the
 	 *		rows from the database.
 	 *
@@ -40,8 +39,8 @@ class DbObjectArray {
 	 * Given an array of DatabaseObjects, return one column
 	 * of the data.
 	 *
-	 * @param array p_array
-	 * @param string p_columnName
+	 * @param array $p_array
+	 * @param string $p_columnName
 	 * @return array
 	 */ 
 	function GetColumn($p_array, $p_columnName) 
@@ -60,7 +59,7 @@ class DbObjectArray {
 	 * Given an array of DatabaseObjects, return the raw data
 	 * table as a two dimensional array.
 	 *
-	 * @param array p_array
+	 * @param array $p_array
 	 * @return array
 	 */
 	function GetTable($p_array) 

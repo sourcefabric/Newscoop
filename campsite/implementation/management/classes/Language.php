@@ -1,13 +1,26 @@
 <?php
+/**
+ * @package Campsite
+ */
+
+/**
+ * Includes
+ */
 require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DatabaseObject.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DbObjectArray.php');
 
+/**
+ * @package Campsite
+ */
 class Language extends DatabaseObject {
 	var $m_dbTableName = 'Languages';
 	var $m_keyColumnNames = array('Id');
 	var $m_keyIsAutoIncrement = true;
-	var $m_columnNames = array('Id', 'Name', 'CodePage', 'OrigName', 'Code');
+	var $m_columnNames = array('Id', 'Name', 'CodePage', 'OrigName', 
+	   'Code', 'Month1', 'Month2', 'Month3', 'Month4', 'Month5', 
+	   'Month6', 'Month7', 'Month8', 'Month9', 'Month10', 'Month11', 
+	   'Month12', 'WDay1', 'WDay2', 'WDay3', 'WDay4', 'WDay5', 'WDay6', 'WDay7' );
 	
 	/** 
 	 * Constructor.

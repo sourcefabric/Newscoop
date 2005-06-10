@@ -1,10 +1,14 @@
 <?php
 /**
+ * @package Campware
  * This file would normally be split into multiple files but since it must
  * be fast (it gets loaded for every hit to the admin screen), we put it
  * all in one file.
  */
  
+/**
+ * Includes
+ */
 require_once('File.php');
 require_once('File/Find.php');
 require_once('LocalizerConfig.php');
@@ -15,7 +19,7 @@ require_once('LanguageMetadata.php');
  * Translate the given string and print it.  This function accepts a variable
  * number of parameters and works something like printf().
  *
- * @param string p_translateString
+ * @param string $p_translateString
  *		The string to translate.
  *
  * @return void
@@ -31,7 +35,7 @@ function putGS($p_translateString)
  * Translate the given string and return it.  This function accepts a variable
  * number of parameters and works something like printf().
  *
- * @param string p_translateString
+ * @param string $p_translateString -
  *		The string to translate.
  *
  * @return string
@@ -60,8 +64,8 @@ function getGS($p_translateString)
 /**
  * Register a string in the global translation file. (Legacy code for GS files)
  *
- * @param string p_value
- * @param string p_key
+ * @param string $p_value
+ * @param string $p_key
  * @return void
  */
 function regGS($p_key, $p_value) 
@@ -84,6 +88,7 @@ function regGS($p_key, $p_value)
 /**
  * The Localizer class handles groups of translation tables (LocalizerLanguages).
  * This class simply acts as a namespace for a group of static methods.  
+ * @package Campware
  */
 class Localizer {
 
@@ -119,10 +124,10 @@ class Localizer {
     /**
      * Load the translation strings into a global variable.
      *
-     * @param string p_path
+     * @param string $p_path -
      *      Path to directory where the translation files are located
      *
-     * @param string p_prefix
+     * @param string $p_prefix -
      *      Beginning of the file name, either 'locals' or 'globals'.
      *
      * @return void
@@ -152,10 +157,10 @@ class Localizer {
 	/**
 	 * To remove admin install path on calls from other admin scripts using asolute path.
 	 *
-     * @param string p_path
+     * @param string $p_path -
      *      Path to directory where the translation files are located
      *
-     * @param string p_prefix
+     * @param string $p_prefix -
      *      Beginning of the file name, either 'locals' or 'globals'.
      *
 	 * @return void
@@ -173,13 +178,13 @@ class Localizer {
     /**
      * Compare a particular language's keys with the default language set.
      *
-     * @param string p_directory
+     * @param string $p_directory -
      *		The directory in which to look for the language files.
      *
-     * @param array p_data
+     * @param array $p_data -
      *		A set of keys.
      *
-     * @param boolean p_findExistingKeys
+     * @param boolean $p_findExistingKeys -
      *		Set this to true to return the set of keys (of the keys given) that already exist,
      *		set this to false to return the set of keys (of the keys given) that do not exist.
      *
@@ -232,7 +237,7 @@ class Localizer {
     
     /**
      * Search through PHP files and find all the strings that need to be translated.
-     * @param string p_directory
+     * @param string $p_directory -
      * @return array
      */
     function FindTranslationStrings($p_directory) 
@@ -294,7 +299,7 @@ class Localizer {
     
     /**
      * Return the set of strings in the code that are not in the translation files.
-     * @param string p_directory
+     * @param string $p_directory -
      * @return array
      */
     function FindMissingStrings($p_directory) 
@@ -308,7 +313,7 @@ class Localizer {
     
     /**
      * Return the set of strings in the translation files that are not used in the code.
-     * @param string p_directory
+     * @param string $p_directory -
      * @return array
      */
     function FindUnusedStrings($p_directory) 
@@ -333,10 +338,10 @@ class Localizer {
     
     /**
      * Update a set of strings in a language file.
-     * @param string p_prefix
-     * @param string p_directory
-     * @param string p_languageCode
-     * @param array p_data
+     * @param string $p_prefix
+     * @param string $p_directory
+     * @param string $p_languageCode
+     * @param array $p_data
      *
      * @return void
      */
@@ -386,8 +391,8 @@ class Localizer {
     
     /**
      * Synchronize the positions of the strings to the default language file order.
-     * @param string p_prefix
-     * @param string p_directory
+     * @param string $p_prefix
+     * @param string $p_directory
      * @return void
      */
     function FixPositions($p_prefix, $p_directory) 
@@ -418,10 +423,10 @@ class Localizer {
     /**
      * Go through all files matching $p_prefix in $p_directory and add entry(s).
      *
-     * @param string p_prefix
-     * @param string p_directory
-     * @param int p_position
-     * @param array p_newKey
+     * @param string $p_prefix
+     * @param string $p_directory
+     * @param int $p_position
+     * @param array $p_newKey
      *
      * @return void
      */
@@ -457,9 +462,9 @@ class Localizer {
 
     /**
      * Go through all files matching $p_prefix in $p_directory and remove selected entry.
-     * @param string p_prefix
-     * @param string p_directory
-     * @param mixed p_key
+     * @param string $p_prefix
+     * @param string $p_directory
+     * @param mixed $p_key -
      *		Can be a string or an array of strings.
      * @return void
      */
@@ -486,10 +491,10 @@ class Localizer {
     /**
      * Go through all files matching $p_prefix in $p_directory and swap selected entrys.
      *
-     * @param string p_prefix
-     * @param string p_directory
-     * @param int p_pos1
-     * @param int p_pos2
+     * @param string $p_prefix
+     * @param string $p_directory
+     * @param int $p_pos1
+     * @param int $p_pos2
      *
      * @return void
      */
@@ -513,7 +518,7 @@ class Localizer {
      * in the current directory, and if it doesnt find that, it will look at the file names
      * in the top directory and deduce the languages from that.
      *
-     * @param string p_mode
+     * @param string $p_mode
      * @return array
      *		An array of LanguageMetadata objects.
      */
@@ -537,8 +542,8 @@ class Localizer {
     /**
      * Get a list of all files matching the pattern given.
      * Return an array of strings, each the full path name of a file.
-     * @param string p_startdir
-     * @param string p_pattern
+     * @param string $p_startdir
+     * @param string $p_pattern
      * @return array
      */
     function SearchFilesRecursive($p_startdir, $p_pattern) 
@@ -566,7 +571,7 @@ class Localizer {
 
 	/**
      * Go through subdirectorys and create language files for given Id.
-     * @param string p_languageId
+     * @param string $p_languageId
      * @return void
      */
     function CreateLanguageFilesRecursive($p_languageId) 
@@ -597,7 +602,7 @@ class Localizer {
     
 	/**
      * Go through subdirectorys and delete language files for given Id.
-     * @param string p_languageId
+     * @param string $p_languageId
      * @return void
      */
     function DeleteLanguageFilesRecursive($p_languageId) 

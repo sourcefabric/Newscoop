@@ -1,8 +1,17 @@
 <?php
+/**
+ * @package Campsite
+ */
 
+/**
+ * Includes
+ */
 require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DatabaseObject.php');
 
+/**
+ * @package Campsite
+ */
 class User extends DatabaseObject {
 	var $m_dbTableName = 'Users';
 	var $m_keyColumnNames = array('Id');
@@ -47,7 +56,10 @@ class User extends DatabaseObject {
 		'Text1',
 		'Text2',
 		'Text3');
-	
+
+	/**
+	 * @param int $p_userId
+	 */
 	function User($p_userId = null) 
 	{
 		parent::DatabaseObject($this->m_columnNames);
@@ -60,6 +72,9 @@ class User extends DatabaseObject {
 	} // constructor
 	
 	
+	/**
+	 * @param array $p_recordSet
+	 */
 	function fetch($p_recordSet = null) 
 	{
 		global $Campsite;
@@ -77,6 +92,9 @@ class User extends DatabaseObject {
 	} // fn fetch
 
 
+	/**
+	 * @param string $p_userType
+	 */
 	function setUserType($p_userType)
 	{
 		global $Campsite;
@@ -96,7 +114,7 @@ class User extends DatabaseObject {
 				$Campsite['db']->Query($queryStr);
 			}
 		}
-	}
+	} // fn setUserType
 	
 	
 	/**
@@ -143,7 +161,7 @@ class User extends DatabaseObject {
 	 * The database column names from the table UserPerm are used
 	 * as the permission strings.
 	 *
-	 * @param string p_permissionString
+	 * @param string $p_permissionString
 	 *
 	 * @return boolean
 	 */

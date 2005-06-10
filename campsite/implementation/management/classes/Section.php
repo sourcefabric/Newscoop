@@ -1,8 +1,18 @@
 <?php
+/**
+ * @package Campsite
+ */
+
+/**
+ * Includes
+ */
 require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DatabaseObject.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DbObjectArray.php');
 
+/**
+ * @package Campsite
+ */
 class Section extends DatabaseObject {
 	var $m_dbTableName = 'Sections';
 	var $m_keyColumnNames = array('IdPublication', 
@@ -21,7 +31,10 @@ class Section extends DatabaseObject {
 	
 	/**
 	 * A section is a part of an issue.
-	 * @param int p_publication
+	 * @param int $p_publicationId
+	 * @param int $p_issueId
+	 * @param int $p_languageId
+	 * @param int $p_sectionId
 	 */
 	function Section($p_publicationId = null, $p_issueId = null, 
 	                 $p_languageId = null, $p_sectionId = null) 
@@ -39,16 +52,16 @@ class Section extends DatabaseObject {
 	
 	/**
 	 * Return an array of sections in the given issue.
-	 * @param int p_publicationId
+	 * @param int $p_publicationId
 	 * 		(Optional) Only return sections in this publication.
 	 *
-	 * @param int p_issueId
+	 * @param int $p_issueId
 	 *		(Optional) Only return sections in this issue.
 	 *
-	 * @param int p_languageId
+	 * @param int $p_languageId
 	 * 		(Optional) Only return sections that have this language.
 	 *
-	 * @param array p_sqlOptions
+	 * @param array $p_sqlOptions
 	 *		(Optional) Additional options.  See DatabaseObject::ProcessOptions().
 	 *
 	 * @return array
@@ -80,9 +93,9 @@ class Section extends DatabaseObject {
 	
 	/**
 	 * Return the total number of sections according to the given values.
-	 * @param int p_publicationId
-	 * @param int p_issueId
-	 * @param int p_languageId
+	 * @param int $p_publicationId
+	 * @param int $p_issueId
+	 * @param int $p_languageId
 	 * @return int
 	 */
 	function GetTotalSections($p_publicationId = null, $p_issueId = null, $p_languageId = null) 
@@ -109,9 +122,9 @@ class Section extends DatabaseObject {
 	
 	/**
 	 * Return a section number that is not in use.
-	 * @param int p_publicationId
-	 * @param int p_issueId
-	 * @param int p_languageId
+	 * @param int $p_publicationId
+	 * @param int $p_issueId
+	 * @param int $p_languageId
 	 * @return int
 	 */
 	function GetUnusedSectionId($p_publicationId, $p_issueId, $p_languageId) 
