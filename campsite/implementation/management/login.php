@@ -54,21 +54,6 @@ else {
 // Load the language files.
 selectLanguageFile("/", "globals");
 selectLanguageFile("/", "locals");
-// Load the language files.
-//$globalfile = $_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/globals.$defaultLanguage.php";
-//if (!is_file($globalfile)) {
-//	$defaultLanguage = substr($defaultLanguage, 0, 2);
-//	$_REQUEST['TOL_Language'] = $defaultLanguage;
-//	$globalfile = $_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/globals.$defaultLanguage.php";
-//}
-//if (!is_file($globalfile)) {
-//	$defaultLanguage = 'en';
-//	$_REQUEST['TOL_Language'] = $defaultLanguage;
-//	$globalfile = $_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/globals.$defaultLanguage.php";
-//}
-//$localfile = $_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/locals.$defaultLanguage.php";
-//require_once($globalfile);
-//require_once($localfile);
 
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
