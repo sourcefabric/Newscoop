@@ -59,9 +59,11 @@ foreach ($publications as $publication) {
 	<SCRIPT LANGUAGE="JavaScript"><!--
 	var myMenu =
 	[
+	    ['<img src="/<?php p($ADMIN); ?>/img/icon/home.png" align="middle" style="padding-bottom: 3px;" width="22" height="22" />', ' <?php putGS('Home'); ?>', '/<?php p($ADMIN); ?>/home.php' ],
+	    _cmSplit,	    
 	    ['<img src="/<?php p($ADMIN); ?>/img/icon/content.png" align="middle" style="padding-bottom: 3px;" width="22" height="22" />', ' <?php putGS('Content'); ?>', '', '', '',
 	    	['<img src="/<?php p($ADMIN); ?>/img/icon/publication.png"  width="22" height="22"/>', '<?php putGS('Publications'); ?>', '/<?php p($ADMIN); ?>/pub/index.php' ],
-	    	['<img src="/<?php p($ADMIN); ?>/img/icon/image_archive.png"  width="22" height="22"/>', '<?php putGS('Image archive'); ?>', '/<?php p($ADMIN); ?>/imagearchive/index.php' ],
+	    	['<img src="/<?php p($ADMIN); ?>/img/icon/image_archive.png"  width="22" height="22"/>', '<?php putGS('Image Archive'); ?>', '/<?php p($ADMIN); ?>/imagearchive/index.php' ],
 		    _cmSplit,
 	    	<?php
 	    	foreach ($publications as $publication) {
@@ -193,7 +195,7 @@ foreach ($publications as $publication) {
 
 <BODY>
 <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-bottom: 2px solid #D5E2EE;"> 
-<tr>
+<tr >
 	<td valign="top" align="left" width="70%" style="padding-top: 0px; ">
 		<table border="0" cellpadding="0" cellspacing="0">
 		<tr>
@@ -209,19 +211,15 @@ foreach ($publications as $publication) {
 		</tr>
 		</table>
 	</td>
-	<td align="right" valign="top" width="30%">
+	<td align="right" valign="middle" width="30%">
 		<table cellpadding="0" cellspacing="0" width="100%" style="">
 		<tr>
 			<td align="right" style="padding-top: 2px;">
 				<table cellpadding="0" cellspacing="0">
 				<TR>
-					<td>
-						<A HREF="/<?php p($ADMIN); ?>/home.php"><img src="/<?php p($ADMIN); ?>/img/icon/home.png" width="22" height="22" border="0" alt="<?php putGS('Home'); ?>"></a>
-					</td>
-					<td style="font-weight: bold; padding-left: 2px;">
-						<A HREF="/<?php p($ADMIN); ?>/home.php" style="color: black; text-decoration: none;"><?php putGS('Home'); ?></A>
-					</td>
-								
+            		<td align="right" style="font-size: 8pt; padding-right: 5px; padding-top: 2px;" colspan="4">
+            			<?php putGS("Signed in: $1", "<b>".$User->getName()."</b>"); ?>
+            		</td>		
 					<td style="padding-left: 10px;">
 						<A HREF="/<?php p($ADMIN); ?>/logout.php"><img src="/<?php p($ADMIN); ?>/img/icon/logout.png" width="22" height="22" border="0" alt="<?php putGS('Logout'); ?>"></a>
 					</td>
@@ -231,11 +229,6 @@ foreach ($publications as $publication) {
 				</tr>
 				</table>
 			</td>
-		</tr>
-		<tr>
-			<td align="right" style="font-size: 8pt; padding-right: 5px; padding-top: 2px;" colspan="4">
-				<?php putGS("You are logged in as $1", "<b>".$User->getName()."</b>"); ?>
-			</td>		
 		</tr>
 		</table>
 	</td>
