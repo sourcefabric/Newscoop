@@ -529,6 +529,8 @@ return 0
 check4_curl()
 {
 is_checked curl && return 0
+check4_file libidn.so --file --path "/usr/lib:/usr/local/lib:/opt/lib"
+result=$? && [ $result -ne 0 ] && output="Could not find IDN library. Please install libidn-dev package." && return 1
 check4_file curl-config --executable --path "/usr/bin:/usr/local/bin:/opt/bin"
 result=$? && [ $result -ne 0 ] && output="Could not find CURL development files. Please install libcurl-devel package." && return 1
 curl_config_path=$file_path
