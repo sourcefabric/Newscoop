@@ -205,6 +205,9 @@ xinha_init = xinha_init ? xinha_init : function()
    xinha_config.btnList["createlink"] = [ "Insert Web Link", linkIcon, false, function(e) {e._createLink();} ],
    // Change the removeformat button to work in text mode.
    xinha_config.btnList["removeformat"] = [ "Remove formatting", ["ed_buttons_main.gif",4,4], true, function(e) {e.execCommand("removeformat");} ],
+   // Put the "find-replace" plugin in a better location
+   xinha_config.addToolbarElement([], ["FR-findreplace"], 0);
+   xinha_config.addToolbarElement(["FR-findreplace"], ["paste","cut","copy","redo","undo"], +1);
 
    // Add in our style sheet for the "subheads".
    xinha_config.pageStyle = "<?php echo str_replace("\n", "", file_get_contents($stylesheetFile)); ?>";
@@ -313,12 +316,12 @@ xinha_init = xinha_init ? xinha_init : function()
 
 		[ 
 		<?php if ($p_user->hasPermission('EditorFontFace')) { ?>
-		  	"fontname", 
-		  	"space",
+		  	//"fontname", 
+		  	//"space",
 		<?php } ?>
 		<?php if ($p_user->hasPermission('EditorFontSize')) { ?>
-		  	"fontsize", 
-		  	"space",
+		  	//"fontsize", 
+		  	//"space",
 		<?php } ?>
 		<?php if (false) { ?>
 		  	"formatblock", 
