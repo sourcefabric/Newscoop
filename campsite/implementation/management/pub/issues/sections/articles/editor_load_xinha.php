@@ -157,9 +157,10 @@ xinha_init = xinha_init ? xinha_init : function()
 	<?php if ($p_user->hasPermission('EditorListNumber')) { ?>
 	'ListType',
 	<?php } ?>
-   'FullScreen',
-//   'Stylist',
-   'SuperClean',
+    'FullScreen',
+    'UltraClean',
+    'CharacterMap',
+    'FindReplace'
   ];
 	// THIS BIT OF JAVASCRIPT LOADS THE PLUGINS, NO TOUCHING  :)
 	if(!HTMLArea.loadPlugins(xinha_plugins, xinha_init)) return;
@@ -195,46 +196,57 @@ xinha_init = xinha_init ? xinha_init : function()
    *************************************************************************/
 
    xinha_config = xinha_config ? xinha_config : new HTMLArea.Config();
-   	xinha_config.pageStyle = "<?php echo str_replace("\n", "", file_get_contents($stylesheetFile)); ?>";
-	subheadTooltip = HTMLArea._lc('Subhead', 'Campsite');
-	xinha_config.registerButton({
-		// The ID of the button.
-		id        : "campsite-subhead", 
-		// The tooltip.
-		tooltip   : subheadTooltip,
-		// Image to be displayed in the toolbar.
-		image     : "/javascript/htmlarea/images/campsite_subhead.gif",
-		// TRUE = enabled in text mode
-		// FALSE = disabled in text mode
-		textMode  : false,
-		// Called when the button is clicked.
-		action    : CampsiteSubhead,
-		// The button will be disabled if outside 
-		// the specified element.
-		context   : ''
-		});
-				
-	internalLinkTooltip = HTMLArea._lc('Insert Internal Link', 'Campsite');
-	xinha_config.registerButton({
-		// The ID of the button.
-		id        : "campsite-internal-link", 
-		// The tooltip.
-		tooltip   : internalLinkTooltip,
-		// Image to be displayed in the toolbar.
-		image     : "/javascript/htmlarea/images/campsite_internal_link.gif",
-		// TRUE = enabled in text mode
-		// FALSE = disabled in text mode
-		textMode  : false,
-		// Called when the button is clicked.
-		action    : CampsiteInternalLink,
-		// The button will be disabled if outside 
-		// the specified element.
-		context   : ''
-		});
+   xinha_config.statusBar = false;
+   xinha_config.htmlareaPaste =  HTMLArea.is_gecko ? false : true;
+   xinha_config.flowToolbars = false;
+   xinha_config.mozParaHandler = "built-in";
+   // Change the built-in icon for "web link"
+   linkIcon = _editor_url + xinha_config.imgURL + "ed_campsite_link.gif";
+   xinha_config.btnList["createlink"] = [ "Insert Web Link", linkIcon, false, function(e) {e._createLink();} ],
+   // Change the removeformat button to work in text mode.
+   xinha_config.btnList["removeformat"] = [ "Remove formatting", ["ed_buttons_main.gif",4,4], true, function(e) {e.execCommand("removeformat");} ],
 
-	xinha_config.toolbar = [
-		[ 
-		<?php if ($p_user->hasPermission('EditorBold')) { ?>
+   // Add in our style sheet for the "subheads".
+   xinha_config.pageStyle = "<?php echo str_replace("\n", "", file_get_contents($stylesheetFile)); ?>";
+   subheadTooltip = HTMLArea._lc('Subhead', 'Campsite');
+   xinha_config.registerButton({
+       // The ID of the button.
+       id        : "campsite-subhead",
+       // The tooltip.
+       tooltip   : subheadTooltip,
+       // Image to be displayed in the toolbar.
+       image     : "/javascript/htmlarea/images/campsite_subhead.gif",
+       // TRUE = enabled in text mode
+       // FALSE = disabled in text mode
+       textMode  : false,
+       // Called when the button is clicked.
+       action    : CampsiteSubhead,
+       // The button will be disabled if outside
+       // the specified element.
+       context   : ''
+   });
+
+   internalLinkTooltip = HTMLArea._lc('Insert Internal Link', 'Campsite');
+   xinha_config.registerButton({
+       // The ID of the button.
+       id        : "campsite-internal-link",
+       // The tooltip.
+       tooltip   : internalLinkTooltip,
+       // Image to be displayed in the toolbar.
+       image     : "/javascript/htmlarea/images/campsite_internal_link.gif",
+       // TRUE = enabled in text mode
+       // FALSE = disabled in text mode
+       textMode  : false,
+       // Called when the button is clicked.
+       action    : CampsiteInternalLink,
+       // The button will be disabled if outside
+       // the specified element.
+       context   : ''
+   });
+
+   xinha_config.toolbar = [
+       [
+       <?php if ($p_user->hasPermission('EditorBold')) { ?>
 		  	"bold", 
 		<?php } ?>
 		<?php if ($p_user->hasPermission('EditorItalic')) { ?>
@@ -246,49 +258,49 @@ xinha_init = xinha_init ? xinha_init : function()
 		<?php if ($p_user->hasPermission('EditorStrikethrough')) { ?>
 		  	"strikethrough", 
 		<?php } ?>
-		  	"separator",
+		  	//"separator",
 		<?php if ($p_user->hasPermission('EditorTextAlignment')) { ?>
 			"justifyleft", 
 			"justifycenter", 
 			"justifyright", 
 			"justifyfull", 
-			"separator",
+			//"separator",
 		<?php } ?>
 		<?php if ($p_user->hasPermission('EditorIndent')) { ?>
 		  	"outdent", 
 		  	"indent", 
-		  	"separator",
+		  	//"separator",
 		<?php } ?>
 		<?php if ($p_user->hasPermission('EditorCopyCutPaste')) { ?>
 		  	"copy", 
 		  	"cut", 
 		  	"paste", 
 		  	"space", 
-		  	"separator", 
+		  	//"separator", 
 		<?php } ?>
 		<?php if ($p_user->hasPermission('EditorUndoRedo')) { ?>				  
 			"undo", 
 			"redo", 
-			"separator", 
+			//"separator", 
 		<?php } ?>				  
 		<?php if ($p_user->hasPermission('EditorTextDirection')) { ?>
 		  	"lefttoright", 
 		  	"righttoleft", 
-		  	"separator", 
+		  	//"separator", 
 		<?php } ?>
 		<?php if ($p_user->hasPermission('EditorLink')) { ?>
 		  	"campsite-internal-link", 
 		  	"createlink", 
-		  	"separator",
+		  	//"separator",
 		<?php } ?>
 		<?php if ($p_user->hasPermission('EditorSubhead')) { ?>
 		  	"campsite-subhead", 
 		<?php } ?>
 		<?php if ($p_user->hasPermission('EditorImage')) { ?>
 		  	"insertimage", 
-		  	"separator",
+		  	//"separator",
 		<?php } ?>
-			"killword",
+			//"killword",
 			"removeformat",
 		<?php if ($p_user->hasPermission('EditorSourceView')) { ?>
 		  	"htmlmode", 
@@ -317,16 +329,16 @@ xinha_init = xinha_init ? xinha_init : function()
 		<?php } ?>
 		<?php if ($p_user->hasPermission('EditorListNumber')) { ?>
 		  	"insertorderedlist", 
-		  	"separator", 
+		  	//"separator", 
 		<?php } ?>
 		<?php if ($p_user->hasPermission('EditorHorizontalRule')) { ?>
 		  	"inserthorizontalrule", 
-		  	"separator",
+		  	//"separator",
 		<?php } ?>
 		<?php if ($p_user->hasPermission('EditorFontColor')) { ?>
 		  	"forecolor", 
 		  	"hilitecolor", 
-		  	"separator",
+		  	//"separator",
 		<?php } ?>
 		<?php if ($p_user->hasPermission('EditorSubscript')) { ?>
 		  	"subscript",
@@ -334,23 +346,12 @@ xinha_init = xinha_init ? xinha_init : function()
 		<?php if ($p_user->hasPermission('EditorSuperscript')) { ?>
 		 	"superscript",
 		<?php } ?>
+		  ],
+		  
 		<?php if ($p_user->hasPermission('EditorTable')) { ?>
-			"linebreak",
+		  [ "linebreak", "inserttable" ],
 		<?php } ?>
-		  ]
 	];
-//  xinha_config.toolbar =
-//  [
-//    ["popupeditor","separator"],
-//    ["formatblock","fontname","fontsize","bold","italic","underline","strikethrough","separator"],
-//    ["forecolor","hilitecolor","textindicator","separator"],
-//    ["subscript","superscript"],
-//    ["linebreak","justifyleft","justifycenter","justifyright","justifyfull","separator"],
-//    ["insertorderedlist","insertunorderedlist","outdent","indent","separator"],
-//    ["inserthorizontalrule","createlink","insertimage","inserttable","separator"],
-//    ["undo","redo"], (HTMLArea.is_gecko ? [] : ["cut","copy","paste"]),["separator"],
-//    ["killword","removeformat","toggleborders","lefttoright", "righttoleft", "separator","htmlmode","about"]
-//  ];
 
   /** STEP 3 ***************************************************************
    * We first create editors for the textareas.
@@ -386,32 +387,33 @@ xinha_init = xinha_init ? xinha_init : function()
    * Finally we "start" the editors, this turns the textareas into
    * Xinha editors.
    ************************************************************************/
-  //HTMLArea.startEditors(xinha_editors);
+  HTMLArea.startEditors(xinha_editors);
   	<?php
   	// Warning: you are about to witness a huge hack!
 	// This quickly flips the htmlareas between text mode
 	// and wysiwyg mode so that when there are more than
 	// one on a page, they are all editable.
-	if (count($xinhaEditors) > 0) {
-		$firstEditor = array_shift($xinhaEditors);
-		?>
-		xinha_editors["<?php p(str_replace("'", "", $firstEditor)); ?>"].generate();		
-		<?php
-		$count = 1;
-		foreach ($xinhaEditors as $field) {
-			?>
-			setTimeout(function() {
-					xinha_editors["<?php p(str_replace("'", "", $field)); ?>"].generate();
-				}, <?php p($count++*300); ?>);
-				
-			<?php
-		}
-	}
+//	if (count($xinhaEditors) > 0) {
+//		$firstEditor = array_shift($xinhaEditors);
+//		?>
+//		xinha_editors["<?php p(str_replace("'", "", $firstEditor)); ?>"].generate();		
+//		<?php
+//		$count = 1;
+//		foreach ($xinhaEditors as $field) {
+//			?>
+//			//setTimeout(function() {
+//					//xinha_editors["<?php p(str_replace("'", "", $field)); ?>"].generate();
+//				//}, <?php p($count++*300); ?>);
+//				
+//			<?php
+//		}
+//	}
 	?>  
 }
 
 window.onload = xinha_init;
 </script>
+  <link href="/javascript/xinha/skins/xp-blue/skin.css" rel="Stylesheet" />
 <?php
 } // fn editor_load_xinha
 ?>
