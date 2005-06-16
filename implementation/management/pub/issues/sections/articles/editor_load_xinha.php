@@ -160,7 +160,8 @@ xinha_init = xinha_init ? xinha_init : function()
     'FullScreen',
     'UltraClean',
     'CharacterMap',
-    'FindReplace'
+    'FindReplace',
+    'RemoveParagraphs'
   ];
 	// THIS BIT OF JAVASCRIPT LOADS THE PLUGINS, NO TOUCHING  :)
 	if(!HTMLArea.loadPlugins(xinha_plugins, xinha_init)) return;
@@ -206,7 +207,7 @@ xinha_init = xinha_init ? xinha_init : function()
    // Change the removeformat button to work in text mode.
    xinha_config.btnList["removeformat"] = [ "Remove formatting", ["ed_buttons_main.gif",4,4], true, function(e) {e.execCommand("removeformat");} ],
    // Put the "find-replace" plugin in a better location
-   xinha_config.addToolbarElement([], ["FR-findreplace"], 0);
+   //xinha_config.addToolbarElement([], ["FR-findreplace"], 0);
    xinha_config.addToolbarElement(["FR-findreplace"], ["paste","cut","copy","redo","undo"], +1);
 
    // Add in our style sheet for the "subheads".
@@ -416,7 +417,7 @@ xinha_init = xinha_init ? xinha_init : function()
 
 window.onload = xinha_init;
 </script>
-  <link href="/javascript/xinha/skins/xp-blue/skin.css" rel="Stylesheet" />
+  <!--<link href="/javascript/xinha/skins/xp-blue/skin.css" rel="Stylesheet" />-->
 <?php
 } // fn editor_load_xinha
 ?>
