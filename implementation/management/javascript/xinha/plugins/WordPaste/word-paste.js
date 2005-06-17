@@ -9,15 +9,15 @@ function WordPaste(editor, args)
     var wordpaste = this;
     //editor.config.registerButton('wordpaste', this._lc("Remove formatting"), editor.imgURL('pasteword.gif', 'WordPaste'), true, function(e, objname, obj) { wordpaste._buttonPress(null, obj); });
 
-    // See if we can find 'paste' and replace it with wordpaste
-    //editor.config.addToolbarElement("wordpaste", "paste", 0);
+    // See if we can find 'paste' and add wordpaste next to it
+    //editor.config.addToolbarElement("wordpaste", "paste", +1);
 }
 
 WordPaste._pluginInfo =
 {
   name     : "WordPaste",
   version  : "1.0",
-  developer: "Paul Baranowski",
+  developer: "Paul Baranowski (paul@paulbaranowski.org)",
   developer_url: "http://campware.org/",
   c_owner      : "MDLF, Inc.",
   license      : "htmlArea",
@@ -29,12 +29,12 @@ WordPaste.prototype._lc = function(string) {
     return HTMLArea._lc(string, 'WordPaste');
 }
 
-WordPaste.prototype._buttonPress = function(opts, obj)
+WordPaste.prototype._buttonPress = function(doPopup)
 {
     var wordpaste = this;
     var editor = wordpaste.editor;
     
-    if (HTMLArea.is_gecko) {
+    if (doPopup) {
         // Mozilla has a security problem with paste.
         // Popup window to get the text.
         editor._popupDialog( "plugin://WordPaste/get_text", function( html ) 
@@ -43,14 +43,15 @@ WordPaste.prototype._buttonPress = function(opts, obj)
                     //user must have pressed Cancel
                     return false;
                 }
-                editor._wordClean();
-                html = wordpaste._clean(html);
+                if (editor.config.killWordOnPaste) {
+                    html = wordpaste._clean(html);
+                }
                 editor.insertHTML(html);
+                editor._wordClean();
             }, // anonymous function
             null);
     } // if
-    else {
-        // For IE
+    else if (editor.config.killWordOnPaste) {
         editor._wordClean();
         var html = editor.getInnerHTML();
         html = wordpaste._clean(html);
@@ -60,7 +61,7 @@ WordPaste.prototype._buttonPress = function(opts, obj)
 
 /**
  * This code started from FCKEditor's CleanAndPaste function. (Thank you FCKEditor!)
- * Its been modified to be much more aggressive with stripping things out..
+ * Its been modified to be much more aggressive with stripping things out...
  */
 WordPaste.prototype._clean = function(html) {
     // Remove HTML comments
