@@ -3479,16 +3479,24 @@ HTMLArea.prototype.execCommand = function(cmdID, UI, param) {
       case "cut":
       case "copy":
       case "paste":
-    try {
-      this._doc.execCommand(cmdID, UI, param);
-      if (this.config.killWordOnPaste)
-        this._wordClean();
-    } catch (e) {
-      if (HTMLArea.is_gecko) {
-        alert(HTMLArea._lc("The Paste button does not work in Mozilla based web browsers (technical security reasons). Press CTRL-V on your keyboard to paste directly."));
-      }
-    }
-    break;
+        doPastePopup = false;
+        try {
+          this._doc.execCommand(cmdID, UI, param);
+        } catch (e) {
+          if (HTMLArea.is_gecko) {
+              doPastePopup = true;
+          }
+        }
+        if (this.config.killWordOnPaste || doPastePopup) {
+          if(typeof WordPaste == 'undefined') {
+              HTMLArea.loadPlugin("WordPaste", function() { editor.generate(); } );
+              editor.registerPlugin('WordPaste');
+          }
+          if(typeof WordPaste == 'function') {
+              editor.plugins['WordPaste'].instance._buttonPress(doPastePopup);
+          }
+        }
+      break;
       case "lefttoright":
       case "righttoleft":
     var dir = (cmdID == "righttoleft") ? "rtl" : "ltr";
