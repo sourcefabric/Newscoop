@@ -49,7 +49,7 @@ if (count($allSections) > 0) {
 <TR class="table_list_header">
 	<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%"><?php  putGS("Nr"); ?></TD>
 	<TD ALIGN="LEFT" VALIGN="TOP"><?php putGS("Name<BR><SMALL>(click to see articles)</SMALL>"); ?></TD>
-	<TD ALIGN="LEFT" VALIGN="TOP"><?php putGS("Short Name"); ?></TD>
+	<TD ALIGN="LEFT" VALIGN="TOP"><?php putGS("URL Name"); ?></TD>
 	<?php if ($User->hasPermission('ManageSection')) { ?>
 	<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%"><?php  putGS("Configure"); ?></TD>
 	<?php } ?>

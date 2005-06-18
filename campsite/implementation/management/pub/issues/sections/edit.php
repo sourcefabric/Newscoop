@@ -78,7 +78,7 @@ CampsiteInterface::ContentTop("Configure section", $topArray);
 </TR>
 
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Short Name"); ?>:</TD>
+	<TD ALIGN="RIGHT" ><?php  putGS("URL Name"); ?>:</TD>
 	<TD>
 	<INPUT TYPE="TEXT" class="input_text" NAME="cShortName" SIZE="32" MAXLENGTH="32" value="<?php  p(htmlspecialchars($sectionObj->getShortName())); ?>">
 	</TD>

@@ -67,12 +67,12 @@ B_MSGBOX(<*Updating section name*>)
 <?php  }
 	if ($cShortName == "" || $cShortName == " ") {
 		$correct = 0;
-		echo "<LI>" . getGS('You must complete the $1 field.','<B>'.getGS('Short Name').'</B>') . "</LI>\n";
+		echo "<LI>" . getGS('You must complete the $1 field.','<B>'.getGS('URL Name').'</B>') . "</LI>\n";
 	}
 	$ok = valid_short_name($cShortName);
 	if ($ok == 0) {
 		$correct= 0;
-		echo "<LI>" . getGS('The $1 field may only contain letters, digits and underscore (_) character.', '</B>' . getGS('Short Name') . '</B>') . "</LI>\n";
+		echo "<LI>" . getGS('The $1 field may only contain letters, digits and underscore (_) character.', '</B>' . getGS('URL Name') . '</B>') . "</LI>\n";
 	}
 	if ($correct) {
 		$sql = "UPDATE Sections SET Name='$cName'";
