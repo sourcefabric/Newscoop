@@ -4,6 +4,8 @@ load_common_include_files("$ADMIN_DIR/pub/issues");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Template.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Publication.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Issue.php');
 
 // Check permissions
 list($access, $User) = check_basic_access($_REQUEST);
@@ -118,7 +120,7 @@ CampsiteInterface::ContentTop('Change issue details', array('Pub' => $publicatio
 </TR>
 
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Short Name"); ?>:</TD>
+	<TD ALIGN="RIGHT" ><?php  putGS("URL Name"); ?>:</TD>
 	<TD>
 	<INPUT TYPE="TEXT" class="input_text" NAME="cShortName" SIZE="32" MAXLENGTH="32" value="<?php  p(htmlspecialchars($issueObj->getShortName())); ?>">
 	</TD>
@@ -127,7 +129,7 @@ CampsiteInterface::ContentTop('Change issue details', array('Pub' => $publicatio
 <TR>
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">
-	<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save changes'); ?>">
+	<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
 	<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='/admin/pub/issues/?Pub=<?php p($Pub); ?>'">
 	</DIV>
 	</TD>

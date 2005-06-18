@@ -5,6 +5,8 @@ require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Template.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Publication.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Issue.php');
 
 // Check permissions
 list($access, $User) = check_basic_access($_REQUEST);
@@ -90,10 +92,10 @@ CampsiteInterface::ContentTop('Updating issue', array('Pub' => $publicationObj, 
 			echo "<LI>" . getGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>') . "</LI>\n";
 		}
 		if ($cShortName == '') {
-			echo "<LI>" . getGS('You must complete the $1 field.','<B>'.getGS('Short Name').'</B>') . "</LI>\n";
+			echo "<LI>" . getGS('You must complete the $1 field.','<B>'.getGS('URL Name').'</B>') . "</LI>\n";
 		}
 		if (!valid_short_name($cShortName)) {
-			echo "<LI>" . getGS('The $1 field may only contain letters, digits and underscore (_) character.', '</B>' . getGS('Short Name') . '</B>') . "</LI>\n";
+			echo "<LI>" . getGS('The $1 field may only contain letters, digits and underscore (_) character.', '</B>' . getGS('URL Name') . '</B>') . "</LI>\n";
 		}
 		if ($created) {
 ?>			<LI><?php  putGS('The issue $1 has been successfuly changed.', '<B>'.encHTML(decS($cName)).'</B>'); ?></LI>
