@@ -66,7 +66,7 @@ B_DIALOG(<*Add new issue*>, <*POST*>, <*do_add_new.php*>)
 	B_DIALOG_INPUT(<*Number*>)
 		<INPUT TYPE="TEXT" class="input_text" NAME="cNumber" VALUE="<?php  pencHTML($nr); ?>" SIZE="5" MAXLENGTH="5">
 	E_DIALOG_INPUT
-	B_DIALOG_INPUT(<*Short Name*>)
+	B_DIALOG_INPUT(<*URL Name*>)
 		<INPUT TYPE="TEXT" class="input_text" NAME="cShortName" SIZE="32" MAXLENGTH="32" value="<?php  pgetHVar($publ,'ShortName'); ?>">
 	E_DIALOG_INPUT
 	B_DIALOG_BUTTONS
