@@ -284,7 +284,7 @@ if ($edit_ok) { ?>
 				<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 				<TR>
 					<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $languageObj->getLanguageId(), "autopublish.php", $_SERVER['REQUEST_URI']); ?><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/<?php if ($automaticPublishingActive) { ?>automatic_publishing_active.png<?php } else { ?>automatic_publishing.png<?php } ?>" BORDER="0"></A></TD>
-					<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $languageObj->getLanguageId(), "autopublish.php", $_SERVER['REQUEST_URI']); ?><B><?php  putGS("Automatic publishing"); ?></B></A></TD>
+					<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $languageObj->getLanguageId(), "autopublish.php", $_SERVER['REQUEST_URI']); ?><B><?php  putGS("Scheduled Publishing"); ?></B></A></TD>
 				</TR>
 				</TABLE>
 			</TD>
