@@ -127,7 +127,7 @@ if ($numUniqueArticlesDisplayed > 0) {
 	<TD ALIGN="center" VALIGN="TOP" WIDTH="1%" ><?php  putGS("Status"); ?></TD>
 	<?php if ($User->hasPermission('Publish')) { ?>
 	<TD ALIGN="center" VALIGN="TOP" WIDTH="1%" ><?php  putGS("Order"); ?></TD>
-	<TD ALIGN="center" VALIGN="TOP" WIDTH="1%" ><?php  putGS("Automatic publishing"); ?></TD>
+	<TD ALIGN="center" VALIGN="TOP" WIDTH="1%" ><?php  putGS("Scheduled Publishing"); ?></TD>
 	<?php } ?>	
 	<TD ALIGN="center" VALIGN="TOP" WIDTH="1%" ><?php  putGS("Preview"); ?></TD>
 	<TD ALIGN="center" VALIGN="TOP" WIDTH="1%" ><?php  putGS("Translate"); ?></TD>
@@ -296,7 +296,7 @@ foreach ($allArticles as $articleObj) {
 			<?php if ($articleObj->getPublished() != 'N') { 
 				$events =& ArticlePublish::GetArticleEvents($articleObj->getArticleId(),
 					$articleObj->getLanguageId());?>
-			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/autopublish.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($articleObj->getArticleId()); ?>&Language=<?php  p($Language);?>&sLanguage=<?php p($articleObj->getLanguageId()); ?>&Back=<?php p(urlencode($_SERVER['REQUEST_URI'])); ?>"><img src="/<?php p($ADMIN); ?>/img/icon/<?php p((count($events) > 0) ? 'automatic_publishing_active.png':'automatic_publishing.png'); ?>" alt="<?php  putGS("Automatic publishing"); ?>" title="<?php  putGS("Automatic publishing"); ?>" border="0" width="22" height="22"></A>
+			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/autopublish.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($articleObj->getArticleId()); ?>&Language=<?php  p($Language);?>&sLanguage=<?php p($articleObj->getLanguageId()); ?>&Back=<?php p(urlencode($_SERVER['REQUEST_URI'])); ?>"><img src="/<?php p($ADMIN); ?>/img/icon/<?php p((count($events) > 0) ? 'automatic_publishing_active.png':'automatic_publishing.png'); ?>" alt="<?php  putGS("Scheduled Publishing"); ?>" title="<?php  putGS("Scheduled Publishing"); ?>" border="0" width="22" height="22"></A>
 			<?php 
 			} else { ?>
 				&nbsp;<?PHP
