@@ -48,7 +48,7 @@ if ($publish_time != '') {
 }
 $allEvents =& IssuePublish::GetIssueEvents($Pub, $Issue, $Language);
 
-CampsiteInterface::ContentTop('Issue automatic publishing schedule', array('Pub' => $publicationObj, 'Issue' => $issueObj));
+CampsiteInterface::ContentTop('Issue Publishing Schedule', array('Pub' => $publicationObj, 'Issue' => $issueObj));
 
 ?>
 
