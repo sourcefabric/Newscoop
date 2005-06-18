@@ -61,11 +61,11 @@ if (count($allIssues) > 0) {
 	<?php  if ($User->hasPermission('ManageIssue')) { ?>
 		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Nr"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("Name<BR><SMALL>(click to see sections)</SMALL>"); ?></B></TD>
-		<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("Short Name"); ?></B></TD>
+		<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("URL Name"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("Language"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>"); ?></B></TD>
 	<?php if ($User->hasPermission('Publish')) { ?>
-		<TD ALIGN="center" VALIGN="TOP" width="1%"><B><?php  putGS("Automatic publishing"); ?></B></TD>
+		<TD ALIGN="center" VALIGN="TOP" width="1%"><B><?php  putGS("Scheduled Publishing"); ?></B></TD>
 	<?php } ?>
 		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Translate"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Configure"); ?></B></TD> 
@@ -117,7 +117,7 @@ foreach ($allIssues as $issue) {
 	</TD>
 <?php if ($User->hasPermission('Publish')) { ?>
 	<TD ALIGN="CENTER">
-		<A HREF="/<?php echo $ADMIN; ?>/pub/issues/autopublish.php?Pub=<?php p($Pub); ?>&Issue=<?php p($issue->getIssueId()); ?>&Language=<?php p($issue->getLanguageId()); ?>"><img src="/<?php echo $ADMIN; ?>/img/icon/automatic_publishing.png" alt="<?php putGS("Automatic publishing"); ?>"  title="<?php putGS("Automatic publishing"); ?>" border="0"></A>
+		<A HREF="/<?php echo $ADMIN; ?>/pub/issues/autopublish.php?Pub=<?php p($Pub); ?>&Issue=<?php p($issue->getIssueId()); ?>&Language=<?php p($issue->getLanguageId()); ?>"><img src="/<?php echo $ADMIN; ?>/img/icon/automatic_publishing.png" alt="<?php putGS("Scheduled Publishing"); ?>"  title="<?php putGS("Scheduled Publishing"); ?>" border="0"></A>
 	</TD>
 <?php } ?>
 	<TD ALIGN="CENTER">
