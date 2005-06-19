@@ -1,4 +1,10 @@
-2.2.0
+2.2.2 (April 29th, 2005)
+    - ???
+
+2.2.1 (April 24th, 2005)
+    - Installation fixes for Fedora & Ubuntu
+
+2.2.0 (April 14th, 2005)
     - Improve management of multiple instances of CAMPSITE on a single server
     (new instances can be created without reinstalling Campsite)
     - Allow editors/journalists to change and set the order of articles
@@ -15,11 +21,24 @@
     additional features such as image display inside the article.
     - New admin interface (pretty icons, dropdown menu, no more frames)
 
-2.1.7
+2.1.8 (April 24th, 2005)
+    - Installation fixes for Fedora & Ubuntu
+    
+2.1.7 (April 11th, 2005)
     - Implemented "Print Topic Identifier" and "Print User Identifier"
-    - Many bug fixes
+    - Check if cookies were modified in a certain way to allow invalid user login
+    - Do not allow operations outside look directory for the following scripts:
+        - template list script
+        - template edit script
+        - template save script
+        - template create script
+        - template duplicate script
+        - template upload script
+        - template delete script
+        - directory create script
+        - directory delete script
 
-2.1.6
+2.1.6 (February 9th, 2005)
     - Implemented new "Topic", "If Topic" and "Print Topic" statements
     - Added new environment attribute: topic; this affects articles lists and
     is forwarded as an URL parameter
