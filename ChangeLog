@@ -1,9 +1,14 @@
 2.2.2 (April 29th, 2005)
-    - ???
+    - #1147: used functions that will not be supported in the future
 
 2.2.1 (April 24th, 2005)
-    - Installation fixes for Fedora & Ubuntu
-
+    - #748, #779: Installation fixes for FreeBSD, Fedora, & Ubuntu
+    - #882: Image Manager doesn't work when changing default installation settings.
+    - #807: Initialize the HTMLArea rights
+    - #848: Cannot upgrade Images table if database is on remote server
+    - #963: "print image <number> description" doesnt work
+    - #728: Gracefully handle the case when PEAR isnt in the path 
+    
 2.2.0 (April 14th, 2005)
     - Improve management of multiple instances of CAMPSITE on a single server
     (new instances can be created without reinstalling Campsite)
