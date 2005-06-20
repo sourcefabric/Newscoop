@@ -95,31 +95,44 @@ class Issue extends DatabaseObject {
 	                   $p_preferredLanguage = null, 
 	                   $p_sqlOptions = null) 
 	{
-		$queryStr = 'SELECT * ';
+		$tmpIssue =& new Issue();
+		$columnNames = $tmpIssue->getColumnNames(true);
+		$queryStr = 'SELECT '.implode(',', $columnNames);
 		if (!is_null($p_preferredLanguage)) {
-			$tmpIssue =& new Issue();
-			$columnNames = $tmpIssue->getColumnNames();
-			$queryStr = 'SELECT '.implode(',', $columnNames)
-				.", abs(IdLanguage-$p_preferredLanguage) as LanguageOrder";
+			$queryStr .= ", abs(IdLanguage-$p_preferredLanguage) as LanguageOrder";
 			$p_sqlOptions['ORDER BY'] = array('Number' => 'DESC', 'LanguageOrder' => 'ASC');
 		}
-		
-		$queryStr .= ' FROM Issues ';
+		// We have to display the language name so oftern that we might
+		// as well fetch it by default.
+		$queryStr .= ', Languages.OrigName as LanguageName';
+		$queryStr .= ' FROM Issues, Languages ';
 		$whereClause = array();
+		$whereClause[] = "Issues.IdLanguage=Languages.Id";
 		if (!is_null($p_publicationId)) {
-			$whereClause[] = "IdPublication=$p_publicationId";
+			$whereClause[] = "Issues.IdPublication=$p_publicationId";
 		}
 		if (!is_null($p_languageId)) {
-			$whereClause[] = "IdLanguage=$p_languageId";
+			$whereClause[] = "Issues.IdLanguage=$p_languageId";
 		}
 		if (!is_null($p_issueId)) {
-			$whereClause[] = "Number=$p_issueId";
+			$whereClause[] = "Issues.Number=$p_issueId";
 		}
 		if (count($whereClause) > 0) {
 			$queryStr .= ' WHERE '.implode(' AND ', $whereClause);
 		}
 		$queryStr = DatabaseObject::ProcessOptions($queryStr, $p_sqlOptions);
-		$issues =& DbObjectArray::Create('Issue', $queryStr);
+		global $Campsite;
+		$issues = array();
+		$rows = $Campsite['db']->GetAll($queryStr);
+		if (is_array($rows)) {
+			foreach ($rows as $row) {
+				$tmpObj =& new Issue();
+				$tmpObj->fetch($row);
+				$tmpObj->m_languageName = $row['LanguageName'];
+				$issues[] = $tmpObj;
+			}
+		}
+		
 		return $issues;
 	} // fn GetIssues
 		
