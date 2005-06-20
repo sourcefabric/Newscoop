@@ -158,10 +158,10 @@ xinha_init = xinha_init ? xinha_init : function()
 	'ListType',
 	<?php } ?>
     'FullScreen',
-    'UltraClean',
+    'WordPaste',
     'CharacterMap',
     'FindReplace',
-    'RemoveParagraphs'
+    //'RemoveParagraphs'
   ];
 	// THIS BIT OF JAVASCRIPT LOADS THE PLUGINS, NO TOUCHING  :)
 	if(!HTMLArea.loadPlugins(xinha_plugins, xinha_init)) return;
@@ -198,7 +198,8 @@ xinha_init = xinha_init ? xinha_init : function()
 
    xinha_config = xinha_config ? xinha_config : new HTMLArea.Config();
    xinha_config.statusBar = false;
-   xinha_config.htmlareaPaste =  HTMLArea.is_gecko ? false : true;
+   xinha_config.htmlareaPaste =  true;
+   xinha_config.killWordOnPaste =  true;
    xinha_config.flowToolbars = false;
    xinha_config.mozParaHandler = "built-in";
    // Change the built-in icon for "web link"
@@ -305,7 +306,7 @@ xinha_init = xinha_init ? xinha_init : function()
 		  	//"separator",
 		<?php } ?>
 			//"killword",
-			"removeformat",
+			//"removeformat",
 		<?php if ($p_user->hasPermission('EditorSourceView')) { ?>
 		  	"htmlmode", 
 		<?php } ?>
