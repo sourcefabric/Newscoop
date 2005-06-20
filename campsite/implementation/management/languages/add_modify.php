@@ -20,10 +20,10 @@ $editMode = ($languageId != 0);
 
 if (!$User->hasPermission('ManageLanguages')) {
     if (!$editMode) {
-	   CampsiteInterface::DisplayError("You do not have the right to add languages.");
+	   CampsiteInterface::DisplayError(getGS("You do not have the right to add languages."));
     }
     else {
-       CampsiteInterface::DisplayError("You do not have the right to edit languages.");
+       CampsiteInterface::DisplayError(getGS("You do not have the right to edit languages."));
     }
 	exit;
 }

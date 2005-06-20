@@ -31,7 +31,7 @@ $sLanguage = Input::Get('sLanguage', 'int', 0);
 $Article = Input::Get('Article', 'int', 0);
 
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(array('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+	CampsiteInterface::DisplayError(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
 	exit;	
 }
 
@@ -123,7 +123,7 @@ $uploadedByUsers =& Image::GetUploadUsers();
 $extraCrumbs = array("Images"=>"/$ADMIN/pub/issues/sections/articles/images/?Pub=$Pub&Issue=$Issue&Language=$Language&Section=$Section&Article=$Article&sLanguage=$sLanguage");
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
 				  'Section' => $sectionObj, 'Article'=>$articleObj);
-CampsiteInterface::ContentTop('Link Image to Article', $topArray, true, true, $extraCrumbs);
+CampsiteInterface::ContentTop(getGS('Link Image to Article'), $topArray, true, true, $extraCrumbs);
 ?>
 
 <table>

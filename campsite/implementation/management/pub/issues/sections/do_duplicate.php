@@ -10,11 +10,11 @@ if (!$access) {
 	exit;
 }
 if (!$User->hasPermission("ManageSection")) {
-	CampsiteInterface::DisplayError("You do not have the right to add sections.");
+	CampsiteInterface::DisplayError(getGS("You do not have the right to add sections."));
 	exit;
 }
 if (!$User->hasPermission("AddArticle")) {
-	CampsiteInterface::DisplayError("You do not have the right to add articles.");
+	CampsiteInterface::DisplayError(getGS("You do not have the right to add articles."));
 	exit;
 }
 
@@ -35,25 +35,25 @@ else {
 $BackLink = Input::Get('Back', 'string', "/$ADMIN/pub/issues/sections/index.php", true);
 
 if (!Input::IsValid()) {
-   	CampsiteInterface::DisplayError(array('Invalid input: $1', Input::GetErrorString()));
+   	CampsiteInterface::DisplayError(getGS('Invalid input: $1', Input::GetErrorString()));
 	exit;
 }
 
 $srcPublicationObj =& new Publication($SrcPubId);
 if (!$srcPublicationObj->exists()) {
-	CampsiteInterface::DisplayError('Publication does not exist.');
+	CampsiteInterface::DisplayError(getGS('Publication does not exist.'));
 	exit;	
 }
 
 $srcIssueObj =& new Issue($SrcPubId, $Language, $SrcIssueId);
 if (!$srcIssueObj->exists()) {
-	CampsiteInterface::DisplayError('Issue does not exist.');
+	CampsiteInterface::DisplayError(getGS('Issue does not exist.'));
 	exit;	
 }
 
 $srcSectionObj =& new Section($SrcPubId, $SrcIssueId, $Language, $SrcSectionId);
 if (!$srcSectionObj->exists()) {
-	CampsiteInterface::DisplayError('Section does not exist.');
+	CampsiteInterface::DisplayError(getGS('Section does not exist.'));
 	exit;	
 }
 
@@ -69,10 +69,10 @@ if ($correct) {
 	$dstIssueObj =& new Issue($DestPublicationId, $DestIssueLanguageId, $DestIssueId);
 	$created = true;
 	$topArray = array('Pub' => $srcPublicationObj, 'Issue' => $srcIssueObj, 'Section' => $dstSectionObj);
-	CampsiteInterface::ContentTop('Duplicating section', $topArray);
+	CampsiteInterface::ContentTop(getGS('Duplicating section'), $topArray);
 } else {
 	$topArray = array('Pub' => $srcPublicationObj, 'Issue' => $srcIssueObj, 'Section' => $srcSectionObj);
-	CampsiteInterface::ContentTop('Duplicating section', $topArray);
+	CampsiteInterface::ContentTop(getGS('Duplicating section'), $topArray);
 }
 
 ?>

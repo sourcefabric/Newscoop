@@ -19,31 +19,31 @@ $Status = strtoupper(Input::Get('Status', 'string', 'N'));
 $BackLink = Input::Get('Back', 'string', "/$ADMIN/pub/issues/sections/articles/index.php", true);
 
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(array('Invalid input: $1', Input::GetErrorString()), $BackLink);
+	CampsiteInterface::DisplayError(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
 	exit;	
 }
 
 if ( ($Status != 'N') && ($Status != 'S') && ($Status != 'Y')) {
-	CampsiteInterface::DisplayError(array('Invalid input: $1', "Invalid status code:".$Status), $BackLink);
+	CampsiteInterface::DisplayError(getGS('Invalid input: $1', "Invalid status code:".$Status), $BackLink);
 	exit;		
 }
 
 $articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
 if (!$articleObj->exists()) {
-	CampsiteInterface::DisplayError('Article does not exist.', $BackLink);
+	CampsiteInterface::DisplayError(getGS('Article does not exist.'), $BackLink);
 	exit;		
 }
 $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
 if (!$sectionObj->exists()) {
-	CampsiteInterface::DisplayError('Section does not exist.', $BackLink);	
+	CampsiteInterface::DisplayError(getGS('Section does not exist.'), $BackLink);	
 }
 $issueObj =& new Issue($Pub, $Language, $Issue);
 if (!$issueObj->exists()) {
-	CampsiteInterface::DisplayError('Issue does not exist.', $BackLink);	
+	CampsiteInterface::DisplayError(getGS('Issue does not exist.'), $BackLink);	
 }
 $publicationObj =& new Publication($Pub);
 if (!$publicationObj->exists()) {
-	CampsiteInterface::DisplayError('Publication does not exist.', $BackLink);	
+	CampsiteInterface::DisplayError(getGS('Publication does not exist.'), $BackLink);	
 }
 
 $languageObj =& new Language($Language);
@@ -58,7 +58,7 @@ if ($User->hasPermission('Publish')
 	$access = true;
 }
 if (!$access) {
-	$errorStr = "You do not have the right to change this article status. Once submitted an article can only changed by authorized users.";
+	$errorStr = getGS("You do not have the right to change this article status. Once submitted an article can only changed by authorized users.");
 	CampsiteInterface::DisplayError($errorStr, $BackLink);
 	exit;	
 }

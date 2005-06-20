@@ -12,7 +12,7 @@ if (!$access) {
 }
 
 if (!$User->hasPermission('ManageIssue')) {
-	CampsiteInterface::DisplayError('You do not have the right to add issues.');
+	CampsiteInterface::DisplayError(getGS('You do not have the right to add issues.'));
 	exit;
 }
 $Pub = Input::Get('Pub', 'int');
@@ -20,7 +20,7 @@ $Issue = Input::Get('Issue', 'int');
 $Language = Input::Get('Language', 'int');
 
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(array('Invalid Input: $1', Input::GetErrorString()));	
+	CampsiteInterface::DisplayError(getGS('Invalid Input: $1', Input::GetErrorString()));	
 	exit;
 }
 $publicationObj =& new Publication($Pub);
@@ -28,7 +28,7 @@ $issueObj =& new Issue($Pub, $Language, $Issue);
 $allIssues =& Issue::GetIssues($Pub, null, $Issue);
 $unusedLanguages =& $issueObj->getUnusedLanguages();
 
-CampsiteInterface::ContentTop('Add new translation', array('Pub' => $publicationObj, 'Issue' => $issueObj));
+CampsiteInterface::ContentTop(getGS('Add new translation'), array('Pub' => $publicationObj, 'Issue' => $issueObj));
 
 ?>
 <P>

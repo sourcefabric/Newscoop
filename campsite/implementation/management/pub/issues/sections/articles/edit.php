@@ -18,7 +18,7 @@ $Saved = Input::Get('Saved', 'int', 0, true);
 $Unlock = Input::Get('Unlock', 'string', false, true);
 
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(array('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+	CampsiteInterface::DisplayError(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
 	exit;	
 }
 
@@ -27,7 +27,7 @@ $errorStr = "";
 // Fetch article
 $articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
 if (!$articleObj->exists()) {
-	$errorStr = 'No such article.';
+	$errorStr = getGS('No such article.');
 }
 $articleType =& $articleObj->getArticleTypeObject();
 $lockUserObj =& new User($articleObj->getLockedByUser());
@@ -104,7 +104,7 @@ foreach ($dbColumns as $dbColumn) {
 // Begin Display of page
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
 				  'Section' => $sectionObj, 'Article'=>$articleObj);
-CampsiteInterface::ContentTop("Edit article details", $topArray);
+CampsiteInterface::ContentTop(getGS("Edit article details"), $topArray);
 editor_load_xinha($dbColumns, $User);
 
 if ($errorStr != "") {

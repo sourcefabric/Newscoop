@@ -31,7 +31,7 @@ $Place = Input::Get('cPlace', 'string', '', true);
 $Date = Input::Get('cDate', 'string', '', true);
 
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(array('Invalid input: $1', Input::GetErrorString()));
+	CampsiteInterface::DisplayError(getGS('Invalid input: $1', Input::GetErrorString()));
 	exit;	
 }
 
@@ -43,7 +43,7 @@ $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
 // This file can only be accessed if the user has the right to change articles
 // or the user created this article and it hasnt been published yet.
 if (!$articleObj->userCanModify($User)) {	
-	CampsiteInterface::DisplayError('You do not have the right to change the article.');
+	CampsiteInterface::DisplayError(getGS('You do not have the right to change the article.'));
 	exit;		
 }
 

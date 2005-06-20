@@ -25,7 +25,7 @@ $ImageTemplateId = Input::Get('ImageTemplateId', 'int', 0);
 
 // Check input
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(array('Invalid input: $1', Input::GetErrorString()));
+	CampsiteInterface::DisplayError(getGS('Invalid input: $1', Input::GetErrorString()));
 	exit;
 }
 
@@ -34,7 +34,7 @@ $articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
 // This file can only be accessed if the user has the right to change articles
 // or the user created this article and it hasnt been published yet.
 if (!$articleObj->userCanModify($User)) {
-	CampsiteInterface::DisplayError("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only changed by authorized users.");
+	CampsiteInterface::DisplayError(getGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only changed by authorized users."));
 	exit;		
 }
 

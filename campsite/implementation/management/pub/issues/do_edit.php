@@ -16,7 +16,7 @@ if (!$access) {
 }
 
 if (!$User->hasPermission('ManageIssue')) {
-	CampsiteInterface::DisplayError('You do not have the right to change issue details.');
+	CampsiteInterface::DisplayError(getGS('You do not have the right to change issue details.'));
 	exit;
 }
 $Pub = Input::Get('Pub', 'int');
@@ -31,7 +31,7 @@ $cArticleTplId = Input::Get('cArticleTplId', 'int');
 $cShortName = trim(Input::Get('cShortName'));
 
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(array('Invalid input: $1', Input::GetErrorString()));	
+	CampsiteInterface::DisplayError(getGS('Invalid input: $1', Input::GetErrorString()));	
 	exit;
 }
 $publicationObj =& new Publication($Pub);
@@ -68,7 +68,7 @@ if ($correct) {
 	}
 }
 
-CampsiteInterface::ContentTop('Updating issue', array('Pub' => $publicationObj, 'Issue' => $issueObj));
+CampsiteInterface::ContentTop(getGS('Updating issue'), array('Pub' => $publicationObj, 'Issue' => $issueObj));
 
 ?>
 <P>

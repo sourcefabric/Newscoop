@@ -14,7 +14,7 @@ if (!$access) {
 	exit;
 }
 if (!$User->hasPermission('ManageLanguages')) {
-	CampsiteInterface::DisplayError("You do not have the right to add new languages.");
+	CampsiteInterface::DisplayError(getGS("You do not have the right to add new languages."));
 	exit;
 }
 

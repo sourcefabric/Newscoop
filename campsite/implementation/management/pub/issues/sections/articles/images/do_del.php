@@ -26,7 +26,7 @@ $ImageId = Input::Get('ImageId', 'int', 0);
 $Language = Input::Get('Language', 'int', 0);
 
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(array('Invalid input: $1', Input::GetErrorString()));
+	CampsiteInterface::DisplayError(getGS('Invalid input: $1', Input::GetErrorString()));
 	exit;		
 }
 
@@ -39,7 +39,7 @@ if ($articleObj->userCanModify($User) || $User->hasPermission('DeleteImage')) {
 	$access = true;
 }
 if (!$access) {
-	CampsiteInterface::DisplayError("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only changed by authorized users.");	
+	CampsiteInterface::DisplayError(getGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only changed by authorized users."));	
 	exit;		
 }
 
