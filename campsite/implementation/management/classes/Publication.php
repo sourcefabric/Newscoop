@@ -32,18 +32,27 @@ class Publication extends DatabaseObject {
 	} // constructor
 
 	
+	/**
+	 * @return int
+	 */
 	function getPublicationId() 
 	{
 		return $this->getProperty('Id');
 	} // fn getPublicationId
 	
 	
+	/**
+	 * @return string
+	 */
 	function getName() 
 	{
 		return $this->getProperty('Name');
 	} // fn getName
 
 	
+	/**
+	 * @return int
+	 */
 	function getLanguageId() 
 	{
 		return $this->getProperty('IdDefaultLanguage');
