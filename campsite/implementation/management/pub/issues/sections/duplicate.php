@@ -70,6 +70,20 @@ if ($DestIssueId > 0) {
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 'Section' => $sectionObj);
 CampsiteInterface::ContentTop('Duplicate section', $topArray, true, true);
 ?>
+<script>
+function CustomValidator_DuplicateSection(form) {
+    if (form.section_chooser[0].checked && (form.destination_section_existing.selectedIndex == 0)) {
+        alert('<?php putGS("You must select a section."); ?>');
+        return false;
+    }
+    if (form.section_chooser[1].checked && (form.destination_section_new.value.trim() == "")) {
+        alert('<?php putGS("You must select a section."); ?>');
+        return false;
+    }   
+    return validateForm(form, 0, 1, 0, 1, 8);
+}
+</script>
+
 
 <P>
 <CENTER>
@@ -162,8 +176,7 @@ if ( ($Pub == $DestPublicationId) && ($Issue == $DestIssueId)) { ?>
 	</td>
 </tr>
 <?php } ?>
-
-<FORM METHOD="POST" action="do_duplicate.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
+<FORM METHOD="POST" action="do_duplicate.php" onsubmit="return CustomValidator_DuplicateSection(this);">
 <input type="hidden" name="Pub" value="<?php p($Pub); ?>">
 <input type="hidden" name="Issue" value="<?php p($Issue); ?>">
 <input type="hidden" name="Section" value="<?php p($Section); ?>">
@@ -185,7 +198,7 @@ if ( ($Pub == $DestPublicationId) && ($Issue == $DestIssueId)) { ?>
 	   </table>
 	</td>
 	<td style="padding-top: 12px; padding-bottom: 0px;">
-		<SELECT NAME="destination_section_existing" class="input_select" <?php if (($DestIssueId <= 0) || (count($allSections) <= 0)) { ?> disabled <?php } ?>>
+		<SELECT NAME="destination_section_existing" class="input_select" <?php if (($DestIssueId <= 0) || (count($allSections) <= 0)) { ?> disabled <?php } ?> onchange="this.form.section_chooser[0].checked = true;">
 		<?php if (($DestIssueId <= 0) || (count($allSections) <= 0)) { ?>
 		<OPTION VALUE="0"><?php  putGS('No sections'); ?></option>
 		<?php } else { ?>
@@ -226,7 +239,7 @@ if ( ($Pub == $DestPublicationId) && ($Issue == $DestIssueId)) { ?>
 	   </tr>
 	   </table>
 	</td>
-	<td><input type="text" class="input_text" name="destination_section_new" size="4" maxlength="4" value="<?php echo $Section; ?>" <?php if (($DestPublicationId <= 0) || ($DestIssueId <= 0)) { ?>disabled<?php } ?>>
+	<td><input type="text" class="input_text" name="destination_section_new" size="4" maxlength="4" value="<?php echo $Section; ?>" <?php if (($DestPublicationId <= 0) || ($DestIssueId <= 0)) { ?>disabled<?php } ?> onclick="this.form.section_chooser[1].checked = true;">
 	</td>
 </tr>
 
