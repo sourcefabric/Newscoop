@@ -1,14 +1,35 @@
-2.2.2 (April 29th, 2005)
-    - #1147: used functions that will not be supported in the future
+2.2.2
+    - updated FreeBSD install documentation
+    - updated the manual (added extra information about upgrading from older 
+    versions)
+    - fixed install bugs:
+        - use short options on install utility (FreeBSD version doesn't support
+        long options)
+        - fixed modules configuration bug (didn't check the settings for each
+        module)
+        - updated dependecies on installed libraries/utilities
+        - select the correct make utility on FreeBSD
+        - removed obsolete code
+        - make the CLI compatible to FreeBSD style
+        - set the editor new rights for all staff users
+        - install and upgrade needed PEAR packages
+        - fixed blank page bug (sometimes users got a blank page)
+        - set the thumnail path correctly when upgrading the images
+        - image archive didn't work for instances, except the default one
+        - copy the short name and default templates when duplicating sections
+    - other:
+        - minor Fedora related bugs
+        - minor template engine bugs
 
-2.2.1 (April 24th, 2005)
-    - #748, #779: Installation fixes for FreeBSD, Fedora, & Ubuntu
-    - #882: Image Manager doesn't work when changing default installation settings.
-    - #807: Initialize the HTMLArea rights
-    - #848: Cannot upgrade Images table if database is on remote server
-    - #963: "print image <number> description" doesnt work
-    - #728: Gracefully handle the case when PEAR isnt in the path 
-    
+2.2.1
+    - bugs #0748, #0779: Installation fixes for FreeBSD, Fedora, & Ubuntu
+    - bug #0882: Image Manager doesn't work when changing default installation
+    settings.
+    - bug #0807: Initialize the HTMLArea rights
+    - bug #0848: Cannot upgrade Images table if database is on remote server
+    - bug #0963: "print image <number> description" doesn't work
+    - bug #0728: Gracefully handle the case when PEAR isn't in the path
+
 2.2.0 (April 14th, 2005)
     - Improve management of multiple instances of CAMPSITE on a single server
     (new instances can be created without reinstalling Campsite)
