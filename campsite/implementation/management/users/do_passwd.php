@@ -9,14 +9,14 @@ read_user_common_parameters(); // $uType, $userOffs, $lpp, search parameters
 verify_user_type();
 compute_user_rights($User, &$canManage, &$canDelete);
 if (!$canManage) {
-	CampsiteInterface::DisplayError('You do not have the right to change user passwords.');
+	CampsiteInterface::DisplayError(getGS('You do not have the right to change user passwords.'));
 	exit;
 }
 
 $userId = Input::Get('User', 'int', 0);
 $editUser = new User($userId);
 if ($editUser->getUserName() == '') {
-	CampsiteInterface::DisplayError('No such user account.');
+	CampsiteInterface::DisplayError(getGS('No such user account.'));
 	exit;
 }
 $typeParam = 'uType=' . urlencode($uType);
@@ -27,12 +27,12 @@ $backLink = "/$ADMIN/users/edit.php?$typeParam&User=".$editUser->getId();
 if ($userId == $User->getId()) {
 	$oldPassword = Input::Get('oldPassword');
 	if (!$editUser->isValidPassword($oldPassword)) {
-		CampsiteInterface::DisplayError('The password you typed is incorrect.', $backLink);
+		CampsiteInterface::DisplayError(getGS('The password you typed is incorrect.'), $backLink);
 		exit;
 	}
 }
 if (strlen($password) < 6 || $password != $passwordConf) {
-	CampsiteInterface::DisplayError('The password must be at least 6 characters long and both passwords should match.', $backLink);
+	CampsiteInterface::DisplayError(getGS('The password must be at least 6 characters long and both passwords should match.'), $backLink);
 	exit;
 }
 

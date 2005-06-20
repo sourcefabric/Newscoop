@@ -15,7 +15,7 @@ $userId = Input::Get('User', 'int', 0);
 if ($userId > 0) {
 	$editUser = new User($userId);
 	if ($editUser->getUserName() == '') {
-		CampsiteInterface::DisplayError('No such user account.');
+		CampsiteInterface::DisplayError(getGS('No such user account.'));
 		exit;
 	}
 	$title = "Change user account information";

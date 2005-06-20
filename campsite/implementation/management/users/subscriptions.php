@@ -2,7 +2,7 @@
 
 check_basic_access($_REQUEST);
 if (!isset($editUser) || gettype($editUser) != 'object' || $editUser->getUserName() == '') {
-	CampsiteInterface::DisplayError('No such user account.',$_SERVER['REQUEST_URI']);
+	CampsiteInterface::DisplayError(getGS('No such user account.'),$_SERVER['REQUEST_URI']);
 	exit;
 }
 

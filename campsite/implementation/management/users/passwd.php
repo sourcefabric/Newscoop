@@ -5,14 +5,14 @@ require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/users_common.php");
 list($access, $User) = check_basic_access($_REQUEST);
 compute_user_rights($User, &$canManage, &$canDelete);
 if (!$canManage) {
-	CampsiteInterface::DisplayError('You do not have the right to change user account information.');
+	CampsiteInterface::DisplayError(getGS('You do not have the right to change user account information.'));
 	exit;
 }
 
 $userId = Input::Get('User', 'int', 0);
 $editUser = new User($userId);
 if ($editUser->getUserName() == '') {
-	CampsiteInterface::DisplayError('No such user account.');
+	CampsiteInterface::DisplayError(getGS('No such user account.'));
 	exit;
 }
 

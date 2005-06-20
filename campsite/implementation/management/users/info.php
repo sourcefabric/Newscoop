@@ -2,16 +2,18 @@
 
 check_basic_access($_REQUEST);
 if (!isset($editUser) || gettype($editUser) != 'object') {
-	CampsiteInterface::DisplayError('No such user account.');
+	CampsiteInterface::DisplayError(getGS('No such user account.'));
 	exit;
 }
 list($access, $User) = check_basic_access($_REQUEST);
 compute_user_rights($User, &$canManage, &$canDelete);
 if (!$canManage) {
-	if ($editUser->getUserName() == '')
-		$error = "You do not have the right to create user accounts.";
-	else
-		$error = 'You do not have the right to change user account information.';
+	if ($editUser->getUserName() == '') {
+		$error = getGS("You do not have the right to create user accounts.");
+	}
+	else {
+		$error = getGS('You do not have the right to change user account information.');
+	}
 	CampsiteInterface::DisplayError($error);
 	exit;
 }

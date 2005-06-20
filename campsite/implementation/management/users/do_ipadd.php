@@ -9,7 +9,7 @@ read_user_common_parameters(); // $uType, $userOffs, $lpp, search parameters
 $uType = 'Readers';
 compute_user_rights($User, &$canManage, &$canDelete);
 if (!$canManage) {
-	CampsiteInterface::DisplayError('You do not have the right to change user account information.');
+	CampsiteInterface::DisplayError(getGS('You do not have the right to change user account information.'));
 	exit;
 }
 
@@ -17,7 +17,7 @@ if (!$canManage) {
 $userId = Input::Get('User', 'int', 0);
 $editUser = new User($userId);
 if ($editUser->getUserName() == '') {
-	CampsiteInterface::DisplayError('No such user account.');
+	CampsiteInterface::DisplayError(getGS('No such user account.'));
 	exit;
 }
 $backLink = "/$ADMIN/users/edit.php?uType=Readers&User=$userId";
@@ -29,12 +29,12 @@ $cAddresses = Input::Get('cAddresses', 'int', 0);
 
 // check if input was correct
 if ($cStartIP1 == 0 || $cStartIP2 == 0 || $cStartIP3 == 0 || $cStartIP4 == 0) {
-	CampsiteInterface::DisplayError(array('You must complete the $1 field.', 'Start IP'),
+	CampsiteInterface::DisplayError(getGS('You must complete the $1 field.', 'Start IP'),
 		$backLink);
 	exit;
 }
 if ($cAddresses == 0) {
-	CampsiteInterface::DisplayError(array('You must complete the $1 field.',
+	CampsiteInterface::DisplayError(getGS('You must complete the $1 field.',
 			'Number of addresses'), $backLink);
 	exit;
 }
@@ -44,7 +44,7 @@ $StartIP = $cStartIP1*256*256*256+$cStartIP2*256*256+$cStartIP3*256+$cStartIP4;
 $ip = "$cStartIP1.$cStartIP2.$cStartIP3.$cStartIP4";
 query ("SELECT Addresses FROM SubsByIP WHERE IdUser=$userId and StartIP=$StartIP", 'ig');
 if ($NUM_ROWS) {
-	CampsiteInterface::DisplayError(array('An IP address group having the $1 start address already exists.', $ip), $backLink);
+	CampsiteInterface::DisplayError(getGS('An IP address group having the $1 start address already exists.', $ip), $backLink);
 	exit;
 }
 
@@ -55,7 +55,7 @@ if ($created) {
 		encHTML($editUser->getUserName()));
 	Log::Message($logtext, $editUser->getUserName(), 57);
 } else {
-	CampsiteInterface::DisplayError(array('There was an error creating the IP address group.', "$ip:$cAddresses"), $backLink);
+	CampsiteInterface::DisplayError(getGS('There was an error creating the IP address group.', "$ip:$cAddresses"), $backLink);
 	exit;
 }
 
