@@ -120,7 +120,7 @@ $NumImagesFound = $imageSearch->getNumImagesFound();
 $uploadedByUsers =& Image::GetUploadUsers();
 
 // Add extra breadcrumb for image list.
-$extraCrumbs = array("Images"=>"/$ADMIN/pub/issues/sections/articles/images/?Pub=$Pub&Issue=$Issue&Language=$Language&Section=$Section&Article=$Article&sLanguage=$sLanguage");
+$extraCrumbs = array(getGS("Images")=>"/$ADMIN/pub/issues/sections/articles/images/?Pub=$Pub&Issue=$Issue&Language=$Language&Section=$Section&Article=$Article&sLanguage=$sLanguage");
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
 				  'Section' => $sectionObj, 'Article'=>$articleObj);
 CampsiteInterface::ContentTop(getGS('Link Image to Article'), $topArray, true, true, $extraCrumbs);

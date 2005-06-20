@@ -31,7 +31,7 @@ $articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
 $imageObj =& new Image($ImageId);
 
 // Add extra breadcrumb for image list.
-$extraCrumbs = array("Images"=>"/$ADMIN/pub/issues/sections/articles/images/?Pub=$Pub&Issue=$Issue&Language=$Language&Section=$Section&Article=$Article&sLanguage=$sLanguage");
+$extraCrumbs = array(getGS("Images")=>"/$ADMIN/pub/issues/sections/articles/images/?Pub=$Pub&Issue=$Issue&Language=$Language&Section=$Section&Article=$Article&sLanguage=$sLanguage");
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
 				  'Section' => $sectionObj, 'Article'=>$articleObj);
 CampsiteInterface::ContentTop(getGS('Change image information'), $topArray, true, true, $extraCrumbs);
