@@ -9,6 +9,7 @@
 require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DatabaseObject.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DbObjectArray.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
 
 /**
  * @package Campsite
@@ -208,6 +209,71 @@ class Section extends DatabaseObject {
 	{
 		return $this->getProperty('SectionTplId');
 	} // fn getSectionTemplateId
+	
+	
+	/**
+	 * Copy the section to the given issue.  The issue can be the same as the current issue.
+	 * All articles will be copied to the new section.
+	 *
+	 * @param int $p_destPublicationId
+	 * @param int $p_destIssueId
+	 * @param int $p_destIssueLanguageId 
+	 * @param int $p_destSectionId
+	 * @param int $p_userId -
+	 *     This is used to log who performed the operation.
+	 *
+	 * @return Section
+	 *     The new Section object.
+	 */
+	function copy($p_destPublicationId, $p_destIssueId, $p_destIssueLanguageId, 
+	              $p_destSectionId, $p_userId = null) {
+    	$dstPublicationObj =& new Publication($p_destPublicationId);
+    	if (is_null($p_destIssueLanguageId)) {
+    	   $p_destIssueLanguageId = $this->m_data['IdLanguage'];   
+    	}
+    	$dstIssueObj =& new Issue($p_destPublicationId, $p_destIssueLanguageId, $p_destIssueId);
+    	$dstSectionObj =& new Section($p_destPublicationId, $p_destIssueId, 
+    	                              $p_destIssueLanguageId, $p_destSectionId);
+    	// If source issue and destination issue are the same
+    	if ( ($this->m_data['IdPublication'] == $p_destPublicationId) 
+    	      && ($this->m_data['NrIssue'] == $p_destIssueId) ) {
+    		$shortName = $p_destSectionId;
+    		$sectionName = $this->getName() . " (duplicate)";
+    	} else {
+    		$shortName = $this->getShortName();
+    		$sectionName = $this->getName();
+    	}
+    	$dstSectionCols = array('Name' => $sectionName, 'ShortName' => $shortName);
+   		$dstSectionCols['SectionTplId'] = $this->m_data['SectionTplId'];
+   		$dstSectionCols['ArticleTplId'] = $this->m_data['ArticleTplId'];
+    	
+   		// Create the section if it doesnt exist yet.
+    	if (!$dstSectionObj->exists()) {
+    		$dstSectionObj->create($dstSectionCols);
+    	}
+    	
+    	// Copy all the articles.
+    	$srcSectionArticles = Article::GetArticles($this->m_data['IdPublication'], 
+                                                   $this->m_data['NrIssue'], 
+                                                   $this->m_data['Number'], 
+                                                   $this->m_data['IdLanguage']);
+    	foreach ($srcSectionArticles as $articleObj) {
+    		$articleCopy = $articleObj->copy($p_destPublicationId, 
+    		                                 $p_destIssueId, 
+                                             $p_destSectionId, 
+                                             $p_userId);
+    	}
+    	
+    	// Record the event in the log.
+    	if (!is_null($p_userId)) {
+        	$User =& new User($p_userId);
+    	    $logtext = getGS('Section $1 has been duplicated to $2. $3 of $4',
+                             $this->getName(), $p_destIssueId, $dstIssueObj->getName(),
+                             $dstPublicationObj->getName());
+            Log::Message($logtext, $User->getUserName(), 154);
+    	}
+    	return $dstSectionObj;
+	} // fn copy
 	
 } // class Section
 ?>
