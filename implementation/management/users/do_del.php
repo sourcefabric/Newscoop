@@ -9,14 +9,14 @@ read_user_common_parameters(); // $uType, $userOffs, $lpp, search parameters
 verify_user_type();
 compute_user_rights($User, &$canManage, &$canDelete);
 if (!$canDelete) {
-	CampsiteInterface::DisplayError('You do not have the right to delete user accounts.');
+	CampsiteInterface::DisplayError(getGS('You do not have the right to delete user accounts.'));
 	exit;
 }
 
 $userId = Input::Get('User', 'int', 0);
 $editUser = new User($userId);
 if ($editUser->getUserName() == '') {
-	CampsiteInterface::DisplayError('No such user account.');
+	CampsiteInterface::DisplayError(getGS('No such user account.'));
 	exit;
 }
 $typeParam = 'uType=' . urlencode($uType);

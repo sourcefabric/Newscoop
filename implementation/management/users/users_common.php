@@ -14,7 +14,7 @@ function verify_user_type()
 		read_user_common_parameters();
 
 	if ($uType != "Staff" && $uType != "Readers") {
-		CampsiteInterface::DisplayError('Invalid value of user type parameter');
+		CampsiteInterface::DisplayError(getGS('Invalid value of user type parameter'));
 		exit(0);
 	}
 	return $uType;

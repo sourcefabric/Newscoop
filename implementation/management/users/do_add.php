@@ -9,7 +9,7 @@ read_user_common_parameters(); // $uType, $userOffs, $lpp, search parameters
 verify_user_type();
 compute_user_rights($User, &$canManage, &$canDelete);
 if (!$canManage) {
-	CampsiteInterface::DisplayError('You do not have the right to change user account information.');
+	CampsiteInterface::DisplayError(getGS('You do not have the right to change user account information.'));
 	exit;
 }
 
@@ -41,11 +41,13 @@ if ($uType == 'Staff' && $Type == '' && $errorField == '')
 // display errors if found
 if ($errorField != "") {
 	$desc = $notNullFields[$errorField];
-	if ($errorField == 'CountryCode' || $errorField == 'Gender' || $errorField == 'Type')
-		$errorMsg = 'You must select a $1';
-	else
-		$errorMsg = 'You must complete the $1 field.';
-	CampsiteInterface::DisplayError(array($errorMsg, $desc), $backLink);
+	if ($errorField == 'CountryCode' || $errorField == 'Gender' || $errorField == 'Type') {
+		$errorMsg = getGS('You must select a $1', $desc);
+	}
+	else {
+		$errorMsg = getGS('You must complete the $1 field.', $desc);
+	}
+	CampsiteInterface::DisplayError($errorMsg, $backLink);
 	exit;
 }
 
@@ -53,7 +55,7 @@ if ($errorField != "") {
 $password = Input::Get('password', 'string', '');
 $passwordConf = Input::Get('passwordConf', 'string', '');
 if (strlen($password) < 6 || $password != $passwordConf) {
-	CampsiteInterface::DisplayError('The password must be at least 6 characters long and both passwords should match.', $backLink);
+	CampsiteInterface::DisplayError(getGS('The password must be at least 6 characters long and both passwords should match.'), $backLink);
 	exit;
 }
 
@@ -67,7 +69,7 @@ if ($editUser->create($fieldValues)) {
 	Log::Message($logtext, $editUser->getUserName(), 51);
 	header("Location: /$ADMIN/users/edit.php?$typeParam&User=" . $editUser->getId());
 } else {
-	CampsiteInterface::DisplayError('The user account could not be created.', $backLink);
+	CampsiteInterface::DisplayError(getGS('The user account could not be created.'), $backLink);
 	exit;
 }
 
