@@ -38,7 +38,7 @@ query ("SELECT LEFT(NOW(), 10)", 'q_now');
 fetchRowNum($q_now);
 
 // Add extra breadcrumb for image list.
-$extraCrumbs = array("Images"=>"/$ADMIN/pub/issues/sections/articles/images/?Pub=$Pub&Issue=$Issue&Language=$Language&Section=$Section&Article=$Article&sLanguage=$sLanguage");
+$extraCrumbs = array(getGS("Images")=>"/$ADMIN/pub/issues/sections/articles/images/?Pub=$Pub&Issue=$Issue&Language=$Language&Section=$Section&Article=$Article&sLanguage=$sLanguage");
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
 				  'Section' => $sectionObj, 'Article'=>$articleObj);
 CampsiteInterface::ContentTop(getGS("Add new image"), $topArray, true, true, $extraCrumbs);

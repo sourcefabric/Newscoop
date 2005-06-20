@@ -141,11 +141,6 @@ class CampsiteInterface {
 	{
 		global $ADMIN;
 		$script = $popup ? 'ad_popup.php' : 'ad.php';
-		if (is_array($p_errorStr)) {
-			$p_errorStr = call_user_func_array('getGS', $p_errorStr);
-		} else {
-			$p_errorStr = getGS($p_errorStr);
-		}
 		$location = "/$ADMIN/$script?ADReason=".urlencode($p_errorStr);
 		if (!is_null($p_backLink)) {
 			$location .= '&Back='.urlencode($p_backLink);
@@ -195,7 +190,7 @@ class CampsiteInterface {
 	    <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.lang-enUS.js"></script>
 	    <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.validators.js"></script>	
 		<?php } ?>
-		<TITLE><?php putGS($p_title); ?></TITLE>
+		<TITLE><?php p($p_title); ?></TITLE>
 	</HEAD>
 	
 	<BODY>
@@ -203,7 +198,7 @@ class CampsiteInterface {
 	<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
 	<TR>
 		<TD class="page_title">
-		    <?php putGS($p_title); ?>
+		    <?php p($p_title); ?>
 		</TD>
 	<?php 
 	if ($p_includeLinks) {
@@ -215,7 +210,7 @@ class CampsiteInterface {
 				if (is_array($p_extraBreadcrumbs)) {
 					foreach ($p_extraBreadcrumbs as $text => $link) {
 						?>
-						<TD><A HREF="<?php echo $link; ?>" class="breadcrumb" ><?php putGS($text); ?></A></TD>
+						<TD><A HREF="<?php echo $link; ?>" class="breadcrumb" ><?php p($text); ?></A></TD>
 						<td class="breadcrumb_separator">&nbsp;</td>
 						<?php
 					}
