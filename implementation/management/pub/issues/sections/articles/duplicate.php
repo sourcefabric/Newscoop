@@ -7,7 +7,7 @@ if (!$access) {
 	exit;
 }
 if (!$User->hasPermission("AddArticle")) {
-	CampsiteInterface::DisplayError("You do not have the right to add articles.");
+	CampsiteInterface::DisplayError(getGS("You do not have the right to add articles."));
 	exit;
 }
 
@@ -23,31 +23,31 @@ $DestSection = Input::Get('destination_section', 'int', 0, true);
 $BackLink = Input::Get('Back', 'string', "/$ADMIN/pub/issues/sections/articles/index.php", true);
 
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(array('Invalid input: $1', Input::GetErrorString()), $BackLink);
+	CampsiteInterface::DisplayError(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
 	exit;	
 }
 
 $publicationObj =& new Publication($Pub);
 if (!$publicationObj->exists()) {
-	CampsiteInterface::DisplayError('Publication does not exist.');
+	CampsiteInterface::DisplayError(getGS('Publication does not exist.'));
 	exit;	
 }
 
 $issueObj =& new Issue($Pub, $Language, $Issue);
 if (!$issueObj->exists()) {
-	CampsiteInterface::DisplayError('Issue does not exist.');
+	CampsiteInterface::DisplayError(getGS('Issue does not exist.'));
 	exit;	
 }
 
 $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
 if (!$sectionObj->exists()) {
-	CampsiteInterface::DisplayError('Section does not exist.');
+	CampsiteInterface::DisplayError(getGS('Section does not exist.'));
 	exit;	
 }
 
 $articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
 if (!$articleObj->exists()) {
-	CampsiteInterface::DisplayError('Article does not exist.');
+	CampsiteInterface::DisplayError(getGS('Article does not exist.'));
 	exit;
 }
 
@@ -66,7 +66,7 @@ if ($DestIssue > 0) {
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
 				  'Section' => $sectionObj, 'Article'=>$articleObj);
-CampsiteInterface::ContentTop("Duplicate article", $topArray);
+CampsiteInterface::ContentTop(getGS("Duplicate article"), $topArray);
 ?>
 
 <table>

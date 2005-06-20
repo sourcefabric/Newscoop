@@ -8,7 +8,7 @@ if (!$access) {
 	exit;
 }
 if (!$User->hasPermission('ManageSection')) {
-	CampsiteInterface::DisplayError("You do not have the right to change section details");	
+	CampsiteInterface::DisplayError(getGS("You do not have the right to change section details"));	
 	exit;
 }
 $Pub = Input::Get('Pub', 'int', 0);
@@ -28,7 +28,7 @@ if (function_exists ("incModFile")) {
 }
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 'Section' => $sectionObj);
-CampsiteInterface::ContentTop("Configure section", $topArray);
+CampsiteInterface::ContentTop(getGS("Configure section"), $topArray);
 
 ?>
 <P>

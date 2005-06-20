@@ -14,7 +14,7 @@ if (!$access) {
 }
 
 if (!$User->hasPermission('ManageIssue')) {
-	CampsiteInterface::DisplayError('You do not have the right to change issues.');
+	CampsiteInterface::DisplayError(getGS('You do not have the right to change issues.'));
 	exit;
 }
 $Pub = Input::Get('Pub', 'int');
@@ -23,7 +23,7 @@ $Language = Input::Get('Language', 'int');
 $publish_time = Input::Get('publish_time', 'string', '', true);
 
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(array('Invalid Input: $1', Input::GetErrorString()));
+	CampsiteInterface::DisplayError(getGS('Invalid Input: $1', Input::GetErrorString()));
 	exit;
 }
 $publicationObj =& new Publication($Pub);
@@ -48,7 +48,7 @@ if ($publish_time != '') {
 }
 $allEvents =& IssuePublish::GetIssueEvents($Pub, $Issue, $Language);
 
-CampsiteInterface::ContentTop('Issue Publishing Schedule', array('Pub' => $publicationObj, 'Issue' => $issueObj));
+CampsiteInterface::ContentTop(getGS('Issue Publishing Schedule'), array('Pub' => $publicationObj, 'Issue' => $issueObj));
 
 ?>
 

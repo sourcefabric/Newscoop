@@ -8,11 +8,11 @@ if (!$access) {
 	exit;
 }
 if (!$User->hasPermission("ManageSection")) {
-	CampsiteInterface::DisplayError("You do not have the right to add sections.");
+	CampsiteInterface::DisplayError(getGS("You do not have the right to add sections."));
 	exit;
 }
 if (!$User->hasPermission("AddArticle")) {
-	CampsiteInterface::DisplayError("You do not have the right to add articles.");
+	CampsiteInterface::DisplayError(getGS("You do not have the right to add articles."));
 	exit;
 }
 
@@ -28,25 +28,25 @@ $DestIssueLanguage = $tmpStr[1];
 $BackLink = Input::Get('Back', 'string', "/$ADMIN/pub/issues/sections/index.php?Pub=$Pub&Issue=$Issue&Language=$Language", true);
 
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(array("Invalid input: $1", Input::GetErrorString()), $BackLink);
+	CampsiteInterface::DisplayError(getGS("Invalid input: $1", Input::GetErrorString()), $BackLink);
 	exit;	
 }
 
 $publicationObj =& new Publication($Pub);
 if (!$publicationObj->exists()) {
-	CampsiteInterface::DisplayError('Publication does not exist.');
+	CampsiteInterface::DisplayError(getGS('Publication does not exist.'));
 	exit;	
 }
 
 $issueObj =& new Issue($Pub, $Language, $Issue);
 if (!$issueObj->exists()) {
-	CampsiteInterface::DisplayError('Issue does not exist.');
+	CampsiteInterface::DisplayError(getGS('Issue does not exist.'));
 	exit;	
 }
 
 $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
 if (!$sectionObj->exists()) {
-	CampsiteInterface::DisplayError('Section does not exist.');
+	CampsiteInterface::DisplayError(getGS('Section does not exist.'));
 	exit;	
 }
 
@@ -68,7 +68,7 @@ if ($DestIssueId > 0) {
 }
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 'Section' => $sectionObj);
-CampsiteInterface::ContentTop('Duplicate section', $topArray, true, true);
+CampsiteInterface::ContentTop(getGS('Duplicate section'), $topArray, true, true);
 ?>
 <script>
 function CustomValidator_DuplicateSection(form) {

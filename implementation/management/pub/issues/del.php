@@ -13,7 +13,7 @@ if (!$access) {
 }
 
 if (!$User->hasPermission('DeleteIssue')) {
-	CampsiteInterface::DisplayError('You do not have the right to delete issues.');
+	CampsiteInterface::DisplayError(getGS('You do not have the right to delete issues.'));
 	exit;
 }
 $Pub = Input::Get('Pub', 'int');
@@ -21,13 +21,13 @@ $Issue = Input::Get('Issue', 'int');
 $Language = Input::Get('Language', 'int');
 
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(array('Invalid Input: $1', Input::GetErrorString()));	
+	CampsiteInterface::DisplayError(getGS('Invalid Input: $1', Input::GetErrorString()));	
 	exit;
 }
 $publicationObj =& new Publication($Pub);
 $issueObj =& new Issue($Pub, $Language, $Issue);
 
-CampsiteInterface::ContentTop('Delete issue', array('Pub' => $publicationObj, 'Issue' => $issueObj));
+CampsiteInterface::ContentTop(getGS('Delete issue'), array('Pub' => $publicationObj, 'Issue' => $issueObj));
 
 ?>
     

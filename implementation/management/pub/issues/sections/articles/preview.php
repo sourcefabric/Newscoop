@@ -22,13 +22,13 @@ $articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
 
 $errorStr = "";
 if (!$articleObj->exists()) {
-	$errorStr = 'There was an error reading request parameters.';
+	$errorStr = getGS('There was an error reading request parameters.');
 } else {
 	$templateId = $sectionObj->getArticleTemplateId();
 	if ($templateId == 0)
 		$templateId = $issueObj->getArticleTemplateId();
 	if ($templateId == 0)
-		$errorStr = 'This article cannot be previewed. Please make sure it has the article template selected.';
+		$errorStr = getGS('This article cannot be previewed. Please make sure it has the article template selected.');
 }
 
 if ($errorStr != "")

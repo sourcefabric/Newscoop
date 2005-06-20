@@ -195,14 +195,14 @@ $cKeywords = Input::Get('cKeywords');
 $cName = Input::Get('cName');
 
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(array('Invalid input: $1', Input::GetErrorString()), $BackLink);
+	CampsiteInterface::DisplayError(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
 	exit;	
 }
 
 // Fetch article
 $articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
 if (!$articleObj->exists()) {
-	CampsiteInterface::DisplayError('No such article.', $BackLink);
+	CampsiteInterface::DisplayError(getGS('No such article.'), $BackLink);
 }
 
 $articleTypeObj =& $articleObj->getArticleTypeObject();
@@ -218,7 +218,7 @@ foreach ($dbColumns as $dbColumn) {
 $BackLink = "/$ADMIN/pub/issues/sections/articles/index.php?Pub=$Pub&Issue=$Issue&Language=$Language&Section=$Section";
 
 if (!$articleObj->userCanModify($User)) {
-	$errorStr = "You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only changed by authorized users.";
+	$errorStr = getGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only changed by authorized users.");
 	CampsiteInterface::DisplayError($errorStr, $BackLink);
 	exit;
 }
@@ -229,9 +229,8 @@ if ($User->getId() != $articleObj->getLockedByUser()) {
 	$diffSeconds -= $hours * 3600;
 	$minutes = floor($diffSeconds/60);
 	$lockUser =& new User($articleObj->getLockedByUser());
-	$errorStr = 'Could not save the article.  It has been locked by $1 $2 hours and $3 minutes ago.';
-	$errorArray = array($errorStr, $lockUser->getName(), $hours, $minutes);
-	CampsiteInterface::DisplayError($errorArray, $BackLink);
+	$errorStr = getGS('Could not save the article.  It has been locked by $1 $2 hours and $3 minutes ago.', $lockUser->getName(), $hours, $minutes);
+	CampsiteInterface::DisplayError($errorStr, $BackLink);
 	exit;
 }
 

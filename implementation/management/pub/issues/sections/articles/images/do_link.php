@@ -23,26 +23,26 @@ $Article = Input::Get('Article', 'int', 0);
 $ImageId = Input::Get('ImageId', 'int', 0);
 
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(array('Invalid input: $1', Input::GetErrorString()));
+	CampsiteInterface::DisplayError(getGS('Invalid input: $1', Input::GetErrorString()));
 	exit;
 }
 
 $articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
 if (!$articleObj->exists()) {
-	CampsiteInterface::DisplayError('Article does not exist.');
+	CampsiteInterface::DisplayError(getGS('Article does not exist.'));
 	exit;		
 }
 
 $imageObj =& new Image($ImageId);
 if (!$imageObj->exists()) {
-	CampsiteInterface::DisplayError('Image does not exist.');
+	CampsiteInterface::DisplayError(getGS('Image does not exist.'));
 	exit;	
 }
 
 // This file can only be accessed if the user has the right to change articles
 // or the user created this article and it hasnt been published yet.
 if (!$articleObj->userCanModify($User)) {
-	CampsiteInterface::DisplayError("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only changed by authorized users.");
+	CampsiteInterface::DisplayError(getGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only changed by authorized users."));
 	exit;		
 }
 

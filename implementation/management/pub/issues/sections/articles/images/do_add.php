@@ -18,7 +18,7 @@ if (!$access) {
 	exit;
 }
 if (!$User->hasPermission('AddImage')) {
-	CampsiteInterface::DisplayError('You do not have the right to add images' );
+	CampsiteInterface::DisplayError(getGS('You do not have the right to add images' ));
 	exit;
 }
 
@@ -36,7 +36,7 @@ $cDate = Input::Get('cDate');
 $cURL = Input::Get('cURL', 'string', '', true);
 
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(array('Invalid input: $1', Input::GetErrorString()));
+	CampsiteInterface::DisplayError(getGS('Invalid input: $1', Input::GetErrorString()));
 	exit;			
 }
 

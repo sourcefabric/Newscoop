@@ -16,13 +16,13 @@ if (!$access) {
 if (!$User->hasPermission('DeleteLanguages')) {
     print_r($User);
     exit;
-	CampsiteInterface::DisplayError("You do not have the right to delete languages.");
+	CampsiteInterface::DisplayError(getGS("You do not have the right to delete languages."));
 	exit;
 }
 
 $Language = Input::Get('Language', 'int');
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(array('Invalid input: $1', Input::GetErrorString()), $BackLink);
+	CampsiteInterface::DisplayError(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
 	exit;    
 }
 

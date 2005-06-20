@@ -18,7 +18,7 @@ $ArticleOffset = Input::Get('ArtOffs', 'int', 0, true);
 $ArticlesPerPage = Input::Get('lpp', 'int', 10, true);
 
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(array('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+	CampsiteInterface::DisplayError(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
 	exit;	
 }
 
@@ -28,19 +28,19 @@ if ($ArticleOffset < 0) {
 
 $publicationObj =& new Publication($Pub);
 if (!$publicationObj->exists()) {
-	CampsiteInterface::DisplayError('Publication does not exist.');
+	CampsiteInterface::DisplayError(getGS('Publication does not exist.'));
 	exit;	
 }
 
 $issueObj =& new Issue($Pub, $Language, $Issue);
 if (!$issueObj->exists()) {
-	CampsiteInterface::DisplayError('Issue does not exist.');
+	CampsiteInterface::DisplayError(getGS('Issue does not exist.'));
 	exit;	
 }
 
 $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
 if (!$sectionObj->exists()) {
-	CampsiteInterface::DisplayError('Section does not exist.', $BackLink);
+	CampsiteInterface::DisplayError(getGS('Section does not exist.'), $BackLink);
 	exit;		
 }
 
@@ -68,7 +68,7 @@ $previousArticleId = 0;
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
 				  'Section' => $sectionObj);
-CampsiteInterface::ContentTop('Articles', $topArray);
+CampsiteInterface::ContentTop(getGS('Articles'), $topArray);
 ?>
 <P>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" WIDTH="100%">

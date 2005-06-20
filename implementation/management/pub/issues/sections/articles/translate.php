@@ -17,35 +17,35 @@ $sLanguage = Input::Get('sLanguage', 'int', 0);
 $BackLink = Input::Get('Back', 'string', "/$ADMIN/pub/issues/sections/articles/", true);
 
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(array('Invalid input: $1', Input::GetErrorString()), $BackLink);
+	CampsiteInterface::DisplayError(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
 	exit;	
 }
 $publicationObj =& new Publication($Pub);
 if (!$publicationObj->exists()) {
-	CampsiteInterface::DisplayError('Publication does not exist.', $BackLink);
+	CampsiteInterface::DisplayError(getGS('Publication does not exist.'), $BackLink);
 	exit;	
 }
 
 $issueObj =& new Issue($Pub, $Language, $Issue);
 if (!$issueObj->exists()) {
-	CampsiteInterface::DisplayError('No such issue.', $BackLink);
+	CampsiteInterface::DisplayError(getGS('No such issue.'), $BackLink);
 	exit;	
 }
 
 $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
 if (!$sectionObj->exists()) {
-	CampsiteInterface::DisplayError('No such section.', $BackLink);
+	CampsiteInterface::DisplayError(getGS('No such section.'), $BackLink);
 	exit;		
 }
 
 $articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
 if (!$articleObj->exists()) {
-	CampsiteInterface::DisplayError('Article does not exist.', $BackLink);
+	CampsiteInterface::DisplayError(getGS('Article does not exist.'), $BackLink);
 	exit;
 }
 
 if (!$articleObj->userCanModify($User)) {
-	$errorStr = 'You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only changed by authorized users.';
+	$errorStr = getGS('You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only changed by authorized users.');
 	CampsiteInterface::DisplayError($errorStr, $BackLink);
 	exit;	
 }
@@ -62,7 +62,7 @@ $articleLanguages = DbObjectArray::GetColumn($articleLanguages, "Id");
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
 				  'Section' => $sectionObj, 'Article'=>$articleObj);
-CampsiteInterface::ContentTop('Translate article', $topArray, true, true);
+CampsiteInterface::ContentTop(getGS('Translate article'), $topArray, true, true);
 ?>
 <table>
 <tr>

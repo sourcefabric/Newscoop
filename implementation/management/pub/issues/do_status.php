@@ -18,13 +18,13 @@ $Issue = Input::Get('Issue', 'int');
 $Language = Input::Get('Language', 'int');
 
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(array('Invalid Input: $1', Input::GetErrorString()));
+	CampsiteInterface::DisplayError(getGS('Invalid Input: $1', Input::GetErrorString()));
 	exit;
 }
 
 if (!$User->hasPermission('ManageIssue') || !$User->hasPermission('Publish')) {
 	$BackLink ="/admin/pub/issues/?Pub=$Pub&Language=$Language";
-	CampsiteInterface::DisplayError('You do not have the right to change issues.');
+	CampsiteInterface::DisplayError(getGS('You do not have the right to change issues.'));
 	exit;
 }
 
@@ -44,7 +44,7 @@ else {
 	$t3=getGS('Not published');
 } 
 
-CampsiteInterface::ContentTop('Changing issue status', array('Pub' => $publicationObj, 'Issue' => $issueObj));
+CampsiteInterface::ContentTop(getGS('Changing issue status'), array('Pub' => $publicationObj, 'Issue' => $issueObj));
 ?> 
 
 <P>

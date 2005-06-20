@@ -8,7 +8,7 @@ if (!$access) {
 }
 
 if (!$User->hasPermission('ManageSection')) {
-	CampsiteInterface::DisplayError("You do not have the right to add sections.");	
+	CampsiteInterface::DisplayError(getGS("You do not have the right to add sections."));	
 	exit;
 }
 
@@ -17,7 +17,7 @@ $Issue = Input::Get('Issue', 'int', 0);
 $Language = Input::Get('Language', 'int', 0);
 
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(array('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+	CampsiteInterface::DisplayError(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
 	exit;		
 }
 $publicationObj =& new Publication($Pub);
@@ -30,7 +30,7 @@ if (function_exists ("incModFile")) {
 }
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj);
-CampsiteInterface::ContentTop('Add new section', $topArray);
+CampsiteInterface::ContentTop(getGS('Add new section'), $topArray);
 
 ?>
 <P>

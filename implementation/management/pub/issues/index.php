@@ -22,14 +22,14 @@ if ($IssOffs < 0) {
 $ItemsPerPage = 20;
 
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(array('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+	CampsiteInterface::DisplayError(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
 	exit;	
 }
 $publicationObj =& new Publication($Pub);
 $allIssues = Issue::GetIssues($Pub, null, null, $publicationObj->getLanguageId(), array('LIMIT' => array('START' => $IssOffs, 'MAX_ROWS'=> $ItemsPerPage)));
 $totalIssues = Issue::GetNumIssues($Pub);
 
-CampsiteInterface::ContentTop('Issues', array('Pub' => $publicationObj));
+CampsiteInterface::ContentTop(getGS('Issues'), array('Pub' => $publicationObj));
 
 if ($User->hasPermission('ManageIssue')) {
 	if (Issue::GetNumIssues($Pub) <= 0) {
