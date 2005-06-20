@@ -44,8 +44,7 @@ foreach ($publications as $publication) {
 	foreach ($issues[$publication->getPublicationId()] as $issue) {
 		$sections[$issue->getPublicationId()][$issue->getIssueId()][$issue->getLanguageId()] = 
 			Section::GetSections($issue->getPublicationId(), 
-				$issue->getIssueId(), 
-				$issue->getLanguageId());
+				$issue->getIssueId(), $issue->getLanguageId());
 	}
 }
 ?>
@@ -75,7 +74,7 @@ foreach ($publications as $publication) {
 	    			foreach ($issues[$pubId] as $issue) {
 	    				$issueId = $issue->getIssueId();
 	    				$languageId = $issue->getLanguageId();
-		    			?>['<img src="/<?php p($ADMIN); ?>/img/tol.gif"/>', '<?php p(htmlspecialchars($issue->getName())); ?>', '/<?php p($ADMIN); ?>/pub/issues/sections/index.php?Pub=<?php p($pubId); ?>&Issue=<?php p($issueId); ?>&Language=<?php p($languageId); ?>', '', ''
+		    			?>['<img src="/<?php p($ADMIN); ?>/img/tol.gif"/>', '<?php p(htmlspecialchars($issue->getName().' ('.$issue->getLanguageName().')')); ?>', '/<?php p($ADMIN); ?>/pub/issues/sections/index.php?Pub=<?php p($pubId); ?>&Issue=<?php p($issueId); ?>&Language=<?php p($languageId); ?>', '', ''
 		    			<?php
 		    			if (isset($sections[$pubId][$issueId][$languageId])) {
 			    			echo ",\n";
