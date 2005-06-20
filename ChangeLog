@@ -1,4 +1,4 @@
-2.2.2
+2.2.2 (April 29, 2005)
     - updated FreeBSD install documentation
     - updated the manual (added extra information about upgrading from older 
     versions)
@@ -21,7 +21,7 @@
         - minor Fedora related bugs
         - minor template engine bugs
 
-2.2.1
+2.2.1 (April 23, 2005)
     - bugs #0748, #0779: Installation fixes for FreeBSD, Fedora, & Ubuntu
     - bug #0882: Image Manager doesn't work when changing default installation
     settings.
@@ -30,7 +30,7 @@
     - bug #0963: "print image <number> description" doesn't work
     - bug #0728: Gracefully handle the case when PEAR isn't in the path
 
-2.2.0 (April 14th, 2005)
+2.2.0 (April 14, 2005)
     - Improve management of multiple instances of CAMPSITE on a single server
     (new instances can be created without reinstalling Campsite)
     - Allow editors/journalists to change and set the order of articles
@@ -47,10 +47,10 @@
     additional features such as image display inside the article.
     - New admin interface (pretty icons, dropdown menu, no more frames)
 
-2.1.8 (April 24th, 2005)
+2.1.8 (April 24, 2005)
     - Installation fixes for Fedora & Ubuntu
-    
-2.1.7 (April 11th, 2005)
+
+2.1.7 (April 11, 2005)
     - Implemented "Print Topic Identifier" and "Print User Identifier"
     - Check if cookies were modified in a certain way to allow invalid user login
     - Do not allow operations outside look directory for the following scripts:
@@ -64,14 +64,14 @@
         - directory create script
         - directory delete script
 
-2.1.6 (February 9th, 2005)
+2.1.6 (February 9, 2005)
     - Implemented new "Topic", "If Topic" and "Print Topic" statements
     - Added new environment attribute: topic; this affects articles lists and
     is forwarded as an URL parameter
     - Added new attributes to "List Issue" statement
     - Many bug fixes
 
-2.1.5
+2.1.5 (March 26, 2004)
     - Added Chinese translation thanks to Andrew Lih and Tian Fawei at Hong Kong
     University, Journalism and Media Studies Centre
     - Added Arabic localization (thanks to folks at www.rightsmedia.org in 
@@ -84,7 +84,7 @@
     - Added Arabic translation
     - Many bug fixes
 
-2.1.4
+2.1.4 (October 20, 2003)
     - Changed the image buttons to text buttons which are easy to translate
     - Fixed bug 178: Some admin rights not added by default when admin account
     created
@@ -93,7 +93,7 @@
     invalid template was included (previously it would display an empty page)
     - Other bug fixes
 
-2.1.3
+2.1.3 (July 8, 2003)
     - Manual updates: some statements were not documented: "If Search"
     (3.9.3.22), "Print Search" (3.9.4.2), "If Subtitle" (3.9.3.23); manual
     corrections
@@ -106,7 +106,7 @@
     subtitle list will display the current subtitle in the list instead of the
     subtitle set at the beginning of the template
 
-2.1.2
+2.1.2 (April 23, 2003)
     - Ported campsite to FreeBSD (thanks to Richard Airlie)
     - Started the port to OpenBSD (thanks to Richard Airlie)
     - Small bug fixes
@@ -119,7 +119,7 @@
     - Added Portuguese translation (thanks to Guilherme Henrique Soares)
     - Replaced AUTHORS with updated CREDITS file
 
-2.1.1
+2.1.1 (February 21, 2003)
     - Added new languages: Serbian (Cyrillic), Spanish, Bosnian and updated
     the other translations
     - Improved template management user interface; allow users whithout write
@@ -132,7 +132,7 @@
     - Improved the manual: detailed database conversion, corrections
     - Other bug fixes
 
-2.1.0
+2.1.0 (November 10, 2002)
     - The application is divided into modules that can be installed on
     different systems (increased scalability)
     - Multiple instances of campsite can be installed on the same system
@@ -169,13 +169,13 @@
     - Added an exhaustive list of countries to campsite database
 
 
-2.0.12
+2.0.12 (October 29, 2001)
     - Set login username/password fields to size 10
     - Add If Language statement (see manual: 3.9.1.26)
     - Updated manual: added With statement description: 3.9.1.27
     - Fixed content type/charset string to work for netscape browser
 
-2.0.11
+2.0.11 (August 9, 2001)
     - When adding a new subscription to a publication add the sections too
     - Admin interface, subscription-section: the section is now selectable
     from a list instead of letting you type the section number
@@ -221,28 +221,31 @@
     - Fixed some incorrect parser hash locks
     - Fixed incorrect use of is, not, greater, smaller operators in if statements
 
-2.0.10
+2.0.10 (July 24, 2001)
     - Fixed the 'Back to article details' bug
     - Removed the weird message from 'Old images'
     - Fixed the language selection in lists bug
 
-2.0.9
+2.0.9 (July 3, 2001)
     - Fixed incorrect timestamp update on event notify
     - Fixed mysqlclient library link problem on RedHat systems
 
-2.0.8
+2.0.8 (June 18, 2001)
     - Fixed internal links bug (select proper template according to link
     publication)
     - Fixed incorrect parsing of "list ... article ... keyword <keyword>" bug
 
-2.0.6 (May, 14th 2001)
+2.0.7 (May 14, 2001)
+    - Small bugfixes
+
+2.0.6 (April 5, 2001)
     - Fixed search list order bug. The parser did not list in the requested
     order the list of searched articles
 
 2.0.1-2.0.5
     - Fixed install bugs
 
-2.0.0 (March 13th 2001):
+2.0.0 (March 13, 2001):
     - New items: README, implementation/tpl_cgi, documentation/example,
     documentation/http-config
     - General:
