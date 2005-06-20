@@ -111,7 +111,7 @@ function camp_time_diff_str($p_time1, $p_time2 = null)
 	$diffSeconds -= $hours * 3600;
 	$minutes = floor($diffSeconds/60);
 	$diffSeconds -= $minutes * 60;
-	return array('days' => $days, 'hours' => $hours, 'minutes' => $minutes, 'seconds' => $seconds);
+	return array('days' => $days, 'hours' => $hours, 'minutes' => $minutes, 'seconds' => $diffSeconds);
 } // fn camp_time_diff_str
 	
 
