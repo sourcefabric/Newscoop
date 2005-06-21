@@ -33,7 +33,7 @@ function check_basic_access($p_request, $p_exit = true)
 	 	|| !is_numeric($p_request['TOL_UserId']) || !is_numeric($p_request['TOL_UserKey'])) {
 		return array($access, $user, $XPerm);
 	}
-    
+	
 	// Check if user exists in the table.
 	$queryStr = 'SELECT * FROM Users '
 				.' WHERE Id='.$p_request['TOL_UserId'];
@@ -48,12 +48,12 @@ function check_basic_access($p_request, $p_exit = true)
 		if (!$user->isAdmin()) {
 			// A non-admin can enter the administration area;
 			// they exist but do not have ANY rights.
-//			$access = 0;
-//			if ($p_exit) {
-//				header("Location: /$ADMIN/logout.php");
-//				exit(0);
-//			}
-
+			$access = 0;
+			$user = array();
+			if ($p_exit && false) {
+				header("Location: /$ADMIN/logout.php");
+				exit(0);
+			}
 		}
 	}
 	return array($access, $user);
