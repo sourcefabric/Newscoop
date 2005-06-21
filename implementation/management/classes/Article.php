@@ -140,14 +140,30 @@ class Article extends DatabaseObject {
 		$values['ShortName'] = $this->m_data['Number'];
 		$values['Type'] = $p_articleType;
 		$values['Public'] = 'Y';
-		$values['ArticleOrder'] = $this->m_data['Number'];
+
+		// compute article order number
+		$queryStr = 'SELECT MIN(ArticleOrder) AS min FROM Articles WHERE IdPublication = '
+		          . $this->m_data['IdPublication'] . ' AND NrIssue = ' . $this->m_data['NrIssue']
+		          . ' and NrSection = ' . $this->m_data['NrSection'];
+		$articleOrder = $Campsite['db']->GetOne($queryStr) - 1;
+		if ($articleOrder < 0)
+			$articleOrder = $this->m_data['Number'];
+		if ($articleOrder == 0) {
+			$queryStr = 'UPDATE Articles SET ArticleOrder = ArticleOrder + 1 WHERE IdPublication = '
+			          . $this->m_data['IdPublication'] . ' AND NrIssue = ' . $this->m_data['NrIssue']
+			          . ' AND NrSection = ' . $this->m_data['NrSection'];
+			$Campsite['db']->Execute($queryStr);
+			$articleOrder = 1;
+		}
+		$values['ArticleOrder'] = $articleOrder;
+	
 		$success = parent::create($values);
 		if (!$success) {
 			return;
 		}
 		$this->setProperty('UploadDate', 'NOW()', true, true);
 		$this->fetch();
-	
+
 		// Insert an entry into the article type table.
 		$articleData =& new ArticleType($this->m_data['Type'], 
 			$this->m_data['Number'], 
