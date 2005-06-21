@@ -177,7 +177,7 @@ class User extends DatabaseObject {
 	 */
 	function isAdmin() 
 	{
-		return (count($this->m_permissions) > 0);
+		return $this->getProperty('Reader') == 'N';
 	} // fn isAdmin
 
 
