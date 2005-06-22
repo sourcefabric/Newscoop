@@ -46,7 +46,7 @@ regGS("on", "on");
 regGS("status", "status");
 regGS("active", "active");
 regGS("inactive", "inactive");
-regGS("Readers", "Readers");
+regGS("Subscribers", "Subscribers");
 regGS("Staff", "Staff");
 regGS("Select destination", "Select destination");
 regGS("No languages", "No languages");

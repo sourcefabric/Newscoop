@@ -20,7 +20,7 @@ if ($editUser->getUserName() == '') {
 	exit;
 }
 $typeParam = 'uType=' . urlencode($uType);
-$isReader = $uType == 'Readers' ? 'Y' : 'N';
+$isReader = $uType == 'Subscribers' ? 'Y' : 'N';
 
 $rightsFields = array('cManagePub'=>'N', 'cDeletePub'=>'N', 'cManageIssue'=>'N', 'cDeleteIssue'=>'N',
 	'cManageSection'=>'N', 'cDeleteSection'=>'N', 'cAddArticle'=>'N', 'cChangeArticle'=>'N',

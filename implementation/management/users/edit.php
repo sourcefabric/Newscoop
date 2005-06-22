@@ -9,7 +9,7 @@ verify_user_type();
 compute_user_rights($User, &$canManage, &$canDelete);
 
 $typeParam = 'uType=' . urlencode($uType);
-$isReader = $uType == 'Readers' ? 'Y' : 'N';
+$isReader = $uType == 'Subscribers' ? 'Y' : 'N';
 
 $userId = Input::Get('User', 'int', 0);
 if ($userId > 0) {
@@ -46,14 +46,14 @@ if ($userId > 0) {
 <?php
 if ($uType == 'Staff')
 	require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/rights.php");
-if ($uType == 'Readers')
+if ($uType == 'Subscribers')
 	require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/subscriptions.php");
 ?>
 	</td>
 </tr>
 <tr>
 	<td valign="top">
-<?php if ($uType == 'Readers') { ?>
+<?php if ($uType == 'Subscribers') { ?>
 	<?php require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/ipaccesslist.php"); ?>
 <?php } ?>
 	</td>

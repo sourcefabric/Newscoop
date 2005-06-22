@@ -13,7 +13,7 @@ function verify_user_type()
 	if (!isset($uType))
 		read_user_common_parameters();
 
-	if ($uType != "Staff" && $uType != "Readers") {
+	if ($uType != "Staff" && $uType != "Subscribers") {
 		CampsiteInterface::DisplayError(getGS('Invalid value of user type parameter'));
 		exit(0);
 	}
@@ -33,7 +33,7 @@ function read_user_common_parameters()
 	$full_name = Input::Get('full_name', 'string', '');
 	$user_name = Input::Get('user_name', 'string', '');
 	$email = Input::Get('email', 'string', '');
-	if ($uType == "Readers") {
+	if ($uType == "Subscribers") {
 		$subscription_how = Input::Get('subscription_how', 'string', '');
 		$subscription_when = Input::Get('subscription_when', 'string', '');
 		$subscription_date = Input::Get('subscription_date', 'string', '');
@@ -52,7 +52,7 @@ function compute_user_rights($User, &$canManage, &$canDelete)
 		$canManage = $User->hasPermission('ManageUsers');
 		$canDelete = $User->hasPermission('DeleteUsers');
 	}
-	if ($uType == 'Readers') {
+	if ($uType == 'Subscribers') {
 		$canManage = $User->hasPermission('ManageReaders');
 		$canDelete = $User->hasPermission('ManageReaders');
 	}

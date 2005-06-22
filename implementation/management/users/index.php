@@ -9,7 +9,7 @@ verify_user_type();
 compute_user_rights($User, &$canManage, &$canDelete);
 
 $typeParam = 'uType=' . urlencode($uType);
-$isReader = $uType == 'Readers' ? 'Y' : 'N';
+$isReader = $uType == 'Subscribers' ? 'Y' : 'N';
 
 ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
@@ -47,7 +47,7 @@ if ($canManage) {
 	<td><input type="text" name="email" value="<?php pencHTML($email); ?>" class="input_text" style="width: 150px;"></td>
 	<td><input type="submit" name="submit_button" value="<?php putGS("Search"); ?>" class="button"></td>
 </tr>
-<?php if ($uType == "Readers") { ?>
+<?php if ($uType == "Subscribers") { ?>
 <tr>
 	<td colspan="11" align="center">
 		<?php putGS("Subscription"); ?>&nbsp;
@@ -115,7 +115,7 @@ if ($NUM_ROWS) {
 		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php putGS("Full Name"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php putGS("User Name"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php putGS("E-Mail"); ?></B></TD>
-<?php if ($uType == "Readers" && $User->hasPermission("ManageSubscriptions")) { ?>
+<?php if ($uType == "Subscribers" && $User->hasPermission("ManageSubscriptions")) { ?>
 		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php putGS("Subscriptions"); ?></B></TD>
 <?php } ?>
 <?php if ($canDelete) { ?>
@@ -150,7 +150,7 @@ for($loop = 0; $loop < $last; $loop++) {
 ?>
 		<TD><a href="?<?php echo get_user_urlparams(); ?>">
 			<?php pgetHVar($Users,'EMail'); ?></TD>
-<?php if ($uType == "Readers" && $User->hasPermission("ManageSubscriptions")) { ?>
+<?php if ($uType == "Subscribers" && $User->hasPermission("ManageSubscriptions")) { ?>
 		<td><a href="<?php echo "/$ADMIN/users/subscriptions/?User=$userId"; ?>">
 			<?php putGS("Subscriptions"); ?></td>
 <?php } ?>

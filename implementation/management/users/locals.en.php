@@ -1,7 +1,7 @@
 <?php 
 // -- index.m4
 regGS("Staff management","Staff management:en");
-regGS("Readers management","Readers management:en");
+regGS("Subscribers management","Subscribers management:en");
 regGS("Set","Set:en");
 regGS("Update","Update:en");
 regGS("Rights","Rights:en");

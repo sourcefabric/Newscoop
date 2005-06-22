@@ -6,7 +6,7 @@ require_once($_SERVER['DOCUMENT_ROOT']. "/classes/Log.php");
 list($access, $User) = check_basic_access($_REQUEST);
 
 read_user_common_parameters(); // $uType, $userOffs, $lpp, search parameters
-$uType = 'Readers';
+$uType = 'Subscribers';
 compute_user_rights($User, &$canManage, &$canDelete);
 if (!$canManage) {
 	CampsiteInterface::DisplayError(getGS('You do not have the right to change user account information.'));
@@ -30,6 +30,6 @@ if ($NUM_ROWS) {
 	Log::Message($logtext, $editUser->getUserName(), 58);
 }
 
-header("Location: /$ADMIN/users/edit.php?uType=Readers&User=$userId");
+header("Location: /$ADMIN/users/edit.php?uType=Subscribers&User=$userId");
 
 ?>
