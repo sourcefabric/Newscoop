@@ -182,11 +182,11 @@ class Article extends DatabaseObject {
 	 * @param int $p_destSection -
 	 * 		The destination section ID.
 	 * @param int $p_userId -
-	 *		The user creating the copy.
+	 *		The user creating the copy.  If null, keep the same user ID as the original.
 	 * @return Article
 	 *		The copied Article object.
 	 */
-	function copy($p_destPublication, $p_destIssue, $p_destSection, $p_userId) 
+	function copy($p_destPublication, $p_destIssue, $p_destSection, $p_userId = null) 
 	{
 		global $Campsite;
 		// Create the duplicate article object.
@@ -195,7 +195,12 @@ class Article extends DatabaseObject {
 		$articleCopy->create($this->m_data['Type']);
 		
 		// Change some attributes
-		$articleCopy->m_data['IdUser'] = $p_userId;
+		if (!is_null($p_userId)) {
+            $articleCopy->m_data['IdUser'] = $p_userId;
+		}
+		else {
+		    $articleCopy->m_data['IdUser'] = $this->m_data['IdUser'];
+		}
 		$articleCopy->m_data['Published'] = 'N';
 		$articleCopy->m_data['IsIndexed'] = 'N';		
 		$articleCopy->m_data['LockUser'] = 0;
