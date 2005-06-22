@@ -40,14 +40,22 @@ CampsiteInterface::ContentTop(getGS('Delete section'), $topArray);
 	</TR>
 		<FORM METHOD="POST" ACTION="do_del.php">
 	<TR>
-		<TD COLSPAN="2"><BLOCKQUOTE><LI><?php  putGS('Are you sure you want to delete the section $1?','<B>'.htmlspecialchars($sectionObj->getName()).'</B>'); ?></LI></BLOCKQUOTE></TD>
+		<TD COLSPAN="2" align="center"><?php  putGS('Are you sure you want to delete the section $1?','<B>'.htmlspecialchars($sectionObj->getName()).'</B>'); ?></TD>
 	</TR>
 	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS("Subscriptions"); ?>:</TD>
 		<TD>
-		<INPUT TYPE="checkbox" checked NAME="cSubs" class="input_checkbox"> <?php  putGS("Delete section from all subscriptions."); ?>
+		<INPUT TYPE="checkbox" checked NAME="f_delete_subscriptions" class="input_checkbox"> <?php  putGS("Delete section from all subscriptions."); ?>
 		</TD>
 	</TR>
+	<?php if ($User->hasPermission('DeleteArticle')) { ?>
+	<TR>
+		<TD ALIGN="RIGHT" ><?php  putGS("Articles"); ?>:</TD>
+		<TD>
+		<INPUT TYPE="checkbox" NAME="f_delete_articles" class="input_checkbox"> <?php  putGS("Delete all articles from the section."); ?>
+		</TD>
+	</TR>
+	<?php } ?>
 	<TR>
 		<TD COLSPAN="2">
 		<DIV ALIGN="CENTER">
