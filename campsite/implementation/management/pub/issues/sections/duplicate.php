@@ -22,9 +22,13 @@ $Section = Input::Get('Section', 'int', 0);
 $Language = Input::Get('Language', 'int', 0);
 $DestPublicationId = Input::Get('destination_publication', 'int', 0, true);
 $DestIssueInput = Input::Get('destination_issue', 'string', 0, true);
-$tmpStr = split('_', $DestIssueInput);
-$DestIssueId = $tmpStr[0];
-$DestIssueLanguage = $tmpStr[1];
+$DestIssueId = 0;
+$DestIssueLanguage = 0;
+if ($DestIssueInput != 0) {
+    $tmpStr = split('_', $DestIssueInput);
+    $DestIssueId = $tmpStr[0];
+    $DestIssueLanguage = $tmpStr[1];
+}
 $BackLink = Input::Get('Back', 'string', "/$ADMIN/pub/issues/sections/index.php?Pub=$Pub&Issue=$Issue&Language=$Language", true);
 
 if (!Input::IsValid()) {
@@ -72,16 +76,42 @@ CampsiteInterface::ContentTop(getGS('Duplicate section'), $topArray, true, true)
 ?>
 <script>
 function CustomValidator_DuplicateSection(form) {
+    // Verify radio button checked
+    if (!form.section_chooser[0].checked && !form.section_chooser[1].checked) {
+        alert("<?php putGS("Please select either '$1' or '$2'.", getGS('Existing Section'), getGS('New Section')); ?>");
+        return false;
+    }
+    
+    // Existing section checking
     if (form.section_chooser[0].checked && (form.destination_section_existing.selectedIndex == 0)) {
         alert('<?php putGS("You must select a section."); ?>');
         return false;
     }
-    if (form.section_chooser[1].checked && (form.destination_section_new.value.trim() == "")) {
+    
+    // New Section checking
+    // Verify there is a number for the section
+    newSectionNumber = form.destination_section_new_id.value.trim();
+    if (form.section_chooser[1].checked && (newSectionNumber == "")) {
         alert('<?php putGS("You must select a section."); ?>');
         return false;
-    }   
-    return validateForm(form, 0, 1, 0, 1, 8);
-}
+    }
+    
+    // Verify there is a name for the section
+    if (form.section_chooser[1].checked && (form.destination_section_new_name.value.trim() == "")) {
+        alert('<?php putGS("You must specify a name for the section."); ?>');
+        return false;
+    }
+    
+    // Check if user specified an existing section in the "New Section" dialog.
+    existingSections = [ <?php p(implode(',', DbObjectArray::GetColumn($allSections, 'Number'))); ?> ];
+    for (i = 0; i < existingSections.length; i++ ) {
+        if (newSectionNumber == existingSections[i]) {
+            alert('<?php putGS("The section number specified already exists, please specify a different value or use the dropdown to find an existing section."); ?>');
+            return false;   
+        }
+    }
+    return true;
+} // fn CustomValidator_DuplicateSection
 </script>
 
 
@@ -188,8 +218,8 @@ if ( ($Pub == $DestPublicationId) && ($Issue == $DestIssueId)) { ?>
 	<td style="padding-left: 40px; padding-top: 10px;">
 	   <table cellpadding="0" cellspacing="0">
 	   <tr>
-	       <td style="border-top: 1px solid black; border-left: 1px solid black; padding-top: 5px;  padding-bottom: 5px;">
-	           <input type="radio" name="section_chooser" value="existing_section" <?php if ($DestIssueId <= 0) { ?> disabled <?php }?> alt="radio" emsg="<?php putGS("Please select either '$1' or '$2'", getGS('Existing Section'), getGS('New Section Number')); ?>">
+	       <td style="border-top: 1px solid black; border-left: 1px solid black; padding-top: 5px;  padding-bottom: 5px;" valign="top">
+	           <input type="radio" name="section_chooser" value="existing_section" <?php if ($DestIssueId <= 0) { ?> disabled <?php }?>>
 	       </td>
 	       <td style="padding-top: 8px; padding-bottom: 3px;">
 	           <?php putGS("Existing Section"); ?>:
@@ -230,16 +260,46 @@ if ( ($Pub == $DestPublicationId) && ($Issue == $DestIssueId)) { ?>
 	<td style="padding-left: 40px;">
 	   <table cellpadding="0" cellspacing="0">
 	   <tr>
-	       <td style="border-bottom: 1px solid black; border-left: 1px solid black; padding-bottom: 5px;">
+	       <td style="border-left: 1px solid black; padding-bottom: 5px;" valign="top">
 	           <input type="radio" name="section_chooser" value="new_section" <?php if ($DestIssueId <= 0) { ?> disabled <?php }?>>
 	       </td>
 	       <td style="padding-top: 3px; padding-bottom: 5px; padding-right: 10px;">
-	           <?php putGS("New Section Number"); ?>:
+	           <?php putGS("New Section"); ?>:
 	       </td>
 	   </tr>
 	   </table>
 	</td>
-	<td><input type="text" class="input_text" name="destination_section_new" size="4" maxlength="4" value="<?php echo $Section; ?>" <?php if (($DestPublicationId <= 0) || ($DestIssueId <= 0)) { ?>disabled<?php } ?> onclick="this.form.section_chooser[1].checked = true;">
+	<td>
+	   <table cellpadding="0" cellspacing="0">
+	   <tr>
+	       <td style="width: 5em;"><?php putGS("Number"); ?>:</td>
+	       <td><input type="text" class="input_text" name="destination_section_new_id" size="4" maxlength="4" value="<?php echo $Section; ?>" <?php if (($DestPublicationId <= 0) || ($DestIssueId <= 0)) { ?>disabled<?php } ?> onclick="this.form.section_chooser[1].checked = true;"></td>
+	   </tr>
+	   </table>
+	</td>
+</tr>
+
+<tr>
+	<td style="padding-left: 40px;">
+	   <table cellpadding="0" cellspacing="0">
+	   <tr>
+	       <td style="border-bottom: 1px solid black; border-left: 1px solid black; padding-bottom: 5px;">
+	           <!-- This radio button is here to make the border match the top border -->
+	           <input type="radio" name="" value="" disabled style="visibility:hidden;">
+	       </td>
+	       <td style="padding-top: 3px; padding-bottom: 5px; padding-right: 10px;">
+	           &nbsp;
+	       </td>
+	   </tr>
+	   </table>
+	</td>
+	<td>
+        <table cellpadding="0" cellspacing="0">
+        <tr>
+           <td style="width: 5em;"><?php putGS("Name"); ?>:</td>
+           <td><input type="text" class="input_text" name="destination_section_new_name" size="20" value="<?php echo $sectionObj->getName(); ?>" <?php if (($DestPublicationId <= 0) || ($DestIssueId <= 0)) { ?>disabled<?php } ?> onclick="this.form.section_chooser[1].checked = true;"></td>
+        </tr>
+        </table>
 	</td>
 </tr>
 
@@ -252,7 +312,7 @@ if ( ($Pub == $DestPublicationId) && ($Issue == $DestIssueId)) { ?>
 		   </td>
 		   
 		   <td style="padding-left: 5px;">
-		      <INPUT TYPE="submit" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='<?php p($BackLink); ?>'" class="button">
+		      <INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='<?php p($BackLink); ?>'" class="button">
 		   </td>
 	   </tr>
 	   </table>
