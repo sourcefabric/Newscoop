@@ -4,6 +4,8 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
 load_common_include_files("$ADMIN_DIR/pub/issues");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Publication.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Issue.php');
 
 // Check permissions
 list($access, $User) = check_basic_access($_REQUEST);
@@ -30,7 +32,7 @@ $issueObj =& new Issue($Pub, $Language, $Issue);
 CampsiteInterface::ContentTop(getGS('Delete issue'), array('Pub' => $publicationObj, 'Issue' => $issueObj));
 
 ?>
-    
+
 <P>
 <CENTER>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box" ALIGN="CENTER">
