@@ -25,13 +25,14 @@ $Language = Input::Get('Language', 'int', 0);
 $DestPublicationId = Input::Get('destination_publication', 'int', 0);
 $DestIssueId = Input::Get('destination_issue', 'int', 0);
 $DestIssueLanguageId = Input::Get('destination_issue_language', 'int', 0);;
-$sectionChooser = Input::Get('section_chooser', 'string', 'new_section');
-if ($sectionChooser == 'new_section') {
-    $DestSectionId = Input::Get('destination_section_new', 'int', 0, true);
+$radioButton = Input::Get('section_chooser', 'string', 'new_section');
+if ($radioButton == 'new_section') {
+    $DestSectionId = Input::Get('destination_section_new_id', 'int', 0, true);
 }
 else {
     $DestSectionId = Input::Get('destination_section_existing', 'int', 0, true);    
 }
+$DestSectionName = Input::Get('destination_section_new_name', 'string', '', true);
 $BackLink = Input::Get('Back', 'string', "/$ADMIN/pub/issues/sections/index.php", true);
 
 if (!Input::IsValid()) {
@@ -64,10 +65,19 @@ $correct = ($DestPublicationId > 0) && ($DestIssueId > 0)
 
 if ($correct) {
     $dstSectionObj =& $srcSectionObj->copy($DestPublicationId, $DestIssueId, $DestIssueLanguageId, 
-                                        $DestSectionId, $User->getId());
+                                           $DestSectionId);
+    if (($radioButton == "new_section") && ($DestSectionName != "")) {
+        $dstSectionObj->setName($DestSectionName);
+    }
 	$dstPublicationObj =& new Publication($DestPublicationId);
 	$dstIssueObj =& new Issue($DestPublicationId, $DestIssueLanguageId, $DestIssueId);
 	$created = true;
+	// Record the event in the log.
+    $logtext = getGS('Section $1 has been duplicated to $2. $3 of $4',
+                     $dstSectionObj->getName(), $DestIssueId, $dstIssueObj->getName(),
+                     $dstPublicationObj->getName());
+    Log::Message($logtext, $User->getUserName(), 154);
+                                           
 	$topArray = array('Pub' => $srcPublicationObj, 'Issue' => $srcIssueObj, 'Section' => $dstSectionObj);
 	CampsiteInterface::ContentTop(getGS('Duplicating section'), $topArray);
 } else {
