@@ -28,7 +28,7 @@ X_HBUTTON(<*Sections*>, <*users/subscriptions/sections/?User=<?php  p($User); ?>
 <td class="breadcrumb_separator">&nbsp;</td>
 X_HBUTTON(<*Subscriptions*>, <*users/subscriptions/?User=<?php  p($User); ?>*>)
 <td class="breadcrumb_separator">&nbsp;</td>
-X_HBUTTON(<*Readers*>, <*users/?uType=Readers*>)
+X_HBUTTON(<*Subscribers*>, <*users/?uType=Subscribers*>)
 E_HEADER_BUTTONS
 E_HEADER
 

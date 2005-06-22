@@ -168,7 +168,7 @@ foreach ($publications as $publication) {
 	    	['<img src="/<?php p($ADMIN); ?>/img/icon/users.png" width="22" height="22" />', '<?php putGS('Staff'); ?>', '/<?php p($ADMIN); ?>/users/?uType=Staff' ],
 	    	<?php } ?>
 	    	<?php if ($User->hasPermission("ManageReaders") || $User->hasPermission("ManageSubscriptions")) { ?>
-	    	['<img src="/<?php p($ADMIN); ?>/img/icon/users.png" width="22" height="22" />', '<?php putGS('Readers'); ?>', '/<?php p($ADMIN); ?>/users/?uType=Readers' ],
+	    	['<img src="/<?php p($ADMIN); ?>/img/icon/users.png" width="22" height="22" />', '<?php putGS('Subscribers'); ?>', '/<?php p($ADMIN); ?>/users/?uType=Subscribers' ],
 	    	<?php } ?>
 	    	<?php if ($User->hasPermission("ManageUserTypes")) { ?>
 	    	['<img src="/<?php p($ADMIN); ?>/img/icon/user_types.png" width="22" height="22" />', '<?php putGS('User Types'); ?>', '/<?php p($ADMIN); ?>/u_types/' ], 

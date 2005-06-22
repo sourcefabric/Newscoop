@@ -6,7 +6,7 @@ require_once($_SERVER['DOCUMENT_ROOT']. "/classes/Log.php");
 list($access, $User) = check_basic_access($_REQUEST);
 
 read_user_common_parameters(); // $uType, $userOffs, $lpp, search parameters
-$uType = 'Readers';
+$uType = 'Subscribers';
 compute_user_rights($User, &$canManage, &$canDelete);
 if (!$canManage) {
 	CampsiteInterface::DisplayError(getGS('You do not have the right to change user account information.'));
@@ -20,7 +20,7 @@ if ($editUser->getUserName() == '') {
 	CampsiteInterface::DisplayError(getGS('No such user account.'));
 	exit;
 }
-$backLink = "/$ADMIN/users/edit.php?uType=Readers&User=$userId";
+$backLink = "/$ADMIN/users/edit.php?uType=Subscribers&User=$userId";
 $cStartIP1 = Input::Get('cStartIP1', 'int', 0);
 $cStartIP2 = Input::Get('cStartIP2', 'int', 0);
 $cStartIP3 = Input::Get('cStartIP3', 'int', 0);
@@ -59,6 +59,6 @@ if ($created) {
 	exit;
 }
 
-header("Location: /$ADMIN/users/edit.php?uType=Readers&User=$userId");
+header("Location: /$ADMIN/users/edit.php?uType=Subscribers&User=$userId");
 
 ?>
