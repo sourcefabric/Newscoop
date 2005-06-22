@@ -1,6 +1,6 @@
 export PRIV_DIR4=$(PRIV_DIR3)/sections
 
-MY_TARGETS=do_add.php do_del.php do_edit.php
+MY_TARGETS=do_add.php do_edit.php
 
 subsystem: all
 	$(MAKE) -C articles
