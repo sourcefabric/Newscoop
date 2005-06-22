@@ -20,6 +20,8 @@ $Section = Input::Get('Section', 'int', 0);
 $Language = Input::Get('Language', 'int', 0);
 $sLanguage = Input::Get('sLanguage', 'int', 0);
 $Article = Input::Get('Article', 'int', 0);
+$ArticleOffset = Input::Get('ArtOffs', 'int', 0, true);
+
 $BackLink = Input::Get('Back', 'string', "/$ADMIN/pub/issues/sections/articles/index.php", true);
 
 if (!Input::IsValid()) {
@@ -68,6 +70,6 @@ if (function_exists ("incModFile")) {
 	incModFile();
 }
 
-header('Location: '.$BackLink."?Pub=$Pub&Issue=$Issue&Section=$Section&Language=$Language");
+header('Location: '.$BackLink."?Pub=$Pub&Issue=$Issue&Section=$Section&Language=$Language&ArtOffs=$ArticleOffset");
 exit;
 ?>
