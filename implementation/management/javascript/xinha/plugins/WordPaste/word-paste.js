@@ -93,9 +93,18 @@ WordPaste.prototype._clean = function(html) {
 	// Replace the &nbsp;
 	html = html.replace(/&nbsp;/, " " );
 	
-	// Transform <P> to <DIV>
-	html = html.replace(/<\s*p[^>]*>/gi, "<div>");
-	html = html.replace(/<\/\s*p[^>]*>/gi, "</div>");
+	// Transform <p><br /></p> to <br>
+	//html = html.replace(/<\s*p[^>]*>\s*<\s*br\s*\/>\s*<\/\s*p[^>]*>/gi, "<br>");
+	html = html.replace(/<\s*p[^>]*><\s*br\s*\/?>\s*<\/\s*p[^>]*>/gi, "<br>");
+	
+	// Remove <P> 
+	html = html.replace(/<\s*p[^>]*>/gi, "");
+	
+	// Remove </p> with <br>
+	html = html.replace(/<\/\s*p[^>]*>/gi, "<br>");
+	
+	// Remove any <br> at the end
+	html = html.replace(/(\s*<br>\s*)*$/, "");
 	
 	html = html.trim();
 	return html;
