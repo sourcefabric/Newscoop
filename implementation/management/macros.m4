@@ -70,7 +70,7 @@ define(<*B_HEADER*>, <*<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="
 *>)dnl
 define(<*X_HEADER_NO_BUTTONS*>, <*	<TR><TD>&nbsp;</TD></TR>*>)dnl
 define(<*B_HEADER_BUTTONS*>, <*	<TD ALIGN=RIGHT><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0"><TR>dnl*>)dnl
-define(<*X_HBUTTON*>, <*<TD><A HREF="X_ROOT/$2" class="breadcrumb" ifelse(<*$3*>, <**>, <**>, <*TARGET="$3"*>)><?php  putGS("$1");  ?></A></TD>*>)dnl
+define(<*X_HBUTTON*>, <*<TD><A HREF="X_ROOT/$2" class="breadcrumb" ifelse(<*$3*>, <**>, <**>, <*TARGET="$3"*>)>ifelse(<*$4*>, <**>, <*<?php  putGS("$1");  ?>*>, <*<?php echo getGS("$1") . " $4"; ?>*>)</A></TD>*>)dnl
 define(<*E_HEADER_BUTTONS*>, <*</TR></TABLE></TD></TR>*>)dnl
 define(<*E_HEADER*>, <*</TABLE>*>)dnl
 dnl
