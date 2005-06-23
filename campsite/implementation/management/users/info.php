@@ -105,7 +105,7 @@ if ($editUser->getUserName() == '') {
 	<tr>
 		<td align="right" nowrap><?php putGS("Street Address"); ?>:</td>
 		<td>
-		<input type="text" class="input_text" name="StrAddress" value="<?php  pencHTML($StrAddress); ?>" size="40" maxlength="255">
+		<input type="text" class="input_text" name="StrAddress" value="<?php  pencHTML($StrAddress); ?>" size="32" maxlength="255">
 		</td>
 	</tr>
 	<tr>
