@@ -23,16 +23,6 @@ B_BODY
     todefnum('Pub');
     todefnum('User');
     todefnum('Subs');
-?>dnl
-B_HEADER(<*Subscribed sections*>)
-B_HEADER_BUTTONS
-X_HBUTTON(<*Subscriptions*>, <*users/subscriptions/?User=<?php  p($User); ?>*>)
-<td class="breadcrumb_separator">&nbsp;</td>
-X_HBUTTON(<*Subscribers*>, <*users/?uType=Subscribers*>)
-E_HEADER_BUTTONS
-E_HEADER
-
-<?php 
 	query("SELECT  Id as IdLang FROM Languages WHERE code='$TOL_Language'", 'q_lang');
 	if($NUM_ROWS == 0){
 		query("SELECT IdDefaultLanguage as IdLang  FROM Publications WHERE Id=$Pub", 'q_lang');
@@ -46,10 +36,20 @@ E_HEADER
 	if ($NUM_ROWS) {
 	    fetchRow($q_usr);
 	    fetchRow($q_pub);
+	    $UName = getHVar($q_usr,'UName');
 ?>dnl
 
+B_HEADER(<*Subscribed sections*>)
+B_HEADER_BUTTONS
+X_HBUTTON(<*Subscriptions*>, <*users/subscriptions/?User=<?php  p($User); ?>*>)
+<td class="breadcrumb_separator">&nbsp;</td>
+X_HBUTTON(<*User account*>, <*users/edit.php?User=<?php echo $User; ?>&uType=Subscribers*>, <**>, <*'$UName'*>)
+<td class="breadcrumb_separator">&nbsp;</td>
+X_HBUTTON(<*Subscribers*>, <*users/?uType=Subscribers*>)
+E_HEADER_BUTTONS
+E_HEADER
+
 B_CURRENT
-X_CURRENT(<*User account*>, <*<?php  pgetHVar($q_usr,'UName'); ?>*>)
 X_CURRENT(<*Publication*>, <*<?php  pgetHVar($q_pub,'Name'); ?>*>)
 E_CURRENT
 
