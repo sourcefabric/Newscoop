@@ -184,8 +184,13 @@ foreach ($publications as $publication) {
 	    	<?php if ($User->hasPermission("ManageClasses")) { ?>
 	    	['<img src="/<?php p($ADMIN); ?>/img/icon/infotypes.png" width="22" height="22" />', '<?php putGS('Infotype'); ?>', '/<?php p($ADMIN); ?>/infotype/' ], 
 	    	<?php } ?>
-	    ]
+	    ],
 	    <?php } // if ($showObsoleteMenu) ?>
+	    _cmSplit,
+	    ['<img src="/<?php p($ADMIN); ?>/img/icon/help.png" width="22" height="22" align="middle" />', ' <?php putGS('Help'); ?>', '', '', '',
+	    	['<img src="/<?php p($ADMIN); ?>/img/icon/help.png" width="22" height="22" />', '<?php putGS('Help'); ?>', 'http://code.campware.org/manuals/campsite/', '_blank' ], 
+	    	['<img src="/<?php p($ADMIN); ?>/img/icon/about.png" width="22" height="22" />', '<?php putGS('About'); ?>', 'http://www.campware.org/look/article.tpl?IdLanguage=1&IdPublication=3&NrIssue=1&NrSection=1&NrArticle=579', '_blank' ], 
+	    ]
 	];
 	--></SCRIPT>
 
