@@ -17,10 +17,18 @@ E_STYLE
 
 B_BODY
 
-<?php  todefnum('User'); ?>dnl
+<?php
+	todefnum('User');
+    query ("SELECT UName FROM Users WHERE Id=$User", 'q_usr');
+    if ($NUM_ROWS) {
+    	fetchRow($q_usr);
+    	$UName = getHVar($q_usr,'UName');
+?>dnl
 B_HEADER(<*Add new subscription*>)
 B_HEADER_BUTTONS
 X_HBUTTON(<*Subscriptions*>, <*users/subscriptions/?User=<?php  p($User); ?>*>)
+<td class="breadcrumb_separator">&nbsp;</td>
+X_HBUTTON(<*User account*>, <*users/edit.php?User=<?php echo $User; ?>&uType=Subscribers*>, <**>, <*'$UName'*>)
 <td class="breadcrumb_separator">&nbsp;</td>
 X_HBUTTON(<*Subscribers*>, <*users/?uType=Subscribers*>)
 E_HEADER_BUTTONS
@@ -31,10 +39,6 @@ E_HEADER
     if ($NUM_ROWS) { 
 	fetchRow($q_usr);
     ?>dnl
-
-B_CURRENT
-X_CURRENT(<*User account*>, <*<?php  pgetHVar($q_usr,'UName'); ?>*>)
-E_CURRENT
 
 <P>
 B_DIALOG(<*Add new subscription*>, <*POST*>, <*do_add.php*>)
@@ -86,9 +90,10 @@ E_DIALOG
 </BLOCKQUOTE>
 <?php  } ?>dnl
 
+<?php  } ?>dnl
+<?php  } ?>dnl
 X_COPYRIGHT
 E_BODY
-<?php  } ?>dnl
 
 E_DATABASE
 E_HTML

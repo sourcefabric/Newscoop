@@ -20,10 +20,16 @@ B_BODY
 <?php 
     todefnum('User');
     todefnum('Subs');
+    query ("SELECT UName FROM Users WHERE Id=$User", 'q_usr');
+    if ($NUM_ROWS) {
+    	fetchRow($q_usr);
+    	$UName = getHVar($q_usr,'UName');
 ?>dnl
 B_HEADER(<*Change subscription status*>)
 B_HEADER_BUTTONS
 X_HBUTTON(<*Subscriptions*>, <*users/subscriptions/?User=<?php  p($User); ?>*>)
+<td class="breadcrumb_separator">&nbsp;</td>
+X_HBUTTON(<*User account*>, <*users/edit.php?User=<?php echo $User; ?>&uType=Subscribers*>, <**>, <*'$UName'*>)
 <td class="breadcrumb_separator">&nbsp;</td>
 X_HBUTTON(<*Subscribers*>, <*users/?uType=Subscribers*>)
 E_HEADER_BUTTONS
@@ -42,7 +48,6 @@ E_HEADER
 	?>dnl
 
 B_CURRENT
-X_CURRENT(<*User account*>, <*<?php  pgetHVar($q_usr,'UName'); ?>*>)
 X_CURRENT(<*Publication*>, <*<?php  pgetHVar($q_pub,'Name'); ?>*>)
 E_CURRENT
 
@@ -78,9 +83,10 @@ E_DIALOG
 </BLOCKQUOTE>
 <?php  } ?>dnl
 
+<?php  } ?>dnl
+<?php  } ?>dnl
 X_COPYRIGHT
 E_BODY
-<?php  } ?>dnl
 
 E_DATABASE
 E_HTML
