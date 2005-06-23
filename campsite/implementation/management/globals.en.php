@@ -1,4 +1,6 @@
 <?php
+regGS("Add new", "Add new");
+regGS("Save changes", "Save changes");
 regGS("CAMPSITE", "CAMPSITE");
 regGS("Home", "Home");
 regGS("Logout", "Logout");
