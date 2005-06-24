@@ -27,6 +27,10 @@ B_BODY
     todefnum('cDays');
     todefnum('cPaidDays');
     todefnum('User');
+    query ("SELECT UName FROM Users WHERE Id=$User", 'q_usr');
+    if ($NUM_ROWS) {
+		fetchRow($q_usr);
+	    $UName = getHVar($q_usr,'UName');
 ?>dnl
 B_HEADER(<*Updating subscription*>)
 B_HEADER_BUTTONS
@@ -34,13 +38,13 @@ X_HBUTTON(<*Sections*>, <*users/subscriptions/sections/?User=<?php  p($User); ?>
 <td class="breadcrumb_separator">&nbsp;</td>
 X_HBUTTON(<*Subscriptions*>, <*users/subscriptions/?User=<?php  p($User); ?>*>)
 <td class="breadcrumb_separator">&nbsp;</td>
+X_HBUTTON(<*User account*>, <*users/edit.php?User=<?php echo $User; ?>&uType=Subscribers*>, <**>, <*'$UName'*>)
+<td class="breadcrumb_separator">&nbsp;</td>
 X_HBUTTON(<*Subscribers*>, <*users/?uType=Subscribers*>)
 E_HEADER_BUTTONS
 E_HEADER
 
 <?php 
-    query ("SELECT UName FROM Users WHERE Id=$User", 'q_usr');
-    if ($NUM_ROWS) {
 	query ("SELECT Name FROM Publications WHERE Id=$Pub", 'q_pub');
 	if ($NUM_ROWS) {
 	    query ("SELECT * FROM Subscriptions WHERE Id = $Subs", 'q_sub');
@@ -50,7 +54,6 @@ E_HEADER
 		    $sectCond = "AND SectionNumber = ".$Sect;
 		query ("SELECT * FROM SubsSections WHERE IdSubscription=$Subs $sectCond", 'q_ssub');
 		if ($NUM_ROWS) {
-		    fetchRow($q_usr);
 		    fetchRow($q_pub);
 		    fetchRow($q_sub);
 		    fetchRow($q_ssub);
@@ -60,7 +63,6 @@ E_HEADER
 ?>dnl
 
 B_CURRENT
-X_CURRENT(<*User account*>, <*<?php  pgetHVar($q_usr,'UName'); ?>*>)
 X_CURRENT(<*Publication*>, <*<?php  pgetHVar($q_pub,'Name'); ?>*>)
 E_CURRENT
 
