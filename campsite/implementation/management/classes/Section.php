@@ -198,10 +198,14 @@ class Section extends DatabaseObject {
     	$srcSectionArticles = Article::GetArticles($this->m_data['IdPublication'], 
                                                    $this->m_data['NrIssue'], 
                                                    $this->m_data['Number']);
+        $copiedArticles = array();
     	foreach ($srcSectionArticles as $articleObj) {
-    		$articleObj->copy($p_destPublicationId, 
-    		                  $p_destIssueId, 
-                              $p_destSectionId);
+    	    if (!in_array($articleObj->getArticleId(), $copiedArticles)) {
+        		$tmpCopiedArticles =& $articleObj->copy($p_destPublicationId, 
+                    $p_destIssueId, $p_destSectionId, null, true);
+                $copiedArticles =& array_merge($copiedArticles, 
+                    DbObjectArray::GetColumn($tmpCopiedArticles, "Number"));
+    	    }
     	}
     	
     	return $dstSectionObj;
