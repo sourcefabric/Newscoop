@@ -121,15 +121,7 @@ class Article extends DatabaseObject {
 	 */
 	function create($p_articleType, $p_name = null) 
 	{
-		global $Campsite;
-		// Create the article ID.
-		$queryStr = 'UPDATE AutoId SET ArticleId=LAST_INSERT_ID(ArticleId + 1)';
-		$Campsite['db']->Execute($queryStr);
-		if ($Campsite['db']->Affected_Rows() <= 0) {
-			// If we were not able to get an ID, dont try to create the article.
-			return;
-		}
-		$this->m_data['Number'] = $Campsite['db']->Insert_ID();
+		$this->m_data['Number'] = $this->__generateArticleId();
 		$this->m_data['ArticleOrder'] = $this->m_data['Number'];
 	
 		// Create the record
@@ -140,30 +132,14 @@ class Article extends DatabaseObject {
 		$values['ShortName'] = $this->m_data['Number'];
 		$values['Type'] = $p_articleType;
 		$values['Public'] = 'Y';
-
-		// compute article order number
-		$queryStr = 'SELECT MIN(ArticleOrder) AS min FROM Articles WHERE IdPublication = '
-		          . $this->m_data['IdPublication'] . ' AND NrIssue = ' . $this->m_data['NrIssue']
-		          . ' and NrSection = ' . $this->m_data['NrSection'];
-		$articleOrder = $Campsite['db']->GetOne($queryStr) - 1;
-		if ($articleOrder < 0)
-			$articleOrder = $this->m_data['Number'];
-		if ($articleOrder == 0) {
-			$queryStr = 'UPDATE Articles SET ArticleOrder = ArticleOrder + 1 WHERE IdPublication = '
-			          . $this->m_data['IdPublication'] . ' AND NrIssue = ' . $this->m_data['NrIssue']
-			          . ' AND NrSection = ' . $this->m_data['NrSection'];
-			$Campsite['db']->Execute($queryStr);
-			$articleOrder = 1;
-		}
-		$values['ArticleOrder'] = $articleOrder;
-	
+		$values['ArticleOrder'] = $this->m_data['Number'];
 		$success = parent::create($values);
 		if (!$success) {
 			return;
 		}
 		$this->setProperty('UploadDate', 'NOW()', true, true);
 		$this->fetch();
-
+	
 		// Insert an entry into the article type table.
 		$articleData =& new ArticleType($this->m_data['Type'], 
 			$this->m_data['Number'], 
@@ -173,47 +149,119 @@ class Article extends DatabaseObject {
 
 	
 	/**
+	 * Create a unique identifier for an article.
+	 * @access private
+	 */
+	function __generateArticleId() 
+	{
+	    global $Campsite;
+		$queryStr = 'UPDATE AutoId SET ArticleId=LAST_INSERT_ID(ArticleId + 1)';
+		$Campsite['db']->Execute($queryStr);
+		if ($Campsite['db']->Affected_Rows() <= 0) {
+			// If we were not able to get an ID.
+			return 0;
+		}
+		return $Campsite['db']->Insert_ID();	    
+	} // fn __generateArticleId
+	
+	
+	/**
 	 * Create a copy of this article.
 	 *
-	 * @param int $p_destPublication -
+	 * @param int $p_destPublicationId -
 	 *		The destination publication ID.
-	 * @param int $p_destIssue -
+	 * @param int $p_destIssueId -
 	 *		The destination issue ID.
-	 * @param int $p_destSection -
+	 * @param int $p_destSectionId -
 	 * 		The destination section ID.
 	 * @param int $p_userId -
 	 *		The user creating the copy.  If null, keep the same user ID as the original.
-	 * @return Article
-	 *		The copied Article object.
+	 * @param boolean $p_copyAllTranslations -
+	 *     If true, all translations will be copied as well.
+	 * @return mixed
+	 *     If $p_copyAllTranslations is TRUE, return an array of copied articles.
+	 *     If $p_copyAllTranslations is FALSE, return the copied Article.
 	 */
-	function copy($p_destPublication, $p_destIssue, $p_destSection, $p_userId = null) 
+	function copy($p_destPublicationId, $p_destIssueId, $p_destSectionId, 
+	              $p_userId = null, $p_copyAllTranslations = false) 
 	{
 		global $Campsite;
-		// Create the duplicate article object.
-		$articleCopy =& new Article($p_destPublication, $p_destIssue, 
-			$p_destSection, $this->m_data['IdLanguage']);
-		$articleCopy->create($this->m_data['Type']);
-		
-		// Change some attributes
-		if (!is_null($p_userId)) {
-            $articleCopy->m_data['IdUser'] = $p_userId;
+		$copyArticles = array();
+		if ($p_copyAllTranslations) {
+		    // Get all translations for this article
+		    $copyArticles =& Article::GetArticles($this->m_data['IdPublication'], 
+		                                          $this->m_data['NrIssue'], 
+		                                          $this->m_data['NrSection'], 
+		                                          null, 
+		                                          $this->m_data['Number']);
 		}
 		else {
-		    $articleCopy->m_data['IdUser'] = $this->m_data['IdUser'];
+		    $copyArticles[] = $this;
 		}
-		$articleCopy->m_data['Published'] = 'N';
-		$articleCopy->m_data['IsIndexed'] = 'N';		
-		$articleCopy->m_data['LockUser'] = 0;
-		$articleCopy->m_data['LockTime'] = 0;
-		// Create a unique name for the new copy
-		$origNewName = $this->m_data['Name'] . " (duplicate";
+		$newArticleId = $this->__generateArticleId();
+		
+		foreach ($copyArticles as $copyMe) {
+    		// Construct the duplicate article object.
+    		$articleCopy =& new Article();
+    		$articleCopy->m_data['IdPublication'] = $p_destPublicationId; 
+    		$articleCopy->m_data['NrIssue'] = $p_destIssueId; 
+    		$articleCopy->m_data['NrSection'] = $p_destSectionId; 
+    		$articleCopy->m_data['IdLanguage'] = $copyMe->m_data['IdLanguage']; 
+    		$articleCopy->m_data['Number'] = $newArticleId; 
+    		$values = array();
+    		// Copy some attributes
+    		$values['ShortName'] = $newArticleId;
+    		$values['Type'] = $copyMe->m_data['Type'];
+    		$values['OnFrontPage'] = $copyMe->m_data['OnFrontPage'];
+    		$values['OnSection'] = $copyMe->m_data['OnFrontPage'];
+    		$values['Public'] = $copyMe->m_data['Public'];
+    		$values['ArticleOrder'] = $copyMe->m_data['ArticleOrder'];
+    		$values['Keywords'] = $copyMe->m_data['Keywords'];
+    		// Change some attributes
+    		$values['Published'] = 'N';
+    		$values['IsIndexed'] = 'N';		
+    		$values['LockUser'] = 0;
+    		$values['LockTime'] = 0;
+    		if (!is_null($p_userId)) {
+                $values['IdUser'] = $p_userId;
+    		}
+    		else {
+    		    $values['IdUser'] = $copyMe->m_data['IdUser'];
+    		}
+    		$values['Name'] = $articleCopy->__getUniqueName($copyMe->m_data['Name']);
+
+    		$articleCopy->__create($values);
+    		$articleCopy->setProperty('UploadDate', 'NOW()', true, true);
+    		    		
+    		$articleData =& $copyMe->getArticleTypeObject();
+    		$articleData->copyToExistingRecord($articleCopy->getArticleId());
+    		
+    		// Copy image pointers
+    		ArticleImage::OnArticleCopy($copyMe->m_data['Number'], $articleCopy->getArticleId());
+    
+    		// Copy topic pointers
+    		ArticleTopic::OnArticleCopy($copyMe->m_data['Number'], $articleCopy->getArticleId());
+		}
+		if ($p_copyAllTranslations) {
+		    return $copyArticles;
+		}
+		else {
+		  return array_pop($copyArticles);
+		}
+	} // fn copy
+	
+	
+	function __getUniqueName($p_currentName) 
+	{
+	    global $Campsite;
+		$origNewName = $p_currentName . " (duplicate";
 		$newName = $origNewName .")";
 		$count = 1;
 		while (true) {
 			$queryStr = 'SELECT * FROM Articles '
-						.' WHERE IdPublication = '.$p_destPublication
-						.' AND NrIssue = ' . $p_destIssue
-						.' AND NrSection = ' . $p_destSection
+						.' WHERE IdPublication = '.$this->m_data['IdPublication']
+						.' AND NrIssue = ' . $this->m_data['NrIssue']
+						.' AND NrSection = ' . $this->m_data['NrSection']
 						.' AND IdLanguage = ' . $this->m_data['IdLanguage']
 						." AND Name = '" . mysql_escape_string($newName) . "'";
 			$row = $Campsite['db']->GetRow($queryStr);
@@ -224,30 +272,10 @@ class Article extends DatabaseObject {
 				break;
 			}
 		}
-		$articleCopy->m_data['Name'] = $newName;
+	    return $newName;
+	} // fn __getUniqueName
 		
-		// Copy some attributes
-		$articleCopy->m_data['OnFrontPage'] = $this->m_data['OnFrontPage'];
-		$articleCopy->m_data['OnSection'] = $this->m_data['OnFrontPage'];
-		$articleCopy->m_data['Keywords'] = $this->m_data['Keywords'];
-		$articleCopy->m_data['Public'] = $this->m_data['Public'];
-		$articleCopy->m_data['ArticleOrder'] = $this->m_data['Number'];
-		
-		$articleCopy->commit();
-
-		$articleData =& $this->getArticleTypeObject();
-		$articleData->copyToExistingRecord($articleCopy->getArticleId());
-		
-		// Copy image pointers
-		ArticleImage::OnArticleCopy($this->m_data['Number'], $articleCopy->getArticleId());
-
-		// Copy topic pointers
-		ArticleTopic::OnArticleCopy($this->m_data['Number'], $articleCopy->getArticleId());
-		
-		return $articleCopy;
-	} // fn copy
 	
-
 	/**
 	 * Create a copy of the article, but make it a translation
 	 * of the current one.
@@ -272,16 +300,16 @@ class Article extends DatabaseObject {
 		$values['ShortName'] = $this->m_data['ShortName'];
 		$values['Name'] = $p_name;
 		$values['Type'] = $this->m_data['Type'];
-		$values['IsIndexed'] = $this->m_data['IsIndexed'];		
 		$values['OnFrontPage'] = $this->m_data['OnFrontPage'];
 		$values['OnSection'] = $this->m_data['OnFrontPage'];
 		$values['Public'] = $this->m_data['Public'];
 		$values['ArticleOrder'] = $this->m_data['ArticleOrder'];
 		// Change some attributes
+		$values['Published'] = 'N';
+		$values['IsIndexed'] = 'N';		
 		$values['LockUser'] = 0;
 		$values['LockTime'] = 0;
 		$values['IdUser'] = $p_userId;
-		$values['Published'] = 'N';
 
 		// Create the record
 		$success = $articleCopy->__create($values);
@@ -1108,7 +1136,8 @@ class Article extends DatabaseObject {
 	 *		Default: false
 	 *
 	 * @return array
-	 *		Return an array of Article objects.
+	 *     Return an array of Article objects with indexes in sequential order
+	 *     starting from zero.
 	 */
 	function GetArticles($p_publicationId = null, $p_issueId = null, 
 						 $p_sectionId = null, $p_languageId = null, 
