@@ -48,13 +48,18 @@ function compute_user_rights($User, &$canManage, &$canDelete)
 	if (!isset($uType))
 		read_user_common_parameters();
 
-	if ($uType == 'Staff') {
+	switch ($uType) {
+	case 'Staff':
 		$canManage = $User->hasPermission('ManageUsers');
 		$canDelete = $User->hasPermission('DeleteUsers');
-	}
-	if ($uType == 'Subscribers') {
+		break;
+	case 'Subscribers':
 		$canManage = $User->hasPermission('ManageReaders');
 		$canDelete = $User->hasPermission('ManageReaders');
+		break;
+	default:
+		$canManage = false;
+		$canDelete = false;
 	}
 }
 
