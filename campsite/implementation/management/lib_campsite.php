@@ -394,6 +394,14 @@ function p($p_string)
 } // fn p
 
 
+function ifTrueThenChecked($v) 
+{
+	if ($v) {
+		echo ' CHECKED';
+	}
+}
+
+
 function ifYthenCHECKED($q,$f) 
 {
 	if (getVar($q,$f)=='Y') {
