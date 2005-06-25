@@ -1,11 +1,10 @@
 <?php
 
-check_basic_access($_REQUEST);
+list($access, $User) = check_basic_access($_REQUEST);
 if (!isset($editUser) || gettype($editUser) != 'object') {
 	CampsiteInterface::DisplayError(getGS('No such user account.'));
 	exit;
 }
-list($access, $User) = check_basic_access($_REQUEST);
 compute_user_rights($User, &$canManage, &$canDelete);
 if (!$canManage) {
 	if ($editUser->getUserName() == '') {
