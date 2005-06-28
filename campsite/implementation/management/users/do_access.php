@@ -44,7 +44,6 @@ foreach ($rightsFields as $field=>$value) {
 }
 
 $queryStr = "UPDATE UserPerm SET " . substr($queryStr, 2) ." WHERE IdUser = $userId";
-echo "query: $queryStr";
 query($queryStr);
 
 if ($AFFECTED_ROWS >= 0) {
