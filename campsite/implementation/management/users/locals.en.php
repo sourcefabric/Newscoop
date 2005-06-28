@@ -67,8 +67,6 @@ regGS("Password changed for $1","Password changed for $1:en");
 regGS("The password has been changed.","The password has been changed.:en");
 
 // -- access.m4
-regGS("User may manage templates","User may manage templates:en");
-regGS("User may add/change country entries","User may add/change country entries:en");
 regGS("Edit user account permissions","Edit user account permissions:en");
 regGS("You do not have the right to change user account permissions.","You do not have the right to change user account permissions.:en");
 regGS("This user account does not have permissions information.","This user account does not have permissions information.:en");
