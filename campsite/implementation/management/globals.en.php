@@ -225,6 +225,8 @@ regGS("User may manage user subscriptions", "User may manage user subscriptions"
 regGS("User may manage account types", "User may manage account types");
 regGS("User may add/change article types", "User may add/change article types");
 regGS("User may delete article types", "User may delete article types");
+regGS("User may manage templates","User may manage templates:en");
+regGS("User may add/change country entries","User may add/change country entries:en");
 regGS("User may add languages and manage language information", "User may add languages and manage language information");
 regGS("User may delete languages", "User may delete languages");
 regGS("User may manage glossary infotypes", "User may manage glossary infotypes");
@@ -261,6 +263,7 @@ regGS("User may insert horizontal rules", "User may insert horizontal rules");
 regGS("User may change the font color", "User may change the font color");
 regGS("User may use superscripts", "User may use superscripts");
 regGS("User may use subscripts", "User may use subscripts");
+regGS("An user type with the name '$1' already exists.", "An user type with the name '$1' already exists.");
 regGS("Localizer", "Localizer");
 regGS("Staff/Subscribers Management", "Staff/Subscribers Management");
 regGS("Editor Basic Settings", "Editor Basic Settings");
