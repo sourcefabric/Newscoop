@@ -34,6 +34,7 @@ regGS("User type $1 deleted","User type $1 deleted:en");
 
 
 // -- access.m4
+regGS("User type","User type:en");
 regGS("Change user type permissions","Change user type permissions:en");
 regGS("You do not have the right to change user type permissions.","You do not have the right to change user type permissions.:en");
 
