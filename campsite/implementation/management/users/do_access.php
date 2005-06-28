@@ -22,25 +22,25 @@ if ($editUser->getUserName() == '') {
 $typeParam = 'uType=' . urlencode($uType);
 $isReader = $uType == 'Subscribers' ? 'Y' : 'N';
 
-$rightsFields = array('cManagePub'=>'N', 'cDeletePub'=>'N', 'cManageIssue'=>'N', 'cDeleteIssue'=>'N',
-	'cManageSection'=>'N', 'cDeleteSection'=>'N', 'cAddArticle'=>'N', 'cChangeArticle'=>'N',
-	'cDeleteArticle'=>'N', 'cAddImage'=>'N', 'cChangeImage'=>'N', 'cDeleteImage'=>'N',
-	'cManageTempl'=>'N', 'cDeleteTempl'=>'N', 'cManageUsers'=>'N', 'cManageReaders'=>'N',
-	'cManageSubscriptions'=>'N', 'cDeleteUsers'=>'N', 'cManageUserTypes'=>'N', 'cManageArticleTypes'=>'N',
-	'cDeleteArticleTypes'=>'N', 'cManageLanguages'=>'N', 'cDeleteLanguages'=>'N', 'cMailNotify'=>'N',
-	'cManageCountries'=>'N', 'cDeleteCountries'=>'N', 'cViewLogs'=>'N', 'cManageLocalizer'=>'N',
-	'cManageIndexer'=>'N', 'cPublish'=>'N', 'cManageTopics'=>'N', 'cEditorBold'=>'N', 'cEditorItalic'=>'N',
-	'cEditorUnderline'=>'N', 'cEditorUndoRedo'=>'N', 'cEditorCopyCutPaste'=>'N', 'cEditorImage'=>'N',
-	'cEditorTextAlignment'=>'N', 'cEditorFontColor'=>'N', 'cEditorFontSize'=>'N', 'cEditorFontFace'=>'N',
-	'cEditorTable'=>'N', 'cEditorSuperscript'=>'N', 'cEditorSubscript'=>'N', 'cEditorStrikethrough'=>'N',
-	'cEditorIndent'=>'N', 'cEditorListBullet'=>'N', 'cEditorListNumber'=>'N', 'cEditorHorizontalRule'=>'N',
-	'cEditorSourceView'=>'N', 'cEditorEnlarge'=>'N', 'cEditorTextDirection'=>'N', 'cEditorLink'=>'N',
-	'cEditorSubhead'=>'N');
+$rightsFields = array('ManagePub'=>'N', 'DeletePub'=>'N', 'ManageIssue'=>'N', 'DeleteIssue'=>'N',
+	'ManageSection'=>'N', 'DeleteSection'=>'N', 'AddArticle'=>'N', 'ChangeArticle'=>'N',
+	'DeleteArticle'=>'N', 'AddImage'=>'N', 'ChangeImage'=>'N', 'DeleteImage'=>'N',
+	'ManageTempl'=>'N', 'DeleteTempl'=>'N', 'ManageUsers'=>'N', 'ManageReaders'=>'N',
+	'ManageSubscriptions'=>'N', 'DeleteUsers'=>'N', 'ManageUserTypes'=>'N', 'ManageArticleTypes'=>'N',
+	'DeleteArticleTypes'=>'N', 'ManageLanguages'=>'N', 'DeleteLanguages'=>'N', 'MailNotify'=>'N',
+	'ManageCountries'=>'N', 'DeleteCountries'=>'N', 'ViewLogs'=>'N', 'ManageLocalizer'=>'N',
+	'ManageIndexer'=>'N', 'Publish'=>'N', 'ManageTopics'=>'N', 'EditorBold'=>'N', 'EditorItalic'=>'N',
+	'EditorUnderline'=>'N', 'EditorUndoRedo'=>'N', 'EditorCopyCutPaste'=>'N', 'EditorImage'=>'N',
+	'EditorTextAlignment'=>'N', 'EditorFontColor'=>'N', 'EditorFontSize'=>'N', 'EditorFontFace'=>'N',
+	'EditorTable'=>'N', 'EditorSuperscript'=>'N', 'EditorSubscript'=>'N', 'EditorStrikethrough'=>'N',
+	'EditorIndent'=>'N', 'EditorListBullet'=>'N', 'EditorListNumber'=>'N', 'EditorHorizontalRule'=>'N',
+	'EditorSourceView'=>'N', 'EditorEnlarge'=>'N', 'EditorTextDirection'=>'N', 'EditorLink'=>'N',
+	'EditorSubhead'=>'N');
 foreach ($rightsFields as $field=>$value) {
 	$val = Input::Get($field, 'string', 'off');
 	if ($val == 'on')
 		$rightsFields[$field] = 'Y';
-	$queryStr .= ", `" . substr($field, 1) . "` = '" . $rightsFields[$field] . "'";
+	$queryStr .= ", `$field` = '" . $rightsFields[$field] . "'";
 }
 
 $queryStr = "UPDATE UserPerm SET " . substr($queryStr, 2) ." WHERE IdUser = $userId";
