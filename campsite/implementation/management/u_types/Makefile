@@ -1,6 +1,6 @@
 export PRIV_DIR2=$(PRIV_COMMON_DIR)/u_types
 
-MY_TARGETS=index.php add.php do_add.php del.php do_del.php
+MY_TARGETS=index.php del.php do_del.php
 
 all: $(MY_TARGETS)
 
