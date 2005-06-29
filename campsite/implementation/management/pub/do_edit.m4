@@ -25,9 +25,9 @@ B_BODY
     todef('cSite');
     todefnum('cLanguage');
     todefnum('cPayTime');
-    todefnum('cTimeUnit');
-    todefnum('cUnitCost');
-    todefnum('cCurrency');
+    todef('cTimeUnit');
+    todef('cUnitCost');
+    todef('cCurrency');
     todefnum('cPaid');
     todefnum('cTrial');
 ?>dnl
