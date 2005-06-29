@@ -128,8 +128,8 @@ for($loop = 0; $loop < $last; $loop++) {
 	$userId = getVar($Users, 'Id');
 	$rowClass = ($loop + 1) % 2 == 0 ? "list_row_even" : "list_row_odd";
 ?>
-	<TR <?php echo "class=\"$rowClass\""; ?>>
-		<TD>
+	<tr <?php echo "class=\"$rowClass\""; ?>>
+		<td>
 <?php
 	if ($canManage)
 		echo "<a href=\"edit.php?" . get_user_urlparams($userId, false, true) . "\">";
@@ -139,17 +139,14 @@ for($loop = 0; $loop < $last; $loop++) {
 	$old_user_name = $user_name;
 	$user_name = getVar($Users, 'UName');
 ?>
-		</TD>
-		<TD><a href="?<?php echo get_user_urlparams(); ?>">
-			<?php pgetHVar($Users,'UName'); ?></a>
-		</TD>
+		</td>
+		<td><?php pgetHVar($Users,'UName'); ?></TD>
 <?php
 	$user_name = $old_user_name;
 	$old_email = $email;
 	$email = getVar($Users, 'EMail');
 ?>
-		<TD><a href="?<?php echo get_user_urlparams(); ?>">
-			<?php pgetHVar($Users,'EMail'); ?></TD>
+		<td><?php pgetHVar($Users,'EMail'); ?></td>
 <?php if ($uType == "Subscribers" && $User->hasPermission("ManageSubscriptions")) { ?>
 		<td><a href="<?php echo "/$ADMIN/users/subscriptions/?User=$userId"; ?>">
 			<?php putGS("Subscriptions"); ?></td>
