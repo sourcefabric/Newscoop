@@ -605,7 +605,7 @@ DROP TABLE IF EXISTS `Topics`;
 CREATE TABLE `Topics` (
   `Id` int(10) unsigned NOT NULL default '0',
   `LanguageId` int(10) unsigned NOT NULL default '0',
-  `Name` varchar(100) NOT NULL default '',
+  `Name` varchar(255) NOT NULL default '',
   `ParentId` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`Id`,`LanguageId`),
   UNIQUE KEY `Name` (`LanguageId`,`Name`)
