@@ -4,7 +4,6 @@ require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/u_types/utypes_common.php")
 
 list($access, $User) = check_basic_access($_REQUEST);
 $canManage = $User->hasPermission('ManageUserTypes');
-$canDelete = $canManage;
 if (!$canManage) {
 	$error = getGS("You do not have the right to change user type permissions.");
 	CampsiteInterface::DisplayError($error);
