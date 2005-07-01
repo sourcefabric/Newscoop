@@ -63,6 +63,18 @@ if ($editUser->getUserName() == '') {
 		</td>
 	</tr>
 	<tr>
+		<td align="right" nowrap><?php putGS("E-Mail"); ?>:</td>
+		<td>
+		<input type="text" class="input_text" name="EMail" value="<?php pencHTML($EMail); ?>" size="32" maxlength="128">
+		</td>
+	</tr>
+	<tr>
+		<td align="right" nowrap><?php putGS("Phone"); ?>:</td>
+		<td>
+		<input type="text" class="input_text" name="Phone" value="<?php pencHTML($Phone); ?>" size="20" maxlength="20">
+		</td>
+	</tr>
+	<tr>
 		<td align="right" nowrap><?php putGS("Title"); ?>:</td>
 		<td>
 <?php
@@ -87,12 +99,6 @@ if ($editUser->getUserName() == '') {
 			"65-"=>getGS('65 or over')),
 		$Age, 'class="input_select"', true);
 ?>
-		</td>
-	</tr>
-	<tr>
-		<td align="right" nowrap><?php putGS("E-Mail"); ?>:</td>
-		<td>
-		<input type="text" class="input_text" name="EMail" value="<?php pencHTML($EMail); ?>" size="32" maxlength="128">
 		</td>
 	</tr>
 	<tr>
@@ -132,12 +138,6 @@ if ($editUser->getUserName() == '') {
 	CampsiteInterface::CreateSelect("CountryCode", $countries_list,
 		$CountryCode, 'class="input_select"', true);
 ?>
-		</td>
-	</tr>
-	<tr>
-		<td align="right" nowrap><?php putGS("Phone"); ?>:</td>
-		<td>
-		<input type="text" class="input_text" name="Phone" value="<?php pencHTML($Phone); ?>" size="20" maxlength="20">
 		</td>
 	</tr>
 	<tr>
