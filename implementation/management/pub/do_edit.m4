@@ -30,9 +30,9 @@ B_BODY
 	todefnum('cLanguage');
 	todefnum('cURLType');
 	todefnum('cPayTime');
-	todefnum('cTimeUnit');
-	todefnum('cUnitCost');
-	todefnum('cCurrency');
+	todef('cTimeUnit');
+	todef('cUnitCost');
+	todef('cCurrency');
 	todefnum('cPaid');
 	todefnum('cTrial');
 ?>dnl
