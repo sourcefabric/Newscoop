@@ -1,20 +1,13 @@
 include ../../../make.env
 
-export PRIV_DIR2=$(PRIV_COMMON_DIR)/users
-
-MY_TARGETS=add.php
-
 subsystem: all
+
+all: dummy
 	$(MAKE) -C subscriptions
 
-all: $(MY_TARGETS)
-
-%.php: %.m4 ../macros.m4
-	$(M4) ../macros.m4 $< >$@
-
 install: all
-	mkdir -p $(PRIV_DIR2)
-	cp -f *.php $(PRIV_DIR2)/
+	mkdir -p $(PRIV_COMMON_DIR)/users
+	cp -f *.php $(PRIV_COMMON_DIR)/users/
 	$(MAKE) -C subscriptions install
 
 clean:
