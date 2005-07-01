@@ -17,8 +17,7 @@ if (!$canManage) {
 $fields = array('UName', 'Name', 'Title', 'Gender', 'Age', 'EMail', 'City', 'StrAddress',
 	'State', 'CountryCode', 'Phone', 'Fax', 'Contact', 'Phone2', 'PostalCode', 'Employer',
 	'EmployerType', 'Position');
-$notNullFields = array('UName'=>'User name', 'Name'=>'Full Name', 'EMail'=>'E-Mail',
-	'Gender'=>'Gender', 'CountryCode'=>'Country', 'Type'=>'Type');
+$notNullFields = array('UName'=>'User name', 'Name'=>'Full Name', 'EMail'=>'E-Mail', 'Type'=>'Type');
 
 // read fields values
 $errorField = "";
