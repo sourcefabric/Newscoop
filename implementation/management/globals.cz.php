@@ -333,7 +333,7 @@ regGS("The sections were added successfully.", "Rubriky byly úspěšně přidá
 regGS("The sections could not be added successfully. Some of them were already added !", "Rubriky nebyly úspěšně přidány. Některé již byly přidány! ");
 regGS("This article cannot be previewed. Please make sure it has the article template selected.", "");
 regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "");
-regGS("Add Another", "Přidat další");
+regGS("Add another", "Přidat další");
 regGS("Cancel", "Zrušit");
 regGS("Done", "Hotovo");
 regGS("New Field", "Nové pole");

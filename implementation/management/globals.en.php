@@ -346,7 +346,7 @@ regGS("The sections were added successfully.", "The sections were added successf
 regGS("The sections could not be added successfully. Some of them were already added !", "The sections could not be added successfully. Some of them were already added !");
 regGS("This article cannot be previewed. Please make sure it has the article template selected.", "This article cannot be previewed. Please make sure it has the article template selected.");
 regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "This article cannot be previewed. Please make sure it has the front page template selected.");
-regGS("Add Another", "Add Another");
+regGS("Add another", "Add another");
 regGS("Cancel", "Cancel");
 regGS("Done", "Done");
 regGS("New Field", "New Field");

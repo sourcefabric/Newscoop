@@ -315,7 +315,7 @@ regGS("The sections were added successfully.", "تم إضافة الأقسام �
 regGS("The sections could not be added successfully. Some of them were already added !", "لم يتم إضافة الأقسام بنجاح. بعض الأقسام مضافة أصلا.");
 regGS("This article cannot be previewed. Please make sure it has the article template selected.", "لا يمكن معاينة هذا المقال. الرجاء التأكد من إختيار قالب المقال");
 regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "لا يمكن معاينة هذا المقال. الرجاء التأكد من إختيار قالب الصفحة الرئيسية");
-regGS("Add Another", "أضف أخر");
+regGS("Add another", "أضف أخر");
 regGS("Cancel", "إلغاء");
 regGS("Done", "تم");
 regGS("New Field", "حقل جديد");
