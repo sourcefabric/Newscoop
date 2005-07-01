@@ -315,7 +315,7 @@ regGS("The sections were added successfully.", "Rubrike su uspešno dodate");
 regGS("The sections could not be added successfully. Some of them were already added !", "Rubrike ne mogu biti dodate. Neke od njih već postoje!");
 regGS("This article cannot be previewed. Please make sure it has the article template selected.", "Članak ne može biti pregledan. Proverite da li je odabran šablon za članak.");
 regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "Članak ne može biti pregledan. Proverite da li je odabran šablon za prvu stranu.");
-regGS("Add Another", "Nastavi sa dodavanjem");
+regGS("Add another", "Nastavi sa dodavanjem");
 regGS("Cancel", "Poništi");
 regGS("Done", "Gotovo");
 regGS("New Field", "Novo polje");
