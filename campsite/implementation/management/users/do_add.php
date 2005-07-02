@@ -40,7 +40,7 @@ if ($uType == 'Staff' && $Type == '' && $errorField == '')
 // display errors if found
 if ($errorField != "") {
 	$desc = $notNullFields[$errorField];
-	if ($errorField == 'CountryCode' || $errorField == 'Gender' || $errorField == 'Type') {
+	if ($errorField == 'Type') {
 		$errorMsg = getGS('You must select a $1', $desc);
 	}
 	else {
