@@ -43,6 +43,8 @@ regGS("Government Agency","Government Agency:en");
 regGS("Academic","Academic:en");
 regGS("Media","Media:en");
 regGS("Position","Position:en");
+regGS("Show more user details", "Show more user details:en");
+regGS("Hide user details", "Hide user details:en");
 
 // -- do_add.m4
 regGS("Adding new user account","Adding new user account:en");
