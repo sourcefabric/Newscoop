@@ -11,12 +11,12 @@ if (!isset($editUser) || gettype($editUser) != 'object' || $editUser->getUserNam
 <table border="0" cellspacing="1" cellpadding="3" width="100%" class="table_list">
 <tr class="table_list_header">
 	<td colspan="5" align="left">
-		<table width="100%"><tr class="table_list_header">
+		<table border="0" cellspacing="0" cellpadding="0" width="100%"><tr class="table_list_header">
 			<td align="left"><?php putGS("Subscriptions"); ?></td>
-			<td align="right" nowrap>
+			<td align="right" valign="center" nowrap>
 				<?php $addURI = "/$ADMIN/users/subscriptions/add.php?User=".$editUser->getId(); ?>
-				<A HREF="<?php echo $addURI; ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/add.png" BORDER="0"></A>&nbsp;
-				<A HREF="<?php echo $addURI; ?>"><B><?php putGS("Add new"); ?></B></A>
+				<a href="<?php echo $addURI; ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/add.png" BORDER="0"></A>
+				<a href="<?php echo $addURI; ?>"><B><?php putGS("Add new"); ?></B></A>
 			</td>
 		</tr></table>
 	</td>
