@@ -20,7 +20,7 @@ if ($editUser->getUserName() == '') {
 <form name="dialog" method="post" action="do_passwd.php" >
 <input type="hidden" name="uType" value="<?php echo $uType; ?>">
 <input type="hidden" name="User" value="<?php echo $editUser->getId(); ?>">
-<table border="0" cellspacing="0" cellpadding="6" class="table_input" align="center" width="95%">
+<table border="0" cellspacing="0" cellpadding="3" class="table_input" align="center" width="95%">
 	<TR>
 		<TD COLSPAN="2">
 			<B><?php putGS("Change password"); ?></B>
@@ -29,20 +29,20 @@ if ($editUser->getUserName() == '') {
 	</TR>
 <?php if ($userId == $User->getId()) { ?>
 	<TR>
-		<TD ALIGN="RIGHT" ><?php  putGS("Old Password"); ?>:</TD>
+		<TD ALIGN="RIGHT" nowrap><?php  putGS("Old Password"); ?>:</TD>
 		<TD>
 		<INPUT TYPE="PASSWORD" class="input_text" NAME="oldPassword" SIZE="16" MAXLENGTH="32">
 		</TD>
 	</TR>
 <?php } ?>
 	<TR>
-		<TD ALIGN="RIGHT" ><?php  putGS("Password"); ?>:</TD>
+		<TD ALIGN="RIGHT" nowrap><?php  putGS("Password"); ?>:</TD>
 		<TD>
 		<INPUT TYPE="PASSWORD" class="input_text" NAME="password" SIZE="16" MAXLENGTH="32">
 		</TD>
 	</TR>
 	<TR>
-		<TD ALIGN="RIGHT" ><?php  putGS("Confirm password"); ?>:</TD>
+		<TD ALIGN="RIGHT" nowrap><?php  putGS("Confirm password"); ?>:</TD>
 		<TD>
 		<INPUT TYPE="PASSWORD" class="input_text" NAME="passwordConf" SIZE="16" MAXLENGTH="32">
 		</TD>
