@@ -58,7 +58,7 @@ regGS("Please check if an account with the same user name does not already exist
 regGS("User account $1 created","User account $1 created:en");
 
 // -- passwd.m4
-regGS("Change password","Change password:en");
+regGS("Click here to change password","Click here to change password:en");
 regGS("You do not have the right to change user passwords.","You do not have the right to change user passwords.:en");
 regGS("Old Password", "Old Password:en");
 
@@ -82,6 +82,9 @@ regGS("User account permissions could not be updated.","User account permissions
 // -- info.m4
 regGS("Change user account information","Change user account information:en");
 regGS("You do not have the right to change user account information.","You do not have the right to change user account information.:en");
+regGS("Show user rights","Show user rights:en");
+regGS("Hide user rights","Hide user rights:en");
+regGS("Click here to leave password unchanged","Click here to leave password unchanged:en");
 
 // -- do_info.m4
 regGS("Changing user account information","Changing user account information:en");
