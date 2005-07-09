@@ -5,12 +5,12 @@ if (!isset($editUser) || gettype($editUser) != 'object') {
 	CampsiteInterface::DisplayError(getGS('No such user account.'));
 	exit;
 }
+$isNewUser = $editUser->getUserName() == '';
 compute_user_rights($User, &$canManage, &$canDelete);
 if (!$canManage) {
-	if ($editUser->getUserName() == '') {
+	if ($isNewUser) {
 		$error = getGS("You do not have the right to create user accounts.");
-	}
-	else {
+	} else {
 		$error = getGS('You do not have the right to change user account information.');
 	}
 	CampsiteInterface::DisplayError($error);
@@ -20,12 +20,12 @@ if (!$canManage) {
 $fields = array('UName', 'Name', 'Title', 'Gender', 'Age', 'EMail', 'City', 'StrAddress',
 	'State', 'CountryCode', 'Phone', 'Fax', 'Contact', 'Phone2', 'PostalCode', 'Employer',
 	'EmployerType', 'Position');
-if ($editUser->getUserName() == '') {
+if ($isNewUser) {
 	$action = 'do_add.php';
 	foreach ($fields as $index=>$field)
 		$$field = Input::Get($field, 'string', '');
 } else {
-	$action = 'do_info.php';
+	$action = 'do_edit.php';
 	foreach ($fields as $index=>$field)
 		$$field = $editUser->getProperty($field);
 }
@@ -45,22 +45,38 @@ function ToggleRowVisibility(id) {
 		document.getElementById(id).style.display = "none";
 	}
 }
+function ToggleBoolValue(element_id) {
+    if (document.getElementById(element_id).value == "false") {
+		document.getElementById(element_id).value = "true";
+    }
+    else {
+	   document.getElementById(element_id).value = "false";
+    }
+}
 </script>
 
 <form name="dialog" method="POST" action="<?php echo $action; ?>">
 <input type="hidden" name="uType" value="<?php echo $uType; ?>">
-<?php if ($editUser->getUserName() != '') { ?>
+<?php
+if (!$isNewUser) { 
+?>
 <input type="hidden" name="User" value="<?php echo $editUser->getId(); ?>">
-<?php } ?>
+<?php
+}
+?>
 <table border="0" cellspacing="0" align="center" class="table_input">
 <tr>
 	<td>
-		<table border="0" cellspacing="0" cellpadding="6" align="center" width="100%">
+		<table border="0" cellspacing="0" cellpadding="3" align="center" width="100%">
 			<tr>
 				<td align="right" nowrap><?php putGS("User name"); ?>:</td>
-		<?php if ($editUser->getUserName() != '') { ?>
+<?php
+if (!$isNewUser) {
+?>
 				<td align="left" nowrap><b><?php pencHTML($editUser->getUserName()); ?></b></td>
-		<?php } else { ?>
+<?php
+} else {
+?>
 				<td><input type="text" class="input_text" name="UName" size="32" maxlength="32" value="<?php pencHTML($UName); ?>"></td>
 			</tr>
 			<tr>
@@ -74,7 +90,9 @@ function ToggleRowVisibility(id) {
 				<td>
 				<input type="password" class="input_text" name="passwordConf" size="16" maxlength="32">
 				</td>
-		<?php } ?>
+<?php
+}
+?>
 			</tr>
 			<tr>
 				<td align="right" nowrap><?php putGS("Full Name"); ?>:</td>
@@ -93,78 +111,134 @@ function ToggleRowVisibility(id) {
 				<input type="text" class="input_text" name="Phone" value="<?php pencHTML($Phone); ?>" size="20" maxlength="20">
 				</td>
 			</tr>
-		<?php if ($UName == '' && $uType == "Staff") { ?>
+<?php
+if ($isNewUser && $uType == "Staff") {
+?>
 			<tr>
 				<td align="right"><?php putGS("Type"); ?>:</td>
 				<td>
-		<?php query ("SELECT Name FROM UserTypes WHERE Reader = 'N' ORDER BY Name ASC", 'q'); ?>
+<?php
+	query ("SELECT Name FROM UserTypes WHERE Reader = 'N' ORDER BY Name ASC", 'q');
+?>
 				<select name="Type" class="input_select">
-		<?php
-			$Type = Input::Get('Type', 'string', '');
-			$nr = $NUM_ROWS;
-			for($loop = 0; $loop < $nr; $loop++) {
-				fetchRow($q);
-		?>
+<?php
+	$Type = Input::Get('Type', 'string', '');
+	$nr = $NUM_ROWS;
+	for($loop = 0; $loop < $nr; $loop++) {
+		fetchRow($q);
+?>
 					<option <?php if ($Type == getHVar($q,'Name')) { ?>selected<?php } ?>>
-		<?php
-				pgetHVar($q,'Name');
-			}
-		?>
+<?php
+		pgetHVar($q,'Name');
+	}
+?>
 				</select>
 				</td>
 			</tr>
-		<?php
-		} else {
-			echo "<input type=\"hidden\" name=\"Type\" value=\"$uType\">\n";
-		}
-		?>
+<?php
+} else {
+	echo "<input type=\"hidden\" name=\"Type\" value=\"$uType\">\n";
+}
+?>
 		</table>
 	</td>
 </tr>
-<tr id="show_row_id">
-	<td style="padding-left: 6px;">
-		<a href="javascript: void(0);" onclick="ToggleRowVisibility('my_hidden_element'); ToggleRowVisibility('hide_row_id'); ToggleRowVisibility('show_row_id');">
+<?php
+if (!$isNewUser) {
+?>
+<input type="hidden" name="setPassword" id="set_password" value="false">
+<tr id="password_show_link">
+	<td style="padding-left: 6px; padding-top: 6px;">
+		<a href="javascript: void(0);" onclick="ToggleRowVisibility('password_dialog'); ToggleRowVisibility('password_hide_link'); ToggleRowVisibility('password_show_link'); ToggleBoolValue('set_password');">
+			<img src="/admin/img/icon/viewmag+.png" id="my_icon" border="0" align="center">
+			<?php putGS("Click here to change password"); ?>
+		</a>
+	</td>
+</tr>
+<tr id="password_hide_link" style="display: none;">
+	<td style="padding-left: 6px; padding-top: 6px;">
+		<a href="javascript: void(0);" onclick="ToggleRowVisibility('password_dialog'); ToggleRowVisibility('password_hide_link'); ToggleRowVisibility('password_show_link'); ToggleBoolValue('set_password');">
+			<img src="/admin/img/icon/viewmag-.png" id="my_icon" border="0" align="center">
+			<?php putGS("Click here to leave password unchanged"); ?>
+		</a>
+	</td>
+</tr>
+<tr id="password_dialog" style="display: none;">
+	<td>
+		<table border="0" cellspacing="0" cellpadding="3" align="center" width="100%">
+<?php
+	if ($userId == $User->getId() && !$isNewUser) {
+?>
+		<tr>
+			<td align="right" nowrap width="1%"><?php  putGS("Old Password"); ?>:</td>
+			<td>
+			<input type="password" class="input_text" name="oldPassword" size="16" maxlength="32">
+			</td>
+		</tr>
+<?php
+	}
+?>
+		<tr>
+			<td align="right" nowrap width="1%"><?php putGS("Password"); ?>:</td>
+			<td>
+			<input type="password" class="input_text" name="password" size="16" maxlength="32">
+			</td>
+		</tr>
+		<tr>
+			<td align="right" nowrap width="1%"><?php putGS("Confirm password"); ?>:</td>
+			<td>
+			<input type="password" class="input_text" name="passwordConf" size="16" maxlength="32">
+			</td>
+		</tr>
+		</table>
+	</td>
+</tr>
+<?php
+} // if ($isNewUser)
+?>
+<tr id="user_details_show_link">
+	<td style="padding-left: 6px; padding-top: 6px;">
+		<a href="javascript: void(0);" onclick="ToggleRowVisibility('user_details_dialog'); ToggleRowVisibility('user_details_hide_link'); ToggleRowVisibility('user_details_show_link');">
 			<img src="/admin/img/icon/viewmag+.png" id="my_icon" border="0" align="center">
 			<?php putGS("Show more user details"); ?>
 		</a>
 	</td>
 </tr>
-<tr id="hide_row_id" style="display: none;">
-	<td style="padding-left: 6px;">
-		<a href="javascript: void(0);" onclick="ToggleRowVisibility('my_hidden_element'); ToggleRowVisibility('hide_row_id'); ToggleRowVisibility('show_row_id');">
+<tr id="user_details_hide_link" style="display: none;">
+	<td style="padding-left: 6px; padding-top: 6px;">
+		<a href="javascript: void(0);" onclick="ToggleRowVisibility('user_details_dialog'); ToggleRowVisibility('user_details_hide_link'); ToggleRowVisibility('user_details_show_link');">
 			<img src="/admin/img/icon/viewmag-.png" id="my_icon" border="0" align="center">
 			<?php putGS("Hide user details"); ?>
 		</a>
 	</td>
 </tr>
-<tr id="my_hidden_element" style="display: none;">
+<tr id="user_details_dialog" style="display: none;">
 	<td>
-		<table border="0" cellspacing="0" cellpadding="6" align="center" width="100%">
+		<table border="0" cellspacing="0" cellpadding="3" align="center" width="100%">
 			<tr>
 				<td align="right" nowrap><?php putGS("Title"); ?>:</td>
 				<td>
-		<?php
-			CampsiteInterface::CreateSelect("Title", array("Mr.", "Mrs.", "Ms.", "Dr."),
-				$Title, 'class="input_select"');
-		?>
+<?php
+CampsiteInterface::CreateSelect("Title", array("Mr.", "Mrs.", "Ms.", "Dr."),
+	$Title, 'class="input_select"');
+?>
 				</td>
 			</tr>
 			<tr>
 				<td align="right" nowrap><?php putGS("Gender"); ?>:</td>
 				<td>
 				<input type=radio name=Gender value="M"<?php if($Gender == "M") { ?> CHECKED<?php  } ?>><?php  putGS('Male'); ?>
-				<input type=radio name=gender value="F"<?php if($Gender == "F") { ?> CHECKED<?php  } ?>><?php  putGS('Female'); ?>
+				<input type=radio name=Gender value="F"<?php if($Gender == "F") { ?> CHECKED<?php  } ?>><?php  putGS('Female'); ?>
 				</td>
 			</tr>
 			<tr>
 				<td align="right" nowrap><?php putGS("Age"); ?>:</td>
 				<td>
-		<?php
-			CampsiteInterface::CreateSelect("Age", array("0-17"=>getGS("under 18"),
-					"18-24"=>"18-24", "25-39"=>"25-39", "40-49"=>"40-49", "50-65"=>"50-65",
-					"65-"=>getGS('65 or over')),
-				$Age, 'class="input_select"', true);
-		?>
+<?php
+CampsiteInterface::CreateSelect("Age", array("0-17"=>getGS("under 18"),
+	"18-24"=>"18-24", "25-39"=>"25-39", "40-49"=>"40-49", "50-65"=>"50-65",
+	"65-"=>getGS('65 or over')), $Age, 'class="input_select"', true);
+?>
 				</td>
 			</tr>
 			<tr>
@@ -194,16 +268,16 @@ function ToggleRowVisibility(id) {
 			<tr>
 				<td align="right" nowrap><?php putGS("Country"); ?>:</td>
 				<td>
-		<?php
-			$countries_list[""] = "";
-			query ("SELECT Code, Name FROM Countries where IdLanguage = 1", 'countries');
-			for($loop = 0; $loop < $NUM_ROWS; $loop++) {
-				fetchRow($countries);
-				$countries_list[getHVar($countries,'Code')] = getHVar($countries,'Name');
-			}
-			CampsiteInterface::CreateSelect("CountryCode", $countries_list,
-				$CountryCode, 'class="input_select"', true);
-		?>
+<?php
+$countries_list[""] = "";
+query ("SELECT Code, Name FROM Countries where IdLanguage = 1", 'countries');
+for($loop = 0; $loop < $NUM_ROWS; $loop++) {
+	fetchRow($countries);
+	$countries_list[getHVar($countries,'Code')] = getHVar($countries,'Name');
+}
+CampsiteInterface::CreateSelect("CountryCode", $countries_list,
+	$CountryCode, 'class="input_select"', true);
+?>
 				</td>
 			</tr>
 			<tr>
@@ -233,16 +307,16 @@ function ToggleRowVisibility(id) {
 			<tr>
 				<td align="right" nowrap><?php putGS("Employer Type"); ?>:</td>
 				<td>
-		<?php
-			$employerTypes[''] = '';
-			$employerTypes['Corporate'] = getGS('Corporate');
-			$employerTypes['NGO'] = getGS('Non-Governmental Organisation');
-			$employerTypes['Government Agency'] = getGS('Government Agency');
-			$employerTypes['Academic'] = getGS('Academic');
-			$employerTypes['Media'] = getGS('Media');
-			CampsiteInterface::CreateSelect("EmployerType", $employerTypes,
-				$EmployerType, 'class="input_select"', true);
-		?>
+<?php
+$employerTypes[''] = '';
+$employerTypes['Corporate'] = getGS('Corporate');
+$employerTypes['NGO'] = getGS('Non-Governmental Organisation');
+$employerTypes['Government Agency'] = getGS('Government Agency');
+$employerTypes['Academic'] = getGS('Academic');
+$employerTypes['Media'] = getGS('Media');
+CampsiteInterface::CreateSelect("EmployerType", $employerTypes,
+	$EmployerType, 'class="input_select"', true);
+?>
 				</td>
 			</tr>
 			<tr>
@@ -254,6 +328,39 @@ function ToggleRowVisibility(id) {
 		</table>
 	</td>
 </tr>
+<?php
+if ($editUser->isAdmin()) {
+?>
+<tr id="rights_show_link">
+	<td style="padding-left: 6px; padding-top: 6px;">
+		<a href="javascript: void(0);" onclick="ToggleRowVisibility('rights_dialog'); ToggleRowVisibility('rights_hide_link'); ToggleRowVisibility('rights_show_link');">
+			<img src="/admin/img/icon/viewmag+.png" id="my_icon" border="0" align="center">
+			<?php putGS("Show user rights"); ?>
+		</a>
+	</td>
+</tr>
+<tr id="rights_hide_link" style="display: none;">
+	<td style="padding-left: 6px; padding-top: 6px;">
+		<a href="javascript: void(0);" onclick="ToggleRowVisibility('rights_dialog'); ToggleRowVisibility('rights_hide_link'); ToggleRowVisibility('rights_show_link');">
+			<img src="/admin/img/icon/viewmag-.png" id="my_icon" border="0" align="center">
+			<?php putGS("Hide user rights"); ?>
+		</a>
+	</td>
+</tr>
+<tr id="rights_dialog" style="display: none;">
+	<td>
+		<table border="0" cellspacing="0" cellpadding="6" align="center" width="100%">
+			<tr>
+				<td>
+		<?php require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/access_form.php"); ?>
+				</td>
+			</tr>
+		</table>
+	</td>
+</tr>
+<?php
+} // $editUser->isAdmin()
+?>
 <tr>
 	<td>
 		<table border="0" cellspacing="0" cellpadding="6" align="center" width="100%">
