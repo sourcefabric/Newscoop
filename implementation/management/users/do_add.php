@@ -33,7 +33,7 @@ foreach ($fields as $index=>$field) {
 
 // set the Reader field
 $Type = Input::Get('Type', 'string', '');
-$fieldValues['Reader'] = $uType == 'Readers' ? 'Y' : 'N';
+$fieldValues['Reader'] = $uType == 'Subscribers' ? 'Y' : 'N';
 if ($uType == 'Staff' && $Type == '' && $errorField == '')
 	$errorField = 'Type';
 
