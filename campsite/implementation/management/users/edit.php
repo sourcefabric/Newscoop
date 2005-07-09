@@ -19,9 +19,11 @@ if ($userId > 0) {
 		exit;
 	}
 	$title = "Change user account information";
+	$isNewUser = false;
 } else {
 	$editUser = new User();
 	$title = "Add new user account";
+	$isNewUser = true;
 }
 
 ?>
@@ -33,19 +35,12 @@ if ($userId > 0) {
 </table>
 <table border="0" align="center">
 <tr>
-	<td rowspan="3" valign="top" align="center" height="1%">
+	<td rowspan="2" valign="top" align="center" height="1%">
 		<?php require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/info.php"); ?>
 	</td>
 <?php if ($userId > 0) { ?>
 	<td valign="top" height="1%">
-		<?php require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/passwd.php"); ?>
-	</td>
-</tr>
-<tr>
-	<td valign="top" height="1%">
 <?php
-if ($uType == 'Staff')
-	require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/rights.php");
 if ($uType == 'Subscribers')
 	require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/subscriptions.php");
 ?>
