@@ -48,17 +48,16 @@ if ($NUM_ROWS) {
 	exit;
 }
 
-query ("INSERT IGNORE INTO SubsByIP SET IdUser=$userId, StartIP='$StartIP', Addresses=$cAddresses");
-$created = ($AFFECTED_ROWS > 0);
-if ($created) {
+if ($Campsite['db']->Execute("INSERT IGNORE INTO SubsByIP SET IdUser=$userId, StartIP='$StartIP', Addresses=$cAddresses")) {
 	$logtext = getGS('IP Group $1 added for user $2', encHTML("$ip:$cAddresses"),
 		encHTML($editUser->getUserName()));
-	Log::Message($logtext, $editUser->getUserName(), 57);
+	Log::Message($logtext, $User->getUserName(), 57);
 } else {
 	CampsiteInterface::DisplayError(getGS('There was an error creating the IP address group.', "$ip:$cAddresses"), $backLink);
 	exit;
 }
 
-header("Location: /$ADMIN/users/edit.php?uType=Subscribers&User=$userId");
+$resMsg = getGS("The IP Group $1 has been created.", "$ip:$cAddresses");
+header("Location: $backLink&res=OK&resMsg=" . urlencode($resMsg));
 
 ?>

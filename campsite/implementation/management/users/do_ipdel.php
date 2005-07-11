@@ -20,16 +20,21 @@ if ($editUser->getUserName() == '') {
 	exit;
 }
 $StartIP = Input::Get('StartIP', 'string', '');
+$ip0 = ($StartIP & 0xff000000) >> 24;
+$ip1 = ($StartIP & 0x00ff0000) >> 16;
+$ip2 = ($StartIP & 0x0000ff00) >> 8;
+$ip3 = $StartIP & 0x000000ff;
+$ip = "$ip0.$ip1.$ip2.$ip3";
 
-query ("SELECT Addresses FROM SubsByIP WHERE IdUser=$userId and StartIP=$StartIP", 'ig');
-if ($NUM_ROWS) {
-	fetchRow($ig);
-	query("DELETE FROM SubsByIP WHERE IdUser=$userId and StartIP=$StartIP");
-	$logtext = getGS('The IP address group $1 has been deleted.',
-		"$StartIP:" . getHVar($ig, 'Addresses'));
-	Log::Message($logtext, $editUser->getUserName(), 58);
+if ($Campsite['db']->Execute("DELETE FROM SubsByIP WHERE IdUser=$userId and StartIP=$StartIP")) {
+	$logtext = getGS('The IP address group $1 has been deleted.', $ip);
+	Log::Message($logtext, $User->getUserName(), 58);
+} else {
+	header("Location: /$ADMIN/users/edit.php?uType=Subscribers&User=$userId");
+	exit;
 }
 
-header("Location: /$ADMIN/users/edit.php?uType=Subscribers&User=$userId");
+$resMsg = getGS("The IP address group $1 has been deleted.", $ip);
+header("Location: /$ADMIN/users/edit.php?uType=Subscribers&User=$userId&res=OK&resMsg=" . urlencode($resMsg));
 
 ?>
