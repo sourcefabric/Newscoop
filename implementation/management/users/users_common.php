@@ -23,7 +23,7 @@ function verify_user_type()
 function read_user_common_parameters()
 {
 	global $uType, $userOffs, $lpp, $full_name, $user_name, $email, $subscription_how;
-	global $subscription_when, $subscription_date, $subscription_status;
+	global $subscription_when, $subscription_date, $subscription_status, $res, $resMsg;
 
 	$uType = Input::Get('uType', 'string', '');
 	$userOffs = Input::Get('userOffs', 'int', 0);
@@ -39,6 +39,8 @@ function read_user_common_parameters()
 		$subscription_date = Input::Get('subscription_date', 'string', '');
 		$subscription_status = Input::Get('subscription_status', 'string', '');
 	}
+	$res = Input::Get('res', 'string', 'OK');
+	$resMsg = Input::Get('resMsg', 'string', '');
 }
 
 function compute_user_rights($User, &$canManage, &$canDelete)
