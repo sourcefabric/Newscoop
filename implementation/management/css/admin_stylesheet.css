@@ -178,6 +178,12 @@ hr {
 	color: #239f34;
 }
 
+.error_message {
+	font-weight: bold; 
+	font-size: 14pt; 
+	color: #E30000;
+}
+
 .action_link {
 	font-weight: bold;
 }
