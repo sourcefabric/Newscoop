@@ -54,6 +54,7 @@ regGS("You must select an user type.","You must select an user type.:en");
 regGS("The user account $1 has been created.","The user account $1 has been created.:en");
 regGS("The user account could not be created.","The user account could not be created.:en");
 regGS("Please check if an account with the same user name does not already exist.","Please check if an account with the same user name does not already exist.:en");
+regGS("User account $1 was created successfully.", "User account $1 was created successfully.:en");
 // log
 regGS("User account $1 created","User account $1 created:en");
 
@@ -92,6 +93,7 @@ regGS("User account information has been changed.","User account information has
 // log
 regGS("User account information could not be changed.","User account information could not be changed.:en");
 regGS("User account information changed for $1","User account information changed for $1:en");
+regGS("User $1 information was changed successfully.", "User $1 information was changed successfully.:en");
 
 // -- chpwd.m4
 regGS("Old password","Old password:en");
@@ -108,6 +110,7 @@ regGS("User $1 changed his password","User $1 changed his password:en");
 regGS("Delete user account","Delete user account:en");
 regGS("You do not have the right to delete user accounts.","You do not have the right to delete user accounts.:en");
 regGS("Are you sure you want to delete the user account $1 ?","Are you sure you want to delete the user account $1 ?:en");
+regGS("User account $1 was deleted successfully.", "User account $1 was deleted successfully.:en");
 
 // -- do_del.m4
 regGS("Deleting user account","Deleting user account:en");
@@ -150,5 +153,6 @@ regGS("The IP address group $1 has been deleted.","The IP address group $1 has b
 regGS("The IP Group could not be deleted.","The IP Group could not be deleted.:en");
 
 regGS("No IP Group.", "No IP Group.:en");
+regGS("User '$1' information was changed successfully.", "User '$1' information was changed successfully.:en");
 
 ?>
