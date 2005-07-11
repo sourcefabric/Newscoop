@@ -33,19 +33,20 @@ if ($setPassword) {
 	if ($userId == $User->getId()) {
 		$oldPassword = Input::Get('oldPassword');
 		if (!$editUser->isValidPassword($oldPassword)) {
-			CampsiteInterface::DisplayError(getGS('The password you typed is incorrect.'), $backLink);
+			$resMsg = getGS('The password you typed is incorrect.');
+			header("Location: $backLink&res=ERROR&resMsg=" . urlencode($resMsg));
 			exit;
 		}
 	}
 	if (strlen($password) < 6 || $password != $passwordConf) {
-		$errMsg = 'The password must be at least 6 characters long and both passwords should match.';
-		CampsiteInterface::DisplayError(getGS($errMsg), $backLink);
+		$resMsg = 'The password must be at least 6 characters long and both passwords should match.';
+		header("Location: $backLink&res=ERROR&resMsg=" . urlencode(getGS($resMsg)));
 		exit;
 	}
 	
 	$editUser->setPassword($password);
 	$logtext = getGS('Password changed for $1', $editUser->getUserName());
-	Log::Message($logtext, $editUser->getUserName(), 54);
+	Log::Message($logtext, $User->getUserName(), 54);
 }
 
 
@@ -70,7 +71,7 @@ $editUser->setProperty('Position', Input::Get('Position', 'string', ''), false);
 $editUser->commit();
 
 $logtext = getGS('User account information changed for $1', $editUser->getUserName());
-Log::Message($logtext, $editUser->getUserName(), 56);
+Log::Message($logtext, $User->getUserName(), 56);
 
 
 if ($editUser->isAdmin()) {
@@ -103,10 +104,12 @@ if ($editUser->isAdmin()) {
 	
 	if ($AFFECTED_ROWS >= 0) {
 		$logtext = getGS('Permissions for $1 changed',$editUser->getUserName());
-		Log::Message($logtext, $editUser->getUserName(), 55);
+		Log::Message($logtext, $User->getUserName(), 55);
 	}
 }
 
-header("Location: /$ADMIN/users/edit.php?$typeParam&User=" . $editUser->getId());
+$resParams = "res=OK&resMsg=" . getGS("User '$1' information was changed successfully.",
+	$editUser->getUserName());
+header("Location: /$ADMIN/users/edit.php?$typeParam&User=" . $editUser->getId() . "&$resParams");
 
 ?>

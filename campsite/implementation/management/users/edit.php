@@ -33,6 +33,21 @@ if ($userId > 0) {
 	<td align="right"><a href="/<?php echo $ADMIN; ?>/users/?<?php echo get_user_urlparams(); ?>" class="breadcrumb" ><?php putGS($uType);  ?></a></td>
 </tr>
 </table>
+
+<?php if ($resMsg != '') { ?>
+<table border="0" cellpadding="0" cellspacing="0" align="center">
+<tr>
+<?php if ($res == 'OK') { ?>
+	<td class="info_message">
+<?php } else { ?>
+	<td class="error_message">
+<?php } ?>
+		<?php echo $resMsg; ?>
+	</td>
+</tr>
+</table>
+<?php } ?>
+
 <table border="0" align="center">
 <tr>
 	<td rowspan="2" valign="top" align="center" height="1%">

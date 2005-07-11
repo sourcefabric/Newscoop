@@ -72,7 +72,21 @@ if ($canManage) {
 </tr>
 <?php } ?>
 </form>
-</TABLE>
+</table>
+
+<?php if ($resMsg != '') { ?>
+<table border="0" cellpadding="0" cellspacing="0" align="center">
+<tr>
+<?php if ($res == 'OK') { ?>
+	<td class="info_message">
+<?php } else { ?>
+	<td class="error_message">
+<?php } ?>
+		<?php echo $resMsg; ?>
+	</td>
+</tr>
+</table>
+<?php } ?>
 
 <?php
 $sql = "SELECT u.* FROM Users as u";
