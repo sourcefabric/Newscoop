@@ -9,7 +9,7 @@ read_user_common_parameters(); // $uType, $userOffs, $lpp, search parameters
 verify_user_type();
 compute_user_rights($User, &$canManage, &$canDelete);
 if (!$canManage) {
-	CampsiteInterface::DisplayError(getGS('You do not have the right to change user account information.'));
+	CampsiteInterface::DisplayError(getGS('You do not have the right to create user accounts.'));
 	exit;
 }
 
@@ -46,7 +46,7 @@ if ($errorField != "") {
 	else {
 		$errorMsg = getGS('You must complete the $1 field.', $desc);
 	}
-	CampsiteInterface::DisplayError($errorMsg, $backLink);
+	header("Location: $backLink&res=ERROR&resMsg=" . urlencode($errorMsg));
 	exit;
 }
 
@@ -54,7 +54,8 @@ if ($errorField != "") {
 $password = Input::Get('password', 'string', '');
 $passwordConf = Input::Get('passwordConf', 'string', '');
 if (strlen($password) < 6 || $password != $passwordConf) {
-	CampsiteInterface::DisplayError(getGS('The password must be at least 6 characters long and both passwords should match.'), $backLink);
+	$errorMsg = 'The password must be at least 6 characters long and both passwords should match.';
+	header("Location: $backLink&res=ERROR&resMsg=" . urlencode(getGS($errorMsg)));
 	exit;
 }
 
@@ -65,10 +66,12 @@ if ($editUser->create($fieldValues)) {
 	if ($uType == 'Staff')
 		$editUser->setUserType($Type);
 	$logtext = getGS('User account $1 created', $editUser->getUserName());
-	Log::Message($logtext, $editUser->getUserName(), 51);
-	header("Location: /$ADMIN/users/edit.php?$typeParam&User=" . $editUser->getId());
+	Log::Message($logtext, $User->getUserName(), 51);
+	$resMsg = getGS('User account $1 was created successfully.', $editUser->getUserName());
+	header("Location: /$ADMIN/users/index.php?$typeParam&res=OK&resMsg=" . urlencode($resMsg));
 } else {
-	CampsiteInterface::DisplayError(getGS('The user account could not be created.'), $backLink);
+	$errorMsg = getGS('The user account could not be created.');
+	header("Location: $backLink&res=ERROR&resMsg=" . urlencode($errorMsg));
 	exit;
 }
 
