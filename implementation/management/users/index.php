@@ -12,28 +12,28 @@ $typeParam = 'uType=' . urlencode($uType);
 $isReader = $uType == 'Subscribers' ? 'Y' : 'N';
 
 ?>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
-	<TR><TD class="page_title" align="left"><?php putGS("$uType management"); ?></TD></TR>
-</TABLE>
+<table border="0" cellspacing="0" cellpadding="1" width="100%" class="page_title_container">
+	<tr><td class="page_title" align="left"><?php putGS("$uType management"); ?></td></tr>
+</table>
 
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
-<TR>
+<table border="0" cellspacing="0" cellpadding="1">
+<tr>
 <?php
 if ($canManage) {
 	$addLink = "edit.php?" . get_user_urlparams(0, true, true);
 ?>
-	<TD><A HREF="<?php echo $addLink; ?>">
-		<IMG SRC="/admin/img/icon/add.png" BORDER="0">
-		<B><?php putGS("Add new user account"); ?></B></A></TD>
+	<td><a href="<?php echo $addLink; ?>">
+		<img src="/admin/img/icon/add.png" border="0">
+		<b><?php putGS("Add new user account"); ?></b></a></td>
 <?php } ?>
-	<TD style="padding-left: 10px;">
-		<A HREF="?<?php echo get_user_urlparams(0, false, true); ?>">
-		<IMG SRC="/admin/img/icon/reset.png" BORDER="0">
-		<B><?php putGS("Reset search conditions"); ?></B></A></TD>
-</TR>
-</TABLE>
+	<td style="padding-left: 10px;">
+		<a href="?<?php echo get_user_urlparams(0, false, true); ?>">
+		<img src="/admin/img/icon/reset.png" border="0">
+		<B><?php putGS("Reset search conditions"); ?></b></a></td>
+</tr>
+</table>
 
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="3" class="table_input" style="margin-bottom: 10px; margin-top: 5px;" align="center">
+<table border="0" cellspacing="0" cellpadding="3" class="table_input" style="margin-bottom: 10px; margin-top: 5px;" align="center">
 <form method="POST" action="index.php">
 <input type="hidden" name="uType" value="<?php pencHTML($uType); ?>">
 <input type="hidden" name="userOffs" value="<?php pencHTML($userOffs); ?>">
@@ -70,6 +70,16 @@ if ($canManage) {
 		</select>
 	</td>
 </tr>
+<tr>
+	<td colspan="11" align="center">
+		<?php putGS("IP address"); ?>:
+		<input type="text" class="input_text" name="StartIP1" size="3" maxlength="3" value="<?php if ($startIP1 != 0) echo $startIP1; ?>">.
+		<input type="text" class="input_text" name="StartIP2" size="3" maxlength="3" value="<?php if ($startIP2 != 0) echo $startIP2; ?>">.
+		<input type="text" class="input_text" name="StartIP3" size="3" maxlength="3" value="<?php if ($startIP3 != 0) echo $startIP3; ?>">.
+		<input type="text" class="input_text" name="StartIP4" size="3" maxlength="3" value="<?php if ($startIP4 != 0) echo $startIP4; ?>">
+		(<?php putGS("fill in from left to right at least one input box"); ?>)
+	</td>
+</tr>
 <?php } ?>
 </form>
 </table>
@@ -90,6 +100,9 @@ if ($canManage) {
 
 <?php
 $sql = "SELECT u.* FROM Users as u";
+if ($startIP1 != 0) {
+	$sql .= " left join SubsByIP as sip on u.Id = sip.IdUser";
+}
 if ($subscription_date != "" || $subscription_status != "") {
 	$sql .= " left join Subscriptions as s on u.Id = s.IdUser";
 	if ($subscription_date != "")
@@ -116,30 +129,40 @@ if ($subscription_date != '') {
 }
 if ($subscription_status != "")
 	$sql .= " and s.Active = '" . ($subscription_status == 'active' ? 'Y' : 'N') . "'";
+if ($startIP1 != 0) {
+	
+	$minIP = $startIP1 * 256 * 256 * 256 + $startIP2 * 256 * 256 + $startIP3 * 256 + $startIP4;
+	$maxIP2 = $startIP2 != 0 ? $startIP2 : 255;
+	$maxIP3 = $startIP3 != 0 ? $startIP3 : 255;
+	$maxIP4 = $startIP4 != 0 ? $startIP4 : 255;
+	$maxIP = $startIP1 * 256 * 256 * 256 + $maxIP2 * 256 * 256 + $maxIP3 * 256 + $maxIP4;
+	$sql .= " and ((sip.StartIP >= $minIP and sip.StartIP <= $maxIP)"
+	     . " or ((sip.StartIP - 1 + sip.Addresses) >= $minIP and (sip.StartIP - 1 + sip.Addresses) <= $maxIP))";
+}
 if ($subscription_date != "")
 	$sql .= " group by s.Id";
-$sql .= " order by Name asc limit $userOffs, " . ($lpp + 1);
-//echo "<p>sql: $sql</p>\n";
-query($sql, 'Users');
-if ($NUM_ROWS) {
-	$nr = $NUM_ROWS;
+$sql .= " order by Name asc";
+echo "<p>sql: $sql</p>\n";
+$res = $Campsite['db']->SelectLimit($sql, $lpp+1, $userOffs);
+if (gettype($res) == 'object' && $res->NumRows() > 0) {
+	$nr = $res->NumRows();
 	$last = $nr > $lpp ? $lpp : $nr;
-?><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" WIDTH="100%" class="table_list">
-	<TR class="table_list_header">
-		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php putGS("Full Name"); ?></B></TD>
-		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php putGS("User Name"); ?></B></TD>
-		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php putGS("E-Mail"); ?></B></TD>
+?><table border="0" cellspacing="1" cellpadding="3" width="100%" class="table_list">
+	<tr class="table_list_header">
+		<td align="left" valign="top"><b><?php putGS("Full Name"); ?></b></td>
+		<td align="left" valign="top"><b><?php putGS("User Name"); ?></b></td>
+		<td align="left" valign="top"><b><?php putGS("E-Mail"); ?></b></td>
 <?php if ($uType == "Subscribers" && $User->hasPermission("ManageSubscriptions")) { ?>
-		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php putGS("Subscriptions"); ?></B></TD>
+		<td align="left" valign="top"><b><?php putGS("Subscriptions"); ?></b></td>
 <?php } ?>
 <?php if ($canDelete) { ?>
-		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%"><B><?php putGS("Delete"); ?></B></TD>
+		<td align="left" valign="top" width="1%"><b><?php putGS("Delete"); ?></b></td>
 <?php } ?>
 	</TR>
 <?php 
 for($loop = 0; $loop < $last; $loop++) {
-	fetchRow($Users);
-	$userId = getVar($Users, 'Id');
+	$row = $res->FetchRow();
+	$userId = $row['Id'];
 	$rowClass = ($loop + 1) % 2 == 0 ? "list_row_even" : "list_row_odd";
 ?>
 	<tr <?php echo "class=\"$rowClass\""; ?>>
@@ -147,20 +170,20 @@ for($loop = 0; $loop < $last; $loop++) {
 <?php
 	if ($canManage)
 		echo "<a href=\"edit.php?" . get_user_urlparams($userId, false, true) . "\">";
-	pgetHVar($Users,'Name');
+	echo htmlspecialchars($row['Name']);
 	if ($canManage)
 		echo "</a>";
 	$old_user_name = $user_name;
-	$user_name = getVar($Users, 'UName');
+	$user_name = $row['UName'];
 ?>
 		</td>
-		<td><?php pgetHVar($Users,'UName'); ?></TD>
+		<td><?php echo htmlspecialchars($user_name); ?></TD>
 <?php
 	$user_name = $old_user_name;
 	$old_email = $email;
-	$email = getVar($Users, 'EMail');
+	$email = $row['EMail'];
 ?>
-		<td><?php pgetHVar($Users,'EMail'); ?></td>
+		<td><?php echo htmlspecialchars($email); ?></td>
 <?php if ($uType == "Subscribers" && $User->hasPermission("ManageSubscriptions")) { ?>
 		<td><a href="<?php echo "/$ADMIN/users/subscriptions/?User=$userId"; ?>">
 			<?php putGS("Subscriptions"); ?></td>
@@ -168,25 +191,25 @@ for($loop = 0; $loop < $last; $loop++) {
 <?php
 	$email = $old_email;
 	if ($canDelete) { ?>
-		<TD ALIGN="CENTER">
-			<A HREF="/admin/users/do_del.php?<?php echo get_user_urlparams($userId, false, true); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the user account $1 ?', getVar($Users, 'UName')); ?>');">
-				<IMG SRC="/admin/img/icon/delete.png" BORDER="0" ALT="<?php putGS('Delete user $1',getHVar($Users,'Name')); ?>" TITLE="<?php  putGS('Delete user $1',getHVar($Users,'Name')); ?>">
-			</A>
-		</TD>
+		<td align="center">
+			<a href="/admin/users/do_del.php?<?php echo get_user_urlparams($userId, false, true); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the user account $1 ?', $row['UName']); ?>');">
+				<img src="/admin/img/icon/delete.png" border="0" ALT="<?php putGS('Delete user $1', $row['UName']); ?>" title="<?php putGS('Delete user $1', $row['UName']); ?>">
+			</a>
+		</td>
 <?php
 	}
 ?>
-	</TR>
+	</tr>
 <?php 
 }
-?>	<TR><TD COLSPAN="2" NOWRAP>
+?>	<tr><td colspan="2" nowrap>
 <?php
 if ($userOffs <= 0) {
 	echo "\t\t&lt;&lt;&nbsp;" . getGS('Previous');
 } else {
 	$oldUserOffs = $userOffs;
 	$userOffs = $userOffs - $lpp;
-?>		<B><A HREF="index.php?<?php echo get_user_urlparams(0); ?>">&lt;&lt; <?php  putGS('Previous'); ?></A></B>
+?>		<b><a href="index.php?<?php echo get_user_urlparams(0); ?>">&lt;&lt; <?php putGS('Previous'); ?></a></b>
 <?php
 	$userOffs = $oldUserOffs;
 }
@@ -194,14 +217,14 @@ if ($nr < $lpp+1) {
 	echo "\t\t| " . getGS('Next') . "&nbsp;&gt;&gt;";
 } else {
 	$userOffs += $lpp;
-?>		 | <B><A HREF="index.php?<?php echo get_user_urlparams(0); ?>"><?php  putGS('Next'); ?> &gt;&gt</A></B>
-<?php  } ?>	</TD></TR>
-</TABLE>
-<?php  } else { ?><BLOCKQUOTE>
-	<LI><?php  putGS('User list is empty.'); ?></LI>
-</BLOCKQUOTE>
+?>		 | <b><a href="index.php?<?php echo get_user_urlparams(0); ?>"><?php putGS('Next'); ?> &gt;&gt</a></b>
+<?php  } ?>	</td></tr>
+</table>
+<?php  } else { ?><blockquote>
+	<li><?php  putGS('User list is empty.'); ?></li>
+</blockquote>
 <?php  } ?>
 <?php CampsiteInterface::CopyrightNotice(); ?>
-</BODY>
+</body>
 
-</HTML>
+</html>
