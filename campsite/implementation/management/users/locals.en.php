@@ -155,4 +155,7 @@ regGS("The IP Group could not be deleted.","The IP Group could not be deleted.:e
 regGS("No IP Group.", "No IP Group.:en");
 regGS("User '$1' information was changed successfully.", "User '$1' information was changed successfully.:en");
 
+regGS("IP address", "IP address:en");
+regGS("fill in from left to right at least one input box", "fill in from left to right at least one input box:en");
+
 ?>
