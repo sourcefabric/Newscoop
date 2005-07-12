@@ -142,7 +142,6 @@ if ($startIP1 != 0) {
 if ($subscription_date != "")
 	$sql .= " group by s.Id";
 $sql .= " order by Name asc";
-echo "<p>sql: $sql</p>\n";
 $res = $Campsite['db']->SelectLimit($sql, $lpp+1, $userOffs);
 if (gettype($res) == 'object' && $res->NumRows() > 0) {
 	$nr = $res->NumRows();
