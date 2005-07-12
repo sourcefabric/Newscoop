@@ -24,6 +24,7 @@ function read_user_common_parameters()
 {
 	global $uType, $userOffs, $lpp, $full_name, $user_name, $email, $subscription_how;
 	global $subscription_when, $subscription_date, $subscription_status, $res, $resMsg;
+	global $startIP1, $startIP2, $startIP3, $startIP4;
 
 	$uType = Input::Get('uType', 'string', '');
 	$userOffs = Input::Get('userOffs', 'int', 0);
@@ -41,6 +42,10 @@ function read_user_common_parameters()
 	}
 	$res = Input::Get('res', 'string', 'OK');
 	$resMsg = Input::Get('resMsg', 'string', '');
+	$startIP1 = Input::Get('StartIP1', 'int', 0);
+	$startIP2 = Input::Get('StartIP2', 'int', 0);
+	$startIP3 = Input::Get('StartIP3', 'int', 0);
+	$startIP4 = Input::Get('StartIP4', 'int', 0);
 }
 
 function compute_user_rights($User, &$canManage, &$canDelete)
