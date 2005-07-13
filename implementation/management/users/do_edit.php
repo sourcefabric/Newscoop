@@ -2,6 +2,7 @@
 
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/users_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']. "/classes/Log.php");
+require_once($_SERVER['DOCUMENT_ROOT']. '/classes/UserType.php');
 
 list($access, $User) = check_basic_access($_REQUEST);
 
@@ -23,6 +24,7 @@ if ($editUser->getUserName() == '') {
 $typeParam = 'uType=' . urlencode($uType);
 $isReader = $uType == 'Readers' ? 'Y' : 'N';
 $setPassword = Input::Get('setPassword', 'string', 'false') == 'true';
+$customizeRights = Input::Get('customizeRights', 'string', 'false') == 'true';
 
 
 if ($setPassword) {
@@ -74,8 +76,8 @@ $logtext = getGS('User account information changed for $1', $editUser->getUserNa
 Log::Message($logtext, $User->getUserName(), 56);
 
 
-if ($editUser->isAdmin()) {
-	// save user rights
+if ($editUser->isAdmin() && $customizeRights) {
+	// save user customized rights
 	$rightsFields = array('ManagePub'=>'N', 'DeletePub'=>'N', 'ManageIssue'=>'N',
 		'DeleteIssue'=>'N', 'ManageSection'=>'N', 'DeleteSection'=>'N', 'AddArticle'=>'N',
 		'ChangeArticle'=>'N', 'DeleteArticle'=>'N', 'AddImage'=>'N', 'ChangeImage'=>'N',
@@ -105,6 +107,13 @@ if ($editUser->isAdmin()) {
 	if ($AFFECTED_ROWS >= 0) {
 		$logtext = getGS('Permissions for $1 changed',$editUser->getUserName());
 		Log::Message($logtext, $User->getUserName(), 55);
+	}
+}
+if ($editUser->isAdmin() && !$customizeRights) {
+	// save user rights based on existing user type
+	$userTypeName = Input::Get('UserType', 'string', '');
+	if ($userTypeName != "") {
+		$editUser->setUserType($userTypeName);
 	}
 }
 
