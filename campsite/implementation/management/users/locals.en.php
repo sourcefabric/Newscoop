@@ -83,8 +83,8 @@ regGS("User account permissions could not be updated.","User account permissions
 // -- info.m4
 regGS("Change user account information","Change user account information:en");
 regGS("You do not have the right to change user account information.","You do not have the right to change user account information.:en");
-regGS("Show user rights","Show user rights:en");
-regGS("Hide user rights","Hide user rights:en");
+regGS("Click here to customize user permissions","Click here to customize user permissions:en");
+regGS("Click here to use existing user type permissions (discard customization)","Click here to use existing user type permissions (discard customization):en");
 regGS("Click here to leave password unchanged","Click here to leave password unchanged:en");
 
 // -- do_info.m4
@@ -157,5 +157,6 @@ regGS("User '$1' information was changed successfully.", "User '$1' information 
 
 regGS("IP address", "IP address:en");
 regGS("fill in from left to right at least one input box", "fill in from left to right at least one input box:en");
+regGS("User Type", "User Type:en");
 
 ?>
