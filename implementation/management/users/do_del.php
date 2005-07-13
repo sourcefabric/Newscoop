@@ -22,15 +22,12 @@ if ($editUser->getUserName() == '') {
 $typeParam = 'uType=' . urlencode($uType);
 $uName = $editUser->getUserName();
 
-if ($Campsite['db']->Execute("DELETE FROM Users WHERE Id=$userId")) {
-	$Campsite['db']->Execute("DELETE FROM UserPerm WHERE IdUser=$userId");
-	$Campsite['db']->Execute("SELECT Id FROM Subscriptions WHERE IdUser=$userId", 's');
-	$nr=$NUM_ROWS;
-	for($loop=0;$loop<$nr;$loop++) {
-		fetchRowNum($s);
-		query ("DELETE FROM SubsSections WHERE IdSubscription=".encS(getNumVar($s,0)) );
+if ($Campsite['db']->Execute("DELETE FROM Users WHERE Id = $userId")) {
+	$Campsite['db']->Execute("DELETE FROM UserPerm WHERE IdUser = $userId");
+	$res = $Campsite['db']->Execute("SELECT Id FROM Subscriptions WHERE IdUser = $userId");
+	while ($row = $res->FetchRow()) {
+		$Campsite['db']->Execute("DELETE FROM SubsSections WHERE IdSubscription=".encS($row['Id']));
 	}
-
 	$Campsite['db']->Execute("DELETE FROM Subscriptions WHERE IdUser=$userId");
 	$Campsite['db']->Execute("DELETE FROM SubsByIP WHERE IdUser=$userId");
 	Log::Message(getGS('The user account $1 has been deleted.', $uName), $User->getUserName(), 52);
