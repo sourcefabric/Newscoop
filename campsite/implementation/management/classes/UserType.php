@@ -155,6 +155,35 @@ class UserType extends DatabaseObject {
 		return $this->getProperty('Reader') == 'N';
 	} // fn isAdmin
 	
+	function GetUserType($p_permissions)
+	{
+		global $Campsite;
+		if (!is_array($p_permissions)) {
+			return false;
+		}
+		
+		$where = '';
+		foreach ($p_permissions as $perm_name=>$perm_value) {
+			$where .= " AND `$perm_name` = '" . ($perm_value ? 'Y' : 'N') . "'";
+		}
+		$queryStr = 'SELECT * FROM UserTypes WHERE ' . substr($where, 4);
+		$user_type_row = $Campsite['db']->GetRow($queryStr);
+		if ($user_type_row) {
+			return new UserType($user_type_row['Name']);
+		}
+		return false;
+	}
+
+	function GetUserTypes()
+	{
+		global $Campsite;
+		$userTypes = array();
+		$res = $Campsite['db']->Execute("SELECT * FROM UserTypes WHERE Reader = 'N'");
+		while ($row = $res->FetchRow()) {
+			$userTypes[] = new UserType($row['Name']);
+		}
+		return $userTypes;
+	}
 } // class User
 
 ?>
