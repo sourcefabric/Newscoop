@@ -86,7 +86,8 @@ class User extends DatabaseObject {
 		if ($permissions) {
 			// Make m_permissions a boolean array.
 			foreach ($permissions as $key => $value) {
-				$this->m_permissions[$key] = ($value == 'Y');
+				if ($key != 'IdUser')
+					$this->m_permissions[$key] = ($value == 'Y');
 			}
 		}
 	} // fn fetch
@@ -107,10 +108,11 @@ class User extends DatabaseObject {
 			foreach ($permissions as $key => $value) {
 				$this->m_permissions[$key] = ($value == 'Y');
 				if ($key != 'Name' && $key != 'Reader')
-					$values .= ", '" . mysql_real_escape_string($value) . "'";
+					$values .= ", `$key` = '" . mysql_real_escape_string($value) . "'";
 			}
 			if ($this->exists()) {
-				$queryStr = "INSERT IGNORE INTO UserPerm VALUES(".$this->getId()."$values)";
+				$values = substr($values, 2);
+				$queryStr = "UPDATE UserPerm SET $values WHERE IdUser = " . $this->getId();
 				$Campsite['db']->Query($queryStr);
 			}
 		}
