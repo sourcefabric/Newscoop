@@ -1,5 +1,7 @@
 <?php
 
+require_once($_SERVER['DOCUMENT_ROOT']. '/classes/UserType.php');
+
 list($access, $User) = check_basic_access($_REQUEST);
 if (!isset($editUser) || gettype($editUser) != 'object') {
 	CampsiteInterface::DisplayError(getGS('No such user account.'));
@@ -331,19 +333,39 @@ CampsiteInterface::CreateSelect("EmployerType", $employerTypes,
 <?php
 if ($editUser->isAdmin()) {
 ?>
+<input type="hidden" name="customizeRights" id="customize_rights" value="false">
+<tr id="user_type_dialog">
+	<td style="padding-left: 4px; padding-top: 4px; padding-bottom: 4px;">
+		<?php putGS("User Type"); ?>:
+		<select name="UserType">
+		<option value="">---</option>
+<?php
+$user_types = UserType::GetUserTypes();
+$my_user_type = UserType::GetUserType($editUser->m_permissions);
+foreach ($user_types as $index=>$user_type) {
+	$user_type_name = htmlspecialchars($user_type->getName());
+	echo "\t\t<option value=\"$user_type_name\"";
+	if (gettype($my_user_type) == 'object' && $my_user_type->getName() == $user_type->getName())
+		echo " selected";
+	echo ">$user_type_name</option>\n";
+}
+?>
+		</select>
+	</td>
+</tr>
 <tr id="rights_show_link">
-	<td style="padding-left: 6px; padding-top: 6px;">
-		<a href="javascript: void(0);" onclick="ToggleRowVisibility('rights_dialog'); ToggleRowVisibility('rights_hide_link'); ToggleRowVisibility('rights_show_link');">
+	<td style="padding-left: 6px; padding-top: 6px; padding-right: 6px;">
+		<a href="javascript: void(0);" onclick="ToggleRowVisibility('rights_dialog'); ToggleRowVisibility('user_type_dialog'); ToggleRowVisibility('rights_hide_link'); ToggleRowVisibility('rights_show_link'); ToggleBoolValue('customize_rights');">
 			<img src="/admin/img/icon/viewmag+.png" id="my_icon" border="0" align="center">
-			<?php putGS("Show user rights"); ?>
+			<?php putGS("Click here to customize user permissions"); ?>
 		</a>
 	</td>
 </tr>
 <tr id="rights_hide_link" style="display: none;">
-	<td style="padding-left: 6px; padding-top: 6px;">
-		<a href="javascript: void(0);" onclick="ToggleRowVisibility('rights_dialog'); ToggleRowVisibility('rights_hide_link'); ToggleRowVisibility('rights_show_link');">
+	<td style="padding-left: 6px; padding-top: 6px; padding-right: 6px;">
+		<a href="javascript: void(0);" onclick="ToggleRowVisibility('rights_dialog'); ToggleRowVisibility('user_type_dialog'); ToggleRowVisibility('rights_hide_link'); ToggleRowVisibility('rights_show_link'); ToggleBoolValue('customize_rights');">
 			<img src="/admin/img/icon/viewmag-.png" id="my_icon" border="0" align="center">
-			<?php putGS("Hide user rights"); ?>
+			<?php putGS("Click here to use existing user type permissions (discard customization)"); ?>
 		</a>
 	</td>
 </tr>
@@ -352,7 +374,7 @@ if ($editUser->isAdmin()) {
 		<table border="0" cellspacing="0" cellpadding="6" align="center" width="100%">
 			<tr>
 				<td>
-		<?php require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/access_form.php"); ?>
+<?php require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/access_form.php"); ?>
 				</td>
 			</tr>
 		</table>
