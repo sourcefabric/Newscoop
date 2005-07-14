@@ -57,7 +57,7 @@ function ToggleBoolValue(element_id) {
 }
 </script>
 
-<form name="dialog" method="POST" action="<?php echo $action; ?>">
+<form name="dialog" method="POST" action="<?php echo $action; ?>" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
 <input type="hidden" name="uType" value="<?php echo $uType; ?>">
 <?php
 if (!$isNewUser) { 
@@ -79,18 +79,18 @@ if (!$isNewUser) {
 <?php
 } else {
 ?>
-				<td><input type="text" class="input_text" name="UName" size="32" maxlength="32" value="<?php pencHTML($UName); ?>"></td>
+				<td><input type="text" class="input_text" name="UName" size="32" maxlength="32" value="<?php pencHTML($UName); ?>" alt="blank" emsg="<?php putGS("You must complete the $1 field.", "User name"); ?>"></td>
 			</tr>
 			<tr>
 				<td align="right"><?php putGS("Password"); ?>:</td>
 				<td>
-				<input type="password" class="input_text" name="password" size="16" maxlength="32">
+				<input type="password" class="input_text" name="password" size="16" maxlength="32" alt="length|6" emsg="<?php putGS("The password must be at least 6 characters long and both passwords should match."); ?>">
 				</td>
 			</tr>
 			<tr>
 				<td align="right"><?php putGS("Confirm password"); ?>:</td>
 				<td>
-				<input type="password" class="input_text" name="passwordConf" size="16" maxlength="32">
+				<input type="password" class="input_text" name="passwordConf" size="16" maxlength="32" alt="length|6" emsg="<?php putGS("The confirm password must be at least 6 characters long and both passwords should match."); ?>">
 				</td>
 <?php
 }
@@ -98,13 +98,13 @@ if (!$isNewUser) {
 			</tr>
 			<tr>
 				<td align="right" nowrap><?php putGS("Full Name"); ?>:</td>
-				<td><input type="text" class="input_text" name="Name" VALUE="<?php pencHTML($Name); ?>" size="32" maxlength="128">
+				<td><input type="text" class="input_text" name="Name" VALUE="<?php pencHTML($Name); ?>" size="32" maxlength="128" alt="blank" emsg="<?php putGS("You must complete the $1 field.", "Full Name");?>">
 				</td>
 			</tr>
 			<tr>
 				<td align="right" nowrap><?php putGS("E-Mail"); ?>:</td>
 				<td>
-				<input type="text" class="input_text" name="EMail" value="<?php pencHTML($EMail); ?>" size="32" maxlength="128">
+				<input type="text" class="input_text" name="EMail" value="<?php pencHTML($EMail); ?>" size="32" maxlength="128" alt="email" emsg="<?php putGS("You must input a valid EMail address.");?>">
 				</td>
 			</tr>
 			<tr>
@@ -122,7 +122,8 @@ if ($isNewUser && $uType == "Staff") {
 <?php
 	query ("SELECT Name FROM UserTypes WHERE Reader = 'N' ORDER BY Name ASC", 'q');
 ?>
-				<select name="Type" class="input_select">
+				<select name="Type" class="input_select" alt="select" emsg="<?php putGS("You must select a $1", "Type"); ?>">
+				<option value=""><?php putGS("Make a selection"); ?></option>
 <?php
 	$Type = Input::Get('Type', 'string', '');
 	$nr = $NUM_ROWS;
