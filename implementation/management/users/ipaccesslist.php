@@ -62,21 +62,21 @@ if ($NUM_ROWS) {
 <?php } ?>
 <tr id="add_ip_row_id" style="display: none;">
 	<td colspan="3" align="center" style="padding-top: 3px;">
-		<form name="dialog" method="POST" action="do_ipadd.php" >
+		<form name="dialog" method="POST" action="do_ipadd.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
 		<input type="hidden" name="User" value="<?php echo $editUser->getId(); ?>">
 		<table border="0" cellspacing="0" cellpadding="3" class="table_input" align="center" width="100%">
 			<tr>
 				<td align="right" width="1%" nowrap><?php  putGS("Start IP"); ?>:</td>
 				<td nowrap>
-				<input type="text" class="input_text" name="cStartIP1" size="3" maxlength="3">.
-				<input type="text" class="input_text" name="cStartIP2" size="3" maxlength="3">.
-				<input type="text" class="input_text" name="cStartIP3" size="3" maxlength="3">.
-				<input type="text" class="input_text" name="cStartIP4" size="3" maxlength="3">
+				<input type="text" class="input_text" name="cStartIP1" size="3" maxlength="3" alt="number|0|0|255" emsg="<?php putGS("You must input a number between 0 and 255 into the Start IP address' $1 field.", 'first'); ?>">.
+				<input type="text" class="input_text" name="cStartIP2" size="3" maxlength="3" alt="number|0|0|255" emsg="<?php putGS("You must input a number between 0 and 255 into the Start IP address' $1 field.", 'second'); ?>">.
+				<input type="text" class="input_text" name="cStartIP3" size="3" maxlength="3" alt="number|0|0|255" emsg="<?php putGS("You must input a number between 0 and 255 into the Start IP address' $1 field.", 'third'); ?>">.
+				<input type="text" class="input_text" name="cStartIP4" size="3" maxlength="3" alt="number|0|0|255" emsg="<?php putGS("You must input a number between 0 and 255 into the Start IP address' $1 field.", 'forth'); ?>">
 				</td>
 			</tr>
 			<tr>
 				<td align="right" nowrap><?php  putGS("Number of addresses"); ?>:</TD>
-				<td><input type="text" class="input_text" name="cAddresses" size="10" maxlength="10"></td>
+				<td><input type="text" class="input_text" name="cAddresses" size="10" maxlength="10" alt="number|0|1|1000000000" emsg="<?php putGS("You must input a number greater than 0 into the $1 field.", "Number of addresses"); ?>"></td>
 			</tr>
 			<tr>
 				<td colspan="2" nowrap>
