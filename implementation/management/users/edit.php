@@ -27,6 +27,13 @@ if ($userId > 0) {
 }
 
 ?>
+<head>
+	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.config.js"></script>
+	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.core.js"></script>
+	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.lang-enUS.js"></script>
+	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.validators.js"></script>
+</head>
+
 <table border="0" cellspacing="0" cellpadding="1" width="100%" class="page_title_container">
 <tr>
 	<td class="page_title"><?php putGS($title); ?></td>
