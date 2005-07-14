@@ -158,5 +158,12 @@ regGS("User '$1' information was changed successfully.", "User '$1' information 
 regGS("IP address", "IP address:en");
 regGS("fill in from left to right at least one input box", "fill in from left to right at least one input box:en");
 regGS("User Type", "User Type:en");
+regGS("You must input a valid EMail address.", "You must input a valid EMail address.:en");
+regGS("The confirm password must be at least 6 characters long and both passwords should match.", "The confirm password must be at least 6 characters long and both passwords should match.:en");
+regGS("You must input a number between 0 and 255 into the Start IP address' $1 field.", "You must input a number between 0 and 255 into the Start IP address' $1 field.:en");
+regGS("first", "first:en");
+regGS("second", "second:en");
+regGS("third", "third:en");
+regGS("forth", "forth:en");
 
 ?>
