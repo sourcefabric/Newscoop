@@ -17,13 +17,24 @@ class Topic extends DatabaseObject {
 	 * @param int $p_id
 	 * @param int $p_languageId
 	 */
-	function Topic($p_id = null, $p_languageId = null) 
-	{ 
+	function Topic($p_id = null, $p_languageId = null, $p_strictLanguage = false)
+	{
+		global $Campsite;
+
 		parent::DatabaseObject($this->m_columnNames);
 		$this->m_data['Id'] = $p_id;
 		$this->m_data['LanguageId'] = $p_languageId;
-		if ($this->keyValuesExist()) {
-			$this->fetch();
+		if (!$this->keyValuesExist() || !$this->fetch()) {
+			if ($p_languageId == null)
+				$p_languageId = 0;
+			$queryStr = "SELECT *, ABS(LanguageId - $p_languageId) as langDiff FROM Topics WHERE"
+				. " Id = $p_id ORDER BY langDiff ASC";
+			if ($row = $Campsite['db']->GetRow($queryStr)) {
+				foreach ($row as $key=>$value) {
+					$this->m_data[$key] = $value;
+				}
+				$this->m_exists = true;
+			}
 		}
 	} // constructor
 	
