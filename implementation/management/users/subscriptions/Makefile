@@ -1,6 +1,6 @@
 export PRIV_DIR3=$(PRIV_COMMON_DIR)/users/subscriptions
 
-MY_TARGETS=index.php add.php do_add.php status.php do_status.php del.php do_del.php topay.php do_topay.php
+MY_TARGETS=index.php add.php do_add.php do_status.php do_del.php topay.php do_topay.php
 
 subsystem: all
 	$(MAKE) -C sections
