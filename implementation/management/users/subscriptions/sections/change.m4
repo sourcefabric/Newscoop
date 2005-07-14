@@ -5,6 +5,10 @@ CHECK_BASIC_ACCESS
 CHECK_ACCESS(<*ManageSubscriptions*>)
 
 B_HEAD
+	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.config.js"></script>
+	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.core.js"></script>
+	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.lang-enUS.js"></script>
+	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.validators.js"></script>
 	X_TITLE(<*Change subscription*>)
 <?php  if ($access == 0) { ?>dnl
 	X_AD(<*You do not have the right to change subscriptions.*>)
@@ -62,20 +66,20 @@ X_CURRENT(<*Publication*>, <*<?php  pgetHVar($q_pub,'Name'); ?>*>)
 E_CURRENT
 
 <P>
-B_DIALOG(<*Change subscription*>, <*POST*>, <*do_change.php*>)
+B_DIALOG(<*Change subscription*>, <*POST*>, <*do_change.php*>, <**>, <*onsubmit="return validateForm(this, 0, 1, 0, 1, 8);"*>)
 
 	B_DIALOG_INPUT(<*Section*>)
 		<?php  if ($Sect > 0) pgetHVar($q_ssub,'Name'); else putGS("-- ALL SECTIONS --"); ?>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Start*>)
-		<INPUT TYPE="TEXT" class="input_text" NAME="cStartDate" SIZE="10" VALUE="<?php  pgetHVar($q_ssub,'StartDate'); ?>" MAXLENGTH="10"> <?php  putGS('(YYYY-MM-DD)'); ?>
+		<INPUT TYPE="TEXT" class="input_text" NAME="cStartDate" SIZE="10" VALUE="<?php  pgetHVar($q_ssub,'StartDate'); ?>" MAXLENGTH="10" alt="date|yyyy/mm/dd|-" emsg="<?php putGS("You must input a valid date."); ?>"> <?php  putGS('(YYYY-MM-DD)'); ?>
 	E_DIALOG_INPUT
 	B_DIALOG_INPUT(<*Days*>)
-		<INPUT TYPE="TEXT" class="input_text" NAME="cDays" SIZE="5" VALUE="<?php  pgetHVar($q_ssub,'Days'); ?>"  MAXLENGTH="5">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cDays" SIZE="5" VALUE="<?php  pgetHVar($q_ssub,'Days'); ?>"  MAXLENGTH="5" alt="number|0|1|1000000000" emsg="<?php putGS("You must input a number greater than 0 into the $1 field.", "Days"); ?>">
 	E_DIALOG_INPUT
 <?php  if ($isPaid) { ?>
 	B_DIALOG_INPUT(<*Paid Days*>)
-		<INPUT TYPE="TEXT" class="input_text" NAME="cPaidDays" SIZE="5" VALUE="<?php  pgetHVar($q_ssub,'PaidDays'); ?>"  MAXLENGTH="5">
+		<INPUT TYPE="TEXT" class="input_text" NAME="cPaidDays" SIZE="5" VALUE="<?php  pgetHVar($q_ssub,'PaidDays'); ?>"  MAXLENGTH="5" alt="number|0|1|1000000000" emsg="<?php putGS("You must input a number greater than 0 into the $1 field.", "Paid Days"); ?>">
 	E_DIALOG_INPUT
 <?php  } ?>
 	B_DIALOG_BUTTONS
