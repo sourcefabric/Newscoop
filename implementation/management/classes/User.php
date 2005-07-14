@@ -99,6 +99,11 @@ class User extends DatabaseObject {
 	function setUserType($p_userType)
 	{
 		global $Campsite;
+		
+		if (!$this->exists()) {
+			return;
+		}
+		
 		// Fetch the user type's permissions.
 		$queryStr = "SELECT * FROM UserTypes WHERE Name = '"
 			.mysql_real_escape_string($p_userType)."'";
@@ -110,8 +115,9 @@ class User extends DatabaseObject {
 				if ($key != 'Name' && $key != 'Reader')
 					$values .= ", `$key` = '" . mysql_real_escape_string($value) . "'";
 			}
-			if ($this->exists()) {
-				$values = substr($values, 2);
+			$values = substr($values, 2);
+			$queryStr = "INSERT INTO UserPerm SET IdUser = " . $this->getId() . ", $values";
+			if (!$Campsite['db']->Query($queryStr)) {
 				$queryStr = "UPDATE UserPerm SET $values WHERE IdUser = " . $this->getId();
 				$Campsite['db']->Query($queryStr);
 			}
