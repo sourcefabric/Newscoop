@@ -55,7 +55,7 @@ B_MSGBOX(<*Adding new field*>)
 
     if ($correct) {
 	if ($cType == 1) {
-	    query ("ALTER TABLE X$AType ADD COLUMN F$cName VARCHAR(100) NOT NULL");
+	    query ("ALTER TABLE X$AType ADD COLUMN F$cName VARCHAR(255) NOT NULL");
 	    $created= 1;
 	} elseif ($cType == 2) {
 	    query ("ALTER TABLE X$AType ADD COLUMN F$cName DATE NOT NULL");
