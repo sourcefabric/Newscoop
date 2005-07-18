@@ -529,7 +529,7 @@ return 0
 check4_curl()
 {
 is_checked curl && return 0
-check4_file libidn.so --file --path "/usr/lib:/usr/local/lib:/opt/lib"
+check4_file libidn.so --file --path "/usr/lib:/usr/local/lib:/opt/lib:/usr/lib64"
 result=$? && [ $result -ne 0 ] && output="Could not find IDN library. Please install libidn-dev package." && return 1
 check4_file curl-config --executable --path "/usr/bin:/usr/local/bin:/opt/bin"
 result=$? && [ $result -ne 0 ] && output="Could not find CURL development files. Please install libcurl-devel package." && return 1
@@ -554,7 +554,7 @@ check4_stl()
 {
 is_checked stl && return 0
 err_message="Could not find STL (Standard Template Library) files. Please install libstdc++-devel package."
-stl_versions="3.1 3.2 3.2.1 3.2.2 3.2.3 3.3 3.3.0 3.3.1 3.3.2 3.3.3 3.3.4 3.4 3.4.0 3.4.1 3.4.2 3.4.3 3.4.4"
+stl_versions="3.1 3.2 3.2.1 3.2.2 3.2.3 3.3 3.3.0 3.3.1 3.3.2 3.3.3 3.3.4 3.3.5 3.4 3.4.0 3.4.1 3.4.2 3.4.3 3.4.4"
 for stl_prefix in /usr/include /usr/local/include; do
     for stl_dir in c++ g++; do
 	stl_path="$stl_prefix:$stl_prefix/$stl_dir"
@@ -671,7 +671,7 @@ if [ "$apache_conf_path" != "" ]; then
 else
     conf_paths=""
     for bn in $bin_names; do
-	conf_paths="$conf_paths /etc/${bn}/conf /etc/${bn} /usr/local/etc/${bn}/conf /usr/local/etc/${bn} "
+	conf_paths="$conf_paths /etc/${bn}/conf /etc/${bn} /usr/local/etc/${bn}/conf /usr/local/etc/${bn} /etc/apache2/${bn}"
     done
     conf_paths="$conf_paths "`cut_last_dirs "${apache_bin_path}"`/conf
 fi
@@ -722,7 +722,7 @@ if $USER_INSTALL; then
 fi
 conf_files="${conf_path}/${conf_file} ${conf_path}/commonhttpd.conf ${conf_path}/common${apache_bin_name}.conf"
 
-user_line=`grep -h -w ^User ${conf_files} 2> /dev/null`
+user_line=`grep -h -E "^[[:space:]]*User[[:space:]]+" ${conf_files} 2> /dev/null`
 if [ "$user_line" = "" ]; then
     echo "Invalid apache configuration files. Aborting."
     return 1
@@ -733,8 +733,7 @@ for w in $user_line; do
     i=`expr $i + 1`
 done
 if [ "$APACHE_USER" != "" ]; then
-    user_lines=`grep -h -w ^User ${conf_files} 2> /dev/null`
-    user_line=`echo "$user_lines" | grep "$APACHE_USER" 2> /dev/null`
+    user_line=`grep -h -E "^[[:space:]]*User[[:space:]]+$APACHE_USER" ${conf_files} 2> /dev/null`
     if [ "$user_line" = "" ]; then
 	echo "WARNING!!! The apache user '$APACHE_USER' is not valid; valid apache user is '$apache_user'";
     fi
@@ -742,7 +741,7 @@ else
     export APACHE_USER=$apache_user
 fi
 
-group_line=`grep -h -w ^Group ${conf_files} 2> /dev/null`
+group_line=`grep -h -E "^[[:space:]]*Group[[:space:]]+" ${conf_files} 2> /dev/null`
 if [ "$group_line" = "" ]; then
     echo "Invalid apache configuration files. Aborting."
     return 1
@@ -753,8 +752,7 @@ for w in $group_line; do
     i=`expr $i + 1`
 done
 if [ "$APACHE_GROUP" != "" ]; then
-    group_lines=`grep -h -w ^Group ${conf_files} 2> /dev/null`
-    group_line=`echo "$group_lines" | grep "$APACHE_GROUP" 2> /dev/null`
+    group_line=`grep -h -E "^[[:space:]]*Group[[:space:]]+$APACHE_GROUP" ${conf_files} 2> /dev/null`
     if [ "$group_line" = "" ]; then
 	echo "WARNING!!! The apache group '$APACHE_GROUP' is not valid; valid apache group is '$apache_group'";
     fi
@@ -818,7 +816,7 @@ return 0
 check4_libmysqlclient()
 {
 is_checked libmysqlclient && return 0
-check4_file libmysqlclient.a --file --path "/usr/lib:/usr/lib/mysql:/usr/local/mysql:/usr/local/lib:/usr/local/lib/mysql:/usr/local/mysql/lib"
+check4_file libmysqlclient.a --file --path "/usr/lib:/usr/lib/mysql:/usr/local/mysql:/usr/local/lib:/usr/local/lib/mysql:/usr/local/mysql/lib:/usr/lib64/mysql"
 result=$? && [ $result -ne 0 ] && return 1
 export LIBMYSQLCLIENT=$file_path
 export LIBMYSQLCLIENT_PATH=`cut_last_dirs $LIBMYSQLCLIENT 1`
