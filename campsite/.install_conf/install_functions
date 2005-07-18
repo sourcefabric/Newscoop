@@ -30,16 +30,6 @@ fi # interactive
 prepare_install_env || exit 1
 check_install_deps || exit 1
 check_install_config
-if $is_installed; then
-    echo -e "\nNOTE: Install found one or more older Campsite instance(s) already installed."
-    echo "If you want to upgrade older instances run:"
-    echo -e "\t$BIN_DIR/create_instance --db_name [instance_name]"
-    echo "script after finishing this install. Replace [instance_name] with"
-    echo "the Campsite instance name you want to upgrade. Run create_instance"
-    echo "script with --help option to get a list of available options."
-    echo -e "\nPress ENTER to continue"
-    read
-fi
 
 if [ "$cc_interactive" = "--interactive" ]; then
 
