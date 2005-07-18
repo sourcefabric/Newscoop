@@ -156,7 +156,8 @@ void CMsgURLRequest::setContent(char* p_pchContent)
 		}
 	}
 
-	pchElement = coReader.nextElement("Cookies");
+	if (strcasecmp(pchElement, "Cookies") != 0)
+		pchElement = coReader.nextElement("Cookies");
 	pchElement = coReader.nextElement();
 	while (coReader.elementDepth() == 2)
 	{
