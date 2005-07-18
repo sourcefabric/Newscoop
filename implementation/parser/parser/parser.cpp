@@ -860,7 +860,7 @@ inline int CParser::HURLParameters(CActionList& al)
 			ValidateDType(l, attr);
 			string tpl_name;
 			if ((l->atom()->identifier())[0] == '/')
-				tpl_name = l->atom()->identifier();
+				tpl_name = l->atom()->identifier().substr(1);
 			else
 				tpl_name = getTemplateInternalPath(true) + l->atom()->identifier();
 			nTemplate = CPublication::getTemplateId(tpl_name, MYSQLConnection());
@@ -1630,7 +1630,7 @@ inline int CParser::HSubscription(CActionList& al, int lv, int sublv)
 	RequireAtom(l);
 	string tpl_name;
 	if ((l->atom()->identifier())[0] == '/')
-		tpl_name = l->atom()->identifier();
+		tpl_name = l->atom()->identifier().substr(1);
 	else
 		tpl_name = getTemplateInternalPath(true) + l->atom()->identifier();
 	id_type nTemplate = CPublication::getTemplateId(tpl_name, MYSQLConnection());
@@ -1817,7 +1817,7 @@ inline int CParser::HUser(CActionList& al, int lv, int sublv)
 	RequireAtom(l);
 	string tpl_name;
 	if ((l->atom()->identifier())[0] == '/')
-		tpl_name = l->atom()->identifier();
+		tpl_name = l->atom()->identifier().substr(1);
 	else
 		tpl_name = getTemplateInternalPath(true) + l->atom()->identifier();
 	id_type nTemplate = CPublication::getTemplateId(tpl_name, MYSQLConnection());
@@ -1857,7 +1857,7 @@ inline int CParser::HLogin(CActionList& al, int lv, int sublv)
 	RequireAtom(l);
 	string tpl_name;
 	if ((l->atom()->identifier())[0] == '/')
-		tpl_name = l->atom()->identifier();
+		tpl_name = l->atom()->identifier().substr(1);
 	else
 		tpl_name = getTemplateInternalPath(true) + l->atom()->identifier();
 	id_type nTemplate = CPublication::getTemplateId(tpl_name, MYSQLConnection());
@@ -1897,7 +1897,7 @@ inline int CParser::HSearch(CActionList& al, int lv, int sublv)
 	RequireAtom(l);
 	string tpl_name;
 	if ((l->atom()->identifier())[0] == '/')
-		tpl_name = l->atom()->identifier();
+		tpl_name = l->atom()->identifier().substr(1);
 	else
 		tpl_name = getTemplateInternalPath(true) + l->atom()->identifier();
 	id_type nTemplate = CPublication::getTemplateId(tpl_name, MYSQLConnection());
@@ -1979,7 +1979,7 @@ inline int CParser::HURIPath(CActionList& al)
 			ValidateDType(l, attr);
 			string tpl_name;
 			if ((l->atom()->identifier())[0] == '/')
-				tpl_name = l->atom()->identifier();
+				tpl_name = l->atom()->identifier().substr(1);
 			else
 				tpl_name = getTemplateInternalPath(true) + l->atom()->identifier();
 			nTemplate = CPublication::getTemplateId(tpl_name, MYSQLConnection());
