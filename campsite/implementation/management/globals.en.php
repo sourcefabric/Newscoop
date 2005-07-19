@@ -91,7 +91,7 @@ regGS("View", "View");
 regGS("Scheduled Publishing", "Scheduled Publishing");
 regGS("Time", "Time");
 regGS("Action", "Action");
-regGS("Schedule a new publish action", "Schedule a new publish action");
+regGS("Schedule a new action", "Schedule a new action");
 regGS("No entries.", "No entries.");
 regGS("Scheduling a new publish action", "Scheduling a new publish action");
 regGS("Delete scheduled publish action", "Delete scheduled publish action");
@@ -359,4 +359,6 @@ regGS("You must input a number greater than 0 into the $1 field.", "You must inp
 regGS("You must input a valid date.","You must input a valid date.");
 regGS("Add new field","Add new field:en");
 regGS("Back to article details","Back to article details");
+regGS("Article automatic publishing schedule", "Article automatic publishing schedule");
+regGS("Are you sure you want to delete this scheduled action?", "Are you sure you want to delete this scheduled action?");
 ?>

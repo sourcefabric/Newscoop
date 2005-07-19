@@ -4,6 +4,8 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
 load_common_include_files("$ADMIN_DIR/pub/issues");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Publication.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Issue.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/IssuePublish.php');
 
 // Check permissions
@@ -57,7 +59,7 @@ CampsiteInterface::ContentTop(getGS('Issue Publishing Schedule'), array('Pub' =>
 <CENTER><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" ALIGN="CENTER" class="table_input">
 	<TR>
 		<TD COLSPAN="2">
-			<B><?php  putGS("Schedule a new publish action"); ?></B>
+			<B><?php  putGS("Schedule a new action"); ?></B>
 			<HR NOSHADE SIZE="1" COLOR="BLACK">
 		</TD>
 	</TR>
@@ -157,7 +159,7 @@ if (count($allEvents) > 0) {
 		</TD>
 		
 		<TD ALIGN="CENTER">
-			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/autopublish_del.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>&publish_time=<?php echo $url_publish_time; ?>" onclick="return confirm('<?php putGS("Are you sure you want to delete this event?"); ?>');"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/delete.png" BORDER="0" ALT="<?php putGS('Delete entry'); ?>"></A>
+			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/autopublish_del.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>&publish_time=<?php echo $url_publish_time; ?>" onclick="return confirm('<?php putGS("Are you sure you want to delete this scheduled action?"); ?>');"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/delete.png" BORDER="0" ALT="<?php putGS('Delete entry'); ?>"></A>
 		</TD>
 		
 	<?php } // foreach ?>
