@@ -358,4 +358,5 @@ regGS("Make a selection", "Make a selection");
 regGS("You must input a number greater than 0 into the $1 field.", "You must input a number greater than 0 into the $1 field.:en");
 regGS("You must input a valid date.","You must input a valid date.");
 regGS("Add new field","Add new field:en");
+regGS("Back to article details","Back to article details");
 ?>
