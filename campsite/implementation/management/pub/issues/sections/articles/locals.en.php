@@ -24,4 +24,6 @@ regGS("The article cannot be updated or no changes have been made.", "No changes
 regGS("Duplicate article", "Duplicate article");
 regGS("The destination section is the same as the source section.", "The destination section is the same as the source section.");
 regGS("The article is new; it is not possible to schedule it for automatic publishing.", "The article is new; it is not possible to schedule it for automatic publishing.");
+regGS("No article types were defined. You must create an article type first.", "No article types were defined. You must create an article type first.:en");
+regGS("Edit article types", "Edit article types:en");
 ?>
