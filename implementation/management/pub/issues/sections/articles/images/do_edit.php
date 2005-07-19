@@ -9,6 +9,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Publication.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ImageSearch.php');
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
 
 list($access, $User) = check_basic_access($_REQUEST);
@@ -56,6 +57,7 @@ if (trim($attributes['Description']) == '') {
 $attributes['Photographer'] = $Photographer;
 $attributes['Place'] = $Place;
 $attributes['Date'] = $Date;
+$view = Input::Get('view', 'string', 'thumbnail', true);
 $imageObj->update($attributes);
 if (is_numeric($ImageTemplateId) && ($ImageTemplateId > 0)) {
 	ArticleImage::SetTemplateId($Article, $Image, $ImageTemplateId);
@@ -64,7 +66,11 @@ if (is_numeric($ImageTemplateId) && ($ImageTemplateId > 0)) {
 $logtext = getGS('Changed image properties of $1',$attributes['Description']); 
 Log::Message($logtext, $User->getUserName(), 43);
 
+$imageNav =& new ImageNav(CAMPSITE_IMAGEARCHIVE_IMAGES_PER_PAGE, $view);
+$ref = CampsiteInterface::ArticleUrl($articleObj, $Language, 'images/search.php')
+	. $imageNav->getKeywordSearchLink();
+
 // Go back to article image list.
-header('Location: '.CampsiteInterface::ArticleUrl($articleObj, $sLanguage, 'images/'));
+header("Location: $ref");
 
 ?>
