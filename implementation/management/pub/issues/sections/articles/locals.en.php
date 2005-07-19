@@ -1,6 +1,5 @@
 <?php
 regGS("Article Type", "Article Type");
-regGS("Are you sure you want to delete this scheduled action?", "Are you sure you want to delete this scheduled action?");
 regGS("$1 articles found", "$1 articles found");
 regGS("Show article on front page", "Show article on front page");
 regGS("Show article on section page", "Show article on section page");

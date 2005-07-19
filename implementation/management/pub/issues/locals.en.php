@@ -102,5 +102,6 @@ regGS("The template could not be changed.","The template could not be changed.:e
 
 // -- autopublish.php
 regGS("Delete entry", "Delete entry:en");
+regGS("Issue Publishing Schedule", "Issue Publishing Schedule");
 
 ?>
