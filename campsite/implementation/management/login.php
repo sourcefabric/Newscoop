@@ -3,6 +3,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/lib_campsite.php");
 include($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/languages.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
 
 // Special case for the login screen:
 // We have to figure out what language to use.
@@ -56,52 +57,48 @@ selectLanguageFile("/", "globals");
 selectLanguageFile("/", "locals");
 
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
-	"http://www.w3.org/TR/REC-html40/loose.dtd">
-<HTML>
-<HEAD>
-	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
+<head>
+	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
 
-	<TITLE><?php  putGS("Login"); ?></TITLE>
-</HEAD>
-<BODY >
+	<TITLE><?php  putGS("Login"); ?></title>
+</head>
+<body >
 
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" >
-<TR>
-	<TD align="center" style="padding-top: 50px;">
+<table border="0" cellspacing="0" cellpadding="1" width="100%" >
+<tr>
+	<td align="center" style="padding-top: 50px;">
 		<img src="/<?php echo $ADMIN; ?>/img/sign_big.gif" border="0">
-	</TD>
+	</td>
 </tr>
-</TABLE>
+</table>
 
-<CENTER>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input" ALIGN="CENTER" style="margin-top: 20px;">
-<FORM NAME="dialog" METHOD="POST" ACTION="do_login.php" >
-	<TR>
-		<TD COLSPAN="2">
-			<B><?php  putGS("Login"); ?></B>
-			<HR NOSHADE SIZE="1" COLOR="BLACK">
-		</TD>
-	</TR>
-	<TR>
-		<TD COLSPAN="2"><?php  putGS('Please enter your user name and password'); ?></TD>
-	</TR>
-	<TR>
-		<TD ALIGN="RIGHT" ><?php  putGS("User name"); ?>:</TD>
-		<TD>
-		<INPUT TYPE="TEXT" NAME="UserName" SIZE="32" MAXLENGTH="32" class="input_text">
-		</TD>
-	</TR>
-	<TR>
-		<TD ALIGN="RIGHT" ><?php  putGS("Password"); ?>:</TD>
-		<TD>
-		<INPUT TYPE="PASSWORD" NAME="UserPassword" SIZE="32" MAXLENGTH="32" class="input_text">
-		</TD>
-	</TR>
-	<TR>
-		<TD ALIGN="RIGHT" ><?php  putGS("Language"); ?>:</TD>
-		<TD>
-		<SELECT name="selectlanguage" class="input_select">
+<table border="0" cellspacing="0" cellpadding="6" class="table_input" align="center" style="margin-top: 20px;">
+<form name="dialog" method="post" action="do_login.php" >
+	<tr>
+		<td colspan="2">
+			<b><?php  putGS("Login"); ?></b>
+			<hr noshade size="1" color="black">
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2"><?php putGS('Please enter your user name and password'); ?></td>
+	</tr>
+	<tr>
+		<td align="right" ><?php putGS("User name"); ?>:</td>
+		<td>
+		<input type="text" name="UserName" size="32" maxlength="32" class="input_text">
+		</td>
+	</tr>
+	<tr>
+		<td align="right" ><?php putGS("Password"); ?>:</td>
+		<td>
+		<input type="password" name="UserPassword" size="32" maxlength="32" class="input_text">
+		</td>
+	</tr>
+	<tr>
+		<td align="right" ><?php putGS("Language"); ?>:</td>
+		<td>
+		<select name="selectlanguage" class="input_select">
 		    <?php 
 			foreach($languages as $languageCode => $languageAttrs){
 			    $languageName = isset($languageAttrs['orig_name'])?
@@ -118,18 +115,17 @@ selectLanguageFile("/", "locals");
 			unset($languageName);
 		    ?>
 		</select>
-		</TD>
-	</TR>
-	<TR>
-		<TD COLSPAN="2">
-		<DIV ALIGN="CENTER">
-		<INPUT TYPE="submit" class="button" NAME="Login" VALUE="<?php  putGS('Login'); ?>">
-		</DIV>
-		</TD>
-	</TR>
-</FORM>
-</TABLE>
-</CENTER>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<div align="center">
+		<input type="submit" class="button" name="Login" value="<?php  putGS('Login'); ?>">
+		</div>
+		</td>
+	</tr>
+</form>
+</table>
 <?php  if (file_exists("./guest_include.php")) require("./guest_include.php"); ?>
-</BODY>
-</HTML>
+<div align="center"><p><?php CampsiteInterface::CopyrightNotice(false); ?></p></div>
+</body>
