@@ -18,13 +18,21 @@ class CampsiteInterface {
 	/**
 	 * Display the copyright notice and close the HTML page.
 	 */
-	function CopyrightNotice() 
+	function CopyrightNotice($p_displayBorder = true)
 	{
 		global $Campsite;
+		if ($p_displayBorder) {
 		?>
-		<TABLE width="100%" style="border-top: 1px solid black; margin-top: 10px;">
+		<table width="100%" align="center" style="border-top: 1px solid black; margin-top: 15px;">
+		<?php
+		} else {
+		?>
+		<table width="100%" align="center" style="margin-top: 5px;">
+		<?php
+		}
+		?>
 		<tr>
-			<td style="padding-left: 5px;">
+			<td style="padding-left: 5px; padding-top: 10px;" align="center">
 				<a style="font-size:8pt; color: black;" href="http://www.campware.org" target="campware">
 				Campsite <?php echo $Campsite['VERSION'] ?> &copy 1999-2005 MDLF, 
 				maintained and distributed under GNU GPL by CAMPWARE
@@ -32,8 +40,6 @@ class CampsiteInterface {
 			</td>
 		</tr>
 		</table>
-		</BODY>
-		</HTML>		
 		<?php
 	} // fn CopyrightNotice
 	
