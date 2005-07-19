@@ -19,8 +19,8 @@ $Language = Input::Get('Language', 'int', 0);
 $sLanguage = Input::Get('sLanguage', 'int', 0);
 $Article = Input::Get('Article', 'int', 0);
 $publishTime = Input::Get('publish_time', 'string', '', true);
-$BackLink = Input::Get('Back', 'string', "/$ADMIN/pub/issues/sections/articles/index.php"
-                       ."?Pub=$Pub&Issue=$Issue&Section=$Section&sLanguage=$sLanguage&Language=$Language", 
+$BackLink = Input::Get('Back', 'string', "/$ADMIN/pub/issues/sections/articles/edit.php"
+                       ."?Pub=$Pub&Issue=$Issue&Section=$Section&sLanguage=$sLanguage&Language=$Language&Article=$Article", 
                        true);
 
 if (!Input::IsValid()) {
@@ -99,7 +99,7 @@ if ($articleObj->getPublished() != 'N') {
 <CENTER><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input" ALIGN="CENTER">
 	<TR>
 		<TD COLSPAN="2">
-			<B><?php  putGS("Schedule a new publish action"); ?></B>
+			<B><?php  putGS("Schedule a new action"); ?></B>
 			<HR NOSHADE SIZE="1" COLOR="BLACK">
 		</TD>
 	</TR>
