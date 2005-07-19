@@ -85,7 +85,6 @@ B_LIST
 	<?php  if ($isPaid) { ?>
 		X_LIST_TH(<*Paid Days*>)
 	<?php  } ?>
-		X_LIST_TH(<*Change*>, <*1%*>)
 		X_LIST_TH(<*Delete*>, <*1%*>)
 	E_LIST_HEADER
 <?php 
@@ -93,7 +92,7 @@ B_LIST
 	if ($i) { ?>dnl
 	B_LIST_TR
 		B_LIST_ITEM
-			<?php  p(getHVar($q_ssect,'Name')); ?>
+			<A HREF="X_ROOT/users/subscriptions/sections/change.php?User=<?php  p($User); ?>&Pub=<?php  p($Pub); ?>&Subs=<?php  p($Subs); ?>&Sect=<?php pgetUVar($q_ssect,'SectionNumber'); ?>"><?php p(getHVar($q_ssect,'Name')); ?></A>
 		E_LIST_ITEM
 		B_LIST_ITEM
 			<?php  pgetHVar($q_ssect,'StartDate'); ?>
@@ -106,9 +105,6 @@ B_LIST
 			<?php  pgetHVar($q_ssect,'PaidDays'); ?>
 		E_LIST_ITEM
 	<?php  } ?>
-		B_LIST_ITEM(<*CENTER*>)
-			<A HREF="X_ROOT/users/subscriptions/sections/change.php?User=<?php  p($User); ?>&Pub=<?php  p($Pub); ?>&Subs=<?php  p($Subs); ?>&Sect=<?php  pgetUVar($q_ssect,'SectionNumber'); ?>"><?php  putGS('Change'); ?></A>
-		E_LIST_ITEM
 		B_LIST_ITEM(<*CENTER*>)
 			X_BUTTON(<*<?php  putGS('Delete subscription to section $1?',getHVar($q_ssect,'SectionNumber')); ?>*>, <*icon/delete.png*>, <*users/subscriptions/sections/do_del.php?User=<?php  p($User); ?>&Pub=<?php  p($Pub); ?>&Subs=<?php  p($Subs); ?>&Sect=<?php  pgetUVar($q_ssect,'SectionNumber'); ?>*>, <*onclick="return confirm('<?php putGS('Are you sure you want to delete the subscription to the section $1?', getHVar($q_ssect,'Name')); ?>');"*>)
 		E_LIST_ITEM
