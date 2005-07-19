@@ -45,6 +45,23 @@ CampsiteInterface::ContentTop(getGS('Add new article'), $topArray, true, true);
 
 ?>
 
+<?php
+if (sizeof($allArticleTypes) == 0) {
+?>
+<p><table border="0" cellspacing="0" cellpadding="6" align="center" class="table_input">
+	<tr>
+		<td align="center">
+		<font color="red">
+		<?php putGS("No article types were defined. You must create an article type first."); ?>
+		</font>
+		<p><b><a href="/<?php echo $ADMIN; ?>/a_types/"><?php putGS("Edit article types"); ?></a></b></p>
+		</td>
+	</tr>
+</table></p>
+<?php
+} else {
+?>
+
 <P>
 <FORM NAME="dialog" METHOD="POST" ACTION="do_add.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
 <INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<?php  p($Pub); ?>">
@@ -128,4 +145,5 @@ CampsiteInterface::ContentTop(getGS('Add new article'), $topArray, true, true);
 </FORM>
 <P>
 
+<?php } ?>
 <?php CampsiteInterface::CopyrightNotice(); ?>
