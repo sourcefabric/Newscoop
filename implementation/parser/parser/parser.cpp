@@ -2236,12 +2236,18 @@ CParser::~CParser()
 //		bool p_nAddTrailingSlash - if true add slash character to the end of the path
 string CParser::getTemplateInternalPath(bool p_nAddTrailingSlash) const
 {
-	string tpl_ipath = getTemplatePath(false);
+	string tpl_ipath = getTemplatePath(p_nAddTrailingSlash);
 	ulint pos = tpl_ipath.find("/look/");
 	if (pos != string::npos)
+	{
 		tpl_ipath.erase(0, pos + 6);
-	if (p_nAddTrailingSlash && tpl_ipath != "")
-		tpl_ipath += '/';
+	}
+	else
+	{
+		pos = tpl_ipath.find("/look");
+		if (pos != string::npos)
+			tpl_ipath = "";
+	}
 	return tpl_ipath;
 }
 
