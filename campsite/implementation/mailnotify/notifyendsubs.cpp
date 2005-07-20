@@ -194,7 +194,7 @@ int NotifyEndSubsFunc(const ConfAttrValue& p_rcoConfValues)
 			if (now_days > (paid_days + sd_days))
 				continue;
 			long int remained_days = paid_days + sd_days - now_days;
-			if (remained_days > 14)
+			if (remained_days > 14 || remained_days <= 0)
 				continue;
 			notify = true;
 			if (num_rows == 1) {
