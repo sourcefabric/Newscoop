@@ -5,6 +5,8 @@ load_common_include_files("$ADMIN_DIR/pub/issues");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Publication.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Issue.php');
 
 // Check permissions
 list($access, $User) = check_basic_access($_REQUEST);
@@ -23,7 +25,7 @@ if (!Input::IsValid()) {
 }
 
 if (!$User->hasPermission('ManageIssue') || !$User->hasPermission('Publish')) {
-	$BackLink ="/admin/pub/issues/?Pub=$Pub&Language=$Language";
+	$BackLink ="/$ADMIN/pub/issues/?Pub=$Pub&Language=$Language";
 	CampsiteInterface::DisplayError(getGS('You do not have the right to change issues.'));
 	exit;
 }
@@ -42,37 +44,8 @@ if ($issueObj->getPublished() == 'Y') {
 else {
 	$t2=getGS('Published');
 	$t3=getGS('Not published');
-} 
+}
 
-CampsiteInterface::ContentTop(getGS('Changing issue status'), array('Pub' => $publicationObj, 'Issue' => $issueObj));
-?> 
+header("Location: /$ADMIN/pub/issues/?Pub=" . $publicationObj->getPublicationId());
 
-<P>
-<CENTER>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box" ALIGN="CENTER">
-<TR>
-	<TD COLSPAN="2">
-		<B> <?php  putGS("Changing issue status"); ?> </B>
-		<HR NOSHADE SIZE="1" COLOR="BLACK">
-	</TD>
-</TR>
-<TR>
-	<TD COLSPAN="2">
-		<BLOCKQUOTE><LI>
-		<?php  putGS('Status of the issue $1 has been changed from $2 to $3','<B>'.$issueObj->getIssueId().'. '.htmlspecialchars($issueObj->getName()).' ('.htmlspecialchars($issueObj->getLanguageName()).')</B>',"<B>$t2</B>","<B>$t3</B>"); ?>
-		</LI></BLOCKQUOTE>
-	</TD>
-</TR>
-
-<TR>
-	<TD COLSPAN="2">
-	<DIV ALIGN="CENTER">
-   		<INPUT TYPE="button" class="button" NAME="Done" VALUE="<?php  putGS('Done'); ?>" ONCLICK="location.href='/admin/pub/issues/?Pub=<?php p($Pub); ?>'">
-	</DIV>
-	</TD>
-</TR>
-</TABLE>
-</CENTER>
-<P>
-
-<?php CampsiteInterface::CopyrightNotice(); ?>
+?>
