@@ -83,7 +83,7 @@ B_MSGBOX(<*Deleting issue*>)
 *>)
 	
 	B_MSGBOX_BUTTONS
-		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/pub/issues/?Pub=<?php  pencURL($Pub); ?>*>)
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/pub/issues/?Pub=<?php  pencURL($Pub); ?>*>)
 	E_MSGBOX_BUTTONS
 E_MSGBOX
 <P>
