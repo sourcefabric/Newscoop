@@ -8,7 +8,7 @@ if (!isset($editUser) || gettype($editUser) != 'object') {
 	exit;
 }
 $isNewUser = $editUser->getUserName() == '';
-compute_user_rights($User, &$canManage, &$canDelete);
+compute_user_rights($User, $canManage, $canDelete);
 if (!$canManage) {
 	if ($isNewUser) {
 		$error = getGS("You do not have the right to create user accounts.");

@@ -6,7 +6,7 @@ list($access, $User) = check_basic_access($_REQUEST);
 
 read_user_common_parameters(); // $uType, $userOffs, $lpp, search parameters
 verify_user_type();
-compute_user_rights($User, &$canManage, &$canDelete);
+compute_user_rights($User, $canManage, $canDelete);
 
 $typeParam = 'uType=' . urlencode($uType);
 $isReader = $uType == 'Subscribers' ? 'Y' : 'N';
