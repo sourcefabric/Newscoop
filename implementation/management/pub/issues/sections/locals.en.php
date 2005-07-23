@@ -59,5 +59,6 @@ regGS("The section $1 could not be duplicated", "The section $1 could not be dup
 regGS("Section $1 has been duplicated to $2. $3 of $4", "Section $1 has been duplicated to $2. $3 of $4:en");
 
 regGS("You do not have the right to modify sections.", "You do not have the right to modify sections.:en");
+regGS("Delete all articles from the section.", "Delete all articles from the section.:en");
 
 ?>
