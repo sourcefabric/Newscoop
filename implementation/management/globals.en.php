@@ -361,4 +361,6 @@ regGS("Add new field","Add new field:en");
 regGS("Back to article details","Back to article details");
 regGS("Article automatic publishing schedule", "Article automatic publishing schedule");
 regGS("Are you sure you want to delete this scheduled action?", "Are you sure you want to delete this scheduled action?");
+regGS("Unlink", "Unlink:en");
+regGS("Are you sure you want to delete the image \\'$1\\'?","Are you sure you want to delete the image \\'$1\\'?");
 ?>
