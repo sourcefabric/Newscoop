@@ -107,7 +107,7 @@ $uploadedByUsers =& Image::GetUploadUsers();
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
 <TR>
 	<TD class="page_title">
-		<?php putGS('Image archive'); ?>
+		<?php putGS('Image Archive'); ?>
 	</TD>
 </TR>
 </TABLE>

@@ -49,7 +49,7 @@ $articles =& ArticleImage::GetArticlesThatUseImage($ImageId);
 		?>
 	</TD>
 	<TD ALIGN="RIGHT">
-		<A HREF="index.php?<?php echo $imageNav->getSearchLink(); ?>" class="breadcrumb"><?php  putGS("Image archive");  ?></A>
+		<A HREF="index.php?<?php echo $imageNav->getSearchLink(); ?>" class="breadcrumb"><?php  putGS("Image Archive");  ?></A>
 	</TD>
 </TR>
 </TABLE>

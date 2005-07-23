@@ -39,7 +39,7 @@ fetchRowNum($q_now);
 	    <?php  putGS('Add new image'); ?>
 	</TD>
 	<TD ALIGN="RIGHT">
-	  	<A HREF="index.php?<?php echo $imageNav->getSearchLink(); ?>" class="breadcrumb"><?php  putGS('Image archive');  ?></A>
+	  	<A HREF="index.php?<?php echo $imageNav->getSearchLink(); ?>" class="breadcrumb"><?php  putGS('Image Archive');  ?></A>
 	</td>
 </TR>
 </TABLE>
