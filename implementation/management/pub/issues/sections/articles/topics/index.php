@@ -46,7 +46,7 @@ if (!$sectionObj->exists()) {
 	exit;		
 }
 
-$articleObj =& new Article($Pub, $Issue, $Section, $Language, $Article);
+$articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
 if (!$articleObj->exists()) {
 	CampsiteInterface::DisplayError(getGS('Article does not exist.'));
 	exit;		
