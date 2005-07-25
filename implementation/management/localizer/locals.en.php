@@ -1,10 +1,6 @@
 <?php
-regGS("success", "success");
-regGS("fail", "fail");
 regGS("edit '$1'", "edit '$1'");
 regGS("edit \"$1\"", "edit \"$1\"");
-regGS("cannot read $1", "cannot read $1");
-regGS("at position:", "at position:");
 regGS("User Subscriptions Sections", "User Subscriptions Sections");
 regGS("User Subscriptions", "User Subscriptions");
 regGS("Translate to:", "Translate to:");
@@ -19,15 +15,10 @@ regGS("Localizer", "Localizer");
 regGS("Image Archive", "Image Archive");
 regGS("Hide translated strings?", "Hide translated strings?");
 regGS("Globals", "Globals");
-regGS("Converting...", "Converting...");
-regGS("At the end", "At the end");
-regGS("At the beginning", "At the beginning");
 regGS("Article Type Fields", "Article Type Fields");
 regGS("Article Topics", "Article Topics");
 regGS("Article Images", "Article Images");
 regGS("Are you sure you want to delete this entry?", "Are you sure you want to delete this entry?");
 regGS("All strings have been translated.", "All strings have been translated.");
-regGS("After \"$1\"", "After \"$1\"");
-regGS("Add new string:", "Add new string:");
 regGS("Add", "Add");
 ?>

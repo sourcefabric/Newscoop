@@ -1,7 +1,7 @@
 <?php
 
-$Campsite['APACHE_USER'] = 'apache';
-$Campsite['APACHE_GROUP'] = 'apache';
+$Campsite['APACHE_USER'] = 'www-data';
+$Campsite['APACHE_GROUP'] = 'www-data';
 $Campsite['CAMPSITE_DIR'] = '/usr/local/campsite';
 $Campsite['BIN_DIR'] = '/usr/local/campsite/bin';
 $Campsite['ETC_DIR'] = '/usr/local/campsite/etc';

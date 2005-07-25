@@ -363,4 +363,6 @@ regGS("Article automatic publishing schedule", "Article automatic publishing sch
 regGS("Are you sure you want to delete this scheduled action?", "Are you sure you want to delete this scheduled action?");
 regGS("Unlink", "Unlink:en");
 regGS("Are you sure you want to delete the image \\'$1\\'?","Are you sure you want to delete the image \\'$1\\'?");
+regGS("No such issue.", "No such issue.:en");
+regGS("No such section.", "No such section.:en");
 ?>
