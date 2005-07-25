@@ -45,6 +45,8 @@ install: dummy
 
 test_install:
 	mkdir -p "$(CAMPSITE_DIR)/test"
+	chown $(ROOT_USER):$(APACHE_GROUP) "$(CAMPSITE_DIR)/test"
+	chmod 755 "$(CAMPSITE_DIR)/test"
 	rmdir "$(CAMPSITE_DIR)/test"
 
 default_instance:
