@@ -25,4 +25,8 @@ regGS("The destination section is the same as the source section.", "The destina
 regGS("The article is new; it is not possible to schedule it for automatic publishing.", "The article is new; it is not possible to schedule it for automatic publishing.");
 regGS("No article types were defined. You must create an article type first.", "No article types were defined. You must create an article type first.:en");
 regGS("Edit article types", "Edit article types:en");
+regGS("Could not save the article. It has been locked by $1 $2 hours and $3 minutes ago.", "Could not save the article. It has been locked by $1 $2 hours and $3 minutes ago.:en");
+regGS("You do not have the right to change this article status. Once submitted an article can only changed by authorized users.", "You do not have the right to change this article status. Once submitted an article can only changed by authorized users.:en");
+regGS("You do not have the right to delete articles.", "You do not have the right to delete articles.:en");
+regGS("You must select an article type.", "You must select an article type.:en");
 ?>

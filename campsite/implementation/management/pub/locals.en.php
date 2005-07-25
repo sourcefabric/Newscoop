@@ -124,5 +124,6 @@ regGS("$1 is the default publication alias, it can not be deleted.", "$1 is the 
 
 regGS("You do not have the right to add publications.", "You do not have the right to add publications.:en");
 regGS("There are $1 issue(s) left.", "There are $1 issue(s) left.:en");
+regGS("No such country.", "No such country.:en");
 
 ?>
