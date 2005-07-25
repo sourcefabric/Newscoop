@@ -173,7 +173,7 @@ if (!$isNewUser) {
 	if ($userId == $User->getId() && !$isNewUser) {
 ?>
 		<tr>
-			<td align="right" nowrap width="1%"><?php  putGS("Old Password"); ?>:</td>
+			<td align="right" nowrap width="1%"><?php putGS("Old Password"); ?>:</td>
 			<td>
 			<input type="password" class="input_text" name="oldPassword" size="16" maxlength="32">
 			</td>
@@ -222,7 +222,7 @@ if (!$isNewUser) {
 				<td align="right" nowrap><?php putGS("Title"); ?>:</td>
 				<td>
 <?php
-CampsiteInterface::CreateSelect("Title", array("Mr.", "Mrs.", "Ms.", "Dr."),
+CampsiteInterface::CreateSelect("Title", array(getGS("Mr."), getGS("Mrs."), getGS("Ms."), getGS("Dr.")),
 	$Title, 'class="input_select"');
 ?>
 				</td>
