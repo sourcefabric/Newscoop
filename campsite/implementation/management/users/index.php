@@ -13,7 +13,7 @@ $isReader = $uType == 'Subscribers' ? 'Y' : 'N';
 
 ?>
 <table border="0" cellspacing="0" cellpadding="1" width="100%" class="page_title_container">
-	<tr><td class="page_title" align="left"><?php putGS("$uType management"); ?></td></tr>
+	<tr><td class="page_title" align="left"><?php if ($isReader) { putGS("Subscribers management"); } else { putGS("Staff management"); } ?></td></tr>
 </table>
 
 <table border="0" cellspacing="0" cellpadding="1">

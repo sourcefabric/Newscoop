@@ -229,7 +229,7 @@ if ($User->getId() != $articleObj->getLockedByUser()) {
 	$diffSeconds -= $hours * 3600;
 	$minutes = floor($diffSeconds/60);
 	$lockUser =& new User($articleObj->getLockedByUser());
-	$errorStr = getGS('Could not save the article.  It has been locked by $1 $2 hours and $3 minutes ago.', $lockUser->getName(), $hours, $minutes);
+	$errorStr = getGS('Could not save the article. It has been locked by $1 $2 hours and $3 minutes ago.', $lockUser->getName(), $hours, $minutes);
 	CampsiteInterface::DisplayError($errorStr, $BackLink);
 	exit;
 }
