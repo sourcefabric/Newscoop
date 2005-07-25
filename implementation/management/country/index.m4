@@ -74,7 +74,7 @@ E_HEADER
 B_LIST
 	B_LIST_HEADER
 <?php  if ($mca != 0) { ?>dnl
-		X_LIST_TH(<*Name<BR><SMALL>(click to edit)</SMALL>*>)
+		X_LIST_TH(<*Name <SMALL>(click to edit)</SMALL>*>)
 <?php  } else { ?>dnl
 		X_LIST_TH(<*Name*>)
 <?php  } ?>dnl

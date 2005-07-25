@@ -37,7 +37,7 @@ else {
 	$t3 = getGS('Published');
 }
 
-CampsiteInterface::ContentTop(getGS('Change Issue Status'), array('Pub' => $publicationObj, 'Issue' => $issueObj));
+CampsiteInterface::ContentTop(getGS('Change issue status'), array('Pub' => $publicationObj, 'Issue' => $issueObj));
 
 ?>
 
