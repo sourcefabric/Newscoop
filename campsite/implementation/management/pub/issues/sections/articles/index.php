@@ -121,7 +121,7 @@ if ($numUniqueArticlesDisplayed > 0) {
 ?>
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" WIDTH="100%" class="table_list">
 <TR class="table_list_header">
-	<TD ALIGN="LEFT" VALIGN="TOP"  ><?php  putGS("Name<BR><SMALL>(click to edit)</SMALL>"); ?></TD>
+	<TD ALIGN="LEFT" VALIGN="TOP"  ><?php  putGS("Name <SMALL>(click to edit)</SMALL>"); ?></TD>
 	<TD ALIGN="center" VALIGN="TOP" WIDTH="1%" ><?php  putGS("Type"); ?></TD>
 	<TD ALIGN="center" VALIGN="TOP" WIDTH="1%" ><?php  putGS("Language"); ?></TD>
 	<TD ALIGN="center" VALIGN="TOP" WIDTH="1%" ><?php  putGS("Status"); ?></TD>
@@ -182,7 +182,7 @@ foreach ($allArticles as $articleObj) {
 		    
 		    ?>
 		    <img src="/<?php echo $ADMIN; ?>/img/icon/lock.png" width="22" height="22" border="0" alt="<?php  p($lockInfo); ?>" title="<?php p($lockInfo); ?>">
-		    <?
+		    <?php
 		}
 		// Can the user edit the article?
 		$userCanEdit = $articleObj->userCanModify($User);
