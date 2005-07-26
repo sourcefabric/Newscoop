@@ -68,6 +68,13 @@ CampsiteInterface::ContentTop(getGS('Add new translation'), array('Pub' => $publ
 </TR>
 
 <TR>
+	<TD ALIGN="RIGHT" ><?php  putGS("URL Name"); ?>:</TD>
+	<TD>
+	<INPUT TYPE="TEXT" class="input_text" NAME="cShortName" size="32" maxlength="64" value="<?php echo htmlspecialchars($issueObj->getShortName()); ?>">
+	</TD>
+</TR>
+
+<TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Language"); ?>:</TD>
 	<TD>
 		<SELECT NAME="cLang" class="input_select"><?php 
