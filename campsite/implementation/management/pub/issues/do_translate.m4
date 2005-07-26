@@ -19,6 +19,7 @@ B_BODY
 
 <?php 
     todef('cName');
+    todef('cShortName');
     todefnum('cNumber');
     todefnum('cLang');
     todefnum('Language');
@@ -54,13 +55,18 @@ B_MSGBOX(<*Adding new translation*>)
 		<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); ?></LI>
     <?php  }
     
+    if ($cShortName == "" || $cShortName == " ") {
+	$correct= 0; ?>dnl
+		<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('URL Name').'</B>'); ?></LI>
+    <?php  }
+    
     if ($cNumber == "" || $cNumber == " ") {
 	$correct= 0; ?>dnl
 		<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Number').'</B>'); ?></LI>
     <?php  }
     
     if ($correct) {
-	query ("INSERT IGNORE INTO Issues SET Name='$cName', IdPublication=$cPub, IdLanguage=$cLang, Number=$cNumber");
+	query ("INSERT IGNORE INTO Issues SET Name='$cName', ShortName = '$cShortName', IdPublication=$cPub, IdLanguage=$cLang, Number=$cNumber");
 	$created= ($AFFECTED_ROWS > 0);
 	if($created){
 		$sql = "SELECT * FROM Sections WHERE IdPublication=$cPub AND NrIssue=$cNumber AND IdLanguage=$Language";
