@@ -6,14 +6,20 @@
 /** 
  * Includes
  */
-require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DatabaseObject.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DbObjectArray.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleType.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleImage.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleTopic.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleIndex.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
+// We indirectly reference the DOCUMENT_ROOT so we can enable 
+// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT'] 
+// is not defined in these cases.
+if (!isset($g_documentRoot)) {
+    $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
+}
+require_once($g_documentRoot.'/db_connect.php');
+require_once($g_documentRoot.'/classes/DatabaseObject.php');
+require_once($g_documentRoot.'/classes/DbObjectArray.php');
+require_once($g_documentRoot.'/classes/ArticleType.php');
+require_once($g_documentRoot.'/classes/ArticleImage.php');
+require_once($g_documentRoot.'/classes/ArticleTopic.php');
+require_once($g_documentRoot.'/classes/ArticleIndex.php');
+require_once($g_documentRoot.'/classes/Language.php');
 
 /**
  * @package Campsite
@@ -68,6 +74,7 @@ class Article extends DatabaseObject {
 		 */
 		'OnSection',
 		'Published',
+		'PublishDate',
 		'UploadDate',
 		'Keywords',
 		'Public',
@@ -772,19 +779,21 @@ class Article extends DatabaseObject {
 	/**
 	 * @return boolean
 	 */
-	function onSection() 
+	function onSectionPage() 
 	{
 		return ($this->getProperty('OnSection') == 'Y');
-	} // fn onSection
+	} // fn onSectionPage
 	
 	
 	/**
-	 * @param boolean value
+	 * Set whether the article will appear on the section page.
+	 * @param boolean p_value
+	 * @return boolean
 	 */
-	function setOnSection($p_value) 
+	function setOnSectionPage($p_value) 
 	{
 		return parent::setProperty('OnSection', $p_value?'Y':'N');
-	} // fn setOnSection
+	} // fn setOnSectionPage
 	
 	
 	/**
@@ -822,13 +831,27 @@ class Article extends DatabaseObject {
 			ArticleIndex::OnArticleDelete($this->getPublicationId(), $this->getIssueId(),
 				$this->getSectionId(), $this->getLanguageId(), $this->getArticleId());
 		}
+		// If the article is being published
+		if ( ($this->getPublished() != 'Y') && ($p_value == 'Y') ) {
+    		$this->setIsIndexed(false);
+		    $this->setProperty('PublishDate', 'NOW()', true, true);
+		}
 		// Unlock the article if it changes status.
 		if ( $this->getPublished() != $p_value ) {
 			$this->unlock();
 		}
-		$this->setIsIndexed(false);
 		return parent::setProperty('Published', $p_value);
-	} // fn setIsPublished
+	} // fn setPublished
+	
+	
+	/**
+	 * Get the date the article was published.
+	 * @return string
+	 */
+	function getPublishDate()
+	{
+	    return $this->getProperty('PublishDate');
+	} // fn getPublishDate
 	
 	
 	/**
@@ -1234,6 +1257,22 @@ class Article extends DatabaseObject {
 		$articles =& DbObjectArray::Create('Article', $queryStr2);
 		return $articles;
 	} // fn GetArticles
+	
+	
+	/**
+	 *
+	 * @return array
+	 */
+	function GetRecentArticles($p_max) 
+	{
+	    global $Campsite;
+	    $queryStr = "SELECT * FROM Articles "
+	               ." WHERE Published='Y'"
+	               ." ORDER BY PublishDate DESC"
+	               ." LIMIT $p_max";
+	    $result =& DbObjectArray::Create('Article', $queryStr);
+	    return $result;
+	} // fn GetRecentArticles
 	
 	
 	/**
