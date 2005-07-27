@@ -2,7 +2,7 @@
 --
 -- Host: localhost    Database: campsite
 -- ------------------------------------------------------
--- Server version	4.0.20
+-- Server version	4.0.23_Debian-3ubuntu2-log
 
 --
 -- Table structure for table `Aliases`
@@ -68,11 +68,12 @@ DROP TABLE IF EXISTS `ArticlePublish`;
 CREATE TABLE `ArticlePublish` (
   `NrArticle` int(10) unsigned NOT NULL default '0',
   `IdLanguage` int(10) unsigned NOT NULL default '0',
-  `PublishTime` datetime NOT NULL default '0000-00-00 00:00:00',
+  `ActionTime` datetime NOT NULL default '0000-00-00 00:00:00',
   `Publish` enum('P','U') default NULL,
   `FrontPage` enum('S','R') default NULL,
   `SectionPage` enum('S','R') default NULL,
-  PRIMARY KEY  (`NrArticle`,`IdLanguage`,`PublishTime`)
+  `Completed` enum('N','Y') NOT NULL default 'N',
+  PRIMARY KEY  (`NrArticle`,`IdLanguage`,`ActionTime`)
 ) TYPE=MyISAM;
 
 --
@@ -113,6 +114,7 @@ CREATE TABLE `Articles` (
   `OnFrontPage` enum('N','Y') NOT NULL default 'N',
   `OnSection` enum('N','Y') NOT NULL default 'N',
   `Published` enum('N','S','Y') NOT NULL default 'N',
+  `PublishDate` datetime NOT NULL default '0000-00-00 00:00:00',
   `UploadDate` date NOT NULL default '0000-00-00',
   `Keywords` varchar(255) NOT NULL default '',
   `Public` enum('N','Y') NOT NULL default 'N',
@@ -285,10 +287,11 @@ CREATE TABLE `IssuePublish` (
   `IdPublication` int(10) unsigned NOT NULL default '0',
   `NrIssue` int(10) unsigned NOT NULL default '0',
   `IdLanguage` int(10) unsigned NOT NULL default '0',
-  `PublishTime` datetime NOT NULL default '0000-00-00 00:00:00',
+  `ActionTime` datetime NOT NULL default '0000-00-00 00:00:00',
   `Action` enum('P','U') NOT NULL default 'P',
   `PublishArticles` enum('Y','N') NOT NULL default 'Y',
-  PRIMARY KEY  (`IdPublication`,`NrIssue`,`IdLanguage`,`PublishTime`)
+  `Completed` enum('N','Y') NOT NULL default 'N',
+  PRIMARY KEY  (`IdPublication`,`NrIssue`,`IdLanguage`,`ActionTime`)
 ) TYPE=MyISAM;
 
 --
@@ -698,6 +701,7 @@ CREATE TABLE `UserPerm` (
   `EditorUnderline` enum('N','Y') NOT NULL default 'N',
   `EditorUndoRedo` enum('N','Y') NOT NULL default 'N',
   `EditorCopyCutPaste` enum('N','Y') NOT NULL default 'N',
+  `ManageReaders` enum('N','Y') NOT NULL default 'N',
   PRIMARY KEY  (`IdUser`)
 ) TYPE=MyISAM;
 
@@ -705,7 +709,7 @@ CREATE TABLE `UserPerm` (
 -- Dumping data for table `UserPerm`
 --
 
-INSERT INTO `UserPerm` (`IdUser`, `ManagePub`, `DeletePub`, `ManageIssue`, `DeleteIssue`, `ManageSection`, `DeleteSection`, `AddArticle`, `ChangeArticle`, `DeleteArticle`, `AddImage`, `ChangeImage`, `DeleteImage`, `ManageTempl`, `DeleteTempl`, `ManageUsers`, `ManageSubscriptions`, `DeleteUsers`, `ManageUserTypes`, `ManageArticleTypes`, `DeleteArticleTypes`, `ManageLanguages`, `DeleteLanguages`, `ManageDictionary`, `DeleteDictionary`, `ManageCountries`, `DeleteCountries`, `ManageClasses`, `MailNotify`, `ViewLogs`, `ManageLocalizer`, `ManageIndexer`, `Publish`, `ManageTopics`, `EditorImage`, `EditorTextAlignment`, `EditorFontColor`, `EditorFontSize`, `EditorFontFace`, `EditorTable`, `EditorSuperscript`, `EditorSubscript`, `EditorStrikethrough`, `EditorIndent`, `EditorListBullet`, `EditorListNumber`, `EditorHorizontalRule`, `EditorSourceView`, `EditorEnlarge`, `EditorTextDirection`, `EditorLink`, `EditorSubhead`, `EditorBold`, `EditorItalic`, `EditorUnderline`, `EditorUndoRedo`, `EditorCopyCutPaste`) VALUES (1,'Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','N','N','Y','Y','N','Y','Y','Y','Y','Y','Y','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N');
+INSERT INTO `UserPerm` (`IdUser`, `ManagePub`, `DeletePub`, `ManageIssue`, `DeleteIssue`, `ManageSection`, `DeleteSection`, `AddArticle`, `ChangeArticle`, `DeleteArticle`, `AddImage`, `ChangeImage`, `DeleteImage`, `ManageTempl`, `DeleteTempl`, `ManageUsers`, `ManageSubscriptions`, `DeleteUsers`, `ManageUserTypes`, `ManageArticleTypes`, `DeleteArticleTypes`, `ManageLanguages`, `DeleteLanguages`, `ManageDictionary`, `DeleteDictionary`, `ManageCountries`, `DeleteCountries`, `ManageClasses`, `MailNotify`, `ViewLogs`, `ManageLocalizer`, `ManageIndexer`, `Publish`, `ManageTopics`, `EditorImage`, `EditorTextAlignment`, `EditorFontColor`, `EditorFontSize`, `EditorFontFace`, `EditorTable`, `EditorSuperscript`, `EditorSubscript`, `EditorStrikethrough`, `EditorIndent`, `EditorListBullet`, `EditorListNumber`, `EditorHorizontalRule`, `EditorSourceView`, `EditorEnlarge`, `EditorTextDirection`, `EditorLink`, `EditorSubhead`, `EditorBold`, `EditorItalic`, `EditorUnderline`, `EditorUndoRedo`, `EditorCopyCutPaste`, `ManageReaders`) VALUES (1,'Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','N','N','Y','Y','N','Y','Y','Y','Y','Y','Y','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N');
 
 --
 -- Table structure for table `UserTypes`
@@ -771,6 +775,7 @@ CREATE TABLE `UserTypes` (
   `EditorUnderline` enum('N','Y') NOT NULL default 'N',
   `EditorUndoRedo` enum('N','Y') NOT NULL default 'N',
   `EditorCopyCutPaste` enum('N','Y') NOT NULL default 'N',
+  `ManageReaders` enum('N','Y') NOT NULL default 'N',
   PRIMARY KEY  (`Name`)
 ) TYPE=MyISAM;
 
@@ -778,7 +783,7 @@ CREATE TABLE `UserTypes` (
 -- Dumping data for table `UserTypes`
 --
 
-INSERT INTO `UserTypes` (`Name`, `Reader`, `ManagePub`, `DeletePub`, `ManageIssue`, `DeleteIssue`, `ManageSection`, `DeleteSection`, `AddArticle`, `ChangeArticle`, `DeleteArticle`, `AddImage`, `ChangeImage`, `DeleteImage`, `ManageTempl`, `DeleteTempl`, `ManageUsers`, `ManageSubscriptions`, `DeleteUsers`, `ManageUserTypes`, `ManageArticleTypes`, `DeleteArticleTypes`, `ManageLanguages`, `DeleteLanguages`, `ManageDictionary`, `DeleteDictionary`, `ManageCountries`, `DeleteCountries`, `ManageClasses`, `MailNotify`, `ViewLogs`, `ManageLocalizer`, `ManageIndexer`, `Publish`, `ManageTopics`, `EditorImage`, `EditorTextAlignment`, `EditorFontColor`, `EditorFontSize`, `EditorFontFace`, `EditorTable`, `EditorSuperscript`, `EditorSubscript`, `EditorStrikethrough`, `EditorIndent`, `EditorListBullet`, `EditorListNumber`, `EditorHorizontalRule`, `EditorSourceView`, `EditorEnlarge`, `EditorTextDirection`, `EditorLink`, `EditorSubhead`, `EditorBold`, `EditorItalic`, `EditorUnderline`, `EditorUndoRedo`, `EditorCopyCutPaste`) VALUES ('Reader','Y','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N'),('Administrator','N','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','N','N','Y','Y','N','N','Y','Y','N','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y'),('Editor','N','N','N','N','N','N','N','Y','Y','Y','Y','Y','Y','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','Y','N','N','N','N','N','Y','Y','N','N','N','Y','Y','Y','N','Y','Y','Y','N','N','Y','Y','Y','Y','Y','Y','Y','Y','Y'),('Chief Editor','N','N','N','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','N','N','N','N','Y','Y','N','N','Y','Y','N','N','Y','N','Y','Y','N','Y','Y','Y','N','Y','N','N','Y','Y','Y','Y','Y','Y','Y','N','N','Y','Y','Y','Y','Y','Y','Y','Y','Y');
+INSERT INTO `UserTypes` (`Name`, `Reader`, `ManagePub`, `DeletePub`, `ManageIssue`, `DeleteIssue`, `ManageSection`, `DeleteSection`, `AddArticle`, `ChangeArticle`, `DeleteArticle`, `AddImage`, `ChangeImage`, `DeleteImage`, `ManageTempl`, `DeleteTempl`, `ManageUsers`, `ManageSubscriptions`, `DeleteUsers`, `ManageUserTypes`, `ManageArticleTypes`, `DeleteArticleTypes`, `ManageLanguages`, `DeleteLanguages`, `ManageDictionary`, `DeleteDictionary`, `ManageCountries`, `DeleteCountries`, `ManageClasses`, `MailNotify`, `ViewLogs`, `ManageLocalizer`, `ManageIndexer`, `Publish`, `ManageTopics`, `EditorImage`, `EditorTextAlignment`, `EditorFontColor`, `EditorFontSize`, `EditorFontFace`, `EditorTable`, `EditorSuperscript`, `EditorSubscript`, `EditorStrikethrough`, `EditorIndent`, `EditorListBullet`, `EditorListNumber`, `EditorHorizontalRule`, `EditorSourceView`, `EditorEnlarge`, `EditorTextDirection`, `EditorLink`, `EditorSubhead`, `EditorBold`, `EditorItalic`, `EditorUnderline`, `EditorUndoRedo`, `EditorCopyCutPaste`, `ManageReaders`) VALUES ('Reader','Y','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N'),('Administrator','N','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','N','N','Y','Y','N','N','Y','Y','N','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','N'),('Editor','N','N','N','N','N','N','N','Y','Y','Y','Y','Y','Y','N','N','N','N','N','N','N','N','N','N','N','N','N','N','N','Y','N','N','N','N','N','Y','Y','N','N','N','Y','Y','Y','N','Y','Y','Y','N','N','Y','Y','Y','Y','Y','Y','Y','Y','Y','N'),('Chief Editor','N','N','N','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','N','N','N','N','Y','Y','N','N','Y','Y','N','N','Y','N','Y','Y','N','Y','Y','Y','N','Y','N','N','Y','Y','Y','Y','Y','Y','Y','N','N','Y','Y','Y','Y','Y','Y','Y','Y','Y','N');
 
 --
 -- Table structure for table `Users`
@@ -796,13 +801,13 @@ CREATE TABLE `Users` (
   `City` varchar(100) NOT NULL default '',
   `StrAddress` varchar(255) NOT NULL default '',
   `State` varchar(32) NOT NULL default '',
-  `CountryCode` varchar(21) NOT NULL default '',
+  `CountryCode` varchar(21) default NULL,
   `Phone` varchar(20) NOT NULL default '',
   `Fax` varchar(20) NOT NULL default '',
   `Contact` varchar(64) NOT NULL default '',
   `Phone2` varchar(20) NOT NULL default '',
   `Title` enum('Mr.','Mrs.','Ms.','Dr.') NOT NULL default 'Mr.',
-  `Gender` enum('M','F') NOT NULL default 'M',
+  `Gender` enum('M','F') default NULL,
   `Age` enum('0-17','18-24','25-39','40-49','50-65','65-') NOT NULL default '0-17',
   `PostalCode` varchar(70) NOT NULL default '',
   `Employer` varchar(140) NOT NULL default '',
