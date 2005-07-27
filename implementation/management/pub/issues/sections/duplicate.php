@@ -83,31 +83,34 @@ function CustomValidator_DuplicateSection(form) {
     }
     
     // Existing section checking
-    if (form.section_chooser[0].checked && (form.destination_section_existing.selectedIndex == 0)) {
-        alert('<?php putGS("You must select a section."); ?>');
-        return false;
+    if (form.section_chooser[0].checked) {
+        if (form.destination_section_existing.selectedIndex == 0) {
+            alert('<?php putGS("You must select a section."); ?>');
+            return false;
+        }
     }
-    
-    // New Section checking
-    // Verify there is a number for the section
-    newSectionNumber = form.destination_section_new_id.value.trim();
-    if (form.section_chooser[1].checked && (newSectionNumber == "")) {
-        alert('<?php putGS("You must select a section."); ?>');
-        return false;
-    }
-    
-    // Verify there is a name for the section
-    if (form.section_chooser[1].checked && (form.destination_section_new_name.value.trim() == "")) {
-        alert('<?php putGS("You must specify a name for the section."); ?>');
-        return false;
-    }
-    
-    // Check if user specified an existing section in the "New Section" dialog.
-    existingSections = [ <?php p(implode(',', DbObjectArray::GetColumn($allSections, 'Number'))); ?> ];
-    for (i = 0; i < existingSections.length; i++ ) {
-        if (newSectionNumber == existingSections[i]) {
-            alert('<?php putGS("The section number specified already exists, please specify a different value or use the dropdown to find an existing section."); ?>');
-            return false;   
+    else {
+        // New Section checking
+        // Verify there is a number for the section
+        newSectionNumber = form.destination_section_new_id.value.trim();
+        if (form.section_chooser[1].checked && (newSectionNumber == "")) {
+            alert('<?php putGS("You must select a section."); ?>');
+            return false;
+        }
+        
+        // Verify there is a name for the section
+        if (form.section_chooser[1].checked && (form.destination_section_new_name.value.trim() == "")) {
+            alert('<?php putGS("You must specify a name for the section."); ?>');
+            return false;
+        }
+        
+        // Check if user specified an existing section in the "New Section" dialog.
+        existingSections = [ <?php p(implode(',', DbObjectArray::GetColumn($allSections, 'Number'))); ?> ];
+        for (i = 0; i < existingSections.length; i++ ) {
+            if (newSectionNumber == existingSections[i]) {
+                alert('<?php putGS("The section number specified already exists, please specify a different value or use the dropdown to find an existing section."); ?>');
+                return false;   
+            }
         }
     }
     return true;
