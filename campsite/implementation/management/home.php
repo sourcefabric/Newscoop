@@ -6,6 +6,8 @@ require_once($_SERVER['DOCUMENT_ROOT']."/classes/Publication.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Issue.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Section.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Article.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/ArticlePublish.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/IssuePublish.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Language.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
 
@@ -30,6 +32,14 @@ list($YourArticles, $NumYourArticles) = Article::GetArticlesByUser($User->getId(
 
 list($SubmittedArticles, $NumSubmittedArticles) = Article::GetSubmittedArticles($NArtOffs, $NumDisplayArticles);
 
+$recentlyPublishedArticles = Article::GetRecentArticles($NumDisplayArticles);
+
+$pendingArticles = ArticlePublish::GetFutureActions($NumDisplayArticles);
+$pendingIssues = IssuePublish::GetFutureActions($NumDisplayArticles);
+$pendingActions = array_merge($pendingArticles, $pendingIssues);
+ksort($pendingActions);
+$pendingActions = array_slice($pendingActions, 0, $NumDisplayArticles);
+//echo "<pre>";print_r($pendingActions);echo "</pre>";
 ?>
 <HEAD>
 	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
@@ -55,6 +65,13 @@ list($SubmittedArticles, $NumSubmittedArticles) = Article::GetSubmittedArticles(
 		</TR>
 
 		<?php 
+		if (count($YourArticles) == 0) {
+	        ?>
+    		<TR>
+			<TD colspan="3" class="list_row_odd"><?php putGS("You haven't written any articles yet."); ?></td>
+	        </tr>
+		    <?php
+		}
 		$color = 0;
 		foreach ($YourArticles as $YourArticle) {
 			$section =& $YourArticle->getSection();
@@ -136,6 +153,14 @@ list($SubmittedArticles, $NumSubmittedArticles) = Article::GetSubmittedArticles(
 		</TR>
 		<?php 
 	    $color=0;
+	    if (count($SubmittedArticles) == 0) {
+	        ?>
+    		<TR>
+			<TD colspan="2" class="list_row_odd"><?php putGS("There are currently no submitted articles."); ?></td>
+	        </tr>
+	        <?php
+	    }
+	    
 		foreach ($SubmittedArticles as $SubmittedArticle) {
 			$section =& $SubmittedArticle->getSection();
 			$language =& new Language($SubmittedArticle->getLanguageId());
@@ -176,4 +201,127 @@ list($SubmittedArticles, $NumSubmittedArticles) = Article::GetSubmittedArticles(
     </TD>
 </TR>
 </TABLE>
+
+<TABLE BORDER="0" CELLSPACING="4" CELLPADDING="2" WIDTH="100%">
+<TR>
+	<TD VALIGN="TOP" align="left" width="50%">
+		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3">
+		<TR class="table_list_header">
+			<TD ALIGN="LEFT" VALIGN="TOP" width="98%"><?php  putGS("Recently Published Articles"); ?></TD>
+			<TD ALIGN="LEFT" VALIGN="TOP" width="2%" nowrap><?php  putGS("Publish Date"); ?></TD>
+		</TR>
+		<?php 
+		if (count($recentlyPublishedArticles) == 0) {
+	        ?>
+    		<TR>
+			<TD colspan="2" class="list_row_odd"><?php putGS("No articles have been published yet."); ?></td>
+	        </tr>
+		    <?php		    
+		}
+		$color = 0;
+		foreach ($recentlyPublishedArticles as $tmpArticle) {
+			 ?>
+		<TR <?php if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
+			<TD>
+				<?php 
+				echo CampsiteInterface::ArticleLink($tmpArticle, $tmpArticle->getLanguageId(), "edit.php"); 
+				p(htmlspecialchars($tmpArticle->getTitle()));
+				echo '</a>';
+				?>
+			</TD>
+			<td nowrap><?php echo $tmpArticle->getPublishDate(); ?></td>
+        </tr>
+		<?php 
+		} // for
+    	?>
+        </table>
+    </td>
+    
+    <td width="50%" valign="top">
+		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3">
+		<TR class="table_list_header">
+			<TD ALIGN="LEFT" VALIGN="TOP" width="96%"><?php putGS("Scheduled Actions"); ?></TD>
+			<TD ALIGN="LEFT" VALIGN="TOP" width="2%" nowrap><?php putGS("Event(s)"); ?></TD>
+			<TD ALIGN="LEFT" VALIGN="TOP" width="2%" nowrap><?php putGS("Date"); ?></TD>
+		</TR>
+		<?php 
+		if (count($pendingActions) == 0) {
+	        ?>
+    		<TR>
+			<TD colspan="3" class="list_row_odd"><?php putGS("There are no pending items to be published."); ?></td>
+	        </tr>
+	        <?php		    
+		}
+		// Warning: the next section is a big hack!
+		// Hopefully will be fixed in 2.4
+		$color = 0;
+		foreach ($pendingActions as $action) {
+			 ?>
+		<TR <?php if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
+		<?PHP
+		if ($action["ObjectType"] == "article") { ?>
+			<TD><?php putGS("Article"); ?>: <a href="/<?php p($ADMIN); ?>/pub/issues/sections/articles/edit.php?Pub=<?php p($action["IdPublication"]); ?>&Issue=<?php p($action["NrIssue"]); ?>&Section=<?php p($action["NrSection"]); ?>&Article=<?php p($action["Number"]); ?>&Language=<?php p($action["IdLanguage"]); ?>&sLanguage=<?php p($action["IdLanguage"]); ?>">
+			    <?php p(htmlspecialchars($action["Name"])); ?>
+				</a>
+			</TD>
+			<td><?PHP
+			$displayActions = array();
+			if ($action["Publish"] == 'P') {
+			    $displayActions[] = getGS("Publish");
+			}
+			if ($action["Publish"] == 'U') {
+			    $displayActions[] = getGS("Unpublish");
+			}
+			if ($action["FrontPage"] == 'S') {
+			    $displayActions[] = getGS("Show on front page");
+			}
+			if ($action["FrontPage"] == 'R') {
+			    $displayActions[] = getGS("Remove from front page");
+			}
+			if ($action["SectionPage"] == 'S') {
+			    $displayActions[] = getGS("Show on section page");
+			}
+			if ($action["SectionPage"] == 'R') {
+			    $displayActions[] = getGS("Remove from section page");
+			}
+			echo implode("<br>", $displayActions)
+			?></td>
+			<td nowrap><a href="/<?php p($ADMIN); ?>/pub/issues/sections/articles/autopublish.php?Pub=<?php p($action["IdPublication"]); ?>&Issue=<?php p($action["NrIssue"]); ?>&Section=<?php p($action["NrSection"]); ?>&Article=<?php p($action["Number"]); ?>&Language=<?php p($action["IdLanguage"]); ?>&sLanguage=<?php p($action["IdLanguage"]); ?>&publish_time=<?php p(urlencode($action["ActionTime"])); ?>"><?php echo htmlspecialchars($action["ActionTime"]); ?></a>
+			</td>
+		<?PHP
+		}
+		elseif ($action["ObjectType"] == "issue") { ?>
+			<TD><?php putGS("Issue"); ?>: <a href="/<?php p($ADMIN); ?>/pub/issues/edit.php?Pub=<?php p($action["IdPublication"]); ?>&Issue=<?php p($action["Number"]); ?>&Language=<?php p($action["IdLanguage"]); ?>">
+			    <?php p(htmlspecialchars($action["Name"])); ?>
+				</a>
+			</TD>
+			<td><?PHP
+			$displayActions = array();
+			if ($action["Action"] == 'P') {
+			    $displayActions[] = getGS("Publish");
+			}
+			if ($action["Action"] == 'U') {
+			    $displayActions[] = getGS("Unpublish");
+			}
+			if ($action["PublishArticles"] == 'Y') {
+			    $displayActions[] = getGS("Publish articles");
+			}
+			echo implode("<br>", $displayActions)
+			?></td>
+			<td nowrap><a href="/<?php p($ADMIN); ?>/pub/issues/autopublish.php?Pub=<?php p($action["IdPublication"]); ?>&Issue=<?php p($action["Number"]); ?>&Language=<?php p($action["IdLanguage"]); ?>&publish_time=<?php p(urlencode($action["ActionTime"])); ?>"><?php echo htmlspecialchars($action["ActionTime"]); ?></a>
+			</td>
+            
+            <?PHP
+		}
+		?>
+        </tr>
+		<?php 
+		} // for
+    	?>
+        </table>
+    </td>
+</tr>
+</table>			
+
+
 <?php CampsiteInterface::CopyrightNotice(); ?>
