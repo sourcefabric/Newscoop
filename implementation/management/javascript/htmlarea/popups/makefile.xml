@@ -1,4 +1,0 @@
-<files>
-  <file name="*.{js,html}" />
-  <file name="about.html" masonize="yes" args="version,release,basename" />
-</files>
