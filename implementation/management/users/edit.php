@@ -18,11 +18,9 @@ if ($userId > 0) {
 		CampsiteInterface::DisplayError(getGS('No such user account.'));
 		exit;
 	}
-	$title = "Change user account information";
 	$isNewUser = false;
 } else {
 	$editUser = new User();
-	$title = "Add new user account";
 	$isNewUser = true;
 }
 
@@ -36,7 +34,7 @@ if ($userId > 0) {
 
 <table border="0" cellspacing="0" cellpadding="1" width="100%" class="page_title_container">
 <tr>
-	<td class="page_title"><?php putGS($title); ?></td>
+	<td class="page_title"><?php if ($userId > 0) { putGS("Change user account information"); } else { putGS("Add new user account"); } ?></td>
 	<td align="right"><a href="/<?php echo $ADMIN; ?>/users/?<?php echo get_user_urlparams(); ?>" class="breadcrumb" ><?php putGS($uType);  ?></a></td>
 </tr>
 </table>
