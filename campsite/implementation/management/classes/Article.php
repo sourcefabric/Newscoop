@@ -240,14 +240,19 @@ class Article extends DatabaseObject {
     		$articleCopy->__create($values);
     		$articleCopy->setProperty('UploadDate', 'NOW()', true, true);
     		    		
-    		$articleData =& $copyMe->getArticleTypeObject();
-    		$articleData->copyToExistingRecord($articleCopy->getArticleId());
+    		// Insert an entry into the article type table.
+    		$newArticleData =& new ArticleType($articleCopy->m_data['Type'], 
+    			$articleCopy->m_data['Number'], 
+    			$articleCopy->m_data['IdLanguage']);
+    		$newArticleData->create();
+    		$origArticleData =& $copyMe->getArticleTypeObject();
+    		$origArticleData->copyToExistingRecord($articleCopy->m_data['Number']);
     		
     		// Copy image pointers
-    		ArticleImage::OnArticleCopy($copyMe->m_data['Number'], $articleCopy->getArticleId());
+    		ArticleImage::OnArticleCopy($copyMe->m_data['Number'], $articleCopy->m_data['Number']);
     
     		// Copy topic pointers
-    		ArticleTopic::OnArticleCopy($copyMe->m_data['Number'], $articleCopy->getArticleId());
+    		ArticleTopic::OnArticleCopy($copyMe->m_data['Number'], $articleCopy->m_data['Number']);
 		}
 		if ($p_copyAllTranslations) {
 		    return $copyArticles;
