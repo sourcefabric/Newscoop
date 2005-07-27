@@ -78,7 +78,7 @@ $pendingActions = array_slice($pendingActions, 0, $NumDisplayArticles);
 			$language =& new Language($YourArticle->getLanguageId());
 			 ?>
 		<TR <?php if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
-			<TD width="450px">
+			<TD width="98%" valign="top">
 				<?php 
 				if ($User->hasPermission('ChangeArticle') || ($YourArticle->getPublished() == 'N')) {
 					echo CampsiteInterface::ArticleLink($YourArticle, $section->getLanguageId(), "edit.php"); 
@@ -90,11 +90,11 @@ $pendingActions = array_slice($pendingActions, 0, $NumDisplayArticles);
 				?>
 			</TD>
 			
-			<TD width="1%" align="center">
+			<TD width="1%" align="center" nowrap valign="top">
 				<?php p(htmlspecialchars($language->getName())); ?>
 			</TD>
 			
-			<TD width="1%" align="center">
+			<TD width="1%" align="center" nowrap valign="top">
 				<?php 
 				$changeStatusLink = CampsiteInterface::ArticleLink($YourArticle, $section->getLanguageId(), "status.php", $_SERVER['REQUEST_URI']);
 				if ($YourArticle->getPublished() == "Y") { 
@@ -166,13 +166,13 @@ $pendingActions = array_slice($pendingActions, 0, $NumDisplayArticles);
 			$language =& new Language($SubmittedArticle->getLanguageId());
 			?>	
 		<TR <?php if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
-			<TD>
+			<TD valign="top">
 			<?php echo CampsiteInterface::ArticleLink($SubmittedArticle, $section->getLanguageId(), "edit.php"); ?>
 			<?php p(htmlspecialchars($SubmittedArticle->getTitle())); ?>
 			</A>
 			</TD>
 			
-			<TD align="center">
+			<TD align="center" nowrap valign="top">
 			<?php p(htmlspecialchars($language->getName()));?>
 			</TD>
 		</TR>
@@ -222,14 +222,14 @@ $pendingActions = array_slice($pendingActions, 0, $NumDisplayArticles);
 		foreach ($recentlyPublishedArticles as $tmpArticle) {
 			 ?>
 		<TR <?php if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
-			<TD>
+			<TD valign="top">
 				<?php 
 				echo CampsiteInterface::ArticleLink($tmpArticle, $tmpArticle->getLanguageId(), "edit.php"); 
 				p(htmlspecialchars($tmpArticle->getTitle()));
 				echo '</a>';
 				?>
 			</TD>
-			<td nowrap><?php echo $tmpArticle->getPublishDate(); ?></td>
+			<td nowrap valign="top"><?php echo $tmpArticle->getPublishDate(); ?></td>
         </tr>
 		<?php 
 		} // for
