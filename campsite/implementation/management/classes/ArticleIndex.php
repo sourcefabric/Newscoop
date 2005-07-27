@@ -6,7 +6,7 @@
 /**
  * Includes
  */
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DatabaseObject.php');
+require_once($g_documentRoot.'/classes/DatabaseObject.php');
 
 /**
  * @package Campsite
