@@ -447,7 +447,7 @@ if ($edit_ok) { ?>
 		</TD>
 	</TR>
 	<TR>
-		<TD ALIGN="RIGHT" ><INPUT TYPE="CHECKBOX" NAME="cOnSection" class="input_checkbox" <?php  if ($articleObj->onSection()) { ?> CHECKED<?php  } ?>></TD>
+		<TD ALIGN="RIGHT" ><INPUT TYPE="CHECKBOX" NAME="cOnSection" class="input_checkbox" <?php  if ($articleObj->onSectionPage()) { ?> CHECKED<?php  } ?>></TD>
 		<TD>
 		<?php  putGS('Show article on section page'); ?>
 		</TD>
