@@ -3,7 +3,7 @@
 LANG=""
 FILE=""
 to_do="print_usage"
-params=""
+my_params=""
 pn=1
 while [ "${!pn}" != "" ]; do
     case ${!pn} in
@@ -14,7 +14,7 @@ while [ "${!pn}" != "" ]; do
 	if [ "$LANG" = "" ]; then
 	    to_do=print_usage
 	fi
-	params="--make_package $LANG"
+	my_params="--make_package $LANG"
 	;;
     --install_package)
 	to_do=install
@@ -23,7 +23,7 @@ while [ "${!pn}" != "" ]; do
 	if [ "$FILE" = "" ]; then
 	    to_do=print_usage
 	fi
-	params="--install_package $FILE"
+	my_params="--install_package $FILE"
 	;;
     --user)
 	pn=`expr $pn + 1`
@@ -40,7 +40,7 @@ while [ "${!pn}" != "" ]; do
 	if [ "$LANG" = "" ]; then
 	    to_do=print_usage
 	fi
-	params="--add_trans_to_dist $LANG"
+	my_params="--add_trans_to_dist $LANG"
 	;;
 #    --) ;;
     esac
@@ -79,7 +79,7 @@ if [ $my_id -ne 0 ] && ! $USER_INSTALL; then
 	echo -n "Root password: "
 	archive_path=`pwd`
 	usr_grp="--user \"$USER_NAME\" --group \"$GROUP_NAME\""
-	su - --command="echo \"\"; cd $archive_path; ./translation $params $usr_grp" 2> /dev/null
+	su - --command="echo \"\"; cd $archive_path; ./translation $my_params $usr_grp" 2> /dev/null
 	err_code=$?
 	if [ $err_code -ne 0 ] && [ $err_code -ne 2 ]; then
 	    echo -n -e "\nThe password was not correct. Try again (Y/N) ? [Y]: "
