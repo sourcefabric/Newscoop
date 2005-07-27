@@ -365,8 +365,4 @@ regGS("Unlink", "Unlink:en");
 regGS("Are you sure you want to delete the image \\'$1\\'?","Are you sure you want to delete the image \\'$1\\'?");
 regGS("No such issue.", "No such issue.:en");
 regGS("No such section.", "No such section.:en");
-regGS("Publish Date", "Publish Date:en");
-regGS("Publish articles", "Publish articles:en");
-regGS("Recently Published Articles", "Recently Published Articles:en");
-regGS("Scheduled Actions", "Scheduled Actions:en");
 ?>
