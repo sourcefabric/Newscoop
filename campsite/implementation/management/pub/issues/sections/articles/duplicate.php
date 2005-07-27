@@ -57,7 +57,7 @@ $sLanguageObj =& new Language($sLanguage);
 $allPublications =& Publication::GetAllPublications();
 $allIssues = array();
 if ($DestPublication > 0) {
-	$allIssues =& Issue::GetIssues($DestPublication);
+	$allIssues =& Issue::GetIssues($DestPublication, $Language);
 }
 $allSections = array();
 if ($DestIssue > 0) {
