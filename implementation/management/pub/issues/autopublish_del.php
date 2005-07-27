@@ -3,6 +3,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
 load_common_include_files("$ADMIN_DIR/pub/issues");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/IssuePublish.php');
 
 // Check permissions
 list($access, $User) = check_basic_access($_REQUEST);
@@ -20,10 +21,14 @@ $Issue = Input::Get('Issue', 'int', 0);
 $Language = Input::Get('Language', 'int', 0);
 $publish_time = trim(Input::Get('publish_time', 'string', ''));
 
-$AFFECTED_ROWS=0;
-$sql = "DELETE FROM IssuePublish WHERE IdPublication = $Pub AND NrIssue = $Issue AND IdLanguage = $Language AND PublishTime = '$publish_time'";
-query ($sql);
-$del = $AFFECTED_ROWS > 0;
+$action =& new IssuePublish($Pub, $Issue, $Language, $publish_time);
+$action->delete();
+//$AFFECTED_ROWS=0;
+//$sql = "DELETE FROM IssuePublish WHERE IdPublication = $Pub AND NrIssue = $Issue AND IdLanguage = $Language AND PublishTime = '$publish_time'";
+//query ($sql);
+//$del = $AFFECTED_ROWS > 0;
+$del = 1;
+
 if ($del)
 	header("Location: /$ADMIN/pub/issues/autopublish.php?Pub=$Pub&Issue=$Issue&Language=$Language");
 
