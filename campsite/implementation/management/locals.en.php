@@ -1,4 +1,13 @@
 <?php
+regGS("You haven't written any articles yet.", "You haven't written any articles yet.");
+regGS("There are no pending items to be published.", "There are no pending items to be published.");
+regGS("There are currently no submitted articles.", "There are currently no submitted articles.");
+regGS("Scheduled Actions", "Scheduled Actions");
+regGS("Recently Published Articles", "Recently Published Articles");
+regGS("Publish articles", "Publish articles");
+regGS("Publish Date", "Publish Date");
+regGS("No articles have been published yet.", "No articles have been published yet.");
+regGS("Event(s)", "Event(s)");
 regGS("Signed in: $1", "Signed in: $1");
 regGS("Help", "Help");
 regGS("About", "About");
