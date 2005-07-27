@@ -279,9 +279,11 @@ class ArticlePublish extends DatabaseObject {
         //echo $queryStr."<br>";
 		$rows = $Campsite['db']->GetAll($queryStr);
 		$addKeys = array();
-		foreach ($rows as $row) {
-		    $row["ObjectType"] = "article";
-		    $addKeys[$row['ActionTime']] = $row;
+		if (count($rows) > 0) {
+    		foreach ($rows as $row) {
+    		    $row["ObjectType"] = "article";
+    		    $addKeys[$row['ActionTime']] = $row;
+    		}
 		}
         return $addKeys;
 	} // fn GetFutureActions
