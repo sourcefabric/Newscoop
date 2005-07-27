@@ -6,10 +6,16 @@
 /**
  * Includes
  */
-require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DatabaseObject.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DbObjectArray.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
+// We indirectly reference the DOCUMENT_ROOT so we can enable 
+// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT'] 
+// is not defined in these cases.
+if (!isset($g_documentRoot)) {
+    $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
+}
+require_once($g_documentRoot.'/db_connect.php');
+require_once($g_documentRoot.'/classes/DatabaseObject.php');
+require_once($g_documentRoot.'/classes/DbObjectArray.php');
+require_once($g_documentRoot.'/classes/Language.php');
 
 /**
  * @package Campsite
@@ -47,95 +53,16 @@ class Issue extends DatabaseObject {
 		}
 	} // constructor
 
-	
-	/**
-	 * Return the total number of issues in the database.
-	 *
-	 * @param int $p_publicationId
-	 *		If specified, return the total number of issues in the given publication.
-	 *
-	 * @return int
-	 */
-	function GetNumIssues($p_publicationId = null) 
-	{
-		global $Campsite;
-		$queryStr = 'SELECT COUNT(*) FROM Issues ';
-		if (is_numeric($p_publicationId)) {
-			$queryStr .= " WHERE IdPublication=$p_publicationId";
-		}
-		$total = $Campsite['db']->GetOne($queryStr);
-		return $total;				
-	} // fn GetNumIssues
 
-	
 	/**
-	 * Get all the issues in the given publication as return them as an array 
-	 * of Issue objects.
-	 *
-	 * @param int $p_publicationId
-	 * 		The publication ID.
-	 *
-	 * @param int $p_languageId
-	 *		(Optional) Only return issues with this language.
-	 *
-	 * @param int $p_issueId
-	 *		(Optional) Only return issues with this Issue ID.
-	 *
-	 * @param int $p_preferredLanguage
-	 *		(Optional) List this language before others.  This will override any 'ORDER BY' sql
-	 *		options you have.
-	 *
-	 * @param array $p_sqlOptions
-	 *
-	 * @return array
+	 * Create an issue.
+	 * @param string $p_shortName
 	 */
-	function GetIssues($p_publicationId = null, 
-	                   $p_languageId = null, 
-	                   $p_issueId = null, 
-	                   $p_preferredLanguage = null, 
-	                   $p_sqlOptions = null) 
+	function create($p_shortName) 
 	{
-		$tmpIssue =& new Issue();
-		$columnNames = $tmpIssue->getColumnNames(true);
-		$queryStr = 'SELECT '.implode(',', $columnNames);
-		if (!is_null($p_preferredLanguage)) {
-			$queryStr .= ", abs(IdLanguage-$p_preferredLanguage) as LanguageOrder";
-			$p_sqlOptions['ORDER BY'] = array('Number' => 'DESC', 'LanguageOrder' => 'ASC');
-		}
-		// We have to display the language name so oftern that we might
-		// as well fetch it by default.
-		$queryStr .= ', Languages.OrigName as LanguageName';
-		$queryStr .= ' FROM Issues, Languages ';
-		$whereClause = array();
-		$whereClause[] = "Issues.IdLanguage=Languages.Id";
-		if (!is_null($p_publicationId)) {
-			$whereClause[] = "Issues.IdPublication=$p_publicationId";
-		}
-		if (!is_null($p_languageId)) {
-			$whereClause[] = "Issues.IdLanguage=$p_languageId";
-		}
-		if (!is_null($p_issueId)) {
-			$whereClause[] = "Issues.Number=$p_issueId";
-		}
-		if (count($whereClause) > 0) {
-			$queryStr .= ' WHERE '.implode(' AND ', $whereClause);
-		}
-		$queryStr = DatabaseObject::ProcessOptions($queryStr, $p_sqlOptions);
-		global $Campsite;
-		$issues = array();
-		$rows = $Campsite['db']->GetAll($queryStr);
-		if (is_array($rows)) {
-			foreach ($rows as $row) {
-				$tmpObj =& new Issue();
-				$tmpObj->fetch($row);
-				$tmpObj->m_languageName = $row['LanguageName'];
-				$issues[] = $tmpObj;
-			}
-		}
-		
-		return $issues;
-	} // fn GetIssues
-		
+	    return parent::create(array('ShortName' => $p_shortName));
+	} // fn create
+	
 	
 	/**
 	 * @return int
@@ -296,6 +223,94 @@ class Issue extends DatabaseObject {
 		$languages =& DbObjectArray::Create('Language', $queryStr);
 		return $languages;
 	} // fn getUsusedLanguages
+
+	
+	/**
+	 * Get all the issues in the given publication as return them as an array 
+	 * of Issue objects.
+	 *
+	 * @param int $p_publicationId
+	 * 		The publication ID.
+	 *
+	 * @param int $p_languageId
+	 *		(Optional) Only return issues with this language.
+	 *
+	 * @param int $p_issueId
+	 *		(Optional) Only return issues with this Issue ID.
+	 *
+	 * @param int $p_preferredLanguage
+	 *		(Optional) List this language before others.  This will override any 'ORDER BY' sql
+	 *		options you have.
+	 *
+	 * @param array $p_sqlOptions
+	 *
+	 * @return array
+	 */
+	function GetIssues($p_publicationId = null, 
+	                   $p_languageId = null, 
+	                   $p_issueId = null, 
+	                   $p_preferredLanguage = null, 
+	                   $p_sqlOptions = null) 
+	{
+		$tmpIssue =& new Issue();
+		$columnNames = $tmpIssue->getColumnNames(true);
+		$queryStr = 'SELECT '.implode(',', $columnNames);
+		if (!is_null($p_preferredLanguage)) {
+			$queryStr .= ", abs(IdLanguage-$p_preferredLanguage) as LanguageOrder";
+			$p_sqlOptions['ORDER BY'] = array('Number' => 'DESC', 'LanguageOrder' => 'ASC');
+		}
+		// We have to display the language name so oftern that we might
+		// as well fetch it by default.
+		$queryStr .= ', Languages.OrigName as LanguageName';
+		$queryStr .= ' FROM Issues, Languages ';
+		$whereClause = array();
+		$whereClause[] = "Issues.IdLanguage=Languages.Id";
+		if (!is_null($p_publicationId)) {
+			$whereClause[] = "Issues.IdPublication=$p_publicationId";
+		}
+		if (!is_null($p_languageId)) {
+			$whereClause[] = "Issues.IdLanguage=$p_languageId";
+		}
+		if (!is_null($p_issueId)) {
+			$whereClause[] = "Issues.Number=$p_issueId";
+		}
+		if (count($whereClause) > 0) {
+			$queryStr .= ' WHERE '.implode(' AND ', $whereClause);
+		}
+		$queryStr = DatabaseObject::ProcessOptions($queryStr, $p_sqlOptions);
+		global $Campsite;
+		$issues = array();
+		$rows = $Campsite['db']->GetAll($queryStr);
+		if (is_array($rows)) {
+			foreach ($rows as $row) {
+				$tmpObj =& new Issue();
+				$tmpObj->fetch($row);
+				$tmpObj->m_languageName = $row['LanguageName'];
+				$issues[] = $tmpObj;
+			}
+		}
+		
+		return $issues;
+	} // fn GetIssues
+			
+	/**
+	 * Return the total number of issues in the database.
+	 *
+	 * @param int $p_publicationId
+	 *		If specified, return the total number of issues in the given publication.
+	 *
+	 * @return int
+	 */
+	function GetNumIssues($p_publicationId = null) 
+	{
+		global $Campsite;
+		$queryStr = 'SELECT COUNT(*) FROM Issues ';
+		if (is_numeric($p_publicationId)) {
+			$queryStr .= " WHERE IdPublication=$p_publicationId";
+		}
+		$total = $Campsite['db']->GetOne($queryStr);
+		return $total;				
+	} // fn GetNumIssues
 	
 } // class Issue
 
