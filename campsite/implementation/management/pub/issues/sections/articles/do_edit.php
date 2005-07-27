@@ -223,7 +223,7 @@ if (!$articleObj->userCanModify($User)) {
 	exit;
 }
 // Only users with a lock on the article can change it.
-if ($User->getId() != $articleObj->getLockedByUser()) {
+if ($articleObj->isLocked() && ($User->getId() != $articleObj->getLockedByUser())) {
 	$diffSeconds = time() - strtotime($articleObj->getLockTime());
 	$hours = floor($diffSeconds/3600);
 	$diffSeconds -= $hours * 3600;
