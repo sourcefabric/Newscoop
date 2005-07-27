@@ -75,6 +75,12 @@ elseif (($extension == '.php') || ($extension == '')) {
 	}
 	$needs_menu = ! in_array($call_script, $no_menu_scripts);
 
+	// Verify the file exists
+	$path_name = $Campsite['HTML_DIR'] . "/$ADMIN_DIR/$call_script";
+	if (!file_exists($path_name)) {
+	    die();
+	}
+	
 	// Clean up the global namespace before we call the script
 	unset($is_image);
 	unset($extension);
@@ -85,7 +91,7 @@ elseif (($extension == '.php') || ($extension == '')) {
 	
 	// Get the main content
 	ob_start();
-	require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/$call_script");
+	require_once($path_name);
 	$content = ob_get_clean();
 
 	// We create the top menu AFTER the main content because
@@ -100,7 +106,6 @@ elseif (($extension == '.php') || ($extension == '')) {
 		$_top_menu = ob_get_clean();
 	}
 	
-
 	echo $_top_menu . $content;
 	
 	if ($needs_menu) {
