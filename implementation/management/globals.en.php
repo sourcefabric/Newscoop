@@ -365,4 +365,5 @@ regGS("Unlink", "Unlink:en");
 regGS("Are you sure you want to delete the image \\'$1\\'?","Are you sure you want to delete the image \\'$1\\'?");
 regGS("No such issue.", "No such issue.:en");
 regGS("No such section.", "No such section.:en");
+regGS("Are you sure you want to delete the subscription to the publication $1?","Are you sure you want to delete the subscription to the publication $1?:en");
 ?>
