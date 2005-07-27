@@ -139,7 +139,7 @@ initdocument = function () {
 				// The tooltip.
 				tooltip   : subheadTooltip,
 				// Image to be displayed in the toolbar.
-				image     : "/javascript/htmlarea/images/campsite_subhead.gif",
+				image     : "/javascript/xinha/images/campsite_subhead.gif",
 				// TRUE = enabled in text mode
 				// FALSE = disabled in text mode
 				textMode  : false,
@@ -160,7 +160,7 @@ initdocument = function () {
 				// The tooltip.
 				tooltip   : internalLinkTooltip,
 				// Image to be displayed in the toolbar.
-				image     : "/javascript/htmlarea/images/campsite_internal_link.gif",
+				image     : "/javascript/xinha/images/campsite_internal_link.gif",
 				// TRUE = enabled in text mode
 				// FALSE = disabled in text mode
 				textMode  : false,
