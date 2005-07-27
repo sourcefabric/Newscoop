@@ -61,7 +61,7 @@ if ($NUM_ROWS) {
 			<A HREF="/<?php echo $ADMIN; ?>/users/subscriptions/status.php?User=<?php echo $editUser->getId(); ?>&Subs=<?php pgetUVar($q_subs,'Id'); ?>"><?php if (getVar($q_subs,'Active') == "Y") { ?>Yes<?php  } else { ?>No<?php  } ?></A>
 		</TD>
 		<TD ALIGN="CENTER">
-			<A HREF="/<?php echo $ADMIN; ?>/users/subscriptions/del.php?User=<?php echo $editUser->getId(); ?>&Subs=<?php pgetUVar($q_subs,'Id'); ?>">
+			<A HREF="/<?php echo $ADMIN; ?>/users/subscriptions/do_del.php?User=<?php echo $editUser->getId(); ?>&Subs=<?php pgetUVar($q_subs,'Id'); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the subscription to the publication $1?', getHVar($q_pub,'Name')); ?>');">
 			<IMG SRC="/<?php echo $ADMIN; ?>/img/icon/delete.png" BORDER="0" ALT="<?php putGS('Delete subscriptions to $1',getHVar($q_pub,'Name') ); ?>" TITLE="<?php  putGS('Delete subscriptions to $1',getHVar($q_pub,'Name') ); ?>"></A>
 		</TD>
 	</TR>
