@@ -3,6 +3,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
 load_common_include_files("$ADMIN_DIR/pub/issues");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/IssuePublish.php');
 
 // Check permissions
 list($access, $User) = check_basic_access($_REQUEST);
@@ -35,20 +36,28 @@ $created = 0;
 if ($correct) {
 	$action_str = $action == "P" ? "Publish" : "Unpublish";
 	$publish_time = $publish_date . " " . $publish_hour . ":" . $publish_min . ":00";
-	$sql = "select * from IssuePublish where IdPublication = $Pub and NrIssue = $Issue and IdLanguage = $Language and PublishTime = '$publish_time'";
-	query($sql, 'q_issp');
-	if ($NUM_ROWS > 0) {
-		$sql = "update IssuePublish set Action = '$action', PublishArticles = '$publish_articles' where IdPublication = $Pub and NrIssue = $Issue and IdLanguage = $Language and PublishTime = '$publish_time'";
-		query($sql);
+	//$sql = "select * from IssuePublish where IdPublication = $Pub and NrIssue = $Issue and IdLanguage = $Language and PublishTime = '$publish_time'";
+	//query($sql, 'q_issp');
+    $action =& new IssuePublish($Pub, $Issue, $Language, $publish_time);
+	if ($action->exists()) {
+	    $action->setPublishAction($action);
+	    $action->setPublishArticlesAction($publish_articles);
+		//$sql = "update IssuePublish set Action = '$action', PublishArticles = '$publish_articles' where IdPublication = $Pub and NrIssue = $Issue and IdLanguage = $Language and PublishTime = '$publish_time'";
+		//query($sql);
 		$created = 1;
 	} else {
-		$sql = "INSERT IGNORE INTO IssuePublish SET IdPublication = $Pub, NrIssue = $Issue, IdLanguage = $Language, PublishTime = '$publish_time', Action = '$action', PublishArticles = '$publish_articles'";
-		query ($sql);
-		$created = $AFFECTED_ROWS > 0;
+	    $action->create();
+		//$sql = "INSERT IGNORE INTO IssuePublish SET IdPublication = $Pub, NrIssue = $Issue, IdLanguage = $Language, PublishTime = '$publish_time', Action = '$action', PublishArticles = '$publish_articles'";
+		//query ($sql);
+		//$created = $AFFECTED_ROWS > 0;
+		$created = 1;
 	}
+    $action->setPublishAction($action);
+    $action->setPublishArticlesAction($publish_articles);
 }
-if ($created)
+if ($created) {
 	header("Location: /$ADMIN/pub/issues/autopublish.php?Pub=$Pub&Issue=$Issue&Language=$Language");
+}
 
 ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
@@ -97,23 +106,27 @@ if ($created)
 	<TR>
 		<TD COLSPAN="2"><BLOCKQUOTE>
 <?php
-	if ($publish_date == "" || $publish_date == " ") {
+	if ( $publish_date == "" ) {
 	$correct= 0; ?>	<LI><?php putGS('You must complete the $1 field.','<B>'.getGS('Date').'</B>' ); ?></LI>
 	<?php }
 
-    if ($publish_hour == "" || $publish_hour == " " || $publish_min == "" || $publish_min == " ") {
+    if ( ($publish_hour == "") || ($publish_min == "") ) {
 	$correct= 0; ?>	<LI><?php putGS('You must complete the $1 field.','<B>'.getGS('Time').'</B>' ); ?></LI>
     <?php }
 
-	if ($action != "P" && $action != "U") {
+	if ( ($action != "P") && ($action != "U") ) {
 	$correct= 0; ?>	<LI><?php putGS('You must select an action.'); ?></LI>
     <?php }
 
 	if ($correct) {
-		if ($created) { ?>			<LI><?php putGS('The $1 action has been scheduled on $2', getGS($action_str), $publish_time); ?></LI>
-		<?php } else { ?>			<LI><?php putGS('There was an error scheduling the $1 action on $2', getGS($action_str), $publish_time); ?></LI>
-	<?php }
-}
+		if ($created) { ?>
+			<LI><?php putGS('The $1 action has been scheduled on $2', getGS($action_str), $publish_time); ?></LI>
+            <?php 
+		} else { ?>
+			<LI><?php putGS('There was an error scheduling the $1 action on $2', getGS($action_str), $publish_time); ?></LI>
+	       <?php 
+		}
+    }
 ?>	</BLOCKQUOTE></TD>
 	</TR>
 	<TR>
