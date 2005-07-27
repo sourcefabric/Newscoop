@@ -260,11 +260,11 @@ $pendingActions = array_slice($pendingActions, 0, $NumDisplayArticles);
 		<TR <?php if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 		<?PHP
 		if ($action["ObjectType"] == "article") { ?>
-			<TD><?php putGS("Article"); ?>: <a href="/<?php p($ADMIN); ?>/pub/issues/sections/articles/edit.php?Pub=<?php p($action["IdPublication"]); ?>&Issue=<?php p($action["NrIssue"]); ?>&Section=<?php p($action["NrSection"]); ?>&Article=<?php p($action["Number"]); ?>&Language=<?php p($action["IdLanguage"]); ?>&sLanguage=<?php p($action["IdLanguage"]); ?>">
+			<TD valign="top"><?php putGS("Article"); ?>: <a href="/<?php p($ADMIN); ?>/pub/issues/sections/articles/edit.php?Pub=<?php p($action["IdPublication"]); ?>&Issue=<?php p($action["NrIssue"]); ?>&Section=<?php p($action["NrSection"]); ?>&Article=<?php p($action["Number"]); ?>&Language=<?php p($action["IdLanguage"]); ?>&sLanguage=<?php p($action["IdLanguage"]); ?>">
 			    <?php p(htmlspecialchars($action["Name"])); ?>
 				</a>
 			</TD>
-			<td><?PHP
+			<td nowrap valign="top"><?PHP
 			$displayActions = array();
 			if ($action["Publish"] == 'P') {
 			    $displayActions[] = getGS("Publish");
@@ -286,16 +286,16 @@ $pendingActions = array_slice($pendingActions, 0, $NumDisplayArticles);
 			}
 			echo implode("<br>", $displayActions)
 			?></td>
-			<td nowrap><a href="/<?php p($ADMIN); ?>/pub/issues/sections/articles/autopublish.php?Pub=<?php p($action["IdPublication"]); ?>&Issue=<?php p($action["NrIssue"]); ?>&Section=<?php p($action["NrSection"]); ?>&Article=<?php p($action["Number"]); ?>&Language=<?php p($action["IdLanguage"]); ?>&sLanguage=<?php p($action["IdLanguage"]); ?>&publish_time=<?php p(urlencode($action["ActionTime"])); ?>"><?php echo htmlspecialchars($action["ActionTime"]); ?></a>
+			<td nowrap valign="top"><a href="/<?php p($ADMIN); ?>/pub/issues/sections/articles/autopublish.php?Pub=<?php p($action["IdPublication"]); ?>&Issue=<?php p($action["NrIssue"]); ?>&Section=<?php p($action["NrSection"]); ?>&Article=<?php p($action["Number"]); ?>&Language=<?php p($action["IdLanguage"]); ?>&sLanguage=<?php p($action["IdLanguage"]); ?>&publish_time=<?php p(urlencode($action["ActionTime"])); ?>"><?php echo htmlspecialchars($action["ActionTime"]); ?></a>
 			</td>
 		<?PHP
 		}
 		elseif ($action["ObjectType"] == "issue") { ?>
-			<TD><?php putGS("Issue"); ?>: <a href="/<?php p($ADMIN); ?>/pub/issues/edit.php?Pub=<?php p($action["IdPublication"]); ?>&Issue=<?php p($action["Number"]); ?>&Language=<?php p($action["IdLanguage"]); ?>">
+			<TD valign="top"><?php putGS("Issue"); ?>: <a href="/<?php p($ADMIN); ?>/pub/issues/edit.php?Pub=<?php p($action["IdPublication"]); ?>&Issue=<?php p($action["Number"]); ?>&Language=<?php p($action["IdLanguage"]); ?>">
 			    <?php p(htmlspecialchars($action["Name"])); ?>
 				</a>
 			</TD>
-			<td><?PHP
+			<td valign="top" nowrap><?PHP
 			$displayActions = array();
 			if ($action["Action"] == 'P') {
 			    $displayActions[] = getGS("Publish");
@@ -308,7 +308,7 @@ $pendingActions = array_slice($pendingActions, 0, $NumDisplayArticles);
 			}
 			echo implode("<br>", $displayActions)
 			?></td>
-			<td nowrap><a href="/<?php p($ADMIN); ?>/pub/issues/autopublish.php?Pub=<?php p($action["IdPublication"]); ?>&Issue=<?php p($action["Number"]); ?>&Language=<?php p($action["IdLanguage"]); ?>&publish_time=<?php p(urlencode($action["ActionTime"])); ?>"><?php echo htmlspecialchars($action["ActionTime"]); ?></a>
+			<td nowrap valign="top"><a href="/<?php p($ADMIN); ?>/pub/issues/autopublish.php?Pub=<?php p($action["IdPublication"]); ?>&Issue=<?php p($action["Number"]); ?>&Language=<?php p($action["IdLanguage"]); ?>&publish_time=<?php p(urlencode($action["ActionTime"])); ?>"><?php echo htmlspecialchars($action["ActionTime"]); ?></a>
 			</td>
             
             <?PHP
