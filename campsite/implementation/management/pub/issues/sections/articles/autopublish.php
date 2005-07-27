@@ -183,10 +183,10 @@ if ($articleObj->getPublished() != 'N') {
 	</TR>
 	<?php
 	foreach ($articleEvents as $event) {
-		$url_publish_time = urlencode($event->getPublishTime());
+		$url_publish_time = urlencode($event->getActionTime());
 		?>	<TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 		<TD>
-			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/autopublish.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php p($Section); ?>&Article=<?php p($Article); ?>&Language=<?php p($Language); ?>&sLanguage=<?php p($sLanguage); ?>&publish_time=<?php echo $url_publish_time; ?>"><?php p(htmlspecialchars($event->getPublishTime())); ?></A>
+			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/autopublish.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php p($Section); ?>&Article=<?php p($Article); ?>&Language=<?php p($Language); ?>&sLanguage=<?php p($sLanguage); ?>&publish_time=<?php echo $url_publish_time; ?>"><?php p(htmlspecialchars($event->getActionTime())); ?></A>
 		</TD>
 		
 		<TD>

@@ -241,7 +241,7 @@ $hasChanged = false;
 
 // Update the article & check if it has been changed.
 $hasChanged |= $articleObj->setOnFrontPage(!empty($cOnFrontPage));
-$hasChanged |= $articleObj->setOnSection(!empty($cOnSection));
+$hasChanged |= $articleObj->setOnSectionPage(!empty($cOnSection));
 $hasChanged |= $articleObj->setIsPublic(!empty($cPublic));
 $hasChanged |= $articleObj->setKeywords($cKeywords);
 $hasChanged |= $articleObj->setTitle($cName);

@@ -69,7 +69,7 @@ $languageObj =& new Language($Language);
 // Create article
 $articleObj =& new Article($Pub, $Issue, $Section, $cLanguage);
 $articleObj->create($cType, $cName);
-$articleObj->setOnSection(($cSectionPage == "on"));
+$articleObj->setOnSectionPage(($cSectionPage == "on"));
 $articleObj->setOnFrontPage(($cFrontPage == "on"));
 $articleObj->setUserId($User->getId());
 $articleObj->setIsPublic(true);
