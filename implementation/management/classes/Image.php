@@ -6,11 +6,17 @@
 /**
  * Includes
  */
-require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DatabaseObject.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DbObjectArray.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleImage.php');
+// We indirectly reference the DOCUMENT_ROOT so we can enable 
+// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT'] 
+// is not defined in these cases.
+if (!isset($g_documentRoot)) {
+    $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
+}
+require_once($g_documentRoot.'/db_connect.php');
+require_once($g_documentRoot.'/classes/DatabaseObject.php');
+require_once($g_documentRoot.'/classes/DbObjectArray.php');
+require_once($g_documentRoot.'/classes/Article.php');
+require_once($g_documentRoot.'/classes/ArticleImage.php');
 require_once('HTTP/Client.php');
 
 /**
