@@ -1,6 +1,14 @@
 <?php
 
-global $Campsite, $ADMIN_DIR, $ADMIN;
+global $Campsite, $ADMIN_DIR, $ADMIN, $g_documentRoot;
+
+// We indirectly reference the document root because some 
+// scripts that use this file run from the command line,
+// therefore $_SERVER['DOCUMENT_ROOT'] is not defined in 
+// these cases.
+if (!isset($g_documentRoot)) {
+    $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
+}
 
 $configuration_files = array("install_conf.php", 
 							 "database_conf.php", 
@@ -9,7 +17,7 @@ $configuration_files = array("install_conf.php",
 							 "smtp_conf.php");
 
 foreach ($configuration_files as $index=>$conf_file) {
-	require($_SERVER['DOCUMENT_ROOT'] . "/$conf_file");
+	require($g_documentRoot . "/$conf_file");
 }
 unset($configuration_files);
 
@@ -26,7 +34,7 @@ $Campsite['HOSTNAME'] = $_SERVER['SERVER_NAME'];
 $Campsite['WEBSITE_URL'] = $scheme.$Campsite['HOSTNAME'];
 unset($scheme);
 
-require_once($_SERVER['DOCUMENT_ROOT'] . "/campsite_version.php");
+require_once($g_documentRoot.'/campsite_version.php');
 
 $Campsite['IMAGE_DIRECTORY'] = $Campsite['HTML_DIR'].'/images/';
 $Campsite['IMAGE_BASE_URL'] = $Campsite['WEBSITE_URL'].'/images/';
