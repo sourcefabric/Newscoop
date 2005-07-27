@@ -649,6 +649,18 @@ class DatabaseObject {
 
 	
 	/**
+	 * Output the raw values of this object so that it displays nice in HTML.
+	 * @return void
+	 */
+	function dumpToHtml()
+	{
+	    echo "<pre>";
+	    print_r($this->m_data);
+	    echo "</pre>";
+	} // fn dumpToHtml
+
+	
+	/**
 	 * This is used by subclasses to add extra SQL options to the end of a query.
 	 * 
 	 * @param string $p_queryStr
@@ -706,6 +718,7 @@ class DatabaseObject {
 		}
 		return $p_queryStr;
 	} // fn ProcessOptions
+	
 	
 } // class DatabaseObject
 
