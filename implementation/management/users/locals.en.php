@@ -76,4 +76,5 @@ regGS("You must input a valid EMail address.", "You must input a valid EMail add
 regGS("The confirm password must be at least 6 characters long and both passwords should match.", "The confirm password must be at least 6 characters long and both passwords should match.:en");
 regGS("You must input a number between 0 and 255 into the Start IP address' $1 field.", "You must input a number between 0 and 255 into the Start IP address' $1 field.:en");
 regGS("Delete subscriptions to $1", "Delete subscriptions to $1:en");
+regGS("Change user account information", "Change user account information:en");
 ?>
