@@ -22,33 +22,12 @@ $sLanguage = Input::Get('sLanguage', 'int', 0);
 $Article = Input::Get('Article', 'int', 0);
 $ArticleOffset = Input::Get('ArtOffs', 'int', 0, true);
 
-$BackLink = Input::Get('Back', 'string', "/$ADMIN/pub/issues/sections/articles/index.php", true);
+$BackLink = Input::Get('Back', 'string', "/$ADMIN/pub/issues/sections/articles/index.php?Pub=$Pub&Issue=$Issue&Section=$Section&Language=$Language&ArtOffs=$ArticleOffset", true);
 
 if (!Input::IsValid()) {
 	CampsiteInterface::DisplayError(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
 	exit;	
 }
-
-$publicationObj =& new Publication($Pub);
-if (!$publicationObj->exists()) {
-	CampsiteInterface::DisplayError(getGS('Publication does not exist.'), $BackLink);
-	exit;	
-}
-
-$issueObj =& new Issue($Pub, $Language, $Issue);
-if (!$issueObj->exists()) {
-	CampsiteInterface::DisplayError(getGS('Issue does not exist.'), $BackLink);
-	exit;	
-}
-
-$sectionObj =& new Section($Pub, $Issue, $Language, $Section);
-if (!$sectionObj->exists()) {
-	CampsiteInterface::DisplayError(getGS('Section does not exist.'), $BackLink);
-	exit;	
-}
-
-$languageObj =& new Language($Language);
-$sLanguageObj =& new Language($sLanguage);
 
 $articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
 if (!$articleObj->exists()) {
@@ -57,6 +36,12 @@ if (!$articleObj->exists()) {
 }
 
 $articleObj->delete();
+
+$publicationObj =& new Publication($Pub);
+$issueObj =& new Issue($Pub, $Language, $Issue);
+$sectionObj =& new Section($Pub, $Issue, $Language, $Section);
+$languageObj =& new Language($Language);
+$sLanguageObj =& new Language($sLanguage);
 
 $logtext = getGS('Article $1 ($2) deleted from $3. $4 from $5. $6 ($7) of $8',
 	$articleObj->getTitle(), $sLanguageObj->getName(), 
