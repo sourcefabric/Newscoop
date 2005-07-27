@@ -29,7 +29,7 @@ $Campsite['CGI_DIR'] = $Campsite['WWW_DIR'].'/'.$Campsite['DATABASE_NAME'].'/cgi
 $ADMIN_DIR = "admin-files";
 $ADMIN = "admin";
 
-$scheme = (substr($_SERVER['REQUEST_URI'], 0, 5) == 'https')?'https://':'http://';
+$scheme = $_SERVER['SERVER_PORT'] == 80 ? 'http://' : 'https://';
 $Campsite['HOSTNAME'] = $_SERVER['SERVER_NAME'];
 $Campsite['WEBSITE_URL'] = $scheme.$Campsite['HOSTNAME'];
 unset($scheme);
