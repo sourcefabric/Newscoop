@@ -224,9 +224,13 @@ $pendingActions = array_slice($pendingActions, 0, $NumDisplayArticles);
 		<TR <?php if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 			<TD valign="top">
 				<?php 
-				echo CampsiteInterface::ArticleLink($tmpArticle, $tmpArticle->getLanguageId(), "edit.php"); 
+				if ($User->hasPermission('ChangeArticle')) {
+    				echo CampsiteInterface::ArticleLink($tmpArticle, $tmpArticle->getLanguageId(), "edit.php"); 
+				}
 				p(htmlspecialchars($tmpArticle->getTitle()));
-				echo '</a>';
+				if ($User->hasPermission('ChangeArticle')) {
+    				echo '</a>';
+				}
 				?>
 			</TD>
 			<td nowrap valign="top"><?php echo $tmpArticle->getPublishDate(); ?></td>
@@ -260,9 +264,17 @@ $pendingActions = array_slice($pendingActions, 0, $NumDisplayArticles);
 		<TR <?php if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 		<?PHP
 		if ($action["ObjectType"] == "article") { ?>
-			<TD valign="top"><?php putGS("Article"); ?>: <a href="/<?php p($ADMIN); ?>/pub/issues/sections/articles/edit.php?Pub=<?php p($action["IdPublication"]); ?>&Issue=<?php p($action["NrIssue"]); ?>&Section=<?php p($action["NrSection"]); ?>&Article=<?php p($action["Number"]); ?>&Language=<?php p($action["IdLanguage"]); ?>&sLanguage=<?php p($action["IdLanguage"]); ?>">
-			    <?php p(htmlspecialchars($action["Name"])); ?>
-				</a>
+			<TD valign="top"><?php putGS("Article"); ?>: 
+    			<?PHP
+				if ($User->hasPermission('ChangeArticle')) { ?>
+                	<a href="/<?php p($ADMIN); ?>/pub/issues/sections/articles/edit.php?Pub=<?php p($action["IdPublication"]); ?>&Issue=<?php p($action["NrIssue"]); ?>&Section=<?php p($action["NrSection"]); ?>&Article=<?php p($action["Number"]); ?>&Language=<?php p($action["IdLanguage"]); ?>&sLanguage=<?php p($action["IdLanguage"]); ?>">
+                	<?PHP
+				}
+			    echo htmlspecialchars($action["Name"]); 
+				if ($User->hasPermission('ChangeArticle')) { 
+    				echo "</a>";
+                }
+                ?>
 			</TD>
 			<td nowrap valign="top"><?PHP
 			$displayActions = array();
@@ -286,14 +298,32 @@ $pendingActions = array_slice($pendingActions, 0, $NumDisplayArticles);
 			}
 			echo implode("<br>", $displayActions)
 			?></td>
-			<td nowrap valign="top"><a href="/<?php p($ADMIN); ?>/pub/issues/sections/articles/autopublish.php?Pub=<?php p($action["IdPublication"]); ?>&Issue=<?php p($action["NrIssue"]); ?>&Section=<?php p($action["NrSection"]); ?>&Article=<?php p($action["Number"]); ?>&Language=<?php p($action["IdLanguage"]); ?>&sLanguage=<?php p($action["IdLanguage"]); ?>&publish_time=<?php p(urlencode($action["ActionTime"])); ?>"><?php echo htmlspecialchars($action["ActionTime"]); ?></a>
+			<td nowrap valign="top">
+                <?php 
+                if ($User->hasPermission("Publish")) { ?>
+                    <a href="/<?php p($ADMIN); ?>/pub/issues/sections/articles/autopublish.php?Pub=<?php p($action["IdPublication"]); ?>&Issue=<?php p($action["NrIssue"]); ?>&Section=<?php p($action["NrSection"]); ?>&Article=<?php p($action["Number"]); ?>&Language=<?php p($action["IdLanguage"]); ?>&sLanguage=<?php p($action["IdLanguage"]); ?>&publish_time=<?php p(urlencode($action["ActionTime"])); ?>">
+                    <?PHP
+                }
+                echo htmlspecialchars($action["ActionTime"]); 
+                if ($User->hasPermission("Publish")) {
+                    echo "</a>";
+                }
+                ?>
 			</td>
 		<?PHP
 		}
 		elseif ($action["ObjectType"] == "issue") { ?>
-			<TD valign="top"><?php putGS("Issue"); ?>: <a href="/<?php p($ADMIN); ?>/pub/issues/edit.php?Pub=<?php p($action["IdPublication"]); ?>&Issue=<?php p($action["Number"]); ?>&Language=<?php p($action["IdLanguage"]); ?>">
-			    <?php p(htmlspecialchars($action["Name"])); ?>
-				</a>
+			<TD valign="top"><?php putGS("Issue"); ?>: 
+    			<?PHP
+				if ($User->hasPermission('ManageIssue')) { ?>
+                    <a href="/<?php p($ADMIN); ?>/pub/issues/edit.php?Pub=<?php p($action["IdPublication"]); ?>&Issue=<?php p($action["Number"]); ?>&Language=<?php p($action["IdLanguage"]); ?>">
+                    <?PHP
+				}
+				echo htmlspecialchars($action["Name"]); 
+				if ($User->hasPermission('ManageIssue')) { 				
+				    echo "</a>";
+				}
+				?>
 			</TD>
 			<td valign="top" nowrap><?PHP
 			$displayActions = array();
@@ -308,9 +338,18 @@ $pendingActions = array_slice($pendingActions, 0, $NumDisplayArticles);
 			}
 			echo implode("<br>", $displayActions)
 			?></td>
-			<td nowrap valign="top"><a href="/<?php p($ADMIN); ?>/pub/issues/autopublish.php?Pub=<?php p($action["IdPublication"]); ?>&Issue=<?php p($action["Number"]); ?>&Language=<?php p($action["IdLanguage"]); ?>&publish_time=<?php p(urlencode($action["ActionTime"])); ?>"><?php echo htmlspecialchars($action["ActionTime"]); ?></a>
+			<td nowrap valign="top">
+                <?php 
+                if ($User->hasPermission("Publish")) { ?>
+                    <a href="/<?php p($ADMIN); ?>/pub/issues/autopublish.php?Pub=<?php p($action["IdPublication"]); ?>&Issue=<?php p($action["Number"]); ?>&Language=<?php p($action["IdLanguage"]); ?>&publish_time=<?php p(urlencode($action["ActionTime"])); ?>">
+                    <?PHP
+                }
+                echo htmlspecialchars($action["ActionTime"]); 
+                if ($User->hasPermission("Publish")) {
+                    echo "</a>";
+                }
+                ?>
 			</td>
-            
             <?PHP
 		}
 		?>
