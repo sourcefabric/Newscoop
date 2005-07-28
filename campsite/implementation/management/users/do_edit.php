@@ -119,6 +119,11 @@ if ($editUser->isAdmin() && !$customizeRights) {
 
 $resParams = "res=OK&resMsg=" . getGS("User '$1' information was changed successfully.",
 	$editUser->getUserName());
+$editUser->fetch();
+if ($editUser->getUserName() == $User->getUserName() && !$editUser->hasPermission('ManageUsers')) {
+	header("Location: /$ADMIN/");
+	exit(0);
+}
 header("Location: /$ADMIN/users/edit.php?$typeParam&User=" . $editUser->getId() . "&$resParams");
 
 ?>
