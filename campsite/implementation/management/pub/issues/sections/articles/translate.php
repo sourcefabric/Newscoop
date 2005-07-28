@@ -44,7 +44,7 @@ if (!$articleObj->exists()) {
 	exit;
 }
 
-if (!$articleObj->userCanModify($User)) {
+if (!$User->hasPermission("AddArticle")) {
 	$errorStr = getGS('You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only changed by authorized users.');
 	CampsiteInterface::DisplayError($errorStr, $BackLink);
 	exit;	
