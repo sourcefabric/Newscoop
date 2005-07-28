@@ -65,12 +65,13 @@ function TransformInternalLinks($p_match) {
 		}
 	}
 	// This matches '<a href="campsite_internal_link?IdPublication=1&..." ...>'
-	elseif (preg_match("/<\s*a\s*(((href\s*=\s*[\"']campsite_internal_link[?][\w&=]*[\"'])|(target\s*=\s*['\"][_\w]*['\"]))[\s]*)*[\s\w\"']*>/i", $p_match[0])) {
+	elseif (preg_match("/<\s*a\s*(((href\s*=\s*[\"']campsite_internal_link[?][\w&=;]*[\"'])|(target\s*=\s*['\"][_\w]*['\"]))[\s]*)*[\s\w\"']*>/i", $p_match[0])) {
 		
 		// Get the URL
-		preg_match("/href\s*=\s*[\"'](campsite_internal_link[?][\w&=]*)[\"']/i", $p_match[0], $url);
+		preg_match("/href\s*=\s*[\"'](campsite_internal_link[?][\w&=;]*)[\"']/i", $p_match[0], $url);
 		$url = isset($url[1])?$url[1]:'';
 		$parsedUrl = parse_url($url);
+		$parsedUrl = str_replace("&amp;", "&", $parsedUrl);
 		
 		// Get the target, if there is one
 		preg_match("/target\s*=\s*[\"']([_\w]*)[\"']/i", $p_match[0], $target);
@@ -247,13 +248,14 @@ $hasChanged |= $articleObj->setKeywords($cKeywords);
 $hasChanged |= $articleObj->setTitle($cName);
 $hasChanged |= $articleObj->setIsIndexed(false);
 foreach ($articleFields as $dbColumnName => $text) {
+    echo $text."<br>";
 	// Replace <span class="subhead"> ... </span> with <!** Title> ... <!** EndTitle>
 	$text = preg_replace_callback("/(<\s*span[^>]*class\s*=\s*[\"']campsite_subhead[\"'][^>]*>|<\s*span|<\s*\/\s*span\s*>)/i", "TransformSubheads", $text);
 	
 	// Replace <a href="campsite_internal_link?IdPublication=1&..." ...> ... </a>
 	// with <!** Link Internal IdPublication=1&...> ... <!** EndLink>
 	//
-	$text = preg_replace_callback("/(<\s*a\s*(((href\s*=\s*[\"']campsite_internal_link[?][\w&=]*[\"'])|(target\s*=\s*['\"][_\w]*['\"]))[\s]*)*[\s\w\"']*>)|(<\s*\/a\s*>)/i", "TransformInternalLinks", $text);
+	$text = preg_replace_callback("/(<\s*a\s*(((href\s*=\s*[\"']campsite_internal_link[?][\w&=;]*[\"'])|(target\s*=\s*['\"][_\w]*['\"]))[\s]*)*[\s\w\"']*>)|(<\s*\/a\s*>)/i", "TransformInternalLinks", $text);
 	//$hasChanged |= $articleTypeObj->setProperty($dbColumnName, $text);
 
 	// Replace <a href="http://xyz.com" target="_blank"> ... </a>
