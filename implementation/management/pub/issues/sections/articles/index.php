@@ -130,8 +130,8 @@ if ($numUniqueArticlesDisplayed > 0) {
 	<TD ALIGN="center" VALIGN="TOP" WIDTH="1%" ><?php  putGS("Scheduled Publishing"); ?></TD>
 	<?php } ?>	
 	<TD ALIGN="center" VALIGN="TOP" WIDTH="1%" ><?php  putGS("Preview"); ?></TD>
-	<TD ALIGN="center" VALIGN="TOP" WIDTH="1%" ><?php  putGS("Translate"); ?></TD>
 	<?php  if ($User->hasPermission('AddArticle')) { ?>
+	<TD ALIGN="center" VALIGN="TOP" WIDTH="1%" ><?php  putGS("Translate"); ?></TD>
 	<TD ALIGN="center" VALIGN="TOP" WIDTH="1%" ><?php  putGS("Duplicate"); ?></TD>
 	<?php  } ?>
 	<?php  if ($User->hasPermission('DeleteArticle')) { ?>
@@ -307,6 +307,8 @@ foreach ($allArticles as $articleObj) {
 		<TD ALIGN="CENTER">
 			<A HREF="" ONCLICK="window.open('/<?php echo $ADMIN; ?>/pub/issues/sections/articles/preview.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($articleObj->getArticleId()); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($articleObj->getLanguageId()); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=yes, width=800, height=600'); return false"><img src="/<?php p($ADMIN); ?>/img/icon/preview.png" alt="<?php  putGS("Preview"); ?>" title="<?php putGS('Preview'); ?>" border="0" width="22" height="22"></A>
 		</TD>
+
+		<?php  if ($User->hasPermission('AddArticle')) { ?>
 		<TD ALIGN="CENTER">
 			<?php  if ($articleObj->getArticleId() != $previousArticleId) { ?>
 			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/translate.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($articleObj->getArticleId()); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php p($articleObj->getLanguageId()); ?>&Back=<?php p(urlencode($_SERVER['REQUEST_URI'])); ?>"><img src="/<?php p($ADMIN); ?>/img/icon/translate.png" alt="<?php  putGS("Translate"); ?>" title="<?php  putGS("Translate"); ?>" border="0" width="22" height="22"></A>
@@ -315,7 +317,6 @@ foreach ($allArticles as $articleObj) {
 			<?php  } ?>
 		</TD>
 		
-		<?php  if ($User->hasPermission('AddArticle')) { ?>
 		<TD ALIGN="CENTER">
 			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/duplicate.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($articleObj->getArticleId()); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($articleObj->getLanguageId()); ?>&Back=<?php p(urlencode($_SERVER['REQUEST_URI'])); ?>"><img src="/<?php p($ADMIN); ?>/img/icon/duplicate.png" alt="<?php  putGS("Duplicate"); ?>" title="<?php  putGS("Duplicate"); ?>" border="0" width="22" height="22"></A>
 		</TD>
