@@ -1,7 +1,7 @@
 <?php
 
 check_basic_access($_REQUEST);
-if (!isset($editUser) || gettype($editUser) != 'object' || $editUser->getUserName() == '') {
+if (!$User->hasPermission("ManageSubscriptions") || !isset($editUser) || gettype($editUser) != 'object' || $editUser->getUserName() == '') {
 	CampsiteInterface::DisplayError(getGS('No such user account.'),$_SERVER['REQUEST_URI']);
 	exit;
 }
