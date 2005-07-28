@@ -15,7 +15,7 @@ function isTpl($s)
 <TR class="table_list_header">
 <TD VALIGN="TOP"><B><?php  putGS('Folders'); ?> </B></TD>
 <?php 
-if ($dta != "0") {
+if ($User->hasPermission("DeleteTempl")) {
 	echo '<TD WIDTH="1%" ><B> '.getGS('Delete').' </B></TD>';
 }
 ?>
@@ -64,7 +64,7 @@ if (isset($dirs)) {
 		}
 		print "<TR $tr_class><TD valign=\"center\"><IMG SRC='/$ADMIN/img/icon/folder.png' BORDER='0'>&nbsp;<A HREF='?Path=".encURL("$listbasedir/$j")."'>$j</A></TD>";
 
-		if ($dta != 0)
+		if ($User->hasPermission("DeleteTempl"))
 			print '<TD ALIGN="CENTER"><A HREF="/'.$ADMIN.'/templates/del.php?What=0&Path='.encURL($listbasedir).'&Name='.encURL($j).'"><IMG SRC="/'.$ADMIN.'/img/icon/delete.png" BORDER="0" ALT="'.getGS('Delete folder').'" TITLE="'.getGS('Delete folder').'"></A></TD></TR>';
 		else
 			echo '</TR>';
@@ -79,8 +79,10 @@ if (isset($dirs)) {
 <TR class="table_list_header">
 <TD  VALIGN="TOP"><B> <?php  putGS('Files'); ?> </B></TD>
 <?php 
-if($dta!= "0") {
+if ($User->hasPermission("ManageTempl")) {
 	echo '<TD  VALIGN="TOP" WIDTH="1%" ><B> '.getGS('Duplicate').' </B></TD>';
+}
+if($User->hasPermission("DeleteTempl")) {
 	echo '<TD  VALIGN="TOP" WIDTH="1%" ><B> '.getGS('Delete').' </B></TD>';
 }
 ?>
@@ -105,11 +107,12 @@ if (isset($files)) {
 		} else {
 			print "<TR $tr_class><TD><IMG SRC='/$ADMIN/img/icon/generic.gif' BORDER='0'> $j</TD>";
 		}
-		if ($dta != 0){
+		if ($User->hasPermission("ManageTempl")){
 			print '<TD ALIGN="CENTER"><A HREF="/'.$ADMIN.'/templates/dup.php?Path='.encURL($listbasedir).'&Name='.encURL($j).'"><IMG SRC="/'.$ADMIN.'/img/icon/duplicate.png" BORDER="0" ALT="'.getGS('Duplicate file').'" TITLE="'.getGS('Duplicate file').'"></A></TD>';
+		}
+		if ($User->hasPermission("DeleteTempl")){
 			print '<TD ALIGN="CENTER"><A HREF="/'.$ADMIN.'/templates/del.php?What=1&Path='.encURL($listbasedir).'&Name='.encURL($j).'"><IMG SRC="/'.$ADMIN.'/img/icon/delete.png" BORDER="0" ALT="'.getGS('Delete file').'" TITLE="'.getGS('Delete file').'"></A></TD></TR>';
-		} else
-			echo '<TD ALIGN="CENTER"></td></TR>';
+		} 
 	}
 }
 else{
