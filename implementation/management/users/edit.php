@@ -60,17 +60,18 @@ if ($userId > 0) {
 	</td>
 <?php if ($userId > 0) { ?>
 	<td valign="top" height="1%">
-<?php
-if ($uType == 'Subscribers')
-	require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/subscriptions.php");
-?>
+        <?php
+        if (($uType == 'Subscribers') && ($User->hasPermission("ManageSubscriptions"))) {
+        	require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/subscriptions.php");
+        }
+        ?>
 	</td>
 </tr>
 <tr>
 	<td valign="top">
-<?php if ($uType == 'Subscribers') { ?>
-	<?php require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/ipaccesslist.php"); ?>
-<?php } ?>
+        <?php if ($uType == 'Subscribers') { ?>
+        	<?php require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/ipaccesslist.php"); ?>
+        <?php } ?>
 	</td>
 <?php } ?>
 </tr>
