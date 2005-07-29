@@ -1,3 +1,84 @@
+Version 2.6.9 (Mar 31, 2005)
+----------------------------
+
+  - disallow variable function calls in {if} statements (messju, monte)
+  - disallow variable function calls in {math} equations (messju, monte)
+
+Version 2.6.8 (Mar 21, 2005)
+----------------------------
+
+  - remove e-modifier from regex_replace modifier (messju)
+  - remove cast of object to array in foreach's from-attribute (messju)
+  - add "null" as a valid token for {if} when security is enabled (messju)
+  - add javascript_charcode encoding option to mailto function
+    (monte)
+  - add ids to html_radios labels (monte, menulis)
+  - fix handling of strip-tags with non-default delimiters (Mark West, messju)
+
+Version 2.6.7 (Feb 3, 2005)
+---------------------------
+
+  - fix handling of hashed opening php-tags inside strip-blocks (messju)
+  - removed border tag from html_image function (monte)
+  - change escape:url use rawurlencode() instead of urlencode() (messju)
+  - make $smarty.const.FOO compile to "FOO", and not to "constant('foo')".
+    this is less code and a little faster execution. note that undefined
+    constants are now displayed as the constant's name. (messju)
+  - make block functions and registered objects' block methods use a
+    local variable for block_content instead of a property of $smarty (messju)
+  - fix escaping in the generated code that calls smarty_core_load_plugins
+    (jes5199, messju)
+  - fix invalid HTML issue with popup (Stefanos Harhalakis,
+    Monte)
+  - fixed {popup} to properly handle inarray and function parameters and added
+    support for mouseoff and followmouse options (boots)
+
+Version 2.6.6 (Oct 13, 2004)
+----------------------------
+
+  - fixed nocache-handling with nested includes (Lars Jankowfsky, messju)
+  - moved /libs/core to /libs/internals (boots)
+  - fixed more parsing problems (messju)
+
+Version 2.6.5 (Sept 13, 2004)
+-----------------------------
+
+  - fixed some parsing problems with object calls introduced
+    in 2.6.4 (Monte)
+  - add $smarty->security_settings['ALLOW_CONSTANTS']. note: this
+    defaults to false which means you have to allow them explicitly
+    in your secured templates from now on! (messju)
+
+Version 2.6.4 (Sept 7, 2004)
+----------------------------
+
+  - add $smarty.ldelim and $smarty.rdelim to smarty special var (Monte)
+  - fall back to old uniqid()-behaviour when tempnam() fails in
+    core.write_file.php (messju)
+  - fix capitalize modifier, don't rely on buggy ucwords (Monte)
+  - make html_select_date work with negative timestamps, also
+    force year range to include given date unless explicitly
+    set (Garo, Monte)
+  - fix bug with {fetch}, passing user/pass in url did not work
+    (Monte)
+  - fix occasional wrong error messages on mismatched tags when
+    {else}, {elseif}, {foreachelse} or {sectionelse} is involved (messju)
+  - fix handling of methods arguments (messju, Manfred Wischin)
+  - remove touch() call that made the compiled-template's timestamp the
+    same as the source-template's one. (messju)
+  - add assign attribute to html_checkboxes and html_radios
+    (pcg, Monte)
+  - remove non-xhtml conformant tag from mailto function
+    (tacker, Monte)
+  - handle date_format codes %e, %T and %D for windows (tip,
+    Monte)
+  - fix unnecessary call to smarty_core_get_include_path() inside
+    Smarty::_get_auto_filename() (c960657, messju)
+  - add error-messages when anything else than an identifier is passed
+    to foreach's key- or item-attribute (messju)
+  - fix handling of digits inside tagnames (messju)
+  - fix escaping of backslashes in Smarty_Compiler::_quote_replace() (messju)
+
 Version 2.6.3 (June 16, 2004)
 -----------------------------
 
