@@ -134,25 +134,24 @@ foreach ($publications as $publication) {
 	    <?php if ($showConfigureMenu) { ?>
 	    _cmSplit,
 	    ['<img src="/<?php p($ADMIN); ?>/img/icon/configure.png" align="middle"  width="22" height="22"/>', ' <?php putGS('Configure'); ?>', '', '', '',
-	    	<?php if ($showPublishingEnvironmentMenu) { ?>
-	    	['<img src="/<?php p($ADMIN); ?>/img/icon/publishing_environment.png"  width="22" height="22"/>', '<?php putGS('Publishing environment'); ?>', '', '', '',
-	    		<?php if ($User->hasPermission("ManageTempl") || $User->hasPermission("DeleteTempl")) { ?>
-	    		['<img src="/<?php p($ADMIN); ?>/img/icon/templates.png" width="22" height="22" />', '<?php putGS('Templates');?>', '/<?php p($ADMIN); ?>/templates/' ],
-	    		<?php } ?>
-	    		<?php if ($User->hasPermission("ManageArticleTypes") || $User->hasPermission("DeleteArticleTypes")) { ?>
-	    		['<img src="/<?php p($ADMIN); ?>/img/icon/article_types.png" width="22" height="22" />', '<?php putGS('Article Types'); ?>', '/<?php p($ADMIN); ?>/a_types/' ],
-	    		<?php } ?>
-	    		<?php if ($User->hasPermission("ManageTopics")) { ?>
-	    		['<img src="/<?php p($ADMIN); ?>/img/icon/topics.png" width="22" height="22" />', '<?php putGS('Topics'); ?>', '/<?php p($ADMIN); ?>/topics/' ],
-	    		<?php } ?>
-	    		<?php if ($User->hasPermission("ManageLanguages") || $User->hasPermission("DeleteLanguages")) { ?>
-	    		['<img src="/<?php p($ADMIN); ?>/img/icon/languages.png" width="22" height="22" />', '<?php putGS('Languages'); ?>', '/<?php p($ADMIN); ?>/languages/' ],
-	    		<?php } ?>
-	    		<?php if ($User->hasPermission("ManageCountries") || $User->hasPermission("DeleteCountries")) { ?>
-	    		['<img src="/<?php p($ADMIN); ?>/img/icon/countries.png" width="22" height="22" />', '<?php putGS('Countries'); ?>', '/<?php p($ADMIN); ?>/country/' ],
-	    		<?php } ?>
-	    	],
-	    	<?php } // if ($showPublishingEnvironmentMenu) ?>
+    		<?php if ($User->hasPermission("ManageTempl") || $User->hasPermission("DeleteTempl")) { ?>
+    		['<img src="/<?php p($ADMIN); ?>/img/icon/templates.png" width="22" height="22" />', '<?php putGS('Templates');?>', '/<?php p($ADMIN); ?>/templates/' ],
+    		<?php } ?>
+    		<?php if ($User->hasPermission("ManageArticleTypes") || $User->hasPermission("DeleteArticleTypes")) { ?>
+    		['<img src="/<?php p($ADMIN); ?>/img/icon/article_types.png" width="22" height="22" />', '<?php putGS('Article Types'); ?>', '/<?php p($ADMIN); ?>/a_types/' ],
+    		<?php } ?>
+    		<?php if ($User->hasPermission("ManageTopics")) { ?>
+    		['<img src="/<?php p($ADMIN); ?>/img/icon/topics.png" width="22" height="22" />', '<?php putGS('Topics'); ?>', '/<?php p($ADMIN); ?>/topics/' ],
+    		<?php } ?>
+    		<?php if ($User->hasPermission("ManageLanguages") || $User->hasPermission("DeleteLanguages")) { ?>
+    		['<img src="/<?php p($ADMIN); ?>/img/icon/languages.png" width="22" height="22" />', '<?php putGS('Languages'); ?>', '/<?php p($ADMIN); ?>/languages/' ],
+    		<?php } ?>
+    		<?php if ($User->hasPermission("ManageCountries") || $User->hasPermission("DeleteCountries")) { ?>
+    		['<img src="/<?php p($ADMIN); ?>/img/icon/countries.png" width="22" height="22" />', '<?php putGS('Countries'); ?>', '/<?php p($ADMIN); ?>/country/' ],
+    		<?php } ?>
+    		<?php if ($showPublishingEnvironmentMenu) { ?>
+    	    _cmSplit,
+    	    <?php } ?>
 	    	<?php if ($User->hasPermission("ManageLocalizer")) { ?>
 	    	['<img src="/<?php p($ADMIN); ?>/img/icon/localizer.png" width="22" height="22" />', '<?php putGS('Localizer'); ?>', '/<?php p($ADMIN); ?>/localizer/',  ],
 	    	<?php } ?>
