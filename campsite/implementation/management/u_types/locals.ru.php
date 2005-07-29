@@ -2,7 +2,6 @@
 regGS("User types", "Типы пользователей");
 regGS("No user types.", "Нет типов пользователей.");
 regGS("User type $1 added", "Тип пользователей $1 добавлен");
-regGS("Delete user type", "Удалить тип пользователя");
 regGS("Are you sure you want to delete the user type $1?", "Вы уверены, что хотите удалить тип пользователей $1?");
 regGS("No such user type.", "Нет такого типа пользователей.");
 regGS("You do not have the right to delete user types.", "Вы не имеете права удаления типов пользователей.");
