@@ -1,6 +1,9 @@
 <?php
-regGS("$uType management", "");
+regGS("You do not have the right to add IP address groups.", "Вы не имеете права добавления групп IP-адресов.");
 regGS("Readers", "Читатели");
+regGS("Edit reader data", "Редактировать данные читателя");
+regGS("Add new IP address group", "Добавление новой группы IP-адресов");
+regGS(" management", "");
 regGS("Delete subscriptions to $1", "Удалить подписку для $1");
 regGS("Edit user rights", "Редактировать права пользователей");
 regGS("User Name", "Имя пользователя");
@@ -65,13 +68,10 @@ regGS("You do not have the right to delete user accounts.", "Вы не имее�
 regGS("Are you sure you want to delete the user account $1 ?", "Вы уверены, что хотите удалить учетную запись пользователя $1?");
 regGS("The user account $1 has been deleted.", "Учетная запись пользователя $1 удалена.");
 regGS("User IP access list management", "Управление списком IP-доступа пользователей");
-regGS("Add new IP address group", "Добавление новой группы IP-адресов");
 regGS("No records.", "Нет записей.");
-regGS("You do not have the right to add IP address groups.", "Вы не имеете права добавления групп IP-адресов.");
 regGS("Start IP", "Начальный IP");
 regGS("Number of addresses", "Количество адресов");
 regGS("IP Access List", "Список IP-доступа");
-regGS("Edit reader data", "Редактировать данные читателя");
 regGS("IP Group $1 added for user $2", "Группа IP-адресов $1 добавлена для пользователя $2");
 regGS("There was an error creating the IP address group.", "Ошибка создания группы IP адресов.");
 regGS("An IP address group having the $1 start address already exists.", "Группа IP адресов со стартовым адресом $1 уже существует.");
