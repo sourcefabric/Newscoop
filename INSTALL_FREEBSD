@@ -55,8 +55,8 @@ satisfy dependencies:
 3) prepare campsite sources for compilation
 # mkdir /usr/local/src
 # cd /usr/local/src
-# fetch http://www.campware.org/look/campware/download/campsite-2.2.2.tar.gz
-# tar -fxz campsite-2.2.2.tar.gz
+# fetch http://www.campware.org/look/campware/download/campsite-2.3.0.tar.gz
+# tar -fxz campsite-2.3.0.tar.gz
 
 4) FreeBSD has bash binary in /usr/local/bin, while linux has it in /bin
 # ln -s /usr/local/bin/bash /bin/bash
