@@ -282,12 +282,14 @@ class Localizer {
         foreach ($data as $line) {
             if (preg_match_all($functPattern1, $line, $m)) {                            
                 foreach ($m[4] as $match) {
+                    $match = str_replace("\\\\", "\\", $match);
                     $matches[$match] = $match;
                 }
             }
 
             if (preg_match_all($functPattern2, $line, $m)) {
                 foreach ($m[4] as $match) {
+                    $match = str_replace("\\\\", "\\", $match);
                     $matches[$match] = $match;
                 }
             }
