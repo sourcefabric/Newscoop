@@ -1,9 +1,6 @@
-<?php 
-
-// -- index.m4
-regGS("You do not have the right to view logs.","You do not have the right to view logs.:en");
-regGS("No events.","No events.:en");
-regGS("User","User:en");
-regGS("Event","Event:en");
-
+<?php
+regGS("You do not have the right to view logs.", "You do not have the right to view logs.");
+regGS("No events.", "No events.");
+regGS("User", "User");
+regGS("Event", "Event");
 ?>
