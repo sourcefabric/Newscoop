@@ -244,9 +244,9 @@ $pendingActions = array_slice($pendingActions, 0, $NumDisplayArticles);
     <td width="50%" valign="top">
 		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3">
 		<TR class="table_list_header">
-			<TD ALIGN="LEFT" VALIGN="TOP" width="96%"><?php putGS("Scheduled Actions"); ?></TD>
+			<TD ALIGN="LEFT" VALIGN="TOP" width="96%"><?php putGS("Scheduled Publishing"); ?></TD>
 			<TD ALIGN="LEFT" VALIGN="TOP" width="2%" nowrap><?php putGS("Event(s)"); ?></TD>
-			<TD ALIGN="LEFT" VALIGN="TOP" width="2%" nowrap><?php putGS("Date"); ?></TD>
+			<TD ALIGN="LEFT" VALIGN="TOP" width="2%" nowrap><?php putGS("Time"); ?></TD>
 		</TR>
 		<?php 
 		if (count($pendingActions) == 0) {
