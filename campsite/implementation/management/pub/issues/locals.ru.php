@@ -29,7 +29,6 @@ regGS("The issue $1 has been successfuly changed.", "Выпуск $1 был ус
 regGS("Issue $1 added", "Выпуск $1 добавлен");
 regGS("The issue could not be changed.", "Не удалось изменить выпуск.");
 regGS("Issue $1 updated in publication $2", "Выпуск $1 обновлен в публикации $2");
-regGS("Delete issue", "Удалить выпуск");
 regGS("You do not have the right to delete issues.", "Вы не имеете права удаления выпусков.");
 regGS("Are you sure you want to delete the issue $1?", "Вы уверены, что хотите удалить выпуск $1?");
 regGS("Deleting issue", "Удаление выпуска");
