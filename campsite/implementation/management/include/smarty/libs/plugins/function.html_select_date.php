@@ -22,9 +22,11 @@
  *                month values (Gary Loescher)
  *           - 1.3.1 added support for choosing format for
  *                day values (Marcus Bointon)
+ *           - 1.3.2 suppport negative timestamps, force year
+ *             dropdown to include given date unless explicitly set (Monte)
  * @link http://smarty.php.net/manual/en/language.function.html.select.date.php {html_select_date}
  *      (Smarty online manual)
- * @version 1.3.1
+ * @version 1.3.2
  * @author   Andrei Zmievski
  * @param array
  * @param Smarty
@@ -122,16 +124,19 @@ function smarty_function_html_select_date($params, &$smarty)
         }
     }
 
+    if(preg_match('!^-\d+$!',$time)) {
+        // negative timestamp, use date()
+        $time = date('Y-m-d',$time);
+    }
     // If $time is not in format yyyy-mm-dd
     if (!preg_match('/^\d{0,4}-\d{0,2}-\d{0,2}$/', $time)) {
-        // then $time is empty or unix timestamp or mysql timestamp
-        // using smarty_make_timestamp to get an unix timestamp and
+        // use smarty_make_timestamp to get an unix timestamp and
         // strftime to make yyyy-mm-dd
         $time = strftime('%Y-%m-%d', smarty_make_timestamp($time));
     }
     // Now split this in pieces, which later can be used to set the select
     $time = explode("-", $time);
-
+    
     // make syntax "+N" or "-N" work with start_year and end_year
     if (preg_match('!^(\+|\-)\s*(\d+)$!', $end_year, $match)) {
         if ($match[1] == '+') {
@@ -145,6 +150,16 @@ function smarty_function_html_select_date($params, &$smarty)
             $start_year = strftime('%Y') + $match[2];
         } else {
             $start_year = strftime('%Y') - $match[2];
+        }
+    }
+    if (strlen($time[0]) > 0) { 
+        if ($start_year > $time[0] && !isset($params['start_year'])) {
+            // force start year to include given date if not explicitly set
+            $start_year = $time[0];
+        }
+        if($end_year < $time[0] && !isset($params['end_year'])) {
+            // force end year to include given date if not explicitly set
+            $end_year = $time[0];
         }
     }
 
@@ -243,6 +258,8 @@ function smarty_function_html_select_date($params, &$smarty)
             $years = range((int)$start_year, (int)$end_year);
             if ($reverse_years) {
                 rsort($years, SORT_NUMERIC);
+            } else {
+                sort($years, SORT_NUMERIC);
             }
             $yearvals = $years;
             if(isset($year_empty)) {
