@@ -42,7 +42,7 @@ if ($validUser) {
 <tr>
 	<td align="center">
 		<DIV STYLE="font-size: 12pt"><B><?php  putGS("Login failed"); ?></B></DIV><br>
-		<?php  putGS('Pease make sure that you typed the correct user name and password.'); ?><br>
+		<?php  putGS('Please make sure that you typed the correct user name and password.'); ?><br>
 		<?php  putGS('If your problem persists please contact the site administrator $1','<A HREF="mailto:'.encURL($SERVER_ADMIN).'">'.encHTML($SERVER_ADMIN) );?></A>
 		<p>
 		<A HREF="/<?php echo $ADMIN; ?>/login.php" ><B><?php  putGS("Login");  ?></B></A>
