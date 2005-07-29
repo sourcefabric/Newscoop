@@ -334,6 +334,7 @@ function translationForm($p_request)
 	foreach ($sourceStrings as $sourceKey => $sourceValue) { 	
 	    if (!empty($targetStrings[$sourceKey])) {
 	        $targetValueDisplay = str_replace('"', '&#34;', $targetStrings[$sourceKey]);
+	        $targetValueDisplay = str_replace("\\", "\\\\", $targetValueDisplay);
 	        $pre  = '';
 	        $post = '';
 	    } else {
@@ -342,7 +343,7 @@ function translationForm($p_request)
 	        $post   = '</FONT>';
 	    }
 	
-		$sourceKeyDisplay = htmlspecialchars($sourceKey);
+		$sourceKeyDisplay = htmlspecialchars(str_replace("\\", "\\\\", $sourceKey));
 	
 		// Dont display translated strings
 	    if (isset($p_request['hide_translated']) && !empty($targetStrings[$sourceKey])) {
@@ -363,7 +364,7 @@ function translationForm($p_request)
             	// If the string exists in the source language, display that
 	            if (!empty($sourceValue)) {
 	            	?>
-	                <b><?php echo $sourceLang->getLanguageId(); ?>:</b> <?php echo $pre.htmlspecialchars($sourceValue).$post; ?>
+	                <b><?php echo $sourceLang->getLanguageId(); ?>:</b> <?php echo $pre.htmlspecialchars(str_replace("\\", "\\\\", $sourceValue)).$post; ?>
 	                <?php
 	            } 
 	            // Otherwise, display it in the default language.
