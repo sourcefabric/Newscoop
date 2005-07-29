@@ -1,9 +1,5 @@
-<?php 
-
-// -- index.m4
-regGS("You do not have the right to add topics.","You do not have the right to add topics.:en");
-regGS("You do not have the right to delete topics.","You do not have the right to delete topics.:en");
-
-regGS("No such topic.", "No such topic.:en");
-
+<?php
+regGS("You do not have the right to add topics.", "You do not have the right to add topics.");
+regGS("You do not have the right to delete topics.", "You do not have the right to delete topics.");
+regGS("No such topic.", "No such topic.");
 ?>
