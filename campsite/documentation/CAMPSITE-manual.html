@@ -1,11 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <HTML>
 <HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-1">
-	<TITLE>CAMPSITE manual Version 2.2</TITLE>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>CAMPSITE manual Version 2.3</TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.1.3  (Linux)">
 	<META NAME="CREATED" CONTENT="20020913;19124500">
-	<META NAME="CHANGED" CONTENT="20050414;14410700">
+	<META NAME="CHANGED" CONTENT="20050730;22465400">
 	<STYLE>
 	<!--
 		@page { size: 8.5in 11in }
@@ -56,14 +56,14 @@
 	</STYLE>
 </HEAD>
 <BODY LANG="en-US" TEXT="#000000" LINK="#0000ff" VLINK="#000099" BGCOLOR="#ffffff" DIR="LTR">
-<P STYLE="margin-top: 0.17in; margin-bottom: 0.2in; line-height: 100%; text-decoration: none; page-break-after: avoid"><A NAME="top"></A>
+<P STYLE="margin-top: 0.17in; margin-bottom: 0.2in; line-height: 100%; text-decoration: none; page-break-after: avoid">
 <FONT FACE="Albany, sans-serif"><FONT SIZE=4>Campsite</FONT></FONT></P>
 <P STYLE="margin-top: 0.17in; margin-bottom: 0.2in; line-height: 100%; text-decoration: none; page-break-after: avoid">
 <FONT FACE="Albany, sans-serif"><FONT SIZE=4>User Guide</FONT></FONT></P>
-<P CLASS="western">Campsite version: 2.2.0 and newer versions</P>
+<P CLASS="western">Campsite version: 2.3.0 and newer versions</P>
 <P CLASS="western">Maintained and distributed under GNU/GPL by
 CAMPWARE <A HREF="http://www.campware.org/">http://www.campware.org</A></P>
-<P CLASS="western">Manual version: April 14, 2005</P>
+<P CLASS="western">Manual version: August 1, 2005</P>
 <P CLASS="western">Language: English</P>
 <P CLASS="western">&copy;1999-2005 Media Development Loan Fund</P>
 <P CLASS="western"><A HREF="http://www.mdlf.org/" TARGET="_blank">http://www.mdlf.org</A>
@@ -81,18 +81,27 @@ AND DEPENDENCIES</FONT></A></CITE><FONT FACE="Nimbus Roman No9 L"><BR>1.2.
 <BLOCKQUOTE CLASS="western" STYLE="margin-left: 1.58in; margin-right: 0.01in">
 <FONT FACE="Nimbus Roman No9 L">1.2.1 </FONT><A HREF="#1_2_1"><FONT FACE="Nimbus Roman No9 L">Configure
 the Web server</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>1.2.2
-</FONT><A HREF="#1_2_2"><FONT FACE="Nimbus Roman No9 L">Customize the
+</FONT><A HREF="#1_2_2"><FONT FACE="Nimbus Roman No9 L">Configuring
+Campsite to work over SSL</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>1.2.3
+</FONT><A HREF="#1_2_3"><FONT FACE="Nimbus Roman No9 L">Customize the
 application framework</FONT></A></BLOCKQUOTE>
 <BLOCKQUOTE CLASS="western" STYLE="margin-right: -0.01in"><FONT FACE="Nimbus Roman No9 L">1.3
 </FONT><A HREF="#1_3"><FONT FACE="Nimbus Roman No9 L">UPGRADING</FONT></A></BLOCKQUOTE>
-<BLOCKQUOTE CLASS="western" STYLE="margin-left: 1.58in; margin-right: 0in">
+<P CLASS="western" STYLE="margin-left: 1.58in; margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
 <FONT FACE="Nimbus Roman No9 L">1.3.1 </FONT><A HREF="#1_3_1"><FONT FACE="Nimbus Roman No9 L">Upgrading
-from versions 2.1.x</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>1.3.2
+from versions 2.2.x</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>1.3.2
 </FONT><A HREF="#1_3_2"><FONT FACE="Nimbus Roman No9 L">Upgrading
-from versions 1.x and 2.0.x</FONT></A></BLOCKQUOTE>
+from versions 2.1.x</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>1.3.3
+</FONT><A HREF="#1_3_3"><FONT FACE="Nimbus Roman No9 L">Compatibility
+issues</FONT></A></P>
+<BLOCKQUOTE CLASS="western" STYLE="margin-left: 1.58in; margin-right: 0in">
+<FONT FACE="Nimbus Roman No9 L">1.3.4 </FONT><A HREF="#1_3_4"><FONT FACE="Nimbus Roman No9 L">New
+template statements and short name URLs</FONT></A></BLOCKQUOTE>
 <BLOCKQUOTE CLASS="western" STYLE="margin-right: -0.01in"><FONT FACE="Nimbus Roman No9 L">1.4
 </FONT><A HREF="#1_4"><FONT FACE="Nimbus Roman No9 L">ACCESSING YOUR
 Campsite SERVER</FONT></A></BLOCKQUOTE>
+<BLOCKQUOTE CLASS="western" STYLE="margin-right: -0.01in"><FONT FACE="Nimbus Roman No9 L">1.5
+</FONT><A HREF="#1_5"><FONT FACE="Nimbus Roman No9 L">KNOWN ISSUES</FONT></A></BLOCKQUOTE>
 <P CLASS="western"><FONT FACE="Nimbus Roman No9 L">2. </FONT><A HREF="#2"><FONT FACE="Nimbus Roman No9 L">PUBLISHING
 WITH Campsite</FONT></A></P>
 <P CLASS="text-body-indent-western" STYLE="margin-left: 0.39in"><FONT FACE="Nimbus Roman No9 L">2.1.
@@ -184,7 +193,7 @@ information</FONT></A></BLOCKQUOTE>
 <P CLASS="western"><FONT FACE="Nimbus Roman No9 L">4. </FONT><A HREF="#4"><FONT FACE="Nimbus Roman No9 L">APENDIX
 I - ALPHABETIC LIST OF LANGUAGE STATEMENTS</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>5.
 </FONT><A HREF="#5"><FONT FACE="Nimbus Roman No9 L">APPENDIX II -
-CHARACTER SETS AND LANGUAGES</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>6.
+UPGRADING FROM OLDER VERSIONS OF CAMPSITE</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>6.
 </FONT><A HREF="#6"><FONT FACE="Nimbus Roman No9 L">APPENDIX III:
 INSTALLING Campsite ON A STANDARD Fedora SERVER</FONT></A><FONT FACE="Nimbus Roman No9 L"><BR>7.
 </FONT><A HREF="#7"><FONT FACE="Nimbus Roman No9 L">APPENDIX IV -
@@ -194,24 +203,24 @@ BACKING UP DATABASES IN MYSQL</FONT></A></P>
 <P CLASS="western">Campsite is a multilingual content management
 system (CMS) for news websites. Its easily localizable user interface
 was built with the end user (journalist/editor/publisher) in mind and
-it can be configured to suit different profiles of end users &ndash;
-to each according his or her own technological prowess. Campsite
-follows the print-newspaper publishing paradigm, so it structures
-sites by default as Publications&gt; Issues &gt; Sections &gt;
-Articles. Campsite works best for medium-to-large-size online news
+it can be configured to suit different profiles of end users – to
+each according his or her own technological prowess. Campsite follows
+the print-newspaper publishing paradigm, so it structures sites by
+default as Publications&gt; Issues &gt; Sections &gt; Articles.
+Campsite works best for medium-to-large-size online news
 publications, but it is capable of handling nimbler sites too. Some
 of its main features are highly customizable user interface, total
 design freedom for web designers, automatic creation of archives,
 copy flow, and built-in subscription support.</P>
 <P CLASS="western">The original Campsite concept was developed by
-Micz Flor and Sava Tati&#263; for Center for Advanced Media-Prague
-(CAMP) in collaboration with Aleksandar Brajanoski from Transitions
-Online, the first site to go live on Campsite in late 2000. Developer
-teams at DNT-Cluj (http://www.dntcj.ro) and Recognos
+Micz Flor and Sava Tatić for Center for Advanced Media-Prague (CAMP)
+in collaboration with Aleksandar Brajanoski from Transitions Online,
+the first site to go live on Campsite in late 2000. Developer teams
+at DNT-Cluj (http://www.dntcj.ro) and Recognos
 (http://www.recognos.com), software companies based in Cluj, Romania,
 wrote the original code and contributed to the development of the
-concept. Lucian Mure&#351;an, Attila Egyedi, and Nenad Pand&#382;i&#263;
-have contributed to the code in the past. Current core development is
+concept. Lucian Mureşan, Attila Egyedi, and Nenad Pandžić have
+contributed to the code in the past. Current core development is
 handled by Mugur Rus, Paul Baranowski, and Sebastian G&ouml;bel. 
 </P>
 <P CLASS="western">Campsite in action can be seen, among other
@@ -226,7 +235,7 @@ Campsite server:
 	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
 	<SPAN STYLE="background: transparent">runs on a GNU/Linux server,
 	tested with Fedora 3.0 and Mandrake 10.1 and has proved compatible
-	with RedHat 9.0, Mandrake 10.0 and Debian</SPAN></P>
+	with RedHat 9.0, Mandrake 10.0, Debian and Ubuntu</SPAN></P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
 	<SPAN STYLE="background: transparent">requires a running Apache web
 	server (and appropriately configured virtual servers).</SPAN></P>
@@ -266,47 +275,83 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
 General Public License for more details.</P>
 <OL>
 	<OL>
-		<H2 CLASS="western">What's New in version 2.2.0</H2>
+		<H2 CLASS="western">What's New in version 2.3.0</H2>
 	</OL>
 </OL>
-<P CLASS="western">Version 2.2.0 brings major changes to Campsite.
-Here are the highlights:</P>
-<P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
-- JavaScript-based HTMLArea has replaced the Campfire Java editor,
-ending Campsite's reliance on the Java VM plugin and bringing all
-sorts of enhancements, including full what-you-see-is-what-you-get
-(WYSIWYG).</P>
-<P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
-- a streamlined and beautified user interface</P>
-<P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
-- improved management of multiple instances of Campsite on a single
-server (new instances can be created without reinstalling Campsite)</P>
-<P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
-- Automatic publishing/removal of selected articles without human
-intervention at a specified date and time</P>
-<P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
-- Article ordering</P>
-<P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
-- New handling of Images (and other Multimedia)</P>
-<P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
-- Publication site aliases: aliases allow Campsite to identify a
-publication based on multiple domain names</P>
-<P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
-- Shorter, Search Engine-Friendly URLs</P>
+<P CLASS="western">Version 2.3.0 brings major changes to Campsite as
+well as critical bug fixes and many small bug fixes. Here are the
+highlights:</P>
+<UL>
+	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+	Improved user management: separation of Staff &amp; Subscribers, 
+	ability to search users, new, easier-to-use interface, categorized
+	user-rights list</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+	Improved localizer: new, easier-to-use interface, ability to
+	translate from any language to any other language, ability to change
+	your default language, notification of missing strings, notification
+	of unused strings</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+	WYSIWYG Text editor: editor changed from HTMLArea to Xinha, a more
+	dynamically supported project, added “Paste from Word” ability –
+	will strip the MSWord styles, internal links support “target”</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+	Online help with user comments</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+	Show recently published articles, pending actions on the home page</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+	Login screen remembers your previous language choice</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+	Language names now appear in native languages in all lists</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+	Testing checklist – a list of tests to be performed before
+	releasing a new version</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+	“Duplicate Section” screen usability improvements</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+	Ability to delete all articles in a section when you delete the
+	section</P>
+</UL>
+<P CLASS="note-western">Minor versions 2.3.1, 2.3.2 etc. are mostly
+bug fix versions and may add some very small new features.</P>
+<P CLASS="western">History of changes from 2.1.x to 2.2.x:</P>
+<UL>
+	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+	JavaScript-based HTMLArea has replaced the Campfire Java editor,
+	ending Campsite's reliance on the Java VM plugin and bringing all
+	sorts of enhancements, including full what-you-see-is-what-you-get
+	(WYSIWYG).</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+	a streamlined and beautified user interface</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+	improved management of multiple instances of Campsite on a single
+	server (new instances can be created without reinstalling Campsite)</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+	Automatic publishing/removal of selected articles without human
+	intervention at a specified date and time</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+	Article ordering</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+	New handling of Images (and other Multimedia)</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+	Publication site aliases: aliases allow Campsite to identify a
+	publication based on multiple domain names</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+	Shorter, Search Engine-Friendly URLs</P>
+</UL>
 <H1 CLASS="western"><A NAME="1"></A>1. <FONT FACE="Times, serif">INSTALLATION</FONT></H1>
 <P CLASS="western">Campsite's parser, the heart of the application,
 is written in C++ and works only on Linux and FreeBSD (as of version
-2.2.1). Future versions will remove the C++ dependency (the parser
+2.2.1). Future versions will remove the C++ dependency: the parser
 will be rewritten into PHP in version 2.3, but for now Linux and
-FreeBSD (as of version 2.2.1) are the only platforms Campsite will
-work on.</P>
+FreeBSD are the only platforms Campsite will work on.</P>
 <H2 CLASS="western"><A NAME="1_1"></A><FONT FACE="Times, serif"><SPAN STYLE="background: transparent">1.1.
 Requirements and Dependencies</SPAN></FONT></H2>
 <P CLASS="western"><SPAN STYLE="background: transparent">To install
 the Campsite server, you need to have <B>root access</B> to a Linux
-server. Campsite 2.2.0 was originally developed Mandrake 10.1 and has
-proved compatible with Fedora 3.0, RedHat 9.0, Mandrake 10.0 and
-Debian.</SPAN></P>
+server. Campsite 2.3.0 was originally developed Mandrake 10.1 and has
+proved compatible with Fedora 3.0, RedHat 9.0, Mandrake 10.0, Debian
+and Ubuntu.</SPAN></P>
 <P CLASS="western">Before installing Campsite, make sure you have two
 other applications up and running:</P>
 <P CLASS="western">1. <B>Apache</B> web server -- your http daemon,
@@ -337,33 +382,43 @@ All of those can be found on the MySQL website
 <BR>
 </P>
 <P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
-<FONT FACE="Nimbus Roman No9 L">3. <B>PHP</B> 4.3 or newer &ndash;
-this is needed for Campsite administration interface. PHP is a module
-for the Apache web server.</FONT></P>
+<FONT FACE="Nimbus Roman No9 L">3. <B>PHP</B> 4.3 or newer – this
+is needed for Campsite administration interface. PHP is a module for
+the Apache web server.</FONT></P>
 <H2 CLASS="western"><A NAME="1_2"></A>1.2. TODO</H2>
 <P CLASS="western"><SPAN STYLE="background: transparent">Here is what
-you need to do to install Campsite on your Linux. Campsite 2.2.0 does
-not run on FreeBSD and OpenBSD.</SPAN></P>
+you need to do to install Campsite:</SPAN></P>
+<OL>
+	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+	Copy the Campsite archive in a directory on the server.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+	Unarchive it using the command: tar xzvf &lt;Campsite_archive&gt;.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+	Enter Campsite directory.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+	<SPAN STYLE="background: transparent">Run './install', answer the
+	install questions and wait for the application to be installed.</SPAN></P>
+</OL>
 <H3 CLASS="western"><A NAME="1_2_1"></A>1.2.1 Configure the Web
 server</H3>
 <P CLASS="western">Starting from 2.2.0 the apache configuration file
 is automatically generated for each Campsite instance. The default
 directory for the instance configuration files is
 /usr/local/campsite/etc/[instance_name]. You can change this at
-install time. We will call this directory the &ldquo;instance
-configuration directory&rdquo; from now on.</P>
+install time. We will call this directory the “instance
+configuration directory” from now on.</P>
 <P CLASS="western">The steps you need to take to configure apache for
 campsite are the following:</P>
 <UL>
 	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
-	Edit the file &ldquo;[instance_name]-vhost.conf&rdquo; from the
-	instance configuration directory and replace $SERVER_ADDRESS and
-	$SERVER_NAME with the appropriate values. Your system administrator
-	should provide the server address and server name. The server name
-	must also be registered in the DNS (Domain Name Service).</P>
+	Edit the file “[instance_name]-vhost.conf” from the instance
+	configuration directory and replace $SERVER_ADDRESS and $SERVER_NAME
+	with the appropriate values. Your system administrator should
+	provide the server address and server name. The server name must
+	also be registered in the DNS (Domain Name Service).</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
-	Include the file &ldquo;[instance_name]-vhost.conf&rdquo; in the
-	main apache configuration file.</P>
+	Include the file “[instance_name]-vhost.conf” in the main apache
+	configuration file.</P>
 </UL>
 <UL>
 	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
@@ -373,28 +428,227 @@ campsite are the following:</P>
 </UL>
 <P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in">or</P>
 <P CLASS="source-code-western">  /etc/rc.d/init.d/httpd restart</P>
-<H3 CLASS="western"><A NAME="1_2_2"></A>1.2.2 Customize the
-application framework</H3>
+<H3 CLASS="western"><A NAME="1_2_2"></A>1.2.2 Configuring Campsite to
+work over SSL</H3>
+<P CLASS="western">Starting with version 2.3.0 Campsite can work over
+encrypted connections (SSL). This chapter will explain how to
+configure apache for SSL in steps.</P>
 <OL>
-	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
-	Copy the Campsite archive in a directory on the server.</P>
-	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
-	Unarchive it using the command: tar xzvf &lt;Campsite_archive&gt;.</P>
-	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
-	Enter Campsite directory.</P>
-	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
-	Run './install', answer the install questions and wait for the
-	application to be installed.</P>
+	<LI><P CLASS="western">Allocate a separate IP address for each
+	Campsite instance you want to run over SSL. You will have to set
+	this IP address to one of your server network interfaces. We don't
+	provide detailed information about network interface configuration
+	process here because it's outside the scope of Campsite. Read
+	'ifconfig' manual page for more details, search for “configuring
+	network interfaces on linux” on Google or try this link:
+	<A HREF="http://www.faqs.org/docs/linux_network/x-087-2-iface.html">http://www.faqs.org/docs/linux_network/x-087-2-iface.html</A>.
+	We will refer to this IP address as [my_IP_address] in the following
+	steps.</P>
+	<LI><P CLASS="western">Locate the “Listen” directive in the main
+	apache configuration file and add the following new lines after it
+	if they did not exist already:</P>
+	<P CLASS="source-code-western">Listen 80</P>
+	<P CLASS="source-code-western">Listen 443 
+	</P>
+	<LI><P CLASS="western">Locate the “NameVirtualHost” directive in
+	the main apache configuration file and add the following new lines
+	after it:</P>
+	<P CLASS="source-code-western">NameVirtualHost [my_IP_address]:80</P>
+	<P CLASS="source-code-western">NameVirtualHost [my_IP_address]:443</P>
+	<P CLASS="western">In case there are duplicate NameVirtualHost
+	directives remove the duplicates.</P>
+	<LI><P CLASS="western">Generate certificate and key for the SSL
+	virtual host. We don't provide detailed information about this
+	process here because it's outside the scope of Campsite. Read
+	<A HREF="http://httpd.apache.org/docs/2.0/ssl/ssl_faq.html">http://httpd.apache.org/docs/2.0/ssl/ssl_faq.html</A>
+	for details. If your apache has SSL module loaded you can skip to:
+	“About Configuration” and “About Certificates”. This step
+	will generate at least two files: certificate file, referred here as
+	[certificate_file] and certificate key file, referred here as
+	[certificate_key_file]. Install these two files into your apache
+	certificates directory, referred here as [certificates_directory].</P>
+	<LI><P CLASS="western">Edit the instance virtual host file generated
+	by Campsite (read “1.2.1 Configure the Web server” to learn how
+	to locate it).</P>
+	<LI><P CLASS="western">Duplicate the virtual host definition in this
+	file: copy the whole section in between &lt;VirtualHost [...]&gt;
+	and &lt;/VirtualHost&gt;, including these tags and paste it at the
+	end of the file.</P>
+	<LI><P CLASS="western">Edit the first virtual host definition and
+	replace the existing &lt;VirtualHost [...]&gt; tag with:</P>
+	<P CLASS="source-code-western">&lt;VirtualHost [my_IP_addresss]:80&gt;</P>
+	<LI><P CLASS="western">Edit the second virtual host definition and
+	replace the existing &lt;VirtualHost [...]&gt; tag with:</P>
+	<P CLASS="source-code-western">&lt;VirtualHost [my_IP_address]:443&gt;</P>
+	<LI><P CLASS="western">Edit the second virtual host definition and
+	add the following lines into your virtual host definition:</P>
+	<P CLASS="source-code-western">SSLEngine on</P>
+	<P CLASS="source-code-western">SSLCipherSuite
+	ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP</P>
+	<P CLASS="source-code-western">SSLCertificateFile
+	[certificates_directory]/[certificate_file]</P>
+	<P CLASS="source-code-western">SSLCertificateKeyFile
+	[certificates_directory]/[certificate_key_file]</P>
 </OL>
+<P CLASS="note-western">Note: When generating the SSL certificate at
+step 4 make sure you enter the FQDN (&quot;Fully Qualified Domain
+Name&quot;) of the server when OpenSSL prompts you for the
+&quot;CommonName&quot;, i.e. when you generate a CSR for a website
+which will be later accessed via https://www.foo.dom/, enter
+&quot;www.foo.dom&quot; here. The FQDN you supply as “CommonName”
+must be the same as the value of “ServerName” in the Campsite
+instance virtual host.</P>
+<P CLASS="western">The following is an example of a fully configured
+Campsite instance:</P>
+<P CLASS="western">- main apache configuration file:</P>
+<P CLASS="source-code-western">Listen 80</P>
+<P CLASS="source-code-western">Listen 443</P>
+<P CLASS="source-code-western"><BR>
+</P>
+<P CLASS="source-code-western">NameVirtualHost 192.168.2.101:80</P>
+<P CLASS="source-code-western">NameVirtualHost 192.168.2.101:443</P>
+<P CLASS="western">- Campsite instance virtual host configuration
+file:</P>
+<P CLASS="source-code-western">&lt;VirtualHost 192.168.2.101:80&gt;</P>
+<P CLASS="source-code-western">	DocumentRoot
+/usr/local/campsite/www/campsite/html</P>
+<P CLASS="source-code-western">	ScriptAlias /cgi-bin/
+/usr/local/campsite/www/campsite/cgi-bin/</P>
+<P CLASS="source-code-western">	ServerName www.mydomain.org</P>
+<P CLASS="source-code-western">	DirectoryIndex index.php index.html</P>
+<P CLASS="source-code-western">	&lt;Directory
+/usr/local/campsite/www/campsite/html&gt;</P>
+<P CLASS="source-code-western">			Options -Indexes FollowSymLinks
+MultiViews</P>
+<P CLASS="source-code-western">			AllowOverride All</P>
+<P CLASS="source-code-western">			&lt;IfModule mod_access.c&gt;</P>
+<P CLASS="source-code-western">				Order allow,deny</P>
+<P CLASS="source-code-western">				Allow from all</P>
+<P CLASS="source-code-western">			&lt;/IfModule&gt;</P>
+<P CLASS="source-code-western">	&lt;/Directory&gt;</P>
+<P CLASS="source-code-western">	&lt;Directory
+/usr/local/campsite/www/campsite/cgi-bin&gt;</P>
+<P CLASS="source-code-western">		AllowOverride All</P>
+<P CLASS="source-code-western">		Options ExecCGI</P>
+<P CLASS="source-code-western">		&lt;IfModule mod_access.c&gt;</P>
+<P CLASS="source-code-western">			Order allow,deny</P>
+<P CLASS="source-code-western">			Allow from all</P>
+<P CLASS="source-code-western">		&lt;/IfModule&gt;</P>
+<P CLASS="source-code-western">	&lt;/Directory&gt;</P>
+<P CLASS="source-code-western"><BR>
+</P>
+<P CLASS="source-code-western">	AddHandler tpl_handler .tpl</P>
+<P CLASS="source-code-western">	Action tpl_handler /cgi-bin/tpl_cgi</P>
+<P CLASS="source-code-western">	AddType application/x-httpd-php .php
+.wrap</P>
+<P CLASS="source-code-western">&lt;/VirtualHost&gt;</P>
+<P CLASS="source-code-western"><BR>
+</P>
+<P CLASS="source-code-western">&lt;VirtualHost 192.168.2.101:443&gt;</P>
+<P CLASS="source-code-western">	DocumentRoot
+/usr/local/campsite/www/campsite/html</P>
+<P CLASS="source-code-western">	ScriptAlias /cgi-bin/
+/usr/local/campsite/www/campsite/cgi-bin/</P>
+<P CLASS="source-code-western">	ServerName www.mydomain.org</P>
+<P CLASS="source-code-western">	DirectoryIndex index.php index.html</P>
+<P CLASS="source-code-western">	&lt;Directory
+/usr/local/campsite/www/campsite/html&gt;</P>
+<P CLASS="source-code-western">			Options -Indexes FollowSymLinks
+MultiViews</P>
+<P CLASS="source-code-western">			AllowOverride All</P>
+<P CLASS="source-code-western">			&lt;IfModule mod_access.c&gt;</P>
+<P CLASS="source-code-western">				Order allow,deny</P>
+<P CLASS="source-code-western">				Allow from all</P>
+<P CLASS="source-code-western">			&lt;/IfModule&gt;</P>
+<P CLASS="source-code-western">	&lt;/Directory&gt;</P>
+<P CLASS="source-code-western">	&lt;Directory
+/usr/local/campsite/www/campsite/cgi-bin&gt;</P>
+<P CLASS="source-code-western">		AllowOverride All</P>
+<P CLASS="source-code-western">		Options ExecCGI</P>
+<P CLASS="source-code-western">		&lt;IfModule mod_access.c&gt;</P>
+<P CLASS="source-code-western">			Order allow,deny</P>
+<P CLASS="source-code-western">			Allow from all</P>
+<P CLASS="source-code-western">		&lt;/IfModule&gt;</P>
+<P CLASS="source-code-western">	&lt;/Directory&gt;</P>
+<P CLASS="source-code-western">	SSLEngine on</P>
+<P CLASS="source-code-western">	SSLCipherSuite
+ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP</P>
+<P CLASS="source-code-western">	SSLCertificateFile
+/etc/apache2/ssl/server.crt</P>
+<P CLASS="source-code-western">	SSLCertificateKeyFile
+/etc/apache2/ssl/server.pem</P>
+<P CLASS="source-code-western"><BR>
+</P>
+<P CLASS="source-code-western">	AddHandler tpl_handler .tpl</P>
+<P CLASS="source-code-western">	Action tpl_handler /cgi-bin/tpl_cgi</P>
+<P CLASS="source-code-western">	AddType application/x-httpd-php .php
+.wrap</P>
+<P CLASS="source-code-western">&lt;/VirtualHost&gt;</P>
+<H3 CLASS="western"><A NAME="1_2_3"></A>1.2.3 Customize the
+application framework</H3>
+<P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+When installing Campsite it is possible to customize certain aspects:</P>
+<UL>
+	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+	the default apache user/group: the administration interface scripts
+	and template will belong to apache user/group; when creating a new
+	instance the script will use the default values unless instructed
+	otherwise by the user.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+	Campsite install directory: the default value is /usr/local/campsite</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+	Campsite binary directory: the default value is
+	/usr/local/campsite/bin</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+	Campsite configuration directory: the default value is
+	/usr/local/campsite/etc</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+	Campsite WWW directory: the default value is
+	/usr/local/campsite/www; this is the place where new instances will
+	be installed.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+	Campsite binary directory: the default value is
+	/usr/local/campsite/www-common; this is the place where
+	administration interface scripts were installed.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+	default SMTP server address: localhost; this is the address of the
+	email server.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+	default SMTP server port: 25; this is the port of the email server.</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+	parser start port: 2000; the new instances will be assigned socket
+	ports starting from 'start port' value + 1</P>
+</UL>
 <H3 CLASS="western"><A NAME="1_3"></A>1.3 UPGRADING</H3>
 <H3 CLASS="western"><A NAME="1_3_1"></A><SPAN STYLE="background: transparent">1.3.1
+Upgrading From Versions 2.2.x</SPAN></H3>
+<P CLASS="western"><SPAN STYLE="background: transparent">The process
+of upgrading from Campsite 2.2.x is transparent to the user: all
+2.2.x instances are upgraded automatically (including the database
+and code). The templates are 100% compatible. Installing Campsite
+2.3.0 over an older 2.2.x version will do the upgrade without any
+user input.</SPAN></P>
+<P CLASS="western"><SPAN STYLE="background: transparent">The process
+of upgrading from Campsite 2.1.x to 2.3.0 is identical to the upgrade
+from 2.1.x to 2.2.x and is described in the following sub-chapters.
+For upgrading from Campsite 1.0.x or 2.0.x read “<A HREF="#5">5.
+APPENDIX II – UPGRADING FROM OLDER VERSIONS OF CAMPSITE</A>”.</SPAN></P>
+<H4 CLASS="western">1.3.1.1 Compatibility issues</H4>
+<P CLASS="western"><A NAME="3_9_4_21"></A><SPAN STYLE="background: transparent">While
+the 2.3.0 templates are 100% compatible with 2.2.x templates the
+output of article body fields changed in regard to images: the table
+containing the image link has the class “cs_img”, allowing the
+web designer to change the image layout using a CSS file. For details
+read “<A HREF="#p_art_expr">Print article</A>” description in
+chapter “<A HREF="#3_9_4_2">3.9.4.2 Print</A>”.</SPAN></P>
+<H3 CLASS="western"><A NAME="1_3_2"></A><SPAN STYLE="background: transparent">1.3.2
 Upgrading From Versions 2.1.x</SPAN></H3>
 <P CLASS="western">The upgrade process from Campsite 2.1.x is
 semi-automatic; the install script does not upgrade automatically the
 existing older Campsite instances. The user has the choice of
 upgrading only the instances he/she wants. After finishing the
-installation of Campsite 2.2.0 the user must take the following steps
-to upgrade an older instance:</P>
+installation of Campsite (2.2.x or 2.3.x) the user must take the
+following steps to upgrade an older instance:</P>
 <P CLASS="western">a. Run: /usr/local/campsite/bin/create_instance
 --db_name [instance_name]</P>
 <P CLASS="western">where [instance_name] is the name of the instance
@@ -417,26 +671,213 @@ host.</P>
 or</P>
 <P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
 	/etc/rc.d/init.d/httpd restart</P>
-<P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
-<BR>
-</P>
-<H3 CLASS="western"><A NAME="1_3_2"></A>1.3.2 Upgrading from Versions
-1.x and 2.x</H3>
-<P CLASS="western"><SPAN STYLE="background: transparent">If you have
-an older installation of Campsite, either of the 1.x or 2.x branches,
-you'll need to upgrade the database and templates first to 2.1. For
-this consult </SPAN><A HREF="#5"><SPAN STYLE="background: transparent">Appendix
+<P CLASS="note-western"><SPAN STYLE="background: transparent">If you
+have an older installation of Campsite, either of the 1.x or 2.x
+branches, you'll need to upgrade the database and templates first to
+2.1. For this consult </SPAN><A HREF="#5"><SPAN STYLE="background: transparent">Appendix
 II</SPAN></A><SPAN STYLE="background: transparent"> in this manual.</SPAN></P>
+<H3 CLASS="western"><A NAME="1_3_3"></A>1.3.3 Compatibility Issues</H3>
+<P CLASS="western">a. <B>Links</B></P>
+<P CLASS="western">Campsite 2.2.x/2.3.x does not redirect from the
+start URL http://[site_name] to
+http://[site_name]/look/[issue_template.tpl]?... Instead, it detects
+the last published issue and runs the issue template. For example:
+suppose your site name was <A HREF="http://test.com/">http://test.com.</A>
+In Campsite 2.1.x requesting <A HREF="http://test.com/">http://test.com</A>
+(<B>URL 1</B>) will automatically redirect you to:
+<A HREF="http://test.com/look/issue.tpl?IdLanguage=l&amp;IdPublication=p&amp;NrIssue=i">http://test.com/look/issue.tpl?IdLanguage=l&amp;IdPublication=p&amp;NrIssue=i</A>
+(<B>URL 2</B>)</P>
+<P CLASS="western">Campsite 2.2.x/2.3.x runs the issue.tpl template
+with the above parameters but without redirecting. This will
+invalidate relative links; relative links look like this:</P>
+<P CLASS="source-code-western">&lt;a href=”section.tpl?&lt;!**
+urlparameters&gt;”&gt;text&lt;/a&gt; (<B>link 1</B>)</P>
+<P CLASS="western">In the case of URL 2 this link works because
+section.tpl template is in the same directory as issue.tpl and the
+new URL will look like this:</P>
+<P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+<A HREF="http://test.com/look/section.tpl?IdLanguage=l&amp;IdPublication=p&amp;NrIssue=i&amp;NrSection=s">http://test.com/look/section.tpl?IdLanguage=l&amp;IdPublication=p&amp;NrIssue=i&amp;NrSection=s</A>
+(<B>URL 3</B>)</P>
+<P CLASS="western">In the case of URL 1 link 1 will generate the
+following URL:</P>
+<P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+<A HREF="http://test.com/section.tpl?IdLanguage=l&amp;IdPublication=p&amp;NrIssue=i&amp;NrSection=s">http://test.com/section.tpl?IdLanguage=l&amp;IdPublication=p&amp;NrIssue=i&amp;NrSection=s</A>
+(<B>URL 4</B>)</P>
+<P CLASS="western">which goes nowhere since there is no section.tpl
+template in the root HTML directory.</P>
+<P CLASS="western">The solution to this problem is to replace
+relative link with absolute links:</P>
+<P CLASS="source-code-western">&lt;a href=”/look/section.tpl?&lt;!**
+urlparameters&gt;”&gt;text&lt;/a&gt; (<B>link 2</B>)</P>
+<P CLASS="western">or better:</P>
+<P CLASS="source-code-western">&lt;a href=”&lt;!** print section
+template&gt;?&lt;!** urlparameters&gt;”&gt;text&lt;/a&gt; (<B>link
+3</B>)</P>
+<P CLASS="note-western">A short term solution (in case you didn't
+have time to fix the links soon enough) is to replace index.php link
+in the HTML directory with index.php file having the following
+content:</P>
+<P CLASS="note-western">&lt;META HTTP-EQUIV=&quot;Refresh&quot;
+CONTENT=&quot;0;
+URL=/look/issue.tpl?IdLanguage=l&amp;IdPublication=p&amp;NrIssue=i&quot;&gt;</P>
+<P CLASS="western">b. <B>URL behavior in case of multiple
+publications</B></P>
+<P CLASS="western">Campsite 2.2.x/2.3.x does not use the
+IdPublication parameter anymore. It is still printed in the URL but
+the part of the URL that sets the publication is the site name. That
+is because Campsite now supports site aliases which determine
+uniquely the publication. In Campsite 2.1.x the following URLs would
+display two different publications:</P>
+<P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+<A HREF="http://test.com/look/issue.tpl?IdLanguage=l&amp;IdPublication=10&amp;NrIssue=i">http://<B>test.com</B>/look/issue.tpl?IdLanguage=l&amp;IdPublication=<B><FONT SIZE=3>10</FONT></B>&amp;NrIssue=i</A>
+(<B>URL 5</B>)</P>
+<P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+<A HREF="http://test.com/look/issue.tpl?IdLanguage=l&amp;IdPublication=20&amp;NrIssue=i">http://<B>test.com</B>/look/issue.tpl?IdLanguage=l&amp;IdPublication=<B><FONT SIZE=3>20</FONT></B>&amp;NrIssue=i</A>
+(<B>URL 6</B>)</P>
+<P CLASS="western">Not anymore; suppose publication <B>10</B> has the
+site name <B>test.com</B> and publication <B>20</B> has the site name
+<B>second.com</B><SPAN STYLE="font-weight: medium">. URL 6 is not
+correct; it has to be replaced by:</SPAN></P>
+<P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+<A HREF="http://second.com/look/issue.tpl?IdLanguage=l&amp;IdPublication=20&amp;NrIssue=i">http://<B>second.com</B>/look/issue.tpl?IdLanguage=l&amp;IdPublication=<B><FONT SIZE=3>20</FONT></B>&amp;NrIssue=i</A>
+(<B>URL 7</B>)</P>
+<P CLASS="western" STYLE="font-weight: medium">The solution to this
+problem is to replace links to other publications:</P>
+<P CLASS="source-code-western">&lt;!** publication identifier 20&gt;</P>
+<P CLASS="source-code-western">&lt;a href=”/look/issue.tpl?&lt;!**
+urlparameters&gt;”&gt;text&lt;/a&gt;</P>
+<P CLASS="western">with:</P>
+<P CLASS="source-code-western">&lt;!** publication identifier 20&gt;</P>
+<P CLASS="source-code-western">&lt;a href=”http://&lt;!** print
+publication site&gt;/look/issue.tpl?&lt;!** urlparameters&gt;”&gt;text&lt;/a&gt;</P>
+<P CLASS="western">c. <B>Issue templates</B></P>
+<P CLASS="western" STYLE="font-weight: medium">Campsite 2.1.x defines
+issue and article templates; Campsite 2.2.x/2.3.x defines one more:
+section template. After the upgrade the section template is set to
+issue template. You should edit issues and set the section template
+correctly. In case you have different templates for different
+sections you can set this at section level. This will not affect your
+templates if you used static links:</P>
+<P CLASS="source-code-western">&lt;a href=”/look/issue.tpl?&lt;!**
+urlparameters&gt;”&gt;text&lt;/a&gt;</P>
+<P CLASS="western" STYLE="font-weight: medium">But if you used
+dynamic defined links:</P>
+<P CLASS="source-code-western">&lt;a href=”&lt;!** print issue
+template&gt;?&lt;!** urlparameters&gt;”&gt;text&lt;/a&gt;</P>
+<P CLASS="western" STYLE="font-weight: medium">then you must take
+care to the template settings.</P>
+<H3 CLASS="western"><A NAME="1_3_4"></A>1.3.4 New template statements
+and short name URLs</H3>
+<P CLASS="western" STYLE="font-weight: medium">Campsite 2.2.x/2.3.x
+supports the following new statements: URI and URIPath. You can find
+the full description in <A HREF="#3_9_4_1">chapter 3.9.4.1</A>. These
+statements help you build a new type of URL: the one called short
+name. It comes from the fact that each issue/ section/ article has a
+short name. A short name based URL would look like:</P>
+<P CLASS="western" STYLE="font-weight: medium"><A HREF="http://test.com/en/may30/news/summer_is_comming">http://test.com/en/may30/news/summer_is_comming</A></P>
+<P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+where:</P>
+<UL>
+	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+	<B>test.com</B> is the publication's site name</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+	<B>en</B> is the publication's language code</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+	<B>may30</B> is the latest issue number</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+	<B>news</B> is the section short name</P>
+	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+	<B>summer_is_comming</B><SPAN STYLE="font-weight: medium"> is the
+	article short name</SPAN></P>
+</UL>
+<P CLASS="western" STYLE="font-weight: medium">To produce such a link
+you only have to write the following:</P>
+<P CLASS="source-code-western">&lt;a href=”&lt;!** URI&gt;”&gt;text&lt;/a&gt;</P>
+<P CLASS="western">This is equivalent to:</P>
+<P CLASS="source-code-western">&lt;a href=”&lt;!** URIPath&gt;?&lt;!**
+URLParameters&gt;”&gt;text&lt;/a&gt;</P>
+<P CLASS="western">URIPath displays the 'path' part of the URI:
+<B>/en/may30/news/summer_is_comming</B><SPAN STYLE="font-weight: medium">.
+URLParameters displays the rest of the parameters if any. URI
+combines both these statements. All these statements work for both
+old style URLs (named </SPAN><B>template path</B><SPAN STYLE="font-weight: medium">)
+and new type of URLs (named </SPAN><B>short name</B><SPAN STYLE="font-weight: medium">).</SPAN></P>
+<H4 CLASS="western">1.3.3.1 Creating links to issue, section etc.</H4>
+<P CLASS="western">Use language, publication, issue, section and
+article arguments in order to specify the scope of the link. Suppose
+we are in the article template and we want to return to the last
+issue, current issue, section or article page.</P>
+<P CLASS="source-code-western">&lt;a href=”&lt;!** URI
+language&gt;”&gt;text&lt;/a&gt;</P>
+<P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+will display: <B>&lt;a href=”/en”&gt;text&lt;/a&gt;</B>; this
+will redirect us to the last published issue page.</P>
+<P CLASS="source-code-western"><BR>
+</P>
+<P CLASS="source-code-western">&lt;a href=”&lt;!** URI
+publication&gt;”&gt;text&lt;/a&gt;</P>
+<P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+will display: <B>&lt;a href=”/en”&gt;text&lt;/a&gt;</B>; this
+will redirect us to the last published issue page.</P>
+<P CLASS="western"><B>Publication</B> argument has the same effect as
+<B>language</B><SPAN STYLE="font-weight: medium"> because short name
+URLs do not have the publication parameter in the URI. Instead, the
+publication is identified by the site name.</SPAN></P>
+<P CLASS="source-code-western"><BR>
+</P>
+<P CLASS="source-code-western">&lt;a href=”&lt;!** URI
+issue&gt;”&gt;text&lt;/a&gt;</P>
+<P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+will display: <B>&lt;a href=”/en/may30”&gt;text&lt;/a&gt;</B>;
+this will take us to the current issue page.</P>
+<P CLASS="source-code-western"><BR>
+</P>
+<P CLASS="source-code-western">&lt;a href=”&lt;!** URI
+section&gt;”&gt;text&lt;/a&gt;</P>
+<P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+will display: <B>&lt;a href=”/en/may30/news”&gt;text&lt;/a&gt;</B>;
+this will take us to the current section page.</P>
+<P CLASS="source-code-western"><BR>
+</P>
+<P CLASS="source-code-western">&lt;a href=”&lt;!** URI
+article&gt;”&gt;text&lt;/a&gt;</P>
+<P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+will display: <B>&lt;a href=”/en/may30/summer_is_comming”&gt;text&lt;/a&gt;</B>;
+this will take us to the current article page.</P>
+<P CLASS="western">Language, publication, issue, section and article
+arguments can not be combined.</P>
+<H4 CLASS="western">1.3.3.2 Setting the template in short name links</H4>
+<P CLASS="western">Sometimes we may need to create a link to a
+template that is not an issue, section or article template; with
+short name URLs this can be done the following way:</P>
+<P CLASS="source-code-western">&lt;a href=”&lt;!** URI template
+login.tpl&gt;”&gt;text&lt;/a&gt;</P>
+<P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
+will display: <B>&lt;a
+href=”/en/may30/summer_is_comming?tpl=<I>tpl_id</I>”&gt;text&lt;/a&gt;</B>;
+this will display the login.tpl template in the current context of
+variables (publication, language, issue etc.).</P>
 <H2 CLASS="western"><A NAME="1_4"></A>1.4 Accessing Your Campsite
 Server</H2>
 <P CLASS="western">To access your Campsite administrator interface,
-go to http://yourdomain/admin/</P>
-<P CLASS="western" STYLE="font-weight: medium; line-height: 100%; page-break-before: auto">
-<FONT FACE="Nimbus Roman No9 L"><FONT SIZE=2 STYLE="font-size: 11pt"><SPAN STYLE="background: transparent">The
-default user is: <B><FONT SIZE=2><FONT FACE="Courier, monospace">admin</FONT></FONT></B></SPAN></FONT></FONT></P>
-<P CLASS="western" STYLE="font-weight: medium; line-height: 100%"><FONT FACE="Nimbus Roman No9 L"><FONT SIZE=2 STYLE="font-size: 11pt"><SPAN STYLE="background: transparent">The
-password for the default user is: <B><FONT SIZE=2><FONT FACE="Courier, monospace">admn00</FONT></FONT></B></SPAN></FONT></FONT></P>
+go to <A HREF="http://yourdomain/admin/">http://yourdomain/admin/</A>
+or <A HREF="https://yourdomain/admin/">https://yourdomain/admin/</A>
+if you set up a SSL based instance.</P>
+<P CLASS="western">The default user is: <B><FONT SIZE=2><FONT FACE="Courier, monospace">admin</FONT></FONT></B></P>
+<P CLASS="western">The password for the default user is: <B><FONT SIZE=2><FONT FACE="Courier, monospace">admn00</FONT></FONT></B></P>
 <P CLASS="western">Don't forget to change these as soon as possible.</P>
+<H2 CLASS="western"><A NAME="1_5"></A><A NAME="1_41"></A>1.5 Known
+Issues</H2>
+<P CLASS="western">For publications having the URL type 'short names'
+all articles that are translated in different languages MUST have a
+corresponding issue/section - in the article language. Otherwise the
+URI, URIPath statements will not work (they can't generate the URI if
+the issue and section short names were not set). When translating an
+article to another language one has to create the corresponding
+issue/section in the language the article is translated to. Campsite
+does not perform this action automatically but this will be fixed in
+a future version (see issue “1282: Create a safety mechanism for
+article translation” on http://bugs.campware.org).</P>
 <H1 CLASS="western"><A NAME="2"></A>2. PUBLISH<SPAN STYLE="text-decoration: none">ING
  WITH </SPAN>CAMPSITE</H1>
 <P CLASS="western">Campsite enables you to publish (host) multiple
@@ -444,11 +885,11 @@ multilingual publications (web sites) on the same server. The process
 can be roughly divided in four steps:</P>
 <UL>
 	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
-	<SPAN STYLE="background: #ffff00"><SPAN STYLE="background: #ffff00">configuring
-	the publishing environment (establishing access rights,
-	country-relevant information, languages you intend</SPAN> <SPAN STYLE="background: #ffff00">to
-	publish in, subscription, etc.), and possibly localizing the user
-	interface into the language of your choice</SPAN></SPAN></P>
+	<SPAN STYLE="background: transparent">configuring the publishing
+	environment (establishing access rights, country-relevant
+	information, languages you intend to publish in, subscription,
+	etc.), and possibly localizing the user interface into the language
+	of your choice</SPAN></P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
 	establishing the structure of your publication(s)</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
@@ -475,10 +916,8 @@ home page. On the top of the screen, you will see the navigation
 menu, containing the functions available for your you will access the
 home page that contains a list of submitted articles and articles you
 have created. Here is how two typical users would see the Home View:</P>
-<P CLASS="screenshot-name-western">1. Campsite: Home View for a user
-with full rights.</P>
-<P CLASS="western"><IMG SRC="CAMPSITE-manual_html_338558e5.png" NAME="Graphic1" ALIGN=LEFT WIDTH=703 HEIGHT=312 BORDER=0><BR CLEAR=LEFT><BR><BR>
-</P>
+<P CLASS="screenshot-name-western"><IMG SRC="CAMPSITE-manual_html_m59af4af4.png" NAME="Graphic1" ALIGN=LEFT WIDTH=100% HEIGHT=40% BORDER=0><BR CLEAR=LEFT>1.
+Campsite: Home View for a user with full rights</P>
 <P CLASS="western"><SPAN STYLE="background: transparent">The
 drop-down menu on the top is the main navigation tool, and it
 consists of the following headings:</SPAN></P>
@@ -498,22 +937,12 @@ topics, etc.), access the Localizer, and view logs.</SPAN></P>
 <P CLASS="western"><SPAN STYLE="background: transparent"><B>Users:</B>
 here, administrators or other users with sufficient rights can add
 and edit back-end users and subscribers.</SPAN></P>
-<P CLASS="screenshot-name-western"><SPAN STYLE="background: transparent">2.
+<P CLASS="screenshot-name-western"><IMG SRC="CAMPSITE-manual_html_53b5c971.png" NAME="Graphic5" ALIGN=LEFT WIDTH=697 HEIGHT=393 BORDER=0><BR CLEAR=LEFT><SPAN STYLE="background: transparent">2.
 Campsite: Home View for a typical journalist</SPAN></P>
-<P CLASS="western"><IMG SRC="CAMPSITE-manual_html_m8a10762.png" NAME="Graphic5" ALIGN=LEFT WIDTH=703 HEIGHT=312 BORDER=0><BR CLEAR=LEFT><BR><BR>
-</P>
-<OL START=3>
-	<LI><P CLASS="screenshot-name-western"><SPAN STYLE="background: transparent">Campsite:
-	the Content menu</SPAN></P>
-</OL>
-<P CLASS="screenshot-name-western"><IMG SRC="CAMPSITE-manual_html_759447e6.png" NAME="Graphic6" ALIGN=LEFT WIDTH=703 HEIGHT=288 BORDER=0><BR CLEAR=LEFT><BR><BR>
-</P>
-<P CLASS="screenshot-name-western"><BR><BR>
-</P>
-<P CLASS="screenshot-name-western" STYLE="page-break-before: always"><SPAN STYLE="background: transparent">4.
+<P CLASS="screenshot-name-western"><IMG SRC="CAMPSITE-manual_html_bdfdd92.png" NAME="Graphic6" ALIGN=LEFT WIDTH=703 HEIGHT=395 BORDER=0><BR CLEAR=LEFT>3.
+Campsite: the Content menu</P>
+<P CLASS="screenshot-name-western"><IMG SRC="CAMPSITE-manual_html_411a88b0.png" NAME="Graphic7" ALIGN=LEFT WIDTH=703 HEIGHT=395 BORDER=0><BR CLEAR=LEFT><SPAN STYLE="background: transparent">4.
 Campsite: the Configure menu</SPAN></P>
-<P CLASS="screenshot-name-western"><IMG SRC="CAMPSITE-manual_html_ma40b1f5.png" NAME="Graphic7" ALIGN=LEFT WIDTH=703 HEIGHT=335 BORDER=0><BR CLEAR=LEFT><BR><BR>
-</P>
 <H2 CLASS="western"><A NAME="2_2"></A><FONT FACE="Times, serif">2.2.
 Configuring the publishing environment</FONT></H2>
 <P CLASS="western">Your first step on the road to bringing your
@@ -536,23 +965,19 @@ actually very much au contraire.</P>
 support for languages that you wish to publish in. If your tongues of
 choice happen to be absent from the list of Campsite's preconfigured
 languages, you can configure your own languages.</P>
-<P CLASS="screenshot-name-western"><BR><BR>
-</P>
-<P CLASS="screenshot-name-western" STYLE="page-break-before: always"><SPAN STYLE="background: transparent">5.
+<P CLASS="screenshot-name-western"><IMG SRC="CAMPSITE-manual_html_m538d3a8f.png" NAME="Graphic2" ALIGN=LEFT WIDTH=703 HEIGHT=485 BORDER=0><BR CLEAR=LEFT><SPAN STYLE="background: transparent">5.
 Campsite: Configuring publishing environment - Languages</SPAN></P>
-<P CLASS="western"><IMG SRC="CAMPSITE-manual_html_29ee8cbb.png" NAME="Graphic2" ALIGN=LEFT VSPACE=5 WIDTH=703 HEIGHT=557 BORDER=0><BR CLEAR=LEFT><BR><BR>
-</P>
-<P CLASS="western">&ldquo;Code&rdquo; refers to the two-letter ISO
-639-1 code name for your language. English, for example, is &ldquo;en&rdquo;,
-German is &ldquo;<SPAN LANG="en-US">de</SPAN>&rdquo;, Spanish is
-&ldquo;es&rdquo;, Chinese is &ldquo;<SPAN LANG="en-US">zh</SPAN>&rdquo;
-and so on. If you don't know your code, this web page can help:
+<P CLASS="western">“Code” refers to the two-letter ISO 639-1 code
+name for your language. English, for example, is “en”, German is
+“<SPAN LANG="en-US">de</SPAN>”, Spanish is “es”, Chinese is
+“<SPAN LANG="en-US">zh</SPAN>” and so on. If you don't know your
+code, this web page can help:
 <SPAN LANG="en-US">http</SPAN>://lcweb.loc.gov/standards/iso639-2/englangn.html.</P>
-<P CLASS="western"><SPAN STYLE="background: transparent">&ldquo;Code
-page&rdquo; refers to the ISO code page for your character set.
-Campsite supports Unicode, and its code page is UTF-8. We recommend
-Unicode, but if you wish to use another code page, you can input it
-here. You can get a list of code pages and languages here:
+<P CLASS="western"><SPAN STYLE="background: transparent">“Code
+page” refers to the ISO code page for your character set. Campsite
+supports Unicode, and its code page is UTF-8. We recommend Unicode,
+but if you wish to use another code page, you can input it here. You
+can get a list of code pages and languages here:
 http://www.w3.org/International/O-charset-lang.html.</SPAN></P>
 <P CLASS="western">To add another language, enter the Languages
 module and click on 'Add new language'. You should enter the language
@@ -572,7 +997,7 @@ web address:
 http://tlt.its.psu.edu/suggestions/international/links.html</P>
 <H3 CLASS="western"><A NAME="2_2_2"></A><FONT FACE="Times, serif">2.2.2
 Countries</FONT></H3>
-<P CLASS="western">This featuredetermines how country lists will
+<P CLASS="western">This feature determines how country lists will
 appear in user-profile forms. The module allows you to create country
 lists in different languages. When you click on 'Add new country',
 you will be prompted to enter the country's name in a language of
@@ -603,10 +1028,8 @@ shown in the right frame. You can interrupt the translation process
 at any time. Just press save at the bottom of the frame and exit the
 localizer. When you return, you'll find all the non-translated
 strings in red and you can continue from where you left off:</P>
-<P CLASS="screenshot-name-western"><SPAN STYLE="background: transparent">6.
+<P CLASS="screenshot-name-western"><IMG SRC="CAMPSITE-manual_html_6a737adc.png" NAME="Graphic3" ALIGN=LEFT WIDTH=703 HEIGHT=499 BORDER=0><BR CLEAR=LEFT><SPAN STYLE="background: transparent">6.
 Campsite: the Localizer</SPAN></P>
-<P CLASS="screenshot-name-western"><IMG SRC="CAMPSITE-manual_html_f1d2464.png" NAME="Graphic3" ALIGN=LEFT WIDTH=666 HEIGHT=507 BORDER=0><BR CLEAR=LEFT><BR><BR>
-</P>
 <P CLASS="note-western"><SPAN STYLE="background: transparent">[NOTE:
 Localization currently works for the entire user interface, minus log
 messages. The body field editor (HTMLArea) is fully localizable, but
@@ -648,12 +1071,17 @@ language code is zh, so the file would be called
 	character with your language translation</SPAN></FONT></P>
 	<LI><P CLASS="western"><FONT FACE="Nimbus Roman No9 L"><SPAN STYLE="background: transparent">Save
 	the file in UTF-8 encoding (you need an UTF-8 text editor for this)</SPAN></FONT></P>
+	<LI><P CLASS="western"><SPAN STYLE="background: transparent"><SPAN LANG="en-US"><FONT FACE="Nimbus Roman No9 L">Repeat
+	steps ii.-iv. for the following directories:
+	implementation/management/javascript/htmlarea/plugins/ListType/lang
+	and 
+	implementation/management/javascript/htmlarea/</FONT></SPAN></SPAN>plugins/TableOperations/lang</P>
 	<LI><P CLASS="western"><FONT FACE="Nimbus Roman No9 L"><SPAN STYLE="background: transparent">Reinstall
 	Campsite</SPAN></FONT></P>
 </OL>
 <OL START=3>
 	<LI><P CLASS="western"><FONT FACE="Nimbus Roman No9 L">E-mail the
-	two translated files to us at <A HREF="Campsite-support@campware.org">Campsite-support@campware.org</A></FONT></P>
+	four translated files to us at <A HREF="Campsite-support@campware.org">Campsite-support@campware.org</A></FONT></P>
 </OL>
 <P CLASS="western"><FONT FACE="Nimbus Roman No9 L">The current list
 of language localizations can be found in the latest Campsite version
@@ -699,22 +1127,20 @@ three default user types:</P>
 	Editor - standard<SPAN LANG="en-US"> back end </SPAN>user with
 	rights limited to basic article management and editing (normally
 	assigned to journalists and editors)</P>
-	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
-	Reader - the profile limited to viewing the site, i.e. front end
-	only.</P>
 </UL>
-<P CLASS="western">To create your custom user profiles, click on
-'User types' and then on 'Add new user type'. Then proceed to select
-the rights that you want included for this type of user.</P>
+<P CLASS="western">To create your custom user profiles, select
+'Users'-&gt;'User types' from the menu and then 'Add new user type'.
+Then proceed to select the rights that you want included for this
+type of user.</P>
 <H4 CLASS="western" STYLE="line-height: 100%"><FONT FACE="Times, serif">2.2.4.2<SPAN LANG="en-US">
 Back end </SPAN>Access: Creating Users</FONT></H4>
-<P CLASS="western">To add a user, click on 'Users' and choose 'Add
-new user account'. You should specify the full name of the user, user
-name, password, and choose a predefined user type (i.e. one of the
-default types or your custom user types).</P>
+<P CLASS="western">To add a user, select 'Users'-&gt;'Staff' and
+choose 'Add new user account'. You should specify the full name of
+the user, user name, password, and choose a predefined user type
+(i.e. one of the default types or your custom user types).</P>
 <P CLASS="western">If you would like to further fine tune the rights
-assigned to a particular user, go to 'Users' and click on 'Rights' in
-the same row with the user's name.</P>
+assigned to a particular user, go to 'Users'-&gt;'Staff' and click on
+'Rights' in the same row with the user's name.</P>
 <H4 CLASS="western"><FONT FACE="Times, serif">2.2.4.3 Front-End
 Access: Subscription</FONT></H4>
 <P CLASS="western">Campsite allows you to control public access to
@@ -752,9 +1178,9 @@ message. Your &lt;subs_type&gt; subscription (started on
 &lt;date&gt; (in &lt;number&gt; days).</P>
 <P CLASS="note-western">Please enter the site http://&lt;pub_site&gt;
 to update subscription.&quot;</P>
-<P CLASS="note-western">Future versions of Campsite (as of version
-2.2) will allow for customization of the message and for its
-translation into multiple languages.]</P>
+<P CLASS="note-western">Future versions of Campsite will allow for
+customization of the message and for its translation into multiple
+languages.]</P>
 <H2 CLASS="western"><A NAME="2_3"></A><FONT FACE="Times, serif">2.3.
 Creating publications</FONT></H2>
 <P CLASS="western">Campsite has a clear four-tier hierarchical
@@ -788,10 +1214,8 @@ be reluctant to hand over those rights to more than a handful of
 people. If you are not among those select few, your Publications view
 will only contain a list of publications hosted on this particular
 Campsite server.]</P>
-<P CLASS="screenshot-name-western">6. Campsite: Adding new
-publications</P>
-<P CLASS="western"><IMG SRC="CAMPSITE-manual_html_10b57278.png" NAME="Graphic4" ALIGN=LEFT WIDTH=369 HEIGHT=428 BORDER=0><BR CLEAR=LEFT><BR><BR>
-</P>
+<P CLASS="screenshot-name-western"><IMG SRC="CAMPSITE-manual_html_m462f9322.png" NAME="Graphic4" ALIGN=LEFT WIDTH=358 HEIGHT=360 BORDER=0><BR CLEAR=LEFT>7.
+Campsite: Adding new publications</P>
 <P CLASS="western">At this point, you should specify the following:</P>
 <UL>
 	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
@@ -807,9 +1231,6 @@ publications</P>
 	path or short (more user-friendly and practical) URLs (the latter
 	are also much better for pasting in newsletters)</P>
 </UL>
-<P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
-<BR>
-</P>
 <P CLASS="western">The rest of fields are related to subscriptions,
 and if you would like to leave the decisions on whether and how much
 are you going to charge for your publication for later, you may just
@@ -833,9 +1254,11 @@ know what they mean:</P>
 	Currency - the monetary unit you will be charging in for your
 	publication</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
-	Paid period - the default duration of paid subscription</P>
+	Paid period - the default duration of paid subscription (in the time
+	units selected at 'Time unit')</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
-	Trial period - default duration of trial subscriptions.</P>
+	Trial period - default duration of trial subscriptions (in the time
+	units selected at 'Time unit')</P>
 </UL>
 <P CLASS="western">Any of the data entered on this screen can be
 altered or fine-tuned at a later stage.</P>
@@ -914,33 +1337,24 @@ an issue</H3>
 Sections view in which you will have the option of adding new
 sections to the current issue by clicking on 'Add new section'. 
 </P>
-<P CLASS="screenshot-name-western"><SPAN STYLE="background: transparent">.
+<P CLASS="screenshot-name-western"><IMG SRC="CAMPSITE-manual_html_44503e.png" NAME="Graphic9" ALIGN=LEFT WIDTH=703 HEIGHT=165 BORDER=0><BR CLEAR=LEFT><SPAN STYLE="background: transparent">8.
 Campsite: Sections View</SPAN></P>
-<P CLASS="screenshot-name-western"><IMG SRC="CAMPSITE-manual_html_m17afd456.png" NAME="Graphic9" ALIGN=LEFT WIDTH=703 HEIGHT=141 BORDER=0><BR CLEAR=LEFT><BR><BR>
-</P>
 <P CLASS="western">You should specify the name and section number
 (within the issue). While you can come back later and change the name
 of the section, the section number can be chosen only at the time
 when the new section is added.</P>
-<P CLASS="screenshot-name-western"><SPAN STYLE="background: transparent">.
+<P CLASS="screenshot-name-western"><IMG SRC="CAMPSITE-manual_html_m676dba61.png" NAME="Graphic8" ALIGN=LEFT WIDTH=334 HEIGHT=156 BORDER=0><BR CLEAR=LEFT><SPAN STYLE="background: transparent">9.
 Campsite: Adding Sections</SPAN></P>
-<P CLASS="screenshot-name-western"><IMG SRC="CAMPSITE-manual_html_50d8e637.png" NAME="Graphic8" ALIGN=LEFT WIDTH=370 HEIGHT=205 BORDER=0><BR CLEAR=LEFT><BR><BR>
-</P>
-<P CLASS="western">At this point, you will also choose the short name
+<P CLASS="western">At this point, you will also choose the URL name
 for the section that will be part of the URL. If you would like to
 make the newly created section available to all existing subscribers,
 you should check the appropriate box. 
 </P>
 <P CLASS="western">Your next step would be to configure the section:</P>
-<P CLASS="screenshot-name-western"><SPAN STYLE="background: transparent">.
+<P CLASS="screenshot-name-western"><IMG SRC="CAMPSITE-manual_html_m46f8adaf.png" NAME="Graphic10" ALIGN=LEFT WIDTH=357 HEIGHT=191 BORDER=0><BR CLEAR=LEFT><SPAN STYLE="background: transparent">10.
 Campsite: Configuring Sections</SPAN></P>
-<P CLASS="western"><IMG SRC="CAMPSITE-manual_html_c80bc0e.png" NAME="Graphic10" ALIGN=LEFT WIDTH=381 HEIGHT=227 BORDER=0><BR CLEAR=LEFT><BR><BR>
-</P>
-<P CLASS="western">Here you need to select the Section Template, from
-the drop-down menu 
-</P>
-<P CLASS="western"><BR><BR>
-</P>
+<P CLASS="western">Here you may want to select custom templates for
+your section and section articles from the drop-down menu.</P>
 <H3 CLASS="western"><A NAME="2_3_4"></A><FONT FACE="Times, serif">2.3.4
 Defining article types</FONT></H3>
 <P CLASS="western">The next step in setting up your publication is to
@@ -1101,12 +1515,12 @@ the following nine buttons:</P>
 	from a list of topics and subtopics predefined by your Campsite
 	administrator or high-ranking editor (e.g. users with rights that
 	correspond to the default Administrator or Chief Editor user types
-	that come &ldquo;out of the box&rdquo; with Campsite). Topics allow
-	you to attach additional attributes to your article, which may be
-	used by the aforementioned power users on your system to display
-	articles in a certain way. If they have not decided to make use of
-	this feature, you may ignore this button. For more information on
-	topics, see section 2.4)</P>
+	that come “out of the box” with Campsite). Topics allow you to
+	attach additional attributes to your article, which may be used by
+	the aforementioned power users on your system to display articles in
+	a certain way. If they have not decided to make use of this feature,
+	you may ignore this button. For more information on topics, see
+	section 2.4)</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
 	<B>Unlock</B>, which you can use to withdraw your reservation of the
 	article (e.g. when you are finished with your editing). The
@@ -1127,8 +1541,7 @@ the following nine buttons:</P>
 	are editing to any publication, issue or section.</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
 	<B>Automatic publishing,</B> which allows you to schedule
-	&ldquo;publishing events,&rdquo; i. e. publish/unpublish your
-	article 
+	“publishing events,” i. e. publish/unpublish your article 
 	</P>
 </UL>
 <H3 CLASS="western"><A NAME="2_3_7"></A><FONT FACE="Times, serif">2.3.7
@@ -1843,9 +2256,8 @@ conventions:</P>
 	identifiers that are not in between '&lt;' and '&gt;' are language
 	keywords and must be written as in the language description</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
-	any language identifier can be written in between &ldquo;&rdquo;
-	character; identifiers containing spaces and must be written in
-	between &ldquo;&rdquo;</P>
+	any language identifier can be written in between “” character;
+	identifiers containing spaces and must be written in between “”</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
 	identifiers enclosed by '[' and ']' characters are not mandatory in
 	the statement</P>
@@ -2424,13 +2836,13 @@ may contain any statement except: &quot;Language&quot;,
 <BR>
 </P>
 <P CLASS="note-western"><B>Note on topics</B>: the topic name must be
-written in the following format: &ldquo;&lt;topic_name&gt;:&lt;language_code&gt;&rdquo;.
+written in the following format: “&lt;topic_name&gt;:&lt;language_code&gt;”.
 Campsite is able to store topics in multiple languages, yet the user
 interface managing the topics wasn't updated and it is only capable
 of managing topics in English language. All the topics are
 automatically assigned the English language.</P>
-<P CLASS="western">Examples of valid topic names: &ldquo;sports:en&rdquo;,
-&ldquo;health:en&rdquo; etc.</P>
+<P CLASS="western">Examples of valid topic names: “sports:en”,
+“health:en” etc.</P>
 <TABLE WIDTH=703 BORDER=0 CELLPADDING=2 CELLSPACING=0>
 	<COL WIDTH=295>
 	<COL WIDTH=400>
@@ -3328,16 +3740,16 @@ can be used to create links.</P>
 <UL>
 	<LI><P CLASS="western">for publications with template path URL type
 	it is equivalent to:</P>
-	<P CLASS="source-code-western">&lt;a href=&rdquo;[template.tpl]?&lt;!**
-	URLParameters&gt;&rdquo;&gt;[text]&lt;/a&gt;</P>
+	<P CLASS="source-code-western">&lt;a href=”[template.tpl]?&lt;!**
+	URLParameters&gt;”&gt;[text]&lt;/a&gt;</P>
 	<LI><P CLASS="western">for publications with short name URL type it
 	is equivalent to:</P>
-	<P CLASS="source-code-western">&lt;a href=&rdquo;&lt;!**
-	URIPath&gt;?&lt;!** URLParameters&gt;&rdquo;&gt;[text]&lt;/a&gt;</P>
+	<P CLASS="source-code-western">&lt;a href=”&lt;!** URIPath&gt;?&lt;!**
+	URLParameters&gt;”&gt;[text]&lt;/a&gt;</P>
 </UL>
 <P CLASS="western">URIPath prints only the path part of the URI, the
-part before the parameters list. If &ldquo;/en/1/2/3?param1=text&rdquo;
-was the full URI, URIpath is &ldquo;/en/1/2/3&rdquo;.</P>
+part before the parameters list. If “/en/1/2/3?param1=text” was
+the full URI, URIpath is “/en/1/2/3”.</P>
 <P CLASS="note-western">Note: For publications with short name URL
 type this is the only way to create links. It is not possible to
 build the URI manually.</P>
@@ -3643,12 +4055,24 @@ new sections to an issue</A>
 	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
 	[&lt;article_type&gt;] &lt;article_type_attribute&gt;
 	[&lt;date_format&gt;]: print an article field specific to a certain
-	article type (see <A HREF="#2_2_4">Defining article types</A>); if
+	article type (see <A HREF="#2_3_4">Defining article types</A>); if
 	the field type is date a date format may be specified; see <A HREF="#date_format">date
 	format details</A></P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
 	template: print the full path of the article template file</P>
 </UL>
+<P CLASS="note-western"><B>Note regarding “Print article
+[&lt;article_type&gt;] &lt;article_type_attribute&gt;”</B>:
+Starting with Campsite 2.3.0 the table containing the image link in
+article body fields has the class “cs_img”; this allows the web
+designer to change the layout of the article images by using a CSS
+file. The new image link has the following structure:</P>
+<P CLASS="source-code-western">&lt;table border=&quot;0&quot;
+cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; <B><SPAN STYLE="text-decoration: none"><FONT COLOR="#0000ff">class=&quot;cs_img&quot;</FONT></SPAN></B>&gt;</P>
+<P CLASS="source-code-western">&lt;tr&gt;&lt;td align=&quot;center&quot;&gt;&lt;img
+src=&quot;/cgi-bin/get_img?NrArticle=1234&amp;NrImage=3&quot;
+border=&quot;0&quot; hspace=&quot;5&quot; vspace=&quot;5&quot;&gt;&lt;/td&gt;&lt;/tr&gt;</P>
+<P CLASS="source-code-western">&lt;/table&gt;</P>
 <P CLASS="western">For details on article see <A HREF="#2_2_5">Creating
 articles within a section</A> and <A HREF="#2_2_6">Editing articles:
 Edit Article Details view.</A></P><A NAME="p_img_expr"></A>
@@ -3679,7 +4103,7 @@ number (1) is used if &lt;image_number&gt; was omitted.</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
 	photographer, place, description are fields describing the image</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
-	&lt;date_attribute&gt;: see Date &ndash; &lt;date_attribute&gt;</P>
+	&lt;date_attribute&gt;: see Date – &lt;date_attribute&gt;</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
 	date [&lt;date_format&gt;]: see Date - &lt;date_format&gt;</P>
 </UL>
@@ -3981,8 +4405,8 @@ generate fields for every section on issue.</P>
 &lt;evaluate_button_name&gt;]<BR>&lt;list_of_instructions&gt;<BR>EndSubscription</P>
 <UL>
 	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
-	&lt;subscription_type&gt; has two values: &ldquo;by_publication&rdquo;
-	and &ldquo;by_section&rdquo;</P>
+	&lt;subscription_type&gt; has two values: “by_publication” and
+	“by_section”</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
 	&lt;template_name&gt; is the name of the next template to be
 	requested from subscription form. 
@@ -4388,8 +4812,8 @@ LANGUAGE STATEMENTS</H1>
 	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
 	<A HREF="#3_9_3_21">With (3.9.3.21)</A></P>
 </UL>
-<H1 CLASS="western"><A NAME="5"></A>5. APPENDIX II &ndash; UPGRADING
-FROM OLDER VERSIONS OF CAMPSITE 
+<H1 CLASS="western"><A NAME="5"></A>5. APPENDIX II – UPGRADING FROM
+OLDER VERSIONS OF CAMPSITE 
 </H1>
 <H2 CLASS="western">5.1 Upgrading from 1.x or 2.0</H2>
 <P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
@@ -4414,8 +4838,7 @@ the older database and templates must be converted; the database
 conversion is more complex and error prone while the templates
 conversion requires only the issuing of one shell command.</P>
 <P CLASS="western">Conversion from any character set to UTF-8 can be
-achieved by using standard iconv tool; for usage type &ldquo;man
-iconv&rdquo;.</P>
+achieved by using standard iconv tool; for usage type “man iconv”.</P>
 <P CLASS="western"><B>Converting the database</B> can be done in
 three steps:</P>
 <OL>
@@ -4429,9 +4852,8 @@ three steps:</P>
 <P CLASS="western" STYLE="margin-top: 0.2in; margin-bottom: 0in; page-break-before: auto">
 <FONT COLOR="#dc2300">Important!!! The database upgrade must take
 place before Campsite application upgrade. If the application upgrade
-already took place, &ldquo;ArticleTopics&rdquo; and &ldquo;Topics&rdquo;
-tables must be added to the list of tables that need not be converted
-to UTF.</FONT></P>
+already took place, “ArticleTopics” and “Topics” tables must
+be added to the list of tables that need not be converted to UTF.</FONT></P>
 <P CLASS="western"><FONT FACE="Nimbus Roman No9 L">Open a shell
 session and type all the following commands described below at the
 command prompt. S</FONT>hell commands are written in <I>italic</I>
@@ -4448,8 +4870,7 @@ style.</P>
 </UL>
 <P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
 where [database] should be replaced by the name of the Campsite
-database and &ldquo;...&rdquo; with other needed parameters (user,
-host etc.)</P>
+database and “...” with other needed parameters (user, host etc.)</P>
 <UL>
 	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
 	Dump data for tables that need not be converted to UTF:</P>
@@ -4467,8 +4888,8 @@ host etc.)</P>
 	</UL>
 </UL>
 <P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; font-style: normal; line-height: 100%; text-decoration: none">
-Don't forget to add &ldquo;ArticleTopics&rdquo; and &ldquo;Topics&rdquo;
-to the list of tables if Campsite upgrade took place already.</P>
+Don't forget to add “ArticleTopics” and “Topics” to the list
+of tables if Campsite upgrade took place already.</P>
 <UL>
 	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
 	Dump data for tables that should be converted to UTF</P>
@@ -4488,8 +4909,8 @@ to the list of tables if Campsite upgrade took place already.</P>
 	<P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
 	where [l1], [l2] are the language identifiers. In order to read the
 	language identifiers and character sets log in to Campsite database
-	and run the following sql: &ldquo;select Name, Id, CodePage from
-	Languages&rdquo;.</P>
+	and run the following sql: “select Name, Id, CodePage from
+	Languages”.</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
 	<I>mysqldump ... -t --tables --where=&quot;IdLanguage = [l1] or
 	IdLanguage = [l2]...&quot; \</I></P>
@@ -4528,17 +4949,17 @@ to the list of tables if Campsite upgrade took place already.</P>
 </OL>
 <P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
 Replace [l1], [l2] with language identifiers, [database] with
-Campsite database name, &ldquo;...&rdquo; in mysqldump command with
-other needed parameters (user, host etc.), [charsetn] with the name
-of the character set (ISO-8859-1,  ISO-8859-2 etc.),
-[list_of_X_tables] with the list of tables whose names start with X;
-these are article content tables.</P>
+Campsite database name, “...” in mysqldump command with other
+needed parameters (user, host etc.), [charsetn] with the name of the
+character set (ISO-8859-1,  ISO-8859-2 etc.), [list_of_X_tables] with
+the list of tables whose names start with X; these are article
+content tables.</P>
 <P CLASS="note-western">Note: In order to simplify the conversion all
 not used languages except English may be deleted. If only one
 language is used and it's character set is ISO-8859-1 there is no
 need to group languages by character set: just delete unused
 languages and perform the steps b through d described above and
-remove &ldquo;--where&rdquo; clause from commands.</P>
+remove “--where” clause from commands.</P>
 <P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
 <BR>
 </P>
@@ -4723,11 +5144,10 @@ manually]<BR>yourserver# ps -A | grep httpd [this should return some
 lines with pid numbers for the httpd. If not, start httpd manually
 (see above)]<BR>yourserver# exit<BR>yourserver# cd
 campsite<BR>yourserver# ./install</P>
-<P CLASS="source-code-western">Preparing install environment...OK</P>
-<P CLASS="source-code-western">Configuration done</P>
+<P CLASS="source-code-western">Preparing install scripts...done</P>
 <P CLASS="source-code-western"><BR>
 </P>
-<P CLASS="source-code-western">Installing CAMPSITE 2.2.0-rc4</P>
+<P CLASS="source-code-western">Installing CAMPSITE 2.3.0</P>
 <P CLASS="source-code-western"><BR>
 </P>
 <P CLASS="source-code-western">Campsite application is composed out
@@ -4737,16 +5157,27 @@ of modules. Before installing</P>
 </P>
 <P CLASS="source-code-western">Do you want to read the description of
 campsite modules? (Y/N) [N]:</P>
-<P CLASS="source-code-western">Preparing install environment...OK</P>
 <P CLASS="source-code-western">Checking install dependencies...OK</P>
-<P CLASS="source-code-western">Testing install configuration...ERROR</P>
-<P CLASS="source-code-western">There is an older installation of
-campsite.</P>
-<P CLASS="source-code-western">Use --upgrade parameter for upgrade.</P>
-<P CLASS="source-code-western">There is another older campsite
-instance already installed.</P>
-<P CLASS="source-code-western">Do you want to upgrade the current
-installation? (Y/N) [Y]:</P>
+<P CLASS="source-code-western">Testing install configuration...OK</P>
+<P CLASS="source-code-western"><BR>
+</P>
+<P CLASS="source-code-western">NOTE: Install found one or more older
+Campsite instance(s) already installed.</P>
+<P CLASS="source-code-western">If you want to upgrade older instances
+run:</P>
+<P CLASS="source-code-western">       
+/usr/local/campsite/bin/create_instance --db_name [instance_name]</P>
+<P CLASS="source-code-western">script after finishing this install.
+Replace [instance_name] with</P>
+<P CLASS="source-code-western">the Campsite instance name you want to
+upgrade. Run create_instance</P>
+<P CLASS="source-code-western">script with --help option to get a
+list of available options.</P>
+<P CLASS="source-code-western"><BR>
+</P>
+<P CLASS="source-code-western">Press ENTER to continue</P>
+<P CLASS="source-code-western"><BR>
+</P>
 <P CLASS="source-code-western">Current install configuration:</P>
 <P CLASS="source-code-western">APACHE_USER=apache</P>
 <P CLASS="source-code-western">APACHE_GROUP=apache</P>
@@ -4761,6 +5192,8 @@ installation? (Y/N) [Y]:</P>
 </P>
 <P CLASS="source-code-western">Select  1 - to modify configuration</P>
 <P CLASS="source-code-western">        0 - to exit</P>
+<P CLASS="source-code-western"><BR>
+</P>
 <P CLASS="source-code-western">Option: 0</P>
 <P CLASS="source-code-western">Testing install configuration...OK</P>
 <P CLASS="source-code-western">Please wait while checking modules
@@ -4777,8 +5210,12 @@ dependencies...OK</P>
 dependencies...OK</P>
 <P CLASS="source-code-western">*** Preparing PARSER environment...OK</P>
 <P CLASS="source-code-western">Testing PARSER configuration...OK</P>
-<P CLASS="source-code-western">The forward list shows modules that
-need to be configured.</P>
+<P CLASS="source-code-western"><BR>
+</P>
+<P CLASS="source-code-western">The following list shows modules that
+are configurable.</P>
+<P CLASS="source-code-western">Modules not shown in this list are not
+configurable at this stage.</P>
 <P CLASS="source-code-western">Modules checked with X have a valid
 configuration.</P>
 <P CLASS="source-code-western">        1. [X] PARSER</P>
@@ -4787,11 +5224,15 @@ configuration.</P>
 <P CLASS="source-code-western">Menu</P>
 <P CLASS="source-code-western">        1. Configure a module</P>
 <P CLASS="source-code-western">        0. Exit module configuration</P>
+<P CLASS="source-code-western"><BR>
+</P>
 <P CLASS="source-code-western">Select a choice: 0</P>
 <P CLASS="source-code-western"><BR>
 </P>
 <P CLASS="source-code-western">Campsite configuration is completed.
-Do you want to review it? (Y/N) [Y]:  Y</P>
+Do you want to review it? (Y/N) [Y]:</P>
+<P CLASS="source-code-western"><BR>
+</P>
 <P CLASS="source-code-western">Install configuration</P>
 <P CLASS="source-code-western">APACHE_USER=apache</P>
 <P CLASS="source-code-western">APACHE_GROUP=apache</P>
@@ -4815,7 +5256,7 @@ Do you want to review it? (Y/N) [Y]:  Y</P>
 <P CLASS="source-code-western"><BR>
 </P>
 <P CLASS="source-code-western">STEP 1</P>
-<P CLASS="source-code-western">Configuring campsite (this may take a
+<P CLASS="source-code-western">Configuring Campsite (this may take a
 while, please wait)...done</P>
 <P CLASS="source-code-western"><BR>
 </P>
@@ -4825,17 +5266,16 @@ while, please wait)...done</P>
 <P CLASS="source-code-western"><BR>
 </P>
 <P CLASS="source-code-western">The root password is needed in order
-to install campsite. Please supply password.</P>
+to install campsite.</P>
 <P CLASS="source-code-western">Root password:</P>
-<P CLASS="source-code-western">Preparing install environment...OK</P>
-<P CLASS="source-code-western">Configuration done</P>
+<P CLASS="source-code-western">Preparing install scripts...done</P>
 <P CLASS="source-code-western"><BR>
 </P>
 <P CLASS="source-code-western">STEP 3</P>
-<P CLASS="source-code-western">Installing CAMPSITE...done</P>
+<P CLASS="source-code-western">Installing Campsite...done</P>
 <P CLASS="source-code-western"><BR>
 </P>
-<P CLASS="source-code-western">CAMPSITE was installed successfully.</P>
+<P CLASS="source-code-western">Campsite was installed successfully.</P>
 <P CLASS="source-code-western">For a complete installation log read
 install_log file.</P>
 <P CLASS="source-code-western"><BR>
@@ -4844,28 +5284,31 @@ install_log file.</P>
 <P CLASS="source-code-western"><BR>
 </P>
 <P CLASS="source-code-western">IMPORTANT!!!</P>
+<P CLASS="source-code-western">The apache virtual host configuration
+file:</P>
+<P CLASS="source-code-western">       
+/usr/local/campsite/etc/campsite/campsite-vhost.conf</P>
+<P CLASS="source-code-western">was created.</P>
+<P CLASS="source-code-western">Please edit it and replace
+$SERVER_ADDRESS and $SERVER_NAME with</P>
+<P CLASS="source-code-western">appropriate values.</P>
+<P CLASS="source-code-western"><BR>
+</P>
 <P CLASS="source-code-western">Please configure apache server before
-using CAMPSITE application; make sure</P>
+using Campsite application; make sure</P>
 <P CLASS="source-code-western">the crond daemon is running; read
 INSTALL file and follow the instructions.</P>
 <P CLASS="source-code-western"><BR>
 </P>
-<P CLASS="source-code-western">To enter the CAMPSITE administration
+<P CLASS="source-code-western">To enter the Campsite administration
 site start a browser and type in the</P>
 <P CLASS="source-code-western">following URL:
-http://localhost/admin/.</P>
+http://[$SERVER_NAME]/admin/.</P>
 <P CLASS="source-code-western">Fill in &quot;admin&quot; and &quot;admn00&quot;
 user and password respectivelly to log in.</P>
 <P CLASS="source-code-western">You should change the password as soon
-as possible.<BR>yourserver# locate httpd.conf [Make a backup copy,
-always a good idea.]<BR>yourserver# cp /etc/httpd/conf/httpd.conf
-/etc/httpd/conf/httpd.conf.bak [the location might vary, depending on
-your configuration and system version]<BR>[Now open and edit the
-config file, you can see the changes that need to be done in the
-INSTALL file which is located in the Campsite folder. Then you need
-to restart the http daemon:]<BR>yourserver# kill -HUP `cat
-/var/run/httpd.pid` [the `` need to be angled from top left to bottom
-right.]<BR>[that's all...]</P>
+as possible.</P>
+<P CLASS="source-code-western">[that's all...]</P>
 <H1 CLASS="western"><A NAME="7"></A>7. APPENDIX IV - BACKING UP
 DATABASES IN MYSQL</H1>
 <P CLASS="western">In order to make a backup of your Campsite
@@ -4873,14 +5316,14 @@ database, do the following:</P>
 <OL>
 	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
 	type: <FONT FACE="Courier, monospace">mysqldump -u &lt;db_user&gt;
-	-p &lt;password&gt; Campsite &gt; yourname-db.sql</FONT></P>
+	-p &lt;password&gt; campsite &gt; yourname-db.sql</FONT></P>
 </OL>
 <P CLASS="western">In order to delete your Campsite database from
 MySQL, do the following:</P>
 <OL>
 	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
 	type: <FONT FACE="Courier, monospace">mysqladmin -u &lt;db_user&gt;
-	-p &lt;password&gt; drop Campsite</FONT></P>
+	-p &lt;password&gt; drop campsite</FONT></P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
 	confirm with 'y'</P>
 </OL>
@@ -4889,15 +5332,15 @@ do the following:</P>
 <OL>
 	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
 	create the Campsite database by typing: <FONT FACE="Courier, monospace">mysqladmin
-	-u &lt;db_user&gt; -p &lt;password&gt; create Campsite</FONT></P>
+	-u &lt;db_user&gt; -p &lt;password&gt; create campsite</FONT></P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
 	edit the backup file you created and add the first line: <FONT FACE="Courier, monospace">use
-	Campsite;</FONT><BR>(make sure you finish the line with a semicolon
+	campsite;</FONT><BR>(make sure you finish the line with a semicolon
 	and do not start the line with a hash, which would mean it is only a
 	comment).</P>
 	<LI><P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none">
 	load the database by typing: <FONT FACE="Courier, monospace">mysql
-	-u &lt;db_user&gt; -p &lt;password&gt; Campsite &lt; yourname-db.sql</FONT></P>
+	-u &lt;db_user&gt; -p &lt;password&gt; campsite &lt; yourname-db.sql</FONT></P>
 </OL>
 <P CLASS="western" STYLE="margin-top: 0in; margin-bottom: 0in; line-height: 100%; text-decoration: none"><A NAME="end"></A>
 <BR>
