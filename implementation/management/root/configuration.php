@@ -45,5 +45,7 @@ $Campsite['THUMBNAIL_DIRECTORY'] = $Campsite['IMAGE_DIRECTORY'].'/thumbnails/';
 $Campsite['THUMBNAIL_BASE_URL'] = $Campsite['WEBSITE_URL'].'/images/thumbnails/';
 $Campsite['THUMBNAIL_PREFIX'] = 'cms-thumb-';
 $Campsite['TMP_DIRECTORY'] = '/tmp/';
+$Campsite['HELP_URL'] = 'http://code.campware.org/manuals/campsite/2.3/';
+$Campsite['ABOUT_URL'] = 'http://www.campware.org/look/article.tpl?IdLanguage=1&IdPublication=3&NrIssue=1&NrSection=1&NrArticle=579';
 
 ?>
