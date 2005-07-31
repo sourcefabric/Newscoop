@@ -73,4 +73,6 @@ regGS("The alias $1 could not be deleted.", "алиас $1 не може бит�
 regGS("The alias $1 has been deleted from publication $2.", "Алиас $1 је обрисан из публикације $2.");
 regGS("$1 is the default publication alias, it can not be deleted.", "$1 је основни алиас за публикацију, па не може бити обрисан.");
 regGS("You do not have the right to add publications.", "Немате право да додајете публикације.");
+regGS("There are $1 issue(s) left.", "Преостало је $1 издања.");
+regGS("No such country.", "Нема те државе.");
 ?>
