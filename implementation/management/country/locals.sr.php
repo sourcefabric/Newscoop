@@ -25,4 +25,5 @@ regGS("The country name $1 has been translated", "Име државе $1 је п
 regGS("The country name $1 could not be translated", "Име државе $1 не може бити преведено");
 regGS("Country name $1 translated", "Име државе $1 преведено");
 regGS("Add New Country", "Додај нову државу");
+regGS("No such country.", "Нема те државе.");
 ?>

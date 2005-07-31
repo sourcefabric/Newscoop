@@ -4,5 +4,4 @@ regGS("You do not have the right to access this page.", "Nemáte přístupová p
 regGS("Login failed", "Přihlášení neproběhlo");
 regGS("Please make sure that you typed the correct user name and password.", "Zkontrolujte, zda jste správně zadali uživatelské jméno a heslo");
 regGS("If your problem persists please contact the site administrator $1", "Pokud vaše problémy přetrvávají, prosím kontaktujte administrátora");
-regGS("Localizer", "Lokalizátor");
 ?>
