@@ -3,7 +3,7 @@ regGS("You haven't written any articles yet.", "Nema vaših članaka.");
 regGS("There are no pending items to be published.", "Nema stavki za objavljivanje.");
 regGS("There are currently no submitted articles.", "Trenutno nema predatih članaka.");
 regGS("Recently Published Articles", "Poslednje objavljeni članci.");
-regGS("Publish articles", "Objavi članak");
+regGS("Publish articles", "Objavi članke");
 regGS("Publish Date", "Datum objavljivanja");
 regGS("No articles have been published yet.", "Za sada nema objavljenih članaka.");
 regGS("Event(s)", "Događaj(i)");
