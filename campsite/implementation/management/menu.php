@@ -187,8 +187,8 @@ foreach ($publications as $publication) {
 	    <?php } // if ($showObsoleteMenu) ?>
 	    _cmSplit,
 	    ['<img src="/<?php p($ADMIN); ?>/img/icon/help.png" width="22" height="22" align="middle" />', ' <?php putGS('Help'); ?>', '', '', '',
-	    	['<img src="/<?php p($ADMIN); ?>/img/icon/help.png" width="22" height="22" />', '<?php putGS('Help'); ?>', 'http://code.campware.org/manuals/campsite/', '_blank' ], 
-	    	['<img src="/<?php p($ADMIN); ?>/img/icon/about.png" width="22" height="22" />', '<?php putGS('About'); ?>', 'http://www.campware.org/look/article.tpl?IdLanguage=1&IdPublication=3&NrIssue=1&NrSection=1&NrArticle=579', '_blank' ], 
+	    	['<img src="/<?php p($ADMIN); ?>/img/icon/help.png" width="22" height="22" />', '<?php putGS('Help'); ?>', '<?php p($Campsite['HELP_URL']); ?>', '_blank' ], 
+	    	['<img src="/<?php p($ADMIN); ?>/img/icon/about.png" width="22" height="22" />', '<?php putGS('About'); ?>', '<?php p($Campsite['ABOUT_URL']); ?>', '_blank' ], 
 	    ]
 	];
 	--></SCRIPT>
