@@ -8,7 +8,7 @@ regGS("You do not have the right to delete user types.", "Nemate pravo da briše
 regGS("User type $1 deleted", "Tip korisnika $1 je obrisan");
 regGS("User type", "Tip korsnika");
 regGS("Change user type permissions", "Promeni prava dodeljena tipu korisnika");
-regGS("You do not have the right to change user type permissions.", "Nemate pravo da menjate dodeljena prava tipu korisnika");
+regGS("You do not have the right to change user type permissions.", "Nemate pravo da menjate dodeljena prava tipu korisnika.");
 regGS("User type $1 changed permissions", "Prava dodeljena tipu korisnika $1 su promenjena");
 regGS("You do not have the right to add user types.", "Nemate pravo da dodajete tipove korisnika");
 regGS("Adding new user type", "Dodavanje novog tipa korisnika");

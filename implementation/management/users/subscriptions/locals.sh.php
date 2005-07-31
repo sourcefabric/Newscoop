@@ -23,7 +23,7 @@ regGS("The subscription has been deactivated.", "Pretplata je deaktivirana");
 regGS("Subscription status could not be changed.", "Status pretplate ne može biti promenjen");
 regGS("Update payment", "Izmeni uplatu");
 regGS("The subscription payment was updated.", "Uplata za pretplatu je izmenjena");
-regGS("Subscription payment could not be changed.", "Uplata za pretplatu nemože biti izmenjena");
+regGS("Subscription payment could not be changed.", "Uplata za pretplatu ne može biti izmenjena");
 regGS("Left to pay", "Preostalo za plaćanje");
 regGS("Active", "Aktivno");
 regGS("No subscriptions.", "Nema pretplata");

@@ -10,7 +10,7 @@ regGS("User Name", "Korisničko ime");
 regGS("Full Name", "Puno ime");
 regGS("Delete user $1", "Obriši korisnika $1");
 regGS("User list is empty.", "Lista korisnika je prazna.");
-regGS("You do not have the right to create user accounts.", "Nemate pravo da kreirate korisničke naloge");
+regGS("You do not have the right to create user accounts.", "Nemate pravo da kreirate korisničke naloge.");
 regGS("Title", "Zvanje");
 regGS("Gender", "Pol");
 regGS("Mr.", "gospodin");
