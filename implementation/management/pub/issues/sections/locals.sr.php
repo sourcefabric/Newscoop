@@ -25,10 +25,25 @@ regGS("Section $1 updated to issue $2. $3 ($4) of $5", "Рубрика $1 је �
 regGS("Name<BR><SMALL>(click to add article)</SMALL>", "Назив <br><small>(кликните да додате текст)</small>");
 regGS("Duplicate section", "Дуплирај рубрику");
 regGS("The destination issue is the same as the source issue.", "Циљно издање је исто као матично.");
-regGS("Destination section number", "Број циљне рубрике");
 regGS("Error updating subscriptions.", "Грешка при мењању претплата.");
 regGS("Duplicating section", "Дуплирање рубрике");
 regGS("The section $1 could not be duplicated", "Рубрика  $1 не може бити дуплирана");
 regGS("Section $1 has been duplicated to $2. $3 of $4", "рубрика $1 је дуплирана у $2. $3 од $4");
 regGS("You do not have the right to modify sections.", "Немате право да мењате рубрике.");
+regGS("Delete all articles from the section.", "Обриши све чланке из рубрике.");
+regGS("A total of $1 articles were deleted.", "Укупно је обрисано $1 чланак(а).");
+regGS("Duplicate Section:", "Дуплирај рубрику:");
+regGS("Existing Section", "Рубрика постоји");
+regGS("Go to new section", "Иди у нову рубрику");
+regGS("Go to source section", "Иди у почетну рубрику");
+regGS("New Section", "Нова рубрика");
+regGS("Please select either '$1' or '$2'.", "Изаберите '$1' или '$2'.");
+regGS("Select destination section:", "Изаберите циљну рубрику");
+regGS("OR", "ИЛИ");
+regGS("Short Name", "Скраћено име");
+regGS("The section number specified already exists, please specify a different value or use the dropdown to find an existing section.", "Наведени број рубрике већ постоји - изаберите другу вредност или користите падајући мени за избор постојеће рубрике.");
+regGS("Warning", "Упозорење");
+regGS("You must select a section.", "Морате изабрати рубрику");
+regGS("You must specify a name for the section.", "Морате унети име рубрике.");
+regGS("Destination section number", "Број циљне рубрике");
 ?>

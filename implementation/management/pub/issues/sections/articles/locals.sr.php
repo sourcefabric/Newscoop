@@ -1,6 +1,5 @@
 <?php
-regGS("Article Type", "");
-regGS("Are you sure you want to delete this scheduled action?", "");
+regGS("Article Type", "Тип чланка");
 regGS("$1 articles found", "Пронађено је $1 чланака");
 regGS("Show article on front page", "Прикажи чланак на почетној страни");
 regGS("Show article on section page", "Прикажи чланак на страни рубрике");
@@ -24,4 +23,11 @@ regGS("The article cannot be updated or no changes have been made.", "Члана
 regGS("Duplicate article", "дуплирај чланак");
 regGS("The destination section is the same as the source section.", "Циљна рубрика је иста као матична рубрика.");
 regGS("The article is new; it is not possible to schedule it for automatic publishing.", "Чланак има статус нови; није могуће заказати му акцију аутоматског објављивања.");
+regGS("No article types were defined. You must create an article type first.", "Нема дефинисаних типова чланака. Морате креирати неки.");
+regGS("Edit article types", "Прикажи типове чланака");
+regGS("Could not save the article. It has been locked by $1 $2 hours and $3 minutes ago.", "Чланак не може бити снимљен. Закључан је од стране $1 пре $2 часова и $3 минута.");
+regGS("You do not have the right to change this article status. Once submitted an article can only changed by authorized users.", "Немате право да мењате статус чланка. Предатом чланку статус може променити само овлашћени корисник.");
+regGS("You do not have the right to delete articles.", "Немате право да бришете чланке.");
+regGS("You must select an article type.", "Морате изабрати тип чланка.");
+regGS("Are you sure you want to delete this scheduled action?", " ");
 ?>
