@@ -110,7 +110,7 @@ foreach ($publications as $publication) {
 			<?php  } ?>
 
 			<?php  if ($User->hasPermission("ManageUsers")) { ?>	
-	    	['<img src="/<?php p($ADMIN); ?>/img/icon/add_user.png"  width="22" height="22"/>', '<?php putGS("Add new user account"); ?>', '/<?php p($ADMIN); ?>/users/add.php?Back=<?php  print urlencode($_SERVER['REQUEST_URI']); ?>'],
+	    	['<img src="/<?php p($ADMIN); ?>/img/icon/add_user.png"  width="22" height="22"/>', '<?php putGS("Add new user account"); ?>', '/<?php p($ADMIN); ?>/users/edit.php?uType=Staff&Back=<?php  print urlencode($_SERVER['REQUEST_URI']); ?>'],
 			<?php  } ?>
 			
 			<?php  if ($User->hasPermission("ManageUserTypes")) { ?>	
@@ -126,10 +126,10 @@ foreach ($publications as $publication) {
 			<?php  } ?>
 		
 			<?php  if ($User->hasPermission("ManageLanguages")) { ?>	
-	    	['<img src="/<?php p($ADMIN); ?>/img/icon/add_language.png"  width="22" height="22"/>', '<?php putGS("Add new language"); ?>', '/<?php p($ADMIN); ?>/languages/add.php?Back=<?php  print urlencode($_SERVER['REQUEST_URI']); ?>'],
+	    	['<img src="/<?php p($ADMIN); ?>/img/icon/add_language.png"  width="22" height="22"/>', '<?php putGS("Add new language"); ?>', '/<?php p($ADMIN); ?>/languages/add_modify.php?Back=<?php  print urlencode($_SERVER['REQUEST_URI']); ?>'],
 			<?php  } ?>
 			
-	    	['<img src="/<?php p($ADMIN); ?>/img/icon/change_password.png"  width="22" height="22"/>', '<?php putGS('Change your password'); ?>', '/<?php p($ADMIN); ?>/users/chpwd.php']
+	    	['<img src="/<?php p($ADMIN); ?>/img/icon/change_password.png"  width="22" height="22"/>', '<?php putGS('Change your password'); ?>', '/<?php p($ADMIN); ?>/users/edit.php?uType=Staff&User=<?php echo $User->getId(); ?>']
 	    ],
 	    <?php if ($showConfigureMenu) { ?>
 	    _cmSplit,
