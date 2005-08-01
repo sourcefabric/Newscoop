@@ -2792,7 +2792,10 @@ int CActURIPath::takeAction(CContext& c, sockstream& fs)
 //		sockstream& fs - output stream	
 int CActURI::takeAction(CContext& c, sockstream& fs)
 {
-	m_coURIPath.takeAction(c, fs);
+	if (m_nImageNr > 0)
+		fs << "/cgi-bin/get_img";
+	else
+		m_coURIPath.takeAction(c, fs);
 	stringstream coURLParametersStr;
 	m_coURLParameters.takeAction(c, coURLParametersStr);
 	if (coURLParametersStr.str() != "")
