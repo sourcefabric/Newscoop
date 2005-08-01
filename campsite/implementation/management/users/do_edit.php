@@ -9,11 +9,6 @@ list($access, $User) = check_basic_access($_REQUEST);
 read_user_common_parameters(); // $uType, $userOffs, $lpp, search parameters
 verify_user_type();
 compute_user_rights($User, $canManage, $canDelete);
-if (!$canManage) {
-	$errMsg = getGS('You do not have the right to change user account information.');
-	CampsiteInterface::DisplayError($errMsg);
-	exit;
-}
 
 $userId = Input::Get('User', 'int', 0);
 $editUser = new User($userId);
@@ -21,6 +16,13 @@ if ($editUser->getUserName() == '') {
 	CampsiteInterface::DisplayError(getGS('No such user account.'));
 	exit;
 }
+
+if (!$canManage && $editUser->getId() != $User->getId()) {
+	$errMsg = getGS('You do not have the right to change user account information.');
+	CampsiteInterface::DisplayError($errMsg);
+	exit;
+}
+
 $typeParam = 'uType=' . urlencode($uType);
 $isReader = $uType == 'Readers' ? 'Y' : 'N';
 $setPassword = Input::Get('setPassword', 'string', 'false') == 'true';
@@ -76,7 +78,7 @@ $logtext = getGS('User account information changed for $1', $editUser->getUserNa
 Log::Message($logtext, $User->getUserName(), 56);
 
 
-if ($editUser->isAdmin() && $customizeRights) {
+if ($editUser->isAdmin() && $customizeRights && $canManage) {
 	// save user customized rights
 	$rightsFields = array('ManagePub'=>'N', 'DeletePub'=>'N', 'ManageIssue'=>'N',
 		'DeleteIssue'=>'N', 'ManageSection'=>'N', 'DeleteSection'=>'N', 'AddArticle'=>'N',
@@ -102,18 +104,18 @@ if ($editUser->isAdmin() && $customizeRights) {
 	}
 	
 	$queryStr = "UPDATE UserPerm SET " . substr($queryStr, 2) ." WHERE IdUser = $userId";
-	$Campsite['db']->Execute($queryStr);
-	
-	if ($AFFECTED_ROWS >= 0) {
+	if ($Campsite['db']->Execute($queryStr)) {
 		$logtext = getGS('Permissions for $1 changed',$editUser->getUserName());
 		Log::Message($logtext, $User->getUserName(), 55);
 	}
 }
-if ($editUser->isAdmin() && !$customizeRights) {
+if ($editUser->isAdmin() && !$customizeRights && $canManage) {
 	// save user rights based on existing user type
 	$userTypeName = Input::Get('UserType', 'string', '');
 	if ($userTypeName != "") {
 		$editUser->setUserType($userTypeName);
+		$logtext = getGS('Permissions for $1 changed',$editUser->getUserName());
+		Log::Message($logtext, $User->getUserName(), 55);
 	}
 }
 

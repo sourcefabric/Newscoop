@@ -9,7 +9,7 @@ if (!isset($editUser) || gettype($editUser) != 'object') {
 }
 $isNewUser = $editUser->getUserName() == '';
 compute_user_rights($User, $canManage, $canDelete);
-if (!$canManage) {
+if (!$canManage && $editUser->getId() != $User->getId()) {
 	if ($isNewUser) {
 		$error = getGS("You do not have the right to create user accounts.");
 	} else {
@@ -332,7 +332,7 @@ CampsiteInterface::CreateSelect("EmployerType", $employerTypes,
 	</td>
 </tr>
 <?php
-if ($editUser->isAdmin()) {
+if ($editUser->isAdmin() && $canManage) {
 ?>
 <input type="hidden" name="customizeRights" id="customize_rights" value="false">
 <tr id="user_type_dialog">
