@@ -1,56 +1,69 @@
-2.3.0 (July XX, 2005)
+2.3.0 (August 1, 2005)
     2.3.0 New Features
     - User Management v2
-        #0307: Separation of Staff & Subscribers
-        Ability to search users 
-        New, easier-to-use interface
-        #0764: Categorize user-rights list
+        - #0307: Separation of Staff & Subscribers
+        - Ability to search users 
+        - New, easier-to-use interface
+        - #0764: Categorize user-rights list
     - Localizer v2
-        New, easier-to-use interface
-        Ability to translate from any language to any other language
-        Ability to change your default language
-        Notification of missing strings
-        Notification of unused strings
+        - New, easier-to-use interface
+        - Ability to translate from any language to any other language
+        - Ability to change your default language
+        - Notification of missing strings
+        - Notification of unused strings
     - WYSIWYG Text editor
-        Editor changed from HTMLArea to Xinha, a more dynamically supported project 
-        Added “Paste from Word” ability – will strip the MSWord styles
-        Internal links support “target”
+        - Editor changed from HTMLArea to Xinha, a more dynamically 
+          supported project 
+        - Added “Paste from Word” ability – will strip the MSWord styles
+        - Internal links support “target”
     - #0710: Online help with user comments
-    - #1115: Show recently published articles, pending actions on the home page
+    - #1115: Show recently published articles, pending actions on the 
+             home page
     - #0703: Article List: Show article lock state
     - #0781: Allow the user to set the default instance parameters
     - #0790: Login screen remembers your previous language choice
     - #0742: Language names now appear in native languages in all lists
-    - #1052: Change all database text input fields to use 255 characters so as to support other languages better
+    - #1052: Change all database text input fields to use 255 characters 
+             so as to support other languages better
     - #1077: Testing checklist
     - “Duplicate Section” screen useability improvements
-    - #1185: Ability to delete all articles in a section when you delete the section
-
+    - #1185: Ability to delete all articles in a section when you delete 
+             the section
+    - Works with SSL
+    
     2.3.0 Major Bug Fixes
     - #1051: PHPWrapper broken
     - #0901: In Article List, articles should be shown newest first
-    - #1132: Article Edit -> Topics -> Topics don't show & you cant add them
+    - #1132: Article Edit -> Topics -> Topics don't show & you cant 
+             add them
     - #0849: "Unlock" doesn't work
-    - #0416: When importing into the database, don't send an email for every imported article
     - #0812: Duplicating a section is broken
-    - #1273: If Scheduled Publishing cron job is stopped for any reason, scheduled actions may never be performed
+    - #1273: If Scheduled Publishing cron job is stopped for any reason, 
+             scheduled actions may never be performed
     
     2.3.0 Minor Bug Fixes/Tweaks
     - #1280: When translating issues the URL name is not set
-    - #0737: You should not have to fill in "currency" when you modify a publication
+    - #0737: You should not have to fill in "currency" when you modify 
+             a publication
     - #1102: Change "Short Name" to "URL Name"
     - #1174: Change "Automatic Publishing" to "Scheduled Publishing"
-    - #1098: No confirmation when deleting an Issue "automatic publishing" action
-    - #1097: After publishing/unpublishing an issue, the confirmation message is exact opposite of what it should be
+    - #1098: No confirmation when deleting an Issue "automatic 
+             publishing" action
+    - #1097: After publishing/unpublishing an issue, the confirmation  
+             message is exact opposite of what it should be
     - #0851: Clicking on the campsite logo should bring you "home"
     - #0850: Article -> Automatic Publishing -> Cancel -> error
     - #0844: Default image archive to show most recently added images
     - #0735: Translated issues are not grouped together
-    - #1135: Article Edit -> Images-> Add existing -> edit -> save -> returns you to the article image list screen
-    - #1131: Scheduled Publishing: When editing an entry, clicking "cancel" takes you to the article list
+    - #1135: Article Edit -> Images-> Add existing -> edit -> save -> 
+             returns you to the article image list screen
+    - #1131: Scheduled Publishing: When editing an entry, clicking  
+             "cancel" takes you to the article list
     - “Automatic Publishing” changed to “Scheduled Publishing”
-    - #1190: Deleting an article from article list moves you back to the beginning of the article list
-    - #1304: If "Manage templates" permission is OFF, and "Delete Templates" permission is ON, you cant get to template screen 
+    - #1190: Deleting an article from article list moves you back to the 
+             beginning of the article list
+    - #1304: If "Manage templates" permission is OFF, and "Delete  
+             Templates" permission is ON, you cant get to template screen 
 
 2.2.2 (April 29, 2005)
     - updated FreeBSD install documentation
