@@ -549,7 +549,8 @@ function fill_missing_parameters(&$p_defined_parameters)
 		'--parser_port'=>'PARSER_PORT', '--parser_max_threads'=>'PARSER_MAX_THREADS',
 		'--smtp_server_address'=>'SMTP_SERVER_ADDRESS',
 		'--smtp_server_port'=>'SMTP_SERVER_PORT',
-		'--apache_user'=>'APACHE_USER', '--apache_group'=>'APACHE_GROUP');
+		'--apache_user'=>'APACHE_USER', '--apache_group'=>'APACHE_GROUP',
+		'--etc_dir'=>'ETC_DIR');
 	foreach ($g_instance_parameters as $param_index=>$param_name) {
 		if (!array_key_exists($param_name, $p_defined_parameters)) {
 			$param_value = $g_parameters_defaults[$param_name];
@@ -557,6 +558,9 @@ function fill_missing_parameters(&$p_defined_parameters)
 				$param_value = $Campsite[substr($param_value, 3)];
 			}
 			$p_defined_parameters[$param_name] = $param_value;
+		}
+		if (!array_key_exists($param_name, $params)) {
+			continue;
 		}
 		$Campsite[$params[$param_name]] = $p_defined_parameters[$param_name];
 	}
