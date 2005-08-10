@@ -78,7 +78,9 @@ elseif (($extension == '.php') || ($extension == '')) {
 	// Verify the file exists
 	$path_name = $Campsite['HTML_DIR'] . "/$ADMIN_DIR/$call_script";
 	if (!file_exists($path_name)) {
-	    die();
+		header("HTTP/1.1 404 Not found");
+		print("<h1>404 Not found</h1>\n");
+		die("The page $ADMIN_DIR/$call_script could not be found");
 	}
 	
 	// Clean up the global namespace before we call the script
