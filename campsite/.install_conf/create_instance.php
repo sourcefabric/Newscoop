@@ -615,6 +615,10 @@ function read_cmdline_parameters($p_arguments, &$p_errors)
 	for ($arg_n = 1; $arg_n < sizeof($p_arguments); $arg_n++) {
 		// read the parameter name
 		$param_name = $p_arguments[$arg_n];
+		if ($param_name == '--help') {
+			print_usage();
+			exit(0);
+		}
 		if (!in_array($param_name, $g_instance_parameters)) {
 			$p_errors[] = "Invalid parameter '$param_name'";
 			continue;
