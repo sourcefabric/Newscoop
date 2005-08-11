@@ -393,27 +393,6 @@ xinha_init = xinha_init ? xinha_init : function()
    * Xinha editors.
    ************************************************************************/
   HTMLArea.startEditors(xinha_editors);
-  	<?php
-  	// Warning: you are about to witness a huge hack!
-	// This quickly flips the htmlareas between text mode
-	// and wysiwyg mode so that when there are more than
-	// one on a page, they are all editable.
-//	if (count($xinhaEditors) > 0) {
-//		$firstEditor = array_shift($xinhaEditors);
-//		?>
-//		xinha_editors["<?php p(str_replace("'", "", $firstEditor)); ?>"].generate();		
-//		<?php
-//		$count = 1;
-//		foreach ($xinhaEditors as $field) {
-//			?>
-//			//setTimeout(function() {
-//					//xinha_editors["<?php p(str_replace("'", "", $field)); ?>"].generate();
-//				//}, <?php p($count++*300); ?>);
-//				
-//			<?php
-//		}
-//	}
-	?>  
 }
 
 window.onload = xinha_init;
