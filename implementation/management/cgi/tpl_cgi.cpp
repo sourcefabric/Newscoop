@@ -51,16 +51,16 @@ using std::stringstream;
 using std::ios_base;
 
 
-void ReadConf(string& p_rcoIP, int& p_rnPort);
+void ReadConf(string& p_rcoIP, int& p_rnPort, string& p_rcoBinDir);
 int ReadParameters(char** p_ppchMsg, int* p_pnSize, const char** p_ppchErrMsg);
 
 
 int main()
 {
 	cout << "Content-type: text/html; charset=UTF-8\n\n";
-	string coIP;
+	string coIP, coBinDir;
 	int nPort;
-	ReadConf(coIP, nPort);
+	ReadConf(coIP, nPort, coBinDir);
 	int nErrNo;
 	int nSize;
 	char* pchMsg;
@@ -86,45 +86,52 @@ int main()
 	FD_ZERO(&clSet);
 	CTCPSocket coSock;
 	ulint nTotalReceived = 0;
-	for (int nRepeat = 0; nRepeat < 10 && nTotalReceived == 0; nRepeat++)
+	try
 	{
-		try
+		coSock.Connect(coIP.c_str(), nPort);
+		coSock.Send(coMsg.str().c_str(), nSize + 10);
+		FD_SET((SOCKET)coSock, &clSet);
+		for (;;)
 		{
-			coSock.Connect(coIP.c_str(), nPort);
-			coSock.Send(coMsg.str().c_str(), nSize+10);
-			FD_SET((SOCKET)coSock, &clSet);
-			for (;;)
+			if (select(FD_SETSIZE, &clSet, NULL, NULL, &tVal) == -1
+				|| !FD_ISSET((SOCKET)*coSock, &clSet))
 			{
-				if (select(FD_SETSIZE, &clSet, NULL, NULL, &tVal) == -1
-					|| !FD_ISSET((SOCKET)*coSock, &clSet))
-				{
-					throw SocketErrorException("Error on select");
-				}
-				char pchBuff[RECV_BUF_LEN + 1];	/* +1 for null char */
-				int nReceived = coSock.Recv(pchBuff, RECV_BUF_LEN);
-				if (nReceived == -1)
-					throw SocketErrorException("Error receiving packet");
-				if (nReceived == 0)
-					break;
-				pchBuff[nReceived] = 0;
-				nTotalReceived += nReceived;
-				cout << pchBuff;
+				throw SocketErrorException("Error on select");
 			}
+			char pchBuff[RECV_BUF_LEN + 1];	/* +1 for null char */
+			int nReceived = coSock.Recv(pchBuff, RECV_BUF_LEN);
+			if (nReceived == -1)
+				throw SocketErrorException("Error receiving packet");
+			if (nReceived == 0)
+				break;
+			pchBuff[nReceived] = 0;
+			nTotalReceived += nReceived;
+			cout << pchBuff;
 		}
-		catch (ConnectRefused& rcoEx)
-		{
-		}
-		catch (SocketErrorException& rcoEx)
-		{
-		}
-		coSock.Close();
-		usleep(200000);
 	}
+	catch (ConnectRefused& rcoEx)
+	{
+		cout << "<font color=\"red\">" << endl;
+		cout << "<h3>Unable to connect to Campsite server, please restart the service.</h3>" << endl;
+		cout << "</font>" << endl << "<h3>Type the following commands in a root shell:</h3>" << endl;
+		cout << "<blockquote>" << endl << "<h3>killall campsite_server</h3>" << endl;
+		cout << "<h3>" << coBinDir << "/campsite_server</h3>" << endl;
+	}
+	catch (SocketErrorException& rcoEx)
+	{
+		cout << "<font color=\"red\">" << endl;
+		cout << "<h3>Error communicating to Campsite server, try restarting the service.</h3>" << endl;
+		cout << "</font>" << endl << "<h3>Type the following commands in a root shell:</h3>" << endl;
+		cout << "<blockquote>" << endl << "<h3>killall campsite_server</h3>" << endl;
+		cout << "<h3>" << coBinDir << "/campsite_server</h3>" << endl;
+	}
+	coSock.Close();
+	usleep(200000);
 	return 0;
 }
 
 
-void ReadConf(string& p_rcoIP, int& p_rnPort)
+void ReadConf(string& p_rcoIP, int& p_rnPort, string& p_rcoBinDir)
 {
 	char* pchDocumentRoot = getenv("DOCUMENT_ROOT");
 	try
@@ -135,9 +142,14 @@ void ReadConf(string& p_rcoIP, int& p_rnPort)
 		p_rcoIP = CSocket::IPAddress(pchHostName);
 
 		// read parser configuration
+		string coInstallConfFile = string(pchDocumentRoot) + "/install_conf.php";
+		ConfAttrValue m_coInstallAttributes(coInstallConfFile);
+		p_rcoBinDir = m_coInstallAttributes.valueOf("BIN_DIR");
+
+		// read parser configuration
 		string coParserConfFile = string(pchDocumentRoot) + "/parser_conf.php";
-		ConfAttrValue m_coAttributes(coParserConfFile);
-		p_rnPort = atoi(m_coAttributes.valueOf("PARSER_PORT").c_str());
+		ConfAttrValue m_coParserAttributes(coParserConfFile);
+		p_rnPort = atoi(m_coParserAttributes.valueOf("PARSER_PORT").c_str());
 	}
 	catch (ConfException& rcoEx)
 	{
