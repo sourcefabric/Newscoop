@@ -461,7 +461,7 @@ function create_virtual_host(&$p_defined_parameters)
 	chgrp($instance_vhost, $Campsite['APACHE_GROUP']);
 
 	$info_messages[] = "The apache virtual host configuration file:\n\t$instance_vhost\nwas created.";
-	$info_messages[] = "Please edit it and replace \$SERVER_ADDRESS and \$SERVER_NAME with\nappropriate values.";
+	$info_messages[] = "Please edit it and replace \$SERVER_NAME with the appropriate value.";
 
 	return 0;
 }
