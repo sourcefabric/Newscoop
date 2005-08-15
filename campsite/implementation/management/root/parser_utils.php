@@ -17,7 +17,14 @@ function send_message_to_parser($msg, $close_socket = false)
 
 	@$socket = fsockopen('127.0.0.1', $Campsite['PARSER_PORT'], $errno, $errstr, 30);
 	if (!$socket) {
-		die("$errstr ($errno)\n");
+		echo "<p>$errstr ($errno)</p>\n<font color=\"red\">\n";
+		echo "<h3>Unable to connect to Campsite server, please re-start the service.</h3>\n</font>\n";
+		echo "<h3>Type the following commands in a root shell:</h3>\n";
+		echo "<blockquote>\n";
+		echo "<h3>killall campsite_server</h3>\n";
+		echo "<h3>" . $Campsite['BIN_DIR'] . "/campsite_server</h3>\n";
+		echo "</blockquote>\n";
+		exit(0);
 	} else {
 		debug_msg("OK.");
 	}
