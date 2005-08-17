@@ -539,8 +539,8 @@ function fill_missing_parameters(&$p_defined_parameters)
 		$p_defined_parameters['--smtp_server_address'] = $CampsiteOld['SMTP_SERVER'];
 	}
 	if (!$apache_defined && read_old_config($old_conf_dir, 'parser', $CampsiteOld)) {
-		$p_defined_parameters['--apache_user'] = $CampsiteOld['USER'];
-		$p_defined_parameters['--apache_group'] = $CampsiteOld['GROUP'];
+		$p_defined_parameters['--apache_user'] = $CampsiteOld['PARSER_USER'];
+		$p_defined_parameters['--apache_group'] = $CampsiteOld['PARSER_GROUP'];
 	}
 
 	$params = array('--db_server_address'=>'DATABASE_SERVER_ADDRESS',
