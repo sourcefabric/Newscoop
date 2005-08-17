@@ -542,6 +542,7 @@ function fill_missing_parameters(&$p_defined_parameters)
 		$p_defined_parameters['--apache_user'] = $CampsiteOld['PARSER_USER'];
 		$p_defined_parameters['--apache_group'] = $CampsiteOld['PARSER_GROUP'];
 	}
+	read_old_config("$old_conf_dir/install", '.modules', $CampsiteOld);
 
 	$params = array('--db_server_address'=>'DATABASE_SERVER_ADDRESS',
 		'--db_server_port'=>'DATABASE_SERVER_PORT', '--db_user'=>'DATABASE_USER',
