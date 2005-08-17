@@ -844,7 +844,7 @@ fi
 echo "Current $module configuration:"
 modules_conf $module
 [ $? -ne 0 ] && return 1
-echo -e "\nSelect\t1 - to modify configuration\n\t0 - to exit"
+echo -e "\nSelect\t1 - Modify these options\n\t0 - Continue to the next step"
 return 0
 }
 # END OF module_config_menu
@@ -857,7 +857,7 @@ install_config_menu()
 {
 echo "Current install configuration:"
 install_conf $module
-echo -e "\nSelect\t1 - to modify configuration\n\t0 - to exit"
+echo -e "\nSelect\t1 - Modify these options\n\t0 - Continue to the next step"
 return 0
 }
 # END OF install_config_menu

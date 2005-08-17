@@ -79,7 +79,7 @@ while true; do
 	cc_index=`expr $cc_index + 1`
     done
     cc_index=`expr $cc_index - 1`
-    echo -e "\nMenu\n\t1. Configure a module\n\t0. Exit module configuration"
+    echo -e "\nSelect\n\t1 - Modify these options\n\t0 - Continue to the next step"
     echo -e -n "$cc_err_msg\nSelect a choice: "
     read -r choice
     if [ "$choice" != "0" ] && [ "$choice" != "1" ]; then
