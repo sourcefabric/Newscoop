@@ -15,8 +15,6 @@ regGS("The subscription could not be added.", "The subscription could not be add
 regGS("Please check if there isn't another subscription to the same publication.", "Please check if there isn't another subscription to the same publication.");
 regGS("Change subscription status", "Change subscription status");
 regGS("You do not have the right to change subscriptions status.", "You do not have the right to change subscriptions status.");
-regGS("Are you sure you want to deactivate the subscription?", "Are you sure you want to deactivate the subscription?");
-regGS("Are you sure you want to activate the subscription?", "Are you sure you want to activate the subscription?");
 regGS("Changing subscription status", "Changing subscription status");
 regGS("The subscription has been activated.", "The subscription has been activated.");
 regGS("The subscription has been deactivated.", "The subscription has been deactivated.");
