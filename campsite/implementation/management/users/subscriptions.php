@@ -58,7 +58,11 @@ if ($NUM_ROWS) {
 			?>
 		</TD>
 		<TD ALIGN="CENTER">
-			<A HREF="/<?php echo $ADMIN; ?>/users/subscriptions/status.php?User=<?php echo $editUser->getId(); ?>&Subs=<?php pgetUVar($q_subs,'Id'); ?>"><?php if (getVar($q_subs,'Active') == "Y") { ?>Yes<?php  } else { ?>No<?php  } ?></A>
+		<?php if (getVar($q_subs,'Active') == "Y") { ?>
+			<a href="/<?php echo $ADMIN; ?>/users/subscriptions/do_status.php?User=<?php echo $editUser->getId(); ?>&Subs=<?php pgetUVar($q_subs,'Id'); ?>" onclick="return confirm('<?php putGS('Are you sure you want to deactivate the subscription?'); ?>');"><?php putGS('Yes'); ?></a>
+		<?php } else { ?>
+			<a href="/<?php echo $ADMIN; ?>/users/subscriptions/do_status.php?User=<?php echo $editUser->getId(); ?>&Subs=<?php pgetUVar($q_subs,'Id'); ?>" onclick="return confirm('<?php putGS('Are you sure you want to activate the subscription?'); ?>');"><?php putGS('No');?></a>
+		<?php } ?>
 		</TD>
 		<TD ALIGN="CENTER">
 			<A HREF="/<?php echo $ADMIN; ?>/users/subscriptions/do_del.php?User=<?php echo $editUser->getId(); ?>&Subs=<?php pgetUVar($q_subs,'Id'); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the subscription to the publication $1?', getHVar($q_pub,'Name')); ?>');">
