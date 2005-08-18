@@ -367,4 +367,6 @@ regGS("No such issue.", "No such issue.");
 regGS("No such section.", "No such section.");
 regGS("Are you sure you want to delete the subscription to the publication $1?", "Are you sure you want to delete the subscription to the publication $1?");
 regGS("Are you sure you want to delete the image \\'$1\\'?", "Are you sure you want to delete the image \\'$1\\'?");
+regGS("Are you sure you want to deactivate the subscription?", "Are you sure you want to deactivate the subscription?");
+regGS("Are you sure you want to activate the subscription?", "Are you sure you want to activate the subscription?");
 ?>
