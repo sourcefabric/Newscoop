@@ -275,8 +275,10 @@ int RunParser(MYSQL* p_pSQL, CURL* p_pcoURL, const char* p_pchRemoteIP, sockstre
 		pcoCtx->DefURL()->deleteParameter(P_SUBSCRIBE);
 	}
 	lint nIdUserIP = -1;
-	sprintf(pchBuf, "select IdUser from SubsByIP where StartIP <= %lu and "
-	        "%lu <= (StartIP + Addresses - 1)", pcoCtx->IP(), pcoCtx->IP());
+	sprintf(pchBuf, "select SIP.IdUser from SubsByIP as SIP left join Subscriptions S "
+			"on SIP.IdUser = S.IdUser where SIP.StartIP <= %lu and "
+			"%lu <= (SIP.StartIP + SIP.Addresses - 1) and S.Active = 'Y'",
+			pcoCtx->IP(), pcoCtx->IP());
 	SQLQuery(p_pSQL, pchBuf);
 	StoreResult(p_pSQL, coSqlRes);
 	if (mysql_num_rows(*coSqlRes) > 0)

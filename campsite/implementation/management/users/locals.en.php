@@ -81,4 +81,5 @@ regGS("The confirm password must be at least 6 characters long and both password
 regGS("You must input a number between 0 and 255 into the Start IP address' $1 field.", "You must input a number between 0 and 255 into the Start IP address' $1 field.");
 regGS("Delete subscriptions to $1", "Delete subscriptions to $1");
 regGS("Change user account information", "Change user account information");
+regGS("The IP address group $1:$2 conflicts with another existing group.", "The IP address group $1:$2 conflicts with another existing group.");
 ?>
