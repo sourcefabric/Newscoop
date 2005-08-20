@@ -4,9 +4,13 @@
  */
 
 
-/**
- * @package Campsite
- */
+function addslashes_walk(&$p_item, $p_key, $p_userData = null)
+{
+	$p_item = str_replace("\\", "\\\\", $p_item);
+	$p_item = str_replace("'", "\\'", $p_item);
+	return true;
+}
+
 class ModuleConfiguration
 {
 	var $m_moduleName;
@@ -132,14 +136,17 @@ class ModuleConfiguration
 		$directory = $p_destDirectory != "" ? $p_destDirectory : $this->m_directory;
 
 		// compute the configuration file path and create the file
+		$variablesList = $this->m_variablesList;
+		array_walk($variablesList, 'addslashes_walk');
 		$file_path = ModuleConfiguration::configurationFilePath($moduleName, $directory);
 		if (!$file = @fopen($file_path, "w+"))
 			return "Unable to create configuration file \"$file_path\"";
 		fputs($file, "<?php\n\n");
 		foreach($this->m_variables as $var_name=>$value)
-			fputs($file, "\$Campsite['$var_name'] = '$value';\n");
-		fputs($file, "\n\$CampsiteVars['$moduleName'] = array('"
-		      . implode("', '", $this->m_variablesList) . "');\n\n?>");
+			fputs($file, "\$Campsite['" . addslashes($var_name) . "'] = '"
+				. addslashes($value) . "';\n");
+		fputs($file, "\n\$CampsiteVars['" . addslashes($moduleName) . "'] = array('"
+		      . implode("', '", $variablesList) . "');\n\n?>");
 		fclose($file);
 		return 0;
 	}
