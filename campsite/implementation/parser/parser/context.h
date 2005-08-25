@@ -743,14 +743,22 @@ public:
 
 inline void CContext::SetURLValue(const string& p_coParam, id_type p_nValue)
 {
-	if (m_pcoURL != NULL)
-		m_pcoURL->replaceValue(p_coParam, p_nValue);
+	if (m_pcoURL != NULL) {
+		if (p_nValue == -1)
+			m_pcoURL->deleteParameter(p_coParam);
+		else
+			m_pcoURL->replaceValue(p_coParam, p_nValue);
+	}
 }
 
 inline void CContext::SetDefURLValue(const string& p_coParam, id_type p_nValue)
 {
-	if (m_pcoDefURL != NULL)
-		m_pcoDefURL->replaceValue(p_coParam, p_nValue);
+	if (m_pcoDefURL != NULL) {
+		if (p_nValue == -1)
+			m_pcoDefURL->deleteParameter(p_coParam);
+		else
+			m_pcoDefURL->replaceValue(p_coParam, p_nValue);
+	}
 }
 
 inline void CContext::EraseURLParam(const string& p_coParam)
