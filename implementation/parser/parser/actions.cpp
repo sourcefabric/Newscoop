@@ -2765,8 +2765,6 @@ int CActURIPath::takeAction(CContext& c, sockstream& fs)
 		SafeAutoPtr<CURL> pcoURL(c.URL()->clone());
 		if (m_nTemplate > 0)
 			pcoURL->setTemplate(m_nTemplate);
-		if (m_nPubLevel <= CMS_PL_ARTICLE)
-			c.SetCurrentField("");
 		if (m_nPubLevel <= CMS_PL_SECTION)
 			pcoURL->deleteParameter(P_NRARTICLE);
 		if (m_nPubLevel <= CMS_PL_ISSUE)
