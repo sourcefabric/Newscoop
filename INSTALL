@@ -76,11 +76,28 @@ INSTALLATION - the usual procedure
    If you are not already logged in as root the installer will prompt
    you for the root password when necessary. Without root access it
    can not install the CAMPSITE application.
-   
+
    IMPORTANT!!!
    If your MySQL configuration is not the default one you'll have to run
    the create instance script separatelly, after installation. Read 
    instructions from install script.
+
+4. Configure the default instance
+
+   - Edit the file "campsite-vhost.conf" from the instance configuration
+   directory (/usr/local/campsite/etc/campsite) and replace $SERVER_NAME
+   with the appropriate value. Your system administrator should provide the
+   server address and server name. The server name must also be registered in
+   the DNS (Domain Name Service).
+
+   - Include the file "campsite-vhost.conf" in the main apache configuration
+   file.
+
+   - Restart the apache server:
+      killall httpd
+      {PATH}/httpd
+   or
+      /etc/rc.d/init.d/httpd restart
 
 Be aware that the Campsite installer does its best to pick reasonable
 defaults in the configuration of the various modules, but that these should
@@ -98,10 +115,10 @@ run:
 /usr/local/campsite/bin/create_instance --db_name [instance_name]
 
 - Edit the file "[instance_name]-vhost.conf" from the instance configuration
-directory (/usr/local/campsite/etc/[instance_name]) and replace $SERVER_ADDRESS
-and $SERVER_NAME with the appropriate values. Your system administrator should
-provide the server address and server name. The server name must also be
-registered in the DNS (Domain Name Service).
+directory (/usr/local/campsite/etc/[instance_name]) and replace $SERVER_NAME
+with the appropriate value. Your system administrator should provide the
+server address and server name. The server name must also be registered in
+the DNS (Domain Name Service).
 
 - Include the file "[instance_name]-vhost.conf" in the main apache
 configuration file.
