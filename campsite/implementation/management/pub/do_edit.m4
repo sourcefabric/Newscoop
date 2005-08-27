@@ -26,6 +26,7 @@ B_BODY
 <?php 
 	todefnum('Pub');
 	todef('cName');
+	todef('cSite');
 	todefnum('cDefaultAlias');
 	todefnum('cLanguage');
 	todefnum('cURLType');

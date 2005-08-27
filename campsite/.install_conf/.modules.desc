@@ -1,26 +1,5 @@
 [
-DATABASE
-# Contains the campsite database. It stores all internal information 
-# (publications, subscriptions etc.). It can be installed separatelly from
-# the other modules. It must be installed on a system running the MySQL server.
-]
-[
 PARSER
-# The server parses the templates and returns an html page. It must be 
-# installed on the same system as the ADMIN_INTERFACE.
-]
-[
-EVENT_HANDLERS
-# Event handlers notify campsite users about changes in campsite database
-# and subscriptions. It can be installed separatelly from the other modules.
-]
-[
-SEARCH_ENGINE
-# Search engine creates an index of keywords for search purposes. It can be 
-# installed separatelly from the other modules.
-]
-[
-ADMIN_INTERFACE
-# Admin interface allowes the administration of campsite publications, 
-# subscriptions, templates etc.
+# The parser interprets the templates and returns an html page. 
+# You will be able to configure which port the daemon will run on.
 ]

@@ -332,7 +332,7 @@ CampsiteInterface::CreateSelect("EmployerType", $employerTypes,
 	</td>
 </tr>
 <?php
-if ($editUser->isAdmin() && $canManage) {
+if ($editUser->isAdmin() /*&& $canManage*/) {
 ?>
 <input type="hidden" name="customizeRights" id="customize_rights" value="false">
 <tr id="user_type_dialog">

@@ -5,6 +5,10 @@ require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/lib_campsite.php");
 include($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/languages.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
 
+// Delete any cookies they currently have.
+setcookie("TOL_UserId", "", time() - 86400);
+setcookie("TOL_UserKey", "", time() - 86400);
+
 // Special case for the login screen:
 // We have to figure out what language to use.
 // If they havent logged in before, we should try to display the
