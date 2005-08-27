@@ -29,8 +29,11 @@ $Campsite['CGI_DIR'] = $Campsite['WWW_DIR'].'/'.$Campsite['DATABASE_NAME'].'/cgi
 $ADMIN_DIR = "admin-files";
 $ADMIN = "admin";
 
-$scheme = $_SERVER['SERVER_PORT'] == 80 ? 'http://' : 'https://';
+$scheme = $_SERVER['SERVER_PORT'] == 443 ? 'https://' : 'http://';
 $Campsite['HOSTNAME'] = $_SERVER['SERVER_NAME'];
+if (($_SERVER['SERVER_PORT'] != 80) && ($_SERVER['SERVER_PORT'] != 443)) {
+    $Campsite['HOSTNAME'] .= ':'.$_SERVER['SERVER_PORT'];
+}
 $Campsite['WEBSITE_URL'] = $scheme.$Campsite['HOSTNAME'];
 unset($scheme);
 
