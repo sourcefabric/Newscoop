@@ -25,6 +25,7 @@ B_BODY
 	todefnum('cSectionTplId');
 	todefnum('cArticleTplId');
 	todef('cShortName');
+	todef('cSubs');
 ?>dnl
 
 B_HEADER(<*Updating section name*>)
