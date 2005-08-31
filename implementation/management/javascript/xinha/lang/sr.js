@@ -43,7 +43,7 @@
 		"Cut selection": "Исеци изабрано",
 		"Copy selection": "Копирај изабрано",
 		"Paste from clipboard": "Залепи из клипборда",
-		"Direction left to right": "Правац с десна на лево"
+		"Direction left to right": "Правац с десна на лево",
 		"Direction right to left": "",
         "Remove formatting": "",
         "Select all": "",
