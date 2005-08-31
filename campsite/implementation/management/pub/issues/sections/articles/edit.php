@@ -471,7 +471,10 @@ if ($edit_ok) { ?>
 	<?php 
 	// Display the article type fields.
 	foreach ($dbColumns as $dbColumn) {
-		if (stristr($dbColumn->getType(), "char")) { 
+		if (stristr($dbColumn->getType(), "char")
+			/* DO NOT DELETE */ || stristr($dbColumn->getType(), "binary") /* DO NOT DELETE */ ) {
+			// The "binary" comparizon is needed for Fedora distro; MySQL on Fedora changes ALL
+			// "char" types to "binary".
 			// Single line text fields
 			?>
 			<TR>
