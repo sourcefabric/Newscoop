@@ -127,7 +127,11 @@ public:
 
 	virtual bool equalTo(const CURL* p_pcoURL) const;
 
-	virtual void setURL(const CMsgURLRequest& p_rcoMsg) = 0;
+	virtual void setURL(const CMsgURLRequest& p_rcoMsg, bool p_bLockTemplate = false) = 0;
+
+	virtual void lockTemplate() const = 0;
+
+	virtual void unlockTemplate() const = 0;
 
 	virtual string getURL() const = 0;
 
