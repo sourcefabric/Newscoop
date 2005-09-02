@@ -41,16 +41,17 @@ CURLShortNames::CURLShortNames(const CURLShortNames& p_rcoSrc)
 	m_pDBConn = p_rcoSrc.m_pDBConn;
 	m_coHTTPHost = p_rcoSrc.m_coHTTPHost;
 	m_coTemplate = p_rcoSrc.m_coTemplate;
-	m_bTemplateSet = p_rcoSrc.m_bTemplateSet;
+	m_bLockTemplate = p_rcoSrc.m_bLockTemplate;
 	m_bValidTemplate = p_rcoSrc.m_bValidTemplate;
 }
 
 
 // setURL(): sets the URL object value
-void CURLShortNames::setURL(const CMsgURLRequest& p_rcoURLMessage)
+void CURLShortNames::setURL(const CMsgURLRequest& p_rcoURLMessage, bool p_bLockTemplate)
 {
 	m_coTemplate = "";
-	m_bTemplateSet = false;
+	m_bValidTemplate = false;
+	m_bLockTemplate = p_bLockTemplate;
 	m_coDocumentRoot = p_rcoURLMessage.getDocumentRoot();
 	m_coPathTranslated = p_rcoURLMessage.getPathTranslated();
 	m_coHTTPHost = p_rcoURLMessage.getHTTPHost();
@@ -238,7 +239,7 @@ string CURLShortNames::setTemplate(const string& p_rcoTemplate) throw (InvalidVa
 	if (p_rcoTemplate == "")
 	{
 		m_bValidTemplate = false;
-		m_bTemplateSet = false;
+		m_bLockTemplate = false;
 		return getTemplate();
 	}
 
@@ -258,7 +259,7 @@ string CURLShortNames::setTemplate(const string& p_rcoTemplate) throw (InvalidVa
 		throw InvalidValue("template name", p_rcoTemplate.c_str());
 	m_coTemplate = coTemplate;
 	m_bValidTemplate = true;
-	m_bTemplateSet = true;
+	m_bLockTemplate = true;
 	return m_coTemplate;
 }
 
@@ -272,7 +273,7 @@ string CURLShortNames::setTemplate(id_type p_nTemplateId) throw (InvalidValue)
 		throw InvalidValue("template identifier", (string)Integer(p_nTemplateId));
 	m_coTemplate = qRow[0];
 	m_bValidTemplate = true;
-	m_bTemplateSet = true;
+	m_bLockTemplate = true;
 	return m_coTemplate;
 }
 

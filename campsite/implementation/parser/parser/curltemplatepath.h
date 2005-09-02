@@ -44,7 +44,7 @@ public:
 	// Needs a database connection pointer to read the publication parameters from
 	// the database.
 	CURLTemplatePath(const CMsgURLRequest& p_rcoURLMessage, MYSQL* p_pDBConn)
-		: m_pDBConn(p_pDBConn), m_bValidTemplate(false), m_bTemplateSet(false)
+		: m_pDBConn(p_pDBConn), m_bValidTemplate(false), m_bLockTemplate(false)
 		{ setURL(p_rcoURLMessage); }
 
 	// CURLTemplatePath(): copy constructor
@@ -56,7 +56,11 @@ public:
 	virtual bool equalTo(const CURL* p_pcoURL) const;
 
 	// setURL(): sets the URL object value
-	virtual void setURL(const CMsgURLRequest& p_rcoURLMessage);
+	virtual void setURL(const CMsgURLRequest& p_rcoURLMessage, bool p_bLockTemplate = false);
+
+	virtual void lockTemplate() const;
+
+	virtual void unlockTemplate() const;
 
 	// getURL(): returns the URL in string format
 	virtual string getURL() const { return m_coHTTPHost + getURI(); }
@@ -87,8 +91,7 @@ private:
 	// BuildURI(): internal method; builds the URI string from object attributes
 	void BuildURI() const;
 
-	virtual void PreSetValue(const string& p_rcoParameter, const string& p_rcoValue)
-	{ m_bValidURI = false; }
+	virtual void PreSetValue(const string& p_rcoParameter, const string& p_rcoValue);
 
 private:
 	mutable bool m_bValidURI;
@@ -100,7 +103,7 @@ private:
 
 private:
 	string m_coHTTPHost;  // stores the HTTP host attribute
-	bool m_bTemplateSet;
+	mutable bool m_bLockTemplate;
 };
 
 
@@ -118,6 +121,25 @@ public:
 
 
 // CURLTemplatePath inline methods
+
+inline void CURLTemplatePath::lockTemplate() const
+{
+	m_bLockTemplate = true;
+}
+
+inline void CURLTemplatePath::unlockTemplate() const
+{
+	m_bLockTemplate = false;
+	m_bValidTemplate = false;
+}
+
+inline void CURLTemplatePath::PreSetValue(const string& p_rcoParameter,
+										  const string& p_rcoValue)
+{
+	m_bValidURI = false;
+	if (!m_bLockTemplate)
+		m_bValidTemplate = false;
+}
 
 inline CURL* CURLTemplatePath::clone() const
 {
