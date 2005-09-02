@@ -70,19 +70,20 @@ int RunParser(MYSQL* p_pSQL, CURL* p_pcoURL, const char* p_pchRemoteIP, sockstre
 	if (p_pSQL == NULL)
 		throw RunException("MYSQL connection not initialised");
 	static const char* ppchParams[PARAM_NR] =
-	    {
-	        "Name", "EMail", "CountryCode", "UName", "Password", "PasswordAgain",
-	        "City", "StrAddress", "State", "Phone", "Fax", "Contact", "Phone2",
-	        "Title", "Gender", "Age", "PostalCode", "Employer", "EmployerType",
-	        "Position", "Interests", "How", "Languages", "Improvements", "Pref1",
-	        "Pref2", "Pref3", "Pref4", "Field1", "Field2", "Field3", "Field4",
-	        "Field5", "Text1", "Text2", "Text3"
-	    };
+	{
+		"Name", "EMail", "CountryCode", "UName", "Password", "PasswordAgain",
+		"City", "StrAddress", "State", "Phone", "Fax", "Contact", "Phone2",
+		"Title", "Gender", "Age", "PostalCode", "Employer", "EmployerType",
+		"Position", "Interests", "How", "Languages", "Improvements", "Pref1",
+		"Pref2", "Pref3", "Pref4", "Field1", "Field2", "Field3", "Field4",
+		"Field5", "Text1", "Text2", "Text3"
+	};
 	static const int errs[ERR_NR] =
-	    {
-	        UERR_NO_NAME, UERR_NO_EMAIL, UERR_NO_COUNTRY, UERR_NO_UNAME,
-	        UERR_NO_PASSWORD, UERR_NO_PASSWORD_AGAIN
-	    };
+	{
+		UERR_NO_NAME, UERR_NO_EMAIL, UERR_NO_COUNTRY, UERR_NO_UNAME,
+		UERR_NO_PASSWORD, UERR_NO_PASSWORD_AGAIN
+	};
+	p_pcoURL->lockTemplate();
 	SafeAutoPtr<CContext> pcoCtx(new CContext);
 	string coStr;
 	bool bDebug = false, bPreview = false, bTechDebug = false;
@@ -366,6 +367,7 @@ int RunParser(MYSQL* p_pSQL, CURL* p_pcoURL, const char* p_pchRemoteIP, sockstre
 		                                           nSection, nArticle, p_pSQL, !bTechDebug);
 		}
 		pcoCtx->URL()->deleteParameter(P_TEMPLATE_ID);
+		pcoCtx->URL()->unlockTemplate();
 		pcoCtx->DefURL()->deleteParameter(P_TEMPLATE_ID);
 		CParser::setMYSQL(p_pSQL);
 #ifdef _DEBUG
