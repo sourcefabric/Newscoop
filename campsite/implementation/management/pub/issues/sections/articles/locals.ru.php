@@ -1,15 +1,5 @@
 <?php
-regGS("You must select an article type.", "Вы должны выбрать тип статьи.");
-regGS("You do not have the right to delete articles.", "Вы не имеете права удалять статьи.");
-regGS("You do not have the right to change this article status. Once submitted an article can only changed by authorized users.", "Вы не имеете права изменять состояние этой статьи. Будучи отправленной статья может быть изменена только уполномоченным пользователем.");
-regGS("No such section.", "Нет такой секции.");
-regGS("No such issue.", "Нет такого выпуска");
-regGS("Name<BR><SMALL>(click to edit)</SMALL>", "Название<BR><SMALL>(щелкните для правки)</SMALL>");
-regGS("Could not save the article.  It has been locked by $1 $2 hours and $3 minutes ago.", "Невозможно сохранить статью. Она была заблокирована пользователем $1 $2 часов и $3 минут назад.");
-regGS("Back to article details", "Назад к подробностям статьи");
-regGS("Article automatic publishing schedule", "Расписание автоматической публикации статей");
 regGS("Article Type", "Тип статьи");
-regGS("Are you sure you want to delete this scheduled action?", "Вы уверены, что хотитее удалить эту запланированную операцию");
 regGS("$1 articles found", "Статей найдено: $1");
 regGS("Show article on front page", "Показать статью на титульной странице");
 regGS("Show article on section page", "Показать статью на странице секции");
@@ -33,4 +23,17 @@ regGS("The article cannot be updated or no changes have been made.", "Стать
 regGS("Duplicate article", "Дублировать статью");
 regGS("The destination section is the same as the source section.", "Секция назначения та же, что и секция источника");
 regGS("The article is new; it is not possible to schedule it for automatic publishing.", "Статья новая, ее невозможно назначить для автоматической публикации.");
+regGS("No article types were defined. You must create an article type first.", "Типы статей не определены. Вы сначала должны создать типы статей.");
+regGS("Edit article types", "Редактировать типы статей");
+regGS("Could not save the article. It has been locked by $1 $2 hours and $3 minutes ago.", "Не удалось сохранить статью. Она заблокирована пользователем $1 $2 часа и $3 минут назад.");
+regGS("You do not have the right to change this article status. Once submitted an article can only changed by authorized users.", "Вы не имеете права изменять состояние этой статьи. Будучи отправленной статья может быть изменена только уполномоченным пользователем.");
+regGS("You do not have the right to delete articles.", "Вы не имеете права удалять статьи.");
+regGS("You must select an article type.", "Вы должны выбрать тип статьи.");
+regGS("No such section.", "Нет такой секции.");
+regGS("No such issue.", "Нет такого выпуска");
+regGS("Name<BR><SMALL>(click to edit)</SMALL>", "Название<BR><SMALL>(щелкните для правки)</SMALL>");
+regGS("Could not save the article.  It has been locked by $1 $2 hours and $3 minutes ago.", "Невозможно сохранить статью. Она была заблокирована пользователем $1 $2 часов и $3 минут назад.");
+regGS("Back to article details", "Назад к подробностям статьи");
+regGS("Article automatic publishing schedule", "Расписание автоматической публикации статей");
+regGS("Are you sure you want to delete this scheduled action?", "Вы уверены, что хотитее удалить эту запланированную операцию");
 ?>

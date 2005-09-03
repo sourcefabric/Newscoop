@@ -1,5 +1,4 @@
 <?php
-regGS("Add new field", "Добавить новое поле");
 regGS("Article type fields", "Поля типов статей");
 regGS("Article type", "Тип статей");
 regGS("No fields.", "Нет полей.");

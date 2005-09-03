@@ -1,6 +1,4 @@
 <?php
-regGS("No such country.", "Нет такой страны.");
-regGS("Name<BR><SMALL>(click to edit)</SMALL>", "Название<BR><SMALL>(щелкните для правки)</SMALL>");
 regGS("No countries.", "Нет стран.");
 regGS("You do not have the right to add countries.", "Вы не имеете права добавления стран.");
 regGS("Adding new country", "Добавление новой страны");
@@ -27,4 +25,6 @@ regGS("The country name $1 has been translated", "Название страны 
 regGS("The country name $1 could not be translated", "Невозможно перевести название страны $1");
 regGS("Country name $1 translated", "Переведено название страны $1");
 regGS("Add New Country", "Добавить новую страну");
+regGS("No such country.", "Нет такой страны.");
+regGS("Name<BR><SMALL>(click to edit)</SMALL>", "Название<BR><SMALL>(щелкните для правки)</SMALL>");
 ?>
