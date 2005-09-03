@@ -96,11 +96,11 @@ function translationForm($p_request)
 	$screens["/globals"] = getGS("Globals");
 	$screens["/"] = getGS("Home");
 	$screens["/pub"] = getGS("Publications");
-	$screens["/pub/issues"] = getGS("Issues");
-	$screens["/pub/issues/sections"] = getGS("Sections");
-	$screens["/pub/issues/sections/articles"] = getGS("Articles");
-	$screens["/pub/issues/sections/articles/images"] = getGS("Article Images");
-	$screens["/pub/issues/sections/articles/topics"] = getGS("Article Topics");
+	$screens["/issues"] = getGS("Issues");
+	$screens["/sections"] = getGS("Sections");
+	$screens["/articles"] = getGS("Articles");
+	$screens["/articles/images"] = getGS("Article Images");
+	$screens["/articles/topics"] = getGS("Article Topics");
 	$screens["/imagearchive"] = getGS("Image Archive");
 	$screens["/templates"] = getGS("Templates");
 	$screens["/a_types"] = getGS("Article Types");

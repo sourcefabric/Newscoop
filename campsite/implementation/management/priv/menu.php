@@ -4,6 +4,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Publication.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Issue.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Section.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/DynMenuItem.php");
 load_common_include_files("$ADMIN_DIR");
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
@@ -30,9 +31,24 @@ $showUserMenu = ($User->hasPermission("ManageUsers")
 	|| $User->hasPermission("ManageUserTypes")
 	|| $User->hasPermission("ManageReaders"));
 	
-$showObsoleteMenu = ($User->hasPermission("ManageDictionary") 
-	|| $User->hasPermission("DeleteDictionary") 
-	|| $User->hasPermission("ManageClasses"));
+$iconTemplateStr = '<img src="/'.$ADMIN.'/img/icon/%s" align="middle" style="padding-bottom: 3px;" width="22" height="22" />';
+
+DynMenuItem::SetMenuType("DynMenuItem_JsCook");
+$menu_root =& DynMenuItem::Create('', '');
+$menu_item =& DynMenuItem::Create(getGS('Home'), "/$ADMIN/home.php", 
+                array('icon' => sprintf($iconTemplateStr, 'home.png'), 'id' => 'home'));
+$menu_root->addItem($menu_item);
+$menu_root->addSplit();
+$menu_content =& DynMenuItem::Create(getGS('Content'), '', 
+                array('icon' => sprintf($iconTemplateStr, 'content.png'), 'id' => 'content'));
+$menu_root->addItem($menu_content);
+$menu_item =& DynMenuItem::Create(getGS('Publications'), "/$ADMIN/pub/index.php", 
+                array('icon' => sprintf($iconTemplateStr, 'publication.png'), 'id' => 'publication'));
+$menu_content->addItem($menu_item);
+$menu_item =& DynMenuItem::Create(getGS('Image Archive'), "/$ADMIN/imagearchive/index.php", 
+                array('icon' => sprintf($iconTemplateStr, 'image_archive.png'), 'id' => 'image_archive'));
+$menu_content->addItem($menu_item);
+$menu_content->addSplit();
 
 $publications =& Publication::GetAllPublications();
 $issues = array();
@@ -47,6 +63,208 @@ foreach ($publications as $publication) {
 				$issue->getIssueId(), $issue->getLanguageId());
 	}
 }
+
+$icon_bullet = '<img src="/'.$ADMIN.'/img/tol.gif" align="middle" style="padding-bottom: 3px;" width="16" height="16" />';
+foreach ($publications as $publication) {
+    $pubId = $publication->getPublicationId();
+    $menu_item_pub =& DynMenuItem::Create(htmlspecialchars($publication->getName()), 
+                                          "/$ADMIN/issues/index.php?Pub=$pubId",
+                                          array("icon" => $icon_bullet));
+    $menu_content->addItem($menu_item_pub);
+	if (isset($issues[$pubId])) {
+		foreach ($issues[$pubId] as $issue) {
+			$issueId = $issue->getIssueId();
+			$languageId = $issue->getLanguageId();
+			$menu_item_issue =& DynMenuItem::Create(htmlspecialchars($issue->getName()),
+			     "/$ADMIN/sections/index.php?Pub=$pubId&Issue=$issueId&Language=$languageId",
+			     array("icon" => $icon_bullet));
+			$menu_item_pub->addItem($menu_item_issue);
+			if (isset($sections[$pubId][$issueId][$languageId])) {
+				foreach ($sections[$pubId][$issueId][$languageId] as $section) {
+				    $sectionId = $section->getSectionId();
+				    $menu_item_section =& DynMenuItem::Create(
+				        htmlspecialchars($section->getName()),
+				        "/$ADMIN/articles/index.php".
+				        "?Pub=$pubId&Issue=$issueId&Language=$languageId&Section=$sectionId",
+				        array("icon" => $icon_bullet));
+				    $menu_item_issue->addItem($menu_item_section);
+				}
+			}
+			$menu_item_issue->addSplit();
+			$menu_item =& DynMenuItem::Create(getGS("More..."), 
+                "/$ADMIN/issues/index.php?Pub=$pubId",
+                array("icon" => $icon_bullet));
+            $menu_item_issue->addItem($menu_item);            
+		}
+	}
+}	    
+$menu_root->addSplit();
+$menu_actions =& DynMenuItem::Create(getGS("Actions"), '', 
+    array("icon" => sprintf($iconTemplateStr, "actions.png"), "id" => "actions"));
+$menu_root->addItem($menu_actions);
+
+if ($User->hasPermission("AddArticle")) { 
+    $menu_item =& DynMenuItem::Create(getGS('Add new article'), "/$ADMIN/pub/add_article.php",
+        array("icon" => sprintf($iconTemplateStr, "actions.png")));
+    $menu_actions->addItem($menu_item);
+}
+    
+if ($User->hasPermission("ManageTempl")) { 
+    $menu_item =& DynMenuItem::Create(getGS('Upload new template'), 
+        "/$ADMIN/templates/upload_templ.php?Path=/look/&Back=".urlencode($_SERVER['REQUEST_URI']),
+        array("icon" => sprintf($iconTemplateStr, "upload_template.png")));
+    $menu_actions->addItem($menu_item);
+}
+    
+if ($User->hasPermission("ManagePub")) { 
+    $menu_item =& DynMenuItem::Create(getGS("Add new publication"), 
+        "/$ADMIN/pub/add.php?Back=".urlencode($_SERVER['REQUEST_URI']),
+        array("icon" => sprintf($iconTemplateStr, "add_publication.png")));
+    $menu_actions->addItem($menu_item);
+}    
+	
+if ($User->hasPermission("ManageUsers")) { 
+    $menu_item =& DynMenuItem::Create(getGS("Add new user account"), 
+        "/$ADMIN/users/edit.php?uType=Staff&Back=".urlencode($_SERVER['REQUEST_URI']),
+        array("icon" => sprintf($iconTemplateStr, "add_user.png")));
+    $menu_actions->addItem($menu_item);
+}    
+	
+if ($User->hasPermission("ManageUserTypes")) { 
+    $menu_item =& DynMenuItem::Create(getGS("Add new user type"), 
+        "/$ADMIN/u_types/add.php?Back=".urlencode($_SERVER['REQUEST_URI']),
+        array("icon" => sprintf($iconTemplateStr, "add_user_type.png")));
+    $menu_actions->addItem($menu_item);
+}    
+	
+if ($User->hasPermission("ManageArticleTypes")) { 
+    $menu_item =& DynMenuItem::Create(getGS("Add new article type"), 
+        "/$ADMIN/a_types/add.php?Back=".urlencode($_SERVER['REQUEST_URI']),
+        array("icon" => sprintf($iconTemplateStr, "add_article_type.png")));
+    $menu_actions->addItem($menu_item);
+}    
+	
+if ($User->hasPermission("ManageCountries")) { 
+    $menu_item =& DynMenuItem::Create(getGS("Add new country"), 
+        "/$ADMIN/country/add.php?Back=".urlencode($_SERVER['REQUEST_URI']),
+        array("icon" => sprintf($iconTemplateStr, "add_country.png")));
+    $menu_actions->addItem($menu_item);
+}    
+	
+if ($User->hasPermission("ManageLanguages")) { 
+    $menu_item =& DynMenuItem::Create(getGS("Add new language"), 
+        "/$ADMIN/languages/add_modify.php?Back=".urlencode($_SERVER['REQUEST_URI']),
+        array("icon" => sprintf($iconTemplateStr, "add_language.png")));
+    $menu_actions->addItem($menu_item);
+}    
+
+$menu_item =& DynMenuItem::Create(getGS("Change your password"), 
+    "/$ADMIN/users/edit.php?uType=Staff&User=".$User->getId(),
+    array("icon" => sprintf($iconTemplateStr, "change_password.png")));
+$menu_actions->addItem($menu_item);
+	
+if ($showConfigureMenu) { 
+    $menu_root->addSplit();
+    $menu_config =& DynMenuItem::Create(getGS("Configure"), "",
+        array("icon" => sprintf($iconTemplateStr, "configure.png"), "id"=>"configure"));
+    $menu_root->addItem($menu_config);
+    
+    if ($User->hasPermission("ManageTempl") || $User->hasPermission("DeleteTempl")) { 
+        $menu_item =& DynMenuItem::Create(getGS("Templates"), 
+            "/$ADMIN/templates/",
+            array("icon" => sprintf($iconTemplateStr, "templates.png")));
+        $menu_config->addItem($menu_item);
+    }
+    if ($User->hasPermission("ManageArticleTypes") || $User->hasPermission("DeleteArticleTypes")) { 
+        $menu_item =& DynMenuItem::Create(getGS("Article Types"), 
+            "/$ADMIN/a_types/",
+            array("icon" => sprintf($iconTemplateStr, "article_types.png")));
+        $menu_config->addItem($menu_item);
+    }        
+    if ($User->hasPermission("ManageTopics")) { 
+        $menu_item =& DynMenuItem::Create(getGS("Topics"), 
+            "/$ADMIN/topics/",
+            array("icon" => sprintf($iconTemplateStr, "topics.png")));
+        $menu_config->addItem($menu_item);
+    }
+    if ($User->hasPermission("ManageLanguages") || $User->hasPermission("DeleteLanguages")) { 
+        $menu_item =& DynMenuItem::Create(getGS("Languages"), 
+            "/$ADMIN/languages/",
+            array("icon" => sprintf($iconTemplateStr, "languages.png")));
+        $menu_config->addItem($menu_item);        
+    }
+    if ($User->hasPermission("ManageCountries") || $User->hasPermission("DeleteCountries")) { 
+        $menu_item =& DynMenuItem::Create(getGS("Countries"), 
+            "/$ADMIN/country/",
+            array("icon" => sprintf($iconTemplateStr, "countries.png")));
+        $menu_config->addItem($menu_item);        
+    }
+    if ($showPublishingEnvironmentMenu) { 
+        $menu_config->addSplit();
+    }
+	if ($User->hasPermission("ManageLocalizer")) { 
+        $menu_item =& DynMenuItem::Create(getGS("Localizer"), 
+            "/$ADMIN/localizer/",
+            array("icon" => sprintf($iconTemplateStr, "localizer.png")));
+        $menu_config->addItem($menu_item);	    
+	}
+	if ($User->hasPermission("ViewLogs")) { 
+        $menu_item =& DynMenuItem::Create(getGS("Logs"), 
+            "/$ADMIN/logs/",
+            array("icon" => sprintf($iconTemplateStr, "logs.png")));
+        $menu_config->addItem($menu_item);	    
+	}
+} // if ($showConfigureMenu) 
+
+if ($showUserMenu) { 
+    $menu_root->addSplit();
+    $menu_users =& DynMenuItem::Create("Users", "", 
+        array("icon" => sprintf($iconTemplateStr, "users.png"), "id" => "users"));
+    $menu_root->addItem($menu_users);
+	if ($User->hasPermission("ManageUsers") || $User->hasPermission("DeleteUsers")) { 
+        $menu_item =& DynMenuItem::Create(getGS("Staff"), 
+            "/$ADMIN/users/?uType=Staff",
+            array("icon" => sprintf($iconTemplateStr, "users.png")));
+        $menu_users->addItem($menu_item);	    
+	}
+	if ($User->hasPermission("ManageReaders") || $User->hasPermission("ManageSubscriptions")) { 
+        $menu_item =& DynMenuItem::Create(getGS("Subscribers"), 
+            "/$ADMIN/users/?uType=Subscribers",
+            array("icon" => sprintf($iconTemplateStr, "users.png")));
+        $menu_users->addItem($menu_item);	    
+	}
+	if ($User->hasPermission("ManageUserTypes")) { 
+        $menu_item =& DynMenuItem::Create(getGS("User Types"), 
+            "/$ADMIN/u_types/",
+            array("icon" => sprintf($iconTemplateStr, "user_types.png")));
+        $menu_users->addItem($menu_item);	    
+	}
+} // if ($showUserMenu) 
+
+$menu_root->addSplit();
+$menu_help =& DynMenuItem::Create("Help", "", 
+    array("icon" => sprintf($iconTemplateStr, "help.png"), "id" => "help"));
+$menu_root->addItem($menu_help);
+$menu_item =& DynMenuItem::Create(getGS("Help"), $Campsite['HELP_URL'],
+    array("icon" => sprintf($iconTemplateStr, "help.png"), "target" => "_blank"));
+$menu_help->addItem($menu_item);
+$menu_item =& DynMenuItem::Create(getGS("About"), $Campsite['ABOUT_URL'],
+    array("icon" => sprintf($iconTemplateStr, "about.png"), "target" => "_blank"));
+$menu_help->addItem($menu_item);
+
+
+//$issues = array();
+//$sections = array();
+//foreach ($publications as $publication) {
+//	$issues[$publication->getPublicationId()] =& 
+//		Issue::GetIssues($publication->getPublicationId(), null, null, null, 
+//			array('ORDER BY'=>array('Number'=>'DESC'), 'LIMIT' => '5'));
+//	foreach ($issues[$publication->getPublicationId()] as $issue) {
+//		$sections[$issue->getPublicationId()][$issue->getIssueId()][$issue->getLanguageId()] = 
+//			Section::GetSections($issue->getPublicationId(), 
+//				$issue->getIssueId(), $issue->getLanguageId());
+//	}
+//}
 ?>
 <HEAD>
     <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -55,144 +273,7 @@ foreach ($publications as $publication) {
 	<LINK REL="stylesheet" HREF="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/JSCookMenu/ThemeOffice/theme.css" TYPE="text/css">
 	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
 <script language="JavaScript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/JSCookMenu/ThemeOffice/theme.js" type="text/javascript"></script>
-	<SCRIPT LANGUAGE="JavaScript"><!--
-	var myMenu =
-	[
-	    ['<img src="/<?php p($ADMIN); ?>/img/icon/home.png" align="middle" style="padding-bottom: 3px;" width="22" height="22" />', ' <?php putGS('Home'); ?>', '/<?php p($ADMIN); ?>/home.php' ],
-	    _cmSplit,	    
-	    ['<img src="/<?php p($ADMIN); ?>/img/icon/content.png" align="middle" style="padding-bottom: 3px;" width="22" height="22" />', ' <?php putGS('Content'); ?>', '', '', '',
-	    	['<img src="/<?php p($ADMIN); ?>/img/icon/publication.png"  width="22" height="22"/>', '<?php putGS('Publications'); ?>', '/<?php p($ADMIN); ?>/pub/index.php' ],
-	    	['<img src="/<?php p($ADMIN); ?>/img/icon/image_archive.png"  width="22" height="22"/>', '<?php putGS('Image Archive'); ?>', '/<?php p($ADMIN); ?>/imagearchive/index.php' ],
-		    _cmSplit,
-	    	<?php
-	    	foreach ($publications as $publication) {
-	    		$pubId = $publication->getPublicationId();
-	    		?>
-		    	['<img src="/<?php p($ADMIN); ?>/img/tol.gif"/>', '<?php p(htmlspecialchars($publication->getName())); ?>', '/<?php p($ADMIN); ?>/pub/issues/index.php?Pub=<?php p($pubId); ?>', '', '' <?php
-	    		if (isset($issues[$pubId])) {
-	    			echo ",\n";
-	    			foreach ($issues[$pubId] as $issue) {
-	    				$issueId = $issue->getIssueId();
-	    				$languageId = $issue->getLanguageId();
-		    			?>['<img src="/<?php p($ADMIN); ?>/img/tol.gif"/>', '<?php p(htmlspecialchars($issue->getName().' ('.$issue->getLanguageName().')')); ?>', '/<?php p($ADMIN); ?>/pub/issues/sections/index.php?Pub=<?php p($pubId); ?>&Issue=<?php p($issueId); ?>&Language=<?php p($languageId); ?>', '', ''
-		    			<?php
-		    			if (isset($sections[$pubId][$issueId][$languageId])) {
-			    			echo ",\n";
-		    				foreach ($sections[$pubId][$issueId][$languageId] as $section) {
-		    					?>['<img src="/<?php p($ADMIN); ?>/img/tol.gif"/>', '<?php p(htmlspecialchars($section->getName())); ?>', '/<?php p($ADMIN); ?>/pub/issues/sections/articles/index.php?Pub=<?php p($pubId); ?>&Issue=<?php p($issueId); ?>&Language=<?php p($languageId); ?>&Section=<?php p($section->getSectionId()); ?>' ], 					
-		    					<?php
-		    				} // foreach ($sections ... )
-		    			}
-	    				echo "],\n";		    			
-		    		} // foreach ($issues ... )
-		    		?>
-		    		_cmSplit,
-		    		['<img src="/<?php p($ADMIN); ?>/img/tol.gif"/>', '<?php putGS('More...'); ?>', '/<?php p($ADMIN); ?>/pub/issues/index.php?Pub=<?php p($pubId); ?>' ],
-		    		<?php
-	    		}
-	    		echo "],\n";
-	    	} // foreach ($publications ... )
-	    	?>
-	    ],
-	    _cmSplit,
-	    ['<img src="/<?php p($ADMIN); ?>/img/icon/actions.png" align="middle"  width="22" height="22"/>', ' <?php putGS('Actions'); ?>', '', '', '',
-	    	
-	    	<?php if ($User->hasPermission("AddArticle")) { ?>
-	    	['<img src="/<?php p($ADMIN); ?>/img/icon/add_article.png"  width="22" height="22"/>', '<?php putGS('Add new article'); ?>', '/<?php p($ADMIN); ?>/pub/add_article.php'],
-	    	<?php } ?>
-			
-			<?php  if ($User->hasPermission("ManageTempl")) { ?>	
-	    	['<img src="/<?php p($ADMIN); ?>/img/icon/upload_template.png"  width="22" height="22"/>', '<?php putGS("Upload new template"); ?>', '/<?php p($ADMIN); ?>/templates/upload_templ.php?Path=/look/&Back=<?php  print urlencode($_SERVER['REQUEST_URI']); ?>'],
-			<?php  } ?>
-				
-	    	<?php  if ($User->hasPermission("ManagePub")) { ?>	
-	    	['<img src="/<?php p($ADMIN); ?>/img/icon/add_publication.png"  width="22" height="22"/>', '<?php putGS("Add new publication"); ?>', '/<?php p($ADMIN); ?>/pub/add.php?Back=<?php  print urlencode($_SERVER['REQUEST_URI']); ?>'],
-			<?php  } ?>
-
-			<?php  if ($User->hasPermission("ManageUsers")) { ?>	
-	    	['<img src="/<?php p($ADMIN); ?>/img/icon/add_user.png"  width="22" height="22"/>', '<?php putGS("Add new user account"); ?>', '/<?php p($ADMIN); ?>/users/edit.php?uType=Staff&Back=<?php  print urlencode($_SERVER['REQUEST_URI']); ?>'],
-			<?php  } ?>
-			
-			<?php  if ($User->hasPermission("ManageUserTypes")) { ?>	
-	    	['<img src="/<?php p($ADMIN); ?>/img/icon/add_user_type.png"  width="22" height="22"/>', '<?php putGS("Add new user type"); ?>', '/<?php p($ADMIN); ?>/u_types/add.php?Back=<?php  print urlencode($_SERVER['REQUEST_URI']); ?>'],
-			<?php  } ?>
-
-			<?php  if ($User->hasPermission("ManageArticleTypes")) { ?>	
-	    	['<img src="/<?php p($ADMIN); ?>/img/icon/add_article_type.png"  width="22" height="22"/>', '<?php putGS("Add new article type"); ?>', '/<?php p($ADMIN); ?>/a_types/add.php?Back=<?php  print urlencode($_SERVER['REQUEST_URI']); ?>'],
-			<?php  } ?>
-
-			<?php  if ($User->hasPermission("ManageCountries")) { ?>	
-	    	['<img src="/<?php p($ADMIN); ?>/img/icon/add_country.png"  width="22" height="22"/>', '<?php putGS("Add new country"); ?>', '/<?php p($ADMIN); ?>/country/add.php?Back=<?php  print urlencode($_SERVER['REQUEST_URI']); ?>'],
-			<?php  } ?>
-		
-			<?php  if ($User->hasPermission("ManageLanguages")) { ?>	
-	    	['<img src="/<?php p($ADMIN); ?>/img/icon/add_language.png"  width="22" height="22"/>', '<?php putGS("Add new language"); ?>', '/<?php p($ADMIN); ?>/languages/add_modify.php?Back=<?php  print urlencode($_SERVER['REQUEST_URI']); ?>'],
-			<?php  } ?>
-			
-	    	['<img src="/<?php p($ADMIN); ?>/img/icon/change_password.png"  width="22" height="22"/>', '<?php putGS('Change your password'); ?>', '/<?php p($ADMIN); ?>/users/edit.php?uType=Staff&User=<?php echo $User->getId(); ?>']
-	    ],
-	    <?php if ($showConfigureMenu) { ?>
-	    _cmSplit,
-	    ['<img src="/<?php p($ADMIN); ?>/img/icon/configure.png" align="middle"  width="22" height="22"/>', ' <?php putGS('Configure'); ?>', '', '', '',
-    		<?php if ($User->hasPermission("ManageTempl") || $User->hasPermission("DeleteTempl")) { ?>
-    		['<img src="/<?php p($ADMIN); ?>/img/icon/templates.png" width="22" height="22" />', '<?php putGS('Templates');?>', '/<?php p($ADMIN); ?>/templates/' ],
-    		<?php } ?>
-    		<?php if ($User->hasPermission("ManageArticleTypes") || $User->hasPermission("DeleteArticleTypes")) { ?>
-    		['<img src="/<?php p($ADMIN); ?>/img/icon/article_types.png" width="22" height="22" />', '<?php putGS('Article Types'); ?>', '/<?php p($ADMIN); ?>/a_types/' ],
-    		<?php } ?>
-    		<?php if ($User->hasPermission("ManageTopics")) { ?>
-    		['<img src="/<?php p($ADMIN); ?>/img/icon/topics.png" width="22" height="22" />', '<?php putGS('Topics'); ?>', '/<?php p($ADMIN); ?>/topics/' ],
-    		<?php } ?>
-    		<?php if ($User->hasPermission("ManageLanguages") || $User->hasPermission("DeleteLanguages")) { ?>
-    		['<img src="/<?php p($ADMIN); ?>/img/icon/languages.png" width="22" height="22" />', '<?php putGS('Languages'); ?>', '/<?php p($ADMIN); ?>/languages/' ],
-    		<?php } ?>
-    		<?php if ($User->hasPermission("ManageCountries") || $User->hasPermission("DeleteCountries")) { ?>
-    		['<img src="/<?php p($ADMIN); ?>/img/icon/countries.png" width="22" height="22" />', '<?php putGS('Countries'); ?>', '/<?php p($ADMIN); ?>/country/' ],
-    		<?php } ?>
-    		<?php if ($showPublishingEnvironmentMenu) { ?>
-    	    _cmSplit,
-    	    <?php } ?>
-	    	<?php if ($User->hasPermission("ManageLocalizer")) { ?>
-	    	['<img src="/<?php p($ADMIN); ?>/img/icon/localizer.png" width="22" height="22" />', '<?php putGS('Localizer'); ?>', '/<?php p($ADMIN); ?>/localizer/',  ],
-	    	<?php } ?>
-	    	<?php if ($User->hasPermission("ViewLogs")) { ?>
-	    	['<img src="/<?php p($ADMIN); ?>/img/icon/logs.png" />', '<?php putGS('Logs'); ?>', '/<?php p($ADMIN); ?>/logs/', ]
-	    	<?php } ?>
-	    ],
-	    <?php } // if ($showConfigureMenu) ?>
-	    <?php if ($showUserMenu) { ?>
-	    _cmSplit,
-	    ['<img src="/<?php p($ADMIN); ?>/img/icon/users.png" width="22" height="22" align="middle" />', ' <?php putGS('Users'); ?>', '', '', '',
-	    	<?php if ($User->hasPermission("ManageUsers") || $User->hasPermission("DeleteUsers")) { ?>
-	    	['<img src="/<?php p($ADMIN); ?>/img/icon/users.png" width="22" height="22" />', '<?php putGS('Staff'); ?>', '/<?php p($ADMIN); ?>/users/?uType=Staff' ],
-	    	<?php } ?>
-	    	<?php if ($User->hasPermission("ManageReaders") || $User->hasPermission("ManageSubscriptions")) { ?>
-	    	['<img src="/<?php p($ADMIN); ?>/img/icon/users.png" width="22" height="22" />', '<?php putGS('Subscribers'); ?>', '/<?php p($ADMIN); ?>/users/?uType=Subscribers' ],
-	    	<?php } ?>
-	    	<?php if ($User->hasPermission("ManageUserTypes")) { ?>
-	    	['<img src="/<?php p($ADMIN); ?>/img/icon/user_types.png" width="22" height="22" />', '<?php putGS('User Types'); ?>', '/<?php p($ADMIN); ?>/u_types/' ], 
-	    	<?php } ?>
-	    ],
-	    <?php } // if ($showUserMenu) ?>
-	    <?php if ($showObsoleteMenu)  { ?>
-	    _cmSplit,
-	    ['<img src="/<?php p($ADMIN); ?>/img/icon/obsolete.png" width="22" height="22" align="middle" />', ' <?php putGS('Obsolete'); ?>', '', '', '',
-	    	<?php if ($User->hasPermission("ManageDictionary") || $User->hasPermission("DeleteDictionary")) { ?>
-	    	['<img src="/<?php p($ADMIN); ?>/img/icon/glossary.png" width="22" height="22" />', '<?php putGS('Glossary'); ?>', '/<?php p($ADMIN); ?>/glossary/' ], 
-	    	<?php } ?>
-	    	<?php if ($User->hasPermission("ManageClasses")) { ?>
-	    	['<img src="/<?php p($ADMIN); ?>/img/icon/infotypes.png" width="22" height="22" />', '<?php putGS('Infotype'); ?>', '/<?php p($ADMIN); ?>/infotype/' ], 
-	    	<?php } ?>
-	    ],
-	    <?php } // if ($showObsoleteMenu) ?>
-	    _cmSplit,
-	    ['<img src="/<?php p($ADMIN); ?>/img/icon/help.png" width="22" height="22" align="middle" />', ' <?php putGS('Help'); ?>', '', '', '',
-	    	['<img src="/<?php p($ADMIN); ?>/img/icon/help.png" width="22" height="22" />', '<?php putGS('Help'); ?>', '<?php p($Campsite['HELP_URL']); ?>', '_blank' ], 
-	    	['<img src="/<?php p($ADMIN); ?>/img/icon/about.png" width="22" height="22" />', '<?php putGS('About'); ?>', '<?php p($Campsite['ABOUT_URL']); ?>', '_blank' ], 
-	    ]
-	];
-	--></SCRIPT>
-
+    <?php echo $menu_root->createMenu("myMenu"); ?>
 	<TITLE>Campsite <?php p($Campsite['VERSION']); ?></TITLE>
 </HEAD>
 

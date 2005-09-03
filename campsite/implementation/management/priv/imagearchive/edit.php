@@ -165,7 +165,7 @@ if (count($articles) > 0) {
 		else {
 			echo '<td>';
 		}
-		echo "<a href=\"/$ADMIN/pub/issues/sections/articles/edit.php?Pub=".$article->getPublicationId().'&Issue='.$article->getIssueId().'&Section='.$article->getSectionId().'&Article='.$article->getArticleId().'&Language='.$article->getLanguageId().'&sLanguage='.$article->getLanguageId().'">'.htmlspecialchars($article->getTitle()).'</a></td></tr>';
+		echo "<a href=\"/$ADMIN/articles/edit.php?Pub=".$article->getPublicationId().'&Issue='.$article->getIssueId().'&Section='.$article->getSectionId().'&Article='.$article->getArticleId().'&Language='.$article->getLanguageId().'&sLanguage='.$article->getLanguageId().'">'.htmlspecialchars($article->getTitle()).'</a></td></tr>';
 		$previousArticleId = $article->getArticleId();
 	}
 	?>

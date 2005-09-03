@@ -60,7 +60,7 @@ function upload_article_handler(&$request, &$session, &$files) {
 			$article->setBody($docBookParser->getBody());
 			
 			// Go back to the "Edit Article" page.
-			header("Location: /$ADMIN/pub/issues/sections/articles/edit.php?Pub=$publication&Issue=$issue&Section=$section&Article=$articleNumber&Language=$language&sLanguage=$sLanguage");
+			header("Location: /$ADMIN/articles/edit.php?Pub=$publication&Issue=$issue&Section=$section&Article=$articleNumber&Language=$language&sLanguage=$sLanguage");
 		} // if (!is_null($xml))
 	} // if ($zip)
 	

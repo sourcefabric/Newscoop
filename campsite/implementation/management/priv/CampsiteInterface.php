@@ -113,7 +113,7 @@ class CampsiteInterface {
 	function ArticleUrl($p_articleObj, $p_interfaceLanguageId, $p_targetFileName = "", $p_backLink = "", $p_extraParams = null) 
 	{
 		global $ADMIN;
-		$str = "/$ADMIN/pub/issues/sections/articles/".$p_targetFileName
+		$str = "/$ADMIN/articles/".$p_targetFileName
 			."?Pub=".$p_articleObj->getPublicationId()
 			."&Issue=".$p_articleObj->getIssueId()
 			."&Section=".$p_articleObj->getSectionId()
@@ -224,19 +224,19 @@ class CampsiteInterface {
 				if (!is_null($articleObj)) {
 				?>
 				<!-- "Articles" Link -->
-				<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/?Pub=<?php p($sectionObj->getPublicationId()); ?>&Issue=<?php p($sectionObj->getIssueId()); ?>&Language=<?php p($issueObj->getLanguageId()); ?>&Section=<?php p($sectionObj->getSectionId()); ?>" class="breadcrumb" ><?php putGS("Articles");  ?></A></TD>
+				<TD><A HREF="/<?php echo $ADMIN; ?>/articles/?Pub=<?php p($sectionObj->getPublicationId()); ?>&Issue=<?php p($sectionObj->getIssueId()); ?>&Language=<?php p($issueObj->getLanguageId()); ?>&Section=<?php p($sectionObj->getSectionId()); ?>" class="breadcrumb" ><?php putGS("Articles");  ?></A></TD>
 				<td class="breadcrumb_separator">&nbsp;</td>
 				<?php
 				}
 				if (!is_null($sectionObj)) { ?>
 				<!-- "Sections" link -->
-				<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/?Pub=<?php p($issueObj->getPublicationId()); ?>&Issue=<?php p($issueObj->getIssueId()); ?>&Language=<?php p($issueObj->getLanguageId()); ?>" class="breadcrumb"><?php putGS("Sections"); ?></A></TD>
+				<TD><A HREF="/<?php echo $ADMIN; ?>/sections/?Pub=<?php p($issueObj->getPublicationId()); ?>&Issue=<?php p($issueObj->getIssueId()); ?>&Language=<?php p($issueObj->getLanguageId()); ?>" class="breadcrumb"><?php putGS("Sections"); ?></A></TD>
 				<td class="breadcrumb_separator">&nbsp;</td>
 				<?PHP
 				}
 				if (!is_null($issueObj)) { ?>
 				<!-- "Issues" Link -->
-				<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/?Pub=<?php p($issueObj->getPublicationId()); ?>" class="breadcrumb"><?php putGS("Issues"); ?></A></TD>
+				<TD><A HREF="/<?php echo $ADMIN; ?>/issues/?Pub=<?php p($issueObj->getPublicationId()); ?>" class="breadcrumb"><?php putGS("Issues"); ?></A></TD>
 				<td class="breadcrumb_separator">&nbsp;</td>
 				<?PHP
 				}

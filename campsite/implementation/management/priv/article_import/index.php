@@ -57,16 +57,16 @@ $issueLanguage =& new Language($sLanguage);
 		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
 		<TR>
 			<TD>
-				<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>&Section=<?php p($Section); ?>" class="breadcrumb">
+				<A HREF="/<?php echo $ADMIN; ?>/articles/?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>&Section=<?php p($Section); ?>" class="breadcrumb">
 				<?php putGS("Articles");  ?></A>
 			</TD>
 			<td class="breadcrumb_separator">&nbsp;</td>
 			<TD>
-				<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>" class="breadcrumb" ><?php putGS("Sections");  ?></A>
+				<A HREF="/<?php echo $ADMIN; ?>/sections/?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>" class="breadcrumb" ><?php putGS("Sections");  ?></A>
 			</TD>
 			<td class="breadcrumb_separator">&nbsp;</td>
 			<TD>
-				<A HREF="/<?php echo $ADMIN; ?>/pub/issues/?Pub=<?php p($Pub); ?>" class="breadcrumb" ><?php putGS("Issues");  ?></A>
+				<A HREF="/<?php echo $ADMIN; ?>/issues/?Pub=<?php p($Pub); ?>" class="breadcrumb" ><?php putGS("Issues");  ?></A>
 			</TD>
 			<td class="breadcrumb_separator">&nbsp;</td>
 			<TD>
@@ -138,7 +138,7 @@ $issueLanguage =& new Language($sLanguage);
 				<INPUT type="submit" name="Submit" value="Upload" class="button">
 			</td>
 			<td align="left" style="padding: 3px;">
-				<INPUT type="button" name="Cancel" value="Cancel" class="button" ONCLICK="location.href='/<?php echo $ADMIN; ?>/pub/issues/sections/articles/edit.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php p($Section); ?>&Article=<?php p($Article) ?>&Language=<?php p($Language); ?>&sLanguage=<?php p($sLanguage) ?>'">
+				<INPUT type="button" name="Cancel" value="Cancel" class="button" ONCLICK="location.href='/<?php echo $ADMIN; ?>/articles/edit.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php p($Section); ?>&Article=<?php p($Article) ?>&Language=<?php p($Language); ?>&sLanguage=<?php p($sLanguage) ?>'">
 			</td>
 		</tr>
 		</table>
