@@ -1,6 +1,6 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
-load_common_include_files("$ADMIN_DIR/pub/issues");
+load_common_include_files("$ADMIN_DIR/issues");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Publication.php');
@@ -65,7 +65,7 @@ CampsiteInterface::ContentTop(getGS('Change issue status'), array('Pub' => $publ
 	<INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<?php p($Issue); ?>">
 	<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php p($Language); ?>">
 	<INPUT TYPE="submit" class="button" NAME="Yes" VALUE="<?php putGS('Yes'); ?>">
-	<INPUT TYPE="button" class="button" NAME="No" VALUE="<?php putGS('No'); ?>" ONCLICK="location.href='/admin/pub/issues/?Pub=<?php p($Pub); ?>'">
+	<INPUT TYPE="button" class="button" NAME="No" VALUE="<?php putGS('No'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/issues/?Pub=<?php p($Pub); ?>'">
 	</FORM>
 	</DIV>
 	</TD>

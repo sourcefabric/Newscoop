@@ -1,7 +1,7 @@
 <?php
 
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
-load_common_include_files("$ADMIN_DIR/pub/issues");
+load_common_include_files("$ADMIN_DIR/issues");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Publication.php');
@@ -103,7 +103,7 @@ CampsiteInterface::ContentTop(getGS('Issue Publishing Schedule'), array('Pub' =>
 		<TD COLSPAN="2">
 		<DIV ALIGN="CENTER">
 		<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save changes'); ?>">
-		<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/pub/issues/?Pub=<?php p($Pub); ?>&Language=<?php p($Language); ?>'">
+		<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/issues/?Pub=<?php p($Pub); ?>&Language=<?php p($Language); ?>'">
 		</DIV>
 		</TD>
 	</TR>
@@ -131,7 +131,7 @@ if (count($allEvents) > 0) {
 		<TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 		
 		<TD >
-			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/autopublish.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>&publish_time=<?php echo $url_publish_time; ?>"><?php p(htmlspecialchars($event->getActionTime())); ?></A>
+			<A HREF="/<?php echo $ADMIN; ?>/issues/autopublish.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>&publish_time=<?php echo $url_publish_time; ?>"><?php p(htmlspecialchars($event->getActionTime())); ?></A>
 		</TD>
 		
 		<TD >
@@ -159,7 +159,7 @@ if (count($allEvents) > 0) {
 		</TD>
 		
 		<TD ALIGN="CENTER">
-			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/autopublish_del.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>&publish_time=<?php echo $url_publish_time; ?>" onclick="return confirm('<?php putGS("Are you sure you want to delete this scheduled action?"); ?>');"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/delete.png" BORDER="0" ALT="<?php putGS('Delete entry'); ?>"></A>
+			<A HREF="/<?php echo $ADMIN; ?>/issues/autopublish_del.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>&publish_time=<?php echo $url_publish_time; ?>" onclick="return confirm('<?php putGS("Are you sure you want to delete this scheduled action?"); ?>');"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/delete.png" BORDER="0" ALT="<?php putGS('Delete entry'); ?>"></A>
 		</TD>
 		
 	<?php } // foreach ?>

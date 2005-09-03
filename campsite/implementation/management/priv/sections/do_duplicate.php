@@ -1,6 +1,6 @@
 <?php
 
-require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/pub/issues/sections/section_common.php");
+require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/sections/section_common.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
 
@@ -33,7 +33,7 @@ else {
     $DestSectionId = Input::Get('destination_section_existing', 'int', 0, true);    
 }
 $DestSectionName = Input::Get('destination_section_new_name', 'string', '', true);
-$BackLink = Input::Get('Back', 'string', "/$ADMIN/pub/issues/sections/index.php", true);
+$BackLink = Input::Get('Back', 'string', "/$ADMIN/sections/index.php", true);
 
 if (!Input::IsValid()) {
    	CampsiteInterface::DisplayError(getGS('Invalid input: $1', Input::GetErrorString()));
@@ -116,16 +116,16 @@ if ($correct) {
                 <table>
                 <tr>
                     <td>
-	                   <b><a href="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/?Pub=<?php  p($dstSectionObj->getPublicationId()); ?>&Issue=<?php  p($dstSectionObj->getIssueId()); ?>&Section=<?php  p($dstSectionObj->getSectionId()); ?>&Language=<?php p($dstSectionObj->getLanguageId()); ?>"><?php putGS("Go to new section"); ?></a></b>
+	                   <b><a href="/<?php echo $ADMIN; ?>/articles/?Pub=<?php  p($dstSectionObj->getPublicationId()); ?>&Issue=<?php  p($dstSectionObj->getIssueId()); ?>&Section=<?php  p($dstSectionObj->getSectionId()); ?>&Language=<?php p($dstSectionObj->getLanguageId()); ?>"><?php putGS("Go to new section"); ?></a></b>
 	                </td>
 	                <td style="padding-left: 50px;">
-        	           <b><a href="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/?Pub=<?php  p($srcSectionObj->getPublicationId()); ?>&Issue=<?php  p($srcSectionObj->getIssueId()); ?>&Section=<?php  p($srcSectionObj->getSectionId()); ?>&Language=<?php p($srcSectionObj->getLanguageId()); ?>"><?php putGS("Go to source section"); ?></a></b>
+        	           <b><a href="/<?php echo $ADMIN; ?>/articles/?Pub=<?php  p($srcSectionObj->getPublicationId()); ?>&Issue=<?php  p($srcSectionObj->getIssueId()); ?>&Section=<?php  p($srcSectionObj->getSectionId()); ?>&Language=<?php p($srcSectionObj->getLanguageId()); ?>"><?php putGS("Go to source section"); ?></a></b>
         	        </td>
         	    </tr>
         	    </table>
                 <?php  
             } else { ?>
-	           <INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/pub/issues/sections/?Pub=<?php  p($SrcPubId); ?>&Issue=<?php  p($SrcIssueId); ?>&Language=<?php  p($Language); ?>'">
+	           <INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/sections/?Pub=<?php  p($SrcPubId); ?>&Issue=<?php  p($SrcIssueId); ?>&Language=<?php  p($Language); ?>'">
                 <?php  
             } ?>
   		</DIV>

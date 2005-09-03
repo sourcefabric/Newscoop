@@ -1,4 +1,4 @@
-INCLUDE_PHP_LIB(<*$ADMIN_DIR/pub/issues*>)
+INCLUDE_PHP_LIB(<*$ADMIN_DIR/issues*>)
 B_DATABASE
 
 CHECK_BASIC_ACCESS
@@ -24,7 +24,7 @@ B_BODY
 ?>dnl
 B_HEADER(<*Deleting issue*>)
 B_HEADER_BUTTONS
-X_HBUTTON(<*Issues*>, <*pub/issues/?Pub=<?php  pencURL($Pub); ?>*>)
+X_HBUTTON(<*Issues*>, <*issues/?Pub=<?php  pencURL($Pub); ?>*>)
 <td class="breadcrumb_separator">&nbsp;</td>
 X_HBUTTON(<*Publications*>, <*pub/*>)
 E_HEADER_BUTTONS
@@ -83,7 +83,7 @@ B_MSGBOX(<*Deleting issue*>)
 *>)
 	
 	B_MSGBOX_BUTTONS
-		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/pub/issues/?Pub=<?php  pencURL($Pub); ?>*>)
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/issues/?Pub=<?php  pencURL($Pub); ?>*>)
 	E_MSGBOX_BUTTONS
 E_MSGBOX
 <P>

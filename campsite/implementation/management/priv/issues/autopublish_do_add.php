@@ -1,6 +1,6 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
-load_common_include_files("$ADMIN_DIR/pub/issues");
+load_common_include_files("$ADMIN_DIR/issues");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/IssuePublish.php');
@@ -56,7 +56,7 @@ if ($correct) {
     $action->setPublishArticlesAction($publish_articles);
 }
 if ($created) {
-	header("Location: /$ADMIN/pub/issues/autopublish.php?Pub=$Pub&Issue=$Issue&Language=$Language");
+	header("Location: /$ADMIN/issues/autopublish.php?Pub=$Pub&Issue=$Issue&Language=$Language");
 }
 
 ?>
@@ -66,7 +66,7 @@ if ($created) {
 		<TD ALIGN=RIGHT>
 			<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
 			<TR>
-				<TD><A HREF="/<?php echo $ADMIN; ?>/pub/issues/?Pub=<?php p($Pub); ?>" class="breadcrumb"><?php  putGS("Issues");  ?></A></TD>
+				<TD><A HREF="/<?php echo $ADMIN; ?>/issues/?Pub=<?php p($Pub); ?>" class="breadcrumb"><?php  putGS("Issues");  ?></A></TD>
 				<td class="breadcrumb_separator">&nbsp;</td>
 				<TD><A HREF="/<?php echo $ADMIN; ?>/pub/" class="breadcrumb"><?php  putGS("Publications");  ?></A></TD>
 			</TR>
@@ -132,7 +132,7 @@ if ($created) {
 	<TR>
 		<TD COLSPAN="2">
 		<DIV ALIGN="CENTER">
-	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/pub/issues/autopublish.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>'">
+	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/issues/autopublish.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>'">
 		</DIV>
 		</TD>
 	</TR>

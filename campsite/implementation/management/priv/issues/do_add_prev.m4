@@ -1,4 +1,4 @@
-INCLUDE_PHP_LIB(<*$ADMIN_DIR/pub/issues*>)
+INCLUDE_PHP_LIB(<*$ADMIN_DIR/issues*>)
 B_DATABASE
 
 CHECK_BASIC_ACCESS
@@ -27,7 +27,7 @@ B_BODY
 ?>dnl
 B_HEADER(<*Copying previous issue*>)
 B_HEADER_BUTTONS
-X_HBUTTON(<*Issues*>, <*pub/issues/?Pub=<?php  pencURL($cPub); ?>*>)
+X_HBUTTON(<*Issues*>, <*issues/?Pub=<?php  pencURL($cPub); ?>*>)
 <td class="breadcrumb_separator">&nbsp;</td>
 X_HBUTTON(<*Publications*>, <*pub/*>)
 E_HEADER_BUTTONS
@@ -83,7 +83,7 @@ for($loop=0;$loop<$nr;$loop++) {
 	<LI><?php  putGS('Copying done.'); ?></LI>
 	*>)
 	B_MSGBOX_BUTTONS
-		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/pub/issues/?Pub=<?php  pencURL($cPub); ?>*>)
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/issues/?Pub=<?php  pencURL($cPub); ?>*>)
 	E_MSGBOX_BUTTONS
 E_MSGBOX
 <P>

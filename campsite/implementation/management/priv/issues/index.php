@@ -1,7 +1,7 @@
 <?php
 
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
-load_common_include_files("$ADMIN_DIR/pub/issues");
+load_common_include_files("$ADMIN_DIR/issues");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Publication.php');
@@ -102,7 +102,7 @@ foreach ($allIssues as $issue) {
  	</TD>
  	
 	<TD <?php if ($currentIssue == $issue->getIssueId()) { ?> style="padding-left: 20px;" <?php } ?>>
-		<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($issue->getIssueId()); ?>&Language=<?php p($issue->getLanguageId()); ?>"><?php p(htmlspecialchars($issue->getName())); ?></A>
+		<A HREF="/<?php echo $ADMIN; ?>/sections/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($issue->getIssueId()); ?>&Language=<?php p($issue->getLanguageId()); ?>"><?php p(htmlspecialchars($issue->getName())); ?></A>
 	</TD>
 	
 	<TD>
@@ -113,18 +113,18 @@ foreach ($allIssues as $issue) {
 		<?php p(htmlspecialchars($issue->getLanguageName())); ?>
 	</TD>
 	<TD ALIGN="CENTER">
-		<A HREF="/<?php echo $ADMIN; ?>/pub/issues/status.php?Pub=<?php p($Pub); ?>&Issue=<?php  p($issue->getIssueId()); ?>&Language=<?php p($issue->getLanguageId()); ?>"><?php  if ($issue->getPublished() == 'Y') { p(htmlspecialchars($issue->getPublicationDate())); } else { print putGS("Publish"); } ?></A>
+		<A HREF="/<?php echo $ADMIN; ?>/issues/status.php?Pub=<?php p($Pub); ?>&Issue=<?php  p($issue->getIssueId()); ?>&Language=<?php p($issue->getLanguageId()); ?>"><?php  if ($issue->getPublished() == 'Y') { p(htmlspecialchars($issue->getPublicationDate())); } else { print putGS("Publish"); } ?></A>
 	</TD>
 <?php if ($User->hasPermission('Publish')) { ?>
 	<TD ALIGN="CENTER">
-		<A HREF="/<?php echo $ADMIN; ?>/pub/issues/autopublish.php?Pub=<?php p($Pub); ?>&Issue=<?php p($issue->getIssueId()); ?>&Language=<?php p($issue->getLanguageId()); ?>"><img src="/<?php echo $ADMIN; ?>/img/icon/automatic_publishing.png" alt="<?php putGS("Scheduled Publishing"); ?>"  title="<?php putGS("Scheduled Publishing"); ?>" border="0"></A>
+		<A HREF="/<?php echo $ADMIN; ?>/issues/autopublish.php?Pub=<?php p($Pub); ?>&Issue=<?php p($issue->getIssueId()); ?>&Language=<?php p($issue->getLanguageId()); ?>"><img src="/<?php echo $ADMIN; ?>/img/icon/automatic_publishing.png" alt="<?php putGS("Scheduled Publishing"); ?>"  title="<?php putGS("Scheduled Publishing"); ?>" border="0"></A>
 	</TD>
 <?php } ?>
 	<TD ALIGN="CENTER">
-		<A HREF="/<?php echo $ADMIN; ?>/pub/issues/translate.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($issue->getIssueId()); ?>&Language=<?php p($issue->getLanguageId()); ?>"><img src="/<?php echo $ADMIN; ?>/img/icon/translate.png" alt="<?php  putGS("Translate"); ?>" title="<?php  putGS("Translate"); ?>" border="0"></A>
+		<A HREF="/<?php echo $ADMIN; ?>/issues/translate.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($issue->getIssueId()); ?>&Language=<?php p($issue->getLanguageId()); ?>"><img src="/<?php echo $ADMIN; ?>/img/icon/translate.png" alt="<?php  putGS("Translate"); ?>" title="<?php  putGS("Translate"); ?>" border="0"></A>
 	</TD>
 	<TD ALIGN="CENTER">
-		<A HREF="/<?php echo $ADMIN; ?>/pub/issues/edit.php?Pub=<?php p($Pub); ?>&Issue=<?php  p($issue->getIssueId()); ?>&Language=<?php p($issue->getLanguageId()); ?>"><img src="/<?php echo $ADMIN; ?>/img/icon/configure.png" alt="<?php  putGS("Configure"); ?>" title="<?php  putGS("Configure"); ?>"  border="0"></A>
+		<A HREF="/<?php echo $ADMIN; ?>/issues/edit.php?Pub=<?php p($Pub); ?>&Issue=<?php  p($issue->getIssueId()); ?>&Language=<?php p($issue->getLanguageId()); ?>"><img src="/<?php echo $ADMIN; ?>/img/icon/configure.png" alt="<?php  putGS("Configure"); ?>" title="<?php  putGS("Configure"); ?>"  border="0"></A>
 	</TD>
 <?php  } else { ?>
 	<TD ALIGN="RIGHT">
@@ -132,7 +132,7 @@ foreach ($allIssues as $issue) {
 	</TD>
 	
 	<TD >
-		<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/?Pub=<?php p($Pub); ?>&Issue=<?php  p($issue->getIssueId()); ?>&Language=<?php p($issue->getLanguageId()); ?>"><?php p(htmlspecialchars($issue->getName())); ?></A>
+		<A HREF="/<?php echo $ADMIN; ?>/issues/sections/?Pub=<?php p($Pub); ?>&Issue=<?php  p($issue->getIssueId()); ?>&Language=<?php p($issue->getLanguageId()); ?>"><?php p(htmlspecialchars($issue->getName())); ?></A>
 	</TD>
 	
 	<TD>
@@ -152,13 +152,13 @@ foreach ($allIssues as $issue) {
 	<?php  } ?>
 
 	<TD ALIGN="CENTER">
-		<A HREF="" ONCLICK="window.open('/<?php echo $ADMIN; ?>/pub/issues/preview.php?Pub=<?php  p($Pub); ?>&Issue=<?php p($issue->getIssueId()); ?>&Language=<?php p($issue->getLanguageId()); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=yes, width=800, height=600'); return false"><img src="/<?php echo $ADMIN; ?>/img/icon/preview.png" alt="<?php  putGS("Preview"); ?>" title="<?php  putGS("Preview"); ?>" border="0"></A>
+		<A HREF="" ONCLICK="window.open('/<?php echo $ADMIN; ?>/issues/preview.php?Pub=<?php  p($Pub); ?>&Issue=<?php p($issue->getIssueId()); ?>&Language=<?php p($issue->getLanguageId()); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=yes, width=800, height=600'); return false"><img src="/<?php echo $ADMIN; ?>/img/icon/preview.png" alt="<?php  putGS("Preview"); ?>" title="<?php  putGS("Preview"); ?>" border="0"></A>
 	</TD>
 
 	<?php
     if ($User->hasPermission('DeleteIssue')) { ?> 
 		<TD ALIGN="CENTER">
-			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/do_del.php?Pub=<?php p($Pub); ?>&Issue=<?php  p($issue->getIssueId()); ?>&Language=<?php p($issue->getLanguageId()); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the issue $1?', htmlspecialchars($issue->getName())); ?>');"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/delete.png" BORDER="0" ALT="<?php  putGS('Delete issue $1', htmlspecialchars($issue->getName())); ?>" title="<?php  putGS('Delete issue $1', htmlspecialchars($issue->getName())); ?>"></A>
+			<A HREF="/<?php echo $ADMIN; ?>/issues/do_del.php?Pub=<?php p($Pub); ?>&Issue=<?php  p($issue->getIssueId()); ?>&Language=<?php p($issue->getLanguageId()); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the issue $1?', htmlspecialchars($issue->getName())); ?>');"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/delete.png" BORDER="0" ALT="<?php  putGS('Delete issue $1', htmlspecialchars($issue->getName())); ?>" title="<?php  putGS('Delete issue $1', htmlspecialchars($issue->getName())); ?>"></A>
 		</TD>
 	<?php  } ?>
 	</TR>

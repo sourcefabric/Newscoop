@@ -1,5 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/pub/issues/sections/section_common.php");
+require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/sections/section_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/Template.php');
 
 list($access, $User) = check_basic_access($_REQUEST);
@@ -64,7 +64,7 @@ CampsiteInterface::ContentTop(getGS('Delete section'), $topArray);
 		<INPUT TYPE="HIDDEN" NAME="Section" VALUE="<?php  p($Section); ?>">
 		<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php  p($Language); ?>">
 		<INPUT TYPE="submit" class="button" NAME="Yes" VALUE="<?php  putGS('Yes'); ?>">
-		<INPUT TYPE="button" class="button" NAME="No" VALUE="<?php  putGS('No'); ?>" ONCLICK="location.href='/admin/pub/issues/sections/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>'">
+		<INPUT TYPE="button" class="button" NAME="No" VALUE="<?php  putGS('No'); ?>" ONCLICK="location.href='/<?php p($ADMIN);?>/sections/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>'">
 		</FORM>
 		</DIV>
 		</TD>

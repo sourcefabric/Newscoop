@@ -1,5 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/pub/issues/sections/section_common.php");
+require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/sections/section_common.php");
 
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
@@ -73,7 +73,7 @@ if (count($sections) > 0) {
 			<?php p($section->getSectionId()); ?>
 		</TD>
 		<TD >
-			<A HREF="/admin/pub/issues/sections/articles/add.php?Pub=<?php p($Pub); ?>&Issue=<?php  p($section->getIssueId()); ?>&Section=<?php p($section->getSectionId()); ?>&Language=<?php  p($section->getLanguageId()); ?>&Wiz=1"><?php p(htmlspecialchars($section->getName())); ?></A>
+			<A HREF="/<?php p($ADMIN); ?>/articles/add.php?Pub=<?php p($Pub); ?>&Issue=<?php  p($section->getIssueId()); ?>&Section=<?php p($section->getSectionId()); ?>&Language=<?php  p($section->getLanguageId()); ?>&Wiz=1"><?php p(htmlspecialchars($section->getName())); ?></A>
 		</TD>
 	</TR>
 	<?php 

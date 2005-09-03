@@ -1,5 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/pub/issues/sections/articles/article_common.php");
+require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/article_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Log.php");
 
 // Check permissions
@@ -20,7 +20,7 @@ $sLanguage = $Language;
 $DestPublication = Input::Get('destination_publication', 'int', 0);
 $DestIssue = Input::Get('destination_issue', 'int', 0);
 $DestSection = Input::Get('destination_section', 'int', 0);
-$BackLink = Input::Get('Back', 'string', "/$ADMIN/pub/issues/sections/articles/index.php", true);
+$BackLink = Input::Get('Back', 'string', "/$ADMIN/articles/index.php", true);
 
 if (!$User->hasPermission("AddArticle")) {
 	CampsiteInterface::DisplayError(getGS("You do not have the right to add articles."), $BackLink);

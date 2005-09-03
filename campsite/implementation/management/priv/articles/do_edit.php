@@ -1,5 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/pub/issues/sections/articles/article_common.php");
+require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/article_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']. "/classes/ArticleImage.php");
 
 // This is used in TransformSubheads() in order to figure out when
@@ -216,7 +216,7 @@ foreach ($dbColumns as $dbColumn) {
 	}
 }
 
-$BackLink = "/$ADMIN/pub/issues/sections/articles/index.php?Pub=$Pub&Issue=$Issue&Language=$Language&Section=$Section";
+$BackLink = "/$ADMIN/articles/index.php?Pub=$Pub&Issue=$Issue&Language=$Language&Section=$Section";
 
 if (!$articleObj->userCanModify($User)) {
 	$errorStr = getGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only changed by authorized users.");

@@ -1,6 +1,6 @@
 <?php
 
-require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/pub/issues/sections/section_common.php");
+require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/sections/section_common.php");
 
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
@@ -29,7 +29,7 @@ if ($DestIssueInput != 0) {
     $DestIssueId = $tmpStr[0];
     $DestIssueLanguage = $tmpStr[1];
 }
-$BackLink = Input::Get('Back', 'string', "/$ADMIN/pub/issues/sections/index.php?Pub=$Pub&Issue=$Issue&Language=$Language", true);
+$BackLink = Input::Get('Back', 'string', "/$ADMIN/sections/index.php?Pub=$Pub&Issue=$Issue&Language=$Language", true);
 
 if (!Input::IsValid()) {
 	CampsiteInterface::DisplayError(getGS("Invalid input: $1", Input::GetErrorString()), $BackLink);

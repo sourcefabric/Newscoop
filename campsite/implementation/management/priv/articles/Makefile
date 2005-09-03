@@ -1,4 +1,4 @@
-export PRIV_DIR5=$(PRIV_DIR4)/articles
+export PRIV_DIR5=$(PRIV_COMMON_DIR)/articles
 
 subsystem: all
 	$(MAKE) -C images

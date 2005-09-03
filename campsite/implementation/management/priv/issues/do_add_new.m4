@@ -1,4 +1,4 @@
-INCLUDE_PHP_LIB(<*$ADMIN_DIR/pub/issues*>)
+INCLUDE_PHP_LIB(<*$ADMIN_DIR/issues*>)
 B_DATABASE
 
 CHECK_BASIC_ACCESS
@@ -26,7 +26,7 @@ B_BODY
 ?>dnl
 B_HEADER(<*Adding new issue*>)
 B_HEADER_BUTTONS
-X_HBUTTON(<*Issues*>, <*pub/issues/?Pub=<?php  pencURL($cPub); ?>*>)
+X_HBUTTON(<*Issues*>, <*issues/?Pub=<?php  pencURL($cPub); ?>*>)
 <td class="breadcrumb_separator">&nbsp;</td>
 X_HBUTTON(<*Publications*>, <*pub/*>)
 E_HEADER_BUTTONS
@@ -89,12 +89,12 @@ B_MSGBOX(<*Adding new issue*>)
 		*>)
 <?php  if ($correct && $created) { ?>dnl
 	B_MSGBOX_BUTTONS
-		REDIRECT(<*Another*>, <*Add another*>, <*X_ROOT/pub/issues/add_new.php?Pub=<?php  pencURL($cPub); ?>*>)
-		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/pub/issues/?Pub=<?php  pencURL($cPub); ?>*>)
+		REDIRECT(<*Another*>, <*Add another*>, <*X_ROOT/issues/add_new.php?Pub=<?php  pencURL($cPub); ?>*>)
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/issues/?Pub=<?php  pencURL($cPub); ?>*>)
 	E_MSGBOX_BUTTONS
 <?php  } else { ?>dnl
 	B_MSGBOX_BUTTONS
-		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/pub/issues/add_new.php?Pub=<?php  pencURL($cPub); ?>*>)
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/issues/add_new.php?Pub=<?php  pencURL($cPub); ?>*>)
 	E_MSGBOX_BUTTONS
 <?php  } ?>dnl
 E_MSGBOX

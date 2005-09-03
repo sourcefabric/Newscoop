@@ -82,7 +82,7 @@ B_LIST
     if ($i) { ?>dnl
     B_LIST_TR
         B_LIST_ITEM
-            <A HREF="X_ROOT/pub/issues/?Pub=<?php  pgetUVar($publ,'Id'); ?>"><?php  pgetHVar($publ,'Name'); ?></A>
+            <A HREF="X_ROOT/issues/?Pub=<?php  pgetUVar($publ,'Id'); ?>"><?php  pgetHVar($publ,'Name'); ?></A>
         E_LIST_ITEM
         B_LIST_ITEM
             <?php  pgetHVar($publ,'Alias'); ?>&nbsp;

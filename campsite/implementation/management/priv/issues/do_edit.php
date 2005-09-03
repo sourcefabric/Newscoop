@@ -1,6 +1,6 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
-load_common_include_files("$ADMIN_DIR/pub/issues");
+load_common_include_files("$ADMIN_DIR/issues");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Template.php');
@@ -37,7 +37,7 @@ if (!Input::IsValid()) {
 $publicationObj =& new Publication($Pub);
 $issueObj =& new Issue($Pub, $Language, $Issue);
 
-$backLink = "/$ADMIN/pub/issues/edit.php?Pub=$Pub&Issue=$Issue&Language=$Language";
+$backLink = "/$ADMIN/issues/edit.php?Pub=$Pub&Issue=$Issue&Language=$Language";
 if ($cLang == 0) {
 	CampsiteInterface::DisplayError(getGS('You must select a language.'), $backLink);
 	exit;
@@ -70,6 +70,6 @@ if ($issueObj->commit()) {
 	Log::Message($logtext, $User->getUserName(), 11);
 }
 
-header("Location: /$ADMIN/pub/issues/?Pub=" . $publicationObj->getPublicationId());
+header("Location: /$ADMIN/issues/?Pub=" . $publicationObj->getPublicationId());
 
 ?>

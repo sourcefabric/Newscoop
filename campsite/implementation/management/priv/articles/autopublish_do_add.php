@@ -1,5 +1,5 @@
 <?PHP
-require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/pub/issues/sections/articles/article_common.php");
+require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/article_common.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticlePublish.php');
 
 list($access, $User) = check_basic_access($_REQUEST);
@@ -24,7 +24,7 @@ $publishMinute = trim(Input::Get('publish_min', 'int', 0));
 $publishAction = Input::Get('publish_action', 'string', '', true);
 $frontPageAction = Input::Get('front_page_action', 'string', '', true);
 $sectionPageAction = Input::Get('section_page_action', 'string', '', true);
-$BackLink = Input::Get('Back', 'string', "/$ADMIN/pub/issues/sections/articles/index.php"
+$BackLink = Input::Get('Back', 'string', "/$ADMIN/articles/index.php"
                        ."?Pub=$Pub&Issue=$Issue&Section=$Section&sLanguage=$sLanguage&Language=$Language", 
                        true);
                        
@@ -128,7 +128,7 @@ if ($articleObj->getPublished() != 'N') {
 	</TR>
 	<TR>
 		<TD COLSPAN="2" align="center">
-			<INPUT TYPE="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/pub/issues/sections/articles/autopublish.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php p($Section); ?>&Article=<?php p($Article); ?>&Language=<?php p($Language); ?>&sLanguage=<?php p($sLanguage); ?>'" class="button">
+			<INPUT TYPE="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/articles/autopublish.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php p($Section); ?>&Article=<?php p($Article); ?>&Language=<?php p($Language); ?>&sLanguage=<?php p($sLanguage); ?>'" class="button">
 		</TD>
 	</TR>
 </TABLE>
@@ -149,7 +149,7 @@ if ($articleObj->getPublished() != 'N') {
 	<TR>
 		<TD COLSPAN="2">
 		<DIV ALIGN="CENTER">
-	<INPUT TYPE="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/pub/issues/sections/articles/edit.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php p($Section); ?>&Article=<?php p($Article); ?>&Language=<?php p($Language); ?>&sLanguage=<?php p($sLanguage); ?>'">
+	<INPUT TYPE="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/articles/edit.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php p($Section); ?>&Article=<?php p($Article); ?>&Language=<?php p($Language); ?>&sLanguage=<?php p($sLanguage); ?>'">
 		</DIV>
 		</TD>
 	</TR>

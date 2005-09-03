@@ -1,4 +1,4 @@
-INCLUDE_PHP_LIB(<*$ADMIN_DIR/pub/issues/sections*>)
+INCLUDE_PHP_LIB(<*$ADMIN_DIR/sections*>)
 B_DATABASE
 
 CHECK_BASIC_ACCESS
@@ -24,9 +24,9 @@ B_BODY
 ?>dnl
 B_HEADER(<*Adding new section*>)
 B_HEADER_BUTTONS
-X_HBUTTON(<*Sections*>, <*pub/issues/sections/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>*>)
+X_HBUTTON(<*Sections*>, <*sections/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>*>)
 <td class="breadcrumb_separator">&nbsp;</td>
-X_HBUTTON(<*Issues*>, <*pub/issues/?Pub=<?php  p($Pub); ?>*>)
+X_HBUTTON(<*Issues*>, <*issues/?Pub=<?php  p($Pub); ?>*>)
 <td class="breadcrumb_separator">&nbsp;</td>
 X_HBUTTON(<*Publications*>, <*pub/*>)
 E_HEADER_BUTTONS
@@ -110,10 +110,10 @@ X_AUDIT(<*21*>, <*getGS('Section $1 added to issue $2. $3 ($4) of $5',$cName,get
 		*>)
 	B_MSGBOX_BUTTONS
 <?php  if ($correct && $created) { ?>dnl
-		REDIRECT(<*Add another*>, <*Add another*>, <*X_ROOT/pub/issues/sections/add.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>*>)
-		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/pub/issues/sections/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>*>)
+		REDIRECT(<*Add another*>, <*Add another*>, <*X_ROOT/sections/add.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>*>)
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/sections/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>*>)
 <?php  } else { ?>
-		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/pub/issues/sections/add.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>*>)
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/sections/add.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>*>)
 <?php  } ?>dnl
 	E_MSGBOX_BUTTONS
 E_MSGBOX

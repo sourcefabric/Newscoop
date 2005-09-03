@@ -1,4 +1,4 @@
-INCLUDE_PHP_LIB(<*$ADMIN_DIR/pub/issues*>)
+INCLUDE_PHP_LIB(<*$ADMIN_DIR/issues*>)
 B_DATABASE
 
 CHECK_BASIC_ACCESS
@@ -20,7 +20,7 @@ B_BODY
 <?php  todefnum('Pub'); ?>dnl
 B_HEADER(<*Add new issue*>)
 B_HEADER_BUTTONS
-X_HBUTTON(<*Issues*>, <*pub/issues/?Pub=<?php  pencURL($Pub); ?>*>)
+X_HBUTTON(<*Issues*>, <*issues/?Pub=<?php  pencURL($Pub); ?>*>)
 <td class="breadcrumb_separator">&nbsp;</td>
 X_HBUTTON(<*Publications*>, <*pub/*>)
 E_HEADER_BUTTONS
@@ -72,7 +72,7 @@ B_DIALOG(<*Add new issue*>, <*POST*>, <*do_add_new.php*>)
 	B_DIALOG_BUTTONS
 		<INPUT TYPE="HIDDEN" NAME="cPub" VALUE="<?php  pencHTML($Pub); ?>">
 		SUBMIT(<*Save*>, <*Save changes*>)
-		REDIRECT(<*Cancel*>, <*Cancel*>, <*X_ROOT/pub/issues/?Pub=<?php  pencURL($Pub); ?>*>)
+		REDIRECT(<*Cancel*>, <*Cancel*>, <*X_ROOT/issues/?Pub=<?php  pencURL($Pub); ?>*>)
 	E_DIALOG_BUTTONS
 E_DIALOG
 <P>

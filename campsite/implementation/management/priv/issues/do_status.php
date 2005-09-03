@@ -1,7 +1,7 @@
 <?php
 
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
-load_common_include_files("$ADMIN_DIR/pub/issues");
+load_common_include_files("$ADMIN_DIR/issues");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
@@ -25,7 +25,7 @@ if (!Input::IsValid()) {
 }
 
 if (!$User->hasPermission('ManageIssue') || !$User->hasPermission('Publish')) {
-	$BackLink ="/$ADMIN/pub/issues/?Pub=$Pub&Language=$Language";
+	$BackLink ="/$ADMIN/issues/?Pub=$Pub&Language=$Language";
 	CampsiteInterface::DisplayError(getGS('You do not have the right to change issues.'));
 	exit;
 }
@@ -46,6 +46,6 @@ else {
 	$t3=getGS('Not published');
 }
 
-header("Location: /$ADMIN/pub/issues/?Pub=" . $publicationObj->getPublicationId());
+header("Location: /$ADMIN/issues/?Pub=" . $publicationObj->getPublicationId());
 
 ?>

@@ -1,5 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/pub/issues/sections/articles/article_common.php");
+require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/article_common.php");
 
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
@@ -20,7 +20,7 @@ $Article = Input::Get('Article', 'int', 0);
 $DestPublication = Input::Get('destination_publication', 'int', 0, true);
 $DestIssue = Input::Get('destination_issue', 'int', 0, true);
 $DestSection = Input::Get('destination_section', 'int', 0, true);
-$BackLink = Input::Get('Back', 'string', "/$ADMIN/pub/issues/sections/articles/index.php", true);
+$BackLink = Input::Get('Back', 'string', "/$ADMIN/articles/index.php", true);
 
 if (!Input::IsValid()) {
 	CampsiteInterface::DisplayError(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);

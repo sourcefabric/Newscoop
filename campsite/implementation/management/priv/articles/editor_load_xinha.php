@@ -9,7 +9,7 @@ function editor_load_xinha($p_dbColumns, $p_user) {
 	global $Campsite;
 	global $ADMIN;
 	$stylesheetFile = $Campsite['HTML_COMMON_DIR'] 
-		.'/priv/pub/issues/sections/articles/article_stylesheet.css';
+		."/$ADMIN/articles/article_stylesheet.css";
 	?>	
 <script type="text/javascript">
 	//<![CDATA[

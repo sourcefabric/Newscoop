@@ -1,7 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
-load_common_include_files("$ADMIN_DIR/pub/issues/sections/articles/images");
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/pub/issues/sections/articles/article_common.php");
+load_common_include_files("$ADMIN_DIR/articles/images");
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/article_common.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
 
 list($access, $User) = check_basic_access($_REQUEST);
@@ -31,7 +31,7 @@ $articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
 $imageObj =& new Image($ImageId);
 
 // Add extra breadcrumb for image list.
-$extraCrumbs = array(getGS("Images")=>"/$ADMIN/pub/issues/sections/articles/images/?Pub=$Pub&Issue=$Issue&Language=$Language&Section=$Section&Article=$Article&sLanguage=$sLanguage");
+$extraCrumbs = array(getGS("Images")=>"/$ADMIN/articles/images/?Pub=$Pub&Issue=$Issue&Language=$Language&Section=$Section&Article=$Article&sLanguage=$sLanguage");
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
 				  'Section' => $sectionObj, 'Article'=>$articleObj);
 CampsiteInterface::ContentTop(getGS('Change image information'), $topArray, true, true, $extraCrumbs);
@@ -93,7 +93,7 @@ CampsiteInterface::ContentTop(getGS('Change image information'), $topArray, true
 	    <INPUT TYPE="HIDDEN" NAME="sLanguage" VALUE="<?php  p($sLanguage); ?>">
 	    <INPUT TYPE="HIDDEN" NAME="Image" VALUE="<?php  p($ImageId); ?>">
 		<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save changes'); ?>" class="button">
-		<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" class="button" ONCLICK="location.href='/<?php echo $ADMIN; ?>/pub/issues/sections/articles/images/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&Section=<?php  p($Section); ?>'">
+		<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" class="button" ONCLICK="location.href='/<?php echo $ADMIN; ?>/articles/images/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&Section=<?php  p($Section); ?>'">
 		</DIV>
 		</TD>
 	</TR>

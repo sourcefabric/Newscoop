@@ -1,7 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
-load_common_include_files("$ADMIN_DIR/pub/issues/sections/articles/images");
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/pub/issues/sections/articles/article_common.php");
+load_common_include_files("$ADMIN_DIR/articles/images");
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/article_common.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ImageSearch.php');
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/imagearchive/include.inc.php");
@@ -120,7 +120,7 @@ $NumImagesFound = $imageSearch->getNumImagesFound();
 $uploadedByUsers =& Image::GetUploadUsers();
 
 // Add extra breadcrumb for image list.
-$extraCrumbs = array(getGS("Images")=>"/$ADMIN/pub/issues/sections/articles/images/?Pub=$Pub&Issue=$Issue&Language=$Language&Section=$Section&Article=$Article&sLanguage=$sLanguage");
+$extraCrumbs = array(getGS("Images")=>"/$ADMIN/articles/images/?Pub=$Pub&Issue=$Issue&Language=$Language&Section=$Section&Article=$Article&sLanguage=$sLanguage");
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
 				  'Section' => $sectionObj, 'Article'=>$articleObj);
 CampsiteInterface::ContentTop(getGS('Link Image to Article'), $topArray, true, true, $extraCrumbs);

@@ -1,5 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/pub/issues/sections/section_common.php");
+require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/sections/section_common.php");
 
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
@@ -69,7 +69,7 @@ if (count($allSections) > 0) {
 		</TD>
 		
 		<TD >
-			<A HREF="/admin/pub/issues/sections/articles/?Pub=<?php p($Pub); ?>&Issue=<?php  p($section->getIssueId()); ?>&Section=<?php p($section->getSectionId()); ?>&Language=<?php  p($section->getLanguageId()); ?>"><?php p(htmlspecialchars($section->getName())); ?></A>
+			<A HREF="/<?php p($ADMIN); ?>/articles/?Pub=<?php p($Pub); ?>&Issue=<?php  p($section->getIssueId()); ?>&Section=<?php p($section->getSectionId()); ?>&Language=<?php  p($section->getLanguageId()); ?>"><?php p(htmlspecialchars($section->getName())); ?></A>
 		</TD>
 		
 		<TD >
@@ -78,19 +78,19 @@ if (count($allSections) > 0) {
 		
 		<?php  if ($User->hasPermission('ManageSection')) { ?>
 		<TD ALIGN="CENTER">
-			<A HREF="/admin/pub/issues/sections/edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($section->getIssueId()); ?>&Section=<?php p($section->getSectionId()); ?>&Language=<?php  p($section->getLanguageId()); ?>"><img src="/<?php echo $ADMIN; ?>/img/icon/configure.png" alt="<?php  putGS("Configure"); ?>" title="<?php  putGS("Configure"); ?>" border="0"></A>
+			<A HREF="/<?php p($ADMIN); ?>/sections/edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($section->getIssueId()); ?>&Section=<?php p($section->getSectionId()); ?>&Language=<?php  p($section->getLanguageId()); ?>"><img src="/<?php echo $ADMIN; ?>/img/icon/configure.png" alt="<?php  putGS("Configure"); ?>" title="<?php  putGS("Configure"); ?>" border="0"></A>
 		</TD>
 		<?php 	} ?>
 		
 		<?php if ($User->hasPermission('ManageSection') && $User->hasPermission('AddArticle')) { ?>
 		<TD ALIGN="CENTER">
-			<A HREF="/admin/pub/issues/sections/duplicate.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php p($section->getSectionId()); ?>&Language=<?php  p($Language); ?>"><img src="/<?php echo $ADMIN; ?>/img/icon/duplicate.png" alt="<?php putGS('Duplicate'); ?>" title="<?php putGS('Duplicate'); ?>" border="0"></A>
+			<A HREF="/<?php p($ADMIN);?>/sections/duplicate.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php p($section->getSectionId()); ?>&Language=<?php  p($Language); ?>"><img src="/<?php echo $ADMIN; ?>/img/icon/duplicate.png" alt="<?php putGS('Duplicate'); ?>" title="<?php putGS('Duplicate'); ?>" border="0"></A>
 		</TD>
 		<?php } ?>
 		
 		<?php if ($User->hasPermission('DeleteSection')) { ?>
 		<TD ALIGN="CENTER">
-			<A HREF="/admin/pub/issues/sections/del.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($section->getIssueId()); ?>&Section=<?php p($section->getSectionId()); ?>&Language=<?php  p($section->getLanguageId()); ?>&SectOffs=<?php p($SectOffs); ?>"><IMG SRC="/admin/img/icon/delete.png" BORDER="0" ALT="<?php putGS('Delete section $1', htmlspecialchars($section->getName())); ?>" TITLE="<?php  putGS('Delete section $1', htmlspecialchars($section->getName())); ?>"></A>
+			<A HREF="/<?php p($ADMIN); ?>/sections/del.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($section->getIssueId()); ?>&Section=<?php p($section->getSectionId()); ?>&Language=<?php  p($section->getLanguageId()); ?>&SectOffs=<?php p($SectOffs); ?>"><IMG SRC="/admin/img/icon/delete.png" BORDER="0" ALT="<?php putGS('Delete section $1', htmlspecialchars($section->getName())); ?>" TITLE="<?php  putGS('Delete section $1', htmlspecialchars($section->getName())); ?>"></A>
 		</TD>
 		<?php  } ?>
 	</TR>

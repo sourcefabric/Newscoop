@@ -1,5 +1,5 @@
 <?php 
-require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/pub/issues/sections/articles/article_common.php");
+require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/article_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/DbObjectArray.php');
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/ArticlePublish.php');
 
@@ -187,7 +187,7 @@ foreach ($allArticles as $articleObj) {
 		// Can the user edit the article?
 		$userCanEdit = $articleObj->userCanModify($User);
 		if ($userCanEdit) { ?>
-		<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($articleObj->getArticleId()); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php p($articleObj->getLanguageId()); ?>"><?php } ?><?php  p(htmlspecialchars($articleObj->getTitle())); ?>&nbsp;<?php if ($userCanEdit) { ?></A><?php } ?>
+		<A HREF="/<?php echo $ADMIN; ?>/articles/edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($articleObj->getArticleId()); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php p($articleObj->getLanguageId()); ?>"><?php } ?><?php  p(htmlspecialchars($articleObj->getTitle())); ?>&nbsp;<?php if ($userCanEdit) { ?></A><?php } ?>
 		</TD>
 		<TD ALIGN="RIGHT">
 			<?php p(htmlspecialchars($articleObj->getType()));  ?>
@@ -200,7 +200,7 @@ foreach ($allArticles as $articleObj) {
 		</TD>
 		<TD ALIGN="CENTER">
 			<?php 
-			$statusLink = "<A HREF=\"/$ADMIN/pub/issues/sections/articles/status.php?Pub=". $Pub
+			$statusLink = "<A HREF=\"/$ADMIN/articles/status.php?Pub=". $Pub
 				.'&Issue='.$Issue.'&Section='.$Section.'&Article='.$articleObj->getArticleId()
 				.'&Language='.$Language.'&sLanguage='.$articleObj->getLanguageId()
 				.'&Back='.urlencode($_SERVER['REQUEST_URI']).'">';
@@ -250,12 +250,12 @@ foreach ($allArticles as $articleObj) {
 					<tr>
 						<td width="22px">
 							<?php if (($ArticleOffset > 0) || ($uniqueArticleCounter != 1)) { ?>
-								<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/do_move.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($articleObj->getArticleId()); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php p($articleObj->getLanguageId()); ?>&ArticleLanguage=<?php p($articleObj->getLanguageId()); ?>&move=up_rel&pos=1&ArtOffs=<?php p($ArticleOffset); ?>&Back=<?php p(urlencode($_SERVER['REQUEST_URI'])); ?>"><img src="/<?php echo $ADMIN; ?>/img/icon/up.png" width="16" height="16" border="0"></A>
+								<A HREF="/<?php echo $ADMIN; ?>/articles/do_move.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($articleObj->getArticleId()); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php p($articleObj->getLanguageId()); ?>&ArticleLanguage=<?php p($articleObj->getLanguageId()); ?>&move=up_rel&pos=1&ArtOffs=<?php p($ArticleOffset); ?>&Back=<?php p(urlencode($_SERVER['REQUEST_URI'])); ?>"><img src="/<?php echo $ADMIN; ?>/img/icon/up.png" width="16" height="16" border="0"></A>
 							<?php } ?>
 						</td>
 						<td width="22px">
 							<?php if (($uniqueArticleCounter+$ArticleOffset) < $numUniqueArticles) { ?>
-								<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/do_move.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($articleObj->getArticleId()); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php p($articleObj->getLanguageId()); ?>&ArticleLanguage=<?php p($articleObj->getLanguageId()); ?>&move=down_rel&pos=1&ArtOffs=<?php p($ArticleOffset); ?>&Back=<?php p(urlencode($_SERVER['REQUEST_URI'])); ?>"><img src="/<?php echo $ADMIN; ?>/img/icon/down.png" width="16" height="16" border="0" style="padding-left: 3px; padding-right: 3px;"></A>
+								<A HREF="/<?php echo $ADMIN; ?>/articles/do_move.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($articleObj->getArticleId()); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php p($articleObj->getLanguageId()); ?>&ArticleLanguage=<?php p($articleObj->getLanguageId()); ?>&move=down_rel&pos=1&ArtOffs=<?php p($ArticleOffset); ?>&Back=<?php p(urlencode($_SERVER['REQUEST_URI'])); ?>"><img src="/<?php echo $ADMIN; ?>/img/icon/down.png" width="16" height="16" border="0" style="padding-left: 3px; padding-right: 3px;"></A>
 							<?php } ?>
 						</td>
 						<form method="GET" action="do_move.php">
@@ -296,7 +296,7 @@ foreach ($allArticles as $articleObj) {
 			<?php if ($articleObj->getPublished() != 'N') { 
 				$events =& ArticlePublish::GetArticleEvents($articleObj->getArticleId(),
 					$articleObj->getLanguageId());?>
-			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/autopublish.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($articleObj->getArticleId()); ?>&Language=<?php  p($Language);?>&sLanguage=<?php p($articleObj->getLanguageId()); ?>&Back=<?php p(urlencode($_SERVER['REQUEST_URI'])); ?>"><img src="/<?php p($ADMIN); ?>/img/icon/<?php p((count($events) > 0) ? 'automatic_publishing_active.png':'automatic_publishing.png'); ?>" alt="<?php  putGS("Scheduled Publishing"); ?>" title="<?php  putGS("Scheduled Publishing"); ?>" border="0" width="22" height="22"></A>
+			<A HREF="/<?php echo $ADMIN; ?>/articles/autopublish.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($articleObj->getArticleId()); ?>&Language=<?php  p($Language);?>&sLanguage=<?php p($articleObj->getLanguageId()); ?>&Back=<?php p(urlencode($_SERVER['REQUEST_URI'])); ?>"><img src="/<?php p($ADMIN); ?>/img/icon/<?php p((count($events) > 0) ? 'automatic_publishing_active.png':'automatic_publishing.png'); ?>" alt="<?php  putGS("Scheduled Publishing"); ?>" title="<?php  putGS("Scheduled Publishing"); ?>" border="0" width="22" height="22"></A>
 			<?php 
 			} else { ?>
 				&nbsp;<?PHP
@@ -305,26 +305,26 @@ foreach ($allArticles as $articleObj) {
 		</TD>
 		<?php } ?>
 		<TD ALIGN="CENTER">
-			<A HREF="" ONCLICK="window.open('/<?php echo $ADMIN; ?>/pub/issues/sections/articles/preview.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($articleObj->getArticleId()); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($articleObj->getLanguageId()); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=yes, width=800, height=600'); return false"><img src="/<?php p($ADMIN); ?>/img/icon/preview.png" alt="<?php  putGS("Preview"); ?>" title="<?php putGS('Preview'); ?>" border="0" width="22" height="22"></A>
+			<A HREF="" ONCLICK="window.open('/<?php echo $ADMIN; ?>/articles/preview.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($articleObj->getArticleId()); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($articleObj->getLanguageId()); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=yes, width=800, height=600'); return false"><img src="/<?php p($ADMIN); ?>/img/icon/preview.png" alt="<?php  putGS("Preview"); ?>" title="<?php putGS('Preview'); ?>" border="0" width="22" height="22"></A>
 		</TD>
 
 		<?php  if ($User->hasPermission('AddArticle')) { ?>
 		<TD ALIGN="CENTER">
 			<?php  if ($articleObj->getArticleId() != $previousArticleId) { ?>
-			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/translate.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($articleObj->getArticleId()); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php p($articleObj->getLanguageId()); ?>&Back=<?php p(urlencode($_SERVER['REQUEST_URI'])); ?>"><img src="/<?php p($ADMIN); ?>/img/icon/translate.png" alt="<?php  putGS("Translate"); ?>" title="<?php  putGS("Translate"); ?>" border="0" width="22" height="22"></A>
+			<A HREF="/<?php echo $ADMIN; ?>/articles/translate.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($articleObj->getArticleId()); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php p($articleObj->getLanguageId()); ?>&Back=<?php p(urlencode($_SERVER['REQUEST_URI'])); ?>"><img src="/<?php p($ADMIN); ?>/img/icon/translate.png" alt="<?php  putGS("Translate"); ?>" title="<?php  putGS("Translate"); ?>" border="0" width="22" height="22"></A>
 			<?php  } else { ?>
 				&nbsp;
 			<?php  } ?>
 		</TD>
 		
 		<TD ALIGN="CENTER">
-			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/duplicate.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($articleObj->getArticleId()); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($articleObj->getLanguageId()); ?>&Back=<?php p(urlencode($_SERVER['REQUEST_URI'])); ?>"><img src="/<?php p($ADMIN); ?>/img/icon/duplicate.png" alt="<?php  putGS("Duplicate"); ?>" title="<?php  putGS("Duplicate"); ?>" border="0" width="22" height="22"></A>
+			<A HREF="/<?php echo $ADMIN; ?>/articles/duplicate.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($articleObj->getArticleId()); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($articleObj->getLanguageId()); ?>&Back=<?php p(urlencode($_SERVER['REQUEST_URI'])); ?>"><img src="/<?php p($ADMIN); ?>/img/icon/duplicate.png" alt="<?php  putGS("Duplicate"); ?>" title="<?php  putGS("Duplicate"); ?>" border="0" width="22" height="22"></A>
 		</TD>
 		<?php  } ?>
 
 		<?php  if ($User->hasPermission('DeleteArticle')) { ?>
 		<TD ALIGN="CENTER">
-			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/do_del.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($articleObj->getArticleId()); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php p($articleObj->getLanguageId()); ?>&ArtOffs=<?php p($ArticleOffset); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the article $1 ($2)?', '&quot;'.camp_javascriptspecialchars($articleObj->getTitle()).'&quot', camp_javascriptspecialchars($articleObj->getLanguageName())); ?>');"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/delete.png" BORDER="0" ALT="<?php  putGS('Delete'); ?>" title="<?php  putGS('Delete'); ?>" width="16" height="16"></A>
+			<A HREF="/<?php echo $ADMIN; ?>/articles/do_del.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($articleObj->getArticleId()); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php p($articleObj->getLanguageId()); ?>&ArtOffs=<?php p($ArticleOffset); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the article $1 ($2)?', '&quot;'.camp_javascriptspecialchars($articleObj->getTitle()).'&quot', camp_javascriptspecialchars($articleObj->getLanguageName())); ?>');"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/delete.png" BORDER="0" ALT="<?php  putGS('Delete'); ?>" title="<?php  putGS('Delete'); ?>" width="16" height="16"></A>
 		</TD>
 		<?php  }
 		if ($articleObj->getArticleId() != $previousArticleId)

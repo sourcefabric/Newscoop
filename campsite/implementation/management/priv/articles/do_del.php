@@ -1,5 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/pub/issues/sections/articles/article_common.php");
+require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/article_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Log.php");
 
 // Check permissions
@@ -22,7 +22,7 @@ $sLanguage = Input::Get('sLanguage', 'int', 0);
 $Article = Input::Get('Article', 'int', 0);
 $ArticleOffset = Input::Get('ArtOffs', 'int', 0, true);
 
-$BackLink = Input::Get('Back', 'string', "/$ADMIN/pub/issues/sections/articles/index.php?Pub=$Pub&Issue=$Issue&Section=$Section&Language=$Language&ArtOffs=$ArticleOffset", true);
+$BackLink = Input::Get('Back', 'string', "/$ADMIN/articles/index.php?Pub=$Pub&Issue=$Issue&Section=$Section&Language=$Language&ArtOffs=$ArticleOffset", true);
 
 if (!Input::IsValid()) {
 	CampsiteInterface::DisplayError(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);

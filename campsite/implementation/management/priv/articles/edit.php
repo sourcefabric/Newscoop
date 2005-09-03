@@ -1,5 +1,5 @@
 <?php  
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/pub/issues/sections/articles/article_common.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/article_common.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticlePublish.php');
 
 list($access, $User) = check_basic_access($_REQUEST);
@@ -129,7 +129,7 @@ if (!$hasAccess) {
 		<TR>
 			<TD COLSPAN="2">
 			<DIV ALIGN="CENTER">
-			<INPUT TYPE="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" class="button" ONCLICK="location.href='/<?php echo $ADMIN; ?>/pub/issues/sections/articles?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>&Section=<?php  p($Section); ?>'">
+			<INPUT TYPE="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" class="button" ONCLICK="location.href='/<?php echo $ADMIN; ?>/articles?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>&Section=<?php  p($Section); ?>'">
 			</DIV>
 			</TD>
 		</TR>
@@ -177,7 +177,7 @@ if ($hasAccess && !$edit_ok) {
 		<TD COLSPAN="2">
 		<DIV ALIGN="CENTER">
 		<INPUT TYPE="button" NAME="Yes" VALUE="<?php  putGS('Yes'); ?>" class="button" ONCLICK="location.href='<?php echo CampsiteInterface::ArticleUrl($articleObj, $sLanguage, "do_unlock.php"); ?>'">
-		<INPUT TYPE="button" NAME="No" VALUE="<?php  putGS('No'); ?>" class="button" ONCLICK="location.href='/<?php echo $ADMIN; ?>/pub/issues/sections/articles/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php p($Language); ?>&Section=<?php  p($Section); ?>'">
+		<INPUT TYPE="button" NAME="No" VALUE="<?php  putGS('No'); ?>" class="button" ONCLICK="location.href='/<?php echo $ADMIN; ?>/articles/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php p($Language); ?>&Section=<?php  p($Section); ?>'">
 		</DIV>
 		</TD>
 	</TR>
@@ -296,8 +296,8 @@ if ($edit_ok) { ?>
 				<!-- Preview Link -->
 				<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 				<TR>	
-					<TD><A HREF="" ONCLICK="window.open('/<?php echo $ADMIN; ?>/pub/issues/sections/articles/preview.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=no, width=680, height=560'); return false"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/preview.png" BORDER="0"></A></TD>
-					<TD><A HREF="" ONCLICK="window.open('/<?php echo $ADMIN; ?>/pub/issues/sections/articles/preview.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>', 'fpreview', 'resizable=yes, menubar=yes, toolbar=yes, width=680, height=560'); return false"><B><?php  putGS("Preview"); ?></B></A></TD>
+					<TD><A HREF="" ONCLICK="window.open('/<?php echo $ADMIN; ?>/articles/preview.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=no, width=680, height=560'); return false"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/preview.png" BORDER="0"></A></TD>
+					<TD><A HREF="" ONCLICK="window.open('/<?php echo $ADMIN; ?>/articles/preview.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>', 'fpreview', 'resizable=yes, menubar=yes, toolbar=yes, width=680, height=560'); return false"><B><?php  putGS("Preview"); ?></B></A></TD>
 				</TR>
 				</TABLE>
 			</TD>
@@ -321,8 +321,8 @@ if ($edit_ok) { ?>
 				<TD class="action_link_container">
 					<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 					<TR>
-						<TD><a href="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/do_del.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php p($Section); ?>&Article=<?php p($Article); ?>&Language=<?php p($Language); ?>&sLanguage=<?php p($sLanguage); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the article $1 ($2)?', '&quot;'.camp_javascriptspecialchars($articleObj->getTitle()).'&quot;', camp_javascriptspecialchars($sLanguageObj->getName())); ?>');"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/delete.png" BORDER="0"></A></TD>
-						<TD style="padding-left: 6px;"><a href="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/do_del.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php p($Section); ?>&Article=<?php p($Article); ?>&Language=<?php p($Language); ?>&sLanguage=<?php p($sLanguage); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the article $1 ($2)?', '&quot;'.camp_javascriptspecialchars($articleObj->getTitle()).'&quot;', camp_javascriptspecialchars($sLanguageObj->getName())); ?>');"><B><?php  putGS("Delete"); ?></B></A></TD>
+						<TD><a href="/<?php echo $ADMIN; ?>/articles/do_del.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php p($Section); ?>&Article=<?php p($Article); ?>&Language=<?php p($Language); ?>&sLanguage=<?php p($sLanguage); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the article $1 ($2)?', '&quot;'.camp_javascriptspecialchars($articleObj->getTitle()).'&quot;', camp_javascriptspecialchars($sLanguageObj->getName())); ?>');"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/delete.png" BORDER="0"></A></TD>
+						<TD style="padding-left: 6px;"><a href="/<?php echo $ADMIN; ?>/articles/do_del.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php p($Section); ?>&Article=<?php p($Article); ?>&Language=<?php p($Language); ?>&sLanguage=<?php p($sLanguage); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the article $1 ($2)?', '&quot;'.camp_javascriptspecialchars($articleObj->getTitle()).'&quot;', camp_javascriptspecialchars($sLanguageObj->getName())); ?>');"><B><?php  putGS("Delete"); ?></B></A></TD>
 					</TR>
 					</TABLE>
 				</TD>
@@ -471,10 +471,11 @@ if ($edit_ok) { ?>
 	<?php 
 	// Display the article type fields.
 	foreach ($dbColumns as $dbColumn) {
-		if (stristr($dbColumn->getType(), "char")
-			/* DO NOT DELETE */ || stristr($dbColumn->getType(), "binary") /* DO NOT DELETE */ ) {
+		if (stristr($dbColumn->getType(), "char")			
+		    /* DO NOT DELETE */ || stristr($dbColumn->getType(), "binary") /* DO NOT DELETE */ ) {
 			// The "binary" comparizon is needed for Fedora distro; MySQL on Fedora changes ALL
 			// "char" types to "binary".
+ 
 			// Single line text fields
 			?>
 			<TR>
@@ -598,7 +599,7 @@ if ($edit_ok) { ?>
 		<TD COLSPAN="2">
 		<DIV ALIGN="CENTER">
 		<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save changes'); ?>" class="button">
-		<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" class="button" ONCLICK="location.href='/<?php echo $ADMIN; ?>/pub/issues/sections/articles/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Language=<?php  p($Language); ?>'">
+		<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" class="button" ONCLICK="location.href='/<?php echo $ADMIN; ?>/articles/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Language=<?php  p($Language); ?>'">
 		</DIV>
 		</TD>
 	</TR>

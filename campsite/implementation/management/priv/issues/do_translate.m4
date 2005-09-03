@@ -1,4 +1,4 @@
-INCLUDE_PHP_LIB(<*$ADMIN_DIR/pub/issues*>)
+INCLUDE_PHP_LIB(<*$ADMIN_DIR/issues*>)
 B_DATABASE
 
 CHECK_BASIC_ACCESS
@@ -27,7 +27,7 @@ B_BODY
 ?>
 B_HEADER(<*Adding new translation*>)
 B_HEADER_BUTTONS
-X_HBUTTON(<*Issues*>, <*pub/issues/?Pub=<?php  pencURL($cPub); ?>*>)
+X_HBUTTON(<*Issues*>, <*issues/?Pub=<?php  pencURL($cPub); ?>*>)
 <td class="breadcrumb_separator">&nbsp;</td>
 X_HBUTTON(<*Publications*>, <*pub/*>)
 E_HEADER_BUTTONS
@@ -92,12 +92,12 @@ X_AUDIT(<*11*>, <*getGS('Issue $1 added',$cName)*>)
 		*>)
 <?php  if ($correct && $created) { ?>dnl
 	B_MSGBOX_BUTTONS
-		REDIRECT(<*Another*>, <*Add another*>, <*X_ROOT/pub/issues/translate.php?Pub=<?php  pencURL($cPub); ?>&Issue=<?php  pencURL($cNumber); ?>*>)
-		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/pub/issues/?Pub=<?php  pencURL($cPub); ?>*>)
+		REDIRECT(<*Another*>, <*Add another*>, <*X_ROOT/issues/translate.php?Pub=<?php  pencURL($cPub); ?>&Issue=<?php  pencURL($cNumber); ?>*>)
+		REDIRECT(<*Done*>, <*Done*>, <*X_ROOT/issues/?Pub=<?php  pencURL($cPub); ?>*>)
 	E_MSGBOX_BUTTONS
 <?php  } else { ?>dnl
 	B_MSGBOX_BUTTONS
-		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/pub/issues/translate.php?Pub=<?php  pencURL($cPub); ?>&Issue=<?php  pencURL($cNumber); ?>*>)
+		REDIRECT(<*OK*>, <*OK*>, <*X_ROOT/issues/translate.php?Pub=<?php  pencURL($cPub); ?>&Issue=<?php  pencURL($cNumber); ?>*>)
 	E_MSGBOX_BUTTONS
 <?php  } ?>dnl
 E_MSGBOX

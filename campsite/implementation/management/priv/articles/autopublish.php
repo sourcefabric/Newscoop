@@ -1,5 +1,5 @@
 <?PHP
-require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/pub/issues/sections/articles/article_common.php");
+require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/article_common.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticlePublish.php');
 
 list($access, $User) = check_basic_access($_REQUEST);
@@ -19,7 +19,7 @@ $Language = Input::Get('Language', 'int', 0);
 $sLanguage = Input::Get('sLanguage', 'int', 0);
 $Article = Input::Get('Article', 'int', 0);
 $publishTime = Input::Get('publish_time', 'string', '', true);
-$BackLink = Input::Get('Back', 'string', "/$ADMIN/pub/issues/sections/articles/edit.php"
+$BackLink = Input::Get('Back', 'string', "/$ADMIN/articles/edit.php"
                        ."?Pub=$Pub&Issue=$Issue&Section=$Section&sLanguage=$sLanguage&Language=$Language&Article=$Article", 
                        true);
 
@@ -186,7 +186,7 @@ if ($articleObj->getPublished() != 'N') {
 		$url_publish_time = urlencode($event->getActionTime());
 		?>	<TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 		<TD>
-			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/autopublish.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php p($Section); ?>&Article=<?php p($Article); ?>&Language=<?php p($Language); ?>&sLanguage=<?php p($sLanguage); ?>&publish_time=<?php echo $url_publish_time; ?>"><?php p(htmlspecialchars($event->getActionTime())); ?></A>
+			<A HREF="/<?php echo $ADMIN; ?>/articles/autopublish.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php p($Section); ?>&Article=<?php p($Article); ?>&Language=<?php p($Language); ?>&sLanguage=<?php p($sLanguage); ?>&publish_time=<?php echo $url_publish_time; ?>"><?php p(htmlspecialchars($event->getActionTime())); ?></A>
 		</TD>
 		
 		<TD>
@@ -226,7 +226,7 @@ if ($articleObj->getPublished() != 'N') {
 		</TD>
 		
 		<TD ALIGN="CENTER">
-			<A HREF="/<?php echo $ADMIN; ?>/pub/issues/sections/articles/autopublish_del.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php p($Section); ?>&Article=<?php p($Article); ?>&Language=<?php p($Language); ?>&sLanguage=<?php p($sLanguage); ?>&publish_time=<?php echo $url_publish_time; ?>&Back=<?php p(urlencode($BackLink)); ?>" onclick="return confirm('<?php putGS("Are you sure you want to delete this scheduled action?"); ?>');"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/x.gif" BORDER="0" ALT="<?php putGS('Delete'); ?>"></A>
+			<A HREF="/<?php echo $ADMIN; ?>/articles/autopublish_del.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php p($Section); ?>&Article=<?php p($Article); ?>&Language=<?php p($Language); ?>&sLanguage=<?php p($sLanguage); ?>&publish_time=<?php echo $url_publish_time; ?>&Back=<?php p(urlencode($BackLink)); ?>" onclick="return confirm('<?php putGS("Are you sure you want to delete this scheduled action?"); ?>');"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/x.gif" BORDER="0" ALT="<?php putGS('Delete'); ?>"></A>
 		</TD>
 	</TR>
 	<?php
@@ -251,7 +251,7 @@ else { ?>
 	</TR>
 	<TR>
 		<TD COLSPAN="2" align="center">
-			<INPUT TYPE="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/pub/issues/sections/articles/edit.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php p($Section); ?>&Article=<?php p($Article); ?>&Language=<?php p($Language); ?>&sLanguage=<?php p($sLanguage); ?>'" class="button">
+			<INPUT TYPE="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/articles/edit.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php p($Section); ?>&Article=<?php p($Article); ?>&Language=<?php p($Language); ?>&sLanguage=<?php p($sLanguage); ?>'" class="button">
 		</TD>
 	</TR>
 	</TABLE></CENTER>

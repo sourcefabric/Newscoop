@@ -1,5 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/pub/issues/sections/section_common.php");
+require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/sections/section_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']. "/classes/Article.php");
 require_once($_SERVER['DOCUMENT_ROOT']. "/classes/Subscription.php");
 
@@ -89,7 +89,7 @@ CampsiteInterface::ContentTop(getGS('Delete section'), $topArray);
 <TR>
 	<TD COLSPAN="2">
     	<DIV ALIGN="CENTER">
-        <INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/admin/pub/issues/sections/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>'">
+        <INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/sections/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>'">
 		</DIV>
 	</TD>
 </TR>
