@@ -32,7 +32,7 @@ export APACHE_BIN_PATH=""
 cdir=`pwd`
 [ $? -ne 0 ] && echo "Error reading campsite directory: pwd command does not exist" && exit 1
 export CAMPSITE_PACKAGE_DIR=$cdir
-export INSTALL_CONF=${CAMPSITE_PACKAGE_DIR}/.install_conf
+export INSTALL_CONF=${CAMPSITE_PACKAGE_DIR}/install_conf
 . ${INSTALL_CONF}/install_functions
 
 for m in php_cli make mkdir chown chmod cut cat grep cp rm locate; do

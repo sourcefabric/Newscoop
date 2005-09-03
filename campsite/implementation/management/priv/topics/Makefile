@@ -1,4 +1,4 @@
-include ../../../make.env
+include ../../../../make.env
 
 export PRIV_DIR2=$(PRIV_COMMON_DIR)/topics
 
