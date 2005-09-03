@@ -1,6 +1,4 @@
 <?php
-regGS("There are $1 issue(s) left.", "Отсалось выпусков: $1");
-regGS("No such country.", "Нет такой страны");
 regGS("Name<BR><SMALL>(click to see issues)</SMALL>", "Название<BR><SMALL>(щелкните для просмотра выпуска)</SMALL>");
 regGS("Delete publication $1", "Удалить публикацию $1");
 regGS("No publications.", "Нет публикаций.");
@@ -75,5 +73,7 @@ regGS("The alias $1 could not be deleted.", "Псевдоним $1 не може
 regGS("The alias $1 has been deleted from publication $2.", "Псевдоним $1 был удален из публикации $2.");
 regGS("$1 is the default publication alias, it can not be deleted.", "$1 - это псевдоним публикации по умолчанию, он не может быть удален.");
 regGS("You do not have the right to add publications.", "Вы не имеете прав добавления публикации.");
+regGS("There are $1 issue(s) left.", "Отсалось выпусков: $1");
+regGS("No such country.", "Нет такой страны");
 regGS("Change publication information", "Изменить информацию публикации:ru");
 ?>

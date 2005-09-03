@@ -3,7 +3,6 @@ regGS("Publication<BR><SMALL>(click to see sections)</SMALL>", "Публикац
 regGS("Delete subscriptions to $1", "Удалить подписку на $1");
 regGS("Paid subscription", "Платная подписка");
 regGS("Trial subscription", "Пробная подписка");
-regGS("Are you sure you want to delete the subscription to the publication $1?", "Вы уверены, что хотите удалить подписку на публикацию $1?");
 regGS("The subscription has been deleted.", "Подписка была удалена");
 regGS("The subscription could not be deleted.", "Невозможно удалить подписку.");
 regGS("Add sections now", "Добавить секцию сейчас");
@@ -25,6 +24,7 @@ regGS("Subscription status could not be changed.", "Невозможно изм�
 regGS("Update payment", "Обновление оплаты");
 regGS("The subscription payment was updated.", "Оплата подписки была обновлена.");
 regGS("Subscription payment could not be changed.", "Невозможно изменить оплату подписки.");
+regGS("Are you sure you want to delete the subscription to the publication $1?", "Вы уверены, что хотите удалить подписку на публикацию $1?");
 regGS("Left to pay", "Осталось оплатить:ru");
 regGS("Active", "Активно:ru");
 regGS("No subscriptions.", "Нет подписок.:ru");

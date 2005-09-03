@@ -1,15 +1,6 @@
 <?php
-regGS("native name", "оригинальное название");
-regGS("name", "название");
-regGS("edit", "редактировать");
-regGS("delete", "удалить");
-regGS("code", "код");
-regGS("Click Here to Convert", "Щелкните здесь для конвертации");
-regGS("success", "успех");
-regGS("fail", "неудача");
 regGS("edit '$1'", "редактировать '$1'");
 regGS("edit \"$1\"", "редактировать \"$1\"");
-regGS("cannot read $1", "невозможно прочитать $1");
 regGS("User Subscriptions Sections", "Пользовательская секция подписок");
 regGS("User Subscriptions", "Пользовательские подписки");
 regGS("Translate to:", "Перевести на:");
@@ -24,11 +15,20 @@ regGS("Localizer", "Локализатор");
 regGS("Image Archive", "Архив картинок");
 regGS("Hide translated strings?", "Спрятать переведённые строки?");
 regGS("Globals", "Общие");
-regGS("Converting...", "Конвертация...");
 regGS("Article Type Fields", "Поля типов статьи");
 regGS("Article Topics", "Темы статей");
 regGS("Article Images", "Картинки из статей");
 regGS("Are you sure you want to delete this entry?", "Вы уверены, что хотите удалить эту строку");
 regGS("All strings have been translated.", "Все строки были переведены.");
 regGS("Add", "Добавить");
+regGS("native name", "оригинальное название");
+regGS("name", "название");
+regGS("edit", "редактировать");
+regGS("delete", "удалить");
+regGS("code", "код");
+regGS("Click Here to Convert", "Щелкните здесь для конвертации");
+regGS("success", "успех");
+regGS("fail", "неудача");
+regGS("cannot read $1", "невозможно прочитать $1");
+regGS("Converting...", "Конвертация...");
 ?>
