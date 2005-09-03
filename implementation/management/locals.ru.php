@@ -1,4 +1,12 @@
 <?php
+regGS("You haven't written any articles yet.", "Вы еще не написали статью.");
+regGS("There are no pending items to be published.", "Нет отложенных статей для публикации.");
+regGS("There are currently no submitted articles.", "Нет отправленных статей в данный момент.");
+regGS("Recently Published Articles", "Недавно опубликованные статьи");
+regGS("Publish articles", "Опубликовать статьи");
+regGS("Publish Date", "Дата публикации");
+regGS("No articles have been published yet.", "Статьи пока не опубликованы.");
+regGS("Event(s)", "Событие(-я)");
 regGS("Signed in: $1", "Пользователь: $1");
 regGS("Help", "Помощь");
 regGS("About", "О программе");

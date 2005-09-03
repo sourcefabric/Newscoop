@@ -1,5 +1,4 @@
 <?php
-regGS("Add new field", "Добавить новое поле");
 regGS("No article types.", "Нет типов статей.");
 regGS("Delete article type $1", "Удалиь тип статей $1");
 regGS("You do not have the right to add article types.", "Вы не имеете права удаления типов статей");
