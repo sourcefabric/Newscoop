@@ -12,8 +12,6 @@ install: $(ALL)
 	mkdir -p $(CGI_COMMON_DIR)
 	mkdir -p $(HTML_COMMON_DIR)
 	mkdir -p $(HTML_COMMON_DIR)/look
-	mkdir -p $(PRIV_COMMON_DIR)/img
-	cp -fr img/* $(PRIV_COMMON_DIR)/img
 	mkdir -p $(HTML_COMMON_DIR)/css
 	cp -f css/*.css $(HTML_COMMON_DIR)/css
 	mkdir -p $(HTML_COMMON_DIR)/classes
@@ -21,7 +19,8 @@ install: $(ALL)
 	mkdir -p $(HTML_COMMON_DIR)/images/thumbnails
 	cp -rf javascript $(HTML_COMMON_DIR)
 	cp -rf include $(HTML_COMMON_DIR)
-	cp -f *.php $(PRIV_COMMON_DIR)/
+	cp -rf priv $(HTML_COMMON_DIR)
+	cp -f *.php $(HTML_COMMON_DIR)/
 	$(MAKE) -C bin install
 	$(MAKE) -C cgi install
 	chown -R $(APACHE_USER):$(APACHE_GROUP) $(HTML_COMMON_DIR)/*
