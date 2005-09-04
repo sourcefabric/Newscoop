@@ -7,7 +7,7 @@ if (!$access) {
 	exit;
 }
 if (!$User->hasPermission('AddArticle')) {
-	CampsiteInterface::DisplayError(getGS("You do not have the right to add articles."));
+	camp_html_display_error(getGS("You do not have the right to add articles."));
 	exit;
 }
 
@@ -22,7 +22,7 @@ if ($Wiz != 0) {
 }
 
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
 	exit;	
 }
 
@@ -41,7 +41,7 @@ if (function_exists ("incModFile")) {
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
 				  'Section' => $sectionObj);
-CampsiteInterface::ContentTop(getGS('Add new article'), $topArray, true, true);
+camp_html_content_top(getGS('Add new article'), $topArray, true, true);
 
 ?>
 
@@ -146,4 +146,4 @@ if (sizeof($allArticleTypes) == 0) {
 <P>
 
 <?php } ?>
-<?php CampsiteInterface::CopyrightNotice(); ?>
+<?php camp_html_copyright_notice(); ?>

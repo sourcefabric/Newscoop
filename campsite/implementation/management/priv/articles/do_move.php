@@ -9,7 +9,7 @@ if (!$access) {
 	exit;
 }
 if (!$User->hasPermission('Publish')) {
-	CampsiteInterface::DisplayError(getGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only changed by authorized users." ));
+	camp_html_display_error(getGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only changed by authorized users." ));
 	exit;
 }
 
@@ -27,26 +27,26 @@ $MoveToPosition = Input::Get('pos', 'int', 1, true);
 $BackLink = Input::Get('Back', 'string', "/$ADMIN/articles/index.php?Pub=$Pub&Issue=$Issue&Section=$Section&Language=$Language&ArtOffs=$ArticleOffset&sLanguage=$sLanguage", true);
 
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
 	exit;	
 }
 
 
 $publicationObj =& new Publication($Pub);
 if (!$publicationObj->exists()) {
-	CampsiteInterface::DisplayError(getGS('Publication does not exist.'), $BackLink);
+	camp_html_display_error(getGS('Publication does not exist.'), $BackLink);
 	exit;	
 }
 
 $issueObj =& new Issue($Pub, $Language, $Issue);
 if (!$issueObj->exists()) {
-	CampsiteInterface::DisplayError(getGS('Issue does not exist.'), $BackLink);
+	camp_html_display_error(getGS('Issue does not exist.'), $BackLink);
 	exit;	
 }
 
 $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
 if (!$sectionObj->exists()) {
-	CampsiteInterface::DisplayError(getGS('Section does not exist.'), $BackLink);
+	camp_html_display_error(getGS('Section does not exist.'), $BackLink);
 	exit;	
 }
 
@@ -54,7 +54,7 @@ $languageObj =& new Language($Language);
 
 $articleObj =& new Article($Pub, $Issue, $Section, $ArticleLanguage, $Article);
 if (!$articleObj->exists()) {
-	CampsiteInterface::DisplayError(getGS('Article does not exist.'), $BackLink);
+	camp_html_display_error(getGS('Article does not exist.'), $BackLink);
 	exit;	
 }
 

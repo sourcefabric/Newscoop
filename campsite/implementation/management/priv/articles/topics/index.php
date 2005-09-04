@@ -24,31 +24,31 @@ $TopicsPerPage = Input::Get('lpp', 'int', 20, true);
 $searchTopicsString = trim(Input::Get('search_topics_string', 'string', '', true));
 
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
 	exit;	
 }
 
 $publicationObj =& new Publication($Pub);
 if (!$publicationObj->exists()) {
-	CampsiteInterface::DisplayError(getGS('Publication does not exist.'));
+	camp_html_display_error(getGS('Publication does not exist.'));
 	exit;	
 }
 
 $issueObj =& new Issue($Pub, $Language, $Issue);
 if (!$issueObj->exists()) {
-	CampsiteInterface::DisplayError(getGS('Issue does not exist.'));
+	camp_html_display_error(getGS('Issue does not exist.'));
 	exit;	
 }
 
 $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
 if (!$sectionObj->exists()) {
-	CampsiteInterface::DisplayError(getGS('Section does not exist.'));
+	camp_html_display_error(getGS('Section does not exist.'));
 	exit;		
 }
 
 $articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
 if (!$articleObj->exists()) {
-	CampsiteInterface::DisplayError(getGS('Article does not exist.'));
+	camp_html_display_error(getGS('Article does not exist.'));
 	exit;		
 }
 
@@ -84,7 +84,7 @@ else {
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
 				  'Section' => $sectionObj, 'Article'=>$articleObj);
-CampsiteInterface::ContentTop(getGS('Article topics'), $topArray);
+camp_html_content_top(getGS('Article topics'), $topArray);
 ?>
 
 <p>
@@ -236,4 +236,4 @@ else { ?>
 	<?php  
 } 
 
-CampsiteInterface::CopyrightNotice(); ?>
+camp_html_copyright_notice(); ?>

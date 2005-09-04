@@ -4,7 +4,7 @@ load_common_include_files("$ADMIN_DIR/imagearchive");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ImageSearch.php');
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/imagearchive/include.inc.php");
 
 list($access, $User) = check_basic_access($_REQUEST);
@@ -103,4 +103,4 @@ fetchRowNum($q_now);
 </FORM>
 <P>
 
-<?php CampsiteInterface::CopyrightNotice(); ?>
+<?php camp_html_copyright_notice(); ?>

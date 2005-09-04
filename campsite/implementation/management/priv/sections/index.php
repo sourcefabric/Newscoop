@@ -17,7 +17,7 @@ if ($SectOffs < 0)	{
 $ItemsPerPage = 15;
 
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
 	exit;		
 }
 $publicationObj =& new Publication($Pub);
@@ -26,7 +26,7 @@ $allSections =& Section::GetSections($Pub, $Issue, $Language, array('ORDER BY' =
 $totalSections = Section::GetTotalSections($Pub, $Issue, $Language);
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj);
-CampsiteInterface::ContentTop(getGS('Sections'), $topArray);
+camp_html_content_top(getGS('Sections'), $topArray);
 
 
 if ($User->hasPermission('ManageSection')) { ?>
@@ -118,4 +118,4 @@ else { ?>
 	<?php  
 }
 
-CampsiteInterface::CopyrightNotice(); ?>
+camp_html_copyright_notice(); ?>

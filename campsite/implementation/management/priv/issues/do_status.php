@@ -2,7 +2,7 @@
 
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
 load_common_include_files("$ADMIN_DIR/issues");
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Publication.php');
@@ -20,13 +20,13 @@ $Issue = Input::Get('Issue', 'int');
 $Language = Input::Get('Language', 'int');
 
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(getGS('Invalid Input: $1', Input::GetErrorString()));
+	camp_html_display_error(getGS('Invalid Input: $1', Input::GetErrorString()));
 	exit;
 }
 
 if (!$User->hasPermission('ManageIssue') || !$User->hasPermission('Publish')) {
 	$BackLink ="/$ADMIN/issues/?Pub=$Pub&Language=$Language";
-	CampsiteInterface::DisplayError(getGS('You do not have the right to change issues.'));
+	camp_html_display_error(getGS('You do not have the right to change issues.'));
 	exit;
 }
 

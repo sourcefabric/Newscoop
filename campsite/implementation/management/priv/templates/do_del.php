@@ -94,7 +94,7 @@ if ($res)
 </TABLE>
 <P>
 <?php
-CampsiteInterface::CopyrightNotice();
+camp_html_copyright_notice();
 ?>
 
 </BODY>

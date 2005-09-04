@@ -5,7 +5,7 @@ require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/languages.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/localizer/Localizer.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
@@ -20,10 +20,10 @@ $editMode = ($languageId != 0);
 
 if (!$User->hasPermission('ManageLanguages')) {
     if (!$editMode) {
-	   CampsiteInterface::DisplayError(getGS("You do not have the right to add languages."));
+	   camp_html_display_error(getGS("You do not have the right to add languages."));
     }
     else {
-       CampsiteInterface::DisplayError(getGS("You do not have the right to edit languages."));
+       camp_html_display_error(getGS("You do not have the right to edit languages."));
     }
 	exit;
 }
@@ -269,4 +269,4 @@ $languageObj =& new Language($languageId);
 </FORM>
 <P>
 
-<?php CampsiteInterface::CopyrightNotice(); ?>
+<?php camp_html_copyright_notice(); ?>

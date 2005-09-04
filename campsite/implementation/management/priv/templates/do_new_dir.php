@@ -86,7 +86,7 @@ if (!$correct) {
 </TABLE>
 <P>
 <?php
-CampsiteInterface::CopyrightNotice();
+camp_html_copyright_notice();
 ?>
 
 </HTML>

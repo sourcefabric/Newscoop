@@ -11,7 +11,7 @@ if (!$access) {
 	exit;
 }
 if (!$User->hasPermission("AddImage")) {
-	CampsiteInterface::DisplayError(getGS("You do not have the right to add images" ));
+	camp_html_display_error(getGS("You do not have the right to add images" ));
 	exit;
 }
 $maxId = Image::GetMaxId();
@@ -23,7 +23,7 @@ $sLanguage = Input::Get('sLanguage', 'int', 0);
 $Article = Input::Get('Article', 'int', 0);
 
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
 	exit;	
 }
 
@@ -41,7 +41,7 @@ fetchRowNum($q_now);
 $extraCrumbs = array(getGS("Images")=>"/$ADMIN/articles/images/?Pub=$Pub&Issue=$Issue&Language=$Language&Section=$Section&Article=$Article&sLanguage=$sLanguage");
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
 				  'Section' => $sectionObj, 'Article'=>$articleObj);
-CampsiteInterface::ContentTop(getGS("Add new image"), $topArray, true, true, $extraCrumbs);
+camp_html_content_top(getGS("Add new image"), $topArray, true, true, $extraCrumbs);
 
 ?>
 <script>
@@ -122,4 +122,4 @@ function checkAddForm(form) {
 </FORM>
 <P>
 
-<?php CampsiteInterface::CopyrightNotice(); ?>
+<?php camp_html_copyright_notice(); ?>

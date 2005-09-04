@@ -8,7 +8,7 @@ if (!$access) {
 }
 
 if (!$User->hasPermission('AddArticle')) {
-	CampsiteInterface::DisplayError(getGS("You do not have the right to add articles."));	
+	camp_html_display_error(getGS("You do not have the right to add articles."));	
 	exit;
 }
 
@@ -23,7 +23,7 @@ $ItemsToDisplay = 15;
 //todefnum('lpp', 10);
 
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
 	exit;		
 }
 $publicationObj =& new Publication($Pub);
@@ -36,7 +36,7 @@ if (function_exists ("incModFile")) {
 }
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj);
-CampsiteInterface::ContentTop(getGS('Add new article'), $topArray);
+camp_html_content_top(getGS('Add new article'), $topArray);
 
 $sections = Section::GetSections($Pub, $Issue, $Language, array('LIMIT' => array('START' => $SectOffs, 'MAX_ROWS' => $ItemsToDisplay)));
 $totalSections = Section::GetTotalSections($Pub, $Issue, $Language);
@@ -93,4 +93,4 @@ if (count($sections) > 0) {
 	</TR>
 </TABLE>
 <?php } // if ?>
-<?php CampsiteInterface::CopyrightNotice(); ?>
+<?php camp_html_copyright_notice(); ?>

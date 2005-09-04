@@ -7,7 +7,7 @@ if (!$access) {
 	exit;
 }
 if (!$User->hasPermission("AddArticle")) {
-	CampsiteInterface::DisplayError(getGS("You do not have the right to add articles."));
+	camp_html_display_error(getGS("You do not have the right to add articles."));
 	exit;
 }
 
@@ -23,31 +23,31 @@ $DestSection = Input::Get('destination_section', 'int', 0, true);
 $BackLink = Input::Get('Back', 'string', "/$ADMIN/articles/index.php", true);
 
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
 	exit;	
 }
 
 $publicationObj =& new Publication($Pub);
 if (!$publicationObj->exists()) {
-	CampsiteInterface::DisplayError(getGS('Publication does not exist.'));
+	camp_html_display_error(getGS('Publication does not exist.'));
 	exit;	
 }
 
 $issueObj =& new Issue($Pub, $Language, $Issue);
 if (!$issueObj->exists()) {
-	CampsiteInterface::DisplayError(getGS('Issue does not exist.'));
+	camp_html_display_error(getGS('Issue does not exist.'));
 	exit;	
 }
 
 $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
 if (!$sectionObj->exists()) {
-	CampsiteInterface::DisplayError(getGS('Section does not exist.'));
+	camp_html_display_error(getGS('Section does not exist.'));
 	exit;	
 }
 
 $articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
 if (!$articleObj->exists()) {
-	CampsiteInterface::DisplayError(getGS('Article does not exist.'));
+	camp_html_display_error(getGS('Article does not exist.'));
 	exit;
 }
 
@@ -66,7 +66,7 @@ if ($DestIssue > 0) {
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
 				  'Section' => $sectionObj, 'Article'=>$articleObj);
-CampsiteInterface::ContentTop(getGS("Duplicate article"), $topArray);
+camp_html_content_top(getGS("Duplicate article"), $topArray);
 ?>
 
 <table>
@@ -251,4 +251,4 @@ CampsiteInterface::ContentTop(getGS("Duplicate article"), $topArray);
 </table>
 <p>
 
-<?php CampsiteInterface::CopyrightNotice(); ?>
+<?php camp_html_copyright_notice(); ?>

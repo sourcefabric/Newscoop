@@ -9,7 +9,7 @@ if (!$access) {
 	exit;
 }
 if (!$User->hasPermission('DeleteArticle')) {
-	CampsiteInterface::DisplayError(getGS("You do not have the right to delete articles."));
+	camp_html_display_error(getGS("You do not have the right to delete articles."));
 	exit;
 }
 
@@ -25,13 +25,13 @@ $ArticleOffset = Input::Get('ArtOffs', 'int', 0, true);
 $BackLink = Input::Get('Back', 'string', "/$ADMIN/articles/index.php?Pub=$Pub&Issue=$Issue&Section=$Section&Language=$Language&ArtOffs=$ArticleOffset", true);
 
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
 	exit;	
 }
 
 $articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
 if (!$articleObj->exists()) {
-	CampsiteInterface::DisplayError(getGS('Article does not exist.'), $BackLink);
+	camp_html_display_error(getGS('Article does not exist.'), $BackLink);
 	exit;		
 }
 

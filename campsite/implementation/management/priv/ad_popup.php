@@ -1,6 +1,6 @@
 <?php
 require_once('db_connect.php');
-require_once('CampsiteInterface.php');
+require_once('camp_html.php');
 require_once('classes/common.php');
 load_common_include_files($ADMIN_DIR);
 require_once('classes/Input.php');
@@ -37,4 +37,4 @@ $ADReason = Input::Get('ADReason', 'string', getGS('You do not have the right to
 </CENTER>
 </FORM>
 
-<?php CampsiteInterface::CopyrightNotice(); ?>
+<?php camp_html_copyright_notice(); ?>

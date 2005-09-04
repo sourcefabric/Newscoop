@@ -1,6 +1,6 @@
 changecom`'dnl
 changequote(<*, *>)dnl
-define(<*X_COPYRIGHT*>, <*<?php CampsiteInterface::CopyrightNotice(); ?>*>)dnl
+define(<*X_COPYRIGHT*>, <*<?php camp_html_copyright_notice(); ?>*>)dnl
 define(<*INCLUDE_PHP_LIB*>, <*<?php
 require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
 require_once($Campsite['HTML_DIR']."/$ADMIN_DIR/lib_campsite.php");
@@ -9,7 +9,7 @@ $localfile=selectLanguageFile("$1","locals");
 @include_once($globalfile);
 @include_once($localfile);
 require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/languages.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 ?>*>)dnl
 define(<*X_ROOT*>, <*/admin*>)dnl
 define(<*X_TMP*>, <*/tmp*>)dnl

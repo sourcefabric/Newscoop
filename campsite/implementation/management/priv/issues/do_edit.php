@@ -1,7 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
 load_common_include_files("$ADMIN_DIR/issues");
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Template.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
@@ -16,7 +16,7 @@ if (!$access) {
 }
 
 if (!$User->hasPermission('ManageIssue')) {
-	CampsiteInterface::DisplayError(getGS('You do not have the right to change issue details.'));
+	camp_html_display_error(getGS('You do not have the right to change issue details.'));
 	exit;
 }
 $Pub = Input::Get('Pub', 'int');
@@ -31,7 +31,7 @@ $cArticleTplId = Input::Get('cArticleTplId', 'int');
 $cShortName = trim(Input::Get('cShortName'));
 
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(getGS('Invalid input: $1', Input::GetErrorString()));	
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));	
 	exit;
 }
 $publicationObj =& new Publication($Pub);
@@ -39,21 +39,21 @@ $issueObj =& new Issue($Pub, $Language, $Issue);
 
 $backLink = "/$ADMIN/issues/edit.php?Pub=$Pub&Issue=$Issue&Language=$Language";
 if ($cLang == 0) {
-	CampsiteInterface::DisplayError(getGS('You must select a language.'), $backLink);
+	camp_html_display_error(getGS('You must select a language.'), $backLink);
 	exit;
 }
 if ($cName == '') {
-	CampsiteInterface::DisplayError(getGS('You must complete the $1 field.', "'".getGS('Name')."'"),
+	camp_html_display_error(getGS('You must complete the $1 field.', "'".getGS('Name')."'"),
 		$backLink);
 	exit;
 }
 if ($cShortName == '') {
-	CampsiteInterface::DisplayError(getGS('You must complete the $1 field.', "'".getGS('URL Name')."'"),
+	camp_html_display_error(getGS('You must complete the $1 field.', "'".getGS('URL Name')."'"),
 		$backLink);
 	exit;
 }
 if (!valid_short_name($cShortName)) {
-	CampsiteInterface::DisplayError(getGS('The $1 field may only contain letters, digits and underscore (_) character.', "'" . getGS('URL Name') . "'"), $backLink);
+	camp_html_display_error(getGS('The $1 field may only contain letters, digits and underscore (_) character.', "'" . getGS('URL Name') . "'"), $backLink);
 	exit;
 }
 $issueObj->setProperty('Name', $cName, false);

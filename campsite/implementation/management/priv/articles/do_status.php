@@ -19,31 +19,31 @@ $Status = strtoupper(Input::Get('Status', 'string', 'N'));
 $BackLink = Input::Get('Back', 'string', "/$ADMIN/articles/index.php", true);
 
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
 	exit;	
 }
 
 if ( ($Status != 'N') && ($Status != 'S') && ($Status != 'Y')) {
-	CampsiteInterface::DisplayError(getGS('Invalid input: $1', "Invalid status code:".$Status), $BackLink);
+	camp_html_display_error(getGS('Invalid input: $1', "Invalid status code:".$Status), $BackLink);
 	exit;		
 }
 
 $articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
 if (!$articleObj->exists()) {
-	CampsiteInterface::DisplayError(getGS('Article does not exist.'), $BackLink);
+	camp_html_display_error(getGS('Article does not exist.'), $BackLink);
 	exit;		
 }
 $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
 if (!$sectionObj->exists()) {
-	CampsiteInterface::DisplayError(getGS('Section does not exist.'), $BackLink);	
+	camp_html_display_error(getGS('Section does not exist.'), $BackLink);	
 }
 $issueObj =& new Issue($Pub, $Language, $Issue);
 if (!$issueObj->exists()) {
-	CampsiteInterface::DisplayError(getGS('Issue does not exist.'), $BackLink);	
+	camp_html_display_error(getGS('Issue does not exist.'), $BackLink);	
 }
 $publicationObj =& new Publication($Pub);
 if (!$publicationObj->exists()) {
-	CampsiteInterface::DisplayError(getGS('Publication does not exist.'), $BackLink);	
+	camp_html_display_error(getGS('Publication does not exist.'), $BackLink);	
 }
 
 $languageObj =& new Language($Language);
@@ -59,7 +59,7 @@ if ($User->hasPermission('Publish')
 }
 if (!$access) {
 	$errorStr = getGS("You do not have the right to change this article status. Once submitted an article can only changed by authorized users.");
-	CampsiteInterface::DisplayError($errorStr, $BackLink);
+	camp_html_display_error($errorStr, $BackLink);
 	exit;	
 }
 

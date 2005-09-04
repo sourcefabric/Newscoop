@@ -8,7 +8,7 @@ if (!$access) {
 	exit;
 }
 if (!$User->hasPermission('DeleteSection')) {
-	CampsiteInterface::DisplayError(getGS('You do not have the right to delete sections.'));	
+	camp_html_display_error(getGS('You do not have the right to delete sections.'));	
 	exit;
 }
 $Pub = Input::Get('Pub', 'int', 0);
@@ -27,7 +27,7 @@ if (function_exists ("incModFile")) {
 }
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 'Section' => $sectionObj);
-CampsiteInterface::ContentTop(getGS('Delete section'), $topArray);
+camp_html_content_top(getGS('Delete section'), $topArray);
 
 ?>
 <P>
@@ -72,4 +72,4 @@ CampsiteInterface::ContentTop(getGS('Delete section'), $topArray);
 </TABLE></CENTER>
 <P>
 
-<?php CampsiteInterface::CopyrightNotice(); ?>
+<?php camp_html_copyright_notice(); ?>

@@ -7,7 +7,7 @@ $uType = 'Staff';
 compute_user_rights($User, $canManage, $canDelete);
 if (!$canManage) {
 	$error = getGS("You do not have the right to change user account permissions.");
-	CampsiteInterface::DisplayError($error);
+	camp_html_display_error($error);
 	exit;
 }
 
@@ -15,11 +15,11 @@ $userId = Input::Get('User', 'int', 0);
 if ($userId > 0) {
 	$editUser = new User($userId);
 	if ($editUser->getUserName() == '') {
-		CampsiteInterface::DisplayError(getGS('No such user account.'));
+		camp_html_display_error(getGS('No such user account.'));
 		exit;
 	}
 } else {
-	CampsiteInterface::DisplayError(getGS('No such user account.'));
+	camp_html_display_error(getGS('No such user account.'));
 	exit;
 }
 

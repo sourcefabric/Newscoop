@@ -66,6 +66,6 @@ require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/templates/list_dir.php");
 ?>
 <P>
 <?php
-CampsiteInterface::CopyrightNotice();
+camp_html_copyright_notice();
 ?>
 </HTML>

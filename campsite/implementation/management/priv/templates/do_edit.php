@@ -74,7 +74,7 @@ if ($nField == 0 || $res > 0) {
 </TABLE>
 <P>
 <?php
-CampsiteInterface::CopyrightNotice();
+camp_html_copyright_notice();
 ?>
 
 </HTML>

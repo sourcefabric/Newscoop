@@ -3,7 +3,7 @@
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/common.php');
 load_common_include_files("$ADMIN_DIR/users");
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/Input.php');
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/db_connect.php");
 
 function verify_user_type()
@@ -14,7 +14,7 @@ function verify_user_type()
 		read_user_common_parameters();
 
 	if ($uType != "Staff" && $uType != "Subscribers") {
-		CampsiteInterface::DisplayError(getGS('Invalid value of user type parameter'));
+		camp_html_display_error(getGS('Invalid value of user type parameter'));
 		exit(0);
 	}
 	return $uType;

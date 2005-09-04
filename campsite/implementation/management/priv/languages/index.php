@@ -3,7 +3,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
 load_common_include_files("$ADMIN_DIR/languages");
 require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/languages.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
@@ -90,4 +90,4 @@ if (count($languages) > 0) {
 	<LI><?php  putGS('No language.'); ?></LI>
     </BLOCKQUOTE>
 <?php  } ?>
-<?php CampsiteInterface::CopyrightNotice(); ?>
+<?php camp_html_copyright_notice(); ?>

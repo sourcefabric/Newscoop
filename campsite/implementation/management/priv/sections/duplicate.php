@@ -8,11 +8,11 @@ if (!$access) {
 	exit;
 }
 if (!$User->hasPermission("ManageSection")) {
-	CampsiteInterface::DisplayError(getGS("You do not have the right to add sections."));
+	camp_html_display_error(getGS("You do not have the right to add sections."));
 	exit;
 }
 if (!$User->hasPermission("AddArticle")) {
-	CampsiteInterface::DisplayError(getGS("You do not have the right to add articles."));
+	camp_html_display_error(getGS("You do not have the right to add articles."));
 	exit;
 }
 
@@ -32,25 +32,25 @@ if ($DestIssueInput != 0) {
 $BackLink = Input::Get('Back', 'string', "/$ADMIN/sections/index.php?Pub=$Pub&Issue=$Issue&Language=$Language", true);
 
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(getGS("Invalid input: $1", Input::GetErrorString()), $BackLink);
+	camp_html_display_error(getGS("Invalid input: $1", Input::GetErrorString()), $BackLink);
 	exit;	
 }
 
 $publicationObj =& new Publication($Pub);
 if (!$publicationObj->exists()) {
-	CampsiteInterface::DisplayError(getGS('Publication does not exist.'));
+	camp_html_display_error(getGS('Publication does not exist.'));
 	exit;	
 }
 
 $issueObj =& new Issue($Pub, $Language, $Issue);
 if (!$issueObj->exists()) {
-	CampsiteInterface::DisplayError(getGS('Issue does not exist.'));
+	camp_html_display_error(getGS('Issue does not exist.'));
 	exit;	
 }
 
 $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
 if (!$sectionObj->exists()) {
-	CampsiteInterface::DisplayError(getGS('Section does not exist.'));
+	camp_html_display_error(getGS('Section does not exist.'));
 	exit;	
 }
 
@@ -72,7 +72,7 @@ if ($DestIssueId > 0) {
 }
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 'Section' => $sectionObj);
-CampsiteInterface::ContentTop(getGS('Duplicate section'), $topArray, true, true);
+camp_html_content_top(getGS('Duplicate section'), $topArray, true, true);
 ?>
 <script>
 function CustomValidator_DuplicateSection(form) {
@@ -328,4 +328,4 @@ if ( ($Pub == $DestPublicationId) && ($Issue == $DestIssueId)) { ?>
 </table>
 <p>
 
-<?php CampsiteInterface::CopyrightNotice(); ?>
+<?php camp_html_copyright_notice(); ?>

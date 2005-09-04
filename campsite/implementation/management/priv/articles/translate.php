@@ -17,36 +17,36 @@ $sLanguage = Input::Get('sLanguage', 'int', 0);
 $BackLink = Input::Get('Back', 'string', "/$ADMIN/articles/", true);
 
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
 	exit;	
 }
 $publicationObj =& new Publication($Pub);
 if (!$publicationObj->exists()) {
-	CampsiteInterface::DisplayError(getGS('Publication does not exist.'), $BackLink);
+	camp_html_display_error(getGS('Publication does not exist.'), $BackLink);
 	exit;	
 }
 
 $issueObj =& new Issue($Pub, $Language, $Issue);
 if (!$issueObj->exists()) {
-	CampsiteInterface::DisplayError(getGS('No such issue.'), $BackLink);
+	camp_html_display_error(getGS('No such issue.'), $BackLink);
 	exit;	
 }
 
 $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
 if (!$sectionObj->exists()) {
-	CampsiteInterface::DisplayError(getGS('No such section.'), $BackLink);
+	camp_html_display_error(getGS('No such section.'), $BackLink);
 	exit;		
 }
 
 $articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
 if (!$articleObj->exists()) {
-	CampsiteInterface::DisplayError(getGS('Article does not exist.'), $BackLink);
+	camp_html_display_error(getGS('Article does not exist.'), $BackLink);
 	exit;
 }
 
 if (!$User->hasPermission("AddArticle")) {
 	$errorStr = getGS('You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only changed by authorized users.');
-	CampsiteInterface::DisplayError($errorStr, $BackLink);
+	camp_html_display_error($errorStr, $BackLink);
 	exit;	
 }
 
@@ -62,7 +62,7 @@ $articleLanguages = DbObjectArray::GetColumn($articleLanguages, "Id");
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
 				  'Section' => $sectionObj, 'Article'=>$articleObj);
-CampsiteInterface::ContentTop(getGS('Translate article'), $topArray, true, true);
+camp_html_content_top(getGS('Translate article'), $topArray, true, true);
 ?>
 <table>
 <tr>
@@ -141,4 +141,4 @@ CampsiteInterface::ContentTop(getGS('Translate article'), $topArray, true, true)
 </FORM>
 <P>
 
-<?php CampsiteInterface::CopyrightNotice(); ?>
+<?php camp_html_copyright_notice(); ?>

@@ -1,7 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
 load_common_include_files("$ADMIN_DIR/issues");
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/IssuePublish.php');
 
@@ -147,7 +147,7 @@ if ($created) {
 	<LI><?php putGS('No such issue.'); ?></LI>
 </BLOCKQUOTE>
 <?php } ?>
-<?php CampsiteInterface::CopyrightNotice(); ?>
+<?php camp_html_copyright_notice(); ?>
 </BODY>
 
 </HTML>

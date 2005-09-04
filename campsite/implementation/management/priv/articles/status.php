@@ -16,13 +16,13 @@ $Article = Input::Get('Article', 'int', 0);
 $BackLink = Input::Get('Back', 'string', "/$ADMIN/articles/index.php", true);
 
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
 	exit;	
 }
 
 $articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
 if (!$articleObj->exists()) {
-	CampsiteInterface::DisplayError(getGS('Article does not exist.'), $BackLink);
+	camp_html_display_error(getGS('Article does not exist.'), $BackLink);
 	exit;		
 }
 $publicationObj =& new Publication($Pub);
@@ -34,7 +34,7 @@ $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
 // and it is new.  
 $access = ($User->hasPermission('Publish') || $articleObj->userCanModify($User));
 if (!$access) {
-	CampsiteInterface::DisplayError(getGS("You do not have the right to change this article status. Once submitted an article can only changed by authorized users."), $BackLink);
+	camp_html_display_error(getGS("You do not have the right to change this article status. Once submitted an article can only changed by authorized users."), $BackLink);
 	exit;	
 }
 
@@ -50,7 +50,7 @@ else {
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
 				  'Section' => $sectionObj, 'Article'=>$articleObj);
-CampsiteInterface::ContentTop(getGS('Change article status'), $topArray);
+camp_html_content_top(getGS('Change article status'), $topArray);
 ?>
 
 <table>
@@ -118,4 +118,4 @@ CampsiteInterface::ContentTop(getGS('Change article status'), $topArray);
 </TABLE></CENTER>
 
 <P>
-<?php CampsiteInterface::CopyrightNotice(); ?>
+<?php camp_html_copyright_notice(); ?>

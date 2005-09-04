@@ -15,7 +15,7 @@ $userId = Input::Get('User', 'int', 0);
 if ($userId > 0) {
 	$editUser = new User($userId);
 	if ($editUser->getUserName() == '') {
-		CampsiteInterface::DisplayError(getGS('No such user account.'));
+		camp_html_display_error(getGS('No such user account.'));
 		exit;
 	}
 	$isNewUser = false;
@@ -76,4 +76,4 @@ if ($userId > 0) {
 <?php } ?>
 </tr>
 </table>
-<?php CampsiteInterface::CopyrightNotice(); ?>
+<?php camp_html_copyright_notice(); ?>

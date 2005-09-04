@@ -32,7 +32,7 @@ if (!$articleObj->exists()) {
 }
 
 if ($errorStr != "")
-	CampsiteInterface::DisplayError($errorStr, null, true);
+	camp_html_display_error($errorStr, null, true);
 
 setcookie("TOL_UserId", $User->getId(), null, "/");
 setcookie("TOL_UserKey", $User->getKeyId(), null, "/");

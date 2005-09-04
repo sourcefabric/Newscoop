@@ -2,7 +2,7 @@
 
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
 load_common_include_files("$ADMIN_DIR/issues");
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Publication.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Issue.php');
@@ -16,7 +16,7 @@ if (!$access) {
 }
 
 if (!$User->hasPermission('ManageIssue')) {
-	CampsiteInterface::DisplayError(getGS('You do not have the right to change issues.'));
+	camp_html_display_error(getGS('You do not have the right to change issues.'));
 	exit;
 }
 $Pub = Input::Get('Pub', 'int');
@@ -25,7 +25,7 @@ $Language = Input::Get('Language', 'int');
 $publish_time = Input::Get('publish_time', 'string', '', true);
 
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(getGS('Invalid Input: $1', Input::GetErrorString()));
+	camp_html_display_error(getGS('Invalid Input: $1', Input::GetErrorString()));
 	exit;
 }
 $publicationObj =& new Publication($Pub);
@@ -50,7 +50,7 @@ if ($publish_time != '') {
 }
 $allEvents =& IssuePublish::GetIssueEvents($Pub, $Issue, $Language);
 
-CampsiteInterface::ContentTop(getGS('Issue Publishing Schedule'), array('Pub' => $publicationObj, 'Issue' => $issueObj));
+camp_html_content_top(getGS('Issue Publishing Schedule'), array('Pub' => $publicationObj, 'Issue' => $issueObj));
 
 ?>
 
@@ -166,5 +166,5 @@ if (count($allEvents) > 0) {
 	</TR>
 <?php
 } // if 
-CampsiteInterface::CopyrightNotice();
+camp_html_copyright_notice();
 ?>

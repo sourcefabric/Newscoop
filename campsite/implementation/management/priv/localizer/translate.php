@@ -144,7 +144,7 @@ function translationForm($p_request)
 						<?PHP
 						$extras = ' onchange="this.form.submit();" ';
 						$extras .= ' class="input_select"';
-						CampsiteInterface::CreateSelect('dir', $screens, $screenDropDownSelection, $extras, true);
+						camp_html_create_select('dir', $screens, $screenDropDownSelection, $extras, true);
 						?>
 					</td>
 				</tr>

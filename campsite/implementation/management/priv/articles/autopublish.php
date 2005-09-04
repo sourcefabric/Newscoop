@@ -8,7 +8,7 @@ if (!$access) {
 	exit;
 }
 if (!$User->hasPermission("Publish")) {
-	CampsiteInterface::DisplayError(getGS("You do not have the right to schedule issues or articles for automatic publishing."));
+	camp_html_display_error(getGS("You do not have the right to schedule issues or articles for automatic publishing."));
 	exit;
 }
 
@@ -24,31 +24,31 @@ $BackLink = Input::Get('Back', 'string', "/$ADMIN/articles/edit.php"
                        true);
 
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
 	exit;	
 }
 
 $publicationObj =& new Publication($Pub);
 if (!$publicationObj->exists()) {
-	CampsiteInterface::DisplayError(getGS('Publication does not exist.'), $BackLink);
+	camp_html_display_error(getGS('Publication does not exist.'), $BackLink);
 	exit;	
 }
 
 $issueObj =& new Issue($Pub, $Language, $Issue);
 if (!$issueObj->exists()) {
-	CampsiteInterface::DisplayError(getGS('Issue does not exist.'), $BackLink);
+	camp_html_display_error(getGS('Issue does not exist.'), $BackLink);
 	exit;	
 }
 
 $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
 if (!$sectionObj->exists()) {
-	CampsiteInterface::DisplayError(getGS('Section does not exist.'), $BackLink);
+	camp_html_display_error(getGS('Section does not exist.'), $BackLink);
 	exit;	
 }
 
 $articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
 if (!$articleObj->exists()) {
-	CampsiteInterface::DisplayError(getGS('Article does not exist.'), $BackLink);
+	camp_html_display_error(getGS('Article does not exist.'), $BackLink);
 	exit;
 }
 
@@ -58,7 +58,7 @@ $articleEvents =& ArticlePublish::GetArticleEvents($Article, $sLanguage);
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
 				  'Section' => $sectionObj, 'Article'=>$articleObj);
-CampsiteInterface::ContentTop(getGS("Article automatic publishing schedule"), $topArray);
+camp_html_content_top(getGS("Article automatic publishing schedule"), $topArray);
 
 if ($articleObj->getPublished() != 'N') {
 	if ($publishTime == '') {
@@ -258,5 +258,5 @@ else { ?>
 	</BLOCKQUOTE>
 <?php 
 } 
-CampsiteInterface::CopyrightNotice();
+camp_html_copyright_notice();
 ?>

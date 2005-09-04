@@ -9,7 +9,7 @@ if (!$access) {
 	exit;
 }
 if (!$User->hasPermission('AddArticle')) {
-	CampsiteInterface::DisplayError(getGS("You do not have the right to add articles."));
+	camp_html_display_error(getGS("You do not have the right to add articles."));
 	exit;
 }
 
@@ -27,40 +27,40 @@ $cKeywords = Input::Get('cKeywords', 'string', '', true);
 
 // Check input
 if ($cName == "") {
-	CampsiteInterface::DisplayError(getGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'));
+	camp_html_display_error(getGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'));
 	exit;
 }
     
 if ($cType == "") {
-	CampsiteInterface::DisplayError(getGS('You must select an article type.'));
+	camp_html_display_error(getGS('You must select an article type.'));
 	exit;
 }
     
 if ($cLanguage == "") {
-	CampsiteInterface::DisplayError(getGS('You must select a language.'));
+	camp_html_display_error(getGS('You must select a language.'));
 	exit;
 }
 
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(getGS('Invalid input: $1', Input::GetErrorString()));
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));
 	exit;	
 }
 
 $publicationObj =& new Publication($Pub);
 if (!$publicationObj->exists()) {
-	CampsiteInterface::DisplayError(getGS('Publication does not exist.'));
+	camp_html_display_error(getGS('Publication does not exist.'));
 	exit;	
 }
 
 $issueObj =& new Issue($Pub, $Language, $Issue);
 if (!$issueObj->exists()) {
-	CampsiteInterface::DisplayError(getGS('Issue does not exist.'));
+	camp_html_display_error(getGS('Issue does not exist.'));
 	exit;	
 }
 
 $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
 if (!$sectionObj->exists()) {
-	CampsiteInterface::DisplayError(getGS('Section does not exist.'));
+	camp_html_display_error(getGS('Section does not exist.'));
 	exit;	
 }
 
@@ -86,6 +86,6 @@ if (function_exists ("incModFile")) {
 	incModFile();
 }
 
-header("Location: ".CampsiteInterface::ArticleUrl($articleObj, $Language, "edit.php"));
+header("Location: ".camp_html_article_url($articleObj, $Language, "edit.php"));
 exit;
 ?>

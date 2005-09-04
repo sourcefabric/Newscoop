@@ -223,7 +223,7 @@ if ($nr < $lpp+1) {
 	<li><?php  putGS('User list is empty.'); ?></li>
 </blockquote>
 <?php  } ?>
-<?php CampsiteInterface::CopyrightNotice(); ?>
+<?php camp_html_copyright_notice(); ?>
 </body>
 
 </html>

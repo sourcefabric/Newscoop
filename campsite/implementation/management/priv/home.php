@@ -9,7 +9,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/classes/Article.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/ArticlePublish.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/IssuePublish.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Language.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 
 load_common_include_files("$ADMIN_DIR");
 list($access, $User) = check_basic_access($_REQUEST);	
@@ -81,7 +81,7 @@ $pendingActions = array_slice($pendingActions, 0, $NumDisplayArticles);
 			<TD width="98%" valign="top">
 				<?php 
 				if ($User->hasPermission('ChangeArticle') || ($YourArticle->getPublished() == 'N')) {
-					echo CampsiteInterface::ArticleLink($YourArticle, $section->getLanguageId(), "edit.php"); 
+					echo camp_html_article_link($YourArticle, $section->getLanguageId(), "edit.php"); 
 				}
 				p(htmlspecialchars($YourArticle->getTitle()));
 				if ($User->hasPermission('ChangeArticle') || ($YourArticle->getPublished() == 'N')) {
@@ -96,7 +96,7 @@ $pendingActions = array_slice($pendingActions, 0, $NumDisplayArticles);
 			
 			<TD width="1%" align="center" nowrap valign="top">
 				<?php 
-				$changeStatusLink = CampsiteInterface::ArticleLink($YourArticle, $section->getLanguageId(), "status.php", $_SERVER['REQUEST_URI']);
+				$changeStatusLink = camp_html_article_link($YourArticle, $section->getLanguageId(), "status.php", $_SERVER['REQUEST_URI']);
 				if ($YourArticle->getPublished() == "Y") { 
 					if ($User->hasPermission('Publish')) {
 						echo $changeStatusLink;
@@ -167,7 +167,7 @@ $pendingActions = array_slice($pendingActions, 0, $NumDisplayArticles);
 			?>	
 		<TR <?php if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 			<TD valign="top">
-			<?php echo CampsiteInterface::ArticleLink($SubmittedArticle, $section->getLanguageId(), "edit.php"); ?>
+			<?php echo camp_html_article_link($SubmittedArticle, $section->getLanguageId(), "edit.php"); ?>
 			<?php p(htmlspecialchars($SubmittedArticle->getTitle())); ?>
 			</A>
 			</TD>
@@ -225,7 +225,7 @@ $pendingActions = array_slice($pendingActions, 0, $NumDisplayArticles);
 			<TD valign="top">
 				<?php 
 				if ($User->hasPermission('ChangeArticle')) {
-    				echo CampsiteInterface::ArticleLink($tmpArticle, $tmpArticle->getLanguageId(), "edit.php"); 
+    				echo camp_html_article_link($tmpArticle, $tmpArticle->getLanguageId(), "edit.php"); 
 				}
 				p(htmlspecialchars($tmpArticle->getTitle()));
 				if ($User->hasPermission('ChangeArticle')) {
@@ -363,4 +363,4 @@ $pendingActions = array_slice($pendingActions, 0, $NumDisplayArticles);
 </table>			
 
 
-<?php CampsiteInterface::CopyrightNotice(); ?>
+<?php camp_html_copyright_notice(); ?>

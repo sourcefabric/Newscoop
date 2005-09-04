@@ -23,12 +23,12 @@ $DestSection = Input::Get('destination_section', 'int', 0);
 $BackLink = Input::Get('Back', 'string', "/$ADMIN/articles/index.php", true);
 
 if (!$User->hasPermission("AddArticle")) {
-	CampsiteInterface::DisplayError(getGS("You do not have the right to add articles."), $BackLink);
+	camp_html_display_error(getGS("You do not have the right to add articles."), $BackLink);
 	exit;
 }
 
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(getGS("Invalid input: $1", Input::GetErrorString()), $BackLink);
+	camp_html_display_error(getGS("Invalid input: $1", Input::GetErrorString()), $BackLink);
 	exit;	
 }
 
@@ -45,6 +45,6 @@ $logtext = getGS('Article $1 added to $2. $3 from $4. $5 of $6',
 	$issueObj->getName(), $publicationObj->getName() );
 Log::Message($logtext, $User->getUserName(), 155);
 
-header("Location: ".CampsiteInterface::ArticleUrl($articleCopy, $Language, "edit.php", $BackLink));
+header("Location: ".camp_html_article_url($articleCopy, $Language, "edit.php", $BackLink));
 exit;
 ?>

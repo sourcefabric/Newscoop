@@ -31,7 +31,7 @@ $sLanguage = Input::Get('sLanguage', 'int', 0);
 $Article = Input::Get('Article', 'int', 0);
 
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
 	exit;	
 }
 
@@ -54,27 +54,27 @@ if ($OrderDirection == 'DESC') {
 }
 
 $IdHref  = 
-	CampsiteInterface::ArticleUrl($articleObj, $Language, 'images/search.php')
+	camp_html_article_url($articleObj, $Language, 'images/search.php')
 	.'&order_by=id'
 	.$imageNav->getKeywordSearchLink();
 $DescriptionHref  = 
-	CampsiteInterface::ArticleUrl($articleObj, $Language, 'images/search.php')
+	camp_html_article_url($articleObj, $Language, 'images/search.php')
 	.'&order_by=description'
 	.$imageNav->getKeywordSearchLink();
 $PhotographerHref  = 
-	CampsiteInterface::ArticleUrl($articleObj, $Language, 'images/search.php')
+	camp_html_article_url($articleObj, $Language, 'images/search.php')
 	.'&order_by=photographer'
 	.$imageNav->getKeywordSearchLink();
 $PlaceHref  = 
-	CampsiteInterface::ArticleUrl($articleObj, $Language, 'images/search.php')
+	camp_html_article_url($articleObj, $Language, 'images/search.php')
 	.'&order_by=place'
 	.$imageNav->getKeywordSearchLink();
 $DateHref  = 
-	CampsiteInterface::ArticleUrl($articleObj, $Language, 'images/search.php')
+	camp_html_article_url($articleObj, $Language, 'images/search.php')
 	.'&order_by=date'
 	.$imageNav->getKeywordSearchLink();
 $InUseHref = 
-	CampsiteInterface::ArticleUrl($articleObj, $Language, 'images/search.php')
+	camp_html_article_url($articleObj, $Language, 'images/search.php')
 	.'&order_by=inuse'
 	.$imageNav->getKeywordSearchLink();
 ///////////////////////////////////////////////////////////////////////
@@ -123,19 +123,19 @@ $uploadedByUsers =& Image::GetUploadUsers();
 $extraCrumbs = array(getGS("Images")=>"/$ADMIN/articles/images/?Pub=$Pub&Issue=$Issue&Language=$Language&Section=$Section&Article=$Article&sLanguage=$sLanguage");
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
 				  'Section' => $sectionObj, 'Article'=>$articleObj);
-CampsiteInterface::ContentTop(getGS('Link Image to Article'), $topArray, true, true, $extraCrumbs);
+camp_html_content_top(getGS('Link Image to Article'), $topArray, true, true, $extraCrumbs);
 ?>
 
 <table>
 <tr>
-    <td><?php echo CampsiteInterface::ArticleLink($articleObj, $Language, 'images/index.php') ?><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/back.png" BORDER="0" ALT="<?php putGS("Back to Article Image List"); ?>"></a></td>
-    <td><?php echo CampsiteInterface::ArticleLink($articleObj, $Language, 'images/index.php') ?><b><?php echo putGS('Back to Article Image List'); ?></b></a></td>
-    <td><?php echo CampsiteInterface::ArticleLink($articleObj, $Language, 'edit.php') ?><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/back.png" BORDER="0" ALT="<?php putGS("Back to article details"); ?>"></a></td>
-    <td><?php echo CampsiteInterface::ArticleLink($articleObj, $Language, 'edit.php') ?><b><?php echo putGS('Back to article details'); ?></b></a></td>
+    <td><?php echo camp_html_article_link($articleObj, $Language, 'images/index.php') ?><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/back.png" BORDER="0" ALT="<?php putGS("Back to Article Image List"); ?>"></a></td>
+    <td><?php echo camp_html_article_link($articleObj, $Language, 'images/index.php') ?><b><?php echo putGS('Back to Article Image List'); ?></b></a></td>
+    <td><?php echo camp_html_article_link($articleObj, $Language, 'edit.php') ?><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/back.png" BORDER="0" ALT="<?php putGS("Back to article details"); ?>"></a></td>
+    <td><?php echo camp_html_article_link($articleObj, $Language, 'edit.php') ?><b><?php echo putGS('Back to article details'); ?></b></a></td>
 </tr>
 <tr>
-    <td><?php echo CampsiteInterface::ArticleLink($articleObj, $Language, 'images/search.php') ?><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/reset.png" BORDER="0" ALT="<?php putGS("Reset search conditions"); ?>"></a></td>
-    <td colspan="3"><?php echo CampsiteInterface::ArticleLink($articleObj, $Language, 'images/search.php') ?><b><?php echo putGS('Reset search conditions'); ?></b></a></td>
+    <td><?php echo camp_html_article_link($articleObj, $Language, 'images/search.php') ?><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/reset.png" BORDER="0" ALT="<?php putGS("Reset search conditions"); ?>"></a></td>
+    <td colspan="3"><?php echo camp_html_article_link($articleObj, $Language, 'images/search.php') ?><b><?php echo putGS('Reset search conditions'); ?></b></a></td>
 </tr>
 </table>
 
@@ -178,9 +178,9 @@ CampsiteInterface::ContentTop(getGS('Link Image to Article'), $topArray, true, t
 <tr>
 	<td colspan="11" align="center" >
 		Additional searches: &nbsp;
-		<a href="<?php echo CampsiteInterface::ArticleUrl($articleObj, $Language, 'images/search.php').'&'.$imageNav->getSearchLink(); ?>&order_by=time_created" style="font-size: 9pt; font-weight: bold; text-decoration: underline;"><?php putGS('Most Recently Added'); ?></a><?php if ($OrderBy == "time_created") { echo "*"; } ?>
+		<a href="<?php echo camp_html_article_url($articleObj, $Language, 'images/search.php').'&'.$imageNav->getSearchLink(); ?>&order_by=time_created" style="font-size: 9pt; font-weight: bold; text-decoration: underline;"><?php putGS('Most Recently Added'); ?></a><?php if ($OrderBy == "time_created") { echo "*"; } ?>
 		&nbsp;
-		<a href="<?php echo CampsiteInterface::ArticleUrl($articleObj, $Language, 'images/search.php').'&'.$imageNav->getSearchLink(); ?>&order_by=last_modified" style="font-size: 9pt; font-weight: bold; text-decoration: underline;"><?php putGS('Most Recently Modified'); ?></a><?php if ($OrderBy == "last_modified") { echo "*"; } ?>
+		<a href="<?php echo camp_html_article_url($articleObj, $Language, 'images/search.php').'&'.$imageNav->getSearchLink(); ?>&order_by=last_modified" style="font-size: 9pt; font-weight: bold; text-decoration: underline;"><?php putGS('Most Recently Modified'); ?></a><?php if ($OrderBy == "last_modified") { echo "*"; } ?>
 	</td>
 	
 </tr>
@@ -192,4 +192,4 @@ if (count($imageData) > 0) {
    	include('view_thumbnail.inc.php');
 }
 
-CampsiteInterface::CopyrightNotice(); ?>
+camp_html_copyright_notice(); ?>

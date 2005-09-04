@@ -10,7 +10,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Publication.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ImageSearch.php');
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
@@ -32,7 +32,7 @@ $Place = Input::Get('cPlace', 'string', '', true);
 $Date = Input::Get('cDate', 'string', '', true);
 
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(getGS('Invalid input: $1', Input::GetErrorString()));
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));
 	exit;	
 }
 
@@ -44,7 +44,7 @@ $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
 // This file can only be accessed if the user has the right to change articles
 // or the user created this article and it hasnt been published yet.
 if (!$articleObj->userCanModify($User)) {	
-	CampsiteInterface::DisplayError(getGS('You do not have the right to change the article.'));
+	camp_html_display_error(getGS('You do not have the right to change the article.'));
 	exit;		
 }
 
@@ -67,7 +67,7 @@ $logtext = getGS('Changed image properties of $1',$attributes['Description']);
 Log::Message($logtext, $User->getUserName(), 43);
 
 $imageNav =& new ImageNav(CAMPSITE_IMAGEARCHIVE_IMAGES_PER_PAGE, $view);
-$ref = CampsiteInterface::ArticleUrl($articleObj, $Language, 'images/search.php')
+$ref = camp_html_article_url($articleObj, $Language, 'images/search.php')
 	. $imageNav->getKeywordSearchLink();
 
 // Go back to article image list.

@@ -9,7 +9,7 @@ read_user_common_parameters(); // $uType, $userOffs, $lpp, search parameters
 verify_user_type();
 compute_user_rights($User, $canManage, $canDelete);
 if (!$canManage) {
-	CampsiteInterface::DisplayError(getGS('You do not have the right to create user accounts.'));
+	camp_html_display_error(getGS('You do not have the right to create user accounts.'));
 	exit;
 }
 

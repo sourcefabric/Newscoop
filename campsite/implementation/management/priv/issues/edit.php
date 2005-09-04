@@ -1,7 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
 load_common_include_files("$ADMIN_DIR/issues");
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Template.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Publication.php');
@@ -15,7 +15,7 @@ if (!$access) {
 }
 
 if (!$User->hasPermission('ManageIssue')) {
-	CampsiteInterface::DisplayError(getGS('You do not have the right to change issue details.'));
+	camp_html_display_error(getGS('You do not have the right to change issue details.'));
 	exit;
 }
 $Pub = Input::Get('Pub', 'int');
@@ -23,7 +23,7 @@ $Issue = Input::Get('Issue', 'int');
 $Language = Input::Get('Language', 'int');
 
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(getGS('Invalid Input: $1', Input::GetErrorString()));	
+	camp_html_display_error(getGS('Invalid Input: $1', Input::GetErrorString()));	
 	exit;
 }
 $publicationObj =& new Publication($Pub);
@@ -31,7 +31,7 @@ $issueObj =& new Issue($Pub, $Language, $Issue);
 $allLanguages =& Language::GetAllLanguages();
 $allTemplates =& Template::GetAllTemplates();
 
-CampsiteInterface::ContentTop(getGS('Change issue details'), array('Pub' => $publicationObj, 'Issue' => $issueObj));
+camp_html_content_top(getGS('Change issue details'), array('Pub' => $publicationObj, 'Issue' => $issueObj));
 
 ?>
 
@@ -139,4 +139,4 @@ CampsiteInterface::ContentTop(getGS('Change issue details'), array('Pub' => $pub
 </FORM>
 <P>
 
-<?php CampsiteInterface::CopyrightNotice(); ?>
+<?php camp_html_copyright_notice(); ?>

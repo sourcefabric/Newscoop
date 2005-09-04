@@ -3,7 +3,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/lib_campsite.php");
 include($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/languages.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 
 // Delete any cookies they currently have.
 setcookie("TOL_UserId", "", time() - 86400);
@@ -131,5 +131,5 @@ selectLanguageFile("/", "locals");
 </form>
 </table>
 <?php  if (file_exists("./guest_include.php")) require("./guest_include.php"); ?>
-<div align="center"><p><?php CampsiteInterface::CopyrightNotice(false); ?></p></div>
+<div align="center"><p><?php camp_html_copyright_notice(false); ?></p></div>
 </body>

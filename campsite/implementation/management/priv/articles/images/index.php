@@ -19,7 +19,7 @@ $sLanguage = Input::Get('sLanguage', 'int', 0);
 $Article = Input::Get('Article', 'int', 0);
 
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
 	exit;	
 }
 
@@ -30,7 +30,7 @@ $articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
 				  'Section' => $sectionObj, 'Article'=>$articleObj);
-CampsiteInterface::ContentTop(getGS('Article Image List'), $topArray);
+camp_html_content_top(getGS('Article Image List'), $topArray);
 
 ?>
 
@@ -58,8 +58,8 @@ CampsiteInterface::ContentTop(getGS('Article Image List'), $topArray);
 	<td>
 		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 		<TR>
-			<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $Language, "images/search.php"); ?><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/add.png" BORDER="0"></a></TD>
-			<TD><?php echo CampsiteInterface::ArticleLink($articleObj, $Language, "images/search.php"); ?><B><?php  putGS('Add an existing image'); ?></B></A></TD>
+			<TD><?php echo camp_html_article_link($articleObj, $Language, "images/search.php"); ?><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/add.png" BORDER="0"></a></TD>
+			<TD><?php echo camp_html_article_link($articleObj, $Language, "images/search.php"); ?><B><?php  putGS('Add an existing image'); ?></B></A></TD>
 		</TR>
 		</TABLE>
 	</td>
@@ -128,7 +128,7 @@ if (count($articleImages) > 0) {
 				."&ImageTemplateId=".$articleImage->getTemplateId();
 		}
 		else {
-			$imageUrl = CampsiteInterface::ArticleUrl($articleObj, $Language, "images/view.php", $_SERVER['REQUEST_URI']) .'&ImageId='.$image->getImageId();
+			$imageUrl = camp_html_article_url($articleObj, $Language, "images/view.php", $_SERVER['REQUEST_URI']) .'&ImageId='.$image->getImageId();
 		}
 		?>
 		<TD ALIGN="center">
@@ -185,4 +185,4 @@ if (count($articleImages) > 0) {
 ?>	
 </TABLE>
 
-<?php CampsiteInterface::CopyrightNotice(); ?>
+<?php camp_html_copyright_notice(); ?>

@@ -6,7 +6,7 @@ list($access, $User) = check_basic_access($_REQUEST);
 $canManage = $User->hasPermission('ManageUserTypes');
 if (!$canManage) {
 	$error = getGS("You do not have the right to change user type permissions.");
-	CampsiteInterface::DisplayError($error);
+	camp_html_display_error($error);
 	exit;
 }
 
@@ -79,5 +79,5 @@ if ($NUM_ROWS) {
 	<li><?php  putGS('No user types.'); ?></li>
 </blockquote>
 <?php  } ?>
-<?php CampsiteInterface::CopyrightNotice(); ?>
+<?php camp_html_copyright_notice(); ?>
 </body>

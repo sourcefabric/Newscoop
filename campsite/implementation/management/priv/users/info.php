@@ -4,7 +4,7 @@ require_once($_SERVER['DOCUMENT_ROOT']. '/classes/UserType.php');
 
 list($access, $User) = check_basic_access($_REQUEST);
 if (!isset($editUser) || gettype($editUser) != 'object') {
-	CampsiteInterface::DisplayError(getGS('No such user account.'));
+	camp_html_display_error(getGS('No such user account.'));
 	exit;
 }
 $isNewUser = $editUser->getUserName() == '';
@@ -15,7 +15,7 @@ if (!$canManage && $editUser->getId() != $User->getId()) {
 	} else {
 		$error = getGS('You do not have the right to change user account information.');
 	}
-	CampsiteInterface::DisplayError($error);
+	camp_html_display_error($error);
 	exit;
 }
 
@@ -222,7 +222,7 @@ if (!$isNewUser) {
 				<td align="right" nowrap><?php putGS("Title"); ?>:</td>
 				<td>
 <?php
-CampsiteInterface::CreateSelect("Title", array(getGS("Mr."), getGS("Mrs."), getGS("Ms."), getGS("Dr.")),
+camp_html_create_select("Title", array(getGS("Mr."), getGS("Mrs."), getGS("Ms."), getGS("Dr.")),
 	$Title, 'class="input_select"');
 ?>
 				</td>
@@ -238,7 +238,7 @@ CampsiteInterface::CreateSelect("Title", array(getGS("Mr."), getGS("Mrs."), getG
 				<td align="right" nowrap><?php putGS("Age"); ?>:</td>
 				<td>
 <?php
-CampsiteInterface::CreateSelect("Age", array("0-17"=>getGS("under 18"),
+camp_html_create_select("Age", array("0-17"=>getGS("under 18"),
 	"18-24"=>"18-24", "25-39"=>"25-39", "40-49"=>"40-49", "50-65"=>"50-65",
 	"65-"=>getGS('65 or over')), $Age, 'class="input_select"', true);
 ?>
@@ -278,7 +278,7 @@ for($loop = 0; $loop < $NUM_ROWS; $loop++) {
 	fetchRow($countries);
 	$countries_list[getHVar($countries,'Code')] = getHVar($countries,'Name');
 }
-CampsiteInterface::CreateSelect("CountryCode", $countries_list,
+camp_html_create_select("CountryCode", $countries_list,
 	$CountryCode, 'class="input_select"', true);
 ?>
 				</td>
@@ -317,7 +317,7 @@ $employerTypes['NGO'] = getGS('Non-Governmental Organisation');
 $employerTypes['Government Agency'] = getGS('Government Agency');
 $employerTypes['Academic'] = getGS('Academic');
 $employerTypes['Media'] = getGS('Media');
-CampsiteInterface::CreateSelect("EmployerType", $employerTypes,
+camp_html_create_select("EmployerType", $employerTypes,
 	$EmployerType, 'class="input_select"', true);
 ?>
 				</td>

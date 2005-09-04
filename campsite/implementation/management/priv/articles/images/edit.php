@@ -20,7 +20,7 @@ $ImageId = Input::Get('ImageId', 'int', 0);
 $ImageTemplateId = Input::Get('ImageTemplateId', 'int', 0, true);
 
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
 	exit;	
 }
 
@@ -34,7 +34,7 @@ $imageObj =& new Image($ImageId);
 $extraCrumbs = array(getGS("Images")=>"/$ADMIN/articles/images/?Pub=$Pub&Issue=$Issue&Language=$Language&Section=$Section&Article=$Article&sLanguage=$sLanguage");
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
 				  'Section' => $sectionObj, 'Article'=>$articleObj);
-CampsiteInterface::ContentTop(getGS('Change image information'), $topArray, true, true, $extraCrumbs);
+camp_html_content_top(getGS('Change image information'), $topArray, true, true, $extraCrumbs);
 ?>
 <P>
 <CENTER>
@@ -103,4 +103,4 @@ CampsiteInterface::ContentTop(getGS('Change image information'), $topArray, true
 <?php 
 }
 
-CampsiteInterface::CopyrightNotice(); ?>
+camp_html_copyright_notice(); ?>

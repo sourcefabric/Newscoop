@@ -5,7 +5,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/localizer/Localizer.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/parser_utils.php");
 
 list($access, $User) = check_basic_access($_REQUEST);
@@ -14,7 +14,7 @@ if (!$access) {
 	exit;
 }
 if (!$User->hasPermission('ManageLanguages')) {
-	CampsiteInterface::DisplayError(getGS("You do not have the right to add new languages."));
+	camp_html_display_error(getGS("You do not have the right to add new languages."));
 	exit;
 }
 
@@ -152,4 +152,4 @@ if ($correct) {
 </CENTER>
 <P>
 
-<?php CampsiteInterface::CopyrightNotice(); ?>
+<?php camp_html_copyright_notice(); ?>

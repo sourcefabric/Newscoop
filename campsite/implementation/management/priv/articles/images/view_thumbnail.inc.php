@@ -31,14 +31,14 @@
         <TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
             <TD ALIGN="center">
                 <A HREF="<?php echo 
-                CampsiteInterface::ArticleUrl($articleObj, $Language, "images/edit.php", $_SERVER['REQUEST_URI'])
+                camp_html_article_url($articleObj, $Language, "images/edit.php", $_SERVER['REQUEST_URI'])
                 .'&ImageId='.$image['id']
                 .'&'.$imageNav->getSearchLink(); ?>">
                   <img src="<?php echo $image['thumbnail_url']; ?>" border="0">
                 </a>
             </TD>
             <TD style="padding-left: 5px;">
-                <A HREF="<?php echo CampsiteInterface::ArticleUrl($articleObj, $Language, "images/edit.php", $_SERVER['REQUEST_URI']) 
+                <A HREF="<?php echo camp_html_article_url($articleObj, $Language, "images/edit.php", $_SERVER['REQUEST_URI']) 
                 .'&ImageId='.$image['id']
                 .'&'.$imageNav->getSearchLink()
                 .$articleUrlData; ?>"><?php echo htmlspecialchars($image['description']); ?></A>
@@ -107,7 +107,7 @@
         $previousLinkExists = false;
         if ($ImageOffset > 0) { 
         	?> 
-            <B><A HREF="<?php echo CampsiteInterface::ArticleUrl($articleObj, $Language, "images/search.php").'&'.$imageNav->getPreviousLink(); ?>">&lt;&lt; <?php  putGS('Previous'); ?></A></B>
+            <B><A HREF="<?php echo camp_html_article_url($articleObj, $Language, "images/search.php").'&'.$imageNav->getPreviousLink(); ?>">&lt;&lt; <?php  putGS('Previous'); ?></A></B>
         	<?php  
         	$previousLinkExists = true;
         } 
@@ -116,7 +116,7 @@
         		echo ' | ';
         	}
         	?>
-            <B><A HREF="<?php echo CampsiteInterface::ArticleUrl($articleObj, $Language, "images/search.php").'&'.$imageNav->getNextLink(); ?>"><?php  putGS('Next'); ?> &gt;&gt</A></B>
+            <B><A HREF="<?php echo camp_html_article_url($articleObj, $Language, "images/search.php").'&'.$imageNav->getNextLink(); ?>"><?php  putGS('Next'); ?> &gt;&gt</A></B>
         	<?php  
         } 
         ?></td>

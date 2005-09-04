@@ -1,7 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
 load_common_include_files("$ADMIN_DIR/issues");
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Publication.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Issue.php');
@@ -14,7 +14,7 @@ if (!$access) {
 }
 
 if (!$User->hasPermission('ManageIssue')) {
-	CampsiteInterface::DisplayError(getGS('You do not have the right to add issues.'));
+	camp_html_display_error(getGS('You do not have the right to add issues.'));
 	exit;
 }
 $Pub = Input::Get('Pub', 'int');
@@ -22,7 +22,7 @@ $Issue = Input::Get('Issue', 'int');
 $Language = Input::Get('Language', 'int');
 
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(getGS('Invalid Input: $1', Input::GetErrorString()));	
+	camp_html_display_error(getGS('Invalid Input: $1', Input::GetErrorString()));	
 	exit;
 }
 $publicationObj =& new Publication($Pub);
@@ -30,7 +30,7 @@ $issueObj =& new Issue($Pub, $Language, $Issue);
 $allIssues =& Issue::GetIssues($Pub, null, $Issue);
 $unusedLanguages =& $issueObj->getUnusedLanguages();
 
-CampsiteInterface::ContentTop(getGS('Add new translation'), array('Pub' => $publicationObj, 'Issue' => $issueObj));
+camp_html_content_top(getGS('Add new translation'), array('Pub' => $publicationObj, 'Issue' => $issueObj));
 
 ?>
 <P>
@@ -99,4 +99,4 @@ CampsiteInterface::ContentTop(getGS('Add new translation'), array('Pub' => $publ
 </TABLE></CENTER>
 </FORM>
 <P>
-<?php CampsiteInterface::CopyrightNotice(); ?>
+<?php camp_html_copyright_notice(); ?>

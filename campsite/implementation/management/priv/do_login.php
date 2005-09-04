@@ -3,7 +3,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
 load_common_include_files($ADMIN_DIR);
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/User.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 list($validUser, $user) = User::Login($_REQUEST["UserName"], $_REQUEST["UserPassword"]);
 $selectLanguage = isset($_REQUEST["selectlanguage"])?$_REQUEST["selectlanguage"]:"";
 if ($selectLanguage == "") {

@@ -9,14 +9,14 @@ read_user_common_parameters(); // $uType, $userOffs, $lpp, search parameters
 $uType = 'Subscribers';
 compute_user_rights($User, $canManage, $canDelete);
 if (!$canManage) {
-	CampsiteInterface::DisplayError(getGS('You do not have the right to change user account information.'));
+	camp_html_display_error(getGS('You do not have the right to change user account information.'));
 	exit;
 }
 
 $userId = Input::Get('User', 'int', 0);
 $editUser = new User($userId);
 if ($editUser->getUserName() == '') {
-	CampsiteInterface::DisplayError(getGS('No such user account.'));
+	camp_html_display_error(getGS('No such user account.'));
 	exit;
 }
 $StartIP = Input::Get('StartIP', 'string', '');

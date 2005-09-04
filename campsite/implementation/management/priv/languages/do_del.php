@@ -5,7 +5,7 @@ require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/languages.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
@@ -16,13 +16,13 @@ if (!$access) {
 if (!$User->hasPermission('DeleteLanguages')) {
     print_r($User);
     exit;
-	CampsiteInterface::DisplayError(getGS("You do not have the right to delete languages."));
+	camp_html_display_error(getGS("You do not have the right to delete languages."));
 	exit;
 }
 
 $Language = Input::Get('Language', 'int');
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
 	exit;    
 }
 
@@ -146,4 +146,4 @@ if ($del) {
 </TABLE></CENTER>
 <P>
 
-<?php CampsiteInterface::CopyrightNotice(); ?>
+<?php camp_html_copyright_notice(); ?>

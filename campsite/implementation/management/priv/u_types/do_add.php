@@ -6,7 +6,7 @@ list($access, $User) = check_basic_access($_REQUEST);
 $canManage = $User->hasPermission('ManageUserTypes');
 if (!$canManage) {
 	$error = getGS("You do not have the right to change user type permissions.");
-	CampsiteInterface::DisplayError($error);
+	camp_html_display_error($error);
 	exit;
 }
 
@@ -15,11 +15,11 @@ if ($uType != '') {
 	$userType = new UserType($uType);
 	if ($userType->exists()) {
 		$errMsg = getGS("An user type with the name '$1' already exists.", $uType);
-		CampsiteInterface::DisplayError($errMsg);
+		camp_html_display_error($errMsg);
 		exit;
 	}
 } else {
-	CampsiteInterface::DisplayError(getGS('You must complete the $1 field.', getGS('Name')));
+	camp_html_display_error(getGS('You must complete the $1 field.', getGS('Name')));
 	exit;
 }
 

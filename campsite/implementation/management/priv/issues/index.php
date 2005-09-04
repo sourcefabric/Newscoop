@@ -2,7 +2,7 @@
 
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
 load_common_include_files("$ADMIN_DIR/issues");
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Publication.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Issue.php');
@@ -22,14 +22,14 @@ if ($IssOffs < 0) {
 $ItemsPerPage = 20;
 
 if (!Input::IsValid()) {
-	CampsiteInterface::DisplayError(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
 	exit;	
 }
 $publicationObj =& new Publication($Pub);
 $allIssues = Issue::GetIssues($Pub, null, null, $publicationObj->getLanguageId(), array('LIMIT' => array('START' => $IssOffs, 'MAX_ROWS'=> $ItemsPerPage)));
 $totalIssues = Issue::GetNumIssues($Pub);
 
-CampsiteInterface::ContentTop(getGS('Issues'), array('Pub' => $publicationObj));
+camp_html_content_top(getGS('Issues'), array('Pub' => $publicationObj));
 
 if ($User->hasPermission('ManageIssue')) {
 	if (Issue::GetNumIssues($Pub) <= 0) {
@@ -195,4 +195,4 @@ else { ?>
 	<?php  
 } ?>
 
-<?php CampsiteInterface::CopyrightNotice(); ?>
+<?php camp_html_copyright_notice(); ?>

@@ -9,7 +9,7 @@ read_user_common_parameters(); // $uType, $userOffs, $lpp, search parameters
 $uType = 'Subscribers';
 compute_user_rights($g_user, $g_canManage, $g_canDelete);
 if (!$g_canManage) {
-	CampsiteInterface::DisplayError(getGS('You do not have the right to change user account information.'));
+	camp_html_display_error(getGS('You do not have the right to change user account information.'));
 	exit;
 }
 
@@ -17,7 +17,7 @@ if (!$g_canManage) {
 $g_userId = Input::Get('User', 'int', 0);
 $g_editUser = new User($g_userId);
 if ($g_editUser->getUserName() == '') {
-	CampsiteInterface::DisplayError(getGS('No such user account.'));
+	camp_html_display_error(getGS('No such user account.'));
 	exit;
 }
 $g_backLink = "/$ADMIN/users/edit.php?uType=Subscribers&User=$g_userId";
@@ -29,13 +29,13 @@ $g_cAddresses = Input::Get('cAddresses', 'int', 0);
 
 // check if input was correct
 if ($g_cStartIP1 == 0 || $g_cStartIP2 == 0 || $g_cStartIP3 == 0 || $g_cStartIP4 == 0) {
-	CampsiteInterface::DisplayError(getGS('You must complete the $1 field.', 'Start IP'),
+	camp_html_display_error(getGS('You must complete the $1 field.', 'Start IP'),
 		$g_backLink);
 	exit;
 }
 if ($g_cAddresses == 0) {
 	$g_errorMsg = getGS('You must complete the $1 field.', 'Number of addresses');
-	CampsiteInterface::DisplayError($g_errorMsg, $g_backLink);
+	camp_html_display_error($g_errorMsg, $g_backLink);
 	exit;
 }
 
@@ -50,7 +50,7 @@ $g_res = $Campsite['db']->Execute($g_sql);
 if ($g_res->RecordCount() > 0) {
 	$g_errorMsg = getGS('The IP address group $1:$2 conflicts with another existing group.',
 		$g_startIPStr, $g_cAddresses);
-	CampsiteInterface::DisplayError($g_errorMsg, $g_backLink);
+	camp_html_display_error($g_errorMsg, $g_backLink);
 	exit;
 }
 
@@ -59,7 +59,7 @@ if ($Campsite['db']->Execute("INSERT IGNORE INTO SubsByIP SET IdUser=$g_userId, 
 		encHTML($g_editUser->getUserName()));
 	Log::Message($logtext, $g_user->getUserName(), 57);
 } else {
-	CampsiteInterface::DisplayError(getGS('There was an error creating the IP address group.', "$g_startIPStr:$g_cAddresses"), $g_backLink);
+	camp_html_display_error(getGS('There was an error creating the IP address group.', "$g_startIPStr:$g_cAddresses"), $g_backLink);
 	exit;
 }
 
