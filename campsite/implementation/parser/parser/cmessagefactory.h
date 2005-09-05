@@ -50,6 +50,8 @@ using std::bad_alloc;
 class CMessageFactory
 {
 public:
+	virtual ~CMessageFactory() {}
+
 	virtual CMessage* createMessage(char* p_pchMsgContent) const 
 		throw (out_of_range, xml_parse_error, invalid_message_content, bad_alloc) = 0;
 
@@ -60,6 +62,8 @@ public:
 class CURLRequestMessageFactory : public CMessageFactory
 {
 public:
+	virtual ~CURLRequestMessageFactory() {}
+
 	virtual CMessage* createMessage(char* p_pchMsgContent) const
 		throw (out_of_range, xml_parse_error, invalid_message_content, bad_alloc)
 		{ return new CMsgURLRequest(p_pchMsgContent); }
@@ -71,6 +75,8 @@ public:
 class CResetCacheMessageFactory : public CMessageFactory
 {
 public:
+	virtual ~CResetCacheMessageFactory() {}
+
 	virtual CMessage* createMessage(char* p_pchMsgContent) const
 		throw (out_of_range, xml_parse_error, invalid_message_content, bad_alloc)
 		{ return new CMsgResetCache(p_pchMsgContent); }
@@ -82,6 +88,8 @@ public:
 class CRestartServerMessageFactory : public CMessageFactory
 {
 public:
+	virtual ~CRestartServerMessageFactory() {}
+
 	virtual CMessage* createMessage(char* p_pchMsgContent) const
 		throw (out_of_range, xml_parse_error, invalid_message_content, bad_alloc)
 		{ return new CMsgRestartServer(p_pchMsgContent); }
