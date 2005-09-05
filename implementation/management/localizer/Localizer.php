@@ -149,6 +149,11 @@ class Localizer {
 	    
 	    $defaultLangStrings = $defaultLang->getTranslationTable();		    
 	    $userLangStrings = $userLang->getTranslationTable();
+	    
+	    if (!isset($g_translationStrings)) {
+    		$g_translationStrings = array();
+        }
+	    
 	    // Prefer the user strings to the default ones.
 	    $g_translationStrings = array_merge($g_translationStrings, $defaultLangStrings, $userLangStrings);
 	} // fn LoadLanguageFiles
