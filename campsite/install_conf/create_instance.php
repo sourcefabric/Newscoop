@@ -474,8 +474,9 @@ function fill_missing_parameters(&$p_defined_parameters)
 	define_globals();
 
 	// read existing configuration (if exists)
-	if ($p_defined_parameters['--db_name'] == "")
+	if (!isset($p_defined_parameters['--db_name']) || trim($p_defined_parameters['--db_name']) == "") {
 		$p_defined_parameters['--db_name'] = $g_parameters_defaults['--db_name'];
+	}
 	$db_name = $p_defined_parameters['--db_name'];
 	$etc_dir = $p_defined_parameters['--etc_dir'];
 	$instance_etc_dir = "$etc_dir/$db_name";
