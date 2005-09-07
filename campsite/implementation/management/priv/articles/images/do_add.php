@@ -34,6 +34,7 @@ $cPhotographer = Input::Get('cPhotographer');
 $cPlace = Input::Get('cPlace');
 $cDate = Input::Get('cDate');
 $cURL = Input::Get('cURL', 'string', '', true);
+$BackLink = Input::Get('BackLink', 'string', null, true);
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));
@@ -66,7 +67,7 @@ else {
 
 // Check if image was added successfully
 if (!is_object($image)) {
-	header('Location: '.camp_html_article_url($articleObj, $Language, 'images/index.php'));
+	header('Location: '.camp_html_display_error($image, $BackLink));
 	exit;	
 }
 

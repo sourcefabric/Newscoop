@@ -20,6 +20,7 @@ $cPlace = Input::Get('cPlace');
 $cDate = Input::Get('cDate');
 $cURL = Input::Get('cURL', 'string', '', true);
 $view = Input::Get('view', 'string', 'thumbnail', true);
+$BackLink = Input::Get('BackLink', 'string', null, true);
 
 $imageNav =& new ImageNav(CAMPSITE_IMAGEARCHIVE_IMAGES_PER_PAGE, $view);
 $imageNav->clearSearchStrings();
@@ -45,8 +46,18 @@ $attributes['Date'] = $cDate;
 if (!empty($cURL)) {
 	$image =& Image::OnAddRemoteImage($cURL, $attributes, $User->getId());
 }
-else {
+elseif (!empty($_FILES['cImage'])) {
 	$image =& Image::OnImageUpload($_FILES['cImage'], $attributes, $User->getId());
+}
+else {
+	header('Location: '.camp_html_display_error(getGS("You must select an image file to upload."), $BackLink));
+	exit;
+}
+
+// Check if image was added successfully
+if (!is_object($image)) {
+	header('Location: '.camp_html_display_error($image, $BackLink));
+	exit;	
 }
 
 $logtext = getGS('The image $1 has been added.', $attributes['Description']);
