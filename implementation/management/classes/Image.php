@@ -450,7 +450,7 @@ class Image extends DatabaseObject {
         // Check content type
         if (!preg_match('/image/', $ContentType)) {
             // wrong URL
-            return getGS('URL <B>$1</B> have wrong content type <B>$2</B>', $p_url, $ContentType);
+            return getGS('URL "$1" is invalid or is not an image.', $p_url);
         }
     	
     	// Save the file
@@ -459,14 +459,14 @@ class Image extends DatabaseObject {
             fwrite($tmphandle, $response['body']);
             fclose($tmphandle);
         } else {
-            return getGS('Cannot create <B>$1</B>', $tmpname);
+            return getGS('Cannot create file "$1"', $tmpname);
         }
         
         // Check if it is really an image file
         $imageInfo = getimagesize($tmpname);
         if ($imageInfo === false) {
         	unlink($tmpname);
-            return getGS('URL <B>$1</B> have wrong content type <B>$2</B>', $cURL, $ctype);
+            return getGS('URL "$1" is not an image.', $cURL);
         }
         
         // content-type = image

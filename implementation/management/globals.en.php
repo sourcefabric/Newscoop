@@ -1,4 +1,7 @@
 <?php
+regGS("Cannot create file \"$1\"", "Cannot create file \"$1\"");
+regGS("URL \"$1\" is invalid or is not an image.", "URL \"$1\" is invalid or is not an image.");
+regGS("URL \"$1\" is not an image.", "URL \"$1\" is not an image.");
 regGS("Add new", "Add new");
 regGS("Save changes", "Save changes");
 regGS("CAMPSITE", "CAMPSITE");
