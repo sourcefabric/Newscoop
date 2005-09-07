@@ -94,6 +94,7 @@ fetchRowNum($q_now);
 		<TD COLSPAN="2">
 		<DIV ALIGN="CENTER">
         <input type="hidden" name="view" value="<?php echo $view ?>"> 
+        <INPUT TYPE="HIDDEN" NAME="BackLink" VALUE="<?php  p($_SERVER['REQUEST_URI']); ?>">
 		<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save changes'); ?>" class="button">
 		<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='index.php?<?php echo $imageNav->getSearchLink(); ?>'" class="button">
 		</DIV>
@@ -103,4 +104,4 @@ fetchRowNum($q_now);
 </FORM>
 <P>
 
-<?php CampsiteInterface::CopyrightNotice(); ?>
+<?php CampsiteInterface::CopyrightNotice(); ?>
