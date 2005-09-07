@@ -1,3 +1,52 @@
+
+
+
+
+
+2.3.1 (September 7, 2005)
+    Bug fixes:
+    - Ticket #1445 - Upgrade from 2.2 to 2.3 fails on MySQL 3.X
+    - Ticket #705 - Image Archive: give an error on Invalid URL
+    - Ticket #1291 - No error dialog popups up for article
+    edit->images->add new->save
+    - Ticket #1443 - Campsite utility scripts don't work when the binary 
+    directory is in the path
+    - Ticket #1157 - Make Campsite work on PHP 5
+    - Ticket #1436 - Fix 'about' link
+    - Ticket #1442 - Translations are broken on Fedora Core 4
+    - Ticket #1441 - Remove obsolete scripts from root HTML directory
+    - Ticket #1438 - Compilation fails on Fedora 4.0
+    - Ticket #1437 - Check in russian translation updates
+    - Ticket #1312 - Admin login can't be done after a user login in same
+    browser session
+    - Ticket #1432 - Invalid template in article body internal links
+    - Ticket #1429 - Article text fields are not visible on Fedora Linux
+    - Ticket #1428 - Xinha SR language broken
+    - Ticket #1424 - Admin interface doesnt work when run on a different port
+    - Ticket #1398 - INSTALL file miss info about apache config
+    - Ticket #1421 - Unsetting a context property does not delete the URL
+    parameter
+    - Ticket #1411 - PHP notices when running "create_instance"
+    - Ticket #1401 - Install breaks if database password has a quote in it
+    - Ticket #585 - IP access problem
+    - Ticket #1408 - Can't change subscription status
+    - Ticket #1400 - Configuring "instance advanced parameters" breaks when
+    using defaults
+    - Ticket #1403 - When upgrading an old instance the templates are not
+    copied to the new HTML directory
+    - Ticket #1402 - Apache user and group are not set properly when upgrading
+    from 2.1
+    - Ticket #1399 - Install prompts "0 - to exit" confusing
+    - Ticket #1285 - Main menu behaviour change
+    - Ticket #1207 - PHP notices appear in admin site
+    - Ticket #1396 - Manual: Most internal internal links are broken
+    - Ticket #1385 - Default Apache .conf file: add php_admin_value and *:80
+    - Ticket #1386 - After create_instance, Connection refused (111)
+    - Ticket #1387 - PHP "NOTICES" break Xinha
+    - Ticket #1390 - Fix images in campsite manual
+    - Ticket #1383 - Invalid path in admin directory gives no error
+    - Ticket #1379 - create_instance parameters description
+
 2.3.0 (August 1, 2005)
     2.3.0 New Features
     - User Management v2
