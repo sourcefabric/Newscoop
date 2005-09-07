@@ -1,8 +1,3 @@
-
-
-
-
-
 2.3.1 (September 7, 2005)
     Bug fixes:
     - Ticket #1445 - Upgrade from 2.2 to 2.3 fails on MySQL 3.X
