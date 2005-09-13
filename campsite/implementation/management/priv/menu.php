@@ -31,7 +31,8 @@ $showUserMenu = ($User->hasPermission("ManageUsers")
 	|| $User->hasPermission("ManageUserTypes")
 	|| $User->hasPermission("ManageReaders"));
 	
-$iconTemplateStr = '<img src="/'.$ADMIN.'/img/icon/%s" align="middle" style="padding-bottom: 3px;" width="22" height="22" />';
+//$iconTemplateStr = '<img src="/admin/img/icon/%s" align="middle" style="padding-bottom: 3px;" width="22" height="22" />';
+$iconTemplateStr = '<img src="'.$Campsite['ADMIN_IMAGE_BASE_URL'].'/%s" align="middle" style="padding-bottom: 3px;" width="22" height="22" />';
 
 DynMenuItem::SetMenuType("DynMenuItem_JsCook");
 $menu_root =& DynMenuItem::Create('', '');
@@ -64,7 +65,7 @@ foreach ($publications as $publication) {
 	}
 }
 
-$icon_bullet = '<img src="/'.$ADMIN.'/img/tol.gif" align="middle" style="padding-bottom: 3px;" width="16" height="16" />';
+$icon_bullet = '<img src="'.$Campsite["ADMIN_IMAGE_BASE_URL"].'/tol.gif" align="middle" style="padding-bottom: 3px;" width="16" height="16" />';
 foreach ($publications as $publication) {
     $pubId = $publication->getPublicationId();
     $menu_item_pub =& DynMenuItem::Create(htmlspecialchars($publication->getName()), 
@@ -284,7 +285,7 @@ $menu_help->addItem($menu_item);
 		<table border="0" cellpadding="0" cellspacing="0">
 		<tr>
 			<td style="padding-left: 3px; padding-right: 10px; padding-top: 0px; padding-bottom: 2px; font-size: 14pt; font-weight: bold; color: black; font-style: Verdana;" align="left" valign="middle" nowrap>
-				<a href="/<?php p($ADMIN) ?>/home.php"><IMG SRC="/admin/img/sign_big.gif" BORDER="0" align="middle"></a>
+				<a href="/<?php p($ADMIN) ?>/home.php"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/sign_big.gif" BORDER="0" align="middle"></a>
 			</td>
 			<td style="padding-left: 20px; padding-top: 6px;" valign="top">
 			<DIV ID="myMenuID"></DIV>
@@ -305,7 +306,7 @@ $menu_help->addItem($menu_item);
             			<?php putGS("Signed in: $1", "<b>".$User->getName()."</b>"); ?>
             		</td>		
 					<td style="padding-left: 10px;">
-						<A HREF="/<?php p($ADMIN); ?>/logout.php"><img src="/<?php p($ADMIN); ?>/img/icon/logout.png" width="22" height="22" border="0" alt="<?php putGS('Logout'); ?>"></a>
+						<A HREF="/<?php p($ADMIN); ?>/logout.php"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/logout.png" width="22" height="22" border="0" alt="<?php putGS('Logout'); ?>"></a>
 					</td>
 					<td style="font-weight: bold; padding-left: 2px; padding-right: 10px;">
 						<A HREF="/<?php p($ADMIN); ?>/logout.php" style="color: black; text-decoration: none;"><?php putGS('Logout'); ?></a>

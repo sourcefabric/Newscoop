@@ -44,7 +44,7 @@ $totalSections = Section::GetTotalSections($Pub, $Issue, $Language);
 <P>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 <TR>
-	<TD><IMG SRC="/admin/img/tol.gif" BORDER="0"></TD>
+	<TD><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/tol.gif" BORDER="0"></TD>
 	<TD><?php  putGS("Select the section"); ?></TD>
 </TR>
 </TABLE>

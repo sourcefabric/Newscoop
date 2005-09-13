@@ -70,7 +70,7 @@ B_LIST
 		E_LIST_ITEM
 <?php  if ($data != 0) { ?>dnl
 		B_LIST_ITEM(<*CENTER*>)
-			X_BUTTON(<*<?php  putGS('Delete article type $1', encHTML($table)); ?>*>, <*icon/x.gif*>, <*a_types/del.php?AType=<?php  print encURL($table); ?>*>)
+			X_BUTTON(<*<?php  putGS('Delete article type $1', encHTML($table)); ?>*>, <*/x.gif*>, <*a_types/del.php?AType=<?php  print encURL($table); ?>*>)
 		E_LIST_ITEM
 <?php  } ?>dnl
 	E_LIST_TR

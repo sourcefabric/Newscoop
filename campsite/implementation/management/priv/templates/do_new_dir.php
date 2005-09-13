@@ -40,7 +40,7 @@ if ($ok)
 		<TD class="page_title">
 		    <?php  putGS("Creating new folder"); ?>
 		</TD>
-		<TD ALIGN=RIGHT><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0"><TR><TD><A HREF="/<?php echo $ADMIN; ?>/templates/?Path=<?php  pencURL(decS($cPath)); ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" ALT="<?php putGS("Templates"); ?>"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/templates/?Path=<?php  pencURL(decS($cPath)); ?>" ><B><?php putGS("Templates");  ?></B></A></TD></TR></TABLE></TD>
+		<TD ALIGN=RIGHT><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0"><TR><TD><A HREF="/<?php echo $ADMIN; ?>/templates/?Path=<?php  pencURL(decS($cPath)); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/tol.gif" BORDER="0" ALT="<?php putGS("Templates"); ?>"></A></TD><TD><A HREF="/<?php echo $ADMIN; ?>/templates/?Path=<?php  pencURL(decS($cPath)); ?>" ><B><?php putGS("Templates");  ?></B></A></TD></TR></TABLE></TD>
 	</TR>
 </TABLE>
 

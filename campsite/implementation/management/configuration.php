@@ -41,6 +41,7 @@ require_once($g_documentRoot.'/campsite_version.php');
 
 $Campsite['IMAGE_DIRECTORY'] = $Campsite['HTML_DIR'].'/images/';
 $Campsite['IMAGE_BASE_URL'] = $Campsite['WEBSITE_URL'].'/images/';
+$Campsite['ADMIN_IMAGE_BASE_URL'] = $Campsite['WEBSITE_URL'].'/css/';
 $Campsite['IMAGE_PREFIX'] = 'cms-image-';
 $Campsite['IMAGEMAGICK_INSTALLED'] = true;
 $Campsite['THUMBNAIL_COMMAND'] = 'convert -sample 64x64';

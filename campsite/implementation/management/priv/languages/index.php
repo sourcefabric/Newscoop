@@ -31,7 +31,7 @@ $languages = Language::GetAllLanguages();
 <P>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 <TR>
-    <TD><A HREF="add_modify.php?Back=<?php print urlencode($_SERVER['REQUEST_URI']); ?>" ><IMG SRC="/admin/img/icon/add.png" BORDER="0"></A></TD>
+    <TD><A HREF="add_modify.php?Back=<?php print urlencode($_SERVER['REQUEST_URI']); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
     <TD><A HREF="add_modify.php?Back=<?php print urlencode($_SERVER['REQUEST_URI']); ?>" ><B><?php  putGS("Add new language"); ?></B></A></TD>
 </TR>
 </TABLE>
@@ -79,7 +79,7 @@ if (count($languages) > 0) {
 	<?php  }
 	if ($User->hasPermission('DeleteLanguages')) { ?>
 	<TD ALIGN="CENTER">
-		<A HREF="/admin/languages/do_del.php?Language=<?php p($language->getLanguageId()); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the language $1?', $language->getNativeName());?>');"><IMG SRC="/<?php p($ADMIN); ?>/img/icon/delete.png" BORDER="0" ALT="<?php  putGS('Delete language $1', htmlspecialchars($language->getNativeName())); ?>" TITLE="<?php  putGS('Delete language $1', htmlspecialchars($language->getNativeName())); ?>"></A>
+		<A HREF="/admin/languages/do_del.php?Language=<?php p($language->getLanguageId()); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the language $1?', $language->getNativeName());?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php  putGS('Delete language $1', htmlspecialchars($language->getNativeName())); ?>" TITLE="<?php  putGS('Delete language $1', htmlspecialchars($language->getNativeName())); ?>"></A>
 		</TD>
 	<?php  } ?>
 	</TR>

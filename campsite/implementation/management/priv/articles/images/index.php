@@ -39,7 +39,7 @@ camp_html_content_top(getGS('Article Image List'), $topArray);
 	<td>
 		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 		<TR>
-			<TD><A HREF="../edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/back.png" BORDER="0"></A></TD>
+			<TD><A HREF="../edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/back.png" BORDER="0"></A></TD>
 			<TD><A HREF="../edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>" ><B><?php putGS('Back to Edit Article'); ?></B></A></TD>
 		</TR>
 		</TABLE>
@@ -50,7 +50,7 @@ camp_html_content_top(getGS('Article Image List'), $topArray);
 	<td>
 		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 		<TR>
-			<TD><A HREF="add.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/add.png" BORDER="0"></A></TD>
+			<TD><A HREF="add.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
 			<TD><A HREF="add.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>" ><B><?php  putGS('Add new image'); ?></B></A></TD>
 		</TR>
 		</TABLE>
@@ -58,7 +58,7 @@ camp_html_content_top(getGS('Article Image List'), $topArray);
 	<td>
 		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 		<TR>
-			<TD><?php echo camp_html_article_link($articleObj, $Language, "images/search.php"); ?><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/add.png" BORDER="0"></a></TD>
+			<TD><?php echo camp_html_article_link($articleObj, $Language, "images/search.php"); ?><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></a></TD>
 			<TD><?php echo camp_html_article_link($articleObj, $Language, "images/search.php"); ?><B><?php  putGS('Add an existing image'); ?></B></A></TD>
 		</TR>
 		</TABLE>
@@ -155,7 +155,7 @@ if (count($articleImages) > 0) {
 		<?php
 	    if ($articleObj->userCanModify($User)) { ?>
 			<TD ALIGN="CENTER">
-				<A HREF="/<?php echo $ADMIN; ?>/articles/images/do_unlink.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($Article); ?>&ImageId=<?php echo $image->getImageId(); ?>&ImageTemplateId=<?php echo $articleImage->getTemplateId(); ?>&sLanguage=<?php  p($sLanguage); ?>&Language=<?php  p($Language); ?>" onclick="return confirm('<?php putGS("Are you sure you want to remove the image \\'$1\\' from the article?", camp_javascriptspecialchars($image->getDescription())); ?>');"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/unlink.png" BORDER="0" ALT="<?php  putGS('Unlink'); ?>" title="<?php  putGS('Unlink'); ?>"></A>
+				<A HREF="/<?php echo $ADMIN; ?>/articles/images/do_unlink.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($Article); ?>&ImageId=<?php echo $image->getImageId(); ?>&ImageTemplateId=<?php echo $articleImage->getTemplateId(); ?>&sLanguage=<?php  p($sLanguage); ?>&Language=<?php  p($Language); ?>" onclick="return confirm('<?php putGS("Are you sure you want to remove the image \\'$1\\' from the article?", camp_javascriptspecialchars($image->getDescription())); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/unlink.png" BORDER="0" ALT="<?php  putGS('Unlink'); ?>" title="<?php  putGS('Unlink'); ?>"></A>
 			</TD>
 		<?php
 	    }
@@ -164,7 +164,7 @@ if (count($articleImages) > 0) {
 			<?php 
 			if (count(ArticleImage::GetArticlesThatUseImage($image->getImageId())) == 1) {
 				?>
-				<A HREF="/<?php echo $ADMIN; ?>/articles/images/do_del.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&ImageId=<?php echo $image->getImageId(); ?>&sLanguage=<?php  p($sLanguage); ?>&Language=<?php p($Language); ?>" onclick="return confirm('<?php putGS("Are you sure you want to delete the image \\'$1\\'?", camp_javascriptspecialchars($image->getDescription())); ?>');"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/delete.png" BORDER="0" ALT="<?php  putGS('Delete'); ?>" title="<?php putGS('Delete'); ?>"></A>
+				<A HREF="/<?php echo $ADMIN; ?>/articles/images/do_del.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&ImageId=<?php echo $image->getImageId(); ?>&sLanguage=<?php  p($sLanguage); ?>&Language=<?php p($Language); ?>" onclick="return confirm('<?php putGS("Are you sure you want to delete the image \\'$1\\'?", camp_javascriptspecialchars($image->getDescription())); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php  putGS('Delete'); ?>" title="<?php putGS('Delete'); ?>"></A>
 				<?php
 			}
 			else {

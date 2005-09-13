@@ -68,7 +68,7 @@ B_LIST
 			<A HREF="X_ROOT/pub/edit_alias.php?Pub=<?php  pencURL($Pub); ?>&Alias=<?php  pgetHVar($q_aliases, 'Id'); ?>"><?php  pgetHVar($q_aliases,'Name'); ?></A>
 		E_LIST_ITEM
 		B_LIST_ITEM(<*CENTER*>)
-			X_BUTTON(<*<?php  putGS('Delete entry $1',getHVar($q_aliases, 'Name')); ?>*>, <*icon/delete.png*>, <*pub/del_alias.php?Pub=<?php  pencURL($Pub); ?>&Alias=<?php  pgetUVar($q_aliases, 'Id'); ?>*>)
+			X_BUTTON(<*<?php  putGS('Delete entry $1',getHVar($q_aliases, 'Name')); ?>*>, <*/delete.png*>, <*pub/del_alias.php?Pub=<?php  pencURL($Pub); ?>&Alias=<?php  pgetUVar($q_aliases, 'Id'); ?>*>)
 		E_LIST_ITEM
 	E_LIST_TR
 <?php 

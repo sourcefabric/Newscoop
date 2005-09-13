@@ -82,7 +82,7 @@ B_LIST
 			<?php  pgetHVar($q_deft,'PaidTime'); ?>
 		E_LIST_ITEM
 		B_LIST_ITEM(<*CENTER*>)
-			X_BUTTON(<*<?php  putGS('Delete entry $1',getHVar($q_deft,'CountryCode')); ?>*>, <*icon/delete.png*>, <*pub/deldeftime.php?Pub=<?php  pencURL($Pub); ?>&CountryCode=<?php  pgetUVar($q_deft,'CountryCode'); ?>&Language=<?php  pencURL($Language); ?>*>)
+			X_BUTTON(<*<?php  putGS('Delete entry $1',getHVar($q_deft,'CountryCode')); ?>*>, <*/delete.png*>, <*pub/deldeftime.php?Pub=<?php  pencURL($Pub); ?>&CountryCode=<?php  pgetUVar($q_deft,'CountryCode'); ?>&Language=<?php  pencURL($Language); ?>*>)
 		E_LIST_ITEM
 	E_LIST_TR
 <?php 

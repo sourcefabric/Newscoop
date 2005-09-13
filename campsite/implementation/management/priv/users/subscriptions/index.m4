@@ -95,7 +95,7 @@ B_LIST
 <?php } ?>
 		E_LIST_ITEM
 		B_LIST_ITEM(<*CENTER*>)
-			X_BUTTON(<*<?php  putGS('Delete subscriptions to $1',getHVar($q_pub,'Name') ); ?>*>, <*icon/delete.png*>, <*users/subscriptions/do_del.php?User=<?php  p($User); ?>&Subs=<?php  pgetUVar($q_subs,'Id'); ?>*>, <*onclick="return confirm('<?php putGS('Are you sure you want to delete the subscription to the publication $1?', getHVar($q_pub,'Name')); ?>');"*>)
+			X_BUTTON(<*<?php  putGS('Delete subscriptions to $1',getHVar($q_pub,'Name') ); ?>*>, <*/delete.png*>, <*users/subscriptions/do_del.php?User=<?php  p($User); ?>&Subs=<?php  pgetUVar($q_subs,'Id'); ?>*>, <*onclick="return confirm('<?php putGS('Are you sure you want to delete the subscription to the publication $1?', getHVar($q_pub,'Name')); ?>');"*>)
 		E_LIST_ITEM
 	E_LIST_TR
 <?php 

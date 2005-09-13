@@ -47,10 +47,10 @@ $ImagesPerPage = 8;
 // build the links for ordering (search results) //////////////////////
 if ($OrderDirection == 'DESC') {
 	$ReverseOrderDirection = "ASC";
-	$OrderSign = "<img src=\"/$ADMIN/img/icon/search_order_direction_down.png\" border=\"0\">";
+	$OrderSign = "<img src=\"".$Campsite["ADMIN_IMAGE_BASE_URL"]."/search_order_direction_down.png\" border=\"0\">";
 } else {
 	$ReverseOrderDirection = "DESC";
-	$OrderSign = "<img src=\"/$ADMIN/img/icon/search_order_direction_up.png\" border=\"0\">";
+	$OrderSign = "<img src=\"".$Campsite["ADMIN_IMAGE_BASE_URL"]."/search_order_direction_up.png\" border=\"0\">";
 }
 
 $IdHref  = 
@@ -128,13 +128,13 @@ camp_html_content_top(getGS('Link Image to Article'), $topArray, true, true, $ex
 
 <table>
 <tr>
-    <td><?php echo camp_html_article_link($articleObj, $Language, 'images/index.php') ?><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/back.png" BORDER="0" ALT="<?php putGS("Back to Article Image List"); ?>"></a></td>
+    <td><?php echo camp_html_article_link($articleObj, $Language, 'images/index.php') ?><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/back.png" BORDER="0" ALT="<?php putGS("Back to Article Image List"); ?>"></a></td>
     <td><?php echo camp_html_article_link($articleObj, $Language, 'images/index.php') ?><b><?php echo putGS('Back to Article Image List'); ?></b></a></td>
-    <td><?php echo camp_html_article_link($articleObj, $Language, 'edit.php') ?><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/back.png" BORDER="0" ALT="<?php putGS("Back to article details"); ?>"></a></td>
+    <td><?php echo camp_html_article_link($articleObj, $Language, 'edit.php') ?><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/back.png" BORDER="0" ALT="<?php putGS("Back to article details"); ?>"></a></td>
     <td><?php echo camp_html_article_link($articleObj, $Language, 'edit.php') ?><b><?php echo putGS('Back to article details'); ?></b></a></td>
 </tr>
 <tr>
-    <td><?php echo camp_html_article_link($articleObj, $Language, 'images/search.php') ?><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/reset.png" BORDER="0" ALT="<?php putGS("Reset search conditions"); ?>"></a></td>
+    <td><?php echo camp_html_article_link($articleObj, $Language, 'images/search.php') ?><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/reset.png" BORDER="0" ALT="<?php putGS("Reset search conditions"); ?>"></a></td>
     <td colspan="3"><?php echo camp_html_article_link($articleObj, $Language, 'images/search.php') ?><b><?php echo putGS('Reset search conditions'); ?></b></a></td>
 </tr>
 </table>

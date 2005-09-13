@@ -50,10 +50,10 @@ define(<*E_BODY*>, <*</BODY>*>)dnl
 define(<*B_MBODY*>, <*<BODY BGCOLOR="#D0D0B0" TEXT="BLACK" LINK="DARKBLUE" ALINK="RED" VLINK="DARKBLUE">*>)dnl
 define(<*E_MBODY*>, <*</BODY>*>)dnl
 define(<*X_HR*>, <*<HR NOSHADE SIZE="1" COLOR="BLACK">*>)dnl
-define(<*X_NEW_BUTTON*>, <*<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1"><TR><TD><A HREF="$2" ifelse(<*$3*>, <**>, <**>, <*ONCLICK="$3"*>)><IMG SRC="X_ROOT/img/icon/add.png" BORDER="0"></A></TD><TD><A HREF="$2" ifelse(<*$3*>, <**>, <**>, <*ONCLICK="$3"*>)><B><?php  putGS("$1"); ?></B></A></TD></TR></TABLE>*>)dnl
-define(<*X_BACK_BUTTON*>, <*<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1"><TR><TD><A HREF="$2" ifelse(<*$3*>, <**>, <**>, <*ONCLICK="$3"*>)><IMG SRC="X_ROOT/img/icon/back.png" BORDER="0"></A></TD><TD><A HREF="$2" ifelse(<*$3*>, <**>, <**>, <*ONCLICK="$3"*>)><B><?php  putGS("$1"); ?></B></A></TD></TR></TABLE>*>)dnl
-define(<*X_TOL_BUTTON*>, <*<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1"><TR><TD><A HREF="$2" ifelse(<*$3*>, <**>, <**>, <*ONCLICK="$3"*>)><IMG SRC="X_ROOT/img/tol.gif" BORDER="0"></A></TD><TD><A HREF="$2" ifelse(<*$3*>, <**>, <**>, <*ONCLICK="$3"*>)><B><?php  putGS("$1"); ?></B></A></TD></TR></TABLE>*>)dnl
-define(<*X_BULLET*>, <*<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1"><TR><TD><IMG SRC="X_ROOT/img/tol.gif" BORDER="0"></TD><TD><?php  putGS("$1"); ?></TD></TR></TABLE>*>)dnl
+define(<*X_NEW_BUTTON*>, <*<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1"><TR><TD><A HREF="$2" ifelse(<*$3*>, <**>, <**>, <*ONCLICK="$3"*>)><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD><TD><A HREF="$2" ifelse(<*$3*>, <**>, <**>, <*ONCLICK="$3"*>)><B><?php  putGS("$1"); ?></B></A></TD></TR></TABLE>*>)dnl
+define(<*X_BACK_BUTTON*>, <*<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1"><TR><TD><A HREF="$2" ifelse(<*$3*>, <**>, <**>, <*ONCLICK="$3"*>)><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/back.png" BORDER="0"></A></TD><TD><A HREF="$2" ifelse(<*$3*>, <**>, <**>, <*ONCLICK="$3"*>)><B><?php  putGS("$1"); ?></B></A></TD></TR></TABLE>*>)dnl
+define(<*X_TOL_BUTTON*>, <*<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1"><TR><TD><A HREF="$2" ifelse(<*$3*>, <**>, <**>, <*ONCLICK="$3"*>)><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/tol.gif" BORDER="0"></A></TD><TD><A HREF="$2" ifelse(<*$3*>, <**>, <**>, <*ONCLICK="$3"*>)><B><?php  putGS("$1"); ?></B></A></TD></TR></TABLE>*>)dnl
+define(<*X_BULLET*>, <*<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1"><TR><TD><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/tol.gif" BORDER="0"></TD><TD><?php  putGS("$1"); ?></TD></TR></TABLE>*>)dnl
 define(<*X_NEXT_I*>, <* | <?php  putGS('Next'); ?> &gt;&gt;*>)dnl
 define(<*X_NEXT_A*>, <* | <B><A HREF="$1"><?php  putGS('Next'); ?> &gt;&gt</A></B>*>)dnl
 define(<*X_PREV_I*>, <*&lt;&lt; <?php  putGS('Previous'); ?>*>)dnl
@@ -77,8 +77,8 @@ dnl
 dnl *** Menu ***
 dnl
 define(<*B_MENU*>, <*<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%">*>)dnl
-dnl define(<*X_MENU_ITEM*>, <*<TR><TD ALIGN="RIGHT"><A HREF="$2" ONCLICK="$3" TARGET="fmain"><IMG SRC="X_ROOT/img/tol.gif" BORDER="0" ALT="<?php  putGS("$1"); ?>"></A></TD><TD NOWRAP><A HREF="$2" ONCLICK="$3" TARGET="fmain"><?php  putGS("$1"); ?></A></TD></TR>*>)dnl
-dnl define(<*X_HITEM*>, <*<TR><TD ALIGN="RIGHT"><A HREF="$1"><IMG SRC="X_ROOT/img/tol.gif" BORDER="0" ALT="<?php  putGS("$2"); ?>"></A></TD><TD NOWRAP><A HREF="$1"><?php  putGS("$2"); ?></A></TD></TR>*>)dnl
+dnl define(<*X_MENU_ITEM*>, <*<TR><TD ALIGN="RIGHT"><A HREF="$2" ONCLICK="$3" TARGET="fmain"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/tol.gif" BORDER="0" ALT="<?php  putGS("$1"); ?>"></A></TD><TD NOWRAP><A HREF="$2" ONCLICK="$3" TARGET="fmain"><?php  putGS("$1"); ?></A></TD></TR>*>)dnl
+dnl define(<*X_HITEM*>, <*<TR><TD ALIGN="RIGHT"><A HREF="$1"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/tol.gif" BORDER="0" ALT="<?php  putGS("$2"); ?>"></A></TD><TD NOWRAP><A HREF="$1"><?php  putGS("$2"); ?></A></TD></TR>*>)dnl
 define(<*X_MENU_BAR*>, <*<TR><TD COLSPAN="2">X_HR</TD></TR>*>)dnl
 define(<*E_MENU*>, <*</TABLE>*>)dnl
 dnl
@@ -86,7 +86,7 @@ dnl *** Home Page Menu ***
 dnl
 define(<*B_HOME_MENU*>, <*<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="2" ALIGN="CENTER" class="table_input">define(<*X_HOME_MENU_P*>, <*$1*>)*>)dnl
 define(<*B_HOME_MENU_HEADER*>, <*<TR>*>)dnl
-define(<*X_HOME_MENU_TH*>, <*<TD WIDTH="1%" VALIGN="TOP"><A HREF="$2"><IMG SRC="X_ROOT/img/tol.gif" BORDER="0"></A></TD><TD WIDTH="X_HOME_MENU_P"><B><A HREF="$2">$1</A></B></TD>*>)dnl
+define(<*X_HOME_MENU_TH*>, <*<TD WIDTH="1%" VALIGN="TOP"><A HREF="$2"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/tol.gif" BORDER="0"></A></TD><TD WIDTH="X_HOME_MENU_P"><B><A HREF="$2">$1</A></B></TD>*>)dnl
 define(<*X_HOME_MENU_TH_EMPTY*>, <*<TD COLSPAN="2">&nbsp;</TD>*>)dnl
 define(<*E_HOME_MENU_HEADER*>, <*</TR>*>)dnl
 define(<*B_HOME_MENU_BODY*>, <*<TR>*>)dnl
@@ -243,7 +243,7 @@ define(<*X_XAD*>, <*
 B_MSGBOX(<*Access denied*>, <**>, <*red*>)
 	X_MSGBOX_TEXT(<*<font color=red><li><?php  putGS("$1" ifelse(<*$3*>, <**>, <**>, <*, $3*>)); ?></li></font>*>)
 	B_MSGBOX_BUTTONS
-		<A HREF="X_ROOT/$2"><IMG SRC="X_ROOT/img/button/ok.gif" BORDER="0" ALT="OK"></A>
+		<A HREF="X_ROOT/$2"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/ok.gif" BORDER="0" ALT="OK"></A>
 	E_MSGBOX_BUTTONS
 E_DIALOG
 <P>

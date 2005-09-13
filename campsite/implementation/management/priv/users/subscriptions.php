@@ -14,7 +14,7 @@ if (!$User->hasPermission("ManageSubscriptions") || !isset($editUser) || gettype
 			<td align="left"><?php putGS("Subscriptions"); ?></td>
 			<td align="right" valign="center" nowrap>
 				<?php $addURI = "/$ADMIN/users/subscriptions/add.php?User=".$editUser->getId(); ?>
-				<a href="<?php echo $addURI; ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/add.png" BORDER="0"></A>
+				<a href="<?php echo $addURI; ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A>
 				<a href="<?php echo $addURI; ?>"><B><?php putGS("Add new"); ?></B></A>
 			</td>
 		</tr></table>
@@ -66,7 +66,7 @@ if ($NUM_ROWS) {
 		</TD>
 		<TD ALIGN="CENTER">
 			<A HREF="/<?php echo $ADMIN; ?>/users/subscriptions/do_del.php?User=<?php echo $editUser->getId(); ?>&Subs=<?php pgetUVar($q_subs,'Id'); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the subscription to the publication $1?', getHVar($q_pub,'Name')); ?>');">
-			<IMG SRC="/<?php echo $ADMIN; ?>/img/icon/delete.png" BORDER="0" ALT="<?php putGS('Delete subscriptions to $1',getHVar($q_pub,'Name') ); ?>" TITLE="<?php  putGS('Delete subscriptions to $1',getHVar($q_pub,'Name') ); ?>"></A>
+			<IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php putGS('Delete subscriptions to $1',getHVar($q_pub,'Name') ); ?>" TITLE="<?php  putGS('Delete subscriptions to $1',getHVar($q_pub,'Name') ); ?>"></A>
 		</TD>
 	</TR>
 <?php 

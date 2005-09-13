@@ -39,7 +39,7 @@ E_HEADER
     <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
     <TR>
     	<TD>
-    		<A HREF="add.php?Back=<?php p(urlencode($_SERVER['REQUEST_URI'])); ?>"><IMG SRC="/<?php p($ADMIN); ?>/img/icon/add.png" BORDER="0"></A>
+    		<A HREF="add.php?Back=<?php p(urlencode($_SERVER['REQUEST_URI'])); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A>
     	</TD>
     	<TD>
     		<A HREF="add.php?Back=<?php p(urlencode($_SERVER['REQUEST_URI'])); ?>"><B><?php  putGS("Add new publication"); ?></B></A>
@@ -95,12 +95,12 @@ B_LIST
             <?php  pgetHVar($publ,'URLType'); ?>&nbsp;
         E_LIST_ITEM
         B_LIST_ITEM(<*CENTER*>)
-            <A HREF="X_ROOT/pub/edit.php?Pub=<?php  pgetUVar($publ,'Id'); ?>"><img src="/<?php echo $ADMIN; ?>/img/icon/configure.png" alt="<?php  putGS("Configure"); ?>" title="<?php  putGS("Configure"); ?>"  border="0"></A>
+            <A HREF="X_ROOT/pub/edit.php?Pub=<?php  pgetUVar($publ,'Id'); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/configure.png" alt="<?php  putGS("Configure"); ?>" title="<?php  putGS("Configure"); ?>"  border="0"></A>
         E_LIST_ITEM
 <?php  }
     if ($dpa != 0) { ?>dnl
         B_LIST_ITEM(<*CENTER*>)
-            X_BUTTON(<*<?php  putGS('Delete publication $1',getHVar($publ,'Name')); ?>*>, <*icon/delete.png*>, <*pub/del.php?Pub=<?php  pgetVar($publ,'Id'); ?>*>)
+            X_BUTTON(<*<?php  putGS('Delete publication $1',getHVar($publ,'Name')); ?>*>, <*/delete.png*>, <*pub/del.php?Pub=<?php  pgetVar($publ,'Id'); ?>*>)
         E_LIST_ITEM
 <?php  } ?>dnl
     E_LIST_TR

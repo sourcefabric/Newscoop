@@ -161,13 +161,27 @@ hr {
 }
 
 .breadcrumb {
+    color: #3c81a0;
+}
+
+.breadcrumb:visited {
+    color: #3c81a0;
+}
+
+.breadcrumb_active {
+    color: #d95022;
+	font-weight: bold;
+}
+
+.breadcrumb_active:visited {
+    color: #d95022;
 	font-weight: bold;
 }
 
 .breadcrumb_separator {
 	padding-left: 8px;
 	padding-right: 8px;
-	background-image: url(/admin-files/img/icon/breadcrumb_separator.gif);
+	background-image: url(/css/breadcrumb_separator.gif);
 	background-repeat: no-repeat;
 	background-position: 50% 70%;
 }

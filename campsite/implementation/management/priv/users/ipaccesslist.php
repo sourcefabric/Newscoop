@@ -16,7 +16,7 @@ if (!isset($editUser) || gettype($editUser) != 'object' || $editUser->getUserNam
 				<?php putGS('User IP access list management'); ?>
 			</td>
 			<td align="right" nowrap>
-				<a href="javascript: void(0);" onclick="ToggleRowVisibility('add_ip_row_id');"><img src="/admin/img/icon/add.png" id="my_icon" border="0" align="center"></a>
+				<a href="javascript: void(0);" onclick="ToggleRowVisibility('add_ip_row_id');"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" id="my_icon" border="0" align="center"></a>
 				<a href="javascript: void(0);" onclick="ToggleRowVisibility('add_ip_row_id');">
 					<?php putGS("Add new"); ?>
 				</a>
@@ -52,7 +52,7 @@ if ($NUM_ROWS) {
 		<td style="padding-left: 3px;"><?php pgetHVar($IPs,'Addresses'); ?></td>
 		<td align="center" style="padding-left: 3px;">
 			<a href="/<?php echo $ADMIN; ?>/users/do_ipdel.php?User=<?php echo $editUser->getId(); ?>&StartIP=<?php  pgetVar($IPs,'StartIP'); ?>"  onclick="return confirm('<?php putGS('Are you sure you want to delete the IP Group $1?', $ip); ?>');">
-			<img src="/<?php echo $ADMIN; ?>/img/icon/delete.png" border="0" ALT="<?php putGS('Delete'); ?>" title="<?php putGS('Delete'); ?>"></a>
+			<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" border="0" ALT="<?php putGS('Delete'); ?>" title="<?php putGS('Delete'); ?>"></a>
 		</td>
 	</tr>
 <?php  

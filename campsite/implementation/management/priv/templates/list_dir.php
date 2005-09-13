@@ -62,10 +62,10 @@ if (isset($dirs)) {
 			$color = 1;
 			$tr_class = "class=\"list_row_odd\"";
 		}
-		print "<TR $tr_class><TD valign=\"center\"><IMG SRC='/$ADMIN/img/icon/folder.png' BORDER='0'>&nbsp;<A HREF='?Path=".encURL("$listbasedir/$j")."'>$j</A></TD>";
+		print "<TR $tr_class><TD valign=\"center\"><IMG SRC='".$Campsite["ADMIN_IMAGE_BASE_URL"]."/folder.png' BORDER='0'>&nbsp;<A HREF='?Path=".encURL("$listbasedir/$j")."'>$j</A></TD>";
 
 		if ($User->hasPermission("DeleteTempl"))
-			print '<TD ALIGN="CENTER"><A HREF="/'.$ADMIN.'/templates/del.php?What=0&Path='.encURL($listbasedir).'&Name='.encURL($j).'"><IMG SRC="/'.$ADMIN.'/img/icon/delete.png" BORDER="0" ALT="'.getGS('Delete folder').'" TITLE="'.getGS('Delete folder').'"></A></TD></TR>';
+			print '<TD ALIGN="CENTER"><A HREF="/'.$ADMIN.'/templates/del.php?What=0&Path='.encURL($listbasedir).'&Name='.encURL($j).'"><IMG SRC="'.$Campsite["ADMIN_IMAGE_BASE_URL"].'/delete.png" BORDER="0" ALT="'.getGS('Delete folder').'" TITLE="'.getGS('Delete folder').'"></A></TD></TR>';
 		else
 			echo '</TR>';
     }
@@ -103,15 +103,15 @@ if (isset($files)) {
 			$tr_class = "class=\"list_row_odd\"";
 		}
 		if (isTpl($j)) {
-			print "<TR $tr_class><TD valign=\"center\"><IMG SRC='/$ADMIN/img/icon/generic.gif' BORDER='0'>&nbsp;<A HREF='/$ADMIN/templates/edit_template.php?Path=" .encURL($listbasedir)."&Name=".encURL($j)."'>$j</A></TD>";
+			print "<TR $tr_class><TD valign=\"center\"><IMG SRC='".$Campsite["ADMIN_IMAGE_BASE_URL"]."/generic.gif' BORDER='0'>&nbsp;<A HREF='/$ADMIN/templates/edit_template.php?Path=" .encURL($listbasedir)."&Name=".encURL($j)."'>$j</A></TD>";
 		} else {
-			print "<TR $tr_class><TD><IMG SRC='/$ADMIN/img/icon/generic.gif' BORDER='0'> $j</TD>";
+			print "<TR $tr_class><TD><IMG SRC='".$Campsite["ADMIN_IMAGE_BASE_URL"]."/generic.gif' BORDER='0'> $j</TD>";
 		}
 		if ($User->hasPermission("ManageTempl")){
-			print '<TD ALIGN="CENTER"><A HREF="/'.$ADMIN.'/templates/dup.php?Path='.encURL($listbasedir).'&Name='.encURL($j).'"><IMG SRC="/'.$ADMIN.'/img/icon/duplicate.png" BORDER="0" ALT="'.getGS('Duplicate file').'" TITLE="'.getGS('Duplicate file').'"></A></TD>';
+			print '<TD ALIGN="CENTER"><A HREF="/'.$ADMIN.'/templates/dup.php?Path='.encURL($listbasedir).'&Name='.encURL($j).'"><IMG SRC="'.$Campsite["ADMIN_IMAGE_BASE_URL"].'/duplicate.png" BORDER="0" ALT="'.getGS('Duplicate file').'" TITLE="'.getGS('Duplicate file').'"></A></TD>';
 		}
 		if ($User->hasPermission("DeleteTempl")){
-			print '<TD ALIGN="CENTER"><A HREF="/'.$ADMIN.'/templates/del.php?What=1&Path='.encURL($listbasedir).'&Name='.encURL($j).'"><IMG SRC="/'.$ADMIN.'/img/icon/delete.png" BORDER="0" ALT="'.getGS('Delete file').'" TITLE="'.getGS('Delete file').'"></A></TD></TR>';
+			print '<TD ALIGN="CENTER"><A HREF="/'.$ADMIN.'/templates/del.php?What=1&Path='.encURL($listbasedir).'&Name='.encURL($j).'"><IMG SRC="'.$Campsite["ADMIN_IMAGE_BASE_URL"].'/delete.png" BORDER="0" ALT="'.getGS('Delete file').'" TITLE="'.getGS('Delete file').'"></A></TD></TR>';
 		} 
 	}
 }

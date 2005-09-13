@@ -106,7 +106,7 @@ B_LIST
 			<A HREF="edit.php?IdCateg=<?php p($IdCateg);?>&EdCateg=<?php  pgetVar($categ,'Id'); ?>"><?php  putGS("Change"); ?></A>
 		E_LIST_ITEM
 		B_LIST_ITEM(<*CENTER*>)
-			X_BUTTON(<*<?php  putGS('Delete topic $1',getHVar($categ,'Name')); ?>*>, <*icon/delete.png*>, <*topics/del.php?IdCateg=<?php p($IdCateg);?>&DelCateg=<?php  pgetVar($categ,'Id'); ?>*>)
+			X_BUTTON(<*<?php  putGS('Delete topic $1',getHVar($categ,'Name')); ?>*>, <*/delete.png*>, <*topics/del.php?IdCateg=<?php p($IdCateg);?>&DelCateg=<?php  pgetVar($categ,'Id'); ?>*>)
 		E_LIST_ITEM
 <?php  } ?>
     E_LIST_TR

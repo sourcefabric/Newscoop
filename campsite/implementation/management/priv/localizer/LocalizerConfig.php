@@ -43,8 +43,8 @@ $g_localizerConfig['FILE_ENCODING'] = 'UTF-8';
 
 // For the interface - the relative path (from DOCUMENT_ROOT)
 // of the icons directory
-global $ADMIN;
-$g_localizerConfig['ICONS_DIR'] = "/$ADMIN/img/icon";
+global $Campsite;
+$g_localizerConfig['ICONS_DIR'] = $Campsite['ADMIN_IMAGE_BASE_URL'];
 
 // The size of the input fields for the admin interface.
 $g_localizerConfig['INPUT_SIZE'] = 70;

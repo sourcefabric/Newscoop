@@ -37,7 +37,7 @@ if ($User->hasPermission('ManageIssue')) {
 		<P>
 		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 		<TR>
-			<TD><A HREF="add_new.php?Pub=<?php pencURL($Pub); ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/add.png" BORDER="0"></A></TD>
+			<TD><A HREF="add_new.php?Pub=<?php pencURL($Pub); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
 			<TD><A HREF="add_new.php?Pub=<?php  pencURL($Pub); ?>" ><B><?php  putGS("Add new issue"); ?></B></A></TD>
 		</TR>
 		</TABLE>
@@ -45,7 +45,7 @@ if ($User->hasPermission('ManageIssue')) {
 		<P>
 		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 		<TR>
-			<TD><A HREF="qadd.php?Pub=<?php  pencURL($Pub); ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/add.png" BORDER="0"></A></TD>
+			<TD><A HREF="qadd.php?Pub=<?php  pencURL($Pub); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
 			<TD><A HREF="qadd.php?Pub=<?php  pencURL($Pub); ?>" ><B><?php  putGS("Add new issue"); ?></B></A></TD>
 		</TR>
 		</TABLE>
@@ -117,14 +117,14 @@ foreach ($allIssues as $issue) {
 	</TD>
 <?php if ($User->hasPermission('Publish')) { ?>
 	<TD ALIGN="CENTER">
-		<A HREF="/<?php echo $ADMIN; ?>/issues/autopublish.php?Pub=<?php p($Pub); ?>&Issue=<?php p($issue->getIssueId()); ?>&Language=<?php p($issue->getLanguageId()); ?>"><img src="/<?php echo $ADMIN; ?>/img/icon/automatic_publishing.png" alt="<?php putGS("Scheduled Publishing"); ?>"  title="<?php putGS("Scheduled Publishing"); ?>" border="0"></A>
+		<A HREF="/<?php echo $ADMIN; ?>/issues/autopublish.php?Pub=<?php p($Pub); ?>&Issue=<?php p($issue->getIssueId()); ?>&Language=<?php p($issue->getLanguageId()); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/automatic_publishing.png" alt="<?php putGS("Scheduled Publishing"); ?>"  title="<?php putGS("Scheduled Publishing"); ?>" border="0"></A>
 	</TD>
 <?php } ?>
 	<TD ALIGN="CENTER">
-		<A HREF="/<?php echo $ADMIN; ?>/issues/translate.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($issue->getIssueId()); ?>&Language=<?php p($issue->getLanguageId()); ?>"><img src="/<?php echo $ADMIN; ?>/img/icon/translate.png" alt="<?php  putGS("Translate"); ?>" title="<?php  putGS("Translate"); ?>" border="0"></A>
+		<A HREF="/<?php echo $ADMIN; ?>/issues/translate.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($issue->getIssueId()); ?>&Language=<?php p($issue->getLanguageId()); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/translate.png" alt="<?php  putGS("Translate"); ?>" title="<?php  putGS("Translate"); ?>" border="0"></A>
 	</TD>
 	<TD ALIGN="CENTER">
-		<A HREF="/<?php echo $ADMIN; ?>/issues/edit.php?Pub=<?php p($Pub); ?>&Issue=<?php  p($issue->getIssueId()); ?>&Language=<?php p($issue->getLanguageId()); ?>"><img src="/<?php echo $ADMIN; ?>/img/icon/configure.png" alt="<?php  putGS("Configure"); ?>" title="<?php  putGS("Configure"); ?>"  border="0"></A>
+		<A HREF="/<?php echo $ADMIN; ?>/issues/edit.php?Pub=<?php p($Pub); ?>&Issue=<?php  p($issue->getIssueId()); ?>&Language=<?php p($issue->getLanguageId()); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/configure.png" alt="<?php  putGS("Configure"); ?>" title="<?php  putGS("Configure"); ?>"  border="0"></A>
 	</TD>
 <?php  } else { ?>
 	<TD ALIGN="RIGHT">
@@ -152,13 +152,13 @@ foreach ($allIssues as $issue) {
 	<?php  } ?>
 
 	<TD ALIGN="CENTER">
-		<A HREF="" ONCLICK="window.open('/<?php echo $ADMIN; ?>/issues/preview.php?Pub=<?php  p($Pub); ?>&Issue=<?php p($issue->getIssueId()); ?>&Language=<?php p($issue->getLanguageId()); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=yes, width=800, height=600'); return false"><img src="/<?php echo $ADMIN; ?>/img/icon/preview.png" alt="<?php  putGS("Preview"); ?>" title="<?php  putGS("Preview"); ?>" border="0"></A>
+		<A HREF="" ONCLICK="window.open('/<?php echo $ADMIN; ?>/issues/preview.php?Pub=<?php  p($Pub); ?>&Issue=<?php p($issue->getIssueId()); ?>&Language=<?php p($issue->getLanguageId()); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=yes, width=800, height=600'); return false"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/preview.png" alt="<?php  putGS("Preview"); ?>" title="<?php  putGS("Preview"); ?>" border="0"></A>
 	</TD>
 
 	<?php
     if ($User->hasPermission('DeleteIssue')) { ?> 
 		<TD ALIGN="CENTER">
-			<A HREF="/<?php echo $ADMIN; ?>/issues/do_del.php?Pub=<?php p($Pub); ?>&Issue=<?php  p($issue->getIssueId()); ?>&Language=<?php p($issue->getLanguageId()); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the issue $1?', htmlspecialchars($issue->getName())); ?>');"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/delete.png" BORDER="0" ALT="<?php  putGS('Delete issue $1', htmlspecialchars($issue->getName())); ?>" title="<?php  putGS('Delete issue $1', htmlspecialchars($issue->getName())); ?>"></A>
+			<A HREF="/<?php echo $ADMIN; ?>/issues/do_del.php?Pub=<?php p($Pub); ?>&Issue=<?php  p($issue->getIssueId()); ?>&Language=<?php p($issue->getLanguageId()); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the issue $1?', htmlspecialchars($issue->getName())); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php  putGS('Delete issue $1', htmlspecialchars($issue->getName())); ?>" title="<?php  putGS('Delete issue $1', htmlspecialchars($issue->getName())); ?>"></A>
 		</TD>
 	<?php  } ?>
 	</TR>

@@ -26,7 +26,7 @@ $lpp = Input::Get('lpp', 'int', 20);
 </table>
 
 <?php if ($canManage) { ?>
-<p><table border="0" cellspacing="0" cellpadding="1"><tr><td><a href="add.php?Back=<?php print urlencode($_SERVER['REQUEST_URI']); ?>" ><img src="/admin/img/icon/add.png" border="0"></a></td><td><a href="add.php?Back=<?php print urlencode($_SERVER['REQUEST_URI']); ?>"><b><?php putGS("Add new user type"); ?></b></a></td></tr></table>
+<p><table border="0" cellspacing="0" cellpadding="1"><tr><td><a href="add.php?Back=<?php print urlencode($_SERVER['REQUEST_URI']); ?>" ><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" border="0"></a></td><td><a href="add.php?Back=<?php print urlencode($_SERVER['REQUEST_URI']); ?>"><b><?php putGS("Add new user type"); ?></b></a></td></tr></table>
 <?php  } ?>
 
 <P><?php
@@ -58,7 +58,7 @@ if ($NUM_ROWS) {
 		</td>
 		<td align="center">
 			<a href="/admin/u_types/do_del.php?UType=<?php pgetUVar($UTypes,'Name'); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the user type $1?', getVar($UTypes, 'Name')); ?>');">
-			<img src="/admin/img/icon/delete.png" border="0" alt="Delete user type <?php pgetHVar($UTypes,'Name'); ?>" title="Delete user type <?php pgetHVar($UTypes,'Name'); ?>"></a>
+			<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" border="0" alt="Delete user type <?php pgetHVar($UTypes,'Name'); ?>" title="Delete user type <?php pgetHVar($UTypes,'Name'); ?>"></a>
 		</td>
 	<?php  } ?>
 	</tr>

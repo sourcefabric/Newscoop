@@ -32,10 +32,10 @@ $imageNav =& new ImageNav(CAMPSITE_IMAGEARCHIVE_IMAGES_PER_PAGE, $view);
 // build the links for ordering (search results) //////////////////////
 if ($OrderDirection == 'DESC') {
 	$ReverseOrderDirection = "ASC";
-	$OrderSign = "<img src=\"/$ADMIN/img/icon/search_order_direction_down.png\" border=\"0\">";
+	$OrderSign = "<img src=\"".$Campsite["ADMIN_IMAGE_BASE_URL"]."/search_order_direction_down.png\" border=\"0\">";
 } else {
 	$ReverseOrderDirection = "DESC";
-	$OrderSign = "<img src=\"/$ADMIN/img/icon/search_order_direction_up.png\" border=\"0\">";
+	$OrderSign = "<img src=\"".$Campsite["ADMIN_IMAGE_BASE_URL"]."/search_order_direction_up.png\" border=\"0\">";
 }
 
 $IdHref  = 'index.php?order_by=id'
@@ -117,7 +117,7 @@ $uploadedByUsers =& Image::GetUploadUsers();
 <?php
 if ($User->hasPermission('AddImage')) { ?>
     <td>
-    	<A HREF="add.php?<?php echo $imageNav->getSearchLink(); ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/add.png" BORDER="0" alt="<?php  putGS('Add new image'); ?>"></A>
+    	<A HREF="add.php?<?php echo $imageNav->getSearchLink(); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0" alt="<?php  putGS('Add new image'); ?>"></A>
     </TD>
     <TD style="padding-left: 3px;">
     	<A HREF="add.php?<?php echo $imageNav->getSearchLink(); ?>"><B><?php  putGS('Add new image'); ?></B></A>
@@ -125,7 +125,7 @@ if ($User->hasPermission('AddImage')) { ?>
 <?php } ?>
     
 	<td class="action_link_container">
-		<a href="index.php?view=<?php echo $view; ?>"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/reset.png" BORDER="0" ALT="<?php putGS("Reset search conditions"); ?>"></a>
+		<a href="index.php?view=<?php echo $view; ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/reset.png" BORDER="0" ALT="<?php putGS("Reset search conditions"); ?>"></a>
 	</td>
 	<td style="padding-left: 3px;">
 		<a href="index.php?view=<?php echo $view; ?>"><b><?php echo putGS('Reset search conditions'); ?></b></a>
@@ -134,19 +134,19 @@ if ($User->hasPermission('AddImage')) { ?>
 	<td style="padding-left: 40px;">&nbsp;</td>
 	<td><B><?php putGS('View', 'View'); ?>:</b></td>
 	<td class="action_link_container">
-		<A HREF="index.php?<?php echo $imageNav->getSearchLink(); ?>&view=thumbnail"><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" alt="<?php  putGS('Thumbnail'); ?>"></A>
+		<A HREF="index.php?<?php echo $imageNav->getSearchLink(); ?>&view=thumbnail"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/tol.gif" BORDER="0" alt="<?php  putGS('Thumbnail'); ?>"></A>
 	</TD>
 	<TD>
 		<A HREF="index.php?<?php echo $imageNav->getSearchLink(); ?>&view=thumbnail"><B><?php putGS('Thumbnail'); ?></B></A>
 	</TD>	
 	<td class="action_link_container">
-		<A HREF="index.php?<?php echo $imageNav->getSearchLink(); ?>&view=gallery"><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" alt="<?php  putGS('Gallery'); ?>"></A>
+		<A HREF="index.php?<?php echo $imageNav->getSearchLink(); ?>&view=gallery"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/tol.gif" BORDER="0" alt="<?php  putGS('Gallery'); ?>"></A>
 	</TD>
 	<TD>
 		<A HREF="index.php?<?php echo $imageNav->getSearchLink(); ?>&view=gallery"><B><?php putGS('Gallery'); ?></B></A>
 	</TD>
 	<td class="action_link_container">
-		<A HREF="index.php?<?php echo $imageNav->getSearchLink(); ?>&view=flat"><IMG SRC="/<?php echo $ADMIN; ?>/img/tol.gif" BORDER="0" alt="<?php  putGS('Text only'); ?>"></A>
+		<A HREF="index.php?<?php echo $imageNav->getSearchLink(); ?>&view=flat"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/tol.gif" BORDER="0" alt="<?php  putGS('Text only'); ?>"></A>
 	</TD>
 	<TD>
 		<A HREF="index.php?<?php echo $imageNav->getSearchLink(); ?>&view=flat"><B><?php  putGS('Text only'); ?></B></A>

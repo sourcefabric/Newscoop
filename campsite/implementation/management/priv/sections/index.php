@@ -33,7 +33,7 @@ if ($User->hasPermission('ManageSection')) { ?>
 <P>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 <TR>
-	<TD><A HREF="add.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>" ><IMG SRC="/admin/img/icon/add.png" BORDER="0"></A></TD>
+	<TD><A HREF="add.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
 	<TD><A HREF="add.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>" ><B><?php  putGS("Add new section"); ?></B></A></TD>
 </TR>
 </TABLE>
@@ -78,19 +78,19 @@ if (count($allSections) > 0) {
 		
 		<?php  if ($User->hasPermission('ManageSection')) { ?>
 		<TD ALIGN="CENTER">
-			<A HREF="/<?php p($ADMIN); ?>/sections/edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($section->getIssueId()); ?>&Section=<?php p($section->getSectionId()); ?>&Language=<?php  p($section->getLanguageId()); ?>"><img src="/<?php echo $ADMIN; ?>/img/icon/configure.png" alt="<?php  putGS("Configure"); ?>" title="<?php  putGS("Configure"); ?>" border="0"></A>
+			<A HREF="/<?php p($ADMIN); ?>/sections/edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($section->getIssueId()); ?>&Section=<?php p($section->getSectionId()); ?>&Language=<?php  p($section->getLanguageId()); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/configure.png" alt="<?php  putGS("Configure"); ?>" title="<?php  putGS("Configure"); ?>" border="0"></A>
 		</TD>
 		<?php 	} ?>
 		
 		<?php if ($User->hasPermission('ManageSection') && $User->hasPermission('AddArticle')) { ?>
 		<TD ALIGN="CENTER">
-			<A HREF="/<?php p($ADMIN);?>/sections/duplicate.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php p($section->getSectionId()); ?>&Language=<?php  p($Language); ?>"><img src="/<?php echo $ADMIN; ?>/img/icon/duplicate.png" alt="<?php putGS('Duplicate'); ?>" title="<?php putGS('Duplicate'); ?>" border="0"></A>
+			<A HREF="/<?php p($ADMIN);?>/sections/duplicate.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php p($section->getSectionId()); ?>&Language=<?php  p($Language); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/duplicate.png" alt="<?php putGS('Duplicate'); ?>" title="<?php putGS('Duplicate'); ?>" border="0"></A>
 		</TD>
 		<?php } ?>
 		
 		<?php if ($User->hasPermission('DeleteSection')) { ?>
 		<TD ALIGN="CENTER">
-			<A HREF="/<?php p($ADMIN); ?>/sections/del.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($section->getIssueId()); ?>&Section=<?php p($section->getSectionId()); ?>&Language=<?php  p($section->getLanguageId()); ?>&SectOffs=<?php p($SectOffs); ?>"><IMG SRC="/admin/img/icon/delete.png" BORDER="0" ALT="<?php putGS('Delete section $1', htmlspecialchars($section->getName())); ?>" TITLE="<?php  putGS('Delete section $1', htmlspecialchars($section->getName())); ?>"></A>
+			<A HREF="/<?php p($ADMIN); ?>/sections/del.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($section->getIssueId()); ?>&Section=<?php p($section->getSectionId()); ?>&Language=<?php  p($section->getLanguageId()); ?>&SectOffs=<?php p($SectOffs); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php putGS('Delete section $1', htmlspecialchars($section->getName())); ?>" TITLE="<?php  putGS('Delete section $1', htmlspecialchars($section->getName())); ?>"></A>
 		</TD>
 		<?php  } ?>
 	</TR>

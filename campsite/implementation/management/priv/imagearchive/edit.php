@@ -57,7 +57,7 @@ $articles =& ArticleImage::GetArticlesThatUseImage($ImageId);
 <table>
 <tr>
 	<td>
-		<img src="/<?php p($ADMIN); ?>/img/icon/back.png" border="0">
+		<img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]); ?>/back.png" border="0">
 	<td>
 	<td class="action_link">
 		<a href="index.php?<?php p($imageNav->getSearchLink()); ?>"><?php putGS('Back to image archive'); ?></a>

@@ -71,7 +71,7 @@ selectLanguageFile("/", "locals");
 <table border="0" cellspacing="0" cellpadding="1" width="100%" >
 <tr>
 	<td align="center" style="padding-top: 50px;">
-		<img src="/<?php echo $ADMIN; ?>/img/sign_big.gif" border="0">
+		<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/sign_big.gif" border="0">
 	</td>
 </tr>
 </table>

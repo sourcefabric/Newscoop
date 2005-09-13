@@ -85,7 +85,7 @@
 				<input type="hidden" name="Article" value="<?php p($Article); ?>">
         		<input type="hidden" name="ImageId" value="<?php echo $image['id']; ?>">
             	<TD ALIGN="CENTER">
-					<input type="image" src="/<?php echo $ADMIN; ?>/img/icon/add.png"></td>
+					<input type="image" src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png"></td>
               	</TD>
            		</form>
             	<?php

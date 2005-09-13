@@ -34,7 +34,7 @@ if ($validUser) {
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" align="center">
 <TR>
 	<TD align="center" style="padding-top: 50px;">
-		<IMG SRC="/<?php echo $ADMIN; ?>/img/sign_big.gif" BORDER="0">
+		<IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/sign_big.gif" BORDER="0">
 	</TD>
 </TR>
 </TABLE>

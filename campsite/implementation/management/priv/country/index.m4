@@ -121,7 +121,7 @@ if ($dca != 0) { ?>
 	<?php  }
 	if ($dca != 0) { ?>
 		B_LIST_ITEM(<*CENTER*>)
-			X_BUTTON(<*Delete country <?php  pgetHVar($q_countries,'Name'); ?>*>, <*icon/x.gif*>, <*country/del.php?Code=<?php  encURL(pgetUVar($q_countries,'Code')); ?>&Language=<?php  pgetUVar($q_countries,'IdLanguage'); ?>*>)
+			X_BUTTON(<*Delete country <?php  pgetHVar($q_countries,'Name'); ?>*>, <*/x.gif*>, <*country/del.php?Code=<?php  encURL(pgetUVar($q_countries,'Code')); ?>&Language=<?php  pgetUVar($q_countries,'IdLanguage'); ?>*>)
 		E_LIST_ITEM
 	<?php  } ?>
 	E_LIST_TR

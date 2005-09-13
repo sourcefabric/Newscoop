@@ -23,12 +23,12 @@ if ($canManage) {
 	$addLink = "edit.php?" . get_user_urlparams(0, true, true);
 ?>
 	<td><a href="<?php echo $addLink; ?>">
-		<img src="/admin/img/icon/add.png" border="0">
+		<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" border="0">
 		<b><?php putGS("Add new user account"); ?></b></a></td>
 <?php } ?>
 	<td style="padding-left: 10px;">
 		<a href="?<?php echo get_user_urlparams(0, false, true); ?>">
-		<img src="/admin/img/icon/reset.png" border="0">
+		<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/reset.png" border="0">
 		<B><?php putGS("Reset search conditions"); ?></b></a></td>
 </tr>
 </table>
@@ -192,7 +192,7 @@ for($loop = 0; $loop < $last; $loop++) {
 	if ($canDelete) { ?>
 		<td align="center">
 			<a href="/<?php echo $ADMIN; ?>/users/do_del.php?<?php echo get_user_urlparams($userId, false, true); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the user account $1 ?', $row['UName']); ?>');">
-				<img src="/<?php echo $ADMIN; ?>/img/icon/delete.png" border="0" ALT="<?php putGS('Delete user $1', $row['UName']); ?>" title="<?php putGS('Delete user $1', $row['UName']); ?>">
+				<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" border="0" ALT="<?php putGS('Delete user $1', $row['UName']); ?>" title="<?php putGS('Delete user $1', $row['UName']); ?>">
 			</a>
 		</td>
 <?php

@@ -153,7 +153,7 @@ if (!$isNewUser) {
 <tr id="password_show_link">
 	<td style="padding-left: 6px; padding-top: 6px;">
 		<a href="javascript: void(0);" onclick="ToggleRowVisibility('password_dialog'); ToggleRowVisibility('password_hide_link'); ToggleRowVisibility('password_show_link'); ToggleBoolValue('set_password');">
-			<img src="/admin/img/icon/viewmag+.png" id="my_icon" border="0" align="center">
+			<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/viewmag+.png" id="my_icon" border="0" align="center">
 			<?php putGS("Click here to change password"); ?>
 		</a>
 	</td>
@@ -161,7 +161,7 @@ if (!$isNewUser) {
 <tr id="password_hide_link" style="display: none;">
 	<td style="padding-left: 6px; padding-top: 6px;">
 		<a href="javascript: void(0);" onclick="ToggleRowVisibility('password_dialog'); ToggleRowVisibility('password_hide_link'); ToggleRowVisibility('password_show_link'); ToggleBoolValue('set_password');">
-			<img src="/admin/img/icon/viewmag-.png" id="my_icon" border="0" align="center">
+			<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/viewmag-.png" id="my_icon" border="0" align="center">
 			<?php putGS("Click here to leave password unchanged"); ?>
 		</a>
 	</td>
@@ -202,7 +202,7 @@ if (!$isNewUser) {
 <tr id="user_details_show_link">
 	<td style="padding-left: 6px; padding-top: 6px;">
 		<a href="javascript: void(0);" onclick="ToggleRowVisibility('user_details_dialog'); ToggleRowVisibility('user_details_hide_link'); ToggleRowVisibility('user_details_show_link');">
-			<img src="/admin/img/icon/viewmag+.png" id="my_icon" border="0" align="center">
+			<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/viewmag+.png" id="my_icon" border="0" align="center">
 			<?php putGS("Show more user details"); ?>
 		</a>
 	</td>
@@ -210,7 +210,7 @@ if (!$isNewUser) {
 <tr id="user_details_hide_link" style="display: none;">
 	<td style="padding-left: 6px; padding-top: 6px;">
 		<a href="javascript: void(0);" onclick="ToggleRowVisibility('user_details_dialog'); ToggleRowVisibility('user_details_hide_link'); ToggleRowVisibility('user_details_show_link');">
-			<img src="/admin/img/icon/viewmag-.png" id="my_icon" border="0" align="center">
+			<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/viewmag-.png" id="my_icon" border="0" align="center">
 			<?php putGS("Hide user details"); ?>
 		</a>
 	</td>
@@ -357,7 +357,7 @@ foreach ($user_types as $index=>$user_type) {
 <tr id="rights_show_link">
 	<td style="padding-left: 6px; padding-top: 6px; padding-right: 6px;">
 		<a href="javascript: void(0);" onclick="ToggleRowVisibility('rights_dialog'); ToggleRowVisibility('user_type_dialog'); ToggleRowVisibility('rights_hide_link'); ToggleRowVisibility('rights_show_link'); ToggleBoolValue('customize_rights');">
-			<img src="/admin/img/icon/viewmag+.png" id="my_icon" border="0" align="center">
+			<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/viewmag+.png" id="my_icon" border="0" align="center">
 			<?php putGS("Click here to customize user permissions"); ?>
 		</a>
 	</td>
@@ -365,7 +365,7 @@ foreach ($user_types as $index=>$user_type) {
 <tr id="rights_hide_link" style="display: none;">
 	<td style="padding-left: 6px; padding-top: 6px; padding-right: 6px;">
 		<a href="javascript: void(0);" onclick="ToggleRowVisibility('rights_dialog'); ToggleRowVisibility('user_type_dialog'); ToggleRowVisibility('rights_hide_link'); ToggleRowVisibility('rights_show_link'); ToggleBoolValue('customize_rights');">
-			<img src="/admin/img/icon/viewmag-.png" id="my_icon" border="0" align="center">
+			<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/viewmag-.png" id="my_icon" border="0" align="center">
 			<?php putGS("Click here to use existing user type permissions (discard customization)"); ?>
 		</a>
 	</td>

@@ -87,7 +87,7 @@ if ($articleObj->getPublished() != 'N') {
 	<td>
 		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 		<TR>
-			<TD><A HREF="edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>" ><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/back.png" BORDER="0"></A></TD>
+			<TD><A HREF="edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/back.png" BORDER="0"></A></TD>
 			<TD><A HREF="edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>" ><B><?php  putGS('Back to Edit Article'); ?></B></A></TD>
 		</TR>
 		</TABLE>
@@ -226,7 +226,7 @@ if ($articleObj->getPublished() != 'N') {
 		</TD>
 		
 		<TD ALIGN="CENTER">
-			<A HREF="/<?php echo $ADMIN; ?>/articles/autopublish_del.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php p($Section); ?>&Article=<?php p($Article); ?>&Language=<?php p($Language); ?>&sLanguage=<?php p($sLanguage); ?>&publish_time=<?php echo $url_publish_time; ?>&Back=<?php p(urlencode($BackLink)); ?>" onclick="return confirm('<?php putGS("Are you sure you want to delete this scheduled action?"); ?>');"><IMG SRC="/<?php echo $ADMIN; ?>/img/icon/x.gif" BORDER="0" ALT="<?php putGS('Delete'); ?>"></A>
+			<A HREF="/<?php echo $ADMIN; ?>/articles/autopublish_del.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php p($Section); ?>&Article=<?php p($Article); ?>&Language=<?php p($Language); ?>&sLanguage=<?php p($sLanguage); ?>&publish_time=<?php echo $url_publish_time; ?>&Back=<?php p(urlencode($BackLink)); ?>" onclick="return confirm('<?php putGS("Are you sure you want to delete this scheduled action?"); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/x.gif" BORDER="0" ALT="<?php putGS('Delete'); ?>"></A>
 		</TD>
 	</TR>
 	<?php

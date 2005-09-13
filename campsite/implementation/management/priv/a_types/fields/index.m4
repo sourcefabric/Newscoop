@@ -84,7 +84,7 @@ B_LIST
 		E_LIST_ITEM
 	<?php  if ($mata != 0) { ?>
 		B_LIST_ITEM(<*CENTER*>)
-			X_BUTTON(<*<?php  putGS('Delete field $1',encHTML($table)); ?>*>, <*icon/x.gif*>, <*a_types/fields/del.php?AType=<?php  print encURL($AType); ?>&Field=<?php  print encURL($table); ?>*>)
+			X_BUTTON(<*<?php  putGS('Delete field $1',encHTML($table)); ?>*>, <*/x.gif*>, <*a_types/fields/del.php?AType=<?php  print encURL($AType); ?>&Field=<?php  print encURL($table); ?>*>)
 		E_LIST_ITEM
 	<?php  } ?>
 	E_LIST_TR
