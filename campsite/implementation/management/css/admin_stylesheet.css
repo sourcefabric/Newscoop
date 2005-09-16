@@ -161,16 +161,17 @@ hr {
 }
 
 .breadcrumb {
-    color: #3c81a0;
+    color: #2F667F; /* #35738F;*/ /*#3c81a0;*/
 }
 
 .breadcrumb:visited {
-    color: #3c81a0;
+    color: #2F667F; /*#3c81a0;*/
 }
 
 .breadcrumb_active {
     color: #d95022;
 	font-weight: bold;
+	/*font-size: larger;*/
 }
 
 .breadcrumb_active:visited {

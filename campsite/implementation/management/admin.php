@@ -102,7 +102,7 @@ elseif (($extension == '.php') || ($extension == '')) {
 	$_top_menu = '';
 	if ($needs_menu) {
 		ob_start();
-		echo "<html><table width=\"100%\">\n<tr><td>\n";
+		echo "<html><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\">\n<tr><td>\n";
 		require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/menu.php");
 		echo "</td></tr>\n<tr><td>\n";
 		$_top_menu = ob_get_clean();

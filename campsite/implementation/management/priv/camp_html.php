@@ -181,6 +181,79 @@ function camp_html_content_top($p_title, $p_objArray, $p_includeLinks = true, $p
 	$issueObj = camp_array_get_value($p_objArray, 'Issue', null);
 	$sectionObj = camp_array_get_value($p_objArray, 'Section', null);
 	$articleObj = camp_array_get_value($p_objArray, 'Article', null);
+	
+	$breadcrumbs = array();
+	if (!is_null($publicationObj)) {
+	    $prompt =  getGS("Publication").":";
+	    //$strCrumbs .= camp_html_breadcrumb($prompt, "/$ADMIN/pub/", )
+	    $name = htmlspecialchars($publicationObj->getName());
+    	$breadcrumbs[] = array($prompt, "/$ADMIN/pub/", false);
+    	$breadcrumbs[] = array($name, "/$ADMIN/pub/edit.php?Pub=".$publicationObj->getPublicationId());
+	}
+	
+	if (!is_null($issueObj)) { 
+	    $prompt = getGS("Issue").":";
+    	$breadcrumbs[] = array($prompt, 
+    	       "/$ADMIN/issues/"
+    	       ."?Pub=".$issueObj->getPublicationId()
+    	       ."&Issue=".$issueObj->getIssueId()
+    	       ."&Language=".$issueObj->getLanguageId(),
+    	       false);
+	    $name = htmlspecialchars($issueObj->getName())." (".htmlspecialchars($issueObj->getLanguageName()).")";
+        $breadcrumbs[] = array($name, 
+    	       "/$ADMIN/issues/edit.php"
+    	       ."?Pub=".$issueObj->getPublicationId()
+    	       ."&Issue=".$issueObj->getIssueId()
+    	       ."&Language=".$issueObj->getLanguageId()); 
+	}
+	if (!is_null($sectionObj)) { 
+	    $prompt = getGS("Section").":";
+		$breadcrumbs[] = array($prompt, 
+		        "/$ADMIN/sections/"
+		        ."?Pub=".$sectionObj->getPublicationId()
+                ."&Issue=".$sectionObj->getIssueId()
+                ."&Language=".$sectionObj->getLanguageId()
+                ."&Section=".$sectionObj->getSectionId(),
+                false);
+	    $name = htmlspecialchars($sectionObj->getName());
+        $breadcrumbs[] = array($name, 
+                "/$ADMIN/sections/edit.php"
+                ."?Pub=".$sectionObj->getPublicationId()
+                ."&Issue=".$sectionObj->getIssueId()
+                ."&Language=".$sectionObj->getLanguageId()
+                ."&Section=".$sectionObj->getSectionId());
+	}
+	if (!is_null($articleObj)) {
+	    $prompt = getGS("Article").":";
+		$breadcrumbs[] = array($prompt, 
+                "/$ADMIN/articles/index.php"
+                ."?Pub=" . $articleObj->getPublicationId() 
+                ."&Issue=".$articleObj->getIssueId()
+                ."&Language=".$articleObj->getLanguageId()
+                ."&Section=".$articleObj->getSectionId()
+                ."&Article=".$articleObj->getArticleId()
+                ."&sLanguage=".$sectionObj->getLanguageId(),                
+                false);
+	    $name = htmlspecialchars($articleObj->getName())." (".htmlspecialchars($articleObj->getLanguageName()).")";
+        $breadcrumbs[] = array($name,
+                "/$ADMIN/articles/edit.php"
+                ."?Pub=" . $articleObj->getPublicationId() 
+                ."&Issue=".$articleObj->getIssueId()
+                ."&Language=".$articleObj->getLanguageId()
+                ."&Section=".$articleObj->getSectionId()
+                ."&Article=".$articleObj->getArticleId()
+                ."&sLanguage=".$sectionObj->getLanguageId());
+	}
+	$breadcrumbs[] = array($p_title, "");
+//	if (is_array($p_extraBreadcrumbs)) {
+//	    //print_r($p_extraBreadcrumbs);
+//		foreach ($p_extraBreadcrumbs as $text => $link) {
+//		    $breadcrumbs[] = array($text => $link);
+//		}
+//	}
+	echo "<pre>";
+	//print_r($breadcrumbs);
+	echo "</pre>";
 	?>
 <HEAD>
 	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
@@ -194,84 +267,85 @@ function camp_html_content_top($p_title, $p_objArray, $p_includeLinks = true, $p
 </HEAD>
 
 <BODY>
-
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
-<TR>
-	<TD class="page_title">
-	    <?php p($p_title); ?>
-	</TD>
-<?php 
-if ($p_includeLinks) {
-?>
-	<TD ALIGN="right">
-		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
-		<TR>
-			<?php 
-			if (is_array($p_extraBreadcrumbs)) {
-				foreach ($p_extraBreadcrumbs as $text => $link) {
-					?>
-					<TD><A HREF="<?php echo $link; ?>" class="breadcrumb" ><?php p($text); ?></A></TD>
-					<td class="breadcrumb_separator">&nbsp;</td>
-					<?php
-				}
-			}
-			if (!is_null($articleObj)) {
-			?>
-			<!-- "Articles" Link -->
-			<TD><A HREF="/<?php echo $ADMIN; ?>/articles/?Pub=<?php p($sectionObj->getPublicationId()); ?>&Issue=<?php p($sectionObj->getIssueId()); ?>&Language=<?php p($issueObj->getLanguageId()); ?>&Section=<?php p($sectionObj->getSectionId()); ?>" class="breadcrumb" ><?php putGS("Articles");  ?></A></TD>
-			<td class="breadcrumb_separator">&nbsp;</td>
-			<?php
-			}
-			if (!is_null($sectionObj)) { ?>
-			<!-- "Sections" link -->
-			<TD><A HREF="/<?php echo $ADMIN; ?>/sections/?Pub=<?php p($issueObj->getPublicationId()); ?>&Issue=<?php p($issueObj->getIssueId()); ?>&Language=<?php p($issueObj->getLanguageId()); ?>" class="breadcrumb"><?php putGS("Sections"); ?></A></TD>
-			<td class="breadcrumb_separator">&nbsp;</td>
-			<?PHP
-			}
-			if (!is_null($issueObj)) { ?>
-			<!-- "Issues" Link -->
-			<TD><A HREF="/<?php echo $ADMIN; ?>/issues/?Pub=<?php p($issueObj->getPublicationId()); ?>" class="breadcrumb"><?php putGS("Issues"); ?></A></TD>
-			<td class="breadcrumb_separator">&nbsp;</td>
-			<?PHP
-			}
-			?>
-			<!-- "Publications" Link -->
-			<TD><A HREF="/<?php echo $ADMIN; ?>/pub/" class="breadcrumb" ><?php  putGS("Publications");  ?></A></TD>
-		</TR>
-		</TABLE>
-	</TD>
-<?php
-} // if ($p_includeLinks)
-?>
-</TR>
-</TABLE>
-
-<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="1" WIDTH="100%" class="current_location_table">
-<TR>
-	<?php if (!is_null($publicationObj)) { ?>
-	<TD ALIGN="RIGHT" NOWRAP VALIGN="TOP" width="1%" class="current_location_title">&nbsp;<?php putGS("Publication"); ?>:</TD>
-	<TD VALIGN="TOP" class="current_location_content"><?php print htmlspecialchars($publicationObj->getName()); ?></TD>
 	<?php
-	}
-	if (!is_null($issueObj)) { ?>
-	<TD ALIGN="RIGHT" NOWRAP VALIGN="TOP" width="1%" class="current_location_title">&nbsp;<?php putGS("Issue"); ?>:</TD>
-	<TD VALIGN="TOP" class="current_location_content"><?php print $issueObj->getIssueId(); ?>. <?php  print htmlspecialchars($issueObj->getName()); ?> (<?php print htmlspecialchars($issueObj->getLanguageName()) ?>)</TD>
-	<?PHP
-	}
-	if (!is_null($sectionObj)) { ?>
-	<TD ALIGN="RIGHT" NOWRAP VALIGN="TOP" width="1%" class="current_location_title">&nbsp;<?php putGS("Section"); ?>:</TD>
-	<TD VALIGN="TOP" class="current_location_content"><?php print $sectionObj->getSectionId(); ?>. <?php  print htmlspecialchars($sectionObj->getName()); ?></TD>
-	<?PHP
-	}
-	if (!is_null($articleObj)) { ?>
-	<TD ALIGN="RIGHT" NOWRAP VALIGN="TOP" width="1%" class="current_location_title">&nbsp;<?php putGS("Article"); ?>:</TD>
-	<TD VALIGN="TOP" class="current_location_content"><?php print htmlspecialchars($articleObj->getTitle()); ?> (<?php print htmlspecialchars($articleObj->getLanguageName()); ?>)</TD>
-	<?PHP
-	}
-	?>
-</TR>
-</TABLE>
-	<?php
+	echo camp_html_breadcrumbs($breadcrumbs);
 } // fn camp_html_content_top
 
+
+/**
+ * Create a set of breadcrumbs.
+ *
+ * @param array $p_crumbs
+ *		An array in the form 'text' => 'link' for breadcrumbs.
+ *      Farthest-away link comes first, increasing in specificity.
+ *
+ * @return string
+ */
+function camp_html_breadcrumbs($p_crumbs) 
+{
+    $lastCrumb = array_pop($p_crumbs);
+    $str = '<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" bgcolor="#D5E2EE" width="100%"><TR><TD align="left" style="border-bottom: 1px solid black; border-top: 1px solid #8BAED1; padding-bottom: 2px; padding-top: 2px; padding-left: 1.3em; ">';
+	//$str .= '<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0"><TR>';
+    $str .= "<span style='padding-right: 1em; font-weight: bold; color: #2F2F2F;'>".getGS("You are here:")."</span>";
+    $tmpCrumbs = array();
+	foreach ($p_crumbs as $crumb) {
+	    if (count($crumb) == 2) {
+    	    $str .= camp_html_breadcrumb($crumb[0], $crumb[1]);
+	    }
+	    else {
+    	    $str .= camp_html_breadcrumb($crumb[0], $crumb[1], $crumb[2]);
+	    }
+	}
+//    $numCrumbs = count($p_crumbs);
+//	for ($i = 0; i < ($numCrumbs - 1); $i++) {
+//	    $str .= camp_html_breadcrumb($text, $link) . "<TD CLASS='breadcrumb_separator'>&nbsp;</TD>";
+//	}
+	//print_r($lastCrumb);
+    $str .= camp_html_breadcrumb($lastCrumb[0], $lastCrumb[1], false, true);
+    //$str .= '</TR>';
+    //$str .= '</TABLE>';
+    $str .= '</TD></TR>';
+    $str .= '</TABLE>';
+    return $str;
+} // fn camp_html_breadcrumbs
+
+
+/**
+ * Create one breadcrumb.
+ *
+ * @param string $p_text
+ * @param mixed $p_link
+ * @param boolean $p_active
+ * @param boolean $p_separator
+ * @return string
+ */
+function camp_html_breadcrumb($p_text, $p_link, $p_separator = true, $p_active = false) {
+    $tmpStr = '';
+    if ($p_active) {
+        $class = "breadcrumb_active";
+    }
+    else {
+        $class = "breadcrumb";        
+    }
+    if ($p_separator) {
+        $tmpStr .= "<span>";
+    }
+    else {
+        $tmpStr .= "<span class='breadcrumb_intra_separator'>";
+    }
+	if ($p_link != "") {
+        $tmpStr .= "<A HREF='$p_link' class='$class'>$p_text</A>";
+	}
+	else {
+	    $tmpStr .= "<SPAN CLASS='$class'>$p_text</SPAN>";
+	}
+	$tmpStr .="</span>";
+	if ($p_separator) {
+        $tmpStr .= "<span CLASS='breadcrumb_separator'>&nbsp;</span>";
+	}
+	else {
+        $tmpStr .= "<span>&nbsp;</spanTD>";	    
+	}
+    return $tmpStr;
+} // fn camp_html_breadcrumb
 ?>

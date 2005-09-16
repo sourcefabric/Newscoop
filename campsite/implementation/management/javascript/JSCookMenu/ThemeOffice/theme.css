@@ -55,7 +55,7 @@
 {
 	/*background-color:	#EFEBDE;*/
 	background-color: #d5e2ee;
-	border: 1px solid #8baed1;
+	border: 1px solid #d5e2ee; /*#8baed1;*/
 }
 
 .ThemeOfficeMainItemHover,.ThemeOfficeMainItemActive

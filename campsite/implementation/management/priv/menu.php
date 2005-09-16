@@ -31,7 +31,6 @@ $showUserMenu = ($User->hasPermission("ManageUsers")
 	|| $User->hasPermission("ManageUserTypes")
 	|| $User->hasPermission("ManageReaders"));
 	
-//$iconTemplateStr = '<img src="/admin/img/icon/%s" align="middle" style="padding-bottom: 3px;" width="22" height="22" />';
 $iconTemplateStr = '<img src="'.$Campsite['ADMIN_IMAGE_BASE_URL'].'/%s" align="middle" style="padding-bottom: 3px;" width="22" height="22" />';
 
 DynMenuItem::SetMenuType("DynMenuItem_JsCook");
@@ -254,18 +253,6 @@ $menu_item =& DynMenuItem::Create(getGS("About"), $Campsite['ABOUT_URL'],
 $menu_help->addItem($menu_item);
 
 
-//$issues = array();
-//$sections = array();
-//foreach ($publications as $publication) {
-//	$issues[$publication->getPublicationId()] =& 
-//		Issue::GetIssues($publication->getPublicationId(), null, null, null, 
-//			array('ORDER BY'=>array('Number'=>'DESC'), 'LIMIT' => '5'));
-//	foreach ($issues[$publication->getPublicationId()] as $issue) {
-//		$sections[$issue->getPublicationId()][$issue->getIssueId()][$issue->getLanguageId()] = 
-//			Section::GetSections($issue->getPublicationId(), 
-//				$issue->getIssueId(), $issue->getLanguageId());
-//	}
-//}
 ?>
 <HEAD>
     <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -277,17 +264,20 @@ $menu_help->addItem($menu_item);
     <?php echo $menu_root->createMenu("myMenu"); ?>
 	<TITLE>Campsite <?php p($Campsite['VERSION']); ?></TITLE>
 </HEAD>
-
-<BODY>
-<table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-bottom: 2px solid #D5E2EE;"> 
-<tr >
-	<td valign="top" align="left" width="70%" style="padding-top: 0px; ">
-		<table border="0" cellpadding="0" cellspacing="0">
+<BODY leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<table cellpadding="0" cellspacing="0" bgcolor="#8BAED1" width="100%">
+<tr>
+    <td style="padding-left: 13px; padding-top: 1px; padding-bottom: 2px;">
+        <a href="/<?php p($ADMIN) ?>/home.php"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/sign_big3.gif" BORDER="0" align="middle"></a>
+    </td>
+</tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-bottom: 2px solid #D5E2EE; padding-top: 4px;" bgcolor="#d5e2ee"> 
+<tr>
+	<td valign="top" align="left" width="70%">
+	   <table border="0" cellpadding="0" cellspacing="0">
 		<tr>
-			<td style="padding-left: 3px; padding-right: 10px; padding-top: 0px; padding-bottom: 2px; font-size: 14pt; font-weight: bold; color: black; font-style: Verdana;" align="left" valign="middle" nowrap>
-				<a href="/<?php p($ADMIN) ?>/home.php"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/sign_big.gif" BORDER="0" align="middle"></a>
-			</td>
-			<td style="padding-left: 20px; padding-top: 6px;" valign="top">
+			<td style="padding-left: 13px; padding-top: 0px; padding-bottom: 0px;" valign="top">
 			<DIV ID="myMenuID"></DIV>
 			<SCRIPT LANGUAGE="JavaScript"><!--
 				cmDraw ('myMenuID', myMenu, 'hbr', cmThemeOffice, 'ThemeOffice');
@@ -296,21 +286,15 @@ $menu_help->addItem($menu_item);
 		</tr>
 		</table>
 	</td>
-	<td align="right" valign="middle" width="30%">
-		<table cellpadding="0" cellspacing="0" width="100%" style="">
+	<td align="right" valign="bottom" width="30%" style="padding-bottom: 3px;">
+        <table cellpadding="0" cellspacing="0" width="100%" border="0">
 		<tr>
-			<td align="right" style="padding-top: 2px;">
-				<table cellpadding="0" cellspacing="0">
+			<td align="right" style="padding-top: 0px;">
+                <table cellpadding="0" cellspacing="0">
 				<TR>
-            		<td align="right" style="font-size: 8pt; padding-right: 5px; padding-top: 2px;" colspan="4">
-            			<?php putGS("Signed in: $1", "<b>".$User->getName()."</b>"); ?>
-            		</td>		
-					<td style="padding-left: 10px;">
-						<A HREF="/<?php p($ADMIN); ?>/logout.php"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/logout.png" width="22" height="22" border="0" alt="<?php putGS('Logout'); ?>"></a>
-					</td>
-					<td style="font-weight: bold; padding-left: 2px; padding-right: 10px;">
-						<A HREF="/<?php p($ADMIN); ?>/logout.php" style="color: black; text-decoration: none;"><?php putGS('Logout'); ?></a>
-					</td>
+            		<td align="right" style="font-size: 8pt; padding-right: 5px; padding-top: 0px;" colspan="4"><?php putGS("Signed in: $1", "<b>".$User->getName()."</b>"); ?></td>		
+					<td style="padding-left: 10px;"><A HREF="/<?php p($ADMIN); ?>/logout.php"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/logout.png" width="22" height="22" border="0" alt="<?php putGS('Logout'); ?>"></a></td>
+					<td style="font-weight: bold; padding-left: 2px; padding-right: 10px;"><A HREF="/<?php p($ADMIN); ?>/logout.php" style="color: black; text-decoration: none;"><?php putGS('Logout'); ?></a></td>
 				</tr>
 				</table>
 			</td>
