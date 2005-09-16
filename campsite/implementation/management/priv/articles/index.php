@@ -71,7 +71,7 @@ $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj,
 camp_html_content_top(getGS('Articles'), $topArray);
 ?>
 <P>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" WIDTH="100%">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0">
 <TR>
 <?php if ($User->hasPermission('AddArticle')) { ?>
 	<TD>
@@ -83,7 +83,7 @@ camp_html_content_top(getGS('Articles'), $topArray);
 		</TABLE>
 	</TD>
 <?php  } ?>
-	<TD ALIGN="RIGHT">
+	<TD ALIGN="left" style="padding-left: 20px;">
 		<FORM METHOD="GET" ACTION="index.php" NAME="">
 		<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<?php  p($Pub); ?>">
 		<INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<?php  p($Issue); ?>">
@@ -119,23 +119,23 @@ if ($numUniqueArticlesDisplayed > 0) {
 	$counter = 0;
 	$color = 0;
 ?>
-<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" WIDTH="100%" class="table_list">
+<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list">
 <TR class="table_list_header">
-	<TD ALIGN="LEFT" VALIGN="TOP"  ><?php  putGS("Name <SMALL>(click to edit)</SMALL>"); ?></TD>
-	<TD ALIGN="center" VALIGN="TOP" WIDTH="1%" ><?php  putGS("Type"); ?></TD>
-	<TD ALIGN="center" VALIGN="TOP" WIDTH="1%" ><?php  putGS("Language"); ?></TD>
-	<TD ALIGN="center" VALIGN="TOP" WIDTH="1%" ><?php  putGS("Status"); ?></TD>
+	<TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Name <SMALL>(click to edit)</SMALL>"); ?></TD>
+	<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Type"); ?></TD>
+	<!--<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Language"); ?></TD>-->
+	<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Status"); ?></TD>
 	<?php if ($User->hasPermission('Publish')) { ?>
-	<TD ALIGN="center" VALIGN="TOP" WIDTH="1%" ><?php  putGS("Order"); ?></TD>
-	<TD ALIGN="center" VALIGN="TOP" WIDTH="1%" ><?php  putGS("Scheduled Publishing"); ?></TD>
+	<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Order"); ?></TD>
+	<TD ALIGN="center" VALIGN="TOP"><?php  echo str_replace(' ', '<br>', getGS("Scheduled Publishing")); ?></TD>
 	<?php } ?>	
-	<TD ALIGN="center" VALIGN="TOP" WIDTH="1%" ><?php  putGS("Preview"); ?></TD>
+	<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Preview"); ?></TD>
 	<?php  if ($User->hasPermission('AddArticle')) { ?>
-	<TD ALIGN="center" VALIGN="TOP" WIDTH="1%" ><?php  putGS("Translate"); ?></TD>
-	<TD ALIGN="center" VALIGN="TOP" WIDTH="1%" ><?php  putGS("Duplicate"); ?></TD>
+	<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Translate"); ?></TD>
+	<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Duplicate"); ?></TD>
 	<?php  } ?>
 	<?php  if ($User->hasPermission('DeleteArticle')) { ?>
-	<TD ALIGN="center" VALIGN="TOP" WIDTH="1%" ><?php  putGS("Delete"); ?></TD>
+	<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Delete"); ?></TD>
 	<?php  } ?>	
 </TR>
 <?php 
@@ -187,17 +187,17 @@ foreach ($allArticles as $articleObj) {
 		// Can the user edit the article?
 		$userCanEdit = $articleObj->userCanModify($User);
 		if ($userCanEdit) { ?>
-		<A HREF="/<?php echo $ADMIN; ?>/articles/edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($articleObj->getArticleId()); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php p($articleObj->getLanguageId()); ?>"><?php } ?><?php  p(htmlspecialchars($articleObj->getTitle())); ?>&nbsp;<?php if ($userCanEdit) { ?></A><?php } ?>
+		<A HREF="/<?php echo $ADMIN; ?>/articles/edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($articleObj->getArticleId()); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php p($articleObj->getLanguageId()); ?>"><?php } ?><?php  p(htmlspecialchars($articleObj->getTitle())); ?>&nbsp;<?php if ($userCanEdit) { ?></A><?php } ?> (<?php p(htmlspecialchars($articleObj->getLanguageName())); ?>)
 		</TD>
 		<TD ALIGN="RIGHT">
 			<?php p(htmlspecialchars($articleObj->getType()));  ?>
 		</TD>
 
-		<TD>
+		<!--<TD>
 			<?php
 			p(htmlspecialchars($articleObj->getLanguageName())); 
 			?>
-		</TD>
+		</TD>-->
 		<TD ALIGN="CENTER">
 			<?php 
 			$statusLink = "<A HREF=\"/$ADMIN/articles/status.php?Pub=". $Pub

@@ -45,19 +45,19 @@ if (count($allSections) > 0) {
 	$color=0;
 ?>
 
-<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" WIDTH="100%" class="table_list">
+<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list">
 <TR class="table_list_header">
-	<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%"><?php  putGS("Nr"); ?></TD>
+	<TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Nr"); ?></TD>
 	<TD ALIGN="LEFT" VALIGN="TOP"><?php putGS("Name<BR><SMALL>(click to see articles)</SMALL>"); ?></TD>
 	<TD ALIGN="LEFT" VALIGN="TOP"><?php putGS("URL Name"); ?></TD>
 	<?php if ($User->hasPermission('ManageSection')) { ?>
-	<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%"><?php  putGS("Configure"); ?></TD>
+	<TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Configure"); ?></TD>
 	<?php } ?>
 	<?php if ($User->hasPermission('ManageSection') && $User->hasPermission('AddArticle')) { ?>
-	<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%"><?php  putGS("Duplicate"); ?></TD>
+	<TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Duplicate"); ?></TD>
 	<?php } ?>
 	<?php if($User->hasPermission('DeleteSection')) { ?>
-	<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%"><?php  putGS("Delete"); ?></TD>
+	<TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Delete"); ?></TD>
 	<?php } ?>
 </TR>
 <?php 

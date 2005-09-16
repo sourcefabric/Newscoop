@@ -82,7 +82,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/db_connect.php");
     <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
     <TR>
     	<TD>
-    		<A HREF="add.php?Back=<?php p(urlencode($_SERVER['REQUEST_URI'])); ?>"><IMG SRC="/<?php p($ADMIN); ?>/img/icon/add.png" BORDER="0"></A>
+    		<A HREF="add.php?Back=<?php p(urlencode($_SERVER['REQUEST_URI'])); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A>
     	</TD>
     	<TD>
     		<A HREF="add.php?Back=<?php p(urlencode($_SERVER['REQUEST_URI'])); ?>"><B><?php  putGS("Add new publication"); ?></B></A>
@@ -104,15 +104,15 @@ require_once($_SERVER['DOCUMENT_ROOT']."/db_connect.php");
     $nr= $NUM_ROWS;
     $i= $lpp;
     $color= 0;
-?><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" WIDTH="100%" class="table_list">
+?><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list">
     <TR class="table_list_header">
-        <TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("Name<BR><SMALL>(click to see issues)</SMALL>"); ?></B></TD>
-        <TD ALIGN="LEFT" VALIGN="TOP" WIDTH="20%" ><B><?php  putGS("Default Site Alias"); ?></B></TD>
-        <TD ALIGN="LEFT" VALIGN="TOP" WIDTH="20%" ><B><?php  putGS("Default Language"); ?></B></TD>
+        <TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Name<BR><SMALL>(click to see issues)</SMALL>"); ?></B></TD>
+        <TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Default Site Alias"); ?></B></TD>
+        <TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Default Language"); ?></B></TD>
     <?php  if ($mpa != 0) { ?>        <TD ALIGN="LEFT" VALIGN="TOP" WIDTH="20%" ><B><?php  putGS("URL Type"); ?></B></TD>
-        <TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Configure"); ?></B></TD>
+        <TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Configure"); ?></B></TD>
     <?php  }
-    if ($dpa != 0) { ?>        <TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Delete"); ?></B></TD>
+    if ($dpa != 0) { ?>        <TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Delete"); ?></B></TD>
     <?php  } ?>    </TR>
 <?php
     for($loop=0;$loop<$nr;$loop++) {
@@ -131,11 +131,11 @@ require_once($_SERVER['DOCUMENT_ROOT']."/db_connect.php");
             <?php  pgetHVar($publ,'URLType'); ?>&nbsp;
         </TD>
         <TD ALIGN="CENTER">
-            <A HREF="/admin/pub/edit.php?Pub=<?php  pgetUVar($publ,'Id'); ?>"><img src="/<?php echo $ADMIN; ?>/img/icon/configure.png" alt="<?php  putGS("Configure"); ?>" title="<?php  putGS("Configure"); ?>"  border="0"></A>
+            <A HREF="/<?php p($ADMIN); ?>/pub/edit.php?Pub=<?php  pgetUVar($publ,'Id'); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/configure.png" alt="<?php  putGS("Configure"); ?>" title="<?php  putGS("Configure"); ?>"  border="0"></A>
         </TD>
 <?php  }
     if ($dpa != 0) { ?>        <TD ALIGN="CENTER">
-            <A HREF="/admin/pub/del.php?Pub=<?php  pgetVar($publ,'Id'); ?>"><IMG SRC="/admin/img/icon/delete.png" BORDER="0" ALT="<?php  putGS('Delete publication $1',getHVar($publ,'Name')); ?>" TITLE="<?php  putGS('Delete publication $1',getHVar($publ,'Name')); ?>" ></A>
+            <A HREF="/<?php p($ADMIN); ?>/pub/del.php?Pub=<?php  pgetVar($publ,'Id'); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php  putGS('Delete publication $1',getHVar($publ,'Name')); ?>" TITLE="<?php  putGS('Delete publication $1',getHVar($publ,'Name')); ?>" ></A>
         </TD>
 <?php  } ?>    </TR>
 <?php

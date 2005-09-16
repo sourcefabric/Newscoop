@@ -62,8 +62,13 @@ class Section extends DatabaseObject {
 	 * @param string $p_name
 	 * @param string $p_shortName
 	 */
-	function create($p_name, $p_shortName) {
-	    return parent::create(array('Name' => $p_name, 'ShortName' => $p_shortName));
+	function create($p_name, $p_shortName, $p_columns = null) {
+	    if (!is_array($p_columns)) {
+	        $p_columns = array();
+	    }
+	    $p_columns['Name'] = $p_name;
+	    $p_columns['ShortName'] = $p_shortName;
+	    return parent::create($p_columns);
 	} // fn create
 	
 	
@@ -205,24 +210,28 @@ class Section extends DatabaseObject {
     	if (is_null($p_destIssueLanguageId)) {
     	   $p_destIssueLanguageId = $this->m_data['IdLanguage'];   
     	}
+    	if (is_null($p_destSectionId)) {
+    	    $p_destSectionId = $this->m_data['Number'];
+    	}
     	$dstSectionObj =& new Section($p_destPublicationId, $p_destIssueId, 
     	                              $p_destIssueLanguageId, $p_destSectionId);
     	// If source issue and destination issue are the same
     	if ( ($this->m_data['IdPublication'] == $p_destPublicationId) 
-    	      && ($this->m_data['NrIssue'] == $p_destIssueId) ) {
+    	      && ($this->m_data['NrIssue'] == $p_destIssueId)
+    	      && ($this->m_data['IdLanguage'] == $p_destIssueLanguageId) ) {
     		$shortName = $p_destSectionId;
     		$sectionName = $this->getName() . " (duplicate)";
     	} else {
     		$shortName = $this->getShortName();
     		$sectionName = $this->getName();
     	}
-    	$dstSectionCols = array('Name' => $sectionName, 'ShortName' => $shortName);
+    	$dstSectionCols = array();
    		$dstSectionCols['SectionTplId'] = $this->m_data['SectionTplId'];
    		$dstSectionCols['ArticleTplId'] = $this->m_data['ArticleTplId'];
     	
    		// Create the section if it doesnt exist yet.
     	if (!$dstSectionObj->exists()) {
-    		$dstSectionObj->create($dstSectionCols);
+    		$dstSectionObj->create($sectionName, $shortName, $dstSectionCols);
     	}
     	
     	// Copy all the articles.

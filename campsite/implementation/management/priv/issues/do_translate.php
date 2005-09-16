@@ -51,7 +51,7 @@ if ($cShortName == "") {
 }
 
 if ($correct) {
-    $issueObj->createTranslation();
+    $issueObj->createTranslation($cLang, $cName, $cShortName);
     $logtext = getGS('Issue $1 added', $cName); 
     Log::Message($logtext, $User->getUserName(), 11);
     $created = true;
