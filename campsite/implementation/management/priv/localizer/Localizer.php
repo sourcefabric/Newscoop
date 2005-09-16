@@ -45,7 +45,7 @@ function getGS($p_translateString)
 	global $g_translationStrings, $TOL_Language;
 	$numFunctionArgs = func_num_args();
 	if (!isset($g_translationStrings[$p_translateString]) || ($g_translationStrings[$p_translateString]=='')) {
-		$translatedString = "$p_translateString (not translated)";
+		$translatedString = "$p_translateString (*)";
 	}
 	else {
 		$translatedString = $g_translationStrings[$p_translateString];
