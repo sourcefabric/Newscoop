@@ -58,6 +58,16 @@ class Section extends DatabaseObject {
 
 	
 	/**
+	 * Create a new Section.
+	 * @param string $p_name
+	 * @param string $p_shortName
+	 */
+	function create($p_name, $p_shortName) {
+	    return parent::create(array('Name' => $p_name, 'ShortName' => $p_shortName));
+	} // fn create
+	
+	
+	/**
 	 * @return int
 	 */
 	function getPublicationId() 
@@ -122,6 +132,15 @@ class Section extends DatabaseObject {
 	
 	
 	/**
+	 * @param string $p_name
+	 */
+	function setShortName($p_name) 
+	{
+	    return $this->setProperty('ShortName', $p_name);
+	} // fn setShortName
+	
+	
+	/**
 	 * @return int
 	 */
 	function getArticleTemplateId() 
@@ -162,21 +181,27 @@ class Section extends DatabaseObject {
 	
 	
 	/**
-	 * Copy the section to the given issue.  The issue can be the same as the current issue.
-	 * All articles will be copied to the new section.
+	 * Copy the section to the given issue.  The issue can be the same as
+	 * the current issue.  All articles will be copied to the new section.
 	 *
 	 * @param int $p_destPublicationId
+	 *     The destination publication ID.
 	 * @param int $p_destIssueId
+	 *     The destination issue ID.
 	 * @param int $p_destIssueLanguageId 
+	 *     (optional) The destination issue language ID.  If not given, 
+	 *     it will use the language ID of this section.
 	 * @param int $p_destSectionId
-	 * @param int $p_userId -
-	 *     This is used to log who performed the operation.
-	 *
+	 *     (optional) The destination section ID.  If not given, a new 
+	 *     section will be created.
+	 * @param boolean $p_copyArticles
+	 *     (optional) If set to true, all articles will be copied to the
+	 *     destination section.
 	 * @return Section
 	 *     The new Section object.
 	 */
-	function copy($p_destPublicationId, $p_destIssueId, $p_destIssueLanguageId, 
-	              $p_destSectionId) {
+	function copy($p_destPublicationId, $p_destIssueId, $p_destIssueLanguageId = null, 
+	              $p_destSectionId = null, $p_copyArticles = true) {
     	if (is_null($p_destIssueLanguageId)) {
     	   $p_destIssueLanguageId = $this->m_data['IdLanguage'];   
     	}
@@ -201,19 +226,21 @@ class Section extends DatabaseObject {
     	}
     	
     	// Copy all the articles.
-    	$srcSectionArticles = Article::GetArticles($this->m_data['IdPublication'], 
-                                                   $this->m_data['NrIssue'], 
-                                                   $this->m_data['Number']);
-        $copiedArticles = array();
-    	foreach ($srcSectionArticles as $articleObj) {
-    	    if (!in_array($articleObj->getArticleId(), $copiedArticles)) {
-        		$tmpCopiedArticles =& $articleObj->copy($p_destPublicationId, 
-                    $p_destIssueId, $p_destSectionId, null, true);
-                $copiedArticles =& array_merge($copiedArticles, 
-                    DbObjectArray::GetColumn($tmpCopiedArticles, "Number"));
-    	    }
+    	if ($p_copyArticles) {
+        	$srcSectionArticles = Article::GetArticles($this->m_data['IdPublication'], 
+                                                       $this->m_data['NrIssue'], 
+                                                       $this->m_data['Number']);
+            $copiedArticles = array();
+        	foreach ($srcSectionArticles as $articleObj) {
+        	    if (!in_array($articleObj->getArticleId(), $copiedArticles)) {
+            		$tmpCopiedArticles =& $articleObj->copy($p_destPublicationId, 
+                        $p_destIssueId, $p_destSectionId, null, true);
+                    $copiedArticles =& array_merge($copiedArticles, 
+                        DbObjectArray::GetColumn($tmpCopiedArticles, "Number"));
+        	    }
+        	}
     	}
-    	
+    	    	
     	return $dstSectionObj;
 	} // fn copy
 	

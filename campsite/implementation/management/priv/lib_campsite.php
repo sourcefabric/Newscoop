@@ -445,127 +445,127 @@ function pencParam($s)
     print encParam($s);
 }
 
-function add_subs_section($publication_id, $section_nr) 
-{
-	// retrieve the default trial and paid time of the subscriptions
-	$dd_query = "select TimeUnit, TrialTime, PaidTime from Publications where Id = "
-	   . $publication_id;
-	query($dd_query, 'dd');
-	if ($GLOBALS['NUM_ROWS'] < 0) {
-		return -1;
-	}
-	if ($GLOBALS['NUM_ROWS'] == 0) {
-		return 0;
-	}
-	fetchRowNum($GLOBALS['dd']);
-	$time_unit = getNumVar($GLOBALS['dd'], 0);
-	$trial_time = getNumVar($GLOBALS['dd'], 1);
-	$paid_time = getNumVar($GLOBALS['dd'], 2);
-	
-	switch($time_unit){
-	case 'D':
-		$trial_days = $trial_time;
-		$paid_days = $paid_time;
-		break;
-	case 'W':
-		$trial_days = $trial_time * 7;
-		$paid_days = $paid_time * 7;
-		break;
-	case 'M':
-		$trial_days = $trial_time * 30;
-		$paid_days = $paid_time * 30;
-		break;
-	case 'Y':
-		$trial_days = $trial_time * 365;
-		$paid_days = $paid_time * 365;
-		break;
-	}
-	
-	$default_days['T'] = $default_paid_days['T'] = $trial_days;
-	$default_days['P'] = $default_paid_days['P'] = $paid_days;
-	
-	// read active subscriptions to the given publication
-	$subs_query = "select subs.Id, subs.Type, sect.StartDate, sect.Days, sect.PaidDays, "
-	     . "abs(sect.SectionNumber - " . $section_nr . ") as sect_diff from "
-	     . "Subscriptions as subs left join SubsSections as sect on subs.Id = "
-	     . "sect.IdSubscription where subs.IdPublication = " . $publication_id
-	     . " and subs.Active = 'Y' " . "order by subs.Id asc, sect_diff asc";
-	query($subs_query, 'subs');
-	$subs_nr = $GLOBALS['NUM_ROWS'];
-	$subs_id = -1;
-	$subs_type = "";
-	$start_date = "";
-	$days = -1;
-	$paid_days = -1;
-	$sect_diff = -1;
-	$subs_count = 0;
-	for ($index = 0; $index < $subs_nr; $index++) {
-		fetchRowNum($GLOBALS['subs']);
-		$n_subs_id = getNumVar($GLOBALS['subs'], 0);
-		$n_subs_type = getNumVar($GLOBALS['subs'], 1);
-		$n_start_date = getNumVar($GLOBALS['subs'], 2);
-		$n_days = getNumVar($GLOBALS['subs'], 3);
-		$n_paid_days = getNumVar($GLOBALS['subs'], 4);
-		$n_sect_diff = getNumVar($GLOBALS['subs'], 5);
-		
-		if (($n_subs_id != $subs_id && $subs_id != -1) || $index == ($subs_nr - 1)) {
-			if ($start_date == "") {
-				$start_date = "now()";
-				$days = $default_days[$subs_type];
-				$paid_days = $default_paid_days[$subs_type];
-			}
-			else {
-				$start_date = "'" . $start_date . "'";
-			}
-			$insert_query = "insert into SubsSections set IdSubscription = " . $subs_id
-			         . ", SectionNumber = " . $section_nr . ", StartDate = "
-			         . $start_date . ", Days = " . $days . ", PaidDays = " . $paid_days;
-			query($insert_query);
-			$subs_count ++;
-			
-			$sect_diff = 1;
-			$subs_id = $n_subs_id;
-			$subs_type = $n_subs_type;
-			$start_date = $n_start_date;
-			$days = $n_days;
-			$paid_days = $n_paid_days;
-			continue;
-		}
-	
-		if ($n_sect_diff < $sect_diff || $sect_diff == -1) {
-			$start_date = $n_start_date;
-			$days = $n_days;
-			$paid_days = $n_paid_days;
-		}
-		
-		$subs_id = $n_subs_id;
-		$subs_type = $n_subs_type;
-		$sect_diff = $n_sect_diff;
-	} // for
-	
-	return $subs_count;
-} // fn add_subs_section
+//function add_subs_section($publication_id, $section_nr) 
+//{
+//	// retrieve the default trial and paid time of the subscriptions
+//	$dd_query = "select TimeUnit, TrialTime, PaidTime from Publications where Id = "
+//	   . $publication_id;
+//	query($dd_query, 'dd');
+//	if ($GLOBALS['NUM_ROWS'] < 0) {
+//		return -1;
+//	}
+//	if ($GLOBALS['NUM_ROWS'] == 0) {
+//		return 0;
+//	}
+//	fetchRowNum($GLOBALS['dd']);
+//	$time_unit = getNumVar($GLOBALS['dd'], 0);
+//	$trial_time = getNumVar($GLOBALS['dd'], 1);
+//	$paid_time = getNumVar($GLOBALS['dd'], 2);
+//	
+//	switch($time_unit){
+//	case 'D':
+//		$trial_days = $trial_time;
+//		$paid_days = $paid_time;
+//		break;
+//	case 'W':
+//		$trial_days = $trial_time * 7;
+//		$paid_days = $paid_time * 7;
+//		break;
+//	case 'M':
+//		$trial_days = $trial_time * 30;
+//		$paid_days = $paid_time * 30;
+//		break;
+//	case 'Y':
+//		$trial_days = $trial_time * 365;
+//		$paid_days = $paid_time * 365;
+//		break;
+//	}
+//	
+//	$default_days['T'] = $default_paid_days['T'] = $trial_days;
+//	$default_days['P'] = $default_paid_days['P'] = $paid_days;
+//	
+//	// read active subscriptions to the given publication
+//	$subs_query = "select subs.Id, subs.Type, sect.StartDate, sect.Days, sect.PaidDays, "
+//	     . "abs(sect.SectionNumber - " . $section_nr . ") as sect_diff from "
+//	     . "Subscriptions as subs left join SubsSections as sect on subs.Id = "
+//	     . "sect.IdSubscription where subs.IdPublication = " . $publication_id
+//	     . " and subs.Active = 'Y' " . "order by subs.Id asc, sect_diff asc";
+//	query($subs_query, 'subs');
+//	$subs_nr = $GLOBALS['NUM_ROWS'];
+//	$subs_id = -1;
+//	$subs_type = "";
+//	$start_date = "";
+//	$days = -1;
+//	$paid_days = -1;
+//	$sect_diff = -1;
+//	$subs_count = 0;
+//	for ($index = 0; $index < $subs_nr; $index++) {
+//		fetchRowNum($GLOBALS['subs']);
+//		$n_subs_id = getNumVar($GLOBALS['subs'], 0);
+//		$n_subs_type = getNumVar($GLOBALS['subs'], 1);
+//		$n_start_date = getNumVar($GLOBALS['subs'], 2);
+//		$n_days = getNumVar($GLOBALS['subs'], 3);
+//		$n_paid_days = getNumVar($GLOBALS['subs'], 4);
+//		$n_sect_diff = getNumVar($GLOBALS['subs'], 5);
+//		
+//		if (($n_subs_id != $subs_id && $subs_id != -1) || $index == ($subs_nr - 1)) {
+//			if ($start_date == "") {
+//				$start_date = "now()";
+//				$days = $default_days[$subs_type];
+//				$paid_days = $default_paid_days[$subs_type];
+//			}
+//			else {
+//				$start_date = "'" . $start_date . "'";
+//			}
+//			$insert_query = "insert into SubsSections set IdSubscription = " . $subs_id
+//			         . ", SectionNumber = " . $section_nr . ", StartDate = "
+//			         . $start_date . ", Days = " . $days . ", PaidDays = " . $paid_days;
+//			query($insert_query);
+//			$subs_count ++;
+//			
+//			$sect_diff = 1;
+//			$subs_id = $n_subs_id;
+//			$subs_type = $n_subs_type;
+//			$start_date = $n_start_date;
+//			$days = $n_days;
+//			$paid_days = $n_paid_days;
+//			continue;
+//		}
+//	
+//		if ($n_sect_diff < $sect_diff || $sect_diff == -1) {
+//			$start_date = $n_start_date;
+//			$days = $n_days;
+//			$paid_days = $n_paid_days;
+//		}
+//		
+//		$subs_id = $n_subs_id;
+//		$subs_type = $n_subs_type;
+//		$sect_diff = $n_sect_diff;
+//	} // for
+//	
+//	return $subs_count;
+//} // fn add_subs_section
 
-function del_subs_section($publication_id, $section_nr) 
-{
-	$subs_query = "select Id from Subscriptions where IdPublication = " . $publication_id;
-	query($subs_query, 'subs');
-	if ($GLOBALS['NUM_ROWS'] < 0) {
-		return -1;
-	}
-	if ($GLOBALS['NUM_ROWS'] == 0) {
-		return 0;
-	}
-	$subs_nr = $GLOBALS['NUM_ROWS'];
-	for ($index = 0; $index < $subs_nr; $index++) {
-		fetchRowNum($GLOBALS['subs']);
-		$subs_id = getNumVar($GLOBALS['subs'], 0);
-		$del_query = "delete from SubsSections where IdSubscription = " . $subs_id
-		     . " and SectionNumber = " . $section_nr;
-		query($del_query);
-	}
-	return $index;
-}
+//function del_subs_section($publication_id, $section_nr) 
+//{
+//	$subs_query = "select Id from Subscriptions where IdPublication = " . $publication_id;
+//	query($subs_query, 'subs');
+//	if ($GLOBALS['NUM_ROWS'] < 0) {
+//		return -1;
+//	}
+//	if ($GLOBALS['NUM_ROWS'] == 0) {
+//		return 0;
+//	}
+//	$subs_nr = $GLOBALS['NUM_ROWS'];
+//	for ($index = 0; $index < $subs_nr; $index++) {
+//		fetchRowNum($GLOBALS['subs']);
+//		$subs_id = getNumVar($GLOBALS['subs'], 0);
+//		$del_query = "delete from SubsSections where IdSubscription = " . $subs_id
+//		     . " and SectionNumber = " . $section_nr;
+//		query($del_query);
+//	}
+//	return $index;
+//}
 
 function limitchars($text, $lim, $break, $tail) 
 {
@@ -614,7 +614,7 @@ function valid_field_name($name)
 	return true;
 }
 
-function valid_short_name($name) 
+function camp_is_valid_url_name($name) 
 {
 	if (strlen($name) == 0) {
 		return false;
@@ -627,7 +627,7 @@ function valid_short_name($name)
 		}
 	}
 	return true;
-}
+} // fn camp_is_valid_url_name
 
 global $cache_type_all, $cache_type_publications, $cache_type_topics, $cache_type_article_types;
 global $operation_attr, $operation_create, $operation_delete, $operation_modify;

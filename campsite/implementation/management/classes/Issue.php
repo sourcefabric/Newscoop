@@ -65,6 +65,56 @@ class Issue extends DatabaseObject {
 	
 	
 	/**
+	 * Delete the Issue, and optionally all sections and articles contained within it.
+	 * @param boolean $p_deleteSections
+	 * @param boolean $p_deleteArticles
+	 * @return boolean
+	 */
+	function delete($p_deleteSections = true, $p_deleteArticles = true) 
+	{
+		global $Campsite;
+		if ($p_deleteSections) {
+    		$sections = Section::GetSections($this->m_data['IdPublication'], $this->m_data['Number'], $this->m_data['IdLanguage']);
+    		foreach ($sections as $section) {
+    		    $section->delete($p_deleteArticles);
+    		}
+		}
+	    return parent::delete();
+	} // fn delete
+	
+	
+	/**
+	 * Create a translation of the issue.  This will copy all of the 
+	 * sections as well, but not the articles.
+	 *
+	 *
+	 */
+	function createTranslation($p_languageId, $p_name, $p_urlName = null) 
+	{
+	    global $Campsite;
+	    if (is_null($p_urlName)) {
+	        $p_urlName = $this->m_data['Number'];
+	    }
+	    // Create a new issue
+        $queryStr = "INSERT IGNORE INTO Issues "
+                    ." SET Name='$p_name'"
+                    .", ShortName = '$p_urlName'"
+                    .", IdLanguage=$p_languageId"
+                    .", IdPublication=".$this->m_data['IdPublication']
+                    .", Number=".$this->m_data['Number']; 
+        $Campsite['db']->Execute($queryStr);
+        
+        // Copy the sections
+        $sections =& Section::GetSections($this->m_data['IdPublication'], 
+            $this->m_data['Number'], $this->m_data['IdLanguage']);
+        foreach ($sections as $section) {
+            $section->copy($this->m_data['IdPublication'], 
+                $this->m_data['Number'], $p_languageId, null, false);
+        }
+	} // fn createTranslation
+	
+	
+	/**
 	 * @return int
 	 */
 	function getPublicationId() 

@@ -52,7 +52,7 @@ if ($cShortName == '') {
 		$backLink);
 	exit;
 }
-if (!valid_short_name($cShortName)) {
+if (!camp_is_valid_url_name($cShortName)) {
 	camp_html_display_error(getGS('The $1 field may only contain letters, digits and underscore (_) character.', "'" . getGS('URL Name') . "'"), $backLink);
 	exit;
 }

@@ -328,13 +328,13 @@ class Article extends DatabaseObject {
 		$values = array();
 		// Copy some attributes
 		$values['ShortName'] = $this->m_data['ShortName'];
-		$values['Name'] = $p_name;
 		$values['Type'] = $this->m_data['Type'];
 		$values['OnFrontPage'] = $this->m_data['OnFrontPage'];
 		$values['OnSection'] = $this->m_data['OnFrontPage'];
 		$values['Public'] = $this->m_data['Public'];
 		$values['ArticleOrder'] = $this->m_data['ArticleOrder'];
 		// Change some attributes
+		$values['Name'] = $p_name;
 		$values['Published'] = 'N';
 		$values['IsIndexed'] = 'N';		
 		$values['LockUser'] = 0;
