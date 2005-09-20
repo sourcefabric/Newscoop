@@ -36,7 +36,7 @@ if [ "$cc_interactive" = "--interactive" ]; then
 configure_install
 [ $? -ne 0 ] && echo "Error configuring install parameters" && exit 1
 install_conf --set
-. $"$INSTALL_CONF/../configure" --define_start_env &> /dev/null
+. "$INSTALL_CONF/../configure" --define_start_env &> /dev/null
 [ $? -ne 0 ] && echo "Error configuring install environment" && exit 1
 
 export MODULES_LIST="DATABASE PARSER EVENT_HANDLERS SEARCH_ENGINE ADMIN_INTERFACE"
@@ -159,8 +159,8 @@ read_parameter database_server_port 0 "This is the database server listening por
 read_parameter template_engine_port 0 "This is the template engine server listening port -\n0 means use default"
 read_parameter template_engine_max_threads 0 "This sets the maximum number of threads for the\ntemplate engine - 0 means use default"
 read_parameter smtp_server_port 25 "This is the email server listening port - default 25"
-read_parameter apache_user $"$APACHE_USER" "The owner of instance files; the template engine will run\nwith this user id - default apache user should work ok"
-read_parameter apache_group $"$APACHE_GROUP" "The group owner of instance files; the template engine will\nrun with this group id - default apache group should work ok"
+read_parameter apache_user "$APACHE_USER" "The owner of instance files; the template engine will run\nwith this user id - default apache user should work ok"
+read_parameter apache_group "$APACHE_GROUP" "The group owner of instance files; the template engine will\nrun with this group id - default apache group should work ok"
 }
 
 args=(--db_server_address --db_user --db_password --smtp_server_address --db_server_port \

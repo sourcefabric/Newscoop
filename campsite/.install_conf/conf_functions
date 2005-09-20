@@ -246,12 +246,12 @@ action="print"
 configurable_modules=""
 modules=`modules_list $*`
 for m in $modules; do
-    conf_file=`cd "$INSTALL_CONF"; $"$PHP" -q module_conf_file.php "$m"`
+    conf_file=`cd "$INSTALL_CONF"; "$PHP" -q module_conf_file.php "$m"`
     if [ ! -f "$INSTALL_CONF/$conf_file" ]; then
 	continue
     fi
     configurable_modules="$configurable_modules $m"
-    mod_conf=`cd "$INSTALL_CONF"; $"$PHP" -q export_conf.php "$m"`
+    mod_conf=`cd "$INSTALL_CONF"; "$PHP" -q export_conf.php "$m"`
     if [ $? -ne 0 ]; then
         echo "$mod_conf"
         return 1
@@ -259,7 +259,7 @@ for m in $modules; do
     if [ "$action" = "print" ]; then
 	echo "$mod_conf" | cut -f 2 -d " "
     fi
-    mod_param_list=`cd "$INSTALL_CONF"; $"$PHP" -q export_module_params.php "$m"`
+    mod_param_list=`cd "$INSTALL_CONF"; "$PHP" -q export_module_params.php "$m"`
     if [ $? -ne 0 ]; then
         echo "$mod_param_list"
         return 1
@@ -297,11 +297,11 @@ action="print"
 [ "$1" = "--set" ] && action="set" && shift 1
 [ "$1" = "--reset" ] && action="reset" && shift 1
 [ "$1" = "--unset" ] && action="unset" && shift 1
-conf_file=`cd "$INSTALL_CONF"; $"$PHP" -q module_conf_file.php "install"`
+conf_file=`cd "$INSTALL_CONF"; "$PHP" -q module_conf_file.php "install"`
 if [ ! -f "$INSTALL_CONF/$conf_file" ]; then
     return 1
 fi
-inst_conf=`cd "$INSTALL_CONF"; $"$PHP" -q export_conf.php "install"`
+inst_conf=`cd "$INSTALL_CONF"; "$PHP" -q export_conf.php "install"`
 if [ $? -ne 0 ]; then
     echo "$inst_conf"
     return 1
@@ -309,7 +309,7 @@ fi
 if [ "$action" = "print" ]; then
     echo "$inst_conf" | cut -f 2 -d " "
 fi
-inst_param_list=`cd "$INSTALL_CONF"; $"$PHP" -q export_module_params.php "install"`
+inst_param_list=`cd "$INSTALL_CONF"; "$PHP" -q export_module_params.php "install"`
 if [ $? -ne 0 ]; then
     echo "$inst_param_list"
     return 1
@@ -518,7 +518,7 @@ fi
 if [ "$1" != "--config" ]; then
     return 0
 fi
-conf_file=`cd "$INSTALL_CONF"; $"$PHP" -q module_conf_file.php "$module"`
+conf_file=`cd "$INSTALL_CONF"; "$PHP" -q module_conf_file.php "$module"`
 if [ ! -f "$INSTALL_CONF/$conf_file" ]; then
     echo "Module $module is not configurable"
     return 1
@@ -738,7 +738,7 @@ return $result
 set_module_config()
 {
 module=$1
-module_file=`cd "$INSTALL_CONF"; $"$PHP" -q module_conf_file.php "$module"`
+module_file=`cd "$INSTALL_CONF"; "$PHP" -q module_conf_file.php "$module"`
 tmp_file=".$$.$module_file"
 module_name=`echo "$module_file" | cut -f 1 -d "_"`
 if [ "$module_name" != "install" ]; then
@@ -748,7 +748,7 @@ if [ "$module_name" != "install" ]; then
 	return 1
     fi
 fi
-module_vars=`cd "$INSTALL_CONF"; $"$PHP" -q export_module_params.php "$module"`
+module_vars=`cd "$INSTALL_CONF"; "$PHP" -q export_module_params.php "$module"`
 echo -e "<?php\n" > $tmp_file;
 vars_list_str=""
 for var in $module_vars; do

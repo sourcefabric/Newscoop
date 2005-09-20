@@ -21,13 +21,13 @@ require_once($Campsite['BIN_DIR'] . "/cli_script_lib.php");
 
 if (!$no_backup) {
 	// backup instance
-	$cmd = $Campsite['BIN_DIR'] . "/backup_instance \$'$instance_name' --silent_exit";
+	$cmd = $Campsite['BIN_DIR'] . "/backup_instance " . escape_shell_arg($instance_name) . " --silent_exit";
 	exec_command($cmd);
 }
 
 // remove WWW directory
 $www_dir = $Campsite['WWW_DIR'] . "/$instance_name";
-$cmd = "rm -fr \$'$www_dir'";
+$cmd = "rm -fr " . escape_shell_arg($www_dir);
 exec_command($cmd);
 
 // check if the database conf file exists
@@ -42,7 +42,7 @@ if (connect_to_database() != 0)
 mysql_query("DROP DATABASE $instance_name");
 
 // remove etc directory
-$cmd = "rm -fr \$'$etc_dir/$instance_name'";
+$cmd = "rm -fr " . escape_shell_arg($etc_dir) . "/" . escape_shell_arg($instance_name);
 exec_command($cmd);
 
 ?>
