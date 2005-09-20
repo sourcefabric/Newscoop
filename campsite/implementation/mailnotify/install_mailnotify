@@ -1,15 +1,15 @@
 #!/bin/bash
 
-mkdir -p $"$BIN_DIR"
-install -o $ROOT_USER -g $APACHE_GROUP -m 750 notifyendsubs $"$BIN_DIR"
-install -o $ROOT_USER -g $APACHE_GROUP -m 750 notifyevents $"$BIN_DIR"
+mkdir -p "$BIN_DIR"
+install -o $ROOT_USER -g $APACHE_GROUP -m 750 notifyendsubs "$BIN_DIR"
+install -o $ROOT_USER -g $APACHE_GROUP -m 750 notifyevents "$BIN_DIR"
 
 if $USER_INSTALL; then exit 0; fi
 
 . ${INSTALL_CONF}/cron_functions
 if [ -f /etc/crontab ]; then
-    uninstall_cron_task $"$BIN_DIR/notifyendsubs" /etc/crontab
-    uninstall_cron_task $"$BIN_DIR/notifyevents" /etc/crontab
+    uninstall_cron_task "$BIN_DIR/notifyendsubs" /etc/crontab
+    uninstall_cron_task "$BIN_DIR/notifyevents" /etc/crontab
 fi
 install_cron_task "0" "*/8" "*" "*" "*" "$ROOT_USER" "$BIN_DIR/notifyendsubs" "/etc/cron.d/notifyendsubs" || exit 1
 install_cron_task "*/2" "*" "*" "*" "*" "$ROOT_USER" "$BIN_DIR/notifyevents" "/etc/cron.d/notifyevents" || exit 1

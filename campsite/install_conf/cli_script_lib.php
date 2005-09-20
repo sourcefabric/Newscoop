@@ -1,5 +1,37 @@
 <?php
 
+function escape_shell_arg($p_arg)
+{
+	$arg = str_replace('\\', '\\\\', $p_arg);
+	$arg = str_replace(' ', '\ ', $arg);
+	$arg = str_replace('`', '\`', $arg);
+	$arg = str_replace('!', '\!', $arg);
+	$arg = str_replace('@', '\@', $arg);
+	$arg = str_replace('$', '\$', $arg);
+	$arg = str_replace('%', '%%', $arg);
+	$arg = str_replace('^', '\^', $arg);
+	$arg = str_replace('&', '\&', $arg);
+	$arg = str_replace('*', '\*', $arg);
+	$arg = str_replace('(', '\(', $arg);
+	$arg = str_replace(')', '\)', $arg);
+	$arg = str_replace('=', '\=', $arg);
+	$arg = str_replace('{', '\{', $arg);
+	$arg = str_replace('}', '\}', $arg);
+	$arg = str_replace('[', '\[', $arg);
+	$arg = str_replace(']', '\]', $arg);
+	$arg = str_replace(':', '\:', $arg);
+	$arg = str_replace(';', '\;', $arg);
+	$arg = str_replace('"', '\"', $arg);
+	$arg = str_replace('\'', '\\\'', $arg);
+	$arg = str_replace('<', '\<', $arg);
+	$arg = str_replace('>', '\>', $arg);
+	$arg = str_replace(',', '\,', $arg);
+	$arg = str_replace('?', '\?', $arg);
+	$arg = str_replace('/', '%2f', $arg);
+	$arg = str_replace('|', '\|', $arg);
+	return $arg;
+}
+
 function exec_command($cmd, $err_msg = "", $print_output = true)
 {
 	exec($cmd, $output, $result);

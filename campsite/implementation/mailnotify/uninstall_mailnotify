@@ -1,16 +1,16 @@
 #!/bin/bash
 
-rm -f $"$BIN_DIR/notifyendsubs"
-rm -f $"$BIN_DIR/notifyevents"
+rm -f "$BIN_DIR/notifyendsubs"
+rm -f "$BIN_DIR/notifyevents"
 
 if $USER_INSTALL; then exit 0; fi
 
 . ${INSTALL_CONF}/cron_functions
 if [ -f /etc/crontab ]; then
-    uninstall_cron_task $"$BIN_DIR/notifyendsubs" /etc/crontab
-    uninstall_cron_task $"$BIN_DIR/notifyevents" /etc/crontab
+    uninstall_cron_task "$BIN_DIR/notifyendsubs" /etc/crontab
+    uninstall_cron_task "$BIN_DIR/notifyevents" /etc/crontab
 fi
-uninstall_cron_task $"$BIN_DIR/notifyendsubs" "/etc/cron.d/notifyendsubs" || exit 1
-uninstall_cron_task $"$BIN_DIR/notifyevents" "/etc/cron.d/notifyevents" || exit 1
+uninstall_cron_task "$BIN_DIR/notifyendsubs" "/etc/cron.d/notifyendsubs" || exit 1
+uninstall_cron_task "$BIN_DIR/notifyevents" "/etc/cron.d/notifyevents" || exit 1
 restart_cron
 exit 0

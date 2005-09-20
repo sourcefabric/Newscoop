@@ -296,7 +296,7 @@ else
     result=0
     if [ "$file_type" = "executable" ]; then
 	[ "$search_path" != "" ] && export PATH=$search_path
-	file_path=`$"$PHP" -q $"$INSTALL_CONF/is_executable.php" $"$file_name"`
+	file_path=`"$PHP" -q "$INSTALL_CONF/is_executable.php" "$file_name"`
 	result=$?
 	[ "$search_path" != "" ] && export PATH=$old_path
     else

@@ -628,7 +628,7 @@ done
 [ "$bin_paths" = "" ] && bin_paths="/sbin /usr/sbin /usr/local/apache/bin /home/apache/bin /home/httpd/bin /opt/apache/bin"
 bin_names="apache httpd httpd2 apache2 httpds"
 for bn in $bin_names; do
-    check4_file --executable $"$bn" &> /dev/null
+    check4_file --executable "$bn" &> /dev/null
     [ $? -eq 0 ] && bin_path=$file_path && apache_bin_name="$bn" && break
     bin_path=""
 done
@@ -1066,7 +1066,7 @@ check4_php_mysql()
 {
 is_checked php_mysql && return 0
 check4_php_cli || return 1
-$"$PHP" -q $"$INSTALL_CONF/php_mysql_exists.php"
+"$PHP" -q "$INSTALL_CONF/php_mysql_exists.php"
 [ $? -ne 0 ] && output="PHP MySQL extension was not installed. Please install it." && return 1
 set_checked php_mysql
 return 0
