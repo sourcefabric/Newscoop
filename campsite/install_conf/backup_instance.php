@@ -27,7 +27,7 @@ if (!is_file("$etc_dir/$instance_name/database_conf.php")) {
 require_once("$etc_dir/$instance_name/database_conf.php");
 $html_dir = $Campsite['WWW_DIR'] . "/$instance_name/html";
 $backup_dir = $Campsite['CAMPSITE_DIR'] . "/backup/$instance_name";
-exec_command("mkdir -p " . escape_shell_arg($backup_dir);
+exec_command("mkdir -p " . escape_shell_arg($backup_dir));
 
 // backup look (templates) directory
 if (archive_file("$html_dir/look", $backup_dir, "$instance_name-look", $output) != 0)

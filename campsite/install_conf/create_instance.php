@@ -51,6 +51,7 @@ function create_instance($p_arguments, &$p_errors)
 
 	require_once($etc_dir . "/install_conf.php");
 	require_once($etc_dir . "/parser_conf.php");
+	require_once($Campsite['BIN_DIR'] . "/cli_script_lib.php");
 
 	if (!is_array($CampsiteVars['install']) || !is_array($CampsiteVars['parser'])
 		|| !is_array($Campsite)) {
@@ -164,7 +165,7 @@ function create_database($p_defined_parameters)
 	$db_exists = database_exists($db_name);
 	$db_is_empty = is_empty_database($db_name);
 	if ($db_exists && !$db_is_empty) {
-		if (!($res = backup_database($db_name, $p_defined_parameters)) == 0)
+		if (!($res = backup_database_default($db_name, $p_defined_parameters)) == 0)
 			return $res;
 		if (!($res = upgrade_database($db_name, $p_defined_parameters)) == 0) {
 			restore_database($db_name, $p_defined_parameters);
@@ -179,7 +180,8 @@ function create_database($p_defined_parameters)
 			. " --port=" . $Campsite['DATABASE_SERVER_PORT'];
 		if ($db_password != "")
 			$cmd .= " --password=\"$db_password\"";
-		$cmd .= " " . escape_shell_arg($db_name) . " " . escape_shell_arg($db_dir) . "/campsite-db.sql 2>&1";
+		$cmd .= " " . escape_shell_arg($db_name) . " < " . escape_shell_arg($db_dir)
+			. "/campsite-db.sql 2>&1";
 		exec($cmd, $output, $res);
 		if ($res != 0)
 			return implode("\n", $output);
@@ -269,17 +271,7 @@ function detect_database_version($p_db_name, &$version)
 }
 
 
-function database_exists($p_db_name)
-{
-	$res = mysql_list_dbs();
-	while ($row = mysql_fetch_object($res))
-		if ($row->Database == $p_db_name)
-			return true;
-	return false;
-}
-
-
-function backup_database($p_db_name, $p_defined_parameters)
+function backup_database_default($p_db_name, $p_defined_parameters)
 {
 	global $Campsite, $CampsiteVars;
 
@@ -302,30 +294,6 @@ function backup_database($p_db_name, $p_defined_parameters)
 		return implode("\n", $output);
 
 	return 0;
-}
-
-
-function clean_database($db_name)
-{
-	if (!mysql_select_db($db_name))
-		return "clean_database: can't select the database";
-	if (!($res = mysql_query("show tables")))
-		return "Can not clean the database: can't read tables";
-	while ($row = mysql_fetch_row($res)) {
-		$table_name = $row[0];
-		mysql_query("drop table `" . mysql_escape_string($table_name) . "`");
-	}
-	return 0;
-}
-
-
-function is_empty_database($db_name)
-{
-	if (!mysql_select_db($db_name))
-		return "is_empty_database: can't select the database";
-	if (!($res = mysql_query("show tables")))
-		return "is_empty_database: can't read tables";
-	return mysql_num_rows($res) == 0;
 }
 
 
