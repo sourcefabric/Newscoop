@@ -17,7 +17,7 @@ if ($type == "-i")
 if ($etc_dir == "" || $type == "" || ($type == "-a" && $archive_file == "")
 	|| ($type == "-i" && $instance_name == "") || ($type != '-a' && $type != '-i')) {
 	echo "Invalid parameters received; usage:\n"
-		. "\tphp restore_backup.php [etc_dir] [type] [archive_name/instance_name]\n"
+		. "\trestore_instance [type] [archive_name/instance_name]\n"
 		. "\twhere [etc_dir] = campsite etc directory\n"
 		. "\t\t[type] = restore type: -a from archive file, -i instance name\n"
 		. "\t\t[archive_name] = archive file name, use with -a type\n"

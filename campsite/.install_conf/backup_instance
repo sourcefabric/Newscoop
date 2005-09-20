@@ -16,5 +16,5 @@ else
         PHP=`$bin_path/campsite_config --php_cli`
 fi
 
-CMD="$PHP -q $script_call --etc_dir $ETC_DIR $*"
+CMD="$PHP -q $script_call $ETC_DIR $*"
 $CMD

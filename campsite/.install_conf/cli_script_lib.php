@@ -27,7 +27,6 @@ function escape_shell_arg($p_arg)
 	$arg = str_replace('>', '\>', $arg);
 	$arg = str_replace(',', '\,', $arg);
 	$arg = str_replace('?', '\?', $arg);
-	$arg = str_replace('/', '%2f', $arg);
 	$arg = str_replace('|', '\|', $arg);
 	return $arg;
 }
