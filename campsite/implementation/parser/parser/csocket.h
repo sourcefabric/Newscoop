@@ -165,7 +165,7 @@ public:
 class CTCPSocket : public CConnectedSocket
 {
 public:
-	CTCPSocket(char* local_ip = "0.0.0.0", int lport = 0, int backlog = 5)
+	CTCPSocket(char* local_ip = "0.0.0.0", int lport = 0, int backlog = 5, bool reuse = true)
 	EXCEPTION_DEF(throw (SocketErrorException));
 	CTCPSocket(SOCKET s) : CConnectedSocket(s)
 	{}
@@ -179,8 +179,8 @@ public:
 class CServerSocket : public CTCPSocket
 {
 public:
-	CServerSocket(char* local_ip = "0.0.0.0", int lport = 0, int backlog = 5)
-	EXCEPTION_DEF(throw (SocketErrorException)) : CTCPSocket(local_ip, lport, backlog)
+	CServerSocket(char* local_ip = "0.0.0.0", int lport = 0, int backlog = 5, bool reuse = true)
+	EXCEPTION_DEF(throw (SocketErrorException)) : CTCPSocket(local_ip, lport, backlog, reuse)
 	{}
 
 	virtual CTCPSocket* Accept() EXCEPTION_DEF(throw (SocketErrorException));
