@@ -876,13 +876,16 @@ int CConnectedSocket::Recv(char* message, int len, int flags) EXCEPTION_DEF(thro
 // CTCPSocket constructor
 // if exceptions enabled throws SocketErrorException on failure to create socket
 // or if cannot bind to SPECIFIED (if any) local address
-CTCPSocket::CTCPSocket(char* local_ip, int lport, int backlog) EXCEPTION_DEF(throw(SocketErrorException))
+CTCPSocket::CTCPSocket(char* local_ip, int lport, int backlog, bool reuse) EXCEPTION_DEF(throw(SocketErrorException))
 		: CConnectedSocket(SOCK_STREAM, PF_INET)
 {
 
 	ulint addr;
 	if ((addr = inet_addr(local_ip)) != INADDR_ANY || lport != 0)
 	{
+		sock = socket(AF_INET, SOCK_STREAM, 0);
+		int on = reuse ? 1 : 0;
+		setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, &on, sizeof(on));
 		struct sockaddr_in s;
 		s.sin_family = AF_INET;
 		s.sin_port = htons(lport);
