@@ -18,8 +18,7 @@ if (!Template::IsValidPath($path))
 	$path = "";
 $print_path = $path != "" ? $path : "/";
 
-register_templates($Campsite['HTML_DIR'] . "/look", $errors);
-verify_templates($Campsite['HTML_DIR'] . "/look", $mt, $dt, $errors);
+Template::UpdateStatus();
 
 ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">

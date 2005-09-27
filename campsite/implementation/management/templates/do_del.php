@@ -38,7 +38,7 @@ if ($What == '0') {
 		if ($res) {
 			$logtext = getGS('Template $1 was deleted', encHTML($dir));
 			query ("INSERT INTO Log SET TStamp=NOW(), IdEvent=112, User='".$User->getUserName()."', Text='$logtext'");
-			verify_templates($templates_dir, $mt, $dt, $errors);
+			Template::UpdateStatus();
 		}
 	} else {
 		$msg_fail = "The template $1 is in use and can not be deleted.";

@@ -2,7 +2,7 @@
 
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/templates/template_common.php");
 require_once($Campsite['HTML_DIR']."/$ADMIN_DIR/templates/lib_upload.php");
-    
+
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
 	header("Location: /$ADMIN/logout.php");
@@ -32,7 +32,7 @@ $res = doUpload("File", $Charset, $Campsite['HTML_DIR'].'/look/'.decS($Path));
 if ($res) {
 	$fileName = $GLOBALS["File"."_name"];
 	$templates_dir = $Campsite['HTML_DIR'] . '/look';
-	register_templates($templates_dir, $errors);
+	Template::UpdateStatus();
 
 	$logtext = getGS('Template $1 uploaded', encHTML(decS($fileName)));
 	query ("INSERT INTO Log SET TStamp=NOW(), IdEvent=111, User='".$User->getUserName()."', Text='$logtext'");

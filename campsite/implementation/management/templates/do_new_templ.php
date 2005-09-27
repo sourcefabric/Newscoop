@@ -31,7 +31,7 @@ if ($correct) {
 		$ok = touch ($newTempl);
 	if ($ok) {
 		$templates_dir = $Campsite['HTML_DIR'] . '/look/';
-		register_templates($templates_dir, $errors);
+		Template::UpdateStatus();
 		$logtext = getGS('New template $1 was created',encHTML(decS($cPath))."/".encHTML(decS($cName)));
 		query ("INSERT INTO Log SET TStamp=NOW(), IdEvent=114, User='".$User->getUserName()."', Text='$logtext'");
 	}
