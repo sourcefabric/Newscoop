@@ -32,7 +32,7 @@ $res = doUpload("File", $Charset, $Campsite['HTML_DIR'].'/look/'.decS($Path));
 if ($res) {
 	$fileName = $GLOBALS["File"."_name"];
 	$templates_dir = $Campsite['HTML_DIR'] . '/look';
-	register_templates($templates_dir, $errors);
+	Template::UpdateStatus();
 
 	$logtext = getGS('Template $1 uploaded', encHTML(decS($fileName)));
 	query ("INSERT INTO Log SET TStamp=NOW(), IdEvent=111, User='".$User->getUserName()."', Text='$logtext'");
