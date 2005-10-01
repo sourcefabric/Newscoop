@@ -13,7 +13,7 @@ install: $(ALL)
 	mkdir -p $(HTML_COMMON_DIR)
 	mkdir -p $(HTML_COMMON_DIR)/look
 	mkdir -p $(HTML_COMMON_DIR)/css
-	cp -f css/*.css $(HTML_COMMON_DIR)/css
+	cp -fr css $(HTML_COMMON_DIR)
 	mkdir -p $(HTML_COMMON_DIR)/classes
 	cp -f classes/*.php $(HTML_COMMON_DIR)/classes
 	mkdir -p $(HTML_COMMON_DIR)/images/thumbnails

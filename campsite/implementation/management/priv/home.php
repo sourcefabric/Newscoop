@@ -53,6 +53,33 @@ $pendingActions = array_slice($pendingActions, 0, $NumDisplayArticles);
 	</TD>
 </TR>
 </TABLE>
+<?php
+$restartEngine = Input::Get('restart_engine', 'string', 'no', true);
+if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine")) {
+	require_once($_SERVER['DOCUMENT_ROOT']."/parser_utils.php");
+	if (stop_parser()) {
+		$resMsg = getGS("The template engine was (re)started.");
+		$res = "OK";
+	} else {
+		$resMsg = getGS("The template engine could not be restarted! Please verify if the template engine was started by other user than $1.", $Campsite['APACHE_USER']);
+		$res = "ERROR";
+	}
+	start_parser();
+}
+?>
+<?php if ($resMsg != '') { ?>
+<table border="0" cellpadding="0" cellspacing="0" align="center">
+<tr>
+<?php if ($res == 'OK') { ?>
+	<td class="info_message" align="center">
+<?php } else { ?>
+	<td class="error_message" align="center">
+<?php } ?>
+		<?php echo $resMsg; ?>
+	</td>
+</tr>
+</table>
+<?php } ?>
 
 <TABLE BORDER="0" CELLSPACING="4" CELLPADDING="2" WIDTH="100%">
 <TR>

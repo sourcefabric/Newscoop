@@ -95,7 +95,8 @@ if ($editUser->isAdmin() && $customizeRights && $canManage) {
 		'EditorTable'=>'N', 'EditorSuperscript'=>'N', 'EditorSubscript'=>'N',
 		'EditorStrikethrough'=>'N', 'EditorIndent'=>'N', 'EditorListBullet'=>'N',
 		'EditorListNumber'=>'N', 'EditorHorizontalRule'=>'N', 'EditorSourceView'=>'N',
-		'EditorEnlarge'=>'N', 'EditorTextDirection'=>'N', 'EditorLink'=>'N', 'EditorSubhead'=>'N');
+		'EditorEnlarge'=>'N', 'EditorTextDirection'=>'N', 'EditorLink'=>'N', 'EditorSubhead'=>'N',
+		'InitializeTemplateEngine'=>'N');
 	foreach ($rightsFields as $field=>$value) {
 		$val = Input::Get($field, 'string', 'off');
 		if ($val == 'on')

@@ -56,7 +56,6 @@ object.
 #include "cms_types.h"
 #include "configure.h"
 #include "csocket.h"
-#include "ccampsiteinstance.h"
 #include "thread.h"
 #include "process_req.h"
 #include "cpublication.h"
@@ -64,6 +63,8 @@ object.
 #include "curlshortnames.h"
 #include "curltemplatepath.h"
 #include "cmessagefactory.h"
+#include "configure.h"
+#include "readconf.h"
 
 using std::cout;
 using std::cerr;
@@ -72,6 +73,11 @@ using std::flush;
 
 #define MAX_THREADS 40
 
+#ifdef _DEBUG_SOURCE
+#warning *******************************************************************************
+#warning This compilation option is for source code debugging, do not use in production!
+#warning *******************************************************************************
+#endif
 
 CMessage* readMessage(CTCPSocket* p_pcoClSock, CMessageFactoryRegister& p_rcoMFReg)
 {
@@ -265,25 +271,20 @@ void* MyThreadRoutine(void* p_pArg)
 	return NULL;
 }
 
-// nMainThreadPid: pid of main thread
-int nMainThreadPid;
-
-// SigHandler: TERM signal handler
-void SigHandler(int p_nSig)
-{
-	if (nMainThreadPid != 0)
-	{
-		kill(nMainThreadPid, SIGTERM);
-		nMainThreadPid = 0;
-	}
-	exit(0);
-}
-
 // StartDaemon: run in background
 void StartDaemon()
 {
-	if (fork() != 0)
+	pid_t nChildPID = fork();
+	if (nChildPID > 0)
+	{
+		usleep(100000);
 		exit(0);
+	}
+	if (nChildPID < 0)
+	{
+		cerr << "Unable to start daemon" << endl;
+		exit(1);
+	}
 	setsid();
 }
 
@@ -292,34 +293,61 @@ void StartDaemon()
 //		char** argv - arguments list
 //		bool& p_rbRunAsDaemon - set by this function according to arguments
 //		string& p_rcoConfDir - set by this function according to arguments
-void ProcessArgs(int argc, char** argv, bool& p_rbRunAsDaemon, string& p_rcoConfDir)
+void ProcessArgs(int argc, char** argv, bool& p_rbRunAsDaemon, string& p_rcoConfDir,
+				 string& p_rcoInstanceName)
 {
-	if (argc < 2)
-		return ;
+	bool bError = false;
 	for (int i = 1; i < argc; i++)
 	{
 		if (strcmp(argv[i], "-d") == 0)
 			p_rbRunAsDaemon = false;
 		if (strcmp(argv[i], "-c") == 0)
 		{
-			if (++i < argc)
+			if (++i >= argc)
 			{
-				cerr << "You did not specify the configuration directory.";
-				exit(1);
+				cerr << "ERROR: You did not specify the configuration directory." << endl;
+				bError = true;
+				break;
 			}
 			else
 			{
-				p_rcoConfDir = atoi(argv[i]);
+				p_rcoConfDir = argv[i];
+			}
+		}
+		if (strcmp(argv[i], "-i") == 0)
+		{
+			if (++i >= argc)
+			{
+				cerr << "ERROR: no instance name was specified. You must specify the name of the\n"
+						<< "instance you want to start." << endl;
+				bError = true;
+				break;
+			}
+			else
+			{
+				p_rcoInstanceName = argv[i];
 			}
 		}
 		if (strcmp(argv[i], "-h") == 0)
 		{
-			cout << "Usage: campsite_server [-c <conf_dir>|-d|-h]\n"
-					"where:\t-d: run in console (by default run as daemon)\n"
-					"\t-c <conf_dir>: set the configuration directory\n"
-					"\t-h: print this help message" << endl;
-			exit(0);
+			bError = true;
+			break;
 		}
+	}
+	if (p_rcoInstanceName == "")
+	{
+		cerr << "ERROR: no instance name was specified. You must specify the name of the\n"
+				<< "instance you want to start." << endl;
+		bError = true;
+	}
+	if (bError)
+	{
+		cout << "Usage: campsite_server -i <instance_name> [-c <conf_dir>|-d|-h]\n"
+				"where:\t-i <instance name>: name of the instance to run\n"
+				"\t-d: run in console (by default run as daemon)\n"
+				"\t-c <conf_dir>: set the configuration directory\n"
+				"\t-h: print this help message" << endl;
+		exit(1);
 	}
 }
 
@@ -381,27 +409,6 @@ void sigterm_handler(int p_nSigNum)
 }
 
 
-void parent_sig_handler(int p_nSigNum)
-{
-#ifdef _DEBUG
-	cerr << p_nSigNum << " signal received (parent)" << endl;
-#endif
-
-	const CCampsiteInstanceMap& rcoInstances =
-			CCampsiteInstanceRegister::get().getCampsiteInstances();
-	CCampsiteInstanceMap::const_iterator coIt = rcoInstances.begin();
-	for (; coIt != rcoInstances.end(); ++coIt)
-	{
-#ifdef _DEBUG
-		cerr << "stopping instance: " << (*coIt).second->getName() << endl;
-#endif
-		(*coIt).second->stop();
-	}
-
-	exit(0);
-}
-
-
 void set_signals(sig_t p_sigHandler, bool p_bSetTERM = true,
 				 bool p_bSetHUP = true, bool p_bSetINT = true)
 {
@@ -424,9 +431,6 @@ void set_signals(sig_t p_sigHandler, bool p_bSetTERM = true,
 }
 
 
-int CampsiteInstanceFunc(const ConfAttrValue& p_rcoConfValues);
-
-
 // main: main function
 // Return 0 if no error encountered; error code otherwise
 // Parameters:
@@ -435,108 +439,55 @@ int CampsiteInstanceFunc(const ConfAttrValue& p_rcoConfValues);
 int main(int argc, char** argv)
 {
 	bool bRunAsDaemon = true;
-	string coConfDir;
-	ProcessArgs(argc, argv, bRunAsDaemon, coConfDir);
-#ifndef _DEBUG_SOURCE
-	if (bRunAsDaemon)
-		StartDaemon();
-
-	set_signals(parent_sig_handler);
-#endif
-
+	string coConfDir, coInstanceName;
+	ProcessArgs(argc, argv, bRunAsDaemon, coConfDir, coInstanceName);
 	if (coConfDir == "")
 		coConfDir = ETC_DIR;
-	const CCampsiteInstanceMap& rcoInstances =
-			CCampsiteInstance::readFromDirectory(coConfDir, CampsiteInstanceFunc);
+	coConfDir += "/" + coInstanceName;
 
-	CCampsiteInstanceMap::const_iterator coIt = rcoInstances.begin();
-	for (; coIt != rcoInstances.end(); ++coIt)
-	{
-		(*coIt).second->run();
-	}
-#ifndef _DEBUG_SOURCE
-	while (true)
-	{
-		int nStatus;
-		pid_t nChildPID = waitpid(-1, &nStatus, 0);
-		cerr << "child " << nChildPID << " exited with status " << nStatus << endl;
-		cerr << "waiting 10 seconds for " << nChildPID << endl;
-		sleep(10);
-		for (coIt = rcoInstances.begin(); coIt != rcoInstances.end(); ++coIt)
-		{
-			if (!(*coIt).second->isRunning())
-			{
-				cerr << "starting instance " << (*coIt).second->getName() << endl;
-				(*coIt).second->run();
-			}
-			else
-			{
-				cerr << "instance " << (*coIt).second->getName() << " running" << endl;
-			}
-		}
-	}
-#endif
-
-	return 0;
-}
-
-int CampsiteInstanceFunc(const ConfAttrValue& p_rcoConfValues)
-{
-	nMainThreadPid = 0;
 	int nMaxThreads;
 	int nPort;
-	int nUserId;
-	int nGroupId;
-
-	nMaxThreads = atoi(p_rcoConfValues.valueOf("PARSER_MAX_THREADS").c_str());
-	nPort = atoi(p_rcoConfValues.valueOf("PARSER_PORT").c_str());
-
-	const char* pUser = p_rcoConfValues.valueOf("APACHE_USER").c_str();
-	struct passwd* pPwEnt = getpwnam(pUser);
-	if (pPwEnt == NULL)
+	try {
+		// read parser configuration
+		string coParserConfFile = coConfDir + "/parser_conf.php";
+		ConfAttrValue coAttributes(coParserConfFile);
+	
+		// read database configuration
+		string coDatabaseConfFile = coConfDir + "/database_conf.php";
+		coAttributes.open(coDatabaseConfFile);
+	
+		nMaxThreads = atoi(coAttributes.valueOf("PARSER_MAX_THREADS").c_str());
+		nPort = atoi(coAttributes.valueOf("PARSER_PORT").c_str());
+		if (nPort == 0)
+		{
+			throw ConfException("Template engine port was not specified");
+		}
+	
+		SQL_SERVER = coAttributes.valueOf("DATABASE_SERVER_ADDRESS");
+		SQL_SRV_PORT = atoi(coAttributes.valueOf("DATABASE_SERVER_PORT").c_str());
+		SQL_USER = coAttributes.valueOf("DATABASE_USER");
+		SQL_PASSWORD = coAttributes.valueOf("DATABASE_PASSWORD");
+		SQL_DATABASE = coAttributes.valueOf("DATABASE_NAME");
+	}
+	catch (ConfException& rcoEx)
 	{
-		cerr << "Invalid user name in conf file";
+		cerr << "ERROR reading configuration: " << rcoEx.what() << endl;
 		exit(1);
 	}
-	nUserId = pPwEnt->pw_uid;
-	const char* pGroup = p_rcoConfValues.valueOf("APACHE_GROUP").c_str();
-	struct group* pGrEnt = getgrnam(pGroup);
-	if (pGrEnt == NULL)
+
+	nMaxThreads = nMaxThreads > 0 ? nMaxThreads : MAX_THREADS;
+
+#ifndef _DEBUG_SOURCE
+	if (bRunAsDaemon)
 	{
-		cerr << "Invalid group name in conf file";
-		exit(1);
+		StartDaemon();
 	}
-	nGroupId = pGrEnt->gr_gid;
-
-	SQL_SERVER = p_rcoConfValues.valueOf("DATABASE_SERVER_ADDRESS");
-	SQL_SRV_PORT = atoi(p_rcoConfValues.valueOf("DATABASE_SERVER_PORT").c_str());
-	SQL_USER = p_rcoConfValues.valueOf("DATABASE_USER");
-	SQL_PASSWORD = p_rcoConfValues.valueOf("DATABASE_PASSWORD");
-	SQL_DATABASE = p_rcoConfValues.valueOf("DATABASE_NAME");
-
-#ifdef _DEBUG_SOURCE
-	cout << "max threads: " << nMaxThreads << ", port: " << nPort << ", user id: "
-			<< nUserId << ", group id: " << nGroupId << endl;
+	set_signals(sigterm_handler, true, true, false);
+#else
+	cout << "max threads: " << nMaxThreads << ", port: " << nPort << endl;
 	cout << "sql server: " << SQL_SERVER << ", sql port: " << SQL_SRV_PORT
 			<< ", sql user: " << SQL_USER << ", sql password: " << SQL_PASSWORD
 			<< ", db name: " << SQL_DATABASE << endl;
-#endif
-
-	nPort = nPort > 0 ? nPort : 2001;
-	nMaxThreads = nMaxThreads > 0 ? nMaxThreads : MAX_THREADS;
-#ifndef _DEBUG_SOURCE
-	if (setuid(nUserId) != 0)
-	{
-		cerr << "Error setting user id " << nUserId << endl;
-		exit (1);
-	}
-	if (setgid(nGroupId) != 0)
-	{
-		cerr << "Error setting group id " << nGroupId << endl;
-		exit (1);
-	}
-
-	set_signals(sigterm_handler, true, true, false);
 #endif
 
 #if (__GNUC__ < 3)
@@ -607,9 +558,6 @@ int CampsiteInstanceFunc(const ConfAttrValue& p_rcoConfValues)
 				if (pcoClSock == 0)
 					throw SocketErrorException("Accept error");
 #ifdef _DEBUG_SOURCE
-#warning *******************************************************************************
-#warning This compilation option is for source code debugging, do not use in production!
-#warning *******************************************************************************
 				MyThreadRoutine((void*)pcoClSock);
 #else
 				g_pcoThreadPool->waitFreeThread();

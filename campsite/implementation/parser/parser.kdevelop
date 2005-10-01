@@ -12,13 +12,14 @@
     <description/>
     <ignoreparts/>
     <secondaryLanguages/>
+    <versioncontrol>kdevsubversion</versioncontrol>
   </general>
   <kdevfileview>
     <groups>
       <group pattern="*.h;*.hh;*.hxx;*.hpp;*.H" name="Headers" />
       <group pattern="*.cpp;*.c;*.cc;*.C;*.cxx;*.ec;*.ecpp;*.lxx;*.l++;*.ll;*.l" name="Sources" />
       <group pattern="*" name="Others" />
-      <hidenonprojectfiles>false</hidenonprojectfiles>
+      <hidenonprojectfiles>true</hidenonprojectfiles>
       <hidenonlocation>false</hidenonlocation>
     </groups>
     <tree>
@@ -41,7 +42,7 @@
       <directoryradio>build</directoryradio>
       <customdirectory>/</customdirectory>
       <mainprogram>parser/campsite_server</mainprogram>
-      <programargs/>
+      <programargs>-i campsite</programargs>
       <terminal>false</terminal>
       <autocompile>true</autocompile>
       <envvars/>
@@ -61,6 +62,7 @@
       </environments>
       <prio>0</prio>
       <makeoptions/>
+      <defaulttarget/>
     </make>
   </kdevcustomproject>
   <kdevcvsservice>
@@ -84,6 +86,14 @@
       <argumentsHintDelay>400</argumentsHintDelay>
       <headerCompletionDelay>250</headerCompletionDelay>
     </codecompletion>
+    <creategettersetter>
+      <prefixGet/>
+      <prefixSet>set</prefixSet>
+      <prefixVariable>m_,_</prefixVariable>
+      <parameterName>theValue</parameterName>
+      <inlineGet>true</inlineGet>
+      <inlineSet>true</inlineSet>
+    </creategettersetter>
   </kdevcppsupport>
   <cppsupportpart>
     <filetemplates>
@@ -123,4 +133,8 @@
       <usermanualurl/>
     </projectdoc>
   </kdevdocumentation>
+  <ctagspart>
+    <customArguments/>
+    <customTagfilePath/>
+  </ctagspart>
 </kdevelop>

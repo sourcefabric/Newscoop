@@ -205,7 +205,7 @@ function upgrade_database($p_db_name, $p_defined_parameters)
 	if (!($res = detect_database_version($p_db_name, $old_version)) == 0)
 		return $res;
 
-	$versions = array("2.0.x", "2.1.x", "2.2.x");
+	$versions = array("2.0.x", "2.1.x", "2.2.x", "2.3.x");
 	foreach ($versions as $index=>$db_version) {
 		if ($old_version > $db_version)
 			continue;
@@ -258,12 +258,18 @@ function detect_database_version($p_db_name, &$version)
 		if (in_array($row[0], array("ArticleTopics", "Topics")))
 			$version = $version < "2.1.x" ? "2.1.x" : $version;
 		if (in_array($row[0], array("URLTypes", "TemplateTypes", "Templates", "Aliases",
-				"ArticlePublish", "IssuePublish"))) {
+				"ArticlePublish", "IssuePublish", "ArticleImages"))) {
 			$version = "2.2.x";
 			if (!$res2 = mysql_query("DESC UserTypes ManageReaders"))
 				return "Unable to query the database $p_db_name";
-			if (mysql_num_rows($res2) > 0)
+			if (mysql_num_rows($res2) > 0) {
 				$version = "2.3.x";
+			}
+			if (!$res2 = mysql_query("DESC UserTypes InitializeTemplateEngine"))
+				return "Unable to query the database $p_db_name";
+			if (mysql_num_rows($res2) > 0) {
+				$version = "2.4.x";
+			}
 		}
 	}
 

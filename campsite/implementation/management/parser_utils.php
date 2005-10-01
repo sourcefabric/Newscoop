@@ -4,6 +4,51 @@ global $DEBUG;
 
 $DEBUG = false;
 
+function start_parser()
+{
+	global $Campsite;
+	
+	$binFile = $Campsite['BIN_DIR'] . "/campsite_server";
+	$args = " -i " . $Campsite['DATABASE_NAME'];
+	if (!file_exists($binFile)) {
+		$p_output[] = "Can't find the campsite_server binary; please check your Campsite install.";
+		return -1;
+	}
+	$childOutput = popen("$binFile$args", "r");
+	usleep(300000);
+	pclose($childOutput);
+}
+
+function stop_parser()
+{
+	global $Campsite;
+	
+	$instanceName = $Campsite['DATABASE_NAME'];
+	$cmd = "ps -o pid=pid,cmd=command -C campsite_server";
+	exec($cmd, $output, $returnValue);
+	foreach ($output as $line) {
+		$line = trim($line);
+		if (strncmp($line, "pid", 3) == 0) {
+			continue;
+		}
+		$elements = explode(" ", $line);
+		$elements = array_map('trim', $elements);
+		for ($i = 0; $i < sizeof($elements); $i++) {
+			if ($i == 0) {
+				$processId = $elements[$i];
+			}
+			if ($elements[$i] == '-i') {
+				$currentInstance = $elements[$i + 1];
+				if ($instanceName == $currentInstance) {
+					return posix_kill($processId, 15);
+				}
+				break;
+			}
+		}
+	}
+	return true;
+}
+
 function send_message_to_parser($msg, $close_socket = false)
 {
 	global $Campsite;
@@ -15,18 +60,19 @@ function send_message_to_parser($msg, $close_socket = false)
 	debug_msg("size: " . $size);
 	debug_msg("parser port: " . $Campsite['PARSER_PORT']);
 
-	@$socket = fsockopen('127.0.0.1', $Campsite['PARSER_PORT'], $errno, $errstr, 30);
+	$errno = 0;
+	$errstr = "";
+	for ($i = 1; $i <= 3; $i++) {
+		@$socket = fsockopen('127.0.0.1', $Campsite['PARSER_PORT'], $errno, $errstr, 30);
+		if (!$socket) {
+			start_parser();
+			usleep(100000);
+		} else {
+			debug_msg("OK.");
+		}
+	}
 	if (!$socket) {
-		echo "<p>$errstr ($errno)</p>\n<font color=\"red\">\n";
-		echo "<h3>Unable to connect to Campsite server, please re-start the service.</h3>\n</font>\n";
-		echo "<h3>Type the following commands in a root shell:</h3>\n";
-		echo "<blockquote>\n";
-		echo "<h3>killall campsite_server</h3>\n";
-		echo "<h3>" . $Campsite['BIN_DIR'] . "/campsite_server</h3>\n";
-		echo "</blockquote>\n";
 		exit(0);
-	} else {
-		debug_msg("OK.");
 	}
 	$final_msg = "0001 $size $msg";
 	debug_msg("final msg size: " . strlen($final_msg));
@@ -111,7 +157,7 @@ function read_get_parameters(&$query_string)
 		$query_string = getenv("QUERY_STRING");
 	$parameters = array();
 	$pairs = explode("&", $query_string);
-	foreach ($pairs as $index=>$pair) {
+	foreach ($pairs as $pair) {
 		$pair_array = explode("=", $pair);
 		if (trim($pair_array[0]) != "")
 			$parameters[trim($pair_array[0])] = urldecode(trim($pair_array[1]));
@@ -134,7 +180,7 @@ function read_cookies(&$cookies_string)
 		$cookies_string = getenv("HTTP_COOKIE");
 	$cookies = array();
 	$pairs = explode(";", $cookies_string);
-	foreach ($pairs as $index=>$pair) {
+	foreach ($pairs as $pair) {
 		$pair_array = explode("=", $pair);
 		if (trim($pair_array[0]) != "")
 			$cookies[trim($pair_array[0])] = trim($pair_array[1]);
@@ -159,7 +205,7 @@ function create_language_links($p_document_root = "")
 	if (!$res = mysql_query("select Code from Languages"))
 		exit(0);
 	$index_file = "$document_root/index.php";
-	while ($row = mysql_fetch_array($res)) {
+	while (($row = mysql_fetch_array($res)) != null) {
 		$lang_code = $row["Code"];
 		$link = "$document_root/$lang_code.php";
 		if (file_exists($link) && !is_link($link))

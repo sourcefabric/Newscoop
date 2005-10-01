@@ -5,7 +5,7 @@ OBJ_FILES=main.o lex.o atoms.o parser.o actions.o util.o error.o\
  thread.o process_req.o attributes.o data_types.o operators.o\
  cmessage.o cmessagefactory.o cpublication.o cpublicationsregister.o curl.o\
  curlshortnames.o curltype.o curltyperegister.o cxmlreader.o cxmltree.o\
- curltemplatepath.o ccampsiteinstance.o
+ curltemplatepath.o
 
 
 CLEAN_XML_INCLUDE=$(shell echo -n "$(XML_INCLUDE)")
@@ -23,17 +23,11 @@ CFLAGS=-D_REENTRANT -Wall $(INCLUDE_PATH) $(CSOCKET_FLAGS) $(CLEAN_XML_INCLUDE)
 # -D_DEBUG
 
 export CAMPSITE_SERVER=campsite_server
-export CAMPSITECTL=campsitectl
-export CAMPSITEINIT=campsite
-export RC_INIT=/etc/init.d/
 
-all: links scripts $(CAMPSITE_SERVER)
+all: links $(CAMPSITE_SERVER)
 
 links: dummy
-	if [ ! -L "configure.h" ]; then ln -s "$(INSTALL_CONF)/configure.h"; fi
-
-scripts: dummy
-	./create_scripts
+	@if [ ! -L "configure.h" ]; then ln -s "$(INSTALL_CONF)/configure.h"; fi
 
 $(CAMPSITE_SERVER): $(OBJ_FILES)
 	g++ -o $(CAMPSITE_SERVER) $(OBJ_FILES) $(LDFLAGS) $(LIBS)
@@ -46,9 +40,12 @@ clean: dummy
 	g++ -c -o $@ $(CFLAGS) $<
 
 install: all
-	./install_parser
+	mkdir -p $(BIN_DIR)
+	@if [ -f $(BIN_DIR)/$(CAMPSITE_SERVER) ]; then $(KILLALL) -q campsite_server; rm -f $(BIN_DIR)/$(CAMPSITE_SERVER); fi
+	install -o $(APACHE_USER) -g $(APACHE_GROUP) -m 750 $(CAMPSITE_SERVER) "$(BIN_DIR)"
+	./configure_parser
 
 uninstall: dummy
-	./uninstall_parser
+	rm -f $(BIN_DIR)/$(CAMPSITE_SERVER)
 
 dummy:

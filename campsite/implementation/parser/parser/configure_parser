@@ -25,7 +25,10 @@
 #
 ################################################################################
 
-rm -f $BIN_DIR/$CAMPSITE_SERVER
+export CAMPSITECTL=campsitectl
+export CAMPSITEINIT=campsite
+export RC_INIT=/etc/init.d/
+
 rm -f $BIN_DIR/$CAMPSITECTL
 
 if $USER_INSTALL; then exit 0; fi

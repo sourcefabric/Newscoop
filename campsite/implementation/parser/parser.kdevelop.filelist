@@ -77,13 +77,3 @@ parser/cxmlreader.cpp
 parser/cxmlreader.h
 parser/cxmltree.cpp
 parser/cxmltree.h
-parser/CVS/Entries
-parser/CVS/Repository
-parser/CVS/Root
-CVS/Entries
-CVS/Repository
-CVS/Root
-/ccampsiteinstance.h
-/ccampsiteinstance.cpp
-parser/ccampsiteinstance.h
-parser/ccampsiteinstance.cpp

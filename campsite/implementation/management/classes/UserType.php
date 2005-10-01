@@ -81,7 +81,8 @@ class UserType extends DatabaseObject {
 		'EditorUnderline',
 		'EditorUndoRedo',
 		'EditorCopyCutPaste',
-		'ManageReaders');
+		'ManageReaders',
+		'InitializeTemplateEngine');
 	
 	
 	/**

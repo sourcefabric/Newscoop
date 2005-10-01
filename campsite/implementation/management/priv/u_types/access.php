@@ -40,6 +40,8 @@ $content_group = array('ManagePub'=>'User may add/change publications',
 $templates_group = array('ManageTempl'=>'User may manage templates',
 	'DeleteTempl'=>'User may delete templates');
 
+$administrative_group = array('InitializeTemplateEngine'=>'User may restart the template engine');
+
 $users_group = array('ManageUsers'=>'User may add/change staff accounts and passwords',
 	'DeleteUsers'=>'User may delete staff accounts',
 	'ManageReaders'=>'User may add/change subscribers accounts and passwords',
@@ -88,9 +90,9 @@ $editor_group_4 = array('EditorHorizontalRule'=>'User may insert horizontal rule
 	'EditorSubscript'=>'User may use subscripts');
 
 $rights = array('Content'=>$content_group, 'Templates'=>$templates_group,
-	'Staff/Subscribers Management'=>$users_group, 'Article Types'=>$article_types_group,
-	'Languages'=>$languages_group, 'Countries'=>$countries_group,
-	'Miscellaneous'=>$misc_group, 'Localizer'=>$localizer_group,
+	'Staff/Subscribers Management'=>$users_group, 'Administrative tasks'=>$administrative_group,
+	'Article Types'=>$article_types_group, 'Languages'=>$languages_group,
+	'Countries'=>$countries_group, 'Miscellaneous'=>$misc_group, 'Localizer'=>$localizer_group,
 	'Editor Basic Settings'=>$editor_group_1, 'Editor Advanced Font Settings'=>$editor_group_2,
 	'Editor Table Settings'=>$editor_group_3, 'Editor Miscellaneous Settings'=>$editor_group_4);
 
