@@ -57,9 +57,9 @@ if (count($sections) > 0) {
 //    if($nr < $lpp)    $i = $nr;
 	$color= 0;
 	?>
-	<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" WIDTH="100%" class="table_list">
+	<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3"class="table_list">
 	<TR class="table_list_header">
-		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Nr"); ?></B></TD>
+		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Nr"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP">
 			<B><?php  putGS("Name<BR><SMALL>(click to add article)</SMALL>");?></B>
 		</TD>

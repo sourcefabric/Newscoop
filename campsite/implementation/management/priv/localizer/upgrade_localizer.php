@@ -32,7 +32,7 @@ foreach ($list as $pathname) {
         foreach ($languages as $lang) {
             if ($lang['Code'] == $filenameParts[1]) {
             	$twoLetterCode = $lang['Code'];
-                $sourceFile =& new LocalizerLanguage($prefix, $directory, $twoLetterCode);
+                $sourceFile =& new LocalizerLanguage($prefix, $twoLetterCode);
                 $sourceFile->loadGsFile();
             	switch ($twoLetterCode) {
             	case 'en':
@@ -73,7 +73,7 @@ foreach ($list as $pathname) {
                 $sourceFile->saveAsXml();
                 
                 // Verify that the saved file is the same as the original.
-                $copyLanguage =& new LocalizerLanguage($prefix, $directory, $languageCode);
+                $copyLanguage =& new LocalizerLanguage($prefix, $languageCode);
                 $loadSuccess = $copyLanguage->loadXmlFile();
 
                 echo $pathname."\n";

@@ -1,4 +1,4 @@
-INCLUDE_PHP_LIB(<*$ADMIN_DIR/templates*>)dnl
+INCLUDE_PHP_LIB(<*templates*>)dnl
 B_DATABASE
 
 CHECK_BASIC_ACCESS

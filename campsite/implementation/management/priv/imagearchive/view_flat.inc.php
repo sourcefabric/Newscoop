@@ -1,6 +1,6 @@
-<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" WIDTH="100%" class="table_list">
+<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list">
 	<TR class="table_list_header">
-		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="5%">
+		<TD ALIGN="LEFT" VALIGN="TOP">
 		  <table border="0" cellspacing="0" cellpadding="0">
 		  <tr>
 		  	<td valign="top">
@@ -12,7 +12,7 @@
 		  </tr>
 		  </table>
 		</TD>
-		<TD ALIGN="LEFT" VALIGN="TOP" width="35%">
+		<TD ALIGN="LEFT" VALIGN="TOP">
 		  <table border="0" cellspacing="0" cellpadding="0">
 		  <tr>
 		  	<td nowrap valign="top">
@@ -24,7 +24,7 @@
 		  	</tr>
 		  	</table>
 		</TD>
-		<TD ALIGN="LEFT" VALIGN="TOP" width="35%">
+		<TD ALIGN="LEFT" VALIGN="TOP">
 		  <table border="0" cellspacing="0" cellpadding="0">
 		  <tr>
 		  	<td valign="top">
@@ -36,7 +36,7 @@
 		  </tr>
 		  </table>
 		</TD>
-		<TD ALIGN="LEFT" VALIGN="TOP" width="15%">
+		<TD ALIGN="LEFT" VALIGN="TOP">
 		  <table border="0" cellspacing="0" cellpadding="0">
 		  <tr>
 		  	<td nowrap valign="top">
@@ -48,7 +48,7 @@
 		  </tr>
 		  </table>
 		</TD>
-		<TD ALIGN="LEFT" VALIGN="TOP" width="5%">
+		<TD ALIGN="LEFT" VALIGN="TOP">
 		  <table border="0" cellspacing="0" cellpadding="0">
 		  <tr>
 		  	<td nowrap valign="top" align="center">
@@ -62,7 +62,7 @@
 		</TD>
 		<?php
 		if ($User->hasPermission('DeleteImage')) { ?>
-		<TD ALIGN="center" VALIGN="TOP" WIDTH="5%" ><B><?php  putGS("Delete"); ?></B></TD>
+		<TD ALIGN="center" VALIGN="TOP"><B><?php  putGS("Delete"); ?></B></TD>
 	<?php  } ?>
 	</TR>
 	<?php

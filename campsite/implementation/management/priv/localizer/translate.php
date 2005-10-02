@@ -35,26 +35,18 @@ function translationForm($p_request)
 	$localizerSourceLanguage = Input::Get('localizer_source_language', 'string', 
 	                                      '', true);
 	if (empty($localizerSourceLanguage)) {
-		$tmpLanguage =& new LocalizerLanguage(null, null, $p_request['TOL_Language']);
+		$tmpLanguage =& new LocalizerLanguage(null, $p_request['TOL_Language']);
 		$localizerSourceLanguage = $tmpLanguage->getLanguageId();
 	}
 	
-	$directory = Input::Get('dir', 'string', '', true);
-	$base = 'locals';
-	$screenDropDownSelection = $directory;
+	$prefix = Input::Get('prefix', 'string', '', true);
+	$screenDropDownSelection = $prefix;
 	
-	// Special case for 'globals' file.
-	if (($directory == '') || ($directory == '/globals')) {
-		$base = 'globals';
-		$directory = '/';
-		$screenDropDownSelection = '/globals';
-	}
-
 	// Load the language files.
-	//echo "Base: $base, Directory: $directory<br>";
-	$sourceLang =& new LocalizerLanguage($base, $directory, $localizerSourceLanguage);
-	$targetLang =& new LocalizerLanguage($base, $directory, $localizerTargetLanguage);
-	$defaultLang =& new LocalizerLanguage($base, $directory, $g_localizerConfig['DEFAULT_LANGUAGE']);
+	//echo "Prefix: $prefix<br>";
+	$sourceLang =& new LocalizerLanguage($prefix, $localizerSourceLanguage);
+	$targetLang =& new LocalizerLanguage($prefix, $localizerTargetLanguage);
+	$defaultLang =& new LocalizerLanguage($prefix, $g_localizerConfig['DEFAULT_LANGUAGE']);
 	
 	// If the language files do not exist, create them.
 	$mode = Localizer::GetMode();
@@ -93,27 +85,27 @@ function translationForm($p_request)
 	// Build the drop-down menu for selecting which section of the interface to translate.
 	$screens = array();
 	$screens[] = "";
-	$screens["/globals"] = getGS("Globals");
-	$screens["/"] = getGS("Home");
-	$screens["/pub"] = getGS("Publications");
-	$screens["/issues"] = getGS("Issues");
-	$screens["/sections"] = getGS("Sections");
-	$screens["/articles"] = getGS("Articles");
-	$screens["/articles/images"] = getGS("Article Images");
-	$screens["/articles/topics"] = getGS("Article Topics");
-	$screens["/imagearchive"] = getGS("Image Archive");
-	$screens["/templates"] = getGS("Templates");
-	$screens["/a_types"] = getGS("Article Types");
-	$screens["/a_types/fields"] = getGS("Article Type Fields");
-	$screens["/topics"] = getGS("Topics");
-	$screens["/languages"] = getGS("Languages");
-	$screens["/country"] = getGS("Countries");
-	$screens["/localizer"] = getGS("Localizer");
-	$screens["/logs"] = getGS("Logs");
-	$screens["/users"] = getGS("Users");
-	$screens["/u_types"] = getGS("User Types");
-	$screens["/users/subscriptions"] = getGS("User Subscriptions");
-	$screens["/users/subscriptions/sections"] = getGS("User Subscriptions Sections");			
+	$screens["globals"] = getGS("Globals");
+	$screens["home"] = getGS("Home");
+	$screens["pub"] = getGS("Publications");
+	$screens["issues"] = getGS("Issues");
+	$screens["sections"] = getGS("Sections");
+	$screens["articles"] = getGS("Articles");
+	$screens["article_images"] = getGS("Article Images");
+	$screens["article_topics"] = getGS("Article Topics");
+	$screens["imagearchive"] = getGS("Image Archive");
+	$screens["templates"] = getGS("Templates");
+	$screens["article_types"] = getGS("Article Types");
+	$screens["article_type_fields"] = getGS("Article Type Fields");
+	$screens["topics"] = getGS("Topics");
+	$screens["languages"] = getGS("Languages");
+	$screens["country"] = getGS("Countries");
+	$screens["localizer"] = getGS("Localizer");
+	$screens["logs"] = getGS("Logs");
+	$screens["users"] = getGS("Users");
+	$screens["user_types"] = getGS("User Types");
+	$screens["user_subscriptions"] = getGS("User Subscriptions");
+	$screens["user_subscription_sections"] = getGS("User Subscriptions Sections");			
 	
 	// Whether to show translated strings or not.
 	$hideTranslated = '';
@@ -128,7 +120,6 @@ function translationForm($p_request)
 		<table border="0" class="message_box" style="border: 1px solid black;" width="600px;">
 		<form action="index.php" method="post">
 	    <INPUT TYPE="hidden" name="action" value="translate">
-	    <INPUT TYPE="hidden" name="base" value="<?php echo $base; ?>">
 	    <INPUT TYPE="hidden" name="localizer_lang_id" value="<?php echo $targetLang->getLanguageId(); ?>">
 	    <input type="hidden" name="search_string" value="<?php echo htmlspecialchars($searchString); ?>">
 		<tr>
@@ -144,7 +135,7 @@ function translationForm($p_request)
 						<?PHP
 						$extras = ' onchange="this.form.submit();" ';
 						$extras .= ' class="input_select"';
-						camp_html_create_select('dir', $screens, $screenDropDownSelection, $extras, true);
+						camp_html_create_select('prefix', $screens, $screenDropDownSelection, $extras, true);
 						?>
 					</td>
 				</tr>
@@ -209,8 +200,7 @@ function translationForm($p_request)
 			<table border="0" style="background-color: #FAEFFF; border: 1px solid black;" width="600px;" align="center">
 			<form>
 	        <input type="hidden" name="action" value="translate">
-	        <input type="hidden" name="base" value="<?php echo $base; ?>">
-	        <input type="hidden" name="dir" value="<?php echo $screenDropDownSelection; ?>">
+	        <input type="hidden" name="prefix" value="<?php echo $screenDropDownSelection; ?>">
 	        <?php if (!empty($hideTranslated)) { ?>
 	        <input type="hidden" name="hide_translated" value="on">
 	        <?php } ?>
@@ -239,14 +229,13 @@ function translationForm($p_request)
 		<td align="center" valign="top">
 	
 	<?PHP
-	$missingStrings = Localizer::FindMissingStrings($directory);
+	$missingStrings = Localizer::FindMissingStrings($prefix);
 	if ((count($missingStrings) > 0)  && ($screenDropDownSelection != '/globals')) {
 		?>
 		<table align="center" style="background-color: #EDFFDF; border: 1px solid #357654;" width="600px">
         <form action="index.php" method="post">
         <input type="hidden" name="action" value="add_missing_translation_strings">
-        <input type="hidden" name="base" value="<?php echo $base; ?>">
-        <input type="hidden" name="dir" value="<?php echo $screenDropDownSelection; ?>">
+        <input type="hidden" name="prefix" value="<?php echo $screenDropDownSelection; ?>">
         <?php if (!empty($hideTranslated)) { ?>
         <input type="hidden" name="hide_translated" value="on">
         <?php } ?>
@@ -277,14 +266,13 @@ function translationForm($p_request)
 		<?php
 	}
 	
-	$unusedStrings = Localizer::FindUnusedStrings($directory);
+	$unusedStrings = Localizer::FindUnusedStrings($prefix);
 	if ((count($unusedStrings) > 0) && ($screenDropDownSelection != '/globals')) {
 		?>
 		<table align="center" style="background-color: #FFE0DF; border: 1px solid #C51325; margin-top: 3px;" width="600px">
         <form action="index.php" method="post">
         <input type="hidden" name="action" value="delete_unused_translation_strings">
-        <input type="hidden" name="base" value="<?php echo $base; ?>">
-        <input type="hidden" name="dir" value="<?php echo $screenDropDownSelection; ?>">
+        <input type="hidden" name="prefix" value="<?php echo $screenDropDownSelection; ?>">
         <?php if (!empty($hideTranslated)) { ?>
         <input type="hidden" name="hide_translated" value="on">
         <?php } ?>
@@ -320,8 +308,7 @@ function translationForm($p_request)
 	<table border="0" style="padding-left: 5px;">
 	<form action="index.php" method="post">
     <INPUT TYPE="hidden" name="action" value="save_translation">
-    <INPUT TYPE="hidden" name="base" value="<?php echo $g_localizerConfig['FILENAME_PREFIX']; ?>">
-    <INPUT TYPE="hidden" name="dir" value="<?php echo $screenDropDownSelection; ?>">
+    <INPUT TYPE="hidden" name="prefix" value="<?php echo $screenDropDownSelection; ?>">
     <?php if (!empty($hideTranslated)) { ?>
     <input type="hidden" name="hide_translated" value="on">
     <?php } ?>
@@ -387,8 +374,7 @@ function translationForm($p_request)
 	        if ($targetLang->getLanguageId() == $g_localizerConfig['DEFAULT_LANGUAGE']) {     
 	            $fileparms = "localizer_target_language=".$targetLang->getLanguageId()
 	           		."&localizer_source_language=".$sourceLang->getLanguageId()
-	            	."&base=".$base
-	            	."&dir=".urlencode($screenDropDownSelection)
+	            	."&prefix=".urlencode($screenDropDownSelection)
 	            	."&search_string=".urlencode($searchString);
 	        	if (!empty($hideTranslated)) { 
 	        		$fileparms .= "&hide_translated=on";

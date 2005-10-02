@@ -1,8 +1,8 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
 require_once($Campsite['HTML_DIR']."/$ADMIN_DIR/lib_campsite.php");
-$globalfile=selectLanguageFile($Campsite['HTML_DIR'] . "/$ADMIN_DIR",'globals');
-$localfile=selectLanguageFile("$ADMIN_DIR/issues","locals");
+$globalfile=selectLanguageFile('globals');
+$localfile=selectLanguageFile("issues");
 @include_once($globalfile);
 @include_once($localfile);
 require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/languages.php");
@@ -94,12 +94,12 @@ require_once($_SERVER['DOCUMENT_ROOT']."/db_connect.php");
 	$i= $lpp;
                         if($nr < $lpp) $i = $nr;
 	$color= 0;
-?><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" WIDTH="100%" class="table_list">
+?><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list">
 	<TR class="table_list_header">
-		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Nr"); ?></B></TD>
-		<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("Name"); ?></B></TD>
-		<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("Language"); ?></B></TD>
-		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>"); ?></B></TD>
+		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Nr"); ?></B></TD>
+		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Name"); ?></B></TD>
+		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Language"); ?></B></TD>
+		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>"); ?></B></TD>
 	</TR>
 
 <?php 

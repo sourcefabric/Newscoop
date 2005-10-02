@@ -1,8 +1,8 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
 require_once($Campsite['HTML_DIR']."/$ADMIN_DIR/lib_campsite.php");
-$globalfile=selectLanguageFile($Campsite['HTML_DIR'] . "/$ADMIN_DIR",'globals');
-$localfile=selectLanguageFile("$ADMIN_DIR/pub","locals");
+$globalfile=selectLanguageFile('globals');
+$localfile=selectLanguageFile("pub");
 @include_once($globalfile);
 @include_once($localfile);
 require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/languages.php");
@@ -81,7 +81,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/db_connect.php");
 	$nr= $NUM_ROWS;
 	$i=10;
 	$color=0;
-?><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" WIDTH="100%" class="table_list">
+?><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list">
 	<TR class="table_list_header">
 		<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("Name<BR><SMALL>(click to select the publication)</SMALL>"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="20%" ><B><?php  putGS("Site"); ?></B></TD>

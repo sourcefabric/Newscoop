@@ -33,7 +33,7 @@ if ($canManage) {
 </tr>
 </table>
 
-<table border="0" cellspacing="0" cellpadding="3" class="table_input" style="margin-bottom: 10px; margin-top: 5px;" align="center">
+<table border="0" cellspacing="0" cellpadding="3" class="table_input" style="margin-bottom: 10px; margin-top: 5px; margin-left: 10px;">
 <form method="POST" action="index.php">
 <input type="hidden" name="uType" value="<?php pencHTML($uType); ?>">
 <input type="hidden" name="userOffs" value="<?php pencHTML($userOffs); ?>">
@@ -146,7 +146,7 @@ $res = $Campsite['db']->SelectLimit($sql, $lpp+1, $userOffs);
 if (gettype($res) == 'object' && $res->NumRows() > 0) {
 	$nr = $res->NumRows();
 	$last = $nr > $lpp ? $lpp : $nr;
-?><table border="0" cellspacing="1" cellpadding="3" width="100%" class="table_list">
+?><table border="0" cellspacing="1" cellpadding="3" class="table_list">
 	<tr class="table_list_header">
 		<td align="left" valign="top"><b><?php putGS("Full Name"); ?></b></td>
 		<td align="left" valign="top"><b><?php putGS("User Name"); ?></b></td>
@@ -155,7 +155,7 @@ if (gettype($res) == 'object' && $res->NumRows() > 0) {
 		<td align="left" valign="top"><b><?php putGS("Subscriptions"); ?></b></td>
 <?php } ?>
 <?php if ($canDelete) { ?>
-		<td align="left" valign="top" width="1%"><b><?php putGS("Delete"); ?></b></td>
+		<td align="left" valign="top"><b><?php putGS("Delete"); ?></b></td>
 <?php } ?>
 	</TR>
 <?php 

@@ -1,8 +1,8 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
 require_once($Campsite['HTML_DIR']."/$ADMIN_DIR/lib_campsite.php");
-$globalfile=selectLanguageFile($Campsite['HTML_DIR'] . "/$ADMIN_DIR",'globals');
-$localfile=selectLanguageFile("$ADMIN_DIR/issues","locals");
+$globalfile=selectLanguageFile('globals');
+$localfile=selectLanguageFile("issues");
 @include_once($globalfile);
 @include_once($localfile);
 require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/languages.php");
@@ -93,7 +93,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/db_connect.php");
 		$nr=getNumVar($q_nr,0);
 ?><P>
 <FORM NAME="dialog" METHOD="POST" ACTION="do_add_new.php"  >
-<CENTER><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input" ALIGN="CENTER">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 	<TR>
 		<TD COLSPAN="2">
 			<B><?php  putGS("Add new issue"); ?></B>

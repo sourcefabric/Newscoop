@@ -1,4 +1,4 @@
-INCLUDE_PHP_LIB(<*$ADMIN_DIR/a_types*>)
+INCLUDE_PHP_LIB(<*article_types*>)
 B_DATABASE
 <?php  todef('cName');
 $correct= 1;

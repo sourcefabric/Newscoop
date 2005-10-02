@@ -1,6 +1,6 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
-load_common_include_files($ADMIN_DIR);
+load_common_include_files("home");
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
 	header("Location: /$ADMIN/login.php");

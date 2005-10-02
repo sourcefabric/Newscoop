@@ -1,5 +1,5 @@
 B_HTML
-INCLUDE_PHP_LIB(<*$ADMIN_DIR/users/subscriptions*>)
+INCLUDE_PHP_LIB(<*user_subscriptions*>)
 B_DATABASE
 
 CHECK_BASIC_ACCESS

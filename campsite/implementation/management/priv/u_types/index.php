@@ -36,12 +36,12 @@ if ($NUM_ROWS) {
 	$i=$lpp;
 	$color= 0;
 ?>
-<table border="0" cellspacing="1" cellpadding="3" width="100%" class="table_list">
+<table border="0" cellspacing="1" cellpadding="3" class="table_list">
 	<tr class="table_list_header">
 		<td align="left" valign="top"><B><?php putGS("Type"); ?></b></td>
 	<?php if ($canManage) { ?>
-		<td align="left" valign="top" width="1%"><b><?php putGS("Access"); ?></b></td>
-		<td align="left" valign="top" width="1%"><b><?php putGS("Delete"); ?></b></td>
+		<td align="left" valign="top"><b><?php putGS("Access"); ?></b></td>
+		<td align="left" valign="top"><b><?php putGS("Delete"); ?></b></td>
 	<?php } ?>
 	</tr>
 	<?php 

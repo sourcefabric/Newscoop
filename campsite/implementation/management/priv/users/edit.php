@@ -53,9 +53,9 @@ if ($userId > 0) {
 </table>
 <?php } ?>
 
-<table border="0" align="center">
+<table border="0">
 <tr>
-	<td rowspan="2" valign="top" align="center" height="1%">
+	<td rowspan="2" valign="top" height="1%">
 		<?php require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/info.php"); ?>
 	</td>
 <?php if ($userId > 0) { ?>

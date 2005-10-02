@@ -5,7 +5,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/classes/Publication.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Issue.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Section.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/DynMenuItem.php");
-load_common_include_files("$ADMIN_DIR");
+load_common_include_files("home");
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
 	exit;

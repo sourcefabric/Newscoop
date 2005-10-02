@@ -1,6 +1,6 @@
-<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" WIDTH="100%" class="table_list">
+<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" class="table_list">
     <TR class="table_list_header">
-        <TD ALIGN="LEFT" VALIGN="TOP" WIDTH="5%">
+        <TD ALIGN="LEFT" VALIGN="TOP">
           <table border="0" cellspacing="0" cellpadding="0">
           <tr>
           	<td style="padding: 3px;">
@@ -12,7 +12,7 @@
           	</tr>
           	</table>
         </TD>
-        <TD ALIGN="LEFT" VALIGN="TOP" width="35%">
+        <TD ALIGN="LEFT" VALIGN="TOP">
           <table border="0" cellspacing="0" cellpadding="0">
           <tr>
           	<td style="padding: 3px;">
@@ -24,7 +24,7 @@
           	</tr>
           	</table>
         </TD>
-        <TD ALIGN="LEFT" VALIGN="TOP" width="20%">
+        <TD ALIGN="LEFT" VALIGN="TOP">
           <table border="0" cellspacing="0" cellpadding="0" >
           <tr>
           	<td style="padding: 3px;">
@@ -36,7 +36,7 @@
           	</tr>
           	</table>
         </TD>
-        <TD ALIGN="LEFT" VALIGN="TOP" width="20%">
+        <TD ALIGN="LEFT" VALIGN="TOP">
           <table border="0" cellspacing="0" cellpadding="0">
           <tr>
           	<td style="padding: 3px;">
@@ -48,7 +48,7 @@
           	</tr>
           	</table>
         </TD>
-        <TD ALIGN="LEFT" VALIGN="TOP" width="15%">
+        <TD ALIGN="LEFT" VALIGN="TOP">
           <table border="0" cellspacing="0" cellpadding="0">
           <tr>
           	<td style="padding: 3px;" nowrap>
@@ -60,7 +60,7 @@
           	</tr>
           	</table>
         </TD>
-        <TD ALIGN="LEFT" VALIGN="TOP" width="5%">
+        <TD ALIGN="LEFT" VALIGN="TOP">
           <table border="0" cellspacing="0" cellpadding="0">
           <tr>
           	<td align="center" style="padding: 3px;" nowrap>
@@ -74,7 +74,7 @@
         </TD>
         <?php
         if ($User->hasPermission('DeleteImage')) { ?>
-        <TD ALIGN="center" VALIGN="TOP" WIDTH="5%" style="padding: 3px;"><B><?php  putGS("Delete"); ?></B></TD>
+        <TD ALIGN="center" VALIGN="TOP" style="padding: 3px;"><B><?php  putGS("Delete"); ?></B></TD>
     <?php  } ?>
     </TR>  
     <?php

@@ -1,6 +1,6 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
-load_common_include_files("$ADMIN_DIR/articles/topics");
+load_common_include_files("article_topics");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Article.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Section.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Issue.php");

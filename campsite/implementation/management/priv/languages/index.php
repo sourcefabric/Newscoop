@@ -1,6 +1,6 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
-load_common_include_files("$ADMIN_DIR/languages");
+load_common_include_files("languages");
 require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/languages.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
@@ -41,17 +41,17 @@ $languages = Language::GetAllLanguages();
 <?php 
 if (count($languages) > 0) {
 	$color= 0; ?>
-	<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" WIDTH="100%" class="table_list">
+	<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list">
 	<TR class="table_list_header">
 		<TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Language"); ?></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Native name"); ?></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Code"); ?></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Code page"); ?></TD>
         <?php if ($User->hasPermission('ManageLanguages')) { ?>
-		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Edit"); ?></B></TD>
+		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Edit"); ?></B></TD>
         <?php  }
         if ($User->hasPermission('DeleteLanguages')) { ?>
-		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Delete"); ?></B></TD>
+		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Delete"); ?></B></TD>
         <?php  } ?>
 	</TR>
     <?php 

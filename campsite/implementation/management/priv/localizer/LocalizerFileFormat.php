@@ -13,7 +13,6 @@ class LocalizerFileFormat {
 	function save(&$p_localizerLanguage) { }
 	function getFilePath($p_localizerLanguage) { }
 	function getFilePattern($p_languageId = null) { }
-	function getLanguagesInDirectory($p_prefix, $p_directory) { }	
 } // class LocalizerFileFormat
 
 
@@ -112,9 +111,8 @@ class LocalizerFileFormat_GS extends LocalizerFileFormat {
 	function getFilePath($p_localizerLanguage) 
 	{
 	    global $g_localizerConfig;
-       	return $g_localizerConfig['BASE_DIR'].$p_localizerLanguage->getDirectory()
-       	    .'/'.$p_localizerLanguage->getPrefix()
-       	    .'.'.$p_localizerLanguage->getLanguageCode().'.php';	    
+       	return $g_localizerConfig['TRANSLATION_DIR'].'/'.$p_localizerLanguage->getLanguageCode()
+       	    .'/'.$p_localizerLanguage->getPrefix().'.php';	    
 	} // fn getFilePath
 	
 	
@@ -147,26 +145,6 @@ class LocalizerFileFormat_GS extends LocalizerFileFormat {
         return $metadata;
 	} // fn getLanguages
 	
-	/**
-	 * @return array
-	 */
-	function getLanguagesInDirectory($p_prefix, $p_directory) 
-	{
-	    global $g_localizerConfig;
-    	// Detect files directly
-        $files = File_Find::mapTreeMultiple($g_localizerConfig['BASE_DIR'].$p_directory, 1);
-        $languageDefs = array();
-        foreach ($files as $key => $filename) {
-            if (preg_match("/$p_prefix\.[a-z]{2}\.php/", $filename)) {
-                list($lost, $id, $lost) = explode('.', $filename);
-        		$languageDef =& new LanguageMetadata();
-        		$languageDef->m_languageId = $id;
-        		$languageDef->m_languageCode = $id;
-                $languageDefs[] = $languageDef;
-            }
-        }
-        return $languageDefs;
-	}
 } // class LocalizerFileFormat_GS
 
 
@@ -273,10 +251,10 @@ class LocalizerFileFormat_XML extends LocalizerFileFormat {
 	function getFilePath($p_localizerLanguage) 
 	{
 	    global $g_localizerConfig;
-       	return $g_localizerConfig['BASE_DIR'].$p_localizerLanguage->getDirectory()
-       	    .'/'.$p_localizerLanguage->getPrefix()
-       	    .'.'.$p_localizerLanguage->getLanguageCode()
-       	    .'_'.$p_localizerLanguage->getCountryCode().'.php';
+       	return $g_localizerConfig['TRANSLATION_DIR'].'/'
+       	    .$p_localizerLanguage->getLanguageCode()
+       	    .'_'.$p_localizerLanguage->getCountryCode()
+       	    .'/'.$p_localizerLanguage->getPrefix().'.php';
 	} // fn getFilePath
 
 	
@@ -308,7 +286,7 @@ class LocalizerFileFormat_XML extends LocalizerFileFormat {
 	function getLanguages() 
 	{
 	    global $g_localizerConfig;
-	    $fileName = $g_localizerConfig['BASE_DIR']
+	    $fileName = $g_localizerConfig['TRANSLATION_DIR']
 	               .$g_localizerConfig['LANGUAGE_METADATA_FILENAME'];
     	if (file_exists($fileName)) {
     		$xml = File::readAll($path);
@@ -327,35 +305,10 @@ class LocalizerFileFormat_XML extends LocalizerFileFormat {
             }
         }
         else {
-            return LocalizerFileFormat_XML::getLanguagesInDirectory('locals', '/');
+            return Localizer::GetLanguages('locals');
         }
 	} // fn getLanguages
 	
-	
-	/**
-	 * @param string $p_prefix
-	 * @param string $p_directory
-	 * @return array
-	 */
-	function getLanguagesInDirectory($p_prefix, $p_directory) 
-	{
-	    global $g_localizerConfig;
-    	// Detect files directly
-        $files = File_Find::mapTreeMultiple($g_localizerConfig['BASE_DIR'].$p_directory, 1);
-        $languageDefs = array();
-        foreach ($files as $key => $filename) {
-            if (preg_match("/$p_prefix\.[a-z]{2}_[^.]*\.xml/", $filename)) {
-                list($lost, $id, $lost, $lost) = explode('.', $filename);
-        		list($languageCode, $countryCode) = explode('_', $id);
-        		$languageDef =& new LanguageMetadata();
-        		$languageDef->m_languageId = $id;
-        		$languageDef->m_languageCode = $languageCode;
-        		$languageDef->m_countryCode = $countryCode;
-                $languageDefs[] = $code;
-            }
-        }
-        return $languageDefs;
-	}
 	
 } // class LocalizerFileFormat_XML
 ?>

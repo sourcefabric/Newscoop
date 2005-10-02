@@ -148,11 +148,13 @@ hr {
 .table_input {
 	background-color: #d5e2ee;
 	border: 1px solid #8baed1;
+	margin-left: 15px;
 }
 
 .message_box {
 	background-color: #d5e2ee;
 	border: 1px solid #8baed1;
+	margin-left: 15px;
 }
 
 .search_dialog {
@@ -161,22 +163,25 @@ hr {
 }
 
 .breadcrumb {
-    color: #2F667F; /* #35738F;*/ /*#3c81a0;*/
+    color: #2F667F; 
+    font-weight: bold;
 }
 
 .breadcrumb:visited {
-    color: #2F667F; /*#3c81a0;*/
+    color: #2F667F; 
+    font-weight: bold;
 }
 
 .breadcrumb_active {
     color: #d95022;
 	font-weight: bold;
-	/*font-size: larger;*/
+	font-size: larger;
 }
 
 .breadcrumb_active:visited {
     color: #d95022;
 	font-weight: bold;
+	font-size: larger;
 }
 
 .breadcrumb_separator {

@@ -1,4 +1,4 @@
-INCLUDE_PHP_LIB(<*$ADMIN_DIR/a_types/fields*>)
+INCLUDE_PHP_LIB(<*article_type_fields*>)
 B_DATABASE
 <?php 
     todef('cName');

@@ -1,6 +1,6 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
-load_common_include_files("$ADMIN_DIR/issues");
+load_common_include_files("issues");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Publication.php');
@@ -42,8 +42,7 @@ camp_html_content_top(getGS('Change issue status'), array('Pub' => $publicationO
 ?>
 
 <P>
-<CENTER>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box" ALIGN="CENTER">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">
 <TR>
 	<TD COLSPAN="2">
 		<B><?php  putGS("Change issue status"); ?> </B>
@@ -70,6 +69,6 @@ camp_html_content_top(getGS('Change issue status'), array('Pub' => $publicationO
 	</DIV>
 	</TD>
 </TR>
-</TABLE></CENTER>
+</TABLE>
 <P>
 <?php camp_html_copyright_notice(); ?>

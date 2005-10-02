@@ -416,10 +416,10 @@ function ifYthenCHECKED($q,$f)
  * @param string $p_name
  * @return void
  */
-function selectLanguageFile($p_path, $p_name) 
+function selectLanguageFile($p_name) 
 {
     require_once('localizer/Localizer.php');
-    Localizer::LoadLanguageFilesAbs($p_path, $p_name);
+    Localizer::LoadLanguageFiles($p_name);
 } // fn selectLanguageFile
 
 

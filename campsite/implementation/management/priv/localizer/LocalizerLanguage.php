@@ -21,7 +21,6 @@ class LocalizerLanguage {
 	var $m_languageId = '';
 	var $m_mode = '';
 	var $m_prefix = '';
-	var $m_directory = '';
 	var $m_filePath = '';
 	
 	/**
@@ -42,13 +41,12 @@ class LocalizerLanguage {
 	 *      2) The two-letter language code, underscore, two-letter country code
 	 *         (e.g. "en_US")
 	 */
-	function LocalizerLanguage($p_prefix, $p_directory, $p_languageId = null) 
+	function LocalizerLanguage($p_prefix, $p_languageId = null) 
 	{
 		if (!is_null($p_languageId)) {
 			$this->setLanguageId($p_languageId);
 		}
 		$this->m_prefix = $p_prefix;
-		$this->m_directory = $p_directory;
 	} // constructor
 	
 
@@ -60,16 +58,6 @@ class LocalizerLanguage {
 	{
 	    return $this->m_prefix;
 	} // fn getPrefix
-	
-	
-	/**
-	 * Return the directory where the translation file is stored.
-	 * @return string
-	 */
-	function getDirectory() 
-	{
-	    return $this->m_directory;
-	} // fn getDirectory
 	
 	
 	/**
@@ -246,12 +234,12 @@ class LocalizerLanguage {
     		$p_mode = $this->m_mode;
     	}    	
     	if ($p_mode == 'xml') {
-        	$relativePath = $this->m_directory.'/'.$this->m_prefix.'.'.$this->m_languageId.'.xml';
+        	$relativePath = '/'.$this->m_languageId.'/'.$this->m_prefix.'.xml';
     	}
     	else {
-    		$relativePath = $this->m_directory.'/'.$this->m_prefix.'.'.$this->m_languageCode.'.php';
+    		$relativePath = '/'.$this->m_languageCode.'/'.$this->m_prefix.'.php';
     	}
-    	return $g_localizerConfig['BASE_DIR'].$relativePath;
+    	return $g_localizerConfig['TRANSLATION_DIR'].$relativePath;
     } // fn getFilePath
 
     
@@ -518,7 +506,6 @@ class LocalizerLanguage {
     {
         global $g_localizerConfig;
         $defaultLanguage =& new LocalizerLanguage($this->m_prefix, 
-                                                  $this->m_directory, 
                                                   $g_localizerConfig['DEFAULT_LANGUAGE']);
         $defaultLanguage->loadFile(Localizer::GetMode());
         $defaultTranslationTable = $defaultLanguage->getTranslationTable();
@@ -544,7 +531,6 @@ class LocalizerLanguage {
     {
         global $g_localizerConfig;
         $defaultLanguage =& new LocalizerLanguage($this->m_prefix, 
-                                                  $this->m_directory, 
                                                   $g_localizerConfig['DEFAULT_LANGUAGE']);
         $defaultLanguage->loadFile(Localizer::GetMode());
         $defaultTranslationTable = $defaultLanguage->getTranslationTable();

@@ -57,8 +57,8 @@ else {
 }
 
 // Load the language files.
-selectLanguageFile("/", "globals");
-selectLanguageFile("/", "locals");
+selectLanguageFile("globals");
+selectLanguageFile("home");
 
 ?>
 <head>

@@ -35,6 +35,10 @@ $g_localizerConfig['DEFAULT_FILE_TYPE'] = 'gs';
 // that need translation files.
 $g_localizerConfig['BASE_DIR'] = $_SERVER['DOCUMENT_ROOT'].'/admin-files';
 
+// The top-level directory to the set of directories
+// that need translation files.
+$g_localizerConfig['TRANSLATION_DIR'] = $_SERVER['DOCUMENT_ROOT'].'/admin-files/lang';
+
 // Name of the XML file that contains the list of supported languages.
 $g_localizerConfig['LANGUAGE_METADATA_FILENAME'] = 'languages.xml';
 

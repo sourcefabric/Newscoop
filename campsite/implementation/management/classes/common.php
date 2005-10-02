@@ -9,8 +9,8 @@ function load_common_include_files($p_currentDir)
 	global $ADMIN_DIR;
 	require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
 	require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/lib_campsite.php");
-	selectLanguageFile($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR",'globals');
-	selectLanguageFile($_SERVER['DOCUMENT_ROOT']."/$p_currentDir",'locals');
+	selectLanguageFile('globals');
+	selectLanguageFile("$p_currentDir");
 	require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/languages.php");
 } // fn load_common_include_files
 

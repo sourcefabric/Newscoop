@@ -95,7 +95,7 @@ $rights = array('Content'=>$content_group, 'Templates'=>$templates_group,
 </table>
 
 <form name="dialog" method="post" action="do_add.php" >
-<p><table border="0" cellspacing="0" cellpadding="1" class="table_input" align="center">
+<p><table border="0" cellspacing="0" cellpadding="1" class="table_input">
 	<tr>
 		<td colspan="2" style="padding-top: 5px; padding-left: 10px;">
 			<b><?php  putGS("Add new user type"); ?></b>

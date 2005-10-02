@@ -1,4 +1,4 @@
-INCLUDE_PHP_LIB(<*$ADMIN_DIR/users/subscriptions/sections*>)
+INCLUDE_PHP_LIB(<*user_subscription_sections*>)
 B_DATABASE
 
 CHECK_BASIC_ACCESS
