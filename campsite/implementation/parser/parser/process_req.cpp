@@ -88,6 +88,8 @@ int RunParser(MYSQL* p_pSQL, CURL* p_pcoURL, const char* p_pchRemoteIP, sockstre
 	string coStr;
 	bool bDebug = false, bPreview = false, bTechDebug = false;
 	char pchBuf[300];
+	const CPublication* pcoPub = NULL;
+	id_type nIssue = -1;
 	pcoCtx->SetIP(htonl(inet_addr(p_pchRemoteIP)));
 	if ((coStr = p_pcoURL->getValue(P_IDLANG)) != "")
 	{
@@ -98,11 +100,13 @@ int RunParser(MYSQL* p_pSQL, CURL* p_pcoURL, const char* p_pchRemoteIP, sockstre
 	{
 		pcoCtx->SetPublication(atol(coStr.c_str()));
 		pcoCtx->SetDefPublication(atol(coStr.c_str()));
+		pcoPub = CPublicationsRegister::getInstance().getPublication(pcoCtx->Publication());
 	}
 	if ((coStr = p_pcoURL->getValue(P_NRISSUE)) != "")
 	{
 		pcoCtx->SetIssue(atol(coStr.c_str()));
 		pcoCtx->SetDefIssue(atol(coStr.c_str()));
+		nIssue = pcoCtx->Issue();
 	}
 	if ((coStr = p_pcoURL->getValue(P_NRSECTION)) != "")
 	{
@@ -359,7 +363,6 @@ int RunParser(MYSQL* p_pSQL, CURL* p_pcoURL, const char* p_pchRemoteIP, sockstre
 		{
 			id_type nLanguage = p_pcoURL->getLanguage();
 			id_type nPublication = p_pcoURL->getPublication();
-			id_type nIssue = p_pcoURL->getIssue();
 			id_type nSection = p_pcoURL->getSection();
 			id_type nArticle = p_pcoURL->getArticle();
 			coTemplate = p_pcoURL->getDocumentRoot() + "/look/"
@@ -396,25 +399,36 @@ int RunParser(MYSQL* p_pSQL, CURL* p_pcoURL, const char* p_pchRemoteIP, sockstre
 #endif
 		CParser::setMYSQL(NULL);
 	}
+	catch (InvalidValue& rcoEx)
+	{
+		stringstream coStr;
+		if (pcoPub != NULL && nIssue > 0)
+		{
+			coStr << "Please verify if the issue, section and article templates were set for "
+					<< "publication " << *(pcoPub->getAliases().begin())
+					<< ", issue number " << nIssue << ".";
+		}
+		else
+		{
+			coStr << "Internal error of invalid value: " << rcoEx.what();
+		}
+		throw RunException(coStr.str());
+	}
 	catch (ExStat& rcoEx)
 	{
 		throw RunException("Error loading template file");
-		return -1;
 	}
 	catch (RunException& rcoEx)
 	{
 		throw rcoEx;
-		return -1;
 	}
 	catch (ExMutex& rcoEx)
 	{
 		throw RunException(rcoEx.Message());
-		return -1;
 	}
 	catch (bad_alloc& rcoEx)
 	{
-		throw RunException("bad alloc");
-		return -1;
+		throw RunException("unable to allocate memory");
 	}
 	return 0;
 }

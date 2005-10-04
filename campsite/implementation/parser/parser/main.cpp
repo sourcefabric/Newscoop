@@ -185,6 +185,9 @@ void* MyThreadRoutine(void* p_pArg)
 	fd_set clSet;
 	FD_ZERO(&clSet);
 	FD_SET((SOCKET)*pcoClSock, &clSet);
+	outbuf coOutBuf((SOCKET)*pcoClSock);
+	sockstream coOs(&coOutBuf);
+	string coErrorMsg;
 	MYSQL* pSql = NULL;
 	try
 	{
@@ -218,8 +221,6 @@ void* MyThreadRoutine(void* p_pArg)
 		cout << "url type: " << pcoURLType->getTypeName() << endl;
 #endif
 
-		outbuf coOutBuf((SOCKET)*pcoClSock);
-		sockstream coOs(&coOutBuf);
 		pSql = MYSQLConnection();
 		if (pSql == NULL)		// unable to connect to server
 		{
@@ -230,44 +231,57 @@ void* MyThreadRoutine(void* p_pArg)
 		{
 			RunParser(MYSQLConnection(), pcoURL, coRemoteAddress.c_str(), coOs);
 		}
-		coOs.flush();
-		delete pcoClSock;
 	}
 	catch (RunException& coEx)
 	{
-		delete pcoClSock;
+		coErrorMsg = coEx.what();
 #ifdef _DEBUG
-		cerr << "MyThreadRoutine: " << coEx.what() << endl;
+		cerr << "MyThreadRoutine: " << coEx.what() << " (RunException)" << endl;
 #endif
 	}
 	catch (SocketErrorException& coEx)
 	{
-		delete pcoClSock;
+		coErrorMsg = string("There was an error communicating with the template engine: ")
+				+ coEx.Message() + "! Please restart the template engine.";
 #ifdef _DEBUG
-		cerr << "MyThreadRoutine: " << coEx.Message() << endl;
+		cerr << "MyThreadRoutine: " << coEx.Message() << " (SocketErrorException)" << endl;
 #endif
 	}
 	catch (out_of_range& coEx)
 	{
-		delete pcoClSock;
+		coErrorMsg = string("Internal out of range error: ") + coEx.what();
 #ifdef _DEBUG
-		cerr << "MyThreadRoutine: " << coEx.what() << endl;
+		cerr << "MyThreadRoutine: " << coEx.what() << " (out_of_range)" << endl;
 #endif
 	}
 	catch (bad_alloc& coEx)
 	{
-		delete pcoClSock;
+		coErrorMsg = string("Internal memory allocation error: ") + coEx.what();
 #ifdef _DEBUG
-		cerr << "MyThreadRoutine: unable to allocate memory: " << coEx.what() << endl;
+		cerr << "MyThreadRoutine: " << coEx.what() << " (bad_alloc)" << endl;
 #endif
 	}
 	catch (exception& coEx)
 	{
-		delete pcoClSock;
+		coErrorMsg = string("Internal error: ") + coEx.what();
 #ifdef _DEBUG
-		cerr << coEx.what() << endl;
+		cerr << "MyThreadRoutine: " << coEx.what() << " (exception)" << endl;
 #endif
 	}
+	catch (...)
+	{
+		coErrorMsg = "Unknown internal error";
+#ifdef _DEBUG
+		cerr << "MyThreadRoutine: other exception" << endl;
+#endif
+	}
+	if (coErrorMsg != "")
+	{
+		coOs << "<html><body><font color=red><h2>There were errors!</h2>" << endl
+				<< "<pre>" << coErrorMsg << "</pre>" << endl << "</body></html>" << endl;
+	}
+	coOs.flush();
+	delete pcoClSock;
 	return NULL;
 }
 
