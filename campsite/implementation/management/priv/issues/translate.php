@@ -1,10 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
-load_common_include_files("issues");
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Publication.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Issue.php');
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/issues/issue_common.php");
 
 // Check permissions
 list($access, $User) = check_basic_access($_REQUEST);
@@ -70,7 +65,7 @@ camp_html_content_top(getGS('Add new translation'), array('Pub' => $publicationO
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("URL Name"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cShortName" size="32" maxlength="64" value="<?php echo htmlspecialchars($issueObj->getShortName()); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="cShortName" size="32" maxlength="64" value="<?php echo htmlspecialchars($issueObj->getUrlName()); ?>">
 	</TD>
 </TR>
 

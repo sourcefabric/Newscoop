@@ -73,7 +73,7 @@ if (count($allSections) > 0) {
 		</TD>
 		
 		<TD >
-			<?php p(htmlspecialchars($section->getShortName())); ?>
+			<?php p(htmlspecialchars($section->getUrlName())); ?>
 		</TD>
 		
 		<?php  if ($User->hasPermission('ManageSection')) { ?>

@@ -244,16 +244,16 @@ function camp_html_content_top($p_title, $p_objArray, $p_includeLinks = true, $p
                 ."&Article=".$articleObj->getArticleId()
                 ."&sLanguage=".$sectionObj->getLanguageId());
 	}
+	if (is_array($p_extraBreadcrumbs)) {
+	    //print_r($p_extraBreadcrumbs);
+		foreach ($p_extraBreadcrumbs as $text => $link) {
+		    $breadcrumbs[] = array($text, $link);
+		}
+	}
 	$breadcrumbs[] = array($p_title, "");
-//	if (is_array($p_extraBreadcrumbs)) {
-//	    //print_r($p_extraBreadcrumbs);
-//		foreach ($p_extraBreadcrumbs as $text => $link) {
-//		    $breadcrumbs[] = array($text => $link);
-//		}
-//	}
-	echo "<pre>";
+	//echo "<pre>";
 	//print_r($breadcrumbs);
-	echo "</pre>";
+	//echo "</pre>";
 	?>
 <HEAD>
 	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">

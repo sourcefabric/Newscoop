@@ -130,10 +130,10 @@ class Section extends DatabaseObject {
 	/**
 	 * @return string
 	 */
-	function getShortName() 
+	function getUrlName() 
 	{
 		return $this->getProperty('ShortName');
-	} // fn getShortName
+	} // fn getUrlName
 	
 	
 	/**
@@ -222,7 +222,7 @@ class Section extends DatabaseObject {
     		$shortName = $p_destSectionId;
     		$sectionName = $this->getName() . " (duplicate)";
     	} else {
-    		$shortName = $this->getShortName();
+    		$shortName = $this->getUrlName();
     		$sectionName = $this->getName();
     	}
     	$dstSectionCols = array();

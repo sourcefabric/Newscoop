@@ -41,7 +41,7 @@ if (function_exists ("incModFile")) {
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
 				  'Section' => $sectionObj);
-camp_html_content_top(getGS('Add new article'), $topArray, true, true);
+camp_html_content_top(getGS('Add new article'), $topArray, true, true, array(getGS("Articles") => "/$ADMIN/articles/?Pub=$Pub&Issue=$Issue&Section=$Section&Language=$Language"));
 
 ?>
 

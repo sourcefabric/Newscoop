@@ -30,7 +30,7 @@ if (function_exists ("incModFile")) {
 }
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj);
-camp_html_content_top(getGS('Add new section'), $topArray);
+camp_html_content_top(getGS('Add new section'), $topArray, true, false, array(getGS("Sections") => "/$ADMIN/sections/?Pub=$Pub&Issue=$Issue&Language=$Language"));
 
 ?>
 <P>

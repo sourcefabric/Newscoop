@@ -38,7 +38,7 @@ class Issue extends DatabaseObject {
 	var $m_languageName = null;
 	
 	/**
-	 * 
+	 * A publication has Issues, Issues have Sections and Articles.
 	 * @param int $p_publicationId
 	 * @param int $p_languageId
 	 * @param int $p_issueId
@@ -58,10 +58,16 @@ class Issue extends DatabaseObject {
 	/**
 	 * Create an issue.
 	 * @param string $p_shortName
+	 * @param array $p_values
+	 * @return boolean
 	 */
-	function create($p_shortName) 
+	function create($p_shortName, $p_values = null) 
 	{
-	    return parent::create(array('ShortName' => $p_shortName));
+	    $tmpValues = array('ShortName' => $p_shortName);
+	    if (!is_null($p_values)) {
+	       $tmpValues = array_merge($p_values, $tmpValues);
+	    }
+	    return parent::create($tmpValues);
 	} // fn create
 	
 	
@@ -85,37 +91,88 @@ class Issue extends DatabaseObject {
 	
 	
 	/**
-	 * Create a translation of the issue.  This will copy all of the 
-	 * sections as well, but not the articles.
-	 *
-	 *
+	 * Copy this issue and all sections.
+	 * @param int $p_destPublicationId
+	 * @param int $p_destIssueId
+	 * @param int $p_destLanguageId
+	 * @return Issue
 	 */
-	function createTranslation($p_languageId, $p_name, $p_urlName = null) 
+	function __copy($p_destPublicationId, $p_destIssueId, $p_destLanguageId) 
 	{
-	    global $Campsite;
-	    if (is_null($p_urlName)) {
-	        $p_urlName = $this->m_data['Number'];
-	    }
-	    // Create a new issue
-        $queryStr = "INSERT IGNORE INTO Issues "
-                    ." SET Name='$p_name'"
-                    .", ShortName = '$p_urlName'"
-                    .", IdLanguage=$p_languageId"
-                    .", IdPublication=".$this->m_data['IdPublication']
-                    .", Number=".$this->m_data['Number']; 
-        $Campsite['db']->Execute($queryStr);
-        
-        // Copy the sections
-        $sections =& Section::GetSections($this->m_data['IdPublication'], 
-            $this->m_data['Number'], $this->m_data['IdLanguage']);
-        foreach ($sections as $section) {
-            $section->copy($this->m_data['IdPublication'], 
-                $this->m_data['Number'], $p_languageId, null, false);
+        // Copy the issue
+        $newIssue =& new Issue($p_destPublicationId, $p_destLanguageId, $p_destIssueId);
+        $columns = array();
+        $columns['Name'] = mysql_real_escape_string($this->getName());
+    	$columns['IssueTplId'] = $this->m_data['IssueTplId'];
+    	$columns['SectionTplId'] = $this->m_data['SectionTplId'];
+    	$columns['ArticleTplId'] = $this->m_data['ArticleTplId'];
+        $created = $newIssue->create($p_destIssueId, $columns);
+        if ($created) {
+        	// Copy the sections in the issue
+            $sections =& Section::GetSections($this->m_data['IdPublication'], 
+                $this->m_data['Number'], $this->m_data['IdLanguage']);
+            foreach ($sections as $section) {
+                $section->copy($p_destPublicationId, $p_destIssueId, $p_destLanguageId, null, false);
+            }
+            return $newIssue;    
+        }	
+        else {
+            return null;
         }
-	} // fn createTranslation
+	} // fn __copy
 	
 	
 	/**
+	 * Create a copy of this issue.  You can use this to:
+	 * 1) Translate an issue.  In this case do:
+	 *    $issue->copy(null, $issue->getIssueId(), $destinationLanguage);
+	 * 2) Duplicate all translations of an issue within a publication:
+	 *    $issue->copy();
+	 * 3) Copy an issue to another publication:
+	 *    $issue->copy($destinationPublication);
+	 * Note: All sections will be copied, but not the articles.
+	 *
+	 * @param int $p_destPublicationId
+	 *     (optional) Specify the destination publication.  
+	 *     Default is this issue's publication ID.
+	 * @param int $p_destIssueId
+	 *     (optional) Specify the destination issue ID.  
+	 *     If not specified, a new one will be generated.
+	 * @param int $p_destLanguageId
+	 *     (optional) Use this if you want the copy to be a translation of the current issue.
+	 *     Default is to copy all translations of this issue.
+	 * @return void
+	 */
+	function copy($p_destPublicationId = null, $p_destIssueId = null, $p_destLanguageId = null) 
+	{
+	    global $Campsite;
+	    if (is_null($p_destPublicationId)) {
+	        $p_destPublicationId = $this->m_data['IdPublication'];
+	    }
+	    if (is_null($p_destIssueId)) {
+	        $p_destIssueId = Issue::GetUnusedIssueId($this->m_data['IdPublication']);
+	    }
+	    if (is_null($p_destLanguageId)) {
+            $queryStr = 'SELECT * FROM Issues '
+                        .' WHERE IdPublication='.$this->m_data['IdPublication']
+                        .' AND Number='.$this->m_data['Number'];
+            $srcIssues =& DbObjectArray::Create('Issue', $queryStr);
+
+            // Copy all translations of this issue.
+            $newIssues = array();
+            foreach ($srcIssues as $issue) {
+                $newIssues[] = $issue->__copy($p_destPublicationId, $p_destIssueId, $issue->getLanguageId());
+            }
+            return $newIssues;
+	    } else {
+	        // Translate the issue.
+	        return $this->__copy($p_destPublicationId, $p_destIssueId, $p_destLanguageId);
+	    }
+	} // fn copy
+	
+	
+	/**
+	 * Return the publication ID of the publication that contains this issue.
 	 * @return int
 	 */
 	function getPublicationId() 
@@ -125,6 +182,7 @@ class Issue extends DatabaseObject {
 	
 	
 	/**
+	 * Return the language ID of the issue.
 	 * @return int
 	 */
 	function getLanguageId() 
@@ -137,6 +195,8 @@ class Issue extends DatabaseObject {
 	 * A simple way to get the name of the language the article is 
 	 * written in.  The value is cached in case there are multiple
 	 * calls to this function.
+	 *
+	 * @return string
 	 */
 	function getLanguageName() 
 	{
@@ -158,6 +218,7 @@ class Issue extends DatabaseObject {
 	
 	
 	/**
+	 * Get the name of the issue.
 	 * @return string
 	 */
 	function getName() 
@@ -167,15 +228,39 @@ class Issue extends DatabaseObject {
 	
 	
 	/**
-	 * @return string
+	 * Set the name of the issue.
+	 * @param string
+	 * @return boolean
 	 */
-	function getShortName() 
+	function setName($p_value) 
 	{
-		return $this->getProperty('ShortName');
-	} // fn getShortName
+	    return $this->setProperty('Name', $p_value);
+	} // fn setName
 	
 	
 	/**
+	 * Get the string used for the URL to this issue.
+	 * @return string
+	 */
+	function getUrlName() 
+	{
+		return $this->getProperty('ShortName');
+	} // fn getUrlName
+	
+	
+	/**
+	 * Set the string used in the URL to access this Issue.
+	 *
+	 * @return boolean
+	 */
+	function setUrlName($p_value) 
+	{
+	    return $this->setProperty('ShortName', $p_value);
+	} // fn setUrlName
+	
+	
+	/**
+	 * Get the default template ID used for articles in this issue.
 	 * @return int
 	 */
 	function getArticleTemplateId() 
@@ -185,6 +270,7 @@ class Issue extends DatabaseObject {
 	
 	
 	/**
+	 * Get the default template ID used for sections in this issue.
 	 * @return int
 	 */
 	function getSectionTemplateId() 
@@ -194,6 +280,7 @@ class Issue extends DatabaseObject {
 	
 	
 	/**
+	 * Get the template ID used for this issue.
 	 * @return int
 	 */
 	function getIssueTemplateId() 
@@ -202,6 +289,10 @@ class Issue extends DatabaseObject {
 	} // fn getIssueTemplateId
 	
 	
+	/**
+	 * Return 'Y' if the issue is published, 'N' if it is not published.
+	 * @return string
+	 */
 	function getPublished() 
 	{
 		return $this->getProperty('Published');
@@ -212,7 +303,7 @@ class Issue extends DatabaseObject {
 	 * Set the published state of the issue.
 	 *
 	 * @param string $p_value
-	 *		Can be NULL, 'Y', 'N', TRUE, FALSE.
+	 *		Can be NULL, 'Y', 'N', TRUE, or FALSE.
 	 *		If set to NULL, the current value will be reversed.
 	 *
 	 * @return void
@@ -362,6 +453,43 @@ class Issue extends DatabaseObject {
 		$total = $Campsite['db']->GetOne($queryStr);
 		return $total;				
 	} // fn GetNumIssues
+
+	
+	/**
+	 * Return an issue number that is not in use.
+	 * @param int $p_publicationId
+	 * @return int
+	 */
+	function GetUnusedIssueId($p_publicationId) 
+	{
+		global $Campsite;
+		$queryStr = "SELECT MAX(Number) + 1 FROM Issues "
+		            ." WHERE IdPublication=$p_publicationId";
+		$number = $Campsite['db']->GetOne($queryStr);
+		return $number;
+	} // fn GetUnusedIssueId
+
+	
+	/**
+	 * Return the last Issue created in this publication or NULL if there
+	 * are no previous issues.
+	 *
+	 * @param int $p_publicationId
+	 * @return Issue
+	 */
+	function GetLastCreatedIssue($p_publicationId) 
+	{
+	   global $Campsite;
+	   $queryStr = "SELECT MAX(Number) FROM Issues WHERE IdPublication=$p_publicationId";
+	   $maxIssueNumber = $Campsite['db']->GetOne($queryStr);
+	   if (empty($maxIssueNumber)) {
+	       return null;
+	   }
+	   $queryStr = "SELECT IdLanguage FROM Issues WHERE IdPublication=$p_publicationId AND Number=$maxIssueNumber";
+	   $idLanguage = $Campsite['db']->GetOne($queryStr);
+	   $issue =& new Issue($p_publicationId, $idLanguage, $maxIssueNumber);
+	   return $issue;
+	} // fn GetLastCreatedIssue
 	
 } // class Issue
 

@@ -123,7 +123,6 @@ if ($numUniqueArticlesDisplayed > 0) {
 <TR class="table_list_header">
 	<TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Name <SMALL>(click to edit)</SMALL>"); ?></TD>
 	<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Type"); ?></TD>
-	<!--<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Language"); ?></TD>-->
 	<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Status"); ?></TD>
 	<?php if ($User->hasPermission('Publish')) { ?>
 	<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Order"); ?></TD>
@@ -193,11 +192,6 @@ foreach ($allArticles as $articleObj) {
 			<?php p(htmlspecialchars($articleObj->getType()));  ?>
 		</TD>
 
-		<!--<TD>
-			<?php
-			p(htmlspecialchars($articleObj->getLanguageName())); 
-			?>
-		</TD>-->
 		<TD ALIGN="CENTER">
 			<?php 
 			$statusLink = "<A HREF=\"/$ADMIN/articles/status.php?Pub=". $Pub

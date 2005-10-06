@@ -1,10 +1,5 @@
 <?php
-
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
-load_common_include_files("issues");
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Publication.php');
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/issues/issue_common.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Issue.php');
 
 // Check permissions
@@ -37,16 +32,16 @@ if ($User->hasPermission('ManageIssue')) {
 		<P>
 		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 		<TR>
-			<TD><A HREF="add_new.php?Pub=<?php pencURL($Pub); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
-			<TD><A HREF="add_new.php?Pub=<?php  pencURL($Pub); ?>" ><B><?php  putGS("Add new issue"); ?></B></A></TD>
+			<TD><A HREF="add_new.php?Pub=<?php p($Pub); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
+			<TD><A HREF="add_new.php?Pub=<?php p($Pub); ?>"><B><?php  putGS("Add new issue"); ?></B></A></TD>
 		</TR>
 		</TABLE>
 	<?php  } else { ?>	
 		<P>
 		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 		<TR>
-			<TD><A HREF="qadd.php?Pub=<?php  pencURL($Pub); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
-			<TD><A HREF="qadd.php?Pub=<?php  pencURL($Pub); ?>" ><B><?php  putGS("Add new issue"); ?></B></A></TD>
+			<TD><A HREF="qadd.php?Pub=<?php p($Pub); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
+			<TD><A HREF="qadd.php?Pub=<?php p($Pub); ?>"><B><?php  putGS("Add new issue"); ?></B></A></TD>
 		</TR>
 		</TABLE>
 	<?php  }
@@ -62,7 +57,6 @@ if (count($allIssues) > 0) {
 		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Nr"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("Name<BR><SMALL>(click to see sections)</SMALL>"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("URL Name"); ?></B></TD>
-		<!--<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("Language"); ?></B></TD>-->
 		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>"); ?></B></TD>
 	<?php if ($User->hasPermission('Publish')) { ?>
 		<TD ALIGN="center" VALIGN="TOP"><B><?php echo str_replace(' ', '<br>', getGS("Scheduled Publishing")); ?></B></TD>
@@ -73,7 +67,6 @@ if (count($allIssues) > 0) {
 	<?php  } else { ?>
 		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Nr"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("Name<BR><SMALL>(click to see sections)</SMALL>"); ?></B></TD>
-		<!--<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("Language"); ?></B></TD>-->
 		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Preview"); ?></B></TD>
 	<?php  }
@@ -91,14 +84,7 @@ foreach ($allIssues as $issue) {
 	
 	<?php  if ($User->hasPermission('ManageIssue')) { ?>
 	<TD ALIGN="RIGHT">
-		<?php  
-		if ($currentIssue != $issue->getIssueId()) {
-			 p($issue->getIssueId());
-		}
-		else {
-			print '&nbsp;';		
-		} 
-	 	?>
+		<?php p($issue->getIssueId()); ?>
  	</TD>
  	
 	<TD <?php if ($currentIssue == $issue->getIssueId()) { ?> style="padding-left: 20px;" <?php } ?>>
@@ -106,13 +92,10 @@ foreach ($allIssues as $issue) {
 	</TD>
 	
 	<TD>
-		<?php p(htmlspecialchars($issue->getShortName())); ?>
+		<?php p(htmlspecialchars($issue->getUrlName())); ?>
 	</TD>
 	
-<!--	<TD >
-		<?php p(htmlspecialchars($issue->getLanguageName())); ?>
-	</TD>
--->	<TD ALIGN="CENTER">
+	<TD ALIGN="CENTER">
 		<A HREF="/<?php echo $ADMIN; ?>/issues/status.php?Pub=<?php p($Pub); ?>&Issue=<?php  p($issue->getIssueId()); ?>&Language=<?php p($issue->getLanguageId()); ?>"><?php  if ($issue->getPublished() == 'Y') { p(htmlspecialchars($issue->getPublicationDate())); } else { print putGS("Publish"); } ?></A>
 	</TD>
 <?php if ($User->hasPermission('Publish')) { ?>

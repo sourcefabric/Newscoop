@@ -80,7 +80,7 @@ camp_html_content_top(getGS("Configure section"), $topArray);
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("URL Name"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cShortName" SIZE="32" MAXLENGTH="32" value="<?php  p(htmlspecialchars($sectionObj->getShortName())); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="cShortName" SIZE="32" MAXLENGTH="32" value="<?php  p(htmlspecialchars($sectionObj->getUrlName())); ?>">
 	</TD>
 </TR>
 

@@ -964,10 +964,10 @@ class Article extends DatabaseObject {
 	/**
 	 * @return string
 	 */
-	function getShortName() 
+	function getUrlName() 
 	{
 		return $this->getProperty('ShortName');
-	} // fn getShortName
+	} // fn getUrlName
 	
 	
 	/**

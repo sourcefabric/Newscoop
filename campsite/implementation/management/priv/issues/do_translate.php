@@ -51,10 +51,14 @@ if ($cShortName == "") {
 }
 
 if ($correct) {
-    $issueObj->createTranslation($cLang, $cName, $cShortName);
+    $newIssue =& $issueObj->copy(null, $issueObj->getIssueId(), $cLang);
+    $newIssue->setName($cName);
+    $newIssue->setUrlName($cShortName);
     $logtext = getGS('Issue $1 added', $cName); 
     Log::Message($logtext, $User->getUserName(), 11);
-    $created = true;
+    header("Location: /$ADMIN/issues/?Pub=$Pub");
+    exit;
+    //$created = true;
 }
 
 $tmpArray = array("Pub" => $publicationObj, "Issue" => $issueObj);

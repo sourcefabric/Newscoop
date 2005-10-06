@@ -1,11 +1,6 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
-load_common_include_files("issues");
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/issues/issue_common.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Template.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Publication.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Issue.php');
 
 // Check permissions
 list($access, $User) = check_basic_access($_REQUEST);
@@ -122,7 +117,7 @@ camp_html_content_top(getGS('Change issue details'), array('Pub' => $publication
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("URL Name"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cShortName" SIZE="32" MAXLENGTH="32" value="<?php  p(htmlspecialchars($issueObj->getShortName())); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="cShortName" SIZE="32" MAXLENGTH="32" value="<?php  p(htmlspecialchars($issueObj->getUrlName())); ?>">
 	</TD>
 </TR>
 

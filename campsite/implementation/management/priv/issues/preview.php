@@ -1,13 +1,5 @@
 <?php
-
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
-load_common_include_files("issues");
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
-require_once($_SERVER['DOCUMENT_ROOT']."/db_connect.php");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Publication.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Issue.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/issues/issue_common.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Template.php');
 
 // Check permissions
@@ -56,7 +48,7 @@ if ($urlType == 1) {
 	$url = "/look/" . $templateObj->getName()
 		. "?IdLanguage=$Language&IdPublication=$Pub&NrIssue=$Issue";
 } else {
-	$url = "/" . $languageObj->getCode() . "/" . $issueObj->getShortName();
+	$url = "/" . $languageObj->getCode() . "/" . $issueObj->getUrlName();
 }
 
 if ($User->hasPermission("ManageTempl") || $User->hasPermission("DeleteTempl")) {
