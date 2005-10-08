@@ -51,27 +51,29 @@ CParser methods implementation
 using std::cout;
 using std::endl;
 
-#define ROOT_STATEMENTS ST_PUBLICATION ", " ST_ISSUE ", " ST_SECTION ", "\
-ST_ARTICLE ", " ST_LIST ", " ST_INCLUDE ", " ST_IF ", " ST_URLPARAMETERS ", "\
-ST_FORMPARAMETERS ", " ST_PRINT ", " ST_DATE ", " ST_LOCAL ", "\
-ST_SUBSCRIPTION ", " ST_EDIT ", " ST_SELECT ", " ST_USER ", " ST_SEARCH ", " ST_TOPIC
+#define ROOT_STATEMENTS ST_LANGUAGE ", " ST_PUBLICATION ", " ST_ISSUE ", " ST_SECTION \
+", " ST_ARTICLE ", " ST_TOPIC ", " ST_INCLUDE ", " ST_IF ", " ST_LOCAL ", " ST_WITH \
+", " ST_LIST " " ST_ISSUE ", " ST_LIST " " ST_SECTION ", " ST_LIST " " ST_ARTICLE \
+", " ST_LIST " " ST_SEARCHRESULT ", " ST_LIST " " ST_SUBTITLE ", " ST_LIST " " ST_ARTICLETOPIC \
+", " ST_URLPARAMETERS ", " ST_URI ", " ST_URIPATH ", " ST_FORMPARAMETERS ", " ST_PRINT \
+", " ST_DATE ", " ST_SUBSCRIPTION ", " ST_EDIT ", " ST_SELECT ", " ST_USER ", " ST_SEARCH
 
-#define LISSUE_STATEMENTS ST_LIST ", " ST_SECTION ", " ST_ARTICLE ", "\
-ST_URLPARAMETERS ", " ST_FORMPARAMETERS ", " ST_PRINT ST_DATE ", "\
-ST_INCLUDE ", " ST_IF ", " ST_LOCAL ", " ST_SUBSCRIPTION ", " ST_EDIT\
-", " ST_SELECT ", " ST_USER ", " ST_SEARCH ", " ST_TOPIC
+#define LISSUE_STATEMENTS ST_SECTION ", " ST_ARTICLE ", " ST_TOPIC ", " ST_INCLUDE ", " ST_IF \
+", " ST_LOCAL ", " ST_WITH ", " ST_LIST " " ST_SECTION ", " ST_LIST " " ST_ARTICLE \
+", " ST_LIST " " ST_SEARCHRESULT ", " ST_LIST " " ST_SUBTITLE ", " ST_LIST " " ST_ARTICLETOPIC \
+", " ST_URLPARAMETERS ", " ST_URI ", " ST_URIPATH ", " ST_FORMPARAMETERS ", " ST_PRINT \
+", " ST_DATE ", " ST_SUBSCRIPTION ", " ST_EDIT ", " ST_SELECT ", " ST_USER ", " ST_SEARCH
 
-#define LSECTION_STATEMENTS ST_LIST ", " ST_ARTICLE ", " ST_URLPARAMETERS\
-", " ST_FORMPARAMETERS ", " ST_PRINT ST_DATE ", " ST_INCLUDE ", " ST_IF\
-"," ST_LOCAL ", " ST_SUBSCRIPTION ", " ST_EDIT ", " ST_SELECT ", " ST_USER\
-", " ST_SEARCH ", " ST_TOPIC
+#define LSECTION_STATEMENTS ST_ARTICLE ", " ST_TOPIC ", " ST_INCLUDE ", " ST_IF ", " ST_LOCAL \
+", " ST_WITH ", " ST_LIST " " ST_ARTICLE ", " ST_LIST " " ST_SEARCHRESULT \
+", " ST_LIST " " ST_SUBTITLE ", " ST_LIST " " ST_ARTICLETOPIC ", " ST_URLPARAMETERS \
+", " ST_URI ", " ST_URIPATH ", " ST_FORMPARAMETERS ", " ST_PRINT ", " ST_DATE \
+", " ST_SUBSCRIPTION ", " ST_EDIT ", " ST_SELECT ", " ST_USER ", " ST_SEARCH
 
-#define LARTICLE_STATEMENTS ST_URLPARAMETERS ", " ST_FORMPARAMETERS ", "\
-ST_PRINT ", " ST_DATE ", " ST_INCLUDE ", " ST_IF ", " ST_LOCAL ", "\
-ST_SUBSCRIPTION ", " ST_EDIT ", " ST_SELECT ", " ST_USER ", " ST_SEARCH
-
-#define LIST_STATEMENTS ST_ISSUE ", " ST_SECTION ", " ST_ARTICLE ", "\
-ST_SEARCHRESULT
+#define LARTICLE_STATEMENTS ST_TOPIC ", " ST_INCLUDE ", " ST_IF ", " ST_LOCAL ", " ST_WITH \
+", " ST_LIST " " ST_ARTICLETOPIC ", " ST_URLPARAMETERS ", " ST_URI ", " ST_URIPATH \
+", " ST_FORMPARAMETERS ", " ST_PRINT ", " ST_DATE ", " ST_SUBSCRIPTION ", " ST_EDIT \
+", " ST_SELECT ", " ST_USER ", " ST_SEARCH
 
 #define LV_ROOT 1
 #define LV_LISSUE 2
@@ -389,13 +391,13 @@ const char* CParser::LvStatements(int level)
 const char* CParser::LvListSt(int level)
 {
 	if (level & LV_LARTICLE || level & LV_LSUBTITLE)
-		return ST_SEARCH;
+		return ST_SEARCH ", " ST_ARTICLETOPIC;
 	else if (level & LV_LSECTION)
-		return ST_ARTICLE ", " ST_SEARCH;
+		return ST_ARTICLE ", " ST_SEARCH ", " ST_ARTICLETOPIC;
 	else if (level & LV_LISSUE)
-		return ST_SECTION ", " ST_ARTICLE ", " ST_SEARCH;
+		return ST_SECTION ", " ST_ARTICLE ", " ST_SEARCH ", " ST_ARTICLETOPIC;
 	else if (level & LV_ROOT)
-		return ST_ISSUE ", " ST_SECTION ", " ST_ARTICLE ", " ST_SEARCH;
+		return ST_ISSUE ", " ST_SECTION ", " ST_ARTICLE ", " ST_SEARCH ", " ST_ARTICLETOPIC;
 	else
 		return "";
 }
@@ -1060,9 +1062,6 @@ inline bool CParser::IsTopicStatement(const CLexem* p_pcoLexem) const
 //		int sublevel - current sublevel
 inline int CParser::HList(CActionList& al, int level, int sublevel)
 {
-	if (level >= LV_LARTICLE)
-		FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE,
-		            LARTICLE_STATEMENTS, lex.prevLine(), lex.prevColumn());
 	lint lines = 0, columns = 0;
 	RequireAtom(l);
 	// check for List attributes
@@ -1084,8 +1083,11 @@ inline int CParser::HList(CActionList& al, int level, int sublevel)
 			columns = strtol(l->atom()->identifier().c_str(), 0, 10);
 		RequireAtom(l);
 	}
-	// check for modifier (Issue, Section, Article, SearchResult, Subtitle)
+	// check for modifier (Issue, Section, Article, SearchResult, Subtitle, ArticleTopic)
 	st = (const CStatement*)l->atom();
+	if (level >= LV_LARTICLE && st->id() != CMS_ST_ARTICLETOPIC)
+		FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE,
+					LARTICLE_STATEMENTS, lex.prevLine(), lex.prevColumn());
 	if (!CActList::validModifier(st->id()))
 	{
 		FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE, LvListSt(level),
@@ -1112,7 +1114,7 @@ inline int CParser::HList(CActionList& al, int level, int sublevel)
 	CParameterList params;
 	l = lex.getLexem();
 	DEBUGLexem("hlist1", l);
-	while (mod != CMS_ST_SEARCHRESULT && mod != CMS_ST_SUBTITLE
+	while (mod != CMS_ST_SEARCHRESULT && mod != CMS_ST_SUBTITLE && mod != CMS_ST_ARTICLETOPIC
 	       && (l->res() == CMS_LEX_IDENTIFIER || (IsTopicStatement(l) && mod == CMS_ST_ARTICLE)))
 	{
 		StringSet ah;

@@ -580,6 +580,7 @@ CListModifiers::CListModifiers()
 	insert(CMS_ST_ARTICLE);
 	insert(CMS_ST_SEARCHRESULT);
 	insert(CMS_ST_SUBTITLE);
+	insert(CMS_ST_ARTICLETOPIC);
 }
 
 CListModifiers CActList::s_coModifiers;
@@ -825,7 +826,7 @@ int CActList::WriteSrcParam(string& s, CContext& c, string& table)
 int CActList::WriteOrdParam(string& s)
 {
 	CParameterList::iterator pl_i;
-	if (modifier != CMS_ST_SEARCHRESULT)
+	if (modifier != CMS_ST_SEARCHRESULT && modifier != CMS_ST_ARTICLETOPIC)
 	{
 		string table;
 		if (modifier == CMS_ST_ARTICLE)
@@ -845,7 +846,7 @@ int CActList::WriteOrdParam(string& s)
 		if (modifier == CMS_ST_ARTICLE)
 			s += string(", Articles.ArticleOrder asc");
 	}
-	else // modifier == CMS_ST_SEARCHRESULT
+	if (modifier == CMS_ST_SEARCHRESULT)
 	{
 		s = " order by Articles.IdPublication asc, ArticleIndex.IdLanguage desc";
 		for (pl_i = ord_param.begin(); pl_i != ord_param.end(); ++pl_i)
@@ -941,7 +942,7 @@ int CActList::takeAction(CContext& c, sockstream& fs)
 			WriteArtParam(where, lc, table);
 			prefix = "Articles.";
 		}
-		else if (modifier == CMS_ST_SEARCHRESULT)
+		if (modifier == CMS_ST_SEARCHRESULT)
 		{
 			WriteSrcParam(where, lc, table);
 			if (where == "")
@@ -950,8 +951,17 @@ int CActList::takeAction(CContext& c, sockstream& fs)
 				return RES_OK;
 			}
 		}
-		else
+		if (modifier == CMS_ST_ISSUE || modifier == CMS_ST_SECTION)
+		{
 			WriteModParam(where, lc, table);
+		}
+		if (modifier == CMS_ST_ARTICLETOPIC)
+		{
+			stringstream buf;
+			buf << " where NrArticle = " << lc.Article();
+			where = buf.str();
+			table = "ArticleTopics";
+		}
 		if (modifier == CMS_ST_SEARCHRESULT && lc.SearchAnd())
 		{
 			stringstream buf;
@@ -960,19 +970,30 @@ int CActList::takeAction(CContext& c, sockstream& fs)
 		}
 		WriteOrdParam(order);
 		WriteLimit(limit, lc);
+		
 		if (modifier == CMS_ST_SEARCHRESULT)
 			fields = "select NrArticle, MAX(Articles.IdLanguage), Articles.IdPublication";
-		else if (modifier == CMS_ST_ARTICLE)
+		if (modifier == CMS_ST_ARTICLE)
 			fields = "select Number, MAX(Articles.IdLanguage), IdPublication";
-		else
+		if (modifier == CMS_ST_ISSUE || modifier == CMS_ST_SECTION || modifier == CMS_ST_SUBTITLE)
 			fields = "select Number, MAX(IdLanguage), IdPublication";
+		if (modifier == CMS_ST_ARTICLETOPIC)
+			fields = "select TopicId";
+		
 		if (modifier == CMS_ST_ARTICLE || modifier == CMS_ST_SEARCHRESULT)
 			fields += ", Articles.NrIssue, Articles.NrSection";
-		else if (modifier == CMS_ST_SECTION)
+		if (modifier == CMS_ST_SECTION)
 			fields += ", NrIssue";
-		string grfield = (modifier == CMS_ST_SEARCHRESULT ? "NrArticle" : "Number");
-		string coQuery = fields + string(" from ") + table + where + " group by " + grfield
-		                 + having + order + limit;
+		string group;
+		if (modifier == CMS_ST_SEARCHRESULT)
+		{
+			group = " group by NrArticle";
+		}
+		if (modifier == CMS_ST_ISSUE || modifier == CMS_ST_SECTION || modifier == CMS_ST_ARTICLE)
+		{
+			group = " group by Number";
+		}
+		string coQuery = fields + " from " + table + where + group + having + order + limit;
 		DEBUGAct("takeAction()", coQuery.c_str(), fs);
 		SQLQuery(&m_coSql, coQuery.c_str());
 		res = mysql_store_result(&m_coSql);
@@ -1009,13 +1030,20 @@ int CActList::takeAction(CContext& c, sockstream& fs)
 		{
 			if ((row = mysql_fetch_row(*res)) == NULL)
 				break;
-			lc.SetLanguage(strtol(row[1], 0, 10));
-			lc.SetPublication(strtol(row[2], 0, 10));
-			if (modifier != CMS_ST_ISSUE)
-				lc.SetIssue(strtol(row[3], 0, 10));
-			if (modifier == CMS_ST_ARTICLE || modifier == CMS_ST_SEARCHRESULT)
-				lc.SetSection(strtol(row[4], 0, 10));
-			SetContext(lc, strtol(row[0], 0, 10));
+			if (modifier != CMS_ST_ARTICLETOPIC)
+			{
+				lc.SetLanguage(strtol(row[1], 0, 10));
+				lc.SetPublication(strtol(row[2], 0, 10));
+				if (modifier != CMS_ST_ISSUE)
+					lc.SetIssue(strtol(row[3], 0, 10));
+				if (modifier == CMS_ST_ARTICLE || modifier == CMS_ST_SEARCHRESULT)
+					lc.SetSection(strtol(row[4], 0, 10));
+				SetContext(lc, strtol(row[0], 0, 10));
+			}
+			else
+			{
+				lc.SetTopic(strtol(row[0], 0, 10));
+			}
 		}
 		else
 		{

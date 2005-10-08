@@ -789,6 +789,14 @@ int CStatementMap::InitStatements()
 
 	this->insert(pcoSt);
 
+	// ArticleTopic statement
+	pcoSt = new CStatement(CMS_ST_ARTICLETOPIC, ST_ARTICLETOPIC);
+
+	pcoCtx = new CStatementContext(CMS_CT_LIST);
+	pcoSt->insertCtx(pcoCtx);
+
+	this->insert(pcoSt);
+
 	CLOSE_TRY
 	CATCH(InvalidValue &rcoEx)
 		cout << "InitStatements: " << rcoEx.what() << endl;
