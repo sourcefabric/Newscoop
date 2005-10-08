@@ -797,6 +797,14 @@ int CStatementMap::InitStatements()
 
 	this->insert(pcoSt);
 
+	// Subtopic statement
+	pcoSt = new CStatement(CMS_ST_SUBTOPIC, ST_SUBTOPIC);
+
+	pcoCtx = new CStatementContext(CMS_CT_LIST);
+	pcoSt->insertCtx(pcoCtx);
+
+	this->insert(pcoSt);
+
 	CLOSE_TRY
 	CATCH(InvalidValue &rcoEx)
 		cout << "InitStatements: " << rcoEx.what() << endl;

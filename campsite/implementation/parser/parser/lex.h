@@ -89,6 +89,7 @@ using std::map;
 #define CMS_ST_URIPATH 42
 #define CMS_ST_URI 43
 #define CMS_ST_ARTICLETOPIC 44
+#define CMS_ST_SUBTOPIC 45
 
 // statement names
 #define ST_LANGUAGE "Language"
@@ -135,6 +136,7 @@ using std::map;
 #define ST_URIPATH "URIPath"
 #define ST_URI "URI"
 #define ST_ARTICLETOPIC "ArticleTopic"
+#define ST_SUBTOPIC "Subtopic"
 
 // The lexem returned by lex class
 class CLexem

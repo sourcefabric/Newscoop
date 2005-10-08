@@ -581,6 +581,7 @@ CListModifiers::CListModifiers()
 	insert(CMS_ST_SEARCHRESULT);
 	insert(CMS_ST_SUBTITLE);
 	insert(CMS_ST_ARTICLETOPIC);
+	insert(CMS_ST_SUBTOPIC);
 }
 
 CListModifiers CActList::s_coModifiers;
@@ -826,7 +827,8 @@ int CActList::WriteSrcParam(string& s, CContext& c, string& table)
 int CActList::WriteOrdParam(string& s)
 {
 	CParameterList::iterator pl_i;
-	if (modifier != CMS_ST_SEARCHRESULT && modifier != CMS_ST_ARTICLETOPIC)
+	if (modifier != CMS_ST_SEARCHRESULT && modifier != CMS_ST_ARTICLETOPIC
+		   && modifier != CMS_ST_SUBTOPIC)
 	{
 		string table;
 		if (modifier == CMS_ST_ARTICLE)
@@ -845,6 +847,10 @@ int CActList::WriteOrdParam(string& s)
 		}
 		if (modifier == CMS_ST_ARTICLE)
 			s += string(", Articles.ArticleOrder asc");
+	}
+	if (modifier == CMS_ST_SUBTOPIC)
+	{
+		s = " order by Id asc";
 	}
 	if (modifier == CMS_ST_SEARCHRESULT)
 	{
@@ -937,61 +943,75 @@ int CActList::takeAction(CContext& c, sockstream& fs)
 	if (modifier != CMS_ST_SUBTITLE)
 	{
 		string where, order, limit, fields, prefix, table, having;
-		if (modifier == CMS_ST_ARTICLE)
-		{
-			WriteArtParam(where, lc, table);
-			prefix = "Articles.";
-		}
-		if (modifier == CMS_ST_SEARCHRESULT)
-		{
-			WriteSrcParam(where, lc, table);
-			if (where == "")
-			{
-				runActions(second_block, c, fs);
-				return RES_OK;
-			}
-		}
-		if (modifier == CMS_ST_ISSUE || modifier == CMS_ST_SECTION)
-		{
-			WriteModParam(where, lc, table);
-		}
-		if (modifier == CMS_ST_ARTICLETOPIC)
-		{
-			stringstream buf;
-			buf << " where NrArticle = " << lc.Article();
-			where = buf.str();
-			table = "ArticleTopics";
-		}
-		if (modifier == CMS_ST_SEARCHRESULT && lc.SearchAnd())
-		{
-			stringstream buf;
-			buf << " having count(NrArticle) = " << lc.KeywordsNr();
-			having = buf.str();
+		stringstream buf;
+		switch (modifier) {
+			case CMS_ST_ISSUE:
+			case CMS_ST_SECTION:
+				WriteModParam(where, lc, table);
+				break;
+			case CMS_ST_ARTICLE:
+				WriteArtParam(where, lc, table);
+				prefix = "Articles.";
+				break;
+			case CMS_ST_SEARCHRESULT:
+				WriteSrcParam(where, lc, table);
+				if (where == "")
+				{
+					runActions(second_block, c, fs);
+					return RES_OK;
+				}
+				if (lc.SearchAnd())
+				{
+					buf << " having count(NrArticle) = " << lc.KeywordsNr();
+					having = buf.str();
+				}
+				break;
+			case CMS_ST_ARTICLETOPIC:
+				buf << " where NrArticle = " << lc.Article();
+				where = buf.str();
+				table = "ArticleTopics";
+				break;
+			case CMS_ST_SUBTOPIC:
+				id_type nTopic = lc.Topic() >= 0 ? lc.Topic() : 0;
+				buf << " where ParentId = " << nTopic;
+				where = buf.str();
+				table = "Topics";
+				break;
 		}
 		WriteOrdParam(order);
 		WriteLimit(limit, lc);
 		
-		if (modifier == CMS_ST_SEARCHRESULT)
-			fields = "select NrArticle, MAX(Articles.IdLanguage), Articles.IdPublication";
-		if (modifier == CMS_ST_ARTICLE)
-			fields = "select Number, MAX(Articles.IdLanguage), IdPublication";
-		if (modifier == CMS_ST_ISSUE || modifier == CMS_ST_SECTION || modifier == CMS_ST_SUBTITLE)
-			fields = "select Number, MAX(IdLanguage), IdPublication";
-		if (modifier == CMS_ST_ARTICLETOPIC)
-			fields = "select TopicId";
-		
-		if (modifier == CMS_ST_ARTICLE || modifier == CMS_ST_SEARCHRESULT)
-			fields += ", Articles.NrIssue, Articles.NrSection";
-		if (modifier == CMS_ST_SECTION)
-			fields += ", NrIssue";
-		string group;
-		if (modifier == CMS_ST_SEARCHRESULT)
-		{
-			group = " group by NrArticle";
+		switch (modifier) {
+			case CMS_ST_ISSUE:
+			case CMS_ST_SECTION:
+				fields = "select Number, MAX(IdLanguage), IdPublication";
+				if (modifier == CMS_ST_SECTION)
+					fields += ", NrIssue";
+				break;
+			case CMS_ST_ARTICLE:
+				fields = "select Number, MAX(Articles.IdLanguage), IdPublication"
+						", Articles.NrIssue, Articles.NrSection";
+				break;
+			case CMS_ST_SEARCHRESULT:
+				fields = "select NrArticle, MAX(Articles.IdLanguage), Articles.IdPublication"
+						", Articles.NrIssue, Articles.NrSection";
+				break;
+			case CMS_ST_ARTICLETOPIC:
+				fields = "select TopicId";
+				break;
+			case CMS_ST_SUBTOPIC:
+				fields = "select distinct Id";
+				break;
 		}
+		
+		string group;
 		if (modifier == CMS_ST_ISSUE || modifier == CMS_ST_SECTION || modifier == CMS_ST_ARTICLE)
 		{
 			group = " group by Number";
+		}
+		if (modifier == CMS_ST_SEARCHRESULT)
+		{
+			group = " group by NrArticle";
 		}
 		string coQuery = fields + " from " + table + where + group + having + order + limit;
 		DEBUGAct("takeAction()", coQuery.c_str(), fs);
@@ -1030,7 +1050,7 @@ int CActList::takeAction(CContext& c, sockstream& fs)
 		{
 			if ((row = mysql_fetch_row(*res)) == NULL)
 				break;
-			if (modifier != CMS_ST_ARTICLETOPIC)
+			if (modifier != CMS_ST_ARTICLETOPIC && modifier != CMS_ST_SUBTOPIC)
 			{
 				lc.SetLanguage(strtol(row[1], 0, 10));
 				lc.SetPublication(strtol(row[2], 0, 10));

@@ -55,25 +55,27 @@ using std::endl;
 ", " ST_ARTICLE ", " ST_TOPIC ", " ST_INCLUDE ", " ST_IF ", " ST_LOCAL ", " ST_WITH \
 ", " ST_LIST " " ST_ISSUE ", " ST_LIST " " ST_SECTION ", " ST_LIST " " ST_ARTICLE \
 ", " ST_LIST " " ST_SEARCHRESULT ", " ST_LIST " " ST_SUBTITLE ", " ST_LIST " " ST_ARTICLETOPIC \
-", " ST_URLPARAMETERS ", " ST_URI ", " ST_URIPATH ", " ST_FORMPARAMETERS ", " ST_PRINT \
-", " ST_DATE ", " ST_SUBSCRIPTION ", " ST_EDIT ", " ST_SELECT ", " ST_USER ", " ST_SEARCH
+", " ST_LIST " " ST_SUBTOPIC ", " ST_URLPARAMETERS ", " ST_URI ", " ST_URIPATH \
+", " ST_FORMPARAMETERS ", " ST_PRINT ", " ST_DATE ", " ST_SUBSCRIPTION ", " ST_EDIT \
+", " ST_SELECT ", " ST_USER ", " ST_SEARCH
 
 #define LISSUE_STATEMENTS ST_SECTION ", " ST_ARTICLE ", " ST_TOPIC ", " ST_INCLUDE ", " ST_IF \
 ", " ST_LOCAL ", " ST_WITH ", " ST_LIST " " ST_SECTION ", " ST_LIST " " ST_ARTICLE \
 ", " ST_LIST " " ST_SEARCHRESULT ", " ST_LIST " " ST_SUBTITLE ", " ST_LIST " " ST_ARTICLETOPIC \
-", " ST_URLPARAMETERS ", " ST_URI ", " ST_URIPATH ", " ST_FORMPARAMETERS ", " ST_PRINT \
-", " ST_DATE ", " ST_SUBSCRIPTION ", " ST_EDIT ", " ST_SELECT ", " ST_USER ", " ST_SEARCH
+", " ST_LIST " " ST_SUBTOPIC ", " ST_URLPARAMETERS ", " ST_URI ", " ST_URIPATH \
+", " ST_FORMPARAMETERS ", " ST_PRINT ", " ST_DATE ", " ST_SUBSCRIPTION ", " ST_EDIT \
+", " ST_SELECT ", " ST_USER ", " ST_SEARCH
 
 #define LSECTION_STATEMENTS ST_ARTICLE ", " ST_TOPIC ", " ST_INCLUDE ", " ST_IF ", " ST_LOCAL \
 ", " ST_WITH ", " ST_LIST " " ST_ARTICLE ", " ST_LIST " " ST_SEARCHRESULT \
-", " ST_LIST " " ST_SUBTITLE ", " ST_LIST " " ST_ARTICLETOPIC ", " ST_URLPARAMETERS \
-", " ST_URI ", " ST_URIPATH ", " ST_FORMPARAMETERS ", " ST_PRINT ", " ST_DATE \
-", " ST_SUBSCRIPTION ", " ST_EDIT ", " ST_SELECT ", " ST_USER ", " ST_SEARCH
+", " ST_LIST " " ST_SUBTITLE ", " ST_LIST " " ST_ARTICLETOPIC ", " ST_LIST " " ST_SUBTOPIC \
+", " ST_URLPARAMETERS ", " ST_URI ", " ST_URIPATH ", " ST_FORMPARAMETERS ", " ST_PRINT \
+", " ST_DATE ", " ST_SUBSCRIPTION ", " ST_EDIT ", " ST_SELECT ", " ST_USER ", " ST_SEARCH
 
 #define LARTICLE_STATEMENTS ST_TOPIC ", " ST_INCLUDE ", " ST_IF ", " ST_LOCAL ", " ST_WITH \
-", " ST_LIST " " ST_ARTICLETOPIC ", " ST_URLPARAMETERS ", " ST_URI ", " ST_URIPATH \
-", " ST_FORMPARAMETERS ", " ST_PRINT ", " ST_DATE ", " ST_SUBSCRIPTION ", " ST_EDIT \
-", " ST_SELECT ", " ST_USER ", " ST_SEARCH
+", " ST_LIST " " ST_ARTICLETOPIC ", " ST_LIST " " ST_SUBTOPIC ", " ST_URLPARAMETERS \
+", " ST_URI ", " ST_URIPATH ", " ST_FORMPARAMETERS ", " ST_PRINT ", " ST_DATE \
+", " ST_SUBSCRIPTION ", " ST_EDIT ", " ST_SELECT ", " ST_USER ", " ST_SEARCH
 
 #define LV_ROOT 1
 #define LV_LISSUE 2
@@ -100,6 +102,8 @@ using std::endl;
 #define SUBLV_WITH 32768
 #define SUBLV_IFLANGUAGE 65536
 #define SUBLV_IFTOPIC 131072
+#define SUBLV_ARTICLETOPIC 262144
+#define SUBLV_SUBTOPIC 524288
 
 
 // macro definition
@@ -1085,7 +1089,7 @@ inline int CParser::HList(CActionList& al, int level, int sublevel)
 	}
 	// check for modifier (Issue, Section, Article, SearchResult, Subtitle, ArticleTopic)
 	st = (const CStatement*)l->atom();
-	if (level >= LV_LARTICLE && st->id() != CMS_ST_ARTICLETOPIC)
+	if (level >= LV_LARTICLE && st->id() != CMS_ST_ARTICLETOPIC && st->id() != CMS_ST_SUBTOPIC)
 		FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE,
 					LARTICLE_STATEMENTS, lex.prevLine(), lex.prevColumn());
 	if (!CActList::validModifier(st->id()))
@@ -1115,7 +1119,8 @@ inline int CParser::HList(CActionList& al, int level, int sublevel)
 	l = lex.getLexem();
 	DEBUGLexem("hlist1", l);
 	while (mod != CMS_ST_SEARCHRESULT && mod != CMS_ST_SUBTITLE && mod != CMS_ST_ARTICLETOPIC
-	       && (l->res() == CMS_LEX_IDENTIFIER || (IsTopicStatement(l) && mod == CMS_ST_ARTICLE)))
+			  && mod != CMS_ST_SUBTOPIC
+			  && (l->res() == CMS_LEX_IDENTIFIER || (IsTopicStatement(l) && mod == CMS_ST_ARTICLE)))
 	{
 		StringSet ah;
 		StringSet::iterator ah_i;
@@ -1244,6 +1249,10 @@ inline int CParser::HList(CActionList& al, int level, int sublevel)
 	             & ~SUBLV_EMPTYLIST & ~SUBLV_LOCAL);
 	if (mod == CMS_ST_SEARCHRESULT)
 		sublevel |= SUBLV_SEARCHRESULT;
+	if (mod == CMS_ST_ARTICLETOPIC)
+		sublevel |= SUBLV_ARTICLETOPIC;
+	if (mod == CMS_ST_SUBTOPIC)
+		sublevel |= SUBLV_SUBTOPIC;
 	int tmp_level = LMod2Level(mod);
 	if (tmp_level == 0)
 		tmp_level = level;
@@ -1405,7 +1414,8 @@ inline int CParser::HIf(CActionList& al, int lv, int sublv)
 	else if (st->id() == CMS_ST_LIST)
 	{
 		if ((sublv & SUBLV_EMPTYLIST)
-		        || (lv == LV_ROOT && (sublv & SUBLV_SEARCHRESULT) == 0))
+				   || (lv == LV_ROOT
+				   && (sublv & (SUBLV_SEARCHRESULT | SUBLV_ARTICLETOPIC | SUBLV_SUBTOPIC)) == 0))
 		{
 			FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE,
 			            IfStatements(lv, sublv), lex.prevLine(), lex.prevColumn());
