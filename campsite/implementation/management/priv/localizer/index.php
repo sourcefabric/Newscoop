@@ -10,27 +10,20 @@ global $g_translationStrings;
 global $g_localizerConfig;
 
 $action = Input::Get('action', 'string', 'translate', true);
-$base = Input::Get('base', 'string', $g_localizerConfig['FILENAME_PREFIX'], true);
-$directory = Input::Get('dir', 'string', $g_localizerConfig['BASE_DIR'], true);
-if ($directory == '/globals') {
-	$directory = '/';
-	$base = 'globals';
-}
+$prefix = Input::Get('prefix', 'string', '', true);
 
+$langCode = null;
+if (isset($_REQUEST['TOL_Language'])){
+    $langCode = $_REQUEST['TOL_Language'];
+}
 //echo "<pre>";
 //print_r($g_translationStrings);
 //print_r($_REQUEST);
 //echo "</pre>";
-?>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
-<TR>
-    <TD class="page_title">
-        <?php  putGS("Localizer"); ?>
-    </TD>
-</TR>       
-</TABLE>
+$crumbs = array();
+$crumbs[] = array("Localizer", "");
+echo camp_html_breadcrumbs($crumbs);
 
-<?php
 //echo "Action: $action<br>";
 switch ($action) {
 	case 'translate':
@@ -41,17 +34,17 @@ switch ($action) {
 	case 'save_translation':
 	    $targetLanguageId = Input::Get('localizer_target_language');
 	    $data = Input::Get('data', 'array');
-	    Localizer::ModifyStrings($base, $directory, $targetLanguageId, $data);
+	    Localizer::ModifyStrings($prefix, $targetLanguageId, $data);
 	    // Localizer strings are changed -> reload files
-	    Localizer::LoadLanguageFiles('/', 'globals');
-	    Localizer::LoadLanguageFiles('/localizer', 'locals'); 
+	    Localizer::LoadLanguageFiles('globals', $langCode);
+	    Localizer::LoadLanguageFiles('localizer', $langCode); 
 	    require_once("translate.php");    
 	    translationForm($_REQUEST);
 		break;
 		
 	case 'remove_string':
 	    $deleteMe = Input::Get('string', 'string');
-	    Localizer::RemoveString($base, $directory, $deleteMe);
+	    Localizer::RemoveString($prefix, $deleteMe);
 	    require_once("translate.php");    
 	    translationForm($_REQUEST);
 		break;
@@ -59,24 +52,24 @@ switch ($action) {
 	case 'move_string':
 		$pos1 = Input::Get('pos1', 'int');
 		$pos2 = Input::Get('pos2', 'int');
-	    Localizer::MoveString($base, $directory, $pos1, $pos2);
+	    Localizer::MoveString($prefix, $pos1, $pos2);
 	    require_once("translate.php");    
 	    translationForm($_REQUEST);
 		break;
 	
 	case 'add_missing_translation_strings':
-		$missingStrings = Localizer::FindMissingStrings($directory);
+		$missingStrings = Localizer::FindMissingStrings($prefix);
 	    if (count($missingStrings) > 0) {
-	        Localizer::AddStringAtPosition($base, $directory, 0, $missingStrings);
+	        Localizer::AddStringAtPosition($prefix, 0, $missingStrings);
 	    }
 	    require_once("translate.php");    
 	    translationForm($_REQUEST);
 		break;
 		
 	case 'delete_unused_translation_strings':
-		$unusedStrings = Localizer::FindUnusedStrings($directory);
+		$unusedStrings = Localizer::FindUnusedStrings($prefix);
 	    if (count($unusedStrings) > 0) {
-	       	Localizer::RemoveString($base, $directory, $unusedStrings);
+	       	Localizer::RemoveString($prefix, $unusedStrings);
 	    }
 	    require_once("translate.php");    
 	    translationForm($_REQUEST);

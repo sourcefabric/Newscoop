@@ -419,7 +419,11 @@ function ifYthenCHECKED($q,$f)
 function selectLanguageFile($p_name) 
 {
     require_once('localizer/Localizer.php');
-    Localizer::LoadLanguageFiles($p_name);
+    $langCode = null;
+     if (isset($_REQUEST['TOL_Language'])) {
+         $langCode = $_REQUEST['TOL_Language'];
+    }
+    Localizer::LoadLanguageFiles($p_name, $langCode);
 } // fn selectLanguageFile
 
 

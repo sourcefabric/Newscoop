@@ -12,7 +12,6 @@ class LocalizerFileFormat {
 	function load(&$p_localizerLanguage) { }	
 	function save(&$p_localizerLanguage) { }
 	function getFilePath($p_localizerLanguage) { }
-	function getFilePattern($p_languageId = null) { }
 } // class LocalizerFileFormat
 
 
@@ -30,8 +29,10 @@ class LocalizerFileFormat_GS extends LocalizerFileFormat {
      */
 	function load(&$p_localizerLanguage) 
 	{
+	    global $g_localizerConfig;
     	$p_localizerLanguage->setMode('gs');
         $filePath = LocalizerFileFormat_GS::GetFilePath($p_localizerLanguage);     
+        //echo "Loading $filePath<br>";
         if (file_exists($filePath)) {
 	        $lines = file($filePath);
 	        foreach ($lines as $line) {
@@ -62,6 +63,7 @@ class LocalizerFileFormat_GS extends LocalizerFileFormat {
      */
 	function save(&$p_localizerLanguage) 
 	{
+	    global $g_localizerConfig;
     	$data = "<?php\n";
     	$translationTable = $p_localizerLanguage->getTranslationTable();
     	foreach ($translationTable as $key => $value) {
@@ -72,7 +74,15 @@ class LocalizerFileFormat_GS extends LocalizerFileFormat {
     	}
     	$data .= "?>";
         $filePath = LocalizerFileFormat_GS::GetFilePath($p_localizerLanguage);
+        //echo $filePath;
         $p_localizerLanguage->_setSourceFile($filePath);
+        
+        // Create the language directory if it doesnt exist.
+        $dirName = $g_localizerConfig['TRANSLATION_DIR'].'/'.$p_localizerLanguage->getLanguageCode();
+        if (!file_exists($dirName)) {
+            mkdir($dirName);
+        }
+        
         // write data to file        
         if (PEAR::isError(File::write($filePath, $data, FILE_MODE_WRITE))) {
         	echo "<br>error writing file<br>";
@@ -83,26 +93,6 @@ class LocalizerFileFormat_GS extends LocalizerFileFormat {
     } // fn save
     
 	
-    /**
-     * Get a regular expression that will match the name of the file.
-     * @param string $p_languageId
-     *      (optional) If specified, give the pattern that will match this language ID.
-     * @return string
-     */
-	function getFilePattern($p_languageId = null) 
-	{
-	    global $g_localizerConfig;
-	    if (is_null($p_languageId)) {
-    	    return '^('.$g_localizerConfig['FILENAME_PREFIX']
-    	           .'|'.$g_localizerConfig['FILENAME_PREFIX_GLOBAL'].')\.[a-z]{2,2}\.php$';
-	    }
-	    else {
-    	    return '^('.$g_localizerConfig['FILENAME_PREFIX']
-    	           .'|'.$g_localizerConfig['FILENAME_PREFIX_GLOBAL'].')\.'.$p_languageId.'\.php$';	        
-	    }
-	} // fn getFilePattern
-	
-
 	/**
 	 * Get the full path to the translation file.
 	 * @param LocalizerLanguage $p_localizerLanguage
@@ -259,27 +249,6 @@ class LocalizerFileFormat_XML extends LocalizerFileFormat {
 
 	
 	/**
-     * Get a regular expression that will match the name of the file.
-     * @param string $p_languageId
-     *      (optional) If specified, give the pattern that will match this language ID.
-	 * @return string
-	 */
-	function getFilePattern($p_languageId = null) 
-	{
-	    global $g_localizerConfig;
-	    if (is_null($p_languageId)) {
-    	    return '^('.$g_localizerConfig['FILENAME_PREFIX']
-    	           .'|'.$g_localizerConfig['FILENAME_PREFIX_GLOBAL'].')\.[a-z]{2,2}_[a-z]{2,2}\.xml$';
-	    }
-	    else {
-    	    return '^('.$g_localizerConfig['FILENAME_PREFIX']
-    	           .'|'.$g_localizerConfig['FILENAME_PREFIX_GLOBAL'].')\.'.$p_languageId.'\.xml$';	        
-	    }
-	} // fn getFilePattern
-	
-
-
-	/**
 	 * Get all supported languages as an array of LanguageMetadata objects.
 	 * @return array
 	 */
@@ -305,7 +274,7 @@ class LocalizerFileFormat_XML extends LocalizerFileFormat {
             }
         }
         else {
-            return Localizer::GetLanguages('locals');
+            return Localizer::GetLanguages();
         }
 	} // fn getLanguages
 	

@@ -92,7 +92,7 @@ else {
 }
 
 echo "Testing ability to get languages in the base directory...<br>";
-$languages = Localizer::GetLanguages('locals');
+$languages = Localizer::GetLanguages();
 echo "<pre>";
 print_r($languages);
 echo "</pre>";

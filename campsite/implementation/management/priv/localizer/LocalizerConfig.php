@@ -55,4 +55,34 @@ $g_localizerConfig['INPUT_SIZE'] = 70;
 
 // List supported file types, in order of preference.
 $g_localizerConfig['FILE_TYPES'] = array('xml', 'gs');
+
+$g_localizerConfig['LOADED_FILES'] = array();
+
+// Map of prefixes to directory names.
+$mapPrefixToDir = array();
+$mapPrefixToDir[""] = null;
+$mapPrefixToDir["globals"] = null;
+$mapPrefixToDir["home"] = "/";
+$mapPrefixToDir["pub"] = "/pub";
+$mapPrefixToDir["issues"] = "/issues";
+$mapPrefixToDir["sections"] = "/sections";
+$mapPrefixToDir["articles"] = "/articles";
+$mapPrefixToDir["article_images"] = "/articles/images";
+$mapPrefixToDir["article_topics"] = "/articles/topics";
+$mapPrefixToDir["imagearchive"] = "/imagearchive";
+$mapPrefixToDir["templates"] = "/templates";
+$mapPrefixToDir["article_types"] = "/a_types";
+$mapPrefixToDir["article_type_fields"] = "/a_types/fields";
+$mapPrefixToDir["topics"] = "/topics";
+$mapPrefixToDir["languages"] = "/languages";
+$mapPrefixToDir["country"] = "/country";
+$mapPrefixToDir["localizer"] = "/localizer";
+$mapPrefixToDir["logs"] = "/logs";
+$mapPrefixToDir["users"] = "/users";
+$mapPrefixToDir["user_subscriptions"] = "/users/subscriptions";
+$mapPrefixToDir["user_subscription_sections"] = "/users/subscriptions/sections";
+$mapPrefixToDir["user_types"] = "/u_types";
+$g_localizerConfig["MAP_PREFIX_TO_DIR"] = $mapPrefixToDir;
+unset($mapPrefixToDir);
+
 ?>
