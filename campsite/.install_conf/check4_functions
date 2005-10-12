@@ -534,8 +534,8 @@ result=$? && [ $result -ne 0 ] && output="Could not find IDN library. Please ins
 check4_file curl-config --executable --path "/usr/bin:/usr/local/bin:/opt/bin"
 result=$? && [ $result -ne 0 ] && output="Could not find CURL development files. Please install libcurl-devel package." && return 1
 curl_config_path=$file_path
-check4_file curl.h --file
-result=$? && [ $result -ne 0 ] && output="Could not find CURL development files. Please install libcurl-devel package." && re
+check4_file curl.h --file --path "/usr/include:/usr/include/curl:/usr/local/include:/usr/local/include/curl"
+result=$? && [ $result -ne 0 ] && output="Could not find CURL development files. Please install libcurl-devel package." && return 1
 export CURL_VERSION=`$curl_config_path --version`
 export CURL_CFLAGS=`$curl_config_path --cflags`
 export CURL_LINK=`$curl_config_path --libs`
