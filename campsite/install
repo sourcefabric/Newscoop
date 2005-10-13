@@ -87,7 +87,7 @@ install_campsite()
     if [ "$DEF_INST_INSTALLED" = "Y" ]; then
 	echo "To enter the Campsite administration site start a browser and type in the"
 	echo "following URL: http://[\$SERVER_NAME]/admin/."
-	echo -e "Fill in \"admin\" and \"admn00\" user and password respectivelly to log in."
+	echo -e "Fill in \"admin\" and \"admn00\" user and password respectively to log in."
 	echo "You should change the password as soon as possible."
     else
 	echo "Run create_instance script in order to complete Campsite install."
