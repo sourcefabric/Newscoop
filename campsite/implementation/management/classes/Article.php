@@ -238,7 +238,7 @@ class Article extends DatabaseObject {
     		$values['ShortName'] = $newArticleId;
     		$values['Type'] = $copyMe->m_data['Type'];
     		$values['OnFrontPage'] = $copyMe->m_data['OnFrontPage'];
-    		$values['OnSection'] = $copyMe->m_data['OnFrontPage'];
+    		$values['OnSection'] = $copyMe->m_data['OnSection'];
     		$values['Public'] = $copyMe->m_data['Public'];
     		$values['ArticleOrder'] = $copyMe->m_data['ArticleOrder'];
     		$values['Keywords'] = $copyMe->m_data['Keywords'];
