@@ -9,17 +9,16 @@ CXXFLAGS=$(CFLAGS)
 LDFLAGS=-L$(LIBMYSQLCLIENT_PATH)
 LDLIBS=-lmysqlclient -lm -lz $(LIBCRYPT_LINK) $(PTHREAD_LINK) $(NSL_LINK)
 
-LINKS=globals.h readconf.h readconf.cpp cms_types.h threadkey.h ccampsiteinstance.h \
- ccampsiteinstance.cpp mutex.h mutex.cpp
+LINKS=globals.h readconf.h readconf.cpp cms_types.h threadkey.h mutex.h mutex.cpp
 
 all: links notifyendsubs notifyevents
 	$(MAKE) -C smtp_wrapper
 
 links: dummy
-	for l in $(LINKS); do \
+	@for l in $(LINKS); do \
 	    if [ ! -L $$l ]; then ln -s ../parser/parser/$$l; fi; \
 	done
-	if [ ! -L "configure.h" ]; then ln -s "$(INSTALL_CONF)/configure.h"; fi
+	@if [ ! -L "configure.h" ]; then ln -s "$(INSTALL_CONF)/configure.h"; fi
 
 notifyendsubs: notifyendsubs.o ccampsiteinstance.o mutex.o readconf.o
 	g++ -o notifyendsubs notifyendsubs.o readconf.o ccampsiteinstance.o mutex.o $(LDFLAGS) $(LDLIBS)

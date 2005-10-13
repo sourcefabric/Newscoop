@@ -7,16 +7,19 @@ CXXFLAGS=$(CFLAGS)
 LDFLAGS=-L$(LIBMYSQLCLIENT_PATH)
 LDLIBS=-lmysqlclient -lm -lz $(LIBCRYPT_LINK) $(PTHREAD_LINK)
 
-LINKS=globals.h readconf.h readconf.cpp cms_types.h threadkey.h ccampsiteinstance.h \
- ccampsiteinstance.cpp mutex.h mutex.cpp
+PARSER_LINKS=globals.h readconf.h readconf.cpp cms_types.h threadkey.h mutex.h mutex.cpp
+MAILNOTIFY_LINKS=ccampsiteinstance.h ccampsiteinstance.cpp
 
 all: links gather
 
 links: dummy
-	for l in $(LINKS); do \
+	@for l in $(PARSER_LINKS); do \
 	    if [ ! -L $$l ]; then ln -s ../parser/parser/$$l; fi; \
 	done
-	if [ ! -L "configure.h" ]; then ln -s "$(INSTALL_CONF)/configure.h"; fi
+	@for l in $(MAILNOTIFY_LINKS); do \
+	    if [ ! -L $$l ]; then ln -s ../mailnotify/$$l; fi; \
+	done
+	@if [ ! -L "configure.h" ]; then ln -s "$(INSTALL_CONF)/configure.h"; fi
 
 gather: gather.o kwd.o readconf.o ccampsiteinstance.o mutex.o
 	g++ -o gather gather.o kwd.o readconf.o ccampsiteinstance.o mutex.o $(LDFLAGS) $(LDLIBS)
@@ -32,7 +35,7 @@ readconf.o: readconf.cpp readconf.h globals.h
 mutex.o: mutex.cpp mutex.h globals.h
 
 clean: dummy
-	rm -f *.o *~ configure.h $(LINKS) gather
+	rm -f *.o *~ configure.h $(PARSER_LINKS) $(MAILNOTIFY_LINKS) gather
 
 install: all
 	./install_search
