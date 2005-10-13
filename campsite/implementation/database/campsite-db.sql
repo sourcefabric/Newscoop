@@ -797,7 +797,7 @@ CREATE TABLE `Users` (
   `KeyId` int(10) unsigned default NULL,
   `Name` varchar(255) NOT NULL default '',
   `UName` varchar(70) NOT NULL default '',
-  `Password` varchar(32) NOT NULL default '',
+  `Password` varchar(64) NOT NULL default '',
   `EMail` varchar(255) NOT NULL default '',
   `Reader` enum('Y','N') NOT NULL default 'Y',
   `City` varchar(100) NOT NULL default '',

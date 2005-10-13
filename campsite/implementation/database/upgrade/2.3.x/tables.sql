@@ -1,2 +1,3 @@
 ALTER TABLE UserTypes ADD COLUMN InitializeTemplateEngine ENUM('N', 'Y') NOT NULL DEFAULT 'N';
 ALTER TABLE UserPerm ADD COLUMN InitializeTemplateEngine ENUM('N', 'Y') NOT NULL DEFAULT 'N';
+ALTER TABLE Users CHANGE COLUMN Password Password VARCHAR(64) NOT NULL DEFAULT '';
