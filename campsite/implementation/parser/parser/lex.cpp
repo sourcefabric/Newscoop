@@ -354,6 +354,7 @@ int CStatementMap::InitStatements()
 	pcoCtx->insertAttr(new CStringAttr("mon_name", "UploadDate"));
 	pcoCtx->insertAttr(new CStringAttr("wday_name", "UploadDate"));
 	pcoCtx->insertAttr(new CDateAttr("upload_date", "UploadDate"));
+	pcoCtx->insertAttr(new CDateAttr("publish_date", "PublishDate"));
 	pcoCtx->insertAttr(new CStringAttr("template"));
 	pcoSt->insertCtx(pcoCtx);
 
@@ -385,6 +386,8 @@ int CStatementMap::InitStatements()
 
 	pcoCtx = new CStatementContext(CMS_CT_LIST);
 	pcoCtx->insertAttr(new CEnumAttr("bydate", "order_direction"));
+	pcoCtx->insertAttr(new CEnumAttr("bycreationdate", "order_direction", "UploadDate"));
+	pcoCtx->insertAttr(new CEnumAttr("bypublishdate", "order_direction", "PublishDate"));
 	pcoCtx->insertAttr(new CEnumAttr("bynumber", "order_direction", "Number"));
 	pcoCtx->insertAttr(new CEnumAttr("byname", "order_direction", "Name"));
 	pcoSt->insertCtx(pcoCtx);
