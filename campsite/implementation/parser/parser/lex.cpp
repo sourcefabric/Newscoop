@@ -316,6 +316,7 @@ int CStatementMap::InitStatements()
 	pcoCtx = new CStatementContext(CMS_CT_IF);
 	pcoCtx->insertAttr(new CStringAttr("name", "Name"));
 	pcoCtx->insertAttr(new CDateAttr("upload_date", "UploadDate"));
+	pcoCtx->insertAttr(new CDateTimeAttr("publish_date", "PublishDate"));
 	pcoCtx->insertAttr(new CAttribute("has_keyword"));
 	pcoCtx->insertAttr(new CAttribute("public", "Public"));
 	pcoCtx->insertAttr(new CSwitchAttr("OnFrontPage", "OnFrontPage"));
@@ -330,6 +331,7 @@ int CStatementMap::InitStatements()
 	pcoCtx->insertAttr(new CStringAttr("name", "Name"));
 	pcoCtx->insertAttr(new CIntegerAttr("number", "Number"));
 	pcoCtx->insertAttr(new CDateAttr("upload_date", "UploadDate"));
+	pcoCtx->insertAttr(new CDateTimeAttr("publish_date", "PublishDate"));
 	pcoCtx->insertAttr(new CStringAttr("keyword", "Keywords"));
 	pcoCtx->insertAttr(new CStringAttr("type", "Type", CMS_TYPE_ATTR));
 	pcoCtx->insertAttr(new CSwitchAttr("OnFrontPage", "OnFrontPage"));
@@ -354,7 +356,7 @@ int CStatementMap::InitStatements()
 	pcoCtx->insertAttr(new CStringAttr("mon_name", "UploadDate"));
 	pcoCtx->insertAttr(new CStringAttr("wday_name", "UploadDate"));
 	pcoCtx->insertAttr(new CDateAttr("upload_date", "UploadDate"));
-	pcoCtx->insertAttr(new CDateAttr("publish_date", "PublishDate"));
+	pcoCtx->insertAttr(new CDateTimeAttr("publish_date", "PublishDate"));
 	pcoCtx->insertAttr(new CStringAttr("template"));
 	pcoSt->insertCtx(pcoCtx);
 
