@@ -266,7 +266,10 @@ class Time
 {
 public:
 	// conversion from string; time must be of format: "hh" + p_coSep + "mm" + p_coSep + "ss"
-	Time(const string&, string p_coSep = ":") throw(InvalidValue);
+	Time(const string& p_rcoValue, string p_coSep = ":") throw(InvalidValue)
+	{ setTime(p_rcoValue, p_coSep); }
+
+	void setTime(const string&, string p_coSep = ":") throw(InvalidValue);
 
 	// instantiation from struct tm
 	Time(const struct tm& p_tm, string p_coSep = ":") throw(InvalidValue)
