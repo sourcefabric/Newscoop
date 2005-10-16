@@ -43,7 +43,7 @@ install_campsite()
 	echo "ERROR."
 	echo "Read install_log for more information on installation error."
 	echo "Please report bug to http://bugs.campware.org"
-	exit 1
+	exit 101
     fi
     def_inst_error=0
     do_install=
@@ -146,7 +146,7 @@ if [ $? -ne 0 ] && [ $my_id -ne 0 ] && ! $USER_INSTALL; then
 	archive_path=`pwd`
 	su - $ROOT_USER -c "echo \"\"; cd $archive_path; ./install --go_to_install" 2> /dev/null
 	err_code=$?
-	if [ $err_code -ne 0 ]; then
+	if [ $err_code -eq 1 ]; then
 	    echo -n -e "\nThe password was not correct. Try again (Y/N) ? [Y]: "
 	    read yn
 	    if [ "$yn" = "" ]; then
@@ -157,7 +157,7 @@ if [ $? -ne 0 ] && [ $my_id -ne 0 ] && ! $USER_INSTALL; then
 		exit 1
 	    fi
 	else
-	    exit 0
+	    exit $err_code
 	fi
     done
 else
