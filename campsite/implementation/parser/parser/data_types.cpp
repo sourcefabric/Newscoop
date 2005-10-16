@@ -121,13 +121,15 @@ void Date::Validate() throw(InvalidValue)
 // Time implementation
 
 // conversion from string
-Time::Time(const string& p_rcoTime, string p_coSep) throw(InvalidValue)
-	: m_coSep(p_coSep)
+void Time::setTime(const string& p_rcoTime, string p_coSep) throw(InvalidValue)
 {
+	m_coSep = p_coSep;
 	string::size_type nMin = p_rcoTime.find(p_coSep);
 	string::size_type nSec = p_rcoTime.find(p_coSep, nMin + 1);
-	if (nMin == 0 || nMin == nSec)
+	if (nMin == string::npos || nMin == nSec)
+	{
 		throw InvalidValue();
+	}
 	m_nHour = Integer::string2int(p_rcoTime.substr(0, nMin));
 	m_nMin = Integer::string2int(p_rcoTime.substr(nMin + 1, nSec - nMin - 1));
 	m_nSec = Integer::string2int(p_rcoTime.substr(nSec + 1, p_rcoTime.length() - nSec - 1));
@@ -164,9 +166,17 @@ void Time::Validate() throw(InvalidValue)
 // conversion from string
 DateTime::DateTime(const string& p_rcoVal, string p_coDateSep, string p_coTimeSep)
 	throw(InvalidValue)
-	: Date(p_rcoVal.substr(0, p_rcoVal.find(" "))),
-	  Time(p_rcoVal.substr(p_rcoVal.find(" ") + 1, p_rcoVal.length() - 1))
+	: Date(p_rcoVal.substr(0, p_rcoVal.find(" "))), Time("00:00:00")
 {
+	try {
+		string::size_type nSpacePos = p_rcoVal.find(" ");
+		if (nSpacePos != string::npos && p_rcoVal.find(p_coTimeSep) != string::npos)
+		{
+			Time::setTime(p_rcoVal.substr(nSpacePos + 1));
+		}
+	}
+	catch (std::out_of_range &rcoEx) {
+	}
 }
 
 // struct tm conversion operator
