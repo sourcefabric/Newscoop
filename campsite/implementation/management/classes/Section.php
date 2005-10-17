@@ -273,26 +273,18 @@ class Section extends DatabaseObject {
 	function GetSections($p_publicationId = null, $p_issueId = null,
 	                     $p_languageId = null, $p_sqlOptions = null) 
 	{
-		$queryStr = 'SELECT * FROM Sections';
-		$whereClause = array();
+		$constraints = array();
 		if (!is_null($p_publicationId)) {
-			$whereClause[] = "IdPublication=$p_publicationId";
+			$constraints[] = array("IdPublication", $p_publicationId);
 		}
 		if (!is_null($p_issueId)) {
-			$whereClause[] = "NrIssue=$p_issueId";
+			$constraints[] = array("NrIssue", $p_issueId);
 		}
 		if (!is_null($p_languageId)) {
-			$whereClause[] = "IdLanguage=$p_languageId";
+			$constraints[] = array("IdLanguage", $p_languageId);
 		}
-		if (count($whereClause) > 0) {
-			$queryStr .= ' WHERE '.implode(' AND ', $whereClause);
-		}
-		if (!is_null($p_sqlOptions)) {
-			$queryStr = DatabaseObject::ProcessOptions($queryStr, $p_sqlOptions);
-		}
-		$sections = DbObjectArray::Create('Section', $queryStr);
-		return $sections;		
-	} // fn GetSectionsInIssue
+		return DatabaseObject::Search('Section', $constraints, $p_sqlOptions);
+	} // fn GetSections
 	
 	
 	/**

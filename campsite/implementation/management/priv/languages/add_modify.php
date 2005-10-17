@@ -38,6 +38,16 @@ $languageObj =& new Language($languageId);
 
 //query ("SELECT * FROM Languages WHERE Id=$Lang", 'l');
 
+$crumbs = array();
+$crumbs[] = array(getGS("Configure"), "");
+$crumbs[] = array(getGS("Languages"), "/$ADMIN/languages");
+if ($editMode) { 
+    $crumbs[] = array(getGS("Edit language"), "");
+} else { 
+    $crumbs[] = array(getGS("Add new language"), "");
+} 
+$breadcrumbs = camp_html_breadcrumbs($crumbs);
+
 ?>
 <HEAD>
 	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
@@ -50,7 +60,8 @@ $languageObj =& new Language($languageId);
 
 <BODY>
 
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
+<?php echo $breadcrumbs; ?>
+<!--<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
 <TR>
 	<TD class="page_title">
 	   <?php if ($editMode) { ?>
@@ -69,7 +80,7 @@ $languageObj =& new Language($languageId);
     </TD>
 </TR>
 </TABLE>
-
+-->
 <P>
 <FORM NAME="dialog" METHOD="POST" ACTION="do_add_modify.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
 <?php if ($editMode) { ?>

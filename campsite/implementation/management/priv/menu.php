@@ -50,7 +50,7 @@ $menu_item =& DynMenuItem::Create(getGS('Image Archive'), "/$ADMIN/imagearchive/
 $menu_content->addItem($menu_item);
 $menu_content->addSplit();
 
-$publications =& Publication::GetAllPublications();
+$publications =& Publication::GetPublications();
 $issues = array();
 $sections = array();
 foreach ($publications as $publication) {

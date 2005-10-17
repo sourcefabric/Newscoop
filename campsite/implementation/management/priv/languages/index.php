@@ -10,29 +10,19 @@ if (!$access) {
 	header("Location: /$ADMIN/logout.php");
 	exit;
 }
-$languages = Language::GetAllLanguages();
-?>
-<HEAD>
-	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
-	<TITLE><?php  putGS("Languages"); ?></TITLE>
-</HEAD>
+$languages = Language::GetLanguages();
+$crumbs = array();
+$crumbs[] = array(getGS("Configure"), "");
+$crumbs[] = array(getGS("Languages"), "");
+$breadcrumbs = camp_html_breadcrumbs($crumbs);
+echo $breadcrumbs;
 
-
-<BODY >
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
-<TR>
-	<TD class="page_title">
-	    <?php  putGS("Languages"); ?>
-	</TD>
-</tr>
-</TABLE>
-
-<?php if ($User->hasPermission('ManageLanguages')) { ?>
+if ($User->hasPermission('ManageLanguages')) { ?>
 <P>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 <TR>
-    <TD><A HREF="add_modify.php?Back=<?php print urlencode($_SERVER['REQUEST_URI']); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
-    <TD><A HREF="add_modify.php?Back=<?php print urlencode($_SERVER['REQUEST_URI']); ?>" ><B><?php  putGS("Add new language"); ?></B></A></TD>
+    <TD><A HREF="/<?php echo $ADMIN; ?>/languages/add_modify.php?Back=<?php print urlencode($_SERVER['REQUEST_URI']); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
+    <TD><A HREF="/<?php echo $ADMIN; ?>/languages/add_modify.php?Back=<?php print urlencode($_SERVER['REQUEST_URI']); ?>" ><B><?php  putGS("Add new language"); ?></B></A></TD>
 </TR>
 </TABLE>
 <?php  } ?>

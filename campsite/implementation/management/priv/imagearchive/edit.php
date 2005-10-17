@@ -23,6 +23,18 @@ if (!Input::IsValid()) {
 $imageNav =& new ImageNav(CAMPSITE_IMAGEARCHIVE_IMAGES_PER_PAGE, $view);
 $imageObj =& new Image($ImageId);
 $articles =& ArticleImage::GetArticlesThatUseImage($ImageId);
+
+$crumbs = array();
+$crumbs[] = array(getGS("Content"), "");
+$crumbs[] = array(getGS("Image Archive"), "/$ADMIN/imagearchive/index.php?".$imageNav->getSearchLink());
+if ($User->hasPermission('ChangeImage')) {
+	$crumbs[] = array(getGS('Change image information'), "");
+}
+else {
+	$crumbs[] = array(getGS('View image'), "");
+}
+$breadcrumbs = camp_html_breadcrumbs($crumbs);
+
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
 	"http://www.w3.org/TR/REC-html40/loose.dtd">
@@ -36,35 +48,7 @@ $articles =& ArticleImage::GetArticlesThatUseImage($ImageId);
 </HEAD>
 
 <BODY>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
-<TR>
-	<TD class="page_title">
-		<?php  
-		if ($User->hasPermission('ChangeImage')) {
-			putGS('Change image information'); 
-		}
-		else {
-			putGS('View image');
-		}
-		?>
-	</TD>
-	<TD ALIGN="RIGHT">
-		<A HREF="index.php?<?php echo $imageNav->getSearchLink(); ?>" class="breadcrumb"><?php  putGS("Image Archive");  ?></A>
-	</TD>
-</TR>
-</TABLE>
-
-<table>
-<tr>
-	<td>
-		<img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]); ?>/back.png" border="0">
-	<td>
-	<td class="action_link">
-		<a href="index.php?<?php p($imageNav->getSearchLink()); ?>"><?php putGS('Back to image archive'); ?></a>
-	</td>
-</tr>
-</table>
-
+<?php echo $breadcrumbs; ?>
 <IMG SRC="<?php echo $imageObj->getImageUrl(); ?>" BORDER="0" ALT="<?php echo htmlspecialchars($imageObj->getDescription()); ?>" style="padding-left:15px">
 <P>
 <?php if ($User->hasPermission('ChangeImage')) { ?>

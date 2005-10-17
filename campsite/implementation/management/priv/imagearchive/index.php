@@ -91,6 +91,11 @@ $imageSearch->run();
 $imageData =& $imageSearch->getImages();
 $NumImagesFound = $imageSearch->getNumImagesFound();
 $uploadedByUsers =& Image::GetUploadUsers();
+
+$crumbs = array();
+$crumbs[] = array(getGS('Content'), "");
+$crumbs[] = array(getGS('Image Archive'), "");
+$breadcrumbs = camp_html_breadcrumbs($crumbs);
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
@@ -104,14 +109,7 @@ $uploadedByUsers =& Image::GetUploadUsers();
 </HEAD>
 <BODY>
 
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
-<TR>
-	<TD class="page_title">
-		<?php putGS('Image Archive'); ?>
-	</TD>
-</TR>
-</TABLE>
-
+<?php echo $breadcrumbs; ?>
 <table cellpadding="0" cellspacing="0" style="padding-top: 3px; padding-bottom: 3px;">
 <tr>
 <?php

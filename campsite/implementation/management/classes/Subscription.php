@@ -1,5 +1,5 @@
 <?PHP
-class Subscription {
+class Subscription extends DatabaseObject {
 	var $m_dbTableName = 'Subscriptions';
 	var $m_keyColumnNames = array('Id');
 	var $m_columnNames = array(
@@ -12,7 +12,23 @@ class Subscription {
 		'Type');
     
 	/**
+	 * Return the number of subscriptions in the given publication.
+	 *
+	 * @param int $p_publicationId
+	 * @return int
+	 */
+	function GetNumSubscriptions($p_publicationId = null)
+	{
+		global $Campsite;
+		$queryStr = "SELECT COUNT(*) FROM Subscriptions WHERE IdPublication=$p_publicationId";
+		$count = $Campsite['db']->GetOne($queryStr);
+		return $count;
+	} // fn GetNumSubscriptions
+	
+	
+	/**
 	 * Delete all the subscriptions to this section.
+	 *
 	 * @param int $p_publicationId
 	 * @param int $p_sectionId
 	 * @return int
@@ -37,6 +53,14 @@ class Subscription {
     } // fn DeleteSubscriptionsInSection
     
     
+    /**
+     * Add the given section to all subscriptions.  Return the number of
+     * subscriptions affected.
+     *
+     * @param int $p_publicationId
+     * @param int $p_sectionId
+     * @return int
+     */
     function AddSectionToAllSubscriptions($p_publicationId, $p_sectionId) 
     {
         global $Campsite;

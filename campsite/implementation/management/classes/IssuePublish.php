@@ -251,7 +251,7 @@ class IssuePublish extends DatabaseObject {
         //echo $queryStr."<br>";
 		$rows = $Campsite['db']->GetAll($queryStr);
 		$addKeys = array();
-		if (count($rows) > 0) {
+		if ($rows && (count($rows) > 0)) {
     		foreach ($rows as $row) {
     		    $row["ObjectType"] = "issue";		    
     		    $addKeys[$row['ActionTime']] = $row;

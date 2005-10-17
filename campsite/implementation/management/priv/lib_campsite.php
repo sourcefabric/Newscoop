@@ -633,69 +633,69 @@ function camp_is_valid_url_name($name)
 	return true;
 } // fn camp_is_valid_url_name
 
-global $cache_type_all, $cache_type_publications, $cache_type_topics, $cache_type_article_types;
-global $operation_attr, $operation_create, $operation_delete, $operation_modify;
-
-$cache_type_all = 'all';
-$cache_type_publications = 'publications';
-$cache_type_topics = 'topics';
-$cache_type_article_types = 'article_types';
-
-$operation_attr = 'operation';
-$operation_create = 'create';
-$operation_delete = 'delete';
-$operation_modify = 'modify';
-
-function build_reset_cache_msg($type, $parameters)
-{
-	$msg = "<CampsiteMessage MessageType=\"ResetCache\">\n";
-	$msg .= "\t<CacheType>" . htmlspecialchars($type) . "</CacheType>\n";
-	$msg .= "\t<Parameters>\n";
-	if (is_array($parameters))
-		foreach($parameters as $name=>$value)
-			$msg .= "\t\t<Parameter Name=\"" . htmlspecialchars($name) . "\">" 
-			     . htmlspecialchars($value) . "</Parameter>\n";
-	$msg .= "\t</Parameters>\n";
-	$msg .= "</CampsiteMessage>\n";
-	$size = sprintf("%04x", strlen($msg));
-	$msg = "0002 " . $size . " " . $msg;
-//	echo "<pre>sending ".htmlentities($msg)."</pre>";
-	return $msg;
-}
-
-function build_restart_server_msg()
-{
-	$msg = "<CampsiteMessage MessageType=\"RestartServer\">\n</CampsiteMessage>\n";
-	$size = sprintf("%04x", strlen($msg));
-	$msg = "0003 " . $size . " " . $msg;
-	return $msg;
-}
-
-function server_port()
-{
-	global $Campsite;
-
-	return $Campsite['PARSER_PORT'];
-}
-
-function send_message($address, $server_port, $msg, &$err_msg, $socket = false, $close_socket = true)
-{
-	if (!$socket) {
-		@$socket = fsockopen($address, $server_port, $errno, $errstr, 30);
-		if (!$socket) {
-			$err_msg = "Unable to connect to server: " . $errstr . " (" . $errno . ")";
-			return false;
-		}
-	}
-
-	fwrite($socket, $msg);
-	fflush($socket);
-	if ($close_socket) {
-		fclose($socket);
-		return true;
-	}
-	return $socket;
-}
+//global $cache_type_all, $cache_type_publications, $cache_type_topics, $cache_type_article_types;
+//global $operation_attr, $operation_create, $operation_delete, $operation_modify;
+//
+//$cache_type_all = 'all';
+//$cache_type_publications = 'publications';
+//$cache_type_topics = 'topics';
+//$cache_type_article_types = 'article_types';
+//
+//$operation_attr = 'operation';
+//$operation_create = 'create';
+//$operation_delete = 'delete';
+//$operation_modify = 'modify';
+//
+//function build_reset_cache_msg($type, $parameters)
+//{
+//	$msg = "<CampsiteMessage MessageType=\"ResetCache\">\n";
+//	$msg .= "\t<CacheType>" . htmlspecialchars($type) . "</CacheType>\n";
+//	$msg .= "\t<Parameters>\n";
+//	if (is_array($parameters))
+//		foreach($parameters as $name=>$value)
+//			$msg .= "\t\t<Parameter Name=\"" . htmlspecialchars($name) . "\">" 
+//			     . htmlspecialchars($value) . "</Parameter>\n";
+//	$msg .= "\t</Parameters>\n";
+//	$msg .= "</CampsiteMessage>\n";
+//	$size = sprintf("%04x", strlen($msg));
+//	$msg = "0002 " . $size . " " . $msg;
+////	echo "<pre>sending ".htmlentities($msg)."</pre>";
+//	return $msg;
+//}
+//
+//function build_restart_server_msg()
+//{
+//	$msg = "<CampsiteMessage MessageType=\"RestartServer\">\n</CampsiteMessage>\n";
+//	$size = sprintf("%04x", strlen($msg));
+//	$msg = "0003 " . $size . " " . $msg;
+//	return $msg;
+//}
+//
+//function server_port()
+//{
+//	global $Campsite;
+//
+//	return $Campsite['PARSER_PORT'];
+//}
+//
+//function send_message($address, $server_port, $msg, &$err_msg, $socket = false, $close_socket = true)
+//{
+//	if (!$socket) {
+//		@$socket = fsockopen($address, $server_port, $errno, $errstr, 30);
+//		if (!$socket) {
+//			$err_msg = "Unable to connect to server: " . $errstr . " (" . $errno . ")";
+//			return false;
+//		}
+//	}
+//
+//	fwrite($socket, $msg);
+//	fflush($socket);
+//	if ($close_socket) {
+//		fclose($socket);
+//		return true;
+//	}
+//	return $socket;
+//}
 
 function template_path($path, $name)
 {

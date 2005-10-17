@@ -82,17 +82,13 @@ $rights = array('Content'=>$content_group, 'Templates'=>$templates_group,
 	'Editor Basic Settings'=>$editor_group_1, 'Editor Advanced Font Settings'=>$editor_group_2,
 	'Editor Table Settings'=>$editor_group_3, 'Editor Miscellaneous Settings'=>$editor_group_4);
 
+$crumbs = array();
+$crumbs[] = array(getGS("Users"), "");
+$crumbs[] = array(getGS("User types"), "/$ADMIN/u_types");
+$crumbs[] = array(getGS("Add new user type"), "");
+echo camp_html_breadcrumbs($crumbs);
+
 ?>
-<table border="0" cellspacing="0" cellpadding="1" width="100%" class="page_title_container">
-	<tr>
-		<td class="page_title">
-		    <?php  putGS("Add new user type"); ?>
-		</td>
-		<td align=left width="1%" nowrap>
-			<a href="/<?php echo $ADMIN; ?>/u_types/" class="breadcrumb"><?php putGS("User Types"); ?></a>
-		</td>
-	</tr>
-</table>
 
 <form name="dialog" method="post" action="do_add.php" >
 <p><table border="0" cellspacing="0" cellpadding="1" class="table_input">

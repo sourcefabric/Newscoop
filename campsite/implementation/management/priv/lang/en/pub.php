@@ -18,7 +18,7 @@ regGS("You do not have the right to change publication information.", "You do no
 regGS("The publication $1 has been successfuly updated.", "The publication $1 has been successfuly updated.");
 regGS("Publication $1 changed", "Publication $1 changed");
 regGS("The publication information could not be updated.", "The publication information could not be updated.");
-regGS("Please check if another publication with the same or the same site name does not already exist.", "Please check if another publication with the same or the same site name does not already exist.");
+regGS("Please check if another publication with the same name or the same site name does not already exist.", "Please check if another publication with the same name or the same site name does not already exist.");
 regGS("Delete publication", "Delete publication");
 regGS("You do not have the right to delete publications.", "You do not have the right to delete publications.");
 regGS("Are you sure you want to delete the publication $1?", "Are you sure you want to delete the publication $1?");

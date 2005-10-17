@@ -18,7 +18,7 @@ regGS("You do not have the right to change publication information.", "لا يح
 regGS("The publication $1 has been successfuly updated.", "تم تحديث المنشور $1 بنجاح");
 regGS("Publication $1 changed", "تغيّر المنشور $1");
 regGS("The publication information could not be updated.", "لا يمكن تحديث المعلومات الخاصة بالمنشور");
-regGS("Please check if another publication with the same or the same site name does not already exist.", "الرجاء التأكد من عدم وجود منشور يحمل الاسم نفسه أو اسم الموقع نفسه");
+regGS("Please check if another publication with the same name or the same site name does not already exist.", "الرجاء التأكد من عدم وجود منشور يحمل الاسم نفسه أو اسم الموقع نفسه");
 regGS("Delete publication", "إلغاء المنشور");
 regGS("You do not have the right to delete publications.", "لا يحق لك إلغاء المنشورات");
 regGS("Are you sure you want to delete the publication $1?", "هل أنت متأكد من أنك تريد إلغاء المنشور $1");

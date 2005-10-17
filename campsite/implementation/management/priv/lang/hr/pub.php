@@ -12,7 +12,7 @@ regGS("You do not have the right to change publication information.", "Nemate pr
 regGS("The publication $1 has been successfuly updated.", "Publikacija $1 je uspješno izmijenjena.");
 regGS("Publication $1 changed", "Publikacija $1 je izmijenjena");
 regGS("The publication information could not be updated.", "Podaci o publikaciji ne mogu biti osvježeni.");
-regGS("Please check if another publication with the same or the same site name does not already exist.", "Provjerite da li slučajno postoji neka druga istoimena publikacija ili istoimeni sajt.");
+regGS("Please check if another publication with the same name or the same site name does not already exist.", "Provjerite da li slučajno postoji neka druga istoimena publikacija ili istoimeni sajt.");
 regGS("Delete publication", "Izbriši publikaciju");
 regGS("You do not have the right to delete publications.", "Nemate prava brisati publikacije.");
 regGS("Are you sure you want to delete the publication $1?", "Da li ste sigurni da želite brisati publikaciju $1?");

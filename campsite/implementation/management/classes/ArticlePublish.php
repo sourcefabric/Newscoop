@@ -276,10 +276,9 @@ class ArticlePublish extends DatabaseObject {
                     . " AND Articles.IdLanguage=ArticlePublish.IdLanguage "
                     . " ORDER BY ActionTime DESC"
                     . " LIMIT $p_limit";
-        //echo $queryStr."<br>";
 		$rows = $Campsite['db']->GetAll($queryStr);
 		$addKeys = array();
-		if (count($rows) > 0) {
+		if ($rows && (count($rows) > 0)) {
     		foreach ($rows as $row) {
     		    $row["ObjectType"] = "article";
     		    $addKeys[$row['ActionTime']] = $row;

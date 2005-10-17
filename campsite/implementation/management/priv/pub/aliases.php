@@ -1,132 +1,60 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
-require_once($Campsite['HTML_DIR']."/$ADMIN_DIR/lib_campsite.php");
-$globalfile=selectLanguageFile('globals');
-$localfile=selectLanguageFile("pub");
-@include_once($globalfile);
-@include_once($localfile);
-require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/languages.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
-?>
-<?php
-require_once($_SERVER['DOCUMENT_ROOT']."/db_connect.php");
-?>
 
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/pub/pub_common.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/Alias.php");
 
-<?php 
-    todefnum('TOL_UserId');
-    todefnum('TOL_UserKey');
-    query ("SELECT * FROM Users WHERE Id=$TOL_UserId AND KeyId=$TOL_UserKey", 'Usr');
-    $access=($NUM_ROWS != 0);
-    if ($NUM_ROWS) {
-	fetchRow($Usr);
-	query ("SELECT * FROM UserPerm WHERE IdUser=".getVar($Usr,'Id'), 'XPerm');
-	 if ($NUM_ROWS){
-	 	fetchRow($XPerm);
-	 }
-	 else $access = 0;						//added lately; a non-admin can enter the administration area; he exists but doesn't have ANY rights
-	 $xpermrows= $NUM_ROWS;
-    }
-    else {
-	query ("SELECT * FROM UserPerm WHERE 1=0", 'XPerm');
-    }
-?>
+// Check permissions
+list($access, $User) = check_basic_access($_REQUEST);
+if (!$access) {
+	header("Location: /$ADMIN/logout.php");
+	exit;
+}
+
+$Pub = Input::Get('Pub', 'int');
+$publicationObj =& new Publication($Pub);
+$aliases =& Alias::GetAliases(null, $Pub);
     
+camp_html_content_top(getGS("Publication Aliases"), array("Pub" => $publicationObj));
+?>
 
-
-<HEAD>
-	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
-
-	<TITLE><?php  putGS("Publication Aliases"); ?></TITLE>
-<?php  if ($access == 0) { ?>	<META HTTP-EQUIV="Refresh" CONTENT="0; URL=/admin/logout.php">
-</HEAD>
-
-<?php  } else { ?> 
- 
-
-<BODY >
-
-<?php 
-	todefnum('Pub');
-?><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
-	<TR>
-		<TD class="page_title">
-		    <?php  putGS("Publication Aliases"); ?>
-		</TD>
-
-	<TD ALIGN=RIGHT><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0"><TR><TD><A HREF="/admin/pub/" class="breadcrumb" ><?php  putGS("Publications");  ?></A></TD>
-</TR></TABLE></TD></TR>
-</TABLE>
-
-<?php 
-	$sql = "SELECT Name FROM Publications WHERE Id=$Pub";
-	query($sql, 'q_pub');
-	if ($NUM_ROWS) { 
-		fetchRow($q_pub);    
-?><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="1" WIDTH="100%" class="current_location_table"><TR>
-<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php  putGS("Publication"); ?>:</TD><TD VALIGN="TOP" class="current_location_content"><?php  pgetHVar($q_pub,'Name'); ?></TD>
-
-</TR></TABLE>
-
+<?php if ($User->hasPermission("ManagePub")) { ?>
 <TABLE>
 <TR>
-	<TD><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1"><TR><TD><A HREF="add_alias.php?Pub=<?php  pencURL($Pub); ?>" ><IMG SRC="/admin/img/icon/add.png" BORDER="0"></A></TD><TD><A HREF="add_alias.php?Pub=<?php  pencURL($Pub); ?>" ><B><?php  putGS("Add new alias"); ?></B></A></TD></TR></TABLE></TD>
-	<TD><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1"><TR><TD><A HREF="edit.php?Pub=<?php  pencURL($Pub); ?>" ><IMG SRC="/admin/img/icon/back.png" BORDER="0"></A></TD><TD><A HREF="edit.php?Pub=<?php  pencURL($Pub); ?>" ><B><?php  putGS("Back to publication"); ?></B></A></TD></TR></TABLE></TD>
+	<TD><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1"><TR><TD><A HREF="add_alias.php?Pub=<?php p($Pub); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD><TD><A HREF="add_alias.php?Pub=<?php  p($Pub); ?>" ><B><?php  putGS("Add new alias"); ?></B></A></TD></TR></TABLE></TD>
 </TR>
 </TABLE>
+<?php } ?>
 
-<P><?php 
-	todefnum('ListOffs');
-	if ($ListOffs < 0)
-		$ListOffs= 0;
-
-	$sql = "SELECT * FROM Aliases WHERE IdPublication=$Pub ORDER BY Name ASC LIMIT $ListOffs, 11";
-	query($sql, 'q_aliases');
-	if ($NUM_ROWS) {
-		$nr = $NUM_ROWS;
-		$i = 10;
-		$color = 0;
-?><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list">
-	<TR class="table_list_header">
-		<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("Alias (click to edit)"); ?></B></TD>
-		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Delete"); ?></B></TD>
-	</TR>
-<?php  
-	for($loop=0;$loop<$nr;$loop++) {
-		fetchRow($q_aliases);
-		if ($i) {
-?>	<TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
-		<TD >
-			<A HREF="/admin/pub/edit_alias.php?Pub=<?php  pencURL($Pub); ?>&Alias=<?php  pgetHVar($q_aliases, 'Id'); ?>"><?php  pgetHVar($q_aliases,'Name'); ?></A>
+<P>
+<?php
+$color = 0;
+?>
+<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list">
+<TR class="table_list_header">
+	<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("Alias (click to edit)"); ?></B></TD>
+	<?php if ($User->hasPermission("ManagePub")) { ?>
+	<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Delete"); ?></B></TD>
+	<?php } ?>
+</TR>
+<?php
+foreach ($aliases as $alias) {  ?>
+	<TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
+		<TD>
+			<?php if ($User->hasPermission("ManagePub")) { ?><A HREF="/<?php p($ADMIN); ?>/pub/edit_alias.php?Pub=<?php p($Pub); ?>&Alias=<?php p($alias->getId()); ?>"><?php } ?><?php  p(htmlspecialchars($alias->getName())); ?><?php if ($User->hasPermission("ManagePub")) { ?></A><?php } ?>
 		</TD>
+		<?php if ($User->hasPermission("ManagePub")) { ?>
 		<TD ALIGN="CENTER">
-			<A HREF="/admin/pub/del_alias.php?Pub=<?php  pencURL($Pub); ?>&Alias=<?php  pgetUVar($q_aliases, 'Id'); ?>"><IMG SRC="/admin/img/icon/delete.png" BORDER="0" ALT="<?php  putGS('Delete entry $1',getHVar($q_aliases, 'Name')); ?>" TITLE="<?php  putGS('Delete entry $1',getHVar($q_aliases, 'Name')); ?>" ></A>
+			<?php 
+			if ($publicationObj->getDefaultAliasId() != $alias->getId()) { ?>
+			<A HREF="/<?php p($ADMIN); ?>/pub/do_del_alias.php?Pub=<?php p($Pub); ?>&Alias=<?php p($alias->getId()); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the alias $1?', $alias->getName()); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php  putGS('Delete entry $1', htmlspecialchars($alias->getName())); ?>" TITLE="<?php  putGS('Delete entry $1', htmlspecialchars($alias->getName())); ?>" ></A>
+			<?php } ?>
 		</TD>
+		<?php } ?>
 	</TR>
 <?php 
-			$i--;
-		}
-	}
-?>	<TR><TD COLSPAN="2" NOWRAP>
-<?php  if ($ListOffs <= 0) { ?>		&lt;&lt; <?php  putGS('Previous'); ?>
-<?php  } else { ?>		<B><A HREF="index.php?Pub=<?php  pencURL($Pub); ?>&ListOffs=<?php  print ($ListOffs - 10); ?>">&lt;&lt; <?php  putGS('Previous'); ?></A></B>
-<?php  }
-    if ($nr < 11) { ?>		 | <?php  putGS('Next'); ?> &gt;&gt;
-<?php  } else { ?>		 | <B><A HREF="index.php?Pub=<?php  pencURL($Pub); ?>&ListOffs=<?php  print ($ListOffs + 10); ?>"><?php  putGS('Next'); ?> &gt;&gt</A></B>
-<?php  } ?>	</TD></TR>
+}
+?>
+
 </TABLE>
 
-<?php  } else { ?><BLOCKQUOTE>
-	<LI><?php  putGS('No entries defined.'); ?></LI>
-</BLOCKQUOTE>
-<?php  } ?>
-<?php  }  else { ?><BLOCKQUOTE>
-	<LI><?php  putGS('Publication does not exist.'); ?></LI>
-</BLOCKQUOTE>
-<?php  } ?>
 <?php camp_html_copyright_notice(); ?>
-</BODY>
-<?php  } ?>
-
-</HTML>
-

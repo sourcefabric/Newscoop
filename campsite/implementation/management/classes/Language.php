@@ -30,28 +30,17 @@ class Language extends DatabaseObject {
 	
 	/** 
 	 * Constructor.
+	 * @param int $p_languageId
 	 */
 	function Language($p_languageId = null) 
 	{
 		parent::DatabaseObject($this->m_columnNames);
-		$this->m_data['Id'] = $p_languageId;
-		if ($this->keyValuesExist()) {
+		if (!is_null($p_languageId)) {
+    		$this->m_data['Id'] = $p_languageId;
 			$this->fetch();
 		}
 	} // constructor
 	
-	
-	/**
-	 * Return an array of all languages (array of Language objects).
-	 * @return array
-	 */
-	function GetAllLanguages() 
-	{
-		$queryStr = 'SELECT * FROM Languages ORDER BY Name';
-		$languages = DbObjectArray::Create('Language', $queryStr);
-		return $languages;
-	} // fn GetAllLanguages
-
 	
 	/**
 	 * The unique ID of the language in the database.
@@ -100,7 +89,32 @@ class Language extends DatabaseObject {
 	function getCodePage() 
 	{
 	    return $this->getProperty('CodePage');
-	}
+	} // fn getCodePage
+
+
+	/**
+	 * Return an array of Language objects based on the contraints given.
+	 *
+	 * @param int $p_id
+	 * @param string $p_languageCode
+	 * @param string $p_name
+	 * @return array
+	 */
+	function GetLanguages($p_id = null, $p_languageCode = null, $p_name = null)
+	{
+	    $constraints = array();
+	    if (!is_null($p_id)) {
+	    	$constraints[] = array("Id", $p_id);
+	    }
+	    if (!is_null($p_languageCode)) {
+	    	$constraints[] = array("Code", $p_languageCode);
+	    }
+	    if (!is_null($p_name)) {
+	    	$constraints[] = array("Name", $p_name);
+	    }
+	    return DatabaseObject::Search('Language', $constraints);
+	} // fn GetLanguages
+	
 } // class Language
 
 ?>

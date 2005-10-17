@@ -75,7 +75,7 @@ if ($correct) {
     	fetchRowNum($lid);
     	$IdLang = getNumVar($lid,0);
     	query("INSERT IGNORE INTO TimeUnits VALUES ('D', $IdLang, '$D'), ('W', $IdLang, '$W'), ('M', $IdLang, '$M'), ('Y', $IdLang, '$Y')");
-    	Localizer::CreateLanguageFilesRecursive($cCode);
+    	Localizer::CreateLanguageFiles($cCode);
     	create_language_links();
         $logtext = getGS('Language $1 added', $cName); 
         Log::Message($logtext, $User->getUserName(), 101);

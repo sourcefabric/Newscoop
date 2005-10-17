@@ -12,7 +12,7 @@ regGS("You do not have the right to change publication information.", "您无权
 regGS("The publication $1 has been successfuly updated.", "出版物$1已成功更新");
 regGS("Publication $1 changed", "出版物$1已改变");
 regGS("The publication information could not be updated.", "出版信息不能被更新");
-regGS("Please check if another publication with the same or the same site name does not already exist.", "请检查是否已有同样出版物或者同样站点名称已不存在");
+regGS("Please check if another publication with the same name or the same site name does not already exist.", "请检查是否已有同样出版物或者同样站点名称已不存在");
 regGS("Delete publication", "删除出版物");
 regGS("You do not have the right to delete publications.", "您无权删除出版物");
 regGS("Are you sure you want to delete the publication $1?", "您确认要删除出版物$1？");

@@ -21,6 +21,7 @@ if (isset($_REQUEST['TOL_Language'])){
 //print_r($_REQUEST);
 //echo "</pre>";
 $crumbs = array();
+$crumbs[] = array("Configure", "");
 $crumbs[] = array("Localizer", "");
 echo camp_html_breadcrumbs($crumbs);
 

@@ -20,18 +20,11 @@ $print_path = $path != "" ? $path : "/";
 
 Template::UpdateStatus();
 
-?>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
-	<TR>
-		<TD class="page_title">
-			<?php  putGS("Templates"); ?>
-		</TD>
-		<TD ALIGN=RIGHT>
-			&nbsp;
-		</TD>
-	</TR>
-</TABLE>
+$crumbs = array();
+$crumbs[] = array(getGS("Templates"), "");
+echo camp_html_breadcrumbs($crumbs);
 
+?>
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="1" WIDTH="100%" class="current_location_table">
 	<TR>
 		<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php  putGS("Path"); ?>:</TD>

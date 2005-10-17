@@ -12,7 +12,7 @@ regGS("You do not have the right to change publication information.", "Nemáte p
 regGS("The publication $1 has been successfuly updated.", "Publikace $1 byla úspěšné obnovena");
 regGS("Publication $1 changed", "Publikace $1 změněna");
 regGS("The publication information could not be updated.", "Publikace nemohla být obnovena");
-regGS("Please check if another publication with the same or the same site name does not already exist.", "Zkontrolujte, zda publikace se stejným názvem již neexistuje.");
+regGS("Please check if another publication with the same name or the same site name does not already exist.", "Zkontrolujte, zda publikace se stejným názvem již neexistuje.");
 regGS("Delete publication", "Smazat publikaci");
 regGS("You do not have the right to delete publications.", "Nemáte právo mazat publikace");
 regGS("Are you sure you want to delete the publication $1?", "Určitě chcete smazat publikaci $1?");

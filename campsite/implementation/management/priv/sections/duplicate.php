@@ -56,7 +56,7 @@ if (!$sectionObj->exists()) {
 
 $languageObj =& new Language($Language);
 
-$allPublications =& Publication::GetAllPublications();
+$allPublications =& Publication::GetPublications();
 $allIssues = array();
 if ($DestPublicationId > 0) {
     // Get the most recent 50 Issues...if they want something farther back, we are in trouble.

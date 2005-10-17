@@ -32,7 +32,7 @@ $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
 $languageObj =& new Language($Language);
 
 $allArticleTypes = ArticleType::GetAllTypes();
-$allLanguages = Language::GetAllLanguages();
+$allLanguages = Language::GetLanguages();
 
 ## added by sebastian
 if (function_exists ("incModFile")) {

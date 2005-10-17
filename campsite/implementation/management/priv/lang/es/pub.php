@@ -12,7 +12,7 @@ regGS("You do not have the right to change publication information.", "No tiene 
 regGS("The publication $1 has been successfuly updated.", "La publicación $1 fue actualizada con éxito");
 regGS("Publication $1 changed", "Publicación $1 cambiada");
 regGS("The publication information could not be updated.", "La información de publicación no pudo ser actualizada");
-regGS("Please check if another publication with the same or the same site name does not already exist.", "Favor revise si otra publicación con el mismo o el mismo sitio no existen ya");
+regGS("Please check if another publication with the same name or the same site name does not already exist.", "Favor revise si otra publicación con el mismo o el mismo sitio no existen ya");
 regGS("Delete publication", "Borrar publicación");
 regGS("You do not have the right to delete publications.", "No tiene derecho a borrar publicaciones");
 regGS("Are you sure you want to delete the publication $1?", "¿Esta seguro que quiere borrar publicación $1?");

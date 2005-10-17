@@ -11,11 +11,16 @@ compute_user_rights($User, $canManage, $canDelete);
 $typeParam = 'uType=' . urlencode($uType);
 $isReader = $uType == 'Subscribers' ? 'Y' : 'N';
 
+$crumbs = array();
+$crumbs[] = array(getGS("Users"), ""); 
+if ($uType == "Staff") { 
+    $crumbs[] = array(getGS("Staff management"), ""); 
+} else { 
+    $crumbs[] = array(getGS("Subscribers management"), ""); 
+}
+$breadcrumbs = camp_html_breadcrumbs($crumbs);
+echo $breadcrumbs;
 ?>
-<table border="0" cellspacing="0" cellpadding="1" width="100%" class="page_title_container">
-	<tr><td class="page_title" align="left"><?php if ($isReader) { putGS("Subscribers management"); } else { putGS("Staff management"); } ?></td></tr>
-</table>
-
 <table border="0" cellspacing="0" cellpadding="1">
 <tr>
 <?php

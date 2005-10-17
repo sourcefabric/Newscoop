@@ -26,8 +26,8 @@ $issueId = Input::get('NrIssue', 'int', 0, true);
 $articleId = Input::get('NrArticle', 'int', 0, true);
 $target = Input::get('target', 'string', '', true);
 
-$languages =& Language::getAllLanguages();
-$publications = Publication::GetAllPublications();
+$languages =& Language::GetLanguages();
+$publications = Publication::GetPublications();
 if (($languageId != 0) && ($publicationId != 0)) {
 	$issues = Issue::GetIssues($publicationId, $languageId);
 }

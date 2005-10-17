@@ -16,17 +16,14 @@ if ($UTOffs < 0) {
 }
 $lpp = Input::Get('lpp', 'int', 20);
 
+$crumbs = array();
+$crumbs[] = array(getGS("Users"), "");
+$crumbs[] = array(getGS("User types"), "");
+echo camp_html_breadcrumbs($crumbs);
 ?>
-<table border="0" cellspacing="0" cellpadding="1" width="100%" class="page_title_container">
-	<tr>
-		<td class="page_title">
-		    <?php  putGS("User types"); ?>
-		</td>
-	</tr>
-</table>
 
 <?php if ($canManage) { ?>
-<p><table border="0" cellspacing="0" cellpadding="1"><tr><td><a href="add.php?Back=<?php print urlencode($_SERVER['REQUEST_URI']); ?>" ><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" border="0"></a></td><td><a href="add.php?Back=<?php print urlencode($_SERVER['REQUEST_URI']); ?>"><b><?php putGS("Add new user type"); ?></b></a></td></tr></table>
+<p><table border="0" cellspacing="0" cellpadding="1"><tr><td><a href="add.php?Back=<?php print urlencode($_SERVER['REQUEST_URI']); ?>" ><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" border="0"></a></td><td><a href="/<?php echo $ADMIN; ?>/u_types/add.php?Back=<?php print urlencode($_SERVER['REQUEST_URI']); ?>"><b><?php putGS("Add new user type"); ?></b></a></td></tr></table>
 <?php  } ?>
 
 <P><?php
@@ -54,10 +51,10 @@ if ($NUM_ROWS) {
 		</td>
 	<?php if ($canManage) { ?>
 		<td align="center">
-			<a href="access.php?UType=<?php  pgetUVar($UTypes,'Name'); ?>"><?php  putGS('Change'); ?></a>
+			<a href="/<?php echo $ADMIN; ?>/u_types/access.php?UType=<?php  pgetUVar($UTypes,'Name'); ?>"><?php  putGS('Change'); ?></a>
 		</td>
 		<td align="center">
-			<a href="/admin/u_types/do_del.php?UType=<?php pgetUVar($UTypes,'Name'); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the user type $1?', getVar($UTypes, 'Name')); ?>');">
+			<a href="/<?php echo $ADMIN; ?>/u_types/do_del.php?UType=<?php pgetUVar($UTypes,'Name'); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the user type $1?', getVar($UTypes, 'Name')); ?>');">
 			<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" border="0" alt="Delete user type <?php pgetHVar($UTypes,'Name'); ?>" title="Delete user type <?php pgetHVar($UTypes,'Name'); ?>"></a>
 		</td>
 	<?php  } ?>
@@ -67,13 +64,15 @@ if ($NUM_ROWS) {
 		}
 	}
 ?>
-	<tr><td colspan="2" nowrap>
-<?php  if ($UTOffs <= 0) { ?>		&lt;&lt; <?php  putGS('Previous'); ?>
-<?php  } else { ?>		<b><a href="index.php?UTOffs=<?php  print ($UTOffs - $lpp); ?>">&lt;&lt; <?php  putGS('Previous'); ?></a></b>
-<?php  } 
-    if ($nr < $lpp+1) { ?>		 | <?php  putGS('Next'); ?> &gt;&gt;
-<?php  } else { ?>		 | <b><a href="index.php?UTOffs=<?php  print ($UTOffs + $lpp); ?>"><?php  putGS('Next'); ?> &gt;&gt</a></b>
-<?php  } ?>	</td></tr>
+	<tr>
+	<td colspan="2" nowrap>
+    <?php  if ($UTOffs > 0) {  ?>
+		<b><a href="index.php?UTOffs=<?php  print ($UTOffs - $lpp); ?>">&lt;&lt; <?php  putGS('Previous'); ?></a></b>
+    <?php  } 
+    if ($nr >= $lpp+1) { ?>
+    	 | <b><a href="index.php?UTOffs=<?php  print ($UTOffs + $lpp); ?>"><?php  putGS('Next'); ?> &gt;&gt</a></b>
+    <?php  } ?>	
+    </td></tr>
 </table>
 <?php  } else { ?><blockquote>
 	<li><?php  putGS('No user types.'); ?></li>

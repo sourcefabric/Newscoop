@@ -24,6 +24,15 @@ if ($userId > 0) {
 	$isNewUser = true;
 }
 
+$crumbs = array();
+$crumbs[] = array(getGS("Users"), "");
+$crumbs[] = array(getGS($uType), "/$ADMIN/users/?".get_user_urlparams());
+if ($userId > 0) { 
+    $crumbs[] = array(getGS("Change user account information"), "");
+} else { 
+    $crumbs[] = array(getGS("Add new user account"), "");
+}
+$breadcrumbs = camp_html_breadcrumbs($crumbs);
 ?>
 <head>
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.config.js"></script>
@@ -32,12 +41,7 @@ if ($userId > 0) {
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.validators.js"></script>
 </head>
 
-<table border="0" cellspacing="0" cellpadding="1" width="100%" class="page_title_container">
-<tr>
-	<td class="page_title"><?php if ($userId > 0) { putGS("Change user account information"); } else { putGS("Add new user account"); } ?></td>
-	<td align="right"><a href="/<?php echo $ADMIN; ?>/users/?<?php echo get_user_urlparams(); ?>" class="breadcrumb" ><?php putGS($uType);  ?></a></td>
-</tr>
-</table>
+<?php echo $breadcrumbs; ?>
 
 <?php if ($resMsg != '') { ?>
 <table border="0" cellpadding="0" cellspacing="0" align="center">

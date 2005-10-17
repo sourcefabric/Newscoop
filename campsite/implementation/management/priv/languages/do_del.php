@@ -38,54 +38,54 @@ query ("SELECT COUNT(*) FROM Publications WHERE IdDefaultLanguage=$Language", 'q
 fetchRowNum($q_pub);
 if (getNumVar($q_pub,0) != 0) {
 	$del= 0; 
-	$msg[] = putGS('There are $1 publication(s) left.',getNumVar($q_pub)); 
+	$msg[] = getGS('There are $1 publication(s) left.',getNumVar($q_pub)); 
 } 
     
 query ("SELECT COUNT(*) FROM Issues WHERE IdLanguage=$Language", 'q_iss');
 fetchRowNum($q_iss);
 if (getNumVar($q_iss,0) != 0) {
     $del= 0; 
-    $msg[] = putGS('There are $1 issue(s) left.',getNumVar($q_iss)); 
+    $msg[] = getGS('There are $1 issue(s) left.',getNumVar($q_iss)); 
 } 
     
 query ("SELECT COUNT(*) FROM Sections WHERE IdLanguage=$Language", 'q_sect');
 fetchRowNum($q_sect);
 if (getNumVar($q_sect,0) != 0) {
     $del= 0; 
-    $msg[] = putGS('There are $1 section(s) left.',getNumVar($q_sect)); 
+    $msg[] = getGS('There are $1 section(s) left.',getNumVar($q_sect)); 
 } 
     
 query ("SELECT COUNT(*) FROM Articles WHERE IdLanguage=$Language", 'q_art');
 fetchRowNum($q_art);
 if (getNumVar($q_art,0) != 0) {
     $del= 0; 
-    $msg[] = putGS('There are $1 article(s) left.',getNumVar($q_art)); 
+    $msg[] = getGS('There are $1 article(s) left.',getNumVar($q_art)); 
 } 
     
 query ("SELECT COUNT(*) FROM Dictionary WHERE IdLanguage=$Language", 'q_kwd');
 fetchRowNum($q_kwd);
 if (getNumVar($q_kwd,0) != 0) {
     $del= 0; 
-    $msg[] = putGS('There are $1 keyword(s) left.',getNumVar($q_kwd)); 
+    $msg[] = getGS('There are $1 keyword(s) left.',getNumVar($q_kwd)); 
 }
     
 query ("SELECT COUNT(*) FROM Classes WHERE IdLanguage=$Language", 'q_cls');
 fetchRowNum($q_cls);
 if (getNumVar($q_cls,0) != 0) {
     $del= 0; 
-    $msg[] = putGS('There are $1 classes(s) left.',getNumVar($q_cls));     
+    $msg[] = getGS('There are $1 classes(s) left.',getNumVar($q_cls));     
 }
     
 query ("SELECT COUNT(*) FROM Countries WHERE IdLanguage=$Language", 'q_country');
 fetchRowNum($q_country);
 if (getNumVar($q_country,0) != 0) {
     $del= 0; 
-    $msg[] = putGS('There are $1 countries left.',getNumVar($q_country));     
+    $msg[] = getGS('There are $1 countries left.',getNumVar($q_country));     
 }
 
 if ($del) {
 	unlink($_SERVER['DOCUMENT_ROOT'] . "/" . $languageObj->getCode() . ".php");
-	Localizer::DeleteLanguageFilesRecursive($languageObj->getCode());
+	Localizer::DeleteLanguageFiles($languageObj->getCode());
 	$languageObj->delete();
 	$logtext = getGS('Language $1 deleted', $languageObj->getName()); 
 	Log::Message($logtext, $User->getUserName(), 102);

@@ -96,18 +96,12 @@ $rights = array('Content'=>$content_group, 'Templates'=>$templates_group,
 	'Editor Basic Settings'=>$editor_group_1, 'Editor Advanced Font Settings'=>$editor_group_2,
 	'Editor Table Settings'=>$editor_group_3, 'Editor Miscellaneous Settings'=>$editor_group_4);
 
-?>
-<table border="0" cellspacing="0" cellpadding="1" width="100%" class="page_title_container">
-	<tr>
-		<td class="page_title">
-		    <?php  putGS("Change user type permissions"); ?>
-		</td>
-		<td align=left width="1%" nowrap>
-			<a href="/<?php echo $ADMIN; ?>/u_types/" class="breadcrumb"><?php putGS("User Types"); ?></a>
-		</td>
-	</tr>
-</table>
+$crumbs = array();
+$crumbs[] = array(getGS("User Types"), "/$ADMIN/u_types/");
+$crumbs[] = array(getGS("Change user type permissions"), "");
+echo camp_html_breadcrumbs($crumbs);
 
+?>
 <table border="0" cellspacing="1" cellpadding="1" width="100%" class="current_location_table">
 	<tr>
 		<td align="right" width="1%" nowrap valign="top" class="current_location_title">

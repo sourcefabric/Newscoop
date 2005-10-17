@@ -40,20 +40,19 @@ $pendingActions = array_merge($pendingArticles, $pendingIssues);
 ksort($pendingActions);
 $pendingActions = array_slice($pendingActions, 0, $NumDisplayArticles);
 //echo "<pre>";print_r($pendingActions);echo "</pre>";
+$crumbs = array();
+$crumbs[] = array(getGS("Home"), "");
+$breadcrumbs = camp_html_breadcrumbs($crumbs);
 ?>
 <HEAD>
 	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
 	<TITLE><?php  putGS("Home"); ?></TITLE>
 </HEAD>
 <BODY>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
-<TR>
-	<TD class="page_title" width="1%">
-	    <?php  putGS("Home"); ?>
-	</TD>
-</TR>
-</TABLE>
+
 <?php
+echo $breadcrumbs;
+
 $restartEngine = Input::Get('restart_engine', 'string', 'no', true);
 if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine")) {
 	require_once($_SERVER['DOCUMENT_ROOT']."/parser_utils.php");

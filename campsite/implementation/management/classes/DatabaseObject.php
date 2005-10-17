@@ -237,11 +237,11 @@ class DatabaseObject {
 			}
 		}
 		else {
+		    // We were given a pre-fetched recordset.
+		    $this->m_data =& $p_recordSet;
+		    // Make sure all columns have a value even if they arent in the dataset.
 			foreach ($this->getColumnNames() as $dbColumnName) {
-				if (isset($p_recordSet[$dbColumnName])) {
-					$this->m_data[$dbColumnName] = $p_recordSet[$dbColumnName];
-				}
-				else {
+				if (!isset($p_recordSet[$dbColumnName])) {
 					$this->m_data[$dbColumnName] = null;
 				}
 			}
@@ -330,13 +330,11 @@ class DatabaseObject {
 		
 		// Make sure we have the key required to create the row.
 		// If auto-increment is set, the database will create the key for us.
-		$columnNames = array();
-		$columnValues = array();
+		$columns = array();
 		if ($this->keyValuesExist()) {
 			// If the key values exist, use those.
-			$columnNames = array_keys($this->getKey());
-			$columnValues = array_values($this->getKey());
-			foreach ($columnValues as $tmpKey => $tmpValue) {
+			$columns =  $this->getKey();
+			foreach ($columns as $tmpKey => $tmpValue) {
 				$columnValues[$tmpKey] = "'".mysql_real_escape_string($tmpValue)."'";
 			}
 		}
@@ -347,19 +345,27 @@ class DatabaseObject {
 			return false;			
 		}
 		
+		// Check if any columns values in the class are already set.
+		// If so, automatically set these values when we create the row.
+		foreach ($this->m_columnNames as $columnName) {
+			if (!empty($this->m_data[$columnName])) {
+				$columns[$columnName] = "'".mysql_real_escape_string($this->m_data[$columnName])."'";
+			}
+		}
+		
 		// Optionally set some values when we create the row.
+		// These override values that are preset in the class.
 		if (!is_null($p_values)) {
 			$parts = array();
 			foreach ($p_values as $columnName => $value) {
 				// Construct value string for the SET clause.
-				$columnNames[] = $columnName;
-				$columnValues[] = "'".mysql_real_escape_string($value)."'";
+				$columns[$columnName] = "'".mysql_real_escape_string($value)."'";
 				$this->m_data[$columnName] = $value;
 			}
 		}
 
-		$queryStr .= '(' . implode(',', $columnNames) . ')';
-		$queryStr .= ' VALUES ('.implode(',', $columnValues) .')';
+		$queryStr .= '(' . implode(',', array_keys($columns)) . ')';
+		$queryStr .= ' VALUES ('.implode(',', array_values($columns)) .')';
 
 		// Create the row.
 		$Campsite['db']->Execute($queryStr);
@@ -409,14 +415,16 @@ class DatabaseObject {
 	 * 
 	 * @return mixed
 	 *		Return a string if the property exists,
-	 *		return a PEAR_Error otherwise.
+	 *		NULL if the value doesnt exist,
+	 *      or a PEAR_Error if $p_forceFetchFromDatabase is TRUE
+	 *      and there was a problem fetching the data.
 	 */
 	function getProperty($p_dbColumnName, $p_forceFetchFromDatabase = false) 
 	{
 		global $Campsite;
-		if (in_array($p_dbColumnName, $this->m_columnNames)) {
+		if (isset($this->m_data[$p_dbColumnName])) {
 			if ($p_forceFetchFromDatabase) {
-				if ($this->keyValuesExist()) {
+				if ($this->keyValuesExist() && in_array($p_dbColumnName, $this->m_columnNames)) {
 					$queryStr = 'SELECT '.$p_dbColumnName
 								.' FROM '.$this->m_dbTableName
 								.' WHERE '.$this->getKeyWhereClause();
@@ -432,14 +440,17 @@ class DatabaseObject {
 					}
 				}
 				else {
-					return new PEAR_Error('Key values do not exist - cannot fetch row.');
+				    if (!$this->keyValuesExist()) {
+                        return new PEAR_Error('Key values do not exist - cannot fetch row.');
+				    }
+				    else {
+				        return new PEAR_Error('Column name does not exist - cannot fetch row.');
+				    }
 				}
 			}
 			return $this->m_data[$p_dbColumnName];
 		}
-		else {
-			return new PEAR_Error('Property \'' . $p_dbColumnName . '\' does not exist.');
-		}
+		return null;
 	} // fn getProperty
 	
 	
@@ -646,6 +657,41 @@ class DatabaseObject {
 		}
 		return $success;
 	} // fn commit
+
+	
+	/**
+	 * Do a simple search.
+	 *
+	 * @param array $p_columns
+	 *		Array of arrays of two strings: column name and search value.
+	 * @param array $p_sqlOptions
+	 *		See ProcessOptions().
+	 *
+	 * @return array
+	 */
+	function Search($p_className, $p_columns = null, $p_sqlOptions = null)
+	{
+		global $Campsite;
+		if (!class_exists($p_className)) {
+			return array();
+		}
+		
+		$tmpObj =& new $p_className;
+		$queryStr = "SELECT * FROM ".$tmpObj->m_dbTableName;
+		if (is_array($p_columns) && (count($p_columns) > 0)) {
+			$contraints = array();
+			foreach ($p_columns as $item) {
+				if (count($item) == 2) {
+					list($columnName, $value) = $item;
+					$contraints[] = "$columnName='$value'";
+				}
+			}
+			$queryStr .= " WHERE ".implode(" AND ", $contraints);
+		}
+		$queryStr = DatabaseObject::ProcessOptions($queryStr, $p_sqlOptions);
+		$dbObjects =& DbObjectArray::Create($p_className, $queryStr);
+		return $dbObjects;
+	} // fn search
 
 	
 	/**

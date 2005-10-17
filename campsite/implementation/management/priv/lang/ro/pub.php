@@ -12,7 +12,7 @@ regGS("You do not have the right to change publication information.", "Nu aveţi
 regGS("The publication $1 has been successfuly updated.", "Publicaţia $1 a fost modificată cu succes");
 regGS("Publication $1 changed", "Publicaţia $1 a fost modificată");
 regGS("The publication information could not be updated.", "Informaţia despre publicaţie nu poate fi modificată");
-regGS("Please check if another publication with the same or the same site name does not already exist.", "Verificaţi dacă nu există altă publicaţie cu acelaşi nume sau acealşi sit");
+regGS("Please check if another publication with the same name or the same site name does not already exist.", "Verificaţi dacă nu există altă publicaţie cu acelaşi nume sau acealşi sit");
 regGS("Delete publication", "Şterge publicaţia");
 regGS("You do not have the right to delete publications.", "Nu aveti dreptul sa ştergeţi publicaţii");
 regGS("Are you sure you want to delete the publication $1?", "Doriţi să ştergeţi publicaţia $1?");

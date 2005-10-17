@@ -21,6 +21,12 @@ $imageNav =& new ImageNav(CAMPSITE_IMAGEARCHIVE_IMAGES_PER_PAGE, $view);
 query ("SELECT LEFT(NOW(), 10)", 'q_now');
 fetchRowNum($q_now);
 
+$crumbs = array();
+$crumbs[] = array(getGS('Content'), "");
+$crumbs[] = array(getGS('Image Archive'), "/$ADMIN/imagearchive/index.php?".$imageNav->getSearchLink());
+$crumbs[] = array(getGS('Add new image'), "");
+$breadcrumbs = camp_html_breadcrumbs($crumbs);
+
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
 	"http://www.w3.org/TR/REC-html40/loose.dtd">
@@ -33,17 +39,7 @@ fetchRowNum($q_now);
 </HEAD>
 
 <BODY>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
-<TR>
-	<TD class="page_title">
-	    <?php  putGS('Add new image'); ?>
-	</TD>
-	<TD ALIGN="RIGHT">
-	  	<A HREF="index.php?<?php echo $imageNav->getSearchLink(); ?>" class="breadcrumb"><?php  putGS('Image Archive');  ?></A>
-	</td>
-</TR>
-</TABLE>
-
+<?php echo $breadcrumbs; ?>
 <P>
 <FORM NAME="dialog" METHOD="POST" ACTION="do_add.php?<?php echo $imageNav->getSearchLink(); ?>" ENCTYPE="multipart/form-data">
 <CENTER>

@@ -56,7 +56,7 @@ foreach ($translations as $translation) {
 }
 $outputName = implode(', ', $articleNames);
 
-$allLanguages = Language::getAllLanguages();
+$allLanguages = Language::GetLanguages();
 $articleLanguages = $articleObj->getLanguages();
 $articleLanguages = DbObjectArray::GetColumn($articleLanguages, "Id");
 

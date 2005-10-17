@@ -54,7 +54,7 @@ if (!$articleObj->exists()) {
 $languageObj =& new Language($Language);
 $sLanguageObj =& new Language($sLanguage);
 
-$allPublications =& Publication::GetAllPublications();
+$allPublications =& Publication::GetPublications();
 $allIssues = array();
 if ($DestPublication > 0) {
 	$allIssues =& Issue::GetIssues($DestPublication, $Language);
