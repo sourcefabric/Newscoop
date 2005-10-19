@@ -774,7 +774,8 @@ const CCLexem* CCParser::DoParse(CContext& p_rcoContext, sockstream& p_rcoOut,
 				if ((coIt = pcoParams->find(P_NRARTICLE)) == pcoParams->end())
 					return l;
 				rcoContext.SetArticle(atol((*coIt).second.c_str()));
-				string coArticleTemplate = CPublication::getArticleTemplate(rcoContext.Language(),
+				string coArticleTemplate = string("/") +
+					CPublication::getArticleTemplate(rcoContext.Language(),
 						rcoContext.Publication(), rcoContext.Issue(), rcoContext.Section(), p_SQL);
 				rcoContext.URL()->setTemplate(coArticleTemplate);
 				

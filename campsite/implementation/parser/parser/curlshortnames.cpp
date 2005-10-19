@@ -244,13 +244,20 @@ string CURLShortNames::setTemplate(const string& p_rcoTemplate) throw (InvalidVa
 	}
 
 	bool bRelativePath = p_rcoTemplate[0] != '/';
-	string coTemplate = p_rcoTemplate.substr(1);
+	string coTemplate;
 	if (bRelativePath)
 	{
 		getTemplate();
 		ulint nSlashPos = m_coTemplate.rfind('/');
 		if (nSlashPos != string::npos)
-			coTemplate = m_coTemplate.substr(0, nSlashPos) + "/" + p_rcoTemplate;
+		{
+			coTemplate = m_coTemplate.substr(0, nSlashPos) + "/";
+		}
+		coTemplate += p_rcoTemplate;
+	}
+	else
+	{
+		coTemplate = p_rcoTemplate.substr(1);
 	}
 	string coSql = string("select Id from Templates where Name = '") + coTemplate + "'";
 	CMYSQL_RES coRes;
