@@ -1,4 +1,29 @@
+2.3.2 (October 19, 2005)
+  For full details about the changes in 2.3.2, see: 
+  http://code.campware.org/projects/campsite/query?milestone=2.3.2
+  
+  Minor features:
+    #1484 -	Allow the use of article publish date in the template language
+    #1391 - Screenshots for all administration steps in the manual
+
+  Bug fixes:
+    #1482 -	Packaged templates do not use 2.3 database 
+    #1480 - Duplicate Article does not copy "OnSection" field correctly
+    #1456 - Escaping command line parameters with $'arg' and $"arg" does not work on FreeBSD
+    #1471 - Install scripts break on Debian 3.1 (Sarge) 
+    #1470 -	Packaged templates need documentation, common layout 
+    #1486 -	Fatal error when opening the "Add new image" page 
+    #1476 -	Wrong error message when PEAR fails to update
+    #1462 -	Campsite server returns error when restarting
+    #1457 -	Preview doesn't work correctly for translated articles 
+    #1447 -	Upload date not set properly when duplicating articles 
+    #1414 -	Refresh templates every time they are displayed
+  
+
 2.3.1 (September 7, 2005)
+  For full details about the changes in 2.3.1, see:
+  http://code.campware.org/projects/campsite/query?milestone=2.3.1
+  
     Bug fixes:
     - Ticket #1445 - Upgrade from 2.2 to 2.3 fails on MySQL 3.X
     - Ticket #705 - Image Archive: give an error on Invalid URL
