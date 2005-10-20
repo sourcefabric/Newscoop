@@ -12,7 +12,7 @@ all: dummy
 	$(MAKE) -C users
 	$(MAKE) -C languages
 	$(MAKE) -C u_types
-	$(MAKE) -C a_types
+	$(MAKE) -C article_types
 	$(MAKE) -C logs
 	$(MAKE) -C country
 	$(MAKE) -C localizer
@@ -33,7 +33,7 @@ install: $(ALL)
 	$(MAKE) -C users install
 	$(MAKE) -C languages install
 	$(MAKE) -C u_types install
-	$(MAKE) -C a_types install
+	$(MAKE) -C article_types install
 	$(MAKE) -C logs install
 	$(MAKE) -C country install
 	$(MAKE) -C localizer install
@@ -48,7 +48,7 @@ clean: dummy
 	$(MAKE) -C users clean
 	$(MAKE) -C languages clean
 	$(MAKE) -C u_types clean
-	$(MAKE) -C a_types clean
+	$(MAKE) -C article_types clean
 	$(MAKE) -C logs clean
 	$(MAKE) -C country clean
 	$(MAKE) -C localizer clean
