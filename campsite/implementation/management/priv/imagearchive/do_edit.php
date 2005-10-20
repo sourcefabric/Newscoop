@@ -50,6 +50,6 @@ $logtext = getGS('Changed image properties of $1', $imageObj->getImageId());
 Log::Message($logtext, $User->getUserName(), 43);
 
 // Go back to article image list.
-header('Location: index.php?'.$imageNav->getSearchLink());
+header("Location: edit.php?image_id=$ImageId&".$imageNav->getSearchLink());
 exit;
 ?>

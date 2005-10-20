@@ -64,6 +64,6 @@ if ($issueObj->commit()) {
 	Log::Message($logtext, $User->getUserName(), 11);
 }
 
-header("Location: /$ADMIN/issues/?Pub=" . $publicationObj->getPublicationId());
+header("Location: /$ADMIN/issues/edit.php?Pub=$Pub&Issue=$Issue&Language=$Language");
 
 ?>

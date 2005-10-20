@@ -82,7 +82,7 @@ if ($articleObj->getPublished() != 'N') {
 	}
 	?>
 
-<table>
+<!--<table>
 <tr>
 	<td>
 		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
@@ -93,7 +93,7 @@ if ($articleObj->getPublished() != 'N') {
 		</TABLE>
 	</td>
 </tr>
-</table>
+</table>-->
 <P>
 <FORM NAME="dialog" METHOD="POST" ACTION="autopublish_do_add.php" >
 <CENTER><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input" ALIGN="CENTER">
@@ -160,7 +160,7 @@ if ($articleObj->getPublished() != 'N') {
 	<TR>
 		<TD COLSPAN="2" align="center">
 		<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save changes'); ?>" class="button">
-		<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='<?php p($BackLink); ?>'" class="button">
+		<!--<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='<?php p($BackLink); ?>'" class="button">-->
 		</TD>
 	</TR>
 </TABLE></CENTER>

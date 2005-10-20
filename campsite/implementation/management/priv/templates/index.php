@@ -21,6 +21,7 @@ $print_path = $path != "" ? $path : "/";
 Template::UpdateStatus();
 
 $crumbs = array();
+$crumbs[] = array(getGS("Configure"), "");
 $crumbs[] = array(getGS("Templates"), "");
 echo camp_html_breadcrumbs($crumbs);
 

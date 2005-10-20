@@ -31,7 +31,7 @@ $issueObj =& new Issue($Pub, $Language, $Issue);
 $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
 $languageObj =& new Language($Language);
 
-$allArticleTypes = ArticleType::GetAllTypes();
+$allArticleTypes = ArticleType::GetArticleTypes();
 $allLanguages = Language::GetLanguages();
 
 ## added by sebastian
@@ -111,7 +111,7 @@ if (sizeof($allArticleTypes) == 0) {
 		</SELECT>
 	</TD>
 </TR>
-<TR>
+<!--<TR>
 	<TD ALIGN="RIGHT" ><INPUT TYPE="CHECKBOX" NAME="cFrontPage" class="input_checkbox"></TD>
 	<TD>
 		<?php  putGS('Show article on front page'); ?>
@@ -132,11 +132,12 @@ if (sizeof($allArticleTypes) == 0) {
 		<INPUT TYPE="TEXT" NAME="cKeywords" SIZE="64" MAXLENGTH="255" class="input_text">
 	</TD>
 </TR>
+-->
 <TR>
 	<TD COLSPAN="2">
 		<DIV ALIGN="CENTER">
 		<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save changes'); ?>" class="button">
-		<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" class="button" ONCLICK="location.href='<?php  p($Back); ?>'">
+		<!--<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" class="button" ONCLICK="location.href='<?php  p($Back); ?>'">-->
 		</DIV>
 	</TD>
 </TR>

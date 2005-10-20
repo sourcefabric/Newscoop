@@ -603,21 +603,6 @@ function limitchars($text, $lim, $break, $tail)
 } // fn limitchars
 
 
-function valid_field_name($name) 
-{
-	if (strlen($name) == 0) {
-		return false;
-	}
-	for ($i = 0; $i < strlen($name); $i++) {
-		$c = $name[$i];
-		$ok = ($c >= 'A' && $c <= 'Z') || ($c >= 'a' && $c <= 'z') || $c == '_';
-		if (!$ok) {
-		  return false;
-		}
-	}
-	return true;
-}
-
 function camp_is_valid_url_name($name) 
 {
 	if (strlen($name) == 0) {

@@ -15,7 +15,7 @@ if (!isset($g_documentRoot)) {
 require_once($g_documentRoot.'/db_connect.php');
 require_once($g_documentRoot.'/classes/DatabaseObject.php');
 require_once($g_documentRoot.'/classes/DbObjectArray.php');
-require_once($g_documentRoot.'/classes/ArticleType.php');
+require_once($g_documentRoot.'/classes/ArticleData.php');
 require_once($g_documentRoot.'/classes/ArticleImage.php');
 require_once($g_documentRoot.'/classes/ArticleTopic.php');
 require_once($g_documentRoot.'/classes/ArticleIndex.php');
@@ -166,7 +166,7 @@ class Article extends DatabaseObject {
 		$this->fetch();
 	
 		// Insert an entry into the article type table.
-		$articleData =& new ArticleType($this->m_data['Type'], 
+		$articleData =& new ArticleData($this->m_data['Type'], 
 			$this->m_data['Number'], 
 			$this->m_data['IdLanguage']);
 		$articleData->create();
@@ -259,11 +259,11 @@ class Article extends DatabaseObject {
     		$articleCopy->setProperty('UploadDate', 'NOW()', true, true);
     		    		
     		// Insert an entry into the article type table.
-    		$newArticleData =& new ArticleType($articleCopy->m_data['Type'], 
+    		$newArticleData =& new ArticleData($articleCopy->m_data['Type'], 
     			$articleCopy->m_data['Number'], 
     			$articleCopy->m_data['IdLanguage']);
     		$newArticleData->create();
-    		$origArticleData =& $copyMe->getArticleTypeObject();
+    		$origArticleData =& $copyMe->getArticleData();
     		$origArticleData->copyToExistingRecord($articleCopy->m_data['Number']);
     		
     		// Copy image pointers
@@ -350,11 +350,11 @@ class Article extends DatabaseObject {
 		$articleCopy->setProperty('UploadDate', 'NOW()', true, true);
 
 		// Insert an entry into the article type table.
-		$articleCopyData =& new ArticleType($articleCopy->m_data['Type'], 
+		$articleCopyData =& new ArticleData($articleCopy->m_data['Type'], 
 			$articleCopy->m_data['Number'], $articleCopy->m_data['IdLanguage']);
 		$articleCopyData->create();
 		
-		$origArticleData =& $this->getArticleTypeObject();
+		$origArticleData =& $this->getArticleData();
 		$origArticleData->copyToExistingRecord($articleCopy->getArticleId(), $p_languageId);
 		
 		return $articleCopy;
@@ -368,7 +368,7 @@ class Article extends DatabaseObject {
 	function delete() 
 	{
 		// Delete row from article type table.
-		$articleData =& new ArticleType($this->m_data['Type'], 
+		$articleData =& new ArticleData($this->m_data['Type'], 
 			$this->m_data['Number'], 
 			$this->m_data['IdLanguage']);
 		$articleData->delete();
@@ -980,16 +980,16 @@ class Article extends DatabaseObject {
 	
 	
 	/**
-	 * Return the ArticleType object for this article.
+	 * Return the ArticleData object for this article.
 	 *
-	 * @return ArticleType
+	 * @return ArticleData
 	 */
-	function getArticleTypeObject() 
+	function getArticleData() 
 	{
-		return new ArticleType($this->getProperty('Type'), 
+		return new ArticleData($this->getProperty('Type'), 
 			$this->getProperty('Number'), 
 			$this->getProperty('IdLanguage'));
-	} // fn getArticleTypeObject
+	} // fn getArticleData
 	
 	
 //	/**
@@ -1283,7 +1283,22 @@ class Article extends DatabaseObject {
 	
 	
 	/**
-	 *
+	 * Return the number of articles of the given type.
+	 * @param string $p_type
+	 *		Article Type
+	 * @return int
+	 */
+	function GetNumArticlesOfType($p_type)
+	{
+		global $Campsite;
+		$queryStr ="SELECT COUNT(*) FROM Articles WHERE Type='$p_type'";
+		return $Campsite['db']->GetOne($queryStr);
+	} // fn GetNumArticlesOfType
+	
+	
+	/**
+	 * Get the $p_max number of the most recently published articles.
+	 * @param int $p_max
 	 * @return array
 	 */
 	function GetRecentArticles($p_max) 

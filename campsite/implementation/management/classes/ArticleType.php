@@ -3,19 +3,30 @@
  * @package Campsite
  */
 
+/**
+ * Includes
+ */
+// We indirectly reference the DOCUMENT_ROOT so we can enable 
+// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT'] 
+// is not defined in these cases.
+if (!isset($g_documentRoot)) {
+    $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
+}
 /** 
  * Includes
  */
 require_once($g_documentRoot.'/classes/DatabaseObject.php');
-require_once($g_documentRoot.'/classes/DbColumn.php');
+require_once($g_documentRoot.'/classes/ArticleTypeField.php');
+require_once($g_documentRoot.'/classes/ParserCom.php');
 
 /**
  * @package Campsite
  */
-class ArticleType extends DatabaseObject {
-	var $m_columnNames = array('NrArticle', 'IdLanguage');
-	var $m_keyColumnNames = array('NrArticle', 'IdLanguage');
+class ArticleType {
+	var $m_columnNames = array();
 	var $m_dbTableName;
+	var $m_name;
+	
 	
 	/**
 	 * An article type is a dynamic table that is created for an article
@@ -26,74 +37,78 @@ class ArticleType extends DatabaseObject {
 	 * @param int $p_articleId
 	 * @param int $p_languageId
 	 */
-	function ArticleType($p_articleType, $p_articleId, $p_languageId) 
+	function ArticleType($p_articleType) 
 	{
+		$this->m_name = $p_articleType;
 		$this->m_dbTableName = 'X'.$p_articleType;
 		// Get user-defined values.
 		$dbColumns = $this->getUserDefinedColumns();
 		foreach ($dbColumns as $columnMetaData) {
 			$this->m_columnNames[] = $columnMetaData->getName();
 		}
-		parent::DatabaseObject($this->m_columnNames);
-		$this->m_data['NrArticle'] = $p_articleId;
-		$this->m_data['IdLanguage'] = $p_languageId;
-		if ($this->exists()) {
-			$this->fetch();
-		}
 	} // constructor
 	
-	
+
 	/**
-	 * Copy the row in the database.
-	 * @param int $p_destArticleId
-	 * @return void
+	 * Create a new Article Type.  Creates a new table in the database.
+	 * @return boolean
 	 */
-	function copy($p_destArticleId) 
+	function create()
 	{
 		global $Campsite;
-		$tmpData = $this->m_data;
-		unset($tmpData['NrArticle']);
-		foreach ($tmpData as $key => $data) {
-			$tmpData[$key] = "'".$data."'";
-		}
-		
-		$queryStr = 'INSERT IGNORE INTO '.$this->m_dbTableName
-			.'(NrArticle,'.implode(',', array_keys($this->m_columnNames)).')'
-			.' VALUES ('.$p_destArticleId.','.implode(',', $tmpData).')';
-		$Campsite['db']->Execute($queryStr);
-	} // fn copy
+		$queryStr = "CREATE TABLE `".$this->m_dbTableName."`"
+					."(NrArticle INT UNSIGNED NOT NULL, "
+					." IdLanguage INT UNSIGNED NOT NULL, "
+					." PRIMARY KEY(NrArticle, IdLanguage))";
+		$retval = $Campsite['db']->Execute($queryStr);
+		ParserCom::SendMessage('article_type', 'create', array("article_type"=>$cName));
+		return $retval;
+	} // fn create
 	
 	
 	/**
-	 * Copy the row in the database.
-	 * @param int $p_destArticleId
-	 * @param int $p_destLanguageId
-	 * @return void
+	 * Return TRUE if the Article Type exists.
+	 * @return boolean
 	 */
-	function copyToExistingRecord($p_destArticleId, $p_destLanguageId = null) 
+	function exists()
 	{
 		global $Campsite;
-		$tmpData = $this->m_data;
-		unset($tmpData['NrArticle']);
-		unset($tmpData['IdLanguage']);
-		$setQuery = array();
-		foreach ($tmpData as $key => $data) {
-			$setQuery[] = $key."='".mysql_real_escape_string($data)."'";
-		}		
-		$queryStr = 'UPDATE '.$this->m_dbTableName.' SET '.implode(',', $setQuery)
-				." WHERE NrArticle=$p_destArticleId ";
-		if (!is_null($p_destLanguageId)) {
-			$queryStr .= " AND IdLanguage=".$p_destLanguageId;
+		$queryStr = "SHOW TABLES LIKE 'X".$this->m_dbTableName."'";
+		$result = $Campsite['db']->GetOne($queryStr);
+		if ($result) {
+			return true;
 		}
 		else {
-			$queryStr .= " AND IdLanguage=".$this->m_data['IdLanguage'];
+			return false;
 		}
-		$Campsite['db']->Execute($queryStr);
-	} // fn copyToExistingRecord
+	} // fn exists
 	
 	
 	/**
-	 * Return an array of DbColumn objects.
+	 * Delete the article type.  This will delete the entire table
+	 * in the database.  Not recommended unless there is no article
+	 * data in the table.
+	 */
+	function delete()
+	{
+		global $Campsite;
+		$queryStr = "DROP TABLE ".$this->m_dbTableName;
+		$Campsite['db']->Execute($queryStr);
+		ParserCom::SendMessage('article_types', 'delete', array("article_type" => $this->m_name));
+	} // fn delete
+	
+	
+	/**
+	 * @return string
+	 */
+	function getTableName()
+	{
+		return $this->m_dbTableName;
+	} // fn getTableName
+	
+	
+	/**
+	 * Return an array of ArticleTypeField objects.
 	 *
 	 * @return array
 	 */
@@ -106,7 +121,7 @@ class ArticleType extends DatabaseObject {
 		$metadata = array();
 		if (is_array($queryArray)) {
 			foreach ($queryArray as $row) {
-				$columnMetadata =& new DbColumn($this->m_dbTableName);
+				$columnMetadata =& new ArticleTypeField($this->m_name);
 				$columnMetadata->fetch($row);
 				$metadata[] =& $columnMetadata;
 			}
@@ -116,12 +131,33 @@ class ArticleType extends DatabaseObject {
 
 	
 	/**
+	 * Static function.
+	 * @param string $p_name
+	 * @return boolean
+	 */
+	function IsValidFieldName($p_name) 
+	{
+		if (empty($p_name)) {
+			return false;
+		}
+		for ($i = 0; $i < strlen($p_name); $i++) {
+			$c = $p_name[$i];
+			$valid = ($c >= 'A' && $c <= 'Z') || ($c >= 'a' && $c <= 'z') || $c == '_';
+			if (!$valid) {
+			  return false;
+			}
+		}
+		return true;
+	} // fn IsValidFieldName
+	
+	
+	/**
 	 * Get all article types that currently exist.
 	 * Returns an array of strings.
 	 *
 	 * @return array
 	 */ 
-	function GetAllTypes() 
+	function GetArticleTypes() 
 	{
 		global $Campsite;
 		$queryStr = "SHOW TABLES LIKE 'X%'";
@@ -134,7 +170,7 @@ class ArticleType extends DatabaseObject {
 			$finalNames[] = substr($tmpName, 1);
 		}
 		return $finalNames;
-	} // fn GetAllTypes
+	} // fn GetArticleTypes
 	
 } // class ArticleType
 

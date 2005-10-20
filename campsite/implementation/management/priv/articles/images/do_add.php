@@ -77,6 +77,9 @@ $logtext = getGS('The image $1 has been added.', $attributes['Description']);
 Log::Message($logtext, $User->getUserName(), 41);
 
 // Go back to article image list.
-header('Location: '.camp_html_article_url($articleObj, $Language, 'images/'));
-
+$redirectLocation = camp_html_article_url($articleObj, $Language, 'images/edit.php')
+	   ."&ImageId=".$image->getImageId()."&ImageTemplateId=$ImageTemplateId";
+//echo $redirectLocation;
+header("Location: $redirectLocation");
+exit;
 ?>

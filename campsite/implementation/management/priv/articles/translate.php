@@ -64,7 +64,7 @@ $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj,
 				  'Section' => $sectionObj, 'Article'=>$articleObj);
 camp_html_content_top(getGS('Translate article'), $topArray, true, true);
 ?>
-<table>
+<!--<table>
 <tr>
 	<td>
 		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
@@ -75,7 +75,7 @@ camp_html_content_top(getGS('Translate article'), $topArray, true, true);
 		</TABLE>
 	</td>
 </tr>
-</table>
+</table>-->
 <P>
 <FORM NAME="dialog" METHOD="POST" ACTION="do_translate.php" >
 <INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<?php  p($Pub); ?>">
@@ -133,7 +133,7 @@ camp_html_content_top(getGS('Translate article'), $topArray, true, true);
 <TR>
 	<TD COLSPAN="2" align="center">
 	<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save changes'); ?>" class="button">
-	<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" class="button" ONCLICK="location.href='<?php  p($BackLink); ?>'">
+	<!--<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" class="button" ONCLICK="location.href='<?php  p($BackLink); ?>'">-->
 	</TD>
 </TR>
 </TABLE>

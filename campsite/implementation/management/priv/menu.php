@@ -139,7 +139,7 @@ if ($User->hasPermission("ManageUserTypes")) {
 	
 if ($User->hasPermission("ManageArticleTypes")) { 
     $menu_item =& DynMenuItem::Create(getGS("Add new article type"), 
-        "/$ADMIN/a_types/add.php?Back=".urlencode($_SERVER['REQUEST_URI']),
+        "/$ADMIN/article_types/add.php?Back=".urlencode($_SERVER['REQUEST_URI']),
         array("icon" => sprintf($iconTemplateStr, "add_article_type.png")));
     $menu_actions->addItem($menu_item);
 }    
@@ -183,7 +183,7 @@ if ($showConfigureMenu) {
     }
     if ($User->hasPermission("ManageArticleTypes") || $User->hasPermission("DeleteArticleTypes")) { 
         $menu_item =& DynMenuItem::Create(getGS("Article Types"), 
-            "/$ADMIN/a_types/",
+            "/$ADMIN/article_types/",
             array("icon" => sprintf($iconTemplateStr, "article_types.png")));
         $menu_config->addItem($menu_item);
     }        

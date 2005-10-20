@@ -286,7 +286,6 @@ function camp_html_breadcrumbs($p_crumbs)
 {
     $lastCrumb = array_pop($p_crumbs);
     $str = '<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" bgcolor="#D5E2EE" width="100%"><TR><TD align="left" style="border-bottom: 1px solid black; border-top: 1px solid #8BAED1; padding-bottom: 2px; padding-top: 2px; padding-left: 1.3em; ">';
-	//$str .= '<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0"><TR>';
     $str .= "<span style='padding-right: 1em; font-weight: bold; color: #2F2F2F;'>".getGS("You are here:")."</span>";
     $tmpCrumbs = array();
 	foreach ($p_crumbs as $crumb) {
@@ -297,14 +296,7 @@ function camp_html_breadcrumbs($p_crumbs)
     	    $str .= camp_html_breadcrumb($crumb[0], $crumb[1], $crumb[2]);
 	    }
 	}
-//    $numCrumbs = count($p_crumbs);
-//	for ($i = 0; i < ($numCrumbs - 1); $i++) {
-//	    $str .= camp_html_breadcrumb($text, $link) . "<TD CLASS='breadcrumb_separator'>&nbsp;</TD>";
-//	}
-	//print_r($lastCrumb);
     $str .= camp_html_breadcrumb($lastCrumb[0], $lastCrumb[1], false, true);
-    //$str .= '</TR>';
-    //$str .= '</TABLE>';
     $str .= '</TD></TR>';
     $str .= '</TABLE>';
     return $str;

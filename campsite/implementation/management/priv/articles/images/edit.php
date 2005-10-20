@@ -37,9 +37,9 @@ $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj,
 camp_html_content_top(getGS('Change image information'), $topArray, true, true, $extraCrumbs);
 ?>
 <P>
-<CENTER>
+<div class="indent">
 <IMG SRC="<?php echo $imageObj->getImageUrl(); ?>" BORDER="0" ALT="<?php echo htmlspecialchars($imageObj->getDescription()); ?>">
-</CENTER>
+</div>
 <?php if ($User->hasPermission('ChangeImage')) { ?>
 <p>
 <FORM NAME="dialog" METHOD="POST" ACTION="do_edit.php" >
@@ -93,7 +93,7 @@ camp_html_content_top(getGS('Change image information'), $topArray, true, true, 
 	    <INPUT TYPE="HIDDEN" NAME="sLanguage" VALUE="<?php  p($sLanguage); ?>">
 	    <INPUT TYPE="HIDDEN" NAME="Image" VALUE="<?php  p($ImageId); ?>">
 		<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save changes'); ?>" class="button">
-		<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" class="button" ONCLICK="location.href='/<?php echo $ADMIN; ?>/articles/images/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&Section=<?php  p($Section); ?>'">
+		<!--<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" class="button" ONCLICK="location.href='/<?php echo $ADMIN; ?>/articles/images/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&Section=<?php  p($Section); ?>'">-->
 		</DIV>
 		</TD>
 	</TR>

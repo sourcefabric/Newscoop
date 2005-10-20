@@ -76,7 +76,7 @@ selectLanguageFile("home");
 </tr>
 </table>
 
-<table border="0" cellspacing="0" cellpadding="6" class="table_input" align="center" style="margin-top: 20px;">
+<table border="0" cellspacing="0" cellpadding="6" align="center" style="margin-top: 20px; background-color: #d5e2ee;	border: 1px solid #8baed1;">
 <form name="dialog" method="post" action="do_login.php" >
 	<tr>
 		<td colspan="2">

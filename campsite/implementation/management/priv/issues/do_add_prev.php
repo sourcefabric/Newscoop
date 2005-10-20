@@ -33,10 +33,13 @@ $publicationObj =& new Publication($Pub);
 
 if ($correct) {
     $lastIssue =& Issue::GetLastCreatedIssue($Pub);
-    $lastIssue->copy(null, $cNumber);
-	$logtext = getGS('New issue $1 from $2 in publication $3', $cNumber, $lastIssue->getIssueId(), $publicationObj->getName()); 
+    $issueCopies =& $lastIssue->copy(null, $cNumber);
+    $issueCopy = array_pop($issueCopies);
+	$logtext = getGS('New issue $1 from $2 in publication $3', $cNumber, 
+					 $lastIssue->getIssueId(), $publicationObj->getName()); 
 	Log::Message($logtext, $User->getUserName(), 11);
-	header("Location: /$ADMIN/issues/?Pub=$Pub");
+	header("Location: /$ADMIN/issues/edit.php?Pub=$Pub&Issue=".$issueCopy->getIssueId()
+		   ."&Language=".$issueCopy->getLanguageId());
 	exit;
 }
 

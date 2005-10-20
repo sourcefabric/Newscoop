@@ -16,11 +16,11 @@ if (!$access) {
 }
 $ImageId = Input::Get('image_id', 'int', 0);
 $view = Input::Get('view', 'string', 'thumbnail', true);
+$imageNav =& new ImageNav(CAMPSITE_IMAGEARCHIVE_IMAGES_PER_PAGE, $view);
 if (!Input::IsValid()) {
 	header('Location: index.php?'.$imageNav->getSearchLink());
 	exit;	
 }
-$imageNav =& new ImageNav(CAMPSITE_IMAGEARCHIVE_IMAGES_PER_PAGE, $view);
 $imageObj =& new Image($ImageId);
 $articles =& ArticleImage::GetArticlesThatUseImage($ImageId);
 
@@ -110,7 +110,7 @@ if ($imageObj->getLocation() == 'remote') {
 	<DIV ALIGN="CENTER">
 	<INPUT TYPE="HIDDEN" NAME="image_id" VALUE="<?php echo $imageObj->getImageId(); ?>">
 	<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save changes'); ?>" class="button">
-	<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='index.php?<?php echo $imageNav->getSearchLink(); ?>'" class="button">
+	<!--<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='index.php?<?php echo $imageNav->getSearchLink(); ?>'" class="button">-->
 	</DIV>
 	</TD>
 </TR>
@@ -123,8 +123,7 @@ if ($imageObj->getLocation() == 'remote') {
 if (count($articles) > 0) {
 	// image is in use //////////////////////////////////////////////////////////////////
 	?>
-	<center>
-	<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" width="500px" class="table_list">
+	<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" width="370px" class="table_list" style="margin-left: 4px;">
 	<tr class="table_list_header">
 		<td><?php putGS('Used in articles'); ?>:</td>
 	</tr>
@@ -152,7 +151,6 @@ if (count($articles) > 0) {
 	}
 	?>
 	</table>
-	</center>
 <?php
 }
 

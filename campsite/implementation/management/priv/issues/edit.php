@@ -125,7 +125,7 @@ camp_html_content_top(getGS('Change issue details'), array('Pub' => $publication
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">
 	<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
-	<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/issues/?Pub=<?php p($Pub); ?>'">
+	<!--<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/issues/?Pub=<?php p($Pub); ?>'">-->
 	</DIV>
 	</TD>
 </TR>

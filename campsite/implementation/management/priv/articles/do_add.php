@@ -21,9 +21,9 @@ $Language = Input::Get('Language', 'int', 0);
 $cName = trim(Input::Get('cName', 'string', ''));
 $cType = trim(Input::Get('cType', 'string', ''));
 $cLanguage = trim(Input::Get('cLanguage', 'int', 0));
-$cFrontPage = Input::Get('cFrontPage', 'string', 'N', true);
-$cSectionPage = Input::Get('cSectionPage', 'string', 'N', true);
-$cKeywords = Input::Get('cKeywords', 'string', '', true);
+//$cFrontPage = Input::Get('cFrontPage', 'string', 'N', true);
+//$cSectionPage = Input::Get('cSectionPage', 'string', 'N', true);
+//$cKeywords = Input::Get('cKeywords', 'string', '', true);
 
 // Check input
 if ($cName == "") {
@@ -69,11 +69,11 @@ $languageObj =& new Language($Language);
 // Create article
 $articleObj =& new Article($Pub, $Issue, $Section, $cLanguage);
 $articleObj->create($cType, $cName);
-$articleObj->setOnSectionPage(($cSectionPage == "on"));
-$articleObj->setOnFrontPage(($cFrontPage == "on"));
+//$articleObj->setOnSectionPage(($cSectionPage == "on"));
+//$articleObj->setOnFrontPage(($cFrontPage == "on"));
 $articleObj->setUserId($User->getId());
 $articleObj->setIsPublic(true);
-$articleObj->setKeywords($cKeywords);
+//$articleObj->setKeywords($cKeywords);
 
 $logtext = getGS('Article $1 added to $2. $3 from $4. $5 of $6',
 	$cName, $sectionObj->getSectionId(), 

@@ -141,7 +141,8 @@ class Issue extends DatabaseObject {
 	 * @param int $p_destLanguageId
 	 *     (optional) Use this if you want the copy to be a translation of the current issue.
 	 *     Default is to copy all translations of this issue.
-	 * @return void
+	 * @return mixed
+	 *		An array of Issues, a single Issue, or null.
 	 */
 	function copy($p_destPublicationId = null, $p_destIssueId = null, $p_destLanguageId = null) 
 	{

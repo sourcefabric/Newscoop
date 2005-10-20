@@ -69,7 +69,7 @@ $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj,
 camp_html_content_top(getGS("Duplicate article"), $topArray);
 ?>
 
-<table>
+<!--<table>
 <tr>
 	<td>
 		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
@@ -80,7 +80,7 @@ camp_html_content_top(getGS("Duplicate article"), $topArray);
 		</TABLE>
 	</td>
 </tr>
-</table>
+</table>-->
 <P>
 <CENTER>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" ALIGN="CENTER" class="table_input">
@@ -244,7 +244,7 @@ camp_html_content_top(getGS("Duplicate article"), $topArray);
 		<input type="hidden" name="destination_issue" value="<?php p($DestIssue); ?>">
 		<input type="hidden" name="destination_section" value="<?php p($DestSection); ?>">
 		<INPUT TYPE="button" Name="Duplicate" Value="<?php putGS("Duplicate article"); ?>" <?php if (($DestPublication <= 0) || ($DestIssue <=0) || ($DestSection <= 0)) { echo 'class="button_disabled"'; } else { echo 'class="button" onclick="this.form.submit();"'; }?> >
-		<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='<?php p($BackLink); ?>'" class="button">
+		<!--<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='<?php p($BackLink); ?>'" class="button">-->
 		</FORM>
 	</td>
 </tr>

@@ -24,7 +24,7 @@ $publications = Publication::GetPublications($sqlOptions);
 $numPublications = Publication::GetNumPublications();
 
 $crumbs = array();
-$crumbs[] = array("Actions", "");
+$crumbs[] = array("Content", "");
 $crumbs[] = array("Add new article", "");
 $crumbs[] = array("Publications", "");
 echo camp_html_breadcrumbs($crumbs);

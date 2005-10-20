@@ -56,7 +56,7 @@ if ($correct) {
     if ($created) {
     	$logtext = getGS('Issue $1 added in publication $2', $cName, $publicationObj->getName()); 
     	Log::Message($logtext, $User->getUserName(), 11);
-    	header("Location: /$ADMIN/issues/?Pub=$Pub");
+    	header("Location: /$ADMIN/issues/edit.php?Pub=$Pub&Issue=$cNumber&Language=$cLang");
     	exit;
     }
 }
@@ -97,8 +97,7 @@ camp_html_content_top(getGS('Adding new issue'), array('Pub' => $publicationObj)
 <TR>
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">
-	<INPUT TYPE="button" class="button" NAME="Another" VALUE="<?php  putGS('Add another'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/issues/add_new.php?Pub=<?php p($Pub); ?>'">
-	<INPUT TYPE="button" class="button" NAME="Done" VALUE="<?php  putGS('Done'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/issues/?Pub=<?php p($Pub); ?>'">
+	<INPUT TYPE="button" class="button" NAME="Done" VALUE="<?php  putGS('Ok'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/issues/add_new.php?Pub=<?php p($Pub); ?>'">
 	</DIV>
 	</TD>
 </TR>

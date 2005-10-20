@@ -314,9 +314,9 @@ if ( ($Pub == $DestPublicationId) && ($Issue == $DestIssueId)) { ?>
 		      <INPUT TYPE="submit" Name="Duplicate" Value="<?php putGS("Duplicate section"); ?>" <?php if (($DestPublicationId <= 0) || ($DestIssueId <=0)) { echo 'class="button_disabled"'; } else { echo 'class="button"'; }?> >
 		   </td>
 		   
-		   <td style="padding-left: 5px;">
+		  <!-- <td style="padding-left: 5px;">
 		      <INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='<?php p($BackLink); ?>'" class="button">
-		   </td>
+		   </td>-->
 	   </tr>
 	   </table>
 	</td>

@@ -108,7 +108,7 @@ hr {
 }
 
 .table_list {
-	padding-left: 10px;
+	padding-left: 15px;
 	padding-right: 10px;
 }
 
@@ -214,4 +214,12 @@ hr {
 
 .article_locked {
     background-color: #FFDFDF;
+}
+
+.indent {
+    margin-left: 17px;
+}
+
+.action_buttons {
+    margin-left: 15px;
 }

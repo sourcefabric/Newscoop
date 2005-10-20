@@ -53,7 +53,7 @@ $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj,
 camp_html_content_top(getGS('Change article status'), $topArray);
 ?>
 
-<table>
+<!--<table>
 <tr>
 	<td>
 		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
@@ -64,7 +64,7 @@ camp_html_content_top(getGS('Change article status'), $topArray);
 		</TABLE>
 	</td>
 </tr>
-</table>
+</table>-->
 <p>
 <CENTER>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" ALIGN="CENTER" class="table_input">
@@ -110,7 +110,7 @@ camp_html_content_top(getGS('Change article status'), $topArray);
 		<INPUT TYPE="HIDDEN" NAME="sLanguage" VALUE="<?php  p($sLanguage); ?>"><P>
 		<INPUT TYPE="HIDDEN" NAME="Back" VALUE="<?php p($BackLink); ?>">
 		<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save changes'); ?>" class="button">
-		<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" class="button" ONCLICK="location.href='<?php echo $BackLink; ?>'">
+		<!--<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" class="button" ONCLICK="location.href='<?php echo $BackLink; ?>'">-->
 		</FORM>
 		</DIV>
 		</TD>

@@ -206,7 +206,7 @@ if (!$articleObj->exists()) {
 	camp_html_display_error(getGS('No such article.'), $BackLink);
 }
 
-$articleTypeObj =& $articleObj->getArticleTypeObject();
+$articleTypeObj =& $articleObj->getArticleData();
 $dbColumns = $articleTypeObj->getUserDefinedColumns();
 
 $articleFields = array();

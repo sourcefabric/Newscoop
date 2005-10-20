@@ -23,8 +23,8 @@ $view = Input::Get('view', 'string', 'thumbnail', true);
 $BackLink = Input::Get('BackLink', 'string', null, true);
 
 $imageNav =& new ImageNav(CAMPSITE_IMAGEARCHIVE_IMAGES_PER_PAGE, $view);
-$imageNav->clearSearchStrings();
-$imageNav->setProperty('order_by', 'time_created');
+//$imageNav->clearSearchStrings();
+//$imageNav->setProperty('order_by', 'time_created');
 
 if (!Input::IsValid()) {
 	header('Location: index.php?'.$imageNav->getSearchLink());
@@ -64,6 +64,6 @@ $logtext = getGS('The image $1 has been added.', $attributes['Description']);
 Log::Message($logtext, $User->getUserName(), 41);
 
 // Go back to article image list.
-header('Location: index.php?'.$imageNav->getSearchLink());
+header('Location: edit.php?image_id='.$image->getImageId().'&'.$imageNav->getSearchLink());
 exit;
 ?>

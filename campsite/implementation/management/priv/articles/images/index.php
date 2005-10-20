@@ -33,9 +33,9 @@ $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj,
 camp_html_content_top(getGS('Article Image List'), $topArray);
 
 ?>
-
-<table>
-<tr>
+<p>
+<table class="action_buttons">
+<!--<tr>
 	<td>
 		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 		<TR>
@@ -44,7 +44,7 @@ camp_html_content_top(getGS('Article Image List'), $topArray);
 		</TR>
 		</TABLE>
 	</td>
-</tr>
+</tr>-->
 <?php  if ($User->hasPermission('AddImage')) { ?>
 <tr>
 	<td>

@@ -31,7 +31,7 @@ camp_html_content_top(getGS('Sections'), $topArray);
 
 if ($User->hasPermission('ManageSection')) { ?>
 <P>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons">
 <TR>
 	<TD><A HREF="add.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
 	<TD><A HREF="add.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>" ><B><?php  putGS("Add new section"); ?></B></A></TD>

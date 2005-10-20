@@ -236,13 +236,13 @@ class ArticleImage extends DatabaseObject {
 
 		// Replace the article tag in each one with the empty string
 		foreach ($articles as $article) {
-			$articleTypeObj =& $article->getArticleTypeObject();
-			$dbColumns =& $articleTypeObj->getUserDefinedColumns();
+			$articleData =& $article->getArticleData();
+			$dbColumns =& $articleData->getUserDefinedColumns();
 			foreach ($dbColumns as $dbColumn) {
-				$originalText = $articleTypeObj->getProperty($dbColumn->getName());
+				$originalText = $articleData->getProperty($dbColumn->getName());
 				$newText = preg_replace($matchString, '', $originalText);
 				if ($originalText != $newText) {
-					$articleTypeObj->setProperty($dbColumn->getName(), $newText);
+					$articleData->setProperty($dbColumn->getName(), $newText);
 				}
 			}
 		}

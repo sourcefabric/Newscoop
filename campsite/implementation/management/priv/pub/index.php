@@ -24,9 +24,9 @@ camp_html_content_top(getGS('Publications'), null);
 ?>
 
 <?php  if ($User->hasPermission("ManagePub")) { ?>    <P>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons">
 <TR>
-	<TD style="padding-left: 10px;">
+	<TD>
 		<A HREF="/<?php echo $ADMIN; ?>/pub/add.php?Back=<?php p(urlencode($_SERVER['REQUEST_URI'])); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A>
 	</TD>
 	<TD>

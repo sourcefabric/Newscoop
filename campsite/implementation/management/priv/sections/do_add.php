@@ -61,17 +61,20 @@ if (!$isValidShortName) {
 }
 if ($correct) {
     $newSection =& new Section($Pub, $Issue, $Language, $cNumber);
-    $newSection->create($cName, $cShortName);
-    $created = true;
-    if ($cSubs != "") {
-        $numSubscriptionsAdded = Subscription::AddSectionToAllSubscriptions($Pub, $cNumber);
-		if ($numSubscriptionsAdded == -1) { 
-            $errors[] = getGS('Error updating subscriptions.'); 
-		}
+    $created = $newSection->create($cName, $cShortName);
+    if ($created) {
+	    if (!empty($cSubs)) {
+	        $numSubscriptionsAdded = Subscription::AddSectionToAllSubscriptions($Pub, $cNumber);
+			if ($numSubscriptionsAdded == -1) { 
+	            $errors[] = getGS('Error updating subscriptions.'); 
+			}
+	    }
+	    $logtext = getGS('Section $1 added to issue $2. $3 ($4) of $5',
+	        $cName, $Issue, $issueObj->getName(), $issueObj->getLanguageName(), $publicationObj->getName()); 
+	    Log::Message($logtext, $User->getUserName(), 21);
+	    header("Location: edit.php?Pub=$Pub&Issue=$Issue&Language=$Language&Section=".$newSection->getSectionId());
+	    exit;
     }
-    $logtext = getGS('Section $1 added to issue $2. $3 ($4) of $5',
-        $cName, $Issue, $issueObj->getName(), $issueObj->getLanguageName(), $publicationObj->getName()); 
-    Log::Message($logtext, $User->getUserName(), 21);
 }
 
 $tmpArray = array("Pub" => $publicationObj, "Issue" => $issueObj);
