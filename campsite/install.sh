@@ -72,14 +72,6 @@ install_campsite()
     else
 	echo -e "\nCampsite was installed successfully."
 	echo "For a complete installation log read install_log file."
-	echo -n -e "\nStarting campsite_server daemon..."
-	"$BIN_DIR/campsitectl" stop &> /dev/null
-	"$BIN_DIR/campsitectl" start
-	if [ $? -ne 0 ]; then
-	    echo "ERROR"
-	else
-	    echo "done"
-	fi
 	echo -e "\nIMPORTANT!!!\n"
     fi
     echo "Please configure apache server before using Campsite application; make sure"
