@@ -434,7 +434,7 @@ export PREPARED_MOD_ENV=""
 modules_list=`modules_list`
 [ $? -ne 0 ] && echo "Error reading selected modules" && exit 1
 export MODULES_LIST=$modules_list
-export IMPLEMENTATION_PARTS=""
+export IMPLEMENTATION_PARTS="utils"
 for mod in $MODULES_LIST; do
     set_module_parts $mod
     [ $? -ne 0 ] && echo $output_err && return 1
