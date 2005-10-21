@@ -9,7 +9,7 @@ if (!$access) {
 }
 
 if (!$User->hasPermission('ManageTempl')) {
-	header("Location: /$ADMIN/ad.php?ADReason=".encURL(getGS("You do not have the right to modify templates.")));
+	camp_html_display_error(getGS("You do not have the right to modify templates."));
 	exit;
 }
 
@@ -20,61 +20,45 @@ if (!Template::IsValidPath($Path)) {
 }
 $Name = Input::Get('Name', 'string', '');
 $cField = Input::Get('cField', 'string', '');
-
-$filename = $Campsite['HTML_DIR']."/look/".decURL($Path)."/$Name";
-$fd = fopen ($filename, "w");
 $nField = str_replace("\\r", "\r", $cField);
 $nField = str_replace("\\n", "\n", $nField);
-$nField = decS($nField);
-$res = fwrite ($fd, $nField);
-fclose ($fd);
 
-if ($nField == 0 || $res > 0) {
-	$logtext = getGS('Template $1 was changed', encHTML(decS($Path))."/".encHTML(decS($Name)));
-	query ("INSERT INTO Log SET TStamp=NOW(), IdEvent=113, User='".$User->getUserName()."', Text='$logtext'");
-	header("Location: /$ADMIN/templates?Path=".encURL(decS($Path)));
+$filename = Template::GetFullPath($Path, $Name);
+$result = file_put_contents($filename, $nField);
+
+if ($nField == 0 || $result > 0) {
+	$logtext = getGS('Template $1 was changed', $Path."/".$Name);
+	Log::Message($logtext, $User->getUserName(), 113);
+	header("Location: /$ADMIN/templates/edit_template.php?Path=".urlencode($Path)."&Name=".urlencode($Name));
+}
+$crumbs = array();
+$crumbs[] = array(getGS("Configure"), "");
+$crumbs[] = array(getGS("Templates"), "/$ADMIN/templates/");
+$crumbs = array_merge($crumbs, camp_template_path_crumbs($path));
+$crumbs[] = array(getGS("Edit template"), "");
+echo camp_html_breadcrumbs($crumbs);
 
 ?>
-
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
-	<TR>
-		<TD class="page_title"><?php  putGS("Edit template"); ?></TD>
-		<TD ALIGN=RIGHT><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0"><TR></TR></TABLE></TD>
-	</TR>
-</TABLE>
-
-<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="1" WIDTH="100%" class="current_location_table"><TR>
-<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php  putGS("Path"); ?>:</TD><TD VALIGN="TOP" class="current_location_content"><?php  pencHTML(decURL($Path)); ?></TD>
-<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php  putGS("Template"); ?>:</TD><TD VALIGN="TOP" class="current_location_content"><?php  pencHTML(decURL($Name)); ?></TD>
-</TR></TABLE>
 <P>
-
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" ALIGN="CENTER" class="table_input">
-	<TR>
-		<TD COLSPAN="2">
-			<B> <?php  putGS("Edit template"); ?> </B>
-			<HR NOSHADE SIZE="1" COLOR="BLACK">
-		</TD>
-	</TR>
-	<TR>
-		<TD COLSPAN="2"><BLOCKQUOTE> <LI><?php putGS('The template has been saved.'); ?></LI> </BLOCKQUOTE></TD>
-	</TR>
-<?php } else { ?>
-	<TR>
-		<TD COLSPAN="2"><BLOCKQUOTE> <LI><?php  putGS('The template could not be saved'); ?></LI> </BLOCKQUOTE></TD>
-	</TR>
-<?php } ?>
-	<TR>
-		<TD COLSPAN="2">
-		<DIV ALIGN="CENTER">
-		<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/templates?Path=<?php pencURL(decS($Path)); ?>'">
-		</DIV>
-		</TD>
-	</TR>
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="table_input">
+<TR>
+	<TD COLSPAN="2">
+		<B> <?php  putGS("Edit template"); ?> </B>
+		<HR NOSHADE SIZE="1" COLOR="BLACK">
+	</TD>
+</TR>
+<TR>
+	<TD COLSPAN="2">
+		<BLOCKQUOTE> <LI><?php  putGS('The template could not be saved'); ?></LI> </BLOCKQUOTE>
+	</TD>
+</TR>
+<TR>
+	<TD COLSPAN="2">
+	<DIV ALIGN="CENTER">
+	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/templates?Path=<?php p(urlencode($Path)); ?>'">
+	</DIV>
+	</TD>
+</TR>
 </TABLE>
 <P>
-<?php
-camp_html_copyright_notice();
-?>
-
-</HTML>
+<?php camp_html_copyright_notice(); ?>

@@ -134,8 +134,10 @@ hr {
 
 .current_location_table {
 	border-bottom: 1px dotted black;
-	margin-left: 5px;
+	padding-left: 12px;
 	margin-right: 5px;
+	padding-top: 2px;
+	padding-bottom: 2px;
 }
 
 .current_location_title {

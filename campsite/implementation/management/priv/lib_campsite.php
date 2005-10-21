@@ -682,56 +682,56 @@ function camp_is_valid_url_name($name)
 //	return $socket;
 //}
 
-function template_path($path, $name)
-{
-	$look_dir = "/look";
+//function template_path($path, $name)
+//{
+//	$look_dir = "/look";
+//
+//	$path = str_replace("//", "/", $path);
+//	$path = strstr($path, $look_dir);
+//	if (strncmp($path, $look_dir, strlen($look_dir)) == 0)
+//		$path = substr($path, strlen($look_dir));
+//	if ($path[0] == '/')
+//		$path = substr($path, 1);
+//	if ($path[strlen($path) - 1] == '/')
+//		$path = substr($path, 0, strlen($path) - 1);
+//
+//	$name = str_replace("//", "/", $name);
+//	if ($name[0] == '/')
+//		$name = substr($name, 1);
+//
+//	if ($path != "")
+//		$template_path = $path . "/" . $name;
+//	else
+//		$template_path = $name;
+//	return $template_path;
+//}
 
-	$path = str_replace("//", "/", $path);
-	$path = strstr($path, $look_dir);
-	if (strncmp($path, $look_dir, strlen($look_dir)) == 0)
-		$path = substr($path, strlen($look_dir));
-	if ($path[0] == '/')
-		$path = substr($path, 1);
-	if ($path[strlen($path) - 1] == '/')
-		$path = substr($path, 0, strlen($path) - 1);
-
-	$name = str_replace("//", "/", $name);
-	if ($name[0] == '/')
-		$name = substr($name, 1);
-
-	if ($path != "")
-		$template_path = $path . "/" . $name;
-	else
-		$template_path = $name;
-	return $template_path;
-}
-
-function template_is_used($template_name)
-{
-	$sql = "select * from Templates where Name = '" . $template_name . "'";
-	$res = mysql_query($sql);
-	$row = mysql_fetch_array($res);
-	if (!$row)
-		return false;
-	$id = $row['Id'];
-
-	$sql = "select count(*) as used_count from Issues where IssueTplId = " . $id
-	     . " or SectionTplId = " . $id . " or ArticleTplId = " . $id;
-	$res = mysql_query($sql);
-	$row = mysql_fetch_array($res);
-	if ($row['used_count'] > 0)
-		return true;
-
-	$sql = "select count(*) as used_count from Sections where SectionTplId = " . $id
-	     . " or ArticleTplId = " . $id;
-	$res = mysql_query($sql);
-	$row = mysql_fetch_array($res);
-	if ($row['used_count'] > 0)
-		return true;
-
-	return false;
-}
-
+//function template_is_used($template_name)
+//{
+//	$sql = "select * from Templates where Name = '" . $template_name . "'";
+//	$res = mysql_query($sql);
+//	$row = mysql_fetch_array($res);
+//	if (!$row)
+//		return false;
+//	$id = $row['Id'];
+//
+//	$sql = "select count(*) as used_count from Issues where IssueTplId = " . $id
+//	     . " or SectionTplId = " . $id . " or ArticleTplId = " . $id;
+//	$res = mysql_query($sql);
+//	$row = mysql_fetch_array($res);
+//	if ($row['used_count'] > 0)
+//		return true;
+//
+//	$sql = "select count(*) as used_count from Sections where SectionTplId = " . $id
+//	     . " or ArticleTplId = " . $id;
+//	$res = mysql_query($sql);
+//	$row = mysql_fetch_array($res);
+//	if ($row['used_count'] > 0)
+//		return true;
+//
+//	return false;
+//}
+//
 
 if (file_exists($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/modules/admin/priv_functions.php")) {
 	include ($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/modules/admin/priv_functions.php");
