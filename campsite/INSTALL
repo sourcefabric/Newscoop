@@ -112,7 +112,7 @@ INSTALLATION of multiple instances
 Since 2.2.0 a new instance can be created without reinstalling Campsite. Just
 run:
 
-/usr/local/campsite/bin/create_instance --db_name [instance_name]
+/usr/local/campsite/bin/campsite-create-instance --db_name [instance_name]
 
 - Edit the file "[instance_name]-vhost.conf" from the instance configuration
 directory (/usr/local/campsite/etc/[instance_name]) and replace $SERVER_NAME

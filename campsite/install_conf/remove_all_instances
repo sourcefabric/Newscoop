@@ -28,7 +28,7 @@ fi
 for inst_name in *; do
 	if [ -d "$inst_name" ]; then
 		echo -n "Removing instance $inst_name ..."
-		"$BIN_DIR/remove_instance" $inst_name
+		"$BIN_DIR/campsite-remove-instance" $inst_name
 		echo "done"
 	fi
 done

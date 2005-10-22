@@ -17,7 +17,7 @@ if ($type == "-i")
 if ($etc_dir == "" || $type == "" || ($type == "-a" && $archive_file == "")
 	|| ($type == "-i" && $instance_name == "") || ($type != '-a' && $type != '-i')) {
 	echo "Invalid parameters received; usage:\n"
-		. "\trestore_instance [type] [archive_name/instance_name]\n"
+		. "\tcampsite-restore-instance [type] [archive_name/instance_name]\n"
 		. "\twhere [etc_dir] = campsite etc directory\n"
 		. "\t\t[type] = restore type: -a from archive file, -i instance name\n"
 		. "\t\t[archive_name] = archive file name, use with -a type\n"
@@ -69,9 +69,9 @@ if ($type == "-i") {
 	exec_command($cmd);
 }
 
-// call create_instance
+// call campsite-create-instance
 $bin_dir = $Campsite['BIN_DIR'];
-exec_command("$bin_dir/create_instance --db_name $instance_name --no_database");
+exec_command("$bin_dir/campsite-create-instance --db_name $instance_name --no_database");
 
 // extract packages
 $html_dir = $Campsite['WWW_DIR'] . "/$instance_name/html";

@@ -634,7 +634,7 @@ function print_usage()
 	global $g_instance_parameters, $g_mandatory_parameters, $g_parameters_defaults;
 
 	define_globals();
-	echo "Usage: create_instance [arguments]\nArguments may be:\n";
+	echo "Usage: campsite-create-instance [arguments]\nArguments may be:\n";
 	foreach ($g_instance_parameters as $index=>$parameter) {
 		if ($parameter != '--no_database')
 			echo "\t$parameter [value]\n";

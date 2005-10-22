@@ -66,7 +66,7 @@ install_campsite()
 	echo -e "\nError creating the default Campsite instance. This usually happens when"
 	echo "MySQL configuration is different from the default one or you did not"
 	echo "install an email server. Run:"
-	echo "$BIN_DIR/create_instance --help"
+	echo "$BIN_DIR/campsite-create-instance --help"
 	echo "to find out how to set Campsite instance parameters."
 	echo -e "\nIMPORTANT!!!"
     else
@@ -82,7 +82,7 @@ install_campsite()
 	echo -e "Fill in \"admin\" and \"admn00\" user and password respectively to log in."
 	echo "You should change the password as soon as possible."
     else
-	echo "Run create_instance script in order to complete Campsite install."
+	echo "Run campsite-create-instance script in order to complete Campsite install."
     fi
 }
 

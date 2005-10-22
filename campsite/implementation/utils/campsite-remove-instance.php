@@ -21,7 +21,7 @@ require_once($Campsite['BIN_DIR'] . "/cli_script_lib.php");
 
 if (!$no_backup) {
 	// backup instance
-	$cmd = $Campsite['BIN_DIR'] . "/backup_instance " . escape_shell_arg($instance_name) . " --silent_exit";
+	$cmd = $Campsite['BIN_DIR'] . "/campsite-backup-instance " . escape_shell_arg($instance_name) . " --silent_exit";
 	exec_command($cmd);
 }
 

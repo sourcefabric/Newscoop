@@ -206,12 +206,12 @@ while [ $index -le 9 ]; do
     fi
     index=`expr $index + 1`
 done
-echo -e "\nRunning $BIN_DIR/create_instance"
+echo -e "\nRunning $BIN_DIR/campsite-create-instance"
 if [ "$cli_args" != "" ]; then
     echo -e "with the following arguments: $cli_args\n"
 else
     echo -e "with no arguments (use default values)\n"
 fi
-$BIN_DIR/create_instance $cli_args && export DEF_INST_INSTALLED=Y && return 0
+$BIN_DIR/campsite-create-instance $cli_args && export DEF_INST_INSTALLED=Y && return 0
 return 1
 }

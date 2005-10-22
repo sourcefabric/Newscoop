@@ -2,20 +2,24 @@
 
 bin_path=`dirname $0`
 if [ "$bin_path" = "." ]; then
-        script_call="./remove_instance.php"
+        script_call="./campsite-create-instance"
         ETC_DIR=`./campsite_config --etc_dir`
         PHP=`./campsite_config --php_cli`
 elif [ "$bin_path" = "" ]; then
         BIN_DIR=`campsite_config --bin_dir`
-        script_call="$BIN_DIR/remove_instance.php"
+        script_call="$BIN_DIR/campsite-create-instance"
         ETC_DIR=`campsite_config --etc_dir`
         PHP=`campsite_config --php_cli`
 else
-        script_call="$bin_path/remove_instance.php"
+        script_call="$bin_path/campsite-create-instance"
         ETC_DIR=`$bin_path/campsite_config --etc_dir`
         PHP=`$bin_path/campsite_config --php_cli`
 fi
 
-CMD="$PHP -q $script_call $ETC_DIR $*"
-$CMD
-
+pushd $ETC_DIR > /dev/null
+for i in *; do
+        if [ -d $i ]; then
+		$script_call --db_name $i
+	fi
+done
+popd > /dev/null
