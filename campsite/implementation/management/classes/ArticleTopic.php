@@ -7,6 +7,8 @@
  * Includes
  */
 require_once($g_documentRoot.'/classes/DatabaseObject.php');
+require_once($g_documentRoot.'/classes/Article.php');
+require_once($g_documentRoot.'/classes/Topic.php');
 
 /**
  * @package Campsite
@@ -117,19 +119,40 @@ class ArticleTopic extends DatabaseObject {
 	 */
 	function GetArticleTopics($p_articleId, $p_languageId = null, $p_sqlOptions = null) 
 	{
-		global $Campsite;
 		$tmpTopic =& new Topic();
 		$columnNames = implode(',', $tmpTopic->getColumnNames(true));
     	$queryStr = "SELECT $columnNames FROM ArticleTopics, Topics "
     				." WHERE ArticleTopics.NrArticle = $p_articleId"
     				.' AND ArticleTopics.TopicId = Topics.Id ';
-    	if (!is_null($p_languageId) && is_numeric($p_languageId)) {
+    	if (!is_null($p_languageId)) {
     		$queryStr .= " AND Topics.LanguageId=$p_languageId";
     	}
 		$queryStr .= ' ORDER BY Topics.Name ';
     	$queryStr = DatabaseObject::ProcessOptions($queryStr, $p_sqlOptions);
     	return DbObjectArray::Create('Topic', $queryStr);
 	} // fn GetArticleTopics
+	
+	
+	/**
+	 * Get the Articles that have the given Topic.
+	 * @param int $p_topicId
+	 * @return array
+	 */
+	function GetArticlesWithTopic($p_topicId, $p_languageId = null, $p_sqlOptions = null)
+	{
+		$tmpArticle =& new Article();
+		$columnNames = implode(',', $tmpArticle->getColumnNames(true));
+		
+		$queryStr = "SELECT $columnNames FROM ArticleTopics, Articles"
+					." WHERE ArticleTopics.TopicId=$p_topicId"
+					." AND ArticleTopics.NrArticle=Articles.Number";
+    	if (!is_null($p_languageId)) {
+    		$queryStr .= " AND Topics.LanguageId=$p_languageId";
+    	}
+    	$queryStr = DatabaseObject::ProcessOptions($queryStr, $p_sqlOptions);
+    	return DbObjectArray::Create('Article', $queryStr);		
+	} // fn GetArticlesWithTopic
+	
 	
 } // class ArticleTopic
 

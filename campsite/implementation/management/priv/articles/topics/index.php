@@ -73,7 +73,7 @@ foreach ($topicParents as $parent) {
 $Path = $Top . '/' . $Path;
 
 if ($searchTopicsString != '') {
-	$subtopics =& Topic::GetByName($searchTopicsString);
+	$subtopics =& Topic::GetTopics(null, null, $searchTopicsString);
 	$totalSubtopics = count($subtopics);
 }
 else {
