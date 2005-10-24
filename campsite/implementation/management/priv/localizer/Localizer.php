@@ -252,6 +252,7 @@ class Localizer {
         $files = File_Find::mapTreeMultiple($g_localizerConfig['BASE_DIR'].$p_directory, 1);
 
         // Get all the PHP files
+        $filelist = array();
         foreach ($files as $name) {
             if (preg_match($filePattern, $name)) {
             	// list of .php-scripts in this folder
