@@ -17,7 +17,7 @@ HTMLArea.Config.prototype.Linker =
 {
   'backend' : _editor_url + 'plugins/Linker/scan.php',
   'files' : null
-}
+};
 
 
 function Linker(editor, args)
@@ -46,7 +46,7 @@ function Linker(editor, args)
 Linker.prototype._lc = function(string)
 {
   return HTMLArea._lc(string, 'Linker');
-}
+};
 
 Linker.prototype._createLink = function(a)
 {
@@ -190,9 +190,9 @@ Linker.prototype._createLink = function(a)
     {
       if(values.to)
       {
-        atr.href = 'mailto:' + values.to + '?';
-        if(values.subject) atr.href += 'subject=' + encodeURIComponent(values.subject);
-        if(values.body)    atr.href += (values.subject ? '&' : '') + 'body=' + encodeURIComponent(values.body);
+        atr.href = 'mailto:' + values.to;
+        if(values.subject) atr.href += '?subject=' + encodeURIComponent(values.subject);
+        if(values.body)    atr.href += (values.subject ? '&' : '?') + 'body=' + encodeURIComponent(values.body);
       }
     }
 
@@ -210,10 +210,24 @@ Linker.prototype._createLink = function(a)
           p.removeChild(a);
         }
       }
-      // Update the link
-      for(var i in atr)
+      else
       {
-        a.setAttribute(i, atr[i]);
+        // Update the link
+        for(var i in atr)
+        {
+          a.setAttribute(i, atr[i]);
+        }
+        
+        // If we change a mailto link in IE for some hitherto unknown
+        // reason it sets the innerHTML of the link to be the 
+        // href of the link.  Stupid IE.
+        if(HTMLArea.is_ie)
+        {
+          if(/mailto:([^?<>]*)(\?[^<]*)?$/i.test(a.innerHTML))
+          {
+            a.innerHTML = RegExp.$1;
+          }
+        }
       }
     }
     else
@@ -243,7 +257,7 @@ Linker.prototype._createLink = function(a)
 
   this._dialog.show(inputs, doOK);
 
-}
+};
 
 Linker.prototype._getSelectedAnchor = function()
 {
@@ -263,12 +277,12 @@ Linker.prototype._getSelectedAnchor = function()
     }
   }
   return null;
-}
+};
 
 Linker.prototype.onGenerate = function()
 {
   this._dialog = new Linker.Dialog(this);
-}
+};
 // Inline Dialog for Linker
 
 Linker.Dialog_dTrees = [ ];
@@ -289,7 +303,7 @@ Linker.Dialog = function (linker)
   // load the dTree script
   this._prepareDialog();
 
-}
+};
 
 Linker.Dialog.prototype._prepareDialog = function()
 {
@@ -370,11 +384,11 @@ Linker.Dialog.prototype._prepareDialog = function()
   this.dialog.onresize = function()
     {
       options.style.height = ddTree.style.height = (parseInt(dialog.height) - dialog.getElementById('h1').offsetHeight) + 'px';
-      ddTree.style.width  = (dialog.width  - 322 ) + 'px';
+      ddTree.style.width  = (parseInt(dialog.width)  - 322 ) + 'px';
     }
 
   this.ready = true;
-}
+};
 
 Linker.Dialog.prototype.makeNodes = function(files, parent)
 {
@@ -413,7 +427,7 @@ Linker.Dialog.prototype.makeNodes = function(files, parent)
       }
     }
   }
-}
+};
 
 Linker.Dialog.prototype._lc = Linker.prototype._lc;
 
@@ -528,11 +542,10 @@ Linker.Dialog.prototype.show = function(inputs, ok, cancel)
 
   // Init the sizes
   this.dialog.onresize();
-}
+};
 
 Linker.Dialog.prototype.hide = function()
 {
   this.linker.editor.enableToolbar();
   return this.dialog.hide();
-}
-
+};

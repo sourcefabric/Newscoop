@@ -30,10 +30,10 @@ InsertAnchor._pluginInfo = {
 
 InsertAnchor.prototype._lc = function(string) {
     return HTMLArea._lc(string, 'InsertAnchor');
-}
+};
 
 InsertAnchor.prototype.onGenerate = function() {
-  var style_id = "IA-style"
+  var style_id = "IA-style";
   var style = this.editor._doc.getElementById(style_id);
   if (style == null) {
     style = this.editor._doc.createElement("link");
@@ -42,7 +42,7 @@ InsertAnchor.prototype.onGenerate = function() {
     style.href = _editor_url + 'plugins/InsertAnchor/insert-anchor.css';
     this.editor._doc.getElementsByTagName("HEAD")[0].appendChild(style);
   }
-}
+};
 
 InsertAnchor.prototype.buttonPress = function(editor) {
   var outparam = null;
@@ -94,4 +94,4 @@ InsertAnchor.prototype.buttonPress = function(editor) {
       catch (e) { }
     }
   }, outparam);
-}
+};

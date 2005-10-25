@@ -37,7 +37,7 @@ Abbreviation._pluginInfo = {
 
 Abbreviation.prototype._lc = function(string) {
     return HTMLArea._lc(string, 'Abbreviation');
-}
+};
 
 Abbreviation.prototype.onGenerate = function() {
   var style_id = "Abbr-style"
@@ -49,7 +49,7 @@ Abbreviation.prototype.onGenerate = function() {
     style.href = _editor_url + 'plugins/Abbreviation/abbreviation.css';
     this.editor._doc.getElementsByTagName("HEAD")[0].appendChild(style);
   }
-}
+};
 
 Abbreviation.prototype.buttonPress = function(editor, context, updatecontextclass) {
 	var outparam = null;
@@ -96,4 +96,4 @@ Abbreviation.prototype.buttonPress = function(editor, context, updatecontextclas
       catch (e) { }
     }
   }, outparam);
-}
+};

@@ -1,8 +1,6 @@
 // I18N constants
-
 // LANG: "el", ENCODING: UTF-8
 // Author: Dimitris Glezos, dimitris@glezos.com
-
 {
   "Align": "Στοίχηση",
   "All four sides": "Και οι 4 πλευρές",
@@ -78,4 +76,4 @@
   "HTMLArea cowardly refuses to delete the last row in table.": "Δεν μπορεί να διαγραφεί η τελευταία γραμμή σε ένα πίνακα.",
   "percent": "τοις εκατόν",
   "pixels": "pixels"
-}
+};

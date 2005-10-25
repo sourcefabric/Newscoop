@@ -1,5 +1,8 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 
   <!--------------------------------------:noTabs=true:tabSize=2:indentSize=2:--
@@ -11,9 +14,9 @@
     --  use of the file as a boilerplate.
     --
     --  $HeadURL: svn://gogo@xinha.gogo.co.nz/repository/trunk/examples/full_example-body.html $
-    --  $LastChangedDate: 2005-03-05 21:42:32 +1300 (Sat, 05 Mar 2005) $
+    --  $LastChangedDate$
     --  $LastChangedRevision: 35 $
-    --  $LastChangedBy: gogo $
+    --  $LastChangedBy$
     --------------------------------------------------------------------------->
 
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -51,7 +54,7 @@
 
       xinha_plugins = xinha_plugins ? xinha_plugins :
       [
-        'FullScreen'
+        
       ];
              // THIS BIT OF JAVASCRIPT LOADS THE PLUGINS, NO TOUCHING  :)
              if(!HTMLArea.loadPlugins(xinha_plugins, xinha_init)) return;
@@ -80,7 +83,18 @@
        *************************************************************************/
 
        xinha_config = xinha_config ? xinha_config : new HTMLArea.Config();
+/*
+       // We can load an external stylesheet like this - NOTE : YOU MUST GIVE AN ABSOLUTE URL
+      //  otherwise it won't work!
+      xinha_config.stylistLoadStylesheet(document.location.href.replace(/[^\/]*\.html/, 'stylist.css'));
 
+      // Or we can load styles directly
+      xinha_config.stylistLoadStyles('p.red_text { color:red }');
+
+      // If you want to provide "friendly" names you can do so like
+      // (you can do this for stylistLoadStylesheet as well)
+      xinha_config.stylistLoadStyles('p.pink_text { color:pink }', {'p.pink_text' : 'Pretty Pink'});
+*/
       /** STEP 3 ***************************************************************
        * We first create editors for the textareas.
        *
@@ -121,7 +135,7 @@
     }
 
     window.onload   = xinha_init;
-    window.onunload = HTMLArea.flushEvents;
+    // window.onunload = HTMLArea.collectGarbageForIE;
   </script>
 </head>
 
@@ -151,5 +165,10 @@
 
     <input type="submit" /> <input type="reset" />
   </form>
+  <script language="javascript">
+    document.write(document.compatMode);
+  </script>
+  <a href="#" onclick="xinha_editors.myTextArea.hidePanels();">Hide</a>
+  <a href="#" onclick="xinha_editors.myTextArea.showPanels();">Show</a>
 </body>
 </html>

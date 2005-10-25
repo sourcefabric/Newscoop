@@ -6,35 +6,48 @@
   <script type="text/javascript" src="../../../popups/popup.js"></script>
 
 <script type="text/javascript">
-var type;
+
+var fields = ["f_name", "f_text", "f_cols", "f_rows", "f_wrap", "f_tabindex", "f_accesskey", "f_readOnly", "f_disabled"];
+
 function Init() {
+  window.resizeTo(280,260);
   __dlg_translate("Forms");
 	__dlg_init();
 	var param = window.dialogArguments;
-  type = param.f_type;
-  var d = document;
-  d.getElementById("f_name").value = param.f_name;
-	d.getElementById("f_value").value = param.f_value;
-	d.getElementById("f_cols").value = param.f_cols;
-	d.getElementById("f_rows").value = param.f_rows;
-	window.resizeTo(280,260);
-	d.getElementById("f_name").focus();
+  for (var i in fields) {
+    switch (fields[i]) { 
+    case "f_readOnly":
+    case "f_disabled":
+      document.getElementById(fields[i]).checked = (param[fields[i]]==fields[i].substring(2,20)) || (param[fields[i]] == true);  break;
+    default:
+      document.getElementById(fields[i]).value = param[fields[i]]; break;
+    }
+  }
+  document.getElementById("f_name").focus();
 };
 
 function onOK() {
-	var d = document;
-	var el = d.getElementById("f_name");
+	var el = document.getElementById("f_name");
 	if (!el.value) {
   	alert("You must enter a Name");
 		el.focus();
 	  return false;
 	}
-	var param = new Object();
-  param["f_type"] = type;
-  param["f_name"] = d.getElementById("f_name").value;
-	param["f_cols"] = d.getElementById("f_cols").value;
-  param["f_rows"] = d.getElementById("f_rows").value;
-  param["f_value"] = d.getElementById("f_value").value;
+  // pass data back to the calling window
+  var param = new Object();
+  for (var i in fields) {
+    switch (fields[i]) { 
+    case "f_readOnly":
+    case "f_disabled":
+      if(HTMLArea.is_ie)
+        param[fields[i]] = (document.getElementById(fields[i]).checked)?true:"";
+      else
+        param[fields[i]] = (document.getElementById(fields[i]).checked)?fields[i].substring(2,20):"";
+      break;
+    default:
+      param[fields[i]] = document.getElementById(fields[i]).value; break;
+    }
+  }
   __dlg_close(param);
   return false;
 };
@@ -44,39 +57,52 @@ function onCancel() {
 	return false;
 };
 </script>
-<style rel="stylesheet" type="text/css">
-DIV.line	{	clear: both;	}
-
-LABEL	{
-	padding-top: 3px;
-	padding-left: 3px;		
-	padding-right: 3px;	
-	}
-	
-LABEL.label	{
-	float: left;
-	width: 8em;
-	text-align: right;
-	}	
-</style> 
 </head>
 
-<body onload="Init()">
+<body class="dialog" onload="Init()">
 <div id="f_type" class="title">Form Element: TEXTAREA</div>
 <form action="" method="get">
-  <div class="line"><label class="label" for="name">Name/ID:</label>
-  <input type="text" name="name" id="f_name" title="name of the textarea" /></div>
-  <div class="space"></div>
+  <div class="fr">Name/ID:</div>
+  <input type="text" name="name" id="f_name" title="name of the textarea" />
+  <p />
   <fieldset>
 	<legend>Dimensions</legend>
-    <div class="line"><label class="label" for="cols">Columns:</label>
-    <input type="text" name="cols" id="f_cols" size="5" title="Width in number of characters" /></div>
-    <div class="line"><label class="label" for="rows">Rows:</label>
-		<input type="text" name="rows" id="f_rows" size="5" title="Height in number of rows" /></div>
+    <div class="fr">Columns:</div>
+    <input type="text" name="cols" id="f_cols" size="5" title="Width in number of characters" />
+    <p />
+    <div class="fr">Rows:</div>
+		<input type="text" name="rows" id="f_rows" size="5" title="Height in number of rows" />
+    <p />
 	</fieldset>
   <div class="space"></div>
-  <div class="line"><label class="label" for="name">Default contents:</label>
-  <input type="text" name="value" id="f_value" title="Default text (optional)" /></div>	  
+  <div class="fr">Wrap Mode:</div>
+  <select name="wrap" id="f_wrap">
+    <option value=""></option>
+    <option value="off">Off</option>
+    <option value="soft">Soft</option>
+    <option value="hard">Hard</option>
+    <option value="physical">Physical</option>
+    <option value="virtual">Virtual</option>
+    <option value="normal">normal</option>
+    <option value="nowrap">nowrap</option>
+    <option value="pre">pre</option>    
+  </select>
+  <p />
+  <div class="fr">Read Only</div>
+  <input type="checkbox" name="readOnly" id="f_readOnly" value="readOnly" />
+  <p />
+  <div class="fr">Disabled</div>
+  <input type="checkbox" name="disabled" id="f_disabled" value="disabled" />
+  <p />
+  <div class="fr">Tab Index:</div>
+  <input type="text" name="tabindex" id="f_tabindex" />
+  <p />
+  <div class="fr">Access Key:</div>
+  <input type="text" name="accesskey" id="f_accesskey" />
+  <p />
+  
+  <div class="fr">Initial Text:</div>
+  <input type="text" name="text" id="f_text" title="Default text (optional)" />
   <div id="buttons">
     <button type="button" name="ok" onclick="return onOK();">OK</button>
     <button type="button" name="cancel" onclick="return onCancel();">Cancel</button>

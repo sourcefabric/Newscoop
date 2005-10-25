@@ -6,46 +6,60 @@
   <script type="text/javascript" src="../../../popups/popup.js"></script>
 
 <script type="text/javascript">
-var type;
+var fields = ["f_name", "f_size", "f_tabindex", "f_multiple", "f_disabled"];
+
 function Init() {
+	window.resizeTo(350,320);
   __dlg_translate("Forms");
 	__dlg_init();
 	var param = window.dialogArguments;
-  type = param.f_type;
-  var d = document;
-  d.getElementById("f_name").value = param.f_name;
-	d.getElementById("f_size").value = (param.f_size<=0)?"":param.f_size;
-	d.getElementById("f_multiple").checked = param.f_multiple;
-	for (var i=0; i<=param.f_options.length-1; i++) {
+  for (var i in fields) {
+    switch (fields[i]) {
+    case "f_multiple":
+    case "f_disabled":
+      document.getElementById(fields[i]).checked = (param[fields[i]]==fields[i].substring(2,20)) || (param[fields[i]] == true); break;
+    case "f_size":
+      document.getElementById(fields[i]).value = (param[fields[i]]<=0)?"":param[fields[i]]; break;
+    default:
+      document.getElementById(fields[i]).value = param[fields[i]]; break;
+    }
+  }
+  for (var i=0; i<=param.f_options.length-1; i++) {
 		document.getElementById("f_select").options[i] = new Option(param.f_options[i].text, param.f_options[i].value);
 	}
-	window.resizeTo(350,320);
-	d.getElementById("f_name").focus();
+  document.getElementById("f_name").focus();
 };
 
 function onOK() {
-	var d = document;
-	var el = d.getElementById("f_name");
+	var el = document.getElementById("f_name");
 	if (!el.value) {
   	alert("You must enter a Name");
 		el.focus();
 	  return false;
 	}
+  // pass data back to the calling window
   var param = new Object();
-  param["f_type"] = type;
-  param["f_name"] = d.getElementById("f_name").value;
-	param["f_size"] = d.getElementById("f_size").value;
-  if (d.getElementById("f_size").value=="1") 
-    param["f_multiple"]=false;
-  else
-  	param["f_multiple"] = d.getElementById("f_multiple").checked;
-	function optionValues(text,value) {
+  for (var i in fields) {
+    switch (fields[i]) { 
+    case "f_multiple":
+      if (document.getElementById("f_size").value=="1") 
+        param["f_multiple"] = "";
+      else
+  	    param["f_multiple"] = (document.getElementById(fields[i]).checked)?"multiple":"";
+	    break;
+    case "f_disabled":
+      param[fields[i]] = (document.getElementById(fields[i]).checked)?"disabled":""; break;
+    default:
+      param[fields[i]] = document.getElementById(fields[i]).value; break;
+    }
+  }
+  function optionValues(text,value) {
 		this.text = text;
 		this.value = value;
 	}
 	optionNodes = new Array(); // for option text/value pairs
-	for (var i=0; i<= d.getElementById("f_select").options.length-1; i++) {
-		optionNodes[i] = new optionValues(d.getElementById("f_select").options[i].text, d.getElementById("f_select").options[i].value);
+	for (var i=0; i<= document.getElementById("f_select").options.length-1; i++) {
+		optionNodes[i] = new optionValues(document.getElementById("f_select").options[i].text, document.getElementById("f_select").options[i].value);
 	}
 	param["f_options"] = optionNodes;
 	__dlg_close(param);
@@ -139,32 +153,26 @@ function swapOptions(obj,i,j) {
 	o[j].selected = i_selected;
 }
 </script>
-<style rel="stylesheet" type="text/css">
-DIV.line	{	clear: both;	}
-
-LABEL	{
-	padding-top: 3px;
-	padding-left: 3px;		
-	padding-right: 3px;	
-	}
-	
-LABEL.label	{
-	float: left;
-	width: 12em;
-	text-align: right;
-	}	
-</style>
 </head>
 
-<body onload="Init()">
+<body class="dialog" onload="Init()">
   <div id="f_type" class="title">Form Element: SELECT</div>
   <form action="" method="get">
-    <div class="line"><label class="label" for="name">Name/ID:</label>
-    <input type="text" name="name" id="f_name" title="Name of the form select" /></div>
-    <div class="line"><label class="label" for="size">Size:</label>
-    <input name="size" id="f_size" type="text" value="" size="15"></div>
-		<div class="line"><label class="label" for="multiple">Allow Multiple Selections:</label>
-    <input name="multiple" id="f_multiple" type="checkbox"></div>
+    <div class="fr">Name/ID:</div>
+    <input type="text" name="name" id="f_name" title="Name of the form select" />
+    <p />
+    <div class="fr">Size:</div>
+    <input name="size" id="f_size" type="text" value="" size="15" />
+    <p />
+		<div class="fr"><nobr>Multiple Select</nobr></div>
+    <input name="multiple" id="f_multiple" type="checkbox" value="multiple" />
+    <p />
+    <div class="fr">Disabled</div>
+    <input type="checkbox" name="disabled" id="f_disabled" value="disabled" />
+    <p />
+    <div class="fr">Tab Index:</div>
+    <input type="text" name="tabindex" id="f_tabindex" />
+    <p />
     <div class="space"></div>
     <fieldset id="fldLayout">
 	  <legend>Options</legend>

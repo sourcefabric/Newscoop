@@ -4,12 +4,11 @@
   <link rel="stylesheet" type="text/css" href="../../../popups/popup.css" />
   <script type="text/javascript" src="../../../popups/popup.js"></script>
   <script type="text/javascript">
-    window.resizeTo(300, 150);
 
 function Init() {
   __dlg_translate("InsertAnchor");
   __dlg_init();
-  window.resizeTo(400, 180);
+  window.resizeTo(400, 150);
   var param = window.dialogArguments;
   if (param) {
     document.getElementById("name").value = param["name"];
@@ -40,7 +39,7 @@ function onCancel() {
 </script>
 </head>
 
-<body onload="Init()">
+<body class="dialog" onload="Init()">
 <div class="title">Insert Anchor</div>
 <form>
 <table border="0" style="width: 100%;">

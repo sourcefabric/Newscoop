@@ -1,17 +1,6 @@
 // I18N constants
-
 // LANG: "ro", ENCODING: UTF-8
 // Author: Mihai Bazon, http://dynarch.com/mishoo
-
-// FOR TRANSLATORS:
-//
-//   1. PLEASE PUT YOUR CONTACT INFO IN THE ABOVE LINE
-//      (at least a valid email address)
-//
-//   2. PLEASE TRY TO USE UTF-8 FOR ENCODING;
-//      (if this is not possible, please include a comment
-//       that states what encoding is necessary.)
-
 {
   "Align": "Aliniere",
   "All four sides": "Toate părţile",
@@ -87,4 +76,4 @@
   "HTMLArea cowardly refuses to delete the last row in table.": "HTMLArea refuză cu laşitate să şteargă ultimul rând din tabela.",
   "percent": "procente",
   "pixels": "pixeli"
-}
+};

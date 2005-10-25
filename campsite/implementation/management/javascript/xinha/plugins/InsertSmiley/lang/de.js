@@ -1,7 +1,7 @@
 // I18N constants
 // LANG: "de", ENCODING: UTF-8
 { 
-	"Insert Smiley": "Smiley einfügen",
+	"Insert Smiley": "Smiley einfÃ¼gen",
 	"Smiley": "Smiley",
 	"Cancel": "Abbrechen"
 };

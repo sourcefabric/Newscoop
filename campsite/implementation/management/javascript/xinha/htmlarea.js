@@ -27,19 +27,19 @@
     --     included in the top 10 lines of the file (see the embedded edit mode)
     --
     --  $HeadURL: http://svn.xinha.python-hosting.com/trunk/htmlarea.js $
-    --  $LastChangedDate: 2005-05-25 09:30:03 +1200 (Wed, 25 May 2005) $
-    --  $LastChangedRevision: 193 $
-    --  $LastChangedBy: gogo $
+    --  $LastChangedDate$
+    --  $LastChangedRevision: 401 $
+    --  $LastChangedBy$
     --------------------------------------------------------------------------*/
 
 HTMLArea.version =
 {
   'Release'   : 'Trunk',
   'Head'      : '$HeadURL: http://svn.xinha.python-hosting.com/trunk/htmlarea.js $'.replace(/^[^:]*: (.*) \$$/, '$1'),
-  'Date'      : '$LastChangedDate: 2005-05-25 09:30:03 +1200 (Wed, 25 May 2005) $'.replace(/^[^:]*: ([0-9-]*) ([0-9:]*) ([+0-9]*) \((.*)\) \$/, '$4 $2 $3'),
-  'Revision'  : '$LastChangedRevision: 193 $'.replace(/^[^:]*: (.*) \$$/, '$1'),
-  'RevisionBy': '$LastChangedBy: gogo $'.replace(/^[^:]*: (.*) \$$/, '$1')
-}
+  'Date'      : '$LastChangedDate$'.replace(/^[^:]*: ([0-9-]*) ([0-9:]*) ([+0-9]*) \((.*)\) \$/, '$4 $2 $3'),
+  'Revision'  : '$LastChangedRevision: 401 $'.replace(/^[^:]*: (.*) \$$/, '$1'),
+  'RevisionBy': '$LastChangedBy$'.replace(/^[^:]*: (.*) \$$/, '$1')
+};
 
 if (typeof _editor_url == "string") {
   // Leave exactly one backslash at the end of _editor_url
@@ -54,6 +54,11 @@ if (typeof _editor_lang == "string") {
   _editor_lang = _editor_lang.toLowerCase();
 } else {
   _editor_lang = "en";
+}
+
+// skin stylesheet to load
+if (!(typeof _editor_skin == "string")) {
+  _editor_skin = "";
 }
 
 var __htmlareas = [ ];
@@ -86,13 +91,13 @@ function HTMLArea(textarea, config)
       textarea = HTMLArea.getElementById('textarea', textarea);
     }
     this._textArea = textarea;
-
+       
     // Before we modify anything, get the initial textarea size
     this._initial_ta_size =
     {
-      w: textarea.style.width ? textarea.style.width : textarea.offsetWidth,
-      h: textarea.style.height ? textarea.style.height : textarea.offsetHeight
-    }
+      w: textarea.style.width ? textarea.style.width   : (textarea.offsetWidth ? (textarea.offsetWidth + 'px') : (textarea.cols+'em')),
+      h: textarea.style.height ? textarea.style.height : (textarea.offsetHeight ? (textarea.offsetHeight + 'px') : (textarea.rows+'em'))
+    };
 
     this._editMode = "wysiwyg";
     this.plugins = {};
@@ -139,9 +144,13 @@ function HTMLArea(textarea, config)
 
     for(var i in panels)
     {
+      if (!panels[i].container) continue; // prevent iterating over wrong type
       panels[i].div = panels[i].container; // legacy
       panels[i].container.className = 'panels ' + i;
+      HTMLArea.freeLater(panels[i], 'container');
+      HTMLArea.freeLater(panels[i], 'div');      
     }
+    HTMLArea.freeLater(this, '_textArea');
   }
 };
 
@@ -155,7 +164,7 @@ HTMLArea.init = function() {
 HTMLArea.RE_tagName = /(<\/|<)\s*([^ \t\n>]+)/ig;
 HTMLArea.RE_doctype = /(<!doctype((.|\n)*?)>)\n?/i;
 HTMLArea.RE_head    = /<head>((.|\n)*?)<\/head>/i;
-HTMLArea.RE_body    = /<body[^>]*>((.|\n)*?)<\/body>/i;
+HTMLArea.RE_body    = /<body[^>]*>((.|\n|\r|\t)*?)<\/body>/i;
 HTMLArea.RE_Specials = /([\/\^$*+?.()|{}[\]])/g;
 HTMLArea.RE_email    = /[a-z0-9_]{3,}@[a-z0-9_-]{2,}(\.[a-z0-9_-]{2,})+/i;
 HTMLArea.RE_url      = /(https?:\/\/)?(([a-z0-9_]+:[a-z0-9_]+@)?[a-z0-9_-]{2,}(\.[a-z0-9_-]{2,}){2,}(:[0-9]+)?(\/\S+)*)/i;
@@ -185,17 +194,17 @@ HTMLArea.Config = function () {
   // to have explicit pixel sizes above (or on your textarea and have auto above)
   this.sizeIncludesPanels = true;
 
-  // If you are using Xinha in a "Standards Mode" page (using doctype switching)
-  // then you must use pixel heights for the top and bottom panels, otherwise
-  // it won't work correctly.  Also remember that you MUST have the "px" appended
-  // to pixel lengths or it won't work either!
+  // each of the panels has a dimension, for the left/right it's the width
+  // for the top/bottom it's the height.
+  //
+  // WARNING: PANEL DIMENSIONS MUST BE SPECIFIED AS PIXEL WIDTHS
   this.panel_dimensions =
   {
     left:   '200px', // Width
     right:  '200px',
     top:    '100px', // Height
     bottom: '100px'
-  }
+  };
 
   // enable creation of a status bar?
   this.statusBar = true;
@@ -240,6 +249,17 @@ HTMLArea.Config = function () {
   //  that don't have a url prefixing them
   this.stripSelfNamedAnchors = true;
 
+  // sometimes high-ascii in links can cause problems for servers (basically they don't recognise them)
+  //  so you can use this flag to ensure that all characters other than the normal ascii set (actually
+  //  only ! through ~) are escaped in URLs to % codes
+  this.only7BitPrintablesInURLs = true;
+
+  // if you are putting the HTML written in Xinha into an email you might want it to be 7-bit
+  //  characters only.  This config option (off by default) will convert all characters consuming
+  //  more than 7bits into UNICODE decimal entity references (actually it will convert anything
+  //  below <space> (chr 20) except cr, lf and tab and above <tilde> (~, chr 7E))
+  this.sevenBitClean  = false;
+
   // sometimes we want to be able to replace some string in the html comng in and going out
   //  so that in the editor we use the "internal" string, and outside and in the source view
   //  we use the "external" string  this is useful for say making special codes for
@@ -253,18 +273,12 @@ HTMLArea.Config = function () {
   // enable the 'Target' field in the Make Link dialog
   this.makeLinkShowsTarget = true;
 
-  // BaseURL included in the iframe document
-  this.baseURL = document.baseURI || document.URL;
-  if (this.baseURL && this.baseURL.match(/(.*)\/([^\/]+)/))
-    this.baseURL = RegExp.$1 + "/";
-
   // CharSet of the iframe, default is the charset of the document
   this.charSet = HTMLArea.is_gecko ? document.characterSet : document.charset;
 
   // URL-s
   this.imgURL = "images/";
   this.popupURL = "popups/";
-  this.helpURL  = _editor_url + "reference.html";
 
   // remove tags (these have to be a regexp, or null if this functionality is not desired)
   this.htmlRemoveTags = null;
@@ -301,8 +315,9 @@ HTMLArea.Config = function () {
     ["linebreak","separator","justifyleft","justifycenter","justifyright","justifyfull"],
     ["separator","insertorderedlist","insertunorderedlist","outdent","indent"],
     ["separator","inserthorizontalrule","createlink","insertimage","inserttable"],
-    ["separator","undo","redo","selectall"], (HTMLArea.is_gecko ? [] : ["cut","copy","paste","overwrite","saveas"]),
-    ["separator","killword","removeformat","toggleborders","lefttoright", "righttoleft","separator","htmlmode","about"]
+    ["separator","undo","redo","selectall","print"], (HTMLArea.is_gecko ? [] : ["cut","copy","paste","overwrite","saveas"]),
+    ["separator","killword","clearfonts","removeformat","toggleborders","splitblock","lefttoright", "righttoleft"],
+    ["separator","htmlmode","showhelp","about"]
   ];
 
 
@@ -356,7 +371,8 @@ HTMLArea.Config = function () {
    "insert_image": "insert_image.html",
    "insert_table": "insert_table.html",
    "select_color": "select_color.html",
-   "about": "about.html"
+   "about": "about.html",
+   "help": "editor_help.html"
   };
 
 
@@ -380,12 +396,12 @@ HTMLArea.Config = function () {
   //            See images/buttons_main.gif to see how it's done.
   //    - Enabled in text mode: if false the button gets disabled for text-only mode; otherwise enabled all the time.
   this.btnList = {
-    bold:          [ "Bold",   ["ed_buttons_main.gif",3,2], false, function(e) {e.execCommand("bold");} ],
-    italic:        [ "Italic", ["ed_buttons_main.gif",2,2], false, function(e) {e.execCommand("italic");} ],
-    underline:     [ "Underline", ["ed_buttons_main.gif",2,0], false, function(e) {e.execCommand("underline");} ],
-    strikethrough: [ "Strikethrough", ["ed_buttons_main.gif",3,0], false, function(e) {e.execCommand("strikethrough");} ],
-    subscript:     [ "Subscript", ["ed_buttons_main.gif",3,1], false, function(e) {e.execCommand("subscript");} ],
-    superscript:   [ "Superscript", ["ed_buttons_main.gif",2,1], false, function(e) {e.execCommand("superscript");} ],
+    bold:          [ "Bold",   HTMLArea._lc({key: 'button_bold', string: ["ed_buttons_main.gif",3,2]}, 'HTMLArea'), false, function(e) {e.execCommand("bold");} ],
+    italic:        [ "Italic", HTMLArea._lc({key: 'button_italic', string: ["ed_buttons_main.gif",2,2]}, 'HTMLArea'), false, function(e) {e.execCommand("italic");} ],
+    underline:     [ "Underline", HTMLArea._lc({key: 'button_underline', string: ["ed_buttons_main.gif",2,0]}, 'HTMLArea'), false, function(e) {e.execCommand("underline");} ],
+    strikethrough: [ "Strikethrough", HTMLArea._lc({key: 'button_strikethrough', string: ["ed_buttons_main.gif",3,0]}, 'HTMLArea'), false, function(e) {e.execCommand("strikethrough");} ],
+    subscript:     [ "Subscript", HTMLArea._lc({key: 'button_subscript', string: ["ed_buttons_main.gif",3,1]}, 'HTMLArea'), false, function(e) {e.execCommand("subscript");} ],
+    superscript:   [ "Superscript", HTMLArea._lc({key: 'button_superscript', string: ["ed_buttons_main.gif",2,1]}, 'HTMLArea'), false, function(e) {e.execCommand("superscript");} ],
 
     justifyleft:   [ "Justify Left", ["ed_buttons_main.gif",0,0], false, function(e) {e.execCommand("justifyleft");} ],
     justifycenter: [ "Justify Center", ["ed_buttons_main.gif",1,1], false, function(e){e.execCommand("justifycenter");}],
@@ -419,22 +435,8 @@ HTMLArea.Config = function () {
 
     htmlmode: [ "Toggle HTML Source", ["ed_buttons_main.gif",7,0], true, function(e) {e.execCommand("htmlmode");} ],
     toggleborders: [ "Toggle Borders", ["ed_buttons_main.gif",7,2], false, function(e) { e._toggleBorders() } ],
-    print:         [ "Print document", ["ed_buttons_main.gif",8,1], false, function(e) {e._iframe.contentWindow.print();} ],
+    print: [ "Print document", ["ed_buttons_main.gif",8,1], false, function(e) {if (HTMLArea.is_gecko) {e._iframe.contentWindow.print();} else {e.focusEditor(); print();}} ],
     saveas: [ "Save as", "ed_saveas.gif", false, function(e) {e.execCommand("saveas",false,"noname.htm");} ],
-    popupeditor: [ "Enlarge Editor", ["ed_buttons_main.gif",8,0], true,
-      function(e, objname, obj)
-      {
-        //call FullScreen-plugin (backwards-compatibility)
-        e._fullScreen();
-        if(e._isFullScreen)
-        {
-          obj.swapImage([_editor_url + cfg.imgURL + 'ed_buttons_main.gif',9,0]);
-        }
-        else
-        {
-          obj.swapImage([_editor_url + cfg.imgURL + 'ed_buttons_main.gif',8,0]);
-        }
-      } ],
     about: [ "About this editor", ["ed_buttons_main.gif",8,2], true, function(e) {e.execCommand("about");} ],
     showhelp: [ "Help using editor", ["ed_buttons_main.gif",9,2], true, function(e) {e.execCommand("showhelp");} ],
 
@@ -444,7 +446,7 @@ HTMLArea.Config = function () {
     overwrite: [ "Insert/Overwrite", "ed_overwrite.gif", false, function(e) {e.execCommand("overwrite");} ],
 
     wordclean:     [ "MS Word Cleaner", ["ed_buttons_main.gif",5,3], false, function(e) {e._wordClean();} ],
-    clearfonts:    [ "Clear Inline Font Specifications", ["ed_buttons_main.gif",5,4], false, function(e) {e._clearFonts();} ],
+    clearfonts:    [ "Clear Inline Font Specifications", ["ed_buttons_main.gif",5,4], true, function(e) {e._clearFonts();} ],
     removeformat:  [ "Remove formatting", ["ed_buttons_main.gif",4,4], false, function(e) {e.execCommand("removeformat");} ],
     killword:      [ "Clear MSOffice tags", ["ed_buttons_main.gif",4,3], false, function(e) {e.execCommand("killword");} ]
 
@@ -475,7 +477,8 @@ HTMLArea.Config = function () {
   // initialize tooltips from the I18N module and generate correct image path
   for (var i in this.btnList) {
     var btn = this.btnList[i];
-    if(typeof btn[1] != 'string')
+    if (typeof btn != 'object') continue; // prevent iterating over wrong type
+    if (typeof btn[1] != 'string')
     {
       btn[1][0] = _editor_url + this.imgURL + btn[1][0];
     }
@@ -485,6 +488,7 @@ HTMLArea.Config = function () {
     }
     btn[0] = HTMLArea._lc(btn[0]); //initialize tooltip
   }
+
 };
 
 /** Helper function: register a new button with the configuration.  It can be
@@ -535,7 +539,7 @@ HTMLArea.prototype.registerPanel = function(side, object)
   {
     object.drawPanelIn(panel);
   }
-}
+};
 
 /** The following helper function registers a dropdown box with the editor
  * configuration.  You still have to add it to the toolbar, same as with the
@@ -694,7 +698,7 @@ HTMLArea.Config.prototype.addToolbarElement = function(id, where, position) {
       }
     }
   }
-}
+};
 
 /** Helper function: replace all TEXTAREA-s in the document with HTMLArea-s. */
 HTMLArea.replaceAll = function(config) {
@@ -719,23 +723,27 @@ HTMLArea.prototype._createToolbar = function () {
   toolbar.className = "toolbar";
   toolbar.unselectable = "1";
 
+  HTMLArea.freeLater(this, '_toolBar');
+  HTMLArea.freeLater(this, '_toolbar');
+  
   var tb_row = null;
   var tb_objects = new Object();
   this._toolbarObjects = tb_objects;
 
 	this._createToolbar1(editor, toolbar, tb_objects);
-	this._htmlArea.appendChild(toolbar);
+	this._htmlArea.appendChild(toolbar);      
+  
   return toolbar;
-}
+};
 
 
 HTMLArea.prototype._setConfig = function(config) {
 	this.config = config;
-}
+};
 
 HTMLArea.prototype._addToolbar = function() {
 	this._createToolbar1(this, this._toolbar, this._toolbarObjects);
-}
+};
 
 // separate from previous createToolBar to allow dynamic change of toolbar
 HTMLArea.prototype._createToolbar1 = function (editor, toolbar, tb_objects) {
@@ -869,8 +877,13 @@ HTMLArea.prototype._createToolbar1 = function (editor, toolbar, tb_objects) {
         state	: setButtonStatus, // for changing state
         context : context
       };
+      
+      HTMLArea.freeLater(obj);
+      
       tb_objects[txt] = obj;
+      
       for (var i in options) {
+        if (typeof(options[i]) != 'string') continue;  // prevent iterating over wrong type
         var op = document.createElement("option");
         op.innerHTML = HTMLArea._lc(i);
         op.value = options[i];
@@ -915,6 +928,9 @@ HTMLArea.prototype._createToolbar1 = function (editor, toolbar, tb_objects) {
         cmd	: "textindicator", // the command ID
         state	: setButtonStatus // for changing state
       };
+      
+      HTMLArea.freeLater(obj);
+      
       tb_objects[txt] = obj;
       break;
         default:
@@ -939,6 +955,9 @@ HTMLArea.prototype._createToolbar1 = function (editor, toolbar, tb_objects) {
         state	: setButtonStatus, // for changing state
         context : btn[4] || null // enabled in a certain context?
       };
+      
+      HTMLArea.freeLater(obj);
+      
       tb_objects[txt] = obj;
       // handlers to emulate nice flat toolbar buttons
       HTMLArea._addEvent(el, "mouseout", function () {
@@ -974,7 +993,7 @@ HTMLArea.prototype._createToolbar1 = function (editor, toolbar, tb_objects) {
       var img = i_contain.firstChild;
       el.appendChild(i_contain);
 
-      obj.imgel = img;
+      obj.imgel = img;      
       obj.swapImage = function(newimg)
       {
         if(typeof newimg != 'string')
@@ -991,7 +1010,7 @@ HTMLArea.prototype._createToolbar1 = function (editor, toolbar, tb_objects) {
           img.style.left = '0px';
         }
       }
-
+      
     } else if (!el) {
       el = createSelect(txt);
     }
@@ -1066,6 +1085,7 @@ HTMLArea.makeBtnImg = function(imgDef, doc)
   if(!doc._htmlareaImgCache)
   {
     doc._htmlareaImgCache = { };
+    HTMLArea.freeLater(doc._htmlareaImgCache);
   }
 
   var i_contain = null;
@@ -1120,25 +1140,28 @@ HTMLArea.makeBtnImg = function(imgDef, doc)
   }
   i_contain.appendChild(img);
   return i_contain;
-}
+};
 
 HTMLArea.prototype._createStatusBar = function() {
   var statusbar = document.createElement("div");
   statusbar.className = "statusBar";
   this._statusBar = statusbar;
-
+  HTMLArea.freeLater(this, '_statusBar');
+  
   // statusbar.appendChild(document.createTextNode(HTMLArea._lc("Path") + ": "));
   // creates a holder for the path view
   div = document.createElement("span");
   div.className = "statusBarTree";
   div.innerHTML = HTMLArea._lc("Path") + ": ";
   this._statusBarTree = div;
+  HTMLArea.freeLater(this, '_statusBarTree');
   this._statusBar.appendChild(div);
 
   div = document.createElement("span");
   div.innerHTML = HTMLArea._lc("You are in TEXT MODE.  Use the [<>] button to switch back to WYSIWYG.");
   div.style.display = "none";
   this._statusBarTextMode = div;
+  HTMLArea.freeLater(this, '_statusBarTextMode');
   this._statusBar.appendChild(div);
 
   if (!this.config.statusBar)
@@ -1174,6 +1197,23 @@ HTMLArea.prototype.generate = function ()
     HTMLArea._loadback
       (_editor_url + 'popupwin.js', function() { editor.generate(); } );
       return false;
+  }
+
+  if(_editor_skin != "") {
+    var found=false;
+    var head = document.getElementsByTagName("head")[0];
+    var links = document.getElementsByTagName("link");
+    for(var i = 0; i<links.length; i++) {
+      if((links[i].rel == "stylesheet")&&(links[i].href == _editor_url + 'skins/' + _editor_skin + '/skin.css'))
+        found = true;
+    }
+    if(!found) {
+      var link = document.createElement("link");
+      link.type = "text/css";
+      link.href = _editor_url + 'skins/' + _editor_skin + '/skin.css';
+      link.rel = "stylesheet"
+      head.appendChild(link);
+    }
   }
 
   //backwards-compatibility: load FullScreen-Plugin if we find a "popupeditor"-button in the toolbar
@@ -1239,8 +1279,11 @@ HTMLArea.prototype.generate = function ()
 
     'sb_row'    :document.createElement('tr'),
     'sb_cell'   :document.createElement('td')  // status bar
-  }
 
+  };
+
+  HTMLArea.freeLater(this._framework);
+  
   var fw = this._framework;
   fw.table.border="0";
   fw.table.cellPadding="0";
@@ -1252,6 +1295,7 @@ HTMLArea.prototype.generate = function ()
   fw.bp_row.style.verticalAlign = 'top';
   fw.sb_row.style.verticalAlign = 'top';
   fw.ed_cell.style.position     = 'relative';
+
   // Put the cells in the rows        set col & rowspans
   // note that I've set all these so that all panels are showing
   // but they will be redone in sizeEditor() depending on which
@@ -1279,9 +1323,9 @@ HTMLArea.prototype.generate = function ()
   // and body in the table
   fw.table.appendChild(fw.tbody);
 
-
   var htmlarea = this._framework.table;
   this._htmlArea = htmlarea;
+  HTMLArea.freeLater(this, '_htmlArea');
   htmlarea.className = "htmlarea";
 
     // create the toolbar and put in the area
@@ -1290,10 +1334,12 @@ HTMLArea.prototype.generate = function ()
 
     // create the IFRAME & add to container
   var iframe = document.createElement("iframe");
+  iframe.src = _editor_url + editor.config.URIs["blank"];
   this._framework.ed_cell.appendChild(iframe);
   this._iframe = iframe;
   this._iframe.className = 'xinha_iframe';
-
+  HTMLArea.freeLater(this, '_iframe');
+  
     // creates & appends the status bar
   var statusbar = this._createStatusBar();
   this._framework.sb_cell.appendChild(statusbar);
@@ -1357,8 +1403,6 @@ HTMLArea.prototype.generate = function ()
     }
   );
 
-  // Set src of iframe
-  this._iframe.src = _editor_url + editor.config.URIs["blank"];
 };
 
 
@@ -1424,22 +1468,10 @@ HTMLArea.prototype.generate = function ()
 
     this.sizeEditor(width, height, this.config.sizeIncludesBars, this.config.sizeIncludesPanels);
 
-    // The resize handler is to allow for heights specified as percentages.
-    // This has been disabled in compatmode because IE seems to throw a resize
-    // event up to the window even when you change the dimensions of elements
-    // on the page rather than the window itself.  Which can lead to
-    // huge amounts of resize events, and possibly getting into infinite loops
-    // of resize events.
-    //
-    // % widths are fine without the event because they are passed through to
-    // the browser as percentages so it's up to the browser to resize those.
-    if(!document.compatMode || document.compatMode == 'BackCompat')
-    {
-      HTMLArea._addEvent(window, 'resize', function() { editor.sizeEditor(); });
-    }
+    HTMLArea.addDom0Event(window, 'resize', function(e) { editor.sizeEditor(); });
 
     this.notifyOn('panel_change',function(){editor.sizeEditor();});
-  }
+  };
 
   /**
    *  Size the editor to a specific size, or just refresh the size (when window resizes for example)
@@ -1450,6 +1482,13 @@ HTMLArea.prototype.generate = function ()
 
   HTMLArea.prototype.sizeEditor = function(width, height, includingBars, includingPanels)
   {
+
+    // We need to set the iframe & textarea to 100% height so that the htmlarea
+    // isn't "pushed out" when we get it's height, so we can change them later.
+    this._iframe.style.height   = '100%';
+    this._textArea.style.height = '100%';
+    this._iframe.style.width    = '';
+    this._textArea.style.width  = '';
 
     if(includingBars != null)     this._htmlArea.sizeIncludesToolbars = includingBars;
     if(includingPanels != null)   this._htmlArea.sizeIncludesPanels   = includingPanels;
@@ -1500,11 +1539,6 @@ HTMLArea.prototype.generate = function ()
       }
     }
 
-    // We need to set the iframe & textarea to 100% height so that the htmlarea
-    // isn't "pushed out" when we get it's height, so we can change them later.
-    if(this._iframe.style.height != '100%')   this._iframe.style.height   = '100%';
-    if(this._textArea.style.height != '100%') this._textArea.style.height = '100%';
-
     // At this point we have this._htmlArea.style.width & this._htmlArea.style.height
     // which are the size for the OUTER editor area, including toolbars and panels
     // now we size the INNER area and position stuff in the right places.
@@ -1514,55 +1548,43 @@ HTMLArea.prototype.generate = function ()
     // Set colspan for toolbar, and statusbar, rowspan for left & right panels, and insert panels to be displayed
     // into thier rows
     var panels = this._panels;
+    var editor = this;
     var col_span = 1;
 
     function panel_is_alive(pan)
     {
       if(panels[pan].on && panels[pan].panels.length && HTMLArea.hasDisplayedChildren(panels[pan].container))
       {
+        panels[pan].container.style.display = '';
         return true;
       }
 
       // Otherwise make sure it's been removed from the framework
       else
       {
-        HTMLArea.removeFromParent(panels[pan].container);
+        panels[pan].container.style.display='none';
         return false;
       }
     }
 
     if(panel_is_alive('left'))
     {
-      col_span += 1;
-      if(!HTMLArea.hasParentNode(panels.left.container))
-      {
-        this._framework.ler_row.insertBefore(panels.left.container,this._framework.ed_cell);
-      }
+      col_span += 1;      
     }
 
     if(panel_is_alive('top'))
     {
-      if(!HTMLArea.hasParentNode(panels.top.container))
-      {
-        this._framework.tp_row.appendChild(panels.top.container);
-      }
+      // NOP
     }
 
     if(panel_is_alive('right'))
     {
       col_span += 1;
-      if(!HTMLArea.hasParentNode(panels.right.container))
-      {
-        this._framework.ler_row.insertBefore(panels.right.container, this._framework.ed_cell.nextSibling);
-      }
     }
 
     if(panel_is_alive('bottom'))
     {
-      if(!HTMLArea.hasParentNode(panels.bottom.container))
-      {
-        this._framework.bp_row.appendChild(panels.bottom.container);
-      }
+      // NOP
     }
 
     this._framework.tb_cell.colSpan = col_span;
@@ -1617,43 +1639,30 @@ HTMLArea.prototype.generate = function ()
     this._framework.tb_cell.style.height = this._toolBar.offsetHeight   + 'px';
     this._framework.sb_cell.style.height = this._statusBar.offsetHeight + 'px';
 
-    // Compatability Mode (both IE and Moz), because table cell heights are
-    // ignored in compatability mode (at least in IE, moz works, but
-    // I don't think it should so we'll do this for moz too incase it changes)
-    // we have to set an explicit pixel height on the iframe so as the table
-    // cell surrounding it takes the available height.
-    // This means that the panel heights for top & bottom MUST be pixel heights
-    // if you are using Xinha in a standards mode page.
-    if( document.compatMode && document.compatMode != 'BackCompat')
-    {
-      var edcellheight = height - this._toolBar.offsetHeight - this._statusBar.offsetHeight;
-      if(this._framework.tp_row.childNodes.length)
-      {
-        edcellheight  -= parseInt(this.config.panel_dimensions.top);
-      }
+    var edcellheight = height - this._toolBar.offsetHeight - this._statusBar.offsetHeight;
+    if(panel_is_alive('top'))    edcellheight  -= parseInt(this.config.panel_dimensions.top);
+    if(panel_is_alive('bottom')) edcellheight  -= parseInt(this.config.panel_dimensions.bottom);;
+    this._iframe.style.height    = edcellheight + 'px';
 
-      if(this._framework.bp_row.childNodes.length)
-      {
-        edcellheight  -= parseInt(this.config.panel_dimensions.bottom);
-      }
-      this._iframe.style.height   = edcellheight + 'px';
-    }
-    else
-    {
-      this._iframe.style.height   = '100%';
-    }
-    this._iframe.style.width    = '100%';
+    var edcellwidth = width;
+    if(panel_is_alive('left'))  edcellwidth -= parseInt(this.config.panel_dimensions.left);
+    if(panel_is_alive('right')) edcellwidth -= parseInt(this.config.panel_dimensions.right);
+    this._iframe.style.width     =  edcellwidth + 'px';
 
     this._textArea.style.height = this._iframe.style.height;
     this._textArea.style.width  = this._iframe.style.width;
 
     this.notifyOf('resize', {width:this._htmlArea.offsetWidth, height:this._htmlArea.offsetHeight});
-  }
+  };
 
   HTMLArea.prototype.addPanel = function(side)
   {
     var div = document.createElement('div');
     div.side = side;
+    if(side == 'left' || side == 'right')
+    {
+      div.style.width = this.config.panel_dimensions[side];
+    }
     HTMLArea.addClasses(div, 'panel');
     this._panels[side].panels.push(div);
     this._panels[side].div.appendChild(div);
@@ -1661,7 +1670,7 @@ HTMLArea.prototype.generate = function ()
     this.notifyOf('panel_change', {'action':'add','panel':div});
 
     return div;
-  }
+  };
 
   HTMLArea.prototype.removePanel = function(panel)
   {
@@ -1676,7 +1685,7 @@ HTMLArea.prototype.generate = function ()
     }
     this._panels[panel.side].panels = clean;
     this.notifyOf('panel_change', {'action':'remove','panel':panel});
-  }
+  };
 
   HTMLArea.prototype.hidePanel = function(panel)
   {
@@ -1685,7 +1694,7 @@ HTMLArea.prototype.generate = function ()
       panel.style.display = 'none';
       this.notifyOf('panel_change', {'action':'hide','panel':panel});
     }
-  }
+  };
 
   HTMLArea.prototype.showPanel = function(panel)
   {
@@ -1694,7 +1703,7 @@ HTMLArea.prototype.generate = function ()
       panel.style.display = '';
       this.notifyOf('panel_change', {'action':'show','panel':panel});
     }
-  }
+  };
 
   HTMLArea.prototype.hidePanels = function(sides)
   {
@@ -1713,7 +1722,7 @@ HTMLArea.prototype.generate = function ()
       }
     }
     this.notifyOf('panel_change', {'action':'multi_hide','sides':sides});
-  }
+  };
 
   HTMLArea.prototype.showPanels = function(sides)
   {
@@ -1732,7 +1741,7 @@ HTMLArea.prototype.generate = function ()
       }
     }
     this.notifyOf('panel_change', {'action':'multi_show','sides':sides});
-  }
+  };
 
   HTMLArea.objectProperties = function(obj)
   {
@@ -1742,7 +1751,7 @@ HTMLArea.prototype.generate = function ()
       props[props.length] = x;
     }
     return props;
-  }
+  };
 
   /*
    * EDITOR ACTIVATION NOTES:
@@ -1760,7 +1769,7 @@ HTMLArea.prototype.generate = function ()
     {
       return false;
     }
-  }
+  };
 
   HTMLArea._someEditorHasBeenActivated = false;
   HTMLArea._currentlyActiveEditor      = false;
@@ -1802,7 +1811,7 @@ HTMLArea.prototype.generate = function ()
 
     var editor = this;
     this.enableToolbar();
-  }
+  };
 
   HTMLArea.prototype.deactivateEditor = function()
   {
@@ -1828,7 +1837,7 @@ HTMLArea.prototype.generate = function ()
     }
 
     HTMLArea._currentlyActiveEditor = false;
-  }
+  };
 
   HTMLArea.prototype.initIframe = function()
   {
@@ -1839,13 +1848,13 @@ HTMLArea.prototype.generate = function ()
     {
       if (editor._iframe.contentDocument)
       {
-        this._doc = editor._iframe.contentDocument;
+        this._doc = editor._iframe.contentDocument;        
       }
       else
       {
         this._doc = editor._iframe.contentWindow.document;
       }
-      doc = this._doc;
+      doc = this._doc;      
       if (!doc) { // try later
         if (HTMLArea.is_gecko) {
           setTimeout(function() { editor.initIframe()}, 50);
@@ -1859,7 +1868,9 @@ HTMLArea.prototype.generate = function ()
     { // try later
       setTimeout(function() { editor.initIframe()}, 50);
     }
-
+    
+    HTMLArea.freeLater(this, '_doc');
+    
     doc.open();
     if (!editor.config.fullPage) {
       var html = "<html>\n";
@@ -1873,7 +1884,7 @@ HTMLArea.prototype.generate = function ()
            + ".htmtableborders, .htmtableborders td, .htmtableborders th {border : 1px dashed lightgrey ! important;} \n"
            + "</style>\n";
       html += "<style type=\"text/css\">"
-           + "html, body { border: 0px; } \n"
+           + "html, body { border: 0px;  background-color: #ffffff; } \n"
            + "span.macro, span.macro ul, span.macro div, span.macro p {background : #CCCCCC;}\n"
            + "</style>\n";
 
@@ -1906,33 +1917,23 @@ HTMLArea.prototype.generate = function ()
     doc.write(html);
     doc.close();
 
-    // if we have multiple editors some bug in Mozilla makes some lose editing ability
-    HTMLArea._addEvents
-    (
-      doc,
-      ["mousedown"],
-      function() { editor.activateEditor(); return true; }
-    );
-
-
-    // intercept some events; for updating the toolbar & keyboard handlers
-    HTMLArea._addEvents
-      (doc, ["keydown", "keypress", "mousedown", "mouseup", "drag"],
-       function (event) {
-         return editor._editorEvent(HTMLArea.is_ie ? editor._iframe.contentWindow.event : event);
-       });
-
-    // check if any plugins have registered refresh handlers
-    for (var i in editor.plugins) {
-      var plugin = editor.plugins[i].instance;
-      HTMLArea.refreshPlugin(plugin);
-    }
-
-    // specific editor initialization
-    if(typeof editor._onGenerate == "function") {
-      editor._onGenerate();
-    }
+    this.setEditorEvents();
+  };
+  
+/** Delay a function until the document is ready for operations.  See ticket:547 */
+HTMLArea.prototype.whenDocReady = function(doFunction)
+{
+  var editor = this;  
+  
+  if(!this._doc.body)
+  {
+    setTimeout(function() {editor.whenDocReady(doFunction)}, 50); 
   }
+  else
+  {
+    doFunction();
+  }
+}
 
 // Switches editor mode; parameter can be "textmode" or "wysiwyg".  If no
 // parameter was passed this function toggles between modes.
@@ -1944,7 +1945,7 @@ HTMLArea.prototype.setMode = function(mode) {
     case "textmode":
     {
       var html = this.outwardHtml(this.getHTML());
-      this._textArea.value = html;
+      this.setHTML(html);
 
       // Hide the iframe
       this.deactivateEditor();
@@ -1965,14 +1966,7 @@ HTMLArea.prototype.setMode = function(mode) {
     {
       var html = this.inwardHtml(this.getHTML());
       this.deactivateEditor();
-      if (!this.config.fullPage)
-      {
-        this._doc.body.innerHTML = html;
-      }
-      else
-      {
-        this.setFullHTML(html);
-      }
+      this.setHTML(html);
       this._iframe.style.display   = '';
       this._textArea.style.display = "none";
       this.activateEditor();
@@ -1996,7 +1990,7 @@ HTMLArea.prototype.setMode = function(mode) {
 
   for (var i in this.plugins) {
     var plugin = this.plugins[i].instance;
-    if (typeof plugin.onMode == "function") plugin.onMode(mode);
+    if (plugin && typeof plugin.onMode == "function") plugin.onMode(mode);
   }
 };
 
@@ -2022,10 +2016,45 @@ HTMLArea.prototype.setFullHTML = function(html) {
     this._doc.write(html);
     this._doc.close();
     if(reac) this.activateEditor();
+    this.setEditorEvents();
     return true;
   }
 };
 
+HTMLArea.prototype.setEditorEvents = function() {
+  var editor=this;
+  var doc=this._doc;
+  editor.whenDocReady(
+    function() {
+      // if we have multiple editors some bug in Mozilla makes some lose editing ability
+      HTMLArea._addEvents
+      (
+        doc,
+        ["mousedown"],
+        function() { editor.activateEditor(); return true; }
+      );
+
+      // intercept some events; for updating the toolbar & keyboard handlers
+      HTMLArea._addEvents
+        (doc, ["keydown", "keypress", "mousedown", "mouseup", "drag"],
+         function (event) {
+           return editor._editorEvent(HTMLArea.is_ie ? editor._iframe.contentWindow.event : event);
+         });
+
+      // check if any plugins have registered refresh handlers
+      for (var i in editor.plugins) {
+        var plugin = editor.plugins[i].instance;
+        HTMLArea.refreshPlugin(plugin);
+      };
+
+      // specific editor initialization
+      if(typeof editor._onGenerate == "function") {
+        editor._onGenerate();
+      }
+    }
+  );
+};
+  
 /***************************************************
  *  Category: PLUGINS
  ***************************************************/
@@ -2168,13 +2197,13 @@ HTMLArea.loadPlugins = function(plugins, callbackIfNotReady)
     setTimeout(function() { if(HTMLArea.loadPlugins(plugins, callbackIfNotReady)) callbackIfNotReady(); }, 150);
   }
   return retVal;
-}
+};
 
 // refresh plugin by calling onGenerate or onGenerateOnce method.
 HTMLArea.refreshPlugin = function(plugin) {
-  if (typeof plugin.onGenerate == "function")
+  if (plugin && typeof plugin.onGenerate == "function")
     plugin.onGenerate();
-  if (typeof plugin.onGenerateOnce == "function") {
+  if (plugin && typeof plugin.onGenerateOnce == "function") {
     plugin.onGenerateOnce();
     plugin.onGenerateOnce = null;
   }
@@ -2326,19 +2355,19 @@ HTMLArea.prototype._wordClean = function() {
 HTMLArea.prototype._clearFonts = function() {
   var D = this.getInnerHTML();
 
-  if(confirm('Would you like to clear font typefaces?'))
+  if(confirm(HTMLArea._lc("Would you like to clear font typefaces?")))
   {
     D = D.replace(/face="[^"]*"/gi, '');
     D = D.replace(/font-family:[^;}"']+;?/gi, '');
   }
 
-  if(confirm('Would you like to clear font sizes?'))
+  if(confirm(HTMLArea._lc("Would you like to clear font sizes?")))
   {
     D = D.replace(/size="[^"]*"/gi, '');
     D = D.replace(/font-size:[^;}"']+;?/gi, '');
   }
 
-  if(confirm('Would you like to clear font colours?'))
+  if(confirm(HTMLArea._lc("Would you like to clear font colours?")))
   {
     D = D.replace(/color="[^"]*"/gi, '');
     D = D.replace(/([^-])color:[^;}"']+;?/gi, '$1');
@@ -2348,12 +2377,12 @@ HTMLArea.prototype._clearFonts = function() {
   D = D.replace(/<(font|span)\s*>/gi, '');
   this.setHTML(D);
   this.updateToolbar();
-}
+};
 
 HTMLArea.prototype._splitBlock = function()
 {
-  this._doc.execCommand('formatblock', false, '<div>');
-}
+  this._doc.execCommand('formatblock', false, 'div');
+};
 
 HTMLArea.prototype.forceRedraw = function() {
   this._doc.body.style.visibility = "hidden";
@@ -2438,14 +2467,15 @@ HTMLArea.prototype.disableToolbar = function(except)
     {
       continue;
     }
+    if (typeof(btn.state) != 'function') continue;  // prevent iterating over wrong type
     btn.state("enabled", false);
   }
-}
+};
 
 HTMLArea.prototype.enableToolbar = function()
 {
   this.updateToolbar();
-}
+};
 
 if(!Array.prototype.contains)
 {
@@ -2458,7 +2488,7 @@ if(!Array.prototype.contains)
     }
 
     return false;
-  }
+  };
 }
 
 if(!Array.prototype.indexOf)
@@ -2472,7 +2502,7 @@ if(!Array.prototype.indexOf)
     }
 
     return null;
-  }
+  };
 }
 
 
@@ -2533,6 +2563,7 @@ HTMLArea.prototype.updateToolbar = function(noStatus) {
     var btn = this._toolbarObjects[i];
     var cmd = i;
     var inContext = true;
+    if (typeof(btn.state) != 'function') continue;  // prevent iterating over wrong type
     if (btn.context && !text) {
       inContext = false;
       var context = btn.context;
@@ -2614,7 +2645,10 @@ HTMLArea.prototype.updateToolbar = function(noStatus) {
         var blocks = [ ];
         for(var i in this.config['formatblock'])
         {
-          blocks[blocks.length] = this.config['formatblock'][i];
+          if (typeof(this.config['formatblock'][i]) == 'string')  // prevent iterating over wrong type
+          {
+            blocks[blocks.length] = this.config['formatblock'][i];
+          }
         }
 
         var deepestAncestor = this._getFirstAncestor(this._getSelection(), blocks);
@@ -2665,7 +2699,13 @@ HTMLArea.prototype.updateToolbar = function(noStatus) {
         default:
       cmd = cmd.replace(/(un)?orderedlist/i, "insert$1orderedlist");
       try {
+
+        // FIXME : Firefox rires alot of exception errors on this one, so to make the
+        // editor not show theese in the JS console I removed it for Firefox.
+        // Gogo or Niko, maby you could look at this one.
+        if(HTMLArea.is_ie){
         btn.state("active", (!text && doc.queryCommandState(cmd)));
+        }
       } catch (e) {}
     }
   }
@@ -2718,12 +2758,12 @@ HTMLArea.prototype.updateToolbar = function(noStatus) {
   // check if any plugins have registered refresh handlers
   for (var i in this.plugins) {
     var plugin = this.plugins[i].instance;
-    if (typeof plugin.onUpdateToolbar == "function")
+    if (plugin && typeof plugin.onUpdateToolbar == "function")
       plugin.onUpdateToolbar();
   }
 
 
-}
+};
 
 /** Returns a node after which we can insert other nodes, in the current
  * selection.  The selection is removed.  It splits a text node, if needed.
@@ -2782,7 +2822,19 @@ HTMLArea.prototype.getParentElement = function(sel) {
   var range = this._createRange(sel);
   if (HTMLArea.is_ie) {
     switch (sel.type) {
-        case "Text":
+        case "Text":         
+      // try to circumvent a bug in IE:
+      // the parent returned is not always the real parent element    
+      var parent = range.parentElement();
+      while (true)
+      {
+        var TestRange = range.duplicate();
+        TestRange.moveToElementText(parent);
+        if (TestRange.inRange(range)) break;
+        if ((parent.nodeType != 1) || (parent.tagName.toLowerCase() == 'body')) break;
+        parent = parent.parentElement;
+      };
+      return parent;
         case "None":
       // It seems that even for selection of type "None",
       // there _is_ a parent element and it's value is not
@@ -2863,7 +2915,7 @@ HTMLArea.prototype._getFirstAncestor = function(sel, types)
   }
 
   return null;
-}
+};
 
 /**
  * Returns the selected element, if any.  That is,
@@ -2941,7 +2993,7 @@ HTMLArea.prototype._activeElement = function(sel)
     }
     return null;
   }
-}
+};
 
 
 HTMLArea.prototype._selectionEmpty = function(sel)
@@ -2958,7 +3010,7 @@ HTMLArea.prototype._selectionEmpty = function(sel)
   }
 
   return true;
-}
+};
 
 HTMLArea.prototype._getAncestorBlock = function(sel)
 {
@@ -3004,7 +3056,7 @@ HTMLArea.prototype._getAncestorBlock = function(sel)
   }
 
   return null;
-}
+};
 
 HTMLArea.prototype._createImplicitBlock = function(type)
 {
@@ -3025,7 +3077,7 @@ HTMLArea.prototype._createImplicitBlock = function(type)
   // Expand UP
 
   // Expand DN
-}
+};
 
 HTMLArea.prototype._formatBlock = function(block_format)
 {
@@ -3125,7 +3177,7 @@ HTMLArea.prototype._formatBlock = function(block_format)
     }
   }
 
-}
+};
 
 // Selects the contents inside the given node
 HTMLArea.prototype.selectNodeContents = function(node, pos) {
@@ -3144,7 +3196,7 @@ HTMLArea.prototype.selectNodeContents = function(node, pos) {
     {
       range = this._doc.body.createTextRange();
       range.moveToElementText(node);
-      (collapsed) && range.collapse(pos);
+      //(collapsed) && range.collapse(pos);
     }
     range.select();
   } else {
@@ -3158,7 +3210,7 @@ HTMLArea.prototype.selectNodeContents = function(node, pos) {
     else
     {
       range.selectNodeContents(node);
-      (collapsed) && range.collapse(pos);
+      //(collapsed) && range.collapse(pos);
     }
     sel.removeAllRanges();
     sel.addRange(range);
@@ -3171,6 +3223,7 @@ HTMLArea.prototype.selectNodeContents = function(node, pos) {
 HTMLArea.prototype.insertHTML = function(html) {
   var sel = this._getSelection();
   var range = this._createRange(sel);
+  this.focusEditor();
   if (HTMLArea.is_ie) {
     range.pasteHTML(html);
   } else {
@@ -3222,10 +3275,8 @@ HTMLArea.prototype._createLink = function(link) {
   if (typeof link == "undefined") {
     link = this.getParentElement();
     if (link) {
-      if (/^img$/i.test(link.tagName))
+      while (link && !/^a$/i.test(link.tagName))
         link = link.parentNode;
-      if (!/^a$/i.test(link.tagName))
-        link = null;
     }
   }
   if (!link) {
@@ -3311,7 +3362,7 @@ HTMLArea.prototype._insertImage = function(image) {
       image = null;
   }
   if (image) outparam = {
-    f_base   : editor.config.baseURL,
+    f_base   : editor.config.baseHref,
     f_url    : HTMLArea.is_ie ? editor.stripBaseURL(image.src) : image.getAttribute("src"),
     f_alt    : image.alt,
     f_border : image.border,
@@ -3472,13 +3523,14 @@ HTMLArea.prototype.execCommand = function(cmdID, UI, param) {
       case "inserttable": this._insertTable(); break;
       case "insertimage": this._insertImage(); break;
       case "about"    : this._popupDialog(editor.config.URIs["about"], null, this); break;
-      case "showhelp" : window.open(this.config.helpURL, "ha_help"); break;
+      case "showhelp" : this._popupDialog(editor.config.URIs["help"], null, this); break;
 
       case "killword": this._wordClean(); break;
 
       case "cut":
       case "copy":
       case "paste":
+        // BEGIN Paul Baranowski, Campsite: Always do a popup for pasted text so we can filter it
         doPastePopup = false;
         try {
           this._doc.execCommand(cmdID, UI, param);
@@ -3496,7 +3548,8 @@ HTMLArea.prototype.execCommand = function(cmdID, UI, param) {
               editor.plugins['WordPaste'].instance._buttonPress(doPastePopup);
           }
         }
-      break;
+        // END Paul Baranowski changes
+    break;
       case "lefttoright":
       case "righttoleft":
     var dir = (cmdID == "righttoleft") ? "rtl" : "ltr";
@@ -3545,7 +3598,7 @@ HTMLArea.prototype._editorEvent = function(ev) {
     for (var i in editor.plugins)
     {
       var plugin = editor.plugins[i].instance;
-      if (typeof plugin.onKeyPress == "function")
+      if (plugin && typeof plugin.onKeyPress == "function")
         if (plugin.onKeyPress(ev))
           return false;
     }
@@ -3649,7 +3702,7 @@ HTMLArea.prototype._editorEvent = function(ev) {
         editor._unlinkOnUndo = true;
 
         return a;
-      }
+      };
 
       switch(ev.which)
       {
@@ -4072,7 +4125,7 @@ HTMLArea.prototype.scrollToElement = function(e)
     }
     this._iframe.contentWindow.scrollTo(left, top);
   }
-}
+};
 
 // retrieve the HTML
 HTMLArea.prototype.getHTML = function() {
@@ -4104,6 +4157,10 @@ HTMLArea.prototype.outwardHtml = function(html)
 {
   html = html.replace(/<(\/?)b(\s|>|\/)/ig, "<$1strong$2");
   html = html.replace(/<(\/?)i(\s|>|\/)/ig, "<$1em$2");
+  html = html.replace(/<(\/?)strike(\s|>|\/)/ig, "<$1del$2");
+  
+  // replace window.open to that any clicks won't open a popup in designMode
+  html = html.replace("onclick=\"try{if(document.designMode &amp;&amp; document.designMode == 'on') return false;}catch(e){} window.open(", "onclick=\"window.open(");
 
   // Figure out what our server name is, and how it's referenced
   var serverBase = location.href.replace(/(https?:\/\/[^\/]*)\/.*/, '$1') + '/';
@@ -4119,8 +4176,22 @@ HTMLArea.prototype.outwardHtml = function(html)
   html = this.outwardSpecialReplacements(html);
 
   html = this.fixRelativeLinks(html);
+
+  if(this.config.sevenBitClean)
+  {
+    html = html.replace(/[^ -~\r\n\t]/g, function(c){ return '&#'+c.charCodeAt(0)+';';});
+  }
+
+  // ticket:56, the "greesemonkey" plugin for Firefox adds this junk,
+  // so we strip it out.  Original submitter gave a plugin, but that's
+  // a bit much just for this IMHO - james
+  if(HTMLArea.is_gecko)
+  {
+    html = html.replace(/<script[\s]*src[\s]*=[\s]*['"]chrome:\/\/.*?["']>[\s]*<\/script>/ig, '');
+  }
+
   return html;
-}
+};
 
 HTMLArea.prototype.inwardHtml = function(html)
 {
@@ -4128,8 +4199,16 @@ HTMLArea.prototype.inwardHtml = function(html)
   // mozilla, this is the 21st century calling!
   if (HTMLArea.is_gecko) {
     html = html.replace(/<(\/?)strong(\s|>|\/)/ig, "<$1b$2");
-    html = html.replace(/<(\/?)em(\s|>|\/)/ig, "<$1i$2");
+    html = html.replace(/<(\/?)em(\s|>|\/)/ig, "<$1i$2");    
   }
+  
+  // Both IE and Gecko use strike instead of del (#523)
+  html = html.replace(/<(\/?)del(\s|>|\/)/ig, "<$1strike$2");
+ 
+
+  // replace window.open to that any clicks won't open a popup in designMode
+  html = html.replace("onclick=\"window.open(", "onclick=\"try{if(document.designMode &amp;&amp; document.designMode == 'on') return false;}catch(e){} window.open(");
+
   html = this.inwardSpecialReplacements(html);
 
   // For IE's sake, make any URLs that are semi-absolute (="/....") to be
@@ -4139,7 +4218,7 @@ HTMLArea.prototype.inwardHtml = function(html)
 
   html = this.fixRelativeLinks(html);
   return html;
-}
+};
 
 HTMLArea.prototype.outwardSpecialReplacements = function(html)
 {
@@ -4147,13 +4226,14 @@ HTMLArea.prototype.outwardSpecialReplacements = function(html)
   {
     var from = this.config.specialReplacements[i];
     var to   = i;
+    if (typeof(from.replace) != 'function' || typeof(to.replace) != 'function') continue;  // prevent iterating over wrong type    
     // alert('out : ' + from + '=>' + to);
     var reg = new RegExp(from.replace(HTMLArea.RE_Specials, '\\$1'), 'g');
     html = html.replace(reg, to.replace(/\$/g, '$$$$'));
     //html = html.replace(from, to);
   }
   return html;
-}
+};
 
 HTMLArea.prototype.inwardSpecialReplacements = function(html)
 {
@@ -4162,6 +4242,8 @@ HTMLArea.prototype.inwardSpecialReplacements = function(html)
   {
     var from = i;
     var to   = this.config.specialReplacements[i];
+
+    if (typeof(from.replace) != 'function' || typeof(to.replace) != 'function') continue;  // prevent iterating over wrong type
     // alert('in : ' + from + '=>' + to);
     //
     // html = html.replace(reg, to);
@@ -4170,7 +4252,7 @@ HTMLArea.prototype.inwardSpecialReplacements = function(html)
     html = html.replace(reg, to.replace(/\$/g, '$$$$')); // IE uses doubled dollar signs to escape backrefs, also beware that IE also implements $& $_ and $' like perl.
   }
   return html;
-}
+};
 
 
 HTMLArea.prototype.fixRelativeLinks = function(html)
@@ -4178,7 +4260,7 @@ HTMLArea.prototype.fixRelativeLinks = function(html)
 
   if(typeof this.config.stripSelfNamedAnchors != 'undefined' && this.config.stripSelfNamedAnchors)
   {
-    var stripRe = new RegExp(document.location.href.replace(HTMLArea.RE_Specials, '\\$1') + '(#.*)', 'g');
+    var stripRe = new RegExp(document.location.href.replace(HTMLArea.RE_Specials, '\\$1') + '(#[^\'" ]*)', 'g');
     html = html.replace(stripRe, '$1');
   }
 
@@ -4209,7 +4291,7 @@ HTMLArea.prototype.fixRelativeLinks = function(html)
   }
 
   return html;
-}
+};
 
 // retrieve the HTML (fastest version, but uses innerHTML)
 HTMLArea.prototype.getInnerHTML = function() {
@@ -4235,34 +4317,15 @@ HTMLArea.prototype.getInnerHTML = function() {
 
 // completely change the HTML inside
 HTMLArea.prototype.setHTML = function(html) {
-  switch (this._editMode)
+  if (!this.config.fullPage)
   {
-    case "wysiwyg"  :
-    {
-      if (!this.config.fullPage)
-      {
-        this._doc.body.innerHTML = html;
-      }
-      else
-      {
-        this._doc.setFullHTML(html);
-      }
-    }
-    break;
-
-    case "textmode" :
-    {
-      this._textArea.value = html;
-    }
-    break;
-
-    default	        :
-    {
-      alert("Mode <" + mode + "> not defined!");
-    }
-    break;
+    this._doc.body.innerHTML = html;
   }
-  return false;
+  else
+  {
+    this.setFullHTML(html);
+  }
+  this._textArea.value = html;
 };
 
 // sets the given doctype (useful when config.fullPage is true)
@@ -4359,35 +4422,47 @@ HTMLArea.flushEvents = function()
   var e = null;
   while(e = HTMLArea._eventFlushers.pop())
   {
-    if(e.length == 3)
+    try
     {
-      HTMLArea._removeEvent(e[0], e[1], e[2]);
-      x++;
+      if(e.length == 3)
+      {
+        HTMLArea._removeEvent(e[0], e[1], e[2]);
+        x++;
+      }
+      else if (e.length == 2)
+      {
+        e[0]['on' + e[1]] = null;
+        e[0]._xinha_dom0Events[e[1]] = null;
+        x++;
+      }
     }
-    else if (e.length == 2)
+    catch(e)
     {
-      e[0]['on' + e[1]] = null;
-      e[0]._xinha_dom0Events[e[1]] = null;
-      x++;
+      // Do Nothing
     }
   }
-
-  if(document.all)
-  {
-    for(var i = 0; i < document.all.length; i++)
+  
+  /* 
+    // This code is very agressive, and incredibly slow in IE, so I've disabled it.
+    
+    if(document.all)
     {
-      for(var j in document.all[i])
+      for(var i = 0; i < document.all.length; i++)
       {
-        if(/^on/.test(j) && typeof document.all[i][j] == 'function')
+        for(var j in document.all[i])
         {
-          document.all[i][j] = null;
-          x++;
+          if(/^on/.test(j) && typeof document.all[i][j] == 'function')
+          {
+            document.all[i][j] = null;
+            x++;
+          }
         }
       }
     }
-  }
-  alert('Flushed ' + x + ' events.');
-}
+  */
+  
+  // alert('Flushed ' + x + ' events.');
+};
 
 HTMLArea._addEvent = function(el, evname, func) {
   if (HTMLArea.is_ie) {
@@ -4420,8 +4495,10 @@ HTMLArea._removeEvents = function(el, evs, func) {
 
 HTMLArea._stopEvent = function(ev) {
   if (HTMLArea.is_ie) {
-    ev.cancelBubble = true;
-    ev.returnValue = false;
+    try{
+      ev.cancelBubble = true;
+      ev.returnValue = false;
+    } catch(e){}
   } else {
     ev.preventDefault();
     ev.stopPropagation();
@@ -4448,7 +4525,7 @@ HTMLArea.addDom0Event = function(el, ev, fn)
 {
   HTMLArea._prepareForDom0Events(el, ev);
   el._xinha_dom0Events[ev].unshift(fn);
-}
+};
 
 
 /**
@@ -4461,7 +4538,7 @@ HTMLArea.prependDom0Event = function(el, ev, fn)
 {
   HTMLArea._prepareForDom0Events(el, ev);
   el._xinha_dom0Events[ev].push(fn);
-}
+};
 
 /**
  * Prepares an element to receive more than one DOM-0 event handler
@@ -4470,7 +4547,11 @@ HTMLArea.prependDom0Event = function(el, ev, fn)
 HTMLArea._prepareForDom0Events = function(el, ev)
 {
   // Create a structure to hold our lists of event handlers
-  if(typeof el._xinha_dom0Events == 'undefined')     el._xinha_dom0Events = { };
+  if(typeof el._xinha_dom0Events == 'undefined')
+  {
+    el._xinha_dom0Events = { };
+    HTMLArea.freeLater(el, '_xinha_dom0Events');
+  }
 
   // Create a list of handlers for this event type
   if(typeof el._xinha_dom0Events[ev] == 'undefined')
@@ -4502,21 +4583,22 @@ HTMLArea._prepareForDom0Events = function(el, ev)
         el._xinha_tempEventHandler = null;
       }
       return allOK;
-    }
+    };
 
     HTMLArea._eventFlushers.push([el, ev]);
   }
-}
+};
 
 HTMLArea.prototype.notifyOn = function(ev, fn)
 {
   if(typeof this._notifyListeners[ev] == 'undefined')
   {
     this._notifyListeners[ev] = [ ];
+    HTMLArea.freeLater(this, '_notifyListeners');
   }
 
   this._notifyListeners[ev].push(fn);
-}
+};
 
 HTMLArea.prototype.notifyOf = function(ev, args)
 {
@@ -4529,7 +4611,7 @@ HTMLArea.prototype.notifyOf = function(ev, args)
       this._notifyListeners[ev][i](ev, args);
     }
   }
-}
+};
 
 
 HTMLArea._removeClass = function(el, className) {
@@ -4576,9 +4658,9 @@ HTMLArea._paraContainerTags = " body td th caption fieldset div";
 HTMLArea.isParaContainer = function(el)
 {
   return el && el.nodeType == 1 && (HTMLArea._paraContainerTags.indexOf(" " + el.tagName.toLowerCase() + " ") != -1);
-}
+};
 
-HTMLArea._closingTags = " head script style div span tr td tbody table em strong b i code cite dfn abbr acronym font a title textarea select form ";
+HTMLArea._closingTags = " head script style div span tr td tbody table em strong b i strike code cite dfn abbr acronym font a title textarea select form ";
 HTMLArea.needsClosingTag = function(el) {
   return el && el.nodeType == 1 && (HTMLArea._closingTags.indexOf(" " + el.tagName.toLowerCase() + " ") != -1);
 };
@@ -4608,7 +4690,7 @@ HTMLArea.getHTML = function(root, outputRoot, editor){
         alert(HTMLArea._lc('Your Document is not well formed. Check JavaScript console for details.'));
         return editor._iframe.contentWindow.document.body.innerHTML;
     }
-}
+};
 
 HTMLArea.getHTMLWrapper = function(root, outputRoot, editor, indent) {
   var html = "";
@@ -4653,8 +4735,6 @@ HTMLArea.getHTMLWrapper = function(root, outputRoot, editor, indent) {
     var closed;
     var i;
     var root_tag = (root.nodeType == 1) ? root.tagName.toLowerCase() : '';
-    if (root_tag == 'br' && !root.nextSibling)
-      break;
     if (outputRoot)
       outputRoot = !(editor.config.htmlRemoveTags && editor.config.htmlRemoveTags.test(root_tag));
     if (HTMLArea.is_ie && root_tag == "head") {
@@ -4711,6 +4791,25 @@ HTMLArea.getHTMLWrapper = function(root, outputRoot, editor, indent) {
             if (HTMLArea.is_ie && (name == "href" || name == "src")) {
               value = editor.stripBaseURL(value);
             }
+
+            // High-ascii (8bit) characters in links seem to cause problems for some sites,
+            // while this seems to be consistent with RFC 3986 Section 2.4
+            // because these are not "reserved" characters, it does seem to
+            // cause links to international resources not to work.  See ticket:167
+
+            // IE always returns high-ascii characters un-encoded in links even if they
+            // were supplied as % codes (it unescapes them when we pul the value from the link).
+
+            // Hmmm, very strange if we use encodeURI here, or encodeURIComponent in place
+            // of escape below, then the encoding is wrong.  I mean, completely.
+            // Nothing like it should be at all.  Using escape seems to work though.
+            // It's in both browsers too, so either I'm doing something wrong, or
+            // something else is going on?
+
+            if(editor.config.only7BitPrintablesInURLs && (name == "href" || name == "src"))
+            {
+              value = value.replace(/([^!-~]+)/g, function(match) { return escape(match); });
+            }
           }
         } else { // IE fails to put style in attributes list
           // FIXME: cssText reported by IE is UPPERCASE
@@ -4724,7 +4823,14 @@ HTMLArea.getHTMLWrapper = function(root, outputRoot, editor, indent) {
         html += " " + name + '="' + HTMLArea.htmlEncode(value) + '"';
       }
       if (html != "") {
-        html += closed ? " />" : ">";
+        if(closed && root_tag=="p") {
+          //never use <p /> as empty paragraphs won't be visible
+          html += ">&nbsp;</p>";
+        } else if(closed) {
+          html += " />";
+        } else {
+          html += ">";
+        }
       }
     }
     var containsBlock = false;
@@ -4748,13 +4854,15 @@ HTMLArea.getHTMLWrapper = function(root, outputRoot, editor, indent) {
   return html;
 };
 
-HTMLArea.prototype.stripBaseURL = function(string) {
-  var baseurl = this.config.baseURL;
+/** @see getHTMLWrapper (search for "value = a.nodeValue;") */
 
-  // strip to last directory in case baseurl points to a file
-  baseurl = baseurl.replace(/[^\/]+$/, '');
-  var basere = new RegExp(baseurl);
-  string = string.replace(basere, "");
+HTMLArea.prototype.stripBaseURL = function(string)
+{
+  if(this.config.baseHref==null || !this.config.stripBaseHref)
+  {
+    return(string);
+  }
+  var baseurl = this.config.baseHref;
 
   // strip host-part of URL which is added by MSIE to links relative to server root
   baseurl = baseurl.replace(/^(https?:\/\/[^\/]+)(.*)$/, '$1');
@@ -4905,7 +5013,7 @@ HTMLArea.prototype._toggleBorders = function()
    }
   }
   return true;
-}
+};
 
 
 HTMLArea.addClasses = function(el, classes)
@@ -4931,7 +5039,7 @@ HTMLArea.addClasses = function(el, classes)
       }
       el.className = thiers.join(' ').trim();
     }
-  }
+  };
 
 HTMLArea.removeClasses = function(el, classes)
 {
@@ -4955,7 +5063,7 @@ HTMLArea.removeClasses = function(el, classes)
     }
   }
   return new_classes.join(' ');
-}
+};
 
 /** Alias these for convenience */
 HTMLArea.addClass       = HTMLArea._addClass;
@@ -4998,7 +5106,7 @@ HTMLArea._postback = function(url, data, handler)
         alert('An error has occurred: ' + req.statusText);
       }
     }
-  }
+  };
 
   req.onreadystatechange = callBack;
 
@@ -5010,7 +5118,7 @@ HTMLArea._postback = function(url, data, handler)
   );
   //alert(content);
   req.send(content);
-}
+};
 
 HTMLArea._getback = function(url, handler)
 {
@@ -5037,12 +5145,12 @@ HTMLArea._getback = function(url, handler)
         alert('An error has occurred: ' + req.statusText);
       }
     }
-  }
+  };
 
   req.onreadystatechange = callBack;
   req.open('GET', url, true);
   req.send(null);
-}
+};
 
 HTMLArea._geturlcontent = function(url)
 {
@@ -5068,7 +5176,7 @@ HTMLArea._geturlcontent = function(url)
     return '';
   }
 
-}
+};
 
 /**
  * Unless somebody already has, make a little function to debug things
@@ -5108,7 +5216,7 @@ HTMLArea.arrayContainsArray = function(a1, a2)
     }
   }
   return all_found;
-}
+};
 
 HTMLArea.arrayFilter = function(a1, filterfn)
 {
@@ -5120,13 +5228,13 @@ HTMLArea.arrayFilter = function(a1, filterfn)
   }
 
   return new_a;
-}
+};
 
 HTMLArea.uniq_count = 0;
 HTMLArea.uniq = function(prefix)
 {
   return prefix + HTMLArea.uniq_count++;
-}
+};
 
 /** New language handling functions **/
 
@@ -5168,51 +5276,92 @@ HTMLArea._loadlang = function(context)
   }
 
   return lang;
-}
+};
 
 /** Return a localised string.
  * @param string    English language string
  * @param context   Case sensitive context name, eg 'HTMLArea' (default), 'TableOperations'...
+ * @param replace   Replace $variables in String, eg {foo: 'replaceText'} ($foo in string will be replaced)
  */
-HTMLArea._lc = function(string, context)
+HTMLArea._lc = function(string, context, replace)
 {
+  var ret;
   if(_editor_lang == "en")
   {
-    return string;
-  }
-
-  if(typeof HTMLArea._lc_catalog == 'undefined')
-  {
-    HTMLArea._lc_catalog = [ ];
-  }
-
-  if(typeof context == 'undefined')
-  {
-    context = 'HTMLArea';
-  }
-
-  if(typeof HTMLArea._lc_catalog[context] == 'undefined')
-  {
-    HTMLArea._lc_catalog[context] = HTMLArea._loadlang(context);
-  }
-
-  if(typeof HTMLArea._lc_catalog[context][string] == 'undefined')
-  {
-    if(context=='HTMLArea')
-    {
-      return string; // Indicate it's untranslated
-    }
-    else
-    {
-      //if string is not found and context is not HTMLArea try if it is in HTMLArea
-      return HTMLArea._lc(string, 'HTMLArea');
+    if(typeof string == 'object' && string.string) {
+        ret = string.string;
+    } else {
+        ret = string;
     }
   }
   else
   {
-    return HTMLArea._lc_catalog[context][string];
+    if(typeof HTMLArea._lc_catalog == 'undefined')
+    {
+      HTMLArea._lc_catalog = [ ];
+    }
+
+    if(typeof context == 'undefined')
+    {
+      context = 'HTMLArea';
+    }
+
+    if(typeof HTMLArea._lc_catalog[context] == 'undefined')
+    {
+      HTMLArea._lc_catalog[context] = HTMLArea._loadlang(context);
+    }
+
+    var key;
+    if(typeof string == 'object' && string.key)
+    {
+      key = string.key;
+    }
+    else if(typeof string == 'object' && string.string)
+    {
+      key = string.string;
+    }
+    else
+    {
+      key = string;
+    }
+
+    if(typeof HTMLArea._lc_catalog[context][key] == 'undefined')
+    {
+      if(context=='HTMLArea')
+      {
+        // Indicate it's untranslated
+        if(typeof string == 'object' && string.string) {
+          ret = string.string;
+        } else {
+          ret = string;
+        }
+      }
+      else
+      {
+        //if string is not found and context is not HTMLArea try if it is in HTMLArea
+        return HTMLArea._lc(string, 'HTMLArea', replace);
+      }
+    }
+    else
+    {
+      ret = HTMLArea._lc_catalog[context][key];
+    }
   }
-}
+
+  if(typeof string == 'object' && string.replace)
+  {
+    replace = string.replace;
+  }
+  if(typeof replace != "undefined")
+  {
+    for(var i in replace)
+    {
+      ret = ret.replace('$'+i, replace[i]);
+    }
+  }
+
+  return ret;
+};
 
 HTMLArea.hasDisplayedChildren = function(el)
 {
@@ -5228,7 +5377,7 @@ HTMLArea.hasDisplayedChildren = function(el)
     }
   }
   return false;
-}
+};
 
 
 HTMLArea._loadback = function(src, callback)
@@ -5255,7 +5404,7 @@ HTMLArea.collectionToArray = function(collection)
     array.push(collection.item(i));
   }
   return array;
-}
+};
 
 if(!Array.prototype.append)
 {
@@ -5266,7 +5415,7 @@ if(!Array.prototype.append)
       this.push(a[i]);
     }
     return this;
-  }
+  };
 }
 
 HTMLArea.makeEditors = function(editor_names, default_config, plugin_names)
@@ -5284,7 +5433,7 @@ HTMLArea.makeEditors = function(editor_names, default_config, plugin_names)
     editors[editor_names[x]] = editor;
   }
   return editors;
-}
+};
 
 HTMLArea.startEditors = function(editors)
 {
@@ -5292,7 +5441,7 @@ HTMLArea.startEditors = function(editors)
   {
     if(editors[i].generate) editors[i].generate();
   }
-}
+};
 
 HTMLArea.prototype.registerPlugins = function(plugin_names) {
   if(plugin_names)
@@ -5302,7 +5451,7 @@ HTMLArea.prototype.registerPlugins = function(plugin_names) {
       this.registerPlugin(eval(plugin_names[i]));
     }
   }
-}
+};
 
 /** Utility function to base64_encode some arbitrary data, uses the builtin btoa() if it exists (Moz) */
 
@@ -5335,7 +5484,7 @@ HTMLArea.base64_encode =  function(input)
   } while (i < input.length);
 
   return output;
-}
+};
 
 /** Utility function to base64_decode some arbitrary data, uses the builtin atob() if it exists (Moz) */
 
@@ -5371,7 +5520,7 @@ HTMLArea.base64_decode =function(input)
   } while (i < input.length);
 
   return output;
-}
+};
 
 HTMLArea.removeFromParent = function(el)
 {
@@ -5379,7 +5528,7 @@ HTMLArea.removeFromParent = function(el)
   var pN = el.parentNode;
   pN.removeChild(el);
   return el;
-}
+};
 
 HTMLArea.hasParentNode = function(el)
 {
@@ -5395,7 +5544,7 @@ HTMLArea.hasParentNode = function(el)
   }
 
   return false;
-}
+};
 
 HTMLArea.getOuterHTML = function(element)
 {
@@ -5407,7 +5556,42 @@ HTMLArea.getOuterHTML = function(element)
   {
     return (new XMLSerializer()).serializeToString(element);
   }
-}
+};
 
+HTMLArea.toFree = [ ];
+HTMLArea.freeLater = function(obj,prop)
+{
+  HTMLArea.toFree.push({o:obj,p:prop});
+};
+
+HTMLArea.free = function(obj, prop)
+{
+  if(obj && !prop)
+  {
+    for(var p in obj)
+    {
+      HTMLArea.free(obj, p);
+    }
+  }
+  else if (obj)
+  {
+    try{ obj[prop] = null; } catch(e){ }
+  }
+};
+
+/** IE's Garbage Collector is broken very badly.  We will do our best to 
+ *   do it's job for it, but we can't be perfect.
+ */
+
+HTMLArea.collectGarbageForIE = function() 
+{  
+  HTMLArea.flushEvents();   
+  for(var x = 0; x < HTMLArea.toFree.length; x++)
+  {
+    if(!HTMLArea.toFree[x].o) alert("What is " + x + ' ' + HTMLArea.toFree[x].o);
+    HTMLArea.free(HTMLArea.toFree[x].o, HTMLArea.toFree[x].p);
+  }
+};
 
 HTMLArea.init();
+HTMLArea.addDom0Event(window,'unload',HTMLArea.collectGarbageForIE);

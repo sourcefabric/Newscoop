@@ -172,7 +172,7 @@
   else
   {
     ?>
-    alert(this._lc('You don\'t have anything to tidy!'));
+    alert(this._lc("You don't have anything to tidy!"));
     <?php
   }
 

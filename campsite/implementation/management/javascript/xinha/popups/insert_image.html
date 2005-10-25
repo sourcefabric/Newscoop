@@ -10,9 +10,17 @@
 
 window.resizeTo(400, 100);
 
+HTMLArea = window.opener.HTMLArea;
+function i18n(str) {
+  return (HTMLArea._lc(str, 'HTMLArea'));
+};
+
 function Init() {
   __dlg_translate('HTMLArea');
   __dlg_init();
+  // Make sure the translated string appears in the drop down. (for gecko)
+  document.getElementById("f_align").selectedIndex = 1;
+  document.getElementById("f_align").selectedIndex = 5;
   var param = window.dialogArguments;
   if (param) {
       document.getElementById("f_url").value = param["f_url"];
@@ -28,7 +36,7 @@ function Init() {
 
 function onOK() {
   var required = {
-    "f_url": "You must enter the URL"
+    "f_url": i18n("You must enter the URL")
   };
   for (var i in required) {
     var el = document.getElementById(i);
@@ -60,7 +68,7 @@ function onPreview() {
   var f_url = document.getElementById("f_url");
   var url = f_url.value;
   if (!url) {
-    alert("You have to enter an URL first");
+    alert(i18n("You must enter the URL"));
     f_url.focus();
     return false;
   }
@@ -71,7 +79,7 @@ function onPreview() {
 
 </head>
 
-<body onload="Init()">
+<body class="dialog" onload="Init()">
 
 <div class="title">Insert Image</div>
 <!--- new stuff --->
@@ -150,7 +158,7 @@ title="Vertical padding" />
 <table width="100%" style="margin-bottom: 0.2em">
  <tr>
   <td valign="bottom">
-    Image Preview:<br />
+    <div class="fr">Image Preview:</div>
     <iframe name="ipreview" id="ipreview" frameborder="0" style="border : 1px solid gray;" height="200" width="300" src=""></iframe>
   </td>
   <td valign="bottom" style="text-align: right">

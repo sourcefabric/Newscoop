@@ -1,17 +1,6 @@
 // I18N constants
-
 // LANG: "he", ENCODING: UTF-8
 // Author: Liron Newman, http://www.eesh.net, <plastish at ultinet dot org>
-
-// FOR TRANSLATORS:
-//
-//   1. PLEASE PUT YOUR CONTACT INFO IN THE ABOVE LINE
-//      (at least a valid email address)
-//
-//   2. PLEASE TRY TO USE UTF-8 FOR ENCODING;
-//      (if this is not possible, please include a comment
-//       that states what encoding is necessary.)
-
 {
   "Cut": "גזור",
   "Copy": "העתק",
@@ -34,8 +23,7 @@
   "Justify Right": "ישור לימין",
   "Justify Full": "ישור לשורה מלאה",
   "Make lin_k...": "צור קי_שור...",
-  "Remove the": "הסר את אלמנט ה-",
-  "Element...": "...",
+  "Remove the $elem Element...": "הסר את אלמנט ה- $elem...",
   "Please confirm that you want to remove this element:": "אנא אשר שברצונך להסיר את האלמנט הזה:",
   "Remove this node from the document": "הסרה של node זה מהמסמך",
   "How did you get here? (Please report!)": "איך הגעת הנה? (אנא דווח!)",
@@ -56,4 +44,4 @@
   "Insert a new column after the current one": "הוספת טור חדש אחרי הנוכחי",
   "Delete the current column": "מחיקת את הטור הנוכחי",
   "Create a link": "יצירת קישור"
-}
+};

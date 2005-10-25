@@ -1,7 +1,6 @@
 // I18N constants
 // LANG: "no", ENCODING: UTF-8
 // translated: Kim Steinhaug, http://www.steinhaug.com/, kim@steinhaug.com
-
 {
   "Please confirm that you want to open this link": "Ønsker du å åpne denne lenken",
   "Cancel": "Avbryt",
@@ -24,4 +23,4 @@
   "Spell-check": "Stavekontroll",
   "Suggestions": "Forslag",
   "One moment...": "Et øyeblikk..."
-}
+};

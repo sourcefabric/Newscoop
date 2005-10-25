@@ -86,3 +86,12 @@
   background-repeat: repeat-x;
   background-color: #f7f8fd;
 }
+.dialog {
+  background-color:#f7f8fd;
+}
+.dialog .title {
+  background-image: url(button-background.png);
+}  
+.dialog button{
+  background-image: url(button-background.png);
+}

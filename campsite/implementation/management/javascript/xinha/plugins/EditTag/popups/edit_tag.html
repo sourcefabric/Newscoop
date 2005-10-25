@@ -6,20 +6,13 @@
   <script type="text/javascript" src="../../../popups/popup.js"></script>
 <script language="javascript">
 
-function _CloseOnEsc() {
-  if ( event.keyCode == 27 ) {
-    window.close();
-    return;
-  }
-}
-
 function Init() {
   __dlg_translate("EditTag");
   __dlg_init();
   window.resizeTo(600, 450);
-  document.body.onkeypress = _CloseOnEsc;
   var param = window.dialogArguments;
   document.getElementById("TAG").value = param["content"];
+  document.getElementById("TAG").focus();
 }
 
 function onCancel() {
@@ -34,7 +27,7 @@ function onOK() {
 </script>
 </head>
 
-<body onLoad="Init();">
+<body class="dialog" onLoad="Init();">
 <div class="title">Tag Editor</div>
 <textarea name="TAG" id="TAG" cols=22 rows=5 style="width: 100%; height: 315px; margin-top: 8px; margin-bottom: 4px; font-family: monospace; font-size: 11px;"></textarea>
 <div id="buttons">

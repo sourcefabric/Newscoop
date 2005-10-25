@@ -10,17 +10,27 @@
 
 window.resizeTo(400, 100);
 
+HTMLArea = window.opener.HTMLArea;
+function i18n(str) {
+  return (HTMLArea._lc(str, 'HTMLArea'));
+};
+
 function Init() {
   HTMLArea = window.opener.HTMLArea; // load the HTMLArea plugin and lang file
   __dlg_translate('HTMLArea');
   __dlg_init();
+  // Make sure the translated string appears in the drop down. (for gecko)
+  document.getElementById("f_unit").selectedIndex = 1;
+  document.getElementById("f_unit").selectedIndex = 0;
+  document.getElementById("f_align").selectedIndex = 1;
+  document.getElementById("f_align").selectedIndex = 0;
   document.getElementById("f_rows").focus();
 };
 
 function onOK() {
   var required = {
-    "f_rows": "You must enter a number of rows",
-    "f_cols": "You must enter a number of columns"
+    "f_rows": i18n("You must enter a number of rows"),
+    "f_cols": i18n("You must enter a number of columns")
   };
   for (var i in required) {
     var el = document.getElementById(i);
@@ -51,7 +61,7 @@ function onCancel() {
 
 </head>
 
-<body onload="Init()">
+<body class="dialog" onload="Init()">
 
 <div class="title">Insert Table</div>
 

@@ -2,4 +2,4 @@
 // LANG: "fr", ENCODING: UTF-8
 {
   "Chars": "Caractères"
-}
+};

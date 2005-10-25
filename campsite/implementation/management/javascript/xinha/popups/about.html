@@ -56,6 +56,7 @@ function initDocument() {
     "<td>License</td>" +
     "</tr></thead><tbody>";
   for (var i in editor.plugins) {
+    if (typeof info != 'object' || !info.name || typeof info.name !='string')   continue;
     var info = editor.plugins[i];
     html += "<tr><td>" + info.name + " v" + info.version + "</td>" +
             "<td><a href='" + info.developer_url + "' target='_blank' title='Visit developer website'>" +

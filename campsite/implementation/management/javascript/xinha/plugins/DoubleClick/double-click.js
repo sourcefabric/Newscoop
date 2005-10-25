@@ -67,4 +67,4 @@ DoubleClick.prototype.onDoubleClick = function(ev) {
 	if (this.editor.dblClickList[tagName] != undefined) {
 		this.editor.dblClickList[tagName][0](this.editor, target);
 	}
-}
+};

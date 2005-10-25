@@ -67,5 +67,4 @@ InsertWords.prototype.onSelect = function(editor, obj, context) {
 
 	// Reset the dropdown to it's label
 	elem.selectedIndex = 0;
-}
-
+};

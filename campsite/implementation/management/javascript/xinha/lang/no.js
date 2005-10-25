@@ -4,6 +4,7 @@
 
 // - translated by ses<ses@online.no>
 // Additional translations by Håvard Wigtil <havardw@extend.no>
+// Additional translations by Kim Steinhaug <kim@steinhaug.com>
 
 {
   "Bold": "Fet",
@@ -35,9 +36,12 @@
   "Redoes your last action": "Gjør om siste angring",
   "Cut selection": "Klipp ut område",
   "Copy selection": "Kopier område",
+  "Save as": "Lagre som",
   "Paste from clipboard": "Lim inn",
+  "Remove formatting": "Fjern formattering",
   "Direction left to right": "Fra venstre mot høyre",
   "Direction right to left": "Fra høyre mot venstre",
+  "Insert/Overwrite": "Sett inn/Overskriv",
   "OK": "OK",
   "Cancel": "Avbryt",
   "Path": "Tekstvelger",
@@ -53,5 +57,13 @@
   "Title (tooltip):": "Tittel (tooltip):",
   "Top frame (_top)": "Toppramme (_top)",
   "URL:": "Adresse:",
-  "You must enter the URL where this link points to": "Du må skrive inn en adresse som denne lenken skal peke til"
-}
+  "You must enter the URL where this link points to": "Du må skrive inn en adresse som denne lenken skal peke til",
+  "Clear Inline Font Specifications": "Fjerne inline font spesifikasjoner",
+  "Would you like to clear font typefaces?": "Ønsker du å fjerne skrifttyper",
+  "Would you like to clear font sizes?": "Ønsker du å fjerne skrift størrelser",
+  "Would you like to clear font colours?": "Ønsker du å fjerne farger på skriften",
+  "Print document": "Skriv ut dokumentet",
+  "Split Block": "Seperasjonsblokk",
+  "Toggle Borders": "Skru av/på hjelpelinjer på tabeller",
+  "Select all": "Merk alt"
+};

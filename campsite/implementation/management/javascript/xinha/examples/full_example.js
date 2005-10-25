@@ -5,9 +5,9 @@
     --  from full_example-body.html.
     --
     --  $HeadURL: http://svn.xinha.python-hosting.com/trunk/examples/full_example.js $
-    --  $LastChangedDate: 2005-05-10 19:02:00 +1200 (Tue, 10 May 2005) $
-    --  $LastChangedRevision: 142 $
-    --  $LastChangedBy: niko $
+    --  $LastChangedDate$
+    --  $LastChangedRevision: 359 $
+    --  $LastChangedBy$
     --------------------------------------------------------------------------*/
 
   var num     = 1;
@@ -15,6 +15,7 @@
   {
     var f = window.parent.menu.document.forms[0];
     _editor_lang = f.lang.value;
+    _editor_skin = f.skin.value;
     num = parseInt(f.num.value);
     if(isNaN(num))
     {
@@ -83,6 +84,28 @@
       }
 
     }
+    
+    if (typeof ListType != 'undefined')
+    {
+      if(window.parent && window.parent != window)
+      {
+        var f = window.parent.menu.document.forms[0];
+        config.ListType.mode = f.elements['ListTypeMode'].options[f.elements['ListTypeMode'].selectedIndex].value;
+      }
+    }
+
+    if (typeof CharacterMap != 'undefined')
+    {
+      if(window.parent && window.parent != window)
+      {
+        var f = window.parent.menu.document.forms[0];
+        config.CharacterMap.mode = f.elements['CharacterMapMode'].options[f.elements['CharacterMapMode'].selectedIndex].value;
+      }
+    }
+    
+    if(typeof Filter != 'undefined') {
+      xinha_config.Filters = ["Word", "Paragraph"]
+    }
 
     return config;
   }
@@ -110,3 +133,22 @@
     div.appendChild(txta);
     f.appendChild(div);
   }
+  
+  //check submitted values
+  var submit = document.createElement('input');
+  submit.type = "submit";
+  submit.id = "submit";
+  submit.value = "submit";
+  f.appendChild(submit);
+  
+  var _oldSubmitHandler = null;
+  if (document.forms[0].onsubmit != null) {
+    _oldSubmitHandler = document.forms[0].onsubmit;
+  }
+  function frame_onSubmit(){
+    alert(document.getElementById("myTextarea0").value);
+    if (_oldSubmitHandler != null) {
+      _oldSubmitHandler();
+    }
+  }
+  document.forms[0].onsubmit = frame_onSubmit;

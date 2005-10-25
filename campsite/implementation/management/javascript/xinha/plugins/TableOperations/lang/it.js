@@ -1,8 +1,6 @@
 // I18N constants
-
 // LANG: "it", ENCODING: UTF-8
 // Author: Fabio Rotondo <fabio@rotondo.it>
-
 {
   "Align": "Allinea",
   "All four sides": "Tutti e quattro i lati",
@@ -78,4 +76,4 @@
   "HTMLArea cowardly refuses to delete the last row in table.": "HTMLArea si rifiuta codardamente di cancellare l'ultima riga nella tabella.",
   "percent": "percento",
   "pixels": "pixels"
-}
+};

@@ -6,7 +6,7 @@
 // Distributed under the same terms as HTMLArea itself.
 // This notice MUST stay intact for use (see license.txt).
 //
-// $Id: spell-check-ui.js,v 1.2 2005/06/10 15:34:43 paul Exp $
+// $Id$
 
 // internationalization file was already loaded in parent ;-)
 var SpellChecker = window.opener.SpellChecker;
@@ -238,7 +238,7 @@ function initDocument() {
   }
   else
   {
-    document.getElementById("b_learn").parent.removeChild(document.getElementById("b_learn"));
+    document.getElementById("b_learn").parentNode.removeChild(document.getElementById("b_learn"));
   }
   document.getElementById("b_replall").onclick = replaceAllClicked;
   document.getElementById("b_ignore").onclick = ignoreClicked;
@@ -398,6 +398,28 @@ function finishedSpellChecking() {
       fixedWords.push(el);
     }
         }
+        
+  var dicts = doc.getElementById("HA-spellcheck-dictionaries");
+  if (dicts) {
+    dicts.parentNode.removeChild(dicts);
+    dicts = dicts.innerHTML.split(/,/);
+    var select = document.getElementById("v_dictionaries");
+    for (var i = select.length; --i >= 0;) {
+      select.remove(i);
+    }
+    var activeDictionary = document.getElementById("f_dictionary").value;
+    for (var i = 0; i < dicts.length; ++i) {
+      var txt = dicts[i];
+      var option = document.createElement("option");
+      if(txt == activeDictionary) {
+        option.selected = true;
+      }
+      option.value = txt;
+      option.appendChild(document.createTextNode(txt));
+      select.appendChild(option);
+    }
+  }
+        
   wrongWords = sps;
   if (sps.length == 0) {
     if (!modified) {
@@ -419,25 +441,5 @@ function finishedSpellChecking() {
       }
       return false;
     };
-  }
-  var dicts = doc.getElementById("HA-spellcheck-dictionaries");
-  if (dicts) {
-    dicts.parentNode.removeChild(dicts);
-    dicts = dicts.innerHTML.split(/,/);
-    var select = document.getElementById("v_dictionaries");
-    for (var i = select.length; --i >= 0;) {
-      select.remove(i);
-    }
-    var activeDictionary = document.getElementById("f_dictionary").value;
-    for (var i = 0; i < dicts.length; ++i) {
-      var txt = dicts[i];
-      var option = document.createElement("option");
-      if(txt == activeDictionary) {
-        option.selected = true;
-      }
-      option.value = txt;
-      option.appendChild(document.createTextNode(txt));
-      select.appendChild(option);
-    }
-  }
+  }  
 };

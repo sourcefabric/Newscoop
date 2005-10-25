@@ -4,4 +4,4 @@
   "Insert Anchor": "Insérer une ancre",
   "Anchor name": "Nom de l'ancre",
   "Delete": "Supprimer"
-}
+};

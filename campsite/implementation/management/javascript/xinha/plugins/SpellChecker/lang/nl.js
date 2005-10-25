@@ -1,18 +1,6 @@
 // I18N constants
-
 // LANG: "nl", ENCODING: UTF-8
-// Author: A.H van den Broek  http://www.kontaktfm.nl
-// Email : tonbroek@kontaktfm.nl
-
-// FOR TRANSLATORS:
-//
-//   1. PLEASE PUT YOUR CONTACT INFO IN THE ABOVE LINE
-//      (at least a valid email address)
-//
-//   2. PLEASE TRY TO USE UTF-8 FOR ENCODING;
-//      (if this is not possible, please include a comment
-//       that states what encoding is necessary.)
-
+// Author: A.H van den Broek  http://www.kontaktfm.nl, tonbroek@kontaktfm.nl
 {
   "Please confirm that you want to open this link": "Weet u zeker dat u deze link wilt openen?",
   "Cancel": "Annuleer",
@@ -36,4 +24,4 @@
   "Spell-check": "Spell-check",
   "Suggestions": "Suggestie",
   "One moment...": "Even wachten ;-)"
-}
+};

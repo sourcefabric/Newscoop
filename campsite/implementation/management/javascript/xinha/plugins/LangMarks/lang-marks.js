@@ -39,7 +39,7 @@ LangMarks._pluginInfo = {
 
 LangMarks.prototype._lc = function(string) {
     return HTMLArea._lc(string, 'LangMarks');
-}
+};
 
 LangMarks.prototype.onGenerate = function() {
   var style_id = "LM-style"
@@ -51,7 +51,7 @@ LangMarks.prototype.onGenerate = function() {
     style.href = _editor_url + 'plugins/LangMarks/lang-marks.css';
     this.editor._doc.getElementsByTagName("HEAD")[0].appendChild(style);
   }
-}
+};
 
 LangMarks.prototype.onSelect = function(editor, obj, context, updatecontextclass) {
 	var tbobj = editor._toolbarObjects[obj.id];

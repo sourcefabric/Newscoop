@@ -1,16 +1,12 @@
 // I18N constants
-
 // LANG: "de", ENCODING: UTF-8
-
 // translated: Raimund Meyer xinha@ray-of-light.org
-
-
 {
   "Cut": "Ausschneiden",
   "Copy": "Kopieren",
   "Paste": "Einfügen",
   "_Image Properties...": "Eigenschaften",
-  "Show the image properties dialog": "Fenster für die Bildoptionen anzeigen",  
+  "Show the image properties dialog": "Fenster für die Bildoptionen anzeigen",
   "_Modify Link...": "Link ändern",
   "Current URL is": "Aktuelle URL ist",
   "Chec_k Link...": "Link testen",
@@ -43,8 +39,7 @@
   "Justify Full": "Blocksatz",
   "Make lin_k...": "Link erstellen",
   "Create a link": "Link erstellen",
-  "Remove the": "Element",
-  "Element...": "entfernen",
+  "Remove the $elem Element...": "Element $elem entfernen...",
   "Please confirm that you want to remove this element:": "Wollen sie dieses Element wirklich entfernen?",
   "Remove this node from the document": "Dieses Element aus dem Dokument entfernen",
   "Insert paragraph before": "Absatz einfügen vor Position",
@@ -52,4 +47,4 @@
   "Insert paragraph after": "Absatz einfügen hinter Position",
   "Insert a paragraph after the current node": "Absatz einfügen hinter der aktuellen Position",
   "How did you get here? (Please report!)": "Wie sind Sie denn hier hin gekommen? (Please report!)"
-}
+};

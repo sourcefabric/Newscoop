@@ -17,14 +17,14 @@ HTMLArea.PanelDialog = function(editor, side, html, localizer)
     this._lc = function(string)
     {
       return HTMLArea._lc(string,localizer);
-    }
+    };
   }
   else
   {
     this._lc = function(string)
     {
       return string;
-    }
+    };
   }
 
   html = html.replace(/\[([a-z0-9_]+)\]/ig,
@@ -50,18 +50,18 @@ HTMLArea.PanelDialog = function(editor, side, html, localizer)
              );
 
   this.rootElem.innerHTML = html;
-}
+};
 
 HTMLArea.PanelDialog.prototype.show = function(values)
 {
   this.editor.showPanel(this.rootElem);
-}
+};
 
 HTMLArea.PanelDialog.prototype.hide = function()
 {
   this.editor.hidePanel(this.rootElem);
   return this.getValues();
-}
+};
 
 HTMLArea.PanelDialog.prototype.onresize   = HTMLArea.Dialog.prototype.onresize;
 

@@ -10,7 +10,7 @@
 // Version 3.0 developed by Mihai Bazon for InteractiveTools.
 //   http://dynarch.com/mishoo
 //
-// $Id: table-operations.js,v 1.3 2005/06/15 13:46:18 paul Exp $
+// $Id$
 
 // Object that will encapsulate all the table operations provided by
 // HTMLArea-3.0 (except "insert table" which is included in the main file)
@@ -22,7 +22,11 @@ function TableOperations(editor) {
 	var self = this;
 
 	// register the toolbar buttons provided by this plugin
+
+    // Paul Baranowski, Campsite: Removed linebreak
+	//var toolbar = ["linebreak"];
 	var toolbar = [];
+	
 	for (var i = 0; i < bl.length; ++i) {
 		var btn = bl[i];
 		if (!btn) {
@@ -37,9 +41,13 @@ function TableOperations(editor) {
 			toolbar.push(id);
 		}
 	}
-
+	
+	// Paul Baranowski, Campsite: Add the buttons differently
 	// Add the new buttons in the toolbar.
-	cfg.addToolbarElement(toolbar, "inserttable", 1);
+	//cfg.addToolbarElement(toolbar, "inserttable", 1);
+	
+	// add a new line in the toolbar
+	cfg.toolbar.push(toolbar);
 };
 
 TableOperations._pluginInfo = {
@@ -55,7 +63,7 @@ TableOperations._pluginInfo = {
 
 TableOperations.prototype._lc = function(string) {
     return HTMLArea._lc(string, 'TableOperations');
-}
+};
 
 /************************
  * UTILITIES
@@ -221,7 +229,7 @@ TableOperations.prototype.dialogTableProperties = function() {
   </tr> \
   <tr> \
     <td> \
-      <fieldset><legend>Frame and borders</legend> \
+      <fieldset><legend>" + HTMLArea._lc("Frame and borders", "TableOperations") + "</legend> \
         <table width='100%'> \
           <tr> \
             <td class='label'>" + HTMLArea._lc("Borders", "TableOperations") + ":</td> \
@@ -282,7 +290,7 @@ TableOperations.prototype.dialogRowCellProperties = function(cell) {
 	// this.editor.selectNodeContents(element);
 	// this.editor.updateToolbar();
 
-	var dialog = new PopupWin(this.editor, HTMLArea._lc(cell ? "Cell Properties" : "Row Properties", "TableOperations"), function(dialog, params) {
+	var dialog = new PopupWin(this.editor, cell ? HTMLArea._lc("Cell Properties", "TableOperations") : HTMLArea._lc("Row Properties", "TableOperations"), function(dialog, params) {
 		TableOperations.processStyle(params, element);
 		for (var i in params) {
       if(typeof params[i] == 'function') continue;
@@ -776,12 +784,20 @@ TableOperations.processStyle = function(params, element) {
 					ch = '\\"';
 				}
 				style.textAlign = '"' + ch + '"';
+			} else if (val == "-") {
+			    style.textAlign = "";
 			} else {
 				style.textAlign = val;
 			}
 			break;
 		    case "f_st_verticalAlign":
-			style.verticalAlign = val;
+		    element.vAlign = "";
+			if (val == "-") {
+			    style.verticalAlign = "";
+			    
+		    } else {
+			    style.verticalAlign = val;
+			}
 			break;
 		    case "f_st_float":
 			style.cssFloat = val;
@@ -922,7 +938,7 @@ TableOperations.createStyleLayoutFieldset = function(doc, editor, el) {
 	select.style.marginLeft = select.style.marginRight = "0.5em";
 	td.appendChild(select);
 	select.name = "f_st_textAlign";
-	options = ["Left", "Center", "Right", "Justify"];
+	options = ["Left", "Center", "Right", "Justify", "-"];
 	if (tagname == "td") {
 		options.push("Char");
 	}
@@ -937,7 +953,7 @@ TableOperations.createStyleLayoutFieldset = function(doc, editor, el) {
 		option = doc.createElement("option");
 		option.value = val;
 		option.innerHTML = HTMLArea._lc(Val, "TableOperations");
-		option.selected = (el.style.textAlign.toLowerCase() == val);
+		option.selected = ((el.style.textAlign.toLowerCase() == val) || (el.style.textAlign == "" && Val == "-"));
 		select.appendChild(option);
 	}
 	function setCharVisibility(value) {
@@ -985,14 +1001,14 @@ TableOperations.createStyleLayoutFieldset = function(doc, editor, el) {
 	select.name = "f_st_verticalAlign";
 	select.style.marginLeft = "0.5em";
 	td.appendChild(select);
-	options = ["Top", "Middle", "Bottom", "Baseline"];
+	options = ["Top", "Middle", "Bottom", "Baseline", "-"];
 	for (var i = 0; i < options.length; ++i) {
 		var Val = options[i];
 		var val = Val.toLowerCase();
 		option = doc.createElement("option");
 		option.value = val;
 		option.innerHTML = HTMLArea._lc(Val, "TableOperations");
-		option.selected = (el.style.verticalAlign.toLowerCase() == val);
+		option.selected = ((el.style.verticalAlign.toLowerCase() == val) || (el.style.verticalAlign == "" && Val == "-"));
 		select.appendChild(option);
 	}
 

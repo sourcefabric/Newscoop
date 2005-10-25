@@ -1,17 +1,6 @@
 // I18N constants
-
 // LANG: "cz", ENCODING: UTF-8
 // Author: Jiri Löw, <jirilow@jirilow.com>
-
-// FOR TRANSLATORS:
-//
-//   1. PLEASE PUT YOUR CONTACT INFO IN THE ABOVE LINE
-//      (at least a valid email address)
-//
-//   2. PLEASE TRY TO USE UTF-8 FOR ENCODING;
-//      (if this is not possible, please include a comment
-//       that states what encoding is necessary.)
-
 {
   "Please confirm that you want to open this link": "Prosím potvrďte otevření tohoto odkazu",
   "Cancel": "Zrušit",
@@ -34,4 +23,4 @@
   "Spell-check": "Kontrola správnosti slov",
   "Suggestions": "Doporučení",
   "One moment...": "strpení prosím ;-)"
-}
+};

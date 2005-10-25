@@ -8,7 +8,7 @@
 # Distributed under the same terms as HTMLArea itself.
 # This notice MUST stay intact for use (see license.txt).
 #
-# $Id: spell-check-logic.cgi,v 1.2 2005/06/10 15:34:43 paul Exp $
+# $Id$
 
 use strict;
 use utf8;

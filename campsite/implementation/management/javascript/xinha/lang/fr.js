@@ -90,9 +90,10 @@
   "Top frame (_top)": "Frame principale (_top)",
   "Other": "Autre",
   "Target:": "Cible",
-  "Title (tooltip):": "Text alternatif",
+  "Title (tooltip):": "Texte alternatif",
   "URL:": "URL:",
   "You must enter the URL where this link points to": "Vous devez entrer l'URL de ce lien",
+  "You need to select some text before creating a link": "Vous devez sélectionner du texte avant de créer un lien",
   
   // Insert Table
   "Insert Table": "Insérer un tableau",
@@ -112,6 +113,8 @@
   "Space between adjacent cells": "Espace entre les cellules adjacentes",
   "Cell padding:": "Marge interne",
   "Space between content and border in cell": "Espace entre le contenu et la bordure d'une cellule",
+  "You must enter a number of rows": "Vous devez entrez le nombre de lignes",
+  "You must enter a number of columns": "Vous devez entrer le nombre de colonnes",
   
   // Insert Image
   "Insert Image": "Insérer une image",
@@ -122,5 +125,6 @@
   "Alternate text:": "Text alternatif",
   "For browsers that don't support images": "Pour les navigateurs qui ne supportent pas les images",
   "Positioning of this image": "Position de l'image",
-  "Image Preview:": "Prévisualisation"
-}
+  "Image Preview:": "Prévisualisation",
+  "You must enter the URL": "Vous devez entrer l'URL"
+};

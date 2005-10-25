@@ -1,4 +1,4 @@
-.htmlarea { background: #fff; }
+.htmlarea { background: #fff; margin:2px; }
 
 .htmlarea .toolbar {
   cursor: default;
@@ -8,7 +8,7 @@
   border-color: ButtonHighlight ButtonShadow ButtonShadow ButtonHighlight;
 }
 .htmlarea .toolbar table { margin: 0; font-family: tahoma,verdana,sans-serif; font-size: 11px; }
-.htmlarea .toolbar img { border: none; }
+.htmlarea .toolbar img { border: none; vertical-align: top; }
 .htmlarea .toolbar .label { padding: 0px 3px; }
 
 .htmlarea .toolbar .button {
@@ -57,17 +57,22 @@
   border-left: 1px solid ButtonShadow;
   border-right: 1px solid ButtonHighlight;
   width: 0px;
-  height: 16px;
+  height: 18px;
   padding: 0px;
 }
 
 .htmlarea .toolbar .space { width: 5px; }
 
-.htmlarea .toolbar select, .htmlarea .toolbar option { font: 11px Tahoma,Verdana,sans-serif; height: 18px;}
+.htmlarea .toolbar select, .htmlarea .toolbar option { font: 11px Tahoma,Verdana,sans-serif;}
 
 .htmlarea .toolbar select,
 .htmlarea .toolbar select:hover,
-.htmlarea .toolbar select:active { background: FieldFace; color: ButtonText; }
+.htmlarea .toolbar select:active { 
+  margin-top: 2px;
+  margin-bottom: 1px;
+  background: FieldFace;
+  color: ButtonText;
+}
 
 .htmlarea iframe.xinha_iframe, .htmlarea textarea.xinha_textarea
 {
@@ -97,7 +102,7 @@
 }
 
 
-/* Hidden DIV popup dialogs (PopupDiv) */
+/* popup dialogs */
 
 .dialog {
   color: ButtonText;
@@ -166,11 +171,6 @@
 
 .dialog legend { font-weight: bold; }
 .dialog fieldset table { margin: 2px 0px; }
-
-.popupdiv {
-  border: 2px solid;
-  border-color: ButtonHighlight ButtonShadow ButtonShadow ButtonHighlight;
-}
 
 .popupwin {
   padding: 0px;

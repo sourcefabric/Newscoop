@@ -6,16 +6,17 @@
   <script type="text/javascript" src="../../../popups/popup.js"></script>
 
 <script type="text/javascript">
+
+var fields = ["f_name", "f_action", "f_method", "f_enctype", "f_target"];
+
 function Init() {
   window.resizeTo(400, 170);
   __dlg_translate("Forms");
 	__dlg_init();
   var param = window.dialogArguments;
-  document.getElementById("f_name").value = param.f_name;
-  document.getElementById("f_action").value = param.f_action;
-  document.getElementById("f_method").value = param.f_method;
-  document.getElementById("f_enctype").value = param.f_enctype;
-  document.getElementById("f_target").value = param.f_target;
+  for (var i in fields) {
+    document.getElementById(fields[i]).value = param[fields[i]];
+  }
  	document.getElementById("f_name").focus();
 };
 
@@ -32,12 +33,9 @@ function onOK() {
 	  }
   }
   // pass data back to the calling window
-  var fields = ["f_name", "f_action", "f_method", "f_enctype", "f_target"];
   var param = new Object();
   for (var i in fields) {
-    var id = fields[i];
-	var el = document.getElementById(id);
-    param[id] = el.value;
+    param[fields[i]] = document.getElementById(fields[i]).value;
   }
   __dlg_close(param);
   return false;
@@ -50,7 +48,7 @@ function onCancel() {
 </script>
 </head>
 
-<body onload="Init()">
+<body class="dialog" onload="Init()">
 <div class="title">Form</div>
 <form action="" method="get">
   <div class="fr">Form Name:</div>

@@ -703,7 +703,7 @@ if (!Array.prototype.push) {
 
     return this.length;
 
-  }
+  };
 
 };
 
@@ -717,7 +717,7 @@ if (!Array.prototype.pop) {
 
     return lastElement;
 
-  }
+  };
 
 };
 

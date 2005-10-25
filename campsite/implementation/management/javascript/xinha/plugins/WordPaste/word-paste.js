@@ -74,6 +74,10 @@ WordPaste.prototype._clean = function(html) {
 	html = html.replace(/<\/?\s*META[^>]*>/gi, "" );
     // Remove all SPAN tags
 	html = html.replace(/<\/?\s*SPAN[^>]*>/gi, "" );
+    // Remove all DIV tags
+	html = html.replace(/<\/?\s*DIV[^>]*>/gi, "" );
+    // Remove all HR tags
+	html = html.replace(/<\/?\s*HR[^>]*>/gi, "" );
     // Remove all STYLE tags & content
 	html = html.replace(/<\/?\s*STYLE[^>]*>(.|[\n\r\t])*<\/\s*STYLE\s*>/gi, "" );
     // Remove all TITLE tags & content

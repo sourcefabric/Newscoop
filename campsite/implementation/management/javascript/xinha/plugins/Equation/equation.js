@@ -9,7 +9,7 @@
 //
 // Version 1.0 developed by Nazarij Dubnytskyj for NasCreative.
 //
-// $Id: equation.js,v 1.1 2005/06/10 15:45:47 paul Exp $
+// $Id$
 
 // Object that will encapsulate all the equation operations
 function Equation(editor) {
@@ -44,7 +44,7 @@ Equation._pluginInfo = {
 
 Equation.prototype._lc = function(string) {
     return HTMLArea._lc(string, 'Equation');
-}
+};
 
 Equation.prototype.buttonPress = function(editor, id) {
 	var self = this;
@@ -143,4 +143,4 @@ Equation.prototype.insertOperation = function(editor,params) {
 			editor.insertHTML(tstr);
 		break;
 	}
-}
+};

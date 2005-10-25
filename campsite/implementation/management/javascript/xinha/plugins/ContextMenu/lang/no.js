@@ -1,11 +1,9 @@
 // I18N constants
 // LANG: "no", ENCODING: UTF-8
 // translated: Kim Steinhaug, http://www.steinhaug.com/, kim@steinhaug.com
-
 // Used key commands
 // C,D,e, ,I, ,k,k,l,M, ,n,o,R, ,s,T, ,w   : English
 //       H B j      R m    F       v       : Norwegian
-
 {
   "Cut": "Klipp ut",
   "Copy": "Kopier",
@@ -44,8 +42,7 @@
   "Justify Full": "Blokk_juster",
   "Make lin_k...": "Lag len_ke...",
   "Create a link": "Lag ny link",
-  "Remove the": "Fjerne",
-  "Element...": "elementet...",
+  "Remove the $elem Element...": "Fjerne $elem elementet...",
   "Please confirm that you want to remove this element:": "Vennligst bekreft at du ønsker å fjerne elementet:",
   "Remove this node from the document": "Fjerne denne node fra dokumentet",
   "Insert paragraph before": "Sett inn paragraf før",
@@ -53,4 +50,4 @@
   "Insert paragraph after": "Sett inn paragraf etter",
   "Insert a paragraph after the current node": "Sett inn paragraf etter gjeldende node",
   "How did you get here? (Please report!)": "Hva skjedde? (Vennligst beskriv)"
-}
+};

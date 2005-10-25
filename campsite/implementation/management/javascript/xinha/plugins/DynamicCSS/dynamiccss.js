@@ -65,7 +65,7 @@ DynamicCSS.parseStyleSheet=function(editor){
             }
         }
         DynamicCSS.cssArray=cssArray;
-}
+};
 
 DynamicCSS.applyCSSRule=function(cssRules,cssArray){
     for(rule in cssRules){
@@ -106,7 +106,7 @@ DynamicCSS.applyCSSRule=function(cssRules,cssArray){
         }
     }
     return cssArray;
-}
+};
 
 DynamicCSS._pluginInfo = {
   name          : "DynamicCSS",
@@ -121,7 +121,7 @@ DynamicCSS._pluginInfo = {
 
 DynamicCSS.prototype._lc = function(string) {
     return HTMLArea._lc(string, 'DynamicCSS');
-}
+};
 
 DynamicCSS.prototype.onSelect = function(editor, obj) {
     var tbobj = editor._toolbarObjects[obj.id];
@@ -164,7 +164,7 @@ DynamicCSS.prototype.reparseTimer = function(editor, obj, instance) {
         },DynamicCSS.parseCount*1000);
         DynamicCSS.parseCount=DynamicCSS.parseCount*2;
     }
-}
+};
 
 DynamicCSS.prototype.updateValue = function(editor, obj) {
         cssArray=DynamicCSS.cssArray;

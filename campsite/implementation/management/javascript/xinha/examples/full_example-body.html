@@ -1,3 +1,4 @@
+<!DOCTYPE BHTML PUBLIC "-//BC//DTD BHTML 3.2 Final//EN">
 <html>
 <head>
 
@@ -10,9 +11,9 @@
     --  use of the file as a boilerplate.
     --
     --  $HeadURL: http://svn.xinha.python-hosting.com/trunk/examples/full_example-body.html $
-    --  $LastChangedDate: 2005-05-21 04:30:40 +1200 (Sat, 21 May 2005) $
-    --  $LastChangedRevision: 186 $
-    --  $LastChangedBy: gogo $
+    --  $LastChangedDate$
+    --  $LastChangedRevision: 287 $
+    --  $LastChangedBy$
     --------------------------------------------------------------------------->
 
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -129,18 +130,23 @@
 
     window.onload = xinha_init;
   </script>
-  <link href="../skins/blue-look/skin.css" rel="Stylesheet" />
+  <!--link type="text/css" rel="alternate stylesheet" title="blue-look" href="../skins/blue-look/skin.css" />
+  <link type="text/css" rel="alternate stylesheet" title="green-look" href="../skins/green-look/skin.css" />
+  <link type="text/css" rel="alternate stylesheet" title="xp-blue" href="../skins/xp-blue/skin.css" />
+  <link type="text/css" rel="alternate stylesheet" title="xp-green" href="../skins/xp-green/skin.css" />
+  <link type="text/css" rel="alternate stylesheet" title="inditreuse" href="../skins/inditreuse/skin.css" />
+  <link type="text/css" rel="alternate stylesheet" title="blue-metallic" href="../skins/blue-metallic/skin.css" /-->
 </head>
 
 <body>
 
-  <form id="editors_here" onsubmit="alert(this.myTextArea0.value);">
+  <form id="editors_here">
     <textarea id="myTextArea" name="myTextArea" rows="10" cols="80" style="width:100%"></textarea>
     <textarea id="anotherOne" name="anotherOne" rows="10" cols="80" style="width:100%"></textarea>
   </form>
 
 
-  <!----------------------------------------------------------------------------
+  <!-- *************************************************************************
     -                            !! IMPORTANT !!
     -  The html and javascript below is the code used to create the example page.
     -  It renders a lot of the above unused because it pre-fills xinha_editors,
@@ -150,7 +156,7 @@
     -
     -  If you are going to take the code in this file to form the basis of your
     -  own, then leave out this marked area.
-    --------------------------------------------------------------------------->
+    -  ********************************************************************* -->
 
         <div id="lipsum" style="display:none">
           <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
@@ -172,7 +178,7 @@
         </div>
         <script src="full_example.js"></script>
 
-  <!--------------------------------------------------------------------------->
+  <!-- ********************************************************************* -->
 
 
 </body>

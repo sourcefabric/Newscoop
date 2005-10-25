@@ -37,7 +37,7 @@ InsertSmiley._pluginInfo = {
 
 InsertSmiley.prototype._lc = function(string) {
     return HTMLArea._lc(string, 'InsertSmiley');
-}
+};
 
 InsertSmiley.prototype.buttonPress = function(editor) {
 	var self = this;

@@ -6,7 +6,7 @@
 // Distributed under the same terms as HTMLArea itself.
 // This notice MUST stay intact for use (see license.txt).
 //
-// $Id: context-menu.js,v 1.2 2005/06/10 15:39:38 paul Exp $
+// $Id$
 
 HTMLArea.loadStyle("menu.css", "ContextMenu");
 
@@ -213,7 +213,7 @@ ContextMenu.prototype.getContextMenu = function(target) {
 
 	if (!/html|body/i.test(currentTarget.tagName))
 		menu.push(null,
-			  [ HTMLArea._lc("Remove the", "ContextMenu") + " &lt;" + currentTarget.tagName + "&gt; " + HTMLArea._lc("Element...", "ContextMenu"),
+			  [ HTMLArea._lc({string: "Remove the $elem Element...", replace: {elem: "&lt;" + currentTarget.tagName + "&gt;"}}, "ContextMenu"),
 			    function() {
 				    if (confirm(HTMLArea._lc("Please confirm that you want to remove this element:", "ContextMenu") + " " +
 						currentTarget.tagName)) {
@@ -426,14 +426,12 @@ ContextMenu.prototype.popupMenu = function(ev) {
 		div.style.left = x + "px";
 		div.style.top = y + "px";
 	} else {
-		// determine the size (did I mention that IE stinks?)
-		var foobar = document.createElement("div");
-		foobar.className = "htmlarea-context-menu";
-		foobar.innerHTML = div.innerHTML;
-		document.body.appendChild(foobar);
-		var w = foobar.offsetWidth;
-		var h = foobar.offsetHeight;
-		document.body.removeChild(foobar);
+    // To get the size we need to display the popup with some width/height
+    // then we can get the actual size of the div and redisplay the popup at the
+    // correct dimensions.
+    this.iePopup.show(ev.screenX, ev.screenY, 300,50);
+		var w = div.offsetWidth;
+		var h = div.offsetHeight;
 		this.iePopup.show(ev.screenX, ev.screenY, w, h);
 	}
 

@@ -16,4 +16,4 @@
   "Message Template:": "Message",
   "Size:": "Taille",
   "Name:": "Nom"
-}
+};

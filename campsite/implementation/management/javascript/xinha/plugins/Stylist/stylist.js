@@ -24,7 +24,7 @@ HTMLArea.Config.prototype.stylistLoadStylesheet = function(url, altnames)
     }
   }
   this.pageStyleSheets[this.pageStyleSheets.length] = url;
-}
+};
 
 /**
  * This method takes raw style definitions and uses them in the stylist
@@ -45,7 +45,7 @@ HTMLArea.Config.prototype.stylistLoadStyles = function(styles, altnames)
     }
   }
   this.pageStyle += styles;
-}
+};
 
 
 
@@ -212,7 +212,7 @@ HTMLArea.prototype._fillStylist = function()
       this._stylist.appendChild(anch);
     }
   }
-}
+};
 
 
 /**
@@ -333,7 +333,7 @@ HTMLArea.prototype._stylistRemoveClassesFull = function(el, classes)
       prnt.removeChild(el);
     }
   }
-}
+};
 
 /**
  * Change the tag of an element
@@ -357,7 +357,7 @@ HTMLArea.prototype.switchElementTag = function(el, tag)
   prnt.removeChild(el);
   this.selectNodeContents(new_el);
   return new_el;
-}
+};
 
 HTMLArea.prototype._getAncestorsClassNames = function(sel)
 {
@@ -386,7 +386,7 @@ HTMLArea.prototype._getAncestorsClassNames = function(sel)
   }
 
   return classNames;
-}
+};
 
 HTMLArea.prototype._ancestorsWithClasses = function(sel, tag, classes)
 {
@@ -441,18 +441,18 @@ HTMLArea.prototype._ancestorsWithClasses = function(sel, tag, classes)
   }
 
   return ancestors;
-}
+};
 
 
 HTMLArea.ripStylesFromCSSFile = function(URL)
 {
   var css = HTMLArea._geturlcontent(URL);
   return HTMLArea.ripStylesFromCSSString(css);
-}
+};
 
 HTMLArea.ripStylesFromCSSString = function(css)
 {
-  // We are holy interested in the selectors, the rules are not important
+  // We are only interested in the selectors, the rules are not important
   //  so we'll drop out all coments and rules
   RE_comment = /\/\*(.|\r|\n)*?\*\//g;
   RE_rule    = /\{(.|\r|\n)*?\}/g;
@@ -474,7 +474,7 @@ HTMLArea.ripStylesFromCSSString = function(css)
 
 
   return selectors;
-}
+};
 
 // Make our right side panel and insert appropriatly
 function Stylist(editor, args)
@@ -503,7 +503,7 @@ function Stylist(editor, args)
                     }
                   }
                   );
-}
+};
 
 Stylist._pluginInfo =
 {
@@ -525,7 +525,7 @@ Stylist.prototype.onGenerate = function()
     editor.removePanel(editor._stylist);
     editor._stylist = null;
   }
-}
+};
 
 Stylist.prototype.onUpdateToolbar = function()
 {
@@ -539,4 +539,4 @@ Stylist.prototype.onUpdateToolbar = function()
     var e = this.editor;
     this._timeoutID = window.setTimeout(function() { e._fillStylist(); }, 250);
   }
-}
+};

@@ -1,17 +1,5 @@
 // I18N constants
-
 // LANG: "fr", ENCODING: UTF-8
-// Author: Cédric Guillemette, http://www.ebdata.com
-
-// FOR TRANSLATORS:
-//
-//   1. PLEASE PUT YOUR CONTACT INFO IN THE ABOVE LINE
-//      (at least a valid email address)
-//
-//   2. PLEASE TRY TO USE UTF-8 FOR ENCODING;
-//      (if this is not possible, please include a comment
-//       that states what encoding is necessary.)
-
 {
   "Align": "Aligner",
   "All four sides": "Quatre cotés",
@@ -87,4 +75,4 @@
   "HTMLArea cowardly refuses to delete the last row in table.": "HTMLArea refuse de supprimer la dernière rangée de la table",
   "percent": "pourcentage",
   "pixels": "pixels"
-}
+};

@@ -136,6 +136,10 @@ if (trim($text) != "")
        // This one isnt used for anything at the moment!
        $return = 'failed to open!';
      }
+} 
+else 
+{ 
+  $returnlines=0; 
 }
 $infolines .= '"Language Used":"'.$lang.'",';
 $infolines .= '"Mispelled words":"'.$counter.'",';

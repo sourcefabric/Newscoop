@@ -1,5 +1,4 @@
 // I18N constants
-
 // LANG: "fi", ENCODING: UTF-8
 {
   "Align": "Kohdistus",
@@ -66,4 +65,4 @@
   "HTMLArea cowardly refuses to delete the last row in table.": "Ei voida poistaa viimeistä riviä taulusta.",
   "percent": "prosenttia",
   "pixels": "pikseliä"
-}
+};
