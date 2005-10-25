@@ -29,7 +29,7 @@ $articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
 if (!$articleObj->exists()) {
 	$errorStr = getGS('No such article.');
 }
-$articleType =& $articleObj->getArticleTypeObject();
+$articleData =& $articleObj->getArticleData();
 $lockUserObj =& new User($articleObj->getLockedByUser());
 $languageObj =& new Language($Language);
 $sLanguageObj =& new Language($sLanguage);
@@ -91,7 +91,7 @@ $xmlLibAvailable |= function_exists("xml_parser_create");
 // Verify this article type has the body & intro fields.
 $introSupport = false;
 $bodySupport = false;
-$dbColumns = $articleType->getUserDefinedColumns();
+$dbColumns = $articleData->getUserDefinedColumns();
 foreach ($dbColumns as $dbColumn) {
 	if ($dbColumn->getName() == "Fintro") {
 		$introSupport = true;
@@ -494,7 +494,7 @@ if ($edit_ok) { ?>
 				<TD>
 		        <INPUT NAME="<?php echo htmlspecialchars($dbColumn->getName()); ?>" 
 					   TYPE="TEXT" 
-					   VALUE="<?php print $articleType->getProperty($dbColumn->getName()) ?>" 
+					   VALUE="<?php print $articleData->getProperty($dbColumn->getName()) ?>" 
 					   class="input_text"
 					   SIZE="64" 
 					   MAXLENGTH="100">
@@ -503,8 +503,8 @@ if ($edit_ok) { ?>
 			<?php  
 		} elseif (stristr($dbColumn->getType(), "date")) { 
 			// Date fields
-			if ($articleType->getProperty($dbColumn->getName()) == "0000-00-00") {
-				$articleType->setProperty($dbColumn->getName(), "CURDATE()", true, true);
+			if ($articleData->getProperty($dbColumn->getName()) == "0000-00-00") {
+				$articleData->setProperty($dbColumn->getName(), "CURDATE()", true, true);
 			}
 			?>		
 			<TR>
@@ -523,7 +523,7 @@ if ($edit_ok) { ?>
 				<TD>
 				<INPUT NAME="<?php echo htmlspecialchars($dbColumn->getName()); ?>" 
 					   TYPE="TEXT" 
-					   VALUE="<?php echo htmlspecialchars($articleType->getProperty($dbColumn->getName())); ?>" 
+					   VALUE="<?php echo htmlspecialchars($articleData->getProperty($dbColumn->getName())); ?>" 
 					   class="input_text"
 					   SIZE="11" 
 					   MAXLENGTH="10"> 
@@ -534,7 +534,7 @@ if ($edit_ok) { ?>
 		} elseif (stristr($dbColumn->getType(), "blob")) {
 			// Multiline text fields
 			// Transform Campsite-specific tags into editor-friendly tags.
-			$text = $articleType->getProperty($dbColumn->getName());
+			$text = $articleData->getProperty($dbColumn->getName());
 			
 			// Subheads
 			$text = preg_replace("/<!\*\*\s*Title\s*>/i", "<span class=\"campsite_subhead\">", $text);
