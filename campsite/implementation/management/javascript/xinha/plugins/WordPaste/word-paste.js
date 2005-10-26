@@ -72,18 +72,35 @@ WordPaste.prototype._clean = function(html) {
     html = html.replace(/<\/?\s*BODY[^>]*>/gi, "" );
     // Remove all META tags
 	html = html.replace(/<\/?\s*META[^>]*>/gi, "" );
+    // Remove all TITLE tags & content
+	html = html.replace(/<\s*TITLE[^>]*>([^<]*)<\/\s*TITLE\s*>/i, "" );
+    // Remove all HEAD tags & content
+	html = html.replace(/<\s*HEAD[^>]*>(.|[\n\r\t])*<\/\s*HEAD\s*>/gi, "" );
     // Remove all SPAN tags
 	html = html.replace(/<\/?\s*SPAN[^>]*>/gi, "" );
     // Remove all DIV tags
 	html = html.replace(/<\/?\s*DIV[^>]*>/gi, "" );
+    // Remove all FONT tags
+	html = html.replace(/<\/?\s*FONT[^>]*>/gi, "" );
+    // Remove all UL tags
+	html = html.replace(/<\/?\s*UL[^>]*>/gi, "" );
+    // Remove all OL tags
+	html = html.replace(/<\/?\s*OL[^>]*>/gi, "" );
+    // Remove all LI tags
+	html = html.replace(/<\/?\s*LI[^>]*>/gi, "" );
+    // Remove all TABLE tags
+	html = html.replace(/<\/?\s*TABLE[^>]*>/gi, "" );
+    // Remove all TH tags
+	html = html.replace(/<\/?\s*TH[^>]*>/gi, "" );
+    // Remove all TR tags
+	html = html.replace(/<\/?\s*TR[^>]*>/gi, "" );
+    // Remove all TD tags
+	html = html.replace(/<\/?\s*TD[^>]*>/gi, "" );
     // Remove all HR tags
 	html = html.replace(/<\/?\s*HR[^>]*>/gi, "" );
     // Remove all STYLE tags & content
-	html = html.replace(/<\/?\s*STYLE[^>]*>(.|[\n\r\t])*<\/\s*STYLE\s*>/gi, "" );
-    // Remove all TITLE tags & content
-	html = html.replace(/<\s*TITLE[^>]*>(.|[\n\r\t])*<\/\s*TITLE\s*>/gi, "" );
-    // Remove all HEAD tags & content
-	html = html.replace(/<\s*HEAD[^>]*>(.|[\n\r\t])*<\/\s*HEAD\s*>/gi, "" );
+	//html = html.replace(/<\/?\s*STYLE[^>]*>(.|[\n\r\t])*<\/\s*STYLE\s*>/gi, "" );
+	html = html.replace(/<\s*STYLE[^>]*>(.|[\n\r\t])*<\/\s*STYLE\s*>/gi, "" );
 	// Remove Class attributes
 	html = html.replace(/<\s*(\w[^>]*) class=([^ |>]*)([^>]*)/gi, "<$1$3") ;
 	// Remove Style attributes
@@ -104,7 +121,7 @@ WordPaste.prototype._clean = function(html) {
 	// Remove <P> 
 	html = html.replace(/<\s*p[^>]*>/gi, "");
 	
-	// Remove </p> with <br>
+	// Replace </p> with <br>
 	html = html.replace(/<\/\s*p[^>]*>/gi, "<br>");
 	
 	// Remove any <br> at the end
