@@ -21,14 +21,14 @@ if ($g_editUser->getUserName() == '') {
 	exit;
 }
 $g_backLink = "/$ADMIN/users/edit.php?uType=Subscribers&User=$g_userId";
-$g_cStartIP1 = Input::Get('cStartIP1', 'int', 0);
-$g_cStartIP2 = Input::Get('cStartIP2', 'int', 0);
-$g_cStartIP3 = Input::Get('cStartIP3', 'int', 0);
-$g_cStartIP4 = Input::Get('cStartIP4', 'int', 0);
+$g_cStartIP1 = Input::Get('cStartIP1', 'int', -1);
+$g_cStartIP2 = Input::Get('cStartIP2', 'int', -1);
+$g_cStartIP3 = Input::Get('cStartIP3', 'int', -1);
+$g_cStartIP4 = Input::Get('cStartIP4', 'int', -1);
 $g_cAddresses = Input::Get('cAddresses', 'int', 0);
 
 // check if input was correct
-if ($g_cStartIP1 == 0 || $g_cStartIP2 == 0 || $g_cStartIP3 == 0 || $g_cStartIP4 == 0) {
+if ($g_cStartIP1 == -1 || $g_cStartIP2 == -1 || $g_cStartIP3 == -1 || $g_cStartIP4 == -1) {
 	camp_html_display_error(getGS('You must complete the $1 field.', 'Start IP'),
 		$g_backLink);
 	exit;
