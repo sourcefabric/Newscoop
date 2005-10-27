@@ -18,7 +18,7 @@ $Pub = Input::Get('Pub', 'int');
 $Language = Input::Get('Language', 'int', 1, true);
 $publicationObj =& new Publication($Pub);
 
-$countries =& Country::GetCountries($Language);
+$countries = Country::GetCountries($Language);
 
 $crumbs = array(getGS("Subscriptions") => "deftime.php?Pub=$Pub");
 camp_html_content_top(getGS("Add new country default subscription time"), array("Pub" => $publicationObj), true, false, $crumbs);

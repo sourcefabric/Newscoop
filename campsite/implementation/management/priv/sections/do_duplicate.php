@@ -64,7 +64,7 @@ $correct = ($DestPublicationId > 0) && ($DestIssueId > 0)
 	    && ($DestIssueLanguageId > 0) && ($DestSectionId > 0);
 
 if ($correct) {
-    $dstSectionObj =& $srcSectionObj->copy($DestPublicationId, $DestIssueId, $DestIssueLanguageId, 
+    $dstSectionObj = $srcSectionObj->copy($DestPublicationId, $DestIssueId, $DestIssueLanguageId, 
                                            $DestSectionId);
     if (($radioButton == "new_section") && ($DestSectionName != "")) {
         $dstSectionObj->setName($DestSectionName);

@@ -19,7 +19,7 @@ if (!Input::IsValid()) {
 	exit;
 }
 $publicationObj =& new Publication($Pub);
-$allLanguages =& Language::GetLanguages();
+$allLanguages = Language::GetLanguages();
 $newIssueId = Issue::GetUnusedIssueId($Pub);
 
 camp_html_content_top(getGS('Add new issue'), array('Pub' => $publicationObj), true, false, array(getGS("Issues") => "/$ADMIN/issues/?Pub=$Pub"));

@@ -41,7 +41,7 @@ if (empty($cSite)) {
 }
 
 if ($correct) {
-	$aliases =& Alias::GetAliases(null, null, $cSite);
+	$aliases = Alias::GetAliases(null, null, $cSite);
 	if (count($aliases) <= 0) {
 		$alias =& new Alias();
 		$alias->create(array('Name' => $cSite));

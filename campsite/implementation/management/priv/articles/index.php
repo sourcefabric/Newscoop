@@ -46,7 +46,7 @@ if (!$sectionObj->exists()) {
 
 $languageObj =& new Language($Language);
 $sLanguageObj =& new Language($sLanguage);
-$allArticleLanguages =& Article::GetAllLanguages();
+$allArticleLanguages = Article::GetAllLanguages();
 
 if ($sLanguage) {
 	// Only show a specific language.
@@ -57,7 +57,7 @@ if ($sLanguage) {
 	$numUniqueArticlesDisplayed = count($allArticles);
 } else {
 	// Show articles in all languages.
-	$allArticles =& Article::GetArticles($Pub, $Issue, $Section, null, null, $Language,
+	$allArticles = Article::GetArticles($Pub, $Issue, $Section, null, null, $Language,
 		$ArticlesPerPage, $ArticleOffset, true);
 	$totalArticles = count(Article::GetArticles($Pub, $Issue, $Section, null));
 	$numUniqueArticles = Article::GetNumUniqueArticles($Pub, $Issue, $Section);
@@ -288,7 +288,7 @@ foreach ($allArticles as $articleObj) {
 		<?php if ($User->hasPermission('Publish')) { ?>
 		<TD ALIGN="CENTER">
 			<?php if ($articleObj->getPublished() != 'N') { 
-				$events =& ArticlePublish::GetArticleEvents($articleObj->getArticleId(),
+				$events = ArticlePublish::GetArticleEvents($articleObj->getArticleId(),
 					$articleObj->getLanguageId());?>
 			<A HREF="/<?php echo $ADMIN; ?>/articles/autopublish.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($articleObj->getArticleId()); ?>&Language=<?php  p($Language);?>&sLanguage=<?php p($articleObj->getLanguageId()); ?>&Back=<?php p(urlencode($_SERVER['REQUEST_URI'])); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/<?php p((count($events) > 0) ? 'automatic_publishing_active.png':'automatic_publishing.png'); ?>" alt="<?php  putGS("Scheduled Publishing"); ?>" title="<?php  putGS("Scheduled Publishing"); ?>" border="0" width="22" height="22"></A>
 			<?php 

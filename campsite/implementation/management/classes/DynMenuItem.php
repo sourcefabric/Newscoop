@@ -27,29 +27,29 @@
  * DynMenuItem::SetMenuType('DynMenuItem_JsCook');
  *
  * // You always must create a root node to contain all the others.
- * $root =& DynMenuItem::Create('', '');
+ * $root = DynMenuItem::Create('', '');
  *
  * // Create a "home" menu item.
- * $home =& DynMenuItem::Create('Home', 'URL', 
+ * $home = DynMenuItem::Create('Home', 'URL', 
  *                           array('id' => 'home', 'icon' => "ICON"));
  * $root->addItem($home);
  *
  * $root->addSplit();
  *
- * $content =& DynMenuItem::Create('Content', 'URL', 
+ * $content = DynMenuItem::Create('Content', 'URL', 
  *                              array('id' => 'content', 'icon' => 'ICON'));
  * $root->addItem($content);             
- * $articles =& DynMenuItem::Create('Articles', 'URL', 
+ * $articles = DynMenuItem::Create('Articles', 'URL', 
  *                               array('id' => 'articles', 'icon' => 'ICON'));
  *
  * $content->addItem($articles);
  * $content->addSplit();
- * $images =& DynMenuItem::Create('Images', 'URL',
+ * $images = DynMenuItem::Create('Images', 'URL',
  *                             array('id' => 'articles', 'icon' => 'ICON'));
  * $content->addItem($images);
  *
  * ... now call plugins to allow them to add their menu items ...
- * $modules =& DynMenuItem::Create('Modules', 'url', array('id' => 'modules'));
+ * $modules = DynMenuItem::Create('Modules', 'url', array('id' => 'modules'));
  * $root->addItemAfter($modules, 'content');
  *
  * ...
@@ -161,12 +161,12 @@ class DynMenuItem {
         if (count($this->m_subItems) <= 0) {
             return null;
         }
-        $match =& $this->getChildById($p_id);
+        $match = $this->getChildById($p_id);
         if (!is_null($match)) {
             return $match;
         }
         foreach ($this->m_subItems as $subItem) {
-            $match =& $subItem->getMatchingItem($p_id);
+            $match = $subItem->getMatchingItem($p_id);
             if (!is_null($match)) {
                 return $match;
             }
@@ -290,13 +290,13 @@ class DynMenuItem_JsCook extends DynMenuItem {
 //DynMenuItem::SetMenuType('DynMenuItem_JsCook_Rights');
 //DynMenuItem_JsCook_Rights::SetUser($user);
 //
-//$root =& DynMenuItem::Create('root', '');
-//$home =& DynMenuItem::Create('Home', 'URL', array('id' => 'home', 'icon' => "ICON"));
+//$root = DynMenuItem::Create('root', '');
+//$home = DynMenuItem::Create('Home', 'URL', array('id' => 'home', 'icon' => "ICON"));
 //$root->addItem($home);
 //$root->addSplit();
-//$content =& DynMenuItem::Create('Content', 'URL', array('id' => 'content', 'icon' => 'ICON', 'rights' => 'foo'));
+//$content = DynMenuItem::Create('Content', 'URL', array('id' => 'content', 'icon' => 'ICON', 'rights' => 'foo'));
 //$root->addItem($content);             
-//$pub =& DynMenuItem::Create('Publications', 'URL', array('id' => 'pub', 'icon' => 'ICON'));
+//$pub = DynMenuItem::Create('Publications', 'URL', array('id' => 'pub', 'icon' => 'ICON'));
 //
 //$content->addItem($pub);
 //$content->addSplit();
@@ -305,7 +305,7 @@ class DynMenuItem_JsCook extends DynMenuItem {
 //echo "<pre>";
 //echo htmlspecialchars($root->createMenu('myMenu'));
 //echo "</pre>";
-//$modules =& DynMenuItem::Create('Modules', 'url', array('id' => 'modules'));
+//$modules = DynMenuItem::Create('Modules', 'url', array('id' => 'modules'));
 //$root->addItemAfter($modules, 'home');
 //
 //echo "<pre>";

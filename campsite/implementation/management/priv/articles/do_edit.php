@@ -156,7 +156,7 @@ function TransformImageTags($p_match) {
 			$templateId = $articleImage->getTemplateId();
 		}
 		else {
-			$image =& Image::GetByUrl($attrs['src']);
+			$image = Image::GetByUrl($attrs['src']);
 			$articleImage =& new ArticleImage($Article, $image->getImageId());
 			$templateId = $articleImage->getTemplateId();
 		}
@@ -206,7 +206,7 @@ if (!$articleObj->exists()) {
 	camp_html_display_error(getGS('No such article.'), $BackLink);
 }
 
-$articleTypeObj =& $articleObj->getArticleData();
+$articleTypeObj = $articleObj->getArticleData();
 $dbColumns = $articleTypeObj->getUserDefinedColumns();
 
 $articleFields = array();

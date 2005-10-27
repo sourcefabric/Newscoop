@@ -23,8 +23,8 @@ if (!Input::IsValid()) {
 }
 $publicationObj =& new Publication($Pub);
 $issueObj =& new Issue($Pub, $Language, $Issue);
-$allLanguages =& Language::GetLanguages();
-$allTemplates =& Template::GetAllTemplates();
+$allLanguages = Language::GetLanguages();
+$allTemplates = Template::GetAllTemplates();
 
 camp_html_content_top(getGS('Change issue details'), array('Pub' => $publicationObj, 'Issue' => $issueObj));
 

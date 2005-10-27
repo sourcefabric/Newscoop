@@ -172,7 +172,7 @@ class Section extends DatabaseObject {
 	{
 	    $numArticlesDeleted = 0;
 	    if ($p_deleteArticles) {
-	        $articles =& Article::GetArticles($this->m_data['IdPublication'], 
+	        $articles = Article::GetArticles($this->m_data['IdPublication'], 
 	                                          $this->m_data['NrIssue'],
 	                                          $this->m_data['Number']);
 	        $numArticlesDeleted = count($articles);
@@ -242,9 +242,9 @@ class Section extends DatabaseObject {
             $copiedArticles = array();
         	foreach ($srcSectionArticles as $articleObj) {
         	    if (!in_array($articleObj->getArticleId(), $copiedArticles)) {
-            		$tmpCopiedArticles =& $articleObj->copy($p_destPublicationId, 
+            		$tmpCopiedArticles = $articleObj->copy($p_destPublicationId, 
                         $p_destIssueId, $p_destSectionId, null, true);
-                    $copiedArticles =& array_merge($copiedArticles, 
+                    $copiedArticles = array_merge($copiedArticles, 
                         DbObjectArray::GetColumn($tmpCopiedArticles, "Number"));
         	    }
         	}

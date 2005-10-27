@@ -17,9 +17,9 @@ if (!$User->hasPermission('ManagePub')) {
 }
 
 $languages = Language::GetLanguages();
-$defaultLanguage =& array_pop(Language::GetLanguages(null, $_REQUEST['TOL_Language']));
-$urlTypes =& UrlType::GetUrlTypes();
-$timeUnits =& TimeUnit::GetTimeUnits($_REQUEST['TOL_Language']);
+$defaultLanguage = array_pop(Language::GetLanguages(null, $_REQUEST['TOL_Language']));
+$urlTypes = UrlType::GetUrlTypes();
+$timeUnits = TimeUnit::GetTimeUnits($_REQUEST['TOL_Language']);
 
 $crumbs = array();
 $crumbs[] = array(getGS("Publications"), "/$ADMIN/pub/");

@@ -110,7 +110,7 @@ if (count($articleImages) > 0) {
 <?php 
 	$imageCount = 0;
 	foreach ($articleImages as $articleImage) {
-		$image =& $articleImage->getImage();
+		$image = $articleImage->getImage();
 	?>	
 	<TR <?php  if (($imageCount%2)==0) { ?>class="list_row_odd"<?php  } else { ?>class="list_row_even"<?php  } ?>>
 		<TD ALIGN="center"><?php echo $articleImage->getTemplateId(); ?></td>

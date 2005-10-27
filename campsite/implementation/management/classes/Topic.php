@@ -189,7 +189,7 @@ class Topic extends DatabaseObject {
 		}
 		$queryStr .= ' ORDER BY Name ';
 		$queryStr = DatabaseObject::ProcessOptions($queryStr, $p_sqlOptions);
-		$subtopics =& DbObjectArray::Create('Topic', $queryStr);
+		$subtopics = DbObjectArray::Create('Topic', $queryStr);
 		return $subtopics;
 	} // fn getSubtopics
 	

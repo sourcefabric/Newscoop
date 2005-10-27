@@ -220,7 +220,7 @@ class ArticlePublish extends DatabaseObject {
 			$queryStr .= " AND IdLanguage=$p_languageId ";
 		}
 		$queryStr .= ' ORDER BY ActionTime ASC ';
-		$result =& DbObjectArray::Create('ArticlePublish', $queryStr);
+		$result = DbObjectArray::Create('ArticlePublish', $queryStr);
 		return $result;
 	} // fn GetArticleEvents
 	
@@ -237,7 +237,7 @@ class ArticlePublish extends DatabaseObject {
                     . " WHERE ActionTime <= '$datetime'"
                     . " AND Completed != 'Y'"
                     . " ORDER BY ActionTime ASC";
-        $result =& DbObjectArray::Create('ArticlePublish', $queryStr);
+        $result = DbObjectArray::Create('ArticlePublish', $queryStr);
         return $result;
 	} // fn GetPendingActions
 	
@@ -248,7 +248,7 @@ class ArticlePublish extends DatabaseObject {
 	 */
 	function DoPendingActions() 
 	{
-        $actions =& ArticlePublish::GetPendingActions();
+        $actions = ArticlePublish::GetPendingActions();
     	foreach ($actions as $articlePublishObj) {
     	    $articlePublishObj->doAction();
     	}

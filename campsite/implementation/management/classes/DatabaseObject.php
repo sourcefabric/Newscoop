@@ -224,7 +224,7 @@ class DatabaseObject {
 			$queryStr .= ' FROM ' . $this->m_dbTableName;
 			$queryStr .= ' WHERE ' . $this->getKeyWhereClause();
 			$queryStr .= ' LIMIT 1';
-			$resultSet =& $Campsite['db']->GetRow($queryStr);
+			$resultSet = $Campsite['db']->GetRow($queryStr);
 			if ($resultSet) {
 				foreach ($this->getColumnNames() as $dbColumnName) {
 					$this->m_data[$dbColumnName] = $resultSet[$dbColumnName];
@@ -267,7 +267,7 @@ class DatabaseObject {
 		$queryStr .= ' FROM ' . $this->m_dbTableName;
 		$queryStr .= ' WHERE ' . $this->getKeyWhereClause();
 		$queryStr .= ' LIMIT 1';
-		$resultSet =& $Campsite['db']->GetRow($queryStr);
+		$resultSet = $Campsite['db']->GetRow($queryStr);
 		return (count($resultSet) > 0);
 	} // fn exists
 	
@@ -689,7 +689,7 @@ class DatabaseObject {
 			$queryStr .= " WHERE ".implode(" AND ", $contraints);
 		}
 		$queryStr = DatabaseObject::ProcessOptions($queryStr, $p_sqlOptions);
-		$dbObjects =& DbObjectArray::Create($p_className, $queryStr);
+		$dbObjects = DbObjectArray::Create($p_className, $queryStr);
 		return $dbObjects;
 	} // fn search
 

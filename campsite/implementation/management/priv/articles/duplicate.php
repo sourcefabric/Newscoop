@@ -54,14 +54,14 @@ if (!$articleObj->exists()) {
 $languageObj =& new Language($Language);
 $sLanguageObj =& new Language($sLanguage);
 
-$allPublications =& Publication::GetPublications();
+$allPublications = Publication::GetPublications();
 $allIssues = array();
 if ($DestPublication > 0) {
-	$allIssues =& Issue::GetIssues($DestPublication, $Language);
+	$allIssues = Issue::GetIssues($DestPublication, $Language);
 }
 $allSections = array();
 if ($DestIssue > 0) {
-	$allSections =& Section::GetSections($DestPublication, $DestIssue, $Language);
+	$allSections = Section::GetSections($DestPublication, $DestIssue, $Language);
 }
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 

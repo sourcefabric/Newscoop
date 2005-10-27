@@ -46,7 +46,7 @@ class UrlType extends DatabaseObject {
 	function GetUrlTypes() 
 	{
 		$queryStr = 'SELECT * FROM URLTypes';
-		$urlTypes =& DbObjectArray::Create('UrlType', $queryStr);
+		$urlTypes = DbObjectArray::Create('UrlType', $queryStr);
 		return $urlTypes;
 	} // fn GetUrlTypes
 

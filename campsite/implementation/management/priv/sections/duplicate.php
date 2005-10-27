@@ -56,19 +56,19 @@ if (!$sectionObj->exists()) {
 
 $languageObj =& new Language($Language);
 
-$allPublications =& Publication::GetPublications();
+$allPublications = Publication::GetPublications();
 $allIssues = array();
 if ($DestPublicationId > 0) {
     // Get the most recent 50 Issues...if they want something farther back, we are in trouble.
     $sqlOptions = array("LIMIT" => 50, "ORDER BY" => array("Number" => "DESC")); 
-	$allIssues =& Issue::GetIssues($DestPublicationId, null, null, null, $sqlOptions);
+	$allIssues = Issue::GetIssues($DestPublicationId, null, null, null, $sqlOptions);
 }
 
 $allSections = array();
 $destIssueObj = null;
 if ($DestIssueId > 0) {
     $destIssueObj =& new Issue($DestPublicationId, $DestIssueLanguage, $DestIssueId);
-	$allSections =& Section::GetSections($DestPublicationId, $DestIssueId, $DestIssueLanguage);
+	$allSections = Section::GetSections($DestPublicationId, $DestIssueId, $DestIssueLanguage);
 }
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 'Section' => $sectionObj);

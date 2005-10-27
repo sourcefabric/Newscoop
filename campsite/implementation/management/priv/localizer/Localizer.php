@@ -300,8 +300,8 @@ class Localizer {
             return array();
         }
         $dir = $g_localizerConfig["MAP_PREFIX_TO_DIR"][$p_prefix];
-	    $newKeys =& Localizer::FindTranslationStrings($dir);
-	    $missingKeys =& Localizer::CompareKeys($p_prefix, $newKeys, false);
+	    $newKeys = Localizer::FindTranslationStrings($dir);
+	    $missingKeys = Localizer::CompareKeys($p_prefix, $newKeys, false);
 	    $missingKeys = array_unique($missingKeys);	    
 	    return $missingKeys;
     } // fn FindMissingStrings
@@ -320,7 +320,7 @@ class Localizer {
             return array();
         }
         $dir = $g_localizerConfig["MAP_PREFIX_TO_DIR"][$p_prefix];
-	    $existingKeys =& Localizer::FindTranslationStrings($dir);
+	    $existingKeys = Localizer::FindTranslationStrings($dir);
 		$localData =& new LocalizerLanguage($p_prefix, $g_localizerConfig['DEFAULT_LANGUAGE']);
 		$localData->loadFile(Localizer::GetMode());
 		$localTable = $localData->getTranslationTable();

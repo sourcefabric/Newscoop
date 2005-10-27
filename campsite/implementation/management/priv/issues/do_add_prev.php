@@ -32,8 +32,8 @@ if (!Input::IsValid()) {
 $publicationObj =& new Publication($Pub);
 
 if ($correct) {
-    $lastIssue =& Issue::GetLastCreatedIssue($Pub);
-    $issueCopies =& $lastIssue->copy(null, $cNumber);
+    $lastIssue = Issue::GetLastCreatedIssue($Pub);
+    $issueCopies = $lastIssue->copy(null, $cNumber);
     $issueCopy = array_pop($issueCopies);
 	$logtext = getGS('New issue $1 from $2 in publication $3', $cNumber, 
 					 $lastIssue->getIssueId(), $publicationObj->getName()); 

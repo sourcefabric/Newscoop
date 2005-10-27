@@ -50,7 +50,7 @@ if (!$User->hasPermission("AddArticle")) {
 	exit;	
 }
 
-$translations =& $articleObj->getTranslations();
+$translations = $articleObj->getTranslations();
 foreach ($translations as $translation) {
 	$articleNames[] = $translation->getName();
 }

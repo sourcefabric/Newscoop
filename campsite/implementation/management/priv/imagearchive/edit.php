@@ -22,7 +22,7 @@ if (!Input::IsValid()) {
 	exit;	
 }
 $imageObj =& new Image($ImageId);
-$articles =& ArticleImage::GetArticlesThatUseImage($ImageId);
+$articles = ArticleImage::GetArticlesThatUseImage($ImageId);
 
 $crumbs = array();
 $crumbs[] = array(getGS("Content"), "");

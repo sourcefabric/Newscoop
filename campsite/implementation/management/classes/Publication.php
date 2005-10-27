@@ -228,7 +228,7 @@ class Publication extends DatabaseObject {
 		            .' AND Publications.IdURLType = URLTypes.Id '
 		            .' AND Publications.IdDefaultLanguage = Languages.Id ';
         $queryStr = DatabaseObject::ProcessOptions($queryStr, $p_sqlOptions);		            
-		$publications =& DbObjectArray::Create('Publication', $queryStr);
+		$publications = DbObjectArray::Create('Publication', $queryStr);
 		return $publications;
 	} // fn getPublications
 	

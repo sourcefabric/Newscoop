@@ -100,7 +100,7 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 		}
 		$color = 0;
 		foreach ($YourArticles as $YourArticle) {
-			$section =& $YourArticle->getSection();
+			$section = $YourArticle->getSection();
 			$language =& new Language($YourArticle->getLanguageId());
 			 ?>
 		<TR <?php if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
@@ -188,7 +188,7 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 	    }
 	    
 		foreach ($SubmittedArticles as $SubmittedArticle) {
-			$section =& $SubmittedArticle->getSection();
+			$section = $SubmittedArticle->getSection();
 			$language =& new Language($SubmittedArticle->getLanguageId());
 			?>	
 		<TR <?php if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>

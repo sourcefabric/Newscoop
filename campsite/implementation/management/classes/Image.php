@@ -536,7 +536,7 @@ class Image extends DatabaseObject {
 		$queryColumnNames = implode(",", $queryColumnNames);			
 		$queryStr = 'SELECT DISTINCT Users.Id, '.$queryColumnNames
 					.' FROM Images, Users WHERE Images.UploadedByUser = Users.Id';
-		$users =& DbObjectArray::Create('User', $queryStr);
+		$users = DbObjectArray::Create('User', $queryStr);
 		return $users;
 	} // fn GetUploadUsers
 	

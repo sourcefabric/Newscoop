@@ -22,7 +22,7 @@ $print_path = ($path != "") ? $path : "/";
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
 $crumbs[] = array(getGS("Templates"), "/$ADMIN/templates");
-$crumbs = array_merge($crumbs, camp_template_path_crumbs($Path));
+$crumbs = array_merge($crumbs, camp_template_path_crumbs($path));
 $crumbs[] = array(getGS("Duplicate template").": $Name", "");
 echo camp_html_breadcrumbs($crumbs);
 

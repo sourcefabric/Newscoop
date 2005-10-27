@@ -1,6 +1,6 @@
 <?php
 /*
- @version V4.50 6 July 2004 (c) 2000-2004 John Lim (jlim@natsoft.com.my). All rights reserved.
+ @version V4.66 28 Sept 2005 (c) 2000-2005 John Lim (jlim@natsoft.com.my). All rights reserved.
  Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence. 
@@ -118,7 +118,7 @@ class ADODB_fbsql extends ADOConnection {
 	// returns true or false
 	function SelectDB($dbName) 
 	{
-		$this->databaseName = $dbName;
+		$this->database = $dbName;
 		if ($this->_connectionID) {
 			return @fbsql_select_db($dbName,$this->_connectionID);		
 		}
@@ -170,9 +170,10 @@ class ADORecordSet_fbsql extends ADORecordSet{
 		}
 		switch ($mode) {
 		case ADODB_FETCH_NUM: $this->fetchMode = FBSQL_NUM; break;
-		default:
-		case ADODB_FETCH_BOTH: $this->fetchMode = FBSQL_BOTH; break;
 		case ADODB_FETCH_ASSOC: $this->fetchMode = FBSQL_ASSOC; break;
+		case ADODB_FETCH_BOTH: 
+		default:
+		$this->fetchMode = FBSQL_BOTH; break;
 		}
 		return $this->ADORecordSet($queryID);
 	}

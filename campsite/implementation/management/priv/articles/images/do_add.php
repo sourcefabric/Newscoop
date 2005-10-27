@@ -55,10 +55,10 @@ $attributes['Photographer'] = $cPhotographer;
 $attributes['Place'] = $cPlace;
 $attributes['Date'] = $cDate;
 if (!empty($cURL)) {
-	$image =& Image::OnAddRemoteImage($cURL, $attributes, $User->getId());
+	$image = Image::OnAddRemoteImage($cURL, $attributes, $User->getId());
 }
 elseif (!empty($_FILES['cImage'])) {
-	$image =& Image::OnImageUpload($_FILES['cImage'], $attributes, $User->getId());
+	$image = Image::OnImageUpload($_FILES['cImage'], $attributes, $User->getId());
 }
 else {
 	header('Location: '.camp_html_article_url($articleObj, $Language, 'images/index.php'));

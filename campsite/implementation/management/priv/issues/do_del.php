@@ -27,7 +27,7 @@ $publicationObj =& new Publication($Pub);
 $issueObj =& new Issue($Pub, $Language, $Issue);
 
 $doDelete = true;
-$articlesRemaining =& Article::GetArticles($Pub, $Issue, null, $Language);
+$articlesRemaining = Article::GetArticles($Pub, $Issue, null, $Language);
 $numArticlesRemaining = count($articlesRemaining);
 if ($numArticlesRemaining > 0) {
     $doDelete = false;

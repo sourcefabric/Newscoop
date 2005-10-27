@@ -1,1 +1,1 @@
-ADOdb Version 4.5.2
+ADOdb Version 4.66

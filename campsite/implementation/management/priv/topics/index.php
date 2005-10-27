@@ -10,7 +10,7 @@ if (!$access) {
 $f_topic_parent_id = Input::Get('f_topic_parent_id', 'int', 0);
 $topic =& new Topic($f_topic_parent_id);
 $Path = camp_topic_path($topic);
-$subtopics =& $topic->getSubtopics();
+$subtopics = $topic->getSubtopics();
 
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");

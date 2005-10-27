@@ -28,7 +28,7 @@ $articlePublishObj->setPublishAction('P');
 $articlePublishObj->dumpToHtml();
 
 echo "Getting events...<br>";
-$events =& ArticlePublish::GetPendingActions();
+$events = ArticlePublish::GetPendingActions();
 foreach ($events as $event) {
     $event->dumpToHtml();   
     $event->doAction();
@@ -90,7 +90,7 @@ $issuePublishEvent->fetch();
 $issuePublishEvent->dumpToHtml();
 
 echo "Executing pending events:<br>";
-$events =& IssuePublish::GetPendingActions();
+$events = IssuePublish::GetPendingActions();
 foreach ($events as $event) {
     $event->doAction();
     $event->dumpToHtml();

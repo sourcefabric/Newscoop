@@ -133,7 +133,7 @@ class ArticleImage extends DatabaseObject {
 					.' WHERE ArticleImages.NrArticle='.$p_articleId
 					.' AND ArticleImages.IdImage=Images.Id'
 					.' ORDER BY ArticleImages.Number';
-		$rows =& $Campsite['db']->GetAll($queryStr);
+		$rows = $Campsite['db']->GetAll($queryStr);
 		$returnArray = array();
 		if (is_array($rows)) {
 			foreach ($rows as $row) {
@@ -226,7 +226,7 @@ class ArticleImage extends DatabaseObject {
 	function RemoveImageTagsFromArticleText($p_articleId, $p_templateId)
 	{
 		// Get all the articles
-		$articles =& Article::GetArticles(null, null, null, null, $p_articleId);
+		$articles = Article::GetArticles(null, null, null, null, $p_articleId);
 		
 		// The REGEX
 		$altAttr = "(alt\s*=\s*[\"][^\"]*[\"])";
@@ -236,8 +236,8 @@ class ArticleImage extends DatabaseObject {
 
 		// Replace the article tag in each one with the empty string
 		foreach ($articles as $article) {
-			$articleData =& $article->getArticleData();
-			$dbColumns =& $articleData->getUserDefinedColumns();
+			$articleData = $article->getArticleData();
+			$dbColumns = $articleData->getUserDefinedColumns();
 			foreach ($dbColumns as $dbColumn) {
 				$originalText = $articleData->getProperty($dbColumn->getName());
 				$newText = preg_replace($matchString, '', $originalText);
@@ -325,7 +325,7 @@ class ArticleImage extends DatabaseObject {
 					.' WHERE ArticleImages.IdImage='.$p_imageId
 					.' AND ArticleImages.NrArticle=Articles.Number'
 					.' ORDER BY Articles.Number, Articles.IdLanguage';
-		$rows =& $Campsite['db']->GetAll($queryStr);
+		$rows = $Campsite['db']->GetAll($queryStr);
 		$articles = array();
 		if (is_array($rows)) {
 			foreach ($rows as $row) {

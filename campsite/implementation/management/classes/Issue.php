@@ -109,7 +109,7 @@ class Issue extends DatabaseObject {
         $created = $newIssue->create($p_destIssueId, $columns);
         if ($created) {
         	// Copy the sections in the issue
-            $sections =& Section::GetSections($this->m_data['IdPublication'], 
+            $sections = Section::GetSections($this->m_data['IdPublication'], 
                 $this->m_data['Number'], $this->m_data['IdLanguage']);
             foreach ($sections as $section) {
                 $section->copy($p_destPublicationId, $p_destIssueId, $p_destLanguageId, null, false);
@@ -157,7 +157,7 @@ class Issue extends DatabaseObject {
             $queryStr = 'SELECT * FROM Issues '
                         .' WHERE IdPublication='.$this->m_data['IdPublication']
                         .' AND Number='.$this->m_data['Number'];
-            $srcIssues =& DbObjectArray::Create('Issue', $queryStr);
+            $srcIssues = DbObjectArray::Create('Issue', $queryStr);
 
             // Copy all translations of this issue.
             $newIssues = array();
@@ -363,7 +363,7 @@ class Issue extends DatabaseObject {
 					." AND Issues.Number= ".$this->m_data['Number']
 					." AND Issues.IdLanguage = Languages.Id "
 					." WHERE Issues.IdPublication IS NULL";
-		$languages =& DbObjectArray::Create('Language', $queryStr);
+		$languages = DbObjectArray::Create('Language', $queryStr);
 		return $languages;
 	} // fn getUsusedLanguages
 

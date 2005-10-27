@@ -19,7 +19,7 @@ if (!Template::IsValidPath($Path)) {
 	header("Location: /$ADMIN/templates/");
 	exit;
 }
-$languages =& Language::GetLanguages();
+$languages = Language::GetLanguages();
 
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");

@@ -214,7 +214,7 @@ class Article extends DatabaseObject {
 		$copyArticles = array();
 		if ($p_copyAllTranslations) {
 		    // Get all translations for this article
-		    $copyArticles =& Article::GetArticles($this->m_data['IdPublication'], 
+		    $copyArticles = Article::GetArticles($this->m_data['IdPublication'], 
 		                                          $this->m_data['NrIssue'], 
 		                                          $this->m_data['NrSection'], 
 		                                          null, 
@@ -263,7 +263,7 @@ class Article extends DatabaseObject {
     			$articleCopy->m_data['Number'], 
     			$articleCopy->m_data['IdLanguage']);
     		$newArticleData->create();
-    		$origArticleData =& $copyMe->getArticleData();
+    		$origArticleData = $copyMe->getArticleData();
     		$origArticleData->copyToExistingRecord($articleCopy->m_data['Number']);
     		
     		// Copy image pointers
@@ -354,7 +354,7 @@ class Article extends DatabaseObject {
 			$articleCopy->m_data['Number'], $articleCopy->m_data['IdLanguage']);
 		$articleCopyData->create();
 		
-		$origArticleData =& $this->getArticleData();
+		$origArticleData = $this->getArticleData();
 		$origArticleData->copyToExistingRecord($articleCopy->getArticleId(), $p_languageId);
 		
 		return $articleCopy;
@@ -459,7 +459,7 @@ class Article extends DatabaseObject {
 	 				.' AND NrSection='.$this->m_data['NrSection']
 	 				.' AND Number='.$this->m_data['Number']
 	 				.' AND Articles.IdLanguage=Languages.Id';
-	 	$languages =& DbObjectArray::Create('Language', $queryStr);
+	 	$languages = DbObjectArray::Create('Language', $queryStr);
 		return $languages;
 	} // fn getLanguages
 	
@@ -478,7 +478,7 @@ class Article extends DatabaseObject {
 	 				.' AND NrIssue='.$this->m_data['NrIssue']
 	 				.' AND NrSection='.$this->m_data['NrSection']
 	 				.' AND Number='.$this->m_data['Number'];
-	 	$articles =& DbObjectArray::Create('Article', $queryStr);
+	 	$articles = DbObjectArray::Create('Article', $queryStr);
 		return $articles;
 	} // fn getTranslations
 	
@@ -1137,7 +1137,7 @@ class Article extends DatabaseObject {
 	 	$queryStr = 'SELECT DISTINCT(IdLanguage), '.$languageColumns
 	 				.' FROM Articles, Languages '
 	 				.' WHERE Articles.IdLanguage = Languages.Id';
-	 	$languages =& DbObjectArray::Create('Language', $queryStr);
+	 	$languages = DbObjectArray::Create('Language', $queryStr);
 		return $languages;		
 	} // fn GetAllLanguages
 	
@@ -1277,7 +1277,7 @@ class Article extends DatabaseObject {
 			}
 		}
 
-		$articles =& DbObjectArray::Create('Article', $queryStr2);
+		$articles = DbObjectArray::Create('Article', $queryStr2);
 		return $articles;
 	} // fn GetArticles
 	
@@ -1308,7 +1308,7 @@ class Article extends DatabaseObject {
 	               ." WHERE Published='Y'"
 	               ." ORDER BY PublishDate DESC"
 	               ." LIMIT $p_max";
-	    $result =& DbObjectArray::Create('Article', $queryStr);
+	    $result = DbObjectArray::Create('Article', $queryStr);
 	    return $result;
 	} // fn GetRecentArticles
 	

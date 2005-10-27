@@ -30,6 +30,7 @@ if (!$User->hasPermission('ManageLanguages')) {
 
 $q_defaultTimeUnits = $Campsite['db']->GetAll("SELECT * FROM TimeUnits WHERE IdLanguage=1");
 $numTimeUnits = 0;
+$q_timeUnits = array();
 if ($editMode) {
     $q_timeUnits = $Campsite['db']->GetAll("SELECT * FROM TimeUnits WHERE IdLanguage=$languageId");
 }

@@ -34,6 +34,32 @@ class Log extends DatabaseObject {
 		$Campsite['db']->Execute($queryStr);
 	} // fn Message
 	
+	
+	function getTimeStamp()
+	{
+		return $this->getProperty('TStamp');
+	}
+	
+	
+	function getUserName()
+	{
+		return $this->getProperty('User');
+	}
+	
+	
+	function GetLogs($p_eventId = null, $p_sqlOptions = null)
+	{
+		if (is_null($p_sqlOptions) || !isset($p_sqlOptions['ORDER BY'])) {
+			$p_sqlOptions['ORDER BY'] = array('TStamp' => 'DESC');
+		}
+		$constraints = array();
+		if (!is_null($p_eventId)) {
+			$constraints[] = array('IdEvent', $p_eventId);
+		}
+		$queryStr = "SELECT * FROM "; 
+		return DatabaseObject::Search('Logs', $constraints, $p_sqlOptions);
+	} // fn GetLogs
+	
 } // class Log
 
 ?>

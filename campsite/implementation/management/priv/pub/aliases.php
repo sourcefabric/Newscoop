@@ -12,7 +12,7 @@ if (!$access) {
 
 $Pub = Input::Get('Pub', 'int');
 $publicationObj =& new Publication($Pub);
-$aliases =& Alias::GetAliases(null, $Pub);
+$aliases = Alias::GetAliases(null, $Pub);
     
 camp_html_content_top(getGS("Publication Aliases"), array("Pub" => $publicationObj));
 ?>

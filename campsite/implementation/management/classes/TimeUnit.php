@@ -56,14 +56,14 @@ class TimeUnit extends DatabaseObject {
 					." WHERE TimeUnits.IdLanguage = Languages.Id "
 					." AND Languages.Code = '$p_languageCode'"
 					." ORDER BY TimeUnits.Unit ASC";
-		$timeUnits =& DbObjectArray::Create('TimeUnit', $queryStr);
+		$timeUnits = DbObjectArray::Create('TimeUnit', $queryStr);
 		if (count($timeUnits) == 0) {
 			$queryStr = "SELECT TimeUnits.Unit, TimeUnits.Name "
 						." FROM TimeUnits, Languages "
 						." WHERE TimeUnits.IdLanguage = Languages.Id "
 						." AND Languages.Code = 'en'"
 						." ORDER BY TimeUnits.Unit ASC";
-			$timeUnits =& DbObjectArray::Create('TimeUnit', $queryStr);
+			$timeUnits = DbObjectArray::Create('TimeUnit', $queryStr);
 		}
 		return $timeUnits;
 	} // fn GetTimeUnits
