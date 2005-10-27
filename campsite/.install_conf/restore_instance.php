@@ -38,8 +38,7 @@ if ($type == "-a") {
 	exec_command("rm -f $tmp_dir/*");
 
 	// unarchive the backup
-	$cmd = "pushd " . escapeshellarg($tmp_dir) . " > /dev/null && tar xf "
-		. escapeshellarg($archive_file) . " && popd > /dev/null";
+	$cmd = "tar xfC " . escapeshellarg($archive_file) . " " . escapeshellarg($tmp_dir);
 	exec_command($cmd);
 
 	// read instance name from database package
