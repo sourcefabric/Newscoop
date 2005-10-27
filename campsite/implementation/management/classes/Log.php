@@ -38,13 +38,37 @@ class Log extends DatabaseObject {
 	function getTimeStamp()
 	{
 		return $this->getProperty('TStamp');
-	}
+	} // fn getTimeStamp
 	
 	
 	function getUserName()
 	{
 		return $this->getProperty('User');
-	}
+	} // fn getUserName
+	
+	
+	function getText()
+	{
+		return $this->getProperty('Text');
+	} // fn getText
+	
+	
+	function getEventId()
+	{
+		return $this->getProperty('IdEvent');
+	} // fn getEventId
+	
+	
+	function GetNumLogs($p_eventId = null)
+	{
+		global $Campsite;
+		$queryStr = 'SELECT COUNT(*) FROM Log';
+		if (!is_null($p_eventId)) {
+			$queryStr .= " WHERE IdEvent=$p_eventId";
+		}
+		$total = $Campsite['db']->GetOne($queryStr);
+		return $total;
+	} // fn GetNumLogs
 	
 	
 	function GetLogs($p_eventId = null, $p_sqlOptions = null)
@@ -56,8 +80,7 @@ class Log extends DatabaseObject {
 		if (!is_null($p_eventId)) {
 			$constraints[] = array('IdEvent', $p_eventId);
 		}
-		$queryStr = "SELECT * FROM "; 
-		return DatabaseObject::Search('Logs', $constraints, $p_sqlOptions);
+		return DatabaseObject::Search('Log', $constraints, $p_sqlOptions);
 	} // fn GetLogs
 	
 } // class Log
