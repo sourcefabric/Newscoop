@@ -48,7 +48,7 @@ if ($publish_time != '') {
 	$publish_hour = $publish_time[0];
 	$publish_min = $publish_time[1];
 }
-$allEvents =& IssuePublish::GetIssueEvents($Pub, $Issue, $Language);
+$allEvents = IssuePublish::GetIssueEvents($Pub, $Issue, $Language);
 
 CampsiteInterface::ContentTop(getGS('Issue Publishing Schedule'), array('Pub' => $publicationObj, 'Issue' => $issueObj));
 

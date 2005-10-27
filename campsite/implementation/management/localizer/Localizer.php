@@ -311,8 +311,8 @@ class Localizer {
      */
     function FindMissingStrings($p_directory) 
     {
-	    $newKeys =& Localizer::FindTranslationStrings($p_directory);
-	    $missingKeys =& Localizer::CompareKeys($p_directory, $newKeys, false);
+	    $newKeys = Localizer::FindTranslationStrings($p_directory);
+	    $missingKeys = Localizer::CompareKeys($p_directory, $newKeys, false);
 	    $missingKeys = array_unique($missingKeys);	    
 	    return $missingKeys;
     } // fn FindMissingStrings
@@ -326,7 +326,7 @@ class Localizer {
     function FindUnusedStrings($p_directory) 
     {
         global $g_localizerConfig;
-	    $existingKeys =& Localizer::FindTranslationStrings($p_directory);	    
+	    $existingKeys = Localizer::FindTranslationStrings($p_directory);	    
 		$localData =& new LocalizerLanguage($g_localizerConfig['FILENAME_PREFIX'], 
 		                                    $p_directory, 
 		                                    $g_localizerConfig['DEFAULT_LANGUAGE']);

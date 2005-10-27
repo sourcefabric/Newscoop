@@ -10,9 +10,9 @@
  * build a database on any ADOdb-supported platform using a simple
  * XML schema.
  *
- * Last Editor: $Author: paul $
+ * Last Editor: $Author$
  * @author Richard Tango-Lowy & Dan Cech
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.12 $
  *
  * @package axmls
  * @tutorial getting_started.pkg
@@ -921,9 +921,10 @@ class dbData extends dbObject {
 			// check that no required columns are missing
 			if( count( $fields ) < $table_field_count ) {
 				foreach( $table_fields as $field ) {
-					if( ( in_array( 'NOTNULL', $field['OPTS'] ) || in_array( 'KEY', $field['OPTS'] ) ) && !in_array( 'AUTOINCREMENT', $field['OPTS'] ) ) {
-						continue(2);
-					}
+					if (isset( $field['OPTS'] ))
+						if( ( in_array( 'NOTNULL', $field['OPTS'] ) || in_array( 'KEY', $field['OPTS'] ) ) && !in_array( 'AUTOINCREMENT', $field['OPTS'] ) ) {
+							continue(2);
+						}
 				}
 			}
 			
@@ -1194,7 +1195,7 @@ class dbQuerySet extends dbObject {
 * @tutorial getting_started.pkg
 *
 * @author Richard Tango-Lowy & Dan Cech
-* @version $Revision: 1.1 $
+* @version $Revision: 1.12 $
 *
 * @package axmls
 */
@@ -1701,6 +1702,13 @@ class adoSchema {
 		return $result;
 	}
 	
+	// compat for pre-4.3 - jlim
+	function _file_get_contents($path)
+	{
+		if (function_exists('file_get_contents')) return file_get_contents($path);
+		return join('',file($path));
+	}
+	
 	/**
 	* Converts an XML schema file to the specified DTD version.
 	*
@@ -1729,7 +1737,7 @@ class adoSchema {
 		}
 		
 		if( $version == $newVersion ) {
-			$result = file_get_contents( $filename );
+			$result = _file_get_contents( $filename );
 			
 			// remove unicode BOM if present
 			if( substr( $result, 0, 3 ) == sprintf( '%c%c%c', 239, 187, 191 ) ) {
@@ -1768,7 +1776,7 @@ class adoSchema {
 					return FALSE;
 				}
 				
-				$schema = file_get_contents( $schema );
+				$schema = _file_get_contents( $schema );
 				break;
 			case 'string':
 			default:
@@ -1779,7 +1787,7 @@ class adoSchema {
 		
 		$arguments = array (
 			'/_xml' => $schema,
-			'/_xsl' => file_get_contents( $xsl_file )
+			'/_xsl' => _file_get_contents( $xsl_file )
 		);
 		
 		// create an XSLT processor
@@ -1917,7 +1925,7 @@ class adoSchema {
 				$schema .= '	<table name="' . $table . '">' . "\n";
 				
 				// grab details from database
-				$rs = $this->db->Execute( 'SELECT * FROM ' . $table . ' WHERE -1' );
+				$rs = $this->db->Execute( 'SELECT * FROM ' . $table . ' WHERE 1=1' );
 				$fields = $this->db->MetaColumns( $table );
 				$indexes = $this->db->MetaIndexes( $table );
 				
@@ -1983,7 +1991,7 @@ class adoSchema {
 						
 						while( $row = $rs->FetchRow() ) {
 							foreach( $row as $key => $val ) {
-								$row[$key] = htmlentities($row);
+								$row[$key] = htmlentities($val);
 							}
 							
 							$schema .= '			<row><f>' . implode( '</f><f>', $row ) . '</f></row>' . "\n";

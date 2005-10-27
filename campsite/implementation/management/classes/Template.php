@@ -47,7 +47,7 @@ class Template extends DatabaseObject {
 		else {
 			$queryStr .= ' ORDER BY Level ASC, Name ASC';
 		}
-		$templates =& DbObjectArray::Create('Template', $queryStr);
+		$templates = DbObjectArray::Create('Template', $queryStr);
 		return $templates;
 	} // fn GetAllTemplates
 	

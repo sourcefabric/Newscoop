@@ -104,4 +104,6 @@ fetchRowNum($q_now);
 </FORM>
 <P>
 
-<?php CampsiteInterface::CopyrightNotice(); ?>
+<?php 
+//CampsiteInterface::CopyrightNotice(); 
+?>

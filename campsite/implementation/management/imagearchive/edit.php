@@ -22,7 +22,7 @@ if (!Input::IsValid()) {
 }
 $imageNav =& new ImageNav(CAMPSITE_IMAGEARCHIVE_IMAGES_PER_PAGE, $view);
 $imageObj =& new Image($ImageId);
-$articles =& ArticleImage::GetArticlesThatUseImage($ImageId);
+$articles = ArticleImage::GetArticlesThatUseImage($ImageId);
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
 	"http://www.w3.org/TR/REC-html40/loose.dtd">

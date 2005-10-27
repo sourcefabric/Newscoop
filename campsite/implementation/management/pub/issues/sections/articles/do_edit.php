@@ -156,7 +156,7 @@ function TransformImageTags($p_match) {
 			$templateId = $articleImage->getTemplateId();
 		}
 		else {
-			$image =& Image::GetByUrl($attrs['src']);
+			$image = Image::GetByUrl($attrs['src']);
 			$articleImage =& new ArticleImage($Article, $image->getImageId());
 			$templateId = $articleImage->getTemplateId();
 		}
@@ -206,7 +206,7 @@ if (!$articleObj->exists()) {
 	CampsiteInterface::DisplayError(getGS('No such article.'), $BackLink);
 }
 
-$articleTypeObj =& $articleObj->getArticleTypeObject();
+$articleTypeObj = $articleObj->getArticleTypeObject();
 $dbColumns = $articleTypeObj->getUserDefinedColumns();
 
 $articleFields = array();

@@ -29,7 +29,7 @@ if (function_exists ("incModFile")) {
     incModFile ();
 }
 
-$articles =& Article::GetArticles($Pub, $Issue, $Section, $Language);
+$articles = Article::GetArticles($Pub, $Issue, $Section, $Language);
 $numArticles = count($articles);
 $doDelete = false;
 if ($f_deleteArticles || (!$f_deleteArticles && ($numArticles <= 0))) {

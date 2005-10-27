@@ -28,8 +28,8 @@ if (!Input::IsValid()) {
 }
 $publicationObj =& new Publication($Pub);
 $issueObj =& new Issue($Pub, $Language, $Issue);
-$allLanguages =& Language::GetAllLanguages();
-$allTemplates =& Template::GetAllTemplates();
+$allLanguages = Language::GetAllLanguages();
+$allTemplates = Template::GetAllTemplates();
 
 CampsiteInterface::ContentTop(getGS('Change issue details'), array('Pub' => $publicationObj, 'Issue' => $issueObj));
 

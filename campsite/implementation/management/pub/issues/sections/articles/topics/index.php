@@ -55,11 +55,11 @@ if (!$articleObj->exists()) {
 $languageObj =& new Language($Language);
 $sLanguageObj =& new Language($sLanguage);
 
-$articleTopics =& ArticleTopic::GetArticleTopics($Article);
+$articleTopics = ArticleTopic::GetArticleTopics($Article);
 $articleTopicsIds = DbObjectArray::GetColumn($articleTopics, 'Id');
 
 $viewTopic =& new Topic($TopicId);
-$topicParents =& $viewTopic->getPath();
+$topicParents = $viewTopic->getPath();
 
 $Top = '';
 if ($TopicId != 0) {
@@ -73,11 +73,11 @@ foreach ($topicParents as $parent) {
 $Path = $Top . '/' . $Path;
 
 if ($searchTopicsString != '') {
-	$subtopics =& Topic::GetByName($searchTopicsString);
+	$subtopics = Topic::GetByName($searchTopicsString);
 	$totalSubtopics = count($subtopics);
 }
 else {
-	$subtopics =& $viewTopic->getSubtopics(null, /*$sLanguage, */
+	$subtopics = $viewTopic->getSubtopics(null, /*$sLanguage, */
 		array('LIMIT' => array('START' => $TopicOffset, 'MAX_ROWS'=>($TopicsPerPage))));
 	$totalSubtopics = count($viewTopic->getSubtopics());
 }
@@ -110,7 +110,7 @@ if (count($articleTopics) > 0) {
 	
 	<?php 
 	foreach ($articleTopics as $topic) { 
-		$topicPath =& $topic->getPath();
+		$topicPath = $topic->getPath();
 		?>
 		<TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 			<TD style="padding-left: 8px;">

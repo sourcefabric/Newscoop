@@ -236,7 +236,7 @@ class LocalizerFileFormat_XML extends LocalizerFileFormat {
 	{
     	$saveData = array();
     	$saveData["Id"] = $p_localizerLanguage->getLanguageId();
-    	$origTranslationTable =& $p_localizerLanguage->getTranslationTable();
+    	$origTranslationTable = $p_localizerLanguage->getTranslationTable();
 		$saveTranslationTable = array();
 		foreach ($origTranslationTable as $key => $value) {
 			$saveTranslationTable[] = array('key' => $key, 'value' => $value);

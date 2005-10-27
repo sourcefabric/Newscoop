@@ -115,9 +115,9 @@ case 'id':
 $TotalImages = Image::GetTotalImages();
 $imageSearch =& new ImageSearch(CAMPSITE_IMAGEARCHIVE_IMAGES_PER_PAGE);
 $imageSearch->run();
-$imageData =& $imageSearch->getImages();
+$imageData = $imageSearch->getImages();
 $NumImagesFound = $imageSearch->getNumImagesFound();
-$uploadedByUsers =& Image::GetUploadUsers();
+$uploadedByUsers = Image::GetUploadUsers();
 
 // Add extra breadcrumb for image list.
 $extraCrumbs = array(getGS("Images")=>"/$ADMIN/pub/issues/sections/articles/images/?Pub=$Pub&Issue=$Issue&Language=$Language&Section=$Section&Article=$Article&sLanguage=$sLanguage");

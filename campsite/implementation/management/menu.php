@@ -34,11 +34,11 @@ $showObsoleteMenu = ($User->hasPermission("ManageDictionary")
 	|| $User->hasPermission("DeleteDictionary") 
 	|| $User->hasPermission("ManageClasses"));
 
-$publications =& Publication::GetAllPublications();
+$publications = Publication::GetAllPublications();
 $issues = array();
 $sections = array();
 foreach ($publications as $publication) {
-	$issues[$publication->getPublicationId()] =& 
+	$issues[$publication->getPublicationId()] = 
 		Issue::GetIssues($publication->getPublicationId(), null, null, null, 
 			array('ORDER BY'=>array('Number'=>'DESC'), 'LIMIT' => '5'));
 	foreach ($issues[$publication->getPublicationId()] as $issue) {

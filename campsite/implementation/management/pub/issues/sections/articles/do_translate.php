@@ -60,7 +60,7 @@ if (!$articleObj->userCanModify($User)) {
 	exit;	
 }
 
-$articleCopy =& $articleObj->createTranslation($cLanguage, $User->getId(), $cName);
+$articleCopy = $articleObj->createTranslation($cLanguage, $User->getId(), $cName);
 
 $logtext = getGS('Article $1 added to $2. $3 from $4. $5 of $6', 
 	$cName, $sectionObj->getSectionId(), $sectionObj->getName(), 

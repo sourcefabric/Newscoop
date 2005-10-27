@@ -72,7 +72,7 @@ class Publication extends DatabaseObject {
 	function GetAllPublications() 
 	{
 		$queryStr = 'SELECT * FROM Publications ORDER BY Name';
-		$publications =& DbObjectArray::Create('Publication', $queryStr);
+		$publications = DbObjectArray::Create('Publication', $queryStr);
 		return $publications;
 	} // fn getAllPublications
 	

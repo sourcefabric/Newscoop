@@ -29,7 +29,7 @@ $articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
 if (!$articleObj->exists()) {
 	$errorStr = getGS('No such article.');
 }
-$articleType =& $articleObj->getArticleTypeObject();
+$articleType = $articleObj->getArticleTypeObject();
 $lockUserObj =& new User($articleObj->getLockedByUser());
 $languageObj =& new Language($Language);
 $sLanguageObj =& new Language($sLanguage);

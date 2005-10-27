@@ -1,6 +1,6 @@
 <?php
 /*
-V4.52 10 Aug 2004  (c) 2000-2004 John Lim (jlim@natsoft.com.my). All rights reserved.
+V4.66 28 Sept 2005  (c) 2000-2005 John Lim (jlim@natsoft.com.my). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence.
@@ -76,6 +76,49 @@ class ADODB_sqlite extends ADOConnection {
 		if ($this->transCnt>0)$this->transCnt -= 1;
 		return !empty($ret);
 	}
+	
+	// mark newnham
+	function &MetaColumns($tab)
+	{
+	  global $ADODB_FETCH_MODE;
+	  $false = false;
+	  $save = $ADODB_FETCH_MODE;
+	  $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
+	  if ($this->fetchMode !== false) $savem = $this->SetFetchMode(false);
+	  $rs = $this->Execute("PRAGMA table_info('$tab')");
+	  if (isset($savem)) $this->SetFetchMode($savem);
+	  if (!$rs) {
+	    $ADODB_FETCH_MODE = $save; 
+	    return $false;
+	  }
+	  $arr = array();
+	  while ($r = $rs->FetchRow()) {
+	    $type = explode('(',$r['type']);
+	    $size = '';
+	    if (sizeof($type)==2)
+	    $size = trim($type[1],')');
+	    $fn = strtoupper($r['name']);
+	    $fld = new ADOFieldObject;
+	    $fld->name = $r['name'];
+	    $fld->type = $type[0];
+	    $fld->max_length = $size;
+	    $fld->not_null = $r['notnull'];
+	    $fld->default_value = $r['dflt_value'];
+	    $fld->scale = 0;
+	    if ($save == ADODB_FETCH_NUM) $arr[] = $fld;	
+	    else $arr[strtoupper($fld->name)] = $fld;
+	  }
+	  $rs->Close();
+	  $ADODB_FETCH_MODE = $save;
+	  return $arr;
+	}
+	
+	function _init($parentDriver)
+	{
+	
+		$parentDriver->hasTransactions = false;
+		$parentDriver->hasInsertID = true;
+	}
 
 	function _insertid()
 	{
@@ -109,7 +152,10 @@ class ADODB_sqlite extends ADOConnection {
 	global $ADODB_FETCH_MODE;
 	
 		$rs = $this->Execute("select * from $tab limit 1");
-		if (!$rs) return false;
+		if (!$rs) {
+			$false = false;
+			return $false;
+		}
 		$arr = array();
 		for ($i=0,$max=$rs->_numOfFields; $i < $max; $i++) {
 			$fld =& $rs->FetchField($i);
@@ -131,6 +177,7 @@ class ADODB_sqlite extends ADOConnection {
 	function _connect($argHostname, $argUsername, $argPassword, $argDatabasename)
 	{
 		if (!function_exists('sqlite_open')) return null;
+		if (empty($argHostname) && $argDatabasename) $argHostname = $argDatabasename;
 		
 		$this->_connectionID = sqlite_open($argHostname);
 		if ($this->_connectionID === false) return false;
@@ -142,6 +189,7 @@ class ADODB_sqlite extends ADOConnection {
 	function _pconnect($argHostname, $argUsername, $argPassword, $argDatabasename)
 	{
 		if (!function_exists('sqlite_open')) return null;
+		if (empty($argHostname) && $argDatabasename) $argHostname = $argDatabasename;
 		
 		$this->_connectionID = sqlite_popen($argHostname);
 		if ($this->_connectionID === false) return false;
@@ -187,7 +235,7 @@ class ADODB_sqlite extends ADOConnection {
 		$MAXLOOPS = 100;
 		//$this->debug=1;
 		while (--$MAXLOOPS>=0) {
-			$num = $this->GetOne("select id from $seq");
+			@($num = $this->GetOne("select id from $seq"));
 			if ($num === false) {
 				$this->Execute(sprintf($this->_genSeqSQL ,$seq));	
 				$start -= 1;
@@ -231,6 +279,51 @@ class ADODB_sqlite extends ADOConnection {
 		return @sqlite_close($this->_connectionID);
 	}
 
+	function &MetaIndexes($table, $primary = FALSE, $owner=false)
+	{
+		$false = false;
+		// save old fetch mode
+        global $ADODB_FETCH_MODE;
+        $save = $ADODB_FETCH_MODE;
+        $ADODB_FETCH_MODE = ADODB_FETCH_NUM;
+        if ($this->fetchMode !== FALSE) {
+               $savem = $this->SetFetchMode(FALSE);
+        }
+		$SQL=sprintf("SELECT name,sql FROM sqlite_master WHERE type='index' AND tbl_name='%s'", strtolower($table));
+        $rs = $this->Execute($SQL);
+        if (!is_object($rs)) {
+			if (isset($savem)) 
+				$this->SetFetchMode($savem);
+			$ADODB_FETCH_MODE = $save;
+            return $false;
+        }
+
+		$indexes = array ();
+		while ($row = $rs->FetchRow()) {
+			if ($primary && preg_match("/primary/i",$row[1]) == 0) continue;
+            if (!isset($indexes[$row[0]])) {
+
+			$indexes[$row[0]] = array(
+				   'unique' => preg_match("/unique/i",$row[1]),
+				   'columns' => array());
+			}
+			/**
+			  * There must be a more elegant way of doing this,
+			  * the index elements appear in the SQL statement
+			  * in cols[1] between parentheses
+			  * e.g CREATE UNIQUE INDEX ware_0 ON warehouse (org,warehouse)
+			  */
+			$cols = explode("(",$row[1]);
+			$cols = explode(")",$cols[1]);
+			array_pop($cols);
+			$indexes[$row[0]]['columns'] = $cols;
+		}
+		if (isset($savem)) { 
+            $this->SetFetchMode($savem);
+			$ADODB_FETCH_MODE = $save;
+		}
+        return $indexes;
+	}
 
 }
 
@@ -255,6 +348,7 @@ class ADORecordset_sqlite extends ADORecordSet {
 		case ADODB_FETCH_ASSOC: $this->fetchMode = SQLITE_ASSOC; break;
 		default: $this->fetchMode = SQLITE_BOTH; break;
 		}
+		$this->adodbFetchMode = $mode;
 		
 		$this->_queryID = $queryID;
 	

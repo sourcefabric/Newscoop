@@ -88,9 +88,9 @@ case 'id':
 $TotalImages = Image::GetTotalImages();
 $imageSearch =& new ImageSearch(CAMPSITE_IMAGEARCHIVE_IMAGES_PER_PAGE);
 $imageSearch->run();
-$imageData =& $imageSearch->getImages();
+$imageData = $imageSearch->getImages();
 $NumImagesFound = $imageSearch->getNumImagesFound();
-$uploadedByUsers =& Image::GetUploadUsers();
+$uploadedByUsers = Image::GetUploadUsers();
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"

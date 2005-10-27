@@ -163,7 +163,7 @@ class IssuePublish extends DatabaseObject {
 
 		$articleState = ($publishAction == 'P') ? 'Y' : 'S';
 		if ($publishArticlesAction == 'Y') {
-		    $articles =& Article::GetArticles(null, $issueId, null, $languageId);
+		    $articles = Article::GetArticles(null, $issueId, null, $languageId);
             foreach ($articles as $article) {
                 $article->setPublished($articleState);
             }
@@ -192,7 +192,7 @@ class IssuePublish extends DatabaseObject {
 					." AND NrIssue = $p_issueId "
 					." AND IdLanguage = $p_languageId "
 					." ORDER BY ActionTime ASC";
-		$result =& DbObjectArray::Create('IssuePublish', $queryStr);
+		$result = DbObjectArray::Create('IssuePublish', $queryStr);
 		return $result;
 	} // fn GetIssueEvents
 	
@@ -208,7 +208,7 @@ class IssuePublish extends DatabaseObject {
     	           . " WHERE ActionTime <= '$datetime'"
                    . " AND Completed != 'Y'"
                    . " ORDER BY ActionTime ASC";
-        $result =& DbObjectArray::Create('IssuePublish', $queryStr);
+        $result = DbObjectArray::Create('IssuePublish', $queryStr);
         return $result;	
 	} // fn GetPendingActions
 	
@@ -219,7 +219,7 @@ class IssuePublish extends DatabaseObject {
 	 */
 	function DoPendingActions()
 	{
-        $actions =& IssuePublish::GetPendingActions();
+        $actions = IssuePublish::GetPendingActions();
     	foreach ($actions as $issuePublishObj) {
     	    $issuePublishObj->doAction();
     	}	    

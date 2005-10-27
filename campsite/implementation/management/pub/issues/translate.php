@@ -27,8 +27,8 @@ if (!Input::IsValid()) {
 }
 $publicationObj =& new Publication($Pub);
 $issueObj =& new Issue($Pub, $Language, $Issue);
-$allIssues =& Issue::GetIssues($Pub, null, $Issue);
-$unusedLanguages =& $issueObj->getUnusedLanguages();
+$allIssues = Issue::GetIssues($Pub, null, $Issue);
+$unusedLanguages = $issueObj->getUnusedLanguages();
 
 CampsiteInterface::ContentTop(getGS('Add new translation'), array('Pub' => $publicationObj, 'Issue' => $issueObj));
 

@@ -1,6 +1,6 @@
 <?php
 /* 
-V4.52 10 Aug 2004  (c) 2000-2004 John Lim (jlim@natsoft.com.my). All rights reserved.
+V4.66 28 Sept 2005  (c) 2000-2005 John Lim (jlim@natsoft.com.my). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence. 
@@ -75,7 +75,7 @@ class ADODB_mssql extends ADOConnection {
 	var $dataProvider = "mssql";
 	var $replaceQuote = "''"; // string to use to replace quotes
 	var $fmtDate = "'Y-m-d'";
-	var $fmtTimeStamp = "'Y-m-d h:i:sA'";
+	var $fmtTimeStamp = "'Y-m-d H:i:s'";
 	var $hasInsertID = true;
 	var $substr = "substring";
 	var $length = 'len';
@@ -103,7 +103,6 @@ class ADODB_mssql extends ADOConnection {
 	var $uniqueOrderBy = true;
 	var $_bindInputArray = true;
 	
-	
 	function ADODB_mssql() 
 	{		
 		$this->_has_mssql_init = (strnatcmp(PHP_VERSION,'4.1.0')>=0);
@@ -126,6 +125,7 @@ class ADODB_mssql extends ADOConnection {
 		$row = $this->GetRow($stmt);
 		
 		//$row = $this->GetRow("execute sp_server_info 2");
+		
 		
 		if ($this->fetchMode === false) {
 			$ADODB_FETCH_MODE = $savem;
@@ -306,10 +306,51 @@ class ADODB_mssql extends ADOConnection {
 		
 		See http://www.swynk.com/friends/achigrik/SQL70Locks.asp
 	*/
-	function RowLock($tables,$where) 
+	function RowLock($tables,$where,$flds='top 1 null as ignore') 
 	{
 		if (!$this->transCnt) $this->BeginTrans();
-		return $this->GetOne("select top 1 null as ignore from $tables with (ROWLOCK,HOLDLOCK) where $where");
+		return $this->GetOne("select $flds from $tables with (ROWLOCK,HOLDLOCK) where $where");
+	}
+	
+	
+	function &MetaIndexes($table,$primary=false)
+	{
+		$table = $this->qstr($table);
+
+		$sql = "SELECT i.name AS ind_name, C.name AS col_name, USER_NAME(O.uid) AS Owner, c.colid, k.Keyno, 
+			CASE WHEN I.indid BETWEEN 1 AND 254 AND (I.status & 2048 = 2048 OR I.Status = 16402 AND O.XType = 'V') THEN 1 ELSE 0 END AS IsPK,
+			CASE WHEN I.status & 2 = 2 THEN 1 ELSE 0 END AS IsUnique
+			FROM dbo.sysobjects o INNER JOIN dbo.sysindexes I ON o.id = i.id 
+			INNER JOIN dbo.sysindexkeys K ON I.id = K.id AND I.Indid = K.Indid 
+			INNER JOIN dbo.syscolumns c ON K.id = C.id AND K.colid = C.Colid
+			WHERE LEFT(i.name, 8) <> '_WA_Sys_' AND o.status >= 0 AND O.Name LIKE $table
+			ORDER BY O.name, I.Name, K.keyno";
+
+		global $ADODB_FETCH_MODE;
+		$save = $ADODB_FETCH_MODE;
+        $ADODB_FETCH_MODE = ADODB_FETCH_NUM;
+        if ($this->fetchMode !== FALSE) {
+        	$savem = $this->SetFetchMode(FALSE);
+        }
+        
+        $rs = $this->Execute($sql);
+        if (isset($savem)) {
+        	$this->SetFetchMode($savem);
+        }
+        $ADODB_FETCH_MODE = $save;
+
+        if (!is_object($rs)) {
+        	return FALSE;
+        }
+
+		$indexes = array();
+		while ($row = $rs->FetchRow()) {
+			if (!$primary && $row[5]) continue;
+			
+            $indexes[$row[0]]['unique'] = $row[6];
+            $indexes[$row[0]]['columns'][] = $row[1];
+    	}
+        return $indexes;
 	}
 	
 	function MetaForeignKeys($table, $owner=false, $upper=false)
@@ -360,13 +401,13 @@ order by constraint_name, referenced_table_name, keyno";
 						 $tmpAr=$ar=array(); 
 						 while($tmpAr=@mssql_fetch_row($rs)) 
 								 $ar[]=$tmpAr[0]; 
-						@mssql_select_db($this->databaseName); 
+						@mssql_select_db($this->database); 
 						 if(sizeof($ar)) 
 								 return($ar); 
 						 else 
 								 return(false); 
 				 } else { 
-						 @mssql_select_db($this->databaseName); 
+						 @mssql_select_db($this->database); 
 						 return(false); 
 				 } 
 		 } 
@@ -395,7 +436,8 @@ order by constraint_name, referenced_table_name, keyno";
 		$ADODB_FETCH_MODE = $savem;
 		
 		if ($a && sizeof($a)>0) return $a;
-		return false;	  
+		$false = false;
+		return $false;	  
 	}
 
 	
@@ -416,7 +458,8 @@ order by constraint_name, referenced_table_name, keyno";
  
 	function SelectDB($dbName) 
 	{
-		$this->databaseName = $dbName;
+		$this->database = $dbName;
+		$this->databaseName = $dbName; # obsolete, retained for compat with older adodb versions
 		if ($this->_connectionID) {
 			return @mssql_select_db($dbName);		
 		}
@@ -493,6 +536,30 @@ order by constraint_name, referenced_table_name, keyno";
 		if (!$stmt)  return $sql;
 		return array($sql,$stmt);
 	}
+	
+	// returns concatenated string
+    // MSSQL requires integers to be cast as strings
+    // automatically cast every datatype to VARCHAR(255)
+    // @author David Rogers (introspectshun)
+    function Concat()
+    {
+            $s = "";
+            $arr = func_get_args();
+
+            // Split single record on commas, if possible
+            if (sizeof($arr) == 1) {
+                foreach ($arr as $arg) {
+                    $args = explode(',', $arg);
+                }
+                $arr = $args;
+            }
+
+            array_walk($arr, create_function('&$v', '$v = "CAST(" . $v . " AS VARCHAR(255))";'));
+            $s = implode('+',$arr);
+            if (sizeof($arr) > 0) return "$s";
+            
+			return '';
+    }
 	
 	/* 
 	Usage:
@@ -670,6 +737,7 @@ class ADORecordset_mssql extends ADORecordSet {
 		if ($mode === false) { 
 			global $ADODB_FETCH_MODE;
 			$mode = $ADODB_FETCH_MODE;
+
 		}
 		$this->fetchMode = $mode;
 		return $this->ADORecordSet($id,$mode);
@@ -716,15 +784,17 @@ class ADORecordset_mssql extends ADORecordSet {
 		fields in a certain query result. If the field offset isn't specified, the next field that wasn't yet retrieved by
 		fetchField() is retrieved.	*/
 
-	function FetchField($fieldOffset = -1) 
+	function &FetchField($fieldOffset = -1) 
 	{
 		if ($fieldOffset != -1) {
-			return @mssql_fetch_field($this->_queryID, $fieldOffset);
+			$f = @mssql_fetch_field($this->_queryID, $fieldOffset);
 		}
 		else if ($fieldOffset == -1) {	/*	The $fieldOffset argument is not provided thus its -1 	*/
-			return @mssql_fetch_field($this->_queryID);
+			$f = @mssql_fetch_field($this->_queryID);
 		}
-		return null;
+		$false = false;
+		if (empty($f)) return $false;
+		return $f;
 	}
 	
 	function _seek($row) 

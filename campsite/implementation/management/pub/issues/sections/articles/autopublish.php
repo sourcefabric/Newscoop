@@ -54,7 +54,7 @@ if (!$articleObj->exists()) {
 
 $languageObj =& new Language($Language);
 $sLanguageObj =& new Language($sLanguage);
-$articleEvents =& ArticlePublish::GetArticleEvents($Article, $sLanguage);
+$articleEvents = ArticlePublish::GetArticleEvents($Article, $sLanguage);
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
 				  'Section' => $sectionObj, 'Article'=>$articleObj);

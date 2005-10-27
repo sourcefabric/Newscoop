@@ -1,3 +1,5 @@
+-- $CVSHeader$
+
 CREATE DATABASE /*! IF NOT EXISTS */ adodb_sessions;
 
 USE adodb_sessions;

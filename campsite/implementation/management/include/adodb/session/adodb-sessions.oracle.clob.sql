@@ -1,3 +1,5 @@
+-- $CVSHeader$
+
 DROP TABLE adodb_sessions;
 
 CREATE TABLE sessions (

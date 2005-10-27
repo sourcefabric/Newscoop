@@ -220,7 +220,7 @@ class Issue extends DatabaseObject {
 					." AND Issues.Number= ".$this->m_data['Number']
 					." AND Issues.IdLanguage = Languages.Id "
 					." WHERE Issues.IdPublication IS NULL";
-		$languages =& DbObjectArray::Create('Language', $queryStr);
+		$languages = DbObjectArray::Create('Language', $queryStr);
 		return $languages;
 	} // fn getUsusedLanguages
 

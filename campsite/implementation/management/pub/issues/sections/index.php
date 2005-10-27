@@ -22,7 +22,7 @@ if (!Input::IsValid()) {
 }
 $publicationObj =& new Publication($Pub);
 $issueObj =& new Issue($Pub, $Language, $Issue);
-$allSections =& Section::GetSections($Pub, $Issue, $Language, array('ORDER BY' => 'Number', 'LIMIT' => array('START' => $SectOffs, 'MAX_ROWS' => $ItemsPerPage)));
+$allSections = Section::GetSections($Pub, $Issue, $Language, array('ORDER BY' => 'Number', 'LIMIT' => array('START' => $SectOffs, 'MAX_ROWS' => $ItemsPerPage)));
 $totalSections = Section::GetTotalSections($Pub, $Issue, $Language);
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj);
