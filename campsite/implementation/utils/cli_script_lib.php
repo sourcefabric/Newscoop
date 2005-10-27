@@ -136,8 +136,11 @@ function clean_files()
 {
 	global $Campsite;
 
-	$backup_dir = $Campsite['CAMPSITE_DIR'] . "/backup/" . $Campsite['DATABASE_NAME'];
-	exec_command("rm -f $backup_dir/*.tar.gz");
+	if (isset($Campsite['CAMPSITE_DIR']) && isset($Campsite['DATABASE_NAME']))
+	{
+		$backup_dir = $Campsite['CAMPSITE_DIR'] . "/backup/" . $Campsite['DATABASE_NAME'];
+		exec_command("rm -f $backup_dir/*.tar.gz");
+	}
 }
 
 function connect_to_database($db_name = "")
