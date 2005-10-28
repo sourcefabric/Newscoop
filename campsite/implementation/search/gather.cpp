@@ -301,11 +301,10 @@ int GatherFunc(const ConfAttrValue& p_rcoConfValues)
 			if (mysql_query(&mysql, query) != 0)
 				die_mysql(&mysql, "Updating article: query");
     
-			printf("Articles: %u, Words: %u, New: %u\r", nart, nword, nnew);
-			fflush(stdout);
-	}    
-  
-	printf("\n");
+	}
+	if (nart > 0 && nword > 0 && nnew > 0)
+		printf("Instance %s: %u new articles, %u words processed, %u of them are new\n",
+			SQL_DATABASE.c_str(), nart, nword, nnew);
 	mysql_close(&mysql);
   
 	return 0;
