@@ -102,10 +102,10 @@ int NotifyEndSubsFunc(const ConfAttrValue& p_rcoConfValues)
 	ConfAttrValue coInstallConf(coInstallConfFile);
 	SMTP_WRAPPER = coInstallConf.valueOf("BIN_DIR") + "/smtp_wrapper";
 
-	cout << "sql server: " << SQL_SERVER << ", sql port: " << SQL_SRV_PORT
-			<< ", sql user: " << SQL_USER << ", sql password: " << SQL_PASSWORD
-			<< ", db name: " << SQL_DATABASE << endl;
-	cout << "smtp server: " << SMTP_SERVER << ", smtp wrapper: " << SMTP_WRAPPER << endl;
+// 	cout << "sql server: " << SQL_SERVER << ", sql port: " << SQL_SRV_PORT
+// 			<< ", sql user: " << SQL_USER << ", sql password: " << SQL_PASSWORD
+// 			<< ", db name: " << SQL_DATABASE << endl;
+// 	cout << "smtp server: " << SMTP_SERVER << ", smtp wrapper: " << SMTP_WRAPPER << endl;
 
 	if ((result = SQLConnection(&sql)) != RES_OK)
 		return result;
