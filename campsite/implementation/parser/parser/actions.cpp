@@ -1882,7 +1882,7 @@ int CActIf::takeAction(CContext& c, sockstream& fs)
 		if (case_comp(param.attribute(), "modifyaction") == 0)
 			run = c.ModifyUser() ? 0 : 1;
 		if (case_comp(param.attribute(), "loggedin") == 0)
-			run = (c.User() >= 0 && c.Key() > 0) ? 0 : 1;
+			run = (c.User() >= 0 && (c.Key() > 0 || c.AccessByIP())) ? 0 : 1;
 		if ((run == 0 && !m_bNegated) || (run == 1 && m_bNegated))
 			runActions(block, c, fs);
 		else if ((run == 1 && !m_bNegated) || (run == 0 && m_bNegated))
