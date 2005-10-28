@@ -64,12 +64,12 @@ if (count($languages) > 0) {
 		</TD>
 	    <?php if ($User->hasPermission('ManageLanguages')) { ?> 
 		<TD ALIGN="CENTER">
-			<A HREF="add_modify.php?Lang=<?php p($language->getLanguageId()); ?>">Edit</A>
+			<A HREF="/<?php echo $ADMIN; ?>/languages/add_modify.php?Lang=<?php p($language->getLanguageId()); ?>">Edit</A>
 		</TD>
 	<?php  }
 	if ($User->hasPermission('DeleteLanguages')) { ?>
 	<TD ALIGN="CENTER">
-		<A HREF="/admin/languages/do_del.php?Language=<?php p($language->getLanguageId()); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the language $1?', $language->getNativeName());?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php  putGS('Delete language $1', htmlspecialchars($language->getNativeName())); ?>" TITLE="<?php  putGS('Delete language $1', htmlspecialchars($language->getNativeName())); ?>"></A>
+		<A HREF="/<?php echo $ADMIN; ?>/languages/do_del.php?Language=<?php p($language->getLanguageId()); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the language $1?', $language->getNativeName());?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php  putGS('Delete language $1', htmlspecialchars($language->getNativeName())); ?>" TITLE="<?php  putGS('Delete language $1', htmlspecialchars($language->getNativeName())); ?>"></A>
 		</TD>
 	<?php  } ?>
 	</TR>
