@@ -728,8 +728,9 @@ const CCLexem* CCParser::DoParse(CContext& p_rcoContext, sockstream& p_rcoOut,
 			if (do_append)
 				p_rcoContext.AppendSubtitle(text);
 			if (local_write)
-				p_rcoOut << "<a name=\"a" << p_rcoContext.Language() << "."
-				<< p_rcoContext.Article() << "_s" << index << "\">" << text << "</a>";
+				p_rcoOut << "<span class=\"articlesubhead\"><a name=\"a" << p_rcoContext.Language()
+					<< "." << p_rcoContext.Article() << "_s" << index << "\">" << text
+					<< "</a></span>";
 			WaitForStatementEnd();
 		}
 		else if (l->res == CMS_CLEX_CST_LINK && local_write)	// found Link statement
