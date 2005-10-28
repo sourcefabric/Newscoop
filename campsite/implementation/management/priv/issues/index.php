@@ -86,7 +86,7 @@ foreach ($allIssues as $issue) {
 		<?php p($issue->getIssueId()); ?>
  	</TD>
  	
-	<TD <?php if ($currentIssue == $issue->getIssueId()) { ?> style="padding-left: 20px;" <?php } ?>>
+	<TD <?php if ($currentIssue == $issue->getIssueId()) { ?> class="translation_indent" <?php } ?>>
 		<A HREF="/<?php echo $ADMIN; ?>/sections/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($issue->getIssueId()); ?>&Language=<?php p($issue->getLanguageId()); ?>"><?php p(htmlspecialchars($issue->getName())); ?></A> (<?php p(htmlspecialchars($issue->getLanguageName())); ?>)
 	</TD>
 	

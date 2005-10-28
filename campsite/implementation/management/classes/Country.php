@@ -62,6 +62,17 @@ class Country extends DatabaseObject {
 	
 
 	/**
+	 * Set the name of the country.
+	 * @param string $p_value
+	 * @return boolean
+	 */
+	function setName($p_value)
+	{
+		return $this->setProperty('Name', $p_value);
+	} // fn setName
+	
+	
+	/**
 	 * Get the two-letter code for this language.
 	 * @return string
 	 */
@@ -72,13 +83,13 @@ class Country extends DatabaseObject {
 	
 	
 	/**
-	 * @param int $p_languageId
-	 * @param string $p_code
-	 * @param string $p_name
-	 * @return array
+	 *
+	 *
 	 */
-	function GetCountries($p_languageId = null, $p_code = null, $p_name = null)
+	function GetNumCountries($p_languageId = null, $p_code = null, $p_name = null)
 	{
+		global $Campsite;
+		$queryStr = "SELECT COUNT(*) FROM Countries";
 		$constraints = array();
 		if (!is_null($p_languageId)) {
 			$constraints[] = array('IdLanguage', $p_languageId);
@@ -89,7 +100,44 @@ class Country extends DatabaseObject {
 		if (!is_null($p_name)) {
 			$constraints[] = array('Name', $p_name);
 		}
-		return DatabaseObject::Search('Country', $constraints);
+		if (count($constraints) > 0) {
+			$tmpArray = array();
+			foreach ($constraints as $constraint) {
+				$tmpArray[] = $constraint[0]."='".$constraint[1]."'";
+			}
+			$queryStr .= " WHERE ".implode(" AND ", $tmpArray);
+		}
+		$total = $Campsite['db']->GetOne($queryStr);
+		return $total;
+	} // fn GetNumCountries
+	
+	
+	/**
+	 * @param int $p_languageId
+	 * @param string $p_code
+	 * @param string $p_name
+	 * @param array $p_sqlOptions
+	 * @return array
+	 */
+	function GetCountries($p_languageId = null, $p_code = null, $p_name = null, $p_sqlOptions = null)
+	{
+		if (is_null($p_sqlOptions)) {
+			$p_sqlOptions = array();
+		}
+		if (!isset($p_sqlOptions["ORDER BY"])) {
+			$p_sqlOptions["ORDER BY"] = array("Code", "IdLanguage");
+		}
+		$constraints = array();
+		if (!is_null($p_languageId)) {
+			$constraints[] = array('IdLanguage', $p_languageId);
+		}
+		if (!is_null($p_code)) {
+			$constraints[] = array('Code', $p_code);
+		}
+		if (!is_null($p_name)) {
+			$constraints[] = array('Name', $p_name);
+		}
+		return DatabaseObject::Search('Country', $constraints, $p_sqlOptions);
 	} // fn GetCountries
 	
 } // class Country

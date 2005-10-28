@@ -161,7 +161,7 @@ foreach ($allArticles as $articleObj) {
 	}
 	?>	
 	<TR class="<?php p($rowClass); ?>">
-		<TD <?php if ($articleObj->getArticleId() == $previousArticleId) { ?>style="padding-left: 20px;"<?php } ?>>
+		<TD <?php if ($articleObj->getArticleId() == $previousArticleId) { ?>class="translation_indent"<?php } ?>>
 		
 		<?php
 		if ($articleObj->isLocked() && ($timeDiff['days'] <= 0) && ($articleObj->getLockedByUser() != $User->getId())) {

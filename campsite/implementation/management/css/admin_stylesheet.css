@@ -225,3 +225,7 @@ hr {
 .action_buttons {
     margin-left: 15px;
 }
+
+.translation_indent {
+    padding-left: 20px;
+}
