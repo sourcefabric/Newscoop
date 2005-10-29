@@ -74,13 +74,13 @@ display_help()
     echo -e "\nSystem specific parameters:"
     echo -e "    --root_user [my_root_user]: set the root user to my_root_user"
     echo -e "    --root_group [my_root_group]: set the root group to my_root_group"
-    echo -e "\n\nApache configuration parameters:"
+    echo -e "\nApache configuration parameters:"
     echo -e "Use these options in case you have a custom apache install."
     echo -e "    --apache_user [my_apache_user]: set the apache user to my_apache_user"
     echo -e "    --apache_group [my_apache_group]: set the apache group to my_apache_group"
     echo -e "    --apache_conf_path [apache_conf_path]: set the apache configuration path"
     echo -e "    --apache_bin_path [apache_bin_path]: set the apache daemon path"
-    echo -e "\n\nInstall directories:"
+    echo -e "\nInstall directories:"
     echo -e "    --prefix [prefix_dir]: use [prefix_dir] as the base directory; campsite"
     echo -e "        directory will be created here"
     echo -e "    --campsite_dir [campsite_dir]: set the campsite install directory"
@@ -92,7 +92,7 @@ display_help()
     echo -e "    --www_common_dir [www_common_dir]: set the campsite WWW common directory;"
     echo -e "        document root and cgi directories containing files common to all"
     echo -e "        instances will be installed here."
-    echo -e "\n\nOther:"
+    echo -e "\nOther:"
     echo -e "    --parser_start_port [start_port]: the template engine (parser) creates a"
     echo -e "        network connection in order to listen for template requests. Each"
     echo -e "        instance will be assigned one network port automatically. This specifies"
@@ -107,6 +107,12 @@ display_help()
 c_define_start_env=""
 root_only=false
 read_only=false
+set_prefix_dir=false
+set_campsite_dir=false
+set_bin_dir=false
+set_etc_dir=false
+set_www_dir=false
+set_www_common_dir=false
 while [ "$1" != "" ]; do
     case $1 in
     --define_start_env) c_define_start_env=--define_start_env ;;
@@ -117,18 +123,30 @@ while [ "$1" != "" ]; do
     --apache_conf_path) export APACHE_CONF_PATH=$2; shift 1 ;;
     --apache_bin_path) export APACHE_BIN_PATH=$2; shift 1 ;;
     --read_only) read_only=true ;;
-    --prefix) export PREFIX_DIR=$2; shift 1 ;;
-    --campsite_dir) export CAMPSITE_DIR=$2; shift 1 ;;
-    --bin_dir) export BIN_DIR=$2; shift 1 ;;
-    --etc_dir) export ETC_DIR=$2; shift 1 ;;
-    --www_dir) export WWW_DIR=$2; shift 1 ;;
-    --www_common_dir) export WWW_COMMON_DIR=$2; shift 1 ;;
+    --prefix) export PREFIX_DIR=$2; set_prefix_dir=true; shift 1 ;;
+    --campsite_dir) export CAMPSITE_DIR=$2; set_campsite_dir=true; shift 1 ;;
+    --bin_dir) export BIN_DIR=$2; set_bin_dir=true; shift 1 ;;
+    --etc_dir) export ETC_DIR=$2; set_etc_dir=true; shift 1 ;;
+    --www_dir) export WWW_DIR=$2; set_www_dir=true; shift 1 ;;
+    --www_common_dir) export WWW_COMMON_DIR=$2; set_www_common_dir=true; shift 1 ;;
     --parser_start_port) export PARSER_START_PORT=$2; shift 1 ;;
     --help) display_help; exit 0 ;;
+    *) echo "ERROR: Invalid parameter $1"; echo -n "Usage:"; display_help; exit 1 ;;
     esac
     shift 1
 done
 
+if $set_prefix_dir; then
+    export CAMPSITE_DIR=$PREFIX_DIR/campsite
+    set_campsite_dir=true
+fi
+
+if $set_campsite_dir; then
+    ! $set_bin_dir && export BIN_DIR=$CAMPSITE_DIR/bin
+    ! $set_etc_dir && export ETC_DIR=$CAMPSITE_DIR/etc
+    ! $set_www_dir && export WWW_DIR=$CAMPSITE_DIR/www
+    ! $set_www_common_dir && export WWW_COMMON_DIR=$CAMPSITE_DIR/www-common
+fi
 
 # set extra install directories
 HTML_COMMON_DIR=$WWW_COMMON_DIR/html
