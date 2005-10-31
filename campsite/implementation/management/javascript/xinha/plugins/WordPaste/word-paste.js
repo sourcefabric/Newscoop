@@ -98,6 +98,8 @@ WordPaste.prototype._clean = function(html) {
 	html = html.replace(/<\/?\s*TD[^>]*>/gi, "" );
     // Remove all HR tags
 	html = html.replace(/<\/?\s*HR[^>]*>/gi, "" );
+    // Remove all U tags
+	html = html.replace(/<\/?\s*U[^>]*>/gi, "" );
     // Remove all STYLE tags & content
 	//html = html.replace(/<\/?\s*STYLE[^>]*>(.|[\n\r\t])*<\/\s*STYLE\s*>/gi, "" );
 	html = html.replace(/<\s*STYLE[^>]*>(.|[\n\r\t])*<\/\s*STYLE\s*>/gi, "" );
