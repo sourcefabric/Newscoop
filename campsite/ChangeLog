@@ -1,3 +1,52 @@
+2.3.3 (October 31, 2005)
+  For full details about the changes in 2.3.3, see: 
+  http://code.campware.org/projects/campsite/query?milestone=2.3.3
+  
+  Minor features:
+  - When pasting into WYSIWYG editor, all styles except bold and 
+    italic will be removed (#1501)
+  - Added Arabic language (#1490)
+  - Subsection anchors now have CSS tags so you can modify their 
+    appearance (#1313)
+  - Added documentation on how to install as non-root user, how to use the
+    "configure" and "create_instance" scripts, and how to logout a user on
+    the frontend  
+  
+  Bug fixes:
+  - When displaying article content the internal links and the 
+    text following them are not displayed. (#1489)
+  - "if user loggedin" does not work correctly for IP-based 
+    subscriptions (#1505)
+  - Fixed minor security bug where it is possible to learn the MYSQL 
+    password if the attacker has the ability to snoop on outgoing 
+    emails (#1497)
+  - Remove warnings when PHP_NOTICES is turned on. (#1515, #1498, #1494)
+  - Whitespace in 'gather' cron script results in needless emails (#1507)
+  - User IP address list management: can't add 127.0.0.1 (#1504)
+  
+  
+2.3.2 (October 19, 2005)
+  For full details about the changes in 2.3.2, see: 
+  http://code.campware.org/projects/campsite/query?milestone=2.3.2
+  
+  Minor features:
+    #1484 -	Allow the use of article publish date in the template language
+    #1391 - Screenshots for all administration steps in the manual
+
+  Bug fixes:
+    #1482 -	Packaged templates do not use 2.3 database 
+    #1480 - Duplicate Article does not copy "OnSection" field correctly
+    #1456 - Escaping command line parameters with $'arg' and $"arg" does not work on FreeBSD
+    #1471 - Install scripts break on Debian 3.1 (Sarge) 
+    #1470 -	Packaged templates need documentation, common layout 
+    #1486 -	Fatal error when opening the "Add new image" page 
+    #1476 -	Wrong error message when PEAR fails to update
+    #1462 -	Campsite server returns error when restarting
+    #1457 -	Preview doesn't work correctly for translated articles 
+    #1447 -	Upload date not set properly when duplicating articles 
+    #1414 -	Refresh templates every time they are displayed
+  
+
 2.3.1 (September 7, 2005)
     Bug fixes:
     - Ticket #1445 - Upgrade from 2.2 to 2.3 fails on MySQL 3.X
