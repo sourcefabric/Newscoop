@@ -1,5 +1,4 @@
 <?php
-
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/users_common.php");
 
 list($access, $User) = check_basic_access($_REQUEST);
@@ -189,7 +188,7 @@ for($loop = 0; $loop < $last; $loop++) {
 ?>
 		<td><?php echo htmlspecialchars($email); ?></td>
 <?php if ($uType == "Subscribers" && $User->hasPermission("ManageSubscriptions")) { ?>
-		<td><a href="<?php echo "/$ADMIN/users/subscriptions/?User=$userId"; ?>">
+		<td><a href="<?php echo "/$ADMIN/users/subscriptions/?f_user_id=$userId"; ?>">
 			<?php putGS("Subscriptions"); ?></td>
 <?php } ?>
 <?php

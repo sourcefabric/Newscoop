@@ -3,11 +3,18 @@
  * @package Campsite
  */
 
+
 /**
  * Includes
  */
+// We indirectly reference the DOCUMENT_ROOT so we can enable 
+// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT'] 
+// is not defined in these cases.
+if (!isset($g_documentRoot)) {
+    $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
+}
 require_once('PEAR.php');
-
+require_once($g_documentRoot.'/classes/DbObjectArray.php');
 
 /**
  * @package Campsite
@@ -476,7 +483,7 @@ class DatabaseObject {
 	 *		order to update the internal variable's value.
 	 *
 	 * @return boolean
-	 *		TRUE if the database was changed, FALSE if it wasnt.
+	 *		TRUE on success, FALSE on error.
 	 */
 	function setProperty($p_dbColumnName, $p_value, $p_commit = true, $p_isSql = false) 
 	{
@@ -496,7 +503,7 @@ class DatabaseObject {
 		}
 		// If the value hasnt changed, dont update it.
 		if ($p_value == $this->m_data[$p_dbColumnName]) {
-			return false;
+			return true;
 		}
 		// If we dont have the key to this row, we cant update it.
 		if ($p_commit && !$this->keyValuesExist()) {

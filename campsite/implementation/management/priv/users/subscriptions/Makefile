@@ -1,14 +1,9 @@
 export PRIV_DIR3=$(PRIV_COMMON_DIR)/users/subscriptions
 
-MY_TARGETS=index.php add.php do_add.php do_status.php do_del.php topay.php do_topay.php
-
 subsystem: all
 	$(MAKE) -C sections
 
-all: $(MY_TARGETS)
-
-%.php: %.m4 ../../macros.m4
-	$(M4) ../../macros.m4 $< >$@
+all: ;
 
 install: $(ALL)
 	mkdir -p $(PRIV_DIR3)
@@ -16,7 +11,7 @@ install: $(ALL)
 	$(MAKE) -C sections install
 
 clean:
-	rm -f *~ $(MY_TARGETS)
+	rm -f *~ 
 	$(MAKE) -C sections clean
 
 dummy:

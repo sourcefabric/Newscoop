@@ -1,7 +1,20 @@
 <?PHP
+/**
+ * Includes
+ */
+// We indirectly reference the DOCUMENT_ROOT so we can enable 
+// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT'] 
+// is not defined in these cases.
+if (!isset($g_documentRoot)) {
+    $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
+}
+require_once($g_documentRoot.'/db_connect.php');
+require_once($g_documentRoot.'/classes/DatabaseObject.php');
+
 class Subscription extends DatabaseObject {
 	var $m_dbTableName = 'Subscriptions';
 	var $m_keyColumnNames = array('Id');
+	var $m_keyIsAutoIncrement = true;
 	var $m_columnNames = array(
 		'Id',
 		'IdUser',
@@ -11,19 +24,137 @@ class Subscription extends DatabaseObject {
 		'Currency',
 		'Type');
     
+		
+	function Subscription($p_id = null)
+	{
+		parent::DatabaseObject($this->m_columnNames);
+		$this->m_data['Id'] = $p_id;
+		if (!is_null($p_id)) {
+			$this->fetch();
+		}
+	} // constructor
+	
+	
+	function delete()
+	{
+		global $Campsite;
+		$deleted = parent::delete();
+	    $queryStr = "DELETE FROM SubsSections WHERE IdSubscription=".$this->m_data['Id'];
+	    $Campsite['db']->Execute($queryStr);
+	    return $deleted;
+	} // fn delete
+	
+	
+	function getSubscriptionId()
+	{
+		return $this->getProperty('Id');
+	} // fn getSubscriptionId
+	
+	
+	function getUserId()
+	{
+		return $this->getProperty('IdUser');
+	} // fn getUserId
+	
+	
+	function getPublicationId()
+	{
+		return $this->getProperty('IdPublication');
+	} // fn getPublicationId
+	
+	
+	function getToPay()
+	{
+		return $this->getProperty('ToPay');
+	} // fn getToPay
+	
+	
+	function setToPay($p_value) 
+	{
+		global $Campsite;
+		$success = $this->setProperty('ToPay', $p_value);
+		if ($success && ( ($p_value == '0') || ($p_value == 0) ) ) {
+			$queryStr ="UPDATE SubsSections SET PaidDays=Days WHERE IdSubscription=".$this->m_data['Id'];
+			$Campsite['db']->Execute($queryStr);
+		}
+		return $success;
+	} // fn setToPay
+	
+	
+	function getCurrency()
+	{
+		return $this->getProperty('Currency');
+	} // fn getCurrency
+	
+	
+	function getType()
+	{
+		return $this->getProperty('Type');
+	} // fn getType
+	
+	
+	function isActive()
+	{
+		$active = $this->getProperty('Active');
+		if ($active == 'Y') {
+			return true;
+		}
+		else {
+			return false;
+		}
+	} // fn isActive
+	
+	
+	function setIsActive($p_value)
+	{
+		if ($p_value) {
+			return $this->setProperty('Active', 'Y');
+		} else {
+			return $this->setProperty('Active', 'N');
+		}
+	} // fn setIsActive
+	
+	
 	/**
 	 * Return the number of subscriptions in the given publication.
 	 *
 	 * @param int $p_publicationId
 	 * @return int
 	 */
-	function GetNumSubscriptions($p_publicationId = null)
+	function GetNumSubscriptions($p_publicationId = null, $p_userId = null)
 	{
 		global $Campsite;
-		$queryStr = "SELECT COUNT(*) FROM Subscriptions WHERE IdPublication=$p_publicationId";
-		$count = $Campsite['db']->GetOne($queryStr);
-		return $count;
+		$queryStr = "SELECT COUNT(*) FROM Subscriptions";
+		$constraints = array();
+		if (!is_null($p_publicationId)) {
+			$constraints[] = array('IdPublication', $p_publicationId);
+		}
+		if (!is_null($p_userId)) {
+			$constraints[] = array('IdUser', $p_userId);
+		}
+		if (count($constraints) > 0) {
+			$tmpArray = array();
+			foreach ($constraints as $constraint) {
+				$tmpArray[] = $constraint[0]."='".$constraint[1]."'";
+			}
+			$queryStr .= " WHERE ".implode(" AND ", $tmpArray);
+		}
+		$total = $Campsite['db']->GetOne($queryStr);
+		return $total;
 	} // fn GetNumSubscriptions
+	
+	
+	function GetSubscriptions($p_publicationId = null, $p_userId = null, $p_sqlOptions = null)
+	{
+		$constraints = array();
+		if (!is_null($p_publicationId)) {
+			$constraints[] = array('IdPublication', $p_publicationId);
+		}
+		if (!is_null($p_userId)) {
+			$constraints[] = array('IdUser', $p_userId);
+		}
+		return DatabaseObject::Search('Subscription', $constraints, $p_sqlOptions);
+	} // fn GetSubscriptions
 	
 	
 	/**
