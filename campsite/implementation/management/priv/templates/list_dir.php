@@ -28,7 +28,7 @@ function isTpl($s)
 		// file and folders; let's say 0 is for folders and 1 for files
 		// we only need it when deleting items
 		
-		$basedir = $Campsite['TEMPLATE_DIRECTORY'].decURL($listbasedir);
+		$basedir = $Campsite['TEMPLATE_DIRECTORY'].urldecode($listbasedir);
 		$handle = opendir($basedir);
 		while (($file = readdir($handle))!=false) {
 			$full = "$basedir/$file";

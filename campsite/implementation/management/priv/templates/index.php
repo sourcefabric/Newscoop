@@ -58,7 +58,7 @@ echo camp_html_breadcrumbs($crumbs);
 			<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 			<TR>
 				<TD><A HREF="/<?php echo $ADMIN; ?>/templates/new_template.php?Path=<?php p(urlencode($path)); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
-				<TD><A HREF="/<?php echo $ADMIN; ?>/templates/new_template.php?Path=<?php  pencURL($path); ?>" ><B><?php  putGS("Create new template"); ?></B></A></TD>
+				<TD><A HREF="/<?php echo $ADMIN; ?>/templates/new_template.php?Path=<?php  p(urlencode($path)); ?>" ><B><?php  putGS("Create new template"); ?></B></A></TD>
 			</TR>
 			</TABLE>
 		</TD>

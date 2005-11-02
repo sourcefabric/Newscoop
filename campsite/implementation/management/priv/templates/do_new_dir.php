@@ -31,7 +31,7 @@ if ($correct) {
 }
 
 if ($ok) {
-	header("Location: /$ADMIN/templates?Path=" . encURL("$cPath/$cName"));
+	header("Location: /$ADMIN/templates?Path=" . urlencode("$cPath/$cName"));
 	exit;
 }
 $crumbs = array();

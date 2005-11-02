@@ -23,7 +23,7 @@ $ADReason = Input::Get('ADReason', 'string', getGS('You do not have the right to
 	<TD COLSPAN="2">
 		<BLOCKQUOTE>
 		<font color="red">
-		<li><?php  print encHTML($ADReason); ?></li>
+		<li><?php  print htmlspecialchars($ADReason); ?></li>
 		</font>
 		</BLOCKQUOTE>
 	</TD>

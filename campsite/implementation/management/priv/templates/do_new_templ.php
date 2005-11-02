@@ -24,7 +24,6 @@ $correct = trim($cName) != "";
 if ($correct) {
 	$cName = strtr($cName,'?~#%*&|"\'\\/<>', '_____________');
 	$newTempl = Template::GetFullPath($cPath, $cName);
-	//$newTempl = $Campsite['HTML_DIR']."/look/".decURL($cPath)."/".$cName;
 	$ok = 0;
 
 	$file_exists = file_exists($newTempl);

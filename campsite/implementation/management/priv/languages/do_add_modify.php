@@ -60,21 +60,44 @@ if ($editMode) {
 }
 
 if ($correct) {
+	$columns = array('Name' => $cName, 
+					 'CodePage' => $cCodePage,
+					 'Code' => $cCode,
+					 'OrigName' => $cOrigName,
+					 'Month1' => $cMonth1,
+					 'Month2' => $cMonth2,
+					 'Month3' => $cMonth3,
+					 'Month4' => $cMonth4,
+					 'Month5' => $cMonth5,
+					 'Month6' => $cMonth6,
+					 'Month7' => $cMonth7,
+					 'Month8' => $cMonth8,
+					 'Month9' => $cMonth9,
+					 'Month10' => $cMonth10,
+					 'Month11' => $cMonth11,
+					 'Month12' => $cMonth12,
+					 'WDay1' => $cWDay1,
+					 'WDay2' => $cWDay2,
+					 'WDay3' => $cWDay3,
+					 'WDay4' => $cWDay4,
+					 'WDay5' => $cWDay5,
+					 'WDay6' => $cWDay6,
+					 'WDay7' => $cWDay7);
     if ($editMode) {
         $queryStr = "REPLACE  INTO TimeUnits VALUES ('D', $cLang, '$D'), ('W', $cLang, '$W'), ('M', $cLang, '$M'), ('Y', $cLang, '$Y')";
-		query($queryStr);
-		query ("UPDATE Languages SET Name='$cName', CodePage='$cCodePage', Code='$cCode', OrigName='$cOrigName', Month1='$cMonth1', Month2='$cMonth2', Month3='$cMonth3', Month4='$cMonth4', Month5='$cMonth5', Month6='$cMonth6', Month7='$cMonth7', Month8='$cMonth8', Month9='$cMonth9', Month10='$cMonth10', Month11='$cMonth11', Month12='$cMonth12', WDay1='$cWDay1', WDay2='$cWDay2', WDay3='$cWDay3', WDay4='$cWDay4', WDay5='$cWDay5', WDay6='$cWDay6', WDay7='$cWDay7' WHERE Id=$cLang");
+		$Campsite['db']->Execute($queryStr);
+		//query ("UPDATE Languages SET Name='$cName', CodePage='$cCodePage', Code='$cCode', OrigName='$cOrigName', Month1='$cMonth1', Month2='$cMonth2', Month3='$cMonth3', Month4='$cMonth4', Month5='$cMonth5', Month6='$cMonth6', Month7='$cMonth7', Month8='$cMonth8', Month9='$cMonth9', Month10='$cMonth10', Month11='$cMonth11', Month12='$cMonth12', WDay1='$cWDay1', WDay2='$cWDay2', WDay3='$cWDay3', WDay4='$cWDay4', WDay5='$cWDay5', WDay6='$cWDay6', WDay7='$cWDay7' WHERE Id=$cLang");
+		$languageObj->update($columns);
         $logtext = getGS('Language $1 modified', $cName); 
         Log::Message($logtext, $User->getUserName(), 103);
         header("Location: /$ADMIN/languages/index.php");
         exit;
     }
     else {
-    	query("INSERT IGNORE INTO Languages SET Name='$cName', CodePage='$cCodePage', Code='$cCode', OrigName='$cOrigName', Month1='$cMonth1', Month2='$cMonth2', Month3='$cMonth3', Month4='$cMonth4', Month5='$cMonth5', Month6='$cMonth6', Month7='$cMonth7', Month8='$cMonth8', Month9='$cMonth9', Month10='$cMonth10', Month11='$cMonth11', Month12='$cMonth12', WDay1='$cWDay1', WDay2='$cWDay2', WDay3='$cWDay3', WDay4='$cWDay4', WDay5='$cWDay5', WDay6='$cWDay6', WDay7='$cWDay7'");
-        query ("SELECT LAST_INSERT_ID()", 'lid');
-    	fetchRowNum($lid);
-    	$IdLang = getNumVar($lid,0);
-    	query("INSERT IGNORE INTO TimeUnits VALUES ('D', $IdLang, '$D'), ('W', $IdLang, '$W'), ('M', $IdLang, '$M'), ('Y', $IdLang, '$Y')");
+    	$languageObj =& new Language();
+    	$languageObj->create($columns);
+    	$IdLang = $languageObj->getLanguageId();
+    	$Campsite['db']->Execute("INSERT IGNORE INTO TimeUnits VALUES ('D', $IdLang, '$D'), ('W', $IdLang, '$W'), ('M', $IdLang, '$M'), ('Y', $IdLang, '$Y')");
     	Localizer::CreateLanguageFiles($cCode);
     	create_language_links();
         $logtext = getGS('Language $1 added', $cName); 
@@ -144,7 +167,7 @@ if ($correct) {
 <TR>
 	<TD COLSPAN="2">
     	<DIV ALIGN="CENTER">
-    	   <INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/admin/languages/add_modify.php<?php if ($editMode) { p("?Lang=".$cLang); } ?>'">
+    	   <INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/languages/add_modify.php<?php if ($editMode) { p("?Lang=".$cLang); } ?>'">
         </DIV>
 	</TD>
 </TR>

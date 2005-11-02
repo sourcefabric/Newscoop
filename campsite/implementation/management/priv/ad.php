@@ -20,7 +20,7 @@ $BackLink = Input::Get('Back', 'string', "/$ADMIN/home.php", true);
 	<TD COLSPAN="2">
 		<BLOCKQUOTE>
 		<font color="red">
-		<li><?php  print encHTML($ADReason); ?></li>
+		<li><?php  print htmlspecialchars($ADReason); ?></li>
 		</font>
 		</BLOCKQUOTE>
 	</TD>

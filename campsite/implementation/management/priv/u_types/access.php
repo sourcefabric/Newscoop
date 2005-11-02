@@ -138,7 +138,7 @@ foreach ($rights as $group_name=>$group) {
 ?>
 	<tr>
 		<td align="right" style="padding-left: 10px;">
-			<input type="checkbox" name="<?php echo $right_name; ?>" class="input_checkbox"<?php  ifTrueThenChecked($userType->hasPermission($right_name)); ?>>
+			<input type="checkbox" name="<?php echo $right_name; ?>" class="input_checkbox"<?php  if ($userType->hasPermission($right_name)) { p("CHECKED"); } ?>>
 		</td>
 		<td style="padding-right: 10px;">
 			<?php putGS($right_text); ?>
@@ -158,7 +158,7 @@ foreach ($rights as $group_name=>$group) {
 	</tr>
 	<tr>
 		<td colspan="2" style="padding-top: 5px; padding-bottom: 10px;" align="center">
-		<input type="hidden" name="UType" value="<?php pencHTML($uType); ?>">
+		<input type="hidden" name="UType" value="<?php p(htmlspecialchars($uType)); ?>">
 		<input type="submit" class="button" name="Save" value="<?php putGS('Save changes'); ?>">
 		<input type="button" class="button" name="Cancel" value="<?php putGS('Cancel'); ?>" onclick="location.href='/<?php echo $ADMIN; ?>/u_types/'">
 		</td>

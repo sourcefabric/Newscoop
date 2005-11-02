@@ -38,8 +38,8 @@ camp_html_content_top(getGS('Add new issue'), array('Pub' => $publicationObj), t
 	</TD>
 <TR>
 <TR>
-	<TD VALIGN="TOP"><A HREF="add_new.php?Pub=<?php  pencURL($Pub); ?>"><IMG SRC="<?php echo $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/tol.gif" BORDER="0"></A></TD>
-	<TD><B><A HREF="add_new.php?Pub=<?php  pencURL($Pub); ?>"><?php  putGS('Create a new structure'); ?></A></B></TD>
+	<TD VALIGN="TOP"><A HREF="add_new.php?Pub=<?php  p($Pub); ?>"><IMG SRC="<?php echo $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/tol.gif" BORDER="0"></A></TD>
+	<TD><B><A HREF="add_new.php?Pub=<?php  p($Pub); ?>"><?php  putGS('Create a new structure'); ?></A></B></TD>
 </TR>
 <TR>
 	<TD></TD>

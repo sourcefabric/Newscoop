@@ -48,40 +48,14 @@ if ($editMode) {
     $crumbs[] = array(getGS("Add new language"), "");
 } 
 $breadcrumbs = camp_html_breadcrumbs($crumbs);
+echo $breadcrumbs;
 
 ?>
-<HEAD>
-	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
-	<TITLE><?php  putGS("Add new language"); ?></TITLE>
-	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.config.js"></script>
-    <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.core.js"></script>
-    <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.lang-enUS.js"></script>
-    <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.validators.js"></script>
-</HEAD>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.config.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.core.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.lang-enUS.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.validators.js"></script>
 
-<BODY>
-
-<?php echo $breadcrumbs; ?>
-<!--<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
-<TR>
-	<TD class="page_title">
-	   <?php if ($editMode) { ?>
-	       <?php  putGS("Edit language"); ?>
-	   <?php } else { ?>
-	       <?php  putGS("Add new language"); ?>
-	   <?php } ?>
-	</TD>
-
-	<TD ALIGN=RIGHT>
-        <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
-	    <TR>
-	       <TD><A HREF="/admin/languages/" class="breadcrumb" ><?php  putGS("Languages");  ?></A></TD>
-        </TR>
-        </TABLE>
-    </TD>
-</TR>
-</TABLE>
--->
 <P>
 <FORM NAME="dialog" METHOD="POST" ACTION="do_add_modify.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
 <?php if ($editMode) { ?>
@@ -267,11 +241,11 @@ $breadcrumbs = camp_html_breadcrumbs($crumbs);
 	<TD COLSPAN="2">
 		<DIV ALIGN="CENTER">
 		<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save changes'); ?>">
-		<INPUT TYPE="HIDDEN" NAME="Back" VALUE="<?php  print encHTML($Back); ?>">
+		<INPUT TYPE="HIDDEN" NAME="Back" VALUE="<?php  print htmlspecialchars($Back); ?>">
         <?php  if ($Back != "") { ?>
-        <INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='<?php  print $Back; ?>'">
+        <!--<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='<?php  print $Back; ?>'">-->
         <?php  } else { ?>
-        <INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='/admin/languages/'">
+        <!--<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='/admin/languages/'">-->
         <?php  } ?>
         </DIV>
 	</TD>

@@ -15,12 +15,13 @@ $crumbs[] = array(getGS("Users"), "");
 if ($uType == "Staff") { 
     $crumbs[] = array(getGS("Staff management"), ""); 
 } else { 
-    $crumbs[] = array(getGS("Subscribers management"), ""); 
+    $crumbs[] = array(getGS("Subscriber management"), ""); 
 }
 $breadcrumbs = camp_html_breadcrumbs($crumbs);
 echo $breadcrumbs;
 ?>
-<table border="0" cellspacing="0" cellpadding="1">
+<p>
+<table border="0" cellspacing="0" cellpadding="0" class="action_buttons">
 <tr>
 <?php
 if ($canManage) {
@@ -36,19 +37,19 @@ if ($canManage) {
 		<B><?php putGS("Reset search conditions"); ?></b></a></td>
 </tr>
 </table>
-
-<table border="0" cellspacing="0" cellpadding="3" class="table_input" style="margin-bottom: 10px; margin-top: 5px; margin-left: 10px;">
+<p>
+<table border="0" cellspacing="0" cellpadding="3" class="table_input" style="margin-bottom: 10px; margin-top: 5px; margin-left: 17px;">
 <form method="POST" action="index.php">
-<input type="hidden" name="uType" value="<?php pencHTML($uType); ?>">
-<input type="hidden" name="userOffs" value="<?php pencHTML($userOffs); ?>">
-<input type="hidden" name="lpp" value="<?php pencHTML($lpp); ?>">
+<input type="hidden" name="uType" value="<?php p($uType); ?>">
+<input type="hidden" name="userOffs" value="<?php p($userOffs); ?>">
+<input type="hidden" name="lpp" value="<?php p($lpp); ?>">
 <tr>
 	<td style="padding-left: 10px;"><?php putGS("Full Name"); ?></td>
-	<td><input type="text" name="full_name" value="<?php pencHTML($full_name); ?>" class="input_text" style="width: 150px;"></td>
+	<td><input type="text" name="full_name" value="<?php p(htmlspecialchars($full_name)); ?>" class="input_text" style="width: 150px;"></td>
 	<td><?php putGS("User Name"); ?></td>
-	<td><input type="text" name="user_name" value="<?php pencHTML($user_name); ?>" class="input_text" style="width: 70px;"></td>
+	<td><input type="text" name="user_name" value="<?php p(htmlspecialchars($user_name)); ?>" class="input_text" style="width: 70px;"></td>
 	<td><?php putGS("E-Mail"); ?></td>
-	<td><input type="text" name="email" value="<?php pencHTML($email); ?>" class="input_text" style="width: 150px;"></td>
+	<td><input type="text" name="email" value="<?php p(htmlspecialchars($email)); ?>" class="input_text" style="width: 150px;"></td>
 	<td><input type="submit" name="submit_button" value="<?php putGS("Search"); ?>" class="button"></td>
 </tr>
 <?php if ($uType == "Subscribers") { ?>
@@ -56,21 +57,27 @@ if ($canManage) {
 	<td colspan="11" align="center">
 		<?php putGS("Subscription"); ?>&nbsp;
 		<select name="subscription_how" class="input_select" style="width: 100px;">
-			<option value="expires" <?php printSelected($subscription_how, 'expires'); ?>><?php putGS("expires"); ?></option>
-			<option value="starts" <?php printSelected($subscription_how, 'starts'); ?>><?php putGS("starts"); ?></option>
+		<?php 
+		pcomboVar("expires", $subscription_how, getGS("expires")); 
+		pcomboVar("starts", $subscription_how, getGS("starts")); 
+		?>
 		</select>
 		<select name="subscription_when" class="input_select" style="width: 100px;">
-			<option value="before" <?php printSelected($subscription_when, 'before'); ?>><?php putGS("before"); ?></option>
-			<option value="after" <?php printSelected($subscription_when, 'after'); ?>><?php putGS("after"); ?></option>
-			<option value="on" <?php printSelected($subscription_when, 'on'); ?>><?php putGS("on"); ?></option>
+		<?PHP
+		pcomboVar("before", $subscription_when, getGS("before"));
+		pcomboVar("after", $subscription_when, getGS("after"));
+		pcomboVar("on", $subscription_when, getGS("on"));
+		?>
 		</select>
-		<input type="text" name="subscription_date" value="<?php pencHTML($subscription_date); ?>" class="input_text" style="width: 100px;">
+		<input type="text" name="subscription_date" value="<?php p(htmlspecialchars($subscription_date)); ?>" class="input_text" style="width: 100px;">
 		&nbsp;<?php putGS('(yyyy-mm-dd)'); ?>&nbsp;&nbsp;
 		<?php putGS("status"); ?>:
 		<select name="subscription_status" class="input_select" style="width: 100px;">
-			<option value=""></option>
-			<option value="active" <?php printSelected($subscription_status, 'active'); ?>><?php putGS("active"); ?></option>
-			<option value="inactive" <?php printSelected($subscription_status, 'inactive'); ?>><?php putGS("inactive"); ?></option>
+		<option value=""></option>
+		<?PHP
+		pcomboVar("active", $subscription_status, getGS("active"));
+		pcomboVar("inactive", $subscription_status, getGS("inactive"));
+		?>
 		</select>
 	</td>
 </tr>
@@ -103,22 +110,22 @@ if ($canManage) {
 <?php } ?>
 
 <?php
-$sql = "SELECT u.* FROM Users as u";
+$sql = "SELECT u.* FROM Users AS u";
 if ($startIP1 != 0) {
-	$sql .= " left join SubsByIP as sip on u.Id = sip.IdUser";
+	$sql .= " LEFT JOIN SubsByIP AS sip ON u.Id = sip.IdUser";
 }
 if ($subscription_date != "" || $subscription_status != "") {
-	$sql .= " left join Subscriptions as s on u.Id = s.IdUser";
+	$sql .= " LEFT JOIN Subscriptions AS s ON u.Id = s.IdUser";
 	if ($subscription_date != "")
-		$sql .= " left join SubsSections as ss on s.Id = ss.IdSubscription";
+		$sql .= " LEFT JOIN SubsSections AS ss ON s.Id = ss.IdSubscription";
 }
-$sql .= " where u.Reader = '$isReader'";
+$sql .= " WHERE u.Reader = '$isReader'";
 if ($full_name != '')
-	$sql .= " and Name like '%" . mysql_escape_string($full_name) . "%'";
+	$sql .= " AND Name like '%" . mysql_escape_string($full_name) . "%'";
 if ($user_name != '')
-	$sql .= " and UName like '%" . mysql_escape_string($user_name) . "%'";
+	$sql .= " AND UName like '%" . mysql_escape_string($user_name) . "%'";
 if ($email != '')
-	$sql .= " and EMail like '%" . mysql_escape_string($email) . "%'";
+	$sql .= " AND EMail like '%" . mysql_escape_string($email) . "%'";
 if ($subscription_date != '') {
 	$ss_field = "TO_DAYS(ss.StartDate) - TO_DAYS('$subscription_date')";
 	if ($subscription_how == 'expires') {
@@ -129,10 +136,10 @@ if ($subscription_date != '') {
 	case 'after': $comp_sign = ">="; break;
 	case 'on': $comp_sign = "="; break;
 	}
-	$sql .= " and ($ss_field) $comp_sign 0";
+	$sql .= " AND ($ss_field) $comp_sign 0";
 }
 if ($subscription_status != "")
-	$sql .= " and s.Active = '" . ($subscription_status == 'active' ? 'Y' : 'N') . "'";
+	$sql .= " AND s.Active = '" . ($subscription_status == 'active' ? 'Y' : 'N') . "'";
 if ($startIP1 != 0) {
 	
 	$minIP = $startIP1 * 256 * 256 * 256 + $startIP2 * 256 * 256 + $startIP3 * 256 + $startIP4;
@@ -140,12 +147,13 @@ if ($startIP1 != 0) {
 	$maxIP3 = $startIP3 != 0 ? $startIP3 : 255;
 	$maxIP4 = $startIP4 != 0 ? $startIP4 : 255;
 	$maxIP = $startIP1 * 256 * 256 * 256 + $maxIP2 * 256 * 256 + $maxIP3 * 256 + $maxIP4;
-	$sql .= " and ((sip.StartIP >= $minIP and sip.StartIP <= $maxIP)"
-	     . " or ((sip.StartIP - 1 + sip.Addresses) >= $minIP and (sip.StartIP - 1 + sip.Addresses) <= $maxIP))";
+	$sql .= " AND ((sip.StartIP >= $minIP AND sip.StartIP <= $maxIP)"
+	     . " OR ((sip.StartIP - 1 + sip.Addresses) >= $minIP AND (sip.StartIP - 1 + sip.Addresses) <= $maxIP))";
 }
-if ($subscription_date != "")
-	$sql .= " group by s.Id";
-$sql .= " order by Name asc";
+if ($subscription_date != "") {
+	$sql .= " GROUP BY s.Id";
+}
+$sql .= " ORDER BY Name ASC";
 $res = $Campsite['db']->SelectLimit($sql, $lpp+1, $userOffs);
 if (gettype($res) == 'object' && $res->NumRows() > 0) {
 	$nr = $res->NumRows();
@@ -207,18 +215,14 @@ for($loop = 0; $loop < $last; $loop++) {
 }
 ?>	<tr><td colspan="2" nowrap>
 <?php
-if ($userOffs <= 0) {
-	echo "\t\t&lt;&lt;&nbsp;" . getGS('Previous');
-} else {
+if ($userOffs > 0) {
 	$oldUserOffs = $userOffs;
 	$userOffs = $userOffs - $lpp;
 ?>		<b><a href="index.php?<?php echo get_user_urlparams(0); ?>">&lt;&lt; <?php putGS('Previous'); ?></a></b>
 <?php
 	$userOffs = $oldUserOffs;
 }
-if ($nr < $lpp+1) {
-	echo "\t\t| " . getGS('Next') . "&nbsp;&gt;&gt;";
-} else {
+if ($nr >= $lpp+1) {
 	$userOffs += $lpp;
 ?>		 | <b><a href="index.php?<?php echo get_user_urlparams(0); ?>"><?php putGS('Next'); ?> &gt;&gt</a></b>
 <?php  } ?>	</td></tr>

@@ -22,8 +22,8 @@ if (!Template::IsValidPath($Path)) {
 $Charset = Input::Get('Charset', 'string', '');
 $UNIQUE_ID = Input::Get('UNIQUE_ID', 'string', '');
 $Id = Input::Get('Id', 'int', 0);
-todef('File', $HTTP_POST_FILES[File][tmp_name]);
-todef('File_name', $HTTP_POST_FILES[File][name]);
+$File = isset($HTTP_POST_FILES['File']['tmp_name']) ? $HTTP_POST_FILES['File']['tmp_name'] : '';
+$File_name = isset($HTTP_POST_FILES['File']['name']) ? $HTTP_POST_FILES['File']['name'] : '';
 
 $debugLevelHigh = false;
 $debugLevelLow = false;

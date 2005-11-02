@@ -283,8 +283,24 @@ class Section extends DatabaseObject {
 		if (!is_null($p_languageId)) {
 			$constraints[] = array("IdLanguage", $p_languageId);
 		}
+		
 		return DatabaseObject::Search('Section', $constraints, $p_sqlOptions);
 	} // fn GetSections
+	
+	
+	/**
+	 * Return an array of arrays indexed by "id" and "name".
+	 * @return array
+	 */
+	function GetUniqueSections($p_publicationId)
+	{
+		global $Campsite;
+		$tmpObj =& new Section();		
+		$queryStr = "SELECT DISTINCT Number as id, Name as name "
+					." FROM ".$tmpObj->m_dbTableName
+					." WHERE IdPublication=$p_publicationId";
+		return $Campsite['db']->GetAll($queryStr);
+	} // fn GetSectionNames
 	
 	
 	/**

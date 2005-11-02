@@ -98,11 +98,11 @@ camp_html_content_top(getGS("Adding new section"), $tmpArray);
 		<?php
 	}
 	if ($created) {    ?>
-        <LI><?php  putGS('The section $1 has been successfuly added.','<B>'.encHTML(decS($cName)).'</B>'); ?></LI>
+        <LI><?php  putGS('The section $1 has been successfuly added.','<B>'.htmlspecialchars($cName).'</B>'); ?></LI>
         <?php 
         if ($cSubs != "") {
 			if ($numSubscriptionsAdded > 0) { ?>
-				<LI><?php  putGS('A total of $1 subscriptions were updated.','<B>'.encHTML(decS($numSubscriptionsAdded)).'</B>'); ?></LI>
+				<LI><?php  putGS('A total of $1 subscriptions were updated.','<B>'.$numSubscriptionsAdded.'</B>'); ?></LI>
 	           <?php
 			}
 		}

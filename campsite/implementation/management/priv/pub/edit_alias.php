@@ -33,8 +33,8 @@ camp_html_content_top(getGS("Edit alias"), array("Pub" => $publicationObj), true
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
 	</TD>
 </TR>
-<INPUT TYPE=HIDDEN NAME=cPub VALUE="<?php  pencHTML($Pub); ?>">
-<INPUT TYPE=HIDDEN NAME=cAlias VALUE="<?php  pencHTML($Alias); ?>">
+<INPUT TYPE=HIDDEN NAME=cPub VALUE="<?php  p($Pub); ?>">
+<INPUT TYPE=HIDDEN NAME=cAlias VALUE="<?php  p($Alias); ?>">
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
 	<TD>

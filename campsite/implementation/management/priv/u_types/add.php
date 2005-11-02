@@ -141,7 +141,7 @@ foreach ($rights as $group_name=>$group) {
 	</tr>
 	<tr>
 		<td colspan="2" style="padding-top: 5px; padding-bottom: 10px;" align="center">
-		<input type="hidden" name="UType" value="<?php pencHTML($uType); ?>">
+		<input type="hidden" name="UType" value="<?php p(htmlspecialchars($uType)); ?>">
 		<input type="submit" class="button" name="Save" value="<?php putGS('Save changes'); ?>">
 		<input type="button" class="button" name="Cancel" value="<?php putGS('Cancel'); ?>" onclick="location.href='/<?php echo $ADMIN; ?>/u_types/'">
 		</td>

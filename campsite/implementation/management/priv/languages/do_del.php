@@ -14,8 +14,6 @@ if (!$access) {
 }
 
 if (!$User->hasPermission('DeleteLanguages')) {
-    print_r($User);
-    exit;
 	camp_html_display_error(getGS("You do not have the right to delete languages."));
 	exit;
 }
@@ -32,58 +30,39 @@ if (!$languageObj->exists()) {
 	exit;    
 }
 
-$del = 1;
+$doDelete = true;
 
-query ("SELECT COUNT(*) FROM Publications WHERE IdDefaultLanguage=$Language", 'q_pub');
-fetchRowNum($q_pub);
-if (getNumVar($q_pub,0) != 0) {
-	$del= 0; 
-	$msg[] = getGS('There are $1 publication(s) left.',getNumVar($q_pub)); 
+$numPublications = $Campsite['db']->GetOne("SELECT COUNT(*) FROM Publications WHERE IdDefaultLanguage=$Language");
+if ($numPublications > 0) {
+	$doDelete = false; 
+	$msg[] = getGS('There are $1 publication(s) left.', $numPublications); 
 } 
     
-query ("SELECT COUNT(*) FROM Issues WHERE IdLanguage=$Language", 'q_iss');
-fetchRowNum($q_iss);
-if (getNumVar($q_iss,0) != 0) {
-    $del= 0; 
-    $msg[] = getGS('There are $1 issue(s) left.',getNumVar($q_iss)); 
+$numIssues = $Campsite['db']->GetOne("SELECT COUNT(*) FROM Issues WHERE IdLanguage=$Language");
+if ($numIssues > 0) {
+    $doDelete = false; 
+    $msg[] = getGS('There are $1 issue(s) left.', $numIssues); 
 } 
     
-query ("SELECT COUNT(*) FROM Sections WHERE IdLanguage=$Language", 'q_sect');
-fetchRowNum($q_sect);
-if (getNumVar($q_sect,0) != 0) {
-    $del= 0; 
-    $msg[] = getGS('There are $1 section(s) left.',getNumVar($q_sect)); 
+$numSections = $Campsite['db']->GetOne("SELECT COUNT(*) FROM Sections WHERE IdLanguage=$Language");
+if ($numSections > 0) {
+    $doDelete = false; 
+    $msg[] = getGS('There are $1 section(s) left.', $numSections); 
+} 
+
+$numArticles = $Campsite['db']->GetOne("SELECT COUNT(*) FROM Articles WHERE IdLanguage=$Language");
+if ($numArticles > 0) {
+    $doDelete = false; 
+    $msg[] = getGS('There are $1 article(s) left.', $numArticles); 
 } 
     
-query ("SELECT COUNT(*) FROM Articles WHERE IdLanguage=$Language", 'q_art');
-fetchRowNum($q_art);
-if (getNumVar($q_art,0) != 0) {
-    $del= 0; 
-    $msg[] = getGS('There are $1 article(s) left.',getNumVar($q_art)); 
-} 
-    
-query ("SELECT COUNT(*) FROM Dictionary WHERE IdLanguage=$Language", 'q_kwd');
-fetchRowNum($q_kwd);
-if (getNumVar($q_kwd,0) != 0) {
-    $del= 0; 
-    $msg[] = getGS('There are $1 keyword(s) left.',getNumVar($q_kwd)); 
-}
-    
-query ("SELECT COUNT(*) FROM Classes WHERE IdLanguage=$Language", 'q_cls');
-fetchRowNum($q_cls);
-if (getNumVar($q_cls,0) != 0) {
-    $del= 0; 
-    $msg[] = getGS('There are $1 classes(s) left.',getNumVar($q_cls));     
-}
-    
-query ("SELECT COUNT(*) FROM Countries WHERE IdLanguage=$Language", 'q_country');
-fetchRowNum($q_country);
-if (getNumVar($q_country,0) != 0) {
-    $del= 0; 
-    $msg[] = getGS('There are $1 countries left.',getNumVar($q_country));     
+$numCountries = $Campsite['db']->GetOne("SELECT COUNT(*) FROM Countries WHERE IdLanguage=$Language");
+if ($numCountries > 0) {
+    $doDelete = false; 
+    $msg[] = getGS('There are $1 countries left.', $numCountries);
 }
 
-if ($del) {
+if ($doDelete) {
 	unlink($_SERVER['DOCUMENT_ROOT'] . "/" . $languageObj->getCode() . ".php");
 	Localizer::DeleteLanguageFiles($languageObj->getCode());
 	$languageObj->delete();
@@ -92,31 +71,16 @@ if ($del) {
 	header("Location: /$ADMIN/languages/index.php");
 	exit;
 }
+
+$crumbs = array();
+$crumbs[] = array(getGS("Configure"), "");
+$crumbs[] = array(getGS("Languages"), "/$ADMIN/languages/");
+$crumbs[] = array(getGS("Deleting language"), "");
+echo camp_html_breadcrumbs($crumbs);
+
 ?>
-<HEAD>
-	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
-	<TITLE><?php  putGS("Deleting language"); ?></TITLE>
-</HEAD>
-
-<BODY >
-
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
-<TR>
-	<TD class="page_title">
-	    <?php  putGS("Deleting language"); ?>
-	</TD>
-	<TD ALIGN=RIGHT>
-	   <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
-	   <TR>
-	       <TD><A HREF="/admin/languages/" class="breadcrumb" ><?php  putGS("Languages");  ?></A></TD>
-       </TR>
-       </TABLE>
-    </TD>
-</TR>
-</TABLE>
-
 <P>
-<CENTER><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box" ALIGN="CENTER">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">
 <TR>
 	<TD COLSPAN="2">
 		<B> <?php  putGS("Deleting language"); ?> </B>
@@ -139,7 +103,7 @@ if ($del) {
 <TR>
 	<TD COLSPAN="2">
     	<DIV ALIGN="CENTER">        
-        	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/admin/languages/'">
+        	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/languages/'">
     	</DIV>
 	</TD>
 </TR>

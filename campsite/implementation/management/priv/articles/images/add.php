@@ -34,8 +34,7 @@ $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
 
 $ImageTemplateId = ArticleImage::GetUnusedTemplateId($Article);
 
-query ("SELECT LEFT(NOW(), 10)", 'q_now');
-fetchRowNum($q_now);
+$q_now = $Campsite['db']->GetOne("SELECT LEFT(NOW(), 10)");
 
 // Add extra breadcrumb for image list.
 $extraCrumbs = array(getGS("Images")=>"/$ADMIN/articles/images/?Pub=$Pub&Issue=$Issue&Language=$Language&Section=$Section&Article=$Article&sLanguage=$sLanguage");
@@ -93,7 +92,7 @@ function checkAddForm(form) {
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Date"); ?>:</TD>
 	<TD>
-		<INPUT TYPE="TEXT" NAME="cDate" VALUE="<?php  pgetNumVar($q_now,0); ?>" class="input_text" SIZE="11" MAXLENGTH="10"> <?php  putGS('YYYY-MM-DD'); ?>
+		<INPUT TYPE="TEXT" NAME="cDate" VALUE="<?php  p($q_now); ?>" class="input_text" SIZE="11" MAXLENGTH="10"> <?php  putGS('YYYY-MM-DD'); ?>
 	</TD>
 </TR>
 <TR>

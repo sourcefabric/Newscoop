@@ -55,8 +55,8 @@ if ($g_res->RecordCount() > 0) {
 }
 
 if ($Campsite['db']->Execute("INSERT IGNORE INTO SubsByIP SET IdUser=$g_userId, StartIP='$g_startIP', Addresses=$g_cAddresses")) {
-	$logtext = getGS('IP Group $1 added for user $2', encHTML("$g_startIPStr:$g_cAddresses"),
-		encHTML($g_editUser->getUserName()));
+	$logtext = getGS('IP Group $1 added for user $2', "$g_startIPStr:$g_cAddresses",
+		$g_editUser->getUserName());
 	Log::Message($logtext, $g_user->getUserName(), 57);
 } else {
 	camp_html_display_error(getGS('There was an error creating the IP address group.', "$g_startIPStr:$g_cAddresses"), $g_backLink);

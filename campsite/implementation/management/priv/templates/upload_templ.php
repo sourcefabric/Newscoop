@@ -42,7 +42,7 @@ echo camp_html_breadcrumbs($crumbs);
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Template charset"); ?>:</TD>
 	<TD>
-		<INPUT TYPE="HIDDEN" NAME="Path" VALUE="<?php  pencHTML(decS($Path)); ?>">
+		<INPUT TYPE="HIDDEN" NAME="Path" VALUE="<?php  p(htmlspecialchars($Path)); ?>">
 		<INPUT TYPE="HIDDEN" NAME="UNIQUE_ID" VALUE="1">
 		<SELECT NAME="Charset" class="input_select">
 		<OPTION VALUE="">-- <?php putGS("Select a language/character set") ?> --</OPTION>

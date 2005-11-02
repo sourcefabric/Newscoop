@@ -18,8 +18,7 @@ if (!$User->hasPermission('AddImage')) {
 }
 $view = Input::Get('view', 'string', 'thumbnail', true);
 $imageNav =& new ImageNav(CAMPSITE_IMAGEARCHIVE_IMAGES_PER_PAGE, $view);
-query ("SELECT LEFT(NOW(), 10)", 'q_now');
-fetchRowNum($q_now);
+$q_now = $Campsite['db']->GetOne("SELECT LEFT(NOW(), 10)");
 
 $crumbs = array();
 $crumbs[] = array(getGS('Content'), "");
@@ -71,7 +70,7 @@ $breadcrumbs = camp_html_breadcrumbs($crumbs);
 	<TR>
 		<TD ALIGN="RIGHT" ><?php putGS('Date'); ?>:</TD>
 		<TD align="left">
-		<INPUT TYPE="TEXT" NAME="cDate" VALUE="<?php  pgetNumVar($q_now,0); ?>" SIZE="11" MAXLENGTH="10" class="input_text"> <?php  putGS('YYYY-MM-DD'); ?>
+		<INPUT TYPE="TEXT" NAME="cDate" VALUE="<?php  p($q_now); ?>" SIZE="11" MAXLENGTH="10" class="input_text"> <?php  putGS('YYYY-MM-DD'); ?>
 		</TD>
 	</TR>
 	<TR>

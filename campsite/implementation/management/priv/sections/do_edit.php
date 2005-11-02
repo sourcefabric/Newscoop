@@ -119,20 +119,20 @@ camp_html_content_top("Updating section name");
 	if ($correct) {
 		if ($cSubs == "a") {
 			if ($add_subs_res > 0) { ?>
-				<LI><?php  putGS('A total of $1 subscriptions were updated.','<B>'.encHTML(decS($numSubscriptionsAdded)).'</B>'); ?></LI>
+				<LI><?php  putGS('A total of $1 subscriptions were updated.','<B>'.$numSubscriptionsAdded.'</B>'); ?></LI>
             	<?php
 			}
 		}
 		if ($cSubs == "d") {
 			if ($del_subs_res > 0) { ?>
-				<LI><?php  putGS('A total of $1 subscriptions were updated.','<B>'.encHTML(decS($numSubscriptionsDeleted)).'</B>'); ?></LI>
+				<LI><?php  putGS('A total of $1 subscriptions were updated.','<B>'.$numSubscriptionsDeleted.'</B>'); ?></LI>
                 <?php
 			}
 		}
     }
 
     if ($modified) { ?>
-    	<LI><?php  putGS('The section $1 has been successfuly modified.', '<B>'.encHTML(decS($cName)).'</B>'); ?></LI>
+    	<LI><?php  putGS('The section $1 has been successfuly modified.', '<B>'.htmlspecialchars($cName).'</B>'); ?></LI>
         <?php  
     } 
     ?>		

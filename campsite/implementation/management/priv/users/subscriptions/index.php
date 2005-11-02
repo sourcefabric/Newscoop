@@ -30,7 +30,7 @@ $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
 $crumbs[] = array(getGS("Subscribers"), "/$ADMIN/users/?uType=Subscribers");
 $crumbs[] = array(getGS("Account") . " '".$manageUser->getUserName()."'", 
-			"/$ADMIN/users/edit.php?User=$User&uType=Subscribers");
+			"/$ADMIN/users/edit.php?User=$f_user_id&uType=Subscribers");
 $crumbs[] = array(getGS("Subscriptions"), "/$ADMIN/users/subscriptions/?f_user_id=$f_user_id");
 echo camp_html_breadcrumbs($crumbs);
 

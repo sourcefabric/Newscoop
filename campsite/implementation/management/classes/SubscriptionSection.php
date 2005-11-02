@@ -62,16 +62,34 @@ class SubscriptionSection extends DatabaseObject {
 	} // fn getStartDate
 	
 	
+	function setStartDate($p_value)
+	{
+		return $this->setProperty('StartDate', $p_value);
+	}
+	
+	
 	function getDays()
 	{
 		return $this->getProperty('Days');
 	} // fn getDays
 	
 	
+	function setDays($p_value)
+	{
+		return $this->setProperty('Days', $p_value);
+	}
+	
+	
 	function getPaidDays()
 	{
 		return $this->getProperty('PaidDays');
 	} // fn getPaidDays
+	
+	
+	function setPaidDays($p_value)
+	{
+		return $this->setProperty('PaidDays', $p_value);
+	}
 	
 	
 	/**
@@ -107,6 +125,23 @@ class SubscriptionSection extends DatabaseObject {
 			$created &= $subscriptionSection->create($p_values);
 		}
 		return $created;
+	}
+	
+	
+	function GetSubscriptionSections($p_subscriptionId, $p_sectionId = null)
+	{
+		$queryStr = "SELECT DISTINCT SubsSections.*, Sections.Name, Subscriptions.Type "
+			." FROM SubsSections, Sections, Subscriptions "
+			." WHERE SubsSections.IdSubscription=$p_subscriptionId "
+			." AND Subscriptions.Id = $p_subscriptionId"
+			." AND Subscriptions.IdPublication = Sections.IdPublication "
+			." AND SubsSections.SectionNumber = Sections.Number ";
+		if (!is_null($p_sectionId)) {
+			$queryStr .= " AND SubsSections.SectionNumber = $p_sectionId";
+		}
+		$queryStr .= " ORDER BY SectionNumber";
+		$sections = DbObjectArray::Create('SubscriptionSection', $queryStr);
+		return $sections;
 	}
 	
 } // class SubscriptionSection

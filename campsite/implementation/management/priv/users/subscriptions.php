@@ -13,7 +13,7 @@ if (!$User->hasPermission("ManageSubscriptions") || !isset($editUser) || gettype
 		<table border="0" cellspacing="0" cellpadding="0" width="100%"><tr class="table_list_header">
 			<td align="left"><?php putGS("Subscriptions"); ?></td>
 			<td align="right" valign="center" nowrap>
-				<?php $addURI = "/$ADMIN/users/subscriptions/add.php?User=".$editUser->getId(); ?>
+				<?php $addURI = "/$ADMIN/users/subscriptions/add.php?f_user_id=".$editUser->getId(); ?>
 				<a href="<?php echo $addURI; ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A>
 				<a href="<?php echo $addURI; ?>"><B><?php putGS("Add new"); ?></B></A>
 			</td>
@@ -21,10 +21,8 @@ if (!$User->hasPermission("ManageSubscriptions") || !isset($editUser) || gettype
 	</td>
 </tr>
 <?php
-
-query ("SELECT * FROM Subscriptions WHERE IdUser=" . $editUser->getId() . " ORDER BY Id DESC", 'q_subs');
-if ($NUM_ROWS) {
-	$nr= $NUM_ROWS;
+$subscriptions = Subscription::GetSubscriptions(null, $editUser->getId(), array("ORDER BY" => array("Id" => "DESC")));
+if (count($subscriptions) > 0) {
 	$color=0;
 	?>
 	<TR class="table_list_header">
@@ -35,38 +33,36 @@ if ($NUM_ROWS) {
 		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Delete"); ?></B></TD>
 	</TR>
 <?php 
-	for($loop=0;$loop<$nr;$loop++) {
-		fetchRow($q_subs);
+	foreach ($subscriptions as $subscription) {
+		$publicationObj =& new Publication($subscription->getPublicationId());
 ?>	<TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
-		<TD >
-<?php 
-		query ("SELECT Name FROM Publications WHERE Id=".getSVar($q_subs,'IdPublication'), 'q_pub');
-		fetchRow($q_pub);
-?>			<A HREF="/<?php echo $ADMIN; ?>/users/subscriptions/sections/?Subs=<?php pgetUVar($q_subs,'Id'); ?>&Pub=<?php pgetUVar($q_subs,'IdPublication'); ?>&User=<?php  echo $editUser->getId(); ?>"><?php pgetHVar($q_pub,'Name'); ?></A>&nbsp;
+		<TD>
+		<A HREF="/<?php echo $ADMIN; ?>/users/subscriptions/sections/?f_subscription_id=<?php p($subscription->getSubscriptionId()); ?>&f_publication_id=<?php p($subscription->getPublicationId()); ?>&f_user_id=<?php echo $editUser->getId(); ?>"><?php p(htmlspecialchars($publicationObj->getName())); ?></A>&nbsp;
 		</TD>
 		<TD >
-			<A HREF="/<?php echo $ADMIN; ?>/users/subscriptions/topay.php?User=<?php echo $editUser->getId(); ?>&Subs=<?php pgetUVar($q_subs,'Id'); ?>">
-			<?php  pgetHVar($q_subs,'ToPay').' '.pgetHVar($q_subs,'Currency'); ?></A>
+			<A HREF="/<?php echo $ADMIN; ?>/users/subscriptions/topay.php?f_user_id=<?php echo $editUser->getId(); ?>&f_subscription_id=<?php p($subscription->getSubscriptionId()); ?>">
+			<?php  p(htmlspecialchars($subscription->getToPay())).' '.p(htmlspecialchars($subscription->getCurrency())); ?></A>
 		</TD>
 		<TD >
 			<?php  
-			$sType = getHVar($q_subs,'Type');
-			if ($sType == 'T')
+			$sType = $subscription->getType();
+			if ($sType == 'T') {
 				putGS("Trial");
-			else
+			} else {
 				putGS("Paid");
+			}
 			?>
 		</TD>
 		<TD ALIGN="CENTER">
-		<?php if (getVar($q_subs,'Active') == "Y") { ?>
-			<a href="/<?php echo $ADMIN; ?>/users/subscriptions/do_status.php?User=<?php echo $editUser->getId(); ?>&Subs=<?php pgetUVar($q_subs,'Id'); ?>" onclick="return confirm('<?php putGS('Are you sure you want to deactivate the subscription?'); ?>');"><?php putGS('Yes'); ?></a>
+		<?php if ($subscription->isActive()) { ?>
+			<a href="/<?php echo $ADMIN; ?>/users/subscriptions/do_status.php?f_user_id=<?php echo $editUser->getId(); ?>&f_subscription_id=<?php p($subscription->getSubscriptionId()); ?>" onclick="return confirm('<?php putGS('Are you sure you want to deactivate the subscription?'); ?>');"><?php putGS('Yes'); ?></a>
 		<?php } else { ?>
-			<a href="/<?php echo $ADMIN; ?>/users/subscriptions/do_status.php?User=<?php echo $editUser->getId(); ?>&Subs=<?php pgetUVar($q_subs,'Id'); ?>" onclick="return confirm('<?php putGS('Are you sure you want to activate the subscription?'); ?>');"><?php putGS('No');?></a>
+			<a href="/<?php echo $ADMIN; ?>/users/subscriptions/do_status.php?f_user_id=<?php echo $editUser->getId(); ?>&f_subscription_id=<?php p($subscription->getSubscriptionId()); ?>" onclick="return confirm('<?php putGS('Are you sure you want to activate the subscription?'); ?>');"><?php putGS('No');?></a>
 		<?php } ?>
 		</TD>
 		<TD ALIGN="CENTER">
-			<A HREF="/<?php echo $ADMIN; ?>/users/subscriptions/do_del.php?User=<?php echo $editUser->getId(); ?>&Subs=<?php pgetUVar($q_subs,'Id'); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the subscription to the publication $1?', getHVar($q_pub,'Name')); ?>');">
-			<IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php putGS('Delete subscriptions to $1',getHVar($q_pub,'Name') ); ?>" TITLE="<?php  putGS('Delete subscriptions to $1',getHVar($q_pub,'Name') ); ?>"></A>
+			<A HREF="/<?php echo $ADMIN; ?>/users/subscriptions/do_del.php?f_user_id=<?php echo $editUser->getId(); ?>&f_subscription_id=<?php p($subscription->getSubscriptionId()); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the subscription to the publication $1?', htmlspecialchars($publicationObj->getName())); ?>');">
+			<IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php putGS('Delete subscriptions to $1', htmlspecialchars($publicationObj->getName()) ); ?>" TITLE="<?php  putGS('Delete subscriptions to $1', htmlspecialchars($publicationObj->getName()) ); ?>"></A>
 		</TD>
 	</TR>
 <?php 

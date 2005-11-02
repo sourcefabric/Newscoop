@@ -91,7 +91,7 @@ echo camp_html_content_top(getGS("Changing publication information"), array("Pub
 </TR>
 <TR>
 	<TD COLSPAN="2" align="center">
-		<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/pub/edit.php?Pub=<?php  pencURL($Pub); ?>'">
+		<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/pub/edit.php?Pub=<?php  p($Pub); ?>'">
 	</TD>
 </TR>
 </TABLE>

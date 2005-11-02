@@ -1,6 +1,8 @@
 <?php
 
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/users_common.php");
+require_once($_SERVER['DOCUMENT_ROOT']. "/classes/Subscription.php");
+require_once($_SERVER['DOCUMENT_ROOT']. "/classes/Publication.php");
 
 list($access, $User) = check_basic_access($_REQUEST);
 
@@ -33,18 +35,17 @@ if ($userId > 0) {
     $crumbs[] = array(getGS("Add new user account"), "");
 }
 $breadcrumbs = camp_html_breadcrumbs($crumbs);
+echo $breadcrumbs; 
 ?>
-<head>
-	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.config.js"></script>
-	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.core.js"></script>
-	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.lang-enUS.js"></script>
-	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.validators.js"></script>
-</head>
+<p>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.config.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.core.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.lang-enUS.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.validators.js"></script>
 
-<?php echo $breadcrumbs; ?>
 
 <?php if ($resMsg != '') { ?>
-<table border="0" cellpadding="0" cellspacing="0" align="center">
+<table border="0" cellpadding="0" cellspacing="0" class="action_buttons">
 <tr>
 <?php if ($res == 'OK') { ?>
 	<td class="info_message">
@@ -55,6 +56,7 @@ $breadcrumbs = camp_html_breadcrumbs($crumbs);
 	</td>
 </tr>
 </table>
+<p>
 <?php } ?>
 
 <table border="0">

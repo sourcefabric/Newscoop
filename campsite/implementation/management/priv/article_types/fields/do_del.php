@@ -25,7 +25,7 @@ $fieldName = Input::Get('Field');
 $field =& new ArticleTypeField($articleTypeName, $fieldName);
 if ($field->exists()) {
 	$field->delete();
-	$logtext = getGS('Article type field $1 deleted',encHTML($Field)); 
+	$logtext = getGS('Article type field $1 deleted', $Field); 
 	Log::Message($logtext, $User->getUserName(), 72);
 }
 header("Location: /$ADMIN/article_types/fields/?AType=".urlencode($articleTypeName));

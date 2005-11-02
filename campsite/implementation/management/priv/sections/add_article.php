@@ -20,7 +20,6 @@ if ($SectOffs < 0) {
 	$SectOffs= 0;
 }
 $ItemsToDisplay = 15;
-//todefnum('lpp', 10);
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
@@ -65,9 +64,7 @@ if (count($sections) > 0) {
 		</TD>
 	</TR>
 	<?php 
-	foreach ($sections as $section) {
-    //for($loop=0;$loop<$i;$loop++) {
-	//fetchRow($q_sect); ?>	
+	foreach ($sections as $section) { ?>	
 	<TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 		<TD ALIGN="RIGHT">
 			<?php p($section->getSectionId()); ?>

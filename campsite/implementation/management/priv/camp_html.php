@@ -155,25 +155,28 @@ function camp_html_display_error($p_errorStr, $p_backLink = null, $popup = false
  * Common header for all content screens.
  *
  * @param string $p_title
- *		The title of the page.  This should have a translation in the language files.
+ *		The title of the page.  This should have a translation in the language
+ *		files.
  *
  * @param array $p_objArray
  *		This represents your current location in the content tree.  This
- * 		can have the following index values, each containing the appropriate object:
- *		'Pub', 'Issue', 'Section', 'Article'
+ * 		can have the following index values, each containing the appropriate
+ *		object: 'Pub', 'Issue', 'Section', 'Article'
  *
  * @param boolean $p_includeLinks
  *		Whether to include the links underneath the title or not.  Default TRUE.
  *
  * @param boolean $p_fValidate
- *		Whether to include the fValidate javascript files in the HTML header. Default FALSE.
+ *		Whether to include the fValidate javascript files in the HTML header. 
+ *      Default FALSE.
  *
  * @param array $p_extraBreadcrumbs
  *		An array in the form 'text' => 'link' for more breadcrumbs.
  *
  * @return void
  */
-function camp_html_content_top($p_title, $p_objArray, $p_includeLinks = true, $p_fValidate = false, $p_extraBreadcrumbs = null) 
+function camp_html_content_top($p_title, $p_objArray, $p_includeLinks = true, 
+							   $p_fValidate = false, $p_extraBreadcrumbs = null) 
 {
 	global $Campsite;
 	global $ADMIN;
@@ -186,7 +189,6 @@ function camp_html_content_top($p_title, $p_objArray, $p_includeLinks = true, $p
 	$breadcrumbs[] = array("Content", "");
 	if (!is_null($publicationObj)) {
 	    $prompt =  getGS("Publication").":";
-	    //$strCrumbs .= camp_html_breadcrumb($prompt, "/$ADMIN/pub/", )
 	    $name = htmlspecialchars($publicationObj->getName());
     	$breadcrumbs[] = array($prompt, "/$ADMIN/pub/", false);
     	$breadcrumbs[] = array($name, "/$ADMIN/pub/edit.php?Pub=".$publicationObj->getPublicationId());

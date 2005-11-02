@@ -78,6 +78,23 @@ class User extends DatabaseObject {
 	} // constructor
 	
 	
+	function delete()
+	{
+		global $Campsite;
+		if ($this->exists()) {
+			parent::delete();
+			$Campsite['db']->Execute("DELETE FROM UserPerm WHERE IdUser = ".$this->m_data['Id']);
+			$res = $Campsite['db']->Execute("SELECT Id FROM Subscriptions WHERE IdUser = ".$this->m_data['Id']);
+			while ($row = $res->FetchRow()) {
+				$Campsite['db']->Execute("DELETE FROM SubsSections WHERE IdSubscription=".$row['Id']);
+			}
+			$Campsite['db']->Execute("DELETE FROM Subscriptions WHERE IdUser=".$this->m_data['Id']);
+			$Campsite['db']->Execute("DELETE FROM SubsByIP WHERE IdUser=".$this->m_data['Id']);
+		}
+		return true;
+	}
+	
+	
 	/**
 	 * @param array $p_recordSet
 	 */

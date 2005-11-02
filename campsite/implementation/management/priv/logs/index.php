@@ -107,11 +107,11 @@ echo camp_html_breadcrumbs($crumbs);
 ?>	
 <TR><TD COLSPAN="2" NOWRAP>
 <?php  if ($f_log_page_offset > 0) { ?>
-	<B><A HREF="index.php?sEvent=<?php  print encURL($sEvent); ?>&f_log_page_offset=<?php  print max(0, ($f_log_page_offset - $ItemsPerPage)); ?>">&lt;&lt; <?php  putGS('Previous'); ?></A></B>
+	<B><A HREF="index.php?sEvent=<?php  print urlencode($sEvent); ?>&f_log_page_offset=<?php  print max(0, ($f_log_page_offset - $ItemsPerPage)); ?>">&lt;&lt; <?php  putGS('Previous'); ?></A></B>
 	<?php  
 } 
 if ($numLogLines > ($f_log_page_offset + $ItemsPerPage)) { ?>
-	 | <B><A HREF="index.php?sEvent=<?php  print encURL($sEvent); ?>&f_log_page_offset=<?php print ($f_log_page_offset + $ItemsPerPage); ?>"><?php  putGS('Next'); ?> &gt;&gt</A></B>
+	 | <B><A HREF="index.php?sEvent=<?php  print urlencode($sEvent); ?>&f_log_page_offset=<?php print ($f_log_page_offset + $ItemsPerPage); ?>"><?php  putGS('Next'); ?> &gt;&gt</A></B>
 <?php  } ?>	</TD></TR>
 </TABLE>
 <?php camp_html_copyright_notice(); ?>

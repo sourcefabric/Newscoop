@@ -19,7 +19,7 @@ echo $breadcrumbs;
 
 if ($User->hasPermission('ManageLanguages')) { ?>
 <P>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="action_buttons">
 <TR>
     <TD><A HREF="/<?php echo $ADMIN; ?>/languages/add_modify.php?Back=<?php print urlencode($_SERVER['REQUEST_URI']); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
     <TD><A HREF="/<?php echo $ADMIN; ?>/languages/add_modify.php?Back=<?php print urlencode($_SERVER['REQUEST_URI']); ?>" ><B><?php  putGS("Add new language"); ?></B></A></TD>
@@ -45,10 +45,7 @@ if (count($languages) > 0) {
         <?php  } ?>
 	</TR>
     <?php 
-    foreach ($languages as $language) {
-    //for($loop=0;$loop<$nr;$loop++) {
-	//fetchRow($Languages);
-	//if ($i) { ?>	
+    foreach ($languages as $language) { ?>	
 	<TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 		<TD>
 			<?php  p(htmlspecialchars($language->getName())); ?>

@@ -75,11 +75,11 @@ if (!$isNewUser) {
 <?php
 if (!$isNewUser) {
 ?>
-				<td align="left" nowrap><b><?php pencHTML($editUser->getUserName()); ?></b></td>
+				<td align="left" nowrap><b><?php p(htmlspecialchars($editUser->getUserName())); ?></b></td>
 <?php
 } else {
 ?>
-				<td><input type="text" class="input_text" name="UName" size="32" maxlength="32" value="<?php pencHTML($UName); ?>" alt="blank" emsg="<?php putGS("You must complete the $1 field.", "User name"); ?>"></td>
+				<td><input type="text" class="input_text" name="UName" size="32" maxlength="32" value="<?php p(htmlspecialchars($UName)); ?>" alt="blank" emsg="<?php putGS("You must complete the $1 field.", "User name"); ?>"></td>
 			</tr>
 			<tr>
 				<td align="right"><?php putGS("Password"); ?>:</td>
@@ -98,43 +98,39 @@ if (!$isNewUser) {
 			</tr>
 			<tr>
 				<td align="right" nowrap><?php putGS("Full Name"); ?>:</td>
-				<td><input type="text" class="input_text" name="Name" VALUE="<?php pencHTML($Name); ?>" size="32" maxlength="128" alt="blank" emsg="<?php putGS("You must complete the $1 field.", "Full Name");?>">
+				<td><input type="text" class="input_text" name="Name" VALUE="<?php p(htmlspecialchars($Name)); ?>" size="32" maxlength="128" alt="blank" emsg="<?php putGS("You must complete the $1 field.", "Full Name");?>">
 				</td>
 			</tr>
 			<tr>
 				<td align="right" nowrap><?php putGS("E-Mail"); ?>:</td>
 				<td>
-				<input type="text" class="input_text" name="EMail" value="<?php pencHTML($EMail); ?>" size="32" maxlength="128" alt="email" emsg="<?php putGS("You must input a valid EMail address.");?>">
+				<input type="text" class="input_text" name="EMail" value="<?php p(htmlspecialchars($EMail)); ?>" size="32" maxlength="128" alt="email" emsg="<?php putGS("You must input a valid EMail address.");?>">
 				</td>
 			</tr>
 			<tr>
 				<td align="right" nowrap><?php putGS("Phone"); ?>:</td>
 				<td>
-				<input type="text" class="input_text" name="Phone" value="<?php pencHTML($Phone); ?>" size="20" maxlength="20">
+				<input type="text" class="input_text" name="Phone" value="<?php p(htmlspecialchars($Phone)); ?>" size="20" maxlength="20">
 				</td>
 			</tr>
-<?php
-if ($isNewUser && $uType == "Staff") {
-?>
+
+			<?php
+			if ($isNewUser && $uType == "Staff") {
+			?>
 			<tr>
 				<td align="right"><?php putGS("Type"); ?>:</td>
 				<td>
-<?php
-	query ("SELECT Name FROM UserTypes WHERE Reader = 'N' ORDER BY Name ASC", 'q');
-?>
+				<?php
+				$userTypes = $Campsite['db']->GetAll("SELECT Name FROM UserTypes WHERE Reader = 'N' ORDER BY Name ASC");
+				?>
 				<select name="Type" class="input_select" alt="select" emsg="<?php putGS("You must select a $1", "Type"); ?>">
 				<option value=""><?php putGS("Make a selection"); ?></option>
-<?php
-	$Type = Input::Get('Type', 'string', '');
-	$nr = $NUM_ROWS;
-	for($loop = 0; $loop < $nr; $loop++) {
-		fetchRow($q);
-?>
-					<option <?php if ($Type == getHVar($q,'Name')) { ?>selected<?php } ?>>
-<?php
-		pgetHVar($q,'Name');
-	}
-?>
+				<?php
+				$Type = Input::Get('Type', 'string', '');
+				foreach ($userTypes as $tmpUserType) {
+					pcomboVar($tmpUserType['Name'], $Type, $tmpUserType['Name']);
+				}
+				?>
 				</select>
 				</td>
 			</tr>
@@ -247,25 +243,25 @@ camp_html_create_select("Age", array("0-17"=>getGS("under 18"),
 			<tr>
 				<td align="right" nowrap><?php putGS("City"); ?>:</td>
 				<td>
-				<input type="text" class="input_text" NAME="City" VALUE="<?php pencHTML($City); ?>" size="32" maxlength="60">
+				<input type="text" class="input_text" NAME="City" VALUE="<?php p(htmlspecialchars($City)); ?>" size="32" maxlength="60">
 				</td>
 			</tr>
 			<tr>
 				<td align="right" nowrap><?php putGS("Street Address"); ?>:</td>
 				<td>
-				<input type="text" class="input_text" name="StrAddress" value="<?php  pencHTML($StrAddress); ?>" size="32" maxlength="255">
+				<input type="text" class="input_text" name="StrAddress" value="<?php  p(htmlspecialchars($StrAddress)); ?>" size="32" maxlength="255">
 				</td>
 			</tr>
 			<tr>
 				<td align="right" nowrap><?php putGS("Postal Code"); ?>:</td>
 				<td>
-				<input type="text" class="input_text" name="PostalCode" value="<?php pencHTML($PostalCode); ?>" size="10" maxlength="10">
+				<input type="text" class="input_text" name="PostalCode" value="<?php p(htmlspecialchars($PostalCode)); ?>" size="10" maxlength="10">
 				</td>
 			</tr>
 			<tr>
 				<td align="right" nowrap><?php putGS("State"); ?>:</td>
 				<td>
-				<input type="text" class="input_text" name="State" value="<?php pencHTML($State); ?>" size="32" maxlength="32">
+				<input type="text" class="input_text" name="State" value="<?php p(htmlspecialchars($State)); ?>" size="32" maxlength="32">
 				</td>
 			</tr>
 			<tr>
@@ -273,10 +269,9 @@ camp_html_create_select("Age", array("0-17"=>getGS("under 18"),
 				<td>
 <?php
 $countries_list[""] = "";
-query ("SELECT Code, Name FROM Countries where IdLanguage = 1", 'countries');
-for($loop = 0; $loop < $NUM_ROWS; $loop++) {
-	fetchRow($countries);
-	$countries_list[getHVar($countries,'Code')] = getHVar($countries,'Name');
+$countries = $Campsite['db']->GetAll("SELECT Code, Name FROM Countries where IdLanguage = 1");
+foreach ($countries as $country) {
+	$countries_list[$country['Code']] = htmlspecialchars($country['Name']);
 }
 camp_html_create_select("CountryCode", $countries_list,
 	$CountryCode, 'class="input_select"', true);
@@ -286,25 +281,25 @@ camp_html_create_select("CountryCode", $countries_list,
 			<tr>
 				<td align="right" nowrap><?php putGS("Fax"); ?>:</td>
 				<td>
-				<input type="text" class="input_text" name="Fax" value="<?php pencHTML($Fax); ?>" size="20" maxlength="20">
+				<input type="text" class="input_text" name="Fax" value="<?php p(htmlspecialchars($Fax)); ?>" size="20" maxlength="20">
 				</td>
 			</tr>
 			<tr>
 				<td align="right" nowrap><?php putGS("Contact Person"); ?>:</td>
 				<td>
-				<input type="text" class="input_text" name="Contact" value="<?php  pencHTML($Contact); ?>" size="32" maxlength="64">
+				<input type="text" class="input_text" name="Contact" value="<?php  p(htmlspecialchars($Contact)); ?>" size="32" maxlength="64">
 				</td>
 			</tr>
 			<tr>
 				<td align="right" nowrap><?php putGS("Second Phone"); ?>:</td>
 				<td>
-				<input type="text" class="input_text" name="Phone2" value="<?php  pencHTML($Phone2); ?>" size="20" maxlength="20">
+				<input type="text" class="input_text" name="Phone2" value="<?php  p(htmlspecialchars($Phone2)); ?>" size="20" maxlength="20">
 				</td>
 			</tr>
 			<tr>
 				<td align="right" nowrap><?php putGS("Employer"); ?>:</td>
 				<td>
-				<input type="text" class="input_text" name="Employer" value="<?php  pencHTML($Employer); ?>" size="30" maxlength="30">
+				<input type="text" class="input_text" name="Employer" value="<?php  p(htmlspecialchars($Employer)); ?>" size="30" maxlength="30">
 				</td>
 			</tr>
 			<tr>
@@ -325,7 +320,7 @@ camp_html_create_select("EmployerType", $employerTypes,
 			<tr>
 				<td align="right" nowrap><?php putGS("Position"); ?>:</td>
 				<td>
-				<input type="text" class="input_text" name="Position" value="<?php pencHTML($Position); ?>" size="30" maxlength="30">
+				<input type="text" class="input_text" name="Position" value="<?php p(htmlspecialchars($Position)); ?>" size="30" maxlength="30">
 				</td>
 			</tr>
 		</table>
