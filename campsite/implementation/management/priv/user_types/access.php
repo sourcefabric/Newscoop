@@ -12,7 +12,7 @@ if (!$canManage) {
 
 $uType = Input::Get('UType', 'string', '');
 if ($uType != '') {
-	$userType = new UserType($uType);
+	$userType =& new UserType($uType);
 	if ($userType->getName() == '') {
 		camp_html_display_error(getGS('No such user type.'));
 		exit;
@@ -21,6 +21,7 @@ if ($uType != '') {
 	camp_html_display_error(getGS('No such user type.'));
 	exit;
 }
+
 
 $content_group = array('ManagePub'=>'User may add/change publications',
 	'DeletePub'=>'User may delete publications',
@@ -113,9 +114,6 @@ echo camp_html_breadcrumbs($crumbs);
 	</tr>
 </table>
 
-<?php 
-print_r($userType);
-?>
 <form name="dialog" method="post" action="do_access.php" >
 <p>
 <table border="0" cellspacing="0" cellpadding="1" class="table_input">
@@ -142,7 +140,7 @@ foreach ($rights as $group_name=>$group) {
 ?>
 	<tr>
 		<td align="right" style="padding-left: 10px;">
-			<input type="checkbox" name="<?php echo $right_name; ?>" class="input_checkbox" <?php  if ($userType->hasPermission($right_name)) { p("CHECKED"); } ?>><?php echo $right_name; ?>
+			<input type="checkbox" name="<?php echo $right_name; ?>" class="input_checkbox" <?php  if ($userType->hasPermission($right_name)) { p("CHECKED"); } ?>>
 		</td>
 		<td style="padding-right: 10px;">
 			<?php putGS($right_text); ?>
