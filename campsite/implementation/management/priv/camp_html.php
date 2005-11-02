@@ -232,20 +232,19 @@ function camp_html_content_top($p_title, $p_objArray, $p_includeLinks = true,
                 "/$ADMIN/articles/index.php"
                 ."?Pub=" . $articleObj->getPublicationId() 
                 ."&Issue=".$articleObj->getIssueId()
-                ."&Language=".$articleObj->getLanguageId()
+                ."&Language=".$sectionObj->getLanguageId()
                 ."&Section=".$articleObj->getSectionId()
-                ."&Article=".$articleObj->getArticleId()
-                ."&sLanguage=".$sectionObj->getLanguageId(),                
+                ."&Article=".$articleObj->getArticleId(),                
                 false);
 	    $name = htmlspecialchars($articleObj->getName())." (".htmlspecialchars($articleObj->getLanguageName()).")";
         $breadcrumbs[] = array($name,
                 "/$ADMIN/articles/edit.php"
                 ."?Pub=" . $articleObj->getPublicationId() 
                 ."&Issue=".$articleObj->getIssueId()
-                ."&Language=".$articleObj->getLanguageId()
+                ."&Language=".$sectionObj->getLanguageId()
                 ."&Section=".$articleObj->getSectionId()
                 ."&Article=".$articleObj->getArticleId()
-                ."&sLanguage=".$sectionObj->getLanguageId());
+                ."&sLanguage=".$articleObj->getLanguageId());
 	}
 	if (is_array($p_extraBreadcrumbs)) {
 	    //print_r($p_extraBreadcrumbs);
