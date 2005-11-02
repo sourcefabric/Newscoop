@@ -203,9 +203,9 @@ class Article extends DatabaseObject {
 	 *		The user creating the copy.  If null, keep the same user ID as the original.
 	 * @param boolean $p_copyAllTranslations -
 	 *     If true, all translations will be copied as well.
-	 * @return mixed
-	 *     If $p_copyAllTranslations is TRUE, return an array of copied articles.
-	 *     If $p_copyAllTranslations is FALSE, return the copied Article.
+	 * @return Article
+	 *     If $p_copyAllTranslations is TRUE, return an array of newly created articles.
+	 *     If $p_copyAllTranslations is FALSE, return the new Article.
 	 */
 	function copy($p_destPublicationId, $p_destIssueId, $p_destSectionId, 
 	              $p_userId = null, $p_copyAllTranslations = false) 
@@ -225,6 +225,7 @@ class Article extends DatabaseObject {
 		}
 		$newArticleId = $this->__generateArticleId();
 		
+		$newArticles = array();
 		foreach ($copyArticles as $copyMe) {
     		// Construct the duplicate article object.
     		$articleCopy =& new Article();
@@ -253,7 +254,7 @@ class Article extends DatabaseObject {
     		else {
     		    $values['IdUser'] = $copyMe->m_data['IdUser'];
     		}
-    		$values['Name'] = $articleCopy->__getUniqueName($copyMe->m_data['Name']);
+    		$values['Name'] = $articleCopy->getUniqueName($copyMe->m_data['Name']);
 
     		$articleCopy->__create($values);
     		$articleCopy->setProperty('UploadDate', 'NOW()', true, true);
@@ -271,20 +272,26 @@ class Article extends DatabaseObject {
     
     		// Copy topic pointers
     		ArticleTopic::OnArticleCopy($copyMe->m_data['Number'], $articleCopy->m_data['Number']);
+    		$newArticles[] = $articleCopy;
 		}
 		if ($p_copyAllTranslations) {
-		    return $copyArticles;
+		    return $newArticles;
 		}
 		else {
-		  return array_pop($copyArticles);
+		  return array_pop($newArticles);
 		}
 	} // fn copy
 	
 	
-	function __getUniqueName($p_currentName) 
+	/**
+	 * Return a unique name based on this article's name.
+	 * The name returned will have the form "original_article_name (duplicate #)"
+	 * @return string
+	 */
+	function getUniqueName($p_currentName) 
 	{
 	    global $Campsite;
-		$origNewName = $p_currentName . " (duplicate";
+		$origNewName = $p_currentName . " (".getGS("Duplicate");
 		$newName = $origNewName .")";
 		$count = 1;
 		while (true) {
@@ -303,7 +310,7 @@ class Article extends DatabaseObject {
 			}
 		}
 	    return $newName;
-	} // fn __getUniqueName
+	} // fn getUniqueName
 		
 	
 	/**

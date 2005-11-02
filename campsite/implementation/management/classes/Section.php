@@ -244,8 +244,7 @@ class Section extends DatabaseObject {
         	    if (!in_array($articleObj->getArticleId(), $copiedArticles)) {
             		$tmpCopiedArticles = $articleObj->copy($p_destPublicationId, 
                         $p_destIssueId, $p_destSectionId, null, true);
-                    $copiedArticles = array_merge($copiedArticles, 
-                        DbObjectArray::GetColumn($tmpCopiedArticles, "Number"));
+                    $copiedArticles[] = $articleObj->getArticleId();
         	    }
         	}
     	}
