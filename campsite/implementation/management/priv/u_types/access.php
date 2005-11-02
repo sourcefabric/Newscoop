@@ -1,6 +1,6 @@
 <?php
 
-require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/u_types/utypes_common.php");
+require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/user_types/utypes_common.php");
 
 list($access, $User) = check_basic_access($_REQUEST);
 $canManage = $User->hasPermission('ManageUserTypes');
@@ -97,7 +97,7 @@ $rights = array('Content'=>$content_group, 'Templates'=>$templates_group,
 	'Editor Table Settings'=>$editor_group_3, 'Editor Miscellaneous Settings'=>$editor_group_4);
 
 $crumbs = array();
-$crumbs[] = array(getGS("User Types"), "/$ADMIN/u_types/");
+$crumbs[] = array(getGS("User Types"), "/$ADMIN/user_types/");
 $crumbs[] = array(getGS("Change user type permissions"), "");
 echo camp_html_breadcrumbs($crumbs);
 
@@ -113,8 +113,12 @@ echo camp_html_breadcrumbs($crumbs);
 	</tr>
 </table>
 
+<?php 
+print_r($userType);
+?>
 <form name="dialog" method="post" action="do_access.php" >
-<p><table border="0" cellspacing="0" cellpadding="1" class="table_input" align="center">
+<p>
+<table border="0" cellspacing="0" cellpadding="1" class="table_input">
 	<tr>
 		<td colspan="2" style="padding-top: 5px; padding-left: 10px;">
 			<b><?php  putGS("Change user type permissions"); ?></b>
@@ -138,7 +142,7 @@ foreach ($rights as $group_name=>$group) {
 ?>
 	<tr>
 		<td align="right" style="padding-left: 10px;">
-			<input type="checkbox" name="<?php echo $right_name; ?>" class="input_checkbox"<?php  if ($userType->hasPermission($right_name)) { p("CHECKED"); } ?>>
+			<input type="checkbox" name="<?php echo $right_name; ?>" class="input_checkbox" <?php  if ($userType->hasPermission($right_name)) { p("CHECKED"); } ?>><?php echo $right_name; ?>
 		</td>
 		<td style="padding-right: 10px;">
 			<?php putGS($right_text); ?>
@@ -160,7 +164,7 @@ foreach ($rights as $group_name=>$group) {
 		<td colspan="2" style="padding-top: 5px; padding-bottom: 10px;" align="center">
 		<input type="hidden" name="UType" value="<?php p(htmlspecialchars($uType)); ?>">
 		<input type="submit" class="button" name="Save" value="<?php putGS('Save changes'); ?>">
-		<input type="button" class="button" name="Cancel" value="<?php putGS('Cancel'); ?>" onclick="location.href='/<?php echo $ADMIN; ?>/u_types/'">
+		<!--<input type="button" class="button" name="Cancel" value="<?php putGS('Cancel'); ?>" onclick="location.href='/<?php echo $ADMIN; ?>/user_types/'">-->
 		</td>
 	</tr>
 </table></p>

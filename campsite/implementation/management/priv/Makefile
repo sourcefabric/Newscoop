@@ -3,19 +3,6 @@ include ../../../make.env
 ALL=all
 
 all: dummy
-	$(MAKE) -C pub
-	$(MAKE) -C issues
-	$(MAKE) -C sections
-	$(MAKE) -C articles
-	$(MAKE) -C templates
-	$(MAKE) -C topics
-	$(MAKE) -C users
-	$(MAKE) -C languages
-	$(MAKE) -C u_types
-	$(MAKE) -C article_types
-	$(MAKE) -C logs
-	$(MAKE) -C country
-	$(MAKE) -C localizer
 
 install: $(ALL)
 	mkdir -p $(PRIV_COMMON_DIR)/article_import
@@ -32,7 +19,7 @@ install: $(ALL)
 	$(MAKE) -C topics install	
 	$(MAKE) -C users install
 	$(MAKE) -C languages install
-	$(MAKE) -C u_types install
+	$(MAKE) -C user_types install
 	$(MAKE) -C article_types install
 	$(MAKE) -C logs install
 	$(MAKE) -C country install
@@ -47,7 +34,7 @@ clean: dummy
 	$(MAKE) -C topics clean	
 	$(MAKE) -C users clean
 	$(MAKE) -C languages clean
-	$(MAKE) -C u_types clean
+	$(MAKE) -C user_types clean
 	$(MAKE) -C article_types clean
 	$(MAKE) -C logs clean
 	$(MAKE) -C country clean

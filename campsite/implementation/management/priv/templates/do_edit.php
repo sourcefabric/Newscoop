@@ -24,9 +24,13 @@ $nField = str_replace("\\r", "\r", $cField);
 $nField = str_replace("\\n", "\n", $nField);
 
 $filename = Template::GetFullPath($Path, $Name);
-$result = file_put_contents($filename, $nField);
+$result = false;
+if ($handle = fopen($filename, 'w')) {
+	$result = fwrite($handle, $nField);
+	fclose($handle);
+}
 
-if ($nField == 0 || $result > 0) {
+if ( ($nField == 0) || ($result > 0) ) {
 	$logtext = getGS('Template $1 was changed', $Path."/".$Name);
 	Log::Message($logtext, $User->getUserName(), 113);
 	header("Location: /$ADMIN/templates/edit_template.php?Path=".urlencode($Path)."&Name=".urlencode($Name));

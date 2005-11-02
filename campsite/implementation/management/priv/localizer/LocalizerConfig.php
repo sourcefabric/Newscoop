@@ -81,7 +81,7 @@ $mapPrefixToDir["logs"] = "/logs";
 $mapPrefixToDir["users"] = "/users";
 $mapPrefixToDir["user_subscriptions"] = "/users/subscriptions";
 $mapPrefixToDir["user_subscription_sections"] = "/users/subscriptions/sections";
-$mapPrefixToDir["user_types"] = "/u_types";
+$mapPrefixToDir["user_types"] = "/user_types";
 $g_localizerConfig["MAP_PREFIX_TO_DIR"] = $mapPrefixToDir;
 unset($mapPrefixToDir);
 

@@ -1,6 +1,6 @@
 <?php
 
-require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/u_types/utypes_common.php");
+require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/user_types/utypes_common.php");
 
 list($access, $User) = check_basic_access($_REQUEST);
 $canManage = $User->hasPermission('ManageUserTypes');
@@ -84,7 +84,7 @@ $rights = array('Content'=>$content_group, 'Templates'=>$templates_group,
 
 $crumbs = array();
 $crumbs[] = array(getGS("Users"), "");
-$crumbs[] = array(getGS("User types"), "/$ADMIN/u_types");
+$crumbs[] = array(getGS("User types"), "/$ADMIN/user_types");
 $crumbs[] = array(getGS("Add new user type"), "");
 echo camp_html_breadcrumbs($crumbs);
 
@@ -143,7 +143,7 @@ foreach ($rights as $group_name=>$group) {
 		<td colspan="2" style="padding-top: 5px; padding-bottom: 10px;" align="center">
 		<input type="hidden" name="UType" value="<?php p(htmlspecialchars($uType)); ?>">
 		<input type="submit" class="button" name="Save" value="<?php putGS('Save changes'); ?>">
-		<input type="button" class="button" name="Cancel" value="<?php putGS('Cancel'); ?>" onclick="location.href='/<?php echo $ADMIN; ?>/u_types/'">
+		<!--<input type="button" class="button" name="Cancel" value="<?php putGS('Cancel'); ?>" onclick="location.href='/<?php echo $ADMIN; ?>/user_types/'">-->
 		</td>
 	</tr>
 </table></p>

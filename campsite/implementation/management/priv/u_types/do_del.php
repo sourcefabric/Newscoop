@@ -1,6 +1,6 @@
 <?php
 
-require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/u_types/utypes_common.php");
+require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/user_types/utypes_common.php");
 
 list($access, $User) = check_basic_access($_REQUEST);
 $canManage = $User->hasPermission('ManageUserTypes');
@@ -28,6 +28,6 @@ if ($Campsite['db']->Execute($query)) {
 	Log::Message($logtext, $uType, 122);
 }
 
-header("Location: /$ADMIN/u_types/");
+header("Location: /$ADMIN/user_types/");
 
 ?>

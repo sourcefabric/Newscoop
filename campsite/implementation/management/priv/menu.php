@@ -132,7 +132,7 @@ if ($User->hasPermission("ManageUsers")) {
 	
 if ($User->hasPermission("ManageUserTypes")) { 
     $menu_item =& DynMenuItem::Create(getGS("Add new user type"), 
-        "/$ADMIN/u_types/add.php?Back=".urlencode($_SERVER['REQUEST_URI']),
+        "/$ADMIN/user_types/add.php?Back=".urlencode($_SERVER['REQUEST_URI']),
         array("icon" => sprintf($iconTemplateStr, "add_user_type.png")));
     $menu_actions->addItem($menu_item);
 }    
@@ -241,7 +241,7 @@ if ($showUserMenu) {
 	}
 	if ($User->hasPermission("ManageUserTypes")) { 
         $menu_item =& DynMenuItem::Create(getGS("User Types"), 
-            "/$ADMIN/u_types/",
+            "/$ADMIN/user_types/",
             array("icon" => sprintf($iconTemplateStr, "user_types.png")));
         $menu_users->addItem($menu_item);	    
 	}
