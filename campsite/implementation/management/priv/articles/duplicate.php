@@ -17,10 +17,11 @@ $Section = Input::Get('Section', 'int', 0);
 $Language = Input::Get('Language', 'int', 0);
 $sLanguage = Input::Get('sLanguage', 'int', 0);
 $Article = Input::Get('Article', 'int', 0);
-$DestPublication = Input::Get('destination_publication', 'int', 0, true);
-$DestIssue = Input::Get('destination_issue', 'int', 0, true);
-$DestSection = Input::Get('destination_section', 'int', 0, true);
-$BackLink = Input::Get('Back', 'string', "/$ADMIN/articles/index.php", true);
+$f_destination_publication_id = Input::Get('f_destination_publication_id', 'int', 0, true);
+$f_destination_issue_id = Input::Get('f_destination_issue_id', 'int', 0, true);
+$f_destination_section_id = Input::Get('f_destination_section_id', 'int', 0, true);
+$f_article_name = Input::Get('f_article_name', 'string', '', true);
+//$BackLink = Input::Get('Back', 'string', "/$ADMIN/articles/index.php", true);
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
@@ -56,12 +57,16 @@ $sLanguageObj =& new Language($sLanguage);
 
 $allPublications = Publication::GetPublications();
 $allIssues = array();
-if ($DestPublication > 0) {
-	$allIssues = Issue::GetIssues($DestPublication, $Language);
+if ($f_destination_publication_id > 0) {
+	$allIssues = Issue::GetIssues($f_destination_publication_id, $Language);
 }
 $allSections = array();
-if ($DestIssue > 0) {
-	$allSections = Section::GetSections($DestPublication, $DestIssue, $Language);
+if ($f_destination_issue_id > 0) {
+	$allSections = Section::GetSections($f_destination_publication_id, $f_destination_issue_id, $Language);
+}
+
+if (empty($f_article_name)) {
+	$f_article_name = $articleObj->getUniqueName($articleObj->getTitle());
 }
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
@@ -69,25 +74,19 @@ $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj,
 camp_html_content_top(getGS("Duplicate article"), $topArray);
 ?>
 
-<!--<table>
-<tr>
-	<td>
-		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
-		<TR>
-			<TD><A HREF="edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/back.png" BORDER="0"></A></TD>
-			<TD><A HREF="edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>" ><B><?php  putGS('Back to article details'); ?></B></A></TD>
-		</TR>
-		</TABLE>
-	</td>
-</tr>
-</table>-->
 <P>
-<CENTER>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" ALIGN="CENTER" class="table_input">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input">
+<FORM NAME="duplicate" METHOD="POST">
+<input type="hidden" name="Pub" value="<?php p($Pub); ?>">
+<input type="hidden" name="Issue" value="<?php p($Issue); ?>">
+<input type="hidden" name="Section" value="<?php p($Section); ?>">
+<input type="hidden" name="Language" value="<?php p($Language); ?>">
+<input type="hidden" name="Article" value="<?php p($Article); ?>">
+<input type="hidden" name="sLanguage" value="<?php p($sLanguage); ?>">
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
 	<TD>
-	<INPUT DISABLED TYPE="TEXT" NAME="cName" SIZE="64" MAXLENGTH="64" VALUE="<?php  p(htmlspecialchars($articleObj->getTitle())); ?>" class="input_text_disabled">
+	<INPUT TYPE="TEXT" NAME="f_article_name" SIZE="64" MAXLENGTH="64" VALUE="<?php  p(htmlspecialchars($f_article_name)); ?>" class="input_text">
 	</TD>
 </TR>
 <TR>
@@ -97,7 +96,7 @@ camp_html_content_top(getGS("Duplicate article"), $topArray);
 	</TD>
 </TR>
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Uploaded"); ?>:</TD>
+	<TD ALIGN="RIGHT" ><?php  putGS("Created"); ?>:</TD>
 	<TD>
 	<B><?php p(htmlspecialchars($articleObj->getUploadDate())); ?> <?php  putGS('(yyyy-mm-dd)'); ?></B>
 	</TD>
@@ -113,20 +112,11 @@ camp_html_content_top(getGS("Duplicate article"), $topArray);
 	<TD VALIGN="middle" ALIGN="RIGHT" style="padding-left: 20px;"><?php  putGS('Publication'); ?>: </TD>
 	<TD valign="middle" ALIGN="LEFT">
 		<?php if (count($allPublications) > 0) { ?>
-		<FORM NAME="FORM_PUB" METHOD="POST">
-		<input type="hidden" name="Pub" value="<?php p($Pub); ?>">
-		<input type="hidden" name="Issue" value="<?php p($Issue); ?>">
-		<input type="hidden" name="Section" value="<?php p($Section); ?>">
-		<input type="hidden" name="Language" value="<?php p($Language); ?>">
-		<input type="hidden" name="Article" value="<?php p($Article); ?>">
-		<input type="hidden" name="sLanguage" value="<?php p($sLanguage); ?>">
-		<input type="hidden" name="Back" value="<?php p($BackLink); ?>">
-		<SELECT NAME="destination_publication" class="input_select" ONCHANGE="if ((this.selectedIndex != 0) && (this.options[this.selectedIndex].value != <?php p($DestPublication); ?>)) {this.form.submit();}">
+		<SELECT NAME="f_destination_publication_id" class="input_select" ONCHANGE="if ((this.selectedIndex != 0) && (this.options[this.selectedIndex].value != <?php p($f_destination_publication_id); ?>)) {this.form.submit();}">
 		<OPTION VALUE="0"><?php  putGS('---Select publication---'); ?></option>
 		<?php 
 		foreach ($allPublications as $tmpPublication) {
-			?><option value="<?php p($tmpPublication->getPublicationId());?>" <?php if ($tmpPublication->getPublicationId() == $DestPublication) {	?>selected<?php	} ?>><?php p(htmlspecialchars($tmpPublication->getName())); ?></option>
-			<?php
+			pcombovar($tmpPublication->getPublicationId(), $f_destination_publication_id, $tmpPublication->getName());
 		}
 		?>
 		</SELECT>
@@ -138,40 +128,21 @@ camp_html_content_top(getGS("Duplicate article"), $topArray);
 			<?php
 		}
 		?>
-		</form>
 	</td>
 </tr>
 
 <tr>
 	<TD VALIGN="middle" ALIGN="RIGHT" style="padding-left: 20px;"><?php  putGS('Issue'); ?>: </TD>
 	<TD valign="middle" ALIGN="LEFT">
-		<?php if (($DestPublication > 0) && (count($allIssues) > 0)) { ?>
-		<FORM NAME="FORM_ISS" METHOD="POST">
-		<input type="hidden" name="Pub" value="<?php p($Pub); ?>">
-		<input type="hidden" name="Issue" value="<?php p($Issue); ?>">
-		<input type="hidden" name="Section" value="<?php p($Section); ?>">
-		<input type="hidden" name="Language" value="<?php p($Language); ?>">
-		<input type="hidden" name="Article" value="<?php p($Article); ?>">
-		<input type="hidden" name="sLanguage" value="<?php p($sLanguage); ?>">
-		<input type="hidden" name="Back" value="<?php p($BackLink); ?>">
-		<input type="hidden" name="destination_publication" value="<?php p($DestPublication); ?>">
-		<SELECT NAME="destination_issue" class="input_select" ONCHANGE="if ((this.selectedIndex != 0) && (this.options[this.selectedIndex].value != <?php p($DestIssue); ?>)) { this.form.submit(); }">
+		<?php if (($f_destination_publication_id > 0) && (count($allIssues) > 0)) { ?>
+		<SELECT NAME="f_destination_issue_id" class="input_select" ONCHANGE="if ((this.selectedIndex != 0) && (this.options[this.selectedIndex].value != <?php p($f_destination_issue_id); ?>)) { this.form.submit(); }">
 		<OPTION VALUE="0"><?php  putGS('---Select issue---'); ?></option>
 		<?php 
 		foreach ($allIssues as $tmpIssue) {
-			?>
-			<option value="<?php p($tmpIssue->getIssueId());?>"
-			<?php
-			if ($tmpIssue->getIssueId() == $DestIssue) {
-				?>selected<?php
-			}
-			?>
-			><?php p(htmlspecialchars($tmpIssue->getName())); ?></option>
-			<?php
+			pcombovar($tmpIssue->getIssueId(), $f_destination_issue_id, $tmpIssue->getName());
 		}
 		?>
 		</SELECT>
-		</FORM>
 		<?php  
 		} 
 		else { 
@@ -185,34 +156,15 @@ camp_html_content_top(getGS("Duplicate article"), $topArray);
 <tr>	
 	<TD VALIGN="middle" ALIGN="RIGHT" style="padding-left: 20px;"><?php  putGS('Section'); ?>: </TD>
 	<TD valign="middle" ALIGN="LEFT">
-		<?php if (($DestIssue > 0) && (count($allSections) > 0)) { ?>
-		<FORM NAME="FORM_SECT" METHOD="POST">
-		<input type="hidden" name="Pub" value="<?php p($Pub); ?>">
-		<input type="hidden" name="Issue" value="<?php p($Issue); ?>">
-		<input type="hidden" name="Section" value="<?php p($Section); ?>">
-		<input type="hidden" name="Language" value="<?php p($Language); ?>">
-		<input type="hidden" name="Article" value="<?php p($Article); ?>">
-		<input type="hidden" name="sLanguage" value="<?php p($sLanguage); ?>">
-		<input type="hidden" name="Back" value="<?php p($BackLink); ?>">
-		<input type="hidden" name="destination_publication" value="<?php p($DestPublication); ?>">
-		<input type="hidden" name="destination_issue" value="<?php p($DestIssue); ?>">
-		<SELECT NAME="destination_section" class="input_select" ONCHANGE="if ((this.selectedIndex != 0) && (this.options[this.selectedIndex].value != <?php p($DestSection); ?>)) { this.form.submit(); }">
+		<?php if (($f_destination_issue_id > 0) && (count($allSections) > 0)) { ?>
+		<SELECT NAME="f_destination_section_id" class="input_select" ONCHANGE="if ((this.selectedIndex != 0) && (this.options[this.selectedIndex].value != <?php p($f_destination_section_id); ?>)) { this.form.submit(); }">
 		<OPTION VALUE="0"><?php  putGS('---Select section---'); ?>
 		<?php 
 		foreach ($allSections as $tmpSection) {
-			?>
-			<option value="<?php p($tmpSection->getSectionId());?>"
-			<?php
-			if ($tmpSection->getSectionId() == $DestSection) {
-				?>selected<?php
-			}
-			?>
-			><?php p(htmlspecialchars($tmpSection->getName())); ?></option>
-			<?php
+			pcomboVar($tmpSection->getSectionId(), $f_destination_section_id, $tmpSection->getName());
 		}
 		?>
 		</SELECT>
-		</form>
 		<?php  
 		} 
 		else { 
@@ -225,7 +177,7 @@ camp_html_content_top(getGS("Duplicate article"), $topArray);
 
 <tr>
 	<td colspan="2"><?php 
-		if ( ($Pub == $DestPublication) && ($Issue == $DestIssue) && ($Section == $DestSection)) {
+		if ( ($Pub == $f_destination_publication_id) && ($Issue == $f_destination_issue_id) && ($Section == $f_destination_section_id)) {
 			putGS("The destination section is the same as the source section."); echo "<BR>\n";
 		}
 	?></td>
@@ -233,21 +185,10 @@ camp_html_content_top(getGS("Duplicate article"), $topArray);
 
 <tr>
 	<td align="center" colspan="2">
-		<FORM NAME="ART_DUP" METHOD="POST" action="do_duplicate.php">
-		<input type="hidden" name="Pub" value="<?php p($Pub); ?>">
-		<input type="hidden" name="Issue" value="<?php p($Issue); ?>">
-		<input type="hidden" name="Section" value="<?php p($Section); ?>">
-		<input type="hidden" name="Language" value="<?php p($Language); ?>">
-		<input type="hidden" name="Article" value="<?php p($Article); ?>">
-		<input type="hidden" name="sLanguage" value="<?php p($sLanguage); ?>">
-		<input type="hidden" name="destination_publication" value="<?php p($DestPublication); ?>">
-		<input type="hidden" name="destination_issue" value="<?php p($DestIssue); ?>">
-		<input type="hidden" name="destination_section" value="<?php p($DestSection); ?>">
-		<INPUT TYPE="button" Name="Duplicate" Value="<?php putGS("Duplicate article"); ?>" <?php if (($DestPublication <= 0) || ($DestIssue <=0) || ($DestSection <= 0)) { echo 'class="button_disabled"'; } else { echo 'class="button" onclick="this.form.submit();"'; }?> >
-		<!--<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='<?php p($BackLink); ?>'" class="button">-->
-		</FORM>
+		<INPUT TYPE="button" Name="Duplicate" Value="<?php putGS("Duplicate article"); ?>" <?php if (($f_destination_publication_id <= 0) || ($f_destination_issue_id <=0) || ($f_destination_section_id <= 0)) { echo 'class="button_disabled"'; } else { echo "class=\"button\" onclick=\"location.href='/$ADMIN/articles/do_duplicate.php?Pub=$Pub&Issue=$Issue&Section=$Section&Language=$Language&sLanguage=$sLanguage&Article=$Article&f_destination_publication_id=$f_destination_publication_id&f_destination_issue_id=$f_destination_issue_id&f_destination_section_id=$f_destination_section_id&f_article_name=".urlencode($f_article_name)."';\""; }?> >
 	</td>
 </tr>
+</FORM>
 </table>
 <p>
 

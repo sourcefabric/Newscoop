@@ -17,10 +17,11 @@ $Language = Input::Get('Language', 'int', 0);
 $Article = Input::Get('Article', 'int', 0);
 //$sLanguage = Input::Get('sLanguage', 'int', 0);
 $sLanguage = $Language;
-$DestPublication = Input::Get('destination_publication', 'int', 0);
-$DestIssue = Input::Get('destination_issue', 'int', 0);
-$DestSection = Input::Get('destination_section', 'int', 0);
-$BackLink = Input::Get('Back', 'string', "/$ADMIN/articles/index.php", true);
+$f_destination_publication_id = Input::Get('f_destination_publication_id', 'int', 0);
+$f_destination_issue_id = Input::Get('f_destination_issue_id', 'int', 0);
+$f_destination_section_id = Input::Get('f_destination_section_id', 'int', 0);
+$f_article_name = Input::Get('f_article_name');
+//$BackLink = Input::Get('Back', 'string', "/$ADMIN/articles/index.php", true);
 
 if (!$User->hasPermission("AddArticle")) {
 	camp_html_display_error(getGS("You do not have the right to add articles."), $BackLink);
@@ -37,7 +38,8 @@ $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
 $issueObj =& new Issue($Pub, $Language, $Issue);
 $publicationObj =& new Publication($Pub);
 
-$articleCopy = $articleObj->copy($DestPublication, $DestIssue, $DestSection, $User->getId());
+$articleCopy = $articleObj->copy($f_destination_publication_id, $f_destination_issue_id, $f_destination_section_id, $User->getId());
+$articleCopy->setTitle($f_article_name);
 
 $logtext = getGS('Article $1 added to $2. $3 from $4. $5 of $6',
 	$articleCopy->getName(), $sectionObj->getSectionId(),
@@ -45,6 +47,7 @@ $logtext = getGS('Article $1 added to $2. $3 from $4. $5 of $6',
 	$issueObj->getName(), $publicationObj->getName() );
 Log::Message($logtext, $User->getUserName(), 155);
 
-header("Location: ".camp_html_article_url($articleCopy, $Language, "edit.php", $BackLink));
+$url = camp_html_article_url($articleCopy, $Language, "edit.php");
+header("Location: $url");
 exit;
 ?>
