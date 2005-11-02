@@ -57,6 +57,7 @@ if ($deleted) {
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
 $crumbs[] = array(getGS("Templates"), "/$ADMIN/templates/");
+$crumbs = array_merge($crumbs, camp_template_path_crumbs($path));
 if ($What == 1) { 
 	$crumbs[] = array(getGS("Deleting template"), ""); 
 } else { 
@@ -65,12 +66,6 @@ if ($What == 1) {
 echo camp_html_breadcrumbs($crumbs);
 
 ?>
-<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="1" width="100%" class="current_location_table">
-<TR>
-	<TD ALIGN="left" NOWRAP VALIGN="TOP" width="1%" class="current_location_title">&nbsp;<?php  putGS("Path"); ?>:</TD>
-	<TD align="left" VALIGN="TOP" class="current_location_content"><?php  p(htmlspecialchars($Path)); ?></TD>
-</TR>
-</TABLE>
 <P>
 
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="table_input">

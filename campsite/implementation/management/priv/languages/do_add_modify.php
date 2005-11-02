@@ -106,33 +106,17 @@ if ($correct) {
         exit;
     }
 }
+
+$crumbs = array();
+$crumbs[] = array(getGS("Configure"), "");
+$crumbs[] = array(getGS("Languages"), "/$ADMIN/languages/");
+$crumbs[] = array(getGS("Adding new language"), "");
+$breadcrumbs = camp_html_breadcrumbs($crumbs);
+echo $breadcrumbs;
+
 ?>
-<HEAD>
-	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
-	<TITLE><?php  putGS("Adding new language"); ?></TITLE>
-</HEAD>
-
-<BODY>
-
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
-<TR>
-	<TD class="page_title">
-	    <?php  putGS("Adding new language"); ?>
-	</TD>
-
-	<TD ALIGN=RIGHT>
-	   <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
-	   <TR>
-	       <TD><A HREF="/admin/languages/" class="breadcrumb" ><?php  putGS("Languages");  ?></A></TD>
-       </TR>
-       </TABLE>
-    </TD>
-</TR>
-</TABLE>
-
 <P>
-<CENTER>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box" ALIGN="CENTER">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">
 <TR>
 	<TD COLSPAN="2">
 		<B> <?php  putGS("Adding new language"); ?> </B>
@@ -172,7 +156,6 @@ if ($correct) {
 	</TD>
 </TR>
 </TABLE>
-</CENTER>
 <P>
 
 <?php camp_html_copyright_notice(); ?>
