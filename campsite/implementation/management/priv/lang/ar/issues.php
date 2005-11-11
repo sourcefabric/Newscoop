@@ -29,7 +29,7 @@ regGS("Issue $1 updated in publication $2", " تحديث الإصدار $1 في 
 regGS("You do not have the right to delete issues.", "لا يحق لك إلغاء الإصدارات");
 regGS("Are you sure you want to delete the issue $1?", "هل أنت متأكد من أنك تريد إلغاء الإصدار $1 ؟  ");
 regGS("Deleting issue", "إلغاء الإصدار");
-regGS("The issue $1 has ben deleted.", "تمّ  إلغاء الإصدار $1");
+regGS("The issue $1 has been deleted.", "تمّ  إلغاء الإصدار $1");
 regGS("The issue $1 could not be deleted.", "لا يمكن إلغاء الإصدار $1");
 regGS("All sections from Issue $1 from publication $2 deleted", "تمّ إلغاء كل أبواب الإصدار $1 في المنشور $2");
 regGS("Issue $1 from publication $2 deleted", " إلغاء الإصدار$1 من المنشور $2");

@@ -57,11 +57,11 @@ foreach ($issues as $issue) {
 	?>	
 	<TR <?php if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 		<TD ALIGN="RIGHT" >
-            <?php p($issue->getIssueId()); ?>
+            <?php p($issue->getIssueNumber()); ?>
         </TD>
 		
-        <TD <?php if ($previousIssueId == $issue->getIssueId()) { ?> style="padding-left: 20px;" <?php } ?>>
-			<A HREF="/<?php echo $ADMIN; ?>/sections/add_article.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($issue->getIssueId()); ?>&Language=<?php p($issue->getLanguageId()); ?>"><?php p(htmlspecialchars($issue->getName())); ?></A> (<?php p(htmlspecialchars($issue->getLanguageName())); ?>)
+        <TD <?php if ($previousIssueId == $issue->getIssueNumber()) { ?> style="padding-left: 20px;" <?php } ?>>
+			<A HREF="/<?php echo $ADMIN; ?>/sections/add_article.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($issue->getIssueNumber()); ?>&Language=<?php p($issue->getLanguageId()); ?>"><?php p(htmlspecialchars($issue->getName())); ?></A> (<?php p(htmlspecialchars($issue->getLanguageName())); ?>)
 		</TD>
 		
         <TD ALIGN="CENTER">
@@ -76,7 +76,7 @@ foreach ($issues as $issue) {
 		</TD>
 	</TR>
     <?php 
-    $previousIssueId = $issue->getIssueId();
+    $previousIssueId = $issue->getIssueNumber();
 }
 ?>	
 <TR>

@@ -10,13 +10,13 @@ if (!$access) {
 }
 
 
-$Pub = Input::Get('Pub', 'int', 0);
-$Issue = Input::Get('Issue', 'int', 0);
-$Section = Input::Get('Section', 'int', 0);
-$Language = Input::Get('Language', 'int', 0);
-$Article = Input::Get('Article', 'int', 0);
+$f_publication_id = Input::Get('f_publication_id', 'int', 0);
+$f_issue_number = Input::Get('f_issue_number', 'int', 0);
+$f_section_number = Input::Get('f_section_number', 'int', 0);
+$f_language_id = Input::Get('f_language_id', 'int', 0);
+$f_article_number = Input::Get('f_article_number', 'int', 0);
 //$sLanguage = Input::Get('sLanguage', 'int', 0);
-$sLanguage = $Language;
+$sLanguage = $f_language_id;
 $f_destination_publication_id = Input::Get('f_destination_publication_id', 'int', 0);
 $f_destination_issue_id = Input::Get('f_destination_issue_id', 'int', 0);
 $f_destination_section_id = Input::Get('f_destination_section_id', 'int', 0);
@@ -33,21 +33,21 @@ if (!Input::IsValid()) {
 	exit;	
 }
 
-$articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
-$sectionObj =& new Section($Pub, $Issue, $Language, $Section);
-$issueObj =& new Issue($Pub, $Language, $Issue);
-$publicationObj =& new Publication($Pub);
+$articleObj =& new Article($sLanguage, $f_article_number);
+$sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
+$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
+$publicationObj =& new Publication($f_publication_id);
 
 $articleCopy = $articleObj->copy($f_destination_publication_id, $f_destination_issue_id, $f_destination_section_id, $User->getId());
 $articleCopy->setTitle($f_article_name);
 
 $logtext = getGS('Article $1 added to $2. $3 from $4. $5 of $6',
-	$articleCopy->getName(), $sectionObj->getSectionId(),
-	$sectionObj->getName(), $issueObj->getIssueId(),
+	$articleCopy->getName(), $sectionObj->getSectionNumber(),
+	$sectionObj->getName(), $issueObj->getIssueNumber(),
 	$issueObj->getName(), $publicationObj->getName() );
 Log::Message($logtext, $User->getUserName(), 155);
 
-$url = camp_html_article_url($articleCopy, $Language, "edit.php");
+$url = camp_html_article_url($articleCopy, $f_language_id, "edit.php");
 header("Location: $url");
 exit;
 ?>

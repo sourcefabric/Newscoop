@@ -46,7 +46,7 @@ if (!$sectionObj->exists()) {
 	exit;		
 }
 
-$articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
+$articleObj =& new Article($sLanguage, $Article);
 if (!$articleObj->exists()) {
 	camp_html_display_error(getGS('Article does not exist.'));
 	exit;		
@@ -55,7 +55,7 @@ if (!$articleObj->exists()) {
 $languageObj =& new Language($Language);
 $sLanguageObj =& new Language($sLanguage);
 
-$articleTopics =& ArticleTopic::GetArticleTopics($Article);
+$articleTopics = ArticleTopic::GetArticleTopics($Article);
 $articleTopicsIds = DbObjectArray::GetColumn($articleTopics, 'Id');
 
 $viewTopic =& new Topic($TopicId);
@@ -77,7 +77,7 @@ if ($searchTopicsString != '') {
 	$totalSubtopics = count($subtopics);
 }
 else {
-	$subtopics =& $viewTopic->getSubtopics(null, /*$sLanguage, */
+	$subtopics = $viewTopic->getSubtopics(null, /*$sLanguage, */
 		array('LIMIT' => array('START' => $TopicOffset, 'MAX_ROWS'=>($TopicsPerPage))));
 	$totalSubtopics = count($viewTopic->getSubtopics());
 }

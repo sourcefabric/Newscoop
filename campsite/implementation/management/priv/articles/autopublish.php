@@ -12,15 +12,15 @@ if (!$User->hasPermission("Publish")) {
 	exit;
 }
 
-$Pub = Input::Get('Pub', 'int', 0);
-$Issue = Input::Get('Issue', 'int', 0);
-$Section = Input::Get('Section', 'int', 0);
-$Language = Input::Get('Language', 'int', 0);
-$sLanguage = Input::Get('sLanguage', 'int', 0);
-$Article = Input::Get('Article', 'int', 0);
+$f_publcation_id = Input::Get('f_publication_id', 'int', 0);
+$f_issue_number = Input::Get('f_issue_number', 'int', 0);
+$f_section_number = Input::Get('f_section_number', 'int', 0);
+$f_language_id = Input::Get('f_language_id', 'int', 0);
+$f_language_selected = Input::Get('f_language_selected', 'int', 0);
+$f_article_number = Input::Get('f_article_number', 'int', 0);
 $publishTime = Input::Get('publish_time', 'string', '', true);
 $BackLink = Input::Get('Back', 'string', "/$ADMIN/articles/edit.php"
-                       ."?Pub=$Pub&Issue=$Issue&Section=$Section&sLanguage=$sLanguage&Language=$Language&Article=$Article", 
+                       ."?f_publcation_id=$f_publcation_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_selected=$f_language_selected&f_language_id=$f_language_id&f_article_number=$f_article_number", 
                        true);
 
 if (!Input::IsValid()) {
@@ -28,33 +28,33 @@ if (!Input::IsValid()) {
 	exit;	
 }
 
-$publicationObj =& new Publication($Pub);
+$publicationObj =& new Publication($f_publcation_id);
 if (!$publicationObj->exists()) {
 	camp_html_display_error(getGS('Publication does not exist.'), $BackLink);
 	exit;	
 }
 
-$issueObj =& new Issue($Pub, $Language, $Issue);
+$issueObj =& new Issue($f_publcation_id, $f_language_id, $f_issue_number);
 if (!$issueObj->exists()) {
 	camp_html_display_error(getGS('Issue does not exist.'), $BackLink);
 	exit;	
 }
 
-$sectionObj =& new Section($Pub, $Issue, $Language, $Section);
+$sectionObj =& new Section($f_publcation_id, $f_issue_number, $f_language_id, $f_section_number);
 if (!$sectionObj->exists()) {
 	camp_html_display_error(getGS('Section does not exist.'), $BackLink);
 	exit;	
 }
 
-$articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
+$articleObj =& new Article($f_language_selected, $f_article_number);
 if (!$articleObj->exists()) {
 	camp_html_display_error(getGS('Article does not exist.'), $BackLink);
 	exit;
 }
 
-$languageObj =& new Language($Language);
-$sLanguageObj =& new Language($sLanguage);
-$articleEvents = ArticlePublish::GetArticleEvents($Article, $sLanguage);
+$languageObj =& new Language($f_language_id);
+$sLanguageObj =& new Language($f_language_selected);
+$articleEvents = ArticlePublish::GetArticleEvents($f_article_number, $f_language_selected);
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
 				  'Section' => $sectionObj, 'Article'=>$articleObj);
@@ -68,7 +68,7 @@ if ($articleObj->getPublished() != 'N') {
 	$frontPageAction = '';
 	$sectionPageAction = '';
 	if ($publishTime != "") {
-		$articlePublishObj =& new ArticlePublish($Article, $sLanguage, $publishTime);
+		$articlePublishObj =& new ArticlePublish($f_article_number, $f_language_selected, $publishTime);
 		if ($articlePublishObj->exists()) {
 			$publishAction = $articlePublishObj->getPublishAction();
 			$frontPageAction = $articlePublishObj->getFrontPageAction();
@@ -87,8 +87,8 @@ if ($articleObj->getPublished() != 'N') {
 	<td>
 		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 		<TR>
-			<TD><A HREF="edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/back.png" BORDER="0"></A></TD>
-			<TD><A HREF="edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>" ><B><?php  putGS('Back to Edit Article'); ?></B></A></TD>
+			<TD><A HREF="edit.php?f_publcation_id=<?php  p($f_publcation_id); ?>&f_issue_number=<?php  p($f_issue_number); ?>&f_section_number=<?php  p($f_section_number); ?>&f_article_number=<?php  p($f_article_number); ?>&f_language_id=<?php  p($f_language_id); ?>&f_language_selected=<?php  p($f_language_selected); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/back.png" BORDER="0"></A></TD>
+			<TD><A HREF="edit.php?f_publcation_id=<?php  p($f_publcation_id); ?>&f_issue_number=<?php  p($f_issue_number); ?>&f_section_number=<?php  p($f_section_number); ?>&f_article_number=<?php  p($f_article_number); ?>&f_language_id=<?php  p($f_language_id); ?>&f_language_selected=<?php  p($f_language_selected); ?>" ><B><?php  putGS('Back to Edit Article'); ?></B></A></TD>
 		</TR>
 		</TABLE>
 	</td>
@@ -103,12 +103,12 @@ if ($articleObj->getPublished() != 'N') {
 			<HR NOSHADE SIZE="1" COLOR="BLACK">
 		</TD>
 	</TR>
-	<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<?php echo $Pub; ?>">
-	<INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<?php echo $Issue; ?>">
-	<INPUT TYPE="HIDDEN" NAME="Section" VALUE="<?php echo $Section; ?>">
-	<INPUT TYPE="HIDDEN" NAME="Article" VALUE="<?php echo $Article; ?>">
-	<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php echo $Language; ?>">
-	<INPUT TYPE="HIDDEN" NAME="sLanguage" VALUE="<?php echo $sLanguage; ?>">
+	<INPUT TYPE="HIDDEN" NAME="f_publication_id" VALUE="<?php echo $f_publcation_id; ?>">
+	<INPUT TYPE="HIDDEN" NAME="f_issue_number" VALUE="<?php echo $f_issue_number; ?>">
+	<INPUT TYPE="HIDDEN" NAME="f_section_number" VALUE="<?php echo $f_section_number; ?>">
+	<INPUT TYPE="HIDDEN" NAME="f_article_number" VALUE="<?php echo $f_article_number; ?>">
+	<INPUT TYPE="HIDDEN" NAME="f_language_id" VALUE="<?php echo $f_language_id; ?>">
+	<INPUT TYPE="HIDDEN" NAME="f_language_selected" VALUE="<?php echo $f_language_selected; ?>">
 	<INPUT type="hidden" name="Back" value="<?php echo $BackLink; ?>">
 	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS("Date"); ?>:</TD>
@@ -186,7 +186,7 @@ if ($articleObj->getPublished() != 'N') {
 		$url_publish_time = urlencode($event->getActionTime());
 		?>	<TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 		<TD>
-			<A HREF="/<?php echo $ADMIN; ?>/articles/autopublish.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php p($Section); ?>&Article=<?php p($Article); ?>&Language=<?php p($Language); ?>&sLanguage=<?php p($sLanguage); ?>&publish_time=<?php echo $url_publish_time; ?>"><?php p(htmlspecialchars($event->getActionTime())); ?></A>
+			<A HREF="/<?php echo $ADMIN; ?>/articles/autopublish.php?f_publcation_id=<?php p($f_publcation_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_article_number=<?php p($f_article_number); ?>&f_language_id=<?php p($f_language_id); ?>&f_language_selected=<?php p($f_language_selected); ?>&publish_time=<?php echo $url_publish_time; ?>"><?php p(htmlspecialchars($event->getActionTime())); ?></A>
 		</TD>
 		
 		<TD>
@@ -226,7 +226,7 @@ if ($articleObj->getPublished() != 'N') {
 		</TD>
 		
 		<TD ALIGN="CENTER">
-			<A HREF="/<?php echo $ADMIN; ?>/articles/autopublish_del.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php p($Section); ?>&Article=<?php p($Article); ?>&Language=<?php p($Language); ?>&sLanguage=<?php p($sLanguage); ?>&publish_time=<?php echo $url_publish_time; ?>&Back=<?php p(urlencode($BackLink)); ?>" onclick="return confirm('<?php putGS("Are you sure you want to delete this scheduled action?"); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/x.gif" BORDER="0" ALT="<?php putGS('Delete'); ?>"></A>
+			<A HREF="/<?php echo $ADMIN; ?>/articles/autopublish_del.php?f_publcation_id=<?php p($f_publcation_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_article_number=<?php p($f_article_number); ?>&f_language_id=<?php p($f_language_id); ?>&f_language_selected=<?php p($f_language_selected); ?>&f_action_id=<?php echo $event->getArticlePublishId(); ?>&Back=<?php p(urlencode($BackLink)); ?>" onclick="return confirm('<?php putGS("Are you sure you want to delete this scheduled action?"); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php putGS('Delete'); ?>"></A>
 		</TD>
 	</TR>
 	<?php
@@ -251,7 +251,7 @@ else { ?>
 	</TR>
 	<TR>
 		<TD COLSPAN="2" align="center">
-			<INPUT TYPE="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/articles/edit.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php p($Section); ?>&Article=<?php p($Article); ?>&Language=<?php p($Language); ?>&sLanguage=<?php p($sLanguage); ?>'" class="button">
+			<INPUT TYPE="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/articles/edit.php?f_publcation_id=<?php p($f_publcation_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_article_number=<?php p($f_article_number); ?>&f_language_id=<?php p($f_language_id); ?>&f_language_selected=<?php p($f_language_selected); ?>'" class="button">
 		</TD>
 	</TR>
 	</TABLE></CENTER>

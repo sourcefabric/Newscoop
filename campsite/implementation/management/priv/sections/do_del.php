@@ -44,7 +44,7 @@ if ($doDelete) {
     }
     $logtext = getGS('Section $1 deleted from issue $2. $3 $4 of $5',
         $sectionObj->getName(),
-        $issueObj->getIssueId(),
+        $issueObj->getIssueNumber(),
         $issueObj->getName(),
         $issueObj->getLanguageName(),
         $publicationObj->getName());

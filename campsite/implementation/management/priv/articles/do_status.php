@@ -9,12 +9,12 @@ if (!$access) {
 	exit;
 }
 
-$Pub = Input::Get('Pub', 'int', 0);
-$Issue = Input::Get('Issue', 'int', 0);
-$Section = Input::Get('Section', 'int', 0);
+//$Pub = Input::Get('Pub', 'int', 0);
+//$Issue = Input::Get('Issue', 'int', 0);
+//$Section = Input::Get('Section', 'int', 0);
 $Language = Input::Get('Language', 'int', 0);
 $Article = Input::Get('Article', 'int', 0);
-$sLanguage = Input::Get('sLanguage', 'int', 0);
+//$sLanguage = Input::Get('sLanguage', 'int', 0);
 $Status = strtoupper(Input::Get('Status', 'string', 'N'));
 $BackLink = Input::Get('Back', 'string', "/$ADMIN/articles/index.php", true);
 
@@ -28,23 +28,23 @@ if ( ($Status != 'N') && ($Status != 'S') && ($Status != 'Y')) {
 	exit;		
 }
 
-$articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
+$articleObj =& new Article($sLanguage, $Article);
 if (!$articleObj->exists()) {
 	camp_html_display_error(getGS('Article does not exist.'), $BackLink);
 	exit;		
 }
-$sectionObj =& new Section($Pub, $Issue, $Language, $Section);
-if (!$sectionObj->exists()) {
-	camp_html_display_error(getGS('Section does not exist.'), $BackLink);	
-}
-$issueObj =& new Issue($Pub, $Language, $Issue);
-if (!$issueObj->exists()) {
-	camp_html_display_error(getGS('Issue does not exist.'), $BackLink);	
-}
-$publicationObj =& new Publication($Pub);
-if (!$publicationObj->exists()) {
-	camp_html_display_error(getGS('Publication does not exist.'), $BackLink);	
-}
+//$sectionObj =& new Section($Pub, $Issue, $Language, $Section);
+//if (!$sectionObj->exists()) {
+//	camp_html_display_error(getGS('Section does not exist.'), $BackLink);	
+//}
+//$issueObj =& new Issue($Pub, $Language, $Issue);
+//if (!$issueObj->exists()) {
+//	camp_html_display_error(getGS('Issue does not exist.'), $BackLink);	
+//}
+//$publicationObj =& new Publication($Pub);
+//if (!$publicationObj->exists()) {
+//	camp_html_display_error(getGS('Publication does not exist.'), $BackLink);	
+//}
 
 $languageObj =& new Language($Language);
 
@@ -58,15 +58,12 @@ if ($User->hasPermission('Publish')
 	$access = true;
 }
 if (!$access) {
-	$errorStr = getGS("You do not have the right to change this article status. Once submitted an article can only changed by authorized users.");
+	$errorStr = getGS("You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.");
 	camp_html_display_error($errorStr, $BackLink);
 	exit;	
 }
 
 $articleObj->setPublished($Status);
-
-$logtext = getGS('Article $1 status from $2. $3 from $4. $5 ($6) of $7 changed', $articleObj->getTitle(), $sectionObj->getSectionId(), $sectionObj->getName(), $issueObj->getIssueId(), $issueObj->getName(), $languageObj->getName(), $publicationObj->getName() ); 
-Log::Message($logtext, $User->getUserName(), 35); 
 
 header('Location: '.$BackLink);
 exit;

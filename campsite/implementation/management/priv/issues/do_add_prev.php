@@ -36,9 +36,9 @@ if ($correct) {
     $issueCopies = $lastIssue->copy(null, $cNumber);
     $issueCopy = array_pop($issueCopies);
 	$logtext = getGS('New issue $1 from $2 in publication $3', $cNumber, 
-					 $lastIssue->getIssueId(), $publicationObj->getName()); 
+					 $lastIssue->getIssueNumber(), $publicationObj->getName()); 
 	Log::Message($logtext, $User->getUserName(), 11);
-	header("Location: /$ADMIN/issues/edit.php?Pub=$Pub&Issue=".$issueCopy->getIssueId()
+	header("Location: /$ADMIN/issues/edit.php?Pub=$Pub&Issue=".$issueCopy->getIssueNumber()
 		   ."&Language=".$issueCopy->getLanguageId());
 	exit;
 }

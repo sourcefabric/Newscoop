@@ -1,4 +1,5 @@
 <?php
+regGS("Go To Issues", "");
 regGS("Name<BR><SMALL>(click to see issues)</SMALL>", "Име<br><small>(кликните за преглед издања)</small>");
 regGS("Delete publication $1", "Обриши публикацију $1");
 regGS("No publications.", "Нема публикација");

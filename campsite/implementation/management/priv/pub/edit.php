@@ -33,8 +33,26 @@ if (!$pubTimeUnit->exists()) {
 }
 
 echo camp_html_content_top(getGS("Configure publication"), array("Pub" => $publicationObj));
+?> 
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
+<TR>
+	<TD><A HREF="/<?php echo $ADMIN; ?>/issues/?Pub=<?php  p($Pub); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/go_to.png" BORDER="0"></A></TD>
+	<TD><A HREF="/<?php echo $ADMIN; ?>/issues/?Pub=<?php  p($Pub); ?>"><B><?php  putGS("Go To Issues"); ?></B></A></TD>
+</TR>
+</TABLE>
 
+<?php
+if ($User->hasPermission("DeletePub")) {
 ?>
+<P>
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons">
+<TR>
+	<TD><A HREF="do_del.php?Pub=<?php p($Pub); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the publication $1?', htmlspecialchars($publicationObj->getName())); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0"></A></TD>
+	<TD><A HREF="do_del.php?Pub=<?php p($Pub); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the publication $1?', htmlspecialchars($publicationObj->getName())); ?>');"><B><?php  putGS("Delete"); ?></B></A></TD>
+</TR>
+</TABLE>
+<?php } ?>
+
 <P>
 <FORM NAME="dialog" METHOD="POST" ACTION="do_edit.php"  >
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
@@ -57,7 +75,7 @@ echo camp_html_content_top(getGS("Configure publication"), array("Pub" => $publi
 		<SELECT NAME="cDefaultAlias" class="input_select">
 		<?php
 			foreach ($aliases as $alias) {
-				pcomboVar($alias->getId(), $publicationObj->getDefaultAliasId(), $alias->getName());		
+				camp_html_select_option($alias->getId(), $publicationObj->getDefaultAliasId(), $alias->getName());		
 			}
 		?>
 		</SELECT>&nbsp;
@@ -70,7 +88,7 @@ echo camp_html_content_top(getGS("Configure publication"), array("Pub" => $publi
 	<SELECT NAME="cLanguage" class="input_select">
 	<?php 
 	foreach ($languages as $language) {
-		pcomboVar($language->getLanguageId(), $publicationObj->getDefaultLanguageId(), $language->getNativeName());
+		camp_html_select_option($language->getLanguageId(), $publicationObj->getDefaultLanguageId(), $language->getNativeName());
 	}
 	?>
 	</SELECT>&nbsp;
@@ -83,7 +101,7 @@ echo camp_html_content_top(getGS("Configure publication"), array("Pub" => $publi
 	<SELECT NAME="cURLType" class="input_select">
 	<?php
 		foreach ($urlTypes as $urlType) {
-			pcomboVar($urlType->getId(), $publicationObj->getUrlTypeId(), $urlType->getName());
+			camp_html_select_option($urlType->getId(), $publicationObj->getUrlTypeId(), $urlType->getName());
 		}
 	?>
 	</SELECT>
@@ -104,7 +122,7 @@ echo camp_html_content_top(getGS("Configure publication"), array("Pub" => $publi
     <SELECT NAME="cTimeUnit" class="input_select">
 	<?php 
 	foreach ($timeUnits as $timeUnit) {
-		pcomboVar($timeUnit->getUnit(), $publicationObj->getTimeUnit(), $timeUnit->getName());
+		camp_html_select_option($timeUnit->getUnit(), $publicationObj->getTimeUnit(), $timeUnit->getName());
 	}
 	?>
     </SELECT>

@@ -62,7 +62,7 @@ if ($correct) {
 //	} 
 //	else {
 //		$errorMsgs[] = getGS('The publication information could not be updated.')
-//					  .' '.getGS('Please check if another publication with the same or the same site name does not already exist.'); 
+//					  .' '.getGS('Please check if another publication with the same name or the same site name does not already exist.'); 
 //	}
 }
 

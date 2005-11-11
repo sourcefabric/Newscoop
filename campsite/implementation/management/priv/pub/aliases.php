@@ -15,12 +15,13 @@ $publicationObj =& new Publication($Pub);
 $aliases = Alias::GetAliases(null, $Pub);
     
 camp_html_content_top(getGS("Publication Aliases"), array("Pub" => $publicationObj));
-?>
 
-<?php if ($User->hasPermission("ManagePub")) { ?>
-<TABLE>
+if ($User->hasPermission("ManagePub")) { ?>
+<p>
+<TABLE class="action_buttons">
 <TR>
-	<TD><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1"><TR><TD><A HREF="add_alias.php?Pub=<?php p($Pub); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD><TD><A HREF="add_alias.php?Pub=<?php  p($Pub); ?>" ><B><?php  putGS("Add new alias"); ?></B></A></TD></TR></TABLE></TD>
+	<TD><A HREF="add_alias.php?Pub=<?php p($Pub); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
+	<TD><A HREF="add_alias.php?Pub=<?php  p($Pub); ?>" ><B><?php  putGS("Add new alias"); ?></B></A></TD>
 </TR>
 </TABLE>
 <?php } ?>

@@ -34,8 +34,7 @@ camp_html_content_top(getGS('Add new section'), $topArray, true, false, array(ge
 
 ?>
 <P>
-<CENTER>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input" ALIGN="CENTER">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 <FORM NAME="dialog" METHOD="POST" ACTION="do_add.php" >
 <TR>
 	<TD COLSPAN="2">
@@ -79,7 +78,7 @@ camp_html_content_top(getGS('Add new section'), $topArray, true, false, array(ge
 	</DIV>
 	</TD>
 </TR>
-</TABLE></CENTER>
+</TABLE>
 </FORM>
 <P>
 

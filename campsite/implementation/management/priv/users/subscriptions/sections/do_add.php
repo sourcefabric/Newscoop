@@ -24,7 +24,7 @@ if (!$User->hasPermission('ManageSubscriptions')) {
 $f_user_id = Input::Get('f_user_id', 'int', 0);
 $f_publication_id = Input::Get('f_publication_id', 'int', 0);
 $f_subscription_id = Input::Get('f_subscription_id', 'int', 0);
-$f_section_id = Input::Get('f_section_id', 'int', 0);
+$f_section_number = Input::Get('f_section_number', 'int', 0);
 $f_subscription_start_date = Input::Get('f_subscription_start_date');
 $f_subscription_days = Input::Get('f_subscription_days');
 $success = true;
@@ -34,8 +34,8 @@ $languageObj =& new Language($publicationObj->getDefaultLanguageId());
 $manageUser =& new User($f_user_id);
 $errorMsgs = array();
 
-if ($f_section_id != 0) {
-	$subscriptionSection =& new SubscriptionSection($f_subscription_id, $f_section_id);
+if ($f_section_number != 0) {
+	$subscriptionSection =& new SubscriptionSection($f_subscription_id, $f_section_number);
 	$columns = array('StartDate' => $f_subscription_start_date, 
 					 'Days' => $f_subscription_days, 
 					 'PaidDays' => $f_subscription_days);

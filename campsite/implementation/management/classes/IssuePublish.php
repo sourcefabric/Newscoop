@@ -22,28 +22,27 @@ require_once($g_documentRoot.'/classes/Issue.php');
  * @package Campsite
  */
 class IssuePublish extends DatabaseObject {
-	var $m_keyColumnNames = array('IdPublication', 'NrIssue', 'IdLanguage', 'ActionTime');
+	var $m_keyColumnNames = array('id');
 	var $m_dbTableName = 'IssuePublish';
-	var $m_columnNames = array('IdPublication', 'NrIssue', 'IdLanguage', 
-							   'ActionTime', 'Action', 'PublishArticles', 'Completed');
+	var $m_keyIsAutoIncrement = true;
+	var $m_columnNames = array('id',
+							   'fk_publication_id', 
+							   'fk_issue_id', 
+							   'fk_language_id', 
+							   'time_action', 
+							   'publish_action', 
+							   'do_publish_articles', 
+							   'is_completed');
 	
 	/**
 	 * This table delays an issue's publish time to a later date.
 	 *
-	 * @param int $p_articleId
-	 * @param int $p_issueId
-	 * @param int $p_languageId
-	 * @param string $p_actionTime
-	 *
+	 * @param int $p_id
 	 */
-	function IssuePublish($p_publicationId = null, $p_issueId = null, 
-	                      $p_languageId = null, $p_actionTime = null) 
+	function IssuePublish($p_id = null) 
 	{
 		parent::DatabaseObject($this->m_columnNames);
-		$this->m_data['IdPublication'] = $p_publicationId;
-		$this->m_data['NrIssue'] = $p_issueId;
-		$this->m_data['IdLanguage'] = $p_languageId;
-		$this->m_data['ActionTime'] = $p_actionTime;
+		$this->m_data['id'] = $p_id;
 		if ($this->keyValuesExist()) {
 			$this->fetch();
 		}
@@ -55,17 +54,17 @@ class IssuePublish extends DatabaseObject {
 	 */
 	function getPublicationId()
 	{
-	    return $this->m_data['IdPublication'];
+	    return $this->m_data['fk_publication_id'];
 	} // fn getPublicationId
 	
 	
 	/**
 	 * @return int
 	 */
-	function getIssueId()
+	function getIssueNumber()
 	{
-	    return $this->m_data['NrIssue'];
-	} // fn getIssueId
+	    return $this->m_data['fk_issue_id'];
+	} // fn getIssueNumber
 	
 	
 	/**
@@ -73,7 +72,7 @@ class IssuePublish extends DatabaseObject {
 	 */
 	function getLanguageId() 
 	{
-	    return $this->m_data['IdLanguage'];
+	    return $this->m_data['fk_language_id'];
 	} // fn getLanguageId
 	
 	
@@ -84,7 +83,7 @@ class IssuePublish extends DatabaseObject {
 	 */ 
 	function getPublishAction() 
 	{
-		return $this->m_data['Action'];
+		return $this->m_data['publish_action'];
 	} // fn getPublishAction
 
 	
@@ -98,7 +97,7 @@ class IssuePublish extends DatabaseObject {
 	{
 		$p_value = strtoupper($p_value);
 		if ( ($p_value == 'P') || ($p_value == 'U') ) {
-			$this->setProperty('Action', $p_value);
+			$this->setProperty('publish_action', $p_value);
 		}
 	} // fn setPublishAction
 	
@@ -110,7 +109,7 @@ class IssuePublish extends DatabaseObject {
 	 */
 	function getPublishArticlesAction() 
 	{
-		return $this->m_data['PublishArticles'];
+		return $this->m_data['do_publish_articles'];
 	} // fn getPublishArticlesAction
 	
 	
@@ -124,7 +123,7 @@ class IssuePublish extends DatabaseObject {
 	{
 		$p_value = strtoupper($p_value);
 		if ( ($p_value == 'Y') || ($p_value == 'N') ) {
-			$this->setProperty('PublishArticles', $p_value);
+			$this->setProperty('do_publish_articles', $p_value);
 		}
 	} // fn setPublishArticlesAction
 	
@@ -135,7 +134,7 @@ class IssuePublish extends DatabaseObject {
 	 */
 	function getActionTime() 
 	{
-		return $this->m_data['ActionTime'];
+		return $this->m_data['time_action'];
 	} // fn getActionTime
 	
 	
@@ -145,7 +144,7 @@ class IssuePublish extends DatabaseObject {
 	 */
 	function setCompleted() 
 	{
-	    $this->setProperty('Completed', 'Y');
+	    $this->setProperty('is_completed', 'Y');
 	} // fn setCompleted
 	
 	
@@ -155,11 +154,11 @@ class IssuePublish extends DatabaseObject {
 	 */
 	function doAction()
 	{
-		$publicationId = $this->m_data['IdPublication'];
-		$issueId = $this->m_data['NrIssue'];
-		$languageId = $this->m_data['IdLanguage'];
-		$publishAction = $this->m_data['Action'];
-		$publishArticlesAction = $this->m_data['PublishArticles'];
+		$publicationId = $this->m_data['fk_publication_id'];
+		$issueId = $this->m_data['fk_issue_id'];
+		$languageId = $this->m_data['fk_language_id'];
+		$publishAction = $this->m_data['publish_action'];
+		$publishArticlesAction = $this->m_data['do_publish_articles'];
 
 		$articleState = ($publishAction == 'P') ? 'Y' : 'S';
 		if ($publishArticlesAction == 'Y') {
@@ -188,10 +187,10 @@ class IssuePublish extends DatabaseObject {
 	{
 		global $Campsite;
 		$queryStr = "SELECT * FROM IssuePublish "
-					." WHERE IdPublication = $p_publicationId "
-					." AND NrIssue = $p_issueId "
-					." AND IdLanguage = $p_languageId "
-					." ORDER BY ActionTime ASC";
+					." WHERE fk_publication_id = $p_publicationId "
+					." AND fk_issue_id = $p_issueId "
+					." AND fk_language_id = $p_languageId "
+					." ORDER BY time_action ASC";
 		$result = DbObjectArray::Create('IssuePublish', $queryStr);
 		return $result;
 	} // fn GetIssueEvents
@@ -205,9 +204,9 @@ class IssuePublish extends DatabaseObject {
 	{
 	    $datetime = strftime("%Y-%m-%d %H:%M:00");
     	$queryStr = "SELECT * FROM IssuePublish "
-    	           . " WHERE ActionTime <= '$datetime'"
-                   . " AND Completed != 'Y'"
-                   . " ORDER BY ActionTime ASC";
+    	           . " WHERE time_action <= '$datetime'"
+                   . " AND is_completed != 'Y'"
+                   . " ORDER BY time_action ASC";
         $result = DbObjectArray::Create('IssuePublish', $queryStr);
         return $result;	
 	} // fn GetPendingActions
@@ -239,14 +238,14 @@ class IssuePublish extends DatabaseObject {
 	    $datetime = strftime("%Y-%m-%d %H:%M:00");
 	    $dummyIssue =& new Issue();
 	    $columnNames = $dummyIssue->getColumnNames(true);
-        $queryStr = "SELECT ActionTime, Action, PublishArticles, "
+        $queryStr = "SELECT id, time_action, publish_action, do_publish_articles, "
                     . implode(",", $columnNames). " FROM Issues, IssuePublish "
-                    . " WHERE ActionTime >= '" . $datetime . "'"
-                    . " AND Completed != 'Y'"
-                    . " AND Issues.IdPublication=IssuePublish.IdPublication"
-                    . " AND Issues.Number=IssuePublish.NrIssue"
-                    . " AND Issues.IdLanguage=IssuePublish.IdLanguage "
-                    . " ORDER BY ActionTime DESC"
+                    . " WHERE time_action >= '" . $datetime . "'"
+                    . " AND is_completed != 'Y'"
+                    . " AND Issues.IdPublication=IssuePublish.fk_publication_id"
+                    . " AND Issues.Number=IssuePublish.fk_issue_id"
+                    . " AND Issues.IdLanguage=IssuePublish.fk_language_id "
+                    . " ORDER BY time_action DESC"
                     . " LIMIT $p_limit";
         //echo $queryStr."<br>";
 		$rows = $Campsite['db']->GetAll($queryStr);
@@ -254,7 +253,7 @@ class IssuePublish extends DatabaseObject {
 		if ($rows && (count($rows) > 0)) {
     		foreach ($rows as $row) {
     		    $row["ObjectType"] = "issue";		    
-    		    $addKeys[$row['ActionTime']] = $row;
+    		    $addKeys[$row['time_action']] = $row;
     		}
 		}
         return $addKeys;

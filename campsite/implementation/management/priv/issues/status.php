@@ -47,7 +47,7 @@ camp_html_content_top(getGS('Change issue status'), array('Pub' => $publicationO
 <TR>
 	<TD COLSPAN="2">
 		<BLOCKQUOTE><LI>
-		<?php  putGS('Are you sure you want to change the issue $1 status from $2 to $3?','<B>'.$issueObj->getIssueId().'. '.htmlspecialchars($issueObj->getName()).' ('.htmlspecialchars($issueObj->getLanguageName()).')</B>',"<B>$t2</B>","<B>$t3</B>"); ?>
+		<?php  putGS('Are you sure you want to change the issue $1 status from $2 to $3?','<B>'.$issueObj->getIssueNumber().'. '.htmlspecialchars($issueObj->getName()).' ('.htmlspecialchars($issueObj->getLanguageName()).')</B>',"<B>$t2</B>","<B>$t3</B>"); ?>
 		</LI></BLOCKQUOTE>
 	</TD>
 </TR>

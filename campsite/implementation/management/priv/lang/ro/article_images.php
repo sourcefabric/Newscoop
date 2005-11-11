@@ -1,9 +1,9 @@
 <?php
-regGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only changed by authorized users.", "");
+regGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.", "");
 regGS("Article Image List", "");
 regGS("Back to Article Image List", "");
-regGS("Add new image", "Adaugă imagine");
-regGS("Add an existing image", "Adaugă o imagine existentă");
+regGS("Add New Image", "Adaugă imagine");
+regGS("Add an Existing Image", "Adaugă o imagine existentă");
 regGS("Date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Data (aaaa-ll-zz)");
 regGS("Delete image $1", "Şterge imaginea $1");
 regGS("Remove Image From Article", "Şterge imaginea din articol");

@@ -1,9 +1,9 @@
 <?php
-regGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only changed by authorized users.", "Nemate pravo da menjate članak. Možete menjati samo svoje članke, a predatim člancima status može promeniti samo ovlašćeni korsnik.");
+regGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.", "Nemate pravo da menjate članak. Možete menjati samo svoje članke, a predatim člancima status može promeniti samo ovlašćeni korsnik.");
 regGS("Article Image List", "Lista slika u članku");
 regGS("Back to Article Image List", "Nazad na listu slika u članku");
-regGS("Add new image", "Dodaj novu sliku");
-regGS("Add an existing image", "Dodaj postojeću sliku");
+regGS("Add New Image", "Dodaj novu sliku");
+regGS("Add an Existing Image", "Dodaj postojeću sliku");
 regGS("Date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Datum<br><small>(gggg-mm-dd)</small>");
 regGS("Remove Image From Article", "Ukloni sliku iz članka");
 regGS("Link Image to Article", "Veži sliku za članak");
@@ -26,5 +26,4 @@ regGS("Click one of the ", "Kliknite na jedan od ponuđenih 'dodaj sliku' linkov
 regGS("Are you sure you want to remove the image '$1' from the article?", "Da li ste sigurni da želite da obrišete sliku $1 iz članka?");
 regGS("Are you sure you want to delete the image '$1'?", "Da li ste sigurni da želite da obrišete sliku $1?");
 regGS("Unlink image $1", "Ukloni vezu slike $1");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Da li ste sigurni da želite da uklonite sliku \\'$1\\' iz članka?");
 ?>

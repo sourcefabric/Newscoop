@@ -1,0 +1,3 @@
+<?php
+regGS("Log Messages", "");
+?>

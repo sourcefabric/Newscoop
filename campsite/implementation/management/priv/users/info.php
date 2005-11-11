@@ -128,7 +128,7 @@ if (!$isNewUser) {
 				<?php
 				$Type = Input::Get('Type', 'string', '');
 				foreach ($userTypes as $tmpUserType) {
-					pcomboVar($tmpUserType['Name'], $Type, $tmpUserType['Name']);
+					camp_html_select_option($tmpUserType['Name'], $Type, $tmpUserType['Name']);
 				}
 				?>
 				</select>

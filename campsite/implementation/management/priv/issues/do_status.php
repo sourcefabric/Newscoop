@@ -27,7 +27,7 @@ $publicationObj =& new Publication($Pub);
 $issueObj =& new Issue($Pub, $Language, $Issue);
 $issueObj->setPublished();
 
-$logtext = getGS('Issue $1 Published: $2  changed status',$issueObj->getIssueId().'. '.$issueObj->getName().' ('.$issueObj->getLanguageName().')',$issueObj->getPublished()); 
+$logtext = getGS('Issue $1 Published: $2  changed status',$issueObj->getIssueNumber().'. '.$issueObj->getName().' ('.$issueObj->getLanguageName().')',$issueObj->getPublished()); 
 Log::Message($logtext, $User->getUserName(), 14);
 
 if ($issueObj->getPublished() == 'Y') {

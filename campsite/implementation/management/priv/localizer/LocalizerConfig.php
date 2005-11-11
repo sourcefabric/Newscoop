@@ -33,7 +33,7 @@ $g_localizerConfig['DEFAULT_FILE_TYPE'] = 'gs';
 
 // The top-level directory to the set of directories
 // that need translation files.
-$g_localizerConfig['BASE_DIR'] = $_SERVER['DOCUMENT_ROOT'].'/admin-files';
+$g_localizerConfig['BASE_DIR'] = $_SERVER['DOCUMENT_ROOT'];
 
 // The top-level directory to the set of directories
 // that need translation files.
@@ -62,26 +62,27 @@ $g_localizerConfig['LOADED_FILES'] = array();
 $mapPrefixToDir = array();
 $mapPrefixToDir[""] = null;
 $mapPrefixToDir["globals"] = null;
-$mapPrefixToDir["home"] = "/";
-$mapPrefixToDir["pub"] = "/pub";
-$mapPrefixToDir["issues"] = "/issues";
-$mapPrefixToDir["sections"] = "/sections";
-$mapPrefixToDir["articles"] = "/articles";
-$mapPrefixToDir["article_images"] = "/articles/images";
-$mapPrefixToDir["article_topics"] = "/articles/topics";
-$mapPrefixToDir["imagearchive"] = "/imagearchive";
-$mapPrefixToDir["templates"] = "/templates";
-$mapPrefixToDir["article_types"] = "/article_types";
-$mapPrefixToDir["article_type_fields"] = "/article_types/fields";
-$mapPrefixToDir["topics"] = "/topics";
-$mapPrefixToDir["languages"] = "/languages";
-$mapPrefixToDir["country"] = "/country";
-$mapPrefixToDir["localizer"] = "/localizer";
-$mapPrefixToDir["logs"] = "/logs";
-$mapPrefixToDir["users"] = "/users";
-$mapPrefixToDir["user_subscriptions"] = "/users/subscriptions";
-$mapPrefixToDir["user_subscription_sections"] = "/users/subscriptions/sections";
-$mapPrefixToDir["user_types"] = "/user_types";
+$mapPrefixToDir["home"] = "/admin-files/";
+$mapPrefixToDir["api"] = "/classes/";
+$mapPrefixToDir["pub"] = "/admin-files/pub";
+$mapPrefixToDir["issues"] = "/admin-files/issues";
+$mapPrefixToDir["sections"] = "/admin-files/sections";
+$mapPrefixToDir["articles"] = "/admin-files/articles";
+$mapPrefixToDir["article_images"] = "/admin-files/articles/images";
+$mapPrefixToDir["article_topics"] = "/admin-files/articles/topics";
+$mapPrefixToDir["imagearchive"] = "/admin-files/imagearchive";
+$mapPrefixToDir["templates"] = "/admin-files/templates";
+$mapPrefixToDir["article_types"] = "/admin-files/article_types";
+$mapPrefixToDir["article_type_fields"] = "/admin-files/article_types/fields";
+$mapPrefixToDir["topics"] = "/admin-files/topics";
+$mapPrefixToDir["languages"] = "/admin-files/languages";
+$mapPrefixToDir["country"] = "/admin-files/country";
+$mapPrefixToDir["localizer"] = "/admin-files/localizer";
+$mapPrefixToDir["logs"] = "/admin-files/logs";
+$mapPrefixToDir["users"] = "/admin-files/users";
+$mapPrefixToDir["user_subscriptions"] = "/admin-files/users/subscriptions";
+$mapPrefixToDir["user_subscription_sections"] = "/admin-files/users/subscriptions/sections";
+$mapPrefixToDir["user_types"] = "/admin-files/user_types";
 $g_localizerConfig["MAP_PREFIX_TO_DIR"] = $mapPrefixToDir;
 unset($mapPrefixToDir);
 

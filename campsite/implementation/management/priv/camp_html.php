@@ -10,6 +10,24 @@ require_once($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/lib_campsite.php");
 
 /**
+ * Create an HTML OPTION element.
+ *
+ * @param string $p_value
+ * @param string $p_selectedValue
+ * @param string $p_printValue
+ * @return void
+ */
+function camp_html_select_option($p_value, $p_selectedValue, $p_printValue) 
+{
+	print '<OPTION VALUE="'.htmlspecialchars($p_value, ENT_QUOTES).'"';
+	if (!strcmp($p_value, $p_selectedValue)) {
+		print ' SELECTED';
+	}
+	print '>'.htmlspecialchars($p_printValue);
+} // fn camp_html_select_option
+
+
+/**
  * Display the copyright notice and close the HTML page.
  */
 function camp_html_copyright_notice($p_displayBorder = true)
@@ -108,12 +126,12 @@ function camp_html_article_url($p_articleObj, $p_interfaceLanguageId, $p_targetF
 {
 	global $ADMIN;
 	$str = "/$ADMIN/articles/".$p_targetFileName
-		."?Pub=".$p_articleObj->getPublicationId()
-		."&Issue=".$p_articleObj->getIssueId()
-		."&Section=".$p_articleObj->getSectionId()
-		."&Article=".$p_articleObj->getArticleId()
-		."&Language=".$p_interfaceLanguageId
-		."&sLanguage=".$p_articleObj->getLanguageId();
+		."?f_publication_id=".$p_articleObj->getPublicationId()
+		."&f_issue_number=".$p_articleObj->getIssueNumber()
+		."&f_section_number=".$p_articleObj->getSectionNumber()
+		."&f_article_number=".$p_articleObj->getArticleNumber()
+		."&f_language_id=".$p_interfaceLanguageId
+		."&f_language_selected=".$p_articleObj->getLanguageId();
 	if ($p_backLink != "") { 
 		$str .="&Back=".urlencode($p_backLink);
 	}
@@ -199,14 +217,14 @@ function camp_html_content_top($p_title, $p_objArray, $p_includeLinks = true,
     	$breadcrumbs[] = array($prompt, 
     	       "/$ADMIN/issues/"
     	       ."?Pub=".$issueObj->getPublicationId()
-    	       ."&Issue=".$issueObj->getIssueId()
+    	       ."&Issue=".$issueObj->getIssueNumber()
     	       ."&Language=".$issueObj->getLanguageId(),
     	       false);
 	    $name = htmlspecialchars($issueObj->getName())." (".htmlspecialchars($issueObj->getLanguageName()).")";
         $breadcrumbs[] = array($name, 
     	       "/$ADMIN/issues/edit.php"
     	       ."?Pub=".$issueObj->getPublicationId()
-    	       ."&Issue=".$issueObj->getIssueId()
+    	       ."&Issue=".$issueObj->getIssueNumber()
     	       ."&Language=".$issueObj->getLanguageId()); 
 	}
 	if (!is_null($sectionObj)) { 
@@ -214,37 +232,37 @@ function camp_html_content_top($p_title, $p_objArray, $p_includeLinks = true,
 		$breadcrumbs[] = array($prompt, 
 		        "/$ADMIN/sections/"
 		        ."?Pub=".$sectionObj->getPublicationId()
-                ."&Issue=".$sectionObj->getIssueId()
+                ."&Issue=".$sectionObj->getIssueNumber()
                 ."&Language=".$sectionObj->getLanguageId()
-                ."&Section=".$sectionObj->getSectionId(),
+                ."&Section=".$sectionObj->getSectionNumber(),
                 false);
 	    $name = htmlspecialchars($sectionObj->getName());
         $breadcrumbs[] = array($name, 
                 "/$ADMIN/sections/edit.php"
                 ."?Pub=".$sectionObj->getPublicationId()
-                ."&Issue=".$sectionObj->getIssueId()
+                ."&Issue=".$sectionObj->getIssueNumber()
                 ."&Language=".$sectionObj->getLanguageId()
-                ."&Section=".$sectionObj->getSectionId());
+                ."&Section=".$sectionObj->getSectionNumber());
 	}
 	if (!is_null($articleObj)) {
 	    $prompt = getGS("Article").":";
 		$breadcrumbs[] = array($prompt, 
                 "/$ADMIN/articles/index.php"
-                ."?Pub=" . $articleObj->getPublicationId() 
-                ."&Issue=".$articleObj->getIssueId()
-                ."&Language=".$sectionObj->getLanguageId()
-                ."&Section=".$articleObj->getSectionId()
-                ."&Article=".$articleObj->getArticleId(),                
+                ."?f_publication_id=" . $articleObj->getPublicationId() 
+                ."&f_issue_number=".$articleObj->getIssueNumber()
+                ."&f_language_id=".$sectionObj->getLanguageId()
+                ."&f_section_number=".$articleObj->getSectionNumber()
+                ."&f_article_number=".$articleObj->getArticleNumber(),                
                 false);
 	    $name = htmlspecialchars($articleObj->getName())." (".htmlspecialchars($articleObj->getLanguageName()).")";
         $breadcrumbs[] = array($name,
                 "/$ADMIN/articles/edit.php"
-                ."?Pub=" . $articleObj->getPublicationId() 
-                ."&Issue=".$articleObj->getIssueId()
-                ."&Language=".$sectionObj->getLanguageId()
-                ."&Section=".$articleObj->getSectionId()
-                ."&Article=".$articleObj->getArticleId()
-                ."&sLanguage=".$articleObj->getLanguageId());
+                ."?f_publication_id=" . $articleObj->getPublicationId() 
+                ."&f_issue_number=".$articleObj->getIssueNumber()
+                ."&f_language_id=".$sectionObj->getLanguageId()
+                ."&f_section_number=".$articleObj->getSectionNumber()
+                ."&f_article_number=".$articleObj->getArticleNumber()
+                ."&f_language_selected=".$articleObj->getLanguageId());
 	}
 	if (is_array($p_extraBreadcrumbs)) {
 	    //print_r($p_extraBreadcrumbs);

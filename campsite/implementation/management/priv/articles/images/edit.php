@@ -27,7 +27,7 @@ if (!Input::IsValid()) {
 $publicationObj =& new Publication($Pub);
 $issueObj =& new Issue($Pub, $Language, $Issue);
 $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
-$articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
+$articleObj =& new Article($sLanguage, $Article);
 $imageObj =& new Image($ImageId);
 
 // Add extra breadcrumb for image list.

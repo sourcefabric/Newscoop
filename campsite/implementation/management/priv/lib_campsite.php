@@ -115,24 +115,6 @@ function camp_implode_keys_and_values($p_array,
 } // fn camp_implode_keys_and_values
 
 
-/**
- * Create an HTML OPTION element.
- *
- * @param string $p_value
- * @param string $p_selectedValue
- * @param string $p_printValue
- * @return void
- */
-function pcomboVar($p_value, $p_selectedValue, $p_printValue) 
-{
-	print '<OPTION VALUE="'.htmlspecialchars($p_value, ENT_QUOTES).'"';
-	if (!strcmp($p_value, $p_selectedValue)) {
-		print ' SELECTED';
-	}
-	print '>'.htmlspecialchars($p_printValue);
-} // fn pcombovar
-
-
 /** 
  * An alias for "print()".
  * @param string $p_string
@@ -146,11 +128,10 @@ function p($p_string)
 
 /**
  * Load the global and local language files.
- * @param string $p_path
  * @param string $p_name
  * @return void
  */
-function selectLanguageFile($p_name) 
+function camp_load_language($p_name) 
 {
     require_once('localizer/Localizer.php');
     $langCode = null;
@@ -158,39 +139,40 @@ function selectLanguageFile($p_name)
          $langCode = $_REQUEST['TOL_Language'];
     }
     Localizer::LoadLanguageFiles($p_name, $langCode);
-} // fn selectLanguageFile
+} // fn camp_load_language
 
 
-function limitchars($text, $lim, $break, $tail) 
-{
-	//  $text = split("$break", $text);
-	// If you want this function case insensitive
-	// replace above line with these two lines
-	$text=preg_replace("/$break/i", strtolower($break), $text);
-	$text = split(strtolower("$break"), $text);
-	if (strlen(implode("$break", $text)) >= $lim) {
-		$i = 0;
-		$add_str = "";
-		while($i <= count($text)) {
-			$add_str = $text[$i];
-			$out[] = $add_str;
-			if(strlen(implode("$break", $out)) >= $lim - strlen($break) - strlen($add_str)) {
-				break;
-			}
-			$add_str = "";
-			$i++;
-		}
-		$text = implode("$break", $out);
-		if (substr($text, 0, -strlen($break)) == $break) {
-			$text = substr($text, 0, -strlen($break));
-		}
-		$text = "$text$tail";
-	} 
-	else {
-		$text=implode("$break", $text);
-	}
-	return $text;
-} // fn limitchars
+/**
+ * Split the given text into something.
+ * @return string
+ */
+//function camp_limit_chars($p_text, $p_limit, $p_break, $p_tail) 
+//{
+//	$p_text = preg_replace("/$p_break/i", strtolower($p_break), $p_text);
+//	$p_text = split(strtolower("$p_break"), $p_text);
+//	if (strlen(implode("$p_break", $p_text)) >= $p_limit) {
+//		$i = 0;
+//		$add_str = "";
+//		while($i <= count($p_text)) {
+//			$add_str = $p_text[$i];
+//			$out[] = $add_str;
+//			if(strlen(implode("$p_break", $out)) >= $p_limit - strlen($p_break) - strlen($add_str)) {
+//				break;
+//			}
+//			$add_str = "";
+//			$i++;
+//		}
+//		$p_text = implode("$p_break", $out);
+//		if (substr($p_text, 0, -strlen($p_break)) == $p_break) {
+//			$p_text = substr($p_text, 0, -strlen($p_break));
+//		}
+//		$p_text = "$p_text$p_tail";
+//	} 
+//	else {
+//		$p_text=implode("$p_break", $p_text);
+//	}
+//	return $p_text;
+//} // fn camp_limit_chars
 
 
 function camp_is_valid_url_name($name) 
@@ -207,6 +189,39 @@ function camp_is_valid_url_name($name)
 	}
 	return true;
 } // fn camp_is_valid_url_name
+
+
+/**
+ * Get the first element from the given array, but do not modify
+ * the array the way array_pop() does.
+ * @param array $p_array
+ * @return mixed
+ */
+function camp_array_peek($p_array)
+{
+	reset($p_array);
+	list($key, $element) = each($p_array);
+	return $element;
+} // fn camp_array_peek
+
+
+/**
+ * 
+ * @param string $p_name
+ * @param mixed $p_defaultValue
+ * @return mixed
+ */
+function camp_persistant_var($p_name, $p_defaultValue)
+{
+	// Use the REQUEST variable if it is set.
+	if (isset($_REQUEST[$p_name])) {
+		$_SESSION[$p_name] = $_REQUEST[$p_name];
+	}
+	elseif (!isset($_SESSION[$p_name])) {
+		$_SESSION[$p_name] = $p_defaultValue;
+	}
+	return $_SESSION[$p_name];
+}
 
 
 if (file_exists($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/modules/admin/priv_functions.php")) {

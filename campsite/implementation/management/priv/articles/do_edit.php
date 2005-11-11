@@ -201,7 +201,7 @@ if (!Input::IsValid()) {
 }
 
 // Fetch article
-$articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
+$articleObj =& new Article($sLanguage, $Article);
 if (!$articleObj->exists()) {
 	camp_html_display_error(getGS('No such article.'), $BackLink);
 }
@@ -219,7 +219,7 @@ foreach ($dbColumns as $dbColumn) {
 $BackLink = "/$ADMIN/articles/index.php?Pub=$Pub&Issue=$Issue&Language=$Language&Section=$Section";
 
 if (!$articleObj->userCanModify($User)) {
-	$errorStr = getGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only changed by authorized users.");
+	$errorStr = getGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.");
 	camp_html_display_error($errorStr, $BackLink);
 	exit;
 }

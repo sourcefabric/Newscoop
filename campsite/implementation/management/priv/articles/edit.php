@@ -8,12 +8,12 @@ if (!$access) {
 	exit;
 }
 
-$Pub = Input::Get('Pub', 'int', 0);
-$Issue = Input::Get('Issue', 'int', 0);
-$Section = Input::Get('Section', 'int', 0);
-$Language = Input::Get('Language', 'int', 0);
-$sLanguage = Input::Get('sLanguage', 'int', 0);
-$Article = Input::Get('Article', 'int', 0);
+$f_publication_id = Input::Get('f_publication_id', 'int', 0);
+$f_issue_number = Input::Get('f_issue_number', 'int', 0);
+$f_section_number = Input::Get('f_section_number', 'int', 0);
+$f_language_id = Input::Get('f_language_id', 'int', 0);
+$f_language_selected = Input::Get('f_language_selected', 'int', 0);
+$f_article_number = Input::Get('f_article_number', 'int', 0);
 $Saved = Input::Get('Saved', 'int', 0, true);
 $Unlock = Input::Get('Unlock', 'string', false, true);
 
@@ -25,17 +25,17 @@ if (!Input::IsValid()) {
 $errorStr = "";
 
 // Fetch article
-$articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
+$articleObj =& new Article($f_language_selected, $f_article_number);
 if (!$articleObj->exists()) {
 	$errorStr = getGS('No such article.');
 }
 $articleData = $articleObj->getArticleData();
 $lockUserObj =& new User($articleObj->getLockedByUser());
-$languageObj =& new Language($Language);
-$sLanguageObj =& new Language($sLanguage);
-$publicationObj =& new Publication($Pub);
-$issueObj =& new Issue($Pub, $Language, $Issue);
-$sectionObj =& new Section($Pub, $Issue, $Language, $Section);
+$languageObj =& new Language($f_language_id);
+$sLanguageObj =& new Language($f_language_selected);
+$publicationObj =& new Publication($f_publication_id);
+$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
+$sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
 $articleTemplate =& new Template($issueObj->getArticleTemplateId());
 
 // If the user has the ability to change the article OR
@@ -104,7 +104,7 @@ foreach ($dbColumns as $dbColumn) {
 // Begin Display of page
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
 				  'Section' => $sectionObj, 'Article'=>$articleObj);
-camp_html_content_top(getGS("Edit article details"), $topArray);
+camp_html_content_top(getGS("Edit article"), $topArray);
 editor_load_xinha($dbColumns, $User);
 
 if ($errorStr != "") {
@@ -124,12 +124,12 @@ if (!$hasAccess) {
 			</TD>
 		</TR>
 		<TR>
-			<TD COLSPAN="2"><BLOCKQUOTE><font color=red><li><?php  putGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only changed by authorized users." ); ?></li></font></BLOCKQUOTE></TD>
+			<TD COLSPAN="2"><BLOCKQUOTE><font color=red><li><?php  putGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users." ); ?></li></font></BLOCKQUOTE></TD>
 		</TR>
 		<TR>
 			<TD COLSPAN="2">
 			<DIV ALIGN="CENTER">
-			<INPUT TYPE="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" class="button" ONCLICK="location.href='/<?php echo $ADMIN; ?>/articles?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>&Section=<?php  p($Section); ?>'">
+			<INPUT TYPE="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" class="button" ONCLICK="location.href='/<?php echo $ADMIN; ?>/articles?f_publication_id=<?php  p($f_publication_id); ?>&f_issue_number=<?php  p($f_issue_number); ?>&f_language_id=<?php  p($f_language_id); ?>&f_section_number=<?php  p($f_section_number); ?>'">
 			</DIV>
 			</TD>
 		</TR>
@@ -176,8 +176,8 @@ if ($hasAccess && !$edit_ok) {
 	<TR>
 		<TD COLSPAN="2">
 		<DIV ALIGN="CENTER">
-		<INPUT TYPE="button" NAME="Yes" VALUE="<?php  putGS('Yes'); ?>" class="button" ONCLICK="location.href='<?php echo camp_html_article_url($articleObj, $sLanguage, "do_unlock.php"); ?>'">
-		<INPUT TYPE="button" NAME="No" VALUE="<?php  putGS('No'); ?>" class="button" ONCLICK="location.href='/<?php echo $ADMIN; ?>/articles/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php p($Language); ?>&Section=<?php  p($Section); ?>'">
+		<INPUT TYPE="button" NAME="Yes" VALUE="<?php  putGS('Yes'); ?>" class="button" ONCLICK="location.href='<?php echo camp_html_article_url($articleObj, $f_language_selected, "do_unlock.php"); ?>'">
+		<INPUT TYPE="button" NAME="No" VALUE="<?php  putGS('No'); ?>" class="button" ONCLICK="location.href='/<?php echo $ADMIN; ?>/articles/?f_publication_id=<?php  p($f_publication_id); ?>&f_issue_number=<?php  p($f_issue_number); ?>&f_language_id=<?php p($f_language_id); ?>&f_section_number=<?php  p($f_section_number); ?>'">
 		</DIV>
 		</TD>
 	</TR>
@@ -244,8 +244,8 @@ if ($edit_ok) { ?>
 				<!-- Images Link -->
 				<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 				<TR>
-					<TD><?php echo camp_html_article_link($articleObj, $Language, "images/"); ?><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/image_archive.png" BORDER="0"></A></TD>
-					<TD><?php echo camp_html_article_link($articleObj, $Language, "images/"); ?><B><?php  putGS("Images"); ?></B></A></TD>
+					<TD><?php echo camp_html_article_link($articleObj, $f_language_id, "images/"); ?><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/image_archive.png" BORDER="0"></A></TD>
+					<TD><?php echo camp_html_article_link($articleObj, $f_language_id, "images/"); ?><B><?php  putGS("Images"); ?></B></A></TD>
 				</TR>
 				</TABLE>
 			</TD>
@@ -277,7 +277,7 @@ if ($edit_ok) { ?>
 		<?php 
 		if ($User->hasPermission('Publish')) { 
 			$automaticPublishingActive = (count(ArticlePublish::GetArticleEvents(
-				$articleObj->getArticleId(), $articleObj->getLanguageId())) > 0);
+				$articleObj->getArticleNumber(), $articleObj->getLanguageId())) > 0);
 			?>
 			<TD class="action_link_container">
 				<!-- Autopublish Link -->
@@ -296,8 +296,8 @@ if ($edit_ok) { ?>
 				<!-- Preview Link -->
 				<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 				<TR>	
-					<TD><A HREF="" ONCLICK="window.open('/<?php echo $ADMIN; ?>/articles/preview.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=no, width=680, height=560'); return false"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/preview.png" BORDER="0"></A></TD>
-					<TD><A HREF="" ONCLICK="window.open('/<?php echo $ADMIN; ?>/articles/preview.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>', 'fpreview', 'resizable=yes, menubar=yes, toolbar=yes, width=680, height=560'); return false"><B><?php  putGS("Preview"); ?></B></A></TD>
+					<TD><A HREF="" ONCLICK="window.open('/<?php echo $ADMIN; ?>/articles/preview.php?f_publication_id=<?php  p($f_publication_id); ?>&f_issue_number=<?php  p($f_issue_number); ?>&f_section_number=<?php  p($f_section_number); ?>&f_article_number=<?php  p($f_article_number); ?>&f_language_id=<?php  p($f_language_id); ?>&f_language_selected=<?php  p($f_language_selected); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=no, width=680, height=560'); return false"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/preview.png" BORDER="0"></A></TD>
+					<TD><A HREF="" ONCLICK="window.open('/<?php echo $ADMIN; ?>/articles/preview.php?f_publication_id=<?php  p($f_publication_id); ?>&f_issue_number=<?php  p($f_issue_number); ?>&f_section_number=<?php  p($f_section_number); ?>&f_article_number=<?php  p($f_article_number); ?>&f_language_id=<?php  p($f_language_id); ?>&f_language_selected=<?php  p($f_language_selected); ?>', 'fpreview', 'resizable=yes, menubar=yes, toolbar=yes, width=680, height=560'); return false"><B><?php  putGS("Preview"); ?></B></A></TD>
 				</TR>
 				</TABLE>
 			</TD>
@@ -321,8 +321,8 @@ if ($edit_ok) { ?>
 				<TD class="action_link_container">
 					<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 					<TR>
-						<TD><a href="/<?php echo $ADMIN; ?>/articles/do_del.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php p($Section); ?>&Article=<?php p($Article); ?>&Language=<?php p($Language); ?>&sLanguage=<?php p($sLanguage); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the article $1 ($2)?', '&quot;'.camp_javascriptspecialchars($articleObj->getTitle()).'&quot;', camp_javascriptspecialchars($sLanguageObj->getName())); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0"></A></TD>
-						<TD style="padding-left: 6px;"><a href="/<?php echo $ADMIN; ?>/articles/do_del.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php p($Section); ?>&Article=<?php p($Article); ?>&Language=<?php p($Language); ?>&sLanguage=<?php p($sLanguage); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the article $1 ($2)?', '&quot;'.camp_javascriptspecialchars($articleObj->getTitle()).'&quot;', camp_javascriptspecialchars($sLanguageObj->getName())); ?>');"><B><?php  putGS("Delete"); ?></B></A></TD>
+						<TD><a href="/<?php echo $ADMIN; ?>/articles/do_del.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_article_number=<?php p($f_article_number); ?>&f_language_id=<?php p($f_language_id); ?>&f_language_selected=<?php p($f_language_selected); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the article $1 ($2)?', '&quot;'.camp_javascriptspecialchars($articleObj->getTitle()).'&quot;', camp_javascriptspecialchars($sLanguageObj->getName())); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0"></A></TD>
+						<TD style="padding-left: 6px;"><a href="/<?php echo $ADMIN; ?>/articles/do_del.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_article_number=<?php p($f_article_number); ?>&f_language_id=<?php p($f_language_id); ?>&f_language_selected=<?php p($f_language_selected); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the article $1 ($2)?', '&quot;'.camp_javascriptspecialchars($articleObj->getTitle()).'&quot;', camp_javascriptspecialchars($sLanguageObj->getName())); ?>');"><B><?php  putGS("Delete"); ?></B></A></TD>
 					</TR>
 					</TABLE>
 				</TD>
@@ -335,7 +335,7 @@ if ($edit_ok) { ?>
 					<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 					<TR>
 						<TD><A HREF="<?php echo camp_html_article_url($articleObj, $languageObj->getLanguageId(), "duplicate.php"); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/duplicate.png" BORDER="0"></A></TD>
-						<TD><A HREF="<?php echo camp_html_article_url($articleObj, $languageObj->getLanguageId(), "duplicate.php"); ?>"><B><?php  putGS("Duplicate"); ?></B></A></TD>
+						<TD><A HREF="<?php echo camp_html_article_url($articleObj, $languageObj->getLanguageId(), "duplicate.php"); ?>"><B><?php  putGS("Copy"); ?></B></A></TD>
 					</TR>
 					</TABLE>
 				</TD>
@@ -368,24 +368,24 @@ if ($edit_ok) { ?>
 
 
 <FORM NAME="dialog" METHOD="POST" ACTION="do_edit.php">
-<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<?php  p($Pub); ?>">
-<INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<?php  p($Issue); ?>">
-<INPUT TYPE="HIDDEN" NAME="Section" VALUE="<?php  p($Section); ?>">
-<INPUT TYPE="HIDDEN" NAME="Article" VALUE="<?php  p($Article); ?>">
-<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php  p($Language); ?>">
-<INPUT TYPE="HIDDEN" NAME="sLanguage" VALUE="<?php  p($sLanguage); ?>">
+<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<?php  p($f_publication_id); ?>">
+<INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<?php  p($f_issue_number); ?>">
+<INPUT TYPE="HIDDEN" NAME="Section" VALUE="<?php  p($f_section_number); ?>">
+<INPUT TYPE="HIDDEN" NAME="Article" VALUE="<?php  p($f_article_number); ?>">
+<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php  p($f_language_id); ?>">
+<INPUT TYPE="HIDDEN" NAME="sLanguage" VALUE="<?php  p($f_language_selected); ?>">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" align="center" class="table_input">
 <TR>
 	<TD COLSPAN="2">
 		<table cellpadding="0" cellspacing="0" width="100%">
 		<tr>
 			<td align="left">
-				<B><?php putGS("Edit article details"); ?></B>
+				<B><?php putGS("Edit article"); ?></B>
 			</td>
         	<TD ALIGN="RIGHT">
         		<?php 
-        		$languageUrl = "edit.php?Pub=$Pub&Issue=$Issue&Section=$Section"
-        		              ."&Article=$Article&Language=$Language&sLanguage=";
+        		$languageUrl = "edit.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number"
+        		              ."&f_article_number=$f_article_number&f_language_id=$f_language_id&f_language_selected=";
         		?>
         		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="3">
         		<TR>
@@ -395,7 +395,7 @@ if ($edit_ok) { ?>
         				<?php 
         					$articleLanguages = $articleObj->getLanguages();
         					foreach ($articleLanguages as $articleLanguage) {
-        					    pcomboVar($articleLanguage->getLanguageId(), $sLanguage, htmlspecialchars($articleLanguage->getName()));
+        					    camp_html_select_option($articleLanguage->getLanguageId(), $f_language_selected, htmlspecialchars($articleLanguage->getName()));
         					}
         				?></SELECT>
         			</TD>
@@ -408,7 +408,7 @@ if ($edit_ok) { ?>
 				// Article Import Link
 				?>
     			<td align="right">
-				<b><a href="/<?php echo $ADMIN; ?>/article_import/index.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Section=<?php p($Section); ?>&Article=<?php p($Article); ?>&Language=<?php p($Language); ?>&sLanguage=<?php p($sLanguage); ?>">Import Article</a></b>
+				<b><a href="/<?php echo $ADMIN; ?>/article_import/index.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_article_number=<?php p($f_article_number); ?>&f_language_id=<?php p($f_language_id); ?>&f_language_selected=<?php p($f_language_selected); ?>">Import Article</a></b>
     			</td>
 				<?php
 			}
@@ -558,7 +558,7 @@ if ($edit_ok) { ?>
 			if (isset($imageMatches[1][0])) {
 				foreach ($imageMatches[1] as $templateId) {
 					// Get the image URL
-					$articleImage =& new ArticleImage($Article, null, $templateId);
+					$articleImage =& new ArticleImage($f_article_number, null, $templateId);
 					$image =& new Image($articleImage->getImageId());
 					$imageUrl = $image->getImageUrl();
 					$text = preg_replace("/<!\*\*\s*Image\s*".$templateId."\s*/i", '<img src="'.$imageUrl.'" ', $text);
@@ -599,7 +599,7 @@ if ($edit_ok) { ?>
 		<TD COLSPAN="2">
 		<DIV ALIGN="CENTER">
 		<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save changes'); ?>" class="button">
-		<!--<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" class="button" ONCLICK="location.href='/<?php echo $ADMIN; ?>/articles/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Language=<?php  p($Language); ?>'">-->
+		<!--<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" class="button" ONCLICK="location.href='/<?php echo $ADMIN; ?>/articles/?f_publication_id=<?php  p($f_publication_id); ?>&f_issue_number=<?php  p($f_issue_number); ?>&f_section_number=<?php  p($f_section_number); ?>&f_language_id=<?php  p($f_language_id); ?>'">-->
 		</DIV>
 		</TD>
 	</TR>

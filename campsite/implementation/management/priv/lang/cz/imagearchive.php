@@ -1,4 +1,5 @@
 <?php
+regGS("You must select an image file to upload.", "");
 regGS("Add new image", "Přidat obrázek");
 regGS("Date <SMALL>(yyyy-mm-dd)</SMALL>", "Datum (rrrr-mm-dd)");
 regGS("Delete image $1", "Stazat obrázek $1");
@@ -8,7 +9,6 @@ regGS("Gallery", "");
 regGS("Text only", "");
 regGS("Used in articles", "");
 regGS("View image", "Náhled obrázku");
-regGS("Back to image archive", "");
 regGS("Change image information", "Změnit informace obrázku");
 regGS("Changed image properties of $1", "Změnit vlastnosti obrázku");
 regGS("Are you sure you want to delete the image $1?", "Určitě chcete smazat obrázek $1?");

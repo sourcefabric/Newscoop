@@ -1,9 +1,9 @@
 <?php
-regGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only changed by authorized users.", "Вы не имеете права изменять эту статью. Вы можете только редактировать собственные статьи, и будучи отправленной, статья может быть изменена только уполномоченным пользователем.");
+regGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.", "Вы не имеете права изменять эту статью. Вы можете только редактировать собственные статьи, и будучи отправленной, статья может быть изменена только уполномоченным пользователем.");
 regGS("Article Image List", "Список картинок статьи");
 regGS("Back to Article Image List", "Назад к списку картинок статьи");
-regGS("Add new image", "Добавить новую картинку");
-regGS("Add an existing image", "Добавить существующую картинку");
+regGS("Add New Image", "Добавить новую картинку");
+regGS("Add an Existing Image", "Добавить существующую картинку");
 regGS("Date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Дата<BR><SMALL>(гггг-мм-дд)</SMALL>");
 regGS("Remove Image From Article", "<nobr>Удалить картинку</nobr> <nobr>из статьи</nobr>");
 regGS("Link Image to Article", "<nobr>Привязать картинку к статье</nobr>");

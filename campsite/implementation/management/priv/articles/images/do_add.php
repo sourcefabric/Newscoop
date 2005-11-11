@@ -41,7 +41,7 @@ if (!Input::IsValid()) {
 	exit;			
 }
 
-$articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
+$articleObj =& new Article($sLanguage, $Article);
 
 // If the template ID is in use, dont add the image.
 if (ArticleImage::TemplateIdInUse($Article, $ImageTemplateId)) {
@@ -71,7 +71,7 @@ if (!is_object($image)) {
 	exit;	
 }
 
-ArticleImage::AddImageToArticle($image->getImageId(), $articleObj->getArticleId(), $ImageTemplateId);
+ArticleImage::AddImageToArticle($image->getImageId(), $articleObj->getArticleNumber(), $ImageTemplateId);
 
 $logtext = getGS('The image $1 has been added.', $attributes['Description']);
 Log::Message($logtext, $User->getUserName(), 41);

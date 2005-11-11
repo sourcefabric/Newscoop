@@ -8,14 +8,15 @@
  * @package Campsite
  */
 class Log extends DatabaseObject {
-	var $m_keyColumnNames = array('IdEvent');
+	var $m_keyColumnNames = array('fk_event_id');
 	var $m_keyIsAutoIncrement = false;
 	var $m_dbTableName = 'Log';
 	var $m_columnNames = array(
-		'TStamp', 
-		'IdEvent', 
-		'User', 
-		'Text');
+		'time_created', 
+		'fk_event_id', 
+		'fk_user_id', 
+		'text');
+	
 	
 	/**
 	 * This is a static function.
@@ -27,60 +28,96 @@ class Log extends DatabaseObject {
 	 *
 	 * @return void
 	 */
-	function Message($p_text, $p_userName = '', $p_eventId = 0) 
+	function Message($p_text, $p_userId = null, $p_eventId = 0) 
 	{
 		global $Campsite;
-		$queryStr = "INSERT INTO Log SET TStamp=NOW(), IdEvent=$p_eventId, User='$p_userName', Text='".mysql_real_escape_string($p_text)."'";
+		if (is_null($p_userId)) {
+			// try to get the user name from the global environment
+			if (isset($_REQUEST['TOL_UserId'])) {
+				$p_userId = $_REQUEST['TOL_UserId'];
+			}
+		}
+		$queryStr = "INSERT INTO Log SET "
+					." time_created=NOW(), "
+					." fk_event_id=$p_eventId,"
+					." fk_user_id=$p_userId, "
+					." text='".mysql_real_escape_string($p_text)."'";
 		$Campsite['db']->Execute($queryStr);
 	} // fn Message
 	
-	
+
+	/**
+	 * Get the time the log message was created.
+	 * @return string
+	 */
 	function getTimeStamp()
 	{
-		return $this->getProperty('TStamp');
+		return $this->getProperty('time_created');
 	} // fn getTimeStamp
 	
 	
-	function getUserName()
-	{
-		return $this->getProperty('User');
-	} // fn getUserName
-	
-	
+	/**
+	 * Return the log message.
+	 * @return string
+	 */
 	function getText()
 	{
-		return $this->getProperty('Text');
+		return $this->getProperty('text');
 	} // fn getText
 	
 	
+	/**
+	 * Get the event ID which cooresponds to an entry in the "Events" table.
+	 * @return int
+	 */
 	function getEventId()
 	{
-		return $this->getProperty('IdEvent');
+		return $this->getProperty('fk_event_id');
 	} // fn getEventId
 	
 	
+	/**
+	 * Return the number of log lines.
+	 * @param int $p_eventId
+	 * @return int
+	 */
 	function GetNumLogs($p_eventId = null)
 	{
 		global $Campsite;
 		$queryStr = 'SELECT COUNT(*) FROM Log';
 		if (!is_null($p_eventId)) {
-			$queryStr .= " WHERE IdEvent=$p_eventId";
+			$queryStr .= " WHERE fk_event_id=$p_eventId";
 		}
 		$total = $Campsite['db']->GetOne($queryStr);
 		return $total;
 	} // fn GetNumLogs
 	
 	
+	/**
+	 * Get the logs.
+	 *
+	 * @param int $p_eventId
+	 * @param array $p_sqlOptions
+	 *
+	 * @return array
+	 */
 	function GetLogs($p_eventId = null, $p_sqlOptions = null)
 	{
 		if (is_null($p_sqlOptions) || !isset($p_sqlOptions['ORDER BY'])) {
-			$p_sqlOptions['ORDER BY'] = array('TStamp' => 'DESC');
+			$p_sqlOptions['ORDER BY'] = array('time_created' => 'DESC');
 		}
-		$constraints = array();
+		$tmpLog =& new Log();
+		$columns = $tmpLog->getColumnNames(true);
+		$queryStr = "SELECT ".implode(", ", $columns)
+					.", Users.Name as full_name, Users.UName as user_name"
+					." FROM Log, Users"
+					." WHERE Log.fk_user_id = Users.Id";
 		if (!is_null($p_eventId)) {
-			$constraints[] = array('IdEvent', $p_eventId);
+			$queryStr .= " AND Log.fk_event_id=$p_eventId";
 		}
-		return DatabaseObject::Search('Log', $constraints, $p_sqlOptions);
+		$queryStr = DatabaseObject::ProcessOptions($queryStr, $p_sqlOptions);
+		$logLines = DbObjectArray::Create('Log', $queryStr);
+		return $logLines;
 	} // fn GetLogs
 	
 } // class Log

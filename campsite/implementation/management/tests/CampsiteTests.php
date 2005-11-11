@@ -29,8 +29,8 @@ class ArticleTest extends PHPUnit_TestCase {
 		// Test GET functions
 		$articleCopy =& new Article(9000001, 9000002, 9000003, 9000004, $article->getArticleId());
 		$this->assertEquals(9000001, $articleCopy->getPublicationId());
-		$this->assertEquals(9000002, $articleCopy->getIssueId());
-		$this->assertEquals(9000003, $articleCopy->getSectionId());
+		$this->assertEquals(9000002, $articleCopy->getIssueNumber());
+		$this->assertEquals(9000003, $articleCopy->getSectionNumber());
 		$this->assertEquals(9000004, $articleCopy->getLanguageId());
 		$this->assertEquals(9000005, $articleCopy->getUserId());
 		$this->assertEquals("Unit Test New Title", $articleCopy->getTitle());

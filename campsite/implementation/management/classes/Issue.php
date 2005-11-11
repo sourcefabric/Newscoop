@@ -41,14 +41,14 @@ class Issue extends DatabaseObject {
 	 * A publication has Issues, Issues have Sections and Articles.
 	 * @param int $p_publicationId
 	 * @param int $p_languageId
-	 * @param int $p_issueId
+	 * @param int $p_issueNumber
 	 */
-	function Issue($p_publicationId = null, $p_languageId = null, $p_issueId = null) 
+	function Issue($p_publicationId = null, $p_languageId = null, $p_issueNumber = null) 
 	{
 		parent::DatabaseObject($this->m_columnNames);
 		$this->m_data['IdPublication'] = $p_publicationId;
 		$this->m_data['IdLanguage'] = $p_languageId;
-		$this->m_data['Number'] = $p_issueId;
+		$this->m_data['Number'] = $p_issueNumber;
 		if ($this->keyValuesExist()) {
 			$this->fetch();
 		}
@@ -125,7 +125,7 @@ class Issue extends DatabaseObject {
 	/**
 	 * Create a copy of this issue.  You can use this to:
 	 * 1) Translate an issue.  In this case do:
-	 *    $issue->copy(null, $issue->getIssueId(), $destinationLanguage);
+	 *    $issue->copy(null, $issue->getIssueNumber(), $destinationLanguage);
 	 * 2) Duplicate all translations of an issue within a publication:
 	 *    $issue->copy();
 	 * 3) Copy an issue to another publication:
@@ -212,10 +212,10 @@ class Issue extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getIssueId() 
+	function getIssueNumber() 
 	{
 		return $this->getProperty('Number');
-	} // fn getIssueId
+	} // fn getIssueNumber
 	
 	
 	/**

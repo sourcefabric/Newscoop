@@ -27,7 +27,7 @@ if (!Input::IsValid()) {
 	exit;
 }
 
-$articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
+$articleObj =& new Article($sLanguage, $Article);
 if (!$articleObj->exists()) {
 	camp_html_display_error(getGS('Article does not exist.'));
 	exit;		
@@ -42,7 +42,7 @@ if (!$imageObj->exists()) {
 // This file can only be accessed if the user has the right to change articles
 // or the user created this article and it hasnt been published yet.
 if (!$articleObj->userCanModify($User)) {
-	camp_html_display_error(getGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only changed by authorized users."));
+	camp_html_display_error(getGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users."));
 	exit;		
 }
 

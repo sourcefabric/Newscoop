@@ -46,7 +46,7 @@ camp_html_content_top(getGS('Add new issue'), array('Pub' => $publicationObj), t
 	<SELECT NAME="cLang" class="input_select">
 	   <?php 
             foreach ($allLanguages as $language) {
-            	pcomboVar($language->getLanguageId(), $publicationObj->getLanguageId(), $language->getNativeName());
+            	camp_html_select_option($language->getLanguageId(), $publicationObj->getLanguageId(), $language->getNativeName());
             }
         ?>
 	</SELECT>

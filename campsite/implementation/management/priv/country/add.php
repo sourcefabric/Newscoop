@@ -49,7 +49,7 @@ echo camp_html_breadcrumbs($crumbs);
 		<SELECT NAME="f_country_language" class="input_select">
 		<?php  
 		foreach ($languages as $language) {
-			pcomboVar($language->getLanguageId(), 0, $language->getNativeName());
+			camp_html_select_option($language->getLanguageId(), 0, $language->getNativeName());
     	} ?>
     	</SELECT>
 	</TD>

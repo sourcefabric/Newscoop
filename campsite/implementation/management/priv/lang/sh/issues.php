@@ -21,7 +21,7 @@ regGS("Issue $1 updated in publication $2", "Izdanje $1 je izmenjeno u publikaci
 regGS("You do not have the right to delete issues.", "Nemate pravo da brišete izdanja");
 regGS("Are you sure you want to delete the issue $1?", "Sigurni ste da želite da obrišete izdanje $1?");
 regGS("Deleting issue", "Brisanje izdanja");
-regGS("The issue $1 has ben deleted.", "Izdanje $1 je izbrisano.");
+regGS("The issue $1 has been deleted.", "Izdanje $1 je izbrisano.");
 regGS("The issue $1 could not be deleted.", "Izdanje $1 ne može biti izbrisano.");
 regGS("All sections from Issue $1 from publication $2 deleted", "Sve rubrike izdanja $1 iz publikacije $2 su izbrisane");
 regGS("Issue $1 from publication $2 deleted", "Izdanje $1 iz publikacije $2 je obrisano");

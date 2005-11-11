@@ -226,7 +226,7 @@ function onTargetChanged(selectElement) {
     	$options[0] = "?";
     	if (($languageId != 0) && ($publicationId != 0)) {
 	    	foreach ($issues as $issue) {
-	    		$options[$issue->getIssueId()] = substr($issue->getName(), 0, $maxSelectLength);
+	    		$options[$issue->getIssueNumber()] = substr($issue->getName(), 0, $maxSelectLength);
 	    	}
 	    	$extras = 'id="NrIssue" onchange="this.form.submit()"';
     	}
@@ -245,7 +245,7 @@ function onTargetChanged(selectElement) {
     	$options[0] = "?";
     	if (($languageId != 0) && ($publicationId != 0) && ($issueId != 0)) {
 	    	foreach ($sections as $section) {
-	    		$options[$section->getSectionId()] = substr($section->getName(), 0, $maxSelectLength);
+	    		$options[$section->getSectionNumber()] = substr($section->getName(), 0, $maxSelectLength);
 	    	}
 	    	$extras = 'id="NrSection" onchange="this.form.submit()"';
     	}
@@ -264,7 +264,7 @@ function onTargetChanged(selectElement) {
     	$options[0] = "?";
     	if (($languageId != 0) && ($publicationId != 0) && ($issueId != 0) && ($sectionId != 0)) {
 	    	foreach ($articles as $article) {
-	    		$options[$article->getArticleId()] = substr($article->getTitle(), 0, $maxSelectLength);
+	    		$options[$article->getArticleNumber()] = substr($article->getTitle(), 0, $maxSelectLength);
 	    	}
 	    	$extras = 'id="NrArticle"';
     	}

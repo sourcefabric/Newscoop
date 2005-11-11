@@ -67,7 +67,7 @@ if (!$sectionObj->exists()) {
 $languageObj =& new Language($Language);
 
 // Create article
-$articleObj =& new Article($Pub, $Issue, $Section, $cLanguage);
+$articleObj =& new Article($cLanguage);
 $articleObj->create($cType, $cName);
 //$articleObj->setOnSectionPage(($cSectionPage == "on"));
 //$articleObj->setOnFrontPage(($cFrontPage == "on"));
@@ -76,8 +76,8 @@ $articleObj->setIsPublic(true);
 //$articleObj->setKeywords($cKeywords);
 
 $logtext = getGS('Article $1 added to $2. $3 from $4. $5 of $6',
-	$cName, $sectionObj->getSectionId(), 
-	$sectionObj->getName(), $issueObj->getIssueId(),
+	$cName, $sectionObj->getSectionNumber(), 
+	$sectionObj->getName(), $issueObj->getIssueNumber(),
 	$issueObj->getName(), $publicationObj->getName()); 
 Log::Message($logtext, $User->getUserName(), 31);
 

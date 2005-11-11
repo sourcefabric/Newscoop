@@ -1,4 +1,5 @@
 <?php
+regGS("Go To Issues", "");
 regGS("Name<BR><SMALL>(click to see issues)</SMALL>", "Nombre");
 regGS("Delete publication $1", "Borrar publicación $1");
 regGS("No publications.", "Sin publicaciones");

@@ -23,7 +23,7 @@ if (!$User->hasPermission('ManageSubscriptions')) {
 $f_user_id = Input::Get('f_user_id', 'int', 0);
 $f_publication_id = Input::Get('f_publication_id', 'int', 0);
 $f_subscription_id = Input::Get('f_subscription_id', 'int', 0);
-$f_section_id = Input::Get('f_section_id', 'int', null);
+$f_section_number = Input::Get('f_section_number', 'int', null);
 $f_subscription_start_date = Input::Get('f_subscription_start_date');
 $f_subscription_days = Input::Get('f_subscription_days', 'int', 0);
 $f_subscription_paid_days = Input::Get('f_subscription_paid_days', 'int', 0);
@@ -37,8 +37,8 @@ if ($subscription->getType() == 'P') {
 	$isPaid = true;
 }
 
-//$subscriptionSection =& new SubscriptionSection($f_subscription_id, $f_section_id);
-$subscriptionSections = SubscriptionSection::GetSubscriptionSections($f_subscription_id, $f_section_id);
+//$subscriptionSection =& new SubscriptionSection($f_subscription_id, $f_section_number);
+$subscriptionSections = SubscriptionSection::GetSubscriptionSections($f_subscription_id, $f_section_number);
 //print_r($subscriptionSections);
 //exit;
 //$subscriptionSection = array_pop($subscriptionSections);
@@ -80,7 +80,7 @@ echo camp_html_breadcrumbs($crumbs);
 <TR>
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">
-	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/users/subscriptions/sections/change.php?f_publication_id=<?php p($f_publication_id); ?>&f_user_id=<?php  p($f_user_id); ?>&f_subscription_id=<?php p($f_subscription_id); ?>&f_section_id=<?php p($f_section_id); ?>'">
+	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/users/subscriptions/sections/change.php?f_publication_id=<?php p($f_publication_id); ?>&f_user_id=<?php  p($f_user_id); ?>&f_subscription_id=<?php p($f_subscription_id); ?>&f_section_number=<?php p($f_section_number); ?>'">
 	</DIV>
 	</TD>
 </TR>

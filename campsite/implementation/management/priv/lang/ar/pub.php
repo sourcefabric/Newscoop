@@ -1,4 +1,5 @@
 <?php
+regGS("Go To Issues", "");
 regGS("Name<BR><SMALL>(click to see issues)</SMALL>", " الاسم (اضغط لترى الإصدارات)");
 regGS("Delete publication $1", "الغاء المنشور $1");
 regGS("No publications.", "لا يوجد منشور");

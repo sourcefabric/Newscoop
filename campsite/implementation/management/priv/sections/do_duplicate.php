@@ -101,7 +101,7 @@ if ($correct) {
 		echo "<LI>"; putGS('Invalid parameters received'); echo "</LI>\n";
 	} else {
 		if ($created) { ?>	
-		  <?php  putGS('Section $1 has been duplicated to $2. $3 of $4', '<B>'.$srcSectionObj->getName().'</B>', '<B>'.$dstSectionObj->getIssueId().'</B>', '<B>'.$dstIssueObj->getName().' ('.$dstIssueObj->getLanguageName().')</B>', '<B>'.$dstPublicationObj->getName().'</B>'); ?>
+		  <?php  putGS('Section $1 has been duplicated to $2. $3 of $4', '<B>'.$srcSectionObj->getName().'</B>', '<B>'.$dstSectionObj->getIssueNumber().'</B>', '<B>'.$dstIssueObj->getName().' ('.$dstIssueObj->getLanguageName().')</B>', '<B>'.$dstPublicationObj->getName().'</B>'); ?>
           <?php  
 		} else { ?>	
 		  <LI><?php  putGS('The section $1 could not be duplicated','<B>'.htmlspecialchars($srcSectionObj->getName()).'</B>'); ?></LI>
@@ -116,10 +116,10 @@ if ($correct) {
                 <table>
                 <tr>
                     <td>
-	                   <b><a href="/<?php echo $ADMIN; ?>/articles/?Pub=<?php  p($dstSectionObj->getPublicationId()); ?>&Issue=<?php  p($dstSectionObj->getIssueId()); ?>&Section=<?php  p($dstSectionObj->getSectionId()); ?>&Language=<?php p($dstSectionObj->getLanguageId()); ?>"><?php putGS("Go to new section"); ?></a></b>
+	                   <b><a href="/<?php echo $ADMIN; ?>/articles/?Pub=<?php  p($dstSectionObj->getPublicationId()); ?>&Issue=<?php  p($dstSectionObj->getIssueNumber()); ?>&Section=<?php  p($dstSectionObj->getSectionNumber()); ?>&Language=<?php p($dstSectionObj->getLanguageId()); ?>"><?php putGS("Go to new section"); ?></a></b>
 	                </td>
 	                <td style="padding-left: 50px;">
-        	           <b><a href="/<?php echo $ADMIN; ?>/articles/?Pub=<?php  p($srcSectionObj->getPublicationId()); ?>&Issue=<?php  p($srcSectionObj->getIssueId()); ?>&Section=<?php  p($srcSectionObj->getSectionId()); ?>&Language=<?php p($srcSectionObj->getLanguageId()); ?>"><?php putGS("Go to source section"); ?></a></b>
+        	           <b><a href="/<?php echo $ADMIN; ?>/articles/?Pub=<?php  p($srcSectionObj->getPublicationId()); ?>&Issue=<?php  p($srcSectionObj->getIssueNumber()); ?>&Section=<?php  p($srcSectionObj->getSectionNumber()); ?>&Language=<?php p($srcSectionObj->getLanguageId()); ?>"><?php putGS("Go to source section"); ?></a></b>
         	        </td>
         	    </tr>
         	    </table>

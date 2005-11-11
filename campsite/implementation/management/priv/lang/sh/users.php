@@ -4,7 +4,7 @@ regGS("Readers", "Čitaoci");
 regGS("Edit reader data", "Prikaži lične podatke čitaoca");
 regGS("Add new IP address group", "Dodajte novu korisničku grupu zasnovanu na IP adresi");
 regGS("Staff management", "Upravljanje saradničkim nalozima");
-regGS("Subscribers management", "Upravljanje pretplatničkim nalozima");
+regGS("Subscriber management", "Upravljanje pretplatničkim nalozima");
 regGS("Edit user rights", "Prikaži korisnička prava");
 regGS("User Name", "Korisničko ime");
 regGS("Full Name", "Puno ime");

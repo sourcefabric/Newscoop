@@ -26,7 +26,7 @@ if (!Input::IsValid()) {
 $publicationObj =& new Publication($Pub);
 $issueObj =& new Issue($Pub, $Language, $Issue);
 $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
-$articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
+$articleObj =& new Article($sLanguage, $Article);
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
 				  'Section' => $sectionObj, 'Article'=>$articleObj);
@@ -51,7 +51,7 @@ camp_html_content_top(getGS('Article Image List'), $topArray);
 		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 		<TR>
 			<TD><A HREF="add.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
-			<TD><A HREF="add.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>" ><B><?php  putGS('Add new image'); ?></B></A></TD>
+			<TD><A HREF="add.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>" ><B><?php  putGS('Add New Image'); ?></B></A></TD>
 		</TR>
 		</TABLE>
 	</td>
@@ -59,7 +59,7 @@ camp_html_content_top(getGS('Article Image List'), $topArray);
 		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 		<TR>
 			<TD><?php echo camp_html_article_link($articleObj, $Language, "images/search.php"); ?><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></a></TD>
-			<TD><?php echo camp_html_article_link($articleObj, $Language, "images/search.php"); ?><B><?php  putGS('Add an existing image'); ?></B></A></TD>
+			<TD><?php echo camp_html_article_link($articleObj, $Language, "images/search.php"); ?><B><?php  putGS('Add an Existing Image'); ?></B></A></TD>
 		</TR>
 		</TABLE>
 	</td>
@@ -69,7 +69,7 @@ camp_html_content_top(getGS('Article Image List'), $topArray);
 
 <P>
 <?php 
-$articleImages = ArticleImage::GetImagesByArticleId($articleObj->getArticleId());
+$articleImages = ArticleImage::GetImagesByArticleId($articleObj->getArticleNumber());
 if (count($articleImages) <= 0) {
 	?>
 	

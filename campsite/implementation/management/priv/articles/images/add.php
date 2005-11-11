@@ -27,7 +27,7 @@ if (!Input::IsValid()) {
 	exit;	
 }
 
-$articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
+$articleObj =& new Article($sLanguage, $Article);
 $publicationObj =& new Publication($Pub);
 $issueObj =& new Issue($Pub, $Language, $Issue);
 $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
@@ -40,7 +40,7 @@ $q_now = $Campsite['db']->GetOne("SELECT LEFT(NOW(), 10)");
 $extraCrumbs = array(getGS("Images")=>"/$ADMIN/articles/images/?Pub=$Pub&Issue=$Issue&Language=$Language&Section=$Section&Article=$Article&sLanguage=$sLanguage");
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
 				  'Section' => $sectionObj, 'Article'=>$articleObj);
-camp_html_content_top(getGS("Add new image"), $topArray, true, true, $extraCrumbs);
+camp_html_content_top(getGS("Add New Image"), $topArray, true, true, $extraCrumbs);
 
 ?>
 <script>
@@ -61,7 +61,7 @@ function checkAddForm(form) {
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" ALIGN="CENTER" class="table_input">
 <TR>
 	<TD COLSPAN="2">
-		<B><?php  putGS("Add new image"); ?></B>
+		<B><?php  putGS("Add New Image"); ?></B>
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
 	</TD>
 </TR>

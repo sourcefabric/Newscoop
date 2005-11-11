@@ -43,12 +43,12 @@ if (is_null($lastCreatedIssue)) { ?>
 	</TD>
 </TR>
 <TR>
-	<TD COLSPAN="2"><?php  putGS('Copy structure from issue nr $1','<B>'. $lastCreatedIssue->getIssueId().'</B>'); ?></TD>
+	<TD COLSPAN="2"><?php  putGS('Copy structure from issue nr $1','<B>'. $lastCreatedIssue->getIssueNumber().'</B>'); ?></TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Issue Number"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cNumber" VALUE="<?php  print ($lastCreatedIssue->getIssueId() + 1); ?>" SIZE="5" MAXLENGTH="5">
+	<INPUT TYPE="TEXT" class="input_text" NAME="cNumber" VALUE="<?php  print ($lastCreatedIssue->getIssueNumber() + 1); ?>" SIZE="5" MAXLENGTH="5">
 	</TD>
 </TR>
 <TR>

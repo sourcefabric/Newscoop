@@ -4,7 +4,7 @@ regGS("Readers", "Readers");
 regGS("Edit reader data", "Edit reader data");
 regGS("Add new IP address group", "Add new IP address group");
 regGS("Staff management", "Staff management");
-regGS("Subscribers management", "Subscribers management");
+regGS("Subscriber management", "Subscriber management");
 regGS("Edit user rights", "Edit user rights");
 regGS("User Name", "User Name");
 regGS("Full Name", "Full Name");

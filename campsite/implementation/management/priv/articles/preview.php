@@ -7,32 +7,35 @@ if (!$access) {
 	exit;
 }
 
-$Language = Input::Get('Language', 'int', 0);
-$sLanguage = Input::Get('sLanguage', 'int', 0);
-$Pub = Input::Get('Pub', 'int', 0);
-$Issue = Input::Get('Issue', 'int', 0);
-$Section = Input::Get('Section', 'int', 0);
-$Article = Input::Get('Article', 'int', 0);
+$f_language_id = Input::Get('f_language_id', 'int', 0);
+$f_language_selected = Input::Get('f_language_selected', 'int', 0);
+$f_publcation_id = Input::Get('f_publication_id', 'int', 0);
+$f_issue_number = Input::Get('f_issue_number', 'int', 0);
+$f_section_number = Input::Get('f_section_number', 'int', 0);
+$f_article_number = Input::Get('f_article_number', 'int', 0);
 
-$languageObj = & new Language($Language);
-$publicationObj = & new Publication($Pub);
-$issueObj =& new Issue($Pub, $Language, $Issue);
-$sectionObj =& new Section($Pub, $Issue, $Language, $Section);
-$articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
+$languageObj = & new Language($f_language_id);
+$publicationObj = & new Publication($f_publication_id);
+$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
+$sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
+$articleObj =& new Article($f_language_selected, $f_article_number);
 
 $errorStr = "";
 if (!$articleObj->exists()) {
 	$errorStr = getGS('There was an error reading request parameters.');
 } else {
 	$templateId = $sectionObj->getArticleTemplateId();
-	if ($templateId == 0)
+	if ($templateId == 0) {
 		$templateId = $issueObj->getArticleTemplateId();
-	if ($templateId == 0)
+	}
+	if ($templateId == 0) {
 		$errorStr = getGS('This article cannot be previewed. Please make sure it has the article template selected.');
+	}
 }
 
-if ($errorStr != "")
+if ($errorStr != "") {
 	camp_html_display_error($errorStr, null, true);
+}
 
 setcookie("TOL_UserId", $User->getId(), null, "/");
 setcookie("TOL_UserKey", $User->getKeyId(), null, "/");
@@ -45,9 +48,9 @@ $templateObj =& new Template($templateId);
 $urlType = $publicationObj->getProperty('IdURLType');
 if ($urlType == 1) {
 	$templateObj = & new Template($templateId);
-	$url = "/look/" . $templateObj->getName() . "?IdLanguage=$Language"
-		. "&IdPublication=$Pub&NrIssue=$Issue&NrSection=$Section"
-		. "&NrArticle=$Article";
+	$url = "/look/" . $templateObj->getName() . "?IdLanguage=$f_language_id"
+		. "&IdPublication=$f_publication_id&NrIssue=$f_issue_number&NrSection=$f_section_number"
+		. "&NrArticle=$f_article_number";
 } else {
 	$url = "/" . $languageObj->getCode() . "/" . $issueObj->getUrlName()
 		. "/" . $sectionObj->getUrlName() . "/" . $articleObj->getUrlName();

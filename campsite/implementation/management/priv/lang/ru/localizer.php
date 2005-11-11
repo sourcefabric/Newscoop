@@ -1,4 +1,5 @@
 <?php
+regGS("Log Messages", "");
 regGS("edit '$1'", "редактировать '$1'");
 regGS("edit \"$1\"", "редактировать \"$1\"");
 regGS("User Subscriptions Sections", "Пользовательская секция подписок");

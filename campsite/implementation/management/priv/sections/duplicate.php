@@ -119,8 +119,7 @@ function CustomValidator_DuplicateSection(form) {
 
 
 <P>
-<CENTER>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" ALIGN="CENTER" class="table_input" width="600px" style="padding-top: 10px; padding-bottom: 10px; padding-left: 40px; padding-right: 40px;">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="table_input" style="padding-top: 10px; padding-bottom: 10px; padding-left: 20px; padding-right: 20px;">
 <tr>
 <td>
 <table BORDER="0" CELLSPACING="0" CELLPADDING="0" ALIGN="CENTER" >
@@ -179,9 +178,9 @@ function CustomValidator_DuplicateSection(form) {
 		<?php 
 		foreach ($allIssues as $tmpIssue) {
 			?>
-			<option value="<?php p($tmpIssue->getIssueId().'_'.$tmpIssue->getLanguageId()); ?>"
+			<option value="<?php p($tmpIssue->getIssueNumber().'_'.$tmpIssue->getLanguageId()); ?>"
 			<?php
-			if (($tmpIssue->getIssueId().'_'.$tmpIssue->getLanguageId()) == $DestIssueInput) {
+			if (($tmpIssue->getIssueNumber().'_'.$tmpIssue->getLanguageId()) == $DestIssueInput) {
 				?>selected<?php
 			}
 			?>
@@ -240,7 +239,7 @@ if ( ($Pub == $DestPublicationId) && ($Issue == $DestIssueId)) { ?>
 		<?php 
 		foreach ($allSections as $tmpSection) {
 			?>
-			<option value="<?php p($tmpSection->getSectionId());?>"><?php p(htmlspecialchars($tmpSection->getName())); ?></option>
+			<option value="<?php p($tmpSection->getSectionNumber());?>"><?php p(htmlspecialchars($tmpSection->getName())); ?></option>
 			<?php
 		}
 		?>

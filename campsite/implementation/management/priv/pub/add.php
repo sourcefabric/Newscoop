@@ -54,7 +54,7 @@ echo camp_html_breadcrumbs($crumbs);
     <SELECT NAME="cLanguage" class="input_select">
     <?php 
     foreach ($languages as $language) {
-		pcomboVar($language->getLanguageId(), $defaultLanguage->getLanguageId(), $language->getNativeName());
+		camp_html_select_option($language->getLanguageId(), $defaultLanguage->getLanguageId(), $language->getNativeName());
     }
     ?>	    </SELECT>
 	</TD>
@@ -65,7 +65,7 @@ echo camp_html_breadcrumbs($crumbs);
 	<SELECT NAME="cURLType" class="input_select">
 	<?php
 	foreach ($urlTypes as $urlType) {
-		pcomboVar($urlType->getId(), 0, $urlType->getName());
+		camp_html_select_option($urlType->getId(), 0, $urlType->getName());
 	}
 	?>
 	</SELECT>
@@ -86,7 +86,7 @@ echo camp_html_breadcrumbs($crumbs);
     <SELECT NAME="cTimeUnit" class="input_select">
 	<?php 
 	foreach ($timeUnits as $timeUnit) {
-		pcomboVar($timeUnit->getUnit(), 0, $timeUnit->getName());		
+		camp_html_select_option($timeUnit->getUnit(), 0, $timeUnit->getName());		
 	}
 	?>	    
 	</SELECT>

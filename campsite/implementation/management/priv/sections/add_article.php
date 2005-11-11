@@ -67,10 +67,10 @@ if (count($sections) > 0) {
 	foreach ($sections as $section) { ?>	
 	<TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 		<TD ALIGN="RIGHT">
-			<?php p($section->getSectionId()); ?>
+			<?php p($section->getSectionNumber()); ?>
 		</TD>
 		<TD >
-			<A HREF="/<?php p($ADMIN); ?>/articles/add.php?Pub=<?php p($Pub); ?>&Issue=<?php  p($section->getIssueId()); ?>&Section=<?php p($section->getSectionId()); ?>&Language=<?php  p($section->getLanguageId()); ?>&Wiz=1"><?php p(htmlspecialchars($section->getName())); ?></A>
+			<A HREF="/<?php p($ADMIN); ?>/articles/add.php?Pub=<?php p($Pub); ?>&Issue=<?php  p($section->getIssueNumber()); ?>&Section=<?php p($section->getSectionNumber()); ?>&Language=<?php  p($section->getLanguageId()); ?>&Wiz=1"><?php p(htmlspecialchars($section->getName())); ?></A>
 		</TD>
 	</TR>
 	<?php 

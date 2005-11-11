@@ -35,7 +35,5 @@ regGS("Friday", "");
 regGS("Saturday", "");
 regGS("Sunday", "");
 regGS("You do not have the right to add new languages.", "");
-regGS("There are $1 classes(s) left.", "");
 regGS("There are $1 issue(s) left.", "");
-regGS("There are $1 keyword(s) left.", "");
 ?>

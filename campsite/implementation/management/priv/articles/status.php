@@ -20,7 +20,7 @@ if (!Input::IsValid()) {
 	exit;	
 }
 
-$articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
+$articleObj =& new Article($sLanguage, $Article);
 if (!$articleObj->exists()) {
 	camp_html_display_error(getGS('Article does not exist.'), $BackLink);
 	exit;		
@@ -34,7 +34,7 @@ $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
 // and it is new.  
 $access = ($User->hasPermission('Publish') || $articleObj->userCanModify($User));
 if (!$access) {
-	camp_html_display_error(getGS("You do not have the right to change this article status. Once submitted an article can only changed by authorized users."), $BackLink);
+	camp_html_display_error(getGS("You do not have the right to change this article status. Once submitted an article can only be changed by authorized users."), $BackLink);
 	exit;	
 }
 

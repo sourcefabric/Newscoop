@@ -23,7 +23,7 @@ if (!$User->hasPermission('ManageSubscriptions')) {
 $f_user_id = Input::Get('f_user_id', 'int', 0);
 $f_publication_id = Input::Get('f_publication_id', 'int', 0);
 $f_subscription_id = Input::Get('f_subscription_id', 'int', 0);
-$f_section_id = Input::Get('f_section_id', 'int', 0);
+$f_section_number = Input::Get('f_section_number', 'int', 0);
 
 $publicationObj =& new Publication($f_publication_id);
 $languageObj =& new Language($publicationObj->getDefaultLanguageId());
@@ -61,11 +61,11 @@ echo camp_html_breadcrumbs($crumbs);
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Section"); ?>:</TD>
 	<TD>
-		<SELECT NAME="f_section_id" class="input_select">
+		<SELECT NAME="f_section_number" class="input_select">
 		<OPTION VALUE="0">All sections</OPTION>
 		<?php  
 		foreach ($sections as $section) {
-			pComboVar($section['id'], '', $section['name']." (".$section['id'].")");
+			camp_html_select_option($section['id'], '', $section['name']." (".$section['id'].")");
 	    }
 		?>
 		</SELECT>

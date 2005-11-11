@@ -23,7 +23,7 @@ if (!$User->hasPermission('ManageSubscriptions')) {
 $f_user_id = Input::Get('f_user_id', 'int', 0);
 $f_publication_id = Input::Get('f_publication_id', 'int', 0);
 $f_subscription_id = Input::Get('f_subscription_id', 'int', 0);
-$f_section_id = Input::Get('f_section_id', 'int', null);
+$f_section_number = Input::Get('f_section_number', 'int', null);
 
 $publicationObj =& new Publication($f_publication_id);
 $languageObj =& new Language($publicationObj->getDefaultLanguageId());
@@ -34,8 +34,8 @@ if ($subscription->getType() == 'P') {
 	$isPaid = true;
 }
 
-//$subscriptionSection =& new SubscriptionSection($f_subscription_id, $f_section_id);
-$subscriptionSections = SubscriptionSection::GetSubscriptionSections($f_subscription_id, $f_section_id);
+//$subscriptionSection =& new SubscriptionSection($f_subscription_id, $f_section_number);
+$subscriptionSections = SubscriptionSection::GetSubscriptionSections($f_subscription_id, $f_section_number);
 $subscriptionSection = array_pop($subscriptionSections);
 
 $crumbs = array();
@@ -68,7 +68,7 @@ echo camp_html_breadcrumbs($crumbs);
 	<TD ALIGN="RIGHT" ><?php  putGS("Section"); ?>:</TD>
 	<TD>
 	<?php
-	if ($f_section_id > 0) {
+	if ($f_section_number > 0) {
 		p(htmlspecialchars($subscriptionSection->getProperty('Name')));
 	} else {
 		putGS("-- ALL SECTIONS --"); 
@@ -101,7 +101,7 @@ echo camp_html_breadcrumbs($crumbs);
 	<DIV ALIGN="CENTER">
 	<INPUT TYPE="HIDDEN" NAME="f_user_id" VALUE="<?php p($f_user_id); ?>">
 	<INPUT TYPE="HIDDEN" NAME="f_subscription_id" VALUE="<?php p($f_subscription_id); ?>">
-	<INPUT TYPE="HIDDEN" NAME="f_section_id" VALUE="<?php p($f_section_id); ?>">
+	<INPUT TYPE="HIDDEN" NAME="f_section_number" VALUE="<?php p($f_section_number); ?>">
 	<INPUT TYPE="HIDDEN" NAME="f_publication_id" VALUE="<?php p($f_publication_id); ?>">
 	<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
 	<!--<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='/admin/users/subscriptions/sections/?Pub=<?php  p($Pub); ?>&User=<?php  p($User); ?>&Subs=<?php  p($Subs); ?>'">-->

@@ -57,8 +57,8 @@ else {
 }
 
 // Load the language files.
-selectLanguageFile("globals");
-selectLanguageFile("home");
+camp_load_language("globals");
+camp_load_language("home");
 
 ?>
 <head>

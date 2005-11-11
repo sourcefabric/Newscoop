@@ -129,7 +129,7 @@ if (count($articles) > 0) {
 	</tr>
 	<?php
 	$color = 0;
-	$previousArticleId = -1;
+	$previousArticleNumber = -1;
 	foreach ($articles as $article) {
 		echo '<tr ';
 		if ($color) { 
@@ -140,14 +140,14 @@ if (count($articles) > 0) {
 			echo 'class="list_row_odd"';
 		} 
 		echo '>';
-		if ($article->getArticleId() == $previousArticleId) {
+		if ($article->getArticleNumber() == $previousArticleNumber) {
 			echo '<td style="padding-left: 20px;">';
 		}
 		else {
 			echo '<td>';
 		}
-		echo "<a href=\"/$ADMIN/articles/edit.php?Pub=".$article->getPublicationId().'&Issue='.$article->getIssueId().'&Section='.$article->getSectionId().'&Article='.$article->getArticleId().'&Language='.$article->getLanguageId().'&sLanguage='.$article->getLanguageId().'">'.htmlspecialchars($article->getTitle()).'</a></td></tr>';
-		$previousArticleId = $article->getArticleId();
+		echo "<a href=\"/$ADMIN/articles/edit.php?Pub=".$article->getPublicationId().'&Issue='.$article->getIssueNumber().'&Section='.$article->getSectionNumber().'&Article='.$article->getArticleNumber().'&Language='.$article->getLanguageId().'&sLanguage='.$article->getLanguageId().'">'.htmlspecialchars($article->getTitle()).'</a></td></tr>';
+		$previousArticleNumber = $article->getArticleNumber();
 	}
 	?>
 	</table>

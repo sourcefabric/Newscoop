@@ -1,9 +1,9 @@
 <?php
-regGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only changed by authorized users.", "");
+regGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.", "");
 regGS("Article Image List", "قائمة صور المقال");
 regGS("Back to Article Image List", "العودة الى قائمة صور المقال");
-regGS("Add new image", "أضف صورة جديدة");
-regGS("Add an existing image", "اضافة صورة موجودة");
+regGS("Add New Image", "أضف صورة جديدة");
+regGS("Add an Existing Image", "اضافة صورة موجودة");
 regGS("Date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "التاريخ <br> (السنة، الشهرة، اليوم)");
 regGS("Delete image $1", "الغاء الصورة $1");
 regGS("Remove Image From Article", "ازالة الصور من المقال");

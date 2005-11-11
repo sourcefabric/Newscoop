@@ -27,7 +27,7 @@ regGS("Issue $1 updated in publication $2", "Vydání $1 bylo obnoveno v publika
 regGS("You do not have the right to delete issues.", "Nemáte právo mazat vydání");
 regGS("Are you sure you want to delete the issue $1?", "Určitě chcete smazat vydání $1?");
 regGS("Deleting issue", "Mazaní vydání");
-regGS("The issue $1 has ben deleted.", "Vydání $1 bylo smazáno");
+regGS("The issue $1 has been deleted.", "Vydání $1 bylo smazáno");
 regGS("The issue $1 could not be deleted.", "Vydání $1 nemohlo být smazáno");
 regGS("All sections from Issue $1 from publication $2 deleted", "Všechny rubriky z vydání $1 v publikaci $2 byly smazány");
 regGS("Issue $1 from publication $2 deleted", "Vydání $1 v publikaci $2 bylo smazáno");

@@ -58,15 +58,15 @@ if ($canManage) {
 		<?php putGS("Subscription"); ?>&nbsp;
 		<select name="subscription_how" class="input_select" style="width: 100px;">
 		<?php 
-		pcomboVar("expires", $subscription_how, getGS("expires")); 
-		pcomboVar("starts", $subscription_how, getGS("starts")); 
+		camp_html_select_option("expires", $subscription_how, getGS("expires")); 
+		camp_html_select_option("starts", $subscription_how, getGS("starts")); 
 		?>
 		</select>
 		<select name="subscription_when" class="input_select" style="width: 100px;">
 		<?PHP
-		pcomboVar("before", $subscription_when, getGS("before"));
-		pcomboVar("after", $subscription_when, getGS("after"));
-		pcomboVar("on", $subscription_when, getGS("on"));
+		camp_html_select_option("before", $subscription_when, getGS("before"));
+		camp_html_select_option("after", $subscription_when, getGS("after"));
+		camp_html_select_option("on", $subscription_when, getGS("on"));
 		?>
 		</select>
 		<input type="text" name="subscription_date" value="<?php p(htmlspecialchars($subscription_date)); ?>" class="input_text" style="width: 100px;">
@@ -75,8 +75,8 @@ if ($canManage) {
 		<select name="subscription_status" class="input_select" style="width: 100px;">
 		<option value=""></option>
 		<?PHP
-		pcomboVar("active", $subscription_status, getGS("active"));
-		pcomboVar("inactive", $subscription_status, getGS("inactive"));
+		camp_html_select_option("active", $subscription_status, getGS("active"));
+		camp_html_select_option("inactive", $subscription_status, getGS("inactive"));
 		?>
 		</select>
 	</td>

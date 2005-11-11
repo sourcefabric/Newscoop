@@ -28,7 +28,7 @@ regGS("Issue $1 updated in publication $2", "Ediţia $1 a fost modificată");
 regGS("You do not have the right to delete issues.", "Nu aveţi dreptul să ştergeţi ediţia");
 regGS("Are you sure you want to delete the issue $1?", "Doriţi să ştergeţi ediţia $1?");
 regGS("Deleting issue", "Şterg ediţia");
-regGS("The issue $1 has ben deleted.", "Ediţia $1 a fost ştearsă");
+regGS("The issue $1 has been deleted.", "Ediţia $1 a fost ştearsă");
 regGS("The issue $1 could not be deleted.", "Ediţia $1 nu poate fi ştearsă");
 regGS("All sections from Issue $1 from publication $2 deleted", "Toate secţiunile din ediţia $1 din publicaţia $2 au fost şterse");
 regGS("Issue $1 from publication $2 deleted", "Ediţia $1 din publicaţia $2 a fost ştearsă");

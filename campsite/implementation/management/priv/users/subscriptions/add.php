@@ -60,7 +60,7 @@ echo camp_html_breadcrumbs($crumbs);
 		<SELECT NAME="f_publication_id" class="input_select">
 		<?php 
 		foreach ($publications as $publication) {
-			pComboVar($publication->getPublicationId(), '', $publication->getName());
+			camp_html_select_option($publication->getPublicationId(), '', $publication->getName());
 		}
 		?>
 		</SELECT>

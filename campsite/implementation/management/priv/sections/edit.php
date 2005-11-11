@@ -30,15 +30,30 @@ if (function_exists ("incModFile")) {
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 'Section' => $sectionObj);
 camp_html_content_top(getGS("Configure section"), $topArray);
 
-if ($User->hasPermission('ManageSection')) { ?>
+$url_args1 = "Pub=$Pub&Issue=$Issue&Language=$Language";
+$url_args2 = $url_args1."&Section=$Section";
+
+?>
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
+<TR>
+	<TD><A HREF="/<?php echo $ADMIN; ?>/articles/?f_publication_id=<?php p($Pub); ?>&f_issue_number=<?php  p($sectionObj->getIssueNumber()); ?>&f_section_number=<?php p($sectionObj->getSectionNumber()); ?>&f_language_id=<?php  p($sectionObj->getLanguageId()); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/go_to.png" BORDER="0"></A></TD>
+	<TD><A HREF="/<?php echo $ADMIN; ?>/articles/?f_publication_id=<?php p($Pub); ?>&f_issue_number=<?php  p($sectionObj->getIssueNumber()); ?>&f_section_number=<?php p($sectionObj->getSectionNumber()); ?>&f_language_id=<?php  p($sectionObj->getLanguageId()); ?>"><B><?php  putGS("Go To Articles"); ?></B></A></TD>
+</TR>
+</TABLE>
+
 <P>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons">
 <TR>
-	<TD><A HREF="add.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
-	<TD><A HREF="add.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>" ><B><?php  putGS("Add new section"); ?></B></A></TD>
+	<TD><A HREF="add.php?<?php p($url_args1); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
+	<TD><A HREF="add.php?<?php p($url_args1); ?>" ><B><?php  putGS("Add new section"); ?></B></A></TD>
+
+	<TD style="padding-left: 20px;"><A HREF="duplicate.php?<?php p($url_args2); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/duplicate.png" BORDER="0"></A></TD>
+	<TD><A HREF="duplicate.php?<?php p($url_args2); ?>" ><B><?php  putGS("Duplicate"); ?></B></A></TD>
+	
+	<TD style="padding-left: 20px;"><A HREF="del.php?<?php p($url_args2); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0"></A></TD>
+	<TD><A HREF="del.php?<?php p($url_args2); ?>" ><B><?php  putGS("Delete"); ?></B></A></TD>
 </TR>
 </TABLE>
-<?php  } ?>
 
 <P>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
@@ -64,7 +79,7 @@ if ($User->hasPermission('ManageSection')) { ?>
 		<OPTION VALUE="0">---</OPTION>
 		<?php 
 		foreach ($templates as $template) {
-			pcomboVar($template->getTemplateId(),$sectionObj->getSectionTemplateId(),$template->getName());
+			camp_html_select_option($template->getTemplateId(), $sectionObj->getSectionTemplateId(), $template->getName());
 		}
 		?>
 		</SELECT>
@@ -78,7 +93,7 @@ if ($User->hasPermission('ManageSection')) { ?>
 		<OPTION VALUE="0">---</OPTION>
 		<?php 
 		foreach ($templates as $template) {
-			pcomboVar($template->getTemplateId(),$sectionObj->getArticleTemplateId(),$template->getName());
+			camp_html_select_option($template->getTemplateId(), $sectionObj->getArticleTemplateId(), $template->getName());
 		}
 		?>
 		</SELECT>

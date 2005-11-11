@@ -28,7 +28,7 @@ regGS("Issue $1 updated in publication $2", "议题$1在发布$2中已更新");
 regGS("You do not have the right to delete issues.", "您无权删除议题");
 regGS("Are you sure you want to delete the issue $1?", "你确认删除议题$1");
 regGS("Deleting issue", "正在删除议题");
-regGS("The issue $1 has ben deleted.", "议题$1已被删除");
+regGS("The issue $1 has been deleted.", "议题$1已被删除");
 regGS("The issue $1 could not be deleted.", "议题$1不能被删除");
 regGS("All sections from Issue $1 from publication $2 deleted", "来自发布$2的议题$1的所有区已删除");
 regGS("Issue $1 from publication $2 deleted", "来自发布$2的议题$1已删除");

@@ -20,6 +20,7 @@ require_once($g_documentRoot.'/classes/ArticleImage.php');
 require_once($g_documentRoot.'/classes/ArticleTopic.php');
 require_once($g_documentRoot.'/classes/ArticleIndex.php');
 require_once($g_documentRoot.'/classes/Language.php');
+require_once($g_documentRoot.'/classes/Log.php');
 
 /**
  * @package Campsite
@@ -29,10 +30,7 @@ class Article extends DatabaseObject {
 	 * The column names used for the primary key.
 	 * @var array
 	 */
-	var $m_keyColumnNames = array('IdPublication',
-						   		  'NrIssue',
-							   	  'NrSection',
-							   	  'Number',
+	var $m_keyColumnNames = array('Number',
 							   	  'IdLanguage');
 
 	var $m_dbTableName = 'Articles';
@@ -90,22 +88,15 @@ class Article extends DatabaseObject {
 	 * Construct by passing in the primary key to access the article in 
 	 * the database.
 	 *
-	 * @param int $p_publicationId
-	 * @param int $p_issueId
-	 * @param int $p_sectionId
 	 * @param int $p_languageId
-	 * @param int $p_articleId
+	 * @param int $p_articleNumber
 	 *		Not required when creating an article.
 	 */
-	function Article($p_publicationId = null, $p_issueId = null, $p_sectionId = null, 
-					 $p_languageId = null, $p_articleId = null) 
+	function Article($p_languageId = null, $p_articleNumber = null) 
 	{
 		parent::DatabaseObject($this->m_columnNames);
-		$this->m_data['IdPublication'] = $p_publicationId;
-		$this->m_data['NrIssue'] = $p_issueId;
-		$this->m_data['NrSection'] = $p_sectionId;
 		$this->m_data['IdLanguage'] = $p_languageId;
-		$this->m_data['Number'] = $p_articleId;
+		$this->m_data['Number'] = $p_articleNumber;
 		if ($this->keyValuesExist()) {
 			$this->fetch();
 		}
@@ -201,30 +192,45 @@ class Article extends DatabaseObject {
 	 * 		The destination section ID.
 	 * @param int $p_userId -
 	 *		The user creating the copy.  If null, keep the same user ID as the original.
-	 * @param boolean $p_copyAllTranslations -
-	 *     If true, all translations will be copied as well.
+	 * @param mixed $p_copyTranslations -
+	 *		If false, only this article will be copied.
+	 * 		If true, all translations will be copied.
+	 *		If an array is passed, the translations given will be copied.  
+	 *		Any translations that do not exist will be ignored.
+	 *
 	 * @return Article
-	 *     If $p_copyAllTranslations is TRUE, return an array of newly created articles.
-	 *     If $p_copyAllTranslations is FALSE, return the new Article.
+	 *     If $p_copyTranslations is TRUE or an array, return an array of newly created articles.
+	 *     If $p_copyTranslations is FALSE, return the new Article.
 	 */
 	function copy($p_destPublicationId, $p_destIssueId, $p_destSectionId, 
-	              $p_userId = null, $p_copyAllTranslations = false) 
+	              $p_userId = null, $p_copyTranslations = false) 
 	{
 		global $Campsite;
 		$copyArticles = array();
-		if ($p_copyAllTranslations) {
+		if ($p_copyTranslations) {
 		    // Get all translations for this article
 		    $copyArticles = Article::GetArticles($this->m_data['IdPublication'], 
 		                                          $this->m_data['NrIssue'], 
 		                                          $this->m_data['NrSection'], 
 		                                          null, 
 		                                          $this->m_data['Number']);
+		    // Remove any translations that are not requested to be translated.
+		    if (is_array($p_copyTranslations)) {
+		    	$tmpArray = array();
+		    	foreach ($copyArticles as $tmpArticle) {
+		    		if (in_array($tmpArticle->m_data['IdLanguage'], $p_copyTranslations)) {
+		    			$tmpArray[] = $tmpArticle;
+		    		}
+		    	}
+		    	$copyArticles = $tmpArray;
+		    }
 		}
 		else {
 		    $copyArticles[] = $this;
 		}
 		$newArticleId = $this->__generateArticleId();
-		
+
+		$logtext = '';
 		$newArticles = array();
 		foreach ($copyArticles as $copyMe) {
     		// Construct the duplicate article object.
@@ -273,8 +279,13 @@ class Article extends DatabaseObject {
     		// Copy topic pointers
     		ArticleTopic::OnArticleCopy($copyMe->m_data['Number'], $articleCopy->m_data['Number']);
     		$newArticles[] = $articleCopy;
+			$logtext .= getGS('Article #$1 "$2" ($3) copied to Article #$3. ',
+				$copyMe->getArticleNumber(), $copyMe->getName(), 
+				$copyMe->getLanguageId(), $articleCopy->getArticleNumber());
 		}
-		if ($p_copyAllTranslations) {
+	
+		Log::Message($logtext, null, 155);
+		if ($p_copyTranslations) {
 		    return $newArticles;
 		}
 		else {
@@ -362,7 +373,12 @@ class Article extends DatabaseObject {
 		$articleCopyData->create();
 		
 		$origArticleData = $this->getArticleData();
-		$origArticleData->copyToExistingRecord($articleCopy->getArticleId(), $p_languageId);
+		$origArticleData->copyToExistingRecord($articleCopy->getArticleNumber(), $p_languageId);
+		
+		$logtext = getGS('Article #$1 "$2" ($3) translated to "$5" ($4)', 
+			$this->getArticleNumber(), $this->getTitle(), $this->getLanguageName(), 
+			$articleCopy->getTitle(), $articleCopy->getLanguageName()); 
+		Log::Message($logtext, null, 31);
 		
 		return $articleCopy;
 	} // fn createTranslation
@@ -374,6 +390,12 @@ class Article extends DatabaseObject {
 	 */
 	function delete() 
 	{
+		$logtext = getGS('Article #$1: "$2" ($3) deleted.',
+			$this->m_data['Number'], $this->m_data['Name'],	$this->getLanguageName())
+			." (".getGS("Publication")." ".$this->m_data['IdPublication'].", "
+			." ".getGS("Issue")." ".$this->m_data['NrIssue'].", "
+			." ".getGS("Section")." ".$this->m_data['NrSection'].")";
+			
 		// Delete row from article type table.
 		$articleData =& new ArticleData($this->m_data['Type'], 
 			$this->m_data['Number'], 
@@ -389,12 +411,17 @@ class Article extends DatabaseObject {
 			ArticleTopic::OnArticleDelete($this->m_data['Number']);
 			
 			// Delete indexes
-			ArticleIndex::OnArticleDelete($this->getPublicationId(), $this->getIssueId(),
-				$this->getSectionId(), $this->getLanguageId(), $this->getArticleId());
+			ArticleIndex::OnArticleDelete($this->getPublicationId(), $this->getIssueNumber(),
+				$this->getSectionNumber(), $this->getLanguageId(), $this->getArticleNumber());
 		}
 					
 		// Delete row from Articles table.
-		parent::delete();
+		$deleted = parent::delete();
+		
+		if ($deleted) {
+			Log::Message($logtext, null, 32);
+		}
+		return $deleted;
 	} // fn delete
 	
 	
@@ -516,18 +543,18 @@ class Article extends DatabaseObject {
 		global $Campsite;
 	    $queryStr = 'SELECT * FROM Sections '
 	    			.' WHERE IdPublication='.$this->getPublicationId()
-	    			.' AND NrIssue='.$this->getIssueId()
+	    			.' AND NrIssue='.$this->getIssueNumber()
 	    			.' AND IdLanguage='.$this->getLanguageId();
 		$query = $Campsite['db']->Execute($queryStr);
 		if ($query->RecordCount() <= 0) {
 			$queryStr = 'SELECT * FROM Sections '
 						.' WHERE IdPublication='.$this->getPublicationId()
-						.' AND NrIssue='.$this->getIssueId()
+						.' AND NrIssue='.$this->getIssueNumber()
 						.' LIMIT 1';
 			$query = $Campsite['db']->Execute($queryStr);	
 		}
 		$row = $query->FetchRow();
-		$section =& new Section($this->getPublicationId(), $this->getIssueId(),
+		$section =& new Section($this->getPublicationId(), $this->getIssueNumber(),
 			$this->getLanguageId());
 		$section->fetch($row);
 	    return $section;
@@ -685,19 +712,19 @@ class Article extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getIssueId() 
+	function getIssueNumber() 
 	{
 		return $this->getProperty('NrIssue');
-	} // fn getIssueId
+	} // fn getIssueNumber
 	
 	
 	/**
 	 * @return int
 	 */
-	function getSectionId() 
+	function getSectionNumber() 
 	{
 		return $this->getProperty('NrSection');
-	} // fn getSectionId
+	} // fn getSectionNumber
 	
 	
 	/**
@@ -712,10 +739,10 @@ class Article extends DatabaseObject {
 	/**
 	 * @return int
 	 */ 
-	function getArticleId() 
+	function getArticleNumber() 
 	{
 		return $this->getProperty('Number');
-	} // fn getArticleId
+	} // fn getArticleNumber
 	
 	
 	/**
@@ -841,6 +868,25 @@ class Article extends DatabaseObject {
 	} // fn isPublished
 	
 	
+	function getPublishedDisplayString($p_value = null)
+	{
+		if (is_null($p_value)) {
+			$p_value = $this->m_data['Published'];
+		}
+		if ( ($p_value != 'Y') && ($p_value != 'S') && ($p_value != 'N')) {
+			return '';
+		}
+		switch ($p_value) {
+		case 'Y':
+			return getGS("Published");
+		case 'S':
+			return getGS("Submitted");
+		case 'N':
+			return getGS("New");
+		}
+	} // fn getPublishedDisplayString
+	
+	
 	/**
 	 * Set the published state of the article.  
 	 * 	   'Y' = 'Published'
@@ -855,11 +901,18 @@ class Article extends DatabaseObject {
 		if ( ($p_value != 'Y') && ($p_value != 'S') && ($p_value != 'N')) {
 			return false;
 		}
+		$logtext = getGS('Article #$1: "$2" status changed from $3 to $4.',
+			$this->m_data['Number'], $this->m_data['Name'],
+			$this->getPublishedDisplayString(), $this->getPublishedDisplayString($p_value))
+			." (".getGS("Publication")." ".$this->m_data['IdPublication'].", "
+			." ".getGS("Issue")." ".$this->m_data['NrIssue'].", "
+			." ".getGS("Section")." ".$this->m_data['NrSection'].")";
+
 		// If the article is being unpublished
 		if ( ($this->getPublished() == 'Y') && ($p_value != 'Y') ) {
 			// Delete indexes
-			ArticleIndex::OnArticleDelete($this->getPublicationId(), $this->getIssueId(),
-				$this->getSectionId(), $this->getLanguageId(), $this->getArticleId());
+			ArticleIndex::OnArticleDelete($this->getPublicationId(), $this->getIssueNumber(),
+				$this->getSectionNumber(), $this->getLanguageId(), $this->getArticleNumber());
 		}
 		// If the article is being published
 		if ( ($this->getPublished() != 'Y') && ($p_value == 'Y') ) {
@@ -870,7 +923,9 @@ class Article extends DatabaseObject {
 		if ( $this->getPublished() != $p_value ) {
 			$this->unlock();
 		}
-		return parent::setProperty('Published', $p_value);
+		$changed = parent::setProperty('Published', $p_value);
+		Log::Message($logtext, null, 35); 
+		return $changed;
 	} // fn setPublished
 	
 	
@@ -980,10 +1035,10 @@ class Article extends DatabaseObject {
 	/**
 	 * @param string value
 	 */
-	function setShortName($p_value) 
+	function setUrlName($p_value) 
 	{
 		return parent::setProperty('ShortName', $p_value);
-	} // fn setShortName
+	} // fn setUrlName
 	
 	
 	/**
@@ -1083,8 +1138,7 @@ class Article extends DatabaseObject {
 		$query = $Campsite['db']->Execute($queryStr);
 		$articles = array();
 		while ($row = $query->FetchRow()) {
-			$tmpArticle =& new Article($row['IdPublication'], $row['NrIssue'],
-				$row['NrSection'], $row['IdLanguage']);
+			$tmpArticle =& new Article();
 			$tmpArticle->fetch($row);
 			$articles[] = $tmpArticle;
 		}
@@ -1117,8 +1171,7 @@ class Article extends DatabaseObject {
 		$query = $Campsite['db']->Execute($queryStr);
 		$articles = array();
 		while ($row = $query->FetchRow()) {
-			$tmpArticle =& new Article($row['IdPublication'], $row['NrIssue'],
-				$row['NrSection'], $row['IdLanguage']);
+			$tmpArticle =& new Article();
 			$tmpArticle->fetch($row);
 			$articles[] = $tmpArticle;
 		}

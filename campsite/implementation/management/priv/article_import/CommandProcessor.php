@@ -54,7 +54,7 @@ function upload_article_handler(&$request, &$session, &$files) {
 			$docBookParser =& new DocBookParser();
 			$docBookParser->parseString($docbookXml, true);
 			
-			$article =& new Article($publication, $issue, $section, $articleNumber, $language);
+			$article =& new Article($articleNumber, $language);
 			$article->setTitle($docBookParser->getTitle());
 			$article->setIntro($docBookParser->getIntro());
 			$article->setBody($docBookParser->getBody());

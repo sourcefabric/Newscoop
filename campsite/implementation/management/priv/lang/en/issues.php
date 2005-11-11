@@ -21,7 +21,7 @@ regGS("Issue $1 updated in publication $2", "Issue $1 updated in publication $2"
 regGS("You do not have the right to delete issues.", "You do not have the right to delete issues.");
 regGS("Are you sure you want to delete the issue $1?", "Are you sure you want to delete the issue $1?");
 regGS("Deleting issue", "Deleting issue");
-regGS("The issue $1 has ben deleted.", "The issue $1 has ben deleted.");
+regGS("The issue $1 has been deleted.", "The issue $1 has been deleted.");
 regGS("The issue $1 could not be deleted.", "The issue $1 could not be deleted.");
 regGS("All sections from Issue $1 from publication $2 deleted", "All sections from Issue $1 from publication $2 deleted");
 regGS("Issue $1 from publication $2 deleted", "Issue $1 from publication $2 deleted");

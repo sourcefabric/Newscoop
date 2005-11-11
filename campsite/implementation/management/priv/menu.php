@@ -58,9 +58,9 @@ foreach ($publications as $publication) {
 		Issue::GetIssues($publication->getPublicationId(), null, null, null, 
 			array('ORDER BY'=>array('Number'=>'DESC'), 'LIMIT' => '5'));
 	foreach ($issues[$publication->getPublicationId()] as $issue) {
-		$sections[$issue->getPublicationId()][$issue->getIssueId()][$issue->getLanguageId()] = 
+		$sections[$issue->getPublicationId()][$issue->getIssueNumber()][$issue->getLanguageId()] = 
 			Section::GetSections($issue->getPublicationId(), 
-				$issue->getIssueId(), $issue->getLanguageId());
+				$issue->getIssueNumber(), $issue->getLanguageId());
 	}
 }
 
@@ -73,7 +73,7 @@ foreach ($publications as $publication) {
     $menu_content->addItem($menu_item_pub);
 	if (isset($issues[$pubId])) {
 		foreach ($issues[$pubId] as $issue) {
-			$issueId = $issue->getIssueId();
+			$issueId = $issue->getIssueNumber();
 			$languageId = $issue->getLanguageId();
 			$menu_item_issue =& DynMenuItem::Create(htmlspecialchars($issue->getName()),
 			     "/$ADMIN/sections/index.php?Pub=$pubId&Issue=$issueId&Language=$languageId",
@@ -81,11 +81,14 @@ foreach ($publications as $publication) {
 			$menu_item_pub->addItem($menu_item_issue);
 			if (isset($sections[$pubId][$issueId][$languageId])) {
 				foreach ($sections[$pubId][$issueId][$languageId] as $section) {
-				    $sectionId = $section->getSectionId();
+				    $sectionId = $section->getSectionNumber();
 				    $menu_item_section =& DynMenuItem::Create(
 				        htmlspecialchars($section->getName()),
-				        "/$ADMIN/articles/index.php".
-				        "?Pub=$pubId&Issue=$issueId&Language=$languageId&Section=$sectionId",
+				        "/$ADMIN/articles/index.php"
+				        ."?f_publication_id=$pubId"
+				        ."&f_issue_number=$issueId"
+				        ."&f_language_id=$languageId"
+				        ."&f_section_number=$sectionId",
 				        array("icon" => $icon_bullet));
 				    $menu_item_issue->addItem($menu_item_section);
 				}

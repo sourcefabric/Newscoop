@@ -30,8 +30,7 @@ camp_html_content_top(getGS('Add new translation'), array('Pub' => $publicationO
 ?>
 <P>
 <FORM NAME="dialog" METHOD="POST" ACTION="do_translate.php" >
-<CENTER>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input" ALIGN="CENTER">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 <TR>
 	<TD COLSPAN="2">
 		<B><?php  putGS("Add new translation"); ?></B>
@@ -74,7 +73,7 @@ camp_html_content_top(getGS('Add new translation'), array('Pub' => $publicationO
 	<TD>
 		<SELECT NAME="cLang" class="input_select"><?php 
 		foreach ($unusedLanguages as $tmpLanguage) { 
-			pcomboVar($tmpLanguage->getLanguageId(),'',htmlspecialchars($tmpLanguage->getNativeName()));
+			camp_html_select_option($tmpLanguage->getLanguageId(),'',htmlspecialchars($tmpLanguage->getNativeName()));
         }
 	    ?>
 		</SELECT>
@@ -91,7 +90,7 @@ camp_html_content_top(getGS('Add new translation'), array('Pub' => $publicationO
 		</DIV>
 		</TD>
 	</TR>
-</TABLE></CENTER>
+</TABLE>
 </FORM>
 <P>
 <?php camp_html_copyright_notice(); ?>

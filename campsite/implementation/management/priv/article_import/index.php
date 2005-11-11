@@ -27,7 +27,7 @@ if (!Input::IsValid()) {
 	exit;
 }
 
-$articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
+$articleObj =& new Article($sLanguage, $Article);
 $sectionObj =& new Section($Pub, $Issue, $Language, $Section);
 $issueObj =& new Issue($Pub, $Language, $Issue);
 $publicationObj =& new Publication($Pub);
@@ -84,10 +84,10 @@ $issueLanguage =& new Language($sLanguage);
 	<TD VALIGN="TOP" class="current_location_content"><?php echo htmlspecialchars($publicationObj->getName()); ?></TD>
 
 	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php putGS("Issue"); ?>:</TD>
-	<TD VALIGN="TOP" class="current_location_content"><?php echo $issueObj->getIssueId(); ?>. <?php echo htmlspecialchars($issueObj->getName()); ?> (<?php echo htmlspecialchars($issueLanguage->getName()); ?>)</TD>
+	<TD VALIGN="TOP" class="current_location_content"><?php echo $issueObj->getIssueNumber(); ?>. <?php echo htmlspecialchars($issueObj->getName()); ?> (<?php echo htmlspecialchars($issueLanguage->getName()); ?>)</TD>
 
 	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php putGS("Section"); ?>:</TD>
-	<TD VALIGN="TOP" class="current_location_content"><?php echo $sectionObj->getSectionId(); ?>. <?php echo htmlspecialchars($sectionObj->getName()); ?></TD>
+	<TD VALIGN="TOP" class="current_location_content"><?php echo $sectionObj->getSectionNumber(); ?>. <?php echo htmlspecialchars($sectionObj->getName()); ?></TD>
 
 	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php putGS("Article"); ?>:</TD>
 	<TD VALIGN="TOP" class="current_location_content"><?php echo htmlspecialchars($articleObj->getTitle()); ?> (<?php echo htmlspecialchars($articleLanguage->getName()); ?>)</TD>

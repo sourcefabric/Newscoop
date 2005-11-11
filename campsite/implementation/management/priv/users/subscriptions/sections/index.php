@@ -82,7 +82,7 @@ $color= 0;
 foreach ($sections as $section) { ?>	
 <TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 	<TD >
-		<A HREF="/<?php p($ADMIN); ?>/users/subscriptions/sections/change.php?f_user_id=<?php p($f_user_id); ?>&f_publication_id=<?php p($f_publication_id); ?>&f_subscription_id=<?php p($f_subscription_id); ?>&f_section_id=<?php p($section->getSectionNumber()); ?>"><?php p(htmlspecialchars($section->getProperty('Name'))); ?></A>
+		<A HREF="/<?php p($ADMIN); ?>/users/subscriptions/sections/change.php?f_user_id=<?php p($f_user_id); ?>&f_publication_id=<?php p($f_publication_id); ?>&f_subscription_id=<?php p($f_subscription_id); ?>&f_section_number=<?php p($section->getSectionNumber()); ?>"><?php p(htmlspecialchars($section->getProperty('Name'))); ?></A>
 	</TD>
 	
 	<TD>
@@ -100,7 +100,7 @@ foreach ($sections as $section) { ?>
 	<?php  } ?>
 	
 	<TD ALIGN="CENTER">
-		<A HREF="/<?php p($ADMIN); ?>/users/subscriptions/sections/do_del.php?f_user_id=<?php p($f_user_id); ?>&f_publication_id=<?php p($f_publication_id); ?>&f_subscription_id=<?php p($f_subscription_id); ?>&f_section_id=<?php p($section->getSectionNumber()); ?>"><IMG SRC="<?php echo $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/delete.png" BORDER="0" ALT="<?php  putGS('Delete subscription to section $1?', htmlspecialchars($section->getProperty('Name'))); ?>" TITLE="<?php  putGS('Delete subscription to section $1?', htmlspecialchars($section->getProperty('Name'))); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the subscription to the section $1?', htmlspecialchars($section->getProperty('Name'))); ?>');"></A>
+		<A HREF="/<?php p($ADMIN); ?>/users/subscriptions/sections/do_del.php?f_user_id=<?php p($f_user_id); ?>&f_publication_id=<?php p($f_publication_id); ?>&f_subscription_id=<?php p($f_subscription_id); ?>&f_section_number=<?php p($section->getSectionNumber()); ?>"><IMG SRC="<?php echo $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/delete.png" BORDER="0" ALT="<?php  putGS('Delete subscription to section $1?', htmlspecialchars($section->getProperty('Name'))); ?>" TITLE="<?php  putGS('Delete subscription to section $1?', htmlspecialchars($section->getProperty('Name'))); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the subscription to the section $1?', htmlspecialchars($section->getProperty('Name'))); ?>');"></A>
 	</TD>
 </TR>
 <?php 

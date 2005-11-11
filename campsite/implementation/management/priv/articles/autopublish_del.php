@@ -12,13 +12,9 @@ if (!$User->hasPermission("Publish")) {
 	exit;
 }
 
-$Pub = Input::Get('Pub', 'int', 0);
-$Issue = Input::Get('Issue', 'int', 0);
-$Section = Input::Get('Section', 'int', 0);
-$Language = Input::Get('Language', 'int', 0);
-$sLanguage = Input::Get('sLanguage', 'int', 0);
-$Article = Input::Get('Article', 'int', 0);
-$publishTime = Input::Get('publish_time');
+$f_language_selected = Input::Get('f_language_selected', 'int', 0);
+$f_article_number = Input::Get('f_article_number', 'int', 0);
+$f_action_id = Input::Get('f_action_id', 'int', 0);
 $BackLink = Input::Get('Back', 'string', "/$ADMIN/articles/index.php", true);
 
 if (!Input::IsValid()) {
@@ -26,38 +22,17 @@ if (!Input::IsValid()) {
 	exit;	
 }
 
-$publicationObj =& new Publication($Pub);
-if (!$publicationObj->exists()) {
-	camp_html_display_error(getGS('Publication does not exist.'), $BackLink);
-	exit;	
-}
-
-$issueObj =& new Issue($Pub, $Language, $Issue);
-if (!$issueObj->exists()) {
-	camp_html_display_error(getGS('Issue does not exist.'), $BackLink);
-	exit;	
-}
-
-$sectionObj =& new Section($Pub, $Issue, $Language, $Section);
-if (!$sectionObj->exists()) {
-	camp_html_display_error(getGS('Section does not exist.'), $BackLink);
-	exit;	
-}
-
-$articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
+$articleObj =& new Article($f_language_selected, $f_article_number);
 if (!$articleObj->exists()) {
 	camp_html_display_error(getGS('Article does not exist.'), $BackLink);
 	exit;
 }
 
-$languageObj =& new Language($Language);
-$sLanguageObj =& new Language($sLanguage);
-
-$articlePublishObj =& new ArticlePublish($Article, $sLanguage, $publishTime);
+$articlePublishObj =& new ArticlePublish($f_action_id);
 if ($articlePublishObj->exists()) {
 	$articlePublishObj->delete();
 }
-$redirect = camp_html_article_url($articleObj, $Language, "autopublish.php", $BackLink);
+$redirect = camp_html_article_url($articleObj, $f_language_selected, "autopublish.php", $BackLink);
 header("Location: $redirect");
 exit;
 ?>

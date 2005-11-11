@@ -2,6 +2,9 @@
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/article_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/DbObjectArray.php');
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/ArticlePublish.php');
+require_once($_SERVER['DOCUMENT_ROOT']. '/include/HTTP_Session/Session.php');
+
+HTTP_Session::start();
 
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
@@ -9,138 +12,285 @@ if (!$access) {
 	exit;
 }
 
-$Pub = Input::Get('Pub', 'int', 0);
-$Issue = Input::Get('Issue', 'int', 0);
-$Section = Input::Get('Section', 'int', 0);
-$Language = Input::Get('Language', 'int', 0);
-$sLanguage = Input::Get('sLanguage', 'int', 0, true);
-$ArticleOffset = Input::Get('ArtOffs', 'int', 0, true);
-$ArticlesPerPage = Input::Get('lpp', 'int', 10, true);
+$f_publication_id = Input::Get('f_publication_id', 'int', 0);
+$f_issue_number = Input::Get('f_issue_number', 'int', 0);
+$f_section_number = Input::Get('f_section_number', 'int', 0);
+$f_language_id = Input::Get('f_language_id', 'int', 0);
+$f_language_selected = Input::Get('f_language_selected', 'int', 0, true);
+$f_article_offset = Input::Get('f_article_offset', 'int', 0, true);
+$ArticlesPerPage = 20;
+
+//$f_articles_per_page = HTTP_Session::get('campsite_articles_per_page', $f_articles_per_page);
+//$f_article_offset = HTTP_Session::get('campsite_articles_per_page', $f_article_offset);
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
 	exit;	
 }
 
-if ($ArticleOffset < 0) {
-	$ArticleOffset = 0;
+if ($f_article_offset < 0) {
+	$f_article_offset = 0;
 }
 
-$publicationObj =& new Publication($Pub);
+$sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
+if (!$sectionObj->exists()) {
+	camp_html_display_error(getGS('Section does not exist.'));
+	exit;		
+}
+
+$publicationObj =& new Publication($f_publication_id);
 if (!$publicationObj->exists()) {
 	camp_html_display_error(getGS('Publication does not exist.'));
 	exit;	
 }
 
-$issueObj =& new Issue($Pub, $Language, $Issue);
+$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
 if (!$issueObj->exists()) {
 	camp_html_display_error(getGS('Issue does not exist.'));
 	exit;	
 }
 
-$sectionObj =& new Section($Pub, $Issue, $Language, $Section);
-if (!$sectionObj->exists()) {
-	camp_html_display_error(getGS('Section does not exist.'), $BackLink);
-	exit;		
-}
-
-$languageObj =& new Language($Language);
-$sLanguageObj =& new Language($sLanguage);
 $allArticleLanguages = Article::GetAllLanguages();
 
-if ($sLanguage) {
+if ($f_language_selected) {
 	// Only show a specific language.
-	$allArticles = Article::GetArticles($Pub, $Issue, $Section, $sLanguage, null, $Language,
-		$ArticlesPerPage, $ArticleOffset);
-	$totalArticles = count(Article::GetArticles($Pub, $Issue, $Section, $sLanguage));
+	$allArticles = Article::GetArticles($f_publication_id, $f_issue_number, 
+		$f_section_number, $f_language_selected, null, $f_language_id,
+		$ArticlesPerPage, $f_article_offset);
+	$totalArticles = count(Article::GetArticles($f_publication_id, 
+		$f_issue_number, $f_section_number, $f_language_selected));
 	$numUniqueArticles = $totalArticles;
 	$numUniqueArticlesDisplayed = count($allArticles);
 } else {
 	// Show articles in all languages.
-	$allArticles = Article::GetArticles($Pub, $Issue, $Section, null, null, $Language,
-		$ArticlesPerPage, $ArticleOffset, true);
-	$totalArticles = count(Article::GetArticles($Pub, $Issue, $Section, null));
-	$numUniqueArticles = Article::GetNumUniqueArticles($Pub, $Issue, $Section);
+	$allArticles = Article::GetArticles($f_publication_id, $f_issue_number,
+		$f_section_number, null, null, $f_language_id,
+		$ArticlesPerPage, $f_article_offset, true);
+	$totalArticles = count(Article::GetArticles($f_publication_id, $f_issue_number, $f_section_number, null));
+	$numUniqueArticles = Article::GetNumUniqueArticles($f_publication_id, $f_issue_number, $f_section_number);
 	$numUniqueArticlesDisplayed = count(array_unique(DbObjectArray::GetColumn($allArticles, 'Number')));
 }
 
-$previousArticleId = 0;
+$previousArticleNumber = 0;
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
 				  'Section' => $sectionObj);
 camp_html_content_top(getGS('Articles'), $topArray);
 ?>
 <P>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="action_buttons">
 <TR>
 <?php if ($User->hasPermission('AddArticle')) { ?>
 	<TD>
 		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 		<TR>
-			<TD><A HREF="add.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Language=<?php  p($Language); ?>&Back=<?php p(urlencode($_SERVER['REQUEST_URI'])); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add_article.png" BORDER="0"></A></TD>
-			<TD><A HREF="add.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Language=<?php  p($Language); ?>&Back=<?php  p(urlencode($_SERVER['REQUEST_URI'])); ?>" ><B><?php  putGS("Add new article"); ?></B></A></TD>
+			<TD><A HREF="add.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_language_id=<?php p($f_language_id); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
+			<TD><A HREF="add.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_language_id=<?php p($f_language_id); ?>" ><B><?php  putGS("Add new article"); ?></B></A></TD>
 		</TR>
 		</TABLE>
 	</TD>
 <?php  } ?>
-	<TD ALIGN="left" style="padding-left: 20px;">
-		<FORM METHOD="GET" ACTION="index.php" NAME="">
-		<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<?php  p($Pub); ?>">
-		<INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<?php  p($Issue); ?>">
-		<INPUT TYPE="HIDDEN" NAME="Section" VALUE="<?php  p($Section); ?>">
-		<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php  p($Language); ?>">
-		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="3" class="table_input">
-		<TR>
-			<TD><?php  putGS('Language'); ?>:</TD>
-			<TD valign="middle">
-				<SELECT NAME="sLanguage" class="input_select">
-				<option></option>
-				<?php 
-				foreach ($allArticleLanguages as $languageItem) {
-					echo '<OPTION value="'.$languageItem->getLanguageId().'"' ;
-					if ($languageItem->getLanguageId() == $sLanguage) {
-						echo " selected";
-					}
-					echo '>'.htmlspecialchars($languageItem->getName()).'</option>';
-				} ?>
-				</SELECT>
-			</TD>
-			<TD><INPUT TYPE="submit" NAME="Search" VALUE="<?php  putGS('Search'); ?>" class="button"></TD>
-		</TR>
-		</TABLE>
-		</FORM>
-	</TD>
 </tr>
 </TABLE>
+<p>
 
+<script>
+function checkAll(field)
+{
+	if (field) {
+		for (i = 0; i < field.length; i++) {
+			field[i].checked = true ;
+		}
+	}
+}
+
+function uncheckAll(field)
+{
+	if (field) {
+		for (i = 0; i < field.length; i++) {
+			field[i].checked = false ;
+		}
+	}
+}
+</script>
+<div style="position: fixed; top: 120px;">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="3" class="table_input" style="background-color: #D5C3DF; border-color: #A35ACF;">
+<TR>
+	<TD>
+		<TABLE cellpadding="0" cellspacing="0">
+		<TR>
+			<TD ALIGN="left">
+				<FORM METHOD="GET" ACTION="index.php" NAME="selected_language">
+				<INPUT TYPE="HIDDEN" NAME="f_publication_id" VALUE="<?php p($f_publication_id); ?>">
+				<INPUT TYPE="HIDDEN" NAME="f_issue_number" VALUE="<?php p($f_issue_number); ?>">
+				<INPUT TYPE="HIDDEN" NAME="f_section_number" VALUE="<?php p($f_section_number); ?>">
+				<INPUT TYPE="HIDDEN" NAME="f_language_id" VALUE="<?php p($f_language_id); ?>">
+				<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="3" >
+				<TR>
+					<TD><?php  putGS('Language'); ?>:</TD>
+					<TD valign="middle">
+						<SELECT NAME="f_language_selected" class="input_select" onchange="this.form.submit();">
+						<option><?php putGS("All"); ?></option>
+						<?php 
+						foreach ($allArticleLanguages as $languageItem) {
+							echo '<OPTION value="'.$languageItem->getLanguageId().'"' ;
+							if ($languageItem->getLanguageId() == $f_language_selected) {
+								echo " selected";
+							}
+							echo '>'.htmlspecialchars($languageItem->getName()).'</option>';
+						} ?>
+						</SELECT>
+					</TD>
+				</TR>
+				</TABLE>
+				</FORM>
+			</TD>
+			<TD style="padding-left: 20px;">
+				<script>
+				function action_selected(dropdownElement) 
+				{
+					// Verify that at least one checkbox has been selected.
+					checkboxes = document.forms.article_list["f_article_code[]"];
+					if (checkboxes) {
+						isValid = false;
+						numCheckboxesChecked = 0;
+						// Special case for single checkbox 
+						// (when there is only one article in the section).
+						if (!checkboxes.length) {
+							isValid = checkboxes.checked;
+							numCheckboxesChecked = isValid ? 1 : 0;
+						}
+						else {
+							// Multiple checkboxes
+							for (var index = 0; index < checkboxes.length; index++) {
+								if (checkboxes[index].checked) {
+									isValid = true;
+									numCheckboxesChecked++;
+								}
+							}
+						}
+						if (!isValid) {
+							alert("<?php putGS("You must select at least one article to perform an action."); ?>");
+							dropdownElement.options[0].selected = true;
+							return;
+						}
+					}
+					else {
+						dropdownElement.options[0].selected = true;
+						return;
+					}
+							
+					// Get the index of the "delete" option.
+					deleteOptionIndex = -1;
+					translateOptionIndex = -1;
+					for (var index = 0; index < dropdownElement.options.length; index++) {
+						if (dropdownElement.options[index].value == "delete") {
+							deleteOptionIndex = index;
+						}
+						if (dropdownElement.options[index].value == "translate") {
+							translateOptionIndex = index;
+						}
+					}
+					
+					// if the user has selected the "delete" option
+					if (dropdownElement.selectedIndex == deleteOptionIndex) {
+						ok = confirm("<?php putGS("Are you sure you want to delete the selected articles?"); ?>");
+						if (!ok) {
+							dropdownElement.options[0].selected = true;
+							return;
+						}
+					}
+					
+					// if the user selected the "translate" option
+					if ( (dropdownElement.selectedIndex == translateOptionIndex) 
+						 && (numCheckboxesChecked > 1) ) {
+						alert("<?php putGS("You may only translate one article at a time."); ?>");
+						dropdownElement.options[0].selected = true;
+						return;
+					}
+					
+					// do the action if it isnt the first or second option
+					if ( (dropdownElement.selectedIndex != 0) &&  (dropdownElement.selectedIndex != 1) ) {
+						dropdownElement.form.submit(); 
+					}
+				}
+				</script>
+				<FORM name="article_list" action="do_article_list_action.php" method="POST">
+				<INPUT TYPE="HIDDEN" NAME="f_publication_id" VALUE="<?php  p($f_publication_id); ?>">
+				<INPUT TYPE="HIDDEN" NAME="f_issue_number" VALUE="<?php  p($f_issue_number); ?>">
+				<INPUT TYPE="HIDDEN" NAME="f_section_number" VALUE="<?php  p($f_section_number); ?>">
+				<INPUT TYPE="HIDDEN" NAME="f_language_id" VALUE="<?php  p($f_language_id); ?>">
+				<INPUT TYPE="HIDDEN" NAME="f_language_selected" VALUE="<?php  p($f_language_selected); ?>">
+				<SELECT name="f_article_list_action" class="input_select" onchange="action_selected(this);">
+				<OPTION value=""><?php putGS("Actions"); ?>...</OPTION>
+				<OPTION value="">-----------------------</OPTION>
+				
+				<?php if ($User->hasPermission('Publish')) { ?>
+				<OPTION value="workflow_publish"><?php putGS("Workflow: Publish"); ?></OPTION>
+				<?php } ?>
+				
+				<?php if ($User->hasPermission('ChangeArticle')) { ?>
+				<OPTION value="workflow_submit"><?php putGS("Workflow: Submit"); ?></OPTION>
+				<?php } ?>
+
+				<?php if ($User->hasPermission('Publish')) { ?>
+				<OPTION value="workflow_new"><?php putGS("Workflow: Set New"); ?></OPTION>
+				<?php } ?>
+				
+				<OPTION value="schedule_publish"><?php putGS("Schedule Publish"); ?></OPTION>
+				<OPTION value="unlock"><?php putGS("Unlock"); ?></OPTION>
+				
+				<?php  if ($User->hasPermission('DeleteArticle')) { ?>
+				<OPTION value="delete"><?php putGS("Delete"); ?></OPTION>
+				<?php } ?>
+				
+				<?php  if ($User->hasPermission('AddArticle')) { ?>
+				<OPTION value="copy"><?php putGS("Copy"); ?></OPTION>
+				<OPTION value="copy_interactive"><?php putGS("Copy to another section"); ?></OPTION>
+				<OPTION value="translate"><?php putGS("Translate"); ?></OPTION>
+				<?php } ?>
+				
+				<OPTION value="move"><?php putGS("Reorder"); ?></OPTION>
+				<OPTION value="preview"><?php putGS("Preview"); ?></OPTION>
+				</SELECT>
+			</TD>
+			
+			<TD style="padding-left: 5px; font-weight: bold;">
+				<input type="button" class="button" value="<?php putGS("Select All"); ?>" onclick="checkAll(document.article_list['f_article_code[]']);"> 
+				<input type="button" class="button" value="<?php putGS("Select None"); ?>" onclick="uncheckAll(document.article_list['f_article_code[]']);"> 
+			</TD>
+		</TR>
+		</TABLE>
+	</TD>
+	
+</TR>
+</TABLE>
+</div>
 <P>
 <?php 
 if ($numUniqueArticlesDisplayed > 0) {
 	$counter = 0;
 	$color = 0;
 ?>
-<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list">
+<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list" style="padding-top: 40px;">
 <TR class="table_list_header">
+	<TD>&nbsp;</TD>
 	<TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Name <SMALL>(click to edit)</SMALL>"); ?></TD>
 	<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Type"); ?></TD>
+	<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Author"); ?></TD>
 	<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Status"); ?></TD>
 	<?php if ($User->hasPermission('Publish')) { ?>
-	<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Order"); ?></TD>
 	<TD ALIGN="center" VALIGN="TOP"><?php  echo str_replace(' ', '<br>', getGS("Scheduled Publishing")); ?></TD>
 	<?php } ?>	
-	<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Preview"); ?></TD>
-	<?php  if ($User->hasPermission('AddArticle')) { ?>
-	<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Translate"); ?></TD>
-	<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Duplicate"); ?></TD>
-	<?php  } ?>
-	<?php  if ($User->hasPermission('DeleteArticle')) { ?>
-	<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Delete"); ?></TD>
-	<?php  } ?>	
+	<TD ALIGN="center" VALIGN="TOP"><?php  echo str_replace(' ', '<br>', getGS("On Front Page")); ?></TD>
+	<TD ALIGN="center" VALIGN="TOP"><?php  echo str_replace(' ', '<br>', getGS("On Section Page")); ?></TD>
+	<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Images"); ?></TD>
+	<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Topics"); ?></TD>
 </TR>
 <?php 
 $uniqueArticleCounter = 0;
 foreach ($allArticles as $articleObj) {
-	if ($articleObj->getArticleId() != $previousArticleId) {
+	if ($articleObj->getArticleNumber() != $previousArticleNumber) {
 		$uniqueArticleCounter++;
 	}
 	if ($uniqueArticleCounter > $ArticlesPerPage) {
@@ -161,10 +311,18 @@ foreach ($allArticles as $articleObj) {
 	}
 	?>	
 	<TR class="<?php p($rowClass); ?>">
-		<TD <?php if ($articleObj->getArticleId() == $previousArticleId) { ?>class="translation_indent"<?php } ?>>
+		<TD>
+			<input type="checkbox" value="<?php p($articleObj->getArticleNumber().'_'.$articleObj->getLanguageId()); ?>" name="f_article_code[]" class="input_checkbox">
+		</TD>
+		<TD <?php if ($articleObj->getArticleNumber() == $previousArticleNumber) { ?>class="translation_indent"<?php } ?>>
 		
 		<?php
-		if ($articleObj->isLocked() && ($timeDiff['days'] <= 0) && ($articleObj->getLockedByUser() != $User->getId())) {
+		if ($articleObj->getArticleNumber() != $previousArticleNumber) { 
+			echo $f_article_offset + $uniqueArticleCounter.". ";
+		}
+		// Is article locked?
+		//if ($articleObj->isLocked() && ($timeDiff['days'] <= 0) && ($articleObj->getLockedByUser() != $User->getId())) {
+		if ($articleObj->isLocked() && ($timeDiff['days'] <= 0)) {
             $lockUserObj =& new User($articleObj->getLockedByUser());
 			if ($timeDiff['hours'] > 0) {
 				$lockInfo = getGS('The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.',
@@ -186,18 +344,26 @@ foreach ($allArticles as $articleObj) {
 		// Can the user edit the article?
 		$userCanEdit = $articleObj->userCanModify($User);
 		if ($userCanEdit) { ?>
-		<A HREF="/<?php echo $ADMIN; ?>/articles/edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($articleObj->getArticleId()); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php p($articleObj->getLanguageId()); ?>"><?php } ?><?php  p(htmlspecialchars($articleObj->getTitle())); ?>&nbsp;<?php if ($userCanEdit) { ?></A><?php } ?> (<?php p(htmlspecialchars($articleObj->getLanguageName())); ?>)
+		<A HREF="/<?php echo $ADMIN; ?>/articles/edit.php?f_publication_id=<?php  p($f_publication_id); ?>&f_issue_number=<?php  p($f_issue_number); ?>&f_section_number=<?php  p($f_section_number); ?>&f_article_number=<?php p($articleObj->getArticleNumber()); ?>&f_language_id=<?php  p($f_language_id); ?>&f_language_selected=<?php p($articleObj->getLanguageId()); ?>"><?php } ?><?php  p(htmlspecialchars($articleObj->getTitle())); ?>&nbsp;<?php if ($userCanEdit) { ?></A><?php } ?> (<?php p(htmlspecialchars($articleObj->getLanguageName())); ?>)
 		</TD>
 		<TD ALIGN="RIGHT">
 			<?php p(htmlspecialchars($articleObj->getType()));  ?>
 		</TD>
 
+		<TD ALIGN="RIGHT">
+			<?php 
+			$articleCreator =& new User($articleObj->getUserId());
+			p(htmlspecialchars($articleCreator->getName()));  ?>
+		</TD>
+
 		<TD ALIGN="CENTER">
 			<?php 
-			$statusLink = "<A HREF=\"/$ADMIN/articles/status.php?Pub=". $Pub
-				.'&Issue='.$Issue.'&Section='.$Section.'&Article='.$articleObj->getArticleId()
-				.'&Language='.$Language.'&sLanguage='.$articleObj->getLanguageId()
-				.'&Back='.urlencode($_SERVER['REQUEST_URI']).'">';
+			$statusLink = "<A HREF=\"/$ADMIN/articles/status.php?f_publication_id=". $f_publication_id
+				.'&f_issue_number='.$f_issue_number
+				.'&f_section_number='.$f_section_number
+				.'&f_article_number='.$articleObj->getArticleNumber()
+				.'&f_language_id='.$f_language_id
+				.'&f_language_selected='.$articleObj->getLanguageId().'">';
 			if ($articleObj->getPublished() == "Y") { 
 				$statusWord = "Published";
 			}
@@ -229,68 +395,12 @@ foreach ($allArticles as $articleObj) {
 			?>
 		</TD>
 		
-		<?php
-		// The MOVE links  
-		if ($User->hasPermission('Publish')) { 
-			if (($articleObj->getArticleId() == $previousArticleId) || ($numUniqueArticles <= 1))  {
-				?>
-				<TD ALIGN="CENTER" valign="middle" NOWRAP></TD>
-				<?php
-			}
-			else {
-				?>
-				<TD ALIGN="right" valign="middle" NOWRAP>
-					<table cellpadding="0" cellspacing="0">
-					<tr>
-						<td width="22px">
-							<?php if (($ArticleOffset > 0) || ($uniqueArticleCounter != 1)) { ?>
-								<A HREF="/<?php echo $ADMIN; ?>/articles/do_move.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($articleObj->getArticleId()); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php p($articleObj->getLanguageId()); ?>&ArticleLanguage=<?php p($articleObj->getLanguageId()); ?>&move=up_rel&pos=1&ArtOffs=<?php p($ArticleOffset); ?>&Back=<?php p(urlencode($_SERVER['REQUEST_URI'])); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/up.png" width="16" height="16" border="0"></A>
-							<?php } ?>
-						</td>
-						<td width="22px">
-							<?php if (($uniqueArticleCounter+$ArticleOffset) < $numUniqueArticles) { ?>
-								<A HREF="/<?php echo $ADMIN; ?>/articles/do_move.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($articleObj->getArticleId()); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php p($articleObj->getLanguageId()); ?>&ArticleLanguage=<?php p($articleObj->getLanguageId()); ?>&move=down_rel&pos=1&ArtOffs=<?php p($ArticleOffset); ?>&Back=<?php p(urlencode($_SERVER['REQUEST_URI'])); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/down.png" width="16" height="16" border="0" style="padding-left: 3px; padding-right: 3px;"></A>
-							<?php } ?>
-						</td>
-						<form method="GET" action="do_move.php">
-						<input type="hidden" name="Pub" value="<?php p($Pub); ?>">
-						<input type="hidden" name="Issue" value="<?php p($Issue); ?>">
-						<input type="hidden" name="Section" value="<?php p($Section); ?>">
-						<input type="hidden" name="Language" value="<?php p($Language); ?>">
-						<input type="hidden" name="sLanguage" value="<?php p($sLanguage); ?>">
-						<input type="hidden" name="ArticleLanguage" value="<?php p($articleObj->getLanguageId()); ?>">
-						<input type="hidden" name="Article" value="<?php p($articleObj->getArticleId()); ?>">
-						<input type="hidden" name="ArtOffs" value="<?php p($ArticleOffset); ?>">
-						<input type="hidden" name="Back" value="<?php p($_SERVER['REQUEST_URI']); ?>">
-						<input type="hidden" name="move" value="abs">
-						<td>
-							<select name="pos" onChange="this.form.submit();" class="input_select">
-							<?php
-							for ($j = 1; $j <= $numUniqueArticles; $j++) {
-								if (($ArticleOffset + $uniqueArticleCounter) == $j) {
-									echo "<option value=\"$j\" selected>$j</option>\n";
-								} else {
-									echo "<option value=\"$j\">$j</option>\n";
-								}
-							}
-							?>
-							</select>
-						</td>
-						</form>
-					</tr>
-					</table>
-				</TD>
-				<?php  
-				}
-		} // if user->hasPermission('publish') 
-		?>
-		
 		<?php if ($User->hasPermission('Publish')) { ?>
 		<TD ALIGN="CENTER">
 			<?php if ($articleObj->getPublished() != 'N') { 
-				$events = ArticlePublish::GetArticleEvents($articleObj->getArticleId(),
+				$events = ArticlePublish::GetArticleEvents($articleObj->getArticleNumber(),
 					$articleObj->getLanguageId());?>
-			<A HREF="/<?php echo $ADMIN; ?>/articles/autopublish.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($articleObj->getArticleId()); ?>&Language=<?php  p($Language);?>&sLanguage=<?php p($articleObj->getLanguageId()); ?>&Back=<?php p(urlencode($_SERVER['REQUEST_URI'])); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/<?php p((count($events) > 0) ? 'automatic_publishing_active.png':'automatic_publishing.png'); ?>" alt="<?php  putGS("Scheduled Publishing"); ?>" title="<?php  putGS("Scheduled Publishing"); ?>" border="0" width="22" height="22"></A>
+			<A HREF="/<?php echo $ADMIN; ?>/articles/autopublish.php?f_publication_id=<?php  p($f_publication_id); ?>&f_issue_number=<?php  p($f_issue_number); ?>&f_section_number=<?php  p($f_section_number); ?>&f_article_number=<?php p($articleObj->getArticleNumber()); ?>&f_language_id=<?php  p($f_language_id);?>&f_language_selected=<?php p($articleObj->getLanguageId()); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/<?php p((count($events) > 0) ? 'automatic_publishing_active.png':'automatic_publishing.png'); ?>" alt="<?php  putGS("Scheduled Publishing"); ?>" title="<?php  putGS("Scheduled Publishing"); ?>" border="0" width="22" height="22"></A>
 			<?php 
 			} else { ?>
 				&nbsp;<?PHP
@@ -298,56 +408,46 @@ foreach ($allArticles as $articleObj) {
 			?>
 		</TD>
 		<?php } ?>
-		<TD ALIGN="CENTER">
-			<A HREF="" ONCLICK="window.open('/<?php echo $ADMIN; ?>/articles/preview.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($articleObj->getArticleId()); ?>&Language=<?php p($articleObj->getLanguageId()); ?>&sLanguage=<?php  p($articleObj->getLanguageId()); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=yes, width=800, height=600'); return false"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/preview.png" alt="<?php  putGS("Preview"); ?>" title="<?php putGS('Preview'); ?>" border="0" width="22" height="22"></A>
-		</TD>
-
-		<?php  if ($User->hasPermission('AddArticle')) { ?>
-		<TD ALIGN="CENTER">
-			<?php  if ($articleObj->getArticleId() != $previousArticleId) { ?>
-			<A HREF="/<?php echo $ADMIN; ?>/articles/translate.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($articleObj->getArticleId()); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php p($articleObj->getLanguageId()); ?>&Back=<?php p(urlencode($_SERVER['REQUEST_URI'])); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/translate.png" alt="<?php  putGS("Translate"); ?>" title="<?php  putGS("Translate"); ?>" border="0" width="22" height="22"></A>
-			<?php  } else { ?>
-				&nbsp;
-			<?php  } ?>
-		</TD>
 		
-		<TD ALIGN="CENTER">
-			<A HREF="/<?php echo $ADMIN; ?>/articles/duplicate.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($articleObj->getArticleId()); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($articleObj->getLanguageId()); ?>&Back=<?php p(urlencode($_SERVER['REQUEST_URI'])); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/duplicate.png" alt="<?php  putGS("Duplicate"); ?>" title="<?php  putGS("Duplicate"); ?>" border="0" width="22" height="22"></A>
-		</TD>
-		<?php  } ?>
-
-		<?php  if ($User->hasPermission('DeleteArticle')) { ?>
-		<TD ALIGN="CENTER">
-			<A HREF="/<?php echo $ADMIN; ?>/articles/do_del.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php p($articleObj->getArticleId()); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php p($articleObj->getLanguageId()); ?>&ArtOffs=<?php p($ArticleOffset); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the article $1 ($2)?', '&quot;'.camp_javascriptspecialchars($articleObj->getTitle()).'&quot', camp_javascriptspecialchars($articleObj->getLanguageName())); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php  putGS('Delete'); ?>" title="<?php  putGS('Delete'); ?>" width="16" height="16"></A>
-		</TD>
-		<?php  }
-		if ($articleObj->getArticleId() != $previousArticleId)
-			$previousArticleId = $articleObj->getArticleId();
+		<TD><?php echo $articleObj->onFrontPage() ? "Yes" : "No"; ?></TD>
+		<TD><?php echo $articleObj->onSectionPage() ? "Yes" : "No"; ?></TD>
+		<TD><?php echo count(ArticleImage::GetImagesByArticleId($articleObj->getArticleNumber())); ?></TD>
+		<TD><?php echo count(ArticleTopic::GetArticleTopics($articleObj->getArticleNumber())); ?></TD>
+		
+		<?php
+		if ($articleObj->getArticleNumber() != $previousArticleNumber) {
+			$previousArticleNumber = $articleObj->getArticleNumber();
+		}
 		?>	
 	</TR>
 	<?php 
 } // foreach
 ?>	
+</table>
+<table class="table_list" style="padding-top: 5px;">
+<tr>
+	<td>
+		<b><?php putGS("$1 articles found", $numUniqueArticles); ?></b>
+	</td>
+</tr>
 <TR>
 	<TD NOWRAP>
 		<?php 
-    	if ($ArticleOffset > 0) { ?>
-			<B><A HREF="index.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&ArtOffs=<?php  p(max(0, ($ArticleOffset - $ArticlesPerPage))); ?>">&lt;&lt; <?php  putGS('Previous'); ?></A></B>
+    	if ($f_article_offset > 0) { ?>
+			<B><A HREF="index.php?f_publication_id=<?php  p($f_publication_id); ?>&f_issue_number=<?php  p($f_issue_number); ?>&f_section_number=<?php  p($f_section_number); ?>&f_language_id=<?php  p($f_language_id); ?>&f_language_selected=<?php  p($f_language_selected); ?>&f_article_offset=<?php  p(max(0, ($f_article_offset - $ArticlesPerPage))); ?>">&lt;&lt; <?php  putGS('Previous'); ?></A></B>
 		<?php  }
 
-    	if ( ($ArticleOffset + $ArticlesPerPage) < $numUniqueArticles) { 
-    		if ($ArticleOffset > 0) {
+    	if ( ($f_article_offset + $ArticlesPerPage) < $numUniqueArticles) { 
+    		if ($f_article_offset > 0) {
     			?>|<?php
     		}
     		?>
-			 <B><A HREF="index.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&ArtOffs=<?php  p(min( ($numUniqueArticles-1), ($ArticleOffset + $ArticlesPerPage))); ?>"><?php  putGS('Next'); ?> &gt;&gt</A></B>
+			 <B><A HREF="index.php?f_publication_id=<?php  p($f_publication_id); ?>&f_issue_number=<?php  p($f_issue_number); ?>&f_section_number=<?php  p($f_section_number); ?>&f_language_id=<?php  p($f_language_id); ?>&f_language_selected=<?php  p($f_language_selected); ?>&f_article_offset=<?php  p(min( ($numUniqueArticles-1), ($f_article_offset + $ArticlesPerPage))); ?>"><?php  putGS('Next'); ?> &gt;&gt</A></B>
 		<?php  } ?>
 	</TD>
-	<td colspan="3">
-		<?php putGS("$1 articles found", $numUniqueArticles); ?>
-	</td>
 </TR>
 </TABLE>
+</form>
 <?php  } else { ?><BLOCKQUOTE>
 	<LI><?php  putGS('No articles.'); ?></LI>
 	</BLOCKQUOTE>

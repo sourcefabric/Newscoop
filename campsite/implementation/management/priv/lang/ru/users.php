@@ -4,7 +4,7 @@ regGS("Readers", "Читатели");
 regGS("Edit reader data", "Редактировать данные читателя");
 regGS("Add new IP address group", "Добавление новой группы IP-адресов");
 regGS("Staff management", "Управление персоналом");
-regGS("Subscribers management", "Управление подписчиками");
+regGS("Subscriber management", "Управление подписчиками");
 regGS("Edit user rights", "Редактировать права пользователей");
 regGS("User Name", "Имя пользователя");
 regGS("Full Name", "Полное имя");

@@ -27,7 +27,7 @@ regGS("Issue $1 updated in publication $2", "Ausgabe $1 in Publikation $2 wurde 
 regGS("You do not have the right to delete issues.", "Keine Berechtigung Ausgaben zu löschen");
 regGS("Are you sure you want to delete the issue $1?", "Ausgabe $1 wirklich löschen?");
 regGS("Deleting issue", "Ausgabe wird gelöscht");
-regGS("The issue $1 has ben deleted.", "Ausgabe $1 wurde gelöscht");
+regGS("The issue $1 has been deleted.", "Ausgabe $1 wurde gelöscht");
 regGS("The issue $1 could not be deleted.", "Ausgabe $1 konnte nicht gelöscht werden");
 regGS("All sections from Issue $1 from publication $2 deleted", "Alle Rubriken in Ausgabe $1 der Publikation $2 wurden gelöscht");
 regGS("Issue $1 from publication $2 deleted", "Ausgabe $1 der Publikation $2 wurde gelöscht");

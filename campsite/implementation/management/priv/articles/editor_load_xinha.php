@@ -14,7 +14,7 @@ function editor_load_xinha($p_dbColumns, $p_user) {
 	//<![CDATA[
       _editor_url = "/javascript/xinha/";
       _editor_lang = "<?php p($_REQUEST['TOL_Language']); ?>";
-      _campsite_article_id = <?php echo $_REQUEST['Article']; ?>;
+      _campsite_article_id = <?php echo $_REQUEST['f_article_number']; ?>;
 	//]]>
 </script>    
 

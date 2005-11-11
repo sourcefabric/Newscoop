@@ -8,65 +8,31 @@ if (!$access) {
 	exit;
 }
 
-$Pub = Input::Get('Pub', 'int', 0);
-$Issue = Input::Get('Issue', 'int', 0);
-$Section = Input::Get('Section', 'int', 0);
-$Language = Input::Get('Language', 'int', 0);
-$sLanguage = Input::Get('sLanguage', 'int', 0);
-$Article = Input::Get('Article', 'int', 0);
-$ArticleLanguage = Input::Get('ArticleLanguage', 'int', 0);
-$cName = trim(Input::Get('cName'));
-$cLanguage = Input::Get('cLanguage');
-$cKeywords = Input::Get('cKeywords');
-$BackLink = Input::Get('Back', 'string', "/$ADMIN/articles/", true);
+$f_language_id = Input::Get('f_language_id', 'int', 0);
+$f_article_code = Input::Get('f_article_code', 'string', 0);
+$f_translation_title = trim(Input::Get('f_translation_title'));
+$f_translation_language = Input::Get('f_translation_language');
+list($articleNumber, $languageId) = split("_", $f_article_code);
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
-	exit;	
-}
-$languageObj =& new Language($cLanguage);
-if (!$languageObj->exists()) {
-	camp_html_display_error(getGS('You must select a language.'), $BackLink);
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));
 	exit;	
 }
 
-$publicationObj =& new Publication($Pub);
-if (!$publicationObj->exists()) {
-	camp_html_display_error(getGS('Publication does not exist.'), $BackLink);
-	exit;	
-}
-
-$issueObj =& new Issue($Pub, $Language, $Issue);
-if (!$issueObj->exists()) {
-	camp_html_display_error(getGS('No such issue.'), $BackLink);
-	exit;	
-}
-
-$sectionObj =& new Section($Pub, $Issue, $Language, $Section);
-if (!$sectionObj->exists()) {
-	camp_html_display_error(getGS('No such section.'), $BackLink);
-	exit;		
-}
-
-$articleObj =& new Article($Pub, $Issue, $Section, $ArticleLanguage, $Article);
+$articleObj =& new Article($languageId, $articleNumber);
 if (!$articleObj->exists()) {
-	camp_html_display_error(getGS('Article does not exist.'), $BackLink);
+	camp_html_display_error(getGS('Article does not exist.'));
 	exit;
 }
 
 if (!$articleObj->userCanModify($User)) {
-	$errorStr = getGS('You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only changed by authorized users.');
-	camp_html_display_error($errorStr, $BackLink);
+	$errorStr = getGS('You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.');
+	camp_html_display_error($errorStr);
 	exit;	
 }
 
-$articleCopy =& $articleObj->createTranslation($cLanguage, $User->getId(), $cName);
+$articleCopy =& $articleObj->createTranslation($f_translation_language, $User->getId(), $f_translation_title);
 
-$logtext = getGS('Article $1 added to $2. $3 from $4. $5 of $6', 
-	$cName, $sectionObj->getSectionId(), $sectionObj->getName(), 
-	$issueObj->getIssueId(), $issueObj->getName(), $publicationObj->getName() ); 
-Log::Message($logtext, $User->getUserName(), 31);
-    
-header('Location: '.camp_html_article_url($articleCopy, $Language, 'edit.php')); 
+header('Location: '.camp_html_article_url($articleCopy, $languageId, 'edit.php')); 
 exit;
 ?>

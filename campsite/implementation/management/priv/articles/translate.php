@@ -8,53 +8,49 @@ if (!$access) {
 	exit;
 }
 
-$Pub = Input::Get('Pub', 'int', 0);
-$Issue = Input::Get('Issue', 'int', 0);
-$Section = Input::Get('Section', 'int', 0);
-$Article = Input::Get('Article', 'int', 0);
-$Language = Input::Get('Language', 'int', 0);
-$sLanguage = Input::Get('sLanguage', 'int', 0);
+$f_publication_id = Input::Get('f_publication_id', 'int', 0);
+$f_issue_number = Input::Get('f_issue_number', 'int', 0);
+$f_section_number = Input::Get('f_section_number', 'int', 0);
+$f_article_code = Input::Get('f_article_code', 'string', 0);
+$f_language_id = Input::Get('f_language_id', 'int', 0);
+$f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $BackLink = Input::Get('Back', 'string', "/$ADMIN/articles/", true);
+
+list($articleNumber, $languageId) = split("_", $f_article_code);
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
 	exit;	
 }
-$publicationObj =& new Publication($Pub);
+$publicationObj =& new Publication($f_publication_id);
 if (!$publicationObj->exists()) {
 	camp_html_display_error(getGS('Publication does not exist.'), $BackLink);
 	exit;	
 }
 
-$issueObj =& new Issue($Pub, $Language, $Issue);
+$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
 if (!$issueObj->exists()) {
 	camp_html_display_error(getGS('No such issue.'), $BackLink);
 	exit;	
 }
 
-$sectionObj =& new Section($Pub, $Issue, $Language, $Section);
+$sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
 if (!$sectionObj->exists()) {
 	camp_html_display_error(getGS('No such section.'), $BackLink);
 	exit;		
 }
 
-$articleObj =& new Article($Pub, $Issue, $Section, $sLanguage, $Article);
+$articleObj =& new Article($languageId, $articleNumber);
 if (!$articleObj->exists()) {
 	camp_html_display_error(getGS('Article does not exist.'), $BackLink);
 	exit;
 }
 
 if (!$User->hasPermission("AddArticle")) {
-	$errorStr = getGS('You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only changed by authorized users.');
+	$errorStr = getGS('You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.');
 	camp_html_display_error($errorStr, $BackLink);
 	exit;	
 }
-
-$translations = $articleObj->getTranslations();
-foreach ($translations as $translation) {
-	$articleNames[] = $translation->getName();
-}
-$outputName = implode(', ', $articleNames);
 
 $allLanguages = Language::GetLanguages();
 $articleLanguages = $articleObj->getLanguages();
@@ -64,30 +60,11 @@ $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj,
 				  'Section' => $sectionObj, 'Article'=>$articleObj);
 camp_html_content_top(getGS('Translate article'), $topArray, true, true);
 ?>
-<!--<table>
-<tr>
-	<td>
-		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
-		<TR>
-			<TD><A HREF="edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/back.png" BORDER="0"></A></TD>
-			<TD><A HREF="edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Section=<?php  p($Section); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>" ><B><?php  putGS('Back to article details'); ?></B></A></TD>
-		</TR>
-		</TABLE>
-	</td>
-</tr>
-</table>-->
 <P>
-<FORM NAME="dialog" METHOD="POST" ACTION="do_translate.php" >
-<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<?php  p($Pub); ?>">
-<INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<?php  p($Issue); ?>">
-<INPUT TYPE="HIDDEN" NAME="Section" VALUE="<?php  p($Section); ?>">
-<INPUT TYPE="HIDDEN" NAME="Article" VALUE="<?php  p($Article); ?>">
-<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php  p($Language); ?>">
-<INPUT TYPE="HIDDEN" NAME="sLanguage" VALUE="<?php  p($sLanguage); ?>">
-<INPUT TYPE="HIDDEN" NAME="ArticleLanguage" VALUE="<?php  p($articleObj->getLanguageId()); ?>">
-<INPUT TYPE="HIDDEN" NAME="Back" VALUE="<?php echo $BackLink; ?>">
-<CENTER>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" ALIGN="CENTER" class="table_input">
+<FORM NAME="dialog" METHOD="POST" ACTION="do_translate.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
+<INPUT TYPE="HIDDEN" NAME="f_article_code" VALUE="<?php  p($f_article_code); ?>">
+<INPUT TYPE="HIDDEN" NAME="f_language_id" VALUE="<?php  p($f_language_id); ?>">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input">
 <TR>
 	<TD COLSPAN="2">
 		<B><?php  putGS("Translate article"); ?></B>
@@ -95,19 +72,20 @@ camp_html_content_top(getGS('Translate article'), $topArray, true, true);
 	</TD>
 </TR>
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Article"); ?>:</TD>
-	<TD><?php p(htmlspecialchars($outputName)); ?></td>
+	<TD ALIGN="RIGHT" valign="top"><?php  putGS("Article name"); ?>:</TD>
+	<TD><?PHP p(htmlspecialchars($articleObj->getTitle())); ?></td>
 </TR>
 <TR>
-	<TD ALIGN="RIGHT" ><?php putGS("Name"); ?>:</TD>
+	<TD ALIGN="RIGHT" ><?php putGS("New article name"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" NAME="cName" SIZE="32" MAXLENGTH="64" class="input_text" alt="blank" emsg="<?php putGS('You must complete the $1 field.', getGS('Name')); ?>">
+	<INPUT TYPE="TEXT" NAME="f_translation_title" SIZE="32" MAXLENGTH="64" class="input_text" alt="blank" emsg="<?php putGS('You must complete the $1 field.', getGS('Name')); ?>">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Language"); ?>:</TD>
 	<TD>
-	<SELECT NAME="cLanguage" class="input_select">
+	<SELECT NAME="f_translation_language" class="input_select" alt="select" emsg="<?php putGS("You must choose a language"); ?>">
+	<option></option>
 	<?php 
 	// Show all the languages that have not yet been translated.
 	$displayLanguages = array();
@@ -118,16 +96,10 @@ camp_html_content_top(getGS('Translate article'), $topArray, true, true);
 	}
 	asort($displayLanguages);
 	foreach ($displayLanguages as $tmpLangId => $nativeName) {
-		pcomboVar($tmpLangId, '', $nativeName);
+		camp_html_select_option($tmpLangId, '', $nativeName);
 	}
 	?>
 	</SELECT>
-	</TD>
-</TR>
-<TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Keywords"); ?>:</TD>
-	<TD>
-		<INPUT TYPE="TEXT" NAME="cKeywords" SIZE="32" MAXLENGTH="255" class="input_text">
 	</TD>
 </TR>
 <TR>
@@ -137,7 +109,6 @@ camp_html_content_top(getGS('Translate article'), $topArray, true, true);
 	</TD>
 </TR>
 </TABLE>
-</CENTER>
 </FORM>
 <P>
 

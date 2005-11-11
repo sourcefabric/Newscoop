@@ -68,9 +68,10 @@ if (!$isValidShortName) {
 	$errors[] = getGS('The $1 field may only contain letters, digits and underscore (_) character.', '"' . getGS('URL Name') . '"');
 }
 
+$editUrl = "/$ADMIN/sections/edit.php?Pub=$Pub&Issue=$Issue&Language=$Language&Section=$Section";
 if ($correct) {
     $sectionObj->setName($cName);
-    $sectionObj->setShortName($cShortName);
+    $sectionObj->setUrlName($cShortName);
     $sectionObj->setSectionTemplateId($cSectionTplId);
     $sectionObj->setArticleTemplateId($cArticleTplId);
 	$modified = true;
@@ -87,22 +88,22 @@ if ($correct) {
             $errors[] = getGS('Error updating subscriptions.'); 
 		}
 	}
-    $logtext = getGS('Section $1 updated to issue $2. $3 ($4) of $5', $cName, $Issue, 
-            $issueObj->getName(), $issueObj->getLanguageName(), $publicationObj->getName()); 
+    $logtext = getGS('Section #$1 "$2" updated. (Publication: $3, Issue: $4)', 
+    				 $Issue, $cName, $publicationObj->getPublicationId(), $issueObj->getIssueNumber()); 
     Log::Message($logtext, $User->getUserName(), 21);
-    
+    header("Location: $editUrl");
+    exit;
 }
 else { 
     $errors[] = getGS('The section could not be changed.').' '.getGS('Please check if another section with the same number does not already exist.'); 
 }
 
-
-camp_html_content_top("Updating section name");
+$topArray = array("Pub" => $publicationObj, "Issue" => $issueObj, "Section" => $sectionObj);
+camp_html_content_top("Updating section name", $topArray);
 ?>
 
 <P>
-<CENTER>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box" ALIGN="CENTER">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">
 <TR>
 	<TD COLSPAN="2">
 		<B> <?php  putGS("Updating section name"); ?> </B>
@@ -116,45 +117,18 @@ camp_html_content_top("Updating section name");
     foreach ($errors as $error) {
         echo "<LI>".$error."</LI>";
     }
-	if ($correct) {
-		if ($cSubs == "a") {
-			if ($add_subs_res > 0) { ?>
-				<LI><?php  putGS('A total of $1 subscriptions were updated.','<B>'.$numSubscriptionsAdded.'</B>'); ?></LI>
-            	<?php
-			}
-		}
-		if ($cSubs == "d") {
-			if ($del_subs_res > 0) { ?>
-				<LI><?php  putGS('A total of $1 subscriptions were updated.','<B>'.$numSubscriptionsDeleted.'</B>'); ?></LI>
-                <?php
-			}
-		}
-    }
-
-    if ($modified) { ?>
-    	<LI><?php  putGS('The section $1 has been successfuly modified.', '<B>'.htmlspecialchars($cName).'</B>'); ?></LI>
-        <?php  
-    } 
-    ?>		
+    ?>
     </BLOCKQUOTE>
     </TD>
 </TR>
 <TR>
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">
-    <?php 
-    if ($correct && $modified) { ?>
-        <INPUT TYPE="button" class="button" NAME="Done" VALUE="<?php  putGS('Done'); ?>" ONCLICK="location.href='/admin/sections/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>'">
-        <?php  
-    } else { ?>
-		<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/admin/sections/edit.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>&Section=<?php  p($Section); ?>'">
-        <?php  
-    } ?>
+		<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='<?php p($editUrl); ?>'">
     </DIV>
 	</TD>
 </TR>
 </TABLE>
-</CENTER>
 <P>
 
 <?php camp_html_copyright_notice(); ?>

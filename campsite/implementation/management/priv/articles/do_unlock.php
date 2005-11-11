@@ -18,12 +18,12 @@ if (!Input::IsValid()) {
 	exit;	
 }
 
-$articleObj =& new Article($PublicationId, $IssueId, $SectionId, $ArticleLanguageId, $ArticleId);
+$articleObj =& new Article($ArticleLanguageId, $ArticleId);
 
 // If the user does not have permission to change the article
 // or they didnt create the article, give them the boot.
 if (!$articleObj->userCanModify($User)) {
-	camp_html_display_error(getGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only changed by authorized users."));
+	camp_html_display_error(getGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users."));
 	exit;	
 }
 

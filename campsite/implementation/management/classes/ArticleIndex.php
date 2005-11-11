@@ -37,10 +37,10 @@ class ArticleIndex extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getArticleId() 
+	function getArticleNumber() 
 	{
 		return $this->getProperty('NrArticle');
-	} // fn getArticleId
+	} // fn getArticleNumber
 
 	
 	/**

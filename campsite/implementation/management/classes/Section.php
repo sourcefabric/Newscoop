@@ -41,16 +41,16 @@ class Section extends DatabaseObject {
 	 * @param int $p_publicationId
 	 * @param int $p_issueId
 	 * @param int $p_languageId
-	 * @param int $p_sectionId
+	 * @param int $p_sectionNumber
 	 */
 	function Section($p_publicationId = null, $p_issueId = null, 
-	                 $p_languageId = null, $p_sectionId = null) 
+	                 $p_languageId = null, $p_sectionNumber = null) 
 	{
 		parent::DatabaseObject($this->m_columnNames);
 		$this->m_data['IdPublication'] = $p_publicationId;
 		$this->m_data['NrIssue'] = $p_issueId;
 		$this->m_data['IdLanguage'] = $p_languageId;
-		$this->m_data['Number'] = $p_sectionId;
+		$this->m_data['Number'] = $p_sectionNumber;
 		if ($this->keyValuesExist()) {
 			$this->fetch();
 		}
@@ -84,10 +84,10 @@ class Section extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getIssueId() 
+	function getIssueNumber() 
 	{
 		return $this->getProperty('NrIssue');
-	} // fn getIssueId
+	} // fn getIssueNumber
 	
 	
 	/**
@@ -102,10 +102,10 @@ class Section extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getSectionId() 
+	function getSectionNumber() 
 	{
 		return $this->getProperty('Number');
-	} // fn getSectionId
+	} // fn getSectionNumber
 
 	
 	/**
@@ -139,10 +139,10 @@ class Section extends DatabaseObject {
 	/**
 	 * @param string $p_name
 	 */
-	function setShortName($p_name) 
+	function setUrlName($p_name) 
 	{
 	    return $this->setProperty('ShortName', $p_name);
-	} // fn setShortName
+	} // fn setUrlName
 	
 	
 	/**
@@ -155,12 +155,32 @@ class Section extends DatabaseObject {
 	
 	
 	/**
+	 * @param int $p_value
+	 * @return boolean
+	 */
+	function setArticleTemplateId($p_value)
+	{
+		return $this->setProperty('ArticleTplId', $p_value);
+	} // fn setArticleTemplateId
+	
+	
+	/**
 	 * @return int
 	 */
 	function getSectionTemplateId() 
 	{
 		return $this->getProperty('SectionTplId');
 	} // fn getSectionTemplateId
+	
+	
+	/**
+	 * @param int $p_value
+	 * @return boolean
+	 */
+	function setSectionTemplateId($p_value) 
+	{
+		return $this->setProperty('SectionTplId', $p_value);
+	} // fn setSectionTemplateId
 	
 	
 	/**
@@ -241,10 +261,10 @@ class Section extends DatabaseObject {
                                                        $this->m_data['Number']);
             $copiedArticles = array();
         	foreach ($srcSectionArticles as $articleObj) {
-        	    if (!in_array($articleObj->getArticleId(), $copiedArticles)) {
+        	    if (!in_array($articleObj->getArticleNumber(), $copiedArticles)) {
             		$tmpCopiedArticles = $articleObj->copy($p_destPublicationId, 
                         $p_destIssueId, $p_destSectionId, null, true);
-                    $copiedArticles[] = $articleObj->getArticleId();
+                    $copiedArticles[] = $articleObj->getArticleNumber();
         	    }
         	}
     	}

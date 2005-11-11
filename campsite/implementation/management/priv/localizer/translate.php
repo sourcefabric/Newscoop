@@ -94,6 +94,7 @@ function translationForm($p_request)
     $mapPrefixToDisplay[] = "";
     $mapPrefixToDisplay["globals"] = getGS("Globals");
     $mapPrefixToDisplay["home"] = getGS("Home");
+    $mapPrefixToDisplay["api"] = getGS("Log Messages");
     $mapPrefixToDisplay["pub"] = getGS("Publications");
     $mapPrefixToDisplay["issues"] = getGS("Issues");
     $mapPrefixToDisplay["sections"] = getGS("Sections");

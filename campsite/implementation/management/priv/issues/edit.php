@@ -28,15 +28,48 @@ $allTemplates = Template::GetAllTemplates();
 
 camp_html_content_top(getGS('Change issue details'), array('Pub' => $publicationObj, 'Issue' => $issueObj));
 
+$url_args1 = "Pub=$Pub";
+$url_args2 = $url_args1."&Issue=$Issue&Language=$Language";
+
+if (Issue::GetNumIssues($Pub) <= 0) {
+	$url_add = "add_new.php";
+} else {
+	$url_add = "qadd.php";
+}
 ?>
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
+<TR>
+	<TD><A HREF="/<?php echo $ADMIN; ?>/sections/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($issueObj->getIssueNumber()); ?>&Language=<?php p($issueObj->getLanguageId()); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/go_to.png" BORDER="0"></A></TD>
+	<TD><A HREF="/<?php echo $ADMIN; ?>/sections/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($issueObj->getIssueNumber()); ?>&Language=<?php p($issueObj->getLanguageId()); ?>"><B><?php  putGS("Go To Sections"); ?></B></A></TD>
+</TR>
+</TABLE>
+
+<P>
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons">
+<TR>
+	<TD><A HREF="<?php p($url_add); ?>?<?php p($url_args1); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
+	<TD><A HREF="<?php p($url_add); ?>?<?php p($url_args1); ?>" ><B><?php  putGS("Add new issue"); ?></B></A></TD>
+	
+	<TD style="padding-left: 20px;"><A HREF="" ONCLICK="window.open('preview.php?<?php p($url_args2); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/preview.png" BORDER="0"></A></TD>
+	<TD><A HREF="" ONCLICK="window.open('preview.php?<?php p($url_args2); ?>');"><B><?php  putGS("Preview"); ?></B></A></TD>
+	
+	<TD style="padding-left: 20px;"><A HREF="autopublish.php?<?php p($url_args2); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/automatic_publishing.png" BORDER="0"></A></TD>
+	<TD><A HREF="autopublish.php?<?php p($url_args2); ?>" ><B><?php  putGS("Scheduled Publishing"); ?></B></A></TD>
+	
+	<TD style="padding-left: 20px;"><A HREF="translate.php?<?php p($url_args2); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/translate.png" BORDER="0"></A></TD>
+	<TD><A HREF="translate.php?<?php p($url_args2); ?>" ><B><?php  putGS("Translate"); ?></B></A></TD>
+	
+	<TD style="padding-left: 20px;"><A HREF="do_del.php?<?php p($url_args2); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the issue $1?', htmlspecialchars($issueObj->getName())); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0"></A></TD>
+	<TD><A HREF="do_del.php?<?php p($url_args2); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the issue $1?', htmlspecialchars($issueObj->getName())); ?>');"><B><?php  putGS("Delete"); ?></B></A></TD>
+</TR>
+</TABLE>
 
 <P>
 <FORM NAME="dialog" METHOD="POST" ACTION="do_edit.php" >
 <INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<?php p($Pub); ?>">
 <INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<?php p($Issue); ?>">
 <INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php p($Language); ?>">
-<CENTER>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input" ALIGN="CENTER">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 <TR>
 	<TD COLSPAN="2">
 		<B><?php  putGS("Change issue details"); ?></B>
@@ -56,7 +89,7 @@ camp_html_content_top(getGS('Change issue details'), array('Pub' => $publication
 	    <SELECT NAME="cLang" class="input_select">
 		<?php 
 		foreach ($allLanguages as $tmpLanguage) {
-			pcomboVar($tmpLanguage->getLanguageId(), $issueObj->getLanguageId(), $tmpLanguage->getNativeName());
+			camp_html_select_option($tmpLanguage->getLanguageId(), $issueObj->getLanguageId(), $tmpLanguage->getNativeName());
 	    }
 		?>
 		</SELECT>
@@ -79,7 +112,7 @@ camp_html_content_top(getGS('Change issue details'), array('Pub' => $publication
 		<OPTION VALUE="0">---</OPTION>
 		<?php 
 		foreach ($allTemplates as $template) {
-			pcomboVar($template->getTemplateId(), $issueObj->getIssueTemplateId(), $template->getName());
+			camp_html_select_option($template->getTemplateId(), $issueObj->getIssueTemplateId(), $template->getName());
 		}
 		?>	    
 		</SELECT>
@@ -93,8 +126,8 @@ camp_html_content_top(getGS('Change issue details'), array('Pub' => $publication
 		<OPTION VALUE="0">---</OPTION>
 		<?php 
 		foreach ($allTemplates as $template) {
-			pcomboVar($template->getTemplateId(), $issueObj->getSectionTemplateId(), $template->getName());
-			}
+			camp_html_select_option($template->getTemplateId(), $issueObj->getSectionTemplateId(), $template->getName());
+		}
 		?>	    
 		</SELECT>
 	</TD>
@@ -107,7 +140,7 @@ camp_html_content_top(getGS('Change issue details'), array('Pub' => $publication
 		<OPTION VALUE="0">---</OPTION>
 		<?php 
 		foreach ($allTemplates as $template) {
-			pcomboVar($template->getTemplateId(), $issueObj->getArticleTemplateId(), $template->getName());
+			camp_html_select_option($template->getTemplateId(), $issueObj->getArticleTemplateId(), $template->getName());
 		}
 		?>
 		</SELECT>
@@ -130,7 +163,6 @@ camp_html_content_top(getGS('Change issue details'), array('Pub' => $publication
 	</TD>
 </TR>
 </TABLE>
-</CENTER>
 </FORM>
 <P>
 

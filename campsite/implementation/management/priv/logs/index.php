@@ -54,7 +54,7 @@ echo camp_html_breadcrumbs($crumbs);
 				<OPTION VALUE="0">
 				<?php 
 				foreach ($events as $event) { 
-					pcomboVar($event->getEventId(), $f_event_search_id, htmlspecialchars($event->getName()));
+					camp_html_select_option($event->getEventId(), $f_event_search_id, htmlspecialchars($event->getName()));
 				}
 				?>
 				</SELECT>
@@ -86,7 +86,7 @@ echo camp_html_breadcrumbs($crumbs);
 		</TD>
 		
 		<TD>
-			<?php  p(htmlspecialchars($entry->getUserName())); ?>&nbsp;
+			<?php  p(htmlspecialchars($entry->getProperty("full_name"))); ?>&nbsp;
 		</TD>
 	
 		<?php if ($f_event_search_id == 0) { ?>

@@ -21,7 +21,7 @@ regGS("Issue $1 updated in publication $2", "Выпуск $1 обновлен в
 regGS("You do not have the right to delete issues.", "Вы не имеете права удаления выпусков.");
 regGS("Are you sure you want to delete the issue $1?", "Вы уверены, что хотите удалить выпуск $1?");
 regGS("Deleting issue", "Удаление выпуска");
-regGS("The issue $1 has ben deleted.", "Выпуск $1 был удален.");
+regGS("The issue $1 has been deleted.", "Выпуск $1 был удален.");
 regGS("The issue $1 could not be deleted.", "Не удалось удалить выпуск $1.");
 regGS("All sections from Issue $1 from publication $2 deleted", "Удалены все секции из выпуска $1 публикации $2");
 regGS("Issue $1 from publication $2 deleted", "Удален выпуск $1 из публикации $2");

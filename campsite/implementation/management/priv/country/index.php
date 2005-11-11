@@ -50,7 +50,7 @@ echo camp_html_breadcrumbs($crumbs);
 				<OPTION></option>
 				<?php 
 				foreach ($languages as $language) {
-					pcomboVar($language->getLanguageId(), $f_language_selected, $language->getNativeName());
+					camp_html_select_option($language->getLanguageId(), $f_language_selected, $language->getNativeName());
 			    }
 				?>
 				</SELECT>

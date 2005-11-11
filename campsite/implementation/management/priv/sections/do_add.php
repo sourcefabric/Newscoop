@@ -72,7 +72,7 @@ if ($correct) {
 	    $logtext = getGS('Section $1 added to issue $2. $3 ($4) of $5',
 	        $cName, $Issue, $issueObj->getName(), $issueObj->getLanguageName(), $publicationObj->getName()); 
 	    Log::Message($logtext, $User->getUserName(), 21);
-	    header("Location: edit.php?Pub=$Pub&Issue=$Issue&Language=$Language&Section=".$newSection->getSectionId());
+	    header("Location: edit.php?Pub=$Pub&Issue=$Issue&Language=$Language&Section=".$newSection->getSectionNumber());
 	    exit;
     }
 }

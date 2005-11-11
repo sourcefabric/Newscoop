@@ -24,9 +24,10 @@ camp_html_content_top(getGS("Countries Subscription Default Time"), array("Pub" 
 
 ?>    
 <p>
-<TABLE>
+<TABLE class="action_buttons">
 <TR>
-	<TD><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1"><TR><TD><A HREF="countryadd.php?Pub=<?php p($Pub); ?>&Language=<?php p($Language); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD><TD><A HREF="countryadd.php?Pub=<?php p($Pub); ?>&Language=<?php p($Language); ?>" ><B><?php  putGS("Add new country"); ?></B></A></TD></TR></TABLE></TD>
+	<TD><A HREF="countryadd.php?Pub=<?php p($Pub); ?>&Language=<?php p($Language); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
+	<TD><A HREF="countryadd.php?Pub=<?php p($Pub); ?>&Language=<?php p($Language); ?>" ><B><?php  putGS("Add new country"); ?></B></A></TD>
 </TR>
 </TABLE>
 
@@ -39,6 +40,7 @@ camp_html_content_top(getGS("Countries Subscription Default Time"), array("Pub" 
 	<TD ALIGN="LEFT" VALIGN="TOP" ><B><?php  putGS("Delete"); ?></B></TD>
 </TR>
 <?php  
+$color = 0;
 foreach ($defaultTimes as $time) { 
 	$country =& new Country($time->getCountryCode(), $Language);
 	?>
