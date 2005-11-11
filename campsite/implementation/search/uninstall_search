@@ -1,13 +1,13 @@
 #!/bin/bash
 
-rm -f "$BIN_DIR/gather"
+rm -f "$SBIN_DIR/campsite_indexer"
 
 if $USER_INSTALL; then exit 0; fi
 
 . ${INSTALL_CONF}/cron_functions
 if [ -f /etc/crontab ]; then
-    uninstall_cron_task "$BIN_DIR/gather" /etc/crontab
+    uninstall_cron_task "$SBIN_DIR/campsite_indexer" /etc/crontab
 fi
-uninstall_cron_task "$BIN_DIR/gather" /etc/cron.d/campsite_gather -d || exit 1
+uninstall_cron_task "$SBIN_DIR/campsite_indexer" /etc/cron.d/campsite_indexer -d || exit 1
 restart_cron
 exit 0

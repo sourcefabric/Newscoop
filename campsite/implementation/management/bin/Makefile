@@ -3,18 +3,16 @@ include ../../../make.env
 all: dummy
 
 install:
-	mkdir -p $(BIN_DIR)
-	cp -f autopublish.php $(BIN_DIR)
-	cp -f autopublish $(BIN_DIR)
-	chown $(ROOT_USER):$(APACHE_GROUP) $(BIN_DIR)/autopublish
-	chown $(ROOT_USER):$(APACHE_GROUP) $(BIN_DIR)/autopublish.php
+	mkdir -p $(SBIN_DIR)
+	install -o $(ROOT_USER) -g $(APACHE_GROUP) -m 750 campsite_autopublish "$(SBIN_DIR)"
+	install -o $(ROOT_USER) -g $(APACHE_GROUP) -m 750 campsite_autopublish.php "$(SBIN_DIR)"
 	./install_autopublish
 
 clean: dummy
 
 uninstall:
-	rm -f $(BIN_DIR)/autopublish.php
-	rm -f $(BIN_DIR)/autopublish
+	rm -f $(SBIN_DIR)/campsite_autopublish.php
+	rm -f $(SBIN_DIR)/campsite_autopublish
 	./uninstall_autopublish
 
 dummy:

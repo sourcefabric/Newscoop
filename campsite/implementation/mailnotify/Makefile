@@ -21,15 +21,15 @@ links: dummy
 	@if [ ! -L "configure.h" ]; then ln -s "$(INSTALL_CONF)/configure.h"; fi
 
 notifyendsubs: notifyendsubs.o ccampsiteinstance.o mutex.o readconf.o
-	g++ -o notifyendsubs notifyendsubs.o readconf.o ccampsiteinstance.o mutex.o $(LDFLAGS) $(LDLIBS)
-	strip notifyendsubs
+	g++ -o campsite_notifyendsubs notifyendsubs.o readconf.o ccampsiteinstance.o mutex.o $(LDFLAGS) $(LDLIBS)
+	strip campsite_notifyendsubs
 
 notifyevents: notifyevents.o ccampsiteinstance.o mutex.o readconf.o
-	g++ -o notifyevents notifyevents.o readconf.o ccampsiteinstance.o mutex.o $(LDFLAGS) $(LDLIBS)
-	strip notifyevents
+	g++ -o campsite_notifyevents notifyevents.o readconf.o ccampsiteinstance.o mutex.o $(LDFLAGS) $(LDLIBS)
+	strip campsite_notifyevents
 
 clean: dummy
-	rm -f $(LINKS) *.o configure.h *~ notifyendsubs notifyevents
+	rm -f $(LINKS) *.o configure.h *~ campsite_notifyendsubs campsite_notifyevents
 	$(MAKE) -C smtp_wrapper clean
 
 ccampsiteinstance.o: ccampsiteinstance.cpp $(DEPENDENCES) ccampsiteinstance.h readconf.h globals.h configure.h

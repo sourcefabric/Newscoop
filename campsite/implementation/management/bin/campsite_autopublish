@@ -1,0 +1,18 @@
+#!/bin/bash
+
+sbin_path=`dirname $0`
+if [ "$sbin_path" = "." ]; then
+	www_dir=`./campsite_config --www_dir`
+	script_call="./campsite_autopublish.php"
+elif [ "$sbin_path" = "" ]; then
+	www_dir=`campsite_config --www_dir`
+	sbin_path=`campsite_config --sbin_dir`
+	script_call="$sbin_path/campsite_autopublish.php"
+else 
+	www_dir=`$bin_path/campsite_config --www_dir`
+	script_call="$sbin_path/campsite_autopublish.php"
+fi
+
+for inst_www_dir in $www_dir/*; do
+	php $"$script_call" $"$inst_www_dir"
+done

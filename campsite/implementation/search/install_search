@@ -1,7 +1,7 @@
 #!/bin/bash
 
-mkdir -p $BIN_DIR
-install -o $ROOT_USER -g $APACHE_GROUP -m 750 gather "$BIN_DIR"
+mkdir -p $SBIN_DIR
+install -o $ROOT_USER -g $APACHE_GROUP -m 750 campsite_indexer "$SBIN_DIR"
 [ $? -ne 0 ] && exit 1
 
 if $USER_INSTALL; then exit 0; fi
@@ -10,6 +10,6 @@ if $USER_INSTALL; then exit 0; fi
 if [ -f /etc/crontab ]; then
     uninstall_cron_task "$BIN_DIR/gather" /etc/crontab
 fi
-install_cron_task "0" "*/4" "*" "*" "*" "$ROOT_USER" "$BIN_DIR/gather" /etc/cron.d/campsite_gather -c || exit 1
+install_cron_task "0" "*/4" "*" "*" "*" "$ROOT_USER" "$SBIN_DIR/campsite_indexer" /etc/cron.d/campsite_indexer -c || exit 1
 restart_cron || exit 1
 exit 0

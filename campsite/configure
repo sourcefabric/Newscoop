@@ -86,6 +86,7 @@ display_help()
     echo -e "    --campsite_dir [campsite_dir]: set the campsite install directory"
     echo -e "        (overrides --prefix option)"
     echo -e "    --bin_dir [bin_dir]: set the campsite binaries directory"
+    echo -e "    --sbin_dir [sbin_dir]: set the campsite admin binaries directory"
     echo -e "    --etc_dir [etc_dir]: set the campsite configuration directory"
     echo -e "    --www_dir [www_dir]: set the campsite WWW directory; instance document root"
     echo -e "        and cgi directories will be installed here."
@@ -110,6 +111,7 @@ read_only=false
 set_prefix_dir=false
 set_campsite_dir=false
 set_bin_dir=false
+set_sbin_dir=false
 set_etc_dir=false
 set_www_dir=false
 set_www_common_dir=false
@@ -126,6 +128,7 @@ while [ "$1" != "" ]; do
     --prefix) export PREFIX_DIR=$2; set_prefix_dir=true; shift 1 ;;
     --campsite_dir) export CAMPSITE_DIR=$2; set_campsite_dir=true; shift 1 ;;
     --bin_dir) export BIN_DIR=$2; set_bin_dir=true; shift 1 ;;
+    --sbin_dir) export SBIN_DIR=$2; set_sbin_dir=true; shift 1 ;;
     --etc_dir) export ETC_DIR=$2; set_etc_dir=true; shift 1 ;;
     --www_dir) export WWW_DIR=$2; set_www_dir=true; shift 1 ;;
     --www_common_dir) export WWW_COMMON_DIR=$2; set_www_common_dir=true; shift 1 ;;
@@ -143,6 +146,7 @@ fi
 
 if $set_campsite_dir; then
     ! $set_bin_dir && export BIN_DIR=$CAMPSITE_DIR/bin
+    ! $set_sbin_dir && export SBIN_DIR=$CAMPSITE_DIR/sbin
     ! $set_etc_dir && export ETC_DIR=$CAMPSITE_DIR/etc
     ! $set_www_dir && export WWW_DIR=$CAMPSITE_DIR/www
     ! $set_www_common_dir && export WWW_COMMON_DIR=$CAMPSITE_DIR/www-common
@@ -186,6 +190,7 @@ cat > "$campsite_config_script" << EOF
 
 [ "\$1" = "--campsite_dir" ] && echo -n "$CAMPSITE_DIR"
 [ "\$1" = "--bin_dir" ] && echo -n "$BIN_DIR"
+[ "\$1" = "--sbin_dir" ] && echo -n "$SBIN_DIR"
 [ "\$1" = "--etc_dir" ] && echo -n "$ETC_DIR"
 [ "\$1" = "--www_dir" ] && echo -n "$WWW_DIR"
 [ "\$1" = "--www_common_dir" ] && echo -n "$WWW_COMMON_DIR"
@@ -209,6 +214,7 @@ export APACHE_GROUP=$APACHE_GROUP
 export INSTALL_CONF=$INSTALL_CONF
 export CAMPSITE_DIR=$CAMPSITE_DIR
 export BIN_DIR=$BIN_DIR
+export SBIN_DIR=$SBIN_DIR
 export ETC_DIR=$ETC_DIR
 export WWW_DIR=$WWW_DIR
 export WWW_COMMON_DIR=$WWW_COMMON_DIR
@@ -347,6 +353,7 @@ export APACHE_USER=$APACHE_USER
 export APACHE_GROUP=$APACHE_GROUP
 export CAMPSITE_DIR=$CAMPSITE_DIR
 export BIN_DIR=$BIN_DIR
+export SBIN_DIR=$SBIN_DIR
 export ETC_DIR=$ETC_DIR
 export WWW_DIR=$WWW_DIR
 export WWW_COMMON_DIR=$WWW_COMMON_DIR

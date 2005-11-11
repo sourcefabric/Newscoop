@@ -7,6 +7,9 @@ install: dummy
 	mkdir -p "$(BIN_DIR)"
 	chown $(ROOT_USER):$(APACHE_GROUP) "$(BIN_DIR)"
 	chmod 755 "$(BIN_DIR)"
+	mkdir -p "$(SBIN_DIR)"
+	chown $(ROOT_USER):$(APACHE_GROUP) "$(SBIN_DIR)"
+	chmod 755 "$(SBIN_DIR)"
 	mkdir -p "$(ETC_DIR)"
 	chown $(ROOT_USER):$(APACHE_GROUP) "$(ETC_DIR)"
 	chmod 755 "$(ETC_DIR)"
@@ -26,6 +29,7 @@ install: dummy
 	chown $(ROOT_USER):$(APACHE_GROUP) "$(CAMPSITE_DIR)/instance"
 	chmod 755 "$(CAMPSITE_DIR)/instance"
 	install -m 755 -o $(ROOT_USER) -g $(APACHE_GROUP) "$(INSTALL_CONF)/campsite_config" "$(BIN_DIR)"
+	install -m 755 -o $(ROOT_USER) -g $(APACHE_GROUP) "$(INSTALL_CONF)/campsite_config" "$(SBIN_DIR)"
 	install -m 640 -o $(ROOT_USER) -g $(APACHE_GROUP) "$(INSTALL_CONF)/install_conf.php" "$(ETC_DIR)"
 	install -m 640 -o $(ROOT_USER) -g $(APACHE_GROUP) "$(INSTALL_CONF)/vhost-template.conf" "$(ETC_DIR)"
 	install -m 640 -o $(ROOT_USER) -g $(APACHE_GROUP) "$(INSTALL_CONF)/parser_conf.php" "$(ETC_DIR)"
@@ -52,9 +56,10 @@ distclean: clean
 uninstall: dummy
 	"$(INSTALL_CONF)/remove_all_instances" -f
 	$(MAKE) -C implementation uninstall
-	rm -f "$(BIN_DIR)/campsite_config"
+	rm -f "$(BIN_DIR)/campsite_config" "$(SBIN_DIR)/campsite_config"
 	rm -f "$(ETC_DIR)/install_conf.php" "$(ETC_DIR)/parser_conf.php" "$(ETC_DIR)/vhost-template.conf"
 	rmdir --ignore-fail-on-non-empty "$(BIN_DIR)"
+	rmdir --ignore-fail-on-non-empty "$(SBIN_DIR)"
 	rmdir --ignore-fail-on-non-empty "$(ETC_DIR)"
 	rmdir --ignore-fail-on-non-empty "$(WWW_DIR)"
 	rmdir --ignore-fail-on-non-empty "$(WWW_COMMON_DIR)"
