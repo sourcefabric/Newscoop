@@ -2,9 +2,6 @@
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/article_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/DbObjectArray.php');
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/ArticlePublish.php');
-require_once($_SERVER['DOCUMENT_ROOT']. '/include/HTTP_Session/Session.php');
-
-HTTP_Session::start();
 
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
@@ -19,9 +16,6 @@ $f_language_id = Input::Get('f_language_id', 'int', 0);
 $f_language_selected = Input::Get('f_language_selected', 'int', 0, true);
 $f_article_offset = Input::Get('f_article_offset', 'int', 0, true);
 $ArticlesPerPage = 20;
-
-//$f_articles_per_page = HTTP_Session::get('campsite_articles_per_page', $f_articles_per_page);
-//$f_article_offset = HTTP_Session::get('campsite_articles_per_page', $f_article_offset);
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
