@@ -72,27 +72,6 @@ return 1
 }
 # END OF check4_make
 
-# FUNCTION: check4_m4
-# Description: check if m4 executable is installed
-# Parameters: none
-# Variables set:
-#	M4 - m4 full path
-#	output - error message (if any)
-check4_m4()
-{
-is_checked m4 && return 0
-if [ $BSD -eq 1 ]; then
-	check4_file gm4 --executable --path "/bin:/usr/bin:/usr/local/bin"
-else
-	check4_file m4 --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
-fi
-result=$? && [ $result -ne 0 ] && output="Could not find m4 utility. Please install m4 package." && return 1
-export M4=$file_path
-set_checked m4
-return 0
-}
-# END OF check4_m4
-
 # FUNCTION: check4_mkdir
 # Description: check if mkdir executable is installed
 # Parameters: none

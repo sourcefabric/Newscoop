@@ -160,7 +160,7 @@ CGI_COMMON_DIR=$WWW_COMMON_DIR/cgi-bin
 
 if [ "$c_define_start_env" != "--define_start_env" ]; then
 
-for m in ls m4 gcc gpp pear curl; do
+for m in ls gcc gpp pear curl; do
     check4_$m
     [ $? -ne 0 ] && echo $output && exit 1
 done
@@ -226,7 +226,6 @@ export RELEASE_NAME=$RELEASE_NAME
 export OLD_CAMPSITE_REGISTER=$OLD_CAMPSITE_REGISTER
 export PROCESSOR_TYPE=\`uname -m\`
 export MAKE=$MAKE
-export M4=$M4
 export IMPLEMENTATION_PARTS=$IMPLEMENTATION_PARTS
 export HAVE_GETHOSTBYADDR_R=$HAVE_GETHOSTBYADDR_R
 export HAVE_GETHOSTBYNAME_R=$HAVE_GETHOSTBYNAME_R
