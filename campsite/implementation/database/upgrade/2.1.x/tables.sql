@@ -1,6 +1,3 @@
-BEGIN;
-
-
 -- Create new tables first: URLTypes, TemplateTypes, Templates, Aliases,
 -- ArticlePublish, IssuePublish
 -- Populate URLTypes and TemplateTypes tables with default values
@@ -301,5 +298,3 @@ ADD `EditorItalic` ENUM( 'N', 'Y' ) DEFAULT 'N' NOT NULL ,
 ADD `EditorUnderline` ENUM( 'N', 'Y' ) DEFAULT 'N' NOT NULL ,
 ADD `EditorUndoRedo` ENUM( 'N', 'Y' ) DEFAULT 'N' NOT NULL ,
 ADD `EditorCopyCutPaste` ENUM( 'N', 'Y' ) DEFAULT 'N' NOT NULL ;
-
-COMMIT;

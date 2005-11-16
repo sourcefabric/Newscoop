@@ -1,5 +1,3 @@
-BEGIN;
-
 ALTER TABLE `Articles` ADD `PublishDate` DATETIME DEFAULT '0' NOT NULL AFTER `Published`;
 ALTER TABLE `ArticlePublish` CHANGE `PublishTime` `ActionTime` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00';
 ALTER TABLE `ArticlePublish` ADD COLUMN `Completed` ENUM('N', 'Y') NOT NULL DEFAULT 'N';
@@ -14,5 +12,3 @@ ALTER TABLE `Users` MODIFY COLUMN `CountryCode` VARCHAR(21);
 ALTER TABLE `Users` MODIFY COLUMN `Gender` ENUM('M','F');
 
 system php ./update_article_types.php
-
-COMMIT;
