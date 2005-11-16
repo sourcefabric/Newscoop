@@ -127,8 +127,15 @@ if ($User->hasPermission("ManagePub")) {
 }    
 	
 if ($User->hasPermission("ManageUsers")) { 
-    $menu_item =& DynMenuItem::Create(getGS("Add new user account"), 
+    $menu_item =& DynMenuItem::Create(getGS("Add new staff member"), 
         "/$ADMIN/users/edit.php?uType=Staff&Back=".urlencode($_SERVER['REQUEST_URI']),
+        array("icon" => sprintf($iconTemplateStr, "add_user.png")));
+    $menu_actions->addItem($menu_item);
+}    
+	
+if ($User->hasPermission("ManageUsers")) { 
+    $menu_item =& DynMenuItem::Create(getGS("Add new subscriber"), 
+        "/$ADMIN/users/edit.php?uType=Subscribers&Back=".urlencode($_SERVER['REQUEST_URI']),
         array("icon" => sprintf($iconTemplateStr, "add_user.png")));
     $menu_actions->addItem($menu_item);
 }    
@@ -243,7 +250,7 @@ if ($showUserMenu) {
         $menu_users->addItem($menu_item);	    
 	}
 	if ($User->hasPermission("ManageUserTypes")) { 
-        $menu_item =& DynMenuItem::Create(getGS("User Types"), 
+        $menu_item =& DynMenuItem::Create(getGS("Staff User Types"), 
             "/$ADMIN/user_types/",
             array("icon" => sprintf($iconTemplateStr, "user_types.png")));
         $menu_users->addItem($menu_item);	    

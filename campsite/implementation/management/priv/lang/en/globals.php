@@ -119,7 +119,7 @@ regGS("Remove", "Remove");
 regGS("The $1 actions have been scheduled on $2", "The $1 actions have been scheduled on $2");
 regGS("days", "days");
 regGS("Article Types", "Article Types");
-regGS("User Types", "User Types");
+regGS("Staff User Types", "Staff User Types");
 regGS("Glossary", "Glossary");
 regGS("Keyword infotypes", "Keyword infotypes");
 regGS("Publications", "Publications");
@@ -290,7 +290,8 @@ regGS("The infotype could not be deleted.", "The infotype could not be deleted."
 regGS("The $1 field may only contain letters, digits and underscore (_) character.", "The $1 field may only contain letters, digits and underscore (_) character.");
 regGS("Add new publication", "Add new publication");
 regGS("Upload new template", "Upload new template");
-regGS("Add new user account", "Add new user account");
+regGS("Add new staff member", "Add new staff member");
+regGS("Add new subscriber", "Add new subscriber");
 regGS("Add new user type", "Add new user type");
 regGS("Add new article type", "Add new article type");
 regGS("Add new country", "Add new country");

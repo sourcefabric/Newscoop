@@ -31,8 +31,12 @@ $crumbs[] = array(getGS("Users"), "");
 $crumbs[] = array(getGS($uType), "/$ADMIN/users/?".get_user_urlparams());
 if ($userId > 0) { 
     $crumbs[] = array(getGS("Change user account information"), "");
-} else { 
-    $crumbs[] = array(getGS("Add new user account"), "");
+} else {
+	if ($uType == "Staff") {
+    	$crumbs[] = array(getGS("Add new staff member"), "");
+	} else {
+    	$crumbs[] = array(getGS("Add new subscriber"), "");
+	}
 }
 $breadcrumbs = camp_html_breadcrumbs($crumbs);
 echo $breadcrumbs; 

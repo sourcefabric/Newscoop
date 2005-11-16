@@ -48,8 +48,14 @@ if ($canManage) {
 ?>
 	<td><a href="<?php echo $addLink; ?>">
 		<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" border="0">
-		<b><?php putGS("Add new user account"); ?></b></a></td>
-<?php } ?>
+<?php
+	if ($uType == "Staff") {
+		echo "<b>" . getGS("Add new staff member") . "</b></a></td>";
+	} else {
+		echo "<b>" . getGS("Add new subscriber") . "</b></a></td>";
+	}
+}
+?>
 	<td style="padding-left: 10px;">
 		<a href="?<?php echo get_user_urlparams(0, false, true); ?>">
 		<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/reset.png" border="0">

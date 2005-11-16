@@ -98,7 +98,7 @@ $rights = array('Content'=>$content_group, 'Templates'=>$templates_group,
 	'Editor Table Settings'=>$editor_group_3, 'Editor Miscellaneous Settings'=>$editor_group_4);
 
 $crumbs = array();
-$crumbs[] = array(getGS("User Types"), "/$ADMIN/user_types/");
+$crumbs[] = array(getGS("Staff User Types"), "/$ADMIN/user_types/");
 $crumbs[] = array(getGS("Change user type permissions"), "");
 echo camp_html_breadcrumbs($crumbs);
 
