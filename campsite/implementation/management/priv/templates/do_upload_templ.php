@@ -1,7 +1,6 @@
 <?php
 
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/templates/template_common.php");
-require_once($Campsite['HTML_DIR']."/$ADMIN_DIR/templates/lib_upload.php");
     
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
@@ -37,6 +36,9 @@ if ($res) {
 	Log::Message($logtext, $User->getUserName, 111);
 	header("Location: /$ADMIN/templates?Path=" . urlencode($Path));
 	exit;
+} else {
+	$errMsg = getGS("Unable to save the template '$1' to the path '$2'.", $File_name, $Path) . " "
+			. getGS("Please check if the user '$1' has permission to write in this directory.", $Campsite['APACHE_USER']);
 }
 
 $crumbs = array();
@@ -56,7 +58,7 @@ echo camp_html_breadcrumbs($crumbs);
 	</TD>
 </TR>
 <TR>
-	<TD COLSPAN="2"><BLOCKQUOTE><LI><?php  p($FSresult)?> </LI> </BLOCKQUOTE></TD>
+	<TD COLSPAN="2"><BLOCKQUOTE><LI><?php  p($errMsg)?> </LI> </BLOCKQUOTE></TD>
 </TR>
 <TR>
 	<TD COLSPAN="2">

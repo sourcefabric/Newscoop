@@ -50,4 +50,7 @@ regGS("You do not have the right to delete folders.", "You do not have the right
 regGS("You do not have the right to create templates.", "You do not have the right to create templates.");
 regGS("Duplicate file", "Duplicate file");
 regGS("Delete file", "Delete file");
+regGS("Unable to save the template '$1' to the path '$2'.", "Unable to save the template '$1' to the path '$2'.");
+regGS("Please check if the user '$1' has permission to write in this directory.", "Please check if the user '$1' has permission to write in this directory.");
+regGS("Unable to delete the template '$1' in the path '$2'.", "Unable to delete the template '$1' in the path '$2'.");
 ?>

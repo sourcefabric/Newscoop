@@ -281,7 +281,7 @@ class Template extends DatabaseObject {
 		}
 	
 		$origFile = $newname.".orig";
-		$renok = move_uploaded_file($fileName, $origFile);
+		@$renok = move_uploaded_file($fileName, $origFile);
 		if ($renok == false){
 			return false;
 		}

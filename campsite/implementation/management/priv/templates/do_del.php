@@ -41,7 +41,8 @@ if ($What == '0') {
 			Template::UpdateStatus();
 		}
 		else {
-			$errorMsgs[] = getGS("The template could not be deleted.");
+			$errorMsgs[] = getGS("Unable to delete the template '$1' in the path '$2'.", $Name, $Path) . " "
+						. getGS("Please check if the user '$1' has permission to write in this directory.", $Campsite['APACHE_USER']);
 		}
 	} else {
 		$errorMsgs[] = getGS("The template $1 is in use and can not be deleted.", $fileFullPath);
@@ -57,7 +58,7 @@ if ($deleted) {
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
 $crumbs[] = array(getGS("Templates"), "/$ADMIN/templates/");
-$crumbs = array_merge($crumbs, camp_template_path_crumbs($path));
+$crumbs = array_merge($crumbs, camp_template_path_crumbs($Path));
 if ($What == 1) { 
 	$crumbs[] = array(getGS("Deleting template"), ""); 
 } else { 

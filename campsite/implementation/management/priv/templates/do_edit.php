@@ -25,20 +25,26 @@ $nField = str_replace("\\n", "\n", $nField);
 
 $filename = Template::GetFullPath($Path, $Name);
 $result = false;
-if ($handle = fopen($filename, 'w')) {
+if (@$handle = fopen($filename, 'w')) {
 	$result = fwrite($handle, $nField);
 	fclose($handle);
+} else {
+	$result = 0;
 }
 
-if ( ($nField == 0) || ($result > 0) ) {
+if ($result > 0) {
 	$logtext = getGS('Template $1 was changed', $Path."/".$Name);
 	Log::Message($logtext, $User->getUserName(), 113);
 	header("Location: /$ADMIN/templates/edit_template.php?Path=".urlencode($Path)."&Name=".urlencode($Name));
+	exit;
+} else {
+	$errMsg = getGS("Unable to save the template '$1' to the path '$2'.", $Name, $Path) . " "
+			. getGS("Please check if the user '$1' has permission to write in this directory.", $Campsite['APACHE_USER']);
 }
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
 $crumbs[] = array(getGS("Templates"), "/$ADMIN/templates/");
-$crumbs = array_merge($crumbs, camp_template_path_crumbs($path));
+$crumbs = array_merge($crumbs, camp_template_path_crumbs($Path));
 $crumbs[] = array(getGS("Edit template"), "");
 echo camp_html_breadcrumbs($crumbs);
 
@@ -53,7 +59,7 @@ echo camp_html_breadcrumbs($crumbs);
 </TR>
 <TR>
 	<TD COLSPAN="2">
-		<BLOCKQUOTE> <LI><?php  putGS('The template could not be saved'); ?></LI> </BLOCKQUOTE>
+		<BLOCKQUOTE> <LI><?php echo $errMsg; ?></LI> </BLOCKQUOTE>
 	</TD>
 </TR>
 <TR>
