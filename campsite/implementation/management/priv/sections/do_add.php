@@ -53,11 +53,11 @@ if ($cNumber == "") {
 }
 if ($cShortName == "") {
 	$correct = false;
-	$errors[] = getGS('You must complete the $1 field.','"'.getGS('Short Name').'"');
+	$errors[] = getGS('You must complete the $1 field.','"'.getGS('URL Name').'"');
 }
-if (!$isValidShortName) {
+if (!$isValidShortName && trim($cShortName) != "") {
 	$correct = false;
-	$errors[] = getGS('The $1 field may only contain letters, digits and underscore (_) character.', '"' . getGS('Short Name') . '"');
+	$errors[] = getGS('The $1 field may only contain letters, digits and underscore (_) character.', '"' . getGS('URL Name') . '"');
 }
 if ($correct) {
     $newSection =& new Section($Pub, $Issue, $Language, $cNumber);
@@ -109,7 +109,7 @@ camp_html_content_top(getGS("Adding new section"), $tmpArray);
     } else {
         if ($correct != 0) { ?>
         	<LI><?php  putGS('The section could not be added.'); ?></LI>
-        	<LI><?php  putGS('Please check if another section with the same number does not already exist.'); ?></LI>
+        	<LI><?php  putGS('Please check if another section with the same number or URL name does not exist already.'); ?></LI>
             <?php  
         }
     }

@@ -57,7 +57,7 @@ camp_html_content_top(getGS('Add new section'), $topArray, true, false, array(ge
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("URL Name"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cShortName" SIZE="32" MAXLENGTH="32">
+	<INPUT TYPE="TEXT" class="input_text" NAME="cShortName" SIZE="32" MAXLENGTH="32" VALUE="<?php  p($newSectionNumber); ?>">
 	</TD>
 </TR>
 <TR>
