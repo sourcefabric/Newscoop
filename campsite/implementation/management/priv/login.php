@@ -88,7 +88,7 @@ camp_load_language("home");
 		<td colspan="2"><?php putGS('Please enter your user name and password'); ?></td>
 	</tr>
 	<tr>
-		<td align="right" ><?php putGS("User name"); ?>:</td>
+		<td align="right" ><?php putGS("Account name"); ?>:</td>
 		<td>
 		<input type="text" name="UserName" size="32" maxlength="32" class="input_text">
 		</td>

@@ -70,7 +70,7 @@ regGS("Keyword infotype", "Keyword infotype");
 regGS("Translation", "Translation");
 regGS("Infotype", "Infotype");
 regGS("Country", "Country");
-regGS("User name", "User name");
+regGS("Account name", "Account name");
 regGS("Definition", "Definition");
 regGS("Publication", "Publication");
 regGS("Default language", "Default language");

@@ -71,7 +71,7 @@ if (!$isNewUser) {
 	<td>
 		<table border="0" cellspacing="0" cellpadding="3" align="center" width="100%">
 			<tr>
-				<td align="right" nowrap><?php putGS("User name"); ?>:</td>
+				<td align="right" nowrap><?php putGS("Account name"); ?>:</td>
 <?php
 if (!$isNewUser) {
 ?>
@@ -79,7 +79,7 @@ if (!$isNewUser) {
 <?php
 } else {
 ?>
-				<td><input type="text" class="input_text" name="UName" size="32" maxlength="32" value="<?php p(htmlspecialchars($UName)); ?>" alt="blank" emsg="<?php putGS("You must complete the $1 field.", "User name"); ?>"></td>
+				<td><input type="text" class="input_text" name="UName" size="32" maxlength="32" value="<?php p(htmlspecialchars($UName)); ?>" alt="blank" emsg="<?php putGS("You must complete the $1 field.", "Account name"); ?>"></td>
 			</tr>
 			<tr>
 				<td align="right"><?php putGS("Password"); ?>:</td>

@@ -6,7 +6,7 @@ regGS("Add new IP address group", "Add new IP address group");
 regGS("Staff management", "Staff management");
 regGS("Subscriber management", "Subscriber management");
 regGS("Edit user rights", "Edit user rights");
-regGS("User Name", "User Name");
+regGS("Account Name", "Account Name");
 regGS("Full Name", "Full Name");
 regGS("Delete user $1", "Delete user $1");
 regGS("User list is empty.", "User list is empty.");
@@ -82,4 +82,5 @@ regGS("You must input a number between 0 and 255 into the Start IP address' $1 f
 regGS("Delete subscriptions to $1", "Delete subscriptions to $1");
 regGS("Change user account information", "Change user account information");
 regGS("The IP address group $1:$2 conflicts with another existing group.", "The IP address group $1:$2 conflicts with another existing group.");
+regGS("Creation Date", "Creation Date");
 ?>
