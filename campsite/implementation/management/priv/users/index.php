@@ -9,6 +9,25 @@ compute_user_rights($User, $canManage, $canDelete);
 
 $typeParam = 'uType=' . urlencode($uType);
 $isReader = $uType == 'Subscribers' ? 'Y' : 'N';
+$orderField = Input::Get('ordfld', 'string', 'fname');
+$orderDir = Input::Get('orddir', 'string', 'asc');
+$orderURLs = array('fname'=>'ordfld=fname&orddir=asc', 'uname'=>'ordfld=uname&orddir=asc',
+	'cdate'=>'ordfld=cdate&orddir=asc');
+$orderSigns = array('fname'=>'', 'uname'=>'', 'cdate'=>'');
+$orderFields = array('fname'=>'Name', 'uname'=>'UName', 'cdate'=>'time_created');
+if (!array_key_exists($orderField, $orderURLs)) {
+	$orderField = 'fname';
+	$orderDir = 'asc';
+}
+foreach($orderURLs as $field=>$fieldURL) {
+	$dir = ($orderField == $field ? ($orderDir == 'asc' ? 'desc' : 'asc') : 'asc');
+	$orderURLs[$field] = "ordfld=$field&orddir=$dir";
+	if ($dir == 'desc') {
+		$orderSigns[$field] = "<img src=\"".$Campsite["ADMIN_IMAGE_BASE_URL"]."/search_order_direction_down.png\" border=\"0\">";
+	} else {
+		$orderSigns[$field] = "<img src=\"".$Campsite["ADMIN_IMAGE_BASE_URL"]."/search_order_direction_up.png\" border=\"0\">";
+	}
+}
 
 $crumbs = array();
 $crumbs[] = array(getGS("Users"), ""); 
@@ -46,7 +65,7 @@ if ($canManage) {
 <tr>
 	<td style="padding-left: 10px;"><?php putGS("Full Name"); ?></td>
 	<td><input type="text" name="full_name" value="<?php p(htmlspecialchars($full_name)); ?>" class="input_text" style="width: 150px;"></td>
-	<td><?php putGS("User Name"); ?></td>
+	<td><?php putGS("Account Name"); ?></td>
 	<td><input type="text" name="user_name" value="<?php p(htmlspecialchars($user_name)); ?>" class="input_text" style="width: 70px;"></td>
 	<td><?php putGS("E-Mail"); ?></td>
 	<td><input type="text" name="email" value="<?php p(htmlspecialchars($email)); ?>" class="input_text" style="width: 150px;"></td>
@@ -153,19 +172,35 @@ if ($startIP1 != 0) {
 if ($subscription_date != "") {
 	$sql .= " GROUP BY s.Id";
 }
-$sql .= " ORDER BY Name ASC";
+$sql .= " ORDER BY " . $orderFields[$orderField] . " $orderDir";
 $res = $Campsite['db']->SelectLimit($sql, $lpp+1, $userOffs);
 if (gettype($res) == 'object' && $res->NumRows() > 0) {
 	$nr = $res->NumRows();
 	$last = $nr > $lpp ? $lpp : $nr;
 ?><table border="0" cellspacing="1" cellpadding="3" class="table_list">
 	<tr class="table_list_header">
-		<td align="left" valign="top"><b><?php putGS("Full Name"); ?></b></td>
-		<td align="left" valign="top"><b><?php putGS("User Name"); ?></b></td>
+		<td align="left" valign="top">
+			<table><tr>
+			<td><b><a href="?<?php echo "$typeParam&" . $orderURLs['fname']; ?>"><?php putGS("Full Name"); ?></a></b></td>
+			<td><?php if ($orderField == 'fname') echo $orderSigns['fname']; ?></td>
+			</tr></table>
+		</td>
+		<td align="left" valign="top">
+			<table><tr>
+			<td><b><a href="?<?php echo "$typeParam&" . $orderURLs['uname']; ?>"><?php putGS("Account Name"); ?></a></b></td>
+			<td><?php if ($orderField == 'uname') echo $orderSigns['uname']; ?></td>
+			</tr></table>
+		</td>
 		<td align="left" valign="top"><b><?php putGS("E-Mail"); ?></b></td>
 <?php if ($uType == "Subscribers" && $User->hasPermission("ManageSubscriptions")) { ?>
 		<td align="left" valign="top"><b><?php putGS("Subscriptions"); ?></b></td>
 <?php } ?>
+		<td align="left" valign="top">
+			<table><tr>
+			<td><b><a href="?<?php echo "$typeParam&" . $orderURLs['cdate']; ?>"><?php putGS("Creation Date"); ?></a></b></td>
+			<td><?php if ($orderField == 'cdate') echo $orderSigns['cdate']; ?></td>
+			</tr></table>
+		</td>
 <?php if ($canDelete) { ?>
 		<td align="left" valign="top"><b><?php putGS("Delete"); ?></b></td>
 <?php } ?>
@@ -199,6 +234,16 @@ for($loop = 0; $loop < $last; $loop++) {
 		<td><a href="<?php echo "/$ADMIN/users/subscriptions/?f_user_id=$userId"; ?>">
 			<?php putGS("Subscriptions"); ?></td>
 <?php } ?>
+		<td>
+<?php
+	$creationDate = $row['time_created'];
+	if ((int)$creationDate == 0) {
+		echo "N/A";
+	} else {
+		echo $creationDate;
+	}
+?>
+		</td>
 <?php
 	$email = $old_email;
 	if ($canDelete) { ?>
