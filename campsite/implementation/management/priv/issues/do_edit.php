@@ -62,6 +62,11 @@ $issueObj->setProperty('ShortName', $cShortName, false);
 if ($issueObj->commit()) {
 	$logtext = getGS('Issue $1 updated in publication $2', $cName, $publicationObj->getName());
 	Log::Message($logtext, $User->getUserName(), 11);
+} else {
+	$errMsg = getGS("Could not save the changes to the issue $1. Please make sure the issue URL name '$2' was not used before in the publication $3.",
+					$issueObj->getName(), $issueObj->getUrlName(), $publicationObj->getName());
+	camp_html_display_error($errMsg, $backLink);
+	exit;
 }
 
 header("Location: /$ADMIN/issues/edit.php?Pub=$Pub&Issue=$Issue&Language=$Language");

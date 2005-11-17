@@ -43,4 +43,6 @@ regGS("Issue $1 added in publication $2", "Issue $1 added in publication $2");
 regGS("Delete entry", "Delete entry");
 regGS("Issue Publishing Schedule", "Issue Publishing Schedule");
 regGS("Invalid Input: $1", "Invalid Input: $1");
+regGS("Issue Number", "Issue Number");
+regGS("Go To Sections", "Go To Sections");
 ?>
