@@ -185,30 +185,33 @@ if (gettype($res) == 'object' && $res->NumRows() > 0) {
 	$last = $nr > $lpp ? $lpp : $nr;
 ?><table border="0" cellspacing="1" cellpadding="3" class="table_list">
 	<tr class="table_list_header">
-		<td align="left" valign="top">
+		<td align="left" valign="center">
 			<table><tr>
 			<td><b><a href="?<?php echo "$typeParam&" . $orderURLs['fname']; ?>"><?php putGS("Full Name"); ?></a></b></td>
 			<td><?php if ($orderField == 'fname') echo $orderSigns['fname']; ?></td>
 			</tr></table>
 		</td>
-		<td align="left" valign="top">
+		<td align="left" valign="center">
 			<table><tr>
 			<td><b><a href="?<?php echo "$typeParam&" . $orderURLs['uname']; ?>"><?php putGS("Account Name"); ?></a></b></td>
 			<td><?php if ($orderField == 'uname') echo $orderSigns['uname']; ?></td>
 			</tr></table>
 		</td>
-		<td align="left" valign="top"><b><?php putGS("E-Mail"); ?></b></td>
+		<td align="left" valign="center"><b><?php putGS("E-Mail"); ?></b></td>
 <?php if ($uType == "Subscribers" && $User->hasPermission("ManageSubscriptions")) { ?>
 		<td align="left" valign="top"><b><?php putGS("Subscriptions"); ?></b></td>
 <?php } ?>
-		<td align="left" valign="top">
+		<td align="left" valign="center">
+			<?php putGS("User Type"); ?>
+		</td>
+		<td align="left" valign="center">
 			<table><tr>
 			<td><b><a href="?<?php echo "$typeParam&" . $orderURLs['cdate']; ?>"><?php putGS("Creation Date"); ?></a></b></td>
 			<td><?php if ($orderField == 'cdate') echo $orderSigns['cdate']; ?></td>
 			</tr></table>
 		</td>
 <?php if ($canDelete) { ?>
-		<td align="left" valign="top"><b><?php putGS("Delete"); ?></b></td>
+		<td align="left" valign="center"><b><?php putGS("Delete"); ?></b></td>
 <?php } ?>
 	</TR>
 <?php 
@@ -216,6 +219,8 @@ for($loop = 0; $loop < $last; $loop++) {
 	$row = $res->FetchRow();
 	$userId = $row['Id'];
 	$rowClass = ($loop + 1) % 2 == 0 ? "list_row_even" : "list_row_odd";
+	$editUser = new User($userId);
+	$userType = UserType::GetUserType($editUser->m_permissions);
 ?>
 	<tr <?php echo "class=\"$rowClass\""; ?>>
 		<td>
@@ -240,6 +245,7 @@ for($loop = 0; $loop < $last; $loop++) {
 		<td><a href="<?php echo "/$ADMIN/users/subscriptions/?f_user_id=$userId"; ?>">
 			<?php putGS("Subscriptions"); ?></td>
 <?php } ?>
+		<td><?php echo $userType->getName(); ?></td>
 		<td>
 <?php
 	$creationDate = $row['time_created'];
