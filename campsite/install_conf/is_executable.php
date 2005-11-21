@@ -14,19 +14,19 @@ if ($param == "") {
 $paths = explode(":", getenv("PATH"));
 foreach ($paths as $index=>$path) {
 	$file_path = "$path/$param";
-	if (is_executable($file_path)) {
+	if (@is_executable($file_path)) {
 		echo $file_path;
 		exit(0);
 	}
-	if (is_link($file_path)) {
+	if (@is_link($file_path)) {
 		$target_path = $file_path;
 		do {
-			if (is_executable($target_path)) {
+			if (@is_executable($target_path)) {
 				echo $file_path;
 				exit(0);
 			}
-			$target_path = readlink($target_path);
-		} while (is_link($target_path));
+			$target_path = @readlink($target_path);
+		} while (@is_link($target_path));
 	}
 }
 
