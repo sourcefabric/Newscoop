@@ -1,6 +1,5 @@
 <?php
 regGS("Add new", "Добавить");
-regGS("Save changes", "Сохранить изменения");
 regGS("CAMPSITE", "CAMPSITE");
 regGS("Home", "Главная");
 regGS("Logout", "Выход");

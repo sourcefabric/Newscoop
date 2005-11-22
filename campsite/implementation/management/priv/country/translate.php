@@ -71,7 +71,7 @@ echo camp_html_breadcrumbs($crumbs);
 	<DIV ALIGN="CENTER">
 	<INPUT TYPE="HIDDEN" NAME="f_country_code" VALUE="<?php print $f_country_code; ?>">
 	<INPUT TYPE="HIDDEN" NAME="f_country_orig_language" VALUE="<?php  print $f_country_language; ?>">
-	<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save changes'); ?>">
+	<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
 	<!--<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='/admin/country/'">-->
 	</DIV>
 	</TD>

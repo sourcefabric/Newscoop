@@ -93,44 +93,13 @@ function TransformInternalLinks($p_match) {
 
 /**
  * This function is a callback for preg_replace_callback().
- * It will replace <a href="http://xyz.com" target="_blank">...</a>
- * with <!** Link external "http://xyz.com" TARGET "_blank"> ... <!** EndLink>
- * @param array p_match
- * @return string
- */
-//function TransformExternalLinks($p_match) {
-//	// This matches '</a>'
-//	if (preg_match("/<\s*\/a\s*>/i", $p_match[0])) {
-//		$retval = "<!** EndLink>";
-//		return $retval;
-//	}
-//	// This matches '<a href="xyz.com" ...>'
-//	elseif (preg_match("/<\s*a\s*href=[\"'][^'\"]*[\"']\s*(target\s*=\s['\"][_\w]*['\"])?[\s\w\"']*>/i", $p_match[0])) {
-//		$url = split("\"", $p_match[0]);
-//		$link = $url[1];
-//		$target = null;
-//		if (isset($url[2]) && (stristr($url[2], 'target') !== false)) {
-//			$target = $url[3];
-//		}
-//		$retval = '<!** Link external "'.$link.'"';
-//		if (!is_null($target)) {
-//			$retval .= 'target="'.$target.'"';
-//		}
-//		$retval .= '>';
-//		return $retval;
-//	}	
-//} // fn TransformExternalLinks
-
-
-/**
- * This function is a callback for preg_replace_callback().
  * It will replace <img src="http://[hostname]/[image_dir]/cms-image-000000001.jpg" align="center" alt="alternate text" sub="caption text">
  * with <!** Image [image_template_id] align=CENTER alt="alternate text" sub="caption text">
  * @param array p_match
  * @return string
  */
 function TransformImageTags($p_match) {
-	global $Article;
+	global $f_article_number;
 	array_shift($p_match);
 	$attrs = array();
 	foreach ($p_match as $attr) {
@@ -152,26 +121,26 @@ function TransformImageTags($p_match) {
 			// Get the image ID.
 			preg_match_all("/[\w\/:]*cms-image-(\d*)[.\w]*/i", $attrs['src'], $srcParts);
 			// Lookup the image by ID
-			$articleImage =& new ArticleImage($Article, $srcParts[1][0]);
+			$articleImage =& new ArticleImage($f_article_number, $srcParts[1][0]);
 			$templateId = $articleImage->getTemplateId();
 		}
 		else {
 			$image = Image::GetByUrl($attrs['src']);
-			$articleImage =& new ArticleImage($Article, $image->getImageId());
+			$articleImage =& new ArticleImage($f_article_number, $image->getImageId());
 			$templateId = $articleImage->getTemplateId();
 		}
 	}
 	$alignTag = '';
 	if (isset($attrs['align'])) {
-		$alignTag = ' align='.$attrs['align'];
+		$alignTag = 'align='.$attrs['align'];
 	}
 	$altTag = '';
 	if (isset($attrs['alt'])) {
-		$altTag = ' alt="'.$attrs['alt'].'"';
+		$altTag = 'alt="'.$attrs['alt'].'"';
 	}
 	$captionTag = '';
 	if (isset($attrs['sub'])) {
-		$captionTag = ' sub="'.$attrs['sub'].'"';
+		$captionTag = 'sub="'.$attrs['sub'].'"';
 	}
 	$imageTag = "<!** Image $templateId $alignTag $altTag $captionTag>";
 	return $imageTag;
@@ -183,17 +152,20 @@ if (!$access) {
 	header("Location: /$ADMIN/logout.php");
 	exit;
 }
-$Pub = Input::Get('Pub', 'int', 0);
-$Issue = Input::Get('Issue', 'int', 0);
-$Section = Input::Get('Section', 'int', 0);
-$Language = Input::Get('Language', 'int', 0);
-$sLanguage = Input::Get('sLanguage', 'int', 0);
-$Article = Input::Get('Article', 'int', 0);
-$cOnFrontPage = Input::Get('cOnFrontPage', 'string', '', true);
-$cOnSection = Input::Get('cOnSection', 'string', '', true);
-$cPublic = Input::Get('cPublic', 'string', '', true);
-$cKeywords = Input::Get('cKeywords');
-$cName = Input::Get('cName');
+$f_publication_id = Input::Get('f_publication_id', 'int', 0);
+$f_issue_number = Input::Get('f_issue_number', 'int', 0);
+$f_section_number = Input::Get('f_section_number', 'int', 0);
+$f_language_id = Input::Get('f_language_id', 'int', 0);
+$f_language_selected = Input::Get('f_language_selected', 'int', 0);
+$f_article_number = Input::Get('f_article_number', 'int', 0);
+$f_on_front_page = Input::Get('f_on_front_page', 'string', '', true);
+$f_on_section_page = Input::Get('f_on_section_page', 'string', '', true);
+$f_is_public = Input::Get('f_is_public', 'string', '', true);
+$f_keywords = Input::Get('f_keywords');
+$f_article_title = Input::Get('f_article_title');
+$f_creation_date = Input::Get('f_creation_date');
+
+$BackLink = "/$ADMIN/articles/index.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_language_id=$f_language_id&f_section_number=$f_section_number";
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
@@ -201,7 +173,7 @@ if (!Input::IsValid()) {
 }
 
 // Fetch article
-$articleObj =& new Article($sLanguage, $Article);
+$articleObj =& new Article($f_language_selected, $f_article_number);
 if (!$articleObj->exists()) {
 	camp_html_display_error(getGS('No such article.'), $BackLink);
 }
@@ -212,11 +184,10 @@ $dbColumns = $articleTypeObj->getUserDefinedColumns();
 $articleFields = array();
 foreach ($dbColumns as $dbColumn) {
 	if (isset($_REQUEST[$dbColumn->getName()])) {
-		$articleFields[$dbColumn->getName()] = Input::Get($dbColumn->getName());
+		$articleFields[$dbColumn->getName()] = trim(Input::Get($dbColumn->getName()));
 	}
 }
 
-$BackLink = "/$ADMIN/articles/index.php?Pub=$Pub&Issue=$Issue&Language=$Language&Section=$Section";
 
 if (!$articleObj->userCanModify($User)) {
 	$errorStr = getGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.");
@@ -235,57 +206,32 @@ if ($articleObj->isLocked() && ($User->getId() != $articleObj->getLockedByUser()
 	exit;
 }
 
-$languageObj =& new Language($Language);
+// Update the article.
+$articleObj->setOnFrontPage(!empty($f_on_front_page));
+$articleObj->setOnSectionPage(!empty($f_on_section_page));
+$articleObj->setIsPublic(!empty($f_is_public));
+$articleObj->setKeywords($f_keywords);
+$articleObj->setTitle($f_article_title);
+$articleObj->setIsIndexed(false);
+$articleObj->setCreationDate($f_creation_date);
 
-// Update the article
-$hasChanged = false;
-
-// Update the article & check if it has been changed.
-$hasChanged |= $articleObj->setOnFrontPage(!empty($cOnFrontPage));
-$hasChanged |= $articleObj->setOnSectionPage(!empty($cOnSection));
-$hasChanged |= $articleObj->setIsPublic(!empty($cPublic));
-$hasChanged |= $articleObj->setKeywords($cKeywords);
-$hasChanged |= $articleObj->setTitle($cName);
-$hasChanged |= $articleObj->setIsIndexed(false);
 foreach ($articleFields as $dbColumnName => $text) {
-    echo $text."<br>";
 	// Replace <span class="subhead"> ... </span> with <!** Title> ... <!** EndTitle>
 	$text = preg_replace_callback("/(<\s*span[^>]*class\s*=\s*[\"']campsite_subhead[\"'][^>]*>|<\s*span|<\s*\/\s*span\s*>)/i", "TransformSubheads", $text);
 	
 	// Replace <a href="campsite_internal_link?IdPublication=1&..." ...> ... </a>
 	// with <!** Link Internal IdPublication=1&...> ... <!** EndLink>
-	//
 	$text = preg_replace_callback("/(<\s*a\s*(((href\s*=\s*[\"']campsite_internal_link[?][\w&=;]*[\"'])|(target\s*=\s*['\"][_\w]*['\"]))[\s]*)*[\s\w\"']*>)|(<\s*\/a\s*>)/i", "TransformInternalLinks", $text);
-	//$hasChanged |= $articleTypeObj->setProperty($dbColumnName, $text);
-
-	// Replace <a href="http://xyz.com" target="_blank"> ... </a>
-	// with <!** Link external "http://xyz.com" TARGET "_blank"> ... <!** EndLink>
-	//
-	//$text = preg_replace_callback("/(<\s*a\s*href=[\"'][^\"']*[\"']\s*(target\s*=\s['\"][_\w]*['\"])?[\s\w\"']*>)|(<\s*\/a\s*>)/i", "TransformExternalLinks", $text);
-	//$hasChanged |= $articleTypeObj->setProperty($dbColumnName, $text);
 
 	// Replace <img src="A" align="B" alt="C" sub="D">
 	// with <!** Image [image_template_id] align=B alt="C" sub="D">
-	//
 	$srcAttr = "(src\s*=\s*[\"'][^'\"]*[\"'])";
 	$altAttr = "(alt\s*=\s*['\"][^'\"]*['\"])";
 	$alignAttr = "(align\s*=\s*['\"][^'\"]*['\"])";
 	$subAttr = "(sub\s*=\s*['\"][^'\"]*['\"])";
 	$text = preg_replace_callback("/<\s*img\s*(($srcAttr|$altAttr|$alignAttr|$subAttr)\s*)*[\s\w\"']*\/>/i", "TransformImageTags", $text);
-	$hasChanged |= $articleTypeObj->setProperty($dbColumnName, $text);
+	$articleTypeObj->setProperty($dbColumnName, $text);
 }
 
-if ($hasChanged) {
-	$Saved = 1;
-}
-else {
-	$Saved = 2;
-}
-
-// added by sebastian
-if (function_exists ("incModFile")) {
-	incModFile ();
-}
-
-header("Location: ". camp_html_article_url($articleObj, $Language, 'edit.php')."&Saved=$Saved");
+header("Location: ". camp_html_article_url($articleObj, $f_language_selected, 'edit.php'));
 ?>

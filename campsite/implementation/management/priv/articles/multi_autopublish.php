@@ -110,6 +110,7 @@ if (count($articles) > 0) {
 <?php } ?>
 <INPUT TYPE="HIDDEN" NAME="f_language_id" VALUE="<?php echo $f_language_id; ?>">
 <INPUT TYPE="HIDDEN" NAME="f_language_selected" VALUE="<?php echo $f_language_selected; ?>">
+<INPUT TYPE="HIDDEN" NAME="f_mode" VALUE="multi">
 <TR>
 	<TD valign="top" align="right" style="padding-top: 12px;">
 		<?php putGS("Articles"); ?>:

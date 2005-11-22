@@ -236,6 +236,5 @@ regGS("Cancel", "Cancelar");
 regGS("Done", "Terminado");
 regGS("New field", "Novo Campo");
 regGS("OK", "OK");
-regGS("Save changes", "Gravar alterações");
 regGS("Search", "Procurar");
 ?>

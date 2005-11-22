@@ -14,14 +14,14 @@ if (!$access) {
 	exit;
 }
 
-$Pub = Input::Get('Pub', 'int', 0);
-$Issue = Input::Get('Issue', 'int', 0);
-$Section = Input::Get('Section', 'int', 0);
-$Language = Input::Get('Language', 'int', 0);
-$sLanguage = Input::Get('sLanguage', 'int', 0);
-$Article = Input::Get('Article', 'int', 0);
-$ImageId = Input::Get('ImageId', 'int', 0);
-$ImageTemplateId = Input::Get('ImageTemplateId', 'int', 0);
+$f_publcation_id = Input::Get('f_publication_id', 'int', 0);
+$f_issue_number = Input::Get('f_issue_number', 'int', 0);
+$f_section_number = Input::Get('f_section_number', 'int', 0);
+$f_language_id = Input::Get('f_language_id', 'int', 0);
+$f_language_selected = Input::Get('f_language_selected', 'int', 0);
+$f_article_number = Input::Get('f_article_number', 'int', 0);
+$f_image_id = Input::Get('f_image_id', 'int', 0);
+$f_image_template_id = Input::Get('f_image_template_id', 'int', 0);
 
 // Check input
 if (!Input::IsValid()) {
@@ -29,7 +29,7 @@ if (!Input::IsValid()) {
 	exit;
 }
 
-$articleObj =& new Article($sLanguage, $Article);
+$articleObj =& new Article($f_language_selected, $f_article_number);
 
 // This file can only be accessed if the user has the right to change articles
 // or the user created this article and it hasnt been published yet.
@@ -38,13 +38,12 @@ if (!$articleObj->userCanModify($User)) {
 	exit;		
 }
 
-ArticleImage::RemoveImageFromArticle($ImageId, $Article, $ImageTemplateId);
+ArticleImage::RemoveImageFromArticle($f_image_id, $f_article_number, $f_image_template_id);
 
 $logtext = getGS('Image $1 unlinked from $2', $ImageId, $Article); 
 Log::Message($logtext, $User->getUserName(), 42);
 
-
 // Go back to article image list.
-header('Location: '.camp_html_article_url($articleObj, $Language, 'images/'));
+header('Location: '.camp_html_article_url($articleObj, $f_language_id, 'edit.php'));
 exit;
 ?>

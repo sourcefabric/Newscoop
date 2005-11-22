@@ -385,7 +385,7 @@ foreach ($user_types as $index=>$user_type) {
 			<tr>
 				<td colspan="2">
 				<div align="center">
-				<input type="submit" class="button" name="Save" value="<?php  putGS('Save changes'); ?>">
+				<input type="submit" class="button" name="Save" value="<?php  putGS('Save'); ?>">
 				<input type="button" class="button" name="Cancel" value="<?php putGS('Cancel'); ?>" onclick="location.href='<?php echo "/$ADMIN/users/?" . get_user_urlparams(); ?>'">
 				</div>
 				</td>

@@ -1,8 +1,8 @@
 <?php
 /**
  * ImageManager, list images, directories, and thumbnails.
- * @author $Author: paul $
- * @version $Id: ImageManager.php,v 1.2 2005/05/03 20:30:19 paul Exp $
+ * @author $Author$
+ * @version $Id$
  * @package ImageManager
  */
 
@@ -12,8 +12,8 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
 
 /**
  * ImageManager Class.
- * @author $Author: paul $
- * @version $Id: ImageManager.php,v 1.2 2005/05/03 20:30:19 paul Exp $
+ * @author $Author$
+ * @version $Id$
  */
 class ImageManager 
 {
@@ -158,9 +158,9 @@ class ImageManager
 
 		//$d = @dir($fullpath);
 		
-		$articleImages =& ArticleImage::GetImagesByArticleId($articleId);
+		$articleImages = ArticleImage::GetImagesByArticleNumber($articleId);
 		foreach ($articleImages as $articleImage) {
-			$image =& $articleImage->getImage();
+			$image = $articleImage->getImage();
 			$img = $this->getImageInfo($image->getImageUrl());
 			//$entry = basename($image->getImageStorageLocation());
 			if (is_array($img) || !$this->config['validate_images']) {

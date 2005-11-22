@@ -1,6 +1,5 @@
 <?php
 regGS("Add new", "Dodaj novi");
-regGS("Save changes", "Snimi izmene");
 regGS("CAMPSITE", "KEMPSAJT");
 regGS("Home", "Početak");
 regGS("Logout", "Odjava");

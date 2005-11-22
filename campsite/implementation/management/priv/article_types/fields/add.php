@@ -58,7 +58,7 @@ echo camp_html_breadcrumbs($crumbs);
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">
 	<INPUT TYPE="HIDDEN" NAME="AType" VALUE="<?php  print htmlspecialchars($articleTypeName); ?>">
-	<INPUT TYPE="submit" class="button" NAME="OK" VALUE="<?php  putGS('Save changes'); ?>">
+	<INPUT TYPE="submit" class="button" NAME="OK" VALUE="<?php  putGS('Save'); ?>">
 	<!--<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='/admin/a_types/fields/?AType=<?php  print urlencode($AType); ?>'">-->
 	</DIV>
 	</TD>

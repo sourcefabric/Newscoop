@@ -19,7 +19,7 @@ $sqlOptions = array("LIMIT" => array("START" => $PubOffs, "MAX_ROWS" => ($ItemsP
 $publications = Publication::GetPublications($sqlOptions);
 $numPublications = Publication::GetNumPublications();
 
-camp_html_content_top(getGS('Publications'), null);
+camp_html_content_top(getGS('Publication List'), null);
 
 ?>
 

@@ -109,7 +109,7 @@ camp_html_content_top(getGS('Change article status'), $topArray);
 		<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php  p($Language); ?>">
 		<INPUT TYPE="HIDDEN" NAME="sLanguage" VALUE="<?php  p($sLanguage); ?>"><P>
 		<INPUT TYPE="HIDDEN" NAME="Back" VALUE="<?php p($BackLink); ?>">
-		<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save changes'); ?>" class="button">
+		<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save'); ?>" class="button">
 		<!--<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" class="button" ONCLICK="location.href='<?php echo $BackLink; ?>'">-->
 		</FORM>
 		</DIV>

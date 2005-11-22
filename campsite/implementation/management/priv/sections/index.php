@@ -26,7 +26,7 @@ $allSections = Section::GetSections($Pub, $Issue, $Language, array('ORDER BY' =>
 $totalSections = Section::GetTotalSections($Pub, $Issue, $Language);
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj);
-camp_html_content_top(getGS('Sections'), $topArray);
+camp_html_content_top(getGS('Section List'), $topArray);
 
 
 if ($User->hasPermission('ManageSection')) { ?>

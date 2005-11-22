@@ -110,6 +110,7 @@ case "copy_interactive":
 	$args = $_REQUEST;
 	unset($args["f_article_code"]);
 	$argsStr = camp_implode_keys_and_values($args, "=", "&");
+	$argsStr .= "&f_mode=multi";
 	foreach ($_REQUEST["f_article_code"] as $code) {
 		$argsStr .= "&f_article_code[]=$code";
 	}

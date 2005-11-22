@@ -8,83 +8,56 @@ class ImageSearch {
 	var $m_orderBy;
 	var $m_orderDirection;
 	var $m_imageOffset;
-	var $m_searchDescription;
-	var $m_searchPhotographer;
-	var $m_searchDate;
-	var $m_searchPlace;
-	var $m_searchInUse;
-	var $m_searchUploadedBy;
+	var $m_searchString;
 	var $m_imageData;
 	var $m_numImagesFound;
 	var $m_orderQuery;
 	var $m_whereQuery;
-	var $m_imagesPerPage = 10;
+	var $m_itemsPerPage = 10;
 		
 	/**
 	 * This class can search for images matching specific criteria.
 	 * Give the search criteria in the contructor, then call the run()
 	 * function to execute the search and get an array of the images found.  
 	 *
-	 * @param array $p_request
-	 *     <pre>
-	 *		This array may contain the following values:
-	 *		"order_by" => ["description"|"photographer"|"place"|"date"|
+	 * @param string $p_searchString
+	 *			The string to search for.
+	 *
+	 * @param string $p_orderBy
+	 *		Which column to order the results by.
+	 *		Can be one of ["description"|"photographer"|"place"|"date"|
 	 *					   "inuse"|"id"|"time_create"|"last_modified"]
-	 *			Which column to order the results by.
-	 *		"order_direction" => ["ASC"|"DESC"]
-	 *			Order by increasing or decreasing values.
-	 *		"image_offset" => int
-	 *			Only return results starting from the given offset.
-	 *		"search_description" => string
-	 *			The description to search for.
-	 *		"search_photographer" => string
-	 *			The photographer to search for.
-	 *		"search_place" => string
-	 *			The place to search for.
-	 *		"search_date" => string
-	 *			The date to search for.
-	 *		"search_inuse" => boolean
-	 *			Search to see if the image is in use.
-	 *     </pre>
+	 *
+	 * @param string $p_orderDirection
+	 *		Order by increasing or decreasing values.
+	 *		Can be  ["ASC"|"DESC"]
+	 *
+	 * @param int $p_offset 
+	 *		Return results starting from the given offset.
+	 *
+	 * @param int $p_itemsPerPage
+	 *		The number of results to return.
+	 *
 	 */
-	function ImageSearch($p_imagesPerPage = 0) 
+	function ImageSearch($p_searchString, $p_orderBy, $p_orderDirection = 'ASC', $p_offset = 0, $p_itemsPerPage = 0) 
 	{
 		global $Campsite;
-		$this->m_orderBy = Input::Get('order_by', 'string', 'id', true);
-		$this->m_orderDirection = Input::Get('order_direction', 'string', 'ASC', true);
-		$this->m_imageOffset = Input::Get('image_offset', 'int', 0, true);		
-		$this->m_searchDescription = Input::Get('search_description', 'string', '', true);
-		$this->m_searchPhotographer = Input::Get('search_photographer', 'string', '', true);
-		$this->m_searchPlace = Input::Get('search_place', 'string', '', true);
-		$this->m_searchDate = Input::Get('search_date', 'string', '', true);
-		$this->m_searchInUse = Input::Get('search_inuse', 'int', '', true);
-		$this->m_searchUploadedBy = Input::Get('search_uploadedby', 'string', '', true);
-		if ($p_imagesPerPage > 0) {
-			$this->m_imagesPerPage = $p_imagesPerPage;
+		$this->m_orderBy = $p_orderBy;
+		$this->m_orderDirection = $p_orderDirection;
+		$this->m_imageOffset = $p_offset;
+		$this->m_searchString = $p_searchString;
+		if ($p_itemsPerPage > 0) {
+			$this->m_itemsPerPage = $p_itemsPerPage;
 		}
 
 		// "Search by" sql
 		$this->m_whereQuery = '';
-		if (!empty($this->m_searchDescription)) {
-			$this->m_whereQuery .= " AND Images.Description LIKE '%$this->m_searchDescription%'";
-		}
-		if (!empty($this->m_searchPhotographer)) {
-			$this->m_whereQuery .= " AND Images.Photographer LIKE '%$this->m_searchPhotographer%'";
-		}
-		if (!empty($this->m_searchPlace)) {
-			$this->m_whereQuery .= " AND Images.Place LIKE '%$this->m_searchPlace%'";
-		}
-		if (!empty($this->m_searchDate)) {
-			$this->m_whereQuery .= " AND Images.Date LIKE '%$this->m_searchDate%'";
-		}
-		if (!empty($this->m_searchInUse)) {
-			if ($this->m_searchInUse) {
-	            $not = 'NOT';
-	        }
-	        $this->m_whereQuery .= " AND ArticleImages.IdImage IS $not NULL";
-		}
-		if ($this->m_searchUploadedBy) {
-			$this->m_whereQuery .= " AND Images.UploadedByUser=".$this->m_searchUploadedBy;
+		if (!empty($this->m_searchString)) {
+			$this->m_whereQuery .= "WHERE Images.Description LIKE '%$this->m_searchString%'"
+								. " OR Images.Photographer LIKE '%$this->m_searchString%'"
+								. " OR Images.Place LIKE '%$this->m_searchString%'"
+								. " OR Images.Date LIKE '%$this->m_searchString%'"
+								. " OR Images.UploadedByUser LIKE '%$this->m_searchString%'";
 		}
 		
 		// "Order by" sql
@@ -138,14 +111,13 @@ class ImageSearch {
 		$queryStr = 'SELECT '.$columnNames.', COUNT(ArticleImages.IdImage) AS inUse'
 				  	.' FROM Images '
 				  	.' LEFT JOIN ArticleImages On Images.Id=ArticleImages.IdImage'
-				  	." WHERE 1 $this->m_whereQuery"
+				  	.' '.$this->m_whereQuery
 				    .' GROUP BY Images.Id'
-				    ." $this->m_orderQuery LIMIT $this->m_imageOffset, ".$this->m_imagesPerPage;
-				    
+				    ." $this->m_orderQuery LIMIT $this->m_imageOffset, ".$this->m_itemsPerPage;
 		$numImagesFoundQueryStr = 'SELECT COUNT(DISTINCT(Images.Id))'
 				  	.' FROM Images '
 				  	.' LEFT JOIN ArticleImages On Images.Id=ArticleImages.IdImage'
-				  	." WHERE 1 $this->m_whereQuery";
+				  	." $this->m_whereQuery";
 		$rows = $Campsite['db']->GetAll($queryStr);
 		$this->m_numImagesFound = $Campsite['db']->GetOne($numImagesFoundQueryStr);
 
@@ -178,6 +150,9 @@ class ImageSearch {
 				if (isset($inUseArray[$row['Id']])) {
 					$template['in_use'] = $inUseArray[$row['Id']];
 				}
+				$imageSize = getimagesize($tmpImage->getImageStorageLocation());
+				$template['width'] = $imageSize[0];
+				$template['height'] = $imageSize[1];
 				$this->m_imageData[] = $template;
 			}
 		}
@@ -217,7 +192,7 @@ class ImageSearch {
 	 */
 	function getImagesPerPage() 
 	{
-		return $this->m_imagesPerPage;
+		return $this->m_itemsPerPage;
 	} // fn getImagesPerPage
 	
 	
@@ -230,7 +205,7 @@ class ImageSearch {
 	 */
 	function setImagesPerPage($p_value) 
 	{
-		$this->m_imagesPerPage = $p_value;
+		$this->m_itemsPerPage = $p_value;
 	} // fn setImagesPerPage
 	
 } // class ImageSearch
@@ -242,38 +217,34 @@ class ImageNav {
 	var $m_previousLink = '';
 	var $m_nextLink = '';
 	var $m_orderByLink = '';
-	var $m_imagesPerPage = 10;
+	var $m_itemsPerPage = 10;
 	var $m_view = 'thumbnail';
-	var $m_input = array();
-	var $m_searchStrings = array("search_description", 
-								 "search_photographer",
-								 "search_place",
-							   	 "search_date",
-							   	 "search_inuse",
-							   	 "search_uploadedby");
+	var $m_searchString = '';
+	var $m_orderBy = '';
+	var $m_orderDirection = '';
+	var $m_offset = 0;
 	
 	/**
 	 * This class is used to create links, which will be parsed by the ImageSearch class.
-	 * @param int $p_imagesPerPage
+	 * @param string $p_searchString
+	 * @param string $p_orderBy
+	 * @param string $p_orderDirection
+	 * @param int $p_offset
+	 * @param int $p_itemsPerPage
 	 *		Number of images to show on a page.
 	 * @param string $p_view
 	 *		Can be: ["thumbnail"|"gallery"|"flat"].  The type of display.
 	 */
-	function ImageNav($p_imagesPerPage = 0, $p_view = "thumbnail") 
+	function ImageNav($p_searchString, $p_orderBy, $p_orderDirection = 'ASC', $p_offset = 0, $p_itemsPerPage = 0, $p_view = "thumbnail") 
 	{
-		if ($p_imagesPerPage > 0) {
-			$this->m_imagesPerPage = $p_imagesPerPage;
+		if ($p_itemsPerPage > 0) {
+			$this->m_itemsPerPage = $p_itemsPerPage;
 		}
 		$this->m_view = $p_view;
-		foreach ($this->m_searchStrings as $key) {
-			$tmp = Input::Get($key, 'string', '', true);
-			if ($tmp != '') {
-				$this->m_input[$key] = $tmp;
-			}
-		}
-		$this->m_input['order_by'] = Input::Get('order_by', 'string', '', true);
-		$this->m_input['order_direction'] = Input::Get('order_direction', 'string', '', true);
-		$this->m_input['image_offset'] = Input::Get('image_offset', 'int', 0, true);
+		$this->m_searchString = $p_searchString;
+		$this->m_orderBy = $p_orderBy;
+		$this->m_orderDirection = $p_orderDirection;
+		$this->m_offset = $p_offset;
 		$this->__buildLinks();		
 	} // constructor
 
@@ -284,18 +255,16 @@ class ImageNav {
 	 * @param string $p_value
 	 * @return void
 	 */
-	function setProperty($p_name, $p_value) 
-	{
-		$this->m_input[$p_name] = $p_value;
-		$this->__buildLinks();	
-	} // fn setProperty
+//	function setProperty($p_name, $p_value) 
+//	{
+//		$this->m_input[$p_name] = $p_value;
+//		$this->__buildLinks();	
+//	} // fn setProperty
 	
 	
 	function clearSearchStrings() 
 	{
-		foreach ($this->m_searchStrings as $searchString) {
-			$this->m_input[$searchString] = '';
-		}
+		$this->m_searchString = '';
 		$this->__buildLinks();
 	} // fn clearSearchStrings
 	
@@ -312,30 +281,27 @@ class ImageNav {
 		$this->m_previousLink = '';
 		$this->m_nextLink = '';		
     	$keywordSearch = false;
-    	foreach ($this->m_input as $fieldName => $keyword) {
-    		if (!empty($this->m_input[$fieldName]) && in_array($fieldName, $this->m_searchStrings))  {
-    			$this->m_keywordSearchLink .= '&'.$fieldName.'='.urlencode($keyword);
-    			$keywordSearch = true;
-    		}
+   		if (!empty($this->m_searchString)) {
+			$this->m_keywordSearchLink .= '&f_search_string='.urlencode($this->m_searchString);
     	}
 
 		// Build the order statement.
-		if (!empty($this->m_input['order_by'])) {
-			$this->m_orderByLink .= '&order_by='.$this->m_input['order_by'];
+		if (!empty($this->m_orderBy)) {
+			$this->m_orderByLink .= '&f_order_by='.$this->m_orderBy;
 		}
-		if (!empty($this->m_input['order_direction'])) {
-			$this->m_orderByLink .= '&order_direction='.$this->m_input['order_direction'];
+		if (!empty($this->m_orderDirection)) {
+			$this->m_orderByLink .= '&f_order_direction='.$this->m_orderDirection;
 		}
-		if ($this->m_input['image_offset'] < 0) {
-			$this->m_input['image_offset'] = 0;
+		if ($this->m_offset < 0) {
+			$this->m_offset = 0;
 		}
 		
 		// Prev/Next switch
-		$this->m_previousLink = 'image_offset='.($this->m_input['image_offset'] - $this->m_imagesPerPage) 
-			.$this->m_keywordSearchLink.$this->m_orderByLink.'&view='.$this->m_view;
-		$this->m_nextLink = 'image_offset='.($this->m_input['image_offset'] + $this->m_imagesPerPage)
-			.$this->m_keywordSearchLink.$this->m_orderByLink.'&view='.$this->m_view;
-		$this->m_keywordSearchLink .= '&image_offset='.$this->m_input['image_offset'].'&view='.$this->m_view;
+		$this->m_previousLink = 'f_image_offset='.($this->m_offset - $this->m_itemsPerPage) 
+			.$this->m_keywordSearchLink.$this->m_orderByLink.'&f_view='.$this->m_view;
+		$this->m_nextLink = 'f_image_offset='.($this->m_offset + $this->m_itemsPerPage)
+			.$this->m_keywordSearchLink.$this->m_orderByLink.'&f_view='.$this->m_view;
+		$this->m_keywordSearchLink .= '&f_image_offset='.$this->m_offset.'&f_view='.$this->m_view;
 		$this->m_staticSearchLink = $this->m_keywordSearchLink . $this->m_orderByLink;		
 	} // fn __buildLinks
 	

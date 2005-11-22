@@ -14,26 +14,26 @@ if (!$access) {
 	exit;
 }
 
-$Pub = Input::Get('Pub', 'int', 0);
-$Issue = Input::Get('Issue', 'int', 0);
-$Section = Input::Get('Section', 'int', 0);
-$Language = Input::Get('Language', 'int', 0);
-$sLanguage = Input::Get('sLanguage', 'int', 0);
-$Article = Input::Get('Article', 'int', 0);
-$ImageId = Input::Get('ImageId', 'int', 0);
+$f_publcation_id = Input::Get('f_publication_id', 'int', 0);
+$f_issue_number = Input::Get('f_issue_number', 'int', 0);
+$f_section_number = Input::Get('f_section_number', 'int', 0);
+$f_language_id = Input::Get('f_language_id', 'int', 0);
+$f_language_selected = Input::Get('f_language_selected', 'int', 0);
+$f_article_number = Input::Get('f_article_number', 'int', 0);
+$f_image_id = Input::Get('f_image_id', 'int', 0);
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));
 	exit;
 }
 
-$articleObj =& new Article($sLanguage, $Article);
+$articleObj =& new Article($f_language_selected, $f_article_number);
 if (!$articleObj->exists()) {
 	camp_html_display_error(getGS('Article does not exist.'));
 	exit;		
 }
 
-$imageObj =& new Image($ImageId);
+$imageObj =& new Image($f_image_id);
 if (!$imageObj->exists()) {
 	camp_html_display_error(getGS('Image does not exist.'));
 	exit;	
@@ -46,12 +46,13 @@ if (!$articleObj->userCanModify($User)) {
 	exit;		
 }
 
-ArticleImage::AddImageToArticle($ImageId, $Article);
+ArticleImage::AddImageToArticle($f_image_id, $f_article_number);
 
-$logtext = getGS('Image $1 linked to article $2', $ImageId, $Article); 
+$logtext = getGS('Image $1 linked to article $2', $f_image_id, $f_article_number); 
 Log::Message($logtext, $User->getUserName(), 42);
 
-// Go back to article image list.
-header('Location: '.camp_html_article_url($articleObj, $Language, 'images/'));
-exit;
 ?>
+<script>
+window.opener.location.reload();
+window.close();
+</script>

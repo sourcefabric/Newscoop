@@ -240,7 +240,7 @@ echo $breadcrumbs;
 	
 	<TD COLSPAN="2">
 		<DIV ALIGN="CENTER">
-		<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save changes'); ?>">
+		<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
 		<INPUT TYPE="HIDDEN" NAME="Back" VALUE="<?php  print htmlspecialchars($Back); ?>">
         <?php  if ($Back != "") { ?>
         <!--<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='<?php  print $Back; ?>'">-->

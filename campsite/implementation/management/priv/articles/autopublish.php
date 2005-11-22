@@ -12,234 +12,162 @@ if (!$User->hasPermission("Publish")) {
 	exit;
 }
 
-$f_publcation_id = Input::Get('f_publication_id', 'int', 0);
+$f_publication_id = Input::Get('f_publication_id', 'int', 0);
 $f_issue_number = Input::Get('f_issue_number', 'int', 0);
 $f_section_number = Input::Get('f_section_number', 'int', 0);
 $f_language_id = Input::Get('f_language_id', 'int', 0);
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
-$publishTime = Input::Get('publish_time', 'string', '', true);
-$BackLink = Input::Get('Back', 'string', "/$ADMIN/articles/edit.php"
-                       ."?f_publcation_id=$f_publcation_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_selected=$f_language_selected&f_language_id=$f_language_id&f_article_number=$f_article_number", 
-                       true);
+$f_event_id = Input::Get('f_event_id', 'int', 0, true);
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
 	exit;	
 }
 
-$publicationObj =& new Publication($f_publcation_id);
+$articleObj =& new Article($f_language_selected, $f_article_number);
+if (!$articleObj->exists()) {
+	camp_html_display_error(getGS('Article does not exist.'));
+	exit;
+}
+
+$BackLink = camp_html_article_url($articleObj, $f_language_selected, "edit.php");
+
+$publicationObj =& new Publication($f_publication_id);
 if (!$publicationObj->exists()) {
 	camp_html_display_error(getGS('Publication does not exist.'), $BackLink);
 	exit;	
 }
 
-$issueObj =& new Issue($f_publcation_id, $f_language_id, $f_issue_number);
+$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
 if (!$issueObj->exists()) {
 	camp_html_display_error(getGS('Issue does not exist.'), $BackLink);
 	exit;	
 }
 
-$sectionObj =& new Section($f_publcation_id, $f_issue_number, $f_language_id, $f_section_number);
+$sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
 if (!$sectionObj->exists()) {
 	camp_html_display_error(getGS('Section does not exist.'), $BackLink);
 	exit;	
 }
 
-$articleObj =& new Article($f_language_selected, $f_article_number);
-if (!$articleObj->exists()) {
-	camp_html_display_error(getGS('Article does not exist.'), $BackLink);
-	exit;
-}
 
-$languageObj =& new Language($f_language_id);
-$sLanguageObj =& new Language($f_language_selected);
 $articleEvents = ArticlePublish::GetArticleEvents($f_article_number, $f_language_selected);
 
-$topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
-				  'Section' => $sectionObj, 'Article'=>$articleObj);
-camp_html_content_top(getGS("Article automatic publishing schedule"), $topArray);
+//$topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
+//				  'Section' => $sectionObj, 'Article'=>$articleObj);
+//camp_html_content_top(getGS("Scheduled Publishing"), $topArray);
 
+$publishTime = date("Y-m-d H:i");
 if ($articleObj->getPublished() != 'N') {
-	if ($publishTime == '') {
-		$publishTime = date("Y-m-d H:i");
-	}
 	$publishAction = '';
 	$frontPageAction = '';
 	$sectionPageAction = '';
-	if ($publishTime != "") {
-		$articlePublishObj =& new ArticlePublish($f_article_number, $f_language_selected, $publishTime);
+	if ($f_event_id > 0) {
+		$articlePublishObj =& new ArticlePublish($f_event_id);
 		if ($articlePublishObj->exists()) {
 			$publishAction = $articlePublishObj->getPublishAction();
 			$frontPageAction = $articlePublishObj->getFrontPageAction();
 			$sectionPageAction = $articlePublishObj->getSectionPageAction();
+			$publishTime = $articlePublishObj->getActionTime();
 		}
-		$datetime = explode(" ", trim($publishTime));
-		$publishDate = $datetime[0];
-		$publishTime = explode(":", trim($datetime[1]));
-		$publishHour = $publishTime[0];
-		$publishMinute = $publishTime[1];
 	}
-	?>
-
-<!--<table>
-<tr>
-	<td>
-		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
-		<TR>
-			<TD><A HREF="edit.php?f_publcation_id=<?php  p($f_publcation_id); ?>&f_issue_number=<?php  p($f_issue_number); ?>&f_section_number=<?php  p($f_section_number); ?>&f_article_number=<?php  p($f_article_number); ?>&f_language_id=<?php  p($f_language_id); ?>&f_language_selected=<?php  p($f_language_selected); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/back.png" BORDER="0"></A></TD>
-			<TD><A HREF="edit.php?f_publcation_id=<?php  p($f_publcation_id); ?>&f_issue_number=<?php  p($f_issue_number); ?>&f_section_number=<?php  p($f_section_number); ?>&f_article_number=<?php  p($f_article_number); ?>&f_language_id=<?php  p($f_language_id); ?>&f_language_selected=<?php  p($f_language_selected); ?>" ><B><?php  putGS('Back to Edit Article'); ?></B></A></TD>
-		</TR>
-		</TABLE>
-	</td>
-</tr>
-</table>-->
-<P>
+	$datetime = explode(" ", trim($publishTime));
+	$publishDate = $datetime[0];
+	$publishTime = explode(":", trim($datetime[1]));
+	$publishHour = $publishTime[0];
+	$publishMinute = $publishTime[1];
+?>
+<html>
+<head>
+    <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<META HTTP-EQUIV="Expires" CONTENT="now">
+	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
+	<title><?php putGS("Schedule a new action"); ?></title>
+</head>
+<body>
 <FORM NAME="dialog" METHOD="POST" ACTION="autopublish_do_add.php" >
-<CENTER><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input" ALIGN="CENTER">
-	<TR>
-		<TD COLSPAN="2">
-			<B><?php  putGS("Schedule a new action"); ?></B>
-			<HR NOSHADE SIZE="1" COLOR="BLACK">
-		</TD>
-	</TR>
-	<INPUT TYPE="HIDDEN" NAME="f_publication_id" VALUE="<?php echo $f_publcation_id; ?>">
-	<INPUT TYPE="HIDDEN" NAME="f_issue_number" VALUE="<?php echo $f_issue_number; ?>">
-	<INPUT TYPE="HIDDEN" NAME="f_section_number" VALUE="<?php echo $f_section_number; ?>">
-	<INPUT TYPE="HIDDEN" NAME="f_article_number" VALUE="<?php echo $f_article_number; ?>">
-	<INPUT TYPE="HIDDEN" NAME="f_language_id" VALUE="<?php echo $f_language_id; ?>">
-	<INPUT TYPE="HIDDEN" NAME="f_language_selected" VALUE="<?php echo $f_language_selected; ?>">
-	<INPUT type="hidden" name="Back" value="<?php echo $BackLink; ?>">
-	<TR>
-		<TD ALIGN="RIGHT" ><?php  putGS("Date"); ?>:</TD>
-		<TD>
-		<INPUT TYPE="TEXT" NAME="publish_date" SIZE="11" MAXLENGTH="10" VALUE="<?php p($publishDate); ?>" class="input_text">
-		<?php putGS('YYYY-MM-DD'); ?>
-		</TD>
-	</TR>
-	<TR>
-		<TD ALIGN="RIGHT" ><?php  putGS("Time"); ?>:</TD>
-		<TD>
-		<INPUT TYPE="TEXT" NAME="publish_hour" SIZE="2" MAXLENGTH="2" VALUE="<?php p($publishHour); ?>" class="input_text"> :
-		<INPUT TYPE="TEXT" NAME="publish_min" SIZE="2" MAXLENGTH="2" VALUE="<?php p($publishMinute); ?>" class="input_text">
-		</TD>
-	</TR>
-	<TR>
-		<TD ALIGN="CENTER" COLSPAN="2"><b><?php  putGS("Actions"); ?></b></TD>
-	</TR>
-	<TR>
-		<TD ALIGN="RIGHT" ><?php  putGS("Publish"); ?>:</TD>
-		<TD>
-		<SELECT NAME="publish_action" class="input_select">
-			<OPTION VALUE=" ">---</OPTION>
-			<OPTION VALUE="P" <?php if ($publishAction == "P") echo "SELECTED"; ?>><?php putGS("Publish"); ?></OPTION>
-			<OPTION VALUE="U" <?php if ($publishAction == "U") echo "SELECTED"; ?>><?php putGS("Unpublish"); ?></OPTION>
-		</SELECT>
-		</TD>
-	</TR>
-	<TR>
-		<TD ALIGN="RIGHT" ><?php  putGS("Front page"); ?>:</TD>
-		<TD>
-		<SELECT NAME="front_page_action" class="input_select">
-			<OPTION VALUE=" ">---</OPTION>
-			<OPTION VALUE="S" <?php if ($frontPageAction == "S") echo "SELECTED"; ?>><?php putGS("Show on front page"); ?></OPTION>
-			<OPTION VALUE="R" <?php if ($frontPageAction == "R") echo "SELECTED"; ?>><?php putGS("Remove from front page"); ?></OPTION>
-		</SELECT>
-		</TD>
-	</TR>
-	<TR>
-		<TD ALIGN="RIGHT" ><?php  putGS("Section page"); ?>:</TD>
-		<TD>
-		<SELECT NAME="section_page_action" class="input_select">
-			<OPTION VALUE=" ">---</OPTION>
-			<OPTION VALUE="S" <?php if ($sectionPageAction == "S") echo "SELECTED"; ?>><?php putGS("Show on section page"); ?></OPTION>
-			<OPTION VALUE="R" <?php if ($sectionPageAction == "R") echo "SELECTED"; ?>><?php putGS("Remove from section page"); ?></OPTION>
-		</SELECT>
-		</TD>
-	</TR>
-	<TR>
-		<TD COLSPAN="2" align="center">
-		<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save changes'); ?>" class="button">
-		<!--<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='<?php p($BackLink); ?>'" class="button">-->
-		</TD>
-	</TR>
-</TABLE></CENTER>
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input" style="margin-top: 10px;">
+<TR>
+	<TD COLSPAN="2">
+		<B>
+		<?php  
+		if ($f_event_id > 0) {
+			putGS("Edit action");
+		} else {
+			putGS("Schedule a new action"); 
+		}
+		?>
+		</B>
+		<HR NOSHADE SIZE="1" COLOR="BLACK">
+	</TD>
+</TR>
+<INPUT TYPE="HIDDEN" NAME="f_publication_id" VALUE="<?php echo $f_publication_id; ?>">
+<INPUT TYPE="HIDDEN" NAME="f_issue_number" VALUE="<?php echo $f_issue_number; ?>">
+<INPUT TYPE="HIDDEN" NAME="f_section_number" VALUE="<?php echo $f_section_number; ?>">
+<INPUT TYPE="HIDDEN" NAME="f_article_number" VALUE="<?php echo $f_article_number; ?>">
+<INPUT TYPE="hidden" NAME="f_article_code[]" VALUE="<?php echo $f_article_number.'_'.$f_language_selected; ?>">
+<INPUT TYPE="HIDDEN" NAME="f_language_id" VALUE="<?php echo $f_language_id; ?>">
+<INPUT TYPE="HIDDEN" NAME="f_language_selected" VALUE="<?php echo $f_language_selected; ?>">
+<INPUT type="hidden" name="f_backlink" value="<?php echo $BackLink; ?>">
+<TR>
+	<TD ALIGN="RIGHT" ><?php  putGS("Date"); ?>:</TD>
+	<TD>
+	<INPUT TYPE="TEXT" NAME="f_publish_date" SIZE="11" MAXLENGTH="10" VALUE="<?php p($publishDate); ?>" class="input_text">
+	<?php putGS('YYYY-MM-DD'); ?>
+	</TD>
+</TR>
+<TR>
+	<TD ALIGN="RIGHT" ><?php  putGS("Time"); ?>:</TD>
+	<TD>
+	<INPUT TYPE="TEXT" NAME="f_publish_hour" SIZE="2" MAXLENGTH="2" VALUE="<?php p($publishHour); ?>" class="input_text"> :
+	<INPUT TYPE="TEXT" NAME="f_publish_minute" SIZE="2" MAXLENGTH="2" VALUE="<?php p($publishMinute); ?>" class="input_text">
+	</TD>
+</TR>
+<TR>
+	<TD ALIGN="CENTER" COLSPAN="2"><b><?php  putGS("Actions"); ?></b></TD>
+</TR>
+<TR>
+	<TD ALIGN="RIGHT" ><?php  putGS("Publish"); ?>:</TD>
+	<TD>
+	<SELECT NAME="f_publish_action" class="input_select">
+		<OPTION VALUE=" ">---</OPTION>
+		<OPTION VALUE="P" <?php if ($publishAction == "P") echo "SELECTED"; ?>><?php putGS("Publish"); ?></OPTION>
+		<OPTION VALUE="U" <?php if ($publishAction == "U") echo "SELECTED"; ?>><?php putGS("Unpublish"); ?></OPTION>
+	</SELECT>
+	</TD>
+</TR>
+<TR>
+	<TD ALIGN="RIGHT" ><?php  putGS("Front page"); ?>:</TD>
+	<TD>
+	<SELECT NAME="f_front_page_action" class="input_select">
+		<OPTION VALUE=" ">---</OPTION>
+		<OPTION VALUE="S" <?php if ($frontPageAction == "S") echo "SELECTED"; ?>><?php putGS("Show on front page"); ?></OPTION>
+		<OPTION VALUE="R" <?php if ($frontPageAction == "R") echo "SELECTED"; ?>><?php putGS("Remove from front page"); ?></OPTION>
+	</SELECT>
+	</TD>
+</TR>
+<TR>
+	<TD ALIGN="RIGHT" ><?php  putGS("Section page"); ?>:</TD>
+	<TD>
+	<SELECT NAME="f_section_page_action" class="input_select">
+		<OPTION VALUE=" ">---</OPTION>
+		<OPTION VALUE="S" <?php if ($sectionPageAction == "S") echo "SELECTED"; ?>><?php putGS("Show on section page"); ?></OPTION>
+		<OPTION VALUE="R" <?php if ($sectionPageAction == "R") echo "SELECTED"; ?>><?php putGS("Remove from section page"); ?></OPTION>
+	</SELECT>
+	</TD>
+</TR>
+<TR>
+	<TD COLSPAN="2" align="center">
+	<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save'); ?>" class="button">
+	</TD>
+</TR>
+</TABLE>
 </FORM>
 </P>
-
-<P>
-<?php
-	if (count($articleEvents) > 0) {
-	$color= 0;
-	?>
-	<center>
-	<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" WIDTH="550px" class="table_list">
-	<TR class="table_list_header">
-		<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("Date/Time"); ?></B></TD>
-		<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("Publish"); ?></B></TD>
-		<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("Front page"); ?></B></TD>
-		<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("Section page"); ?></B></TD>
-		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Delete"); ?></B></TD>
-	</TR>
-	<?php
-	foreach ($articleEvents as $event) {
-		$url_publish_time = urlencode($event->getActionTime());
-		?>	<TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
-		<TD>
-			<A HREF="/<?php echo $ADMIN; ?>/articles/autopublish.php?f_publcation_id=<?php p($f_publcation_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_article_number=<?php p($f_article_number); ?>&f_language_id=<?php p($f_language_id); ?>&f_language_selected=<?php p($f_language_selected); ?>&publish_time=<?php echo $url_publish_time; ?>"><?php p(htmlspecialchars($event->getActionTime())); ?></A>
-		</TD>
-		
-		<TD>
-			<?php
-			$publishAction = $event->getPublishAction();
-			if ($publishAction == "P") {
-				putGS("Publish");
-			}
-			if ($publishAction == "U") {
-				putGS("Unpublish");
-			}
-			?>&nbsp;
-		</TD>
-		
-		<TD>
-			<?php
-			$frontPageAction = $event->getFrontPageAction();
-			if ($frontPageAction == "S") {
-				putGS("Show");
-			}
-			if ($frontPageAction == "R") {
-				putGS("Remove");
-			}
-			?>&nbsp;
-		</TD>
-		
-		<TD>
-			<?php
-			$sectionPageAction = $event->getSectionPageAction();
-			if ($sectionPageAction == "S") {
-				putGS("Show");
-			}
-			if ($sectionPageAction == "R") {
-				putGS("Remove");
-			}
-			?>&nbsp;
-		</TD>
-		
-		<TD ALIGN="CENTER">
-			<A HREF="/<?php echo $ADMIN; ?>/articles/autopublish_del.php?f_publcation_id=<?php p($f_publcation_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_article_number=<?php p($f_article_number); ?>&f_language_id=<?php p($f_language_id); ?>&f_language_selected=<?php p($f_language_selected); ?>&f_action_id=<?php echo $event->getArticlePublishId(); ?>&Back=<?php p(urlencode($BackLink)); ?>" onclick="return confirm('<?php putGS("Are you sure you want to delete this scheduled action?"); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php putGS('Delete'); ?>"></A>
-		</TD>
-	</TR>
-	<?php
-    } // foreach
-	?>	
-	</TABLE>
-	</center>
-	<?php 
-	} // if (count($articleEvents) > 0) 
-} 
-else { ?>
+<?php } else { ?>
 	<BLOCKQUOTE>
-	<CENTER><TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box" ALIGN="CENTER">
+	<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">
 	<TR>
 		<TD COLSPAN="2">
 			<B> <?php  putGS("Scheduling a new publish action"); ?> </B>
@@ -251,12 +179,12 @@ else { ?>
 	</TR>
 	<TR>
 		<TD COLSPAN="2" align="center">
-			<INPUT TYPE="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/articles/edit.php?f_publcation_id=<?php p($f_publcation_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_article_number=<?php p($f_article_number); ?>&f_language_id=<?php p($f_language_id); ?>&f_language_selected=<?php p($f_language_selected); ?>'" class="button">
+			<INPUT TYPE="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/articles/edit.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_article_number=<?php p($f_article_number); ?>&f_language_id=<?php p($f_language_id); ?>&f_language_selected=<?php p($f_language_selected); ?>'" class="button">
 		</TD>
 	</TR>
-	</TABLE></CENTER>
+	</TABLE>
 	</BLOCKQUOTE>
 <?php 
 } 
-camp_html_copyright_notice();
+//camp_html_copyright_notice();
 ?>

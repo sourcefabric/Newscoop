@@ -48,7 +48,7 @@ echo camp_html_breadcrumbs($crumbs);
 	<DIV ALIGN="CENTER">
 	<INPUT TYPE="HIDDEN" NAME="cPath" VALUE="<?php  p($path); ?>">
 	<INPUT TYPE="HIDDEN" NAME="Name" VALUE="<?php  p($Name); ?>">
-	<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save changes'); ?>">
+	<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
 	<!--<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/templates?Path=<?php  p(urlencode($path)); ?>'">-->
 	</DIV>
 	</TD>

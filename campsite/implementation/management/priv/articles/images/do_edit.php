@@ -18,28 +18,28 @@ if (!$access) {
 	exit;
 }
 
-$Pub = Input::Get('Pub', 'int', 0);
-$Issue = Input::Get('Issue', 'int', 0);
-$Section = Input::Get('Section', 'int', 0);
-$Language = Input::Get('Language', 'int', 0);
-$sLanguage = Input::Get('sLanguage', 'int', 0);
-$Article = Input::Get('Article', 'int', 0);
-$Image = Input::Get('Image', 'int', 0);
-$ImageTemplateId = Input::Get('cNumber', 'int', 0, true);
-$Description = Input::Get('cDescription', 'string', 'None', true);
-$Photographer = Input::Get('cPhotographer', 'string', '', true);
-$Place = Input::Get('cPlace', 'string', '', true);
-$Date = Input::Get('cDate', 'string', '', true);
+$f_publcation_id = Input::Get('f_publication_id', 'int', 0);
+$f_issue_number = Input::Get('f_issue_number', 'int', 0);
+$f_section_number = Input::Get('f_section_number', 'int', 0);
+$f_language_id = Input::Get('f_language_id', 'int', 0);
+$f_language_selected = Input::Get('f_language_selected', 'int', 0);
+$f_article_number = Input::Get('f_article_number', 'int', 0);
+$f_image_id = Input::Get('f_image_id', 'int', 0);
+$f_image_template_id = Input::Get('f_image_template_id', 'int', 0, true);
+$f_image_description = trim(Input::Get('f_image_description', 'string', '', true));
+$f_image_photographer = trim(Input::Get('f_image_photographer', 'string', '', true));
+$f_image_place = trim(Input::Get('f_image_place', 'string', '', true));
+$f_image_date = Input::Get('f_image_date', 'string', '', true);
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));
 	exit;	
 }
 
-$articleObj =& new Article($sLanguage, $Article);
-$publicationObj =& new Publication($Pub);
-$issueObj =& new Issue($Pub, $Language, $Issue);
-$sectionObj =& new Section($Pub, $Issue, $Language, $Section);
+$articleObj =& new Article($f_language_selected, $f_article_number);
+$publicationObj =& new Publication($f_publication_id);
+$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
+$sectionObj =& new Section($f_publcation_id, $f_issue_number, $f_language_id, $f_section_number);
 
 // This file can only be accessed if the user has the right to change articles
 // or the user created this article and it hasnt been published yet.
@@ -48,27 +48,22 @@ if (!$articleObj->userCanModify($User)) {
 	exit;		
 }
 
-$imageObj =& new Image($Image);
+$imageObj =& new Image($f_image_id);
 $attributes = array();
-$attributes['Description'] = $Description;
-if (trim($attributes['Description']) == '') {
-	$attributes['Description'] = 'None';
-}
-$attributes['Photographer'] = $Photographer;
-$attributes['Place'] = $Place;
-$attributes['Date'] = $Date;
+$attributes['Description'] = $f_image_description;
+$attributes['Photographer'] = $f_image_photographer;
+$attributes['Place'] = $f_image_place;
+$attributes['Date'] = $f_image_date;
 $view = Input::Get('view', 'string', 'thumbnail', true);
 $imageObj->update($attributes);
-if (is_numeric($ImageTemplateId) && ($ImageTemplateId > 0)) {
-	ArticleImage::SetTemplateId($Article, $Image, $ImageTemplateId);
+if (is_numeric($f_image_template_id) && ($f_image_template_id > 0)) {
+	ArticleImage::SetTemplateId($f_article_number, $f_image_id, $f_image_template_id);
 }
 
 $logtext = getGS('Changed image properties of $1',$attributes['Description']); 
 Log::Message($logtext, $User->getUserName(), 43);
 
-$imageNav =& new ImageNav(CAMPSITE_IMAGEARCHIVE_IMAGES_PER_PAGE, $view);
-$ref = camp_html_article_url($articleObj, $Language, 'images/search.php')
-	. $imageNav->getKeywordSearchLink();
+$ref = camp_html_article_url($articleObj, $f_language_selected, 'edit.php');
 
 // Go back to article image list.
 header("Location: $ref");

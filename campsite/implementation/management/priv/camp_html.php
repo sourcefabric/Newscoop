@@ -19,11 +19,12 @@ require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/lib_campsite.php");
  */
 function camp_html_select_option($p_value, $p_selectedValue, $p_printValue) 
 {
-	print '<OPTION VALUE="'.htmlspecialchars($p_value, ENT_QUOTES).'"';
+	$str = '<OPTION VALUE="'.htmlspecialchars($p_value, ENT_QUOTES).'"';
 	if (!strcmp($p_value, $p_selectedValue)) {
-		print ' SELECTED';
+		$str .= ' SELECTED';
 	}
-	print '>'.htmlspecialchars($p_printValue);
+	$str .= '>'.htmlspecialchars($p_printValue)."</OPTION>\n";
+	echo $str;
 } // fn camp_html_select_option
 
 
@@ -304,17 +305,35 @@ function camp_html_content_top($p_title, $p_objArray, $p_includeLinks = true,
 function camp_html_breadcrumbs($p_crumbs) 
 {
     $lastCrumb = array_pop($p_crumbs);
-    $str = '<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" bgcolor="#D5E2EE" width="100%"><TR><TD align="left" style="border-bottom: 1px solid black; border-top: 1px solid #8BAED1; padding-bottom: 2px; padding-top: 2px; padding-left: 1.3em; ">';
-    $str .= "<span style='padding-right: 1em; font-weight: bold; color: #2F2F2F;'>".getGS("You are here:")."</span>";
-    $tmpCrumbs = array();
-	foreach ($p_crumbs as $crumb) {
-	    if (count($crumb) == 2) {
-    	    $str .= camp_html_breadcrumb($crumb[0], $crumb[1]);
-	    }
-	    else {
-    	    $str .= camp_html_breadcrumb($crumb[0], $crumb[1], $crumb[2]);
-	    }
-	}
+//    $secondToLastCrumb = array_pop($p_crumbs);
+    $str = '<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" bgcolor="#D5E2EE" width="100%">';
+    if (count($p_crumbs) > 0) {
+	   	$str .= '<TR><TD align="left" style="border-top: 1px solid #8BAED1; padding-left: 1.25em; padding-top: 3px;">';
+	    //$str .= "<span style='font-weight: bold; color: #2F2F2F;'>".getGS("You are here:")."</span>";
+	    //$str .= "</TD><TD style='padding-bottom: 2px; padding-top: 2px; padding-left: 0.5em;'>";
+	    $tmpCrumbs = array();
+		foreach ($p_crumbs as $crumb) {
+		    if (count($crumb) == 2) {
+	    	    $str .= camp_html_breadcrumb($crumb[0], $crumb[1]);
+		    }
+		    else {
+	    	    $str .= camp_html_breadcrumb($crumb[0], $crumb[1], $crumb[2]);
+		    }
+		}
+//	    if (count($secondToLastCrumb) == 2) {
+//		    $str .= camp_html_breadcrumb($secondToLastCrumb[0], $secondToLastCrumb[1], false, false);
+//	    }
+//	    else {
+//		    $str .= camp_html_breadcrumb($secondToLastCrumb[0], $secondToLastCrumb[1], $secondToLastCrumb[2], false);
+//	    }
+	    $str .= '</TD></TR>';
+    }
+    $str .= '<TR>';
+    $str .= '<TD align="left" style="padding-left: 1.4em; padding-bottom: 2px; border-bottom: 1px solid black; padding-top: 3px;';
+    if (count($p_crumbs) <= 0) {
+    	$str .= "border-top: 1px solid #8BAED1;";
+    }
+    $str .= '">';
     $str .= camp_html_breadcrumb($lastCrumb[0], $lastCrumb[1], false, true);
     $str .= '</TD></TR>';
     $str .= '</TABLE>';

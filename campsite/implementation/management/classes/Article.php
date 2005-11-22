@@ -193,7 +193,7 @@ class Article extends DatabaseObject {
 	 * @param int $p_userId -
 	 *		The user creating the copy.  If null, keep the same user ID as the original.
 	 * @param mixed $p_copyTranslations -
-	 *		If false, only this article will be copied.
+	 *		If false (default), only this article will be copied.
 	 * 		If true, all translations will be copied.
 	 *		If an array is passed, the translations given will be copied.  
 	 *		Any translations that do not exist will be ignored.
@@ -673,14 +673,25 @@ class Article extends DatabaseObject {
 	
 
 	/**
-	 * Return true if the given user has permission to modify this article.
+	 * Return true if the given user has permission to modify the content of this article.
+	 *
+	 * 1) Publishers can always edit.
+	 * 2) Users who have the ChangeArticle right can edit as long as the
+	 *    article is not published.  i.e. they can edit ALL articles that are 
+	 *    new or submitted.
+	 * 3) Users with the AddArticle right can edit as long as they created
+	 *    the article, and the article is in the "New" state.
+	 *
 	 * @return boolean
 	 */
 	function userCanModify($p_user) 
 	{
 		$userCreatedArticle = ($this->m_data['IdUser'] == $p_user->getId());
 		$articleIsNew = ($this->m_data['Published'] == 'N');
-		if ($p_user->hasPermission('ChangeArticle') || ($userCreatedArticle && $articleIsNew)) {
+		$articleIsNotPublished = (($this->m_data['Published'] == 'N') || ($this->m_data['Published'] == 'S'));
+		if ($p_user->hasPermission('Publish') 
+			|| ($p_user->hasPermission('ChangeArticle') && $articleIsNotPublished)
+			|| ($userCreatedArticle && $articleIsNew)) {
 			return true;
 		}
 		else {
@@ -790,10 +801,10 @@ class Article extends DatabaseObject {
 	 * Return the user ID of the user who created this article.
 	 * @return int
 	 */
-	function getUserId() 
+	function getCreatorId() 
 	{
 		return $this->getProperty('IdUser');
-	} // fn getUserId
+	} // fn getCreatorId
 	
 	
 	/**
@@ -943,10 +954,21 @@ class Article extends DatabaseObject {
 	 * Return the date the article was created in the form YYYY-MM-DD.
 	 * @return string
 	 */
-	function getUploadDate() 
+	function getCreationDate() 
 	{
 		return $this->getProperty('UploadDate');
-	} // fn getUploadDate
+	} // fn getCreationDate
+	
+	
+	/**
+	 * Set the date the article was created, parameter must be in the form YYYY-MM-DD.
+	 * @param string $p_value
+	 * @return boolean
+	 */
+	function setCreationDate($p_value) 
+	{
+		return $this->setProperty('UploadDate', $p_value);
+	} // fn setCreationDate
 	
 	
 	/**

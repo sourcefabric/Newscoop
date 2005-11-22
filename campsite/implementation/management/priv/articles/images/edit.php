@@ -10,28 +10,28 @@ if (!$access) {
 	exit;
 }
 
-$Pub = Input::Get('Pub', 'int', 0);
-$Issue = Input::Get('Issue', 'int', 0);
-$Section = Input::Get('Section', 'int', 0);
-$Language = Input::Get('Language', 'int', 0);
-$sLanguage = Input::Get('sLanguage', 'int', 0);
-$Article = Input::Get('Article', 'int', 0);
-$ImageId = Input::Get('ImageId', 'int', 0);
-$ImageTemplateId = Input::Get('ImageTemplateId', 'int', 0, true);
+$f_publication_id = Input::Get('f_publication_id', 'int', 0);
+$f_issue_number = Input::Get('f_issue_number', 'int', 0);
+$f_section_number = Input::Get('f_section_number', 'int', 0);
+$f_language_id = Input::Get('f_language_id', 'int', 0);
+$f_language_selected = Input::Get('f_language_selected', 'int', 0);
+$f_article_number = Input::Get('f_article_number', 'int', 0);
+$f_image_id = Input::Get('f_image_id', 'int', 0);
+$f_image_template_id = Input::Get('f_image_template_id', 'int', 0, true);
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
 	exit;	
 }
 
-$publicationObj =& new Publication($Pub);
-$issueObj =& new Issue($Pub, $Language, $Issue);
-$sectionObj =& new Section($Pub, $Issue, $Language, $Section);
-$articleObj =& new Article($sLanguage, $Article);
-$imageObj =& new Image($ImageId);
+$publicationObj =& new Publication($f_publication_id);
+$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
+$sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
+$articleObj =& new Article($f_language_selected, $f_article_number);
+$imageObj =& new Image($f_image_id);
 
 // Add extra breadcrumb for image list.
-$extraCrumbs = array(getGS("Images")=>"/$ADMIN/articles/images/?Pub=$Pub&Issue=$Issue&Language=$Language&Section=$Section&Article=$Article&sLanguage=$sLanguage");
+$extraCrumbs = array(getGS("Images") => "");
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
 				  'Section' => $sectionObj, 'Article'=>$articleObj);
 camp_html_content_top(getGS('Change image information'), $topArray, true, true, $extraCrumbs);
@@ -50,50 +50,47 @@ camp_html_content_top(getGS('Change image information'), $topArray, true, true, 
 			<HR NOSHADE SIZE="1" COLOR="BLACK">
 		</TD>
 	</TR>
-	<?php if ($ImageTemplateId > 0) { ?>
 	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS('Number'); ?>:</TD>
 		<TD>
-		<INPUT TYPE="TEXT" NAME="cNumber" VALUE="<?php echo $ImageTemplateId; ?>" class="input_text" SIZE="32" MAXLENGTH="10">
+		<INPUT TYPE="TEXT" NAME="f_image_template_id" VALUE="<?php echo $f_image_template_id; ?>" class="input_text" SIZE="32" MAXLENGTH="10">
 		</TD>
 	</TR>
-	<?php } ?>
 	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS('Description'); ?>:</TD>
 		<TD>
-		<INPUT TYPE="TEXT" NAME="cDescription" VALUE="<?php echo htmlspecialchars($imageObj->getDescription()); ?>" class="input_text" SIZE="32" MAXLENGTH="128">
+		<INPUT TYPE="TEXT" NAME="f_image_description" VALUE="<?php echo htmlspecialchars($imageObj->getDescription()); ?>" class="input_text" SIZE="32" MAXLENGTH="128">
 		</TD>
 	</TR>
 	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS('Photographer'); ?>:</TD>
 		<TD>
-		<INPUT TYPE="TEXT" NAME="cPhotographer" VALUE="<?php echo htmlspecialchars($imageObj->getPhotographer());?>" class="input_text" SIZE="32" MAXLENGTH="64">
+		<INPUT TYPE="TEXT" NAME="f_image_photographer" VALUE="<?php echo htmlspecialchars($imageObj->getPhotographer());?>" class="input_text" SIZE="32" MAXLENGTH="64">
 		</TD>
 	</TR>
 	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS('Place'); ?>:</TD>
 		<TD>
-		<INPUT TYPE="TEXT" NAME="cPlace" VALUE="<?php echo htmlspecialchars($imageObj->getPlace()); ?>" class="input_text" SIZE="32" MAXLENGTH="64">
+		<INPUT TYPE="TEXT" NAME="f_image_place" VALUE="<?php echo htmlspecialchars($imageObj->getPlace()); ?>" class="input_text" SIZE="32" MAXLENGTH="64">
 		</TD>
 	</TR>
 	<TR>
 		<TD ALIGN="RIGHT" ><?php  putGS('Date'); ?>:</TD>
 		<TD>
-		<INPUT TYPE="TEXT" NAME="cDate" VALUE="<?php echo htmlspecialchars($imageObj->getDate()); ?>" class="input_text" SIZE="11" MAXLENGTH="10"> <?php putGS('YYYY-MM-DD'); ?>
+		<INPUT TYPE="TEXT" NAME="f_image_date" VALUE="<?php echo htmlspecialchars($imageObj->getDate()); ?>" class="input_text" SIZE="11" MAXLENGTH="10"> <?php putGS('YYYY-MM-DD'); ?>
 		</TD>
 	</TR>
 	<TR>
 		<TD COLSPAN="2">
 		<DIV ALIGN="CENTER">
-	    <INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<?php  p($Pub); ?>">
-	    <INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<?php  p($Issue); ?>">
-	    <INPUT TYPE="HIDDEN" NAME="Section" VALUE="<?php  p($Section); ?>">
-	    <INPUT TYPE="HIDDEN" NAME="Article" VALUE="<?php  p($Article); ?>">
-	    <INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php  p($Language); ?>">
-	    <INPUT TYPE="HIDDEN" NAME="sLanguage" VALUE="<?php  p($sLanguage); ?>">
-	    <INPUT TYPE="HIDDEN" NAME="Image" VALUE="<?php  p($ImageId); ?>">
-		<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save changes'); ?>" class="button">
-		<!--<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" class="button" ONCLICK="location.href='/<?php echo $ADMIN; ?>/articles/images/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Article=<?php  p($Article); ?>&Language=<?php  p($Language); ?>&sLanguage=<?php  p($sLanguage); ?>&Section=<?php  p($Section); ?>'">-->
+	    <INPUT TYPE="HIDDEN" NAME="f_publication_id" VALUE="<?php  p($f_publication_id); ?>">
+	    <INPUT TYPE="HIDDEN" NAME="f_issue_number" VALUE="<?php  p($f_issue_number); ?>">
+	    <INPUT TYPE="HIDDEN" NAME="f_section_number" VALUE="<?php  p($f_section_number); ?>">
+	    <INPUT TYPE="HIDDEN" NAME="f_article_number" VALUE="<?php  p($f_article_number); ?>">
+	    <INPUT TYPE="HIDDEN" NAME="f_language_id" VALUE="<?php  p($f_language_id); ?>">
+	    <INPUT TYPE="HIDDEN" NAME="f_language_selected" VALUE="<?php  p($f_language_selected); ?>">
+	    <INPUT TYPE="HIDDEN" NAME="f_image_id" VALUE="<?php  p($f_image_id); ?>">
+		<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save'); ?>" class="button">
 		</DIV>
 		</TD>
 	</TR>

@@ -24,6 +24,8 @@ $f_publish_action = Input::Get('f_publish_action', 'string', '', true);
 $f_front_page_action = Input::Get('f_front_page_action', 'string', '', true);
 $f_section_page_action = Input::Get('f_section_page_action', 'string', '', true);
 $f_article_code = Input::Get('f_article_code', 'array', 0);
+// "mode" can be "multi" or "single"
+$f_mode = Input::Get('f_mode', 'string', 'single', true);
 
 // Get all the articles.
 $articles = array();
@@ -39,10 +41,6 @@ foreach ($f_article_code as $code) {
 	}
 }
 
-//$BackLink = Input::Get('Back', 'string', "/$ADMIN/articles/index.php"
-//                       ."?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&Section=$f_section_number&f_language_selected=$f_language_selected&Language=$f_language_id", 
-//                       true);
-                       
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
 	exit;	
@@ -97,7 +95,7 @@ if ($correct) {
 	foreach ($articles as $tmpArticle) {
 		$articlePublishObj =& new ArticlePublish();
 		$articlePublishObj->create();
-		$articlePublishObj->setArticleId($tmpArticle->getArticleNumber());
+		$articlePublishObj->setArticleNumber($tmpArticle->getArticleNumber());
 		$articlePublishObj->setLanguageId($tmpArticle->getLanguageId());
 		$articlePublishObj->setActionTime($publishTime);
 		$created = true;
@@ -111,14 +109,20 @@ if ($correct) {
 			$articlePublishObj->setSectionPageAction($f_section_page_action);
 		}
 	}
-	$args = $_REQUEST;
-	unset($args["f_article_code"]);
-	$argsStr = camp_implode_keys_and_values($args, "=", "&");
-	$url = "Location: /$ADMIN/articles/index.php?".$argsStr;
-	//echo $url;
-	header($url);	
-//	$redirect = camp_html_article_url($articleObj, $f_language_id, "autopublish.php", $BackLink);
-//	header("Location: $redirect");
+	if ($f_mode == "multi") {
+		$args = $_REQUEST;
+		unset($args["f_article_code"]);
+		$argsStr = camp_implode_keys_and_values($args, "=", "&");
+		$url = "Location: /$ADMIN/articles/index.php?".$argsStr;
+		header($url);	
+	} else {
+		?>
+		<script>
+		window.opener.location.reload();
+		window.close();		
+		</script>
+		<?
+	}
 	exit;
 }
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 

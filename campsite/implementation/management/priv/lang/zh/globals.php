@@ -216,7 +216,6 @@ regGS("Cancel", "取消");
 regGS("Done", "完成");
 regGS("New field", "新字段");
 regGS("OK", "成功");
-regGS("Save changes", "保存变化");
 regGS("Search", "搜索");
 regGS("No languages", "无语言");
 regGS("---Select language---", "－－选择语言－－");

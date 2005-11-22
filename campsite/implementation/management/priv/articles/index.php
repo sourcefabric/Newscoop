@@ -69,7 +69,7 @@ $previousArticleNumber = 0;
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
 				  'Section' => $sectionObj);
-camp_html_content_top(getGS('Articles'), $topArray);
+camp_html_content_top(getGS('Article List'), $topArray);
 ?>
 <P>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="action_buttons">
@@ -107,7 +107,7 @@ function uncheckAll(field)
 	}
 }
 </script>
-<div style="position: fixed; top: 120px;">
+<div style="position: fixed; top: 140px;">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="3" class="table_input" style="background-color: #D5C3DF; border-color: #A35ACF;">
 <TR>
 	<TD>
@@ -273,9 +273,7 @@ if ($numUniqueArticlesDisplayed > 0) {
 	<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Type"); ?></TD>
 	<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Author"); ?></TD>
 	<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Status"); ?></TD>
-	<?php if ($User->hasPermission('Publish')) { ?>
 	<TD ALIGN="center" VALIGN="TOP"><?php  echo str_replace(' ', '<br>', getGS("Scheduled Publishing")); ?></TD>
-	<?php } ?>	
 	<TD ALIGN="center" VALIGN="TOP"><?php  echo str_replace(' ', '<br>', getGS("On Front Page")); ?></TD>
 	<TD ALIGN="center" VALIGN="TOP"><?php  echo str_replace(' ', '<br>', getGS("On Section Page")); ?></TD>
 	<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Images"); ?></TD>
@@ -335,10 +333,8 @@ foreach ($allArticles as $articleObj) {
 		    <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/lock.png" width="22" height="22" border="0" alt="<?php  p($lockInfo); ?>" title="<?php p($lockInfo); ?>">
 		    <?php
 		}
-		// Can the user edit the article?
-		$userCanEdit = $articleObj->userCanModify($User);
-		if ($userCanEdit) { ?>
-		<A HREF="/<?php echo $ADMIN; ?>/articles/edit.php?f_publication_id=<?php  p($f_publication_id); ?>&f_issue_number=<?php  p($f_issue_number); ?>&f_section_number=<?php  p($f_section_number); ?>&f_article_number=<?php p($articleObj->getArticleNumber()); ?>&f_language_id=<?php  p($f_language_id); ?>&f_language_selected=<?php p($articleObj->getLanguageId()); ?>"><?php } ?><?php  p(htmlspecialchars($articleObj->getTitle())); ?>&nbsp;<?php if ($userCanEdit) { ?></A><?php } ?> (<?php p(htmlspecialchars($articleObj->getLanguageName())); ?>)
+		?>
+		<A HREF="/<?php echo $ADMIN; ?>/articles/edit.php?f_publication_id=<?php  p($f_publication_id); ?>&f_issue_number=<?php  p($f_issue_number); ?>&f_section_number=<?php  p($f_section_number); ?>&f_article_number=<?php p($articleObj->getArticleNumber()); ?>&f_language_id=<?php  p($f_language_id); ?>&f_language_selected=<?php p($articleObj->getLanguageId()); ?>"><?php  p(htmlspecialchars($articleObj->getTitle())); ?>&nbsp;</A> (<?php p(htmlspecialchars($articleObj->getLanguageName())); ?>)
 		</TD>
 		<TD ALIGN="RIGHT">
 			<?php p(htmlspecialchars($articleObj->getType()));  ?>
@@ -346,66 +342,39 @@ foreach ($allArticles as $articleObj) {
 
 		<TD ALIGN="RIGHT">
 			<?php 
-			$articleCreator =& new User($articleObj->getUserId());
+			$articleCreator =& new User($articleObj->getCreatorId());
 			p(htmlspecialchars($articleCreator->getName()));  ?>
 		</TD>
 
 		<TD ALIGN="CENTER">
 			<?php 
-			$statusLink = "<A HREF=\"/$ADMIN/articles/status.php?f_publication_id=". $f_publication_id
-				.'&f_issue_number='.$f_issue_number
-				.'&f_section_number='.$f_section_number
-				.'&f_article_number='.$articleObj->getArticleNumber()
-				.'&f_language_id='.$f_language_id
-				.'&f_language_selected='.$articleObj->getLanguageId().'">';
 			if ($articleObj->getPublished() == "Y") { 
-				$statusWord = "Published";
+				putGS("Published");
 			}
 			elseif ($articleObj->getPublished() == "N") { 
-				$statusWord = "New";
+				putGS("New");
 			}
 			elseif ($articleObj->getPublished() == "S") { 
-				$statusWord = "Submitted";
-			}
-			$enableStatusLink = false;
-			if ($User->hasPermission('Publish')) {
-				$enableStatusLink = true;
-			}
-			elseif ($User->hasPermission('ChangeArticle') 
-					&& ($articleObj->getPublished() != 'Y')) {
-				$enableStatusLink = true;
-			}
-			elseif ( ($User->getId() == $articleObj->getUserId())
-					&& ($articleObj->getPublished() == "N")) {
-				$enableStatusLink = true;
-			}
-			if ($enableStatusLink) {
-				echo $statusLink;
-			}
-			putGS($statusWord);
-			if ($enableStatusLink) {
-				echo "</a>";
+				putGS("Submitted");
 			}
 			?>
 		</TD>
 		
-		<?php if ($User->hasPermission('Publish')) { ?>
 		<TD ALIGN="CENTER">
 			<?php if ($articleObj->getPublished() != 'N') { 
 				$events = ArticlePublish::GetArticleEvents($articleObj->getArticleNumber(),
 					$articleObj->getLanguageId());?>
-			<A HREF="/<?php echo $ADMIN; ?>/articles/autopublish.php?f_publication_id=<?php  p($f_publication_id); ?>&f_issue_number=<?php  p($f_issue_number); ?>&f_section_number=<?php  p($f_section_number); ?>&f_article_number=<?php p($articleObj->getArticleNumber()); ?>&f_language_id=<?php  p($f_language_id);?>&f_language_selected=<?php p($articleObj->getLanguageId()); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/<?php p((count($events) > 0) ? 'automatic_publishing_active.png':'automatic_publishing.png'); ?>" alt="<?php  putGS("Scheduled Publishing"); ?>" title="<?php  putGS("Scheduled Publishing"); ?>" border="0" width="22" height="22"></A>
+			<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/<?php p((count($events) > 0) ? 'automatic_publishing_active.png':'automatic_publishing.png'); ?>" alt="<?php  putGS("Scheduled Publishing"); ?>" title="<?php  putGS("Scheduled Publishing"); ?>" border="0" width="22" height="22">
 			<?php 
 			} else { ?>
 				&nbsp;<?PHP
 			}
 			?>
 		</TD>
-		<?php } ?>
 		
 		<TD><?php echo $articleObj->onFrontPage() ? "Yes" : "No"; ?></TD>
 		<TD><?php echo $articleObj->onSectionPage() ? "Yes" : "No"; ?></TD>
-		<TD><?php echo count(ArticleImage::GetImagesByArticleId($articleObj->getArticleNumber())); ?></TD>
+		<TD><?php echo count(ArticleImage::GetImagesByArticleNumber($articleObj->getArticleNumber())); ?></TD>
 		<TD><?php echo count(ArticleTopic::GetArticleTopics($articleObj->getArticleNumber())); ?></TD>
 		
 		<?php

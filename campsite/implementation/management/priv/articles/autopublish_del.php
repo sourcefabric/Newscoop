@@ -14,7 +14,7 @@ if (!$User->hasPermission("Publish")) {
 
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
-$f_action_id = Input::Get('f_action_id', 'int', 0);
+$f_event_id = Input::Get('f_event_id', 'int', 0);
 $BackLink = Input::Get('Back', 'string', "/$ADMIN/articles/index.php", true);
 
 if (!Input::IsValid()) {
@@ -28,11 +28,11 @@ if (!$articleObj->exists()) {
 	exit;
 }
 
-$articlePublishObj =& new ArticlePublish($f_action_id);
+$articlePublishObj =& new ArticlePublish($f_event_id);
 if ($articlePublishObj->exists()) {
 	$articlePublishObj->delete();
 }
-$redirect = camp_html_article_url($articleObj, $f_language_selected, "autopublish.php", $BackLink);
+$redirect = camp_html_article_url($articleObj, $f_language_selected, "edit.php");
 header("Location: $redirect");
 exit;
 ?>

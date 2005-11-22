@@ -121,7 +121,7 @@ class ArticleImage extends DatabaseObject {
 	 * Get all the images that belong to this article.
 	 * @return array
 	 */
-	function GetImagesByArticleId($p_articleId) 
+	function GetImagesByArticleNumber($p_articleId) 
 	{
 		global $Campsite;
 		$tmpImage =& new Image();
@@ -145,7 +145,7 @@ class ArticleImage extends DatabaseObject {
 			}
 		}
 		return $returnArray;
-	} // fn GetImagesByArticleId
+	} // fn GetImagesByArticleNumber
 	
 	
 	/**

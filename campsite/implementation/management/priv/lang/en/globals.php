@@ -4,7 +4,6 @@ regGS("URL \"$1\" is invalid or is not an image.", "URL \"$1\" is invalid or is 
 regGS("URL \"$1\" is not an image.", "URL \"$1\" is not an image.");
 regGS("You are here:", "You are here:");
 regGS("Add new", "Add new");
-regGS("Save changes", "Save changes");
 regGS("CAMPSITE", "CAMPSITE");
 regGS("Home", "Home");
 regGS("Logout", "Logout");

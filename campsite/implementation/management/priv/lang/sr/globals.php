@@ -1,6 +1,5 @@
 <?php
 regGS("Add new", "Додај нови");
-regGS("Save changes", "Сними измене");
 regGS("CAMPSITE", "КЕМПСАЈТ");
 regGS("Home", "Почетак");
 regGS("Logout", "Одјава");

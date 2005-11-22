@@ -216,7 +216,6 @@ regGS("Cancel", "Abbruch");
 regGS("Done", "Ausgeführt");
 regGS("New field", "Neues Feld");
 regGS("OK", "OK");
-regGS("Save changes", "Veränderungen speichern");
 regGS("Search", "Suche");
 regGS("No languages", "Keine Sprachen");
 regGS("---Select language---", "---Sprache auswählen---");

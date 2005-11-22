@@ -23,7 +23,7 @@ $publicationObj =& new Publication($Pub);
 $allIssues = Issue::GetIssues($Pub, null, null, $publicationObj->getLanguageId(), array('LIMIT' => array('START' => $IssOffs, 'MAX_ROWS'=> $ItemsPerPage)));
 $totalIssues = Issue::GetNumIssues($Pub);
 
-camp_html_content_top(getGS('Issues'), array('Pub' => $publicationObj));
+camp_html_content_top(getGS('Issue List'), array('Pub' => $publicationObj));
 
 if ($User->hasPermission('ManageIssue')) {
 	if (Issue::GetNumIssues($Pub) <= 0) {
@@ -52,27 +52,27 @@ if (count($allIssues) > 0) {
 	$color = 0;
 ?><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list">
 	<TR class="table_list_header">
-	<?php  if ($User->hasPermission('ManageIssue')) { ?>
-		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Nr"); ?></B></TD>
+		<?php  if ($User->hasPermission('ManageIssue')) { ?>
+		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Number"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("Name<BR><SMALL>(click to see sections)</SMALL>"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("URL Name"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Configure"); ?></B></TD> 
-	<?php if ($User->hasPermission('Publish')) { ?>
+			<?php if ($User->hasPermission('Publish')) { ?>
 		<TD ALIGN="center" VALIGN="TOP"><B><?php echo str_replace(' ', '<br>', getGS("Scheduled Publishing")); ?></B></TD>
-	<?php } ?>
+			<?php } ?>
 		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Translate"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Preview"); ?></B></TD>
-	<?php  } else { ?>
-		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Nr"); ?></B></TD>
+		<?php  } else { ?>
+		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Number"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("Name<BR><SMALL>(click to see sections)</SMALL>"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Preview"); ?></B></TD>
-	<?php  }
+		<?php }
 	
-	if ($User->hasPermission('DeleteIssue')) { ?>
+		if ($User->hasPermission('DeleteIssue')) { ?>
 		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Delete"); ?></B></TD>
-	<?php  } ?>
+		<?php  } ?>
 	</TR>
 
 <?php 
@@ -114,11 +114,7 @@ foreach ($allIssues as $issue) {
 	</TD>
 	
 	<TD >
-		<A HREF="/<?php echo $ADMIN; ?>/issues/sections/?Pub=<?php p($Pub); ?>&Issue=<?php  p($issue->getIssueNumber()); ?>&Language=<?php p($issue->getLanguageId()); ?>"><?php p(htmlspecialchars($issue->getName())); ?></A>
-	</TD>
-	
-	<TD>
-		<?php p($issue->getLanguageName()); ?>		
+		<A HREF="/<?php echo $ADMIN; ?>/sections/?Pub=<?php p($Pub); ?>&Issue=<?php  p($issue->getIssueNumber()); ?>&Language=<?php p($issue->getLanguageId()); ?>"><?php p(htmlspecialchars($issue->getName())); ?></A> (<?php p($issue->getLanguageName()); ?>)
 	</TD>
 	
 	<TD ALIGN="CENTER">

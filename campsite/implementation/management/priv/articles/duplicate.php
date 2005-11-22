@@ -20,6 +20,7 @@ $f_article_code = Input::Get('f_article_code', 'array', 0);
 $f_destination_publication_id = Input::Get('f_destination_publication_id', 'int', 0, true);
 $f_destination_issue_id = Input::Get('f_destination_issue_id', 'int', 0, true);
 $f_destination_section_id = Input::Get('f_destination_section_id', 'int', 0, true);
+$f_mode = Input::Get('f_mode', 'string', 'single', true);
 
 // Article names can change from page request to page request.
 // We create a 2-dimensional array of article names indexed by article ID, language ID.
@@ -41,12 +42,13 @@ foreach ($_REQUEST as $key => $value) {
 	}
 }
 
+
 // Get all the articles we are copying.
 $articles = array();
 foreach ($f_article_code as $code) {
 	list($articleNumber, $languageId) = split("_", $code);
 	$tmpArticle =& new Article($languageId, $articleNumber);
-	$articles[$articleNumber][$languageId] =& $tmpArticle;
+	$articles[$articleNumber][$languageId] = $tmpArticle;
 	
 	// Initialize the article names on initial page request.
 	// Initialize the $doCopy array on initial page request.
@@ -56,10 +58,11 @@ foreach ($f_article_code as $code) {
 	}
 }
 
+
 // Fill in article names for translations.
 // The user is automatically given the choice to duplicate translations of articles
 // when they get to this screen.
-foreach ($articles as $languageArray) {
+foreach ($articles as $articleNumber => $languageArray) {	
 	$tmpArticle = camp_array_peek($languageArray);
 	$translations = $tmpArticle->getTranslations();
 	foreach ($translations as $article) {
@@ -98,28 +101,41 @@ if (!$sectionObj->exists()) {
 if (isset($_REQUEST["duplicate_button"])) {
 	foreach ($doCopy as $articleNumber => $languageArray) {
 		$languageArray = array_keys($languageArray);
-		echo "<pre>"; print_r($languageArray); echo "</pre>";
+		//echo "<pre>"; print_r($languageArray); echo "</pre>";
 		
 		$tmpLanguageId = camp_array_peek($languageArray);
 		
 		// Error checking
 		if (!isset($articles[$articleNumber][$tmpLanguageId])) {
-		echo "error $articleNumber:$tmpLanguageId<br>";
+			//echo "error $articleNumber:$tmpLanguageId<br>";
 			continue;
 		}
 		
-		echo "copying $articleNumber:$tmpLanguageId<br>";
+		//echo "copying $articleNumber:$tmpLanguageId<br>";
 		// Grab the first article - it doesnt matter which one.
 		$tmpArticle = $articles[$articleNumber][$tmpLanguageId];
 		
 		// Copy all the translations requested.
-		$tmpArticle->copy($f_destination_publication_id, 
-						  $f_destination_issue_id, 
-						  $f_destination_section_id, 
-						  $User->getId(),
-						  $languageArray);
+		$newArticles = $tmpArticle->copy($f_destination_publication_id, 
+						  				 $f_destination_issue_id, 
+						  				 $f_destination_section_id, 
+						  				 $User->getId(),
+						  				 $languageArray);
+		
+		// Set the names of the new copies
+		foreach ($newArticles as $newArticle) {
+			$newArticle->setTitle($articleNames[$articleNumber][$newArticle->getLanguageId()]);
+		}
 	}
-	//header("Location:");
+	if ($f_mode == "single") {
+		$tmpArticle = camp_array_peek($newArticles);
+		$url = camp_html_article_url($tmpArticle, $f_language_selected, "edit.php");
+		header("Location: $url");
+	} else {
+		$tmpArticle = camp_array_peek(camp_array_peek($articles));
+		$url = camp_html_article_url($tmpArticle, $f_language_id, "index.php");
+		header("Location: $url");
+	}
 	exit;
 }
 
@@ -137,7 +153,7 @@ $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj,
 				  'Section' => $sectionObj);
 if (count($articles) > 1) {
 	$crumbs = array(getGS("Articles") => "/$ADMIN/articles/index.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id&f_language_selected=$f_language_selected");
-	camp_html_content_top(getGS("Copy article"), $topArray, true, false, $crumbs);
+	camp_html_content_top(getGS("Copy articles"), $topArray, true, false, $crumbs);
 }
 else {
 	$topArray['Article'] = camp_array_peek(camp_array_peek($articles));
@@ -150,12 +166,13 @@ else {
 <?php putGS("Copy articles"); ?>:
 </div>
 
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" style="margin-left: 5px;">
 <FORM NAME="duplicate" METHOD="POST">
 <input type="hidden" name="f_publication_id" value="<?php p($f_publication_id); ?>">
 <input type="hidden" name="f_issue_number" value="<?php p($f_issue_number); ?>">
 <input type="hidden" name="f_section_number" value="<?php p($f_section_number); ?>">
 <input type="hidden" name="f_language_id" value="<?php p($f_language_id); ?>">
+<input type="hidden" name="f_mode" value="<?php p($f_mode); ?>">
 <?php 
 foreach ($articles as $languageArray) {
 	foreach ($languageArray as $article) {	?>
@@ -208,7 +225,7 @@ foreach ($articles as $languageArray) {
 	</TD>
 </TR>
 </TABLE>
-
+<p>
 <div class="page_title">
 <?php putGS("to section"); ?>:
 </div>

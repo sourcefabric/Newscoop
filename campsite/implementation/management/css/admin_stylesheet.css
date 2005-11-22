@@ -178,7 +178,8 @@ hr {
 }
 
 .breadcrumb_active {
-    color: #d95022;
+    /*color: #d95022;*/
+    color: #2F2F2F;
 	font-weight: bold;
 	font-size: larger;
 }
@@ -192,9 +193,9 @@ hr {
 .breadcrumb_separator {
 	padding-left: 8px;
 	padding-right: 8px;
-	background-image: url(/css/breadcrumb_separator.gif);
+	background-image: url(/css/breadcrumb_separator2.png);
 	background-repeat: no-repeat;
-	background-position: 50% 70%;
+	background-position: 50% 60%;
 }
 
 .info_message {

@@ -6,19 +6,19 @@ if (!$access) {
 	header("Location: /$ADMIN/logout.php");
 	exit;
 }
-$PublicationId = Input::Get('Pub', 'int', 0);
-$IssueId  = Input::Get('Issue', 'int', 0);
-$SectionId = Input::Get('Section', 'int', 0);
-$InterfaceLanguageId = Input::Get('Language', 'int', 0);
-$ArticleLanguageId = Input::Get('sLanguage', 'int', 0);
-$ArticleId = Input::Get('Article', 'int', 0);
+$f_publcation_id = Input::Get('f_publication_id', 'int', 0);
+$f_issue_number = Input::Get('f_issue_number', 'int', 0);
+$f_section_number = Input::Get('f_section_number', 'int', 0);
+$f_language_id = Input::Get('f_language_id', 'int', 0);
+$f_language_selected = Input::Get('f_language_selected', 'int', 0);
+$f_article_number = Input::Get('f_article_number', 'int', 0);
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));
 	exit;	
 }
 
-$articleObj =& new Article($ArticleLanguageId, $ArticleId);
+$articleObj =& new Article($f_language_selected, $f_article_number);
 
 // If the user does not have permission to change the article
 // or they didnt create the article, give them the boot.
@@ -28,7 +28,7 @@ if (!$articleObj->userCanModify($User)) {
 }
 
 $articleObj->unlock();
-header('Location: '.camp_html_article_url($articleObj, $InterfaceLanguageId, "edit.php", "", "&Unlock=true"));
+header('Location: '.camp_html_article_url($articleObj, $f_language_selected, "edit.php", "", "&Unlock=true"));
 exit;
 
 ?>

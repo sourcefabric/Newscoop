@@ -304,22 +304,22 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 			</TD>
 			<td nowrap valign="top"><?PHP
 			$displayActions = array();
-			if ($action["Publish"] == 'P') {
+			if ($action["publish_action"] == 'P') {
 			    $displayActions[] = getGS("Publish");
 			}
-			if ($action["Publish"] == 'U') {
+			if ($action["publish_action"] == 'U') {
 			    $displayActions[] = getGS("Unpublish");
 			}
-			if ($action["FrontPage"] == 'S') {
+			if ($action["publish_on_front_page"] == 'S') {
 			    $displayActions[] = getGS("Show on front page");
 			}
-			if ($action["FrontPage"] == 'R') {
+			if ($action["publish_on_front_page"] == 'R') {
 			    $displayActions[] = getGS("Remove from front page");
 			}
-			if ($action["SectionPage"] == 'S') {
+			if ($action["publish_on_section_page"] == 'S') {
 			    $displayActions[] = getGS("Show on section page");
 			}
-			if ($action["SectionPage"] == 'R') {
+			if ($action["publish_on_section_page"] == 'R') {
 			    $displayActions[] = getGS("Remove from section page");
 			}
 			echo implode("<br>", $displayActions)
@@ -327,10 +327,10 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 			<td nowrap valign="top">
                 <?php 
                 if ($User->hasPermission("Publish")) { ?>
-                    <a href="/<?php p($ADMIN); ?>/articles/autopublish.php?Pub=<?php p($action["IdPublication"]); ?>&Issue=<?php p($action["NrIssue"]); ?>&Section=<?php p($action["NrSection"]); ?>&Article=<?php p($action["Number"]); ?>&Language=<?php p($action["IdLanguage"]); ?>&sLanguage=<?php p($action["IdLanguage"]); ?>&publish_time=<?php p(urlencode($action["ActionTime"])); ?>">
+                    <a href="/<?php p($ADMIN); ?>/articles/autopublish.php?Pub=<?php p($action["IdPublication"]); ?>&Issue=<?php p($action["NrIssue"]); ?>&Section=<?php p($action["NrSection"]); ?>&Article=<?php p($action["Number"]); ?>&Language=<?php p($action["IdLanguage"]); ?>&sLanguage=<?php p($action["IdLanguage"]); ?>&publish_time=<?php p(urlencode($action["time_action"])); ?>">
                     <?PHP
                 }
-                echo htmlspecialchars($action["ActionTime"]); 
+                echo htmlspecialchars($action["time_action"]); 
                 if ($User->hasPermission("Publish")) {
                     echo "</a>";
                 }
@@ -353,13 +353,13 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 			</TD>
 			<td valign="top" nowrap><?PHP
 			$displayActions = array();
-			if ($action["Action"] == 'P') {
+			if ($action["publish_action"] == 'P') {
 			    $displayActions[] = getGS("Publish");
 			}
-			if ($action["Action"] == 'U') {
+			if ($action["publish_action"] == 'U') {
 			    $displayActions[] = getGS("Unpublish");
 			}
-			if ($action["PublishArticles"] == 'Y') {
+			if ($action["do_publish_articles"] == 'Y') {
 			    $displayActions[] = getGS("Publish articles");
 			}
 			echo implode("<br>", $displayActions)
@@ -367,10 +367,10 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 			<td nowrap valign="top">
                 <?php 
                 if ($User->hasPermission("Publish")) { ?>
-                    <a href="/<?php p($ADMIN); ?>/issues/autopublish.php?Pub=<?php p($action["IdPublication"]); ?>&Issue=<?php p($action["Number"]); ?>&Language=<?php p($action["IdLanguage"]); ?>&publish_time=<?php p(urlencode($action["ActionTime"])); ?>">
+                    <a href="/<?php p($ADMIN); ?>/issues/autopublish.php?Pub=<?php p($action["IdPublication"]); ?>&Issue=<?php p($action["Number"]); ?>&Language=<?php p($action["IdLanguage"]); ?>&publish_time=<?php p(urlencode($action["time_action"])); ?>">
                     <?PHP
                 }
-                echo htmlspecialchars($action["ActionTime"]); 
+                echo htmlspecialchars($action["time_action"]); 
                 if ($User->hasPermission("Publish")) {
                     echo "</a>";
                 }

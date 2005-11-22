@@ -32,7 +32,7 @@ class ArticleTest extends PHPUnit_TestCase {
 		$this->assertEquals(9000002, $articleCopy->getIssueNumber());
 		$this->assertEquals(9000003, $articleCopy->getSectionNumber());
 		$this->assertEquals(9000004, $articleCopy->getLanguageId());
-		$this->assertEquals(9000005, $articleCopy->getUserId());
+		$this->assertEquals(9000005, $articleCopy->getCreatorId());
 		$this->assertEquals("Unit Test New Title", $articleCopy->getTitle());
 		$this->assertEquals(true, $articleCopy->onFrontPage());
 		$this->assertEquals(true, $articleCopy->onSection());

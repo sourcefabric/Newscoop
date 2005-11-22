@@ -110,7 +110,8 @@ $breadcrumbs = camp_html_breadcrumbs($crumbs);
 <BODY>
 
 <?php echo $breadcrumbs; ?>
-<table cellpadding="0" cellspacing="0" style="padding-top: 3px; padding-bottom: 3px;">
+<p>
+<table cellpadding="0" cellspacing="0" class="action_buttons">
 <tr>
 <?php
 if ($User->hasPermission('AddImage')) { ?>

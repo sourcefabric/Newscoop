@@ -136,7 +136,7 @@ if (sizeof($allArticleTypes) == 0) {
 <TR>
 	<TD COLSPAN="2">
 		<DIV ALIGN="CENTER">
-		<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save changes'); ?>" class="button">
+		<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save'); ?>" class="button">
 		<!--<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" class="button" ONCLICK="location.href='<?php  p($Back); ?>'">-->
 		</DIV>
 	</TD>

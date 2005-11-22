@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
 
 /** 
@@ -13,6 +14,9 @@ $no_menu_scripts = array(
 	'/issues/empty.php', 
 	'/ad_popup.php', 
 	'/articles/preview.php',
+	'/articles/autopublish.php',
+	'/articles/images/popup.php',
+	'/articles/images/view.php',
 	'/articles/empty.php');
 
 $request_uri = $_SERVER['REQUEST_URI'];

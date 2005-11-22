@@ -206,12 +206,16 @@ function camp_array_peek($p_array)
 
 
 /**
- * 
+ * Get a persistant value.  If the value is present in the $_REQUEST
+ * array, the session variable will be set to this value and returned.
+ * If the value is not yet set, it will be set to the default value.
+ * In all other cases the value from the session variable is returned.
+ *
  * @param string $p_name
  * @param mixed $p_defaultValue
  * @return mixed
  */
-function camp_persistant_var($p_name, $p_defaultValue)
+function camp_session_get($p_name, $p_defaultValue)
 {
 	// Use the REQUEST variable if it is set.
 	if (isset($_REQUEST[$p_name])) {
@@ -221,10 +225,26 @@ function camp_persistant_var($p_name, $p_defaultValue)
 		$_SESSION[$p_name] = $p_defaultValue;
 	}
 	return $_SESSION[$p_name];
+} // fn camp_session_get
+
+
+/**
+ * Print out the array or object surrounded with PRE tags so that its readable.
+ * @param mixed $p_object
+ * @return void
+ */
+function camp_dump($p_object)
+{
+	echo "<pre>";
+	ob_start();
+	print_r($p_object);
+	$buffer = ob_get_clean();
+	echo htmlspecialchars($buffer);
+	echo "</pre>";	
 }
 
 
-if (file_exists($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/modules/admin/priv_functions.php")) {
+if (isset($ADMIN_DIR) && file_exists($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/modules/admin/priv_functions.php")) {
 	include ($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/modules/admin/priv_functions.php");
 }
 

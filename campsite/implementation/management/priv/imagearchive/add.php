@@ -90,7 +90,7 @@ $breadcrumbs = camp_html_breadcrumbs($crumbs);
 		<DIV ALIGN="CENTER">
         <input type="hidden" name="view" value="<?php echo $view ?>"> 
         <INPUT TYPE="HIDDEN" NAME="BackLink" VALUE="<?php  p($_SERVER['REQUEST_URI']); ?>">
-		<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save changes'); ?>" class="button">
+		<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save'); ?>" class="button">
 		<!--<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='index.php?<?php echo $imageNav->getSearchLink(); ?>'" class="button">-->
 		</DIV>
 		</TD>
