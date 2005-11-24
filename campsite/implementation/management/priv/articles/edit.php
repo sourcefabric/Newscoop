@@ -236,7 +236,7 @@ if ($articleObj->userCanModify($User) && $locked) {
 						<?php 
 						// Show a different menu depending on the rights of the user.
 						if ($User->hasPermission("Publish")) { ?>
-						<SELECT name="f_action_workflow" class="input_select">
+						<SELECT name="f_action_workflow" class="input_select" onchange="this.form.submit();">
 						<?php 
 						camp_html_select_option("Y", $articleObj->getPublished(), getGS("Workflow: Published"));
 						camp_html_select_option("S", $articleObj->getPublished(), getGS("Workflow: Submitted"));
@@ -244,7 +244,7 @@ if ($articleObj->userCanModify($User) && $locked) {
 						?>
 						</SELECT>
 						<?php } elseif ($articleObj->userCanModify($User) && ($articleObj->getPublished() != 'Y')) { ?>
-						<SELECT name="f_action_workflow" class="input_select">
+						<SELECT name="f_action_workflow" class="input_select" onchange="this.form.submit();">
 						<?php 
 						camp_html_select_option("S", $articleObj->getPublished(), getGS("Workflow: Submitted"));
 						camp_html_select_option("N", $articleObj->getPublished(), getGS("Workflow: New"));

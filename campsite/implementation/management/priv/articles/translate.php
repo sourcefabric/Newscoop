@@ -105,7 +105,6 @@ camp_html_content_top(getGS('Translate article'), $topArray, true, true);
 <TR>
 	<TD COLSPAN="2" align="center">
 	<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save'); ?>" class="button">
-	<!--<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" class="button" ONCLICK="location.href='<?php  p($BackLink); ?>'">-->
 	</TD>
 </TR>
 </TABLE>

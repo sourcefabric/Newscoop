@@ -12,10 +12,16 @@ $f_section_number = Input::Get('f_section_number', 'int', 0);
 $f_language_id = Input::Get('f_language_id', 'int', 0);
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
-$f_action = Input::Get('f_action');
+$f_action = Input::Get('f_action', 'string', null, true);
+$f_action_workflow = Input::Get('f_action_workflow', 'string', null, true);
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));
+	exit;	
+}
+
+if (is_null($f_action) && is_null($f_action_workflow)) {
+	camp_html_display_error(getGS('No action specified'));
 	exit;	
 }
 
@@ -50,7 +56,12 @@ switch ($f_action) {
 		header("Location: $url");
 		exit;
 	case "translate":
-		break;
+		$args = $_REQUEST;
+		$argsStr = camp_implode_keys_and_values($_REQUEST, "=", "&");
+		$argsStr .= "&f_article_code=".$f_article_number."_".$f_language_selected;
+		$url = "Location: /$ADMIN/articles/translate.php?".$argsStr;
+		header($url);
+		exit;
 	case "copy":
 		$args = $_REQUEST;
 		$argsStr = camp_implode_keys_and_values($_REQUEST, "=", "&");
@@ -61,5 +72,27 @@ switch ($f_action) {
 		exit;
 }
 
+if (!is_null($f_action_workflow)) {
+	$access = false;
+	// A publisher can change the status in any way he sees fit.
+	// Someone who can change an article can submit/unsubmit articles.
+	// A user who owns the article may submit it.
+	if ($User->hasPermission('Publish') 
+		|| ($User->hasPermission('ChangeArticle') && ($f_action_workflow != 'Y'))
+		|| ($articleObj->userCanModify($User) && ($f_action_workflow == 'S') )) {
+		$access = true;
+	}
+	if (!$access) {
+		$errorStr = getGS("You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.");
+		camp_html_display_error($errorStr);
+		exit;	
+	}
+	
+	$articleObj->setPublished($f_action_workflow);
+	
+	$url = camp_html_article_url($articleObj, $f_language_selected, "edit.php");
+	header("Location: $url");	
+	exit;
+}
 
 ?>
