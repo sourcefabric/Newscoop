@@ -56,10 +56,10 @@ class ArticleData extends DatabaseObject {
 	
 	/**
 	 * Copy the row in the database.
-	 * @param int $p_destArticleId
+	 * @param int $p_destArticleNumber
 	 * @return void
 	 */
-	function copy($p_destArticleId) 
+	function copy($p_destArticleNumber) 
 	{
 		global $Campsite;
 		$tmpData = $this->m_data;
@@ -70,18 +70,18 @@ class ArticleData extends DatabaseObject {
 		
 		$queryStr = 'INSERT IGNORE INTO '.$this->m_dbTableName
 			.'(NrArticle,'.implode(',', array_keys($this->m_columnNames)).')'
-			.' VALUES ('.$p_destArticleId.','.implode(',', $tmpData).')';
+			.' VALUES ('.$p_destArticleNumber.','.implode(',', $tmpData).')';
 		$Campsite['db']->Execute($queryStr);
 	} // fn copy
 	
 	
 	/**
 	 * Copy the row in the database.
-	 * @param int $p_destArticleId
+	 * @param int $p_destArticleNumber
 	 * @param int $p_destLanguageId
 	 * @return void
 	 */
-	function copyToExistingRecord($p_destArticleId, $p_destLanguageId = null) 
+	function copyToExistingRecord($p_destArticleNumber, $p_destLanguageId = null) 
 	{
 		global $Campsite;
 		$tmpData = $this->m_data;
@@ -92,7 +92,7 @@ class ArticleData extends DatabaseObject {
 			$setQuery[] = $key."='".mysql_real_escape_string($data)."'";
 		}		
 		$queryStr = 'UPDATE '.$this->m_dbTableName.' SET '.implode(',', $setQuery)
-				." WHERE NrArticle=$p_destArticleId ";
+				." WHERE NrArticle=$p_destArticleNumber ";
 		if (!is_null($p_destLanguageId)) {
 			$queryStr .= " AND IdLanguage=".$p_destLanguageId;
 		}

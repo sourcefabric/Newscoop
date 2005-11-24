@@ -121,7 +121,7 @@ class Article extends DatabaseObject {
 	{
 		global $Campsite;
 		
-		$this->m_data['Number'] = $this->__generateArticleId();
+		$this->m_data['Number'] = $this->__generateArticleNumber();
 		$this->m_data['ArticleOrder'] = $this->m_data['Number'];
 	
 		// Create the record
@@ -168,7 +168,7 @@ class Article extends DatabaseObject {
 	 * Create a unique identifier for an article.
 	 * @access private
 	 */
-	function __generateArticleId() 
+	function __generateArticleNumber() 
 	{
 	    global $Campsite;
 		$queryStr = 'UPDATE AutoId SET ArticleId=LAST_INSERT_ID(ArticleId + 1)';
@@ -178,7 +178,7 @@ class Article extends DatabaseObject {
 			return 0;
 		}
 		return $Campsite['db']->Insert_ID();	    
-	} // fn __generateArticleId
+	} // fn __generateArticleNumber
 	
 	
 	/**
@@ -228,7 +228,7 @@ class Article extends DatabaseObject {
 		else {
 		    $copyArticles[] = $this;
 		}
-		$newArticleId = $this->__generateArticleId();
+		$newArticleNumber = $this->__generateArticleNumber();
 
 		$logtext = '';
 		$newArticles = array();
@@ -239,10 +239,10 @@ class Article extends DatabaseObject {
     		$articleCopy->m_data['NrIssue'] = $p_destIssueId; 
     		$articleCopy->m_data['NrSection'] = $p_destSectionId; 
     		$articleCopy->m_data['IdLanguage'] = $copyMe->m_data['IdLanguage']; 
-    		$articleCopy->m_data['Number'] = $newArticleId; 
+    		$articleCopy->m_data['Number'] = $newArticleNumber; 
     		$values = array();
     		// Copy some attributes
-    		$values['ShortName'] = $newArticleId;
+    		$values['ShortName'] = $newArticleNumber;
     		$values['Type'] = $copyMe->m_data['Type'];
     		$values['OnFrontPage'] = $copyMe->m_data['OnFrontPage'];
     		$values['OnSection'] = $copyMe->m_data['OnSection'];
@@ -278,6 +278,10 @@ class Article extends DatabaseObject {
     
     		// Copy topic pointers
     		ArticleTopic::OnArticleCopy($copyMe->m_data['Number'], $articleCopy->m_data['Number']);
+    		
+    		// Position the new article at the beginning of the section
+    		$articleCopy->moveAbsolute(1);
+    		
     		$newArticles[] = $articleCopy;
 			$logtext .= getGS('Article #$1 "$2" ($3) copied to Article #$3. ',
 				$copyMe->getArticleNumber(), $copyMe->getName(), 

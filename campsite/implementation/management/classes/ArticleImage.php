@@ -288,18 +288,18 @@ class ArticleImage extends DatabaseObject {
 
 	/**
 	 * Copy all the pointers for the given article.
-	 * @param int $p_srcArticleId
-	 * @param int $p_destArticleId
+	 * @param int $p_srcArticleNumber
+	 * @param int $p_destArticleNumber
 	 * @return void
 	 */
-	function OnArticleCopy($p_srcArticleId, $p_destArticleId) 
+	function OnArticleCopy($p_srcArticleNumber, $p_destArticleNumber) 
 	{
 		global $Campsite;
-		$queryStr = 'SELECT * FROM ArticleImages WHERE NrArticle='.$p_srcArticleId;
+		$queryStr = 'SELECT * FROM ArticleImages WHERE NrArticle='.$p_srcArticleNumber;
 		$rows = $Campsite['db']->GetAll($queryStr);
 		foreach ($rows as $row) {
 			$queryStr = 'INSERT IGNORE INTO ArticleImages(NrArticle, IdImage, Number)'
-						." VALUES($p_destArticleId, ".$row['IdImage'].",".$row['Number'].")";
+						." VALUES($p_destArticleNumber, ".$row['IdImage'].",".$row['Number'].")";
 			$Campsite['db']->Execute($queryStr);
 		}
 	} // fn OnArticleCopy

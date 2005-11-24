@@ -6,7 +6,6 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ImageSearch.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/imagearchive/include.inc.php");
 
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
@@ -14,24 +13,18 @@ if (!$access) {
 	exit;
 }
 // Check input 
-$cDescription = Input::Get('cDescription');
-$cPhotographer = Input::Get('cPhotographer');
-$cPlace = Input::Get('cPlace');
-$cDate = Input::Get('cDate');
-$cURL = Input::Get('cURL', 'string', '', true);
-$view = Input::Get('view', 'string', 'thumbnail', true);
-$BackLink = Input::Get('BackLink', 'string', null, true);
-
-$imageNav =& new ImageNav(CAMPSITE_IMAGEARCHIVE_IMAGES_PER_PAGE, $view);
-//$imageNav->clearSearchStrings();
-//$imageNav->setProperty('order_by', 'time_created');
+$f_image_description = Input::Get('f_image_description');
+$f_image_photographer = Input::Get('f_image_photographer');
+$f_image_place = Input::Get('f_image_place');
+$f_image_date = Input::Get('f_image_date');
+$f_image_url = Input::Get('f_image_url', 'string', '', true);
 
 if (!Input::IsValid()) {
-	header('Location: index.php?'.$imageNav->getSearchLink());
+	header("Location: /$ADMIN/imagearchive/index.php");
 	exit;	
 }
-if (empty($cURL) && !isset($_FILES['cImage'])) {
-	header('Location: index.php?'.$imageNav->getSearchLink());
+if (empty($f_image_url) && !isset($_FILES['f_image_file'])) {
+	header("Location: /$ADMIN/imagearchive/index.php");
 	exit;	
 }
 if (!$User->hasPermission('AddImage')) {
@@ -39,31 +32,29 @@ if (!$User->hasPermission('AddImage')) {
 	exit;	
 }
 $attributes = array();
-$attributes['Description'] = $cDescription;
-$attributes['Photographer'] = $cPhotographer;
-$attributes['Place'] = $cPlace;
-$attributes['Date'] = $cDate;
-if (!empty($cURL)) {
-	$image = Image::OnAddRemoteImage($cURL, $attributes, $User->getId());
+$attributes['Description'] = $f_image_description;
+$attributes['Photographer'] = $f_image_photographer;
+$attributes['Place'] = $f_image_place;
+$attributes['Date'] = $f_image_date;
+if (!empty($f_image_url)) {
+	$image = Image::OnAddRemoteImage($f_image_url, $attributes, $User->getId());
 }
-elseif (!empty($_FILES['cImage'])) {
-	$image = Image::OnImageUpload($_FILES['cImage'], $attributes, $User->getId());
+elseif (!empty($_FILES['f_image_file'])) {
+	$image = Image::OnImageUpload($_FILES['f_image_file'], $attributes, $User->getId());
 }
 else {
-	header('Location: '.camp_html_display_error(getGS("You must select an image file to upload."), $BackLink));
+	camp_html_display_error(getGS("You must select an image file to upload."));
 	exit;
 }
 
 // Check if image was added successfully
 if (!is_object($image)) {
-	header('Location: '.camp_html_display_error($image, $BackLink));
-	exit;	
+	camp_html_display_error($image);
 }
 
 $logtext = getGS('The image $1 has been added.', $attributes['Description']);
 Log::Message($logtext, $User->getUserName(), 41);
 
-// Go back to article image list.
-header('Location: edit.php?image_id='.$image->getImageId().'&'.$imageNav->getSearchLink());
+header("Location: /$ADMIN/imagearchive/edit.php?f_image_id=".$image->getImageId());
 exit;
 ?>

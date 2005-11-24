@@ -24,8 +24,6 @@ if (!Input::IsValid()) {
 	exit;	
 }
 
-$imageNav =& new ImageNav($f_search_string, $f_order_by, $f_order_direction, $f_image_offset, $f_items_per_page);
-
 // Build the links for ordering search results
 $OrderSign = '';
 if ($f_order_direction == 'DESC') {
@@ -42,8 +40,7 @@ $imageSearch->run();
 $imageData = $imageSearch->getImages();
 $NumImagesFound = $imageSearch->getNumImagesFound();
 
-$orderDirectionUrl = camp_html_article_url($articleObj, $f_language_selected, 'images/popup.php')
-	.$imageNav->getKeywordSearchLink()."&f_order_direction=$ReverseOrderDirection&f_order_by=$f_order_by";
+$orderDirectionUrl = camp_html_article_url($articleObj, $f_language_selected, 'images/popup.php');
 
 $articleUrlData = "&f_publication_id=$f_publication_id"
 				 ."&f_issue_number=$f_issue_number"
@@ -98,10 +95,7 @@ $articleUrlData = "&f_publication_id=$f_publication_id"
 
 <?php
 if (count($imageData) > 0) {
-    $pagerUrl = camp_html_article_url($articleObj, $f_language_selected, "images/popup.php")
-    	.$imageNav->getKeywordSearchLink()
-    	."&f_order_direction=$f_order_direction"
-    	."&f_order_by=$f_order_by&"; 
+    $pagerUrl = camp_html_article_url($articleObj, $f_language_selected, "images/popup.php")."?";
     $pager =& new SimplePager($NumImagesFound, $f_items_per_page, "f_image_offset", $pagerUrl);
 
 ?>

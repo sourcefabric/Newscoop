@@ -1,7 +1,6 @@
 <?php  
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
 load_common_include_files("imagearchive");
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/imagearchive/include.inc.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
@@ -15,16 +14,14 @@ if (!$access) {
 	exit;
 }
 
-$ImageId = Input::Get('image_id', 'int', 0);
-$view = Input::Get('view', 'string', 'thumbnail', true);
+$f_image_id = Input::Get('f_image_id', 'int', 0);
 
-$imageNav =& new ImageNav(CAMPSITE_IMAGEARCHIVE_IMAGES_PER_PAGE, $view);
-if (!Input::IsValid() || ($ImageId <= 0)) {
-	header('Location: index.php?'.$imageNav->getSearchLink());
+if (!Input::IsValid() || ($f_image_id <= 0)) {
+	header("Location: /$ADMIN/imagearchive/index.php");
 	exit;	
 }
 
-$imageObj =& new Image($ImageId);
+$imageObj =& new Image($f_image_id);
 
 // This file can only be accessed if the user has the right to delete images.
 if (!$User->hasPermission('DeleteImage')) {
@@ -32,7 +29,7 @@ if (!$User->hasPermission('DeleteImage')) {
 	exit;		
 }
 if ($imageObj->inUse()) {
-	header('Location: index.php?'.$imageNav->getSearchLink());
+	header("Location: /$ADMIN/imagearchive/index.php");
 	exit;
 }
 
@@ -42,6 +39,6 @@ $logtext = getGS('Image $1 deleted', $imageObj->getImageId());
 Log::Message($logtext, $User->getUserName(), 42);
 
 // Go back to article image list.
-header('Location: index.php?'.$imageNav->getSearchLink());
+header("Location: /$ADMIN/imagearchive/index.php");
 exit;
 ?>

@@ -1,7 +1,6 @@
 <?php  
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
 load_common_include_files("imagearchive");
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/imagearchive/include.inc.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
@@ -16,40 +15,36 @@ if (!$access) {
 }
 
 // check input
-$ImageId = Input::Get('image_id', 'int', 0);
-$cDescription = Input::Get('cDescription');
-$cPhotographer = Input::Get('cPhotographer');
-$cPlace = Input::Get('cPlace');
-$cDate = Input::Get('cDate');
-$cURL = Input::Get('cURL', 'string', '', true);
-$view = Input::Get('view', 'string', 'thumbnail', true);
-$imageNav =& new ImageNav(CAMPSITE_IMAGEARCHIVE_IMAGES_PER_PAGE, $view);
-if (!Input::IsValid() || ($ImageId <= 0)) {
-	header('Location: index.php?'.$imageNav->getSearchLink());
+$f_image_id = Input::Get('f_image_id', 'int', 0);
+$f_image_description = Input::Get('f_image_description');
+$f_image_photographer = Input::Get('f_image_photographer');
+$f_image_place = Input::Get('f_image_place');
+$f_image_date = Input::Get('f_image_date');
+$f_image_url = Input::Get('f_image_url', 'string', '', true);
+if (!Input::IsValid() || ($f_image_id <= 0)) {
+	header("Location: /$ADMIN/imagearchive/index.php");
 	exit;	
 }
 
-$imageObj =& new Image($ImageId);
+$imageObj =& new Image($f_image_id);
 
-// This file can only be accessed if the user has the right to delete images.
 if (!$User->hasPermission('ChangeImage')) {
 	header("Location: /$ADMIN/logout.php");
 	exit;		
 }
 
-$updateArray = array('Description' => $cDescription,
-					'Photographer' => $cPhotographer,
-					'Place' => $cPlace,
-					'Date' => $cDate);
-if (!empty($cURL)) {
-	$updateArray['URL'] = $cURL;
+$updateArray = array('Description' => $f_image_description,
+					'Photographer' => $f_image_photographer,
+					'Place' => $f_image_place,
+					'Date' => $f_image_date);
+if (!empty($f_image_url)) {
+	$updateArray['URL'] = $f_image_url;
 }
 $imageObj->update($updateArray);
 
 $logtext = getGS('Changed image properties of $1', $imageObj->getImageId()); 
 Log::Message($logtext, $User->getUserName(), 43);
 
-// Go back to article image list.
-header("Location: edit.php?image_id=$ImageId&".$imageNav->getSearchLink());
+header("Location: /$ADMIN/imagearchive/edit.php?f_image_id=$f_image_id");
 exit;
 ?>

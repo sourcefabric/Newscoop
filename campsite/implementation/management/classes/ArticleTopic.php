@@ -86,18 +86,18 @@ class ArticleTopic extends DatabaseObject {
 	
 	/**
 	 * Copy the topic pointers
-	 * @param int $p_srcArticleId
-	 * @param int $p_destArticleId
+	 * @param int $p_srcArticleNumber
+	 * @param int $p_destArticleNumber
 	 * @return void
 	 */
-	function OnArticleCopy($p_srcArticleId, $p_destArticleId) 
+	function OnArticleCopy($p_srcArticleNumber, $p_destArticleNumber) 
 	{
 		global $Campsite;
-		$queryStr = 'SELECT * FROM ArticleTopics WHERE NrArticle='.$p_srcArticleId;
+		$queryStr = 'SELECT * FROM ArticleTopics WHERE NrArticle='.$p_srcArticleNumber;
 		$rows = $Campsite['db']->GetAll($queryStr);
 		foreach ($rows as $row) {
 			$queryStr = 'INSERT IGNORE INTO ArticleTopics(NrArticle, TopicId)'
-						." VALUES($p_destArticleId, ".$row['TopicId'].")";
+						." VALUES($p_destArticleNumber, ".$row['TopicId'].")";
 			$Campsite['db']->Execute($queryStr);
 		}
 	} // fn OnArticleCopy
