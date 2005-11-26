@@ -23,7 +23,7 @@ TPL_CGI=tpl_cgi
 GET_IMG=get_img
 
 LINKS=csocket.h csocket.cpp exceptions.h readconf.h readconf.cpp \
-cxmltree.h cxmltree.cpp cms_types.h threadkey.h mutex.cpp mutex.h
+cxmltree.h cms_types.h threadkey.h mutex.cpp mutex.h
 
 all: links $(TPL_CGI) $(GET_IMG)
 
