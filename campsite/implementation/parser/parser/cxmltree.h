@@ -155,7 +155,7 @@ inline CXMLTree::~CXMLTree()
 
 inline CXMLTree::iterator CXMLTree::newChild(iterator& p_pParent, const char* p_pchName, const char* p_pchContent)
 {
-	return iterator(xmlNewChild(*p_pParent, NULL, BAD_CAST p_pchName, BAD_CAST p_pchContent));
+	return iterator(xmlNewTextChild(*p_pParent, NULL, BAD_CAST p_pchName, BAD_CAST p_pchContent));
 }
 
 inline CXMLTree::iterator CXMLTree::newNode(const char* p_pchName)
