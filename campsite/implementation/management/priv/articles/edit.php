@@ -42,6 +42,7 @@ $publicationObj =& new Publication($f_publication_id);
 $issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
 $sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
 $articleEvents = ArticlePublish::GetArticleEvents($f_article_number, $f_language_selected);
+$articleTopics = ArticleTopic::GetArticleTopics($f_article_number, $f_language_selected);
 
 // Automatically switch to "view" mode if user doesnt have permissions.
 if (!$articleObj->userCanModify($User)) {
@@ -657,6 +658,59 @@ if ($articleObj->userCanModify($User) && $locked) {
 			</TABLE>
 			<!-- END Images table -->
 		</TD></TR>
+		
+		<TR><TD>
+			<!-- BEGIN TOPICS table -->
+			<TABLE width="100%" style="border: 1px solid #EEEEEE;">
+			<TR>
+				<TD>
+					<TABLE width="100%" bgcolor="#EEEEEE" cellpadding="3" cellspacing="0">
+					<TR>
+						<TD align="left">
+						<b><?php putGS("Topics"); ?></b>
+						</td>
+						<?php if ($f_edit_mode == "edit") {  ?>
+						<td align="right">
+							<img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/add.png" border="0">
+							<a href="javascript: void(0);" onclick="window.open('<?php echo camp_html_article_url($articleObj, $f_language_selected, "topics/popup.php"); ?>', 'attach_topic', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=300, height=400, top=200, left=200');"><?php putGS("Attach"); ?></a>
+						</td>
+						<?php } ?>
+					</tr>
+					</table>
+				</td>
+			</tr>
+			<?PHP
+			foreach ($articleTopics as $tmpArticleTopic) { 
+				$detachUrl = "/$ADMIN/articles/topics/do_del.php?f_article_number=$f_article_number&f_topic_id=".$tmpArticleTopic->getTopicId()."&f_language_selected=$f_language_selected";
+			?>
+			<tr>
+				<td align="center" width="100%" style="border-top: 1px solid #EEEEEE;">
+					<table>
+					<tr>
+						<td align="center" valign="middle">
+							<?php 
+							$path = $tmpArticleTopic->getPath();
+							$pathStr = "";
+							foreach ($path as $element) {
+								$pathStr .= " / ". $element->getName();
+							}
+							?>
+							<?php p(wordwrap($pathStr, 25, "<br>&nbsp;&nbsp;", true)); ?>
+						</td>
+						<?php if ($f_edit_mode == "edit") { ?>
+						<td>
+							<a href="<?php p($detachUrl); ?>" onclick="return confirm('<?php putGS("Are you sure you want to remove the topic \\'$1\\' from the article?", camp_javascriptspecialchars($tmpArticleTopic->getName())); ?>');"><img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/unlink.png" border="0"></a>
+						</td>
+						<?php } ?>
+					</tr>
+					</table>
+				</td>
+			</tr>
+			<?php } ?>
+			</TABLE>
+			<!-- END TOPICS table -->
+		</TD></TR>
+
 		</TABLE>
 	</TD>
 </TR>

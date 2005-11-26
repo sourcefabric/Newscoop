@@ -195,13 +195,25 @@ function camp_is_valid_url_name($name)
  * Get the first element from the given array, but do not modify
  * the array the way array_pop() does.
  * @param array $p_array
+ * @param boolean $p_getKeyValuePair
+ * 		If TRUE, return both the key and the element,
+ * 		if FALSE, just return the element.
+ * @param int $p_offset
+ * 		Which element to peek at.  If -1, peek at the last element.
  * @return mixed
  */
-function camp_array_peek($p_array)
+function camp_array_peek($p_array, $p_getKeyValuePair = false, $p_offset = 0)
 {
 	reset($p_array);
+	if ($p_offset == -1) {
+		end($p_array);	
+	}
 	list($key, $element) = each($p_array);
-	return $element;
+	if ($p_getKeyValuePair) {
+		return array($key, $element);
+	} else {
+		return $element;		
+	}
 } // fn camp_array_peek
 
 

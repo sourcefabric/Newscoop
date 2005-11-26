@@ -10,54 +10,18 @@ if (!$access) {
 	exit;
 }
 
-$Pub = Input::Get('Pub', 'int', 0);
-$Issue = Input::Get('Issue', 'int', 0);
-$Section = Input::Get('Section', 'int', 0);
-$Language = Input::Get('Language', 'int', 0);
-$sLanguage = Input::Get('sLanguage', 'int', 0);
-$Article = Input::Get('Article', 'int', 0);
-$TopicId = Input::Get('IdCateg', 'int', 0, true);
-$TopicOffset = Input::Get('CatOffs', 'int', 0, true);
-$AddTopicId = Input::Get('AddTopic', 'int', 0);
-$AddTopicLanguage = Input::Get('AddTopicLanguage', 'int', 0);
-
-if ($TopicOffset < 0) {
-	$TopicOffset = 0;
-}
-$searchTopicsString = trim(Input::Get('search_topics_string', 'string', '', true));
+$f_language_selected = Input::Get('f_language_selected', 'int', 0);
+$f_article_number = Input::Get('f_article_number', 'int', 0);
+$f_topic_ids = Input::Get('f_topic_ids', 'array');
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));
 	exit;	
 }
 
-$publicationObj =& new Publication($Pub);
-if (!$publicationObj->exists()) {
-	camp_html_display_error(getGS('Publication does not exist.'));
-	exit;	
-}
-
-$issueObj =& new Issue($Pub, $Language, $Issue);
-if (!$issueObj->exists()) {
-	camp_html_display_error(getGS('Issue does not exist.'));
-	exit;	
-}
-
-$sectionObj =& new Section($Pub, $Issue, $Language, $Section);
-if (!$sectionObj->exists()) {
-	camp_html_display_error(getGS('Section does not exist.'));
-	exit;		
-}
-
-$articleObj =& new Article($sLanguage, $Article);
+$articleObj =& new Article($f_language_selected, $f_article_number);
 if (!$articleObj->exists()) {
 	camp_html_display_error(getGS('Article does not exist.'));
-	exit;		
-}
-
-$topic =& new Topic($AddTopicId, $AddTopicLanguage);
-if (!$topic->exists()) {
-	camp_html_display_error(getGS('Topic does not exist.'));
 	exit;		
 }
 
@@ -66,11 +30,17 @@ if (!$articleObj->userCanModify($User)) {
 	exit;	
 }
 
-ArticleTopic::AddTopicToArticle($AddTopicId, $Article);
+foreach ($f_topic_ids as $topicIdString) {
+	list($topicId, $languageId) = split("_", $topicIdString);
+	// Verify topic exists
+	$tmpTopic =& new Topic($topicId, $languageId);
+	if ($tmpTopic->exists()) {
+		ArticleTopic::AddTopicToArticle($topicId, $f_article_number);	
+	}
+}
 
-$logtext = getGS('Topic $1 added to article', $topic->getName());
-Log::Message($logtext, $User->getUserName(), 144);
-
-header("Location: index.php?Pub=$Pub&Issue=$Issue&Section=$Section&Article=$Article&Language=$Language&sLanguage=$sLanguage&IdCateg=$TopicId&CatOffs=$TopicOffset");
-exit;
 ?>
+<script>
+window.opener.location.reload();
+window.close();
+</script>

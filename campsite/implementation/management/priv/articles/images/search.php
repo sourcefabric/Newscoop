@@ -5,7 +5,6 @@ require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/article_common.php"
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ImageSearch.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/SimplePager.php');
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/imagearchive/include.inc.php");
 
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {

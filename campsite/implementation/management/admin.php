@@ -17,6 +17,7 @@ $no_menu_scripts = array(
 	'/articles/autopublish.php',
 	'/articles/images/popup.php',
 	'/articles/images/view.php',
+	'/articles/topics/popup.php',
 	'/articles/empty.php');
 
 $request_uri = $_SERVER['REQUEST_URI'];

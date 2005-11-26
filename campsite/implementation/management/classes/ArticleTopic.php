@@ -9,6 +9,7 @@
 require_once($g_documentRoot.'/classes/DatabaseObject.php');
 require_once($g_documentRoot.'/classes/Article.php');
 require_once($g_documentRoot.'/classes/Topic.php');
+require_once($g_documentRoot.'/classes/Log.php');
 
 /**
  * @package Campsite
@@ -50,9 +51,11 @@ class ArticleTopic extends DatabaseObject {
 	function AddTopicToArticle($p_topicId, $p_articleId) 
 	{
 		global $Campsite;
+		$logtext = getGS('Topic $1 added to article', $p_topicId);
 		$queryStr = 'INSERT IGNORE INTO ArticleTopics(NrArticle, TopicId)'
 					.' VALUES('.$p_articleId.', '.$p_topicId.')';
 		$Campsite['db']->Execute($queryStr);
+		Log::Message($logtext, null, 144);
 	} // fn AddTopicToArticle
 	
 	
@@ -65,8 +68,10 @@ class ArticleTopic extends DatabaseObject {
 	function RemoveTopicFromArticle($p_topicId, $p_articleId) 
 	{
 		global $Campsite;
+		$logtext = getGS('Article topic $1 deleted', $p_topicId); 
 		$queryStr = "DELETE FROM ArticleTopics WHERE NrArticle=$p_articleId AND TopicId=$p_topicId";
 		$Campsite['db']->Execute($queryStr);
+		Log::Message($logtext, null, 145);		
 	} // fn RemoveTopicFromArticle
 	
 	
@@ -106,7 +111,7 @@ class ArticleTopic extends DatabaseObject {
 	/**
 	 * Get the topics for the given article.
 	 *
-	 * @param int $p_articleId
+	 * @param int $p_articleNumber
 	 *		Retrieve the topics for this article.
 	 *
 	 * @param int $p_numTopics
@@ -117,12 +122,12 @@ class ArticleTopic extends DatabaseObject {
 	 *
 	 * @return array
 	 */
-	function GetArticleTopics($p_articleId, $p_languageId = null, $p_sqlOptions = null) 
+	function GetArticleTopics($p_articleNumber, $p_languageId = null, $p_sqlOptions = null) 
 	{
 		$tmpTopic =& new Topic();
 		$columnNames = implode(',', $tmpTopic->getColumnNames(true));
     	$queryStr = "SELECT $columnNames FROM ArticleTopics, Topics "
-    				." WHERE ArticleTopics.NrArticle = $p_articleId"
+    				." WHERE ArticleTopics.NrArticle = $p_articleNumber"
     				.' AND ArticleTopics.TopicId = Topics.Id ';
     	if (!is_null($p_languageId)) {
     		$queryStr .= " AND Topics.LanguageId=$p_languageId";

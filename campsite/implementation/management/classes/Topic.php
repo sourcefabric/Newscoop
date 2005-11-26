@@ -241,6 +241,72 @@ class Topic extends DatabaseObject {
 		return DatabaseObject::Search('Topics', $constraints, $p_sqlOptions);
 	} // fn GetTopics
 	
+	
+	/**
+	 * 
+	 *
+	 * @param array $p_tree
+	 * @param array $p_path
+	 * @param int $p_topicId
+	 * @param int $p_languageId
+	 */
+	function __TraverseTree(&$p_tree, $p_path, $p_topicId = 0, $p_languageId = null) 
+	{
+		global $Campsite;
+		$sql = "SELECT * FROM Topics WHERE ParentId = ".$p_topicId;
+		if (!is_null($p_languageId)) {
+			$sql .= " AND LanguageId=$p_languageId";
+		}
+		$rows = $Campsite['db']->GetAll($sql);
+		if ($rows) {
+			foreach ($rows as $row) {
+				$p_path[$row['Id']] = $row['Name'];
+				$p_tree[] = $p_path;
+				Topic::__TraverseTree($p_tree, $p_path, $row['Id'], $p_languageId);
+				array_pop($p_path);
+			}
+		}		
+	} // fn __TraverseTree
+	
+	
+	/**
+	 * Get all the topics in an array, where each element contains the entire
+	 * path for each topic.  Each topic will be indexed by its ID.
+	 * For example, if we have the following topic structure (IDs are
+	 * in brackets):
+	 * 
+	 * sports (1)
+	 *  - baseball (2)
+	 *  - soccer (3)
+	 *    - player stats (4)
+	 *    - matches (5)
+	 * politics (6)
+	 *  - world (7)
+	 *  - local (8)
+	 * 
+	 *  ...then the returned array would look like:
+	 *  array(array(1 => "sports"),
+	 *        array(1 => "sports", 2 => "baseball"),
+	 *        array(1 => "sports", 3 => "soccer"),
+	 *        array(1 => "sports", 3 => "soccer", 4 => "player stats"),
+	 *        array(1 => "sports", 3 => "soccer", 5 => "matches"),
+	 *        array(6 => "politics"),
+	 *        array(6 => "politics", 7 => "world"),
+	 *        array(6 => "politics", 8 => "local")
+	 *  );
+	 * 
+	 * @param int $p_languageId
+	 * @param int $p_startingTopicId
+	 * @return array
+	 */
+	function GetTree($p_languageId = 1, $p_startingTopicId = 0) 
+	{
+		$tree = array();
+		$path = array();
+		Topic::__TraverseTree($tree, $path, $p_startingTopicId, $p_languageId);
+		return $tree;
+	} // fn GetTree
+	
 } // class Topics
 
 ?>
