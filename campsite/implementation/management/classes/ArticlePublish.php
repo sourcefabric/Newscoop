@@ -278,10 +278,11 @@ class ArticlePublish extends DatabaseObject {
 	{
 	    global $Campsite;
 	    $datetime = strftime("%Y-%m-%d %H:%M:00");
-        $queryStr = "SELECT * FROM ArticlePublish "
-                    . " WHERE time_action <= '$datetime'"
-                    . " AND is_completed != 'Y'"
-                    . " ORDER BY time_action ASC";
+        $queryStr = "SELECT * FROM ArticlePublish, Articles "
+                    . " WHERE ArticlePublish.time_action <= '$datetime'"
+                    . " AND ArticlePublish.is_completed != 'Y'"
+                    . " AND Articles.Published != 'N'"
+                    . " ORDER BY ArticlePublish.time_action ASC";
         $result = DbObjectArray::Create('ArticlePublish', $queryStr);
         return $result;
 	} // fn GetPendingActions
@@ -315,8 +316,9 @@ class ArticlePublish extends DatabaseObject {
 	    $columnNames = $dummyArticle->getColumnNames(true);
         $queryStr = "SELECT id, time_action, publish_action, publish_on_front_page, publish_on_section_page,"
                     . implode(",", $columnNames). " FROM Articles, ArticlePublish "
-                    . " WHERE time_action >= '" . $datetime . "'"
-                    . " AND is_completed != 'Y'"
+                    . " WHERE ArticlePublish.time_action >= '" . $datetime . "'"
+                    . " AND ArticlePublish.is_completed != 'Y'"
+                    . " AND Articles.Published != 'N'"
                     . " AND Articles.Number=ArticlePublish.fk_article_number "
                     . " AND Articles.IdLanguage=ArticlePublish.fk_language_id "
                     . " ORDER BY time_action DESC"
