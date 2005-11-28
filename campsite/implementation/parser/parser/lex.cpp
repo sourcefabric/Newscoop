@@ -309,6 +309,7 @@ int CStatementMap::InitStatements()
 
 	pcoCtx = new CStatementContext(CMS_CT_DEFAULT);
 	pcoCtx->insertAttr(new CStringAttr("name", "Name"));
+	pcoCtx->insertAttr(new CStringAttr("number", "Number"));
 	pcoCtx->insertAttr(new CAttribute("off"));
 	pcoCtx->insertAttr(new CAttribute("default"));
 	pcoSt->insertCtx(pcoCtx);
