@@ -24,8 +24,9 @@ $imageObj =& new Image($f_image_id);
 ?>
 <P>
 <div class="indent">
-<a href="<?php p($f_backlink); ?>"><?php putGS("Back"); ?></a>
+<a href="<?php p($f_backlink); ?>"><?php putGS("Back"); ?>
 <p>
 <IMG SRC="<?php echo $imageObj->getImageUrl(); ?>" BORDER="0" ALT="<?php echo htmlspecialchars($imageObj->getDescription()); ?>">
+</a>
 </div>
 <p>
