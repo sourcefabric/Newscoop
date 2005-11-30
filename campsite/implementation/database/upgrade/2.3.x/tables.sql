@@ -63,3 +63,43 @@ ALTER TABLE `IssuePublish` ADD INDEX `action_time_index` ( `time_action` , `is_c
 -- Add time_created and time_updated fields
 ALTER TABLE `campsite`.`Users` ADD COLUMN `time_updated` TIMESTAMP  NOT NULL AFTER `Text3`;
 ALTER TABLE `campsite`.`Users` ADD COLUMN `time_created` TIMESTAMP  NOT NULL AFTER `time_updated`;
+
+-- 
+-- Add UserConfig table
+--
+CREATE TABLE `UserConfig` (
+`id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+`fk_user_id` INT UNSIGNED NOT NULL ,
+`varname` VARCHAR( 100 ) NOT NULL ,
+`value` VARCHAR( 100 ) ,
+`last_modified` TIMESTAMP NOT NULL ,
+PRIMARY KEY ( `id` ) ,
+INDEX ( `fk_user_id` )
+) TYPE = MYISAM ;
+
+ALTER TABLE `UserConfig` ADD UNIQUE `unique_var_name_index` ( `fk_user_id` , `varname` );
+
+--
+-- Add temporary User Types Table which will become the main UserTypes table.
+--
+CREATE TABLE `TmpUserTypes` (
+`id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+`user_type_name` VARCHAR( 140 ) NOT NULL ,
+`varname` VARCHAR( 100 ) NOT NULL ,
+`value` VARCHAR( 100 ) ,
+`last_modified` TIMESTAMP NOT NULL ,
+PRIMARY KEY ( `id` ) ,
+INDEX ( `user_type_name` )
+) TYPE = MYISAM ;
+
+ALTER TABLE `TmpUserTypes` ADD UNIQUE `unique_var_name_index` ( `user_type_name` , `varname` );
+
+-- Run the upgrade script
+system php ./update_user_perms.php
+
+-- Rename the tables after the upgrade script is run.
+DROP TABLE `UserTypes`;
+ALTER TABLE `TmpUserTypes` RENAME `UserTypes` ;
+
+DROP TABLE `UserPerm`;
+
