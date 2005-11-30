@@ -1,9 +1,9 @@
 <?php
 class SimplePager {
 	var $m_offsets;
-	var $m_urls;
-	var $m_selectedPageNumber;
-	var $m_offset;
+	var $m_urls = array();
+	var $m_selectedPageNumber = null;
+	var $m_offset = null;
 	var $m_renderedStr = null;
 	
 	/**
@@ -15,8 +15,9 @@ class SimplePager {
 	 * @param int $p_itemsPerPage
 	 * @param string $p_offsetVarName
 	 * @param string $p_baseUrl
+	 * @param boolean $p_useSessions
 	 */
-	function SimplePager($p_totalItems, $p_itemsPerPage, $p_offsetVarName, $p_baseUrl) 
+	function SimplePager($p_totalItems, $p_itemsPerPage, $p_offsetVarName, $p_baseUrl, $p_useSessions = true) 
 	{
 		$this->m_urls["first"] = $p_baseUrl;
 		$this->m_urls["previous"] = $p_baseUrl;
@@ -25,7 +26,11 @@ class SimplePager {
 		$this->m_urls["links"] = array();
 		
 		if ($p_totalItems > $p_itemsPerPage) {
-			$this->m_offset = isset($_REQUEST[$p_offsetVarName]) ? $_REQUEST[$p_offsetVarName] : 0;
+			if ($p_useSessions) {
+				$this->m_offset = camp_session_get($p_offsetVarName, 0);
+			} else {
+				$this->m_offset = isset($_REQUEST[$p_offsetVarName]) ? $_REQUEST[$p_offsetVarName] : 0;				
+			}
 			if ($this->m_offset < 0) {
 				$this->m_offset = 0;
 			}
@@ -38,7 +43,6 @@ class SimplePager {
 			}
 			$numPages = count($this->m_offsets);
 			$this->m_selectedPageNumber = $numPages;
-			$this->m_urls = array();
 			for ($index = 0; $index < count($this->m_offsets); $index++) {
 				$this->m_urls["links"][$index+1] = $p_baseUrl."$p_offsetVarName=".$this->m_offsets[$index];
 				if (($this->m_selectedPageNumber == $numPages) && ($this->m_offsets[$index] > $this->m_offset)) {
