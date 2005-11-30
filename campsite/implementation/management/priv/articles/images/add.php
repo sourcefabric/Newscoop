@@ -79,7 +79,7 @@ function checkAddForm(form) {
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Photographer"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" NAME="f_image_photographer" SIZE="32" MAXLENGTH="64" VALUE="<?php echo $User->getName(); ?>" class="input_text">
+	<INPUT TYPE="TEXT" NAME="f_image_photographer" SIZE="32" MAXLENGTH="64" VALUE="<?php echo $User->getRealName(); ?>" class="input_text">
 	</TD>
 </TR>
 <TR>

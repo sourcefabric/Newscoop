@@ -37,10 +37,10 @@ $attributes['Photographer'] = $f_image_photographer;
 $attributes['Place'] = $f_image_place;
 $attributes['Date'] = $f_image_date;
 if (!empty($f_image_url)) {
-	$image = Image::OnAddRemoteImage($f_image_url, $attributes, $User->getId());
+	$image = Image::OnAddRemoteImage($f_image_url, $attributes, $User->getUserId());
 }
 elseif (!empty($_FILES['f_image_file'])) {
-	$image = Image::OnImageUpload($_FILES['f_image_file'], $attributes, $User->getId());
+	$image = Image::OnImageUpload($_FILES['f_image_file'], $attributes, $User->getUserId());
 }
 else {
 	camp_html_display_error(getGS("You must select an image file to upload."));

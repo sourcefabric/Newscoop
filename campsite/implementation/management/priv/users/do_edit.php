@@ -17,24 +17,22 @@ if ($editUser->getUserName() == '') {
 	exit;
 }
 
-if (!$canManage && $editUser->getId() != $User->getId()) {
+if (!$canManage && $editUser->getUserId() != $User->getUserId()) {
 	$errMsg = getGS('You do not have the right to change user account information.');
 	camp_html_display_error($errMsg);
 	exit;
 }
 
 $typeParam = 'uType=' . urlencode($uType);
-$isReader = $uType == 'Readers' ? 'Y' : 'N';
 $setPassword = Input::Get('setPassword', 'string', 'false') == 'true';
 $customizeRights = Input::Get('customizeRights', 'string', 'false') == 'true';
-
 
 if ($setPassword) {
 	$password = Input::Get('password', 'string', 0);
 	$passwordConf = Input::Get('passwordConf', 'string', 0);
-	$backLink = "/$ADMIN/users/edit.php?$typeParam&User=".$editUser->getId();
+	$backLink = "/$ADMIN/users/edit.php?$typeParam&User=".$editUser->getUserId();
 	
-	if ($userId == $User->getId()) {
+	if ($userId == $User->getUserId()) {
 		$oldPassword = Input::Get('oldPassword');
 		if (!$editUser->isValidPassword($oldPassword)) {
 			$resMsg = getGS('The password you typed is incorrect.');
@@ -80,35 +78,15 @@ Log::Message($logtext, $User->getUserName(), 56);
 
 if ($editUser->isAdmin() && $customizeRights && $canManage) {
 	// save user customized rights
-	$rightsFields = array('ManagePub'=>'N', 'DeletePub'=>'N', 'ManageIssue'=>'N',
-		'DeleteIssue'=>'N', 'ManageSection'=>'N', 'DeleteSection'=>'N', 'AddArticle'=>'N',
-		'ChangeArticle'=>'N', 'DeleteArticle'=>'N', 'AddImage'=>'N', 'ChangeImage'=>'N',
-		'DeleteImage'=>'N', 'ManageTempl'=>'N', 'DeleteTempl'=>'N', 'ManageUsers'=>'N',
-		'ManageReaders'=>'N', 'ManageSubscriptions'=>'N', 'DeleteUsers'=>'N',
-		'ManageUserTypes'=>'N', 'ManageArticleTypes'=>'N', 'DeleteArticleTypes'=>'N',
-		'ManageLanguages'=>'N', 'DeleteLanguages'=>'N', 'MailNotify'=>'N',
-		'ManageCountries'=>'N', 'DeleteCountries'=>'N', 'ViewLogs'=>'N', 'ManageLocalizer'=>'N',
-		'ManageIndexer'=>'N', 'Publish'=>'N', 'ManageTopics'=>'N', 'EditorBold'=>'N',
-		'EditorItalic'=>'N', 'EditorUnderline'=>'N', 'EditorUndoRedo'=>'N',
-		'EditorCopyCutPaste'=>'N', 'EditorImage'=>'N', 'EditorTextAlignment'=>'N',
-		'EditorFontColor'=>'N', 'EditorFontSize'=>'N', 'EditorFontFace'=>'N',
-		'EditorTable'=>'N', 'EditorSuperscript'=>'N', 'EditorSubscript'=>'N',
-		'EditorStrikethrough'=>'N', 'EditorIndent'=>'N', 'EditorListBullet'=>'N',
-		'EditorListNumber'=>'N', 'EditorHorizontalRule'=>'N', 'EditorSourceView'=>'N',
-		'EditorEnlarge'=>'N', 'EditorTextDirection'=>'N', 'EditorLink'=>'N', 'EditorSubhead'=>'N',
-		'InitializeTemplateEngine'=>'N');
+	$rightsFields = $editUser->GetDefaultConfig();
 	foreach ($rightsFields as $field=>$value) {
 		$val = Input::Get($field, 'string', 'off');
-		if ($val == 'on')
-			$rightsFields[$field] = 'Y';
-		$queryStr .= ", `$field` = '" . $rightsFields[$field] . "'";
+		$permissionEnabled = ($val == 'on') ? true : false;
+		$editUser->setPermission($field, $permissionEnabled);
 	}
 	
-	$queryStr = "UPDATE UserPerm SET " . substr($queryStr, 2) ." WHERE IdUser = $userId";
-	if ($Campsite['db']->Execute($queryStr)) {
-		$logtext = getGS('Permissions for $1 changed',$editUser->getUserName());
-		Log::Message($logtext, $User->getUserName(), 55);
-	}
+	$logtext = getGS('Permissions for $1 changed',$editUser->getUserName());
+	Log::Message($logtext, $User->getUserName(), 55);
 }
 if ($editUser->isAdmin() && !$customizeRights && $canManage) {
 	// save user rights based on existing user type
@@ -127,6 +105,6 @@ if ($editUser->getUserName() == $User->getUserName() && !$editUser->hasPermissio
 	header("Location: /$ADMIN/");
 	exit(0);
 }
-header("Location: /$ADMIN/users/edit.php?$typeParam&User=" . $editUser->getId() . "&$resParams");
+header("Location: /$ADMIN/users/edit.php?$typeParam&User=" . $editUser->getUserId() . "&$resParams");
 
 ?>

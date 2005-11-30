@@ -27,7 +27,7 @@ if ($ArtOffs < 0) {
 	$ArtOffs=0; 
 }
 $NumDisplayArticles=15;
-list($YourArticles, $NumYourArticles) = Article::GetArticlesByUser($User->getId(), $ArtOffs, 
+list($YourArticles, $NumYourArticles) = Article::GetArticlesByUser($User->getUserId(), $ArtOffs, 
 	$NumDisplayArticles);
 
 list($SubmittedArticles, $NumSubmittedArticles) = Article::GetSubmittedArticles($NArtOffs, $NumDisplayArticles);
@@ -293,7 +293,7 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 			<TD valign="top"><?php putGS("Article"); ?>: 
     			<?PHP
 				if ($User->hasPermission('ChangeArticle')) { ?>
-                	<a href="/<?php p($ADMIN); ?>/articles/edit.php?Pub=<?php p($action["IdPublication"]); ?>&Issue=<?php p($action["NrIssue"]); ?>&Section=<?php p($action["NrSection"]); ?>&Article=<?php p($action["Number"]); ?>&Language=<?php p($action["IdLanguage"]); ?>&sLanguage=<?php p($action["IdLanguage"]); ?>">
+                    <a href="/<?php p($ADMIN); ?>/articles/edit.php?f_publication_id=<?php p($action["IdPublication"]); ?>&f_issue_number=<?php p($action["NrIssue"]); ?>&f_section_number=<?php p($action["NrSection"]); ?>&f_article_number=<?php p($action["Number"]); ?>&f_language_id=<?php p($action["IdLanguage"]); ?>&f_language_selected=<?php p($action["IdLanguage"]); ?>">
                 	<?PHP
 				}
 			    echo htmlspecialchars($action["Name"]); 
@@ -325,16 +325,7 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 			echo implode("<br>", $displayActions)
 			?></td>
 			<td nowrap valign="top">
-                <?php 
-                if ($User->hasPermission("Publish")) { ?>
-                    <a href="/<?php p($ADMIN); ?>/articles/autopublish.php?Pub=<?php p($action["IdPublication"]); ?>&Issue=<?php p($action["NrIssue"]); ?>&Section=<?php p($action["NrSection"]); ?>&Article=<?php p($action["Number"]); ?>&Language=<?php p($action["IdLanguage"]); ?>&sLanguage=<?php p($action["IdLanguage"]); ?>&publish_time=<?php p(urlencode($action["time_action"])); ?>">
-                    <?PHP
-                }
-                echo htmlspecialchars($action["time_action"]); 
-                if ($User->hasPermission("Publish")) {
-                    echo "</a>";
-                }
-                ?>
+                <?php echo htmlspecialchars($action["time_action"]); ?>
 			</td>
 		<?PHP
 		}

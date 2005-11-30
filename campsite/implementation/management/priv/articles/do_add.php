@@ -71,7 +71,7 @@ $articleObj =& new Article($cLanguage);
 $articleObj->create($cType, $cName);
 //$articleObj->setOnSectionPage(($cSectionPage == "on"));
 //$articleObj->setOnFrontPage(($cFrontPage == "on"));
-$articleObj->setUserId($User->getId());
+$articleObj->setUserId($User->getUserId());
 $articleObj->setIsPublic(true);
 //$articleObj->setKeywords($cKeywords);
 

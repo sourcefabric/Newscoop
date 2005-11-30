@@ -119,7 +119,7 @@ if (isset($_REQUEST["duplicate_button"])) {
 		$newArticles = $tmpArticle->copy($f_destination_publication_id, 
 						  				 $f_destination_issue_id, 
 						  				 $f_destination_section_id, 
-						  				 $User->getId(),
+						  				 $User->getUserId(),
 						  				 $languageArray);
 		
 		// Set the names of the new copies

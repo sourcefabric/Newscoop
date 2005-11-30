@@ -9,7 +9,7 @@ setcookie("TOL_UserKey", "", time() - 86400);
 
 // Unlock all articles that are locked by this user
 if ($access) {
-	Article::UnlockByUser($User->getId());
+	Article::UnlockByUser($User->getUserId());
 }
 
 // added by sebastian

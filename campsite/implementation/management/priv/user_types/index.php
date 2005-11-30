@@ -34,8 +34,9 @@ echo camp_html_breadcrumbs($crumbs);
 
 <P>
 <?php
-$rows = $Campsite['db']->GetAll("SELECT * FROM UserTypes WHERE Reader = 'N' ORDER BY Name LIMIT $UTOffs, ".($lpp+1));
-if (count($rows) > 0) {
+$userTypes = UserType::GetUserTypes();
+
+if (count($userTypes) > 0) {
 	$color= 0;
 ?>
 <table border="0" cellspacing="1" cellpadding="3" class="table_list">
@@ -47,20 +48,20 @@ if (count($rows) > 0) {
 <?php } ?>
 </tr>
 <?php 
-foreach ($rows as $row) { ?>
+foreach ($userTypes as $userType) { ?>
 <tr <?php if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 	<td>
-		<?php p(htmlspecialchars($row['Name'])); ?>&nbsp;
+		<?php p(htmlspecialchars($userType->getName())); ?>&nbsp;
 	</td>
 	
 	<?php if ($canManage) { ?>
 	<td align="center">
-		<a href="/<?php echo $ADMIN; ?>/user_types/access.php?UType=<?php p(urlencode($row['Name'])); ?>"><?php  putGS('Change'); ?></a>
+		<a href="/<?php echo $ADMIN; ?>/user_types/access.php?UType=<?php p(urlencode($userType->getName())); ?>"><?php  putGS('Change'); ?></a>
 	</td>
 	
 	<td align="center">
-		<a href="/<?php echo $ADMIN; ?>/user_types/do_del.php?UType=<?php p(urlencode($row['Name'])); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the user type $1?', $row['Name']); ?>');">
-		<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" border="0" alt="Delete user type <?php p(htmlspecialchars($row['Name'])); ?>" title="Delete user type <?php p(htmlspecialchars($row['Name'])); ?>"></a>
+		<a href="/<?php echo $ADMIN; ?>/user_types/do_del.php?UType=<?php p(urlencode($userType->getName())); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the user type $1?', $userType->getName()); ?>');">
+		<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" border="0" alt="Delete user type <?php p(htmlspecialchars($userType->getName())); ?>" title="Delete user type <?php p(htmlspecialchars($userType->getName())); ?>"></a>
 	</td>
 <?php  } ?>
 </tr>

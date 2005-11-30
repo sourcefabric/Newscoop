@@ -690,7 +690,7 @@ class Article extends DatabaseObject {
 	 */
 	function userCanModify($p_user) 
 	{
-		$userCreatedArticle = ($this->m_data['IdUser'] == $p_user->getId());
+		$userCreatedArticle = ($this->m_data['IdUser'] == $p_user->getUserId());
 		$articleIsNew = ($this->m_data['Published'] == 'N');
 		$articleIsNotPublished = (($this->m_data['Published'] == 'N') || ($this->m_data['Published'] == 'S'));
 		if ($p_user->hasPermission('Publish') 

@@ -195,13 +195,13 @@ if (!$articleObj->userCanModify($User)) {
 	exit;
 }
 // Only users with a lock on the article can change it.
-if ($articleObj->isLocked() && ($User->getId() != $articleObj->getLockedByUser())) {
+if ($articleObj->isLocked() && ($User->getUserId() != $articleObj->getLockedByUser())) {
 	$diffSeconds = time() - strtotime($articleObj->getLockTime());
 	$hours = floor($diffSeconds/3600);
 	$diffSeconds -= $hours * 3600;
 	$minutes = floor($diffSeconds/60);
 	$lockUser =& new User($articleObj->getLockedByUser());
-	$errorStr = getGS('Could not save the article. It has been locked by $1 $2 hours and $3 minutes ago.', $lockUser->getName(), $hours, $minutes);
+	$errorStr = getGS('Could not save the article. It has been locked by $1 $2 hours and $3 minutes ago.', $lockUser->getRealName(), $hours, $minutes);
 	camp_html_display_error($errorStr, $BackLink);
 	exit;
 }

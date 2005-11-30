@@ -22,7 +22,7 @@ class User extends DatabaseObject {
 	var $m_dbTableName = 'Users';
 	var $m_keyColumnNames = array('Id');
 	var $m_keyIsAutoIncrement = true;
-	var $m_permissions = array();
+	var $m_config = array();
 	var $m_columnNames = array(
 		'Id',
 		'KeyId',
@@ -63,7 +63,67 @@ class User extends DatabaseObject {
 		'Text2',
 		'Text3');
 
+	var $m_defaultConfig = array(
+		'ManagePub'=>'N', 
+		'DeletePub'=>'N', 
+		'ManageIssue'=>'N', 
+		'DeleteIssue'=>'N',
+		'ManageSection'=>'N', 
+		'DeleteSection'=>'N', 
+		'AddArticle'=>'N', 
+		'ChangeArticle'=>'N',
+		'DeleteArticle'=>'N', 
+		'AddImage'=>'N', 
+		'ChangeImage'=>'N', 
+		'DeleteImage'=>'N',
+		'ManageTempl'=>'N', 
+		'DeleteTempl'=>'N', 
+		'ManageUsers'=>'N', 
+		'ManageReaders'=>'N',
+		'ManageSubscriptions'=>'N', 
+		'DeleteUsers'=>'N', 
+		'ManageUserTypes'=>'N', 
+		'ManageArticleTypes'=>'N',
+		'DeleteArticleTypes'=>'N', 
+		'ManageLanguages'=>'N', 
+		'DeleteLanguages'=>'N', 
+		'MailNotify'=>'N',
+		'ManageCountries'=>'N', 
+		'DeleteCountries'=>'N', 
+		'ViewLogs'=>'N', 
+		'ManageLocalizer'=>'N',
+		'ManageIndexer'=>'N', 
+		'Publish'=>'N', 
+		'ManageTopics'=>'N', 
+		'EditorBold'=>'N', 
+		'EditorItalic'=>'N',
+		'EditorUnderline'=>'N', 
+		'EditorUndoRedo'=>'N', 
+		'EditorCopyCutPaste'=>'N', 
+		'EditorImage'=>'N',
+		'EditorTextAlignment'=>'N', 
+		'EditorFontColor'=>'N', 
+		'EditorFontSize'=>'N', 
+		'EditorFontFace'=>'N',
+		'EditorTable'=>'N', 
+		'EditorSuperscript'=>'N', 
+		'EditorSubscript'=>'N', 
+		'EditorStrikethrough'=>'N',
+		'EditorIndent'=>'N', 
+		'EditorListBullet'=>'N', 
+		'EditorListNumber'=>'N', 
+		'EditorHorizontalRule'=>'N',
+		'EditorSourceView'=>'N', 
+		'EditorEnlarge'=>'N', 
+		'EditorTextDirection'=>'N', 
+		'EditorLink'=>'N',
+		'EditorSubhead'=>'N',
+		'InitializeTemplateEngine'=>'N');		
+		
 	/**
+	 * A user of the system is a frontend reader or a 'admin' user, meaning
+	 * they have login rights to the backend.
+	 * 
 	 * @param int $p_userId
 	 */
 	function User($p_userId = null) 
@@ -78,12 +138,17 @@ class User extends DatabaseObject {
 	} // constructor
 	
 	
+	/**
+	 * Delete the user.  This will delete all config values and subscriptions of the user.
+	 *
+	 * @return boolean
+	 */
 	function delete()
 	{
 		global $Campsite;
 		if ($this->exists()) {
 			parent::delete();
-			$Campsite['db']->Execute("DELETE FROM UserPerm WHERE IdUser = ".$this->m_data['Id']);
+			$Campsite['db']->Execute("DELETE FROM UserConfig WHERE fk_user_id = ".$this->m_data['Id']);
 			$res = $Campsite['db']->Execute("SELECT Id FROM Subscriptions WHERE IdUser = ".$this->m_data['Id']);
 			while ($row = $res->FetchRow()) {
 				$Campsite['db']->Execute("DELETE FROM SubsSections WHERE IdSubscription=".$row['Id']);
@@ -92,32 +157,39 @@ class User extends DatabaseObject {
 			$Campsite['db']->Execute("DELETE FROM SubsByIP WHERE IdUser=".$this->m_data['Id']);
 		}
 		return true;
-	}
+	} // fn delete
 	
 	
 	/**
+	 * Get the user from the database.
+	 * 
 	 * @param array $p_recordSet
 	 */
 	function fetch($p_recordSet = null) 
 	{
 		global $Campsite;
-		parent::fetch($p_recordSet);
-		// Fetch the user's permissions.
-		$queryStr = 'SELECT * FROM UserPerm '
-					.' WHERE IdUser='.$this->getProperty('Id');
-		$permissions = $Campsite['db']->GetRow($queryStr);
-		if ($permissions) {
-			// Make m_permissions a boolean array.
-			foreach ($permissions as $key => $value) {
-				if ($key != 'IdUser')
-					$this->m_permissions[$key] = ($value == 'Y');
+		$success = parent::fetch($p_recordSet);
+		if ($success) {
+			// Fetch the user's permissions.
+			$queryStr = 'SELECT varname, value FROM UserConfig '
+						.' WHERE fk_user_id='.$this->getProperty('Id');
+			$config = $Campsite['db']->GetAll($queryStr);
+			if ($config) {
+				// Make m_config an associative array.
+				foreach ($config as $value) {
+					$this->m_config[$value['varname']] = $value['value'];
+				}
 			}
 		}
 	} // fn fetch
 
 
 	/**
+	 * Set the user to the given user type.
+	 * 
 	 * @param string $p_userType
+	 * 
+	 * @return void
 	 */
 	function setUserType($p_userType)
 	{
@@ -128,22 +200,32 @@ class User extends DatabaseObject {
 		}
 		
 		// Fetch the user type's permissions.
-		$queryStr = "SELECT * FROM UserTypes WHERE Name = '"
-			.mysql_real_escape_string($p_userType)."'";
-		$permissions = $Campsite['db']->GetRow($queryStr);
-		if ($permissions) {
-			// Make m_permissions a boolean array.
-			foreach ($permissions as $key => $value) {
-				$this->m_permissions[$key] = ($value == 'Y');
-				if ($key != 'Name' && $key != 'Reader')
-					$values .= ", `$key` = '" . mysql_real_escape_string($value) . "'";
+		$userType =& new UserType($p_userType);
+		if ($userType->exists()) {
+			// Drop all current user permissions.
+			//$queryStr = "DELETE FROM UserConfig WHERE fk_user_id=".$this->m_data['Id'];
+			$configVars = $userType->getConfig();
+			foreach ($configVars as $varname => $value) {
+				$queryStr = "SELECT value FROM UserConfig "
+							." WHERE fk_user_id=".$this->m_data['Id']
+							." AND varname='$varname'";
+				$exists = $Campsite['db']->GetOne($queryStr);
+				if ($exists !== false) {
+					if ($value != $this->m_config[$varname]) {
+						$queryStr = "UPDATE UserConfig SET value='$value' "
+									." WHERE fk_user_id=".$this->m_data['Id']
+									." AND varname='$varname'";
+						$Campsite['db']->Execute($queryStr);
+					}
+				} else {
+					$queryStr = "INSERT INTO UserConfig SET "
+								." fk_user_id=".$this->m_data['Id'].","
+								." varname='$varname',"
+								." value='$value'";
+					$Campsite['db']->Execute($queryStr);
+				}
 			}
-			$values = substr($values, 2);
-			$queryStr = "INSERT INTO UserPerm SET IdUser = " . $this->getId() . ", $values";
-			if (!$Campsite['db']->Query($queryStr)) {
-				$queryStr = "UPDATE UserPerm SET $values WHERE IdUser = " . $this->getId();
-				$Campsite['db']->Query($queryStr);
-			}
+			$this->fetch();
 		}
 	} // fn setUserType
 	
@@ -151,14 +233,15 @@ class User extends DatabaseObject {
 	/**
 	 * @return int
 	 */
-	function getId() 
+	function getUserId() 
 	{
 		return $this->getProperty('Id');
-	} // fn getId
+	} // fn getUserId
 	
 	
 	/**
-	 *
+	 * Get unique login key for this user - login key is only good for the time the
+	 * user is logged in.
 	 * @return int
 	 */
 	function getKeyId() 
@@ -171,10 +254,10 @@ class User extends DatabaseObject {
 	 * Get the real name of the user.
 	 * @return string
 	 */
-	function getName() 
+	function getRealName() 
 	{
 		return $this->getProperty('Name');
-	} // fn getName
+	} // fn getRealName
 	
 	
 	/**
@@ -184,13 +267,93 @@ class User extends DatabaseObject {
 	function getUserName() 
 	{
 		return $this->getProperty('UName');
-	} // fn getUName
+	} // fn getUserName
 
 	
 	/**
+	 * Return the value of the given variable name.
+	 * If the variable name does not exist, return null.
+	 *
+	 * @param string $p_varName
+	 * @return mixed
+	 */
+	function getConfigValue($p_varName)
+	{
+		if (isset($this->m_config[$p_varName])) {
+			return $this->m_config[$p_varName];
+		} else {	
+			return null;	
+		}
+	} // fn getConfigValue
+	
+	
+	/**
+	 * Set the user variable to the given value.
+	 * If the variable does not exist, it will be created.
+	 *
+	 * @param string $p_varName
+	 * @param mixed $p_value
+	 * 
+	 * @return void
+	 */
+	function setConfigValue($p_varName, $p_value)
+	{
+		global $Campsite;
+		if (!$this->exists() || empty($p_varName) || !is_string($p_varName)) {
+			return;
+		}
+		
+		if (strtolower($p_varName) == "reader") {
+			// Special case for the "Reader" property.
+			$this->setProperty("Reader", $p_value);
+		} else {
+			if (isset($this->m_config[$p_varName])) {
+				if ($this->m_config[$p_varName] != $p_value) {
+					$sql = "UPDATE UserConfig SET value='".mysql_real_escape_string($p_value)."'"
+						   ." WHERE fk_user_id=".$this->m_data['Id']
+						   ." AND varname='".mysql_real_escape_string($p_varName)."'";
+					$Campsite['db']->Execute($sql);
+				}
+			} else {
+				$sql = "INSERT INTO UserConfig SET "
+					   ." fk_user_id=".$this->m_data['Id'].", "
+					   ." varname='".mysql_real_escape_string($p_varName)."', "
+					   ." value='".mysql_real_escape_string($p_value)."'";
+				$Campsite['db']->Execute($sql);			
+			}
+		}
+	} // fn setConfigValue	
+	
+	
+	/**
+	 * Get the user config variables in the form array("varname" => "value").
+	 *
+	 * @return array
+	 */
+	function getConfig()
+	{
+		return $this->m_config;
+	} // fn getConfig
+	
+	
+	/**
+	 * Get the default config for all users.
+	 *
+	 * @return array
+	 */
+	function GetDefaultConfig()
+	{
+		if (isset($this->m_defaultConfig)) {
+			return $this->m_defaultConfig;
+		} else {
+			$tmpUser =& new User();
+			return $tmpUser->m_defaultConfig;
+		}
+	} // fn GetDefaultConfig
+	
+	
+	/**
 	 * Return true if the user has the permission specified.
-	 * The database column names from the table UserPerm are used
-	 * as the permission strings.
 	 *
 	 * @param string $p_permissionString
 	 *
@@ -198,17 +361,34 @@ class User extends DatabaseObject {
 	 */
 	function hasPermission($p_permissionString) 
 	{
-		return (isset($this->m_permissions[$p_permissionString])
-				&& $this->m_permissions[$p_permissionString]);
+		return (isset($this->m_config[$p_permissionString])
+				&& ($this->m_config[$p_permissionString] == 'Y'));
 	} // fn hasPermission
 	
 	
 	/**
+	 * Set the specified permission enabled or disabled.
+	 *
+	 * @param string $p_permissionString
+	 * @param boolean $p_value
+	 * 
+	 * @return void
+	 */
+	function setPermission($p_permissionString, $p_value)
+	{
+		$p_value = $p_value ? 'Y' : 'N';
+		$this->setConfigValue($p_permissionString, $p_value);		
+	} // fn setPermission
+	
+	
+	/**
+	 * Return TRUE if this user is an administrator.
+	 * 
 	 * @return boolean
 	 */
 	function isAdmin() 
 	{
-		return $this->getProperty('Reader') == 'N';
+		return ($this->getProperty('Reader') == 'N');
 	} // fn isAdmin
 
 
@@ -219,13 +399,13 @@ class User extends DatabaseObject {
 	{
 		global $Campsite;
 		$queryStr = 'SELECT * FROM Users '
-				. " WHERE Id = '".mysql_real_escape_string($this->getId())."' "
+				. " WHERE Id = '".mysql_real_escape_string($this->getUserId())."' "
 				. " AND Password = PASSWORD('".mysql_real_escape_string($p_password)."')";
 		$row = $Campsite['db']->GetRow($queryStr);
 		if ($row)
 			return true;
 		return false;
-	}
+	} // fn isValidPassword
 	
 	
 	/**
@@ -237,7 +417,7 @@ class User extends DatabaseObject {
 		$queryStr = "SELECT PASSWORD('".mysql_real_escape_string($p_password)."') AS PWD";
 		$row = $Campsite['db']->GetRow($queryStr);
 		$this->setProperty('Password', $row['PWD']);
-	}
+	}  // fn setPassword
 
 	
 	/**

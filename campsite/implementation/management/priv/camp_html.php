@@ -58,33 +58,6 @@ function camp_html_copyright_notice($p_displayBorder = true)
 
 
 /**
- * Create a HTML SELECT drop down box.
- *
- */
-function camp_html_create_select($p_name, $p_options, $p_selected = null, $p_extras ="", $p_valuesIncluded = false) 
-{
-	?>
-	<select name="<?php echo $p_name ?>" <?php echo $p_extras ?>>
-	<?php
-	foreach ($p_options as $key => $value) {
-		if ($p_valuesIncluded) {
-			?>
-			<option value="<?php echo $key; ?>" <?php if (!is_null($p_selected) && ($p_selected == $key)) { echo "selected"; } ?>><?php echo htmlspecialchars($value); ?></option>
-			<?php
-		}
-		else {
-			?>
-			<option <?php if (!is_null($p_selected) && ($p_selected == $value)) { echo "selected"; } ?>><?php echo htmlspecialchars($value); ?></option>
-			<?php    			
-		}
-	}
-	?>
-	</select>
-	<?php
-} // fn camp_html_create_select
-
-
-/**
  * Create a HTML HREF link to an article.
  *
  * @param Article $p_articleObj

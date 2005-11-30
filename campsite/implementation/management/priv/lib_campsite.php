@@ -251,7 +251,7 @@ function camp_dump($p_object)
 	ob_start();
 	print_r($p_object);
 	$buffer = ob_get_clean();
-	echo htmlspecialchars($buffer);
+	echo htmlspecialchars(wordwrap($buffer, 100));
 	echo "</pre>";	
 }
 

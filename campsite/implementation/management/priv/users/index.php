@@ -121,7 +121,7 @@ if ($canManage) {
 </table>
 
 <?php if ($resMsg != '') { ?>
-<table border="0" cellpadding="0" cellspacing="0" align="center">
+<table border="0" cellpadding="0" cellspacing="0" class="indent" style="padding-bottom: 5px;">
 <tr>
 <?php if ($res == 'OK') { ?>
 	<td class="info_message">
@@ -219,20 +219,22 @@ for($loop = 0; $loop < $last; $loop++) {
 	$row = $res->FetchRow();
 	$userId = $row['Id'];
 	$rowClass = ($loop + 1) % 2 == 0 ? "list_row_even" : "list_row_odd";
-	$editUser = new User($userId);
-	$userType = UserType::GetUserType($editUser->m_permissions);
+	$editUser =& new User($userId);
+	$userType = UserType::GetUserTypeFromConfig($editUser->getConfig());
 ?>
 	<tr <?php echo "class=\"$rowClass\""; ?>>
 		<td>
-<?php
-	if ($canManage)
-		echo "<a href=\"edit.php?" . get_user_urlparams($userId, false, true) . "\">";
-	echo htmlspecialchars($row['Name']);
-	if ($canManage)
-		echo "</a>";
-	$old_user_name = $user_name;
-	$user_name = $row['UName'];
-?>
+		<?php
+			if ($canManage) {
+				echo "<a href=\"edit.php?" . get_user_urlparams($userId, false, true) . "\">";
+			}
+			echo htmlspecialchars($row['Name']);
+			if ($canManage) {
+				echo "</a>";
+			}
+			$old_user_name = $user_name;
+			$user_name = $row['UName'];
+		?>
 		</td>
 		<td><?php echo htmlspecialchars($user_name); ?></TD>
 <?php
@@ -241,20 +243,24 @@ for($loop = 0; $loop < $last; $loop++) {
 	$email = $row['EMail'];
 ?>
 		<td><?php echo htmlspecialchars($email); ?></td>
-<?php if ($uType == "Subscribers" && $User->hasPermission("ManageSubscriptions")) { ?>
+		
+		<?php if ($uType == "Subscribers" && $User->hasPermission("ManageSubscriptions")) { ?>
 		<td><a href="<?php echo "/$ADMIN/users/subscriptions/?f_user_id=$userId"; ?>">
-			<?php putGS("Subscriptions"); ?></td>
-<?php } ?>
-		<td><?php echo $userType->getName(); ?></td>
+			<?php putGS("Subscriptions"); ?>
+		</td>
+		<?php } ?>
+		
+		<td><?php if ($userType !== false) { echo $userType->getName(); } ?></td>
+
 		<td>
-<?php
-	$creationDate = $row['time_created'];
-	if ((int)$creationDate == 0) {
-		echo "N/A";
-	} else {
-		echo $creationDate;
-	}
-?>
+			<?php
+				$creationDate = $row['time_created'];
+				if ((int)$creationDate == 0) {
+					echo "N/A";
+				} else {
+					echo $creationDate;
+				}
+			?>
 		</td>
 <?php
 	$email = $old_email;

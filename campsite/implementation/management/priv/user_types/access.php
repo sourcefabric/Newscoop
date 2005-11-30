@@ -90,12 +90,19 @@ $editor_group_4 = array('EditorHorizontalRule'=>'User may insert horizontal rule
 	'EditorSuperscript'=>'User may use superscripts',
 	'EditorSubscript'=>'User may use subscripts');
 
-$rights = array('Content'=>$content_group, 'Templates'=>$templates_group,
-	'Staff/Subscribers Management'=>$users_group, 'Administrative tasks'=>$administrative_group,
-	'Article Types'=>$article_types_group, 'Languages'=>$languages_group,
-	'Countries'=>$countries_group, 'Miscellaneous'=>$misc_group, 'Localizer'=>$localizer_group,
-	'Editor Basic Settings'=>$editor_group_1, 'Editor Advanced Font Settings'=>$editor_group_2,
-	'Editor Table Settings'=>$editor_group_3, 'Editor Miscellaneous Settings'=>$editor_group_4);
+$rights = array(getGS('Content')=>$content_group, 
+				getGS('Templates')=>$templates_group,
+				getGS('Staff/Subscribers Management')=>$users_group, 
+				getGS('Administrative tasks')=>$administrative_group,
+				getGS('Article Types')=>$article_types_group, 
+				getGS('Languages')=>$languages_group,
+				getGS('Countries')=>$countries_group, 
+				getGS('Miscellaneous')=>$misc_group, 
+				getGS('Localizer')=>$localizer_group,
+				getGS('Editor Basic Settings')=>$editor_group_1, 
+				getGS('Editor Advanced Font Settings')=>$editor_group_2,
+				getGS('Editor Table Settings')=>$editor_group_3, 
+				getGS('Editor Miscellaneous Settings')=>$editor_group_4);
 
 $crumbs = array();
 $crumbs[] = array(getGS("Staff User Types"), "/$ADMIN/user_types/");
@@ -117,54 +124,59 @@ echo camp_html_breadcrumbs($crumbs);
 <form name="dialog" method="post" action="do_access.php" >
 <p>
 <table border="0" cellspacing="0" cellpadding="1" class="table_input">
-	<tr>
-		<td colspan="2" style="padding-top: 5px; padding-left: 10px;">
-			<b><?php  putGS("Change user type permissions"); ?></b>
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2">
-			<hr noshade size="1" color="black">
-		</td>
-	</tr>
+<tr>
+	<td colspan="2" style="padding-top: 5px; padding-left: 10px;">
+		<b><?php  putGS("Change user type permissions"); ?></b>
+	</td>
+</tr>
+<tr>
+	<td colspan="2">
+		<hr noshade size="1" color="black">
+	</td>
+</tr>
+<tr>
+	<td colspan="2" style="padding-top: 5px; padding-bottom: 0px;" align="center">
+	<input type="submit" class="button" name="Save" value="<?php putGS('Save'); ?>">
+	</td>
+</tr>
 <?php
 foreach ($rights as $group_name=>$group) {
 ?>
-	<tr>
-		<td colspan="2" align="left" style="padding-top: 10px; padding-left: 10px;">
-			--- <?php putGS($group_name); ?> ---
-		</td>
-	</tr>
+<tr>
+	<td colspan="2" align="left" style="padding-top: 10px; padding-left: 10px;">
+		--- <?php p($group_name); ?> ---
+	</td>
+</tr>
+
 <?php
-	foreach ($group as $right_name=>$right_text) {
+foreach ($group as $right_name=>$right_text) {
 ?>
-	<tr>
-		<td align="right" style="padding-left: 10px;">
-			<input type="checkbox" name="<?php echo $right_name; ?>" class="input_checkbox" <?php  if ($userType->hasPermission($right_name)) { p("CHECKED"); } ?>>
-		</td>
-		<td style="padding-right: 10px;">
-			<?php putGS($right_text); ?>
-		</td>
-	</tr>
+<tr>
+	<td align="right" style="padding-left: 10px;">
+		<input type="checkbox" name="<?php echo $right_name; ?>" class="input_checkbox" <?php  if ($userType->hasPermission($right_name)) { p("CHECKED"); } ?>>
+	</td>
+	<td style="padding-right: 10px;">
+		<?php putGS($right_text); ?>
+	</td>
+</tr>
 <?php
-	}
+}
 }
 ?>
-	<tr>
-		<td>
-<?php
+<tr>
+	<td>
+	<?php
 	if (function_exists ("incModFile"))
 		incModFile ($User);
-?>
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2" style="padding-top: 5px; padding-bottom: 10px;" align="center">
-		<input type="hidden" name="UType" value="<?php p(htmlspecialchars($uType)); ?>">
-		<input type="submit" class="button" name="Save" value="<?php putGS('Save'); ?>">
-		<!--<input type="button" class="button" name="Cancel" value="<?php putGS('Cancel'); ?>" onclick="location.href='/<?php echo $ADMIN; ?>/user_types/'">-->
-		</td>
-	</tr>
+	?>
+	</td>
+</tr>
+<tr>
+	<td colspan="2" style="padding-top: 5px; padding-bottom: 10px;" align="center">
+	<input type="hidden" name="UType" value="<?php p(htmlspecialchars($uType)); ?>">
+	<input type="submit" class="button" name="Save" value="<?php putGS('Save'); ?>">
+	</td>
+</tr>
 </table></p>
 </form>
 <?php camp_html_copyright_notice(); ?>

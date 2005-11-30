@@ -37,8 +37,6 @@ if ($editMode) {
 
 $languageObj =& new Language($languageId);
 
-//query ("SELECT * FROM Languages WHERE Id=$Lang", 'l');
-
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
 $crumbs[] = array(getGS("Languages"), "/$ADMIN/languages");
@@ -61,8 +59,7 @@ echo $breadcrumbs;
 <?php if ($editMode) { ?>
 <input type="hidden" name="cLang" value="<?php p($languageObj->getLanguageId()); ?>">
 <?php } ?>
-<CENTER>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input" ALIGN="CENTER">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 <TR>
 	<TD COLSPAN="2">
 	   <?php if ($editMode) { ?>
@@ -251,7 +248,6 @@ echo $breadcrumbs;
 	</TD>
 </TR>
 </TABLE>
-</CENTER>
 </FORM>
 <P>
 

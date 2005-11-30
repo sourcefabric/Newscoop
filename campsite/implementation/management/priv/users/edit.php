@@ -11,7 +11,6 @@ verify_user_type();
 compute_user_rights($User, $canManage, $canDelete);
 
 $typeParam = 'uType=' . urlencode($uType);
-$isReader = $uType == 'Subscribers' ? 'Y' : 'N';
 
 $userId = Input::Get('User', 'int', 0);
 if ($userId > 0) {

@@ -73,7 +73,7 @@ elseif (($articleObj->getLockedByUser() != 0) && !$lockUserObj->exists()) {
 if ($f_unlock === false) {
     if (!$articleObj->isLocked()) {
 		// Lock the article
-		$articleObj->lock($User->getId());
+		$articleObj->lock($User->getUserId());
     }
 }
 else {
@@ -81,7 +81,7 @@ else {
 }
 
 // If the article is locked by the current user, OK to edit.
-if ($articleObj->getLockedByUser() == $User->getId()) {
+if ($articleObj->getLockedByUser() == $User->getUserId()) {
     $locked = false;
 }
 
@@ -124,13 +124,13 @@ if ($articleObj->userCanModify($User) && $locked) {
 				$timeDiff = camp_time_diff_str($articleObj->getLockTime());
 				if ($timeDiff['hours'] > 0) {
 					putGS('The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.',
-						  '<B>'.htmlspecialchars($lockUserObj->getName()),
+						  '<B>'.htmlspecialchars($lockUserObj->getRealName()),
 						  htmlspecialchars($lockUserObj->getUserName()).'</B>',
 						  $timeDiff['hours'], $timeDiff['minutes']); 
 				}
 				else {
 					putGS('The article has been locked by $1 ($2) $3 minute(s) ago.',
-						  '<B>'.htmlspecialchars($lockUserObj->getName()),
+						  '<B>'.htmlspecialchars($lockUserObj->getRealName()),
 						  htmlspecialchars($lockUserObj->getUserName()).'</B>',
 						  $timeDiff['minutes']);
 				}
@@ -326,7 +326,7 @@ if ($articleObj->userCanModify($User) && $locked) {
 					?>
 				</TD>
 				<TD ALIGN="RIGHT" valign="top"><b><?php  putGS("Created by"); ?>:</b></TD>
-				<TD align="left" valign="top"><?php p(htmlspecialchars($articleCreator->getName())); ?></TD>
+				<TD align="left" valign="top"><?php p(htmlspecialchars($articleCreator->getRealName())); ?></TD>
 				<TD ALIGN="RIGHT" valign="top"><INPUT TYPE="CHECKBOX" NAME="f_on_front_page" class="input_checkbox" <?php  if ($articleObj->onFrontPage()) { ?> CHECKED<?php  } ?> <?php if ($f_edit_mode == "view") { ?>disabled<?php }?>></TD>
 				<TD align="left" valign="top" style="padding-top: 0.25em;">
 				<?php  putGS('Show article on front page'); ?>
@@ -616,7 +616,7 @@ if ($articleObj->userCanModify($User) && $locked) {
 						<?php if ($f_edit_mode == "edit") {  ?>
 						<td align="right">
 							<img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/add.png" border="0">
-							<a href="javascript: void(0);" onclick="window.open('<?php echo camp_html_article_url($articleObj, $f_language_selected, "images/popup.php"); ?>', 'attach_image', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=750, height=600');"><?php putGS("Attach"); ?></a>
+							<a href="javascript: void(0);" onclick="window.open('<?php echo camp_html_article_url($articleObj, $f_language_selected, "images/popup.php"); ?>', 'attach_image', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=750, height=600, top=200, left=100');"><?php putGS("Attach"); ?></a>
 						</td>
 						<?php } ?>
 					</tr>
@@ -626,7 +626,7 @@ if ($articleObj->userCanModify($User) && $locked) {
 			<?PHP
 			foreach ($articleImages as $tmpArticleImage) { 
 				$image = $tmpArticleImage->getImage();
-				$imageEditUrl = "/$ADMIN/articles/images/edit.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_article_number=$f_article_number&f_image_id=".$image->getImageId()."&f_language_id=$f_language_id&f_language_selected=$f_language_selected";
+				$imageEditUrl = "/$ADMIN/articles/images/edit.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_article_number=$f_article_number&f_image_id=".$image->getImageId()."&f_language_id=$f_language_id&f_language_selected=$f_language_selected&f_image_template_id=".$tmpArticleImage->getTemplateId();
 				$detachUrl = "/$ADMIN/articles/images/do_unlink.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_article_number=$f_article_number&f_image_id=".$image->getImageId()."&f_language_selected=$f_language_selected&f_language_id=$f_language_id&f_image_template_id=".$tmpArticleImage->getTemplateId();
 				$imageSize = getimagesize($image->getImageStorageLocation());
 			?>

@@ -37,7 +37,7 @@ if ($errorStr != "") {
 	camp_html_display_error($errorStr, null, true);
 }
 
-setcookie("TOL_UserId", $User->getId(), null, "/");
+setcookie("TOL_UserId", $User->getUserId(), null, "/");
 setcookie("TOL_UserKey", $User->getKeyId(), null, "/");
 setcookie("TOL_Access", "all", null, "/");
 if ($User->hasPermission("ManageTempl") || $User->hasPermission("DeleteTempl"))

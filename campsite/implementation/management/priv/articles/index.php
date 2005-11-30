@@ -289,7 +289,7 @@ foreach ($allArticles as $articleObj) {
 		break;
 	}
 	$timeDiff = camp_time_diff_str($articleObj->getLockTime());
-	if ($articleObj->isLocked() && ($timeDiff['days'] <= 0) && ($articleObj->getLockedByUser() != $User->getId())) {
+	if ($articleObj->isLocked() && ($timeDiff['days'] <= 0) && ($articleObj->getLockedByUser() != $User->getUserId())) {
 	    $rowClass = "article_locked";
 	}
 	else {
@@ -313,18 +313,17 @@ foreach ($allArticles as $articleObj) {
 			echo $f_article_offset + $uniqueArticleCounter.". ";
 		}
 		// Is article locked?
-		//if ($articleObj->isLocked() && ($timeDiff['days'] <= 0) && ($articleObj->getLockedByUser() != $User->getId())) {
 		if ($articleObj->isLocked() && ($timeDiff['days'] <= 0)) {
             $lockUserObj =& new User($articleObj->getLockedByUser());
 			if ($timeDiff['hours'] > 0) {
 				$lockInfo = getGS('The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.',
-					  htmlspecialchars($lockUserObj->getName()),
+					  htmlspecialchars($lockUserObj->getRealName()),
 					  htmlspecialchars($lockUserObj->getUserName()),
 					  $timeDiff['hours'], $timeDiff['minutes']); 
 			}
 			else {
 				$lockInfo = getGS('The article has been locked by $1 ($2) $3 minute(s) ago.',
-					  htmlspecialchars($lockUserObj->getName()),
+					  htmlspecialchars($lockUserObj->getRealName()),
 					  htmlspecialchars($lockUserObj->getUserName()),
 					  $timeDiff['minutes']);
 			}
@@ -343,7 +342,7 @@ foreach ($allArticles as $articleObj) {
 		<TD ALIGN="RIGHT">
 			<?php 
 			$articleCreator =& new User($articleObj->getCreatorId());
-			p(htmlspecialchars($articleCreator->getName()));  ?>
+			p(htmlspecialchars($articleCreator->getRealName()));  ?>
 		</TD>
 
 		<TD ALIGN="CENTER">

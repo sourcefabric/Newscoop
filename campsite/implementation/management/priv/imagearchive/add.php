@@ -54,7 +54,7 @@ $breadcrumbs = camp_html_breadcrumbs($crumbs);
 <TR>
 	<TD ALIGN="RIGHT" ><?php putGS('Photographer'); ?>:</TD>
 	<TD align="left">
-	<INPUT TYPE="TEXT" NAME="f_image_photographer" VALUE="<?php echo htmlspecialchars($User->getName()); ?>" SIZE="32" MAXLENGTH="64" class="input_text">
+	<INPUT TYPE="TEXT" NAME="f_image_photographer" VALUE="<?php echo htmlspecialchars($User->getRealName()); ?>" SIZE="32" MAXLENGTH="64" class="input_text">
 	</TD>
 </TR>
 <TR>

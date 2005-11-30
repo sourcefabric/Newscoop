@@ -33,17 +33,17 @@ foreach ($fields as $index=>$field) {
 
 // set the Reader field
 $Type = Input::Get('Type', 'string', '');
-$fieldValues['Reader'] = $uType == 'Subscribers' ? 'Y' : 'N';
-if ($uType == 'Staff' && $Type == '' && $errorField == '')
+$fieldValues['Reader'] = ($uType == 'Subscribers') ? 'Y' : 'N';
+if ( ($uType == 'Staff') && ($Type == '') && ($errorField == '') ) {
 	$errorField = 'Type';
+}
 
 // display errors if found
 if ($errorField != "") {
 	$desc = $notNullFields[$errorField];
 	if ($errorField == 'Type') {
 		$errorMsg = getGS('You must select a $1', $desc);
-	}
-	else {
+	} else {
 		$errorMsg = getGS('You must complete the $1 field.', $desc);
 	}
 	header("Location: $backLink&res=ERROR&resMsg=" . urlencode($errorMsg));
@@ -63,12 +63,13 @@ if (strlen($password) < 6 || $password != $passwordConf) {
 $editUser = new User;
 if ($editUser->create($fieldValues)) {
 	$editUser->setPassword($password);
-	if ($uType == 'Staff')
+	if ($uType == 'Staff') {
 		$editUser->setUserType($Type);
+	}
 	$logtext = getGS('User account $1 created', $editUser->getUserName());
 	Log::Message($logtext, $User->getUserName(), 51);
 	$resMsg = getGS('User account $1 was created successfully.', $editUser->getUserName());
-	header("Location: /$ADMIN/users/index.php?$typeParam&res=OK&resMsg=" . urlencode($resMsg));
+	header("Location: /$ADMIN/users/edit.php?User=".$editUser->getUserId()."&$typeParam&res=OK&resMsg=" . urlencode($resMsg));
 } else {
 	$errorMsg = getGS('The user account could not be created.');
 	header("Location: $backLink&res=ERROR&resMsg=" . urlencode($errorMsg));

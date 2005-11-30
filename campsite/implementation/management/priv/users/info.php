@@ -1,6 +1,7 @@
 <?php
 
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/UserType.php');
+require_once($_SERVER['DOCUMENT_ROOT']. '/classes/Country.php');
 
 list($access, $User) = check_basic_access($_REQUEST);
 if (!isset($editUser) || gettype($editUser) != 'object') {
@@ -9,7 +10,7 @@ if (!isset($editUser) || gettype($editUser) != 'object') {
 }
 $isNewUser = $editUser->getUserName() == '';
 compute_user_rights($User, $canManage, $canDelete);
-if (!$canManage && $editUser->getId() != $User->getId()) {
+if (!$canManage && $editUser->getUserId() != $User->getUserId()) {
 	if ($isNewUser) {
 		$error = getGS("You do not have the right to create user accounts.");
 	} else {
@@ -24,13 +25,18 @@ $fields = array('UName', 'Name', 'Title', 'Gender', 'Age', 'EMail', 'City', 'Str
 	'EmployerType', 'Position');
 if ($isNewUser) {
 	$action = 'do_add.php';
-	foreach ($fields as $index=>$field)
+	foreach ($fields as $index=>$field) {
 		$$field = Input::Get($field, 'string', '');
+	}
 } else {
 	$action = 'do_edit.php';
-	foreach ($fields as $index=>$field)
+	foreach ($fields as $index=>$field) {
 		$$field = $editUser->getProperty($field);
+	}
 }
+$userTypes = UserType::GetUserTypes();
+$countries = Country::GetCountries(1);
+$my_user_type = UserType::GetUserTypeFromConfig($editUser->getConfig());
 
 ?>
 <script>
@@ -62,7 +68,7 @@ function ToggleBoolValue(element_id) {
 <?php
 if (!$isNewUser) { 
 ?>
-<input type="hidden" name="User" value="<?php echo $editUser->getId(); ?>">
+<input type="hidden" name="User" value="<?php echo $editUser->getUserId(); ?>">
 <?php
 }
 ?>
@@ -115,20 +121,17 @@ if (!$isNewUser) {
 			</tr>
 
 			<?php
-			if ($isNewUser && $uType == "Staff") {
+			if ($isNewUser && ($uType == "Staff")) {
 			?>
 			<tr>
 				<td align="right"><?php putGS("Type"); ?>:</td>
 				<td>
-				<?php
-				$userTypes = $Campsite['db']->GetAll("SELECT Name FROM UserTypes WHERE Reader = 'N' ORDER BY Name ASC");
-				?>
 				<select name="Type" class="input_select" alt="select" emsg="<?php putGS("You must select a $1", "Type"); ?>">
 				<option value=""><?php putGS("Make a selection"); ?></option>
 				<?php
 				$Type = Input::Get('Type', 'string', '');
 				foreach ($userTypes as $tmpUserType) {
-					camp_html_select_option($tmpUserType['Name'], $Type, $tmpUserType['Name']);
+					camp_html_select_option($tmpUserType->getName(), $Type, $tmpUserType->getName());
 				}
 				?>
 				</select>
@@ -165,24 +168,26 @@ if (!$isNewUser) {
 <tr id="password_dialog" style="display: none;">
 	<td>
 		<table border="0" cellspacing="0" cellpadding="3" align="center" width="100%">
-<?php
-	if ($userId == $User->getId() && !$isNewUser) {
-?>
+		<?php
+		if ($userId == $User->getUserId() && !$isNewUser) {
+		?>
 		<tr>
 			<td align="right" nowrap width="1%"><?php putGS("Old Password"); ?>:</td>
 			<td>
 			<input type="password" class="input_text" name="oldPassword" size="16" maxlength="32">
 			</td>
 		</tr>
-<?php
-	}
-?>
+		<?php
+		}
+		?>
+
 		<tr>
 			<td align="right" nowrap width="1%"><?php putGS("Password"); ?>:</td>
 			<td>
 			<input type="password" class="input_text" name="password" size="16" maxlength="32">
 			</td>
 		</tr>
+		
 		<tr>
 			<td align="right" nowrap width="1%"><?php putGS("Confirm password"); ?>:</td>
 			<td>
@@ -217,10 +222,14 @@ if (!$isNewUser) {
 			<tr>
 				<td align="right" nowrap><?php putGS("Title"); ?>:</td>
 				<td>
-<?php
-camp_html_create_select("Title", array(getGS("Mr."), getGS("Mrs."), getGS("Ms."), getGS("Dr.")),
-	$Title, 'class="input_select"');
-?>
+				<SELECT class="input_select" name="Title">
+				<?php
+				camp_html_select_option(getGS("Mr."), $Title, getGS("Mr."));
+				camp_html_select_option(getGS("Mrs."), $Title, getGS("Mrs."));
+				camp_html_select_option(getGS("Ms."), $Title, getGS("Ms."));
+				camp_html_select_option(getGS("Dr."), $Title, getGS("Dr."));
+				?>
+				</SELECT>
 				</td>
 			</tr>
 			<tr>
@@ -233,11 +242,16 @@ camp_html_create_select("Title", array(getGS("Mr."), getGS("Mrs."), getGS("Ms.")
 			<tr>
 				<td align="right" nowrap><?php putGS("Age"); ?>:</td>
 				<td>
-<?php
-camp_html_create_select("Age", array("0-17"=>getGS("under 18"),
-	"18-24"=>"18-24", "25-39"=>"25-39", "40-49"=>"40-49", "50-65"=>"50-65",
-	"65-"=>getGS('65 or over')), $Age, 'class="input_select"', true);
-?>
+				<SELECT name="Age" class="input_select">
+				<?php
+				camp_html_select_option("0-17", $Age, getGS("under 18"));
+				camp_html_select_option("18-24", $Age, "18-24");
+				camp_html_select_option("25-39", $Age, "25-39");
+				camp_html_select_option("40-49", $Age, "40-49");
+				camp_html_select_option("50-65", $Age, "50-65");
+				camp_html_select_option("65-", $Age, "65 or over");
+				?>				
+				</SELECT>
 				</td>
 			</tr>
 			<tr>
@@ -267,15 +281,13 @@ camp_html_create_select("Age", array("0-17"=>getGS("under 18"),
 			<tr>
 				<td align="right" nowrap><?php putGS("Country"); ?>:</td>
 				<td>
-<?php
-$countries_list[""] = "";
-$countries = $Campsite['db']->GetAll("SELECT Code, Name FROM Countries where IdLanguage = 1");
-foreach ($countries as $country) {
-	$countries_list[$country['Code']] = htmlspecialchars($country['Name']);
-}
-camp_html_create_select("CountryCode", $countries_list,
-	$CountryCode, 'class="input_select"', true);
-?>
+				<SELECT name="CountryCode" class="input_select">
+				<?php
+				foreach ($countries as $country) {
+					camp_html_select_option($country->getCode(), $CountryCode, $country->getName());
+				}
+				?>
+				</SELECT>
 				</td>
 			</tr>
 			<tr>
@@ -305,16 +317,16 @@ camp_html_create_select("CountryCode", $countries_list,
 			<tr>
 				<td align="right" nowrap><?php putGS("Employer Type"); ?>:</td>
 				<td>
-<?php
-$employerTypes[''] = '';
-$employerTypes['Corporate'] = getGS('Corporate');
-$employerTypes['NGO'] = getGS('Non-Governmental Organisation');
-$employerTypes['Government Agency'] = getGS('Government Agency');
-$employerTypes['Academic'] = getGS('Academic');
-$employerTypes['Media'] = getGS('Media');
-camp_html_create_select("EmployerType", $employerTypes,
-	$EmployerType, 'class="input_select"', true);
-?>
+					<SELECT name="EmployerType" class="input_select">
+					<OPTION></OPTION>
+					<?php
+					camp_html_select_option('Corporate', $EmployerType, getGS('Corporate'));
+					camp_html_select_option('NGO', $EmployerType, getGS('Non-Governmental Organisation'));
+					camp_html_select_option('Government Agency', $EmployerType, getGS('Government Agency'));
+					camp_html_select_option('Academic', $EmployerType, getGS('Academic'));
+					camp_html_select_option('Media', $EmployerType, getGS('Media'));
+					?>
+					</SELECT>
 				</td>
 			</tr>
 			<tr>
@@ -332,20 +344,17 @@ if ($editUser->isAdmin() /*&& $canManage*/) {
 <input type="hidden" name="customizeRights" id="customize_rights" value="false">
 <tr id="user_type_dialog">
 	<td style="padding-left: 4px; padding-top: 4px; padding-bottom: 4px;">
+		<?PHP
+		$my_user_type_name = $my_user_type ? $my_user_type->getName() : "";
+		?>
 		<?php putGS("User Type"); ?>:
 		<select name="UserType">
 		<option value="">---</option>
-<?php
-$user_types = UserType::GetUserTypes();
-$my_user_type = UserType::GetUserType($editUser->m_permissions);
-foreach ($user_types as $index=>$user_type) {
-	$user_type_name = htmlspecialchars($user_type->getName());
-	echo "\t\t<option value=\"$user_type_name\"";
-	if (gettype($my_user_type) == 'object' && $my_user_type->getName() == $user_type->getName())
-		echo " selected";
-	echo ">$user_type_name</option>\n";
-}
-?>
+		<?php
+		foreach ($userTypes as $user_type) {
+			camp_html_select_option($user_type->getName(), $my_user_type_name, $user_type->getName());
+		}
+		?>
 		</select>
 	</td>
 </tr>
@@ -382,14 +391,14 @@ foreach ($user_types as $index=>$user_type) {
 <tr>
 	<td>
 		<table border="0" cellspacing="0" cellpadding="6" align="center" width="100%">
-			<tr>
-				<td colspan="2">
-				<div align="center">
-				<input type="submit" class="button" name="Save" value="<?php  putGS('Save'); ?>">
-				<input type="button" class="button" name="Cancel" value="<?php putGS('Cancel'); ?>" onclick="location.href='<?php echo "/$ADMIN/users/?" . get_user_urlparams(); ?>'">
-				</div>
-				</td>
-			</tr>
+		<tr>
+			<td colspan="2">
+			<div align="center">
+			<input type="submit" class="button" name="Save" value="<?php  putGS('Save'); ?>">
+<!--				<input type="button" class="button" name="Cancel" value="<?php putGS('Cancel'); ?>" onclick="location.href='<?php echo "/$ADMIN/users/?" . get_user_urlparams(); ?>'">
+-->				</div>
+			</td>
+		</tr>
 		</table>
 	</td>
 </tr>

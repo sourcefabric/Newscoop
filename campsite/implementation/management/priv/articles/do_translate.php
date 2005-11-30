@@ -31,7 +31,7 @@ if (!$articleObj->userCanModify($User)) {
 	exit;	
 }
 
-$articleCopy =& $articleObj->createTranslation($f_translation_language, $User->getId(), $f_translation_title);
+$articleCopy =& $articleObj->createTranslation($f_translation_language, $User->getUserId(), $f_translation_title);
 
 header('Location: '.camp_html_article_url($articleCopy, $languageId, 'edit.php')); 
 exit;

@@ -27,7 +27,7 @@ if (!isset($editUser) || gettype($editUser) != 'object' || $editUser->getUserNam
 </tr>
 <?php
 
-$sql = "SELECT (StartIP & 0xff000000) >> 24 as ip0, (StartIP & 0x00ff0000) >> 16 as ip1, (StartIP & 0x0000ff00) >> 8 as ip2, StartIP & 0x000000ff as ip3, StartIP, Addresses FROM SubsByIP WHERE IdUser = ".$editUser->getId();
+$sql = "SELECT (StartIP & 0xff000000) >> 24 as ip0, (StartIP & 0x00ff0000) >> 16 as ip1, (StartIP & 0x0000ff00) >> 8 as ip2, StartIP & 0x000000ff as ip3, StartIP, Addresses FROM SubsByIP WHERE IdUser = ".$editUser->getUserId();
 $rows = $Campsite['db']->GetAll($sql);
 if (count($rows) > 0) {
 	$color= 0;
@@ -45,7 +45,7 @@ if (count($rows) > 0) {
 		<td style="padding-left: 3px; padding-top: 3px; padding-bottom: 3px; "><?php echo $ip; ?></td>
 		<td style="padding-left: 3px;"><?php p(htmlspecialchars($row['Addresses'])); ?></td>
 		<td align="center" style="padding-left: 3px;">
-			<a href="/<?php echo $ADMIN; ?>/users/do_ipdel.php?User=<?php echo $editUser->getId(); ?>&StartIP=<?php  p($row['StartIP']); ?>"  onclick="return confirm('<?php putGS('Are you sure you want to delete the IP Group $1?', $ip); ?>');">
+			<a href="/<?php echo $ADMIN; ?>/users/do_ipdel.php?User=<?php echo $editUser->getUserId(); ?>&StartIP=<?php  p($row['StartIP']); ?>"  onclick="return confirm('<?php putGS('Are you sure you want to delete the IP Group $1?', $ip); ?>');">
 			<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" border="0" ALT="<?php putGS('Delete'); ?>" title="<?php putGS('Delete'); ?>"></a>
 		</td>
 	</tr>
@@ -57,7 +57,7 @@ if (count($rows) > 0) {
 <tr id="add_ip_row_id" style="display: none;">
 	<td colspan="3" align="center" style="padding-top: 3px;">
 		<form name="dialog" method="POST" action="do_ipadd.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
-		<input type="hidden" name="User" value="<?php echo $editUser->getId(); ?>">
+		<input type="hidden" name="User" value="<?php echo $editUser->getUserId(); ?>">
 		<table border="0" cellspacing="0" cellpadding="3" class="table_input" align="center" width="100%">
 			<tr>
 				<td align="right" width="1%" nowrap><?php  putGS("Start IP"); ?>:</td>

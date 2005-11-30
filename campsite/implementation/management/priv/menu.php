@@ -169,7 +169,7 @@ if ($User->hasPermission("ManageLanguages")) {
 }    
 
 $menu_item =& DynMenuItem::Create(getGS("Change your password"), 
-    "/$ADMIN/users/edit.php?uType=Staff&User=".$User->getId(),
+    "/$ADMIN/users/edit.php?uType=Staff&User=".$User->getUserId(),
     array("icon" => sprintf($iconTemplateStr, "change_password.png")));
 $menu_actions->addItem($menu_item);
 
@@ -308,7 +308,7 @@ $menu_help->addItem($menu_item);
 			<td align="right" style="padding-top: 0px;">
                 <table cellpadding="0" cellspacing="0">
 				<TR>
-            		<td align="right" style="font-size: 8pt; padding-right: 5px; padding-top: 0px;" colspan="4"><?php putGS("Signed in: $1", "<b>".$User->getName()."</b>"); ?></td>		
+            		<td align="right" style="font-size: 8pt; padding-right: 5px; padding-top: 0px;" colspan="4"><?php putGS("Signed in: $1", "<b>".$User->getRealName()."</b>"); ?></td>		
 					<td style="padding-left: 10px;"><A HREF="/<?php p($ADMIN); ?>/logout.php"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/logout.png" width="22" height="22" border="0" alt="<?php putGS('Logout'); ?>"></a></td>
 					<td style="font-weight: bold; padding-left: 2px; padding-right: 10px;"><A HREF="/<?php p($ADMIN); ?>/logout.php" style="color: black; text-decoration: none;"><?php putGS('Logout'); ?></a></td>
 				</tr>

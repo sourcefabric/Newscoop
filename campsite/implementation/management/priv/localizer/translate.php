@@ -140,11 +140,13 @@ function translationForm($p_request)
 				</tr>
 				<tr>
 					<td>
+						<SELECT name="prefix" class="input_select" onchange="this.form.submit();">
 						<?PHP
-						$extras = ' onchange="this.form.submit();" ';
-						$extras .= ' class="input_select"';
-						camp_html_create_select('prefix', $mapPrefixToDisplay, $screenDropDownSelection, $extras, true);
+						foreach ($mapPrefixToDisplay as $prefix => $displayStr) {
+							camp_html_select_option($prefix, $screenDropDownSelection, $displayStr);
+						}
 						?>
+						</SELECT>
 					</td>
 				</tr>
 				</table>

@@ -13,100 +13,141 @@ if (!isset($g_documentRoot)) {
     $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 }
 require_once($g_documentRoot.'/db_connect.php');
-require_once($g_documentRoot.'/classes/DatabaseObject.php');
 
 /**
  * @package Campsite
  */
-class UserType extends DatabaseObject {
-	var $m_dbTableName = 'UserTypes';
-	var $m_keyColumnNames = array('Name');
-	var $m_keyIsAutoIncrement = false;
-	var $m_columnNames = array(
-		'Name',
-		'Reader',
-		'ManagePub',
-		'DeletePub',
-		'ManageIssue',
-		'DeleteIssue',
-		'ManageSection',
-		'DeleteSection',
-		'AddArticle',
-		'ChangeArticle',
-		'DeleteArticle',
-		'AddImage',
-		'ChangeImage',
-		'DeleteImage',
-		'ManageTempl',
-		'DeleteTempl',
-		'ManageUsers',
-		'ManageSubscriptions',
-		'DeleteUsers',
-		'ManageUserTypes',
-		'ManageArticleTypes',
-		'DeleteArticleTypes',
-		'ManageLanguages',
-		'DeleteLanguages',
-		'ManageDictionary',
-		'DeleteDictionary',
-		'ManageCountries',
-		'DeleteCountries',
-		'ManageClasses',
-		'MailNotify',
-		'ViewLogs',
-		'ManageLocalizer',
-		'ManageIndexer',
-		'Publish',
-		'ManageTopics',
-		'EditorImage',
-		'EditorTextAlignment',
-		'EditorFontColor',
-		'EditorFontSize',
-		'EditorFontFace',
-		'EditorTable',
-		'EditorSuperscript',
-		'EditorSubscript',
-		'EditorStrikethrough',
-		'EditorIndent',
-		'EditorListBullet',
-		'EditorListNumber',
-		'EditorHorizontalRule',
-		'EditorSourceView',
-		'EditorEnlarge',
-		'EditorTextDirection',
-		'EditorLink',
-		'EditorSubhead',
-		'EditorBold',
-		'EditorItalic',
-		'EditorUnderline',
-		'EditorUndoRedo',
-		'EditorCopyCutPaste',
-		'ManageReaders',
-		'InitializeTemplateEngine');
-	
+class UserType {
+	var $m_config = array();
+	var $m_userTypeName = null;
+	var $m_exists = false;
 	
 	/**
 	 * @param string $p_userType
 	 */
 	function UserType($p_userType = null)
 	{
-		parent::DatabaseObject($this->m_columnNames);
-		if ($p_userType != '') {
-			$this->m_data['Name'] = $p_userType;
-			if ($this->keyValuesExist()) {
-				$this->fetch();
-			}
+		$this->m_userTypeName = $p_userType;
+		if (!empty($p_userType)) {
+			$this->fetch();
 		}
 	} // constructor
+
+	
+	/**
+	 * Get the user type from the database.
+	 * @return void
+	 */
+	function fetch() 
+	{
+		global $Campsite;
+		$queryStr = 'SELECT varname, value FROM UserTypes '
+					." WHERE user_type_name='".$this->m_userTypeName."'";
+		$config = $Campsite['db']->GetAll($queryStr);
+		if ($config) {
+			// Make m_config an associative array.
+			foreach ($config as $value) {
+				$this->m_config[$value['varname']] = $value['value'];
+			}
+			$this->m_exists = true;
+		}
+	} // fn fetch
+
+
+	function exists()
+	{
+		return $this->m_exists;
+	} // fn exists
 	
 	
 	/**
+	 * Create the new UserType with the config variables given.
+	 * If a config variable is not set, the default value will be used.
+	 * 
+	 * @param array $p_configVars
+	 */
+	function create($p_name, $p_configVars = null)
+	{
+		global $Campsite;
+		if (empty($p_name) || !is_string($p_name)) {
+			return false;
+		}
+		$this->m_userTypeName = $p_name;
+		$defaultConfig = User::GetDefaultConfig();
+		foreach ($defaultConfig as $varname => $value) {
+			if (isset($p_configVars[$varname])) {
+				$defaultConfig[$varname] = $p_configVars[$varname];
+			}
+		}
+		foreach ($defaultConfig as $varname => $value) {
+			$sql = "INSERT INTO UserTypes SET "
+				   ." user_type_name='$p_name', "
+				   ." varname='$varname',"
+				   ." value='$value'";
+			$Campsite['db']->Execute($sql);
+		}
+		$this->fetch();
+		return true;
+	} // fn create
+	
+	
+	/**
+	 * Get the name of this user type.
 	 * @return string
 	 */
 	function getName()
 	{
-		return $this->getProperty('Name');
-	} // fn getId
+		return $this->m_userTypeName;
+	} // fn getName
+	
+	
+	/**
+	 * Return the value of the given variable name.
+	 * If the variable name does not exist, return null.
+	 *
+	 * @param string $p_varName
+	 * @return mixed
+	 */
+	function getValue($p_varName)
+	{
+		if (isset($this->m_config[$p_varName])) {
+			return $this->m_config[$p_varName];
+		} else {	
+			return null;
+		}
+	} // fn getValue
+	
+	
+	/**
+	 * Set the default config value for the given variable.
+	 * Note that this does not create a new config variable.
+	 *
+	 * @param string $p_varName
+	 * @param mixed $p_value
+	 * 
+	 * @return void
+	 */
+	function setValue($p_varName, $p_value)
+	{
+		global $Campsite;
+		if (isset($this->m_config[$p_varName]) && ($this->m_config[$p_varName] != $p_value) ) {
+			$sql = "UPDATE UserTypes SET value='".mysql_real_escape_string($p_value)."'"
+				   ." WHERE user_type_name='".$this->m_userTypeName."'"
+				   ." AND varname='".mysql_real_escape_string($p_varName)."'";
+			$Campsite['db']->Execute($sql);
+		}
+	} // fn setValue
+	
+	
+	/**
+	 * Return an array of config values in the form array("varname" => "value");
+	 *
+	 * @return array
+	 */
+	function getConfig()
+	{
+		return $this->m_config;
+	} // fn getConfig
 	
 	
 	/**
@@ -118,9 +159,8 @@ class UserType extends DatabaseObject {
 	 */
 	function hasPermission($p_permissionString)
 	{
-		return ($p_permissionString != 'Name' && $p_permissionString != 'Reader'
-				&& isset($this->m_data[$p_permissionString])
-				&& $this->m_data[$p_permissionString] == 'Y');
+		return (isset($this->m_config[$p_permissionString])
+				&& ($this->m_config[$p_permissionString] == 'Y') );
 	} // fn hasPermission
 	
 	
@@ -134,12 +174,9 @@ class UserType extends DatabaseObject {
 	 */
 	function setPermission($p_permissionString, $p_permissionValue)
 	{
-		if (array_key_exists($p_permissionString, $this->m_columnNames)
-			&& $p_permissionString != 'Name'
-			&& $p_permissionString != 'Reader') {
-			$this->setProperty($p_permissionString, $p_permissionValue ? 'Y' : 'N');
-		}
-	} // fn hasPermission
+		$p_permissionValue = $p_permissionValue ? 'Y' : 'N';
+		$this->setValue($p_permissionString, $p_permissionValue);
+	} // fn setPermission
 	
 	
 	/**
@@ -150,8 +187,9 @@ class UserType extends DatabaseObject {
 	 */
 	function setAdmin($p_isAdmin)
 	{
-		$this->setProperty('Reader', $p_isAdmin ? 'N' : 'Y');
-	} // fn isAdmin
+		$p_isAdmin = $p_isAdmin ? 'N' : 'Y';
+		$this->setValue('Reader', $p_isAdmin);
+	} // fn setAdmin
 	
 	
 	/**
@@ -159,38 +197,84 @@ class UserType extends DatabaseObject {
 	 */
 	function isAdmin()
 	{
-		return $this->getProperty('Reader') == 'N';
+		return ($this->getValue('Reader') == 'N');
 	} // fn isAdmin
 	
-	function GetUserType($p_permissions)
+	
+	/**
+	 * Get the user type that matches the given config variables.
+	 *
+	 * @param array $p_configVars
+	 * @return string
+	 */
+	function GetUserTypeFromConfig($p_configVars)
 	{
 		global $Campsite;
-		if (!is_array($p_permissions)) {
+		if (!is_array($p_configVars) || (count($p_configVars) == 0) ) {
 			return false;
 		}
+		$userTypes = UserType::GetUserTypes();
 		
-		$where = '';
-		foreach ($p_permissions as $perm_name=>$perm_value) {
-			$where .= " AND `$perm_name` = '" . ($perm_value ? 'Y' : 'N') . "'";
+		$where = array();
+		foreach ($p_configVars as $name => $value) {
+			if (is_bool($value)) {
+				$value = $value ? 'Y' : 'N';
+			}
+			$where[] = "(varname='".mysql_real_escape_string($name)."'"
+					  ." AND value='".mysql_real_escape_string($value)."')";
 		}
-		$queryStr = 'SELECT * FROM UserTypes WHERE ' . substr($where, 4);
-		$user_type_row = $Campsite['db']->GetRow($queryStr);
-		if ($user_type_row) {
-			return new UserType($user_type_row['Name']);
+		$whereStr = implode(' OR ', $where);
+		
+		$totalConfigValues = count($p_configVars);
+		$mismatches = array();
+		foreach ($userTypes as $userType) {
+			$queryStr = "SELECT COUNT(*) FROM UserTypes WHERE user_type_name='".$userType->getName()."'"
+						." AND ($whereStr)";
+			$numMatches = $Campsite['db']->GetOne($queryStr);
+			
+			// DEBUGGING CODE - DO NOT DELETE
+			$queryStr = "SELECT * FROM UserTypes WHERE user_type_name='".$userType->getName()."'"
+						." AND ($whereStr)";
+			$rows = $Campsite['db']->GetAll($queryStr);
+			foreach ($p_configVars as $varname => $value) {
+				$found = false;
+				foreach ($rows as $row) {
+					if ($row['varname'] == $varname) {
+						$found =true;
+						break;
+					}
+				}
+				if (!$found) {
+					$mismatches[$userType->getName()][] = $varname;
+				}
+			}
+			
+			if ($numMatches >= $totalConfigValues) {
+				return $userType;
+			}
 		}
 		return false;
-	}
+	} // fn GetUserTypeFromConfig
 
+
+	/**
+	 * Get all the user types with the exception of those with the Reader permission.
+	 *
+	 * @return array
+	 * 		An array of UserType objects.
+	 */
 	function GetUserTypes()
 	{
 		global $Campsite;
 		$userTypes = array();
-		$res = $Campsite['db']->Execute("SELECT * FROM UserTypes WHERE Reader = 'N'");
+		$res = $Campsite['db']->Execute("SELECT DISTINCT(user_type_name) as name FROM UserTypes");
 		while ($row = $res->FetchRow()) {
-			$userTypes[] = new UserType($row['Name']);
+			$tmpUserType =& new UserType($row['name']);
+			$userTypes[] = $tmpUserType;
 		}
 		return $userTypes;
-	}
-} // class User
+	} // fn GetUserTypes
+		
+} // class UserType
 
 ?>
