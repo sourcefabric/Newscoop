@@ -211,6 +211,14 @@ int CAction::runActions(CActionList& al, CContext& c, sockstream& fs)
 		{
 			cout << "runActions: InvalidOperation in " << (*al_i)->actionType() << endl;
 		}
+		catch (InvalidValue& rcoEx)
+		{
+			const CPublication* pcoPub = 
+					CPublicationsRegister::getInstance().getPublication(c.Publication());
+			const string& coAlias = *(pcoPub->getAliases().begin());
+			fs << "<font color=red><h3>ERROR: " << rcoEx.what() << " in publication "
+					<< coAlias << ", language id: " << c.Language() << "</h3></font>";
+		}
 		catch (ExMutex& rcoEx)
 		{
 			cout << "runActions: mutex exception in " << (*al_i)->actionType() << endl;

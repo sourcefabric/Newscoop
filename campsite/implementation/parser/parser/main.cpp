@@ -278,7 +278,7 @@ void* MyThreadRoutine(void* p_pArg)
 	if (coErrorMsg != "")
 	{
 		coOs << "<html><body><font color=red><h2>There were errors!</h2>" << endl
-				<< "<pre>" << coErrorMsg << "</pre>" << endl << "</body></html>" << endl;
+				<< "<pre>" << coErrorMsg << "</pre></font>" << endl << "</body></html>" << endl;
 	}
 	coOs.flush();
 	delete pcoClSock;

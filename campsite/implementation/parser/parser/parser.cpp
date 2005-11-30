@@ -2386,6 +2386,14 @@ int CParser::writeOutput(const CContext& c, sockstream& fs)
 		{
 			SetPError(write_err, err, MODE_WRITE, (*al_i)->actionType(), 0, 0);
 		}
+		catch (InvalidValue& rcoEx)
+		{
+			const CPublication* pcoPub = 
+					CPublicationsRegister::getInstance().getPublication(c.Publication());
+			const string& coAlias = *(pcoPub->getAliases().begin());
+			fs << "<font color=red><h3>ERROR: " << rcoEx.what() << " in publication "
+					<< coAlias << ", language id: " << c.Language() << "</h3></font>";
+		}
 		if (debug())
 			fs << "<!-- action " << (*al_i)->actionType() << " result: " << err << " -->\n";
 		nRetVal |= err;
