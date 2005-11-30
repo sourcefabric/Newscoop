@@ -213,7 +213,11 @@ $articleObj->setIsPublic(!empty($f_is_public));
 $articleObj->setKeywords($f_keywords);
 $articleObj->setTitle($f_article_title);
 $articleObj->setIsIndexed(false);
-$articleObj->setCreationDate($f_creation_date);
+// Verify creation date is in the correct format.
+// If not, dont change it.
+if (preg_match("/\d{4}-\d{2}-\d{2}/", $f_creation_date)) {
+	$articleObj->setCreationDate($f_creation_date);
+}
 
 foreach ($articleFields as $dbColumnName => $text) {
 	// Replace <span class="subhead"> ... </span> with <!** Title> ... <!** EndTitle>

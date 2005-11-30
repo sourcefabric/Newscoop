@@ -220,15 +220,15 @@ function uncheckAll(field)
 				<OPTION value="">-----------------------</OPTION>
 				
 				<?php if ($User->hasPermission('Publish')) { ?>
-				<OPTION value="workflow_publish"><?php putGS("Workflow: Publish"); ?></OPTION>
+				<OPTION value="workflow_publish"><?php putGS("Status: Publish"); ?></OPTION>
 				<?php } ?>
 				
 				<?php if ($User->hasPermission('ChangeArticle')) { ?>
-				<OPTION value="workflow_submit"><?php putGS("Workflow: Submit"); ?></OPTION>
+				<OPTION value="workflow_submit"><?php putGS("Status: Submit"); ?></OPTION>
 				<?php } ?>
 
 				<?php if ($User->hasPermission('Publish')) { ?>
-				<OPTION value="workflow_new"><?php putGS("Workflow: Set New"); ?></OPTION>
+				<OPTION value="workflow_new"><?php putGS("Status: Set New"); ?></OPTION>
 				<?php } ?>
 				
 				<OPTION value="schedule_publish"><?php putGS("Schedule Publish"); ?></OPTION>

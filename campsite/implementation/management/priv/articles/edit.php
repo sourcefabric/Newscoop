@@ -155,6 +155,11 @@ if ($articleObj->userCanModify($User) && $locked) {
 }
  
 ?>
+<style type="text/css">@import url(<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/calendar-system.css);</style>
+<script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/calendar.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/lang/calendar-<?php echo $_REQUEST["TOL_Language"]; ?>.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/calendar-setup.js"></script>
+
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" class="table_input" width="900px" style="margin-top: 5px;">
 <TR>
 	<TD width="700px" style="border-bottom: 1px solid #8baed1;" colspan="2">
@@ -239,28 +244,28 @@ if ($articleObj->userCanModify($User) && $locked) {
 						if ($User->hasPermission("Publish")) { ?>
 						<SELECT name="f_action_workflow" class="input_select" onchange="this.form.submit();">
 						<?php 
-						camp_html_select_option("Y", $articleObj->getPublished(), getGS("Workflow: Published"));
-						camp_html_select_option("S", $articleObj->getPublished(), getGS("Workflow: Submitted"));
-						camp_html_select_option("N", $articleObj->getPublished(), getGS("Workflow: New"));
+						camp_html_select_option("Y", $articleObj->getPublished(), getGS("Status: Published"));
+						camp_html_select_option("S", $articleObj->getPublished(), getGS("Status: Submitted"));
+						camp_html_select_option("N", $articleObj->getPublished(), getGS("Status: New"));
 						?>
 						</SELECT>
 						<?php } elseif ($articleObj->userCanModify($User) && ($articleObj->getPublished() != 'Y')) { ?>
 						<SELECT name="f_action_workflow" class="input_select" onchange="this.form.submit();">
 						<?php 
-						camp_html_select_option("S", $articleObj->getPublished(), getGS("Workflow: Submitted"));
-						camp_html_select_option("N", $articleObj->getPublished(), getGS("Workflow: New"));
+						camp_html_select_option("S", $articleObj->getPublished(), getGS("Status: Submitted"));
+						camp_html_select_option("N", $articleObj->getPublished(), getGS("Status: New"));
 						?>
 						</SELECT>
 						<?php } else { 
 							switch ($articleObj->getPublished()) {
 								case 'Y':
-									putGS("Workflow: Published");
+									putGS("Status: Published");
 									break;
 								case 'S':
-									putGS("Workflow: Submitted");
+									putGS("Status: Submitted");
 									break;
 								case 'N':
-									putGS("Workflow: New");
+									putGS("Status: New");
 									break;
 							}
 						} ?>
@@ -335,9 +340,26 @@ if ($articleObj->userCanModify($User) && $locked) {
 			<TR>
 				<Td>&nbsp;</TD>
 				<TD ALIGN="RIGHT" valign="top" style="padding-left: 1em;"><b><nobr><?php  putGS("Creation date"); ?>:</nobr></b></TD>
-				<TD align="left" valign="top">
+				<TD align="left" valign="top" nowrap>
 					<?php if ($f_edit_mode == "edit") { ?>
-					<input type="text" name="f_creation_date" value="<?php p($articleObj->getCreationDate()); ?>" size="10" maxlength="10" class="input_text">
+					<input type="hidden" name="f_creation_date" value="<?php p($articleObj->getCreationDate()); ?>" id="f_creation_date">
+					<table cellpadding="0" cellspacing="2"><tr>
+						<td><span id="show_date"><?php p($articleObj->getCreationDate()); ?></span></td>
+						<td><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/calendar.gif" id="f_trigger_c"
+					    	 style="cursor: pointer; border: 1px solid red;"
+					     	 title="Date selector"
+					     	 onmouseover="this.style.background='red';"
+					     	 onmouseout="this.style.background=''" /></td>
+					</tr></table>
+					<script type="text/javascript">
+					    Calendar.setup({
+					        inputField     :    "f_creation_date",
+					        ifFormat       :    "%Y-%m-%d",
+					        displayArea    :    "show_date",
+					        daFormat	   :    "%Y-%m-%d",
+					        button		   :    "f_trigger_c"
+					    });
+					</script>					
 					<?php } else { ?>
 					<?php print $articleObj->getCreationDate(); ?> 
 					<?php } ?>
