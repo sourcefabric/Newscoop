@@ -100,6 +100,32 @@ system php ./update_user_perms.php
 -- Rename the tables after the upgrade script is run.
 DROP TABLE `UserTypes`;
 ALTER TABLE `TmpUserTypes` RENAME `UserTypes` ;
-
 DROP TABLE `UserPerm`;
+
+--
+-- Article Attachments
+--
+CREATE TABLE `ArticleAttachments` (
+`id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+`fk_article_number` INT UNSIGNED,
+`fk_language_id` INT UNSIGNED,
+`file_name` VARCHAR( 255 ) ,
+`mime_type` VARCHAR( 255 ) ,
+`size_in_bytes` BIGINT UNSIGNED,
+`fk_description_id` INT,
+`last_modified` TIMESTAMP NOT NULL ,
+PRIMARY KEY ( `id` ) ,
+INDEX ( `fk_article_number` )
+) TYPE = MYISAM ;
+
+CREATE TABLE `Translation` (
+`id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+`phrase_id` INT UNSIGNED NOT NULL ,
+`fk_language_id` INT UNSIGNED NOT NULL ,
+`translation_text` TEXT NOT NULL ,
+PRIMARY KEY ( `id` ) ,
+INDEX ( `phrase_id` )
+) TYPE = MYISAM ;
+
+ALTER TABLE `Translation` ADD UNIQUE `phrase_language_index` ( `phrase_id` , `fk_language_id` );
 
