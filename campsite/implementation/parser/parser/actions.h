@@ -582,7 +582,7 @@ protected:
 	// IMod2Level: convert from list modifier to level identifier; return level identifier
 	// Parameters:
 	//		int m - list modifier
-	CLevel IMod2Level(int);
+	CListLevel IMod2Level(int);
 
 public:
 	// constructor
@@ -627,7 +627,7 @@ protected:
 	id_type image_nr;		// if not -1, print url parameters for image nr.
 	bool fromstart;			// if true, print url parameters using template start parameters
 	bool allsubtitles;		// if true, print all subtitles parameter
-	CLevel reset_from_list;	// level from which to reset list start
+	CListLevel reset_from_list;	// level from which to reset list start
 	id_type m_coTemplate;	// specified a certain template to be used
 	TPubLevel m_nPubLevel;	// identifies the level in the publication structure; parameters
 							// above this level are cut
@@ -641,7 +641,7 @@ protected:
 
 public:
 	// constructor
-	CActURLParameters(bool fs = false, bool as = false, id_type i = -1, CLevel r_fl = CLV_ROOT,
+	CActURLParameters(bool fs = false, bool as = false, id_type i = -1, CListLevel r_fl = CLV_ROOT,
 	                  id_type tpl = -1, TPubLevel lvl = CMS_PL_ARTICLE)
 		: image_nr(i), fromstart(fs), allsubtitles(as), reset_from_list(r_fl), m_coTemplate(tpl),
 		m_nPubLevel(lvl) {}
@@ -1216,7 +1216,7 @@ protected:
 
 public:
 	// constructor
-	CActURI(bool fs = false, bool as = false, id_type i = -1, CLevel r_fl = CLV_ROOT,
+	CActURI(bool fs = false, bool as = false, id_type i = -1, CListLevel r_fl = CLV_ROOT,
 	        id_type tpl = -1, TPubLevel lvl = CMS_PL_ARTICLE)
 	: m_coURIPath(tpl, lvl), m_coURLParameters(fs, as, i, r_fl, tpl, lvl), m_nImageNr(i) {}
 

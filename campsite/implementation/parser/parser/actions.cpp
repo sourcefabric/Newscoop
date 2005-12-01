@@ -913,7 +913,7 @@ void CActList::SetContext(CContext& c, id_type value)
 // IMod2Level: convert from list modifier to level identifier; return level identifier
 // Parameters:
 //		TListModifier m - list modifier
-CLevel CActList::IMod2Level(int m)
+CListLevel CActList::IMod2Level(int m)
 {
 	switch (m)
 	{

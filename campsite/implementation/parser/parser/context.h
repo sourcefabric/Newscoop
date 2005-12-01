@@ -59,21 +59,31 @@ typedef enum _TStMode {
     STM_NEXT = 1
 } TStMode;
 
-// CLevel: describe the list level
+// CListLevel: describes the list level
 //	CLV_ROOT: not inside a list statement
 //	CLV_ISSUE_LIST: inside a "list issue" statement
 //	CLV_SECTION_LIST: inside a "list section" statement
 //	CLV_ARTICLE_LIST: inside a "list article" statement
 //	CLV_SEARCHRESULT_LIST: inside a "list SearchResult" statement
 //	CLV_SUBTITLE_LIST: inside a "list subtitle" statement
-typedef enum _CLevel {
+typedef enum _CListLevel {
     CLV_ROOT = 0,
     CLV_ISSUE_LIST = 1,
     CLV_SECTION_LIST = 2,
     CLV_ARTICLE_LIST = 3,
     CLV_SEARCHRESULT_LIST = 4,
     CLV_SUBTITLE_LIST = 5
-} CLevel;
+} CListLevel;
+
+// CPubLevel: describes the publication level
+//	CLV_PUB_ISSUE: inside a "list issue" statement
+//	CLV_PUB_SECTION: inside a "list section" statement
+//	CLV_PUB_ARTICLE: inside a "list article" statement
+typedef enum _CPubLevel {
+	CLV_PUB_ISSUE = 1,
+	CLV_PUB_SECTION = 2,
+	CLV_PUB_ARTICLE = 3,
+} CPubLevel;
 
 // TAccess: describes users type of access to articles and issues
 //	A_PUBLISHED: user has access only to published articles
@@ -132,7 +142,7 @@ private:
 	bool is_reader;							// true if user is reader
 	bool access_by_ip;						// true is access is by IP
 	TAccess access;							// access type
-	CLevel level;							// level (root, issue list etc.)
+	CListLevel level;						// level (root, issue list etc.)
 	id_type language_id, def_language_id;	// current and default(from template start) language
 	id_type publication_id, def_publication_id;// current and default publication
 	id_type issue_nr, def_issue_nr;			// current and default issue
@@ -189,6 +199,8 @@ private:
 	void SetDefURLValue(const string& p_coParam, id_type p_nValue);
 	void EraseURLParam(const string& p_coParam);
 	void EraseDefURLParam(const string& p_coParam);
+	void ResetPublicationParams(CPubLevel p_nLevel);
+	void ResetDefPublicationParams(CPubLevel p_nLevel);
 
 public:
 	// default constructor
@@ -223,58 +235,18 @@ public:
 	{
 		access = a;
 	}
-	void SetLevel(CLevel l)
+	void SetLevel(CListLevel l)
 	{
 		level = l;
 	}
-	void SetLanguage(id_type l)
-	{
-		SetURLValue(P_IDLANG, l);
-		EraseURLParam(P_NRARTICLE);
-		language_id = l;
-	}
-	void SetDefLanguage(id_type l)
-	{
-		SetDefURLValue(P_IDLANG, l);
-		EraseDefURLParam(P_NRARTICLE);
-		def_language_id = l;
-	}
-	void SetPublication(id_type p)
-	{
-		SetURLValue(P_IDPUBL, p);
-		EraseURLParam(P_NRARTICLE);
-		publication_id = p;
-	}
-	void SetDefPublication(id_type p)
-	{
-		SetDefURLValue(P_IDPUBL, p);
-		EraseDefURLParam(P_NRARTICLE);
-		def_publication_id = p;
-	}
-	void SetIssue(id_type i)
-	{
-		SetURLValue(P_NRISSUE, i);
-		EraseURLParam(P_NRARTICLE);
-		issue_nr = i;
-	}
-	void SetDefIssue(id_type i)
-	{
-		SetDefURLValue(P_NRISSUE, i);
-		EraseDefURLParam(P_NRARTICLE);
-		def_issue_nr = i;
-	}
-	void SetSection(id_type s)
-	{
-		SetURLValue(P_NRSECTION, s);
-		EraseURLParam(P_NRARTICLE);
-		section_nr = s;
-	}
-	void SetDefSection(id_type s)
-	{
-		SetDefURLValue(P_NRSECTION, s);
-		EraseDefURLParam(P_NRARTICLE);
-		def_section_nr = s;
-	}
+	void SetLanguage(id_type l);
+	void SetDefLanguage(id_type l);
+	void SetPublication(id_type p);
+	void SetDefPublication(id_type p);
+	void SetIssue(id_type i);
+	void SetDefIssue(id_type i);
+	void SetSection(id_type s);
+	void SetDefSection(id_type s);
 	void SetArticle(id_type a)
 	{
 		SetURLValue(P_NRARTICLE, a);
@@ -302,7 +274,7 @@ public:
 		sr_list_start = i;
 	}
 	void SetStListStart(lint, const string& = "");
-	void SetListStart(lint, CLevel, const string& = "");
+	void SetListStart(lint, CListLevel, const string& = "");
 	void SetListIndex(lint i)
 	{
 		list_index = i;
@@ -353,8 +325,8 @@ public:
 	}
 	void SetStPrevStart(lint, const string& = "");
 	void SetStNextStart(lint, const string& = "");
-	void SetPrevStart(lint, CLevel, const string& = "");
-	void SetNextStart(lint, CLevel, const string& = "");
+	void SetPrevStart(lint, CListLevel, const string& = "");
+	void SetNextStart(lint, CListLevel, const string& = "");
 	void SetLMode(TLMode lm)
 	{
 		lmode = lm;
@@ -493,7 +465,7 @@ public:
 	{
 		return access;
 	}
-	CLevel Level() const
+	CListLevel Level() const
 	{
 		return level;
 	}
@@ -554,7 +526,7 @@ public:
 	{
 		return a_list_start;
 	}
-	lint ListStart(CLevel, const string& = "");
+	lint ListStart(CListLevel, const string& = "");
 	lint ListIndex() const
 	{
 		return list_index;
@@ -605,8 +577,8 @@ public:
 	}
 	lint StPrevStart(const string& = "");
 	lint StNextStart(const string& = "");
-	lint PrevStart(CLevel, const string& = "");
-	lint NextStart(CLevel, const string& = "");
+	lint PrevStart(CListLevel, const string& = "");
+	lint NextStart(CListLevel, const string& = "");
 	TLMode LMode() const
 	{
 		return lmode;

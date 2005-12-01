@@ -32,6 +32,8 @@ Implementation of CContext methods
 #include <iostream>
 
 #include "context.h"
+#include "cpublication.h"
+#include "util.h"
 
 using std::cout;
 
@@ -243,6 +245,62 @@ const CContext& CContext::operator =(const CContext& s)
 	return *this;
 }
 
+void CContext::SetLanguage(id_type l)
+{
+	SetURLValue(P_IDLANG, l);
+	language_id = l;
+	ResetPublicationParams(CLV_PUB_ISSUE);
+}
+
+void CContext::SetDefLanguage(id_type l)
+{
+	SetDefURLValue(P_IDLANG, l);
+	def_language_id = l;
+	ResetDefPublicationParams(CLV_PUB_ISSUE);
+}
+
+void CContext::SetPublication(id_type p)
+{
+	SetURLValue(P_IDPUBL, p);
+	publication_id = p;
+	ResetPublicationParams(CLV_PUB_ISSUE);
+}
+
+void CContext::SetDefPublication(id_type p)
+{
+	SetDefURLValue(P_IDPUBL, p);
+	def_publication_id = p;
+	ResetDefPublicationParams(CLV_PUB_ISSUE);
+}
+
+void CContext::SetIssue(id_type i)
+{
+	SetURLValue(P_NRISSUE, i);
+	issue_nr = i;
+	ResetPublicationParams(CLV_PUB_SECTION);
+}
+
+void CContext::SetDefIssue(id_type i)
+{
+	SetDefURLValue(P_NRISSUE, i);
+	def_issue_nr = i;
+	ResetDefPublicationParams(CLV_PUB_SECTION);
+}
+
+void CContext::SetSection(id_type s)
+{
+	SetURLValue(P_NRSECTION, s);
+	section_nr = s;
+	ResetPublicationParams(CLV_PUB_ARTICLE);
+}
+
+void CContext::SetDefSection(id_type s)
+{
+	SetDefURLValue(P_NRSECTION, s);
+	def_section_nr = s;
+	ResetDefPublicationParams(CLV_PUB_ARTICLE);
+}
+
 // SetStListStart: set the subtitles list start element to value for the given article
 //		content(field) .If field is empty ("") set the subtitles start element to value for the
 //		current article content
@@ -313,9 +371,9 @@ void CContext::SetStNextStart(lint value, const string& field)
 //		start element to value for the current article content
 // Parameters:
 //		lint value - start element from list
-//		CLevel l - list level
+//		CListLevel l - list level
 //		const string& field - field (from database) to set the start element for
-void CContext::SetListStart(lint value, CLevel l, const string& field)
+void CContext::SetListStart(lint value, CListLevel l, const string& field)
 {
 	if (l == CLV_ROOT)
 		return ;
@@ -337,9 +395,9 @@ void CContext::SetListStart(lint value, CLevel l, const string& field)
 //		article content
 // Parameters:
 //		lint value - start element from list
-//		CLevel l - list level
+//		CListLevel l - list level
 //		const string& field - field (from database) to set the start element for
-void CContext::SetPrevStart(lint val, CLevel l, const string& field)
+void CContext::SetPrevStart(lint val, CListLevel l, const string& field)
 {
 	if (l == CLV_ROOT)
 		return ;
@@ -361,9 +419,9 @@ void CContext::SetPrevStart(lint val, CLevel l, const string& field)
 //		article content
 // Parameters:
 //		lint value - start element from list
-//		CLevel l - list level
+//		CListLevel l - list level
 //		const string& field - field (from database) to set the start element for
-void CContext::SetNextStart(lint val, CLevel l, const string& field)
+void CContext::SetNextStart(lint val, CListLevel l, const string& field)
 {
 	if (l == CLV_ROOT)
 		return ;
@@ -560,9 +618,9 @@ lint CContext::StNextStart(const string &field)
 // ListStart: return list start for the given level. If l is SLV_SUBTITLE_LIST return
 //		subtitles list start for the given field.
 // Parameters:
-//		CLevel l - list level
+//		CListLevel l - list level
 //		const string& field - field (article content)
-lint CContext::ListStart(CLevel l, const string& field)
+lint CContext::ListStart(CListLevel l, const string& field)
 {
 	switch (l)
 	{
@@ -584,9 +642,9 @@ lint CContext::ListStart(CLevel l, const string& field)
 // PrevStart: return list start in previous context for the given level. If l is
 //		SLV_SUBTITLE_LIST return subtitles list start for the given field.
 // Parameters:
-//		CLevel l - list level
+//		CListLevel l - list level
 //		const string& field - field (article content)
-lint CContext::PrevStart(CLevel l, const string& field)
+lint CContext::PrevStart(CListLevel l, const string& field)
 {
 	switch (l)
 	{
@@ -608,9 +666,9 @@ lint CContext::PrevStart(CLevel l, const string& field)
 // NextStart: return list start in next context for the given level. If l is
 //		SLV_SUBTITLE_LIST return subtitles list start for the given field.
 // Parameters:
-//		CLevel l - list level
+//		CListLevel l - list level
 //		const string& field - field (article content)
-lint CContext::NextStart(CLevel l, const string& field)
+lint CContext::NextStart(CListLevel l, const string& field)
 {
 	switch (l)
 	{
@@ -836,5 +894,72 @@ void CContext::PrintSubs()
 		for (s_i = (*p_i).second.begin(); s_i != (*p_i).second.end(); ++s_i)
 			cout << "<p>section: " << *s_i << "\n";
 		cout << "</blockquote>\n";
+	}
+}
+
+void CContext::ResetPublicationParams(CPubLevel p_nLevel)
+{
+	MYSQL* pMySQL = MYSQLConnection();
+	if (pMySQL == NULL)
+		return;
+	bool bResetSection = false;
+	bool bResetArticle = false;
+	if (p_nLevel == CLV_PUB_ISSUE
+		   && !CPublication::isValidIssue(language_id, publication_id, issue_nr, pMySQL))
+	{
+		issue_nr = -1;
+		SetURLValue(P_NRISSUE, issue_nr);
+		bResetSection = true;
+	}
+	if (p_nLevel <= CLV_PUB_SECTION
+		   && (bResetSection
+		   || !CPublication::isValidSection(language_id, publication_id, issue_nr, section_nr,
+											pMySQL)))
+	{
+		section_nr = -1;
+		SetURLValue(P_NRSECTION, section_nr);
+		bResetArticle = true;
+	}
+	if (p_nLevel <= CLV_PUB_ARTICLE
+		   && (bResetSection || bResetArticle
+		   || !CPublication::isValidArticle(language_id, publication_id, issue_nr,
+											section_nr, article_nr, pMySQL)))
+	{
+		article_nr = -1;
+		SetURLValue(P_NRARTICLE, article_nr);
+	}
+}
+
+void CContext::ResetDefPublicationParams(CPubLevel p_nLevel)
+{
+	MYSQL* pMySQL = MYSQLConnection();
+	if (pMySQL == NULL)
+		return;
+	bool bResetSection = false;
+	bool bResetArticle = false;
+	if (p_nLevel == CLV_PUB_ISSUE
+		   && !CPublication::isValidIssue(def_language_id, def_publication_id, def_issue_nr,
+										  pMySQL))
+	{
+		def_issue_nr = -1;
+		SetDefURLValue(P_NRISSUE, def_issue_nr);
+		bResetSection = true;
+	}
+	if (p_nLevel <= CLV_PUB_SECTION
+		   && (bResetSection
+		   || !CPublication::isValidSection(def_language_id, def_publication_id, def_issue_nr,
+											def_section_nr, pMySQL)))
+	{
+		def_section_nr = -1;
+		SetDefURLValue(P_NRSECTION, def_section_nr);
+		bResetArticle = true;
+	}
+	if (p_nLevel == CLV_PUB_ARTICLE
+		   && (bResetSection || bResetArticle
+		   && !CPublication::isValidArticle(def_language_id, def_publication_id, def_issue_nr,
+											def_section_nr, def_article_nr, pMySQL)))
+	{
+		def_article_nr = -1;
+		SetDefURLValue(P_NRARTICLE, def_article_nr);
 	}
 }

@@ -201,3 +201,43 @@ void CPublication::BuildFromDB(id_type p_nId, MYSQL* p_DBConn) throw(InvalidValu
 		qRow = mysql_fetch_row(*coRes);
 	}
 }
+
+bool CPublication::isValidIssue(id_type p_nLanguage, id_type p_nPublication, id_type p_nIssue,
+								MYSQL* p_DBConn)
+{
+	stringstream coSql;
+	coSql << "select * from Issues where IdPublication = " << p_nPublication << " and Number = "
+			<< p_nIssue << " and IdLanguage = " << p_nLanguage;
+	CMYSQL_RES coRes;
+	MYSQL_ROW qRow = QueryFetchRow(p_DBConn, coSql.str().c_str(), coRes);
+	if (qRow == NULL)
+		return false;
+	return true;
+}
+
+bool CPublication::isValidSection(id_type p_nLanguage, id_type p_nPublication, id_type p_nIssue,
+								  id_type p_nSection, MYSQL* p_DBConn)
+{
+	stringstream coSql;
+	coSql << "select * from Sections where IdPublication = " << p_nPublication << " and NrIssue = "
+			<< p_nIssue << " and IdLanguage = " << p_nLanguage << " and Number = " << p_nSection;
+	CMYSQL_RES coRes;
+	MYSQL_ROW qRow = QueryFetchRow(p_DBConn, coSql.str().c_str(), coRes);
+	if (qRow == NULL)
+		return false;
+	return true;
+}
+
+bool CPublication::isValidArticle(id_type p_nLanguage, id_type p_nPublication, id_type p_nIssue,
+								  id_type p_nSection, id_type p_nArticle, MYSQL* p_DBConn)
+{
+	stringstream coSql;
+	coSql << "select * from Articles where IdPublication = " << p_nPublication << " and NrIssue = "
+			<< p_nIssue << " and NrSection = " << p_nSection << " and Number = " << p_nArticle
+			<< " and IdLanguage = " << p_nLanguage;
+	CMYSQL_RES coRes;
+	MYSQL_ROW qRow = QueryFetchRow(p_DBConn, coSql.str().c_str(), coRes);
+	if (qRow == NULL)
+		return false;
+	return true;
+}

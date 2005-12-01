@@ -71,8 +71,9 @@ public:
 
 	const string& getURLTypeName() const { return m_coURLTypeName; }
 
-	static string getTemplate(id_type p_nLanguage, id_type p_nPublication, id_type p_nIssue, id_type p_nSection,
-	                          id_type p_nArticle, MYSQL* p_DBConn, bool p_bIsPublished = true);
+	static string getTemplate(id_type p_nLanguage, id_type p_nPublication, id_type p_nIssue,
+							  id_type p_nSection, id_type p_nArticle, MYSQL* p_DBConn,
+							  bool p_bIsPublished = true);
 
 	static string getIssueTemplate(id_type p_nLanguage, id_type p_nPublication, id_type p_nIssue, 
 	                               MYSQL* p_DBConn);
@@ -84,6 +85,15 @@ public:
 	                                 id_type p_nSection, MYSQL* p_DBConn);
 
 	static id_type getTemplateId(const string& p_rcoTemplate, MYSQL* p_DBConn) throw(InvalidValue);
+
+	static bool isValidIssue(id_type p_nLanguage, id_type p_nPublication, id_type p_nIssue, 
+							 MYSQL* p_DBConn);
+
+	static bool isValidSection(id_type p_nLanguage, id_type p_nPublication, id_type p_nIssue,
+							   id_type p_nSection, MYSQL* p_DBConn);
+
+	static bool isValidArticle(id_type p_nLanguage, id_type p_nPublication, id_type p_nIssue,
+							   id_type p_nSection, id_type p_nArticle, MYSQL* p_DBConn);
 
 	string getIssueTemplate(id_type p_nIssue, MYSQL* p_DBConn) const;
 

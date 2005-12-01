@@ -819,7 +819,7 @@ inline int CParser::HURLParameters(CActionList& al)
 	DEBUGLexem("urlparam", l);
 	lint img = -1, nTemplate = -1;
 	bool fromstart = false, allsubtitles = false;
-	CLevel nResetList = CLV_ROOT;
+	CListLevel nResetList = CLV_ROOT;
 	TPubLevel nLevel = CMS_PL_SUBTITLE;
 	while (l->res() != CMS_LEX_END_STATEMENT)
 	{
