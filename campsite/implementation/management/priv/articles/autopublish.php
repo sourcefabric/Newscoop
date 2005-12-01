@@ -84,9 +84,13 @@ if ($articleObj->getPublished() != 'N') {
 	<META HTTP-EQUIV="Expires" CONTENT="now">
 	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
 	<title><?php putGS("Schedule a new action"); ?></title>
+	<style type="text/css">@import url(<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/calendar-system.css);</style>
+	<script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/calendar.js"></script>
+	<script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/lang/calendar-<?php echo $_REQUEST["TOL_Language"]; ?>.js"></script>
+	<script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/calendar-setup.js"></script>
 </head>
 <body>
-<FORM NAME="dialog" METHOD="POST" ACTION="autopublish_do_add.php" >
+<FORM NAME="autopublish" METHOD="POST" ACTION="autopublish_do_add.php" >
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input" style="margin-top: 10px;">
 <TR>
 	<TD COLSPAN="2">
@@ -113,8 +117,31 @@ if ($articleObj->getPublished() != 'N') {
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Date"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" NAME="f_publish_date" SIZE="11" MAXLENGTH="10" VALUE="<?php p($publishDate); ?>" class="input_text">
-	<?php putGS('YYYY-MM-DD'); ?>
+		<div id="calendar-container"></div>
+		<script type="text/javascript">
+		function dateChanged(calendar) {
+			// Beware that this function is called even if the end-user only
+			// changed the month/year.  In order to determine if a date was
+			// clicked you can use the dateClicked property of the calendar:
+			if (calendar.dateClicked) {
+			  // OK, a date was clicked, redirect to /yyyy/mm/dd/index.php
+			  var y = calendar.date.getFullYear();
+			  var m = calendar.date.getMonth()+1;     // integer, 0..11
+			  var d = calendar.date.getDate();      // integer, 1..31
+			  document.forms.autopublish.f_publish_date.value = y+"-"+m+"-"+d;
+			}
+		};
+		
+		Calendar.setup(
+			{
+			  flat         : "calendar-container", // ID of the parent element
+			  flatCallback : dateChanged           // our callback function
+			}
+		);
+		</script>
+		<p>
+		<input type="text" name="f_publish_date" value="" readonly class="input_text_disabled" size="10">
+		<?php putGS('YYYY-MM-DD'); ?>
 	</TD>
 </TR>
 <TR>

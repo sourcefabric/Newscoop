@@ -559,7 +559,7 @@ if ($articleObj->userCanModify($User) && $locked) {
 						<?php if ($f_edit_mode == "edit") {  ?>
 						<td align="right">
 							<table cellpadding="2" cellspacing="0"><tr><td><img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/add.png" border="0"></td>
-							<td><a href="javascript: void(0);" onclick="window.open('<?php echo camp_html_article_url($articleObj, $f_language_selected, "autopublish.php"); ?>', 'autopublish_window', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=400, height=350, top=200, left=200');"><?php putGS("Add Event"); ?></a></td></tr></table>
+							<td><a href="javascript: void(0);" onclick="window.open('<?php echo camp_html_article_url($articleObj, $f_language_selected, "autopublish.php"); ?>', 'autopublish_window', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=450, height=500, top=200, left=200');"><?php putGS("Add Event"); ?></a></td></tr></table>
 						</td>
 						<?php } ?>
 					</tr>
