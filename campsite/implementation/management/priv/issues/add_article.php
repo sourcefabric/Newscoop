@@ -32,10 +32,10 @@ camp_html_content_top(getGS('Add new article'), array('Pub' => $publicationObj))
 
 ?>
 <P>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="indent">
 <TR>
     <TD><IMG SRC="<?php echo $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/tol.gif" BORDER="0"></TD>
-    <TD><?php  putGS("Select the issue"); ?></TD>
+    <TD><b><?php  putGS("Select the issue"); ?></b></TD>
 </TR>
 </TABLE>
 
@@ -85,7 +85,7 @@ foreach ($issues as $issue) {
         	<B><A HREF="add_article.php?Pub=<?php p($Pub); ?>&IssOffs=<?php  p($IssOffs - $ItemsPerPage); ?>">&lt;&lt; <?php  putGS('Previous'); ?></A></B>
         <?php  }
 
-        if ($nr >= $ItemsPerPage+1) { ?>
+        if ($IssOffs >= $ItemsPerPage+1) { ?>
         	 | <B><A HREF="add_article.php?Pub=<?php  p($Pub); ?>&IssOffs=<?php p($IssOffs + $ItemsPerPage); ?>"><?php  putGS('Next'); ?> &gt;&gt</A></B>
         <?php  } ?>
     </TD>

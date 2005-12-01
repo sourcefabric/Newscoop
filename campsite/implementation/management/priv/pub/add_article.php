@@ -31,22 +31,22 @@ echo camp_html_breadcrumbs($crumbs);
 ?>
 
 <P>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="indent">
 <TR>
 	<TD>
 		<IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/tol.gif" BORDER="0">
 	</TD>
-	<TD>
+	<TD >
 		<b><?php  putGS("Select the publication"); ?></b>
 	</TD>
 </TR>
 </TABLE>
 
 <P>
-<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list">
+<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="6" class="table_list">
 	<TR class="table_list_header">
-		<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("Name<BR><SMALL>(click to select the publication)</SMALL>"); ?></B></TD>
-		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="20%" ><B><?php  putGS("Site"); ?></B></TD>
+		<TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Name<BR><SMALL>(click to select the publication)</SMALL>"); ?></TD>
+		<TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Site"); ?></TD>
 	</TR>
 <?php 
 	$color=0;

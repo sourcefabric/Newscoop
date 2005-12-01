@@ -15,7 +15,7 @@ if (!$User->hasPermission("AddImage")) {
 	exit;
 }
 $maxId = Image::GetMaxId();
-$f_publcation_id = Input::Get('f_publication_id', 'int', 0);
+$f_publication_id = Input::Get('f_publication_id', 'int', 0);
 $f_issue_number = Input::Get('f_issue_number', 'int', 0);
 $f_section_number = Input::Get('f_section_number', 'int', 0);
 $f_language_id = Input::Get('f_language_id', 'int', 0);
@@ -29,8 +29,8 @@ if (!Input::IsValid()) {
 
 $articleObj =& new Article($f_language_selected, $f_article_number);
 $publicationObj =& new Publication($f_publication_id);
-$issueObj =& new Issue($f_publcation_id, $f_language_id, $f_issue_number);
-$sectionObj =& new Section($f_publcation_id, $f_issue_number, $f_language_id, $f_section_number);
+$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
+$sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
 
 $ImageTemplateId = ArticleImage::GetUnusedTemplateId($f_article_number);
 

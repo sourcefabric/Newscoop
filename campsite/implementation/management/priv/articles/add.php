@@ -1,5 +1,6 @@
 <?php 
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/article_common.php");
+require_once($_SERVER['DOCUMENT_ROOT']. "/classes/ArticleType.php");
 
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
@@ -11,25 +12,19 @@ if (!$User->hasPermission('AddArticle')) {
 	exit;
 }
 
-$Pub = Input::Get('Pub', 'int', 0);
-$Issue = Input::Get('Issue', 'int', 0);
-$Section = Input::Get('Section', 'int', 0);
-$Language = Input::Get('Language', 'int', 0);
-$Back = Input::Get('Back', 'string', 'index.php', true);
-$Wiz = Input::Get('Wiz', 'int', 0, true);
-if ($Wiz != 0) {
-	$Back = "/$ADMIN/home.php";
-}
+$f_publication_id = Input::Get('f_publication_id', 'int', 0);
+$f_issue_number = Input::Get('f_issue_number', 'int', 0);
+$f_section_number = Input::Get('f_section_number', 'int', 0);
+$f_language_id = Input::Get('f_language_id', 'int', 0);
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
 	exit;	
 }
 
-$publicationObj =& new Publication($Pub);
-$issueObj =& new Issue($Pub, $Language, $Issue);
-$sectionObj =& new Section($Pub, $Issue, $Language, $Section);
-$languageObj =& new Language($Language);
+$publicationObj =& new Publication($f_publication_id);
+$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
+$sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
 
 $allArticleTypes = ArticleType::GetArticleTypes();
 $allLanguages = Language::GetLanguages();
@@ -41,7 +36,7 @@ if (function_exists ("incModFile")) {
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
 				  'Section' => $sectionObj);
-camp_html_content_top(getGS('Add new article'), $topArray, true, true, array(getGS("Articles") => "/$ADMIN/articles/?Pub=$Pub&Issue=$Issue&Section=$Section&Language=$Language"));
+camp_html_content_top(getGS('Add new article'), $topArray, true, true, array(getGS("Articles") => "/$ADMIN/articles/?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id"));
 
 ?>
 
@@ -64,12 +59,11 @@ if (sizeof($allArticleTypes) == 0) {
 
 <P>
 <FORM NAME="dialog" METHOD="POST" ACTION="do_add.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
-<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<?php  p($Pub); ?>">
-<INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<?php  p($Issue); ?>">
-<INPUT TYPE="HIDDEN" NAME="Section" VALUE="<?php  p($Section); ?>">
-<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php  p($Language); ?>">
-<CENTER>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" ALIGN="CENTER" class="table_input">
+<INPUT TYPE="HIDDEN" NAME="f_publication_id" VALUE="<?php p($f_publication_id); ?>">
+<INPUT TYPE="HIDDEN" NAME="f_issue_number" VALUE="<?php p($f_issue_number); ?>">
+<INPUT TYPE="HIDDEN" NAME="f_section_number" VALUE="<?php p($f_section_number); ?>">
+<INPUT TYPE="HIDDEN" NAME="f_language_id" VALUE="<?php  p($f_language_id); ?>">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input">
 <TR>
 	<TD COLSPAN="2">
 		<B><?php  putGS("Add new article"); ?></B>
@@ -79,13 +73,13 @@ if (sizeof($allArticleTypes) == 0) {
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" NAME="cName" SIZE="64" MAXLENGTH="140" class="input_text" alt="blank" emsg="<?php putGS('You must complete the $1 field.', getGS('Name')); ?>">
+	<INPUT TYPE="TEXT" NAME="f_article_name" SIZE="64" MAXLENGTH="140" class="input_text" alt="blank" emsg="<?php putGS('You must complete the $1 field.', getGS('Name')); ?>">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Type"); ?>:</TD>
 	<TD>
-		<SELECT NAME="cType" class="input_select" alt="select" emsg="<?php putGS('You must complete the $1 field.', getGS('Article Type')); ?>">
+		<SELECT NAME="f_article_type" class="input_select" alt="select" emsg="<?php putGS('You must complete the $1 field.', getGS('Article Type')); ?>">
 		<option></option>
 		<?php 
 		foreach ($allArticleTypes as $tmpType) {
@@ -98,11 +92,11 @@ if (sizeof($allArticleTypes) == 0) {
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Language"); ?>:</TD>
 	<TD>
-		<SELECT NAME="cLanguage" class="input_select">
+		<SELECT NAME="f_article_language" class="input_select">
 		<?php 
 	 	foreach ($allLanguages as $tmpLanguage) {
 			echo '<option value="'.$tmpLanguage->getLanguageId().'"';
-			if ($tmpLanguage->getLanguageId() == $Language) {
+			if ($tmpLanguage->getLanguageId() == $f_language_id) {
 				echo "selected";
 			}
 			echo '>'.$tmpLanguage->getName().'</option>';
@@ -111,38 +105,14 @@ if (sizeof($allArticleTypes) == 0) {
 		</SELECT>
 	</TD>
 </TR>
-<!--<TR>
-	<TD ALIGN="RIGHT" ><INPUT TYPE="CHECKBOX" NAME="cFrontPage" class="input_checkbox"></TD>
-	<TD>
-		<?php  putGS('Show article on front page'); ?>
-	</TD>
-</TR>
-<TR>
-	<TD ALIGN="RIGHT" ><INPUT TYPE="CHECKBOX" NAME="cSectionPage" class="input_checkbox"></TD>
-	<TD>
-		<?php  putGS('Show article on section page'); ?>
-	</TD>
-</TR>
-<TR>
-	<TD COLSPAN="2"> <?php putGS("Enter keywords, comma separated");?></TD>
-</TR>
-<TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Keywords"); ?>:</TD>
-	<TD>
-		<INPUT TYPE="TEXT" NAME="cKeywords" SIZE="64" MAXLENGTH="255" class="input_text">
-	</TD>
-</TR>
--->
 <TR>
 	<TD COLSPAN="2">
 		<DIV ALIGN="CENTER">
 		<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save'); ?>" class="button">
-		<!--<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" class="button" ONCLICK="location.href='<?php  p($Back); ?>'">-->
 		</DIV>
 	</TD>
 </TR>
 </TABLE>
-</CENTER>
 </FORM>
 <P>
 

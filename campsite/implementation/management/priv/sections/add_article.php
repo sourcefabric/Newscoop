@@ -41,19 +41,15 @@ $sections = Section::GetSections($Pub, $Issue, $Language, array('LIMIT' => array
 $totalSections = Section::GetTotalSections($Pub, $Issue, $Language);
 ?>
 <P>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="indent">
 <TR>
 	<TD><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/tol.gif" BORDER="0"></TD>
-	<TD><?php  putGS("Select the section"); ?></TD>
+	<TD><b><?php  putGS("Select the section"); ?></b></TD>
 </TR>
 </TABLE>
 <P>
 <?php 
 if (count($sections) > 0) {	    
-//    if ($NUM_ROWS) {
-//	$nr= $NUM_ROWS;
-//	$i= $lpp;
-//    if($nr < $lpp)    $i = $nr;
 	$color= 0;
 	?>
 	<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3"class="table_list">
@@ -70,7 +66,7 @@ if (count($sections) > 0) {
 			<?php p($section->getSectionNumber()); ?>
 		</TD>
 		<TD >
-			<A HREF="/<?php p($ADMIN); ?>/articles/add.php?Pub=<?php p($Pub); ?>&Issue=<?php  p($section->getIssueNumber()); ?>&Section=<?php p($section->getSectionNumber()); ?>&Language=<?php  p($section->getLanguageId()); ?>&Wiz=1"><?php p(htmlspecialchars($section->getName())); ?></A>
+			<A HREF="/<?php p($ADMIN); ?>/articles/add.php?f_publication_id=<?php p($Pub); ?>&f_issue_number=<?php  p($section->getIssueNumber()); ?>&f_section_number=<?php p($section->getSectionNumber()); ?>&f_language_id=<?php  p($section->getLanguageId()); ?>"><?php p(htmlspecialchars($section->getName())); ?></A>
 		</TD>
 	</TR>
 	<?php 

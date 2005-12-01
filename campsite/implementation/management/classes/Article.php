@@ -161,6 +161,10 @@ class Article extends DatabaseObject {
 			$this->m_data['Number'], 
 			$this->m_data['IdLanguage']);
 		$articleData->create();
+		
+		$logtext = getGS('Article #$1 "$2" ($3) created.',
+			$this->m_data['Number'], $this->m_data['Name'], $this->getLanguageName()); 
+		Log::Message($logtext, null, 31);
 	} // fn create
 
 	
@@ -723,14 +727,48 @@ class Article extends DatabaseObject {
 		return $this->getProperty('IdPublication');
 	} // fn getPublicationId
 	
+
+	/**
+	 * Set the publication ID.
+	 *
+	 * @param int $p_value
+	 * @return boolean
+	 */
+	function setPublicationId($p_value)
+	{
+		if (is_numeric($p_value)) {
+			return $this->setProperty('IdPublication', $p_value);
+		} else {
+			return false;
+		}
+	} // fn setPublicationId
+	
 	
 	/**
+	 * Get the issue that the article resides within.
+	 * 
 	 * @return int
 	 */
 	function getIssueNumber() 
 	{
 		return $this->getProperty('NrIssue');
 	} // fn getIssueNumber
+	
+	
+	/**
+	 * Set the issue number.
+	 *
+	 * @param int $p_value
+	 * @return boolean
+	 */
+	function setIssueNumber($p_value)
+	{
+		if (is_numeric($p_value)) {
+			return $this->setProperty('NrIssue', $p_value);
+		} else {
+			return false;
+		}
+	} // fn setIssueNumber
 	
 	
 	/**
@@ -741,6 +779,22 @@ class Article extends DatabaseObject {
 		return $this->getProperty('NrSection');
 	} // fn getSectionNumber
 	
+	
+	/**
+	 * Set the section number.
+	 *
+	 * @param int $p_value
+	 * @return boolean
+	 */
+	function setSectionNumber($p_value)
+	{
+		if (is_numeric($p_value)) {
+			return $this->setProperty('NrSection', $p_value);
+		} else {
+			return false;
+		}
+	} // fn setSectionNumber
+
 	
 	/**
 	 * @return int
