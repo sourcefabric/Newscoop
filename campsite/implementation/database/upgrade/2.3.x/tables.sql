@@ -111,7 +111,7 @@ CREATE TABLE `Attachments` (
 `file_name` VARCHAR( 255 ) ,
 `extension` VARCHAR( 50 ),
 `mime_type` VARCHAR( 255 ) ,
-`is_attachment` ENUM( 'N', 'Y' ) NOT NULL DEFAULT 'N',
+`content_disposition` ENUM( 'attachment' ) NULL,
 `charset` VARCHAR( 50 ) ,
 `size_in_bytes` BIGINT UNSIGNED,
 `fk_description_id` INT,
