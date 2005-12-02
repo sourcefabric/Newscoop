@@ -105,20 +105,26 @@ DROP TABLE `UserPerm`;
 --
 -- Article Attachments
 --
-CREATE TABLE `ArticleAttachments` (
+CREATE TABLE `Attachments` (
 `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-`fk_article_number` INT UNSIGNED,
 `fk_language_id` INT UNSIGNED,
 `file_name` VARCHAR( 255 ) ,
 `mime_type` VARCHAR( 255 ) ,
 `size_in_bytes` BIGINT UNSIGNED,
 `fk_description_id` INT,
 `last_modified` TIMESTAMP NOT NULL ,
-PRIMARY KEY ( `id` ) ,
-INDEX ( `fk_article_number` )
+`time_created` TIMESTAMP NOT NULL ,
+PRIMARY KEY ( `id` ) 
 ) TYPE = MYISAM ;
 
-CREATE TABLE `Translation` (
+CREATE TABLE `ArticleAttachments` (
+`fk_article_number` INT UNSIGNED NOT NULL ,
+`fk_attachment_id` INT UNSIGNED NOT NULL ,
+PRIMARY KEY ( `fk_article_number` ) ,
+INDEX ( `fk_attachment_id` )
+) TYPE = MYISAM ;
+
+CREATE TABLE `Translations` (
 `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
 `phrase_id` INT UNSIGNED NOT NULL ,
 `fk_language_id` INT UNSIGNED NOT NULL ,
@@ -127,5 +133,5 @@ PRIMARY KEY ( `id` ) ,
 INDEX ( `phrase_id` )
 ) TYPE = MYISAM ;
 
-ALTER TABLE `Translation` ADD UNIQUE `phrase_language_index` ( `phrase_id` , `fk_language_id` );
+ALTER TABLE `Translations` ADD UNIQUE `phrase_language_index` ( `phrase_id` , `fk_language_id` );
 
