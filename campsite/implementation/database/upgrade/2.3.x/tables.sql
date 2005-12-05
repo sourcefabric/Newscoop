@@ -112,9 +112,10 @@ CREATE TABLE `Attachments` (
 `extension` VARCHAR( 50 ),
 `mime_type` VARCHAR( 255 ) ,
 `content_disposition` ENUM( 'attachment' ) NULL,
-`charset` VARCHAR( 50 ) ,
+`http_charset` VARCHAR( 50 ) ,
 `size_in_bytes` BIGINT UNSIGNED,
 `fk_description_id` INT,
+`fk_user_id` INT UNSIGNED,
 `last_modified` TIMESTAMP NOT NULL ,
 `time_created` TIMESTAMP NOT NULL ,
 PRIMARY KEY ( `id` ) 
@@ -123,8 +124,9 @@ PRIMARY KEY ( `id` )
 CREATE TABLE `ArticleAttachments` (
 `fk_article_number` INT UNSIGNED NOT NULL ,
 `fk_attachment_id` INT UNSIGNED NOT NULL ,
-PRIMARY KEY ( `fk_article_number` ) ,
-INDEX ( `fk_attachment_id` )
+INDEX ( `fk_article_number` ) ,
+INDEX ( `fk_attachment_id` ),
+UNIQUE `article_attachment_index` ( `fk_article_number` , `fk_attachment_id` )
 ) TYPE = MYISAM ;
 
 CREATE TABLE `Translations` (
@@ -138,3 +140,14 @@ INDEX ( `phrase_id` )
 
 ALTER TABLE `Translations` ADD UNIQUE `phrase_language_index` ( `phrase_id` , `fk_language_id` );
 
+--
+-- AutoId table
+--
+
+-- Remove unused columns.
+ALTER TABLE `AutoId` DROP `DictionaryId` ,
+DROP `ClassId` ,
+DROP `KeywordId` ;
+
+-- Add counter for translation table
+ALTER TABLE `AutoId` ADD `translation_phrase_id` INT UNSIGNED NOT NULL ;
