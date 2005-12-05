@@ -36,12 +36,6 @@ $ImageTemplateId = ArticleImage::GetUnusedTemplateId($f_article_number);
 
 $q_now = $Campsite['db']->GetOne("SELECT LEFT(NOW(), 10)");
 
-// Add extra breadcrumb for image list.
-//$extraCrumbs = array(getGS("Images")=>"/$ADMIN/articles/images/?Pub=$Pub&Issue=$Issue&Language=$Language&Section=$Section&Article=$Article&sLanguage=$sLanguage");
-//$topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
-//				  'Section' => $sectionObj, 'Article'=>$articleObj);
-//camp_html_content_top(getGS("Add New Image"), $topArray, true, true, $extraCrumbs);
-
 ?>
 <script>
 function checkAddForm(form) {
@@ -123,5 +117,3 @@ function checkAddForm(form) {
 </TABLE>
 </FORM>
 <P>
-
-<?php //camp_html_copyright_notice(); ?>

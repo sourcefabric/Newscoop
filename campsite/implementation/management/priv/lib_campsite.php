@@ -127,6 +127,26 @@ function p($p_string)
 
 
 /**
+ * Transform bytes into a human-readable string.
+ *
+ * @param int $p_bytes
+ * @return string
+ */
+function camp_format_bytes($p_bytes)
+{
+	if ( ($p_bytes / 1073741824) > 1) {
+		return round($p_bytes/1073741824, 1).' '.getGS('GB');
+	} else if ( ($p_bytes / 1048576) > 1) {
+		return round($p_bytes/1048576, 1).' '.getGS('MB');
+	} else if ( ($p_bytes / 1024) > 1) {
+		return round($p_bytes/1024, 1).' '.getGS('KB');
+	} else {
+		return round($p_bytes, 1).' '.getGS('bytes');
+	}
+} // fn camp_format_bytes
+
+
+/**
  * Load the global and local language files.
  * @param string $p_name
  * @return void

@@ -54,10 +54,6 @@ if (!$sectionObj->exists()) {
 
 $articleEvents = ArticlePublish::GetArticleEvents($f_article_number, $f_language_selected);
 
-//$topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
-//				  'Section' => $sectionObj, 'Article'=>$articleObj);
-//camp_html_content_top(getGS("Scheduled Publishing"), $topArray);
-
 $publishTime = date("Y-m-d H:i");
 if ($articleObj->getPublished() != 'N') {
 	$publishAction = '';
@@ -187,6 +183,8 @@ if ($articleObj->getPublished() != 'N') {
 <TR>
 	<TD COLSPAN="2" align="center">
 	<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save'); ?>" class="button">
+	&nbsp;&nbsp;
+	<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" class="button" onclick="window.close();"> 
 	</TD>
 </TR>
 </TABLE>

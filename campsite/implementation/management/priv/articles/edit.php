@@ -2,6 +2,7 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/article_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/editor_load_xinha.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticlePublish.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleAttachment.php');
 
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
@@ -44,6 +45,7 @@ $issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
 $sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
 $articleEvents = ArticlePublish::GetArticleEvents($f_article_number, $f_language_selected);
 $articleTopics = ArticleTopic::GetArticleTopics($f_article_number, $f_language_selected);
+$articleFiles = ArticleAttachment::GetAttachmentsByArticleNumber($f_article_number, $f_language_selected);
 
 // Automatically switch to "view" mode if user doesnt have permissions.
 if (!$articleObj->userCanModify($User)) {
@@ -682,6 +684,59 @@ if ($f_edit_mode == "edit") { ?>
 			</TABLE>
 			<!-- END Images table -->
 		</TD></TR>
+
+		
+		<TR><TD>
+			<!-- BEGIN Files table -->
+			<TABLE width="100%" style="border: 1px solid #EEEEEE;">
+			<TR>
+				<TD>
+					<TABLE width="100%" bgcolor="#EEEEEE" cellpadding="3" cellspacing="0">
+					<TR>
+						<TD align="left">
+						<b><?php putGS("Files"); ?></b>
+						</td>
+						<?php if ($f_edit_mode == "edit") {  ?>
+						<td align="right">
+							<img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/add.png" border="0">
+							<a href="javascript: void(0);" onclick="window.open('<?php echo camp_html_article_url($articleObj, $f_language_selected, "files/popup.php"); ?>', 'attach_file', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=500, height=400, top=200, left=100');"><?php putGS("Attach"); ?></a>
+						</td>
+						<?php } ?>
+					</tr>
+					</table>
+				</td>
+			</tr>
+			<?PHP
+			foreach ($articleFiles as $file) { 
+				$fileEditUrl = "/$ADMIN/articles/files/edit.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_article_number=$f_article_number&f_attachment_id=".$file->getAttachmentId()."&f_language_id=$f_language_id&f_language_selected=$f_language_selected";
+				$deleteUrl = "/$ADMIN/articles/files/do_del.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_article_number=$f_article_number&f_attachment_id=".$file->getAttachmentId()."&f_language_selected=$f_language_selected&f_language_id=$f_language_id";
+			?>
+			<tr>
+				<td align="center" width="100%">
+					<table>
+					<tr>
+						<td align="center" valign="middle">
+							<?php if ($f_edit_mode == "edit") { ?><a href="<?php p($fileEditUrl); ?>"><?php } p(wordwrap($file->getFileName(), "25", "<br>", true)); ?><?php if ($f_edit_mode == "edit") { ?></a><?php } ?><br><?php p($file->getDescription($f_language_selected)); ?>
+						</td>
+						<?php if ($f_edit_mode == "edit") { ?>
+						<td>
+							<a href="<?php p($deleteUrl); ?>" onclick="return confirm('<?php putGS("Are you sure you want to remove the file \\'$1\\' from the article?", camp_javascriptspecialchars($file->getFileName())); ?>');"><img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/unlink.png" border="0"></a>
+						</td>
+						<?php } ?>
+					</tr>
+					<tr>
+						<td align="center"><?php p(camp_format_bytes($file->getSizeInBytes())); ?></td>
+						<td></td>
+					</tr>
+					</table>
+				</td>
+			</tr>
+			<?php } ?>
+			</TABLE>
+			<!-- END Files table -->
+		</TD></TR>
+		
+		
 		
 		<TR><TD>
 			<!-- BEGIN TOPICS table -->

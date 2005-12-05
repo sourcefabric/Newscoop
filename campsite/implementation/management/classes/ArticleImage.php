@@ -25,15 +25,23 @@ class ArticleImage extends DatabaseObject {
 	var $m_columnNames = array('NrArticle', 'IdImage', 'Number');
 	var $m_image = null;
 	
-	function ArticleImage($p_articleId = null, $p_imageId = null, $p_templateId = null) 
+	/**
+	 * The ArticleImage table links together Articles with Images.
+	 *
+	 * @param int $p_articleNumber
+	 * @param int $p_imageId
+	 * @param int $p_templateId
+	 * @return ArticleImage
+	 */
+	function ArticleImage($p_articleNumber = null, $p_imageId = null, $p_templateId = null) 
 	{ 
-		if (!is_null($p_articleId) && !is_null($p_imageId)) {
-			$this->m_data['NrArticle'] = $p_articleId;
+		if (!is_null($p_articleNumber) && !is_null($p_imageId)) {
+			$this->m_data['NrArticle'] = $p_articleNumber;
 			$this->m_data['IdImage'] = $p_imageId;
 			$this->fetch();
 		}
-		elseif (!is_null($p_articleId) && !is_null($p_templateId)) {
-			$this->m_data['NrArticle'] = $p_articleId;
+		elseif (!is_null($p_articleNumber) && !is_null($p_templateId)) {
+			$this->m_data['NrArticle'] = $p_articleNumber;
 			$this->m_data['Number'] = $p_templateId;
 			$this->m_keyColumnNames = array('NrArticle', 'Number');
 			$this->fetch();
@@ -69,7 +77,7 @@ class ArticleImage extends DatabaseObject {
 	
 	
 	/**
-	 *
+	 * Return an Image object.
 	 */
 	function getImage() 
 	{
@@ -79,13 +87,13 @@ class ArticleImage extends DatabaseObject {
 
 	/**
 	 * Get a free Template ID.
-	 * @param int $p_articleId
+	 * @param int $p_articleNumber
 	 */
-	function GetUnusedTemplateId($p_articleId) 
+	function GetUnusedTemplateId($p_articleNumber) 
 	{
 		global $Campsite;
 		// Get the highest template ID and add one.
-		$queryStr = "SELECT MAX(Number)+1 FROM ArticleImages WHERE NrArticle=$p_articleId";
+		$queryStr = "SELECT MAX(Number)+1 FROM ArticleImages WHERE NrArticle=$p_articleNumber";
 		$templateId = $Campsite['db']->GetOne($queryStr);
 		if (!$templateId) {
 			$templateId = 1;
@@ -97,16 +105,16 @@ class ArticleImage extends DatabaseObject {
 	/**
 	 * Return true if article already is using the given template ID, false otherwise.
 	 *
-	 * @param int $p_articleId
+	 * @param int $p_articleNumber
 	 * @param int $p_templateId
 	 *
 	 * @return boolean
 	 */
-	function TemplateIdInUse($p_articleId, $p_templateId) 
+	function TemplateIdInUse($p_articleNumber, $p_templateId) 
 	{
 		global $Campsite;
 		$queryStr = "SELECT Number FROM ArticleImages"
-					." WHERE NrArticle=$p_articleId AND Number=$p_templateId";
+					." WHERE NrArticle=$p_articleNumber AND Number=$p_templateId";
 		$value = $Campsite['db']->GetOne($queryStr);
 		if ($value !== false) {
 			return true;
@@ -119,9 +127,10 @@ class ArticleImage extends DatabaseObject {
 	
 	/**
 	 * Get all the images that belong to this article.
+	 * @param int $p_articleNumber
 	 * @return array
 	 */
-	function GetImagesByArticleNumber($p_articleId) 
+	function GetImagesByArticleNumber($p_articleNumber) 
 	{
 		global $Campsite;
 		$tmpImage =& new Image();
@@ -130,7 +139,7 @@ class ArticleImage extends DatabaseObject {
 		$queryStr = 'SELECT '.$columnNames
 					.', ArticleImages.Number, ArticleImages.NrArticle, ArticleImages.IdImage'
 					.' FROM Images, ArticleImages'
-					.' WHERE ArticleImages.NrArticle='.$p_articleId
+					.' WHERE ArticleImages.NrArticle='.$p_articleNumber
 					.' AND ArticleImages.IdImage=Images.Id'
 					.' ORDER BY ArticleImages.Number';
 		$rows = $Campsite['db']->GetAll($queryStr);
@@ -153,23 +162,21 @@ class ArticleImage extends DatabaseObject {
 	 * is the image's position in the template.
 	 *
 	 * @param int $p_imageId
-	 *
-	 * @param int $p_articleId
-	 *
+	 * @param int $p_articleNumber
 	 * @param int $p_templateId
 	 *		Optional.  If not specified, this will be the next highest number
 	 *		of the existing values.
 	 *
 	 * @return void
 	 */
-	function AddImageToArticle($p_imageId, $p_articleId, $p_templateId = null) 
+	function AddImageToArticle($p_imageId, $p_articleNumber, $p_templateId = null) 
 	{
 		global $Campsite;
 		if (is_null($p_templateId)) {
-			$p_templateId = ArticleImage::GetUnusedTemplateId($p_articleId);
+			$p_templateId = ArticleImage::GetUnusedTemplateId($p_articleNumber);
 		}
 		$queryStr = 'INSERT IGNORE INTO ArticleImages(NrArticle, IdImage, Number)'
-					.' VALUES('.$p_articleId.', '.$p_imageId.', '.$p_templateId.')';
+					.' VALUES('.$p_articleNumber.', '.$p_imageId.', '.$p_templateId.')';
 		$Campsite['db']->Execute($queryStr);
 	} // fn AddImageToArticle
 
@@ -177,17 +184,17 @@ class ArticleImage extends DatabaseObject {
 	/**
 	 * This call will only work for entries that already exist.
 	 *
-	 * @param int $p_articleId
+	 * @param int $p_articleNumber
 	 * @param int $p_imageId
 	 * @param int $p_templateId
 	 *
 	 * @return void
 	 */
-	function SetTemplateId($p_articleId, $p_imageId, $p_templateId) 
+	function SetTemplateId($p_articleNumber, $p_imageId, $p_templateId) 
 	{
 		global $Campsite;
 		$queryStr = "UPDATE ArticleImages SET Number=$p_templateId"
-					." WHERE NrArticle=$p_articleId AND IdImage=$p_imageId";
+					." WHERE NrArticle=$p_articleNumber AND IdImage=$p_imageId";
 		$Campsite['db']->Execute($queryStr);
 	} // fn SetTemplateId
 	
@@ -197,17 +204,17 @@ class ArticleImage extends DatabaseObject {
 	 * the image tags from the article text.
 	 *
 	 * @param int $p_imageId
-	 * @param int $p_articleId
+	 * @param int $p_articleNumber
 	 * @param int $p_templateId
 	 *
 	 * @return void
 	 */
-	function RemoveImageFromArticle($p_imageId, $p_articleId, $p_templateId) 
+	function RemoveImageFromArticle($p_imageId, $p_articleNumber, $p_templateId) 
 	{
 		global $Campsite;
-		ArticleImage::RemoveImageTagsFromArticleText($p_articleId, $p_templateId);
+		ArticleImage::RemoveImageTagsFromArticleText($p_articleNumber, $p_templateId);
 		$queryStr = 'DELETE FROM ArticleImages'
-					.' WHERE NrArticle='.$p_articleId
+					.' WHERE NrArticle='.$p_articleNumber
 					.' AND IdImage='.$p_imageId
 					.' AND Number='.$p_templateId
 					.' LIMIT 1';
@@ -219,14 +226,14 @@ class ArticleImage extends DatabaseObject {
 	 * Remove the image tags in the article text.
 	 *
 	 * @param int $p_imageId
-	 * @param int $p_articleId
+	 * @param int $p_articleNumber
 	 * @param int $p_templateId
 	 * @return void
 	 */
-	function RemoveImageTagsFromArticleText($p_articleId, $p_templateId)
+	function RemoveImageTagsFromArticleText($p_articleNumber, $p_templateId)
 	{
 		// Get all the articles
-		$articles = Article::GetArticles(null, null, null, null, $p_articleId);
+		$articles = Article::GetArticles(null, null, null, null, $p_articleNumber);
 		
 		// The REGEX
 		$altAttr = "(alt\s*=\s*[\"][^\"]*[\"])";
@@ -274,14 +281,14 @@ class ArticleImage extends DatabaseObject {
 	
 	/**
 	 * Remove image pointers for the given article.
-	 * @param int $p_articleId
+	 * @param int $p_articleNumber
 	 * @return void
 	 */
-	function OnArticleDelete($p_articleId) 
+	function OnArticleDelete($p_articleNumber) 
 	{
 		global $Campsite;
 		$queryStr = 'DELETE FROM ArticleImages'
-					." WHERE NrArticle='".$p_articleId."'";
+					." WHERE NrArticle='".$p_articleNumber."'";
 		$Campsite['db']->Execute($queryStr);		
 	} // fn OnArticleDelete
 	

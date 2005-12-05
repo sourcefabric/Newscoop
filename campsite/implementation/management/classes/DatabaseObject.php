@@ -309,7 +309,7 @@ class DatabaseObject {
 	function keyValuesExist() 
 	{
 		foreach ($this->m_keyColumnNames as $columnName) {
-			if (!$this->m_data[$columnName]) {
+			if (!isset($this->m_data[$columnName]) || empty($this->m_data[$columnName])) {
 				return false;
 			}
 		}

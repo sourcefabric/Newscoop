@@ -67,7 +67,7 @@ else {
 
 // Check if image was added successfully
 if (!is_object($image)) {
-	header('Location: '.camp_html_display_error($image, $BackLink));
+	camp_html_display_error($image, $BackLink);
 	exit;	
 }
 
@@ -76,12 +76,6 @@ ArticleImage::AddImageToArticle($image->getImageId(), $articleObj->getArticleNum
 $logtext = getGS('The image $1 has been added.', $attributes['Description']);
 Log::Message($logtext, $User->getUserName(), 41);
 
-// Go back to article image list.
-//$redirectLocation = camp_html_article_url($articleObj, $f_language_id, 'images/edit.php')
-//	   ."&ImageId=".$image->getImageId()."&ImageTemplateId=$ImageTemplateId";
-////echo $redirectLocation;
-//header("Location: $redirectLocation");
-//exit;
 ?>
 <script>
 window.opener.location.reload();
