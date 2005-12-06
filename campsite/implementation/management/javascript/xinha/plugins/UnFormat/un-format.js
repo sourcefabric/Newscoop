@@ -17,7 +17,7 @@ function UnFormat(editor) {
   });
 
   cfg.addToolbarElement("unformat", "killword", 1);
-};
+}
 
 UnFormat._pluginInfo = {
   name          : "UnFormat",

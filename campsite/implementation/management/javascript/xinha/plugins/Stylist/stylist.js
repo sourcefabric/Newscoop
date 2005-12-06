@@ -503,7 +503,7 @@ function Stylist(editor, args)
                     }
                   }
                   );
-};
+}
 
 Stylist._pluginInfo =
 {

@@ -24,7 +24,7 @@ function LangMarks(editor, args) {
 		refresh	: function(editor) { self.updateValue(editor, this); }
 	});
 	cfg.addToolbarElement("langmarks", "inserthorizontalrule", 1);
-};
+}
 
 LangMarks._pluginInfo = {
 	name          : "LangMarks",

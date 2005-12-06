@@ -26,7 +26,7 @@ function Forms(editor) {
 	}
 	// add a new line in the toolbar
 	cfg.toolbar.push(toolbar);
-};
+}
 
 Forms._pluginInfo = {
   name          : "Forms",
@@ -173,7 +173,7 @@ Forms.prototype.buttonPress = function(editor,button_id, node) {
           var a_options = new Array(); 
 			    for (var i=0; i<=node.options.length-1; i++) {
             a_options[i] = new optionValues(node.options[i].text, node.options[i].value);
-			    };
+			    }
 			    outparam.f_options = a_options;
 				  break;
 			  case "text":
@@ -267,7 +267,7 @@ Forms.prototype.buttonPress = function(editor,button_id, node) {
       outparam.f_for = "";
       outparam.f_text = "";
       outparam.f_legend = "";
-	  };
+	  }
   	editor._popupDialog("plugin://Forms/" + tagName + ".html", function(param) {
 	  	if (param) {
         if(param["f_cols"])

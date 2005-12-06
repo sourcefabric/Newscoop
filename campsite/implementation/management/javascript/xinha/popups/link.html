@@ -12,7 +12,7 @@ HTMLArea = window.opener.HTMLArea;
 
 function i18n(str) {
   return (HTMLArea._lc(str, 'HTMLArea'));
-};
+}
 
 function onTargetChanged() {
   var f = document.getElementById("f_other_target");
@@ -21,7 +21,7 @@ function onTargetChanged() {
     f.select();
     f.focus();
   } else f.style.visibility = "hidden";
-};
+}
 
 function Init() {
   __dlg_translate('HTMLArea');
@@ -63,7 +63,7 @@ function Init() {
   target_select.onchange = onTargetChanged;
   document.getElementById("f_href").focus();
   document.getElementById("f_href").select();
-};
+}
 
 function onOK() {
   var required = {
@@ -91,12 +91,12 @@ function onOK() {
     param.f_target = document.getElementById("f_other_target").value;
   __dlg_close(param);
   return false;
-};
+}
 
 function onCancel() {
   __dlg_close(null);
   return false;
-};
+}
 
 </script>
 

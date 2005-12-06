@@ -13,7 +13,7 @@ function Init() {
 	var param = window.dialogArguments;
   document.getElementById("f_text").value = param["f_text"];
   document.getElementById("f_text").focus();
-};
+}
 
 function onOK() {
 	// pass data back to the calling window
@@ -21,12 +21,12 @@ function onOK() {
   param["f_text"] = document.getElementById("f_text").value;
 	__dlg_close(param);
   return false;
-};
+}
 
 function onCancel() {
 	__dlg_close(null);
 	return false;
-};
+}
 
 </script>
 </head>

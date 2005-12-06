@@ -67,7 +67,7 @@ Linker.prototype._createLink = function(a)
     to:       'alice@example.com',
     subject:  '',
     body:     ''
-  }
+  };
 
   if(a && a.tagName.toLowerCase() == 'a')
   {
@@ -156,7 +156,7 @@ Linker.prototype._createLink = function(a)
       target:'',
       title:'',
       onclick:''
-    }
+    };
 
     if(values.type == 'url')
     {
@@ -253,7 +253,7 @@ Linker.prototype._createLink = function(a)
         }
       }
     }
-  }
+  };
 
   this._dialog.show(inputs, doOK);
 

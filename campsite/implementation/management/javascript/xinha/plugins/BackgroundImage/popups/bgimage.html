@@ -10,12 +10,12 @@ function Init() {
   __dlg_translate("BackgroundImage");
   __dlg_init();
   window.resizeTo(300, 195);
-};
+}
 
 function onCancel() {
   __dlg_close(null);
   return false;
-};
+}
 
 function insertbg(image) {
 	__dlg_close(window.opener._editor_url + "/plugins/BackgroundImage/backgrounds/" + image);
@@ -33,10 +33,10 @@ function onDelete() {
   <div class="title">Set Page Background Image</div>
 <table align="center" border="0" cellspacing="0" cellpadding="6">
 <tr align="center" valign="top">
-<td><img onclick="insertbg('blufur.jpg')" border=1 src="../backgrounds/thumbnails/blufur.jpg" width="50" height="50"></td>
-<td><img onclick="insertbg('palecnvs.jpg')" border=1 src="../backgrounds/thumbnails/palecnvs.jpg" width="50" height="50"></td>
-<td><img onclick="insertbg('ppplcnvs.jpg')" border=1 src="../backgrounds/thumbnails/ppplcnvs.jpg" width="50" height="50"></td>
-<td><img onclick="insertbg('ylwsand.jpg')" border=1 src="../backgrounds/thumbnails/ylwsand.jpg" width="50" height="50"></td>
+<td><img onclick="insertbg('blufur.jpg')" border="1" src="../backgrounds/thumbnails/blufur.jpg" width="50" height="50"></td>
+<td><img onclick="insertbg('palecnvs.jpg')" border="1" src="../backgrounds/thumbnails/palecnvs.jpg" width="50" height="50"></td>
+<td><img onclick="insertbg('ppplcnvs.jpg')" border="1" src="../backgrounds/thumbnails/ppplcnvs.jpg" width="50" height="50"></td>
+<td><img onclick="insertbg('ylwsand.jpg')" border="1" src="../backgrounds/thumbnails/ylwsand.jpg" width="50" height="50"></td>
 </tr>
 </table>
 <div class="space"></div>

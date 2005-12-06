@@ -8,7 +8,7 @@
  * 
  */
 require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/CampsiteInterface.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Publication.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Issue.php');
@@ -26,7 +26,7 @@ $issueId = Input::get('NrIssue', 'int', 0, true);
 $articleId = Input::get('NrArticle', 'int', 0, true);
 $target = Input::get('target', 'string', '', true);
 
-$languages =& Language::GetLanguages();
+$languages = Language::GetLanguages();
 $publications = Publication::GetPublications();
 if (($languageId != 0) && ($publicationId != 0)) {
 	$issues = Issue::GetIssues($publicationId, $languageId);
@@ -190,89 +190,77 @@ function onTargetChanged(selectElement) {
 <tr>
 	<td class="label"><?php putGS("Language"); ?>:</td>
     <td>
+    	<select name="IdLanguage" id="IdLanguage" onchange="this.form.submit();">
+    	<option value="0">?</OPTION>
     	<?php
-    	$extras = 'id="IdLanguage" onchange="this.form.submit();"';
-    	$options = array();
-    	$options[0] = "?";
     	foreach ($languages as $language) {
-    		$options[$language->getLanguageId()] = substr($language->getName(), 0, $maxSelectLength);
+    		$languageName = substr($language->getName(), 0, $maxSelectLength);
+    		camp_html_select_option($language->getLanguageId(), $languageId, $languageName);
     	}
-    	CampsiteInterface::CreateSelect("IdLanguage", $options, $languageId, $extras, true);
     	?>
+    	</select>
     </td>
   </tr>
 <tr>
 	<td class="label"><?php putGS("Publication"); ?>:</td>
     <td>
+    	<SELECT name="IdPublication" id="IdPublication" onchange="this.form.submit();" <?php if ($languageId == 0){ ?>disabled<?php } ?>>
+    	<OPTION value="0">?</OPTION>
     	<?php
-    	$options = array();
-    	$options[0] = "?";
     	foreach ($publications as $publication) {
-    		$options[$publication->getPublicationId()] = substr($publication->getName(), 0, $maxSelectLength);
+    		$publicationName = substr($publication->getName(), 0, $maxSelectLength);
+    		camp_html_select_option($publication->getPublicationId(), $publicationId, $publicationName);
     	}
-    	$extras = 'id="IdPublication" onchange="this.form.submit()"';
-    	if ($languageId == 0){
-    		$extras .= ' disabled';
-    	}
-    	CampsiteInterface::CreateSelect("IdPublication", $options, $publicationId, $extras, true);
     	?>
+    	</SELECT>
 	</td>
 </tr>
 <tr>
 	<td class="label"><?php putGS("Issue"); ?>:</td>
 	<td>
+    	<SELECT name="NrIssue" id="NrIssue" onchange="this.form.submit();" <?php if (($languageId == 0) || ($publicationId == 0)) { ?>disabled<?php } ?>>
+    	<OPTION value="0">?</OPTION>
     	<?php
-    	$options = array();
-    	$options[0] = "?";
     	if (($languageId != 0) && ($publicationId != 0)) {
 	    	foreach ($issues as $issue) {
-	    		$options[$issue->getIssueNumber()] = substr($issue->getName(), 0, $maxSelectLength);
+	    		$issueName = substr($issue->getName(), 0, $maxSelectLength);
+	    		camp_html_select_option($issue->getIssueNumber(), $issueId, $issueName);
 	    	}
-	    	$extras = 'id="NrIssue" onchange="this.form.submit()"';
     	}
-    	else {
-    		$extras = ' disabled';
-    	}
-    	CampsiteInterface::CreateSelect("NrIssue", $options, $issueId, $extras, true);
     	?>
+    	</SELECT>
 	</td>
 </tr>
 <tr>
 	<td class="label"><?php putGS("Section"); ?>:</td>
 	<td>
+    	<SELECT name="NrSection" id="NrSection" onchange="this.form.submit();" <?php if (($languageId == 0) || ($publicationId == 0) || ($issueId == 0)) { ?>disabled<?php } ?>>
+    	<OPTION value="0">?</OPTION>
     	<?php
-    	$options = array();
-    	$options[0] = "?";
     	if (($languageId != 0) && ($publicationId != 0) && ($issueId != 0)) {
 	    	foreach ($sections as $section) {
-	    		$options[$section->getSectionNumber()] = substr($section->getName(), 0, $maxSelectLength);
+	    		$sectionName = substr($section->getName(), 0, $maxSelectLength);
+	    		camp_html_select_option($section->getSectionNumber(), $sectionId, $sectionName);
 	    	}
-	    	$extras = 'id="NrSection" onchange="this.form.submit()"';
     	}
-    	else {
-    		$extras = ' disabled';
-    	}
-    	CampsiteInterface::CreateSelect("NrSection", $options, $sectionId, $extras, true);
     	?>
+    	</SELECT>
 	</td>
 </tr>
 <tr>
 	<td class="label"><?php putGS("Article"); ?>:</td>
 	<td>
+    	<SELECT name="NrArticle" id="NrArticle" onchange="this.form.submit();" <?php if (($languageId == 0) || ($publicationId == 0) || ($issueId == 0) || ($sectionId == 0)) { ?>disabled<?php } ?>>
+    	<OPTION value="0">?</OPTION>
     	<?php
-    	$options = array();
-    	$options[0] = "?";
     	if (($languageId != 0) && ($publicationId != 0) && ($issueId != 0) && ($sectionId != 0)) {
 	    	foreach ($articles as $article) {
-	    		$options[$article->getArticleNumber()] = substr($article->getTitle(), 0, $maxSelectLength);
+	    		$articleName = substr($article->getTitle(), 0, $maxSelectLength);
+	    		camp_html_select_option($article->getArticleNumber(), $articleId, $articleName);
 	    	}
-	    	$extras = 'id="NrArticle"';
     	}
-    	else {
-    		$extras = ' disabled';
-    	}
-    	CampsiteInterface::CreateSelect("NrArticle", $options, $articleId, $extras, true);
     	?>
+    	</SELECT>
 	</td>
 </tr>
 <tr>

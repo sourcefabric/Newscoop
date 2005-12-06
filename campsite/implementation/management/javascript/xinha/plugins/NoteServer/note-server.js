@@ -26,9 +26,9 @@ function NoteServer(editor) {
                 action   : function(editor) {
                                 self.buttonPress(editor);
                            }
-            })
+            });
 	cfg.addToolbarElement("insertscore", "insertimage", 1);
-};
+}
 
 NoteServer._pluginInfo = {
   name          : "NoteServer",
@@ -185,7 +185,7 @@ if (param["f_midi"]) string2 = string2 + "<a href=" + stringmidi + ">" + HTMLAre
 
     //var html = linktext.link(stringmidi);
     //editor.insertHTML(html);
-};
+}
 
 // this routine includes the applet-definition 
 function IncludeGuidoStringAsApplet(editor, gmnstring, zoom) {
@@ -205,4 +205,4 @@ function IncludeGuidoStringAsApplet(editor, gmnstring, zoom) {
   alert(string);
   editor.focusEditor();
   editor.insertHTML(string);
-};
+}

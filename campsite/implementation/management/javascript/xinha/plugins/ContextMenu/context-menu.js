@@ -12,7 +12,7 @@ HTMLArea.loadStyle("menu.css", "ContextMenu");
 
 function ContextMenu(editor) {
 	this.editor = editor;
-};
+}
 
 ContextMenu._pluginInfo = {
 	name          : "ContextMenu",
@@ -60,7 +60,7 @@ ContextMenu.prototype.getContextMenu = function(target) {
 
 	function tableOperation(opcode) {
 		tbo.buttonPress(editor, opcode);
-	};
+	}
 
 	function insertPara(after) {
 		var el = currentTarget;
@@ -80,7 +80,7 @@ ContextMenu.prototype.getContextMenu = function(target) {
 			range.collapse(true);
 			range.select();
 		}
-	};
+	}
 
 	for (; target; target = target.parentNode) {
 		var tag = target.tagName;
@@ -258,7 +258,7 @@ ContextMenu.prototype.popupMenu = function(ev) {
 			r.y += tmp.y;
 		}
 		return r;
-	};
+	}
 	function documentClick(ev) {
 		ev || (ev = window.event);
 		if (!self.currentMenu) {
@@ -271,7 +271,7 @@ ContextMenu.prototype.popupMenu = function(ev) {
 			self.closeMenu();
 		//HTMLArea._stopEvent(ev);
 		//return false;
-	};
+	}
 	var keys = [];
 	function keyPress(ev) {
 		ev || (ev = window.event);
@@ -286,7 +286,7 @@ ContextMenu.prototype.popupMenu = function(ev) {
 			if (k[0].toLowerCase() == key)
 				k[1].__msh.activate();
 		}
-	};
+	}
 	self.closeMenu = function() {
 		self.currentMenu.parentNode.removeChild(self.currentMenu);
 		self.currentMenu = null;
@@ -296,7 +296,7 @@ ContextMenu.prototype.popupMenu = function(ev) {
 			HTMLArea._removeEvent(self.editordoc, "keypress", keyPress);
 		if (HTMLArea.is_ie)
 			self.iePopup.hide();
-	};
+	}
 	var target = HTMLArea.is_ie ? ev.srcElement : ev.target;
      var ifpos = getPos(self.editor._htmlArea);//_iframe);
 	var x = ev.clientX + ifpos.x;

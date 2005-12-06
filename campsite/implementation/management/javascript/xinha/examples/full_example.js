@@ -6,7 +6,7 @@
     --
     --  $HeadURL: http://svn.xinha.python-hosting.com/trunk/examples/full_example.js $
     --  $LastChangedDate$
-    --  $LastChangedRevision: 359 $
+    --  $LastChangedRevision: 416 $
     --  $LastChangedBy$
     --------------------------------------------------------------------------*/
 
@@ -14,8 +14,9 @@
   if(window.parent && window.parent != window)
   {
     var f = window.parent.menu.document.forms[0];
-    _editor_lang = f.lang.value;
-    _editor_skin = f.skin.value;
+    _editor_lang = f.lang[f.lang.selectedIndex].value;
+    _editor_skin = f.skin[f.skin.selectedIndex].value;
+    
     num = parseInt(f.num.value);
     if(isNaN(num))
     {

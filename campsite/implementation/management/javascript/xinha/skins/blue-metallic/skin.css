@@ -10,12 +10,13 @@
   padding:2px;
   -moz-border-radius:4px;
   margin:4px;
+  height:25px;
 }
 
 .htmlarea .toolbar .button {
   background-image: url(button-background.png);
   width:20px;
-  height:20px;
+  height:21px;
   padding:1px;
   border:0px;
 }
@@ -33,7 +34,7 @@
   background-image: url(separator.gif);
   border:1px #f7f8fd;
   width:   7px;
-  height: 20px;
+  height: 21px;
   padding: 0px;
 }
 

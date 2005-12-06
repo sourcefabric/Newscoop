@@ -5,7 +5,7 @@
 
 function CharCounter(editor) {
     this.editor = editor;
-};
+}
 
 CharCounter._pluginInfo = {
     name : "CharCounter",

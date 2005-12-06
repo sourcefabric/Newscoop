@@ -52,7 +52,7 @@ function Node(id, pid, name, url, title, target, icon, iconOpen, open) {
 
   this._p;
 
-};
+}
 
 
 
@@ -80,7 +80,7 @@ function dTree(objName, baseDir) {
 
     inOrder					: false
 
-  }
+  };
 
   this.icon = {
 
@@ -128,7 +128,7 @@ function dTree(objName, baseDir) {
 
   this.completed = false;
 
-};
+}
 
 
 
@@ -387,7 +387,7 @@ dTree.prototype.setCS_All = function()
     node._ls = ids[node.pid]._ls_is == node.id ? true : false;
     node._hc = ids[node.id]._hc;
   }
-}
+};
 
 // Returns the selected node
 
@@ -705,7 +705,7 @@ if (!Array.prototype.push) {
 
   };
 
-};
+}
 
 if (!Array.prototype.pop) {
 
@@ -719,5 +719,4 @@ if (!Array.prototype.pop) {
 
   };
 
-};
-
+}

@@ -27,9 +27,9 @@ function Equation(editor) {
 	action   : function(editor, id) {
 			self.buttonPress(editor, id);
 		}
-	})
+	});
 	 cfg.addToolbarElement("equation", "inserthorizontalrule", -1);
-};
+}
 
 Equation._pluginInfo = {
 	name          : "Equation",

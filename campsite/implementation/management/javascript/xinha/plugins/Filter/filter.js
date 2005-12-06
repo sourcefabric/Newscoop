@@ -18,7 +18,7 @@ function Filter(editor) {
   action   : function(editor) {
                self.buttonPress(editor);
              }
-  })
+  });
 	//cfg.Filters = ["Paragraph","Word"];
   for (var i = 0; i < editor.config.Filters.length; i++) {
     self.add(editor.config.Filters[i]);

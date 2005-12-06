@@ -26,7 +26,7 @@ function FullPage(editor) {
 
 	// add a new line in the toolbar
 	cfg.addToolbarElement(["separator","FP-docprop"],"separator",-1);
-};
+}
 
 FullPage._pluginInfo = {
 	name          : "FullPage",
@@ -134,7 +134,7 @@ FullPage.prototype.setDocProp = function(params) {
 		link.rel = alt ? "alternate stylesheet" : "stylesheet";
 		head.appendChild(link);
 		return link;
-	};
+	}
 	function createMeta(httpEquiv, name, content) {
 		var meta = doc.createElement("meta");
 		if (httpEquiv!="") meta.httpEquiv = httpEquiv;
@@ -143,7 +143,7 @@ FullPage.prototype.setDocProp = function(params) {
 		meta.content = content;
 		head.appendChild(meta);
 		return meta;
-	};
+	}
 
 	if (!style1 && params.f_base_style)
 		style1 = createLink(false);

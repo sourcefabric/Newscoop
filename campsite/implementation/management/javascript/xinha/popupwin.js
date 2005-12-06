@@ -54,9 +54,9 @@ function PopupWin(editor, title, handler, initFunction) {
 		self.element = body;
 		initFunction(self);
 		dlg.focus();
-	};
+	}
 	init2();
-};
+}
 
 PopupWin.prototype.callHandler = function() {
 	var tags = ["input", "textarea", "select"];

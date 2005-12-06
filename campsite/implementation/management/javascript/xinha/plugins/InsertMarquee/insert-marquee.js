@@ -23,7 +23,7 @@ function InsertMarquee(editor) {
 		}
 	})
 	cfg.addToolbarElement("insertmarquee", "inserthorizontalrule", -1);
-};
+}
 
 InsertMarquee._pluginInfo = {
 	name          : "InsertMarquee",

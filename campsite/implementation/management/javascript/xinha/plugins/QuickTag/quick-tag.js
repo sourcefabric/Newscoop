@@ -19,7 +19,7 @@ function QuickTag(editor) {
              }
   });
   cfg.addToolbarElement("quickeditor", "htmlmode", 1);  
-};
+}
 
 QuickTag.prototype.buttonPress = function(editor) { 
 var self = this;

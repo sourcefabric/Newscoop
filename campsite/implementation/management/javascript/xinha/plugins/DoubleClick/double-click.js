@@ -48,7 +48,7 @@ function DoubleClick(editor) {
 		img: [ function(e) {e.execCommand("insertimage");} ],
 		td: [ function(e) {e.execCommand("inserttable");} ]
 	};
-};
+}
 
 DoubleClick.prototype.onGenerate = function() {
 	var self = this;

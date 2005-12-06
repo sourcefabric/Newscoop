@@ -22,7 +22,7 @@ function Init() {
 		document.getElementById("f_noshade").checked = params.f_noshade;
 	}
 	document.getElementById("f_width").focus();
-};
+}
 
 function onOK() {
   var fields = ["f_size", "f_width", "f_widthUnit", "f_align", "f_color", "f_noshade"];
@@ -34,12 +34,12 @@ function onOK() {
   }
   __dlg_close(param);
   return false;
-};
+}
 
 function onCancel() {
   __dlg_close(null);
   return false;
-};
+}
 
 function selectColor(id1,id2,color) {
 	Dialog(editor.popupURL("select_color.html"), function(color){
@@ -51,7 +51,7 @@ function selectColor(id1,id2,color) {
 }
 function Dialog(url, action, init) {
 	Dialog.openModal(url, action, init);
-};
+}
 Dialog.openModal = function(url, action, init) {
 	var dlg2 = window.open(url, "hadialog2",
 		  "toolbar=no,menubar=no,personalbar=no,width=10,height=10," +

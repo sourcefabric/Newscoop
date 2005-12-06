@@ -74,7 +74,7 @@ function ListType( editor )
 
     editor.hidePanel( editor._ListType );
   }
-};
+}
 
 HTMLArea.Config.prototype.ListType =
 {

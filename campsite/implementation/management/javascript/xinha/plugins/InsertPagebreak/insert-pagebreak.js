@@ -19,9 +19,9 @@ function InsertPagebreak(editor, args) {
 	action   : function(editor) {
 			self.buttonPress(editor);
 		}
-	})
+	});
   cfg.addToolbarElement("pagebreak", "inserthorizontalrule", 1);
-};
+}
 
 InsertPagebreak._pluginInfo = {
 	name          : "InsertPagebreak",

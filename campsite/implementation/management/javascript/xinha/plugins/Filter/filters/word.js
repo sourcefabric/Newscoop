@@ -50,4 +50,4 @@ Word = function(html) {
 	
 	html = html.trim();
 	return html;
-} 
+};

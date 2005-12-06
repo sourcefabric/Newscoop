@@ -41,19 +41,19 @@ function Init() {
 	trow.insertCell((i - 1) % 4).innerHTML = "<a href=\"javascript:onOK('" + inum + "')\"><img style=\"border: 0px;\" alt=\"Smiley " + + i + "\" src=\""+ param.editor_url +"plugins/InsertSmiley/smileys/" + inum + ".gif\" />";
   }
   document.body.onkeypress = __dlg_key_press;
-};
+}
 
 function onCancel() {
   __dlg_close(null);
   return false;
-};
+}
 
 function onOK(smileynum) {
   var params = {};
   params.imgURL = param.editor_url +"plugins/InsertSmiley/smileys/" + smileynum + ".gif";
   __dlg_close(params);
   return false;
-};
+}
 
 function __dlg_key_press(ev) {
   ev || (ev = window.event);
@@ -66,7 +66,7 @@ function __dlg_key_press(ev) {
     return false;
   }
 return true;
-};
+}
 </script>
 
 <style type="text/css">

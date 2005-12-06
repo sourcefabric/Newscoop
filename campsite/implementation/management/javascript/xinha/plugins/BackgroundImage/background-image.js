@@ -20,7 +20,7 @@ function BackgroundImage(editor) {
                            }
             })
 	cfg.addToolbarElement("bgImage", "inserthorizontalrule", 1);
-};
+}
 
 BackgroundImage._pluginInfo = {
 	name          : "BackgroundImage",

@@ -44,7 +44,7 @@ function HtmlTidy(editor) {
 	for (var i in toolbar) {
 		cfg.toolbar[0].push(toolbar[i]);
 	}
-};
+}
 
 HtmlTidy._pluginInfo = {
 	name          : "HtmlTidy",

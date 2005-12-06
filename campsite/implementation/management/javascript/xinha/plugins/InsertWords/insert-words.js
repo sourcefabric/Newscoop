@@ -45,7 +45,7 @@ function InsertWords(editor, params) {
 
     cfg.addToolbarElement(toolbar, "linebreak", 1);
 
-};
+}
 
 InsertWords._pluginInfo = {
 	name          : "InsertWords",

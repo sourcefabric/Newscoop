@@ -163,7 +163,7 @@ function FormOperations(editor)
     },
     'form'
   ];
-};
+}
 
 FormOperations.prototype.onGenerate = function()
 {
@@ -466,7 +466,7 @@ FormOperations.prototype.showButton = function (input)
     'button_name'    : this.deformatName(input, input.name),
     'button_value'   : input.value,
     'button_type'    : input.type.toLowerCase()
-  }
+  };
   this.panel.setValues(vals);
 
   var i = input;

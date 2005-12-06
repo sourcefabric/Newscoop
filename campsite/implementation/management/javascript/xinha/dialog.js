@@ -19,7 +19,7 @@ function Dialog(url, action, init) {
 		init = window;	// pass this window object by default
 	}
 	Dialog._geckoOpenModal(url, action, init);
-};
+}
 
 Dialog._parentEvent = function(ev) {
 	setTimeout( function() { if (Dialog._modal && !Dialog._modal.closed) { Dialog._modal.focus() } }, 50);
@@ -50,13 +50,13 @@ Dialog._geckoOpenModal = function(url, action, init) {
 		HTMLArea._addEvent(w, "click", Dialog._parentEvent);
 		HTMLArea._addEvent(w, "mousedown", Dialog._parentEvent);
 		HTMLArea._addEvent(w, "focus", Dialog._parentEvent);
-	};
+	}
 	// release the captured events
 	function relwin(w) {
 		HTMLArea._removeEvent(w, "click", Dialog._parentEvent);
 		HTMLArea._removeEvent(w, "mousedown", Dialog._parentEvent);
 		HTMLArea._removeEvent(w, "focus", Dialog._parentEvent);
-	};
+	}
 	capwin(window);
 	// capture other frames, note the exception trapping, this is because
   // we are not permitted to add events to frames outside of the current

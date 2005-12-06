@@ -13,7 +13,7 @@ window.resizeTo(400, 100);
 HTMLArea = window.opener.HTMLArea;
 function i18n(str) {
   return (HTMLArea._lc(str, 'HTMLArea'));
-};
+}
 
 function Init() {
   HTMLArea = window.opener.HTMLArea; // load the HTMLArea plugin and lang file
@@ -25,7 +25,7 @@ function Init() {
   document.getElementById("f_align").selectedIndex = 1;
   document.getElementById("f_align").selectedIndex = 0;
   document.getElementById("f_rows").focus();
-};
+}
 
 function onOK() {
   var required = {
@@ -50,12 +50,12 @@ function onOK() {
   }
   __dlg_close(param);
   return false;
-};
+}
 
 function onCancel() {
   __dlg_close(null);
   return false;
-};
+}
 
 </script>
 

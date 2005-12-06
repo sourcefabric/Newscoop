@@ -20,9 +20,9 @@ function Template(editor) {
 	action   : function(editor) {
 			self.buttonPress(editor);
 		}
-	})
+	});
 	cfg.addToolbarElement("template", "inserthorizontalrule", 1);
-};
+}
 
 Template._pluginInfo = {
 	name          : "Template",

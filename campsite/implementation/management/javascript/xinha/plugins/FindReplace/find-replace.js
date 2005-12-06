@@ -12,8 +12,8 @@ var self = this;
 cfg.registerButton("FR-findreplace", this._lc("Find and Replace"),
                    editor.imgURL("ed_find.gif", "FindReplace"), false,
                    function(editor) { self.buttonPress(editor); });
-cfg.addToolbarElement(["FR-findreplace"], ["formatblock","fontsize","fontname"], -1);
-};
+cfg.addToolbarElement(["FR-findreplace","separator"], ["formatblock","fontsize","fontname"], -1);
+}
 
 FindReplace.prototype.buttonPress = function(editor) { 
 FindReplace.editor = editor;

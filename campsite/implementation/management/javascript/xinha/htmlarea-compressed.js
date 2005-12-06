@@ -1,4 +1,4 @@
-HTMLArea.version={"Release":"Trunk","Head":"$HeadURL: http://svn.xinha.python-hosting.com/trunk/htmlarea.js $".replace(/^[^:]*: (.*) \$$/,"$1"),"Date":"$LastChangedDate: 2005-10-25 03:30:22 +1300 (Tue, 25 Oct 2005) $".replace(/^[^:]*: ([0-9-]*) ([0-9:]*) ([+0-9]*) \((.*)\) \$/,"$4 $2 $3"),"Revision":"$LastChangedRevision: 401 $".replace(/^[^:]*: (.*) \$$/,"$1"),"RevisionBy":"$LastChangedBy: gocher $".replace(/^[^:]*: (.*) \$$/,"$1")};
+HTMLArea.version={"Release":"Trunk","Head":"$HeadURL: http://svn.xinha.python-hosting.com/trunk/htmlarea.js $".replace(/^[^:]*: (.*) \$$/,"$1"),"Date":"$LastChangedDate: 2005-11-07 21:36:41 +1300 (Mon, 07 Nov 2005) $".replace(/^[^:]*: ([0-9-]*) ([0-9:]*) ([+0-9]*) \((.*)\) \$/,"$4 $2 $3"),"Revision":"$LastChangedRevision: 421 $".replace(/^[^:]*: (.*) \$$/,"$1"),"RevisionBy":"$LastChangedBy: gocher $".replace(/^[^:]*: (.*) \$$/,"$1")};
 if(typeof _editor_url=="string"){
 _editor_url=_editor_url.replace(/\x2f*$/,"/");
 }else{
@@ -864,10 +864,10 @@ case "auto":
 _93=this._initial_ta_size.w;
 break;
 case "toolbar":
-_93=this._toolBar.offsetWidth;
+_93=this._toolBar.offsetWidth+"px";
 break;
 default:
-_93=this.config.width;
+_93=/[^0-9]/.test(this.config.width)?this.config.width:this.config.width+"px";
 break;
 }
 switch(this.config.height){
@@ -875,7 +875,7 @@ case "auto":
 _94=this._initial_ta_size.h;
 break;
 default:
-_94=this.config.height;
+_94=/[^0-9]/.test(this.config.height)?this.config.height:this.config.height+"px";
 break;
 }
 this.sizeEditor(_93,_94,this.config.sizeIncludesBars,this.config.sizeIncludesPanels);
@@ -1828,9 +1828,7 @@ break;
 default:
 cmd=cmd.replace(/(un)?orderedlist/i,"insert$1orderedlist");
 try{
-if(HTMLArea.is_ie){
 btn.state("active",(!text&&doc.queryCommandState(cmd)));
-}
 }
 catch(e){
 }
@@ -2299,16 +2297,18 @@ return false;
 }
 var img=_228;
 if(!img){
+if(HTMLArea.is_ie){
 var sel=_229._getSelection();
 var _232=_229._createRange(sel);
 _229._doc.execCommand("insertimage",false,_231.f_url);
-if(HTMLArea.is_ie){
 img=_232.parentElement();
 if(img.tagName.toLowerCase()!="img"){
 img=img.previousSibling;
 }
 }else{
-img=_232.startContainer.previousSibling;
+img=document.createElement("img");
+img.src=_231.f_url;
+_229.insertNodeAtSelection(img);
 if(!img.tagName){
 img=_232.startContainer.firstChild;
 }
@@ -2386,7 +2386,7 @@ if(_241){
 td.style.width=_241+"%";
 }
 tr.appendChild(td);
-(HTMLArea.is_gecko)&&td.appendChild(doc.createElement("br"));
+td.appendChild(doc.createTextNode("\xa0"));
 }
 }
 if(HTMLArea.is_ie){
@@ -2406,7 +2406,9 @@ case "fontsize":
 this.execCommand(txt,false,_245);
 break;
 case "formatblock":
+if(!HTMLArea.is_gecko||_245!=="blockquote"){
 _245="<"+_245+">";
+}
 this.execCommand(txt,false,_245);
 break;
 default:
@@ -3068,10 +3070,10 @@ if(!obj){
 return null;
 }
 var _303=new Object;
-if(obj.constructor.toString().indexOf("function Array(")==1){
+if(obj.constructor.toString().match(/\s*function Array\(/)){
 _303=obj.constructor();
 }
-if(obj.constructor.toString().indexOf("function Function(")==1){
+if(obj.constructor.toString().match(/\s*function Function\(/)){
 _303=obj;
 }else{
 for(var n in obj){
@@ -3266,7 +3268,7 @@ HTMLArea._paraContainerTags=" body td th caption fieldset div";
 HTMLArea.isParaContainer=function(el){
 return el&&el.nodeType==1&&(HTMLArea._paraContainerTags.indexOf(" "+el.tagName.toLowerCase()+" ")!=-1);
 };
-HTMLArea._closingTags=" head script style div span tr td tbody table em strong b i strike code cite dfn abbr acronym font a title textarea select form ";
+HTMLArea._closingTags=" a abbr acronym address applet b bdo big blockquote button caption center cite code del dfn dir div dl em fieldset font form frameset h1 h2 h3 h4 h5 h6 i iframe ins kbd label legend map menu noframes noscript object ol optgroup pre q s samp script select small span strike strong style sub sup table textarea title tt u ul var ";
 HTMLArea.needsClosingTag=function(el){
 return el&&el.nodeType==1&&(HTMLArea._closingTags.indexOf(" "+el.tagName.toLowerCase()+" ")!=-1);
 };

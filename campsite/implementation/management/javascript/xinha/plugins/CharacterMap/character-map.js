@@ -53,7 +53,7 @@ function CharacterMap( editor )
 
     editor.hidePanel( editor._CharacterMap );
   }
-};
+}
 
 // configuration mode : panel or popup
 HTMLArea.Config.prototype.CharacterMap =

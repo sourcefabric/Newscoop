@@ -64,7 +64,7 @@
 var HTMLArea = window.opener.HTMLArea;
 function i18n(str) {
   return (HTMLArea._lc(str, 'HTMLArea'));
-};
+}
 
 function Init() {
   __dlg_translate("InsertPicture");
@@ -84,7 +84,7 @@ function Init() {
       window.ipreview.location.replace(param.f_url);
   }
   document.getElementById("f_url").focus();
-};
+}
 
 function onOK() {
   var required = {
@@ -109,7 +109,7 @@ function onOK() {
   }
   __dlg_close(param);
   return false;
-};
+}
 
 function onUpload() {
   var required = {
@@ -130,7 +130,7 @@ function onUpload() {
 function onCancel() {
   __dlg_close(null);
   return false;
-};
+}
 
 function onPreview() {
   var f_url = document.getElementById("f_url");
@@ -146,12 +146,12 @@ function onPreview() {
     window.ipreview.location.replace(url);
   }
   return false;
-};
+}
 
 function CopyToURL(imgName) {
   document.getElementById("f_url").value = imgName;
   onPreview();
-};
+}
 
 function openFile() {
   window.open(document.getElementById("f_url").value,'','');

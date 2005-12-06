@@ -20,7 +20,7 @@ function getAbsolutePos(el) {
 		r.y += tmp.y;
 	}
 	return r;
-};
+}
 
 function comboSelectValue(c, val) {
 	var ops = c.getElementsByTagName("option");
@@ -29,11 +29,11 @@ function comboSelectValue(c, val) {
 		op.selected = (op.value == val);
 	}
 	c.value = val;
-};
+}
 
 function __dlg_onclose() {
 	opener.Dialog._return(null);
-};
+}
 
 function __dlg_init(bottom) {
   if(window.opener._editor_skin != "") {
@@ -82,7 +82,7 @@ function __dlg_init(bottom) {
 		window.moveTo(x, y);
 	}
 	HTMLArea.addDom0Event(document.body, 'keypress', __dlg_close_on_esc);
-};
+}
 
 function __dlg_translate(context) {
 	var types = ["input", "select", "legend", "span", "option", "td", "button", "div", "label"];
@@ -103,13 +103,13 @@ function __dlg_translate(context) {
 		}
 	}
     document.title = HTMLArea._lc(document.title, context);
-};
+}
 
 // closes the dialog and passes the return info upper.
 function __dlg_close(val) {
 	opener.Dialog._return(val);
 	window.close();
-};
+}
 
 function __dlg_close_on_esc(ev) {
 	ev || (ev = window.event);
@@ -118,4 +118,4 @@ function __dlg_close_on_esc(ev) {
 		return false;
 	}
 	return true;
-};
+}

@@ -27,7 +27,7 @@ function ClientsideSpellcheck(editor) {
     cfg.addToolbarElement("clientsidespellcheck", "print", 1);
 }
 
-};
+}
 
 ClientsideSpellcheck._pluginInfo = {
   name          : "ClientsideSpellcheck",

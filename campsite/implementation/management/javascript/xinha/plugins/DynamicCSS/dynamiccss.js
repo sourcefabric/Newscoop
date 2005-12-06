@@ -25,7 +25,7 @@ function DynamicCSS(editor, args) {
   };
   cfg.registerDropdown(css_class);
   cfg.addToolbarElement(["T[CSS]", "DynamicCSS-class", "separator"] , "formatblock", -1);
-};
+}
 
 DynamicCSS.parseStyleSheet=function(editor){
         iframe = editor._iframe.contentWindow.document;

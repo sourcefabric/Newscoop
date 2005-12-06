@@ -113,7 +113,7 @@ function EnterParagraphs(editor)
     this.onKeyPress = this.__onKeyPress;
 		}
 
-	};	// end of constructor.
+	}	// end of constructor.
 
 // ------------------------------------------------------------------
 

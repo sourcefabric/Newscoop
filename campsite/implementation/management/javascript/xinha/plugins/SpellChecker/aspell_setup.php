@@ -115,7 +115,7 @@
 
 // as an additional precaution check the aspell_args for illegal 
 // characters
-  $aspell_args = preg_replace( "/[|><;\$]+/", $aspell_args );
+  $aspell_args = preg_replace( "/[|><;\$]+/", '', $aspell_args );
   $aspelldictionaries = "$aspell dump dicts";
   $aspellcommand      = "$aspell $aspell_args < $temptext";
 

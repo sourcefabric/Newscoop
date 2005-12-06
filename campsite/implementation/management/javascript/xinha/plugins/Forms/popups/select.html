@@ -28,7 +28,7 @@ function Init() {
 		document.getElementById("f_select").options[i] = new Option(param.f_options[i].text, param.f_options[i].value);
 	}
   document.getElementById("f_name").focus();
-};
+}
 
 function onOK() {
 	var el = document.getElementById("f_name");
@@ -64,12 +64,12 @@ function onOK() {
 	param["f_options"] = optionNodes;
 	__dlg_close(param);
   return false;
-};
+}
 
 function onCancel() {
 	__dlg_close(null);
 	return false;
-};
+}
 
 
 //functions to build select options list

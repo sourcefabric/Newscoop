@@ -23,10 +23,11 @@ function TableOperations(editor) {
 
 	// register the toolbar buttons provided by this plugin
 
+    
     // Paul Baranowski, Campsite: Removed linebreak
-	//var toolbar = ["linebreak"];
-	var toolbar = [];
-	
+    //var toolbar = ["linebreak"];
+    var toolbar = [];
+
 	for (var i = 0; i < bl.length; ++i) {
 		var btn = bl[i];
 		if (!btn) {
@@ -41,14 +42,10 @@ function TableOperations(editor) {
 			toolbar.push(id);
 		}
 	}
-	
-	// Paul Baranowski, Campsite: Add the buttons differently
-	// Add the new buttons in the toolbar.
-	//cfg.addToolbarElement(toolbar, "inserttable", 1);
-	
+
 	// add a new line in the toolbar
 	cfg.toolbar.push(toolbar);
-};
+}
 
 TableOperations._pluginInfo = {
 	name          : "TableOperations",
@@ -174,7 +171,7 @@ TableOperations.prototype.dialogTableProperties = function() {
 
 		function selected(val) {
 			return val ? " selected" : "";
-		};
+		}
 
 		// dialog contents
 		dialog.content.style.width = "400px";
@@ -327,7 +324,7 @@ TableOperations.prototype.dialogRowCellProperties = function(cell) {
 
 		function selected(val) {
 			return val ? " selected" : "";
-		};
+		}
 
 		// dialog contents
 		dialog.content.style.width = "400px";
@@ -397,7 +394,7 @@ TableOperations.prototype.buttonPress = function(editor, button_id) {
 			td.rowSpan = 1;
 			td.innerHTML = mozbr;
 		}
-	};
+	}
 
 	function splitRow(td) {
 		var n = parseInt("" + td.rowSpan);
@@ -416,7 +413,7 @@ TableOperations.prototype.buttonPress = function(editor, button_id) {
 		}
 		editor.forceRedraw();
 		editor.updateToolbar();
-	};
+	}
 
 	function splitCol(td) {
 		var nc = parseInt("" + td.colSpan);
@@ -431,7 +428,7 @@ TableOperations.prototype.buttonPress = function(editor, button_id) {
 		}
 		editor.forceRedraw();
 		editor.updateToolbar();
-	};
+	}
 
 	function splitCell(td) {
 		var nc = parseInt("" + td.colSpan);
@@ -441,7 +438,7 @@ TableOperations.prototype.buttonPress = function(editor, button_id) {
 		while (nc-- > 0) {
 			splitRow(items[index++]);
 		}
-	};
+	}
 
 	function selectNextNode(el) {
 		var node = el.nextSibling;
@@ -458,7 +455,7 @@ TableOperations.prototype.buttonPress = function(editor, button_id) {
 			node = el.parentNode;
 		}
 		editor.selectNodeContents(node);
-	};
+	}
 
 	switch (button_id) {
 		// ROWS
@@ -511,18 +508,20 @@ TableOperations.prototype.buttonPress = function(editor, button_id) {
 		}
 		var rows = td.parentNode.parentNode.rows;
 		var index = td.cellIndex;
+    var lastColumn = (td.parentNode.cells.length == index + 1);
 		for (var i = rows.length; --i >= 0;) {
-      /*
-      var tr = rows;
-      var otd = tr.insertCell(index + (/after/.test(button_id) ? 1 : 0));
-      otd.innerHTML = mozbr;
-      */
-			var tr = rows[i];
-			var ref = tr.cells[index + (/after/.test(button_id) ? 1 : 0)];
+			var tr = rows[i];			
 			var otd = editor._doc.createElement("td");
 			otd.innerHTML = mozbr;
-			tr.insertBefore(otd, ref);
-
+      if (lastColumn && HTMLArea.is_ie) 
+      {
+        tr.insertBefore(otd);
+      } 
+      else 
+      {
+        var ref = tr.cells[index + (/after/.test(button_id) ? 1 : 0)];
+        tr.insertBefore(otd, ref);
+      }
 		}
 		editor.focusEditor();
 		break;
@@ -962,7 +961,7 @@ TableOperations.createStyleLayoutFieldset = function(doc, editor, el) {
 			input.focus();
 			input.select();
 		}
-	};
+	}
 	select.onchange = function() { setCharVisibility(this.value == "char"); };
 	setCharVisibility(select.value == "char");
 
@@ -1112,7 +1111,7 @@ TableOperations.createStyleFieldset = function(doc, editor, el) {
 				el.select();
 			}
 		}
-	};
+	}
 	select.onchange = function() { setBorderFieldsStatus(this.value == "none"); };
 
 	input = doc.createElement("input");

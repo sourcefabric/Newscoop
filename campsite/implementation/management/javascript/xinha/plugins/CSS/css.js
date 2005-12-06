@@ -70,7 +70,7 @@ function CSS(editor, params) {
 		cfg.registerDropdown(css_class);
     cfg.addToolbarElement(["T[" + combo.label + "]", id, "separator"] , "formatblock", -1);
  	}
-};
+}
 
 CSS._pluginInfo = {
 	name          : "CSS",

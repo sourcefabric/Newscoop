@@ -19,7 +19,7 @@
 
 function InsertPicture(editor) {
 // nothing to do
-};
+}
 
 InsertPicture._pluginInfo = {
 	name          : "InsertPicture",

@@ -10,7 +10,7 @@ function Init() {
   __dlg_init();
   window.resizeTo(400, 200);
   document.getElementById("cancel").focus();
-};
+}
 
 function onOK(sel) {
   // pass data back to the calling window
@@ -18,12 +18,12 @@ function onOK(sel) {
   param["templ"] = sel;
   __dlg_close(param);
   return false;
-};
+}
 
 function onCancel() {
   __dlg_close(null);
   return false;
-};
+}
 </script>
 </head>
 

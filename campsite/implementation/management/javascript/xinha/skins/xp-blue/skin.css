@@ -7,6 +7,7 @@
   margin-top:2px;
   margin-bottom:2px;
   background-image:url(button-background.png);
+  height:25px;  
 }
 .htmlarea .toolbar .button {
   width:20px;

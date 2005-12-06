@@ -26,7 +26,7 @@ function SpellChecker(editor) {
              });
 
   cfg.addToolbarElement("SC-spell-check", "htmlmode", 1);
-};
+}
 
 SpellChecker._pluginInfo = {
   name          : "SpellChecker",

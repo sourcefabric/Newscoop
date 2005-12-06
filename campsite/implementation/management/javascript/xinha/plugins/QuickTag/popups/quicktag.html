@@ -33,17 +33,17 @@ function Init() {
 
   document.getElementById('bt_colors').style.display = 'none';
   document.body.onkeypress = __dlg_key_press;
-};
+}
 
 function onCancel() {
   __dlg_close(null);
   return false;
-};
+}
 
 function quoteTest(val) {
   var er = /^\w+\s*(\w+=\"[^\"]*\"\s*|\w+=\'[^\']*\'\s*)*$/;
   return er.test(val);
-};
+}
 
 function onOK() {
   var el = document.getElementById('tagopen');
@@ -71,7 +71,7 @@ function onOK() {
 
   __dlg_close(param);
   return false;
-};
+}
 
 function __dlg_key_press(ev) {
   ev || (ev = window.event);
@@ -84,7 +84,7 @@ function __dlg_key_press(ev) {
     return false;
   }
   return true;
-};
+}
 
 function selchange() {
   var toadd = document.getElementById('selectag').value;
@@ -149,8 +149,8 @@ function selchange() {
   function addchanges() {
     document.getElementById('tagopen').focus();
     document.getElementById('tagopen').value += toadd;
-  };
-};
+  }
+}
 
 function captureClasses() {
   var cont = 0;
@@ -193,7 +193,7 @@ function captureClasses() {
     }
   }
   return cont;
-};
+}
 
 function choice_dropdown(e) {
   if (document.all) Key = e.keyCode;
@@ -222,7 +222,7 @@ function choice_dropdown(e) {
     att = curTag;
 
   createDropdown(att);
-};
+}
 
 function createDropdown(type) {
   var _div = document.getElementById('showselect');
@@ -270,15 +270,15 @@ function createDropdown(type) {
       opt.value = obj[i];
       _sel.appendChild(opt);
     }
-  };
-};
+  }
+}
 
 function colors() {
   var colloc = window.location.toString().replace(/plugins.+$/,"") +
                "popups/select_color.html";
   window.open(colloc, 'colors', "toolbar=no,location=no,directories=no," +
               "status=no,menubar=no,scrollbars=no,resizable=no,width=240,height=182");
-};
+}
 
 // simulation of Dialog._return - select_color.html needs it.
 var Dialog = new Object();

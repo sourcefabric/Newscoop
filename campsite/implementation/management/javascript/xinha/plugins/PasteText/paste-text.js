@@ -16,15 +16,15 @@ function PasteText(editor) {
                 action   : function(editor) {
                              self.buttonPress(editor);
                            }
-            })
+            });
 
   cfg.addToolbarElement("pastetext", ["paste", "killword"], 1);
 
-};
+}
 
 PasteText._pluginInfo = {
 	name          : "PasteText",
-	version       : "1.0",
+	version       : "1.1",
 	developer     : "Michael Harris",
 	developer_url : "http://www.jonesadvisorygroup.com",
 	c_owner       : "Jones Advisory Group",
@@ -44,6 +44,8 @@ PasteText.prototype.buttonPress = function(editor) {
 	}; 
 	html=" ";
 	editor._popupDialog( "plugin://PasteText/paste_text", function( html ) {
+		html = html.replace(/</g, "&lt;");
+  		html = html.replace(/>/g, "&gt;");
 		html = html.replace(/\t/g,"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
 		html = html.replace(/\n/g,"</p><p>");
 		html="<p>"+html;

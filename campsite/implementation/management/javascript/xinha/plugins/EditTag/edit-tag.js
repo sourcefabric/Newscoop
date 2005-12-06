@@ -20,11 +20,11 @@ function EditTag(editor) {
                 action   : function(editor) {
                              self.buttonPress(editor);
                            }
-            })
+            });
 
 	cfg.addToolbarElement("edittag", "htmlmode",1);
 
-};
+}
 
 EditTag._pluginInfo = {
 	name          : "EditTag",
