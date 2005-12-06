@@ -422,6 +422,9 @@ class Article extends DatabaseObject {
 			// Delete topics pointers
 			ArticleTopic::OnArticleDelete($this->m_data['Number']);
 			
+			// Delete file pointers
+			ArticleAttachment::OnArticleDelete($this->m_data['Number']);
+			
 			// Delete indexes
 			ArticleIndex::OnArticleDelete($this->getPublicationId(), $this->getIssueNumber(),
 				$this->getSectionNumber(), $this->getLanguageId(), $this->getArticleNumber());
