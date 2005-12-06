@@ -1,5 +1,4 @@
 <?php
-
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/user_types/utypes_common.php");
 
 list($access, $User) = check_basic_access($_REQUEST);
@@ -11,21 +10,16 @@ if (!$canManage) {
 }
 
 $uType = Input::Get('UType', 'string', '');
-if ($uType != '') {
+if (!empty($uType)) {
 	$userType = new UserType($uType);
-	if ($userType->getName() == '') {
+	if (!$userType->exists()) {
 		camp_html_display_error(getGS('No such user type.'));
 		exit;
 	}
+	$userType->delete();
 } else {
 	camp_html_display_error(getGS('No such user type.'));
 	exit;
-}
-
-$query = "DELETE FROM UserTypes WHERE Name = '$uType'";
-if ($Campsite['db']->Execute($query)) {
-	$logtext = getGS('User type $1 deleted', $uType);
-	Log::Message($logtext, $uType, 122);
 }
 
 header("Location: /$ADMIN/user_types/");

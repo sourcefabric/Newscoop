@@ -13,6 +13,7 @@ if (!isset($g_documentRoot)) {
     $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 }
 require_once($g_documentRoot.'/db_connect.php');
+require_once($g_documentRoot.'/classes/Log.php');
 
 /**
  * @package Campsite
@@ -81,14 +82,37 @@ class UserType {
 		}
 		foreach ($defaultConfig as $varname => $value) {
 			$sql = "INSERT INTO UserTypes SET "
-				   ." user_type_name='$p_name', "
+				   ." user_type_name='".mysql_real_escape_string($p_name)."', "
 				   ." varname='$varname',"
 				   ." value='$value'";
 			$Campsite['db']->Execute($sql);
 		}
+
 		$this->fetch();
+		if ($this->exists()) {
+			$logtext = getGS('User type $1 added', $p_name);
+			Log::Message($logtext, null, 121);			
+		}
 		return true;
 	} // fn create
+	
+
+	/**
+	 * Delete the user type.
+	 *
+	 */
+	function delete()
+	{
+		global $Campsite;
+		$logtext = getGS('User type $1 deleted', $this->m_userTypeName);
+		$query = "DELETE FROM UserTypes WHERE user_type_name='".mysql_real_escape_string($this->m_userTypeName)."'";
+		if ($Campsite['db']->Execute($query)) {
+			$this->m_exists = false;
+			Log::Message($logtext, null, 122);
+			return true;
+		}
+		return false;
+	} // fn delete
 	
 	
 	/**

@@ -1,6 +1,6 @@
 Notes on Changes to HTMLArea for Campsite
 -----------------------------------------
-Last synced with Xinha trunk on October 25, 2005
+Last synced with Xinha trunk on December 5, 2005
 
 * Core
 File: /htmlarea.js

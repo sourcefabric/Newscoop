@@ -10,7 +10,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/lib_campsite.php");
 
 /**
- * Create an HTML OPTION element.
+ * Print out an HTML OPTION element.
  *
  * @param string $p_value
  * @param string $p_selectedValue

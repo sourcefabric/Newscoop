@@ -10,16 +10,12 @@ if (!isset($g_documentRoot)) {
     $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 }
 
-$configuration_files = array("install_conf.php", 
-							 "database_conf.php", 
-							 "apache_conf.php", 
-							 "parser_conf.php", 
-							 "smtp_conf.php");
-
-foreach ($configuration_files as $index=>$conf_file) {
-	require($g_documentRoot . "/$conf_file");
-}
-unset($configuration_files);
+require_once($g_documentRoot."/install_conf.php");
+require_once($g_documentRoot."/database_conf.php");
+require_once($g_documentRoot."/apache_conf.php");
+require_once($g_documentRoot."/parser_conf.php");
+require_once($g_documentRoot."/smtp_conf.php");
+require_once($g_documentRoot.'/campsite_version.php');
 
 $Campsite['HTML_COMMON_DIR'] = $Campsite['WWW_COMMON_DIR'] . "/html";
 $Campsite['CGI_COMMON_DIR'] = $Campsite['WWW_COMMON_DIR'] . "/cgi-bin";
@@ -40,8 +36,6 @@ if (($_SERVER['SERVER_PORT'] != 80) && ($_SERVER['SERVER_PORT'] != 443)) {
 }
 $Campsite['WEBSITE_URL'] = $scheme.$Campsite['HOSTNAME'];
 unset($scheme);
-
-require_once($g_documentRoot.'/campsite_version.php');
 
 $Campsite['TEMPLATE_DIRECTORY'] = $Campsite['HTML_DIR']."/look";
 $Campsite['IMAGE_DIRECTORY'] = $Campsite['HTML_DIR'].'/images/';

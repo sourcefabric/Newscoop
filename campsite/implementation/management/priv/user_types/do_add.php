@@ -30,10 +30,7 @@ foreach ($rightsFields as $field=>$value) {
 		$rightsFields[$field] = 'Y';
 	}
 }
-if ($userType->create($uType, $rightsFields)) {
-	$logtext = getGS('User type $1 added', $uType);
-	Log::Message($logtext, $uType, 121);
-}
+$userType->create($uType, $rightsFields);
 
 header("Location: /$ADMIN/user_types/access.php?UType=$uType");
 
