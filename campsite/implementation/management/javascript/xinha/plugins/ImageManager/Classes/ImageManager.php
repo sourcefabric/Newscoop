@@ -155,63 +155,22 @@ class ImageManager
 		$base = Files::fixPath($this->getBaseDir());
 		$fullpath = Files::makePath($base,$path);
 
-
-		//$d = @dir($fullpath);
-		
 		$articleImages = ArticleImage::GetImagesByArticleNumber($articleId);
 		foreach ($articleImages as $articleImage) {
 			$image = $articleImage->getImage();
 			$img = $this->getImageInfo($image->getImageUrl());
-			//$entry = basename($image->getImageStorageLocation());
 			if (is_array($img) || !$this->config['validate_images']) {
 				$file['url'] = $image->getImageUrl();
-				//$file['url'] = Files::makePath($this->config['base_url'],$path).$entry;
-				//$file['relative'] = $path.$entry;
-				//$file['fullpath'] = $fullpath.$entry;
 				$file['image'] = $img;
 				$file['image_object'] = $image;
 				$file['alt'] = htmlspecialchars($image->getDescription(), ENT_QUOTES);
-				//$file['stat'] = stat($fullpath.$entry);
-				//$files[$entry] = $file;
 				$files[$articleImage->getTemplateId()] = $file;
 			}
-			
 		}
 		
-//		while (false !== ($entry = $d->read())) 
-//		{
-//			//not a dot file or directory
-//			if(substr($entry,0,1) != '.')
-//			{
-//				if(is_dir($fullpath.$entry)
-//					&& $this->isThumbDir($entry) == false)
-//				{
-//					$relative = Files::fixPath($path.$entry);
-//					$full = Files::fixPath($fullpath.$entry);
-//					$count = $this->countFiles($full);
-//					$dirs[$relative] = array('fullpath'=>$full,'entry'=>$entry,'count'=>$count);
-//				}
-//				else if(is_file($fullpath.$entry) && $this->isThumb($entry)==false && $this->isTmpFile($entry) == false) 
-//				{
-//					$img = $this->getImageInfo($fullpath.$entry);
-//
-//					if(!(!is_array($img)&&$this->config['validate_images']))
-//					{
-//						$file['url'] = Files::makePath($this->config['base_url'],$path).$entry;
-//						$file['relative'] = $path.$entry;
-//						$file['fullpath'] = $fullpath.$entry;
-//						$file['image'] = $img;
-//						$file['stat'] = stat($fullpath.$entry);
-//						$files[$entry] = $file;
-//					}
-//				}
-//			}
-//		}
-		//$d->close();
 		ksort($dirs);
 		ksort($files);
-		
-		Return array($dirs, $files);
+		return array($dirs, $files);
 	}	
 
 	/**

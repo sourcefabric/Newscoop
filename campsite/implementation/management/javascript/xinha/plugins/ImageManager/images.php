@@ -1,8 +1,8 @@
 <?php
 /**
  * Show a list of images in a long horizontal table.
- * @author $Author: paul $
- * @version $Id: images.php,v 1.1 2005/05/02 17:39:57 paul Exp $
+ * @author $Author$
+ * @version $Id$
  * @package ImageManager
  */
 
@@ -11,18 +11,9 @@ require_once('Classes/ImageManager.php');
 
 //default path is /
 $relative = '/';
-$manager = new ImageManager($IMConfig);
-
-//process any file uploads
-//$manager->processUploads();
-
-//$manager->deleteFiles();
+$manager =& new ImageManager($IMConfig);
 
 $refreshDir = false;
-//process any directory functions
-//if ($manager->deleteDirs() || $manager->processNewDir()) {
-//	$refreshDir = true;
-//}
 
 // Check for any sub-directory request.
 // Check that the requested sub-directory exists and valid.
@@ -53,16 +44,15 @@ function drawFiles($list, &$manager)
 		<td>
 			<table width="100" cellpadding="0" cellspacing="0">
 			<tr>
-				<td class="block" onclick="selectImage('<?php echo $file['image_object']->getImageUrl(); //$file['relative'];?>', '<?php echo $file['alt']; ?>', <?php echo $file['image'][0];?>, <?php echo $file['image'][1]; ?>);">
-		<a href="javascript:;" onclick="selectImage('<?php echo $file['image_object']->getImageUrl(); //$file['relative'];?>', '<?php echo $file['alt']; ?>', <?php echo $file['image'][0];?>, <?php echo $file['image'][1]; ?>);" title="<?php echo $file['alt']; ?>"><img src="<?php echo $file['image_object']->getThumbnailUrl();//$manager->getThumbnail($file['relative']); ?>" alt="<?php echo $file['alt']; ?>"/></a>
+				<td class="block" onclick="selectImage('<?php echo $file['image_object']->getImageUrl(); ?>', '<?php echo $file['alt']; ?>', <?php echo 0+$file['image'][0];?>, <?php echo 0+$file['image'][1]; ?>);">
+		<a href="javascript:;" onclick="selectImage('<?php echo $file['image_object']->getImageUrl(); ?>', '<?php echo $file['alt']; ?>', <?php echo 0+$file['image'][0];?>, <?php echo 0+$file['image'][1]; ?>);" title="<?php echo $file['alt']; ?>"><img src="<?php echo $file['image_object']->getThumbnailUrl(); ?>" alt="<?php echo $file['alt']; ?>"/></a>
 		</td></tr><tr><td class="edit">
-			<!--<a href="images.php?dir=<?php //echo $relative; ?>&amp;delf=<?php //echo rawurlencode($file['relative']);?>" title="Trash" onclick="return confirmDeleteFile('<?php //echo $entry; ?>');"><img src="img/edit_trash.gif" height="15" width="15" alt="Trash"/></a><a href="javascript:;" title="Edit" onclick="editImage('<?php //echo rawurlencode($file['relative']);?>');"><img src="img/edit_pencil.gif" height="15" width="15" alt="Edit"/></a>-->
 		<?php 
 		if ($file['image']) { 
 			echo $file['image'][0].'x'.$file['image'][1]; 
 		} 
 		else {
-			echo "???"; //$entry;
+			echo " "; //$entry;
 		}
 		?>
 		</td></tr></table></td> 
