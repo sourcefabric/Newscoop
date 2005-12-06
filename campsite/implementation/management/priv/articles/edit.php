@@ -231,7 +231,7 @@ if ($f_edit_mode == "edit") { ?>
 						<?php } ?>
 						
 						<?php  if ($User->hasPermission('AddArticle')) { ?>
-						<OPTION value="copy"><?php putGS("Copy"); ?></OPTION>
+						<OPTION value="copy"><?php putGS("Duplicate"); ?></OPTION>
 						<OPTION value="translate"><?php putGS("Translate"); ?></OPTION>
 						<?php } ?>				
 						</SELECT>

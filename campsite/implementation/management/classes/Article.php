@@ -19,6 +19,7 @@ require_once($g_documentRoot.'/classes/ArticleData.php');
 require_once($g_documentRoot.'/classes/ArticleImage.php');
 require_once($g_documentRoot.'/classes/ArticleTopic.php');
 require_once($g_documentRoot.'/classes/ArticleIndex.php');
+require_once($g_documentRoot.'/classes/ArticleAttachment.php');
 require_once($g_documentRoot.'/classes/Language.php');
 require_once($g_documentRoot.'/classes/Log.php');
 
@@ -282,6 +283,9 @@ class Article extends DatabaseObject {
     
     		// Copy topic pointers
     		ArticleTopic::OnArticleCopy($copyMe->m_data['Number'], $articleCopy->m_data['Number']);
+    		
+    		// Copy file pointers
+    		ArticleAttachment::OnArticleCopy($copyMe->m_data['Number'], $articleCopy->m_data['Number']);
     		
     		// Position the new article at the beginning of the section
     		$articleCopy->moveAbsolute(1);

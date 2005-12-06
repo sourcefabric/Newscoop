@@ -151,7 +151,7 @@ class ArticleAttachment extends DatabaseObject {
 	function OnArticleCopy($p_srcArticleNumber, $p_destArticleNumber) 
 	{
 		global $Campsite;
-		$queryStr = 'SELECT fk_attachment_id FROM ArticleAttachments WHERE fk_article_id='.$p_srcArticleNumber;
+		$queryStr = 'SELECT fk_attachment_id FROM ArticleAttachments WHERE fk_article_number='.$p_srcArticleNumber;
 		$rows = $Campsite['db']->GetAll($queryStr);
 		foreach ($rows as $row) {
 			$queryStr = 'INSERT IGNORE INTO ArticleAttachments(fk_article_number, fk_attachment_id)'

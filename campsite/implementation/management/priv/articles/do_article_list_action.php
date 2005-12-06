@@ -9,9 +9,9 @@ if (!$access) {
 }
 
 
-echo "<pre>";
-print_r($_REQUEST);
-echo "</pre>";
+//echo "<pre>";
+//print_r($_REQUEST);
+//echo "</pre>";
 
 // Get input
 $f_publication_id = Input::Get('f_publication_id', 'int', 0);

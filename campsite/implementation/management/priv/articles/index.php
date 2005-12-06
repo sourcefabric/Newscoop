@@ -239,8 +239,8 @@ function uncheckAll(field)
 				<?php } ?>
 				
 				<?php  if ($User->hasPermission('AddArticle')) { ?>
-				<OPTION value="copy"><?php putGS("Copy"); ?></OPTION>
-				<OPTION value="copy_interactive"><?php putGS("Copy to another section"); ?></OPTION>
+				<OPTION value="copy"><?php putGS("Duplicate"); ?></OPTION>
+				<OPTION value="copy_interactive"><?php putGS("Duplicate to another section"); ?></OPTION>
 				<OPTION value="translate"><?php putGS("Translate"); ?></OPTION>
 				<?php } ?>
 				
