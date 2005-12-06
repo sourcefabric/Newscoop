@@ -49,17 +49,17 @@ class ArticleIndex extends DatabaseObject {
 	 * @param int $p_issueId
 	 * @param int $p_sectionId
 	 * @param int $p_languageId
-	 * @param int $p_articleId
+	 * @param int $p_articleNumber
 	 * @return void
 	 */
-	function OnArticleDelete($p_publicationId, $p_issueId, $p_sectionId, $p_languageId, $p_articleId) 
+	function OnArticleDelete($p_publicationId, $p_issueId, $p_sectionId, $p_languageId, $p_articleNumber) 
 	{
 		global $Campsite;
 		$queryStr = 'DELETE FROM ArticleIndex'
 					." WHERE IdPublication=$p_publicationId "
 					." AND NrIssue=$p_issueId "
 					." AND NrSection=$p_sectionId "
-					." AND NrArticle=$p_articleId "
+					." AND NrArticle=$p_articleNumber "
 					." AND IdLanguage=$p_languageId";
 		$Campsite['db']->Execute($queryStr);		
 	} // fn OnArticleDelete

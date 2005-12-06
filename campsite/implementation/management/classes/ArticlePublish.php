@@ -252,15 +252,15 @@ class ArticlePublish extends DatabaseObject {
 	 * Get all the events that will change the article's state.
 	 * Returns an array of ArticlePublish objects.
 	 *
-	 * @param int $p_articleId
+	 * @param int $p_articleNumber
 	 * @param int $p_languageId
 	 * @return array
 	 */
-	function GetArticleEvents($p_articleId, $p_languageId = null) 
+	function GetArticleEvents($p_articleNumber, $p_languageId = null) 
 	{
 		global $Campsite;
 		$queryStr = 'SELECT * FROM ArticlePublish '
-					." WHERE fk_article_number=$p_articleId";
+					." WHERE fk_article_number=$p_articleNumber";
 		if (!is_null($p_languageId)) {
 			$queryStr .= " AND fk_language_id=$p_languageId ";
 		}
@@ -279,13 +279,37 @@ class ArticlePublish extends DatabaseObject {
 	    global $Campsite;
 	    $datetime = strftime("%Y-%m-%d %H:%M:00");
         $queryStr = "SELECT * FROM ArticlePublish, Articles "
-                    . " WHERE ArticlePublish.time_action <= '$datetime'"
+        			. " WHERE ArticlePublish.fk_article_number=Articles.Number"
+                    . " AND ArticlePublish.time_action <= '$datetime'"
                     . " AND ArticlePublish.is_completed != 'Y'"
                     . " AND Articles.Published != 'N'"
                     . " ORDER BY ArticlePublish.time_action ASC";
         $result = DbObjectArray::Create('ArticlePublish', $queryStr);
         return $result;
 	} // fn GetPendingActions
+	
+	
+	/**
+	 * Return TRUE if there are actions scheduled in the future.
+	 * @param int $p_articleNumber
+	 * @param int $p_languageId
+	 * @return boolean
+	 */
+	function ArticleHasFutureActions($p_articleNumber, $p_languageId) 
+	{
+	    global $Campsite;
+	    $datetime = strftime("%Y-%m-%d %H:%M:00");
+        $queryStr = "SELECT COUNT(*) FROM ArticlePublish, Articles "
+                    . " WHERE ArticlePublish.fk_article_number=$p_articleNumber"
+                    . " AND ArticlePublish.fk_language_id=$p_languageId"
+                    . " AND ArticlePublish.fk_article_number=Articles.Number"
+                    . " AND ArticlePublish.time_action > '$datetime'"
+                    . " AND ArticlePublish.is_completed != 'Y'"
+                    . " AND Articles.Published != 'N'"
+                    . " ORDER BY ArticlePublish.time_action ASC";
+        $result = $Campsite['db']->GetOne($queryStr);
+        return ($result > 0);
+	} // fn ArticleHasFutureActions
 	
 	
 	/**

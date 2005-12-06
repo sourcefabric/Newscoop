@@ -1301,8 +1301,8 @@ class Article extends DatabaseObject {
 	 * @param int $p_languageId -
 	 *		The language ID.
 	 *
-	 * @param int $p_articleId -
-	 *		The article ID.
+	 * @param int $p_articleNumber -
+	 *		The article number.
 	 *
 	 * @param int $p_preferredLanguage -
 	 *		If specified, list the articles in this language before others.
@@ -1327,7 +1327,7 @@ class Article extends DatabaseObject {
 	 */
 	function GetArticles($p_publicationId = null, $p_issueId = null, 
 						 $p_sectionId = null, $p_languageId = null, 
-						 $p_articleId = null, $p_preferredLanguage = null, 
+						 $p_articleNumber = null, $p_preferredLanguage = null, 
 						 $p_numRows = null, $p_startAt = '', 
 						 $p_numRowsIsUniqueRows = false) 
     {
@@ -1346,8 +1346,8 @@ class Article extends DatabaseObject {
 		if (!is_null($p_languageId)) {
 			$whereClause[] = "IdLanguage=$p_languageId";
 		}
-		if (!is_null($p_articleId)) {
-			$whereClause[] = "Number=$p_articleId";
+		if (!is_null($p_articleNumber)) {
+			$whereClause[] = "Number=$p_articleNumber";
 		}
 
 		if ($p_numRowsIsUniqueRows) {

@@ -362,9 +362,10 @@ foreach ($allArticles as $articleObj) {
 		<TD ALIGN="CENTER">
 			<?php 
 			if ($articleObj->getPublished() != 'N') { 
-				$events = ArticlePublish::GetArticleEvents($articleObj->getArticleNumber(),
+				$hasPendingActions = 
+					ArticlePublish::ArticleHasFutureActions($articleObj->getArticleNumber(),
 					$articleObj->getLanguageId());
-				if (count($events) > 0) { ?>
+				if ($hasPendingActions) { ?>
 			<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/automatic_publishing.png" alt="<?php  putGS("Scheduled Publishing"); ?>" title="<?php  putGS("Scheduled Publishing"); ?>" border="0" width="22" height="22">
 				<?php 
 				}

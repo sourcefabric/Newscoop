@@ -33,10 +33,10 @@ class ArticleData extends DatabaseObject {
 	 * ways.  
 	 *
 	 * @param string $p_articleType
-	 * @param int $p_articleId
+	 * @param int $p_articleNumber
 	 * @param int $p_languageId
 	 */
-	function ArticleData($p_articleType, $p_articleId, $p_languageId) 
+	function ArticleData($p_articleType, $p_articleNumber, $p_languageId) 
 	{
 		$this->m_articleTypeName = $p_articleType;
 		$this->m_dbTableName = 'X'.$p_articleType;
@@ -46,7 +46,7 @@ class ArticleData extends DatabaseObject {
 			$this->m_columnNames[] = $columnMetaData->getName();
 		}
 		parent::DatabaseObject($this->m_columnNames);
-		$this->m_data['NrArticle'] = $p_articleId;
+		$this->m_data['NrArticle'] = $p_articleNumber;
 		$this->m_data['IdLanguage'] = $p_languageId;
 		if ($this->exists()) {
 			$this->fetch();

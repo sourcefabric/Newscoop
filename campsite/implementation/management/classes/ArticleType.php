@@ -34,8 +34,6 @@ class ArticleType {
 	 * ways.  
 	 *
 	 * @param string $p_articleType
-	 * @param int $p_articleId
-	 * @param int $p_languageId
 	 */
 	function ArticleType($p_articleType) 
 	{

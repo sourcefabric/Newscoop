@@ -137,7 +137,7 @@ class ArticleAttachment extends DatabaseObject {
 	{
 		global $Campsite;
 		$queryStr = 'DELETE FROM ArticleAttachments'
-					." WHERE fk_article_number='".$p_articleId."'";
+					." WHERE fk_article_number='".$p_articleNumber."'";
 		$Campsite['db']->Execute($queryStr);		
 	} // fn OnArticleDelete
 	

@@ -45,15 +45,15 @@ class ArticleTopic extends DatabaseObject {
 	/**
 	 * Link a topic to an article.
 	 * @param int $p_topicId
-	 * @param int $p_articleId
+	 * @param int $p_articleNumber
 	 * @return void
 	 */
-	function AddTopicToArticle($p_topicId, $p_articleId) 
+	function AddTopicToArticle($p_topicId, $p_articleNumber) 
 	{
 		global $Campsite;
 		$logtext = getGS('Topic $1 added to article', $p_topicId);
 		$queryStr = 'INSERT IGNORE INTO ArticleTopics(NrArticle, TopicId)'
-					.' VALUES('.$p_articleId.', '.$p_topicId.')';
+					.' VALUES('.$p_articleNumber.', '.$p_topicId.')';
 		$Campsite['db']->Execute($queryStr);
 		Log::Message($logtext, null, 144);
 	} // fn AddTopicToArticle
@@ -62,14 +62,14 @@ class ArticleTopic extends DatabaseObject {
 	/**
 	 * Unlink a topic from an article.
 	 * @param int $p_topicId
-	 * @param int $p_articleId
+	 * @param int $p_articleNumber
 	 * @return void
 	 */
-	function RemoveTopicFromArticle($p_topicId, $p_articleId) 
+	function RemoveTopicFromArticle($p_topicId, $p_articleNumber) 
 	{
 		global $Campsite;
 		$logtext = getGS('Article topic $1 deleted', $p_topicId); 
-		$queryStr = "DELETE FROM ArticleTopics WHERE NrArticle=$p_articleId AND TopicId=$p_topicId";
+		$queryStr = "DELETE FROM ArticleTopics WHERE NrArticle=$p_articleNumber AND TopicId=$p_topicId";
 		$Campsite['db']->Execute($queryStr);
 		Log::Message($logtext, null, 145);		
 	} // fn RemoveTopicFromArticle
@@ -77,14 +77,14 @@ class ArticleTopic extends DatabaseObject {
 	
 	/**
 	 * Remove topic pointers for the given article.
-	 * @param int $p_articleId
+	 * @param int $p_articleNumber
 	 * @return void
 	 */
-	function OnArticleDelete($p_articleId) 
+	function OnArticleDelete($p_articleNumber) 
 	{
 		global $Campsite;
 		$queryStr = 'DELETE FROM ArticleTopics'
-					." WHERE NrArticle='".$p_articleId."'";
+					." WHERE NrArticle='".$p_articleNumber."'";
 		$Campsite['db']->Execute($queryStr);		
 	} // fn OnArticleDelete
 	
