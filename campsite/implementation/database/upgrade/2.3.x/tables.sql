@@ -95,7 +95,7 @@ INDEX ( `user_type_name` )
 ALTER TABLE `TmpUserTypes` ADD UNIQUE `unique_var_name_index` ( `user_type_name` , `varname` );
 
 -- Run the upgrade script
-system php ./update_user_perms.php
+system php ./upgrade_user_perms.php
 
 -- Rename the tables after the upgrade script is run.
 DROP TABLE `UserTypes`;
