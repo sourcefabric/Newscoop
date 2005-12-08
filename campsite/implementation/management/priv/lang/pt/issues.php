@@ -1,4 +1,5 @@
 <?php
+regGS("Issue List", "");
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>", "Nome<br>(Clique para ver Secções)");
 regGS("Front Page Template<BR><SMALL>(click to change)</SMALL>", "Modelo para a Página Principal");
 regGS("Single Article Template<BR><SMALL>(click to change)</SMALL>", "Modelo para Pagina de Artigo");
@@ -27,7 +28,6 @@ regGS("Issue $1 updated in publication $2", "A Edição $1 da Publicação $2 fo
 regGS("You do not have the right to delete issues.", "Não tem permissões para eliminar Edições");
 regGS("Are you sure you want to delete the issue $1?", "Tem a certeza que deseja eliminar a Edição $1?");
 regGS("Deleting issue", "Eliminando Edição");
-regGS("The issue $1 has been deleted.", "A Edição $1 foi eliminada.");
 regGS("The issue $1 could not be deleted.", "A Edição $1 não pode ser eliminada.");
 regGS("All sections from Issue $1 from publication $2 deleted", "Todas as Secções da Edição $1 da Publicação $2 foram eliminadas");
 regGS("Issue $1 from publication $2 deleted", "Edição $1 da Publicação $2 foi Eliminada");
@@ -41,7 +41,6 @@ regGS("Copy previous issue", "Copiar Edição anterior");
 regGS("No previous issue.", "Não existem Edição anterior");
 regGS("Copy structure from issue nr $1", "Copiar estrutura da Edição $1");
 regGS("Copying previous issue", "Copiar Edição anterior");
-regGS("Copying done.", "Cópia Efectuada");
 regGS("Select the issue", "Escolha a Edição");
 regGS("New issue $1 from $2 in publication $3", "Nova Edição $1 de $2 na Publicação $3");
 regGS("Adding new issue", "Adicionando nova Edição");

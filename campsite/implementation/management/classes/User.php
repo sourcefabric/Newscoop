@@ -118,7 +118,10 @@ class User extends DatabaseObject {
 		'EditorTextDirection'=>'N', 
 		'EditorLink'=>'N',
 		'EditorSubhead'=>'N',
-		'InitializeTemplateEngine'=>'N');		
+		'InitializeTemplateEngine'=>'N',
+		'AddFile'=>'N',
+		'ChangeFile'=>'N',
+		'DeleteFile'=>'N');		
 		
 	/**
 	 * A user of the system is a frontend reader or a 'admin' user, meaning

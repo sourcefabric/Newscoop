@@ -1,4 +1,5 @@
 <?php
+regGS("Issue List", "");
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>", "Name (zum Betrachten der Rubrik anklicken)");
 regGS("Front Page Template<BR><SMALL>(click to change)</SMALL>", "Template der Startseite");
 regGS("Single Article Template<BR><SMALL>(click to change)</SMALL>", "Template für Artikel");
@@ -27,7 +28,6 @@ regGS("Issue $1 updated in publication $2", "Ausgabe $1 in Publikation $2 wurde 
 regGS("You do not have the right to delete issues.", "Keine Berechtigung Ausgaben zu löschen");
 regGS("Are you sure you want to delete the issue $1?", "Ausgabe $1 wirklich löschen?");
 regGS("Deleting issue", "Ausgabe wird gelöscht");
-regGS("The issue $1 has been deleted.", "Ausgabe $1 wurde gelöscht");
 regGS("The issue $1 could not be deleted.", "Ausgabe $1 konnte nicht gelöscht werden");
 regGS("All sections from Issue $1 from publication $2 deleted", "Alle Rubriken in Ausgabe $1 der Publikation $2 wurden gelöscht");
 regGS("Issue $1 from publication $2 deleted", "Ausgabe $1 der Publikation $2 wurde gelöscht");
@@ -41,7 +41,6 @@ regGS("Copy previous issue", "Vorherige Ausgabe kopieren");
 regGS("No previous issue.", "Keine vorherige Ausgabe vorhanden");
 regGS("Copy structure from issue nr $1", "Struktur der Ausgabe $1 kopieren");
 regGS("Copying previous issue", "Vorherige Ausgabe kopieren");
-regGS("Copying done.", "Kopiervorgang abgeschlossen");
 regGS("Select the issue", "Ausgabe auswählen");
 regGS("New issue $1 from $2 in publication $3", "Neue Ausgabe $1 von $2 der Publikation $3");
 regGS("Adding new issue", "Neue Ausgabe hinzufügen");

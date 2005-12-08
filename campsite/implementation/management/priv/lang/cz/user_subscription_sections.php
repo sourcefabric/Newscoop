@@ -8,17 +8,14 @@ regGS("Change all sections", "Změnit všechny rubriky");
 regGS("WARNING: If you subscribe to all sections, the periods for previously added sections will be overriden!", "UPOZORNĚNÍ: Pokud si předplatíte všechny rubriky, bude období dříve přidaných rubrik přepsáno.");
 regGS("Adding sections", "Přidání rubrik");
 regGS("Adding sections to subscription", "Přidání rubrik do předplatného");
-regGS("The section was added successfully.", "Rubrika byla úspěšně přidána");
 regGS("Please check if there isn't another subscription with the same section.", "Zkontrolujte prosím, zda již neexistuje předplatné se stejnou rubrikou");
 regGS("Are you sure you want to delete the subscription to the section $1?", "Určitě chcete smazat předplatné k rubrice $1?");
-regGS("The subscription to the section $1 has been deleted.", "Předplatné k rubrice $1 bylo úspěšně smazáno");
 regGS("The subscription to the section $1 could not be deleted.", "Předplatné k rubrice $1 nemohlo být smazáno");
 regGS("Change subscription", "Změnit předplatné");
 regGS("You do not have the right to change subscriptions.", "Nemáte právo měnit předplatné");
 regGS("Paid Days", "Zaplacené dny");
 regGS("-- ALL SECTIONS --", "-- VŠECHNY RUBRIKY --");
 regGS("Updating subscription", "Obnovení předplatného");
-regGS("The subscription has been updated.", "Předplatné bylo obnoveno");
 regGS("The subscription could not be updated.", "Předplatné nemohlo být obnoveno");
 regGS("Changing subscription", "Změna předplatného");
 ?>

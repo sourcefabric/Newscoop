@@ -13,10 +13,10 @@ if (!$access) {
 	header("Location: /$ADMIN/logout.php");
 	exit;
 }
-//if (!$User->hasPermission('AddFiles')) {
-//	camp_html_display_error(getGS('You do not have the right to add files' ));
-//	exit;
-//}
+if (!$User->hasPermission('AddFile')) {
+	camp_html_display_error(getGS('You do not have the right to add files.'));
+	exit;
+}
 
 $f_publication_id = Input::Get('f_publication_id', 'int', 0);
 $f_issue_number = Input::Get('f_issue_number', 'int', 0);

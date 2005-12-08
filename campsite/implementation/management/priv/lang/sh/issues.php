@@ -1,4 +1,5 @@
 <?php
+regGS("Issue List", "");
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>", "Naziv<br><small>(kliknite za pregled rubrika)</small>");
 regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Objavljen<br><small>(gggg-mm-dd)</small>");
 regGS("Delete issue $1", "Obriši izdanje $1");
@@ -21,7 +22,6 @@ regGS("Issue $1 updated in publication $2", "Izdanje $1 je izmenjeno u publikaci
 regGS("You do not have the right to delete issues.", "Nemate pravo da brišete izdanja");
 regGS("Are you sure you want to delete the issue $1?", "Sigurni ste da želite da obrišete izdanje $1?");
 regGS("Deleting issue", "Brisanje izdanja");
-regGS("The issue $1 has been deleted.", "Izdanje $1 je izbrisano.");
 regGS("The issue $1 could not be deleted.", "Izdanje $1 ne može biti izbrisano.");
 regGS("All sections from Issue $1 from publication $2 deleted", "Sve rubrike izdanja $1 iz publikacije $2 su izbrisane");
 regGS("Issue $1 from publication $2 deleted", "Izdanje $1 iz publikacije $2 je obrisano");
@@ -35,7 +35,6 @@ regGS("Copy previous issue", "Prekopiraj prethodno izdanje");
 regGS("No previous issue.", "Nema prethodnog izdanja.");
 regGS("Copy structure from issue nr $1", "Prekopiraj strukturu iz izdanja $1");
 regGS("Copying previous issue", "Kopiranje prethodnog izdanja");
-regGS("Copying done.", "Kopiranje je gotovo");
 regGS("Select the issue", "Izaberite izdanje");
 regGS("New issue $1 from $2 in publication $3", "Novo izdanje $1 iz $2 u publikaciji $3");
 regGS("Adding new issue", "Dodavanje novog izdanja");

@@ -1,4 +1,5 @@
 <?php
+regGS("Issue List", "");
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>", "Název publikace");
 regGS("Front Page Template<BR><SMALL>(click to change)</SMALL>", "Šablona titulní strany");
 regGS("Single Article Template<BR><SMALL>(click to change)</SMALL>", "Šablona článku (klikněte pro změnu)");
@@ -27,7 +28,6 @@ regGS("Issue $1 updated in publication $2", "Vydání $1 bylo obnoveno v publika
 regGS("You do not have the right to delete issues.", "Nemáte právo mazat vydání");
 regGS("Are you sure you want to delete the issue $1?", "Určitě chcete smazat vydání $1?");
 regGS("Deleting issue", "Mazaní vydání");
-regGS("The issue $1 has been deleted.", "Vydání $1 bylo smazáno");
 regGS("The issue $1 could not be deleted.", "Vydání $1 nemohlo být smazáno");
 regGS("All sections from Issue $1 from publication $2 deleted", "Všechny rubriky z vydání $1 v publikaci $2 byly smazány");
 regGS("Issue $1 from publication $2 deleted", "Vydání $1 v publikaci $2 bylo smazáno");
@@ -41,7 +41,6 @@ regGS("Copy previous issue", "Kopírovat předchozí vydání");
 regGS("No previous issue.", "Žádné předchozí vydání");
 regGS("Copy structure from issue nr $1", "Kopírovat strukturu z vydání č. $1");
 regGS("Copying previous issue", "Kopírování předchozího vydání");
-regGS("Copying done.", "Kopírování dokončeno");
 regGS("Select the issue", "Vyberte vydání");
 regGS("New issue $1 from $2 in publication $3", "Nové vydání $1 z $1 v publikaci $3");
 regGS("Adding new issue", "Přidání nového vydání");

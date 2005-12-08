@@ -5,13 +5,9 @@ regGS("Date <SMALL>(yyyy-mm-dd)</SMALL>", "Date <SMALL>(yyyy-mm-dd)</SMALL>");
 regGS("Delete image $1", "Delete image $1");
 regGS("No images.", "No images.");
 regGS("Description <SMALL>(Click to view details)</SMALL>", "Description <SMALL>(Click to view details)</SMALL>");
-regGS("Gallery", "Gallery");
-regGS("Text only", "Text only");
 regGS("Used in articles", "Used in articles");
 regGS("View image", "View image");
 regGS("Change image information", "Change image information");
 regGS("Changed image properties of $1", "Changed image properties of $1");
-regGS("Are you sure you want to delete the image $1?", "Are you sure you want to delete the image $1?");
-regGS("Image $1 deleted", "Image $1 deleted");
 regGS("The image $1 has been added.", "The image $1 has been added.");
 ?>

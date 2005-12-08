@@ -6,10 +6,8 @@ regGS("Adding new article type", "Dodavanje novog tipa članka");
 regGS("The $1 field may only contain letters and underscore (_) character.", "Polje $1 može imati samo slova");
 regGS("The article type $1 already exists.", "Tip članka $1 već postoji");
 regGS("The article type $1 has been added.", "Tip članka $1 je dodan");
-regGS("Delete article type", "Izbriši tip članka");
 regGS("You do not have the right to delete article types.", "Nemate prava brisati tipove članaka");
 regGS("Are you sure you want to delete the article type $1?", "Sigurno želite izbrisati tip članka $1?");
-regGS("Deleting article type", "Brisanje tipa članka");
 regGS("The article type $1 has been deleted.", "Tip članka $1 je izbrisan");
 regGS("The article type $1 could not be deleted.", "Tip članka $1 ne može se izbrisati");
 ?>

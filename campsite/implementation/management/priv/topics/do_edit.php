@@ -56,14 +56,17 @@ echo camp_html_breadcrumbs($crumbs);
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">
 <TR>
 	<TD COLSPAN="2">
-		<B> <?php  putGS("Changing topic name"); ?> </B>
+		<B> <?php  putGS("Change topic name"); ?> </B>
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
 	</TD>
 </TR>
 <TR>
 	<TD COLSPAN="2">
 	<BLOCKQUOTE>
-
+	<?php foreach ($errorMsgs as $errorMsg) {
+		p($errorMsg);
+	}
+	?>
     </BLOCKQUOTE>
     </TD>
 </TR>

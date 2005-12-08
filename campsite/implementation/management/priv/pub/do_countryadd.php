@@ -33,9 +33,6 @@ if ($correct) {
 	$defaultTime = new SubscriptionDefaultTime($cCountryCode, $cPub);
 	$created = $defaultTime->create(array('TrialTime' => $cTrialTime, 'PaidTime' => $cPaidTime));
 	if ($created) {
-		$logtext = getGS('The default subscription time for $1 has been added.', 
-						 $publicationObj->getName().':'.$cCountryCode); 
-		Log::Message($logtext, $User->getUserName(), 4);
 		header("Location: /$ADMIN/pub/editdeftime.php?Pub=$cPub&CountryCode=$cCountryCode&Language=$Language");
 		exit;
 	}

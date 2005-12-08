@@ -70,7 +70,7 @@ camp_html_content_top(getGS('Copying previous issue'), array('Pub' => $publicati
 <TR>
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">
-	<INPUT TYPE="button" class="button" NAME="Ok" VALUE="<?php  putGS('Ok'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/issues/?Pub=<?php  p($Pub); ?>'">
+	<INPUT TYPE="button" class="button" NAME="Ok" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/issues/?Pub=<?php  p($Pub); ?>'">
 	</DIV>
 	</TD>
 </TR>

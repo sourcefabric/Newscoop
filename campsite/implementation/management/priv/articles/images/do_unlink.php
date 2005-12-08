@@ -40,9 +40,6 @@ if (!$articleObj->userCanModify($User)) {
 
 ArticleImage::RemoveImageFromArticle($f_image_id, $f_article_number, $f_image_template_id);
 
-$logtext = getGS('Image $1 unlinked from $2', $ImageId, $Article); 
-Log::Message($logtext, $User->getUserName(), 42);
-
 // Go back to article image list.
 header('Location: '.camp_html_article_url($articleObj, $f_language_id, 'edit.php'));
 exit;

@@ -100,6 +100,7 @@ function translationForm($p_request)
     $mapPrefixToDisplay["sections"] = getGS("Sections");
     $mapPrefixToDisplay["articles"] = getGS("Articles");
     $mapPrefixToDisplay["article_images"] = getGS("Article Images");
+    $mapPrefixToDisplay["article_files"] = getGS("Article Files");
     $mapPrefixToDisplay["article_topics"] = getGS("Article Topics");
     $mapPrefixToDisplay["imagearchive"] = getGS("Image Archive");
     $mapPrefixToDisplay["templates"] = getGS("Templates");

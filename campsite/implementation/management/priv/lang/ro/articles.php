@@ -5,7 +5,6 @@ regGS("$1 articles found", "");
 regGS("Show article on front page", "Afişează articolul în pagina principală");
 regGS("Show article on section page", "Afişează articolul în pagina secţiunii");
 regGS("Enter keywords, comma separated", "Introduceţi cuvintele cheie separate de virgulă");
-regGS("Article $1 added to $2. $3 from $4. $5 of $6", "Articolul $1 a fost adăugat la $2. $3 din $4. $5 din $6");
 regGS("Are you sure you want to delete the article $1 ($2)?", "Doriţi să ştergeţi articolul $1 ($2)?");
 regGS("Change article status", "Modific starea articolului");
 regGS("Change the status of article $1 ($2) from $3 to", "Modific starea articolului $1 ($2) de la $3 la");
@@ -17,8 +16,9 @@ regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.",
 regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "");
 regGS("Are you sure you want to unlock it?", "Doriţi să îl deblocaţi?");
 regGS("Article is locked", "");
-regGS("The article has been updated.", "Articolul a fost modificat");
 regGS("The article cannot be updated or no changes have been made.", "Articolul nu poate fi modificat sau nu au fost modificări");
 regGS("Duplicate article", "Duplică articolul");
 regGS("The destination section is the same as the source section.", "Secţiunea destinaţie este aceeaşi cu cea sursă");
+regGS("Are you sure you want to remove the image \'$1\' from the article?", "");
+
 ?>

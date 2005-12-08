@@ -4,7 +4,6 @@ regGS("$1 articles found", "تم العثور على $1 مقالات");
 regGS("Show article on front page", "أظهر المقال في الصفحة الرئيسية");
 regGS("Show article on section page", "أظهار المقال في صفحة الباب");
 regGS("Enter keywords, comma separated", "أدخل كلمات المفتاح مستخدما الفاصلة");
-regGS("Article $1 added to $2. $3 from $4. $5 of $6", "تمّت إضافة المقال $1 إلى $2. $3 من $4 و$5 من $6");
 regGS("Are you sure you want to delete the article $1 ($2)?", "هل أنت متأكد من أنك تريد إلغاء المقال $1 ($2)؟");
 regGS("Change article status", "غيّر وضع المقال");
 regGS("Change the status of article $1 ($2) from $3 to", "تغيير وضع المقال $1 ($2) من $3");
@@ -16,7 +15,6 @@ regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.",
 regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "تم اغلاق المقال بواسطة 1$ (2$) منذ 3$ دقائق");
 regGS("Are you sure you want to unlock it?", "هل انت متأكد من فتح المقال؟");
 regGS("Article is locked", "المقال مغلق");
-regGS("The article has been updated.", "تم تحديث المقال");
 regGS("The article cannot be updated or no changes have been made.", "لم يحدث أي تعديل، فلم يتم تحديث المقال");
 regGS("Duplicate article", "كرر المقال");
 regGS("The destination section is the same as the source section.", "القسم الهدف هو نفس القسم المصدر");
@@ -28,4 +26,6 @@ regGS("You do not have the right to change this article status. Once submitted a
 regGS("You do not have the right to delete articles.", "");
 regGS("You must select an article type.", "");
 regGS("Are you sure you want to delete this scheduled action?", "");
+regGS("Are you sure you want to remove the image '$1' from the article?", "هل انت متأكد من ازالة الصورة' /1$/ 'من المقال ؟");
+
 ?>

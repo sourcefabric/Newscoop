@@ -1,11 +1,9 @@
 <?php
 regGS("User types", "Типы пользователей");
 regGS("No user types.", "Нет типов пользователей.");
-regGS("User type $1 added", "Тип пользователей $1 добавлен");
 regGS("Are you sure you want to delete the user type $1?", "Вы уверены, что хотите удалить тип пользователей $1?");
 regGS("No such user type.", "Нет такого типа пользователей.");
 regGS("You do not have the right to delete user types.", "Вы не имеете права удаления типов пользователей.");
-regGS("User type $1 deleted", "Тип пользователей $1 удален");
 regGS("User type", "Тип пользователей");
 regGS("Change user type permissions", "Изменить права типа пользователей");
 regGS("You do not have the right to change user type permissions.", "Вы не имеете права изменения прав типов пользователей.");

@@ -5,9 +5,6 @@ regGS("Logout", "خروج");
 regGS("You are logged in as $1", "أنت داخل ك$1");
 regGS("More...", "المزيد...");
 regGS("Content", "المحتوى");
-regGS("Obsolete", "قديم");
-regGS("Publishing environment", "بيئة النشر");
-regGS("Infotypes", "أنواع المعلومات");
 regGS("Languages", "اللغات");
 regGS("Countries", "الدول");
 regGS("Templates", "القوالب");
@@ -48,9 +45,7 @@ regGS("---Select section---", "اختر القسم");
 regGS("No articles", "لا مقالات");
 regGS("---Select article---", "اختر المقال");
 regGS("Language", "اللغة");
-regGS("Keyword infotype", "نوع الكلمة الأساسية");
 regGS("Translation", "الترجمة");
-regGS("Infotype", "نوع المعلومات");
 regGS("Country", "البلد");
 regGS("User name", "اسم المستخدم");
 regGS("Definition", "التعريف");
@@ -77,7 +72,6 @@ regGS("Schedule a new publish action", "جدول عملية نشر جديدة");
 regGS("No entries.", "لا إدخالات");
 regGS("Scheduling a new publish action", "جدول عملية نشر جديدة");
 regGS("Delete scheduled publish action", "حذف عملية نشر مجدولة");
-regGS("The action scheduled on $1 has been deleted.", "العملية المجدولة في $1 تم إلغاؤها");
 regGS("The $1 action has been scheduled on $2", "عملية ال $1 تم جدولتها في $2");
 regGS("Date/Time", "التاريخ/الوقت");
 regGS("You must select an action.", "يجب أن تختار عملية");
@@ -94,12 +88,9 @@ regGS("Actions", "العمليات");
 regGS("Publishing", "النشر");
 regGS("Show", "اظهر");
 regGS("Remove", "أزل");
-regGS("The $1 actions have been scheduled on $2", "عمليات $1 تم جدولتها في $2");
 regGS("days", "الأيام");
 regGS("Article Types", "أنواع المقال");
 regGS("User Types", "أنواع المستخدم");
-regGS("Glossary", "الفهرس");
-regGS("Keyword infotypes", "أنواع الكلمات الأساسية");
 regGS("Publications", "المنشورات");
 regGS("Issues", "الأعداد");
 regGS("Sections", "الأقسام");
@@ -124,7 +115,6 @@ regGS("You must complete the $1 field.", "يجب تعبئة الحقل $1");
 regGS("Error", "خطاء");
 regGS("Invalid input: $1", "إدخال غير صحيح");
 regGS("Language does not exist.", "اللغة غير موجودة");
-regGS("Infotype does not exist.", "نوع المعلومة غير موجود");
 regGS("Keyword does not exist.", "الكلمة الأساسية غير موجودة");
 regGS("Publication does not exist.", "المنشور غير موجود");
 regGS("Country does not exist.", "الدولة غير موجودة");
@@ -171,19 +161,14 @@ regGS("Date", "التاريخ");
 regGS("Thumbnail", "الصورة المصغرة");
 regGS("In use", "مستخدمة بي");
 regGS("Identifier", "معرَف");
-regGS("Uploaded by", "حمَل بواسطة");
 regGS("Additional searches", "بحث إضافي");
 regGS("Most Recently Added", "أخر الإضافات");
 regGS("Most Recently Modified", "أخر التعديلات");
 regGS("$1 images found", "تم العثور على $1");
 regGS("Reset search conditions", "أعد شروط البحث");
 regGS("Preview issue", "معاينة العدد");
-regGS("Publ. no.", "رقم المنشور");
-regGS("Issue no.", "رقم العدد");
-regGS("Section no.", "رقم القسم");
 regGS("Image number", "رقم الصورة");
 regGS("Users", "المستخدمون");
-regGS("User is a reader", "المستخدم قارئ");
 regGS("User may add/change publications", "يحق للمستخدم إضافة وتعديل المنشورات");
 regGS("User may delete publications", "يحق للمستخدم إلغاء المنشورات");
 regGS("User may add/change issues", "يحق للمستخدم إضافة وتعديل الأعداد");
@@ -206,9 +191,6 @@ regGS("User may add/change article types", "يحق للمستخدم إضافة �
 regGS("User may delete article types", "يحق للمستخدم إلغاء المقالات");
 regGS("User may add languages and manage language information", "يحق للمستخدم إضافة اللغات وتعديلها");
 regGS("User may delete languages", "يحق للمستخدم إلغاء اللغات");
-regGS("User may manage glossary infotypes", "يحق للمستخدم إدارة معلومات الفهرس");
-regGS("User may add/change glossary entries", "يحق للمستخدم إضافة وتعديل مدخلات الفهرس");
-regGS("User may delete glossary entries", "يحق للمستخدم إلغاء مدخلات الفهرس");
 regGS("User will be notified on several events", "سيتم تنبية المستخدم على العديد من العمليات");
 regGS("User may view audit logs", "يحق للمستخدم أن يرى سجلات الأداء");
 regGS("User may add/change country names", "يحق للمستخدم إضافة وتعديل أسماء الدول");
@@ -242,12 +224,7 @@ regGS("User may use superscripts", "يحق للمستخدم إستخدام ال�
 regGS("User may use subscripts", "يحق للمستخدم إستخدام النص السفلي");
 regGS("Updating user types permissions", "تحديث صلاحيات أنواع المستخدمين");
 regGS("Adding new translation", "إضافة ترجمة جديدة");
-regGS("Translate keyword", "ترجمة كلمة أساسية");
 regGS("No more languages.", "لا مزيد من اللغات");
-regGS("No such keyword infotype.", "لا وجود نوع كلمة رئيسية");
-regGS("Adding new keyword infotype", "إضافة نوع كلمة رئيسية جديد");
-regGS("The infotype has been deleted.", "تم إلغاء نوع المعلومات");
-regGS("The infotype could not be deleted.", "لم يكن ممكن إلغاء نوع المعلومات");
 regGS("The $1 field may only contain letters, digits and underscore (_) character.", "الحقل $1 يمكن أن يحتوي على أحرف, أرقام و _");
 regGS("Add new publication", "أضف منشور جديد");
 regGS("Upload new template", "تحميل قالب جديد");
@@ -261,7 +238,6 @@ regGS("View logs", "مشاهدة السجلات");
 regGS("Change your password", "تعديل كلمة السر");
 regGS("Your articles", "مقالاتك");
 regGS("Submitted articles", "المقالات المعتمدة");
-regGS("Quick Menu", "القائمة السريعة");
 regGS("Logs", "السجلات");
 regGS("There are $1 article(s) left.", "لا يزال هنالك $1 مقالات");
 regGS("There are $1 issues(s) left.", "لا يزال هنالك $1 أعداد");
@@ -278,7 +254,6 @@ regGS("Adding subscription", "إضافة أشتراك");
 regGS("The section could not be added.", "لم يكن من الممكن إضافة القسم");
 regGS("Delete subscription", "حذف الإشتراك");
 regGS("You do not have the right to delete subscriptions.", "لا تملك صلاحية حذف الإشتراكات");
-regGS("Deleting subscription", "حذف الإشتراك");
 regGS("No such subscription.", "لا وجود للإشتراك");
 regGS("The section $1 could not be deleted.", "لم يتم حذف القسم $1");
 regGS("The topic $1 could not be deleted.", "لم يتم حذف الموضوع $1");
@@ -295,15 +270,12 @@ regGS("Add another topic", "إضافة موضوع آخر");
 regGS("Deleting topic", "حذف الموضوع");
 regGS("There are $1 subtopics left.", "هنالك $1 مواضيع فرعية متبقية");
 regGS("Topic $1 deleted", "تم حذف الموضوع $1 ");
-regGS("Changing topic name", "تغير أسم الموضوع");
 regGS("You do not have the right to change topic name.", "لا تملك صلاحية تغير أسم الموضوع");
 regGS("Topic $1 updated", "تم تحديث الموضوع $1");
 regGS("The topic name could not be updated.", "لم يتم تحديث أسم الموضوع");
 regGS("Change topic name", "تغير أسم الموضوع");
 regGS("Delete topic $1", "حذف الموضوع $1");
 regGS("No topics", "لا مواضيع");
-regGS("The topic $1 has been successfuly added.", "تم إضافة الموضوع $1 بنجاح");
-regGS("The topic $1 has been successfuly updated.", "تم تحديث الموضوع $1 بنجاح");
 regGS("The topic $1 has been deleted.", "تم حذف الموضوع $1");
 regGS("There are $1 articles using the topic.", "هنالك $1 مقالات تستخدم الموضوع");
 regGS("You must fill in the $1 field.", "عليك ملأ الحقل $1");

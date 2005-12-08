@@ -41,13 +41,6 @@ $publicationObj =& new Publication($f_publication_id);
 $issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
 $sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
 
-// This file can only be accessed if the user has the right to change articles
-// or the user created this article and it hasnt been published yet.
-if (!$articleObj->userCanModify($User)) {	
-	camp_html_display_error(getGS('You do not have the right to change the article.'));
-	exit;		
-}
-
 $imageObj =& new Image($f_image_id);
 $attributes = array();
 $attributes['Description'] = $f_image_description;
@@ -55,13 +48,15 @@ $attributes['Photographer'] = $f_image_photographer;
 $attributes['Place'] = $f_image_place;
 $attributes['Date'] = $f_image_date;
 $view = Input::Get('view', 'string', 'thumbnail', true);
-$imageObj->update($attributes);
-if (is_numeric($f_image_template_id) && ($f_image_template_id > 0)) {
-	ArticleImage::SetTemplateId($f_article_number, $f_image_id, $f_image_template_id);
-}
 
-$logtext = getGS('Changed image properties of $1',$attributes['Description']); 
-Log::Message($logtext, $User->getUserName(), 43);
+if ($User->hasPermission('ChangeImage')) {
+	$imageObj->update($attributes);
+}
+if ($articleObj->userCanModify($User)) {	
+	if (is_numeric($f_image_template_id) && ($f_image_template_id > 0)) {
+		ArticleImage::SetTemplateId($f_article_number, $f_image_id, $f_image_template_id);
+	}
+}
 
 $ref = camp_html_article_url($articleObj, $f_language_selected, 'edit.php');
 

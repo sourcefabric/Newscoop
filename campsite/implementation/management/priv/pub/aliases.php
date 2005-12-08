@@ -47,7 +47,7 @@ foreach ($aliases as $alias) {  ?>
 		<TD ALIGN="CENTER">
 			<?php 
 			if ($publicationObj->getDefaultAliasId() != $alias->getId()) { ?>
-			<A HREF="/<?php p($ADMIN); ?>/pub/do_del_alias.php?Pub=<?php p($Pub); ?>&Alias=<?php p($alias->getId()); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the alias $1?', $alias->getName()); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php  putGS('Delete entry $1', htmlspecialchars($alias->getName())); ?>" TITLE="<?php  putGS('Delete entry $1', htmlspecialchars($alias->getName())); ?>" ></A>
+			<A HREF="/<?php p($ADMIN); ?>/pub/do_del_alias.php?Pub=<?php p($Pub); ?>&Alias=<?php p($alias->getId()); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the alias $1?', $alias->getName()); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php  putGS('Delete alias $1', htmlspecialchars($alias->getName())); ?>" TITLE="<?php  putGS('Delete alias $1', htmlspecialchars($alias->getName())); ?>" ></A>
 			<?php } ?>
 		</TD>
 		<?php } ?>

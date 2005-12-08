@@ -5,7 +5,6 @@ regGS("$1 articles found", "");
 regGS("Show article on front page", "Mostrar artículo en portada");
 regGS("Show article on section page", "Mostrar artículo en portada de sección");
 regGS("Enter keywords, comma separated", "Entrar palabras claves, separadas por comas");
-regGS("Article $1 added to $2. $3 from $4. $5 of $6", "Artículo $1 agregado a $2. $3 de $4. $5 de $6");
 regGS("Are you sure you want to delete the article $1 ($2)?", "¿Esta seguro que quiere borrar el artículo $1 ($2)?");
 regGS("Change article status", "Cambiar estatus de artículo");
 regGS("Change the status of article $1 ($2) from $3 to", "Cambiar el estatus de artículo $1 ($2) de $3 a");
@@ -17,8 +16,9 @@ regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.",
 regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "");
 regGS("Are you sure you want to unlock it?", "¿Esta seguro que desea bloquearlo?");
 regGS("Article is locked", "");
-regGS("The article has been updated.", "El artículo ha sido actualizado.");
 regGS("The article cannot be updated or no changes have been made.", "El artículo no pudo ser actualizado o no se pudieron hacer cambios.");
 regGS("Duplicate article", "Duplicar articulo");
 regGS("The destination section is the same as the source section.", "La seccion destino es la misma que la seccion fuente.");
+regGS("Are you sure you want to remove the image \'$1\' from the article?", "");
+
 ?>

@@ -1,4 +1,5 @@
 <?php
+regGS("Issue List", "");
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>", "      ( الاسم <br> (إضغط لترى الإصدارات");
 regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>", "نشر<br> (السنة، الشهر، اليوم");
 regGS("Delete issue $1", "الغاء  الإصدار$1");
@@ -29,7 +30,6 @@ regGS("Issue $1 updated in publication $2", " تحديث الإصدار $1 في 
 regGS("You do not have the right to delete issues.", "لا يحق لك إلغاء الإصدارات");
 regGS("Are you sure you want to delete the issue $1?", "هل أنت متأكد من أنك تريد إلغاء الإصدار $1 ؟  ");
 regGS("Deleting issue", "إلغاء الإصدار");
-regGS("The issue $1 has been deleted.", "تمّ  إلغاء الإصدار $1");
 regGS("The issue $1 could not be deleted.", "لا يمكن إلغاء الإصدار $1");
 regGS("All sections from Issue $1 from publication $2 deleted", "تمّ إلغاء كل أبواب الإصدار $1 في المنشور $2");
 regGS("Issue $1 from publication $2 deleted", " إلغاء الإصدار$1 من المنشور $2");
@@ -43,7 +43,6 @@ regGS("Copy previous issue", "إنسخ الإصدار السابق");
 regGS("No previous issue.", "لا يوجد إصدار سابق");
 regGS("Copy structure from issue nr $1", "إنسخ الهيكلية من الإصدار رقم $1");
 regGS("Copying previous issue", "نسخ الإصدار السابق");
-regGS("Copying done.", "إنتهى النسخ");
 regGS("Select the issue", "إختر الإصدار");
 regGS("New issue $1 from $2 in publication $3", "إصدار $1 جديد من $2 في المنشور $3");
 regGS("Adding new issue", "إضافة إصدار جديد");

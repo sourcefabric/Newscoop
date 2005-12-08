@@ -1,4 +1,5 @@
 <?php
+regGS("Issue List", "");
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>", "Название<BR><SMALL>(щелкните для просмотра секций)</SMALL>");
 regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Опубликовано<BR><SMALL>(гггг-мм-дд)</SMALL>");
 regGS("Delete issue $1", "Удаление выпуска $1");
@@ -21,7 +22,6 @@ regGS("Issue $1 updated in publication $2", "Выпуск $1 обновлен в
 regGS("You do not have the right to delete issues.", "Вы не имеете права удаления выпусков.");
 regGS("Are you sure you want to delete the issue $1?", "Вы уверены, что хотите удалить выпуск $1?");
 regGS("Deleting issue", "Удаление выпуска");
-regGS("The issue $1 has been deleted.", "Выпуск $1 был удален.");
 regGS("The issue $1 could not be deleted.", "Не удалось удалить выпуск $1.");
 regGS("All sections from Issue $1 from publication $2 deleted", "Удалены все секции из выпуска $1 публикации $2");
 regGS("Issue $1 from publication $2 deleted", "Удален выпуск $1 из публикации $2");
@@ -35,7 +35,6 @@ regGS("Copy previous issue", "Скопировать предыдущий вып
 regGS("No previous issue.", "Нет предыдущего выпуска.");
 regGS("Copy structure from issue nr $1", "Скопировать структуру из выпуска №$1");
 regGS("Copying previous issue", "Копирование предыдущего выпуска:");
-regGS("Copying done.", "Копирование завершено.");
 regGS("Select the issue", "Выберите выпуск");
 regGS("New issue $1 from $2 in publication $3", "Новый выпуск $1 из $2 в публикации $3");
 regGS("Adding new issue", "Добавление нового выпуска");

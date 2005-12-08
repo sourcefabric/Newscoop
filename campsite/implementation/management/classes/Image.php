@@ -15,6 +15,7 @@ if (!isset($g_documentRoot)) {
 require_once($g_documentRoot.'/db_connect.php');
 require_once($g_documentRoot.'/classes/DatabaseObject.php');
 require_once($g_documentRoot.'/classes/DbObjectArray.php');
+require_once($g_documentRoot.'/classes/Log.php');
 require_once($g_documentRoot.'/classes/Article.php');
 require_once($g_documentRoot.'/classes/ArticleImage.php');
 require_once('HTTP/Client.php');
@@ -56,6 +57,14 @@ class Image extends DatabaseObject {
 	} // constructor
 
 	
+	function update($p_columns = null, $p_commit = true, $p_isSql = false) 
+	{
+		$success = parent::update($p_columns, $p_commit, $p_isSql);
+		$logtext = getGS('Changed image properties of $1', $this->m_data['Id']); 
+		Log::Message($logtext, null, 43);
+		return $success;
+	} // fn update
+	
 	/**
 	 * Delete the row from the database, all article references to this image,
 	 * and the file(s) on disk.
@@ -80,6 +89,10 @@ class Image extends DatabaseObject {
 			&& is_file($this->getThumbnailStorageLocation())) {
 			unlink($this->getThumbnailStorageLocation());
 		}
+		
+		$logtext = getGS('Image $1 deleted', $this->m_data['Id']); 
+		Log::Message($logtext, null, 42);
+
 		return true;
 	} // fn delete
 	
@@ -413,6 +426,10 @@ class Image extends DatabaseObject {
             }
         }
         $image->commit();
+		$logtext = getGS('The image $1 has been added.', 
+						$this->m_data['Description']." (".$this->m_data['Id'].")");
+		Log::Message($logtext, null, 41);
+                
         return $image;
 	} // fn OnImageUpload
 	
@@ -516,6 +533,11 @@ class Image extends DatabaseObject {
         }
         unlink($tmpname);
         $image->commit();
+        
+		$logtext = getGS('The image $1 has been added.', 
+						$this->m_data['Description']." (".$this->m_data['Id'].")");
+		Log::Message($logtext, null, 41);
+        
 	    return $image;
 	} // fn OnAddRemoteImage
 

@@ -8,17 +8,14 @@ regGS("Change all sections", "Изменить все секции");
 regGS("WARNING: If you subscribe to all sections, the periods for previously added sections will be overriden!", "ПРЕДУПРЕЖДЕНИЕ: Если вы подпишитесь на все секции, периоды для ранее добавленных секций будут перезаписаны!");
 regGS("Adding sections", "Добавление секций");
 regGS("Adding sections to subscription", "Добавление секций к подписке");
-regGS("The section was added successfully.", "Секция была успешно добавлена");
 regGS("Please check if there isn't another subscription with the same section.", "Пожалуйста проверьте, что нет другой подписки с такой секцией.");
 regGS("Are you sure you want to delete the subscription to the section $1?", "Вы уверены, что хотите удалить подписку на секцию $1?");
-regGS("The subscription to the section $1 has been deleted.", "Подписка на секцию $1 была удалена");
 regGS("The subscription to the section $1 could not be deleted.", "Невозможно удалить подписку на секцию $1.");
 regGS("Change subscription", "Изменить подписку");
 regGS("You do not have the right to change subscriptions.", "Вы не имеете права изменения подписок.");
 regGS("Paid Days", "Оплаченные дни");
 regGS("-- ALL SECTIONS --", "-- ВСЕ СЕКЦИИ --");
 regGS("Updating subscription", "Обновление подписки");
-regGS("The subscription has been updated.", "Подписка была обновлена.");
 regGS("The subscription could not be updated.", "Невозможно обновить подписку.");
 regGS("Changing subscription", "Изменение подписки");
 ?>

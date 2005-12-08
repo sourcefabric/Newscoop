@@ -35,9 +35,6 @@ if ($imageObj->inUse()) {
 
 $imageObj->delete();
 
-$logtext = getGS('Image $1 deleted', $imageObj->getImageId()); 
-Log::Message($logtext, $User->getUserName(), 42);
-
 // Go back to article image list.
 header("Location: /$ADMIN/imagearchive/index.php");
 exit;

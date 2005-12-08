@@ -12,35 +12,38 @@ if (!$access) {
 
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
-$f_topic_ids = Input::Get('f_topic_ids', 'array');
+$f_topic_ids = Input::Get('f_topic_ids', 'array', null, true);
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));
 	exit;	
 }
 
-$articleObj =& new Article($f_language_selected, $f_article_number);
-if (!$articleObj->exists()) {
-	camp_html_display_error(getGS('Article does not exist.'));
-	exit;		
-}
-
-if (!$articleObj->userCanModify($User)) {
-	camp_html_display_error(getGS("You do not have the right to add topics to article."));
-	exit;	
-}
-
-foreach ($f_topic_ids as $topicIdString) {
-	list($topicId, $languageId) = split("_", $topicIdString);
-	// Verify topic exists
-	$tmpTopic =& new Topic($topicId, $languageId);
-	if ($tmpTopic->exists()) {
-		ArticleTopic::AddTopicToArticle($topicId, $f_article_number);	
+if (!is_null($f_topic_ids)) {
+	$articleObj =& new Article($f_language_selected, $f_article_number);
+	if (!$articleObj->exists()) {
+		camp_html_display_error(getGS('Article does not exist.'));
+		exit;		
+	}
+	
+	if (!$articleObj->userCanModify($User)) {
+		camp_html_display_error(getGS("You do not have the right to add topics to article."));
+		exit;	
+	}
+	
+	foreach ($f_topic_ids as $topicIdString) {
+		list($topicId, $languageId) = split("_", $topicIdString);
+		// Verify topic exists
+		$tmpTopic =& new Topic($topicId, $languageId);
+		if ($tmpTopic->exists()) {
+			ArticleTopic::AddTopicToArticle($topicId, $f_article_number);	
+		}
 	}
 }
-
 ?>
 <script>
+<?php if (!is_null($f_topic_ids)) { ?>
 window.opener.location.reload();
+<?php } ?>
 window.close();
 </script>

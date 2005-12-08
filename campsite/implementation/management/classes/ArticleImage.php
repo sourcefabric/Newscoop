@@ -13,6 +13,7 @@ if (!isset($g_documentRoot)) {
     $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 }
 require_once($g_documentRoot.'/classes/DatabaseObject.php');
+require_once($g_documentRoot.'/classes/Log.php');
 require_once($g_documentRoot.'/classes/Article.php');
 require_once($g_documentRoot.'/classes/Image.php');
 
@@ -178,6 +179,8 @@ class ArticleImage extends DatabaseObject {
 		$queryStr = 'INSERT IGNORE INTO ArticleImages(NrArticle, IdImage, Number)'
 					.' VALUES('.$p_articleNumber.', '.$p_imageId.', '.$p_templateId.')';
 		$Campsite['db']->Execute($queryStr);
+		$logtext = getGS('Image $1 linked to article $2', $p_imageId, $p_articleNumber); 
+		Log::Message($logtext, null, 42);
 	} // fn AddImageToArticle
 
 	
@@ -219,6 +222,8 @@ class ArticleImage extends DatabaseObject {
 					.' AND Number='.$p_templateId
 					.' LIMIT 1';
 		$Campsite['db']->Execute($queryStr);
+		$logtext = getGS('Image $1 unlinked from $2', $p_imageId, $p_articleNumber); 
+		Log::Message($logtext, null, 42);
 	} // fn RemoveImageFromArticle
 
 	

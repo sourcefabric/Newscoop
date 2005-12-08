@@ -17,6 +17,11 @@ if (!$access) {
 	exit;
 }
 
+if (!$User->hasPermission('ChangeFile')) {
+	camp_html_display_error(getGS('You do not have the right to change files.' ));
+	exit;
+}
+
 $f_publication_id = Input::Get('f_publication_id', 'int', 0);
 $f_issue_number = Input::Get('f_issue_number', 'int', 0);
 $f_section_number = Input::Get('f_section_number', 'int', 0);

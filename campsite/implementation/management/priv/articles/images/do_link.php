@@ -48,9 +48,6 @@ if (!$articleObj->userCanModify($User)) {
 
 ArticleImage::AddImageToArticle($f_image_id, $f_article_number);
 
-$logtext = getGS('Image $1 linked to article $2', $f_image_id, $f_article_number); 
-Log::Message($logtext, $User->getUserName(), 42);
-
 ?>
 <script>
 window.opener.location.reload();

@@ -69,6 +69,7 @@ $mapPrefixToDir["issues"] = "/admin-files/issues";
 $mapPrefixToDir["sections"] = "/admin-files/sections";
 $mapPrefixToDir["articles"] = "/admin-files/articles";
 $mapPrefixToDir["article_images"] = "/admin-files/articles/images";
+$mapPrefixToDir["article_files"] = "/admin-files/articles/files";
 $mapPrefixToDir["article_topics"] = "/admin-files/articles/topics";
 $mapPrefixToDir["imagearchive"] = "/admin-files/imagearchive";
 $mapPrefixToDir["templates"] = "/admin-files/templates";

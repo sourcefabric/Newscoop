@@ -4,7 +4,6 @@ regGS("$1 articles found", "Пронађено је $1 чланака");
 regGS("Show article on front page", "Прикажи чланак на почетној страни");
 regGS("Show article on section page", "Прикажи чланак на страни рубрике");
 regGS("Enter keywords, comma separated", "Унесите кључне речи (раздвојене зарезима)");
-regGS("Article $1 added to $2. $3 from $4. $5 of $6", "Чланак $1 додат у $2. $3 из $4. $5 од $6");
 regGS("Are you sure you want to delete the article $1 ($2)?", "Да ли сте сигурни да желите да обришете чланак $1 ($2)?");
 regGS("Change article status", "Промени статус чланка");
 regGS("Change the status of article $1 ($2) from $3 to", "Промени статус чланка $1 ($2) из $3 у");
@@ -16,7 +15,6 @@ regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.",
 regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "Чланак је закључан од стране $1 ($2) пре $3 минута.");
 regGS("Are you sure you want to unlock it?", "Да ли сте сигурни да желите да га откључате?");
 regGS("Article is locked", "Чланак је закључан");
-regGS("The article has been updated.", "Чланак је измењен");
 regGS("The article cannot be updated or no changes have been made.", "Чланак не може бити измењен или нема шта да се измени");
 regGS("Duplicate article", "дуплирај чланак");
 regGS("The destination section is the same as the source section.", "Циљна рубрика је иста као матична рубрика.");
@@ -28,4 +26,6 @@ regGS("You do not have the right to change this article status. Once submitted a
 regGS("You do not have the right to delete articles.", "Немате право да бришете чланке.");
 regGS("You must select an article type.", "Морате изабрати тип чланка.");
 regGS("Are you sure you want to delete this scheduled action?", " ");
+regGS("Are you sure you want to remove the image '$1' from the article?", "Да ли сте сигурни да желите да обришете слику  '$1'  из чланка? ");
+
 ?>

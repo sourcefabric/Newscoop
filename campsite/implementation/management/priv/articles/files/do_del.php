@@ -15,6 +15,11 @@ if (!$access) {
 	exit;
 }
 
+if (!$User->hasPermission('DeleteFile')) {
+	camp_html_display_error(getGS('You do not have the right to delete files.' ));
+	exit;
+}
+
 $f_publication_id = Input::Get('f_publication_id', 'int', 0);
 $f_issue_number = Input::Get('f_issue_number', 'int', 0);
 $f_section_number = Input::Get('f_section_number', 'int', 0);

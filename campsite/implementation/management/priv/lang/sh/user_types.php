@@ -1,11 +1,9 @@
 <?php
 regGS("User types", "Tipovi korisnika");
 regGS("No user types.", "Nema tipova korisnika");
-regGS("User type $1 added", "Tip korisnika $1 je dodat");
 regGS("Are you sure you want to delete the user type $1?", "Sigurni ste da želite da obrišete tip korisnika $1?");
 regGS("No such user type.", "Nema takvog tipa korisnika");
 regGS("You do not have the right to delete user types.", "Nemate pravo da brišete tipove korisnika");
-regGS("User type $1 deleted", "Tip korisnika $1 je obrisan");
 regGS("User type", "Tip korsnika");
 regGS("Change user type permissions", "Promeni prava dodeljena tipu korisnika");
 regGS("You do not have the right to change user type permissions.", "Nemate pravo da menjate dodeljena prava tipu korisnika.");

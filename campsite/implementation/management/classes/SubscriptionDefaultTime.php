@@ -35,6 +35,22 @@ class SubscriptionDefaultTime extends DatabaseObject {
   	
   	
   	/**
+  	 * @param array $p_values
+  	 * @return boolean
+  	 */
+  	function create($p_values = null)
+  	{
+  		$success = parent::create($p_values);
+  		$publicationObj =& new Publication($this->m_data['IdPublication']);
+		$logtext = getGS('The default subscription time for $1 has been added.', 
+						 "(".getGS("Publication")." ".$publicationObj->getName() 
+						 .':'.$this->m_data['CountryCode'].")"); 
+		Log::Message($logtext, null, 4);  		
+		return $success;
+  	} // fn create
+  	
+  	
+  	/**
   	 * @return string
   	 */
   	function getCountryCode()

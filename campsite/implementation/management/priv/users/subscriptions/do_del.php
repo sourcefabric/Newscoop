@@ -36,7 +36,7 @@ $crumbs[] = array(getGS("Subscribers"), "/$ADMIN/users/?uType=Subscribers");
 $crumbs[] = array(getGS("Account") . " '".$manageUser->getUserName()."'", 
 			"/$ADMIN/users/edit.php?User=$User&uType=Subscribers");
 $crumbs[] = array(getGS("Subscriptions"), "/$ADMIN/users/subscriptions/?f_user_id=$f_user_id");			
-$crumbs[] = array(getGS("Deleting subscription"), "");
+$crumbs[] = array(getGS("Delete subscription"), "");
 echo camp_html_breadcrumbs($crumbs);
 
 ?>
@@ -44,7 +44,7 @@ echo camp_html_breadcrumbs($crumbs);
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">
 <TR>
 	<TD COLSPAN="2">
-		<B> <?php  putGS("Deleting subscription"); ?> </B>
+		<B> <?php  putGS("Delete subscription"); ?> </B>
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
 	</TD>
 </TR>

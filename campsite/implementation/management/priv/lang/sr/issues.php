@@ -1,4 +1,5 @@
 <?php
+regGS("Issue List", "");
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>", "Назив<br><small>(кликните за преглед рубрика)</small>");
 regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Објављен <br><small>(гггг-мм-дд)</small>");
 regGS("Delete issue $1", "Обриши издање $1");
@@ -21,7 +22,6 @@ regGS("Issue $1 updated in publication $2", "Издање $1 је измењен
 regGS("You do not have the right to delete issues.", "Немате право да бришете издања");
 regGS("Are you sure you want to delete the issue $1?", "Сигурни сте да желите да обришете издање $1?");
 regGS("Deleting issue", "Брисање издања");
-regGS("The issue $1 has been deleted.", "Издање $1 је избрисано");
 regGS("The issue $1 could not be deleted.", "Издање $1 не може бити избрисано");
 regGS("All sections from Issue $1 from publication $2 deleted", "Све рубрике издања $1 из публикације $2 су обрисане");
 regGS("Issue $1 from publication $2 deleted", "Издање $1 из публикације $2 обрисано");
@@ -35,7 +35,6 @@ regGS("Copy previous issue", "Прекопирај претходно издањ
 regGS("No previous issue.", "Нема претходног издања");
 regGS("Copy structure from issue nr $1", "Прекопирај структуру из издања $1");
 regGS("Copying previous issue", "Копирање претходног издања");
-regGS("Copying done.", "Копирање готово");
 regGS("Select the issue", "Изаберите издање");
 regGS("New issue $1 from $2 in publication $3", "Ново издање $1 из $2 у публикацији $3");
 regGS("Adding new issue", "Додавање новог издања");

@@ -122,29 +122,14 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 			
 			<TD width="1%" align="center" nowrap valign="top">
 				<?php 
-				$changeStatusLink = camp_html_article_link($YourArticle, $section->getLanguageId(), "status.php", $_SERVER['REQUEST_URI']);
 				if ($YourArticle->getPublished() == "Y") { 
-					if ($User->hasPermission('Publish')) {
-						echo $changeStatusLink;
-					}
 					putGS('Published'); 
-					if ($User->hasPermission('Publish')) {
-						echo '</a>';
-					}
 				} 
 				elseif ($YourArticle->getPublished() == 'S') { 
-					if ($User->hasPermission('Publish')) {
-						echo $changeStatusLink; 
-					}
 					putGS('Submitted'); 
-					if ($User->hasPermission('Publish')) {
-						echo '</a>';
-					}
 				} 
 				elseif ($YourArticle->getPublished() == "N") { 
-					echo $changeStatusLink;
 					putGS('New'); 
-					echo '</A>';
 				} 
 				?>
 			</TD>

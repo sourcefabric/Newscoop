@@ -18,7 +18,7 @@ if (!$access) {
 	exit;
 }
 if (!$User->hasPermission('AddImage')) {
-	camp_html_display_error(getGS('You do not have the right to add images' ));
+	camp_html_display_error(getGS('You do not have the right to add images.' ));
 	exit;
 }
 
@@ -72,9 +72,6 @@ if (!is_object($image)) {
 }
 
 ArticleImage::AddImageToArticle($image->getImageId(), $articleObj->getArticleNumber(), $f_image_template_id);
-
-$logtext = getGS('The image $1 has been added.', $attributes['Description']);
-Log::Message($logtext, $User->getUserName(), 41);
 
 ?>
 <script>

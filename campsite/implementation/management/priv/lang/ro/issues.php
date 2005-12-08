@@ -1,4 +1,5 @@
 <?php
+regGS("Issue List", "");
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>", "Nume");
 regGS("Front Page Template<BR><SMALL>(click to change)</SMALL>", "Şablonul paginii principale");
 regGS("Single Article Template<BR><SMALL>(click to change)</SMALL>", "Şablonul pentru afişarea articolelor");
@@ -28,7 +29,6 @@ regGS("Issue $1 updated in publication $2", "Ediţia $1 a fost modificată");
 regGS("You do not have the right to delete issues.", "Nu aveţi dreptul să ştergeţi ediţia");
 regGS("Are you sure you want to delete the issue $1?", "Doriţi să ştergeţi ediţia $1?");
 regGS("Deleting issue", "Şterg ediţia");
-regGS("The issue $1 has been deleted.", "Ediţia $1 a fost ştearsă");
 regGS("The issue $1 could not be deleted.", "Ediţia $1 nu poate fi ştearsă");
 regGS("All sections from Issue $1 from publication $2 deleted", "Toate secţiunile din ediţia $1 din publicaţia $2 au fost şterse");
 regGS("Issue $1 from publication $2 deleted", "Ediţia $1 din publicaţia $2 a fost ştearsă");
@@ -42,7 +42,6 @@ regGS("Copy previous issue", "Copiază ediţia precedentă");
 regGS("No previous issue.", "Nu există ediţie anterioară");
 regGS("Copy structure from issue nr $1", "Copiază structura de la ediţia nr $1");
 regGS("Copying previous issue", "Copiez ediţia anterioară");
-regGS("Copying done.", "Copierea terminată cu succes");
 regGS("Select the issue", "Selectaţi ediţia");
 regGS("New issue $1 from $2 in publication $3", "Ediţia nouă $1 din $2 în publicaţia $3");
 regGS("Adding new issue", "Adaug ediţie nouă");

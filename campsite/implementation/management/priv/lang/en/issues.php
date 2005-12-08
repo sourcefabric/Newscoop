@@ -1,4 +1,5 @@
 <?php
+regGS("Issue List", "Issue List");
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>", "Name<BR><SMALL>(click to see sections)</SMALL>");
 regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Published<BR><SMALL>(yyyy-mm-dd)</SMALL>");
 regGS("Delete issue $1", "Delete issue $1");
@@ -21,7 +22,6 @@ regGS("Issue $1 updated in publication $2", "Issue $1 updated in publication $2"
 regGS("You do not have the right to delete issues.", "You do not have the right to delete issues.");
 regGS("Are you sure you want to delete the issue $1?", "Are you sure you want to delete the issue $1?");
 regGS("Deleting issue", "Deleting issue");
-regGS("The issue $1 has been deleted.", "The issue $1 has been deleted.");
 regGS("The issue $1 could not be deleted.", "The issue $1 could not be deleted.");
 regGS("All sections from Issue $1 from publication $2 deleted", "All sections from Issue $1 from publication $2 deleted");
 regGS("Issue $1 from publication $2 deleted", "Issue $1 from publication $2 deleted");
@@ -35,7 +35,6 @@ regGS("Copy previous issue", "Copy previous issue");
 regGS("No previous issue.", "No previous issue.");
 regGS("Copy structure from issue nr $1", "Copy structure from issue nr $1");
 regGS("Copying previous issue", "Copying previous issue");
-regGS("Copying done.", "Copying done.");
 regGS("Select the issue", "Select the issue");
 regGS("New issue $1 from $2 in publication $3", "New issue $1 from $2 in publication $3");
 regGS("Adding new issue", "Adding new issue");

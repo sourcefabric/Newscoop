@@ -125,15 +125,20 @@ if ($correct) {
 	}
 	exit;
 }
-$topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
-				  'Section' => $sectionObj);
-camp_html_content_top(getGS("Scheduling a new publish action"), $topArray);
 ?>
-<P>
+<html>
+<head>
+    <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<META HTTP-EQUIV="Expires" CONTENT="now">
+	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
+	<title><?php putGS("Schedule a new action"); ?></title>
+</head>
+<body>
+<br>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">
 <TR>
 	<TD COLSPAN="2">
-		<B> <?php  putGS("Scheduling a new publish action"); ?> </B>
+		<B> <?php  putGS("Schedule a new action"); ?> </B>
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
 	</TD>
 </TR>
@@ -151,11 +156,8 @@ camp_html_content_top(getGS("Scheduling a new publish action"), $topArray);
 	</TR>
 	<TR>
 		<TD COLSPAN="2" align="center">
-			<INPUT TYPE="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/articles/autopublish.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_article_number=<?php p($f_article_number); ?>&f_language_id=<?php p($f_language_id); ?>&f_language_selected=<?php p($f_language_selected); ?>'" class="button">
+			<INPUT TYPE="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="history.back();" class="button">
 		</TD>
 	</TR>
 </TABLE>
 <P>
-<?php
-camp_html_copyright_notice();
-?>

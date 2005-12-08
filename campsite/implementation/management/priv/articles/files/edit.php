@@ -34,27 +34,34 @@ if (!$articleObj->exists()) {
 	exit;
 }
 
+$isDisabled = '';
+$isReadOnly = '';
+if (!$User->hasPermission('ChangeFile')) {
+	$isDisabled = 'disabled';
+	$isReadOnly = 'readonly';
+	$title = getGS('File information');
+} else {
+	$title = getGS('Change file information');
+}
 // Add extra breadcrumb for image list.
 $extraCrumbs = array(getGS("Attachments") => "");
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
 				  'Section' => $sectionObj, 'Article'=>$articleObj);
-camp_html_content_top(getGS('Change file information'), $topArray, true, true, $extraCrumbs);
+camp_html_content_top($title, $topArray, true, true, $extraCrumbs);
 ?>
 <P>
-<?php //if ($User->hasPermission('ChangeImage')) { ?>
-<p>
 <FORM NAME="dialog" METHOD="POST" ACTION="do_edit.php" >
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input" width="400px">
 <TR>
 	<TD COLSPAN="2">
-		<B><?php  putGS('Change file information'); ?></B>
+		<B><?php  p($title); ?></B>
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT"><?php  putGS('Description'); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" NAME="f_description" VALUE="<?php echo htmlspecialchars($attachmentObj->getDescription($f_language_selected)); ?>" class="input_text" SIZE="32" MAXLENGTH="128">
+	<INPUT TYPE="TEXT" NAME="f_description" VALUE="<?php echo htmlspecialchars($attachmentObj->getDescription($f_language_selected)); ?>" class="input_text" SIZE="32" MAXLENGTH="128" <?php p($isReadOnly); ?>>
 	</TD>
 </TR>
 <TR>
@@ -62,8 +69,8 @@ camp_html_content_top(getGS('Change file information'), $topArray, true, true, $
 </TR>
 <TR>
 	<TD colspan="2" class="indent"  style="padding-left: 30px;">
-	<INPUT type="radio" name="f_language_specific" value="yes" <?php if ($attachmentObj->getLanguageId()) { ?> checked<?php } ?>><?php putGS("Only this translation"); ?><br>
-	<INPUT type="radio" name="f_language_specific" value="no" <?php if (!$attachmentObj->getLanguageId()) { ?> checked<?php } ?>><?php putGS("All translations"); ?>
+	<INPUT type="radio" name="f_language_specific" value="yes" <?php if ($attachmentObj->getLanguageId()) { ?> checked<?php } ?> <?php p($isDisabled); ?>><?php putGS("Only this translation"); ?><br>
+	<INPUT type="radio" name="f_language_specific" value="no" <?php if (!$attachmentObj->getLanguageId()) { ?> checked<?php } ?>  <?php p($isDisabled); ?>><?php putGS("All translations"); ?>
 	</TD>
 </TR>
 <TR>
@@ -71,10 +78,11 @@ camp_html_content_top(getGS('Change file information'), $topArray, true, true, $
 </TR>
 <TR>
 	<TD colspan="2" style="padding-left: 30px;">
-	<INPUT type="radio" name="f_content_disposition" value="" <?php if (!$attachmentObj->getContentDisposition()) { ?> checked<?php } ?>><?php putGS("Open in the browser"); ?><br>
-	<INPUT type="radio" name="f_content_disposition" value="attachment" <?php if ($attachmentObj->getContentDisposition()) { ?> checked<?php } ?>><?php putGS("Automatically download"); ?>
+	<INPUT type="radio" name="f_content_disposition" value="" <?php if (!$attachmentObj->getContentDisposition()) { ?> checked<?php } ?> <?php p($isDisabled); ?>><?php putGS("Open in the browser"); ?><br>
+	<INPUT type="radio" name="f_content_disposition" value="attachment" <?php if ($attachmentObj->getContentDisposition()) { ?> checked<?php } ?> <?php p($isDisabled); ?>><?php putGS("Automatically download"); ?>
 	</TD>
 </TR>
+<?php if ($User->hasPermission('ChangeFile')) { ?>
 <TR>
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">
@@ -89,10 +97,10 @@ camp_html_content_top(getGS('Change file information'), $topArray, true, true, $
 	</DIV>
 	</TD>
 </TR>
+<?php } ?>
 </TABLE>
 </FORM>
 <P>
 <?php 
-//}
 
 camp_html_copyright_notice(); ?>
