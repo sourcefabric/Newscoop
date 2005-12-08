@@ -213,7 +213,7 @@ public:
 		throw (out_of_range, xml_parse_error, invalid_message_content)
 		: m_pchContent(NULL) { setContent(p_pchContent); }
 
-	~CMsgURLRequest() { delete m_pchContent; }
+	~CMsgURLRequest() { delete []m_pchContent; }
 
 	void setContent(char* p_pchContent)
 		throw (out_of_range, xml_parse_error, invalid_message_content);
@@ -281,6 +281,8 @@ public:
 		throw (out_of_range, xml_parse_error, invalid_message_content)
 		: m_pchContent(NULL) { setContent(p_pchContent); }
 
+	~CMsgResetCache() { delete []m_pchContent; }
+
 	void setContent(char* p_pchContent)
 		throw (out_of_range, xml_parse_error, invalid_message_content);
 
@@ -313,6 +315,8 @@ public:
 	CMsgRestartServer(char* p_pchContent)
 		throw (out_of_range, xml_parse_error, invalid_message_content)
 		: m_pchContent(NULL) { setContent(p_pchContent); }
+
+	~CMsgRestartServer() { delete []m_pchContent; }
 
 	void setContent(char* p_pchContent)
 		throw (out_of_range, xml_parse_error, invalid_message_content);
