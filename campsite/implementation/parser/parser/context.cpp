@@ -50,33 +50,33 @@ CContext::CContext()
 	access = A_PUBLISHED;
 	level = CLV_ROOT;
 	language_id
-	= publication_id
-	  = issue_nr
-	    = section_nr
-	      = article_nr
-	        = i_list_start
-	          = s_list_start
-	            = a_list_start
-	              = sr_list_start
-	                = list_index
-	                  = list_row
-	                    = list_column
-	                      = list_length
-	                        = i_prev_start
-	                          = i_next_start
-	                            = s_prev_start
-	                              = s_next_start
-	                                = a_prev_start
-	                                  = a_next_start
-	                                    = sr_prev_start
-	                                      = sr_next_start
-	                                        = def_language_id
-	                                          = def_publication_id
-	                                            = def_issue_nr
-	                                              = def_section_nr
-	                                                = def_article_nr
-	                                                  = -1;
-	m_nTopicId = m_nDefTopicId = -1;
+			= publication_id
+			= issue_nr
+			= section_nr
+			= article_nr
+			= i_list_start
+			= s_list_start
+			= a_list_start
+			= sr_list_start
+			= list_index
+			= list_row
+			= list_column
+			= list_length
+			= i_prev_start
+			= i_next_start
+			= s_prev_start
+			= s_next_start
+			= a_prev_start
+			= a_next_start
+			= sr_prev_start
+			= sr_next_start
+			= def_language_id
+			= def_publication_id
+			= def_issue_nr
+			= def_section_nr
+			= def_article_nr
+			= -1;
+	m_nTopicId = m_nDefTopicId = m_nAttachment = -1;
 	lmode = LM_NORMAL;
 	stmode = STM_NORMAL;
 	do_subscribe = false;
@@ -95,71 +95,72 @@ CContext::CContext()
 int CContext::operator ==(const CContext& c) const
 {
 	return userinfo == c.userinfo
-	       && ip == c.ip
-	       && user_id == c.user_id
-	       && key == c.key
-	       && is_reader == c.is_reader
-	       && access_by_ip == c.access_by_ip
-	       && access == c.access
-	       && level == c.level
-	       && language_id == c.language_id
-	       && def_language_id == c.def_language_id
-	       && publication_id == c.publication_id
-	       && def_publication_id == c.def_publication_id
-	       && issue_nr == c.issue_nr
-	       && def_issue_nr == c.def_issue_nr
-	       && section_nr == c.section_nr
-	       && def_section_nr == c.def_section_nr
-	       && article_nr == c.article_nr
-	       && def_article_nr == c.def_article_nr
-	       && m_nTopicId == c.m_nDefTopicId
-	       && i_list_start == c.i_list_start
-	       && s_list_start == c.s_list_start
-	       && a_list_start == c.a_list_start
-	       && sr_list_start == c.sr_list_start
-	       && list_index == c.list_index
-	       && list_row == c.list_row
-	       && list_column == c.list_column
-	       && list_length == c.list_length
-	       && i_prev_start == c.i_prev_start
-	       && i_next_start == c.i_next_start
-	       && s_prev_start == c.s_prev_start
-	       && s_next_start == c.s_next_start
-	       && a_prev_start == c.a_prev_start
-	       && a_next_start == c.a_next_start
-	       && sr_prev_start == c.sr_prev_start
-	       && sr_next_start == c.sr_next_start
-	       && lmode == c.lmode
-	       && stmode == c.stmode
-	       && subs == c.subs
-	       && keywords == c.keywords
-	       && str_keywords == c.str_keywords
-	       && do_subscribe == c.do_subscribe
-	       && subs_type == c.subs_type
-	       && by_publication == c.by_publication
-	       && subs_res == c.subs_res
-	       && adduser == c.adduser
-	       && modifyuser == c.modifyuser
-	       && adduser_res == c.adduser_res
-	       && modifyuser_res == c.modifyuser_res
-	       && login == c.login
-	       && login_res == c.login_res
-	       && search == c.search
-	       && search_res == c.search_res
-	       && search_and == c.search_and
-	       && search_level == c.search_level
-	       && start_subtitle == c.start_subtitle
-	       && default_start_subtitle == c.default_start_subtitle
-	       && all_subtitles == c.all_subtitles
-	       && st_list_start == c.st_list_start
-	       && st_prev_start == c.st_prev_start
-	       && st_next_start == c.st_next_start
-	       && subtitles == c.subtitles
-	       && fields == c.fields
-	       && current_field == c.current_field
-	       && current_art_type == c.current_art_type
-	       && m_pcoURL->equalTo(c.m_pcoURL)
-	       && m_pcoDefURL->equalTo(c.m_pcoDefURL);
+			&& ip == c.ip
+			&& user_id == c.user_id
+			&& key == c.key
+			&& is_reader == c.is_reader
+			&& access_by_ip == c.access_by_ip
+			&& access == c.access
+			&& level == c.level
+			&& language_id == c.language_id
+			&& def_language_id == c.def_language_id
+			&& publication_id == c.publication_id
+			&& def_publication_id == c.def_publication_id
+			&& issue_nr == c.issue_nr
+			&& def_issue_nr == c.def_issue_nr
+			&& section_nr == c.section_nr
+			&& def_section_nr == c.def_section_nr
+			&& article_nr == c.article_nr
+			&& def_article_nr == c.def_article_nr
+			&& m_nTopicId == c.m_nDefTopicId
+			&& i_list_start == c.i_list_start
+			&& s_list_start == c.s_list_start
+			&& a_list_start == c.a_list_start
+			&& sr_list_start == c.sr_list_start
+			&& list_index == c.list_index
+			&& list_row == c.list_row
+			&& list_column == c.list_column
+			&& list_length == c.list_length
+			&& i_prev_start == c.i_prev_start
+			&& i_next_start == c.i_next_start
+			&& s_prev_start == c.s_prev_start
+			&& s_next_start == c.s_next_start
+			&& a_prev_start == c.a_prev_start
+			&& a_next_start == c.a_next_start
+			&& sr_prev_start == c.sr_prev_start
+			&& sr_next_start == c.sr_next_start
+			&& lmode == c.lmode
+			&& stmode == c.stmode
+			&& subs == c.subs
+			&& keywords == c.keywords
+			&& str_keywords == c.str_keywords
+			&& do_subscribe == c.do_subscribe
+			&& subs_type == c.subs_type
+			&& by_publication == c.by_publication
+			&& subs_res == c.subs_res
+			&& adduser == c.adduser
+			&& modifyuser == c.modifyuser
+			&& adduser_res == c.adduser_res
+			&& modifyuser_res == c.modifyuser_res
+			&& login == c.login
+			&& login_res == c.login_res
+			&& search == c.search
+			&& search_res == c.search_res
+			&& search_and == c.search_and
+			&& search_level == c.search_level
+			&& start_subtitle == c.start_subtitle
+			&& default_start_subtitle == c.default_start_subtitle
+			&& all_subtitles == c.all_subtitles
+			&& st_list_start == c.st_list_start
+			&& st_prev_start == c.st_prev_start
+			&& st_next_start == c.st_next_start
+			&& subtitles == c.subtitles
+			&& fields == c.fields
+			&& current_field == c.current_field
+			&& current_art_type == c.current_art_type
+			&& m_nAttachment == c.m_nAttachment
+			&& m_pcoURL->equalTo(c.m_pcoURL)
+			&& m_pcoDefURL->equalTo(c.m_pcoDefURL);
 }
 
 // assign operator
@@ -233,6 +234,7 @@ const CContext& CContext::operator =(const CContext& s)
 	fields = s.fields;
 	current_field = s.current_field;
 	current_art_type = s.current_art_type;
+	m_nAttachment = s.m_nAttachment;
 	if (s.m_pcoURL != NULL)
 		m_pcoURL = s.m_pcoURL->clone();
 	else
@@ -954,12 +956,13 @@ void CContext::ResetDefPublicationParams(CPubLevel p_nLevel)
 		SetDefURLValue(P_NRSECTION, def_section_nr);
 		bResetArticle = true;
 	}
-	if (p_nLevel == CLV_PUB_ARTICLE
+	if (p_nLevel <= CLV_PUB_ARTICLE
 		   && (bResetSection || bResetArticle
-		   && !CPublication::isValidArticle(def_language_id, def_publication_id, def_issue_nr,
+		   || !CPublication::isValidArticle(def_language_id, def_publication_id, def_issue_nr,
 											def_section_nr, def_article_nr, pMySQL)))
 	{
 		def_article_nr = -1;
 		SetDefURLValue(P_NRARTICLE, def_article_nr);
+		m_nAttachment = -1;
 	}
 }

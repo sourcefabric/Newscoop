@@ -190,6 +190,7 @@ private:
 	string current_art_type;				// current article type
 	id_type m_nTopicId;						// topic numeric identifier
 	id_type m_nDefTopicId;					// topic numeric identifier
+	id_type m_nAttachment;					// article attachment identifier
 	CURL* m_pcoURL;
 	CURL* m_pcoDefURL;
 
@@ -429,6 +430,10 @@ public:
 		if (t != -1 && !Topic::isValid(t))
 			throw InvalidValue("topic identifier", (string)Integer(t));
 		m_nDefTopicId = t;
+	}
+	void SetAttachment(id_type p_nAttachment)
+	{
+		m_nAttachment = p_nAttachment;
 	}
 	void SetURL(CURL* p_pcoURL)
 	{
@@ -700,6 +705,10 @@ public:
 	id_type DefTopic() const
 	{
 		return m_nDefTopicId;
+	}
+	id_type Attachment() const
+	{
+		return m_nAttachment;
 	}
 	CURL* URL() const
 	{

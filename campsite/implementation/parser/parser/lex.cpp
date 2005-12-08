@@ -326,6 +326,7 @@ int CStatementMap::InitStatements()
 	pcoCtx->insertAttr(new CStringAttr("type", "Type", CMS_TYPE_ATTR));
 	pcoCtx->insertAttr(new CAttribute("fromstart"));
 	pcoCtx->insertAttr(new CAttribute("translated_to"));
+	pcoCtx->insertAttr(new CAttribute("hasAttachments"));
 	pcoSt->insertCtx(pcoCtx);
 
 	pcoCtx = new CStatementContext(CMS_CT_LIST);
@@ -481,6 +482,7 @@ int CStatementMap::InitStatements()
 	pcoCtx->insertAttr(new CAttribute("issue"));
 	pcoCtx->insertAttr(new CAttribute("section"));
 	pcoCtx->insertAttr(new CAttribute("article"));
+	pcoCtx->insertAttr(new CAttribute("articleAttachment"));
 	pcoSt->insertCtx(pcoCtx);
 
 	this->insert(pcoSt);
@@ -768,6 +770,7 @@ int CStatementMap::InitStatements()
 	pcoCtx->insertAttr(new CAttribute("issue"));
 	pcoCtx->insertAttr(new CAttribute("section"));
 	pcoCtx->insertAttr(new CAttribute("article"));
+	pcoCtx->insertAttr(new CAttribute("articleAttachment"));
 	pcoSt->insertCtx(pcoCtx);
 
 	this->insert(pcoSt);
@@ -791,6 +794,7 @@ int CStatementMap::InitStatements()
 	pcoCtx->insertAttr(new CAttribute("reset_article_list"));
 	pcoCtx->insertAttr(new CAttribute("reset_searchresult_list"));
 	pcoCtx->insertAttr(new CAttribute("reset_subtitle_list"));
+	pcoCtx->insertAttr(new CAttribute("articleAttachment"));
 	pcoSt->insertCtx(pcoCtx);
 
 	this->insert(pcoSt);
@@ -807,6 +811,35 @@ int CStatementMap::InitStatements()
 	pcoSt = new CStatement(CMS_ST_SUBTOPIC, ST_SUBTOPIC);
 
 	pcoCtx = new CStatementContext(CMS_CT_LIST);
+	pcoSt->insertCtx(pcoCtx);
+
+	this->insert(pcoSt);
+
+	// ArticleAttachment statement
+	pcoSt = new CStatement(CMS_ST_ARTICLEATTACHMENT, ST_ARTICLEATTACHMENT);
+
+	pcoCtx = new CStatementContext(CMS_CT_LIST);
+	pcoCtx->insertAttr(new CAttribute("ForCurrentLanguage"));
+	pcoCtx->insertAttr(new CAttribute("ForAllLanguages"));
+	pcoSt->insertCtx(pcoCtx);
+
+	pcoCtx = new CStatementContext(CMS_CT_PRINT);
+	pcoCtx->insertAttr(new CStringAttr("FileName", "file_name"));
+	pcoCtx->insertAttr(new CStringAttr("MimeType", "mime_type"));
+	pcoCtx->insertAttr(new CStringAttr("Extension", "extension"));
+	pcoCtx->insertAttr(new CStringAttr("Description"));
+	pcoCtx->insertAttr(new CIntegerAttr("sizeB", "size_in_bytes"));
+	pcoCtx->insertAttr(new CIntegerAttr("sizeKB", "ROUND(size_in_bytes/1024)"));
+	pcoCtx->insertAttr(new CIntegerAttr("sizeMB", "ROUND(size_in_bytes/1048576)"));
+	pcoSt->insertCtx(pcoCtx);
+
+	pcoCtx = new CStatementContext(CMS_CT_IF);
+	pcoCtx->insertAttr(new CStringAttr("FileName", "file_name"));
+	pcoCtx->insertAttr(new CStringAttr("MimeType", "mime_type"));
+	pcoCtx->insertAttr(new CStringAttr("Extension", "extension"));
+	pcoCtx->insertAttr(new CIntegerAttr("sizeB", "size_in_bytes"));
+	pcoCtx->insertAttr(new CIntegerAttr("sizeKB", "ROUND(size_in_bytes/1024)"));
+	pcoCtx->insertAttr(new CIntegerAttr("sizeMB", "ROUND(size_in_bytes/1048576)"));
 	pcoSt->insertCtx(pcoCtx);
 
 	this->insert(pcoSt);

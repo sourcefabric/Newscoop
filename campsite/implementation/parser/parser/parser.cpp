@@ -55,27 +55,29 @@ using std::endl;
 ", " ST_ARTICLE ", " ST_TOPIC ", " ST_INCLUDE ", " ST_IF ", " ST_LOCAL ", " ST_WITH \
 ", " ST_LIST " " ST_ISSUE ", " ST_LIST " " ST_SECTION ", " ST_LIST " " ST_ARTICLE \
 ", " ST_LIST " " ST_SEARCHRESULT ", " ST_LIST " " ST_SUBTITLE ", " ST_LIST " " ST_ARTICLETOPIC \
-", " ST_LIST " " ST_SUBTOPIC ", " ST_URLPARAMETERS ", " ST_URI ", " ST_URIPATH \
-", " ST_FORMPARAMETERS ", " ST_PRINT ", " ST_DATE ", " ST_SUBSCRIPTION ", " ST_EDIT \
-", " ST_SELECT ", " ST_USER ", " ST_SEARCH
+", " ST_LIST " " ST_SUBTOPIC ", " ST_LIST " " ST_ARTICLEATTACHMENT ", " ST_URLPARAMETERS \
+", " ST_URI ", " ST_URIPATH ", " ST_FORMPARAMETERS ", " ST_PRINT ", " ST_DATE \
+", " ST_SUBSCRIPTION ", " ST_EDIT ", " ST_SELECT ", " ST_USER ", " ST_SEARCH
 
 #define LISSUE_STATEMENTS ST_SECTION ", " ST_ARTICLE ", " ST_TOPIC ", " ST_INCLUDE ", " ST_IF \
 ", " ST_LOCAL ", " ST_WITH ", " ST_LIST " " ST_SECTION ", " ST_LIST " " ST_ARTICLE \
 ", " ST_LIST " " ST_SEARCHRESULT ", " ST_LIST " " ST_SUBTITLE ", " ST_LIST " " ST_ARTICLETOPIC \
-", " ST_LIST " " ST_SUBTOPIC ", " ST_URLPARAMETERS ", " ST_URI ", " ST_URIPATH \
-", " ST_FORMPARAMETERS ", " ST_PRINT ", " ST_DATE ", " ST_SUBSCRIPTION ", " ST_EDIT \
-", " ST_SELECT ", " ST_USER ", " ST_SEARCH
+", " ST_LIST " " ST_SUBTOPIC ", " ST_LIST " " ST_ARTICLEATTACHMENT ", " ST_URLPARAMETERS \
+", " ST_URI ", " ST_URIPATH ", " ST_FORMPARAMETERS ", " ST_PRINT ", " ST_DATE \
+", " ST_SUBSCRIPTION ", " ST_EDIT ", " ST_SELECT ", " ST_USER ", " ST_SEARCH
 
 #define LSECTION_STATEMENTS ST_ARTICLE ", " ST_TOPIC ", " ST_INCLUDE ", " ST_IF ", " ST_LOCAL \
 ", " ST_WITH ", " ST_LIST " " ST_ARTICLE ", " ST_LIST " " ST_SEARCHRESULT \
 ", " ST_LIST " " ST_SUBTITLE ", " ST_LIST " " ST_ARTICLETOPIC ", " ST_LIST " " ST_SUBTOPIC \
-", " ST_URLPARAMETERS ", " ST_URI ", " ST_URIPATH ", " ST_FORMPARAMETERS ", " ST_PRINT \
-", " ST_DATE ", " ST_SUBSCRIPTION ", " ST_EDIT ", " ST_SELECT ", " ST_USER ", " ST_SEARCH
+", " ST_LIST " " ST_ARTICLEATTACHMENT ", " ST_URLPARAMETERS ", " ST_URI ", " ST_URIPATH \
+", " ST_FORMPARAMETERS ", " ST_PRINT ", " ST_DATE ", " ST_SUBSCRIPTION ", " ST_EDIT \
+", " ST_SELECT ", " ST_USER ", " ST_SEARCH
 
 #define LARTICLE_STATEMENTS ST_TOPIC ", " ST_INCLUDE ", " ST_IF ", " ST_LOCAL ", " ST_WITH \
-", " ST_LIST " " ST_ARTICLETOPIC ", " ST_LIST " " ST_SUBTOPIC ", " ST_URLPARAMETERS \
-", " ST_URI ", " ST_URIPATH ", " ST_FORMPARAMETERS ", " ST_PRINT ", " ST_DATE \
-", " ST_SUBSCRIPTION ", " ST_EDIT ", " ST_SELECT ", " ST_USER ", " ST_SEARCH
+", " ST_LIST " " ST_ARTICLETOPIC ", " ST_LIST " " ST_SUBTOPIC \
+", " ST_LIST " " ST_ARTICLEATTACHMENT ", " ST_URLPARAMETERS ", " ST_URI ", " ST_URIPATH \
+", " ST_FORMPARAMETERS ", " ST_PRINT ", " ST_DATE ", " ST_SUBSCRIPTION ", " ST_EDIT \
+", " ST_SELECT ", " ST_USER ", " ST_SEARCH
 
 #define LV_ROOT 1
 #define LV_LISSUE 2
@@ -395,13 +397,15 @@ const char* CParser::LvStatements(int level)
 const char* CParser::LvListSt(int level)
 {
 	if (level & LV_LARTICLE || level & LV_LSUBTITLE)
-		return ST_SEARCH ", " ST_ARTICLETOPIC;
+		return ST_SEARCH ", " ST_ARTICLETOPIC ", " ST_ARTICLEATTACHMENT;
 	else if (level & LV_LSECTION)
-		return ST_ARTICLE ", " ST_SEARCH ", " ST_ARTICLETOPIC;
+		return ST_ARTICLE ", " ST_SEARCH ", " ST_ARTICLETOPIC ", " ST_ARTICLEATTACHMENT;
 	else if (level & LV_LISSUE)
-		return ST_SECTION ", " ST_ARTICLE ", " ST_SEARCH ", " ST_ARTICLETOPIC;
+		return ST_SECTION ", " ST_ARTICLE ", " ST_SEARCH ", " ST_ARTICLETOPIC
+				", " ST_ARTICLEATTACHMENT;
 	else if (level & LV_ROOT)
-		return ST_ISSUE ", " ST_SECTION ", " ST_ARTICLE ", " ST_SEARCH ", " ST_ARTICLETOPIC;
+		return ST_ISSUE ", " ST_SECTION ", " ST_ARTICLE ", " ST_SEARCH ", " ST_ARTICLETOPIC
+				", " ST_ARTICLEATTACHMENT;
 	else
 		return "";
 }
@@ -426,7 +430,7 @@ string CParser::IfStatements(int level, int sublevel)
 	else
 		s_str = ST_PREVIOUSITEMS ", " ST_NEXTITEMS ", " ST_LIST ", " ST_PUBLICATION
 		        ", " ST_ISSUE ", " ST_SECTION ", " ST_ARTICLE ", " ST_ALLOWED;
-	s_str += ", " ST_SUBSCRIPTION ", " ST_TOPIC;
+	s_str += ", " ST_SUBSCRIPTION ", " ST_TOPIC ", " ST_ARTICLEATTACHMENT;
 	if ((sublevel & SUBLV_USER) == 0)
 		s_str += ", " ST_USER;
 	if ((sublevel & SUBLV_LOGIN) == 0)
@@ -818,7 +822,7 @@ inline int CParser::HURLParameters(CActionList& al)
 	l = lex.getLexem();
 	DEBUGLexem("urlparam", l);
 	lint img = -1, nTemplate = -1;
-	bool fromstart = false, allsubtitles = false;
+	bool fromstart = false, allsubtitles = false, bArticleAttachment = false, bFirst = true;
 	CListLevel nResetList = CLV_ROOT;
 	TPubLevel nLevel = CMS_PL_SUBTITLE;
 	while (l->res() != CMS_LEX_END_STATEMENT)
@@ -830,6 +834,24 @@ inline int CParser::HURLParameters(CActionList& al)
 			return 0;
 		}
 		attr = st->findAttr(l->atom()->identifier(), CMS_CT_DEFAULT);
+		bFirst = false;
+		if (case_comp(l->atom()->identifier(), "articleAttachment") == 0)
+		{
+			bArticleAttachment = true;
+			if (!bFirst)
+			{
+				SetPError(parse_err, PERR_INVALID_ATTRIBUTE, MODE_PARSE, "",
+						  lex.prevLine(), lex.prevColumn());
+			}
+			l = lex.getLexem();
+			continue;
+		}
+		if (bArticleAttachment)
+		{
+			SetPError(parse_err, PERR_INVALID_ATTRIBUTE, MODE_PARSE, "",
+					  lex.prevLine(), lex.prevColumn());
+			break;
+		}
 		if (case_comp(l->atom()->identifier(), "fromstart") == 0)
 			fromstart = true;
 		if (case_comp(l->atom()->identifier(), "allsubtitles") == 0)
@@ -889,10 +911,11 @@ inline int CParser::HURLParameters(CActionList& al)
 	if (st->id() == CMS_ST_URLPARAMETERS)
 		al.insert(al.end(),
 		          new CActURLParameters(fromstart, allsubtitles, img, nResetList, nTemplate, 
-	                                    nLevel));
+	                                    nLevel, bArticleAttachment));
 	else
 		al.insert(al.end(),
-		          new CActURI(fromstart, allsubtitles, img, nResetList, nTemplate, nLevel));
+		          new CActURI(fromstart, allsubtitles, img, nResetList, nTemplate, nLevel,
+							  bArticleAttachment));
 	if (l->res() != CMS_LEX_END_STATEMENT)
 		WaitForStatementEnd(true);
 	return 0;
@@ -1087,9 +1110,11 @@ inline int CParser::HList(CActionList& al, int level, int sublevel)
 			columns = strtol(l->atom()->identifier().c_str(), 0, 10);
 		RequireAtom(l);
 	}
-	// check for modifier (Issue, Section, Article, SearchResult, Subtitle, ArticleTopic)
+	// check for modifier: Issue, Section, Article, SearchResult, Subtitle, ArticleTopic or
+	// ArticleAttachment
 	st = (const CStatement*)l->atom();
-	if (level >= LV_LARTICLE && st->id() != CMS_ST_ARTICLETOPIC && st->id() != CMS_ST_SUBTOPIC)
+	if (level >= LV_LARTICLE && st->id() != CMS_ST_ARTICLETOPIC && st->id() != CMS_ST_SUBTOPIC
+		   && st->id() != CMS_ST_ARTICLEATTACHMENT)
 		FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE,
 					LARTICLE_STATEMENTS, lex.prevLine(), lex.prevColumn());
 	if (!CActList::validModifier(st->id()))
@@ -1120,7 +1145,8 @@ inline int CParser::HList(CActionList& al, int level, int sublevel)
 	DEBUGLexem("hlist1", l);
 	while (mod != CMS_ST_SEARCHRESULT && mod != CMS_ST_SUBTITLE && mod != CMS_ST_ARTICLETOPIC
 			  && mod != CMS_ST_SUBTOPIC
-			  && (l->res() == CMS_LEX_IDENTIFIER || (IsTopicStatement(l) && mod == CMS_ST_ARTICLE)))
+			  && (l->res() == CMS_LEX_IDENTIFIER
+			  || (IsTopicStatement(l) && mod == CMS_ST_ARTICLE)))
 	{
 		StringSet ah;
 		StringSet::iterator ah_i;
@@ -1484,7 +1510,8 @@ inline int CParser::HIf(CActionList& al, int lv, int sublv)
 		sublv |= SUBLV_IFISSUE;
 	}
 	else if (st->id() == CMS_ST_SECTION || st->id() == CMS_ST_ARTICLE || st->id() == CMS_ST_TOPIC
-	         || st->id() == CMS_ST_LANGUAGE || st->id() == CMS_ST_PUBLICATION)
+				|| st->id() == CMS_ST_LANGUAGE || st->id() == CMS_ST_PUBLICATION
+				|| st->id() == CMS_ST_ARTICLEATTACHMENT)
 	{
 		RequireAtom(l);
 		string type;
@@ -1981,10 +2008,29 @@ inline int CParser::HURIPath(CActionList& al)
 	TPubLevel nLevel = CMS_PL_SUBTITLE;
 	const CLexem *l;
 	StringSet ah;
+	bool bArticleAttachment = false, bFirst = true;
 	l = lex.getLexem();
 	while (l->res() != CMS_LEX_END_STATEMENT)
 	{
 		attr = st->findAttr(l->atom()->identifier(), CMS_CT_DEFAULT);
+		bFirst = false;
+		if (case_comp(l->atom()->identifier(), "articleAttachment") == 0)
+		{
+			bArticleAttachment = true;
+			if (!bFirst)
+			{
+				SetPError(parse_err, PERR_INVALID_ATTRIBUTE, MODE_PARSE, "",
+						  lex.prevLine(), lex.prevColumn());
+			}
+			l = lex.getLexem();
+			continue;
+		}
+		if (bArticleAttachment)
+		{
+			SetPError(parse_err, PERR_INVALID_ATTRIBUTE, MODE_PARSE, "",
+					  lex.prevLine(), lex.prevColumn());
+			break;
+		}
 		if (case_comp(attr->identifier(), "template") == 0)
 		{
 			RequireAtom(l);
@@ -2010,7 +2056,7 @@ inline int CParser::HURIPath(CActionList& al)
 			nLevel = CMS_PL_ARTICLE;
 		l = lex.getLexem();
 	}
-	al.insert(al.end(), new CActURIPath(nTemplate, nLevel));
+	al.insert(al.end(), new CActURIPath(nTemplate, nLevel, bArticleAttachment));
 	return 0;
 }
 

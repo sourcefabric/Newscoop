@@ -631,6 +631,7 @@ protected:
 	id_type m_coTemplate;	// specified a certain template to be used
 	TPubLevel m_nPubLevel;	// identifies the level in the publication structure; parameters
 							// above this level are cut
+	bool m_bArticleAttachment;
 
 	// PrintSubtitlesURL: print url parameters for subtitle list/printing
 	// Parameters:
@@ -642,9 +643,10 @@ protected:
 public:
 	// constructor
 	CActURLParameters(bool fs = false, bool as = false, id_type i = -1, CListLevel r_fl = CLV_ROOT,
-	                  id_type tpl = -1, TPubLevel lvl = CMS_PL_ARTICLE)
+	                  id_type tpl = -1, TPubLevel lvl = CMS_PL_ARTICLE,
+					  bool p_bArticleAttachment = -1)
 		: image_nr(i), fromstart(fs), allsubtitles(as), reset_from_list(r_fl), m_coTemplate(tpl),
-		m_nPubLevel(lvl) {}
+	m_nPubLevel(lvl), m_bArticleAttachment(p_bArticleAttachment) {}
 
 	// destructor
 	virtual ~CActURLParameters() {}
@@ -1184,11 +1186,14 @@ class CActURIPath : public CAction
 protected:
 	id_type m_nTemplate;
 	TPubLevel m_nPubLevel;
+	bool m_bArticleAttachment;
 
 public:
 	// constructor
-	CActURIPath(id_type p_nTemplate = -1, TPubLevel p_nPubLevel = CMS_PL_ARTICLE)
-		: m_nTemplate(p_nTemplate), m_nPubLevel(p_nPubLevel) {}
+	CActURIPath(id_type p_nTemplate = -1, TPubLevel p_nPubLevel = CMS_PL_ARTICLE,
+				bool p_bArticleAttachment = -1)
+	: m_nTemplate(p_nTemplate), m_nPubLevel(p_nPubLevel),
+	m_bArticleAttachment(p_bArticleAttachment) {}
 
 	// destructor
 	virtual ~CActURIPath() {}
@@ -1213,12 +1218,14 @@ protected:
 	CActURIPath m_coURIPath;
 	CActURLParameters m_coURLParameters;
 	id_type m_nImageNr;		// if not -1, print URI of image nr.
+	bool m_bArticleAttachment;
 
 public:
 	// constructor
 	CActURI(bool fs = false, bool as = false, id_type i = -1, CListLevel r_fl = CLV_ROOT,
-	        id_type tpl = -1, TPubLevel lvl = CMS_PL_ARTICLE)
-	: m_coURIPath(tpl, lvl), m_coURLParameters(fs, as, i, r_fl, tpl, lvl), m_nImageNr(i) {}
+			id_type tpl = -1, TPubLevel lvl = CMS_PL_ARTICLE, bool p_bArticleAttachment = -1)
+	: m_coURIPath(tpl, lvl), m_coURLParameters(fs, as, i, r_fl, tpl, lvl), m_nImageNr(i),
+	m_bArticleAttachment(p_bArticleAttachment) {}
 
 	// destructor
 	virtual ~CActURI() {}

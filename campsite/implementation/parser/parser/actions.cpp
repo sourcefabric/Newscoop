@@ -590,6 +590,7 @@ CListModifiers::CListModifiers()
 	insert(CMS_ST_SUBTITLE);
 	insert(CMS_ST_ARTICLETOPIC);
 	insert(CMS_ST_SUBTOPIC);
+	insert(CMS_ST_ARTICLEATTACHMENT);
 }
 
 CListModifiers CActList::s_coModifiers;
@@ -836,7 +837,7 @@ int CActList::WriteOrdParam(string& s)
 {
 	CParameterList::iterator pl_i;
 	if (modifier != CMS_ST_SEARCHRESULT && modifier != CMS_ST_ARTICLETOPIC
-		   && modifier != CMS_ST_SUBTOPIC)
+		   && modifier != CMS_ST_SUBTOPIC && modifier != CMS_ST_ARTICLEATTACHMENT)
 	{
 		string table;
 		if (modifier == CMS_ST_ARTICLE)
@@ -876,6 +877,10 @@ int CActList::WriteOrdParam(string& s)
 				s += ", NrArticle asc";
 		}
 	}
+	if (modifier == CMS_ST_ARTICLEATTACHMENT)
+	{
+		s = " order by att.file_name asc, att.extension asc";
+	}
 	return RES_OK;
 }
 
@@ -904,10 +909,12 @@ void CActList::SetContext(CContext& c, id_type value)
 {
 	if (modifier == CMS_ST_ISSUE)
 		c.SetIssue(value);
-	else if (modifier == CMS_ST_SECTION)
+	if (modifier == CMS_ST_SECTION)
 		c.SetSection(value);
-	else if (modifier == CMS_ST_ARTICLE || modifier == CMS_ST_SEARCHRESULT)
+	if (modifier == CMS_ST_ARTICLE || modifier == CMS_ST_SEARCHRESULT)
 		c.SetArticle(value);
+	if (modifier == CMS_ST_ARTICLEATTACHMENT)
+		c.SetAttachment(value);
 }
 
 // IMod2Level: convert from list modifier to level identifier; return level identifier
@@ -917,18 +924,18 @@ CListLevel CActList::IMod2Level(int m)
 {
 	switch (m)
 	{
-	case CMS_ST_ISSUE:
-		return CLV_ISSUE_LIST;
-	case CMS_ST_SECTION:
-		return CLV_SECTION_LIST;
-	case CMS_ST_ARTICLE:
-		return CLV_ARTICLE_LIST;
-	case CMS_ST_SEARCHRESULT:
-		return CLV_SEARCHRESULT_LIST;
-	case CMS_ST_SUBTITLE:
-		return CLV_SUBTITLE_LIST;
-	default:
-		return CLV_ROOT;
+		case CMS_ST_ISSUE:
+			return CLV_ISSUE_LIST;
+		case CMS_ST_SECTION:
+			return CLV_SECTION_LIST;
+		case CMS_ST_ARTICLE:
+			return CLV_ARTICLE_LIST;
+		case CMS_ST_SEARCHRESULT:
+			return CLV_SEARCHRESULT_LIST;
+		case CMS_ST_SUBTITLE:
+			return CLV_SUBTITLE_LIST;
+		default:
+			return CLV_ROOT;
 	}
 }
 
@@ -985,6 +992,18 @@ int CActList::takeAction(CContext& c, sockstream& fs)
 				where = buf.str();
 				table = "Topics";
 				break;
+			case CMS_ST_ARTICLEATTACHMENT:
+				table = "ArticleAttachments as art_att, Attachments as att";
+				buf << " where art_att.fk_article_number = " << lc.Article()
+						<< " and art_att.fk_attachment_id = att.id";
+				if (mod_param.begin() != mod_param.end())
+				{
+					string coParameter = (*(mod_param.begin()))->attribute();
+					if (case_comp(coParameter, "ForCurrentLanguage") == 0)
+						buf << " and att.fk_language_id = " << lc.Language();
+				}
+				where = buf.str();
+				break;
 		}
 		WriteOrdParam(order);
 		WriteLimit(limit, lc);
@@ -1009,6 +1028,9 @@ int CActList::takeAction(CContext& c, sockstream& fs)
 				break;
 			case CMS_ST_SUBTOPIC:
 				fields = "select distinct Id";
+				break;
+			case CMS_ST_ARTICLEATTACHMENT:
+				fields = "select att.id";
 				break;
 		}
 		
@@ -1058,7 +1080,8 @@ int CActList::takeAction(CContext& c, sockstream& fs)
 		{
 			if ((row = mysql_fetch_row(*res)) == NULL)
 				break;
-			if (modifier != CMS_ST_ARTICLETOPIC && modifier != CMS_ST_SUBTOPIC)
+			if (modifier == CMS_ST_ISSUE || modifier == CMS_ST_SECTION
+						 || modifier == CMS_ST_ARTICLE || modifier == CMS_ST_SEARCHRESULT)
 			{
 				lc.SetLanguage(strtol(row[1], 0, 10));
 				lc.SetPublication(strtol(row[2], 0, 10));
@@ -1068,7 +1091,11 @@ int CActList::takeAction(CContext& c, sockstream& fs)
 					lc.SetSection(strtol(row[4], 0, 10));
 				SetContext(lc, strtol(row[0], 0, 10));
 			}
-			else
+			if (modifier == CMS_ST_ARTICLEATTACHMENT)
+			{
+				lc.SetAttachment(strtol(row[0], 0, 10));
+			}
+			if (modifier == CMS_ST_ARTICLETOPIC || modifier == CMS_ST_SUBTOPIC)
 			{
 				lc.SetTopic(strtol(row[0], 0, 10));
 			}
@@ -1165,6 +1192,15 @@ int CActURLParameters::takeAction(CContext& c, sockstream& fs)
 {
 	TK_TRY
 	bool first = true;
+	if (m_bArticleAttachment)
+	{
+		if (c.Attachment() <= 0)
+		{
+			return ERR_NODATA;
+		}
+		fs << "id=" << c.Attachment();
+		return 0;
+	}
 	if (image_nr >= 0)
 	{
 		if (c.Publication() < 0 || c.Issue() < 0 || c.Section() < 0 || c.Article() < 0)
@@ -1173,11 +1209,10 @@ int CActURLParameters::takeAction(CContext& c, sockstream& fs)
 		URLPrintParam(P_NRARTICLE, c.Article(), fs, first);
 		return 0;
 	}
-	else
+	if (c.Language() < 0 && c.Publication() < 0 && c.Issue() < 0
+		   && c.Section() < 0 && c.Article() < 0)
 	{
-		if (c.Language() < 0 && c.Publication() < 0 && c.Issue() < 0
-		        && c.Section() < 0 && c.Article() < 0)
-			return ERR_NOPARAM;
+		return ERR_NOPARAM;
 	}
 	CURL* pcoURL = NULL;
 	if (fromstart)
@@ -1299,19 +1334,20 @@ int CActFormParameters::takeAction(CContext& c, sockstream& fs)
 
 CPrintModifiers::CPrintModifiers()
 {
-    insert(CMS_ST_IMAGE);
-    insert(CMS_ST_PUBLICATION);
-    insert(CMS_ST_ISSUE);
-    insert(CMS_ST_SECTION);
-    insert(CMS_ST_ARTICLE);
-    insert(CMS_ST_LIST);
-    insert(CMS_ST_LANGUAGE);
-    insert(CMS_ST_SUBSCRIPTION);
-    insert(CMS_ST_USER);
-    insert(CMS_ST_LOGIN);
-    insert(CMS_ST_SEARCH);
-    insert(CMS_ST_SUBTITLE);
-    insert(CMS_ST_TOPIC);
+	insert(CMS_ST_IMAGE);
+	insert(CMS_ST_PUBLICATION);
+	insert(CMS_ST_ISSUE);
+	insert(CMS_ST_SECTION);
+	insert(CMS_ST_ARTICLE);
+	insert(CMS_ST_LIST);
+	insert(CMS_ST_LANGUAGE);
+	insert(CMS_ST_SUBSCRIPTION);
+	insert(CMS_ST_USER);
+	insert(CMS_ST_LOGIN);
+	insert(CMS_ST_SEARCH);
+	insert(CMS_ST_SUBTITLE);
+	insert(CMS_ST_TOPIC);
+	insert(CMS_ST_ARTICLEATTACHMENT);
 }
 
 CPrintModifiers CActPrint::s_coModifiers;
@@ -1583,6 +1619,26 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 		fs << row[0];
 		return RES_OK;
 	}
+	if (modifier == CMS_ST_ARTICLEATTACHMENT)
+	{
+		if (case_comp(attr, "Description") != 0)
+		{
+			buf << "select " << attr << " from Attachments where Id = " << c.Attachment();
+		}
+		else
+		{
+			buf << "select tr.translation_text, abs(tr.fk_language_id - " << c.Language() << ") "
+					<< "as lang_diff from Attachments as att, Translations as tr where att.Id = "
+					<< c.Attachment() << " and att.fk_description_id = tr.phrase_id "
+					<< "order by lang_diff asc";
+		}
+		SQLQuery(&m_coSql, buf.str().c_str());
+		res = mysql_store_result(&m_coSql);
+		CheckForRows(*res, 1);
+		row = mysql_fetch_row(*res);
+		fs << row[0];
+		return RES_OK;
+	}
 	buf.str("");	
 	string w, table, field;
 	w = table = "";
@@ -1742,25 +1798,26 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 
 CIfModifiers::CIfModifiers()
 {
-    insert(CMS_ST_ISSUE);
-    insert(CMS_ST_SECTION);
-    insert(CMS_ST_ARTICLE);
-    insert(CMS_ST_LIST);
-    insert(CMS_ST_PREVIOUSITEMS);
-    insert(CMS_ST_NEXTITEMS);
-    insert(CMS_ST_ALLOWED);
-    insert(CMS_ST_SUBSCRIPTION);
-    insert(CMS_ST_USER);
-    insert(CMS_ST_LOGIN);
-    insert(CMS_ST_PUBLICATION);
-    insert(CMS_ST_SEARCH);
-    insert(CMS_ST_PREVSUBTITLES);
-    insert(CMS_ST_NEXTSUBTITLES);
-    insert(CMS_ST_SUBTITLE);
-    insert(CMS_ST_CURRENTSUBTITLE);
-    insert(CMS_ST_IMAGE);
-    insert(CMS_ST_LANGUAGE);
-    insert(CMS_ST_TOPIC);
+	insert(CMS_ST_ISSUE);
+	insert(CMS_ST_SECTION);
+	insert(CMS_ST_ARTICLE);
+	insert(CMS_ST_LIST);
+	insert(CMS_ST_PREVIOUSITEMS);
+	insert(CMS_ST_NEXTITEMS);
+	insert(CMS_ST_ALLOWED);
+	insert(CMS_ST_SUBSCRIPTION);
+	insert(CMS_ST_USER);
+	insert(CMS_ST_LOGIN);
+	insert(CMS_ST_PUBLICATION);
+	insert(CMS_ST_SEARCH);
+	insert(CMS_ST_PREVSUBTITLES);
+	insert(CMS_ST_NEXTSUBTITLES);
+	insert(CMS_ST_SUBTITLE);
+	insert(CMS_ST_CURRENTSUBTITLE);
+	insert(CMS_ST_IMAGE);
+	insert(CMS_ST_LANGUAGE);
+	insert(CMS_ST_TOPIC);
+	insert(CMS_ST_ARTICLEATTACHMENT);
 }
 
 CIfModifiers CActIf::s_coModifiers;
@@ -2160,9 +2217,44 @@ int CActIf::takeAction(CContext& c, sockstream& fs)
 			runActions(sec_block, c, fs);
 		return RES_OK;
 	}
+	buf.str("");
+	if (modifier == CMS_ST_ARTICLEATTACHMENT)
+	{
+		buf << "select " << param.attribute() << " from Attachments where id = " << c.Attachment();
+		DEBUGAct("takeAction()", buf.str().c_str(), fs);
+		SQLQuery(&m_coSql, buf.str().c_str());
+		StoreResult(&m_coSql, res);
+		CheckForRows(*res, 1);
+		FetchRow(*res, row);
+		if (row[0] == NULL)
+			return ERR_NODATA;
+		run_first = param.applyOp(row[0]);
+		run_first = m_bNegated ? !run_first : run_first;
+		if (run_first)
+			runActions(block, c, fs);
+		else
+			runActions(sec_block, c, fs);
+	}
+	if (case_comp(param.attribute(), "hasAttachments") == 0 && modifier == CMS_ST_ARTICLE)
+	{
+		buf << "select count(*) from ArticleAttachments where fk_article_number = " << c.Article();
+		DEBUGAct("takeAction()", buf.str().c_str(), fs);
+		SQLQuery(&m_coSql, buf.str().c_str());
+		StoreResult(&m_coSql, res);
+		CheckForRows(*res, 1);
+		FetchRow(*res, row);
+		if (row[0] == NULL)
+			return ERR_NODATA;
+		run_first = strtol(row[0], 0, 10) > 0;
+		run_first = m_bNegated ? !run_first : run_first;
+		if (run_first)
+			runActions(block, c, fs);
+		else
+			runActions(sec_block, c, fs);
+		return RES_OK;
+	}
 	if (c.Language() < 0 || c.Publication() < 0 || c.Issue() < 0)
 		return ERR_NOPARAM;
-	buf.str("");
 	string w, field, tables, value;
 	field = param.attribute();
 	bool need_lang = false;
@@ -2816,6 +2908,11 @@ int CActWith::takeAction(CContext& c, sockstream& fs)
 //		sockstream& fs - output stream	
 int CActURIPath::takeAction(CContext& c, sockstream& fs)
 {
+	if (m_bArticleAttachment)
+	{
+		fs << "/attachment";
+		return RES_OK;
+	}
 	if (m_nTemplate > 0 || m_nPubLevel < CMS_PL_SUBTITLE)
 	{
 		SafeAutoPtr<CURL> pcoURL(c.URL()->clone());
@@ -2832,11 +2929,9 @@ int CActURIPath::takeAction(CContext& c, sockstream& fs)
 		if (m_nPubLevel <= CMS_PL_ROOT)
 			pcoURL->deleteParameter(P_IDLANG);
 		fs << pcoURL->getURIPath();
+		return RES_OK;
 	}
-	else
-	{
-		fs << c.URL()->getURIPath();
-	}
+	fs << c.URL()->getURIPath();
 	return RES_OK;
 }
 
