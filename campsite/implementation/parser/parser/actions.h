@@ -644,7 +644,7 @@ public:
 	// constructor
 	CActURLParameters(bool fs = false, bool as = false, id_type i = -1, CListLevel r_fl = CLV_ROOT,
 	                  id_type tpl = -1, TPubLevel lvl = CMS_PL_ARTICLE,
-					  bool p_bArticleAttachment = -1)
+					  bool p_bArticleAttachment = false)
 		: image_nr(i), fromstart(fs), allsubtitles(as), reset_from_list(r_fl), m_coTemplate(tpl),
 	m_nPubLevel(lvl), m_bArticleAttachment(p_bArticleAttachment) {}
 
@@ -1191,7 +1191,7 @@ protected:
 public:
 	// constructor
 	CActURIPath(id_type p_nTemplate = -1, TPubLevel p_nPubLevel = CMS_PL_ARTICLE,
-				bool p_bArticleAttachment = -1)
+				bool p_bArticleAttachment = false)
 	: m_nTemplate(p_nTemplate), m_nPubLevel(p_nPubLevel),
 	m_bArticleAttachment(p_bArticleAttachment) {}
 
@@ -1223,7 +1223,7 @@ protected:
 public:
 	// constructor
 	CActURI(bool fs = false, bool as = false, id_type i = -1, CListLevel r_fl = CLV_ROOT,
-			id_type tpl = -1, TPubLevel lvl = CMS_PL_ARTICLE, bool p_bArticleAttachment = -1)
+			id_type tpl = -1, TPubLevel lvl = CMS_PL_ARTICLE, bool p_bArticleAttachment = false)
 	: m_coURIPath(tpl, lvl), m_coURLParameters(fs, as, i, r_fl, tpl, lvl), m_nImageNr(i),
 	m_bArticleAttachment(p_bArticleAttachment) {}
 
