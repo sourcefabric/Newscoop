@@ -1,8 +1,7 @@
 <?php
 
-require_once('../configuration.php');
-//require_once("database_conf.php");
-//require_once("install_conf.php");
+require_once("database_conf.php");
+require_once("install_conf.php");
 if (!is_array($Campsite)) {
 	echo "Invalid configuration file(s)";
 	exit(1);
