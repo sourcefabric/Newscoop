@@ -189,6 +189,7 @@ void* MyThreadRoutine(void* p_pArg)
 	sockstream coOs(&coOutBuf);
 	string coErrorMsg;
 	MYSQL* pSql = NULL;
+	CMessage* pcoMessage = NULL;
 	try
 	{
 		if (select(FD_SETSIZE, &clSet, NULL, NULL, &tVal) == -1
@@ -199,7 +200,7 @@ void* MyThreadRoutine(void* p_pArg)
 #ifdef _DEBUG
 		cout << "MyThreadRoutine: reading message" << endl;
 #endif
-		CMessage* pcoMessage = readMessage(pcoClSock, CMessageFactoryRegister::getInstance());
+		pcoMessage = readMessage(pcoClSock, CMessageFactoryRegister::getInstance());
 #ifdef _DEBUG
 		cout << "received message " << pcoMessage->getMessageTypeId() << endl;
 #endif
@@ -281,6 +282,7 @@ void* MyThreadRoutine(void* p_pArg)
 				<< "<pre>" << coErrorMsg << "</pre></font>" << endl << "</body></html>" << endl;
 	}
 	coOs.flush();
+	delete pcoMessage;
 	delete pcoClSock;
 	return NULL;
 }
