@@ -224,7 +224,7 @@ function upgrade_database($p_db_name, $p_defined_parameters)
 			return "Unable to create link to install configuration file";
 
 		// run upgrade scripts
-		$cmd_prefix = "cd " . escape_shell_arg($upgrade_dir) . "; mysql --user=$db_user --host="
+		$cmd_prefix = "cd " . escape_shell_arg($upgrade_dir) . " && mysql --user=$db_user --host="
 			. $Campsite['DATABASE_SERVER_ADDRESS']
 			. " --port=" . $Campsite['DATABASE_SERVER_PORT'];
 		if ($db_password != "")
