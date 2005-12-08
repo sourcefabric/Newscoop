@@ -179,6 +179,7 @@ void CMsgURLRequest::setContent(char* p_pchContent)
 	}
 
 	// set the pointer to the content buffer
+	delete []m_pchContent;
 	m_pchContent = p_pchContent;
 	m_nContentSize = nDataSize + 10;
 	m_bValidContent = true;
@@ -240,6 +241,7 @@ void CMsgResetCache::setContent(char* p_pchContent)
 	}
 
 	// set the pointer to the content buffer
+	delete []m_pchContent;
 	m_pchContent = p_pchContent;
 	m_nContentSize = nDataSize + 10;
 	m_bValidContent = true;
@@ -277,6 +279,7 @@ void CMsgRestartServer::setContent(char* p_pchContent)
 	coReader.nextElement(CampsiteMessage);
 
 	// set the pointer to the content buffer
+	delete []m_pchContent;
 	m_pchContent = p_pchContent;
 	m_nContentSize = nDataSize + 10;
 	m_bValidContent = true;
