@@ -82,8 +82,10 @@ public:
 
 	// Create an xml reader for an XML in-memory document.
 	// The parsing flags @options are a combination of xmlParserOption(s).
-	CXMLReader(const char* p_pchBuffer, int p_nSize, const char* p_pchURL, const char* p_pchEncoding,
-	           int p_nOptions) throw (invalid_argument);
+	CXMLReader(const char* p_pchBuffer, int p_nSize, const char* p_pchURL,
+			   const char* p_pchEncoding, int p_nOptions) throw (invalid_argument);
+	
+	~CXMLReader();
 
 	// Moves the position of the current instance to the next node in the stream.
 	// Returns the qualified name of the next node.
@@ -146,6 +148,11 @@ inline CXMLReader::CXMLReader(const char* p_pchBuffer, int p_nSize, const char* 
 	m_pReader = xmlReaderForMemory(p_pchBuffer, p_nSize, p_pchURL, p_pchEncoding, p_nOptions);
 	if (m_pReader == NULL)
 		throw invalid_argument("Invalid arguments");
+}
+
+inline CXMLReader::~CXMLReader()
+{
+	xmlFreeTextReader(m_pReader);
 }
 
 // Returns the depth of the node in the tree.
