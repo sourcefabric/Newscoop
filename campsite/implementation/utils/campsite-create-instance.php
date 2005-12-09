@@ -265,7 +265,7 @@ function detect_database_version($p_db_name, &$version)
 			if (mysql_num_rows($res2) > 0) {
 				$version = "2.3.x";
 			}
-			if (!$res2 = mysql_query("DESC UserTypes InitializeTemplateEngine"))
+			if (!$res2 = mysql_query("SHOW TABLES LIKE 'UserConfig'"))
 				return "Unable to query the database $p_db_name";
 			if (mysql_num_rows($res2) > 0) {
 				$version = "2.4.x";
@@ -352,7 +352,8 @@ function create_site($p_defined_parameters)
 		'IMAGES_DIR'=>$instance_www_dir . "/html/images",
 		'THUMBNAILS_DIR'=>$instance_www_dir . "/html/images/thumbnails",
 		'TEMPLATES_DIR'=>$instance_www_dir . "/html/look",
-		'CGI_DIR'=>$instance_www_dir . "/cgi-bin");
+		'CGI_DIR'=>$instance_www_dir . "/cgi-bin",
+		'ATTACHMENTS_DIR'=>$instance_www_dir . "/html/files");
 	// create directories
 	foreach ($instance_dirs as $dir_type=>$dir_name)
 		if (!is_dir($dir_name) && !mkdir($dir_name))
