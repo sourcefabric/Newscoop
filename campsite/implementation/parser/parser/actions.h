@@ -1218,14 +1218,13 @@ protected:
 	CActURIPath m_coURIPath;
 	CActURLParameters m_coURLParameters;
 	id_type m_nImageNr;		// if not -1, print URI of image nr.
-	bool m_bArticleAttachment;
 
 public:
 	// constructor
 	CActURI(bool fs = false, bool as = false, id_type i = -1, CListLevel r_fl = CLV_ROOT,
 			id_type tpl = -1, TPubLevel lvl = CMS_PL_ARTICLE, bool p_bArticleAttachment = false)
-	: m_coURIPath(tpl, lvl), m_coURLParameters(fs, as, i, r_fl, tpl, lvl), m_nImageNr(i),
-	m_bArticleAttachment(p_bArticleAttachment) {}
+	: m_coURIPath(tpl, lvl, p_bArticleAttachment),
+	m_coURLParameters(fs, as, i, r_fl, tpl, lvl, p_bArticleAttachment), m_nImageNr(i) {}
 
 	// destructor
 	virtual ~CActURI() {}
