@@ -37,6 +37,10 @@ if (archive_file("$html_dir/look", $backup_dir, "$instance_name-look", $output) 
 if (archive_file("$html_dir/images", $backup_dir, "$instance_name-images", $output) != 0)
 	exit_with_error($output);
 
+// backup files directory
+if (archive_file("$html_dir/files", $backup_dir, "$instance_name-files", $output) != 0)
+	exit_with_error($output);
+
 // backup configuration directory
 if (archive_file("$etc_dir/$instance_name", $backup_dir, "$instance_name-conf", $output) != 0)
 	exit_with_error($output);
@@ -56,6 +60,7 @@ $cmd = "pushd $backup_dir > /dev/null && tar cf "
 	. " *.tar.gz && popd > /dev/null";
 exec_command($cmd);
 unlink("$backup_dir/$instance_name-conf.tar.gz");
+unlink("$backup_dir/$instance_name-files.tar.gz");
 unlink("$backup_dir/$instance_name-images.tar.gz");
 unlink("$backup_dir/$instance_name-look.tar.gz");
 unlink("$backup_dir/$instance_name-database.tar.gz");
