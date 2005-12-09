@@ -380,7 +380,8 @@ function create_site($p_defined_parameters)
 		"$common_html_dir/css"=>"$html_dir/css",
 		"$common_html_dir/include"=>"$html_dir/include",
 		"$common_html_dir/javascript"=>"$html_dir/javascript",
-		"$common_html_dir/priv"=>"$html_dir/admin-files"
+		"$common_html_dir/priv"=>"$html_dir/admin-files",
+		"$common_html_dir/attachment.php"=>"$html_dir/attachment.php"
 		);
 	foreach ($link_files as $file=>$link) {
 		if (!is_link($link) && !symlink($file, $link))
