@@ -11,13 +11,10 @@ install: $(ALL)
 	mkdir -p $(BIN_DIR)
 	mkdir -p $(CGI_COMMON_DIR)
 	mkdir -p $(HTML_COMMON_DIR)
-	mkdir -p $(HTML_COMMON_DIR)/look
 	mkdir -p $(HTML_COMMON_DIR)/css
-	cp -fr css $(HTML_COMMON_DIR)
+	cp -fr css/* $(HTML_COMMON_DIR)/css
 	mkdir -p $(HTML_COMMON_DIR)/classes
 	cp -f classes/*.php $(HTML_COMMON_DIR)/classes
-	mkdir -p $(HTML_COMMON_DIR)/images/thumbnails
-	mkdir -p $(HTML_COMMON_DIR)/attachments
 	cp -rf javascript $(HTML_COMMON_DIR)
 	cp -f javascript/xinha/htmlarea-compressed.js $(HTML_COMMON_DIR)/javascript/xinha/htmlarea.js
 	cp -rf include $(HTML_COMMON_DIR)
