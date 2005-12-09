@@ -5,7 +5,6 @@ ALL=all
 all: dummy
 	$(MAKE) -C bin
 	$(MAKE) -C cgi
-	$(MAKE) -C priv
 
 install: $(ALL)
 	mkdir -p $(BIN_DIR)
@@ -19,7 +18,7 @@ install: $(ALL)
 	cp -f javascript/xinha/htmlarea-compressed.js $(HTML_COMMON_DIR)/javascript/xinha/htmlarea.js
 	cp -rf include $(HTML_COMMON_DIR)
 	cp -rf priv $(HTML_COMMON_DIR)
-	cp -f *.php $(HTML_COMMON_DIR)/
+	cp -f *.php $(HTML_COMMON_DIR)
 	$(MAKE) -C bin install
 	$(MAKE) -C cgi install
 	chown -R $(APACHE_USER):$(APACHE_GROUP) $(HTML_COMMON_DIR)/*
@@ -33,7 +32,6 @@ install: $(ALL)
 clean: dummy
 	$(MAKE) -C bin clean
 	$(MAKE) -C cgi clean
-	$(MAKE) -C priv clean
 
 uninstall: dummy
 # check the validity of the directory name
