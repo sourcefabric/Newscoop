@@ -533,38 +533,35 @@ check4_stl()
 {
 is_checked stl && return 0
 err_message="Could not find STL (Standard Template Library) files. Please install libstdc++-devel package."
-stl_versions="3.1 3.2 3.2.1 3.2.2 3.2.3 3.3 3.3.0 3.3.1 3.3.2 3.3.3 3.3.4 3.3.5 3.4 3.4.0 3.4.1 3.4.2 3.4.3 3.4.4"
+stl_major_versions="6 5 4 3"
 for stl_prefix in /usr/include /usr/local/include; do
     for stl_dir in c++ g++; do
 	stl_path="$stl_prefix:$stl_prefix/$stl_dir"
-	for stl_ver in $stl_versions; do
-	    stl_path="$stl_path:$stl_prefix/$stl_dir/$stl_ver"
+	for stl_major_version in $stl_major_versions; do
+	    stl_subdir=`ls -1 -r "$stl_prefix/$stl_dir" 2> /dev/null | grep -m 1 "^$stl_major_version."`
+	    stl_result=$?
+	    [ $stl_result -eq 0 ] && file_path="$stl_prefix/$stl_dir/$stl_subdir" && break
 	done
-	check4_file string --file --path "$stl_path" &> /dev/null
-	stl_result=$?
-	if [ $stl_result -eq 0 ]; then
-	    break
-	fi
+	[ $stl_result -eq 0 ] && break
     done
-    if [ $stl_result -eq 0 ]; then
-	break
-    fi
+    [ $stl_result -eq 0 ] && break
 done
 if [ $stl_result -ne 0 ]; then
-    stl_path="/usr/include/g++-2:/usr/include/g++-3:/usr/local/include/g++-2:/usr/local/include/g++-3"
+    stl_path="/usr/include/c++/4.0.2:/usr/include/g++-2:/usr/include/g++-3:/usr/local/include/g++-2:/usr/local/include/g++-3"
     check4_file string --file --path "$stl_path" &> /dev/null
     stl_result=$?
+    [ $stl_result -eq 0 ] && file_path=`cut_last_dirs $file_path 1`
 fi
 if [ $stl_result -ne 0 ]; then
     output=$err_message
     return 1
 fi
-export STL_PATH=`cut_last_dirs $file_path 1`
+export STL_PATH=$file_path
 for file in map list stack hashtable.h vector; do
     check4_file $file --file --path "$STL_PATH" &> /dev/null
     result=$?
     if [ $result -ne 0 ]; then
-	check4_file $file --file --path "$STL_PATH/backward"
+	check4_file $file --file --path "$STL_PATH/backward" &> /dev/null
 	result=$?
     fi
     [ $result -ne 0 ] && output=$err_message && return 1
