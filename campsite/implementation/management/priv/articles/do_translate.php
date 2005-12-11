@@ -25,10 +25,73 @@ if (!$articleObj->exists()) {
 	exit;
 }
 
+$translationLanguageObj =& new Language($f_translation_language);
+if (!$translationLanguageObj->exists()) {
+	camp_html_display_error(getGS('Language does not exist.'));
+	exit;
+}
+
 if (!$articleObj->userCanModify($User)) {
 	$errorStr = getGS('You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.');
 	camp_html_display_error($errorStr);
 	exit;	
+}
+
+$f_publication_id = $articleObj->getProperty('IdPublication');
+$publicationObj =& new Publication($f_publication_id);
+if (!$publicationObj->exists()) {
+	camp_html_display_error(getGS('Publication does not exist.'), $BackLink);
+	exit;	
+}
+
+$f_issue_number = $articleObj->getProperty('NrIssue');
+$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
+if (!$issueObj->exists()) {
+	camp_html_display_error(getGS('No such issue.'), $BackLink);
+	exit;	
+}
+
+$translationIssueObj =& new Issue($f_publication_id, $f_translation_language, $f_issue_number);
+if (!$translationIssueObj->exists()) {
+	foreach ($issueObj->getData() as $field=>$fieldValue) {
+		if ($field != 'IdLanguage') {
+			$translationIssueObj->setProperty($field, $fieldValue, false);
+		}
+	}
+	$f_issue_name = Input::Get('f_issue_name', 'string', '');
+	if ($f_issue_name != '') {
+		$translationIssueObj->setName($f_issue_name);
+	}
+	$f_issue_urlname = Input::Get('f_issue_urlname', 'string', $issueObj->getUrlName());
+	$translationIssueObj->create($f_issue_urlname);
+	if (!$translationIssueObj->exists()) {
+		camp_html_display_error(getGS('Unable to create the issue for translation $1.', $translationLanguageObj->getName()), $BackLink);
+		exit;
+	}
+}
+
+$f_section_number = $articleObj->getProperty('NrSection');
+$sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
+if (!$sectionObj->exists()) {
+	camp_html_display_error(getGS('No such section.'), $BackLink);
+	exit;		
+}
+
+$translationSectionObj =& new Section($f_publication_id, $f_issue_number, $f_translation_language,
+									  $f_section_number);
+if (!$translationSectionObj->exists()) {
+	foreach ($sectionObj->getData() as $field=>$fieldValue) {
+		if ($field != 'IdLanguage') {
+			$translationSectionObj->setProperty($field, $fieldValue, false);
+		}
+	}
+	$f_section_name = Input::Get('f_section_name', 'string', $sectionObj->getName());
+	$f_section_urlname = Input::Get('f_section_urlname', 'string', $sectionObj->getUrlName());
+	$translationSectionObj->create($f_section_name, $f_section_urlname);
+	if (!$translationSectionObj->exists()) {
+		camp_html_display_error(getGS('Unable to create the section for translation $1.', $translationLanguageObj->getName()), $BackLink);
+		exit;
+	}
 }
 
 $articleCopy =& $articleObj->createTranslation($f_translation_language, $User->getUserId(), $f_translation_title);
