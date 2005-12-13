@@ -50,24 +50,28 @@ if ($errorField != "") {
 	exit;
 }
 
+if (User::UserNameExists($fieldValues['UName'])) {
+	$errorMsg = getGS('That user name already exists, please choose a different login name.');
+	header("Location: $backLink&res=ERROR&resMsg=" . urlencode($errorMsg));
+	exit;	
+}
+
 // read password
 $password = Input::Get('password', 'string', '');
 $passwordConf = Input::Get('passwordConf', 'string', '');
 if (strlen($password) < 6 || $password != $passwordConf) {
-	$errorMsg = 'The password must be at least 6 characters long and both passwords should match.';
-	header("Location: $backLink&res=ERROR&resMsg=" . urlencode(getGS($errorMsg)));
+	$errorMsg = getGS('The password must be at least 6 characters long and both passwords should match.');
+	header("Location: $backLink&res=ERROR&resMsg=" . urlencode($errorMsg));
 	exit;
 }
 
 // create user
-$editUser = new User;
+$editUser = new User();
 if ($editUser->create($fieldValues)) {
 	$editUser->setPassword($password);
 	if ($uType == 'Staff') {
 		$editUser->setUserType($Type);
 	}
-	$logtext = getGS('User account $1 created', $editUser->getUserName());
-	Log::Message($logtext, $User->getUserName(), 51);
 	$resMsg = getGS('User account $1 was created successfully.', $editUser->getUserName());
 	header("Location: /$ADMIN/users/edit.php?User=".$editUser->getUserId()."&$typeParam&res=OK&resMsg=" . urlencode($resMsg));
 } else {
