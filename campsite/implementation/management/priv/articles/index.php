@@ -2,6 +2,8 @@
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/article_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/DbObjectArray.php');
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/ArticlePublish.php');
+require_once($_SERVER['DOCUMENT_ROOT']. '/classes/SimplePager.php');
+camp_load_language("api");
 
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
@@ -14,8 +16,9 @@ $f_issue_number = Input::Get('f_issue_number', 'int', 0);
 $f_section_number = Input::Get('f_section_number', 'int', 0);
 $f_language_id = Input::Get('f_language_id', 'int', 0);
 $f_language_selected = Input::Get('f_language_selected', 'int', 0, true);
-$f_article_offset = Input::Get('f_article_offset', 'int', 0, true);
-$ArticlesPerPage = 20;
+$offsetVarName = "f_article_offset_".$f_publication_id."_".$f_issue_number."_".$f_language_id."_".$f_section_number;
+$f_article_offset = camp_session_get($offsetVarName, 0);
+$ArticlesPerPage = 15;
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
@@ -66,6 +69,13 @@ if ($f_language_selected) {
 }
 
 $previousArticleNumber = 0;
+
+$pagerUrl = "index.php?f_publication_id=".$f_publication_id
+	."&f_issue_number=".$f_issue_number
+	."&f_section_number=".$f_section_number
+	."&f_language_id=".$f_language_id
+	."&f_language_selected=".$f_language_selected."&";
+$pager =& new SimplePager($numUniqueArticles, $ArticlesPerPage, $offsetVarName, $pagerUrl);
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
 				  'Section' => $sectionObj);
@@ -231,7 +241,7 @@ function uncheckAll(field)
 				<OPTION value="workflow_new"><?php putGS("Status: Set New"); ?></OPTION>
 				<?php } ?>
 				
-				<OPTION value="schedule_publish"><?php putGS("Schedule Publish"); ?></OPTION>
+				<OPTION value="schedule_publish"><?php putGS("Publish Schedule"); ?></OPTION>
 				<OPTION value="unlock"><?php putGS("Unlock"); ?></OPTION>
 				
 				<?php  if ($User->hasPermission('DeleteArticle')) { ?>
@@ -396,23 +406,14 @@ foreach ($allArticles as $articleObj) {
 		<b><?php putGS("$1 articles found", $numUniqueArticles); ?></b>
 	</td>
 </tr>
+</TABLE>
+<table class="indent">
 <TR>
 	<TD NOWRAP>
-		<?php 
-    	if ($f_article_offset > 0) { ?>
-			<B><A HREF="index.php?f_publication_id=<?php  p($f_publication_id); ?>&f_issue_number=<?php  p($f_issue_number); ?>&f_section_number=<?php  p($f_section_number); ?>&f_language_id=<?php  p($f_language_id); ?>&f_language_selected=<?php  p($f_language_selected); ?>&f_article_offset=<?php  p(max(0, ($f_article_offset - $ArticlesPerPage))); ?>">&lt;&lt; <?php  putGS('Previous'); ?></A></B>
-		<?php  }
-
-    	if ( ($f_article_offset + $ArticlesPerPage) < $numUniqueArticles) { 
-    		if ($f_article_offset > 0) {
-    			?>|<?php
-    		}
-    		?>
-			 <B><A HREF="index.php?f_publication_id=<?php  p($f_publication_id); ?>&f_issue_number=<?php  p($f_issue_number); ?>&f_section_number=<?php  p($f_section_number); ?>&f_language_id=<?php  p($f_language_id); ?>&f_language_selected=<?php  p($f_language_selected); ?>&f_article_offset=<?php  p(min( ($numUniqueArticles-1), ($f_article_offset + $ArticlesPerPage))); ?>"><?php  putGS('Next'); ?> &gt;&gt</A></B>
-		<?php  } ?>
+		<?php echo $pager->render(); ?>
 	</TD>
 </TR>
-</TABLE>
+</table>
 </form>
 <?php  } else { ?><BLOCKQUOTE>
 	<LI><?php  putGS('No articles.'); ?></LI>
