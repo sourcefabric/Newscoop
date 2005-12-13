@@ -509,15 +509,15 @@ if ($f_edit_mode == "edit") { ?>
 				<?php echo htmlspecialchars($dbColumn->getPrintName()); ?>:
 			</td>
 			<TD align="left" valign="top">
-				<table style="border: 1px solid #888; margin-right: 5px;" cellpadding="0" cellspacing="0" width="100%">
-				<tr bgcolor="#EEEEEE">
+				<table cellpadding="0" cellspacing="0" width="100%">
+				<tr>
 					<?php if ($f_edit_mode == "edit") { ?>
 					<td><textarea name="<?php print $dbColumn->getName() ?>" 
 								  id="<?php print $dbColumn->getName() ?>" 
 								  rows="20" cols="80"><?php print $text; ?></textarea>
 					</td>
 					<?php } else { ?>
-					<td align="left" style="padding: 5px;"><?php p($text); ?></td> 
+					<td align="left" style="padding: 5px; <?php if (!empty($text)) {?>border: 1px solid #888; margin-right: 5px;<?php } ?>" <?php if (!empty($text)) {?>bgcolor="#EEEEEE"<?php } ?>><?php p($text); ?></td> 
 					<?php } ?>
 				</tr>
 				</table>
