@@ -53,6 +53,9 @@ class Publication extends DatabaseObject {
 	{
 		$created = parent::create($p_values);	
 		if ($created) {
+			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+			$logtext = getGS('Publication $1 added', $this->m_data['Name']." (".$this->m_data['Id'].")"); 
+			Log::Message($logtext, null, 1);
 			ParserCom::SendMessage('publication', 'create', array("IdPublication" => $this->m_data['Id']));
 		}
 		return $created;
@@ -63,6 +66,9 @@ class Publication extends DatabaseObject {
 	{
 		$updated = parent::update($p_columns, $p_commit, $p_isSql);
 		if ($updated) {
+			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+			$logtext = getGS('Publication $1 changed', $this->m_data['Name']." (".$this->m_data['Id'].")"); 
+			Log::Message($logtext, null, 3);		
 			ParserCom::SendMessage('publication', 'modify', array("IdPublication" => $this->m_data['Id']));
 		}
 		return $updated;
@@ -71,7 +77,7 @@ class Publication extends DatabaseObject {
 	
 	function delete() 
 	{
-		$aliases = Alias::GetAliases($this->m_data['id']);
+		$aliases = Alias::GetAliases(null, $this->m_data['Id']);
 		if ($aliases && (count($aliases) > 0)) {
 			foreach ($aliases as $alias) {
 				$alias->delete();
@@ -79,6 +85,9 @@ class Publication extends DatabaseObject {
 		}
 		$deleted = parent::delete();
 		if ($deleted) {
+			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+			$logtext = getGS('Publication $1 deleted', $this->m_data['Name']." (".$this->m_data['Id'].")"); 
+			Log::Message($logtext, null, 2);
 			ParserCom::SendMessage('publication', 'delete', array("IdPublication" => $this->m_data['Id']));			
 		}
 		return $deleted;
