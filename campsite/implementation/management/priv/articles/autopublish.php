@@ -18,7 +18,6 @@ $f_section_number = Input::Get('f_section_number', 'int', 0);
 $f_language_id = Input::Get('f_language_id', 'int', 0);
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
-$f_event_id = Input::Get('f_event_id', 'int', 0, true);
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
@@ -59,15 +58,6 @@ if ($articleObj->getPublished() != 'N') {
 	$publishAction = '';
 	$frontPageAction = '';
 	$sectionPageAction = '';
-	if ($f_event_id > 0) {
-		$articlePublishObj =& new ArticlePublish($f_event_id);
-		if ($articlePublishObj->exists()) {
-			$publishAction = $articlePublishObj->getPublishAction();
-			$frontPageAction = $articlePublishObj->getFrontPageAction();
-			$sectionPageAction = $articlePublishObj->getSectionPageAction();
-			$publishTime = $articlePublishObj->getActionTime();
-		}
-	}
 	$datetime = explode(" ", trim($publishTime));
 	$publishDate = $datetime[0];
 	$publishTime = explode(":", trim($datetime[1]));
@@ -90,15 +80,7 @@ if ($articleObj->getPublished() != 'N') {
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input" style="margin-top: 10px;">
 <TR>
 	<TD COLSPAN="2">
-		<B>
-		<?php  
-		if ($f_event_id > 0) {
-			putGS("Edit action");
-		} else {
-			putGS("Schedule a new action"); 
-		}
-		?>
-		</B>
+		<B><?php putGS("Schedule a new action"); ?></B>
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
 	</TD>
 </TR>
