@@ -35,7 +35,7 @@ $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
 $crumbs[] = array(getGS("Subscribers"), "/$ADMIN/users/?uType=Subscribers");
 $crumbs[] = array(getGS("Account") . " '".$manageUser->getUserName()."'", 
-			"/$ADMIN/users/edit.php?User=$User&uType=Subscribers");
+			"/$ADMIN/users/edit.php?User=$f_user_id&uType=Subscribers");
 $crumbs[] = array(getGS("Subscriptions"), "/$ADMIN/users/subscriptions/?f_user_id=$f_user_id");
 $crumbs[] = array(getGS("Subscribed sections").": ".$publicationObj->getName(), "/$ADMIN/users/subscriptions/sections/?f_user_id=$f_user_id&f_subscription_id=$f_subscription_id&f_publication_id=$f_publication_id");
 $crumbs[] = array(getGS("Add new subscription"), "");
