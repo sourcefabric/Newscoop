@@ -1,5 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/users_common.php");
+require_once($_SERVER['DOCUMENT_ROOT']. "/classes/SimplePager.php");
+camp_load_language("api");
 
 list($access, $User) = check_basic_access($_REQUEST);
 
@@ -56,18 +58,13 @@ if ($canManage) {
 	}
 }
 ?>
-	<td style="padding-left: 10px;">
-		<a href="?<?php echo get_user_urlparams(0, false, true); ?>">
-		<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/reset.png" border="0">
-		<B><?php putGS("Reset search conditions"); ?></b></a></td>
 </tr>
 </table>
 <p>
 <table border="0" cellspacing="0" cellpadding="3" class="table_input" style="margin-bottom: 10px; margin-top: 5px; margin-left: 17px;">
 <form method="POST" action="index.php">
 <input type="hidden" name="uType" value="<?php p($uType); ?>">
-<input type="hidden" name="userOffs" value="<?php p($userOffs); ?>">
-<input type="hidden" name="lpp" value="<?php p($lpp); ?>">
+<input type="hidden" name="userOffs" value="0">
 <tr>
 	<td style="padding-left: 10px;"><?php putGS("Full Name"); ?></td>
 	<td><input type="text" name="full_name" value="<?php p(htmlspecialchars($full_name)); ?>" class="input_text" style="width: 150px;"></td>
@@ -123,11 +120,11 @@ if ($canManage) {
 <?php if ($resMsg != '') { ?>
 <table border="0" cellpadding="0" cellspacing="0" class="indent" style="padding-bottom: 5px;">
 <tr>
-<?php if ($res == 'OK') { ?>
+	<?php if ($res == 'OK') { ?>
 	<td class="info_message">
-<?php } else { ?>
+	<?php } else { ?>
 	<td class="error_message">
-<?php } ?>
+	<?php } ?>
 		<?php echo $resMsg; ?>
 	</td>
 </tr>
@@ -135,38 +132,43 @@ if ($canManage) {
 <?php } ?>
 
 <?php
-$sql = "SELECT u.* FROM Users AS u";
+$sqlBase = "SELECT u.* FROM Users AS u";
+$sql = '';
 if ($startIP1 != 0) {
 	$sql .= " LEFT JOIN SubsByIP AS sip ON u.Id = sip.IdUser";
 }
 if ($subscription_date != "" || $subscription_status != "") {
 	$sql .= " LEFT JOIN Subscriptions AS s ON u.Id = s.IdUser";
-	if ($subscription_date != "")
+	if ($subscription_date != "") {
 		$sql .= " LEFT JOIN SubsSections AS ss ON s.Id = ss.IdSubscription";
+	}
 }
 $sql .= " WHERE u.Reader = '$isReader'";
-if ($full_name != '')
+if ($full_name != '') {
 	$sql .= " AND Name like '%" . mysql_escape_string($full_name) . "%'";
-if ($user_name != '')
+}
+if ($user_name != '') {
 	$sql .= " AND UName like '%" . mysql_escape_string($user_name) . "%'";
-if ($email != '')
+}
+if ($email != '') {
 	$sql .= " AND EMail like '%" . mysql_escape_string($email) . "%'";
+}
 if ($subscription_date != '') {
 	$ss_field = "TO_DAYS(ss.StartDate) - TO_DAYS('$subscription_date')";
 	if ($subscription_how == 'expires') {
 		$ss_field .= " + Days";
 	}
 	switch ($subscription_when) {
-	case 'before': $comp_sign = "<="; break;
-	case 'after': $comp_sign = ">="; break;
-	case 'on': $comp_sign = "="; break;
+		case 'before': $comp_sign = "<="; break;
+		case 'after': $comp_sign = ">="; break;
+		case 'on': $comp_sign = "="; break;
 	}
 	$sql .= " AND ($ss_field) $comp_sign 0";
 }
-if ($subscription_status != "")
+if ($subscription_status != "") {
 	$sql .= " AND s.Active = '" . ($subscription_status == 'active' ? 'Y' : 'N') . "'";
+}
 if ($startIP1 != 0) {
-	
 	$minIP = $startIP1 * 256 * 256 * 256 + $startIP2 * 256 * 256 + $startIP3 * 256 + $startIP4;
 	$maxIP2 = $startIP2 != 0 ? $startIP2 : 255;
 	$maxIP3 = $startIP3 != 0 ? $startIP3 : 255;
@@ -179,11 +181,26 @@ if ($subscription_date != "") {
 	$sql .= " GROUP BY s.Id";
 }
 $sql .= " ORDER BY " . $orderFields[$orderField] . " $orderDir";
-$res = $Campsite['db']->SelectLimit($sql, $lpp+1, $userOffs);
+$searchSql = $sqlBase.$sql." LIMIT $userOffs, $lpp";
+$res = $Campsite['db']->Execute($searchSql);
+
+$countSql = "SELECT COUNT(*) FROM Users as u ".$sql;
+$totalUsers = $Campsite['db']->GetOne($countSql);
+
+$pager =& new SimplePager($totalUsers, $lpp, "userOffs", "index.php?".get_user_urlparams(0)."&", false);
+
 if (gettype($res) == 'object' && $res->NumRows() > 0) {
 	$nr = $res->NumRows();
 	$last = $nr > $lpp ? $lpp : $nr;
-?><table border="0" cellspacing="1" cellpadding="3" class="table_list">
+	?>
+	<table class="indent">
+	<tr>
+		<td>
+			<?php echo $pager->render(); ?>
+		</td>
+	</tr>
+	</table>
+	<table border="0" cellspacing="1" cellpadding="3" class="table_list">
 	<tr class="table_list_header">
 		<td align="left" valign="center">
 			<table><tr>
@@ -276,25 +293,18 @@ for($loop = 0; $loop < $last; $loop++) {
 	</tr>
 <?php 
 }
-?>	<tr><td colspan="2" nowrap>
-<?php
-if ($userOffs > 0) {
-	$oldUserOffs = $userOffs;
-	$userOffs = $userOffs - $lpp;
-?>		<b><a href="index.php?<?php echo get_user_urlparams(0); ?>">&lt;&lt; <?php putGS('Previous'); ?></a></b>
-<?php
-	$userOffs = $oldUserOffs;
-}
-if ($nr >= $lpp+1) {
-	$userOffs += $lpp;
-?>		 | <b><a href="index.php?<?php echo get_user_urlparams(0); ?>"><?php putGS('Next'); ?> &gt;&gt</a></b>
-<?php  } ?>	</td></tr>
+?>
 </table>
-<?php  } else { ?><blockquote>
+<table class="indent">
+<tr>
+	<td>
+		<?php echo $pager->render(); ?>
+	</td>
+</tr>
+</table>
+<?php  } else { ?>
+	<blockquote>
 	<li><?php  putGS('User list is empty.'); ?></li>
-</blockquote>
+	</blockquote>
 <?php  } ?>
 <?php camp_html_copyright_notice(); ?>
-</body>
-
-</html>

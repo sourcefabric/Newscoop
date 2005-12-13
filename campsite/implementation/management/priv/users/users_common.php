@@ -28,25 +28,26 @@ function read_user_common_parameters()
 	global $startIP1, $startIP2, $startIP3, $startIP4;
 
 	$uType = Input::Get('uType', 'string', '');
-	$userOffs = Input::Get('userOffs', 'int', 0);
-	if ($userOffs < 0)
+	$userOffs = camp_session_get('userOffs', 0);
+	if ($userOffs < 0) {
 		$userOffs = 0;
-	$lpp = Input::Get('lpp', 'int', 20);
-	$full_name = Input::Get('full_name', 'string', '');
-	$user_name = Input::Get('user_name', 'string', '');
-	$email = Input::Get('email', 'string', '');
+	}
+	$lpp = Input::Get('lpp', 'int', 2);
+	$full_name = camp_session_get('full_name', '');
+	$user_name = camp_session_get('user_name', '');
+	$email = camp_session_get('email', '');
 	if ($uType == "Subscribers") {
-		$subscription_how = Input::Get('subscription_how', 'string', '');
-		$subscription_when = Input::Get('subscription_when', 'string', '');
-		$subscription_date = Input::Get('subscription_date', 'string', '');
-		$subscription_status = Input::Get('subscription_status', 'string', '');
+		$subscription_how = camp_session_get('subscription_how', '');
+		$subscription_when = camp_session_get('subscription_when', '');
+		$subscription_date = camp_session_get('subscription_date', '');
+		$subscription_status = camp_session_get('subscription_status', '');
 	}
 	$res = Input::Get('res', 'string', 'OK');
 	$resMsg = Input::Get('resMsg', 'string', '');
-	$startIP1 = Input::Get('StartIP1', 'int', 0);
-	$startIP2 = Input::Get('StartIP2', 'int', 0);
-	$startIP3 = Input::Get('StartIP3', 'int', 0);
-	$startIP4 = Input::Get('StartIP4', 'int', 0);
+	$startIP1 = camp_session_get('StartIP1', 0);
+	$startIP2 = camp_session_get('StartIP2', 0);
+	$startIP3 = camp_session_get('StartIP3', 0);
+	$startIP4 = camp_session_get('StartIP4', 0);
 }
 
 function compute_user_rights($User, &$canManage, &$canDelete)
