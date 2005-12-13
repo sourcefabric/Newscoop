@@ -29,8 +29,6 @@ if ($correct) {
 	$numMatches = Country::GetNumCountries($f_country_language, null, $f_country_name);
 	if ($numMatches == 0) {
 		$country->setName($f_country_name);
-		$logtext = getGS('Country name $1 changed', $f_country_name);
-		Log::Message($logtext, $User->getUserName(), 133);
 		header("Location: /$ADMIN/country/edit.php?f_country_code=$f_country_code&f_country_language=$f_country_language");
 		exit;
 	} else { 

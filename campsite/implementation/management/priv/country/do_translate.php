@@ -36,8 +36,6 @@ if ($correct) {
 	$newCountry =& new Country($f_country_code, $f_country_new_language);
 	$created = $newCountry->create(array('Name' => $f_country_name));
 	if ($created) {
-		$logtext = getGS('Country name $1 translated', $newCountry->getName());
-		Log::Message($logtext, $User->getUserName(), 132);
 	    header("Location: /$ADMIN/country/");
 	    exit;
 	} else {

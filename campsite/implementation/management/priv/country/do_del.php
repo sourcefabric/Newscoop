@@ -19,15 +19,13 @@ $country =& new Country($f_country_code, $f_country_language);
 $language =& new Language($f_country_language);
 $deleted = $country->delete();
 if ($deleted) {
-	$logtext = getGS('Country $1 deleted', $country->getName().' ('.$language->getNativeName().')' ); 
-	Log::Message($logtext, $User->getUserName(), 134);
 	header("Location: /$ADMIN/country");
 	exit;
 }
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
 $crumbs[] = array(getGS("Countries"), "/$ADMIN/country/");
-$crumbs[] = array(getGS("Deleting country"), "");
+$crumbs[] = array(getGS("Delete country"), "");
 echo camp_html_breadcrumbs($crumbs);
 
 ?>
@@ -36,7 +34,7 @@ echo camp_html_breadcrumbs($crumbs);
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">
 <TR>
 	<TD COLSPAN="2">
-		<B> <?php  putGS("Deleting country"); ?> </B>
+		<B> <?php  putGS("Delete country"); ?> </B>
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
 	</TD>
 </TR>

@@ -36,8 +36,6 @@ if ($correct) {
 	$country =& new Country($f_country_code, $f_country_language);
 	$created = $country->create(array("Name" => $f_country_name));
 	if ($created) {
-		$logtext = getGS('Country $1 added', $f_country_name);
-		Log::Message($logtext, $User->getUserName(), 131);
 		header("Location: /$ADMIN/country/");
 		exit;
 	}
