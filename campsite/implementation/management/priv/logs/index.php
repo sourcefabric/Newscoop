@@ -1,12 +1,14 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
 load_common_include_files("logs");
+camp_load_language("api");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Language.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/User.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Input.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Log.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Event.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/SimplePager.php');
 
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
@@ -20,25 +22,24 @@ if (!$User->hasPermission('ViewLogs')) {
 }
 
 $f_event_search_id = Input::Get('f_event_search_id', 'int', null, true);
-$f_log_page_offset = Input::Get('f_log_page_offset', 'int', 0, true);
-//$LogOffs = Input::Get('LogOffs', );
+$f_log_page_offset = camp_session_get('f_log_page_offset', 0);
+
 $events = Event::GetEvents();
 if ($f_log_page_offset < 0) {
 	$f_log_page_offset = 0;
 }
-$ItemsPerPage = 20;
+$ItemsPerPage = 15;
 
 $logs = Log::GetLogs($f_event_search_id, 
 	array('LIMIT' => array('MAX_ROWS' => $ItemsPerPage, 'START' => $f_log_page_offset)));
 $numLogLines = Log::GetNumLogs($f_event_search_id);
 
+$pager =& new SimplePager($numLogLines, $ItemsPerPage, "f_log_page_offset", "index.php?f_event_search_id=".urlencode($f_event_search_id)."&");
+
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
 $crumbs[] = array(getGS("Logs"), "");
 echo camp_html_breadcrumbs($crumbs);
-
-//    query ("SELECT Id, Name FROM Events WHERE 1=0", 'ee');
-//    query ("SELECT TStamp, IdEvent, User, Text FROM Log WHERE 1=0", 'log'); 
 
 ?>
 <p>
@@ -68,6 +69,15 @@ echo camp_html_breadcrumbs($crumbs);
 </TABLE>
 
 <P>
+
+<table class="indent">
+<TR>
+	<TD>
+		<?php echo $pager->render(); ?>
+	</TD>
+</TR>
+</TABLE>
+<?php if (count($logs) > 0) { ?>
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list">
 <TR class="table_list_header">
 	<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Date/Time"); ?></B></TD>
@@ -105,13 +115,17 @@ echo camp_html_breadcrumbs($crumbs);
 <?php 
 }
 ?>	
-<TR><TD COLSPAN="2" NOWRAP>
-<?php  if ($f_log_page_offset > 0) { ?>
-	<B><A HREF="index.php?sEvent=<?php  print urlencode($sEvent); ?>&f_log_page_offset=<?php  print max(0, ($f_log_page_offset - $ItemsPerPage)); ?>">&lt;&lt; <?php  putGS('Previous'); ?></A></B>
-	<?php  
-} 
-if ($numLogLines > ($f_log_page_offset + $ItemsPerPage)) { ?>
-	 | <B><A HREF="index.php?sEvent=<?php  print urlencode($sEvent); ?>&f_log_page_offset=<?php print ($f_log_page_offset + $ItemsPerPage); ?>"><?php  putGS('Next'); ?> &gt;&gt</A></B>
-<?php  } ?>	</TD></TR>
+</table>
+<table class="indent">
+<TR>
+	<TD>
+		<?php echo $pager->render(); ?>
+	</TD>
+</TR>
 </TABLE>
+<?php } else { ?>
+	<BLOCKQUOTE>
+	<LI><?php  putGS('No events.'); ?></LI>
+	</BLOCKQUOTE>
+<?php } ?>
 <?php camp_html_copyright_notice(); ?>
