@@ -19,22 +19,17 @@ if ($editUser->getUserName() == '') {
 	camp_html_display_error(getGS('No such user account.'));
 	exit;
 }
-$StartIP = Input::Get('StartIP', 'string', '');
-$ip0 = ($StartIP & 0xff000000) >> 24;
-$ip1 = ($StartIP & 0x00ff0000) >> 16;
-$ip2 = ($StartIP & 0x0000ff00) >> 8;
-$ip3 = $StartIP & 0x000000ff;
-$ip = "$ip0.$ip1.$ip2.$ip3";
+$startIP = Input::Get('StartIP', 'string', '');
+$ipAccess =& new IPAccess($userId, $startIP);
+$startIPstring = $ipAccess->getStartIPstring();
+$addresses = $ipAccess->getAddresses();
 
-if ($Campsite['db']->Execute("DELETE FROM SubsByIP WHERE IdUser=$userId and StartIP=$StartIP")) {
-	$logtext = getGS('The IP address group $1 has been deleted.', $ip);
-	Log::Message($logtext, $User->getUserName(), 58);
-} else {
+if (!$ipAccess->delete()) {
 	header("Location: /$ADMIN/users/edit.php?uType=Subscribers&User=$userId");
 	exit;
 }
 
-$resMsg = getGS("The IP address group $1 has been deleted.", $ip);
+$resMsg = getGS("The IP address group $1 has been deleted.", "$startIPstring:$addresses");
 header("Location: /$ADMIN/users/edit.php?uType=Subscribers&User=$userId&res=OK&resMsg=" . urlencode($resMsg));
 
 ?>

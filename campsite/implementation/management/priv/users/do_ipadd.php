@@ -40,30 +40,21 @@ if ($g_cAddresses == 0) {
 }
 
 // check if the IP address group exists already
-$g_startIP = $g_cStartIP1*256*256*256+$g_cStartIP2*256*256+$g_cStartIP3*256+$g_cStartIP4;
-$g_endIP = $g_startIP + $g_cAddresses - 1;
-$g_startIPStr = "$g_cStartIP1.$g_cStartIP2.$g_cStartIP3.$g_cStartIP4";
-$g_sql = "SELECT Addresses FROM SubsByIP WHERE "
-	. "(StartIP <= $g_startIP AND (StartIP + Addresses - 1) >= $g_startIP) OR "
-	. "(StartIP <= $g_endIP AND (StartIP + Addresses - 1) >= $g_endIP)";
-$g_res = $Campsite['db']->Execute($g_sql);
-if ($g_res->RecordCount() > 0) {
+$ipAddressArray = array($g_cStartIP1, $g_cStartIP2, $g_cStartIP3, $g_cStartIP4);
+$ipAccess =& new IPAccess($g_userId, $ipAddressArray, $g_cAddresses);
+if ($ipAccess->exists()) {
 	$g_errorMsg = getGS('The IP address group $1:$2 conflicts with another existing group.',
-		$g_startIPStr, $g_cAddresses);
+		$ipAccess->getStartIPstring(), $g_cAddresses);
 	camp_html_display_error($g_errorMsg, $g_backLink);
 	exit;
 }
 
-if ($Campsite['db']->Execute("INSERT IGNORE INTO SubsByIP SET IdUser=$g_userId, StartIP='$g_startIP', Addresses=$g_cAddresses")) {
-	$logtext = getGS('IP Group $1 added for user $2', "$g_startIPStr:$g_cAddresses",
-		$g_editUser->getUserName());
-	Log::Message($logtext, $g_user->getUserName(), 57);
-} else {
+if (!$ipAccess->create($g_userId, $ipAddressArray, $g_cAddresses)) {
 	camp_html_display_error(getGS('There was an error creating the IP address group.', "$g_startIPStr:$g_cAddresses"), $g_backLink);
 	exit;
 }
 
-$g_resMsg = getGS("The IP Group $1 has been created.", "$g_startIPStr:$g_cAddresses");
+$g_resMsg = getGS("The IP Group $1 has been created.", $ipAccess->getStartIPstring().":$g_cAddresses");
 header("Location: $g_backLink&res=OK&resMsg=" . urlencode($g_resMsg));
 
 ?>
