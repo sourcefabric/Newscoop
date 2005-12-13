@@ -41,14 +41,12 @@ if ($setPassword) {
 		}
 	}
 	if (strlen($password) < 6 || $password != $passwordConf) {
-		$resMsg = 'The password must be at least 6 characters long and both passwords should match.';
-		header("Location: $backLink&res=ERROR&resMsg=" . urlencode(getGS($resMsg)));
+		$resMsg = getGS('The password must be at least 6 characters long and both passwords should match.');
+		header("Location: $backLink&res=ERROR&resMsg=" . urlencode($resMsg));
 		exit;
 	}
 	
 	$editUser->setPassword($password);
-	$logtext = getGS('Password changed for $1', $editUser->getUserName());
-	Log::Message($logtext, $User->getUserName(), 54);
 }
 
 
@@ -93,8 +91,6 @@ if ($editUser->isAdmin() && !$customizeRights && $canManage) {
 	$userTypeName = Input::Get('UserType', 'string', '');
 	if ($userTypeName != "") {
 		$editUser->setUserType($userTypeName);
-		$logtext = getGS('Permissions for $1 changed',$editUser->getUserName());
-		Log::Message($logtext, $User->getUserName(), 55);
 	}
 }
 

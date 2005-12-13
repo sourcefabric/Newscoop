@@ -22,7 +22,6 @@ if ($editUser->getUserName() == '') {
 $typeParam = 'uType=' . urlencode($uType);
 $uName = $editUser->getUserName();
 $editUser->delete();
-Log::Message(getGS('The user account $1 has been deleted.', $uName), $User->getUserName(), 52);
 
 $resMsg = getGS('User account $1 was deleted successfully.', $uName);
 header("Location: /$ADMIN/users/?$typeParam&res=OK&resMsg=" . urlencode($resMsg));
