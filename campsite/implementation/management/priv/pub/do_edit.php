@@ -55,8 +55,6 @@ if ($correct) {
 					 'Currency' => $cCurrency);
 	$updated = $publicationObj->update($columns);
 //	if ($updated) {
-		$logtext = getGS('Publication $1 changed', $publicationObj->getName()); 
-		Log::Message($logtext, $User->getUserName(), 3);
 		header("Location: /$ADMIN/pub/edit.php?Pub=$Pub");
 		exit;
 //	} 

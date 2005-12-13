@@ -30,7 +30,7 @@ if ($issuesRemaining > 0) {
 	$doDelete = false;
 }
 
-$sectionsRemaining =& Section::GetSections($Pub);
+$sectionsRemaining = Section::GetSections($Pub);
 if (count($sectionsRemaining) > 0) {
 	$errorMsgs[] = getGS('There are $1 section(s) left.', count($sectionsRemaining));
 	$doDelete = false;
@@ -49,9 +49,7 @@ if ($subscriptionsRemaining > 0) {
 }
     
 if ($doDelete) {
-	$logtext = getGS('Publication $1 deleted', $publicationObj->getName()); 
 	$publicationObj->delete();
-	Log::Message($logtext, $User->getUserName(), 2);
 	header("Location: /$ADMIN/pub");
 	exit;
 } else {

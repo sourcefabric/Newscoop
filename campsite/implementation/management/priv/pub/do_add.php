@@ -59,8 +59,6 @@ if ($correct) {
 		$created = $newPub->create($columns);
 		if ($created) {
 			$alias->setPublicationId($newPub->getPublicationId());
-			$logtext = getGS('Publication $1 added', $cName); 
-			Log::Message($logtext, $User->getUserName(), 1);
 			header("Location: /$ADMIN/pub/edit.php?Pub=".$newPub->getPublicationId());
 			exit;
 		} else {
