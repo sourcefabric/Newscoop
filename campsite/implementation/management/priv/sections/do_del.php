@@ -42,13 +42,6 @@ if ($doDelete) {
     if ($f_deleteSubscriptions != "") {
         $numSubscriptionsDeleted = Subscription::DeleteSubscriptionsInSection($Pub, $Section);
     }
-    $logtext = getGS('Section $1 deleted from issue $2. $3 $4 of $5',
-        $sectionObj->getName(),
-        $issueObj->getIssueNumber(),
-        $issueObj->getName(),
-        $issueObj->getLanguageName(),
-        $publicationObj->getName());
-    Log::Message($logtext, $User->getUserName(), 22);
 }
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 'Section' => $sectionObj);
