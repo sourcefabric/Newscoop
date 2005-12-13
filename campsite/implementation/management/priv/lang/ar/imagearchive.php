@@ -8,6 +8,4 @@ regGS("Description <SMALL>(Click to view details)</SMALL>", "الوصف (إضغ�
 regGS("Used in articles", "مستخدمة في المقالات");
 regGS("View image", "مشاهدة الصورة");
 regGS("Change image information", "غيّر معلومات الصورة");
-regGS("Changed image properties of $1", "تمّ تغيير خصائص الصورة $1");
-regGS("The image $1 has been added.", "تمّت إضافة الصورة  $1");
 ?>

@@ -186,7 +186,6 @@ regGS("No issues.", "Sin edición");
 regGS("Adding new topic", "Agregando nuevo tema");
 regGS("Topic $1 added", "Tema $1 agregado");
 regGS("The topic could not be added.", "El tema no pudo ser agregado");
-regGS("Do you want to delete the topic $1?", "¿Quiere borrar el tema $1?");
 regGS("Add another topic", "Agregar otro tema");
 regGS("Deleting topic", "Borrando tema");
 regGS("There are $1 subtopics left.", "Hay $1 subtema(s) pendiente(s)");
@@ -213,4 +212,9 @@ regGS("New field", "Nuevo Campo");
 regGS("OK", "OK");
 regGS("Search", "Buscar");
 regGS("Add new field", "Agregar nuevo campo");
+regGS("Attach", "");
+regGS("Back", "");
+regGS("File", "");
+regGS("Save and Close", "");
+regGS("Add", "Agregar");
 ?>

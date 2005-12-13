@@ -8,6 +8,4 @@ regGS("Description <SMALL>(Click to view details)</SMALL>", "");
 regGS("Used in articles", "");
 regGS("View image", "查看图片");
 regGS("Change image information", "修改图片信息");
-regGS("Changed image properties of $1", "已变化$1的图片属性");
-regGS("The image $1 has been added.", "图片$1已被添加");
 ?>

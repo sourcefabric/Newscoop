@@ -10,7 +10,6 @@ regGS("Change publication information", "Izmjeni podatke o publikaciji");
 regGS("You do not have the right to edit publication information.", "Nemate pravo mijenjati podatke o publikacijama.");
 regGS("Changing publication information", "Izmjena podataka o publikaciji");
 regGS("You do not have the right to change publication information.", "Nemate pravo mijenjati podatke o publikacijama.");
-regGS("Publication $1 changed", "Publikacija $1 je izmijenjena");
 regGS("The publication information could not be updated.", "Podaci o publikaciji ne mogu biti osvježeni.");
 regGS("Please check if another publication with the same name or the same site name does not already exist.", "Provjerite da li slučajno postoji neka druga istoimena publikacija ili istoimeni sajt.");
 regGS("You do not have the right to delete publications.", "Nemate prava brisati publikacije.");
@@ -18,7 +17,6 @@ regGS("Are you sure you want to delete the publication $1?", "Da li ste sigurni 
 regGS("Deleting publication", "Brisanje publikacije");
 regGS("There are $1 subscription(s) left.", "Ostala(-lo) je još $1 pretplata");
 regGS("The publication $1 could not be deleted.", "Publikacija $1 nije mogla biti izbrisana.");
-regGS("Publication $1 deleted", "Publikacija $1 je izbrisana");
 regGS("Adding new publication", "Dodavanje nove publikacije");
 regGS("The publication could not be added.", "Publikacija ne može biti dodana.");
 regGS("Add new country default subscription time", "Dodajte novo standardno trajanje pretplate za datu državu");
@@ -27,11 +25,8 @@ regGS("Adding new country default subscription time", "Dodavanje novog standardn
 regGS("You must select a country.", "Morate izabrati državu");
 regGS("The default subscription time for country $1 could not be added.", "Standardno trajanje pretplate nije moglo biti dodano za državu: $1 ");
 regGS("Change subscription default time", "Izmijeni standardno trajanje pretplate");
-regGS("No default time entry for that country.", "Standardno trajanje pretplate nije definirano za tu državu.");
 regGS("Default subscription time for $1 changed", "Standardno trajanje pretplate za publikaciju $1 je izmijenjeno");
-regGS("Delete subscription default time", "Izbriši standardno trajanje pretplate");
 regGS("Are you sure you want to delete the subscription default time for $1?", "Da li ste sigurni da želite izbrisati standardno trajanje pretplate za publikaciju $1");
 regGS("Subscription default time for $1 deleted", "Standardno trajanje pretplate za publikaciju $1 je izbrisano");
 regGS("Name<BR><SMALL>(click to select the publication)</SMALL>", "Ime<br><small>(kliknite za odabir publikacije)</small>");
-regGS("Publication $1 added", "Publikacija $1 je dodana");
 ?>

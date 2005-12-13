@@ -1,4 +1,7 @@
 <?php
+regGS("Section List", "");
+regGS("Section #$1 \"$2\" updated. (Publication: $3, Issue: $4)", "");
+regGS("Go To Articles", "");
 regGS("Add section to all subscriptions.", "Добавить секцию ко всем подпискам");
 regGS("Delete section from all subscriptions.", "Удалить секцию из вссех подписок");
 regGS("A total of $1 subscriptions were updated.", "Было обновлено подписок:");
@@ -9,19 +12,14 @@ regGS("You do not have the right to add sections.", "Вы не имеете пр
 regGS("The section $1 has been successfuly added.", "Секция $1 была успешно добавлена.");
 regGS("Please check if another section with the same number does not already exist.", "Пожалуйста проверьте, что еще нет другой секции с таким же номером.");
 regGS("Select the section", "Выберите секцию");
-regGS("Section $1 added to issue $2. $3 ($4) of $5", "Секция $1 добавлена в выпуск $2. $3 ($4) из $5");
 regGS("Delete section", "Удалить секцию");
 regGS("You do not have the right to delete sections.", "Вы не имеете права удаления секций");
 regGS("Are you sure you want to delete the section $1?", "Вы уверены, что хотите удалить секцию $1?");
 regGS("Deleting section", "Удаление секции");
 regGS("The section $1 has been deleted.", "Секция $1 была удалена");
-regGS("Section $1 deleted from issue $2. $3 $4 of $5", "Секция $1 удалена из выпусков $2 $3 $4 из $5");
 regGS("Configure section", "Настроить секцию");
-regGS("You do not have the right to change section details", "Вы не имеете права изменения параметров секции");
 regGS("Updating section name", "Обновление название секции");
-regGS("The section $1 has been successfuly modified.", "Секция $1 была успешно модифицирована.");
 regGS("The section could not be changed.", "Невозможно изменить секцию.");
-regGS("Section $1 updated to issue $2. $3 ($4) of $5", "Секция $1 обновлена для выпуска $2. $3 ($4) из $5");
 regGS("Name<BR><SMALL>(click to add article)</SMALL>", "Название<BR><SMALL>(щелкните для добавления статьи)</SMALL>");
 regGS("Duplicate section", "Дублировать секцию");
 regGS("The destination issue is the same as the source issue.", "Выпуск источника тот же, что и  получтеля");

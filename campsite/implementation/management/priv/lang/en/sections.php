@@ -1,4 +1,7 @@
 <?php
+regGS("Section List", "Section List");
+regGS("Section #$1 \"$2\" updated. (Publication: $3, Issue: $4)", "Section #$1 \"$2\" updated. (Publication: $3, Issue: $4)");
+regGS("Go To Articles", "Go To Articles");
 regGS("Add section to all subscriptions.", "Add section to all subscriptions.");
 regGS("Delete section from all subscriptions.", "Delete section from all subscriptions.");
 regGS("A total of $1 subscriptions were updated.", "A total of $1 subscriptions were updated.");
@@ -9,19 +12,14 @@ regGS("You do not have the right to add sections.", "You do not have the right t
 regGS("The section $1 has been successfuly added.", "The section $1 has been successfuly added.");
 regGS("Please check if another section with the same number or URL name does not exist already.", "Please check if another section with the same number or URL name does not exist already.");
 regGS("Select the section", "Select the section");
-regGS("Section $1 added to issue $2. $3 ($4) of $5", "Section $1 added to issue $2. $3 ($4) of $5");
 regGS("Delete section", "Delete section");
 regGS("You do not have the right to delete sections.", "You do not have the right to delete sections.");
 regGS("Are you sure you want to delete the section $1?", "Are you sure you want to delete the section $1?");
 regGS("Deleting section", "Deleting section");
 regGS("The section $1 has been deleted.", "The section $1 has been deleted.");
-regGS("Section $1 deleted from issue $2. $3 $4 of $5", "Section $1 deleted from issue $2. $3 $4 of $5");
 regGS("Configure section", "Configure section");
-regGS("You do not have the right to change section details", "You do not have the right to change section details");
 regGS("Updating section name", "Updating section name");
-regGS("The section $1 has been successfuly modified.", "The section $1 has been successfuly modified.");
 regGS("The section could not be changed.", "The section could not be changed.");
-regGS("Section $1 updated to issue $2. $3 ($4) of $5", "Section $1 updated to issue $2. $3 ($4) of $5");
 regGS("Name<BR><SMALL>(click to add article)</SMALL>", "Name<BR><SMALL>(click to add article)</SMALL>");
 regGS("Duplicate section", "Duplicate section");
 regGS("The destination issue is the same as the source issue.", "The destination issue is the same as the source issue.");

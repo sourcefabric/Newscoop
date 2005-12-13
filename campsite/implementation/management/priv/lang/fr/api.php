@@ -1,4 +1,8 @@
 <?php
+regGS("User permissions for $1 changed", "");
+regGS("Section $1 deleted. (Issue: $2, Publication: $3)", "");
+regGS("Section $1 added. (Issue: $2, Publication: $3)", "");
+regGS("Issue $1 changed status to $2", "");
 regGS("User type $1 deleted", "");
 regGS("User type $1 added", "");
 regGS("Topic $1 added to article", "");
@@ -18,5 +22,23 @@ regGS("Image $1 linked to article $2", "");
 regGS("Image $1 unlinked from $2", "");
 regGS("The image $1 has been added.", "");
 regGS("Image $1 deleted", "");
-
+regGS("Publication $1 changed", "");
+regGS("Publication $1 deleted", "");
+regGS("Publication $1 added", "");
+regGS("Issue $1 from publication $2 deleted", "");
+regGS("Issue $1 added in publication $2", "");
+regGS("The article type $1 has been deleted.", "");
+regGS("The article type $1 has been added.", "");
+regGS("Article type field $1 created", "");
+regGS("Article type field $1 deleted", "");
+regGS("Language $1 added", "");
+regGS("Language $1 deleted", "");
+regGS("Language $1 modified", "");
+regGS("Country $1 added", "");
+regGS("Country $1 deleted", "");
+regGS("Country name $1 changed", "");
+regGS("The user account $1 has been deleted.", "");
+regGS("Password changed for $1", "");
+regGS("User account $1 created", "");
+regGS("Template $1 uploaded", "");
 ?>

@@ -10,7 +10,6 @@ regGS("You do not have the right to change issues.", "لا يحق لك تغيي�
 regGS("Are you sure you want to change the issue $1 status from $2 to $3?", "هل أنت متأكد من أنك تريد تغيير وضع الإصدار  $1 من $2 إلى $3؟");
 regGS("Changing issue status", "تغيير وضع الإصدار");
 regGS("Status of the issue $1 has been changed from $2 to $3", "تمّ تغيير وضع الإصدار $1 من$2 إلى $3");
-regGS("Issue $1 Published: $2  changed status", " نشر الإصدار $1: تم تغيير وضع الاصدار  $1");
 regGS("Status of the issue $1 could not be changed.", "لا يمكن تغيير الإصدار $1");
 regGS("Add new translation", "إضافة ترجمة جديدة");
 regGS("You do not have the right to add issues.", "لا يحق لك إضافة إصدارات");
@@ -24,15 +23,11 @@ regGS("Front Page Template", "قالب الصفحة الأمامية");
 regGS("Updating issue", "تحديث الإصدار");
 regGS("Changing issue's details", "تغيير تفاصيل الإصدار");
 regGS("The issue $1 has been successfuly changed.", "تم تغيير الإصدار $1");
-regGS("Issue $1 added", "أضيف الإصدار $1");
 regGS("The issue could not be changed.", "لا يمكن تغيير الإصدار");
 regGS("Issue $1 updated in publication $2", " تحديث الإصدار $1 في المنشور $2");
 regGS("You do not have the right to delete issues.", "لا يحق لك إلغاء الإصدارات");
 regGS("Are you sure you want to delete the issue $1?", "هل أنت متأكد من أنك تريد إلغاء الإصدار $1 ؟  ");
 regGS("Deleting issue", "إلغاء الإصدار");
-regGS("The issue $1 could not be deleted.", "لا يمكن إلغاء الإصدار $1");
-regGS("All sections from Issue $1 from publication $2 deleted", "تمّ إلغاء كل أبواب الإصدار $1 في المنشور $2");
-regGS("Issue $1 from publication $2 deleted", " إلغاء الإصدار$1 من المنشور $2");
 regGS("Use the structure of the previous issue", "إستخدم هيكلية الإصدار السابق");
 regGS("Copy the entire structure in all languages from the previous issue except for content.", "إنسخ الهيكلية الكاملة باللغات كلها من الإصدار السابق باستثناء المحتوى");
 regGS("You may modify it later if you wish.", "يمكنك تغييره لاحقا إذا أردت");
@@ -46,7 +41,6 @@ regGS("Copying previous issue", "نسخ الإصدار السابق");
 regGS("Select the issue", "إختر الإصدار");
 regGS("New issue $1 from $2 in publication $3", "إصدار $1 جديد من $2 في المنشور $3");
 regGS("Adding new issue", "إضافة إصدار جديد");
-regGS("Issue $1 added in publication $2", "أضيف الإصدار$1 في المنشور$2");
 regGS("Changing issue template", "تغيير نموذج الإصدار");
 regGS("You do not have the right to change issue templates.", "لا يحق لك تغيير نماذج الإصدار");
 regGS("Changing issue template for front page", "تغيير نموذج الإصدار للصفحة الرئيسية");

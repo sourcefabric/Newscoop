@@ -306,7 +306,6 @@ regGS("Back to Edit Article", "Back to Edit Article");
 regGS("Adding new topic", "Adding new topic");
 regGS("Topic $1 added", "Topic $1 added");
 regGS("The topic could not be added.", "The topic could not be added.");
-regGS("Do you want to delete the topic $1?", "Do you want to delete the topic $1?");
 regGS("Add another topic", "Add another topic");
 regGS("Deleting topic", "Deleting topic");
 regGS("There are $1 subtopics left.", "There are $1 subtopics left.");
@@ -350,4 +349,13 @@ regGS("Are you sure you want to delete the subscription to the publication $1?",
 regGS("Are you sure you want to deactivate the subscription?", "Are you sure you want to deactivate the subscription?");
 regGS("Are you sure you want to activate the subscription?", "Are you sure you want to activate the subscription?");
 regGS("Could not save the changes to the issue $1. Please make sure the issue URL name '$2' was not used before in the publication $3.", "Could not save the changes to the issue $1. Please make sure the issue URL name '$2' was not used before in the publication $3.");
+regGS("GB", "GB");
+regGS("MB", "MB");
+regGS("KB", "KB");
+regGS("bytes", "bytes");
+regGS("Attach", "Attach");
+regGS("Back", "Back");
+regGS("File", "File");
+regGS("Save and Close", "Save and Close");
+regGS("Add", "Add");
 ?>

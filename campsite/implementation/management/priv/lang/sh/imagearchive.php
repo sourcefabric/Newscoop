@@ -8,6 +8,4 @@ regGS("Description <SMALL>(Click to view details)</SMALL>", "Opis (klik za detal
 regGS("Used in articles", "Koristi se u člancima");
 regGS("View image", "Prikaži sliku");
 regGS("Change image information", "Promeni podatke o slici");
-regGS("Changed image properties of $1", "Promeni osobine slike $1");
-regGS("The image $1 has been added.", "Slika $1 je dodata");
 ?>

@@ -1,4 +1,5 @@
 <?php
+regGS("Article Files", "Article Files");
 regGS("Log Messages", "Log Messages");
 regGS("edit '$1'", "edit '$1'");
 regGS("edit \"$1\"", "edit \"$1\"");

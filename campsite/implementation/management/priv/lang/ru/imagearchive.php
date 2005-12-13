@@ -8,7 +8,5 @@ regGS("Description <SMALL>(Click to view details)</SMALL>", "Описание <S
 regGS("Used in articles", "Использована в статьях");
 regGS("View image", "Просмотреть картинку");
 regGS("Change image information", "Изменить информацию о картинке");
-regGS("Changed image properties of $1", "Измененные свойства картинки $1");
-regGS("The image $1 has been added.", "Картинка $1 была успешно добавлена.");
 regGS("Image archive", "Архив картинок");
 ?>

@@ -169,7 +169,6 @@ regGS("No issues.", "Nema izdanja.");
 regGS("Adding new topic", "Dodaj novu temu");
 regGS("Topic $1 added", "Tema $1 je dodana");
 regGS("The topic could not be added.", "Tema ne može bit idodana");
-regGS("Do you want to delete the topic $1?", "Da li želite brisati temu $1?");
 regGS("Add another topic", "Dodaj drugu temu");
 regGS("Deleting topic", "Brisanje teme");
 regGS("There are $1 subtopics left.", "Ostala je $1 podtema");
@@ -201,4 +200,9 @@ regGS("---Select article---", "---Odaberi članak---");
 regGS("Duplicate", "Napravi kopiju");
 regGS("You do not have the right to add articles.", "Nemate prava kreirati članak");
 regGS("Add new field", "Dodaj novo polje");
+regGS("Attach", "");
+regGS("Back", "");
+regGS("File", "");
+regGS("Save and Close", "");
+regGS("Add", "Dodaj");
 ?>

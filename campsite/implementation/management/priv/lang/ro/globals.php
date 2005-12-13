@@ -186,7 +186,6 @@ regGS("No issues.", "Nu exista ediţii");
 regGS("Adding new topic", "Adaug topic nou");
 regGS("Topic $1 added", "Topicul $1 a fost adăugat");
 regGS("The topic could not be added.", "Topicul nu poate fi adăugat");
-regGS("Do you want to delete the topic $1?", "Doriţi să ştergeţi topicul $1?");
 regGS("Add another topic", "Adaugă alt topic");
 regGS("Deleting topic", "Şterge topic");
 regGS("There are $1 subtopics left.", "Mai sunt $1 topicuri");
@@ -213,4 +212,9 @@ regGS("New field", "Câmp nou");
 regGS("OK", "OK");
 regGS("Search", "Caută");
 regGS("Add new field", "Adaugă câmp nou");
+regGS("Attach", "");
+regGS("Back", "");
+regGS("File", "");
+regGS("Save and Close", "");
+regGS("Add", "Adaugă");
 ?>

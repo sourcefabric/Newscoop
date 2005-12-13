@@ -169,7 +169,6 @@ regGS("No issues.", "无问题");
 regGS("Adding new topic", "添加新主题");
 regGS("Topic $1 added", "主题$1已添加");
 regGS("The topic could not be added.", "主题不能被添加");
-regGS("Do you want to delete the topic $1?", "你要删除主题$1吗？");
 regGS("Add another topic", "添加另一个主题");
 regGS("Deleting topic", "删除主题");
 regGS("There are $1 subtopics left.", "还有$1子主题");
@@ -207,4 +206,9 @@ regGS("---Select article---", "－－选择文章－－");
 regGS("Duplicate", "复制");
 regGS("You do not have the right to add articles.", "您无权添加文章");
 regGS("Add new field", "增加新字段");
+regGS("Attach", "");
+regGS("Back", "");
+regGS("File", "");
+regGS("Save and Close", "");
+regGS("Add", "增加");
 ?>

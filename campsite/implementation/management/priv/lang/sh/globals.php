@@ -295,7 +295,6 @@ regGS("Back to Edit Article", "Nazad na uređivanje članka");
 regGS("Adding new topic", "Dodavanje nove teme");
 regGS("Topic $1 added", "Tema $1 je dodata");
 regGS("The topic could not be added.", "Tema ne može biti dodata");
-regGS("Do you want to delete the topic $1?", "Želite li da obrišete temu $1?");
 regGS("Add another topic", "Dodaj novu temu");
 regGS("Deleting topic", "Brisanje teme");
 regGS("There are $1 subtopics left.", "Preostalo je $1 podtema");
@@ -339,4 +338,9 @@ regGS("Are you sure you want to delete the subscription to the publication $1?",
 regGS("Schedule a new publish action", "Zakaži novu akciju objavljivanja");
 regGS("User may add/change user accounts and passwords", "Korisnik može da dodaje/menja korisničke naloge i lozinke");
 regGS("User may delete user accounts", "Korisnik može da briše korisničke naloge");
+regGS("Attach", "");
+regGS("Back", "");
+regGS("File", "");
+regGS("Save and Close", "");
+regGS("Add", "Dodaj");
 ?>

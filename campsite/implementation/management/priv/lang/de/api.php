@@ -1,11 +1,15 @@
 <?php
+regGS("User permissions for $1 changed", "");
+regGS("Section $1 deleted. (Issue: $2, Publication: $3)", "");
+regGS("Section $1 added. (Issue: $2, Publication: $3)", "");
+regGS("Issue $1 changed status to $2", "");
 regGS("User type $1 deleted", "");
 regGS("User type $1 added", "");
-regGS("Topic $1 added to article", "");
+regGS("Topic $1 added to article", "Topic $1 zu artikel hinzugefügt");
 regGS("Last", "");
 regGS("First", "");
-regGS("Changed image properties of $1", "");
-regGS("Article topic $1 deleted", "");
+regGS("Changed image properties of $1", "Bildeigenschaften von $1 geändert");
+regGS("Article topic $1 deleted", "Artikelthema $1 gelöscht");
 regGS("Article #$1 \"$2\" ($3) created.", "");
 regGS("Article #$1 \"$2\" ($3) translated to \"$5\" ($4)", "");
 regGS("Article #$1 \"$2\" ($3) copied to Article #$3. ", "");
@@ -14,7 +18,27 @@ regGS("Article #$1: \"$2\" ($3) deleted.", "");
 regGS("Text", "");
 regGS("Article body", "");
 regGS("The default subscription time for $1 has been added.", "Abonomentstandardzeit für $1 wurde erfolgreich hinzugefügt");
+regGS("Image $1 linked to article $2", "");
+regGS("Image $1 unlinked from $2", "");
 regGS("The image $1 has been added.", "Bild $1 erfolgreich hinzugefügt");
 regGS("Image $1 deleted", "Bild $1 gelöscht");
-
+regGS("Publication $1 changed", "Publikation $1 wurde geändert");
+regGS("Publication $1 deleted", "Publikation $1 wurde gelöscht");
+regGS("Publication $1 added", "Publikation $1 wurde hinzugefügt");
+regGS("Issue $1 from publication $2 deleted", "Ausgabe $1 der Publikation $2 wurde gelöscht");
+regGS("Issue $1 added in publication $2", "Ausgabe $1 zu Publikation $2 hinzugefügt");
+regGS("The article type $1 has been deleted.", "Artikeltyp $1 wurde gelöscht");
+regGS("The article type $1 has been added.", "Artikeltyp $1 wurde hinzugefügt");
+regGS("Article type field $1 created", "Artikeltyp-Feld $1erstellt");
+regGS("Article type field $1 deleted", "Artikeltyp-Feld $1 gelöscht");
+regGS("Language $1 added", "Sprache $1 hinzugefügt");
+regGS("Language $1 deleted", "Sprache $1 gelöscht");
+regGS("Language $1 modified", "Sprache $1 modifiziert");
+regGS("Country $1 added", "Land $1 hinzugefügt");
+regGS("Country $1 deleted", "Land $1 gelöscht");
+regGS("Country name $1 changed", "Landname $1 geändert");
+regGS("The user account $1 has been deleted.", "Benutzerkonto $1 wurde gelöscht");
+regGS("Password changed for $1", "Passwort für $1 geändert");
+regGS("User account $1 created", "Benutzerkonto $1 erstellt");
+regGS("Template $1 uploaded", "Template $1 hochgeladen");
 ?>

@@ -169,7 +169,6 @@ regGS("No issues.", "Keine Ausgabe");
 regGS("Adding new topic", "Neues Thema wird hinzugefügt");
 regGS("Topic $1 added", "Thema $1 hinzugefügt");
 regGS("The topic could not be added.", "Thema konnte nicht hinzugefügt werden");
-regGS("Do you want to delete the topic $1?", "Thema $1 wirklich löschen?");
 regGS("Add another topic", "Ein weiteres Thema hinzufügen");
 regGS("Deleting topic", "Thema wird gelöscht");
 regGS("There are $1 subtopics left.", "Es sind noch $1 Unterthemen übrig");
@@ -207,4 +206,9 @@ regGS("---Select article---", "---Artikel auswählen---");
 regGS("Duplicate", "Duplizieren");
 regGS("You do not have the right to add articles.", "Keine Berechtigung Artikel hinzuzufügen");
 regGS("Add new field", "Neues Feld hinzufügen");
+regGS("Attach", "");
+regGS("Back", "");
+regGS("File", "");
+regGS("Save and Close", "");
+regGS("Add", "Hinzufügen");
 ?>

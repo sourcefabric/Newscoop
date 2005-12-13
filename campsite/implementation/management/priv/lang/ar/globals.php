@@ -265,7 +265,6 @@ regGS("Back to Edit Article", "العودة لتعديل المقال");
 regGS("Adding new topic", "إضافة موضوع جديد");
 regGS("Topic $1 added", "تم إضافة الموضوع $1");
 regGS("The topic could not be added.", "لم يتم إضافة الموضوع");
-regGS("Do you want to delete the topic $1?", "هل تريد حذف الموضوع $1 ؟");
 regGS("Add another topic", "إضافة موضوع آخر");
 regGS("Deleting topic", "حذف الموضوع");
 regGS("There are $1 subtopics left.", "هنالك $1 مواضيع فرعية متبقية");
@@ -295,4 +294,9 @@ regGS("OK", "موافق");
 regGS("Save", "حفظ");
 regGS("Search", "بحث");
 regGS("Add New Field", "أضف حقل جديد");
+regGS("Attach", "");
+regGS("Back", "");
+regGS("File", "");
+regGS("Save and Close", "");
+regGS("Add", "أضف");
 ?>

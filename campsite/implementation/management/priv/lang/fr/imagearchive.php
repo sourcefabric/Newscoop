@@ -8,6 +8,4 @@ regGS("Description <SMALL>(Click to view details)</SMALL>", "");
 regGS("Used in articles", "");
 regGS("View image", "");
 regGS("Change image information", "");
-regGS("Changed image properties of $1", "");
-regGS("The image $1 has been added.", "");
 ?>

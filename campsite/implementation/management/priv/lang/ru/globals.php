@@ -295,7 +295,6 @@ regGS("Back to Edit Article", "Назад к редактированию ста
 regGS("Adding new topic", "Добавление новой темы");
 regGS("Topic $1 added", "Добавлена тема $1");
 regGS("The topic could not be added.", "Невозможно добавить тему");
-regGS("Do you want to delete the topic $1?", "Вы уверены, что хотите удалить тему $1?");
 regGS("Add another topic", "Добавить другую тему");
 regGS("Deleting topic", "Удаление темы");
 regGS("There are $1 subtopics left.", "Осталось подтем: $1");
@@ -348,4 +347,9 @@ regGS("There are $1 issue(s) left.", "Осталось $1 выпуск(ов):ru"
 regGS("There are $1 keyword(s) left.", "Осталось $1 ключевое(-ых) слов(о):ru");
 regGS("Name<BR><SMALL>(click to edit)</SMALL>", "Название<BR><SMALL>(Щелкнуть для правки)</SMALL>:ru");
 regGS("New field", "Новое поле");
+regGS("Attach", "");
+regGS("Back", "");
+regGS("File", "");
+regGS("Save and Close", "");
+regGS("Add", "Добавить");
 ?>

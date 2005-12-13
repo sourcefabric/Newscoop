@@ -1,7 +1,5 @@
 <?php
 regGS("Article type fields", "Polja tipova članaka");
-regGS("Article type", "Tip članka");
-regGS("No fields.", "Nema polja");
 regGS("Delete field $1", "Izbriši polje $1");
 regGS("Article body", "Tijelo članka");
 regGS("Text", "Tekst");
@@ -10,13 +8,7 @@ regGS("You do not have the right to add article type fields.", "Nemate pravo dod
 regGS("The field $1 already exists.", "Polje $1 već postoji");
 regGS("The $1  must not be void and may only contain letters and underscore (_) character.", "Polje $1 ne smije biti prazno i može sadržavati samo slova");
 regGS("Invalid field type.", "Kriva vrsta polja");
-regGS("The field $1 has been created.", "Polje $1 je napravljeno");
-regGS("Article type field $1 created", "Napravljeno je polje $1 u tipu članka");
 regGS("You do not have the right to delete article type fields.", "Nemate pravo brisati polja unutar tipa članka");
-regGS("Delete field", "Briši polje");
 regGS("Are you sure you want to delete the field $1?", "Zaista želite izbrisati polje $1?");
 regGS("You will also delete all fields with this name from all articles of this type from all publications.", "Izbrisat ćete također i sva polja ovog naziva iz svih članaka ovog tipa unutar cijele publikacije");
-regGS("Deleting field", "Brisanje polja");
-regGS("The field $1 has been deleted.", "Polje $1 je izbrisano");
-regGS("Article type field $1 deleted", "Polje $1 u tipu članka je izbrisano");
 ?>

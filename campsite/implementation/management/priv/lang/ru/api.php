@@ -1,11 +1,15 @@
 <?php
+regGS("User permissions for $1 changed", "");
+regGS("Section $1 deleted. (Issue: $2, Publication: $3)", "");
+regGS("Section $1 added. (Issue: $2, Publication: $3)", "");
+regGS("Issue $1 changed status to $2", "");
 regGS("User type $1 deleted", "");
 regGS("User type $1 added", "");
-regGS("Topic $1 added to article", "");
+regGS("Topic $1 added to article", "Статья $1 добавлена к статье");
 regGS("Last", "");
 regGS("First", "");
-regGS("Changed image properties of $1", "");
-regGS("Article topic $1 deleted", "");
+regGS("Changed image properties of $1", "Измененные свойства картинки $1");
+regGS("Article topic $1 deleted", "Удалена тема статьи $1");
 regGS("Article #$1 \"$2\" ($3) created.", "");
 regGS("Article #$1 \"$2\" ($3) translated to \"$5\" ($4)", "");
 regGS("Article #$1 \"$2\" ($3) copied to Article #$3. ", "");
@@ -18,5 +22,23 @@ regGS("Image $1 linked to article $2", "Картинки $1 привязана �
 regGS("Image $1 unlinked from $2", "Картинка $1 отвязана от $2");
 regGS("The image $1 has been added.", "Картинка $1 была успешно добавлена.");
 regGS("Image $1 deleted", "Удалена картинка $1");
-
+regGS("Publication $1 changed", "Публикация $1 изменена");
+regGS("Publication $1 deleted", "Публикация $1 удалена");
+regGS("Publication $1 added", "Добавлен публикация $1");
+regGS("Issue $1 from publication $2 deleted", "Удален выпуск $1 из публикации $2");
+regGS("Issue $1 added in publication $2", "Выпуск $1 добавлен в публикацию $2");
+regGS("The article type $1 has been deleted.", "Тип статей $1 был удален");
+regGS("The article type $1 has been added.", "Тип статьи $1 был добавлен.");
+regGS("Article type field $1 created", "Создан тип статей $1");
+regGS("Article type field $1 deleted", "Удалено поле типов статей $1");
+regGS("Language $1 added", "Язык $1 добавлен");
+regGS("Language $1 deleted", "Удален язык $1");
+regGS("Language $1 modified", "Язык $1 обновлен");
+regGS("Country $1 added", "Страна $1 добавлена");
+regGS("Country $1 deleted", "Страна $1 удалена");
+regGS("Country name $1 changed", "Изменено название страны $1");
+regGS("The user account $1 has been deleted.", "Учетная запись пользователя $1 удалена.");
+regGS("Password changed for $1", "Изменен пароль для $1");
+regGS("User account $1 created", "Создана учетная запись пользователя $1");
+regGS("Template $1 uploaded", "Загружен шаблон $1");
 ?>

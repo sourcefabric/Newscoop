@@ -283,7 +283,6 @@ regGS("Back to Edit Article", "Zpět na detaily článku");
 regGS("Adding new topic", "Přidání nového témata");
 regGS("Topic $1 added", "Téma $1 bylo přidáno");
 regGS("The topic could not be added.", "Téma nemohlo být přidáno");
-regGS("Do you want to delete the topic $1?", "Určitě chcete smazat téma $1?");
 regGS("Add another topic", "Přidat další téma");
 regGS("Deleting topic", "Mazání tématu");
 regGS("There are $1 subtopics left.", "Zbývá $1 podtémat");
@@ -314,4 +313,9 @@ regGS("Save", "Uložit změny");
 regGS("Search", "Hledej");
 regGS("Add New Field", "Přidat pole");
 regGS("Subscription Default Time", "Předplatné období");
+regGS("Attach", "");
+regGS("Back", "");
+regGS("File", "");
+regGS("Save and Close", "");
+regGS("Add", "Přidat");
 ?>

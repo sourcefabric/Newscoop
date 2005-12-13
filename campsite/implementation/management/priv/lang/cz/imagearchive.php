@@ -8,6 +8,4 @@ regGS("Description <SMALL>(Click to view details)</SMALL>", "");
 regGS("Used in articles", "");
 regGS("View image", "Náhled obrázku");
 regGS("Change image information", "Změnit informace obrázku");
-regGS("Changed image properties of $1", "Změnit vlastnosti obrázku");
-regGS("The image $1 has been added.", "Obrázek $1 byl úspěšně přidán");
 ?>
