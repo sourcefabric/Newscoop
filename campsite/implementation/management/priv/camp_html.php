@@ -282,7 +282,7 @@ function camp_html_breadcrumbs($p_crumbs)
     $str = '<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" bgcolor="#D5E2EE" width="100%">';
     if (count($p_crumbs) > 0) {
 	   	$str .= '<TR><TD align="left" style="border-top: 1px solid #8BAED1; padding-left: 1.25em; padding-top: 3px;">';
-	    //$str .= "<span style='font-weight: bold; color: #2F2F2F;'>".getGS("You are here:")."</span>";
+	    //$str .= "<span style='font-weight: bold; color: #2F2F2F;'></span>";
 	    //$str .= "</TD><TD style='padding-bottom: 2px; padding-top: 2px; padding-left: 0.5em;'>";
 	    $tmpCrumbs = array();
 		foreach ($p_crumbs as $crumb) {
