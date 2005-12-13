@@ -62,7 +62,6 @@ regGS("No records.", "Bez podataka");
 regGS("Start IP", "Početna IP adresa");
 regGS("Number of addresses", "Broj adresa");
 regGS("The IP Group $1 has been created.", "Grupa zasnovana na IP adresi je kreirana");
-regGS("IP Group $1 added for user $2", "IP grupa $1 dodata za korisnika $2");
 regGS("There was an error creating the IP address group.", "Došlo je do greške pri kreiranju grupe zasnovane na IP adresi.");
 regGS("Are you sure you want to delete the IP Group $1?", "Sigurni ste da želite da obrišete IP grupu $1?");
 regGS("The IP address group $1 has been deleted.", "Grupa zasnovana na IP adresi $1 je obrisana");

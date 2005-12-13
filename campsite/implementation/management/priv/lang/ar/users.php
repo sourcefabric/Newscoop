@@ -88,7 +88,6 @@ regGS("Number of addresses", "عدد العناوين");
 regGS("IP Access List", "قائمة الدخول إلى بروتوكول الإنترنت");
 regGS("Adding new IP Group", "إضافة مجموعة جديدة من بروتوكول الإنترنت");
 regGS("The IP Group $1 has been created.", "وضع مجموعة بروتوكول الإنترنت  $1");
-regGS("IP Group $1 added for user $2", "إضافة مجموعة بروتوكول الإنترنت  $1 إلى المستخدم  $2");
 regGS("The IP Group could not be created.", "لا يمكن وضع مجموعة بروتوكول الإنترنت ");
 regGS("Please check if an account with the same IP Group does not already exist.", " الرجاء التأكد من عدم وجود اشتراك يتضمن مجموعة بروتوكول الإنترنت نفسها");
 regGS("Delete IP Group", " إلغ مجموعة بروتوكول الإنترنت");

@@ -1,4 +1,6 @@
 <?php
+regGS("The IP address group $1 has been deleted.", "The IP address group $1 has been deleted.");
+regGS("IP Group $1 added for user $2", "IP Group $1 added for user $2");
 regGS("User permissions for $1 changed", "User permissions for $1 changed");
 regGS("Section $1 deleted. (Issue: $2, Publication: $3)", "Section $1 deleted. (Issue: $2, Publication: $3)");
 regGS("Section $1 added. (Issue: $2, Publication: $3)", "Section $1 added. (Issue: $2, Publication: $3)");

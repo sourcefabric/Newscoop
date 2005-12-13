@@ -88,7 +88,6 @@ regGS("Number of addresses", "地址数量");
 regGS("IP Access List", "IP访问列表");
 regGS("Adding new IP Group", "正在添加新IP组");
 regGS("The IP Group $1 has been created.", "IP组$1已建立");
-regGS("IP Group $1 added for user $2", "已为用户$2增加了IP组$1");
 regGS("The IP Group could not be created.", "IP组不能建立");
 regGS("Please check if an account with the same IP Group does not already exist.", "请检查是否具有同样IP组的用户已经存在");
 regGS("Delete IP Group", "删除IP组");

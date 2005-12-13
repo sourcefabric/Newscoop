@@ -88,7 +88,6 @@ regGS("Number of addresses", "Numărul de adrese IP");
 regGS("IP Access List", "Lista de acces bazată pe adrese IP");
 regGS("Adding new IP Group", "Adaug grup de adrese IP");
 regGS("The IP Group $1 has been created.", "Grupul de adrese IP $1 a fost adăugat");
-regGS("IP Group $1 added for user $2", "Grupul de adrese IP $1 a fost adăugat la utilizatorul $2");
 regGS("The IP Group could not be created.", "Grupul de adrese IP nu poate fi adăugat");
 regGS("Please check if an account with the same IP Group does not already exist.", "Verificaţi dacă un cont cu acelaşi grup de adrese IP există deja");
 regGS("Delete IP Group", "Şterge grupul de adrese IP");

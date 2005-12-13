@@ -62,7 +62,6 @@ regGS("No records.", "Нет записей.");
 regGS("Start IP", "Начальный IP");
 regGS("Number of addresses", "Количество адресов");
 regGS("The IP Group $1 has been created.", "IP-группа $1 была создана");
-regGS("IP Group $1 added for user $2", "Группа IP-адресов $1 добавлена для пользователя $2");
 regGS("There was an error creating the IP address group.", "Ошибка создания группы IP адресов.");
 regGS("Are you sure you want to delete the IP Group $1?", "Вы уверены, что хотите удалить группу IP-адресов $1");
 regGS("The IP address group $1 has been deleted.", "Группа IP-адресов $1 была удалена.");

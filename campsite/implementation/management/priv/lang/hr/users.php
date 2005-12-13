@@ -88,7 +88,6 @@ regGS("Number of addresses", "Broj adresa");
 regGS("IP Access List", "Lista IP pristupa");
 regGS("Adding new IP Group", "Dodavanje nove IP grupe");
 regGS("The IP Group $1 has been created.", "IP grupa $1 je napravljena");
-regGS("IP Group $1 added for user $2", "IP grupa $1 je napravljena za korisnika $2");
 regGS("The IP Group could not be created.", "IP grupa ne može se napraviti");
 regGS("Please check if an account with the same IP Group does not already exist.", "Molim provjerite da li već postoji račun sa tom IP grupom");
 regGS("Delete IP Group", "Izbriši IP grupu");

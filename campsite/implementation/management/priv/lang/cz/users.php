@@ -88,7 +88,6 @@ regGS("Number of addresses", "Počet adres");
 regGS("IP Access List", "Seznam IP přístupů");
 regGS("Adding new IP Group", "Přidání nové IP skupiny");
 regGS("The IP Group $1 has been created.", "IP skupina $1 byla vytvořena");
-regGS("IP Group $1 added for user $2", "IP skupiny $1  byla přidána pro uživatele $2");
 regGS("The IP Group could not be created.", "IP skupina nemohla být vytvořena");
 regGS("Please check if an account with the same IP Group does not already exist.", "Zkontrolujte prosím, zda již neexistuje účet se stejnou IP skupinou");
 regGS("Delete IP Group", "Smazat IP skupinu");

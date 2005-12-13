@@ -62,7 +62,6 @@ regGS("No records.", "No records.");
 regGS("Start IP", "Start IP");
 regGS("Number of addresses", "Number of addresses");
 regGS("The IP Group $1 has been created.", "The IP Group $1 has been created.");
-regGS("IP Group $1 added for user $2", "IP Group $1 added for user $2");
 regGS("There was an error creating the IP address group.", "There was an error creating the IP address group.");
 regGS("Are you sure you want to delete the IP Group $1?", "Are you sure you want to delete the IP Group $1?");
 regGS("The IP address group $1 has been deleted.", "The IP address group $1 has been deleted.");

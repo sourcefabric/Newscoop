@@ -88,7 +88,6 @@ regGS("Number of addresses", "Número de direcciones");
 regGS("IP Access List", "Lista de IP de acceso");
 regGS("Adding new IP Group", "Agregando nuevos Grupo de IP");
 regGS("The IP Group $1 has been created.", "El Grupo de IP $1 ha sido creado");
-regGS("IP Group $1 added for user $2", "Grupo de IP $1 agregado para usuario $2");
 regGS("The IP Group could not be created.", "Grupo de IP no pudo ser creado");
 regGS("Please check if an account with the same IP Group does not already exist.", "Favor revisar si una cuenta con el mismo Grupo de IP no existe ya");
 regGS("Delete IP Group", "Borrar Grupo de IP");
