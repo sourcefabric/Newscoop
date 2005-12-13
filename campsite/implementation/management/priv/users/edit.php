@@ -62,6 +62,29 @@ echo $breadcrumbs;
 <p>
 <?php } ?>
 
+<?php
+if ($canManage && ($userId > 0)) {
+	$addLink = "edit.php?" . get_user_urlparams(0, true, true);
+?>
+<table class="action_buttons">
+<tr>
+	<td><a href="<?php echo $addLink; ?>">
+		<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" border="0">
+<?php
+	if ($uType == "Staff") {
+		echo "<b>" . getGS("Add new staff member") . "</b></a></td>";
+	} else {
+		echo "<b>" . getGS("Add new subscriber") . "</b></a></td>";
+	}
+	?>
+	</tr>
+	</table>
+	<p></p>
+	<?php
+}
+?>
+
+
 <table border="0">
 <tr>
 	<td rowspan="2" valign="top" height="1%">
