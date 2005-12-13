@@ -52,9 +52,6 @@ if (!is_object($image)) {
 	camp_html_display_error($image);
 }
 
-$logtext = getGS('The image $1 has been added.', $attributes['Description']);
-Log::Message($logtext, $User->getUserName(), 41);
-
 header("Location: /$ADMIN/imagearchive/edit.php?f_image_id=".$image->getImageId());
 exit;
 ?>

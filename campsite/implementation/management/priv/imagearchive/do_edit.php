@@ -42,9 +42,6 @@ if (!empty($f_image_url)) {
 }
 $imageObj->update($updateArray);
 
-$logtext = getGS('Changed image properties of $1', $imageObj->getImageId()); 
-Log::Message($logtext, $User->getUserName(), 43);
-
 header("Location: /$ADMIN/imagearchive/edit.php?f_image_id=$f_image_id");
 exit;
 ?>
