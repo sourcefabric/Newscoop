@@ -62,7 +62,7 @@ if (!$sectionObj->exists()) {
 }
 
 // Create article
-$articleObj =& new Article($f_language_id);
+$articleObj =& new Article($f_article_language);
 $articleObj->create($f_article_type, $f_article_name);
 if ($articleObj->exists()) {
 	$articleObj->setPublicationId($f_publication_id);
