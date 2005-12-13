@@ -1,5 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/sections/section_common.php");
+require_once($_SERVER['DOCUMENT_ROOT']. '/classes/SimplePager.php');
+camp_load_language("api");
 
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
@@ -10,9 +12,9 @@ if (!$access) {
 $Pub = Input::Get('Pub', 'int', 0);
 $Issue = Input::Get('Issue', 'int', 0);
 $Language = Input::Get('Language', 'int', 0);
-$SectOffs = Input::Get('SectOffs', 'int', 0, true);
+$SectOffs = camp_session_get("SectOffs_".$Pub."_".$Issue."_".$Language, 0);
 if ($SectOffs < 0)	{
-	$SectOffs= 0;
+	$SectOffs = 0;
 }
 $ItemsPerPage = 15;
 
@@ -24,6 +26,8 @@ $publicationObj =& new Publication($Pub);
 $issueObj =& new Issue($Pub, $Language, $Issue);
 $allSections = Section::GetSections($Pub, $Issue, $Language, array('ORDER BY' => 'Number', 'LIMIT' => array('START' => $SectOffs, 'MAX_ROWS' => $ItemsPerPage)));
 $totalSections = Section::GetTotalSections($Pub, $Issue, $Language);
+
+$pager =& new SimplePager($totalSections, $ItemsPerPage, "SectOffs_".$Pub."_".$Issue."_".$Language, "index.php?Pub=$Pub&Issue=$Issue&Language=$Language&");
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj);
 camp_html_content_top(getGS('Section List'), $topArray);
@@ -97,17 +101,13 @@ if (count($allSections) > 0) {
 <?php 
 } // foreach
 ?>	
+</table>
+<table class="indent">
 <TR>
-	<TD COLSPAN="2" NOWRAP>
-		<?php  if ($SectOffs > 0) { ?>
-		<B><A HREF="index.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>&SectOffs=<?php  p($SectOffs - $ItemsPerPage); ?>">&lt;&lt; <?php  putGS('Previous'); ?></A></B>
-	<?php  }
-	    if (($SectOffs + $ItemsPerPage) < $totalSections) {
-	    	if ($SectOffs > 0) { echo " | "; }
-	    	?>
-			<B><A HREF="index.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>&SectOffs=<?php  p ($SectOffs + $ItemsPerPage); ?>"><?php  putGS('Next'); ?> &gt;&gt</A></B>
-		<?php  } ?>	
-	</TD></TR>
+	<TD>
+		<?php echo $pager->render(); ?>
+	</TD>
+</TR>
 </TABLE>
 <?php 
 } // if
