@@ -72,7 +72,7 @@ $orderDirectionUrl = camp_html_article_url($articleObj, $f_language_selected, 'i
 				camp_html_select_option('photographer', $f_order_by, getGS("Photographer"));
 				camp_html_select_option('place', $f_order_by, getGS("Place"));
 				camp_html_select_option('date', $f_order_by, getGS("Date"));
-				camp_html_select_option('inuse', $f_order_by, getGS("In Use"));
+				camp_html_select_option('inuse', $f_order_by, getGS("In use"));
 				?>
 				</select>
 			</td>
