@@ -46,8 +46,6 @@ if (!in_array($fieldType, $validTypes)) {
 if ($correct) {
 	$field->create($fieldType);
 	$created = true;
-	$logtext = getGS('Article type field $1 created', $fieldName);
-	Log::Message($logtext, $User->getUserName(), 71);
 	header("Location: /$ADMIN/article_types/fields/?AType=".urlencode($articleTypeName));
 }
 

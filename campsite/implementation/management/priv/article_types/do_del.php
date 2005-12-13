@@ -32,8 +32,6 @@ if ($articlesRemaining > 0) {
 if ($doDelete) {
 	$articleType = new ArticleType($articleTypeName);
 	$articleType->delete();
-	$logtext = getGS('The article type $1 has been deleted.', $articleTypeName);
-	Log::Message($logtext, $User->getUserName(), 62);
 	header("Location: /$ADMIN/article_types/");
 	exit;
 } else { 
@@ -44,7 +42,7 @@ if ($doDelete) {
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
 $crumbs[] = array(getGS("Article Types"), "/$ADMIN/article_types/");
-$crumbs[] = array(getGS("Deleting article type"), "");
+$crumbs[] = array(getGS("Delete article type $1", $articleTypeName), "");
 
 echo camp_html_breadcrumbs($crumbs);
 
@@ -54,7 +52,7 @@ echo camp_html_breadcrumbs($crumbs);
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">
 <TR>
 	<TD COLSPAN="2">
-		<B> <?php  putGS("Deleting article type"); ?> </B>
+		<B> <?php  putGS("Delete article type $1", $articleTypeName); ?> </B>
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
 	</TD>
 </TR>

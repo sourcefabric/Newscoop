@@ -29,6 +29,8 @@ if ($User->hasPermission("ManageArticleTypes")) { ?>
 	</TABLE>
 <?php  } ?>
 <P>
+
+<?php if (count($articleTypes) > 0) { ?>
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list">
 <TR class="table_list_header">
 	<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Type"); ?></B></TD>
@@ -58,4 +60,9 @@ foreach ($articleTypes as $articleType) {
 	</TR>
 	<?php  } // foreach  ?>	    
 </TABLE>
+<?php } else { ?>
+	<BLOCKQUOTE>
+	<LI><?php  putGS('No article types.'); ?></LI>
+	</BLOCKQUOTE>
+<?php } ?>
 <?php camp_html_copyright_notice(); ?>

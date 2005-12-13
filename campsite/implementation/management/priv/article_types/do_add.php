@@ -44,8 +44,6 @@ if (empty($cName)) {
     
     if ($correct) {
     	$created = $articleType->create();
-    	$logtext = getGS('The article type $1 has been added.',$cName); 
-    	Log::Message($logtext, $User->getUserName(), 61);
     	header("Location: /$ADMIN/article_types/fields/add.php?AType=$cName");
     	exit;
 	}
