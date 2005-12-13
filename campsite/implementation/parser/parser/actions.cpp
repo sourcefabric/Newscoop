@@ -955,6 +955,7 @@ int CActList::takeAction(CContext& c, sockstream& fs)
 	if (lc.ListStart(lc.Level()) < 0)
 		lc.SetListStart(0, lc.Level());
 	CMYSQL_RES res(NULL);
+	id_type nTopic;
 	if (modifier != CMS_ST_SUBTITLE)
 	{
 		string where, order, limit, fields, prefix, table, having;
@@ -987,7 +988,7 @@ int CActList::takeAction(CContext& c, sockstream& fs)
 				table = "ArticleTopics";
 				break;
 			case CMS_ST_SUBTOPIC:
-				id_type nTopic = lc.Topic() >= 0 ? lc.Topic() : 0;
+				nTopic = lc.Topic() >= 0 ? lc.Topic() : 0;
 				buf << " where ParentId = " << nTopic;
 				where = buf.str();
 				table = "Topics";
