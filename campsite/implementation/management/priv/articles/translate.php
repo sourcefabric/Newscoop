@@ -77,7 +77,7 @@ camp_html_content_top(getGS('Translate article'), $topArray, true, true);
 <input type='hidden' name='f_publication_id' value="<?php p($f_publication_id); ?>">
 <input type='hidden' name='f_issue_number' value="<?php p($f_issue_number); ?>">
 <input type='hidden' name='f_section_number' value="<?php p($f_section_number); ?>">
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input" width="70%">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input" width="600px">
 <TR>
 	<TD COLSPAN="2">
 		<B><?php  putGS("Translate article"); ?></B>
@@ -85,7 +85,7 @@ camp_html_content_top(getGS('Translate article'), $topArray, true, true);
 	</TD>
 </TR>
 <TR>
-	<TD ALIGN="RIGHT" valign="top"><?php  putGS("Article name"); ?>:</TD>
+	<TD ALIGN="RIGHT" valign="top"><?php  putGS("Article name ($1)", $articleObj->getLanguageName()); ?>:</TD>
 	<TD><?PHP p(htmlspecialchars($articleObj->getTitle())); ?></td>
 </TR>
 <TR>
@@ -121,18 +121,18 @@ camp_html_content_top(getGS('Translate article'), $topArray, true, true);
 		if (!$translationIssueObj->exists()) {
 ?>
 <TR>
-	<TD colspan="2" align="left"><strong><?php putGS("The issue for the corresponding article translation does not exist and must be created. Please supply the issue name and URL name."); ?></strong></TD>
+	<TD colspan="2" align="left" style="padding-left: 40px; padding-right: 40px; padding-top: 20px;"><strong><?php putGS("An issue must be created for the selected language.  Please enter the issue name and URL name."); ?></strong></TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php putGS("New issue name"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" NAME="f_issue_name" SIZE="32" maxlength="140" value="<?php echo htmlentities($f_issue_name) ?>" class="input_text" alt="blank" emsg="<?php putGS('You must complete the $1 field.', getGS('Issue Name')); ?>">
+	<INPUT TYPE="TEXT" NAME="f_issue_name" SIZE="32" maxlength="140" value="<?php echo htmlentities($f_translation_issue_name) ?>" class="input_text" alt="blank" emsg="<?php putGS('You must complete the $1 field.', getGS('Issue Name')); ?>">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php putGS("New issue URL name"); ?>:</TD>
-	<TD>
-	<INPUT TYPE="TEXT" NAME="f_issue_urlname" SIZE="20" maxlength="32" value="<?php echo htmlentities($f_issue_urlname) ?>" class="input_text" alt="blank" emsg="<?php putGS('You must complete the $1 field.', getGS('Issue URL Name')); ?>">
+	<TD valign="bottom">
+	<INPUT TYPE="TEXT" NAME="f_issue_urlname" SIZE="20" maxlength="32" value="<?php echo htmlentities($f_translation_issue_urlname) ?>" class="input_text" alt="blank" emsg="<?php putGS('You must complete the $1 field.', getGS('Issue URL Name')); ?>">
 	</TD>
 </TR>
 <?php
@@ -141,18 +141,18 @@ camp_html_content_top(getGS('Translate article'), $topArray, true, true);
 		if (!$translationSectionObj->exists()) {
 ?>
 <TR>
-	<TD colspan="2" align="left"><strong><?php putGS("The section for the corresponding article translation does not exist and must be created. Please supply the section name and URL name."); ?></strong></TD>
+	<TD colspan="2" align="left" style="padding-left: 40px; padding-right: 40px; padding-top: 20px;"><strong><?php putGS("A section must be created for the selected language.  Please enter the section name and URL name."); ?></strong></TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php putGS("New section name"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" NAME="f_section_name" SIZE="32" maxlength="255" value="<?php echo htmlentities($f_section_name) ?>" class="input_text" alt="blank" emsg="<?php putGS('You must complete the $1 field.', getGS('Section Name')); ?>">
+	<INPUT TYPE="TEXT" NAME="f_section_name" SIZE="32" maxlength="255" value="<?php echo htmlentities($f_translation_section_name) ?>" class="input_text" alt="blank" emsg="<?php putGS('You must complete the $1 field.', getGS('Section Name')); ?>">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php putGS("New section URL name"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" NAME="f_section_urlname" SIZE="20" maxlength="32" value="<?php echo htmlentities($f_section_urlname) ?>" class="input_text" alt="blank" emsg="<?php putGS('You must complete the $1 field.', getGS('Section URL Name')); ?>">
+	<INPUT TYPE="TEXT" NAME="f_section_urlname" SIZE="20" maxlength="32" value="<?php echo htmlentities($f_translation_section_urlname) ?>" class="input_text" alt="blank" emsg="<?php putGS('You must complete the $1 field.', getGS('Section URL Name')); ?>">
 	</TD>
 </TR>
 <?php
