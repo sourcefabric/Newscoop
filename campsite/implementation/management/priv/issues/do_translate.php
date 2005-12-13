@@ -54,8 +54,6 @@ if ($correct) {
     $newIssue = $issueObj->copy(null, $issueObj->getIssueNumber(), $cLang);
     $newIssue->setName($cName);
     $newIssue->setUrlName($cShortName);
-    $logtext = getGS('Issue $1 added', $cName); 
-    Log::Message($logtext, $User->getUserName(), 11);
     header("Location: /$ADMIN/issues/?Pub=$Pub");
     exit;
     //$created = true;

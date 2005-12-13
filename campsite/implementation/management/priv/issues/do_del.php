@@ -35,11 +35,6 @@ if ($numArticlesRemaining > 0) {
 
 if ($doDelete) {
     $issueObj->delete(true, false);
-	$logtext = getGS('All sections from Issue $1 from publication $2 deleted',
-	   $issueObj->getName(), $publicationObj->getName()); 
-	Log::Message($logtext, $User->getUserName(), 12);
-	$logtext = getGS('Issue $1 from publication $2 deleted', $issueObj->getName(), $publicationObj->getName()); 
-	Log::Message($logtext, $User->getUserName(), 12); 
 	header("Location: /$ADMIN/issues/index.php?Pub=$Pub&IssOffs=$IssOffs");
 	exit;
 }

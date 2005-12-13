@@ -54,8 +54,6 @@ if ($correct) {
     $newIssueObj =& new Issue($Pub, $cLang, $cNumber);
     $created = $newIssueObj->create($cShortName, array('Name' => $cName));
     if ($created) {
-    	$logtext = getGS('Issue $1 added in publication $2', $cName, $publicationObj->getName()); 
-    	Log::Message($logtext, $User->getUserName(), 11);
     	header("Location: /$ADMIN/issues/edit.php?Pub=$Pub&Issue=$cNumber&Language=$cLang");
     	exit;
     }
