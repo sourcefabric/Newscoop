@@ -32,8 +32,6 @@ if ($res) {
 	$fileName = $GLOBALS["File"."_name"];
 	Template::UpdateStatus();
 
-	$logtext = getGS('Template $1 uploaded', $fileName);
-	Log::Message($logtext, $User->getUserName, 111);
 	header("Location: /$ADMIN/templates?Path=" . urlencode($Path));
 	exit;
 } else {
