@@ -221,6 +221,21 @@ class LocalizerLanguage {
 	
 	
 	/**
+	 * Return the value for the given key.
+	 *
+	 * @param unknown_type $p_key
+	 */
+	function getValue($p_key)
+	{
+		if (isset($this->m_translationTable[$p_key])) {
+			return $this->m_translationTable[$p_key];
+		} else {
+			return null;
+		}
+	} // fn getValue
+	
+	
+	/**
 	 * Get the full path to the translation file.
 	 *
 	 * @param string $p_mode

@@ -242,7 +242,7 @@ function translationForm($p_request)
 	<?PHP
 	if ((count($missingStrings) > 0)  && ($screenDropDownSelection != 'globals')) {
 		?>
-		<table align="center" style="background-color: #EDFFDF; border: 1px solid #357654; margin-left: 10px;" width="700px">
+		<table align="center" style="background-color: #EDFFDF; border: 1px solid #357654; margin-left: 10px; margin-bottom: 5px;" width="700px">
         <form action="index.php" method="post">
         <input type="hidden" name="action" value="add_missing_translation_strings">
         <input type="hidden" name="prefix" value="<?php echo $screenDropDownSelection; ?>">
@@ -427,6 +427,19 @@ function translationForm($p_request)
             	            ?>
             	            <td style="padding-left: 3px;">
             	            <a href="<?php echo $removeLink; ?>" onClick="return confirm('<?php putGS('Are you sure you want to delete this entry?'); ?>');"><img src="<?php echo $g_localizerConfig['ICONS_DIR']; ?>/delete.png" border="0" vspace="4"></a>
+            	            </td>
+            	            
+            	            <td style="padding-left: 5px;" nowrap>
+								<SELECT name="change_prefix_<?php echo $count; ?>" class="input_select">
+								<?PHP
+								foreach ($mapPrefixToDisplay as $prefix => $displayStr) {
+									if ($prefix != $screenDropDownSelection) {
+										camp_html_select_option($prefix, null, $displayStr);
+									}
+								}
+								?>
+								</SELECT>
+								<input type="button" name="" value="Move" onclick="location.href='?action=change_string_prefix&string=<?php echo urlencode($sourceKey); ?>&new_prefix='+this.form.change_prefix_<?php echo $count; ?>.options[this.form.change_prefix_<?php echo $count; ?>.selectedIndex].value+'&<?php echo $fileparms; ?>';" class="button">
             	            </td>
                             <?php 
                 	        }

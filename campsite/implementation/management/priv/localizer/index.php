@@ -53,11 +53,19 @@ switch ($action) {
 	case 'move_string':
 		$pos1 = Input::Get('pos1', 'int');
 		$pos2 = Input::Get('pos2', 'int');
-	    Localizer::MoveString($prefix, $pos1, $pos2);
+	    Localizer::RepositionString($prefix, $pos1, $pos2);
 	    require_once("translate.php");    
 	    translationForm($_REQUEST);
 		break;
 	
+	case 'change_string_prefix':
+		$newPrefix = Input::Get('new_prefix');
+		$moveStr = Input::Get('string');
+		Localizer::ChangeStringPrefix($prefix, $newPrefix, $moveStr);
+	    require_once("translate.php");    
+	    translationForm($_REQUEST);
+		break;
+		
 	case 'add_missing_translation_strings':
 		$missingStrings = Localizer::FindMissingStrings($prefix);
 	    if (count($missingStrings) > 0) {

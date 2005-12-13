@@ -484,7 +484,7 @@ class Localizer {
 
     
     /**
-     * Go through all files matching $p_prefix swap selected entrys.
+     * Go through all files matching $p_prefix and swap selected entrys.
      *
      * @param string $p_prefix
      * @param int $p_pos1
@@ -492,17 +492,37 @@ class Localizer {
      *
      * @return void
      */
-    function MoveString($p_prefix, $p_pos1, $p_pos2) 
+    function RepositionString($p_prefix, $p_pos1, $p_pos2) 
     {
         $languages = Localizer::GetLanguages();
         foreach ($languages as $language) {
 			$target =& new LocalizerLanguage($p_prefix, $language->getLanguageId());
 			$target->loadFile(Localizer::GetMode());
-			$success = $target->moveString($p_pos1, $p_pos2);
+			$target->moveString($p_pos1, $p_pos2);
 			$target->saveFile(Localizer::GetMode());
         }
-    } // fn MoveString
+    } // fn RepositionString
 
+    
+    function ChangeStringPrefix($p_oldPrefix, $p_newPrefix, $p_key) 
+    {
+        $languages = Localizer::GetLanguages();
+        foreach ($languages as $language) {
+			$source =& new LocalizerLanguage($p_oldPrefix, $language->getLanguageId());
+			$source->loadFile(Localizer::GetMode());
+			$srcValue = $source->getValue($p_key);
+			
+			$target =& new LocalizerLanguage($p_newPrefix, $language->getLanguageId());
+			$target->loadFile(Localizer::GetMode());
+			
+			$target->addString($p_key, $srcValue);
+			$source->deleteString($p_key);
+			
+			$source->saveFile(Localizer::GetMode());
+			$target->saveFile(Localizer::GetMode());
+        }    	
+    } // fn ChangeStringPrefix
+    
     
    	/**
      * Get all the languages that the interface supports.
@@ -615,8 +635,8 @@ class Localizer {
         //echo "<pre>";print_r($files);echo "</pre>";
         foreach ($files as $pathname) {
             if (file_exists($pathname)) {
-                echo 'deleteing '.$pathname.'<br>';
-                //unlink($pathname);
+                //echo 'deleteing '.$pathname.'<br>';
+                unlink($pathname);
             }
         }
     } // fn DeleteLanguageFiles
