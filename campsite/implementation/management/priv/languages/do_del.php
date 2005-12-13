@@ -63,11 +63,7 @@ if ($numCountries > 0) {
 }
 
 if ($doDelete) {
-	unlink($_SERVER['DOCUMENT_ROOT'] . "/" . $languageObj->getCode() . ".php");
-	Localizer::DeleteLanguageFiles($languageObj->getCode());
 	$languageObj->delete();
-	$logtext = getGS('Language $1 deleted', $languageObj->getName()); 
-	Log::Message($logtext, $User->getUserName(), 102);
 	header("Location: /$ADMIN/languages/index.php");
 	exit;
 }
