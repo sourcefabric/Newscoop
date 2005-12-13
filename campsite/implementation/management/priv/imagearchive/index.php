@@ -6,6 +6,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ImageSearch.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/SimplePager.php');
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
+camp_load_language("api");
 
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
@@ -30,6 +31,9 @@ if ($f_order_direction == 'DESC') {
 	$OrderSign = "<img src=\"".$Campsite["ADMIN_IMAGE_BASE_URL"]."/ascending.png\" border=\"0\">";
 }
 $orderDirectionUrl = "/$ADMIN/imagearchive/index.php?&f_order_direction=$ReverseOrderDirection";
+if ($f_order_by == "id") {
+	$f_order_direction = $ReverseOrderDirection;
+}
 
 $TotalImages = Image::GetTotalImages();
 $imageSearch =& new ImageSearch($f_search_string, $f_order_by, $f_order_direction, $f_image_offset, $f_items_per_page);
