@@ -1,5 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/pub/pub_common.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/SimplePager.php");
+camp_load_language("api");
 
 // Check permissions
 list($access, $User) = check_basic_access($_REQUEST);
@@ -8,22 +10,25 @@ if (!$access) {
 	exit;
 }
 
-$PubOffs = Input::Get('PubOffs', 'int', 0, true);
+$PubOffs = camp_session_get('PubOffs', 0);
 if ($PubOffs < 0) {
     $PubOffs = 0;
 }
-$ItemsPerPage = 20;
+$ItemsPerPage = 15;
 
-$sqlOptions = array("LIMIT" => array("START" => $PubOffs, "MAX_ROWS" => ($ItemsPerPage+1)), 
+$sqlOptions = array("LIMIT" => array("START" => $PubOffs, "MAX_ROWS" => $ItemsPerPage), 
                     "ORDER BY" => array("Name" => "ASC"));
 $publications = Publication::GetPublications($sqlOptions);
 $numPublications = Publication::GetNumPublications();
+
+$pager =& new SimplePager($numPublications, $ItemsPerPage, "PubOffs", "index.php?");
 
 camp_html_content_top(getGS('Publication List'), null);
 
 ?>
 
-<?php  if ($User->hasPermission("ManagePub")) { ?>    <P>
+<?php  if ($User->hasPermission("ManagePub")) { ?>    
+<P>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons">
 <TR>
 	<TD>
@@ -36,6 +41,14 @@ camp_html_content_top(getGS('Publication List'), null);
 </TABLE>
 <?php  } ?>
 <P>
+<?php if ($numPublications > 0) { ?>
+<table class="indent">
+<TR>
+	<TD>
+		<?php echo $pager->render(); ?>
+    </TD>
+</TR>
+</TABLE>
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list">
 <TR class="table_list_header">
     <TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Name<BR><SMALL>(click to see issues)</SMALL>"); ?></B></TD>
@@ -78,14 +91,20 @@ foreach ($publications as $pub) { ?>
 </TR>
 <?php
 } // foreach ?>
+</table>
+<table class="indent">
 <TR>
-<TD COLSPAN="2" NOWRAP>
-<?php  
-if ($PubOffs > 0) { ?>
-    <B><A HREF="index.php?PubOffs=<?php  print (max(0, ($PubOffs - $ItemsPerPage))); ?>">&lt;&lt; <?php  putGS('Previous'); ?></A></B>
-<?php  } ?>
-<?php  if ($numPublications > ($PubOffs+$ItemsPerPage)) { ?>
-      | <B><A HREF="index.php?PubOffs=<?php  print ($PubOffs + $ItemsPerPage); ?>"><?php  putGS('Next'); ?> &gt;&gt</A></B>
-<?php  } ?>    </TD></TR>
+	<TD>
+		<?php echo $pager->render(); ?>
+    </TD>
+</TR>
 </TABLE>
-<?php camp_html_copyright_notice(); ?>
+<?php 
+} else {
+	?>
+	<BLOCKQUOTE>
+	<LI><?php  putGS('No publications.'); ?></LI>
+	</BLOCKQUOTE>
+	<?php
+}
+camp_html_copyright_notice(); ?>
