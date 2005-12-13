@@ -1,5 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/country/country_common.php");
+require_once($_SERVER['DOCUMENT_ROOT']. "/classes/SimplePager.php");
+camp_load_language("api");
 
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
@@ -7,8 +9,8 @@ if (!$access) {
 	exit;
 }
 
-$f_language_selected = Input::Get('f_language_selected', 'string', null, true);
-$f_country_offset = Input::Get('f_country_offset', 'int', 0, true);
+$f_language_selected = Input::Get('f_language_selected', 'string', '', true);
+$f_country_offset = camp_session_get('f_country_offset', 0);
 if (empty($f_language_selected)) {
 	$f_language_selected = null;
 }
@@ -17,6 +19,8 @@ $languages = Language::GetLanguages();
 $countries = Country::GetCountries($f_language_selected, null, null, 
 				array("LIMIT" => array("START" => $f_country_offset, "MAX_ROWS" => $ItemsPerPage)));
 $numCountries = Country::GetNumCountries($f_language_selected);
+
+$pager =& new SimplePager($numCountries, $ItemsPerPage, "f_country_offset", "index.php?f_language_selected=".urlencode($f_language_selected)."&");
 
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
@@ -64,6 +68,13 @@ echo camp_html_breadcrumbs($crumbs);
 </TABLE>
 <p>
 
+<table class="action_buttons">
+<TR>
+	<TD>
+		<?php  echo $pager->render(); ?>
+	</TD>
+</TR>
+</TABLE>
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list">
 <TR class="table_list_header">
 	<?php  if ($User->hasPermission("ManageCountries")) { ?>
@@ -124,16 +135,12 @@ foreach ($countries as $country) { ?>
 	<?php 
 	$previousCountryCode = $country->getCode();
 } ?>
-
+</table>
+<table class="action_buttons">
 <TR>
-	<TD COLSPAN="2" NOWRAP>
-	<?php  
-	if ($f_country_offset > 0) {  ?>
-			<B><A HREF="index.php?f_language_selected=<?php  print urlencode($f_language_selected); ?>&f_country_offset=<?php  print ($f_country_offset - $ItemsPerPage); ?>">&lt;&lt; <?php  putGS('Previous'); ?></A></B>
-		<?php  
-	} 
-	if ($numCountries > ($f_country_offset + $ItemsPerPage)) { ?>
-		 | <B><A HREF="index.php?f_language_selected=<?php  print urlencode($f_language_selected); ?>&f_country_offset=<?php print ($f_country_offset + $ItemsPerPage); ?>"><?php  putGS('Next'); ?> &gt;&gt</A></B>
-<?php  } ?>	</TD></TR>
+	<TD>
+		<?php  echo $pager->render(); ?>
+	</TD>
+</TR>
 </TABLE>
 <?php camp_html_copyright_notice(); ?>
