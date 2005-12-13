@@ -11,6 +11,7 @@ if (!isset($g_documentRoot)) {
 require_once($g_documentRoot.'/db_connect.php');
 require_once($g_documentRoot.'/classes/DatabaseObject.php');
 require_once($g_documentRoot.'/classes/DbObjectArray.php');
+require_once($g_documentRoot.'/classes/Log.php');
 require_once($g_documentRoot.'/classes/ParserCom.php');
 
 /**
@@ -75,6 +76,9 @@ class Topic extends DatabaseObject {
 		}
 		$success = parent::create($p_values);
 		if ($success) {
+			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+			$logtext = getGS('Topic $1 added', $this->m_data['Name']." (".$this->m_data['Id'].")");
+			Log::Message($logtext, null, 141);			
 			ParserCom::SendMessage('topics', 'create', array("tpid" => $this->m_data['Id']));
 		}
 		return $success;
@@ -89,6 +93,9 @@ class Topic extends DatabaseObject {
 	{
 		$deleted = parent::delete();
 		if ($deleted) {
+			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+			$logtext = getGS('Topic $1 deleted', $this->m_data['Name']." (".$this->m_data['Id'].")");
+			Log::Message($logtext, null, 142);
 			ParserCom::SendMessage('topics', 'delete', array("tpid" => $this->m_data['Id']));
 		}
 		return $deleted;
@@ -110,8 +117,12 @@ class Topic extends DatabaseObject {
 	 */
 	function setName($p_value) 
 	{
+		$oldValue = $this->m_data['Name'];
 		$changed = $this->setProperty('Name', $p_value);
 		if ($changed) {
+			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+			$logtext = getGS('Topic $1 updated', $this->m_data['Id'].": (".$oldValue." -> ".$this->m_data['Name'].")");
+			Log::Message($logtext, null, 143);		
 			ParserCom::SendMessage('topics', 'modify', array("tpid"=> $this->m_data['Id']));
 		}
 		return $changed;

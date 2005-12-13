@@ -9,6 +9,7 @@
 if (!isset($g_documentRoot)) {
     $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 }
+require_once($g_documentRoot.'/classes/Log.php');
 require_once($g_documentRoot.'/classes/ParserCom.php');
 
 /**
@@ -70,8 +71,13 @@ class ArticleTypeField {
 		    default:
 		    	return;
 		}
-		$Campsite['db']->Execute($queryStr);
-		ParserCom::SendMessage('article_types', 'create', array("article_type"=> $this->m_articleTypeName));
+		$success = $Campsite['db']->Execute($queryStr);
+		if ($success) {
+			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+			$logtext = getGS('Article type field $1 created', $this->m_dbColumnName);
+			Log::Message($logtext, null, 71);
+			ParserCom::SendMessage('article_types', 'create', array("article_type"=> $this->m_articleTypeName));
+		}
 	} // fn create
 	
 	
@@ -116,8 +122,13 @@ class ArticleTypeField {
 	{
 		global $Campsite;
 		$queryStr = "ALTER TABLE ".$this->m_dbTableName." DROP COLUMN ".$this->m_dbColumnName;
-		$Campsite['db']->Execute($queryStr);
-		ParserCom::SendMessage("article_types", "modify", array("article_type"=>"$AType"));
+		$success = $Campsite['db']->Execute($queryStr);
+		if ($success) {
+			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+			$logtext = getGS('Article type field $1 deleted', $this->m_dbColumnName); 
+			Log::Message($logtext, null, 72);
+			ParserCom::SendMessage("article_types", "modify", array("article_type"=>"$AType"));
+		}
 	} // fn delete
 	
 	

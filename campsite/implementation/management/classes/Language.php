@@ -15,6 +15,9 @@ if (!isset($g_documentRoot)) {
 require_once($g_documentRoot.'/db_connect.php');
 require_once($g_documentRoot.'/classes/DatabaseObject.php');
 require_once($g_documentRoot.'/classes/DbObjectArray.php');
+require_once($g_documentRoot.'/classes/Log.php');
+require_once($g_documentRoot.'/parser_utils.php');
+require_once($g_documentRoot."/$ADMIN_DIR/localizer/Localizer.php");
 
 /**
  * @package Campsite
@@ -40,6 +43,50 @@ class Language extends DatabaseObject {
 			$this->fetch();
 		}
 	} // constructor
+	
+	
+	/**
+	 * Create the language.
+	 *
+	 * @param array $p_values
+	 * @return boolean
+	 */
+	function create($p_values = null)
+	{
+		$success = parent::create($p_values);
+		if ($success) {
+	    	Localizer::CreateLanguageFiles($this->m_data['Code']);
+	    	create_language_links();
+			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+	        $logtext = getGS('Language $1 added', $this->m_data['Name']." (".$this->m_data['OrigName'].")"); 
+	        Log::Message($logtext, null, 101);
+		}
+		return $success;		
+	} // fn create
+	
+	
+	function update($p_values = null, $p_commit = true, $p_isSql = false)
+	{
+		parent::update($p_values, $p_commit, $p_isSql);
+		if (function_exists("camp_load_language")) { camp_load_language("api");	}
+        $logtext = getGS('Language $1 modified', $this->m_data['Name']." (".$this->m_data['OrigName'].")"); 
+        Log::Message($logtext, null, 103);		
+	} // fn update
+	
+	
+	function delete()
+	{
+		global $g_documentRoot;
+		unlink($g_documentRoot . "/" . $this->getCode() . ".php");
+		Localizer::DeleteLanguageFiles($this->getCode());
+		$success = parent::delete();
+		if ($success) {
+			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+			$logtext = getGS('Language $1 deleted', $this->m_data['Name']." (".$this->m_data['OrigName'].")"); 
+			Log::Message($logtext, null, 102);
+		}
+		return $success;		
+	} // fn delete
 	
 	
 	/**

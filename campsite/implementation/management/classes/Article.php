@@ -163,6 +163,7 @@ class Article extends DatabaseObject {
 			$this->m_data['IdLanguage']);
 		$articleData->create();
 		
+		if (function_exists("camp_load_language")) { camp_load_language("api");	}
 		$logtext = getGS('Article #$1 "$2" ($3) created.',
 			$this->m_data['Number'], $this->m_data['Name'], $this->getLanguageName()); 
 		Log::Message($logtext, null, 31);
@@ -235,6 +236,7 @@ class Article extends DatabaseObject {
 		}
 		$newArticleNumber = $this->__generateArticleNumber();
 
+		if (function_exists("camp_load_language")) { camp_load_language("api");	}
 		$logtext = '';
 		$newArticles = array();
 		foreach ($copyArticles as $copyMe) {
@@ -387,6 +389,7 @@ class Article extends DatabaseObject {
 		$origArticleData = $this->getArticleData();
 		$origArticleData->copyToExistingRecord($articleCopy->getArticleNumber(), $p_languageId);
 		
+		if (function_exists("camp_load_language")) { camp_load_language("api");	}
 		$logtext = getGS('Article #$1 "$2" ($3) translated to "$5" ($4)', 
 			$this->getArticleNumber(), $this->getTitle(), $this->getLanguageName(), 
 			$articleCopy->getTitle(), $articleCopy->getLanguageName()); 
@@ -402,12 +405,6 @@ class Article extends DatabaseObject {
 	 */
 	function delete() 
 	{
-		$logtext = getGS('Article #$1: "$2" ($3) deleted.',
-			$this->m_data['Number'], $this->m_data['Name'],	$this->getLanguageName())
-			." (".getGS("Publication")." ".$this->m_data['IdPublication'].", "
-			." ".getGS("Issue")." ".$this->m_data['NrIssue'].", "
-			." ".getGS("Section")." ".$this->m_data['NrSection'].")";
-			
 		// Delete row from article type table.
 		$articleData =& new ArticleData($this->m_data['Type'], 
 			$this->m_data['Number'], 
@@ -434,6 +431,12 @@ class Article extends DatabaseObject {
 		$deleted = parent::delete();
 		
 		if ($deleted) {
+			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+			$logtext = getGS('Article #$1: "$2" ($3) deleted.',
+				$this->m_data['Number'], $this->m_data['Name'],	$this->getLanguageName())
+				." (".getGS("Publication")." ".$this->m_data['IdPublication'].", "
+				." ".getGS("Issue")." ".$this->m_data['NrIssue'].", "
+				." ".getGS("Section")." ".$this->m_data['NrSection'].")";			
 			Log::Message($logtext, null, 32);
 		}
 		return $deleted;
@@ -977,12 +980,6 @@ class Article extends DatabaseObject {
 		if ( ($p_value != 'Y') && ($p_value != 'S') && ($p_value != 'N')) {
 			return false;
 		}
-		$logtext = getGS('Article #$1: "$2" status changed from $3 to $4.',
-			$this->m_data['Number'], $this->m_data['Name'],
-			$this->getPublishedDisplayString(), $this->getPublishedDisplayString($p_value))
-			." (".getGS("Publication")." ".$this->m_data['IdPublication'].", "
-			." ".getGS("Issue")." ".$this->m_data['NrIssue'].", "
-			." ".getGS("Section")." ".$this->m_data['NrSection'].")";
 
 		// If the article is being unpublished
 		if ( ($this->getPublished() == 'Y') && ($p_value != 'Y') ) {
@@ -1000,6 +997,13 @@ class Article extends DatabaseObject {
 			$this->unlock();
 		}
 		$changed = parent::setProperty('Published', $p_value);
+		if (function_exists("camp_load_language")) { camp_load_language("api");	}
+		$logtext = getGS('Article #$1: "$2" status changed from $3 to $4.',
+			$this->m_data['Number'], $this->m_data['Name'],
+			$this->getPublishedDisplayString(), $this->getPublishedDisplayString($p_value))
+			." (".getGS("Publication")." ".$this->m_data['IdPublication'].", "
+			." ".getGS("Issue")." ".$this->m_data['NrIssue'].", "
+			." ".getGS("Section")." ".$this->m_data['NrSection'].")";
 		Log::Message($logtext, null, 35); 
 		return $changed;
 	} // fn setPublished

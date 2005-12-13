@@ -12,6 +12,7 @@ if (!isset($g_documentRoot)) {
 require_once($g_documentRoot.'/db_connect.php');
 require_once($g_documentRoot.'/classes/DatabaseObject.php');
 require_once($g_documentRoot.'/classes/DbObjectArray.php');
+require_once($g_documentRoot.'/classes/Publication.php');
 
 class SubscriptionDefaultTime extends DatabaseObject {
 	var $m_dbTableName = 'SubsDefTime';
@@ -42,6 +43,7 @@ class SubscriptionDefaultTime extends DatabaseObject {
   	{
   		$success = parent::create($p_values);
   		$publicationObj =& new Publication($this->m_data['IdPublication']);
+		if (function_exists("camp_load_language")) { camp_load_language("api");	}
 		$logtext = getGS('The default subscription time for $1 has been added.', 
 						 "(".getGS("Publication")." ".$publicationObj->getName() 
 						 .':'.$this->m_data['CountryCode'].")"); 

@@ -15,6 +15,7 @@ if (!isset($g_documentRoot)) {
 require_once($g_documentRoot.'/db_connect.php');
 require_once($g_documentRoot.'/classes/DatabaseObject.php');
 require_once($g_documentRoot.'/classes/DbObjectArray.php');
+require_once($g_documentRoot.'/classes/Log.php');
 
 /**
  * @package Campsite
@@ -39,6 +40,28 @@ class Country extends DatabaseObject {
 			$this->fetch();
 		}
 	} // constructor
+	
+	
+	function create($p_values = null)
+	{
+		$success = parent::create($p_values);
+		if ($success) {
+			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+			$logtext = getGS('Country $1 added', $this->m_data['Name']." (".$this->m_data['Code'].")");
+			Log::Message($logtext, null, 131);		
+		}
+	} // fn create
+	
+	
+	function delete()
+	{
+		$success = parent::delete();
+		if ($success) {
+			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+			$logtext = getGS('Country $1 deleted', $this->m_data['Name'].' ('.$this->m_data['Code'].')' ); 
+			Log::Message($logtext, null, 134);
+		}		
+	} // fn delete
 	
 	
 	/**
@@ -68,7 +91,13 @@ class Country extends DatabaseObject {
 	 */
 	function setName($p_value)
 	{
-		return $this->setProperty('Name', $p_value);
+		$oldValue = $this->m_data['Name'];
+		$success = $this->setProperty('Name', $p_value);
+		if ($success) {
+			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+			$logtext = getGS('Country name $1 changed', $this->m_data['Name']." (".$this->m_data['Code'].")");
+			Log::Message($logtext, null, 133);
+		}
 	} // fn setName
 	
 	

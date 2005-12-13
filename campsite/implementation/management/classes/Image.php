@@ -60,8 +60,11 @@ class Image extends DatabaseObject {
 	function update($p_columns = null, $p_commit = true, $p_isSql = false) 
 	{
 		$success = parent::update($p_columns, $p_commit, $p_isSql);
-		$logtext = getGS('Changed image properties of $1', $this->m_data['Id']); 
-		Log::Message($logtext, null, 43);
+		if ($success) {
+			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+			$logtext = getGS('Changed image properties of $1', $this->m_data['Id']); 
+			Log::Message($logtext, null, 43);
+		}
 		return $success;
 	} // fn update
 	
@@ -78,22 +81,24 @@ class Image extends DatabaseObject {
 		ArticleImage::OnImageDelete($this->getImageId());
 		
 		// Delete the record in the database
-		parent::delete();
+		$success = parent::delete();
 		
-		// Delete the images from disk
-		if (file_exists($this->getImageStorageLocation()) 
-			&& is_file($this->getImageStorageLocation())) {
-			unlink($this->getImageStorageLocation());
+		if ($success) {
+			// Delete the images from disk
+			if (file_exists($this->getImageStorageLocation()) 
+				&& is_file($this->getImageStorageLocation())) {
+				unlink($this->getImageStorageLocation());
+			}
+			if (file_exists($this->getThumbnailStorageLocation()) 
+				&& is_file($this->getThumbnailStorageLocation())) {
+				unlink($this->getThumbnailStorageLocation());
+			}
+			
+			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+			$logtext = getGS('Image $1 deleted', $this->m_data['Id']); 
+			Log::Message($logtext, null, 42);
 		}
-		if (file_exists($this->getThumbnailStorageLocation()) 
-			&& is_file($this->getThumbnailStorageLocation())) {
-			unlink($this->getThumbnailStorageLocation());
-		}
-		
-		$logtext = getGS('Image $1 deleted', $this->m_data['Id']); 
-		Log::Message($logtext, null, 42);
-
-		return true;
+		return $success;
 	} // fn delete
 	
 	
@@ -426,6 +431,7 @@ class Image extends DatabaseObject {
             }
         }
         $image->commit();
+		if (function_exists("camp_load_language")) { camp_load_language("api");	}
 		$logtext = getGS('The image $1 has been added.', 
 						$this->m_data['Description']." (".$this->m_data['Id'].")");
 		Log::Message($logtext, null, 41);
@@ -534,6 +540,7 @@ class Image extends DatabaseObject {
         unlink($tmpname);
         $image->commit();
         
+		if (function_exists("camp_load_language")) { camp_load_language("api");	}
 		$logtext = getGS('The image $1 has been added.', 
 						$this->m_data['Description']." (".$this->m_data['Id'].")");
 		Log::Message($logtext, null, 41);

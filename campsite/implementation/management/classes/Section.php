@@ -68,10 +68,117 @@ class Section extends DatabaseObject {
 	    }
 	    $p_columns['Name'] = $p_name;
 	    $p_columns['ShortName'] = $p_shortName;
-	    return parent::create($p_columns);
+	    $success = parent::create($p_columns);
+	    if ($success) {
+			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+		    $logtext = getGS('Section $1 added. (Issue: $2, Publication: $3)',
+		        $this->m_data['Name']." (".$this->m_data['Number'].")", 
+		        $this->m_data['NrIssue'], 
+		        $this->m_data['IdPublication']); 
+		    Log::Message($logtext, null, 21);
+	    }
+	    return $success;
 	} // fn create
 	
+
+	/**
+	 * Copy the section to the given issue.  The issue can be the same as
+	 * the current issue.  All articles will be copied to the new section.
+	 *
+	 * @param int $p_destPublicationId
+	 *     The destination publication ID.
+	 * @param int $p_destIssueId
+	 *     The destination issue ID.
+	 * @param int $p_destIssueLanguageId 
+	 *     (optional) The destination issue language ID.  If not given, 
+	 *     it will use the language ID of this section.
+	 * @param int $p_destSectionId
+	 *     (optional) The destination section ID.  If not given, a new 
+	 *     section will be created.
+	 * @param boolean $p_copyArticles
+	 *     (optional) If set to true, all articles will be copied to the
+	 *     destination section.
+	 * @return Section
+	 *     The new Section object.
+	 */
+	function copy($p_destPublicationId, $p_destIssueId, $p_destIssueLanguageId = null, 
+	              $p_destSectionId = null, $p_copyArticles = true) {
+    	if (is_null($p_destIssueLanguageId)) {
+    	   $p_destIssueLanguageId = $this->m_data['IdLanguage'];   
+    	}
+    	if (is_null($p_destSectionId)) {
+    	    $p_destSectionId = $this->m_data['Number'];
+    	}
+    	$dstSectionObj =& new Section($p_destPublicationId, $p_destIssueId, 
+    	                              $p_destIssueLanguageId, $p_destSectionId);
+    	// If source issue and destination issue are the same
+    	if ( ($this->m_data['IdPublication'] == $p_destPublicationId) 
+    	      && ($this->m_data['NrIssue'] == $p_destIssueId)
+    	      && ($this->m_data['IdLanguage'] == $p_destIssueLanguageId) ) {
+    		$shortName = $p_destSectionId;
+    		$sectionName = $this->getName() . " (duplicate)";
+    	} else {
+    		$shortName = $this->getUrlName();
+    		$sectionName = $this->getName();
+    	}
+    	$dstSectionCols = array();
+   		$dstSectionCols['SectionTplId'] = $this->m_data['SectionTplId'];
+   		$dstSectionCols['ArticleTplId'] = $this->m_data['ArticleTplId'];
+    	
+   		// Create the section if it doesnt exist yet.
+    	if (!$dstSectionObj->exists()) {
+    		$dstSectionObj->create($sectionName, $shortName, $dstSectionCols);
+    	}
+    	
+    	// Copy all the articles.
+    	if ($p_copyArticles) {
+        	$srcSectionArticles = Article::GetArticles($this->m_data['IdPublication'], 
+                                                       $this->m_data['NrIssue'], 
+                                                       $this->m_data['Number']);
+            $copiedArticles = array();
+        	foreach ($srcSectionArticles as $articleObj) {
+        	    if (!in_array($articleObj->getArticleNumber(), $copiedArticles)) {
+            		$tmpCopiedArticles = $articleObj->copy($p_destPublicationId, 
+                        $p_destIssueId, $p_destSectionId, null, true);
+                    $copiedArticles[] = $articleObj->getArticleNumber();
+        	    }
+        	}
+    	}
+    	    	
+    	return $dstSectionObj;
+	} // fn copy
+
 	
+	/**
+	 * Delete the section, and optionally the articles.
+	 * @param boolean $p_deleteArticles
+	 * @return boolean
+	 */
+	function delete($p_deleteArticles = false) 
+	{
+	    $numArticlesDeleted = 0;
+	    if ($p_deleteArticles) {
+	        $articles = Article::GetArticles($this->m_data['IdPublication'], 
+	                                          $this->m_data['NrIssue'],
+	                                          $this->m_data['Number']);
+	        $numArticlesDeleted = count($articles);
+            foreach ($articles as $deleteMe) {
+                $deleteMe->delete();
+            }
+	    }
+	    $success = parent::delete();
+	    if ($success) {
+			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+	        $logtext = getGS('Section $1 deleted. (Issue: $2, Publication: $3)',
+		        $this->m_data['Name']." (".$this->m_data['Number'].")",
+		        $this->m_data['NrIssue'],
+		        $this->m_data['IdPublication']);
+		    Log::Message($logtext, null, 22);
+	    }
+	    return $numArticlesDeleted;
+	} // fn delete
+	
+		
 	/**
 	 * @return int
 	 */
@@ -181,96 +288,6 @@ class Section extends DatabaseObject {
 	{
 		return $this->setProperty('SectionTplId', $p_value);
 	} // fn setSectionTemplateId
-	
-	
-	/**
-	 * Delete the section, and optionally the articles.
-	 * @param boolean $p_deleteArticles
-	 * @return boolean
-	 */
-	function delete($p_deleteArticles = false) 
-	{
-	    $numArticlesDeleted = 0;
-	    if ($p_deleteArticles) {
-	        $articles = Article::GetArticles($this->m_data['IdPublication'], 
-	                                          $this->m_data['NrIssue'],
-	                                          $this->m_data['Number']);
-	        $numArticlesDeleted = count($articles);
-            foreach ($articles as $deleteMe) {
-                $deleteMe->delete();
-            }
-	    }
-	    parent::delete();
-	    return $numArticlesDeleted;
-	} // fn delete
-	
-	
-	/**
-	 * Copy the section to the given issue.  The issue can be the same as
-	 * the current issue.  All articles will be copied to the new section.
-	 *
-	 * @param int $p_destPublicationId
-	 *     The destination publication ID.
-	 * @param int $p_destIssueId
-	 *     The destination issue ID.
-	 * @param int $p_destIssueLanguageId 
-	 *     (optional) The destination issue language ID.  If not given, 
-	 *     it will use the language ID of this section.
-	 * @param int $p_destSectionId
-	 *     (optional) The destination section ID.  If not given, a new 
-	 *     section will be created.
-	 * @param boolean $p_copyArticles
-	 *     (optional) If set to true, all articles will be copied to the
-	 *     destination section.
-	 * @return Section
-	 *     The new Section object.
-	 */
-	function copy($p_destPublicationId, $p_destIssueId, $p_destIssueLanguageId = null, 
-	              $p_destSectionId = null, $p_copyArticles = true) {
-    	if (is_null($p_destIssueLanguageId)) {
-    	   $p_destIssueLanguageId = $this->m_data['IdLanguage'];   
-    	}
-    	if (is_null($p_destSectionId)) {
-    	    $p_destSectionId = $this->m_data['Number'];
-    	}
-    	$dstSectionObj =& new Section($p_destPublicationId, $p_destIssueId, 
-    	                              $p_destIssueLanguageId, $p_destSectionId);
-    	// If source issue and destination issue are the same
-    	if ( ($this->m_data['IdPublication'] == $p_destPublicationId) 
-    	      && ($this->m_data['NrIssue'] == $p_destIssueId)
-    	      && ($this->m_data['IdLanguage'] == $p_destIssueLanguageId) ) {
-    		$shortName = $p_destSectionId;
-    		$sectionName = $this->getName() . " (duplicate)";
-    	} else {
-    		$shortName = $this->getUrlName();
-    		$sectionName = $this->getName();
-    	}
-    	$dstSectionCols = array();
-   		$dstSectionCols['SectionTplId'] = $this->m_data['SectionTplId'];
-   		$dstSectionCols['ArticleTplId'] = $this->m_data['ArticleTplId'];
-    	
-   		// Create the section if it doesnt exist yet.
-    	if (!$dstSectionObj->exists()) {
-    		$dstSectionObj->create($sectionName, $shortName, $dstSectionCols);
-    	}
-    	
-    	// Copy all the articles.
-    	if ($p_copyArticles) {
-        	$srcSectionArticles = Article::GetArticles($this->m_data['IdPublication'], 
-                                                       $this->m_data['NrIssue'], 
-                                                       $this->m_data['Number']);
-            $copiedArticles = array();
-        	foreach ($srcSectionArticles as $articleObj) {
-        	    if (!in_array($articleObj->getArticleNumber(), $copiedArticles)) {
-            		$tmpCopiedArticles = $articleObj->copy($p_destPublicationId, 
-                        $p_destIssueId, $p_destSectionId, null, true);
-                    $copiedArticles[] = $articleObj->getArticleNumber();
-        	    }
-        	}
-    	}
-    	    	
-    	return $dstSectionObj;
-	} // fn copy
 	
 	
 	/**

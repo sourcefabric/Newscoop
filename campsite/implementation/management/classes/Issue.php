@@ -15,6 +15,7 @@ if (!isset($g_documentRoot)) {
 require_once($g_documentRoot.'/db_connect.php');
 require_once($g_documentRoot.'/classes/DatabaseObject.php');
 require_once($g_documentRoot.'/classes/DbObjectArray.php');
+require_once($g_documentRoot.'/classes/Log.php');
 require_once($g_documentRoot.'/classes/Language.php');
 require_once($g_documentRoot.'/classes/Section.php');
 
@@ -67,7 +68,15 @@ class Issue extends DatabaseObject {
 	    if (!is_null($p_values)) {
 	       $tmpValues = array_merge($p_values, $tmpValues);
 	    }
-	    return parent::create($tmpValues);
+	    $success = parent::create($tmpValues);
+	    if ($success) {
+			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+	    	$logtext = getGS('Issue $1 added in publication $2', 
+	    					 $this->m_data['Name']." (".$this->m_data['Number'].")", 
+	    					 $this->m_data['IdPublication']);
+    		Log::Message($logtext, null, 11);
+	    }
+	    return $success;
 	} // fn create
 	
 	
@@ -86,7 +95,15 @@ class Issue extends DatabaseObject {
     		    $section->delete($p_deleteArticles);
     		}
 		}
-	    return parent::delete();
+	    $success = parent::delete();
+	    if ($success) {
+			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+	    	$logtext = getGS('Issue $1 from publication $2 deleted', 
+	    		$this->m_data['Name']." (".$this->m_data['Number'].")", 
+	    		$this->m_data['IdPublication']); 
+			Log::Message($logtext, null, 12); 
+	    }
+		return $success;
 	} // fn delete
 	
 	
@@ -115,8 +132,7 @@ class Issue extends DatabaseObject {
                 $section->copy($p_destPublicationId, $p_destIssueId, $p_destLanguageId, null, false);
             }
             return $newIssue;    
-        }	
-        else {
+        } else {
             return null;
         }
 	} // fn __copy
@@ -315,19 +331,16 @@ class Issue extends DatabaseObject {
 		if (is_null($p_value)) {
 			if ($this->m_data['Published'] == 'Y') {
 				$doPublish = false;
-			}
-			else {
+			} else {
 				$doPublish = true;
 			}
-		}
-		else {
+		} else {
 			if (is_string($p_value)) {
 				$p_value = strtoupper($p_value);
 			}
 			if (($this->m_data['Published'] == 'N') && (($p_value == 'Y') || ($p_value === true))) {
 				$doPublish = true;
-			}
-			elseif (($this->m_data['Published'] == 'Y') && (($p_value == 'N') || ($p_value === false))) {
+			} elseif (($this->m_data['Published'] == 'Y') && (($p_value == 'N') || ($p_value === false))) {
 				$doPublish = false;
 			}
 		}
@@ -335,10 +348,21 @@ class Issue extends DatabaseObject {
 			if ($doPublish) {
 				$this->setProperty('Published', 'Y', true);
 				$this->setProperty('PublicationDate', 'NOW()', true, true);
-			}
-			else {
+			} else {
 				$this->setProperty('Published', 'N', true);			
 			}
+			
+			// Log message
+			if ($this->getPublished() == 'Y') {
+				$status = getGS('Published');
+			} else {
+				$status = getGS('Not published');
+			}
+			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+			$logtext = getGS('Issue $1 changed status to $2',
+							 $this->m_data['Number'].'. '.$this->m_data['Name'].' ('.$this->getLanguageName().')',
+							 $status); 
+			Log::Message($logtext, null, 14);
 		}
 	} // fn setPublished
 	

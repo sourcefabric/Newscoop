@@ -51,10 +51,11 @@ class ArticleTopic extends DatabaseObject {
 	function AddTopicToArticle($p_topicId, $p_articleNumber) 
 	{
 		global $Campsite;
-		$logtext = getGS('Topic $1 added to article', $p_topicId);
 		$queryStr = 'INSERT IGNORE INTO ArticleTopics(NrArticle, TopicId)'
 					.' VALUES('.$p_articleNumber.', '.$p_topicId.')';
 		$Campsite['db']->Execute($queryStr);
+		if (function_exists("camp_load_language")) { camp_load_language("api");	}
+		$logtext = getGS('Topic $1 added to article', $p_topicId);
 		Log::Message($logtext, null, 144);
 	} // fn AddTopicToArticle
 	
@@ -68,9 +69,10 @@ class ArticleTopic extends DatabaseObject {
 	function RemoveTopicFromArticle($p_topicId, $p_articleNumber) 
 	{
 		global $Campsite;
-		$logtext = getGS('Article topic $1 deleted', $p_topicId); 
 		$queryStr = "DELETE FROM ArticleTopics WHERE NrArticle=$p_articleNumber AND TopicId=$p_topicId";
 		$Campsite['db']->Execute($queryStr);
+		if (function_exists("camp_load_language")) { camp_load_language("api");	}
+		$logtext = getGS('Article topic $1 deleted', $p_topicId); 
 		Log::Message($logtext, null, 145);		
 	} // fn RemoveTopicFromArticle
 	

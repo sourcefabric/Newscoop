@@ -179,6 +179,7 @@ class ArticleImage extends DatabaseObject {
 		$queryStr = 'INSERT IGNORE INTO ArticleImages(NrArticle, IdImage, Number)'
 					.' VALUES('.$p_articleNumber.', '.$p_imageId.', '.$p_templateId.')';
 		$Campsite['db']->Execute($queryStr);
+		if (function_exists("camp_load_language")) { camp_load_language("api");	}
 		$logtext = getGS('Image $1 linked to article $2', $p_imageId, $p_articleNumber); 
 		Log::Message($logtext, null, 42);
 	} // fn AddImageToArticle
@@ -222,6 +223,7 @@ class ArticleImage extends DatabaseObject {
 					.' AND Number='.$p_templateId
 					.' LIMIT 1';
 		$Campsite['db']->Execute($queryStr);
+		if (function_exists("camp_load_language")) { camp_load_language("api");	}
 		$logtext = getGS('Image $1 unlinked from $2', $p_imageId, $p_articleNumber); 
 		Log::Message($logtext, null, 42);
 	} // fn RemoveImageFromArticle

@@ -16,6 +16,7 @@ if (!isset($g_documentRoot)) {
  * Includes
  */
 require_once($g_documentRoot.'/classes/DatabaseObject.php');
+require_once($g_documentRoot.'/classes/Log.php');
 require_once($g_documentRoot.'/classes/ArticleTypeField.php');
 require_once($g_documentRoot.'/classes/ParserCom.php');
 
@@ -58,9 +59,14 @@ class ArticleType {
 					."(NrArticle INT UNSIGNED NOT NULL, "
 					." IdLanguage INT UNSIGNED NOT NULL, "
 					." PRIMARY KEY(NrArticle, IdLanguage))";
-		$retval = $Campsite['db']->Execute($queryStr);
-		ParserCom::SendMessage('article_type', 'create', array("article_type"=>$cName));
-		return $retval;
+		$success = $Campsite['db']->Execute($queryStr);
+		if ($success) {
+			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+		    $logtext = getGS('The article type $1 has been added.', $this->m_dbTableName); 
+	    	Log::Message($logtext, null, 61);
+			ParserCom::SendMessage('article_type', 'create', array("article_type"=>$cName));
+		}
+		return $success;
 	} // fn create
 	
 	
@@ -91,8 +97,13 @@ class ArticleType {
 	{
 		global $Campsite;
 		$queryStr = "DROP TABLE ".$this->m_dbTableName;
-		$Campsite['db']->Execute($queryStr);
-		ParserCom::SendMessage('article_types', 'delete', array("article_type" => $this->m_name));
+		$success = $Campsite['db']->Execute($queryStr);
+		if ($success) {
+			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+			$logtext = getGS('The article type $1 has been deleted.', $this->m_dbTableName);
+			Log::Message($logtext, null, 62);
+			ParserCom::SendMessage('article_types', 'delete', array("article_type" => $this->m_name));
+		}
 	} // fn delete
 	
 	
