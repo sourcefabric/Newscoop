@@ -29,8 +29,6 @@ if (empty($f_name)) {
 if ($correct) {
 	$updated = $editTopic->setName($f_name);
 	if ($updated) {
-		$logtext = getGS('Topic $1 updated', $topic->getTopicId());
-		Log::Message($logtext, $User->getUserName(), 143);
 		header("Location: /$ADMIN/topics/edit.php?f_topic_parent_id=$f_topic_parent_id&f_topic_edit_id=$f_topic_edit_id");
 		exit;
 	}

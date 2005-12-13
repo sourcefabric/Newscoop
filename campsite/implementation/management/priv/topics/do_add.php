@@ -29,8 +29,6 @@ if ($correct) {
 	$topic =& new Topic();
 	$created = $topic->create(array("Name" => $f_name, "ParentId" => $f_topic_parent_id));
 	if ($created) {
-		$logtext = getGS('Topic $1 added', $topic->getTopicId());
-		Log::Message($logtext, $User->getUserName(), 141);
 		header("Location: /$ADMIN/topics/edit.php?f_topic_parent_id=$f_topic_parent_id&f_topic_edit_id=".$topic->getTopicId());
 		exit;
 	}

@@ -32,8 +32,6 @@ if ($numArticles > 0) {
 if ($doDelete) {
 	$deleted = $deleteTopic->delete();
 	if ($deleted) {
-		$logtext = getGS('Topic $1 deleted', $deleteTopic->getName());
-		Log::Message($logtext, $User->getUserName(), 142);
 		header("Location: /$ADMIN/topics/index.php?f_topic_parent_id=$f_topic_parent_id");
 		exit;
 	}
