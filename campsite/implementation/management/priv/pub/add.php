@@ -65,7 +65,11 @@ echo camp_html_breadcrumbs($crumbs);
 	<SELECT NAME="cURLType" class="input_select">
 	<?php
 	foreach ($urlTypes as $urlType) {
-		camp_html_select_option($urlType->getId(), 0, $urlType->getName());
+		$selected = 0;
+		if ($urlType->getName() == "short names") {
+			$selected = $urlType->getId();
+		}
+		camp_html_select_option($urlType->getId(), $selected, $urlType->getName());
 	}
 	?>
 	</SELECT>
