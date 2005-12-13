@@ -35,6 +35,8 @@ $topics = Topic::GetTree($f_language_selected);
 <?php putGS("Attach Topics"); ?>
 </div>
 <p></p>
+
+<?php if (count($topics) > 0) { ?>
 <FORM action="do_add.php" method="POST">
 <INPUT type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>">
 <INPUT type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>">
@@ -64,5 +66,13 @@ foreach ($topics as $path) {
 &nbsp;&nbsp;&nbsp;<INPUT type="submit" value="<?php putGS("Cancel"); ?>" class="button" onclick="window.close();">
 </div>
 </FORM>
+<?php } else { ?>
+	<BLOCKQUOTE>
+	<LI><?php  putGS('No topics.'); ?></LI>
+	</BLOCKQUOTE>
+	<DIV align="center" style="padding-top: 20px;">
+	<INPUT type="submit" value="<?php putGS("Close"); ?>" class="button" onclick="window.close();">
+	</div>
+<?php } ?>
 </body>
 </html>
