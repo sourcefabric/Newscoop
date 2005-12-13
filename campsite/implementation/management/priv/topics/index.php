@@ -69,7 +69,7 @@ foreach ($subtopics as $subtopic) { ?>
 			<A HREF="edit.php?f_topic_parent_id=<?php p($f_topic_parent_id);?>&f_topic_edit_id=<?php p($subtopic->getTopicId()); ?>"><?php  putGS("Change"); ?></A>
 		</TD>
 		<TD ALIGN="CENTER">
-			<A HREF="do_del.php?f_topic_parent_id=<?php p($f_topic_parent_id);?>&f_topic_delete_id=<?php p($subtopic->getTopicId()); ?>" onclick="return confirm('<?php putGS('Do you want to delete the topic $1?',htmlspecialchars($subtopic->getName())); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php  putGS('Delete topic $1', htmlspecialchars($subtopic->getName())); ?>" TITLE="<?php  putGS('Delete topic $1', htmlspecialchars($subtopic->getName())); ?>" ></A>
+			<A HREF="do_del.php?f_topic_parent_id=<?php p($f_topic_parent_id);?>&f_topic_delete_id=<?php p($subtopic->getTopicId()); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the topic $1?',htmlspecialchars($subtopic->getName())); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php  putGS('Delete topic $1', htmlspecialchars($subtopic->getName())); ?>" TITLE="<?php  putGS('Delete topic $1', htmlspecialchars($subtopic->getName())); ?>" ></A>
 		</TD>
 <?php  } ?>
     </TR>
