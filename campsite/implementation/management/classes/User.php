@@ -14,6 +14,7 @@ if (!isset($g_documentRoot)) {
 }
 require_once($g_documentRoot.'/db_connect.php');
 require_once($g_documentRoot.'/classes/DatabaseObject.php');
+require_once($g_documentRoot.'/classes/Log.php');
 
 /**
  * @package Campsite
@@ -141,6 +142,18 @@ class User extends DatabaseObject {
 	} // constructor
 	
 	
+	function create($p_values = null)
+	{
+		$success = parent::create($p_values);
+		if ($success) {
+			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+			$logtext = getGS('User account $1 created', $this->m_data['Name']." (".$this->m_data['UName'].")");
+			Log::Message($logtext, null, 51);		
+		}
+		return $success;
+	} // fn create
+	
+	
 	/**
 	 * Delete the user.  This will delete all config values and subscriptions of the user.
 	 *
@@ -158,6 +171,9 @@ class User extends DatabaseObject {
 			}
 			$Campsite['db']->Execute("DELETE FROM Subscriptions WHERE IdUser=".$this->m_data['Id']);
 			$Campsite['db']->Execute("DELETE FROM SubsByIP WHERE IdUser=".$this->m_data['Id']);
+			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+			$logtext = getGS('The user account $1 has been deleted.', $this->m_data['Name']." (".$this->m_data['UName'].")");
+			Log::Message($logtext, null, 52);
 		}
 		return true;
 	} // fn delete
@@ -229,6 +245,9 @@ class User extends DatabaseObject {
 				}
 			}
 			$this->fetch();
+			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+			$logtext = getGS('User permissions for $1 changed', $this->m_data['Name']." (".$this->m_data['UName'].")");
+			Log::Message($logtext, null, 55);
 		}
 	} // fn setUserType
 	
@@ -420,6 +439,9 @@ class User extends DatabaseObject {
 		$queryStr = "SELECT PASSWORD('".mysql_real_escape_string($p_password)."') AS PWD";
 		$row = $Campsite['db']->GetRow($queryStr);
 		$this->setProperty('Password', $row['PWD']);
+		if (function_exists("camp_load_language")) { camp_load_language("api");	}
+		$logtext = getGS('Password changed for $1', $this->m_data['Name']." (".$this->m_data['UName'].")");
+		Log::Message($logtext, null, 54);	
 	}  // fn setPassword
 
 	
@@ -451,6 +473,25 @@ class User extends DatabaseObject {
 			return array(false, null);
 		}
 	} // fn Login
+	
+	
+	/**
+	 * Return true if the user name exists.
+	 *
+	 * @param string $p_userName
+	 * @return boolean
+	 */
+	function UserNameExists($p_userName)
+	{
+		global $Campsite;
+		$sql = "SELECT UName FROM Users WHERE UName='".mysql_real_escape_string($p_userName)."'";
+		if ($Campsite['db']->GetOne($sql)) {
+			return true;
+		} else {
+			return false;
+		}
+	} // fn UserNameExists
+	
 } // class User
 
 ?>
