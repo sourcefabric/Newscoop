@@ -75,7 +75,7 @@ foreach ($publications as $publication) {
 		foreach ($issues[$pubId] as $issue) {
 			$issueId = $issue->getIssueNumber();
 			$languageId = $issue->getLanguageId();
-			$menu_item_issue =& DynMenuItem::Create(htmlspecialchars($issue->getName()),
+			$menu_item_issue =& DynMenuItem::Create(htmlspecialchars($issue->getName()." (".$issue->getLanguageName().")"),
 			     "/$ADMIN/sections/index.php?Pub=$pubId&Issue=$issueId&Language=$languageId",
 			     array("icon" => $icon_bullet));
 			$menu_item_pub->addItem($menu_item_issue);
