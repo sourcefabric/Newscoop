@@ -153,17 +153,17 @@ $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj,
 				  'Section' => $sectionObj);
 if (count($articles) > 1) {
 	$crumbs = array(getGS("Articles") => "/$ADMIN/articles/index.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id&f_language_selected=$f_language_selected");
-	camp_html_content_top(getGS("Copy articles"), $topArray, true, false, $crumbs);
+	camp_html_content_top(getGS("Duplicate articles"), $topArray, true, false, $crumbs);
 }
 else {
 	$topArray['Article'] = camp_array_peek(camp_array_peek($articles));
-	camp_html_content_top(getGS("Copy article"), $topArray);
+	camp_html_content_top(getGS("Duplicate article"), $topArray);
 }
 ?>
 
 <P>
 <div class="page_title">
-<?php putGS("Copy articles"); ?>:
+<?php putGS("Duplicate articles"); ?>:
 </div>
 
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" style="margin-left: 5px;">
@@ -186,7 +186,7 @@ foreach ($articles as $languageArray) {
 	<TD>
 		<TABLE cellpadding="3">
 		<TR class="table_list_header">
-			<TD valign="top"><?php putGS("Copy?"); ?></TD>
+			<TD valign="top"><?php putGS("Duplicate?"); ?></TD>
 			<TD valign="top"><?php putGS("Name"); ?></TD>
 			<TD valign="top"><?php putGS("Language"); ?></TD>
 			<TD valign="top"><?php putGS("Type"); ?></TD>
@@ -314,7 +314,7 @@ foreach ($articles as $languageArray) {
 		
 		<tr>
 			<td align="center" colspan="2">
-				<INPUT TYPE="submit" Name="duplicate_button" Value="<?php putGS("Copy article"); ?>" <?php if (($f_destination_publication_id <= 0) || ($f_destination_issue_id <=0) || ($f_destination_section_id <= 0)) { echo 'class="button_disabled"'; } else { echo "class=\"button\""; }?> >
+				<INPUT TYPE="submit" Name="duplicate_button" Value="<?php putGS("Duplicate article"); ?>" <?php if (($f_destination_publication_id <= 0) || ($f_destination_issue_id <=0) || ($f_destination_section_id <= 0)) { echo 'class="button_disabled"'; } else { echo "class=\"button\""; }?> >
 			</td>
 		</tr>
 		</TABLE>
