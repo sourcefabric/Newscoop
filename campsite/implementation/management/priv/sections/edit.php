@@ -8,7 +8,7 @@ if (!$access) {
 	exit;
 }
 if (!$User->hasPermission('ManageSection')) {
-	camp_html_display_error(getGS("You do not have the right to change section details"));	
+	camp_html_display_error(getGS("You do not have the right to modify sections."));	
 	exit;
 }
 $Pub = Input::Get('Pub', 'int', 0);

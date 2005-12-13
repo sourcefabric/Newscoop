@@ -95,7 +95,7 @@ if ($correct) {
     exit;
 }
 else { 
-    $errors[] = getGS('The section could not be changed.').' '.getGS('Please check if another section with the same number does not already exist.'); 
+    $errors[] = getGS('The section could not be changed.').' '.getGS('Please check if another section with the same number or URL name does not exist already.'); 
 }
 
 $topArray = array("Pub" => $publicationObj, "Issue" => $issueObj, "Section" => $sectionObj);
