@@ -1,5 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/issues/issue_common.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/SimplePager.php");
+camp_load_language("api");
 
 // Check permissions
 list($access, $User) = check_basic_access($_REQUEST);
@@ -9,11 +11,11 @@ if (!$access) {
 }
 
 $Pub = Input::Get('Pub', 'int', 0);
-$IssOffs = Input::Get('IssOffs', 'int', 0, true);
+$IssOffs = camp_session_get("IssOffs_$Pub", 0);
 if ($IssOffs < 0) {
 	$IssOffs = 0;
 }
-$ItemsPerPage = 20;
+$ItemsPerPage = 15;
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
@@ -22,6 +24,8 @@ if (!Input::IsValid()) {
 $publicationObj =& new Publication($Pub);
 $allIssues = Issue::GetIssues($Pub, null, null, $publicationObj->getLanguageId(), array('LIMIT' => array('START' => $IssOffs, 'MAX_ROWS'=> $ItemsPerPage)));
 $totalIssues = Issue::GetNumIssues($Pub);
+
+$pager =& new SimplePager($totalIssues, $ItemsPerPage, "IssOffs_$Pub", "index.php?Pub=$Pub&");
 
 camp_html_content_top(getGS('Issue List'), array('Pub' => $publicationObj));
 
@@ -50,7 +54,16 @@ if ($User->hasPermission('ManageIssue')) {
 <?php 
 if (count($allIssues) > 0) {
 	$color = 0;
-?><TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list">
+	?>
+	<table class="indent">
+	<TR>
+		<TD>
+			<?php echo $pager->render(); ?>
+		</TD>
+	</TR>
+	</TABLE>
+
+	<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list">
 	<TR class="table_list_header">
 		<?php  if ($User->hasPermission('ManageIssue')) { ?>
 		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Number"); ?></B></TD>
@@ -145,22 +158,11 @@ foreach ($allIssues as $issue) {
     $currentIssue = $issue->getIssueNumber();
 }
 ?>	
+</table>
+<table class="indent">
 <TR>
-	<TD COLSPAN="2" NOWRAP>
-		<?php  
-		if ($IssOffs > 0) { ?>
-			<B><A HREF="index.php?Pub=<?php p($Pub); ?>&IssOffs=<?php print (max(0, $IssOffs - $ItemsPerPage)); ?>">&lt;&lt; <?php  putGS('Previous'); ?></A></B>
-			<?php  
-		}
-    	if ( ($IssOffs + $ItemsPerPage) < $totalIssues) {
-    		if ($IssOffs > 0) {
-    			echo " | ";
-    		}
-    		?>
-    	    <B><A HREF="index.php?Pub=<?php p($Pub); ?>&IssOffs=<?php print (min(($totalIssues - 1), ($IssOffs + $ItemsPerPage))); ?>"><?php  putGS('Next'); ?> &gt;&gt</A></B>
-			<?php  
-    	} 
-    	?>	
+	<TD>
+		<?php echo $pager->render(); ?>
 	</TD>
 </TR>
 </TABLE>
