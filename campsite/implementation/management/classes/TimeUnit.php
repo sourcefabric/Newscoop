@@ -26,7 +26,6 @@ class TimeUnit extends DatabaseObject {
 	var $m_columnNames = array('Unit', 'IdLanguage', 'Name');
 	
 	/** 
-	 * Constructor.
 	 * @param string $p_unit
 	 * @param int $p_languageId
 	 */
@@ -44,30 +43,16 @@ class TimeUnit extends DatabaseObject {
 	} // constructor
 	
 	
-	/**
-	 * Return an array of all time units.
-	 * @return array
-	 */
-	function GetTimeUnits($p_languageCode) 
+	function SetTimeUnit($p_unit, $p_languageId, $p_name)
 	{
-		global $Campsite;
-		$queryStr = "SELECT TimeUnits.Unit, TimeUnits.Name "
-					." FROM TimeUnits, Languages "
-					." WHERE TimeUnits.IdLanguage = Languages.Id "
-					." AND Languages.Code = '$p_languageCode'"
-					." ORDER BY TimeUnits.Unit ASC";
-		$timeUnits = DbObjectArray::Create('TimeUnit', $queryStr);
-		if (count($timeUnits) == 0) {
-			$queryStr = "SELECT TimeUnits.Unit, TimeUnits.Name "
-						." FROM TimeUnits, Languages "
-						." WHERE TimeUnits.IdLanguage = Languages.Id "
-						." AND Languages.Code = 'en'"
-						." ORDER BY TimeUnits.Unit ASC";
-			$timeUnits = DbObjectArray::Create('TimeUnit', $queryStr);
+		$timeUnit =& new TimeUnit($p_unit, $p_languageId);
+		if ($timeUnit->exists()) {
+			$timeUnit->setProperty('Name', $p_name);
+		} else {
+			$timeUnit->create(array('Name' => $p_name));
 		}
-		return $timeUnits;
-	} // fn GetTimeUnits
-
+	} // fn SetTimeUnit
+	
 	
 	/**
 	 * @return string
@@ -94,7 +79,33 @@ class TimeUnit extends DatabaseObject {
 	{
 		return $this->getProperty('IdLanguage');
 	} // fn getLanguageId
-		
+	
+	
+	/**
+	 * Return an array of all time units.
+	 * @return array
+	 */
+	function GetTimeUnits($p_languageCode) 
+	{
+		global $Campsite;
+		$queryStr = "SELECT TimeUnits.Unit, TimeUnits.Name "
+					." FROM TimeUnits, Languages "
+					." WHERE TimeUnits.IdLanguage = Languages.Id "
+					." AND Languages.Code = '$p_languageCode'"
+					." ORDER BY TimeUnits.Unit ASC";
+		$timeUnits = DbObjectArray::Create('TimeUnit', $queryStr);
+		if (count($timeUnits) == 0) {
+			$queryStr = "SELECT TimeUnits.Unit, TimeUnits.Name "
+						." FROM TimeUnits, Languages "
+						." WHERE TimeUnits.IdLanguage = Languages.Id "
+						." AND Languages.Code = 'en'"
+						." ORDER BY TimeUnits.Unit ASC";
+			$timeUnits = DbObjectArray::Create('TimeUnit', $queryStr);
+		}
+		return $timeUnits;
+	} // fn GetTimeUnits
+
+			
 } // class TimeUnit
 
 ?>
