@@ -472,8 +472,13 @@ int Login(CContext& c, MYSQL* pSql)
 	c.URL()->deleteParameter("LoginPassword");
 	c.DefURL()->deleteParameter("LoginPassword");
 	password = s;
-	q = "select Password, password(\"" + password + "\") from Users where UName "
-	    "= \"" + uname + "\"";
+	char pchUserNameEscaped[141], pchPasswordEscaped[201];
+	ulint nUserNameSize = uname.size() >= 70 ? 70 : uname.size();
+	mysql_real_escape_string(pSql, pchUserNameEscaped, uname.c_str(), nUserNameSize);
+	ulint nPasswordSize = password.size() >= 100 ? 100 : password.size();
+	mysql_real_escape_string(pSql, pchPasswordEscaped, password.c_str(), nPasswordSize);
+	q = "select Password, MD5(\'" + string(pchPasswordEscaped) + "\'), PASSWORD(\'"
+			+ pchPasswordEscaped + "\') from Users where UName = \'" + pchUserNameEscaped + "\'";
 	SQLQuery(pSql, q.c_str());
 	StoreResult(pSql, coSqlRes);
 	if (mysql_num_rows(*coSqlRes) < 1)
@@ -481,9 +486,21 @@ int Login(CContext& c, MYSQL* pSql)
 		return LERR_INVALID_UNAME;
 	}
 	FetchRow(*coSqlRes, row);
-	if (strcmp(row[0], row[1]))
+	if (strcmp(row[0], row[1]) != 0 && strcmp(row[0], row[2]) != 0)
 	{
-		return LERR_INVALID_PASSWORD;
+		q = "select Password, OLD_PASSWORD(\'" + string(pchPasswordEscaped) + "\') from Users "
+				" where UName = \'" + pchUserNameEscaped + "\'";
+		SQLQuery(pSql, q.c_str());
+		StoreResult(pSql, coSqlRes);
+		if (mysql_num_rows(*coSqlRes) < 1)
+		{
+			return LERR_INVALID_PASSWORD;
+		}
+		FetchRow(*coSqlRes, row);
+		if (strcmp(row[0], row[1]) != 0)
+		{
+			return LERR_INVALID_PASSWORD;
+		}
 	}
 	q = "update Users set KeyId = RAND()*1000000000+RAND()*1000000+RAND()*1000 "
 	    "where UName = \"" + uname + "\"";
@@ -564,8 +581,9 @@ int AddUser(CContext& c, MYSQL* pSql, const char* ppchParams[], int param_nr,
 		if (ppchParams[i] == NULL)
 			continue;
 		string s = c.UserInfo(string(ppchParams[i]));
-		char pchBuf[10000];
-		mysql_escape_string(pchBuf, s.c_str(), strlen(s.c_str()));
+		char pchBuf[10001];
+		ulint nParamSize = s.size() >= 5000 ? 5000 : s.size();
+		mysql_escape_string(pchBuf, s.c_str(), nParamSize);
 		if (i < err_nr && s == "") return errs[i];
 		if (s == "") continue;
 		if (i == 4)
@@ -583,16 +601,16 @@ int AddUser(CContext& c, MYSQL* pSql, const char* ppchParams[], int param_nr,
 				return UERR_PASSWORDS_DONT_MATCH;
 			if (strlen(s.c_str()) < 6)
 				return UERR_PASSWORD_TOO_SIMPLE;
-			fv += string(", password(\"") + pchBuf + "\")";
+			fv += string(", MD5(\'") + pchBuf + "\')";
 		}
 		else if (strncasecmp(ppchParams[i], "Pref", 4))
-			fv += string(", \"") + pchBuf + "\"";
+			fv += string(", \'") + pchBuf + "\'";
 		else
 		{
 			if (s == "on")
-				fv += ", \"Y\"";
+				fv += ", \'Y\'";
 			else
-				fv += ", \"N\"";
+				fv += ", \'N\'";
 		}
 	}
 	q = "select * from Users where UName = \"" + uname + "\"";
@@ -659,12 +677,12 @@ int ModifyUser(CContext& c, MYSQL* pSql, const char* ppchParams[], int param_nr,
 				return UERR_PASSWORDS_DONT_MATCH;
 			if (strlen(s.c_str()) < 6)
 				return UERR_PASSWORD_TOO_SIMPLE;
-			f += string("password(\"") + pchBuf + "\")";
+			f += string("MD5(\'") + pchBuf + "\')";
 		}
 		else if (strncasecmp(ppchParams[i], "Pref", 4))
-			f += string("\"") + pchBuf + "\"";
+			f += string("\'") + pchBuf + "\'";
 		else
-			f += string("\"") + (s == "on" ? "Y" : "N") + "\"";
+			f += string("\'") + (s == "on" ? "Y" : "N") + "\'";
 		if (first) first = false;
 	}
 	sprintf(pchBuf, "%ld", c.User());
