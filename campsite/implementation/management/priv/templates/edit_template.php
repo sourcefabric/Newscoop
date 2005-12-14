@@ -37,6 +37,8 @@ echo camp_html_breadcrumbs($crumbs);
 
 <P>
 <FORM NAME="dialog" METHOD="POST" ACTION="do_edit.php"  >
+<INPUT TYPE="HIDDEN" NAME="Path" VALUE="<?php  p($Path); ?>">
+<INPUT TYPE="HIDDEN" NAME="Name" VALUE="<?php  p($Name); ?>">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 <TR>
 	<TD COLSPAN="2">
@@ -60,9 +62,6 @@ echo camp_html_breadcrumbs($crumbs);
 <TR>
 	<TD><TEXTAREA ROWS="25" COLS="85" NAME="cField" WRAP="NO"><?php  p($contents) ?></TEXTAREA></TD>
 </TR>
-
-<INPUT TYPE="HIDDEN" NAME="Path" VALUE="<?php  p($Path); ?>">
-<INPUT TYPE="HIDDEN" NAME="Name" VALUE="<?php  p($Name); ?>">
 
 <TR>
 	<TD COLSPAN="2">

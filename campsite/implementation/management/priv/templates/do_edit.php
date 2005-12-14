@@ -28,11 +28,9 @@ $result = false;
 if (@$handle = fopen($filename, 'w')) {
 	$result = fwrite($handle, $nField);
 	fclose($handle);
-} else {
-	$result = 0;
-}
+} 
 
-if ($result > 0) {
+if ($result !== false) {
 	$logtext = getGS('Template $1 was changed', $Path."/".$Name);
 	Log::Message($logtext, $User->getUserName(), 113);
 	header("Location: /$ADMIN/templates/edit_template.php?Path=".urlencode($Path)."&Name=".urlencode($Name));
