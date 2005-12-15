@@ -191,6 +191,7 @@ private:
 	id_type m_nTopicId;						// topic numeric identifier
 	id_type m_nDefTopicId;					// topic numeric identifier
 	id_type m_nAttachment;					// article attachment identifier
+	string m_coAttachmentExtension;			// article attachment extension
 	CURL* m_pcoURL;
 	CURL* m_pcoDefURL;
 
@@ -434,6 +435,10 @@ public:
 	void SetAttachment(id_type p_nAttachment)
 	{
 		m_nAttachment = p_nAttachment;
+	}
+	void SetAttachmentExtension(const string& p_rcoAttachmentExtension)
+	{
+		m_coAttachmentExtension = p_rcoAttachmentExtension;
 	}
 	void SetURL(CURL* p_pcoURL)
 	{
@@ -709,6 +714,10 @@ public:
 	id_type Attachment() const
 	{
 		return m_nAttachment;
+	}
+	const string& AttachmentExtension() const
+	{
+		return m_coAttachmentExtension;
 	}
 	CURL* URL() const
 	{

@@ -39,6 +39,7 @@ CActSearch, CActWith methods.
 #include <typeinfo>
 #include <sstream>
 #include <set>
+#include <iomanip>
 
 #include "util.h"
 #include "actions.h"
@@ -1031,7 +1032,7 @@ int CActList::takeAction(CContext& c, sockstream& fs)
 				fields = "select distinct Id";
 				break;
 			case CMS_ST_ARTICLEATTACHMENT:
-				fields = "select att.id";
+				fields = "select att.id, att.extension";
 				break;
 		}
 		
@@ -1095,6 +1096,7 @@ int CActList::takeAction(CContext& c, sockstream& fs)
 			if (modifier == CMS_ST_ARTICLEATTACHMENT)
 			{
 				lc.SetAttachment(strtol(row[0], 0, 10));
+				lc.SetAttachmentExtension(row[1]);
 			}
 			if (modifier == CMS_ST_ARTICLETOPIC || modifier == CMS_ST_SUBTOPIC)
 			{
@@ -1199,7 +1201,6 @@ int CActURLParameters::takeAction(CContext& c, sockstream& fs)
 		{
 			return ERR_NODATA;
 		}
-		fs << "id=" << c.Attachment();
 		return 0;
 	}
 	if (image_nr >= 0)
@@ -2909,9 +2910,18 @@ int CActWith::takeAction(CContext& c, sockstream& fs)
 //		sockstream& fs - output stream	
 int CActURIPath::takeAction(CContext& c, sockstream& fs)
 {
+	using std::setw;
+	using std::setfill;
+	using std::right;
+	using std::resetiosflags;
 	if (m_bArticleAttachment)
 	{
-		fs << "/attachment";
+		ulint nMillions = c.Attachment() / 1000000;
+		ulint nThousands = (c.Attachment() - (nMillions * c.Attachment())) / 1000;
+		fs << "/attachment/" << setw(4) << setfill('0') << right << nMillions << "/"
+				<< setw(4) << setfill('0') << right << nThousands << "/"
+				<< setw(9) << setfill('0') << right << c.Attachment()
+				<< "." << c.AttachmentExtension();
 		return RES_OK;
 	}
 	if (m_nTemplate > 0 || m_nPubLevel < CMS_PL_SUBTITLE)

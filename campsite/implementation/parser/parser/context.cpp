@@ -159,6 +159,7 @@ int CContext::operator ==(const CContext& c) const
 			&& current_field == c.current_field
 			&& current_art_type == c.current_art_type
 			&& m_nAttachment == c.m_nAttachment
+			&& m_coAttachmentExtension == c.m_coAttachmentExtension
 			&& m_pcoURL->equalTo(c.m_pcoURL)
 			&& m_pcoDefURL->equalTo(c.m_pcoDefURL);
 }
@@ -235,6 +236,7 @@ const CContext& CContext::operator =(const CContext& s)
 	current_field = s.current_field;
 	current_art_type = s.current_art_type;
 	m_nAttachment = s.m_nAttachment;
+	m_coAttachmentExtension = s.m_coAttachmentExtension;
 	if (s.m_pcoURL != NULL)
 		m_pcoURL = s.m_pcoURL->clone();
 	else
