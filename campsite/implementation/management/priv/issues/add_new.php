@@ -61,7 +61,7 @@ camp_html_content_top(getGS('Add new issue'), array('Pub' => $publicationObj), t
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("URL Name"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cShortName" SIZE="32" MAXLENGTH="32" value="">
+	<INPUT TYPE="TEXT" class="input_text" NAME="cShortName" VALUE="<?php p($newIssueId); ?>" SIZE="32" MAXLENGTH="32" value="">
 	</TD>
 </TR>
 <TR>
