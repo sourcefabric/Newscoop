@@ -381,7 +381,10 @@ class Section extends DatabaseObject {
 		$queryStr = "SELECT MAX(Number) + 1 FROM Sections "
 					." WHERE IdPublication=$p_publicationId "
 					." AND NrIssue=$p_issueId AND IdLanguage=$p_languageId";
-		$number = $Campsite['db']->GetOne($queryStr);
+		$number = 0 + $Campsite['db']->GetOne($queryStr);
+		if ($number <= 0) {
+			$number++;
+		}
 		return $number;
 	} // fn GetUnusedSectionId
 		
