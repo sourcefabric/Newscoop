@@ -61,8 +61,8 @@ ALTER TABLE `IssuePublish` ADD INDEX `issue_index` ( `fk_publication_id` , `fk_i
 ALTER TABLE `IssuePublish` ADD INDEX `action_time_index` ( `time_action` , `is_completed` );
 
 -- Add time_created and time_updated fields
-ALTER TABLE `campsite`.`Users` ADD COLUMN `time_updated` TIMESTAMP  NOT NULL AFTER `Text3`;
-ALTER TABLE `campsite`.`Users` ADD COLUMN `time_created` TIMESTAMP  NOT NULL AFTER `time_updated`;
+ALTER TABLE `Users` ADD COLUMN `time_updated` TIMESTAMP  NOT NULL AFTER `Text3`;
+ALTER TABLE `Users` ADD COLUMN `time_created` TIMESTAMP  NOT NULL AFTER `time_updated`;
 
 -- 
 -- Add UserConfig table
