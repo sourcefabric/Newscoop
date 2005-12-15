@@ -420,13 +420,24 @@ class User extends DatabaseObject {
 	function isValidPassword($p_password) 
 	{
 		global $Campsite;
-		$queryStr = 'SELECT * FROM Users '
-				. " WHERE Id = '".mysql_real_escape_string($this->getUserId())."' "
-				. " AND Password = PASSWORD('".mysql_real_escape_string($p_password)."')";
-		$row = $Campsite['db']->GetRow($queryStr);
-		if ($row)
+		$userPasswordSQL = mysql_real_escape_string($p_password);
+		$queryStr = "SELECT Password, MD5('$userPasswordSQL') AS MD5Password,"
+				. " PASSWORD('$userPasswordSQL') AS OLDPassword FROM Users "
+				. " WHERE Id = '".mysql_real_escape_string($this->getUserId())."' ";
+		if (!($row = $Campsite['db']->GetRow($queryStr))) {
+			return false;
+		}
+		if ($row['Password'] == $row['MD5Password'] || $row['Password'] == $row['OLDPassword']) {
 			return true;
-		return false;
+		}
+		$queryStr = "SELECT Password, OLD_PASSWORD('$userPasswordSQL') AS OLDPassword FROM Users "
+				. " WHERE Id = '".mysql_real_escape_string($this->getUserId())."' ";
+		if (!($row = $Campsite['db']->GetRow($queryStr))) {
+			return false;
+		}
+		if ($row['Password'] == $row['OLDPassword']) {
+			return true;
+		}
 	} // fn isValidPassword
 	
 	
@@ -436,7 +447,7 @@ class User extends DatabaseObject {
 	function setPassword($p_password) 
 	{
 		global $Campsite;
-		$queryStr = "SELECT PASSWORD('".mysql_real_escape_string($p_password)."') AS PWD";
+		$queryStr = "SELECT MD5('".mysql_real_escape_string($p_password)."') AS PWD";
 		$row = $Campsite['db']->GetRow($queryStr);
 		$this->setProperty('Password', $row['PWD']);
 		if (function_exists("camp_load_language")) { camp_load_language("api");	}
@@ -457,17 +468,17 @@ class User extends DatabaseObject {
 	function Login($p_userName, $p_userPassword) 
 	{
 		global $Campsite;
-		$queryStr = 'SELECT * FROM Users '
-					." WHERE UName='$p_userName' "
-					." AND Password=PASSWORD('$p_userPassword') "
-					." AND Reader='N'";
+		$queryStr = "SELECT * FROM Users WHERE UName='$p_userName' AND Reader='N'";
 		$row = $Campsite['db']->GetRow($queryStr);
 		if ($row) {
-			// Generate the Key ID
 			$user =& new User();
 			$user->fetch($row);
-			$user->setProperty('KeyId', 'RAND()*1000000000+RAND()*1000000+RAND()*1000', true, true);
-			return array(true, $user);
+			if ($user->isValidPassword($p_userPassword)) {
+				// Generate the Key ID
+				$user->setProperty('KeyId', 'RAND()*1000000000+RAND()*1000000+RAND()*1000', true, true);
+				return array(true, $user);
+			}
+			return array(false, null);
 		}
 		else {
 			return array(false, null);
