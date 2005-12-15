@@ -9,10 +9,17 @@ if (!$access) {
 }
 
 $f_language_id = Input::Get('f_language_id', 'int', 0);
+$f_publication_id = Input::Get('f_publication_id', 'int', 0);
+$f_issue_number = Input::Get('f_issue_number', 'int', 0);
+$f_section_number = Input::Get('f_section_number', 'int', 0);
 $f_article_code = Input::Get('f_article_code', 'string', 0);
 $f_translation_title = trim(Input::Get('f_translation_title'));
 $f_translation_language = Input::Get('f_translation_language');
 list($articleNumber, $languageId) = split("_", $f_article_code);
+$BackLink = "/$ADMIN/articles/translate.php?f_language_id=$f_language_id"
+		. "&f_publication_id=$f_publication_id&f_issue_number=$f_issue_number"
+		. "&f_section_number=$f_section_number&f_article_code=$f_article_code"
+		. "&f_translation_title=$f_translation_title&f_translation_language=$f_translation_language";
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));
@@ -63,6 +70,14 @@ if (!$translationIssueObj->exists()) {
 		$translationIssueObj->setName($f_issue_name);
 	}
 	$f_issue_urlname = Input::Get('f_issue_urlname', 'string', $issueObj->getUrlName());
+	if ($f_issue_urlname == "") {
+		camp_html_display_error(getGS('You must complete the $1 field.','"'.getGS('New issue URL name').'"'), $BackLink);
+		exit;
+	}
+	if (!camp_is_valid_url_name($f_issue_urlname)) {
+		camp_html_display_error(getGS('The $1 field may only contain letters, digits and underscore (_) character.', '"' . getGS('New issue URL name') . '"'), $BackLink);
+		exit;
+	}
 	$translationIssueObj->create($f_issue_urlname);
 	if (!$translationIssueObj->exists()) {
 		camp_html_display_error(getGS('Unable to create the issue for translation $1.', $translationLanguageObj->getName()), $BackLink);
@@ -87,6 +102,14 @@ if (!$translationSectionObj->exists()) {
 	}
 	$f_section_name = Input::Get('f_section_name', 'string', $sectionObj->getName());
 	$f_section_urlname = Input::Get('f_section_urlname', 'string', $sectionObj->getUrlName());
+	if ($f_section_urlname == "") {
+		camp_html_display_error(getGS('You must complete the $1 field.','"'.getGS('New section URL name').'"'), $BackLink);
+		exit;
+	}
+	if (!camp_is_valid_url_name($f_section_urlname)) {
+		camp_html_display_error(getGS('The $1 field may only contain letters, digits and underscore (_) character.', '"' . getGS('New section URL name') . '"'), $BackLink);
+		exit;
+	}
 	$translationSectionObj->create($f_section_name, $f_section_urlname);
 	if (!$translationSectionObj->exists()) {
 		camp_html_display_error(getGS('Unable to create the section for translation $1.', $translationLanguageObj->getName()), $BackLink);
