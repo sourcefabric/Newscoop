@@ -33,7 +33,7 @@ function read_user_common_parameters()
 	if ($userOffs < 0) {
 		$userOffs = 0;
 	}
-	$lpp = Input::Get('lpp', 'int', 2);
+	$lpp = Input::Get('lpp', 'int', 10);
 	$full_name = camp_session_get('full_name', '');
 	$user_name = camp_session_get('user_name', '');
 	$email = camp_session_get('email', '');
