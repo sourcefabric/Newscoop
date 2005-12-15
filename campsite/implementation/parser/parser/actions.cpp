@@ -2916,11 +2916,7 @@ int CActURIPath::takeAction(CContext& c, sockstream& fs)
 	using std::resetiosflags;
 	if (m_bArticleAttachment)
 	{
-		ulint nMillions = c.Attachment() / 1000000;
-		ulint nThousands = (c.Attachment() - (nMillions * c.Attachment())) / 1000;
-		fs << "/attachment/" << setw(4) << setfill('0') << right << nMillions << "/"
-				<< setw(4) << setfill('0') << right << nThousands << "/"
-				<< setw(9) << setfill('0') << right << c.Attachment()
+		fs << "/attachment/" << setw(9) << setfill('0') << right << c.Attachment()
 				<< "." << c.AttachmentExtension();
 		return RES_OK;
 	}
