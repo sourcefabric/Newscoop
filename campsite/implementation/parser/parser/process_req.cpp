@@ -477,7 +477,7 @@ int Login(CContext& c, MYSQL* pSql)
 	mysql_real_escape_string(pSql, pchUserNameEscaped, uname.c_str(), nUserNameSize);
 	ulint nPasswordSize = password.size() >= 100 ? 100 : password.size();
 	mysql_real_escape_string(pSql, pchPasswordEscaped, password.c_str(), nPasswordSize);
-	q = "select Password, MD5(\'" + string(pchPasswordEscaped) + "\'), PASSWORD(\'"
+	q = "select Password, SHA1(\'" + string(pchPasswordEscaped) + "\'), PASSWORD(\'"
 			+ pchPasswordEscaped + "\') from Users where UName = \'" + pchUserNameEscaped + "\'";
 	SQLQuery(pSql, q.c_str());
 	StoreResult(pSql, coSqlRes);
@@ -601,7 +601,7 @@ int AddUser(CContext& c, MYSQL* pSql, const char* ppchParams[], int param_nr,
 				return UERR_PASSWORDS_DONT_MATCH;
 			if (strlen(s.c_str()) < 6)
 				return UERR_PASSWORD_TOO_SIMPLE;
-			fv += string(", MD5(\'") + pchBuf + "\')";
+			fv += string(", SHA1(\'") + pchBuf + "\')";
 		}
 		else if (strncasecmp(ppchParams[i], "Pref", 4))
 			fv += string(", \'") + pchBuf + "\'";
@@ -677,7 +677,7 @@ int ModifyUser(CContext& c, MYSQL* pSql, const char* ppchParams[], int param_nr,
 				return UERR_PASSWORDS_DONT_MATCH;
 			if (strlen(s.c_str()) < 6)
 				return UERR_PASSWORD_TOO_SIMPLE;
-			f += string("MD5(\'") + pchBuf + "\')";
+			f += string("SHA1(\'") + pchBuf + "\')";
 		}
 		else if (strncasecmp(ppchParams[i], "Pref", 4))
 			f += string("\'") + pchBuf + "\'";

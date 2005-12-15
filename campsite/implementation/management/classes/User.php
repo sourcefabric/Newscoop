@@ -421,13 +421,13 @@ class User extends DatabaseObject {
 	{
 		global $Campsite;
 		$userPasswordSQL = mysql_real_escape_string($p_password);
-		$queryStr = "SELECT Password, MD5('$userPasswordSQL') AS MD5Password,"
+		$queryStr = "SELECT Password, SHA1('$userPasswordSQL') AS SHA1Password,"
 				. " PASSWORD('$userPasswordSQL') AS OLDPassword FROM Users "
 				. " WHERE Id = '".mysql_real_escape_string($this->getUserId())."' ";
 		if (!($row = $Campsite['db']->GetRow($queryStr))) {
 			return false;
 		}
-		if ($row['Password'] == $row['MD5Password'] || $row['Password'] == $row['OLDPassword']) {
+		if ($row['Password'] == $row['SHA1Password'] || $row['Password'] == $row['OLDPassword']) {
 			return true;
 		}
 		$queryStr = "SELECT Password, OLD_PASSWORD('$userPasswordSQL') AS OLDPassword FROM Users "
@@ -447,7 +447,7 @@ class User extends DatabaseObject {
 	function setPassword($p_password) 
 	{
 		global $Campsite;
-		$queryStr = "SELECT MD5('".mysql_real_escape_string($p_password)."') AS PWD";
+		$queryStr = "SELECT SHA1('".mysql_real_escape_string($p_password)."') AS PWD";
 		$row = $Campsite['db']->GetRow($queryStr);
 		$this->setProperty('Password', $row['PWD']);
 		if (function_exists("camp_load_language")) { camp_load_language("api");	}
