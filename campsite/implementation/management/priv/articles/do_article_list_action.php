@@ -150,6 +150,6 @@ case "translate":
 	exit;
 }
 
-header("Location: /$ADMIN/articles/index.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id&f_article_offset=$f_article_offset");
+header("Location: /$ADMIN/articles/index.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id&f_language_selected=$f_language_selected&f_article_offset=$f_article_offset");
 exit;
 ?>
