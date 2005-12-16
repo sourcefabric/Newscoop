@@ -129,6 +129,7 @@ function uncheckAll(field)
 				<INPUT TYPE="HIDDEN" NAME="f_issue_number" VALUE="<?php p($f_issue_number); ?>">
 				<INPUT TYPE="HIDDEN" NAME="f_section_number" VALUE="<?php p($f_section_number); ?>">
 				<INPUT TYPE="HIDDEN" NAME="f_language_id" VALUE="<?php p($f_language_id); ?>">
+				<input type="hidden" name="<?php p($offsetVarName); ?>" value="0">
 				<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="3" >
 				<TR>
 					<TD><?php  putGS('Language'); ?>:</TD>
@@ -251,11 +252,11 @@ function uncheckAll(field)
 				<?php  if ($User->hasPermission('AddArticle')) { ?>
 				<OPTION value="copy"><?php putGS("Duplicate"); ?></OPTION>
 				<OPTION value="copy_interactive"><?php putGS("Duplicate to another section"); ?></OPTION>
-				<OPTION value="translate"><?php putGS("Translate"); ?></OPTION>
+				<!--<OPTION value="translate"><?php //putGS("Translate"); ?></OPTION>-->
 				<?php } ?>
 				
-				<OPTION value="move"><?php putGS("Reorder"); ?></OPTION>
-				<OPTION value="preview"><?php putGS("Preview"); ?></OPTION>
+				<!--<OPTION value="move"><?php //putGS("Reorder"); ?></OPTION>-->
+				<!--<OPTION value="preview"><?php //putGS("Preview"); ?></OPTION>-->
 				</SELECT>
 			</TD>
 			
@@ -279,6 +280,13 @@ if ($numUniqueArticlesDisplayed > 0) {
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list" style="padding-top: 40px;">
 <TR class="table_list_header">
 	<TD>&nbsp;</TD>
+	<?php  if ($User->hasPermission('AddArticle')) { ?>
+	<TD align="center" valign="top"><?php //putGS("Translate"); ?></TD>	
+	<?php } ?>
+	<?php if ($User->hasPermission("Publish")) { ?>
+	<TD align="center" valign="top"><?php //putGS("Order"); ?></TD>
+	<?php } ?>
+	<TD align="center" valign="top"><?php //putGS("Preview"); ?></TD>
 	<TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Name <SMALL>(click to edit)</SMALL>"); ?></TD>
 	<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Type"); ?></TD>
 	<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Author"); ?></TD>
@@ -316,6 +324,49 @@ foreach ($allArticles as $articleObj) {
 		<TD>
 			<input type="checkbox" value="<?php p($articleObj->getArticleNumber().'_'.$articleObj->getLanguageId()); ?>" name="f_article_code[]" class="input_checkbox">
 		</TD>
+		
+		<?php  if ($User->hasPermission('AddArticle')) { ?>
+		<TD ALIGN="CENTER">
+			<A HREF="/<?php echo $ADMIN; ?>/articles/translate.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_article_code=<?php p($articleObj->getArticleNumber()); ?>_<?php p($articleObj->getLanguageId()); ?>&f_language_id=<?php p($f_language_id); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/translate-16x16.png" alt="<?php  putGS("Translate"); ?>" title="<?php  putGS("Translate"); ?>" border="0" width="16" height="16"></A>
+		</TD>
+		<?php } ?>
+		
+		
+		<?php
+		// The MOVE links  
+		if ($User->hasPermission('Publish')) { 
+			if (($articleObj->getArticleNumber() == $previousArticleNumber) || ($numUniqueArticles <= 1))  {
+				?>
+				<TD ALIGN="CENTER" valign="middle" NOWRAP></TD>
+				<?php
+			}
+			else {
+				?>
+				<TD ALIGN="right" valign="middle" NOWRAP style="padding: 1px;">
+					<table cellpadding="0" cellspacing="0">
+					<tr>
+						<td width="18px">
+							<?php if (($f_article_offset > 0) || ($uniqueArticleCounter != 1)) { ?>
+								<A HREF="/<?php echo $ADMIN; ?>/articles/do_move.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_article_number=<?php p($articleObj->getArticleNumber()); ?>&f_language_id=<?php p($f_language_id); ?>&f_language_selected=<?php p($articleObj->getLanguageId()); ?>&f_move=up_rel&f_position=1"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/up-16x16.png" width="16" height="16" border="0"></A>
+							<?php } ?>
+						</td>
+						<td width="20px">
+							<?php if (($uniqueArticleCounter + $f_article_offset) < $numUniqueArticles) { ?>
+								<A HREF="/<?php echo $ADMIN; ?>/articles/do_move.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_article_number=<?php p($articleObj->getArticleNumber()); ?>&f_language_id=<?php p($f_language_id); ?>&f_language_selected=<?php p($articleObj->getLanguageId()); ?>&f_move=down_rel&f_position=1"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/down-16x16.png" width="16" height="16" border="0" style="padding-left: 3px; padding-right: 3px;"></A>
+							<?php } ?>
+						</td>
+					</tr>
+					</table>
+				</TD>
+				<?php  
+				}
+		} // if user->hasPermission('publish') 
+		?>
+
+		<TD ALIGN="CENTER">
+			<A HREF="" ONCLICK="window.open('/<?php echo $ADMIN; ?>/articles/preview.php?f_publication_id=<?php  p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_article_number=<?php p($articleObj->getArticleNumber()); ?>&f_language_id=<?php p($f_language_id); ?>&f_language_selected=<?php p($articleObj->getLanguageId()); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=yes, width=800, height=600'); return false"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/preview-16x16.png" alt="<?php  putGS("Preview"); ?>" title="<?php putGS('Preview'); ?>" border="0" width="16" height="16"></A>
+		</TD>		
+		
 		<TD <?php if ($articleObj->getArticleNumber() == $previousArticleNumber) { ?>class="translation_indent"<?php } ?>>
 		
 		<?php
@@ -339,7 +390,7 @@ foreach ($allArticles as $articleObj) {
 			}
 		    
 		    ?>
-		    <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/lock.png" width="22" height="22" border="0" alt="<?php  p($lockInfo); ?>" title="<?php p($lockInfo); ?>">
+		    <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/lock-16x16.png" width="16" height="16" border="0" alt="<?php  p($lockInfo); ?>" title="<?php p($lockInfo); ?>">
 		    <?php
 		}
 		?>
