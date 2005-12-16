@@ -37,10 +37,7 @@ if (count($languages) > 0) {
 		<TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Native name"); ?></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Code"); ?></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Code page"); ?></TD>
-        <?php if ($User->hasPermission('ManageLanguages')) { ?>
-		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Edit"); ?></B></TD>
-        <?php  }
-        if ($User->hasPermission('DeleteLanguages')) { ?>
+        <?php if ($User->hasPermission('DeleteLanguages')) { ?>
 		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Delete"); ?></B></TD>
         <?php  } ?>
 	</TR>
@@ -48,7 +45,13 @@ if (count($languages) > 0) {
     foreach ($languages as $language) { ?>	
 	<TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 		<TD>
+			<?php if ($User->hasPermission('ManageLanguages')) { ?> 
+			<A HREF="/<?php echo $ADMIN; ?>/languages/add_modify.php?Lang=<?php p($language->getLanguageId()); ?>">
+			<?php } ?>
 			<?php  p(htmlspecialchars($language->getName())); ?>
+			<?php if ($User->hasPermission('ManageLanguages')) { ?> 
+			</a>
+			<?php } ?>
 		</TD>
 		<TD>
 			<?php p(htmlspecialchars($language->getNativeName())); ?>
@@ -59,11 +62,8 @@ if (count($languages) > 0) {
 		<TD >
 			<?php p(htmlspecialchars($language->getCodePage())); ?>&nbsp;
 		</TD>
-	    <?php if ($User->hasPermission('ManageLanguages')) { ?> 
-		<TD ALIGN="CENTER">
-			<A HREF="/<?php echo $ADMIN; ?>/languages/add_modify.php?Lang=<?php p($language->getLanguageId()); ?>">Edit</A>
-		</TD>
-	<?php  }
+	    
+	<?php 
 	if ($User->hasPermission('DeleteLanguages')) { ?>
 	<TD ALIGN="CENTER">
 		<A HREF="/<?php echo $ADMIN; ?>/languages/do_del.php?Language=<?php p($language->getLanguageId()); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the language $1?', $language->getNativeName());?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php  putGS('Delete language $1', htmlspecialchars($language->getNativeName())); ?>" TITLE="<?php  putGS('Delete language $1', htmlspecialchars($language->getNativeName())); ?>"></A>
