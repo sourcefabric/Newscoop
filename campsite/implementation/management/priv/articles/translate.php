@@ -91,7 +91,7 @@ camp_html_content_top(getGS('Translate article'), $topArray, true, true);
 <TR>
 	<TD ALIGN="RIGHT" ><?php putGS("New article name"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" NAME="f_translation_title" SIZE="32" MAXLENGTH="64" value="<?php echo htmlentities($f_translation_title); ?>" class="input_text" alt="blank" emsg="<?php putGS('You must complete the $1 field.', getGS('Name')); ?>">
+	<INPUT TYPE="TEXT" NAME="f_translation_title" SIZE="32" MAXLENGTH="64" value="<?php echo htmlspecialchars($f_translation_title); ?>" class="input_text" alt="blank" emsg="<?php putGS('You must complete the $1 field.', getGS('Name')); ?>">
 	</TD>
 </TR>
 <TR>
@@ -126,13 +126,13 @@ camp_html_content_top(getGS('Translate article'), $topArray, true, true);
 <TR>
 	<TD ALIGN="RIGHT" ><?php putGS("New issue name"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" NAME="f_issue_name" SIZE="32" maxlength="140" value="<?php echo htmlentities($f_translation_issue_name) ?>" class="input_text" alt="blank" emsg="<?php putGS('You must complete the $1 field.', getGS('Issue Name')); ?>">
+	<INPUT TYPE="TEXT" NAME="f_issue_name" SIZE="32" maxlength="140" value="<?php echo htmlspecialchars($f_translation_issue_name) ?>" class="input_text" alt="blank" emsg="<?php putGS('You must complete the $1 field.', getGS('Issue Name')); ?>">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php putGS("New issue URL name"); ?>:</TD>
 	<TD valign="bottom">
-	<INPUT TYPE="TEXT" NAME="f_issue_urlname" SIZE="20" maxlength="32" value="<?php echo htmlentities($f_translation_issue_urlname) ?>" class="input_text" alt="blank" emsg="<?php putGS('You must complete the $1 field.', getGS('Issue URL Name')); ?>">
+	<INPUT TYPE="TEXT" NAME="f_issue_urlname" SIZE="20" maxlength="32" value="<?php echo htmlspecialchars($f_translation_issue_urlname) ?>" class="input_text" alt="blank" emsg="<?php putGS('You must complete the $1 field.', getGS('Issue URL Name')); ?>">
 	</TD>
 </TR>
 <?php
@@ -146,13 +146,13 @@ camp_html_content_top(getGS('Translate article'), $topArray, true, true);
 <TR>
 	<TD ALIGN="RIGHT" ><?php putGS("New section name"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" NAME="f_section_name" SIZE="32" maxlength="255" value="<?php echo htmlentities($f_translation_section_name) ?>" class="input_text" alt="blank" emsg="<?php putGS('You must complete the $1 field.', getGS('Section Name')); ?>">
+	<INPUT TYPE="TEXT" NAME="f_section_name" SIZE="32" maxlength="255" value="<?php echo htmlspecialchars($f_translation_section_name) ?>" class="input_text" alt="blank" emsg="<?php putGS('You must complete the $1 field.', getGS('Section Name')); ?>">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php putGS("New section URL name"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" NAME="f_section_urlname" SIZE="20" maxlength="32" value="<?php echo htmlentities($f_translation_section_urlname) ?>" class="input_text" alt="blank" emsg="<?php putGS('You must complete the $1 field.', getGS('Section URL Name')); ?>">
+	<INPUT TYPE="TEXT" NAME="f_section_urlname" SIZE="20" maxlength="32" value="<?php echo htmlspecialchars($f_translation_section_urlname) ?>" class="input_text" alt="blank" emsg="<?php putGS('You must complete the $1 field.', getGS('Section URL Name')); ?>">
 	</TD>
 </TR>
 <?php
