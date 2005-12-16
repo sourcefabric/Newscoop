@@ -133,6 +133,14 @@ hr {
 	background-color: #f5f5f5;
 }
 
+.list_row_hover {
+	background-color: #CCFFCC;
+}
+
+.list_row_click {
+	background-color: #FFCC99;
+}
+
 .current_location_table {
 	border-bottom: 1px dotted black;
 	padding-left: 12px;
