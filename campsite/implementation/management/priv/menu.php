@@ -108,7 +108,7 @@ $menu_root->addItem($menu_actions);
 
 if ($User->hasPermission("AddArticle")) { 
     $menu_item =& DynMenuItem::Create(getGS('Add new article'), "/$ADMIN/pub/add_article.php",
-        array("icon" => sprintf($iconTemplateStr, "actions.png")));
+        array("icon" => sprintf($iconTemplateStr, "add_article.png")));
     $menu_actions->addItem($menu_item);
 }
     
