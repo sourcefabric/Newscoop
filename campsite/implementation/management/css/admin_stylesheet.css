@@ -109,8 +109,8 @@ hr {
 }
 
 .table_list {
-	padding-left: 15px;
-	padding-right: 10px;
+	margin-left: 15px;
+	margin-right: 10px;
 }
 
 .table_list_header {
