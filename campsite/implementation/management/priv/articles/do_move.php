@@ -1,5 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/article_common.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/article_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Log.php");
 
 // Check permissions
@@ -14,51 +14,46 @@ if (!$User->hasPermission('Publish')) {
 }
 
 // Get input
-$Pub = Input::Get('Pub', 'int', 0);
-$Issue = Input::Get('Issue', 'int', 0);
-$Section = Input::Get('Section', 'int', 0);
-$Language = Input::Get('Language', 'int', 0);
-$Article = Input::Get('Article', 'int', 0);
-$ArticleLanguage = Input::Get('ArticleLanguage', 'int', 0);
-$MoveType = Input::Get('move', 'string', 'up_rel');
-$sLanguage = Input::Get('sLanguage', 'int', 0, true);
-$ArticleOffset = Input::Get('ArtOffs', 'int', 0, true);
-$MoveToPosition = Input::Get('pos', 'int', 1, true);
-$BackLink = Input::Get('Back', 'string', "/$ADMIN/articles/index.php?Pub=$Pub&Issue=$Issue&Section=$Section&Language=$Language&ArtOffs=$ArticleOffset&sLanguage=$sLanguage", true);
+$f_publication_id = Input::Get('f_publication_id', 'int', 0);
+$f_issue_number = Input::Get('f_issue_number', 'int', 0);
+$f_section_number = Input::Get('f_section_number', 'int', 0);
+$f_language_id = Input::Get('f_language_id', 'int', 0);
+$f_language_selected = Input::Get('f_language_selected', 'int', 0);
+$f_article_number = Input::Get('f_article_number', 'int', 0);
+$f_move = Input::Get('f_move', 'string', 'up_rel');
+$f_position = Input::Get('f_position', 'int', 1, true);
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));
 	exit;	
 }
 
 
-$publicationObj =& new Publication($Pub);
+$publicationObj =& new Publication($f_publication_id);
 if (!$publicationObj->exists()) {
-	camp_html_display_error(getGS('Publication does not exist.'), $BackLink);
+	camp_html_display_error(getGS('Publication does not exist.'));
 	exit;	
 }
 
-$issueObj =& new Issue($Pub, $Language, $Issue);
+$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
 if (!$issueObj->exists()) {
-	camp_html_display_error(getGS('Issue does not exist.'), $BackLink);
+	camp_html_display_error(getGS('Issue does not exist.'));
 	exit;	
 }
 
-$sectionObj =& new Section($Pub, $Issue, $Language, $Section);
+$sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
 if (!$sectionObj->exists()) {
-	camp_html_display_error(getGS('Section does not exist.'), $BackLink);
+	camp_html_display_error(getGS('Section does not exist.'));
 	exit;	
 }
 
-$languageObj =& new Language($Language);
-
-$articleObj =& new Article($ArticleLanguage, $Article);
+$articleObj =& new Article($f_language_selected, $f_article_number);
 if (!$articleObj->exists()) {
-	camp_html_display_error(getGS('Article does not exist.'), $BackLink);
+	camp_html_display_error(getGS('Article does not exist.'));
 	exit;	
 }
 
-switch ($MoveType) {
+switch ($f_move) {
 case 'up_rel':
 	$articleObj->moveRelative('up', 1);
 	break;
@@ -66,7 +61,7 @@ case 'down_rel':
 	$articleObj->moveRelative('down', 1);
 	break;
 case 'abs':
-	$articleObj->moveAbsolute($MoveToPosition);
+	$articleObj->moveAbsolute($f_position);
 	break;
 default: ;
 }
@@ -76,6 +71,13 @@ if (function_exists ("incModFile")) {
 	incModFile();
 }
 
-header("Location: $BackLink");
+$url = "/$ADMIN/articles/index.php"
+		."?f_publication_id=".$articleObj->getPublicationId()
+		."&f_issue_number=".$articleObj->getIssueNumber()
+		."&f_section_number=".$articleObj->getSectionNumber()
+		."&f_article_number=".$articleObj->getArticleNumber()
+		."&f_language_selected=$f_language_selected"
+		."&f_language_id=".$f_language_id;
+header("Location: $url");
 exit;
 ?>
