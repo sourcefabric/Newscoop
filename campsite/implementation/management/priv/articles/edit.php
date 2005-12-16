@@ -146,7 +146,7 @@ if ($articleObj->userCanModify($User) && $locked) {
 	<TR>
 		<TD COLSPAN="2">
 		<DIV ALIGN="CENTER">
-		<INPUT TYPE="button" NAME="Yes" VALUE="<?php  putGS('Yes'); ?>" class="button" ONCLICK="location.href='<?php echo camp_html_article_url($articleObj, $f_language_selected, "do_unlock.php"); ?>'">
+		<INPUT TYPE="button" NAME="Yes" VALUE="<?php  putGS('Yes'); ?>" class="button" ONCLICK="location.href='<?php echo camp_html_article_url($articleObj, $f_language_id, "do_unlock.php"); ?>'">
 		<INPUT TYPE="button" NAME="No" VALUE="<?php  putGS('No'); ?>" class="button" ONCLICK="location.href='/<?php echo $ADMIN; ?>/articles/?f_publication_id=<?php  p($f_publication_id); ?>&f_issue_number=<?php  p($f_issue_number); ?>&f_language_id=<?php p($f_language_id); ?>&f_section_number=<?php  p($f_section_number); ?>'">
 		</DIV>
 		</TD>
@@ -185,7 +185,7 @@ if ($f_edit_mode == "edit") { ?>
 				<TR>
 					<?PHP
 					if ($articleObj->userCanModify($User)) {
-					$switchModeUrl = camp_html_article_url($articleObj, $f_language_selected, "edit.php")
+					$switchModeUrl = camp_html_article_url($articleObj, $f_language_id, "edit.php")
 						."&f_edit_mode=".( ($f_edit_mode =="edit") ? "view" : "edit");
 					?>
 					<TD style="padding-left: 8px;"><a href="<?php p($switchModeUrl); ?>"><b><?php if ($f_edit_mode == "edit") { putGS("View"); } else { putGS("Edit"); } ?></b></a></TD>
@@ -563,7 +563,7 @@ if ($f_edit_mode == "edit") { ?>
 						<?php if (($f_edit_mode == "edit") && $User->hasPermission('Publish')) {  ?>
 						<td align="right">
 							<table cellpadding="2" cellspacing="0"><tr><td><img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/add.png" border="0"></td>
-							<td><a href="javascript: void(0);" onclick="window.open('<?php echo camp_html_article_url($articleObj, $f_language_selected, "autopublish.php"); ?>', 'autopublish_window', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=450, height=500, top=200, left=200');"><?php putGS("Add Event"); ?></a></td></tr></table>
+							<td><a href="javascript: void(0);" onclick="window.open('<?php echo camp_html_article_url($articleObj, $f_language_id, "autopublish.php"); ?>', 'autopublish_window', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=450, height=500, top=200, left=200');"><?php putGS("Add Event"); ?></a></td></tr></table>
 						</td>
 						<?php } ?>
 					</tr>
@@ -581,7 +581,7 @@ if ($f_edit_mode == "edit") { ?>
 						
 						<td style="padding-left: 3px;" valign="middle">
 						<?php if (($f_edit_mode == "edit") && $User->hasPermission('Publish')) { ?>
-						<a href="<?php p(camp_html_article_url($articleObj, $f_language_selected, "autopublish_del.php", '', '&f_event_id='.$event->getArticlePublishId())); ?>" onclick="return confirm('<?php putGS("Are you sure you want to remove the event scheduled on $1?", camp_javascriptspecialchars($event->getActionTime())); ?>');"><img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/unlink.png" border="0"></a>
+						<a href="<?php p(camp_html_article_url($articleObj, $f_language_id, "autopublish_del.php", '', '&f_event_id='.$event->getArticlePublishId())); ?>" onclick="return confirm('<?php putGS("Are you sure you want to remove the event scheduled on $1?", camp_javascriptspecialchars($event->getActionTime())); ?>');"><img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/unlink.png" border="0"></a>
 						<?php } ?>
 						</td>
 					</tr>
@@ -642,7 +642,7 @@ if ($f_edit_mode == "edit") { ?>
 						<?php if ($f_edit_mode == "edit") {  ?>
 						<td align="right">
 							<img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/add.png" border="0">
-							<a href="javascript: void(0);" onclick="window.open('<?php echo camp_html_article_url($articleObj, $f_language_selected, "images/popup.php"); ?>', 'attach_image', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=750, height=600, top=200, left=100');"><?php putGS("Attach"); ?></a>
+							<a href="javascript: void(0);" onclick="window.open('<?php echo camp_html_article_url($articleObj, $f_language_id, "images/popup.php"); ?>', 'attach_image', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=750, height=600, top=200, left=100');"><?php putGS("Attach"); ?></a>
 						</td>
 						<?php } ?>
 					</tr>
@@ -699,7 +699,7 @@ if ($f_edit_mode == "edit") { ?>
 						<?php if (($f_edit_mode == "edit") && $User->hasPermission('AddFile')) {  ?>
 						<td align="right">
 							<img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/add.png" border="0">
-							<a href="javascript: void(0);" onclick="window.open('<?php echo camp_html_article_url($articleObj, $f_language_selected, "files/popup.php"); ?>', 'attach_file', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=500, height=400, top=200, left=100');"><?php putGS("Attach"); ?></a>
+							<a href="javascript: void(0);" onclick="window.open('<?php echo camp_html_article_url($articleObj, $f_language_id, "files/popup.php"); ?>', 'attach_file', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=500, height=400, top=200, left=100');"><?php putGS("Attach"); ?></a>
 						</td>
 						<?php } ?>
 					</tr>
@@ -751,7 +751,7 @@ if ($f_edit_mode == "edit") { ?>
 						<?php if ($f_edit_mode == "edit") {  ?>
 						<td align="right">
 							<img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/add.png" border="0">
-							<a href="javascript: void(0);" onclick="window.open('<?php echo camp_html_article_url($articleObj, $f_language_selected, "topics/popup.php"); ?>', 'attach_topic', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=300, height=400, top=200, left=200');"><?php putGS("Attach"); ?></a>
+							<a href="javascript: void(0);" onclick="window.open('<?php echo camp_html_article_url($articleObj, $f_language_id, "topics/popup.php"); ?>', 'attach_topic', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=300, height=400, top=200, left=200');"><?php putGS("Attach"); ?></a>
 						</td>
 						<?php } ?>
 					</tr>

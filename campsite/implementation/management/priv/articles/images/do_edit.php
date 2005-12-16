@@ -58,7 +58,7 @@ if ($articleObj->userCanModify($User)) {
 	}
 }
 
-$ref = camp_html_article_url($articleObj, $f_language_selected, 'edit.php');
+$ref = camp_html_article_url($articleObj, $f_language_id, 'edit.php');
 
 // Go back to article image list.
 header("Location: $ref");

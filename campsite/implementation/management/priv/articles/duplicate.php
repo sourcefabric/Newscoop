@@ -129,7 +129,7 @@ if (isset($_REQUEST["duplicate_button"])) {
 	}
 	if ($f_mode == "single") {
 		$tmpArticle = camp_array_peek($newArticles);
-		$url = camp_html_article_url($tmpArticle, $f_language_selected, "edit.php");
+		$url = camp_html_article_url($tmpArticle, $f_language_id, "edit.php");
 		header("Location: $url");
 	} else {
 		$tmpArticle = camp_array_peek(camp_array_peek($articles));

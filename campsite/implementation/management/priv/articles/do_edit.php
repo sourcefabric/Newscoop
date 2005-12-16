@@ -237,5 +237,5 @@ foreach ($articleFields as $dbColumnName => $text) {
 	$articleTypeObj->setProperty($dbColumnName, $text);
 }
 
-header("Location: ". camp_html_article_url($articleObj, $f_language_selected, 'edit.php'));
+header("Location: ". camp_html_article_url($articleObj, $f_language_id, 'edit.php'));
 ?>

@@ -37,7 +37,7 @@ if (!$articleObj->userCanModify($User)) {
 }
 ArticleTopic::RemoveTopicFromArticle($f_topic_id, $f_article_number);
 
-$url = camp_html_article_url($articleObj, $f_language_selected, "edit.php");
+$url = camp_html_article_url($articleObj, $f_language_id, "edit.php");
 header("Location: $url");
 exit;
 

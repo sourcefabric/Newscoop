@@ -45,7 +45,7 @@ $articleObj =& new Article($f_language_selected, $f_article_number);
 
 // If the template ID is in use, dont add the image.
 if (ArticleImage::TemplateIdInUse($f_article_number, $f_image_template_id)) {
-	header('Location: '.camp_html_article_url($articleObj, $f_language_selected, 'images/popup.php'));
+	header('Location: '.camp_html_article_url($articleObj, $f_language_id, 'images/popup.php'));
 	exit;
 }
 

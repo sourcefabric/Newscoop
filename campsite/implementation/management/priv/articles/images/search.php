@@ -42,7 +42,7 @@ $imageSearch->run();
 $imageData = $imageSearch->getImages();
 $NumImagesFound = $imageSearch->getNumImagesFound();
 
-$orderDirectionUrl = camp_html_article_url($articleObj, $f_language_selected, 'images/popup.php');
+$orderDirectionUrl = camp_html_article_url($articleObj, $f_language_id, 'images/popup.php');
 
 ?>
 
@@ -89,7 +89,7 @@ $orderDirectionUrl = camp_html_article_url($articleObj, $f_language_selected, 'i
 
 <?php
 if (count($imageData) > 0) {
-    $pagerUrl = camp_html_article_url($articleObj, $f_language_selected, "images/popup.php")."&";
+    $pagerUrl = camp_html_article_url($articleObj, $f_language_id, "images/popup.php")."&";
     $pager =& new SimplePager($NumImagesFound, $f_items_per_page, "f_image_offset", $pagerUrl);
 
 ?>
@@ -149,14 +149,14 @@ foreach ($imageData as $image) {
         ?>
         <TD ALIGN="center">
             <A HREF="<?php echo 
-            camp_html_article_url($articleObj, $f_language_selected, "images/view.php", camp_html_article_url($articleObj, $f_language_selected, "images/popup.php"))
+            camp_html_article_url($articleObj, $f_language_id, "images/view.php", camp_html_article_url($articleObj, $f_language_id, "images/popup.php"))
             .'&f_image_id='.$image['id']; ?>">
               <img src="<?php echo $image['thumbnail_url']; ?>" border="0"><br>
               <?php echo $image['width'].'x'.$image['height']; ?>
             </a>
         </TD>
         <TD style="padding-left: 5px;">
-            <A HREF="<?php echo camp_html_article_url($articleObj, $f_language_selected, "images/view.php", camp_html_article_url($articleObj, $f_language_selected, "images/popup.php"))  
+            <A HREF="<?php echo camp_html_article_url($articleObj, $f_language_id, "images/view.php", camp_html_article_url($articleObj, $f_language_id, "images/popup.php"))  
             .'&f_image_id='.$image['id']; ?>"><?php echo htmlspecialchars($image['description']); ?></A>
         </TD>
         <TD style="padding-left: 5px;">

@@ -30,7 +30,7 @@ if (!$articleObj->exists()) {
 	exit;
 }
 
-$BackLink = camp_html_article_url($articleObj, $f_language_selected, "edit.php");
+$BackLink = camp_html_article_url($articleObj, $f_language_id, "edit.php");
 
 $publicationObj =& new Publication($f_publication_id);
 if (!$publicationObj->exists()) {

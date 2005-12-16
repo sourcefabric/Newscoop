@@ -119,6 +119,6 @@ if (!$translationSectionObj->exists()) {
 
 $articleCopy =& $articleObj->createTranslation($f_translation_language, $User->getUserId(), $f_translation_title);
 
-header('Location: '.camp_html_article_url($articleCopy, $languageId, 'edit.php')); 
+header('Location: '.camp_html_article_url($articleCopy, $f_language_id, 'edit.php')); 
 exit;
 ?>

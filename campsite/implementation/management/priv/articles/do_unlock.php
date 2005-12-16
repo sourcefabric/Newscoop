@@ -28,7 +28,7 @@ if (!$articleObj->userCanModify($User)) {
 }
 
 $articleObj->unlock();
-header('Location: '.camp_html_article_url($articleObj, $f_language_selected, "edit.php", "", "&Unlock=true"));
+header('Location: '.camp_html_article_url($articleObj, $f_language_id, "edit.php", "", "&Unlock=true"));
 exit;
 
 ?>

@@ -40,7 +40,7 @@ switch ($f_action) {
 			exit;	
 		}
 		$articleObj->unlock();
-		header('Location: '.camp_html_article_url($articleObj, $f_language_selected, "edit.php", "", "&f_unlock=true"));
+		header('Location: '.camp_html_article_url($articleObj, $f_language_id, "edit.php", "", "&f_unlock=true"));
 		exit;
 	case "delete":
 		if (!$User->hasPermission('DeleteArticle')) {
@@ -90,7 +90,7 @@ if (!is_null($f_action_workflow)) {
 	
 	$articleObj->setPublished($f_action_workflow);
 	
-	$url = camp_html_article_url($articleObj, $f_language_selected, "edit.php");
+	$url = camp_html_article_url($articleObj, $f_language_id, "edit.php");
 	header("Location: $url");	
 	exit;
 }

@@ -32,7 +32,7 @@ $articlePublishObj =& new ArticlePublish($f_event_id);
 if ($articlePublishObj->exists()) {
 	$articlePublishObj->delete();
 }
-$redirect = camp_html_article_url($articleObj, $f_language_selected, "edit.php");
+$redirect = camp_html_article_url($articleObj, $f_language_id, "edit.php");
 header("Location: $redirect");
 exit;
 ?>
