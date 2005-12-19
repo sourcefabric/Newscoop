@@ -104,6 +104,7 @@ camp_html_content_top(getGS('Article List'), $topArray);
  * This array is used to remember mark status of rows in browse mode
  */
 var marked_row = new Array;
+var default_class = new Array;
 
 function checkAll()
 {
@@ -118,11 +119,7 @@ function checkAll()
 function uncheckAll()
 {
 	for (i = 0; i < <?php p($numArticlesThisPage); ?>; i++) {
-		if (i%2==0) {
-			document.getElementById("row_"+i).className = 'list_row_odd';
-		} else {
-			document.getElementById("row_"+i).className = 'list_row_even';			
-		}
+		document.getElementById("row_"+i).className = default_class[i];			
 		document.getElementById("checkbox_"+i).checked = false;
         marked_row[i] = false;		
 	}
@@ -138,12 +135,13 @@ function uncheckAll()
  *
  * @return  boolean  whether pointer is set or not
  */
-function setPointer(theRow, theRowNum, theAction, theDefaultClass)
+//function setPointer(theRow, theRowNum, theAction, theDefaultClass)
+function setPointer(theRow, theRowNum, theAction)
 {
 	newClass = null;
     // 4. Defines the new class
     // 4.1 Current class is the default one
-    if (theRow.className == theDefaultClass) {
+    if (theRow.className == default_class[theRowNum]) {
         if (theAction == 'over') {
             newClass = 'list_row_hover';
         }
@@ -152,7 +150,7 @@ function setPointer(theRow, theRowNum, theAction, theDefaultClass)
     else if (theRow.className == 'list_row_hover'
              && (typeof(marked_row[theRowNum]) == 'undefined' || !marked_row[theRowNum])) {
         if (theAction == 'out') {
-            newClass = theDefaultClass;
+            newClass = default_class[theRowNum];
         }
     }
 
@@ -345,7 +343,7 @@ if ($numUniqueArticlesDisplayed > 0) {
 	<TD>&nbsp;</TD>
 	<TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Name <SMALL>(click to edit)</SMALL>"); ?></TD>
 	<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Type"); ?></TD>
-	<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Author"); ?></TD>
+	<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Created by"); ?></TD>
 	<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Status"); ?></TD>
 	<TD ALIGN="center" VALIGN="TOP"><?php  echo str_replace(' ', '<br>', getGS("Scheduled Publishing")); ?></TD>
 	<TD ALIGN="center" VALIGN="TOP"><?php  echo str_replace(' ', '<br>', getGS("On Front Page")); ?></TD>
@@ -375,15 +373,18 @@ foreach ($allArticles as $articleObj) {
 	}
 	else {
     	if ($color) { 
-    	    $color = 0; 
     	    $rowClass = "list_row_even";
     	} else { 
-    	    $color = 1; 
     	    $rowClass = "list_row_odd";
     	} 
 	}
+	$color = !$color;
+	
+	// Remember the default class so we can restore it when "Select None" is clicked
+	// or the mouse leaves the row after hovering on it.
 	?>	
-	<TR id="row_<?php p($counter); ?>" class="<?php p($rowClass); ?>" onmouseover="setPointer(this, <?php p($counter); ?>, 'over', '<?php p($rowClass); ?>');" onmouseout="setPointer(this, <?php p($counter); ?>, 'out', '<?php p($rowClass); ?>');">
+	<script>default_class[<?php p($counter); ?>] = "<?php p($rowClass); ?>";</script>
+	<TR id="row_<?php p($counter); ?>" class="<?php p($rowClass); ?>" onmouseover="setPointer(this, <?php p($counter); ?>, 'over');" onmouseout="setPointer(this, <?php p($counter); ?>, 'out');">
 		<TD>
 			<input type="checkbox" value="<?php p($articleObj->getArticleNumber().'_'.$articleObj->getLanguageId()); ?>" name="f_article_code[]" id="checkbox_<?php p($counter); ?>" class="input_checkbox" onclick="checkboxClick(this, <?php p($counter); ?>);">
 		</TD>
