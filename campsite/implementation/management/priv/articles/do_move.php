@@ -19,6 +19,7 @@ $f_issue_number = Input::Get('f_issue_number', 'int', 0);
 $f_section_number = Input::Get('f_section_number', 'int', 0);
 $f_language_id = Input::Get('f_language_id', 'int', 0);
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
+$f_article_language = Input::Get('f_article_language', 'int', 0);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
 $f_move = Input::Get('f_move', 'string', 'up_rel');
 $f_position = Input::Get('f_position', 'int', 1, true);
@@ -47,7 +48,7 @@ if (!$sectionObj->exists()) {
 	exit;	
 }
 
-$articleObj =& new Article($f_language_selected, $f_article_number);
+$articleObj =& new Article($f_article_language, $f_article_number);
 if (!$articleObj->exists()) {
 	camp_html_display_error(getGS('Article does not exist.'));
 	exit;	

@@ -253,14 +253,14 @@ function checkboxClick(theCheckbox, theRowNum)
 							
 					// Get the index of the "delete" option.
 					deleteOptionIndex = -1;
-					translateOptionIndex = -1;
+//					translateOptionIndex = -1;
 					for (var index = 0; index < dropdownElement.options.length; index++) {
 						if (dropdownElement.options[index].value == "delete") {
 							deleteOptionIndex = index;
 						}
-						if (dropdownElement.options[index].value == "translate") {
-							translateOptionIndex = index;
-						}
+//						if (dropdownElement.options[index].value == "translate") {
+//							translateOptionIndex = index;
+//						}
 					}
 					
 					// if the user has selected the "delete" option
@@ -273,12 +273,12 @@ function checkboxClick(theCheckbox, theRowNum)
 					}
 					
 					// if the user selected the "translate" option
-					if ( (dropdownElement.selectedIndex == translateOptionIndex) 
-						 && (numCheckboxesChecked > 1) ) {
-						alert("<?php putGS("You may only translate one article at a time."); ?>");
-						dropdownElement.options[0].selected = true;
-						return;
-					}
+//					if ( (dropdownElement.selectedIndex == translateOptionIndex) 
+//						 && (numCheckboxesChecked > 1) ) {
+//						alert("<?php putGS("You may only translate one article at a time."); ?>");
+//						dropdownElement.options[0].selected = true;
+//						return;
+//					}
 					
 					// do the action if it isnt the first or second option
 					if ( (dropdownElement.selectedIndex != 0) &&  (dropdownElement.selectedIndex != 1) ) {
@@ -287,11 +287,11 @@ function checkboxClick(theCheckbox, theRowNum)
 				}
 				</script>
 				<FORM name="article_list" action="do_article_list_action.php" method="POST">
-				<INPUT TYPE="HIDDEN" NAME="f_publication_id" VALUE="<?php  p($f_publication_id); ?>">
-				<INPUT TYPE="HIDDEN" NAME="f_issue_number" VALUE="<?php  p($f_issue_number); ?>">
-				<INPUT TYPE="HIDDEN" NAME="f_section_number" VALUE="<?php  p($f_section_number); ?>">
-				<INPUT TYPE="HIDDEN" NAME="f_language_id" VALUE="<?php  p($f_language_id); ?>">
-				<INPUT TYPE="HIDDEN" NAME="f_language_selected" VALUE="<?php  p($f_language_selected); ?>">
+				<INPUT TYPE="HIDDEN" NAME="f_publication_id" VALUE="<?php p($f_publication_id); ?>">
+				<INPUT TYPE="HIDDEN" NAME="f_issue_number" VALUE="<?php p($f_issue_number); ?>">
+				<INPUT TYPE="HIDDEN" NAME="f_section_number" VALUE="<?php p($f_section_number); ?>">
+				<INPUT TYPE="HIDDEN" NAME="f_language_id" VALUE="<?php p($f_language_id); ?>">
+				<INPUT TYPE="HIDDEN" NAME="f_language_selected" VALUE="<?php p($f_language_selected); ?>">
 				<SELECT name="f_article_list_action" class="input_select" onchange="action_selected(this);">
 				<OPTION value=""><?php putGS("Actions"); ?>...</OPTION>
 				<OPTION value="">-----------------------</OPTION>
@@ -488,25 +488,17 @@ foreach ($allArticles as $articleObj) {
 					<tr>
 						<td width="18px">
 							<?php if (($f_article_offset > 0) || ($uniqueArticleCounter != 1)) { ?>
-								<A HREF="/<?php echo $ADMIN; ?>/articles/do_move.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_article_number=<?php p($articleObj->getArticleNumber()); ?>&f_language_id=<?php p($f_language_id); ?>&f_language_selected=<?php p($articleObj->getLanguageId()); ?>&f_move=up_rel&f_position=1"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/up-16x16.png" width="16" height="16" border="0"></A>
+								<A HREF="/<?php echo $ADMIN; ?>/articles/do_move.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_article_number=<?php p($articleObj->getArticleNumber()); ?>&f_article_language=<?php p($articleObj->getLanguageId());?>&f_language_id=<?php p($f_language_id); ?>&f_language_selected=<?php p($articleObj->getLanguageId()); ?>&f_move=up_rel&f_position=1"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/up-16x16.png" width="16" height="16" border="0"></A>
 							<?php } ?>
 						</td>
 						<td width="20px">
 							<?php if (($uniqueArticleCounter + $f_article_offset) < $numUniqueArticles) { ?>
-								<A HREF="/<?php echo $ADMIN; ?>/articles/do_move.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_article_number=<?php p($articleObj->getArticleNumber()); ?>&f_language_id=<?php p($f_language_id); ?>&f_language_selected=<?php p($articleObj->getLanguageId()); ?>&f_move=down_rel&f_position=1"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/down-16x16.png" width="16" height="16" border="0" style="padding-left: 3px; padding-right: 3px;"></A>
+								<A HREF="/<?php echo $ADMIN; ?>/articles/do_move.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_article_number=<?php p($articleObj->getArticleNumber()); ?>&f_article_language=<?php p($articleObj->getLanguageId());?>&f_language_id=<?php p($f_language_id); ?>&f_language_selected=<?php p($articleObj->getLanguageId()); ?>&f_move=down_rel&f_position=1"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/down-16x16.png" width="16" height="16" border="0" style="padding-left: 3px; padding-right: 3px;"></A>
 							<?php } ?>
 						</td>
 						
-						<form method="GET" action="do_move.php">
-						<input type="hidden" name="f_publication_id" value="<?php p($f_publication_id); ?>">
-						<input type="hidden" name="f_issue_number" value="<?php p($f_issue_number); ?>">
-						<input type="hidden" name="f_section_number" value="<?php p($f_section_number); ?>">
-						<input type="hidden" name="f_language_id" value="<?php p($f_language_id); ?>">
-						<input type="hidden" name="f_language_selected" value="<?php p($articleObj->getLanguageId()); ?>">
-						<input type="hidden" name="f_article_number" value="<?php p($articleObj->getArticleNumber()); ?>">
-						<input type="hidden" name="f_move" value="abs">
 						<td>
-							<select name="f_position" onChange="this.form.submit();" class="input_select" style="font-size: smaller;">
+							<select name="f_position_<?php p($counter);?>" onChange="positionValue = document.forms.article_list.f_position_<?php p($counter); ?>.options[document.forms.article_list.f_position_<?php p($counter); ?>.selectedIndex].value; url = '/<?php p($ADMIN);?>/articles/do_move.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_language_id=<?php p($f_language_id); ?>&f_language_selected=<?php p($f_language_selected);?>&f_article_language=<?php p($articleObj->getLanguageId()); ?>&f_article_number=<?php p($articleObj->getArticleNumber());?>&f_move=abs&f_position='+positionValue; location.href=url;" class="input_select" style="font-size: smaller;">
 							<?php
 							for ($j = 1; $j <= $numUniqueArticles; $j++) {
 								if (($f_article_offset + $uniqueArticleCounter) == $j) {
@@ -518,7 +510,6 @@ foreach ($allArticles as $articleObj) {
 							?>
 							</select>
 						</td>
-						</form>
 
 					</tr>
 					</table>
