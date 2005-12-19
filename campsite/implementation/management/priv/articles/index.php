@@ -100,20 +100,22 @@ camp_html_content_top(getGS('Article List'), $topArray);
 <p>
 
 <script>
-function checkAll(field)
+/**
+ * This array is used to remember mark status of rows in browse mode
+ */
+var marked_row = new Array;
+
+function checkAll()
 {
 	for (i = 0; i < <?php p($numArticlesThisPage); ?>; i++) {
 		document.getElementById("row_"+i).className = 'list_row_click';
 		document.getElementById("checkbox_"+i).checked = true;
+        marked_row[i] = true;		
 	}
-//	if (field) {
-//		for (i = 0; i < field.length; i++) {
-//			field[i].checked = true ;
-//		}
-//	}
-}
+} // fn checkAll
 
-function uncheckAll(field)
+
+function uncheckAll()
 {
 	for (i = 0; i < <?php p($numArticlesThisPage); ?>; i++) {
 		if (i%2==0) {
@@ -122,18 +124,9 @@ function uncheckAll(field)
 			document.getElementById("row_"+i).className = 'list_row_even';			
 		}
 		document.getElementById("checkbox_"+i).checked = false;
+        marked_row[i] = false;		
 	}
-//	if (field) {
-//		for (i = 0; i < field.length; i++) {
-//			field[i].checked = false ;
-//		}
-//	}
-}
-
-/**
- * This array is used to remember mark status of rows in browse mode
- */
-var marked_row = new Array;
+} // fn uncheckAll
 
 /**
  * Sets/unsets the pointer and marker in browse mode
@@ -331,8 +324,8 @@ function checkboxClick(theCheckbox, theRowNum)
 			</TD>
 			
 			<TD style="padding-left: 5px; font-weight: bold;">
-				<input type="button" class="button" value="<?php putGS("Select All"); ?>" onclick="checkAll(document.article_list['f_article_code[]']);"> 
-				<input type="button" class="button" value="<?php putGS("Select None"); ?>" onclick="uncheckAll(document.article_list['f_article_code[]']);"> 
+				<input type="button" class="button" value="<?php putGS("Select All"); ?>" onclick="checkAll();"> 
+				<input type="button" class="button" value="<?php putGS("Select None"); ?>" onclick="uncheckAll();"> 
 			</TD>
 		</TR>
 		</TABLE>
