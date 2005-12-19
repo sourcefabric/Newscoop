@@ -17,7 +17,7 @@ setcookie("TOL_UserKey", "", time() - 86400);
 $defaultLanguage = null;
 if (!isset($_REQUEST['TOL_Language'])) {
 	// Get the browser languages
-	$browserLanguageStr = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
+	$browserLanguageStr = isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? $_SERVER['HTTP_ACCEPT_LANGUAGE'] : '';
 	$browserLanguageArray = split("[,;]", $browserLanguageStr);
 	$browserLanguagePrefs = array();
 	foreach ($browserLanguageArray as $tmpLang) {
