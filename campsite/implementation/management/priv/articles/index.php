@@ -67,6 +67,7 @@ if ($f_language_selected) {
 	$numUniqueArticles = Article::GetNumUniqueArticles($f_publication_id, $f_issue_number, $f_section_number);
 	$numUniqueArticlesDisplayed = count(array_unique(DbObjectArray::GetColumn($allArticles, 'Number')));
 }
+$numArticlesThisPage = count($allArticles);
 
 $previousArticleNumber = 0;
 
@@ -101,20 +102,32 @@ camp_html_content_top(getGS('Article List'), $topArray);
 <script>
 function checkAll(field)
 {
-	if (field) {
-		for (i = 0; i < field.length; i++) {
-			field[i].checked = true ;
-		}
+	for (i = 0; i < <?php p($numArticlesThisPage); ?>; i++) {
+		document.getElementById("row_"+i).className = 'list_row_click';
+		document.getElementById("checkbox_"+i).checked = true;
 	}
+//	if (field) {
+//		for (i = 0; i < field.length; i++) {
+//			field[i].checked = true ;
+//		}
+//	}
 }
 
 function uncheckAll(field)
 {
-	if (field) {
-		for (i = 0; i < field.length; i++) {
-			field[i].checked = false ;
+	for (i = 0; i < <?php p($numArticlesThisPage); ?>; i++) {
+		if (i%2==0) {
+			document.getElementById("row_"+i).className = 'list_row_odd';
+		} else {
+			document.getElementById("row_"+i).className = 'list_row_even';			
 		}
+		document.getElementById("checkbox_"+i).checked = false;
 	}
+//	if (field) {
+//		for (i = 0; i < field.length; i++) {
+//			field[i].checked = false ;
+//		}
+//	}
 }
 
 /**
@@ -139,33 +152,16 @@ function setPointer(theRow, theRowNum, theAction, theDefaultClass)
     // 4.1 Current class is the default one
     if (theRow.className == theDefaultClass) {
         if (theAction == 'over') {
-            newClass              = 'list_row_hover';
-        }
-        else if (theAction == 'click') {
-            newClass              = 'list_row_click';
-            marked_row[theRowNum] = true;
+            newClass = 'list_row_hover';
         }
     }
     // 4.1.2 Current color is the hover one
     else if (theRow.className == 'list_row_hover'
              && (typeof(marked_row[theRowNum]) == 'undefined' || !marked_row[theRowNum])) {
         if (theAction == 'out') {
-            newClass              = theDefaultClass;
-        }
-        else if (theAction == 'click') {
-            newClass              = 'list_row_click';
-            marked_row[theRowNum] = true;
+            newClass = theDefaultClass;
         }
     }
-    // 4.1.3 Current color is the clicked one
-    else if (theRow.className == 'list_row_click') {
-        if (theAction == 'click') {
-            newClass              = 'list_row_hover';
-            marked_row[theRowNum] = (typeof(marked_row[theRowNum]) == 'undefined' || !marked_row[theRowNum])
-                                  ? true
-                                  : null;
-        }
-    } // end 4
 
     if (newClass != null) {
     	theRow.className = newClass;
@@ -173,6 +169,26 @@ function setPointer(theRow, theRowNum, theAction, theDefaultClass)
     return true;
 } // end of the 'setPointer()' function
 
+/** 
+ * Change the color of the row when the checkbox is selected.
+ *
+ * @param object  The checkbox object.
+ * @param int     The row number.
+ */
+function checkboxClick(theCheckbox, theRowNum)
+{
+	if (theCheckbox.checked) {
+        newClass = 'list_row_click';
+        marked_row[theRowNum] = (typeof(marked_row[theRowNum]) == 'undefined' || !marked_row[theRowNum])
+                              ? true
+                              : null;		
+	} else {
+        newClass = 'list_row_hover';		
+        marked_row[theRowNum] = false;		
+	}
+   	row = document.getElementById("row_"+theRowNum);
+   	row.className = newClass;
+} // fn checkboxClick
 </script>
 <div style="position: fixed; top: 140px;">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="3" class="table_input" style="background-color: #D5C3DF; border-color: #A35ACF;">
@@ -309,11 +325,8 @@ function setPointer(theRow, theRowNum, theAction, theDefaultClass)
 				<?php  if ($User->hasPermission('AddArticle')) { ?>
 				<OPTION value="copy"><?php putGS("Duplicate"); ?></OPTION>
 				<OPTION value="copy_interactive"><?php putGS("Duplicate to another section"); ?></OPTION>
-				<!--<OPTION value="translate"><?php //putGS("Translate"); ?></OPTION>-->
 				<?php } ?>
 				
-				<!--<OPTION value="move"><?php //putGS("Reorder"); ?></OPTION>-->
-				<!--<OPTION value="preview"><?php //putGS("Preview"); ?></OPTION>-->
 				</SELECT>
 			</TD>
 			
@@ -377,9 +390,9 @@ foreach ($allArticles as $articleObj) {
     	} 
 	}
 	?>	
-	<TR class="<?php p($rowClass); ?>" onmouseover="setPointer(this, <?php p($counter); ?>, 'over', '<?php p($rowClass); ?>');" onmouseout="setPointer(this, <?php p($counter); ?>, 'out', '<?php p($rowClass); ?>');" onmousedown="setPointer(this, <?php p($counter); ?>, 'click', '<?php p($rowClass); ?>');">
+	<TR id="row_<?php p($counter); ?>" class="<?php p($rowClass); ?>" onmouseover="setPointer(this, <?php p($counter); ?>, 'over', '<?php p($rowClass); ?>');" onmouseout="setPointer(this, <?php p($counter); ?>, 'out', '<?php p($rowClass); ?>');">
 		<TD>
-			<input type="checkbox" value="<?php p($articleObj->getArticleNumber().'_'.$articleObj->getLanguageId()); ?>" name="f_article_code[]" class="input_checkbox">
+			<input type="checkbox" value="<?php p($articleObj->getArticleNumber().'_'.$articleObj->getLanguageId()); ?>" name="f_article_code[]" id="checkbox_<?php p($counter); ?>" class="input_checkbox" onclick="checkboxClick(this, <?php p($counter); ?>);">
 		</TD>
 		
 		<TD <?php if ($articleObj->getArticleNumber() == $previousArticleNumber) { ?>class="translation_indent"<?php } ?>>
