@@ -342,10 +342,12 @@ if ($numUniqueArticlesDisplayed > 0) {
 <TR class="table_list_header">
 	<TD>&nbsp;</TD>
 	<TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Name <SMALL>(click to edit)</SMALL>"); ?></TD>
+	<?php if ($User->hasPermission("Publish")) { ?>
+	<TD align="center" valign="top"><?php putGS("Order"); ?></TD>
+	<?php } ?>
 	<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Type"); ?></TD>
 	<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Created by"); ?></TD>
 	<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Status"); ?></TD>
-	<TD ALIGN="center" VALIGN="TOP"><?php  echo str_replace(' ', '<br>', getGS("Scheduled Publishing")); ?></TD>
 	<TD ALIGN="center" VALIGN="TOP"><?php  echo str_replace(' ', '<br>', getGS("On Front Page")); ?></TD>
 	<TD ALIGN="center" VALIGN="TOP"><?php  echo str_replace(' ', '<br>', getGS("On Section Page")); ?></TD>
 	<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Images"); ?></TD>
@@ -353,9 +355,6 @@ if ($numUniqueArticlesDisplayed > 0) {
 	<TD align="center" valign="top"><?php //putGS("Preview"); ?></TD>
 	<?php  if ($User->hasPermission('AddArticle')) { ?>
 	<TD align="center" valign="top"><?php //putGS("Translate"); ?></TD>	
-	<?php } ?>
-	<?php if ($User->hasPermission("Publish")) { ?>
-	<TD align="center" valign="top"><?php //putGS("Order"); ?></TD>
 	<?php } ?>
 </TR>
 <?php 
@@ -416,64 +415,9 @@ foreach ($allArticles as $articleObj) {
 		    <?php
 		}
 		?>
-		<A HREF="/<?php echo $ADMIN; ?>/articles/edit.php?f_publication_id=<?php  p($f_publication_id); ?>&f_issue_number=<?php  p($f_issue_number); ?>&f_section_number=<?php  p($f_section_number); ?>&f_article_number=<?php p($articleObj->getArticleNumber()); ?>&f_language_id=<?php  p($f_language_id); ?>&f_language_selected=<?php p($articleObj->getLanguageId()); ?>"><?php  p(htmlspecialchars($articleObj->getTitle())); ?>&nbsp;</A> (<?php p(htmlspecialchars($articleObj->getLanguageName())); ?>)
-		</TD>
-		<TD ALIGN="RIGHT">
-			<?php p(htmlspecialchars($articleObj->getType()));  ?>
+		<A HREF="/<?php echo $ADMIN; ?>/articles/edit.php?f_publication_id=<?php  p($f_publication_id); ?>&f_issue_number=<?php  p($f_issue_number); ?>&f_section_number=<?php  p($f_section_number); ?>&f_article_number=<?php p($articleObj->getArticleNumber()); ?>&f_language_id=<?php  p($f_language_id); ?>&f_language_selected=<?php p($articleObj->getLanguageId()); ?>"><?php  p(wordwrap(htmlspecialchars($articleObj->getTitle()), 80, "<br>")); ?>&nbsp;</A> (<?php p(htmlspecialchars($articleObj->getLanguageName())); ?>)
 		</TD>
 
-		<TD ALIGN="RIGHT">
-			<?php 
-			$articleCreator =& new User($articleObj->getCreatorId());
-			p(htmlspecialchars($articleCreator->getRealName()));  ?>
-		</TD>
-
-		<TD ALIGN="CENTER">
-			<?php 
-			if ($articleObj->getPublished() == "Y") { 
-				putGS("Published");
-			}
-			elseif ($articleObj->getPublished() == "N") { 
-				putGS("New");
-			}
-			elseif ($articleObj->getPublished() == "S") { 
-				putGS("Submitted");
-			}
-			?>
-		</TD>
-		
-		<TD ALIGN="CENTER">
-			<?php 
-			if ($articleObj->getPublished() != 'N') { 
-				$hasPendingActions = 
-					ArticlePublish::ArticleHasFutureActions($articleObj->getArticleNumber(),
-					$articleObj->getLanguageId());
-				if ($hasPendingActions) { ?>
-			<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/automatic_publishing.png" alt="<?php  putGS("Scheduled Publishing"); ?>" title="<?php  putGS("Scheduled Publishing"); ?>" border="0" width="22" height="22">
-				<?php 
-				}
-			} else { ?>
-				&nbsp;<?PHP
-			}
-			?>
-		</TD>
-		
-		<TD><?php echo $articleObj->onFrontPage() ? "Yes" : "No"; ?></TD>
-		<TD><?php echo $articleObj->onSectionPage() ? "Yes" : "No"; ?></TD>
-		<TD><?php echo count(ArticleImage::GetImagesByArticleNumber($articleObj->getArticleNumber())); ?></TD>
-		<TD><?php echo count(ArticleTopic::GetArticleTopics($articleObj->getArticleNumber())); ?></TD>
-		
-		<TD ALIGN="CENTER">
-			<A HREF="" ONCLICK="window.open('/<?php echo $ADMIN; ?>/articles/preview.php?f_publication_id=<?php  p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_article_number=<?php p($articleObj->getArticleNumber()); ?>&f_language_id=<?php p($f_language_id); ?>&f_language_selected=<?php p($articleObj->getLanguageId()); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=yes, width=800, height=600'); return false"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/preview-16x16.png" alt="<?php  putGS("Preview"); ?>" title="<?php putGS('Preview'); ?>" border="0" width="16" height="16"></A>
-		</TD>		
-		
-		<?php  if ($User->hasPermission('AddArticle')) { ?>
-		<TD ALIGN="CENTER">
-			<A HREF="/<?php echo $ADMIN; ?>/articles/translate.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_article_code=<?php p($articleObj->getArticleNumber()); ?>_<?php p($articleObj->getLanguageId()); ?>&f_language_id=<?php p($f_language_id); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/translate-16x16.png" alt="<?php  putGS("Translate"); ?>" title="<?php  putGS("Translate"); ?>" border="0" width="16" height="16"></A>
-		</TD>
-		<?php } ?>
-		
-		
 		<?php
 		// The MOVE links  
 		if ($User->hasPermission('Publish')) { 
@@ -520,6 +464,55 @@ foreach ($allArticles as $articleObj) {
 		} // if user->hasPermission('publish') 
 		?>
 
+		<TD ALIGN="RIGHT">
+			<?php p(htmlspecialchars($articleObj->getType()));  ?>
+		</TD>
+
+		<TD ALIGN="RIGHT">
+			<?php 
+			$articleCreator =& new User($articleObj->getCreatorId());
+			p(htmlspecialchars($articleCreator->getRealName()));  ?>
+		</TD>
+
+		<TD ALIGN="CENTER" valign="middle" nowrap>
+			<?php 
+			if ($articleObj->getPublished() == "Y") { 
+				putGS("Published");
+			}
+			elseif ($articleObj->getPublished() == "N") { 
+				putGS("New");
+			}
+			elseif ($articleObj->getPublished() == "S") { 
+				putGS("Submitted");
+			}
+			if ($articleObj->getPublished() != 'N') { 
+				$hasPendingActions = 
+					ArticlePublish::ArticleHasFutureActions($articleObj->getArticleNumber(),
+					$articleObj->getLanguageId());
+				if ($hasPendingActions) { ?>
+			<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/automatic_publishing.png" alt="<?php  putGS("Scheduled Publishing"); ?>" title="<?php  putGS("Scheduled Publishing"); ?>" border="0" width="22" height="22" align="middle" style="padding-bottom: 1px;">
+				<?php 
+				}
+			} 
+			?>
+		</TD>
+		
+		<TD><?php echo $articleObj->onFrontPage() ? "Yes" : "No"; ?></TD>
+		<TD><?php echo $articleObj->onSectionPage() ? "Yes" : "No"; ?></TD>
+		<TD><?php echo count(ArticleImage::GetImagesByArticleNumber($articleObj->getArticleNumber())); ?></TD>
+		<TD><?php echo count(ArticleTopic::GetArticleTopics($articleObj->getArticleNumber())); ?></TD>
+		
+		<TD ALIGN="CENTER">
+			<A HREF="" ONCLICK="window.open('/<?php echo $ADMIN; ?>/articles/preview.php?f_publication_id=<?php  p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_article_number=<?php p($articleObj->getArticleNumber()); ?>&f_language_id=<?php p($f_language_id); ?>&f_language_selected=<?php p($articleObj->getLanguageId()); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=yes, width=800, height=600'); return false"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/preview-16x16.png" alt="<?php  putGS("Preview"); ?>" title="<?php putGS('Preview'); ?>" border="0" width="16" height="16"></A>
+		</TD>		
+		
+		<?php  if ($User->hasPermission('AddArticle')) { ?>
+		<TD ALIGN="CENTER">
+			<A HREF="/<?php echo $ADMIN; ?>/articles/translate.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_article_code=<?php p($articleObj->getArticleNumber()); ?>_<?php p($articleObj->getLanguageId()); ?>&f_language_id=<?php p($f_language_id); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/translate-16x16.png" alt="<?php  putGS("Translate"); ?>" title="<?php  putGS("Translate"); ?>" border="0" width="16" height="16"></A>
+		</TD>
+		<?php } ?>
+		
+		
 		<?php
 		if ($articleObj->getArticleNumber() != $previousArticleNumber) {
 			$previousArticleNumber = $articleObj->getArticleNumber();
