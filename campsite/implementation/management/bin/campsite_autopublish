@@ -9,7 +9,7 @@ elif [ "$sbin_path" = "" ]; then
 	sbin_path=`campsite_config --sbin_dir`
 	script_call="$sbin_path/campsite_autopublish.php"
 else 
-	www_dir=`$bin_path/campsite_config --www_dir`
+	www_dir=`$sbin_path/campsite_config --www_dir`
 	script_call="$sbin_path/campsite_autopublish.php"
 fi
 

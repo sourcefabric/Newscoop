@@ -3,13 +3,21 @@
  * @package Campware
  */
 
+// We indirectly reference the document root because some 
+// scripts that use this file run from the command line,
+// therefore $_SERVER['DOCUMENT_ROOT'] is not defined in 
+// these cases.
+if (!isset($g_documentRoot)) {
+    $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
+}
+
 /**
  * Since the XML_Serializer package is not yet stable,
  * we must use our own package.  The package has a bug fix applied
  * that is required for the Localizer XML files to work.
  */
-require_once($_SERVER['DOCUMENT_ROOT'].'/include/XML_Serializer/Serializer.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/include/XML_Serializer/Unserializer.php');
+require_once("$g_documentRoot/include/XML_Serializer/Serializer.php");
+require_once("$g_documentRoot/include/XML_Serializer/Unserializer.php");
 
 global $g_localizerConfig;
 

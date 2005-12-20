@@ -3,13 +3,21 @@
  * @package Campware
  */
 
+// We indirectly reference the document root because some 
+// scripts that use this file run from the command line,
+// therefore $_SERVER['DOCUMENT_ROOT'] is not defined in 
+// these cases.
+if (!isset($g_documentRoot)) {
+    $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
+}
+
 /**
  * Includes
  */
 require_once('PEAR.php');
 require_once('LocalizerConfig.php');
 require_once('LocalizerFileFormat.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
+require_once("$g_documentRoot/db_connect.php");
 
 /**
  * @package Campware
