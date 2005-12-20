@@ -154,7 +154,7 @@ if ($articleObj->userCanModify($User) && $locked) {
 	</TABLE>
 	<P>
 	<?php  
-	exit;
+	return;
 }
  
 if ($f_edit_mode == "edit") { ?>
