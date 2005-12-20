@@ -1,5 +1,5 @@
 <?php
-regGS("Issue List", "");
+regGS("Issue List", "Lista izdanja");
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>", "Naziv<br><small>(kliknite za pregled rubrika)</small>");
 regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Objavljen<br><small>(gggg-mm-dd)</small>");
 regGS("Delete issue $1", "Obriši izdanje $1");
@@ -36,6 +36,8 @@ regGS("Adding new issue", "Dodavanje novog izdanja");
 regGS("Delete entry", "Obriši unos");
 regGS("Issue Publishing Schedule", "Raspored automatskog objavljivanja izdanja");
 regGS("Invalid Input: $1", "Pogrešan unos: $1");
+regGS("Issue Number", "Broj izdanja");
+regGS("Go To Sections", "Idi na rubrike");
 regGS("Issue automatic publishing schedule", "Raspored automatskog objavljivanja izdanja");
 regGS("Changing issue status", "Menjanje statusa izdanja");
 regGS("Status of the issue $1 has been changed from $2 to $3", "Status izdanja $1 je promenjen iz $2 u $3");

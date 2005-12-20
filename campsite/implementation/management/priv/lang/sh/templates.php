@@ -1,7 +1,7 @@
 <?php
 regGS("The template $1 is in use and can not be deleted.", "Šablon $1 je u upotrebi i ne može biti obrisan.");
 regGS("The folder could not be deleted.", "Folder ne može biti izbrisan");
-regGS("The directory must be empty", "");
+regGS("The directory must be empty", "Direktorijum mora biti prazan");
 regGS("Create new folder", "Napravi novi folder");
 regGS("Upload template", "Aplouduj šablon");
 regGS("Creating new folder", "Pravljenje novog foldera");
@@ -41,6 +41,9 @@ regGS("You do not have the right to upload templates.", "Nemate pravo da aploudu
 regGS("You do not have the right to create templates.", "Nemate pravo da pravite šablone.");
 regGS("Duplicate file", "Dupliraj fajl");
 regGS("Delete file", "Obriši fajl");
+regGS("Unable to save the template '$1' to the path '$2'.", "Šablon '$1' ne može biti snimljen na putanju '$2'.");
+regGS("Please check if the user '$1' has permission to write in this directory.", "Proverite da li korisnik '$1' ima ovlašćenja da upisuje u ovoaj direktorijum.");
+regGS("Unable to delete the template '$1' in the path '$2'.", "Šablon  '$1' ne može biti obrisan sa putanje '$2'.");
 regGS("The folder has been deleted.", "Folder je izbrisan");
 regGS("The template has been deleted.", "Šablon je izbrisan");
 regGS("The template could not be deleted.", "Šablon ne može biti izbrisan");

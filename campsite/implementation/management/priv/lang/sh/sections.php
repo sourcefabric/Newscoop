@@ -1,7 +1,7 @@
 <?php
-regGS("Section List", "");
-regGS("Section #$1 \"$2\" updated. (Publication: $3, Issue: $4)", "");
-regGS("Go To Articles", "");
+regGS("Section List", "Lista rubrika");
+regGS("Section #$1 \"$2\" updated. (Publication: $3, Issue: $4)", "Rubrika #$1 \"$2\" je izmenjena. (publikacija:  $3, izdanje:  $4)");
+regGS("Go To Articles", "Idi na članke");
 regGS("Add section to all subscriptions.", "Dodaj rubriku u sve pretplate.");
 regGS("Delete section from all subscriptions.", "Obriši rubriku iz svih pretplata.");
 regGS("A total of $1 subscriptions were updated.", "Ukupan broj izmenjenih pretplata: $1.");
@@ -10,7 +10,7 @@ regGS("Delete section $1", "Obriši rubriku");
 regGS("Adding new section", "Dodavanje nove rubrike");
 regGS("You do not have the right to add sections.", "Nemate pravo da dodajete rubrike");
 regGS("The section $1 has been successfuly added.", "Rubrika $1 je uspešno dodata");
-regGS("Please check if another section with the same number does not already exist.", "Proverite da li već ne postoji rubrika pod istim brojem");
+regGS("Please check if another section with the same number or URL name does not exist already.", "Proverite da li druga rubrika sa istim brojem ili URL imenom već ne postoji.");
 regGS("Select the section", "Izaberite rubriku");
 regGS("Delete section", "Obriši rubriku");
 regGS("You do not have the right to delete sections.", "Nemate pravo da brišete rubrike.");
@@ -38,10 +38,12 @@ regGS("New Section", "Nova rubrika");
 regGS("Please select either '$1' or '$2'.", "Izaberite '$1' ili '$2'.");
 regGS("Select destination section:", "Izaberite ciljnu rubriku");
 regGS("OR", "ILI");
-regGS("Short Name", "Skraćeno ime");
+regGS("URL Name", "URL ime");
 regGS("The section number specified already exists, please specify a different value or use the dropdown to find an existing section.", "Navedeni broj rubrike već postoji, izaberite drugu vrednost ili koristite padajući meni za izbor postojeće rubrike.");
 regGS("Warning", "Upozorenje");
 regGS("You must select a section.", "Morate izabrati rubriku");
 regGS("You must specify a name for the section.", "Morate uneti ime rubrike.");
+regGS("Please check if another section with the same number does not already exist.", "Proverite da li već ne postoji rubrika pod istim brojem");
+regGS("Short Name", "Skraćeno ime");
 regGS("Destination section number", "Broj ciljne rubrike");
 ?>

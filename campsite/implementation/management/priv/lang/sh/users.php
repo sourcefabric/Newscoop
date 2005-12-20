@@ -1,11 +1,11 @@
 <?php
-regGS("That user name already exists, please choose a different login name.", "");
-regGS("User may delete article attachments", "");
-regGS("User may change article attachments", "");
-regGS("User may add article attachments", "");
+regGS("That user name already exists, please choose a different login name.", "Korsničko ime već postoji, smislite nešto drugo.");
+regGS("User may delete article attachments", "Korisnik može da briše atačmente uz članke.");
+regGS("User may change article attachments", "Korsnik može da menja atačmente uz članke");
+regGS("User may add article attachments", "Korsinik može da dodaje atačmente uz članke");
 regGS("Staff management", "Upravljanje saradničkim nalozima");
 regGS("Subscriber management", "Upravljanje pretplatničkim nalozima");
-regGS("User Name", "Korisničko ime");
+regGS("Account Name", "Ime naloga");
 regGS("Full Name", "Puno ime");
 regGS("Delete user $1", "Obriši korisnika $1");
 regGS("User list is empty.", "Lista korisnika je prazna.");
@@ -74,6 +74,9 @@ regGS("The confirm password must be at least 6 characters long and both password
 regGS("You must input a number between 0 and 255 into the Start IP address' $1 field.", "Morate uneti broj između 0 i 255 u polje $1kod početne IP adrese ");
 regGS("Delete subscriptions to $1", "Obriši pretplate za $1");
 regGS("Change user account information", "Promenite podatke za korisnički nalog");
+regGS("The IP address group $1:$2 conflicts with another existing group.", "IP adresna grupa  $1:$2 se sukobljava sa drugom, već postojećom grupom.");
+regGS("Creation Date", "Datum kreiranja");
+regGS("User Name", "Korisničko ime");
 regGS("User management", "Administracija korisnicima");
 regGS("Set", "Postavi");
 regGS("Update", "Izmeni");

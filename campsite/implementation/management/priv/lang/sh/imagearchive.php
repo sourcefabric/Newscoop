@@ -1,5 +1,5 @@
 <?php
-regGS("You must select an image file to upload.", "");
+regGS("You must select an image file to upload.", "Morate izabrati sliku za aploud.");
 regGS("Add new image", "Dodaj novu sliku");
 regGS("Date <SMALL>(yyyy-mm-dd)</SMALL>", "Datum (gggg-mm-dd)");
 regGS("Delete image $1", "Izbriši sliku $1");
