@@ -118,7 +118,7 @@ if (count($imageData) > 0) {
 ?>
 <table class="action_buttons">
 <TR>
-    <TD style="color: #00008b;">
+    <TD>
     <?php  
     echo $pager->render();
     ?></td>
@@ -178,7 +178,7 @@ foreach ($imageData as $image) {
         if ($User->hasPermission('DeleteImage')) {
         	if (!$image['in_use']) { ?>
             	<TD ALIGN="CENTER">
-                <A HREF="do_del.php?image_id=<?php echo $image['id']; ?>" onclick="return confirm('<?php putGS("Are you sure you want to delete the image \\'$1\\'?", camp_javascriptspecialchars($image['description'])); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php putGS('Delete image $1',htmlspecialchars($image['description'])); ?>"></A>
+                <A HREF="do_del.php?f_image_id=<?php echo $image['id']; ?>" onclick="return confirm('<?php putGS("Are you sure you want to delete the image \\'$1\\'?", camp_javascriptspecialchars($image['description'])); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php putGS('Delete image $1',htmlspecialchars($image['description'])); ?>"></A>
               	</TD>
             	<?php
          	}
@@ -199,7 +199,7 @@ foreach ($imageData as $image) {
 </TABLE>
 <table class="action_buttons">
 <TR>
-    <TD style="color: #00008b;">
+    <TD>
     <?php  
     echo $pager->render();
     ?></td>
