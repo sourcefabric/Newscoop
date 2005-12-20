@@ -1,3 +1,85 @@
+2.4 (January 10, 2006)
+  Major Features
+  --------------
+  - Ability to attach files to articles
+  - Article Edit screen redesign
+    - Images, topics, attachments, and publishing events are now shown
+      alongside the article.  Adding these items has been vastly
+      simplified.
+  - Article List redesign
+    - Ability to do actions on multiple articles at once (it has a
+      similar interface to Gmail).
+    - More information about each article is shown in the article list.
+  - API for third party plugins (beta)
+  - Simplified navigation
+  - The template engine starts automatically and it can be restarted from
+    the user interface.
+  - The template engine is more user-friendly: when it encounters a
+    critical error it displays a message instead of crashing.
+
+  Minor Features
+  --------------
+  - Article copy: When duplicating an article, you can now duplicate
+    any number of its translations, as well as give each translation
+    a new name.
+  - Article translation: When you translate an article and the issue
+    and/or section do not exist in the translation language, you now have
+    the ability to create them at the same time you create the article
+    translation.
+  - Scheduled Publishing: A javascript calendar has been added for
+    selecting dates.
+  - Image Archive: Simplified the search interface.  Your searches are
+    now remembered.
+  - Image archive: "View image" screen now shows all translations of
+    articles that use the image.
+  - Configuration screens for publications, issues, and sections now
+    have all actions available.  Previously, most actions could only be
+    accessed on the "list" screens.
+  - Simplified the "Add Article" screen.
+  - Staff list: Added a "User type" column to the staff list.
+  - Subscribers list can be sorted by full name, account name and
+    creation date.
+  - WYSIWYG: Decreased the loading time for the editor.
+  - WYSIWYG: The editor now works in Firefox 1.5.
+  - Install maintenance binaries into the standard /usr/sbin directory.
+  - Campsite can be installed in standard directories without generating
+    conflicts. The Campsite instance utilities have globally acceptable
+    names.
+
+  Template Language Improvements
+  -------------------------------
+  - Added "PublishDate" to "print article" commands
+  - Added "PublishDate" to "article list order" command
+  - Added "creation_date" to "article list order" command
+  - Added "List ArticleTopics"
+  - Added "List Subtopics"
+  - Added "Article Number"
+
+  Developers
+  ----------
+  - Admin interface Subversion repository files now mimic the installed
+    directory structure.
+  - User permissions have been refactored to allow for arbitrary
+    additional user configuration variables
+  - Localizer: Language files are now independent of specific
+    directories.
+  - Localizer: Added ability to move strings to different screens.
+  - Removed all use of the M4 macro processing language.
+  - Replaced PASSWORD function for generating the user password with SHA1.
+  - Moved utility scripts into the implementation directory.
+
+  Bugs Fixed
+  ----------
+  - Fixed bug where article events would still take place even if
+    the Article was set back to 'New' from 'Submitted'
+  - Fixed bug where an article would be placed in an arbitrary position
+    when copied.
+  - Fixed bug where trying to save the empty string in the WYSIWYG editor
+    would actually save a "<BR>".
+  - Fixed the template engine crash when the issue, section or article
+    template was not set.
+
+
 2.3.3 (October 31, 2005)
   For full details about the changes in 2.3.3, see: 
   http://code.campware.org/projects/campsite/query?milestone=2.3.3

@@ -1,6 +1,6 @@
 Campsite
-version     : 2.4-dev
-release date: August 1, 2005
+version     : 2.4-beta
+release date: December 20, 2005
 contact     : contact@campware.org
 url         : http://www.campware.org
 copyright   : (c)1999-2005 Media Development Loan Fund
@@ -9,44 +9,52 @@ manual      : http://code.campware.org/manuals/campsite/2.4/
 
 INTRODUCTION
 
-CAMPSITE is a content management system with multi-lingual Unicode support,
-designed for medium to large sized online publications. Issues, back archives,
-as well as subscription management are fully implemented features. At the core
-of management system sits the article editor allowing contributors and editors
-to control layout online in their native font face. Style features can be
-assigned via buttons - similar to editors such as Wordpad - meaning no HTML
-knowledge is necessary for formatting text.
+Campsite is a robust, stable, and journalist-friendly solution for online
+magazines and newspapers that speaks your language.  
 
+Campsite follows the print-newspaper publishing paradigm, so it structures
+sites by default as Publications > Issues > Sections > Articles. 
+
+Campsite is available in: English, Portuguese, Spanish, German, Russian, 
+Arabic, Chinese, Serbian (Cyrillic), Serbo-Croatian (Latin), Croatian,
+Czech, and Romanian.  However, the interface can easily be localized to new 
+languages using its built-in 'Localizer'.
+
+CAMPSITE offers...
+ - Support for managing articles translated into different languages
+ - An advanced WYSIWYG interface for article editing
+ - Support for incorporating images into your articles
+ - Support for attaching files to articles 
+ - Categorizing your articles with topics
+ - Scheduling articles for release in the future
+ - Full control over the look of your web site
+ - Fine-grained access control for different types of staff users: 
+   journalist, editor, designer, etc
+ - Built-in subscription system with:
+   - time trials
+   - pay periods
+   - IP access control for group subscriptions
+ - Support for localizing the interface to new languages
+ - An object-oriented API for building plugins or alternative interfaces
+ 
 We encourage further development of this software and would like to make any
 progress accessible to all other users. Please contact us if you have or intend
 to developed this software further.
 
-CAMPSITE offers...
-- support of managing article translations in different languages
-- advanced editorial interface for remote article editing
-- cut and paste formatting from other editors into the online
-- article editor with near WYSIWYG feel
-- its own customizable search-engine
-- built-in subscription system
-- management of dictionaries (obsolete)
-
-CREDITS
-
-The original CAMPSITE concept was developed by C@MP in collaboration with
-Transitions Online, who started using CAMPSITE in late 2000. The initial
-development was accomplished by DNT and Recognos. For more info see CREDITS file.
-
+ 
 INSTALLATION
-- see INSTALL file
+ - see the INSTALL file
 
+ 
 MANUAL
-- see http://code.campware.org/manuals/campsite/2.4/
+ - see http://code.campware.org/manuals/campsite/2.4/
 
 If you intend to show the world you are running on CAMPSITE, you could include
 the little banner 'thisisacampsite.gif' provided with this tarball and link it
 to http://www.campware.org.
 
-TECH-SPECS
+
+TECHNICAL REQUIREMENTS
 
 Implementing CAMPSITE for your purposes requires the following technical set-up,
 nothing out of the ordinary.
@@ -61,8 +69,16 @@ proved compatible with RedHat 9.0, Mandrake 10.0 and Debian
 - requires PHP (version 4.0 and up) to be running
 
 CAMPSITE client:
--works in most modern Web browsers: Mozilla, Mozilla Firefox, MS Internet
-Explorer. No plugins are necessary as of version 2.2.
+- Works in most modern Web browsers: Mozilla, Mozilla Firefox, MS Internet
+  Explorer.  No plugins are necessary as of version 2.2 and up.
+
+  
+CREDITS
+
+The original CAMPSITE concept was developed by C@MP in collaboration with
+Transitions Online, who started using CAMPSITE in late 2000. The initial
+development was accomplished by DNT and Recognos. For more info see CREDITS file.
+
 
 COPYRIGHT
 
