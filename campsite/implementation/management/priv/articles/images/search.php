@@ -183,7 +183,7 @@ foreach ($imageData as $image) {
 </table>
 <table class="action_buttons">
 <TR>
-    <TD style="color: #00008b;">
+    <TD>
     <?php  
     echo $pager->render();
     ?></td>
