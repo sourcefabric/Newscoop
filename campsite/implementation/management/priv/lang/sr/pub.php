@@ -1,6 +1,6 @@
 <?php
-regGS("Publication List", "");
-regGS("Go To Issues", "");
+regGS("Publication List", "Листа публикација");
+regGS("Go To Issues", "Иди на издања");
 regGS("Name<BR><SMALL>(click to see issues)</SMALL>", "Име<br><small>(кликните за преглед издања)</small>");
 regGS("Delete publication $1", "Обриши публикацију $1");
 regGS("No publications.", "Нема публикација");
@@ -30,7 +30,6 @@ regGS("You do not have the right to manage publications.", "Немате пра�
 regGS("Please check if another entry with the same country code exists already.", "Проверите да ли већ постоји унос са истим кодом државе");
 regGS("Adding new country default subscription time", "Додавање новог основног периода претплате за државу");
 regGS("You must select a country.", "Морате изабрати државу");
-regGS("The default subscription time for $1 has been added.", "Нови период претплате за $1 додат");
 regGS("The default subscription time for country $1 could not be added.", "Нови период претплате за $1 не може бити додат");
 regGS("Change subscription default time", "Промени трајање основне претплате");
 regGS("Default subscription time for $1 changed", "Трајање основне претплате за $1 промењено");
@@ -56,4 +55,5 @@ regGS("The alias $1 has been deleted from publication $2.", "Алиас $1 је 
 regGS("$1 is the default publication alias, it can not be deleted.", "$1 је основни алиас за публикацију, па не може бити обрисан.");
 regGS("You do not have the right to add publications.", "Немате право да додајете публикације.");
 regGS("There are $1 issue(s) left.", "Преостало је $1 издања.");
+regGS("The default subscription time for $1 has been added.", "Нови период претплате за $1 додат");
 ?>

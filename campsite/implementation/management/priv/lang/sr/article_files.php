@@ -1,20 +1,20 @@
 <?php
-regGS("You must select a file to upload.", "");
-regGS("You do not have the right to delete files.", "");
-regGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.", "");
-regGS("You do not have the right to change the article.", "");
-regGS("You do not have the right to change files.", "");
-regGS("You do not have the right to add files.", "");
-regGS("Should this file only be available for this translation of the article, or for all translations?", "");
-regGS("Please enter a description for the file.", "");
-regGS("Open in the browser", "");
-regGS("Only this translation", "");
-regGS("File information", "");
-regGS("Do you want this file to open in the user's browser, or to automatically download?", "");
-regGS("Change file information", "");
-regGS("Automatically download", "");
-regGS("Attachments", "");
-regGS("Attachment does not exist.", "");
-regGS("Attach File to Article", "");
-regGS("All translations", "");
+regGS("You must select a file to upload.", "Морате изабрати фајл за аплоуд.");
+regGS("You do not have the right to delete files.", "Немате право да бришете фајлове.");
+regGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.", "Немате право да мењате овај чланак. Можете приказивати само властите чланке, а једном предат чланак може мењати само овлашћени корисник.");
+regGS("You do not have the right to change the article.", "Немате право да мењате чланак.");
+regGS("You do not have the right to change files.", "Немате право да мењате фајлове.");
+regGS("You do not have the right to add files.", "Немате право да додајете фајлове.");
+regGS("Should this file only be available for this translation of the article, or for all translations?", "Да ли овај фајл треба да буде доступан за овај превод члака, или за све преводе?");
+regGS("Please enter a description for the file.", "Унесите опис за овај фајл.");
+regGS("Open in the browser", "Отвори у претраживачу");
+regGS("Only this translation", "Само овај превод");
+regGS("File information", "Подаци о фајлу");
+regGS("Do you want this file to open in the user's browser, or to automatically download?", "Да ли желите да се овај фајл отвара у претраживачу корисника, или да се аутоматски преузме?");
+regGS("Change file information", "Промени информације о фајлу");
+regGS("Automatically download", "Аутоматско преузимање");
+regGS("Attachments", "Атачменти");
+regGS("Attachment does not exist.", "Атачмент не постоји");
+regGS("Attach File to Article", "Прикачи фајл уз чланак");
+regGS("All translations", "Сви преводи");
 ?>

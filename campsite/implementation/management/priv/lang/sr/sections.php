@@ -1,7 +1,7 @@
 <?php
-regGS("Section List", "");
-regGS("Section #$1 \"$2\" updated. (Publication: $3, Issue: $4)", "");
-regGS("Go To Articles", "");
+regGS("Section List", "Листа рубрика");
+regGS("Section #$1 \"$2\" updated. (Publication: $3, Issue: $4)", "рубрика #$1 \"$2\" је измењена. (публикација: $3, издање: $4)");
+regGS("Go To Articles", "Иди на чланке");
 regGS("Add section to all subscriptions.", "Додај рубрику у све претплате.");
 regGS("Delete section from all subscriptions.", "Обриши рубрику из свих претплата.");
 regGS("A total of $1 subscriptions were updated.", "Укупан број измењених претплата: $1.");
@@ -10,7 +10,7 @@ regGS("Delete section $1", "Обриши рубрику");
 regGS("Adding new section", "Додавање нове рубрике");
 regGS("You do not have the right to add sections.", "Немате право да додајете рубрике");
 regGS("The section $1 has been successfuly added.", "Рубрика $1 успешно је додата");
-regGS("Please check if another section with the same number does not already exist.", "Проверите да ли већ не постоји рубрика са истим бројем");
+regGS("Please check if another section with the same number or URL name does not exist already.", "Проверите да ли друга рубрика са истим бројем или УРЛ именом већ не постоји.");
 regGS("Select the section", "Изабери рубрику");
 regGS("Delete section", "Обриши рубрику");
 regGS("You do not have the right to delete sections.", "Немате право брисања рубрика");
@@ -38,10 +38,12 @@ regGS("New Section", "Нова рубрика");
 regGS("Please select either '$1' or '$2'.", "Изаберите '$1' или '$2'.");
 regGS("Select destination section:", "Изаберите циљну рубрику");
 regGS("OR", "ИЛИ");
-regGS("Short Name", "Скраћено име");
+regGS("URL Name", "УРЛ име");
 regGS("The section number specified already exists, please specify a different value or use the dropdown to find an existing section.", "Наведени број рубрике већ постоји - изаберите другу вредност или користите падајући мени за избор постојеће рубрике.");
 regGS("Warning", "Упозорење");
 regGS("You must select a section.", "Морате изабрати рубрику");
 regGS("You must specify a name for the section.", "Морате унети име рубрике.");
+regGS("Please check if another section with the same number does not already exist.", "Проверите да ли већ не постоји рубрика са истим бројем");
+regGS("Short Name", "Скраћено име");
 regGS("Destination section number", "Број циљне рубрике");
 ?>

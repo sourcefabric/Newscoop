@@ -1,6 +1,6 @@
 <?php
-regGS("Article Files", "");
-regGS("Log Messages", "");
+regGS("Article Files", "Фајлови уз чланак");
+regGS("Log Messages", "Лог поруке");
 regGS("edit '$1'", "прикажи '$1'");
 regGS("edit \"$1\"", "прикажи \"$1\"");
 regGS("User Subscriptions Sections", "Претплате корисника на рубрике");
