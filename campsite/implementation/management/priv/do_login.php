@@ -1,6 +1,6 @@
 <?php  
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
-load_common_include_files($ADMIN_DIR);
+load_common_include_files('home');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/User.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
@@ -38,7 +38,7 @@ if ($validUser) {
 	</TD>
 </TR>
 </TABLE>
-<table class="message_box" align="center" style="margin-top: 25px;" cellpadding="6">
+<table align="center" style="margin-top: 25px; 	background-color: #d5e2ee; border: 1px solid #8baed1;" cellpadding="6">
 <tr>
 	<td align="center">
 		<DIV STYLE="font-size: 12pt"><B><?php  putGS("Login failed"); ?></B></DIV><br>
