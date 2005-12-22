@@ -115,7 +115,7 @@ int main()
 		cout << "<h3>Unable to connect to Campsite server, please restart the service.</h3>" << endl;
 		cout << "</font>" << endl << "<h3>Type the following commands in a root shell:</h3>" << endl;
 		cout << "<blockquote>" << endl << "<h3>killall campsite_server</h3>" << endl;
-		cout << "<h3>" << coBinDir << "/campsite_server</h3>" << endl;
+		cout << "<h3>" << coBinDir << "/campsite_server</h3>" << endl << "</blockquote>" << endl;
 	}
 	catch (SocketErrorException& rcoEx)
 	{
@@ -123,7 +123,7 @@ int main()
 		cout << "<h3>Error communicating to Campsite server, try restarting the service.</h3>" << endl;
 		cout << "</font>" << endl << "<h3>Type the following commands in a root shell:</h3>" << endl;
 		cout << "<blockquote>" << endl << "<h3>killall campsite_server</h3>" << endl;
-		cout << "<h3>" << coBinDir << "/campsite_server</h3>" << endl;
+		cout << "<h3>" << coBinDir << "/campsite_server</h3>" << endl << "</blockquote>" << endl;
 	}
 	coSock.Close();
 	usleep(200000);
@@ -150,6 +150,32 @@ void ReadConf(string& p_rcoIP, int& p_rnPort, string& p_rcoBinDir)
 		string coParserConfFile = string(pchDocumentRoot) + "/parser_conf.php";
 		ConfAttrValue m_coParserAttributes(coParserConfFile);
 		p_rnPort = atoi(m_coParserAttributes.valueOf("PARSER_PORT").c_str());
+	}
+	catch (HostNotFound& rcoEx)
+	{
+		cout << "<font color=\"red\">" << endl;
+		cout << "<h3>CGI internal error: the local host name, '" << rcoEx.Host()
+			<< "', is invalid.*</h3>" << endl;
+		cout << "</font>" << endl;
+		cout << "<h3>Please check if your host name was properly set.</h3>" << endl;
+		exit(0);
+	}
+	catch (MalformedAddress& rcoEx)
+	{
+		cout << "<font color=\"red\">" << endl;
+		cout << "<h3>CGI internal error: the local host name, '" << rcoEx.Host()
+			<< "', is invalid.</h3>" << endl;
+		cout << "</font>" << endl;
+		cout << "<h3>Please check if your host name was properly set.</h3>" << endl;
+		exit(0);
+	}
+	catch (AddressRange& rcoEx)
+	{
+		cout << "<font color=\"red\">" << endl;
+		cout << "<h3>CGI internal error: unable to read local IP address.</h3>" << endl;
+		cout << "</font>" << endl;
+		cout << "<h3>Please check if your host name was properly set.</h3>" << endl;
+		exit(0);
 	}
 	catch (ConfException& rcoEx)
 	{
