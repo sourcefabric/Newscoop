@@ -640,7 +640,8 @@ const char* CSocket::HostName(const char* name_or_addr) EXCEPTION_DEF(throw(Sock
 // throws HostNotFound if cannot resolve name or address
 // throws MalformedAddress if invalid address
 // throws AddressRange if the index is out of range
-IPAddr CSocket::IPAddress(const char* name, const int index) EXCEPTION_DEF(throw(SocketException))
+IPAddr CSocket::IPAddress(const char* name, const int index)
+	EXCEPTION_DEF(throw(HostNotFound, MalformedAddress, AddressRange))
 {
 	struct in_addr in;
 	IPAddr ip;
@@ -665,7 +666,8 @@ IPAddr CSocket::IPAddress(const char* name, const int index) EXCEPTION_DEF(throw
 // Returns the number of IP addresses for the host <name>=IP or hostname
 // throws HostNotFound if cannot resolve name or address
 // throws MalformedAddress if invalid address
-const int CSocket::IPCount(const char* name_or_addr) EXCEPTION_DEF(throw(SocketException))
+const int CSocket::IPCount(const char* name_or_addr)
+	EXCEPTION_DEF(throw(HostNotFound, MalformedAddress))
 {
 	struct hostent* h = GetHostInfo(name_or_addr);
 	int count = 0;

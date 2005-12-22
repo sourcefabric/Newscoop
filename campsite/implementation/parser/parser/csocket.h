@@ -117,8 +117,9 @@ public:
 	static const char* LocalHostName() EXCEPTION_DEF(throw ());
 	static const int AliasCount(const char*) EXCEPTION_DEF(throw (SocketException));
 	static const char* Alias(const char*, const int = 1) EXCEPTION_DEF(throw (SocketException));
-	static const int IPCount(const char*) EXCEPTION_DEF(throw (SocketException));
-	static IPAddr IPAddress(const char*, const int = 1) EXCEPTION_DEF(throw (SocketException));
+	static const int IPCount(const char*) EXCEPTION_DEF(throw(HostNotFound, MalformedAddress));
+	static IPAddr IPAddress(const char*, const int = 1)
+		EXCEPTION_DEF(throw(HostNotFound, MalformedAddress, AddressRange));
 	static const int ServByName(const char*, const char* = "tcp") EXCEPTION_DEF(throw (ServNotFound));
 
 	// setRegister: if parameter is true register all sockets that are created; closeAllSockets will
