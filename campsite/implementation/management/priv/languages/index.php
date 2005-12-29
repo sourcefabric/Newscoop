@@ -36,7 +36,6 @@ if (count($languages) > 0) {
 		<TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Language"); ?></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Native name"); ?></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Code"); ?></TD>
-		<TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Code page"); ?></TD>
         <?php if ($User->hasPermission('DeleteLanguages')) { ?>
 		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Delete"); ?></B></TD>
         <?php  } ?>
@@ -58,9 +57,6 @@ if (count($languages) > 0) {
 		</TD>
 		<TD>
 			<?php p(htmlspecialchars($language->getCode())); ?>&nbsp;
-		</TD>
-		<TD >
-			<?php p(htmlspecialchars($language->getCodePage())); ?>&nbsp;
 		</TD>
 	    
 	<?php 
