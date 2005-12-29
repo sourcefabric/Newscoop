@@ -22,7 +22,6 @@ if (!$User->hasPermission('ManageLanguages')) {
 $cLang = Input::Get('cLang', 'int', 0, true);
 $editMode = ($cLang != 0);
 $cName = Input::Get('cName');
-$cCodePage = Input::Get('cCodePage');
 $cOrigName = Input::Get('cOrigName');
 $cCode = Input::Get('cCode');
 $cMonth1 = Input::Get('cMonth1', 'string', '', true);
@@ -52,7 +51,7 @@ $Y = Input::Get('Y', 'string', '', true);
 
 $correct = 1;
 $created = 0;
-if (($cName == "") || ($cOrigName == "") || ($cCodePage == "") || ($cCode == "") ) {
+if (($cName == "") || ($cOrigName == "") || ($cCode == "") ) {
     $correct = 0; 
 }
 
@@ -62,7 +61,6 @@ if ($editMode) {
 
 if ($correct) {
 	$columns = array('Name' => $cName, 
-					 'CodePage' => $cCodePage,
 					 'Code' => $cCode,
 					 'OrigName' => $cOrigName,
 					 'Month1' => $cMonth1,
@@ -128,10 +126,6 @@ echo $breadcrumbs;
         if ($cOrigName == "") { ?>
            	<LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Native name').'</B>'); ?></LI>
             <?php
-        }
-        if ($cCodePage == "") { ?>
-            <LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Code page').'</B>'); ?></LI>
-            <?php  
         }
         if ($cCode == "") { ?>
             <LI><?php  putGS('You must complete the $1 field.','<B>'.getGS('Code').'</B>'); ?></LI>

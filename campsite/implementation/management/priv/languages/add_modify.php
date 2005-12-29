@@ -89,12 +89,6 @@ echo $breadcrumbs;
 	</TD>
 </TR>
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Code page"); ?>:</TD>
-	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cCodePage" SIZE="32" MAXLENGTH="32" alt="blank" emsg="<?php  putGS('You must complete the $1 field.', getGS('Code page')); ?>" value="<?php p($languageObj->getProperty('CodePage')); ?>">
-	</TD>
-</TR>
-<TR>
 	<TD COLSPAN="2"><?php  putGS('Please enter the translation for month names.'); ?></TD>
 </TR>
 <TR>
