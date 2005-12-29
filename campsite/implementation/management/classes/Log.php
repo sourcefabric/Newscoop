@@ -32,6 +32,8 @@ class Log extends DatabaseObject {
 	{
 		global $Campsite;
 		if (is_null($p_userId)) {
+			$p_userId = 0;
+			
 			// try to get the user name from the global environment
 			if (isset($_REQUEST['TOL_UserId'])) {
 				$p_userId = $_REQUEST['TOL_UserId'];
@@ -110,8 +112,8 @@ class Log extends DatabaseObject {
 		$columns = $tmpLog->getColumnNames(true);
 		$queryStr = "SELECT ".implode(", ", $columns)
 					.", Users.Name as full_name, Users.UName as user_name"
-					." FROM Log, Users"
-					." WHERE Log.fk_user_id = Users.Id";
+					." FROM Log"
+					." LEFT JOIN Users ON Log.fk_user_id = Users.Id";
 		if (!is_null($p_eventId)) {
 			$queryStr .= " AND Log.fk_event_id=$p_eventId";
 		}
