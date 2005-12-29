@@ -311,7 +311,7 @@ if ($f_edit_mode == "edit") { ?>
 </tr>
 
 <tr>
-	<td>
+	<td valign="top">
 	<!-- BEGIN article content -->
 	<FORM name="article_edit" action="do_edit.php" method="POST">
 	<INPUT TYPE="HIDDEN" NAME="f_publication_id" VALUE="<?php  p($f_publication_id); ?>">
@@ -760,7 +760,7 @@ if ($f_edit_mode == "edit") { ?>
 			</tr>
 			<?PHP
 			foreach ($articleTopics as $tmpArticleTopic) { 
-				$detachUrl = "/$ADMIN/articles/topics/do_del.php?f_article_number=$f_article_number&f_topic_id=".$tmpArticleTopic->getTopicId()."&f_language_selected=$f_language_selected";
+				$detachUrl = "/$ADMIN/articles/topics/do_del.php?f_article_number=$f_article_number&f_topic_id=".$tmpArticleTopic->getTopicId()."&f_language_selected=$f_language_selected&f_language_id=$f_language_id";
 			?>
 			<tr>
 				<td align="center" width="100%" style="border-top: 1px solid #EEEEEE;">

@@ -10,6 +10,7 @@ if (!$access) {
 	exit;
 }
 
+$f_language_id = Input::Get('f_language_id', 'int', 0);
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
 $f_topic_id = Input::Get('f_topic_id', 'int', 0, true);
