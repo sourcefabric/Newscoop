@@ -1,6 +1,25 @@
 <?PHP
 
 /**
+ * PHP class to dynamically create a javascript menu.
+ * Funded by MDLF/Campware (http://www.campware.org)
+ * 
+ * Copyright (C) 2005  Paul Baranowski (paul@paulbaranowski.org)
+ * 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * To see the full license, go here:
+ * http://www.gnu.org/copyleft/gpl.html
+ * 
+ * 
  * Dynamic programmable web menu class.  
  *
  * The design goals are:
@@ -30,29 +49,21 @@
  * $root = DynMenuItem::Create('', '');
  *
  * // Create a "home" menu item.
- * $home = DynMenuItem::Create('Home', 'URL', 
- *                           array('id' => 'home', 'icon' => "ICON"));
+ * $home = DynMenuItem::Create('Home', 'http://mysite.com/index.php', 
+ *                           array('id' => 'home', 
+ * 								   'icon' => "<img src='http://mysite.com/img/home.png' align='middle' style='padding-bottom: 3px;' width='16' height='16' />"));
  * $root->addItem($home);
  *
  * $root->addSplit();
  *
- * $content = DynMenuItem::Create('Content', 'URL', 
- *                              array('id' => 'content', 'icon' => 'ICON'));
+ * $content = DynMenuItem::Create('Content', 'http://mysite.com/content.php', 
+ *                              array('id' => 'content'));
  * $root->addItem($content);             
- * $articles = DynMenuItem::Create('Articles', 'URL', 
- *                               array('id' => 'articles', 'icon' => 'ICON'));
+ * $articles = DynMenuItem::Create('Articles', 'http://mysite.com/articles.php', 
+ *                               array('id' => 'articles'));
  *
  * $content->addItem($articles);
- * $content->addSplit();
- * $images = DynMenuItem::Create('Images', 'URL',
- *                             array('id' => 'articles', 'icon' => 'ICON'));
- * $content->addItem($images);
  *
- * ... now call plugins to allow them to add their menu items ...
- * $modules = DynMenuItem::Create('Modules', 'url', array('id' => 'modules'));
- * $root->addItemAfter($modules, 'content');
- *
- * ...
  * // Generate the menu
  * echo $root->createMenu('myMenu');
  *
@@ -103,8 +114,14 @@ class DynMenuItem {
      * Create a menu item node of the type set with SetMenuType().
      *
      * @param string $p_title
+     * 		Display string for the menu item.
      * @param string $p_url
+     * 		Destination URL.
      * @param array $p_attrs
+     * 		Options:
+     * 		'icon' => HTML IMG tag
+     * 		'id' => unique id for the item
+     * 		'target' => new window ID for the destination URL
      * @return DynMenuItem
      */
     function &Create($p_title, $p_url, $p_attrs = null) 
@@ -128,8 +145,7 @@ class DynMenuItem {
         $p_item->m_parent =& $this;
         if (isset($p_item->m_attrs['id'])) {
             $this->m_subItems[$p_item->m_attrs['id']] =& $p_item;
-        }
-        else {
+        } else {
             $this->m_subItems[] =& $p_item;
         }
     } // fn addItem
@@ -206,8 +222,7 @@ class DynMenuItem {
         $newItem =& new $className('[[split]]', '', $p_attrs);
         if (isset($newItem->m_attrs['id'])) {
             $this->m_subItems[$newItem->m_attrs['id']] =& $newItem;
-        }
-        else {
+        } else {
             $this->m_subItems[] =& $newItem;
         }
         return $newItem;
@@ -264,12 +279,10 @@ class DynMenuItem_JsCook extends DynMenuItem {
                 if (count($subItem->m_subItems) > 0) {
                     $str .= ",\n". $subItem->__recurseBuild($p_level+1);
                     $str .= str_repeat("\t", $p_level)."],\n";
-                }
-                else {
+                } else {
                     $str .= "],\n";
                 }
-            }
-            else {
+            } else {
                 $str .= str_repeat("\t", $p_level)."_cmSplit,\n";
             }
         }
@@ -278,37 +291,4 @@ class DynMenuItem_JsCook extends DynMenuItem {
         
 } // class DynMenuItem_JsCook
 
-
-
-//class User {
-//    function hasPermission($str) {
-//        return ($str == "foo");
-//    }
-//}
-//
-//$user =& new User();
-//DynMenuItem::SetMenuType('DynMenuItem_JsCook_Rights');
-//DynMenuItem_JsCook_Rights::SetUser($user);
-//
-//$root = DynMenuItem::Create('root', '');
-//$home = DynMenuItem::Create('Home', 'URL', array('id' => 'home', 'icon' => "ICON"));
-//$root->addItem($home);
-//$root->addSplit();
-//$content = DynMenuItem::Create('Content', 'URL', array('id' => 'content', 'icon' => 'ICON', 'rights' => 'foo'));
-//$root->addItem($content);             
-//$pub = DynMenuItem::Create('Publications', 'URL', array('id' => 'pub', 'icon' => 'ICON'));
-//
-//$content->addItem($pub);
-//$content->addSplit();
-////$content->addItem('ImageManager', 'Image Manager', 'URL','ICON');
-//
-//echo "<pre>";
-//echo htmlspecialchars($root->createMenu('myMenu'));
-//echo "</pre>";
-//$modules = DynMenuItem::Create('Modules', 'url', array('id' => 'modules'));
-//$root->addItemAfter($modules, 'home');
-//
-//echo "<pre>";
-//echo htmlspecialchars($root->createMenu('myMenu'));
-//echo "</pre>";
 ?>

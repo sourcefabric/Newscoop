@@ -55,7 +55,7 @@ $issues = array();
 $sections = array();
 foreach ($publications as $publication) {
 	$issues[$publication->getPublicationId()] = 
-		Issue::GetIssues($publication->getPublicationId(), null, null, null, 
+		Issue::GetIssues($publication->getPublicationId(), null, null, $publication->getLanguageId(), 
 			array('ORDER BY'=>array('Number'=>'DESC'), 'LIMIT' => '5'));
 	foreach ($issues[$publication->getPublicationId()] as $issue) {
 		$sections[$issue->getPublicationId()][$issue->getIssueNumber()][$issue->getLanguageId()] = 
@@ -75,8 +75,9 @@ foreach ($publications as $publication) {
 		foreach ($issues[$pubId] as $issue) {
 			$issueId = $issue->getIssueNumber();
 			$languageId = $issue->getLanguageId();
+			$issueIndexLink = "/$ADMIN/sections/index.php?Pub=$pubId&Issue=$issueId&Language=$languageId";
 			$menu_item_issue =& DynMenuItem::Create(camp_javascriptspecialchars($issue->getName()." (".$issue->getLanguageName().")"),
-			     "/$ADMIN/sections/index.php?Pub=$pubId&Issue=$issueId&Language=$languageId",
+			     $issueIndexLink,
 			     array("icon" => $icon_bullet));
 			$menu_item_pub->addItem($menu_item_issue);
 			if (isset($sections[$pubId][$issueId][$languageId])) {
@@ -92,12 +93,20 @@ foreach ($publications as $publication) {
 				        array("icon" => $icon_bullet));
 				    $menu_item_issue->addItem($menu_item_section);
 				}
+				if (count($sections[$pubId][$issueId][$languageId]) > 0) {
+					$menu_item_issue->addSplit();
+					$menu_item =& DynMenuItem::Create(getGS("More..."), $issueIndexLink,
+		                array("icon" => $icon_bullet));
+		            $menu_item_issue->addItem($menu_item);            
+				}
 			}
-			$menu_item_issue->addSplit();
+		}
+		if (count($issues[$pubId]) > 0) {
+			$menu_item_pub->addSplit();
 			$menu_item =& DynMenuItem::Create(getGS("More..."), 
-                "/$ADMIN/issues/index.php?Pub=$pubId",
-                array("icon" => $icon_bullet));
-            $menu_item_issue->addItem($menu_item);            
+	            "/$ADMIN/issues/index.php?Pub=$pubId",
+	            array("icon" => $icon_bullet));
+	        $menu_item_pub->addItem($menu_item);            
 		}
 	}
 }	    
