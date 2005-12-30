@@ -16,7 +16,7 @@ if (!$access) {
 
 // Initialize input variables ///////////////////////////////////////////////////
 $f_order_by = camp_session_get('f_order_by', 'id');
-$f_order_direction = camp_session_get('f_order_direction', 'DESC');
+$f_order_direction = camp_session_get('f_order_direction', 'ASC');
 $f_image_offset = camp_session_get('f_image_offset', 0);
 $f_search_string = camp_session_get('f_search_string', '');
 $f_items_per_page = camp_session_get('f_items_per_page', 8);
