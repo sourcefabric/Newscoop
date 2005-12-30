@@ -369,7 +369,7 @@ class Image extends DatabaseObject {
 	 *		The Image object that was created or updated.
 	 *		NULL if there was an error.
 	 */
-	function OnImageUpload($p_fileVar, $p_attributes, $p_userId = null, $p_id = null) 
+	function OnImageUpload($p_fileVar, $p_attributes, $p_userId = null, $p_id = null, $p_isLocalFile = false) 
 	{
 		global $Campsite;
 		if (!is_array($p_fileVar)) {
@@ -377,7 +377,7 @@ class Image extends DatabaseObject {
 		}
 
 		// Verify its a valid image file.
-		$imageInfo = getimagesize($p_fileVar['tmp_name']);
+		$imageInfo = @getimagesize($p_fileVar['tmp_name']);
 		if ($imageInfo === false) {
 			return null;
 		}
@@ -414,14 +414,29 @@ class Image extends DatabaseObject {
 		if (!is_null($p_userId)) {
 			$image->setProperty('UploadedByUser', $p_userId, false);
 		}
+        if (!isset($p_attributes['Date'])) {
+        	$image->setProperty('Date', 'NOW()', true, true);
+        }
 	    $target = $image->generateImageStorageLocation($extension);
 	    $thumbnail = $image->generateThumbnailStorageLocation($extension);
 	    $image->setProperty('ImageFileName', basename($target), false);
 	    $image->setProperty('ThumbnailFileName', basename($thumbnail), false);
 	    
-        if (!move_uploaded_file($p_fileVar['tmp_name'], $target)) {
-             return null;
-        }
+	    if ($p_isLocalFile) {
+	    	if (!copy($p_fileVar['tmp_name'], $target)) {
+	        	if (is_null($p_id)) {
+	        		$image->delete();
+	        	}
+	    		return null;
+	    	}
+	    } else {
+	        if (!move_uploaded_file($p_fileVar['tmp_name'], $target)) {
+	        	if (is_null($p_id)) {
+	        		$image->delete();
+	        	}
+	            return null;
+	        } 
+	    }
 		chmod($target, 0644);
         if ($Campsite['IMAGEMAGICK_INSTALLED']) {
             $cmd = $Campsite['THUMBNAIL_COMMAND'].' '.$target.' '.$thumbnail;
@@ -433,7 +448,7 @@ class Image extends DatabaseObject {
         $image->commit();
 		if (function_exists("camp_load_language")) { camp_load_language("api");	}
 		$logtext = getGS('The image $1 has been added.', 
-						$this->m_data['Description']." (".$this->m_data['Id'].")");
+						$image->m_data['Description']." (".$image->m_data['Id'].")");
 		Log::Message($logtext, null, 41);
                 
         return $image;
@@ -512,6 +527,9 @@ class Image extends DatabaseObject {
         	$image->setProperty('TimeCreated', 'NULL', true, true);
         	$image->setProperty('LastModified', 'NULL', true, true);
         }
+        if (!isset($p_attributes['Date'])) {
+        	$image->setProperty('Date', 'NOW()', true, true);
+        }
         $image->setProperty('Location', 'remote', false);
         $image->setProperty('URL', $p_url, false);
 	    if (isset($imageInfo['mime'])) {
@@ -542,7 +560,7 @@ class Image extends DatabaseObject {
         
 		if (function_exists("camp_load_language")) { camp_load_language("api");	}
 		$logtext = getGS('The image $1 has been added.', 
-						$this->m_data['Description']." (".$this->m_data['Id'].")");
+						$image->m_data['Description']." (".$image->m_data['Id'].")");
 		Log::Message($logtext, null, 41);
         
 	    return $image;
