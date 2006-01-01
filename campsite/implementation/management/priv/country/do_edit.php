@@ -18,17 +18,11 @@ $f_country_name = trim(Input::Get('f_country_name'));
 
 $country =& new Country($f_country_code, $f_country_language);
 $language =& new Language($f_country_language);
-$correct = true;
 
 if (empty($f_country_name)) {
-	$correct = false; 
 	$errorMsgs[] = getGS("You must complete the $1 field.", "<B>".getGS("Name")."</B>");
-} 
-
-if ($correct) {
-	$numMatches = Country::GetNumCountries($f_country_language, null, $f_country_name);
-	if ($numMatches == 0) {
-		$country->setName($f_country_name);
+} else {
+	if ($country->setName($f_country_name)) {
 		header("Location: /$ADMIN/country/edit.php?f_country_code=$f_country_code&f_country_language=$f_country_language");
 		exit;
 	} else { 

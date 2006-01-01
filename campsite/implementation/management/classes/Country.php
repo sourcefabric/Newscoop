@@ -50,6 +50,7 @@ class Country extends DatabaseObject {
 			$logtext = getGS('Country $1 added', $this->m_data['Name']." (".$this->m_data['Code'].")");
 			Log::Message($logtext, null, 131);		
 		}
+		return $success;
 	} // fn create
 	
 	
@@ -61,6 +62,7 @@ class Country extends DatabaseObject {
 			$logtext = getGS('Country $1 deleted', $this->m_data['Name'].' ('.$this->m_data['Code'].')' ); 
 			Log::Message($logtext, null, 134);
 		}		
+		return $success;
 	} // fn delete
 	
 	
@@ -98,6 +100,7 @@ class Country extends DatabaseObject {
 			$logtext = getGS('Country name $1 changed', $this->m_data['Name']." (".$this->m_data['Code'].")");
 			Log::Message($logtext, null, 133);
 		}
+		return $success;
 	} // fn setName
 	
 	
