@@ -22,11 +22,17 @@ function verify_user_type()
 	return $uType;
 }
 
+$defaultUserSearchParameters = array('full_name'=>'', 'user_name'=>'', 'email'=>'',
+	'subscription_how'=>'expires', 'subscription_when'=>'before', 'subscription_date'=>'',
+	'subscription_status'=>'', 'startIP1'=>'', 'startIP2'=>'', 'startIP3'=>'', 'startIP4'=>'');
+$userSearchParameters = array('full_name'=>'', 'user_name'=>'', 'email'=>'',
+	'subscription_how'=>'expires', 'subscription_when'=>'before', 'subscription_date'=>'',
+	'subscription_status'=>'', 'startIP1'=>'', 'startIP2'=>'', 'startIP3'=>'', 'startIP4'=>'');
+
 function read_user_common_parameters()
 {
-	global $uType, $userOffs, $lpp, $full_name, $user_name, $email, $subscription_how;
-	global $subscription_when, $subscription_date, $subscription_status, $res, $resMsg;
-	global $startIP1, $startIP2, $startIP3, $startIP4;
+	global $uType, $userOffs, $lpp, $res, $resMsg;
+	global $defaultUserSearchParameters, $userSearchParameters;
 
 	$uType = Input::Get('uType', 'string', '');
 	$userOffs = camp_session_get('userOffs', 0);
@@ -34,21 +40,44 @@ function read_user_common_parameters()
 		$userOffs = 0;
 	}
 	$lpp = Input::Get('lpp', 'int', 10);
-	$full_name = camp_session_get('full_name', '');
-	$user_name = camp_session_get('user_name', '');
-	$email = camp_session_get('email', '');
-	if ($uType == "Subscribers") {
-		$subscription_how = camp_session_get('subscription_how', '');
-		$subscription_when = camp_session_get('subscription_when', '');
-		$subscription_date = camp_session_get('subscription_date', '');
-		$subscription_status = camp_session_get('subscription_status', '');
+	foreach ($userSearchParameters as $parameter=>$defaultValue) {
+		$userSearchParameters[$parameter] =
+			camp_session_get($parameter, $defaultUserSearchParameters[$parameter]);
 	}
 	$res = Input::Get('res', 'string', 'OK');
 	$resMsg = Input::Get('resMsg', 'string', '');
-	$startIP1 = camp_session_get('StartIP1', 0);
-	$startIP2 = camp_session_get('StartIP2', 0);
-	$startIP3 = camp_session_get('StartIP3', 0);
-	$startIP4 = camp_session_get('StartIP4', 0);
+}
+
+function user_search_is_set()
+{
+	global $defaultUserSearchParameters, $userSearchParameters;
+	
+	foreach ($userSearchParameters as $parameter=>$defaultValue) {
+		if ($userSearchParameters[$parameter] != $defaultUserSearchParameters[$parameter]) {
+			return true;
+		}
+	}
+	return false;
+}
+
+function reset_user_search_parameters()
+{
+	global $userSearchParameters, $_REQUEST, $_GET, $_POST, $_SESSION;
+	
+	foreach ($userSearchParameters as $parameter=>$defaultValue) {
+		if (isset($_REQUEST[$parameter])) {
+			unset($_REQUEST[$parameter]);
+		}
+		if (isset($_GET[$parameter])) {
+			unset($_GET[$parameter]);
+		}
+		if (isset($_POST[$parameter])) {
+			unset($_POST[$parameter]);
+		}
+		if (isset($_SESSION[$parameter])) {
+			unset($_SESSION[$parameter]);
+		}
+	}
 }
 
 function compute_user_rights($User, &$canManage, &$canDelete)

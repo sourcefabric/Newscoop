@@ -85,7 +85,7 @@ class LocalizerFileFormat_GS extends LocalizerFileFormat {
         
         // write data to file        
         if (PEAR::isError(File::write($filePath, $data, FILE_MODE_WRITE))) {
-        	echo "<br>error writing file<br>";
+//        	echo "<br>error writing file<br>";
             return FALSE;
         }
         File::close($filePath, FILE_MODE_WRITE);
@@ -223,7 +223,7 @@ class LocalizerFileFormat_XML extends LocalizerFileFormat {
         //echo "Saving as ".$this->m_filePath."<Br>";
         // write data to file        
         if (PEAR::isError(File::write($filePath, $xml, FILE_MODE_WRITE))) {
-        	echo "<br>error writing file<br>";
+//        	echo "<br>error writing file<br>";
             return FALSE;
         }        
         

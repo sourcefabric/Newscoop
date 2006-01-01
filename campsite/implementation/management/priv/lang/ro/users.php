@@ -1,4 +1,5 @@
 <?php
+regGS("Reset search form", "");
 regGS("That user name already exists, please choose a different login name.", "");
 regGS("User may delete article attachments", "");
 regGS("User may change article attachments", "");
