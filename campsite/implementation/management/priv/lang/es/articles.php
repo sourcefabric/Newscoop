@@ -49,7 +49,6 @@ regGS("All", "");
 regGS("Add Event", "");
 regGS("A section must be created for the selected language.  Please enter the section name and URL name.", "");
 regGS("Article Type", "");
-regGS("Are you sure you want to delete this scheduled action?", "");
 regGS("$1 articles found", "");
 regGS("Show article on front page", "Mostrar artículo en portada");
 regGS("Show article on section page", "Mostrar artículo en portada de sección");
@@ -63,5 +62,13 @@ regGS("Are you sure you want to unlock it?", "¿Esta seguro que desea bloquearlo
 regGS("Article is locked", "");
 regGS("Duplicate article", "Duplicar articulo");
 regGS("The destination section is the same as the source section.", "La seccion destino es la misma que la seccion fuente.");
+regGS("The article is new; it is not possible to schedule it for automatic publishing.", "");
+regGS("No article types were defined. You must create an article type first.", "");
+regGS("Edit article types", "");
+regGS("Could not save the article. It has been locked by $1 $2 hours and $3 minutes ago.", "");
+regGS("You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.", "");
+regGS("You do not have the right to delete articles.", "");
+regGS("You must select an article type.", "");
 regGS("Are you sure you want to remove the image \'$1\' from the article?", "");
+regGS("Are you sure you want to delete this scheduled action?", "");
 ?>

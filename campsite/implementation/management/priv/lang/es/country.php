@@ -12,4 +12,5 @@ regGS("The country name $1 could not be changed", "El nombre de país $1 no pudo
 regGS("Translate country name", "Traduzca nombre de país");
 regGS("You do not have the right to translate country names.", "No tiene derecho a traducir nombre de país");
 regGS("The country name $1 could not be translated", "El nombre de país $1 no pudo ser traducido");
+regGS("Add New Country", "Añadir nuevo país");
 ?>
