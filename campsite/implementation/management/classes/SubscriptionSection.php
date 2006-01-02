@@ -100,8 +100,7 @@ class SubscriptionSection extends DatabaseObject {
 		$sent = $this->getProperty('NoticeSent');
 		if ($sent == 'Y') {
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
 	} // fn noticeSent

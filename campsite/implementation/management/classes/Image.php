@@ -130,8 +130,7 @@ class Image extends DatabaseObject {
 					.' AND Articles.Number=ArticlesImage.NrArticle';
 		if ($Campsite['db']->GetOne($queryStr)) {
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
 	} // fn inUse
@@ -272,8 +271,7 @@ class Image extends DatabaseObject {
 		global $Campsite;
 		if ($this->m_data['Location'] == 'local') {
 			return $Campsite['IMAGE_BASE_URL'].$this->m_data['ImageFileName'];
-		}
-		else {
+		} else {
 			return $this->m_data['URL'];
 		}
 	} // fn getImageUrl
@@ -407,8 +405,7 @@ class Image extends DatabaseObject {
 	    // If we are using PHP version >= 4.3
 	    if (isset($imageInfo['mime'])) {
 	    	$image->setProperty('ContentType', $imageInfo['mime'], false);
-	    }
-	    else {
+	    } else {
 			$image->setProperty('ContentType', $p_fileVar['type'], false);
 	    }
 		if (!is_null($p_userId)) {

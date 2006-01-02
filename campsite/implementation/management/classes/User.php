@@ -479,8 +479,7 @@ class User extends DatabaseObject {
 				return array(true, $user);
 			}
 			return array(false, null);
-		}
-		else {
+		} else {
 			return array(false, null);
 		}
 	} // fn Login

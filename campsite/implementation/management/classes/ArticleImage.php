@@ -40,8 +40,7 @@ class ArticleImage extends DatabaseObject {
 			$this->m_data['NrArticle'] = $p_articleNumber;
 			$this->m_data['IdImage'] = $p_imageId;
 			$this->fetch();
-		}
-		elseif (!is_null($p_articleNumber) && !is_null($p_templateId)) {
+		} elseif (!is_null($p_articleNumber) && !is_null($p_templateId)) {
 			$this->m_data['NrArticle'] = $p_articleNumber;
 			$this->m_data['Number'] = $p_templateId;
 			$this->m_keyColumnNames = array('NrArticle', 'Number');
@@ -119,8 +118,7 @@ class ArticleImage extends DatabaseObject {
 		$value = $Campsite['db']->GetOne($queryStr);
 		if ($value !== false) {
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
 	} // fn TemplateIdInUse

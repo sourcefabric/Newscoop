@@ -104,8 +104,7 @@ class DatabaseObject {
 	{ 
 		if (!$p_withTablePrefix) {
 			return $this->m_columnNames; 
-		}
-		else {
+		} else {
 			$prefixNames = array();
 			foreach ($this->m_columnNames as $columnName) {
 				$prefixNames[] = $this->m_dbTableName.'.'.$columnName;
@@ -181,8 +180,7 @@ class DatabaseObject {
 		if (is_array($p_columnNames)) {
 			if (isset($p_columnNames[0])) {
 				$this->m_keyColumnNames = array_values($p_columnNames);
-			}
-			else {
+			} else {
 				$this->m_keyColumnNames = array_keys($p_columnNames);
 				foreach ($this->m_keyColumnNames as $columnName) {
 					$this->modifyKeyValue($columnName, $p_columnNames[$columnName]);
@@ -237,13 +235,11 @@ class DatabaseObject {
 					$this->m_data[$dbColumnName] = $resultSet[$dbColumnName];
 				}
 				$this->m_exists = true;
-			}
-			else {
+			} else {
 				$this->m_exists = false;
 				return false;
 			}
-		}
-		else {
+		} else {
 		    // We were given a pre-fetched recordset.
 		    $this->m_data =& $p_recordSet;
 		    // Make sure all columns have a value even if they arent in the dataset.
@@ -290,8 +286,7 @@ class DatabaseObject {
 		foreach ($this->m_keyColumnNames as $columnName) {
 			if (isset($this->m_oldKeyValues[$columnName])) {
 				$whereParts[] = '`' . $columnName . "`='".mysql_real_escape_string($this->m_oldKeyValues[$columnName]) ."'";
-			}
-			else {
+			} else {
 				$whereParts[] = '`' . $columnName . "`='"
 					.mysql_real_escape_string($this->m_data[$columnName]) ."'";					
 			}
@@ -344,8 +339,7 @@ class DatabaseObject {
 			foreach ($columns as $tmpKey => $tmpValue) {
 				$columnValues[$tmpKey] = "'".mysql_real_escape_string($tmpValue)."'";
 			}
-		}
-		elseif (!$this->m_keyIsAutoIncrement) {
+		} elseif (!$this->m_keyIsAutoIncrement) {
 			// We dont have the key values and
 			// the key is not an auto-increment value,
 			// so we cant create the row.
@@ -445,12 +439,10 @@ class DatabaseObject {
 					if ($this->m_data[$p_dbColumnName] !== false) {
 						$this->m_exists = true;
 					}
-				}
-				else {
+				} else {
 				    if (!$this->keyValuesExist()) {
                         return new PEAR_Error('Key values do not exist - cannot fetch row.');
-				    }
-				    else {
+				    } else {
 				        return new PEAR_Error('Column name does not exist - cannot fetch row.');
 				    }
 				}
@@ -496,8 +488,7 @@ class DatabaseObject {
 		if (!array_key_exists($p_dbColumnName, $this->m_data)) {
 			if (in_array($p_dbColumnName, $this->m_columnNames)) {
 				$this->m_data[$p_dbColumnName] = null;
-			}
-			else {
+			} else {
 				return false;
 			}
 		}
@@ -539,8 +530,7 @@ class DatabaseObject {
 		// Store the value locally.
 		if (!$p_isSql) {
 			$this->m_data[$p_dbColumnName] = $p_value;
-		}
-		else {
+		} else {
 			// Fetch the data from the database.  This is for the
 			// case when the database execute some operation (e.g. 'DATE')
 			// to create the new value.
@@ -551,8 +541,7 @@ class DatabaseObject {
 			if ($value !== false) {
 				$this->m_data[$p_dbColumnName] = $value;
 				$this->m_exists = true;
-			}
-			else {
+			} else {
 				$errorMsg = $Campsite['db']->ErrorMsg();
 			}
 		}
@@ -738,8 +727,7 @@ class DatabaseObject {
 			if (isset($p_sqlOptions['ORDER BY'])) {
 				if (!is_array($p_sqlOptions['ORDER BY'])) {
 					$p_queryStr .= ' ORDER BY '.$p_sqlOptions['ORDER BY'];	
-				}
-				else {
+				} else {
 					$p_queryStr .= ' ORDER BY ';
 					$tmpItems = array();
 					foreach ($p_sqlOptions['ORDER BY'] as $key => $orderItem) {
@@ -747,8 +735,7 @@ class DatabaseObject {
 						if (is_numeric($key)) {
 							// Not using the ASC/DESC option
 							$tmpItems[] = $orderItem;
-						}
-						else {
+						} else {
 							$orderItem = strtoupper($orderItem);
 							if (($orderItem == 'ASC') || ($orderItem == 'DESC')) {
 								// Using the ASC/DESC option
@@ -763,8 +750,7 @@ class DatabaseObject {
 				if (is_array($p_sqlOptions['LIMIT'])) {
 					$p_queryStr .= ' LIMIT '.$p_sqlOptions['LIMIT']['START']
 						.','.$p_sqlOptions['LIMIT']['MAX_ROWS'];
-				}
-				else {
+				} else {
 					$p_queryStr .= ' LIMIT '.$p_sqlOptions['LIMIT'];					
 				}
 			}			

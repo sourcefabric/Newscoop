@@ -317,8 +317,7 @@ class Template extends DatabaseObject {
 		$queryStr = 'SELECT * FROM Templates';
 		if (!is_null($p_sqlOptions)) {
 			$queryStr = DatabaseObject::ProcessOptions($queryStr, $p_sqlOptions);
-		}
-		else {
+		} else {
 			$queryStr .= ' ORDER BY Level ASC, Name ASC';
 		}
 		$templates = DbObjectArray::Create('Template', $queryStr);

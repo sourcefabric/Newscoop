@@ -98,8 +98,7 @@ class Subscription extends DatabaseObject {
 		$active = $this->getProperty('Active');
 		if ($active == 'Y') {
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
 	} // fn isActive
@@ -247,8 +246,7 @@ class Subscription extends DatabaseObject {
 				$startDate = 'NOW()';
 				$days = $defaultDays[$row['Type']];
 				$paidDays = $defaultPaidDays[$row['Type']];
-			}
-			else {
+			} else {
 				$startDate = "'" . $row['StartDate'] . "'";
 			}
 			

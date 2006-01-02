@@ -91,8 +91,7 @@ class ArticleTypeField {
 		$exists = $Campsite['db']->GetOne($queryStr);
 		if ($exists) {
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
 	} // fn exists
@@ -108,8 +107,7 @@ class ArticleTypeField {
 			foreach ($p_recordSet as $key => $value) {
 				$this->$key = $value;
 			}
-		}
-		else {
+		} else {
 			$queryStr = 'SHOW COLUMNS FROM '.$this->m_dbTableName
 						." LIKE 'F".$this->m_dbColumnName."'";
 			$row = $Campsite['db']->GetAll($queryStr);

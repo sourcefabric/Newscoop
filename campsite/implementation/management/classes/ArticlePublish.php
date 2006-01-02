@@ -121,8 +121,7 @@ class ArticlePublish extends DatabaseObject {
 		$p_value = strtoupper($p_value);
 		if ( ($p_value == 'P') || ($p_value == 'U') ) {
 			$this->setProperty('publish_action', $p_value);
-		}
-		elseif (is_null($p_value)) {
+		} elseif (is_null($p_value)) {
 			$this->setProperty('publish_action', 'NULL', true, true);
 		}
 	} // fn setPublishAction
@@ -149,8 +148,7 @@ class ArticlePublish extends DatabaseObject {
 		$p_value = strtoupper($p_value);
 		if ( ($p_value == 'S') || ($p_value == 'R') ) {
 			$this->setProperty('publish_on_front_page', $p_value);
-		}
-		elseif (is_null($p_value)) {
+		} elseif (is_null($p_value)) {
 			$this->setProperty('publish_on_front_page', 'NULL', true, true);
 		}
 	} // fn setFrontPageAction
@@ -177,8 +175,7 @@ class ArticlePublish extends DatabaseObject {
 		$p_value = strtoupper($p_value);
 		if ( ($p_value == 'S') || ($p_value == 'R') ) {
 			$this->setProperty('publish_on_section_page', $p_value);
-		}
-		elseif (is_null($p_value)) {
+		} elseif (is_null($p_value)) {
 			$this->setProperty('publish_on_section_page', 'NULL', true, true);
 		}
 	} // fn setSectionPageAction

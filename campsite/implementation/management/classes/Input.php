@@ -76,8 +76,7 @@ class Input {
 		if (get_magic_quotes_gpc()) {
 			if (is_array($_REQUEST[$p_varName])) {
 				$_REQUEST[$p_varName] = Input::CleanMagicQuotes($_REQUEST[$p_varName]);
-			}
-			else {
+			} else {
 				$_REQUEST[$p_varName] = stripslashes($_REQUEST[$p_varName]);
 			}
 		}
@@ -125,8 +124,7 @@ class Input {
 		global $g_inputErrors;
 		if (count($g_inputErrors) > 0) {
 			return false;
-		}
-		else {
+		} else {
 			return true;
 		}
 	} // fn isValid

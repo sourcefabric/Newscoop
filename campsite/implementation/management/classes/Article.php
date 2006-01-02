@@ -230,8 +230,7 @@ class Article extends DatabaseObject {
 		    	}
 		    	$copyArticles = $tmpArray;
 		    }
-		}
-		else {
+		} else {
 		    $copyArticles[] = $this;
 		}
 		$newArticleNumber = $this->__generateArticleNumber();
@@ -263,8 +262,7 @@ class Article extends DatabaseObject {
     		$values['LockTime'] = 0;
     		if (!is_null($p_userId)) {
                 $values['IdUser'] = $p_userId;
-    		}
-    		else {
+    		} else {
     		    $values['IdUser'] = $copyMe->m_data['IdUser'];
     		}
     		$values['Name'] = $articleCopy->getUniqueName($copyMe->m_data['Name']);
@@ -301,8 +299,7 @@ class Article extends DatabaseObject {
 		Log::Message($logtext, null, 155);
 		if ($p_copyTranslations) {
 		    return $newArticles;
-		}
-		else {
+		} else {
 		  return array_pop($newArticles);
 		}
 	} // fn copy
@@ -329,8 +326,7 @@ class Article extends DatabaseObject {
 			$row = $Campsite['db']->GetRow($queryStr);
 			if (count($row) > 0) {
 				$newName = $origNewName.' '.++$count.')';
-			}
-			else {
+			} else {
 				break;
 			}
 		}
@@ -711,8 +707,7 @@ class Article extends DatabaseObject {
 			|| ($p_user->hasPermission('ChangeArticle') && $articleIsNotPublished)
 			|| ($userCreatedArticle && $articleIsNew)) {
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
 	} // fn userCanModify

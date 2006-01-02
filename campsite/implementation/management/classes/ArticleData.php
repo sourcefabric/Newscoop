@@ -95,8 +95,7 @@ class ArticleData extends DatabaseObject {
 				." WHERE NrArticle=$p_destArticleNumber ";
 		if (!is_null($p_destLanguageId)) {
 			$queryStr .= " AND IdLanguage=".$p_destLanguageId;
-		}
-		else {
+		} else {
 			$queryStr .= " AND IdLanguage=".$this->m_data['IdLanguage'];
 		}
 		$Campsite['db']->Execute($queryStr);

@@ -81,8 +81,7 @@ class ArticleType {
 		$result = $Campsite['db']->GetOne($queryStr);
 		if ($result) {
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
 	} // fn exists
