@@ -46,7 +46,7 @@ class SimplePager {
 		if ($p_itemsPerPage < 1) {
 			$p_itemsPerPage = 1;
 		}
-		
+
 		// Only generate pager if there is more than one page of information.
 		if ($p_totalItems > $p_itemsPerPage) {
 			
@@ -70,6 +70,10 @@ class SimplePager {
 			
 			$this->m_numPages = count($this->m_offsets);
 			$this->m_selectedPageNumber = floor($this->m_offset/$p_itemsPerPage)+1;
+		
+			if ($p_width > $this->m_numPages) {	
+				$p_width = $this->m_numPages;	
+			}
 			
 			// Generate the numbered links
 			if ($this->m_selectedPageNumber < ($p_width/2 + 1)) {
