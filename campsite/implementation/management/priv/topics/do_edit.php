@@ -29,7 +29,7 @@ if (empty($f_name)) {
 if ($correct) {
 	$updated = $editTopic->setName($f_name);
 	if ($updated) {
-		header("Location: /$ADMIN/topics/edit.php?f_topic_parent_id=$f_topic_parent_id&f_topic_edit_id=$f_topic_edit_id");
+		header("Location: /$ADMIN/topics/index.php?f_topic_parent_id=$f_topic_parent_id");
 		exit;
 	}
 } else {
