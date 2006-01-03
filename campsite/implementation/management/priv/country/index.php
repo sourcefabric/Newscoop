@@ -9,18 +9,18 @@ if (!$access) {
 	exit;
 }
 
-$f_language_selected = Input::Get('f_language_selected', 'string', '', true);
+$f_country_language_selected = camp_session_get('f_country_language_selected', '');
 $f_country_offset = camp_session_get('f_country_offset', 0);
-if (empty($f_language_selected)) {
-	$f_language_selected = null;
+if (empty($f_country_language_selected)) {
+	$f_country_language_selected = null;
 }
 $ItemsPerPage = 20;
 $languages = Language::GetLanguages();
-$countries = Country::GetCountries($f_language_selected, null, null, 
+$countries = Country::GetCountries($f_country_language_selected, null, null, 
 				array("LIMIT" => array("START" => $f_country_offset, "MAX_ROWS" => $ItemsPerPage)));
-$numCountries = Country::GetNumCountries($f_language_selected);
+$numCountries = Country::GetNumCountries($f_country_language_selected);
 
-$pager =& new SimplePager($numCountries, $ItemsPerPage, "f_country_offset", "index.php?f_language_selected=".urlencode($f_language_selected)."&");
+$pager =& new SimplePager($numCountries, $ItemsPerPage, "f_country_offset", "index.php?");
 
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
@@ -50,11 +50,11 @@ echo camp_html_breadcrumbs($crumbs);
 		<TR>
 			<TD><?php  putGS('Language') ?>:</TD>
 			<TD>
-				<SELECT NAME="f_language_selected" class="input_select">
+				<SELECT NAME="f_country_language_selected" class="input_select">
 				<OPTION></option>
 				<?php 
 				foreach ($languages as $language) {
-					camp_html_select_option($language->getLanguageId(), $f_language_selected, $language->getNativeName());
+					camp_html_select_option($language->getLanguageId(), $f_country_language_selected, $language->getNativeName());
 			    }
 				?>
 				</SELECT>
