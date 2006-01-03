@@ -125,7 +125,8 @@ class Localizer {
      *
      * @param string $p_prefix -
      *      Beginning of the file name, before the ".php" extension.
-     *
+     * @param  string $p_languageCode -
+     * 		The two-letter language code of the language you want to load.
      * @return void
      */
 	function LoadLanguageFiles($p_prefix, $p_languageCode = null) 
@@ -290,7 +291,7 @@ class Localizer {
     
     /**
      * Return the set of strings in the code that are not in the translation files.
-     * @param string $p_directory -
+     * @param string $p_prefix 
      * @return array
      */
     function FindMissingStrings($p_prefix) 
@@ -310,7 +311,6 @@ class Localizer {
     /**
      * Return the set of strings in the translation files that are not used in the code.
      * @param string $p_prefix
-     * @param string $p_directory -
      * @return array
      */
     function FindUnusedStrings($p_prefix) 
@@ -504,6 +504,13 @@ class Localizer {
     } // fn RepositionString
 
     
+    /**
+     * Move a string from one file to another.
+     *
+     * @param string $p_oldPrefix
+     * @param string $p_newPrefix
+     * @param string $p_key
+     */
     function ChangeStringPrefix($p_oldPrefix, $p_newPrefix, $p_key) 
     {
         $languages = Localizer::GetLanguages();
@@ -518,8 +525,8 @@ class Localizer {
 			$target->addString($p_key, $srcValue);
 			$source->deleteString($p_key);
 			
-			$source->saveFile(Localizer::GetMode());
 			$target->saveFile(Localizer::GetMode());
+			$source->saveFile(Localizer::GetMode());
         }    	
     } // fn ChangeStringPrefix
     
@@ -584,50 +591,30 @@ class Localizer {
 
 
 	/**
-     * Create a new directory and make a copy of current default language files.
-     * @param string $p_languageId
+     * Create a new directory to store the language files.
+     * @param string $p_languageCode
      * @return void
      */
-    function CreateLanguageFiles($p_languageId) 
+    function CreateLanguageFiles($p_languageCode) 
     {
         global $g_localizerConfig;
         
         // Make new directory
-        if (!mkdir($g_localizerConfig['TRANSLATION_DIR']."/".$p_languageId)) {
+        if (!mkdir($g_localizerConfig['TRANSLATION_DIR']."/".$p_languageCode)) {
             return;
-        }
-        
-        // Copy files from reference language
-        
-//        $className = "LocalizerFileFormat_".strtoupper(Localizer::GetMode());
-//        foreach ($files as $pathname) {
-//            if ($pathname) {
-//                $fileNameParts = explode('.', basename($pathname));
-//                $base = $fileNameParts[0];
-//                $dir = str_replace($g_localizerConfig['BASE_DIR'], '', dirname($pathname));
-//                // read the default file
-//                $defaultLang =& new LocalizerLanguage($base, $g_localizerConfig['DEFAULT_LANGUAGE']);
-//                $defaultLang->loadFile(Localizer::GetMode());
-//                $defaultLang->clearValues();
-//                $defaultLang->setLanguageId($p_languageId);
-//                // if file already exists -> skip
-//                if (!file_exists($defaultLang->getFilePath())) {
-//	                $defaultLang->saveFile(Localizer::GetMode());
-//                }
-//            }
-//        }
+        }        
     } // fn CreateLanguageFiles
 
     
     /**
-     * Go through subdirectorys and delete language files for given Id.
-     * @param string $p_languageId
+     * Delete language files for the given language.
+     * @param string $p_languageCode
      * @return void
      */
-    function DeleteLanguageFiles($p_languageId) 
+    function DeleteLanguageFiles($p_languageCode) 
     {
         global $g_localizerConfig;
-        $langDir = $g_localizerConfig['TRANSLATION_DIR'].'/'.$p_languageId;
+        $langDir = $g_localizerConfig['TRANSLATION_DIR'].'/'.$p_languageCode;
         if (!file_exists($langDir)) {
             return;
         }
