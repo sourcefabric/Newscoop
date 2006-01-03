@@ -6,7 +6,7 @@ require_once($_SERVER['DOCUMENT_ROOT']. '/classes/UserType.php');
 
 list($access, $User) = check_basic_access($_REQUEST);
 
-read_user_common_parameters(); // $uType, $userOffs, $lpp, search parameters
+read_user_common_parameters(); // $uType, $userOffs, $ItemsPerPage, search parameters
 verify_user_type();
 compute_user_rights($User, $canManage, $canDelete);
 

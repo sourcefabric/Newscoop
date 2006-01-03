@@ -5,7 +5,7 @@ require_once($_SERVER['DOCUMENT_ROOT']. "/classes/Log.php");
 
 list($g_hasAccess, $g_user) = check_basic_access($_REQUEST);
 
-read_user_common_parameters(); // $uType, $userOffs, $lpp, search parameters
+read_user_common_parameters(); // $uType, $userOffs, $ItemsPerPage, search parameters
 $uType = 'Subscribers';
 compute_user_rights($g_user, $g_canManage, $g_canDelete);
 if (!$g_canManage) {

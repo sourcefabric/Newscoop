@@ -8,7 +8,7 @@ list($access, $User) = check_basic_access($_REQUEST);
 if (Input::Get('reset_search', 'string', 'false', true) == 'true') {
 	reset_user_search_parameters();
 }
-read_user_common_parameters(); // $uType, $userOffs, $lpp, search parameters
+read_user_common_parameters(); // $uType, $userOffs, $ItemsPerPage, search parameters
 verify_user_type();
 compute_user_rights($User, $canManage, $canDelete);
 
@@ -51,7 +51,7 @@ echo $breadcrumbs;
 if ($canManage) {
 	$addLink = "edit.php?" . get_user_urlparams(0, true, true);
 ?>
-	<td style="padding-left: 20px;" valign="bottom">
+	<td valign="bottom">
 		<a href="<?php echo $addLink; ?>">
 		<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" border="0">
 <?php
@@ -198,17 +198,17 @@ if ($userSearchParameters['subscription_date'] != "") {
 	$sql .= " GROUP BY s.Id";
 }
 $sql .= " ORDER BY " . $orderFields[$orderField] . " $orderDir";
-$searchSql = $sqlBase.$sql." LIMIT $userOffs, $lpp";
+$searchSql = $sqlBase.$sql." LIMIT $userOffs, $ItemsPerPage";
 $res = $Campsite['db']->Execute($searchSql);
 
 $countSql = "SELECT COUNT(*) FROM Users as u ".$sql;
 $totalUsers = $Campsite['db']->GetOne($countSql);
 
-$pager =& new SimplePager($totalUsers, $lpp, "userOffs", "index.php?".get_user_urlparams(0)."&", false);
+$pager =& new SimplePager($totalUsers, $ItemsPerPage, "userOffs", "index.php?".get_user_urlparams(0)."&", false);
 
 if (gettype($res) == 'object' && $res->NumRows() > 0) {
 	$nr = $res->NumRows();
-	$last = $nr > $lpp ? $lpp : $nr;
+	$last = $nr > $ItemsPerPage ? $ItemsPerPage : $nr;
 	?>
 	<table class="indent">
 	<tr>
@@ -219,33 +219,38 @@ if (gettype($res) == 'object' && $res->NumRows() > 0) {
 	</table>
 	<table border="0" cellspacing="1" cellpadding="3" class="table_list">
 	<tr class="table_list_header">
-		<td align="left" valign="center">
+		<td align="left" valign="middle">
 			<table><tr>
 			<td><b><a href="?<?php echo "$typeParam&" . $orderURLs['fname']; ?>"><?php putGS("Full Name"); ?></a></b></td>
 			<td><?php if ($orderField == 'fname') echo $orderSigns['fname']; ?></td>
 			</tr></table>
 		</td>
-		<td align="left" valign="center">
+		<td align="left" valign="middle">
 			<table><tr>
 			<td><b><a href="?<?php echo "$typeParam&" . $orderURLs['uname']; ?>"><?php putGS("Account Name"); ?></a></b></td>
 			<td><?php if ($orderField == 'uname') echo $orderSigns['uname']; ?></td>
 			</tr></table>
 		</td>
-		<td align="left" valign="center"><b><?php putGS("E-Mail"); ?></b></td>
-<?php if ($uType == "Subscribers" && $User->hasPermission("ManageSubscriptions")) { ?>
-		<td align="left" valign="top"><b><?php putGS("Subscriptions"); ?></b></td>
-<?php } ?>
-		<td align="left" valign="center">
+		<td align="left" valign="middle"><b><?php putGS("E-Mail"); ?></b></td>
+		
+		<?php if ($uType == "Subscribers" && $User->hasPermission("ManageSubscriptions")) { ?>
+		<td align="left" valign="middle"><b><?php putGS("Subscriptions"); ?></b></td>
+		<?php } ?>
+		
+		<?php if ($uType == "Staff") { ?>
+		<td align="left" valign="middle">
 			<?php putGS("User Type"); ?>
 		</td>
-		<td align="left" valign="center">
+		<?php } ?>
+		
+		<td align="left" valign="middle">
 			<table><tr>
 			<td><b><a href="?<?php echo "$typeParam&" . $orderURLs['cdate']; ?>"><?php putGS("Creation Date"); ?></a></b></td>
 			<td><?php if ($orderField == 'cdate') echo $orderSigns['cdate']; ?></td>
 			</tr></table>
 		</td>
 <?php if ($canDelete) { ?>
-		<td align="left" valign="center"><b><?php putGS("Delete"); ?></b></td>
+		<td align="left" valign="middle"><b><?php putGS("Delete"); ?></b></td>
 <?php } ?>
 	</TR>
 <?php 
@@ -275,7 +280,11 @@ for($loop = 0; $loop < $last; $loop++) {
 			<?php putGS("Subscriptions"); ?>
 		</td>
 		<?php } ?>
+
+		<?php if ($uType == "Staff") { ?>
 		<td><?php if ($userType !== false) { echo $userType->getName(); } ?></td>
+		<?php } ?>
+		
 		<td>
 			<?php
 				$creationDate = $row['time_created'];

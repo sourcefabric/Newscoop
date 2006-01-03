@@ -31,7 +31,7 @@ $userSearchParameters = array('full_name'=>'', 'user_name'=>'', 'email'=>'',
 
 function read_user_common_parameters()
 {
-	global $uType, $userOffs, $lpp, $res, $resMsg;
+	global $uType, $userOffs, $ItemsPerPage, $res, $resMsg;
 	global $defaultUserSearchParameters, $userSearchParameters;
 
 	$uType = Input::Get('uType', 'string', '');
@@ -39,7 +39,7 @@ function read_user_common_parameters()
 	if ($userOffs < 0) {
 		$userOffs = 0;
 	}
-	$lpp = Input::Get('lpp', 'int', 10);
+	$ItemsPerPage = Input::Get('ItemsPerPage', 'int', 10);
 	foreach ($userSearchParameters as $parameter=>$defaultValue) {
 		$userSearchParameters[$parameter] =
 			camp_session_get($parameter, $defaultUserSearchParameters[$parameter]);
