@@ -56,7 +56,7 @@ class Language extends DatabaseObject {
 		$success = parent::create($p_values);
 		if ($success) {
 	    	Localizer::CreateLanguageFiles($this->m_data['Code']);
-	    	create_language_links();
+	    	camp_create_language_links();
 			if (function_exists("camp_load_language")) { camp_load_language("api");	}
 	        $logtext = getGS('Language $1 added', $this->m_data['Name']." (".$this->m_data['OrigName'].")"); 
 	        Log::Message($logtext, null, 101);

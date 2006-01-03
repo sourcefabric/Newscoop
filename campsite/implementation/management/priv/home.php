@@ -56,14 +56,14 @@ echo $breadcrumbs;
 $restartEngine = Input::Get('restart_engine', 'string', 'no', true);
 if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine")) {
 	require_once($_SERVER['DOCUMENT_ROOT']."/parser_utils.php");
-	if (stop_parser()) {
+	if (camp_stop_parser()) {
 		$resetMsg = getGS("The template engine was (re)started.");
 		$res = "OK";
 	} else {
 		$resetMsg = getGS("The template engine could not be restarted! Please verify if the template engine was started by other user than $1.", $Campsite['APACHE_USER']);
 		$res = "ERROR";
 	}
-	start_parser();
+	camp_start_parser();
 }
 ?>
 <?php if (!empty($resetMsg)) { ?>
