@@ -23,7 +23,7 @@ if (empty($f_country_name)) {
 	$errorMsgs[] = getGS("You must complete the $1 field.", "<B>".getGS("Name")."</B>");
 } else {
 	if ($country->setName($f_country_name)) {
-		header("Location: /$ADMIN/country/edit.php?f_country_code=$f_country_code&f_country_language=$f_country_language");
+		header("Location: /$ADMIN/country/index.php");
 		exit;
 	} else { 
 		$errorMsgs[] = getGS('The country name $1 could not be changed','<B>'.htmlspecialchars($country->getName()).'</B>');
