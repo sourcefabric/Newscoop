@@ -85,8 +85,8 @@ function camp_html_article_link($p_articleObj, $p_interfaceLanguageId, $p_target
  * @param Article $p_articleObj
  *		The article we want to display.
  *
- * @param int $p_interfaceLanguageId
- *		The language ID for the interface language. 
+ * @param int $p_sectionLanguageId
+ *		The language ID for the publication/issue/section. 
  *
  * @param string $p_targetFileName
  *		Which file in the "articles" directory to call.
@@ -96,7 +96,7 @@ function camp_html_article_link($p_articleObj, $p_interfaceLanguageId, $p_target
  *
  * @param string $p_extraParams
  */
-function camp_html_article_url($p_articleObj, $p_interfaceLanguageId, $p_targetFileName = "", $p_backLink = "", $p_extraParams = null) 
+function camp_html_article_url($p_articleObj, $p_sectionLanguageId, $p_targetFileName = "", $p_backLink = "", $p_extraParams = null) 
 {
 	global $ADMIN;
 	$str = "/$ADMIN/articles/".$p_targetFileName
@@ -104,7 +104,7 @@ function camp_html_article_url($p_articleObj, $p_interfaceLanguageId, $p_targetF
 		."&f_issue_number=".$p_articleObj->getIssueNumber()
 		."&f_section_number=".$p_articleObj->getSectionNumber()
 		."&f_article_number=".$p_articleObj->getArticleNumber()
-		."&f_language_id=".$p_interfaceLanguageId
+		."&f_language_id=".$p_sectionLanguageId
 		."&f_language_selected=".$p_articleObj->getLanguageId();
 	if ($p_backLink != "") { 
 		$str .="&Back=".urlencode($p_backLink);
