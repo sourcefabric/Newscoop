@@ -1,76 +1,177 @@
-CAMPWARE organization and development
-- Sava Tatic <sava.tatic@mdlf.org>
-- Micz Flor <micz.flor@web.de>
-- Douglas Arellanes <douglas.arellanes@mdlf.org>
-
 Campsite Credits by Version Number
 
-2.4
-- Mugurel Rus: Campsite parser, database, admin interface, install scripts,
-  documentation
-- Paul Baranowski: admin interface, API, Xinha, documentation
-- Ljuba Rankovic (Serbian and Serbo-Croatian) <sr-localizer@campware.org>,
-<sh-localizer@campware.org>
+--------------------
+Campsite 2.4 Credits
+--------------------
+Released January 10, 2006
 
-2.3
-- Mugurel Rus: Campsite parser, database, admin interface, install scripts,
+- Mugurel Rus (mugur1973@yahoo.com): 
+  Campsite parser, database, admin interface, install scripts,
   documentation
-- Paul Baranowski: admin interface, API, Xinha, documentation
-- Sava Tatic: manager, documentation
-- Micz Flor: documentation
-- Aleksandar Brajanoski: testing
-- Ondra Koutek: testing, FreeBSD port
-- John Pye: RPM build
-- Andrei Blagorazumov (Russian) <ru-localizer@campware.org>
-- Ljuba Rankovic (Serbian and Serbo-Croatian) <sr-localizer@campware.org>,
-<sh-localizer@campware.org>
-- Marinko Filipovic and Tatjana Grujic (Croatian) <hr-localizer@campware.org>
-- Micz Flor (German) <de-localizer@campware.org>
-- Pavla Zankova (Czech) <cz-localizer@campware.org>
-- Guilherme Henrique Soares (Portuguese) <pt-localizer@campware.org>
-- Engel Sanchez and William Maas (Spanish) <es-localizer@campware.org>
-- Mugurel Rus and Lucian Muresan (Romanian) <ro-localizer@campware.org>
 
-2.2
-- Mugurel Rus: Campsite parser, database, admin interface, install scripts,
+- Paul Baranowski (paul@paulbaranowski.org): 
+  Admin interface, API, Xinha, install scripts, documentation
+
+- Sava Tatic (sava.tatic@mdlf.org):
+  Management, documentation
+
+- Ljuba Rankovic (sr-localizer@campware.org):
+  Serbian and Serbo-Croatian Translation
+
+- Claudia Cruz (ccruz@elperiodico.com.gt): 
+  Spanish Localization
+
+  
+--------------------
+Campsite 2.3 Credits
+--------------------
+Released August 1, 2005
+
+- Mugurel Rus (mugur1973@yahoo.com):
+  Campsite parser, database, admin interface, install scripts,
+  documentation, Romanian localization
+
+- Paul Baranowski (paul@paulbaranowski.org): 
+  Admin interface, API, Xinha, documentation
+  
+- Sava Tatic (sava.tatic@mdlf.org): 
+  Management, documentation
+
+- Douglas Arellanes (douglas.arellanes@mdlf.org)
+  Management, feedback, documentaion
+
+- Micz Flor (micz.flor@web.de): 
+  Contributed the Docmint tool for the online manual, German Translation
+
+- Aleksandar Brajanoski (braja@tol.org): 
+  Testing
+
+- Ondra Koutek (kouteko@tol.org): 
+  Testing, FreeBSD port
+
+- John Pye (john@curioussymbols.com): 
+  RPM build
+
+- Andrei Blagorazumov (ru-localizer@campware.org):
+  Russian Translation
+  
+- Ljuba Rankovic (sr-localizer@campware.org, sh-localizer@campware.org):
+  Serbian and Serbo-Croatian Translations
+  
+- Marinko Filipovic and Tatjana Grujic (hr-localizer@campware.org):
+  Croatian Translation
+  
+- Pavla Zankova (cz-localizer@campware.org):
+  Czech Translation
+  
+- Guilherme Henrique Soares (pt-localizer@campware.org):
+  Portuguese Translation
+  
+- Engel Sanchez and William Maas (es-localizer@campware.org):
+  Spanish Translation
+
+- Lucian Muresan (ro-localizer@campware.org):
+  Romanian Translation
+
+--------------------
+Campsite 2.2 Credits
+--------------------
+Released April 14, 2005
+
+- Mugurel Rus (mugur1973@yahoo.com):
+  Campsite parser, database, admin interface, install scripts,
   documentation
-- Paul Baranowski: admin interface, API, HTMLArea
-- Sava Tatic: manager, documentation
-- Micz Flor: documentation
-- Aleksandar Brajanoski: testing
-- Ondra Koutek: testing, FreeBSD port
-- Andrei Blagorazumov (Russian) <ru-localizer@campware.org>
-- Ljuba Rankovic (Serbian and Serbo-Croatian) <sr-localizer@campware.org>,
-<sh-localizer@campware.org>
-- Marinko Filipovic and Tatjana Grujic (Croatian) <hr-localizer@campware.org>
-- Micz Flor (German) <de-localizer@campware.org>
-- Pavla Zankova (Czech) <cz-localizer@campware.org>
-- Guilherme Henrique Soares (Portuguese) <pt-localizer@campware.org>
-- Engel Sanchez and William Maas (Spanish) <es-localizer@campware.org>
-- Mugurel Rus and Lucian Muresan (Romanian) <ro-localizer@campware.org>
+  
+- Paul Baranowski (paul@paulbaranowski.org): 
+  Admin interface, API, HTMLArea
+  
+- Sava Tatic (sava.tatic@mdlf.org): 
+  Management, documentation
+  
+- Micz Flor (micz.flor@web.de): 
+  Documentation, German Translation
+  
+- Aleksandar Brajanoski (braja@tol.org): 
+  Testing
 
-2.1
-- Mugurel Rus: campsite server, database, admin interface, install scripts,
+- Ondra Koutek (kouteko@tol.org): 
+  Testing, FreeBSD port
+
+- Andrei Blagorazumov (ru-localizer@campware.org):
+  Russian Translation
+  
+- Ljuba Rankovic (sr-localizer@campware.org, sh-localizer@campware.org):
+  Serbian and Serbo-Croatian Translations
+  
+- Marinko Filipovic and Tatjana Grujic (hr-localizer@campware.org):
+  Croatian Translation
+  
+- Pavla Zankova (cz-localizer@campware.org):
+  Czech Translation
+
+- Guilherme Henrique Soares (pt-localizer@campware.org):
+  Portuguese Translation
+  
+- Engel Sanchez and William Maas (es-localizer@campware.org):
+  Spanish Translation
+
+- Lucian Muresan (ro-localizer@campware.org):
+  Romanian Translation
+
+  
+--------------------
+Campsite 2.1 Credits
+--------------------
+Released November 10, 2002
+
+- Mugurel Rus (mugur1973@yahoo.com):
+  Campsite server, database, admin interface, install scripts,
   documentation
-- Sebastian Gobel: admin interface
-- Micz Flor: documentation
-- Sava Tatic: manager, documentation
-- Aleksandar Brajanoski: Testing
-- Ondra Koutek: Testing
-- Andrei Blagorazumov (Russian) <ru-localizer@campware.org>
-- Ljuba Rankovic (Serbian and Serbo-Croatian) <sr-localizer@campware.org>,
-<sh-localizer@campware.org>
-- Marinko Filipovic and Tatjana Grujic (Croatian) <hr-localizer@campware.org>
-- Micz Flor (German) <de-localizer@campware.org>
-- Pavla Zankova (Czech) <cz-localizer@campware.org>
-- Guilherme Henrique Soares (Portuguese) <pt-localizer@campware.org>
-- Engel Sanchez and William Maas (Spanish) <es-localizer@campware.org>
-- Mugurel Rus and Lucian Muresan (Romanian) <ro-localizer@campware.org>
+  
+- Sebastian Gobel (devel@yellowsunshine.de): 
+  Admin interface
 
-Original Specifications
-- Micz Flor
-- Sava Tatic
-- Aleksandar Brajanoski
+- Micz Flor (micz.flor@web.de): 
+  Documentation, German Translation
+  
+- Sava Tatic (sava.tatic@mdlf.org): 
+  Management, documentation
+  
+- Aleksandar Brajanoski (braja@tol.org): 
+  Testing
+
+- Ondra Koutek (kouteko@tol.org): 
+  Testing
+  
+- Andrei Blagorazumov (ru-localizer@campware.org):
+  Russian Translation
+  
+- Ljuba Rankovic (sr-localizer@campware.org, sh-localizer@campware.org):
+  Serbian and Serbo-Croatian Translations
+  
+- Marinko Filipovic and Tatjana Grujic (hr-localizer@campware.org):
+  Croatian Translation
+  
+- Pavla Zankova (cz-localizer@campware.org):
+  Czech Translation
+
+- Guilherme Henrique Soares (pt-localizer@campware.org):
+  Portuguese Translation
+  
+- Engel Sanchez and William Maas (es-localizer@campware.org):
+  Spanish Translation
+
+- Lucian Muresan (ro-localizer@campware.org):
+  Romanian Translation
+
+-------------------------------------------------------------------------
+The original Campsite concept was developed by Micz Flor and Sava Tatić 
+for Center for Advanced Media-Prague (CAMP) in collaboration with 
+Aleksandar Brajanoski from Transitions Online, the first site to go live 
+on Campsite in late 2000. Developer teams at DNT-Cluj 
+(http://www.dntcj.ro) and Recognos (http://www.recognos.com), software
+companies based in Cluj, Romania, wrote the original code and contributed
+to the development of the concept. 
 
 Former contributors
 - Lucian Muresan: database, admin interface, localization, documentation

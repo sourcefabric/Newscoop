@@ -1,6 +1,6 @@
 Campsite
-version     : 2.4-beta
-release date: December 20, 2005
+version     : 2.4.0
+release date: January 10, 2005
 contact     : contact@campware.org
 url         : http://www.campware.org
 copyright   : (c)1999-2005 Media Development Loan Fund
@@ -20,23 +20,31 @@ Arabic, Chinese, Serbian (Cyrillic), Serbo-Croatian (Latin), Croatian,
 Czech, and Romanian.  However, the interface can easily be localized to new 
 languages using its built-in 'Localizer'.
 
-CAMPSITE offers...
- - Support for managing articles translated into different languages
- - An advanced WYSIWYG interface for article editing
- - Support for incorporating images into your articles
- - Support for attaching files to articles 
- - Categorizing your articles with topics
- - Scheduling articles for release in the future
- - Full control over the look of your web site
- - Fine-grained access control for different types of staff users: 
-   journalist, editor, designer, etc
- - Built-in subscription system with:
-   - time trials
-   - pay periods
-   - IP access control for group subscriptions
- - Support for localizing the interface to new languages
- - An object-oriented API for building plugins or alternative interfaces
- 
+With Campsite you can:
+
+   1. Manage articles translated into different languages
+   2. Edit articles using an advanced WYSIWYG interface
+   3. Create your own types of articles. In other words, you can create 
+      your own definition of what an article is.  For example, one article 
+      type might consist of "Intro", "Body", and "References", while another 
+      type might be "Body" and "Author Bio".
+   4. Incorporate images into your articles
+   5. Attach files to articles
+   6. Categorize your articles with topics
+   7. Schedule articles for release in the future
+   8. Require a copy-flow process to ensure quality of content: the
+      journalist writes the article, the editor reviews and edits the content,
+      and then the article is published.
+   9. Have full control over the look of your web site
+  10. Exercise fine-grained access control for different types of staff users,
+      for example: journalist, editor, designer, etc.
+  11. Manage subscribers and allow:
+         1. time trials
+         2. pay periods
+         3. IP access control for group subscriptions
+  12. Localize the interface to new languages
+  13. Build third-party plugins using the PHP object-oriented API 
+  
 We encourage further development of this software and would like to make any
 progress accessible to all other users. Please contact us if you have or intend
 to developed this software further.
