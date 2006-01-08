@@ -2,6 +2,7 @@
 
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/user_types/utypes_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/permission_list.php");
+camp_load_language("users");
 
 list($access, $User) = check_basic_access($_REQUEST);
 $canManage = $User->hasPermission('ManageUserTypes');
