@@ -42,7 +42,18 @@ while ($row = mysql_fetch_array($res, MYSQL_ASSOC)) {
 				mysql_query($sql);
 			}
 		}
-	}
+	} // foreach
+	
+	// Add new permissions
+	$sql = "INSERT INTO UserConfig(fk_user_id, varname, value) "
+			." VALUES ($userId, 'AddFile', '".$row['AddImage']."')";
+	mysql_query($sql);
+	$sql = "INSERT INTO UserConfig(fk_user_id, varname, value) "
+			." VALUES ($userId, 'ChangeFile', '".$row['ChangeImage']."')";
+	mysql_query($sql);
+	$sql = "INSERT INTO UserConfig(fk_user_id, varname, value) "
+			." VALUES ($userId, 'DeleteFile', '".$row['DeleteImage']."')";
+	mysql_query($sql);
 }
 
 if (!($res = mysql_query("SELECT * FROM UserTypes WHERE Name!='Reader'"))) {
@@ -66,7 +77,18 @@ while ($row = mysql_fetch_array($res, MYSQL_ASSOC)) {
 				mysql_query($sql);
 			}
 		}
-	}
+	} // foreach
+
+	// Add new permissions
+	$sql = "INSERT INTO TmpUserTypes(user_type_name, varname, value) "
+			." VALUES ('$userTypeName', 'AddFile', '".$row['AddImage']."')";
+	mysql_query($sql);
+	$sql = "INSERT INTO TmpUserTypes(user_type_name, varname, value) "
+			." VALUES ('$userTypeName', 'ChangeFile', '".$row['ChangeImage']."')";
+	mysql_query($sql);
+	$sql = "INSERT INTO TmpUserTypes(user_type_name, varname, value) "
+			." VALUES ('$userTypeName', 'DeleteFile', '".$row['DeleteImage']."')";
+	mysql_query($sql);
 }
 
 ?>
