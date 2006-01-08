@@ -36,11 +36,6 @@ while ($row = mysql_fetch_array($res, MYSQL_ASSOC)) {
 			&& ($columnName != 'ManageDictionary')) {
 			$sql = "INSERT INTO UserConfig(fk_user_id, varname, value) VALUES ($userId, '$columnName', '$value')";
 			mysql_query($sql);
-			if ($columnName == 'AddImage' || $columnName == 'ChangeImage' || $columnName == 'DeleteImage') {
-				$columnName = str_replace('Image', 'File', $columnName);
-				$sql = "INSERT INTO UserConfig(fk_user_id, varname, value) VALUES ($userId, '$columnName', '$value')";
-				mysql_query($sql);
-			}
 		}
 	} // foreach
 	
@@ -71,11 +66,6 @@ while ($row = mysql_fetch_array($res, MYSQL_ASSOC)) {
 			&& ($columnName != 'ManageDictionary')) {
 			$sql = "INSERT INTO TmpUserTypes(user_type_name, varname, value) VALUES ('$userTypeName', '$columnName', '$value')";
 			mysql_query($sql);
-			if ($columnName == 'AddImage' || $columnName == 'ChangeImage' || $columnName == 'DeleteImage') {
-				$columnName = str_replace('Image', 'File', $columnName);
-				$sql = "INSERT INTO TmpUserTypes(user_type_name, varname, value) VALUES ('$userTypeName', '$columnName', '$value')";
-				mysql_query($sql);
-			}
 		}
 	} // foreach
 
