@@ -147,18 +147,18 @@ function camp_format_bytes($p_bytes)
 
 
 /**
- * Load the global and local language files.
- * @param string $p_name
+ * Load the language files for the given prefix.
+ * @param string $p_prefix
  * @return void
  */
-function camp_load_language($p_name) 
+function camp_load_language($p_prefix) 
 {
     require_once('localizer/Localizer.php');
     $langCode = null;
      if (isset($_REQUEST['TOL_Language'])) {
          $langCode = $_REQUEST['TOL_Language'];
     }
-    Localizer::LoadLanguageFiles($p_name, $langCode);
+    Localizer::LoadLanguageFiles($p_prefix, $langCode);
 } // fn camp_load_language
 
 
