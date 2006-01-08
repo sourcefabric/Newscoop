@@ -49,7 +49,7 @@ if (sizeof($allArticleTypes) == 0) {
 		<font color="red">
 		<?php putGS("No article types were defined. You must create an article type first."); ?>
 		</font>
-		<p><b><a href="/<?php echo $ADMIN; ?>/a_types/"><?php putGS("Edit article types"); ?></a></b></p>
+		<p><b><a href="/<?php echo $ADMIN; ?>/article_types/"><?php putGS("Edit article types"); ?></a></b></p>
 		</td>
 	</tr>
 </table></p>
