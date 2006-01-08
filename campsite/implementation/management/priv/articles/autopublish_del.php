@@ -13,6 +13,7 @@ if (!$User->hasPermission("Publish")) {
 }
 
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
+$f_language_id = Input::Get('f_language_id', 'int', 0);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
 $f_event_id = Input::Get('f_event_id', 'int', 0);
 $BackLink = Input::Get('Back', 'string', "/$ADMIN/articles/index.php", true);
