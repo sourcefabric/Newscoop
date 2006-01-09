@@ -1,4 +1,5 @@
 <?php
+regGS("Account", "Conta");
 regGS("Subscribed sections", "Secções assinadas");
 regGS("Add new section to subscription", "Adicionar Secção a assinatura");
 regGS("Start Date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Data de Inicio da Assinatura<br>(aaaa-mm-dd)");

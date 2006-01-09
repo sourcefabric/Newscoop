@@ -1,13 +1,18 @@
 <?php
-regGS("Publication List", "");
-regGS("Go To Issues", "");
+regGS("Publication List", "Lista de Publicações");
+regGS("Go To Issues", "Ir para edições");
 regGS("Name<BR><SMALL>(click to see issues)</SMALL>", "Nome (Carregue para ver Edições)");
 regGS("Delete publication $1", "Apagar Publicação");
 regGS("No publications.", "Não existem Publicações");
+regGS("Default Site Alias", "Alias do Site");
+regGS("URL Type", "Tipo de Endereço URL");
 regGS("Country<BR><SMALL>(click to edit)</SMALL>", "País (Carregue para Alterar)");
 regGS("Delete alias $1", "Apagar $1");
-regGS("Change publication information", "Alterar detalhes da Publicação");
+regGS("Configure publication", "Configurar Publicação");
 regGS("You do not have the right to edit publication information.", "Não tem permissão para Alterar Detalhes de Publicação");
+regGS("General attributes", "Definições Gerais");
+regGS("Subscriptions defaults", "Definições de Assinaturas");
+regGS("Countries defaults", "Definições de Paises");
 regGS("Changing publication information", "Alterando Detalhes de Publicação");
 regGS("You do not have the right to change publication information.", "Não tem permissão para Alterar Detalhes de Publicação");
 regGS("The publication information could not be updated.", "Os detalhes de Publicação não podem ser alterados");
@@ -31,4 +36,24 @@ regGS("Default subscription time for $1 changed", "Tempo de Assinatura para $1 f
 regGS("Are you sure you want to delete the subscription default time for $1?", "Confirma o apagamento do tempo de Assinatura");
 regGS("Subscription default time for $1 deleted", "Tempo de Assinatura para $1 foi apagado");
 regGS("Name<BR><SMALL>(click to select the publication)</SMALL>", "Nome (Carregue para selecionar Publicação)");
+regGS("Add new alias", "Adicionar novo Alias");
+regGS("Alias (click to edit)", "Alias (carregue para editar)");
+regGS("Edit aliases", "Editar Alias");
+regGS("Publication Aliases", "Alias de Publicações");
+regGS("Adding new alias", "Adicionar Alias");
+regGS("The site alias $1 has been added to publication $2.", "O Alias $1 foi eliminado da publicação $2.");
+regGS("The site alias $1 could not be added.", "O Alias $1 não pode ser adicionado.");
+regGS("Another alias with the same name exists already.", "Ja existe um alias idêntico.");
+regGS("Edit alias", "Editar Alias.");
+regGS("Editing alias", "Editando Alias");
+regGS("The site alias for publication $1 has been modified to $2.", "O Alias para a publicação $1 foi modificado para $2.");
+regGS("The site alias $1 could not be modified.", "O Alias $1 não pode ser modificado.");
+regGS("Are you sure you want to delete the alias $1?", "Confirma eliminação do alias $1?");
+regGS("Deleting alias", "Eliminando Alias");
+regGS("The alias $1 could not be deleted.", "O Alias $1 não pode ser eliminado.");
+regGS("The alias $1 has been deleted from publication $2.", "O Alias $1 foi eliminado da publicação $2.");
+regGS("$1 is the default publication alias, it can not be deleted.", "$1 é o alias principal da publicação e como tal não pode ser eliminado.");
+regGS("You do not have the right to add publications.", "Nao tem permissões para adicionar publicações.");
+regGS("There are $1 issue(s) left.", "Existe(m) ainda $1 Edição(ões).");
+regGS("Change publication information", "Alterar detalhes da Publicação");
 ?>
