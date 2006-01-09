@@ -358,7 +358,8 @@ int CStatementMap::InitStatements()
 	pcoCtx->insertAttr(new CStringAttr("mon_name", "UploadDate"));
 	pcoCtx->insertAttr(new CStringAttr("wday_name", "UploadDate"));
 	pcoCtx->insertAttr(new CDateAttr("upload_date", "UploadDate"));
-	pcoCtx->insertAttr(new CDateTimeAttr("publish_date", "PublishDate"));
+	pcoCtx->insertAttr(new CDateAttr("uploaddate", "UploadDate"));
+	pcoCtx->insertAttr(new CDateTimeAttr("publishdate", "PublishDate"));
 	pcoCtx->insertAttr(new CStringAttr("template"));
 	pcoSt->insertCtx(pcoCtx);
 
