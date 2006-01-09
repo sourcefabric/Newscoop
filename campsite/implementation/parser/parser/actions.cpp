@@ -851,6 +851,10 @@ int CActList::WriteOrdParam(string& s)
 			string coAttribute = (*pl_i)->attribute();
 			if (case_comp(coAttribute, "bydate") == 0)
 				coAttribute = modifier == CMS_ST_ISSUE ? "PublicationDate" : "UploadDate";
+			if (case_comp(coAttribute, "bypublishdate") == 0)
+				coAttribute = modifier == CMS_ST_ISSUE ? "PublicationDate" : "PublishDate";
+			if (case_comp(coAttribute, "bycreationdate") == 0)
+				coAttribute = modifier == CMS_ST_ISSUE ? "PublicationDate" : "UploadDate";
 			s += string(", ") + table + coAttribute + " ";
 			if ((*pl_i)->spec().length())
 				s += (*pl_i)->spec();

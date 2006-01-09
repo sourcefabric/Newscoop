@@ -390,8 +390,8 @@ int CStatementMap::InitStatements()
 
 	pcoCtx = new CStatementContext(CMS_CT_LIST);
 	pcoCtx->insertAttr(new CEnumAttr("bydate", "order_direction"));
-	pcoCtx->insertAttr(new CEnumAttr("bycreationdate", "order_direction", "UploadDate"));
-	pcoCtx->insertAttr(new CEnumAttr("bypublishdate", "order_direction", "PublishDate"));
+	pcoCtx->insertAttr(new CEnumAttr("bycreationdate", "order_direction"));
+	pcoCtx->insertAttr(new CEnumAttr("bypublishdate", "order_direction"));
 	pcoCtx->insertAttr(new CEnumAttr("bynumber", "order_direction", "Number"));
 	pcoCtx->insertAttr(new CEnumAttr("byname", "order_direction", "Name"));
 	pcoSt->insertCtx(pcoCtx);
