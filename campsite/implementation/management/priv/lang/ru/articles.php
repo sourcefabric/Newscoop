@@ -17,6 +17,7 @@ regGS("Select None", "Отменить выбор");
 regGS("Select All", "Выбрать все");
 regGS("Section URL Name", "Название URL секции");
 regGS("Section Name", "Название секции");
+regGS("Reorder", "");
 regGS("Publish date", "Дата публикации");
 regGS("Publish Schedule", "Расписание публикаций");
 regGS("On Section Page", "На странице секций");
@@ -35,10 +36,11 @@ regGS("Duplicate to another section", "Дублировать в другую с
 regGS("Duplicate articles", "Дублировать статью");
 regGS("Creation date", "Дата создания");
 regGS("Created by", "Создан:");
+regGS("Author", "");
 regGS("Article name ($1)", "Название статьи ($1)");
 regGS("Article List", "Список статей");
-regGS("Are you sure you want to remove the topic \'$1\' from the article?", "");
-regGS("Are you sure you want to remove the file \'$1\' from the article?", "");
+regGS("Are you sure you want to remove the topic \'$1\' from the article?", "Вы уверены, что хотите удалить топик \'$1\' из статьи?");
+regGS("Are you sure you want to remove the file \'$1\' from the article?", "Вы уверены, что хотите удалить файл \'$1\' из статьи?");
 regGS("Are you sure you want to remove the event scheduled on $1?", "Вы уверены, что хотите удалить событие, назначенное на $1?");
 regGS("Are you sure you want to delete this article?", "Вы уверены, что хотите удалить эту статью?");
 regGS("Are you sure you want to delete the selected articles?", "Вы уверены, что хотите удалить выбранные статьи?");
@@ -75,7 +77,4 @@ regGS("Could not save the article.  It has been locked by $1 $2 hours and $3 min
 regGS("Back to article details", "Назад к подробностям статьи");
 regGS("Article automatic publishing schedule", "Расписание автоматической публикации статей");
 regGS("Are you sure you want to delete this scheduled action?", "Вы уверены, что хотитее удалить эту запланированную операцию");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Вы уверены, что хотите удалить топик \\'$1\\' из статьи?");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Вы уверены, что хотите удалить файл \\'$1\\' из статьи?");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Вы уверены, что хотите удалить картинку \\'$1\\' из статьи?");
 ?>

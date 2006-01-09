@@ -1,12 +1,12 @@
 <?php
-regGS("Reset search form", "");
-regGS("That user name already exists, please choose a different login name.", "");
-regGS("User may delete article attachments", "");
-regGS("User may change article attachments", "");
-regGS("User may add article attachments", "");
+regGS("Reset search form", "Сбросить форму поиска");
+regGS("That user name already exists, please choose a different login name.", "Это имя пользователя уже существует, пожалуйста выберите другое.");
+regGS("User may delete article attachments", "Пользователь может удалять приложения к статьям");
+regGS("User may change article attachments", "Пользователь может изменять приложения к статьям");
+regGS("User may add article attachments", "Пользователь может добавлять приложения к статьям");
 regGS("Staff management", "Управление персоналом");
 regGS("Subscriber management", "Управление подписчиками");
-regGS("User Name", "Имя пользователя");
+regGS("Account Name", "Учетная запись");
 regGS("Full Name", "Полное имя");
 regGS("Delete user $1", "Удалить пользователя $1");
 regGS("User list is empty.", "Список пользователей пуст.");
@@ -75,6 +75,9 @@ regGS("The confirm password must be at least 6 characters long and both password
 regGS("You must input a number between 0 and 255 into the Start IP address' $1 field.", "Вы должны ввести число между 0 и 255 в поле $1 начала IP-адресов");
 regGS("Delete subscriptions to $1", "Удалить подписку для $1");
 regGS("Change user account information", "Изменить информацию учетной записи пользовтеля");
+regGS("The IP address group $1:$2 conflicts with another existing group.", "Группа IP-адресов конфликтует с другой существующей группой.");
+regGS("Creation Date", "Дата создания");
+regGS("User Name", "Имя пользователя");
 regGS(" management", "");
 regGS("Change password", "Изменить пароль пользователя");
 regGS("You do not have the right to change user passwords.", "Вы не имеете права изменять пароли пользователей.");

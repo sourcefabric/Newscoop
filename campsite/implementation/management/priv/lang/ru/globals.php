@@ -1,7 +1,7 @@
 <?php
 regGS("Account", "Учетная запись");
 regGS("Items per page", "Объектов на странице");
-regGS("Cannot create file \"$1\"", "");
+regGS("Cannot create file \"$1\"", "Невозможно создать файл \"$1\"");
 regGS("URL \"$1\" is invalid or is not an image.", "URL \"$1\" неверен или не является картинкой");
 regGS("URL \"$1\" is not an image.", "URL \"$1\" не является картинкой");
 regGS("Add new", "Добавить");
@@ -347,7 +347,7 @@ regGS("No such issue.", "Нет такого выпуска.:ru");
 regGS("No such section.", "Нет такой секции:ru");
 regGS("Are you sure you want to delete the subscription to the publication $1?", "Вы уверены, что хотите удалить подписку на публикацию $1?");
 regGS("Are you sure you want to deactivate the subscription?", "Вы уверены, что хотите деактивировать подписчика?");
-regGS("Are you sure you want to activate the subscription?", "");
+regGS("Are you sure you want to activate the subscription?", "Вы уверены, что хотите активировать подписку?");
 regGS("Could not save the changes to the issue $1. Please make sure the issue URL name '$2' was not used before in the publication $3.", "Невозможно сохранить изменения в  выпуске $1, Убедитесь, что название '$2' URL выпуска не исрпользовалось ранее в публикации $3.");
 regGS("GB", "GB");
 regGS("MB", "MB");
@@ -373,4 +373,5 @@ regGS("There are $1 issue(s) left.", "Осталось $1 выпуск(ов):ru"
 regGS("There are $1 keyword(s) left.", "Осталось $1 ключевое(-ых) слов(о):ru");
 regGS("Name<BR><SMALL>(click to edit)</SMALL>", "Название<BR><SMALL>(Щелкнуть для правки)</SMALL>:ru");
 regGS("New field", "Новое поле");
+regGS("Are you sure you want to delete the image \\'$1\\'?", "Вы уверены, что хотите удалить картинку \\'$1\\'?");
 ?>
