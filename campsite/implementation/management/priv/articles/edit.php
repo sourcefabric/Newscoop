@@ -19,7 +19,7 @@ $f_unlock = Input::Get('f_unlock', 'string', false, true);
 
 // Saved session values
 // $f_edit_mode can be "view" or "edit"
-$f_edit_mode = camp_session_get('f_edit_mode', 'view');
+$f_edit_mode = camp_session_get('f_edit_mode', 'edit');
 $f_language_selected = camp_session_get('f_language_selected', 0);
 
 if (!Input::IsValid()) {
