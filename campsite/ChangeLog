@@ -50,7 +50,7 @@
   -------------------------------
   - Added "PublishDate" to "print article" commands
   - Added "PublishDate" to "article list order" command
-  - Added "creation_date" to "article list order" command
+  - Added "CreationDate" to "article list order" command
   - Added "List ArticleTopics"
   - Added "List Subtopics"
   - Added "Article Number"
