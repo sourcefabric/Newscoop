@@ -1,20 +1,20 @@
 <?php
-regGS("You must select a file to upload.", "");
-regGS("You do not have the right to delete files.", "");
-regGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.", "");
-regGS("You do not have the right to change the article.", "");
-regGS("You do not have the right to change files.", "");
-regGS("You do not have the right to add files.", "");
-regGS("Should this file only be available for this translation of the article, or for all translations?", "");
-regGS("Please enter a description for the file.", "");
-regGS("Open in the browser", "");
-regGS("Only this translation", "");
-regGS("File information", "");
-regGS("Do you want this file to open in the user's browser, or to automatically download?", "");
-regGS("Change file information", "");
-regGS("Automatically download", "");
-regGS("Attachments", "");
-regGS("Attachment does not exist.", "");
-regGS("Attach File to Article", "");
-regGS("All translations", "");
+regGS("You must select a file to upload.", "Datei zum Hochladen auswählen");
+regGS("You do not have the right to delete files.", "Keine Zugriffsrechte auf das Löschen von Dateien");
+regGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.", "Keine Berechtigung, den Artikel zu ändern.  Bearbeiten nur von eigenen Artikeln möglich. Bereits eingepflegte Artikel können nur von autorisierten Usern verändert werden.");
+regGS("You do not have the right to change the article.", "Keine Berechtigung, den Artikel zu ändern.");
+regGS("You do not have the right to change files.", "Keine Berechtigung, Dateien zu ändern.");
+regGS("You do not have the right to add files.", "Keine Berechtigung, Dateien hinzuzufügen.");
+regGS("Should this file only be available for this translation of the article, or for all translations?", "Soll diese Datei nur für diese Übersetzung des Artikels verfügbar sein oder für alle Übersetzungen?");
+regGS("Please enter a description for the file.", "Bitte eine Beschreibung der Datei eingeben.");
+regGS("Open in the browser", "Im Browser öffnen");
+regGS("Only this translation", "Nur diese Übersetzung");
+regGS("File information", "Dateiinformation");
+regGS("Do you want this file to open in the user's browser, or to automatically download?", "Soll diese Datei im Browser geöffnet oder automatisch zum Herunterladen angeboten werden?");
+regGS("Change file information", "Dateiinformation ändern");
+regGS("Automatically download", "Automatisch Herunterladen");
+regGS("Attachments", "Anlagen");
+regGS("Attachment does not exist.", "Es existieren keine Anlagen");
+regGS("Attach File to Article", "Datei mit Artikel verknüpfen");
+regGS("All translations", "Alle Übersetzungen");
 ?>

@@ -1,7 +1,7 @@
 <?php
 regGS("Article type fields", "Artikeltypen-Felder");
 regGS("Delete field $1", "Feld $1 löschen");
-regGS("Article body", "Fliesstext");
+regGS("Article body", "Fließtext");
 regGS("Text", "Textzeile");
 regGS("Adding new field", "Neues Feld hinzufügen");
 regGS("You do not have the right to add article type fields.", "Keine Berechtigung Artikeltyp-Felder hinzuzufügen");
