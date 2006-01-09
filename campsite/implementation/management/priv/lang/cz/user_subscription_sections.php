@@ -1,4 +1,5 @@
 <?php
+regGS("Account", "");
 regGS("Subscribed sections", "Předplacené rubriky");
 regGS("Add new section to subscription", "Přidat novou rubriku do předplatného");
 regGS("Start Date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Začátek (rrrr-mm-dd)");

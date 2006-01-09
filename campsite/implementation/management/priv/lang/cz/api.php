@@ -1,4 +1,5 @@
 <?php
+regGS("Cannot create file \"$1\"", "");
 regGS("The IP address group $1 has been deleted.", "");
 regGS("IP Group $1 added for user $2", "");
 regGS("User permissions for $1 changed", "");

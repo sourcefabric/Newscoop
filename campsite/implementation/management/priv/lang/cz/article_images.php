@@ -1,4 +1,5 @@
 <?php
+regGS("Items per page", "");
 regGS("You do not have the right to add images.", "");
 regGS("Image information", "");
 regGS("Attach New Image", "");

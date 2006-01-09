@@ -1,4 +1,5 @@
 <?php
+regGS("Items per page", "");
 regGS("You must select an image file to upload.", "");
 regGS("Add new image", "Přidat obrázek");
 regGS("Date <SMALL>(yyyy-mm-dd)</SMALL>", "Datum (rrrr-mm-dd)");
