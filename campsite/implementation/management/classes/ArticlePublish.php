@@ -251,9 +251,10 @@ class ArticlePublish extends DatabaseObject {
 	 *
 	 * @param int $p_articleNumber
 	 * @param int $p_languageId
+	 * @param boolean $p_onlyFutureEvents
 	 * @return array
 	 */
-	function GetArticleEvents($p_articleNumber, $p_languageId = null) 
+	function GetArticleEvents($p_articleNumber, $p_languageId = null, $p_onlyFutureEvents = false) 
 	{
 		global $Campsite;
 		$queryStr = 'SELECT * FROM ArticlePublish '
@@ -261,6 +262,12 @@ class ArticlePublish extends DatabaseObject {
 		if (!is_null($p_languageId)) {
 			$queryStr .= " AND fk_language_id=$p_languageId ";
 		}
+		if ($p_onlyFutureEvents) {
+	    	$datetime = strftime("%Y-%m-%d %H:%M:00");
+            $queryStr .= " AND time_action >= '" . $datetime . "'"
+                    	. " AND is_completed != 'Y'";
+		}
+
 		$queryStr .= ' ORDER BY time_action ASC ';
 		$result = DbObjectArray::Create('ArticlePublish', $queryStr);
 		return $result;
