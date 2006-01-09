@@ -118,7 +118,8 @@ if ($correct) {
 	} else {
 		?>
 		<script>
-		window.opener.location.reload();
+		window.opener.document.forms.article_edit.onsubmit();
+		window.opener.document.forms.article_edit.submit();
 		window.close();		
 		</script>
 		<?

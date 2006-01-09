@@ -43,7 +43,8 @@ if (!is_null($f_topic_ids)) {
 ?>
 <script>
 <?php if (!is_null($f_topic_ids)) { ?>
-window.opener.location.reload();
+window.opener.document.forms.article_edit.onsubmit();
+window.opener.document.forms.article_edit.submit();
 <?php } ?>
 window.close();
 </script>
