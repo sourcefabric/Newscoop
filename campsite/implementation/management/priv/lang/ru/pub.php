@@ -1,6 +1,6 @@
 <?php
-regGS("Publication List", "");
-regGS("Go To Issues", "");
+regGS("Publication List", "Список публикаций");
+regGS("Go To Issues", "Перейти к выпускам");
 regGS("Name<BR><SMALL>(click to see issues)</SMALL>", "Название<BR><SMALL>(щелкните для просмотра выпуска)</SMALL>");
 regGS("Delete publication $1", "Удалить публикацию $1");
 regGS("No publications.", "Нет публикаций.");

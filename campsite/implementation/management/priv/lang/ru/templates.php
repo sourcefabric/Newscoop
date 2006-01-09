@@ -1,7 +1,7 @@
 <?php
-regGS("The template $1 is in use and can not be deleted.", "");
-regGS("The folder could not be deleted.", "");
-regGS("The directory must be empty", "");
+regGS("The template $1 is in use and can not be deleted.", "Шаблон $1 используется и не может быть удален");
+regGS("The folder could not be deleted.", "Папка не может быть удалена.");
+regGS("The directory must be empty", "Папка должна быть пуста");
 regGS("Create new folder", "Создать новую папку");
 regGS("Upload template", "Загрузить шаблон");
 regGS("Creating new folder", "Создание новой папки");
@@ -41,4 +41,7 @@ regGS("You do not have the right to upload templates.", "Вы не имеет а
 regGS("You do not have the right to create templates.", "Вы не имеет а права создавать шаблоны.");
 regGS("Duplicate file", "Дублировать файл");
 regGS("Delete file", "Удалить файл");
+regGS("Unable to save the template '$1' to the path '$2'.", "Невозможно  сохранить шаблон '$1' в папку '$2'.");
+regGS("Please check if the user '$1' has permission to write in this directory.", "Пожалуйста проверьте, что пользователь '$1' имел право записи в эту папку.");
+regGS("Unable to delete the template '$1' in the path '$2'.", "Невозможно удалить шаблон '$1' в папке '$2'.");
 ?>

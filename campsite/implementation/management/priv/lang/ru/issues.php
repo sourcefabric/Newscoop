@@ -1,5 +1,5 @@
 <?php
-regGS("Issue List", "");
+regGS("Issue List", "Список выпусков");
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>", "Название<BR><SMALL>(щелкните для просмотра секций)</SMALL>");
 regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Опубликовано<BR><SMALL>(гггг-мм-дд)</SMALL>");
 regGS("Delete issue $1", "Удаление выпуска $1");
@@ -36,6 +36,8 @@ regGS("Adding new issue", "Добавление нового выпуска");
 regGS("Delete entry", "Удалить запись");
 regGS("Issue Publishing Schedule", "Публикация выпуска запланирована");
 regGS("Invalid Input: $1", "Неправильный ввод: $1");
+regGS("Issue Number", "Номер выпуска");
+regGS("Go To Sections", "Перейти к секциям");
 regGS("No such issue.", "Нет такого выпуска.");
 regGS("Change Issue Status", "Изменить состояние выпуска");
 regGS("Are you sure you want to delete this event?", "Вы уверены, что хотите удалить это событие");

@@ -1,4 +1,5 @@
 <?php
+regGS("Account", "Учетная запись");
 regGS("Subscribed sections", "Подписанные секции");
 regGS("Add new section to subscription", "Добавление новой секции к подписке");
 regGS("Start Date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Начальная дата<BR><SMALL>(гггг-мм-дд)</SMALL>");

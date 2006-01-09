@@ -1,5 +1,6 @@
 <?php
-regGS("You must select an image file to upload.", "");
+regGS("Items per page", "Объектов на страницу");
+regGS("You must select an image file to upload.", "Вы должны выбрать файл картинки для загрузки.");
 regGS("Add new image", "Добавить новую картинки");
 regGS("Date <SMALL>(yyyy-mm-dd)</SMALL>", "Дата (гггг-мм-дд)");
 regGS("Delete image $1", "Удаление картинки $1");
