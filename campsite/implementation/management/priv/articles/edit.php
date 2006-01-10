@@ -646,7 +646,7 @@ if ($f_edit_mode == "edit") { ?>
 						<TD align="left">
 						<b><?php putGS("Images"); ?></b>
 						</td>
-						<?php if ($f_edit_mode == "edit") {  ?>
+						<?php if (($f_edit_mode == "edit") && $User->hasPermission('AddImage')) {  ?>
 						<td align="right">
 							<img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/add.png" border="0">
 							<a href="javascript: void(0);" onclick="window.open('<?php echo camp_html_article_url($articleObj, $f_language_id, "images/popup.php"); ?>', 'attach_image', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=750, height=600, top=200, left=100');"><?php putGS("Attach"); ?></a>
