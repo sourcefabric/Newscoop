@@ -1,4 +1,6 @@
 <?php
+regGS("An issue must be created for the selected language but you do not have the right to create an issue.", "");
+regGS("A section must be created for the selected language but you do not have the right to create a section.", "");
 regGS("to section", "");
 regGS("You must select at least one article to perform an action.", "");
 regGS("You must choose a language", "");
@@ -17,7 +19,6 @@ regGS("Select None", "");
 regGS("Select All", "");
 regGS("Section URL Name", "");
 regGS("Section Name", "");
-regGS("Reorder", "");
 regGS("Publish date", "");
 regGS("Publish Schedule", "");
 regGS("On Section Page", "");
@@ -36,7 +37,6 @@ regGS("Duplicate to another section", "");
 regGS("Duplicate articles", "");
 regGS("Creation date", "");
 regGS("Created by", "");
-regGS("Author", "");
 regGS("Article name ($1)", "");
 regGS("Article List", "");
 regGS("Are you sure you want to remove the topic \'$1\' from the article?", "");

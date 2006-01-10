@@ -116,9 +116,11 @@ camp_html_content_top(getGS('Translate article'), $topArray, true, true);
 	</TD>
 </TR>
 <?php
+	$canCreate = true;
 	if ($f_language_selected > 0) {
 		$translationIssueObj =& new Issue($f_publication_id, $f_language_selected, $f_issue_number);
 		if (!$translationIssueObj->exists()) {
+			if ($User->hasPermission("ManageIssue")) {
 ?>
 <TR>
 	<TD colspan="2" align="left" style="padding-left: 40px; padding-right: 40px; padding-top: 20px;"><strong><?php putGS("An issue must be created for the selected language.  Please enter the issue name and URL name."); ?></strong></TD>
@@ -136,9 +138,18 @@ camp_html_content_top(getGS('Translate article'), $topArray, true, true);
 	</TD>
 </TR>
 <?php
+			} else {
+				$canCreate = false;
+?>
+<TR>
+	<TD colspan="2" align="left" class="error_message" style="padding-left: 40px; padding-right: 40px; padding-top: 20px;"><?php putGS('An issue must be created for the selected language but you do not have the right to create an issue.'); ?></TD>
+</TR>
+<?php
+			}
 		}
 		$translationSectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_selected, $f_section_number);
 		if (!$translationSectionObj->exists()) {
+			if ($User->hasPermission("ManageSection")) {
 ?>
 <TR>
 	<TD colspan="2" align="left" style="padding-left: 40px; padding-right: 40px; padding-top: 20px;"><strong><?php putGS("A section must be created for the selected language.  Please enter the section name and URL name."); ?></strong></TD>
@@ -156,16 +167,28 @@ camp_html_content_top(getGS('Translate article'), $topArray, true, true);
 	</TD>
 </TR>
 <?php
+			} else {
+				$canCreate = false;
+?>
+<TR>
+	<TD colspan="2" align="left" class="error_message" style="padding-left: 40px; padding-right: 40px; padding-top: 20px;"><?php putGS('A section must be created for the selected language but you do not have the right to create a section.'); ?></TD>
+</TR>
+<?php
+			}
 		}
 ?>
 <?php
 	}
+	if ($canCreate) {
 ?>
 <TR>
 	<TD COLSPAN="2" align="center">
 	<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save'); ?>" class="button">
 	</TD>
 </TR>
+<?php
+	}
+?>
 </TABLE>
 </FORM>
 <P>

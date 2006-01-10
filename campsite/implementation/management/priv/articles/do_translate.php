@@ -60,6 +60,10 @@ if (!$issueObj->exists()) {
 
 $translationIssueObj =& new Issue($f_publication_id, $f_translation_language, $f_issue_number);
 if (!$translationIssueObj->exists()) {
+	if (!$User->hasPermission("ManageIssue")) {
+		camp_html_display_error(getGS('An issue must be created for the selected language but you do not have the right to create an issue.'), $BackLink);
+		exit;
+	}
 	foreach ($issueObj->getData() as $field=>$fieldValue) {
 		if ($field != 'IdLanguage') {
 			$translationIssueObj->setProperty($field, $fieldValue, false);
@@ -95,6 +99,10 @@ if (!$sectionObj->exists()) {
 $translationSectionObj =& new Section($f_publication_id, $f_issue_number, $f_translation_language,
 									  $f_section_number);
 if (!$translationSectionObj->exists()) {
+	if (!$User->hasPermission("ManageSection")) {
+		camp_html_display_error(getGS('A section must be created for the selected language but you do not have the right to create a section.'), $BackLink);
+		exit;
+	}
 	foreach ($sectionObj->getData() as $field=>$fieldValue) {
 		if ($field != 'IdLanguage') {
 			$translationSectionObj->setProperty($field, $fieldValue, false);
