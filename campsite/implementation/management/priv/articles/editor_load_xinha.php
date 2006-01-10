@@ -149,14 +149,18 @@ xinha_init = xinha_init ? xinha_init : function()
 
   xinha_plugins = xinha_plugins ? xinha_plugins :
   [
+  	<?php if ($p_user->hasPermission("EditorImage")) { ?>
 	'ImageManager',
+	<?php } ?>
 	<?php if ($p_user->hasPermission('EditorTable')) { ?>
 	'TableOperations',
 	<?php } ?>
 	<?php if ($p_user->hasPermission('EditorListNumber')) { ?>
 	'ListType',
 	<?php } ?>
+	<?php if ($p_user->hasPermission("EditorEnlarge")) { ?>
     'FullScreen',
+    <?php } ?>
     'WordPaste',
     'CharacterMap',
     'FindReplace',
@@ -207,11 +211,12 @@ xinha_init = xinha_init ? xinha_init : function()
    // Change the removeformat button to work in text mode.
    xinha_config.btnList["removeformat"] = [ "Remove formatting", ["ed_buttons_main.gif",4,4], true, function(e) {e.execCommand("removeformat");} ],
    // Put the "find-replace" plugin in a better location
-   //xinha_config.addToolbarElement([], ["FR-findreplace"], 0);
-   xinha_config.addToolbarElement(["FR-findreplace"], ["paste","cut","copy","redo","undo"], +1);
+   xinha_config.addToolbarElement([], ["FR-findreplace"], 0);
 
    // Add in our style sheet for the "subheads".
    xinha_config.pageStyle = "<?php echo str_replace("\n", "", file_get_contents($stylesheetFile)); ?>";
+   
+   <?php if ($p_user->hasPermission('EditorSubhead')) { ?>
    subheadTooltip = HTMLArea._lc('Subhead', 'Campsite');
    xinha_config.registerButton({
        // The ID of the button.
@@ -229,7 +234,9 @@ xinha_init = xinha_init ? xinha_init : function()
        // the specified element.
        context   : ''
    });
-
+   <?php } ?>
+   
+   <?php if ($p_user->hasPermission('EditorLink')) { ?>
    internalLinkTooltip = HTMLArea._lc('Insert Internal Link', 'Campsite');
    xinha_config.registerButton({
        // The ID of the button.
@@ -247,113 +254,119 @@ xinha_init = xinha_init ? xinha_init : function()
        // the specified element.
        context   : ''
    });
+   <?php } 
+   
+    $toolbar1 = array();
+    if ($p_user->hasPermission('EditorBold')) { 
+	  	$toolbar1[] = "\"bold\""; 
+	}
+	if ($p_user->hasPermission('EditorItalic')) { 
+		$toolbar1[] = "\"italic\""; 
+	}
+	if ($p_user->hasPermission('EditorUnderline')) { 
+		$toolbar1[] = "\"underline\""; 
+	}
+	if ($p_user->hasPermission('EditorStrikethrough')) { 
+		$toolbar1[] = "\"strikethrough\""; 
+	} 
+	if ($p_user->hasPermission('EditorTextAlignment')) { 
+		$toolbar1[] = "\"justifyleft\"";
+		$toolbar1[] = "\"justifycenter\""; 
+		$toolbar1[] = "\"justifyright\""; 
+		$toolbar1[] = "\"justifyfull\""; 
+	} 
+	if ($p_user->hasPermission('EditorIndent')) { 
+		$toolbar1[] = "\"outdent\""; 
+		$toolbar1[] = "\"indent\""; 
+	} 
+	if ($p_user->hasPermission('EditorCopyCutPaste')) { 
+		$toolbar1[] = "\"copy\""; 
+		$toolbar1[] = "\"cut\""; 
+		$toolbar1[] = "\"paste\""; 
+		$toolbar1[] = "\"space\""; 
+	} 
+	if ($p_user->hasPermission('EditorUndoRedo')) { 
+		$toolbar1[] = "\"undo\""; 
+		$toolbar1[] = "\"redo\""; 
+	} 
+	if ($p_user->hasPermission('EditorTextDirection')) { 
+		 $toolbar1[] = "\"lefttoright\""; 
+		 $toolbar1[] = "\"righttoleft\""; 
+	}
+	if ($p_user->hasPermission('EditorLink')) { 
+		$toolbar1[] = "\"campsite-internal-link\""; 
+		$toolbar1[] = "\"createlink\""; 
+	}
+	if ($p_user->hasPermission('EditorSubhead')) {
+		$toolbar1[] = "\"campsite-subhead\""; 
+	} 
+	if ($p_user->hasPermission('EditorImage')) { 
+		$toolbar1[] = "\"insertimage\"";
+	} 
+	if ($p_user->hasPermission('EditorSourceView')) { 
+		$toolbar1[] = "\"htmlmode\""; 
+	} 
+	if ($p_user->hasPermission('EditorEnlarge')) { 
+		$toolbar1[] = "\"popupeditor\"";
+	}
+    
+	if ($p_user->hasPermission('EditorHorizontalRule')) { 
+		$toolbar1[] = "\"inserthorizontalrule\"";
+	} 
+	if ($p_user->hasPermission('EditorFontColor')) { 
+		$toolbar1[] = "\"forecolor\"";
+		$toolbar1[] = "\"hilitecolor\"";
+	} 
+	if ($p_user->hasPermission('EditorSubscript')) { 
+		$toolbar1[] = "\"subscript\"";
+	}
+	if ($p_user->hasPermission('EditorSuperscript')) {
+		$toolbar1[] = "\"superscript\"";
+	}
 
+	$toolbar2 = array();
+	// Slice up the first toolbar if it is too long.
+	if (count($toolbar1) > 24) {
+		$toolbar2 = array_splice($toolbar1, 24);
+	}
+	
+	// This is to put the bulleted and numbered list controls
+	// on the most appropriate line of the toolbar.
+	if ($p_user->hasPermission('EditorListBullet') && $p_user->hasPermission('EditorListNumber') && count($toolbar1) < 15) { 
+		$toolbar1[] = "\"insertunorderedlist\"";
+		$toolbar1[] = "\"insertorderedlist\"";
+	}		
+	elseif ($p_user->hasPermission('EditorListBullet') && !$p_user->hasPermission('EditorListNumber') && count($toolbar1) < 24) {
+		$toolbar1[] = "\"insertunorderedlist\"";
+	}
+	elseif (!$p_user->hasPermission('EditorListBullet') && $p_user->hasPermission('EditorListNumber') && count($toolbar1) < 16) {
+		$toolbar1[] = "\"insertorderedlist\"";
+	}
+	else {
+		if ($p_user->hasPermission('EditorListBullet')) { 
+			$toolbar2[] = "\"insertunorderedlist\"";
+		}
+		if ($p_user->hasPermission('EditorListNumber')) { 
+			$toolbar2[] = "\"insertorderedlist\"";
+	 	}
+	}
+	
+	// This is to fix ticket #1602.  You only want the line break if
+	// there is more than one line in the toolbar.
+	if (count($toolbar2) > 0 || $p_user->hasPermission('EditorTable'))  { 
+		$toolbar1[] = "\"linebreak\"";
+	}
+   ?>
+   
    xinha_config.toolbar = [
-       [
-       <?php if ($p_user->hasPermission('EditorBold')) { ?>
-		  	"bold", 
+		[ <?php echo implode(",", $toolbar1); ?> ],
+		
+		<?php if (count($toolbar2) > 0) { ?>
+		[ <?php echo implode(",", $toolbar2); ?> ],
 		<?php } ?>
-		<?php if ($p_user->hasPermission('EditorItalic')) { ?>
-		  	"italic", 
-		<?php } ?>
-		<?php if ($p_user->hasPermission('EditorUnderline')) { ?>
-		  	"underline", 
-		<?php } ?>
-		<?php if ($p_user->hasPermission('EditorStrikethrough')) { ?>
-		  	"strikethrough", 
-		<?php } ?>
-		  	//"separator",
-		<?php if ($p_user->hasPermission('EditorTextAlignment')) { ?>
-			"justifyleft", 
-			"justifycenter", 
-			"justifyright", 
-			"justifyfull", 
-			//"separator",
-		<?php } ?>
-		<?php if ($p_user->hasPermission('EditorIndent')) { ?>
-		  	"outdent", 
-		  	"indent", 
-		  	//"separator",
-		<?php } ?>
-		<?php if ($p_user->hasPermission('EditorCopyCutPaste')) { ?>
-		  	"copy", 
-		  	"cut", 
-		  	"paste", 
-		  	"space", 
-		  	//"separator", 
-		<?php } ?>
-		<?php if ($p_user->hasPermission('EditorUndoRedo')) { ?>				  
-			"undo", 
-			"redo", 
-			//"separator", 
-		<?php } ?>				  
-		<?php if ($p_user->hasPermission('EditorTextDirection')) { ?>
-		  	"lefttoright", 
-		  	"righttoleft", 
-		  	//"separator", 
-		<?php } ?>
-		<?php if ($p_user->hasPermission('EditorLink')) { ?>
-		  	"campsite-internal-link", 
-		  	"createlink", 
-		  	//"separator",
-		<?php } ?>
-		<?php if ($p_user->hasPermission('EditorSubhead')) { ?>
-		  	"campsite-subhead", 
-		<?php } ?>
-		<?php if ($p_user->hasPermission('EditorImage')) { ?>
-		  	"insertimage", 
-		  	//"separator",
-		<?php } ?>
-			//"killword",
-			//"removeformat",
-		<?php if ($p_user->hasPermission('EditorSourceView')) { ?>
-		  	"htmlmode", 
-		<?php } ?>
-		<?php if ($p_user->hasPermission('EditorEnlarge')) { ?>
-		  	"popupeditor",
-		<?php } ?>
-			"linebreak",
-		],
-
-		[ 
-		<?php if ($p_user->hasPermission('EditorFontFace')) { ?>
-		  	//"fontname", 
-		  	//"space",
-		<?php } ?>
-		<?php if ($p_user->hasPermission('EditorFontSize')) { ?>
-		  	//"fontsize", 
-		  	//"space",
-		<?php } ?>
-		<?php if (false) { ?>
-		  	"formatblock", 
-		  	"space",
-		<?php } ?>
-		<?php if ($p_user->hasPermission('EditorListBullet')) { ?>
-		  	"insertunorderedlist", 
-		<?php } ?>
-		<?php if ($p_user->hasPermission('EditorListNumber')) { ?>
-		  	"insertorderedlist", 
-		  	//"separator", 
-		<?php } ?>
-		<?php if ($p_user->hasPermission('EditorHorizontalRule')) { ?>
-		  	"inserthorizontalrule", 
-		  	//"separator",
-		<?php } ?>
-		<?php if ($p_user->hasPermission('EditorFontColor')) { ?>
-		  	"forecolor", 
-		  	"hilitecolor", 
-		  	//"separator",
-		<?php } ?>
-		<?php if ($p_user->hasPermission('EditorSubscript')) { ?>
-		  	"subscript",
-		<?php } ?>
-		<?php if ($p_user->hasPermission('EditorSuperscript')) { ?>
-		 	"superscript",
-		<?php } ?>
-		  ],
-		  
+		
 		<?php if ($p_user->hasPermission('EditorTable')) { ?>
-		  [ "linebreak", "inserttable" ],
+		[ "linebreak", "inserttable" ],
 		<?php } ?>
 	];
 
