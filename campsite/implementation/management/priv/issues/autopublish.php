@@ -1,6 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/issues/issue_common.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/IssuePublish.php');
+camp_load_language("articles");
 
 // Check permissions
 list($access, $User) = check_basic_access($_REQUEST);
@@ -52,7 +53,7 @@ camp_html_content_top(getGS('Issue Publishing Schedule'), array('Pub' => $public
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons">
 <TR>
 	<TD><A HREF="autopublish.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
-	<TD><A HREF="autopublish.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>"><B><?php  putGS("Add"); ?></B></A></TD>
+	<TD><A HREF="autopublish.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>"><B><?php  putGS("Add Event"); ?></B></A></TD>
 </TR>
 </TABLE>
 
