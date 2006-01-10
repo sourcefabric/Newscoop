@@ -1,4 +1,4 @@
-<?PHP
+<?php
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/article_common.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticlePublish.php');
 
@@ -122,7 +122,7 @@ if ($correct) {
 		window.opener.document.forms.article_edit.submit();
 		window.close();		
 		</script>
-		<?
+		<?php
 	}
 	exit;
 }
