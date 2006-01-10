@@ -62,7 +62,8 @@ class User extends DatabaseObject {
 		'Field5',
 		'Text1',
 		'Text2',
-		'Text3');
+		'Text3',
+		'time_created');
 
 	var $m_defaultConfig = array(
 		'ManagePub'=>'N', 
@@ -144,6 +145,9 @@ class User extends DatabaseObject {
 	
 	function create($p_values = null)
 	{
+		if (is_array($p_values)) {
+			$p_values['time_created'] = strftime("%Y-%m-%d %H:%M:%S", time());
+		}
 		$success = parent::create($p_values);
 		if ($success) {
 			if (function_exists("camp_load_language")) { camp_load_language("api");	}

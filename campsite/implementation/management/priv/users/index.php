@@ -291,7 +291,7 @@ for($loop = 0; $loop < $last; $loop++) {
 				if ((int)$creationDate == 0) {
 					echo "N/A";
 				} else {
-					echo $creationDate;
+					echo strftime("%H:%M:%S %d.%m.%Y", strtotime($creationDate));
 				}
 			?>
 		</td>
