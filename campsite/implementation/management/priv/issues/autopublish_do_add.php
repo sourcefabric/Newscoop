@@ -17,36 +17,43 @@ if (!$User->hasPermission('Publish')) {
 $Pub = Input::Get('Pub', 'int', 0);
 $Issue = Input::Get('Issue', 'int', 0);
 $Language = Input::Get('Language', 'int', 0);
+$event_id = Input::Get('event_id', 'int', null, true);
 $publish_date = trim(Input::Get('publish_date', 'string', ''));
 $action = trim(Input::Get('action', 'string', ''));
 $publish_articles = trim(Input::Get('publish_articles', 'string', ''));
 $publish_hour = trim(Input::Get('publish_hour', 'string', ''));
 $publish_min = trim(Input::Get('publish_min', 'string', ''));
 
-$correct = $publish_date != "" && $publish_hour != ""
-	&& $publish_min != "" && ($action == "P" || $action == "U");
+if (!Input::IsValid()) {
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));	
+	exit;
+}
 
-if ($publish_articles != "Y" && $publish_articles != "N")
+$correct = ($publish_date != "") && ($publish_hour != "")
+	&& ($publish_min != "") && ($action == "P" || $action == "U");
+
+if ($publish_articles != "Y" && $publish_articles != "N") {
 	$publish_articles = "N";
+}
 
 $created = 0;
 if ($correct) {
-	$action_str = $action == "P" ? "Publish" : "Unpublish";
 	$publish_time = $publish_date . " " . $publish_hour . ":" . $publish_min . ":00";
-    $action =& new IssuePublish($Pub, $Issue, $Language, $publish_time);
-	if ($action->exists()) {
-	    $action->setPublishAction($action);
-	    $action->setPublishArticlesAction($publish_articles);
-		$created = 1;
-	} else {
-	    $action->create();
-		$created = 1;
+    $issuePublishObj =& new IssuePublish($event_id);
+	if (!$issuePublishObj->exists()) {
+	    $issuePublishObj->create();
+	    $issuePublishObj->setPublicationId($Pub);
+	    $issuePublishObj->setIssueNumber($Issue);
+	    $issuePublishObj->setLanguageId($Language);
 	}
-    $action->setPublishAction($action);
-    $action->setPublishArticlesAction($publish_articles);
+    $issuePublishObj->setPublishAction($action);
+    $issuePublishObj->setPublishArticlesAction($publish_articles);
+    $issuePublishObj->setActionTime($publish_time);
+	$created = 1;
 }
 if ($created) {
 	header("Location: /$ADMIN/issues/autopublish.php?Pub=$Pub&Issue=$Issue&Language=$Language");
+	exit;
 }
 
 $issueObj =& new Issue($Pub, $Language, $Issue);
@@ -78,10 +85,7 @@ camp_html_content_top(getGS("Scheduling a new publish action"), $crumbs);
     <?php }
 
 	if ($correct) {
-		if ($created) { ?>
-			<LI><?php putGS('The $1 action has been scheduled on $2', getGS($action_str), $publish_time); ?></LI>
-            <?php 
-		} else { ?>
+		if (!$created) { ?>
 			<LI><?php putGS('There was an error scheduling the $1 action on $2', getGS($action_str), $publish_time); ?></LI>
 	       <?php 
 		}

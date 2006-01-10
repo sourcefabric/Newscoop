@@ -16,7 +16,7 @@ if (!$User->hasPermission('ManageIssue')) {
 $Pub = Input::Get('Pub', 'int');
 $Issue = Input::Get('Issue', 'int');
 $Language = Input::Get('Language', 'int');
-$publish_time = Input::Get('publish_time', 'string', '', true);
+$event_id = Input::Get('event_id', 'string', null, true);
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid Input: $1', Input::GetErrorString()));
@@ -25,18 +25,19 @@ if (!Input::IsValid()) {
 $publicationObj =& new Publication($Pub);
 $issueObj =& new Issue($Pub, $Language, $Issue);
 
-if ($publish_time == "") {
-	$publish_time = date("Y-m-d H:i");
-}
 $action = '';
 $publish_articles = '';
-if ($publish_time != '') {
-	$issuePublishObj =& new IssuePublish($Pub, $Issue, $Language, $publish_time);
+$publish_date = date("Y-m-d");
+$publish_hour = (date("H") + 1);
+$publish_min = "00";
+
+if (!is_null($event_id)) {
+	$issuePublishObj =& new IssuePublish($event_id);
 	if ($issuePublishObj->exists()) {
 		$action = $issuePublishObj->getPublishAction();
 		$publish_articles = $issuePublishObj->getPublishArticlesAction();
 	}
-	$datetime = explode(" ", trim($publish_time));
+	$datetime = explode(" ", trim($issuePublishObj->getActionTime()));
 	$publish_date = $datetime[0];
 	$publish_time = explode(":", trim($datetime[1]));
 	$publish_hour = $publish_time[0];
@@ -47,19 +48,33 @@ $allEvents = IssuePublish::GetIssueEvents($Pub, $Issue, $Language);
 camp_html_content_top(getGS('Issue Publishing Schedule'), array('Pub' => $publicationObj, 'Issue' => $issueObj));
 
 ?>
+<p></p>
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons">
+<TR>
+	<TD><A HREF="autopublish.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
+	<TD><A HREF="autopublish.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>"><B><?php  putGS("Add"); ?></B></A></TD>
+</TR>
+</TABLE>
 
 <P>
 <FORM NAME="dialog" METHOD="POST" ACTION="autopublish_do_add.php" >
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input">
 <TR>
 	<TD COLSPAN="2">
+		<?php if (is_null($event_id)) { ?>
 		<B><?php  putGS("Schedule a new action"); ?></B>
+		<?php } else { ?>
+		<B><?php  putGS("Edit"); ?></B>		
+		<?php } ?>
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
 	</TD>
 </TR>
 <INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<?php echo $Pub; ?>">
 <INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<?php echo $Issue; ?>">
 <INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php echo $Language; ?>">
+<?php if (!is_null($event_id)) { ?>
+<input type="hidden" name="event_id" value="<?php echo $event_id; ?>">
+<?php } ?>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Date"); ?>:</TD>
 	<TD>
@@ -97,7 +112,6 @@ camp_html_content_top(getGS('Issue Publishing Schedule'), array('Pub' => $public
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">
 	<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
-	<!--<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/issues/?Pub=<?php p($Pub); ?>&Language=<?php p($Language); ?>'">-->
 	</DIV>
 	</TD>
 </TR>
@@ -125,7 +139,7 @@ if (count($allEvents) > 0) {
 		<TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 		
 		<TD >
-			<A HREF="/<?php echo $ADMIN; ?>/issues/autopublish.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>&publish_time=<?php echo $url_publish_time; ?>"><?php p(htmlspecialchars($event->getActionTime())); ?></A>
+			<A HREF="/<?php echo $ADMIN; ?>/issues/autopublish.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>&event_id=<?php echo $event->getEventId(); ?>"><?php p(htmlspecialchars($event->getActionTime())); ?></A>
 		</TD>
 		
 		<TD >
@@ -153,7 +167,7 @@ if (count($allEvents) > 0) {
 		</TD>
 		
 		<TD ALIGN="CENTER">
-			<A HREF="/<?php echo $ADMIN; ?>/issues/autopublish_del.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>&publish_time=<?php echo $url_publish_time; ?>" onclick="return confirm('<?php putGS("Are you sure you want to delete this scheduled action?"); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php putGS('Delete entry'); ?>"></A>
+			<A HREF="/<?php echo $ADMIN; ?>/issues/autopublish_del.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>&event_id=<?php echo $event->getEventId(); ?>" onclick="return confirm('<?php putGS("Are you sure you want to delete this scheduled action?"); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php putGS('Delete entry'); ?>"></A>
 		</TD>
 		
 	<?php } // foreach ?>

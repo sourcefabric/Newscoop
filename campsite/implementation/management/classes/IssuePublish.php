@@ -52,10 +52,31 @@ class IssuePublish extends DatabaseObject {
 	/**
 	 * @return int
 	 */
+	function getEventId()
+	{
+		return $this->getProperty('id');
+	} // fn getEventId
+	
+	
+	/**
+	 * @return int
+	 */
 	function getPublicationId()
 	{
-	    return $this->m_data['fk_publication_id'];
+	    return $this->getProperty('fk_publication_id');
 	} // fn getPublicationId
+	
+	
+	/**
+	 * Set the publication ID.
+	 *
+	 * @param int $p_value
+	 * @return boolean
+	 */
+	function setPublicationId($p_value)
+	{
+		return $this->setProperty('fk_publication_id', $p_value);
+	} // fn setPublicationId
 	
 	
 	/**
@@ -63,8 +84,20 @@ class IssuePublish extends DatabaseObject {
 	 */
 	function getIssueNumber()
 	{
-	    return $this->m_data['fk_issue_id'];
+	    return $this->getProperty('fk_issue_id');
 	} // fn getIssueNumber
+	
+	
+	/**
+	 * Enter description here...
+	 *
+	 * @param int $p_value
+	 * @return boolean
+	 */
+	function setIssueNumber($p_value)
+	{
+		return $this->setProperty('fk_issue_id', $p_value);
+	} // fn setIssueNumber
 	
 	
 	/**
@@ -72,8 +105,20 @@ class IssuePublish extends DatabaseObject {
 	 */
 	function getLanguageId() 
 	{
-	    return $this->m_data['fk_language_id'];
+	    return $this->getProperty('fk_language_id');
 	} // fn getLanguageId
+	
+	
+	/**
+	 * Set the language ID of the issue to publish.
+	 *
+	 * @param int $p_value
+	 * @return boolean
+	 */
+	function setLanguageId($p_value)
+	{
+		return $this->setProperty('fk_language_id', $p_value);
+	} // fn setLanguageId
 	
 	
 	/**
@@ -83,7 +128,7 @@ class IssuePublish extends DatabaseObject {
 	 */ 
 	function getPublishAction() 
 	{
-		return $this->m_data['publish_action'];
+		return $this->getProperty('publish_action');
 	} // fn getPublishAction
 
 	
@@ -109,7 +154,7 @@ class IssuePublish extends DatabaseObject {
 	 */
 	function getPublishArticlesAction() 
 	{
-		return $this->m_data['do_publish_articles'];
+		return $this->getProperty('do_publish_articles');
 	} // fn getPublishArticlesAction
 	
 	
@@ -134,8 +179,22 @@ class IssuePublish extends DatabaseObject {
 	 */
 	function getActionTime() 
 	{
-		return $this->m_data['time_action'];
+		return $this->getProperty('time_action');
 	} // fn getActionTime
+	
+	
+	/**
+	 * Set the time the action should be executed.
+	 *
+	 * @param string $p_value
+	 * 		Must be in the form YYYY-MM-DD HH:MM:SS
+	 * 
+	 * @return boolean
+	 */
+	function setActionTime($p_value)
+	{
+		return $this->setProperty('time_action', $p_value);
+	} // fn setActionTime
 	
 	
 	/**

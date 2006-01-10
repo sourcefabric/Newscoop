@@ -16,9 +16,9 @@ if (!$User->hasPermission('Publish')) {
 $Pub = Input::Get('Pub', 'int', 0);
 $Issue = Input::Get('Issue', 'int', 0);
 $Language = Input::Get('Language', 'int', 0);
-$publish_time = trim(Input::Get('publish_time', 'string', ''));
+$event_id = trim(Input::Get('event_id', 'string', ''));
 
-$action =& new IssuePublish($Pub, $Issue, $Language, $publish_time);
+$action =& new IssuePublish($event_id);
 $deleted = $action->delete();
 
 if ($deleted) {
