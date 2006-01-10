@@ -51,8 +51,8 @@
   - Added "PublishDate" to "print article" commands
   - Added "PublishDate" to "article list order" command
   - Added "CreationDate" to "article list order" command
-  - Added "List ArticleTopics"
-  - Added "List Subtopics"
+  - Added "List ArticleTopic"
+  - Added "List Subtopic"
   - Added "Article Number"
 
   Developers
