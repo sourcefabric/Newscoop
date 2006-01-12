@@ -834,7 +834,6 @@ inline int CParser::HURLParameters(CActionList& al)
 			return 0;
 		}
 		attr = st->findAttr(l->atom()->identifier(), CMS_CT_DEFAULT);
-		bFirst = false;
 		if (case_comp(l->atom()->identifier(), "articleAttachment") == 0)
 		{
 			bArticleAttachment = true;
@@ -846,6 +845,7 @@ inline int CParser::HURLParameters(CActionList& al)
 			l = lex.getLexem();
 			continue;
 		}
+		bFirst = false;
 		if (bArticleAttachment)
 		{
 			SetPError(parse_err, PERR_INVALID_ATTRIBUTE, MODE_PARSE, "",
@@ -2013,7 +2013,6 @@ inline int CParser::HURIPath(CActionList& al)
 	while (l->res() != CMS_LEX_END_STATEMENT)
 	{
 		attr = st->findAttr(l->atom()->identifier(), CMS_CT_DEFAULT);
-		bFirst = false;
 		if (case_comp(l->atom()->identifier(), "articleAttachment") == 0)
 		{
 			bArticleAttachment = true;
@@ -2025,6 +2024,7 @@ inline int CParser::HURIPath(CActionList& al)
 			l = lex.getLexem();
 			continue;
 		}
+		bFirst = false;
 		if (bArticleAttachment)
 		{
 			SetPError(parse_err, PERR_INVALID_ATTRIBUTE, MODE_PARSE, "",
