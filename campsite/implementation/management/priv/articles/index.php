@@ -180,7 +180,7 @@ function checkboxClick(theCheckbox, theRowNum)
    	row.className = newClass;
 } // fn checkboxClick
 </script>
-<div style="position: fixed; top: 140px;">
+<div style="position: fixed; <?php if ($User->hasPermission("AddArticle")) { ?>top: 140px;"<?php } else { ?>top: 105px;"<?php } ?>>
 <FORM name="article_list" action="do_article_list_action.php" method="POST">
 <INPUT TYPE="HIDDEN" NAME="f_publication_id" VALUE="<?php p($f_publication_id); ?>">
 <INPUT TYPE="HIDDEN" NAME="f_issue_number" VALUE="<?php p($f_issue_number); ?>">
@@ -198,7 +198,7 @@ function checkboxClick(theCheckbox, theRowNum)
 					<TD><?php  putGS('Language'); ?>:</TD>
 					<TD valign="middle">
 						<SELECT NAME="f_language_selected" id="f_language_selected" class="input_select" onchange="location.href='index.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_language_id=<?php p($f_language_id); ?>&<?php p($offsetVarName); ?>=0&f_language_selected='+document.getElementById('f_language_selected').options[document.getElementById('f_language_selected').selectedIndex].value;">
-						<option><?php putGS("All"); ?></option>
+						<option value="0"><?php putGS("All"); ?></option>
 						<?php 
 						foreach ($allArticleLanguages as $languageItem) {
 							echo '<OPTION value="'.$languageItem->getLanguageId().'"' ;
@@ -330,7 +330,7 @@ if ($numUniqueArticlesDisplayed > 0) {
 	$counter = 0;
 	$color = 0;
 ?>
-<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list" style="padding-top: 40px;">
+<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list" style="padding-top: 35px;">
 <TR class="table_list_header">
 	<TD>&nbsp;</TD>
 	<TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Name <SMALL>(click to edit)</SMALL>"); ?></TD>
@@ -425,12 +425,12 @@ foreach ($allArticles as $articleObj) {
 					<tr>
 						<td width="18px">
 							<?php if (($f_article_offset > 0) || ($uniqueArticleCounter != 1)) { ?>
-								<A HREF="/<?php echo $ADMIN; ?>/articles/do_move.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_article_number=<?php p($articleObj->getArticleNumber()); ?>&f_article_language=<?php p($articleObj->getLanguageId());?>&f_language_id=<?php p($f_language_id); ?>&f_language_selected=<?php p($articleObj->getLanguageId()); ?>&f_move=up_rel&f_position=1"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/up-16x16.png" width="16" height="16" border="0"></A>
+								<A HREF="/<?php echo $ADMIN; ?>/articles/do_move.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_article_number=<?php p($articleObj->getArticleNumber()); ?>&f_article_language=<?php p($articleObj->getLanguageId());?>&f_language_id=<?php p($f_language_id); ?>&f_language_selected=<?php p($f_language_selected); ?>&f_move=up_rel&f_position=1"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/up-16x16.png" width="16" height="16" border="0"></A>
 							<?php } ?>
 						</td>
 						<td width="20px">
 							<?php if (($uniqueArticleCounter + $f_article_offset) < $numUniqueArticles) { ?>
-								<A HREF="/<?php echo $ADMIN; ?>/articles/do_move.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_article_number=<?php p($articleObj->getArticleNumber()); ?>&f_article_language=<?php p($articleObj->getLanguageId());?>&f_language_id=<?php p($f_language_id); ?>&f_language_selected=<?php p($articleObj->getLanguageId()); ?>&f_move=down_rel&f_position=1"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/down-16x16.png" width="16" height="16" border="0" style="padding-left: 3px; padding-right: 3px;"></A>
+								<A HREF="/<?php echo $ADMIN; ?>/articles/do_move.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_article_number=<?php p($articleObj->getArticleNumber()); ?>&f_article_language=<?php p($articleObj->getLanguageId());?>&f_language_id=<?php p($f_language_id); ?>&f_language_selected=<?php p($f_language_selected); ?>&f_move=down_rel&f_position=1"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/down-16x16.png" width="16" height="16" border="0" style="padding-left: 3px; padding-right: 3px;"></A>
 							<?php } ?>
 						</td>
 						
