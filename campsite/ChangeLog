@@ -1,3 +1,21 @@
+2.4.1 (January 13, 2006)
+  Bugs Fixed
+  ----------
+  - #1643: Fixed installation issue when installing from scratch
+  - #1650: Template engine: "articleAttachment" attribute produces
+    an error even if it's correct
+  - #1649: In the Article List, using the "up" and "down" order icons
+    will select the language of the article you moved.
+  - #1647: The Article List formatting is messed up when you dont have 
+    the Add Article permission
+  - #1644: No error messages shown in Article Type Add/Edit screen
+  - #1642: Article List doesnt look good in IE
+  - #1637: Article Edit: A date field is still looks editable when in
+    VIEW mode
+  - #1635: Home Page - Clicking on scheduled Issue time does not 
+    take you to editing the event
+    
+    
 2.4 (January 10, 2006)
   Major Features
   --------------
