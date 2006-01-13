@@ -135,7 +135,6 @@ function uncheckAll()
  *
  * @return  boolean  whether pointer is set or not
  */
-//function setPointer(theRow, theRowNum, theAction, theDefaultClass)
 function setPointer(theRow, theRowNum, theAction)
 {
 	newClass = null;
@@ -182,23 +181,23 @@ function checkboxClick(theCheckbox, theRowNum)
 } // fn checkboxClick
 </script>
 <div style="position: fixed; top: 140px;">
+<FORM name="article_list" action="do_article_list_action.php" method="POST">
+<INPUT TYPE="HIDDEN" NAME="f_publication_id" VALUE="<?php p($f_publication_id); ?>">
+<INPUT TYPE="HIDDEN" NAME="f_issue_number" VALUE="<?php p($f_issue_number); ?>">
+<INPUT TYPE="HIDDEN" NAME="f_section_number" VALUE="<?php p($f_section_number); ?>">
+<INPUT TYPE="HIDDEN" NAME="f_language_id" VALUE="<?php p($f_language_id); ?>">
+<INPUT TYPE="HIDDEN" NAME="f_language_selected" VALUE="<?php p($f_language_selected); ?>">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="3" class="table_input" style="background-color: #D5C3DF; border-color: #A35ACF;">
 <TR>
 	<TD>
 		<TABLE cellpadding="0" cellspacing="0">
 		<TR>
 			<TD ALIGN="left">
-				<FORM METHOD="GET" ACTION="index.php" NAME="selected_language">
-				<INPUT TYPE="HIDDEN" NAME="f_publication_id" VALUE="<?php p($f_publication_id); ?>">
-				<INPUT TYPE="HIDDEN" NAME="f_issue_number" VALUE="<?php p($f_issue_number); ?>">
-				<INPUT TYPE="HIDDEN" NAME="f_section_number" VALUE="<?php p($f_section_number); ?>">
-				<INPUT TYPE="HIDDEN" NAME="f_language_id" VALUE="<?php p($f_language_id); ?>">
-				<input type="hidden" name="<?php p($offsetVarName); ?>" value="0">
 				<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="3" >
 				<TR>
 					<TD><?php  putGS('Language'); ?>:</TD>
 					<TD valign="middle">
-						<SELECT NAME="f_language_selected" class="input_select" onchange="this.form.submit();">
+						<SELECT NAME="f_language_selected" id="f_language_selected" class="input_select" onchange="location.href='index.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_language_id=<?php p($f_language_id); ?>&<?php p($offsetVarName); ?>=0&f_language_selected='+document.getElementById('f_language_selected').options[document.getElementById('f_language_selected').selectedIndex].value;">
 						<option><?php putGS("All"); ?></option>
 						<?php 
 						foreach ($allArticleLanguages as $languageItem) {
@@ -206,13 +205,12 @@ function checkboxClick(theCheckbox, theRowNum)
 							if ($languageItem->getLanguageId() == $f_language_selected) {
 								echo " selected";
 							}
-							echo '>'.htmlspecialchars($languageItem->getName()).'</option>';
+							echo '>'.htmlspecialchars($languageItem->getNativeName()).'</option>';
 						} ?>
 						</SELECT>
 					</TD>
 				</TR>
 				</TABLE>
-				</FORM>
 			</TD>
 			<TD style="padding-left: 20px;">
 				<script>
@@ -284,12 +282,6 @@ function checkboxClick(theCheckbox, theRowNum)
 					}
 				}
 				</script>
-				<FORM name="article_list" action="do_article_list_action.php" method="POST">
-				<INPUT TYPE="HIDDEN" NAME="f_publication_id" VALUE="<?php p($f_publication_id); ?>">
-				<INPUT TYPE="HIDDEN" NAME="f_issue_number" VALUE="<?php p($f_issue_number); ?>">
-				<INPUT TYPE="HIDDEN" NAME="f_section_number" VALUE="<?php p($f_section_number); ?>">
-				<INPUT TYPE="HIDDEN" NAME="f_language_id" VALUE="<?php p($f_language_id); ?>">
-				<INPUT TYPE="HIDDEN" NAME="f_language_selected" VALUE="<?php p($f_language_selected); ?>">
 				<SELECT name="f_article_list_action" class="input_select" onchange="action_selected(this);">
 				<OPTION value=""><?php putGS("Actions"); ?>...</OPTION>
 				<OPTION value="">-----------------------</OPTION>
@@ -475,6 +467,7 @@ foreach ($allArticles as $articleObj) {
 		</TD>
 
 		<TD ALIGN="CENTER" valign="middle" nowrap>
+			<table cellpadding=0 cellspacing=0><tr><td>
 			<?php 
 			if ($articleObj->getPublished() == "Y") { 
 				putGS("Published");
@@ -485,16 +478,21 @@ foreach ($allArticles as $articleObj) {
 			elseif ($articleObj->getPublished() == "S") { 
 				putGS("Submitted");
 			}
+			?>
+			</td>
+			<?php
 			if ($articleObj->getPublished() != 'N') { 
 				$hasPendingActions = 
 					ArticlePublish::ArticleHasFutureActions($articleObj->getArticleNumber(),
 					$articleObj->getLanguageId());
 				if ($hasPendingActions) { ?>
-			<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/automatic_publishing.png" alt="<?php  putGS("Scheduled Publishing"); ?>" title="<?php  putGS("Scheduled Publishing"); ?>" border="0" width="22" height="22" align="middle" style="padding-bottom: 1px;">
+			<td style="padding-left: 3px"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/automatic_publishing.png" alt="<?php  putGS("Scheduled Publishing"); ?>" title="<?php  putGS("Scheduled Publishing"); ?>" border="0" width="22" height="22" align="middle" ></td>
 				<?php 
 				}
 			} 
 			?>
+			</tr>
+			</table>
 		</TD>
 		
 		<TD><?php echo $articleObj->onFrontPage() ? "Yes" : "No"; ?></TD>
