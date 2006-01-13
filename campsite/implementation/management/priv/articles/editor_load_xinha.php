@@ -177,6 +177,7 @@ xinha_init = xinha_init ? xinha_init : function()
   xinha_editors = xinha_editors ? xinha_editors :
   [
   	<?php
+  	$xinhaEditors = array();
 	foreach ($p_dbColumns as $dbColumn) {	
 		if (stristr($dbColumn->getType(), "blob")) {
 			$xinhaEditors[] = "'".$dbColumn->getName()."'";

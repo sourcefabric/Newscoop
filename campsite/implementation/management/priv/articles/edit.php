@@ -101,7 +101,13 @@ else {
 }	  
 camp_html_content_top($title, $topArray);
 
-if ($f_edit_mode == "edit") {
+$hasArticleBodyField = false;
+foreach ($dbColumns as $dbColumn) {
+	if (stristr($dbColumn->getType(), "blob")) { 
+		$hasArticleBodyField = true;
+	}
+}
+if (($f_edit_mode == "edit") && $hasArticleBodyField) {
 	editor_load_xinha($dbColumns, $User);
 }
 
@@ -469,12 +475,18 @@ if ($f_edit_mode == "edit") { ?>
 					<?php echo htmlspecialchars($dbColumn->getPrintName()); ?>:
 				</td>
 				<TD>
+				<?php if ($f_edit_mode == "edit") { ?>
 				<INPUT NAME="<?php echo $dbColumn->getName(); ?>" 
 					   TYPE="TEXT" 
 					   VALUE="<?php echo htmlspecialchars($articleData->getProperty($dbColumn->getName())); ?>" 
 					   class="input_text"
 					   SIZE="11" 
 					   MAXLENGTH="10"> 
+				<?php } else { ?>
+					<span style="padding-left: 4px; padding-right: 4px; padding-top: 1px; padding-bottom: 1px; border: 1px solid #888; margin-right: 5px; background-color: #EEEEEE;"><?php echo htmlspecialchars($articleData->getProperty($dbColumn->getName())); ?></span>
+					<?php
+				}
+				?>
 				<?php putGS('YYYY-MM-DD'); ?>
 				</TD>
 			</TR>
