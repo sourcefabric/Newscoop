@@ -68,6 +68,11 @@ echo camp_html_breadcrumbs($crumbs);
 <TR>
 	<TD COLSPAN="2">
 		<BLOCKQUOTE>
+		<?php 
+		foreach ($errorMsgs as $errorMsg) { 
+			echo "<li>".$errorMsg."</li>";
+		}
+		?>
 		</BLOCKQUOTE>
 	</TD>
 </TR>
