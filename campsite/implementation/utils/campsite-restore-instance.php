@@ -115,7 +115,7 @@ exec_command($cmd);
 if (($res = restore_database($instance_name, $database_dump_file)) !== 0)
 	exit_with_error($res);
 require_once("$html_dir/parser_utils.php");
-create_language_links($html_dir);
+camp_create_language_links($html_dir);
 
 // remove packages
 exec_command("rm -f $backup_dir/*.tar.gz");

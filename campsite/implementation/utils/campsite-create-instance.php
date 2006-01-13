@@ -82,7 +82,7 @@ function create_instance($p_arguments, &$p_errors)
 	// create language links
 	$html_dir = $Campsite['WWW_DIR'] . "/" . $Campsite['DATABASE_NAME'] . "/html";
 	require_once("$html_dir/parser_utils.php");
-	create_language_links($html_dir);
+	camp_create_language_links($html_dir);
 
 	return true;
 }
