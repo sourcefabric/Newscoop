@@ -102,7 +102,7 @@ case "copy":
 		$articleObj->copy($articleObj->getPublicationId(), 
 						  $articleObj->getIssueNumber(), 
 						  $articleObj->getSectionNumber(),
-						  null,
+						  $User->getUserId(),
 						  $languageArray);
 	}
 	break;
