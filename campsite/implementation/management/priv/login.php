@@ -6,8 +6,8 @@ include($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/languages.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 
 // Delete any cookies they currently have.
-setcookie("TOL_UserId", "", time() - 86400);
-setcookie("TOL_UserKey", "", time() - 86400);
+setcookie("LoginUserId", "", time() - 86400);
+setcookie("LoginUserKey", "", time() - 86400);
 
 // Special case for the login screen:
 // We have to figure out what language to use.

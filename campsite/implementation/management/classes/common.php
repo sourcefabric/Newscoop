@@ -29,15 +29,15 @@ function check_basic_access($p_request, $p_exit = true)
 	$user = array();
 	
 	// Check for required info.
-	if (!isset($p_request['TOL_UserId']) || !isset($p_request['TOL_UserKey'])
-	 	|| !is_numeric($p_request['TOL_UserId']) || !is_numeric($p_request['TOL_UserKey'])) {
+	if (!isset($p_request['LoginUserId']) || !isset($p_request['LoginUserKey'])
+	 	|| !is_numeric($p_request['LoginUserId']) || !is_numeric($p_request['LoginUserKey'])) {
 		return array($access, $user, $XPerm);
 	}
 	
 	// Check if user exists in the table.
 	$queryStr = 'SELECT * FROM Users '
-				.' WHERE Id='.$p_request['TOL_UserId'];
-				//.' AND KeyId='.$p_request['TOL_UserKey'];
+				.' WHERE Id='.$p_request['LoginUserId'];
+				//.' AND KeyId='.$p_request['LoginUserKey'];
 	$query = mysql_query($queryStr);
 	if ($query && (mysql_num_rows($query) > 0)) {
 		// User exists.

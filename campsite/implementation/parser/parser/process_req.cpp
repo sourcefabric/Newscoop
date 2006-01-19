@@ -209,9 +209,9 @@ int RunParser(MYSQL* p_pSQL, CURL* p_pcoURL, const char* p_pchRemoteIP, sockstre
 			nRes = UERR_INTERNAL;
 		pcoCtx->SetAddUserRes(nRes);
 		if (nRes == 0)
-			p_rOs << "<META HTTP-EQUIV=\"Set-Cookie\" CONTENT=\"TOL_UserId="
+			p_rOs << "<META HTTP-EQUIV=\"Set-Cookie\" CONTENT=\"LoginUserId="
 			<< pcoCtx->User() << "; path=/\">\n"
-			<< "<META HTTP-EQUIV=\"Set-Cookie\" CONTENT=\"TOL_UserKey="
+			<< "<META HTTP-EQUIV=\"Set-Cookie\" CONTENT=\"LoginUserKey="
 			<< pcoCtx->Key() << "; path=/\">\n";
 		pcoCtx->URL()->deleteParameter(P_USERADD);
 		pcoCtx->DefURL()->deleteParameter(P_USERADD);
@@ -231,26 +231,30 @@ int RunParser(MYSQL* p_pSQL, CURL* p_pcoURL, const char* p_pchRemoteIP, sockstre
 				pcoCtx->URL()->deleteParameter(P_REMEMBER_USER);
 				pcoCtx->DefURL()->deleteParameter(P_REMEMBER_USER);
 			}
-			p_rOs << "<META HTTP-EQUIV=\"Set-Cookie\" CONTENT=\"TOL_UserId="
+			p_rOs << "<META HTTP-EQUIV=\"Set-Cookie\" CONTENT=\"LoginUserId="
 			<< pcoCtx->User() << "; path=/" << coExpires << "\">\n"
-			<< "<META HTTP-EQUIV=\"Set-Cookie\" CONTENT=\"TOL_UserKey="
+			<< "<META HTTP-EQUIV=\"Set-Cookie\" CONTENT=\"LoginUserKey="
 			<< pcoCtx->Key() << "; path=/" << coExpires << "\">\n";
 		}
 		pcoCtx->URL()->deleteParameter(P_LOGIN);
 		pcoCtx->DefURL()->deleteParameter(P_LOGIN);
 	}
-	else if (p_pcoURL->getCookies().size() > 0)
+	else
 	{
-		if ((coStr = p_pcoURL->getCookie("TOL_UserId")) != "")
+		if ((coStr = p_pcoURL->getValue("LoginUserId")) != "")
 			pcoCtx->SetUser(atol(coStr.c_str()));
-		if ((coStr = p_pcoURL->getCookie("TOL_UserKey")) != "")
+		else if ((coStr = p_pcoURL->getCookie("LoginUserId")) != "")
+			pcoCtx->SetUser(atol(coStr.c_str()));
+		if ((coStr = p_pcoURL->getValue("LoginUserKey")) != "")
 			pcoCtx->SetKey(strtoul(coStr.c_str(), 0, 10));
-		if ((coStr = p_pcoURL->getCookie("TOL_Access")) != "")
+		else if ((coStr = p_pcoURL->getCookie("LoginUserKey")) != "")
+			pcoCtx->SetKey(strtoul(coStr.c_str(), 0, 10));
+		if ((coStr = p_pcoURL->getValue("AdminAccess")) != "")
 			bAccessAll = coStr == "all";
-		if ((coStr = p_pcoURL->getCookie("TOL_Preview")) != "")
-			bPreview = coStr == "on";
-		if ((coStr = p_pcoURL->getCookie("TOL_Debug")) != "")
-			bTechDebug = coStr == "on";
+		else if ((coStr = p_pcoURL->getCookie("AdminAccess")) != "")
+			bAccessAll = coStr == "all";
+		bPreview = p_pcoURL->getValue(P_PREVIEW_MODE) == "on";
+		bTechDebug = p_pcoURL->getValue(P_DEBUG_MODE) == "on";
 	}
 	if ((coStr = p_pcoURL->getValue(P_USERMODIFY)) != "")
 	{
