@@ -37,30 +37,26 @@ if ($errorStr != "") {
 	camp_html_display_error($errorStr, null, true);
 }
 
-setcookie("TOL_UserId", $User->getUserId(), null, "/");
-setcookie("TOL_UserKey", $User->getKeyId(), null, "/");
-setcookie("TOL_Access", "all", null, "/");
-if ($User->hasPermission("ManageTempl") || $User->hasPermission("DeleteTempl"))
-	setcookie("TOL_Preview", "on", null, "/");
-
 $templateObj =& new Template($templateId);
 
+$accessParams = "LoginUserId=" . $User->getUserId() . "&LoginUserKey=" . $User->getKeyId()
+				. "&AdminAccess=all";
 $urlType = $publicationObj->getProperty('IdURLType');
 if ($urlType == 1) {
 	$templateObj = & new Template($templateId);
-	$url = "/look/" . $templateObj->getName() . "?IdLanguage=$f_language_id"
+	$uri = "/look/" . $templateObj->getName() . "?IdLanguage=$f_language_id"
 		. "&IdPublication=$f_publication_id&NrIssue=$f_issue_number&NrSection=$f_section_number"
-		. "&NrArticle=$f_article_number";
+		. "&NrArticle=$f_article_number&$accessParams";
 } else {
-	$url = "/" . $languageObj->getCode() . "/" . $issueObj->getUrlName()
-		. "/" . $sectionObj->getUrlName() . "/" . $articleObj->getUrlName();
+	$uri = "/" . $languageObj->getCode() . "/" . $issueObj->getUrlName()
+		. "/" . $sectionObj->getUrlName() . "/" . $articleObj->getUrlName() . "?$accessParams";
 }
 
 if ($User->hasPermission("ManageTempl") || $User->hasPermission("DeleteTempl")) {
 	// Show dual-pane view for those with template management priviledges
 ?>
 	<FRAMESET ROWS="60%,*" BORDER="2">
-		<FRAME SRC="<?php print $url; ?>" NAME="body" FRAMEBORDER="1">
+		<FRAME SRC="<?php print "$uri&preview=on"; ?>" NAME="body" FRAMEBORDER="1">
 		<FRAME NAME="e" SRC="empty.php" FRAMEBORDER="1">
 	</FRAMESET>
 <?php
@@ -68,7 +64,7 @@ if ($User->hasPermission("ManageTempl") || $User->hasPermission("DeleteTempl")) 
 	// Show single pane for everyone else.
 ?>
 	<FRAMESET ROWS="100%">
-		<FRAME SRC="<?php print $url; ?>" NAME="body" FRAMEBORDER="1">
+		<FRAME SRC="<?php print $uri; ?>" NAME="body" FRAMEBORDER="1">
 	</FRAMESET>
 <?php
 }

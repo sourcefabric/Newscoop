@@ -13,8 +13,8 @@ if ($validUser) {
 	if (function_exists ("incModFile")) {
 		incModFile ();
 	}
-	setcookie("TOL_UserId", $user->getUserId());
-	setcookie("TOL_UserKey", $user->getKeyId());
+	setcookie("LoginUserId", $user->getUserId());
+	setcookie("LoginUserKey", $user->getKeyId());
 	setcookie("TOL_Language", $selectLanguage);
 	Article::UnlockByUser($user->getUserId());
 	header("Location: /$ADMIN/index.php");

@@ -57,5 +57,7 @@ Defines parameters for cgi
 #define P_REMEMBER_USER "RememberUser"
 #define P_TOPIC_ID "tpid"
 #define P_TEMPLATE_ID "tpl"
+#define P_PREVIEW_MODE "preview"
+#define P_DEBUG_MODE "debug"
 
 #endif

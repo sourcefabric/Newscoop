@@ -35,8 +35,8 @@ class Log extends DatabaseObject {
 			$p_userId = 0;
 			
 			// try to get the user name from the global environment
-			if (isset($_REQUEST['TOL_UserId'])) {
-				$p_userId = $_REQUEST['TOL_UserId'];
+			if (isset($_REQUEST['LoginUserId'])) {
+				$p_userId = $_REQUEST['LoginUserId'];
 			}
 		}
 		$queryStr = "INSERT INTO Log SET "
