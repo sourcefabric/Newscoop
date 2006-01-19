@@ -413,7 +413,7 @@ public:
 
 	// updateTypes: set the types hash
 	// Parameters:
-	//		const TOLTypeAttributesHash* p_pcoTypeAttributes - pointer to types hash
+	//		const CTypeAttributesHash* p_pcoTypeAttributes - pointer to types hash
 	bool updateTypes(CTypeAttributesMap* p_pcoTypeAttributes) throw(ExMutex);
 
 	// print statement
