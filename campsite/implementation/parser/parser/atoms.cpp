@@ -598,7 +598,7 @@ string CStatement::types() const throw(ExMutex)
 
 // updateTypes: set the types hash
 // Parameters:
-//		const TOLTypeAttributesHash* p_pcoTypeAttributes - pointer to types hash
+//		const CTypeAttributesHash* p_pcoTypeAttributes - pointer to types hash
 bool CStatement::updateTypes(CTypeAttributesMap* p_pcoTypeAttributes) throw(ExMutex)
 {
 	SafeAutoPtr<CTypeAttributesMap> pcoTypeAttrs(p_pcoTypeAttributes);
