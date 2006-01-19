@@ -1003,7 +1003,7 @@ return 0
 check4_pear()
 {
 is_checked pear && return 0
-check4_file pear --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
+check4_file pear --executable --path "/usr/local/bin:/bin:/usr/bin:/opt/bin"
 result=$? && [ $result -ne 0 ] && return 1
 pear_dir=`pear config-get php_dir | cut -f 2 -d "="`
 result=$? && [ $result -ne 0 ] && echo "$pear_dir" && return 1
@@ -1024,7 +1024,7 @@ check4_php_cli()
 {
 is_checked php_cli && return 0
 export PHP=
-for p in /bin /usr/bin /usr/local/bin /opt/bin; do
+for p in /usr/local/bin /bin /usr/bin /opt/bin; do
     [ -x "$p/php" ] && export PHP="$p/php" && break
 done
 [ "$PHP" = "" ] && output="PHP CLI (Command Line Interface) not found. Please install this package" && return 1
