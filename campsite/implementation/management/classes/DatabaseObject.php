@@ -647,7 +647,7 @@ class DatabaseObject {
 	        		.' WHERE ' . $this->getKeyWhereClause()
 	        		.' LIMIT 1';
         $result = $Campsite['db']->Execute($queryStr);
-		$success = ($Campsite['db']->Affected_Rows() > 0);
+		$success = ($Campsite['db']->Affected_Rows() >= 0);
 		if ($result !== false) {
 			$this->m_exists = true;
 		}
