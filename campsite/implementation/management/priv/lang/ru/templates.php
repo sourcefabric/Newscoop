@@ -1,4 +1,5 @@
 <?php
+regGS("The template '$1' was saved successfully.", "");
 regGS("The template $1 is in use and can not be deleted.", "Шаблон $1 используется и не может быть удален");
 regGS("The folder could not be deleted.", "Папка не может быть удалена.");
 regGS("The directory must be empty", "Папка должна быть пуста");

@@ -33,7 +33,9 @@ if (@$handle = fopen($filename, 'w')) {
 if ($result !== false) {
 	$logtext = getGS('Template $1 was changed', $Path."/".$Name);
 	Log::Message($logtext, $User->getUserName(), 113);
-	header("Location: /$ADMIN/templates/edit_template.php?Path=".urlencode($Path)."&Name=".urlencode($Name));
+	header("Location: /$ADMIN/templates/edit_template.php?Path=".urlencode($Path)
+			."&Name=".urlencode($Name)."&res=OK"
+			."&resMsg=".urlencode(getGS("The template '$1' was saved successfully.", $Name)));
 	exit;
 } else {
 	$errMsg = getGS("Unable to save the template '$1' to the path '$2'.", $Name, $Path) . " "
@@ -49,12 +51,6 @@ echo camp_html_breadcrumbs($crumbs);
 ?>
 <P>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="table_input">
-<TR>
-	<TD COLSPAN="2">
-		<B> <?php  putGS("Edit template"); ?> </B>
-		<HR NOSHADE SIZE="1" COLOR="BLACK">
-	</TD>
-</TR>
 <TR>
 	<TD COLSPAN="2">
 		<BLOCKQUOTE> <LI><?php echo $errMsg; ?></LI> </BLOCKQUOTE>

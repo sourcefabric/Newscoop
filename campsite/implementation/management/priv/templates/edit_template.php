@@ -33,19 +33,33 @@ $crumbs[] = array(getGS("Templates"), "/$ADMIN/templates");
 $crumbs = array_merge($crumbs, camp_template_path_crumbs($Path));
 $crumbs[] = array(getGS("Edit template").": $Name", "");
 echo camp_html_breadcrumbs($crumbs);
+
+$res = Input::Get('res', 'string', 'OK');
+$resMsg = Input::Get('resMsg', 'string', '');
+
 ?>
+
+<?php if ($resMsg != '') { ?>
+<p>
+<table border="0" cellpadding="0" cellspacing="0" class="action_buttons">
+<tr>
+<?php if ($res == 'OK') { ?>
+	<td class="info_message">
+<?php } else { ?>
+	<td class="error_message">
+<?php } ?>
+		<?php echo $resMsg; ?>
+	</td>
+</tr>
+</table>
+</p>
+<?php } ?>
 
 <P>
 <FORM NAME="dialog" METHOD="POST" ACTION="do_edit.php"  >
 <INPUT TYPE="HIDDEN" NAME="Path" VALUE="<?php  p($Path); ?>">
 <INPUT TYPE="HIDDEN" NAME="Name" VALUE="<?php  p($Name); ?>">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
-<TR>
-	<TD COLSPAN="2">
-		<B><?php  putGS("Edit template"); ?></B>
-		<HR NOSHADE SIZE="1" COLOR="BLACK">
-	</TD>
-</TR>
 <TR>
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">
@@ -60,7 +74,7 @@ echo camp_html_breadcrumbs($crumbs);
 </TR>
 
 <TR>
-	<TD><TEXTAREA ROWS="25" COLS="85" NAME="cField" WRAP="NO"><?php  p($contents) ?></TEXTAREA></TD>
+	<TD><TEXTAREA ROWS="25" COLS="90" NAME="cField" WRAP="NO"><?php  p($contents) ?></TEXTAREA></TD>
 </TR>
 
 <TR>
