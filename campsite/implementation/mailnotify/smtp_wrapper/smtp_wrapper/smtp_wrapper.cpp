@@ -121,34 +121,34 @@ int main(int argc, char** argv)
 		int nRecLen = 0;
 		nRecLen = Receive(coSock, &pchBuf, nBufLen);
 
-		coStr = string("helo ") + pchMyHostName + "\n";
+		coStr = string("helo ") + pchMyHostName + "\r\n";
 		coSock.Send(coStr.c_str(), strlen(coStr.c_str()));
 		nRecLen = Receive(coSock, &pchBuf, nBufLen);
 		CheckSMTPErrorCode(pchBuf);
 
-		coStr = string("mail from: ") + pchReplyAddress + "\n";
+		coStr = string("mail from: ") + pchReplyAddress + "\r\n";
 		coSock.Send(coStr.c_str(), strlen(coStr.c_str()));
 		nRecLen = Receive(coSock, &pchBuf, nBufLen);
 		CheckSMTPErrorCode(pchBuf);
 		for (int i = 0; i < nFirstFree; i++)
 		{
-			coStr = string("rcpt to: ") + ppchSendToList[i] + "\n";
+			coStr = string("rcpt to: ") + ppchSendToList[i] + "\r\n";
 			coSock.Send(coStr.c_str(), strlen(coStr.c_str()));
 			nRecLen = Receive(coSock, &pchBuf, nBufLen);
 			CheckSMTPErrorCode(pchBuf);
 		}
 		if (bTest)
 			return 0;
-		coSock.Send("data\n", 5);
+		coSock.Send("data\r\n", 6);
 		nRecLen = Receive(coSock, &pchBuf, nBufLen);
 		CheckSMTPErrorCode(pchBuf, 354);
 		while (!cin.eof())
 		{
 			getline(cin, coStr);
-			coStr += "\n";
+			coStr += "\r\n";
 			coSock.Send(coStr.c_str(), strlen(coStr.c_str()));
 		}
-		coSock.Send(".\n", 2);
+		coSock.Send("\r\n.\r\n", 5);
 		nRecLen = Receive(coSock, &pchBuf, nBufLen);
 		CheckSMTPErrorCode(pchBuf);
 		coSock.Shutdown();
