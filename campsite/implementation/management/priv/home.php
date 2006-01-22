@@ -117,7 +117,7 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 			</TD>
 			
 			<TD width="1%" align="center" nowrap valign="top">
-				<?php p(htmlspecialchars($language->getName())); ?>
+				<?php p(htmlspecialchars($language->getNativeName())); ?>
 			</TD>
 			
 			<TD width="1%" align="center" nowrap valign="top">
@@ -184,7 +184,7 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 			</TD>
 			
 			<TD align="center" nowrap valign="top">
-			<?php p(htmlspecialchars($language->getName()));?>
+			<?php p(htmlspecialchars($language->getNativeName()));?>
 			</TD>
 		</TR>
 		<?php 

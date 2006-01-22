@@ -99,7 +99,7 @@ if (sizeof($allArticleTypes) == 0) {
 			if ($tmpLanguage->getLanguageId() == $f_language_id) {
 				echo "selected";
 			}
-			echo '>'.$tmpLanguage->getName().'</option>';
+			echo '>'.$tmpLanguage->getNativeName().'</option>';
         }
 		?>			
 		</SELECT>
