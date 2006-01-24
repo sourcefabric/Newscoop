@@ -1,14 +1,3 @@
-<?php
-function isTpl($s)
-{
-	$dotpos=strrpos($s,".");
-	$ext=substr($s,$dotpos+1);
-	return ($ext == 'tpl' || $ext=='TPL' || $ext == 'php' || $ext == 'htm'
-		|| $ext == 'html' || $ext == 'php3' || $ext == 'php4' || $ext == 'txt'
-		|| $ext == 'css');
-}
-?>
-
 <TABLE BORDER="0" CELLSPACING="2" CELLPADDING="0">
 <TR>
 	<TD VALIGN="TOP">
@@ -109,7 +98,7 @@ function isTpl($s)
 					$color = 1;
 					$tr_class = "class=\"list_row_odd\"";
 				}
-				if (isTpl($filename)) {
+				if (camp_is_template_file($filename)) {
 					print "<TR $tr_class><TD valign=\"center\"><IMG SRC='".$Campsite["ADMIN_IMAGE_BASE_URL"]."/generic.gif' BORDER='0'>&nbsp;<A HREF='/$ADMIN/templates/edit_template.php?Path=" .urlencode($listbasedir)."&Name=".urlencode($filename)."'>$filename</A></TD>";
 				} else {
 					print "<TR $tr_class><TD><IMG SRC='".$Campsite["ADMIN_IMAGE_BASE_URL"]."/generic.gif' BORDER='0'> $filename</TD>";
