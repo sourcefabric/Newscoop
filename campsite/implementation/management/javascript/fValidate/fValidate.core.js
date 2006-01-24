@@ -407,7 +407,10 @@ fValidate.prototype.showError = function( emsg, last, elem )
 	{
 		if ( self.groupError ) self.showErrors.push( emsg );
 		else alert( emsg );
-		if ( last ) alert( self.i18n.groupAlert + self.showErrors.join( "\n\n- " ) );			
+		// Modified by Paul Baranowski of Campsite:
+		// dont show the 'grouperror' so we can avoid having to translate this.
+		//if ( last ) alert( self.i18n.groupAlert + self.showErrors.join( "\n\n- " ) );			
+		if ( last ) alert( self.showErrors.join( "\n\n" ) );			
 	}
 	//	Applies class to form element
 	function inputError()

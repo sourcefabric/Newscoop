@@ -8,6 +8,15 @@ require_once($_SERVER['DOCUMENT_ROOT']."/classes/Input.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Log.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 
+function camp_is_template_file($s)
+{
+	$dotpos = strrpos($s,".");
+	$ext = strtolower(substr($s,$dotpos+1));
+	return ($ext == 'tpl' || $ext == 'php' || $ext == 'htm'
+		|| $ext == 'html' || $ext == 'php3' || $ext == 'php4' || $ext == 'txt'
+		|| $ext == 'css');
+} // fn camp_is_template_file
+
 function camp_template_path_crumbs($p_path) 
 {
 	global $ADMIN;
@@ -34,6 +43,6 @@ function camp_template_path_crumbs($p_path)
 		$crumbs[] = array("$dir/", "/$ADMIN/templates/?Path=".urlencode($tmpPath), ($count++ == $numDirs));
 	}
 	return $crumbs;
-}
+} // fn camp_template_path_crumbs
 
 ?>

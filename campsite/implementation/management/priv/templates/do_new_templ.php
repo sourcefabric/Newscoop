@@ -13,17 +13,28 @@ if (!$User->hasPermission('ManageTempl')) {
 	exit;
 }
 
-$cPath = Input::Get('cPath', 'string', '');
-if (!Template::IsValidPath($cPath)) {
+$f_path = Input::Get('f_path', 'string', '');
+if (!Template::IsValidPath($f_path)) {
 	header("Location: /$ADMIN/templates/");
 	exit;
 }
-$cName = Input::Get('cName', 'string', '');
+$f_name = Input::Get('f_name', 'string', '');
 $created = 0;
-$correct = trim($cName) != "";
+$correct = trim($f_name) != "";
 if ($correct) {
-	$cName = strtr($cName,'?~#%*&|"\'\\/<>', '_____________');
-	$newTempl = Template::GetFullPath($cPath, $cName);
+	$f_name = strtr($f_name,'?~#%*&|"\'\\/<>', '_____________');
+	
+	// Set the extension of the new file if it doesnt have one already.
+	$new_path_info = pathinfo($f_name);
+	$newExtension = isset($new_path_info["extension"]) ? $new_path_info["extension"] : "";
+	if (empty($newExtension)) {
+		if ($f_name[strlen($f_name)-1] != ".") {
+			$f_name .= ".";
+		} 
+		$f_name .= "tpl";			
+	}
+
+	$newTempl = Template::GetFullPath($f_path, $f_name);
 	$ok = 0;
 
 	$file_exists = file_exists($newTempl);
@@ -32,9 +43,9 @@ if ($correct) {
 	}
 	if ($ok) {
 		Template::UpdateStatus();
-		$logtext = getGS('New template $1 was created',$cPath."/".$cName);
+		$logtext = getGS('New template $1 was created',$f_path."/".$f_name);
 		Log::Message($logtext, $User->getUserName(), 114);
-		header("Location: /$ADMIN/templates/edit_template.php?Path=$cPath&Name=$cName");
+		header("Location: /$ADMIN/templates/edit_template.php?Path=$f_path&Name=$f_name");
 		exit;
 	}
 }
@@ -63,23 +74,19 @@ echo camp_html_breadcrumbs($crumbs);
 	<?php
 	} else {
 		if ($file_exists) {
-			putGS('A file or folder having the name $1 already exists','<b>'.$cName.'</B>');
+			putGS('A file or folder having the name $1 already exists','<b>'.$f_name.'</B>');
 		}
 		else {
-			putGS('The template $1 could not be created.','<b>'.$cName.'</B>');
+			putGS('The template $1 could not be created.','<b>'.$f_name.'</B>');
 		}
 	}
 	?>	</BLOCKQUOTE></TD>
 	</TR>
 
-<?php if ($ok) { ?>	<TR>
-		<TD COLSPAN="2"><BLOCKQUOTE><LI><?php  putGS('Do you want to edit the template ?'); ?></LI></BLOCKQUOTE></TD>
-	</TR>
-<?php } ?>
 	<TR>
 		<TD COLSPAN="2">
 		<DIV ALIGN="CENTER">
-		<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/templates/new_template.php?Path=<?php p(urlencode($cPath)); ?>'">
+		<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/templates/new_template.php?Path=<?php p(urlencode($f_path)); ?>'">
 		</DIV>
 		</TD>
 	</TR>
