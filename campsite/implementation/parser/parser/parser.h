@@ -264,6 +264,13 @@ private:	// private methods
 	//		int sublevel - current sublevel
 	int HTopic(CActionList& al, int level, int sublevel);
 	
+	// HHTMLEncoding: parse HTMLEncoding statement; add CActHTMLEncoding action to actions list
+	// Parameters:
+	//		CActionList& al - reference to actions list
+	//		int level - current level
+	//		int sublevel - current sublevel
+	int HHTMLEncoding(CActionList& al, int level, int sublevel);
+	
 	// HURLParameters: parse URLParameters statement; add CActURLParameters action to
 	// actions list (al)
 	// Parameters:

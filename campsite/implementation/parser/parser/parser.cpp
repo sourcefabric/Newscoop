@@ -814,6 +814,20 @@ inline int CParser::HTopic(CActionList& al, int level, int sublevel)
 	return 0;
 }
 
+// HHTMLEncoding: parse HTMLEncoding statement; add CActHTMLEncoding action to actions list
+// Parameters:
+//		CActionList& al - reference to actions list
+//		int level - current level
+//		int sublevel - current sublevel
+inline int CParser::HHTMLEncoding(CActionList& al, int level, int sublevel)
+{
+	RequireAtom(l);
+	attr = st->findAttr(l->atom()->identifier(), CMS_CT_DEFAULT);
+	al.insert(al.end(), new CActHTMLEncoding(CParameter(attr->attribute(), "", NULL)));
+	WaitForStatementEnd(true);
+	return 0;
+}
+
 // HURLParameters: parse include statement; add CActURLParameters action to actions list (al)
 // Parameters:
 //		CActionList& al - reference to actions list
@@ -2114,6 +2128,9 @@ int CParser::LevelParser(CActionList& al, int level, int sublevel)
 			break;
 		case CMS_ST_TOPIC:
 			HTopic(al, level, sublevel);
+			break;
+		case CMS_ST_HTMLENCODING:
+			HHTMLEncoding(al, level, sublevel);
 			break;
 		case CMS_ST_LIST:
 			if ((res = HList(al, level, sublevel)))

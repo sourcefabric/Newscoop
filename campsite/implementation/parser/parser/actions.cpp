@@ -610,6 +610,25 @@ int CActTopic::takeAction(CContext& c, sockstream& fs)
 	return RES_OK;
 }
 
+// takeAction: performs the action
+// Parametes:
+//		CContext& c - current context (modified by action)
+//		sockstream& fs - output stream (not used)
+int CActHTMLEncoding::takeAction(CContext& c, sockstream& fs)
+{
+	if (case_comp(param.attribute(), "on") == 0)
+	{
+		c.SetEncodeHTML(true);
+		return RES_OK;
+	}
+	if (case_comp(param.attribute(), "off") == 0)
+	{
+		c.SetEncodeHTML(false);
+		return RES_OK;
+	}
+	return RES_OK;
+}
+
 CListModifiers::CListModifiers()
 {
 	insert(CMS_ST_ISSUE);

@@ -399,6 +399,15 @@ int CStatementMap::InitStatements()
 
 	this->insert(pcoSt);
 
+	pcoSt = new CStatement(CMS_ST_HTMLENCODING, ST_HTMLENCODING);
+
+	pcoCtx = new CStatementContext(CMS_CT_DEFAULT);
+	pcoCtx->insertAttr(new CAttribute("on"));
+	pcoCtx->insertAttr(new CAttribute("off"));
+	pcoSt->insertCtx(pcoCtx);
+
+	this->insert(pcoSt);
+
 	// list statement
 	pcoSt = new CStatement(CMS_ST_LIST, ST_LIST);
 

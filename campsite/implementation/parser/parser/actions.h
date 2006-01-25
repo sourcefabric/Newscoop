@@ -512,6 +512,44 @@ public:
 	virtual int takeAction(CContext& c, sockstream& fs);
 };
 
+// CActHTMLEncoding: HTMLEncoding action - corresponding to HTMLEncoding statement (see manual)
+class CActHTMLEncoding : public CAction
+{
+	protected:
+		CParameter param;		// parameter
+
+	public:
+	// constructor
+	// Parameters:
+	//		const CParameter& p - parameter
+		CActHTMLEncoding(const CParameter& p) : param(p) {}
+	
+	// copy-constructor
+		CActHTMLEncoding(const CActHTMLEncoding& s) : param("") { *this = s; }
+
+	// destructor
+		virtual ~CActHTMLEncoding() {}
+
+	// assign operator
+		const CActHTMLEncoding& operator =(const CActHTMLEncoding& o)
+		{
+			param = o.param;
+			return *this;
+		}
+	
+	// action: return action identifier
+		virtual TAction action() const { return CMS_ACT_HTMLENCODING; }
+
+	// clone this object
+		virtual CAction* clone() const { return new CActHTMLEncoding(*this); }
+
+	// takeAction: performs the action
+	// Parametes:
+	//		CContext& c - current context (modified by action)
+	//		sockstream& fs - output stream (not used)
+		virtual int takeAction(CContext& c, sockstream& fs);
+};
+
 class CListModifiers : public set<int>
 {
 public:
