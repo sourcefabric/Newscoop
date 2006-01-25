@@ -90,6 +90,7 @@ table .label {
 
 <script type="text/javascript" src="popup.js"></script>
 <script type="text/javascript">
+window.resizeTo(400, 200);
 
 function Init() {
 	__dlg_translate('Campsite');
