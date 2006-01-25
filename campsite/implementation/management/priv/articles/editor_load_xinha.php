@@ -360,6 +360,7 @@ xinha_init = xinha_init ? xinha_init : function()
 	
 	if ($p_user->hasPermission('EditorFontFace')) {
 		$toolbar2[] = "\"formatblock\"";
+		$toolbar2[] = "\"fontname\"";
 	}
 	
 	if ($p_user->hasPermission('EditorFontSize')) {
