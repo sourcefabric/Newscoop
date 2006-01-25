@@ -54,6 +54,7 @@ using std::set;
 using std::cout;
 using std::endl;
 using std::stringstream;
+using std::ostringstream;
 
 //*** start macro definition
 
@@ -110,6 +111,13 @@ if (p >= 0)\
 os << "<input type=hidden name=\"" << pn << "\" value=\"" << p << "\">";\
 }
 
+#define FormPrintParamHTML(pn, p, os, c)\
+{\
+if (p >= 0)\
+os << "<input type=hidden name=\"" << encodeHTML(pn, c.EncodeHTML()) \
+<< "\" value=\"" << encodeHTML(p, c.EncodeHTML()) << "\">";\
+}
+
 #define CheckForType(t, sql)\
 {\
 if (IsValidType(t, sql) != 0)\
@@ -160,11 +168,14 @@ TK_MYSQL CAction::m_coSql(NULL);
 TK_bool CAction::m_coDebug(NULL);
 
 // DEBUGAct: print debug information
-inline void CAction::DEBUGAct(const char* method, const char* expl, sockstream& fs)
+inline void CAction::DEBUGAct(const char* method, const char* expl, sockstream& fs,
+							  bool p_bEncodeHTML)
 {
 	if (*m_coDebug == true)
 	{
-		fs << "<!-- " << actionType() << "." << method << ": " << expl << " -->\n";
+		fs << "<!-- " << encodeHTML(actionType(), p_bEncodeHTML) << "."
+				<< encodeHTML(method, p_bEncodeHTML) << ": "
+				<< encodeHTML(expl, p_bEncodeHTML) << " -->\n";
 	}
 }
 
@@ -203,7 +214,10 @@ int CAction::runActions(CActionList& al, CContext& c, sockstream& fs)
 	{
 		int err;
 		if (debug())
-			fs << "<!-- taking action " << (*al_i)->actionType() << " -->\n";
+		{
+			fs << "<!-- taking action "
+					<< encodeHTML((*al_i)->actionType(), c.EncodeHTML()) << " -->\n";
+		}
 		try
 		{
 			err = (*al_i)->takeAction(c, fs);
@@ -217,8 +231,18 @@ int CAction::runActions(CActionList& al, CContext& c, sockstream& fs)
 			const CPublication* pcoPub = 
 					CPublicationsRegister::getInstance().getPublication(c.Publication());
 			const string& coAlias = *(pcoPub->getAliases().begin());
-			fs << "<font color=red><h3>ERROR: " << rcoEx.what() << " in publication "
-					<< coAlias << ", language id: " << c.Language() << "</h3></font>";
+			if (c.EncodeHTML())
+			{
+				fs << "<font color=red><h3>ERROR: " << encodeHTML(rcoEx.what(), true)
+						<< " in publication " << encodeHTML(coAlias, true) << ", language id: "
+						<< c.Language() << "</h3></font>" << endl;
+			}
+			else
+			{
+				fs << "ERROR: " << rcoEx.what() << " in publication " << coAlias
+						<< ", language id: " << c.Language() << endl;
+
+			}
 		}
 		catch (ExMutex& rcoEx)
 		{
@@ -229,7 +253,10 @@ int CAction::runActions(CActionList& al, CContext& c, sockstream& fs)
 			cout << "runActions: " << rcoEx.what() << " in " << (*al_i)->actionType() << endl;
 		}
 		if (debug())
-			fs << "<!-- action " << (*al_i)->actionType() << " result: " << err << " -->\n";
+		{
+			fs << "<!-- action " << encodeHTML((*al_i)->actionType(), c.EncodeHTML())
+					<< " result: " << err << " -->\n";
+		}
 	}
 	return RES_OK;
 }
@@ -386,7 +413,8 @@ int CActInclude::takeAction(CContext& c, sockstream& fs)
 	catch (ExStat& rcoEx)
 	{
 		fs << endl << "<!-- INCLUDE FILE WARNING!!! -->" << endl;
-		fs << "<!-- Included file (" << tpl_path << ") does not exist. -->" << endl;
+		fs << "<!-- Included file (" << encodeHTML(tpl_path, c.EncodeHTML())
+				<< ") does not exist. -->" << endl;
 		fs << "<!----------------------------->" << endl;
 		return ERR_NOHASHENT;
 	}
@@ -1197,6 +1225,7 @@ void CActURLParameters::PrintSubtitlesURL(CContext& c, sockstream& fs, bool& fir
 //		sockstream& fs - output stream
 int CActURLParameters::takeAction(CContext& c, sockstream& fs)
 {
+	ostringstream coOut;
 	TK_TRY
 	bool first = true;
 	if (m_bArticleAttachment)
@@ -1211,8 +1240,9 @@ int CActURLParameters::takeAction(CContext& c, sockstream& fs)
 	{
 		if (c.Publication() < 0 || c.Issue() < 0 || c.Section() < 0 || c.Article() < 0)
 			return ERR_NOPARAM;
-		URLPrintParam(P_NRIMAGE, image_nr, fs, first);
-		URLPrintParam(P_NRARTICLE, c.Article(), fs, first);
+		URLPrintParam(P_NRIMAGE, image_nr, coOut, first);
+		URLPrintParam(P_NRARTICLE, c.Article(), coOut, first);
+		fs << encodeHTML(coOut.str(), c.EncodeHTML());
 		return 0;
 	}
 	if (c.Language() < 0 && c.Publication() < 0 && c.Issue() < 0
@@ -1236,62 +1266,77 @@ int CActURLParameters::takeAction(CContext& c, sockstream& fs)
 	if (m_nPubLevel < CMS_PL_LANGUAGE)
 		pcoURL->deleteParameter(P_IDLANG);
 	string coURL = pcoURL->getQueryString();
-	fs << (first ? "" : "&") << coURL;
+	coOut << (first ? "" : "&") << coURL;
 	first = coURL == "";
 
-	URLPrintParam(P_TOPIC_ID, (fromstart ? c.DefTopic() : c.Topic()), fs, first);
+	URLPrintParam(P_TOPIC_ID, (fromstart ? c.DefTopic() : c.Topic()), coOut, first);
 	if (pcoURL->needTemplateParameter())
-		URLPrintNParam(P_TEMPLATE_ID, m_coTemplate, fs, first);
+	{
+		URLPrintNParam(P_TEMPLATE_ID, m_coTemplate, coOut, first);
+	}
 	if (m_nPubLevel > CMS_PL_ARTICLE)
-		PrintSubtitlesURL(c, fs, first);
+	{
+		PrintSubtitlesURL(c, coOut, first);
+	}
 	if (m_nPubLevel < CMS_PL_ARTICLE)
+	{
 		delete pcoURL;
+	}
 	if (c.Level() == CLV_ROOT)
+	{
+		fs << encodeHTML(coOut.str(), c.EncodeHTML());
 		return RES_OK;
+	}
 
 	if (c.LMode() == LM_PREV)
 	{
 		if (c.Level() == CLV_ISSUE_LIST)
-			URLPrintParam(P_ILSTART, (ResetList(CLV_ISSUE_LIST) ? 0 : c.IPrevStart()), fs, first);
+			URLPrintParam(P_ILSTART, (ResetList(CLV_ISSUE_LIST) ? 0 : c.IPrevStart()), coOut,
+						  first);
 		if (c.Level() == CLV_SECTION_LIST)
 			URLPrintParam(P_SLSTART, (ResetList(CLV_SECTION_LIST) ? 0 : c.SPrevStart()),
-			              fs, first);
+			              coOut, first);
 		if (c.Level() == CLV_ARTICLE_LIST)
 			URLPrintParam(P_ALSTART, (ResetList(CLV_ARTICLE_LIST) ? 0 : c.APrevStart()),
-			              fs, first);
+			              coOut, first);
 		if (c.Level() == CLV_SEARCHRESULT_LIST)
 			URLPrintParam(P_SRLSTART, (ResetList(CLV_SEARCHRESULT_LIST) ? 0 : c.SrPrevStart()),
-			              fs, first);
+			              coOut, first);
 	}
 	else if (c.LMode() == LM_NEXT)
 	{
 		if (c.Level() == CLV_ISSUE_LIST)
-			URLPrintNParam(P_ILSTART, (ResetList(CLV_ISSUE_LIST) ? 0 : c.INextStart()), fs, first);
+			URLPrintNParam(P_ILSTART, (ResetList(CLV_ISSUE_LIST) ? 0 : c.INextStart()), coOut,
+						   first);
 		if (c.Level() == CLV_SECTION_LIST)
 			URLPrintNParam(P_SLSTART, (ResetList(CLV_SECTION_LIST) ? 0 : c.SNextStart()),
-			               fs, first);
+			               coOut, first);
 		if (c.Level() == CLV_ARTICLE_LIST)
 			URLPrintNParam(P_ALSTART, (ResetList(CLV_ARTICLE_LIST) ? 0 : c.ANextStart()),
-			               fs, first);
+			               coOut, first);
 		if (c.Level() == CLV_SEARCHRESULT_LIST)
 			URLPrintNParam(P_SRLSTART, (ResetList(CLV_SEARCHRESULT_LIST) ? 0 : c.SrNextStart()),
-			               fs, first);
+			               coOut, first);
 	}
 	if (c.LMode() == LM_NORMAL || (c.Level() != CLV_ISSUE_LIST && c.Level() != CLV_ROOT))
-		URLPrintNParam(P_ILSTART, (ResetList(CLV_ISSUE_LIST) ? 0 : c.IListStart()), fs, first);
+		URLPrintNParam(P_ILSTART, (ResetList(CLV_ISSUE_LIST) ? 0 : c.IListStart()), coOut,
+					   first);
 	if (c.LMode() == LM_NORMAL || (c.Level() != CLV_SECTION_LIST && c.Level() != CLV_ROOT))
-		URLPrintNParam(P_SLSTART, (ResetList(CLV_SECTION_LIST) ? 0 : c.SListStart()), fs, first);
+		URLPrintNParam(P_SLSTART, (ResetList(CLV_SECTION_LIST) ? 0 : c.SListStart()), coOut,
+					   first);
 	if (c.LMode() == LM_NORMAL || (c.Level() != CLV_ARTICLE_LIST && c.Level() != CLV_ROOT))
-		URLPrintNParam(P_ALSTART, (ResetList(CLV_ARTICLE_LIST) ? 0 : c.AListStart()), fs, first);
+		URLPrintNParam(P_ALSTART, (ResetList(CLV_ARTICLE_LIST) ? 0 : c.AListStart()), coOut,
+					   first);
 	if (c.Level() == CLV_SEARCHRESULT_LIST && (c.LMode() == LM_PREV || c.LMode() == LM_NEXT))
 	{
 		if (!first)
-			fs << "&";
+			coOut << "&";
 		const char* pchEscKw = EscapeURL(c.StrKeywords());
-		fs << "search=search&SearchKeywords=" << pchEscKw
+		coOut << "search=search&SearchKeywords=" << pchEscKw
 		<< (c.SearchAnd() ? "&SearchMode=on" : "") << "&SearchLevel=" << c.SearchLevel();
 		delete []pchEscKw;
 	}
+	fs << encodeHTML(coOut.str(), c.EncodeHTML());
 	return RES_OK;
 	TK_CATCH_ERR
 }
@@ -1449,7 +1494,7 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 				if (row[0] == NULL || row[0][0] == 0)
 					return -1;
 			}
-			fs << row[0];
+			fs << encodeHTML(row[0], c.EncodeHTML());
 			return RES_OK;
 		}
 		if (case_comp(attr, "unit") == 0)
@@ -1507,13 +1552,10 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 		{
 			pchData = row[2];
 		}
-		if ((pchData = EscapeHTML(pchData)) == NULL)
-			return ERR_NOMEM;
 		if (format != "")
-			fs << dateFormat(pchData, format.c_str(), c.Language());
+			fs << encodeHTML(dateFormat(pchData, format.c_str(), c.Language()), c.EncodeHTML());
 		else
-			fs << pchData;
-		delete []pchData;
+			fs << encodeHTML(pchData, c.EncodeHTML());
 		return RES_OK;
 	}
 	if (modifier == CMS_ST_USER)
@@ -1531,11 +1573,7 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 		res = mysql_store_result(&m_coSql);
 		CheckForRows(*res, 1);
 		row = mysql_fetch_row(*res);
-		const char* pchData = row[0];
-		if ((pchData = EscapeHTML(pchData)) == NULL)
-			return ERR_NOMEM;
-		fs << pchData;
-		delete []pchData;
+		fs << encodeHTML(row[0], c.EncodeHTML());
 		return RES_OK;
 	}
 	if (modifier == CMS_ST_LOGIN)
@@ -1546,18 +1584,14 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 		res = mysql_store_result(&m_coSql);
 		CheckForRows(*res, 1);
 		row = mysql_fetch_row(*res);
-		const char* pchData = row[0];
-		if ((pchData = EscapeHTML(pchData)) == NULL)
-			return ERR_NOMEM;
-		fs << pchData;
-		delete []pchData;
+		fs << encodeHTML(row[0], c.EncodeHTML());
 		return RES_OK;
 	}
 	if (modifier == CMS_ST_SEARCH)
 	{
 		if (case_comp(attr, "Keywords") == 0)
 		{
-			fs << c.StrKeywords();
+			fs << encodeHTML(c.StrKeywords(), c.EncodeHTML());
 			return RES_OK;
 		}
 		buf << "select Message from Errors where Number = " << c.SearchRes() << " and "
@@ -1566,16 +1600,12 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 		res = mysql_store_result(&m_coSql);
 		CheckForRows(*res, 1);
 		row = mysql_fetch_row(*res);
-		const char* pchData = row[0];
-		if ((pchData = EscapeHTML(pchData)) == NULL)
-			return ERR_NOMEM;
-		fs << pchData;
-		delete []pchData;
+		fs << encodeHTML(row[0], c.EncodeHTML());
 		return RES_OK;
 	}
 	if (modifier == CMS_ST_SUBTITLE)
 	{
-		fs << c.CurrentSubtitle();
+		fs << encodeHTML(c.CurrentSubtitle(), c.EncodeHTML());
 		return RES_OK;
 	}
 	if (modifier == CMS_ST_LANGUAGE)
@@ -1590,11 +1620,7 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 		res = mysql_store_result(&m_coSql);
 		CheckForRows(*res, 1);
 		row = mysql_fetch_row(*res);
-		const char* pchData = row[0];
-		if ((pchData = EscapeHTML(pchData)) == NULL)
-			return ERR_NOMEM;
-		fs << pchData;
-		delete []pchData;
+		fs << encodeHTML(row[0], c.EncodeHTML());
 		return RES_OK;
 	}
 	if (modifier == CMS_ST_TOPIC)
@@ -1609,7 +1635,7 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 		CheckForRows(*res, 1);
 		row = mysql_fetch_row(*res);
 		if (case_comp(attr, "name") == 0)
-			fs << pcoTopic->name(row[0]);
+			fs << encodeHTML(pcoTopic->name(row[0]), c.EncodeHTML());
 		if (case_comp(attr, "identifier") == 0)
 			fs << pcoTopic->id();
 		return RES_OK;
@@ -1622,7 +1648,7 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 		res = mysql_store_result(&m_coSql);
 		CheckForRows(*res, 1);
 		row = mysql_fetch_row(*res);
-		fs << row[0];
+		fs << encodeHTML(row[0], c.EncodeHTML());
 		return RES_OK;
 	}
 	if (modifier == CMS_ST_ARTICLEATTACHMENT)
@@ -1642,7 +1668,7 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 		res = mysql_store_result(&m_coSql);
 		CheckForRows(*res, 1);
 		row = mysql_fetch_row(*res);
-		fs << row[0];
+		fs << encodeHTML(row[0], c.EncodeHTML());
 		return RES_OK;
 	}
 	buf.str("");	
@@ -1673,8 +1699,9 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 		if (case_comp(field, "template") == 0)
 		{
 			try {
-				fs << "/look/" << CPublication::getIssueTemplate(c.Language(), c.Publication(), 
-				                                                 c.Issue(), &m_coSql);
+				string coTpl = CPublication::getIssueTemplate(c.Language(),
+						c.Publication(), c.Issue(), &m_coSql);
+				fs << "/look/" << encodeHTML(coTpl, c.EncodeHTML());
 			}
 			catch (InvalidValue& rcoEx)
 			{
@@ -1694,8 +1721,9 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 		if (case_comp(field, "template") == 0)
 		{
 			try {
-				fs << "/look/" << CPublication::getSectionTemplate(c.Language(), c.Publication(), 
-				                                              c.Issue(), c.Section(), &m_coSql);
+				string coTpl = CPublication::getSectionTemplate(c.Language(), c.Publication(), 
+						c.Issue(), c.Section(), &m_coSql);
+				fs << "/look/" << encodeHTML(coTpl, c.EncodeHTML());
 			}
 			catch (InvalidValue& rcoEx)
 			{
@@ -1719,8 +1747,9 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 		if (case_comp(field, "template") == 0)
 		{
 			try {
-				fs << "/look/" << CPublication::getArticleTemplate(c.Language(), c.Publication(), 
-				                                              c.Issue(), c.Section(), &m_coSql);
+				string coTpl = CPublication::getArticleTemplate(c.Language(), c.Publication(), 
+						c.Issue(), c.Section(), &m_coSql);
+				fs << "/look/" << encodeHTML(coTpl, c.EncodeHTML());
 			}
 			catch (InvalidValue& rcoEx)
 			{
@@ -1782,21 +1811,21 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 		else if (DateField(table.c_str(), attr.c_str()) == 0 && format != "")
 		{
 			string coDate(row2[0], lengths[0]);
-			fs << dateFormat(coDate.c_str(), format.c_str(), c.Language());
+			fs << encodeHTML(dateFormat(coDate.c_str(), format.c_str(), c.Language()),
+							 c.EncodeHTML());
 		}
 		else
-			fs.write(row2[0], lengths[0]);
+		{
+			string coStr(row[0], lengths[0]);
+			fs << encodeHTML(coStr, c.EncodeHTML());
+		}
 	}
 	else
 	{
-		const char* pchData = EscapeHTML(row[0]);
-		if (pchData == NULL)
-			return ERR_NOMEM;
 		if (format != "")
-			fs << dateFormat(pchData, format.c_str(), c.Language());
+			fs << encodeHTML(dateFormat(row[0], format.c_str(), c.Language()), c.EncodeHTML());
 		else
-			fs << pchData;
-		delete []pchData;
+			fs << encodeHTML(row[0], c.EncodeHTML());
 	}
 	return RES_OK;
 	TK_CATCH_ERR
@@ -2459,11 +2488,7 @@ int CActDate::takeAction(CContext& c, sockstream& fs)
 	StoreResult(&m_coSql, res);
 	CheckForRows(*res, 1);
 	FetchRow(*res, row);
-	char* pchVal = SQLEscapeString(format, strlen(format));
-	if (pchVal == NULL)
-		return ERR_NOMEM;
-	fs << dateFormat(row[0], pchVal, c.Language());
-	delete []pchVal;
+	fs << encodeHTML(dateFormat(row[0], format, c.Language()), c.EncodeHTML());
 	return RES_OK;
 }
 
@@ -2523,10 +2548,13 @@ int CActSubscription::takeAction(CContext& c, sockstream& fs)
 	CContext lc = c;
 	lc.SetByPublication(by_publication);
 	string coSubsType = (c.SubsType() == ST_TRIAL ? "trial" : "paid");
-	fs << "<form name=\"subscription\" action=\"" << pcoURL->getURIPath()
-	   << "\" name=\"f1\" method=POST>\n"
-	   << "<input type=hidden name=" << P_TEMPLATE_ID << " value=" << m_nTemplateId << ">\n"
-	   << "<input type=hidden name=" << P_SUBSTYPE << " value=\"" << coSubsType << "\">" << endl;
+	fs << "<form name=\"subscription\" action=\""
+			<< encodeHTML(pcoURL->getURIPath(), c.EncodeHTML())
+			<< "\" name=\"f1\" method=\"POST\">\n"
+			<< "<input type=\"hidden\" name=\"" << P_TEMPLATE_ID
+			<< "\" value=\"" << m_nTemplateId << "\">\n"
+			<< "<input type=\"hidden\" name=\"" << P_SUBSTYPE << "\" value=\""
+			<< encodeHTML(coSubsType, c.EncodeHTML()) << "\">" << endl;
 	if (c.SubsType() == ST_PAID && total != "")
 		fs << "<script>\nvar sum;\nvar i;\n\n"
 		"function f(){\n"
@@ -2539,16 +2567,19 @@ int CActSubscription::takeAction(CContext& c, sockstream& fs)
 		"}\n</script>\n";
 	runActions(block, lc, fs);
 	if (c.SubsType() == ST_PAID && total != "" && !by_publication)
-		fs << total << " <input type=text name=suma size=10 READONLY> " << currency << endl;
+		fs << encodeHTML(total, c.EncodeHTML())
+				<< " <input type=\"text\" name=\"suma\" size=\"10\" READONLY> "
+				<< encodeHTML(currency, c.EncodeHTML()) << endl;
 	fs << c.URL()->getFormString();
 	if (c.SubsType() == ST_PAID && total != "" && !by_publication)
-		fs << "<input type=hidden name=\"unitcost\" value=\"" << unit_cost
-		<< "\">\n<input type=hidden name=nos value=\"" << nos << "\">\n"
-		<< "<p><input type=button value=\"" << evaluate << "\" onclick=\"f()\"></p>\n";
+		fs << "<input type=\"hidden\" name=\"unitcost\" value=\"" << unit_cost
+				<< "\">\n<input type=\"hidden\" name=\"nos\" value=\"" << nos << "\">\n"
+				<< "<p><input type=\"button\" value=\""
+				<< encodeHTML(evaluate, c.EncodeHTML()) << "\" onclick=\"f()\"></p>\n";
 	if (by_publication)
-		fs << "<input type=hidden name=by value=publication>\n";
-	fs << "<input type=submit name=\"" P_SUBSCRIBE "\" value=\"" << button_name
-	   << "\">\n</form>\n";
+		fs << "<input type=\"hidden\" name=\"by\" value=\"publication\">\n";
+	fs << "<input type=\"submit\" name=\"" P_SUBSCRIBE "\" value=\""
+			<< encodeHTML(button_name, c.EncodeHTML()) << "\">\n</form>\n";
 	return RES_OK;
 	TK_CATCH_ERR
 }
@@ -2590,19 +2621,20 @@ int CActEdit::takeAction(CContext& c, sockstream& fs)
 			if (r == 0 || *r == 0)
 				return RES_OK;
 			int len = atol(r + 1);
-			fs << "<input type=text name=\"User" << field << "\" size="
-			<< (len > 50 ? 50 : len) << " maxlength=" << len;
+			fs << "<input type=\"text\" name=\"User" << field << "\" size=\""
+					<< (len > 50 ? 50 : len) << "\" maxlength=\"" << len;
 			if (attrval != "")
-				fs << " value=\"" << attrval << "\"";
-			fs << ">";
+				fs << "\" value=\"" << encodeHTML(attrval, c.EncodeHTML());
+			fs << "\">";
 			return RES_OK;
 		}
 		if (field == "Password" || field == "PasswordAgain")
 		{
-			fs << "<input type=password name=\"User" << field << "\" size=32 maxlength=32>";
+			fs << "<input type=\"password\" name=\"User" << field
+					<< "\" size=\"32\" maxlength=\"32\">";
 			return RES_OK;
 		}
-		fs << "<textarea name=\"User" << field << "\" cols=40 rows=4></textarea>";
+		fs << "<textarea name=\"User" << field << "\" cols=\"40\" rows=\"4\"></textarea>";
 	}
 	if (modifier == CMS_ST_SUBSCRIPTION)
 	{
@@ -2620,25 +2652,27 @@ int CActEdit::takeAction(CContext& c, sockstream& fs)
 			res = mysql_store_result(&m_coSql);
 		}
 		FetchRow(*res, row);
-		fs << "<input type=hidden name=\"" << P_TX_SUBS << c.Section()
-		   << "\" value=\"" << (c.SubsType() == ST_TRIAL ? row[0] : row[1])
-		   << "\">" << (c.SubsType() == ST_TRIAL ? row[0] : row[1]);
+		const char* pchData = c.SubsType() == ST_TRIAL ? row[0] : row[1];
+		fs << "<input type=\"hidden\" name=\"" << P_TX_SUBS << c.Section() << "\" value=\""
+				<< encodeHTML(pchData, c.EncodeHTML()) << "\">"
+				<< encodeHTML(pchData, c.EncodeHTML());
 	}
 	if (modifier == CMS_ST_LOGIN)
 	{
 		if (field == "Password")
-			fs << "<input type=password name=\"Login" << field << "\" maxlength=32 size=10>";
+			fs << "<input type=\"password\" name=\"Login" << field
+					<< "\" maxlength=\"32\" size=\"10\">";
 		else
-			fs << "<input type=text name=\"Login" << field << "\" maxlength=32 size=10>";
+			fs << "<input type=\"text\" name=\"Login" << field
+					<< "\" maxlength=\"32\" size=\"10\">";
 	}
 	if (modifier == CMS_ST_SEARCH)
 	{
 		if (field == "Keywords")
 		{
-			const char* pchEscKw = EscapeHTML(c.StrKeywords());
-			fs << "<input type=text name=\"Search" << field << "\" maxlength=255 "
-			"size=" << size << " value=\"" << pchEscKw << "\">";
-			delete []pchEscKw;
+			fs << "<input type=\"text\" name=\"Search" << field << "\" maxlength=\"255\" "
+					"size=\"" << size << "\" value=\""
+					<< encodeHTML(c.StrKeywords(), c.EncodeHTML()) << "\">";
 		}
 	}
 	return RES_OK;
@@ -2666,10 +2700,10 @@ int CActSelect::takeAction(CContext& c, sockstream& fs)
 	if (modifier == CMS_ST_SUBSCRIPTION)
 	{
 		if (c.ByPublication())
-			fs << "<input type=hidden name=\"" << P_CB_SUBS << "\" value=\""
+			fs << "<input type=\"hidden\" name=\"" << P_CB_SUBS << "\" value=\""
 			<< c.Section() << "\">";
 		else
-			fs << "<input type=checkbox name=\"" << P_CB_SUBS << "\" value=\""
+			fs << "<input type=\"checkbox\" name=\"" << P_CB_SUBS << "\" value=\""
 			<< c.Section() << "\">";
 	}
 	else if (modifier == CMS_ST_USER)
@@ -2694,10 +2728,12 @@ int CActSelect::takeAction(CContext& c, sockstream& fs)
 		}
 		else if (case_comp(field, "Gender") == 0)
 		{
-			fs << "<input type=radio name=\"User" << field << "\" value=\"M\""
-			<< (attrval == "M" ? " checked" : "") << ">" << male_name
-			<< " <input type=radio name=\"User" << field << "\" value=\"F\""
-			<< (attrval == "F" ? " checked" : "") << ">" << female_name;
+			fs << "<input type=\"radio\" name=\"User" << field << "\" value=\"M\""
+					<< (attrval == "M" ? " checked" : "") << ">"
+					<< encodeHTML(male_name, c.EncodeHTML())
+					<< " <input type=\"radio\" name=\"User" << field << "\" value=\"F\""
+					<< (attrval == "F" ? " checked" : "") << ">"
+					<< encodeHTML(female_name, c.EncodeHTML());
 			return RES_OK;
 		}
 		else if (case_comp(field, "Age") == 0)
@@ -2737,10 +2773,10 @@ int CActSelect::takeAction(CContext& c, sockstream& fs)
 		}
 		else if (strncasecmp(field.c_str(), "Pref", 4) == 0)
 		{
-			fs << "<input type=checkbox name=\"User" << field << "\"";
+			fs << "<input type=\"checkbox\" name=\"User" << field << "\"";
 			if (attrval == "Y" || checked)
 				fs << " value=\"on\" checked";
-			fs << "><input type=hidden name=HasPref" << field.substr(4) << " value=1>";
+			fs << "><input type=\"hidden\" name=\"HasPref" << field.substr(4) << "\" value=\"1\">";
 			return RES_OK;
 		}
 		else
@@ -2752,16 +2788,16 @@ int CActSelect::takeAction(CContext& c, sockstream& fs)
 		MYSQL_ROW row;
 		while ((row = mysql_fetch_row(*res)))
 		{
-			fs << "<option value=\"" << row[0] << "\""
-			<< (attrval == row[0] ? " selected" : "") << ">"
-			<< row[1] << "</option>";
+			fs << "<option value=\"" << encodeHTML(row[0], c.EncodeHTML()) << "\""
+					<< (attrval == row[0] ? " selected" : "") << ">"
+					<< encodeHTML(row[1], c.EncodeHTML()) << "</option>";
 		}
 		fs << "</select>\n";
 	}
 	else if (modifier == CMS_ST_SEARCH)
 	{
 		if (field == "Mode")
-			fs << "<input type=checkbox name=\"Search" << field << "\""
+			fs << "<input type=\"checkbox\" name=\"Search" << field << "\""
 			<< (c.SearchAnd() ? " checked" : "") << ">";
 		else
 		{
@@ -2776,7 +2812,7 @@ int CActSelect::takeAction(CContext& c, sockstream& fs)
 	}
 	else if (modifier == CMS_ST_LOGIN)
 	{
-		fs << "<input type=checkbox name=\"" P_REMEMBER_USER "\">";
+		fs << "<input type=\"checkbox\" name=\"" P_REMEMBER_USER "\">";
 	}
 	return RES_OK;
 	TK_CATCH_ERR
@@ -2809,9 +2845,11 @@ int CActUser::takeAction(CContext& c, sockstream& fs)
 	}
 
 	string coSubsType = (c.SubsType() == ST_TRIAL ? "trial" : "paid");
-	fs << "<form name=\"user\" action=\"" << pcoURL->getURIPath() << "\" method=POST>\n"
-	   << "<input type=hidden name=" << P_TEMPLATE_ID << " value=" << m_nTemplateId << ">\n"
-	   << "<input type=hidden name=" << P_SUBSTYPE << " value=" << coSubsType << ">" << endl;
+	fs << "<form name=\"user\" action=\"" << pcoURL->getURIPath() << "\" method=\"POST\">\n"
+			<< "<input type=\"hidden\" name=\"" << P_TEMPLATE_ID << "\" value=\""
+			<< m_nTemplateId << "\">\n"
+			<< "<input type=\"hidden\" name=\"" << P_SUBSTYPE << "\" value=\""
+			<< encodeHTML(coSubsType, c.EncodeHTML()) << "\">" << endl;
 	fs << c.URL()->getFormString();
 	CContext lc = c;
 	if (!add)
@@ -2830,8 +2868,8 @@ int CActUser::takeAction(CContext& c, sockstream& fs)
 				lc.SetUserInfo(string(params[i]), string(row[i] != NULL ? row[i] : ""));
 	}
 	runActions(block, lc, fs);
-	fs << "<input type=submit name=\"" << (add ? P_USERADD : P_USERMODIFY)
-	<< "\" value=\"" << button_name << "\">\n</form>\n";
+	fs << "<input type=\"submit\" name=\"" << (add ? P_USERADD : P_USERMODIFY)
+			<< "\" value=\"" << encodeHTML(button_name, c.EncodeHTML()) << "\">\n</form>\n";
 	return RES_OK;
 	TK_CATCH_ERR
 }
@@ -2851,11 +2889,13 @@ int CActLogin::takeAction(CContext& c, sockstream& fs)
 		return ERR_INVALID_FIELD;
 	}
 	CContext lc = c;
-	fs << "<form name=\"login\" action=\"" << pcoURL->getURIPath() << "\" method=POST>\n"
-	   << "<input type=hidden name=" << P_TEMPLATE_ID << " value=" << m_nTemplateId << ">" << endl;
+	fs << "<form name=\"login\" action=\"" << pcoURL->getURIPath() << "\" method=\"POST\">\n"
+			<< "<input type=\"hidden\" name=" << P_TEMPLATE_ID << " value=\"" << m_nTemplateId
+			<< "\">" << endl;
 	fs << c.URL()->getFormString();
 	runActions(block, lc, fs);
-	fs << "<input type=submit name=\"" P_LOGIN "\" value=\"" << button_name << "\">\n</form>\n";
+	fs << "<input type=\"submit\" name=\"" P_LOGIN "\" value=\""
+			<< encodeHTML(button_name, c.EncodeHTML()) << "\">\n</form>\n";
 	return RES_OK;
 }
 
@@ -2874,11 +2914,13 @@ int CActSearch::takeAction(CContext& c, sockstream& fs)
 		return ERR_INVALID_FIELD;
 	}
 	CContext lc = c;
-	fs << "<form name=\"search\" action=\"" << pcoURL->getURIPath() << "\" method=POST>\n"
-	   << "<input type=hidden name=" << P_TEMPLATE_ID << " value=" << m_nTemplateId << ">" << endl;
+	fs << "<form name=\"search\" action=\"" << pcoURL->getURIPath() << "\" method=\"POST\">\n"
+			<< "<input type=\"hidden\" name=\"" << P_TEMPLATE_ID << "\" value=\""
+			<< m_nTemplateId << "\">" << endl;
 	fs << c.URL()->getFormString();
 	runActions(block, lc, fs);
-	fs << "<input type=submit name=\"" P_SEARCH "\" value=\"" << button_name << "\">\n</form>\n";
+	fs << "<input type=\"submit\" name=\"" P_SEARCH "\" value=\""
+			<< encodeHTML(button_name, c.EncodeHTML()) << "\">\n</form>\n";
 	return RES_OK;
 }
 
@@ -2921,7 +2963,7 @@ int CActURIPath::takeAction(CContext& c, sockstream& fs)
 	if (m_bArticleAttachment)
 	{
 		fs << "/attachment/" << setw(9) << setfill('0') << right << c.Attachment()
-				<< "." << c.AttachmentExtension();
+				<< "." << encodeHTML(c.AttachmentExtension(), c.EncodeHTML());
 		return RES_OK;
 	}
 	if (m_nTemplate > 0 || m_nPubLevel < CMS_PL_SUBTITLE)

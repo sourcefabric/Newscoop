@@ -35,7 +35,11 @@ General purpose functions
 #include <mysql/mysql.h>
 #include <string>
 #include <new>
+#include <iostream>
 
+using std::cout;
+using std::endl;
+using std::ostream;
 using std::string;
 using std::bad_alloc;
 
@@ -89,6 +93,30 @@ const char* const UnescapeURL(const char* src);
 // Returns: pointer to escaped string; this is dynamically allocated using new
 //		operator; after use this must be deallocated using delete operator
 const char* const EscapeHTML(const char* src);
+
+struct HTMLEncoder {
+	ostream& (*m_pEncodeMethod)(ostream&, const char*, bool);
+	const char* m_pchString;
+	bool m_bEncode;
+	
+	HTMLEncoder(ostream& (*p_pEncodeMethod)(ostream&, const char* p_pchString, bool),
+				const char* p_pchString, bool p_bEncode)
+	: m_pEncodeMethod(p_pEncodeMethod), m_pchString(p_pchString), m_bEncode(p_bEncode) {}
+};
+
+ostream& operator << (ostream& p_rOutStream, HTMLEncoder p_rEncoder);
+
+ostream& outEncodeHTML(ostream& p_rcoOutStream, const char* p_rchString, bool p_bEncode);
+
+inline HTMLEncoder encodeHTML(const string& p_rcoString, bool p_bEncode = true)
+{
+	return HTMLEncoder(outEncodeHTML, p_rcoString.c_str(), p_bEncode);
+}
+
+inline HTMLEncoder encodeHTML(const char* p_pchString, bool p_bEncode = true)
+{
+	return HTMLEncoder(outEncodeHTML, p_pchString, p_bEncode);
+}
 
 // CMYSQL_RES: wrapper class around MYSQL_RES structure; it takes care of result
 //		deallocation

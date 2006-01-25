@@ -143,6 +143,7 @@ private:
 	bool access_by_ip;						// true is access is by IP
 	TAccess access;							// access type
 	CListLevel level;						// level (root, issue list etc.)
+	bool m_bEncodeHTML;						// if true will encode the output to HTML format
 	id_type language_id, def_language_id;	// current and default(from template start) language
 	id_type publication_id, def_publication_id;// current and default publication
 	id_type issue_nr, def_issue_nr;			// current and default issue
@@ -240,6 +241,10 @@ public:
 	void SetLevel(CListLevel l)
 	{
 		level = l;
+	}
+	void SetEncodeHTML(bool p_bEncodeHTML)
+	{
+		m_bEncodeHTML = p_bEncodeHTML;
 	}
 	void SetLanguage(id_type l);
 	void SetDefLanguage(id_type l);
@@ -478,6 +483,10 @@ public:
 	CListLevel Level() const
 	{
 		return level;
+	}
+	bool EncodeHTML() const
+	{
+		return m_bEncodeHTML;
 	}
 	id_type Language() const
 	{

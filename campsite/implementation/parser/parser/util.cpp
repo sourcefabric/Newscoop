@@ -37,9 +37,6 @@ Implementation of general purpose functions
 #include <sys/mman.h>
 #include <string>
 #include <mysql/mysql.h>
-#include <iostream>
-using std::cout;
-using std::endl;
 
 #include "util.h"
 #include "atoms_impl.h"
@@ -346,6 +343,23 @@ const char* const EscapeHTML(const char *src)
 		}
 	dst[dstI] = 0;
 	return dst;
+}
+
+ostream& operator << (ostream& p_rOutStream, HTMLEncoder p_rEncoder)
+{
+	return p_rEncoder.m_pEncodeMethod(p_rOutStream, p_rEncoder.m_pchString, p_rEncoder.m_bEncode);
+}
+
+ostream& outEncodeHTML(ostream& p_rcoOutStream, const char* p_pchString, bool p_bEncode)
+{
+	if (p_bEncode)
+	{
+		const char* pchEncodedStream = EscapeHTML(p_pchString);
+		ostream& rcoOutStream = p_rcoOutStream << pchEncodedStream;
+		delete [] pchEncodedStream;
+		return rcoOutStream;
+	}
+	return p_rcoOutStream << p_pchString;
 }
 
 MYSQL_ROW QueryFetchRow(MYSQL* p_pDBConn, const string& p_rcoQuery, CMYSQL_RES& p_rcoQRes)

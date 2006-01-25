@@ -49,6 +49,7 @@ CContext::CContext()
 	access_by_ip = false;
 	access = A_PUBLISHED;
 	level = CLV_ROOT;
+	m_bEncodeHTML = true;
 	language_id
 			= publication_id
 			= issue_nr
@@ -102,6 +103,7 @@ int CContext::operator ==(const CContext& c) const
 			&& access_by_ip == c.access_by_ip
 			&& access == c.access
 			&& level == c.level
+			&& m_bEncodeHTML == c.m_bEncodeHTML
 			&& language_id == c.language_id
 			&& def_language_id == c.def_language_id
 			&& publication_id == c.publication_id
@@ -177,6 +179,7 @@ const CContext& CContext::operator =(const CContext& s)
 	access_by_ip = s.access_by_ip;
 	access = s.access;
 	level = s.level;
+	m_bEncodeHTML = s.m_bEncodeHTML;
 	language_id = s.language_id;
 	def_language_id = s.def_language_id;
 	publication_id = s.publication_id;

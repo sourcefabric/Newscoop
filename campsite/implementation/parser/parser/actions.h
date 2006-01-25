@@ -180,7 +180,7 @@ protected:
 
 protected:
 	// DEBUGAct: print debug information
-	inline void DEBUGAct(const char*, const char*, sockstream&);
+	inline void DEBUGAct(const char*, const char*, sockstream&, bool = true);
 	
 	// SQLEscapeString: escape given string for sql query; returns escaped string
 	// The returned string must be deallocated by the user using delete operator.
