@@ -1,3 +1,22 @@
+2.4.2 (January 26, 2006)
+  Bugs Fixed
+  ----------
+  - #1652: Copying an article created by someone else keeps the
+    orginal creator
+  - #1651: Language names show up in English in "Article Add" screen and
+    on the Home page under "Your Articles"
+  - #1569: /usr/local/campsite/bin/notifyevents is sending malformed
+    mail messages
+  - #418: Non-published articles are shown in List article when Preview
+    Mode is used
+  - #1659: Error when you edit an issue configuration
+  - #1674: Xinha on IE: Internal link popup window is too small
+  - #1675: Turn on font face & font size for Xinha
+  - #1670: Trying to duplicate a template shows an error (but still works)
+  - #1663: Xinha "Subhead" button doesnt work in Internet Explorer
+  - #1671: Automatic extensions for new template file names.
+
+
 2.4.1 (January 13, 2006)
   Bugs Fixed
   ----------
