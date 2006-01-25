@@ -24,16 +24,22 @@ function editor_load_xinha($p_dbColumns, $p_user) {
 <!-- Special Campsite functionality -->
 <script type="text/javascript">
 function CampsiteSubhead(editor, objectName, object) {
-	parent = editor.getParentElement();
-	if ((parent.tagName.toLowerCase() == "span") && 
-		(parent.className.toLowerCase()=="campsite_subhead")) {
-		editor.selectNodeContents(parent);
-		//editor._doc.execCommand("unlink", false, null);
-		editor.updateToolbar();
-		return false;
-	}
-	else {
-		editor.surroundHTML('<span class="campsite_subhead">', '</span>');
+	if (!HTMLArea.is_ie) {
+		// This statement crashes in the most bizarre way on IE.
+		// If you remove the "parent = " here, then it doesnt crash.
+		// So IE will allow subheads within subheads (bad), while
+		// the code below will prevent that for the other browsers.
+		parent = editor.getParentElement();
+		if ((parent.tagName.toLowerCase() == "span") && 
+			(parent.className.toLowerCase()=="campsite_subhead")) {
+			editor.selectNodeContents(parent);
+			editor.updateToolbar();
+			return false;
+		} else {
+			editor.surroundHTML('<span class="campsite_subhead">', '</span>');
+		}
+	} else {
+		editor.surroundHTML('<span class="campsite_subhead">', '</span>');		
 	}
 } // fn CampsiteSubhead
 
@@ -350,6 +356,14 @@ xinha_init = xinha_init ? xinha_init : function()
 		if ($p_user->hasPermission('EditorListNumber')) { 
 			$toolbar2[] = "\"insertorderedlist\"";
 	 	}
+	}
+	
+	if ($p_user->hasPermission('EditorFontFace')) {
+		$toolbar2[] = "\"formatblock\"";
+	}
+	
+	if ($p_user->hasPermission('EditorFontSize')) {
+		$toolbar2[] = "\"fontsize\"";
 	}
 	
 	// This is to fix ticket #1602.  You only want the line break if
