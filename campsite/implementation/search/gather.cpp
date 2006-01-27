@@ -260,18 +260,27 @@ int GatherFunc(const ConfAttrValue& p_rcoConfValues)
 			mysql_free_result(res1);
         
 			if (!kwd_id) {
-				/* Get a new id */
-				if (mysql_query(&mysql, "UPDATE AutoId SET KeywordId = LAST_INSERT_ID"
-								"(KeywordId + 1)") != 0)
-					die_mysql(&mysql, "Obtaining new KeywordId: query");
-				kwd_id = mysql_insert_id(&mysql);
-          
+				if (mysql_query(&mysql, "LOCK TABLE KeywordIndex WRITE"))
+					die_mysql(&mysql, "Lock table KeywordIndex: query");
+				
+				if (mysql_query(&mysql, "SELECT MAX(Id) from KeywordIndex"))
+					die_mysql(&mysql, "Reading the last id: query");
+				
+				res1 = mysql_store_result(&mysql);
+				if (!res1)
+					die_mysql(&mysql, "Read last id: store_result");
+				row1 = mysql_fetch_row(res1);
+				
 				/* Insert in keyword list */
-				sprintf(query, "INSERT INTO KeywordIndex SET Keyword = '%s', Id = %u",
-						p, kwd_id);
+				sprintf(query, "INSERT INTO KeywordIndex SET Keyword = '%s', Id = %s + 1", p, row1[0]);
 				debug("QUERY [%s]\n", query);
+				mysql_free_result(res1);
 				if (mysql_query(&mysql, query) != 0)
 					die_mysql(&mysql, "Adding keyword: query");
+				
+				if (mysql_query(&mysql, "UNLOCK TABLES"))
+					die_mysql(&mysql, "Unlock table KeywordIndex: query");
+				
 				nnew++;
 			}
         
@@ -302,7 +311,7 @@ int GatherFunc(const ConfAttrValue& p_rcoConfValues)
 				die_mysql(&mysql, "Updating article: query");
     
 	}
-	if (nart > 0 && nword > 0 && nnew > 0)
+	if (nart > 0 || nword > 0 || nnew > 0)
 		printf("Instance %s: %u new articles, %u words processed, %u of them are new\n",
 			SQL_DATABASE.c_str(), nart, nword, nnew);
 	mysql_close(&mysql);
