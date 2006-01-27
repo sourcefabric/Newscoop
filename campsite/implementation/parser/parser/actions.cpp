@@ -672,7 +672,7 @@ int CActList::WriteModParam(string& s, CContext& c, string& table)
 	if (modifier == CMS_ST_SECTION)
 		CheckFor("NrIssue", c.Issue(), buf, w);
 	buf.str("");
-	buf << "IdLanguage = " << c.Language();// << " or IdLanguage = 1)";
+	buf << "IdLanguage = " << c.Language();
 	if (w != "")
 		w += " and ";
 	w += buf.str();
@@ -782,7 +782,7 @@ int CActList::WriteArtParam(string& s, CContext& c, string& table)
 	CheckFor("NrIssue", c.Issue(), buf, w);
 	CheckFor("NrSection", c.Section(), buf, w);
 	buf.str("");
-	buf << "Articles.IdLanguage = " << c.Language();// << " or Articles.IdLanguage = 1)";
+	buf << "Articles.IdLanguage = " << c.Language();
 	if (w != "")
 		w += " and ";
 	w += buf.str();
@@ -868,11 +868,11 @@ int CActList::WriteSrcParam(string& s, CContext& c, string& table)
 	if (w != "")
 		w += " and ";
 	w += "ArticleIndex.IdKeyword = KeywordIndex.Id"
-	     " and Articles.Number = ArticleIndex.NrArticle"
-	     " and Articles.IdPublication = ArticleIndex.IdPublication"
-	     " and Articles.IdLanguage = ArticleIndex.IdLanguage"
-	     " and Articles.NrIssue = ArticleIndex.NrIssue"
-	     " and Articles.NrSection = ArticleIndex.NrSection";
+			" and Articles.Number = ArticleIndex.NrArticle"
+			" and Articles.IdPublication = ArticleIndex.IdPublication"
+			" and Articles.IdLanguage = ArticleIndex.IdLanguage"
+			" and Articles.NrIssue = ArticleIndex.NrIssue"
+			" and Articles.NrSection = ArticleIndex.NrSection";
 	s = string(" where ") + w;
 	return RES_OK;
 }
@@ -1061,20 +1061,23 @@ int CActList::takeAction(CContext& c, sockstream& fs)
 		WriteOrdParam(order);
 		WriteLimit(limit, lc);
 		
+		string coLanguageId;
 		switch (modifier) {
 			case CMS_ST_ISSUE:
 			case CMS_ST_SECTION:
-				fields = "select Number, MAX(IdLanguage), IdPublication";
+				fields = "select Number, IdLanguage, IdPublication";
 				if (modifier == CMS_ST_SECTION)
 					fields += ", NrIssue";
 				break;
 			case CMS_ST_ARTICLE:
-				fields = "select Number, MAX(Articles.IdLanguage), IdPublication"
+				fields = "select Number, Articles.IdLanguage, IdPublication"
 						", Articles.NrIssue, Articles.NrSection";
 				break;
 			case CMS_ST_SEARCHRESULT:
-				fields = "select NrArticle, MAX(Articles.IdLanguage), Articles.IdPublication"
-						", Articles.NrIssue, Articles.NrSection";
+				coLanguageId = (string)Integer(c.Language());
+				fields = "select NrArticle, " + coLanguageId +  ", Articles.IdPublication, "
+						"Articles.NrIssue, Articles.NrSection, MIN(ABS(Articles.IdLanguage - "
+						+ coLanguageId + ")), MIN(Articles.IdLanguage - 1)";
 				break;
 			case CMS_ST_ARTICLETOPIC:
 				fields = "select TopicId";
@@ -1136,7 +1139,23 @@ int CActList::takeAction(CContext& c, sockstream& fs)
 			if (modifier == CMS_ST_ISSUE || modifier == CMS_ST_SECTION
 						 || modifier == CMS_ST_ARTICLE || modifier == CMS_ST_SEARCHRESULT)
 			{
-				lc.SetLanguage(strtol(row[1], 0, 10));
+				if (modifier != CMS_ST_SEARCHRESULT)
+				{
+					lc.SetLanguage(strtol(row[1], 0, 10));
+				}
+				else
+				{
+					Integer coCurrentLangDiff(row[5]);
+					Integer coEnglishDiff(row[6]);
+					if ((lint)coCurrentLangDiff == 0)
+					{
+						lc.SetLanguage(strtol(row[1], 0, 10));
+					}
+					else
+					{
+						lc.SetLanguage(1 + (lint)coEnglishDiff);
+					}
+				}
 				lc.SetPublication(strtol(row[2], 0, 10));
 				if (modifier != CMS_ST_ISSUE)
 					lc.SetIssue(strtol(row[3], 0, 10));
