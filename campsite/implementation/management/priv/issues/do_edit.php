@@ -69,6 +69,6 @@ if ($issueObj->commit()) {
 	exit;
 }
 
-header("Location: /$ADMIN/issues/edit.php?Pub=$Pub&Issue=$Issue&Language=$Language");
+header("Location: /$ADMIN/issues/edit.php?Pub=$Pub&Issue=$Issue&Language=".$issueObj->getLanguageId());
 
 ?>
