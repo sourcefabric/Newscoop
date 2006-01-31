@@ -151,16 +151,14 @@ private:
 	const CAtom* m_pcoAtom;		// pointer to atom structure
 	const char* m_pchTextStart;	// html text found (after ">" - end of statement - lexem)
 	lint m_nTextLen;		// html text length
+	bool m_bInsertSpace;	// if true there were spaces before the text
 
 public:
 	// constructor
 	CLexem(TLexResult p_Res, TDataType p_DataType, const CAtom* p_pcoAtom = NULL,
-	         const char* p_pchText = NULL, lint p_nTextLen = 0)
-			: m_Res(p_Res), m_DataType(p_DataType), m_pcoAtom(p_pcoAtom)
-	{
-		m_pchTextStart = p_pchText;
-		m_nTextLen = p_nTextLen;
-	}
+	         const char* p_pchText = NULL, lint p_nTextLen = 0, bool p_bInsertSpace = false)
+	: m_Res(p_Res), m_DataType(p_DataType), m_pcoAtom(p_pcoAtom),
+	m_pchTextStart(p_pchText), m_nTextLen(p_nTextLen), m_bInsertSpace(p_bInsertSpace) {}
 
 	// copy constructor
 	CLexem(const CLexem& p_rcoLexem) { *this = p_rcoLexem; }
@@ -175,6 +173,7 @@ public:
 		m_DataType = p_rcoLexem.m_DataType;
 		m_pchTextStart = p_rcoLexem.m_pchTextStart;
 		m_nTextLen = p_rcoLexem.m_nTextLen;
+		m_bInsertSpace = p_rcoLexem.m_bInsertSpace;
 		return *this;
 	}
 
@@ -195,6 +194,9 @@ public:
 
 	lint textLen() const { return m_nTextLen; }
 	void setTextLen(lint p_nTextLen) { m_nTextLen = p_nTextLen; }
+	
+	bool insertSpace() const { return m_bInsertSpace; }
+	void setInsertSpace(bool p_bInsertSpace) { m_bInsertSpace = p_bInsertSpace; }
 };
 
 
@@ -257,9 +259,6 @@ private:
 	// AppentOnAtom: return true if not end of identifier buffer (can append character to atom
 	// identifier)
 	int AppendOnAtom();
-
-	// InitStatements: initialise statements
-//	static void InitStatements();
 
 public:
 	// constructor

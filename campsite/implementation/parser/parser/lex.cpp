@@ -936,10 +936,12 @@ const CLexem* CLex::getLexem()
 {
 	bool bValidText = m_nHtmlCodeLevel > 0 ? true : false;
 	bool FoundLexem = false;
+	bool bInsertSpace = false;
 	m_coLexem.setAtom(NULL);
 	m_coLexem.setDataType(CMS_DT_INTEGER);
 	m_coLexem.setTextStart(0);
 	m_coLexem.setTextLen(0);
+	m_coLexem.setInsertSpace(false);
 	m_coAtom.setId("");
 	if (m_bIsEOF)
 	{
@@ -959,18 +961,25 @@ const CLexem* CLex::getLexem()
 			}
 			m_coLexem.setTextStart(m_pchTextStart);
 			m_coLexem.setTextLen(m_nIndex - (ulint)(m_pchTextStart - m_pchInBuf));
+			m_coLexem.setInsertSpace(bInsertSpace);
 			m_coLexem.setRes(CMS_LEX_NONE);
 			return &m_coLexem;
 		}
 		if (m_nState != 4)
 		{
-			// if didn't find valid text yet and the current character is not valid set the
+			// if I didn't find valid text yet and the current character was not valid, set the
 			// text start pointer to the next character
 			// a valid text character is anything that is not between 0 and space
 			// characters between 0 and space are special characters, tab and space
 			if ((m_chChar > 0 && m_chChar <= ' ') && !bValidText && m_pchTextStart != NULL
 					&& m_nState < 2)
+			{
 				m_pchTextStart = m_pchInBuf + m_nIndex;
+				if (!bInsertSpace && (m_chChar == ' ' || m_chChar == '\t'))
+				{
+					bInsertSpace = true;
+				}
+			}
 			m_nPrevLine = m_nLine;
 			m_nPrevColumn = m_nColumn;
 			if (m_chChar == '\n') // increment line and set column to 0 on new line character
@@ -1003,8 +1012,6 @@ const CLexem* CLex::getLexem()
 				m_nTempIndex = 0;
 				m_nState = 1;
 				bValidText = true;
-				if (++m_nHtmlCodeLevel > 0)
-					bValidText = true;
 				break;
 			}
 			m_nTempIndex++;
@@ -1018,6 +1025,7 @@ const CLexem* CLex::getLexem()
 					m_coLexem.setTextLen(m_nIndex - (ulint)(m_pchTextStart - m_pchInBuf)
 					                     - strlen(s_pchCTokenStart));
 					m_coLexem.setTextStart(m_pchTextStart);
+					m_coLexem.setInsertSpace(bInsertSpace);
 				}
 				m_coLexem.setRes(CMS_LEX_START_STATEMENT);
 				return &m_coLexem;

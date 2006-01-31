@@ -166,7 +166,7 @@ FatalPError(parse_err, er, MODE_PARSE, req, line, column);\
 #define CheckForText(al, l)\
 {\
 if (l->textStart() && l->textLen() > 0)\
-al.insert(al.end(), new CActText(l->textStart(), l->textLen()));\
+al.insert(al.end(), new CActText(l->textStart(), l->textLen(), l->insertSpace()));\
 }
 
 #define CheckForEOF(l, err)\

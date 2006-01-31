@@ -897,15 +897,13 @@ class CActText : public CAction
 {
 protected:
 	const char* text;		// text to print
-	ulint text_len;		// text length
+	ulint text_len;			// text length
+	bool m_bInsertSpace;	// if true it will insert a space before the text
 
 public:
 	// constructor
-	CActText(const char* t, ulint tl)
-	{
-		text = t;
-		text_len = tl;
-	}
+	CActText(const char* t, ulint tl, bool p_bInsertSpace = false)
+	: text(t), text_len(tl), m_bInsertSpace(p_bInsertSpace) {}
 
 	// destructor
 	virtual ~CActText() {}
@@ -922,6 +920,10 @@ public:
 	//		sockstream& fs - output stream
 	virtual int takeAction(CContext& c, sockstream& fs)
 	{
+		if (m_bInsertSpace)
+		{
+			fs << ' ';
+		}
 		fs.write(text, text_len);
 		return RES_OK;
 	}
