@@ -1,0 +1,108 @@
+#!/bin/bash
+
+. ${INSTALL_CONF}/check4_functions
+
+restart_cron()
+{
+check4_crond --force
+cron_bin=$file_name
+if [ $OPENBSD -eq 1 ]; then
+	$KILLALL -s1 $cron_bin
+else
+	$KILLALL -1 $cron_bin
+fi
+result=$?
+if [ $result -ne 0 ]; then
+      echo ERROR: Unable to restart cron process. You MUST have cron installed and running.
+fi
+return $result
+}
+
+install_cron_task()
+{
+minute=$1
+shift 1
+hour=$1
+shift 1
+day_of_mon=$1
+shift 1
+mon=$1
+shift 1
+day_of_week=$1
+shift 1
+user=$1
+shift 1
+binary=$1
+shift 1
+file=$1
+if [ "$minute" = "" ] || [ "$hour" = "" ] || [ "$day_of_mon" = "" ] || [ "$mon" = "" ] || \
+   [ "$day_of_week" = "" ] || [ "$binary" = "" ] || [ "$file" = "" ]; then
+    echo "invalid parameters"
+    return 1
+fi
+shift 1
+force=false
+while [ "$1" != "" ]; do
+    [ "$1" = "-f" ] && force=true
+    shift 1
+done
+installed=false
+if [ $BSD -eq 1 ]; then
+	crontab -u $ROOT_USER -l | grep "$binary" &> /dev/null
+else
+	[ -f "$file" ] && cat "$file" | grep "$binary" &> /dev/null
+fi
+[ $? -eq 0 ] && installed=true
+$installed && ! $force && return 0
+if $installed; then
+    uninstall_cron_task "$binary" "$file"
+    [ $? -ne 0 ] && return 3
+fi
+if [ $BSD -eq 1 ]; then
+	echo crontab -u $ROOT_USER -l >/tmp/cron.tmp
+	crontab -u $ROOT_USER -l >/tmp/cron.tmp
+	echo "$minute $hour $day_of_mon $mon $day_of_week $binary" >> /tmp/cron.tmp
+	crontab -u $ROOT_USER /tmp/cron.tmp
+	if [ $? -ne 0 ]; then
+	    echo "error installing cron task for $ROOT_USER"
+	fi
+	rm /tmp/cron.tmp
+else
+	echo "$minute $hour $day_of_mon $mon $day_of_week $user $binary" > $file
+	if [ ! -f "$file" ]; then
+	    echo "invalid file or unable to create file"
+	    return 2
+	fi
+fi
+return $?
+}
+
+uninstall_cron_task()
+{
+binary=$1
+shift 1
+file=$1
+if [ "$binary" = "" ] || [ "$file" = "" ]; then
+    echo "invalid parameters"
+    return 1
+fi
+installed=false
+if [ $BSD -eq 1 ]; then
+	file="/tmp/cron.tmp"
+	crontab -u $ROOT_USER -l >"$file"
+fi
+if [ ! -f "$file" ]; then
+   echo "invalid file"
+   return 0
+fi
+cat "$file" | grep "$binary" &> /dev/null
+[ $? -eq 0 ] && installed=true
+! $installed && return 0
+if [ $BSD -eq 1 ]; then
+	cat "$file" | grep -v "$binary" >/tmp/cron.tmp2
+	crontab -u $ROOT_USER /tmp/cron.tmp2
+	rm -f /tmp/cron.tmp2
+fi
+rm -f "$file"
+return $?
+}

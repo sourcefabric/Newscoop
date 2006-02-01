@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Paste Text</title>
+  <link rel="stylesheet" type="text/css" href="../../../popups/popup.css" />
+  <script type="text/javascript" src="../../../popups/popup.js"></script>
+<script language="javascript">
+
+function _CloseOnEsc(event) {
+  if ( event.keyCode == 27 ) {
+    window.close();
+    return;
+  }
+}
+
+function Init() {
+  __dlg_translate("PasteText");
+  __dlg_init();
+  window.resizeTo(600, 450);
+  var param = window.dialogArguments;
+}
+
+function onCancel() {
+  __dlg_close( null );
+  return false;
+}
+
+function onOK() {
+  var ret = document.getElementById("SCREEN").value;
+  __dlg_close( ret );
+}
+</script>
+</head>
+
+<body class="dialog" onLoad="Init(); SCREEN.focus();">
+<div class="title">Paste as Plain Text</div>
+<textarea name="SCREEN" id="SCREEN" cols=22 rows=5 style="width: 100%; height: 315px; margin-top: 8px; margin-bottom: 4px; font-family: monospace; font-size: 11px;"></textarea>
+<div id="buttons">
+    <button type="submit" name="ok" onclick="return onOK();">OK</button>
+    <button type="button" name="cancel" onclick="return onCancel();">Cancel</button>
+</div>
+</body>
+</html>

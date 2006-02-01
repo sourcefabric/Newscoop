@@ -1,0 +1,418 @@
+html, body {
+	height: 100%;
+	}
+body {
+	color: #000;
+	background-color: #FFF;
+	}
+body, form, input, textarea, select {
+	font: 12pt "Times New Roman", Times, serif;
+	}
+h1, h2, h3, h4 {
+	font-family: "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	}
+h1	{
+	margin: 0;
+	font-size: 200%;
+	font-style: italic;
+	color: #00C;
+	background-color: transparent;
+	}
+h1 span {
+	font-size: 50%;	
+	}
+h2	{
+	font-size: 170%;
+	color: #C00;
+	margin: 0;
+	}
+h3	{
+	font-size: 140%;
+	color: #C00;
+	background-color: transparent;
+	border-bottom: 1px solid #CCD;	
+	}
+p	{
+	padding-left: 1em;
+	}
+acronym {
+	color: #447;
+	border-bottom: 1px dashed #CCF;
+	cursor: help;
+	}
+ul.bullets, ol.list	{
+	color: #000;
+	background-color: #EEF;
+	border: 1px solid #CCD;
+	padding: .5em 2em 0 2em;
+	margin: 1em 5em;
+	}
+ol.list {
+	padding-left: 3em;
+	}
+ul.bullets li, ol.list li {
+	padding-bottom: .5em;
+	}
+div#header {
+	padding-bottom: 5pt;
+	}
+div#nav {
+	display: none;
+	}
+div#footer {
+	padding: 1em;
+	text-align: center;
+	color: #999;
+	}
+div#powered_by {
+	display: none;
+	}
+/*	end general declarations */
+/*	Homepage */
+	body#_home h3 {
+		position: relative;
+		width: 97%;
+		}
+	h3 span.date {
+		position: absolute;
+		right: .5em;
+		font-size: 70%;
+		font-style: italic;
+		font-weight: normal;
+		background-color: transparent;
+		color: #999;
+		}
+	span.time {
+		color: #999;
+		font-weight: bold;
+		}
+
+/*	Content Sections */
+	div.contentSection {
+		position: relative;
+		color: #000;
+		background-color: #F5F5F5;
+		padding: 0 .5em 1em .5em;
+		margin: 30px 0 0 0;
+		border: 1px solid #DDD;
+		width: 97%;
+		}
+	div.contentSection h3 {
+		border: none;
+		}
+	div.contentSection h3 a {
+		border: 1px solid #CCC;
+		padding: 5px;
+		background-color: #FFF;
+		position: relative;
+		top: -10px;
+		}
+	html>body div.contentSection h3 a {
+		top: -25px;
+		}
+	div.contentSection div.toplink {
+		background-color: #FFF;
+		position: absolute;
+		margin: 0;
+		padding: 0;
+		bottom: -3px;
+		right: -3px;
+		z-index: 10;
+		}
+
+	div.contentSection a.top {
+		border-top: 1px solid #DDD;
+		border-left: 1px solid #DDD;
+		border-bottom: 1px solid #FFF;
+		border-right: 1px solid #FFF;
+		color: #00C;
+		background-color: #FFF;
+		text-decoration: none;
+		display: block;
+		padding: .2em .5em;
+		text-align: center;
+		}
+	div.contentSection>div.toplink {
+		bottom: -1px;
+		right: -1px;
+		}
+	div.contentSection a.top:hover {
+		color: #C00;
+		}
+/*	Validator Types */
+	div.params {
+		border: 1px solid #CCC;
+		padding: .5em;
+		}
+	dl.param {
+		border-bottom: 1px solid #CCC;
+		padding-bottom: 1em;
+		}
+	dl.param dt, fieldset#typeLegend .parameter, fieldset#typeLegend .valueOther, fieldset#typeLegend .valueDefault, fieldset#typeLegend .valueDesc, fieldset#typeLegend .valueExample {
+		font-family: "Courier New", Courier, mono;
+		font-weight: bold;
+		color: #060;
+		}
+	dl.param dd span, fieldset#typeLegend .datatype, fieldset#typeLegend .inclusion {
+		color: #00C;
+		font-weight: bold;
+		}
+	dl.param dd span span, fieldset#typeLegend .inclusion {
+		color: #F90;
+		}
+	dl.paramValue dt, fieldset#typeLegend .valueOther, fieldset#typeLegend .valueDefault, fieldset#typeLegend .valueDesc, fieldset#typeLegend .valueExample {
+		font-weight: normal;
+		color: #C00;
+		}
+	dl.paramValue dt.default, fieldset#typeLegend .valueDefault {
+		font-weight: bold;
+		}
+	dl.paramValue dt.desc, fieldset#typeLegend .valueDesc {
+		font-style: italic;
+		}
+	dl.paramValue dt.example, fieldset#typeLegend .valueExample {
+		color: #800080;
+		}
+	fieldset#typeLegend p {
+		margin: 0 .5em;
+		}
+	fieldset#typeLegend legend {
+		font-size: 110%;
+		font-weight: bold;
+		color: #000;
+		padding: .2em .5em;
+		}
+/*	Changelog */
+	ul#changelog {
+		padding-bottom: 5px;
+		font-weight: bold;
+		color: #C00;
+		cursor: pointer;
+		}	
+	ul#changelog ul {
+		font-weight: normal;
+		color: #000;
+		cursor: default;
+		}
+	div#controlBar {
+		display:none;
+		}
+/*	Tables */
+	table {
+		border-collapse: collapse;
+		position: relative;
+		margin: 0 auto;
+		}
+	table caption {
+		color: #999;
+		text-align: left;
+		font-style: italic;
+		}
+	table th {
+		background-color: #559;
+		color: #FFF;
+		}
+	table td {
+		background-color: #FFF;
+		}
+	table td, table th {	
+		padding: .2em .5em;
+		border: 1px solid #CCD;
+		}
+	/* Compatibility Table */
+	table#compat td.family {
+		background-color: #EEE;
+		font-weight: bold;
+		color: #C00;
+		}
+	/* namespace table */
+	table#namespace td.family {
+		background-color: #EEE;
+		font-weight: bold;
+		color: #C00;
+		}
+	table#namespace col.keyCells {
+		font-weight: bold;
+		background-color: #eee;
+		}
+/* File list */	
+	div#files {
+		margin: 1em;
+		}
+	div#files h4 {
+		margin-bottom: 2px;
+		}
+	div#files p {
+		margin: .2em;
+		}
+	div#files>div.file h4 {
+		margin-bottom: 1px;
+		}
+	div#files h4 a {
+		border: 1px solid #CCD;
+		border-bottom: none;
+		padding: .2em .5em;
+		color: #559;
+		background-color: #FFF;
+		}
+	div#files div.file div {
+		padding: 0;
+		margin-top: 0;
+		border: 1px solid #CCD;
+		background-color: #EEE;
+		}
+
+/*	Testimonials */
+	div.testimonial {
+		border-top: 1px solid #CCD;	
+		}
+	div.testimonial p.quote {
+		font-size: 110%;
+		color: #007;
+		background-color: transparent;
+		margin-bottom: 0;
+		padding: 0 2em;
+		}
+	p.testAuthor {
+		margin: 0 0 1em 0;
+		color: #999;
+		background-color: transparent;
+		font-style: italic;	
+		padding-right: 5em;
+		text-align: right; 
+		}
+/*	Contact form */
+	form {
+		margin: 0;
+		padding: 0 0 0 20px;
+		}
+	label {
+		font-weight: bold;
+		display: block;
+		margin-top: 1em;
+		}
+	input, select, textarea {
+		border: 1px solid #CCD;
+		background-color: #EEF;
+		margin-left: 1em;
+		padding: .2em;
+		}
+	input.errHilite, select.errHilite, textarea.errHilite {
+		border: 1px solid #DDC;
+		background-color: #FFE;
+		}
+	label.errHilite {
+		color: #C00;
+		}
+	div.formFooter {
+		margin-top: 1em;
+		clear: both;
+		}
+	div.formFooter input {
+		padding: 0;
+		margin-left: 0;
+		margin-right: 1em;
+		border: 1px solid #CCC;
+		background-color: #EEE;
+		color: #C00;
+		font-weight: bold;
+		}
+	ul#errors {
+		display: none;
+		margin-top: 1em;
+		background-color: #FFE;
+		border: 1px solid #CC9;
+		padding: .3em;
+		color: #C00;
+		font-weight: bold;
+		}	
+	ul#errors li {
+		margin-top: .5em;
+		margin-bottom: .5em;
+		padding: 0;
+		}
+	ul#errors li.heading {
+		list-style-type: none;
+		color: #000;
+		font-weight: normal;
+		font-style: italic;
+		margin: .5em 0;
+		padding: 0;
+		}
+/*	Demo form */
+	form#demoForm fieldset {
+		padding: 1em;
+		margin-right: 1em;
+		width: 40%;
+		float: left;
+		}
+	form#demoForm div {
+		clear: both;
+		}
+	form#demoForm hr {
+		color: #CCC;
+		clear: both:
+		}
+/*	Glossary */
+	dl#glossary, dl#validators {
+		}
+	dl#glossary dt, dl#validators dt {
+		font-size: 110%;
+		font-weight: bold;
+		}
+	dl#glossary dd, dl#validators dd {
+		border-bottom: 1px solid #CCD;
+		margin-bottom: 1em;
+		padding-bottom: 1em;
+		}
+/*	Downloads */
+	p.currentDownload {
+		padding: 10px 10px 10px 65px;
+		background: #FFC url(../images/zip_file.gif) 10px 10px no-repeat;
+		border: 1px solid #CC9;
+		width: 70%;
+		min-width: 300px;
+		height: 45px;
+		margin: 0 auto;
+		}
+	p.download {
+		margin-bottom: .5em;
+		}
+
+/*	Other definitions */
+	code {
+		position: relative;
+		display: block;
+		border: 1px solid #CCC;	
+		color: #060;
+		font-size: 80%;
+		background-color: #EEE;
+		font-size: 110%;
+		padding: 5px;
+		}
+	span.filename {
+		font-family: "Courier new", courier, mono;
+		color: #060;
+		}
+	
+/*	Generic classes */
+	.centered {
+		text-align: center;
+		}
+	.right {
+		text-align: right;
+		}
+	.u	{
+		text-decoration: underline;
+		}
+	.italic {
+		font-style: italic;
+		}
+	.note {
+		color: #C00;
+		font-style: italic;
+		}
+	.note span {
+		font-weight: bold;
+		font-style: normal;
+		}

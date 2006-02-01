@@ -1,0 +1,16 @@
+GLOBALS:
+- "Subscription Default Time"
+- "Change" (replaced with "Edit")
+- "Info" (replaced with "Edit")
+- "Subscription Default Time"
+- "Change publication information"
+
+DIRECTORY: pub
+- "Site"
+
+DIRECTORY: issues
+- "Front Page Template<BR><SMALL>(click to change)</SMALL>"
+- "Single Article Template<BR><SMALL>(click to change)</SMALL>"
+
+DIRECTORY: sections
+- "Change section name"

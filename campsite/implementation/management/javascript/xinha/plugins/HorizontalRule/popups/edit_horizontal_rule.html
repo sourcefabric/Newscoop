@@ -1,0 +1,159 @@
+<html>
+<head>
+  <title>Insert/Edit Horizontal Rule</title>
+  <link rel="stylesheet" type="text/css" href="../../../popups/popup.css" />
+  <script type="text/javascript" src="../../../popups/popup.js"></script>
+
+<script type="text/javascript">
+editor = window.opener.editor;
+
+function Init() {
+	__dlg_translate("HorizontalRule");
+	__dlg_init();
+	window.resizeTo(300,320);
+	var params = window.dialogArguments;
+	if(params) {
+		document.getElementById("f_size").value = params.f_size;
+		document.getElementById("f_width").value = params.f_width;
+		document.getElementById("f_widthUnit").value = params.f_widthUnit;
+		document.getElementById("f_align").value = params.f_align;
+		document.getElementById("f_color").value = params.f_color;
+		document.getElementById("hrpv").style.backgroundColor = params.f_color;
+		document.getElementById("f_noshade").checked = params.f_noshade;
+	}
+	document.getElementById("f_width").focus();
+}
+
+function onOK() {
+  var fields = ["f_size", "f_width", "f_widthUnit", "f_align", "f_color", "f_noshade"];
+  var param = new Object();
+  for (var i in fields) {
+    var id = fields[i];
+	var el = document.getElementById(id);
+    param[id] = (el.type == "checkbox") ? el.checked : el.value;
+  }
+  __dlg_close(param);
+  return false;
+}
+
+function onCancel() {
+  __dlg_close(null);
+  return false;
+}
+
+function selectColor(id1,id2,color) {
+	Dialog(editor.popupURL("select_color.html"), function(color){
+		if (color) {
+			document.getElementById(id1).style.backgroundColor="#"+color;
+			document.getElementById(id2).value="#"+color;
+		}
+	}, color);
+}
+function Dialog(url, action, init) {
+	Dialog.openModal(url, action, init);
+}
+Dialog.openModal = function(url, action, init) {
+	var dlg2 = window.open(url, "hadialog2",
+		  "toolbar=no,menubar=no,personalbar=no,width=10,height=10," +
+		  "scrollbars=no,resizable=yes,modal=yes,dependable=yes");
+	Dialog._modal = dlg2;
+	Dialog._arguments = init;
+	Dialog._return = function (val) {
+		if (val && action) {
+			action(val);
+		}
+		Dialog._modal = null;
+	};
+};
+
+</script>
+
+<style type="text/css">
+.buttonColor {
+  padding: 1px;
+  cursor: default;
+  border: 1px solid;
+  border-color: ButtonHighlight ButtonShadow ButtonShadow ButtonHighlight;
+}
+
+.buttonColor-hilite {
+  border-color: #000;
+}
+
+.buttonColor .chooser {
+  height: 0.6em;
+  border: 1px solid;
+  padding: 0px 1em;
+  border-color: ButtonShadow ButtonHighlight ButtonHighlight ButtonShadow;
+}
+
+.buttonColor .nocolor {
+  padding: 0px;
+  height: 0.6em;
+  border: 1px solid;
+  border-color: ButtonShadow ButtonHighlight ButtonHighlight ButtonShadow;
+}
+.buttonColor .nocolor-hilite { background-color: #fff; color: #f00; }
+</style>
+<style type="text/css">
+@import url(../../../popups/popupstyle.css);
+</style>
+
+</head>
+
+<body class="dialog" onload="Init()">
+<div class="title">Horizontal Rule</div>
+<form action="" method="get">
+  <fieldset>
+  <legend>Layout</legend>
+    <div class="fr">Width:</div>
+    <input style="margin-right: 0.5em;" name="f_width" id="f_width" size="5" type="text">
+    <select style="margin-right: 0.5em;" name="f_widthUnit" id="f_widthUnit">
+      <option value="%">percent</option>
+      <option value="px">pixels</option>
+    </select>
+    <p />
+    <div class="fr">Height:</div>
+    <input style="margin-right: 0.5em;" name="f_size" id="f_size" size="5" type="text"> <span>pixels</span>
+    <p />
+    <div class="fr">Alignment:</div>
+    <select name="f_align" id="f_align">
+      <option value="left">Left</option>
+      <option value="center">Center</option>
+      <option value="right">Right</option>
+    </select>
+    <p />
+  </fieldset>
+  <fieldset>
+  <legend>Style</legend>
+    <div class="fr">Color:</div>
+    <table cellpadding="2" cellspacing="0" id="hrbtn" class="buttonColor">
+    <tr>
+      <td class="chooser" id="hrpv"
+          onMouseOver="document.getElementById('hrbtn').style.borderColor='black'"
+          onMouseOut="document.getElementById('hrbtn').style.borderColor='ButtonHighlight ButtonShadow ButtonShadow ButtonHighlight'"
+          onClick="selectColor('hrpv','f_color',document.getElementById('f_color').value)">&nbsp;</td>
+      <td class="nocolor" id="hrclr"
+          onMouseOver="document.getElementById('hrclr').style.color='#f00'"
+          onMouseOut="document.getElementById('hrclr').style.color='#000'"
+          onClick="document.getElementById('f_color').value='';	document.getElementById('hrpv').style.backgroundColor=''">&#x00d7;</td>
+    </tr>
+    </table>
+    <p />
+    <div class="fr"> </div>
+    <input type="hidden" name="f_color" id="f_color">
+    <input type="checkbox" name="f_noshade" id="f_noshade" value="noshade">
+    <span>No shading</span>
+    <p />
+  </fieldset>
+  <fieldset>
+	  <legend>Note:</legend>
+    <span>To select an existing horizontal rule, a double-click may be needed.</span>
+  </fieldset>
+<div id="buttons">
+  <button type="submit" name="ok" onclick="return onOK();">OK</button>
+  <button type="button" name="cancel" onclick="return onCancel();">Cancel</button>
+</div>
+</form>
+</body>
+</html>

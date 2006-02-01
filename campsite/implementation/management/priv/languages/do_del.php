@@ -1,0 +1,109 @@
+<?php
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
+load_common_include_files("languages");
+require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/languages.php");
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
+
+list($access, $User) = check_basic_access($_REQUEST);
+if (!$access) {
+	header("Location: /$ADMIN/logout.php");
+	exit;
+}
+
+if (!$User->hasPermission('DeleteLanguages')) {
+	camp_html_display_error(getGS("You do not have the right to delete languages."));
+	exit;
+}
+
+$Language = Input::Get('Language', 'int');
+if (!Input::IsValid()) {
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
+	exit;    
+}
+
+$languageObj =& new Language($Language);
+if (!$languageObj->exists()) {
+	header("Location: /$ADMIN/logout.php");
+	exit;    
+}
+
+$doDelete = true;
+
+$numPublications = $Campsite['db']->GetOne("SELECT COUNT(*) FROM Publications WHERE IdDefaultLanguage=$Language");
+if ($numPublications > 0) {
+	$doDelete = false; 
+	$msg[] = getGS('There are $1 publication(s) left.', $numPublications); 
+} 
+    
+$numIssues = $Campsite['db']->GetOne("SELECT COUNT(*) FROM Issues WHERE IdLanguage=$Language");
+if ($numIssues > 0) {
+    $doDelete = false; 
+    $msg[] = getGS('There are $1 issue(s) left.', $numIssues); 
+} 
+    
+$numSections = $Campsite['db']->GetOne("SELECT COUNT(*) FROM Sections WHERE IdLanguage=$Language");
+if ($numSections > 0) {
+    $doDelete = false; 
+    $msg[] = getGS('There are $1 section(s) left.', $numSections); 
+} 
+
+$numArticles = $Campsite['db']->GetOne("SELECT COUNT(*) FROM Articles WHERE IdLanguage=$Language");
+if ($numArticles > 0) {
+    $doDelete = false; 
+    $msg[] = getGS('There are $1 article(s) left.', $numArticles); 
+} 
+    
+$numCountries = $Campsite['db']->GetOne("SELECT COUNT(*) FROM Countries WHERE IdLanguage=$Language");
+if ($numCountries > 0) {
+    $doDelete = false; 
+    $msg[] = getGS('There are $1 countries left.', $numCountries);
+}
+
+if ($doDelete) {
+	$languageObj->delete();
+	header("Location: /$ADMIN/languages/index.php");
+	exit;
+}
+
+$crumbs = array();
+$crumbs[] = array(getGS("Configure"), "");
+$crumbs[] = array(getGS("Languages"), "/$ADMIN/languages/");
+$crumbs[] = array(getGS("Deleting language"), "");
+echo camp_html_breadcrumbs($crumbs);
+
+?>
+<P>
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">
+<TR>
+	<TD COLSPAN="2">
+		<B> <?php  putGS("Deleting language"); ?> </B>
+		<HR NOSHADE SIZE="1" COLOR="BLACK">
+	</TD>
+</TR>
+<TR>
+	<TD COLSPAN="2">
+	   <BLOCKQUOTE>
+        <?php  
+        foreach ($msg as $error) { ?>
+            <LI><?php p($error); ?></LI>
+            <?php
+        }
+        ?>
+		<LI><?php  putGS('The language $1 could not be deleted.','<B>'.$languageObj->getNativeName().'</B>'); ?></LI>
+	   </BLOCKQUOTE>
+	</TD>
+</TR>
+<TR>
+	<TD COLSPAN="2">
+    	<DIV ALIGN="CENTER">        
+        	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/languages/'">
+    	</DIV>
+	</TD>
+</TR>
+</TABLE></CENTER>
+<P>
+
+<?php camp_html_copyright_notice(); ?>

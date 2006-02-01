@@ -1,0 +1,554 @@
+2.4.3 (February 1, 2006)
+  Bugs Fixed
+  ----------
+  - #1678: The article indexer doesn't work
+  - #1683: Error changing an Issue's language
+  - #1682: Update the default country list
+
+2.4.2 (January 26, 2006)
+  Bugs Fixed
+  ----------
+  - #1652: Copying an article created by someone else keeps the 
+    orginal creator
+  - #1651: Language names show up in English in "Article Add" screen and
+    on the Home page under "Your Articles" 
+  - #1569: /usr/local/campsite/bin/notifyevents is sending malformed
+    mail messages
+  - #418: Non-published articles are shown in List article when Preview
+    Mode is used
+  - #1659: Error when you edit an issue configuration
+  - #1674: Xinha on IE: Internal link popup window is too small
+  - #1675: Turn on font face & font size for Xinha
+  - #1670: Trying to duplicate a template shows an error (but still works)
+  - #1663: Xinha "Subhead" button doesnt work in Internet Explorer
+  - #1671: Automatic extensions for new template file names.  
+
+
+2.4.1 (January 13, 2006)
+  Bugs Fixed
+  ----------
+  - #1643: Fixed installation issue when installing from scratch
+  - #1650: Template engine: "articleAttachment" attribute produces
+    an error even if it's correct
+  - #1649: In the Article List, using the "up" and "down" order icons
+    will select the language of the article you moved.
+  - #1647: The Article List formatting is messed up when you dont have 
+    the Add Article permission
+  - #1644: No error messages shown in Article Type Add/Edit screen
+  - #1642: Article List doesnt look good in IE
+  - #1637: Article Edit: A date field is still looks editable when in
+    VIEW mode
+  - #1635: Home Page - Clicking on scheduled Issue time does not 
+    take you to editing the event
+    
+    
+2.4 (January 10, 2006)
+  Major Features
+  --------------
+  - Ability to attach files to articles
+  - Article Edit screen redesign
+    - Images, topics, attachments, and publishing events are now shown
+      alongside the article.  Adding these items has been vastly
+      simplified.
+  - Article List redesign
+    - Ability to do actions on multiple articles at once (it has a
+      similar interface to Gmail).
+    - More information about each article is shown in the article list.
+  - API for third party plugins (beta)
+  - Simplified navigation
+  - The template engine starts automatically and it can be restarted from
+    the user interface.
+  - The template engine is more user-friendly: when it encounters a
+    critical error it displays a message instead of crashing.
+
+  Minor Features
+  --------------
+  - Article copy: When duplicating an article, you can now duplicate
+    any number of its translations, as well as give each translation
+    a new name.
+  - Article translation: When you translate an article and the issue
+    and/or section do not exist in the translation language, you now have
+    the ability to create them at the same time you create the article
+    translation.
+  - Scheduled Publishing: A javascript calendar has been added for
+    selecting dates.
+  - Image Archive: Simplified the search interface.  Your searches are
+    now remembered.
+  - Image archive: "View image" screen now shows all translations of
+    articles that use the image.
+  - Configuration screens for publications, issues, and sections now
+    have all actions available.  Previously, most actions could only be
+    accessed on the "list" screens.
+  - Simplified the "Add Article" screen.
+  - Staff list: Added a "User type" column to the staff list.
+  - Subscribers list can be sorted by full name, account name and
+    creation date.
+  - WYSIWYG: Decreased the loading time for the editor.
+  - WYSIWYG: The editor now works in Firefox 1.5.
+  - Install maintenance binaries into the standard /usr/sbin directory.
+  - Campsite can be installed in standard directories without generating
+    conflicts. The Campsite instance utilities have globally acceptable
+    names.
+
+  Template Language Improvements
+  -------------------------------
+  - Added "PublishDate" to "print article" commands
+  - Added "PublishDate" to "article list order" command
+  - Added "CreationDate" to "article list order" command
+  - Added "List ArticleTopic"
+  - Added "List Subtopic"
+  - Added "Article Number"
+  - Added "If Article Number"
+
+  Developers
+  ----------
+  - Admin interface Subversion repository files now mimic the installed
+    directory structure.
+  - User permissions have been refactored to allow for arbitrary
+    additional user configuration variables
+  - Localizer: Language files are now independent of specific
+    directories.
+  - Localizer: Added ability to move strings to different screens.
+  - Removed all use of the M4 macro processing language.
+  - Replaced PASSWORD function for generating the user password with SHA1.
+  - Moved utility scripts into the implementation directory.
+
+  Bugs Fixed
+  ----------
+  - Fixed bug where article events would still take place even if
+    the Article was set back to 'New' from 'Submitted'
+  - Fixed bug where an article would be placed in an arbitrary position
+    when copied.
+  - Fixed bug where trying to save the empty string in the WYSIWYG editor
+    would actually save a "<BR>".
+  - Fixed the template engine crash when the issue, section or article
+    template was not set.
+
+
+2.3.3 (October 31, 2005)
+  For full details about the changes in 2.3.3, see: 
+  http://code.campware.org/projects/campsite/query?milestone=2.3.3
+  
+  Minor features:
+  - When pasting into WYSIWYG editor, all styles except bold and 
+    italic will be removed (#1501)
+  - Added Arabic language (#1490)
+  - Subsection anchors now have CSS tags so you can modify their 
+    appearance (#1313)
+  - Added documentation on how to install as non-root user, how to use the
+    "configure" and "create_instance" scripts, and how to logout a user on
+    the frontend  
+  
+  Bug fixes:
+  - When displaying article content the internal links and the 
+    text following them are not displayed. (#1489)
+  - "if user loggedin" does not work correctly for IP-based 
+    subscriptions (#1505)
+  - Fixed minor security bug where it is possible to learn the MYSQL 
+    password if the attacker has the ability to snoop on outgoing 
+    emails (#1497)
+  - Remove warnings when PHP_NOTICES is turned on. (#1515, #1498, #1494)
+  - Whitespace in 'gather' cron script results in needless emails (#1507)
+  - User IP address list management: can't add 127.0.0.1 (#1504)
+  
+  
+2.3.2 (October 19, 2005)
+  For full details about the changes in 2.3.2, see: 
+  http://code.campware.org/projects/campsite/query?milestone=2.3.2
+  
+  Minor features:
+    #1484 -	Allow the use of article publish date in the template language
+    #1391 - Screenshots for all administration steps in the manual
+
+  Bug fixes:
+    #1482 -	Packaged templates do not use 2.3 database 
+    #1480 - Duplicate Article does not copy "OnSection" field correctly
+    #1456 - Escaping command line parameters with $'arg' and $"arg" does not work on FreeBSD
+    #1471 - Install scripts break on Debian 3.1 (Sarge) 
+    #1470 -	Packaged templates need documentation, common layout 
+    #1486 -	Fatal error when opening the "Add new image" page 
+    #1476 -	Wrong error message when PEAR fails to update
+    #1462 -	Campsite server returns error when restarting
+    #1457 -	Preview doesn't work correctly for translated articles 
+    #1447 -	Upload date not set properly when duplicating articles 
+    #1414 -	Refresh templates every time they are displayed
+  
+
+2.3.1 (September 7, 2005)
+    Bug fixes:
+    - Ticket #1445 - Upgrade from 2.2 to 2.3 fails on MySQL 3.X
+    - Ticket #705 - Image Archive: give an error on Invalid URL
+    - Ticket #1291 - No error dialog popups up for article
+    edit->images->add new->save
+    - Ticket #1443 - Campsite utility scripts don't work when the binary 
+    directory is in the path
+    - Ticket #1157 - Make Campsite work on PHP 5
+    - Ticket #1436 - Fix 'about' link
+    - Ticket #1442 - Translations are broken on Fedora Core 4
+    - Ticket #1441 - Remove obsolete scripts from root HTML directory
+    - Ticket #1438 - Compilation fails on Fedora 4.0
+    - Ticket #1437 - Check in russian translation updates
+    - Ticket #1312 - Admin login can't be done after a user login in same
+    browser session
+    - Ticket #1432 - Invalid template in article body internal links
+    - Ticket #1429 - Article text fields are not visible on Fedora Linux
+    - Ticket #1428 - Xinha SR language broken
+    - Ticket #1424 - Admin interface doesnt work when run on a different port
+    - Ticket #1398 - INSTALL file miss info about apache config
+    - Ticket #1421 - Unsetting a context property does not delete the URL
+    parameter
+    - Ticket #1411 - PHP notices when running "create_instance"
+    - Ticket #1401 - Install breaks if database password has a quote in it
+    - Ticket #585 - IP access problem
+    - Ticket #1408 - Can't change subscription status
+    - Ticket #1400 - Configuring "instance advanced parameters" breaks when
+    using defaults
+    - Ticket #1403 - When upgrading an old instance the templates are not
+    copied to the new HTML directory
+    - Ticket #1402 - Apache user and group are not set properly when upgrading
+    from 2.1
+    - Ticket #1399 - Install prompts "0 - to exit" confusing
+    - Ticket #1285 - Main menu behaviour change
+    - Ticket #1207 - PHP notices appear in admin site
+    - Ticket #1396 - Manual: Most internal internal links are broken
+    - Ticket #1385 - Default Apache .conf file: add php_admin_value and *:80
+    - Ticket #1386 - After create_instance, Connection refused (111)
+    - Ticket #1387 - PHP "NOTICES" break Xinha
+    - Ticket #1390 - Fix images in campsite manual
+    - Ticket #1383 - Invalid path in admin directory gives no error
+    - Ticket #1379 - create_instance parameters description
+
+2.3.0 (August 1, 2005)
+    2.3.0 New Features
+    - User Management v2
+        - #0307: Separation of Staff & Subscribers
+        - Ability to search users 
+        - New, easier-to-use interface
+        - #0764: Categorize user-rights list
+    - Localizer v2
+        - New, easier-to-use interface
+        - Ability to translate from any language to any other language
+        - Ability to change your default language
+        - Notification of missing strings
+        - Notification of unused strings
+    - WYSIWYG Text editor
+        - Editor changed from HTMLArea to Xinha, a more dynamically 
+          supported project 
+        - Added “Paste from Word” ability – will strip the MSWord styles
+        - Internal links support “target”
+    - #0710: Online help with user comments
+    - #1115: Show recently published articles, pending actions on the 
+             home page
+    - #0703: Article List: Show article lock state
+    - #0781: Allow the user to set the default instance parameters
+    - #0790: Login screen remembers your previous language choice
+    - #0742: Language names now appear in native languages in all lists
+    - #1052: Change all database text input fields to use 255 characters 
+             so as to support other languages better
+    - #1077: Testing checklist
+    - “Duplicate Section” screen useability improvements
+    - #1185: Ability to delete all articles in a section when you delete 
+             the section
+    - Works with SSL
+    
+    2.3.0 Major Bug Fixes
+    - #1051: PHPWrapper broken
+    - #0901: In Article List, articles should be shown newest first
+    - #1132: Article Edit -> Topics -> Topics don't show & you cant 
+             add them
+    - #0849: "Unlock" doesn't work
+    - #0812: Duplicating a section is broken
+    - #1273: If Scheduled Publishing cron job is stopped for any reason, 
+             scheduled actions may never be performed
+    
+    2.3.0 Minor Bug Fixes/Tweaks
+    - #1280: When translating issues the URL name is not set
+    - #0737: You should not have to fill in "currency" when you modify 
+             a publication
+    - #1102: Change "Short Name" to "URL Name"
+    - #1174: Change "Automatic Publishing" to "Scheduled Publishing"
+    - #1098: No confirmation when deleting an Issue "automatic 
+             publishing" action
+    - #1097: After publishing/unpublishing an issue, the confirmation  
+             message is exact opposite of what it should be
+    - #0851: Clicking on the campsite logo should bring you "home"
+    - #0850: Article -> Automatic Publishing -> Cancel -> error
+    - #0844: Default image archive to show most recently added images
+    - #0735: Translated issues are not grouped together
+    - #1135: Article Edit -> Images-> Add existing -> edit -> save -> 
+             returns you to the article image list screen
+    - #1131: Scheduled Publishing: When editing an entry, clicking  
+             "cancel" takes you to the article list
+    - “Automatic Publishing” changed to “Scheduled Publishing”
+    - #1190: Deleting an article from article list moves you back to the 
+             beginning of the article list
+    - #1304: If "Manage templates" permission is OFF, and "Delete  
+             Templates" permission is ON, you cant get to template screen 
+
+2.2.2 (April 29, 2005)
+    - updated FreeBSD install documentation
+    - updated the manual (added extra information about upgrading from older 
+    versions)
+    - fixed install bugs:
+        - use short options on install utility (FreeBSD version doesn't support
+        long options)
+        - fixed modules configuration bug (didn't check the settings for each
+        module)
+        - updated dependecies on installed libraries/utilities
+        - select the correct make utility on FreeBSD
+        - removed obsolete code
+        - make the CLI compatible to FreeBSD style
+        - set the editor new rights for all staff users
+        - install and upgrade needed PEAR packages
+        - fixed blank page bug (sometimes users got a blank page)
+        - set the thumnail path correctly when upgrading the images
+        - image archive didn't work for instances, except the default one
+        - copy the short name and default templates when duplicating sections
+    - other:
+        - minor Fedora related bugs
+        - minor template engine bugs
+
+2.2.1 (April 23, 2005)
+    - bugs #0748, #0779: Installation fixes for FreeBSD, Fedora, & Ubuntu
+    - bug #0882: Image Manager doesn't work when changing default installation
+    settings.
+    - bug #0807: Initialize the HTMLArea rights
+    - bug #0848: Cannot upgrade Images table if database is on remote server
+    - bug #0963: "print image <number> description" doesn't work
+    - bug #0728: Gracefully handle the case when PEAR isn't in the path
+
+2.2.0 (April 14, 2005)
+    - Improve management of multiple instances of CAMPSITE on a single server
+    (new instances can be created without reinstalling Campsite)
+    - Allow editors/journalists to change and set the order of articles
+    - New handling of Images (and other Multimedia)
+    - Automatic publishing/removal of selected articles without human
+    intervention at a specified date and time
+    - Publication site aliases: aliases allow Campsite to identify a
+    publication based on multiple domain names
+    - Shorter, Search Engine-Friendly URLs: the user has the choice of old
+    type URLs or new, shorter URLs
+    - Replaced the Campfire Java applet with the JavaScript-based HTMLArea.
+    This will allow users to input and edit articles without having to
+    download and install the Java VM and Campfire applet. It will also allow
+    additional features such as image display inside the article.
+    - New admin interface (pretty icons, dropdown menu, no more frames)
+
+2.1.8 (April 24, 2005)
+    - Installation fixes for Fedora & Ubuntu
+
+2.1.7 (April 11, 2005)
+    - Implemented "Print Topic Identifier" and "Print User Identifier"
+    - Check if cookies were modified in a certain way to allow invalid user login
+    - Do not allow operations outside look directory for the following scripts:
+        - template list script
+        - template edit script
+        - template save script
+        - template create script
+        - template duplicate script
+        - template upload script
+        - template delete script
+        - directory create script
+        - directory delete script
+
+2.1.6 (February 9, 2005)
+    - Implemented new "Topic", "If Topic" and "Print Topic" statements
+    - Added new environment attribute: topic; this affects articles lists and
+    is forwarded as an URL parameter
+    - Added new attributes to "List Issue" statement
+    - Many bug fixes
+
+2.1.5 (March 26, 2004)
+    - Added Chinese translation thanks to Andrew Lih and Tian Fawei at Hong Kong
+    University, Journalism and Media Studies Centre
+    - Added Arabic localization (thanks to folks at www.rightsmedia.org in 
+    Lebanon)
+    - Implemented article/section duplication feature
+    - Implemented a small extension API in order to allow the Phorum modules to
+    work with campsite (thanks to Sebastian Goebel)
+    - Implemented ordering by name in issues and articles lists
+    - Added a technical FAQ for troubleshooting
+    - Added Arabic translation
+    - Many bug fixes
+
+2.1.4 (October 20, 2003)
+    - Changed the image buttons to text buttons which are easy to translate
+    - Fixed bug 178: Some admin rights not added by default when admin account
+    created
+    - Improved the manual (2.1. Configuring the publishing environment)
+    - Improved the template parser behavior: display error message when an
+    invalid template was included (previously it would display an empty page)
+    - Other bug fixes
+
+2.1.3 (July 8, 2003)
+    - Manual updates: some statements were not documented: "If Search"
+    (3.9.3.22), "Print Search" (3.9.4.2), "If Subtitle" (3.9.3.23); manual
+    corrections
+    - Parser used to abort improperly when it couldn't resolve the allowed hosts
+    name
+    - Increased the maximum keyword length in the search engine
+    - Fixed memory leaks (used valgrind to detect them)
+    - Added Firebird specific article body field edit script
+    - Modified the subtitle printing behavior: printing the field inside the
+    subtitle list will display the current subtitle in the list instead of the
+    subtitle set at the beginning of the template
+
+2.1.2 (April 23, 2003)
+    - Ported campsite to FreeBSD (thanks to Richard Airlie)
+    - Started the port to OpenBSD (thanks to Richard Airlie)
+    - Small bug fixes
+    - Manual updates relative to the FreeBSD port
+    - Manual update: 2.1.4 User management: write about the admin user and it's
+    use in email notifiers
+    - Small template language improvements: ability to specify the image number
+    when printig image attributes (3.9.4.2 Print), accept empty strings as
+    identifiers
+    - Added Portuguese translation (thanks to Guilherme Henrique Soares)
+    - Replaced AUTHORS with updated CREDITS file
+
+2.1.1 (February 21, 2003)
+    - Added new languages: Serbian (Cyrillic), Spanish, Bosnian and updated
+    the other translations
+    - Improved template management user interface; allow users whithout write
+    right to view the template
+    - Login file checks for guest_include.php; if found, it is included
+    - Fixed bug 86 (at install time the script checks for apache user instead
+    of group; if user and group are not the same it fails)
+    - Implemented subscription update feature: update subscriptions automatically
+    when adding/deleting subscriptions to/from issues
+    - Improved the manual: detailed database conversion, corrections
+    - Other bug fixes
+
+2.1.0 (November 10, 2002)
+    - The application is divided into modules that can be installed on
+    different systems (increased scalability)
+    - Multiple instances of campsite can be installed on the same system
+    - Campsite is more configurable: connection to database, install
+    directories, smtp server etc. can be configured by install scripts
+    - New, improved install scripts: detect necessary dependencies (libraries,
+    headers, binaries etc.), configure application, test configuration, select
+    modules etc.
+    - Ported the administration interface from www-sql to Php
+    - Use UTF-8 charset all over the application (database, admin interface, 
+    templates, parser, java editor)
+    - Added the localizer: a tool allowing the users to translate the admin
+    interface into different languages and select the language of the interface
+    at login time
+    - Improved template management module: create and edit files remotely,
+    duplicate them on the server, save them on the local system
+    - Improved image management module: add old image feature, search engine.
+    - Improved authorization and access system: fixed security bug, added new
+    user type
+    - Improved usability: ease the deletion of issues, add all sections to a
+    subscription at once, copy issue structure on translation etc.
+    - New module: topics. An article can have zero-more topics. Topics can be
+    structured in a hierarchy. E.g.: sport topic can have football, tennis,
+    basketball etc. as subtopics
+    - Other small enhancements and bug fixes on administration interface
+    - Template language improvements: more operators, more attributes added to
+    If and List statements, the possibility to use dynamic fields in If Article
+    and List Article statements etc.
+    - Set default subscription time per publication (independent of the
+    country)
+    - New, improved article editor: Campfire 2.0
+    - Administration interface translated into Russian, German, Romanian,
+    Serbo-Croatian and Czech languages
+    - Added an exhaustive list of countries to campsite database
+
+
+2.0.12 (October 29, 2001)
+    - Set login username/password fields to size 10
+    - Add If Language statement (see manual: 3.9.1.26)
+    - Updated manual: added With statement description: 3.9.1.27
+    - Fixed content type/charset string to work for netscape browser
+
+2.0.11 (August 9, 2001)
+    - When adding a new subscription to a publication add the sections too
+    - Admin interface, subscription-section: the section is now selectable
+    from a list instead of letting you type the section number
+    - Admin interface, subscription-section: print the name of the section
+    name instead of the number
+    - New text only editor for article body type fields
+    - Admin interface: print more sections per page (20)
+    - Admin interface: print the description for date-type fields (YYYY-MM-DD)
+    - When deleting article: delete the links from search keywords to articles
+    too
+    - Admin interface: adding new issue detects if there was an old structure
+    or not and selects the appropriate link accordingly
+    - The newly added articles are Public to everybody (not just to subscribers)
+    by default.
+    - Admin interface: on adding new images forward the current language
+    identifier
+    - New statement in template language: If Image <number>; tests if image
+    <number> exists
+    - If statements in template language can be negated: If not
+    - The parser server updates automatically the article types from the database
+    (in case they were modified)
+    - Fixed event notify bug: mailnotify used to send all the email to the event
+    originator
+    - Order can be used now in Issue, SearchResult and Article lists
+    - Fixed parser crash bug: when encountered invalid identifier for Language,
+    Publication, Issue, Section, Article, Print, If, Subscription, Edit
+    - Fixed parser bug: on Issue statement select the current issue according to
+    access rights
+    - Added more debug information on Local statement
+    - Fixed bug on template list: didn't print properly file names containing spaces
+    - Small enhancement on template list: print files/directories in alphabetical
+    order
+    - Fixed small bug on install/uninstall scripts
+    - Fixed parser crash on empty search
+    - Fixed login/subscription password field size
+    - Select the publication language when adding a new issue or article
+    - Fixed bug: listing subscription sections showed section from all the
+    publication (not just the selected one)
+    - Fixed subscription process bug: the parser doesn't process subscription
+    statement when modifying/updating the subscription
+    - Fixed notification of subscription end bug
+    - Fixed reading ALT image property in article body
+    - Fixed some incorrect parser hash locks
+    - Fixed incorrect use of is, not, greater, smaller operators in if statements
+
+2.0.10 (July 24, 2001)
+    - Fixed the 'Back to article details' bug
+    - Removed the weird message from 'Old images'
+    - Fixed the language selection in lists bug
+
+2.0.9 (July 3, 2001)
+    - Fixed incorrect timestamp update on event notify
+    - Fixed mysqlclient library link problem on RedHat systems
+
+2.0.8 (June 18, 2001)
+    - Fixed internal links bug (select proper template according to link
+    publication)
+    - Fixed incorrect parsing of "list ... article ... keyword <keyword>" bug
+
+2.0.7 (May 14, 2001)
+    - Small bugfixes
+
+2.0.6 (April 5, 2001)
+    - Fixed search list order bug. The parser did not list in the requested
+    order the list of searched articles
+
+2.0.1-2.0.5
+    - Fixed install bugs
+
+2.0.0 (March 13, 2001):
+    - New items: README, implementation/tpl_cgi, documentation/example,
+    documentation/http-config
+    - General:
+        - Changed Makefiles in order to compile on Redhat 7.0
+        implementation/parser:
+        - The parser is now campsite_server, a multithreaded daemon
+        - Made campsitectl (start, stop, restart, show status) campsite_server
+        - Made campsite rc script for Sys V like systems (ex. RedHat)
+        - Made install script to install campsitectl, campsite scripts for
+        automatic start of campsite_server on system startup
+        - The parser prints formatted date, month name (mon_name) and weekday
+        name (wday_name) in current language (not in English only)
+    - documentation:
+        - Updated campsite-guide (changes made on: URLParameters, Print Issue
+        Article Image Subscription, Date)
+    - implementation/tpl_cgi:
+        - This is a small cgi; it receives requests, connects to
+        campsite_server, read the response from campsite_server and forwards
+        the response (HTML page)

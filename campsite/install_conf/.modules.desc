@@ -1,0 +1,5 @@
+[
+PARSER
+# The parser interprets the templates and returns an html page. 
+# You will be able to configure which port the daemon will run on.
+]

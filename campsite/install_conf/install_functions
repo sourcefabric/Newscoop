@@ -1,0 +1,217 @@
+#!/bin/bash
+
+. ${INSTALL_CONF}/conf_functions
+
+configure_campsite()
+{
+cc_interactive=""
+while [ "$1" != "" ]; do
+    case $1 in
+    --interactive) cc_interactive="$1" ;;
+    esac
+    shift 1
+done
+
+if [ "$cc_interactive" = "--interactive" ]; then
+
+echo -e "\nCampsite application is composed out of modules. Before installing"
+echo "campsite they must be configured."
+echo ""
+choice_yn "Do you want to read the description of campsite modules?" N
+if [ "$choice" = "Y" ]; then
+    echo -e "\nCampsite modules description:"
+    modules_desc
+    echo -e "\nPress ENTER when ready"
+    read
+fi
+
+fi # interactive
+
+prepare_install_env || exit 1
+check_install_deps || exit 1
+check_install_config
+
+if [ "$cc_interactive" = "--interactive" ]; then
+
+configure_install
+[ $? -ne 0 ] && echo "Error configuring install parameters" && exit 1
+install_conf --set
+. "$INSTALL_CONF/../configure" --define_start_env &> /dev/null
+[ $? -ne 0 ] && echo "Error configuring install environment" && exit 1
+
+export MODULES_LIST="DATABASE PARSER EVENT_HANDLERS SEARCH_ENGINE ADMIN_INTERFACE"
+echo "Please wait while checking modules configuration..."
+for cc_mod in $MODULES_LIST; do
+    check_module_deps $cc_mod $cc_interactive
+    if [ $? -ne 0 ]; then
+	if [ "$output" != "" ]; then echo $output; fi
+	echo "There is a dependecy problem. Please read the previous message and"
+	echo "install the required program/package".
+	exit 1
+    fi
+done
+for cc_mod in $NEED_CONFIG_MODULES; do
+    prepare_${cc_mod}_env
+    if [ $? -ne 0 ]; then
+	echo "Error preparing environment for $cc_mod module."
+	echo "Please report bug to http://www.campware.org/bugs"
+	echo "Aborting..."
+	exit 1
+    fi
+    check_${cc_mod}_config $cc_interactive || exit 1
+done
+cc_err_msg=""
+while true; do
+    echo -e "\nThe following list shows modules that are configurable."
+    echo "Modules not shown in this list are not configurable at this stage."
+    echo "Modules checked with X have a valid configuration."
+    cc_index=1
+    all_ok=true
+    for cc_mod in $NEED_CONFIG_MODULES; do
+	echo -e -n "\t${cc_index}. ["
+	if in_list $cc_mod $CHECKED_MODULES; then
+	    echo -n "X"
+	else
+	    echo -n " "
+	    all_ok=false
+	fi
+	echo "] $cc_mod"
+	cc_index=`expr $cc_index + 1`
+    done
+    cc_index=`expr $cc_index - 1`
+    echo -e "\nSelect\n\t1 - Modify these options\n\t0 - Continue to the next step"
+    echo -e -n "$cc_err_msg\nSelect a choice: "
+    read -r choice
+    if [ "$choice" != "0" ] && [ "$choice" != "1" ]; then
+	cc_err_msg="Invalid choice $choice"
+    else
+	case $choice in
+	1)
+	    read_string module_number
+	    cc_m_nr=$module_number
+	    cc_err_msg=""
+	    if [ $cc_m_nr -gt $cc_index ] || [ 0 -ge $cc_m_nr ]; then
+		cc_err_msg="Invalid module number $module_number"
+	    else
+		cc_mod_name=`list_item $module_number $NEED_CONFIG_MODULES`
+		configure_module $cc_mod_name check_${cc_mod_name}_config
+	    fi ;;
+	0)
+	    cc_err_msg=""
+	    if $all_ok; then
+		break
+	    else
+		choice_yn "Not all modules are properly configured. Abort?" N
+		[ "$choice" = "Y" ] && echo "Aborting..." && exit 1
+	    fi ;;
+	esac
+    fi
+done
+choice_yn "\nCampsite configuration is completed. Do you want to review it?" Y
+if [ "$choice" = "Y" ]; then
+    echo -e "\nInstall configuration"
+    install_conf
+    echo -e "\nTo continue press ENTER"
+    read
+    for cc_mod in $NEED_CONFIG_MODULES; do
+	echo "$cc_mod configuration:"
+	modules_conf $cc_mod
+	[ $? -ne 0 ] && return $?
+	echo -e "\nTo continue press ENTER"
+	read
+    done
+fi
+
+fi # interactive
+
+}
+
+
+read_parameter()
+{
+param=$1
+def_val=$2
+explanation=$3
+
+[ "$3" != "" ] && echo -e "- $1: $3"
+echo -e -n "\tEnter $1 value"
+[ "$2" != "" ] && echo -n " [$2]"
+echo -n ": "
+read -r val
+if [ "$val" = "" ]; then
+    val=$2
+fi
+export $1="$val"
+return 0
+}
+
+read_instance_parameters()
+{
+read_parameter database_server_address 127.0.0.1 "The IP address of the MySQL server - usualy localhost"
+read_parameter database_user root "The user is needed to connect to the database server"
+read_parameter database_password "" "The password is needed to connect to the database server"
+read_parameter smtp_server_address 127.0.0.1 "The IP address of the email server - usualy localhost"
+}
+
+read_advanced_instance_parameters()
+{
+read_parameter database_server_port 0 "This is the database server listening port - 0 means\nuse default"
+read_parameter template_engine_port 0 "This is the template engine server listening port -\n0 means use default"
+read_parameter template_engine_max_threads 0 "This sets the maximum number of threads for the\ntemplate engine - 0 means use default"
+read_parameter smtp_server_port 25 "This is the email server listening port - default 25"
+read_parameter apache_user "$APACHE_USER" "The owner of instance files; the template engine will run\nwith this user id - default apache user should work ok"
+read_parameter apache_group "$APACHE_GROUP" "The group owner of instance files; the template engine will\nrun with this group id - default apache group should work ok"
+}
+
+args=(--db_server_address --db_user --db_password --smtp_server_address --db_server_port \
+      --parser_port --parser_max_threads --smtp_server_port --apache_user --apache_group)
+params=(database_server_address database_user database_password smtp_server_address \
+        database_server_port template_engine_port template_engine_max_threads smtp_server_port \
+	apache_user apache_group)
+
+install_default_instance()
+{
+echo "The base package was installed. In order for Campsite to work you must install"
+echo "at least one instance."
+
+if [ "$1" != "Y" ]; then
+    choice_yn "Do you want to install the default Campsite instance?" "Y"
+    if [ $? -ne 0 ]; then
+	# The choice was no
+        return 0
+    fi
+fi
+choice_yn "Do you want to change the instance base parameters?" "N"
+if [ $? -eq 0 ]; then
+    echo ""
+    read_instance_parameters
+    echo ""
+fi
+apache_user=
+apache_group=
+choice_yn "Do you want to change the instance advanced parameters?" "N"
+if [ $? -eq 0 ]; then
+    echo ""
+    read_advanced_instance_parameters
+    echo ""
+fi
+cli_args=""
+index=0
+while [ $index -le 9 ]; do
+    param_name=${params[$index]}
+    arg_name=${args[$index]}
+    param_value=${!param_name}
+    if [ "$param_value" != "" ]; then
+	cli_args="$cli_args  $arg_name $param_value"
+    fi
+    index=`expr $index + 1`
+done
+echo -e "\nRunning $BIN_DIR/campsite-create-instance"
+if [ "$cli_args" != "" ]; then
+    echo -e "with the following arguments: $cli_args\n"
+else
+    echo -e "with no arguments (use default values)\n"
+fi
+$BIN_DIR/campsite-create-instance $cli_args && export DEF_INST_INSTALLED=Y && return 0
+return 1
+}

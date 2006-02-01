@@ -1,0 +1,213 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<!--
+:noTabs=true:tabSize=2:indentSize=2:
+Xinha example menu.  This file is used by full_example.html within a
+frame to provide a menu for generating example editors using
+full_example-body.html, and full_example.js.
+-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Example of Xinha</title>
+<link rel="stylesheet" href="full_example.css" type="text/css">
+<style type="text/css">
+form, p {margin:0; padding:0;}
+label {display:block;}
+#numeditor {width:25px;}
+.options {display:none;}
+</style>
+<script type="text/javascript">
+function checkPluginsOptions()
+{
+  var plugins = document.forms[0].elements['plugins'];
+  for(var x = 0; x < plugins.length; x++)
+    if (document.getElementById(plugins[x].value + 'Options'))
+      document.getElementById(plugins[x].value + 'Options').style.display = (plugins[x].checked)? 'block':'none';
+}
+function toggleOnChange(elt) {
+  document.getElementById(elt.value + 'Options').style.display = (elt.checked)? 'block':'none';
+}
+</script>
+</head>
+
+<body onload="checkPluginsOptions();">
+  <form action="full_example-body.html" target="body">
+    <p>
+      Select from the options below and <input type="submit" value="click to show Example">
+    </p>
+    <fieldset>
+      <legend>Settings</legend>
+        <label>
+          Number of Editors: <input type="text" name="num" value="1" id="numeditor" maxlength="2">
+        </label>
+        <label>
+          Language:
+          <select name="lang">
+          <option value="en">English</option>
+          <option value="de">German</option>
+          <option value="fr">French</option>
+          <option value="it">Italian</option>
+          <option value="no">Norwegian</option>
+          </select>
+        </label>
+        <label>
+          Skin:
+          <select name="skin">
+          <option value="blue-look">blue-look</option>
+          <option value="green-look">green-look</option>
+          <option value="xp-blue">xp-blue</option>
+          <option value="xp-green">xp-green</option>
+          <option value="inditreuse">inditreuse</option>
+          <option value="blue-metallic">blue-metallic</option>
+          <option value="titan">titan</option>
+          </select>
+        </label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Plugins</legend>
+      <label>
+        <input type="checkbox" name="plugins" value="Abbreviation"> Abbreviation
+      </label>
+      <label>
+        <input type="checkbox" name="plugins" value="BackgroundImage"> BackgroundImage
+      </label>
+      <label>
+        <input type="checkbox" name="plugins" value="CharacterMap" checked="checked" onchange="toggleOnChange(this);"> CharacterMap
+      </label>
+      <div id="CharacterMapOptions" class="options">
+        mode : <select name="CharacterMapMode">
+          <option value="popup">popup</option>
+          <option value="panel">panel</option>
+        </select>
+      </div>
+      <label>
+        <input type="checkbox" name="plugins" value="CharCounter"> CharCounter
+      </label>
+      <label>
+        <input type="checkbox" name="plugins" value="ClientsideSpellcheck" checked="checked"> ClientsideSpellcheck
+      </label>
+      <label>
+        <input type="checkbox" name="plugins" value="ContextMenu" checked="checked"> ContextMenu
+      </label>
+      <label>
+        <input type="checkbox" name="plugins" value="CSS" > CSS
+      </label>
+      <label>
+        <input type="checkbox" name="plugins" value="DoubleClick"> DoubleClick
+      </label>
+      <label>
+        <input type="checkbox" name="plugins" value="DynamicCSS" > DynamicCSS
+      </label>
+      <label>
+        <input type="checkbox" name="plugins" value="EditTag"> EditTag
+      </label>
+      <label>
+        <input type="checkbox" name="plugins" value="EnterParagraphs"> EnterParagraphs
+      </label>
+      <label>
+        <input type="checkbox" name="plugins" value="Equation"> Equation
+      </label>
+      <label>
+        <input type="checkbox" name="plugins" value="FindReplace" checked="checked"> FindReplace
+      </label>
+      <label>
+        <input type="checkbox" name="plugins" value="FormOperations"> FormOperations
+      </label>
+      <label>
+        <input type="checkbox" name="plugins" value="Forms"> Forms
+      </label>
+      <label>
+        <input type="checkbox" name="plugins" value="FullPage" > FullPage
+      </label>
+      <label>
+        <input type="checkbox" name="plugins" value="FullScreen" checked="checked"> FullScreen
+      </label>
+      <label>
+        <input type="checkbox" name="plugins" value="GetHtml" checked="checked"> GetHtml
+      </label>
+      <label>
+        <input type="checkbox" name="plugins" value="HorizontalRule"> HorizontalRule
+      </label>
+      <label>
+        <input type="checkbox" name="plugins" value="InsertAnchor" checked="checked"> InsertAnchor
+      </label>
+      <label>
+        <input type="checkbox" name="plugins" value="InsertMarquee"> InsertMarquee
+      </label>
+      <label>
+        <input type="checkbox" name="plugins" value="InsertPagebreak"> InsertPagebreak
+      </label>
+      <label>
+        <input type="checkbox" name="plugins" value="InsertSmiley"> InsertSmiley
+      </label>
+      <label>
+        <input type="checkbox" name="plugins" value="InsertWords"> InsertWords
+      </label>
+      <label>
+        <input type="checkbox" name="plugins" value="LangMarks"> LangMarks
+      </label>
+      <label>
+        <input type="checkbox" name="plugins" value="ListType" checked="checked" onchange="toggleOnChange(this);"> ListType
+      </label>
+      <div id="ListTypeOptions" class="options">
+        mode : <select name="ListTypeMode">
+          <option value="toolbar">toolbar</option>
+          <option value="panel">panel</option>
+        </select>
+      </div>
+      <label>
+        <input type="checkbox" name="plugins" value="NoteServer"> NoteServer
+      </label>
+      <label>
+        <input type="checkbox" name="plugins" value="PasteText" checked="checked"> PasteText
+      </label>
+      <label>
+        <input type="checkbox" name="plugins" value="QuickTag"> QuickTag
+      </label>
+      <label>
+        <input type="checkbox" name="plugins" value="Stylist" checked="checked"> Stylist
+      </label>
+      <label>
+        <input type="checkbox" name="plugins" value="TableOperations" checked="checked"> TableOperations
+      </label>
+      <label>
+        <input type="checkbox" name="plugins" value="Template"> Template
+      </label>
+      <label>
+        <input type="checkbox" name="plugins" value="UnFormat"> UnFormat
+      </label>
+    </fieldset>
+
+    <fieldset>
+      <legend>PHP Plugins</legend>
+      <p>
+        <small>These plugins require PHP in order to run.</small>
+      </p>
+      <label>
+        <input type="checkbox" name="plugins" value="HtmlTidy"> HtmlTidy
+      </label>
+      <label>
+        <input type="checkbox" name="plugins" value="ImageManager"> ImageManager
+      </label>
+      <label>
+        <input type="checkbox" name="plugins" value="InsertPicture"> InsertPicture
+      </label>      
+      <label>
+        <input type="checkbox" name="plugins" value="Linker"> Linker
+      </label>
+      <label>
+        <input type="checkbox" name="plugins" value="SpellChecker"> SpellChecker
+      </label>
+      <label>
+        <input type="checkbox" name="plugins" value="SuperClean"> SuperClean
+      </label>
+    </fieldset>
+
+  </form>
+  <script type="text/javascript">
+    top.frames["body"].location.href = document.location.href.replace(/full_example-menu\.html.*/, 'full_example-body.html')
+  </script>
+
+</body>
+</html>

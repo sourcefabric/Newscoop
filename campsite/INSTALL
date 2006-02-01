@@ -1,0 +1,126 @@
+INSTALLATION PROCEDURE FOR CAMPSITE V.2.4.x
+http://www.campware.org
+
+CONTENTS:
+   * PREPARATION - applications you need to have installed
+   * INSTALLATION - the usual procedure
+   * INSTALLATION of multiple instances
+
+####################################################################
+
+PREPARATION - applications you need to have installed
+
+   (Most of the following should be installed with the default
+   distribution. But check for MySQL and Apache ...)
+
+1. make
+   Usually the make binary is located in /usr/bin directory.
+   On rpm systems make package should be installed.
+
+2. stat
+   Stat is a utility for displaying the file or filesystem status.
+   It is located in /bin directory. On RedHat, Suse stat package
+   must be installed. On Mandrake fileutils package must be installed.
+
+3. g++ compiler
+   Usually the g++ binary is located in /usr/bin directory.
+   On rpm systems gcc-c++ package should be installed.
+
+4. MySQL server
+   On rpm systems, MySQL, MySQL-shared, MySQL-devel and
+   MySQL-client packages should be installed.
+   Check that mysqld daemon is started:
+      type "ps ax | grep mysqld".
+   You should see one safe_mysqld process and at least
+   three mysqld processes. If not, the mysqld daemon is not
+   started. Start it typing safe_mysqld as root.
+
+5. Apache server
+   On rpm systems, apache or http packages should be installed.
+   Configure the Web server (see INSTALLATION 3.) and (re)start
+   the httpd daemon.
+
+6. PHP
+   Campsite requires PHP 4.3 or newer; the following PHP modules
+   must be installed: php-cli (command line), php-pear, php-adodb,
+   php-mysql.
+
+7. Cron daemon
+   Usually the crond binary is located in /usr/sbin directory.
+   On rpm systems vixie-cron package should be installed.
+   Make sure the crond daemon is started:
+      type "ps ax|grep cron"
+   You should see a cron process.
+
+####################################################################
+
+INSTALLATION - the usual procedure
+
+1. Unzip and Untar the campsite file. This will generate a
+   folder named 'campsite'.
+
+2. Change into the 'campsite' directory.
+
+   IMPORTANT: If you have an old version of campsite and want to drop
+   the old database type: "mysqladmin -u root drop campsite". The
+   installer will NOT install a new blank database over the old one.
+   If you want to upgrade campsite and keep the old database, continue
+   with the next step. The installation will not delete the old database.
+
+3. Type ./install
+
+   If you are not already logged in as root the installer will prompt
+   you for the root password when necessary. Without root access it
+   can not install the CAMPSITE application.
+
+   IMPORTANT!!!
+   If your MySQL configuration is not the default one you'll have to run
+   the create instance script separatelly, after installation. Read 
+   instructions from install script.
+
+4. Configure the default instance
+
+   - Edit the file "campsite-vhost.conf" from the instance configuration
+   directory (/usr/local/campsite/etc/campsite) and replace $SERVER_NAME
+   with the appropriate value. Your system administrator should provide the
+   server address and server name. The server name must also be registered in
+   the DNS (Domain Name Service).
+
+   - Include the file "campsite-vhost.conf" in the main apache configuration
+   file.
+
+   - Restart the apache server:
+      killall httpd
+      {PATH}/httpd
+   or
+      /etc/rc.d/init.d/httpd restart
+
+Be aware that the Campsite installer does its best to pick reasonable
+defaults in the configuration of the various modules, but that these should
+always be checked by the user. (This applies when installing Campsite on
+any architecture). You can change all necessary variables interactively in
+the installer.
+
+####################################################################
+
+INSTALLATION of multiple instances
+
+Since 2.2.0 a new instance can be created without reinstalling Campsite. Just
+run:
+
+/usr/local/campsite/bin/campsite-create-instance --db_name [instance_name]
+
+- Edit the file "[instance_name]-vhost.conf" from the instance configuration
+directory (/usr/local/campsite/etc/[instance_name]) and replace $SERVER_NAME
+with the appropriate value. Your system administrator should provide the
+server address and server name. The server name must also be registered in
+the DNS (Domain Name Service).
+
+- Include the file "[instance_name]-vhost.conf" in the main apache
+configuration file.
+
+- Restart the apache server:
+	killall httpd
+	{PATH}/httpd
+or
+	/etc/rc.d/init.d/httpd restart

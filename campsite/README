@@ -1,0 +1,111 @@
+Campsite
+version     : 2.4.3 "Rade"
+release date: February 1, 2006
+contact     : contact@campware.org
+url         : http://www.campware.org
+copyright   : (c)1999-2006 Media Development Loan Fund
+support     : mailto: campsite-support@campware.org; subject: subscribe
+manual      : http://code.campware.org/manuals/campsite/2.4/
+
+INTRODUCTION
+
+Campsite is a robust, stable, and journalist-friendly solution for online
+magazines and newspapers that speaks your language.
+
+Campsite follows the print-newspaper publishing paradigm, so it structures
+sites by default as Publications > Issues > Sections > Articles.
+
+Campsite is available in: English, Portuguese, Spanish, German, Russian, 
+Arabic, Chinese, Serbian (Cyrillic), Serbo-Croatian (Latin), Croatian,
+Czech, and Romanian.  However, the interface can easily be localized to new 
+languages using its built-in 'Localizer'.
+
+With Campsite you can:
+
+   1. Manage articles translated into different languages
+   2. Edit articles using an advanced WYSIWYG interface
+   3. Create your own types of articles. In other words, you can create 
+      your own definition of what an article is.  For example, one article 
+      type might consist of "Intro", "Body", and "References", while another 
+      type might be "Body" and "Author Bio".
+   4. Incorporate images into your articles
+   5. Attach files to articles
+   6. Categorize your articles with topics
+   7. Schedule articles for release in the future
+   8. Require a copy-flow process to ensure quality of content: the
+      journalist writes the article, the editor reviews and edits the content,
+      and then the article is published.
+   9. Have full control over the look of your web site
+  10. Exercise fine-grained access control for different types of staff users,
+      for example: journalist, editor, designer, etc.
+  11. Manage subscribers and allow:
+         1. time trials
+         2. pay periods
+         3. IP access control for group subscriptions
+  12. Localize the interface to new languages
+  13. Build third-party plugins using the PHP object-oriented API 
+  
+We encourage further development of this software and would like to make any
+progress accessible to all other users. Please contact us if you have or intend
+to developed this software further.
+
+ 
+INSTALLATION
+ - see the INSTALL file
+
+ 
+MANUAL
+ - see http://code.campware.org/manuals/campsite/2.4/
+
+If you intend to show the world you are running on CAMPSITE, you could include
+the little banner 'thisisacampsite.gif' provided with this tarball and link it
+to http://www.campware.org.
+
+
+TECHNICAL REQUIREMENTS
+
+Implementing CAMPSITE for your purposes requires the following technical set-up,
+nothing out of the ordinary.
+
+CAMPSITE server:
+- runs on a GNU/Linux server, tested with Fedora 3.0 and Mandrake 10.1 and has
+proved compatible with RedHat 9.0, Mandrake 10.0 and Debian
+- needs an Apache web to be running, and its virtual servers configured by the
+  administrator.
+- for data storage it is needed a MySQL database server for GNU/Linux. The tests
+  were made on MySQL v.4.0.
+- requires PHP (version 4.0 and up) to be running
+
+CAMPSITE client:
+- Works in most modern Web browsers: Mozilla, Mozilla Firefox, MS Internet
+  Explorer.  No plugins are necessary as of version 2.2 and up.
+
+  
+CREDITS
+
+The original CAMPSITE concept was developed by C@MP in collaboration with
+Transitions Online, who started using CAMPSITE in late 2000. The initial
+development was accomplished by DNT and Recognos. For more info see CREDITS file.
+
+
+COPYRIGHT
+
+CAMPSITE is a Unicode-enabled multilingual web content management system for
+news publications. CAMPFIRE is a Unicode-enabled java-based near WYSIWYG text
+editor. Copyright (C)1999-2005  Media Development Loan Fund.
+contact: contact@campware.org - http://www.campware.org
+Campware encourages further development. Please let us know.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.

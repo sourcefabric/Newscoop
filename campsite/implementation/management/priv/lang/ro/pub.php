@@ -1,0 +1,34 @@
+<?php
+regGS("Publication List", "");
+regGS("Go To Issues", "");
+regGS("Name<BR><SMALL>(click to see issues)</SMALL>", "Nume");
+regGS("Delete publication $1", "Şterge publicaţia $1");
+regGS("No publications.", "Nu există publicaţii");
+regGS("Country<BR><SMALL>(click to edit)</SMALL>", "Ţara<br><font size=-1>(click pt. a edita)</font>");
+regGS("Delete alias $1", "Şterge înregistrarea $1");
+regGS("Change publication information", "Modifică informaţia despre publicaţie");
+regGS("You do not have the right to edit publication information.", "Nu aveţi dreptul de a edita informaţia despre publicaţie");
+regGS("Changing publication information", "Modific informaţia despre publicaţie");
+regGS("You do not have the right to change publication information.", "Nu aveţi dreptul de a modifica informaţia despre publicaţie");
+regGS("The publication information could not be updated.", "Informaţia despre publicaţie nu poate fi modificată");
+regGS("Please check if another publication with the same name or the same site name does not already exist.", "Verificaţi dacă nu există altă publicaţie cu acelaşi nume sau acealşi sit");
+regGS("You do not have the right to delete publications.", "Nu aveti dreptul sa ştergeţi publicaţii");
+regGS("Are you sure you want to delete the publication $1?", "Doriţi să ştergeţi publicaţia $1?");
+regGS("Deleting publication", "Şterg publicaţia");
+regGS("There are $1 subscription(s) left.", "Mai sunt $1 subscrieri");
+regGS("The publication $1 could not be deleted.", "Publicaţia $1 nu poate fi ştearsă");
+regGS("Adding new publication", "Adaug publicaţie");
+regGS("The publication could not be added.", "Publicaţia nu poate fi adăugată");
+regGS("Select the publication", "Selectaţi publicaţia");
+regGS("Add new country default subscription time", "Adaugă timp implicit de subscriere la ţară");
+regGS("You do not have the right to manage publications.", "Nu aveţi dreptul de a modifica publicaţii");
+regGS("Please check if another entry with the same country code exists already.", "Verificaţi dacă există o alta înregistrare cu acelaş cod de ţară");
+regGS("Adding new country default subscription time", "Adaug timp implicit de subscriere la ţară");
+regGS("You must select a country.", "Trebuie să selectaţi o ţară");
+regGS("The default subscription time for country $1 could not be added.", "Timp implicit de subscriere la ţara $1 nu poate fi adăugat");
+regGS("Change subscription default time", "Modifică timpul implicit de subscriere la ţară");
+regGS("Default subscription time for $1 changed", "Timpul implicit de subscriere la ţara $1 a fost modificat");
+regGS("Are you sure you want to delete the subscription default time for $1?", "Doriţi să ştergeţi timpul implicit de subscriere la ţara $1?");
+regGS("Subscription default time for $1 deleted", "Timpul implicit de subscriere la ţara $1 a fost şters");
+regGS("Name<BR><SMALL>(click to select the publication)</SMALL>", "Nume");
+?>

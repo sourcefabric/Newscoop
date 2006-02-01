@@ -1,0 +1,1082 @@
+#!/bin/bash
+
+. ${INSTALL_CONF}/global_functions
+
+###########################################################
+## Functions checking if different programs/files are installed
+###########################################################
+
+# FUNCTION: is_checked
+# Description: check dependancy is already checked
+# Parameters:
+#	$1 - dependancy name
+# Variables set: none
+is_checked()
+{
+[ "$1" = "" ] && return 0
+in_list $1 $CHECKED_DEPENDENCIES && return 0
+return 1
+}
+# END OF is_checked
+
+# FUNCTION: set_checked
+# Description: set dependancy as checked
+# Parameters:
+#	$1 - dependancy name
+# Variables set: none
+set_checked()
+{
+[ "$1" = "" ] && return 0
+in_list $1 $CHECKED_DEPENDENCIES && return 0
+export CHECKED_DEPENDENCIES="$CHECKED_DEPENDENCIES $1"
+return 0
+}
+# END OF set_checked
+
+# FUNCTION: check4_pwd
+# Description: check if pwd executable is installed
+# Parameters: none
+# Variables set:
+#	PWD - pwd full path
+#	output - error message (if any)
+check4_pwd()
+{
+is_checked pwd && return 0
+check4_file pwd --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
+result=$? && [ $result -ne 0 ] && return 1
+export PWD=$file_path
+set_checked pwd
+return 0
+}
+# END OF check4_pwd
+
+# FUNCTION: check4_make
+# Description: check if make executable is installed
+# Parameters: none
+# Variables set:
+#	MAKE - make full path
+#	output - error message (if any)
+check4_make()
+{
+is_checked make && return 0
+for make_cmd in gmake make; do
+    check4_file $make_cmd --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin" &> /dev/null
+    if [ $? -eq 0 ]; then
+	export MAKE=$file_path
+	set_checked make
+	return 0
+    fi
+done
+output="Could not find make utility. Please install make package."
+return 1
+}
+# END OF check4_make
+
+# FUNCTION: check4_mkdir
+# Description: check if mkdir executable is installed
+# Parameters: none
+# Variables set:
+#	MKDIR - mkdir full path
+#	output - error message (if any)
+check4_mkdir()
+{
+is_checked mkdir && return 0
+check4_file mkdir --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
+result=$? && [ $result -ne 0 ] && return 1
+export MKDIR=$file_path
+set_checked mkdir
+return 0
+}
+# END OF check4_mkdir
+
+# FUNCTION: check4_ls
+# Description: check if ls executable is installed
+# Parameters: none
+# Variables set:
+#	LS - ls full path
+#	output - error message (if any)
+check4_ls()
+{
+is_checked ls && return 0
+check4_file ls --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
+result=$? && [ $result -ne 0 ] && return 1
+export LS=$file_path
+set_checked ls
+return 0
+}
+# END OF check4_ls
+
+# FUNCTION: check4_chown
+# Description: check if chown executable is installed
+# Parameters: none
+# Variables set:
+#	CHOWN - chown full path
+#	output - error message (if any)
+check4_chown()
+{
+is_checked chown && return 0
+check4_file chown --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin:/usr/sbin"
+result=$? && [ $result -ne 0 ] && return 1
+export CHOWN=$file_path
+set_checked chown
+return 0
+}
+# END OF check4_chown
+
+# FUNCTION: check4_chmod
+# Description: check if chmod executable is installed
+# Parameters: none
+# Variables set:
+#	CHMOD - chmod full path
+#	output - error message (if any)
+check4_chmod()
+{
+is_checked chmod && return 0
+check4_file chmod --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
+result=$? && [ $result -ne 0 ] && return 1
+export CHMOD=$file_path
+set_checked chmod
+return 0
+}
+# END OF check4_chmod
+
+# FUNCTION: check4_cat
+# Description: check if cat executable is installed
+# Parameters: none
+# Variables set:
+#	CAT - cat full path
+#	output - error message (if any)
+check4_cat()
+{
+is_checked cat && return 0
+check4_file cat --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
+result=$? && [ $result -ne 0 ] && return 1
+export CAT=$file_path
+set_checked cat
+return 0
+}
+# END OF check4_cat
+
+# FUNCTION: check4_cut
+# Description: check if cut executable is installed
+# Parameters: none
+# Variables set:
+#	CUT - cut full path
+#	output - error message (if any)
+check4_cut()
+{
+is_checked cut && return 0
+check4_file cut --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
+result=$? && [ $result -ne 0 ] && return 1
+export CUT=$file_path
+set_checked cut
+return 0
+}
+# END OF check4_cut
+
+# FUNCTION: check4_grep
+# Description: check if grep executable is installed
+# Parameters: none
+# Variables set:
+#	GREP - grep full path
+#	output - error message (if any)
+check4_grep()
+{
+is_checked grep && return 0
+check4_file grep --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
+result=$? && [ $result -ne 0 ] && output="Could not find grep utility. Please install grep package." && return 1
+export GREP=$file_path
+set_checked grep
+return 0
+}
+# END OF check4_grep
+
+# FUNCTION: check4_cp
+# Description: check if cp executable is installed
+# Parameters: none
+# Variables set:
+#	CP - cp full path
+#	output - error message (if any)
+check4_cp()
+{
+is_checked cp && return 0
+check4_file cp --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
+result=$? && [ $result -ne 0 ] && return 1
+export CP=$file_path
+set_checked cp
+return 0
+}
+# END OF check4_cp
+
+# FUNCTION: check4_rm
+# Description: check if rm executable is installed
+# Parameters: none
+# Variables set:
+#	RM - rm full path
+#	output - error message (if any)
+check4_rm()
+{
+is_checked rm && return 0
+check4_file rm --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
+result=$? && [ $result -ne 0 ] && return 1
+export RM=$file_path
+set_checked rm
+return 0
+}
+# END OF check4_rm
+
+# FUNCTION: check4_clear
+# Description: check if clear executable is installed
+# Parameters: none
+# Variables set:
+#	CLEAR - clear full path
+#	output - error message (if any)
+check4_clear()
+{
+is_checked clear && return 0
+check4_file clear --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
+result=$? && [ $result -ne 0 ] && output="Could not find 'clear' utility. Please install ncurses package." && return 1
+export CLEAR=$file_path
+set_checked clear
+return 0
+}
+# END OF check4_clear
+
+# FUNCTION: check4_gcc
+# Description: check if gcc executable is installed
+# Parameters: none
+# Variables set:
+#	GCC - gcc full path
+#	output - error message (if any)
+check4_gcc()
+{
+is_checked gcc && return 0
+check4_file gcc --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
+result=$? && [ $result -ne 0 ] && output="Could not find 'gcc' - GNU C compiler. Please install gcc package." && return 1
+export GPP=$file_path
+set_checked gcc
+return 0
+}
+# END OF check4_gcc
+
+# FUNCTION: check4_gpp
+# Description: check if g++ executable is installed
+# Parameters: none
+# Variables set:
+#	GPP - g++ full path
+#	output - error message (if any)
+check4_gpp()
+{
+is_checked gpp && return 0
+check4_file g++ --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
+result=$? && [ $result -ne 0 ] && output="Could not find 'g++' - GNU C++ compiler. Please install gcc-c++ package." && return 1
+export GPP=$file_path
+set_checked gpp
+return 0
+}
+# END OF check4_gpp
+
+# FUNCTION: check4_locate
+# Description: check if locate executable is installed
+# Parameters: none
+# Variables set:
+#	LOCATE - locate full path
+#	output - error message (if any)
+check4_locate()
+{
+is_checked locate && return 0
+check4_file locate --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
+result=$? && [ $result -ne 0 ] && output="Could not find 'locate' utility. Please install slocate package." && return 1
+export LOCATE=$file_path
+set_checked locate
+return 0
+}
+# END OF check4_locate
+
+# FUNCTION: check4_mysql
+# Description: check if mysql executable is installed
+# Parameters: none
+# Variables set:
+#	MYSQL - mysql full path
+#	output - error message (if any)
+check4_mysql()
+{
+is_checked mysql && return 0
+check4_file mysql --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin:/usr/local/mysql/bin"
+result=$? && [ $result -ne 0 ] && output="Could not find 'mysql' client utility. Please install mysql-client package." && return 1
+export MYSQL=$file_path
+set_checked mysql
+return 0
+}
+# END OF check4_mysql
+
+# FUNCTION: check4_mysqladmin
+# Description: check if mysqladmin executable is installed
+# Parameters: none
+# Variables set:
+#	MYSQLADMIN - mysql full path
+#	output - error message (if any)
+check4_mysqladmin()
+{
+is_checked mysqladmin && return 0
+check4_file mysqladmin --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin:/usr/local/mysql/bin"
+result=$? && [ $result -ne 0 ] && output="Could not find 'mysqladmin' client utility. Please install mysql-client package." && return 1
+export MYSQLADMIN=$file_path
+set_checked mysqladmin
+return 0
+}
+# END OF check4_mysqladmin
+
+# FUNCTION: check4_mysqld
+# Description: check if mysqld executable is installed
+# Parameters: none
+# Variables set:
+#	MYSQLD - mysqld full path
+#	output - error message (if any)
+check4_mysqld()
+{
+is_checked mysqld && return 0
+check4_file mysqld --executable --path "/sbin:/usr/sbin:/usr/local/sbin:/opt/sbin:/usr/libexec:/usr/local/mysql/bin:/usr/local/mysql/libexec:/usr/local/libexec"
+result=$? && [ $result -ne 0 ] && output="Could not find 'mysqld' server. Please install mysql package." && return 1
+export MYSQLD=$file_path
+set_checked mysqld
+return 0
+}
+# END OF check4_mysqld
+
+# FUNCTION: check4_crond
+# Description: check if crond executable is installed
+# Parameters: --force - force check even if already checked
+# Variables set:
+#	CROND - crond full path
+#	output - error message (if any)
+check4_crond()
+{
+[ "$1" != "--force" ] && is_checked crond && return 0
+check4_file cron --executable --path "/sbin:/usr/sbin:/usr/local/sbin:/opt/sbin" &> /dev/null
+if [ $? -ne 0 ]; then
+    check4_file crond --executable --path "/sbin:/usr/sbin:/usr/local/sbin:/opt/sbin"
+    result=$? && [ $result -ne 0 ] && output="Could not find 'crond' server. Please install vixie-cron package." && return 1
+fi
+export CROND=$file_path
+set_checked crond
+return 0
+}
+# END OF check4_crond
+
+# FUNCTION: check4_passwd
+# Description: check if passwd file is installed
+# Parameters: none
+# Variables set:
+#	PASSWD - passwd full path
+#	output - error message (if any)
+check4_passwd()
+{
+is_checked passwd && return 0
+check4_file passwd --file --path "/etc"
+result=$? && [ $result -ne 0 ] && output="Could not find 'passwd' utility. Please install passwd package." && return 1
+export PASSWD=$file_path
+set_checked passwd
+return 0
+}
+# END OF check4_passwd
+
+# FUNCTION: check4_group
+# Description: check if group file is installed
+# Parameters: none
+# Variables set:
+#	GROUP - group full path
+#	output - error message (if any)
+check4_group()
+{
+is_checked group && return 0
+check4_file group --file --path "/etc"
+result=$? && [ $result -ne 0 ] && return 1
+export GROUP=$file_path
+set_checked group
+return 0
+}
+# END OF check4_group
+
+# FUNCTION: check4_mysql_h
+# Description: check if mysql.h file is installed
+# Parameters: none
+# Variables set:
+#	MYSQL_H - mysql.h full path
+#       MYSQL_H_PATH - directory containing mysql.h
+#	output - error message (if any)
+check4_mysql_h()
+{
+is_checked mysql_h && return 0
+check4_file mysql.h --file --path "/usr/include:/usr/include/mysql:/usr/local/include:/usr/local/include/mysql:/usr/local/mysql/include"
+result=$?
+if [ $result -ne 0 ]; then
+    output="Could not find mysql development files. Please install mysql development package (mysql-devel or libmysql-devel)."
+    return 1
+fi
+export MYSQL_H=$file_path
+export MYSQL_H_PATH=`cut_last_dirs "$MYSQL_H" 2`
+set_checked mysql_h
+return 0
+}
+# END OF check4_mysql_h
+
+# FUNCTION: check4_socket_h
+# Description: check if socket.h file is installed
+# Parameters: none
+# Variables set:
+#	SOCKET_H - socket.h full path
+#	output - error message (if any)
+check4_socket_h()
+{
+is_checked socket_h && return 0
+check4_file socket.h --file --path "/usr/include:/usr/include/sys:/usr/local/include/sys"
+result=$? && [ $result -ne 0 ] && output="Could not find network development files (socket.h). Please install glibc-devel package." && return 1
+export SOCKET_H=$file_path
+set_checked socket_h
+return 0
+}
+# END OF check4_socket_h
+
+# FUNCTION: check4_pthread_h
+# Description: check if pthread.h file is installed
+# Parameters: none
+# Variables set:
+#	PTHREAD_H - pthread.h full path
+#	output - error message (if any)
+check4_pthread_h()
+{
+is_checked pthread_h && return 0
+check4_file pthread.h --file --path "/usr/include:/usr/local/include"
+result=$? && [ $result -ne 0 ] && output="Could not find threading development files (pthread.h). Please install glibc-devel package." && return 1
+export PTHREAD_H=$file_path
+set_checked pthread_h
+return 0
+}
+# END OF check4_pthread_h
+
+# FUNCTION: check4_semaphore_h
+# Description: check if semaphore.h file is installed
+# Parameters: none
+# Variables set:
+#	SEMAPHORE_H - semaphore.h full path
+#	output - error message (if any)
+check4_semaphore_h()
+{
+is_checked semaphore_h && return 0
+check4_file semaphore.h --file --path "/usr/include:/usr/local/include"
+result=$? && [ $result -ne 0 ] && output="Could not find threading development files (semaphore.h). Please install glibc-devel package." && return 1
+export SEMAPHORE_H=$file_path
+set_checked semaphore_h
+return 0
+}
+# END OF check4_semaphore_h
+
+# FUNCTION: check4_xml
+# Description: check if XML library and header files were installed
+# Parameters: none
+# Variables set:
+#	XML_VERSION - XML library version
+#	XML_INCLUDE - compiler flags for XML library
+#	XML_LINK - link flags for XML library
+#	output - error message (if any)
+check4_xml()
+{
+is_checked xml && return 0
+check4_file xml2-config --executable --path "/usr/bin:/usr/local/bin:/opt/bin"
+result=$? && [ $result -ne 0 ] && output="Could not find XML development files. Please install libxml2-devel package." && return 1
+export XML_VERSION=`$file_path --version`
+if [ "$XML_VERSION" "<" "2.6.0" ]; then
+    output="The XML library is older than 2.6.0. Please install 2.6.0 or newer version."
+    return 1
+fi
+export XML_INCLUDE=`$file_path --cflags`
+export XML_LINK=`$file_path --libs`
+set_checked xml
+return 0
+}
+# END OF check4_semaphore_h
+
+# FUNCTION: check4_curl
+# Description: check if CURL library and header files were installed
+# Parameters: none
+# Variables set:
+#	CURL_VERSION - CURL library version
+#	CURL_CFLAGS - compiler flags for CURL library
+#	CURL_LINK - link flags for CURL library
+#	output - error message (if any)
+check4_curl()
+{
+is_checked curl && return 0
+check4_file libidn.so --file --path "/usr/lib:/usr/local/lib:/opt/lib:/usr/lib64"
+result=$? && [ $result -ne 0 ] && output="Could not find IDN library. Please install libidn-dev package." && return 1
+check4_file curl-config --executable --path "/usr/bin:/usr/local/bin:/opt/bin"
+result=$? && [ $result -ne 0 ] && output="Could not find CURL development files. Please install libcurl-devel package." && return 1
+curl_config_path=$file_path
+check4_file curl.h --file --path "/usr/include:/usr/include/curl:/usr/local/include:/usr/local/include/curl"
+result=$? && [ $result -ne 0 ] && output="Could not find CURL development files. Please install libcurl-devel package." && return 1
+export CURL_VERSION=`$curl_config_path --version`
+export CURL_CFLAGS=`$curl_config_path --cflags`
+export CURL_LINK=`$curl_config_path --libs`
+set_checked curl
+return 0
+}
+# END OF check4_semaphore_h
+
+# FUNCTION: check4_stl
+# Description: check if STL is installed
+# Parameters: none
+# Variables set:
+#	STL_PATH - STL full path
+#	output - error message (if any)
+check4_stl()
+{
+is_checked stl && return 0
+err_message="Could not find STL (Standard Template Library) files. Please install libstdc++-devel package."
+stl_major_versions="6 5 4 3"
+for stl_prefix in /usr/include /usr/local/include; do
+    for stl_dir in c++ g++; do
+	stl_path="$stl_prefix:$stl_prefix/$stl_dir"
+	for stl_major_version in $stl_major_versions; do
+	    stl_subdir=`ls -1 -r "$stl_prefix/$stl_dir" 2> /dev/null | grep -m 1 "^$stl_major_version."`
+	    stl_result=$?
+	    [ $stl_result -eq 0 ] && file_path="$stl_prefix/$stl_dir/$stl_subdir" && break
+	done
+	[ $stl_result -eq 0 ] && break
+    done
+    [ $stl_result -eq 0 ] && break
+done
+if [ $stl_result -ne 0 ]; then
+    stl_path="/usr/include/c++/4.0.2:/usr/include/g++-2:/usr/include/g++-3:/usr/local/include/g++-2:/usr/local/include/g++-3"
+    check4_file string --file --path "$stl_path" &> /dev/null
+    stl_result=$?
+    [ $stl_result -eq 0 ] && file_path=`cut_last_dirs $file_path 1`
+fi
+if [ $stl_result -ne 0 ]; then
+    output=$err_message
+    return 1
+fi
+export STL_PATH=$file_path
+for file in map list stack hashtable.h vector; do
+    check4_file $file --file --path "$STL_PATH" &> /dev/null
+    result=$?
+    if [ $result -ne 0 ]; then
+	check4_file $file --file --path "$STL_PATH/backward" &> /dev/null
+	result=$?
+    fi
+    [ $result -ne 0 ] && output=$err_message && return 1
+done
+file_path=$STL_PATH
+set_checked stl
+return 0
+}
+# END OF check4_stl
+
+# FUNCTION: check4_apache
+# Description: check if apache is installed and where is it installed
+# Parameters:
+#	--interactive - read apache binary/config path from standard input
+#	--apache_bin_path <path> - specifies the apache binary path
+#	--apache_conf_path <path> - specifies the apache conf path
+# Variables set:
+#	apache_bin_path - path to apache binary
+#	apache_conf_path - path to apache conf files
+#	apache_bin_name - apache binary name
+#	APACHE_USER - apache daemon user
+#	APACHE_GROUP - apache daemon group
+check4_apache()
+{
+is_checked apache && return 0
+apache_bin_path=
+apache_conf_path=
+apache_bin_name=
+bin_paths=
+interactive=false
+while [ "$1" != "" ]; do
+    case $1 in
+    --interactive) interactive=true ;;
+    --apache_bin_path) shift 1; bin_paths=$1 ;;
+    --apache_conf_path) shift 1; apache_conf_path=$1 ;;
+    *) ;;
+    esac
+    shift 1
+done
+[ "$bin_paths" = "" ] && bin_paths="/sbin /usr/sbin /usr/local/apache/bin /home/apache/bin /home/httpd/bin /opt/apache/bin"
+bin_names="apache httpd httpd2 apache2 httpds"
+for bn in $bin_names; do
+    check4_file --executable "$bn" &> /dev/null
+    [ $? -eq 0 ] && bin_path=$file_path && apache_bin_name="$bn" && break
+    bin_path=""
+done
+if [ "$bin_path" = "" ]; then
+    for bp in $bin_paths; do
+	for nm in $bin_names; do
+	    [ -x "${bp}/$nm" ] && bin_path="$bp" && apache_bin_name="$nm" && break
+	done
+    done
+else
+    bin_path=`cut_last_dirs "$bin_path" 1`
+fi
+while [ "$bin_path" = "" ]; do
+    if $interactive; then
+	choice_yn "Could not find apache binary. Do you want to supply one?" y
+	if [ "$choice" = "N" ]; then
+	    echo "Could not find apache binary file."
+	    return 1
+	fi
+	read_path_with_test path_to_apache_binary --exp "fill in the path to apache binary"
+	[ $? -ne 0 ] && return 1
+	read_string apache_bin_name "" "fill in apache binary name"
+	[ $? -ne 0 ] && apache_bin_name="" && return 1
+	if [ ! -x "$path_to_apache_binary"/"$apache_bin_name" ]; then
+	    echo "Invalid apache path/binary name"
+	    apache_bin_name=""
+	else
+	    bin_path="$path_to_apache_binary"
+	    break
+	fi
+    else
+	echo "Could not find apache binary file."
+	return 1
+    fi
+done
+conf_file=${apache_bin_name}.conf
+apache_bin_path="$bin_path"
+if [ "$apache_conf_path" != "" ]; then
+    conf_paths=$apache_conf_path
+else
+    conf_paths=""
+    for bn in $bin_names; do
+	conf_paths="$conf_paths /etc/${bn}/conf /etc/${bn} /usr/local/etc/${bn}/conf /usr/local/etc/${bn} /etc/apache2/${bn}"
+    done
+    conf_paths="$conf_paths "`cut_last_dirs "${apache_bin_path}"`/conf
+fi
+cf_path=""
+cf_paths=""
+for bn in $bin_names; do
+    for conf_path in $conf_paths; do
+	cf_paths="$cf_paths ${conf_path}/${bn}.conf"
+	if [ -f "${conf_path}/${bn}.conf" ]; then
+	    cf_path="${conf_path}/${bn}.conf"
+	    break
+	fi
+    done
+done
+if [ "$cf_path" = "" ]; then
+    if $interactive; then
+	choice_yn "Could not find apache conf directory. Do you want to supply one?" y
+	if [ "$choice" = "N" ]; then
+	    echo "Could not find apache configuration file in $cf_paths"
+	    return 1
+	fi
+	found=false
+	while ! $found; do
+	    read_path_with_test path_to_conf_directory --exp "fill in the path to apache configuration file"
+	    [ $? -ne 0 ] && return 1
+	    conf_path=$path_to_conf_directory
+	    for cf_fn in $bin_names; do
+		if [ -f "${conf_path}/${cf_fn}.conf" ]; then
+		    conf_file=${cf_fn}.conf
+		    found=true
+		    break
+		fi
+	    done
+	done
+    else
+	echo "Could not find apache configuration file in $cf_paths"
+	return 1
+    fi
+else
+	conf_path=`cut_last_dirs "$cf_path"`
+fi
+apache_conf_path=$conf_path
+if $USER_INSTALL; then
+    export APACHE_USER=$ROOT_USER
+    export APACHE_GROUP=$ROOT_GROUP
+    set_checked apache
+    return 0
+fi
+conf_files="${conf_path}/${conf_file} ${conf_path}/commonhttpd.conf ${conf_path}/common${apache_bin_name}.conf ${conf_path}/httpd.conf ${conf_path}/apache.conf ${conf_path}/apache2.conf"
+
+user_line=`grep -h -E "^[[:space:]]*User[[:space:]]+" ${conf_files} 2> /dev/null`
+if [ "$user_line" = "" ]; then
+    echo "Invalid apache configuration files. Aborting."
+    return 1
+fi
+i=1
+for w in $user_line; do
+    [ $i -eq 2 ] && apache_user=$w && break
+    i=`expr $i + 1`
+done
+if [ "$APACHE_USER" != "" ]; then
+    user_line=`grep -h -E "^[[:space:]]*User[[:space:]]+$APACHE_USER" ${conf_files} 2> /dev/null`
+    if [ "$user_line" = "" ]; then
+	echo "WARNING!!! The apache user '$APACHE_USER' is not valid; valid apache user is '$apache_user'";
+    fi
+else
+    export APACHE_USER=$apache_user
+fi
+
+group_line=`grep -h -E "^[[:space:]]*Group[[:space:]]+" ${conf_files} 2> /dev/null`
+if [ "$group_line" = "" ]; then
+    echo "Invalid apache configuration files. Aborting."
+    return 1
+fi
+i=1
+for w in $group_line; do
+    [ $i -eq 2 ] && apache_group=$w && break
+    i=`expr $i + 1`
+done
+if [ "$APACHE_GROUP" != "" ]; then
+    group_line=`grep -h -E "^[[:space:]]*Group[[:space:]]+$APACHE_GROUP" ${conf_files} 2> /dev/null`
+    if [ "$group_line" = "" ]; then
+	echo "WARNING!!! The apache group '$APACHE_GROUP' is not valid; valid apache group is '$apache_group'";
+    fi
+else
+    export APACHE_GROUP=$apache_group
+fi
+
+set_checked apache
+return 0
+}
+# END OF check4_apache
+
+# FUNCTION: check4_libz
+# Description: check if z library is installed
+# Parameters: none
+# Variables set:
+#	LIBZ - libz full path
+#	output - error message (if any)
+check4_libz()
+{
+is_checked libz && return 0
+check4_file libz.so --file --path "/usr/lib:/usr/local/lib"
+result=$? && [ $result -ne 0 ] && output="Could not find z compression library. Please install zlib1-devel package." && return 1
+export LIBZ=$file_path
+set_checked libz
+return 0
+}
+# END OF check4_libz
+
+# FUNCTION: check4_libcrypt
+# Description: check if crypt library is installed
+# Parameters: none
+# Variables set:
+#	LIBCRYPT - libcrypt full path
+#	LIBCRYPT_LINK - added to gcc line to link with libcrypt
+#	output - error message (if any)
+check4_libcrypt()
+{
+is_checked libcrypt && return 0
+if [ $OPENBSD -eq 1 ]; then
+    export LIBCRYPT=
+    export LIBCRYPT_LINK=
+else
+    check4_file libcrypt.so --file --path "/usr/lib:/usr/local/lib"
+    result=$? && [ $result -ne 0 ] && output="Could not find crypt library. Please install glibc-devel package." && return 1
+    export LIBCRYPT=$file_path
+    export LIBCRYPT_LINK=-lcrypt
+fi
+set_checked libcrypt
+return 0
+}
+# END OF check4_libcrypt
+
+# FUNCTION: check4_libmysqlclient
+# Description: check if mysqlclient library is installed
+# Parameters: none
+# Variables set:
+#	LIBMYSQLCLIENT - mysqlclient library full path
+#	LIBMYSQLCLIENT_PATH - path to mysqlclient library
+#	output - error message (if any)
+check4_libmysqlclient()
+{
+is_checked libmysqlclient && return 0
+check4_file libmysqlclient.a --file --path "/usr/lib:/usr/lib/mysql:/usr/local/mysql:/usr/local/lib:/usr/local/lib/mysql:/usr/local/mysql/lib:/usr/lib64/mysql"
+result=$? && [ $result -ne 0 ] && return 1
+export LIBMYSQLCLIENT=$file_path
+export LIBMYSQLCLIENT_PATH=`cut_last_dirs $LIBMYSQLCLIENT 1`
+check4_gpp
+[ $? -ne 0 ] && return 1
+check4_mysql_h
+[ $? -ne 0 ] && return 1
+check4_libz
+[ $? -ne 0 ] && return 1
+file_path=$LIBMYSQLCLIENT
+test_file="$$_lmysqlclient"
+cat > ${test_file}.cpp << EOF
+#include <$MYSQL_H>
+int main()
+{
+MYSQL* mysql;
+mysql_init(mysql);
+}
+EOF
+g++ -o $test_file ${test_file}.cpp -lm -lz -L$LIBMYSQLCLIENT_PATH -lmysqlclient
+result=$?
+rm -f ${test_file}.o ${test_file}.cpp ${test_file}
+[ $result -ne 0 ] && output="Could not find mysqlclient library. Please install mysql-devel package." && return 1
+set_checked libmysqlclient
+return 0
+}
+# END OF check4_libmysqlclient
+
+# FUNCTION: check4_libpthread
+# Description: check if pthread library is installed
+# Parameters: none
+# Variables set:
+#	LIBPTHREAD - libpthread full path
+#	LIBPTHREAD_PATH - path to pthread library
+#       PTHREAD_LINK - added to gcc line to link with pthread
+#	output - error message (if any)
+check4_libpthread()
+{
+is_checked libpthread && return 0
+if [ $BSD -eq 1 ]; then
+	export LIBPTHREAD=./
+	export LIBPTHREAD_PATH=./
+	export PTHREAD_LINK=-pthread
+	return 0
+fi
+check4_file libpthread.so --file --path "/usr/lib:/usr/local/lib"
+result=$? && [ $result -ne 0 ] && return 1
+export LIBPTHREAD=$file_path
+export LIBPTHREAD_PATH=`cut_last_dirs $LIBPTHREAD 1`
+export PTHREAD_LINK=-lpthread
+check4_gpp
+[ $? -ne 0 ] && return 1
+check4_pthread_h
+[ $? -ne 0 ] && return 1
+file_path=$LIBPTHREAD
+test_file="$$_lpthread"
+cat > ${test_file}.cpp << EOF
+#include <$PTHREAD_H>
+int main()
+{
+pthread_create(0, 0, 0, 0);
+}
+EOF
+g++ -o $test_file ${test_file}.cpp -L$LIBPTHREAD_PATH $PTHREAD_LINK
+result=$?
+rm -f ${test_file} ${test_file}.o ${test_file}.cpp
+[ $result -ne 0 ] && output="Could not find threading library. Please install glibc-devel package." && return 1
+set_checked libpthread
+return 0
+}
+# END OF check4_libpthread
+
+# FUNCTION: check4_iconv
+# Description: check if iconv is installed
+# Parameters: none
+# Variables set:
+#	ICONV - full path
+#	output - error message (if any)
+check4_iconv()
+{
+is_checked iconv && return 0
+check4_file iconv --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
+result=$? && [ $result -ne 0 ] && output="Could not find 'iconv' utility. Please install glibc package." && return 1
+export ICONV=$file_path
+set_checked iconv
+return 0
+}
+# END OF check4_
+
+# FUNCTION: check4_libnsl
+# Description: 
+# Parameters: none
+# Variables set:
+#       NSL_LINK - added to gcc line to link with nsl
+#	output - error message (if any)
+check4_libnsl()
+{
+is_checked libnsl && return 0
+if [ $BSD -eq 1 ]; then
+	export NSL_LINK=
+else
+	export NSL_LINK=-lnsl
+fi
+set_checked libnsl
+}
+# END OF check4_libnsl
+
+# list of possible libc names
+libcnames="libc.a libc_r.a libc.so libc_r.so"
+
+# list of possible lisc directories
+libcdirs="/usr/lib:/lib"
+
+# FUNCTION: check4_gethostbyaddr_r
+# Description:
+# Parameters: none
+# Variables set:
+#       HAVE_GETHOSTBYADDR_R - 1 if found, 0 if not
+#	output - error message (if any)
+check4_gethostbyaddr_r()
+{
+is_checked gethostbyaddr_r && return 0
+export HAVE_GETHOSTBYADDR_R=0
+for libname in $libcnames; do
+	check4_symbol_and_prototype $libname "$libcdirs" netdb.h /usr/include gethostbyaddr_r &> /dev/null
+	if [ $? -eq 0 ]; then
+		export HAVE_GETHOSTBYADDR_R=1
+	fi
+done
+set_checked gethostbyaddr_r
+}
+# END OF check4_gethostbyaddr
+
+# FUNCTION: check4_gethostbyname_r
+# Description:
+# Parameters: none
+# Variables set:
+#       HAVE_GETHOSTBYNAME_R - 1 if found, 0 if not
+#	output - error message (if any)
+check4_gethostbyname_r()
+{
+is_checked gethostbyname_r && return 0
+export HAVE_GETHOSTBYNAME_R=0
+for libname in $libcnames; do
+	check4_symbol_and_prototype $libname "$libcdirs" netdb.h /usr/include gethostbyname_r &> /dev/null
+	if [ $? -eq 0 ]; then
+		export HAVE_GETHOSTBYNAME_R=1
+	fi
+done
+set_checked gethostbyname_r
+}
+# END OF check4_gethostbyname
+
+# FUNCTION: check4_getservbyname_r
+# Description:
+# Parameters: none
+# Variables set:
+#       HAVE_GETSERVBYNAME_R - 1 if found, 0 if not
+#	output - error message (if any)
+check4_getservbyname_r()
+{
+is_checked getservbyname_r && return 0
+export HAVE_GETSERVBYNAME_R=0
+for libname in $libcnames; do
+	check4_symbol_and_prototype $libname "$libcdirs" netdb.h /usr/include getservbyname_r &> /dev/null
+	if [ $? -eq 0 ]; then
+		export HAVE_GETSERVBYNAME_R=1
+	fi
+done
+set_checked getservbyname_r
+}
+# END OF check4_getservbyname
+
+# FUNCTION: check4_killall
+# Description: check for killall
+# Parameters: none
+# Variables set:
+#	KILLALL - name of killall program
+#	output - error message (if any)
+check4_killall()
+{
+is_checked killall && return 0
+if [ $OPENBSD -eq 1 ]; then
+	KILLALL_CMD=zap
+else
+	KILLALL_CMD=killall
+fi
+check4_file $KILLALL_CMD --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
+result=$? && [ $result -ne 0 ] && return 1
+
+if [ $OPENBSD -eq 1 ]; then
+	export KILLALL="${KILLALL_CMD} -y"
+else
+	export KILLALL=$KILLALL_CMD
+fi
+set_checked killall
+return 0
+}
+# END OF check4_killall
+
+# FUNCTION: check4_pear
+# Description: check if pear is installed
+# Parameters: none
+# Variables set:
+#	PEAR - pear full path
+#	PEAR_DIR - pear directory
+#	output - error message (if any)
+check4_pear()
+{
+is_checked pear && return 0
+check4_file pear --executable --path "/usr/local/bin:/bin:/usr/bin:/opt/bin"
+result=$? && [ $result -ne 0 ] && return 1
+pear_dir=`pear config-get php_dir | cut -f 2 -d "="`
+result=$? && [ $result -ne 0 ] && echo "$pear_dir" && return 1
+export PEAR=$file_path
+export PEAR_DIR=$pear_dir
+set_checked pear
+return 0
+}
+# END OF check4_pear
+
+# FUNCTION: check4_php_cli
+# Description: check if php cli (command line interface) is installed
+# Parameters: none
+# Variables set:
+#	PHP - php full path
+#	output - error message (if any)
+check4_php_cli()
+{
+is_checked php_cli && return 0
+export PHP=
+for p in /usr/local/bin /bin /usr/bin /opt/bin; do
+    [ -x "$p/php" ] && export PHP="$p/php" && break
+done
+[ "$PHP" = "" ] && output="PHP CLI (Command Line Interface) not found. Please install this package" && return 1
+set_checked php_cli
+return 0
+}
+# END OF check4_php_cli
+
+# FUNCTION: check4_php_myslq
+# Description: check if php mysql module was installed
+# Parameters: none
+# Variables set:
+#	output - error message (if any)
+check4_php_mysql()
+{
+is_checked php_mysql && return 0
+check4_php_cli || return 1
+"$PHP" -q "$INSTALL_CONF/php_mysql_exists.php"
+[ $? -ne 0 ] && output="PHP MySQL extension was not installed. Please install it." && return 1
+set_checked php_mysql
+return 0
+}
+# END OF check4_php_myslq
+
+# FUNCTION: check4_convert
+# Description: check if ImageMagic package was installed
+# Parameters: none
+# Variables set:
+#	output - error message (if any)
+check4_convert()
+{
+is_checked convert && return 0
+check4_file convert --executable --path "/bin:/usr/bin:/usr/local/bin:/opt/bin"
+[ $? -ne 0 ] && output="ImageMagic package was not installed. Please install it." && return 1
+set_checked convert
+return 0
+}
+# END OF check4_convert
+
+# FUNCTION: check4_
+# Description: check if  is installed
+# Parameters: none
+# Variables set:
+#	 -  full path
+#	output - error message (if any)
+#check4_()
+#{
+#is_checked  && return 0
+#check4_file  --file --path ""
+#result=$? && [ $result -ne 0 ] && return 1
+#export =$file_path
+#set_checked
+#return 0
+#}
+# END OF check4_

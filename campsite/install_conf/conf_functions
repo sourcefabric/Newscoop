@@ -1,0 +1,980 @@
+#!/bin/bash
+
+. ${INSTALL_CONF}/check4_functions
+
+check4_php_cli
+[ $? -ne 0 ] && echo $output && exit 1
+
+###########################################################
+## Functions for manipulating configuration variables
+###########################################################
+
+# FUNCTION: is_configured
+# Description: check if module is already configured
+# Parameters:
+#	$1 - module name
+# Variables set: none
+is_configured()
+{
+[ "$1" = "" ] && return 0
+in_list $1 $CONFIGURED_MODULES && return 0
+return 1
+}
+# END OF is_configured
+
+# FUNCTION: set_configured
+# Description: set module as configured
+# Parameters:
+#	$1 - module name
+# Variables set:
+#	CONFIGURED_MODULES
+set_configured()
+{
+[ "$1" = "" ] && return 0
+in_list $1 $CONFIGURED_MODULES && return 0
+export CONFIGURED_MODULES="$CONFIGURED_MODULES $1"
+return 0
+}
+# END OF set_configured
+
+# FUNCTION: set_not_configured
+# Description: set module as not configured
+# Parameters:
+#	$1 - module name
+# Variables set:
+#	CONFIGURED_MODULES
+set_not_configured()
+{
+[ "$1" = "" ] && return 0
+! in_list $1 $CONFIGURED_MODULES && return 0
+rm_from_list_var $1 CONFIGURED_MODULES
+return 0
+}
+# END OF set_not_configured
+
+# FUNCTION: unset_env_vars
+# Description: unset environment variables used for installation
+# Parameters: none
+# Variables set: none
+unset_env_vars()
+{
+unset MODULES_LIST
+unset IMPLEMENTATION_PARTS
+unset CAMPSITE_VERSION
+unset INSTALL_CONF
+unset CAMPSITE_PACKAGE_DIR
+unset MYSQL_CONNECT
+unset SMTP_WRAPPER
+unset OLD_CAMPSITE_REGISTER
+unset INSTALL_LOG
+unset CHECKED_DEPENDENCIES
+unset CHECKED_MODULES
+unset CONFIGURED_MODULES
+unset INSTALL_CONFIGURED
+unset PREPARED_MOD_ENV
+modules_conf --unset
+install_conf --unset
+}
+# END OF unset_env_vars
+
+###########################################################
+## Functions for reading configuration from files
+###########################################################
+
+# FUNCTION: dependent_on
+# Description: prints the list of modules that depend on given module
+# Parameters:
+#	$1 - module to print the list for
+# Variables set: none
+dependent_on()
+{
+validate_module $1
+[ $? -ne 0 ] && return 1
+grep -w "@$1" ${INSTALL_CONF}/.modules.dep | cut -f 1 -d ":"
+return 1
+}
+# END OF dependent_on
+
+# FUNCTION: depends_on
+# Description: prints the list of modules that given module depends on
+# Parameters:
+#	$1 - module to print the list for
+# Variables set: none
+depends_on()
+{
+validate_module $1
+[ $? -ne 0 ] && return 1
+do_deps=`grep -w "^$1" ${INSTALL_CONF}/.modules.dep | cut -f 2 -d ":"`
+[ $? -ne 0 ] && return 1
+for do_d in $do_deps; do
+    if [ "${do_d:0:1}" = "@" ]; then
+	echo ${do_d:1}
+    fi
+done
+return 0
+}
+# END OF depends_on
+
+# FUNCTION: preconf_modules
+# Description: prints the list of modules that must be configured
+#	before given module is configured
+# Parameters:
+#	$1 - module to print the list for
+# Variables set: none
+preconf_modules()
+{
+validate_module $1
+[ $? -ne 0 ] && return 1
+grep -w "^$1" ${INSTALL_CONF}/.modules.dep | cut -f 3 -d ":"
+return 0
+}
+# END OF preconf_modules
+
+# FUNCTION: read_module_deps
+# Description: prints the list of dependencies for given module
+# Parameters:
+#	$1 - modules to print dependencies for
+# Variables set: none
+read_module_deps()
+{
+validate_module $1
+[ $? -ne 0 ] && return 1
+fields="4 5"
+found_mod_deps=""
+mod_deps=""
+for fld in $fields; do
+    found_mod_deps=`grep -h -w "^$1" ${INSTALL_CONF}/.modules.dep | cut -f $fld -d ":"`
+    [ $? -ne 0 ] && echo $found_mod_deps && return 1
+    for mod_dep in $found_mod_deps; do mod_deps="$mod_deps $mod_dep"; done
+done
+echo $mod_deps
+return 0
+}
+# END OF read_module_deps
+
+# FUNCTION: read_install_deps
+# Description: prints the list of install dependencies
+# Parameters: none
+# Variables set: none
+read_install_deps()
+{
+cat ${INSTALL_CONF}/.inst.dep
+[ $? -ne 0 ] && return 1
+return 0
+}
+# END OF read_install_deps
+
+# FUNCTION: modules_list
+# Description: returns the list of campsite modules
+# Parameters:
+#	$1, $2... - list of selected modules
+# Variables set:
+#	modules - list of modules
+modules_list()
+{
+modules=""
+while [ "$1" != "" ]; do
+    modules="$modules $1"
+    shift 1
+done
+if [ "$modules" = "" ]; then
+    modules=`cat ${INSTALL_CONF}/.modules.dep | cut -f 1 -d ":"`
+fi
+echo $modules
+return 0
+}
+# END OF modules_list
+
+# FUNCTION: modules_desc
+# Description: prints the description of selected/campsite modules
+# Parameters:
+#	$1, $2... - list of selected modules
+# Variables set:
+#	modules - list of modules
+modules_desc()
+{
+modules=`modules_list $*`
+md=`cat ${INSTALL_CONF}/.modules.desc`
+state=init
+for w in $md; do
+    case $state in
+    init)
+	mod_name=""
+	mod_desc=""
+	if [ "$w" = "[" ]; then
+	    state=read_name
+	fi ;;
+    read_name)
+	mod_name=$w
+	state=read_desc ;;
+    read_desc)
+	if [ "$w" = "#" ]; then
+	    [ "$mod_desc" != "" ] && mod_desc="$mod_desc \n"
+	elif [ "$w" = "]" ]; then
+	    echo $modules | grep $mod_name &> /dev/null
+	    if [ $? -eq 0 ]; then
+	        echo -e "\n$mod_name\n$mod_desc"
+	    fi
+	    state=init
+	else
+	    mod_desc="$mod_desc $w"
+	fi ;;
+    *)
+	echo "Internal error"
+	exit 1 ;;
+    esac
+done
+return 0
+}
+# END OF modules_desc
+
+# FUNCTION: modules_conf
+# Description: prints the configuration of selected/campsite modules
+# Parameters:
+#	$1=--set|--unset - set/unset module configuration variables
+#	$1, $2... - list of selected modules
+# Variables set:
+#	modules - modules list
+#	configurable_modules - configurable modules
+#	module configuration variables (only if --set parameter is received)
+modules_conf()
+{
+action="print"
+[ "$1" = "--set" ] && action="set" && shift 1
+[ "$1" = "--reset" ] && action="reset" && shift 1
+[ "$1" = "--unset" ] && action="unset" && shift 1
+configurable_modules=""
+modules=`modules_list $*`
+for m in $modules; do
+    conf_file=`cd "$INSTALL_CONF"; "$PHP" -q module_conf_file.php "$m"`
+    if [ ! -f "$INSTALL_CONF/$conf_file" ]; then
+	continue
+    fi
+    configurable_modules="$configurable_modules $m"
+    mod_conf=`cd "$INSTALL_CONF"; "$PHP" -q export_conf.php "$m"`
+    if [ $? -ne 0 ]; then
+        echo "$mod_conf"
+        return 1
+    fi
+    if [ "$action" = "print" ]; then
+	echo "$mod_conf" | cut -f 2 -d " "
+    fi
+    mod_param_list=`cd "$INSTALL_CONF"; "$PHP" -q export_module_params.php "$m"`
+    if [ $? -ne 0 ]; then
+        echo "$mod_param_list"
+        return 1
+    fi
+    if [ "$action" = "set" ]; then
+	for param in $inst_param_list; do
+	    if [ "${!param}" = "" ]; then
+		line=`echo "$inst_conf" | grep "$param"`
+		$line
+	    fi
+	done
+    fi
+    if [ "$action" = "reset" ]; then
+	$mod_conf
+    fi
+    if [ "$action" = "unset" ]; then
+	for p in $mod_param_list; do
+	    unset $p
+	done
+    fi
+done
+return 0
+}
+# END OF modules_conf
+
+# FUNCTION: install_conf
+# Description: prints the install configuration
+# Parameters:
+#	$1=--set|--unset - set/unset install configuration variables
+# Variables set:
+#	install configuration variables (only if --set parameter is received)
+install_conf()
+{
+action="print"
+[ "$1" = "--set" ] && action="set" && shift 1
+[ "$1" = "--reset" ] && action="reset" && shift 1
+[ "$1" = "--unset" ] && action="unset" && shift 1
+conf_file=`cd "$INSTALL_CONF"; "$PHP" -q module_conf_file.php "install"`
+if [ ! -f "$INSTALL_CONF/$conf_file" ]; then
+    return 1
+fi
+inst_conf=`cd "$INSTALL_CONF"; "$PHP" -q export_conf.php "install"`
+if [ $? -ne 0 ]; then
+    echo "$inst_conf"
+    return 1
+fi
+if [ "$action" = "print" ]; then
+    echo "$inst_conf" | cut -f 2 -d " "
+fi
+inst_param_list=`cd "$INSTALL_CONF"; "$PHP" -q export_module_params.php "install"`
+if [ $? -ne 0 ]; then
+    echo "$inst_param_list"
+    return 1
+fi
+if [ "$action" = "set" ]; then
+    for param in $inst_param_list; do
+	if [ "${!param}" = "" ]; then
+	    line=`echo "$inst_conf" | grep "$param"`
+	    $line
+	fi
+    done
+fi
+if [ "$action" = "reset" ]; then
+    $inst_conf
+fi
+if [ "$action" = "unset" ]; then
+    for p in $inst_param_list; do
+        unset $p
+    done
+fi
+return 0
+}
+# END OF install_conf
+
+###########################################################
+## Functions for environment preparation
+###########################################################
+
+# FUNCTION: prepare_DATABASE_env
+# Description: prepare the environment for DATABASE module
+# Parameters: none
+# Variables set: none
+prepare_DATABASE_env()
+{
+in_list DATABASE $PREPARED_MOD_ENV && return 0
+echo "*** Preparing DATABASE environment...OK"
+add_to_list_var DATABASE PREPARED_MOD_ENV
+return 0
+}
+# END OF prepare_DATABASE_env
+
+# FUNCTION: prepare_PARSER_env
+# Description: prepare the environment for PARSER module
+# Parameters: none
+# Variables set: none
+prepare_PARSER_env()
+{
+in_list PARSER $PREPARED_MOD_ENV && return 0
+echo -n "*** Preparing PARSER environment..."
+check4_gethostbyaddr_r
+[ $? -ne 0 ] && echo "ERROR" && return 1
+check4_gethostbyname_r
+[ $? -ne 0 ] && echo "ERROR" && return 1
+check4_getservbyname_r
+[ $? -ne 0 ] && echo "ERROR" && return 1
+echo "OK"
+add_to_list_var PARSER PREPARED_MOD_ENV
+return 0
+}
+# END OF prepare_PARSER_env
+
+# FUNCTION: prepare_EVENT_HANDLERS_env
+# Description: prepare the environment for EVENT_HANDLERS module
+# Parameters: none
+# Variables set:
+#	SMTP_WRAPPER - smtp_wrapper binary full path
+prepare_EVENT_HANDLERS_env()
+{
+in_list EVENT_HANDLERS $PREPARED_MOD_ENV && return 0
+output_err="Error preparing environment for EVENT_HANDLERS module."
+echo -e "*** Preparing EVENT_HANDLERS environment..."
+smtp_wrapper=${CAMPSITE_PACKAGE_DIR}/implementation/mailnotify/smtp_wrapper/smtp_wrapper/smtp_wrapper
+check4_gethostbyaddr_r
+check4_gethostbyname_r
+check4_getservbyname_r
+export SMTP_WRAPPER=$smtp_wrapper
+add_to_list_var EVENT_HANDLERS PREPARED_MOD_ENV
+echo "EVENT_HANDLERS environment OK"
+return 0
+}
+# END OF prepare_EVENT_HANDLERS_env
+
+# FUNCTION: prepare_SEARCH_ENGINE_env
+# Description: prepare the environment for SEARCH_ENGINE module
+# Parameters: none
+# Variables set: none
+prepare_SEARCH_ENGINE_env()
+{
+in_list SEARCH_ENGINE $PREPARED_MOD_ENV && return 0
+echo -e "*** Preparing SEARCH_ENGINE environment...OK"
+add_to_list_var SEARCH_ENGINE PREPARED_MOD_ENV
+return 0
+}
+# END OF prepare_SEARCH_ENGINE_env
+
+# FUNCTION: prepare_ADMIN_INTERFACE_env
+# Description: prepare the environment for  module
+# Parameters: none
+# Variables set: none
+prepare_ADMIN_INTERFACE_env()
+{
+in_list ADMIN_INTERFACE $PREPARED_MOD_ENV && return 0
+echo -e "*** Preparing ADMIN_INTERFACE environment...OK"
+add_to_list_var ADMIN_INTERFACE PREPARED_MOD_ENV
+return 0
+}
+# END OF prepare_ADMIN_INTERFACE_env
+
+# FUNCTION: prepare_install_env
+# Description: prepare the install environment
+# Parameters: none
+# Variables set: none
+prepare_install_env()
+{
+output_err="Error preparing install environment."
+export OLD_CAMPSITE_REGISTER=/etc/campsite.reg
+export CHECKED_DEPENDENCIES=""
+export CHECKED_MODULES=""
+export CONFIGURED_MODULES=""
+export INSTALL_CONFIGURED="no"
+export PREPARED_MOD_ENV=""
+modules_list=`modules_list`
+[ $? -ne 0 ] && echo "Error reading selected modules" && exit 1
+export MODULES_LIST=$modules_list
+export IMPLEMENTATION_PARTS="utils"
+for mod in $MODULES_LIST; do
+    set_module_parts $mod
+    [ $? -ne 0 ] && echo $output_err && return 1
+done
+set_need_config_modules
+[ $? -ne 0 ] && echo $output_err && return 1
+return 0
+}
+# END OF prepare_install_env
+
+# FUNCTION: set_module_parts
+# Description: add module parts to IMPLEMENTATION_PARTS variable
+# Parameters: none
+# Variables set:
+#	IMPLEMENTATION_PARTS
+set_module_parts()
+{
+output=`validate_module $1`
+[ $? -ne 0 ] && echo $output && return 1
+parts=`grep -w "^$1" ${INSTALL_CONF}/.modules.dep | cut -f 2 -d ":"`
+[ $? -ne 0 ] && echo $parts && return 1
+for part in $parts; do
+    first_char=${part:0:1}
+    if [ "$first_char" != "@" ]; then
+	part_type=`echo $part | cut -f 1 -d "/"`
+	part_name=`echo $part | cut -f 2 -d "/"`
+	[ "$part_type" = "implementation" ] && add_to_list_var $part_name IMPLEMENTATION_PARTS
+    fi
+done
+return 0
+}
+# END OF set_module_parts
+
+# FUNCTION: set_need_config_modules
+# Description: set NEED_CONFIG_MODULES variable (contains modules that need to
+#	be configured)
+# Parameters: none
+# Variables set:
+#	NEED_CONFIG_MODULES
+set_need_config_modules()
+{
+modules_conf --set
+[ $? -ne 0 ] && return 1
+NEED_CONFIG_MODULES=""
+for ncm_mod in $MODULES_LIST; do
+    ncm_preconf_mod=`preconf_modules $ncm_mod`
+    for ncm_pmod in $ncm_preconf_mod; do
+	in_list $ncm_mod $configurable_modules && add_to_list_var $ncm_pmod NEED_CONFIG_MODULES
+    done
+    in_list $ncm_mod $configurable_modules && add_to_list_var $ncm_mod NEED_CONFIG_MODULES
+done
+export NEED_CONFIG_MODULES
+return 0
+}
+# END OF set_need_config_modules
+
+###########################################################
+## Functions for validation of modules/installation
+###########################################################
+
+# FUNCTION: validate_module
+# Description: check if module name is valid
+# Parameters:
+#	$1 - module name
+#	$2=--config - check if module is configurable
+# Variables set: none
+validate_module()
+{
+module=$1
+[ "$module" = "--config" ] && module=""
+shift 1
+if [ "$module" = "" ]; then
+    echo "Specify a module"
+    return 1
+fi
+grep -w -e "$module" ${INSTALL_CONF}/.modules.dep &> /dev/null
+if [ $? -ne 0 ]; then
+    echo "Invalid module name $module"
+    return 1
+fi
+if [ "$1" != "--config" ]; then
+    return 0
+fi
+conf_file=`cd "$INSTALL_CONF"; "$PHP" -q module_conf_file.php "$module"`
+if [ ! -f "$INSTALL_CONF/$conf_file" ]; then
+    echo "Module $module is not configurable"
+    return 1
+fi
+return 0
+}
+# END OF validate_module
+
+# FUNCTION: check_module_deps
+# Description: check if given module dependencies are satisfied
+# Parameters:
+#	$1 - module name
+# Variables set: none
+check_module_deps()
+{
+validate_module $1
+[ $? -ne 0 ] && return 1
+echo -n "Checking $1 module dependencies..."
+mod_deps=`read_module_deps $1`
+[ $? -ne 0 ] && echo -e "ERROR\n$mod_deps" && return 1
+for mod_dep in $mod_deps; do
+    check4_${mod_dep} $2
+    [ $? -ne 0 ] && echo $output && return 1
+done
+echo "OK"
+return 0
+}
+# END OF check_module_deps
+
+# FUNCTION: check_install_deps
+# Description: check if install dependencies are satisfied
+# Parameters: none
+# Variables set: none
+check_install_deps()
+{
+echo -n "Checking install dependencies..."
+inst_deps=`read_install_deps $1`
+[ $? -ne 0 ] && echo "$inst_deps" && return 1
+for inst_dep in $inst_deps; do
+    check4_${inst_dep} $1
+    [ $? -ne 0 ] && echo $output && return 1
+done
+echo "OK"
+return 0
+}
+# END OF check_install_deps
+
+# FUNCTION: check_DATABASE_config
+# Description: check if DATABASE module configuration is valid
+# Parameters: none
+# Variables set:
+#	output - output error message (if any)
+check_DATABASE_config()
+{
+in_list DATABASE $CHECKED_MODULES && return 0
+echo -n "Testing database configuration..."
+add_to_list_var DATABASE CHECKED_MODULES
+echo "OK"
+return 0
+}
+# END OF check_DATABASE_config
+
+# FUNCTION: check_PARSER_config
+# Description: check if PARSER module configuration is valid
+# Parameters: none
+# Variables set: none
+check_PARSER_config()
+{
+in_list PARSER $CHECKED_MODULES && return 0
+echo -n "Testing PARSER configuration..."
+acp=""
+if [ "$APACHE_CONF_PATH" != "" ]; then
+    acp="--apache_conf_path $APACHE_CONF_PATH"
+fi
+abp=""
+if [ "$APACHE_BIN_PATH" != "" ]; then
+    abp="--apache_bin_path $APACHE_BIN_PATH"
+fi
+check4_apache $1 $acp $abp
+[ $? -ne 0 ] && return 1
+add_to_list_var PARSER CHECKED_MODULES
+echo "OK"
+return 0
+}
+# END OF check_PARSER_config
+
+# FUNCTION: check_EVENT_HANDLERS_config
+# Description: check if EVENT_HANDLERS configuration is valid
+# Parameters: none
+# Variables set:
+#	output - output error message (if any)
+check_EVENT_HANDLERS_config()
+{
+in_list EVENT_HANDLERS $CHECKED_MODULES && return 0
+echo -n "Testing EVENT_HANDLERS configuration..."
+add_to_list_var EVENT_HANDLERS CHECKED_MODULES
+echo "OK"
+return 0
+}
+# END OF check_EVENT_HANDLERS_config
+
+# FUNCTION: check_SEARCH_ENGINE_config
+# Description: check if SEARCH_ENGINE configuration is valid
+# Parameters: none
+# Variables set: none
+check_SEARCH_ENGINE_config()
+{
+in_list SEARCH_ENGINE $CHECKED_MODULES && return 0
+echo -n "Testing SEARCH_ENGINE configuration..."
+add_to_list_var SEARCH_ENGINE CHECKED_MODULES
+echo "OK"
+return 0
+}
+# END OF check_SEARCH_ENGINE_config
+
+# FUNCTION: check_ADMIN_INTERFACE_config
+# Description: check if ADMIN_INTERFACE configuration is valid
+# Parameters: none
+# Variables set: none
+check_ADMIN_INTERFACE_config()
+{
+in_list ADMIN_INTERFACE $CHECKED_MODULES && return 0
+echo -n "Testing ADMIN_INTERFACE configuration..."
+add_to_list_var ADMIN_INTERFACE CHECKED_MODULES
+echo "OK"
+return 0
+}
+# END OF check_ADMIN_INTERFACE_config
+
+# FUNCTION: check_install_config
+# Description: check if install configuration is valid
+# Parameters: none
+# Variables set:
+#	is_installed - true if application was installed, false otherwise
+check_install_config()
+{
+is_installed=false
+err_code=0
+err_msg="OK"
+echo -n "Testing install configuration..."
+if [ -f "$OLD_CAMPSITE_REGISTER" ]; then
+    is_installed=true
+fi
+echo "OK"
+return 0
+}
+# END OF check_install_config
+
+# FUNCTION: do_module_full_config
+# Description: perform a full configuration of module
+# Parameters:
+#	$1 - module to perform configuration for
+# Variables set: none
+do_module_full_config()
+{
+fc_mod=$1
+shift 1
+define_start_env=false
+while [ "$1" != "" ]; do
+    case $1 in
+    --define_start_env) define_start_env=true ;;
+    esac
+    shift 1
+done
+validate_module $fc_mod || return 1
+is_configured $fc_mod && return 0
+preconf_mod=`preconf_modules $fc_mod`
+[ $? -ne 0 ] && echo $preconf_mod && return 1
+if [ "$preconf_mod" != "" ]; then
+    for fc_pmod in $preconf_mod; do
+	if ! in_list $fc_pmod $CHECKED_MODULES; then
+	    check_module_deps $fc_pmod && modules_conf --set $fc_pmod && prepare_${fc_pmod}_env
+	    [ $? -ne 0 ] && return 1
+	    if [ "$define_start_env" = "false" ]; then
+		check_${fc_pmod}_config
+		[ $? -ne 0 ] && return 1
+	    fi
+	fi
+    done
+fi
+check_module_deps $fc_mod && modules_conf --set $fc_mod && prepare_${fc_mod}_env
+[ $? -ne 0 ] && return 1
+if [ "$define_start_env" = "false" ]; then
+    check_${fc_mod}_config
+    [ $? -ne 0 ] && return 1
+fi
+set_configured $fc_mod
+return 0
+}
+# END OF do_module_full_config
+
+# FUNCTION: do_install_full_config
+# Description: perform a full install configuration
+# Parameters: none
+# Variables set: none
+do_install_full_config()
+{
+[ "$INSTALL_CONFIGURED" = "yes" ] && return 0
+prepare_install_env && check_install_deps && install_conf --set && check_install_config $*
+result=$?
+[ $result -eq 0 ] && export INSTALL_CONFIGURED=yes
+return $result
+}
+# END OF do_install_full_config
+
+
+###########################################################
+## Functions for writing the configuation files
+###########################################################
+
+# FUNCTION: set_module_config
+# Description: write the configuration for selected module
+# Parameters:
+#	$1 - selected module
+# Variables set:
+#	output - output error message (if any)
+set_module_config()
+{
+module=$1
+module_file=`cd "$INSTALL_CONF"; "$PHP" -q module_conf_file.php "$module"`
+tmp_file=".$$.$module_file"
+module_name=`echo "$module_file" | cut -f 1 -d "_"`
+if [ "$module_name" != "install" ]; then
+    output=`validate_module "$module" --config`
+    if [ $? -ne 0 ]; then
+	echo "$output"
+	return 1
+    fi
+fi
+module_vars=`cd "$INSTALL_CONF"; "$PHP" -q export_module_params.php "$module"`
+echo -e "<?php\n" > $tmp_file;
+vars_list_str=""
+for var in $module_vars; do
+    echo -e "\$Campsite['$var'] = '${!var}';" >> $tmp_file;
+    if [ "$vars_list_str" = "" ]; then
+	vars_list_str="'$var'";
+    else
+	vars_list_str="$vars_list_str, '$var'"
+    fi
+done
+echo -e -n "\n\$CampsiteVars['$module_name'] = array($vars_list_str);\n\n?>" >> $tmp_file;
+cp -f "$tmp_file" "${INSTALL_CONF}/$module_file"
+rm -f "$tmp_file"
+[ "$module_name" != "install" ] && set_configured $module_name
+return 0
+}
+# END OF set_module_config
+
+# FUNCTION: set_install_config
+# Description: write the install configuration
+# Parameters: none
+# Variables set: none
+set_install_config()
+{
+set_module_config install
+return 1
+}
+
+###########################################################
+## Functions for user interface
+###########################################################
+
+# FUNCTION: read_module_conf
+# Description: read the configuration of selected module from console
+# Parameters:
+#	$1 - selected module
+# Variables set:
+#	output - output error message (if any)
+read_module_conf()
+{
+module=$1
+output=`validate_module "$module" --config`
+if [ $? -ne 0 ]; then
+    echo "$output"
+    return 1
+fi
+attr_name_list="`modules_conf $module | cut -f 1 -d "="`"
+for attr_name in $attr_name_list; do
+    al="`modules_conf $module | grep -w $attr_name`"
+    attr_val="`echo $al | cut -f 2 -d "=" | cut -f 1 -d "#"`"
+    attr_val="`echo $attr_val`"
+    attr_desc="`echo $al | cut -f 2 -d "#"`"
+    export $attr_name="$attr_val"
+    read_string $attr_name "$attr_val" "$attr_desc"
+done
+return 0
+}
+# END OF read_module_conf
+
+# FUNCTION: read_install_conf
+# Description: read the install configuration from console
+# Parameters: none
+# Variables set: none
+read_install_conf()
+{
+attr_name_list="`install_conf | cut -f 1 -d "="`"
+for attr_name in $attr_name_list; do
+    al="`install_conf | grep -w $attr_name`"
+    attr_val="`echo $al | cut -f 2 -d "=" | cut -f 1 -d "#"`"
+    attr_val="`echo $attr_val`"
+    attr_desc="`echo $al | cut -f 2 -d "#"`"
+    export $attr_name="$attr_val"
+    read_string $attr_name "$attr_val" "$attr_desc"
+done
+return 0
+}
+# END OF read_install_conf
+
+# FUNCTION: module_config_menu
+# Description: prints a menu for configuring the selected module
+# Parameters:
+#	$1 - selected module
+# Variables set:
+#	output - output error message (if any)
+module_config_menu()
+{
+module=$1
+output=`validate_module "$module" --config`
+if [ $? -ne 0 ]; then
+    echo "$output"
+    return 1
+fi
+echo "Current $module configuration:"
+modules_conf $module
+[ $? -ne 0 ] && return 1
+echo -e "\nSelect\t1 - Modify these options\n\t0 - Continue to the next step"
+return 0
+}
+# END OF module_config_menu
+
+# FUNCTION: install_config_menu
+# Description: prints a menu for install configuration
+# Parameters: none
+# Variables set: none
+install_config_menu()
+{
+echo "Current install configuration:"
+install_conf $module
+echo -e "\nSelect\t1 - Modify these options\n\t0 - Continue to the next step"
+return 0
+}
+# END OF install_config_menu
+
+# FUNCTION: configure_module
+# Description: prints a menu for module configuration and performs
+#	according to input
+# Parameters:
+#	$1 - selected module
+# Variables set:
+#	output - output error message (if any)
+configure_module()
+{
+module=$1
+shift 1
+output=`validate_module "$module" --config`
+if [ $? -ne 0 ]; then
+    echo "$output"
+    return 1
+fi
+module_check=$1
+shift 1
+message=""
+while true; do
+    echo " " && module_config_menu "$module"
+    echo $message
+    echo -n -e "Option: "
+    read -r option
+    case $option in
+    1)
+	message=""
+	while true; do
+	    read_module_conf "$module"
+            result=0
+	    if [ "$module_check" != "" ]; then
+		rm_from_list_var $module CHECKED_MODULES
+		$module_check $*
+		result=$?
+	    fi
+	    if [ $result -ne 0 ]; then
+		choice_yn "Invalid $module module configuration. Try again?" y
+		if [ "$choice" = "N" ]; then
+		    break
+		fi
+	    else
+		choice_yn "Commit changes?" y
+		if [ "$choice" = "Y" ]; then
+		    output=`set_module_config "$module"`
+		    if [ $? -ne 0 ]; then
+			message=$output
+		    fi
+		    modules_conf --reset PARSER
+		fi
+		break
+	    fi
+	done ;;
+    0)
+	message=""
+	return 0 ;;
+    *)
+	message="Invalid option $option" ;;
+    esac
+done
+return 0
+}
+# END OF configure_module
+
+# FUNCTION: configure_install
+# Description: prints a menu for install configuration and performs
+#	according to input
+# Parameters: none
+# Variables set: none
+configure_install()
+{
+message=""
+while true; do
+    echo " " && install_config_menu
+    echo $message
+    echo -n -e "Option: "
+    read -r option
+    case $option in
+    1)
+	message=""
+	while true; do
+	    read_install_conf
+	    check_install_config
+	    result=$?
+	    if [ $result -ne 0 ]; then
+		choice_yn "Invalid install configuration. Try again?" y
+		if [ "$choice" = "N" ]; then
+		    return 1
+		fi
+	    else
+		choice_yn "Commit changes?" y
+		if [ "$choice" = "Y" ]; then
+		    output=`set_install_config`
+		    if [ $? -ne 0 ]; then
+			message=$output
+		    fi
+		    install_conf --reset
+		fi
+		break
+	    fi
+	done ;;
+    0)
+	check_install_config
+	result=$?
+	if [ $result -ne 0 ]; then
+	    echo "Invalid install configuration. Aborting..."
+	    return 1
+	fi
+	message=""
+	return 0 ;;
+    *)
+	message="Invalid option $option" ;;
+    esac
+done
+return 0
+}
+# END OF configure_install
