@@ -71,6 +71,12 @@ function __dlg_init(bottom) {
 	} else {
 		// window.dialogHeight = body.offsetHeight + 50 + "px";
 		// window.dialogWidth = body.offsetWidth + "px";
+		
+		// Paul Baranowski: Added next three lines to deal with 
+		// incorrectly sized IE popups.
+		if (HTMLArea.is_ie) {
+			body_height += 40;
+		}
 		window.resizeTo(body.offsetWidth, body_height);
 		var ch = body.clientHeight;
 		var cw = body.clientWidth;
