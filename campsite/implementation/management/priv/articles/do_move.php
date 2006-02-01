@@ -56,13 +56,13 @@ if (!$articleObj->exists()) {
 
 switch ($f_move) {
 case 'up_rel':
-	$articleObj->moveRelative('up', 1);
+	$articleObj->positionRelative('up', 1);
 	break;
 case 'down_rel':
-	$articleObj->moveRelative('down', 1);
+	$articleObj->positionRelative('down', 1);
 	break;
 case 'abs':
-	$articleObj->moveAbsolute($f_position);
+	$articleObj->positionAbsolute($f_position);
 	break;
 default: ;
 }

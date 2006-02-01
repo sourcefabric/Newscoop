@@ -30,9 +30,7 @@ $sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $
 $articleObj =& new Article($f_language_selected, $f_article_number);
 $imageObj =& new Image($f_image_id);
 
-$isDisabled = '';
 if (!$User->hasPermission('ChangeImage')) {
-	$isDisabled = 'readonly';
 	$title = getGS('Image information');
 } else {
 	$title = getGS('Change image information');
@@ -60,34 +58,55 @@ camp_html_content_top($title, $topArray, true, true, $extraCrumbs);
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS('Number'); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" NAME="f_image_template_id" VALUE="<?php echo $f_image_template_id; ?>" class="input_text" SIZE="32" MAXLENGTH="10" <?php p($isDisabled); ?>>
+		<?php if ($User->hasPermission('AttachImageToArticle')) { ?>
+		<INPUT TYPE="TEXT" NAME="f_image_template_id" VALUE="<?php echo $f_image_template_id; ?>" class="input_text" SIZE="32" MAXLENGTH="10">
+		<?php } else { 
+			echo $f_image_template_id;
+		} ?>
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS('Description'); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" NAME="f_image_description" VALUE="<?php echo htmlspecialchars($imageObj->getDescription()); ?>" class="input_text" SIZE="32" MAXLENGTH="128"  <?php p($isDisabled); ?>>
+		<?php if ($User->hasPermission('ChangeImage')) { ?>
+		<INPUT TYPE="TEXT" NAME="f_image_description" VALUE="<?php echo htmlspecialchars($imageObj->getDescription()); ?>" class="input_text" SIZE="32" MAXLENGTH="128">
+		<?php } else {
+			echo htmlspecialchars($imageObj->getDescription());
+		} ?>
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS('Photographer'); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" NAME="f_image_photographer" VALUE="<?php echo htmlspecialchars($imageObj->getPhotographer());?>" class="input_text" SIZE="32" MAXLENGTH="64" <?php p($isDisabled); ?>>
+		<?php if ($User->hasPermission('ChangeImage')) { ?>
+		<INPUT TYPE="TEXT" NAME="f_image_photographer" VALUE="<?php echo htmlspecialchars($imageObj->getPhotographer());?>" class="input_text" SIZE="32" MAXLENGTH="64">
+		<?php } else {
+			echo htmlspecialchars($imageObj->getPhotographer());
+		} ?>
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS('Place'); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" NAME="f_image_place" VALUE="<?php echo htmlspecialchars($imageObj->getPlace()); ?>" class="input_text" SIZE="32" MAXLENGTH="64" <?php p($isDisabled); ?>>
+		<?php if ($User->hasPermission('ChangeImage')) { ?>
+		<INPUT TYPE="TEXT" NAME="f_image_place" VALUE="<?php echo htmlspecialchars($imageObj->getPlace()); ?>" class="input_text" SIZE="32" MAXLENGTH="64">
+		<?php } else { 
+			echo htmlspecialchars($imageObj->getPlace());
+		} ?>
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS('Date'); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" NAME="f_image_date" VALUE="<?php echo htmlspecialchars($imageObj->getDate()); ?>" class="input_text" SIZE="11" MAXLENGTH="10" <?php p($isDisabled); ?>> <?php putGS('YYYY-MM-DD'); ?>
+		<?php if ($User->hasPermission('ChangeImage')) { ?>
+		<INPUT TYPE="TEXT" NAME="f_image_date" VALUE="<?php echo htmlspecialchars($imageObj->getDate()); ?>" class="input_text" SIZE="11" MAXLENGTH="10">
+		<?php } else { 
+			echo htmlspecialchars($imageObj->getDate());
+		} ?>
+		<?php putGS('YYYY-MM-DD'); ?>
 	</TD>
 </TR>
-<?php if ($User->hasPermission('ChangeImage')) { ?>
+<?php if ($User->hasPermission('ChangeImage') || $User->hasPermission('AttachImageToArticle')) { ?>
 <TR>
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">

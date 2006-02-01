@@ -97,7 +97,9 @@ elseif (($extension == '.php') || ($extension == '')) {
 	unset($question_mark);
 	unset($no_menu_scripts);
 	unset($request_uri);
-	
+
+	require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/init_content.php");
+
 	// Get the main content
 	ob_start();
 	require_once($path_name);

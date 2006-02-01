@@ -11,24 +11,33 @@ if (!$User->hasPermission("AddArticle")) {
 	exit;
 }
 
-$f_publication_id = Input::Get('f_publication_id', 'int', 0);
-$f_issue_number = Input::Get('f_issue_number', 'int', 0);
-$f_section_number = Input::Get('f_section_number', 'int', 0);
-$f_language_id = Input::Get('f_language_id', 'int', 0);
+// Optional input, for articles that are inside of sections.
+$f_publication_id = Input::Get('f_publication_id', 'int', 0, true);
+$f_issue_number = Input::Get('f_issue_number', 'int', 0, true);
+$f_section_number = Input::Get('f_section_number', 'int', 0, true);
+$f_language_id = Input::Get('f_language_id', 'int', 0, true);
+
+
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_article_code = Input::Get('f_article_code', 'array', 0);
 $f_destination_publication_id = Input::Get('f_destination_publication_id', 'int', 0, true);
-$f_destination_issue_id = Input::Get('f_destination_issue_id', 'int', 0, true);
-$f_destination_section_id = Input::Get('f_destination_section_id', 'int', 0, true);
+$f_destination_issue_number = Input::Get('f_destination_issue_number', 'int', 0, true);
+$f_destination_section_number = Input::Get('f_destination_section_number', 'int', 0, true);
+
+// $f_mode can be "single" or "multi".  This governs
+// the behavior of where the user goes after they perform the action.
 $f_mode = Input::Get('f_mode', 'string', 'single', true);
 
+// $f_action can be "duplicate" or "move".
+$f_action = Input::Get('f_action');
+
 // Article names can change from page request to page request.
-// We create a 2-dimensional array of article names indexed by article ID, language ID.
+// We create $articleNames, a 2-dimensional array of article names indexed by article ID, language ID.
 //
-// The user can choose whether to duplicate articles from page request to page request.
-// We create a 2-dimensional array of boolean values indexed by article ID, language ID.
+// The user can choose whether to perform an action on articles from page request to page request.
+// We create $doAction, a 2-dimensional array of boolean values indexed by article ID, language ID.
 $articleNames = array();
-$doCopy = array();
+$doAction = array();
 foreach ($_REQUEST as $key => $value) {
 	if (!strncmp($key, "f_article_name_", strlen("f_article_name_"))) {
 		$tmpCodeStr = str_replace("f_article_name_", "", $key);
@@ -38,12 +47,13 @@ foreach ($_REQUEST as $key => $value) {
 	if (!strncmp($key, "f_do_copy_", strlen("f_do_copy_"))) {
 		$tmpCodeStr = str_replace("f_do_copy_", "", $key);
 		list($articleId, $languageId) = split("_", $tmpCodeStr);
-		$doCopy[$articleId][$languageId] = Input::Get($key, 'string', '', true);
+		$doAction[$articleId][$languageId] = Input::Get($key, 'string', '', true);
 	}
 }
 
 
-// Get all the articles we are copying.
+// $articles array:
+// The articles that were initially selected to perform the move or duplicate upon.
 $articles = array();
 foreach ($f_article_code as $code) {
 	list($articleNumber, $languageId) = split("_", $code);
@@ -51,10 +61,10 @@ foreach ($f_article_code as $code) {
 	$articles[$articleNumber][$languageId] = $tmpArticle;
 	
 	// Initialize the article names on initial page request.
-	// Initialize the $doCopy array on initial page request.
+	// Initialize the $doAction array on initial page request.
 	if (!isset($articleNames[$articleNumber][$languageId])) {
 		$articleNames[$articleNumber][$languageId] = $tmpArticle->getTitle();
-		$doCopy[$articleNumber][$languageId] = $languageId;
+		$doAction[$articleNumber][$languageId] = $languageId;
 	}
 }
 
@@ -66,8 +76,13 @@ foreach ($articles as $articleNumber => $languageArray) {
 	$tmpArticle = camp_array_peek($languageArray);
 	$translations = $tmpArticle->getTranslations();
 	foreach ($translations as $article) {
-		if (!isset($articleNames[$article->getArticleNumber()][$article->getLanguageId()])) {
-			$articleNames[$article->getArticleNumber()][$article->getLanguageId()] = $article->getTitle();
+		$articleNumber = $article->getArticleNumber();
+		$articleLanguage = $article->getLanguageId();
+		if (!isset($articleNames[$articleNumber][$articleLanguage])) {
+			$articleNames[$articleNumber][$articleLanguage] = $article->getTitle();
+		}
+		if (!isset($articles[$articleNumber][$articleLanguage])) {
+			$articles[$articleNumber][$articleLanguage] = $article;
 		}
 	}
 }
@@ -77,102 +92,204 @@ if (!Input::IsValid()) {
 	exit;	
 }
 
-$publicationObj =& new Publication($f_publication_id);
-if (!$publicationObj->exists()) {
-	camp_html_display_error(getGS('Publication does not exist.'));
-	exit;	
+if ($f_publication_id > 0) {
+	$publicationObj =& new Publication($f_publication_id);
+	if (!$publicationObj->exists()) {
+		camp_html_display_error(getGS('Publication does not exist.'));
+		exit;	
+	}
+	
+	$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
+	if (!$issueObj->exists()) {
+		camp_html_display_error(getGS('Issue does not exist.'));
+		exit;	
+	}
+	
+	$sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
+	if (!$sectionObj->exists()) {
+		camp_html_display_error(getGS('Section does not exist.'));
+		exit;	
+	}
 }
 
-$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
-if (!$issueObj->exists()) {
-	camp_html_display_error(getGS('Issue does not exist.'));
-	exit;	
+// Get all the publications
+$allPublications = Publication::GetPublications();
+// Automatically select the publication if there is only one.
+if (count($allPublications) == 1) {
+	$tmpPublication = camp_array_peek($allPublications);
+	$f_destination_publication_id = $tmpPublication->getPublicationId();
 }
 
-$sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
-if (!$sectionObj->exists()) {
-	camp_html_display_error(getGS('Section does not exist.'));
-	exit;	
+// Get the most recent issues.
+$allIssues = array();
+if ($f_destination_publication_id > 0) {
+	$allIssues = Issue::GetIssues($f_destination_publication_id, null, null, null, array("LIMIT" => 50, "ORDER BY" => array("Number" => "DESC")));
+	// Automatically select the issue if there is only one.
+	if (count($allIssues) == 1) {
+		$tmpIssue = camp_array_peek($allIssues);
+		$f_destination_issue_number = $tmpIssue->getIssueNumber();
+	}
 }
+
+// Get all the sections.
+$allSections = array();
+if ($f_destination_issue_number > 0) {
+	$allSections = Section::GetSections($f_destination_publication_id, $f_destination_issue_number);
+	// Automatically select the section if there is only one.
+	if (count($allSections) == 1) {
+		$tmpSection = camp_array_peek($allSections);
+		$f_destination_section_number = $tmpSection->getSectionNumber();
+	}
+}
+
+
+// Special case:
+// You cannot copy the articles if there is no cooresponding translated issue/section
+// in the destination issue.  For example, you cannot copy a french article to an
+// issue that has ONLY an english translation.
+$issueLanguages = array();
+if ($f_destination_issue_number > 0) {
+	$issueTranslations = Issue::GetIssues($f_destination_publication_id, null, $f_destination_issue_number);
+	$issueLanguages = DbObjectArray::GetColumn($issueTranslations, "IdLanguage");
+}
+// $actionDenied is TRUE if any articles cannot be moved/duped.
+$actionDenied = false;
+foreach ($articles as $articleNumber => $languageArray) {
+	foreach ($languageArray as $languageId => $article) {
+		$tmpActionDenied = (count($issueLanguages) > 0) && !in_array($languageId, $issueLanguages);
+		$actionDenied |= $tmpActionDenied;
+		
+		// Uncheck any articles that cannot be moved/duped.
+		if ($tmpActionDenied) {
+			unset($doAction[$articleNumber][$languageId]);
+			if (count($doAction[$articleNumber]) == 0) {
+				unset($doAction[$articleNumber]);
+			}
+		}
+	}
+}
+
 
 //
 // This section is executed when the user finally hits the "duplicate" button.
 //
-if (isset($_REQUEST["duplicate_button"])) {
-	foreach ($doCopy as $articleNumber => $languageArray) {
-		$languageArray = array_keys($languageArray);
-		//echo "<pre>"; print_r($languageArray); echo "</pre>";
-		
-		$tmpLanguageId = camp_array_peek($languageArray);
-		
-		// Error checking
-		if (!isset($articles[$articleNumber][$tmpLanguageId])) {
-			//echo "error $articleNumber:$tmpLanguageId<br>";
-			continue;
+if (isset($_REQUEST["action_button"])) {
+	if ($f_action == "duplicate") {
+		foreach ($doAction as $articleNumber => $languageArray) {
+			$languageArray = array_keys($languageArray);
+			//echo "<pre>"; print_r($languageArray); echo "</pre>";
+			
+			$tmpLanguageId = camp_array_peek($languageArray);
+			
+			// Error checking
+			if (!isset($articles[$articleNumber][$tmpLanguageId])) {
+				//echo "error $articleNumber:$tmpLanguageId<br>";
+				continue;
+			}
+			
+			//echo "copying $articleNumber:$tmpLanguageId<br>";
+			// Grab the first article - it doesnt matter which one.
+			$tmpArticle = $articles[$articleNumber][$tmpLanguageId];
+			
+			// Copy all the translations requested.
+			$newArticles = $tmpArticle->copy($f_destination_publication_id, 
+							  				 $f_destination_issue_number, 
+							  				 $f_destination_section_number, 
+							  				 $User->getUserId(),
+							  				 $languageArray);
+			
+			// Set the names of the new copies
+			foreach ($newArticles as $newArticle) {
+				$newArticle->setTitle($articleNames[$articleNumber][$newArticle->getLanguageId()]);
+			}
 		}
-		
-		//echo "copying $articleNumber:$tmpLanguageId<br>";
-		// Grab the first article - it doesnt matter which one.
-		$tmpArticle = $articles[$articleNumber][$tmpLanguageId];
-		
-		// Copy all the translations requested.
-		$newArticles = $tmpArticle->copy($f_destination_publication_id, 
-						  				 $f_destination_issue_id, 
-						  				 $f_destination_section_id, 
-						  				 $User->getUserId(),
-						  				 $languageArray);
-		
-		// Set the names of the new copies
-		foreach ($newArticles as $newArticle) {
-			$newArticle->setTitle($articleNames[$articleNumber][$newArticle->getLanguageId()]);
+		if ($f_mode == "single") {
+			$tmpArticle = camp_array_peek($newArticles);
+			$url = camp_html_article_url($tmpArticle, $f_language_id, "edit.php");
+		} else {
+			$tmpArticle = camp_array_peek(camp_array_peek($articles));
+			$url = camp_html_article_url($tmpArticle, 0, "index.php");
 		}
-	}
-	if ($f_mode == "single") {
-		$tmpArticle = camp_array_peek($newArticles);
-		$url = camp_html_article_url($tmpArticle, $f_language_id, "edit.php");
 		header("Location: $url");
+		exit;
+		
+	} elseif ($f_action == "move") {
+
+		// Move all the translations requested.
+		$tmpArticles = array();
+		foreach ($doAction as $articleNumber => $languageArray) {
+			foreach ($languageArray as $languageId => $action) {
+				//echo "copying $articleNumber:$tmpLanguageId<br>";
+				$tmpArticle =& new Article($languageId, $articleNumber);
+				
+				$tmpArticle->move($f_destination_publication_id, 
+								  $f_destination_issue_number, 
+								  $f_destination_section_number);
+				
+				$tmpArticle->setTitle($articleNames[$articleNumber][$languageId]);
+				$tmpArticles[] = $tmpArticle;
+			}
+		}
+		$tmpArticle = camp_array_peek($tmpArticles);
+		if ($f_mode == "single") {
+			$url = camp_html_article_url($tmpArticle, $f_language_id, "edit.php");
+		} else {
+			$url = camp_html_article_url($tmpArticle, $f_language_id, "index.php");
+		}
+		header("Location: $url");
+		exit;		
+	}
+} // END perform the action
+
+
+$title = "";
+if (count($doAction) > 1) {
+	if ($f_action == "duplicate") {
+		$title = getGS("Duplicate articles");
+	} elseif ($f_action == "move") {
+		$title = getGS("Move articles");
+	}
+} else {
+	if ($f_action == "duplicate") {
+		$title = getGS("Duplicate article");
+	} elseif ($f_action == "move") {
+		$title = getGS("Move article");
+	}
+}
+
+if ($f_publication_id > 0) {
+	$topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
+					  'Section' => $sectionObj);
+	if (count($articles) > 1) {
+		$crumbs = array(getGS("Articles") => "/$ADMIN/articles/index.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id&f_language_selected=$f_language_selected");
+		camp_html_content_top($title, $topArray, true, false, $crumbs);
 	} else {
-		$tmpArticle = camp_array_peek(camp_array_peek($articles));
-		$url = camp_html_article_url($tmpArticle, $f_language_id, "index.php");
-		header("Location: $url");
+		$topArray['Article'] = camp_array_peek(camp_array_peek($articles));
+		camp_html_content_top($title, $topArray);
 	}
-	exit;
-}
-
-$allPublications = Publication::GetPublications();
-$allIssues = array();
-if ($f_destination_publication_id > 0) {
-	$allIssues = Issue::GetIssues($f_destination_publication_id, $f_language_id);
-}
-$allSections = array();
-if ($f_destination_issue_id > 0) {
-	$allSections = Section::GetSections($f_destination_publication_id, $f_destination_issue_id, $f_language_id);
-}
-
-$topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
-				  'Section' => $sectionObj);
-if (count($articles) > 1) {
-	$crumbs = array(getGS("Articles") => "/$ADMIN/articles/index.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id&f_language_selected=$f_language_selected");
-	camp_html_content_top(getGS("Duplicate articles"), $topArray, true, false, $crumbs);
-}
-else {
-	$topArray['Article'] = camp_array_peek(camp_array_peek($articles));
-	camp_html_content_top(getGS("Duplicate article"), $topArray);
+} else {
+	$crumbs = array();
+	$crumbs[] = array(getGS("Actions"), "");
+	$crumbs[] = array($title, "");
+	echo camp_html_breadcrumbs($crumbs);	
 }
 ?>
 
 <P>
 <div class="page_title">
-<?php putGS("Duplicate articles"); ?>:
+<?php p($title); ?>:
 </div>
 
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" style="margin-left: 5px;">
-<FORM NAME="duplicate" METHOD="POST">
+<FORM NAME="move_duplicate" METHOD="POST">
+<?php if ($f_publication_id > 0) { ?>
 <input type="hidden" name="f_publication_id" value="<?php p($f_publication_id); ?>">
 <input type="hidden" name="f_issue_number" value="<?php p($f_issue_number); ?>">
 <input type="hidden" name="f_section_number" value="<?php p($f_section_number); ?>">
 <input type="hidden" name="f_language_id" value="<?php p($f_language_id); ?>">
+<?php } ?>
 <input type="hidden" name="f_mode" value="<?php p($f_mode); ?>">
+<input type="hidden" name="f_action" value="<?php p($f_action); ?>">
 <?php 
 foreach ($articles as $languageArray) {
 	foreach ($languageArray as $article) {	?>
@@ -186,7 +303,7 @@ foreach ($articles as $languageArray) {
 	<TD>
 		<TABLE cellpadding="3">
 		<TR class="table_list_header">
-			<TD valign="top"><?php putGS("Duplicate?"); ?></TD>
+			<TD valign="top"><?php ($f_action == "duplicate") ? putGS("Duplicate?") : putGS("Move?"); ?></TD>
 			<TD valign="top"><?php putGS("Name"); ?></TD>
 			<TD valign="top"><?php putGS("Language"); ?></TD>
 			<TD valign="top"><?php putGS("Type"); ?></TD>
@@ -196,23 +313,23 @@ foreach ($articles as $languageArray) {
 		$color = 0;
 		foreach ($articles as $languageArray) {
 			$count = 0;
-			$tmpArticle = camp_array_peek($languageArray);
-			$translations = $tmpArticle->getTranslations();
-			foreach ($translations as $article) { 
+			foreach ($languageArray as $languageId => $article) {
+				$bad = (count($issueLanguages) > 0) && !in_array($languageId, $issueLanguages);
+				$articleNumber = $article->getArticleNumber();
 			?>
-		<TR class="<?php if ($color) { ?>list_row_even<?php } else { ?>list_row_odd<?php } $color = !$color; ?>">
-			<TD>
-				<input type="checkbox" name="f_do_copy_<?php p($article->getArticleNumber()."_".$article->getLanguageId()); ?>" value="" <?php if (isset($doCopy[$article->getArticleNumber()][$article->getLanguageId()])) { ?>CHECKED<?php } ?>>
+		<TR class="<?php if ($color) { ?>list_row_even<?php } else { ?>list_row_odd<?php } $color = !$color; ?>" >
+			<TD <?php if ($bad) { ?>style="border-left: 3px solid #AF2041; background-color: #FFD4E4;"<?php } ?>>
+				<input type="checkbox" name="f_do_copy_<?php p($articleNumber."_".$languageId); ?>" value="" <?php if ($bad) { echo "disabled"; } elseif (isset($doAction[$articleNumber][$languageId])) { echo "CHECKED"; } ?>>
 			</TD>
-			<TD <?php if ($count++ > 0) { ?>class="translation_indent"<?php } ?>>
-				<INPUT TYPE="TEXT" NAME="f_article_name_<?php p($article->getArticleNumber()."_".$article->getLanguageId()); ?>" SIZE="50" MAXLENGTH="256" VALUE="<?php  p(htmlspecialchars($articleNames[$article->getArticleNumber()][$article->getLanguageId()])); ?>" class="input_text">
+			<TD <?php if ($count++ > 0) { ?>class="translation_indent"<?php } ?> <?php if ($bad) { ?>style="background-color: #FFD4E4;"<?php } ?>>
+				<INPUT TYPE="TEXT" NAME="f_article_name_<?php p($articleNumber."_".$languageId); ?>" SIZE="50" MAXLENGTH="256" VALUE="<?php  p(htmlspecialchars($articleNames[$articleNumber][$languageId])); ?>" class="input_text">
 			</TD>
 			
-			<TD>
+			<TD <?php if ($bad) { ?>style="background-color: #FFD4E4"<?php } ?>>
 				<B><?php p(htmlspecialchars($article->getLanguageName())); ?></B>
 			</TD>
 			
-			<TD>
+			<TD <?php if ($bad) { ?>style="background-color: #FFD4E4; border-right: 3px solid #AF2041;"<?php } ?>>
 				<B><?php p(htmlspecialchars($article->getType())); ?></B>
 			</TD>
 			
@@ -225,88 +342,114 @@ foreach ($articles as $languageArray) {
 	</TD>
 </TR>
 </TABLE>
+
+<?php if ($actionDenied) { ?>
+<table width="565px">
+<tr>
+	<td colspan="2" style="padding-left: 17px; padding-bottom: 8px;" align="center">
+		<div style="border: 1px solid #AF2041; background-color: #FFD4E4; font-size: 12pt; padding: 5px; font-weight: bold; color: #AF2041;">
+		<?php 
+			putGS("You cannot $1 the articles marked in red because the destination issue has not been translated into the appropriate language.", ($f_action == "move") ? getGS("move") : getGS("duplicate"));
+		?>
+		</div>
+	</td>
+</tr>
+</table>
+<?php } ?>		
+
 <p>
 <div class="page_title">
 <?php putGS("to section"); ?>:
 </div>
 <p>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input" width="400px">
 <TR>
-	<TD>
-		<TABLE>
+	<TD align="left">
+		<TABLE align="left" border="0">
 		<TR>
 			<td colspan="2" style="padding-left: 20px; padding-bottom: 5px;font-size: 12pt; font-weight: bold;"><?php  putGS("Select destination"); ?></TD>
 		</TR>
 		<TR>
-			<TD VALIGN="middle" ALIGN="RIGHT" style="padding-left: 20px;"><?php  putGS('Publication'); ?>: </TD>
-			<TD valign="middle" ALIGN="LEFT">
-				<?php if (count($allPublications) > 0) { ?>
-				<SELECT NAME="f_destination_publication_id" class="input_select" ONCHANGE="if ((this.selectedIndex != 0) && (this.options[this.selectedIndex].value != <?php p($f_destination_publication_id); ?>)) {this.form.submit();}">
-				<OPTION VALUE="0"><?php  putGS('---Select publication---'); ?></option>
-				<?php 
-				foreach ($allPublications as $tmpPublication) {
-					camp_html_select_option($tmpPublication->getPublicationId(), $f_destination_publication_id, $tmpPublication->getName());
-				}
-				?>
-				</SELECT>
-				<?php
-				}
-				else {
-					?>
-					<SELECT class="input_select" DISABLED><OPTION><?php  putGS('No publications'); ?></option></SELECT>
-					<?php
-				}
-				?>
-			</td>
-		</tr>
-		
-		<tr>
-			<TD VALIGN="middle" ALIGN="RIGHT" style="padding-left: 20px;"><?php  putGS('Issue'); ?>: </TD>
-			<TD valign="middle" ALIGN="LEFT">
-				<?php if (($f_destination_publication_id > 0) && (count($allIssues) > 0)) { ?>
-				<SELECT NAME="f_destination_issue_id" class="input_select" ONCHANGE="if ((this.selectedIndex != 0) && (this.options[this.selectedIndex].value != <?php p($f_destination_issue_id); ?>)) { this.form.submit(); }">
-				<OPTION VALUE="0"><?php  putGS('---Select issue---'); ?></option>
-				<?php 
-				foreach ($allIssues as $tmpIssue) {
-					camp_html_select_option($tmpIssue->getIssueNumber(), $f_destination_issue_id, $tmpIssue->getName());
-				}
-				?>
-				</SELECT>
-				<?php  
-				} 
-				else { 
-					?><SELECT class="input_select" DISABLED><OPTION><?php  putGS('No issues'); ?></SELECT>
-					<?php  
-				} 
-				?>
-			</td>
-		</tr>
-		
-		<tr>	
-			<TD VALIGN="middle" ALIGN="RIGHT" style="padding-left: 20px;"><?php  putGS('Section'); ?>: </TD>
-			<TD valign="middle" ALIGN="LEFT">
-				<?php if (($f_destination_issue_id > 0) && (count($allSections) > 0)) { ?>
-				<SELECT NAME="f_destination_section_id" class="input_select" ONCHANGE="if ((this.selectedIndex != 0) && (this.options[this.selectedIndex].value != <?php p($f_destination_section_id); ?>)) { this.form.submit(); }">
-				<OPTION VALUE="0"><?php  putGS('---Select section---'); ?>
-				<?php 
-				foreach ($allSections as $tmpSection) {
-					camp_html_select_option($tmpSection->getSectionNumber(), $f_destination_section_id, $tmpSection->getName());
-				}
-				?>
-				</SELECT>
-				<?php  
-				} 
-				else { 
-					?><SELECT class="input_select" DISABLED><OPTION><?php  putGS('No sections'); ?></SELECT>
-					<?php  
-				}
-				?>
-				</TD>
+			<td>
+				<!-- BEGIN table for pub/issue/section selection -->
+				<table>
+				<tr>
+					<TD VALIGN="middle" ALIGN="RIGHT" style="padding-left: 20px;"><?php  putGS('Publication'); ?>: </TD>
+					<TD valign="middle" ALIGN="LEFT">
+						<?php if (count($allPublications) > 1) { ?>
+						<SELECT NAME="f_destination_publication_id" class="input_select" ONCHANGE="if (this.options[this.selectedIndex].value != <?php p($f_destination_publication_id); ?>) {this.form.submit();}">
+						<OPTION VALUE="0"><?php  putGS('---Select publication---'); ?></option>
+						<?php 
+						foreach ($allPublications as $tmpPublication) {
+							camp_html_select_option($tmpPublication->getPublicationId(), $f_destination_publication_id, $tmpPublication->getName());
+						}
+						?>
+						</SELECT>
+						<?php } elseif (count($allPublications) == 1) { 
+							$tmpPublication = camp_array_peek($allPublications);
+							p(htmlspecialchars($tmpPublication->getName()));
+							?>
+							<input type="hidden" name="f_destination_publication_id" value="<?php p($tmpPublication->getPublicationId()); ?>">
+							
+						<?php } else { ?>
+							<SELECT class="input_select" DISABLED><OPTION><?php  putGS('No publications'); ?></option></SELECT>
+						<?php }	?>
+					</td>
+				</tr>
+				
+				<tr>
+					<TD VALIGN="middle" ALIGN="RIGHT" style="padding-left: 20px;"><?php  putGS('Issue'); ?>: </TD>
+					<TD valign="middle" ALIGN="LEFT">
+						<?php if (($f_destination_publication_id > 0) && (count($allIssues) > 1)) { ?>
+						<SELECT NAME="f_destination_issue_number" class="input_select" ONCHANGE="if (this.options[this.selectedIndex].value != <?php p($f_destination_issue_number); ?>) { this.form.submit(); }">
+						<OPTION VALUE="0"><?php  putGS('---Select issue---'); ?></option>
+						<?php 
+						foreach ($allIssues as $tmpIssue) {
+							camp_html_select_option($tmpIssue->getIssueNumber(), $f_destination_issue_number, $tmpIssue->getIssueNumber().". ".$tmpIssue->getName()." (".$tmpIssue->getLanguageName().")");
+						}
+						?>
+						</SELECT>
+						<?php } elseif (($f_destination_publication_id > 0) && (count($allIssues) == 1)) { 
+							$tmpIssue = camp_array_peek($allIssues);
+							p(htmlspecialchars($tmpIssue->getName()));
+							?>
+							<input type="hidden" name="f_destination_issue_number" value="<?php p($tmpIssue->getIssueNumber()); ?>">
+						<?php } else { ?>
+							<SELECT class="input_select" DISABLED><OPTION><?php  putGS('No issues'); ?></SELECT>
+						<?php } ?>
+					</td>
+				</tr>
+				
+				<tr>	
+					<TD VALIGN="middle" ALIGN="RIGHT" style="padding-left: 20px;"><?php  putGS('Section'); ?>: </TD>
+					<TD valign="middle" ALIGN="LEFT">
+						<?php if (($f_destination_issue_number > 0) && (count($allSections) > 1)) { ?>
+						<SELECT NAME="f_destination_section_number" class="input_select" ONCHANGE="if (this.options[this.selectedIndex].value != <?php p($f_destination_section_number); ?>) { this.form.submit(); }">
+						<OPTION VALUE="0"><?php  putGS('---Select section---'); ?>
+						<?php 
+						foreach ($allSections as $tmpSection) {
+							camp_html_select_option($tmpSection->getSectionNumber(), $f_destination_section_number, $tmpSection->getName()." (".$tmpSection->getLanguageName().")");
+						}
+						?>
+						</SELECT>
+						<?php } elseif (($f_destination_issue_number > 0) && (count($allSections) == 1)) { 
+							$tmpSection = camp_array_peek($allSections);
+							p(htmlspecialchars($tmpSection->getName()));
+							?>
+							<input type="hidden" name="f_destination_section_number" value="<?php p($tmpSection->getSectionNumber()); ?>">
+						<?php } else { ?>
+							<SELECT class="input_select" DISABLED><OPTION><?php  putGS('No sections'); ?></SELECT>
+						<?php }	?>
+					</td>
+				</tr>
+				</table>
+				<!-- END table for pub/issue/section selection -->
+			</TD>
 		</tr>
 		
 		<tr>
 			<td colspan="2"><?php 
-				if ( ($f_publication_id == $f_destination_publication_id) && ($f_issue_number == $f_destination_issue_id) && ($f_section_number == $f_destination_section_id)) {
+				if ( ($f_publication_id == $f_destination_publication_id) && ($f_issue_number == $f_destination_issue_number) && ($f_section_number == $f_destination_section_number)) {
 					putGS("The destination section is the same as the source section."); echo "<BR>\n";
 				}
 			?></td>
@@ -314,7 +457,7 @@ foreach ($articles as $languageArray) {
 		
 		<tr>
 			<td align="center" colspan="2">
-				<INPUT TYPE="submit" Name="duplicate_button" Value="<?php putGS("Duplicate article"); ?>" <?php if (($f_destination_publication_id <= 0) || ($f_destination_issue_id <=0) || ($f_destination_section_id <= 0)) { echo 'class="button_disabled"'; } else { echo "class=\"button\""; }?> >
+				<INPUT TYPE="submit" Name="action_button" Value="<?php p($title); ?>" <?php if ( (count($doAction) <= 0) || ($f_destination_publication_id <= 0) || ($f_destination_issue_number <= 0) || ($f_destination_section_number <= 0)) { echo 'class="button_disabled"'; } else { echo "class=\"button\""; }?> >
 			</td>
 		</tr>
 		</TABLE>

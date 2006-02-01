@@ -72,10 +72,10 @@ if (!$isNewUser) {
 <?php
 }
 ?>
-<table border="0" cellspacing="0" align="center" class="table_input">
+<table border="0" cellspacing="0" align="left" class="table_input" width="600px">
 <tr>
-	<td>
-		<table border="0" cellspacing="0" cellpadding="3" align="center" width="100%">
+	<td align="left">
+		<table border="0" cellspacing="0" cellpadding="3" align="left">
 			<tr>
 				<td align="right" nowrap><?php putGS("Account name"); ?>:</td>
 <?php

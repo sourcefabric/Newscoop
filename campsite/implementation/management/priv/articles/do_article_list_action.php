@@ -110,7 +110,18 @@ case "copy_interactive":
 	$args = $_REQUEST;
 	unset($args["f_article_code"]);
 	$argsStr = camp_implode_keys_and_values($args, "=", "&");
-	$argsStr .= "&f_mode=multi";
+	$argsStr .= "&f_mode=multi&f_action=duplicate";
+	foreach ($_REQUEST["f_article_code"] as $code) {
+		$argsStr .= "&f_article_code[]=$code";
+	}
+	$url = "Location: /$ADMIN/articles/duplicate.php?".$argsStr;
+	header($url);
+	exit;
+case "move":
+	$args = $_REQUEST;
+	unset($args["f_article_code"]);
+	$argsStr = camp_implode_keys_and_values($args, "=", "&");
+	$argsStr .= "&f_mode=multi&f_action=move";
 	foreach ($_REQUEST["f_article_code"] as $code) {
 		$argsStr .= "&f_article_code[]=$code";
 	}
@@ -133,7 +144,6 @@ case "schedule_publish":
 		$argsStr .= "&f_article_code[]=$code";
 	}
 	$url = "Location: /$ADMIN/articles/multi_autopublish.php?".$argsStr;
-	//echo $url;
 	header($url);
 	exit;
 case "translate":
@@ -145,7 +155,6 @@ case "translate":
 		break;
 	}
 	$url = "Location: /$ADMIN/articles/translate.php?".$argsStr;
-	//echo $url;
 	header($url);
 	exit;
 }

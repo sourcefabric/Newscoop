@@ -8,11 +8,11 @@ $ADReason = Input::Get('ADReason', 'string', getGS('You do not have the right to
 ?>
 <HEAD>
 	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
-	<TITLE><?php  putGS("Preview issue"); ?></TITLE>
+	<TITLE><?php putGS("Access denied"); ?></TITLE>
 </HEAD>
 <p>
 <CENTER>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box" ALIGN="CENTER" style="margin-top: 50px; margin-bottom: 50px;">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box" ALIGN="CENTER" style="margin-top: 20px; margin-bottom: 20px; margin-right: 10px;">
 <TR>
 	<TD COLSPAN="2">
 		<B><font color="red"><?php  putGS("Error"); ?> </font></B>
@@ -20,12 +20,8 @@ $ADReason = Input::Get('ADReason', 'string', getGS('You do not have the right to
 	</TD>
 </TR>
 <TR>
-	<TD COLSPAN="2">
-		<BLOCKQUOTE>
-		<font color="red">
-		<li><?php  print htmlspecialchars($ADReason); ?></li>
-		</font>
-		</BLOCKQUOTE>
+	<TD COLSPAN="2" align="center" style="padding-left: 15px; padding-right: 15px;">
+		<?php  print htmlspecialchars($ADReason); ?>
 	</TD>
 </TR>
 <TR>

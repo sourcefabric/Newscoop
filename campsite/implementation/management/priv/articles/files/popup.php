@@ -21,9 +21,6 @@ if (!Input::IsValid()) {
 	exit;	
 }
 
-$publicationObj =& new Publication($f_publication_id);
-$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
-$sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
 $articleObj =& new Article($f_language_selected, $f_article_number);
 ?>
 <html>
@@ -77,9 +74,6 @@ $articleObj =& new Article($f_language_selected, $f_article_number);
 <TR>
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">
-    <INPUT TYPE="HIDDEN" NAME="f_publication_id" VALUE="<?php  p($f_publication_id); ?>">
-    <INPUT TYPE="HIDDEN" NAME="f_issue_number" VALUE="<?php  p($f_issue_number); ?>">
-    <INPUT TYPE="HIDDEN" NAME="f_section_number" VALUE="<?php  p($f_section_number); ?>">
     <INPUT TYPE="HIDDEN" NAME="f_article_number" VALUE="<?php  p($f_article_number); ?>">
     <INPUT TYPE="HIDDEN" NAME="f_language_id" VALUE="<?php  p($f_language_id); ?>">
     <INPUT TYPE="HIDDEN" NAME="f_language_selected" VALUE="<?php  p($f_language_selected); ?>">

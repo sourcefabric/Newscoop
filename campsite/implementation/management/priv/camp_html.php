@@ -15,16 +15,20 @@ require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/lib_campsite.php");
  * @param string $p_value
  * @param string $p_selectedValue
  * @param string $p_printValue
- * @return void
+ * @return boolean
+ * 		Return TRUE if the option is selected, FALSE if not.
  */
 function camp_html_select_option($p_value, $p_selectedValue, $p_printValue) 
 {
+	$selected = false;
 	$str = '<OPTION VALUE="'.htmlspecialchars($p_value, ENT_QUOTES).'"';
 	if (!strcmp($p_value, $p_selectedValue)) {
 		$str .= ' SELECTED';
+		$selected = true;
 	}
 	$str .= '>'.htmlspecialchars($p_printValue)."</OPTION>\n";
 	echo $str;
+	return $selected;
 } // fn camp_html_select_option
 
 
@@ -278,12 +282,9 @@ function camp_html_content_top($p_title, $p_objArray, $p_includeLinks = true,
 function camp_html_breadcrumbs($p_crumbs) 
 {
     $lastCrumb = array_pop($p_crumbs);
-//    $secondToLastCrumb = array_pop($p_crumbs);
     $str = '<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" bgcolor="#D5E2EE" width="100%">';
     if (count($p_crumbs) > 0) {
 	   	$str .= '<TR><TD align="left" style="border-top: 1px solid #8BAED1; padding-left: 1.25em; padding-top: 3px;">';
-	    //$str .= "<span style='font-weight: bold; color: #2F2F2F;'></span>";
-	    //$str .= "</TD><TD style='padding-bottom: 2px; padding-top: 2px; padding-left: 0.5em;'>";
 	    $tmpCrumbs = array();
 		foreach ($p_crumbs as $crumb) {
 		    if (count($crumb) == 2) {
@@ -293,12 +294,6 @@ function camp_html_breadcrumbs($p_crumbs)
 	    	    $str .= camp_html_breadcrumb($crumb[0], $crumb[1], $crumb[2]);
 		    }
 		}
-//	    if (count($secondToLastCrumb) == 2) {
-//		    $str .= camp_html_breadcrumb($secondToLastCrumb[0], $secondToLastCrumb[1], false, false);
-//	    }
-//	    else {
-//		    $str .= camp_html_breadcrumb($secondToLastCrumb[0], $secondToLastCrumb[1], $secondToLastCrumb[2], false);
-//	    }
 	    $str .= '</TD></TR>';
     }
     $str .= '<TR>';

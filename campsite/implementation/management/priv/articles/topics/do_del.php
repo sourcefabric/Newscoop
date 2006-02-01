@@ -32,8 +32,8 @@ if (!$topic->exists()) {
 	exit;	
 }
 
-if (!$articleObj->userCanModify($User)) {
-	camp_html_display_error(getGS("You do not have the right to add topics to article."));
+if (!$User->hasPermission('AttachTopicToArticle')) {
+	camp_html_display_error(getGS("You do not have the right to attach topics to articles."));
 	exit;	
 }
 ArticleTopic::RemoveTopicFromArticle($f_topic_id, $f_article_number);

@@ -1,9 +1,6 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/db_connect.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/common.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Publication.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Issue.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Section.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/DynMenuItem.php");
 load_common_include_files("home");
 list($access, $User) = check_basic_access($_REQUEST);
@@ -50,29 +47,15 @@ $menu_item =& DynMenuItem::Create(getGS('Image Archive'), "/$ADMIN/imagearchive/
 $menu_content->addItem($menu_item);
 $menu_content->addSplit();
 
-$publications = Publication::GetPublications();
-$issues = array();
-$sections = array();
-foreach ($publications as $publication) {
-	$issues[$publication->getPublicationId()] = 
-		Issue::GetIssues($publication->getPublicationId(), null, null, $publication->getLanguageId(), 
-			array('ORDER BY'=>array('Number'=>'DESC'), 'LIMIT' => '5'));
-	foreach ($issues[$publication->getPublicationId()] as $issue) {
-		$sections[$issue->getPublicationId()][$issue->getIssueNumber()][$issue->getLanguageId()] = 
-			Section::GetSections($issue->getPublicationId(), 
-				$issue->getIssueNumber(), $issue->getLanguageId());
-	}
-}
-
 $icon_bullet = '<img src="'.$Campsite["ADMIN_IMAGE_BASE_URL"].'/tol.gif" align="middle" style="padding-bottom: 3px;" width="16" height="16" />';
-foreach ($publications as $publication) {
+foreach ($Campsite["publications"] as $publication) {
     $pubId = $publication->getPublicationId();
     $menu_item_pub =& DynMenuItem::Create(camp_javascriptspecialchars($publication->getName()), 
                                           "/$ADMIN/issues/index.php?Pub=$pubId",
                                           array("icon" => $icon_bullet));
     $menu_content->addItem($menu_item_pub);
-	if (isset($issues[$pubId])) {
-		foreach ($issues[$pubId] as $issue) {
+	if (isset($Campsite["issues"][$pubId])) {
+		foreach ($Campsite["issues"][$pubId] as $issue) {
 			$issueId = $issue->getIssueNumber();
 			$languageId = $issue->getLanguageId();
 			$issueIndexLink = "/$ADMIN/sections/index.php?Pub=$pubId&Issue=$issueId&Language=$languageId";
@@ -80,8 +63,8 @@ foreach ($publications as $publication) {
 			     $issueIndexLink,
 			     array("icon" => $icon_bullet));
 			$menu_item_pub->addItem($menu_item_issue);
-			if (isset($sections[$pubId][$issueId][$languageId])) {
-				foreach ($sections[$pubId][$issueId][$languageId] as $section) {
+			if (isset($Campsite["sections"][$pubId][$issueId][$languageId])) {
+				foreach ($Campsite["sections"][$pubId][$issueId][$languageId] as $section) {
 				    $sectionId = $section->getSectionNumber();
 				    $menu_item_section =& DynMenuItem::Create(
 				        camp_javascriptspecialchars($section->getName()),
@@ -93,7 +76,7 @@ foreach ($publications as $publication) {
 				        array("icon" => $icon_bullet));
 				    $menu_item_issue->addItem($menu_item_section);
 				}
-				if (count($sections[$pubId][$issueId][$languageId]) > 0) {
+				if (count($Campsite["sections"][$pubId][$issueId][$languageId]) > 0) {
 					$menu_item_issue->addSplit();
 					$menu_item =& DynMenuItem::Create(getGS("More..."), $issueIndexLink,
 		                array("icon" => $icon_bullet));
@@ -101,7 +84,7 @@ foreach ($publications as $publication) {
 				}
 			}
 		}
-		if (count($issues[$pubId]) > 0) {
+		if (count($Campsite["issues"][$pubId]) > 0) {
 			$menu_item_pub->addSplit();
 			$menu_item =& DynMenuItem::Create(getGS("More..."), 
 	            "/$ADMIN/issues/index.php?Pub=$pubId",
@@ -116,7 +99,7 @@ $menu_actions =& DynMenuItem::Create(getGS("Actions"), '',
 $menu_root->addItem($menu_actions);
 
 if ($User->hasPermission("AddArticle")) { 
-    $menu_item =& DynMenuItem::Create(getGS('Add new article'), "/$ADMIN/pub/add_article.php",
+    $menu_item =& DynMenuItem::Create(getGS('Add new article'), "/$ADMIN/articles/add.php",
         array("icon" => sprintf($iconTemplateStr, "add_article.png")));
     $menu_actions->addItem($menu_item);
 }

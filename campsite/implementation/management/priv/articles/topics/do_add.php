@@ -22,12 +22,12 @@ if (!Input::IsValid()) {
 if (!is_null($f_topic_ids)) {
 	$articleObj =& new Article($f_language_selected, $f_article_number);
 	if (!$articleObj->exists()) {
-		camp_html_display_error(getGS('Article does not exist.'));
+		camp_html_display_error(getGS('Article does not exist.'), null, true);
 		exit;		
 	}
 	
-	if (!$articleObj->userCanModify($User)) {
-		camp_html_display_error(getGS("You do not have the right to add topics to article."));
+	if (!$User->hasPermission('AttachTopicToArticle')) {
+		camp_html_display_error(getGS("You do not have the right to attach topics to articles."), null, true);
 		exit;	
 	}
 	

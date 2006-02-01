@@ -192,10 +192,10 @@ class Article extends DatabaseObject {
 	 *
 	 * @param int $p_destPublicationId -
 	 *		The destination publication ID.
-	 * @param int $p_destIssueId -
-	 *		The destination issue ID.
-	 * @param int $p_destSectionId -
-	 * 		The destination section ID.
+	 * @param int $p_destIssueNumber -
+	 *		The destination issue number.
+	 * @param int $p_destSectionNumber -
+	 * 		The destination section number.
 	 * @param int $p_userId -
 	 *		The user creating the copy.  If null, keep the same user ID as the original.
 	 * @param mixed $p_copyTranslations -
@@ -208,7 +208,7 @@ class Article extends DatabaseObject {
 	 *     If $p_copyTranslations is TRUE or an array, return an array of newly created articles.
 	 *     If $p_copyTranslations is FALSE, return the new Article.
 	 */
-	function copy($p_destPublicationId, $p_destIssueId, $p_destSectionId, 
+	function copy($p_destPublicationId = 0, $p_destIssueNumber = 0, $p_destSectionNumber = 0, 
 	              $p_userId = null, $p_copyTranslations = false) 
 	{
 		global $Campsite;
@@ -235,6 +235,7 @@ class Article extends DatabaseObject {
 		}
 		$newArticleNumber = $this->__generateArticleNumber();
 
+		// Load translation file for log message.
 		if (function_exists("camp_load_language")) { camp_load_language("api");	}
 		$logtext = '';
 		$newArticles = array();
@@ -242,8 +243,8 @@ class Article extends DatabaseObject {
     		// Construct the duplicate article object.
     		$articleCopy =& new Article();
     		$articleCopy->m_data['IdPublication'] = $p_destPublicationId; 
-    		$articleCopy->m_data['NrIssue'] = $p_destIssueId; 
-    		$articleCopy->m_data['NrSection'] = $p_destSectionId; 
+    		$articleCopy->m_data['NrIssue'] = $p_destIssueNumber; 
+    		$articleCopy->m_data['NrSection'] = $p_destSectionNumber; 
     		$articleCopy->m_data['IdLanguage'] = $copyMe->m_data['IdLanguage']; 
     		$articleCopy->m_data['Number'] = $newArticleNumber; 
     		$values = array();
@@ -288,7 +289,7 @@ class Article extends DatabaseObject {
     		ArticleAttachment::OnArticleCopy($copyMe->m_data['Number'], $articleCopy->m_data['Number']);
     		
     		// Position the new article at the beginning of the section
-    		$articleCopy->moveAbsolute(1);
+    		$articleCopy->positionAbsolute(1);
     		
     		$newArticles[] = $articleCopy;
 			$logtext .= getGS('Article #$1 "$2" ($3) copied to Article #$3. ',
@@ -303,6 +304,37 @@ class Article extends DatabaseObject {
 		  return array_pop($newArticles);
 		}
 	} // fn copy
+	
+	
+	/**
+	 * This is a convenience function to move an article from 
+	 * one section to another.
+	 *
+	 * @param int $p_destPublicationId -
+	 *		The destination publication ID.
+	 * @param int $p_destIssueNumber -
+	 *		The destination issue number.
+	 * @param int $p_destSectionNumber -
+	 * 		The destination section number.
+	 *
+	 * @return void
+	 */
+	function move($p_destPublicationId = 0, $p_destIssueNumber = 0, $p_destSectionNumber = 0)
+	{
+		$columns = array();
+		if ($this->m_data["IdPublication"] != $p_destPublicationId) {
+			$columns["IdPublication"] = $p_destPublicationId;
+		}
+		if ($this->m_data["NrIssue"] != $p_destIssueNumber) {
+			$columns["NrIssue"] = $p_destIssueNumber;
+		}
+		if ($this->m_data["NrSection"] != $p_destSectionNumber) {
+			$columns["NrSection"] = $p_destSectionNumber;
+		}
+		if (count($columns) > 0) {
+			$this->update($columns);
+		}
+	} // fn move
 	
 	
 	/**
@@ -587,7 +619,7 @@ class Article extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function moveRelative($p_direction, $p_spacesToMove = 1)
+	function positionRelative($p_direction, $p_spacesToMove = 1)
 	{
 		global $Campsite;
 		
@@ -630,7 +662,7 @@ class Article extends DatabaseObject {
 		// Re-fetch this article to get the updated article order.
 		$this->fetch();
 		return true;
-	} // fn moveRelative
+	} // fn positionRelative
 	
 	
 	/**
@@ -638,7 +670,7 @@ class Article extends DatabaseObject {
 	 * @param int $p_position
 	 * @return boolean
 	 */
-	function moveAbsolute($p_moveToPosition = 1) 
+	function positionAbsolute($p_moveToPosition = 1) 
 	{
 		global $Campsite;
 		// Get the article that is in the location we are moving
@@ -683,7 +715,7 @@ class Article extends DatabaseObject {
 		
 		$this->fetch();
 		return true;
-	} // fn moveAbsolute
+	} // fn positionAbsolute
 	
 
 	/**
@@ -1250,7 +1282,10 @@ class Article extends DatabaseObject {
 	function GetSubmittedArticles($p_start = 0, $p_upperLimit = 20) 
 	{
 		global $Campsite;
-		$queryStr = 'SELECT * FROM Articles'
+		$tmpArticle =& new Article();
+		$columnNames = $tmpArticle->getColumnNames(true);
+		$queryStr = 'SELECT '.implode(", ", $columnNames)
+					.' FROM Articles '
 	    			." WHERE Published = 'S' "
 	    			.' ORDER BY Number DESC, IdLanguage '
 	    			." LIMIT $p_start, $p_upperLimit";

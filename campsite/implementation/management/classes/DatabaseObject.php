@@ -456,6 +456,9 @@ class DatabaseObject {
 	/**
 	 * Set the given column name to the given value.
 	 * The object's internal variable will also be updated.
+	 * If the value hasnt changed, the database will not be updated.
+	 * Note: You cannot set $p_commit to FALSE and $p_isSql to TRUE
+	 * at the same time.
 	 *
 	 * @param string $p_dbColumnName
 	 *		The name of the column that is to be updated.

@@ -8,11 +8,13 @@ if (!$access) {
 	exit;
 }
 
-$f_publication_id = Input::Get('f_publication_id', 'int', 0);
-$f_issue_number = Input::Get('f_issue_number', 'int', 0);
-$f_section_number = Input::Get('f_section_number', 'int', 0);
+// Optional input parameters
+$f_publication_id = Input::Get('f_publication_id', 'int', 0, true);
+$f_issue_number = Input::Get('f_issue_number', 'int', 0, true);
+$f_section_number = Input::Get('f_section_number', 'int', 0, true);
+$f_language_id = Input::Get('f_language_id', 'int', 0, true);
+
 $f_article_code = Input::Get('f_article_code', 'string', 0);
-$f_language_id = Input::Get('f_language_id', 'int', 0);
 $BackLink = Input::Get('Back', 'string', "/$ADMIN/articles/", true);
 
 list($articleNumber, $languageId) = split("_", $f_article_code);
@@ -21,23 +23,6 @@ if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
 	exit;	
 }
-$publicationObj =& new Publication($f_publication_id);
-if (!$publicationObj->exists()) {
-	camp_html_display_error(getGS('Publication does not exist.'), $BackLink);
-	exit;	
-}
-
-$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
-if (!$issueObj->exists()) {
-	camp_html_display_error(getGS('No such issue.'), $BackLink);
-	exit;	
-}
-
-$sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
-if (!$sectionObj->exists()) {
-	camp_html_display_error(getGS('No such section.'), $BackLink);
-	exit;		
-}
 
 $articleObj =& new Article($languageId, $articleNumber);
 if (!$articleObj->exists()) {
@@ -45,8 +30,32 @@ if (!$articleObj->exists()) {
 	exit;
 }
 
-if (!$User->hasPermission("AddArticle")) {
-	$errorStr = getGS('You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.');
+$f_publication_id = ($f_publication_id > 0) ? $f_publication_id : $articleObj->getPublicationId();
+$f_issue_number = ($f_issue_number > 0) ? $f_issue_number : $articleObj->getIssueNumber();
+$f_section_number = ($f_section_number > 0) ? $f_section_number : $articleObj->getSectionNumber();
+
+if ($f_publication_id > 0) {
+	$publicationObj =& new Publication($f_publication_id);
+	if (!$publicationObj->exists()) {
+		camp_html_display_error(getGS('Publication does not exist.'), $BackLink);
+		exit;	
+	}
+	
+	$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
+	if (!$issueObj->exists()) {
+		camp_html_display_error(getGS('No such issue.'), $BackLink);
+		exit;	
+	}
+	
+	$sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
+	if (!$sectionObj->exists()) {
+		camp_html_display_error(getGS('No such section.'), $BackLink);
+		exit;		
+	}
+}
+
+if (!$User->hasPermission("TranslateArticle")) {
+	$errorStr = getGS('You do not have the right to translate articles.');
 	camp_html_display_error($errorStr, $BackLink);
 	exit;	
 }
@@ -57,26 +66,39 @@ if (!$User->hasPermission("AddArticle")) {
 $f_translation_title = Input::Get('f_translation_title', 'string', '', true);
 $f_language_selected = Input::Get('f_translation_language', 'int', 0, true);
 $f_translation_language = Input::Get('f_translation_language', 'int', 0, true);
-$f_translation_issue_name = Input::Get('f_issue_name', 'string', $issueObj->getName(), true);
-$f_translation_issue_urlname = Input::Get('f_issue_urlname', 'string', $issueObj->getUrlName(), true);
-$f_translation_section_name = Input::Get('f_section_name', 'string', $sectionObj->getName(), true);
-$f_translation_section_urlname = Input::Get('f_section_urlname', 'string', $sectionObj->getUrlName(), true);
+
+if ($f_publication_id > 0) {
+	$f_translation_issue_name = Input::Get('f_issue_name', 'string', $issueObj->getName(), true);
+	$f_translation_issue_urlname = Input::Get('f_issue_urlname', 'string', $issueObj->getUrlName(), true);
+	$f_translation_section_name = Input::Get('f_section_name', 'string', $sectionObj->getName(), true);
+	$f_translation_section_urlname = Input::Get('f_section_urlname', 'string', $sectionObj->getUrlName(), true);
+}
 
 $allLanguages = Language::GetLanguages();
 $articleLanguages = $articleObj->getLanguages();
 $articleLanguages = DbObjectArray::GetColumn($articleLanguages, "Id");
 
-$topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
-				  'Section' => $sectionObj, 'Article'=>$articleObj);
-camp_html_content_top(getGS('Translate article'), $topArray, true, true);
+if ($f_publication_id > 0) {
+	$topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
+					  'Section' => $sectionObj, 'Article'=>$articleObj);
+	camp_html_content_top(getGS('Translate article'), $topArray, true, true);
+} else {
+	$crumbs = array();
+	$crumbs[] = array(getGS("Actions"), "");
+	$crumbs[] = array(getGS('Translate article'), "");
+	echo camp_html_breadcrumbs($crumbs);		
+}
 ?>
 <P>
 <FORM NAME="dialog" METHOD="POST" ACTION="do_translate.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
 <INPUT TYPE="HIDDEN" NAME="f_article_code" VALUE="<?php  p($f_article_code); ?>">
+<?php if ($f_publication_id > 0) { ?>
 <INPUT TYPE="HIDDEN" NAME="f_language_id" VALUE="<?php  p($f_language_id); ?>">
 <input type='hidden' name='f_publication_id' value="<?php p($f_publication_id); ?>">
 <input type='hidden' name='f_issue_number' value="<?php p($f_issue_number); ?>">
 <input type='hidden' name='f_section_number' value="<?php p($f_section_number); ?>">
+<?php } ?>
+
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input" width="600px">
 <TR>
 	<TD COLSPAN="2">
@@ -117,7 +139,7 @@ camp_html_content_top(getGS('Translate article'), $topArray, true, true);
 </TR>
 <?php
 	$canCreate = true;
-	if ($f_language_selected > 0) {
+	if ( ($f_language_selected > 0) && ($f_issue_number > 0) ) {
 		$translationIssueObj =& new Issue($f_publication_id, $f_language_selected, $f_issue_number);
 		if (!$translationIssueObj->exists()) {
 			if ($User->hasPermission("ManageIssue")) {

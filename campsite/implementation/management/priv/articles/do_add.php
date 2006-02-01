@@ -14,13 +14,21 @@ if (!$User->hasPermission('AddArticle')) {
 }
 
 // Get input
-$f_publication_id = Input::Get('f_publication_id', 'int', 0);
-$f_issue_number = Input::Get('f_issue_number', 'int', 0);
-$f_section_number = Input::Get('f_section_number', 'int', 0);
-$f_language_id = Input::Get('f_language_id', 'int', 0);
+$f_publication_id = Input::Get('f_publication_id', 'int', 0, true);
+$f_issue_number = Input::Get('f_issue_number', 'int', 0, true);
+$f_section_number = Input::Get('f_section_number', 'int', 0, true);
+$f_language_id = Input::Get('f_language_id', 'int', 0, true);
+
+// For choosing the article location.
+$f_destination_publication_id = Input::Get('f_destination_publication_id', 'int', 0, true);
+$f_destination_issue_number = Input::Get('f_destination_issue_number', 'int', 0, true);
+$f_destination_section_number = Input::Get('f_destination_section_number', 'int', 0, true);
+
 $f_article_name = trim(Input::Get('f_article_name', 'string', ''));
 $f_article_type = trim(Input::Get('f_article_type', 'string', ''));
 $f_article_language = trim(Input::Get('f_article_language', 'int', 0));
+
+$f_language_id = ($f_language_id > 0) ? $f_language_id : $f_article_language;
 
 // Check input
 if (empty($f_article_name)) {
@@ -43,31 +51,48 @@ if (!Input::IsValid()) {
 	exit;	
 }
 
-$publicationObj =& new Publication($f_publication_id);
-if (!$publicationObj->exists()) {
-	camp_html_display_error(getGS('Publication does not exist.'));
-	exit;	
-}
+$publication_id = ($f_destination_publication_id > 0) ? $f_destination_publication_id : $f_publication_id;
+$issue_number = ($f_destination_issue_number > 0) ? $f_destination_issue_number : $f_issue_number;
+$section_number = ($f_destination_section_number > 0) ? $f_destination_section_number : $f_section_number;
 
-$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
-if (!$issueObj->exists()) {
-	camp_html_display_error(getGS('Issue does not exist.'));
-	exit;	
-}
+if ($publication_id > 0) {
+	$publicationObj =& new Publication($publication_id);
+	if (!$publicationObj->exists()) {
+		camp_html_display_error(getGS('Publication does not exist.'));
+		exit;	
+	}
 
-$sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
-if (!$sectionObj->exists()) {
-	camp_html_display_error(getGS('Section does not exist.'));
-	exit;	
+	if ($issue_number > 0) {
+		$issueObj =& new Issue($publication_id, $f_article_language, $issue_number);
+		if (!$issueObj->exists()) {
+			camp_html_display_error(getGS('Issue does not exist.'));
+			exit;	
+		}
+
+		if ($section_number > 0) {
+			$sectionObj =& new Section($publication_id, $issue_number, $f_article_language, $section_number);
+			if (!$sectionObj->exists()) {
+				camp_html_display_error(getGS('Section does not exist.'));
+				exit;	
+			}
+		}
+	}
 }
 
 // Create article
 $articleObj =& new Article($f_article_language);
 $articleObj->create($f_article_type, $f_article_name);
 if ($articleObj->exists()) {
-	$articleObj->setPublicationId($f_publication_id);
-	$articleObj->setIssueNumber($f_issue_number);
-	$articleObj->setSectionNumber($f_section_number);
+	if ($publication_id > 0) {
+		$articleObj->setPublicationId($publication_id);
+	}
+	if ($issue_number > 0) {
+		$articleObj->setIssueNumber($issue_number);
+	}
+	if ($section_number > 0) {
+		$articleObj->setSectionNumber($section_number);
+	} 
+	
 	$articleObj->setUserId($User->getUserId());
 	$articleObj->setIsPublic(true);
 	

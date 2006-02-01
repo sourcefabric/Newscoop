@@ -35,6 +35,8 @@ class Section extends DatabaseObject {
 		'ShortName',
 		'SectionTplId',
 		'ArticleTplId');
+
+	var $m_languageName = null;
 	
 	/**
 	 * A section is a part of an issue.
@@ -204,6 +206,23 @@ class Section extends DatabaseObject {
 	{
 		return $this->getProperty('IdLanguage');
 	} // fn getLanguageId
+	
+	
+	/**
+	 * A simple way to get the name of the language the article is 
+	 * written in.  The value is cached in case there are multiple
+	 * calls to this function.
+	 *
+	 * @return string
+	 */
+	function getLanguageName() 
+	{
+		if (is_null($this->m_languageName)) {
+			$language =& new Language($this->m_data['IdLanguage']);
+			$this->m_languageName = $language->getNativeName();
+		}
+		return $this->m_languageName;		
+	} // fn getLanguageName
 	
 	
 	/**

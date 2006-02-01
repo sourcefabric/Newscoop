@@ -167,10 +167,13 @@ xinha_init = xinha_init ? xinha_init : function()
 	<?php if ($p_user->hasPermission("EditorEnlarge")) { ?>
     'FullScreen',
     <?php } ?>
-    'WordPaste',
+    <?php if ($p_user->hasPermission('EditorCharacterMap')) { ?>
     'CharacterMap',
+    <?php } ?>
+    <?php if ($p_user->hasPermission('EditorFindReplace')) { ?>
     'FindReplace',
-    //'RemoveParagraphs'
+    <?php } ?>
+    'WordPaste'
   ];
 	// THIS BIT OF JAVASCRIPT LOADS THE PLUGINS, NO TOUCHING  :)
 	if(!HTMLArea.loadPlugins(xinha_plugins, xinha_init)) return;
@@ -217,9 +220,12 @@ xinha_init = xinha_init ? xinha_init : function()
    xinha_config.btnList["createlink"] = [ "Insert Web Link", linkIcon, false, function(e) {e._createLink();} ],
    // Change the removeformat button to work in text mode.
    xinha_config.btnList["removeformat"] = [ "Remove formatting", ["ed_buttons_main.gif",4,4], true, function(e) {e.execCommand("removeformat");} ],
+   
+   <?php if ($p_user->hasPermission('EditorFindReplace')) { ?>
    // Put the "find-replace" plugin in a better location
    xinha_config.addToolbarElement([], ["FR-findreplace"], 0);
-
+   <?php } ?>
+   
    // Add in our style sheet for the "subheads".
    xinha_config.pageStyle = "<?php echo str_replace("\n", "", file_get_contents($stylesheetFile)); ?>";
    

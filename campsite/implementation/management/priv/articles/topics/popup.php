@@ -11,11 +11,17 @@ if (!$access) {
 	exit;
 }
 
+if (!$User->hasPermission("AttachTopicToArticle")) {
+	$errorStr = getGS('You do not have the right to attach topics to articles.');
+	camp_html_display_error($errorStr, null, true);
+	exit;	
+}
+
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI'], true);
 	exit;	
 }
 

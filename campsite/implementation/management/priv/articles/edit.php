@@ -10,10 +10,13 @@ if (!$access) {
 	exit;
 }
 
-$f_publication_id = Input::Get('f_publication_id', 'int', 0);
-$f_issue_number = Input::Get('f_issue_number', 'int', 0);
-$f_section_number = Input::Get('f_section_number', 'int', 0);
-$f_language_id = Input::Get('f_language_id', 'int', 0);
+// These are optional, depending on whether you are in a section
+// or whether editing an article that doesnt have a location.
+$f_publication_id = Input::Get('f_publication_id', 'int', 0, true);
+$f_issue_number = Input::Get('f_issue_number', 'int', 0, true);
+$f_section_number = Input::Get('f_section_number', 'int', 0, true);
+$f_language_id = Input::Get('f_language_id', 'int', 0, true);
+
 $f_article_number = Input::Get('f_article_number', 'int', 0);
 $f_unlock = Input::Get('f_unlock', 'string', false, true);
 
@@ -40,12 +43,15 @@ $dbColumns = $articleData->getUserDefinedColumns();
 $articleImages = ArticleImage::GetImagesByArticleNumber($f_article_number);
 $lockUserObj =& new User($articleObj->getLockedByUser());
 $articleCreator =& new User($articleObj->getCreatorId());
-$publicationObj =& new Publication($f_publication_id);
-$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
-$sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
 $articleEvents = ArticlePublish::GetArticleEvents($f_article_number, $f_language_selected, true);
 $articleTopics = ArticleTopic::GetArticleTopics($f_article_number, $f_language_selected);
 $articleFiles = ArticleAttachment::GetAttachmentsByArticleNumber($f_article_number, $f_language_selected);
+
+if ($f_publication_id > 0) {
+	$publicationObj =& new Publication($f_publication_id);
+	$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
+	$sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
+}
 
 // Automatically switch to "view" mode if user doesnt have permissions.
 if (!$articleObj->userCanModify($User)) {
@@ -91,15 +97,23 @@ if ($articleObj->getLockedByUser() == $User->getUserId()) {
 //
 // Begin Display of page
 //
-$topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
-				  'Section' => $sectionObj, 'Article'=>$articleObj);
 if ($f_edit_mode == "edit") {
 	$title = getGS("Edit article");
 }
 else {
 	$title = getGS("View article");
-}	  
-camp_html_content_top($title, $topArray);
+}
+
+if ($f_publication_id > 0) {
+	$topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
+					  'Section' => $sectionObj, 'Article'=>$articleObj);
+	camp_html_content_top($title, $topArray);
+} else {
+	$crumbs = array();
+	$crumbs[] = array(getGS("Actions"), "");
+	$crumbs[] = array($title, "");
+	echo camp_html_breadcrumbs($crumbs);	
+}
 
 $hasArticleBodyField = false;
 foreach ($dbColumns as $dbColumn) {
@@ -238,15 +252,25 @@ if ($f_edit_mode == "edit") { ?>
 						
 						<?php  if ($User->hasPermission('AddArticle')) { ?>
 						<OPTION value="copy"><?php putGS("Duplicate"); ?></OPTION>
+						<?php } ?>
+						
+						<?php if ($User->hasPermission('TranslateArticle')) { ?>
 						<OPTION value="translate"><?php putGS("Translate"); ?></OPTION>
-						<?php } ?>				
+						<?php } ?>
+						
+						<?php if ($User->hasPermission('MoveArticle')) { ?>
+						<OPTION value="move"><?php putGS("Move"); ?></OPTION>
+						<?php } ?>
 						</SELECT>
 					</TD>
+					
+					<?php if ($f_publication_id > 0) { ?>
 					<TD>
 						<!-- Preview Link -->
 						<A HREF="" ONCLICK="window.open('/<?php echo $ADMIN; ?>/articles/preview.php?f_publication_id=<?php  p($f_publication_id); ?>&f_issue_number=<?php  p($f_issue_number); ?>&f_section_number=<?php  p($f_section_number); ?>&f_article_number=<?php  p($f_article_number); ?>&f_language_id=<?php  p($f_language_id); ?>&f_language_selected=<?php  p($f_language_selected); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=no, width=680, height=560'); return false"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/preview.png" BORDER="0" alt="<?php putGS("Preview"); ?>" title="<?php putGS("Preview"); ?>"></A>
 					</TD>
-		
+					<?php } ?>
+					
 					<!-- BEGIN Workflow -->
 					<TD style="padding-left: 1em;">
 						<?php 
@@ -658,7 +682,7 @@ if ($f_edit_mode == "edit") { ?>
 						<TD align="left">
 						<b><?php putGS("Images"); ?></b>
 						</td>
-						<?php if (($f_edit_mode == "edit") && $User->hasPermission('AddImage')) {  ?>
+						<?php if (($f_edit_mode == "edit") && $User->hasPermission('AttachImageToArticle')) {  ?>
 						<td align="right">
 							<img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/add.png" border="0">
 							<a href="javascript: void(0);" onclick="window.open('<?php echo camp_html_article_url($articleObj, $f_language_id, "images/popup.php"); ?>', 'attach_image', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=750, height=600, top=200, left=100');"><?php putGS("Attach"); ?></a>
@@ -685,7 +709,7 @@ if ($f_edit_mode == "edit") { ?>
 						<td align="center" valign="middle">
 							<?php if ($f_edit_mode == "edit") { ?><a href="<?php p($imageEditUrl); ?>"><?php } ?><img src="<?php p($image->getThumbnailUrl()); ?>" border="0"><?php if ($f_edit_mode == "edit") { ?></a><?php } ?>
 						</td>
-						<?php if ($f_edit_mode == "edit") { ?>
+						<?php if (($f_edit_mode == "edit") && $User->hasPermission('AttachImageToArticle')) { ?>
 						<td>
 							<a href="<?php p($detachUrl); ?>" onclick="return confirm('<?php putGS("Are you sure you want to remove the image \\'$1\\' from the article?", camp_javascriptspecialchars($image->getDescription())); ?>');"><img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/unlink.png" border="0"></a>
 						</td>
@@ -767,7 +791,7 @@ if ($f_edit_mode == "edit") { ?>
 						<TD align="left">
 						<b><?php putGS("Topics"); ?></b>
 						</td>
-						<?php if ($f_edit_mode == "edit") {  ?>
+						<?php if (($f_edit_mode == "edit") && $User->hasPermission('AttachTopicToArticle')) {  ?>
 						<td align="right">
 							<img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/add.png" border="0">
 							<a href="javascript: void(0);" onclick="window.open('<?php echo camp_html_article_url($articleObj, $f_language_id, "topics/popup.php"); ?>', 'attach_topic', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=300, height=400, top=200, left=200');"><?php putGS("Attach"); ?></a>
@@ -795,7 +819,7 @@ if ($f_edit_mode == "edit") { ?>
 							?>
 							<?php p(wordwrap($pathStr, 25, "<br>&nbsp;&nbsp;", true)); ?>
 						</td>
-						<?php if ($f_edit_mode == "edit") { ?>
+						<?php if (($f_edit_mode == "edit") && $User->hasPermission('AttachTopicToArticle')) { ?>
 						<td>
 							<a href="<?php p($detachUrl); ?>" onclick="return confirm('<?php putGS("Are you sure you want to remove the topic \\'$1\\' from the article?", camp_javascriptspecialchars($tmpArticleTopic->getName())); ?>');"><img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/unlink.png" border="0"></a>
 						</td>
