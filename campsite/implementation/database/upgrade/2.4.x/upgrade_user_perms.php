@@ -25,7 +25,7 @@ if (!mysql_select_db($db_name)) {
 //
 // Add new permissions for each user.
 //
-if (!($res = mysql_query("SELECT DISTINCT(fk_user_id) FROM UserConfig"))) {
+if (!($res = mysql_query("SELECT DISTINCT(fk_user_id) FROM UserConfig WHERE fk_user_id!=0"))) {
 	die("Unable to read from the database.\n");
 }
 while ($row = mysql_fetch_array($res, MYSQL_ASSOC)) {
@@ -60,6 +60,17 @@ while ($row = mysql_fetch_array($res, MYSQL_ASSOC)) {
 	// Add the "AttachImageToArticle" permission.
 	$sql = "INSERT INTO UserConfig(fk_user_id, varname, value) "
 			." VALUES (".$row['fk_user_id'].", 'AttachImageToArticle', '".$row2['value']."')";
+	mysql_query($sql);
+	
+	// Set the new "ChangeSystemPreferences" permission to have the same value as the 
+	// "InitializeTemplateEngine" permission.
+	$sql = "SELECT value FROM UserConfig WHERE fk_user_id=".$row['fk_user_id']." AND varname='InitializeTemplateEngine'";
+	$result = mysql_query($sql);
+	$row2 = mysql_fetch_array($result, MYSQL_ASSOC);
+	
+	// Add the "ChangeSystemPreferences" permission.
+	$sql = "INSERT INTO UserConfig(fk_user_id, varname, value) "
+			." VALUES (".$row['fk_user_id'].", 'ChangeSystemPreferences', '".$row2['value']."')";
 	mysql_query($sql);
 	
 	// Add the "AttachTopicToArticle" permission.
@@ -121,6 +132,17 @@ while ($row = mysql_fetch_array($res, MYSQL_ASSOC)) {
 	// Add the "AttachImageToArticle" permission.
 	$sql = "INSERT INTO UserTypes(user_type_name, varname, value) "
 			." VALUES ('$userTypeName', 'AttachImageToArticle', '".$row2['value']."')";
+	mysql_query($sql);
+	
+	// Set the new "ChangeSystemPreferences" permission to have the same value as the 
+	// "InitializeTemplateEngine" permission.
+	$sql = "SELECT value FROM UserTypes WHERE user_type_name='$userTypeName' AND varname='InitializeTemplateEngine'";
+	$result = mysql_query($sql);
+	$row2 = mysql_fetch_array($result, MYSQL_ASSOC);
+
+	// Add the "ChangeSystemPreferences" permission.
+	$sql = "INSERT INTO UserTypes(user_type_name, varname, value) "
+			." VALUES ('$userTypeName', 'ChangeSystemPreferences', '".$row2['value']."')";
 	mysql_query($sql);
 	
 	// Add the "AttachTopicToArticle" permission.
