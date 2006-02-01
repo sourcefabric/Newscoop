@@ -127,6 +127,7 @@ class User extends DatabaseObject {
 		'EditorLink'=>'N',
 		'EditorSubhead'=>'N',
 		'InitializeTemplateEngine'=>'N',
+		'ChangeSystemPreferences'=>'N',
 		'AddFile'=>'N',
 		'ChangeFile'=>'N',
 		'DeleteFile'=>'N');		
@@ -345,6 +346,7 @@ class User extends DatabaseObject {
 						   ." WHERE fk_user_id=".$this->m_data['Id']
 						   ." AND varname='".mysql_real_escape_string($p_varName)."'";
 					$Campsite['db']->Execute($sql);
+					$this->m_config[$p_varName] = $p_value;
 				}
 			} else {
 				$sql = "INSERT INTO UserConfig SET "
@@ -352,6 +354,7 @@ class User extends DatabaseObject {
 					   ." varname='".mysql_real_escape_string($p_varName)."', "
 					   ." value='".mysql_real_escape_string($p_value)."'";
 				$Campsite['db']->Execute($sql);			
+				$this->m_config[$p_varName] = $p_value;
 			}
 		}
 	} // fn setConfigValue	

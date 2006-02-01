@@ -29,7 +29,8 @@ function camp_get_permission_list()
 		'ManageTempl'=>getGS('User may manage templates'),
 		'DeleteTempl'=>getGS('User may delete templates'));
 	
-	$administrative_group = array('InitializeTemplateEngine'=>getGS('User may restart the template engine'));
+	$administrative_group = array('InitializeTemplateEngine'=>getGS('User may restart the template engine'),
+								  'ChangeSystemPreferences'=>getGS('User may change system preferences'));
 	
 	$users_group = array(
 		'ManageUsers'=>getGS('User may add/change staff accounts and passwords'),

@@ -177,6 +177,12 @@ if ($showConfigureMenu) {
         array("icon" => sprintf($iconTemplateStr, "configure.png"), "id"=>"configure"));
     $menu_root->addItem($menu_config);
     
+    if ($User->hasPermission("ChangeSystemPreferences")) {
+        $menu_item =& DynMenuItem::Create(getGS("System Preferences"), 
+            "/$ADMIN/system_pref/",
+            array("icon" => sprintf($iconTemplateStr, "preferences.png")));
+        $menu_config->addItem($menu_item);
+    }
     if ($User->hasPermission("ManageTempl") || $User->hasPermission("DeleteTempl")) { 
         $menu_item =& DynMenuItem::Create(getGS("Templates"), 
             "/$ADMIN/templates/",

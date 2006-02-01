@@ -22,6 +22,7 @@ require_once($g_documentRoot.'/classes/ArticleIndex.php');
 require_once($g_documentRoot.'/classes/ArticleAttachment.php');
 require_once($g_documentRoot.'/classes/Language.php');
 require_once($g_documentRoot.'/classes/Log.php');
+require_once($g_documentRoot.'/classes/SystemPref.php');
 
 /**
  * @package Campsite
@@ -1072,7 +1073,9 @@ class Article extends DatabaseObject {
 	 */
 	function getKeywords() 
 	{
-		return $this->getProperty('Keywords');
+		$keywords = $this->getProperty('Keywords');
+		$keywordSeparator = SystemPref::Get("KeywordSeparator");
+		return str_replace(",", $keywordSeparator, $keywords);
 	} // fn getKeywords
 	
 	
@@ -1081,6 +1084,8 @@ class Article extends DatabaseObject {
 	 */
 	function setKeywords($p_value) 
 	{
+		$keywordsSeparator = SystemPref::Get('KeywordSeparator');
+		$p_value = str_replace($keywordsSeparator, ",", $p_value);
 		return parent::setProperty('Keywords', $p_value);
 	} // fn setKeywords
 	
