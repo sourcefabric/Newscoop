@@ -151,6 +151,14 @@ CCLex::CCLex(const char* i, lint bl)
 	isEOF = 0;
 }
 
+CCLex::~CCLex()
+{
+	if (m_pchTempBuff != NULL)
+	{
+		delete [] m_pchTempBuff;
+	}
+}
+
 // CCLex assign operator
 const CCLex& CCLex::operator =(const CCLex& s)
 {

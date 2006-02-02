@@ -169,7 +169,7 @@ public:
 	{ *this = s; }
 
 	// destructor
-	~CCLex() { delete m_pchTempBuff; }
+	~CCLex();
 
 	// reset: reset lex
 	void reset(const char* = 0, lint = 0);
