@@ -751,6 +751,8 @@ protected:
 	string format;		// if attribute is of date type, format to use for printing
 	int modifier;		// print modifier
 	int image;			// image number for printing image attributes
+	int m_nParagraphNumber; // for string type of fields: if greater than 0 will
+							// print the paragraph identified by number "m_nParagraphNumber"
 	CCParser cparser;	// article content parser
 
 	// BlobField: return 0 if field of table is blob type
@@ -764,6 +766,22 @@ protected:
 	//		const char* table - table
 	//		const char* field - table field
 	int DateField(const char* table, const char* field);
+	
+	// IsPEntity: returns true if it finds a <P> HTML entity at the given position
+	// Parameters:
+	//		string::const_iterator& p_rcoCurrent - the position in the string where to search
+	//			for the <P> HTML entity
+	//		const string::const_iterator& p_rcoEnd - the end of the string
+	static bool IsPEntity(string::const_iterator& p_rcoCurrent,
+						  const string::const_iterator& p_rcoEnd);
+
+	// IsBREntity: returns true if it finds a <BR> HTML entity at the given position
+	// Parameters:
+	//		string::const_iterator& p_rcoCurrent - the position in the string where to search
+	//			for the <BR> HTML entity
+	//		const string::const_iterator& p_rcoEnd - the end of the string
+	static bool IsBREntity(string::const_iterator& p_rcoCurrent,
+						   const string::const_iterator& p_rcoEnd);
 
 public:
 	// constructor
@@ -773,8 +791,8 @@ public:
 	//		const string& t = "" - special type (may be empty)
 	//		string f = "" - format (for date type attributes)
 	CActPrint(const string& a, int m, const string& t = string(""), bool st = false,
-	          const string& f = string(""), int i = 1) throw(InvalidModifier)
-		: attr(a), type(t), strictType(st), format(f), modifier(m), image(i)
+	          const string& f = string(""), int i = 1, int p = 0) throw(InvalidModifier)
+	: attr(a), type(t), strictType(st), format(f), modifier(m), image(i), m_nParagraphNumber(p)
 	{
 		if (!s_coModifiers.validModifier(m))
 			throw InvalidModifier();
@@ -797,6 +815,19 @@ public:
 
 	// validModifier: return true if modifier is valid; false otherwise
 	static bool validModifier(int m) { return s_coModifiers.validModifier(m); }
+
+	static bool isParagraphStart(string::const_iterator& p_rcoCurrent,
+								 const string::const_iterator& p_rcoEnd,
+								 string::const_iterator& p_rcoParagraphStart);
+
+	// printParagraph: prints only the paragraph identifier by the number "p_nParagraphNumber"
+	//		to the output stream
+	// Parameters:
+	//		const string& p_rcoText - the text to be printed
+	//		sockstream& p_rcoStream - output stream
+	//		int p_nParagraphNumber - the number of the paragraph to be printed
+	static void printParagraph(const string& p_rcoText, sockstream& p_rcoStream,
+							   int p_nParagraphNumber);
 };
 
 class CIfModifiers : public set<int>

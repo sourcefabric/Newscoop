@@ -1480,6 +1480,76 @@ int CActPrint::DateField(const char* table, const char* field)
 	return result;
 }
 
+// IsPEntity: returns true if it finds a <P> HTML entity at the given position
+// Parameters:
+//		string::const_iterator& p_rcoCurrent - the position in the string where to search
+//			for the <P> HTML entity
+//		const string::const_iterator& p_rcoEnd - the end of the string
+bool CActPrint::IsPEntity(string::const_iterator& p_rcoCurrent,
+						  const string::const_iterator& p_rcoEnd)
+{
+	if (*p_rcoCurrent != '<')
+	{
+		return false;
+	}
+	do {
+		++p_rcoCurrent;
+	} while(p_rcoCurrent != p_rcoEnd && *p_rcoCurrent >= 0 && *p_rcoCurrent <= ' ');
+	if (p_rcoCurrent == p_rcoEnd)
+	{
+		return false;
+	}
+	char chFirstChar = *p_rcoCurrent;
+	char chSecondChar = *(++p_rcoCurrent);
+	if (p_rcoCurrent == p_rcoEnd)
+	{
+		return false;
+	}
+	if (tolower(chFirstChar) == 'p' && (chSecondChar == '/' || chSecondChar == '>'
+		   || (chSecondChar >= 0 && chSecondChar <= ' ')))
+	{
+		for (; p_rcoCurrent != p_rcoEnd && *p_rcoCurrent != '>'; ++p_rcoCurrent);
+		return true;
+	}
+	return false;
+}
+
+// IsBREntity: returns true if it finds a <BR> HTML entity at the given position
+// Parameters:
+//		string::const_iterator& p_rcoCurrent - the position in the string where to search
+//			for the <BR> HTML entity
+//		const string::const_iterator& p_rcoEnd - the end of the string
+bool CActPrint::IsBREntity(string::const_iterator& p_rcoCurrent,
+						   const string::const_iterator& p_rcoEnd)
+{
+	if (*p_rcoCurrent != '<')
+	{
+		return false;
+	}
+	do {
+		++p_rcoCurrent;
+	} while(p_rcoCurrent != p_rcoEnd && *p_rcoCurrent >= 0 && *p_rcoCurrent <= ' ');
+	if (p_rcoCurrent == p_rcoEnd)
+	{
+		return false;
+	}
+	char chFirstChar = *p_rcoCurrent;
+	char chSecondChar = *(++p_rcoCurrent);
+	if (p_rcoCurrent == p_rcoEnd)
+	{
+		return false;
+	}
+	char chThirdChar = *(++p_rcoCurrent);
+	if (tolower(chFirstChar) == 'b' && tolower(chSecondChar) == 'r'
+		   && (chThirdChar == '/' || chThirdChar == '>'
+		   || (chThirdChar >= 0 && chThirdChar <= ' ')))
+	{
+		for (; p_rcoCurrent != p_rcoEnd && *p_rcoCurrent != '>'; ++p_rcoCurrent);
+		return true;
+	}
+	return false;
+}
+
 // takeAction: performs the action
 // Parametes:
 //		CContext& c - current context
@@ -1830,8 +1900,7 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 		if (strictType && type != row[0])
 			return RES_OK;
 		table = string("X") + row[0];
-		int blob;
-		blob = BlobField(table.c_str(), attr.c_str());
+		int blob = BlobField(table.c_str(), attr.c_str());
 		coQuery = string("select ") + attr + " from " + table + " where NrArticle = " + row[1]
 		          + " and IdLanguage = " + row[2];
 		DEBUGAct("takeAction()", coQuery.c_str(), fs);
@@ -1844,7 +1913,16 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 		{
 			cparser.setDebug(*m_coDebug);
 			cparser.reset(row2[0], lengths[0]);
-			cparser.parse(c, fs, &m_coSql, c.StartSubtitle(), c.AllSubtitles(), true);
+			if (m_nParagraphNumber <= 0)
+			{
+				cparser.parse(c, fs, &m_coSql, c.StartSubtitle(), c.AllSubtitles(), true);
+			}
+			else
+			{
+				ostringstream coOut;
+				cparser.parse(c, coOut, &m_coSql, c.StartSubtitle(), c.AllSubtitles(), true);
+				printParagraph(coOut.str(), fs, m_nParagraphNumber);
+			}
 		}
 		else if (DateField(table.c_str(), attr.c_str()) == 0 && format != "")
 		{
@@ -1867,6 +1945,77 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 	}
 	return RES_OK;
 	TK_CATCH_ERR
+}
+
+bool CActPrint::isParagraphStart(string::const_iterator& p_rcoCurrent,
+								 const string::const_iterator& p_rcoEnd,
+								 string::const_iterator& p_rcoParagraphStart)
+{
+	if (*p_rcoCurrent != '<')
+	{
+		return false;
+	}
+	string::const_iterator p_rcoMyCurrent = p_rcoCurrent;
+	if (CActPrint::IsPEntity(p_rcoMyCurrent, p_rcoEnd))
+	{
+		p_rcoParagraphStart = p_rcoCurrent;
+		p_rcoCurrent = p_rcoMyCurrent;
+		return true;
+	}
+	p_rcoMyCurrent = p_rcoCurrent;
+	if (CActPrint::IsBREntity(p_rcoMyCurrent, p_rcoEnd))
+	{
+		for (; p_rcoMyCurrent != p_rcoEnd && *p_rcoMyCurrent != '<'; ++p_rcoMyCurrent);
+		if (CActPrint::IsBREntity(p_rcoMyCurrent, p_rcoEnd))
+		{
+			p_rcoParagraphStart = p_rcoCurrent;
+			p_rcoCurrent = p_rcoMyCurrent;
+			return true;
+		}
+	}
+	return false;
+}
+
+// printParagraph: prints only the paragraph identifier by the number "p_nParagraphNumber"
+//		to the output stream
+// Parameters:
+//		const string& p_rcoText - the text to be printed
+//		sockstream& p_rcoStream - output stream
+//		int p_nParagraphNumber - the number of the paragraph to be printed
+void CActPrint::printParagraph(const string& p_rcoText, sockstream& p_rcoStream,
+							   int p_nParagraphNumber)
+{
+	if (p_nParagraphNumber <= 0)
+	{
+		p_rcoStream << p_rcoText;
+		return;
+	}
+	int nCurrentParagraph = 1;
+	string::const_iterator coParagraphStart = p_rcoText.begin();
+	string::const_iterator coNextParagraphStart = p_rcoText.begin();
+	string::const_iterator coFoundParagraph;
+	string::const_iterator coCurrent = p_rcoText.begin();
+	do {
+		for (; coCurrent != p_rcoText.end() && *coCurrent != '<'; ++coCurrent);
+		if (coCurrent == p_rcoText.end()
+					 || CActPrint::isParagraphStart(coCurrent, p_rcoText.end(),
+				coFoundParagraph))
+		{
+			coParagraphStart = coNextParagraphStart;
+			coNextParagraphStart = coCurrent == p_rcoText.end() ?
+					p_rcoText.end() : coFoundParagraph;
+			nCurrentParagraph++;
+		}
+		else
+		{
+			++coCurrent;
+		}
+	} while (coCurrent != p_rcoText.end() && nCurrentParagraph <= p_nParagraphNumber);
+	if (coParagraphStart != coNextParagraphStart)
+	{
+		p_rcoStream << p_rcoText.substr(distance(p_rcoText.begin(), coParagraphStart),
+										distance(coParagraphStart, coNextParagraphStart));
+	}
 }
 
 CIfModifiers::CIfModifiers()

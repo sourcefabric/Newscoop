@@ -1076,7 +1076,27 @@ inline int CParser::HPrint(CActionList& al, int lv, int sublv)
 		format = "%M";
 	if (case_comp(attrIdentifier, "wday_name") == 0)
 		format = "%W";
-	al.insert(al.end(), new CActPrint(attrAttribute, st->id(), type, strictType, format, image));
+	int nParagraphNumber = 0;
+	if (attrType->first->dataType() == CMS_DT_STRING)
+	{
+		l = lex.getLexem();
+		DEBUGLexem("print", l);
+		CheckForEOF(l, PERR_EOS_MISSING);
+		if (l->res() != CMS_LEX_END_STATEMENT)
+		{
+			CheckForAtom(l);
+			if (case_comp(l->atom()->identifier(), "firstParagraph") != 0)
+			{
+				SetPError(parse_err, PERR_INVALID_ATTRIBUTE, MODE_PARSE,
+						  "FirstParagraph", lex.prevLine(), lex.prevColumn());
+				WaitForStatementEnd(true);
+				return 0;
+			}
+			nParagraphNumber = 1;
+		}
+	}
+	al.insert(al.end(), new CActPrint(attrAttribute, st->id(), type, strictType, format, image,
+									 nParagraphNumber));
 	if (l->res() != CMS_LEX_END_STATEMENT)
 		WaitForStatementEnd(true);
 	return 0;
