@@ -696,7 +696,7 @@ if $USER_INSTALL; then
     set_checked apache
     return 0
 fi
-conf_files="${conf_path}/${conf_file} ${conf_path}/commonhttpd.conf ${conf_path}/common${apache_bin_name}.conf ${conf_path}/httpd.conf ${conf_path}/apache.conf ${conf_path}/apache2.conf"
+conf_files="${conf_path}/${conf_file} ${conf_path}/commonhttpd.conf ${conf_path}/common${apache_bin_name}.conf ${conf_path}/httpd.conf ${conf_path}/apache.conf ${conf_path}/apache2.conf ${conf_path}/uid.conf"
 
 user_line=`grep -h -E "^[[:space:]]*User[[:space:]]+" ${conf_files} 2> /dev/null`
 if [ "$user_line" = "" ]; then
