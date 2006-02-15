@@ -86,23 +86,35 @@ switch ($f_action) {
 }
 
 if (!is_null($f_action_workflow)) {
-	$access = false;
-	// A publisher can change the status in any way he sees fit.
-	// Someone who can change an article can submit/unsubmit articles.
-	// A user who owns the article may submit it.
-	if ($User->hasPermission('Publish') 
-		|| ($User->hasPermission('ChangeArticle') && ($f_action_workflow != 'Y'))
-		|| ($articleObj->userCanModify($User) && ($f_action_workflow == 'S') )) {
-		$access = true;
+	$f_action_workflow = strtoupper($f_action_workflow);
+	if (in_array($f_action_workflow, array('Y', 'S', 'N'))) {
+		$access = false;
+		// A publisher can change the status in any way he sees fit.
+		// Someone who can change an article can submit/unsubmit articles.
+		// A user who owns the article may submit it.
+		if ($User->hasPermission('Publish') 
+			|| ($User->hasPermission('ChangeArticle') && ($f_action_workflow != 'Y'))
+			|| ($articleObj->userCanModify($User) && ($f_action_workflow == 'S') )) {
+			$access = true;
+		}
+		if (!$access) {
+			$errorStr = getGS("You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.");
+			camp_html_display_error($errorStr);
+			exit;	
+		}
+		
+		// If the article is not yet categorized, force it to be before publication.
+		if (($f_action_workflow == "Y") && (($articleObj->getPublicationId() == 0) || ($articleObj->getIssueNumber() == 0) || ($articleObj->getSectionNumber() == 0))) {
+			$args = $_REQUEST;
+			$argsStr = camp_implode_keys_and_values($_REQUEST, "=", "&");
+			$argsStr .= "&f_article_code[]=".$f_article_number."_".$f_language_selected;
+			$argsStr .= "&f_mode=single&f_action=publish";
+			$url = "Location: /$ADMIN/articles/duplicate.php?".$argsStr;
+			header($url);
+			exit;
+		}
+		$articleObj->setPublished($f_action_workflow);	
 	}
-	if (!$access) {
-		$errorStr = getGS("You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.");
-		camp_html_display_error($errorStr);
-		exit;	
-	}
-	
-	$articleObj->setPublished($f_action_workflow);
-	
 	$url = camp_html_article_url($articleObj, $f_language_id, "edit.php");
 	header("Location: $url");	
 	exit;
