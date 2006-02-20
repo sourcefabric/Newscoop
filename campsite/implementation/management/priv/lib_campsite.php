@@ -120,7 +120,7 @@ function camp_implode_keys_and_values($p_array,
  * @param string $p_string
  * @return void
  */
-function p($p_string) 
+function p($p_string = null) 
 {
     print $p_string;
 } // fn p

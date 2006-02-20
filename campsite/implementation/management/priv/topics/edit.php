@@ -12,11 +12,10 @@ if (!$User->hasPermission('ManageTopics')) {
 	exit;
 }
 
-$f_topic_parent_id = Input::Get('f_topic_parent_id', 'int', 0);
 $f_topic_edit_id = Input::Get('f_topic_edit_id', 'int', 0);
-$topic =& new Topic($f_topic_parent_id, 1);
-$editTopic =& new Topic($f_topic_edit_id, 1);
-$Path = camp_topic_path($topic);
+$f_topic_language_id = Input::Get('f_topic_language_id', 'int', 0);
+$editTopic =& new Topic($f_topic_edit_id);
+$path = camp_topic_path($editTopic, $f_topic_language_id);
 
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
@@ -28,7 +27,7 @@ echo camp_html_breadcrumbs($crumbs);
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="1" WIDTH="100%" class="current_location_table">
 <TR>
 	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php  putGS("Topic"); ?>:</TD>
-	<TD VALIGN="TOP" class="current_location_content"><?php p($Path);?></TD>
+	<TD VALIGN="TOP" class="current_location_content"><?php p($path);?></TD>
 </TR>
 </TABLE>
 
@@ -44,16 +43,16 @@ echo camp_html_breadcrumbs($crumbs);
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="f_name" VALUE="<?php p(htmlspecialchars($editTopic->getName())); ?>" SIZE="32" MAXLENGTH="255">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_name" VALUE="<?php p(htmlspecialchars($editTopic->getName($f_topic_language_id))); ?>" SIZE="32" MAXLENGTH="255">
 	</TD>
 </TR>
 <TR>
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">
-	<INPUT TYPE="HIDDEN" NAME="f_topic_parent_id" VALUE="<?php p($f_topic_parent_id); ?>">
 	<INPUT TYPE="HIDDEN" NAME="f_topic_edit_id" VALUE="<?php  p($f_topic_edit_id); ?>">
+	<INPUT TYPE="HIDDEN" NAME="f_topic_language_id" VALUE="<?php  p($f_topic_language_id); ?>">
 	<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
-	<!--<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/topics/index.php?f_topic_parent_id=<?php p($f_topic_parent_id);?>'">-->
+	<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/topics/index.php'">
 	</DIV>
 	</TD>
 </TR>

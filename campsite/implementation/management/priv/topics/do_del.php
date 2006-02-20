@@ -13,15 +13,14 @@ if (!$User->hasPermission('ManageTopics')) {
 	exit;
 }
 
-$f_topic_parent_id = Input::Get('f_topic_parent_id', 'int', 0);
+$f_topic_language_id = Input::Get('f_topic_language_id', 'int', 0);
 $f_topic_delete_id = Input::Get('f_topic_delete_id', 'int', 0);
 $errorMsgs = array();
 $doDelete = true;
-$deleteTopic =& new Topic($f_topic_delete_id, 1);
-if ($deleteTopic->hasSubtopics()) {
-	$numSubTopics = count($deleteTopic->getSubtopics());
+$deleteTopic =& new Topic($f_topic_delete_id);
+if (($deleteTopic->getNumTranslations() == 1) && $deleteTopic->hasSubtopics()) {
 	$doDelete = false;
-	$errorMsgs[] = getGS('There are $1 subtopics left.', $numSubTopics);
+	$errorMsgs[] = getGS('This topic has subtopics, therefore it cannot be deleted.');
 }
 $numArticles = count(ArticleTopic::GetArticlesWithTopic($f_topic_delete_id));
 if ($numArticles > 0) {
@@ -30,9 +29,9 @@ if ($numArticles > 0) {
 }
 
 if ($doDelete) {
-	$deleted = $deleteTopic->delete();
+	$deleted = $deleteTopic->delete($f_topic_language_id);
 	if ($deleted) {
-		header("Location: /$ADMIN/topics/index.php?f_topic_parent_id=$f_topic_parent_id");
+		header("Location: /$ADMIN/topics/index.php");
 		exit;
 	}
 	else {
@@ -70,7 +69,7 @@ echo camp_html_breadcrumbs($crumbs);
 <TR>
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">
-	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/topics/index.php?f_topic_parent_id=<?php p($f_topic_parent_id);?>'">
+	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/topics/index.php'">
 	</DIV>
 	</TD>
 </TR>

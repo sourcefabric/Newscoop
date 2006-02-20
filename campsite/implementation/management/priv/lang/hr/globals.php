@@ -371,4 +371,6 @@ regGS("Add new user account", "Dodaj novog korisnika");
 regGS("There are $1 issue(s) left.", "Ostalo-la je(su) još $1 izdanje-a");
 regGS("There are $1 keyword(s) left.", "Ostalo je još $1 ključne riječi");
 regGS("Name<BR><SMALL>(click to edit)</SMALL>", "Ime<br><small>(kliknite za uređivanje)</small>");
+regGS("Select All", "");
+regGS("Select None", "");
 ?>

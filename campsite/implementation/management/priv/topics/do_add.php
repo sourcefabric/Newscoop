@@ -13,23 +13,37 @@ if (!$User->hasPermission('ManageTopics')) {
 }
 
 $f_topic_parent_id = Input::Get('f_topic_parent_id', 'int', 0);
-$f_name = trim(Input::Get('f_name'));
+// $f_topic_id is only for the case of translating a topic.
+$f_topic_id = Input::Get('f_topic_id', 'int', 0, true);
+$f_topic_language_id = Input::Get('f_topic_language_id', 'int', 0);
+$f_topic_name = trim(Input::Get('f_topic_name'));
 $correct = true;
 $created = false;
 $topicParent =& new Topic($f_topic_parent_id);
-$Path = camp_topic_path($topicParent);
+$Path = camp_topic_path($topicParent, $f_topic_language_id);
 
 $errorMsgs = array();
-if (empty($f_name)) {
+if (empty($f_topic_name)) {
 	$correct = false; 
 	$errorMsgs[] = getGS('You must fill in the $1 field.','<B>'.getGS('Name').'</B>'); 
 }
+if ($f_topic_language_id <= 0) {
+	$correct = false; 
+	$errorMsgs[] = getGS('You must choose a language for the topic.'); 
+}
 
 if ($correct) {
-	$topic =& new Topic();
-	$created = $topic->create(array("Name" => $f_name, "ParentId" => $f_topic_parent_id));
+	if ($f_topic_id == 0) {
+		// Create new topic
+		$topic =& new Topic();
+		$created = $topic->create(array("Name" => $f_topic_name, "ParentId" => $f_topic_parent_id, 'LanguageId'=>$f_topic_language_id));
+	} else {
+		// Translate existing topic
+		$topic =& new Topic($f_topic_id);
+		$created = $topic->setName($f_topic_language_id, $f_topic_name);
+	}
 	if ($created) {
-		header("Location: /$ADMIN/topics/index.php?f_topic_parent_id=$f_topic_parent_id");
+		header("Location: /$ADMIN/topics/index.php");
 		exit;
 	}
 	else {
@@ -73,7 +87,7 @@ echo camp_html_breadcrumbs($crumbs);
 <TR>
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">
-	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/topics/add.php?f_topic_parent_id=<?php p($f_topic_parent_id);?>'">
+	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/topics/index.php'">
 	</DIV>
 	</TD>
 </TR>

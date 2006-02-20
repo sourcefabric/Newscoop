@@ -15,8 +15,6 @@ regGS("Status: Set New", "Status: Set New");
 regGS("Status: Published", "Status: Published");
 regGS("Status: Publish", "Status: Publish");
 regGS("Status: New", "Status: New");
-regGS("Select None", "Select None");
-regGS("Select All", "Select All");
 regGS("Section URL Name", "Section URL Name");
 regGS("Section Name", "Section Name");
 regGS("Publish date", "Publish date");

@@ -366,4 +366,6 @@ regGS("User may add/change user accounts and passwords", "Uživatel může přid
 regGS("User may delete user accounts", "Uživatel může mazat uživatelské účty");
 regGS("Add new user account", "Přidat uživatelský účet");
 regGS("Subscription Default Time", "Předplatné období");
+regGS("Select All", "");
+regGS("Select None", "");
 ?>

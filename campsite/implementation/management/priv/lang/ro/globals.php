@@ -372,4 +372,6 @@ regGS("There are $1 issue(s) left.", "Mai sunt $1 ediţii");
 regGS("There are $1 keyword(s) left.", "Mai sunt $1 cuvinte cheie");
 regGS("Name<BR><SMALL>(click to edit)</SMALL>", "Nume");
 regGS("New field", "Câmp nou");
+regGS("Select All", "");
+regGS("Select None", "");
 ?>

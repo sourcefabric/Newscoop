@@ -93,7 +93,7 @@ class Input {
 			break;
 		case 'string':
 			if (!is_string($_REQUEST[$p_varName])) {
-				if (!$errorsOk) {
+				if (!$p_errorsOk) {
 					$g_inputErrors[$p_varName] = 'Incorrect type.  Expected type '.$p_type
 						.', but received type '.gettype($_REQUEST[$p_varName]).'.'
 						.' Value is "'.$_REQUEST[$p_varName].'".';
@@ -103,13 +103,22 @@ class Input {
 			break;
 		case 'array':
 			if (!is_array($_REQUEST[$p_varName])) {
-				if (!$errorsOk) {
-					$g_inputErrors[$p_varName] = 'Incorrect type.  Expected type '.$p_type
-						.', but received type '.gettype($_REQUEST[$p_varName]).'.'
-						.' Value is "'.$_REQUEST[$p_varName].'".';
-				}
-				return $p_defaultValue;
-			}
+				// Create an array if it isnt one already.
+				// Arrays are used with checkboxes and radio buttons.
+				// The problem with them is that if there is only one
+				// checkbox, the given value will not be an array.  So
+				// we make it easy for the programmer by always returning
+				// an array.
+				$newArray = array();
+				$newArray[] = $_REQUEST[$p_varName];
+				return $newArray;
+//				if (!$p_errorsOk) {
+//					$g_inputErrors[$p_varName] = 'Incorrect type.  Expected type '.$p_type
+//						.', but received type '.gettype($_REQUEST[$p_varName]).'.'
+//						.' Value is "'.$_REQUEST[$p_varName].'".';
+//				}
+//				return $p_defaultValue;
+			} 
 		}
 		return $_REQUEST[$p_varName];
 	} // fn get

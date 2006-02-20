@@ -367,4 +367,6 @@ regGS("User Types", "أنواع المستخدم");
 regGS("User may add/change user accounts and passwords", "يحق للمستخدم إضافة وتعديل الحسابات وكلمات السر");
 regGS("User may delete user accounts", "يحق للمستخدم إلغاء حسابات المستخدمين");
 regGS("Add new user account", "أضف حساب مستخدم جديد");
+regGS("Select All", "");
+regGS("Select None", "");
 ?>

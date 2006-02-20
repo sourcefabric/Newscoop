@@ -13,8 +13,6 @@ regGS("Status: Set New", "Состояние: установить новую");
 regGS("Status: Published", "Состояние: Опубликована");
 regGS("Status: Publish", "Состояние: Опубликовать");
 regGS("Status: New", "Состояние: Новая");
-regGS("Select None", "Отменить выбор");
-regGS("Select All", "Выбрать все");
 regGS("Section URL Name", "Название URL секции");
 regGS("Section Name", "Название секции");
 regGS("Reorder", "");

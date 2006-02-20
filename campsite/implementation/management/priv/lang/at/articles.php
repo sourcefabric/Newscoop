@@ -13,8 +13,6 @@ regGS("Status: Set New", "Status: auf neu setzen");
 regGS("Status: Published", "Status: veröffentlicht");
 regGS("Status: Publish", "Status: veröffentlichen");
 regGS("Status: New", "Status: neu");
-regGS("Select None", "Keine auswählen");
-regGS("Select All", "Alle auswählen");
 regGS("Section URL Name", "URL Name der Rubrik");
 regGS("Section Name", "Rubrikenname");
 regGS("Reorder", "Nachbestellen");
@@ -69,9 +67,6 @@ regGS("Could not save the article. It has been locked by $1 $2 hours and $3 minu
 regGS("You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.", "Keine Zugriffsrechte auf die Änderung des Artikelstatus. Eingepflegte Artikel können nur mit den dazugehörigen Rechten geändert werden.");
 regGS("You do not have the right to delete articles.", "Fehlende Zugriffsrechte für das Löschen von Artikeln.");
 regGS("You must select an article type.", "Ein Artikeltyp muss ausgewählt werden.");
-regGS("Are you sure you want to remove the image \'$1\' from the article?", "");
+regGS("Are you sure you want to remove the image \'$1\' from the article?", "Soll das Bild '$1' vom Artikel entkoppelt werden?");
 regGS("Are you sure you want to delete this scheduled action?", "");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Soll das Thema '$1' von diesem Artikel entkoppelt werden?");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Soll die Datei '$1' von diesem Artikel entkoppelt werden?");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Soll das Bild '$1' vom Artikel entkoppelt werden?");
 ?>

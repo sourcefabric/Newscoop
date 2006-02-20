@@ -814,14 +814,18 @@ if ($f_edit_mode == "edit") { ?>
 							$path = $tmpArticleTopic->getPath();
 							$pathStr = "";
 							foreach ($path as $element) {
-								$pathStr .= " / ". $element->getName();
+								$name = $element->getName($f_language_selected);
+								if (empty($name)) {
+									$name = "-----";
+								}
+								$pathStr .= " / ". $name;
 							}
 							?>
 							<?php p(wordwrap($pathStr, 25, "<br>&nbsp;&nbsp;", true)); ?>
 						</td>
 						<?php if (($f_edit_mode == "edit") && $User->hasPermission('AttachTopicToArticle')) { ?>
 						<td>
-							<a href="<?php p($detachUrl); ?>" onclick="return confirm('<?php putGS("Are you sure you want to remove the topic \\'$1\\' from the article?", camp_javascriptspecialchars($tmpArticleTopic->getName())); ?>');"><img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/unlink.png" border="0"></a>
+							<a href="<?php p($detachUrl); ?>" onclick="return confirm('<?php putGS("Are you sure you want to remove the topic \\'$1\\' from the article?", camp_javascriptspecialchars($tmpArticleTopic->getName($f_language_selected))); ?>');"><img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/unlink.png" border="0"></a>
 						</td>
 						<?php } ?>
 					</tr>

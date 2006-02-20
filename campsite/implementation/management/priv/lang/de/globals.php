@@ -342,7 +342,7 @@ regGS("Add new field", "Neues Feld hinzufügen");
 regGS("Article automatic publishing schedule", "Automatisierung des Artikels (Veröffentlichung und Eigenschaften)");
 regGS("Are you sure you want to delete this scheduled action?", "Soll diese automatisierte Aktion gelöscht werden?");
 regGS("Unlink", "Entkoppeln");
-regGS("Are you sure you want to delete the image \'$1\'?", "");
+regGS("Are you sure you want to delete the image \'$1\'?", "Soll Bild '$1' gelöscht werden?");
 regGS("No such issue.", "Ausgabe nicht vorhanden");
 regGS("No such section.", "Rubrik nicht vorhanden");
 regGS("Are you sure you want to delete the subscription to the publication $1?", "Soll das Abonnement für die Publikation $1 gelöscht werden?");
@@ -372,5 +372,6 @@ regGS("There are $1 issue(s) left.", "Es sind noch $1 Ausgaben vorhanden");
 regGS("There are $1 keyword(s) left.", "Es sind noch $1 Stichworte vorhanden");
 regGS("Name<BR><SMALL>(click to edit)</SMALL>", "Name (bearbeiten, bitte anklicken)");
 regGS("New field", "Neues Feld");
-regGS("Are you sure you want to delete the image \\'$1\\'?", "Soll Bild '$1' gelöscht werden?");
+regGS("Select All", "Alle auswählen");
+regGS("Select None", "Keine auswählen");
 ?>

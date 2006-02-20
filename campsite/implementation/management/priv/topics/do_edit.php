@@ -12,14 +12,13 @@ if (!$User->hasPermission('ManageTopics')) {
 	exit;
 }
 
-$f_topic_parent_id = Input::Get('f_topic_parent_id', 'int', 0);
 $f_topic_edit_id = Input::Get('f_topic_edit_id', 'int', 0);
+$f_topic_language_id = Input::Get('f_topic_language_id', 'int', 0);
 $f_name = trim(Input::Get('f_name'));
 
 $correct = true;
-$topic =& new Topic($f_topic_parent_id, 1);
-$editTopic =& new Topic($f_topic_edit_id, 1);
-$Path = camp_topic_path($topic);
+$editTopic =& new Topic($f_topic_edit_id);
+$path = camp_topic_path($editTopic);
 
 if (empty($f_name)) {
 	$correct = false; 
@@ -27,9 +26,9 @@ if (empty($f_name)) {
 }
 
 if ($correct) {
-	$updated = $editTopic->setName($f_name);
+	$updated = $editTopic->setName($f_topic_language_id, $f_name);
 	if ($updated) {
-		header("Location: /$ADMIN/topics/index.php?f_topic_parent_id=$f_topic_parent_id");
+		header("Location: /$ADMIN/topics/index.php");
 		exit;
 	}
 } else {
@@ -46,7 +45,7 @@ echo camp_html_breadcrumbs($crumbs);
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="1" WIDTH="100%" class="current_location_table">
 <TR>
 	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php  putGS("Topic"); ?>:</TD>
-	<TD VALIGN="TOP" class="current_location_content"><?php p($Path);?></TD>
+	<TD VALIGN="TOP" class="current_location_content"><?php p($path);?></TD>
 </TR>
 </TABLE>
 
@@ -71,7 +70,7 @@ echo camp_html_breadcrumbs($crumbs);
 <TR>
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">
-	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/admin/topics/edit.php?f_topic_parent_id=<?php p($f_topic_parent_id); ?>&f_topic_edit_id=<?php  p($f_topic_edit_id); ?>'">
+	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/admin/topics/edit.php?f_topic_language_id=<?php p($f_topic_language_id); ?>&f_topic_edit_id=<?php  p($f_topic_edit_id); ?>'">
 	</DIV>
 	</TD>
 </TR>

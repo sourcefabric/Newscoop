@@ -358,4 +358,6 @@ regGS("Back", "Back");
 regGS("File", "File");
 regGS("Save and Close", "Save and Close");
 regGS("Add", "Add");
+regGS("Select All", "Select All");
+regGS("Select None", "Select None");
 ?>

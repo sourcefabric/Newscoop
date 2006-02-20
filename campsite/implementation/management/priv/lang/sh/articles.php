@@ -13,8 +13,6 @@ regGS("Status: Set New", "Status: postavi novi");
 regGS("Status: Published", "Status: objavljen");
 regGS("Status: Publish", "Status: objavi");
 regGS("Status: New", "Status: novi");
-regGS("Select None", "Izaberi nijedan");
-regGS("Select All", "Izaberi sve");
 regGS("Section URL Name", "URL ime rubrike");
 regGS("Section Name", "Ime rubrike");
 regGS("Publish date", "Datum objavljivanja");

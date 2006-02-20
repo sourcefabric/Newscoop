@@ -364,5 +364,6 @@ regGS("Add new user account", "Додај новог корисника");
 regGS("Schedule a new publish action", "Закажи нову акцију објављивања");
 regGS("User may add/change user accounts and passwords", "Корисник може да додаје/мења корисничке налоге и лозинке");
 regGS("User may delete user accounts", "Корисник може да брише корисничке налоге");
-regGS("Are you sure you want to delete the image \\'$1\\'?", "Да ли сте сигурни да желите да обришете слику \\'$1\\'?");
+regGS("Select All", "Изабери све");
+regGS("Select None", "Изабери ниједан");
 ?>

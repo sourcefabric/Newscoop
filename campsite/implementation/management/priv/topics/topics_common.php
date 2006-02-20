@@ -8,12 +8,16 @@ require_once($_SERVER['DOCUMENT_ROOT']."/classes/Input.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Log.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 
-function camp_topic_path($p_topic)
+function camp_topic_path($p_topic, $p_languageId)
 {
-	$path = "<A HREF=index.php>".getGS("Top")."</A>";
+	$path = getGS("Top")." ";
 	$topicPath = $p_topic->getPath();
 	foreach ($topicPath as $tmpTopic) {
-		$path .= "/<A HREF=index.php?f_topic_parent_id=".$tmpTopic->getTopicId()."> ".$tmpTopic->getName()."</A>";	
+		$name = $tmpTopic->getName($p_languageId);
+		if (empty($name)) {
+			$name = "-----";
+		}
+		$path .= "/ $name ";	
 	}
 	return $path;
 }

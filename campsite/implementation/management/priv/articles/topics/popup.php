@@ -25,7 +25,7 @@ if (!Input::IsValid()) {
 	exit;	
 }
 
-$topics = Topic::GetTree($f_language_selected);
+$topics = Topic::GetTree();
 
 ?>
 <html>
@@ -43,21 +43,29 @@ $topics = Topic::GetTree($f_language_selected);
 <p></p>
 
 <?php if (count($topics) > 0) { ?>
-<FORM action="do_add.php" method="POST">
+<FORM action="<?php p("/$ADMIN/articles/topics/do_add.php"); ?>" method="POST">
 <INPUT type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>">
 <INPUT type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>">
-<table class="table_list" width="100%">
+<table class="table_list">
 <?PHP
 $color = 0;
 foreach ($topics as $path) { 
-	list($lastTopicId,) = camp_array_peek($path, true, -1);
+	$currentTopic = camp_array_peek($path, false, -1);
+	$name = $currentTopic->getName($f_language_selected);
+	if (empty($name)) {
+		continue;
+	}
 	?>
 	<tr <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
-		<td width="1%"><input type="checkbox" name="f_topic_ids[]" value="<?php p($lastTopicId."_".$f_language_selected); ?>"></td>
-		<td>
+		<td><input type="checkbox" name="f_topic_ids[]" value="<?php p($currentTopic->getTopicId()."_".$f_language_selected); ?>"></td>
+		<td style="padding-left: 3px; padding-right: 5px;" width="400px">
 			<?php
-			foreach ($path as $element) {
-				echo "/ $element ";
+			foreach ($path as $topicObj) {
+				$name = $topicObj->getName($f_language_selected);
+				if (empty($name)) {
+					$name = "-----";
+				}
+				echo " / ".$name;
 			}
 			?>
 		</td>

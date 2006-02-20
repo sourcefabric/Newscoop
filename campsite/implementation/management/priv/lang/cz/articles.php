@@ -13,8 +13,6 @@ regGS("Status: Set New", "");
 regGS("Status: Published", "");
 regGS("Status: Publish", "");
 regGS("Status: New", "");
-regGS("Select None", "");
-regGS("Select All", "");
 regGS("Section URL Name", "");
 regGS("Section Name", "");
 regGS("Publish date", "");
