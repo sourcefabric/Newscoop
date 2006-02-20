@@ -74,7 +74,7 @@ $resMsg = Input::Get('resMsg', 'string', '');
 </TR>
 
 <TR>
-	<TD><TEXTAREA ROWS="25" COLS="90" NAME="cField" WRAP="NO"><?php  p($contents) ?></TEXTAREA></TD>
+	<TD><TEXTAREA ROWS="25" COLS="90" NAME="cField" WRAP="NO"><?php  p(htmlspecialchars($contents)); ?></TEXTAREA></TD>
 </TR>
 
 <TR>
