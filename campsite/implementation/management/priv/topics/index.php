@@ -128,13 +128,16 @@ if (count($topics) == 0) { ?>
 	<?php  
 } else {
 ?>
+<script>
+var topic_ids = new Array;
+</script>
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list">
 <TR class="table_list_header">
-	<TD ALIGN="LEFT" VALIGN="TOP"><?php  //putGS("Add Subtopic"); ?></TD>
-	<TD ALIGN="LEFT" VALIGN="TOP"><?php  //putGS("Translate"); ?></TD>
+	<TD ALIGN="LEFT" VALIGN="TOP"></TD>
+	<TD ALIGN="LEFT" VALIGN="TOP"></TD>
 	<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Language"); ?></TD>
 	<TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Topic"); ?></TD>
-	<TD ALIGN="center" VALIGN="TOP"><?php  //putGS("Delete"); ?></TD>
+	<TD ALIGN="center" VALIGN="TOP"></TD>
 </TR>
 
 <?php 
@@ -150,19 +153,13 @@ foreach ($topics as $topicPath) {
 		}
 	?>
 	<TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
-		<td <?php if (!$isFirstTopic) { ?>style="border-top: 2px solid grey;"<?php } ?>>
-		<?php 
-		if ($isFirstTranslation) {
-			?>
-			<a href="javascript: void(0);" onclick="ToggleRowVisibility('add_subtopic_<?php p($currentTopic->getTopicId()); ?>');"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" alt="<?php putGS("Add subtopic"); ?>" title="<?php putGS("Add subtopic"); ?>" border="0"></a>
-			<?php
-		}
-		?>
+		<td <?php if (!$isFirstTopic && $isFirstTranslation) { ?>style="border-top: 2px solid grey;"<?php } ?>>
+			<a href="javascript: void(0);" onclick="HideAll(topic_ids); ShowElement('add_subtopic_<?php p($currentTopic->getTopicId()); ?>_<?php p($topicLanguageId); ?>'); return false;"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add_subtopic.png" alt="<?php putGS("Add subtopic"); ?>" title="<?php putGS("Add subtopic"); ?>" border="0"></a>
 		</td>
 		<td <?php if (!$isFirstTopic && $isFirstTranslation) { ?>style="border-top: 2px solid grey;"<?php } ?>>
 		<?php if ($isFirstTranslation) {
 			?>
-			<a href="javascript: void(0);" onclick="ToggleRowVisibility('translate_topic_<?php p($currentTopic->getTopicId()); ?>');"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/localizer.png" alt="<?php putGS("Translate"); ?>" title="<?php putGS("Translate"); ?>" border="0"></a>
+			<a href="javascript: void(0);" onclick="HideAll(topic_ids); ShowElement('translate_topic_<?php p($currentTopic->getTopicId()); ?>');"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/localizer.png" alt="<?php putGS("Translate"); ?>" title="<?php putGS("Translate"); ?>" border="0"></a>
 			<?php
 		}
 		?>
@@ -202,44 +199,38 @@ foreach ($topics as $topicPath) {
 			<a href="<?php p("/$ADMIN/topics/do_del.php?f_topic_delete_id=".$currentTopic->getTopicId()."&f_topic_language_id=$topicLanguageId"); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the topic $1?', htmlspecialchars($topicName)); ?>');"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" alt="<?php putGS("Delete"); ?>" title="<?php putGS("Delete"); ?>" border="0"></a>
 		</td>
 		</tr>
+		
+	    <tr id="add_subtopic_<?php p($currentTopic->getTopicId()); ?>_<?php p($topicLanguageId); ?>" style="display: none;">
+	    	<td colspan="2"></td>
+	    	<td colspan="3">
+	    		<FORM method="POST" action="do_add.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
+	    		<input type="hidden" name="f_topic_parent_id" value="<?php p($currentTopic->getTopicId()); ?>">
+	    		<input type="hidden" name="f_topic_language_id" value="<?php p($topicLanguageId); ?>">
+	    		<table cellpadding="0" cellspacing="0" style="border-top: 1px solid green; border-bottom: 1px solid green; background-color: #CCFFCC; padding-left: 5px; padding-right: 5px;" width="100%">
+	    		<tr>
+	    			<td align="left">
+	    				<table cellpadding="2" cellspacing="1">
+	    				<tr>
+			    			<td><?php putGS("Add subtopic:"); ?></td>
+			    			<td><?php p($topicLanguage->getNativeName()); ?>
+			    			</td>
+			    			<td><input type="text" name="f_topic_name" value="" class="input_text" size="15" alt="blank" emsg="<?php putGS('You must enter a name for the topic.'); ?>"></td>
+			    			<td><input type="submit" name="f_submit" value="<?php putGS("Add"); ?>" class="button"></td>
+			    		</tr>
+		    			</table>
+	    			</td>
+	    		</tr>
+	    		</table>
+	    		</FORM>
+	    	</td>
+	    </tr>	
+		<script>
+		topic_ids.push(document.getElementById("add_subtopic_"+<?php p($currentTopic->getTopicId()); ?>+"_<?php p($topicLanguageId); ?>"));
+		</script>
 		<?php  
 		$isFirstTranslation = false;
 	}
 	?>
-    <tr id="add_subtopic_<?php p($currentTopic->getTopicId()); ?>" style="display: none;">
-    	<td colspan="2"></td>
-    	<td colspan="3">
-    		<FORM method="POST" action="do_add.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
-    		<input type="hidden" name="f_topic_parent_id" value="<?php p($currentTopic->getTopicId()); ?>">
-    		<table cellpadding="0" cellspacing="0" style="border-top: 1px solid green; border-bottom: 1px solid green; background-color: #CCFFCC; padding-left: 5px; padding-right: 5px;" width="100%">
-    		<tr>
-    			<td align="left">
-    				<table cellpadding="2" cellspacing="1">
-    				<tr>
-		    			<td><?php putGS("Add subtopic:"); ?></td>
-		    			<td>
-							<SELECT NAME="f_topic_language_id" class="input_select" alt="select" emsg="<?php putGS("You must select a language."); ?>">
-							<option value="0"><?php putGS("---Select language---"); ?></option>
-							<?php 
-						 	foreach ($allLanguages as $tmpLanguage) {
-						 		camp_html_select_option($tmpLanguage->getLanguageId(), 
-						 								null, 
-						 								$tmpLanguage->getNativeName());
-					        }
-							?>			
-							</SELECT>
-		    			</td>
-		    			<td><input type="text" name="f_topic_name" value="" class="input_text" size="15" alt="blank" emsg="<?php putGS('You must enter a name for the topic.'); ?>"></td>
-		    			<td><input type="submit" name="f_submit" value="<?php putGS("Add"); ?>" class="button"></td>
-		    		</tr>
-	    			</table>
-    			</td>
-    		</tr>
-    		</table>
-    		</FORM>
-    	</td>
-    </tr>
-    
     <tr id="translate_topic_<?php p($currentTopic->getTopicId()); ?>" style="display: none;">
     	<td colspan="2"></td>
     	<td colspan="3">
@@ -273,6 +264,12 @@ foreach ($topics as $topicPath) {
     		</FORM>
     	</td>
     </tr>
+		<script>
+		//topic_ids.push(document.getElementById("add_subtopic_"+<?php p($currentTopic->getTopicId()); ?>));
+		topic_ids.push(document.getElementById("translate_topic_"+<?php p($currentTopic->getTopicId()); ?>));
+//		topic_ids.push("add_subtopic_"+<?php p($currentTopic->getTopicId()); ?>);
+//		topic_ids.push("translate_topic_"+<?php p($currentTopic->getTopicId()); ?>);
+		</script>
     <?php
     $isFirstTopic = false;
 }
