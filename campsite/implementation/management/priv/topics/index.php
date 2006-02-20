@@ -7,13 +7,13 @@ if (!$access) {
 	exit;
 }
 
-$f_show_languages = camp_session_get('f_show_languages', null);
+$f_show_languages = camp_session_get('f_show_languages', array());
 
 $topics = Topic::GetTree();
 // return value is sorted by language
 $allLanguages = Language::GetLanguages();
 
-if (is_null($f_show_languages)) {
+if (count($f_show_languages) <= 0) {
 	$f_show_languages = DbObjectArray::GetColumn($allLanguages, 'Id');
 }
 
