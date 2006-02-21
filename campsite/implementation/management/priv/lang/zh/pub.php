@@ -1,4 +1,13 @@
 <?php
+regGS("trial subscription", "");
+regGS("paid subscription", "");
+regGS("time units", "");
+regGS("one language", "");
+regGS("all languages", "");
+regGS("Trial subscriptions", "");
+regGS("Time unit cost per one section", "");
+regGS("Paid subscriptions", "");
+regGS("Default time period", "");
 regGS("Publication List", "");
 regGS("Go To Issues", "");
 regGS("Name<BR><SMALL>(click to see issues)</SMALL>", "名称");
@@ -19,7 +28,6 @@ regGS("There are $1 subscription(s) left.", "还有$1个订阅");
 regGS("The publication $1 could not be deleted.", "出版物$1不能被删除");
 regGS("Adding new publication", "添加新出版物");
 regGS("The publication could not be added.", "不能添加出版物");
-regGS("Select the publication", "选择出版物");
 regGS("Add new country default subscription time", "增加新国家的默认订阅时间");
 regGS("You do not have the right to manage publications.", "您无权管理出版物");
 regGS("Adding new country default subscription time", "正在增加新国家的默认订阅时间");
@@ -29,5 +37,4 @@ regGS("Change subscription default time", "改变订阅默认时间");
 regGS("Default subscription time for $1 changed", "$1的默认订阅时间已改变");
 regGS("Are you sure you want to delete the subscription default time for $1?", "您确定要删除$1的默认订阅时间？");
 regGS("Subscription default time for $1 deleted", "$1的默认订阅时间已删除");
-regGS("Name<BR><SMALL>(click to select the publication)</SMALL>", "名称（单击选择发布）");
 ?>

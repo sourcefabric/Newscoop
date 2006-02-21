@@ -12,7 +12,7 @@ $DEBUG = false;
 function camp_start_parser()
 {
 	global $Campsite;
-	
+
 	$binFile = $Campsite['BIN_DIR'] . "/campsite_server";
 	$args = " -i " . $Campsite['DATABASE_NAME'];
 	if (!file_exists($binFile)) {
@@ -33,7 +33,7 @@ function camp_start_parser()
 function camp_stop_parser()
 {
 	global $Campsite;
-	
+
 	$instanceName = $Campsite['DATABASE_NAME'];
 	$cmd = "ps -o pid=pid,cmd=command -C campsite_server";
 	exec($cmd, $output, $returnValue);
@@ -63,13 +63,13 @@ function camp_stop_parser()
 
 /**
  * Send a message to the campsite parser.  Note to third-party developers:
- * use the ParserCom class for this.  These will be merged together in the 
+ * use the ParserCom class for this.  These will be merged together in the
  * future.
  *
  * @param string $p_msg
  * @param boolean $p_closeSocket
  * @return mixed
- * 		If $p_closeSocket is TRUE, return NULL, if it is FALSE, return 
+ * 		If $p_closeSocket is TRUE, return NULL, if it is FALSE, return
  * 		a socket.
  */
 function camp_send_message_to_parser($p_msg, $p_closeSocket = false)
@@ -156,7 +156,7 @@ function camp_create_url_request_message($p_envVars, $p_parameters, $p_cookies)
 	foreach ($p_cookies as $name => $value) {
 		camp_debug_msg("&nbsp;&nbsp;$name = $value");
 	}
-	
+
 	$msg = "<CampsiteMessage MessageType=\"URLRequest\">\n";
 	$msg .= "\t<HTTPHost>" . camp_xmlescape($p_envVars['HTTP_HOST']) . "</HTTPHost>\n";
 	$msg .= "\t<DocumentRoot>" . camp_xmlescape($p_envVars['DOCUMENT_ROOT']) . "</DocumentRoot>\n";
@@ -166,8 +166,15 @@ function camp_create_url_request_message($p_envVars, $p_parameters, $p_cookies)
 	$msg .= "\t<RequestURI>" . camp_xmlescape($p_envVars['REQUEST_URI']) . "</RequestURI>\n";
 	$msg .= "\t<Parameters>\n";
 	foreach ($p_parameters as $param_name=>$param_value) {
-		$msg .= "\t\t<Parameter Name=\"" . camp_xmlescape($param_name)
-			. "\" Type=\"string\">" . camp_xmlescape($param_value) . "</Parameter>\n";
+		if (is_array($param_value)) {
+			foreach ($param_value as $list_param_value) {
+				$msg .= "\t\t<Parameter Name=\"" . camp_xmlescape($param_name)
+					. "\" Type=\"string\">" . camp_xmlescape($list_param_value) . "</Parameter>\n";
+			}
+		} else {
+			$msg .= "\t\t<Parameter Name=\"" . camp_xmlescape($param_name)
+				. "\" Type=\"string\">" . camp_xmlescape($param_value) . "</Parameter>\n";
+		}
 	}
 	$msg .= "\t</Parameters>\n";
 	$msg .= "\t<Cookies>\n";
@@ -214,9 +221,20 @@ function camp_read_get_parameters(&$p_queryString)
 	$pairs = explode("&", $p_queryString);
 	foreach ($pairs as $pair) {
 		$pair_array = explode("=", $pair);
-		if (trim($pair_array[0]) != "") {
-			$parameters[trim($pair_array[0])] = urldecode(trim($pair_array[1]));
+		$paramName = trim($pair_array[0]);
+		$paramValue = trim($pair_array[1]);
+		if ($paramName == "") {
+			continue;
 		}
+		if (isset($parameters[$paramName])) {
+			if (is_array($parameters[$paramName])) {
+				$parameters[$paramName][] = $paramValue;
+			} else {
+				$parameters[$paramName] = array($parameters[$paramName], urldecode($paramValue));
+			}
+			continue;
+		}
+		$parameters[$paramName] = $paramValue;
 	}
 	return $parameters;
 } // fn camp_read_get_parameters
@@ -306,7 +324,7 @@ function camp_debug_msg($msg, $format_html = true)
 	if ($format_html) {
 		echo "<p>";
 	}
-	
+
 	echo $msg;
 	if ($format_html) {
 		echo "</p>\n";

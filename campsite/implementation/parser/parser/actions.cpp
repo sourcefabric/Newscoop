@@ -1574,37 +1574,6 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 	stringstream buf;
 	if (modifier == CMS_ST_SUBSCRIPTION)
 	{
-		if (case_comp(attr, "totalcost") == 0)
-		{
-			if (c.SubsType() == ST_NONE)
-				return RES_OK;
-			const char* subs = c.SubsType() == ST_TRIAL ? "TrialTime" : "PaidTime";
-			buf << "select sum(UnitCost) * sdt." << subs << " from Sections as sec, Publications"
-			       " as pub, SubsDefTime as sdt where pub.Id = sdt.IdPublication and pub.Id = "
-			       "sec.IdPublication and sdt.IdPublication = pub.Id and pub.Id = "
-			    << c.Publication() << " and NrIssue = " << c.Issue() << " and IdLanguage = "
-			    << c.Language() << " and CountryCode = '" << c.UserInfo("CountryCode") << "'";
-			DEBUGAct("takeAction()", buf.str().c_str(), fs);
-			SQLQuery(&m_coSql, buf.str().c_str());
-			res = mysql_store_result(&m_coSql);
-			row = mysql_fetch_row(*res);
-			if (row[0] == NULL || row[0][0] == 0)
-			{
-				buf.str("");
-				buf << "select sum(UnitCost) * " << subs << " from Sections, Publications as pub"
-				       " where pub.Id = Sections.IdPublication and pub.Id = "
-				    << c.Publication() << " and NrIssue = " << c.Issue() << " and IdLanguage = "
-				    << c.Language();
-				DEBUGAct("takeAction()", buf.str().c_str(), fs);
-				SQLQuery(&m_coSql, buf.str().c_str());
-				res = mysql_store_result(&m_coSql);
-				row = mysql_fetch_row(*res);
-				if (row[0] == NULL || row[0][0] == 0)
-					return -1;
-			}
-			fs << encodeHTML(row[0], c.EncodeHTML());
-			return RES_OK;
-		}
 		if (case_comp(attr, "unit") == 0)
 		{
 			buf << "select TimeUnits.Name from TimeUnits, Publications where Publications.Id = "
@@ -2053,8 +2022,7 @@ bool CActIf::AccessAllowed(CContext& c, sockstream& fs)
 	stringstream buf;
 	buf << "select Public from Articles where IdPublication = " << c.Publication() << " and "
 	       "NrIssue = " << c.Issue() << " and NrSection = " << c.Section() << " and Number = "
-	    << c.Article() << " and (IdLanguage = " << c.Language() << " or IdLanguage = 1) order "
-	       "by IdLanguage desc";
+	    << c.Article() << " and IdLanguage = " << c.Language();
 	DEBUGAct("AccessAllowed()", buf.str().c_str(), fs);
 	if (mysql_query(&m_coSql, buf.str().c_str()))
 		return false;
@@ -2073,7 +2041,7 @@ bool CActIf::AccessAllowed(CContext& c, sockstream& fs)
 		return false;
 	if (!c.IsReader())
 		return true;
-	return c.IsSubs(c.Publication(), c.Section());
+	return c.IsSubs(c.Publication(), c.Section(), c.Language());
 }
 
 // CActIf: assign operator
@@ -2682,6 +2650,20 @@ int CActDate::takeAction(CContext& c, sockstream& fs)
 // takeAction: performs the action
 // Parametes:
 //		CContext& c - current context
+//		sockstream& fs - output stream
+int CActText::takeAction(CContext& c, sockstream& fs)
+{
+	if (m_bInsertSpace)
+	{
+		fs << ' ';
+	}
+	fs.write(text, text_len);
+	return RES_OK;
+}
+
+// takeAction: performs the action
+// Parametes:
+//		CContext& c - current context
 //		sockstream& fs - output stream	
 int CActSubscription::takeAction(CContext& c, sockstream& fs)
 {
@@ -2697,33 +2679,52 @@ int CActSubscription::takeAction(CContext& c, sockstream& fs)
 		CheckForRows(*res, 1);
 		FetchRow(*res, row);
 		if (row[0] == NULL || row[1] == NULL)
+		{
 			return -1;
-		if (row[0][0] == 'T')
-			c.SetSubsType(ST_TRIAL);
-		else
-			c.SetSubsType(ST_PAID);
+		}
+		c.SetSubsType((row[0][0] == 'T') ? ST_TRIAL : ST_PAID);
 		c.SetUserInfo("CountryCode", row[1]);
 		buf.str("");
 	}
-	buf << "select UnitCost, Currency from Publications where Id = " << c.Publication();
+	
+	// Compute the subscription length; search for the default subscription intervals in
+	// the countries subscriptions intervals table first
+	const char* pchSubsTypeTime = c.SubsType() == ST_TRIAL ? "TrialTime" : "PaidTime";
+	buf << "select " << pchSubsTypeTime << " from SubsDefTime, Users where IdPublication = "
+			<< c.Publication() << " and SubsDefTime.CountryCode = Users.CountryCode and "
+			"Users.Id = " << c.User();
 	SQLQuery(&m_coSql, buf.str().c_str());
 	StoreResult(&m_coSql, res);
-	CheckForRows(*res, 1);
-	FetchRow(*res, row);
-	if (row[0] == NULL)
-		return -1;
-	double unit_cost = atof(row[0]);
-	string currency = row[1];
+	MYSQL_ROW row;
+	if ((row = mysql_fetch_row(*res)) != NULL)
+	{
+		c.SetSubsTimeUnits(atol(row[0]));
+	}
 	buf.str("");
-	buf << "select count(*) from Sections where IdPublication = " << c.Publication() << " and "
-	       "NrIssue = " << c.Issue() << " and IdLanguage = " << c.Language();
+	
+	buf << "select Currency, " << pchSubsTypeTime << ", UnitCost, UnitCostAllLang from "
+			"Publications where Id = " << c.Publication();
 	SQLQuery(&m_coSql, buf.str().c_str());
 	res = mysql_store_result(&m_coSql);
 	CheckForRows(*res, 1);
 	row = mysql_fetch_row(*res);
-	if (row[0] == NULL)
-		return -1;
-	lint nos = atol(row[0]);
+	string currency = row[0];
+	// If the default subscription interval was not found in the countries subscriptions
+	// intervals table read it from the publications table
+	if (c.SubsTimeUnits() == 0)
+	{
+		c.SetSubsTimeUnits(atol(row[1]));
+	}
+	double nUnitCost = atof(row[2]);
+	double nUnitCostAllLang = atof(row[3]);
+	buf.str("");
+	
+	buf << "select * from Sections where IdPublication = " << c.Publication()
+			<< " group by Number";
+	SQLQuery(&m_coSql, buf.str().c_str());
+	res = mysql_store_result(&m_coSql);
+	CheckForRows(*res, 1);
+	lint nos = mysql_num_rows(*res);
 	SafeAutoPtr<CURL> pcoURL(c.URL()->clone());
 	try {
 		pcoURL->setTemplate(m_nTemplateId);
@@ -2735,38 +2736,97 @@ int CActSubscription::takeAction(CContext& c, sockstream& fs)
 	CContext lc = c;
 	lc.SetByPublication(by_publication);
 	string coSubsType = (c.SubsType() == ST_TRIAL ? "trial" : "paid");
-	fs << "<form name=\"subscription\" action=\""
-			<< encodeHTML(pcoURL->getURIPath(), c.EncodeHTML())
-			<< "\" name=\"f1\" method=\"POST\">\n"
+	fs << "<script>\n"
+			"function ToggleElementEnabled(id) {\n"
+			"	if (document.getElementById(id).disabled) {\n"
+			"		document.getElementById(id).disabled = false\n"
+			"	} else {\n"
+			"		document.getElementById(id).disabled = true\n"
+			"	}\n"
+			"}\n"
+			"</script>\n";
+	fs << "<form action=\"" << encodeHTML(pcoURL->getURIPath(), c.EncodeHTML())
+			<< "\" name=\"subscription_form\" method=\"POST\">\n"
 			<< "<input type=\"hidden\" name=\"" << P_TEMPLATE_ID
 			<< "\" value=\"" << m_nTemplateId << "\">\n"
 			<< "<input type=\"hidden\" name=\"" << P_SUBSTYPE << "\" value=\""
-			<< encodeHTML(coSubsType, c.EncodeHTML()) << "\">" << endl;
-	if (c.SubsType() == ST_PAID && total != "")
-		fs << "<script>\nvar sum;\nvar i;\n\n"
-		"function f(){\n"
-		" sum=0;\n"
-		" for(i=0; i<document.f1.nos.value; i++){\n"
-		"   if(document.f1.cb_subs[i].checked && document.f1[2*i+1].value.length)\n"
-		"   sum=parseInt(sum)+parseInt(document.f1[2*i+1].value)\n"
-		" }\n"
-		" document.f1.suma.value = Math.round(100*sum*document.f1.unitcost.value)/100;\n"
-		"}\n</script>\n";
+			<< encodeHTML(coSubsType, c.EncodeHTML()) << "\">\n"
+			<< "<input type=\"hidden\" name=\"tx_subs\" value=\"" << c.SubsTimeUnits() << "\">\n"
+			<< "<input type=\"hidden\" name=\"nos\" value=\"" << nos << "\">\n"
+			<< "<input type=\"hidden\" name=\"unitcost\" value=\"" << nUnitCost << "\">\n"
+			<< "<input type=\"hidden\" name=\"unitcostalllang\" value=\""
+			<< nUnitCostAllLang << "\">\n";
 	runActions(block, lc, fs);
-	if (c.SubsType() == ST_PAID && total != "" && !by_publication)
+	if (c.SubsType() == ST_PAID && total != "")
+	{
 		fs << encodeHTML(total, c.EncodeHTML())
 				<< " <input type=\"text\" name=\"suma\" size=\"10\" READONLY> "
 				<< encodeHTML(currency, c.EncodeHTML()) << endl;
+	}
 	fs << c.URL()->getFormString();
-	if (c.SubsType() == ST_PAID && total != "" && !by_publication)
-		fs << "<input type=\"hidden\" name=\"unitcost\" value=\"" << unit_cost
-				<< "\">\n<input type=\"hidden\" name=\"nos\" value=\"" << nos << "\">\n"
-				<< "<p><input type=\"button\" value=\""
-				<< encodeHTML(evaluate, c.EncodeHTML()) << "\" onclick=\"f()\"></p>\n";
+	if (c.SubsType() == ST_PAID && evaluate != "")
+	{
+		fs << "<p><input type=\"button\" value=\"" << encodeHTML(evaluate, c.EncodeHTML())
+				<< "\" onclick=\"update_subscription_payment()\"></p>\n";
+	}
 	if (by_publication)
-		fs << "<input type=\"hidden\" name=\"by\" value=\"publication\">\n";
-	fs << "<input type=\"submit\" name=\"" P_SUBSCRIBE "\" value=\""
-			<< encodeHTML(button_name, c.EncodeHTML()) << "\">\n</form>\n";
+	{
+		fs << "<input type=\"hidden\" name=\"by\" value=\"publication\">\n"
+				"<input type=\"hidden\" name=\"cb_subs\" value=\"0\">\n";
+	}
+	fs << "<p><input type=\"submit\" name=\"" P_SUBSCRIBE "\" value=\""
+			<< encodeHTML(button_name, c.EncodeHTML()) << "\"></p>\n</form>\n";
+	if (c.SubsType() == ST_PAID && total != "")
+	{
+		fs << "<script>\n"
+				"function element_exists(object, property) {\n"
+				"	for (i in object) {\n"
+				"		if (object[i].name == property) {\n"
+				"			return true\n"
+				"		}\n"
+				"	}\n"
+				"	return false\n"
+				"}\n"
+				"function update_subscription_payment() {\n"
+				"	var sum = 0\n"
+				"	var i\n"
+				"	var my_form = document.forms[\"subscription_form\"]\n"
+				"	var subs_all_lang = false\n"
+				"	var unitcost = my_form.unitcost.value\n"
+				"	var lang_count = 1\n"
+				"	if (element_exists(my_form.elements, \"subs_all_languages\")\n"
+				"		&& my_form.subs_all_languages.checked) {\n"
+				"		unitcost = my_form.unitcostalllang.value\n"
+				"	} else if (element_exists(my_form.elements, \"subscription_language[]\")) {\n"
+				"		lang_count = 0\n"
+				"		for (i=0; i<my_form[\"subscription_language[]\"].options.length; i++) {\n"
+				"			if (my_form[\"subscription_language[]\"].options[i].selected) {\n"
+				"				lang_count++\n"
+				"			}\n"
+				"		}\n"
+				"	}\n"
+				"	for (i = 0; i < my_form.nos.value; i++) {\n"
+				"		if (element_exists(my_form.elements, \"by\")\n"
+				"			&& my_form.by.value == \"publication\") {\n"
+				"			sum = parseInt(sum) + parseInt(my_form[\"tx_subs\"].value)\n"
+				"			continue\n"
+				"		}\n"
+				"		if (!my_form[\"cb_subs[]\"][i].checked) {\n"
+				"			continue\n"
+				"		}\n"
+				"		var section = my_form[\"cb_subs[]\"][i].value\n"
+				"		var time_var_name = \"tx_subs\" + section\n"
+				"		if (element_exists(my_form.elements, time_var_name)) {\n"
+				"			sum = parseInt(sum) + parseInt(my_form[time_var_name].value)\n"
+				"		} else if (element_exists(my_form.elements, \"tx_subs\")) {\n"
+				"			sum = parseInt(sum) + parseInt(my_form[\"tx_subs\"].value)\n"
+				"		}\n"
+				"	}\n"
+				"	my_form.suma.value = Math.round(100 * sum * unitcost * lang_count) / 100\n"
+				"}\n"
+				"update_subscription_payment()\n"
+				"</script>\n";
+	}
 	return RES_OK;
 	TK_CATCH_ERR
 }
@@ -2825,24 +2885,8 @@ int CActEdit::takeAction(CContext& c, sockstream& fs)
 	}
 	if (modifier == CMS_ST_SUBSCRIPTION)
 	{
-		buf << "select TrialTime, PaidTime from SubsDefTime, Users where "
-		       "SubsDefTime.CountryCode = Users.CountryCode and SubsDefTime."
-		       "IdPublication = " << c.Publication() << " and Users.Id = " << c.User();
-		DEBUGAct("takeAction()", buf.str().c_str(), fs);
-		SQLQuery(&m_coSql, buf.str().c_str());
-		StoreResult(&m_coSql, res);
-		if (mysql_num_rows(*res) < 1)
-		{
-			buf.str("");
-			buf << "select TrialTime, PaidTime from Publications where Id = " << c.Publication();
-			SQLQuery(&m_coSql, buf.str().c_str());
-			res = mysql_store_result(&m_coSql);
-		}
-		FetchRow(*res, row);
-		const char* pchData = c.SubsType() == ST_TRIAL ? row[0] : row[1];
 		fs << "<input type=\"hidden\" name=\"" << P_TX_SUBS << c.Section() << "\" value=\""
-				<< encodeHTML(pchData, c.EncodeHTML()) << "\">"
-				<< encodeHTML(pchData, c.EncodeHTML());
+				<< c.SubsTimeUnits() << "\">" << c.SubsTimeUnits();
 	}
 	if (modifier == CMS_ST_LOGIN)
 	{
@@ -2886,12 +2930,47 @@ int CActSelect::takeAction(CContext& c, sockstream& fs)
 	stringstream buf;
 	if (modifier == CMS_ST_SUBSCRIPTION)
 	{
-		if (c.ByPublication())
-			fs << "<input type=\"hidden\" name=\"" << P_CB_SUBS << "\" value=\""
-			<< c.Section() << "\">";
-		else
-			fs << "<input type=\"checkbox\" name=\"" << P_CB_SUBS << "\" value=\""
-			<< c.Section() << "\">";
+		string coClassAttr = m_coClass != "" ? string(" class=\"") + m_coClass + "\"" : "";
+		if (case_comp(field, "Section") == 0)
+		{
+			if (c.ByPublication())
+			{
+				fs << "<input type=\"hidden\" name=\"" << P_CB_SUBS << "[]\" value=\""
+						<< c.Section() << "\"" << coClassAttr << ">";
+			}
+			else
+			{
+				fs << "<input type=\"checkbox\" name=\"" << P_CB_SUBS << "[]\" value=\""
+						<< c.Section() << "\" onchange=\"update_subscription_payment()\""
+						<< coClassAttr << ">";
+			}
+		}
+		else if (case_comp(field, "Languages") == 0)
+		{
+			buf << "select l.Id, l.OrigName from Issues as i, Languages as l where "
+					"i.IdLanguage = l.Id and i.IdPublication = " << c.Publication()
+					<< " group by l.Id";
+			SQLQuery(&m_coSql, buf.str().c_str());
+			StoreResult(&m_coSql, res);
+			fs << "<select name=\"subscription_language[]\"" << coClassAttr << " size=\""
+					<< m_nSize << "\"" << (m_bMultipleSelect ? " multiple" : "")
+					<< " onchange=\"update_subscription_payment()\" id=\"select_language\">\n";
+			MYSQL_ROW row;
+			while ((row = mysql_fetch_row(*res)))
+			{
+				id_type nLanguageId = atol(row[0]);
+				fs << "<option value=\"" << nLanguageId << "\""
+						<< (nLanguageId == c.Language() ? " selected" : "") << ">"
+						<< encodeHTML(row[1], c.EncodeHTML()) << "</option>\n";
+			}
+			fs << "</select>\n";
+		}
+		else if (case_comp(field, "AllLanguages") == 0)
+		{
+			fs << "<input type=\"checkbox\" name=\"subs_all_languages\"" << coClassAttr
+					<< " onchange=\"update_subscription_payment(); "
+					"ToggleElementEnabled('select_language');\">";
+		}
 	}
 	else if (modifier == CMS_ST_USER)
 	{

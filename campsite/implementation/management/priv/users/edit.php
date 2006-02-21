@@ -28,7 +28,7 @@ if ($userId > 0) {
 $crumbs = array();
 $crumbs[] = array(getGS("Users"), "");
 $crumbs[] = array(getGS($uType), "/$ADMIN/users/?".get_user_urlparams());
-if ($userId > 0) { 
+if ($userId > 0) {
     $crumbs[] = array(getGS("Change user account information"), "");
 } else {
 	if ($uType == "Staff") {
@@ -38,7 +38,7 @@ if ($userId > 0) {
 	}
 }
 $breadcrumbs = camp_html_breadcrumbs($crumbs);
-echo $breadcrumbs; 
+echo $breadcrumbs;
 ?>
 <p>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.config.js"></script>
@@ -83,7 +83,6 @@ if ($canManage && ($userId > 0)) {
 	<?php
 }
 ?>
-
 
 <table border="0">
 <tr>

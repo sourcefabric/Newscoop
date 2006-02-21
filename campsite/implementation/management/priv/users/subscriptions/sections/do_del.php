@@ -22,6 +22,7 @@ if (!$User->hasPermission('ManageSubscriptions')) {
 
 $f_user_id = Input::Get('f_user_id', 'int', 0);
 $f_publication_id = Input::Get('f_publication_id', 'int', 0);
+$f_language_id = Input::Get('f_language_id', 'int', 0);
 $f_subscription_id = Input::Get('f_subscription_id', 'int', 0);
 $f_section_number = Input::Get('f_section_number', 'int', 0);
 
@@ -29,7 +30,7 @@ $publicationObj =& new Publication($f_publication_id);
 $languageObj =& new Language($publicationObj->getDefaultLanguageId());
 $manageUser =& new User($f_user_id);
 
-$subscriptionSection =& new SubscriptionSection($f_subscription_id, $f_section_number);
+$subscriptionSection =& new SubscriptionSection($f_subscription_id, $f_section_number, $f_language_id);
 $subscriptionSection->delete();
 header("Location: /$ADMIN/users/subscriptions/sections/?f_user_id=$f_user_id&f_subscription_id=$f_subscription_id&f_publication_id=$f_publication_id");
 exit;

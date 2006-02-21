@@ -6,8 +6,8 @@
 /**
  * Includes
  */
-// We indirectly reference the DOCUMENT_ROOT so we can enable 
-// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT'] 
+// We indirectly reference the DOCUMENT_ROOT so we can enable
+// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT']
 // is not defined in these cases.
 if (!isset($g_documentRoot)) {
     $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
@@ -22,7 +22,7 @@ require_once($g_documentRoot.'/classes/Log.php');
  */
 class Section extends DatabaseObject {
 	var $m_dbTableName = 'Sections';
-	var $m_keyColumnNames = array('IdPublication', 
+	var $m_keyColumnNames = array('IdPublication',
 								  'NrIssue',
 								  'IdLanguage',
 								  'Number');
@@ -37,7 +37,7 @@ class Section extends DatabaseObject {
 		'ArticleTplId');
 
 	var $m_languageName = null;
-	
+
 	/**
 	 * A section is a part of an issue.
 	 * @param int $p_publicationId
@@ -45,8 +45,8 @@ class Section extends DatabaseObject {
 	 * @param int $p_languageId
 	 * @param int $p_sectionNumber
 	 */
-	function Section($p_publicationId = null, $p_issueId = null, 
-	                 $p_languageId = null, $p_sectionNumber = null) 
+	function Section($p_publicationId = null, $p_issueId = null,
+	                 $p_languageId = null, $p_sectionNumber = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
 		$this->m_data['IdPublication'] = $p_publicationId;
@@ -58,7 +58,7 @@ class Section extends DatabaseObject {
 		}
 	} // fn Section
 
-	
+
 	/**
 	 * Create a new Section.
 	 * @param string $p_name
@@ -74,14 +74,14 @@ class Section extends DatabaseObject {
 	    if ($success) {
 			if (function_exists("camp_load_language")) { camp_load_language("api");	}
 		    $logtext = getGS('Section $1 added. (Issue: $2, Publication: $3)',
-		        $this->m_data['Name']." (".$this->m_data['Number'].")", 
-		        $this->m_data['NrIssue'], 
-		        $this->m_data['IdPublication']); 
+		        $this->m_data['Name']." (".$this->m_data['Number'].")",
+		        $this->m_data['NrIssue'],
+		        $this->m_data['IdPublication']);
 		    Log::Message($logtext, null, 21);
 	    }
 	    return $success;
 	} // fn create
-	
+
 
 	/**
 	 * Copy the section to the given issue.  The issue can be the same as
@@ -91,11 +91,11 @@ class Section extends DatabaseObject {
 	 *     The destination publication ID.
 	 * @param int $p_destIssueId
 	 *     The destination issue ID.
-	 * @param int $p_destIssueLanguageId 
-	 *     (optional) The destination issue language ID.  If not given, 
+	 * @param int $p_destIssueLanguageId
+	 *     (optional) The destination issue language ID.  If not given,
 	 *     it will use the language ID of this section.
 	 * @param int $p_destSectionId
-	 *     (optional) The destination section ID.  If not given, a new 
+	 *     (optional) The destination section ID.  If not given, a new
 	 *     section will be created.
 	 * @param boolean $p_copyArticles
 	 *     (optional) If set to true, all articles will be copied to the
@@ -103,18 +103,18 @@ class Section extends DatabaseObject {
 	 * @return Section
 	 *     The new Section object.
 	 */
-	function copy($p_destPublicationId, $p_destIssueId, $p_destIssueLanguageId = null, 
+	function copy($p_destPublicationId, $p_destIssueId, $p_destIssueLanguageId = null,
 	              $p_destSectionId = null, $p_copyArticles = true) {
     	if (is_null($p_destIssueLanguageId)) {
-    	   $p_destIssueLanguageId = $this->m_data['IdLanguage'];   
+    	   $p_destIssueLanguageId = $this->m_data['IdLanguage'];
     	}
     	if (is_null($p_destSectionId)) {
     	    $p_destSectionId = $this->m_data['Number'];
     	}
-    	$dstSectionObj =& new Section($p_destPublicationId, $p_destIssueId, 
+    	$dstSectionObj =& new Section($p_destPublicationId, $p_destIssueId,
     	                              $p_destIssueLanguageId, $p_destSectionId);
     	// If source issue and destination issue are the same
-    	if ( ($this->m_data['IdPublication'] == $p_destPublicationId) 
+    	if ( ($this->m_data['IdPublication'] == $p_destPublicationId)
     	      && ($this->m_data['NrIssue'] == $p_destIssueId)
     	      && ($this->m_data['IdLanguage'] == $p_destIssueLanguageId) ) {
     		$shortName = $p_destSectionId;
@@ -126,41 +126,41 @@ class Section extends DatabaseObject {
     	$dstSectionCols = array();
    		$dstSectionCols['SectionTplId'] = $this->m_data['SectionTplId'];
    		$dstSectionCols['ArticleTplId'] = $this->m_data['ArticleTplId'];
-    	
+
    		// Create the section if it doesnt exist yet.
     	if (!$dstSectionObj->exists()) {
     		$dstSectionObj->create($sectionName, $shortName, $dstSectionCols);
     	}
-    	
+
     	// Copy all the articles.
     	if ($p_copyArticles) {
-        	$srcSectionArticles = Article::GetArticles($this->m_data['IdPublication'], 
-                                                       $this->m_data['NrIssue'], 
+        	$srcSectionArticles = Article::GetArticles($this->m_data['IdPublication'],
+                                                       $this->m_data['NrIssue'],
                                                        $this->m_data['Number']);
             $copiedArticles = array();
         	foreach ($srcSectionArticles as $articleObj) {
         	    if (!in_array($articleObj->getArticleNumber(), $copiedArticles)) {
-            		$tmpCopiedArticles = $articleObj->copy($p_destPublicationId, 
+            		$tmpCopiedArticles = $articleObj->copy($p_destPublicationId,
                         $p_destIssueId, $p_destSectionId, null, true);
                     $copiedArticles[] = $articleObj->getArticleNumber();
         	    }
         	}
     	}
-    	    	
+
     	return $dstSectionObj;
 	} // fn copy
 
-	
+
 	/**
 	 * Delete the section, and optionally the articles.
 	 * @param boolean $p_deleteArticles
 	 * @return boolean
 	 */
-	function delete($p_deleteArticles = false) 
+	function delete($p_deleteArticles = false)
 	{
 	    $numArticlesDeleted = 0;
 	    if ($p_deleteArticles) {
-	        $articles = Article::GetArticles($this->m_data['IdPublication'], 
+	        $articles = Article::GetArticles($this->m_data['IdPublication'],
 	                                          $this->m_data['NrIssue'],
 	                                          $this->m_data['Number']);
 	        $numArticlesDeleted = count($articles);
@@ -179,107 +179,107 @@ class Section extends DatabaseObject {
 	    }
 	    return $numArticlesDeleted;
 	} // fn delete
-	
-		
+
+
 	/**
 	 * @return int
 	 */
-	function getPublicationId() 
+	function getPublicationId()
 	{
 		return $this->getProperty('IdPublication');
 	} // fn getPublicationId
-	
-	
+
+
 	/**
 	 * @return int
 	 */
-	function getIssueNumber() 
+	function getIssueNumber()
 	{
 		return $this->getProperty('NrIssue');
 	} // fn getIssueNumber
-	
-	
+
+
 	/**
 	 * @return int
 	 */
-	function getLanguageId() 
+	function getLanguageId()
 	{
 		return $this->getProperty('IdLanguage');
 	} // fn getLanguageId
-	
-	
+
+
 	/**
-	 * A simple way to get the name of the language the article is 
+	 * A simple way to get the name of the language the article is
 	 * written in.  The value is cached in case there are multiple
 	 * calls to this function.
 	 *
 	 * @return string
 	 */
-	function getLanguageName() 
+	function getLanguageName()
 	{
 		if (is_null($this->m_languageName)) {
 			$language =& new Language($this->m_data['IdLanguage']);
 			$this->m_languageName = $language->getNativeName();
 		}
-		return $this->m_languageName;		
+		return $this->m_languageName;
 	} // fn getLanguageName
-	
-	
+
+
 	/**
 	 * @return int
 	 */
-	function getSectionNumber() 
+	function getSectionNumber()
 	{
 		return $this->getProperty('Number');
 	} // fn getSectionNumber
 
-	
+
 	/**
 	 * @return string
-	 */ 
-	function getName() 
+	 */
+	function getName()
 	{
 		return $this->getProperty('Name');
 	} // fn getName
-	
-	
+
+
 	/**
 	 * @param string $p_value
 	 * @return boolean
 	 */
-	function setName($p_value) 
+	function setName($p_value)
 	{
 	    return $this->setProperty('Name', $p_value);
 	} // fn setName
-	
-	
+
+
 	/**
 	 * @return string
 	 */
-	function getUrlName() 
+	function getUrlName()
 	{
 		return $this->getProperty('ShortName');
 	} // fn getUrlName
-	
-	
+
+
 	/**
 	 * @param string $p_name
 	 */
-	function setUrlName($p_name) 
+	function setUrlName($p_name)
 	{
 	    return $this->setProperty('ShortName', $p_name);
 	} // fn setUrlName
-	
-	
+
+
 	/**
 	 * @return int
 	 */
-	function getArticleTemplateId() 
+	function getArticleTemplateId()
 	{
 		return $this->getProperty('ArticleTplId');
 	} // fn getArticleTemplateId
-	
-	
+
+
 	/**
 	 * @param int $p_value
 	 * @return boolean
@@ -288,27 +288,27 @@ class Section extends DatabaseObject {
 	{
 		return $this->setProperty('ArticleTplId', $p_value);
 	} // fn setArticleTemplateId
-	
-	
+
+
 	/**
 	 * @return int
 	 */
-	function getSectionTemplateId() 
+	function getSectionTemplateId()
 	{
 		return $this->getProperty('SectionTplId');
 	} // fn getSectionTemplateId
-	
-	
+
+
 	/**
 	 * @param int $p_value
 	 * @return boolean
 	 */
-	function setSectionTemplateId($p_value) 
+	function setSectionTemplateId($p_value)
 	{
 		return $this->setProperty('SectionTplId', $p_value);
 	} // fn setSectionTemplateId
-	
-	
+
+
 	/**
 	 * Return an array of sections in the given issue.
 	 * @param int $p_publicationId
@@ -326,7 +326,7 @@ class Section extends DatabaseObject {
 	 * @return array
 	 */
 	function GetSections($p_publicationId = null, $p_issueId = null,
-	                     $p_languageId = null, $p_sqlOptions = null) 
+	                     $p_languageId = null, $p_sqlOptions = null)
 	{
 		$constraints = array();
 		if (!is_null($p_publicationId)) {
@@ -338,26 +338,29 @@ class Section extends DatabaseObject {
 		if (!is_null($p_languageId)) {
 			$constraints[] = array("IdLanguage", $p_languageId);
 		}
-		
+
 		return DatabaseObject::Search('Section', $constraints, $p_sqlOptions);
 	} // fn GetSections
-	
-	
+
+
 	/**
 	 * Return an array of arrays indexed by "id" and "name".
 	 * @return array
 	 */
-	function GetUniqueSections($p_publicationId)
+	function GetUniqueSections($p_publicationId, $p_byLanguage = false)
 	{
 		global $Campsite;
-		$tmpObj =& new Section();		
-		$queryStr = "SELECT DISTINCT Number as id, Name as name "
-					." FROM ".$tmpObj->m_dbTableName
-					." WHERE IdPublication=$p_publicationId";
+		$queryStr = "SELECT Number as id, s.Name as name, s.IdLanguage, l.Name as LangName "
+					." FROM Sections AS s LEFT JOIN Languages AS l ON s.IdLanguage = l.Id"
+					." WHERE s.IdPublication = $p_publicationId"
+					." GROUP BY s.Number";
+		if ($p_byLanguage) {
+			$queryStr .= ", s.IdLanguage";
+		}
 		return $Campsite['db']->GetAll($queryStr);
 	} // fn GetSectionNames
-	
-	
+
+
 	/**
 	 * Return the total number of sections according to the given values.
 	 * @param int $p_publicationId
@@ -365,7 +368,7 @@ class Section extends DatabaseObject {
 	 * @param int $p_languageId
 	 * @return int
 	 */
-	function GetTotalSections($p_publicationId = null, $p_issueId = null, $p_languageId = null) 
+	function GetTotalSections($p_publicationId = null, $p_issueId = null, $p_languageId = null)
 	{
 		global $Campsite;
 		$queryStr = 'SELECT COUNT(*) FROM Sections';
@@ -385,8 +388,21 @@ class Section extends DatabaseObject {
 		$total = $Campsite['db']->GetOne($queryStr);
 		return $total;
 	} // fn GetTotalSections
-	
-	
+
+
+	function GetNumUniqueSections($p_publicationId, $p_byLanguage = true)
+	{
+		global $Campsite;
+		$queryStr = "SELECT * FROM Sections WHERE IdPublication = $p_publicationId"
+			." GROUP BY Number";
+		if ($p_byLanguage) {
+			$queryStr .= ', IdLanguage';
+		}
+		$result = $Campsite['db']->Execute($queryStr);
+		return $result->RowCount();
+	}
+
+
 	/**
 	 * Return a section number that is not in use.
 	 * @param int $p_publicationId
@@ -394,7 +410,7 @@ class Section extends DatabaseObject {
 	 * @param int $p_languageId
 	 * @return int
 	 */
-	function GetUnusedSectionId($p_publicationId, $p_issueId, $p_languageId) 
+	function GetUnusedSectionId($p_publicationId, $p_issueId, $p_languageId)
 	{
 		global $Campsite;
 		$queryStr = "SELECT MAX(Number) + 1 FROM Sections "
@@ -406,6 +422,6 @@ class Section extends DatabaseObject {
 		}
 		return $number;
 	} // fn GetUnusedSectionId
-		
+
 } // class Section
 ?>

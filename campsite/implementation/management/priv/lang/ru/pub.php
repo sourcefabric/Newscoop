@@ -1,4 +1,13 @@
 <?php
+regGS("trial subscription", "");
+regGS("paid subscription", "");
+regGS("time units", "");
+regGS("one language", "");
+regGS("all languages", "");
+regGS("Trial subscriptions", "");
+regGS("Time unit cost per one section", "");
+regGS("Paid subscriptions", "");
+regGS("Default time period", "");
 regGS("Publication List", "Список публикаций");
 regGS("Go To Issues", "Перейти к выпускам");
 regGS("Name<BR><SMALL>(click to see issues)</SMALL>", "Название<BR><SMALL>(щелкните для просмотра выпуска)</SMALL>");
@@ -24,7 +33,6 @@ regGS("There are $1 subscription(s) left.", "Осталось подписок: 
 regGS("The publication $1 could not be deleted.", "Не удалось удалить публикацию $1.");
 regGS("Adding new publication", "Добавление новой публикации");
 regGS("The publication could not be added.", "Не удалось добавить публикацию.");
-regGS("Select the publication", "Выберите публикацию");
 regGS("Add new country default subscription time", "Добавить время подписки по умолчанию для новой страны");
 regGS("You do not have the right to manage publications.", "Вы не имеете права управления публикациями");
 regGS("Please check if another entry with the same country code exists already.", "Убедитесь, что не существует записи с тем же кодом страны.");
@@ -35,7 +43,6 @@ regGS("Change subscription default time", "Изменение времени п�
 regGS("Default subscription time for $1 changed", "Время подписки по умолчанию для $1 изменено");
 regGS("Are you sure you want to delete the subscription default time for $1?", "Вы уверены, что хотите удалить время подпискипо умолчанию для $1?");
 regGS("Subscription default time for $1 deleted", "Время подписки по умолчанию для $1 удалено");
-regGS("Name<BR><SMALL>(click to select the publication)</SMALL>", "Название<BR><SMALL>(щелкните для выбора выпуска)</SMALL>");
 regGS("Add new alias", "Добавить новый псевдоним");
 regGS("Alias (click to edit)", "Псевдонимы (щелкните для правки)");
 regGS("Edit aliases", "Правка псевдонимов");

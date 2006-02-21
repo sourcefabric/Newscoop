@@ -18,10 +18,9 @@ $cName = trim(Input::Get('cName'));
 $cSite = trim(Input::Get('cSite'));
 $cLanguage = Input::Get('cLanguage', 'int');
 $cURLType = Input::Get('cURLType', 'int', 0);
-
-$cPayTime = Input::Get('cPayTime', 'int', 0, true);
 $cTimeUnit = Input::Get('cTimeUnit', 'string', null, true);
 $cUnitCost = Input::Get('cUnitCost', 'string', null, true);
+$cUnitCostAllLang = Input::Get('cUnitCostAllLang', 'string', null, true);
 $cCurrency = Input::Get('cCurrency', 'string', null, true);
 $cPaid = Input::Get('cPaid', 'int', null, true);
 $cTrial = Input::Get('cTrial', 'int', null, true);
@@ -29,15 +28,15 @@ $cTrial = Input::Get('cTrial', 'int', null, true);
 $correct = true;
 $created = false;
 $errorMsgs = array();
-	
+
 if (empty($cName)) {
 	$correct = false;
-	$errorMsgs[] = getGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); 
+	$errorMsgs[] = getGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>');
 }
 
 if (empty($cSite)) {
 	$correct = false;
-	$errorMsgs[] = getGS('You must complete the $1 field.','<B>'.getGS('Site').'</B>'); 
+	$errorMsgs[] = getGS('You must complete the $1 field.','<B>'.getGS('Site').'</B>');
 }
 
 if ($correct) {
@@ -46,13 +45,13 @@ if ($correct) {
 		$alias =& new Alias();
 		$alias->create(array('Name' => $cSite));
 		$newPub =& new Publication();
-		$columns = array('Name' => $cName, 
-						 'IdDefaultAlias'=> $alias->getId(), 
+		$columns = array('Name' => $cName,
+						 'IdDefaultAlias'=> $alias->getId(),
 						 'IdDefaultLanguage' => $cLanguage,
 						 'IdURLType' => $cURLType,
-						 'PayTime' => $cPayTime,
 						 'TimeUnit' => $cTimeUnit,
 						 'UnitCost' => $cUnitCost,
+						 'UnitCostAllLang' => $cUnitCostAllLang,
 						 'Currency' => $cCurrency,
 						 'PaidTime' => $cPaid,
 						 'TrialTime' => $cTrial);
@@ -75,7 +74,7 @@ $crumbs = array();
 $crumbs[] = array(getGS("Publications"), "/$ADMIN/pub");
 $crumbs[] = array(getGS("Adding new publication"), "");
 echo camp_html_breadcrumbs($crumbs);
-?> 
+?>
 
 <P>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">
@@ -88,7 +87,7 @@ echo camp_html_breadcrumbs($crumbs);
 <TR>
 	<TD COLSPAN="2">
 		<BLOCKQUOTE>
-		<?php 
+		<?php
 		foreach ($errorMsgs as $errorMsg) { ?>
 			<LI><?php echo $errorMsg; ?></LI>
 			<?php

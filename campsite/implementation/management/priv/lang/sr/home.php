@@ -1,4 +1,5 @@
 <?php
+regGS("System Preferences", "");
 regGS("You haven't written any articles yet.", "Нема ваших чланака.");
 regGS("There are no pending items to be published.", "Нема ставки за објављивање.");
 regGS("There are currently no submitted articles.", "Тренутно нема предатих чланака.");

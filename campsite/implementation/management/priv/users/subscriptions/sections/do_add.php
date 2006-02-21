@@ -24,51 +24,55 @@ if (!$User->hasPermission('ManageSubscriptions')) {
 $f_user_id = Input::Get('f_user_id', 'int', 0);
 $f_publication_id = Input::Get('f_publication_id', 'int', 0);
 $f_subscription_id = Input::Get('f_subscription_id', 'int', 0);
-$f_section_number = Input::Get('f_section_number', 'int', 0);
+$f_section_number = Input::Get('f_section_number', 'array');
+$f_section_id = Input::Get('f_section_id', 'array');
+$f_language_set = Input::Get('f_language_set', 'string', 'all');
 $f_subscription_start_date = Input::Get('f_subscription_start_date');
 $f_subscription_days = Input::Get('f_subscription_days');
 $success = true;
 
 $publicationObj =& new Publication($f_publication_id);
 $languageObj =& new Language($publicationObj->getDefaultLanguageId());
+$languages = $publicationObj->getLanguages();
 $manageUser =& new User($f_user_id);
 $errorMsgs = array();
 
-if ($f_section_number != 0) {
-	$subscriptionSection =& new SubscriptionSection($f_subscription_id, $f_section_number);
-	$columns = array('StartDate' => $f_subscription_start_date, 
-					 'Days' => $f_subscription_days, 
-					 'PaidDays' => $f_subscription_days);
-	if (!$subscriptionSection->exists()) {
-		$success = $subscriptionSection->create($columns);
-	}
-	if (!$success) {
- 		$errorMsgs[] = getGS('The section could not be added.').' '.getGS("Please check if there isn't another subscription with the same section."); 		
+$new_sections = array();
+if ($f_language_set == 'all') {
+	foreach ($f_section_number as $section_number) {
+		$new_sections[$section_number][] = 0;
 	}
 } else {
-	$sections = Section::GetUniqueSections($f_publication_id);
-	$columns = array('StartDate' => $f_subscription_start_date, 
-					 'Days' => $f_subscription_days, 
-					 'PaidDays' => $f_subscription_days);
-	foreach ($sections as $section) {
-		$subscriptionSection =& new SubscriptionSection($f_subscription_id, $section['id']);
+	foreach ($f_section_id as $section_id) {
+		$id = explode('_', $section_id);
+		$new_sections[$id[0]][] = $id[1];
+	}
+}
+
+$columns = array('StartDate' => $f_subscription_start_date,
+				 'Days' => $f_subscription_days,
+				 'PaidDays' => $f_subscription_days);
+foreach ($new_sections as $section_number=>$section_languages) {
+	foreach ($section_languages as $section_language) {
+		echo "<p>try $section_number:$section_language</p>\n";
+		$subscriptionSection =& new SubscriptionSection($f_subscription_id, $section_number, $section_language);
 		if (!$subscriptionSection->exists()) {
+			echo "<p>create $section_number:$section_language</p>\n";
 			$success &= $subscriptionSection->create($columns);
 		}
-	}
-	if (!$success) {
-		$errorMsgs[] = getGS('The sections could not be added successfully. Some of them were already added !');
 	}
 }
 if ($success) {
 	header("Location: /$ADMIN/users/subscriptions/sections/?f_user_id=$f_user_id&f_subscription_id=$f_subscription_id&f_publication_id=$f_publication_id");
 	exit;
+} else {
+	$errorMsgs[] = getGS('The sections could not be added successfully. Some of them were already added !');
 }
 
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
 $crumbs[] = array(getGS("Subscribers"), "/$ADMIN/users/?uType=Subscribers");
-$crumbs[] = array(getGS("Account") . " '".$manageUser->getUserName()."'", 
+$crumbs[] = array(getGS("Account") . " '".$manageUser->getUserName()."'",
 			"/$ADMIN/users/edit.php?User=$User&uType=Subscribers");
 $crumbs[] = array(getGS("Subscriptions"), "/$ADMIN/users/subscriptions/?f_user_id=$f_user_id");
 $crumbs[] = array(getGS("Subscribed sections").": ".$publicationObj->getName(), "/$ADMIN/users/subscriptions/sections/?f_user_id=$f_user_id&f_subscription_id=$f_subscription_id&f_publication_id=$f_publication_id");
@@ -87,7 +91,7 @@ echo camp_html_breadcrumbs($crumbs);
 <TR>
 	<TD COLSPAN="2">
 	<BLOCKQUOTE>
-	<?php 
+	<?php
 	foreach ($errorMsgs as $errorMsg) { ?>
 		<LI><?php p($errorMsg); ?></LI>
 		<?PHP

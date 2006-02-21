@@ -294,7 +294,12 @@ int ReadParameters(char** p_ppchMsg, int* p_pnSize, const char** p_ppchErrMsg)
 	while (coCgi.GetNextParameter(&pchParam, &pchValue))
 	{
 		CXMLTree::iterator coParamIt = coTree.newChild(coNodeIt, "Parameter", pchValue);
-		coTree.addAttribute(coParamIt, "Name", pchParam);
+		string coParam = pchParam;
+		if (coParam.rfind("[]") == (coParam.size() - 2))
+		{
+			coParam = coParam.substr(0, coParam.size() - 2);
+		}
+		coTree.addAttribute(coParamIt, "Name", coParam.c_str());
 		coTree.addAttribute(coParamIt, "Type", "string");
 	}
 	string coCookies = pchHttpCookie;

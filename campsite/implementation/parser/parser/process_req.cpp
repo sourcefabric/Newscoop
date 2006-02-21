@@ -386,6 +386,7 @@ int RunParser(MYSQL* p_pSQL, CURL* p_pcoURL, const char* p_pchRemoteIP, sockstre
 		cout << "writing output for " << coTemplate << ": " << coDocumentRoot << endl;
 #endif
 		p->writeOutput(*pcoCtx, p_rOs);
+		p->printParseErrors(cout, true);
 		if (bPreview == true)
 		{
 #ifdef _DEBUG
@@ -639,6 +640,7 @@ int AddUser(CContext& c, MYSQL* pSql, const char* ppchParams[], int param_nr,
 	return 0;
 }
 
+
 // ModifyUser: perform modify user action (modify user information in the database)
 // Return error code.
 // Parameters:
@@ -700,6 +702,77 @@ int ModifyUser(CContext& c, MYSQL* pSql, const char* ppchParams[], int param_nr,
 	return 0;
 }
 
+
+typedef multimap<id_type, lint, less<id_type> > SubscriptionSections;
+
+int CreateSubscriptionSections(CContext& c, MYSQL* pSql, id_type p_nSubscriptionId,
+							   lint p_nLanguageId, bool p_bByPublication, double p_nUnitCost,
+							   int p_nSubscriptionTime, const string& p_rcoTimeUnit,
+							   const string& p_rcoCurrency,
+							   const SubscriptionSections& p_rcoSections)
+{
+	char pchBuf[1000];
+	double nToPay = 0;
+	// create subscription sections
+	for (SubscriptionSections::const_iterator coIt = p_rcoSections.begin();
+			coIt != p_rcoSections.end(); ++coIt)
+	{
+		id_type nSection = (*coIt).first;
+		lint nTimeUnits = (*coIt).second;
+		
+		// compute the subscription length in days
+		sprintf(pchBuf, "select TO_DAYS(ADDDATE(now(), INTERVAL %ld %s)) - TO_DAYS(now())",
+				nTimeUnits, p_rcoTimeUnit.c_str());
+		SQLQuery(pSql, pchBuf);
+		StoreResult(pSql, coSqlRes);
+		CheckForRows(*coSqlRes, 1);
+		FetchRow(*coSqlRes, row);
+		lint nSubsSectionDays = atol(row[0]);
+		lint nPaidDays = c.SubsType() == ST_TRIAL ? nSubsSectionDays : 0;
+		
+		// compute the subscription payment
+		if (c.SubsType() == ST_PAID)
+		{
+			nToPay += (double)nTimeUnits * p_nUnitCost;
+		}
+
+		// check if the subscription section already existed
+		sprintf(pchBuf, "select TO_DAYS(ADDDATE(StartDate, INTERVAL Days DAY)) - TO_DAYS(now()) "
+				"from SubsSections where IdSubscription = %ld and SectionNumber = %ld "
+				"and IdLanguage = %ld", p_nSubscriptionId, nSection, p_nLanguageId);
+		SQLQuery(pSql, pchBuf);
+		coSqlRes = mysql_store_result(pSql);
+		if ((row = mysql_fetch_row(*coSqlRes)) != NULL) // yes, update subscription
+		{
+			if (atol(row[0]) > 0)
+				sprintf(pchBuf, "update SubsSections set Days = Days + %ld, PaidDays = "
+						"PaidDays + %ld where IdSubscription = %ld and SectionNumber = %ld "
+								"and IdLanguage = %ld",
+						nSubsSectionDays, nPaidDays, p_nSubscriptionId, nSection, p_nLanguageId);
+			else
+				sprintf(pchBuf, "update SubsSections set StartDate = now(), Days = %ld, "
+						"PaidDays = %ld where IdSubscription = %ld and SectionNumber = %ld "
+								"and IdLanguage = %ld",
+						nSubsSectionDays, nPaidDays, p_nSubscriptionId, nSection, p_nLanguageId);
+		}
+		else // no, create subscription to section
+		{
+			sprintf(pchBuf, "insert into SubsSections (IdSubscription, SectionNumber, IdLanguage,"
+					" StartDate, Days, PaidDays) values(%ld, %ld, %ld, now(), %ld, %ld)",
+					p_nSubscriptionId, nSection, p_nLanguageId, nSubsSectionDays, nPaidDays);
+		}
+		SQLQuery(pSql, pchBuf);
+	}
+	
+	// set the subscription currency and payment amount
+	sprintf(pchBuf, "update Subscriptions set ToPay = ToPay + %f, Currency = '%s' "
+	        "where Id = %ld", nToPay, p_rcoCurrency.c_str(), p_nSubscriptionId);
+	SQLQuery(pSql, pchBuf);
+	
+	return 0;
+}
+
+
 // DoSubscribe: perform subscribe action (subscribe user to a certain publication)
 // Parameters:
 //		CContext& c - current context
@@ -716,171 +789,178 @@ int DoSubscribe(CContext& c, MYSQL* pSql)
 		return SERR_USER_NOT_READER;
 	if (c.Publication() < 0)
 		return SERR_PUBL_NOT_SPECIFIED;
-	string s;
-	sprintf(pchBuf, "select TimeUnit, PayTime, UnitCost, Currency from Publications where "
-	        "Id = %ld", c.Publication());
+	
+	// see if subscription is to all languages or only to selected ones
+	bool bAllLanguages = case_comp(c.URL()->getValue("subs_all_languages"), "on") == 0;
+	
+	// read time unit, cost, currency
+	sprintf(pchBuf, "select TimeUnit, UnitCost, UnitCostAllLang, Currency from Publications "
+			"where Id = %ld", c.Publication());
 	SQLQuery(pSql, pchBuf);
 	StoreResult(pSql, coSqlRes);
 	CheckForRows(*coSqlRes, 1);
 	FetchRow(*coSqlRes, row);
-	const char* modifier = "";
-	if (row[0][0] == 'D')
-		modifier = "DAY";
-	else if (row[0][0] == 'W')
-		modifier = "WEEK";
-	else if (row[0][0] == 'M')
-		modifier = "MONTH";
-	else if (row[0][0] == 'Y')
-		modifier = "YEAR";
-	else
-		return SERR_UNIT_NOT_SPECIFIED;
-	lint paid_time = atol(row[1]);
-	double unit_cost = atof(row[2]);
-	string currency = row[3];
-	id_type id_subscription;
-	bool active = true;
-	my_ulonglong rows = 0;
+	string coTimeUnit = "";
+	switch (row[0][0]) {
+		case 'D':
+			coTimeUnit = "DAY"; break;
+		case 'W':
+			coTimeUnit = "WEEK"; break;
+		case 'M':
+			coTimeUnit = "MONTH"; break;
+		case 'Y':
+			coTimeUnit = "YEAR"; break;
+		default:
+			return SERR_UNIT_NOT_SPECIFIED;
+	}
+	double nUnitCost = bAllLanguages ? atof(row[2]) : atof(row[1]);
+	string coCurrency = row[3];
+	
+	// create the subscription; check if the subscription already existed
+	id_type nSubscriptionId;
 	sprintf(pchBuf, "select Id, Active, ToPay from Subscriptions where IdUser = %ld and "
-	        "IdPublication = %ld", c.User(), c.Publication());
+			"IdPublication = %ld", c.User(), c.Publication());
 	SQLQuery(pSql, pchBuf);
 	coSqlRes = mysql_store_result(pSql);
-	char subs_type = c.SubsType() == ST_TRIAL ? 'T' : 'P';
-	if (mysql_num_rows(*coSqlRes) > 0)
+	char chSubsType = c.SubsType() == ST_TRIAL ? 'T' : 'P';
+	if ((row = mysql_fetch_row(*coSqlRes)) != NULL)	// subscription already existed; update it
 	{
-		row = mysql_fetch_row(*coSqlRes);
-		id_subscription = atol(row[0]);
-		active = row[1][0] == 'Y';
 		if (atof(row[2]) > 0)
-			return SERR_SUBS_NOT_PAID;
-		if (!active)
 		{
-			sprintf(pchBuf, "update Subscriptions set Active = 'Y', Type = '%c' were IdUser"
-			        " = %ld and IdPublication = %ld", subs_type, c.User(), c.Publication());
+			return SERR_SUBS_NOT_PAID;
+		}
+		nSubscriptionId = atol(row[0]);
+		if (row[1][0] != 'Y')
+		{
+			sprintf(pchBuf, "update Subscriptions set Active = 'Y', Type = '%c' where "
+					"IdUser = %ld and IdPublication = %ld", chSubsType, c.User(), c.Publication());
 			SQLQuery(pSql, pchBuf);
 		}
 	}
-	else
+	else	// create the subscription
 	{
 		sprintf(pchBuf, "insert into Subscriptions (IdUser, IdPublication, Active, Type) "
-		        "values(%ld, %ld, 'Y', '%c')", c.User(), c.Publication(), subs_type);
+				"values(%ld, %ld, 'Y', '%c')", c.User(), c.Publication(), chSubsType);
 		SQLQuery(pSql, pchBuf);
 		sprintf(pchBuf, "select Id from Subscriptions where IdUser = %ld and "
-		        "IdPublication = %ld", c.User(), c.Publication());
+				"IdPublication = %ld", c.User(), c.Publication());
 		SQLQuery(pSql, pchBuf);
 		coSqlRes = mysql_store_result(pSql);
 		CheckForRows(*coSqlRes, 1);
 		row = mysql_fetch_row(*coSqlRes);
-		id_subscription = atol(row[0]);
+		nSubscriptionId = atol(row[0]);
 	}
-	bool by_publication = false;
-	double to_pay = 0;
-	if ((s = c.URL()->getValue("by")) != "" && strcasecmp(s.c_str(), "publication") == 0)
+	
+	// Compute the subscription length; search for the default subscription intervals in
+	// the countries subscriptions intervals table first
+	const char* pchSubsTypeTime = c.SubsType() == ST_TRIAL ? "TrialTime" : "PaidTime";
+	sprintf(pchBuf, "select %s from SubsDefTime, Users where IdPublication = %ld and "
+			"SubsDefTime.CountryCode = Users.CountryCode and Users.Id = %ld",
+			pchSubsTypeTime, c.Publication(), c.User());
+	SQLQuery(pSql, pchBuf);
+	coSqlRes = mysql_store_result(pSql);
+	
+	// If the default subscription interval was not found in the countries subscriptions
+	// intervals table read it from the publications table
+	if (mysql_num_rows(*coSqlRes) < 1)
 	{
-		c.URL()->deleteParameter("by");
-		c.DefURL()->deleteParameter("by");
-		by_publication = true;
-		sprintf(pchBuf, "select Number from Issues where IdPublication = %ld and "
-		        "Published = 'Y' and IdLanguage = %ld order by Number DESC limit 0, 1",
-		        c.Publication(), c.Language());
+		sprintf(pchBuf, "select %s from Publications where Id = %ld", pchSubsTypeTime,
+				c.Publication());
 		SQLQuery(pSql, pchBuf);
 		coSqlRes = mysql_store_result(pSql);
 		CheckForRows(*coSqlRes, 1);
-		row = mysql_fetch_row(*coSqlRes);
-		c.SetIssue(atol(row[0]));
-		const char* sel_time = c.SubsType() == ST_TRIAL ? "TrialTime" : "PaidTime";
-		sprintf(pchBuf, "select TO_DAYS(ADDDATE(now(), INTERVAL %s %s)) - TO_DAYS(now()), %s "
-		        "from SubsDefTime, Users where IdPublication = %ld and "
-		        "SubsDefTime.CountryCode = Users.CountryCode and Users.Id = %ld",
-		        sel_time, modifier, sel_time, c.Publication(), c.User());
-		SQLQuery(pSql, pchBuf);
-		coSqlRes = mysql_store_result(pSql);
-		if (mysql_num_rows(*coSqlRes) < 1) {
-			sprintf(pchBuf, "select TO_DAYS(ADDDATE(now(), INTERVAL %s %s)) - TO_DAYS(now()), "
-			        "%s from Publications where Id = %ld", sel_time, modifier, sel_time,
-			        c.Publication());
-			SQLQuery(pSql, pchBuf);
-			coSqlRes = mysql_store_result(pSql);
-			if (mysql_num_rows(*coSqlRes) < 1)
-				return -1;
-		}
-		row = mysql_fetch_row(*coSqlRes);
-		lint subs_days = atol(row[0]);
-		lint time_units = atol(row[1]);
-		if (c.SubsType() == ST_TRIAL)
-			paid_time = subs_days;
-		sprintf(pchBuf, "select Number from Sections where IdPublication = %ld and NrIssue "
-		        "= %ld and IdLanguage = %ld", c.Publication(), c.Issue(), c.Language());
-		SQLQuery(pSql, pchBuf);
-		coSqlRes = mysql_store_result(pSql);
-		CheckForRows(*coSqlRes, 1);
-		while ((row = mysql_fetch_row(*coSqlRes)) != NULL)
-		{
-			sprintf(pchBuf, "replace into SubsSections set IdSubscription = %ld, "
-			        "SectionNumber = %s, StartDate = now(), Days = %ld, PaidDays = %ld",
-			         id_subscription, row[0], subs_days, paid_time);
-			SQLQuery(pSql, pchBuf);
-			to_pay += unit_cost * time_units;
-		}
 	}
-	if ((s = c.URL()->getValue(P_CB_SUBS)) != "" && !by_publication)
+	row = mysql_fetch_row(*coSqlRes);
+	lint nSubscriptionTime = atol(row[0]);
+	c.SetSubsTimeUnits(nSubscriptionTime);
+	
+	// read the subscription mode: by publication or by section
+	string coValue;
+	bool bByPublication = (coValue = c.URL()->getValue("by")) != ""
+			&& strcasecmp(coValue.c_str(), "publication") == 0;
+	c.URL()->deleteParameter("by");
+	c.DefURL()->deleteParameter("by");
+	
+	// initialise the list of subscription sections
+	SubscriptionSections coSubscriptionSections;
+	
+	// subscribe mode: by section
+	// read the list of sections from the parameters list
+	coValue = c.URL()->getValue(P_CB_SUBS);
+	while (!bByPublication && coValue != "")
 	{
-		while (s != "")
+		id_type nSection = atol(coValue.c_str());
+		sprintf(pchBuf, "%s%ld", P_TX_SUBS, nSection);
+		lint nTimeUnits = nSubscriptionTime;
+		if ((coValue = c.URL()->getValue(pchBuf)) != "")
 		{
-			id_type section = atol(s.c_str());
-			sprintf(pchBuf, "%s%s", P_TX_SUBS, s.c_str());
-			if ((s = c.URL()->getValue(pchBuf)) == "")
+			nTimeUnits = atol(coValue.c_str());
+			
+			// delete parameters we don't need anymore
+			c.URL()->deleteParameter(pchBuf);
+			c.DefURL()->deleteParameter(pchBuf);
+		}
+		coSubscriptionSections.insert(pair<id_type, lint>(nSection, nTimeUnits));
+		coValue = c.URL()->getNextValue(P_CB_SUBS);
+	}
+	// delete parameters we don't need anymore
+	c.URL()->deleteParameter(P_CB_SUBS);
+	c.DefURL()->deleteParameter(P_CB_SUBS);
+	
+	// initialize the language list
+	list<id_type> coLanguages;
+	coValue = c.URL()->getValue("subscription_language");
+	while (!bAllLanguages && coValue != "")
+	{
+		coLanguages.push_back(atol(coValue.c_str()));
+		coValue = c.URL()->getNextValue("subscription_language");
+	}
+	c.URL()->deleteParameter("subscription_language");
+	c.DefURL()->deleteParameter("subscription_language");
+	if (coLanguages.empty())
+	{
+		coLanguages.push_back(bAllLanguages ? 0 : c.Language());
+	}
+	
+	// run the CreateSubscriptionSections function for each language
+	for (list<id_type>::iterator coIt = coLanguages.begin(); coIt != coLanguages.end(); ++coIt)
+	{
+		// subscribe mode: by publication
+		// create the list of subscription sections for the current language
+		if (bByPublication)
+		{
+			if (*coIt == 0)
 			{
-				s = c.URL()->getNextValue(P_CB_SUBS);
-				continue;
-			}
-			lint time_units = atol(s.c_str());
-			sprintf(pchBuf, "select TO_DAYS(ADDDATE(now(), INTERVAL %ld %s)) - TO_DAYS(now())",
-			        time_units, modifier);
-			SQLQuery(pSql, pchBuf);
-			coSqlRes = mysql_store_result(pSql);
-			CheckForRows(*coSqlRes, 1);
-			row = mysql_fetch_row(*coSqlRes);
-			lint req_days = atol(row[0]);
-			if (c.SubsType() == ST_TRIAL)
-				paid_time = req_days;
-			sprintf(pchBuf, "select TO_DAYS(ADDDATE(StartDate, INTERVAL Days DAY)) - "
-			        "TO_DAYS(now()) from SubsSections where IdSubscription = %ld and "
-			        "SectionNumber = %ld", id_subscription, section);
-			SQLQuery(pSql, pchBuf);
-			coSqlRes = mysql_store_result(pSql);
-			to_pay += unit_cost * time_units;
-			if ((rows = mysql_num_rows(*coSqlRes)))
-			{
-				row = mysql_fetch_row(*coSqlRes);
-				if (c.SubsType() == ST_TRIAL)
-					paid_time = req_days;
-				if (atol(row[0]) > 0)
-					sprintf(pchBuf, "update SubsSections set Days = Days + %ld, PaidDays = "
-					        "PaidDays + %ld where IdSubscription = %ld and SectionNumber = %ld",
-					        req_days, paid_time, id_subscription, section);
-				else
-					sprintf(pchBuf, "update SubsSections set StartDate = now(), Days = %ld, "
-					        "PaidDays = %ld where IdSubscription = %ld and SectionNumber = %ld",
-					        req_days, paid_time, id_subscription, section);
+				sprintf(pchBuf, "select Number from Sections where IdPublication = %ld "
+						"group by Number", c.Publication());
 			}
 			else
-				sprintf(pchBuf, "insert into SubsSections (IdSubscription, SectionNumber, "
-				        "StartDate, Days, PaidDays) values(%ld, %ld, now(), %ld, %ld)",
-				        id_subscription, section, req_days, paid_time);
+			{
+				sprintf(pchBuf, "select Number from Sections where IdPublication = %ld "
+						"and IdLanguage = %ld group by Number", c.Publication(), *coIt);
+			}
 			SQLQuery(pSql, pchBuf);
-			s = c.URL()->getNextValue(P_CB_SUBS);
+			StoreResult(pSql, coSqlRes);
+			MYSQL_ROW row;
+			coSubscriptionSections.clear();
+			while ((row = mysql_fetch_row(*coSqlRes)) != NULL)
+			{
+				coSubscriptionSections.insert(pair<id_type, lint>(atol(row[0]),
+											  nSubscriptionTime));
+			}
 		}
-		c.URL()->deleteParameter(P_CB_SUBS);
-		c.DefURL()->deleteParameter(P_CB_SUBS);
-	}
-	if (c.SubsType() != ST_TRIAL)
-	{
-		sprintf(pchBuf, "update Subscriptions set ToPay = ToPay + %f, Currency = '%s' "
-		        "where Id = %ld", to_pay, currency.c_str(), id_subscription);
-		SQLQuery(pSql, pchBuf);
+	
+		int res = CreateSubscriptionSections(c, pSql, nSubscriptionId, *coIt, bByPublication,
+											 nUnitCost, nSubscriptionTime, coTimeUnit,
+											 coCurrency, coSubscriptionSections);
+		if (res != 0)
+		{
+			return res;
+		}
 	}
 	return 0;
 }
+
 
 // SetReaderAccess: update current context: set reader access to publication sections
 // according to user subscriptions.
@@ -904,7 +984,7 @@ void SetReaderAccess(CContext& c, MYSQL* pSql)
 	{
 		id_type id_publ = atol(row[0]), id_subs = atol(row[1]);
 		sprintf(pchBuf, "select SectionNumber, (TO_DAYS(now())-TO_DAYS(StartDate)), "
-		        "PaidDays from SubsSections where IdSubscription = %ld", id_subs);
+		        "PaidDays, IdLanguage from SubsSections where IdSubscription = %ld", id_subs);
 		if (mysql_query(pSql, pchBuf))
 			continue;
 		MYSQL_RES *res2 = mysql_store_result(pSql);
@@ -916,8 +996,9 @@ void SetReaderAccess(CContext& c, MYSQL* pSql)
 			id_type nr_section = atol(row2[0]);
 			lint passed_days = atol(row2[1]);
 			lint days = atol(row2[2]);
+			lint languageId = atol(row2[3]);
 			if (passed_days <= days)
-				c.SetSubs(id_publ, nr_section);
+				c.SetSubs(id_publ, nr_section, languageId);
 		}
 		mysql_free_result(res2);
 	}

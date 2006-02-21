@@ -2,6 +2,7 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/pub/pub_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/SubscriptionDefaultTime.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Country.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/TimeUnit.php");
 
 // Check permissions
 list($access, $User) = check_basic_access($_REQUEST);
@@ -19,6 +20,10 @@ $Pub = Input::Get('Pub', 'int');
 $Language = Input::Get('Language', 'int', 1, true);
 $CountryCode = Input::Get('CountryCode');
 $publicationObj =& new Publication($Pub);
+$pubTimeUnit =& new TimeUnit($publicationObj->getTimeUnit(), $publicationObj->getLanguageId());
+if (!$pubTimeUnit->exists()) {
+	$pubTimeUnit =& new TimeUnit($publicationObj->getTimeUnit(), 1);
+}
 
 $defaultTime =& new SubscriptionDefaultTime($CountryCode, $Pub);
 $country =& new Country($CountryCode, $Language);
@@ -30,12 +35,6 @@ camp_html_content_top(getGS("Change subscription default time"), array("Pub" => 
 <P>
 <FORM NAME="dialog" METHOD="POST" ACTION="do_editdeftime.php"  >
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
-<TR>
-	<TD COLSPAN="2">
-		<B><?php  putGS("Change subscription default time"); ?></B>
-		<HR NOSHADE SIZE="1" COLOR="BLACK">
-	</TD>
-</TR>
 <INPUT TYPE=HIDDEN NAME="Pub" VALUE="<?php p($Pub); ?>">
 <INPUT TYPE=HIDDEN NAME="CountryCode" VALUE="<?php p($CountryCode); ?>">
 <INPUT TYPE=HIDDEN NAME="Language" VALUE="<?php p($Language); ?>">
@@ -45,16 +44,21 @@ camp_html_content_top(getGS("Change subscription default time"), array("Pub" => 
 	<?php p(htmlspecialchars($country->getName()." (".$country->getCode().")")); ?>
 	</TD>
 </TR>
+<tr>
+	<td colspan="2" align="left"><b><?php putGS('Default time period'); ?>:</b></td>
+</tr>
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Trial Period"); ?>:</TD>
+	<TD ALIGN="RIGHT" >- <?php  putGS("trial subscription"); ?>:</TD>
 	<TD>
 	<INPUT TYPE="TEXT" NAME="cTrialTime" VALUE="<?php p($defaultTime->getTrialTime()); ?>" SIZE="5" MAXLENGTH="5">
+	<?php p($pubTimeUnit->getName()); ?>
 	</TD>
 </TR>
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Paid Period"); ?>:</TD>
+	<TD ALIGN="RIGHT" >- <?php  putGS("paid subscription"); ?>:</TD>
 	<TD>
 	<INPUT TYPE="TEXT" NAME="cPaidTime" VALUE="<?php p($defaultTime->getPaidTime()); ?>" SIZE="5" MAXLENGTH="5">
+	<?php p($pubTimeUnit->getName()); ?>
 	</TD>
 </TR>
 <TR>

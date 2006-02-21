@@ -6,6 +6,9 @@ if (!$User->hasPermission("ManageSubscriptions") || !isset($editUser) || gettype
 	exit;
 }
 
+$publications = Publication::GetPublications();
+$numSubscriptions = Subscription::GetNumSubscriptions(null, $editUser->getUserId());
+
 ?>
 <table border="0" cellspacing="1" cellpadding="3" width="100%" class="table_list">
 <tr class="table_list_header">
@@ -13,11 +16,17 @@ if (!$User->hasPermission("ManageSubscriptions") || !isset($editUser) || gettype
 		<table border="0" cellspacing="0" cellpadding="0" width="100%">
 		<tr class="table_list_header">
 			<td align="left"><?php putGS("Subscriptions"); ?></td>
+<?php
+if (sizeof($publications) > $numSubscriptions) {
+?>
 			<td align="right" valign="center" nowrap>
 				<?php $addURI = "/$ADMIN/users/subscriptions/add.php?f_user_id=".$editUser->getUserId(); ?>
 				<a href="<?php echo $addURI; ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A>
 				<a href="<?php echo $addURI; ?>"><B><?php putGS("Add new"); ?></B></A>
 			</td>
+<?php
+} // if (sizeof($publications) > $numSubscriptions)
+?>
 		</tr>
 		</table>
 	</td>
@@ -34,7 +43,7 @@ if (count($subscriptions) > 0) {
 		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Active"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP" WIDTH="1%" ><B><?php  putGS("Delete"); ?></B></TD>
 	</TR>
-<?php 
+<?php
 	foreach ($subscriptions as $subscription) {
 		$publicationObj =& new Publication($subscription->getPublicationId());
 ?>	<TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
@@ -46,7 +55,7 @@ if (count($subscriptions) > 0) {
 			<?php  p(htmlspecialchars($subscription->getToPay())).' '.p(htmlspecialchars($subscription->getCurrency())); ?></A>
 		</TD>
 		<TD >
-			<?php  
+			<?php
 			$sType = $subscription->getType();
 			if ($sType == 'T') {
 				putGS("Trial");
@@ -67,7 +76,7 @@ if (count($subscriptions) > 0) {
 			<IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php putGS('Delete subscriptions to $1', htmlspecialchars($publicationObj->getName()) ); ?>" TITLE="<?php  putGS('Delete subscriptions to $1', htmlspecialchars($publicationObj->getName()) ); ?>"></A>
 		</TD>
 	</TR>
-<?php 
+<?php
 }
 ?>
 <?php  } else { ?>

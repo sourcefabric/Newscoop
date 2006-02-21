@@ -22,6 +22,7 @@ if (!$User->hasPermission('ManageSubscriptions')) {
 
 $f_user_id = Input::Get('f_user_id', 'int', 0);
 $f_publication_id = Input::Get('f_publication_id', 'int', 0);
+$f_language_id = Input::Get('f_language_id', 'int', null);
 $f_subscription_id = Input::Get('f_subscription_id', 'int', 0);
 $f_section_number = Input::Get('f_section_number', 'int', null);
 
@@ -34,14 +35,24 @@ if ($subscription->getType() == 'P') {
 	$isPaid = true;
 }
 
-//$subscriptionSection =& new SubscriptionSection($f_subscription_id, $f_section_number);
-$subscriptionSections = SubscriptionSection::GetSubscriptionSections($f_subscription_id, $f_section_number);
+$subscriptionSections = SubscriptionSection::GetSubscriptionSections($f_subscription_id,
+							$f_section_number, $f_language_id);
 $subscriptionSection = array_pop($subscriptionSections);
+if ($f_section_number > 0) {
+	if ($f_language_id > 0) {
+		$subscriptionSectionLanguage =& new Language($f_language_id);
+		$languageName = $subscriptionSectionLanguage->getName();
+	} else {
+		$languageName = '-- ' . getGS('All languages') . ' --';
+	}
+} else {
+	$languageName = getGS('N/A');
+}
 
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
 $crumbs[] = array(getGS("Subscribers"), "/$ADMIN/users/?uType=Subscribers");
-$crumbs[] = array(getGS("Account") . " '".$manageUser->getUserName()."'", 
+$crumbs[] = array(getGS("Account") . " '".$manageUser->getUserName()."'",
 			"/$ADMIN/users/edit.php?User=$f_user_id&uType=Subscribers");
 $crumbs[] = array(getGS("Subscriptions"), "/$ADMIN/users/subscriptions/?f_user_id=$f_user_id");
 $crumbs[] = array(getGS("Subscribed sections").": ".$publicationObj->getName(), "/$ADMIN/users/subscriptions/sections/?f_user_id=$f_user_id&f_subscription_id=$f_subscription_id&f_publication_id=$f_publication_id");
@@ -71,10 +82,14 @@ echo camp_html_breadcrumbs($crumbs);
 	if ($f_section_number > 0) {
 		p(htmlspecialchars($subscriptionSection->getProperty('Name')));
 	} else {
-		putGS("-- ALL SECTIONS --"); 
+		putGS("-- ALL SECTIONS --");
 	}
 	?>
 	</TD>
+</TR>
+<TR>
+	<TD ALIGN="RIGHT" ><?php putGS("Language"); ?>:</TD>
+	<TD><?php p($languageName); ?></TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Start"); ?>:</TD>
@@ -92,7 +107,7 @@ echo camp_html_breadcrumbs($crumbs);
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Paid Days"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="f_subscription_paid_days" SIZE="5" VALUE="<?php  p($subscriptionSection->getPaidDays()); ?>"  MAXLENGTH="5" alt="number|0|1|1000000000" emsg="<?php putGS("You must input a number greater than 0 into the $1 field.", "Paid Days"); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_subscription_paid_days" SIZE="5" VALUE="<?php  p($subscriptionSection->getPaidDays()); ?>" MAXLENGTH="5" alt="number|0|0|1000000000" emsg="<?php putGS("You must input a number greater or equal to 0 into the $1 field.", "Paid Days"); ?>">
 	</TD>
 </TR>
 <?php  } ?>
@@ -103,6 +118,7 @@ echo camp_html_breadcrumbs($crumbs);
 	<INPUT TYPE="HIDDEN" NAME="f_subscription_id" VALUE="<?php p($f_subscription_id); ?>">
 	<INPUT TYPE="HIDDEN" NAME="f_section_number" VALUE="<?php p($f_section_number); ?>">
 	<INPUT TYPE="HIDDEN" NAME="f_publication_id" VALUE="<?php p($f_publication_id); ?>">
+	<INPUT TYPE="HIDDEN" NAME="f_language_id" VALUE="<?php p($f_language_id); ?>">
 	<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
 	<!--<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='/admin/users/subscriptions/sections/?Pub=<?php  p($Pub); ?>&User=<?php  p($User); ?>&Subs=<?php  p($Subs); ?>'">-->
 	</DIV>

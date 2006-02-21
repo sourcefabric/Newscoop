@@ -23,9 +23,9 @@ $cName = trim(Input::Get('cName'));
 $cDefaultAlias = Input::Get('cDefaultAlias', 'int');
 $cLanguage = Input::Get('cLanguage', 'int');
 $cURLType = Input::Get('cURLType', 'int');
-$cPayTime = Input::Get('cPayTime', 'int');
 $cTimeUnit = Input::Get('cTimeUnit');
 $cUnitCost = trim(Input::Get('cUnitCost', 'float', '0.0'));
+$cUnitCostAllLang = trim(Input::Get('cUnitCostAllLang', 'float', '0.0'));
 $cCurrency = trim(Input::Get('cCurrency'));
 $cPaid = Input::Get('cPaid', 'int');
 $cTrial = Input::get('cTrial', 'int');
@@ -34,11 +34,11 @@ $correct = true;
 $updated = false;
 if (empty($cName)) {
 	$correct = false;
-	$errorMsgs[] = getGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'); 
+	$errorMsgs[] = getGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>');
 }
 if (empty($cDefaultAlias)) {
 	$correct = false;
-	$errorMsgs = getGS('You must complete the $1 field.','<B>'.getGS('Site').'</B>'); 
+	$errorMsgs = getGS('You must complete the $1 field.','<B>'.getGS('Site').'</B>');
 }
 
 $publicationObj =& new Publication($Pub);
@@ -47,21 +47,20 @@ if ($correct) {
 					 'IdDefaultAlias' => $cDefaultAlias,
 					 'IdDefaultLanguage' => $cLanguage,
 					 'IdURLType' => $cURLType,
-					 'PayTime' => $cPayTime,
 					 'TimeUnit' => $cTimeUnit,
 					 'PaidTime' => $cPaid,
 					 'TrialTime' => $cTrial,
 					 'UnitCost' => $cUnitCost,
+					 'UnitCostAllLang' => $cUnitCostAllLang,
 					 'Currency' => $cCurrency);
 	$updated = $publicationObj->update($columns);
-//	if ($updated) {
+	if ($updated) {
 		header("Location: /$ADMIN/pub/edit.php?Pub=$Pub");
 		exit;
-//	} 
-//	else {
-//		$errorMsgs[] = getGS('The publication information could not be updated.')
-//					  .' '.getGS('Please check if another publication with the same name or the same site name does not already exist.'); 
-//	}
+	} else {
+		$errorMsgs[] = getGS('The publication information could not be updated.')
+					  .' '.getGS('Please check if another publication with the same name or the same site name does not already exist.');
+	}
 }
 
 echo camp_html_content_top(getGS("Changing publication information"), array("Pub" => $publicationObj));
@@ -78,7 +77,7 @@ echo camp_html_content_top(getGS("Changing publication information"), array("Pub
 <TR>
 	<TD COLSPAN="2">
 		<BLOCKQUOTE>
-		<?php 
+		<?php
 		foreach ($errorMsgs as $errorMsg) { ?>
 			<li><?php p($errorMsg); ?> </li>
 			<?php

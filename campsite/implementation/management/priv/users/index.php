@@ -35,11 +35,11 @@ foreach($orderURLs as $field=>$fieldURL) {
 }
 
 $crumbs = array();
-$crumbs[] = array(getGS("Users"), ""); 
-if ($uType == "Staff") { 
-    $crumbs[] = array(getGS("Staff management"), ""); 
-} else { 
-    $crumbs[] = array(getGS("Subscriber management"), ""); 
+$crumbs[] = array(getGS("Users"), "");
+if ($uType == "Staff") {
+    $crumbs[] = array(getGS("Staff management"), "");
+} else {
+    $crumbs[] = array(getGS("Subscriber management"), "");
 }
 $breadcrumbs = camp_html_breadcrumbs($crumbs);
 echo $breadcrumbs;
@@ -92,9 +92,9 @@ if ($canManage) {
 	<td colspan="11" align="center">
 		<?php putGS("Subscription"); ?>&nbsp;
 		<select name="subscription_how" class="input_select" style="width: 100px;">
-		<?php 
-		camp_html_select_option("expires", $userSearchParameters['subscription_how'], getGS("expires")); 
-		camp_html_select_option("starts", $userSearchParameters['subscription_how'], getGS("starts")); 
+		<?php
+		camp_html_select_option("expires", $userSearchParameters['subscription_how'], getGS("expires"));
+		camp_html_select_option("starts", $userSearchParameters['subscription_how'], getGS("starts"));
 		?>
 		</select>
 		<select name="subscription_when" class="input_select" style="width: 100px;">
@@ -232,17 +232,17 @@ if (gettype($res) == 'object' && $res->NumRows() > 0) {
 			</tr></table>
 		</td>
 		<td align="left" valign="middle"><b><?php putGS("E-Mail"); ?></b></td>
-		
+
 		<?php if ($uType == "Subscribers" && $User->hasPermission("ManageSubscriptions")) { ?>
 		<td align="left" valign="middle"><b><?php putGS("Subscriptions"); ?></b></td>
 		<?php } ?>
-		
+
 		<?php if ($uType == "Staff") { ?>
 		<td align="left" valign="middle">
 			<?php putGS("User Type"); ?>
 		</td>
 		<?php } ?>
-		
+
 		<td align="left" valign="middle">
 			<table><tr>
 			<td><b><a href="?<?php echo "$typeParam&" . $orderURLs['cdate']; ?>"><?php putGS("Creation Date"); ?></a></b></td>
@@ -253,7 +253,7 @@ if (gettype($res) == 'object' && $res->NumRows() > 0) {
 		<td align="left" valign="middle"><b><?php putGS("Delete"); ?></b></td>
 <?php } ?>
 	</TR>
-<?php 
+<?php
 for($loop = 0; $loop < $last; $loop++) {
 	$row = $res->FetchRow();
 	$userId = $row['Id'];
@@ -284,12 +284,12 @@ for($loop = 0; $loop < $last; $loop++) {
 		<?php if ($uType == "Staff") { ?>
 		<td><?php if ($userType !== false) { echo $userType->getName(); } ?></td>
 		<?php } ?>
-		
+
 		<td>
 			<?php
 				$creationDate = $row['time_created'];
 				if ((int)$creationDate == 0) {
-					echo "N/A";
+					putGS('N/A');
 				} else {
 					echo strftime("%H:%M:%S %d.%m.%Y", strtotime($creationDate));
 				}
@@ -306,7 +306,7 @@ for($loop = 0; $loop < $last; $loop++) {
 	}
 ?>
 	</tr>
-<?php 
+<?php
 }
 ?>
 </table>

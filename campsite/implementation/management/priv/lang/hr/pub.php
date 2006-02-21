@@ -1,4 +1,13 @@
 <?php
+regGS("trial subscription", "");
+regGS("paid subscription", "");
+regGS("time units", "");
+regGS("one language", "");
+regGS("all languages", "");
+regGS("Trial subscriptions", "");
+regGS("Time unit cost per one section", "");
+regGS("Paid subscriptions", "");
+regGS("Default time period", "");
 regGS("Publication List", "");
 regGS("Go To Issues", "");
 regGS("Name<BR><SMALL>(click to see issues)</SMALL>", "Ime<br><small>(kliknite da vidite izdanje)</small>");
@@ -28,5 +37,4 @@ regGS("Change subscription default time", "Izmijeni standardno trajanje pretplat
 regGS("Default subscription time for $1 changed", "Standardno trajanje pretplate za publikaciju $1 je izmijenjeno");
 regGS("Are you sure you want to delete the subscription default time for $1?", "Da li ste sigurni da želite izbrisati standardno trajanje pretplate za publikaciju $1");
 regGS("Subscription default time for $1 deleted", "Standardno trajanje pretplate za publikaciju $1 je izbrisano");
-regGS("Name<BR><SMALL>(click to select the publication)</SMALL>", "Ime<br><small>(kliknite za odabir publikacije)</small>");
 ?>

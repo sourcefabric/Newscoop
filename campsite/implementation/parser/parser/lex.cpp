@@ -567,7 +567,6 @@ int CStatementMap::InitStatements()
 	pcoCtx->insertAttr(new CAttribute("currency"));
 	pcoCtx->insertAttr(new CIntegerAttr("trialtime"));
 	pcoCtx->insertAttr(new CIntegerAttr("paidtime"));
-	pcoCtx->insertAttr(new CIntegerAttr("totalcost"));
 	pcoSt->insertCtx(pcoCtx);
 
 	pcoCtx = new CStatementContext(CMS_CT_EDIT);
@@ -576,6 +575,8 @@ int CStatementMap::InitStatements()
 
 	pcoCtx = new CStatementContext(CMS_CT_SELECT);
 	pcoCtx->insertAttr(new CAttribute("section"));
+	pcoCtx->insertAttr(new CAttribute("languages"));
+	pcoCtx->insertAttr(new CAttribute("alllanguages"));
 	pcoSt->insertCtx(pcoCtx);
 
 	pcoCtx = new CStatementContext(CMS_CT_DEFAULT);
@@ -1026,6 +1027,12 @@ const CLexem* CLex::getLexem()
 					                     - strlen(s_pchCTokenStart));
 					m_coLexem.setTextStart(m_pchTextStart);
 					m_coLexem.setInsertSpace(bInsertSpace);
+				}
+				if (!(m_pchTextStart && bValidText) && bInsertSpace)
+				{
+					m_coLexem.setTextStart(m_pchInBuf + m_nIndex);
+					m_coLexem.setTextLen(0);
+					m_coLexem.setInsertSpace(true);
 				}
 				m_coLexem.setRes(CMS_LEX_START_STATEMENT);
 				return &m_coLexem;

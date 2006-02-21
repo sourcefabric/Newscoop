@@ -1,4 +1,13 @@
 <?php
+regGS("trial subscription", "");
+regGS("paid subscription", "");
+regGS("time units", "");
+regGS("one language", "");
+regGS("all languages", "");
+regGS("Trial subscriptions", "");
+regGS("Time unit cost per one section", "");
+regGS("Paid subscriptions", "");
+regGS("Default time period", "");
 regGS("Publication List", "");
 regGS("Go To Issues", "");
 regGS("Name<BR><SMALL>(click to see issues)</SMALL>", " الاسم (اضغط لترى الإصدارات)");
@@ -24,7 +33,6 @@ regGS("There are $1 subscription(s) left.", "اشتراك $1 (اشتراكات) 
 regGS("The publication $1 could not be deleted.", "لا  يمكن إلغاء المنشور$1");
 regGS("Adding new publication", "إضافة منشور جديد");
 regGS("The publication could not be added.", "لا يمكن إضافة المنشور");
-regGS("Select the publication", "اختر المنشور");
 regGS("Add new country default subscription time", "أضف مدّة الاشتراك الأصلية خاصة بالبلد الجديد");
 regGS("You do not have the right to manage publications.", "لا يحق لك إدارة المنشورات");
 regGS("Please check if another entry with the same country code exists already.", "الرجاء التأكد من عدم وجود إدخال أخر بنفس رمز الدولة");
@@ -35,7 +43,6 @@ regGS("Change subscription default time", "قم بتغيير مدّة الاشت
 regGS("Default subscription time for $1 changed", " تغيير مدّة الاشتراك الأصلية لـ $1");
 regGS("Are you sure you want to delete the subscription default time for $1?", "هل أنت متأكد من أنك تريد إلغاء مدّة الاشتراك الأصلية لـ $1 ؟");
 regGS("Subscription default time for $1 deleted", "تمّ الغاء مدّة الاشتراك الأصلية لـ $1");
-regGS("Name<BR><SMALL>(click to select the publication)</SMALL>", "الاسم (اضغط هنا لاختيار المنشور");
 regGS("Add new alias", "أضف اسم مستعار جديد");
 regGS("Alias (click to edit)", "الاسم المستعار ( اضغط للتعديل)");
 regGS("Edit aliases", "تعديل الاسم المستعار");

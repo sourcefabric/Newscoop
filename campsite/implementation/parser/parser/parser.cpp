@@ -165,7 +165,7 @@ FatalPError(parse_err, er, MODE_PARSE, req, line, column);\
 
 #define CheckForText(al, l)\
 {\
-if (l->textStart() && l->textLen() > 0)\
+if (l->textStart() && (l->textLen() > 0 || l->insertSpace()))\
 al.insert(al.end(), new CActText(l->textStart(), l->textLen(), l->insertSpace()));\
 }
 
@@ -1716,8 +1716,11 @@ inline int CParser::HSubscription(CActionList& al, int lv, int sublv)
 	{
 		CheckForAtom(l);
 		total = l->atom()->identifier();
-		RequireAtom(l);
-		evaluate = l->atom()->identifier();
+		l = lex.getLexem();
+		if (l->res() != CMS_LEX_END_STATEMENT)
+		{
+			evaluate = l->atom()->identifier();
+		}
 	}
 	int res;
 	if (l->res() != CMS_LEX_END_STATEMENT)
@@ -1808,8 +1811,9 @@ inline int CParser::HEdit(CActionList& al, int lv, int sublv)
 //		int sublv - current sublevel
 inline int CParser::HSelect(CActionList& al, int lv, int sublv)
 {
-	string male_name, female_name;
-	bool checked = false;
+	string coMaleName, coFemaleName, coClass;
+	bool bChecked = false, bMultipleSelection = true;
+	int nSize = 3;
 	const CLexem *l;
 	RequireAtom(l);
 	CheckForStatement(l, ST_SUBSCRIPTION ", " ST_USER ", " ST_SEARCH,
@@ -1827,6 +1831,64 @@ inline int CParser::HSelect(CActionList& al, int lv, int sublv)
 		if ((sublv & SUBLV_SUBSCRIPTION) == 0)
 			FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE,
 			            SelectStatements(sublv), lex.prevLine(), lex.prevColumn());
+		l = lex.getLexem();
+		while (l->res() == CMS_LEX_IDENTIFIER)
+		{
+			CheckForAtom(l);
+			string coOption = l->atom()->identifier();
+			l = lex.getLexem();
+			if (l->res() != CMS_LEX_IDENTIFIER)
+			{
+				string coRequired = case_comp(attr->identifier(), "languages") == 0 ?
+						"class, size, type" : "class";
+				SetPError(parse_err, PERR_IDENTIFIER_MISSING, MODE_PARSE, coRequired,
+						  lex.prevLine(), lex.prevColumn());
+				break;
+			}
+			CheckForAtom(l);
+			if (case_comp(attr->identifier(), "languages") != 0
+						 && case_comp(coOption, "class") != 0)
+			{
+				SetPError(parse_err, PERR_INVALID_ATTRIBUTE, MODE_PARSE, "class",
+						  lex.prevLine(), lex.prevColumn());
+				break;
+			}
+			if (case_comp(coOption, "class") == 0)
+			{
+				coClass = l->atom()->identifier();
+			}
+			if (case_comp(coOption, "size") == 0)
+			{
+				try
+				{
+					nSize = (long int)Integer(l->atom()->identifier());
+				}
+				catch (InvalidValue& rcoEx)
+				{
+					SetPError(parse_err, PERR_DATA_TYPE, MODE_PARSE, "integer",
+							  lex.prevLine(), lex.prevColumn());
+					break;
+				}
+			}
+			if (case_comp(coOption, "type") == 0)
+			{
+				if (case_comp(l->atom()->identifier(), "single") == 0)
+				{
+					bMultipleSelection = false;
+				}
+				else if (case_comp(l->atom()->identifier(), "multiple") == 0)
+				{
+					bMultipleSelection = true;
+				}
+				else
+				{
+					SetPError(parse_err, PERR_INVALID_VALUE, MODE_PARSE, "single/multiple",
+							  lex.prevLine(), lex.prevColumn());
+					break;
+				}
+			}
+			l = lex.getLexem();
+		}
 	}
 	else if (st->id() == CMS_ST_USER)
 	{
@@ -1836,9 +1898,9 @@ inline int CParser::HSelect(CActionList& al, int lv, int sublv)
 		if (case_comp(attr->identifier(), "Gender") == 0)
 		{
 			RequireAtom(l);
-			male_name = l->atom()->identifier();
+			coMaleName = l->atom()->identifier();
 			RequireAtom(l);
-			female_name = l->atom()->identifier();
+			coFemaleName = l->atom()->identifier();
 		}
 		else if (case_comp(attr->identifier(), "Pref", 4) == 0)
 		{
@@ -1848,7 +1910,7 @@ inline int CParser::HSelect(CActionList& al, int lv, int sublv)
 			{
 				CheckForAtom(l);
 				if (case_comp(l->atom()->identifier(), "checked") == 0)
-					checked = true;
+					bChecked = true;
 			}
 		}
 	}
@@ -1864,7 +1926,8 @@ inline int CParser::HSelect(CActionList& al, int lv, int sublv)
 			FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE,
 			            SelectStatements(sublv), lex.prevLine(), lex.prevColumn());
 	}
-	CActSelect* select = new CActSelect(st->id(), attr->attribute(), male_name, female_name, checked);
+	CActSelect* select = new CActSelect(st->id(), attr->attribute(), coMaleName, coFemaleName,
+										bChecked, coClass, nSize, bMultipleSelection);
 	al.insert(al.end(), select);
 	if (l->res() != CMS_LEX_END_STATEMENT)
 		WaitForStatementEnd(true);

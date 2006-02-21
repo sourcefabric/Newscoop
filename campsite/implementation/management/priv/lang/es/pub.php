@@ -1,4 +1,13 @@
 <?php
+regGS("trial subscription", "");
+regGS("paid subscription", "");
+regGS("time units", "");
+regGS("one language", "");
+regGS("all languages", "");
+regGS("Trial subscriptions", "");
+regGS("Time unit cost per one section", "");
+regGS("Paid subscriptions", "");
+regGS("Default time period", "");
 regGS("Publication List", "");
 regGS("Go To Issues", "");
 regGS("Name<BR><SMALL>(click to see issues)</SMALL>", "Nombre");
@@ -19,7 +28,6 @@ regGS("There are $1 subscription(s) left.", "Hay $1 subscripcion(es) pendiente(s
 regGS("The publication $1 could not be deleted.", "La publicación $1 no pudo ser borrada");
 regGS("Adding new publication", "Agregando nueva publicación");
 regGS("The publication could not be added.", "La publicación no pudo ser agregada");
-regGS("Select the publication", "Seleccionar la publicación");
 regGS("Add new country default subscription time", "Agregar nuevo país defecto de tiempo de suscripción");
 regGS("You do not have the right to manage publications.", "No tiene derecho a manejar las publicaciones");
 regGS("Please check if another entry with the same country code exists already.", "Por favor verifique si otra entrada con el mismo codigo de pais ya existe.");
@@ -30,5 +38,4 @@ regGS("Change subscription default time", "Cambiar tiempo de suscripción inicia
 regGS("Default subscription time for $1 changed", "Tiempo defecto de suscripción para $1 cambiado");
 regGS("Are you sure you want to delete the subscription default time for $1?", "¿Esta seguro que desea borrar tiempo defecto de suscripción para $1?");
 regGS("Subscription default time for $1 deleted", "Tiempo defecto de suscripción para $1 borrado");
-regGS("Name<BR><SMALL>(click to select the publication)</SMALL>", "Nombre");
 ?>

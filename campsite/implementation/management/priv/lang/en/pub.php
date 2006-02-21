@@ -1,4 +1,13 @@
 <?php
+regGS("trial subscription", "trial subscription");
+regGS("paid subscription", "paid subscription");
+regGS("time units", "time units");
+regGS("one language", "one language");
+regGS("all languages", "all languages");
+regGS("Trial subscriptions", "Trial subscriptions");
+regGS("Time unit cost per one section", "Time unit cost per one section");
+regGS("Paid subscriptions", "Paid subscriptions");
+regGS("Default time period", "Default time period");
 regGS("Publication List", "Publication List");
 regGS("Go To Issues", "Go To Issues");
 regGS("Name<BR><SMALL>(click to see issues)</SMALL>", "Name<BR><SMALL>(click to see issues)</SMALL>");
@@ -24,7 +33,6 @@ regGS("There are $1 subscription(s) left.", "There are $1 subscription(s) left."
 regGS("The publication $1 could not be deleted.", "The publication $1 could not be deleted.");
 regGS("Adding new publication", "Adding new publication");
 regGS("The publication could not be added.", "The publication could not be added.");
-regGS("Select the publication", "Select the publication");
 regGS("Add new country default subscription time", "Add new country default subscription time");
 regGS("You do not have the right to manage publications.", "You do not have the right to manage publications.");
 regGS("Please check if another entry with the same country code exists already.", "Please check if another entry with the same country code exists already.");
@@ -35,7 +43,6 @@ regGS("Change subscription default time", "Change subscription default time");
 regGS("Default subscription time for $1 changed", "Default subscription time for $1 changed");
 regGS("Are you sure you want to delete the subscription default time for $1?", "Are you sure you want to delete the subscription default time for $1?");
 regGS("Subscription default time for $1 deleted", "Subscription default time for $1 deleted");
-regGS("Name<BR><SMALL>(click to select the publication)</SMALL>", "Name<BR><SMALL>(click to select the publication)</SMALL>");
 regGS("Add new alias", "Add new alias");
 regGS("Alias (click to edit)", "Alias (click to edit)");
 regGS("Edit aliases", "Edit aliases");

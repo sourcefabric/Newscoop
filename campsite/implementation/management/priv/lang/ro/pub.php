@@ -1,4 +1,13 @@
 <?php
+regGS("trial subscription", "");
+regGS("paid subscription", "");
+regGS("time units", "");
+regGS("one language", "");
+regGS("all languages", "");
+regGS("Trial subscriptions", "");
+regGS("Time unit cost per one section", "");
+regGS("Paid subscriptions", "");
+regGS("Default time period", "");
 regGS("Publication List", "");
 regGS("Go To Issues", "");
 regGS("Name<BR><SMALL>(click to see issues)</SMALL>", "Nume");
@@ -19,7 +28,6 @@ regGS("There are $1 subscription(s) left.", "Mai sunt $1 subscrieri");
 regGS("The publication $1 could not be deleted.", "Publicaţia $1 nu poate fi ştearsă");
 regGS("Adding new publication", "Adaug publicaţie");
 regGS("The publication could not be added.", "Publicaţia nu poate fi adăugată");
-regGS("Select the publication", "Selectaţi publicaţia");
 regGS("Add new country default subscription time", "Adaugă timp implicit de subscriere la ţară");
 regGS("You do not have the right to manage publications.", "Nu aveţi dreptul de a modifica publicaţii");
 regGS("Please check if another entry with the same country code exists already.", "Verificaţi dacă există o alta înregistrare cu acelaş cod de ţară");
@@ -30,5 +38,4 @@ regGS("Change subscription default time", "Modifică timpul implicit de subscrie
 regGS("Default subscription time for $1 changed", "Timpul implicit de subscriere la ţara $1 a fost modificat");
 regGS("Are you sure you want to delete the subscription default time for $1?", "Doriţi să ştergeţi timpul implicit de subscriere la ţara $1?");
 regGS("Subscription default time for $1 deleted", "Timpul implicit de subscriere la ţara $1 a fost şters");
-regGS("Name<BR><SMALL>(click to select the publication)</SMALL>", "Nume");
 ?>

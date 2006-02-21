@@ -1,4 +1,5 @@
 <?php
+regGS("System Preferences", "System Preferences");
 regGS("You haven't written any articles yet.", "You haven't written any articles yet.");
 regGS("There are no pending items to be published.", "There are no pending items to be published.");
 regGS("There are currently no submitted articles.", "There are currently no submitted articles.");

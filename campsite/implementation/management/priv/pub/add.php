@@ -30,12 +30,7 @@ echo camp_html_breadcrumbs($crumbs);
 <P>
 <FORM NAME="dialog" METHOD="POST" ACTION="do_add.php">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
-<TR>
-	<TD COLSPAN="2">
-		<B><?php  putGS("Add new publication"); ?></B>
-		<HR NOSHADE SIZE="1" COLOR="BLACK">
-	</TD>
-</TR>
+<tr><td colspan=2><font size="+1"><b><?php putGS("General attributes"); ?></b></font></td></tr>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
 	<TD>
@@ -52,7 +47,7 @@ echo camp_html_breadcrumbs($crumbs);
 	<TD ALIGN="RIGHT" ><?php  putGS("Default language"); ?>:</TD>
 	<TD>
     <SELECT NAME="cLanguage" class="input_select">
-    <?php 
+    <?php
     foreach ($languages as $language) {
 		camp_html_select_option($language->getLanguageId(), $defaultLanguage->getLanguageId(), $language->getNativeName());
     }
@@ -77,45 +72,54 @@ echo camp_html_breadcrumbs($crumbs);
 </TR>
 
 <tr><td colspan=2><HR NOSHADE SIZE="1" COLOR="BLACK"></td></tr>
-<tr><td colspan=2><b><?php putGS("Subscriptions defaults"); ?></b></td></tr>
-<TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Pay Period"); ?>:</TD>
-	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cPayTime" VALUE="" SIZE="5" MAXLENGTH="5">
-	</TD>
-</TR>
+<tr><td colspan=2><font size="+1"><b><?php putGS("Subscriptions defaults"); ?></b></font></td></tr>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Time Unit"); ?>:</TD>
 	<TD>
     <SELECT NAME="cTimeUnit" class="input_select">
-	<?php 
+	<?php
 	foreach ($timeUnits as $timeUnit) {
-		camp_html_select_option($timeUnit->getUnit(), 0, $timeUnit->getName());		
+		camp_html_select_option($timeUnit->getUnit(), 0, $timeUnit->getName());
 	}
-	?>	    
+	?>
 	</SELECT>
 	</TD>
 </TR>
-<TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Unit Cost"); ?>:</TD>
-	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cUnitCost" VALUE="" SIZE="10" MAXLENGTH="10">
-	</TD>
-</TR>
+<tr>
+	<td colspan="2" align="left"><b><?php putGS('Paid subscriptions'); ?></b></td>
+</tr>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Currency"); ?>:</TD>
 	<TD>
 	<INPUT TYPE="TEXT" class="input_text" NAME="cCurrency" VALUE="" SIZE="10" MAXLENGTH="10">
 	</TD>
 </TR>
+<tr>
+	<td colspan="2" align="left"><?php  putGS("Time unit cost per one section"); ?>:</td>
+</tr>
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Paid Period"); ?>:</TD>
+	<TD ALIGN="RIGHT" >- <?php putGS('one language'); ?>:</TD>
+	<TD>
+	<INPUT TYPE="TEXT" class="input_text" NAME="cUnitCost" VALUE="" SIZE="10" MAXLENGTH="10">
+	</TD>
+</TR>
+<TR>
+	<TD ALIGN="RIGHT" >- <?php putGS('all languages'); ?>:</TD>
+	<TD>
+	<INPUT TYPE="TEXT" class="input_text" NAME="cUnitCostAllLang" VALUE="" SIZE="10" MAXLENGTH="10">
+	</TD>
+</TR>
+<TR>
+	<TD ALIGN="RIGHT" ><?php  putGS("Default time period"); ?>:</TD>
 	<TD>
 	<INPUT TYPE="TEXT" class="input_text" NAME="cPaid" VALUE="" SIZE="10" MAXLENGTH="10">
 	</TD>
 </TR>
+<tr>
+	<td colspan="2" align="left"><b><?php putGS('Trial subscriptions'); ?></b></td>
+</tr>
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Trial Period"); ?>:</TD>
+	<TD ALIGN="RIGHT" ><?php  putGS("Default time period"); ?>:</TD>
 	<TD>
 	<INPUT TYPE="TEXT" class="input_text" NAME="cTrial" VALUE="" SIZE="10" MAXLENGTH="10">
 	</TD>

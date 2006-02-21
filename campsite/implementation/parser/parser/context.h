@@ -114,9 +114,9 @@ using std::list;
 using std::string;
 using std::less;
 
-typedef set <lint> LIntSet;
+typedef multimap <lint, lint, less <lint> > LIntMultiMap;
 
-typedef map <lint, LIntSet, less <lint> > LInt2LIntSet;
+typedef map <lint, LIntMultiMap, less <lint> > LInt2LIntMultiMap;
 
 typedef map <string, lint, str_case_less> String2LInt;
 
@@ -136,9 +136,9 @@ class CContext
 {
 private:
 	String2String userinfo;					// informations about user (name, address, email etc.)
-	ulint ip;						// client IP
+	ulint ip;								// client IP
 	id_type user_id;						// user identifier
-	ulint key;						// user key (used for authentication purposes)
+	ulint key;								// user key (used for authentication purposes)
 	bool is_reader;							// true if user is reader
 	bool access_by_ip;						// true is access is by IP
 	TAccess access;							// access type
@@ -152,33 +152,35 @@ private:
 	id_type i_list_start, s_list_start;		// list start index for issue, section, article
 	id_type a_list_start, sr_list_start;	// and search lists
 	String2LInt st_list_start;				// list start index for subtitle list
-	lint list_index;					// current list index
-	lint list_row;						// current list row (table construction)
-	lint list_column;					// current list column
-	lint list_length;					// list length
-	lint i_prev_start, i_next_start;	// list start index for issue, section, article,
-	lint s_prev_start, s_next_start;	// and search lists in previous and next contexts
+	lint list_index;						// current list index
+	lint list_row;							// current list row (table construction)
+	lint list_column;						// current list column
+	lint list_length;						// list length
+	lint i_prev_start, i_next_start;		// list start index for issue, section, article,
+	lint s_prev_start, s_next_start;		// and search lists in previous and next contexts
 	lint a_prev_start, a_next_start;
 	lint sr_prev_start, sr_next_start;
-	String2LInt st_prev_start, st_next_start;// list start index for subtitles list in previous
-											// and next context
+	String2LInt st_prev_start;				// subtitles list start index in the previous context
+	String2LInt st_next_start;				// subtitles list start index in the next context
 	TLMode lmode;							// list mode (PREV, NORMAL, NEXT)
 	TStMode stmode;							// subtitles list mode
-	LInt2LIntSet subs;						// user subscriptions
+	LInt2LIntMultiMap subs;					// user subscriptions
 	StringSet keywords;						// keywords to search for
 	string str_keywords;					// the string of keywords
 	StringSet::iterator kw_i;				// keywords iterator; memorise the current element
 	bool do_subscribe;						// true if subscribe process occured
 	TSubsType subs_type;					// subscription type
 	bool by_publication;					// subscription by: publication or sections
-	lint subs_res;						// subscription result
+	lint subs_res;							// subscription result
+	lint nSubsTimeUnits;					// default subscription time in the time units
+											// defined by the publication: days, months etc.
 	bool adduser;							// true if add user process occured
 	bool modifyuser;						// true if modify user process occured
-	lint adduser_res, modifyuser_res;	// add/modify user result
+	lint adduser_res, modifyuser_res;		// add/modify user result
 	bool login;								// true if login process occured
-	lint login_res;						// login result
+	lint login_res;							// login result
 	bool search;							// true if search process occured
-	lint search_res;					// search result
+	lint search_res;						// search result
 	bool search_and;						// true if search for all keywords
 	int search_level;						// search level: 0 - all, 1 - issue, 2 - section
 	String2StringList subtitles;			// current article body field subtitles/field
@@ -342,7 +344,7 @@ public:
 	{
 		stmode = sm;
 	}
-	void SetSubs(id_type, id_type);
+	void SetSubs(id_type p_nPublicationId, id_type p_nSectionNumber, id_type p_nLanguageId);
 	void SetKeyword(const string& k)
 	{
 		keywords.insert(k);
@@ -370,6 +372,10 @@ public:
 	void SetSubsRes(lint r)
 	{
 		subs_res = r;
+	}
+	void SetSubsTimeUnits(lint t)
+	{
+		nSubsTimeUnits = t;
 	}
 	void SetAddUser(bool au)
 	{
@@ -606,7 +612,7 @@ public:
 	{
 		return stmode;
 	}
-	bool IsSubs(id_type, id_type);
+	bool IsSubs(id_type p_nPublicationId, id_type p_nSectionNumber, id_type p_nLanguageId) const;
 	bool NoKeywords() const
 	{
 		return keywords.empty();
@@ -635,6 +641,10 @@ public:
 	lint SubsRes() const
 	{
 		return subs_res;
+	}
+	lint SubsTimeUnits() const
+	{
+		return nSubsTimeUnits;
 	}
 	bool AddUser() const
 	{

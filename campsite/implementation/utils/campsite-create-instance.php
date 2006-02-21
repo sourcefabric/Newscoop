@@ -270,7 +270,7 @@ function detect_database_version($p_db_name, &$version)
 			if (mysql_num_rows($res2) > 0) {
 				$version = "2.4.x";
 			}
-			if (!$res2 = mysql_query("SELECT * FROM UserConfig WHERE `fk_user_id` = 0"))
+			if (!$res2 = mysql_query("DESC SubsSections IdLanguage"))
 				return "Unable to query the database $p_db_name";
 			if (mysql_num_rows($res2) > 0) {
 				$version = "2.5.x";

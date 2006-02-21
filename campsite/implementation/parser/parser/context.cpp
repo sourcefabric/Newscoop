@@ -84,6 +84,7 @@ CContext::CContext()
 	subs_type = ST_NONE;
 	by_publication = false;
 	subs_res = -1;
+	nSubsTimeUnits = 0;
 	adduser = modifyuser = login = search = search_and = false;
 	adduser_res = modifyuser_res = login_res = search_res = -1;
 	search_level = 0;
@@ -140,6 +141,7 @@ int CContext::operator ==(const CContext& c) const
 			&& subs_type == c.subs_type
 			&& by_publication == c.by_publication
 			&& subs_res == c.subs_res
+			&& nSubsTimeUnits == c.nSubsTimeUnits
 			&& adduser == c.adduser
 			&& modifyuser == c.modifyuser
 			&& adduser_res == c.adduser_res
@@ -221,6 +223,7 @@ const CContext& CContext::operator =(const CContext& s)
 	subs_type = s.subs_type;
 	by_publication = s.by_publication;
 	subs_res = s.subs_res;
+	nSubsTimeUnits = s.nSubsTimeUnits;
 	adduser = s.adduser;
 	adduser_res = s.adduser_res;
 	modifyuser = s.modifyuser;
@@ -455,18 +458,32 @@ void CContext::SetUserInfo(const string& attr, const string& value)
 }
 
 // SetSubs: set subscription for current user
-//		id_type p - publication identifier
-//		id_type s - section identifier
-void CContext::SetSubs(id_type p, id_type s)
+//		id_type p_nPublicationId - publication identifier
+//		id_type p_nSectionNumber - section identifier
+//		id_type p_nLanguageId - language identifier
+void CContext::SetSubs(id_type p_nPublicationId, id_type p_nSectionNumber, id_type p_nLanguageId)
 {
-	LInt2LIntSet::iterator p_i;
-	p_i = subs.find(p);
-	if (p_i == subs.end())
-		subs.insert(LInt2LIntSet::value_type(p, LIntSet()));
-	p_i = subs.find(p);
-	if (p_i == subs.end())
+	LInt2LIntMultiMap::iterator coPubIt = subs.find(p_nPublicationId);
+	if (coPubIt == subs.end())
+	{
+		subs.insert(LInt2LIntMultiMap::value_type(p_nPublicationId, LIntMultiMap()));
+		coPubIt = subs.find(p_nPublicationId);
+	}
+	if (coPubIt == subs.end())
+	{
 		return ;
-	(*p_i).second.insert(s);
+	}
+	pair<LIntMultiMap::iterator, LIntMultiMap::iterator> coSectionRange;
+	coSectionRange = (*coPubIt).second.equal_range(p_nSectionNumber);
+	LIntMultiMap::iterator coSectionIt = coSectionRange.first;
+	for (; coSectionIt != coSectionRange.second; ++coSectionIt)
+	{
+		if ((*coSectionIt).second == p_nLanguageId)
+		{
+			return;
+		}
+	}
+	(*coPubIt).second.insert(pair<lint, lint>(p_nSectionNumber, p_nLanguageId));
 }
 
 // AppendSubtitle: append subtitle to the article content (field) subtitle list; if field is
@@ -715,14 +732,27 @@ bool CContext::IsUserInfo(const string& attr)
 
 // IsSubs: return true if the subscription to given publication/section exists
 // Parameters:
-//		id_type publication_id - publication identifier
-//		id_type section_id - section identifier
-bool CContext::IsSubs(id_type publication_id, id_type section_id)
+//		id_type p_nPublicationId - publication identifier
+//		id_type p_nSectionId - section identifier
+//		id_type p_nLanguageId - language identifier
+bool CContext::IsSubs(id_type p_nPublicationId, id_type p_nSectionNumber, id_type p_nLanguageId) const
 {
-	LInt2LIntSet::iterator p_i = subs.find(publication_id);
-	if (p_i == subs.end())
+	LInt2LIntMultiMap::const_iterator coPubIt = subs.find(p_nPublicationId);
+	if (coPubIt == subs.end())
+	{
 		return false;
-	return ((*p_i).second.find(section_id) != (*p_i).second.end());
+	}
+	pair<LIntMultiMap::const_iterator, LIntMultiMap::const_iterator> coSectionRange;
+	coSectionRange = (*coPubIt).second.equal_range(p_nSectionNumber);
+	LIntMultiMap::const_iterator coSectionIt = coSectionRange.first;
+	for (; coSectionIt != coSectionRange.second; ++coSectionIt)
+	{
+		if ((*coSectionIt).second == p_nLanguageId || (*coSectionIt).second == 0)
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 // NextKwd: returns the next keyword in the keywords list
@@ -894,13 +924,13 @@ int CContext::AllSubtitles(const string& field)
 // PrintSubs: print subscriptions (for test purposes)
 void CContext::PrintSubs()
 {
-	for (LInt2LIntSet::iterator p_i = subs.begin(); p_i != subs.end(); ++p_i)
+	for (LInt2LIntMultiMap::iterator p_i = subs.begin(); p_i != subs.end(); ++p_i)
 	{
-		cout << "<p>publication: " << (*p_i).first << "\n<blockquote>";
-		LIntSet::iterator s_i;
+		cout << "publication: " << (*p_i).first << endl;
+		LIntMultiMap::iterator s_i;
 		for (s_i = (*p_i).second.begin(); s_i != (*p_i).second.end(); ++s_i)
-			cout << "<p>section: " << *s_i << "\n";
-		cout << "</blockquote>\n";
+			cout << "\tsection: " << (*s_i).first << " language: " << (*s_i).second << endl;
+		cout << endl;
 	}
 }
 

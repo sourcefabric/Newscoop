@@ -949,15 +949,7 @@ public:
 	// Parametes:
 	//		CContext& c - current context
 	//		sockstream& fs - output stream
-	virtual int takeAction(CContext& c, sockstream& fs)
-	{
-		if (m_bInsertSpace)
-		{
-			fs << ' ';
-		}
-		fs.write(text, text_len);
-		return RES_OK;
-	}
+	virtual int takeAction(CContext& c, sockstream& fs);
 };
 
 // CActLocal: Local action - corresponding to Local statement (see manual)
@@ -1095,12 +1087,17 @@ protected:
 	string male_name;			// male noun in current language
 	string female_name;			// female noun in current language
 	bool checked;				// true if field is checked
+	string m_coClass;			// set the HTML element class (for CSS stylesheets)
+	int m_nSize;				// size of the selection box for multiple select elements
+	bool m_bMultipleSelect;		// if true create multiple select box
 
 public:
 	// constructor
-	CActSelect(int m, const string& f, string mn = "", string fn = "", bool ck = false)
-		throw(InvalidModifier)
-		: modifier(m), field(f), male_name(mn), female_name(fn), checked(ck)
+	CActSelect(int m, const string& f, string mn = "", string fn = "", bool ck = false,
+			   string p_coClass = "", int p_nSize = 3, bool p_bMultipleSelect = false)
+			throw(InvalidModifier)
+	: modifier(m), field(f), male_name(mn), female_name(fn), checked(ck), m_coClass(p_coClass),
+	m_nSize(p_nSize), m_bMultipleSelect(p_bMultipleSelect)
 	{
 		if (!s_coModifiers.validModifier(m))
 			throw InvalidModifier();

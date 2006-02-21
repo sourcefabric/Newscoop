@@ -1,4 +1,5 @@
 <?php
+regGS("System Preferences", "");
 regGS("Please enter your user name and password", "&#35831;&#36755;&#20837;&#29992;&#25143;&#21517;&#19982;&#23494;&#30721;");
 regGS("You do not have the right to access this page.", "&#20320;&#26080;&#26435;&#38480;&#35775;&#38382;&#27492;&#39029;&#38754;");
 regGS("Login failed", "&#30331;&#38470;&#22833;&#36133;");

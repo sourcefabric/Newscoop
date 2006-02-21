@@ -1,4 +1,13 @@
 <?php
+regGS("trial subscription", "");
+regGS("paid subscription", "");
+regGS("time units", "");
+regGS("one language", "");
+regGS("all languages", "");
+regGS("Trial subscriptions", "");
+regGS("Time unit cost per one section", "");
+regGS("Paid subscriptions", "");
+regGS("Default time period", "");
 regGS("Publication List", "");
 regGS("Go To Issues", "");
 regGS("Name<BR><SMALL>(click to see issues)</SMALL>", "Název publikace (klikněte pro náhled vydání)");
@@ -19,7 +28,6 @@ regGS("There are $1 subscription(s) left.", "Zbývá předplatné $1");
 regGS("The publication $1 could not be deleted.", "Publikace $1 nemohla být smazána");
 regGS("Adding new publication", "Přidat novou publikaci");
 regGS("The publication could not be added.", "Publikace nemohla být přidána");
-regGS("Select the publication", "Vyberte publikaci");
 regGS("Add new country default subscription time", "Přidat předplatné období pro novou zemi");
 regGS("You do not have the right to manage publications.", "Nemáte právo spravovat publikace");
 regGS("Adding new country default subscription time", "Přidání předplatného období pro novou zemi");
@@ -29,5 +37,4 @@ regGS("Change subscription default time", "Změnit předplatné období");
 regGS("Default subscription time for $1 changed", "Předplatné období pro $1 bylo změněno");
 regGS("Are you sure you want to delete the subscription default time for $1?", "Určitě chcete smazat předplatné období pro $1?");
 regGS("Subscription default time for $1 deleted", "Předplatné období pro $1 bylo smazáno");
-regGS("Name<BR><SMALL>(click to select the publication)</SMALL>", "Název (klikněte pro výběr publikace)");
 ?>

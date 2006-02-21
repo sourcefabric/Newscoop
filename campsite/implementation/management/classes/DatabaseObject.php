@@ -7,8 +7,8 @@
 /**
  * Includes
  */
-// We indirectly reference the DOCUMENT_ROOT so we can enable 
-// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT'] 
+// We indirectly reference the DOCUMENT_ROOT so we can enable
+// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT']
 // is not defined in these cases.
 if (!isset($g_documentRoot)) {
     $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
@@ -33,7 +33,7 @@ class DatabaseObject {
 	 * @var array
 	 */
 	var $m_columnNames = array();
-	
+
 	/**
 	 * The column names used for the key.
 	 * Redefine this in the subclass.
@@ -46,7 +46,7 @@ class DatabaseObject {
 	 * @var boolean
 	 */
 	var $m_keyIsAutoIncrement = false;
-	
+
 	/**
 	 * An array of (ColumnName => Value).
 	 * @var array
@@ -58,7 +58,7 @@ class DatabaseObject {
 	 * @var boolean
 	 */
 	var $m_exists = null;
-	
+
 	/**
 	 * If the key values of an object are changed, we need to remember the old
 	 * values in order to change to the new values.  This is the array of the
@@ -66,7 +66,7 @@ class DatabaseObject {
 	 * @var array
 	 */
 	var $m_oldKeyValues = array();
-	
+
 	/**
 	 * DatabaseObject represents a row in a database table.
 	 * This class is meant to be subclassed in order to implement a
@@ -76,21 +76,21 @@ class DatabaseObject {
 	 *		The column names of this table.  These are optional.
 	 *
 	 */
-	function DatabaseObject($p_columnNames = null) 
+	function DatabaseObject($p_columnNames = null)
 	{
 		if (!is_null($p_columnNames)) {
 			$this->setColumnNames($p_columnNames);
 		}
 	} // constructor
-	
-	
+
+
 	/**
 	 * Return the column names used for the primary key.
 	 * @return array
 	 */
 	function getKeyColumnNames() { return $this->m_keyColumnNames; }
 
-	
+
 	/**
 	 * Return the column names of this table.
 	 *
@@ -99,11 +99,11 @@ class DatabaseObject {
 	 *		Default is false.
 	 *
 	 * @return array
-	 */	
-	function getColumnNames($p_withTablePrefix = false) 
-	{ 
+	 */
+	function getColumnNames($p_withTablePrefix = false)
+	{
 		if (!$p_withTablePrefix) {
-			return $this->m_columnNames; 
+			return $this->m_columnNames;
 		} else {
 			$prefixNames = array();
 			foreach ($this->m_columnNames as $columnName) {
@@ -123,33 +123,33 @@ class DatabaseObject {
 	 *
 	 * @return void
 	 */
-	function setColumnNames($p_columnNames) 
+	function setColumnNames($p_columnNames)
 	{
 		foreach ($p_columnNames as $columnName) {
 			$this->m_data[$columnName] = null;
 		}
 	} // fn setColumnNames
-	
-	
+
+
 	/**
 	 * Return the row as an array indexed by the column names.
 	 * @return array
 	 */
 	function getData() { return $this->m_data; }
-	
-	
+
+
 	/**
 	 * Return the name of the database table.
 	 * @return string
 	 */
 	function getDbTableName() { return $this->m_dbTableName; }
-	
-	
+
+
 	/**
 	 * Return the key as an array indexed by column names.
 	 * @return array
 	 */
-	function getKey() 
+	function getKey()
 	{
 		$key = array();
 		foreach ($this->m_keyColumnNames as $columnName) {
@@ -157,8 +157,8 @@ class DatabaseObject {
 		}
 		return $key;
 	} // fn getKey
-	
-	
+
+
 	/**
 	 * This function has two modes of operation:
 	 * You can change the columns used for the key values,
@@ -175,7 +175,7 @@ class DatabaseObject {
 	 *     </pre>
 	 * @return void
 	 */
-	function setKey($p_columnNames) 
+	function setKey($p_columnNames)
 	{
 		if (is_array($p_columnNames)) {
 			if (isset($p_columnNames[0])) {
@@ -188,7 +188,7 @@ class DatabaseObject {
 			}
 		}
 	} // fn setKey
-	
+
 
 	/**
 	 * Remember the old value of the key.
@@ -196,29 +196,29 @@ class DatabaseObject {
 	 * @param string $p_value
 	 * @return void
 	 */
-	function modifyKeyValue($p_columnName, $p_value) 
+	function modifyKeyValue($p_columnName, $p_value)
 	{
 		if (!isset($this->m_oldKeyValues[$p_columnName])) {
 			$this->m_oldKeyValues[$p_columnName] = $this->m_data[$p_columnName];
 		}
 		$this->m_data[$p_columnName] = $p_value;
 	} // fn modifyKeyValue
-	
-	
+
+
 	/**
 	 * Fetch a single record from the database for the given key.
 	 *
 	 * @param array $p_recordSet
-	 *		If the record has already been fetched and we just need to 
+	 *		If the record has already been fetched and we just need to
 	 * 		assign the data to the object's internal member variable.
 	 *
 	 * @return boolean
 	 *		TRUE on success, FALSE on failure
 	 */
-	function fetch($p_recordSet = null) 
+	function fetch($p_recordSet = null)
 	{
 		global $Campsite;
-		
+
 		if (is_null($p_recordSet)) {
 			$queryStr = 'SELECT ';
 			$tmpColumnNames = array();
@@ -253,14 +253,14 @@ class DatabaseObject {
 		$this->m_oldKeyValues = array();
 		return true;
 	} // fn fetch
-	
-	
+
+
 	/**
 	 * Return true if the object exists in the database.
 	 *
 	 * @return boolean
 	 */
-	function exists() 
+	function exists()
 	{
 		if (!is_null($this->m_exists)) {
 			return $this->m_exists;
@@ -273,14 +273,14 @@ class DatabaseObject {
 		$resultSet = $Campsite['db']->GetRow($queryStr);
 		return (count($resultSet) > 0);
 	} // fn exists
-	
-	
+
+
 	/**
 	 * Return a string for the primary key of the table.
 	 *
 	 * @return string
 	 */
-	function getKeyWhereClause() 
+	function getKeyWhereClause()
 	{
 		$whereParts = array();
 		foreach ($this->m_keyColumnNames as $columnName) {
@@ -288,34 +288,34 @@ class DatabaseObject {
 				$whereParts[] = '`' . $columnName . "`='".mysql_real_escape_string($this->m_oldKeyValues[$columnName]) ."'";
 			} else {
 				$whereParts[] = '`' . $columnName . "`='"
-					.mysql_real_escape_string($this->m_data[$columnName]) ."'";					
+					.mysql_real_escape_string($this->m_data[$columnName]) ."'";
 			}
-		}			
-		return implode(' AND ', $whereParts);		
+		}
+		return implode(' AND ', $whereParts);
 	} // fn getKeyWhereClause
-	
-	
+
+
 	/**
 	 * Return true if the object has all the values required
 	 * to fetch a unique record from the table.
 	 *
 	 * @return boolean
 	 */
-	function keyValuesExist() 
+	function keyValuesExist()
 	{
 		foreach ($this->m_keyColumnNames as $columnName) {
-			if (!isset($this->m_data[$columnName]) || empty($this->m_data[$columnName])) {
+			if (!isset($this->m_data[$columnName]) /* || empty($this->m_data[$columnName]) */) {
 				return false;
 			}
 		}
 		return true;
 	} // fn keyValuesExist
-	
-	
+
+
 	/**
 	 * Create the record in the database for this object.
 	 * This will use the currently set index values for the key.
-	 * No other values are set unless they are passed in through 
+	 * No other values are set unless they are passed in through
 	 * the $p_values parameter.
 	 *
 	 * @param array $p_values
@@ -325,11 +325,11 @@ class DatabaseObject {
 	 * @return boolean
 	 *		TRUE if the record was added, false if not.
 	 */
-	function create($p_values = null) 
+	function create($p_values = null)
 	{
 		global $Campsite;
 		$queryStr = 'INSERT IGNORE INTO ' . $this->m_dbTableName;
-		
+
 		// Make sure we have the key required to create the row.
 		// If auto-increment is set, the database will create the key for us.
 		$columns = array();
@@ -343,9 +343,9 @@ class DatabaseObject {
 			// We dont have the key values and
 			// the key is not an auto-increment value,
 			// so we cant create the row.
-			return false;			
+			return false;
 		}
-		
+
 		// Check if any columns values in the class are already set.
 		// If so, automatically set these values when we create the row.
 		foreach ($this->m_columnNames as $columnName) {
@@ -353,7 +353,7 @@ class DatabaseObject {
 				$columns[$columnName] = "'".mysql_real_escape_string($this->m_data[$columnName])."'";
 			}
 		}
-		
+
 		// Optionally set some values when we create the row.
 		// These override values that are preset in the class.
 		if (!is_null($p_values)) {
@@ -372,25 +372,25 @@ class DatabaseObject {
 		$Campsite['db']->Execute($queryStr);
 		$success = ($Campsite['db']->Affected_Rows() > 0);
 		$this->m_exists = $success;
-		
+
 		// Fetch the row ID if it is auto-increment
 		if ($this->m_keyIsAutoIncrement) {
 			// There should only be one key column because
 			// its an auto-increment key.
-			$this->m_data[$this->m_keyColumnNames[0]] = 
+			$this->m_data[$this->m_keyColumnNames[0]] =
 				$Campsite['db']->Insert_ID();
 		}
 		return $success;
 	} // fn create
-	
-	
+
+
 	/**
 	 * Delete the row from the database.
 	 *
 	 * @return boolean
 	 *		TRUE if the record was deleted, false if not.
 	 */
-	function delete() 
+	function delete()
 	{
 		global $Campsite;
 		$queryStr = 'DELETE FROM ' . $this->m_dbTableName
@@ -398,7 +398,7 @@ class DatabaseObject {
 					.' LIMIT 1';
 		$Campsite['db']->Execute($queryStr);
 		$wasDeleted = ($Campsite['db']->Affected_Rows() > 0);
-		// Always set "exists" to false because if a row wasnt 
+		// Always set "exists" to false because if a row wasnt
 		// deleted it means it probably didnt exist in the first place.
 		$this->m_exists = false;
 		return $wasDeleted;
@@ -411,16 +411,16 @@ class DatabaseObject {
 	 * @param string $p_dbColumnName
 	 *
 	 * @param boolean $p_forceFetchFromDatabase
-	 *		Get the data from the database instead of cached value 
+	 *		Get the data from the database instead of cached value
 	 *		that is stored in the object.
-	 * 
+	 *
 	 * @return mixed
 	 *		Return a string if the property exists,
 	 *		NULL if the value doesnt exist,
 	 *      or a PEAR_Error if $p_forceFetchFromDatabase is TRUE
 	 *      and there was a problem fetching the data.
 	 */
-	function getProperty($p_dbColumnName, $p_forceFetchFromDatabase = false) 
+	function getProperty($p_dbColumnName, $p_forceFetchFromDatabase = false)
 	{
 		global $Campsite;
 		if (isset($this->m_data[$p_dbColumnName])) {
@@ -451,8 +451,8 @@ class DatabaseObject {
 		}
 		return null;
 	} // fn getProperty
-	
-	
+
+
 	/**
 	 * Set the given column name to the given value.
 	 * The object's internal variable will also be updated.
@@ -480,7 +480,7 @@ class DatabaseObject {
 	 * @return boolean
 	 *		TRUE on success, FALSE on error.
 	 */
-	function setProperty($p_dbColumnName, $p_value, $p_commit = true, $p_isSql = false) 
+	function setProperty($p_dbColumnName, $p_value, $p_commit = true, $p_isSql = false)
 	{
 		global $Campsite;
 		// If we are not committing, the value cannot be SQL.
@@ -550,8 +550,8 @@ class DatabaseObject {
 		}
 		return $databaseChanged;
 	} // fn setProperty
-	
-	
+
+
 	/**
 	 * Update the database row with the given values.
 	 *
@@ -571,13 +571,13 @@ class DatabaseObject {
 	 *
 	 * @return boolean
 	 *		Return TRUE if the database was updated, FALSE otherwise.
-	 *		This means that if p_commit is FALSE, this function will 
+	 *		This means that if p_commit is FALSE, this function will
 	 *		always return false.
 	 */
-	function update($p_columns = null, $p_commit = true, $p_isSql = false) 
+	function update($p_columns = null, $p_commit = true, $p_isSql = false)
 	{
 		global $Campsite;
-		
+
 		// Check input
 		if (!is_array($p_columns)) {
 			return false;
@@ -588,7 +588,7 @@ class DatabaseObject {
         	// Set the value only if the column name exists.
         	if (array_key_exists($columnName, $this->m_data)) {
 	        	// Special case if we are setting a key value -
-	        	// if we are going to commit later, then we need to 
+	        	// if we are going to commit later, then we need to
 	        	// remember the old key values.
 	        	if (!$p_commit && in_array($columnName, $this->m_keyColumnNames)) {
 					// Remember the old value so we can tell the database which row
@@ -622,7 +622,7 @@ class DatabaseObject {
 		return $databaseChanged;
 	} // fn update
 
-	
+
 	/**
 	 * Commit the data stored in memory to the database.
 	 * This is useful if you make a bunch of setProperty() calls at once
@@ -635,7 +635,7 @@ class DatabaseObject {
 	 * @return boolean
 	 *		Return TRUE if the database was updated, false otherwise.
 	 */
-	function commit($p_ignoreColumns = null) 
+	function commit($p_ignoreColumns = null)
 	{
 		global $Campsite;
         $setColumns = array();
@@ -657,7 +657,7 @@ class DatabaseObject {
 		return $success;
 	} // fn commit
 
-	
+
 	/**
 	 * Do a simple search.
 	 *
@@ -674,7 +674,7 @@ class DatabaseObject {
 		if (!class_exists($p_className)) {
 			return array();
 		}
-		
+
 		$tmpObj =& new $p_className;
 		$queryStr = "SELECT * FROM ".$tmpObj->m_dbTableName;
 		if (is_array($p_columns) && (count($p_columns) > 0)) {
@@ -692,7 +692,7 @@ class DatabaseObject {
 		return $dbObjects;
 	} // fn search
 
-	
+
 	/**
 	 * Output the raw values of this object so that it displays nice in HTML.
 	 * @return void
@@ -704,10 +704,10 @@ class DatabaseObject {
 	    echo "</pre>";
 	} // fn dumpToHtml
 
-	
+
 	/**
 	 * This is used by subclasses to add extra SQL options to the end of a query.
-	 * 
+	 *
 	 * @param string $p_queryStr
 	 *		The current SQL query.
 	 *
@@ -724,12 +724,12 @@ class DatabaseObject {
 	 * @return string
 	 *		Original SQL query with the options appended at the end.
 	 */
-	function ProcessOptions($p_queryStr, $p_sqlOptions) 
+	function ProcessOptions($p_queryStr, $p_sqlOptions)
 	{
 		if (!is_null($p_sqlOptions)) {
 			if (isset($p_sqlOptions['ORDER BY'])) {
 				if (!is_array($p_sqlOptions['ORDER BY'])) {
-					$p_queryStr .= ' ORDER BY '.$p_sqlOptions['ORDER BY'];	
+					$p_queryStr .= ' ORDER BY '.$p_sqlOptions['ORDER BY'];
 				} else {
 					$p_queryStr .= ' ORDER BY ';
 					$tmpItems = array();
@@ -754,14 +754,14 @@ class DatabaseObject {
 					$p_queryStr .= ' LIMIT '.$p_sqlOptions['LIMIT']['START']
 						.','.$p_sqlOptions['LIMIT']['MAX_ROWS'];
 				} else {
-					$p_queryStr .= ' LIMIT '.$p_sqlOptions['LIMIT'];					
+					$p_queryStr .= ' LIMIT '.$p_sqlOptions['LIMIT'];
 				}
-			}			
+			}
 		}
 		return $p_queryStr;
 	} // fn ProcessOptions
-	
-	
+
+
 } // class DatabaseObject
 
 ?>
