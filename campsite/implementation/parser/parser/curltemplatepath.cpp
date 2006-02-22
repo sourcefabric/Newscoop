@@ -111,7 +111,13 @@ void CURLTemplatePath::setURL(const CMsgURLRequest& p_rcoURLMessage, bool p_bLoc
 					+ " and Published = 'Y'";
 			qRow = QueryFetchRow(m_pDBConn, coQuery.c_str(), coRes);
 			if (qRow != NULL)
+			{
+				if (qRow[0] == NULL || atol(qRow[0]) <= 0)
+				{
+					throw RunException("There are no published issues.");
+				}
 				setValue(P_NRISSUE, qRow[0]); 
+			}
 		}
 		m_coTemplate = CPublication::getIssueTemplate(getIntValue(P_IDLANG), getIntValue(P_IDPUBL),
 				getIntValue(P_NRISSUE), m_pDBConn);

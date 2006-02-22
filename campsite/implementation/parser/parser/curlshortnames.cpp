@@ -127,6 +127,10 @@ void CURLShortNames::setURL(const CMsgURLRequest& p_rcoURLMessage, bool p_bLockT
 		qRow = QueryFetchRow(m_pDBConn, coQuery.c_str(), coRes);
 		if (qRow != NULL)
 		{
+			if (qRow[0] == NULL || atol(qRow[0]) <= 0)
+			{
+				throw RunException("There are no published issues.");
+			}
 			nIssue = Integer(qRow[0]);
 			setIssue(nIssue);
 		}
