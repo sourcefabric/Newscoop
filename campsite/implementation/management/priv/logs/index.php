@@ -23,6 +23,9 @@ if (!$User->hasPermission('ViewLogs')) {
 
 $f_event_search_id = Input::Get('f_event_search_id', 'int', null, true);
 $f_log_page_offset = camp_session_get('f_log_page_offset', 0);
+if ($f_event_search_id == 0) {
+	$f_event_search_id = null;
+}
 
 $events = Event::GetEvents();
 if ($f_log_page_offset < 0) {
@@ -30,7 +33,7 @@ if ($f_log_page_offset < 0) {
 }
 $ItemsPerPage = 15;
 
-$logs = Log::GetLogs($f_event_search_id, 
+$logs = Log::GetLogs($f_event_search_id,
 	array('LIMIT' => array('MAX_ROWS' => $ItemsPerPage, 'START' => $f_log_page_offset)));
 $numLogLines = Log::GetNumLogs($f_event_search_id);
 
@@ -53,8 +56,8 @@ echo camp_html_breadcrumbs($crumbs);
 			<TD>
 				<SELECT NAME="f_event_search_id" class="input_select">
 				<OPTION VALUE="0">
-				<?php 
-				foreach ($events as $event) { 
+				<?php
+				foreach ($events as $event) {
 					camp_html_select_option($event->getEventId(), $f_event_search_id, htmlspecialchars($event->getName()));
 				}
 				?>
@@ -87,34 +90,34 @@ echo camp_html_breadcrumbs($crumbs);
 	<?php  } ?>
 	<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("Description"); ?></B></TD>
 </TR>
-<?php 
+<?php
 	$color=0;
 	foreach ($logs as $entry) { ?>
 	<TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 		<TD ALIGN="CENTER">
 			<?php  p(htmlspecialchars($entry->getTimeStamp())); ?>
 		</TD>
-		
+
 		<TD>
 			<?php  p(htmlspecialchars($entry->getProperty("full_name"))); ?>&nbsp;
 		</TD>
-	
+
 		<?php if ($f_event_search_id == 0) { ?>
 		<TD>
-			<?php  
+			<?php
 			$event =& new Event($entry->getEventId(), 1);
 			echo htmlspecialchars($event->getName());
 			?>&nbsp;
 		</TD>
 		<?php  } ?>
-		
+
 		<TD>
 			<?php  p(htmlspecialchars($entry->getText())); ?>
 		</TD>
 	</TR>
-<?php 
+<?php
 }
-?>	
+?>
 </table>
 <table class="indent">
 <TR>

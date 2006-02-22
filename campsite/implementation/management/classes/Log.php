@@ -12,12 +12,12 @@ class Log extends DatabaseObject {
 	var $m_keyIsAutoIncrement = false;
 	var $m_dbTableName = 'Log';
 	var $m_columnNames = array(
-		'time_created', 
-		'fk_event_id', 
-		'fk_user_id', 
+		'time_created',
+		'fk_event_id',
+		'fk_user_id',
 		'text');
-	
-	
+
+
 	/**
 	 * This is a static function.
 	 * Write a message to the log table.
@@ -28,12 +28,12 @@ class Log extends DatabaseObject {
 	 *
 	 * @return void
 	 */
-	function Message($p_text, $p_userId = null, $p_eventId = 0) 
+	function Message($p_text, $p_userId = null, $p_eventId = 0)
 	{
 		global $Campsite;
 		if (is_null($p_userId)) {
 			$p_userId = 0;
-			
+
 			// try to get the user name from the global environment
 			if (isset($_REQUEST['LoginUserId'])) {
 				$p_userId = $_REQUEST['LoginUserId'];
@@ -46,7 +46,7 @@ class Log extends DatabaseObject {
 					." text='".mysql_real_escape_string($p_text)."'";
 		$Campsite['db']->Execute($queryStr);
 	} // fn Message
-	
+
 
 	/**
 	 * Get the time the log message was created.
@@ -56,8 +56,8 @@ class Log extends DatabaseObject {
 	{
 		return $this->getProperty('time_created');
 	} // fn getTimeStamp
-	
-	
+
+
 	/**
 	 * Return the log message.
 	 * @return string
@@ -66,8 +66,8 @@ class Log extends DatabaseObject {
 	{
 		return $this->getProperty('text');
 	} // fn getText
-	
-	
+
+
 	/**
 	 * Get the event ID which cooresponds to an entry in the "Events" table.
 	 * @return int
@@ -76,8 +76,8 @@ class Log extends DatabaseObject {
 	{
 		return $this->getProperty('fk_event_id');
 	} // fn getEventId
-	
-	
+
+
 	/**
 	 * Return the number of log lines.
 	 * @param int $p_eventId
@@ -93,8 +93,8 @@ class Log extends DatabaseObject {
 		$total = $Campsite['db']->GetOne($queryStr);
 		return $total;
 	} // fn GetNumLogs
-	
-	
+
+
 	/**
 	 * Get the logs.
 	 *
@@ -115,13 +115,13 @@ class Log extends DatabaseObject {
 					." FROM Log"
 					." LEFT JOIN Users ON Log.fk_user_id = Users.Id";
 		if (!is_null($p_eventId)) {
-			$queryStr .= " AND Log.fk_event_id=$p_eventId";
+			$queryStr .= " WHERE Log.fk_event_id=$p_eventId";
 		}
 		$queryStr = DatabaseObject::ProcessOptions($queryStr, $p_sqlOptions);
 		$logLines = DbObjectArray::Create('Log', $queryStr);
 		return $logLines;
 	} // fn GetLogs
-	
+
 } // class Log
 
 ?>
