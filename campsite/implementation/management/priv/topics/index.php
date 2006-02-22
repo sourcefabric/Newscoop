@@ -225,7 +225,7 @@ foreach ($topics as $topicPath) {
 	    	</td>
 	    </tr>	
 		<script>
-		topic_ids.push(document.getElementById("add_subtopic_"+<?php p($currentTopic->getTopicId()); ?>+"_<?php p($topicLanguageId); ?>"));
+		topic_ids.push("add_subtopic_"+<?php p($currentTopic->getTopicId()); ?>+"_<?php p($topicLanguageId); ?>");
 		</script>
 		<?php  
 		$isFirstTranslation = false;
@@ -265,10 +265,7 @@ foreach ($topics as $topicPath) {
     	</td>
     </tr>
 		<script>
-		//topic_ids.push(document.getElementById("add_subtopic_"+<?php p($currentTopic->getTopicId()); ?>));
-		topic_ids.push(document.getElementById("translate_topic_"+<?php p($currentTopic->getTopicId()); ?>));
-//		topic_ids.push("add_subtopic_"+<?php p($currentTopic->getTopicId()); ?>);
-//		topic_ids.push("translate_topic_"+<?php p($currentTopic->getTopicId()); ?>);
+		topic_ids.push("translate_topic_"+<?php p($currentTopic->getTopicId()); ?>);
 		</script>
     <?php
     $isFirstTopic = false;

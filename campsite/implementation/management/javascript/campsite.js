@@ -49,10 +49,11 @@ function ShowElement(id)
  *
  * @param array p_array
  */
-function HideAll(p_htmlElementArray)
+function HideAll(p_array)
 {
-	for (i = 0; i < p_htmlElementArray.length; i++) { 
-		p_htmlElementArray[i].style.display = "none";
+	for (i = 0; i < p_array.length; i++) { 
+		document.getElementById(p_array[i]).style.display = "none";
 	}
 	return true;
 } 
+
