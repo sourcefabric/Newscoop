@@ -6,13 +6,13 @@
 /**
  * Includes
  */
-// We indirectly reference the DOCUMENT_ROOT so we can enable 
-// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT'] 
+// We indirectly reference the DOCUMENT_ROOT so we can enable
+// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT']
 // is not defined in these cases.
 if (!isset($g_documentRoot)) {
     $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 }
-/** 
+/**
  * Includes
  */
 require_once($g_documentRoot.'/classes/DatabaseObject.php');
@@ -27,16 +27,16 @@ class ArticleType {
 	var $m_columnNames = array();
 	var $m_dbTableName;
 	var $m_name;
-	
-	
+
+
 	/**
 	 * An article type is a dynamic table that is created for an article
 	 * to allow different publications to display their content in different
-	 * ways.  
+	 * ways.
 	 *
 	 * @param string $p_articleType
 	 */
-	function ArticleType($p_articleType) 
+	function ArticleType($p_articleType)
 	{
 		$this->m_name = $p_articleType;
 		$this->m_dbTableName = 'X'.$p_articleType;
@@ -46,7 +46,7 @@ class ArticleType {
 			$this->m_columnNames[] = $columnMetaData->getName();
 		}
 	} // constructor
-	
+
 
 	/**
 	 * Create a new Article Type.  Creates a new table in the database.
@@ -62,14 +62,14 @@ class ArticleType {
 		$success = $Campsite['db']->Execute($queryStr);
 		if ($success) {
 			if (function_exists("camp_load_language")) { camp_load_language("api");	}
-		    $logtext = getGS('The article type $1 has been added.', $this->m_dbTableName); 
+		    $logtext = getGS('The article type $1 has been added.', $this->m_dbTableName);
 	    	Log::Message($logtext, null, 61);
-			ParserCom::SendMessage('article_type', 'create', array("article_type"=>$cName));
+			ParserCom::SendMessage('article_types', 'create', array("article_type"=>$cName));
 		}
 		return $success;
 	} // fn create
-	
-	
+
+
 	/**
 	 * Return TRUE if the Article Type exists.
 	 * @return boolean
@@ -85,8 +85,8 @@ class ArticleType {
 			return false;
 		}
 	} // fn exists
-	
-	
+
+
 	/**
 	 * Delete the article type.  This will delete the entire table
 	 * in the database.  Not recommended unless there is no article
@@ -104,8 +104,8 @@ class ArticleType {
 			ParserCom::SendMessage('article_types', 'delete', array("article_type" => $this->m_name));
 		}
 	} // fn delete
-	
-	
+
+
 	/**
 	 * @return string
 	 */
@@ -113,14 +113,14 @@ class ArticleType {
 	{
 		return $this->m_dbTableName;
 	} // fn getTableName
-	
-	
+
+
 	/**
 	 * Return an array of ArticleTypeField objects.
 	 *
 	 * @return array
 	 */
-	function getUserDefinedColumns() 
+	function getUserDefinedColumns()
 	{
 		global $Campsite;
 		$queryStr = 'SHOW COLUMNS FROM '.$this->m_dbTableName
@@ -137,13 +137,13 @@ class ArticleType {
 		return $metadata;
 	} // fn getUserDefinedColumns
 
-	
+
 	/**
 	 * Static function.
 	 * @param string $p_name
 	 * @return boolean
 	 */
-	function IsValidFieldName($p_name) 
+	function IsValidFieldName($p_name)
 	{
 		if (empty($p_name)) {
 			return false;
@@ -157,15 +157,15 @@ class ArticleType {
 		}
 		return true;
 	} // fn IsValidFieldName
-	
-	
+
+
 	/**
 	 * Get all article types that currently exist.
 	 * Returns an array of strings.
 	 *
 	 * @return array
-	 */ 
-	function GetArticleTypes() 
+	 */
+	function GetArticleTypes()
 	{
 		global $Campsite;
 		$queryStr = "SHOW TABLES LIKE 'X%'";
@@ -179,7 +179,7 @@ class ArticleType {
 		}
 		return $finalNames;
 	} // fn GetArticleTypes
-	
+
 } // class ArticleType
 
 ?>

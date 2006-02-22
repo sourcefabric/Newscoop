@@ -3,8 +3,8 @@
 /**
  * Includes
  */
-// We indirectly reference the DOCUMENT_ROOT so we can enable 
-// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT'] 
+// We indirectly reference the DOCUMENT_ROOT so we can enable
+// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT']
 // is not defined in these cases.
 if (!isset($g_documentRoot)) {
     $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
@@ -26,8 +26,8 @@ class ArticleTypeField {
 	var $Key;
 	var $Default;
 	var $Extra;
-	
-	function ArticleTypeField($p_articleTypeName = null, $p_fieldName = null) 
+
+	function ArticleTypeField($p_articleTypeName = null, $p_fieldName = null)
 	{
 		$this->m_articleTypeName = $p_articleTypeName;
 		$this->m_fieldName = $p_fieldName;
@@ -37,17 +37,17 @@ class ArticleTypeField {
 			$this->fetch();
 		}
 	} // constructor
-	
-	
+
+
 	/**
 	 * @return string
 	 */
-	function getDbTableName() 
+	function getDbTableName()
 	{
 		return $this->m_dbTableName;
 	} // fn getDbTableName
-	
-	
+
+
 	/**
 	 * Create a column in the table.
 	 * @param string $p_type
@@ -76,11 +76,11 @@ class ArticleTypeField {
 			if (function_exists("camp_load_language")) { camp_load_language("api");	}
 			$logtext = getGS('Article type field $1 created', $this->m_dbColumnName);
 			Log::Message($logtext, null, 71);
-			ParserCom::SendMessage('article_types', 'create', array("article_type"=> $this->m_articleTypeName));
+			ParserCom::SendMessage('article_types', 'modify', array("article_type"=> $this->m_articleTypeName));
 		}
 	} // fn create
-	
-	
+
+
 	/**
 	 * @return boolean
 	 */
@@ -95,12 +95,12 @@ class ArticleTypeField {
 			return false;
 		}
 	} // fn exists
-	
-	
+
+
 	/**
 	 * @return void
 	 */
-	function fetch($p_recordSet = null) 
+	function fetch($p_recordSet = null)
 	{
 		global $Campsite;
 		if (!is_null($p_recordSet)) {
@@ -114,8 +114,8 @@ class ArticleTypeField {
 			$this->fetch($row);
 		}
 	} // fn fetch
-	
-	
+
+
 	function delete()
 	{
 		global $Campsite;
@@ -123,40 +123,40 @@ class ArticleTypeField {
 		$success = $Campsite['db']->Execute($queryStr);
 		if ($success) {
 			if (function_exists("camp_load_language")) { camp_load_language("api");	}
-			$logtext = getGS('Article type field $1 deleted', $this->m_dbColumnName); 
+			$logtext = getGS('Article type field $1 deleted', $this->m_dbColumnName);
 			Log::Message($logtext, null, 72);
 			ParserCom::SendMessage("article_types", "modify", array("article_type"=>"$AType"));
 		}
 	} // fn delete
-	
-	
-	/**
-	 * @return string
-	 */
-	function getName() 
-	{
-		return $this->Field;
-	} // fn getName
-	
+
 
 	/**
 	 * @return string
 	 */
-	function getPrintName() 
+	function getName()
 	{
-		return substr($this->Field, 1);
-	} // fn getPrintName
-	
-	
+		return $this->Field;
+	} // fn getName
+
+
 	/**
 	 * @return string
 	 */
-	function getType() 
+	function getPrintName()
+	{
+		return substr($this->Field, 1);
+	} // fn getPrintName
+
+
+	/**
+	 * @return string
+	 */
+	function getType()
 	{
 		return strtolower($this->Type);
 	} // fn getType
-	
-	
+
+
 	/**
 	 * Get a human-readable representation of the column type.
 	 * @return string
@@ -176,7 +176,7 @@ class ArticleTypeField {
 	    	return "unknown";
 		}
 	} // fn getPrintType
-	
+
 } // class ArticleTypeField
 
 

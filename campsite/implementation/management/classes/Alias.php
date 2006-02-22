@@ -6,8 +6,8 @@
 /**
  * Includes
  */
-// We indirectly reference the DOCUMENT_ROOT so we can enable 
-// scripts to use this file from the command line, because $_SERVER['DOCUMENT_ROOT'] 
+// We indirectly reference the DOCUMENT_ROOT so we can enable
+// scripts to use this file from the command line, because $_SERVER['DOCUMENT_ROOT']
 // is not defined in these cases.
 if (!isset($g_documentRoot)) {
     $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
@@ -25,12 +25,12 @@ class Alias extends DatabaseObject {
 	var $m_keyColumnNames = array('Id');
 	var $m_keyIsAutoIncrement = true;
 	var $m_columnNames = array('Id', 'Name', 'IdPublication');
-	
-	/** 
+
+	/**
 	 * Constructor.
 	 * @param int $p_id
 	 */
-	function Alias($p_id = null) 
+	function Alias($p_id = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
 		if (!is_null($p_id)) {
@@ -38,8 +38,8 @@ class Alias extends DatabaseObject {
 			$this->fetch();
 		}
 	} // constructor
-	
-	
+
+
 	/**
 	 * @param array $p_values
 	 * @return boolean
@@ -48,44 +48,44 @@ class Alias extends DatabaseObject {
 	{
 		$created = parent::create($p_values);
 		if ($created && ($this->m_data["IdPublication"] > 0)) {
-			ParserCom::SendMessage('publication', 'modify', 
+			ParserCom::SendMessage('publications', 'modify',
 								   array("IdPublication" => $this->m_data['IdPublication']));
 		}
 		return $created;
 	} // fn create
-	
-	
+
+
 	/**
 	 * @return boolean
 	 */
-	function delete() 
+	function delete()
 	{
 		$deleted = parent::delete();
 		if ($deleted) {
-			ParserCom::SendMessage('publication', 'modify', 
-								   array("IdPublication" => $this->m_data['IdPublication']));			
+			ParserCom::SendMessage('publications', 'modify',
+								   array("IdPublication" => $this->m_data['IdPublication']));
 		}
 		return $deleted;
 	} // fn delete
-	
-	
+
+
 	/**
 	 * @return int
 	 */
-	function getId() 
+	function getId()
 	{
 		return $this->getProperty('Id');
 	} // fn getId
-	
-	
+
+
 	/**
 	 * @return string
 	 */
-	function getName() 
+	function getName()
 	{
 		return $this->getProperty('Name');
 	} // fn getName
-	
+
 
 	/**
 	 *
@@ -94,22 +94,22 @@ class Alias extends DatabaseObject {
 	{
 		$changed = $this->setProperty('Name', $p_name);
 		if ($changed) {
-			ParserCom::SendMessage('publication', 'modify', 
+			ParserCom::SendMessage('publication', 'modify',
 								   array("IdPublication"=>$this->m_data['IdPublication']));
 		}
 		return $changed;
 	} // fn setName
-	
-	
+
+
 	/**
 	 * @return int
 	 */
-	function getPublicationId() 
+	function getPublicationId()
 	{
 		return $this->getProperty('IdPublication');
 	} // fn getPublicationId
-	
-	
+
+
 	/**
 	 * @param int $p_value
 	 * @return boolean
@@ -119,14 +119,14 @@ class Alias extends DatabaseObject {
 		return $this->setProperty('IdPublication', $p_value);
 	} // fn setPublicationId
 
-	
+
 	/**
 	 * @param int $p_id
 	 * @param int $p_publicationId
 	 * @param string $p_name
 	 * @return array
 	 */
-	function GetAliases($p_id = null, $p_publicationId = null, $p_name = null) 
+	function GetAliases($p_id = null, $p_publicationId = null, $p_name = null)
 	{
 		$contraints = array();
 		if (!is_null($p_publicationId)) {
@@ -136,11 +136,11 @@ class Alias extends DatabaseObject {
 			$contraints[] = array("Name", $p_name);
 		}
 		if (!is_null($p_id)) {
-			$contraints[] = array("Id", $p_id);	
+			$contraints[] = array("Id", $p_id);
 		}
 		return DatabaseObject::Search('Alias', $contraints);
 	} // fn GetAliases
-	
+
 } // class Alias
 
 ?>
