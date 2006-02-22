@@ -2,6 +2,9 @@
 -- the queries for fetching images become unbearably slow.
 ALTER  TABLE  `ArticleImages`  ADD  INDEX  `IdImage` (  `IdImage`  ) ;
 
+-- Add this index so we can grab all translations of a topic at once.
+ALTER TABLE `Topics` ADD INDEX `topic_id` ( `Id` );
+
 -- add IdLanguage column to SubsSections table
 ALTER TABLE SubsSections DROP PRIMARY KEY;
 ALTER TABLE SubsSections ADD COLUMN IdLanguage int(10) NOT NULL DEFAULT 0 AFTER SectionNumber;
