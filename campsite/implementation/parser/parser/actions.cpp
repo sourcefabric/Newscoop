@@ -2977,7 +2977,7 @@ int CActSelect::takeAction(CContext& c, sockstream& fs)
 		string attrval = c.UserInfo(field);
 		if (case_comp(field, "CountryCode") == 0)
 		{
-			buf << "select Code, Name from Countries where IdLanguage = " << c.Language();
+			buf << "select Code, Name from Countries group by Code asc order by Name asc";
 		}
 		else if (case_comp(field, "Title") == 0)
 		{
