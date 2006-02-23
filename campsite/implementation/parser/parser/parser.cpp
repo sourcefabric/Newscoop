@@ -106,6 +106,7 @@ using std::endl;
 #define SUBLV_IFTOPIC 131072
 #define SUBLV_ARTICLETOPIC 262144
 #define SUBLV_SUBTOPIC 524288
+#define SUBLV_ARTICLEATTACHMENT 1048576
 
 
 // macro definition
@@ -1314,6 +1315,8 @@ inline int CParser::HList(CActionList& al, int level, int sublevel)
 		sublevel |= SUBLV_ARTICLETOPIC;
 	if (mod == CMS_ST_SUBTOPIC)
 		sublevel |= SUBLV_SUBTOPIC;
+	if (mod == CMS_ST_ARTICLEATTACHMENT)
+		sublevel |= SUBLV_ARTICLEATTACHMENT;
 	int tmp_level = LMod2Level(mod);
 	if (tmp_level == 0)
 		tmp_level = level;
@@ -1476,7 +1479,8 @@ inline int CParser::HIf(CActionList& al, int lv, int sublv)
 	{
 		if ((sublv & SUBLV_EMPTYLIST)
 				   || (lv == LV_ROOT
-				   && (sublv & (SUBLV_SEARCHRESULT | SUBLV_ARTICLETOPIC | SUBLV_SUBTOPIC)) == 0))
+				   && (sublv & (SUBLV_SEARCHRESULT | SUBLV_ARTICLETOPIC | SUBLV_SUBTOPIC |
+				   		SUBLV_ARTICLEATTACHMENT)) == 0))
 		{
 			FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE,
 			            IfStatements(lv, sublv), lex.prevLine(), lex.prevColumn());
