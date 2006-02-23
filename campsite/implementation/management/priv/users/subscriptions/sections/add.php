@@ -44,30 +44,8 @@ $crumbs[] = array(getGS("Add new subscription"), "");
 echo camp_html_breadcrumbs($crumbs);
 
 ?>
-<script>
-function ToggleRowVisibility(id) {
-	if (document.getElementById(id).style.display == "none") {
-		if (document.all) {
-			document.getElementById(id).style.display = "block";
-		}
-		else {
-			document.getElementById(id).style.display = "";
-		}
-	}
-	else {
-		document.getElementById(id).style.display = "none";
-	}
-}
-function ToggleBoolValue(element_id) {
-    if (document.getElementById(element_id).value == "false") {
-		document.getElementById(element_id).value = "true";
-    }
-    else {
-	   document.getElementById(element_id).value = "false";
-    }
-}
-</script>
 
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.config.js"></script>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.core.js"></script>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.lang-enUS.js"></script>
