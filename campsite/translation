@@ -115,7 +115,7 @@ if [ "$to_do" = "package" ]; then
     pushd `pwd` &> /dev/null
     pushd "$PRIV_COMMON_DIR" &> /dev/null
 
-    if [ ! -f globals.$LANG.php ]; then
+    if [ ! -d lang/$LANG ]; then
 	echo "no $LANG translation found"
 	popd &> /dev/null
 	exit 2
@@ -129,8 +129,7 @@ if [ "$to_do" = "package" ]; then
 	exit 2
     fi
 
-    cp -f globals.$LANG.php $DST_DIR
-    find . -name locals.$LANG.php -exec $INSTALL_CONF/cp_path {} $DST_DIR \;
+    cp -fr lang/$LANG $DST_DIR
 
     popd &> /dev/null
     pushd "$DST_DIR" &> /dev/null
@@ -155,11 +154,11 @@ if [ "$to_do" = "install" ]; then
 	echo "invalid package file $FILE"
 	exit 2
     fi
-    cp -f "$FILE" "$PRIV_COMMON_DIR"
+    cp -f "$FILE" "$PRIV_COMMON_DIR/lang"
 
     pushd `pwd` &> /dev/null
     . make.env
-    pushd "$PRIV_COMMON_DIR" &> /dev/null
+    pushd "$PRIV_COMMON_DIR/lang" &> /dev/null
 
     tar xzf "$FILE"
     if [ $? -ne 0 ]; then
@@ -168,10 +167,9 @@ if [ "$to_do" = "install" ]; then
 	echo "invalid package file"
 	exit 2
     fi
-    chown "$APACHE_USER":"$APACHE_GROUP" globals.*.php
-    chmod 660 globals.*.php
-    find . -name locals.\*.php -exec chown "$APACHE_USER":"$APACHE_GROUP" {} \;
-    find . -name locals.\*.php -exec chmod 660 {} \;
+    chown -R "$APACHE_USER":"$APACHE_GROUP" *
+    chmod 775 *
+    find . -name \*.php -exec chmod 664 {} \;
     rm -f $FILE
 
     popd &> /dev/null
@@ -187,29 +185,30 @@ if [ "$to_do" = "add_trans" ]; then
     pushd `pwd` &> /dev/null
     pushd $PRIV_COMMON_DIR &> /dev/null
 
-    if [ ! -f globals.$LANG.php ]; then
+    if [ ! -d lang/$LANG ]; then
 	echo "no $LANG translation found"
 	popd &> /dev/null
 	exit 2
     fi
 
-    DST_DIR=`cut_last_dirs "$INSTALL_CONF"`/implementation/management
+    DST_DIR=`cut_last_dirs "$INSTALL_CONF"`/implementation/management/priv
     if [ ! -d "$DST_DIR" ]; then
 	echo "distribution directory does not exist"
 	popd &> /dev/null
 	exit 2
     fi
 
-    cp -f globals.$LANG.php $DST_DIR
+    cp -fr lang/$LANG $DST_DIR/lang
     find . -name locals.$LANG.php -exec $INSTALL_CONF/cp_path {} $DST_DIR \;
 
     popd &> /dev/null
     pushd $DST_DIR &> /dev/null
 
-    [ "$USER_NAME" != "" ] && chown "$USER_NAME":"$GROUP_NAME" globals.$LANG.php
-    chmod 660 globals.$LANG.php
-    find . -name locals.$LANG.php -exec chown "$USER_NAME":"$GROUP_NAME" {} \;
-    find . -name locals.$LANG.php -exec chmod 660 {} \;
+    if [ "$USER_NAME" != "" ]; then
+	chown -R "$USER_NAME":"$GROUP_NAME" lang/$LANG
+	chmod 775 lang/$LANG
+	chmod 664 lang/$LANG/*.php
+    fi
 
     popd &> /dev/null
     popd &> /dev/null
