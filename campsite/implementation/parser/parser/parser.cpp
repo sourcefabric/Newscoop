@@ -397,15 +397,16 @@ const char* CParser::LvStatements(int level)
 const char* CParser::LvListSt(int level)
 {
 	if (level & LV_LARTICLE || level & LV_LSUBTITLE)
-		return ST_SEARCH ", " ST_ARTICLETOPIC ", " ST_ARTICLEATTACHMENT;
+		return ST_SEARCH ", " ST_ARTICLETOPIC ", " ST_ARTICLEATTACHMENT ", " ST_SUBTOPIC;
 	else if (level & LV_LSECTION)
-		return ST_ARTICLE ", " ST_SEARCH ", " ST_ARTICLETOPIC ", " ST_ARTICLEATTACHMENT;
+		return ST_ARTICLE ", " ST_SEARCH ", " ST_ARTICLETOPIC ", " ST_ARTICLEATTACHMENT ", "
+				ST_SUBTOPIC;
 	else if (level & LV_LISSUE)
 		return ST_SECTION ", " ST_ARTICLE ", " ST_SEARCH ", " ST_ARTICLETOPIC
-				", " ST_ARTICLEATTACHMENT;
+				", " ST_ARTICLEATTACHMENT ", " ST_SUBTOPIC;
 	else if (level & LV_ROOT)
 		return ST_ISSUE ", " ST_SECTION ", " ST_ARTICLE ", " ST_SEARCH ", " ST_ARTICLETOPIC
-				", " ST_ARTICLEATTACHMENT;
+				", " ST_ARTICLEATTACHMENT ", " ST_SUBTOPIC;
 	else
 		return "";
 }
