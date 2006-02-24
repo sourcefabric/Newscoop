@@ -22,8 +22,23 @@ if (!Input::IsValid()) {
 	exit;
 }
 $publicationObj =& new Publication($Pub);
+
+if (!$publicationObj->exists()) {
+	camp_html_display_error(getGS('Publication does not exist.'));	
+	exit;	
+}
 $issueObj =& new Issue($Pub, $Language, $Issue);
+if (!$issueObj->exists()) {
+	camp_html_display_error(getGS('Issue does not exist.'));
+	exit;
+}
+
 $allLanguages = Language::GetLanguages();
+
+// Get translations of this issue
+$issueTranslations = Issue::GetIssues($Pub, null, $Issue);
+$excludeLanguageIds = DbObjectArray::GetColumn($issueTranslations, 'IdLanguage');
+
 $allTemplates = Template::GetAllTemplates();
 
 camp_html_content_top(getGS('Change issue details'), array('Pub' => $publicationObj, 'Issue' => $issueObj));
@@ -91,7 +106,10 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 	    <SELECT NAME="cLang" class="input_select">
 		<?php 
 		foreach ($allLanguages as $tmpLanguage) {
-			camp_html_select_option($tmpLanguage->getLanguageId(), $issueObj->getLanguageId(), $tmpLanguage->getNativeName());
+			$langId = $tmpLanguage->getLanguageId();
+			if (($langId == $issueObj->getLanguageId()) || !in_array($langId, $excludeLanguageIds)) {
+				camp_html_select_option($langId, $issueObj->getLanguageId(), $tmpLanguage->getNativeName());
+			}
 	    }
 		?>
 		</SELECT>
