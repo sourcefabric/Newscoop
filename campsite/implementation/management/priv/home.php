@@ -20,8 +20,8 @@ if (!$access) {
 	header("Location: /$ADMIN/logout.php");
 	exit;
 }
-
-$f_screen = camp_session_get("f_screen", "your_articles");
+$defaultScreen = "submitted_articles";
+$f_screen = camp_session_get("f_screen", $defaultScreen);
 $f_submitted_articles_offset = camp_session_get('f_submitted_articles_offset', 0);
 $f_your_articles_offset = camp_session_get('f_your_articles_offset', 0);
 $NumDisplayArticles=20;
@@ -91,8 +91,8 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 <TR>
 	<TD VALIGN="TOP" align="left" nowrap width="1%">
 		<table cellpadding="3" cellspacing="3">
-		<tr><td nowrap><a href="javascript: void(0);" onclick="HideAll(home_page_elements); ShowElement('your_articles');"  style="font-weight: bold; color: #333;"><?php putGS("Your articles"); ?></a></td></tr>
 		<tr><td nowrap><a href="javascript: void(0);" onclick="HideAll(home_page_elements); ShowElement('submitted_articles');"  style="font-weight: bold; color: #333;"><?php putGS("Submitted articles"); ?></a></td></tr>
+		<tr><td nowrap><a href="javascript: void(0);" onclick="HideAll(home_page_elements); ShowElement('your_articles');"  style="font-weight: bold; color: #333;"><?php putGS("Your articles"); ?></a></td></tr>
 		<tr><td nowrap><a href="javascript: void(0);" onclick="HideAll(home_page_elements); ShowElement('recently_published_articles');"  style="font-weight: bold; color: #333;"><?php putGS("Recently Published Articles"); ?></a></td></tr>
 		<tr><td nowrap><a href="javascript: void(0);" onclick="HideAll(home_page_elements); ShowElement('scheduled_actions');" style="font-weight: bold; color: #333;"><?php putGS("Scheduled Publishing"); ?></a></td></tr>
 		</TABLE>
@@ -353,7 +353,7 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 		if (count($pendingActions) == 0) {
 	        ?>
     		<TR>
-			<TD colspan="3" class="list_row_odd"><?php putGS("There are no pending items to be published."); ?></td>
+			<TD colspan="6" class="list_row_odd"><?php putGS("There are no pending items to be published."); ?></td>
 	        </tr>
 	        <?php		    
 		}
@@ -430,7 +430,10 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 			
 		<?PHP
 		}
-		elseif ($action["ObjectType"] == "issue") { ?>
+		elseif ($action["ObjectType"] == "issue") { 
+			//$language =& new Language($action["IdLanguage"]);
+			$pub =& new Publication($action["IdPublication"]);			
+			?>
 			<TD valign="top"><?php putGS("Issue"); ?>: 
     			<?PHP
 				if ($User->hasPermission('ManageIssue')) { ?>
@@ -468,6 +471,13 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
                 }
                 ?>
 			</td>
+
+			<td valign="top">
+				<?php p(htmlspecialchars($pub->getName())); ?>
+			</td>
+			
+			<td valign="top"> -----</td>
+			<td valign="top"> -----</td>
             <?PHP
 		}
 		?>
