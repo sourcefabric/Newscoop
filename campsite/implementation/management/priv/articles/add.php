@@ -26,11 +26,6 @@ $f_article_name = Input::Get('f_article_name', 'string', '', true);
 $f_article_type = Input::Get('f_article_type', 'string', '', true);
 $f_article_language = Input::Get('f_article_language', 'int', $f_language_id, true);
 
-// For choosing the article location.
-$f_destination_publication_id = Input::Get('f_destination_publication_id', 'int', 0, true);
-$f_destination_issue_number = Input::Get('f_destination_issue_number', 'int', 0, true);
-$f_destination_section_number = Input::Get('f_destination_section_number', 'int', 0, true);
-
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
 	exit;	
@@ -50,24 +45,25 @@ if ($f_publication_id > 0) {
 	}
 }
 
+// Only show the languages for sections which have been translated.
+$sections = Section::GetSections($f_publication_id, $f_issue_number);
+$languageIds = DbObjectArray::GetColumn($sections, 'IdLanguage');
+$allLanguages = array();
+foreach ($languageIds as $languageId) {
+	if (!isset($allLanguages[$languageId])) {
+		$allLanguages[$languageId] =& new Language($languageId);
+	}
+}
 $allArticleTypes = ArticleType::GetArticleTypes();
-$allLanguages = Language::GetLanguages();
 
 // added by sebastian
 if (function_exists ("incModFile")) {
 	incModFile ();
 }
 
-if ($f_publication_id > 0) {
-	$topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
-					  'Section' => $sectionObj);
-	camp_html_content_top(getGS('Add new article'), $topArray, true, false, array(getGS("Articles") => "/$ADMIN/articles/?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id"));
-} else {
-	$crumbs = array();
-	$crumbs[] = array(getGS("Actions"), "");
-	$crumbs[] = array(getGS("Add new article"), "");
-	echo camp_html_breadcrumbs($crumbs);
-}
+$topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
+				  'Section' => $sectionObj);
+camp_html_content_top(getGS('Add new article'), $topArray, true, false, array(getGS("Articles") => "/$ADMIN/articles/?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id"));
 
 ?>
 
@@ -96,7 +92,7 @@ if (sizeof($allArticleTypes) == 0) {
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.validators.js"></script>	
 
 <P>
-<FORM NAME="add_article" METHOD="GET" ACTION="add.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
+<FORM NAME="add_article" METHOD="GET" ACTION="do_add.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
 <?php if ($f_publication_id > 0) { ?>
 <INPUT TYPE="HIDDEN" NAME="f_publication_id" VALUE="<?php p($f_publication_id); ?>">
 <?php } ?>
@@ -140,8 +136,9 @@ if (sizeof($allArticleTypes) == 0) {
 		</TR>
 		<TR>
 			<TD ALIGN="RIGHT" ><?php  putGS("Language"); ?>:</TD>
-			<TD>
-				<SELECT NAME="f_article_language" class="input_select" <?php if ($f_publication_id <= 0) { ?>onchange="this.form.submit();"<?php } ?>>
+			<TD style="padding-top: 3px;">
+				<?php if (count($allLanguages) > 1) { ?>
+				<SELECT NAME="f_article_language" alt="select" emsg="<?php putGS("You must select a language.")?>" class="input_select">
 				<option value="0"><?php putGS("---Select language---"); ?></option>
 				<?php 
 			 	foreach ($allLanguages as $tmpLanguage) {
@@ -151,107 +148,24 @@ if (sizeof($allArticleTypes) == 0) {
 		        }
 				?>			
 				</SELECT>
-			</TD>
-		</TR>
-		</table>
-	</td>
-	
-	<?php if (($f_publication_id <= 0) && $User->hasPermission("MoveArticle")) { ?>
-	<td style="border-left: 1px solid black;">
-		<TABLE>
-		<TR>
-			<td colspan="2" style="padding-left: 20px; padding-bottom: 5px;font-size: 10pt; font-weight: bold;"><?php  putGS("Select location (optional):"); ?></TD>
-		</TR>
-		<TR>
-			<TD VALIGN="middle" ALIGN="RIGHT" style="padding-left: 20px;"><?php  putGS('Publication'); ?>: </TD>
-			<TD valign="middle" ALIGN="LEFT">
-				<?php if ( ($f_article_language > 0) && count($Campsite["publications"]) > 0) { ?>
-				<SELECT NAME="f_destination_publication_id" class="input_select" ONCHANGE="if (this.options[this.selectedIndex].value != <?php p($f_destination_publication_id); ?>) {this.form.submit();}">
-				<OPTION VALUE="0"><?php  putGS('---Select publication---'); ?></option>
-				<?php 
-				foreach ($Campsite["publications"] as $tmpPublication) {
-					camp_html_select_option($tmpPublication->getPublicationId(), $f_destination_publication_id, $tmpPublication->getName());
-				}
-				?>
-				</SELECT>
-				<?php
-				}
-				else {
+				<?php } else { 
+					$tmpLanguage = array_pop($allLanguages);
+					echo '<b>'.htmlspecialchars($tmpLanguage->getNativeName()).'</b>';
 					?>
-					<SELECT class="input_select" DISABLED><OPTION><?php  putGS('No publications'); ?></option></SELECT>
+					<input type="hidden" name="f_article_language" value="<?php p($tmpLanguage->getLanguageId()); ?>">
 					<?php
 				}
 				?>
-			</td>
-		</tr>
-		
-		<tr>
-			<TD VALIGN="middle" ALIGN="RIGHT" style="padding-left: 20px;"><?php  putGS('Issue'); ?>: </TD>
-			<TD valign="middle" ALIGN="LEFT">
-				<?php 
-				$tmpIssues = array();
-				if ($f_destination_publication_id > 0) {
-					// Only get Issues with given language.
-					foreach ($Campsite["issues"][$f_destination_publication_id] as $tmpIssue) {
-						if ($tmpIssue->getLanguageId() == $f_article_language) {
-							$tmpIssues[] = $tmpIssue;
-						}
-					}					
-				}
-				if (($f_destination_publication_id > 0) && (count($tmpIssues) > 0)) {
-					?>
-					<SELECT NAME="f_destination_issue_number" class="input_select" ONCHANGE="if (this.options[this.selectedIndex].value != <?php p($f_destination_issue_number); ?>) { this.form.submit(); }">
-					<OPTION VALUE="0"><?php  putGS('---Select issue---'); ?></option>
-					<?php 
-					foreach ($tmpIssues as $tmpIssue) {
-						camp_html_select_option($tmpIssue->getIssueNumber(), $f_destination_issue_number, $tmpIssue->getName());
-					}
-					?>
-					</SELECT>
-					<?php  
-				} 
-				else { 
-					?><SELECT class="input_select" DISABLED><OPTION><?php  putGS('No issues'); ?></SELECT>
-					<?php  
-				} 
-				?>
-			</td>
-		</tr>
-		
-		<tr>	
-			<TD VALIGN="middle" ALIGN="RIGHT" style="padding-left: 20px;"><?php  putGS('Section'); ?>: </TD>
-			<TD valign="middle" ALIGN="LEFT">
-				<?php if (($f_destination_publication_id > 0) 
-						  && (count($tmpIssues) > 0) 
-						  && ($f_destination_issue_number > 0) 
-						  && (count($Campsite["sections"]) > 0)) { ?>
-				<SELECT NAME="f_destination_section_number" class="input_select" onchange="if (this.selectedIndex != 0) { document.forms.add_article.save.className='button'; document.forms.add_article.save.disabled = false; } else { document.forms.add_article.save.className='button_disabled'; document.forms.add_article.save.disabled = true;}">
-				<OPTION VALUE="0"><?php  putGS('---Select section---'); ?>
-				<?php 
-				$issueLanguageId = $Campsite["issues"][$f_destination_publication_id][0]->getLanguageId();
-				$sections = $Campsite["sections"][$f_destination_publication_id][$f_destination_issue_number][$issueLanguageId];
-				foreach ($sections as $tmpSection) {
-					camp_html_select_option($tmpSection->getSectionNumber(), $f_destination_section_number, $tmpSection->getName());
-				}
-				?>
-				</SELECT>
-				<?php  
-				} 
-				else { 
-					?><SELECT class="input_select" DISABLED><OPTION><?php  putGS('No sections'); ?></SELECT>
-					<?php  
-				}
-				?>
-				</TD>
-		</tr>
-		</TABLE>
-	</td>
-	<?php } ?>
+				
+			</TD>
+		</TR>
+		</table>
+	</td>	
 </tr>
 <TR>
 	<TD COLSPAN="2" align="center">
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
-		<INPUT TYPE="submit" NAME="save" VALUE="<?php  putGS('Save'); ?>" <?php if (($f_destination_publication_id > 0) && (($f_destination_issue_number <= 0) || (count($tmpIssues) <= 0) || ($f_destination_section_number <= 0) || (count($Campsite["sections"]) <= 0))) { echo 'class="button_disabled" disabled'; } else { echo "class=\"button\""; }?> onclick="document.forms.add_article.action='do_add.php';">
+		<INPUT TYPE="submit" NAME="save" VALUE="<?php  putGS('Save'); ?>" class="button">
 	</TD>
 </TR>
 </TABLE>

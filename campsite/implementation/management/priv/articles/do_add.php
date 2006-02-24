@@ -83,13 +83,9 @@ if ($publication_id > 0) {
 $articleObj =& new Article($f_article_language);
 $articleObj->create($f_article_type, $f_article_name);
 if ($articleObj->exists()) {
-	if ($publication_id > 0) {
+	if (($publication_id > 0) && ($issue_number > 0) && ($section_number > 0)) {
 		$articleObj->setPublicationId($publication_id);
-	}
-	if ($issue_number > 0) {
 		$articleObj->setIssueNumber($issue_number);
-	}
-	if ($section_number > 0) {
 		$articleObj->setSectionNumber($section_number);
 	} 
 	

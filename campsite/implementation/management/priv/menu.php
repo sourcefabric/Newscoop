@@ -99,7 +99,7 @@ $menu_actions =& DynMenuItem::Create(getGS("Actions"), '',
 $menu_root->addItem($menu_actions);
 
 if ($User->hasPermission("AddArticle")) { 
-    $menu_item =& DynMenuItem::Create(getGS('Add new article'), "/$ADMIN/articles/add.php",
+    $menu_item =& DynMenuItem::Create(getGS('Add new article'), "/$ADMIN/articles/add_move.php",
         array("icon" => sprintf($iconTemplateStr, "add_article.png")));
     $menu_actions->addItem($menu_item);
 }
