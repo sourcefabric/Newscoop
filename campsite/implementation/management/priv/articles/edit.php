@@ -46,6 +46,7 @@ $articleCreator =& new User($articleObj->getCreatorId());
 $articleEvents = ArticlePublish::GetArticleEvents($f_article_number, $f_language_selected, true);
 $articleTopics = ArticleTopic::GetArticleTopics($f_article_number, $f_language_selected);
 $articleFiles = ArticleAttachment::GetAttachmentsByArticleNumber($f_article_number, $f_language_selected);
+$articleLanguages = $articleObj->getLanguages();
 
 if ($f_publication_id > 0) {
 	$publicationObj =& new Publication($f_publication_id);
@@ -319,6 +320,7 @@ if ($f_edit_mode == "edit") { ?>
 		        			<TD><?php  putGS('Language'); ?>:</TD>
 		        			<TD>
 								<?php 
+								if (count($articleLanguages) > 1) {
 				        		$languageUrl = "edit.php?f_publication_id=$f_publication_id"
 				        			."&f_issue_number=$f_issue_number"
 				        			."&f_section_number=$f_section_number"
@@ -328,11 +330,16 @@ if ($f_edit_mode == "edit") { ?>
 		        				?>
 		        				<SELECT NAME="f_language_selected" class="input_select" onchange="dest = '<?php p($languageUrl); ?>'+this.options[this.selectedIndex].value; location.href=dest;">
 		    					<?php 
-		    					$articleLanguages = $articleObj->getLanguages();
 		    					foreach ($articleLanguages as $articleLanguage) {
 		    					    camp_html_select_option($articleLanguage->getLanguageId(), $f_language_selected, htmlspecialchars($articleLanguage->getNativeName()));
 		    					}
 		        				?></SELECT>
+		        				<?php } else { 
+		        					$articleLanguage = camp_array_peek($articleLanguages);
+		        					echo '<b>'.htmlspecialchars($articleLanguage->getNativeName()).'</b>';
+		        				}	
+		        				?>
+		        				
 		        			</TD>
 		        		</TR>
 		        		</TABLE>
