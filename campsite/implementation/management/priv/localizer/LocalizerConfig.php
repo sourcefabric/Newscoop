@@ -16,8 +16,8 @@ if (!isset($g_documentRoot)) {
  * we must use our own package.  The package has a bug fix applied
  * that is required for the Localizer XML files to work.
  */
-require_once("$g_documentRoot/include/XML_Serializer/Serializer.php");
-require_once("$g_documentRoot/include/XML_Serializer/Unserializer.php");
+require_once("XML/Serializer/Serializer.php");
+require_once("XML/Serializer/Unserializer.php");
 
 global $g_localizerConfig;
 

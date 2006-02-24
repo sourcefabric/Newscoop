@@ -21,6 +21,9 @@ $Campsite['HTML_COMMON_DIR'] = $Campsite['WWW_COMMON_DIR'] . "/html";
 $Campsite['CGI_COMMON_DIR'] = $Campsite['WWW_COMMON_DIR'] . "/cgi-bin";
 $Campsite['HTML_DIR'] = $Campsite['WWW_DIR'].'/'.$Campsite['DATABASE_NAME'].'/html';
 $Campsite['CGI_DIR'] = $Campsite['WWW_DIR'].'/'.$Campsite['DATABASE_NAME'].'/cgi-bin';
+$Campsite['PEAR_LOCAL'] = $Campsite['WWW_COMMON_DIR']."/html/include/pear";
+
+set_include_path($Campsite['PEAR_LOCAL'].PATH_SEPARATOR.get_include_path());
 
 $ADMIN_DIR = "admin-files";
 $ADMIN = "admin";
