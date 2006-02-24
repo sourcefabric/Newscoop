@@ -314,7 +314,7 @@ class Section extends DatabaseObject {
 	 * @param int $p_publicationId
 	 * 		(Optional) Only return sections in this publication.
 	 *
-	 * @param int $p_issueId
+	 * @param int $p_issueNumber
 	 *		(Optional) Only return sections in this issue.
 	 *
 	 * @param int $p_languageId
@@ -325,15 +325,15 @@ class Section extends DatabaseObject {
 	 *
 	 * @return array
 	 */
-	function GetSections($p_publicationId = null, $p_issueId = null,
+	function GetSections($p_publicationId = null, $p_issueNumber = null,
 	                     $p_languageId = null, $p_sqlOptions = null)
 	{
 		$constraints = array();
 		if (!is_null($p_publicationId)) {
 			$constraints[] = array("IdPublication", $p_publicationId);
 		}
-		if (!is_null($p_issueId)) {
-			$constraints[] = array("NrIssue", $p_issueId);
+		if (!is_null($p_issueNumber)) {
+			$constraints[] = array("NrIssue", $p_issueNumber);
 		}
 		if (!is_null($p_languageId)) {
 			$constraints[] = array("IdLanguage", $p_languageId);
