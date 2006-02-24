@@ -1,4 +1,38 @@
+2.5.0 (March 1st, 2006)
+  For full details about these changes, see: 
+  http://code.campware.org/projects/campsite/query?milestone=2.5.0
+  
+  New Features
+  ------------
+  - Ability to translate topics
+  - Ability to create an article without placing it in the 
+    publication/issue/section hierarchy
+  - Ability to move an article to another section
+  - Home page now displays publication/issue/section for all articles
+  - Added the ability to subscribe to a section of a specific language,
+    instead of all languages in a section
+  - 
+  Added permissions:
+  - User may move articles
+  - User may translate articles
+  - User may attach images to articles
+  - User may attach topics to articles
+  - User may change system preferences
+  - User may use the "Find and Replace" button in the WYSIWYG
+  - User may use the "Character Map" button in the WYSIWYG
+  
+  Bugs Fixed
+  ----------
+  - #1661: Consecutive "print" statements in the template language eat
+    spaces around them
+  - #1660: Template editor eats "&nbsp;"
+  - #1493: Xinha->add image: popup too small
+  
+  
 2.4.2 (January 26, 2006)
+  For full details about these changes, see: 
+  http://code.campware.org/projects/campsite/query?milestone=2.4.2
+
   Bugs Fixed
   ----------
   - #1652: Copying an article created by someone else keeps the
@@ -18,6 +52,9 @@
 
 
 2.4.1 (January 13, 2006)
+  For full details about these changes, see: 
+  http://code.campware.org/projects/campsite/query?milestone=2.4.1
+
   Bugs Fixed
   ----------
   - #1643: Fixed installation issue when installing from scratch
@@ -35,7 +72,10 @@
     take you to editing the event
     
     
-2.4 (January 10, 2006)
+2.4.0 (January 10, 2006)
+  For full details about these changes, see: 
+  http://code.campware.org/projects/campsite/query?milestone=2.4.0
+  
   Major Features
   --------------
   - Ability to attach files to articles
@@ -119,7 +159,7 @@
 
 
 2.3.3 (October 31, 2005)
-  For full details about the changes in 2.3.3, see: 
+  For full details about these changes, see: 
   http://code.campware.org/projects/campsite/query?milestone=2.3.3
   
   Minor features:
