@@ -4,14 +4,23 @@
   
   New Features
   ------------
-  - Ability to translate topics
-  - Ability to create an article without placing it in the 
-    publication/issue/section hierarchy
-  - Ability to move an article to another section
-  - Home page now displays publication/issue/section for all articles
+  - Added ability to translate topics.
+  - Added ability to create an article without placing it in the 
+    publication/issue/section hierarchy.
+  - Added ability to move an article to another section 
+    (previously we had the ability to copy, but not move).
+  - The Home page has a new layout to accommodate more detailed 
+    information and an increasing number of views of the workflow.
+    It now displays publication/issue/section for all articles, and
+    there is a new section to show articles which have not yet been
+    placed in a publication/issue/section.
   - Added the ability to subscribe to a section of a specific language,
-    instead of all languages in a section
-  - 
+    instead of all languages in a section.
+  - Added Swedish translation.
+  - Campsite no longer tries to install PEAR libraries on the system at
+    install time, instead it will use the ones we have added to the release. 
+    This will eliminate one of our main install problems.
+    
   Added permissions:
   - User may move articles
   - User may translate articles
