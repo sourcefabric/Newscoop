@@ -89,6 +89,12 @@ if ($f_publication_id > 0) {
 	echo camp_html_breadcrumbs($crumbs);		
 }
 ?>
+<table cellpadding="1" cellspacing="0" class="action_buttons" style="padding-top: 10px;">
+<tr>
+	<td><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></td>
+	<td><a href="<?php echo camp_html_article_url($articleObj, $f_language_id, "edit.php"); ?>"><b><?php putGS("Back to Edit Article"); ?></b></a></td>
+</table>
+
 <P>
 <FORM NAME="dialog" METHOD="POST" ACTION="do_translate.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
 <INPUT TYPE="HIDDEN" NAME="f_article_code" VALUE="<?php  p($f_article_code); ?>">
@@ -119,7 +125,7 @@ if ($f_publication_id > 0) {
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Language"); ?>:</TD>
 	<TD>
-	<SELECT NAME="f_translation_language" class="input_select" alt="select" ONCHANGE="this.form.action = 'translate.php'; this.form.submit();" emsg="<?php putGS("You must choose a language"); ?>">
+	<SELECT NAME="f_translation_language" class="input_select" alt="select" <?php if ($f_publication_id > 0) { ?>ONCHANGE="this.form.action = 'translate.php'; this.form.submit();"<?php } ?> emsg="<?php putGS("You must choose a language"); ?>">
 	<option></option>
 	<?php 
 	// Show all the languages that have not yet been translated.
