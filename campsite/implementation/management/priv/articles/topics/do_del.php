@@ -26,14 +26,8 @@ if (!$articleObj->exists()) {
 	exit;		
 }
 
-$topic =& new Topic($f_topic_id, $f_language_selected);
-if (!$topic->exists()) {
-	camp_html_display_error(getGS('Topic does not exist.'));
-	exit;	
-}
-
 if (!$User->hasPermission('AttachTopicToArticle')) {
-	camp_html_display_error(getGS("You do not have the right to attach topics to articles."));
+	camp_html_display_error(getGS("You do not have the right to detach topics from articles."));
 	exit;	
 }
 ArticleTopic::RemoveTopicFromArticle($f_topic_id, $f_article_number);
