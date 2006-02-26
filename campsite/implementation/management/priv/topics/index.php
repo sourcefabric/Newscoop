@@ -131,11 +131,11 @@ if (count($topics) == 0) { ?>
 <script>
 var topic_ids = new Array;
 </script>
-<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="3" class="table_list">
 <TR class="table_list_header">
 	<TD ALIGN="LEFT" VALIGN="TOP"></TD>
 	<TD ALIGN="LEFT" VALIGN="TOP"></TD>
-	<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Language"); ?></TD>
+	<TD ALIGN="center" VALIGN="TOP" style="padding-left: 10px; padding-right: 10px;"><?php  putGS("Language"); ?></TD>
 	<TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Topic"); ?></TD>
 	<TD ALIGN="center" VALIGN="TOP"></TD>
 </TR>
@@ -153,10 +153,10 @@ foreach ($topics as $topicPath) {
 		}
 	?>
 	<TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
-		<td <?php if (!$isFirstTopic && $isFirstTranslation) { ?>style="border-top: 2px solid grey;"<?php } ?>>
+		<td <?php if (!$isFirstTopic && $isFirstTranslation) { ?>style="border-top: 2px solid #8AACCE;"<?php } ?>>
 			<a href="javascript: void(0);" onclick="HideAll(topic_ids); ShowElement('add_subtopic_<?php p($currentTopic->getTopicId()); ?>_<?php p($topicLanguageId); ?>'); return false;"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add_subtopic.png" alt="<?php putGS("Add subtopic"); ?>" title="<?php putGS("Add subtopic"); ?>" border="0"></a>
 		</td>
-		<td <?php if (!$isFirstTopic && $isFirstTranslation) { ?>style="border-top: 2px solid grey;"<?php } ?>>
+		<td <?php if (!$isFirstTopic && $isFirstTranslation) { ?>style="border-top: 2px solid #8AACCE;"<?php } ?>>
 		<?php if ($isFirstTranslation) {
 			?>
 			<a href="javascript: void(0);" onclick="HideAll(topic_ids); ShowElement('translate_topic_<?php p($currentTopic->getTopicId()); ?>');"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/localizer.png" alt="<?php putGS("Translate"); ?>" title="<?php putGS("Translate"); ?>" border="0"></a>
@@ -164,13 +164,13 @@ foreach ($topics as $topicPath) {
 		}
 		?>
 		</td>
-		<TD <?php if (!$isFirstTopic & $isFirstTranslation) { ?>style="border-top: 2px solid grey;"<?php } ?> valign="middle" align="center">
+		<TD <?php if (!$isFirstTopic & $isFirstTranslation) { ?>style="border-top: 2px solid #8AACCE;"<?php } ?> valign="middle" align="center">
 			<?php 
 			$topicLanguage =& new Language($topicLanguageId);
 			p($topicLanguage->getCode());
 			?>
 		</TD>
-		<TD <?php if (!$isFirstTopic && $isFirstTranslation) { ?>style="border-top: 2px solid grey;"<?php } ?> valign="middle" align="left" width="450px">
+		<TD <?php if (!$isFirstTopic && $isFirstTranslation) { ?>style="border-top: 2px solid #8AACCE;"<?php } ?> valign="middle" align="left" width="450px">
 			<?php 
 			$printTopic = array();
 			// pop off the last topic because we want to make it a hyperlink.
@@ -195,7 +195,7 @@ foreach ($topics as $topicPath) {
 				.htmlspecialchars($topicName)."</a>";
 			?>
 		</TD>
-		<td <?php if (!$isFirstTopic && $isFirstTranslation) { ?>style="border-top: 2px solid grey;"<?php } ?> align="center">
+		<td <?php if (!$isFirstTopic && $isFirstTranslation) { ?>style="border-top: 2px solid #8AACCE;"<?php } ?> align="center">
 			<a href="<?php p("/$ADMIN/topics/do_del.php?f_topic_delete_id=".$currentTopic->getTopicId()."&f_topic_language_id=$topicLanguageId"); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the topic $1?', htmlspecialchars($topicName)); ?>');"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" alt="<?php putGS("Delete"); ?>" title="<?php putGS("Delete"); ?>" border="0"></a>
 		</td>
 		</tr>
@@ -206,7 +206,7 @@ foreach ($topics as $topicPath) {
 	    		<FORM method="POST" action="do_add.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
 	    		<input type="hidden" name="f_topic_parent_id" value="<?php p($currentTopic->getTopicId()); ?>">
 	    		<input type="hidden" name="f_topic_language_id" value="<?php p($topicLanguageId); ?>">
-	    		<table cellpadding="0" cellspacing="0" style="border-top: 1px solid green; border-bottom: 1px solid green; background-color: #CCFFCC; padding-left: 5px; padding-right: 5px;" width="100%">
+	    		<table cellpadding="0" cellspacing="0" style="border-top: 1px solid #8FBF8F; border-bottom: 1px solid #8FBF8F; background-color: #EFFFEF; padding-left: 5px; padding-right: 5px;" width="100%">
 	    		<tr>
 	    			<td align="left">
 	    				<table cellpadding="2" cellspacing="1">
@@ -236,7 +236,7 @@ foreach ($topics as $topicPath) {
     	<td colspan="3">
     		<FORM method="POST" action="do_add.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
     		<input type="hidden" name="f_topic_id" value="<?php p($currentTopic->getTopicId()); ?>">
-    		<table cellpadding="0" cellspacing="0" style="border-top: 1px solid green; border-bottom: 1px solid green; background-color: #CCFFCC; padding-left: 5px; padding-right: 5px;" width="100%">
+    		<table cellpadding="0" cellspacing="0" style="border-top: 1px solid #CFC467; border-bottom: 1px solid #CFC467; background-color: #FFFCDF ; padding-left: 5px; padding-right: 5px;" width="100%">
     		<tr>
     			<td align="left">
     				<table cellpadding="2" cellspacing="1">
