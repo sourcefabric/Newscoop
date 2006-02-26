@@ -61,6 +61,7 @@ class Topic extends DatabaseObject {
 			if (isset($p_columns['LanguageId']) && isset($p_columns['Name'])) {
 				$this->m_names[$p_columns['LanguageId']] = $p_columns['Name'];
 			}
+			$this->m_exists = true;
 		} else {
 			$columnNames = implode(",", $this->m_columnNames);
 			$queryStr = "SELECT $columnNames FROM ".$this->m_dbTableName
@@ -74,6 +75,7 @@ class Topic extends DatabaseObject {
 				foreach ($rows as $row) {
 					$this->m_names[$row['LanguageId']] = $row['Name'];
 				}
+				$this->m_exists = true;
 			}
 		}
 	} // fn fetch
@@ -101,6 +103,7 @@ class Topic extends DatabaseObject {
 		}
 		$success = parent::create($p_values);
 		if ($success) {
+			$this->m_exists = true;
 			if (function_exists("camp_load_language")) { camp_load_language("api");	}
 			$logtext = getGS('Topic $1 added', $this->m_data['Name']." (".$this->m_data['Id'].")");
 			Log::Message($logtext, null, 141);			
@@ -128,6 +131,7 @@ class Topic extends DatabaseObject {
 			$deleted = $Campsite['db']->Execute($sql);			
 		}
 		if ($deleted) {
+			$this->m_exists = false;
 			if (function_exists("camp_load_language")) { camp_load_language("api");	}
 			if (is_null($p_languageId)) {
 				$name = implode(",", $this->m_names);

@@ -44,7 +44,8 @@ $articleImages = ArticleImage::GetImagesByArticleNumber($f_article_number);
 $lockUserObj =& new User($articleObj->getLockedByUser());
 $articleCreator =& new User($articleObj->getCreatorId());
 $articleEvents = ArticlePublish::GetArticleEvents($f_article_number, $f_language_selected, true);
-$articleTopics = ArticleTopic::GetArticleTopics($f_article_number, $f_language_selected);
+$articleTopics = ArticleTopic::GetArticleTopics($f_article_number);
+
 $articleFiles = ArticleAttachment::GetAttachmentsByArticleNumber($f_article_number, $f_language_selected);
 $articleLanguages = $articleObj->getLanguages();
 
@@ -823,16 +824,29 @@ if ($f_edit_mode == "edit") { ?>
 							foreach ($path as $element) {
 								$name = $element->getName($f_language_selected);
 								if (empty($name)) {
-									$name = "-----";
+									// For backwards compatibility - 
+									// get the english translation if the translation
+									// doesnt exist for the article's language.
+									$name = $element->getName(1);
+									if (empty($name)) {
+										$name = "-----";
+									}
 								}
 								$pathStr .= " / ". $name;
+							}
+							
+							// Get the topic name for the 'detach topic' dialog box, below.
+							$tmpTopicName = $tmpArticleTopic->getName($f_language_selected);
+							// For backwards compatibility.
+							if (empty($tmpTopicName)) {
+								$tmpTopicName = $tmpArticleTopic->getName(1);
 							}
 							?>
 							<?php p(wordwrap($pathStr, 25, "<br>&nbsp;&nbsp;", true)); ?>
 						</td>
 						<?php if (($f_edit_mode == "edit") && $User->hasPermission('AttachTopicToArticle')) { ?>
 						<td>
-							<a href="<?php p($detachUrl); ?>" onclick="return confirm('<?php putGS("Are you sure you want to remove the topic \\'$1\\' from the article?", camp_javascriptspecialchars($tmpArticleTopic->getName($f_language_selected))); ?>');"><img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/unlink.png" border="0"></a>
+							<a href="<?php p($detachUrl); ?>" onclick="return confirm('<?php putGS("Are you sure you want to remove the topic \\'$1\\' from the article?", camp_javascriptspecialchars($tmpTopicName)); ?>');"><img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/unlink.png" border="0"></a>
 						</td>
 						<?php } ?>
 					</tr>

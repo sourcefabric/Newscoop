@@ -116,27 +116,23 @@ class ArticleTopic extends DatabaseObject {
 	 * @param int $p_articleNumber
 	 *		Retrieve the topics for this article.
 	 *
-	 * @param int $p_numTopics
-	 *		The max number of topics to return.
-	 *
-	 * @param int $p_start
-	 * 		Start listing the topics from this index.
-	 *
 	 * @return array
 	 */
-	function GetArticleTopics($p_articleNumber, $p_languageId = null, $p_sqlOptions = null) 
+	function GetArticleTopics($p_articleNumber) 
 	{
-		$tmpTopic =& new Topic();
-		$columnNames = implode(',', $tmpTopic->getColumnNames(true));
-    	$queryStr = "SELECT $columnNames FROM ArticleTopics, Topics "
+		global $Campsite;
+    	$queryStr = "SELECT DISTINCT(Topics.Id) FROM ArticleTopics, Topics "
     				." WHERE ArticleTopics.NrArticle = $p_articleNumber"
-    				.' AND ArticleTopics.TopicId = Topics.Id ';
-    	if (!is_null($p_languageId)) {
-    		$queryStr .= " AND Topics.LanguageId=$p_languageId";
-    	}
-		$queryStr .= ' ORDER BY Topics.Name ';
-    	$queryStr = DatabaseObject::ProcessOptions($queryStr, $p_sqlOptions);
-    	return DbObjectArray::Create('Topic', $queryStr);
+    				.' AND ArticleTopics.TopicId = Topics.Id '
+					.' ORDER BY Topics.Id ';
+		$topics = array();
+		$rows = $Campsite['db']->GetAll($queryStr);
+		if ($rows && is_array($rows)) {
+			foreach ($rows as $row) {
+				$topics[] =& new Topic($row['Id']);
+			}
+		}
+		return $topics;
 	} // fn GetArticleTopics
 	
 	
@@ -145,7 +141,7 @@ class ArticleTopic extends DatabaseObject {
 	 * @param int $p_topicId
 	 * @return array
 	 */
-	function GetArticlesWithTopic($p_topicId, $p_languageId = null, $p_sqlOptions = null)
+	function GetArticlesWithTopic($p_topicId)
 	{
 		$tmpArticle =& new Article();
 		$columnNames = implode(',', $tmpArticle->getColumnNames(true));
@@ -153,10 +149,6 @@ class ArticleTopic extends DatabaseObject {
 		$queryStr = "SELECT $columnNames FROM ArticleTopics, Articles"
 					." WHERE ArticleTopics.TopicId=$p_topicId"
 					." AND ArticleTopics.NrArticle=Articles.Number";
-    	if (!is_null($p_languageId)) {
-    		$queryStr .= " AND Topics.LanguageId=$p_languageId";
-    	}
-    	$queryStr = DatabaseObject::ProcessOptions($queryStr, $p_sqlOptions);
     	return DbObjectArray::Create('Article', $queryStr);		
 	} // fn GetArticlesWithTopic
 	

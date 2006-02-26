@@ -32,11 +32,10 @@ if (!is_null($f_topic_ids)) {
 	}
 	
 	foreach ($f_topic_ids as $topicIdString) {
-		list($topicId, $languageId) = split("_", $topicIdString);
 		// Verify topic exists
-		$tmpTopic =& new Topic($topicId, $languageId);
+		$tmpTopic =& new Topic($topicIdString);
 		if ($tmpTopic->exists()) {
-			ArticleTopic::AddTopicToArticle($topicId, $f_article_number);	
+			ArticleTopic::AddTopicToArticle($topicIdString, $f_article_number);	
 		}
 	}
 }
