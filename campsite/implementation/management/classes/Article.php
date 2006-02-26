@@ -1309,6 +1309,38 @@ class Article extends DatabaseObject {
 		return array($articles, $totalArticles);
 	} // fn GetSubmittedArticles
 	
+
+	/**
+	 * Get the articles that have no publication/issue/section.
+	 *
+	 * @param int $p_start
+	 * @param int $p_maxRows
+	 */
+	function GetUnplacedArticles($p_start = 0, $p_maxRows = 20) 
+	{
+		global $Campsite;
+		$tmpArticle =& new Article();
+		$columnNames = $tmpArticle->getColumnNames(true);
+		$queryStr = 'SELECT '.implode(", ", $columnNames)
+					.' FROM Articles '
+	    			." WHERE IdPublication=0 AND NrIssue=0 AND NrSection=0 "
+	    			.' ORDER BY Number DESC, IdLanguage '
+	    			." LIMIT $p_start, $p_maxRows";
+		$query = $Campsite['db']->Execute($queryStr);
+		$articles = array();
+		while ($row = $query->FetchRow()) {
+			$tmpArticle =& new Article();
+			$tmpArticle->fetch($row);
+			$articles[] = $tmpArticle;
+		}
+		$queryStr = 'SELECT COUNT(*) FROM Articles'
+	    			." WHERE IdPublication=0 AND NrIssue=0 AND NrSection=0 "
+	    			.' ORDER BY Number DESC, IdLanguage ';
+	    $totalArticles = $Campsite['db']->GetOne($queryStr);
+	    
+		return array($articles, $totalArticles);		
+	} // fn GetUnplacedArticles
+	
 	
 	/**
 	 * Get the list of all languages that articles have been written in.
