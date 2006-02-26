@@ -30,16 +30,14 @@ function LanguageMenu($p_languageMetadata, $p_selectedValue)
 function translationForm($p_request) 
 {
     global $g_localizerConfig;
-	$localizerTargetLanguage = Input::Get('localizer_target_language', 'string', 
-	                                      $g_localizerConfig['DEFAULT_LANGUAGE'], true);
-	$localizerSourceLanguage = Input::Get('localizer_source_language', 'string', 
-	                                      '', true);
+	$localizerTargetLanguage = camp_session_get('localizer_target_language', $g_localizerConfig['DEFAULT_LANGUAGE']);
+	$localizerSourceLanguage = camp_session_get('localizer_source_language', '');
 	if (empty($localizerSourceLanguage)) {
 		$tmpLanguage =& new LocalizerLanguage(null, $p_request['TOL_Language']);
 		$localizerSourceLanguage = $tmpLanguage->getLanguageId();
 	}
 	
-	$prefix = Input::Get('prefix', 'string', '', true);
+	$prefix = camp_session_get('prefix', '');
 	$screenDropDownSelection = $prefix;
 	
 	// Load the language files.
@@ -75,7 +73,7 @@ function translationForm($p_request)
 	
     
     $defaultStrings = $defaultLang->getTranslationTable();
-    $searchString = Input::Get('search_string', 'string', '', true);
+    $searchString = camp_session_get('search_string', '');
     if (!empty($searchString)) {
     	$sourceStrings = $sourceLang->search($searchString);
     }
