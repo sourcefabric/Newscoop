@@ -78,6 +78,11 @@ $allLanguages = Language::GetLanguages();
 $articleLanguages = $articleObj->getLanguages();
 $articleLanguages = DbObjectArray::GetColumn($articleLanguages, "Id");
 
+if ( ($f_language_selected > 0) && ($f_issue_number > 0) ) {
+	$translationIssueObj =& new Issue($f_publication_id, $f_language_selected, $f_issue_number);
+	$translationSectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_selected, $f_section_number);
+}
+
 if ($f_publication_id > 0) {
 	$topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
 					  'Section' => $sectionObj, 'Article'=>$articleObj);
@@ -146,9 +151,16 @@ if ($f_publication_id > 0) {
 <?php
 	$canCreate = true;
 	if ( ($f_language_selected > 0) && ($f_issue_number > 0) ) {
-		$translationIssueObj =& new Issue($f_publication_id, $f_language_selected, $f_issue_number);
+		// Every article must live inside a cooresponding issue of the same language.
 		if (!$translationIssueObj->exists()) {
+			
 			if ($User->hasPermission("ManageIssue")) {
+				
+				// If a section needs to be translated, but the user doesnt have the permission
+				// to create a section, then we dont want to display anything here.  Even 
+				// if they can create the issue, they still need to create a cooresponding section.
+				// If they dont have the permission to do that, then no use in creating the issue.
+				if ($translationSectionObj->exists() || $User->hasPermission("ManageSection")) {
 ?>
 <TR>
 	<TD colspan="2" align="left" style="padding-left: 40px; padding-right: 40px; padding-top: 20px;"><strong><?php putGS("An issue must be created for the selected language.  Please enter the issue name and URL name."); ?></strong></TD>
@@ -166,18 +178,25 @@ if ($f_publication_id > 0) {
 	</TD>
 </TR>
 <?php
+				}
 			} else {
 				$canCreate = false;
 ?>
 <TR>
-	<TD colspan="2" align="left" class="error_message" style="padding-left: 40px; padding-right: 40px; padding-top: 20px;"><?php putGS('An issue must be created for the selected language but you do not have the right to create an issue.'); ?></TD>
+	<TD colspan="2" align="left" class="error_message" style="padding-left: 40px; padding-right: 40px; padding-top: 20px; padding-bottom: 20px;"><?php putGS('An issue must be created for the selected language but you do not have the right to create an issue.'); ?></TD>
 </TR>
 <?php
 			}
 		}
-		$translationSectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_selected, $f_section_number);
+		
 		if (!$translationSectionObj->exists()) {
+
 			if ($User->hasPermission("ManageSection")) {
+
+				// If an issue needs to be translated, but the user doesnt have the permission
+				// to create an issue, then we dont want to display anything here.  Even 
+				// if they can create the section, they still need to create a cooresponding issue.
+				if ($translationIssueObj->exists() || $User->hasPermission("ManageIssue")) {
 ?>
 <TR>
 	<TD colspan="2" align="left" style="padding-left: 40px; padding-right: 40px; padding-top: 20px;"><strong><?php putGS("A section must be created for the selected language.  Please enter the section name and URL name."); ?></strong></TD>
@@ -195,11 +214,12 @@ if ($f_publication_id > 0) {
 	</TD>
 </TR>
 <?php
+				}
 			} else {
 				$canCreate = false;
 ?>
 <TR>
-	<TD colspan="2" align="left" class="error_message" style="padding-left: 40px; padding-right: 40px; padding-top: 20px;"><?php putGS('A section must be created for the selected language but you do not have the right to create a section.'); ?></TD>
+	<TD colspan="2" align="left" class="error_message" style="padding-left: 40px; padding-right: 40px; padding-top: 20px; padding-bottom: 20px;"><?php putGS('A section must be created for the selected language but you do not have the right to create a section.'); ?></TD>
 </TR>
 <?php
 			}
