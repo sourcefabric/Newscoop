@@ -81,14 +81,12 @@ if ($publication_id > 0) {
 
 // Create article
 $articleObj =& new Article($f_article_language);
-$articleObj->create($f_article_type, $f_article_name);
+if (($publication_id > 0) && ($issue_number > 0) && ($section_number > 0)) {
+	$articleObj->create($f_article_type, $f_article_name, $publication_id, $issue_number, $section_number);
+} else {
+	$articleObj->create($f_article_type, $f_article_name);
+}
 if ($articleObj->exists()) {
-	if (($publication_id > 0) && ($issue_number > 0) && ($section_number > 0)) {
-		$articleObj->setPublicationId($publication_id);
-		$articleObj->setIssueNumber($issue_number);
-		$articleObj->setSectionNumber($section_number);
-	} 
-	
 	$articleObj->setUserId($User->getUserId());
 	$articleObj->setIsPublic(true);
 	

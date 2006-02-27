@@ -117,9 +117,12 @@ class Article extends DatabaseObject {
 	 *
 	 * @param string $p_articleType
 	 * @param string $p_name
+	 * @param int $p_publicationId
+	 * @param int $p_issueNumber
+	 * @param int $p_sectionNumber
 	 * @return void
 	 */
-	function create($p_articleType, $p_name = null) 
+	function create($p_articleType, $p_name = null, $p_publicationId = null, $p_issueNumber = null, $p_sectionNumber = null) 
 	{
 		global $Campsite;
 		
@@ -131,6 +134,11 @@ class Article extends DatabaseObject {
 		if (!is_null($p_name)) {
 			$values['Name'] = $p_name;
 		}
+		if (is_numeric($p_publicationId) && is_numeric($p_issueNumber) && is_numeric($p_sectionNumber)) {
+			$values['IdPublication'] = $p_publicationId;
+			$values['NrIssue'] = $p_issueNumber;
+			$values['NrSection'] = $p_sectionNumber;
+		}
 		$values['ShortName'] = $this->m_data['Number'];
 		$values['Type'] = $p_articleType;
 		$values['Public'] = 'Y';
@@ -140,8 +148,9 @@ class Article extends DatabaseObject {
 		          . $this->m_data['IdPublication'] . ' AND NrIssue = ' . $this->m_data['NrIssue']
 		          . ' and NrSection = ' . $this->m_data['NrSection'];
 		$articleOrder = $Campsite['db']->GetOne($queryStr) - 1;
-		if ($articleOrder < 0)
+		if ($articleOrder < 0) {
 			$articleOrder = $this->m_data['Number'];
+		}
 		if ($articleOrder == 0) {
 			$queryStr = 'UPDATE Articles SET ArticleOrder = ArticleOrder + 1 WHERE IdPublication = '
 			          . $this->m_data['IdPublication'] . ' AND NrIssue = ' . $this->m_data['NrIssue']
