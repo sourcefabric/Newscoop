@@ -993,27 +993,6 @@ return 0
 }
 # END OF check4_killall
 
-# FUNCTION: check4_pear
-# Description: check if pear is installed
-# Parameters: none
-# Variables set:
-#	PEAR - pear full path
-#	PEAR_DIR - pear directory
-#	output - error message (if any)
-check4_pear()
-{
-is_checked pear && return 0
-check4_file pear --executable --path "/usr/local/bin:/bin:/usr/bin:/opt/bin"
-result=$? && [ $result -ne 0 ] && return 1
-pear_dir=`pear config-get php_dir | cut -f 2 -d "="`
-result=$? && [ $result -ne 0 ] && echo "$pear_dir" && return 1
-export PEAR=$file_path
-export PEAR_DIR=$pear_dir
-set_checked pear
-return 0
-}
-# END OF check4_pear
-
 # FUNCTION: check4_php_cli
 # Description: check if php cli (command line interface) is installed
 # Parameters: none

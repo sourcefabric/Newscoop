@@ -160,7 +160,7 @@ CGI_COMMON_DIR=$WWW_COMMON_DIR/cgi-bin
 
 if [ "$c_define_start_env" != "--define_start_env" ]; then
 
-for m in ls gcc gpp pear curl; do
+for m in ls gcc gpp curl; do
     check4_$m
     [ $? -ne 0 ] && echo $output && exit 1
 done
@@ -241,7 +241,6 @@ export XML_LINK="$XML_LINK"
 export CURL_CFLAGS="$CURL_CFLAGS"
 export CURL_LINK="$CURL_LINK"
 export PHP=$PHP
-export PEAR=$PEAR
 EOF
 [ $? -ne 0 ] && echo "ERROR" && exit 1
 [ "$GPP" != "" ] && echo "export GPP=$GPP" >> $make_env
