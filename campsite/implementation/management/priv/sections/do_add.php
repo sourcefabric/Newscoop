@@ -16,9 +16,9 @@ $Pub = Input::Get('Pub', 'int', 0);
 $Issue = Input::Get('Issue', 'int', 0);
 $Language = Input::Get('Language', 'int', 0);
 $cName = trim(Input::Get('cName', 'string', '', true));
-$cNumber = trim(Input::Get('cNumber', 'int'));
+$cNumber = trim(Input::Get('cNumber', 'int', 0, true));
 $cSubs = Input::Get('cSubs', 'string', '', true);
-$cShortName = trim(Input::Get('cShortName', 'string'));
+$cShortName = trim(Input::Get('cShortName', 'string', '', true));
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
@@ -46,7 +46,7 @@ if ($cName == "") {
 	$correct = false; 
 	$errors[] = getGS('You must complete the $1 field.', '"'.getGS('Name').'"'); 
 }
-if ($cNumber == "") {
+if ($cNumber == 0) {
 	$correct= false;
 	$cNumber = ($cNumber + 0); 
 	$errors[] = getGS('You must complete the $1 field.','"'.getGS('Number').'"'); 
