@@ -22,7 +22,7 @@ if (!Input::IsValid()) {
 }
 $publicationObj =& new Publication($Pub);
 $issueObj =& new Issue($Pub, $Language, $Issue);
-$newSectionNumber = Section::GetUnusedSectionId($Pub, $Issue, $Language);
+$newSectionNumber = Section::GetUnusedSectionNumber($Pub, $Issue, $Language);
 
 ## added by sebastian
 if (function_exists ("incModFile")) {
@@ -30,12 +30,12 @@ if (function_exists ("incModFile")) {
 }
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj);
-camp_html_content_top(getGS('Add new section'), $topArray, true, false, array(getGS("Sections") => "/$ADMIN/sections/?Pub=$Pub&Issue=$Issue&Language=$Language"));
+camp_html_content_top(getGS('Add new section'), $topArray, true, true, array(getGS("Sections") => "/$ADMIN/sections/?Pub=$Pub&Issue=$Issue&Language=$Language"));
 
 ?>
 <P>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
-<FORM NAME="dialog" METHOD="POST" ACTION="do_add.php" >
+<FORM NAME="dialog" METHOD="POST" ACTION="do_add.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
 <TR>
 	<TD COLSPAN="2">
 		<B><?php  putGS("Add new section"); ?></B>
@@ -45,19 +45,19 @@ camp_html_content_top(getGS('Add new section'), $topArray, true, false, array(ge
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cName" SIZE="32" MAXLENGTH="64">
+	<INPUT TYPE="TEXT" class="input_text" NAME="cName" SIZE="32" MAXLENGTH="64" alt="blank" emsg="<?php putGS('You must complete the $1 field.', "'".getGS('Name')."'"); ?>">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Number"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cNumber" VALUE="<?php  p($newSectionNumber); ?>" SIZE="5" MAXLENGTH="5">
+	<INPUT TYPE="TEXT" class="input_text" NAME="cNumber" VALUE="<?php  p($newSectionNumber); ?>" SIZE="5" MAXLENGTH="5" alt="number|0" emsg="<?php putGS('You must complete the $1 field.',"'".getGS('Number')."'"); ?>">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("URL Name"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cShortName" SIZE="32" MAXLENGTH="32" VALUE="<?php  p($newSectionNumber); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="cShortName" SIZE="32" MAXLENGTH="32" VALUE="<?php  p($newSectionNumber); ?>" alt="blank" emsg="<?php putGS('You must complete the $1 field.',"'".getGS('URL Name')."'"); ?>">
 	</TD>
 </TR>
 <TR>
@@ -74,7 +74,6 @@ camp_html_content_top(getGS('Add new section'), $topArray, true, false, array(ge
 	<INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<?php  p($Issue); ?>">
 	<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php  p($Language); ?>">
 	<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
-	<!--<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/sections/?Pub=<?php  p($Pub); ?>&Issue=<?php  p($Issue); ?>&Language=<?php  p($Language); ?>'">-->
 	</DIV>
 	</TD>
 </TR>
