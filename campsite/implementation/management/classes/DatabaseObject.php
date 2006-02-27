@@ -365,7 +365,7 @@ class DatabaseObject {
 			}
 		}
 
-		$queryStr .= '(' . implode(',', array_keys($columns)) . ')';
+		$queryStr .= '(`' . implode('`,`', array_keys($columns)) . '`)';
 		$queryStr .= ' VALUES ('.implode(',', array_values($columns)) .')';
 
 		// Create the row.
@@ -597,7 +597,7 @@ class DatabaseObject {
 	        			$this->m_oldKeyValues[$columnName] = $this->m_data[$columnName];
 	        		}
 	        	}
-	        	$setColumns[] = $columnName . "='". mysql_real_escape_string($columnValue) ."'";
+	        	$setColumns[] = "`".$columnName . "`='". mysql_real_escape_string($columnValue) ."'";
 	        	if (!$p_isSql) {
 	        		$this->m_data[$columnName] = $columnValue;
 	        	}
@@ -641,7 +641,7 @@ class DatabaseObject {
         $setColumns = array();
         foreach ($this->m_data as $columnName => $columnValue) {
         	if (is_null($p_ignoreColumns) || !in_array($columnName, $p_ignoreColumns)) {
-        		$setColumns[] = $columnName . "='". mysql_real_escape_string($columnValue) ."'";
+        		$setColumns[] = "`".$columnName . "`='". mysql_real_escape_string($columnValue) ."'";
         	}
         }
         $databaseChanged = false;
@@ -682,7 +682,7 @@ class DatabaseObject {
 			foreach ($p_columns as $item) {
 				if (count($item) == 2) {
 					list($columnName, $value) = $item;
-					$contraints[] = "$columnName='$value'";
+					$contraints[] = "`$columnName`='$value'";
 				}
 			}
 			$queryStr .= " WHERE ".implode(" AND ", $contraints);
