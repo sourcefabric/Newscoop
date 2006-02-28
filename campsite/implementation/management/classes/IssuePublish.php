@@ -198,6 +198,17 @@ class IssuePublish extends DatabaseObject {
 	
 	
 	/**
+	 * Return true if the action has been carried out.
+	 *
+	 * @return boolean
+	 */
+	function isCompleted()
+	{
+		return ($this->m_data['is_completed'] == 'Y');
+	} // fn isCompleted
+	
+	
+	/**
 	 * Mark that this action has been completed.
 	 * @return void
 	 */
@@ -240,16 +251,20 @@ class IssuePublish extends DatabaseObject {
 	 * @param int $p_publicationId
 	 * @param int $p_issueId
 	 * @param int $p_language
+	 * @param boolean $p_includeCompleted
 	 * @return array
 	 */
-	function GetIssueEvents($p_publicationId, $p_issueId, $p_languageId = null) 
+	function GetIssueEvents($p_publicationId, $p_issueId, $p_languageId = null, $p_includeCompleted = true) 
 	{
 		global $Campsite;
 		$queryStr = "SELECT * FROM IssuePublish "
 					." WHERE fk_publication_id = $p_publicationId "
 					." AND fk_issue_id = $p_issueId "
-					." AND fk_language_id = $p_languageId "
-					." ORDER BY time_action ASC";
+					." AND fk_language_id = $p_languageId ";
+		if (!$p_includeCompleted) {
+			$queryStr .= " AND is_completed = 'N'";
+		}
+		$queryStr .= " ORDER BY time_action ASC";
 		$result = DbObjectArray::Create('IssuePublish', $queryStr);
 		return $result;
 	} // fn GetIssueEvents
