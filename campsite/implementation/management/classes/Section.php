@@ -41,16 +41,16 @@ class Section extends DatabaseObject {
 	/**
 	 * A section is a part of an issue.
 	 * @param int $p_publicationId
-	 * @param int $p_issueId
+	 * @param int $p_issueNumber
 	 * @param int $p_languageId
 	 * @param int $p_sectionNumber
 	 */
-	function Section($p_publicationId = null, $p_issueId = null,
+	function Section($p_publicationId = null, $p_issueNumber = null,
 	                 $p_languageId = null, $p_sectionNumber = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
 		$this->m_data['IdPublication'] = $p_publicationId;
-		$this->m_data['NrIssue'] = $p_issueId;
+		$this->m_data['NrIssue'] = $p_issueNumber;
 		$this->m_data['IdLanguage'] = $p_languageId;
 		$this->m_data['Number'] = $p_sectionNumber;
 		if ($this->keyValuesExist()) {
@@ -89,12 +89,12 @@ class Section extends DatabaseObject {
 	 *
 	 * @param int $p_destPublicationId
 	 *     The destination publication ID.
-	 * @param int $p_destIssueId
+	 * @param int $p_destIssueNumber
 	 *     The destination issue ID.
 	 * @param int $p_destIssueLanguageId
 	 *     (optional) The destination issue language ID.  If not given,
 	 *     it will use the language ID of this section.
-	 * @param int $p_destSectionId
+	 * @param int $p_destSectionNumber
 	 *     (optional) The destination section ID.  If not given, a new
 	 *     section will be created.
 	 * @param boolean $p_copyArticles
@@ -103,21 +103,21 @@ class Section extends DatabaseObject {
 	 * @return Section
 	 *     The new Section object.
 	 */
-	function copy($p_destPublicationId, $p_destIssueId, $p_destIssueLanguageId = null,
-	              $p_destSectionId = null, $p_copyArticles = true) {
+	function copy($p_destPublicationId, $p_destIssueNumber, $p_destIssueLanguageId = null,
+	              $p_destSectionNumber = null, $p_copyArticles = true) {
     	if (is_null($p_destIssueLanguageId)) {
     	   $p_destIssueLanguageId = $this->m_data['IdLanguage'];
     	}
-    	if (is_null($p_destSectionId)) {
-    	    $p_destSectionId = $this->m_data['Number'];
+    	if (is_null($p_destSectionNumber)) {
+    	    $p_destSectionNumber = $this->m_data['Number'];
     	}
-    	$dstSectionObj =& new Section($p_destPublicationId, $p_destIssueId,
-    	                              $p_destIssueLanguageId, $p_destSectionId);
+    	$dstSectionObj =& new Section($p_destPublicationId, $p_destIssueNumber,
+    	                              $p_destIssueLanguageId, $p_destSectionNumber);
     	// If source issue and destination issue are the same
     	if ( ($this->m_data['IdPublication'] == $p_destPublicationId)
-    	      && ($this->m_data['NrIssue'] == $p_destIssueId)
+    	      && ($this->m_data['NrIssue'] == $p_destIssueNumber)
     	      && ($this->m_data['IdLanguage'] == $p_destIssueLanguageId) ) {
-    		$shortName = $p_destSectionId;
+    		$shortName = $p_destSectionNumber;
     		$sectionName = $this->getName() . " (duplicate)";
     	} else {
     		$shortName = $this->getUrlName();
@@ -141,7 +141,7 @@ class Section extends DatabaseObject {
         	foreach ($srcSectionArticles as $articleObj) {
         	    if (!in_array($articleObj->getArticleNumber(), $copiedArticles)) {
             		$tmpCopiedArticles = $articleObj->copy($p_destPublicationId,
-                        $p_destIssueId, $p_destSectionId, null, true);
+                        $p_destIssueNumber, $p_destSectionNumber, null, true);
                     $copiedArticles[] = $articleObj->getArticleNumber();
         	    }
         	}
@@ -364,11 +364,11 @@ class Section extends DatabaseObject {
 	/**
 	 * Return the total number of sections according to the given values.
 	 * @param int $p_publicationId
-	 * @param int $p_issueId
+	 * @param int $p_issueNumber
 	 * @param int $p_languageId
 	 * @return int
 	 */
-	function GetTotalSections($p_publicationId = null, $p_issueId = null, $p_languageId = null)
+	function GetTotalSections($p_publicationId = null, $p_issueNumber = null, $p_languageId = null)
 	{
 		global $Campsite;
 		$queryStr = 'SELECT COUNT(*) FROM Sections';
@@ -376,8 +376,8 @@ class Section extends DatabaseObject {
 		if (!is_null($p_publicationId)) {
 			$whereClause[] = "IdPublication=$p_publicationId";
 		}
-		if (!is_null($p_issueId)) {
-			$whereClause[] = "NrIssue=$p_issueId";
+		if (!is_null($p_issueNumber)) {
+			$whereClause[] = "NrIssue=$p_issueNumber";
 		}
 		if (!is_null($p_languageId)) {
 			$whereClause[] = "IdLanguage=$p_languageId";
@@ -406,22 +406,22 @@ class Section extends DatabaseObject {
 	/**
 	 * Return a section number that is not in use.
 	 * @param int $p_publicationId
-	 * @param int $p_issueId
+	 * @param int $p_issueNumber
 	 * @param int $p_languageId
 	 * @return int
 	 */
-	function GetUnusedSectionId($p_publicationId, $p_issueId, $p_languageId)
+	function GetUnusedSectionNumber($p_publicationId, $p_issueNumber, $p_languageId)
 	{
 		global $Campsite;
 		$queryStr = "SELECT MAX(Number) + 1 FROM Sections "
 					." WHERE IdPublication=$p_publicationId "
-					." AND NrIssue=$p_issueId AND IdLanguage=$p_languageId";
+					." AND NrIssue=$p_issueNumber AND IdLanguage=$p_languageId";
 		$number = 0 + $Campsite['db']->GetOne($queryStr);
 		if ($number <= 0) {
 			$number++;
 		}
 		return $number;
-	} // fn GetUnusedSectionId
+	} // fn GetUnusedSectionNumber
 
 } // class Section
 ?>
