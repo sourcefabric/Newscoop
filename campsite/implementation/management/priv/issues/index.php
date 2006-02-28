@@ -66,26 +66,26 @@ if (count($allIssues) > 0) {
 
 	<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list">
 	<TR class="table_list_header">
+		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php putGS("Number"); ?></B></TD>
+		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php putGS("Name<BR><SMALL>(click to see sections)</SMALL>"); ?></B></TD>
+		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php putGS("URL Name"); ?></B></TD>
+		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php putGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>"); ?></B></TD>
+		
 		<?php  if ($User->hasPermission('ManageIssue')) { ?>
-		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Number"); ?></B></TD>
-		<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("Name<BR><SMALL>(click to see sections)</SMALL>"); ?></B></TD>
-		<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("URL Name"); ?></B></TD>
-		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>"); ?></B></TD>
-		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Configure"); ?></B></TD> 
-			<?php if ($User->hasPermission('Publish')) { ?>
+		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php putGS("Configure"); ?></B></TD> 
+		<?php } ?>
+		
+		<?php if ($User->hasPermission('Publish')) { ?>
 		<TD ALIGN="center" VALIGN="TOP"><B><?php echo str_replace(' ', '<br>', getGS("Scheduled Publishing")); ?></B></TD>
-			<?php } ?>
-		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Translate"); ?></B></TD>
-		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Preview"); ?></B></TD>
-		<?php  } else { ?>
-		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Number"); ?></B></TD>
-		<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("Name<BR><SMALL>(click to see sections)</SMALL>"); ?></B></TD>
-		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>"); ?></B></TD>
-		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Preview"); ?></B></TD>
-		<?php }
+		<?php } ?>
+		
+		<?php  if ($User->hasPermission('ManageIssue')) { ?>
+		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php putGS("Translate"); ?></B></TD>
+		<?php } ?>
+		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php putGS("Preview"); ?></B></TD>
 	
-		if ($User->hasPermission('DeleteIssue')) { ?>
-		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Delete"); ?></B></TD>
+		<?php if ($User->hasPermission('DeleteIssue')) { ?>
+		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php putGS("Delete"); ?></B></TD>
 		<?php  } ?>
 	</TR>
 
@@ -96,7 +96,6 @@ foreach ($allIssues as $issue) {
 	?>	
 	<TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 	
-	<?php  if ($User->hasPermission('ManageIssue')) { ?>
 	<TD ALIGN="RIGHT">
 		<?php p($issue->getIssueNumber()); ?>
  	</TD>
@@ -110,40 +109,42 @@ foreach ($allIssues as $issue) {
 	</TD>
 	
 	<TD ALIGN="CENTER">
-		<A HREF="/<?php echo $ADMIN; ?>/issues/status.php?Pub=<?php p($Pub); ?>&Issue=<?php  p($issue->getIssueNumber()); ?>&Language=<?php p($issue->getLanguageId()); ?>"><?php  if ($issue->getPublished() == 'Y') { p(htmlspecialchars($issue->getPublicationDate())); } else { print putGS("Publish"); } ?></A>
+		<?php if ($User->hasPermission('ManageIssue')) { ?>
+		<A HREF="/<?php echo $ADMIN; ?>/issues/status.php?Pub=<?php p($Pub); ?>&Issue=<?php  p($issue->getIssueNumber()); ?>&Language=<?php p($issue->getLanguageId()); ?>">
+		<?php  
+		}
+		if ($issue->getPublished() == 'Y') { 
+			p(htmlspecialchars($issue->getPublicationDate())); 
+		} else { 
+			if ($User->hasPermission('ManageIssue')) {
+				print putGS("Publish"); 
+			} else {
+				print putGS("No"); 
+			}
+		} ?>
+		<?php if ($User->hasPermission('ManageIssue')) { ?>
+		</A>
+		<?php } ?>
 	</TD>
+	
+	<?php  if ($User->hasPermission('ManageIssue')) { ?>
 	<TD ALIGN="CENTER">
 		<A HREF="/<?php echo $ADMIN; ?>/issues/edit.php?Pub=<?php p($Pub); ?>&Issue=<?php  p($issue->getIssueNumber()); ?>&Language=<?php p($issue->getLanguageId()); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/configure.png" alt="<?php  putGS("Configure"); ?>" title="<?php  putGS("Configure"); ?>"  border="0"></A>
 	</TD>
-<?php if ($User->hasPermission('Publish')) { ?>
+	<?php } ?>
+	
+	<?php if ($User->hasPermission('Publish')) { ?>
 	<TD ALIGN="CENTER">
 		<A HREF="/<?php echo $ADMIN; ?>/issues/autopublish.php?Pub=<?php p($Pub); ?>&Issue=<?php p($issue->getIssueNumber()); ?>&Language=<?php p($issue->getLanguageId()); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/<?php if ($hasPendingEvents) { ?>automatic_publishing_active.png<?php } else { ?>automatic_publishing.png<?php } ?>" alt="<?php putGS("Scheduled Publishing"); ?>"  title="<?php putGS("Scheduled Publishing"); ?>" border="0"></A>
 	</TD>
-<?php } ?>
+	<?php } ?>
+	
+	<?php  if ($User->hasPermission('ManageIssue')) { ?>
 	<TD ALIGN="CENTER">
 		<A HREF="/<?php echo $ADMIN; ?>/issues/translate.php?Pub=<?php  p($Pub); ?>&Issue=<?php  p($issue->getIssueNumber()); ?>&Language=<?php p($issue->getLanguageId()); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/translate.png" alt="<?php  putGS("Translate"); ?>" title="<?php  putGS("Translate"); ?>" border="0"></A>
 	</TD>
-<?php  } else { ?>
-	<TD ALIGN="RIGHT">
-		<?php p($issue->getIssueNumber()); ?>
-	</TD>
-	
-	<TD >
-		<A HREF="/<?php echo $ADMIN; ?>/sections/?Pub=<?php p($Pub); ?>&Issue=<?php  p($issue->getIssueNumber()); ?>&Language=<?php p($issue->getLanguageId()); ?>"><?php p(htmlspecialchars($issue->getName())); ?></A> (<?php p($issue->getLanguageName()); ?>)
-	</TD>
-	
-	<TD ALIGN="CENTER">
-		<?php 
-		if ($issue->getPublished() == 'Y') {
-			p(htmlspecialchars($issue->getPublicationDate())); 
-		}
-		else {
-			print putGS("No"); 
-		}
-		?>
-	</TD>
 	<?php  } ?>
-
+	
 	<TD ALIGN="CENTER">
 		<A HREF="" ONCLICK="window.open('/<?php echo $ADMIN; ?>/issues/preview.php?Pub=<?php  p($Pub); ?>&Issue=<?php p($issue->getIssueNumber()); ?>&Language=<?php p($issue->getLanguageId()); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=yes, width=800, height=600'); return false"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/preview.png" alt="<?php  putGS("Preview"); ?>" title="<?php  putGS("Preview"); ?>" border="0"></A>
 	</TD>
