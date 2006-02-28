@@ -51,7 +51,6 @@ if (!camp_is_valid_url_name($cShortName)) {
 	exit;
 }
 $issueObj->setProperty('Name', $cName, false);
-$issueObj->setProperty('IdLanguage', $cLang, false);
 if ($issueObj->getPublished() == 'Y') {
 	$issueObj->setProperty('PublicationDate', $cPublicationDate, false);
 }
@@ -60,6 +59,7 @@ $issueObj->setProperty('SectionTplId', $cSectionTplId, false);
 $issueObj->setProperty('ArticleTplId', $cArticleTplId, false);
 $issueObj->setProperty('ShortName', $cShortName, false);
 if ($issueObj->commit()) {
+	$issueObj->setLanguageId($cLang);
 	$logtext = getGS('Issue $1 updated in publication $2', $cName, $publicationObj->getName());
 	Log::Message($logtext, $User->getUserName(), 11);
 } else {

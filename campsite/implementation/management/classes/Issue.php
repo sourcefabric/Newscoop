@@ -209,6 +209,25 @@ class Issue extends DatabaseObject {
 
 	
 	/**
+	 * Changing an issue's language will change the section language as well.
+	 *
+	 * @param int $p_value
+	 */
+	function setLanguageId($p_value) 
+	{
+		global $Campsite;
+		$sql = "UPDATE Sections SET IdLanguage=$p_value"
+			  ." WHERE IdPublication=".$this->m_data['IdPublication']
+			  ." AND NrIssue=".$this->m_data['Number']
+			  ." AND IdLanguage=".$this->m_data['IdLanguage'];
+		$success = $Campsite['db']->Execute($sql);
+		if ($success) {
+			$this->setProperty('IdLanguage', $p_value);
+		}
+	} // fn setLanguageId
+	
+	
+	/**
 	 * A simple way to get the name of the language the article is 
 	 * written in.  The value is cached in case there are multiple
 	 * calls to this function.
