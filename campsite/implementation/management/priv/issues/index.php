@@ -1,6 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/issues/issue_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/SimplePager.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/IssuePublish.php");
 camp_load_language("api");
 
 // Check permissions
@@ -91,6 +92,7 @@ if (count($allIssues) > 0) {
 <?php 
 $currentIssue = -1;
 foreach ($allIssues as $issue) {
+	$hasPendingEvents = (count(IssuePublish::GetIssueEvents($issue->getPublicationId(), $issue->getIssueNumber(), $issue->getLanguageId(), false)) > 0);
 	?>	
 	<TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 	
@@ -115,7 +117,7 @@ foreach ($allIssues as $issue) {
 	</TD>
 <?php if ($User->hasPermission('Publish')) { ?>
 	<TD ALIGN="CENTER">
-		<A HREF="/<?php echo $ADMIN; ?>/issues/autopublish.php?Pub=<?php p($Pub); ?>&Issue=<?php p($issue->getIssueNumber()); ?>&Language=<?php p($issue->getLanguageId()); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/automatic_publishing.png" alt="<?php putGS("Scheduled Publishing"); ?>"  title="<?php putGS("Scheduled Publishing"); ?>" border="0"></A>
+		<A HREF="/<?php echo $ADMIN; ?>/issues/autopublish.php?Pub=<?php p($Pub); ?>&Issue=<?php p($issue->getIssueNumber()); ?>&Language=<?php p($issue->getLanguageId()); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/<?php if ($hasPendingEvents) { ?>automatic_publishing_active.png<?php } else { ?>automatic_publishing.png<?php } ?>" alt="<?php putGS("Scheduled Publishing"); ?>"  title="<?php putGS("Scheduled Publishing"); ?>" border="0"></A>
 	</TD>
 <?php } ?>
 	<TD ALIGN="CENTER">
