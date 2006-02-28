@@ -94,7 +94,7 @@ class Alias extends DatabaseObject {
 	{
 		$changed = $this->setProperty('Name', $p_name);
 		if ($changed) {
-			ParserCom::SendMessage('publication', 'modify',
+			ParserCom::SendMessage('publications', 'modify',
 								   array("IdPublication"=>$this->m_data['IdPublication']));
 		}
 		return $changed;
