@@ -46,7 +46,7 @@ if (!is_null($event_id)) {
 }
 $allEvents = IssuePublish::GetIssueEvents($Pub, $Issue, $Language);
 
-camp_html_content_top(getGS('Issue Publishing Schedule'), array('Pub' => $publicationObj, 'Issue' => $issueObj));
+camp_html_content_top(getGS('Issue Publishing Schedule'), array('Pub' => $publicationObj, 'Issue' => $issueObj), true, true);
 
 ?>
 <p></p>
@@ -58,7 +58,7 @@ camp_html_content_top(getGS('Issue Publishing Schedule'), array('Pub' => $public
 </TABLE>
 
 <P>
-<FORM NAME="dialog" METHOD="POST" ACTION="autopublish_do_add.php" >
+<FORM NAME="dialog" METHOD="POST" ACTION="autopublish_do_add.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input">
 <TR>
 	<TD COLSPAN="2">
@@ -79,21 +79,22 @@ camp_html_content_top(getGS('Issue Publishing Schedule'), array('Pub' => $public
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Date"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="publish_date" SIZE="11" MAXLENGTH="10" VALUE="<?php p($publish_date); ?>">
+	<?php $now = getdate(); ?>
+	<INPUT TYPE="TEXT" class="input_text" NAME="publish_date" SIZE="11" MAXLENGTH="10" VALUE="<?php p($publish_date); ?>" alt="date|yyyy/mm/dd|-|4|<?php echo $now["year"]."/".$now["mon"]."/".$now["mday"]; ?>" emsg="<?php putGS('You must complete the $1 field.',"'".getGS('Date')."'" ); ?>">
 	<?php putGS('YYYY-MM-DD'); ?>
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Time"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="publish_hour" SIZE="2" MAXLENGTH="2" VALUE="<?php p($publish_hour); ?>"> :
-	<INPUT TYPE="TEXT" class="input_text" NAME="publish_min" SIZE="2" MAXLENGTH="2" VALUE="<?php p($publish_min); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="publish_hour" SIZE="2" MAXLENGTH="2" VALUE="<?php p($publish_hour); ?>" alt="number|0|0|23" emsg="<?php putGS('You must complete the $1 field.',"'".getGS('Time')."'" ); ?>"> :
+	<INPUT TYPE="TEXT" class="input_text" NAME="publish_min" SIZE="2" MAXLENGTH="2" VALUE="<?php p($publish_min); ?>" alt="number|0|0|59" emsg="<?php putGS('You must complete the $1 field.',"'".getGS('Time')."'" ); ?>">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Action"); ?>:</TD>
 	<TD>
-	<SELECT NAME="action" class="input_select">
+	<SELECT NAME="action" class="input_select" alt="select" emsg="<?php putGS('You must select an action.'); ?>">
 		<OPTION VALUE=" ">---</OPTION>
 		<OPTION VALUE="P" <?php if ($action == "P") echo "SELECTED"; ?>><?php putGS("Publish"); ?></OPTION>
 		<OPTION VALUE="U" <?php if ($action == "U") echo "SELECTED"; ?>><?php putGS("Unpublish"); ?></OPTION>
@@ -139,8 +140,8 @@ if (count($allEvents) > 0) {
 		?>	
 		<TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 		
-		<TD >
-			<A HREF="/<?php echo $ADMIN; ?>/issues/autopublish.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>&event_id=<?php echo $event->getEventId(); ?>"><?php p(htmlspecialchars($event->getActionTime())); ?></A>
+		<TD>
+			<?php if (!$event->isCompleted()) { ?><A HREF="/<?php echo $ADMIN; ?>/issues/autopublish.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>&event_id=<?php echo $event->getEventId(); ?>"><?php } else { echo "<strike>"; } ?><?php p(htmlspecialchars($event->getActionTime())); ?><?php if (!$event->isCompleted()) { ?></A><?php } else { echo "</strike>"; } ?>
 		</TD>
 		
 		<TD >
