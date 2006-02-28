@@ -365,7 +365,11 @@ class DatabaseObject {
 			}
 		}
 
-		$queryStr .= '(`' . implode('`,`', array_keys($columns)) . '`)';
+		if (count($columns) > 0) {
+			$queryStr .= '(`' . implode('`,`', array_keys($columns)) . '`)';
+		} else {
+			$queryStr .= '(' . implode('`,`', array_keys($columns)) . ')';			
+		}
 		$queryStr .= ' VALUES ('.implode(',', array_values($columns)) .')';
 
 		// Create the row.
