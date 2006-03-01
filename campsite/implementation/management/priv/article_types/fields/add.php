@@ -67,7 +67,7 @@ function UpdateArticleFieldContext() {
 <tr style="display: none;" id="topic_list">
 	<td align="right"><?php putGS("Top element"); ?>:</td>
 	<td>
-		<select name="f_root_topic_id">
+		<select name="f_root_topic_id" class="input_select">
 <?php
 $TOL_Language = Input::Get('TOL_Language');
 $currentLanguages = Language::GetLanguages(null, $TOL_Language);
