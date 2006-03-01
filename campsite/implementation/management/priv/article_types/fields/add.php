@@ -4,6 +4,7 @@ load_common_include_files("article_type_fields");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleType.php');
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/Topic.php");
 
 // Check permissions
 list($access, $User) = check_basic_access($_REQUEST);
@@ -28,32 +29,70 @@ $crumbs[] = array(getGS("Add new field"), "");
 echo camp_html_breadcrumbs($crumbs);
 
 ?>
-    
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
+<script>
+function UpdateArticleFieldContext() {
+	var my_form = document.forms["add_field_form"]
+	var field_type = my_form.elements["cType"].value
+	var is_topic = my_form.elements["is_topic"].value
+	if ((is_topic == "false" && field_type == "topic")
+			|| (is_topic == "true" && field_type != "topic")) {
+		ToggleRowVisibility('topic_list')
+		ToggleBoolValue('is_topic')
+	}
+}
+</script>
+
 <P>
-<FORM NAME="dialog" METHOD="POST" ACTION="do_add.php">
+<FORM NAME="add_field_form" METHOD="POST" ACTION="do_add.php">
+<input type="hidden" name="is_topic" id="is_topic" value="false">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
-<TR>
-	<TD COLSPAN="2">
-		<B><?php  putGS("Add new field"); ?></B>
-		<HR NOSHADE SIZE="1" COLOR="BLACK">
-	</TD>
-</TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cName" SIZE="32" MAXLENGTH="32">
+	<INPUT TYPE="TEXT" class="input_text" NAME="cName" SIZE="20" MAXLENGTH="32">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Type"); ?>:</TD>
 	<TD>
-	<SELECT NAME="cType" class="input_select">
+	<SELECT NAME="cType" class="input_select" onchange="UpdateArticleFieldContext()">
 		<OPTION VALUE="text"><?php  putGS('Text'); ?>
 		<OPTION VALUE="date"><?php  putGS('Date'); ?>
 		<OPTION VALUE="body"><?php  putGS('Article body'); ?>
+		<OPTION VALUE="topic"><?php  putGS('Topic'); ?>
 	</SELECT>
 	</TD>
 </TR>
+<tr style="display: none;" id="topic_list">
+	<td align="right"><?php putGS("Top element"); ?>:</td>
+	<td>
+		<select name="f_root_topic_id">
+<?php
+$TOL_Language = Input::Get('TOL_Language');
+$currentLanguages = Language::GetLanguages(null, $TOL_Language);
+$currentLanguageId = $currentLanguages[0]->getLanguageId();
+$topics = Topic::GetTree();
+foreach ($topics as $topicPath) {
+	$printTopic = array();
+	foreach ($topicPath as $topicId => $topic) {
+		$translations = $topic->getTranslations();
+		if (array_key_exists($currentLanguageId, $translations)) {
+			$currentTopic = $translations[$currentLanguageId];
+		} elseif ($currentLanguageId != 1 && array_key_exists(1, $translations)) {
+			$currentTopic = $translations[1];
+		} else {
+			$currentTopic = end($translations);
+		}
+		$printTopic[] = $currentTopic;
+	}
+	echo '<option value="' . $topic->getTopicId() . '">'
+		. htmlspecialchars(implode(" / ", $printTopic)) . "</option>\n";
+}
+?>
+		</select>
+	</td>
+</tr>
 <TR>
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">

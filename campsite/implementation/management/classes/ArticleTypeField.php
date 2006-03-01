@@ -11,6 +11,7 @@ if (!isset($g_documentRoot)) {
 }
 require_once($g_documentRoot.'/classes/Log.php');
 require_once($g_documentRoot.'/classes/ParserCom.php');
+require_once($g_documentRoot.'/classes/Topic.php');
 
 /**
  * @package Campsite
@@ -53,7 +54,7 @@ class ArticleTypeField {
 	 * @param string $p_type
 	 *		Can be one of: 'text', 'date', 'body'.
 	 */
-	function create($p_type)
+	function create($p_type, $p_rootTopicId = 0)
 	{
 		global $Campsite;
 		$p_type = strtolower($p_type);
@@ -68,8 +69,17 @@ class ArticleTypeField {
 			case 'body':
 		    	$queryStr .= " MEDIUMBLOB NOT NULL";
 		    	break;
+			case 'topic':
+				$queryStr .= " INTEGER UNSIGNED NOT NULL";
+				$queryStr2 = "INSERT INTO TopicFields (ArticleType, FieldName, RootTopicId) "
+							."VALUES ('".$this->m_articleTypeName."', '".$this->m_fieldName."', '"
+							.$p_rootTopicId."')";
+				if (!$Campsite['db']->Execute($queryStr2)) {
+					return false;
+				}
+				break;
 		    default:
-		    	return;
+		    	return false;
 		}
 		$success = $Campsite['db']->Execute($queryStr);
 		if ($success) {
@@ -78,6 +88,7 @@ class ArticleTypeField {
 			Log::Message($logtext, null, 71);
 			ParserCom::SendMessage('article_types', 'modify', array("article_type"=> $this->m_articleTypeName));
 		}
+		return $success;
 	} // fn create
 
 
@@ -109,9 +120,11 @@ class ArticleTypeField {
 			}
 		} else {
 			$queryStr = 'SHOW COLUMNS FROM '.$this->m_dbTableName
-						." LIKE 'F".$this->m_dbColumnName."'";
+						." LIKE '".$this->m_dbColumnName."'";
 			$row = $Campsite['db']->GetAll($queryStr);
-			$this->fetch($row);
+			if (!is_null($row[0])) {
+				$this->fetch($row[0]);
+			}
 		}
 	} // fn fetch
 
@@ -122,6 +135,9 @@ class ArticleTypeField {
 		$queryStr = "ALTER TABLE ".$this->m_dbTableName." DROP COLUMN ".$this->m_dbColumnName;
 		$success = $Campsite['db']->Execute($queryStr);
 		if ($success) {
+			$queryStr = "DELETE FROM TopicFields WHERE ArticleType = '".$this->m_articleTypeName
+						."' and FieldName = '".substr($this->m_dbColumnName, 1)."'";
+			$Campsite['db']->Execute($queryStr);
 			if (function_exists("camp_load_language")) { camp_load_language("api");	}
 			$logtext = getGS('Article type field $1 deleted', $this->m_dbColumnName);
 			Log::Message($logtext, null, 72);
@@ -153,17 +169,45 @@ class ArticleTypeField {
 	 */
 	function getType()
 	{
+		global $Campsite;
+		if (stristr($this->Type, 'int') != '') {
+    		$queryStr = "SELECT RootTopicId FROM TopicFields WHERE ArticleType = '"
+    					.$this->m_articleTypeName."' and FieldName = '"
+    					.substr($this->Field, 1)."'";
+    		$topicId = $Campsite['db']->GetOne($queryStr);
+    		if ($topicId > 0) {
+				return 'topic';
+    		}
+		}
 		return strtolower($this->Type);
 	} // fn getType
+
+
+	/**
+	 * @return string
+	 */
+	function getTopicTypeRootElement()
+	{
+		global $Campsite;
+		$topicId = null;
+		if (stristr($this->Type, 'int') != '') {
+    		$queryStr = "SELECT RootTopicId FROM TopicFields WHERE ArticleType = '"
+    					.$this->m_articleTypeName."' and FieldName = '"
+    					.substr($this->Field, 1)."'";
+    		$topicId = $Campsite['db']->GetOne($queryStr);
+		}
+		return $topicId;
+	}
 
 
 	/**
 	 * Get a human-readable representation of the column type.
 	 * @return string
 	 */
-	function getPrintType()
+	function getPrintType($p_languageId = 1)
 	{
-		switch ($this->Type) {
+		global $Campsite;
+		switch ($this->getType()) {
 	    case 'mediumblob':
 	    	return getGS('Article body');
 	    case 'varchar(255)':
@@ -172,12 +216,26 @@ class ArticleTypeField {
 	    	return getGS('Text');
 	    case 'date':
 	    	return getGS('Date');
+	    case 'topic':
+    		$queryStr = "SELECT RootTopicId FROM TopicFields WHERE ArticleType = '"
+    					.$this->m_articleTypeName."' and FieldName = '"
+    					.substr($this->Field, 1)."'";
+    		$topicId = $Campsite['db']->GetOne($queryStr);
+   			$topic = new Topic($topicId);
+   			$translations = $topic->getTranslations();
+   			if (array_key_exists($p_languageId, $translations)) {
+   				return "Topic (".$translations[$p_languageId].")";
+   			} elseif ($p_languageId != 1 && array_key_exists(1, $translations)) {
+   				return "Topic (".$translations[1].")";
+   			} else {
+   				return "Topic (".end($translations).")";
+   			}
+	    	break;
 	    default:
 	    	return "unknown";
 		}
 	} // fn getPrintType
 
 } // class ArticleTypeField
-
 
 ?>

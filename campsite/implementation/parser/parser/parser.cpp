@@ -47,6 +47,7 @@ CParser methods implementation
 #include "data_types.h"
 #include "exceptions.h"
 #include "cpublication.h"
+#include "attributes.h"
 
 using std::cout;
 using std::endl;
@@ -1036,13 +1037,13 @@ inline int CParser::HPrint(CActionList& al, int lv, int sublv)
 		{
 			// check for image number
 			const CAttribute* pImgAttrType;
-			OPEN_TRY
+			try {
 				pImgAttrType = st->findAttr("number", CMS_CT_PRINT);
-			CLOSE_TRY
-			CATCH(InvalidAttr &rcoEx)
+			}
+			catch (InvalidAttr &rcoEx) {
 				SetPError(parse_err, PERR_INTERNAL, MODE_PARSE, "",
 				          lex.prevLine(), lex.prevColumn());
-			END_CATCH
+			}
 			if (pImgAttrType->validValue(l->atom()->identifier()))
 			{
 				image = Integer(l->atom()->identifier());
@@ -1055,7 +1056,9 @@ inline int CParser::HPrint(CActionList& al, int lv, int sublv)
 		type = attrType->second->name();
 	const string& attrIdentifier = attrType->first->identifier();
 	const string& attrAttribute = attrType->first->attribute();
-	if (attrType->first->dataType() == CMS_DT_DATE)
+	if (attrType->first->dataType() == CMS_DT_DATE
+		   || attrType->first->dataType() == CMS_DT_DATETIME
+		   || attrType->first->dataType() == CMS_DT_TIME)
 	{
 		l = lex.getLexem();
 		DEBUGLexem("print", l);
@@ -1223,17 +1226,31 @@ inline int CParser::HList(CActionList& al, int level, int sublevel)
 			string op = l->atom()->identifier();
 			RequireAtom(l);
 			string identifier = l->atom()->identifier();
+			CompOperation* pcoCompOperation = NULL;
 			if (attr->attrClass() != CMS_NORMAL_ATTR)
 			{
 				const CTypeAttributes* pcoType = st->findType(identifier);
 				if (pcoType == NULL)
 					throw InvalidType();
 				identifier = pcoType->name();
+				pcoCompOperation = attr->compOperation(op, identifier);
 			}
 			else
+			{
 				ValidateDType(l, attr);
-			params.insert(params.end(), new CParameter(attr->attribute(), type,
-			                                           attr->compOperation(op, identifier)));
+				if (attr->dataType() == CMS_DT_TOPIC)
+				{
+					const Topic* pcoTopic = Topic::topic(identifier);
+					identifier = (string)Integer(pcoTopic->id());
+					CIntegerAttr coAttr(attr->attribute());
+					pcoCompOperation = coAttr.compOperation(op, identifier);
+				}
+				else
+				{
+					pcoCompOperation = attr->compOperation(op, identifier);
+				}
+			}
+			params.insert(params.end(), new CParameter(attr->attribute(), type, pcoCompOperation));
 		}
 		else
 		{

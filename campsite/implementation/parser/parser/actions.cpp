@@ -49,6 +49,7 @@ CActSearch, CActWith methods.
 #include "attributes_impl.h"
 #include "cpublication.h"
 #include "auto_ptr.h"
+#include "lex.h"
 
 using std::set;
 using std::cout;
@@ -1441,14 +1442,14 @@ CPrintModifiers::CPrintModifiers()
 
 CPrintModifiers CActPrint::s_coModifiers;
 
-// BlobField: return 0 if field of table is blob type
+// BlobField: return 0 if the field from the given article type is blob type
 // Parameters:
-//		const char* table - table
-//		const char* field - table field
-int CActPrint::BlobField(const char* table, const char* field)
+//		const char* pchArticleType - article type name
+//		const char* pchField - article type field
+int CActPrint::BlobField(const char* pchArticleType, const char* pchField)
 {
 	int result = -1;
-	string coQuery = string("desc ") + table + " " + field;
+	string coQuery = string("desc X") + pchArticleType + " " + pchField;
 	SQLQuery(&m_coSql, coQuery.c_str());
 	StoreResult(&m_coSql, res);
 	CheckForRows(*res, 1);
@@ -1460,24 +1461,49 @@ int CActPrint::BlobField(const char* table, const char* field)
 	return result;
 }
 
-// DateField: return 0 if field of table is date type
+// IsDateField: return true if the field from the given article type is date type
 // Parameters:
-//		const char* table - table
-//		const char* field - table field
-int CActPrint::DateField(const char* table, const char* field)
+//		const char* pchArticleType - article type name
+//		const char* pchField - article type field
+bool CActPrint::IsDateField(const char* pchArticleType, const char* pchField)
 {
-	int result;
-	result = -1;
-	string coQuery = string("desc ") + table + " " + field;
-	SQLQuery(&m_coSql, coQuery.c_str());
-	StoreResult(&m_coSql, res);
-	CheckForRows(*res, 1);
-	FetchRow(*res, row);
-	if (row[1] == NULL)
-		return -1;
-	if (strncmp(row[1], "date", 4) == 0)
-		result = 0;
-	return result;
+	const CStatement* pcoPrintStatement = CLex::findSt(string("Article"));
+	if (pcoPrintStatement == NULL)
+	{
+		return false;
+	}
+	try {
+		SafeAutoPtr<CPairAttrType> pcoAttrPair(NULL);
+		pcoAttrPair.reset(pcoPrintStatement->findTypeAttr(pchField, pchArticleType, CMS_CT_PRINT));
+		TDataType nAttributeType = (*pcoAttrPair).first->dataType();
+		return (nAttributeType == CMS_DT_DATE || nAttributeType == CMS_DT_DATETIME
+				|| nAttributeType == CMS_DT_TIME);
+	}
+	catch (...) {
+		return false;
+	}
+}
+
+// IsTopicField: return true if the field from the given article type is topic type
+// Parameters:
+//		const char* pchArticleType - article type name
+//		const char* pchField - article type field
+bool CActPrint::IsTopicField(const char* pchArticleType, const char* pchField)
+{
+	const CStatement* pcoPrintStatement = CLex::findSt(string("Article"));
+	if (pcoPrintStatement == NULL)
+	{
+		return false;
+	}
+	try {
+		SafeAutoPtr<CPairAttrType> pcoAttrPair(NULL);
+		pcoAttrPair.reset(pcoPrintStatement->findTypeAttr(pchField, pchArticleType, CMS_CT_PRINT));
+		TDataType nAttributeType = (*pcoAttrPair).first->dataType();
+		return (nAttributeType == CMS_DT_TOPIC);
+	}
+	catch (...) {
+		return false;
+	}
 }
 
 // IsPEntity: returns true if it finds a <P> HTML entity at the given position
@@ -1868,9 +1894,7 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 	{
 		if (strictType && type != row[0])
 			return RES_OK;
-		table = string("X") + row[0];
-		int blob = BlobField(table.c_str(), attr.c_str());
-		coQuery = string("select ") + attr + " from " + table + " where NrArticle = " + row[1]
+		coQuery = string("select ") + attr + " from X" + row[0] + " where NrArticle = " + row[1]
 		          + " and IdLanguage = " + row[2];
 		DEBUGAct("takeAction()", coQuery.c_str(), fs);
 		SQLRealQuery(&m_coSql, coQuery.c_str(), coQuery.length());
@@ -1878,7 +1902,7 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 		CheckForRows(*res2, 1);
 		FetchRow(*res2, row2);
 		ulint* lengths = mysql_fetch_lengths(*res2);
-		if (blob == 0)
+		if (BlobField(row[0], attr.c_str()) == 0)
 		{
 			cparser.setDebug(*m_coDebug);
 			cparser.reset(row2[0], lengths[0]);
@@ -1893,15 +1917,30 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 				printParagraph(coOut.str(), fs, m_nParagraphNumber);
 			}
 		}
-		else if (DateField(table.c_str(), attr.c_str()) == 0 && format != "")
+		else if (IsDateField(row[0], attr.c_str() + 1) && format != "")
 		{
 			string coDate(row2[0], lengths[0]);
 			fs << encodeHTML(dateFormat(coDate.c_str(), format.c_str(), c.Language()),
 							 c.EncodeHTML());
 		}
+		else if (IsTopicField(row[0], attr.c_str() + 1))
+		{
+			const Topic* pcoTopic = Topic::topic(atol(row2[0]));
+			if (pcoTopic == NULL)
+			{
+				return -1;
+			}
+			buf.str("");
+			buf << "select Code from Languages where id = " << c.Language();
+			SQLQuery(&m_coSql, buf.str().c_str());
+			res = mysql_store_result(&m_coSql);
+			CheckForRows(*res, 1);
+			row = mysql_fetch_row(*res);
+			fs << encodeHTML(pcoTopic->name(row[0]), c.EncodeHTML());
+		}
 		else
 		{
-			string coStr(row[0], lengths[0]);
+			string coStr(row2[0], lengths[0]);
 			fs << encodeHTML(coStr, c.EncodeHTML());
 		}
 	}

@@ -21,10 +21,10 @@ if (!$User->hasPermission('ManageArticleTypes')) {
 $articleTypeName = Input::Get('AType');
 $fieldName = trim(Input::Get('cName'));
 $fieldType = trim(Input::Get('cType'));
+$rootTopicId = Input::Get('f_root_topic_id', 'int', 0);
 
 $field =& new ArticleTypeField($articleTypeName, $fieldName);
 
-$created = false; 
 $correct = true;
 $errorMsgs = array();
 
@@ -37,16 +37,16 @@ if ($field->exists()) {
 	$correct = false;
 }
 
-$validTypes = array('text', 'date', 'body');
+$validTypes = array('text', 'date', 'body', 'topic');
 if (!in_array($fieldType, $validTypes)) {
 	$errorMsgs[] = getGS('Invalid field type.');
 	$correct = false;
 }
 
 if ($correct) {
-	$field->create($fieldType);
-	$created = true;
+	$field->create($fieldType, $rootTopicId);
 	header("Location: /$ADMIN/article_types/fields/?AType=".urlencode($articleTypeName));
+	exit;
 }
 
 $crumbs = array();

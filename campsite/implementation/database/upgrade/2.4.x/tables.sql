@@ -18,5 +18,13 @@ UPDATE Publications SET UnitCostAllLang = UnitCost;
 -- add settings option
 INSERT INTO UserConfig(`fk_user_id`, `varname`, `value`) VALUES (0, 'KeywordSeparator', ',');
 
--- Run the upgrade script
+-- Run the user permission upgrade script
 system php ./upgrade_user_perms.php
+
+-- create the TopicFields table
+CREATE TABLE TopicFields (
+    ArticleType VARCHAR(255) NOT NULL,
+    FieldName VARCHAR(255) NOT NULL,
+    RootTopicId INTEGER NOT NULL,
+    PRIMARY KEY (ArticleType, FieldName)
+);

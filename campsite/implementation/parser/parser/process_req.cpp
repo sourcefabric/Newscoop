@@ -386,7 +386,6 @@ int RunParser(MYSQL* p_pSQL, CURL* p_pcoURL, const char* p_pchRemoteIP, sockstre
 		cout << "writing output for " << coTemplate << ": " << coDocumentRoot << endl;
 #endif
 		p->writeOutput(*pcoCtx, p_rOs);
-		p->printParseErrors(cout, true);
 		if (bPreview == true)
 		{
 #ifdef _DEBUG

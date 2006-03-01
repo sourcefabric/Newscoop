@@ -139,53 +139,72 @@ int GetArticleTypeAttributes(CTypeAttributesMap** ta_h) throw(bad_alloc)
 	// type-attributes map
 	SafeAutoPtr<CTypeAttributesMap> pcoTypes(new CTypeAttributesMap);
 
-	// query for all table names in the database
-	if (mysql_query(sql, "show tables"))
+	// query for tables with names that start with X (contain article types data)
+	if (mysql_query(sql, "SHOW TABLES LIKE 'X%'"))
 		return ERR_QUERY;
 	StoreResult(sql, res);
 	CheckForRows(*res, 1);
 	MYSQL_ROW row;
-	while ((row = mysql_fetch_row(*res)))
+	while ((row = mysql_fetch_row(*res)) != NULL)
 	{
-		if (row[0] == NULL)
-			continue;
-		if (row[0][0] != 'X')	// select only those tables whose name start with X
-			continue;
-
 		// these tables contain the fields of every type of article
-		string q = string("desc ") + row[0];	// query for table description (fields)
+		string q = string("SHOW COLUMNS FROM ") + row[0] + " LIKE 'F%'";
 		if (mysql_query(sql, q.c_str()) != 0)
 			continue;
-
 		CMYSQL_RES tres = mysql_store_result(sql);
 		if (*tres == NULL)
 			continue;
 
-		CTypeAttributes* pcoType = new CTypeAttributes(row[0] + 1);		// new type
+		CTypeAttributes* pcoType = new CTypeAttributes(row[0] + 1);	// new article type
+		// create the contexts
 		CStatementContext* pcoCtxList = new CStatementContext(CMS_CT_LIST);
 		CStatementContext* pcoCtxPrint = new CStatementContext(CMS_CT_PRINT);
 		CStatementContext* pcoCtxWith = new CStatementContext(CMS_CT_WITH);
 		CStatementContext* pcoCtxIf = new CStatementContext(CMS_CT_IF);
 
 		MYSQL_ROW trow;
-		while ((trow = mysql_fetch_row(*tres)))
+		while ((trow = mysql_fetch_row(*tres)) != NULL)
 		{
-			if (trow[0][0] != 'F')		// select only those fields whose name start with F
-				continue;
-
-			CAttribute* pcoAttr = NULL;		// pointer to new attribute
-			if (strncmp(trow[1], "tinyint", 7) == 0)			// field type is switch
+			CAttribute* pcoAttr = NULL;	// pointer to new attribute
+			if (strncasecmp(trow[1], "tinyint", 7) == 0)	// field type is switch
+			{
 				pcoAttr = new CSwitchAttr(trow[0] + 3, trow[0]);
-			else if (strncmp(trow[1], "int", 3) == 0)		// field type is integer
-				pcoAttr = new CIntegerAttr(trow[0] + 1, trow[0]);
-			else if (strncmp(trow[1], "datetime", 8) == 0)	// field type is datetime
+			}
+			else if (strncasecmp(trow[1], "int", 3) == 0)	// field type is integer or topic
+			{
+				q = string("SELECT RootTopicId FROM TopicFields WHERE ArticleType = '")
+						+ (row[0] + 1) + "' AND FieldName = '" + (trow[0] + 1) + "'";
+				if (mysql_query(sql, q.c_str()) != 0)
+					continue;
+				CMYSQL_RES fres = mysql_store_result(sql);
+				if (*fres == NULL)
+					continue;
+				MYSQL_ROW frow;
+				if ((frow = mysql_fetch_row(*fres)) != NULL)
+				{
+					pcoAttr = new CTopicAttr(trow[0] + 1, trow[0]);
+				}
+				else
+				{
+					pcoAttr = new CIntegerAttr(trow[0] + 1, trow[0]);
+				}
+			}
+			else if (strncasecmp(trow[1], "datetime", 8) == 0)	// field type is datetime
+			{
 				pcoAttr = new CDateTimeAttr(trow[0] + 1, trow[0]);
-			else if (strncmp(trow[1], "date", 4) == 0)		// field type is date
+			}
+			else if (strncasecmp(trow[1], "date", 4) == 0)	// field type is date
+			{
 				pcoAttr = new CDateAttr(trow[0] + 1, trow[0]);
-			else if (strncmp(trow[1], "time", 4) == 0)		// field type is time
+			}
+			else if (strncasecmp(trow[1], "time", 4) == 0)	// field type is time
+			{
 				pcoAttr = new CTimeAttr(trow[0] + 1, trow[0]);
-			else											// others are considered string
+			}
+			else	// others are considered string
+			{
 				pcoAttr = new CStringAttr(trow[0] + 1, trow[0]);
+			}
 
 			pcoCtxList->insertAttr(pcoAttr);
 			pcoCtxPrint->insertAttr((CAttribute*)pcoAttr->clone());

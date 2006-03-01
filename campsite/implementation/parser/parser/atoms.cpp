@@ -250,7 +250,7 @@ void CStatementContext::print(int p_nStartIndent, const string& p_rcoIndent) con
 	for (int i = 0; i < p_nStartIndent; i++)
 		coStartIndent += p_rcoIndent;
 	cout << coStartIndent << "Context: " << (int)m_nContext << endl;
-	CAttributeMap::iterator coIt = m_pcoAttributes->begin();
+	CAttributeMap::const_iterator coIt = m_pcoAttributes->begin();
 	for (; coIt != m_pcoAttributes->end(); ++coIt)
 	{
 		cout << coStartIndent << p_rcoIndent
@@ -325,7 +325,7 @@ void CTypeAttributes::print(int p_nStartIndent, const string& p_rcoIndent) const
 	for (int i = 0; i < p_nStartIndent; i++)
 		coStartIndent += p_rcoIndent;
 	cout << coStartIndent << "Type: " << m_coName << endl;
-	CStatementContextMap::iterator coIt = m_pcoCtxAttributes->begin();
+	CStatementContextMap::const_iterator coIt = m_pcoCtxAttributes->begin();
 	for (; coIt != m_pcoCtxAttributes->end(); ++coIt)
 	{
 		(*coIt).second->print(2);
@@ -617,12 +617,12 @@ bool CStatement::updateTypes(CTypeAttributesMap* p_pcoTypeAttributes) throw(ExMu
 void CStatement::print(int p_nStartIndent, const string& p_rcoIndent) const
 {
 	cout << identifier() << endl;
-	CStatementContextMap::iterator coCIt = m_pcoContexts->begin();
+	CStatementContextMap::const_iterator coCIt = m_pcoContexts->begin();
 	for (; coCIt != m_pcoContexts->end(); ++coCIt)
 	{
 		(*coCIt).second->print();
 	}
-	CTypeAttributesMap::iterator coTIt = m_pcoTypes->begin();
+	CTypeAttributesMap::const_iterator coTIt = m_pcoTypes->begin();
 	for (; coTIt != m_pcoTypes->end(); ++coTIt)
 		(*coTIt).second->print();
 }

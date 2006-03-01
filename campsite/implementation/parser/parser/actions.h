@@ -755,17 +755,23 @@ protected:
 							// print the paragraph identified by number "m_nParagraphNumber"
 	CCParser cparser;	// article content parser
 
-	// BlobField: return 0 if field of table is blob type
+	// BlobField: return 0 if the field from the given article type is blob type
 	// Parameters:
-	//		const char* table - table
-	//		const char* field - table field
-	int BlobField(const char* table, const char* field);
+	//		const char* pchArticleType - article type name
+	//		const char* pchField - article type field
+	int BlobField(const char* pchArticleType, const char* pchField);
 
-	// DateField: return 0 if field of table is date type
+	// IsDateField: return true if the field from the given article type is date type
 	// Parameters:
-	//		const char* table - table
-	//		const char* field - table field
-	int DateField(const char* table, const char* field);
+	//		const char* pchArticleType - article type name
+	//		const char* pchField - article type field
+	bool IsDateField(const char* pchArticleType, const char* pchField);
+	
+	// IsTopicField: return true if the field from the given article type is topic type
+	// Parameters:
+	//		const char* pchArticleType - article type name
+	//		const char* pchField - article type field
+	bool IsTopicField(const char* pchArticleType, const char* pchField);
 	
 	// IsPEntity: returns true if it finds a <P> HTML entity at the given position
 	// Parameters:
