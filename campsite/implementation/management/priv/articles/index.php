@@ -180,7 +180,6 @@ function checkboxClick(theCheckbox, theRowNum)
    	row.className = newClass;
 } // fn checkboxClick
 </script>
-<div style="position: fixed; <?php if ($User->hasPermission("AddArticle")) { ?>top: 140px;"<?php } else { ?>top: 105px;"<?php } ?>>
 <FORM name="article_list" action="do_article_list_action.php" method="POST">
 <INPUT TYPE="HIDDEN" NAME="f_publication_id" VALUE="<?php p($f_publication_id); ?>">
 <INPUT TYPE="HIDDEN" NAME="f_issue_number" VALUE="<?php p($f_issue_number); ?>">
@@ -326,14 +325,12 @@ function checkboxClick(theCheckbox, theRowNum)
 	
 </TR>
 </TABLE>
-</div>
-<P>
 <?php 
 if ($numUniqueArticlesDisplayed > 0) {
 	$counter = 0;
 	$color = 0;
 ?>
-<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list" style="padding-top: 35px;">
+<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list" style="padding-top: 5px;">
 <TR class="table_list_header">
 	<TD>&nbsp;</TD>
 	<TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Name <SMALL>(click to edit)</SMALL>"); ?></TD>
