@@ -1,21 +1,18 @@
 <?php
-regGS("There are no pending articles.", "");
-regGS("Pending Articles", "");
-regGS("System Preferences", "");
-regGS("You haven't written any articles yet.", "");
-regGS("There are no pending items to be published.", "");
-regGS("There are currently no submitted articles.", "");
-regGS("Recently Published Articles", "");
-regGS("Publish articles", "");
-regGS("Publish Date", "");
-regGS("No articles have been published yet.", "");
-regGS("Event(s)", "");
-regGS("Signed in: $1", "");
-regGS("Help", "");
-regGS("About", "");
-regGS("Please enter your user name and password", "Unesite vaÅ¡e ime i lozinku");
-regGS("You do not have the right to access this page.", "Nemate pravo pristupiti ovoj stranici");
+regGS("You haven't written any articles yet.", "Niste još napisali nijedan èlanak.");
+regGS("There are no pending items to be published.", "Nema stavki za objavljivanje.");
+regGS("There are currently no submitted articles.", "Trenutno nema predanih èlanaka.");
+regGS("Recently Published Articles", "Posljednje objavljeni èlanci.");
+regGS("Publish articles", "Objavi èlanke");
+regGS("Publish Date", "Datum objavljivanja");
+regGS("No articles have been published yet.", "Za sada nema objavljenih èlanaka");
+regGS("Event(s)", "Dogaðaj(i)");
+regGS("Signed in: $1", "Prijavljeno: $1");
+regGS("Help", "Pomoæ");
+regGS("About", "O projektu");
+regGS("Please enter your user name and password", "Unesite vaše ime i lozinku");
+regGS("You do not have the right to access this page.", "Nemate ovlasti pristupiti ovoj stranici");
 regGS("Login failed", "Prijava nije uspjela");
-regGS("Please make sure that you typed the correct user name and password.", "Provjerite da li ste ispravno upisali korisniÄko ime i lozinku");
-regGS("If your problem persists please contact the site administrator $1", "Ukoliko vam se ovaj problem ponavlja, obratite se vaÅ¡em administratoru $1");
+regGS("Please make sure that you typed the correct user name and password.", "Provjerite da li ste ispravno upisali korisnièko ime i lozinku");
+regGS("If your problem persists please contact the site administrator $1", "Ukoliko vam se ovaj problem ponavlja, obratite se vašem administratoru $1");
 ?>

@@ -1,15 +1,15 @@
 <?php
-regGS("You do not have the right to add countries.", "Nemate pravo dodavati dr탑ave.");
-regGS("The country $1 could not be created", "Dr탑ava $1 ne mo탑e biti unesena.");
-regGS("Delete country", "Izbri큄i dr탑avu.");
-regGS("You do not have the right to delete countries.", "Nemate pravo brisati dr탑ave.");
-regGS("Are you sure you want to delete the country $1?", "Sigurno 탑elite izbrisati dr탑avu $1?");
-regGS("The country $1 could not be deleted.", "Dr탑ava $1 ne mo탑e se izbrisati.");
-regGS("Edit country name", "Uredite ime dr탑ave.");
-regGS("You do not have the right to change country names.", "Nemate pravo mijenjati imena dr탑ava.");
-regGS("Changing country name", "Mijenjanje imena dr탑ave.");
-regGS("The country name $1 could not be changed", "Ime dr탑ave $1 ne mo탑e se promijeniti. ");
-regGS("Translate country name", "Prevedi ime dr탑ave.");
-regGS("You do not have the right to translate country names.", "Nemate pravo prevoditi imena dr탑ava.");
-regGS("The country name $1 could not be translated", "Ime dr탑ave $1 ne mo탑e se prevesti.");
+regGS("You do not have the right to add countries.", "Nemate ovlasti dodavati zemlje.");
+regGS("The country $1 could not be created", "Zemlja $1 ne mo엁 biti kreirana.");
+regGS("Delete country", "Izbri쉏 zemlju.");
+regGS("You do not have the right to delete countries.", "Nemate ovlasti brisati zemlje.");
+regGS("Are you sure you want to delete the country $1?", "Jeste li sigurni da 엁lite obrisati zemlju $1?");
+regGS("The country $1 could not be deleted.", "Zemlja $1 ne mo엁 se obrisati.");
+regGS("Edit country name", "Uredite ime zemlje.");
+regGS("You do not have the right to change country names.", "Nemate ovlasti mijenjati imena zemalja.");
+regGS("Changing country name", "Mijenjanje imena zemlje.");
+regGS("The country name $1 could not be changed", "Ime zemlje $1 ne mo엁 se promijeniti. ");
+regGS("Translate country name", "Prevedi ime zemlje.");
+regGS("You do not have the right to translate country names.", "Nemate ovlasti prevoditi imena zemalja.");
+regGS("The country name $1 could not be translated", "Ime zemlje $1 ne mo엁 se prevesti.");
 ?>

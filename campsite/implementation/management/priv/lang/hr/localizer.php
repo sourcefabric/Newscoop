@@ -1,4 +1,4 @@
 <?php
-regGS("Article Files", "");
-regGS("Log Messages", "");
+regGS("Article Files", "Datoteke èlanaka");
+regGS("Log Messages", "Log poruka");
 ?>

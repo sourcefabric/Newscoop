@@ -1,20 +1,21 @@
 <?php
-regGS("Section List", "");
-regGS("Section #$1 \"$2\" updated. (Publication: $3, Issue: $4)", "");
-regGS("Go To Articles", "");
-regGS("Name<BR><SMALL>(click to see articles)</SMALL>", "Rubrike<br><small>(kliknite da vidite pojednaƒçne ƒçlanke)</small>");
-regGS("Delete section $1", "Izbri≈°i rubriku $1");
+regGS("Section List", "Lista rubrika");
+regGS("Section #$1 \"$2\" updated. (Publication: $3, Issue: $4)", " Rubrika #$1 \"$2\" je aûurirani. (Publikacija:  $3, Izdanje:  $4");
+regGS("Go To Articles", "Idi na Ëlanak");
+regGS("Name<BR><SMALL>(click to see articles)</SMALL>", "Ime<br><small>(kliknite da vidite pojednaËne Ëlanke)</small>");
+regGS("Delete section $1", "Izbriöi rubriku $1");
 regGS("No sections.", "Nema nikakvih rubrika");
 regGS("Adding new section", "Dodavanje nove rubrike");
-regGS("You do not have the right to add sections.", "Nemate pravo dodavati rubrike");
-regGS("The section $1 has been successfuly added.", "Rubrika $1 je uspje≈°no dodana.");
-regGS("Please check if another section with the same number does not already exist.", "Provjerite da li istoimena rubrika sa istim rednim brojem veƒá postoji.");
-regGS("Delete section", "Izbri≈°i rubriku");
+regGS("You do not have the right to add sections.", "Nemate ovlasti dodavati rubrike");
+regGS("The section $1 has been successfuly added.", "Rubrika $1 je uspjeöno dodana.");
+regGS("Please check if another section with the same number does not already exist.", "Provjerite da li istoimena rubrika sa istim rednim brojem veÊ postoji.");
+regGS("Delete section", "Izbriöi rubriku");
 regGS("You do not have the right to delete sections.", "Nemate dozvolu za brisati rubrike.");
-regGS("Are you sure you want to delete the section $1?", "Da li ste sigurni da ≈æelite izbrisati rubriku $1?");
+regGS("Are you sure you want to delete the section $1?", "Jeste li sigurni da ûelite obrisati rubriku $1?");
 regGS("Deleting section", "Brisanje rubrike");
-regGS("The section $1 has been deleted.", "Rubrika $1 je izbrisana");
+regGS("The section $1 has been deleted.", "Rubrika $1 je obrisana");
 regGS("Change section name", "Promijeni ime rubrike");
 regGS("Updating section name", "Promjena imena rubrike");
-regGS("The section could not be changed.", "Rubrika ne mo≈æe biti izmijenjena.");
+regGS("The section could not be changed.", "Rubrika ne moûe biti izmijenjena.");
+regGS("Name<BR><SMALL>(click to add article)</SMALL>", "Ime<br><small>(kliknite da dodate Ëlanak)</small>");
 ?>
