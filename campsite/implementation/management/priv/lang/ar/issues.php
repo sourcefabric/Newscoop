@@ -38,7 +38,6 @@ regGS("Copy previous issue", "إنسخ الإصدار السابق");
 regGS("No previous issue.", "لا يوجد إصدار سابق");
 regGS("Copy structure from issue nr $1", "إنسخ الهيكلية من الإصدار رقم $1");
 regGS("Copying previous issue", "نسخ الإصدار السابق");
-regGS("Select the issue", "إختر الإصدار");
 regGS("New issue $1 from $2 in publication $3", "إصدار $1 جديد من $2 في المنشور $3");
 regGS("Adding new issue", "إضافة إصدار جديد");
 regGS("Changing issue template", "تغيير نموذج الإصدار");

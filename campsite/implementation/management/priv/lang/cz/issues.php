@@ -36,7 +36,6 @@ regGS("Copy previous issue", "Kopírovat předchozí vydání");
 regGS("No previous issue.", "Žádné předchozí vydání");
 regGS("Copy structure from issue nr $1", "Kopírovat strukturu z vydání č. $1");
 regGS("Copying previous issue", "Kopírování předchozího vydání");
-regGS("Select the issue", "Vyberte vydání");
 regGS("New issue $1 from $2 in publication $3", "Nové vydání $1 z $1 v publikaci $3");
 regGS("Adding new issue", "Přidání nového vydání");
 regGS("Preview issue", "Náhled vydání");

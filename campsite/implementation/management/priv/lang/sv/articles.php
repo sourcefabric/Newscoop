@@ -1,4 +1,19 @@
 <?php
+regGS("move", "");
+regGS("duplicate", "");
+regGS("You must set the publication, issue, and section for this article before you can schedule it for publishing.  Go to the \"$1\" menu and select \"$2\" to do this.", "");
+regGS("You do not have the right to translate articles.", "");
+regGS("You do not have the right to publish articles.", "");
+regGS("You do not have the right to move articles.", "");
+regGS("You cannot $1 the articles marked in red because the destination issue has not been translated into the appropriate language.", "");
+regGS("Select location (optional):", "");
+regGS("Publish?", "");
+regGS("Publish articles", "");
+regGS("Publish article", "");
+regGS("Move?", "");
+regGS("Move articles", "");
+regGS("Move article", "");
+regGS("Move", "");
 regGS("An issue must be created for the selected language but you do not have the right to create an issue.", "En utgåva måste skapas för det valda språket, men du har inte rätt att skapa en utgåva.");
 regGS("A section must be created for the selected language but you do not have the right to create a section.", "En sektion måste skapas för det valda språket, men du har inte rätt att skapa en sektion.");
 regGS("to section", "till sektion");
@@ -21,8 +36,6 @@ regGS("Section URL Name", "Sektions-URL-namn");
 regGS("Section Name", "Sektionsnamn");
 regGS("Publish date", "Publiceringsdatum");
 regGS("Publish Schedule", "Publiceringsschema");
-regGS("On Section Page", "På sektionssidan");
-regGS("On Front Page", "På framsidan");
 regGS("No action specified", "Ingen händelse specificerad");
 regGS("New section name", "Nytt sektionsnamn");
 regGS("New section URL name", "Nytt sektions-URL-namn");
@@ -35,8 +48,6 @@ regGS("Files", "Filer");
 regGS("Duplicate?", "Duplicera?");
 regGS("Duplicate to another section", "Duplicera till en annan sektion");
 regGS("Duplicate articles", "Duplicera artiklar");
-regGS("Creation date", "Skapad datum");
-regGS("Created by", "Skapad av");
 regGS("Article name ($1)", "Artikelnamn ($1)");
 regGS("Article List", "Artikellista");
 regGS("Are you sure you want to remove the topic \'$1\' from the article?", "Är du säker att du vill ta bort temat \'$1\' från artikeln?");
@@ -46,7 +57,6 @@ regGS("Are you sure you want to delete this article?", "Är du säker att du vil
 regGS("Are you sure you want to delete the selected articles?", "Är du säker att du vill radera de valda artiklarna?");
 regGS("An issue must be created for the selected language.  Please enter the issue name and URL name.", "En utgåva måste skapas för det valda språket. Var god skriv in utgåvenamnet och ett URL-namn.");
 regGS("All", "Alla");
-regGS("Add Event", "Lägg till händelse");
 regGS("A section must be created for the selected language.  Please enter the section name and URL name.", "En sektion måste skapas för det valda språket. Var god skriv in sektionsnamnet och ett URL-namn.");
 regGS("Article Type", "Artikeltyp");
 regGS("$1 articles found", "$1 artiklar hittades");
@@ -70,7 +80,4 @@ regGS("You do not have the right to change this article status. Once submitted a
 regGS("You do not have the right to delete articles.", "Du har inte rätt att radera artiklar");
 regGS("You must select an article type.", "Du måste välja en artikeltyp");
 regGS("Are you sure you want to remove the image \'$1\' from the article?", "Är du säker att du vill ta bort bilden \'$1\' från artikeln?");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Är du säker att du vill ta bort temat \\'$1\\' från artikeln?");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Är du säker att du vill ta bort filen \\'$1\\' från artikeln?");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Är du säker att du vill ta bort bilden \\'$1\\' från artikeln?");
 ?>

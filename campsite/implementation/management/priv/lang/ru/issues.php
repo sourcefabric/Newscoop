@@ -30,7 +30,6 @@ regGS("Copy previous issue", "Скопировать предыдущий вып
 regGS("No previous issue.", "Нет предыдущего выпуска.");
 regGS("Copy structure from issue nr $1", "Скопировать структуру из выпуска №$1");
 regGS("Copying previous issue", "Копирование предыдущего выпуска:");
-regGS("Select the issue", "Выберите выпуск");
 regGS("New issue $1 from $2 in publication $3", "Новый выпуск $1 из $2 в публикации $3");
 regGS("Adding new issue", "Добавление нового выпуска");
 regGS("Delete entry", "Удалить запись");

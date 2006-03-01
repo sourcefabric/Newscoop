@@ -1,4 +1,5 @@
 <?php
+regGS("Top element", "");
 regGS("Article type fields", "حقول نوع المقال");
 regGS("Delete field $1", "حذف الحقل $1");
 regGS("Article body", "صلب المقال");

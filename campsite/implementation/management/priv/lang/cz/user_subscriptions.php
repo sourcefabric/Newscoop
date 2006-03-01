@@ -1,4 +1,6 @@
 <?php
+regGS("Regardless of the language", "");
+regGS("Individual languages", "");
 regGS("Account", "");
 regGS("Publication<BR><SMALL>(click to see sections)</SMALL>", "Publikace ");
 regGS("Left to pay", "Zbývá zaplatit");

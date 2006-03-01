@@ -1,4 +1,6 @@
 <?php
+regGS("Regardless of the language", "");
+regGS("Individual languages", "");
 regGS("Publication<BR><SMALL>(click to see sections)</SMALL>", "Publikacija <br><small>(klikni da vidiš rubrike)</small>");
 regGS("Left to pay", "Preostalo za uplatu");
 regGS("Active", "Aktivna");

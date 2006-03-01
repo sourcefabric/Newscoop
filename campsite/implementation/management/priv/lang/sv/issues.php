@@ -31,7 +31,6 @@ regGS("Copy previous issue", "Kopiera föregående utgåva");
 regGS("No previous issue.", "Ingen tidigare utgåva.");
 regGS("Copy structure from issue nr $1", "Kopiera struktur från utgåva nr $1");
 regGS("Copying previous issue", "Kopierar föregående utgåva");
-regGS("Select the issue", "Välj utgåva");
 regGS("New issue $1 from $2 in publication $3", "Ny utgåva $1 från $2 i publikation $3");
 regGS("Adding new issue", "Lägger till ny utgåva");
 regGS("Delete entry", "Radera post");

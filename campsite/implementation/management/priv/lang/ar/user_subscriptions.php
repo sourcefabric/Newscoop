@@ -1,4 +1,6 @@
 <?php
+regGS("Regardless of the language", "");
+regGS("Individual languages", "");
 regGS("Publication<BR><SMALL>(click to see sections)</SMALL>", "المنشور<br> (إضغط لترى المقاطع)");
 regGS("Left to pay", "المبلغ المتبقي للدفع");
 regGS("Active", "جاري");

@@ -30,7 +30,6 @@ regGS("Copy previous issue", "Прекопирај претходно издањ
 regGS("No previous issue.", "Нема претходног издања");
 regGS("Copy structure from issue nr $1", "Прекопирај структуру из издања $1");
 regGS("Copying previous issue", "Копирање претходног издања");
-regGS("Select the issue", "Изаберите издање");
 regGS("New issue $1 from $2 in publication $3", "Ново издање $1 из $2 у публикацији $3");
 regGS("Adding new issue", "Додавање новог издања");
 regGS("Delete entry", "Обриши унос");

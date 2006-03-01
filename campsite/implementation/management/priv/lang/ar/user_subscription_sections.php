@@ -1,4 +1,8 @@
 <?php
+regGS("You must input a number greater or equal to 0 into the $1 field.", "");
+regGS("Regardless of the language", "");
+regGS("Individual languages", "");
+regGS("All languages", "");
 regGS("Subscribed sections", "الابواب التي تم الاشتراك فيها");
 regGS("Add new section to subscription", "أضف باب جديد إلى الاشتراك");
 regGS("Start Date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "تاريخ البدء<br> (سنة، شهر، يوم)");

@@ -1,4 +1,11 @@
 <?php
+regGS("User may translate articles", "");
+regGS("User may move articles", "");
+regGS("User may find and replace", "");
+regGS("User may change system preferences", "");
+regGS("User may attach topics to articles", "");
+regGS("User may attach images to articles", "");
+regGS("User may add special characters", "");
 regGS("That user name already exists, please choose a different login name.", "Korsničko ime već postoji, smislite nešto drugo.");
 regGS("User may delete article attachments", "Korisnik može da briše atačmente uz članke.");
 regGS("User may change article attachments", "Korsnik može da menja atačmente uz članke");

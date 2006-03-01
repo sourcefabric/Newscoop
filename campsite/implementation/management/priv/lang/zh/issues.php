@@ -37,7 +37,6 @@ regGS("Copy previous issue", "复制以前的议题");
 regGS("No previous issue.", "无以前的议题");
 regGS("Copy structure from issue nr $1", "从$1议题复制结构");
 regGS("Copying previous issue", "正在复制以前的议题");
-regGS("Select the issue", "选择议题");
 regGS("New issue $1 from $2 in publication $3", "在发布$3来自$2的新议题$1");
 regGS("Adding new issue", "正在增加新议题");
 regGS("Preview issue", "预览议题");

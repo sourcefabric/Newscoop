@@ -1,7 +1,7 @@
 <?php
+regGS("You do not have the right to delete file attachments.", "You do not have the right to delete file attachments.");
 regGS("You must select a file to upload.", "You must select a file to upload.");
 regGS("You do not have the right to delete files.", "You do not have the right to delete files.");
-regGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.", "You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.");
 regGS("You do not have the right to change the article.", "You do not have the right to change the article.");
 regGS("You do not have the right to change files.", "You do not have the right to change files.");
 regGS("You do not have the right to add files.", "You do not have the right to add files.");

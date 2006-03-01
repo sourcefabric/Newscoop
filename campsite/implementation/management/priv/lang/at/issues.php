@@ -30,7 +30,6 @@ regGS("Copy previous issue", "Vorherige Ausgabe kopieren");
 regGS("No previous issue.", "Keine vorherige Ausgabe vorhanden");
 regGS("Copy structure from issue nr $1", "Struktur der Ausgabe $1 kopieren");
 regGS("Copying previous issue", "Vorherige Ausgabe kopieren");
-regGS("Select the issue", "Ausgabe auswählen");
 regGS("New issue $1 from $2 in publication $3", "Neue Ausgabe $1 von $2 der Publikation $3");
 regGS("Adding new issue", "Neue Ausgabe hinzufügen");
 regGS("Delete entry", "Eintrag löschen");

@@ -17,5 +17,4 @@ regGS("The section $1 has been deleted.", "Rubrika $1 je izbrisana");
 regGS("Change section name", "Promijeni ime rubrike");
 regGS("Updating section name", "Promjena imena rubrike");
 regGS("The section could not be changed.", "Rubrika ne može biti izmijenjena.");
-regGS("Name<BR><SMALL>(click to add article)</SMALL>", "Rubrike<br><small>(kliknite da dodate članak)</small>");
 ?>

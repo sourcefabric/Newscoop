@@ -1,4 +1,5 @@
 <?php
+regGS("Top element", "");
 regGS("Article type fields", "Polja za tip članka ");
 regGS("Delete field $1", "Obriši polje $1");
 regGS("Article body", "Složen tekst");

@@ -12,7 +12,6 @@ regGS("Adding new section", "Přidání nové rubriky");
 regGS("You do not have the right to add sections.", "Nemáte právo přidat rubriku");
 regGS("The section $1 has been successfuly added.", "Rubrika $1 byla úspěšně přidána");
 regGS("Please check if another section with the same number does not already exist.", "Prosím zkontrolujte, zda rubrika se stejným názvem již neexistuje");
-regGS("Select the section", "Vyberte rubriku");
 regGS("Delete section", "Smazat rubriku");
 regGS("You do not have the right to delete sections.", "Nemáte právo mazat rubriky");
 regGS("Are you sure you want to delete the section $1?", "Určitě chcete smazat rubriku $1?");
@@ -21,5 +20,4 @@ regGS("The section $1 has been deleted.", "Rubrika $1 byla smazána");
 regGS("Change section name", "Změnit název rubriky");
 regGS("Updating section name", "Obnovit název rubriky");
 regGS("The section could not be changed.", "Rubrika nemohla být změněna");
-regGS("Name<BR><SMALL>(click to add article)</SMALL>", "Název (klikněte pro přidání článku)");
 ?>

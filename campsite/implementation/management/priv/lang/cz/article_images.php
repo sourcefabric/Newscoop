@@ -1,11 +1,11 @@
 <?php
+regGS("You do not have the right to attach images to articles.", "");
 regGS("Items per page", "");
 regGS("You do not have the right to add images.", "");
 regGS("Image information", "");
 regGS("Attach New Image", "");
 regGS("Attach Image To Article", "");
 regGS("Attach Existing Image", "");
-regGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.", "");
 regGS("Add New Image", "Přidat obrázek");
 regGS("Date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Datum (rrrr-mm-dd)");
 regGS("Delete image $1", "Stazat obrázek $1");

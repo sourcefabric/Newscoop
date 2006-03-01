@@ -276,8 +276,8 @@ regGS("Add new language", "Добавить новый язык");
 regGS("Add new section", "Добавить новую секцию");
 regGS("View logs", "Просмотреть журнал");
 regGS("Change your password", "Изменить ваш пароль");
-regGS("Your articles", "Ваши статьи");
-regGS("Submitted articles", "Отправленные статьи");
+regGS("Your Articles", "Ваши статьи");
+regGS("Submitted Articles", "Отправленные статьи");
 regGS("Logs", "Журнал");
 regGS("There are $1 article(s) left.", "Осталось статей: $1");
 regGS("There are $1 issues(s) left.", "Осталось выпусков: $1");
@@ -375,4 +375,10 @@ regGS("Name<BR><SMALL>(click to edit)</SMALL>", "Название<BR><SMALL>(Щ�
 regGS("New field", "Новое поле");
 regGS("Select All", "Выбрать все");
 regGS("Select None", "Отменить выбор");
+regGS("Add Event", "Добавить событие");
+regGS("N/A", "");
+regGS("On Front Page", "На титульной странице");
+regGS("On Section Page", "На странице секций");
+regGS("Created by", "Создан:");
+regGS("Creation date", "Дата создания");
 ?>

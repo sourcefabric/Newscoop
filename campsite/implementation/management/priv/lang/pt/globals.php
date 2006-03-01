@@ -276,8 +276,8 @@ regGS("Add new language", "Criar Idioma");
 regGS("Add new section", "Criar Secção");
 regGS("View logs", "Ver Registos de Utilização");
 regGS("Change your password", "Alterar Palavra-Passe");
-regGS("Your articles", "Os Meus Artigos");
-regGS("Submitted articles", "Artigos Submetidos à Apreciação");
+regGS("Your Articles", "Os Meus Artigos");
+regGS("Submitted Articles", "Artigos Submetidos à Apreciação");
 regGS("Logs", "Registos");
 regGS("There are $1 article(s) left.", "Existe(m) ainda $1 Artigo(s).");
 regGS("There are $1 issues(s) left.", "Existe(m) ainda $1 Edição(ões).");
@@ -374,4 +374,10 @@ regGS("Name<BR><SMALL>(click to edit)</SMALL>", "Nome <br> (Carregue para Altera
 regGS("New field", "Novo Campo");
 regGS("Select All", "Selecionar todos");
 regGS("Select None", "Limpar selecção");
+regGS("Add Event", "Adicionar evento");
+regGS("N/A", "");
+regGS("On Front Page", "Na página principal");
+regGS("On Section Page", "Na página de secção");
+regGS("Created by", "Criado por");
+regGS("Creation date", "Data da criação");
 ?>

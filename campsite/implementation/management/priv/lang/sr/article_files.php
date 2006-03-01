@@ -1,7 +1,7 @@
 <?php
+regGS("You do not have the right to delete file attachments.", "");
 regGS("You must select a file to upload.", "Морате изабрати фајл за аплоуд.");
 regGS("You do not have the right to delete files.", "Немате право да бришете фајлове.");
-regGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.", "Немате право да мењате овај чланак. Можете приказивати само властите чланке, а једном предат чланак може мењати само овлашћени корисник.");
 regGS("You do not have the right to change the article.", "Немате право да мењате чланак.");
 regGS("You do not have the right to change files.", "Немате право да мењате фајлове.");
 regGS("You do not have the right to add files.", "Немате право да додајете фајлове.");

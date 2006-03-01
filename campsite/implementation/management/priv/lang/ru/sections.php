@@ -11,7 +11,6 @@ regGS("Adding new section", "Добавление новой секции");
 regGS("You do not have the right to add sections.", "Вы не имеете права добавления секций.");
 regGS("The section $1 has been successfuly added.", "Секция $1 была успешно добавлена.");
 regGS("Please check if another section with the same number or URL name does not exist already.", "Пожалуйста убедитесь, что ранее не существовала другая секция с таким же номером или URL.");
-regGS("Select the section", "Выберите секцию");
 regGS("Delete section", "Удалить секцию");
 regGS("You do not have the right to delete sections.", "Вы не имеете права удаления секций");
 regGS("Are you sure you want to delete the section $1?", "Вы уверены, что хотите удалить секцию $1?");
@@ -20,7 +19,6 @@ regGS("The section $1 has been deleted.", "Секция $1 была удален
 regGS("Configure section", "Настроить секцию");
 regGS("Updating section name", "Обновление название секции");
 regGS("The section could not be changed.", "Невозможно изменить секцию.");
-regGS("Name<BR><SMALL>(click to add article)</SMALL>", "Название<BR><SMALL>(щелкните для добавления статьи)</SMALL>");
 regGS("Duplicate section", "Дублировать секцию");
 regGS("The destination issue is the same as the source issue.", "Выпуск источника тот же, что и  получтеля");
 regGS("Error updating subscriptions.", "Ошибка обновления подписок");

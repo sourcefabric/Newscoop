@@ -37,7 +37,6 @@ regGS("Copy previous issue", "Copiar edición previa");
 regGS("No previous issue.", "Sin ediciones previas");
 regGS("Copy structure from issue nr $1", "Copiar estructura de edición No. $1");
 regGS("Copying previous issue", "Copiando edición previa");
-regGS("Select the issue", "Seleccionar la edición");
 regGS("New issue $1 from $2 in publication $3", "Nueva edición $1 de $2 en publicación $3");
 regGS("Adding new issue", "Agregando nueva edición");
 regGS("Preview issue", "Vista previa de edición");

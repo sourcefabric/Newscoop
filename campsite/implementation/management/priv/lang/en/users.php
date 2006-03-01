@@ -1,4 +1,11 @@
 <?php
+regGS("User may translate articles", "User may translate articles");
+regGS("User may move articles", "User may move articles");
+regGS("User may find and replace", "User may find and replace");
+regGS("User may change system preferences", "User may change system preferences");
+regGS("User may attach topics to articles", "User may attach topics to articles");
+regGS("User may attach images to articles", "User may attach images to articles");
+regGS("User may add special characters", "User may add special characters");
 regGS("Reset search form", "Reset search form");
 regGS("That user name already exists, please choose a different login name.", "That user name already exists, please choose a different login name.");
 regGS("User may delete article attachments", "User may delete article attachments");

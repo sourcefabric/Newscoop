@@ -1,7 +1,7 @@
 <?php
+regGS("You do not have the right to delete file attachments.", "");
 regGS("You must select a file to upload.", "Debe seleccionar un archivo para cargar.");
 regGS("You do not have the right to delete files.", "No tiene privilegios para eliminar archivos.");
-regGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.", "No tiene privilegios para cambiar este artículo.  Sólo puede editar sus propios artículos, que una vez enviados sólo pueden modificar los usuarios autorizados.");
 regGS("You do not have the right to change the article.", "No tiene privilegios para cambiar el artículo.");
 regGS("You do not have the right to change files.", "No tiene privilegios para cambiar archivos.");
 regGS("You do not have the right to add files.", "No tiene privilegios para añadir archivos.");

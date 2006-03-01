@@ -1,4 +1,5 @@
 <?php
+regGS("Top element", "");
 regGS("Article type fields", "文章类型字段");
 regGS("Delete field $1", "删除字段$1");
 regGS("Article body", "文章正文");

@@ -1,4 +1,5 @@
 <?php
+regGS("Top element", "");
 regGS("Article type fields", "Artikeltypfält");
 regGS("Delete field $1", "Radera fält $1");
 regGS("Article body", "Artikeltext");

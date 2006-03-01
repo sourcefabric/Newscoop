@@ -30,7 +30,6 @@ regGS("Copy previous issue", "");
 regGS("No previous issue.", "");
 regGS("Copy structure from issue nr $1", "");
 regGS("Copying previous issue", "");
-regGS("Select the issue", "");
 regGS("New issue $1 from $2 in publication $3", "");
 regGS("Adding new issue", "");
 regGS("Delete entry", "");

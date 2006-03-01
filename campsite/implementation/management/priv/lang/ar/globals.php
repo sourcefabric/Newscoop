@@ -276,8 +276,8 @@ regGS("Add new language", "أضف لغة جديدة");
 regGS("Add new section", "أضف قسم جديد");
 regGS("View logs", "مشاهدة السجلات");
 regGS("Change your password", "تعديل كلمة السر");
-regGS("Your articles", "مقالاتك");
-regGS("Submitted articles", "المقالات المعتمدة");
+regGS("Your Articles", "مقالاتك");
+regGS("Submitted Articles", "المقالات المعتمدة");
 regGS("Logs", "السجلات");
 regGS("There are $1 article(s) left.", "لا يزال هنالك $1 مقالات");
 regGS("There are $1 issues(s) left.", "لا يزال هنالك $1 أعداد");
@@ -369,4 +369,10 @@ regGS("User may delete user accounts", "يحق للمستخدم إلغاء حس�
 regGS("Add new user account", "أضف حساب مستخدم جديد");
 regGS("Select All", "");
 regGS("Select None", "");
+regGS("Add Event", "");
+regGS("N/A", "");
+regGS("On Front Page", "");
+regGS("On Section Page", "");
+regGS("Created by", "");
+regGS("Creation date", "");
 ?>

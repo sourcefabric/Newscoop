@@ -1,7 +1,7 @@
 <?php
+regGS("You do not have the right to delete file attachments.", "");
 regGS("You must select a file to upload.", "Datei zum Hochladen auswählen");
 regGS("You do not have the right to delete files.", "Keine Zugriffsrechte auf das Löschen von Dateien");
-regGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.", "Keine Berechtigung, den Artikel zu ändern.  Bearbeiten nur von eigenen Artikeln möglich. Bereits eingepflegte Artikel können nur von autorisierten Usern verändert werden.");
 regGS("You do not have the right to change the article.", "Keine Berechtigung, den Artikel zu ändern.");
 regGS("You do not have the right to change files.", "Keine Berechtigung, Dateien zu ändern.");
 regGS("You do not have the right to add files.", "Keine Berechtigung, Dateien hinzuzufügen.");

@@ -1,4 +1,5 @@
 <?php
+regGS("Top element", "");
 regGS("Article type fields", "Campos de tipo de archivo");
 regGS("Delete field $1", "Borrar campo $1");
 regGS("Article body", "Cuerpo del artículo");

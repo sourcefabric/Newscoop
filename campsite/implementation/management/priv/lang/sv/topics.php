@@ -1,4 +1,12 @@
 <?php
+regGS("You must enter a name for the topic.", "");
+regGS("You must choose a language for the topic.", "");
+regGS("This topic has subtopics, therefore it cannot be deleted.", "");
+regGS("Show languages:", "");
+regGS("Add translation:", "");
+regGS("Add subtopic:", "");
+regGS("Add subtopic", "");
+regGS("Add root topic:", "");
 regGS("Top", "Topp");
 regGS("You do not have the right to add topics.", "Du har inte rätt att lägga till teman.");
 regGS("You do not have the right to delete topics.", "Du har inte rätt att radera teman.");

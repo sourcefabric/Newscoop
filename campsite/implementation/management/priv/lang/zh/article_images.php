@@ -1,10 +1,10 @@
 <?php
+regGS("You do not have the right to attach images to articles.", "");
 regGS("You do not have the right to add images.", "");
 regGS("Image information", "");
 regGS("Attach New Image", "");
 regGS("Attach Image To Article", "");
 regGS("Attach Existing Image", "");
-regGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.", "");
 regGS("Add New Image", "添加新图片");
 regGS("Date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "日期(yyyy-mm-dd)");
 regGS("Delete image $1", "删除图片$1");

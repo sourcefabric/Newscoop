@@ -1,4 +1,6 @@
 <?php
+regGS("Regardless of the language", "");
+regGS("Individual languages", "");
 regGS("Publication<BR><SMALL>(click to see sections)</SMALL>", "");
 regGS("Delete subscriptions to $1", "");
 regGS("Paid subscription", "");

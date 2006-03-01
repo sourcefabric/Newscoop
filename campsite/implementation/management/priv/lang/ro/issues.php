@@ -37,7 +37,6 @@ regGS("Copy previous issue", "Copiază ediţia precedentă");
 regGS("No previous issue.", "Nu există ediţie anterioară");
 regGS("Copy structure from issue nr $1", "Copiază structura de la ediţia nr $1");
 regGS("Copying previous issue", "Copiez ediţia anterioară");
-regGS("Select the issue", "Selectaţi ediţia");
 regGS("New issue $1 from $2 in publication $3", "Ediţia nouă $1 din $2 în publicaţia $3");
 regGS("Adding new issue", "Adaug ediţie nouă");
 regGS("Preview issue", "Vizualizare ediţie");

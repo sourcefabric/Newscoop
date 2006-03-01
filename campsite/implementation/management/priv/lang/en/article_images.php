@@ -1,10 +1,10 @@
 <?php
+regGS("You do not have the right to attach images to articles.", "You do not have the right to attach images to articles.");
 regGS("You do not have the right to add images.", "You do not have the right to add images.");
 regGS("Image information", "Image information");
 regGS("Attach New Image", "Attach New Image");
 regGS("Attach Image To Article", "Attach Image To Article");
 regGS("Attach Existing Image", "Attach Existing Image");
-regGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.", "You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.");
 regGS("Add New Image", "Add New Image");
 regGS("Date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Date<BR><SMALL>(yyyy-mm-dd)</SMALL>");
 regGS("Please enter a number for the image.", "Please enter a number for the image.");

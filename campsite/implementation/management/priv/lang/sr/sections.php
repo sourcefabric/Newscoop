@@ -11,7 +11,6 @@ regGS("Adding new section", "Додавање нове рубрике");
 regGS("You do not have the right to add sections.", "Немате право да додајете рубрике");
 regGS("The section $1 has been successfuly added.", "Рубрика $1 успешно је додата");
 regGS("Please check if another section with the same number or URL name does not exist already.", "Проверите да ли друга рубрика са истим бројем или УРЛ именом већ не постоји.");
-regGS("Select the section", "Изабери рубрику");
 regGS("Delete section", "Обриши рубрику");
 regGS("You do not have the right to delete sections.", "Немате право брисања рубрика");
 regGS("Are you sure you want to delete the section $1?", "Да ли сте сигурни да желите да обришете рубрику $1? ");
@@ -20,7 +19,6 @@ regGS("The section $1 has been deleted.", "Рубрика $1 је обрисан
 regGS("Configure section", "Подеси рубрику");
 regGS("Updating section name", "Мењање имена рубрике");
 regGS("The section could not be changed.", "Рубрика не може бити измењена");
-regGS("Name<BR><SMALL>(click to add article)</SMALL>", "Назив <br><small>(кликните да додате текст)</small>");
 regGS("Duplicate section", "Дуплирај рубрику");
 regGS("The destination issue is the same as the source issue.", "Циљно издање је исто као матично.");
 regGS("Error updating subscriptions.", "Грешка при мењању претплата.");

@@ -276,8 +276,8 @@ regGS("Add new language", "Додај језик");
 regGS("Add new section", "Додај нову рубрику");
 regGS("View logs", "Прикажи логове");
 regGS("Change your password", "Промени лозинку");
-regGS("Your articles", "Твоји чланци");
-regGS("Submitted articles", "Предати чланци");
+regGS("Your Articles", "Твоји чланци");
+regGS("Submitted Articles", "Предати чланци");
 regGS("Logs", "Логови");
 regGS("There are $1 article(s) left.", "Преоста(л)о је $1 чланак(а)");
 regGS("There are $1 issues(s) left.", "Преостало је $1 издања");
@@ -366,4 +366,10 @@ regGS("User may add/change user accounts and passwords", "Корисник мо�
 regGS("User may delete user accounts", "Корисник може да брише корисничке налоге");
 regGS("Select All", "Изабери све");
 regGS("Select None", "Изабери ниједан");
+regGS("Add Event", "Додајте акцију");
+regGS("N/A", "");
+regGS("On Front Page", "На првој страни");
+regGS("On Section Page", "На страни рубрике");
+regGS("Created by", "Креирао:");
+regGS("Creation date", "Датум креирања");
 ?>

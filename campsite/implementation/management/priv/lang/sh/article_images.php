@@ -1,10 +1,10 @@
 <?php
+regGS("You do not have the right to attach images to articles.", "");
 regGS("You do not have the right to add images.", "Nemate pravo da dodajete slike.");
 regGS("Image information", "Podaci o slici");
 regGS("Attach New Image", "Zakači novu sliku");
 regGS("Attach Image To Article", "Prikači sliku uz članak");
 regGS("Attach Existing Image", "Prikači postojeću sliku");
-regGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.", "Nemate pravo da menjate članak. Možete menjati samo svoje članke, a predatim člancima status može promeniti samo ovlašćeni korsnik.");
 regGS("Add New Image", "Dodaj novu sliku");
 regGS("Date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Datum<br><small>(gggg-mm-dd)</small>");
 regGS("Please enter a number for the image.", "Unesite broj za ovu sliku.");

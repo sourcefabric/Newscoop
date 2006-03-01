@@ -1,4 +1,6 @@
 <?php
+regGS("Regardless of the language", "");
+regGS("Individual languages", "");
 regGS("Account", "Учетная запись");
 regGS("Publication<BR><SMALL>(click to see sections)</SMALL>", "Публикация<BR><SMALL>(Щелкните для просмотра секций)</SMALL>");
 regGS("Delete subscriptions to $1", "Удалить подписку на $1");
