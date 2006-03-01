@@ -1,4 +1,6 @@
 <?php
+regGS("There are no pending articles.", "");
+regGS("Pending Articles", "");
 regGS("System Preferences", "");
 regGS("You haven't written any articles yet.", "Вы еще не написали статью.");
 regGS("There are no pending items to be published.", "Нет отложенных статей для публикации.");

@@ -121,7 +121,7 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 		
 		<tr><td nowrap><a href="javascript: void(0);" id="link_scheduled_actions" onclick="HideAll(home_page_elements); ShowElement('scheduled_actions'); on_link_click('link_scheduled_actions', home_page_links);" style="font-weight: bold; color: #333; padding: 5px; <?php if ($f_screen == "scheduled_actions") { echo 'background-color:#CCC;'; } ?>"><?php putGS("Scheduled Publishing"); ?></a></td></tr>
 		
-		<tr><td nowrap><a href="javascript: void(0);" id="link_unplaced_articles" onclick="HideAll(home_page_elements); ShowElement('unplaced_articles'); on_link_click('link_unplaced_articles', home_page_links);" style="font-weight: bold; color: #333; padding: 5px; <?php if ($f_screen == "unplaced_articles") { echo 'background-color:#CCC;'; } ?>"><?php putGS("Articles Pending Layout"); ?></a></td></tr>
+		<tr><td nowrap><a href="javascript: void(0);" id="link_unplaced_articles" onclick="HideAll(home_page_elements); ShowElement('unplaced_articles'); on_link_click('link_unplaced_articles', home_page_links);" style="font-weight: bold; color: #333; padding: 5px; <?php if ($f_screen == "unplaced_articles") { echo 'background-color:#CCC;'; } ?>"><?php putGS("Pending Articles"); ?></a></td></tr>
 		
 		</TABLE>
 	</td>
@@ -528,7 +528,7 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 		<!-- Unplaced articles -->
 		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" id="unplaced_articles" <?php if ($f_screen != "unplaced_articles") { echo 'style="display:none;"'; } ?>>
 		<TR class="table_list_header">
-			<TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Articles Pending Layout"); ?></TD>
+			<TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Pending Articles"); ?></TD>
 			<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Status"); ?></TD>
 			<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Type"); ?></TD>
 			<td align="center" valign="top"><?php echo str_replace(" ", "<br>", getGS("Created by")); ?></td>
@@ -539,7 +539,7 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 		if (count($unplacedArticles) == 0) {
 	        ?>
     		<TR>
-			<TD colspan="3" class="list_row_odd"><?php putGS("There are no unplaced articles."); ?></td>
+			<TD colspan="3" class="list_row_odd"><?php putGS("There are no pending articles."); ?></td>
 	        </tr>
 		    <?php
 		}

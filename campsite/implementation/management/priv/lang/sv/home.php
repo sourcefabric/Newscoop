@@ -1,4 +1,6 @@
 <?php
+regGS("There are no pending articles.", "");
+regGS("Pending Articles", "");
 regGS("You haven't written any articles yet.", "Du har inte skrivit några artiklar än.");
 regGS("There are no pending items to be published.", "Det finns inga föremål som väntar på publicering.");
 regGS("There are currently no submitted articles.", "Det finns för närvarande inga inkomna artiklar.");
