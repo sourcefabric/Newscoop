@@ -122,7 +122,7 @@ class ArticleTypeField {
 			$queryStr = 'SHOW COLUMNS FROM '.$this->m_dbTableName
 						." LIKE '".$this->m_dbColumnName."'";
 			$row = $Campsite['db']->GetAll($queryStr);
-			if (!is_null($row[0])) {
+			if (!is_null($row) && is_array($row) && sizeof($row) > 0 && !is_null($row[0])) {
 				$this->fetch($row[0]);
 			}
 		}
