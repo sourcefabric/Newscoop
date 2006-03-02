@@ -14,14 +14,14 @@ if (!$User->hasPermission('ManageTopics')) {
 
 $f_topic_edit_id = Input::Get('f_topic_edit_id', 'int', 0);
 $f_topic_language_id = Input::Get('f_topic_language_id', 'int', 0);
-$f_name = trim(Input::Get('f_name'));
+$f_name = trim(Input::Get('f_name', 'string', '', true));
 
 $correct = true;
 $editTopic =& new Topic($f_topic_edit_id);
-$path = camp_topic_path($editTopic);
+$path = camp_topic_path($editTopic, $f_topic_language_id);
 
 if (empty($f_name)) {
-	$correct = false; 
+	$correct = false;
 	$errorMsgs[] = getGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>');
 }
 
@@ -60,8 +60,9 @@ echo camp_html_breadcrumbs($crumbs);
 <TR>
 	<TD COLSPAN="2">
 	<BLOCKQUOTE>
-	<?php foreach ($errorMsgs as $errorMsg) {
-		p($errorMsg);
+	<?php foreach ($errorMsgs as $errorMsg) { ?>
+		<li><?php p($errorMsg); ?></li>
+		<?php
 	}
 	?>
     </BLOCKQUOTE>
