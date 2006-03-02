@@ -611,6 +611,9 @@ if ($f_edit_mode == "edit") { ?>
 				<select class="input_select" name="<?php echo $dbColumn->getName(); ?>">
 				<option value="0"></option>
 				<?php
+				$TOL_Language = Input::Get('TOL_Language');
+				$currentLanguages = Language::GetLanguages(null, $TOL_Language);
+				$currentLanguageId = $currentLanguages[0]->getLanguageId();
 				foreach ($subtopics as $topicPath) {
 					$printTopic = array();
 					foreach ($topicPath as $topicId => $topic) {
