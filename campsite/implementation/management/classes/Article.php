@@ -625,7 +625,8 @@ class Article extends DatabaseObject {
 	 * relative to its current position.
 	 *
 	 * @param string $p_direction -
-	 * 		Can be "up" or "down".
+	 * 		Can be "up" or "down".  "Up" means towards the beginning of the list,
+	 * 		and "down" means towards the end of the list.
 	 *
 	 * @param int $p_spacesToMove -
 	 *		The number of spaces to move the article.
@@ -645,32 +646,48 @@ class Article extends DatabaseObject {
 					.' AND NrIssue='.$this->m_data['NrIssue']
 					.' AND NrSection='.$this->m_data['NrSection']
 					.' AND ArticleOrder '.$compareOperator.' '.$this->m_data['ArticleOrder']
-					//.' AND IdLanguage='.$this->m_data['IdLanguage']
 					.' ORDER BY ArticleOrder ' . $order
 		     		.' LIMIT '.($p_spacesToMove-1).', 1';
 		$destRow = $Campsite['db']->GetRow($queryStr);
 		if (!$destRow) {
-			return false;
+			// Special case: there was a bug when you duplicated articles that
+			// caused them to have the same order number.  So we check here if
+			// there are any articles that match the order number of the current
+			// article.  The end result will be that this article will have
+			// a different order number than all the articles it used to share it
+			// with.  However, the other articles will still have the same
+			// order number, which means that the article may appear to 'jump'
+			// across multiple articles.
+			$queryStr = 'SELECT DISTINCT(Number), ArticleOrder FROM Articles '
+						.' WHERE IdPublication='.$this->m_data['IdPublication']
+						.' AND NrIssue='.$this->m_data['NrIssue']
+						.' AND NrSection='.$this->m_data['NrSection']
+						.' AND ArticleOrder='.$this->m_data['ArticleOrder']
+			     		.' LIMIT '.($p_spacesToMove-1).', 1';
+			$destRow = $Campsite['db']->GetRow($queryStr);
+			if (!$destRow) {
+				return false;
+			}
 		}
 		// Shift all articles one space between the source and destination article.
 		$operator = ($p_direction == 'up') ? '+' : '-';
 		$minArticleOrder = min($destRow['ArticleOrder'], $this->m_data['ArticleOrder']);
 		$maxArticleOrder = max($destRow['ArticleOrder'], $this->m_data['ArticleOrder']);
-		$queryStr = 'UPDATE Articles SET ArticleOrder = ArticleOrder '.$operator.' 1 '
+		$queryStr2 = 'UPDATE Articles SET ArticleOrder = ArticleOrder '.$operator.' 1 '
 					.' WHERE IdPublication = '. $this->m_data['IdPublication']
 					.' AND NrIssue = ' . $this->m_data['NrIssue']
 					.' AND NrSection = ' . $this->m_data['NrSection']
 		     		.' AND ArticleOrder >= '.$minArticleOrder
 		     		.' AND ArticleOrder <= '.$maxArticleOrder;
-		$Campsite['db']->Execute($queryStr);
+		$Campsite['db']->Execute($queryStr2);
 
 		// Change position of this article to the destination position.
-		$queryStr = 'UPDATE Articles SET ArticleOrder = ' . $destRow['ArticleOrder']
+		$queryStr3 = 'UPDATE Articles SET ArticleOrder = ' . $destRow['ArticleOrder']
 					.' WHERE IdPublication = '. $this->m_data['IdPublication']
 					.' AND NrIssue = ' . $this->m_data['NrIssue']
 					.' AND NrSection = ' . $this->m_data['NrSection']
 		     		.' AND Number = ' . $this->m_data['Number'];
-		$Campsite['db']->Execute($queryStr);
+		$Campsite['db']->Execute($queryStr3);
 
 		// Re-fetch this article to get the updated article order.
 		$this->fetch();
@@ -688,7 +705,7 @@ class Article extends DatabaseObject {
 		global $Campsite;
 		// Get the article that is in the location we are moving
 		// this one to.
-		$queryStr = 'SELECT DISTINCT(Number), ArticleOrder FROM Articles '
+		$queryStr = 'SELECT Number, IdLanguage, ArticleOrder FROM Articles '
 					.' WHERE IdPublication='.$this->m_data['IdPublication']
 					.' AND NrIssue='.$this->m_data['NrIssue']
 					.' AND NrSection='.$this->m_data['NrSection']
@@ -698,6 +715,9 @@ class Article extends DatabaseObject {
 			return false;
 		}
 		if ($destRow['ArticleOrder'] == $this->m_data['ArticleOrder']) {
+			// Move the destination down one.
+			$destArticle =& new Article($destRow['IdLanguage'], $destRow['Number']);
+			$destArticle->positionRelative("down", 1);
 			return true;
 		}
 		if ($destRow['ArticleOrder'] > $this->m_data['ArticleOrder']) {
