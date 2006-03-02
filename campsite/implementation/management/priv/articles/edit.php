@@ -612,23 +612,22 @@ if ($f_edit_mode == "edit") { ?>
 				<option value="0"></option>
 				<?php
 				$TOL_Language = Input::Get('TOL_Language');
-				$currentLanguages = Language::GetLanguages(null, $TOL_Language);
-				$currentLanguageId = $currentLanguages[0]->getLanguageId();
+				$currentLanguage =& new Language($TOL_Language);
+				$currentLanguageId = $currentLanguage->getLanguageId();
 				foreach ($subtopics as $topicPath) {
 					$printTopic = array();
 					foreach ($topicPath as $topicId => $topic) {
 						$translations = $topic->getTranslations();
 						if (array_key_exists($currentLanguageId, $translations)) {
 							$currentTopic = $translations[$currentLanguageId];
-						} elseif ($currentLanguageId != 1 && array_key_exists(1, $translations)) {
+						} elseif ( ($currentLanguageId != 1) && array_key_exists(1, $translations)) {
 							$currentTopic = $translations[1];
 						} else {
 							$currentTopic = end($translations);
 						}
 						$printTopic[] = $currentTopic;
 					}
-					camp_html_select_option($topicId, $articleTopicId,
-											htmlspecialchars(implode(" / ", $printTopic)));
+					camp_html_select_option($topicId, $articleTopicId, implode(" / ", $printTopic));
 				}
 				?>
 				</select>
