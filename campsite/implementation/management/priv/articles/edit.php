@@ -824,7 +824,7 @@ if ($f_edit_mode == "edit") { ?>
 					<table>
 					<tr>
 						<td align="center" valign="middle">
-							<?php if ($f_edit_mode == "edit") { ?><a href="<?php p($fileEditUrl); ?>"><?php } p(wordwrap($file->getFileName(), "25", "<br>", true)); ?><?php if ($f_edit_mode == "edit") { ?></a><?php } ?><br><?php p($file->getDescription($f_language_selected)); ?>
+							<?php if ($f_edit_mode == "edit") { ?><a href="<?php p($fileEditUrl); ?>"><?php } p(wordwrap($file->getFileName(), "25", "<br>", true)); ?><?php if ($f_edit_mode == "edit") { ?></a><?php } ?><br><?php p(htmlspecialchars($file->getDescription($f_language_selected))); ?>
 						</td>
 						<?php if (($f_edit_mode == "edit") && $User->hasPermission('DeleteFile')) { ?>
 						<td>
