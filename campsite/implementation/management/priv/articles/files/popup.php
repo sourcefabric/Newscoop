@@ -17,8 +17,8 @@ $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
-	exit;	
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI'], true);
+	exit;
 }
 
 $articleObj =& new Article($f_language_selected, $f_article_number);
@@ -29,11 +29,15 @@ $articleObj =& new Article($f_language_selected, $f_article_number);
 	<META HTTP-EQUIV="Expires" CONTENT="now">
 	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
 	<title><?php putGS("Attach File to Article"); ?></title>
+	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.config.js"></script>
+	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.core.js"></script>
+	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.lang-enUS.js"></script>
+	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.validators.js"></script>
 </head>
 <body>
 
 <br>
-<FORM NAME="dialog" METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/articles/files/do_add.php" ENCTYPE="multipart/form-data" onsubmit="return validateForm(form, 0, 0, 0, 1, 8);">
+<FORM NAME="dialog" METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/articles/files/do_add.php" ENCTYPE="multipart/form-data" onsubmit="return validateForm(this, 0, 0, 0, 1, 8);">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input">
 <TR>
 	<TD COLSPAN="2">
@@ -44,7 +48,7 @@ $articleObj =& new Article($f_language_selected, $f_article_number);
 <TR>
 	<TD ALIGN="RIGHT" ><?php putGS("File"); ?>:</TD>
 	<TD>
-		<INPUT TYPE="FILE" NAME="f_file" SIZE="32" MAXLENGTH="64" class="input_file" alt="file" emsg="<?php putGS("You must select a file to upload."); ?>">
+		<INPUT TYPE="FILE" NAME="f_file" SIZE="32" MAXLENGTH="64" class="input_file">
 	</TD>
 </TR>
 <TR>
@@ -86,6 +90,6 @@ $articleObj =& new Article($f_language_selected, $f_article_number);
 </TR>
 </TABLE>
 </FORM>
-<P>	
+<P>
 </body>
 </html>
