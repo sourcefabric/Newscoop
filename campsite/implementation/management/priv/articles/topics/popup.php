@@ -14,7 +14,7 @@ if (!$access) {
 if (!$User->hasPermission("AttachTopicToArticle")) {
 	$errorStr = getGS('You do not have the right to attach topics to articles.');
 	camp_html_display_error($errorStr, null, true);
-	exit;	
+	exit;
 }
 
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
@@ -22,7 +22,7 @@ $f_article_number = Input::Get('f_article_number', 'int', 0);
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI'], true);
-	exit;	
+	exit;
 }
 
 $topics = Topic::GetTree();
@@ -49,7 +49,7 @@ $topics = Topic::GetTree();
 <table class="table_list">
 <?PHP
 $color = 0;
-foreach ($topics as $path) { 
+foreach ($topics as $path) {
 	$currentTopic = camp_array_peek($path, false, -1);
 	$name = $currentTopic->getName($f_language_selected);
 	if (empty($name)) {
@@ -72,7 +72,7 @@ foreach ($topics as $path) {
 						$name = "-----";
 					}
 				}
-				echo " / ".$name;
+				echo " / ".htmlspecialchars($name);
 			}
 			?>
 		</td>
