@@ -608,7 +608,7 @@ if ($f_edit_mode == "edit") { ?>
 				<?php echo $articleTypeField->getPrintName(); ?>:
 			</td>
 			<td>
-				<select class="input_select" name="<?php echo $dbColumn->getName(); ?>">
+				<select class="input_select" name="<?php echo $dbColumn->getName(); ?>" <?php if ($f_edit_mode != "edit") { ?>disabled<?php } ?>>
 				<option value="0"></option>
 				<?php
 				$TOL_Language = Input::Get('TOL_Language');
