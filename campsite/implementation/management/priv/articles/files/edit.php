@@ -19,8 +19,8 @@ $f_article_number = Input::Get('f_article_number', 'int', 0);
 $f_attachment_id = Input::Get('f_attachment_id', 'int', 0);
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
-	exit;	
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI'], true);
+	exit;
 }
 
 $publicationObj =& new Publication($f_publication_id);
@@ -30,7 +30,7 @@ $articleObj =& new Article($f_language_selected, $f_article_number);
 $attachmentObj =& new Attachment($f_attachment_id);
 
 if (!$articleObj->exists()) {
-	camp_html_display_error(getGS("Article does not exist."));
+	camp_html_display_error(getGS("Article does not exist."), null, true);
 	exit;
 }
 
@@ -45,7 +45,7 @@ if (!$User->hasPermission('ChangeFile')) {
 }
 // Add extra breadcrumb for image list.
 $extraCrumbs = array(getGS("Attachments") => "");
-$topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
+$topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj,
 				  'Section' => $sectionObj, 'Article'=>$articleObj);
 camp_html_content_top($title, $topArray, true, true, $extraCrumbs);
 ?>
@@ -101,6 +101,6 @@ camp_html_content_top($title, $topArray, true, true, $extraCrumbs);
 </TABLE>
 </FORM>
 <P>
-<?php 
+<?php
 
 camp_html_copyright_notice(); ?>

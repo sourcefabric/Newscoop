@@ -11,7 +11,7 @@ if (!$access) {
 	exit;
 }
 if (!$User->hasPermission("AddImage")) {
-	camp_html_display_error(getGS("You do not have the right to add images" ));
+	camp_html_display_error(getGS("You do not have the right to add images" ), null, true);
 	exit;
 }
 $maxId = Image::GetMaxId();
@@ -23,8 +23,8 @@ $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
-	exit;	
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI'], true);
+	exit;
 }
 
 $articleObj =& new Article($f_language_selected, $f_article_number);
@@ -91,7 +91,7 @@ function checkAddForm(form) {
 <TR>
 	<TD ALIGN="RIGHT" ><?php putGS("URL"); ?>:</TD>
 	<TD>
-		<INPUT TYPE="TEXT" NAME="f_image_url" VALUE="" class="input_text" SIZE="32"> 
+		<INPUT TYPE="TEXT" NAME="f_image_url" VALUE="" class="input_text" SIZE="32">
 	</TD>
 </TR>
 <TR>

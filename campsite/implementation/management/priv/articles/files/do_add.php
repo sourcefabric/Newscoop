@@ -1,4 +1,4 @@
-<?php  
+<?php
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
 load_common_include_files("article_files");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
@@ -14,7 +14,7 @@ if (!$access) {
 	exit;
 }
 if (!$User->hasPermission('AddFile')) {
-	camp_html_display_error(getGS('You do not have the right to add files.'));
+	camp_html_display_error(getGS('You do not have the right to add files.'), null, true);
 	exit;
 }
 
@@ -27,14 +27,18 @@ $f_content_disposition = Input::Get('f_content_disposition');
 
 $BackLink = Input::Get('BackLink', 'string', null, true);
 
+if (!isset($_FILES["f_file"]) || (filesize($_FILES["f_file"]['tmp_name']) == false)) {
+	camp_html_display_error(getGS("You must select a file to upload."), null, true);
+}
+
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));
-	exit;			
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), null, true);
+	exit;
 }
 
 $articleObj =& new Article($f_language_selected, $f_article_number);
 if (!$articleObj->exists()) {
-	camp_html_display_error(getGS("Article does not exist."));
+	camp_html_display_error(getGS("Article does not exist."), null, true);
 	exit;
 }
 
@@ -60,8 +64,8 @@ if (!empty($_FILES['f_file'])) {
 
 // Check if image was added successfully
 if (!is_object($file)) {
-	camp_html_display_error("File upload failed.", $BackLink);
-	exit;	
+	camp_html_display_error("File upload failed.", $BackLink, true);
+	exit;
 }
 
 ArticleAttachment::AddFileToArticle($file->getAttachmentId(), $articleObj->getArticleNumber());

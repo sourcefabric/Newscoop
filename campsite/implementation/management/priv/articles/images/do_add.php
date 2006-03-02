@@ -1,4 +1,4 @@
-<?php  
+<?php
 
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
 load_common_include_files("article_images");
@@ -18,7 +18,7 @@ if (!$access) {
 	exit;
 }
 if (!$User->hasPermission('AddImage')) {
-	camp_html_display_error(getGS('You do not have the right to add images.' ));
+	camp_html_display_error(getGS('You do not have the right to add images.' ), null, true);
 	exit;
 }
 
@@ -34,8 +34,8 @@ $f_image_url = Input::Get('f_image_url', 'string', '', true);
 $BackLink = Input::Get('BackLink', 'string', null, true);
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));
-	exit;			
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), null, true);
+	exit;
 }
 
 $articleObj =& new Article($f_language_selected, $f_article_number);
@@ -64,8 +64,8 @@ else {
 
 // Check if image was added successfully
 if (!is_object($image)) {
-	camp_html_display_error($image, $BackLink);
-	exit;	
+	camp_html_display_error($image, $BackLink, true);
+	exit;
 }
 
 ArticleImage::AddImageToArticle($image->getImageId(), $articleObj->getArticleNumber(), $f_image_template_id);

@@ -15,7 +15,7 @@ if (!$access) {
 if (!$User->hasPermission("AttachImageToArticle")) {
 	$errorStr = getGS('You do not have the right to attach images to articles.');
 	camp_html_display_error($errorStr, null, true);
-	exit;	
+	exit;
 }
 
 $f_language_id = Input::Get('f_language_id', 'int', 0);
@@ -24,8 +24,8 @@ $f_article_number = Input::Get('f_article_number', 'int', 0);
 $f_image_attach_mode = camp_session_get('f_image_attach_mode', 'existing');
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
-	exit;	
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI'], true);
+	exit;
 }
 
 $articleObj =& new Article($f_language_selected, $f_article_number);
@@ -43,14 +43,14 @@ $articleObj =& new Article($f_language_selected, $f_article_number);
 	<?php if ($User->hasPermission('AddImage')) { ?>
 	<td style="padding: 3px; background-color: #EEE; border-top: 1px solid #8baed1; border-left: 1px solid #8baed1; <?php if ($f_image_attach_mode != "new") { ?>border-bottom: 1px solid #8baed1;<?php } ?>"><a href="<?php echo camp_html_article_url($articleObj, $f_language_id, "images/popup.php", "", "&f_image_attach_mode=new"); ?>"><img src="<?php p($Campsite['ADMIN_IMAGE_BASE_URL']); ?>/add.png" border="0"><b><?php putGS("Attach New Image"); ?></b></a></td>
 	<?php } ?>
-	
+
 	<td style="padding: 3px; background-color: #EEE; border-top: 1px solid #8baed1; border-right: 1px solid #8baed1; border-left: 1px solid #8baed1; <?php if ($f_image_attach_mode != "existing") { ?>border-bottom: 1px solid #8baed1;<?php } ?>"><a href="<?php echo camp_html_article_url($articleObj, $f_language_id, "images/popup.php", "", "&f_image_attach_mode=existing"); ?>"><img src="<?php p($Campsite['ADMIN_IMAGE_BASE_URL']); ?>/add.png" border="0"><b><?php putGS("Attach Existing Image"); ?></b></a></td>
 </tr>
 <tr>
-	<td colspan="2" style="background-color: #EEE; padding-top: 5px; border-bottom: 1px solid #8baed1; border-right: 1px solid #8baed1; border-left: 1px solid #8baed1;">	
-		<?php 
+	<td colspan="2" style="background-color: #EEE; padding-top: 5px; border-bottom: 1px solid #8baed1; border-right: 1px solid #8baed1; border-left: 1px solid #8baed1;">
+		<?php
 		if ($f_image_attach_mode == "existing") {
-			include("search.php"); 
+			include("search.php");
 		} else {
 			include("add.php");
 		}?>

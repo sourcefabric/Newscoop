@@ -20,8 +20,8 @@ $f_image_id = Input::Get('f_image_id', 'int', 0);
 $f_image_template_id = Input::Get('f_image_template_id', 'int', 0, true);
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
-	exit;	
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI'], true);
+	exit;
 }
 
 $publicationObj =& new Publication($f_publication_id);
@@ -38,7 +38,7 @@ if (!$User->hasPermission('ChangeImage')) {
 
 // Add extra breadcrumb for image list.
 $extraCrumbs = array(getGS("Images") => "");
-$topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
+$topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj,
 				  'Section' => $sectionObj, 'Article'=>$articleObj);
 camp_html_content_top($title, $topArray, true, true, $extraCrumbs);
 ?>
@@ -60,7 +60,7 @@ camp_html_content_top($title, $topArray, true, true, $extraCrumbs);
 	<TD>
 		<?php if ($User->hasPermission('AttachImageToArticle')) { ?>
 		<INPUT TYPE="TEXT" NAME="f_image_template_id" VALUE="<?php echo $f_image_template_id; ?>" class="input_text" SIZE="32" MAXLENGTH="10">
-		<?php } else { 
+		<?php } else {
 			echo $f_image_template_id;
 		} ?>
 	</TD>
@@ -90,7 +90,7 @@ camp_html_content_top($title, $topArray, true, true, $extraCrumbs);
 	<TD>
 		<?php if ($User->hasPermission('ChangeImage')) { ?>
 		<INPUT TYPE="TEXT" NAME="f_image_place" VALUE="<?php echo htmlspecialchars($imageObj->getPlace()); ?>" class="input_text" SIZE="32" MAXLENGTH="64">
-		<?php } else { 
+		<?php } else {
 			echo htmlspecialchars($imageObj->getPlace());
 		} ?>
 	</TD>
@@ -100,7 +100,7 @@ camp_html_content_top($title, $topArray, true, true, $extraCrumbs);
 	<TD>
 		<?php if ($User->hasPermission('ChangeImage')) { ?>
 		<INPUT TYPE="TEXT" NAME="f_image_date" VALUE="<?php echo htmlspecialchars($imageObj->getDate()); ?>" class="input_text" SIZE="11" MAXLENGTH="10">
-		<?php } else { 
+		<?php } else {
 			echo htmlspecialchars($imageObj->getDate());
 		} ?>
 		<?php putGS('YYYY-MM-DD'); ?>
@@ -125,6 +125,6 @@ camp_html_content_top($title, $topArray, true, true, $extraCrumbs);
 </TABLE>
 </FORM>
 <P>
-<?php 
+<?php
 
 camp_html_copyright_notice(); ?>

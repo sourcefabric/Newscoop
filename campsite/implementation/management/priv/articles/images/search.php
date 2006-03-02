@@ -15,12 +15,12 @@ if (!$access) {
 $f_order_by = camp_session_get('f_order_by', 'id');
 $f_order_direction = camp_session_get('f_order_direction', 'ASC');
 $f_image_offset = camp_session_get('f_image_offset', 0);
-$f_search_string = camp_session_get('f_search_string', '');	
+$f_search_string = camp_session_get('f_search_string', '');
 $f_items_per_page = camp_session_get('f_items_per_page', 4);
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
-	exit;	
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI'], true);
+	exit;
 }
 
 // Build the links for ordering search results
@@ -119,7 +119,7 @@ if (count($imageData) > 0) {
     <TD ALIGN="center" VALIGN="top" style="padding: 3px;" nowrap>
       <?php  putGS("In use"); ?>
     </TD>
-</TR>  
+</TR>
 <?php
 $color = 0;
 foreach ($imageData as $image) {
@@ -143,12 +143,12 @@ foreach ($imageData as $image) {
      	}
      	else {
      		?>
-        	<TD ALIGN="CENTER">&nbsp;</TD>             		
+        	<TD ALIGN="CENTER">&nbsp;</TD>
      		<?php
      	}
         ?>
         <TD ALIGN="center">
-            <A HREF="<?php echo 
+            <A HREF="<?php echo
             camp_html_article_url($articleObj, $f_language_id, "images/view.php", camp_html_article_url($articleObj, $f_language_id, "images/popup.php"))
             .'&f_image_id='.$image['id']; ?>">
               <img src="<?php echo $image['thumbnail_url']; ?>" border="0"><br>
@@ -156,7 +156,7 @@ foreach ($imageData as $image) {
             </a>
         </TD>
         <TD style="padding-left: 5px;">
-            <A HREF="<?php echo camp_html_article_url($articleObj, $f_language_id, "images/view.php", camp_html_article_url($articleObj, $f_language_id, "images/popup.php"))  
+            <A HREF="<?php echo camp_html_article_url($articleObj, $f_language_id, "images/view.php", camp_html_article_url($articleObj, $f_language_id, "images/popup.php"))
             .'&f_image_id='.$image['id']; ?>"><?php echo htmlspecialchars($image['description']); ?></A>
         </TD>
         <TD style="padding-left: 5px;">
@@ -184,11 +184,11 @@ foreach ($imageData as $image) {
 <table class="action_buttons">
 <TR>
     <TD>
-    <?php  
+    <?php
     echo $pager->render();
     ?></td>
 </TR>
-</TABLE>	
+</TABLE>
 <?php
 }
 

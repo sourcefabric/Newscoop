@@ -1,4 +1,4 @@
-<?php  
+<?php
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
 load_common_include_files("article_images");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
@@ -30,14 +30,14 @@ $f_image_place = trim(Input::Get('f_image_place', 'string', null, true));
 $f_image_date = Input::Get('f_image_date', 'string', null, true);
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));
-	exit;	
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), null, true);
+	exit;
 }
 
 $articleObj =& new Article($f_language_selected, $f_article_number);
 
 if (!$User->hasPermission('ChangeImage') && !$User->hasPermission('AttachImageToArticle')) {
-	$ref = camp_html_article_url($articleObj, $f_language_id, 'edit.php');	
+	$ref = camp_html_article_url($articleObj, $f_language_id, 'edit.php');
 	header("Location: $ref");
 }
 
@@ -49,13 +49,13 @@ if (!is_null($f_image_description) && $User->hasPermission('ChangeImage')) {
 	$attributes['Description'] = $f_image_description;
 	$attributes['Photographer'] = $f_image_photographer;
 	$attributes['Place'] = $f_image_place;
-	$attributes['Date'] = $f_image_date;	
+	$attributes['Date'] = $f_image_date;
 	if ($User->hasPermission('ChangeImage')) {
 		$imageObj->update($attributes);
 	}
 }
 
-if ($User->hasPermission('AttachImageToArticle')) {	
+if ($User->hasPermission('AttachImageToArticle')) {
 	if (is_numeric($f_image_template_id) && ($f_image_template_id > 0)) {
 		ArticleImage::SetTemplateId($f_article_number, $f_image_id, $f_image_template_id);
 	}

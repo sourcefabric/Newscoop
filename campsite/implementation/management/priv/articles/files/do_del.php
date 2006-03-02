@@ -1,4 +1,4 @@
-<?php  
+<?php
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
 load_common_include_files("article_files");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
@@ -16,7 +16,7 @@ if (!$access) {
 }
 
 if (!$User->hasPermission('DeleteFile')) {
-	camp_html_display_error(getGS('You do not have the right to delete files.' ));
+	camp_html_display_error(getGS('You do not have the right to delete files.' ), null, true);
 	exit;
 }
 
@@ -27,25 +27,25 @@ $f_attachment_id = Input::Get('f_attachment_id', 'int', 0);
 
 // Check input
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), null, true);
 	exit;
 }
 
 $articleObj =& new Article($f_language_selected, $f_article_number);
 
 if (!$articleObj->exists()) {
-	camp_html_display_error(getGS("Article does not exist."));
+	camp_html_display_error(getGS("Article does not exist."), null, true);
 	exit;
 }
 
 if (!$User->hasPermission("DeleteFile")) {
-	camp_html_display_error(getGS("You do not have the right to delete file attachments."));
-	exit;		
+	camp_html_display_error(getGS("You do not have the right to delete file attachments."), null, true);
+	exit;
 }
 
 $attachmentObj =& new Attachment($f_attachment_id);
 if (!$attachmentObj->exists()) {
-	camp_html_display_error(getGS('Attachment does not exist.'));
+	camp_html_display_error(getGS('Attachment does not exist.'), null, true);
 	exit;
 }
 ArticleAttachment::RemoveAttachmentFromArticle($f_attachment_id, $f_article_number);

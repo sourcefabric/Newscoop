@@ -1,4 +1,4 @@
-<?php  
+<?php
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
 load_common_include_files("article_files");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
@@ -18,7 +18,7 @@ if (!$access) {
 }
 
 if (!$User->hasPermission('ChangeFile')) {
-	camp_html_display_error(getGS('You do not have the right to change files.' ));
+	camp_html_display_error(getGS('You do not have the right to change files.' ), null, true);
 	exit;
 }
 
@@ -34,8 +34,8 @@ $f_language_specific = Input::Get('f_language_specific');
 $f_content_disposition = Input::Get('f_content_disposition');
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));
-	exit;	
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), null, true);
+	exit;
 }
 
 $articleObj =& new Article($f_language_selected, $f_article_number);
@@ -44,15 +44,15 @@ $issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
 $sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
 
 if (!$articleObj->exists()) {
-	camp_html_display_error(getGS("Article does not exist."));
+	camp_html_display_error(getGS("Article does not exist."), null, true);
 	exit;
 }
 
 // This file can only be accessed if the user has the right to change articles
 // or the user created this article and it hasnt been published yet.
-if (!$articleObj->userCanModify($User)) {	
-	camp_html_display_error(getGS('You do not have the right to change the article.'));
-	exit;		
+if (!$articleObj->userCanModify($User)) {
+	camp_html_display_error(getGS('You do not have the right to change the article.'), null, true);
+	exit;
 }
 
 $attachmentObj =& new Attachment($f_attachment_id);
