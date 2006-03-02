@@ -191,7 +191,7 @@ if ($f_edit_mode == "edit") { ?>
 <TR>
 	<TD><A HREF="<?php echo "/$ADMIN/articles/?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id"; ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></A></TD>
 	<TD><A HREF="<?php echo "/$ADMIN/articles/?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id"; ?>"><B><?php  putGS("Article List"); ?></B></A></TD>
-	
+
 	<?php if ($User->hasPermission('AddArticle')) { ?>
 	<TD style="padding-left: 20px;"><A HREF="add.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_language_id=<?php p($f_language_id); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
 	<TD><A HREF="add.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_language_id=<?php p($f_language_id); ?>" ><B><?php  putGS("Add new article"); ?></B></A></TD>
@@ -200,7 +200,7 @@ if ($f_edit_mode == "edit") { ?>
 </TABLE>
 <?php } ?>
 
-	
+
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" class="table_input" width="900px" style="margin-top: 5px;">
 <TR>
 	<TD width="700px" style="border-bottom: 1px solid #8baed1;" colspan="2">
@@ -889,7 +889,7 @@ if ($f_edit_mode == "edit") { ?>
 										$name = "-----";
 									}
 								}
-								$pathStr .= " / ". $name;
+								$pathStr .= " / ". htmlspecialchars($name);
 							}
 
 							// Get the topic name for the 'detach topic' dialog box, below.
@@ -899,7 +899,7 @@ if ($f_edit_mode == "edit") { ?>
 								$tmpTopicName = $tmpArticleTopic->getName(1);
 							}
 							?>
-							<?php p(wordwrap($pathStr, 25, "<br>&nbsp;&nbsp;", true)); ?>
+							<?php p(wordwrap($pathStr, 25, "<br>&nbsp;&nbsp;")); ?>
 						</td>
 						<?php if (($f_edit_mode == "edit") && $User->hasPermission('AttachTopicToArticle')) { ?>
 						<td>
