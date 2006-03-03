@@ -21,6 +21,10 @@ $f_image_offset = camp_session_get('f_image_offset', 0);
 $f_search_string = camp_session_get('f_search_string', '');
 $f_items_per_page = camp_session_get('f_items_per_page', 8);
 
+if ($f_items_per_page < 4) {
+	$f_items_per_page = 4;
+}
+
 // Build the links for ordering search results
 $OrderSign = '';
 if ($f_order_direction == 'DESC') {
