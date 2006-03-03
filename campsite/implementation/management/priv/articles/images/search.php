@@ -17,6 +17,9 @@ $f_order_direction = camp_session_get('f_order_direction', 'ASC');
 $f_image_offset = camp_session_get('f_image_offset', 0);
 $f_search_string = camp_session_get('f_search_string', '');
 $f_items_per_page = camp_session_get('f_items_per_page', 4);
+if ($f_items_per_page < 4) {
+	$f_items_per_page = 4;
+}
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI'], true);
@@ -33,16 +36,13 @@ if ($f_order_direction == 'DESC') {
 	$OrderSign = "<img src=\"".$Campsite["ADMIN_IMAGE_BASE_URL"]."/ascending.png\" border=\"0\">";
 }
 
-if ($f_order_by == "id") {
-	$f_order_direction = $ReverseOrderDirection;
-}
 $TotalImages = Image::GetTotalImages();
 $imageSearch =& new ImageSearch($f_search_string, $f_order_by, $f_order_direction, $f_image_offset, $f_items_per_page);
 $imageSearch->run();
 $imageData = $imageSearch->getImages();
 $NumImagesFound = $imageSearch->getNumImagesFound();
 
-$orderDirectionUrl = camp_html_article_url($articleObj, $f_language_id, 'images/popup.php');
+//$orderDirectionUrl = camp_html_article_url($articleObj, $f_language_id, 'images/popup.php');
 
 ?>
 
@@ -50,9 +50,6 @@ $orderDirectionUrl = camp_html_article_url($articleObj, $f_language_id, 'images/
 <form method="POST" action="popup.php">
 <input type="hidden" name="f_order_direction" value="<?php echo $f_order_direction; ?>">
 <input type="hidden" name="f_image_offset" value="0">
-<input type="hidden" name="f_publication_id" value="<?php p($f_publication_id); ?>">
-<input type="hidden" name="f_issue_number" value="<?php p($f_issue_number); ?>">
-<input type="hidden" name="f_section_number" value="<?php p($f_section_number); ?>">
 <input type="hidden" name="f_language_id" value="<?php p($f_language_id); ?>">
 <input type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>">
 <input type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>">
@@ -77,7 +74,7 @@ $orderDirectionUrl = camp_html_article_url($articleObj, $f_language_id, 'images/
 				</select>
 			</td>
 			<td>
-				<a href="<?php p($orderDirectionUrl); ?>&f_order_direction=<?php p($ReverseOrderDirection); ?>"><?php p($OrderSign); ?></a>
+				<a href="popup.php?f_language_id=<?php p($f_language_id); ?>&f_language_selected=<?php p($f_language_selected); ?>&f_article_number=<?php p($f_article_number); ?>&f_order_direction=<?php p($ReverseOrderDirection); ?>"><?php p($OrderSign); ?></a>
 			</td>
 		</tr>
 		</table>
@@ -128,9 +125,6 @@ foreach ($imageData as $image) {
         <?php
         if ($articleObj->userCanModify($User)) { ?>
     		<form method="POST" action="do_link.php">
-			<input type="hidden" name="f_publication_id" value="<?php p($f_publication_id); ?>">
-			<input type="hidden" name="f_issue_number" value="<?php p($f_issue_number); ?>">
-			<input type="hidden" name="f_section_number" value="<?php p($f_section_number); ?>">
 			<input type="hidden" name="f_language_id" value="<?php p($f_language_id); ?>">
 			<input type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>">
 			<input type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>">

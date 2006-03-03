@@ -31,9 +31,6 @@ if ($f_order_direction == 'DESC') {
 	$OrderSign = "<img src=\"".$Campsite["ADMIN_IMAGE_BASE_URL"]."/ascending.png\" border=\"0\">";
 }
 $orderDirectionUrl = "/$ADMIN/imagearchive/index.php?&f_order_direction=$ReverseOrderDirection";
-if ($f_order_by == "id") {
-	$f_order_direction = $ReverseOrderDirection;
-}
 
 $TotalImages = Image::GetTotalImages();
 $imageSearch =& new ImageSearch($f_search_string, $f_order_by, $f_order_direction, $f_image_offset, $f_items_per_page);
@@ -72,7 +69,7 @@ if ($User->hasPermission('AddImage')) { ?>
     	<A HREF="add.php"><B><?php  putGS('Add new image'); ?></B></A>
     </TD>
 <?php } ?>
-    
+
 </tr>
 </table>
 
@@ -114,16 +111,16 @@ if ($User->hasPermission('AddImage')) { ?>
 <?php
 if (count($imageData) > 0) {
   	$pagerUrl = "/$ADMIN/imagearchive/index.php?";
-    $pager =& new SimplePager($NumImagesFound, $f_items_per_page, "f_image_offset", $pagerUrl);   
+    $pager =& new SimplePager($NumImagesFound, $f_items_per_page, "f_image_offset", $pagerUrl);
 ?>
 <table class="action_buttons">
 <TR>
     <TD>
-    <?php  
+    <?php
     echo $pager->render();
     ?></td>
 </TR>
-</TABLE>	
+</TABLE>
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="6" class="table_list">
 <TR class="table_list_header">
     <TD ALIGN="LEFT" VALIGN="TOP">
@@ -148,7 +145,7 @@ if (count($imageData) > 0) {
     if ($User->hasPermission('DeleteImage')) { ?>
     <TD ALIGN="center" VALIGN="TOP" style="padding: 3px;"><?php  putGS("Delete"); ?></TD>
 <?php  } ?>
-</TR>  
+</TR>
 <?php
 $color = 0;
 foreach ($imageData as $image) {
@@ -184,7 +181,7 @@ foreach ($imageData as $image) {
          	}
          	else {
          		?>
-            	<TD ALIGN="CENTER">&nbsp;</TD>             		
+            	<TD ALIGN="CENTER">&nbsp;</TD>
          		<?php
          	}
         }
@@ -200,11 +197,11 @@ foreach ($imageData as $image) {
 <table class="action_buttons">
 <TR>
     <TD>
-    <?php  
+    <?php
     echo $pager->render();
     ?></td>
 </TR>
-</TABLE>	
+</TABLE>
 <?php
 } else {
     ?><BLOCKQUOTE><LI><?php  putGS('No images.'); ?></LI></BLOCKQUOTE>

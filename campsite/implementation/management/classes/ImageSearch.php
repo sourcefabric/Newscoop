@@ -14,11 +14,11 @@ class ImageSearch {
 	var $m_orderQuery;
 	var $m_whereQuery;
 	var $m_itemsPerPage = 10;
-		
+
 	/**
 	 * This class can search for images matching specific criteria.
 	 * Give the search criteria in the contructor, then call the run()
-	 * function to execute the search and get an array of the images found.  
+	 * function to execute the search and get an array of the images found.
 	 *
 	 * @param string $p_searchString
 	 *			The string to search for.
@@ -32,14 +32,14 @@ class ImageSearch {
 	 *		Order by increasing or decreasing values.
 	 *		Can be  ["ASC"|"DESC"]
 	 *
-	 * @param int $p_offset 
+	 * @param int $p_offset
 	 *		Return results starting from the given offset.
 	 *
 	 * @param int $p_itemsPerPage
 	 *		The number of results to return.
 	 *
 	 */
-	function ImageSearch($p_searchString, $p_orderBy, $p_orderDirection = 'ASC', $p_offset = 0, $p_itemsPerPage = 0) 
+	function ImageSearch($p_searchString, $p_orderBy, $p_orderDirection = 'ASC', $p_offset = 0, $p_itemsPerPage = 0)
 	{
 		global $Campsite;
 		$this->m_orderBy = $p_orderBy;
@@ -59,7 +59,7 @@ class ImageSearch {
 								. " OR Images.Date LIKE '%$this->m_searchString%'"
 								. " OR Images.UploadedByUser LIKE '%$this->m_searchString%'";
 		}
-		
+
 		// "Order by" sql
 		switch ($this->m_orderBy) {
 		case 'description':
@@ -79,30 +79,51 @@ class ImageSearch {
 			break;
 		case 'time_created':
 			$this->m_orderQuery = 'ORDER BY TimeCreated ';
-			$this->m_orderDirection = 'DESC';
+			// Reverse the order direction because "last modified ASC"
+			// means that the last modified article should be on top.
+			// Since the last_modified field is a date, it has the
+			// opposite meaning when you are sorting.
+			if ($p_orderDirection == 'ASC') {
+				$this->m_orderDirection = 'DESC';
+			} else {
+				$this->m_orderDirection = 'ASC';
+			}
 			break;
 		case 'last_modified':
 			$this->m_orderQuery = 'ORDER BY LastModified ';
-			$this->m_orderDirection = 'DESC';
+			// Reverse the order direction because "last modified ASC"
+			// means that the last modified article should be on top.
+			// Since the last_modified field is a date, it has the
+			// opposite meaning when you are sorting.
+			if ($p_orderDirection == 'ASC') {
+				$this->m_orderDirection = 'DESC';
+			} else {
+				$this->m_orderDirection = 'ASC';
+			}
 			break;
 		case 'id':
 		default:
 			$this->m_orderQuery = 'ORDER BY Images.Id ';
+			if ($p_orderDirection == 'ASC') {
+				$this->m_orderDirection = 'DESC';
+			} else {
+				$this->m_orderDirection = 'ASC';
+			}
 			break;
 		}
 		if (!empty($this->m_orderQuery)) {
 			$this->m_orderQuery .= ' '.$this->m_orderDirection;
 		}
 	} // constructor
-	
-	
+
+
 	/**
 	 * Execute the search and return the results.
 	 *
 	 * @return array
 	 *		An array of Image objects.
 	 */
-	function run() 
+	function run()
 	{
 		global $Campsite;
 		$tmpImage =& new Image();
@@ -130,7 +151,7 @@ class ImageSearch {
 			}
 			$inUseQuery = "SELECT ArticleImages.IdImage, COUNT(Articles.Number) as in_use "
 							." FROM Articles, ArticleImages "
-							." WHERE (Articles.Number=ArticleImages.NrArticle) " 
+							." WHERE (Articles.Number=ArticleImages.NrArticle) "
 							." AND (".implode(' OR ', $imageIds).")"
 							." GROUP By ArticleImages.IdImage";
 			$tmpInUseArray = $Campsite['db']->GetAll($inUseQuery);
@@ -158,44 +179,44 @@ class ImageSearch {
 		}
 		return $this->m_imageData;
 	} // fn run
-	
-	
+
+
 	/**
 	 * Return the images that were found.
 	 * @return array
 	 */
-	function getImages() 
+	function getImages()
 	{
 		return $this->m_imageData;
 	} // fn getImages
-	
-	
+
+
 	/**
 	 * Return the total number of images that match the search.
-	 * Note that this may be different than the total number of 
+	 * Note that this may be different than the total number of
 	 * images returned by run() or getImages() because that array
 	 * is limited to the set "images per page".  The number returned
-	 * by this function is the total number of images without that 
+	 * by this function is the total number of images without that
 	 * restriction.
 	 *
 	 * @return int
 	 */
-	function getNumImagesFound() 
+	function getNumImagesFound()
 	{
 		return $this->m_numImagesFound;
 	} // fn getNumImagesFound
-	
-	
+
+
 	/**
 	 * The current value for the number of images shown per page.
 	 * @return int
 	 */
-	function getImagesPerPage() 
+	function getImagesPerPage()
 	{
 		return $this->m_itemsPerPage;
 	} // fn getImagesPerPage
-	
-	
+
+
 	/**
 	 * Set the max number of images to return from the run() function.
 	 *
@@ -203,11 +224,11 @@ class ImageSearch {
 	 *
 	 * @return void
 	 */
-	function setImagesPerPage($p_value) 
+	function setImagesPerPage($p_value)
 	{
 		$this->m_itemsPerPage = $p_value;
 	} // fn setImagesPerPage
-	
+
 } // class ImageSearch
 
 ?>
