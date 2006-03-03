@@ -21,7 +21,7 @@ $f_article_number = Input::Get('f_article_number', 'int', 0);
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
-	exit;	
+	exit;
 }
 
 if ($f_publication_id == 0 || $f_issue_number == 0 || $f_section_number == 0) {
@@ -40,19 +40,19 @@ $BackLink = camp_html_article_url($articleObj, $f_language_id, "edit.php");
 $publicationObj =& new Publication($f_publication_id);
 if (!$publicationObj->exists()) {
 	camp_html_display_error(getGS('Publication does not exist.'), $BackLink, true);
-	exit;	
+	exit;
 }
 
 $issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
 if (!$issueObj->exists()) {
 	camp_html_display_error(getGS('Issue does not exist.'), $BackLink);
-	exit;	
+	exit;
 }
 
 $sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
 if (!$sectionObj->exists()) {
 	camp_html_display_error(getGS('Section does not exist.'), $BackLink, true);
-	exit;	
+	exit;
 }
 
 
@@ -79,9 +79,13 @@ if ($articleObj->getPublished() != 'N') {
 	<script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/calendar.js"></script>
 	<script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/lang/calendar-<?php echo $_REQUEST["TOL_Language"]; ?>.js"></script>
 	<script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/calendar-setup.js"></script>
+	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.config.js"></script>
+	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.core.js"></script>
+	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.lang-enUS.js"></script>
+	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.validators.js"></script>
 </head>
 <body>
-<FORM NAME="autopublish" METHOD="POST" ACTION="autopublish_do_add.php" >
+<FORM NAME="autopublish" METHOD="POST" ACTION="autopublish_do_add.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input" style="margin-top: 10px;">
 <TR>
 	<TD COLSPAN="2">
@@ -114,7 +118,7 @@ if ($articleObj->getPublished() != 'N') {
 			  document.forms.autopublish.f_publish_date.value = y+"-"+m+"-"+d;
 			}
 		};
-		
+
 		Calendar.setup(
 			{
 			  flat         : "calendar-container", // ID of the parent element
@@ -123,15 +127,15 @@ if ($articleObj->getPublished() != 'N') {
 		);
 		</script>
 		<p>
-		<input type="text" name="f_publish_date" value="" readonly class="input_text_disabled" size="10">
+		<input type="text" name="f_publish_date" value="" readonly class="input_text_disabled" size="10" alt="blank" emsg="<?php putGS('You must complete the $1 field.',"'".getGS('Date')."'"); ?>">
 		<?php putGS('YYYY-MM-DD'); ?>
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Time"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" NAME="f_publish_hour" SIZE="2" MAXLENGTH="2" VALUE="<?php p($publishHour); ?>" class="input_text"> :
-	<INPUT TYPE="TEXT" NAME="f_publish_minute" SIZE="2" MAXLENGTH="2" VALUE="<?php p($publishMinute); ?>" class="input_text">
+	<INPUT TYPE="TEXT" NAME="f_publish_hour" SIZE="2" MAXLENGTH="2" VALUE="<?php p($publishHour); ?>" class="input_text" alt="number|0|0|23" emsg="<?php putGS('You must complete the $1 field.',"'".getGS('Time')."'"); ?>"> :
+	<INPUT TYPE="TEXT" NAME="f_publish_minute" SIZE="2" MAXLENGTH="2" VALUE="<?php p($publishMinute); ?>" class="input_text" alt="number|0|0|59" emsg="<?php putGS('You must complete the $1 field.',"'".getGS('Time')."'"); ?>">
 	</TD>
 </TR>
 <TR>
@@ -171,7 +175,7 @@ if ($articleObj->getPublished() != 'N') {
 	<TD COLSPAN="2" align="center">
 	<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save'); ?>" class="button">
 	&nbsp;&nbsp;
-	<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" class="button" onclick="window.close();"> 
+	<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" class="button" onclick="window.close();">
 	</TD>
 </TR>
 </TABLE>
@@ -196,7 +200,7 @@ if ($articleObj->getPublished() != 'N') {
 	</TR>
 	</TABLE>
 	</BLOCKQUOTE>
-<?php 
-} 
+<?php
+}
 //camp_html_copyright_notice();
 ?>
