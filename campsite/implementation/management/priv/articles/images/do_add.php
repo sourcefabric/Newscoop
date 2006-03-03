@@ -54,11 +54,11 @@ $attributes['Date'] = $f_image_date;
 if (!empty($f_image_url)) {
 	$image = Image::OnAddRemoteImage($f_image_url, $attributes, $User->getUserId());
 }
-elseif (!empty($_FILES['f_image_file'])) {
+elseif (!empty($_FILES['f_image_file']) && !empty($_FILES['f_image_file']['name'])) {
 	$image = Image::OnImageUpload($_FILES['f_image_file'], $attributes, $User->getUserId());
 }
 else {
-	header('Location: '.camp_html_article_url($articleObj, $f_language_id, 'images/popup.php'));
+	camp_html_display_error(getGS("You must select an image file to upload."), $BackLink, true);
 	exit;
 }
 

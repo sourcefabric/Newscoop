@@ -37,9 +37,14 @@ $ImageTemplateId = ArticleImage::GetUnusedTemplateId($f_article_number);
 $q_now = $Campsite['db']->GetOne("SELECT LEFT(NOW(), 10)");
 
 ?>
+<script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/calendar-setup.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.config.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.core.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.lang-enUS.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.validators.js"></script>
 <script>
 function checkAddForm(form) {
-	retval = ((form.cURL.value != '') || (form.cImage.value != ''));
+	retval = ((form.f_image_url.value != '') || (form.f_image_file.value != ''));
 	if (!retval) {
 	    alert('<?php putGS("You must select an image file to upload."); ?>');
 	    return retval;
