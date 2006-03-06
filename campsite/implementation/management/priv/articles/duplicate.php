@@ -196,14 +196,20 @@ foreach ($articles as $articleNumber => $languageArray) {
 //
 if (isset($_REQUEST["action_button"])) {
 
-	// If no actions were selected, dont do anything.
-	if (count($doAction) == 0) {
-		$url = "/$ADMIN/articles/"
+	$srcArticleIndexUrl = "/$ADMIN/articles/"
 				."?f_publication_id=$f_publication_id"
 				."&f_issue_number=$f_issue_number"
 				."&f_section_number=$f_section_number"
 				."&f_language_id=$f_language_id";
-		header("Location: $url");
+	$destArticleIndexUrl = "/$ADMIN/articles/"
+				."?f_publication_id=$f_destination_publication_id"
+				."&f_issue_number=$f_destination_issue_number"
+				."&f_section_number=$f_destination_section_number"
+				."&f_language_id=$f_language_id";
+
+	// If no actions were selected, dont do anything.
+	if (($f_action != "move") && (count($doAction) == 0) ) {
+		header("Location: $srcArticleIndexUrl");
 		exit;
 	}
 
@@ -240,11 +246,7 @@ if (isset($_REQUEST["action_button"])) {
 			$tmpArticle = camp_array_peek($newArticles);
 			$url = camp_html_article_url($tmpArticle, $tmpArticle->getLanguageId(), "edit.php");
 		} else {
-			$url = "/$ADMIN/articles/"
-					."?f_publication_id=$f_publication_id"
-					."&f_issue_number=$f_issue_number"
-					."&f_section_number=$f_section_number"
-					."&f_language_id=$f_language_id";
+			$url = $destArticleIndexUrl;
 		}
 		header("Location: $url");
 		exit;
@@ -253,23 +255,24 @@ if (isset($_REQUEST["action_button"])) {
 
 		// Move all the translations requested.
 		$tmpArticles = array();
-		foreach ($doAction as $articleNumber => $languageArray) {
-			foreach ($languageArray as $languageId => $action) {
-				$tmpArticle =& new Article($languageId, $articleNumber);
-
-				$tmpArticle->move($f_destination_publication_id,
-								  $f_destination_issue_number,
-								  $f_destination_section_number);
-
-				$tmpArticle->setTitle($articleNames[$articleNumber][$languageId]);
-				$tmpArticles[] = $tmpArticle;
+		foreach ($articles as $articleNumber => $languageArray) {
+			$tmpArticle = camp_array_peek($languageArray);
+			$translations = $tmpArticle->getTranslations();
+			foreach ($translations as $tmpArticle2) {
+				$articleNumber = $tmpArticle2->getArticleNumber();
+				$articleLanguage = $tmpArticle2->getLanguageId();
+				$tmpArticle2->move($f_destination_publication_id,
+							   	   $f_destination_issue_number,
+							   	   $f_destination_section_number);
+				$tmpArticle2->setTitle($articleNames[$articleNumber][$articleLanguage]);
+				$tmpArticles[] = $tmpArticle2;
 			}
 		}
 		$tmpArticle = camp_array_peek($tmpArticles);
 		if ($f_mode == "single") {
 			$url = camp_html_article_url($tmpArticle, $tmpArticle->getLanguageId(), "edit.php");
 		} else {
-			$url = camp_html_article_url($tmpArticle, $f_language_id, "index.php");
+			$url = $destArticleIndexUrl;
 		}
 		header("Location: $url");
 		exit;
@@ -295,7 +298,7 @@ if (isset($_REQUEST["action_button"])) {
 		if ($f_mode == "single") {
 			$url = camp_html_article_url($tmpArticle, $tmpArticle->getLanguageId(), "edit.php");
 		} else {
-			$url = camp_html_article_url($tmpArticle, $f_language_id, "index.php");
+			$url = $destArticleIndexUrl;
 		}
 		header("Location: $url");
 		exit;
@@ -376,17 +379,19 @@ foreach ($articles as $languageArray) {
 	<TD>
 		<TABLE cellpadding="3">
 		<TR class="table_list_header">
+			<?php if ($f_action != "move") { ?>
 			<TD valign="top">
 				<?php
 				if ($f_action == "duplicate") {
 					putGS("Duplicate?");
-				} elseif ($f_action == "move") {
-					putGS("Move?");
+//				} elseif ($f_action == "move") {
+//					putGS("Move?");
 				} elseif ($f_action == "publish") {
 					putGS("Publish?");
 				}
 				?>
 			</TD>
+			<?php } ?>
 			<TD valign="top"><?php putGS("Name"); ?></TD>
 			<TD valign="top"><?php putGS("Language"); ?></TD>
 			<TD valign="top"><?php putGS("Type"); ?></TD>
@@ -401,9 +406,14 @@ foreach ($articles as $languageArray) {
 				$articleNumber = $article->getArticleNumber();
 			?>
 		<TR class="<?php if ($color) { ?>list_row_even<?php } else { ?>list_row_odd<?php } $color = !$color; ?>" >
+			<?php
+			// When moving articles, you must move all translations as well,
+			// so the user is not allowed to opt-opt of moving them.
+			if ($f_action != "move") { ?>
 			<TD <?php if ($bad) { ?>style="border-left: 3px solid #AF2041; background-color: #FFD4E4;"<?php } ?>>
 				<input type="checkbox" name="f_do_copy_<?php p($articleNumber."_".$languageId); ?>" value="" <?php if ($bad) { echo "disabled"; } elseif (isset($doAction[$articleNumber][$languageId])) { echo "CHECKED"; } ?>>
 			</TD>
+			<?php } ?>
 			<TD <?php if ($count++ > 0) { ?>class="translation_indent"<?php } ?> <?php if ($bad) { ?>style="background-color: #FFD4E4;"<?php } ?>>
 				<INPUT TYPE="TEXT" NAME="f_article_name_<?php p($articleNumber."_".$languageId); ?>" SIZE="50" MAXLENGTH="256" VALUE="<?php  p(htmlspecialchars($articleNames[$articleNumber][$languageId])); ?>" class="input_text">
 			</TD>
@@ -511,7 +521,7 @@ foreach ($articles as $languageArray) {
 					<TD VALIGN="middle" ALIGN="RIGHT" style="padding-left: 20px;"><?php  putGS('Section'); ?>: </TD>
 					<TD valign="middle" ALIGN="LEFT">
 						<?php if (($f_destination_issue_number > 0) && (count($allSections) > 1)) { ?>
-						<SELECT NAME="f_destination_section_number" class="input_select" ONCHANGE="if (this.selectedIndex != 0) { this.form.action_button.className='button'; } else { this.form.action_button.className='button_disabled'; }">
+						<SELECT NAME="f_destination_section_number" class="input_select" ONCHANGE="this.form.submit();">
 						<OPTION VALUE="0"><?php  putGS('---Select section---'); ?></OPTION>
 						<?php
 						$previousSection = camp_array_peek($allSections);
@@ -545,7 +555,7 @@ foreach ($articles as $languageArray) {
 
 		<tr>
 			<td align="center" colspan="2">
-				<INPUT TYPE="submit" Name="action_button" Value="<?php p($title); ?>" <?php if ( (count($doAction) <= 0) || ($f_destination_publication_id <= 0) || ($f_destination_issue_number <= 0) || ($f_destination_section_number <= 0)) { echo 'class="button_disabled"'; } else { echo "class=\"button\""; }?> >
+				<INPUT TYPE="submit" Name="action_button" Value="<?php p($title); ?>" <?php if ( ($f_destination_publication_id <= 0) || ($f_destination_issue_number <= 0) || ($f_destination_section_number <= 0)) { echo 'class="button_disabled"'; } else { echo "class=\"button\""; }?> >
 			</td>
 		</tr>
 		</TABLE>

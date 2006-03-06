@@ -346,6 +346,7 @@ class Article extends DatabaseObject {
 		}
 		if (count($columns) > 0) {
 			$this->update($columns);
+			$this->positionAbsolute(1);
 		}
 	} // fn move
 
