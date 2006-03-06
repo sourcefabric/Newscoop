@@ -1,15 +1,15 @@
 2.5.0 (March 1st, 2006)
-  For full details about these changes, see: 
+  For full details about these changes, see:
   http://code.campware.org/projects/campsite/query?milestone=2.5.0
-  
+
   New Features
   ------------
   - Added ability to translate topics.
-  - Added ability to create an article without placing it in the 
+  - Added ability to create an article without placing it in the
     publication/issue/section hierarchy.
-  - Added ability to move an article to another section 
+  - Added ability to move an article to another section
     (previously we had the ability to copy, but not move).
-  - The Home page has a new layout to accommodate more detailed 
+  - The Home page has a new layout to accommodate more detailed
     information and an increasing number of views of the workflow.
     It now displays publication/issue/section for all articles, and
     there is a new section to show articles which have not yet been
@@ -18,9 +18,9 @@
     instead of all languages in a section.
   - Added Swedish translation.
   - Campsite no longer tries to install PEAR libraries on the system at
-    install time, instead it will use the ones we have added to the release. 
+    install time, instead it will use the ones we have added to the release.
     This will eliminate one of our main install problems.
-    
+
   Added permissions:
   - User may move articles
   - User may translate articles
@@ -29,17 +29,101 @@
   - User may change system preferences
   - User may use the "Find and Replace" button in the WYSIWYG
   - User may use the "Character Map" button in the WYSIWYG
-  
-  Bugs Fixed
-  ----------
+
+  Minor Features
+  --------------
+  - Added backlinks to lots of screens to get back to where you
+    came from.
+  - Used javascript to validate lots of forms before they are
+    submitted.
+  - #1181: Differentiate between past and future events in Issue
+    Scheduled Publishing
+  - #1655: Provide confirmation on template save
+  - #1666: Add an "Add Article" link to the Article Edit screen
+  - #1672: Allow setting of HTML encoding from the template
+  - #1719: If you adding an article from within a section, the
+    language drop down should be populated with only the languages
+    of the section.
+  - #1722: Issue List scheduled publishing icon should change icon
+    to green when enabled
+
+  Bugs Fixed (40 total)
+  ---------------------
+  - Fixed many cases where something bad would happen if no input
+    was given in a form. (#1768, #1754, #1747, #1746, #1737, #1726)
+  - #1100: Possible to scheduled events in the past in Issue Scheduled
+    Publishing
+  - #1493: Xinha->add image: popup too small
+  - #1605: When a large number of images are attached to any number of
+    articles, any image function will hang the system.
+  - #1660: Template editor eats "&nbsp;"
   - #1661: Consecutive "print" statements in the template language eat
     spaces around them
-  - #1660: Template editor eats "&nbsp;"
-  - #1493: Xinha->add image: popup too small
-  
-  
+  - #1662: Encode HTML special chars in template engine output.  Affected
+    keywords are Print, URL, Form, Search, User
+  - #1677: Right now the search of an article can return a translation,
+    even though the article in the current language exists.
+  - #1687: If you sort the log by event, the user row in the table is
+    empty
+  - #1692: In the user subscription form the "Select User Country"
+    statement does not work when the current language is not English.
+  - #1694: Invalid error message displayed by the template engine when
+    no issue was published
+  - #1708: When changing the publication URL type in the admin interface
+    the template engine does not receive the reset cache message.
+  - #1712: The error message for "List <statement>" is missing Subtopic
+    statement.
+  - #1714: The "translate" shell script does not work.
+  - #1715: Scheduled publishing does not work for Serbian language.
+  - #1716: "If List Start" does not work inside "List ArticleAttachment"
+  - #1718: Edit Issue: dont allow language to change to an existing
+    translation
+  - #1720: Changing issue language should change section's language
+  - #1721: Configure issue -> preview -> popups a full browser window
+    instead of small window
+  - #1727: Section duplicate -> after duplicate, cant go to existing
+    or new section
+  - #1730: Article list -> add article -> article added at bottom of list
+  - #1731: Translating an article into an unsupported language gives
+    useless input dialogs if you dont have the right to create an
+    issue or section.
+  - #1732: Some functions in DatabaseObject do not properly escape
+    column names
+  - #1733: Issue list is not indented correctly if you dont have
+    permission to add/change issues
+  - #1745: Duplicate article -> dont select anything to duplicate
+    -> crash
+  - #1748: Cannot attach URL image to an article
+  - #1751: Article -> add image -> you can upload something that isnt
+    an image
+  - #1752: Add existing image to article -> quirks switching from one
+    sort to another
+  - #1753: Image search -> setting "items per page" to zero gives
+    strange behaviour
+  - #1756: HTML special characters not escaped for file attachment
+    descriptions
+  - #1757: Topics with HTML special characters dont show up correctly
+    in article edit
+  - #1761: Topics with special characters not displayed correctly in
+    "Attach topic" popup
+  - #1769: Duplicating an article duplicates keeps the article order
+    of the original. (New articles should be placed at the top of the
+    list)
+  - #1778: Fix subsription form in IE 6
+  - #1780: Image sort - Last Modified sort cannot be reversed to sort
+    the opposite direction
+
+
+2.4.3 (February 1, 2006)
+  Bugs Fixed
+  ----------
+  - #1678: The article indexer doesn't work
+  - #1683: Error changing an Issue's language
+  - #1682: Update the default country list
+
+
 2.4.2 (January 26, 2006)
-  For full details about these changes, see: 
+  For full details about these changes, see:
   http://code.campware.org/projects/campsite/query?milestone=2.4.2
 
   Bugs Fixed
@@ -61,7 +145,7 @@
 
 
 2.4.1 (January 13, 2006)
-  For full details about these changes, see: 
+  For full details about these changes, see:
   http://code.campware.org/projects/campsite/query?milestone=2.4.1
 
   Bugs Fixed
@@ -71,20 +155,20 @@
     an error even if it's correct
   - #1649: In the Article List, using the "up" and "down" order icons
     will select the language of the article you moved.
-  - #1647: The Article List formatting is messed up when you dont have 
+  - #1647: The Article List formatting is messed up when you dont have
     the Add Article permission
   - #1644: No error messages shown in Article Type Add/Edit screen
   - #1642: Article List doesnt look good in IE
   - #1637: Article Edit: A date field is still looks editable when in
     VIEW mode
-  - #1635: Home Page - Clicking on scheduled Issue time does not 
+  - #1635: Home Page - Clicking on scheduled Issue time does not
     take you to editing the event
-    
-    
+
+
 2.4.0 (January 10, 2006)
-  For full details about these changes, see: 
+  For full details about these changes, see:
   http://code.campware.org/projects/campsite/query?milestone=2.4.0
-  
+
   Major Features
   --------------
   - Ability to attach files to articles
@@ -168,53 +252,53 @@
 
 
 2.3.3 (October 31, 2005)
-  For full details about these changes, see: 
+  For full details about these changes, see:
   http://code.campware.org/projects/campsite/query?milestone=2.3.3
-  
+
   Minor features:
-  - When pasting into WYSIWYG editor, all styles except bold and 
+  - When pasting into WYSIWYG editor, all styles except bold and
     italic will be removed (#1501)
   - Added Arabic language (#1490)
-  - Subsection anchors now have CSS tags so you can modify their 
+  - Subsection anchors now have CSS tags so you can modify their
     appearance (#1313)
   - Added documentation on how to install as non-root user, how to use the
     "configure" and "create_instance" scripts, and how to logout a user on
-    the frontend  
-  
+    the frontend
+
   Bug fixes:
-  - When displaying article content the internal links and the 
+  - When displaying article content the internal links and the
     text following them are not displayed. (#1489)
-  - "if user loggedin" does not work correctly for IP-based 
+  - "if user loggedin" does not work correctly for IP-based
     subscriptions (#1505)
-  - Fixed minor security bug where it is possible to learn the MYSQL 
-    password if the attacker has the ability to snoop on outgoing 
+  - Fixed minor security bug where it is possible to learn the MYSQL
+    password if the attacker has the ability to snoop on outgoing
     emails (#1497)
   - Remove warnings when PHP_NOTICES is turned on. (#1515, #1498, #1494)
   - Whitespace in 'gather' cron script results in needless emails (#1507)
   - User IP address list management: can't add 127.0.0.1 (#1504)
-  
-  
+
+
 2.3.2 (October 19, 2005)
-  For full details about the changes in 2.3.2, see: 
+  For full details about the changes in 2.3.2, see:
   http://code.campware.org/projects/campsite/query?milestone=2.3.2
-  
+
   Minor features:
     #1484 -	Allow the use of article publish date in the template language
     #1391 - Screenshots for all administration steps in the manual
 
   Bug fixes:
-    #1482 -	Packaged templates do not use 2.3 database 
+    #1482 -	Packaged templates do not use 2.3 database
     #1480 - Duplicate Article does not copy "OnSection" field correctly
     #1456 - Escaping command line parameters with $'arg' and $"arg" does not work on FreeBSD
-    #1471 - Install scripts break on Debian 3.1 (Sarge) 
-    #1470 -	Packaged templates need documentation, common layout 
-    #1486 -	Fatal error when opening the "Add new image" page 
+    #1471 - Install scripts break on Debian 3.1 (Sarge)
+    #1470 -	Packaged templates need documentation, common layout
+    #1486 -	Fatal error when opening the "Add new image" page
     #1476 -	Wrong error message when PEAR fails to update
     #1462 -	Campsite server returns error when restarting
-    #1457 -	Preview doesn't work correctly for translated articles 
-    #1447 -	Upload date not set properly when duplicating articles 
+    #1457 -	Preview doesn't work correctly for translated articles
+    #1447 -	Upload date not set properly when duplicating articles
     #1414 -	Refresh templates every time they are displayed
-  
+
 
 2.3.1 (September 7, 2005)
     Bug fixes:
@@ -222,7 +306,7 @@
     - Ticket #705 - Image Archive: give an error on Invalid URL
     - Ticket #1291 - No error dialog popups up for article
     edit->images->add new->save
-    - Ticket #1443 - Campsite utility scripts don't work when the binary 
+    - Ticket #1443 - Campsite utility scripts don't work when the binary
     directory is in the path
     - Ticket #1157 - Make Campsite work on PHP 5
     - Ticket #1436 - Fix 'about' link
@@ -264,7 +348,7 @@
     2.3.0 New Features
     - User Management v2
         - #0307: Separation of Staff & Subscribers
-        - Ability to search users 
+        - Ability to search users
         - New, easier-to-use interface
         - #0764: Categorize user-rights list
     - Localizer v2
@@ -274,62 +358,62 @@
         - Notification of missing strings
         - Notification of unused strings
     - WYSIWYG Text editor
-        - Editor changed from HTMLArea to Xinha, a more dynamically 
-          supported project 
+        - Editor changed from HTMLArea to Xinha, a more dynamically
+          supported project
         - Added “Paste from Word” ability – will strip the MSWord styles
         - Internal links support “target”
     - #0710: Online help with user comments
-    - #1115: Show recently published articles, pending actions on the 
+    - #1115: Show recently published articles, pending actions on the
              home page
     - #0703: Article List: Show article lock state
     - #0781: Allow the user to set the default instance parameters
     - #0790: Login screen remembers your previous language choice
     - #0742: Language names now appear in native languages in all lists
-    - #1052: Change all database text input fields to use 255 characters 
+    - #1052: Change all database text input fields to use 255 characters
              so as to support other languages better
     - #1077: Testing checklist
     - “Duplicate Section” screen useability improvements
-    - #1185: Ability to delete all articles in a section when you delete 
+    - #1185: Ability to delete all articles in a section when you delete
              the section
     - Works with SSL
-    
+
     2.3.0 Major Bug Fixes
     - #1051: PHPWrapper broken
     - #0901: In Article List, articles should be shown newest first
-    - #1132: Article Edit -> Topics -> Topics don't show & you cant 
+    - #1132: Article Edit -> Topics -> Topics don't show & you cant
              add them
     - #0849: "Unlock" doesn't work
     - #0812: Duplicating a section is broken
-    - #1273: If Scheduled Publishing cron job is stopped for any reason, 
+    - #1273: If Scheduled Publishing cron job is stopped for any reason,
              scheduled actions may never be performed
-    
+
     2.3.0 Minor Bug Fixes/Tweaks
     - #1280: When translating issues the URL name is not set
-    - #0737: You should not have to fill in "currency" when you modify 
+    - #0737: You should not have to fill in "currency" when you modify
              a publication
     - #1102: Change "Short Name" to "URL Name"
     - #1174: Change "Automatic Publishing" to "Scheduled Publishing"
-    - #1098: No confirmation when deleting an Issue "automatic 
+    - #1098: No confirmation when deleting an Issue "automatic
              publishing" action
-    - #1097: After publishing/unpublishing an issue, the confirmation  
+    - #1097: After publishing/unpublishing an issue, the confirmation
              message is exact opposite of what it should be
     - #0851: Clicking on the campsite logo should bring you "home"
     - #0850: Article -> Automatic Publishing -> Cancel -> error
     - #0844: Default image archive to show most recently added images
     - #0735: Translated issues are not grouped together
-    - #1135: Article Edit -> Images-> Add existing -> edit -> save -> 
+    - #1135: Article Edit -> Images-> Add existing -> edit -> save ->
              returns you to the article image list screen
-    - #1131: Scheduled Publishing: When editing an entry, clicking  
+    - #1131: Scheduled Publishing: When editing an entry, clicking
              "cancel" takes you to the article list
     - “Automatic Publishing” changed to “Scheduled Publishing”
-    - #1190: Deleting an article from article list moves you back to the 
+    - #1190: Deleting an article from article list moves you back to the
              beginning of the article list
-    - #1304: If "Manage templates" permission is OFF, and "Delete  
-             Templates" permission is ON, you cant get to template screen 
+    - #1304: If "Manage templates" permission is OFF, and "Delete
+             Templates" permission is ON, you cant get to template screen
 
 2.2.2 (April 29, 2005)
     - updated FreeBSD install documentation
-    - updated the manual (added extra information about upgrading from older 
+    - updated the manual (added extra information about upgrading from older
     versions)
     - fixed install bugs:
         - use short options on install utility (FreeBSD version doesn't support
@@ -403,7 +487,7 @@
 2.1.5 (March 26, 2004)
     - Added Chinese translation thanks to Andrew Lih and Tian Fawei at Hong Kong
     University, Journalism and Media Studies Centre
-    - Added Arabic localization (thanks to folks at www.rightsmedia.org in 
+    - Added Arabic localization (thanks to folks at www.rightsmedia.org in
     Lebanon)
     - Implemented article/section duplication feature
     - Implemented a small extension API in order to allow the Phorum modules to
@@ -471,7 +555,7 @@
     headers, binaries etc.), configure application, test configuration, select
     modules etc.
     - Ported the administration interface from www-sql to Php
-    - Use UTF-8 charset all over the application (database, admin interface, 
+    - Use UTF-8 charset all over the application (database, admin interface,
     templates, parser, java editor)
     - Added the localizer: a tool allowing the users to translate the admin
     interface into different languages and select the language of the interface
