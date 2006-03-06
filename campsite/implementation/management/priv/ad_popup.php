@@ -8,7 +8,7 @@ $ADReason = Input::Get('ADReason', 'string', getGS('You do not have the right to
 ?>
 <HEAD>
 	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
-	<TITLE><?php putGS("Access denied"); ?></TITLE>
+	<TITLE><?php putGS("Error"); ?></TITLE>
 </HEAD>
 <p>
 <CENTER>
