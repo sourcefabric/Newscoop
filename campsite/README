@@ -1,6 +1,6 @@
 Campsite
 version     : 2.5.0
-release date: March 1, 2006
+release date: March 6, 2006
 contact     : contact@campware.org
 url         : http://www.campware.org
 copyright   : (c)1999-2006 Media Development Loan Fund
@@ -9,25 +9,25 @@ manual      : http://code.campware.org/manuals/campsite/2.5/
 
 INTRODUCTION
 
-Campsite is a robust, stable, and journalist-friendly solution for 
-online magazines and newspapers that speaks your language.  
+Campsite is a robust, stable, and journalist-friendly solution for
+online magazines and newspapers that speaks your language.
 
-Campsite follows the print-newspaper publishing paradigm, so it 
-structures sites by default as Publications > Issues > Sections > 
-Articles. 
+Campsite follows the print-newspaper publishing paradigm, so it
+structures sites by default as Publications > Issues > Sections >
+Articles.
 
-Campsite is available in: English, Portuguese, Spanish, German, 
+Campsite is available in: English, Portuguese, Spanish, German,
 Russian, Arabic, Chinese, Serbian (Cyrillic), Serbo-Croatian (Latin),
-Croatian, Czech, Swedish, and Romanian.  However, the interface can 
+Croatian, Czech, Swedish, and Romanian.  However, the interface can
 easily be localized to new languages using its built-in 'Localizer'.
 
 With Campsite you can:
 
    1. Manage articles translated into different languages
    2. Edit articles using an advanced WYSIWYG interface
-   3. You can create your own definition of what an article is.  
-      For example, one article type might consist of "Intro", 
-      "Body", and "References", while another type might be 
+   3. You can create your own definition of what an article is.
+      For example, one article type might consist of "Intro",
+      "Body", and "References", while another type might be
       "Body" and "Author Bio".
    4. Incorporate images into your articles
    5. Attach files to articles
@@ -44,17 +44,17 @@ With Campsite you can:
          2. pay periods
          3. IP access control for group subscriptions
   12. Localize the administration interface to new languages
-  13. Build third-party plugins using the PHP object-oriented API 
-  
-We encourage further development of this software and would like to 
+  13. Build third-party plugins using the PHP object-oriented API
+
+We encourage further development of this software and would like to
 make any progress accessible to all other users. Please contact us
 if you have or intend to developed this software further.
 
- 
+
 INSTALLATION
 See the INSTALL file
 
- 
+
 MANUAL
 See http://code.campware.org/manuals/campsite/2.5/
 
@@ -62,7 +62,7 @@ See http://code.campware.org/manuals/campsite/2.5/
 TECHNICAL REQUIREMENTS
 See http://code.campware.org/manuals/campsite/2.5/index.php?id=5
 
-  
+
 COPYRIGHT
 Campsite is a Unicode-enabled multilingual web content management system for
 news publications. Copyright (C)1999-2006  Media Development Loan Fund.
