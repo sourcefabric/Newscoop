@@ -6,8 +6,8 @@
 /**
  * Includes
  */
-// We indirectly reference the DOCUMENT_ROOT so we can enable 
-// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT'] 
+// We indirectly reference the DOCUMENT_ROOT so we can enable
+// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT']
 // is not defined in these cases.
 if (!isset($g_documentRoot)) {
     $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
@@ -28,14 +28,14 @@ class Image extends DatabaseObject {
 	var $m_keyIsAutoIncrement = true;
 	var $m_dbTableName = 'Images';
 	var $m_columnNames = array(
-		'Id', 
-		'Description', 
-		'Photographer', 
-		'Place', 
-		'Caption', 
-		'Date', 
-		'ContentType', 
-		'Location', 
+		'Id',
+		'Description',
+		'Photographer',
+		'Place',
+		'Caption',
+		'Date',
+		'ContentType',
+		'Location',
 		'URL',
 		'ThumbnailFileName',
 		'ImageFileName',
@@ -47,7 +47,7 @@ class Image extends DatabaseObject {
 	 * @param int $p_imageId
 	 *
 	 */
-	function Image($p_imageId = null) 	
+	function Image($p_imageId = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
 		$this->m_data['Id'] = $p_imageId;
@@ -56,18 +56,18 @@ class Image extends DatabaseObject {
 		}
 	} // constructor
 
-	
-	function update($p_columns = null, $p_commit = true, $p_isSql = false) 
+
+	function update($p_columns = null, $p_commit = true, $p_isSql = false)
 	{
 		$success = parent::update($p_columns, $p_commit, $p_isSql);
 		if ($success) {
 			if (function_exists("camp_load_language")) { camp_load_language("api");	}
-			$logtext = getGS('Changed image properties of $1', $this->m_data['Id']); 
+			$logtext = getGS('Changed image properties of $1', $this->m_data['Id']);
 			Log::Message($logtext, null, 43);
 		}
 		return $success;
 	} // fn update
-	
+
 	/**
 	 * Delete the row from the database, all article references to this image,
 	 * and the file(s) on disk.
@@ -75,52 +75,52 @@ class Image extends DatabaseObject {
 	 * @return boolean
 	 *		TRUE if the record was deleted, false if not.
 	 */
-	function delete() 
+	function delete()
 	{
 		// Delete all the references to this image.
 		ArticleImage::OnImageDelete($this->getImageId());
-		
+
 		// Delete the record in the database
 		$success = parent::delete();
-		
+
 		if ($success) {
 			// Delete the images from disk
-			if (file_exists($this->getImageStorageLocation()) 
+			if (file_exists($this->getImageStorageLocation())
 				&& is_file($this->getImageStorageLocation())) {
 				unlink($this->getImageStorageLocation());
 			}
-			if (file_exists($this->getThumbnailStorageLocation()) 
+			if (file_exists($this->getThumbnailStorageLocation())
 				&& is_file($this->getThumbnailStorageLocation())) {
 				unlink($this->getThumbnailStorageLocation());
 			}
-			
+
 			if (function_exists("camp_load_language")) { camp_load_language("api");	}
-			$logtext = getGS('Image $1 deleted', $this->m_data['Id']); 
+			$logtext = getGS('Image $1 deleted', $this->m_data['Id']);
 			Log::Message($logtext, null, 42);
 		}
 		return $success;
 	} // fn delete
-	
-	
+
+
 	/**
 	 * Commit current values to the database.
 	 * The values "TimeCreated" and "LastModified" are ignored.
-	 * 
+	 *
 	 * @return boolean
 	 *		Return TRUE if the database was updated, false otherwise.
 	 */
-	function commit() 
+	function commit()
 	{
 		return parent::commit(array("TimeCreated", "LastModified"));
 	} // fn commit
-	
-	
+
+
 	/**
 	 * Return true if the image is being used by an article.
 	 *
 	 * @return boolean
 	 */
-	function inUse() 
+	function inUse()
 	{
 		global $Campsite;
 		// It is in use only if there is an entry in both
@@ -134,101 +134,105 @@ class Image extends DatabaseObject {
 			return false;
 		}
 	} // fn inUse
-	
-	
+
+
 	/**
 	 * @return int
 	 */
-	function getImageId() 
+	function getImageId()
 	{
 		return $this->getProperty('Id');
 	} // fn getImageId
-	
-	
+
+
 	/**
 	 * @return string
 	 */
-	function getDescription() 
+	function getDescription()
 	{
 		return $this->getProperty('Description');
 	} // fn getDescription
-	
-	
+
+
 	/**
 	 * @return string
 	 */
-	function getPhotographer() 
+	function getPhotographer()
 	{
 		return $this->getProperty('Photographer');
 	} // fn getPhotographer
-	
-	
+
+
 	/**
 	 * @return string
 	 */
-	function getPlace() 
+	function getPlace()
 	{
 		return $this->getProperty('Place');
 	} // fn getPlace
-	
-	
+
+
 	/**
 	 * @return string
 	 */
-	function getDate() 
+	function getDate()
 	{
 		return $this->getProperty('Date');
 	} // fn getDate
-	
-	
+
+
 	/**
 	 * @return string
 	 */
-	function getLocation() 
+	function getLocation()
 	{
 		return $this->getProperty('Location');
 	} // fn getLocation
-	
-	
+
+
 	/**
 	 * @return string
 	 */
-	function getUrl() 
+	function getUrl()
 	{
 		return $this->getProperty('URL');
 	} // fn getUrl
-	
-	
+
+
 	/**
 	 * @return string
 	 */
-	function getContentType() 
+	function getContentType()
 	{
 		return $this->getProperty('ContentType');
 	} // fn getContentType
-	
-	
+
+
 	/**
 	 * Return the full path to the image file.
 	 * @return string
 	 */
-	function getImageStorageLocation() 
+	function getImageStorageLocation()
 	{
 		global $Campsite;
-		return $Campsite['IMAGE_DIRECTORY'].$this->m_data['ImageFileName'];
+		if ($this->m_data['Location'] == 'local') {
+			return $Campsite['IMAGE_DIRECTORY'].$this->m_data['ImageFileName'];
+		} else {
+			return $this->m_data['URL'];
+		}
 	} // fn getImageStorageLocation
-	
-	
+
+
 	/**
 	 * Return the full path to the thumbnail file.
 	 * @return string
 	 */
-	function getThumbnailStorageLocation() 
+	function getThumbnailStorageLocation()
 	{
 		global $Campsite;
 		return $Campsite['THUMBNAIL_DIRECTORY'].$this->m_data['ThumbnailFileName'];
 	} // fn getThumbnailStorageLocation
-	
+
 
 	/**
 	 * Generate the full path to the thumbnail storage location on disk.
@@ -236,7 +240,7 @@ class Image extends DatabaseObject {
 	 *		The file extension for the filename.
 	 * @return string
 	 */
-	function generateThumbnailStorageLocation($p_fileExtension) 
+	function generateThumbnailStorageLocation($p_fileExtension)
 	{
 		global $Campsite;
 	    $thumbnailStorageLocation = $Campsite['THUMBNAIL_DIRECTORY']
@@ -244,15 +248,15 @@ class Image extends DatabaseObject {
 	    	.'.'.$p_fileExtension;
 	    return $thumbnailStorageLocation;
 	} // fn generateThumbnailStorageLocation
-	
-	
+
+
 	/**
 	 * Generate the full path to the image storage location on disk.
 	 * @param string $p_fileExtension
 	 *		The file extension for the filename.
 	 * @return string
 	 */
-	function generateImageStorageLocation($p_fileExtension) 
+	function generateImageStorageLocation($p_fileExtension)
 	{
 		global $Campsite;
 	    $imageStorageLocation = $Campsite['IMAGE_DIRECTORY']
@@ -260,13 +264,13 @@ class Image extends DatabaseObject {
 	    	.'.'.$p_fileExtension;
 	    return $imageStorageLocation;
 	} // fn generateImageStorageLocation
-	
-	
+
+
 	/**
 	 * Return the full URL to the image image.
 	 * @return string
 	 */
-	function getImageUrl() 
+	function getImageUrl()
 	{
 		global $Campsite;
 		if ($this->m_data['Location'] == 'local') {
@@ -275,44 +279,44 @@ class Image extends DatabaseObject {
 			return $this->m_data['URL'];
 		}
 	} // fn getImageUrl
-	
-	
+
+
 	/**
 	 * Get the full URL to the thumbnail image.
 	 * @return string
 	 */
-	function getThumbnailUrl() 
+	function getThumbnailUrl()
 	{
 		global $Campsite;
 		return $Campsite['THUMBNAIL_BASE_URL'].$this->m_data['ThumbnailFileName'];
 	} // fn getThumbnailUrl
-	
-	
+
+
 	/**
 	 * @return int
 	 */
-	function GetMaxId() 
+	function GetMaxId()
 	{
 		global $Campsite;
 		$queryStr = 'SHOW TABLE STATUS LIKE "Images"';
 		$result = $Campsite['db']->getRow($queryStr);
 		return $result['Auto_increment'];
 	} // fn GetMaxId
-	
-	
+
+
 	/**
 	 * @return int
 	 */
-	function GetTotalImages() 
+	function GetTotalImages()
 	{
 		global $Campsite;
 		$queryStr = 'SHOW TABLE STATUS LIKE "Images"';
 		$result = $Campsite['db']->getRow($queryStr);
 		return $result['Rows'];
 	} // fn GetTotalImages
-	
 
-	function __ImageTypeToExtension($p_imageType) 
+
+	function __ImageTypeToExtension($p_imageType)
 	{
 		$extension = '';
 		switch($p_imageType) {
@@ -335,8 +339,8 @@ class Image extends DatabaseObject {
         }
         return $extension;
 	}
-	
-	
+
+
 	/**
 	 * This function should be called when an image is uploaded.  It will save
 	 * the image to the appropriate place on the disk, create a thumbnail for it,
@@ -367,7 +371,7 @@ class Image extends DatabaseObject {
 	 *		The Image object that was created or updated.
 	 *		NULL if there was an error.
 	 */
-	function OnImageUpload($p_fileVar, $p_attributes, $p_userId = null, $p_id = null, $p_isLocalFile = false) 
+	function OnImageUpload($p_fileVar, $p_attributes, $p_userId = null, $p_id = null, $p_isLocalFile = false)
 	{
 		global $Campsite;
 		if (!is_array($p_fileVar)) {
@@ -380,7 +384,7 @@ class Image extends DatabaseObject {
 			return null;
 		}
 		$extension = Image::__ImageTypeToExtension($imageInfo[2]);
-		
+
 		// Are we updating or creating?
 	 	if (!is_null($p_id)) {
 	 		// Updating the image
@@ -418,7 +422,7 @@ class Image extends DatabaseObject {
 	    $thumbnail = $image->generateThumbnailStorageLocation($extension);
 	    $image->setProperty('ImageFileName', basename($target), false);
 	    $image->setProperty('ThumbnailFileName', basename($thumbnail), false);
-	    
+
 	    if ($p_isLocalFile) {
 	    	if (!copy($p_fileVar['tmp_name'], $target)) {
 	        	if (is_null($p_id)) {
@@ -432,7 +436,7 @@ class Image extends DatabaseObject {
 	        		$image->delete();
 	        	}
 	            return null;
-	        } 
+	        }
 	    }
 		chmod($target, 0644);
         if ($Campsite['IMAGEMAGICK_INSTALLED']) {
@@ -444,14 +448,14 @@ class Image extends DatabaseObject {
         }
         $image->commit();
 		if (function_exists("camp_load_language")) { camp_load_language("api");	}
-		$logtext = getGS('The image $1 has been added.', 
+		$logtext = getGS('The image $1 has been added.',
 						$image->m_data['Description']." (".$image->m_data['Id'].")");
 		Log::Message($logtext, null, 41);
-                
+
         return $image;
 	} // fn OnImageUpload
-	
-	
+
+
 	/**
 	 * Download the remote file and save it to disk, create a thumbnail for it,
 	 * and create a database entry for the file.
@@ -471,39 +475,44 @@ class Image extends DatabaseObject {
 	 *
 	 * @return void
 	 */
-	function OnAddRemoteImage($p_url, $p_attributes, $p_userId = null, $p_id = null) 
+	function OnAddRemoteImage($p_url, $p_attributes, $p_userId = null, $p_id = null)
 	{
 		global $Campsite;
 	    $client =& new HTTP_Client();
 	    $client->get($p_url);
-	    $response = $client->currentResponse(); 
+	    $response = $client->currentResponse();
 	    if ($response['code'] != 200) {
 	    	return;
 	    }
-        $ContentType = $response['headers']['Content-Type'];
-        
+	    foreach ($response['headers'] as $headerName => $value) {
+	    	if (strtolower($headerName) == "content-type") {
+	    		$ContentType = $value;
+	    		break;
+	    	}
+	    }
+
         // Check content type
         if (!preg_match('/image/', $ContentType)) {
             // wrong URL
             return getGS('URL "$1" is invalid or is not an image.', $p_url);
         }
-    	
+
     	// Save the file
-        $tmpname = CAMPSITE_TMP_DIR.'img'.md5(rand());
+        $tmpname = $Campsite['TMP_DIRECTORY'].'img'.md5(rand());
         if ($tmphandle = fopen($tmpname, 'w')) {
             fwrite($tmphandle, $response['body']);
             fclose($tmphandle);
         } else {
             return getGS('Cannot create file "$1"', $tmpname);
         }
-        
+
         // Check if it is really an image file
         $imageInfo = getimagesize($tmpname);
         if ($imageInfo === false) {
         	unlink($tmpname);
             return getGS('URL "$1" is not an image.', $cURL);
         }
-        
+
         // content-type = image
         if (!is_null($p_id)) {
         	// Updating the image
@@ -532,7 +541,7 @@ class Image extends DatabaseObject {
 	    if (isset($imageInfo['mime'])) {
 	    	$image->setProperty('ContentType', $imageInfo['mime'], false);
 	    }
-        
+
         // Remember who uploaded the image
         if (!is_null($p_userId)) {
 			$image->setProperty('UploadedByUser', $p_userId, false);
@@ -544,7 +553,7 @@ class Image extends DatabaseObject {
 		    $thumbnail = $image->generateThumbnailStorageLocation($extension);
 		    $image->setProperty('ThumbnailFileName', basename($thumbnail), false);
 
-		    // Create the thumbnail 
+		    // Create the thumbnail
             $cmd = $Campsite['THUMBNAIL_COMMAND'].' '
             	. $tmpname . ' ' . $image->getThumbnailStorageLocation();
             system($cmd);
@@ -554,21 +563,21 @@ class Image extends DatabaseObject {
         }
         unlink($tmpname);
         $image->commit();
-        
+
 		if (function_exists("camp_load_language")) { camp_load_language("api");	}
-		$logtext = getGS('The image $1 has been added.', 
+		$logtext = getGS('The image $1 has been added.',
 						$image->m_data['Description']." (".$image->m_data['Id'].")");
 		Log::Message($logtext, null, 41);
-        
+
 	    return $image;
 	} // fn OnAddRemoteImage
 
 
-	/** 
+	/**
 	 * Get an array of users who have uploaded images.
 	 * @return array
 	 */
-	function GetUploadUsers() 
+	function GetUploadUsers()
 	{
 		global $Campsite;
 		$tmpUser =& new User();
@@ -577,20 +586,20 @@ class Image extends DatabaseObject {
 		foreach ($columnNames as $columnName) {
 			$queryColumnNames[] = 'Users.'.$columnName;
 		}
-		$queryColumnNames = implode(",", $queryColumnNames);			
+		$queryColumnNames = implode(",", $queryColumnNames);
 		$queryStr = 'SELECT DISTINCT Users.Id, '.$queryColumnNames
 					.' FROM Images, Users WHERE Images.UploadedByUser = Users.Id';
 		$users = DbObjectArray::Create('User', $queryStr);
 		return $users;
 	} // fn GetUploadUsers
-	
-	
+
+
 	/**
 	 * Fetch an image object by matching the URL.
 	 * @param string $p_url
 	 * @return Image
 	 */
-	function GetByUrl($p_url) 
+	function GetByUrl($p_url)
 	{
 		global $Campsite;
 		$queryStr = "SELECT * FROM Images WHERE URL='".mysql_real_escape_string($p_url)."'";
@@ -599,14 +608,14 @@ class Image extends DatabaseObject {
 		$image->fetch($row);
 		return $image;
 	} // fn GetByUrl
-	
-	
+
+
 	/**
 	 * Return an array that can be used in a template.
 	 *
 	 * @return array
 	 */
-	function toTemplate() 
+	function toTemplate()
 	{
 		$template = array();
 		$template['id'] = $this->getImageId();
@@ -619,6 +628,6 @@ class Image extends DatabaseObject {
 		$template['thumbnail_url'] = $this->getThumbnailUrl();
 		return $template;
 	} // fn toTemplate
-	
+
 } // class Image
 ?>
