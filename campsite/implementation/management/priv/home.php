@@ -15,7 +15,7 @@ load_common_include_files("home");
 camp_load_language("articles");
 camp_load_language("api");
 
-list($access, $User) = check_basic_access($_REQUEST);	
+list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
 	header("Location: /$ADMIN/logout.php");
 	exit;
@@ -26,7 +26,7 @@ $f_submitted_articles_offset = camp_session_get('f_submitted_articles_offset', 0
 $f_your_articles_offset = camp_session_get('f_your_articles_offset', 0);
 $f_unplaced_articles_offset = camp_session_get('f_unplaced_articles_offset', 0);
 $NumDisplayArticles = 20;
-list($YourArticles, $NumYourArticles) = Article::GetArticlesByUser($User->getUserId(), $f_your_articles_offset, 
+list($YourArticles, $NumYourArticles) = Article::GetArticlesByUser($User->getUserId(), $f_your_articles_offset,
 	$NumDisplayArticles);
 
 list($SubmittedArticles, $NumSubmittedArticles) = Article::GetSubmittedArticles($f_submitted_articles_offset, $NumDisplayArticles);
@@ -54,23 +54,23 @@ $breadcrumbs = camp_html_breadcrumbs($crumbs);
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
 	<TITLE><?php  putGS("Home"); ?></TITLE>
 	<script>
-	home_page_elements = new Array("your_articles", 
-								   "submitted_articles", 
-								   "recently_published_articles", 
+	home_page_elements = new Array("your_articles",
+								   "submitted_articles",
+								   "recently_published_articles",
 								   "scheduled_actions",
 								   "unplaced_articles");
-	home_page_links = new Array("link_your_articles", 
-								"link_submitted_articles", 
-								"link_recently_published_articles", 
+	home_page_links = new Array("link_your_articles",
+								"link_submitted_articles",
+								"link_recently_published_articles",
 								"link_scheduled_actions",
 								"link_unplaced_articles");
-	function on_link_click(id, home_page_links) 
+	function on_link_click(id, home_page_links)
 	{
 		for (i = 0; i < home_page_links.length; i++) {
 			if (id == home_page_links[i]) {
 				document.getElementById(home_page_links[i]).style.backgroundColor = '#CCC';
 			} else {
-				document.getElementById(home_page_links[i]).style.backgroundColor = '#FFF';				
+				document.getElementById(home_page_links[i]).style.backgroundColor = '#FFF';
 			}
 		}
 	}
@@ -112,22 +112,22 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 <TR>
 	<TD VALIGN="TOP" align="left" nowrap width="1%">
 		<table cellpadding="4" cellspacing="3">
-		
+
 		<tr><td nowrap><a href="javascript: void(0);" id="link_submitted_articles" onclick="HideAll(home_page_elements); ShowElement('submitted_articles'); on_link_click('link_submitted_articles', home_page_links);"  style="font-weight: bold; color: #333; padding: 5px; <?php if ($f_screen == "submitted_articles") { echo 'background-color:#CCC;'; } ?>"><?php putGS("Submitted Articles"); ?></a></td></tr>
-		
+
 		<tr><td nowrap><a href="javascript: void(0);" id="link_your_articles" onclick="HideAll(home_page_elements); ShowElement('your_articles'); on_link_click('link_your_articles', home_page_links);"  style="font-weight: bold; color: #333; padding: 5px; <?php if ($f_screen == "your_articles") { echo 'background-color:#CCC;'; } ?>"><?php putGS("Your Articles"); ?></a></td></tr>
-		
+
 		<tr><td nowrap><a href="javascript: void(0);" id="link_recently_published_articles" onclick="HideAll(home_page_elements); ShowElement('recently_published_articles'); on_link_click('link_recently_published_articles', home_page_links);"  style="font-weight: bold; color: #333; padding: 5px; <?php if ($f_screen == "recently_published_articles") { echo 'background-color:#CCC;'; } ?>"><?php putGS("Recently Published Articles"); ?></a></td></tr>
-		
+
 		<tr><td nowrap><a href="javascript: void(0);" id="link_scheduled_actions" onclick="HideAll(home_page_elements); ShowElement('scheduled_actions'); on_link_click('link_scheduled_actions', home_page_links);" style="font-weight: bold; color: #333; padding: 5px; <?php if ($f_screen == "scheduled_actions") { echo 'background-color:#CCC;'; } ?>"><?php putGS("Scheduled Publishing"); ?></a></td></tr>
-		
+
 		<tr><td nowrap><a href="javascript: void(0);" id="link_unplaced_articles" onclick="HideAll(home_page_elements); ShowElement('unplaced_articles'); on_link_click('link_unplaced_articles', home_page_links);" style="font-weight: bold; color: #333; padding: 5px; <?php if ($f_screen == "unplaced_articles") { echo 'background-color:#CCC;'; } ?>"><?php putGS("Pending Articles"); ?></a></td></tr>
-		
+
 		</TABLE>
 	</td>
-	
+
 	<td valign="top" align="left" style="border-left: 1px solid black; padding-left: 10px;">
-	
+
 		<!-- Your articles -->
 		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" id="your_articles" <?php if ($f_screen != "your_articles") { echo 'style="display:none;"'; } ?>>
 		<TR class="table_list_header">
@@ -140,7 +140,7 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 			<td align="center" valign="top"><?php echo str_replace(" ", "<br>", getGS("Creation date")); ?></td>
 		</TR>
 
-		<?php 
+		<?php
 		if (count($YourArticles) == 0) {
 	        ?>
     		<TR>
@@ -153,41 +153,41 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 			$section = $tmpArticle->getSection();
 			$language =& new Language($tmpArticle->getLanguageId());
 			$pub =& new Publication($tmpArticle->getPublicationId());
-			$issue =& new Issue($tmpArticle->getPublicationId(), 
-								$tmpArticle->getLanguageId(), 
+			$issue =& new Issue($tmpArticle->getPublicationId(),
+								$tmpArticle->getLanguageId(),
 								$tmpArticle->getIssueNumber());
-			$section =& new Section($tmpArticle->getPublicationId(), 
-									$tmpArticle->getIssueNumber(), 
-									$tmpArticle->getLanguageId(), 
+			$section =& new Section($tmpArticle->getPublicationId(),
+									$tmpArticle->getIssueNumber(),
+									$tmpArticle->getLanguageId(),
 									$tmpArticle->getSectionNumber());
 			 ?>
 		<TR <?php if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 			<TD valign="top">
-				<?php 
+				<?php
 				if ($User->hasPermission('ChangeArticle') || ($tmpArticle->getPublished() == 'N')) {
-					echo camp_html_article_link($tmpArticle, $section->getLanguageId(), "edit.php"); 
+					echo camp_html_article_link($tmpArticle, $section->getLanguageId(), "edit.php");
 				}
-				p(htmlspecialchars($tmpArticle->getTitle()." (".$language->getNativeName().")")); 
+				p(htmlspecialchars($tmpArticle->getTitle()." (".$language->getNativeName().")"));
 				if ($User->hasPermission('ChangeArticle') || ($tmpArticle->getPublished() == 'N')) {
 					echo '</a>';
 				}
 				?>
 			</TD>
-			
+
 			<TD align="center" nowrap valign="top">
-				<?php 
-				if ($tmpArticle->getPublished() == "Y") { 
-					putGS('Published'); 
-				} 
-				elseif ($tmpArticle->getPublished() == 'S') { 
-					putGS('Submitted'); 
-				} 
-				elseif ($tmpArticle->getPublished() == "N") { 
-					putGS('New'); 
-				} 
+				<?php
+				if ($tmpArticle->getPublished() == "Y") {
+					putGS('Published');
+				}
+				elseif ($tmpArticle->getPublished() == 'S') {
+					putGS('Submitted');
+				}
+				elseif ($tmpArticle->getPublished() == "N") {
+					putGS('New');
+				}
 				?>
 			</TD>
-			
+
 			<td align="center" valign="top">
 				<?php p(htmlspecialchars($tmpArticle->getType())); ?>
 			</td>
@@ -195,32 +195,32 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 			<td>
 				<?php p(htmlspecialchars($pub->getName())); ?>
 			</td>
-			
+
 			<td>
 				<?php p(htmlspecialchars($issue->getName())); ?>
 			</td>
-			
+
 			<td>
 				<?php p(htmlspecialchars($section->getName())); ?>
 			</td>
-			
+
 			<td align="center" valign="top">
 				<?php p(htmlspecialchars($tmpArticle->getCreationDate())); ?>
 			</td>
 		</TR>
-		<?php 
+		<?php
 		} // for
     	?>
-	
+
     	<TR>
     		<TD COLSPAN="2" NOWRAP style="padding-top: 10px;">
-				<?php  
+				<?php
 				echo $yourArticlesPager->render();
 				?>
 			</TD>
 		</TR>
 		</TABLE>
-	
+
 		<!-- Submitted articles -->
 		<?php if ($User->hasPermission('ChangeArticle') || $User->hasPermission('Publish')) { ?>
 		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" id="submitted_articles" <?php if ($f_screen != "submitted_articles") { echo 'style="display:none;"'; } ?>>
@@ -233,51 +233,51 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 			<td align="center" valign="top"><?php echo str_replace(" ", "<br>", getGS("Created by")); ?></td>
 			<td align="center" valign="top"><?php echo str_replace(" ", "<br>", getGS("Creation date")); ?></td>
 		</TR>
-		<?php 
+		<?php
 	    $color=0;
 	    if (count($SubmittedArticles) == 0) {
 	        ?>
     		<TR>
-			<TD colspan="2" class="list_row_odd"><?php putGS("There are currently no submitted articles."); ?></td>
+			<TD colspan="7" class="list_row_odd"><?php putGS("There are currently no submitted articles."); ?></td>
 	        </tr>
 	        <?php
 	    }
-	    
+
 		foreach ($SubmittedArticles as $tmpArticle) {
 			$section = $tmpArticle->getSection();
 			$language =& new Language($tmpArticle->getLanguageId());
 			$pub =& new Publication($tmpArticle->getPublicationId());
-			$issue =& new Issue($tmpArticle->getPublicationId(), 
-								$tmpArticle->getLanguageId(), 
+			$issue =& new Issue($tmpArticle->getPublicationId(),
+								$tmpArticle->getLanguageId(),
 								$tmpArticle->getIssueNumber());
-			$section =& new Section($tmpArticle->getPublicationId(), 
-									$tmpArticle->getIssueNumber(), 
-									$tmpArticle->getLanguageId(), 
+			$section =& new Section($tmpArticle->getPublicationId(),
+									$tmpArticle->getIssueNumber(),
+									$tmpArticle->getLanguageId(),
 									$tmpArticle->getSectionNumber());
 			$creator =& new User($tmpArticle->getCreatorId());
-			?>	
+			?>
 		<TR <?php if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 			<TD valign="top">
 			<?php echo camp_html_article_link($tmpArticle, $section->getLanguageId(), "edit.php"); ?>
-			<?php 
-			p(htmlspecialchars($tmpArticle->getTitle())); 
+			<?php
+			p(htmlspecialchars($tmpArticle->getTitle()));
 			p(" (".htmlspecialchars($language->getNativeName()).")");
 			?>
 			</A>
 			</TD>
-			
+
 			<td align="center" valign="top">
 				<?php p(htmlspecialchars($pub->getName())); ?>
 			</td>
-			
+
 			<td align="center" valign="top">
 				<?php p(htmlspecialchars($issue->getName())); ?>
 			</td>
-			
+
 			<td align="center" valign="top">
 				<?php p(htmlspecialchars($section->getName())); ?>
 			</td>
-			
+
 			<td align="center" valign="top">
 				<?php p(htmlspecialchars($tmpArticle->getType())); ?>
 			</td>
@@ -291,19 +291,19 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 			</td>
 
 		</TR>
-		<?php 
+		<?php
 		} // for ($SubmittedArticles ...)
-		?>	
+		?>
 
 		<TR>
 			<TD COLSPAN="2" NOWRAP style="padding-top: 10px;">
-			<?php 
+			<?php
 			echo $submittedArticlesPager->render();
-    		?>	
+    		?>
 			</TD>
 		</TR>
 		</TABLE>
-		<?php 
+		<?php
 		} // if ($User->hasPermission('ChangeArticle') || $User->hasPermission('Publish'))
 		?>
 
@@ -318,31 +318,31 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 			<TD ALIGN="center" VALIGN="TOP" nowrap><?php  p(str_replace(" ", "<br>", getGS("On Front Page"))); ?></TD>
 			<TD ALIGN="center" VALIGN="TOP" nowrap><?php  p(str_replace(" ", "<br>", getGS("On Section Page"))); ?></TD>
 		</TR>
-		<?php 
+		<?php
 		if (count($recentlyPublishedArticles) == 0) {
 	        ?>
     		<TR>
 			<TD colspan="2" class="list_row_odd"><?php putGS("No articles have been published yet."); ?></td>
 	        </tr>
-		    <?php		    
+		    <?php
 		}
 		$color = 0;
 		foreach ($recentlyPublishedArticles as $tmpArticle) {
 			$language =& new Language($tmpArticle->getLanguageId());
 			$pub =& new Publication($tmpArticle->getPublicationId());
-			$issue =& new Issue($tmpArticle->getPublicationId(), 
-								$tmpArticle->getLanguageId(), 
+			$issue =& new Issue($tmpArticle->getPublicationId(),
+								$tmpArticle->getLanguageId(),
 								$tmpArticle->getIssueNumber());
-			$section =& new Section($tmpArticle->getPublicationId(), 
-									$tmpArticle->getIssueNumber(), 
-									$tmpArticle->getLanguageId(), 
+			$section =& new Section($tmpArticle->getPublicationId(),
+									$tmpArticle->getIssueNumber(),
+									$tmpArticle->getLanguageId(),
 									$tmpArticle->getSectionNumber());
 			 ?>
 		<TR <?php if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 			<TD valign="top">
-				<?php 
+				<?php
 				if ($User->hasPermission('ChangeArticle')) {
-    				echo camp_html_article_link($tmpArticle, $tmpArticle->getLanguageId(), "edit.php"); 
+    				echo camp_html_article_link($tmpArticle, $tmpArticle->getLanguageId(), "edit.php");
 				}
 				p(htmlspecialchars($tmpArticle->getTitle(). " (".$language->getNativeName().")"));
 				if ($User->hasPermission('ChangeArticle')) {
@@ -351,7 +351,7 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 				?>
 			</TD>
 			<td nowrap valign="top"><?php echo $tmpArticle->getPublishDate(); ?></td>
-			
+
 			<td>
 				<?php p(htmlspecialchars($pub->getName())); ?>
 			</td>
@@ -359,24 +359,24 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 			<td>
 				<?php p(htmlspecialchars($issue->getName())); ?>
 			</td>
-			
+
 			<td>
 				<?php p(htmlspecialchars($section->getName())); ?>
 			</td>
-			
+
 			<td align="center" valign="top">
 				<?php p(htmlspecialchars($tmpArticle->onFrontPage() ? getGS("Yes") : getGS("No"))); ?>
 			</td>
 
 			<td align="center" valign="top">
 				<?php p(htmlspecialchars($tmpArticle->onSectionPage() ? getGS("Yes") : getGS("No"))); ?>
-			</td>			
+			</td>
         </tr>
-		<?php 
+		<?php
 		} // for
     	?>
         </table>
-		
+
         <!-- Scheduled Publishing -->
 		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" id="scheduled_actions" <?php if ($f_screen != "scheduled_actions") { echo 'style="display:none;"'; } ?>>
 		<TR class="table_list_header">
@@ -387,13 +387,13 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 			<TD ALIGN="center" VALIGN="TOP" nowrap><?php putGS("Issue"); ?></TD>
 			<TD ALIGN="center" VALIGN="TOP" nowrap><?php putGS("Section"); ?></TD>
 		</TR>
-		<?php 
+		<?php
 		if (count($pendingActions) == 0) {
 	        ?>
     		<TR>
 			<TD colspan="6" class="list_row_odd"><?php putGS("There are no pending items to be published."); ?></td>
 	        </tr>
-	        <?php		    
+	        <?php
 		}
 		// Warning: the next section is a big hack!
 		// Hopefully will be fixed in 2.4
@@ -402,25 +402,25 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 			 ?>
 		<TR <?php if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 		<?PHP
-		if ($action["ObjectType"] == "article") { 
+		if ($action["ObjectType"] == "article") {
 			$language =& new Language($action["IdLanguage"]);
 			$pub =& new Publication($action["IdPublication"]);
-			$issue =& new Issue($action["IdPublication"], 
-								$action["IdLanguage"], 
+			$issue =& new Issue($action["IdPublication"],
+								$action["IdLanguage"],
 								$action["NrIssue"]);
-			$section =& new Section($action["IdPublication"], 
-									$action["NrIssue"], 
-									$action["IdLanguage"], 
+			$section =& new Section($action["IdPublication"],
+									$action["NrIssue"],
+									$action["IdLanguage"],
 									$action["NrSection"]);
 			?>
-			<TD valign="top"><?php putGS("Article"); ?>: 
+			<TD valign="top"><?php putGS("Article"); ?>:
     			<?PHP
 				if ($User->hasPermission('ChangeArticle')) { ?>
                     <a href="/<?php p($ADMIN); ?>/articles/edit.php?f_publication_id=<?php p($action["IdPublication"]); ?>&f_issue_number=<?php p($action["NrIssue"]); ?>&f_section_number=<?php p($action["NrSection"]); ?>&f_article_number=<?php p($action["Number"]); ?>&f_language_id=<?php p($action["IdLanguage"]); ?>&f_language_selected=<?php p($action["IdLanguage"]); ?>">
                 	<?PHP
 				}
-			    echo htmlspecialchars($action["Name"]." (".$language->getNativeName().")"); 
-				if ($User->hasPermission('ChangeArticle')) { 
+			    echo htmlspecialchars($action["Name"]." (".$language->getNativeName().")");
+				if ($User->hasPermission('ChangeArticle')) {
     				echo "</a>";
                 }
                 ?>
@@ -449,37 +449,37 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 				echo implode("<br>", $displayActions)
 				?>
 			</td>
-			
+
 			<td nowrap valign="top">
                 <?php echo htmlspecialchars($action["time_action"]); ?>
 			</td>
-			
+
 			<td valign="top">
 				<?php p(htmlspecialchars($pub->getName())); ?>
 			</td>
-			
+
 			<td valign="top">
 				<?php p(htmlspecialchars($issue->getName())); ?>
 			</td>
-			
+
 			<td valign="top">
 				<?php p(htmlspecialchars($section->getName())); ?>
 			</td>
-			
+
 		<?PHP
 		}
-		elseif ($action["ObjectType"] == "issue") { 
+		elseif ($action["ObjectType"] == "issue") {
 			//$language =& new Language($action["IdLanguage"]);
-			$pub =& new Publication($action["IdPublication"]);			
+			$pub =& new Publication($action["IdPublication"]);
 			?>
-			<TD valign="top"><?php putGS("Issue"); ?>: 
+			<TD valign="top"><?php putGS("Issue"); ?>:
     			<?PHP
 				if ($User->hasPermission('ManageIssue')) { ?>
                     <a href="/<?php p($ADMIN); ?>/issues/edit.php?Pub=<?php p($action["IdPublication"]); ?>&Issue=<?php p($action["Number"]); ?>&Language=<?php p($action["IdLanguage"]); ?>">
                     <?PHP
 				}
-				echo htmlspecialchars($action["Name"]); 
-				if ($User->hasPermission('ManageIssue')) { 				
+				echo htmlspecialchars($action["Name"]);
+				if ($User->hasPermission('ManageIssue')) {
 				    echo "</a>";
 				}
 				?>
@@ -498,12 +498,12 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 			echo implode("<br>", $displayActions)
 			?></td>
 			<td nowrap valign="top">
-                <?php 
+                <?php
                 if ($User->hasPermission("Publish")) { ?>
                     <a href="/<?php p($ADMIN); ?>/issues/autopublish.php?Pub=<?php p($action["IdPublication"]); ?>&Issue=<?php p($action["Number"]); ?>&Language=<?php p($action["IdLanguage"]); ?>&event_id=<?php p(urlencode($action["id"])); ?>">
                     <?PHP
                 }
-                echo htmlspecialchars($action["time_action"]); 
+                echo htmlspecialchars($action["time_action"]);
                 if ($User->hasPermission("Publish")) {
                     echo "</a>";
                 }
@@ -513,18 +513,18 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 			<td valign="top">
 				<?php p(htmlspecialchars($pub->getName())); ?>
 			</td>
-			
+
 			<td valign="top"> -----</td>
 			<td valign="top"> -----</td>
             <?PHP
 		}
 		?>
         </tr>
-		<?php 
+		<?php
 		} // for
     	?>
     	</table>
-    	
+
 		<!-- Unplaced articles -->
 		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" id="unplaced_articles" <?php if ($f_screen != "unplaced_articles") { echo 'style="display:none;"'; } ?>>
 		<TR class="table_list_header">
@@ -535,7 +535,7 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 			<td align="center" valign="top"><?php echo str_replace(" ", "<br>", getGS("Creation date")); ?></td>
 		</TR>
 
-		<?php 
+		<?php
 		if (count($unplacedArticles) == 0) {
 	        ?>
     		<TR>
@@ -551,30 +551,30 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 			 ?>
 		<TR <?php if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 			<TD valign="top">
-				<?php 
+				<?php
 				if ($User->hasPermission('ChangeArticle') || ($tmpArticle->getPublished() == 'N')) {
-					echo camp_html_article_link($tmpArticle, $section->getLanguageId(), "edit.php"); 
+					echo camp_html_article_link($tmpArticle, $section->getLanguageId(), "edit.php");
 				}
-				p(htmlspecialchars($tmpArticle->getTitle()." (".$language->getNativeName().")")); 
+				p(htmlspecialchars($tmpArticle->getTitle()." (".$language->getNativeName().")"));
 				if ($User->hasPermission('ChangeArticle') || ($tmpArticle->getPublished() == 'N')) {
 					echo '</a>';
 				}
 				?>
 			</TD>
-			
+
 			<TD align="center" nowrap valign="top">
-				<?php 
-				if ($tmpArticle->getPublished() == "Y") { 
-					putGS('Published'); 
-				} 
-				elseif ($tmpArticle->getPublished() == 'S') { 
-					putGS('Submitted'); 
-				} 
-				elseif ($tmpArticle->getPublished() == "N") { 
-					putGS('New'); 
-				} 
+				<?php
+				if ($tmpArticle->getPublished() == "Y") {
+					putGS('Published');
+				}
+				elseif ($tmpArticle->getPublished() == 'S') {
+					putGS('Submitted');
+				}
+				elseif ($tmpArticle->getPublished() == "N") {
+					putGS('New');
+				}
 				?>
-			</TD>			
+			</TD>
 
 			<td align="center" valign="top">
 				<?php p(htmlspecialchars($tmpArticle->getType())); ?>
@@ -587,15 +587,15 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 			<td align="center" valign="top">
 				<?php p(htmlspecialchars($tmpArticle->getCreationDate())); ?>
 			</td>
-			
+
 		</TR>
-		<?php 
+		<?php
 		} // for
     	?>
-	
+
     	<TR>
     		<TD COLSPAN="2" NOWRAP style="padding-top: 10px;">
-				<?php  
+				<?php
 				echo $unplacedArticlesPager->render();
 				?>
 			</TD>
