@@ -417,7 +417,7 @@ class Article extends DatabaseObject {
 		// Create the record
 		$success = $articleCopy->__create($values);
 		if (!$success) {
-			return;
+			return false;
 		}
 
 		$articleCopy->setProperty('UploadDate', 'NOW()', true, true);
@@ -1366,8 +1366,7 @@ class Article extends DatabaseObject {
 			$articles[] = $tmpArticle;
 		}
 		$queryStr = 'SELECT COUNT(*) FROM Articles'
-	    			." WHERE IdPublication=0 AND NrIssue=0 AND NrSection=0 "
-	    			.' ORDER BY Number DESC, IdLanguage ';
+	    			." WHERE IdPublication=0 AND NrIssue=0 AND NrSection=0 ";
 	    $totalArticles = $Campsite['db']->GetOne($queryStr);
 
 		return array($articles, $totalArticles);
