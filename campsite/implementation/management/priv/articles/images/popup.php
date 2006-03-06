@@ -21,7 +21,7 @@ if (!$User->hasPermission("AttachImageToArticle")) {
 $f_language_id = Input::Get('f_language_id', 'int', 0);
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
-$f_image_attach_mode = camp_session_get('f_image_attach_mode', 'existing');
+$f_image_attach_mode = camp_session_get('f_image_attach_mode', 'new');
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI'], true);
