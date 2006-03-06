@@ -16,6 +16,9 @@
     placed in a publication/issue/section.
   - Added the ability to subscribe to a section of a specific language,
     instead of all languages in a section.
+  - Added the ability to create an article-type field that would list certain
+    topics as a dropdown list.
+  - Added the ability to print only the first paragraph of a story.
   - Added Swedish translation.
   - Campsite no longer tries to install PEAR libraries on the system at
     install time, instead it will use the ones we have added to the release.
@@ -112,6 +115,7 @@
   - #1778: Fix subsription form in IE 6
   - #1780: Image sort - Last Modified sort cannot be reversed to sort
     the opposite direction
+  - #1657: install.sh throws error on CentOS 4.x
 
 
 2.4.3 (February 1, 2006)
