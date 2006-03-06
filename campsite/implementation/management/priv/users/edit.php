@@ -86,23 +86,31 @@ if ($canManage && ($userId > 0)) {
 
 <table border="0">
 <tr>
-	<td rowspan="2" valign="top" height="1%">
+	<td rowspan="2" valign="top" >
 		<?php require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/info.php"); ?>
 	</td>
 <?php if ($userId > 0) { ?>
-	<td valign="top" height="1%">
-        <?php
-        if (($uType == 'Subscribers') && ($User->hasPermission("ManageSubscriptions"))) {
-        	require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/subscriptions.php");
-        }
-        ?>
-	</td>
-</tr>
-<tr>
-	<td valign="top">
-        <?php if ($uType == 'Subscribers') { ?>
-        	<?php require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/ipaccesslist.php"); ?>
-        <?php } ?>
+	<td valign="top" >
+		<table cellpadding="0" cellspacing="0">
+		<tr>
+			<td valign="top">
+		        <?php
+       			if (($uType == 'Subscribers') && ($User->hasPermission("ManageSubscriptions"))) {
+        			require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/subscriptions.php");
+	        	}
+        		?>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+        		<?php 
+			if ($uType == 'Subscribers') {
+        			require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/ipaccesslist.php"); 
+        		}
+			?>
+			</td>
+		</tr>
+		</table>
 	</td>
 <?php } ?>
 </tr>

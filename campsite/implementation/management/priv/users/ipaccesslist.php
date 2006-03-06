@@ -7,7 +7,7 @@ if (!isset($editUser) || gettype($editUser) != 'object' || $editUser->getUserNam
 }
 
 ?>
-<table border="0" cellspacing="1" cellpadding="0" width="100%" class="table_list">
+<table border="0" cellspacing="1" cellpadding="0" width="100%" >
 <tr class="table_list_header">
 	<td colspan="3">
 		<table border="0" cellspacing="0" cellpadding="3" width="100%">

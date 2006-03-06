@@ -10,7 +10,7 @@ $publications = Publication::GetPublications();
 $numSubscriptions = Subscription::GetNumSubscriptions(null, $editUser->getUserId());
 
 ?>
-<table border="0" cellspacing="1" cellpadding="3" width="100%" class="table_list">
+<table border="0" cellspacing="1" cellpadding="3" width="100%" >
 <tr class="table_list_header">
 	<td colspan="5" align="left">
 		<table border="0" cellspacing="0" cellpadding="0" width="100%">
