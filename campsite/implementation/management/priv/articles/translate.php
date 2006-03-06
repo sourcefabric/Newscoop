@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/article_common.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DbObjectArray.php');
 
@@ -21,7 +21,7 @@ list($articleNumber, $languageId) = split("_", $f_article_code);
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
-	exit;	
+	exit;
 }
 
 $articleObj =& new Article($languageId, $articleNumber);
@@ -38,26 +38,26 @@ if ($f_publication_id > 0) {
 	$publicationObj =& new Publication($f_publication_id);
 	if (!$publicationObj->exists()) {
 		camp_html_display_error(getGS('Publication does not exist.'), $BackLink);
-		exit;	
+		exit;
 	}
-	
+
 	$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
 	if (!$issueObj->exists()) {
 		camp_html_display_error(getGS('No such issue.'), $BackLink);
-		exit;	
+		exit;
 	}
-	
+
 	$sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
 	if (!$sectionObj->exists()) {
 		camp_html_display_error(getGS('No such section.'), $BackLink);
-		exit;		
+		exit;
 	}
 }
 
 if (!$User->hasPermission("TranslateArticle")) {
 	$errorStr = getGS('You do not have the right to translate articles.');
 	camp_html_display_error($errorStr, $BackLink);
-	exit;	
+	exit;
 }
 
 // When the user selects a language the form is submitted to the same page (translation.php).
@@ -84,19 +84,23 @@ if ( ($f_language_selected > 0) && ($f_issue_number > 0) ) {
 }
 
 if ($f_publication_id > 0) {
-	$topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
+	$topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj,
 					  'Section' => $sectionObj, 'Article'=>$articleObj);
 	camp_html_content_top(getGS('Translate article'), $topArray, true, true);
 } else {
 	$crumbs = array();
 	$crumbs[] = array(getGS("Actions"), "");
 	$crumbs[] = array(getGS('Translate article'), "");
-	echo camp_html_breadcrumbs($crumbs);		
+	echo camp_html_breadcrumbs($crumbs);
 }
 ?>
 <table cellpadding="1" cellspacing="0" class="action_buttons" style="padding-top: 10px;">
 <tr>
+	<?php if ($f_publication_id > 0) { ?>
 	<td><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></td>
+	<td><a href="<?php echo camp_html_article_url($articleObj, $f_language_id, "index.php"); ?>"><b><?php putGS("Article List"); ?></b></a></td>
+	<?php } ?>
+	<td <?php if ($f_publication_id > 0) { ?>style="padding-left: 20px;"<?php } ?>><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></td>
 	<td><a href="<?php echo camp_html_article_url($articleObj, $f_language_id, "edit.php"); ?>"><b><?php putGS("Back to Edit Article"); ?></b></a></td>
 </table>
 
@@ -132,12 +136,12 @@ if ($f_publication_id > 0) {
 	<TD>
 	<SELECT NAME="f_translation_language" class="input_select" alt="select" <?php if ($f_publication_id > 0) { ?>ONCHANGE="this.form.action = 'translate.php'; this.form.submit();"<?php } ?> emsg="<?php putGS("You must choose a language"); ?>">
 	<option></option>
-	<?php 
+	<?php
 	// Show all the languages that have not yet been translated.
 	$displayLanguages = array();
 	foreach ($allLanguages as $language) {
 		if (!in_array($language->getLanguageId(), $articleLanguages)) {
-			$displayLanguages[$language->getLanguageId()] = $language->getNativeName(); 
+			$displayLanguages[$language->getLanguageId()] = $language->getNativeName();
 		}
 	}
 	asort($displayLanguages);
@@ -153,11 +157,11 @@ if ($f_publication_id > 0) {
 	if ( ($f_language_selected > 0) && ($f_issue_number > 0) ) {
 		// Every article must live inside a cooresponding issue of the same language.
 		if (!$translationIssueObj->exists()) {
-			
+
 			if ($User->hasPermission("ManageIssue")) {
-				
+
 				// If a section needs to be translated, but the user doesnt have the permission
-				// to create a section, then we dont want to display anything here.  Even 
+				// to create a section, then we dont want to display anything here.  Even
 				// if they can create the issue, they still need to create a cooresponding section.
 				// If they dont have the permission to do that, then no use in creating the issue.
 				if ($translationSectionObj->exists() || $User->hasPermission("ManageSection")) {
@@ -188,13 +192,13 @@ if ($f_publication_id > 0) {
 <?php
 			}
 		}
-		
+
 		if (!$translationSectionObj->exists()) {
 
 			if ($User->hasPermission("ManageSection")) {
 
 				// If an issue needs to be translated, but the user doesnt have the permission
-				// to create an issue, then we dont want to display anything here.  Even 
+				// to create an issue, then we dont want to display anything here.  Even
 				// if they can create the section, they still need to create a cooresponding issue.
 				if ($translationIssueObj->exists() || $User->hasPermission("ManageIssue")) {
 ?>
