@@ -1,4 +1,4 @@
-2.5.0 (March 1st, 2006)
+2.5.0 (March 6, 2006)
   For full details about these changes, see:
   http://code.campware.org/projects/campsite/query?milestone=2.5.0
 
@@ -16,13 +16,13 @@
     placed in a publication/issue/section.
   - Added the ability to subscribe to a section of a specific language,
     instead of all languages in a section.
-  - Added the ability to create an article-type field that would list certain
-    topics as a dropdown list.
+  - Added the ability to create an article-type field that lists 
+    topics in a dropdown list.
   - Added the ability to print only the first paragraph of a story.
   - Added Swedish translation.
   - Campsite no longer tries to install PEAR libraries on the system at
-    install time, instead it will use the ones we have added to the release.
-    This will eliminate one of our main install problems.
+    install time, instead it will use the ones we have added to the 
+    release.  This will eliminate one of our main install problems.
 
   Added permissions:
   - User may move articles
@@ -50,7 +50,7 @@
   - #1722: Issue List scheduled publishing icon should change icon
     to green when enabled
 
-  Bugs Fixed (40 total)
+  Bugs Fixed (41 total)
   ---------------------
   - Fixed many cases where something bad would happen if no input
     was given in a form. (#1768, #1754, #1747, #1746, #1737, #1726)
