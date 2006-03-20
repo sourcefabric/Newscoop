@@ -30,8 +30,6 @@ regGS("Creating new template", "Vytváření nové šablony");
 regGS("Duplicate template", "Duplikovat šablonu");
 regGS("Edit template", "Editovat šablonu");
 regGS("Save", "Uložit");
-regGS("The template $1 has been created.", "Šablona $1 byla vytvořena");
-regGS("Do you want to edit the template ?", "Chcete editovat šablonu?");
 regGS("The template $1 could not be created.", "Šablona $1 nemohla být vytvořena");
 regGS("Template $1 was changed", "Šablona $1 byla změněna");
 regGS("New template $1 was created", "Byla vytvořena nová šablona $1");

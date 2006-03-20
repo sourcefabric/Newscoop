@@ -11,7 +11,6 @@ regGS("Change all sections", "");
 regGS("WARNING: If you subscribe to all sections, the periods for previously added sections will be overriden!", "");
 regGS("Adding sections", "");
 regGS("Adding sections to subscription", "");
-regGS("Please check if there isn't another subscription with the same section.", "");
 regGS("Are you sure you want to delete the subscription to the section $1?", "");
 regGS("Change subscription", "");
 regGS("You do not have the right to change subscriptions.", "");

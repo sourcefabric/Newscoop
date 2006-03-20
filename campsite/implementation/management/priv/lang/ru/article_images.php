@@ -1,4 +1,5 @@
 <?php
+regGS("Edit article", "");
 regGS("You do not have the right to attach images to articles.", "");
 regGS("Items per page", "Объектов на страницу");
 regGS("You do not have the right to add images.", "Вы не имеете права добавления картинок.");

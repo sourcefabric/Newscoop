@@ -30,8 +30,6 @@ regGS("Creating new template", "Creez şablon");
 regGS("Duplicate template", "Copiază şablon");
 regGS("Edit template", "Editează şablon");
 regGS("Save", "Salvează");
-regGS("The template $1 has been created.", "Şablonul $1 a fost creat.");
-regGS("Do you want to edit the template ?", "Doriţi să editaţi şablonul?");
 regGS("The template $1 could not be created.", "Şablonul $1 nu poate fi creat.");
 regGS("Template $1 was changed", "Şablonul $1 a fost modificat");
 regGS("New template $1 was created", "Şablonul $1 a fost creat");

@@ -30,8 +30,6 @@ regGS("Creating new template", "正在建新模版");
 regGS("Duplicate template", "复制模版");
 regGS("Edit template", "编辑模版");
 regGS("Save", "保存");
-regGS("The template $1 has been created.", "模版$1已建立");
-regGS("Do you want to edit the template ?", "您要编辑模版？");
 regGS("The template $1 could not be created.", "模版$1不能被建立");
 regGS("Template $1 was changed", "模版$1被改变");
 regGS("New template $1 was created", "新模版$1被建立");

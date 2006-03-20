@@ -11,7 +11,6 @@ regGS("Change all sections", "Alle Rubriken verändern");
 regGS("WARNING: If you subscribe to all sections, the periods for previously added sections will be overriden!", "Warnung: Beim abonnieren aller Rubriken werden die Zeiträume für vormals hinzugefügte Rubriken überschrieben!");
 regGS("Adding sections", "Rubriken werden hinzugefügt");
 regGS("Adding sections to subscription", "Rubriken werden zu Abonoment hinzugefügtq");
-regGS("Please check if there isn't another subscription with the same section.", "Bitte überprüfen, ob ein anderes Abonmoment mit derselben Rubrik bereits existiert");
 regGS("Are you sure you want to delete the subscription to the section $1?", "Abonoment zur Rubrik $1 wirklich löschen?");
 regGS("Change subscription", "Abonoment ändern");
 regGS("You do not have the right to change subscriptions.", "Keine Berechtigung Abonoments zu ändern");

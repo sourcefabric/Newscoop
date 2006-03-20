@@ -26,8 +26,6 @@ regGS("Create new template", "Креирај нови шаблон");
 regGS("Creating new template", "Креирање новог шаблона");
 regGS("Duplicate template", "Дуплирај шаблон");
 regGS("Edit template", "Уреди шаблон");
-regGS("The template $1 has been created.", "Шаблон $1 је креиран");
-regGS("Do you want to edit the template ?", "Желите ли да уредите шаблон?");
 regGS("The template $1 could not be created.", "Шаблон $1 не може бити креиран");
 regGS("Template $1 was changed", "Шаблон $1 је промењен");
 regGS("New template $1 was created", "Нови шаблон $1 је креиран");

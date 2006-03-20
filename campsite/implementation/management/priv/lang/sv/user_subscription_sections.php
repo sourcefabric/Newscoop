@@ -11,7 +11,6 @@ regGS("Change all sections", "Ändra alla sektioner");
 regGS("WARNING: If you subscribe to all sections, the periods for previously added sections will be overriden!", "VARNING: Om du prenumererar på alla sektioner, kommer preioderna för tidigare tillagda sektioner att skrivas över!");
 regGS("Adding sections", "Lägger till sektioner");
 regGS("Adding sections to subscription", "Lägger till sektioner till prenumeration");
-regGS("Please check if there isn't another subscription with the same section.", "Var god kontollera att det inte finns en annan prenumeration på samma sektion.");
 regGS("Are you sure you want to delete the subscription to the section $1?", "Är du säker att du vill radera prenumerationen till sektionen $1?");
 regGS("Change subscription", "Ändra prenumeration");
 regGS("You do not have the right to change subscriptions.", "Du har inte rätt att ändra prenumerationer.");

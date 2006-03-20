@@ -30,8 +30,6 @@ regGS("Creating new template", "وضع قالب جديد");
 regGS("Duplicate template", "كرر القالب");
 regGS("Edit template", "تحرير القالب");
 regGS("Save", "حفظ");
-regGS("The template $1 has been created.", "القالب 1$ تم انشاؤه");
-regGS("Do you want to edit the template ?", " هل تريد تحرير القالب؟");
 regGS("The template $1 could not be created.", "لا يمكن وضع القالب 1$");
 regGS("Template $1 was changed", "تمّ تغيير القالب 1$");
 regGS("New template $1 was created", "تمّ وضع القالب جديد 1$");

@@ -26,8 +26,6 @@ regGS("Create new template", "");
 regGS("Creating new template", "");
 regGS("Duplicate template", "");
 regGS("Edit template", "");
-regGS("The template $1 has been created.", "");
-regGS("Do you want to edit the template ?", "");
 regGS("The template $1 could not be created.", "");
 regGS("Template $1 was changed", "");
 regGS("New template $1 was created", "");

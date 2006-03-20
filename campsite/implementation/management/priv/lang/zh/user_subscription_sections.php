@@ -11,7 +11,6 @@ regGS("Change all sections", "改变所有区");
 regGS("WARNING: If you subscribe to all sections, the periods for previously added sections will be overriden!", "警告：如果你订阅所有区，以前增加的区的时间将作废！");
 regGS("Adding sections", "正在增加区");
 regGS("Adding sections to subscription", "正在向订阅增加区");
-regGS("Please check if there isn't another subscription with the same section.", "请确认是否存在同样区的其它订阅");
 regGS("Are you sure you want to delete the subscription to the section $1?", "你确认要删除区$1的订阅？");
 regGS("Change subscription", "改变订阅");
 regGS("You do not have the right to change subscriptions.", "你无权修改订阅");

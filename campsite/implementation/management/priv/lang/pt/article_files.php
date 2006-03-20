@@ -1,4 +1,5 @@
 <?php
+regGS("Edit article", "");
 regGS("You do not have the right to delete file attachments.", "");
 regGS("You must select a file to upload.", "Tem de selecionar um ficheiro para transferir");
 regGS("You do not have the right to delete files.", "Não tem permissões para eliminar ficheiros");

@@ -26,8 +26,6 @@ regGS("Create new template", "Criar Modelo");
 regGS("Creating new template", "Criando Modelo");
 regGS("Duplicate template", "Duplicar Modelo");
 regGS("Edit template", "Editar Modelo");
-regGS("The template $1 has been created.", "O modelo $1 foi criado");
-regGS("Do you want to edit the template ?", "Editar modelo?");
 regGS("The template $1 could not be created.", "O modelo $1 não pode ser criado");
 regGS("Template $1 was changed", "O modelo $1 foi alterado");
 regGS("New template $1 was created", "Modelo $1 foi criado");
