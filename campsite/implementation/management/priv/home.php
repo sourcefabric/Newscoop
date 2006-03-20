@@ -144,7 +144,7 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 		if (count($YourArticles) == 0) {
 	        ?>
     		<TR>
-			<TD colspan="3" class="list_row_odd"><?php putGS("You haven't written any articles yet."); ?></td>
+			<TD colspan="7" class="list_row_odd"><?php putGS("You haven't written any articles yet."); ?></td>
 	        </tr>
 		    <?php
 		}
@@ -322,7 +322,7 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 		if (count($recentlyPublishedArticles) == 0) {
 	        ?>
     		<TR>
-			<TD colspan="2" class="list_row_odd"><?php putGS("No articles have been published yet."); ?></td>
+			<TD colspan="7" class="list_row_odd"><?php putGS("No articles have been published yet."); ?></td>
 	        </tr>
 		    <?php
 		}
@@ -539,7 +539,7 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 		if (count($unplacedArticles) == 0) {
 	        ?>
     		<TR>
-			<TD colspan="3" class="list_row_odd"><?php putGS("There are no pending articles."); ?></td>
+			<TD colspan="5" class="list_row_odd"><?php putGS("There are no pending articles."); ?></td>
 	        </tr>
 		    <?php
 		}
