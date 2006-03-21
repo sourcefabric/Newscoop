@@ -355,7 +355,7 @@ const char* const EscapeHTML(const char *src)
 			}
 		case '\r':
 			strcpy((dst + dstI), "<BR>\r");
-			dstI = dstI + 4;
+			dstI = dstI + 3;
 			break;
 		default:
 			dst[dstI] = src[srcI];

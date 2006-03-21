@@ -733,6 +733,11 @@ const CCLexem* CCParser::DoParse(CContext& p_rcoContext, sockstream& p_rcoOut,
 			index ++;
 			local_write = p_bWrite && ((index == start_st && !all)
 									   || (index >= start_st && all));
+			string::size_type nTrimStart = text.find_first_not_of(" \r\n\t");
+			if (nTrimStart != string::npos)
+			{
+				text = text.substr(nTrimStart);
+			}
 			if (do_append)
 				p_rcoContext.AppendSubtitle(text);
 			if (local_write)
