@@ -11,7 +11,7 @@ LDLIBS=-lmysqlclient -lm -lz $(LIBCRYPT_LINK) $(PTHREAD_LINK) $(NSL_LINK)
 
 LINKS=globals.h readconf.h readconf.cpp cms_types.h threadkey.h mutex.h mutex.cpp
 
-all: links notifyendsubs notifyevents
+all: links campsite_notifyendsubs campsite_notifyevents
 	$(MAKE) -C smtp_wrapper
 
 links: dummy
@@ -20,11 +20,11 @@ links: dummy
 	done
 	@if [ ! -L "configure.h" ]; then ln -s "$(INSTALL_CONF)/configure.h"; fi
 
-notifyendsubs: notifyendsubs.o ccampsiteinstance.o mutex.o readconf.o
+campsite_notifyendsubs: notifyendsubs.o ccampsiteinstance.o mutex.o readconf.o
 	g++ -o campsite_notifyendsubs notifyendsubs.o readconf.o ccampsiteinstance.o mutex.o $(LDFLAGS) $(LDLIBS)
 	strip campsite_notifyendsubs
 
-notifyevents: notifyevents.o ccampsiteinstance.o mutex.o readconf.o
+campsite_notifyevents: notifyevents.o ccampsiteinstance.o mutex.o readconf.o
 	g++ -o campsite_notifyevents notifyevents.o readconf.o ccampsiteinstance.o mutex.o $(LDFLAGS) $(LDLIBS)
 	strip campsite_notifyevents
 
