@@ -20,6 +20,7 @@ $languages = Language::GetLanguages();
 $defaultLanguage = array_pop(Language::GetLanguages(null, $_REQUEST['TOL_Language']));
 $urlTypes = UrlType::GetUrlTypes();
 $timeUnits = TimeUnit::GetTimeUnits($_REQUEST['TOL_Language']);
+$shortNameUrlType = UrlType::GetByName('short names');
 
 $crumbs = array();
 $crumbs[] = array(getGS("Publications"), "/$ADMIN/pub/");
@@ -60,11 +61,7 @@ echo camp_html_breadcrumbs($crumbs);
 	<SELECT NAME="cURLType" class="input_select">
 	<?php
 	foreach ($urlTypes as $urlType) {
-		$selected = 0;
-		if ($urlType->getName() == "short names") {
-			$selected = $urlType->getId();
-		}
-		camp_html_select_option($urlType->getId(), $selected, $urlType->getName());
+		camp_html_select_option($urlType->getId(), $shortNameUrlType->getId(), $urlType->getName());
 	}
 	?>
 	</SELECT>

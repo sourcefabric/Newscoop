@@ -1,4 +1,6 @@
 <?php
+regGS("template path", "");
+regGS("short names", "");
 regGS("Cannot create file \"$1\"", "Невозможно создать файл \"$1\"");
 regGS("The IP address group $1 has been deleted.", "Группа IP-адресов $1 была удалена.");
 regGS("IP Group $1 added for user $2", "Группа IP-адресов $1добавлена для пользователя $2");

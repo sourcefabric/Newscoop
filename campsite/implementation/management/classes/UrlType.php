@@ -6,8 +6,8 @@
 /**
  * Includes
  */
-// We indirectly reference the DOCUMENT_ROOT so we can enable 
-// scripts to use this file from the command line, because $_SERVER['DOCUMENT_ROOT'] 
+// We indirectly reference the DOCUMENT_ROOT so we can enable
+// scripts to use this file from the command line, because $_SERVER['DOCUMENT_ROOT']
 // is not defined in these cases.
 if (!isset($g_documentRoot)) {
     $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
@@ -24,12 +24,12 @@ class UrlType extends DatabaseObject {
 	var $m_keyColumnNames = array('Id');
 	var $m_keyIsAutoIncrement = true;
 	var $m_columnNames = array('Id', 'Name', 'Description');
-	
-	/** 
+
+	/**
 	 * Constructor.
 	 * @param int $p_id
 	 */
-	function UrlType($p_id = null) 
+	function UrlType($p_id = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
 		if (!is_null($p_id)) {
@@ -37,49 +37,72 @@ class UrlType extends DatabaseObject {
 			$this->fetch();
 		}
 	} // constructor
-	
-	
+
+
 	/**
 	 * Return an array of all URL types.
 	 * @return array
 	 */
-	function GetUrlTypes() 
+	function GetUrlTypes()
 	{
 		$queryStr = 'SELECT * FROM URLTypes';
 		$urlTypes = DbObjectArray::Create('UrlType', $queryStr);
 		return $urlTypes;
 	} // fn GetUrlTypes
 
-	
+
 	/**
 	 * The unique ID of the URLType.
 	 * @return int
 	 */
-	function getId() 
+	function getId()
 	{
 		return $this->getProperty('Id');
 	} // fn getId
-	
-	
+
+
 	/**
 	 * Return the name of this URLType.
 	 * @return string
 	 */
-	function getName() 
+	function getName()
 	{
-		return $this->getProperty('Name');
+		$name = $this->getProperty('Name');
+		switch ($name) {
+			case "short names":
+				return getGS("short names");
+			case "template path":
+				return getGS("template path");
+			default:
+				return "";
+		}
 	} // fn getName
-	
+
 
 	/**
 	 * Return the description of the URL Type.
 	 * @return string
-	 */ 
-	function getDescription() 
+	 */
+	function getDescription()
 	{
 		return $this->getProperty('Description');
 	} // fn getDescription
-		
+
+
+	function GetByName($p_name)
+	{
+		global $Campsite;
+		$sql = "SELECT * FROM URLTypes WHERE Name='".mysql_real_escape_string($p_name)."'";
+		$row = $Campsite['db']->GetRow($sql);
+		if ($row && is_array($row)) {
+			$urlType =& new UrlType();
+			$urlType->fetch($row);
+			return $urlType;
+		} else {
+			return null;
+		}
+	} // fn GetByName
+
 } // class UrlType
 
 ?>
