@@ -222,7 +222,7 @@ function camp_read_get_parameters(&$p_queryString)
 	foreach ($pairs as $pair) {
 		$pair_array = explode("=", $pair);
 		$paramName = trim($pair_array[0]);
-		$paramValue = trim($pair_array[1]);
+		$paramValue = trim(isset($pair_array[1]) ? $pair_array[1] : '');
 		if ($paramName == "") {
 			continue;
 		}
