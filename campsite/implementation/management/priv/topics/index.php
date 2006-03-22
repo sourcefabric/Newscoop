@@ -13,6 +13,13 @@ $topics = Topic::GetTree();
 // return value is sorted by language
 $allLanguages = Language::GetLanguages();
 
+$loginLanguageId = 0;
+$loginLanguage = Language::GetLanguages(null, $_REQUEST['TOL_Language']);
+if (is_array($loginLanguage)) {
+	$loginLanguage = array_pop($loginLanguage);
+	$loginLanguageId = $loginLanguage->getLanguageId();
+}
+
 if (count($f_show_languages) <= 0) {
 	$f_show_languages = DbObjectArray::GetColumn($allLanguages, 'Id');
 }
@@ -26,7 +33,7 @@ echo camp_html_breadcrumbs($crumbs);
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.config.js"></script>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.core.js"></script>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.lang-enUS.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.validators.js"></script>	
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.validators.js"></script>
 <script>
 
 function checkAll()
@@ -61,7 +68,7 @@ function uncheckAll()
 	<td >
 		<table cellpadding="0">
 		<tr>
-		<?php 
+		<?php
 		foreach ($allLanguages as $tmpLanguage) {
 			?>
 			<td style="padding-left: 5px;">
@@ -72,19 +79,19 @@ function uncheckAll()
 			</td>
 			<?php
 		}
-		?>		
+		?>
 			<td style="padding-left: 10px;">
 				<input type="submit" name="f_show" value="<?php putGS("Show"); ?>" class="button">
 			</td>
 		</tr>
 		</table>
-	</td>	
+	</td>
 </tr>
 </table>
 </FORM>
 
 <p>
-<?php  if ($User->hasPermission("ManageTopics")) { ?>	
+<?php  if ($User->hasPermission("ManageTopics")) { ?>
 <form method="POST" action="do_add.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
 <input type="hidden" name="f_topic_parent_id" value="0">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="table_input">
@@ -97,14 +104,14 @@ function uncheckAll()
 			<td valign="middle">
 				<SELECT NAME="f_topic_language_id" class="input_select" alt="select" emsg="<?php putGS("You must select a language."); ?>">
 				<option value="0"><?php putGS("---Select language---"); ?></option>
-				<?php 
+				<?php
 			 	foreach ($allLanguages as $tmpLanguage) {
-			 		camp_html_select_option($tmpLanguage->getLanguageId(), 
-			 								null, 
+			 		camp_html_select_option($tmpLanguage->getLanguageId(),
+			 								$loginLanguageId,
 			 								$tmpLanguage->getNativeName());
 		        }
-				?>			
-				</SELECT>			
+				?>
+				</SELECT>
 			</td>
 			<td>
 				<input type="text" name="f_topic_name" value="" class="input_text" size="20" alt="blank" emsg="<?php putGS('You must enter a name for the topic.'); ?>">
@@ -125,7 +132,7 @@ if (count($topics) == 0) { ?>
 	<BLOCKQUOTE>
 	<LI><?php  putGS('No topics'); ?></LI>
 	</BLOCKQUOTE>
-	<?php  
+	<?php
 } else {
 ?>
 <script>
@@ -140,10 +147,10 @@ var topic_ids = new Array;
 	<TD ALIGN="center" VALIGN="TOP"></TD>
 </TR>
 
-<?php 
+<?php
 $color= 0;
 $isFirstTopic = true;
-foreach ($topics as $topicPath) { 
+foreach ($topics as $topicPath) {
 	$currentTopic = camp_array_peek($topicPath, false, -1);
 	$topicTranslations = $currentTopic->getTranslations();
 	$isFirstTranslation = true;
@@ -165,13 +172,13 @@ foreach ($topics as $topicPath) {
 		?>
 		</td>
 		<TD <?php if (!$isFirstTopic & $isFirstTranslation) { ?>style="border-top: 2px solid #8AACCE;"<?php } ?> valign="middle" align="center">
-			<?php 
+			<?php
 			$topicLanguage =& new Language($topicLanguageId);
 			p($topicLanguage->getCode());
 			?>
 		</TD>
 		<TD <?php if (!$isFirstTopic && $isFirstTranslation) { ?>style="border-top: 2px solid #8AACCE;"<?php } ?> valign="middle" align="left" width="450px">
-			<?php 
+			<?php
 			$printTopic = array();
 			// pop off the last topic because we want to make it a hyperlink.
 			$lastTopic = array_pop($topicPath);
@@ -199,7 +206,7 @@ foreach ($topics as $topicPath) {
 			<a href="<?php p("/$ADMIN/topics/do_del.php?f_topic_delete_id=".$currentTopic->getTopicId()."&f_topic_language_id=$topicLanguageId"); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the topic $1?', htmlspecialchars($topicName)); ?>');"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" alt="<?php putGS("Delete"); ?>" title="<?php putGS("Delete"); ?>" border="0"></a>
 		</td>
 		</tr>
-		
+
 	    <tr id="add_subtopic_<?php p($currentTopic->getTopicId()); ?>_<?php p($topicLanguageId); ?>" style="display: none;">
 	    	<td colspan="2"></td>
 	    	<td colspan="3">
@@ -223,11 +230,11 @@ foreach ($topics as $topicPath) {
 	    		</table>
 	    		</FORM>
 	    	</td>
-	    </tr>	
+	    </tr>
 		<script>
 		topic_ids.push("add_subtopic_"+<?php p($currentTopic->getTopicId()); ?>+"_<?php p($topicLanguageId); ?>");
 		</script>
-		<?php  
+		<?php
 		$isFirstTranslation = false;
 	}
 	?>
@@ -245,13 +252,13 @@ foreach ($topics as $topicPath) {
 		    			<td>
 							<SELECT NAME="f_topic_language_id" class="input_select" alt="select" emsg="<?php putGS("You must select a language."); ?>">
 							<option value="0"><?php putGS("---Select language---"); ?></option>
-							<?php 
+							<?php
 						 	foreach ($allLanguages as $tmpLanguage) {
-						 		camp_html_select_option($tmpLanguage->getLanguageId(), 
-						 								null, 
+						 		camp_html_select_option($tmpLanguage->getLanguageId(),
+						 								null,
 						 								$tmpLanguage->getNativeName());
 					        }
-							?>			
+							?>
 							</SELECT>
 		    			</td>
 		    			<td><input type="text" name="f_topic_name" value="" class="input_text" size="15" alt="blank" emsg="<?php putGS('You must enter a name for the topic.'); ?>"></td>
