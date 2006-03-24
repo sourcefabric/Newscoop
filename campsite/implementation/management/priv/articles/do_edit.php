@@ -66,34 +66,34 @@ function TransformInternalLinks($p_match) {
 	}
 	// This matches '<a href="campsite_internal_link?IdPublication=1&..." ...>'
 	elseif (preg_match("/<\s*a\s*(((href\s*=\s*[\"']campsite_internal_link[?][\w&=;]*[\"'])|(target\s*=\s*['\"][_\w]*['\"]))[\s]*)*[\s\w\"']*>/i", $p_match[0])) {
-		
+
 		// Get the URL
 		preg_match("/href\s*=\s*[\"'](campsite_internal_link[?][\w&=;]*)[\"']/i", $p_match[0], $url);
 		$url = isset($url[1])?$url[1]:'';
 		$parsedUrl = parse_url($url);
 		$parsedUrl = str_replace("&amp;", "&", $parsedUrl);
-		
+
 		// Get the target, if there is one
 		preg_match("/target\s*=\s*[\"']([_\w]*)[\"']/i", $p_match[0], $target);
 		$target = isset($target[1])?$target[1]:null;
-		
+
 		// Replace the HTML tag with a template tag
 		$retval = "<!** Link Internal ".$parsedUrl["query"];
 		if (!is_null($target)) {
 			$retval .= " TARGET ".$target;
 		}
 		$retval .= ">";
-		
+
 		// Mark that we are now inside an internal link.
 		$g_internalLinkCounter = 1;
 		return $retval;
-	}	
+	}
 } // fn TransformInternalLinks
 
 
 /**
  * This function is a callback for preg_replace_callback().
- * It will replace <img src="http://[hostname]/[image_dir]/cms-image-000000001.jpg" align="center" alt="alternate text" sub="caption text">
+ * It will replace <img src="http://[hostname]/[image_dir]/cms-image-000000001.jpg" align="center" alt="alternate text" sub="caption text" id="5">
  * with <!** Image [image_template_id] align=CENTER alt="alternate text" sub="caption text">
  * @param array p_match
  * @return string
@@ -110,24 +110,15 @@ function TransformImageTags($p_match) {
 		$attrValue = str_replace('"', '', $attrValue);
 		$attrValue = str_replace("'", '', $attrValue);
 		$attrs[$attrName] = $attrValue;
-	}	
-	if (!isset($attrs['src'])) {
-		return '';
 	}
-	else {
-		// Figure out if it is a local or remote image
-		if (strstr($attrs['src'], 'cms-image-')) {
-			// It is a local image
-			// Get the image ID.
-			preg_match_all("/[\w\/:]*cms-image-(\d*)[.\w]*/i", $attrs['src'], $srcParts);
-			// Lookup the image by ID
-			$articleImage =& new ArticleImage($f_article_number, $srcParts[1][0]);
-			$templateId = $articleImage->getTemplateId();
-		}
-		else {
-			$image = Image::GetByUrl($attrs['src']);
-			$articleImage =& new ArticleImage($f_article_number, $image->getImageId());
-			$templateId = $articleImage->getTemplateId();
+
+	if (!isset($attrs['id'])) {
+		return '';
+	} else {
+		$templateId = $attrs['id'];
+		$articleImage =& new ArticleImage($f_article_number, $templateId);
+		if (!$articleImage->exists()) {
+			return '';
 		}
 	}
 	$alignTag = '';
@@ -170,7 +161,7 @@ $BackLink = "/$ADMIN/articles/index.php?f_publication_id=$f_publication_id&f_iss
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
-	exit;	
+	exit;
 }
 
 // Fetch article
@@ -223,7 +214,7 @@ if (preg_match("/\d{4}-\d{2}-\d{2}/", $f_creation_date)) {
 foreach ($articleFields as $dbColumnName => $text) {
 	// Replace <span class="subhead"> ... </span> with <!** Title> ... <!** EndTitle>
 	$text = preg_replace_callback("/(<\s*span[^>]*class\s*=\s*[\"']campsite_subhead[\"'][^>]*>|<\s*span|<\s*\/\s*span\s*>)/i", "TransformSubheads", $text);
-	
+
 	// Replace <a href="campsite_internal_link?IdPublication=1&..." ...> ... </a>
 	// with <!** Link Internal IdPublication=1&...> ... <!** EndLink>
 	$text = preg_replace_callback("/(<\s*a\s*(((href\s*=\s*[\"']campsite_internal_link[?][\w&=;]*[\"'])|(target\s*=\s*['\"][_\w]*['\"]))[\s]*)*[\s\w\"']*>)|(<\s*\/a\s*>)/i", "TransformInternalLinks", $text);
@@ -234,6 +225,7 @@ foreach ($articleFields as $dbColumnName => $text) {
 	$altAttr = "(alt\s*=\s*['\"][^'\"]*['\"])";
 	$alignAttr = "(align\s*=\s*['\"][^'\"]*['\"])";
 	$subAttr = "(sub\s*=\s*['\"][^'\"]*['\"])";
+	$subAttr = "(id\s*=\s*['\"][^'\"]*['\"])";
 	$text = preg_replace_callback("/<\s*img\s*(($srcAttr|$altAttr|$alignAttr|$subAttr)\s*)*[\s\w\"']*\/>/i", "TransformImageTags", $text);
 	$articleTypeObj->setProperty($dbColumnName, $text);
 }

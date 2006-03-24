@@ -1,10 +1,10 @@
 /**
- * Functions for the ImageManager, used by manager.php only	
- * @author $Author: paul $
- * @version $Id: manager.js,v 1.1 2005/05/02 17:39:57 paul Exp $
+ * Functions for the ImageManager, used by manager.php only
+ * @author $Author$
+ * @version $Id$
  * @package ImageManager
  */
-	
+
 	//Translation
 //	function i18n(str) {
 //		if(I18N)
@@ -15,7 +15,7 @@
 
 
 	//set the alignment options
-	function setAlign(align) 
+	function setAlign(align)
 	{
 		var selection = document.getElementById('f_align');
 		for(var i = 0; i < selection.length; i++)
@@ -29,7 +29,7 @@
 	}
 
 	//initialise the form
-	init = function () 
+	init = function ()
 	{
 		__dlg_init();
 
@@ -39,8 +39,9 @@
 		if(uploadForm) uploadForm.target = 'imgManager';
 
 		var param = window.dialogArguments;
-		if (param) 
+		if (param)
 		{
+			document.getElementById("f_image_template_id").value = param["f_image_template_id"];
 			document.getElementById("f_url").value = param["f_url"];
 			document.getElementById("f_alt").value = param["f_alt"];
 			document.getElementById("f_caption").value = param["f_caption"];
@@ -56,21 +57,21 @@
 	}
 
 
-	function onCancel() 
+	function onCancel()
 	{
 		__dlg_close(null);
 		return false;
 	};
 
-	function onOK() 
+	function onOK()
 	{
 		// pass data back to the calling window
-		//var fields = ["f_url", "f_alt", "f_align", "f_border", 
+		//var fields = ["f_url", "f_alt", "f_align", "f_border",
 		//			  "f_horiz", "f_vert", "f_height", "f_width"];
-		var fields = ["f_url", "f_alt", "f_align", "f_caption"];
+		var fields = ["f_url", "f_alt", "f_align", "f_caption", "f_image_template_id"];
 		var param = new Object();
 		//var debugMsg = "";
-		for (var i in fields) 
+		for (var i in fields)
 		{
 			var id = fields[i];
 			var el = document.getElementById(id);
@@ -86,32 +87,32 @@
 	};
 
 	//similar to the Files::makeFile() in Files.php
-	function makeURL(pathA, pathB) 
+	function makeURL(pathA, pathB)
 	{
 		if(pathA.substring(pathA.length-1) != '/')
 			pathA += '/';
 
-		if(pathB.charAt(0) == '/');	
+		if(pathB.charAt(0) == '/');
 			pathB = pathB.substring(1);
 
 		return pathA+pathB;
 	}
 
 
-	function updateDir(selection) 
+	function updateDir(selection)
 	{
 		var newDir = selection.options[selection.selectedIndex].value;
 		changeDir(newDir);
 	}
 
-	function goUpDir() 
+	function goUpDir()
 	{
 		var selection = document.getElementById('dirPath');
 		var currentDir = selection.options[selection.selectedIndex].text;
 		if(currentDir.length < 2)
 			return false;
 		var dirs = currentDir.split('/');
-		
+
 		var search = '';
 
 		for(var i = 0; i < dirs.length - 2; i++)
@@ -132,34 +133,34 @@
 		}
 	}
 
-	function changeDir(newDir) 
+	function changeDir(newDir)
 	{
 		if(typeof imgManager != 'undefined')
 			imgManager.changeDir(newDir);
 	}
 
-	function toggleConstrains(constrains) 
+	function toggleConstrains(constrains)
 	{
 		var lockImage = document.getElementById('imgLock');
 		var constrains = document.getElementById('constrain_prop');
 
-		if(constrains.checked) 
+		if(constrains.checked)
 		{
-			lockImage.src = "img/locked.gif";	
-			checkConstrains('width') 
+			lockImage.src = "img/locked.gif";
+			checkConstrains('width')
 		}
 		else
 		{
-			lockImage.src = "img/unlocked.gif";	
+			lockImage.src = "img/unlocked.gif";
 		}
 	}
 
-	function checkConstrains(changed) 
+	function checkConstrains(changed)
 	{
 		//alert(document.form1.constrain_prop);
 		var constrains = document.getElementById('constrain_prop');
-		
-		if(constrains.checked) 
+
+		if(constrains.checked)
 		{
 			var obj = document.getElementById('orginal_width');
 			var orginal_width = parseInt(obj.value);
@@ -168,11 +169,11 @@
 
 			var widthObj = document.getElementById('f_width');
 			var heightObj = document.getElementById('f_height');
-			
+
 			var width = parseInt(widthObj.value);
 			var height = parseInt(heightObj.value);
 
-			if(orginal_width > 0 && orginal_height > 0) 
+			if(orginal_width > 0 && orginal_height > 0)
 			{
 				if(changed == 'width' && width > 0) {
 					heightObj.value = parseInt((width/orginal_width)*orginal_height);
@@ -181,11 +182,11 @@
 				if(changed == 'height' && height > 0) {
 					widthObj.value = parseInt((height/orginal_height)*orginal_width);
 				}
-			}			
+			}
 		}
 	}
 
-	function showMessage(newMessage) 
+	function showMessage(newMessage)
 	{
 		var message = document.getElementById('message');
 		var messages = document.getElementById('messages');
@@ -193,20 +194,20 @@
 			message.removeChild(message.firstChild);
 
 		message.appendChild(document.createTextNode(i18n(newMessage)));
-		
+
 		messages.style.display = "block";
 	}
 
 	function addEvent(obj, evType, fn)
-	{ 
-		if (obj.addEventListener) { obj.addEventListener(evType, fn, true); return true; } 
-		else if (obj.attachEvent) {  var r = obj.attachEvent("on"+evType, fn);  return r;  } 
-		else {  return false; } 
-	} 
-
-	function doUpload() 
 	{
-		
+		if (obj.addEventListener) { obj.addEventListener(evType, fn, true); return true; }
+		else if (obj.attachEvent) {  var r = obj.attachEvent("on"+evType, fn);  return r;  }
+		else {  return false; }
+	}
+
+	function doUpload()
+	{
+
 		var uploadForm = document.getElementById('uploadForm');
 		if(uploadForm)
 			showMessage('Uploading');
@@ -219,12 +220,12 @@
 	}
 
 
-	function newFolder() 
+	function newFolder()
 	{
 		var selection = document.getElementById('dirPath');
 		var dir = selection.options[selection.selectedIndex].value;
 
-		Dialog("newFolder.html", function(param) 
+		Dialog("newFolder.html", function(param)
 		{
 			if (!param) // user must have pressed Cancel
 				return false;
@@ -237,8 +238,8 @@
 					return false;
 				}
 
-				if (folder && folder != '' && typeof imgManager != 'undefined') 
-					imgManager.newFolder(dir, encodeURI(folder)); 
+				if (folder && folder != '' && typeof imgManager != 'undefined')
+					imgManager.newFolder(dir, encodeURI(folder));
 			}
 		}, null);
 	}

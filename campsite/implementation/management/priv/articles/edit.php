@@ -561,7 +561,7 @@ if ($f_edit_mode == "edit") { ?>
 						$articleImage =& new ArticleImage($f_article_number, null, $templateId);
 						$image =& new Image($articleImage->getImageId());
 						$imageUrl = $image->getImageUrl();
-						$text = preg_replace("/<!\*\*\s*Image\s*".$templateId."\s*/i", '<img src="'.$imageUrl.'" ', $text);
+						$text = preg_replace("/<!\*\*\s*Image\s*".$templateId."\s*/i", '<img src="'.$imageUrl.'" id="'.$templateId.'" ', $text);
 					}
 				}
 			?>

@@ -1,8 +1,8 @@
 <?php
 /**
  * The main GUI for the ImageManager.
- * @author $Author: paul $
- * @version $Id: manager.php,v 1.2 2005/05/03 20:32:25 paul Exp $
+ * @author $Author$
+ * @version $Id$
  * @package ImageManager
  */
 
@@ -10,7 +10,6 @@ require_once('config.inc.php');
 require_once('Classes/ImageManager.php');
 
 $manager = new ImageManager($IMConfig);
-//$dirs = $manager->getDirs();
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -18,7 +17,7 @@ $manager = new ImageManager($IMConfig);
 <html>
 <head>
   	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
- 	<link href="assets/manager.css" rel="stylesheet" type="text/css" />	
+ 	<link href="assets/manager.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript" src="../../popups/popup.js"></script>
 	<script type="text/javascript" src="assets/dialog.js"></script>
 	<script type="text/javascript">
@@ -27,8 +26,6 @@ $manager = new ImageManager($IMConfig);
 		if(window.opener) {
 			HTMLArea = window.opener.HTMLArea;
 		}
-		//var thumbdir = "<?php echo $IMConfig['thumbnail_dir']; ?>";
-		//var base_url = "<?php echo $manager->getBaseURL(); ?>";
 	/*]]>*/
 	</script>
 	<script type="text/javascript" src="assets/manager.js"></script>
@@ -37,13 +34,14 @@ $manager = new ImageManager($IMConfig);
 <body>
 	<div class="title">Insert Image</div>
 	<form action="images.php" id="uploadForm" method="post" enctype="multipart/form-data">
-	<fieldset><!--<legend><script>document.write(i18n("Image Manager"));</script></legend>-->
+	<fieldset>
 	<div class="dirs">
 		<iframe src="images.php?article_id=<?php echo $_REQUEST['article_id']; ?>" name="imgManager" id="imgManager" class="imageFrame" scrolling="auto" title="Image Selection" frameborder="0"></iframe>
 	</div>
 	</fieldset>
 	<!-- image properties -->
 		<table class="inputTable">
+			<input type="hidden" id="f_image_template_id" value="" />
 			<input type="hidden" id="f_url" value="" />
 			<input type="hidden" id="f_vert" value="" />
 			<input type="hidden" id="f_horiz" value="" />
@@ -55,11 +53,11 @@ $manager = new ImageManager($IMConfig);
 			<tr>
 				<td align="right"><label for="f_alt">Alt</label></td>
 				<td><input type="text" id="f_alt" class="largelWidth" value="" /></td>
-			</tr>		
+			</tr>
 			<tr>
 				<td align="right"><label for="f_caption">Caption</label></td>
 				<td><input type="text" id="f_caption" class="largelWidth" value="" /></td>
-			</tr>		
+			</tr>
 			<tr>
 				<td align="right"><label for="f_align">Alignment:</label></td>
 				<td>
@@ -78,10 +76,9 @@ $manager = new ImageManager($IMConfig);
 				</td>
 			</tr>
 		</table>
-	<!--// image properties -->	
-		<div style="text-align: right;"> 
+	<!--// image properties -->
+		<div style="text-align: right;">
 	          <hr />
-			  <!--<button type="button" class="buttons" onclick="return refresh();">Refresh</button>-->
 	          <button type="button" class="buttons" onclick="return onOK();">OK</button>
 	          <button type="button" class="buttons" onclick="return onCancel();">Cancel</button>
 	    </div>

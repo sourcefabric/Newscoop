@@ -1,7 +1,7 @@
 /**
  * The ImageManager plugin javascript.
- * @author $Author: paul $
- * @version $Id: image-manager.js,v 1.1 2005/05/02 17:39:57 paul Exp $
+ * @author $Author$
+ * @version $Id$
  * @package ImageManager
  */
 
@@ -47,6 +47,7 @@ HTMLArea.prototype._insertImage = function(image) {
 	if (image) {
 		outparam = {
 			f_url    : HTMLArea.is_ie ? image.src : image.getAttribute("src"),
+			f_image_template_id : image.id,
 			f_alt    : image.alt,
 			f_border : image.border,
 			f_align  : image.align,
@@ -69,13 +70,16 @@ HTMLArea.prototype._insertImage = function(image) {
 			// Image was added.
 			var imageTag = '<img src="'+param.f_url+'"';
 			if (param.f_alt) {
-				imageTag += ' alt="'+param.f_alt.replace(/\"/g, "&quot;")+'"';			
+				imageTag += ' alt="'+param.f_alt.replace(/\"/g, "&quot;")+'"';
 			}
 			if (param.f_align) {
 				imageTag += ' align="'+param.f_align+'"';
 			}
 			if (param.f_caption) {
 				imageTag += ' sub="'+param.f_caption.replace(/\"/g, "&quot")+'"';
+			}
+			if (param.f_image_template_id) {
+				imageTag += ' id="'+param.f_image_template_id+'"';
 			}
 			imageTag += ' />';
 			//alert(imageTag);
@@ -87,6 +91,7 @@ HTMLArea.prototype._insertImage = function(image) {
 				var value = param[field];
 				//alert(field+' : '+value);
 				switch (field) {
+					case "f_image_template_id" : img.id = parseInt(value || "0"); break;
 				    case "f_alt"    : img.alt	 = value.replace(/\"/g, "&quot;"); break;
 				    case "f_caption": img.setAttribute("sub", value.replace(/\"/g, "&quot;")); break;
 				    case "f_border" : img.border = parseInt(value || "0"); break;
@@ -96,7 +101,7 @@ HTMLArea.prototype._insertImage = function(image) {
 					case "f_width"  : img.width = parseInt(value || "0"); break;
 					case "f_height" : img.height = parseInt(value || "0"); break;
 				}
-			}	
+			}
 		}
 	}
 	, outparam);

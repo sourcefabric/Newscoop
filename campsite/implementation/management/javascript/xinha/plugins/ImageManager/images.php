@@ -39,24 +39,24 @@ function drawFiles($list, &$manager)
 {
 	global $relative;
 
-	foreach($list as $entry => $file) 
+	foreach($list as $entry => $file)
 	{ ?>
 		<td>
 			<table width="100" cellpadding="0" cellspacing="0">
 			<tr>
-				<td class="block" onclick="selectImage('<?php echo $file['image_object']->getImageUrl(); ?>', '<?php echo $file['alt']; ?>', <?php echo 0+$file['image'][0];?>, <?php echo 0+$file['image'][1]; ?>);">
-		<a href="javascript:;" onclick="selectImage('<?php echo $file['image_object']->getImageUrl(); ?>', '<?php echo $file['alt']; ?>', <?php echo 0+$file['image'][0];?>, <?php echo 0+$file['image'][1]; ?>);" title="<?php echo $file['alt']; ?>"><img src="<?php echo $file['image_object']->getThumbnailUrl(); ?>" alt="<?php echo $file['alt']; ?>"/></a>
+				<td class="block" onclick="selectImage(<?php echo $file['template_id']; ?>, '<?php echo $file['image_object']->getImageUrl(); ?>', '<?php echo $file['alt']; ?>');">
+		<a href="javascript:;" onclick="selectImage(<?php echo $file['template_id']; ?>, '<?php echo $file['image_object']->getImageUrl(); ?>', '<?php echo $file['alt']; ?>');" title="<?php echo $file['alt']; ?>"><img src="<?php echo $file['image_object']->getThumbnailUrl(); ?>" alt="<?php echo $file['alt']; ?>"/></a>
 		</td></tr><tr><td class="edit">
-		<?php 
-		if ($file['image']) { 
-			echo $file['image'][0].'x'.$file['image'][1]; 
-		} 
+		<?php
+		if ($file['image']) {
+			echo $file['image'][0].'x'.$file['image'][1];
+		}
 		else {
-			echo " "; //$entry;
+			echo " ";
 		}
 		?>
-		</td></tr></table></td> 
-	  <?php 
+		</td></tr></table></td>
+	  <?php
 	}//foreach
 }//function drawFiles
 
@@ -64,11 +64,11 @@ function drawFiles($list, &$manager)
 /**
  * Draw the directory.
  */
-function drawDirs($list, &$manager) 
+function drawDirs($list, &$manager)
 {
 	global $relative;
 
-	foreach($list as $path => $dir) 
+	foreach($list as $path => $dir)
 	{ ?>
 		<td><table width="100" cellpadding="0" cellspacing="0"><tr><td class="block">
 		<a href="images.php?dir=<?php echo rawurlencode($path); ?>" onclick="updateDir('<?php echo $path; ?>')" title="<?php echo $dir['entry']; ?>"><img src="img/folder.gif" height="80" width="80" alt="<?php echo $dir['entry']; ?>" /></a>
@@ -78,7 +78,7 @@ function drawDirs($list, &$manager)
 			<?php echo $dir['entry']; ?>
 		</td>
 		</tr></table></td>
-	  <?php 
+	  <?php
 	} //foreach
 }//function drawDirs
 
@@ -86,7 +86,7 @@ function drawDirs($list, &$manager)
 /**
  * No directories and no files.
  */
-function drawNoResults() 
+function drawNoResults()
 {
 ?>
 <table width="100%">
@@ -94,13 +94,13 @@ function drawNoResults()
     <td class="noResult"><script>document.write(i18n("No Images Found"));</script></td>
   </tr>
 </table>
-<?php	
+<?php
 }
 
 /**
  * No directories and no files.
  */
-function drawErrorBase(&$manager) 
+function drawErrorBase(&$manager)
 {
 ?>
 <table width="100%">
@@ -108,7 +108,7 @@ function drawErrorBase(&$manager)
     <td class="error">Invalid base directory: <?php echo $manager->config['base_dir']; ?></td>
   </tr>
 </table>
-<?php	
+<?php
 }
 
 ?>
@@ -139,12 +139,12 @@ function drawErrorBase(&$manager)
 		hideMessage();
 		var topDoc = window.top.document;
 
-<?php 
+<?php
 	//we need to refesh the drop directory list
 	//save the current dir, delete all select options
 	//add the new list, re-select the saved dir.
-	if($refreshDir) 
-	{ 
+	if($refreshDir)
+	{
 		$dirs = $manager->getDirs();
 ?>
 		var selection = topDoc.getElementById('dirPath');
@@ -152,12 +152,12 @@ function drawErrorBase(&$manager)
 
 		while(selection.length > 0)
 		{	selection.remove(0); }
-		
-		selection.options[selection.length] = new Option("/","<?php echo rawurlencode('/'); ?>");	
+
+		selection.options[selection.length] = new Option("/","<?php echo rawurlencode('/'); ?>");
 		<?php foreach($dirs as $relative=>$fullpath) { ?>
-		selection.options[selection.length] = new Option("<?php echo $relative; ?>","<?php echo rawurlencode($relative); ?>");		
+		selection.options[selection.length] = new Option("<?php echo $relative; ?>","<?php echo rawurlencode($relative); ?>");
 		<?php } ?>
-		
+
 		for(var i = 0; i < selection.length; i++)
 		{
 			var thisDir = selection.options[i].text;
@@ -166,14 +166,14 @@ function drawErrorBase(&$manager)
 				selection.selectedIndex = i;
 				break;
 			}
-		}		
+		}
 <?php } ?>
-	}	
+	}
 
-	function editImage(image) 
+	function editImage(image)
 	{
 		var url = "editor.php?img="+image;
-		Dialog(url, function(param) 
+		Dialog(url, function(param)
 		{
 			if (!param) // user must have pressed Cancel
 				return false;
@@ -181,7 +181,7 @@ function drawErrorBase(&$manager)
 			{
 				return true;
 			}
-		}, null);		
+		}, null);
 	}
 
 /*]]>*/
@@ -190,7 +190,7 @@ function drawErrorBase(&$manager)
 </head>
 
 <body>
-<?php if ($manager->isValidBase() == false) { drawErrorBase($manager); } 
+<?php if ($manager->isValidBase() == false) { drawErrorBase($manager); }
 	elseif(count($list[0]) > 0 || count($list[1]) > 0) { ?>
 <table>
 	<tr>
