@@ -3,9 +3,9 @@
  * @package Campware
  */
 
-// We indirectly reference the document root because some 
+// We indirectly reference the document root because some
 // scripts that use this file run from the command line,
-// therefore $_SERVER['DOCUMENT_ROOT'] is not defined in 
+// therefore $_SERVER['DOCUMENT_ROOT'] is not defined in
 // these cases.
 if (!isset($g_documentRoot)) {
     $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
@@ -21,7 +21,7 @@ require_once("XML/Serializer/Unserializer.php");
 
 global $g_localizerConfig;
 
-// The default language, which forms the keys for 
+// The default language, which forms the keys for
 // all other languages.
 $g_localizerConfig['DEFAULT_LANGUAGE'] = 'en';
 
@@ -29,7 +29,7 @@ $g_localizerConfig['DEFAULT_LANGUAGE'] = 'en';
 $g_localizerConfig['FILENAME_PREFIX'] = 'locals';
 
 // Filename prefix for the global translation file -
-// a file that is always loaded with the particular 
+// a file that is always loaded with the particular
 // locals file.
 $g_localizerConfig['FILENAME_PREFIX_GLOBAL'] = 'globals';
 
@@ -41,11 +41,11 @@ $g_localizerConfig['DEFAULT_FILE_TYPE'] = 'gs';
 
 // The top-level directory to the set of directories
 // that need translation files.
-$g_localizerConfig['BASE_DIR'] = $_SERVER['DOCUMENT_ROOT'];
+$g_localizerConfig['BASE_DIR'] = $g_documentRoot;
 
 // The top-level directory to the set of directories
 // that need translation files.
-$g_localizerConfig['TRANSLATION_DIR'] = $_SERVER['DOCUMENT_ROOT'].'/admin-files/lang';
+$g_localizerConfig['TRANSLATION_DIR'] = $g_documentRoot.'/admin-files/lang';
 
 // Name of the XML file that contains the list of supported languages.
 $g_localizerConfig['LANGUAGE_METADATA_FILENAME'] = 'languages.xml';
