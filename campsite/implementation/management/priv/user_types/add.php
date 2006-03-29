@@ -79,7 +79,6 @@ if (function_exists ("incModFile"))
 </tr>
 <tr>
 	<td colspan="2" style="padding-top: 5px; padding-bottom: 10px;" align="center">
-		<input type="hidden" name="UType" value="<?php p(htmlspecialchars($uType)); ?>">
 		<input type="submit" class="button" name="Save" value="<?php putGS('Save'); ?>">
 	</td>
 </tr>
