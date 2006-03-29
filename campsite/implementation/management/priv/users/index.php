@@ -145,7 +145,7 @@ if ($canManage) {
 <?php } ?>
 
 <?php
-$sqlBase = "SELECT DISTINCT u.* FROM Users AS u";
+$sqlBase = "SELECT DISTINCT u.Id, u.Name, u.UName, u.EMail, DATE_FORMAT(u.time_created, '%Y-%m-%d %T') as time_created FROM Users AS u";
 $sql = '';
 if ($userSearchParameters['startIP1'] != 0) {
 	$sql .= " LEFT JOIN SubsByIP AS sip ON u.Id = sip.IdUser";
@@ -291,7 +291,7 @@ for($loop = 0; $loop < $last; $loop++) {
 				if ((int)$creationDate == 0) {
 					putGS('N/A');
 				} else {
-					echo strftime("%H:%M:%S %d.%m.%Y", strtotime($creationDate));
+					echo $creationDate;
 				}
 			?>
 		</td>
