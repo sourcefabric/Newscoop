@@ -191,23 +191,22 @@ int GatherFunc(const ConfAttrValue& p_rcoConfValues)
 
 	/* Connect to the MySQL server */
 	mysql_init(&mysql);
-	if (!mysql_real_connect(&mysql, SQL_SERVER.c_str(), SQL_USER.c_str(),
-		 SQL_PASSWORD.c_str(), SQL_DATABASE.c_str(),
-		 SQL_SRV_PORT, 0, 0))
+	if (!mysql_real_connect(&mysql, SQL_SERVER.c_str(), SQL_USER.c_str(), SQL_PASSWORD.c_str(),
+			SQL_DATABASE.c_str(), SQL_SRV_PORT, 0, 0))
 		die_mysql(&mysql, "Connecting to the database server");
 
 
 	/* Select articles not yet indexed */
-	if (mysql_query(&mysql, "SELECT IdPublication, NrIssue, NrSection, Number, "
-		   "IdLanguage, Published, Type, Keywords, Name FROM Articles "
-				   "WHERE IsIndexed = 'N'") != 0)
+	if (mysql_query(&mysql, "SELECT IdPublication, NrIssue, NrSection, Number, IdLanguage, "
+			"Published, Type, Keywords, Name FROM Articles WHERE IsIndexed = 'N'") != 0)
 		die_mysql(&mysql, "Selecting articles not yet indexed: query");
-	res = mysql_store_result(&mysql);
-	if (!res)
+	if ((res = mysql_store_result(&mysql)) == NULL)
+	{
 		die_mysql(&mysql, "Selecting articles not yet indexed: store_result");
-
+	}
+	
 	nart = nword = nnew = 0;
-
+	
 	while ((row = mysql_fetch_row(res))) {
 		a.IdPublication = row[0] ? atoi(row[0]) : 0;
 		a.NrIssue = row[1] ? atoi(row[1]) : 0;
@@ -218,22 +217,20 @@ int GatherFunc(const ConfAttrValue& p_rcoConfValues)
 		a.Type = strdup(row[6] ? row[6] : "");
 		a.Keywords = strdup(row[7] ? row[7] : "");
 		a.Name = strdup(row[8] ? row[8] : "");
-
+		
 		/* Delete from index */
-		sprintf(query, "DELETE FROM ArticleIndex WHERE IdPublication = %u AND "
-				"IdLanguage = %u AND NrIssue = %u AND NrSection = %u AND "
-						"NrArticle = %u", a.IdPublication, a.IdLanguage, a.NrIssue,
-				a.NrSection, a.Number);
+		sprintf(query, "DELETE FROM ArticleIndex WHERE IdPublication = %u AND IdLanguage = %u "
+						"AND NrIssue = %u AND NrSection = %u AND NrArticle = %u",
+						a.IdPublication, a.IdLanguage, a.NrIssue, a.NrSection, a.Number);
 		debug("QUERY [%s]\n", query);
 		if (mysql_query(&mysql, query) != 0)
 			die_mysql(&mysql, "Deleting old index: query");
-
-
+		
 		if (!a.Published)
 			continue;
-
+		
 		nart++;
-
+		
 		init_hash();
 		build_kwd_list(&mysql, &a);
 		for (h = 0; h < 256; h++)
@@ -241,25 +238,25 @@ int GatherFunc(const ConfAttrValue& p_rcoConfValues)
 			if (!k->k)
 				continue;
 			nword++;
-
+			
 			p = (char*)malloc(strlen(k->k) * 2 + 1);
 			mysql_escape_string(p, k->k, mymin(strlen(k->k), MAX_KWD));
-
+			
 			sprintf(query, "SELECT Id FROM KeywordIndex WHERE Keyword = '%s'", p);
 			debug("QUERY [%s]\n", query);
 			if (mysql_query(&mysql, query) != 0)
 				die_mysql(&mysql, "Get KeywordId: query");
-
+			
 			res1 = mysql_store_result(&mysql);
 			if (!res1)
 				die_mysql(&mysql, "Get KeywordId: store_result");
-        
+			
 			row1 = mysql_fetch_row(res1);
-			kwd_id = row1 ? (row1[0] ? atoi(row1[0]) : 0) : 0;
-        
+			kwd_id = (row1 != NULL && row1[0] != NULL) ? atoi(row1[0]) : 0;
+			
 			mysql_free_result(res1);
-        
-			if (!kwd_id) {
+			
+			if (kwd_id == 0) {
 				if (mysql_query(&mysql, "LOCK TABLE KeywordIndex WRITE"))
 					die_mysql(&mysql, "Lock table KeywordIndex: query");
 				
@@ -270,9 +267,10 @@ int GatherFunc(const ConfAttrValue& p_rcoConfValues)
 				if (!res1)
 					die_mysql(&mysql, "Read last id: store_result");
 				row1 = mysql_fetch_row(res1);
+				kwd_id = 1 + ((row1 != NULL && row1[0] != NULL) ? atoi(row1[0]) : 0);
 				
 				/* Insert in keyword list */
-				sprintf(query, "INSERT INTO KeywordIndex SET Keyword = '%s', Id = %s + 1", p, row1[0]);
+				sprintf(query, "INSERT INTO KeywordIndex SET Keyword = '%s', Id = %u", p, kwd_id);
 				debug("QUERY [%s]\n", query);
 				mysql_free_result(res1);
 				if (mysql_query(&mysql, query) != 0)
@@ -283,19 +281,19 @@ int GatherFunc(const ConfAttrValue& p_rcoConfValues)
 				
 				nnew++;
 			}
-        
+			
 			free(p);
-        
+			
 			/* Insert in article index */
-			sprintf(query, "INSERT IGNORE INTO ArticleIndex SET IdPublication = %u"
-					", IdLanguage = %u, IdKeyword = %u, NrIssue = %u, NrSection = "
-							"%u, NrArticle = %u", a.IdPublication, a.IdLanguage, kwd_id,
-					a.NrIssue, a.NrSection, a.Number);
+			sprintf(query, "INSERT IGNORE INTO ArticleIndex SET IdPublication = %u, "
+						"IdLanguage = %u, IdKeyword = %u, NrIssue = %u, NrSection = %u, "
+						"NrArticle = %u", a.IdPublication, a.IdLanguage, kwd_id,
+						a.NrIssue, a.NrSection, a.Number);
 			debug("QUERY [%s]\n", query);
 			if (mysql_query(&mysql, query) != 0)
 				die_mysql(&mysql, "Adding article to index: query");
 			}
-    
+			
 			del_kwd_list();
     
 			free(a.Name);
