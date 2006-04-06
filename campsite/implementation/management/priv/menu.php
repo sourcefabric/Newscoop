@@ -50,7 +50,7 @@ $menu_content->addSplit();
 $icon_bullet = '<img src="'.$Campsite["ADMIN_IMAGE_BASE_URL"].'/tol.gif" align="middle" style="padding-bottom: 3px;" width="16" height="16" />';
 foreach ($Campsite["publications"] as $publication) {
     $pubId = $publication->getPublicationId();
-    $menu_item_pub =& DynMenuItem::Create(camp_javascriptspecialchars($publication->getName()), 
+    $menu_item_pub =& DynMenuItem::Create($publication->getName(), 
                                           "/$ADMIN/issues/index.php?Pub=$pubId",
                                           array("icon" => $icon_bullet));
     $menu_content->addItem($menu_item_pub);
@@ -59,7 +59,7 @@ foreach ($Campsite["publications"] as $publication) {
 			$issueId = $issue->getIssueNumber();
 			$languageId = $issue->getLanguageId();
 			$issueIndexLink = "/$ADMIN/sections/index.php?Pub=$pubId&Issue=$issueId&Language=$languageId";
-			$menu_item_issue =& DynMenuItem::Create(camp_javascriptspecialchars($issue->getName()." (".$issue->getLanguageName().")"),
+			$menu_item_issue =& DynMenuItem::Create($issue->getName()." (".$issue->getLanguageName().")",
 			     $issueIndexLink,
 			     array("icon" => $icon_bullet));
 			$menu_item_pub->addItem($menu_item_issue);
@@ -67,7 +67,7 @@ foreach ($Campsite["publications"] as $publication) {
 				foreach ($Campsite["sections"][$pubId][$issueId][$languageId] as $section) {
 				    $sectionId = $section->getSectionNumber();
 				    $menu_item_section =& DynMenuItem::Create(
-				        camp_javascriptspecialchars($section->getName()),
+				        $section->getName(),
 				        "/$ADMIN/articles/index.php"
 				        ."?f_publication_id=$pubId"
 				        ."&f_issue_number=$issueId"
