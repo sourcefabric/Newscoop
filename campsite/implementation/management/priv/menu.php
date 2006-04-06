@@ -232,7 +232,7 @@ if ($showConfigureMenu) {
 
 if ($showUserMenu) { 
     $menu_root->addSplit();
-    $menu_users =& DynMenuItem::Create("Users", "", 
+    $menu_users =& DynMenuItem::Create(getGS("Users"), "",
         array("icon" => sprintf($iconTemplateStr, "users.png"), "id" => "users"));
     $menu_root->addItem($menu_users);
 	if ($User->hasPermission("ManageUsers") || $User->hasPermission("DeleteUsers")) { 
