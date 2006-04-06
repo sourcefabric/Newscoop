@@ -1,5 +1,4 @@
 <?PHP
-
 /**
  * PHP class to dynamically create a javascript menu.
  * Funded by MDLF/Campware (http://www.campware.org)
@@ -67,8 +66,9 @@
  * // Generate the menu
  * echo $root->createMenu('myMenu');
  *
+ * Note: the JSCook menu requires camp_javascriptspecialchars() which 
+ * escapes javascript strings.
  */
-
 class DynMenuItem {
     var $m_title = '';
     var $m_url = '';
@@ -273,7 +273,7 @@ class DynMenuItem_JsCook extends DynMenuItem {
             }
             if ($subItem->m_title != "[[split]]") {
                 $str .= str_repeat("\t", $p_level);
-                $str .= "['" . $attrs['icon'] . "', '" . $subItem->m_title . "', '"
+                $str .= "['" . $attrs['icon'] . "', '" . camp_javascriptspecialchars($subItem->m_title) . "', '"
                              . $subItem->m_url . "', '" . $attrs['target'] . "', '"
                              . $attrs['description']. "'";
                 if (count($subItem->m_subItems) > 0) {
