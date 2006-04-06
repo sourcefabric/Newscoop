@@ -227,7 +227,7 @@ if (!$isNewUser) {
 				camp_html_select_option("25-39", $Age, "25-39");
 				camp_html_select_option("40-49", $Age, "40-49");
 				camp_html_select_option("50-65", $Age, "50-65");
-				camp_html_select_option("65-", $Age, "65 or over");
+				camp_html_select_option("65-", $Age, getGS("65 or over"));
 				?>				
 				</SELECT>
 				</td>
