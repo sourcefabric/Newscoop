@@ -256,7 +256,7 @@ if ($showUserMenu) {
 } // if ($showUserMenu) 
 
 $menu_root->addSplit();
-$menu_help =& DynMenuItem::Create("Help", "", 
+$menu_help =& DynMenuItem::Create(getGS("Help"), "", 
     array("icon" => sprintf($iconTemplateStr, "help.png"), "id" => "help"));
 $menu_root->addItem($menu_help);
 $menu_item =& DynMenuItem::Create(getGS("Help"), $Campsite['HELP_URL'],
