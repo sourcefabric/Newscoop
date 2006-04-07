@@ -1,6 +1,6 @@
 Campsite
-version     : 2.5.0 "Eli"
-release date: March 6, 2006
+version     : 2.5.1 "Eli"
+release date: April 10, 2006
 contact     : contact@campware.org
 url         : http://www.campware.org
 copyright   : (c)1999-2006 Media Development Loan Fund
@@ -18,8 +18,9 @@ Articles.
 
 Campsite is available in: English, Portuguese, Spanish, German,
 Russian, Arabic, Chinese, Serbian (Cyrillic), Serbo-Croatian (Latin),
-Croatian, Czech, Swedish, and Romanian.  However, the interface can
-easily be localized to new languages using its built-in 'Localizer'.
+Croatian, Czech, Swedish, French, and Romanian.  However, the
+interface can easily be localized to new languages using its built-in
+'Localizer'.
 
 With Campsite you can:
 

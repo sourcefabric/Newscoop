@@ -1,3 +1,34 @@
+2.5.1 (April 10, 2006)
+  Full localizations for the following languages were added:
+  1. Arabic (Read Neshiewat <raed@raednesh.com>)
+  2. Serbian (Cyrillic) (Ljuba Rankovic <sr-localizer@campware.org>)
+  3. Serbo-Croatian (Latin) (Ljuba Rankovic <sr-localizer@campware.org>)
+  4. Romanian (George Hari Popescu)
+  5. Swedish (Erik Dalén <dalen@jpl.se>)
+  6. Russian (Andrei Blagorazumov <a@fnr.ru>)
+  7. French (new!) (Rokhaya Ndiour)
+  8. German (Micz Flor <micz.flor@web.de>)
+
+  Bugs Fixed
+  ----------
+  - Xinha cant handle more than 9 images in an article
+  - Xinha subheads sometimes dont work
+  - User creation date shows up incorrectly
+  - Topics: Root topic language should default to login language
+  - Parts of the Home page formatted wrong when there are no articles
+  - Minor bug in localizer when installing
+  - PHP notice in "Add new user type" (most users would never see it)
+  - "65 or over" string not translated
+  - 'Users' & 'Help' string in the main menu is not translated
+  - Not all main menu items are escaped for javascript (caused the
+    main menu not to show up in French)
+  - Updated Manual with documentation for 2.5 features
+  - The article indexer doesn't work with a blank database
+  - Scripts from older versions of Campsite are not deleted
+    automaticaly when upgrading. They are: autopublish, gather,
+    notifyendsubs and notifyevents.
+
+
 2.5.0 (March 6, 2006)
   For full details about these changes, see:
   http://code.campware.org/projects/campsite/query?milestone=2.5.0
@@ -16,12 +47,12 @@
     placed in a publication/issue/section.
   - Added the ability to subscribe to a section of a specific language,
     instead of all languages in a section.
-  - Added the ability to create an article-type field that lists 
+  - Added the ability to create an article-type field that lists
     topics in a dropdown list.
   - Added the ability to print only the first paragraph of a story.
   - Added Swedish translation.
   - Campsite no longer tries to install PEAR libraries on the system at
-    install time, instead it will use the ones we have added to the 
+    install time, instead it will use the ones we have added to the
     release.  This will eliminate one of our main install problems.
 
   Added permissions:
@@ -287,21 +318,21 @@
   http://code.campware.org/projects/campsite/query?milestone=2.3.2
 
   Minor features:
-    #1484 -	Allow the use of article publish date in the template language
+    #1484 -     Allow the use of article publish date in the template language
     #1391 - Screenshots for all administration steps in the manual
 
   Bug fixes:
-    #1482 -	Packaged templates do not use 2.3 database
+    #1482 -     Packaged templates do not use 2.3 database
     #1480 - Duplicate Article does not copy "OnSection" field correctly
     #1456 - Escaping command line parameters with $'arg' and $"arg" does not work on FreeBSD
     #1471 - Install scripts break on Debian 3.1 (Sarge)
-    #1470 -	Packaged templates need documentation, common layout
-    #1486 -	Fatal error when opening the "Add new image" page
-    #1476 -	Wrong error message when PEAR fails to update
-    #1462 -	Campsite server returns error when restarting
-    #1457 -	Preview doesn't work correctly for translated articles
-    #1447 -	Upload date not set properly when duplicating articles
-    #1414 -	Refresh templates every time they are displayed
+    #1470 -     Packaged templates need documentation, common layout
+    #1486 -     Fatal error when opening the "Add new image" page
+    #1476 -     Wrong error message when PEAR fails to update
+    #1462 -     Campsite server returns error when restarting
+    #1457 -     Preview doesn't work correctly for translated articles
+    #1447 -     Upload date not set properly when duplicating articles
+    #1414 -     Refresh templates every time they are displayed
 
 
 2.3.1 (September 7, 2005)

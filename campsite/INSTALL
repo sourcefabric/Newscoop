@@ -1,4 +1,4 @@
-INSTALLATION PROCEDURE FOR CAMPSITE V.2.5.x
+﻿INSTALLATION PROCEDURE FOR CAMPSITE V.2.5.x
 http://www.campware.org
 
 CONTENTS:
@@ -18,7 +18,7 @@ PREPARATION - applications you need to have installed
    On rpm systems make package should be installed.
 
 2. stat
-   Stat is a utility for displaying the file or filesystem status.
+   Stat is a utility for displaying the file or file system status.
    It is located in /bin directory. On RedHat, Suse stat package
    must be installed. On Mandrake fileutils package must be installed.
 
@@ -67,7 +67,7 @@ INSTALLATION - the usual procedure
    If you want to upgrade campsite and keep the old database, continue
    with the next step. The installation will not delete the old database.
 
-3. Type ./install
+3. Type ./install.sh
 
    If you are not already logged in as root the installer will prompt
    you for the root password when necessary. Without root access it
@@ -75,7 +75,7 @@ INSTALLATION - the usual procedure
 
    IMPORTANT!!!
    If your MySQL configuration is not the default one you'll have to run
-   the create instance script separatelly, after installation. Read 
+   the create instance script separately, after installation. Read
    instructions from install script.
 
 4. Configure the default instance
@@ -120,7 +120,7 @@ the DNS (Domain Name Service).
 configuration file.
 
 - Restart the apache server:
-	killall httpd
-	{PATH}/httpd
+        killall httpd
+        {PATH}/httpd
 or
-	/etc/rc.d/init.d/httpd restart
+        /etc/rc.d/init.d/httpd restart
