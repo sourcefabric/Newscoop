@@ -1,11 +1,11 @@
 <?php
 regGS("Section List", "Lista rubrika");
 regGS("Section #$1 \"$2\" updated. (Publication: $3, Issue: $4)", "Rubrika #$1 \"$2\" je izmenjena. (publikacija:  $3, izdanje:  $4)");
-regGS("Go To Articles", "Idi na članke");
+regGS("Go To Articles", "Idi na tekstove");
 regGS("Add section to all subscriptions.", "Dodaj rubriku u sve pretplate.");
 regGS("Delete section from all subscriptions.", "Obriši rubriku iz svih pretplata.");
 regGS("A total of $1 subscriptions were updated.", "Ukupan broj izmenjenih pretplata: $1.");
-regGS("Name<BR><SMALL>(click to see articles)</SMALL>", "Naziv<br><small>(kliknite za pregled članaka)</small>");
+regGS("Name<BR><SMALL>(click to see articles)</SMALL>", "Naziv<br><small>(kliknite listing tekstova)</small>");
 regGS("Delete section $1", "Obriši rubriku");
 regGS("Adding new section", "Dodavanje nove rubrike");
 regGS("You do not have the right to add sections.", "Nemate pravo da dodajete rubrike");
@@ -26,8 +26,8 @@ regGS("Duplicating section", "Dupliranje rubrike");
 regGS("The section $1 could not be duplicated", "Rubrika $1 ne može biti duplirana ");
 regGS("Section $1 has been duplicated to $2. $3 of $4", "Rubrika $1 je duplirana u $2. $3 od $4");
 regGS("You do not have the right to modify sections.", "Nemate pravo da menjate rubrike.");
-regGS("Delete all articles from the section.", "Obriši sve članke iz rubrike.");
-regGS("A total of $1 articles were deleted.", "Ukupno je obrisano $1 članak(a).");
+regGS("Delete all articles from the section.", "Obriši sve tekstove iz rubrike.");
+regGS("A total of $1 articles were deleted.", "Ukupno je obrisano $1 tekst(ova).");
 regGS("Duplicate Section:", "Dupliraj rubriku:");
 regGS("Existing Section", "Postojeća rubrika");
 regGS("Go to new section", "Idi u novu rubriku");

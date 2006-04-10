@@ -1,5 +1,4 @@
 <?php
-regGS("Items per page", "Itens por página");
 regGS("You must select an image file to upload.", "Tem de selecionar um ficheiro de imagem para transferir.");
 regGS("Add new image", "Adicionar Imagem");
 regGS("Date <SMALL>(yyyy-mm-dd)</SMALL>", "Data (aaaa-mm-dd)");
@@ -9,4 +8,5 @@ regGS("Description <SMALL>(Click to view details)</SMALL>", "Descrição <SMALL>
 regGS("Used in articles", "Usado no(s) artigo(s)");
 regGS("View image", "Ver imagem");
 regGS("Change image information", "Alterar informações da imagem");
+regGS("Items per page", "Itens por página");
 ?>

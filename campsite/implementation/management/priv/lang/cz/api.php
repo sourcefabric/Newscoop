@@ -1,7 +1,4 @@
 <?php
-regGS("template path", "");
-regGS("short names", "");
-regGS("Cannot create file \"$1\"", "");
 regGS("The IP address group $1 has been deleted.", "");
 regGS("IP Group $1 added for user $2", "");
 regGS("User permissions for $1 changed", "");
@@ -23,6 +20,8 @@ regGS("Article #$1: \"$2\" ($3) deleted.", "");
 regGS("Text", "");
 regGS("Article body", "");
 regGS("The default subscription time for $1 has been added.", "Předplatné období $1 bylo úspěšně přidáno");
+regGS("Image $1 linked to article $2", "");
+regGS("Image $1 unlinked from $2", "");
 regGS("The image $1 has been added.", "Obrázek $1 byl úspěšně přidán");
 regGS("Image $1 deleted", "Obrázek $1 byl smazán");
 regGS("Publication $1 changed", "Publikace $1 změněna");
@@ -44,4 +43,5 @@ regGS("The user account $1 has been deleted.", "Uživatelský účet $1 byl smaz
 regGS("Password changed for $1", "Heslo bylo změněno na $1");
 regGS("User account $1 created", "Uživatelský účet $1 byl vytvořen");
 regGS("Template $1 uploaded", "Šablona $1 byla nahrána");
+regGS("Cannot create file \"$1\"", "");
 ?>

@@ -1,4 +1,13 @@
 <?php
+regGS("trial subscription", "provprenumeration");
+regGS("paid subscription", "betald prenumeration");
+regGS("time units", "tidsenheter");
+regGS("one language", "ett språk");
+regGS("all languages", "alla språk");
+regGS("Trial subscriptions", "Provprenumerationer");
+regGS("Time unit cost per one section", "Tidsenhetskostnad per sektion");
+regGS("Paid subscriptions", "Betalda prenumerationer");
+regGS("Default time period", "Grundtidsperiod");
 regGS("Publication List", "Publikationslista");
 regGS("Go To Issues", "Gå till utgåvor");
 regGS("Name<BR><SMALL>(click to see issues)</SMALL>", "Namn<BR><SMALL>(klicka för att se utgåvor)</SMALL>");
@@ -24,7 +33,6 @@ regGS("There are $1 subscription(s) left.", "Det finns $1 prenumeration(er) kvar
 regGS("The publication $1 could not be deleted.", "Publikationen $1 kunde inte raderas.");
 regGS("Adding new publication", "Lägger till ny publikation");
 regGS("The publication could not be added.", "Publikationen kunde inte läggas till.");
-regGS("Select the publication", "Välj publikation");
 regGS("Add new country default subscription time", "Lägg till ny landsgrundprenumerationstid.");
 regGS("You do not have the right to manage publications.", "Du har inte rätt att hantera publikationer.");
 regGS("Please check if another entry with the same country code exists already.", "Var god kontrollera om ett land med samma landskod redan finns.");
@@ -35,7 +43,6 @@ regGS("Change subscription default time", "Ändra grundprenumerationstid");
 regGS("Default subscription time for $1 changed", "Grundprenumerationstid för $1 ändrad");
 regGS("Are you sure you want to delete the subscription default time for $1?", "Är du säker att du vill radera grundprenumerationstiden för $1?");
 regGS("Subscription default time for $1 deleted", "Grundprenumerationstiden för $1 raderad");
-regGS("Name<BR><SMALL>(click to select the publication)</SMALL>", "Namn<BR><SMALL>(klicka för att välja publikation)</SMALL>");
 regGS("Add new alias", "Lägg till nytt alias");
 regGS("Alias (click to edit)", "Alias (klicka för att redigera)");
 regGS("Edit aliases", "Redigera aliasar");
@@ -55,4 +62,6 @@ regGS("The alias $1 has been deleted from publication $2.", "Aliaset $1 har rade
 regGS("$1 is the default publication alias, it can not be deleted.", "$1 är grundpublikationsaliaset, det kan inte raderas.");
 regGS("You do not have the right to add publications.", "Du har inte rätt att lägga till publikationer.");
 regGS("There are $1 issue(s) left.", "Det finns $1 utgåva(or) kvar.");
+regGS("Select the publication", "Välj publikation");
+regGS("Name<BR><SMALL>(click to select the publication)</SMALL>", "Namn<BR><SMALL>(klicka för att välja publikation)</SMALL>");
 ?>

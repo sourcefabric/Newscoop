@@ -1,11 +1,12 @@
 <?php
-regGS("User may translate articles", "");
-regGS("User may move articles", "");
-regGS("User may find and replace", "");
-regGS("User may change system preferences", "");
-regGS("User may attach topics to articles", "");
-regGS("User may attach images to articles", "");
-regGS("User may add special characters", "");
+regGS("65 or over", "");
+regGS("User may translate articles", "Пользователь может переводить статьи");
+regGS("User may move articles", "Пользователь может перемещать статьи");
+regGS("User may find and replace", "Пользователь может выполнять поиск и замену");
+regGS("User may change system preferences", "Пользователь может менять настройки системы");
+regGS("User may attach topics to articles", "Пользователь может прикреплять темы к статьям");
+regGS("User may attach images to articles", "Пользователь может прикреплять картинки к статьям");
+regGS("User may add special characters", "Пользователь может добавлять специальные символы");
 regGS("Reset search form", "Сбросить форму поиска");
 regGS("That user name already exists, please choose a different login name.", "Это имя пользователя уже существует, пожалуйста выберите другое.");
 regGS("User may delete article attachments", "Пользователь может удалять приложения к статьям");

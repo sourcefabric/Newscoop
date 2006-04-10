@@ -1,8 +1,8 @@
 <?php
-regGS("You must input a number greater or equal to 0 into the $1 field.", "");
-regGS("Regardless of the language", "");
-regGS("Individual languages", "");
-regGS("All languages", "");
+regGS("You must input a number greater or equal to 0 into the $1 field.", "Morate unijeti broj veći ili jednak 0 u polje $1.");
+regGS("Regardless of the language", "Bez obzira na jezik");
+regGS("Individual languages", "Pojedinačni jezici");
+regGS("All languages", "Svi jezici");
 regGS("Subscribed sections", "Rubrike u pretplati");
 regGS("Add new section to subscription", "Dodaj novu rubriku za pretplatu");
 regGS("Start Date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Početni datum <br><small>(gggg-mm-dd)</small>");
@@ -13,7 +13,7 @@ regGS("Adding sections", "Dodavanje rubrika");
 regGS("Adding sections to subscription", "Dodavanje rubrika za pretplatu");
 regGS("Are you sure you want to delete the subscription to the section $1?", "Zaista želite obrisati pretplatu na rubriku $1?");
 regGS("Change subscription", "Promijeni pretplatu");
-regGS("You do not have the right to change subscriptions.", "Nemate ovlasti mijenjati pretplate");
+regGS("You do not have the right to change subscriptions.", "Nemate ovlasti mijenjati pretplate.");
 regGS("Paid Days", "Plaćeni dani");
 regGS("-- ALL SECTIONS --", "-- SVE RUBRIKE --");
 regGS("Updating subscription", "Osvježavanje pretplate");

@@ -1,11 +1,12 @@
 <?php
-regGS("User may translate articles", "");
-regGS("User may move articles", "");
-regGS("User may find and replace", "");
-regGS("User may change system preferences", "");
-regGS("User may attach topics to articles", "");
-regGS("User may attach images to articles", "");
-regGS("User may add special characters", "");
+regGS("65 or over", "");
+regGS("User may translate articles", "Användaren får översätta artiklar");
+regGS("User may move articles", "Användaren får flytta artiklar");
+regGS("User may find and replace", "Användaren får söka och ersätta");
+regGS("User may change system preferences", "Användaren får ändra systeminställningar");
+regGS("User may attach topics to articles", "Användaren får lägga till teman till artiklar");
+regGS("User may attach images to articles", "Användaren får bifoga bilder till artiklar");
+regGS("User may add special characters", "Användaren får lägga till specialtecken");
 regGS("Reset search form", "Nollställ sökformulär");
 regGS("That user name already exists, please choose a different login name.", "Användarnamnet finns redan, var god välj ett annat användarnamn.");
 regGS("User may delete article attachments", "Användaren får radera artikelbilagor");

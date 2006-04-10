@@ -1,8 +1,8 @@
 <?php
-regGS("The template '$1' was saved successfully.", "");
+regGS("The template '$1' was saved successfully.", "Šablon '$1' je uspešno snimljen.");
 regGS("The template $1 is in use and can not be deleted.", "Šablon $1 je u upotrebi i ne može biti obrisan.");
 regGS("The folder could not be deleted.", "Folder ne može biti izbrisan");
-regGS("The directory must be empty", "Direktorijum mora biti prazan");
+regGS("The directory must be empty", "Folder mora biti prazan");
 regGS("Create new folder", "Napravi novi folder");
 regGS("Upload template", "Aplouduj šablon");
 regGS("Creating new folder", "Pravljenje novog foldera");

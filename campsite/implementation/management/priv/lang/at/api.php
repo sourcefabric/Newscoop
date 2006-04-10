@@ -1,6 +1,4 @@
 <?php
-regGS("template path", "");
-regGS("short names", "");
 regGS("The IP address group $1 has been deleted.", "IP Adressgruppe $1 wurde gelöscht.");
 regGS("IP Group $1 added for user $2", "IP Adressgruppe $1 für User $2 hinzugefügt");
 regGS("User permissions for $1 changed", "Userrechte für $1 geändert");

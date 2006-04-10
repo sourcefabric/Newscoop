@@ -1,17 +1,17 @@
 <?php
 regGS("There are no pending articles.", "");
 regGS("Pending Articles", "");
-regGS("System Preferences", "");
-regGS("You haven't written any articles yet.", "");
-regGS("There are no pending items to be published.", "");
+regGS("System Preferences", "Předvolby systému");
+regGS("You haven't written any articles yet.", "Ještě jste nenapsal žádné články");
+regGS("There are no pending items to be published.", "Žádné položky nejsou připravené k publikování");
 regGS("There are currently no submitted articles.", "");
-regGS("Recently Published Articles", "");
-regGS("Publish articles", "");
-regGS("Publish Date", "");
-regGS("No articles have been published yet.", "");
-regGS("Event(s)", "");
-regGS("Signed in: $1", "");
-regGS("Help", "");
+regGS("Recently Published Articles", "Dříve publikované články");
+regGS("Publish articles", "Publikovat články");
+regGS("Publish Date", "Datum publikování");
+regGS("No articles have been published yet.", "Ještě nebyl publikován žádný článek");
+regGS("Event(s)", "Událost(i)");
+regGS("Signed in: $1", "Přihlášený v: $1");
+regGS("Help", "Nápověda");
 regGS("About", "");
 regGS("Please enter your user name and password", "Zadejte uživatelské jméno a heslo");
 regGS("You do not have the right to access this page.", "Nemáte přístupová práva k této stránce");

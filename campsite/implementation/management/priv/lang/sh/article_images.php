@@ -1,10 +1,10 @@
 <?php
-regGS("Edit article", "");
-regGS("You do not have the right to attach images to articles.", "");
+regGS("Edit article", "Uredi tekst");
+regGS("You do not have the right to attach images to articles.", "Nemate pravo da kačite slike uz tekstove.");
 regGS("You do not have the right to add images.", "Nemate pravo da dodajete slike.");
 regGS("Image information", "Podaci o slici");
 regGS("Attach New Image", "Zakači novu sliku");
-regGS("Attach Image To Article", "Prikači sliku uz članak");
+regGS("Attach Image To Article", "Prikači sliku uz tekst");
 regGS("Attach Existing Image", "Prikači postojeću sliku");
 regGS("Add New Image", "Dodaj novu sliku");
 regGS("Date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Datum<br><small>(gggg-mm-dd)</small>");

@@ -1,8 +1,8 @@
 <?php
-regGS("Article Files", "Fajlovi uz članak");
+regGS("Article Files", "Fajlovi uz tekst");
 regGS("Log Messages", "Log poruke");
-regGS("edit '$1'", "prikaži '$1'");
-regGS("edit \"$1\"", "prikaži \"$1\"");
+regGS("edit '$1'", "uredi '$1'");
+regGS("edit \"$1\"", "uredi \"$1\"");
 regGS("User Subscriptions Sections", "Pretplate korisnika na rubrike");
 regGS("User Subscriptions", "Pretplate korsnika");
 regGS("Translate to:", "Prevedi u:");
@@ -17,9 +17,9 @@ regGS("Localizer", "Lokalizator");
 regGS("Image Archive", "Foto arhiva");
 regGS("Hide translated strings?", "Sakrij prevedene stringove?");
 regGS("Globals", "Opšti stringovi");
-regGS("Article Type Fields", "Polja tipa članka");
-regGS("Article Topics", "Teme u člancima");
-regGS("Article Images", "Slike u člancima");
+regGS("Article Type Fields", "Polja tipa teksta");
+regGS("Article Topics", "Teme tekstova");
+regGS("Article Images", "Slike u tekstovima");
 regGS("Are you sure you want to delete this entry?", "Da li ste sigurni da želite da obrišete ovaj unos?");
 regGS("All strings have been translated.", "Ura, svi stringovi su prevedeni. wOOt!");
 regGS("Add", "Dodaj");

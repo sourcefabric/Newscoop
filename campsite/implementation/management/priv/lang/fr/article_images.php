@@ -1,16 +1,16 @@
 <?php
-regGS("Edit article", "");
-regGS("You do not have the right to attach images to articles.", "");
-regGS("You do not have the right to add images.", "");
-regGS("Image information", "");
-regGS("Attach New Image", "");
-regGS("Attach Image To Article", "");
-regGS("Attach Existing Image", "");
-regGS("Add New Image", "");
-regGS("Date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "");
-regGS("Please enter a number for the image.", "");
-regGS("Please enter a description for the image.", "");
-regGS("You must select an image file to upload.", "");
-regGS("Change image information", "");
-regGS("You do not have the right to add images", "");
+regGS("Edit article", "Editer article");
+regGS("You do not have the right to attach images to articles.", "Vous n'avez pas le droit d'attacher des images aux articles. ");
+regGS("You do not have the right to add images.", "Vous n'avez pas le droit d'ajouter des images. ");
+regGS("Image information", "Information d'image ");
+regGS("Attach New Image", "Attacher Nouvelle Image ");
+regGS("Attach Image To Article", "Attacher Image à Article ");
+regGS("Attach Existing Image", "Attacher Image Existante ");
+regGS("Add New Image", "Ajouter Nouvelle Image ");
+regGS("Date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Date<BR><SMALL>(aaaa-mm-jj)</SMALL>");
+regGS("Please enter a number for the image.", "Entrez S'il vous plaît un numéro pour l'image.");
+regGS("Please enter a description for the image.", "Entrez S'il vous plaît une description pour l'image. ");
+regGS("You must select an image file to upload.", "Vous devez choisir un fichier d'image à télécharger. ");
+regGS("Change image information", "Changer linformation d'image");
+regGS("You do not have the right to add images", "Vous n'avez pas le droit d'ajouter des images ");
 ?>

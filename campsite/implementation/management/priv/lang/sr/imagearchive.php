@@ -5,7 +5,7 @@ regGS("Date <SMALL>(yyyy-mm-dd)</SMALL>", "Датум (гггг-мм-дд)");
 regGS("Delete image $1", "Избриши слику $1");
 regGS("No images.", "Нема ниједне слике");
 regGS("Description <SMALL>(Click to view details)</SMALL>", "Опис<br><small>(клик за детаље)</small>");
-regGS("Used in articles", "Користи се у чланцима");
+regGS("Used in articles", "Користи се у следећим текстовима");
 regGS("View image", "Прикажи слику");
 regGS("Change image information", "Промени податке о слици");
 ?>

@@ -1,5 +1,5 @@
 <?php
-regGS("Top element", "");
+regGS("Top element", "Oberstes Element");
 regGS("Article type fields", "Artikeltypen-Felder");
 regGS("Delete field $1", "Feld $1 löschen");
 regGS("Article body", "Fließtext");

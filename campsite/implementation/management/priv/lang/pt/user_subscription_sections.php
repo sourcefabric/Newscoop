@@ -1,9 +1,8 @@
 <?php
-regGS("You must input a number greater or equal to 0 into the $1 field.", "");
-regGS("Regardless of the language", "");
-regGS("Individual languages", "");
-regGS("All languages", "");
-regGS("Account", "Conta");
+regGS("You must input a number greater or equal to 0 into the $1 field.", "Tem de inserir um numero superior a 0 no campo $1.");
+regGS("Regardless of the language", "Apesar do idioma");
+regGS("Individual languages", "Idiomas");
+regGS("All languages", "Todos os Idiomas");
 regGS("Subscribed sections", "Secções assinadas");
 regGS("Add new section to subscription", "Adicionar Secção a assinatura");
 regGS("Start Date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Data de Inicio da Assinatura<br>(aaaa-mm-dd)");
@@ -20,4 +19,5 @@ regGS("-- ALL SECTIONS --", "-- TODAS AS SECÇÕES --");
 regGS("Updating subscription", "Actualizanto Assinatura");
 regGS("The subscription could not be updated.", "A Assinatura não pode ser actualizada");
 regGS("Changing subscription", "Actualizando a Assinatura");
+regGS("Account", "Conta");
 ?>

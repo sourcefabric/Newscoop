@@ -1,8 +1,8 @@
 <?php
-regGS("You must input a number greater or equal to 0 into the $1 field.", "");
-regGS("Regardless of the language", "");
-regGS("Individual languages", "");
-regGS("All languages", "");
+regGS("You must input a number greater or equal to 0 into the $1 field.", "Du måste skriva en siffra större än 0 i fältet $1.");
+regGS("Regardless of the language", "Oavsett språk");
+regGS("Individual languages", "Enskilda språk");
+regGS("All languages", "Alla språk");
 regGS("Subscribed sections", "Prenumererade sektioner");
 regGS("Add new section to subscription", "Lägg till ny sektion till prenumeration");
 regGS("Start Date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Startdatum<BR><SMALL>(åååå-mm-dd)</SMALL>");

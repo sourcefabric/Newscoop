@@ -1,6 +1,6 @@
 <?php
-regGS("Regardless of the language", "");
-regGS("Individual languages", "");
+regGS("Regardless of the language", "Nezavisno od jezika");
+regGS("Individual languages", "Pojedinačni jezici");
 regGS("Publication<BR><SMALL>(click to see sections)</SMALL>", "Publikacija<br><small>(kliknite da vidite rubrike)</small>");
 regGS("Delete subscriptions to $1", "Obriši pretplate na $1");
 regGS("Paid subscription", "Plaćene pretplate");

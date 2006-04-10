@@ -1,9 +1,8 @@
 <?php
-regGS("You must input a number greater or equal to 0 into the $1 field.", "");
-regGS("Regardless of the language", "");
-regGS("Individual languages", "");
-regGS("All languages", "");
-regGS("Account", "Учетная запись");
+regGS("You must input a number greater or equal to 0 into the $1 field.", "Вы должны ввести неотрицательное число в поле $1");
+regGS("Regardless of the language", "Независимо от языков");
+regGS("Individual languages", "Индивидуальные языки");
+regGS("All languages", "Все языки");
 regGS("Subscribed sections", "Подписанные секции");
 regGS("Add new section to subscription", "Добавление новой секции к подписке");
 regGS("Start Date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Начальная дата<BR><SMALL>(гггг-мм-дд)</SMALL>");
@@ -20,4 +19,5 @@ regGS("-- ALL SECTIONS --", "-- ВСЕ СЕКЦИИ --");
 regGS("Updating subscription", "Обновление подписки");
 regGS("The subscription could not be updated.", "Невозможно обновить подписку.");
 regGS("Changing subscription", "Изменение подписки");
+regGS("Account", "Учетная запись");
 ?>

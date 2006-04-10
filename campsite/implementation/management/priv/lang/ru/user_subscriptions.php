@@ -1,7 +1,6 @@
 <?php
-regGS("Regardless of the language", "");
-regGS("Individual languages", "");
-regGS("Account", "Учетная запись");
+regGS("Regardless of the language", "Независимо от языков");
+regGS("Individual languages", "Индивидуальные языки");
 regGS("Publication<BR><SMALL>(click to see sections)</SMALL>", "Публикация<BR><SMALL>(Щелкните для просмотра секций)</SMALL>");
 regGS("Delete subscriptions to $1", "Удалить подписку на $1");
 regGS("Paid subscription", "Платная подписка");
@@ -19,6 +18,7 @@ regGS("You do not have the right to change subscriptions status.", "Вы не и
 regGS("Subscription status could not be changed.", "Невозможно изменить статус подписки.");
 regGS("Update payment", "Обновление оплаты");
 regGS("Subscription payment could not be changed.", "Невозможно изменить оплату подписки.");
+regGS("Account", "Учетная запись");
 regGS("Are you sure you want to deactivate the subscription?", "Вы уверены, что хотите деактивировать подписку?");
 regGS("Are you sure you want to activate the subscription?", "Вы уверены, что хотите активировать подписку?");
 regGS("Are you sure you want to delete the subscription to the publication $1?", "Вы уверены, что хотите удалить подписку на публикацию $1?");

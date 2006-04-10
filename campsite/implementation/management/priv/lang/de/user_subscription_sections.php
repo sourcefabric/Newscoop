@@ -1,8 +1,8 @@
 <?php
-regGS("You must input a number greater or equal to 0 into the $1 field.", "");
-regGS("Regardless of the language", "");
-regGS("Individual languages", "");
-regGS("All languages", "");
+regGS("You must input a number greater or equal to 0 into the $1 field.", "In das Feld $1 muss eine Zahl größer oder gleich 0 eingegeben werden.");
+regGS("Regardless of the language", "Unabhängig von der Sprache");
+regGS("Individual languages", "Individuelle Sprachen");
+regGS("All languages", "Alle Sprachen");
 regGS("Subscribed sections", "Abonierte Rubriken");
 regGS("Add new section to subscription", "Neue Rubriken zu Abonoment hinzufügen");
 regGS("Start Date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "(JJJJ-MM-TT)");

@@ -1,12 +1,12 @@
 <?php
-regGS("You must enter a name for the topic.", "");
-regGS("You must choose a language for the topic.", "");
-regGS("This topic has subtopics, therefore it cannot be deleted.", "");
-regGS("Show languages:", "");
-regGS("Add translation:", "");
-regGS("Add subtopic:", "");
-regGS("Add subtopic", "");
-regGS("Add root topic:", "");
+regGS("You must enter a name for the topic.", "Morate uneti ime teme.");
+regGS("You must choose a language for the topic.", "Morate izabrati jezik za temu.");
+regGS("This topic has subtopics, therefore it cannot be deleted.", "Ova tema ima pod-teme, pa ne može biti obrisana.");
+regGS("Show languages:", "Prikaži jezike:");
+regGS("Add translation:", "Dodaj prevod:");
+regGS("Add subtopic:", "Dodaj pod-temu:");
+regGS("Add subtopic", "Dodaj pod-temu");
+regGS("Add root topic:", "Dodaj osnovnu temu:");
 regGS("Top", "vrh");
 regGS("You do not have the right to add topics.", "Nemate pravo da dodaјete teme.");
 regGS("You do not have the right to delete topics.", "Nemate pravo da brišete teme.");

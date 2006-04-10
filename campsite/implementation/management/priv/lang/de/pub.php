@@ -1,13 +1,13 @@
 <?php
-regGS("trial subscription", "");
-regGS("paid subscription", "");
-regGS("time units", "");
-regGS("one language", "");
-regGS("all languages", "");
-regGS("Trial subscriptions", "");
-regGS("Time unit cost per one section", "");
-regGS("Paid subscriptions", "");
-regGS("Default time period", "");
+regGS("trial subscription", "Probe Abonnement");
+regGS("paid subscription", "Bezahltes Abonnement");
+regGS("time units", "Zeiteinheiten");
+regGS("one language", "Eine Sprache");
+regGS("all languages", "Alle Sprachen");
+regGS("Trial subscriptions", "Probe Abonnements");
+regGS("Time unit cost per one section", "Kosten der Zeiteinheit für eine Rubrik");
+regGS("Paid subscriptions", "Bezahlte Abonnements");
+regGS("Default time period", "Voreinstellung der Zeiteinheit");
 regGS("Publication List", "Liste der Publikationen");
 regGS("Go To Issues", "Gehe zu Ausgabe");
 regGS("Name<BR><SMALL>(click to see issues)</SMALL>", "Name");

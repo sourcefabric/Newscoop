@@ -1,12 +1,12 @@
 <?php
-regGS("You must enter a name for the topic.", "");
-regGS("You must choose a language for the topic.", "");
-regGS("This topic has subtopics, therefore it cannot be deleted.", "");
-regGS("Show languages:", "");
-regGS("Add translation:", "");
-regGS("Add subtopic:", "");
-regGS("Add subtopic", "");
-regGS("Add root topic:", "");
+regGS("You must enter a name for the topic.", "Вы должны ввести название темы");
+regGS("You must choose a language for the topic.", "Вы должны выбрать язык для темы");
+regGS("This topic has subtopics, therefore it cannot be deleted.", "Эта тема имеет подтему, следовательно не может быть удалена.");
+regGS("Show languages:", "Показать языки:");
+regGS("Add translation:", "Добавить переводы:");
+regGS("Add subtopic:", "Добавить подтемы:");
+regGS("Add subtopic", "Добавить подтемы");
+regGS("Add root topic:", "Добавить корневую тему");
 regGS("Top", "Верх");
 regGS("You do not have the right to add topics.", "Вы не имеете права добавлять новые темы");
 regGS("You do not have the right to delete topics.", "Вы не имеете права удалять новые темы");
