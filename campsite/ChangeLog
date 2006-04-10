@@ -1,14 +1,22 @@
 2.5.1 (April 10, 2006)
   Full localizations for the following languages were added:
-  1. Arabic (Read Neshiewat <raed@raednesh.com>)
-  2. Serbian (Cyrillic) (Ljuba Rankovic <sr-localizer@campware.org>)
-  3. Serbo-Croatian (Latin) (Ljuba Rankovic <sr-localizer@campware.org>)
-  4. Romanian (George Hari Popescu)
-  5. Swedish (Erik Dalén <dalen@jpl.se>)
-  6. Russian (Andrei Blagorazumov <a@fnr.ru>)
-  7. French (new!) (Rokhaya Ndiour)
-  8. German (Micz Flor <micz.flor@web.de>)
-
+  1.  French (new!) (Rokhaya Ndiour)
+  2.  Arabic (Read Neshiewat <raed@raednesh.com>)
+  3.  Croatian (Marinko Filipović <marinko.filipovic@gmail.com>)
+  4.  German (Micz Flor <micz.flor@web.de>)
+  5.  Portugues (Guilherme Henrique Soares <ghsoares@publicor.pt>)
+  6.  Romanian (George Hari Popescu)
+  7.  Russian (Andrei Blagorazumov <a@fnr.ru>)
+  8.  Serbian (Cyrillic) (Ljuba Rankovic <sr-localizer@campware.org>)
+  9.  Serbo-Croatian (Latin) (Ljuba Rankovic <sr-localizer@campware.org>)
+  10. Swedish (Erik Dalén <dalen@jpl.se>)
+  
+  A demo server was added which allows you to test-drive Campsite.
+  You can access the demo administration interface here:
+      http://campsite-demo.campware.org/admin
+  and see the demo frontend here:
+      http://campsite-demo.campware.org/
+  
   Bugs Fixed
   ----------
   - Xinha cant handle more than 9 images in an article
