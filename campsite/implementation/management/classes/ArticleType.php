@@ -77,7 +77,7 @@ class ArticleType {
 	function exists()
 	{
 		global $Campsite;
-		$queryStr = "SHOW TABLES LIKE 'X".$this->m_dbTableName."'";
+		$queryStr = "SHOW TABLES LIKE '".$this->m_dbTableName."'";
 		$result = $Campsite['db']->GetOne($queryStr);
 		if ($result) {
 			return true;
