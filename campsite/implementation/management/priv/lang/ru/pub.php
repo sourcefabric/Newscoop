@@ -1,13 +1,13 @@
 <?php
-regGS("trial subscription", "");
-regGS("paid subscription", "");
-regGS("time units", "");
-regGS("one language", "");
-regGS("all languages", "");
-regGS("Trial subscriptions", "");
-regGS("Time unit cost per one section", "");
-regGS("Paid subscriptions", "");
-regGS("Default time period", "");
+regGS("trial subscription", "пробная подписка");
+regGS("paid subscription", "платная подписка");
+regGS("time units", "единицы времени");
+regGS("one language", "один язык");
+regGS("all languages", "все языки");
+regGS("Trial subscriptions", "Пробная подписки");
+regGS("Time unit cost per one section", "Стоимость единицы времени за одну секцию");
+regGS("Paid subscriptions", "Платная подписки");
+regGS("Default time period", "Период времени по умолчанию");
 regGS("Publication List", "Список публикаций");
 regGS("Go To Issues", "Перейти к выпускам");
 regGS("Name<BR><SMALL>(click to see issues)</SMALL>", "Название<BR><SMALL>(щелкните для просмотра выпуска)</SMALL>");

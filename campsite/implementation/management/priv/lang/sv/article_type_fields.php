@@ -1,5 +1,5 @@
 <?php
-regGS("Top element", "");
+regGS("Top element", "Huvudtema");
 regGS("Article type fields", "Artikeltypfält");
 regGS("Delete field $1", "Radera fält $1");
 regGS("Article body", "Artikeltext");

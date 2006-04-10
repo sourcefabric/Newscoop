@@ -1,6 +1,6 @@
 <?php
-regGS("You do not have the right to attach images to articles.", "");
-regGS("Items per page", "Объектов на страницу");
+regGS("Edit article", "Редактировать статью");
+regGS("You do not have the right to attach images to articles.", "Вы не имеете права добавлять картинки к статье.");
 regGS("You do not have the right to add images.", "Вы не имеете права добавления картинок.");
 regGS("Image information", "Информация о картинке");
 regGS("Attach New Image", "Приложить новую картинку");
@@ -13,6 +13,7 @@ regGS("Please enter a description for the image.", "Пожалуйста вве�
 regGS("You must select an image file to upload.", "Вы должны выбрать картинку для загрузки.");
 regGS("Change image information", "Измениить информацию о картинке");
 regGS("You do not have the right to add images", "Вы не имеете права добавления картинок");
+regGS("Items per page", "Объектов на страницу");
 regGS("The image $1 has been added.", "Картинка $1 была успешно добавлена.");
 regGS("View image", "Просмотр картинки");
 regGS("Unlink", "Отвязать");

@@ -1,6 +1,6 @@
 <?php
-regGS("Regardless of the language", "");
-regGS("Individual languages", "");
+regGS("Regardless of the language", "Unabhängig von der Sprache");
+regGS("Individual languages", "Individuelle Sprachen");
 regGS("Publication<BR><SMALL>(click to see sections)</SMALL>", "Publikation (anklicken um Rubriken zu betrachten)");
 regGS("Delete subscriptions to $1", "Abonoment an $1 löschen");
 regGS("Paid subscription", "Volles Abonnement");

@@ -1,5 +1,6 @@
 <?php
-regGS("You do not have the right to attach images to articles.", "");
+regGS("Edit article", "Artikel editieren");
+regGS("You do not have the right to attach images to articles.", "Keine Berechtigung Bilder zu Artikeln hinzuzufügen.");
 regGS("You do not have the right to add images.", "Kein Zugriffsrecht neue Bilder hinzuzufügen.");
 regGS("Image information", "Bildinformation");
 regGS("Attach New Image", "Neues Bild hinzufügen");

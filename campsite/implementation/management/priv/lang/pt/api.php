@@ -1,5 +1,4 @@
 <?php
-regGS("Cannot create file \"$1\"", "Não é possivél criar o ficheiro \"$1\"");
 regGS("The IP address group $1 has been deleted.", "O grupo de ip's $1 foi eliminado.");
 regGS("IP Group $1 added for user $2", "O grupo de ip's $1 foi adicionado para o utilizador $2");
 regGS("User permissions for $1 changed", "As permissões para o utilizador $1 foram alteradas");
@@ -44,4 +43,5 @@ regGS("The user account $1 has been deleted.", "Utilizador $1 foi eliminado");
 regGS("Password changed for $1", "Palavra-Passe de $1 foi alterada");
 regGS("User account $1 created", "Utilizador $1 foi criado");
 regGS("Template $1 uploaded", "O modelo $1 foi transferido");
+regGS("Cannot create file \"$1\"", "Não é possivél criar o ficheiro \"$1\"");
 ?>

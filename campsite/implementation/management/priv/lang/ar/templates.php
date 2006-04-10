@@ -1,8 +1,8 @@
 <?php
-regGS("The template '$1' was saved successfully.", "");
+regGS("The template '$1' was saved successfully.", "تم حفظ القالب \"$1\" بنجاح.");
 regGS("The template $1 is in use and can not be deleted.", "القالب  1$ في حالة الاستخدام ولا يمكنت حذفه");
 regGS("The folder could not be deleted.", "لا يمكن حذف المجلد");
-regGS("The directory must be empty", "");
+regGS("The directory must be empty", "على المجلد أن يكون فارغاً");
 regGS("Create new folder", "اخلق مجلد جديد");
 regGS("Upload template", "حمّل القالب");
 regGS("Creating new folder", "خلق مجلد جديد");
@@ -14,9 +14,6 @@ regGS("Are you sure you want to delete the folder $1 from $2?", "هل انت م�
 regGS("Are you sure you want to delete the template $1 from folder $2?", "هل أنت متأكد من حذف القالب 1$ من 2$ ؟");
 regGS("Deleting template", "حذف القالب");
 regGS("Deleting folder", "حذف المجلد");
-regGS("The folder has been deleted.", "تم حذف المجلد");
-regGS("The template has been deleted.", "تم إلغاء القالب");
-regGS("The template could not be deleted.", "لا يمكن إلغاء القالب");
 regGS("Template $1 was deleted", "تم حذف القالب $1");
 regGS("Delete folder", "إلغاء المجلد");
 regGS("Folders", "المجلدات");
@@ -29,9 +26,6 @@ regGS("Create new template", "ضع قالب جديد");
 regGS("Creating new template", "وضع قالب جديد");
 regGS("Duplicate template", "كرر القالب");
 regGS("Edit template", "تحرير القالب");
-regGS("Save", "حفظ");
-regGS("The template $1 has been created.", "القالب 1$ تم انشاؤه");
-regGS("Do you want to edit the template ?", " هل تريد تحرير القالب؟");
 regGS("The template $1 could not be created.", "لا يمكن وضع القالب 1$");
 regGS("Template $1 was changed", "تمّ تغيير القالب 1$");
 regGS("New template $1 was created", "تمّ وضع القالب جديد 1$");
@@ -46,4 +40,11 @@ regGS("You do not have the right to upload templates.", "لا تملك الصل�
 regGS("You do not have the right to create templates.", "لا تملك الصلاحية لخبق القوالب");
 regGS("Duplicate file", "تكرير الملف");
 regGS("Delete file", "حذف الملف");
+regGS("Unable to save the template '$1' to the path '$2'.", "لا يمكن حفظ القالب \"$1\" في المسار \"$2\".");
+regGS("Please check if the user '$1' has permission to write in this directory.", "الرجاء التأكد من أن المستخدم \"$1\" لديه صلاحية الكتابة في هذا المجلد.");
+regGS("Unable to delete the template '$1' in the path '$2'.", "لا يمكن إلغاء القالب \"$1\" في المسار \"$2\".");
+regGS("The folder has been deleted.", "تم حذف المجلد");
+regGS("The template has been deleted.", "تم إلغاء القالب");
+regGS("The template could not be deleted.", "لا يمكن إلغاء القالب");
+regGS("Save", "حفظ");
 ?>

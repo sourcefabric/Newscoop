@@ -26,8 +26,6 @@ regGS("Create new template", "");
 regGS("Creating new template", "");
 regGS("Duplicate template", "");
 regGS("Edit template", "");
-regGS("The template $1 has been created.", "");
-regGS("Do you want to edit the template ?", "");
 regGS("The template $1 could not be created.", "");
 regGS("Template $1 was changed", "");
 regGS("New template $1 was created", "");
@@ -42,4 +40,7 @@ regGS("You do not have the right to upload templates.", "");
 regGS("You do not have the right to create templates.", "");
 regGS("Duplicate file", "");
 regGS("Delete file", "");
+regGS("Unable to save the template '$1' to the path '$2'.", "");
+regGS("Please check if the user '$1' has permission to write in this directory.", "");
+regGS("Unable to delete the template '$1' in the path '$2'.", "");
 ?>

@@ -1,5 +1,5 @@
 <?php
-regGS("Top element", "");
+regGS("Top element", "Верхний элемент");
 regGS("Article type fields", "Поля типов статей");
 regGS("Delete field $1", "Удалить поле $1");
 regGS("Article body", "Тело статьи");

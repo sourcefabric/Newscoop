@@ -1,5 +1,5 @@
 <?php
-regGS("The template '$1' was saved successfully.", "");
+regGS("The template '$1' was saved successfully.", "Template '$1$ wurde erfolgreich gespeichert.");
 regGS("The template $1 is in use and can not be deleted.", "Die Template $1 wird benutzt und kann nicht gelöscht werden.");
 regGS("The folder could not be deleted.", "Ordner konnte nicht gelöscht werden");
 regGS("The directory must be empty", "Das Verzeichnis muss leer sein.");
@@ -26,8 +26,6 @@ regGS("Create new template", "Neues Template erstellen");
 regGS("Creating new template", "Neues Template wird erstellt");
 regGS("Duplicate template", "Template Duplizieren");
 regGS("Edit template", "Template Bearbeiten");
-regGS("The template $1 has been created.", "Template $1 wurde erstellt");
-regGS("Do you want to edit the template ?", "Template bearbeiten?");
 regGS("The template $1 could not be created.", "Template $1 konnte nicht erstellt werden");
 regGS("Template $1 was changed", "Template $1 wurde geändert");
 regGS("New template $1 was created", "Neues Template $1 wurde erstellt");

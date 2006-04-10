@@ -1,4 +1,5 @@
 <?php
+regGS("The article has already been translated into $1.", "The article has already been translated into $1.");
 regGS("move", "move");
 regGS("duplicate", "duplicate");
 regGS("You must set the publication, issue, and section for this article before you can schedule it for publishing.  Go to the \"$1\" menu and select \"$2\" to do this.", "You must set the publication, issue, and section for this article before you can schedule it for publishing.  Go to the \"$1\" menu and select \"$2\" to do this.");

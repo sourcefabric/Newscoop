@@ -1,7 +1,6 @@
 <?php
-regGS("Regardless of the language", "");
-regGS("Individual languages", "");
-regGS("Account", "Conta");
+regGS("Regardless of the language", "Apesar do idioma");
+regGS("Individual languages", "Idiomas ");
 regGS("Publication<BR><SMALL>(click to see sections)</SMALL>", "Publicação <br> (Carregue para ver secções)");
 regGS("Delete subscriptions to $1", "Eliminar assinaturas para $1");
 regGS("Paid subscription", "Assinatura");
@@ -19,6 +18,7 @@ regGS("You do not have the right to change subscriptions status.", "não tem per
 regGS("Subscription status could not be changed.", "O Status da Assinatura não pode ser alterado");
 regGS("Update payment", "Actualizar Pagamento");
 regGS("Subscription payment could not be changed.", "O periodo de vigencia da Assinatura não pode ser alterado");
+regGS("Account", "Conta");
 regGS("Left to pay", "");
 regGS("Active", "Activo");
 regGS("No subscriptions.", "Não existem assinaturas");

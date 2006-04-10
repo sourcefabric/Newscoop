@@ -1,15 +1,15 @@
 <?php
-regGS("trial subscription", "");
-regGS("paid subscription", "");
-regGS("time units", "");
-regGS("one language", "");
-regGS("all languages", "");
-regGS("Trial subscriptions", "");
-regGS("Time unit cost per one section", "");
-regGS("Paid subscriptions", "");
-regGS("Default time period", "");
-regGS("Publication List", "");
-regGS("Go To Issues", "");
+regGS("trial subscription", "إشتراك تجريبي");
+regGS("paid subscription", "إشتراك مدفوع");
+regGS("time units", "وحدات الوقت");
+regGS("one language", "لغة واحدة");
+regGS("all languages", "جميع اللغات");
+regGS("Trial subscriptions", "أشتراكات تجريبية");
+regGS("Time unit cost per one section", "كلفة وحدة الوقت لقسم واحد");
+regGS("Paid subscriptions", "إشتراكات مدفوعة");
+regGS("Default time period", "مدة الوقت الإفتراضية");
+regGS("Publication List", "قائمة المنشورات");
+regGS("Go To Issues", "إذهب للأعداد");
 regGS("Name<BR><SMALL>(click to see issues)</SMALL>", " الاسم (اضغط لترى الإصدارات)");
 regGS("Delete publication $1", "الغاء المنشور $1");
 regGS("No publications.", "لا يوجد منشور");
@@ -61,4 +61,5 @@ regGS("The alias $1 could not be deleted.", "لم يتم حذف الاسم ال�
 regGS("The alias $1 has been deleted from publication $2.", "تم حذف الاسم المستعار 1$ من  المنشور 2$");
 regGS("$1 is the default publication alias, it can not be deleted.", "لا يمكن الغاء الاسم المستعار 1$ لانه الاسم الافتراضي");
 regGS("You do not have the right to add publications.", "لا تملك صلاحية اضافة منشورات");
+regGS("There are $1 issue(s) left.", "هنالك $1 أعداد متبقية.");
 ?>

@@ -1,8 +1,8 @@
 <?php
-regGS("You must input a number greater or equal to 0 into the $1 field.", "");
-regGS("Regardless of the language", "");
-regGS("Individual languages", "");
-regGS("All languages", "");
+regGS("You must input a number greater or equal to 0 into the $1 field.", "In das Feld $1 muss eine Zahl größer oder gleich 0 eingegeben werden.");
+regGS("Regardless of the language", "Unabhängig von der Sprache");
+regGS("Individual languages", "Individuelle Sprachen");
+regGS("All languages", "Alle Sprachen");
 regGS("Subscribed sections", "Abonierte Rubriken");
 regGS("Add new section to subscription", "Neue Rubriken zu Abonoment hinzufügen");
 regGS("Start Date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "(JJJJ-MM-TT)");
@@ -11,7 +11,6 @@ regGS("Change all sections", "Alle Rubriken verändern");
 regGS("WARNING: If you subscribe to all sections, the periods for previously added sections will be overriden!", "Warnung: Beim abonnieren aller Rubriken werden die Zeiträume für vormals hinzugefügte Rubriken überschrieben!");
 regGS("Adding sections", "Rubriken werden hinzugefügt");
 regGS("Adding sections to subscription", "Rubriken werden zu Abonoment hinzugefügtq");
-regGS("Please check if there isn't another subscription with the same section.", "Bitte überprüfen, ob ein anderes Abonmoment mit derselben Rubrik bereits existiert");
 regGS("Are you sure you want to delete the subscription to the section $1?", "Abonoment zur Rubrik $1 wirklich löschen?");
 regGS("Change subscription", "Abonoment ändern");
 regGS("You do not have the right to change subscriptions.", "Keine Berechtigung Abonoments zu ändern");

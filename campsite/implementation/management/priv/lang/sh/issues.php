@@ -3,7 +3,7 @@ regGS("Issue List", "Lista izdanja");
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>", "Naziv<br><small>(kliknite za pregled rubrika)</small>");
 regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Objavljen<br><small>(gggg-mm-dd)</small>");
 regGS("Delete issue $1", "Obriši izdanje $1");
-regGS("Publish articles", "Objavi članke");
+regGS("Publish articles", "Objavi tekstove");
 regGS("Change issue status", "Promeni status izdanja");
 regGS("You do not have the right to change issues.", "Nemate pravo da promenenite podatke o izdanju");
 regGS("Are you sure you want to change the issue $1 status from $2 to $3?", "Da li ste sigurni da želite da promenite status izdanja $1 iz $2 u $3?");
@@ -20,7 +20,7 @@ regGS("Issue $1 updated in publication $2", "Izdanje $1 je izmenjeno u publikaci
 regGS("You do not have the right to delete issues.", "Nemate pravo da brišete izdanja");
 regGS("Are you sure you want to delete the issue $1?", "Sigurni ste da želite da obrišete izdanje $1?");
 regGS("Deleting issue", "Brisanje izdanja");
-regGS("Use the structure of the previous issue", "Iskoristite strukturu prethodnog izdanja");
+regGS("Use the structure of the previous issue", "Iskoristi strukturu prethodnog izdanja");
 regGS("Copy the entire structure in all languages from the previous issue except for content.", "Prekopiraj celokupnu strukturu u svim jezicima iz prethodnog izdanja, osim sadržaja");
 regGS("You may modify it later if you wish.", "Možete ga promeniti kasnije ako želite.");
 regGS("Create a new structure", "Napravi novu strukturu");

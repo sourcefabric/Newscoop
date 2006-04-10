@@ -1,19 +1,22 @@
 <?php
-regGS("move", "");
-regGS("duplicate", "");
-regGS("You must set the publication, issue, and section for this article before you can schedule it for publishing.  Go to the \"$1\" menu and select \"$2\" to do this.", "");
-regGS("You do not have the right to translate articles.", "");
-regGS("You do not have the right to publish articles.", "");
-regGS("You do not have the right to move articles.", "");
-regGS("You cannot $1 the articles marked in red because the destination issue has not been translated into the appropriate language.", "");
-regGS("Select location (optional):", "");
-regGS("Publish?", "");
-regGS("Publish articles", "");
-regGS("Publish article", "");
-regGS("Move?", "");
-regGS("Move articles", "");
-regGS("Move article", "");
-regGS("Move", "");
+regGS("The article has already been translated into $1.", "Este artigo ja foi traduzido para $1");
+regGS("move", "mover");
+regGS("duplicate", "duplicar");
+regGS("You must set the publication, issue, and section for this article before you can schedule it for publishing.  Go to the \"$1\" menu and select \"$2\" to do this.", "Tem de escolher a publicação, numero e secção para este artigo antes de agendar a sua publicação. Vá ao menu $1 e escolha a opção $2 para fazê-lo");
+regGS("You do not have the right to translate articles.", "Não tem permissão para traduzir artigos.");
+regGS("You do not have the right to publish articles.", "Não tem permissão para publicar artigos");
+regGS("You do not have the right to move articles.", "Não tem permissão para mover artigos.");
+regGS("You cannot $1 the articles marked in red because the destination issue has not been translated into the appropriate language.", "Não pode mover os artigos assinalados a vermelho porque a edição de destino não se encontra traduzido para o idioma apropriado.");
+regGS("Select location (optional):", "Selecione a localização ( opcional ):");
+regGS("Publish?", "Publicar?");
+regGS("Publish articles", "Publicar artigos");
+regGS("Publish article", "Publicar artigo");
+regGS("Move?", "Mover?");
+regGS("Move articles", "Mover artigos");
+regGS("Move article", "Mover artigo");
+regGS("Move", "Mover");
+regGS("An issue must be created for the selected language but you do not have the right to create an issue.", "Tem de criar uma edição para o idioma escolhido, mas não possui permissões para tal.");
+regGS("A section must be created for the selected language but you do not have the right to create a section.", "Tem de criar um secção para o idioma escolhido, mas não possui permissões para tal.");
 regGS("to section", "para secção");
 regGS("You must select at least one article to perform an action.", "Tem de selecionar um artigo para efectuar operação");
 regGS("You must choose a language", "Tem de escolher um idioma");
@@ -77,4 +80,7 @@ regGS("You do not have the right to delete articles.", "Não tem permissões par
 regGS("You must select an article type.", "Tem de escolher o tipo de artigo.");
 regGS("Are you sure you want to remove the image \'$1\' from the article?", "Confirma a eliminação da imagem \'$1\' do artigo?");
 regGS("Are you sure you want to delete this scheduled action?", "");
+regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Confirma a eliminação do tópico \\'$1\\' do artigo?");
+regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Confirma a eliminação do anexo \\'$1\\' do artigo?");
+regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Confirma a eliminação da imagem \\'$1\\' do artigo?");
 ?>

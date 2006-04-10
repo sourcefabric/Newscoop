@@ -1,11 +1,12 @@
 <?php
-regGS("User may translate articles", "");
-regGS("User may move articles", "");
-regGS("User may find and replace", "");
-regGS("User may change system preferences", "");
-regGS("User may attach topics to articles", "");
-regGS("User may attach images to articles", "");
-regGS("User may add special characters", "");
+regGS("65 or over", "65 oder älter");
+regGS("User may translate articles", "User darf Artikel übersetzen");
+regGS("User may move articles", "User darf Artikel verschieben");
+regGS("User may find and replace", "User darf Suchen und Ersetzen");
+regGS("User may change system preferences", "User darf Systemeinstellungen ändern");
+regGS("User may attach topics to articles", "User darf Themen mit Artikeln verknüpfen");
+regGS("User may attach images to articles", "User darf Bilder zu Artikeln hinzufügen");
+regGS("User may add special characters", "User darf Sonderzeichen einfügen");
 regGS("Reset search form", "Formular zurück setzen");
 regGS("That user name already exists, please choose a different login name.", "Der Username existiert bereits, bitte einen anderen Loginnamen wählen.");
 regGS("User may delete article attachments", "User darf Artikelanhänge löschen");

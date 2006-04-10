@@ -1,5 +1,5 @@
 <?php
-regGS("Top element", "");
+regGS("Top element", "Elementul principal");
 regGS("Article type fields", "Câmpurile tipului de articol");
 regGS("Delete field $1", "Şterge câmpul $1");
 regGS("Article body", "Conţinut al articolului");

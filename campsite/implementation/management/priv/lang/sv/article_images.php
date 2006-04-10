@@ -1,5 +1,6 @@
 <?php
-regGS("You do not have the right to attach images to articles.", "");
+regGS("Edit article", "Redigera artikel");
+regGS("You do not have the right to attach images to articles.", "Du har inte rättighet att bifoga bilder till artiklar.");
 regGS("You do not have the right to add images.", "Du har inte rätt att lägga till bilder.");
 regGS("Image information", "Bildinformation");
 regGS("Attach New Image", "Bifoga ny bild");

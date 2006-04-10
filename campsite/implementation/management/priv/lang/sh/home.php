@@ -1,14 +1,14 @@
 <?php
-regGS("There are no pending articles.", "");
-regGS("Pending Articles", "");
-regGS("System Preferences", "");
-regGS("You haven't written any articles yet.", "Nema vaših članaka.");
+regGS("There are no pending articles.", "Nema tekstova na čekanju.");
+regGS("Pending Articles", "Tekstovi na čekanju");
+regGS("System Preferences", "Sistemske postavke");
+regGS("You haven't written any articles yet.", "Nema vaših tekstova.");
 regGS("There are no pending items to be published.", "Nema stavki za objavljivanje.");
-regGS("There are currently no submitted articles.", "Trenutno nema predatih članaka.");
-regGS("Recently Published Articles", "Poslednje objavljeni članci.");
-regGS("Publish articles", "Objavi članke");
+regGS("There are currently no submitted articles.", "Trenutno nema predatih tekstova.");
+regGS("Recently Published Articles", "Poslednje objavljeni tekstovi");
+regGS("Publish articles", "Objavi tekstove");
 regGS("Publish Date", "Datum objavljivanja");
-regGS("No articles have been published yet.", "Za sada nema objavljenih članaka.");
+regGS("No articles have been published yet.", "Za sada nema objavljenih tekstova.");
 regGS("Event(s)", "Događaj(i)");
 regGS("Signed in: $1", "Prijavljeno: $1");
 regGS("Help", "Pomoć");

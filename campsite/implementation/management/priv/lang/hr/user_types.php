@@ -1,12 +1,12 @@
 <?php
 regGS("User types", "Vrste korisnika");
-regGS("No user types.", "Nema te vrste korisnika");
+regGS("No user types.", "Nema te vrste korisnika.");
 regGS("Are you sure you want to delete the user type $1?", "Jeste li sigurni da želite obrisati vrstu korisnika $1?");
-regGS("No such user type.", "Nema takve vrste korisnika");
+regGS("No such user type.", "Nema takve vrste korisnika.");
 regGS("You do not have the right to delete user types.", "Nemate ovlasti brisati vrste korisnika.");
-regGS("User type", "");
+regGS("User type", "Vrsta korisnika");
 regGS("Change user type permissions", "Promijena dozvola za vrstu korisnika");
-regGS("You do not have the right to change user type permissions.", "Nemate ovlasti mijenjati dozvole za vrste korisnika");
+regGS("You do not have the right to change user type permissions.", "Nemate ovlasti mijenjati dozvole za vrste korisnika.");
 regGS("User type $1 changed permissions", "Promijenjene su dozvole za vrstu korisnika $1");
 regGS("You do not have the right to add user types.", "Nemate ovlasti dodavati vrste korisnika");
 regGS("Adding new user type", "Dodavanje nove vrste korisnika");

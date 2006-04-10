@@ -358,6 +358,14 @@ regGS("Back", "Назад");
 regGS("File", "Файл");
 regGS("Save and Close", "Сохранить и закрыть");
 regGS("Add", "Добавить");
+regGS("Select All", "Выбрать все");
+regGS("Select None", "Отменить выбор");
+regGS("Add Event", "Добавить событие");
+regGS("N/A", "недоступно");
+regGS("On Front Page", "На титульной странице");
+regGS("On Section Page", "На странице секций");
+regGS("Created by", "Создан:");
+regGS("Creation date", "Дата создания");
 regGS("User name", "Пользователь");
 regGS("User Types", "Типы пользователей");
 regGS("Add new user account", "Добавить новую учетную запись пользователя");
@@ -373,12 +381,4 @@ regGS("There are $1 issue(s) left.", "Осталось $1 выпуск(ов):ru"
 regGS("There are $1 keyword(s) left.", "Осталось $1 ключевое(-ых) слов(о):ru");
 regGS("Name<BR><SMALL>(click to edit)</SMALL>", "Название<BR><SMALL>(Щелкнуть для правки)</SMALL>:ru");
 regGS("New field", "Новое поле");
-regGS("Select All", "Выбрать все");
-regGS("Select None", "Отменить выбор");
-regGS("Add Event", "Добавить событие");
-regGS("N/A", "");
-regGS("On Front Page", "На титульной странице");
-regGS("On Section Page", "На странице секций");
-regGS("Created by", "Создан:");
-regGS("Creation date", "Дата создания");
 ?>

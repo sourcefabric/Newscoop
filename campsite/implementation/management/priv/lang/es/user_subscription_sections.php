@@ -11,7 +11,6 @@ regGS("Change all sections", "Cambiar todas las secciones");
 regGS("WARNING: If you subscribe to all sections, the periods for previously added sections will be overriden!", "AVISO:  Si se suscribe a todas las secciones, los periodos para las secciones previamente agregadas serán invalidados!");
 regGS("Adding sections", "Agregando secciones");
 regGS("Adding sections to subscription", "Agregando secciones para suscripción");
-regGS("Please check if there isn't another subscription with the same section.", "Favor revise si no existe otra suscripción con el mismo nombre de sección");
 regGS("Are you sure you want to delete the subscription to the section $1?", "¿Esta seguro que desea borrar la suscripción a la sección $1?");
 regGS("Change subscription", "Cambiar suscripción");
 regGS("You do not have the right to change subscriptions.", "No tiene derecho a cambiar suscripciones");

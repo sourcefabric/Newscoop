@@ -1,5 +1,4 @@
 <?php
-regGS("Items per page", "Объектов на страницу");
 regGS("You must select an image file to upload.", "Вы должны выбрать файл картинки для загрузки.");
 regGS("Add new image", "Добавить новую картинки");
 regGS("Date <SMALL>(yyyy-mm-dd)</SMALL>", "Дата (гггг-мм-дд)");
@@ -9,5 +8,6 @@ regGS("Description <SMALL>(Click to view details)</SMALL>", "Описание <S
 regGS("Used in articles", "Использована в статьях");
 regGS("View image", "Просмотреть картинку");
 regGS("Change image information", "Изменить информацию о картинке");
+regGS("Items per page", "Объектов на страницу");
 regGS("Image archive", "Архив картинок");
 ?>

@@ -1,5 +1,4 @@
 <?php
-regGS("Add Event", "Lägg till händelse");
 regGS("Issue List", "Utgåvslista");
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>", "Namn<BR><SMALL>(klicka för att se sektioner)</SMALL>");
 regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Publicerad<BR><SMALL>(åååå-mm-dd)</SMALL>");
@@ -38,4 +37,5 @@ regGS("Issue Publishing Schedule", "Utgåvepubliceringsschema");
 regGS("Invalid Input: $1", "Ogiltig inmatning: $1");
 regGS("Issue Number", "Utgåva nummer");
 regGS("Go To Sections", "Gå till sektioner");
+regGS("Add Event", "Lägg till händelse");
 ?>

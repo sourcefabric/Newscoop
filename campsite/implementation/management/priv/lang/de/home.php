@@ -1,7 +1,7 @@
 <?php
-regGS("There are no pending articles.", "");
-regGS("Pending Articles", "");
-regGS("System Preferences", "");
+regGS("There are no pending articles.", "Keine Artikel in der Warteschleife");
+regGS("Pending Articles", "Artikel in der Warteschleife");
+regGS("System Preferences", "System Einstellungen");
 regGS("You haven't written any articles yet.", "Sie haben noch keine Artikel geschrieben.");
 regGS("There are no pending items to be published.", "Es existieren keine Artikel, die auf ihre Veröffentlichung warten.");
 regGS("There are currently no submitted articles.", "Es gibt keine neuen Artikel.");

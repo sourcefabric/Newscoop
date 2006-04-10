@@ -1,18 +1,20 @@
 <?php
-regGS("User may translate articles", "");
-regGS("User may move articles", "");
-regGS("User may find and replace", "");
-regGS("User may change system preferences", "");
-regGS("User may attach topics to articles", "");
-regGS("User may attach images to articles", "");
-regGS("User may add special characters", "");
+regGS("65 or over", "65 или више");
+regGS("User may translate articles", "Корисник може да преводи текстове");
+regGS("User may move articles", "Корисник може да премешта текстове");
+regGS("User may find and replace", "Корисник може да користи опцију 'тражи/замени'");
+regGS("User may change system preferences", "Корисник може да мења системске поставке");
+regGS("User may attach topics to articles", "Корисник може да додаје теме текстовима");
+regGS("User may attach images to articles", "Корисник може да качи слике уз текстове");
+regGS("User may add special characters", "Корисник може да додаје специјалне знакове");
+regGS("Reset search form", "Поништи услове претраге");
 regGS("That user name already exists, please choose a different login name.", "Корисничко име већ постоји, смислите нешто друго.");
 regGS("User may delete article attachments", "Корисник може да брише атачменте уз чланке.");
 regGS("User may change article attachments", "Корисник може да мења атачменте уз чланке");
 regGS("User may add article attachments", "Корисник може да додаје атачменте уз чланке");
 regGS("Staff management", "Управљање сарадничким налозима");
 regGS("Subscriber management", "Управљање претплатничким налозима");
-regGS("Account Name", "Име налога");
+regGS("Account Name", "Корисничко име");
 regGS("Full Name", "Пуно име");
 regGS("Delete user $1", "Обриши корисника $1");
 regGS("User list is empty.", "Листа корисника је празна.");

@@ -1,5 +1,6 @@
 <?php
-regGS("You do not have the right to delete file attachments.", "");
+regGS("Edit article", "Redigera artikel");
+regGS("You do not have the right to delete file attachments.", "Du har inte rättighet att radera bifogade filer.");
 regGS("You must select a file to upload.", "Du måste välja en fil att ladda upp.");
 regGS("You do not have the right to delete files.", "Du har inte rätt att radera filer.");
 regGS("You do not have the right to change the article.", "Du har inte rätt att ändra artikeln.");

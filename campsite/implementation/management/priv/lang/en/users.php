@@ -1,4 +1,5 @@
 <?php
+regGS("65 or over", "65 or over");
 regGS("User may translate articles", "User may translate articles");
 regGS("User may move articles", "User may move articles");
 regGS("User may find and replace", "User may find and replace");

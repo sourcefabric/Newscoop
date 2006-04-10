@@ -1,6 +1,6 @@
 <?php
-regGS("You do not have the right to detach topics from articles.", "");
-regGS("You do not have the right to attach topics to articles.", "");
+regGS("You do not have the right to detach topics from articles.", "No tiene permiso para desvincular tópicos de los artículos");
+regGS("You do not have the right to attach topics to articles.", "No tiene permiso para vincular tópicos a los artículos");
 regGS("Attach Topics", "Adjuntar tópicos");
 regGS("Attach Topic To Article", "Adjuntar tópico al artículo");
 regGS("No topics.", "Sin temas");
