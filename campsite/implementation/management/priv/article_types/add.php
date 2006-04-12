@@ -29,15 +29,14 @@ echo camp_html_breadcrumbs($crumbs);
 <FORM NAME="dialog" METHOD="POST" ACTION="do_add.php">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 <TR>
-	<TD COLSPAN="2">
-		<B><?php  putGS("Add new article type"); ?></B>
+	<TD COLSPAN="6">
+		<B><?php putGS("Add new article type"); ?></B>
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
-	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
-	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cName" SIZE="15" MAXLENGTH="15">
+	<TD COLSPAN="5">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_name" SIZE="15" MAXLENGTH="15">
 	</TD>
 </TR>
 <TR>
