@@ -266,7 +266,6 @@ $menu_item =& DynMenuItem::Create(getGS("About"), $Campsite['ABOUT_URL'],
     array("icon" => sprintf($iconTemplateStr, "about.png"), "target" => "_blank"));
 $menu_help->addItem($menu_item);
 
-
 ?>
 <HEAD>
     <META http-equiv="Content-Type" content="text/html; charset=UTF-8">

@@ -1,6 +1,11 @@
 <?php
+global $global_custum_var;
+$global_custom_var = 1;
+
 session_start();
 require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
+
+set_error_handler ("report_bug");
 
 /** 
  * This file is basically a hack so that we could implement the
@@ -73,7 +78,7 @@ elseif (($extension == '.php') || ($extension == '')) {
 	}
 		
 	// If its not a PHP file, assume its a directory.
-	if ($extension != '.php') {
+   	if ($extension != '.php') {
 		// If its a directory
 		if (($call_script != '') && ($call_script[strlen($call_script)-1] != '/') ) {
 			$call_script .= '/';
@@ -117,6 +122,8 @@ elseif (($extension == '.php') || ($extension == '')) {
 		$_top_menu = ob_get_clean();
 	}
 	
+        
+
 	echo $_top_menu . $content;
 	
 	if ($needs_menu) {
@@ -124,6 +131,33 @@ elseif (($extension == '.php') || ($extension == '')) {
 	}
 }
 else {
-	readfile($Campsite['HTML_DIR'] . "/$ADMIN_DIR/$call_script");	
+    readfile($Campsite['HTML_DIR'] . "/$ADMIN_DIR/$call_script");  
+}
+
+/**
+ * Called for all Campsite errors.
+ * 
+ * @param int    $p_number The error number.
+ * @param string $p_string The error message.
+ * @param string $p_file The name of the file in which the error occurred.
+ * @param int    $p_line The line number in which the error occurred.
+ * @param
+ */
+function report_bug ($p_number, $p_string, $p_file, $p_line)    
+{
+    global $ADMIN_DIR, $ADMIN, $Campsite;
+
+    // --- Don't print out the previous screen (in which the error occurred). ---
+    ob_end_clean();
+
+    echo "<html><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\">\n<tr><td>\n";
+    require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/menu.php");
+    echo "</td></tr>\n<tr><td>\n";
+
+    include ($Campsite['HTML_DIR'] . "/$ADMIN_DIR/bugreporter/senderrorform.php");
+
+//     include ($Campsite['HTML_DIR'] . "/bugreporter/senderrorform.php");
+
+    exit();
 }
 ?>
