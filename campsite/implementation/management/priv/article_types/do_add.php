@@ -19,32 +19,36 @@ if (!$User->hasPermission('ManageArticleTypes')) {
 	exit;
 }
 
-$cName = trim(Input::Get('cName')); 
+$f_name = trim(Input::Get('f_name')); 
+
 $correct = true;
 $created = false;
-
 $errorMsgs = array();
-if (empty($cName)) {
+
+if (empty($f_name)) {
     $correct = false;
     $errorMsgs[] = getGS('You must complete the $1 field.','</B>'.getGS('Name').'</B>');
-} else {
-	$valid = ArticleType::IsValidFieldName($cName);
+} 
+
+if ($correct) {
+	$valid = ArticleType::IsValidFieldName($f_name);
 	if (!$valid) {
 		$correct = false; 
 		$errorMsgs[] = getGS('The $1 field may only contain letters and underscore (_) character.', '</B>' . getGS('Name') . '</B>'); 
-    }
+	}
+}
 
-    if ($correct) {
-    	$articleType =& new ArticleType($cName);
-    	if ($articleType->exists()) {
-		    $correct = false; 
-		    $errorMsgs[] = getGS('The article type $1 already exists.', '<B>'.htmlspecialchars($cName).'</B>'); 
-		}
-    }
+if ($correct) {
+
+   	$articleType =& new ArticleType($f_name);
+   	if ($articleType->exists()) {
+	    $correct = false; 
+	    $errorMsgs[] = getGS('The article type $1 already exists.', '<B>'.htmlspecialchars($f_name).'</B>'); 
+	}
     
     if ($correct) {
     	$created = $articleType->create();
-    	header("Location: /$ADMIN/article_types/fields/add.php?AType=$cName");
+    	header("Location: /$ADMIN/article_types/fields/add.php?AType=$f_name");
     	exit;
 	}
 } 
