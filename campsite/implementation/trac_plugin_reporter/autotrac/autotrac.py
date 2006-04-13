@@ -17,20 +17,33 @@ dynvars_disallowed_value_chars_re = re.compile(r'[^a-zA-Z0-9-_@.,\\]')
 class AutoTrac(Component):
     implements(INavigationContributor, IRequestHandler)
 
-    # INavigationContributor methods
+    # --- INavigationContributor methods ---
+
     def get_active_navigation_item(self, req):
         return 'autotrac'
                 
+    ## Create Ticket Inbox tab
+    #
+    # @param Request req The HTTP Request data
     def get_navigation_items(self, req):
-        yield 'mainnav', 'autotrac', Markup('<a href="%s">Ticket Inbox</a>', self.env.href.autotrac())
+        yield 'mainnav', 'autotrac', Markup('<a href="%s">Ticket Inbox</a>', 
+                                            self.env.href.autotrac())
 
     # IRequestHandler methods
+
+    ## Return true if req-URL matches an Autotrac method. 
+    #
+    # @param Request req The HTTP request data
     def match_request(self, req):
+
         if re.compile (r'^/autotrac([/](.*))?$').match(req.path_info, 0):
             return True
         else:
             return False 
     
+    ## Send request to the correct method.
+    #
+    # @param Request req The HTTP request data
     def process_request(self, req):
         # This method is based on _render_view() in ReportModule
 
@@ -63,11 +76,14 @@ class AutoTrac(Component):
         else:
             raise util.TracError('No handler matched request to %s' % req.path_info)
 
+    ## uses a user specified sql query to extract some information
+    #  from the database and presents it as a html table.
+    #
+    # @param Request           req The HTTP request data
+    # @param ConnectionWrapper db  The database connection
+    # @param int                id The ticket ID
     def display_report_page(self, req, db, id):
-        """
-        uses a user specified sql query to extract some information
-        from the database and presents it as a html table.
-        """
+
         actions = {'create': 'REPORT_CREATE', 'delete': 'REPORT_DELETE',
                    'modify': 'REPORT_MODIFY'}
         for action in [k for k,v in actions.items()
@@ -183,9 +199,7 @@ class AutoTrac(Component):
                                if col[0] in ('ticket', 'id')]
                     if id_cols:
                         id_val = row[id_cols[0]]
-#                         value['ticket_href'] = self.env.href.ticket(id_val)
                         value['ticket_href'] = self.env.href.autotrac("ticket/" + str(id_val))
-#                         value['ticket_href'] = re.sub ("/ticket", "/autotrac/ticket", value['ticket_href'])
                 elif column == 'description':
                     value['parsed'] = wiki_to_html(cell, self.env, req, db)
                 elif column == 'reporter' and cell.find('@') != -1:
@@ -220,8 +234,17 @@ class AutoTrac(Component):
         return 'report.cs', None
 
 
+    ## Execute report query
+    #
+    # This method was adapted from ReportModule.execute_report()
+    #
+    # @param Request            req  The HTTP request object
+    # @param ConnectionWrapper  db   The database connection
+    # @param int                id   The ticket ID
+    # @param str                sql  The SQL query
+    # @param Dict               args ??
     def execute_sql_report(self, req, db, id, sql, args):
-        # --- (taken from ReportModule execute_report) ---
+
         sql = self.sql_sub_vars(req, sql, args)
         if not sql:
             raise util.TracError('Report %s has no SQL query.' % id)
@@ -238,27 +261,10 @@ class AutoTrac(Component):
 
         return cols, info
 
-    def get_info(self, db, id, args):
-        if id == -1:
-            # If no particular report was requested, display
-            # a list of available reports instead
-            title = 'Available Reports'
-            sql = 'SELECT id AS report, title FROM report ORDER BY report'
-            description = 'This is a list of reports available.'
-        else:
-            cursor = db.cursor()
-            cursor.execute("SELECT title,sql,description from report "
-                           "WHERE id=%s", (id,))
-            row = cursor.fetchone()
-            if not row:
-                raise util.TracError('Report %d does not exist.' % id,
-                                     'Invalid Report Number')
-            title = row[0] or ''
-            sql = row[1]
-            description = row[2] or ''
-
-        return [title, description, sql]
-
+    ## Get report-related arguments from the HTTP request
+    #
+    # @param Request req The HTTP request object.
+    # @return The report related arguments.
     def get_var_args(self, req):
         report_args = {}
         for arg in req.args.keys():
@@ -281,6 +287,8 @@ class AutoTrac(Component):
 
         return report_args
 
+    ## ??
+
     def sql_sub_vars(self, req, sql, args):
         def repl(match):
             aname = match.group()[1:]
@@ -294,15 +302,26 @@ class AutoTrac(Component):
         return dynvars_re.sub(repl, sql)
 
 
+    ## Send an HTTP header
+    #  This method is used for dialogue with BugReporter
+    #
+    # @param Request req The HTTP request data
+
     def print_http_header(self, req):
         req.send_response(200)
         req.send_header('Content-Type', 'text/plain')
         req.end_headers()
 
+    ## Send a reply to a BugReporter ping
+    #
+    # @param Request req The HTTP request data
     def reply_to_ping (self, req):
         self.print_http_header(req)
         req.write ("pong")
 
+    ## Process info and reply to BugReporter
+    #
+    # @param Request req The HTTP request data
     def bug_reporters_post (self, req):
 
         self.print_http_header (req)
@@ -316,7 +335,7 @@ class AutoTrac(Component):
 
         time = req.args.get('f_time')
         if time == None:
-            time = "(none)";
+            time = "";
         else:
             time = urllib.unquote_plus(time)
 
@@ -331,7 +350,7 @@ class AutoTrac(Component):
 
         description = req.args.get('f_backtrace')
         if description == None:
-            description = "(none)";
+            description = "";
         else:
             description = urllib.unquote_plus (description)
             description = "{{{\n" + description + "\n}}}"
@@ -345,13 +364,13 @@ class AutoTrac(Component):
 
         software = req.args.get('f_software')
         if software == None:
-            software = "(none)"
+            software = ""
         else:
             software = urllib.unquote_plus(software)
 
         version =  req.args.get('f_version')
         if version == None:
-            version = "??"
+            version = ""
         else:
             version = urllib.unquote_plus (version)
 
@@ -365,6 +384,16 @@ class AutoTrac(Component):
         req.write ('version: ' + version + '\n')
         req.write ('software: ' + software + '\n')
 
+    ## Add BugReporter's feedback to the database
+    #
+    # @param Request req         The HTTP request data
+    # @param str    description  User description & stack trace
+    # @param str    time         The time the error occurred
+    # @param str    summary      A summary of the user's description
+    # @param str    reporter     The email of the user
+    # @param str    software     The name of the software that crashed
+    # @param str    version      The version number of the software that crashed
+    # @param str    errorId      The error identification string
     def add_user_feedback (self, req, description, time, summary, reporter,
                      software, version, errorId):
 
@@ -382,8 +411,11 @@ class AutoTrac(Component):
             self.update_ticket_on_db (ticketId, reporter, description, req)
 
 
+    ## Get ticket ID with error-ID 'errorId'
+    #
+    # @param str               errorId The error identification string
+    # @param ConnectionWrapper db      The database connection
     def get_ticket_id (self, errorId, db=None):
-        """Get ticket ID with error-id 'errorID'"""
         if not db:
             db = self.env.get_db_cnx()
 
@@ -413,6 +445,19 @@ class AutoTrac(Component):
 
             return ticketId
         
+    ## Insert a BugReporter report with a new Error ID into the database
+    #
+    # todo: this method should return False, if reports with this
+    # errorId already exist
+    #
+    # @param str   description  User's description of the error plus a strack trace
+    # @param str   time         Time at which the error occurred
+    # @param str   summary      Summary of user's description
+    # @param str   reporter     Email of the user reporting the trouble
+    # @param str   software     The name of the software that crashed
+    # @param str   version      Version of the software that crashed
+    # @param str   errorId      The error identification string
+    # @return True
     def insert_new_report_to_db(self, description, time, summary, reporter,
     software, version, errorId):
         
@@ -433,22 +478,38 @@ class AutoTrac(Component):
         self.insert_error_id_to_db (ticketId, errorId)
         return True
 
+    ## Insert an existing BugReporter error report
+    #
+    # todo: This method should return False, if there are no tickets
+    # with this error ID.
+    #
+    # @param str     ticketId   The ticket ID
+    # @param str     author     The reporter's email
+    # @param str     comment    The user's comment
+    # @param Request req        The HTTP request data
     def update_ticket_on_db(self, ticketId, author, comment, req):
         db = self.env.get_db_cnx()
         ticket = Ticket(self.env, ticketId, db=db)
 
         ticket.populate(req.args)
 
-        #ticket['status'] =  'inbox'
-
         now = int(time.time())
         ticket.save_changes(author, comment, when=now, db=db)
         db.commit()
 
-    # This method artificially updates 'req' (the HTTP-request object)
-    # as if it had been created with a POST form.  It does this so
-    # that certain methods (ie save_ticket_form_data()), can be handed a 'req'
-    # object.
+    ## This method artificially updates 'req' (the HTTP-request object)
+    #  as if it had been created with a POST form.  It does this so
+    #  that certain methods (ie save_ticket_form_data()), can be handed a 'req'
+    #  object.
+    #
+    # @param Request req         The HTTP request data
+    # @param str     description The user's description
+    # @param str     time        The time the error occurred
+    # @param str     summary     A summary of the error description
+    # @param str     reporter    The reporter's name
+    # @param str     software    The software the error occurred on
+    # @param str     version     The software version the error occurred on
+    # @param str     errorId     The error ID string
     def update_req (self, req, description, time, summary, reporter,
                    software, version, errorId):
         req.args["description"] =  description
@@ -506,15 +567,14 @@ class AutoTrac(Component):
         add_stylesheet(req, 'common/css/ticket.css')
         return 'autotracticket.cs', None
 
+    ## Insert ticket data into the hdf
     def insert_ticket_data_to_hdf(self, req, db, ticket):
-        """Insert ticket data into the hdf"""
         # This method is based on _insert_ticket_data in TicketModule
 
         self.insert_autotrac_ticket_data_to_hdf (ticket, db)
 
         req.hdf['ticket'] = ticket.values
         req.hdf['ticket.id'] = ticket.id
-#         req.hdf['ticket.href'] = self.env.href.ticket(ticket.id)
         req.hdf['ticket.href'] = self.env.href.autotrac("ticket/" + repr(ticket.id))
 
         for field in TicketSystem(self.env).get_ticket_fields():
@@ -601,8 +661,8 @@ class AutoTrac(Component):
         ticket.values["occurrences"] = int(occurrences)
         
 
+    ## Returns the actions that can be performed on the ticket.
     def get_available_ticket_actions(self, ticket, perm_):
-        """Returns the actions that can be performed on the ticket."""
 
         if ticket['status'] == "inbox":
             return ['postpone', 'accept', 'close']
