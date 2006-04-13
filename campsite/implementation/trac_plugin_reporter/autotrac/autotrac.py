@@ -1,4 +1,10 @@
-# Autotrac plugin
+## Autotrac--A Trac plugin that enables Trac to accept reports from BugReporter.
+#
+#  This module accepts automatic error reports sent from BugReporter.
+#
+#  Additionally, it creates an Inbox tab, which allows an
+#  administrator to view the error reports and determine which ones to
+#  accept, and which ones to reject.  
 
 from trac import util
 from trac.attachment import attachment_to_hdf, Attachment
@@ -487,6 +493,7 @@ class AutoTrac(Component):
     # @param str     author     The reporter's email
     # @param str     comment    The user's comment
     # @param Request req        The HTTP request data
+    # @return True
     def update_ticket_on_db(self, ticketId, author, comment, req):
         db = self.env.get_db_cnx()
         ticket = Ticket(self.env, ticketId, db=db)
@@ -496,6 +503,8 @@ class AutoTrac(Component):
         now = int(time.time())
         ticket.save_changes(author, comment, when=now, db=db)
         db.commit()
+
+        return True
 
     ## This method artificially updates 'req' (the HTTP-request object)
     #  as if it had been created with a POST form.  It does this so
@@ -522,6 +531,10 @@ class AutoTrac(Component):
 #        keep changing ---
 #        req.args["summary"] =  summary
 
+    ## Display (and process forms from) the ticket webpage
+    #
+    # @param Request req      The HTTP request data
+    # @param int     ticketId The ticket ID
     def display_ticket_page(self, req, ticketId):
         # This method is based on process_request() in TicketModule.
 
@@ -567,7 +580,12 @@ class AutoTrac(Component):
         add_stylesheet(req, 'common/css/ticket.css')
         return 'autotracticket.cs', None
 
-    ## Insert ticket data into the hdf
+    ## Insert ticket data into the HDF
+    #
+    # @param Request            req    The HTTP request data
+    # @param ConnectionWrapper  db     The database connection
+    # @param dict               ticket A dictionary with ticket values
+    #                           to be displayed on the website
     def insert_ticket_data_to_hdf(self, req, db, ticket):
         # This method is based on _insert_ticket_data in TicketModule
 
@@ -662,6 +680,12 @@ class AutoTrac(Component):
         
 
     ## Returns the actions that can be performed on the ticket.
+    #
+    # todo: add user permissions
+    #
+    # @param Ticket ticket The ticket in questioen
+    # @param str    perm_ The permission of the user
+    # @return list The available actions
     def get_available_ticket_actions(self, ticket, perm_):
 
         if ticket['status'] == "inbox":
@@ -671,6 +695,11 @@ class AutoTrac(Component):
         else:
             return []
 
+    ## Save the data from the ticket form
+    #
+    # @param Request            req The HTTP request data
+    # @param ConnectionWrapper  db The database connection
+    # @param Ticket             ticket The ticket
     def save_ticket_form_data(self, req, db, ticket):
         # This method is based on _do_save() in TicketModule
 
@@ -722,6 +751,10 @@ class AutoTrac(Component):
 
         req.redirect(self.env.href.autotrac())
 
+    ## Create a short summary of text
+    #
+    # @param  str text The text to summarize
+    # @return str The summarized text
     def summarize_text (self, text):
         maxLength = 55
 
@@ -744,12 +777,25 @@ class AutoTrac(Component):
 
         return text
 
+    ## Confirm that the 'errorId' is valid
+    #
+    # @param str errorId  The error ID string
+    # @return True if valid, otherwise False 
     def is_valid_error_id (self, errorId):
         if re.match (r"[0-9]+:[^:]+:[^:]+:[^:]+:[0-9]+", errorId):
             return True
         else:
             return False
 
+    ## Insert error-ID to database
+    #
+    # todo: autotrac should probably use it's own database, rather
+    # than the geneic 'ticket_custom', which doesn't confirm that
+    # errorId's are unique.
+    #
+    # @param int                ticketId        The ticket ID number
+    # @param str                errorId         The error ID string
+    # @param ConnectionWrapper db               The database connection
     def insert_error_id_to_db(self, ticketId, errorId, db=None):
         if not db:
             db = self.env.get_db_cnx()
