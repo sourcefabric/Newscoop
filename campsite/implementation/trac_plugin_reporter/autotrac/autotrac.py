@@ -4,7 +4,7 @@
 #
 #  Additionally, it creates an Inbox tab, which allows an
 #  administrator to view the error reports and determine which ones to
-#  accept, and which ones to reject.  
+#  accept as tickets, and which ones to dismiss.  
 
 from trac import util
 from trac.attachment import attachment_to_hdf, Attachment
@@ -22,6 +22,13 @@ dynvars_disallowed_value_chars_re = re.compile(r'[^a-zA-Z0-9-_@.,\\]')
 
 class AutoTrac(Component):
     implements(INavigationContributor, IRequestHandler)
+
+    ## Constructor
+    #
+    def __init__ (self):
+        # --- Define the permission that is required for users to act
+        # on inbox-tickets (eg accept) ---
+        self.actionPermission = 'TICKET_CREATE'
 
     # --- INavigationContributor methods ---
 
@@ -549,6 +556,8 @@ class AutoTrac(Component):
         ticket = Ticket(self.env, ticketId, db=db)
         reporter_id = req.args.get('author')
 
+#         req.hdf['ticket.debug'] = ", ".join (req.perm.perms.keys())
+
         if req.method == 'POST':
             if not req.args.has_key('preview'):
                 self.save_ticket_form_data(req, db, ticket)
@@ -561,6 +570,7 @@ class AutoTrac(Component):
                 req.hdf['ticket.reassign_owner'] = req.args.get('reassign_owner') \
                                                    or req.authname
                 req.hdf['ticket.resolve_resolution'] = req.args.get('resolve_resolution')
+
                 reporter_id = req.args.get('author')
                 comment = req.args.get('comment')
                 if comment:
@@ -683,15 +693,25 @@ class AutoTrac(Component):
     #
     # todo: add user permissions
     #
-    # @param Ticket ticket The ticket in questioen
-    # @param str    perm_ The permission of the user
-    # @return list The available actions
+    # @param  Ticket ticket The ticket in questioen
+    # @param  str    perm_ The permission of the user
+    # @return list   The available actions
     def get_available_ticket_actions(self, ticket, perm_):
+        # (This method was adapted from TicketSystem.get_available_actions())
 
-        if ticket['status'] == "inbox":
-            return ['postpone', 'accept', 'close']
-        elif ticket['status'] == 'postponed':
-            return ['postpone', 'accept', 'close']
+        # --- Assert user as appropriate permission ---
+        if perm_.has_permission (self.actionPermission):
+
+            # -- If viewing an inbox ticket, return these actions --
+            if ticket['status'] == "inbox":
+                return ['postpone', 'accept', 'close']
+
+            # -- else if viewing a postponed ticket, return  these actions --
+            elif ticket['status'] == 'postponed':
+                return ['postpone', 'accept', 'close']
+
+        # --- If lacking appropriate permission or ticket-type, return
+        #     an empty list ---
         else:
             return []
 
@@ -759,7 +779,7 @@ class AutoTrac(Component):
         maxLength = 55
 
         # --- If text is longer than 'maxLength', Eliminate any
-        #     sentences ending after 'maxLength' ---
+        #     sentences ending after 'maxLength' characters ---
         if len (text) > maxLength:
             text = re.sub (r"(.+?[.?!]).*", r"\1", text)
 
