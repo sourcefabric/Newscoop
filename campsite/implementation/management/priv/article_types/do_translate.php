@@ -46,17 +46,17 @@ if ($correct) {
 	// Translate existing type
 	$type =& new ArticleType($f_type_id);
 	$created = $type->setName($f_type_language_id, $f_type_translation_name);
-	
-
+	$description =& new Translation($f_type_language_id);
+	$description->create($f_type_translation_name);
 	if ($created) {
 		$foo = $type->getTranslations();
-		print "<BR>translations:<BR><BR>";
-		print_r($foo);
-//		header("Location: /$ADMIN/topics/index.php");
-//		exit;
+		//print "<BR>translations:<BR><BR>";
+		//print_r($foo);
+		header("Location: /$ADMIN/article_types/index.php");
+		exit;
 	}
 	else {
-		$errorMsgs[] = getGS('The article type could not be added.');
+		$errorMsgs[] = getGS('The translation could not be added.');
 	}
 }
 
