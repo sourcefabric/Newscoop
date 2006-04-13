@@ -45,6 +45,7 @@ class ArticleType {
 		foreach ($dbColumns as $columnMetaData) {
 			$this->m_columnNames[] = $columnMetaData->getName();
 		}
+		$this->m_metadata = $this->getMetadata();
 	} // constructor
 
 
@@ -62,9 +63,9 @@ class ArticleType {
 		$success = $Campsite['db']->Execute($queryStr);
 
 		if ($success) {
-			$queryStr = "INSERT INTO `data_type_fields`"
-						."(table_name, field_name, weight, is_hidden, fk_phrase_id) "
-						."VALUES ('".$this->m_dbTableName."', NULL, 0, 1, NULL)";
+			$queryStr = "INSERT INTO `ArticleTypeMetadata`"
+						."(type_name) "
+						."VALUES ('".$this->m_dbTableName."')";
 			$success2 = $Campsite['db']->Execute($queryStr);			
 		} else {
 			return $success;
@@ -79,7 +80,7 @@ class ArticleType {
 			$queryStr = "DROP TABLE ".$this->m_dbTableName;
 			$result = $Campsite['db']->Execute($queryStr);
 			// RFC: Maybe a check on this result as well?  We drop the table since creation is two-tier: create the table,
-			// then add the entry into data_type_fields; so if the second part failed, but hte first part worked (when would 
+			// then add the entry into ArticleTypeMetadata; so if the second part failed, but hte first part worked (when would 
 			// that ever really happen??) we drop the table and return 0.  But if the table drop breaks too, should I
 			// give a more verbose error.  I'm voting not, due to rarity--and if things get that bad they have other issues.
 		}
@@ -116,7 +117,7 @@ class ArticleType {
 		$queryStr = "DROP TABLE ".$this->m_dbTableName;
 		$success = $Campsite['db']->Execute($queryStr);
 		if ($success) {
-			$queryStr = "DELETE FROM data_type_fields WHERE table_name='".$this->m_dbTableName."'";
+			$queryStr = "DELETE FROM ArticleTypeMetadata WHERE type_name='".$this->m_dbTableName."'";
 			$success2 = $Campsite['db']->Execute($queryStr);
 		} 
 		
@@ -129,7 +130,7 @@ class ArticleType {
 	} // fn delete
 
 	/**
-	 * Rename the article type.  This will move the entire table in the database and update data_type_fields.
+	 * Rename the article type.  This will move the entire table in the database and update ArticleTypeMetadata.
 	 * Usually, one wants to just rename the Display Name, which is done via SetDisplayName
 	 *
 	 */
@@ -140,7 +141,7 @@ class ArticleType {
 		$queryStr = "RENAME TABLE ".$this->m_dbTableName ." TO X".$p_newName;
 		$success = $Campsite['db']->Execute($queryStr);
 		if ($success) {
-			$queryStr = "UPDATE data_type_fields SET table_name='X". $p_newName ."' WHERE table_name='". $this->m_dbTableName ."'";
+			$queryStr = "UPDATE ArticleTypeMetadata SET type_name='X". $p_newName ."' WHERE type_name='". $this->m_dbTableName ."'";
 			$success2 = $Campsite['db']->Execute($queryStr);		
 		}
 
@@ -189,22 +190,32 @@ class ArticleType {
 		
 		// if the string is empty, nuke it		
 		if (!is_string($p_value)) {
-			$sql = "DELETE FROM data_type_fields WHERE table_name=". $this->m_dbTableName ." AND fk_phrase_id=". $p_languageId;
+			$phase_id = $this->m_metadata['fk_phrase_id'];
+			$trans =& new Translation($p_languageId, $phrase_id);
+			$trans->delete();
+			$sql = "DELETE FROM ArticleTypeMetadata WHERE type_name=". $this->m_dbTableName ." AND fk_phrase_id=". $phrase_id;
 			$changed = $Campsite['db']->Execute($sql);
 		}
 		
 		if (isset($this->m_names[$p_languageId])) {
+			$description =& new Translation($p_languageId, $this->m_metadata['fk_phrase_id']);
+			$description->setText($p_value);
+			
 			// Update the name.
 			$oldValue = $this->m_names[$p_languageId];
-			$sql = "UPDATE data_type_fields SET table_name='".mysql_real_escape_string($p_value)."' "
-					." WHERE table_name=".$this->m_dbTableName
-					." AND fk_phrase_id=".$p_languageId;
-			$changed = $Campsite['db']->Execute($sql);
+			//$sql = "UPDATE ArticleTypeMetadata SET type_name='".$this->m_dbTableName."' "
+			//		." WHERE type_name=".$this->m_dbTableName
+			//		." AND fk_phrase_id=".$phrase_id;
+			//$changed = $Campsite['db']->Execute($sql);
+			$changed = true;
 		} else {
 			// Insert the new translation.
+			$description =& new Translation($p_languageId);
+			$description->create($p_value);
+			$phrase_id = $description->getPhraseId();
+
 			$oldValue = "";
-			$sql = "INSERT INTO data_type_fields SET table_name='".mysql_real_escape_string($p_value)."' "
-					.", fk_phrase_id=".$p_languageId;
+			$sql = "INSERT INTO ArticleTypeMetadata SET type_name='".$this->m_dbTableName ."', fk_phrase_id=".$phrase_id;
 			$changed = $Campsite['db']->Execute($sql);			
 		}
 		if ($changed) {
@@ -251,6 +262,17 @@ class ArticleType {
 	} // fn getTableName
 
 
+	/** 
+	* Return an associative array of the metadata in ArticleFieldMetadata.
+	*
+	**/
+	function getMetadata() {
+		global $Campsite;
+		$queryStr = "SELECT * FROM ArticleFieldMetadata WHERE type_name='". $this->m_dbTableName ."' and field_name = NULL";
+		$queryArray = $Campsite['db']->GetAll($queryStr);
+		return $queryArray;
+	}
+	
 	/**
 	 * Return an array of ArticleTypeField objects.
 	 *
