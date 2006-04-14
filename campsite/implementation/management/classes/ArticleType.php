@@ -63,9 +63,10 @@ class ArticleType {
 		$success = $Campsite['db']->Execute($queryStr);
 
 		if ($success) {
-			$queryStr = "INSERT INTO `ArticleTypeMetadata`"
+			$queryStr = "INSERT INTO ArticleTypeMetadata"
 						."(type_name) "
 						."VALUES ('".$this->m_dbTableName."')";
+			print $queryStr;
 			$success2 = $Campsite['db']->Execute($queryStr);			
 		} else {
 			return $success;
@@ -75,7 +76,7 @@ class ArticleType {
 			if (function_exists("camp_load_language")) { camp_load_language("api");	}
 		    $logtext = getGS('The article type $1 has been added.', $this->m_dbTableName);
 	    	Log::Message($logtext, null, 61);
-			ParserCom::SendMessage('article_types', 'create', array("article_type"=>$cName));
+			//ParserCom::SendMessage('article_types', 'create', array("article_type"=>$this->m_dbTableName));
 		} else {
 			$queryStr = "DROP TABLE ".$this->m_dbTableName;
 			$result = $Campsite['db']->Execute($queryStr);
@@ -228,31 +229,25 @@ class ArticleType {
 		return $changed;
 	} // fn setName
 	
-
 	/**
-	 * Get all translations of the topic in an array indexed by 
-	 * the language ID.
-	 * 
+	 * Parses m_metadata for phrase_ids and returns an array of language_id => translation_text
+	 *
 	 * @return array
+	 *
 	 */
-	function getTranslations() 
-	{
-	    return $this->m_names;
-	} // fn getTranslations
+	function getTranslations() {
+		$return = array();
+		foreach ($this->m_metadata as $m) {
+			if (is_numeric($m['fk_phrase_id'])) {
+				$tmp = Translation::getTranslations($m['fk_phrase_id']);
+				foreach ($tmp as $k => $v) 
+					$return[$k] = $v;
+				unset($tmp);
+			}
+		}	
+		return $return;
+	}
 	
-	
-	/**
-	 * Return the number of translations of this topic. 
-	 * 
-	 * @return int
-	 */
-	function getNumTranslations()
-	{
-		return count($this->m_names);
-	} // fn getNumTranslations
-	
-	 
-
 	/**
 	 * @return string
 	 */
@@ -268,7 +263,7 @@ class ArticleType {
 	**/
 	function getMetadata() {
 		global $Campsite;
-		$queryStr = "SELECT * FROM ArticleFieldMetadata WHERE type_name='". $this->m_dbTableName ."' and field_name = NULL";
+		$queryStr = "SELECT * FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' and field_name IS NULL";
 		$queryArray = $Campsite['db']->GetAll($queryStr);
 		return $queryArray;
 	}
@@ -337,6 +332,27 @@ class ArticleType {
 		}
 		return $finalNames;
 	} // fn GetArticleTypes
+
+	/**
+	 * sets the is_hidden variable
+	 */
+	function hide() {
+		global $Campsite;
+		$queryStr = "UPDATE ArticleTypeMetadata SET is_hidden=1 WHERE type_name='". $this->getTableName() ."'";
+		print $queryStr;
+		$ret = $Campsite['db']->Execute($queryStr);
+	}
+
+	/**
+	*
+	* sets the is_hidden varaible
+	*/
+	function show() {
+		global $Campsite;
+		$queryStr = "UPDATE ArticleTypeMetadata SET is_hidden=0 WHERE type_name='". $this->getTableName() ."'";
+		print $queryStr;
+		$ret = $Campsite['db']->Execute($queryStr);
+	}
 
 } // class ArticleType
 
