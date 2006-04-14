@@ -48,7 +48,7 @@ if ($correct) {
     
     if ($correct) {
     	$created = $articleType->create();
-    	header("Location: /$ADMIN/article_types/fields/add.php?AType=$f_name");
+//    	header("Location: /$ADMIN/article_types/fields/add.php?AType=$f_name");
     	exit;
 	}
 } 

@@ -20,7 +20,7 @@ if (!$User->hasPermission('ManageArticleTypes')) {
 }
 
 
-$f_type_id = Input::Get('f_type_id', 'int', 0, true);
+$f_type_id = Input::Get('f_type_id');
 $f_type_language_id = Input::Get('f_type_language_id', 'int', 0);
 $f_type_translation_name = trim(Input::Get('f_type_translation_name'));
 $correct = true;
@@ -46,12 +46,9 @@ if ($correct) {
 	// Translate existing type
 	$type =& new ArticleType($f_type_id);
 	$created = $type->setName($f_type_language_id, $f_type_translation_name);
-	$description =& new Translation($f_type_language_id);
-	$description->create($f_type_translation_name);
 	if ($created) {
-		$foo = $type->getTranslations();
-		//print "<BR>translations:<BR><BR>";
-		//print_r($foo);
+		//$foo = $type->getTranslations();
+//		print_r($foo);
 		header("Location: /$ADMIN/article_types/index.php");
 		exit;
 	}

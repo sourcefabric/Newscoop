@@ -3,7 +3,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
 load_common_include_files("article_types");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleType.php');
-
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Translation.php');
 // Check permissions
 list($access, $User) = check_basic_access($_REQUEST);
 if (!$access) {
@@ -87,6 +87,15 @@ if ($User->hasPermission("ManageArticleTypes")) { ?>
 $color = 0;
 $i = 0;
 foreach ($articleTypes as $articleType) {
+	$currentArticleType =& new ArticleType($articleType);
+	if ($currentArticleType->m_metadata[0]['is_hidden'] == 1) {
+		$hideShowText = 'show';
+		$hideShowImage = "is_hidden.png";
+	}
+	else {
+		$hideShowText = 'hide';
+		$hideShowImage = "is_shown.png";
+	}
     ?>	
 
 
@@ -107,7 +116,7 @@ foreach ($articleTypes as $articleType) {
 	</td>
 
 	<TD ALIGN="CENTER">
-		<A HREF="/<?php p($ADMIN); ?>/article_types/do_del.php?AType=<?php  print urlencode($articleType); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the article type $1?', htmlspecialchars($articleType)); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php  putGS('Delete article type $1', htmlspecialchars($articleType)); ?>" TITLE="<?php  putGS('Delete article type $1', htmlspecialchars($articleType)); ?>" ></A>
+		<A HREF="/<?php p($ADMIN); ?>/article_types/do_hide.php?AType=<?php  print urlencode($articleType); ?>&AStatus=<?php print $hideShowText; ?>" onclick="return confirm('<?php putGS('Are you sure you want to $1 the article type $2?', $hideShowText, htmlspecialchars($articleType)); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/<?php echo $hideShowImage; ?>" BORDER="0" ALT="<?php  putGS('Delete article type $1', htmlspecialchars($articleType)); ?>" TITLE="<?php  putGS('$1 article type $2', ucfirst($hideShowText), htmlspecialchars($articleType)); ?>" ></A>
 	</TD>
 	
 	<?php  if ($User->hasPermission("DeleteArticleTypes")) { ?>		
@@ -118,9 +127,41 @@ foreach ($articleTypes as $articleType) {
 	
 	</TR>
 
-    <tr id="translate_type_<?php p($i); ?>" style="display: none;">
-    	<td colspan="2"></td>
-    	<td colspan="3">
+
+
+
+
+    <tr id="translate_type_<?php p($i); ?>" style="display: none;"><td colspan="7">
+    	<table>
+
+		<?php
+		$isFirstTranslation = true;
+		$typeTranslations = $currentArticleType->getTranslations();
+		foreach ($typeTranslations as $typeLanguageId => $typeTransName) {
+		?>
+		<TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>">
+			<TD <?php if ($isFirstTranslation) { ?>style="border-top: 2px solid #8AACCE;"<?php } ?> valign="middle" align="center">
+				<?php
+				$typeLanguage =& new Language($typeLanguageId);
+				p($typeLanguage->getCode());
+				?>
+			</TD>
+			<TD <?php if ($isFirstTranslation) { ?>style="border-top: 2px solid #8AACCE;"<?php } ?> valign="middle" align="left" width="450px">
+				<?php
+				echo htmlspecialchars($typeTransName);
+				?>
+			</TD>
+			</tr>
+			<?php
+			$isFirstTranslation = false;
+		}
+		?>
+
+
+
+
+    	<tr>
+    	<td colspan="2">
     		<FORM method="POST" action="do_translate.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
     		<input type="hidden" name="f_type_id" value="<?php p($articleType); ?>"> 
     		<table cellpadding="0" cellspacing="0" style="border-top: 1px solid #CFC467; border-bottom: 1px solid #CFC467; background-color: #FFFCDF ; padding-left: 5px; padding-right: 5px;" width="100%">
@@ -150,6 +191,9 @@ foreach ($articleTypes as $articleType) {
     		</table>
     		</FORM>
     	</td>
+    	</tr>
+    	</table>
+	</td>
     </tr>
 
 	<?php  $i++; } // foreach  ?>	    
