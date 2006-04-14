@@ -57,3 +57,18 @@ function HideAll(p_array)
 	return true;
 } 
 
+
+/**
+ * Given an array of HTML elements, make all of the 
+ * elements invisible.
+ *
+ * @param array p_array
+ */
+function ShowAll(p_array)
+{
+	for (i = 0; i < p_array.length; i++) { 
+		document.getElementById(p_array[i]).style.display = "block";
+	}
+	return true;
+} 
+
