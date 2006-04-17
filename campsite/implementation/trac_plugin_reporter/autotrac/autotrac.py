@@ -39,7 +39,7 @@ class AutoTrac(Component):
     #
     # @param Request req The HTTP Request data
     def get_navigation_items(self, req):
-        yield 'mainnav', 'autotrac', Markup('<a href="%s">Ticket Inbox</a>', 
+        yield 'mainnav', 'autotrac', util.Markup('<a href="%s">Ticket Inbox</a>', 
                                             self.env.href.autotrac())
 
     # IRequestHandler methods
@@ -429,6 +429,12 @@ class AutoTrac(Component):
     # @param str               errorId The error identification string
     # @param ConnectionWrapper db      The database connection
     def get_ticket_id (self, errorId, db=None):
+
+        # --- BE CAUTIOUS & return if errorId's value seems
+        # suspicious: potentially the ENTIRE TICKET TABLE could be
+        # DELETED by this function.  ---
+        if not (is_valid_error_id (errorId)) return None
+
         if not db:
             db = self.env.get_db_cnx()
 
@@ -451,6 +457,8 @@ class AutoTrac(Component):
             row = cursor.fetchone()
             ticketId = row[0]
 
+            # --- This is a dangerous line, as if used incautiously
+            #     the entire ticket table could be deleted. ---
             cursor.execute ("""
                 DELETE FROM ticket_custom WHERE NAME =
                 "error_id" AND VALUE = "%s" AND
@@ -798,6 +806,10 @@ class AutoTrac(Component):
         return text
 
     ## Confirm that the 'errorId' is valid
+    #
+    #  Note: it's VERY IMPORTANT that this function reports False on
+    #  blank errorId's.  If it were to do otherwise, the ENTIRE TICKET
+    #  TABLE could be erased.
     #
     # @param str errorId  The error ID string
     # @return True if valid, otherwise False 
