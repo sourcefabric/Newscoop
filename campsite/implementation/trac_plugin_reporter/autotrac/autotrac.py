@@ -433,7 +433,8 @@ class AutoTrac(Component):
         # --- BE CAUTIOUS & return if errorId's value seems
         # suspicious: potentially the ENTIRE TICKET TABLE could be
         # DELETED by this function.  ---
-        if not (is_valid_error_id (errorId)) return None
+        if not (is_valid_error_id (errorId)):
+            return None
 
         if not db:
             db = self.env.get_db_cnx()
@@ -457,7 +458,7 @@ class AutoTrac(Component):
             row = cursor.fetchone()
             ticketId = row[0]
 
-            # --- This is a dangerous line, as if used incautiously
+            # --- This is a dangerous line, and if used incautiously
             #     the entire ticket table could be deleted. ---
             cursor.execute ("""
                 DELETE FROM ticket_custom WHERE NAME =
@@ -809,7 +810,7 @@ class AutoTrac(Component):
     #
     #  Note: it's VERY IMPORTANT that this function reports False on
     #  blank errorId's.  If it were to do otherwise, the ENTIRE TICKET
-    #  TABLE could be erased.
+    #  TABLE could be deleted.
     #
     # @param str errorId  The error ID string
     # @return True if valid, otherwise False 
