@@ -18,9 +18,9 @@ if (!$User->hasPermission('ManageArticleTypes')) {
 	exit;
 }
 
-$articleTypeName = Input::Get('AType');
-$fieldName = trim(Input::Get('cName'));
-$fieldType = trim(Input::Get('cType'));
+$articleTypeName = Input::Get('f_article_type');
+$fieldName = trim(Input::Get('f_article_field_name'));
+$fieldType = trim(Input::Get('f_article_field_type'));
 $rootTopicId = Input::Get('f_root_topic_id', 'int', 0);
 
 $field =& new ArticleTypeField($articleTypeName, $fieldName);
@@ -45,14 +45,14 @@ if (!in_array($fieldType, $validTypes)) {
 
 if ($correct) {
 	$field->create($fieldType, $rootTopicId);
-	header("Location: /$ADMIN/article_types/fields/?AType=".urlencode($articleTypeName));
+	header("Location: /$ADMIN/article_types/fields/?f_article_type=".urlencode($articleTypeName));
 	exit;
 }
 
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
 $crumbs[] = array(getGS("Article Types"), "/$ADMIN/article_types/");
-$crumbs[] = array(getGS("Article type fields"), "/$ADMIN/article_types/fields/?AType=".urlencode($articleTypeName));
+$crumbs[] = array(getGS("Article type fields"), "/$ADMIN/article_types/fields/?f_article_type=".urlencode($articleTypeName));
 $crumbs[] = array(getGS("Adding new field"), "");
 
 echo camp_html_breadcrumbs($crumbs);
@@ -82,7 +82,7 @@ echo camp_html_breadcrumbs($crumbs);
 <TR>
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">
-	<INPUT TYPE="button" class="button" NAME="Ok" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/article_types/fields/add.php?AType=<?php print urlencode($articleTypeName); ?>'">
+	<INPUT TYPE="button" class="button" NAME="Ok" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/article_types/fields/add.php?f_article_type=<?php print urlencode($articleTypeName); ?>'">
 	</DIV>
 	</TD>
 </TR>

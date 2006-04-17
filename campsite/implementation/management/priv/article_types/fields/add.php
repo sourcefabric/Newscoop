@@ -18,12 +18,12 @@ if (!$User->hasPermission('ManageArticleTypes')) {
 	exit;
 }
 
-$articleTypeName = Input::Get('AType');
+$articleTypeName = Input::Get('f_article_type');
 
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
 $crumbs[] = array(getGS("Article Types"), "/$ADMIN/article_types/");
-$crumbs[] = array(getGS("Article type fields"), "/$ADMIN/article_types/fields/?AType=".urlencode($articleTypeName));
+$crumbs[] = array(getGS("Article type fields"), "/$ADMIN/article_types/fields/?f_article_type=".urlencode($articleTypeName));
 $crumbs[] = array(getGS("Add new field"), "");
 
 echo camp_html_breadcrumbs($crumbs);
@@ -37,7 +37,7 @@ echo camp_html_breadcrumbs($crumbs);
 <script>
 function UpdateArticleFieldContext() {
 	var my_form = document.forms["add_field_form"]
-	var field_type = my_form.elements["cType"].value
+	var field_type = my_form.elements["f_article_field_type"].value
 	var is_topic = my_form.elements["is_topic"].value
 	if ((is_topic == "false" && field_type == "topic")
 			|| (is_topic == "true" && field_type != "topic")) {
@@ -54,13 +54,13 @@ function UpdateArticleFieldContext() {
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cName" SIZE="20" MAXLENGTH="32" alt="blank" emsg="<?php putGS("You must complete the $1 field.", getGS("Name")) ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_article_field_name" SIZE="20" MAXLENGTH="32" alt="blank" emsg="<?php putGS("You must complete the $1 field.", getGS("Name")) ?>">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Type"); ?>:</TD>
 	<TD>
-	<SELECT NAME="cType" class="input_select" onchange="UpdateArticleFieldContext()">
+	<SELECT NAME="f_article_field_type" class="input_select" onchange="UpdateArticleFieldContext()">
 		<OPTION VALUE="text"><?php  putGS('Text'); ?>
 		<OPTION VALUE="date"><?php  putGS('Date'); ?>
 		<OPTION VALUE="body"><?php  putGS('Article body'); ?>
@@ -100,7 +100,7 @@ foreach ($topics as $topicPath) {
 <TR>
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">
-	<INPUT TYPE="HIDDEN" NAME="AType" VALUE="<?php  print htmlspecialchars($articleTypeName); ?>">
+	<INPUT TYPE="HIDDEN" NAME="f_article_type" VALUE="<?php  print htmlspecialchars($articleTypeName); ?>">
 	<INPUT TYPE="submit" class="button" NAME="OK" VALUE="<?php  putGS('Save'); ?>">
 	</DIV>
 	</TD>
