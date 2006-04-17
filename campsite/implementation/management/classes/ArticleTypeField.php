@@ -27,7 +27,8 @@ class ArticleTypeField {
 	var $Key;
 	var $Default;
 	var $Extra;
-
+	var $m_metadata;
+	
 	function ArticleTypeField($p_articleTypeName = null, $p_fieldName = null)
 	{
 		$this->m_articleTypeName = $p_articleTypeName;
@@ -37,6 +38,8 @@ class ArticleTypeField {
 		if (!is_null($this->m_articleTypeName) && !is_null($this->m_fieldName)) {
 			$this->fetch();
 		}
+		$this->m_metadata = $this->getMetadata();
+
 	} // constructor
 
 
@@ -47,6 +50,54 @@ class ArticleTypeField {
 	{
 		return $this->m_dbTableName;
 	} // fn getDbTableName
+
+	/**
+	 * Rename the article type.  This will move the entire table in the database and update ArticleTypeMetadata.
+	 * Usually, one wants to just rename the Display Name, which is done via SetDisplayName
+	 *
+	 */
+	function rename($p_newName)
+	{
+		global $Campsite;
+		if (!ArticleType::isValidFieldName($p_newName)) return 0;
+		// TODO: This sql sequence could be cleaned up for efficiency.  Renaming columns is tricky in mysql. pjh 2006/March
+		$queryStr = "SHOW COLUMNS FROM ". $this->m_dbTableName;
+		$success = 0;
+		$res = mysql_query($queryStr);
+		if (!$res) 
+			return;
+
+		$queryStr = 0;
+			
+	    if (mysql_num_rows($res) > 0) {
+	    	while ($row = mysql_fetch_assoc($res)) {
+	    		if ($row['Field'] == $this->m_dbColumnName) {
+					$queryStr = "ALTER TABLE ". $this->m_dbTableName ." CHANGE COLUMN ". $this->m_dbColumnName ." F". $p_newName ." ". $row['Type']; 				
+					break;
+	    		}
+	    	}
+		}
+
+		if ($queryStr) {
+			$success = $Campsite['db']->Execute($queryStr);
+			
+		}
+
+		if ($success) {
+			$queryStr = "UPDATE ArticleTypeMetadata SET field_name='F". $p_newName ."' WHERE field_name='". $this->m_dbColumnName ."'";
+			$success2 = $Campsite['db']->Execute($queryStr);		
+		}
+
+
+		if ($success2) {
+			$this->m_dbColumnName = 'F'. $p_newName;
+			if (function_exists("camp_load_language")) { camp_load_language("api"); }
+			$logText = getGS('The article type field $1 has been renamed to $2.', $this->m_dbColumnName, $p_newName);
+			Log::Message($logText, null, 62);
+			//ParserCom::SendMessage('article_type_fields', 'rename', array('article_field' => $this->m_dbColumnName));
+		}
+	}
+
 
 
 	/**
@@ -73,7 +124,7 @@ class ArticleTypeField {
 				$queryStr .= " INTEGER UNSIGNED NOT NULL";
 				$queryStr2 = "INSERT INTO TopicFields (ArticleType, FieldName, RootTopicId) "
 							."VALUES ('".$this->m_articleTypeName."', '".$this->m_fieldName."', '"
-							.$p_rootTopicId."')";
+							.$p_rootTopicId ."')";
 				if (!$Campsite['db']->Execute($queryStr2)) {
 					return false;
 				}
@@ -83,6 +134,14 @@ class ArticleTypeField {
 		}
 		$success = $Campsite['db']->Execute($queryStr);
 		if ($success) {
+			$success = 0;
+			$queryStr = "INSERT INTO ArticleTypeMetadata (type_name, field_name, field_type) VALUES ('". $this->m_dbTableName ."','". $this->m_dbColumnName ."', '". $p_type ."')";
+			$success = $Campsite['db']->Execute($queryStr);
+		
+		}
+
+		if ($success) {
+
 			if (function_exists("camp_load_language")) { camp_load_language("api");	}
 			$logtext = getGS('Article type field $1 created', $this->m_dbColumnName);
 			Log::Message($logtext, null, 71);
@@ -92,6 +151,50 @@ class ArticleTypeField {
 	} // fn create
 
 
+	function setType($p_type) {
+		global $Campsite;
+		$p_type = strtolower($p_type);
+		$queryStr = "ALTER TABLE ".$this->m_dbTableName." CHANGE ".$this->m_dbColumnName ." ". $this->m_dbColumnName;
+		switch ($p_type) {
+			case 'text':
+			    $queryStr .= " VARCHAR(255) NOT NULL";
+			    break;
+			case 'date':
+		    	$queryStr .= " DATE NOT NULL";
+		    	break;
+			case 'body':
+		    	$queryStr .= " MEDIUMBLOB NOT NULL";
+		    	break;
+			case 'topic':
+				$queryStr .= " INTEGER UNSIGNED NOT NULL";
+				$queryStr2 = "INSERT INTO TopicFields (ArticleType, FieldName, RootTopicId) "
+							."VALUES ('".$this->m_articleTypeName."', '".$this->m_fieldName."', '"
+							.$p_rootTopicId ."')";
+				if (!$Campsite['db']->Execute($queryStr2)) {
+					return false;
+				}
+				break;
+		    default:
+		    	return false;
+		}
+		$success = $Campsite['db']->Execute($queryStr);
+		if ($success) {
+			$success = 0;
+			$queryStr = "UPDATE ArticleTypeMetadata SET field_type='". $p_type ."' WHERE type_name='". $this->m_dbTableName ."' AND field_name='". $this->m_dbColumnName ."'";
+			$success = $Campsite['db']->Execute($queryStr);
+		}
+
+		if ($success) {
+
+			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+			$logtext = getGS('Article type field $1 changed', $this->m_dbColumnName);
+			Log::Message($logtext, null, 71);
+			ParserCom::SendMessage('article_types', 'modify', array("article_type"=> $this->m_articleTypeName));
+		}
+		return $success;
+				
+	
+	}
 	/**
 	 * @return boolean
 	 */
@@ -235,6 +338,36 @@ class ArticleTypeField {
 	    	return "unknown";
 		}
 	} // fn getPrintType
+
+	function getDisplayName() {
+		return "NAME";
+	}
+
+
+	function hide() {
+		global $Campsite;
+		$queryStr = "UPDATE ArticleTypeMetadata SET is_hidden=1 WHERE type_name='". $this->m_dbTableName ."' AND field_name='". $this->m_fieldName ."'";
+		$ret = $Campsite['db']->Execute($queryStr);
+	
+	}
+	
+	function show() {
+		global $Campsite;
+		$queryStr = "UPDATE ArticleTypeMetadata SET is_hidden=0 WHERE type_name='". $this->m_dbTableName ."' AND field_name='". $this->m_fieldName ."'";
+		$ret = $Campsite['db']->Execute($queryStr);
+	
+	}
+
+	/** 
+	* Return an associative array of the metadata in ArticleFieldMetadata.
+	*
+	**/
+	function getMetadata() {
+		global $Campsite;
+		$queryStr = "SELECT * FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' and field_name='". $this->Field ."'";
+		$queryArray = $Campsite['db']->GetAll($queryStr);
+		return $queryArray;
+	}
 
 } // class ArticleTypeField
 
