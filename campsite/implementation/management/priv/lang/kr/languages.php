@@ -1,0 +1,36 @@
+<?php
+regGS("No language.", "언어 없슴.");
+regGS("Delete language $1", "언어 $1 삭제중");
+regGS("You do not have the right to add languages.", "언어를 추가할 권한이 없습니다.");
+regGS("Please enter the translation for time units.", "시간 단위의 번역을 입력하시오.");
+regGS("Adding new language", "새로운 언어 추가");
+regGS("You do not have the right to delete languages.", "언어를 삭제할 권한이 없습니다. ");
+regGS("Are you sure you want to delete the language $1?", "언어 $1을 확실히 삭제합니까?");
+regGS("Deleting language", "언어 삭제중");
+regGS("The language $1 could not be deleted.", "언어 $1 을 삭제할 수없습니다.");
+regGS("Edit language", "언어 수정");
+regGS("You do not have the right to edit languages.", "언어를 수정할 권한이 없습니다.");
+regGS("Please enter the translation for month names.", "월 이름에 대한 번역을 입력하시오");
+regGS("Please enter the translation for week day names.", "주 이름에 대한 번역을 입력하시오.");
+regGS("January", "1월");
+regGS("February", "2월");
+regGS("March", "3월");
+regGS("April", "4월");
+regGS("May", "5월");
+regGS("June", "6월");
+regGS("July", "7월");
+regGS("August", "8월");
+regGS("September", "9월");
+regGS("October", "10월");
+regGS("November", "11월");
+regGS("December", "12월");
+regGS("Monday", "월요일");
+regGS("Tuesday", "화요일");
+regGS("Wednesday", "수요일");
+regGS("Thursday", "목요일");
+regGS("Friday", "금요일");
+regGS("Saturday", "토요일");
+regGS("Sunday", "일요일");
+regGS("You do not have the right to add new languages.", "새로운 언어를 추가할 권한이 없습니다.");
+regGS("There are $1 issue(s) left.", "$ 1 이슈가 남아 있슴.");
+?>
