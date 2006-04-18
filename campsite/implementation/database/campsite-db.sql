@@ -840,3 +840,17 @@ CREATE TABLE `Users` (
 
 INSERT INTO `Users` (`Id`, `KeyId`, `Name`, `UName`, `Password`, `EMail`, `Reader`, `City`, `StrAddress`, `State`, `CountryCode`, `Phone`, `Fax`, `Contact`, `Phone2`, `Title`, `Gender`, `Age`, `PostalCode`, `Employer`, `EmployerType`, `Position`, `Interests`, `How`, `Languages`, `Improvements`, `Pref1`, `Pref2`, `Pref3`, `Pref4`, `Field1`, `Field2`, `Field3`, `Field4`, `Field5`, `Text1`, `Text2`, `Text3`, `time_updated`, `time_created`) VALUES (1,NULL,'Administrator','admin','b2d716fb2328a246e8285f47b1500ebcb349c187','','N','','','','AD','','','','','Mr.','M','0-17','','','','','','','','','N','N','N','N','','','','','','','','',20060306164323,00000000000000);
 
+--
+-- Table structure for `ArticleTypeMetadata`
+--
+DROP TABLE IF EXISTS `ArticleTypeMetadata`;
+CREATE TABLE `ArticleTypeMetadata` (
+    `type_name` VARCHAR(255) NOT NULL,
+    `field_name` VARCHAR(255),
+    `field_weight` INT,
+    `is_hidden` INT DEFAULT 1,
+    `fk_phrase_id` INT UNSIGNED,
+    `field_type` VARCHAR(255),
+    `field_type_param` VARCHAR(255)
+) TYPE=MyISAM;
+
