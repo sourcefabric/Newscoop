@@ -67,7 +67,7 @@ function HideAll(p_array)
 function ShowAll(p_array)
 {
 	for (i = 0; i < p_array.length; i++) { 
-		document.getElementById(p_array[i]).style.display = "block";
+		document.getElementById(p_array[i]).style.display = "";
 	}
 	return true;
 } 
