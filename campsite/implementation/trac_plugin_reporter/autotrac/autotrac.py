@@ -694,7 +694,10 @@ class AutoTrac(Component):
             SELECT DISTINCT time FROM ticket_change WHERE ticket = %i;"""
             % (tkt_id))
         row = cursor.fetchall()
-        occurrences = len(row) + 1
+        if row = None:
+            occurrences = 0
+        else:
+            occurrences = len(row) + 1
         ticket.values["occurrences"] = int(occurrences)
         
 
