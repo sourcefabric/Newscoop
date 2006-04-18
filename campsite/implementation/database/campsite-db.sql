@@ -2,7 +2,7 @@
 --
 -- Host: localhost    Database: campsite
 -- ------------------------------------------------------
--- Server version	4.0.18
+-- Server version       4.0.18
 
 --
 -- Table structure for table `Aliases`
@@ -460,6 +460,7 @@ INSERT INTO `Languages` VALUES (15,'Russian','ISO_8859-5','Русский','ru',
 INSERT INTO `Languages` VALUES (18,'Swedish','','Svenska','sv','januari','februari','mars','april','maj','juni','juli','augusti','september','oktober','november','december','söndag','måndag','tisdag','onsdag','torsdag','fredag','lördag');
 INSERT INTO `Languages` VALUES (16,'Chinese','UTF-8','中文','zh','一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月','星期','星期','星期','星期','星期','星期','星期');
 INSERT INTO `Languages` VALUES (17,'Arabic','UTF-8','عربي','ar','كانون الثاني','شباط','آذار','نيسان','آيار','حزيران','تموز','آب','أيلول','تشرين أول','تشرين الثاني','كانون أول','الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت');
+INSERT INTO `Languages` VALUES (19,'Korean','','한국어','kr','1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월','일요일','월요일','화요일','수요일','목요일','금요일','토요일');
 
 --
 -- Table structure for table `Log`
