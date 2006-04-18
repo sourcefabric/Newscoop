@@ -27,6 +27,7 @@ class ArticleType {
 	var $m_columnNames = array();
 	var $m_dbTableName;
 	var $m_name;
+	var $m_metadata;
 
 
 	/**
