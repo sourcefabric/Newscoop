@@ -29,7 +29,7 @@ echo camp_html_breadcrumbs($crumbs);
 ?>
 <P>
 <FORM NAME="dialog" METHOD="POST" ACTION="do_rename.php">
-<INPUT TYPE="hidden" VALUE="<?php p($f_name); ?>" NAME="cOldName">
+<INPUT TYPE="hidden" VALUE="<?php p($f_name); ?>" NAME="f_oldName">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 <TR>
 	<TD COLSPAN="6">

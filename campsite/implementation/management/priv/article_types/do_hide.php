@@ -15,7 +15,7 @@ if (!$access) {
 }
 
 
-$articleTypeName = Input::Get('AType'); 
+$articleTypeName = Input::Get('f_article_type'); 
 $status = Input::Get('AStatus');
 $errorMsgs = array();
 

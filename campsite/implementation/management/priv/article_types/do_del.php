@@ -19,7 +19,7 @@ if (!$User->hasPermission('DeleteArticleTypes')) {
 	exit;
 }
 
-$articleTypeName = Input::Get('AType'); 
+$articleTypeName = Input::Get('f_article_type'); 
 $doDelete = true;
 $articlesRemaining = Article::GetNumArticlesOfType($articleTypeName);
 $errorMsgs = array();
