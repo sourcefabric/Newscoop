@@ -4,6 +4,7 @@ load_common_include_files("article_type_fields");
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleType.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Translation.php');
 
 // Check permissions
 list($access, $User) = check_basic_access($_REQUEST);
@@ -13,6 +14,9 @@ if (!$access) {
 }
 
 $articleTypeName = Input::Get('f_article_type');
+// return value is sorted by language
+$allLanguages = Language::GetLanguages();
+
 $articleType =& new ArticleType($articleTypeName);
 $fields = $articleType->getUserDefinedColumns();
 
@@ -24,6 +28,21 @@ $crumbs[] = array(getGS("Article type fields"), "");
 echo camp_html_breadcrumbs($crumbs);
 
 if ($User->hasPermission("ManageArticleTypes")) { ?>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.config.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.core.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.lang-enUS.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.validators.js"></script>	
+<script>
+var field_ids = new Array;
+</script>
+<?php
+for ($i = 0; $i < count($fields); $i++) { ?>
+<script>
+field_ids.push("translate_field_"+<?php p($i); ?>);
+</script>
+<?php } ?>
+
 <P>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons">
 <TR>
@@ -65,7 +84,10 @@ foreach ($fields as $field) {
 		$hideShowText = 'hide';
 		$hideShowImage = "is_shown.png";
 	}
+
 ?>
+
+
 
 <TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 	<TD>
@@ -84,11 +106,11 @@ foreach ($fields as $field) {
 	</TD>
 	
 	<TD>
-		<A HREF="rename.php?f_article_type=<?php print urlencode($articleTypeName); ?>&f_field_name=<?php print $field->getName(); ?>"><?php  print htmlspecialchars($field->getPrintName()); ?></A>&nbsp;
+		<A HREF="rename.php?f_article_type=<?php print urlencode($articleTypeName); ?>&f_field_name=<?php print $field->getPrintName(); ?>"><?php  print htmlspecialchars($field->getPrintName()); ?></A>&nbsp;
 	</TD>
 	
 	<TD>
-		<A HREF="retype.php?f_article_type=<?php print urlencode($articleTypeName); ?>&f_field_name=<?php print $field->getName(); ?>"><?php print htmlspecialchars($field->getPrintType()); ?></A>		
+		<A HREF="retype.php?f_article_type=<?php print urlencode($articleTypeName); ?>&f_field_name=<?php print $field->getPrintName(); ?>"><?php print htmlspecialchars($field->getPrintType()); ?></A>		
 	</TD>
 
 	<TD>
@@ -100,17 +122,90 @@ foreach ($fields as $field) {
 	</td>
 
 	<TD ALIGN="CENTER">
-		<A HREF="/<?php p($ADMIN); ?>/article_types/fields/do_hide.php?f_article_type=<?php print urlencode($articleTypeName); ?>&f_article_type_field_name=<?php  print urlencode($field->getName()); ?>&f_status=<?php print $hideShowText; ?>" onclick="return confirm('<?php putGS('Are you sure you want to $1 the article type field $2?', $hideShowText, $field->getPrintName()); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/<?php echo $hideShowImage; ?>" BORDER="0" ALT="<?php  putGS('$1 article type field $2', ucfirst($hideShowText), $field->getPrintName()); ?>" TITLE="<?php  putGS('$1 article type $2', ucfirst($hideShowText), $field->getPrintName()); ?>" ></A>
+		<A HREF="/<?php p($ADMIN); ?>/article_types/fields/do_hide.php?f_article_type=<?php print urlencode($articleTypeName); ?>&f_field_name=<?php  print urlencode($field->getPrintName()); ?>&f_status=<?php print $hideShowText; ?>" onclick="return confirm('<?php putGS('Are you sure you want to $1 the article type field $2?', $hideShowText, $field->getPrintName()); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/<?php echo $hideShowImage; ?>" BORDER="0" ALT="<?php  putGS('$1 article type field $2', ucfirst($hideShowText), $field->getPrintName()); ?>" TITLE="<?php  putGS('$1 article type $2', ucfirst($hideShowText), $field->getPrintName()); ?>" ></A>
 	</TD>
 
 	<?php  if ($User->hasPermission("ManageArticleTypes")) { ?>
 	<TD ALIGN="CENTER">
-		<A HREF="/<?php p($ADMIN); ?>/article_types/fields/do_del.php?f_article_type=<?php print urlencode($articleTypeName); ?>&f_article_field=<?php print urlencode($field->getName()); ?>" onclick="return confirm('<?php echo getGS('Are you sure you want to delete the field $1?', htmlspecialchars($field->getPrintName())).' '.getGS('You will also delete all fields with this name from all articles of this type from all publications.');  ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php  putGS('Delete field $1', htmlspecialchars($field->getPrintName())); ?>" TITLE="<?php  putGS('Delete field $1', htmlspecialchars($field->getPrintName())); ?>" ></A>
+		<A HREF="/<?php p($ADMIN); ?>/article_types/fields/do_del.php?f_article_type=<?php print urlencode($articleTypeName); ?>&f_field_name=<?php print urlencode($field->getPrintName()); ?>" onclick="return confirm('<?php echo getGS('Are you sure you want to delete the field $1?', htmlspecialchars($field->getPrintName())).' '.getGS('You will also delete all fields with this name from all articles of this type from all publications.');  ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php  putGS('Delete field $1', htmlspecialchars($field->getPrintName())); ?>" TITLE="<?php  putGS('Delete field $1', htmlspecialchars($field->getPrintName())); ?>" ></A>
 	</TD>
-	<?php  
-	$i++;	
-	} ?>
+	<?php } ?>
 </TR>
-<?php  } // foreach  ?>	
+
+
+    <tr id="translate_field_<?php p($i); ?>" style="display: none;"><td colspan="7">
+    	<table>
+
+		<?php
+		$isFirstTranslation = true;
+		$fieldTranslations = $field->getTranslations();
+		foreach ($fieldTranslations as $languageId => $transName) {
+		?>
+		<TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>">
+			<TD <?php if ($isFirstTranslation) { ?>style="border-top: 2px solid #8AACCE;"<?php } ?> valign="middle" align="center">
+				<?php
+				$language =& new Language($languageId);
+				p($language->getCode());
+				?>
+			</TD>
+			<TD <?php if ($isFirstTranslation) { ?>style="border-top: 2px solid #8AACCE;"<?php } ?> valign="middle" align="left" width="450px">
+				<?php
+				echo htmlspecialchars($transName);
+				?>
+			</TD>
+			</tr>
+			<?php
+			$isFirstTranslation = false;
+		}
+		?>
+
+
+
+
+    	<tr>
+    	<td colspan="2">
+    		<FORM method="POST" action="do_translate.php?f_article_type=<?php p($articleTypeName); ?>" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
+    		<input type="hidden" name="f_field_id" value="<?php p($field->getPrintName()); ?>"> 
+    		<table cellpadding="0" cellspacing="0" style="border-top: 1px solid #CFC467; border-bottom: 1px solid #CFC467; background-color: #FFFCDF ; padding-left: 5px; padding-right: 5px;" width="100%">
+    		<tr>
+    			<td align="left">
+    				<table cellpadding="2" cellspacing="1">
+    				<tr>
+		    			<td><?php putGS("Add translation:"); ?></td>
+		    			<td>
+							<SELECT NAME="f_field_language_id" class="input_select" alt="select" emsg="<?php putGS("You must select a language."); ?>">
+							<option value="0"><?php putGS("---Select language---"); ?></option>
+							<?php 
+						 	foreach ($allLanguages as $tmpLanguage) {
+						 		camp_html_select_option($tmpLanguage->getLanguageId(), 
+						 								null, 
+						 								$tmpLanguage->getNativeName());
+					        }
+							?>			
+							</SELECT>
+		    			</td>
+		    			<td><input type="text" name="f_field_translation_name" value="" class="input_text" size="15" alt="blank" emsg="<?php putGS('You must enter a name for the field.'); ?>"></td>
+		    			<td><input type="submit" name="f_submit" value="<?php putGS("Translate"); ?>" class="button"></td>
+		    		</tr>
+		    		</table>
+		    	</td>
+    		</tr>
+    		</table>
+    		</FORM>
+
+    	</td>
+    	</tr>
+    	</table>
+	</td>
+    </tr>
+
+
+
+
+
+<?php  
+$i++; 
+} // foreach  
+?>	
 </TABLE>
 <?php camp_html_copyright_notice(); ?>

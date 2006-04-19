@@ -19,7 +19,7 @@ if (!$User->hasPermission('ManageArticleTypes')) {
 }
 
 $articleTypeName = Input::Get('f_article_type');
-$fieldName = trim(substr(Input::Get('f_article_field_name'), 1));
+$fieldName = trim(Input::Get('f_field_name'));
 $fieldType = trim(Input::Get('f_article_field_type'));
 $rootTopicId = Input::Get('f_root_topic_id', 'int', 0);
 

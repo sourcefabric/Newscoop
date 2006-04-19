@@ -21,7 +21,6 @@ if (!$User->hasPermission('DeleteArticleTypes')) {
 $articleTypeName = Input::Get('f_article_type');
 $oldFieldName = Input::Get('f_old_field_name');
 $newFieldName = Input::Get('f_new_field_name');
-
 $field =& new ArticleTypeField($articleTypeName, $oldFieldName);
 if ($field->exists()) {
 	$field->rename($newFieldName);

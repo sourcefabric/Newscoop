@@ -16,16 +16,13 @@ if (!$access) {
 
 
 $articleTypeName = Input::Get('f_article_type'); 
-$articleTypeFieldName = Input::Get('f_article_type_field_name');
+$articleTypeFieldName = Input::Get('f_field_name');
 $status = Input::Get('f_status');
 $errorMsgs = array();
 
 
 $articleTypeField = new ArticleTypeField($articleTypeName, $articleTypeFieldName);
-if ($status == 'show') 
-	$articleTypeField->show();
-else if ($status == 'hide') 
-	$articleTypeField->hide();
+$articleTypeField->setStatus($status);
 
 
 header("Location: /$ADMIN/article_types/fields/?f_article_type=".urlencode($articleTypeName));

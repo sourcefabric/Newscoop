@@ -20,8 +20,7 @@ if (!$User->hasPermission('ManageArticleTypes')) {
 
 $articleTypeName = Input::Get('f_article_type');
 $articleTypeFieldName = Input::Get('f_field_name');
-$articleField =& new ArticleTypeField($articleTypeName, substr($articleTypeFieldName, 1));
-print $articleField->getPrintType();
+$articleField =& new ArticleTypeField($articleTypeName, $articleTypeFieldName);
 
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
@@ -49,20 +48,20 @@ function UpdateArticleFieldContext() {
 	}
 }
 </script>
-
 <P>
 <FORM NAME="add_field_form" METHOD="POST" ACTION="do_retype.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
-<input type="hidden" name="f_article_field_name" value="<?php print $articleTypeFieldName; ?>">
+<input type="hidden" name="f_field_name" value="<?php print $articleTypeFieldName; ?>">
 <input type="hidden" name="is_topic" id="is_topic" value="false">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Type"); ?>:</TD>
 	<TD>
 	<SELECT NAME="f_article_field_type" class="input_select" onchange="UpdateArticleFieldContext()">
-		<OPTION VALUE="text"><?php  putGS('Text'); ?>
-		<OPTION VALUE="date"><?php  putGS('Date'); ?>
-		<OPTION VALUE="body"><?php  putGS('Article body'); ?>
-		<OPTION VALUE="topic"><?php  putGS('Topic'); ?>
+		<OPTION VALUE="text" <?php if ($articleField->getPrintType() == 'Text') print "SELECTED"; ?>><?php  putGS('Text'); ?>
+		<OPTION VALUE="date" <?php if ($articleField->getPrintType() == 'Date') print "SELECTED"; ?>><?php  putGS('Date'); ?>
+		<OPTION VALUE="body" <?php if ($articleField->getPrintType() == 'Article body') print "SELECTED"; ?>><?php  putGS('Article body'); ?>
+		<!-- TODO: Type Topic tests need to happen. -->
+		<OPTION VALUE="topic" <?php if ($articleField->getPrintType() == 'unknown') print "SELECTED"; ?>><?php  putGS('Topic'); ?>
 	</SELECT>
 	</TD>
 </TR>
