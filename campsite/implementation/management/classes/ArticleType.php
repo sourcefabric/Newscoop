@@ -172,7 +172,7 @@ class ArticleType {
 		}
 	} // fn getName
 	
-	
+
 	/**
 	 * Set the type name for the given language.  A new entry in 
 	 * the database will be created if the language does not exist.
@@ -192,7 +192,7 @@ class ArticleType {
 		
 		// if the string is empty, nuke it		
 		if (!is_string($p_value)) {
-			$phase_id = $this->m_metadata['fk_phrase_id'];
+			$phrase_id = $this->m_metadata['fk_phrase_id'];
 			$trans =& new Translation($p_languageId, $phrase_id);
 			$trans->delete();
 			$sql = "DELETE FROM ArticleTypeMetadata WHERE type_name=". $this->m_dbTableName ." AND fk_phrase_id=". $phrase_id;
@@ -208,7 +208,7 @@ class ArticleType {
 			//$sql = "UPDATE ArticleTypeMetadata SET type_name='".$this->m_dbTableName."' "
 			//		." WHERE type_name=".$this->m_dbTableName
 			//		." AND fk_phrase_id=".$phrase_id;
-			//$changed = $Campsite['db']->Execute($sql);
+			$changed = $Campsite['db']->Execute($sql);
 			$changed = true;
 		} else {
 			// Insert the new translation.
