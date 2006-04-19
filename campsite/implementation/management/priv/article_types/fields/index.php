@@ -94,12 +94,12 @@ foreach ($fields as $field) {
 		<TABLE><TR>
 		<TD>
 		<DIV STYLE="width: 15px;">
-			<?php if (count($fields) > 1 && $i < count($fields) - 1) { ?><IMG SRC="<?php echo $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/down_arrow.png"><?php } else { ?>&nbsp;<?php } ?>
+			<?php if (count($fields) > 1 && $i < count($fields) - 1) { ?><A HREF="do_reorder.php?f_article_type=<?php print urlencode($articleTypeName); ?>&f_field_name=<?php print $field->getPrintName(); ?>&f_move=down"><IMG BORDER="0" SRC="<?php echo $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/down_arrow.png"></A><?php } else { ?>&nbsp;<?php } ?>
 		</DIV>
 		</TD>
 		<TD>
 		<DIV STYLE="width: 15px;">
-			<?php if (count($fields) > 1 && $i != 0) { ?><IMG SRC="<?php echo $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/up_arrow.png"><?php } else { ?>&nbsp;<?php } ?>
+			<?php if (count($fields) > 1 && $i != 0) { ?><A HREF="do_reorder.php?f_article_type=<?php print urlencode($articleTypeName); ?>&f_field_name=<?php print $field->getPrintName(); ?>&f_move=up"><IMG BORDER="0" SRC="<?php echo $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/up_arrow.png"></A><?php } else { ?>&nbsp;<?php } ?>
 		</DIV>
 		</TD>
 		</TR></TABLE>
