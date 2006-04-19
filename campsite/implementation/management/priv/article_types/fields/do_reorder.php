@@ -1,0 +1,71 @@
+<?php
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/common.php');
+load_common_include_files("article_types");
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleType.php');
+
+// Check permissions
+list($access, $User) = check_basic_access($_REQUEST);
+if (!$access) {
+	header("Location: /$ADMIN/logout.php");
+	exit;
+}
+
+
+$articleTypeName = Input::Get('f_article_type'); 
+$articleTypeFieldName = Input::Get('f_field_name');
+$move = Input::Get('f_move');
+$errorMsgs = array();
+
+
+$articleTypeField = new ArticleTypeField($articleTypeName, $articleTypeFieldName);
+$articleTypeField->reorder($move);
+
+
+header("Location: /$ADMIN/article_types/fields/?f_article_type=".urlencode($articleTypeName));
+exit;
+
+
+$crumbs = array();
+$crumbs[] = array(getGS("Configure"), "");
+$crumbs[] = array(getGS("Article Types"), "/$ADMIN/article_types/");
+$crumbs[] = array(getGS("Reorder article type field $1", $articleTypeFieldName), "");
+
+echo camp_html_breadcrumbs($crumbs);
+
+
+?>
+<P>
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">
+<TR>
+	<TD COLSPAN="2">
+		<B> <?php  putGS("Reorder article type field $1", $articleTypeFieldName); ?> </B>
+		<HR NOSHADE SIZE="1" COLOR="BLACK">
+	</TD>
+</TR>
+<TR>
+	<TD COLSPAN="2">
+		<BLOCKQUOTE>
+		<?PHP
+		foreach ($errorMsgs as $errorMsg) { ?>
+			<li><?php p($errorMsg); ?></li>
+			<?PHP
+		}
+		?>
+		</BLOCKQUOTE>
+	</TD>
+</TR>
+<TR>
+	<TD COLSPAN="2">
+	<DIV ALIGN="CENTER">
+	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/article_types/'">
+	</DIV>
+	</TD>
+</TR>
+</TABLE>
+<P>
+
+<?php camp_html_copyright_notice(); ?>
