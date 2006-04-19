@@ -67,7 +67,6 @@ class ArticleType {
 			$queryStr = "INSERT INTO ArticleTypeMetadata"
 						."(type_name, is_hidden) "
 						."VALUES ('".$this->m_dbTableName."', 0)";
-			print $queryStr;
 			$success2 = $Campsite['db']->Execute($queryStr);			
 		} else {
 			return $success;
@@ -349,7 +348,6 @@ class ArticleType {
 		if ($p_status == 'show')
 			$set = "is_hidden=0";
 		$queryStr = "UPDATE ArticleTypeMetadata SET $set WHERE type_name='". $this->getTableName() ."'";
-		print $queryStr;
 		$ret = $Campsite['db']->Execute($queryStr);
 	}
 
