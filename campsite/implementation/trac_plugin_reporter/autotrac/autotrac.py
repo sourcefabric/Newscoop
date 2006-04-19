@@ -673,8 +673,9 @@ class AutoTrac(Component):
 
         # Add the possible actions to hdf
         actions = self.get_available_ticket_actions(ticket, req.perm)
-        for action in actions:
-            req.hdf['ticket.actions.' + action] = '1'
+	if not actions == None:
+	    for action in actions:
+                req.hdf['ticket.actions.' + action] = '1'
 
     def insert_autotrac_ticket_data_to_hdf (self, ticket, db=None):
         pass
