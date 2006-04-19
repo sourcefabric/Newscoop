@@ -65,8 +65,8 @@ class ArticleType {
 
 		if ($success) {
 			$queryStr = "INSERT INTO ArticleTypeMetadata"
-						."(type_name) "
-						."VALUES ('".$this->m_dbTableName."')";
+						."(type_name, is_hidden) "
+						."VALUES ('".$this->m_dbTableName."', 0)";
 			print $queryStr;
 			$success2 = $Campsite['db']->Execute($queryStr);			
 		} else {
@@ -277,17 +277,22 @@ class ArticleType {
 	function getUserDefinedColumns()
 	{
 		global $Campsite;
-		$queryStr = 'SHOW COLUMNS FROM '.$this->m_dbTableName
-					." LIKE 'F%'";
+		#$queryStr = 'SHOW COLUMNS FROM '.$this->m_dbTableName
+		#			." LIKE 'F%'";
+		$queryStr = "SELECT * FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' AND field_name IS NOT NULL ORDER BY field_weight DESC";
 		$queryArray = $Campsite['db']->GetAll($queryStr);
 		$metadata = array();
 		if (is_array($queryArray)) {
 			foreach ($queryArray as $row) {
+				$queryStr = "SHOW COLUMNS FROM ". $this->m_dbTableName ." LIKE '". $row['field_name'] ."'";
+				$rowdata = $Campsite['db']->GetAll($queryStr);
 				$columnMetadata =& new ArticleTypeField($this->m_name);
-				$columnMetadata->fetch($row);
+				$columnMetadata->fetch($rowdata[0]);
+				$columnMetadata->m_metadata = $columnMetadata->getMetadata();
 				$metadata[] =& $columnMetadata;
 			}
 		}
+		
 		return $metadata;
 	} // fn getUserDefinedColumns
 
@@ -337,24 +342,36 @@ class ArticleType {
 	/**
 	 * sets the is_hidden variable
 	 */
-	function hide() {
+	function setStatus($p_status) {
 		global $Campsite;
-		$queryStr = "UPDATE ArticleTypeMetadata SET is_hidden=1 WHERE type_name='". $this->getTableName() ."'";
+		if ($p_status == 'hide') 
+			$set = "is_hidden=1";
+		if ($p_status == 'show')
+			$set = "is_hidden=0";
+		$queryStr = "UPDATE ArticleTypeMetadata SET $set WHERE type_name='". $this->getTableName() ."'";
 		print $queryStr;
 		$ret = $Campsite['db']->Execute($queryStr);
 	}
 
 	/**
 	*
-	* sets the is_hidden varaible
-	*/
-	function show() {
-		global $Campsite;
-		$queryStr = "UPDATE ArticleTypeMetadata SET is_hidden=0 WHERE type_name='". $this->getTableName() ."'";
-		print $queryStr;
-		$ret = $Campsite['db']->Execute($queryStr);
+	* gets the display name of a type; this is based on the native language -- and if no native language translation is available
+	* we use dbTableName
+	*
+	**/
+	function getDisplayName() {
+		global $_REQUEST;
+		$loginLanguageId = 0;
+		$loginLanguage = Language::GetLanguages(null, $_REQUEST['TOL_Language']);
+		if (is_array($loginLanguage)) {
+			$loginLanguage = array_pop($loginLanguage);
+			$loginLanguageId = $loginLanguage->getLanguageId();
+		}
+		$translations = $this->getTranslations();
+		if (!isset($translations[$loginLanguageId])) return substr($this->getTableName(), 1);
+		else return $translations[$loginLanguageId] .' ('. $loginLanguage->getCode() .')';		
 	}
-
+	
 } // class ArticleType
 
 ?>
