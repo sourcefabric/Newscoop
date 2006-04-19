@@ -108,7 +108,7 @@ foreach ($articleTypes as $articleType) {
 	</TD>
 	
 	<TD>
-		<?php  print htmlspecialchars($articleType); ?>&nbsp;
+		<?php  print $currentArticleType->getDisplayName(); ?>&nbsp;
 	</TD>
 	
 	<td> 
@@ -162,7 +162,7 @@ foreach ($articleTypes as $articleType) {
 
     	<tr>
     	<td colspan="2">
-    		<FORM method="POST" action="do_translate.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
+    		<FORM method="POST" action="do_translate.php">
     		<input type="hidden" name="f_type_id" value="<?php p($articleType); ?>"> 
     		<table cellpadding="0" cellspacing="0" style="border-top: 1px solid #CFC467; border-bottom: 1px solid #CFC467; background-color: #FFFCDF ; padding-left: 5px; padding-right: 5px;" width="100%">
     		<tr>

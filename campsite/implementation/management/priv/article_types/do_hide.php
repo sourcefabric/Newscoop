@@ -21,10 +21,7 @@ $errorMsgs = array();
 
 
 $articleType = new ArticleType($articleTypeName);
-if ($status == 'show') 
-	$articleType->show();
-else if ($status == 'hide') 
-	$articleType->hide();
+$articleType->setStatus($status);
 
 
 header("Location: /$ADMIN/article_types/");

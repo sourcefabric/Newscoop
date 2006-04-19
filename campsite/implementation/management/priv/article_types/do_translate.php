@@ -29,10 +29,7 @@ $created = false;
 //$Path = camp_topic_path($topicParent, $f_topic_language_id);
 
 $errorMsgs = array();
-if (empty($f_type_translation_name)) {
-	$correct = false; 
-	$errorMsgs[] = getGS('You must fill in the $1 field.','<B>'.getGS('Name').'</B>'); 
-}
+
 if ($f_type_language_id <= 0) {
 	$correct = false; 
 	$errorMsgs[] = getGS('You must choose a language for the topic.'); 
@@ -47,8 +44,6 @@ if ($correct) {
 	$type =& new ArticleType($f_type_id);
 	$created = $type->setName($f_type_language_id, $f_type_translation_name);
 	if ($created) {
-		//$foo = $type->getTranslations();
-//		print_r($foo);
 		header("Location: /$ADMIN/article_types/index.php");
 		exit;
 	}
