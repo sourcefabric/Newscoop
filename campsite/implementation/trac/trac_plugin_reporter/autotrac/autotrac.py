@@ -438,9 +438,9 @@ class AutoTrac(Component):
     # @param ConnectionWrapper db      The database connection
     def get_ticket_id (self, errorId, db=None):
 
-        # --- BE CAUTIOUS & return if errorId's value seems
-        # suspicious: potentially the ENTIRE TICKET TABLE could be
-        # DELETED by this function.  ---
+        # --- Be cautious & return if errorId's value seems
+        # suspicious: this function erases data, you don't want to do
+        # that unless you're confident. ---
         if not (self.is_valid_error_id (errorId)):
             return None
 
@@ -468,22 +468,11 @@ class AutoTrac(Component):
             row = rowArray[0]
             ticketId = row[0]
 
-            # --- This is a dangerous line, and if used incautiously
-            #     the entire ticket table could be deleted. ---
+            # --- Use the following DELETE line with care ---
             cursor.execute ("""
                 DELETE FROM ticket_custom WHERE NAME =
                 "error_id" AND VALUE = "%s" AND
                 TICKET > %i;""" % (errorId, ticketId))
-
-            cursor.execute ("""
-                DELETE FROM ticket_change WHERE NAME =
-                "error_id" AND VALUE = "%s" AND
-                TICKET > %i;""" % (errorId, ticketId))
-
-            cursor.execute ("""
-                DELETE FROM ticket WHERE NAME =
-                "error_id" AND VALUE = "%s" AND
-                ID > %i;""" % (errorId, ticketId))
 
             return ticketId
         
@@ -831,10 +820,6 @@ class AutoTrac(Component):
         return text
 
     ## Confirm that the 'errorId' is valid
-    #
-    #  Note: it's VERY IMPORTANT that this function reports False on
-    #  blank errorId's.  If it were to do otherwise, the ENTIRE TICKET
-    #  TABLE could be deleted.
     #
     # @param str errorId  The error ID string
     # @return True if valid, otherwise False 
