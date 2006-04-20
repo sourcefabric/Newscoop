@@ -433,7 +433,7 @@ class AutoTrac(Component):
         # --- BE CAUTIOUS & return if errorId's value seems
         # suspicious: potentially the ENTIRE TICKET TABLE could be
         # DELETED by this function.  ---
-        if not (is_valid_error_id (errorId)):
+        if not (self.is_valid_error_id (errorId)):
             return None
 
         if not db:
@@ -448,7 +448,7 @@ class AutoTrac(Component):
         ticket;""" % errorId)
 
         rows = cursor.rowcount 
-        if rows == 0:
+        if rows == 0 or rows == -1:
             return None
         elif rows == 1:
             row = cursor.fetchone()
