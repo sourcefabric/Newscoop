@@ -116,15 +116,14 @@ class AutoTrac(Component):
 
         # --- SQL based on Report #3 ---
         sql = """
-        SELECT p.value AS __color__,
+        SELECT
            status AS __group__,
-           id AS ticket, summary, component, version, t.type AS type, 
+           id AS ticket, summary, component, version, t.type AS type,
            time AS created,
            changetime AS _changetime, description AS _description,
            reporter AS _reporter
-          FROM ticket t, enum p
-          WHERE status IN ('inbox', 'postponed') 
-        AND p.name = t.priority AND p.type = 'priority'
+          FROM ticket t
+          WHERE status IN ('inbox', 'postponed')
           ORDER BY status, id
         """
         if req.args.get('format') == 'sql':
@@ -456,7 +455,10 @@ class AutoTrac(Component):
         ticket;""" % errorId)
 
         rowArray = cursor.fetchall()
-        rows = len(rowArray) 
+	if rowArray != None:
+            rows = len(rowArray) 
+	else:
+            rows = 0
 
         if rows == 0:
             return None
