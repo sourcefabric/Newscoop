@@ -29,6 +29,7 @@ class AutoTrac(Component):
         # --- Define the permission that is required for users to act
         # on inbox-tickets (eg accept) ---
         self.actionPermission = 'TICKET_CREATE'
+        self.debug = ""
 
     # --- INavigationContributor methods ---
 
@@ -65,7 +66,7 @@ class AutoTrac(Component):
             self.reply_to_ping(req)
 
         elif re.compile ("^/autotrac/newreport/?$").match(req.path_info,0)\
-        and req.method == "POST":
+        :# and req.method == "POST":
             self.bug_reporters_post(req)
 
         # --- User commands ---
@@ -339,6 +340,12 @@ class AutoTrac(Component):
 
         self.print_http_header (req)
 
+#         # Debug:
+#         if (req.method == "GET"):
+#             errorId = "1:xxx:yyy:zzz:2"
+
+#         else:
+
         errorId = req.args.get('f_id')
         if (errorId == None) or (not self.is_valid_error_id(errorId)):
             req.write ('error: Bad or missing error ID\n')
@@ -396,6 +403,7 @@ class AutoTrac(Component):
         req.write ('accepted\n')
         req.write ('version: ' + version + '\n')
         req.write ('software: ' + software + '\n')
+        req.write ('misc:' + str(self.debug) + '\n')
 
     ## Add BugReporter's feedback to the database
     #
@@ -448,6 +456,7 @@ class AutoTrac(Component):
         ticket;""" % errorId)
 
         rows = cursor.rowcount 
+
         if rows == 0 or rows == -1:
             return None
         elif rows == 1:
@@ -565,7 +574,7 @@ class AutoTrac(Component):
         ticket = Ticket(self.env, ticketId, db=db)
         reporter_id = req.args.get('author')
 
-#         req.hdf['ticket.debug'] = ", ".join (req.perm.perms.keys())
+        req.hdf['ticket.debug'] = self.debug
 
         if req.method == 'POST':
             if not req.args.has_key('preview'):
