@@ -455,16 +455,17 @@ class AutoTrac(Component):
         value="%s" order by
         ticket;""" % errorId)
 
-        rows = cursor.rowcount 
+        rowArray = cursor.fetchall()
+        rows = len(rowArray) + (1)
 
-        if rows == 0 or rows == -1:
+        if rows == 0:
             return None
         elif rows == 1:
-            row = cursor.fetchone()
+            row = rowArray[0]
             ticketId = row[0]
             return ticketId
         else:
-            row = cursor.fetchone()
+            row = rowArray[0]
             ticketId = row[0]
 
             # --- This is a dangerous line, and if used incautiously
