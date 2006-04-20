@@ -456,7 +456,7 @@ class AutoTrac(Component):
         ticket;""" % errorId)
 
         rowArray = cursor.fetchall()
-        rows = len(rowArray) + (1)
+        rows = len(rowArray) 
 
         if rows == 0:
             return None
@@ -474,6 +474,16 @@ class AutoTrac(Component):
                 DELETE FROM ticket_custom WHERE NAME =
                 "error_id" AND VALUE = "%s" AND
                 TICKET > %i;""" % (errorId, ticketId))
+
+            cursor.execute ("""
+                DELETE FROM ticket_change WHERE NAME =
+                "error_id" AND VALUE = "%s" AND
+                TICKET > %i;""" % (errorId, ticketId))
+
+            cursor.execute ("""
+                DELETE FROM ticket WHERE NAME =
+                "error_id" AND VALUE = "%s" AND
+                ID > %i;""" % (errorId, ticketId))
 
             return ticketId
         
