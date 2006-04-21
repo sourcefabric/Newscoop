@@ -66,7 +66,7 @@ class AutoTrac(Component):
             self.reply_to_ping(req)
 
         elif re.compile ("^/autotrac/newreport/?$").match(req.path_info,0)\
-        :# and req.method == "POST":
+        and req.method == "POST":
             self.bug_reporters_post(req)
 
         # --- User commands ---
