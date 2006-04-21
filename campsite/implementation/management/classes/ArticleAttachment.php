@@ -6,8 +6,8 @@
 /**
  * Includes
  */
-// We indirectly reference the DOCUMENT_ROOT so we can enable 
-// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT'] 
+// We indirectly reference the DOCUMENT_ROOT so we can enable
+// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT']
 // is not defined in these cases.
 if (!isset($g_documentRoot)) {
     $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
@@ -23,7 +23,7 @@ class ArticleAttachment extends DatabaseObject {
 	var $m_keyColumnNames = array('fk_article_number', 'fk_attachment_id');
 	var $m_dbTableName = 'ArticleAttachments';
 	var $m_columnNames = array('fk_article_number', 'fk_attachment_id');
-	
+
 	/**
 	 * The article attachment table links together articles with Attachments.
 	 *
@@ -31,8 +31,8 @@ class ArticleAttachment extends DatabaseObject {
 	 * @param int $p_attachmentId
 	 * @return ArticleAttachment
 	 */
-	function ArticleAttachment($p_articleNumber = null, $p_attachmentId = null) 
-	{ 
+	function ArticleAttachment($p_articleNumber = null, $p_attachmentId = null)
+	{
 		if (is_numeric($p_articleNumber)) {
 			$this->m_data['fk_article_number'] = $p_articleNumber;
 		}
@@ -40,55 +40,55 @@ class ArticleAttachment extends DatabaseObject {
 			$this->m_data['fk_attachment_id'] = $p_attachmentId;
 		}
 	} // constructor
-	
+
 
 	/**
 	 * @return int
 	 */
-	function getAttachmentId() 
+	function getAttachmentId()
 	{
 		return $this->getProperty('fk_attachment_id');
 	} // fn getAttachmentId
-	
-	
+
+
 	/**
 	 * @return int
 	 */
-	function getArticleNumber() 
+	function getArticleNumber()
 	{
 		return $this->getProperty('fk_article_number');
 	} // fn getArticleNumber
 
 
 	/**
-	 * Link the given file with the given article.  
+	 * Link the given file with the given article.
 	 *
 	 * @param int $p_attachmentId
 	 * @param int $p_articleNumber
 	 *
 	 * @return void
 	 */
-	function AddFileToArticle($p_attachmentId, $p_articleNumber) 
+	function AddFileToArticle($p_attachmentId, $p_articleNumber)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$queryStr = 'INSERT IGNORE INTO ArticleAttachments(fk_article_number, fk_attachment_id)'
 					.' VALUES('.$p_articleNumber.', '.$p_attachmentId.')';
-		$Campsite['db']->Execute($queryStr);
+		$g_ado_db->Execute($queryStr);
 	} // fn AddFileToArticle
 
-	
+
 	/**
 	 * Get all the attachments that belong to this article.
 	 * @param int $p_articleNumber
 	 * @param int $p_languageId
 	 * @return array
 	 */
-	function GetAttachmentsByArticleNumber($p_articleNumber, $p_languageId = null) 
+	function GetAttachmentsByArticleNumber($p_articleNumber, $p_languageId = null)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$tmpObj =& new Attachment();
 		$columnNames = implode(',', $tmpObj->getColumnNames());
-		
+
 		if (is_null($p_languageId)) {
 			$langConstraint = "FALSE";
 		} else {
@@ -100,7 +100,7 @@ class ArticleAttachment extends DatabaseObject {
 					.' AND ArticleAttachments.fk_attachment_id=Attachments.id'
 					." AND (Attachments.fk_language_id IS NULL OR $langConstraint)"
 					.' ORDER BY Attachments.time_created';
-		$rows = $Campsite['db']->GetAll($queryStr);
+		$rows = $g_ado_db->GetAll($queryStr);
 		$returnArray = array();
 		if (is_array($rows)) {
 			foreach ($rows as $row) {
@@ -111,7 +111,7 @@ class ArticleAttachment extends DatabaseObject {
 		}
 		return $returnArray;
 	} // fn GetAttachmentsByArticleNumber
-	
+
 
 	/**
 	 * This is called when an attachment is deleted.
@@ -120,27 +120,27 @@ class ArticleAttachment extends DatabaseObject {
 	 * @param int $p_attachmentId
 	 * @return void
 	 */
-	function OnAttachmentDelete($p_attachmentId) 
+	function OnAttachmentDelete($p_attachmentId)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$queryStr = "DELETE FROM ArticleAttachments WHERE fk_attachment_id=$p_attachmentId";
-		$Campsite['db']->Execute($queryStr);
+		$g_ado_db->Execute($queryStr);
 	} // fn OnAttachmentDelete
-	
-		
+
+
 	/**
 	 * Remove attachment pointers for the given article.
 	 * @param int $p_articleNumber
 	 * @return void
 	 */
-	function OnArticleDelete($p_articleNumber) 
+	function OnArticleDelete($p_articleNumber)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$queryStr = 'DELETE FROM ArticleAttachments'
 					." WHERE fk_article_number='".$p_articleNumber."'";
-		$Campsite['db']->Execute($queryStr);		
+		$g_ado_db->Execute($queryStr);
 	} // fn OnArticleDelete
-	
+
 
 	/**
 	 * Copy all the pointers for the given article.
@@ -148,18 +148,18 @@ class ArticleAttachment extends DatabaseObject {
 	 * @param int $p_destArticleNumber
 	 * @return void
 	 */
-	function OnArticleCopy($p_srcArticleNumber, $p_destArticleNumber) 
+	function OnArticleCopy($p_srcArticleNumber, $p_destArticleNumber)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$queryStr = 'SELECT fk_attachment_id FROM ArticleAttachments WHERE fk_article_number='.$p_srcArticleNumber;
-		$rows = $Campsite['db']->GetAll($queryStr);
+		$rows = $g_ado_db->GetAll($queryStr);
 		foreach ($rows as $row) {
 			$queryStr = 'INSERT IGNORE INTO ArticleAttachments(fk_article_number, fk_attachment_id)'
 						." VALUES($p_destArticleNumber, ".$row['fk_attachment_id'].")";
-			$Campsite['db']->Execute($queryStr);
+			$g_ado_db->Execute($queryStr);
 		}
 	} // fn OnArticleCopy
-	
+
 
 	/**
 	 * Remove the linkage between the given attachment and the given article.
@@ -169,14 +169,14 @@ class ArticleAttachment extends DatabaseObject {
 	 *
 	 * @return void
 	 */
-	function RemoveAttachmentFromArticle($p_attachmentId, $p_articleNumber) 
+	function RemoveAttachmentFromArticle($p_attachmentId, $p_articleNumber)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$queryStr = 'DELETE FROM ArticleAttachments'
 					.' WHERE fk_article_number='.$p_articleNumber
 					.' AND fk_attachment_id='.$p_attachmentId
 					.' LIMIT 1';
-		$Campsite['db']->Execute($queryStr);
+		$g_ado_db->Execute($queryStr);
 	} // fn RemoveAttachmentFromArticle
 
 } // class ArticleAttachment

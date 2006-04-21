@@ -21,44 +21,44 @@ if (!$User->hasPermission('DeleteLanguages')) {
 $Language = Input::Get('Language', 'int');
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
-	exit;    
+	exit;
 }
 
 $languageObj =& new Language($Language);
 if (!$languageObj->exists()) {
 	header("Location: /$ADMIN/logout.php");
-	exit;    
+	exit;
 }
 
 $doDelete = true;
 
-$numPublications = $Campsite['db']->GetOne("SELECT COUNT(*) FROM Publications WHERE IdDefaultLanguage=$Language");
+$numPublications = $g_ado_db->GetOne("SELECT COUNT(*) FROM Publications WHERE IdDefaultLanguage=$Language");
 if ($numPublications > 0) {
-	$doDelete = false; 
-	$msg[] = getGS('There are $1 publication(s) left.', $numPublications); 
-} 
-    
-$numIssues = $Campsite['db']->GetOne("SELECT COUNT(*) FROM Issues WHERE IdLanguage=$Language");
-if ($numIssues > 0) {
-    $doDelete = false; 
-    $msg[] = getGS('There are $1 issue(s) left.', $numIssues); 
-} 
-    
-$numSections = $Campsite['db']->GetOne("SELECT COUNT(*) FROM Sections WHERE IdLanguage=$Language");
-if ($numSections > 0) {
-    $doDelete = false; 
-    $msg[] = getGS('There are $1 section(s) left.', $numSections); 
-} 
+	$doDelete = false;
+	$msg[] = getGS('There are $1 publication(s) left.', $numPublications);
+}
 
-$numArticles = $Campsite['db']->GetOne("SELECT COUNT(*) FROM Articles WHERE IdLanguage=$Language");
+$numIssues = $g_ado_db->GetOne("SELECT COUNT(*) FROM Issues WHERE IdLanguage=$Language");
+if ($numIssues > 0) {
+    $doDelete = false;
+    $msg[] = getGS('There are $1 issue(s) left.', $numIssues);
+}
+
+$numSections = $g_ado_db->GetOne("SELECT COUNT(*) FROM Sections WHERE IdLanguage=$Language");
+if ($numSections > 0) {
+    $doDelete = false;
+    $msg[] = getGS('There are $1 section(s) left.', $numSections);
+}
+
+$numArticles = $g_ado_db->GetOne("SELECT COUNT(*) FROM Articles WHERE IdLanguage=$Language");
 if ($numArticles > 0) {
-    $doDelete = false; 
-    $msg[] = getGS('There are $1 article(s) left.', $numArticles); 
-} 
-    
-$numCountries = $Campsite['db']->GetOne("SELECT COUNT(*) FROM Countries WHERE IdLanguage=$Language");
+    $doDelete = false;
+    $msg[] = getGS('There are $1 article(s) left.', $numArticles);
+}
+
+$numCountries = $g_ado_db->GetOne("SELECT COUNT(*) FROM Countries WHERE IdLanguage=$Language");
 if ($numCountries > 0) {
-    $doDelete = false; 
+    $doDelete = false;
     $msg[] = getGS('There are $1 countries left.', $numCountries);
 }
 
@@ -86,7 +86,7 @@ echo camp_html_breadcrumbs($crumbs);
 <TR>
 	<TD COLSPAN="2">
 	   <BLOCKQUOTE>
-        <?php  
+        <?php
         foreach ($msg as $error) { ?>
             <LI><?php p($error); ?></LI>
             <?php
@@ -98,7 +98,7 @@ echo camp_html_breadcrumbs($crumbs);
 </TR>
 <TR>
 	<TD COLSPAN="2">
-    	<DIV ALIGN="CENTER">        
+    	<DIV ALIGN="CENTER">
         	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/languages/'">
     	</DIV>
 	</TD>

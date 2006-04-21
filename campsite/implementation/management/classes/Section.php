@@ -349,7 +349,7 @@ class Section extends DatabaseObject {
 	 */
 	function GetUniqueSections($p_publicationId, $p_byLanguage = false)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$queryStr = "SELECT Number as id, s.Name as name, s.IdLanguage, l.Name as LangName "
 					." FROM Sections AS s LEFT JOIN Languages AS l ON s.IdLanguage = l.Id"
 					." WHERE s.IdPublication = $p_publicationId"
@@ -357,7 +357,7 @@ class Section extends DatabaseObject {
 		if ($p_byLanguage) {
 			$queryStr .= ", s.IdLanguage";
 		}
-		return $Campsite['db']->GetAll($queryStr);
+		return $g_ado_db->GetAll($queryStr);
 	} // fn GetSectionNames
 
 
@@ -370,7 +370,7 @@ class Section extends DatabaseObject {
 	 */
 	function GetTotalSections($p_publicationId = null, $p_issueNumber = null, $p_languageId = null)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$queryStr = 'SELECT COUNT(*) FROM Sections';
 		$whereClause = array();
 		if (!is_null($p_publicationId)) {
@@ -385,20 +385,20 @@ class Section extends DatabaseObject {
 		if (count($whereClause) > 0) {
 			$queryStr .= ' WHERE '.implode(' AND ', $whereClause);
 		}
-		$total = $Campsite['db']->GetOne($queryStr);
+		$total = $g_ado_db->GetOne($queryStr);
 		return $total;
 	} // fn GetTotalSections
 
 
 	function GetNumUniqueSections($p_publicationId, $p_byLanguage = true)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$queryStr = "SELECT * FROM Sections WHERE IdPublication = $p_publicationId"
 			." GROUP BY Number";
 		if ($p_byLanguage) {
 			$queryStr .= ', IdLanguage';
 		}
-		$result = $Campsite['db']->Execute($queryStr);
+		$result = $g_ado_db->Execute($queryStr);
 		return $result->RowCount();
 	}
 
@@ -412,11 +412,11 @@ class Section extends DatabaseObject {
 	 */
 	function GetUnusedSectionNumber($p_publicationId, $p_issueNumber, $p_languageId)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$queryStr = "SELECT MAX(Number) + 1 FROM Sections "
 					." WHERE IdPublication=$p_publicationId "
 					." AND NrIssue=$p_issueNumber AND IdLanguage=$p_languageId";
-		$number = 0 + $Campsite['db']->GetOne($queryStr);
+		$number = 0 + $g_ado_db->GetOne($queryStr);
 		if ($number <= 0) {
 			$number++;
 		}

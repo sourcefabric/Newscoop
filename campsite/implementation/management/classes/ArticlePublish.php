@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * @package Campsite
  */
@@ -6,8 +6,8 @@
 /**
  * Includes
  */
-// We indirectly reference the DOCUMENT_ROOT so we can enable 
-// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT'] 
+// We indirectly reference the DOCUMENT_ROOT so we can enable
+// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT']
 // is not defined in these cases.
 if (!isset($g_documentRoot)) {
     $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
@@ -24,21 +24,21 @@ class ArticlePublish extends DatabaseObject {
 	var $m_keyColumnNames = array('id');
 	var $m_dbTableName = 'ArticlePublish';
 	var $m_keyIsAutoIncrement = true;
-	var $m_columnNames = array('id', 
-							   'fk_article_number', 
-							   'fk_language_id', 
-							   'time_action', 
-							   'publish_action', 
-							   'publish_on_front_page', 
-							   'publish_on_section_page', 
+	var $m_columnNames = array('id',
+							   'fk_article_number',
+							   'fk_language_id',
+							   'time_action',
+							   'publish_action',
+							   'publish_on_front_page',
+							   'publish_on_section_page',
 							   'is_completed');
-	
+
 	/**
 	 * This table delays an article's publish time to a later date.
 	 *
 	 * @param int $p_id
 	 */
-	function ArticlePublish($p_id = null) 
+	function ArticlePublish($p_id = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
 		$this->m_data['id'] = $p_id;
@@ -46,7 +46,7 @@ class ArticlePublish extends DatabaseObject {
 			$this->fetch();
 		}
 	} // constructor
-	
+
 
 	/**
 	 * Get the unique ID that identifies this action.
@@ -56,18 +56,18 @@ class ArticlePublish extends DatabaseObject {
 	{
 		return $this->getProperty('id');
 	} // fn getArticlePublishId
-	
-	
+
+
 	/**
 	 * Return the article number associated with this action.
 	 * @return int
 	 */
-	function getArticleNumber() 
+	function getArticleNumber()
 	{
 	    return $this->getProperty('fk_article_number');
 	} // fn getArticleNumber
-	
-	
+
+
 	/**
 	 * Set the Article number.
 	 * @param int $p_value
@@ -77,18 +77,18 @@ class ArticlePublish extends DatabaseObject {
 	{
 		return $this->setProperty('fk_article_number', $p_value);
 	} // fn setArticleNumber
-	
-	
+
+
 	/**
 	 * Return the language ID of the article.
 	 * @return int
 	 */
-	function getLanguageId() 
+	function getLanguageId()
 	{
 	    return $this->getProperty('fk_language_id');
 	} // fn getLanguageId
-	
-	
+
+
 	/**
 	 * Set the language ID.
 	 * @param int $p_value
@@ -98,25 +98,25 @@ class ArticlePublish extends DatabaseObject {
 	{
 		return $this->setProperty('fk_language_id', $p_value);
 	} // fn setLanguageId
-	
-	
+
+
 	/**
 	 * Get the published state to switch to when the "publish time" arrives:
 	 * NULL for no action, 'P' for Publish, or 'U' for Unpublish.
 	 * @return mixed
-	 */ 
-	function getPublishAction() 
+	 */
+	function getPublishAction()
 	{
 		return $this->m_data['publish_action'];
 	} // fn getPublishAction
 
-	
+
 	/**
 	 * Set the published state to switch to when the "publish time" arrives:
-	 * NULL for no action, 'P' for Publish, or 'U' for Unpublish.	 
+	 * NULL for no action, 'P' for Publish, or 'U' for Unpublish.
 	 * @return void
 	 */
-	function setPublishAction($p_value) 
+	function setPublishAction($p_value)
 	{
 		$p_value = strtoupper($p_value);
 		if ( ($p_value == 'P') || ($p_value == 'U') ) {
@@ -125,25 +125,25 @@ class ArticlePublish extends DatabaseObject {
 			$this->setProperty('publish_action', 'NULL', true, true);
 		}
 	} // fn setPublishAction
-	
-	
+
+
 	/**
 	 * Get the front page state to switch to when the "publish time" arrives.
 	 * This can be NULL for no action, 'S' for Show, or 'R' for Remove.
 	 * @return mixed
 	 */
-	function getFrontPageAction() 
+	function getFrontPageAction()
 	{
 		return $this->m_data['publish_on_front_page'];
 	} // fn getFrontPageAction
-	
-	
+
+
 	/**
 	 * Set the front page state to switch to when the "publish time" arrives.
 	 * This can be NULL for no action, 'S' for Show, or 'R' for Remove.
 	 * @return mixed
 	 */
-	function setFrontPageAction($p_value) 
+	function setFrontPageAction($p_value)
 	{
 		$p_value = strtoupper($p_value);
 		if ( ($p_value == 'S') || ($p_value == 'R') ) {
@@ -152,25 +152,25 @@ class ArticlePublish extends DatabaseObject {
 			$this->setProperty('publish_on_front_page', 'NULL', true, true);
 		}
 	} // fn setFrontPageAction
-	
-	
+
+
 	/**
 	 * Get the section page state to switch to when the "publish time" arrives.
 	 * This can be NULL for no action, 'S' for Show, or 'R' for Remove.
 	 * @return mixed
 	 */
-	function getSectionPageAction() 
+	function getSectionPageAction()
 	{
 		return $this->m_data['publish_on_section_page'];
 	} // fn getSectionPageAction
-	
-	
+
+
 	/**
 	 * Set the section page state to switch to when the "publish time" arrives.
 	 * This can be NULL for no action, 'S' for Show, or 'R' for Remove.
 	 * @return mixed
 	 */
-	function setSectionPageAction($p_value) 
+	function setSectionPageAction($p_value)
 	{
 		$p_value = strtoupper($p_value);
 		if ( ($p_value == 'S') || ($p_value == 'R') ) {
@@ -180,17 +180,17 @@ class ArticlePublish extends DatabaseObject {
 		}
 	} // fn setSectionPageAction
 
-	
+
 	/**
 	 * Get the time the event is scheduled to happen.
 	 * @return string
 	 */
-	function getActionTime() 
+	function getActionTime()
 	{
 		return $this->m_data['time_action'];
 	} // fn getActionTime
-	
-	
+
+
 	/**
 	 * Set the time when the action(s) should be taken.
 	 * The parameter given should be in the form "YYYY-MM-DD HH:MM:SS".
@@ -201,23 +201,23 @@ class ArticlePublish extends DatabaseObject {
 	{
 		return $this->setProperty('time_action', $p_value);
 	} // fn setActionTime
-	
-	
+
+
 	/**
 	 * Mark that this action has been completed.
 	 * @return void
 	 */
-	function setCompleted() 
+	function setCompleted()
 	{
 	    $this->setProperty('is_completed', 'Y');
 	} // fn setCompleted
-	
-	
+
+
 	/**
 	 * Execute the action, and mark the action as completed.
 	 * @return void
 	 */
-	function doAction() 
+	function doAction()
 	{
 		$publishAction = $this->getPublishAction();
 		$frontPageAction = $this->getFrontPageAction();
@@ -227,7 +227,7 @@ class ArticlePublish extends DatabaseObject {
 		    $article->setPublished('Y');
 		}
 		if ($publishAction == 'U') {
-            $article->setPublished('S');   
+            $article->setPublished('S');
 		}
 		if ($frontPageAction == 'S') {
 		    $article->setOnFrontPage(true);
@@ -241,10 +241,10 @@ class ArticlePublish extends DatabaseObject {
 		if ($sectionPageAction == 'R') {
 		    $article->setOnSectionPage(false);
 		}
-		$this->setCompleted();	    
+		$this->setCompleted();
 	} // fn doAction
-	
-	
+
+
 	/**
 	 * Get all the events that will change the article's state.
 	 * Returns an array of ArticlePublish objects.
@@ -254,9 +254,8 @@ class ArticlePublish extends DatabaseObject {
 	 * @param boolean $p_onlyFutureEvents
 	 * @return array
 	 */
-	function GetArticleEvents($p_articleNumber, $p_languageId = null, $p_onlyFutureEvents = false) 
+	function GetArticleEvents($p_articleNumber, $p_languageId = null, $p_onlyFutureEvents = false)
 	{
-		global $Campsite;
 		$queryStr = 'SELECT * FROM ArticlePublish '
 					." WHERE fk_article_number=$p_articleNumber";
 		if (!is_null($p_languageId)) {
@@ -272,15 +271,14 @@ class ArticlePublish extends DatabaseObject {
 		$result = DbObjectArray::Create('ArticlePublish', $queryStr);
 		return $result;
 	} // fn GetArticleEvents
-	
-	
+
+
 	/**
 	 * Get all the actions that currently need to be performed.
 	 * @return array
 	 */
-	function GetPendingActions() 
+	function GetPendingActions()
 	{
-	    global $Campsite;
 	    $datetime = strftime("%Y-%m-%d %H:%M:00");
         $queryStr = "SELECT * FROM ArticlePublish, Articles "
         			. " WHERE ArticlePublish.fk_article_number=Articles.Number"
@@ -291,17 +289,17 @@ class ArticlePublish extends DatabaseObject {
         $result = DbObjectArray::Create('ArticlePublish', $queryStr);
         return $result;
 	} // fn GetPendingActions
-	
-	
+
+
 	/**
 	 * Return TRUE if there are actions scheduled in the future.
 	 * @param int $p_articleNumber
 	 * @param int $p_languageId
 	 * @return boolean
 	 */
-	function ArticleHasFutureActions($p_articleNumber, $p_languageId) 
+	function ArticleHasFutureActions($p_articleNumber, $p_languageId)
 	{
-	    global $Campsite;
+	    global $g_ado_db;
 	    $datetime = strftime("%Y-%m-%d %H:%M:00");
         $queryStr = "SELECT COUNT(*) FROM ArticlePublish, Articles "
                     . " WHERE ArticlePublish.fk_article_number=$p_articleNumber"
@@ -311,24 +309,24 @@ class ArticlePublish extends DatabaseObject {
                     . " AND ArticlePublish.is_completed != 'Y'"
                     . " AND Articles.Published != 'N'"
                     . " ORDER BY ArticlePublish.time_action ASC";
-        $result = $Campsite['db']->GetOne($queryStr);
+        $result = $g_ado_db->GetOne($queryStr);
         return ($result > 0);
 	} // fn ArticleHasFutureActions
-	
-	
+
+
 	/**
 	 * Execute all pending actions.
 	 * @return void
 	 */
-	function DoPendingActions() 
+	function DoPendingActions()
 	{
         $actions = ArticlePublish::GetPendingActions();
     	foreach ($actions as $articlePublishObj) {
     	    $articlePublishObj->doAction();
     	}
 	} // fn DoPendingActions
-	
-	
+
+
 	/**
 	 * For now, this is mostly a hack to get the home page working.
 	 * The raw array is returned.
@@ -336,9 +334,9 @@ class ArticlePublish extends DatabaseObject {
 	 * @param int $p_limit
 	 * @return array
 	 */
-	function GetFutureActions($p_limit) 
+	function GetFutureActions($p_limit)
 	{
-	    global $Campsite;
+	    global $g_ado_db;
 	    $datetime = strftime("%Y-%m-%d %H:%M:00");
 	    $dummyArticle =& new Article();
 	    $columnNames = $dummyArticle->getColumnNames(true);
@@ -351,7 +349,7 @@ class ArticlePublish extends DatabaseObject {
                     . " AND Articles.IdLanguage=ArticlePublish.fk_language_id "
                     . " ORDER BY time_action DESC"
                     . " LIMIT $p_limit";
-		$rows = $Campsite['db']->GetAll($queryStr);
+		$rows = $g_ado_db->GetAll($queryStr);
 		$addKeys = array();
 		if ($rows && (count($rows) > 0)) {
     		foreach ($rows as $row) {
@@ -361,7 +359,7 @@ class ArticlePublish extends DatabaseObject {
 		}
         return $addKeys;
 	} // fn GetFutureActions
-	
+
 } // class ArticlePublish
 
 ?>

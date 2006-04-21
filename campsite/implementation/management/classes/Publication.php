@@ -229,9 +229,9 @@ class Publication extends DatabaseObject {
 	 */
 	function GetNumPublications()
 	{
-	    global $Campsite;
+	    global $g_ado_db;
 	    $queryStr = "SELECT COUNT(*) FROM Publications";
-	    return $Campsite['db']->GetOne($queryStr);
+	    return $g_ado_db->GetOne($queryStr);
 	} // fn GetNumPublications
 
 

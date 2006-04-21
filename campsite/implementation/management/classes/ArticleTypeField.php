@@ -28,7 +28,7 @@ class ArticleTypeField {
 	var $Default;
 	var $Extra;
 	var $m_metadata;
-	
+
 	function ArticleTypeField($p_articleTypeName = null, $p_fieldName = null)
 	{
 		$this->m_articleTypeName = $p_articleTypeName;
@@ -58,34 +58,34 @@ class ArticleTypeField {
 	 */
 	function rename($p_newName)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		if (!ArticleType::isValidFieldName($p_newName)) return 0;
 		// TODO: This sql sequence could be cleaned up for efficiency.  Renaming columns is tricky in mysql. pjh 2006/March
 		$queryStr = "SHOW COLUMNS FROM ". $this->m_dbTableName;
 		$success = 0;
 		$res = mysql_query($queryStr);
-		if (!$res) 
+		if (!$res)
 			return;
 
 		$queryStr = 0;
-			
+
 	    if (mysql_num_rows($res) > 0) {
 	    	while ($row = mysql_fetch_assoc($res)) {
 	    		if ($row['Field'] == $this->m_dbColumnName) {
-					$queryStr = "ALTER TABLE ". $this->m_dbTableName ." CHANGE COLUMN ". $this->m_dbColumnName ." F". $p_newName ." ". $row['Type']; 				
+					$queryStr = "ALTER TABLE ". $this->m_dbTableName ." CHANGE COLUMN ". $this->m_dbColumnName ." F". $p_newName ." ". $row['Type'];
 					break;
 	    		}
 	    	}
 		}
 
 		if ($queryStr) {
-			$success = $Campsite['db']->Execute($queryStr);
-			
+			$success = $g_ado_db->Execute($queryStr);
+
 		}
 
 		if ($success) {
 			$queryStr = "UPDATE ArticleTypeMetadata SET field_name='F". $p_newName ."' WHERE field_name='". $this->m_dbColumnName ."'";
-			$success2 = $Campsite['db']->Execute($queryStr);		
+			$success2 = $g_ado_db->Execute($queryStr);
 		}
 
 
@@ -107,7 +107,7 @@ class ArticleTypeField {
 	 */
 	function create($p_type, $p_rootTopicId = 0)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$p_type = strtolower($p_type);
 		$queryStr = "ALTER TABLE ".$this->m_dbTableName." ADD COLUMN ".$this->m_dbColumnName;
 		switch ($p_type) {
@@ -125,19 +125,19 @@ class ArticleTypeField {
 				$queryStr2 = "INSERT INTO TopicFields (ArticleType, FieldName, RootTopicId) "
 							."VALUES ('".$this->m_articleTypeName."', '".$this->m_fieldName."', '"
 							.$p_rootTopicId ."')";
-				if (!$Campsite['db']->Execute($queryStr2)) {
+				if (!$g_ado_db->Execute($queryStr2)) {
 					return false;
 				}
 				break;
 		    default:
 		    	return false;
 		}
-		$success = $Campsite['db']->Execute($queryStr);
+		$success = $g_ado_db->Execute($queryStr);
 		if ($success) {
 			$success = 0;
 			$queryStr = "INSERT INTO ArticleTypeMetadata (type_name, field_name, field_type, is_hidden) VALUES ('". $this->m_dbTableName ."','". $this->m_dbColumnName ."', '". $p_type ."', 0)";
-			$success = $Campsite['db']->Execute($queryStr);
-		
+			$success = $g_ado_db->Execute($queryStr);
+
 		}
 
 		if ($success) {
@@ -152,7 +152,7 @@ class ArticleTypeField {
 
 
 	function setType($p_type) {
-		global $Campsite;
+		global $g_ado_db;
 		$p_type = strtolower($p_type);
 		$queryStr = "ALTER TABLE ".$this->m_dbTableName." CHANGE ".$this->m_dbColumnName ." ". $this->m_dbColumnName;
 		switch ($p_type) {
@@ -170,18 +170,18 @@ class ArticleTypeField {
 				$queryStr2 = "INSERT INTO TopicFields (ArticleType, FieldName, RootTopicId) "
 							."VALUES ('".$this->m_articleTypeName."', '".$this->m_fieldName."', '"
 							.$p_rootTopicId ."')";
-				if (!$Campsite['db']->Execute($queryStr2)) {
+				if (!$g_ado_db->Execute($queryStr2)) {
 					return false;
 				}
 				break;
 		    default:
 		    	return false;
 		}
-		$success = $Campsite['db']->Execute($queryStr);
+		$success = $g_ado_db->Execute($queryStr);
 		if ($success) {
 			$success = 0;
 			$queryStr = "UPDATE ArticleTypeMetadata SET field_type='". $p_type ."' WHERE type_name='". $this->m_dbTableName ."' AND field_name='". $this->m_dbColumnName ."'";
-			$success = $Campsite['db']->Execute($queryStr);
+			$success = $g_ado_db->Execute($queryStr);
 		}
 
 		if ($success) {
@@ -192,17 +192,17 @@ class ArticleTypeField {
 			ParserCom::SendMessage('article_types', 'modify', array("article_type"=> $this->m_articleTypeName));
 		}
 		return $success;
-				
-	
+
+
 	}
 	/**
 	 * @return boolean
 	 */
 	function exists()
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$queryStr = "SHOW COLUMNS FROM ".$this->m_dbTableName." LIKE '".$this->m_dbColumnName."'";
-		$exists = $Campsite['db']->GetOne($queryStr);
+		$exists = $g_ado_db->GetOne($queryStr);
 		if ($exists) {
 			return true;
 		} else {
@@ -216,7 +216,7 @@ class ArticleTypeField {
 	 */
 	function fetch($p_recordSet = null)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		if (!is_null($p_recordSet)) {
 			foreach ($p_recordSet as $key => $value) {
 				$this->$key = $value;
@@ -224,7 +224,7 @@ class ArticleTypeField {
 		} else {
 			$queryStr = 'SHOW COLUMNS FROM '.$this->m_dbTableName
 						." LIKE '".$this->m_dbColumnName."'";
-			$row = $Campsite['db']->GetAll($queryStr);
+			$row = $g_ado_db->GetAll($queryStr);
 			if (!is_null($row) && is_array($row) && sizeof($row) > 0 && !is_null($row[0])) {
 				$this->fetch($row[0]);
 			}
@@ -234,13 +234,13 @@ class ArticleTypeField {
 
 	function delete()
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$queryStr = "ALTER TABLE ".$this->m_dbTableName." DROP COLUMN ".$this->m_dbColumnName;
-		$success = $Campsite['db']->Execute($queryStr);
+		$success = $g_ado_db->Execute($queryStr);
 		if ($success) {
 			$queryStr = "DELETE FROM TopicFields WHERE ArticleType = '".$this->m_articleTypeName
 						."' and FieldName = '".substr($this->m_dbColumnName, 1)."'";
-			$Campsite['db']->Execute($queryStr);
+			$g_ado_db->Execute($queryStr);
 			if (function_exists("camp_load_language")) { camp_load_language("api");	}
 			$logtext = getGS('Article type field $1 deleted', $this->m_dbColumnName);
 			Log::Message($logtext, null, 72);
@@ -272,12 +272,12 @@ class ArticleTypeField {
 	 */
 	function getType()
 	{
-		global $Campsite;
+		global $g_ado_db;
 		if (stristr($this->Type, 'int') != '') {
     		$queryStr = "SELECT RootTopicId FROM TopicFields WHERE ArticleType = '"
     					.$this->m_articleTypeName."' and FieldName = '"
     					.substr($this->Field, 1)."'";
-    		$topicId = $Campsite['db']->GetOne($queryStr);
+    		$topicId = $g_ado_db->GetOne($queryStr);
     		if ($topicId > 0) {
 				return 'topic';
     		}
@@ -291,13 +291,13 @@ class ArticleTypeField {
 	 */
 	function getTopicTypeRootElement()
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$topicId = null;
 		if (stristr($this->Type, 'int') != '') {
     		$queryStr = "SELECT RootTopicId FROM TopicFields WHERE ArticleType = '"
     					.$this->m_articleTypeName."' and FieldName = '"
     					.substr($this->Field, 1)."'";
-    		$topicId = $Campsite['db']->GetOne($queryStr);
+    		$topicId = $g_ado_db->GetOne($queryStr);
 		}
 		return $topicId;
 	}
@@ -309,7 +309,7 @@ class ArticleTypeField {
 	 */
 	function getPrintType($p_languageId = 1)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		switch ($this->getType()) {
 	    case 'mediumblob':
 	    	return getGS('Article body');
@@ -323,7 +323,7 @@ class ArticleTypeField {
     		$queryStr = "SELECT RootTopicId FROM TopicFields WHERE ArticleType = '"
     					.$this->m_articleTypeName."' and FieldName = '"
     					.substr($this->Field, 1)."'";
-    		$topicId = $Campsite['db']->GetOne($queryStr);
+    		$topicId = $g_ado_db->GetOne($queryStr);
    			$topic = new Topic($topicId);
    			$translations = $topic->getTranslations();
    			if (array_key_exists($p_languageId, $translations)) {
@@ -349,27 +349,27 @@ class ArticleTypeField {
 		}
 		$translations = $this->getTranslations();
 		if (!isset($translations[$loginLanguageId])) return $this->getPrintName();
-		else return $translations[$loginLanguageId] .' ('. $loginLanguage->getCode() .')';		
+		else return $translations[$loginLanguageId] .' ('. $loginLanguage->getCode() .')';
 
 	}
 
 
 	function setStatus($p_status) {
-		global $Campsite;
+		global $g_ado_db;
 		if ($p_status == 'show') $set = "is_hidden=0";
 		if ($p_status == 'hide') $set = "is_hidden=1";
 		$queryStr = "UPDATE ArticleTypeMetadata SET $set WHERE type_name='". $this->m_dbTableName ."' AND field_name='". $this->Field ."'";
-		$ret = $Campsite['db']->Execute($queryStr);
+		$ret = $g_ado_db->Execute($queryStr);
 	}
 
-	/** 
+	/**
 	* Return an associative array of the metadata in ArticleFieldMetadata.
 	*
 	**/
 	function getMetadata() {
-		global $Campsite;
+		global $g_ado_db;
 		$queryStr = "SELECT * FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' and field_name='". $this->Field ."'";
-		$queryArray = $Campsite['db']->GetAll($queryStr);
+		$queryArray = $g_ado_db->GetAll($queryStr);
 		return $queryArray;
 	}
 
@@ -378,45 +378,45 @@ class ArticleTypeField {
 		foreach ($this->m_metadata as $m) {
 			if (is_numeric($m['fk_phrase_id'])) {
 				$tmp = Translation::getTranslations($m['fk_phrase_id']);
-				foreach ($tmp as $k => $v) 
+				foreach ($tmp as $k => $v)
 					$return[$k] = $v;
 				unset($tmp);
 			}
-		}	
+		}
 		return $return;
 	}
 
-	
+
 	/**
-	 * Set the field name for the given language.  A new entry in 
+	 * Set the field name for the given language.  A new entry in
 	 * the database will be created if the language does not exist.
-	 * 
+	 *
 	 * @param int $p_languageId
 	 * @param string $p_value
-	 * 
+	 *
 	 * @return boolean
 	 */
-	function setName($p_languageId, $p_value) 
+	function setName($p_languageId, $p_value)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		if (!is_numeric($p_languageId)) {
 			return false;
 		}
-		
-		
-		// if the string is empty, nuke it		
+
+
+		// if the string is empty, nuke it
 		if (!is_string($p_value)) {
 			$phase_id = $this->m_metadata['fk_phrase_id'];
 			$trans =& new Translation($p_languageId, $phrase_id);
 			$trans->delete();
 			$sql = "DELETE FROM ArticleTypeMetadata WHERE type_name=". $this->m_dbTableName ." AND field_name=". $this->m_dbColumnName ." AND fk_phrase_id=". $phrase_id;
-			$changed = $Campsite['db']->Execute($sql);
+			$changed = $g_ado_db->Execute($sql);
 		}
-		
+
 		if (isset($this->m_names[$p_languageId])) {
 			$description =& new Translation($p_languageId, $this->m_metadata['fk_phrase_id']);
 			$description->setText($p_value);
-			
+
 			// Update the name.
 			$oldValue = $this->m_names[$p_languageId];
 			$changed = true;
@@ -428,38 +428,38 @@ class ArticleTypeField {
 
 			$oldValue = "";
 			$sql = "INSERT INTO ArticleTypeMetadata SET type_name='".$this->m_dbTableName ."', field_name='". $this->m_dbColumnName ."', fk_phrase_id=".$phrase_id;
-			$changed = $Campsite['db']->Execute($sql);			
+			$changed = $g_ado_db->Execute($sql);
 		}
 		if ($changed) {
 			$this->m_names[$p_languageId] = $p_value;
 			if (function_exists("camp_load_language")) { camp_load_language("api");	}
 			$logtext = getGS('Type $1 updated', $this->m_dbTableName.": (".$oldValue. " -> ".$this->m_names[$p_languageId].")");
-			Log::Message($logtext, null, 143);		
+			Log::Message($logtext, null, 143);
 			//ParserCom::SendMessage('article_types', 'modify', array('article_type' => $this->m_name));
 		}
 		return $changed;
 	} // fn setName
 
 	function getOrders() {
-		global $Campsite;
+		global $g_ado_db;
 		$queryStr = "SELECT field_weight FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' ORDER BY field_weight DESC LIMIT 1,1";
-		$max = $Campsite['db']->getOne($queryStr);
+		$max = $g_ado_db->getOne($queryStr);
 		if ($max == NULL) $max = 0;
 		$queryStr = "SELECT field_weight, field_name FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' AND field_name IS NOT NULL";
-		$queryArray = $Campsite['db']->GetAll($queryStr);
+		$queryArray = $g_ado_db->GetAll($queryStr);
 		$orderArray = array();
 		foreach ($queryArray as $row => $values) {
 			if ($values['field_weight'] == NULL) { $values['field_weight'] = $max++; }
 			$orderArray[$values['field_weight']] = $values['field_name'];
 		}
-		return $orderArray;	
+		return $orderArray;
 	}
 
 	function setOrders($orderArray) {
-		global $Campsite;
+		global $g_ado_db;
 		foreach ($orderArray as $order => $field) {
 			$queryStr = "UPDATE ArticleTypeMetadata SET field_weight=$order WHERE type_name='". $this->m_dbTableName ."' AND field_name='". $field ."'";
-			$Campsite['db']->Execute($queryStr);
+			$g_ado_db->Execute($queryStr);
 		}
 	}
 
@@ -473,13 +473,13 @@ class ArticleTypeField {
 			$tmp = $orders[$pos - 1];
 			$orders[$pos - 1] = $orders[$pos];
 			$orders[$pos] = $tmp;
-		}		
+		}
 		if ($move == 'up') {
 			$tmp = $orders[$pos + 1];
 			$orders[$pos + 1] = $orders[$pos];
 			$orders[$pos] = $tmp;
 		}
-		$this->setOrders($orders);	
+		$this->setOrders($orders);
 	}
 
 } // class ArticleTypeField

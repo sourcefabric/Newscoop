@@ -13,9 +13,9 @@ if (!$access) {
 }
 if (!$User->hasPermission('AddImage')) {
 	header("Location: /$ADMIN/logout.php");
-	exit;	
+	exit;
 }
-$q_now = $Campsite['db']->GetOne("SELECT LEFT(NOW(), 10)");
+$q_now = $g_ado_db->GetOne("SELECT LEFT(NOW(), 10)");
 
 $crumbs = array();
 $crumbs[] = array(getGS('Content'), "");
@@ -31,7 +31,7 @@ $breadcrumbs = camp_html_breadcrumbs($crumbs);
     <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<META HTTP-EQUIV="Expires" CONTENT="now">
 	<TITLE><?php putGS("Add new image"); ?></TITLE>
-	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">	
+	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
 </HEAD>
 
 <BODY>

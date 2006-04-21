@@ -42,6 +42,9 @@ $menu_root->addItem($menu_content);
 $menu_item =& DynMenuItem::Create(getGS('Publications'), "/$ADMIN/pub/index.php", 
                 array('icon' => sprintf($iconTemplateStr, 'publication.png'), 'id' => 'publication'));
 $menu_content->addItem($menu_item);
+$menu_item =& DynMenuItem::Create(getGS('Comments'), "/$ADMIN/comments/index.php", 
+                array('icon' => sprintf($iconTemplateStr, 'comments.png'), 'id' => 'comments'));
+$menu_content->addItem($menu_item);
 $menu_item =& DynMenuItem::Create(getGS('Image Archive'), "/$ADMIN/imagearchive/index.php", 
                 array('icon' => sprintf($iconTemplateStr, 'image_archive.png'), 'id' => 'image_archive'));
 $menu_content->addItem($menu_item);

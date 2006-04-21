@@ -27,22 +27,22 @@ class ArticleIndex extends DatabaseObject {
 		'NrIssue',
 		'NrSection',
 		'NrArticle');
-	
-	function ArticleIndex() 
-	{ 
+
+	function ArticleIndex()
+	{
 		parent::DatabaseObject($this->m_columnNames);
 	} // constructor
-	
-	
+
+
 	/**
 	 * @return int
 	 */
-	function getArticleNumber() 
+	function getArticleNumber()
 	{
 		return $this->getProperty('NrArticle');
 	} // fn getArticleNumber
 
-	
+
 	/**
 	 * Remove index pointers for the given article.
 	 * @param int $p_publicationId
@@ -52,18 +52,18 @@ class ArticleIndex extends DatabaseObject {
 	 * @param int $p_articleNumber
 	 * @return void
 	 */
-	function OnArticleDelete($p_publicationId, $p_issueId, $p_sectionId, $p_languageId, $p_articleNumber) 
+	function OnArticleDelete($p_publicationId, $p_issueId, $p_sectionId, $p_languageId, $p_articleNumber)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$queryStr = 'DELETE FROM ArticleIndex'
 					." WHERE IdPublication=$p_publicationId "
 					." AND NrIssue=$p_issueId "
 					." AND NrSection=$p_sectionId "
 					." AND NrArticle=$p_articleNumber "
 					." AND IdLanguage=$p_languageId";
-		$Campsite['db']->Execute($queryStr);		
+		$g_ado_db->Execute($queryStr);
 	} // fn OnArticleDelete
-	
+
 } // class ArticleIndex
 
 ?>

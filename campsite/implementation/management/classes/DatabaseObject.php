@@ -186,6 +186,8 @@ class DatabaseObject {
 					$this->modifyKeyValue($columnName, $p_columnNames[$columnName]);
 				}
 			}
+		} elseif (is_string($p_columnNames)) {
+			$this->m_keyColumnNames = array($p_columnNames);
 		}
 	} // fn setKey
 
@@ -217,7 +219,7 @@ class DatabaseObject {
 	 */
 	function fetch($p_recordSet = null)
 	{
-		global $Campsite;
+		global $g_ado_db;
 
 		if (is_null($p_recordSet)) {
 			$queryStr = 'SELECT ';
@@ -229,7 +231,7 @@ class DatabaseObject {
 			$queryStr .= ' FROM ' . $this->m_dbTableName;
 			$queryStr .= ' WHERE ' . $this->getKeyWhereClause();
 			$queryStr .= ' LIMIT 1';
-			$resultSet = $Campsite['db']->GetRow($queryStr);
+			$resultSet = $g_ado_db->GetRow($queryStr);
 			if ($resultSet) {
 				foreach ($this->getColumnNames() as $dbColumnName) {
 					$this->m_data[$dbColumnName] = $resultSet[$dbColumnName];
@@ -265,12 +267,12 @@ class DatabaseObject {
 		if (!is_null($this->m_exists)) {
 			return $this->m_exists;
 		}
-		global $Campsite;
+		global $g_ado_db;
 		$queryStr = 'SELECT `'.$this->m_keyColumnNames[0].'`';
 		$queryStr .= ' FROM ' . $this->m_dbTableName;
 		$queryStr .= ' WHERE ' . $this->getKeyWhereClause();
 		$queryStr .= ' LIMIT 1';
-		$resultSet = $Campsite['db']->GetRow($queryStr);
+		$resultSet = $g_ado_db->GetRow($queryStr);
 		return (count($resultSet) > 0);
 	} // fn exists
 
@@ -327,7 +329,7 @@ class DatabaseObject {
 	 */
 	function create($p_values = null)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$queryStr = 'INSERT IGNORE INTO ' . $this->m_dbTableName;
 
 		// Make sure we have the key required to create the row.
@@ -368,13 +370,13 @@ class DatabaseObject {
 		if (count($columns) > 0) {
 			$queryStr .= '(`' . implode('`,`', array_keys($columns)) . '`)';
 		} else {
-			$queryStr .= '(' . implode('`,`', array_keys($columns)) . ')';			
+			$queryStr .= '(' . implode('`,`', array_keys($columns)) . ')';
 		}
 		$queryStr .= ' VALUES ('.implode(',', array_values($columns)) .')';
 
 		// Create the row.
-		$Campsite['db']->Execute($queryStr);
-		$success = ($Campsite['db']->Affected_Rows() > 0);
+		$g_ado_db->Execute($queryStr);
+		$success = ($g_ado_db->Affected_Rows() > 0);
 		$this->m_exists = $success;
 
 		// Fetch the row ID if it is auto-increment
@@ -382,7 +384,7 @@ class DatabaseObject {
 			// There should only be one key column because
 			// its an auto-increment key.
 			$this->m_data[$this->m_keyColumnNames[0]] =
-				$Campsite['db']->Insert_ID();
+				$g_ado_db->Insert_ID();
 		}
 		return $success;
 	} // fn create
@@ -396,12 +398,12 @@ class DatabaseObject {
 	 */
 	function delete()
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$queryStr = 'DELETE FROM ' . $this->m_dbTableName
 					.' WHERE ' . $this->getKeyWhereClause()
 					.' LIMIT 1';
-		$Campsite['db']->Execute($queryStr);
-		$wasDeleted = ($Campsite['db']->Affected_Rows() > 0);
+		$g_ado_db->Execute($queryStr);
+		$wasDeleted = ($g_ado_db->Affected_Rows() > 0);
 		// Always set "exists" to false because if a row wasnt
 		// deleted it means it probably didnt exist in the first place.
 		$this->m_exists = false;
@@ -426,14 +428,14 @@ class DatabaseObject {
 	 */
 	function getProperty($p_dbColumnName, $p_forceFetchFromDatabase = false)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		if (isset($this->m_data[$p_dbColumnName])) {
 			if ($p_forceFetchFromDatabase) {
 				if ($this->keyValuesExist() && in_array($p_dbColumnName, $this->m_columnNames)) {
 					$queryStr = 'SELECT '.$p_dbColumnName
 								.' FROM '.$this->m_dbTableName
 								.' WHERE '.$this->getKeyWhereClause();
-					$this->m_data[$p_dbColumnName] = $Campsite['db']->GetOne($queryStr);
+					$this->m_data[$p_dbColumnName] = $g_ado_db->GetOne($queryStr);
 					// Special case for key values
 					if (in_array($p_dbColumnName, $this->m_oldKeyValues)) {
 						// Key value is now synced with database.
@@ -486,7 +488,7 @@ class DatabaseObject {
 	 */
 	function setProperty($p_dbColumnName, $p_value, $p_commit = true, $p_isSql = false)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		// If we are not committing, the value cannot be SQL.
 		if (!$p_commit && $p_isSql) {
 			return false;
@@ -528,8 +530,8 @@ class DatabaseObject {
 						.' SET `'. $p_dbColumnName.'`='.$value
 						.' WHERE '.$this->getKeyWhereClause()
 						.' LIMIT 1';
-			$result = $Campsite['db']->Execute($queryStr);
-			$databaseChanged = ($result !== false && $Campsite['db']->Affected_Rows() >= 0);
+			$result = $g_ado_db->Execute($queryStr);
+			$databaseChanged = ($result !== false && $g_ado_db->Affected_Rows() >= 0);
 			if ($result !== false) {
 				$this->m_exists = true;
 			}
@@ -544,12 +546,12 @@ class DatabaseObject {
 			$queryStr = 'SELECT '.$p_dbColumnName
 						.' FROM '.$this->m_dbTableName
 						.' WHERE '.$this->getKeyWhereClause();
-			$value = $Campsite['db']->GetOne($queryStr);
+			$value = $g_ado_db->GetOne($queryStr);
 			if ($value !== false) {
 				$this->m_data[$p_dbColumnName] = $value;
 				$this->m_exists = true;
 			} else {
-				$errorMsg = $Campsite['db']->ErrorMsg();
+				$errorMsg = $g_ado_db->ErrorMsg();
 			}
 		}
 		return $databaseChanged;
@@ -580,7 +582,7 @@ class DatabaseObject {
 	 */
 	function update($p_columns = null, $p_commit = true, $p_isSql = false)
 	{
-		global $Campsite;
+		global $g_ado_db;
 
 		// Check input
 		if (!is_array($p_columns)) {
@@ -613,8 +615,8 @@ class DatabaseObject {
 	        			.' SET '.implode(',', $setColumns)
 	        			.' WHERE ' . $this->getKeyWhereClause()
 	        			.' LIMIT 1';
-	        $result = $Campsite['db']->Execute($queryStr);
-			$databaseChanged = ($Campsite['db']->Affected_Rows() > 0);
+	        $result = $g_ado_db->Execute($queryStr);
+			$databaseChanged = ($g_ado_db->Affected_Rows() > 0);
 			if ($result !== false) {
 				$this->m_exists = true;
 			}
@@ -641,7 +643,7 @@ class DatabaseObject {
 	 */
 	function commit($p_ignoreColumns = null)
 	{
-		global $Campsite;
+		global $g_ado_db;
         $setColumns = array();
         foreach ($this->m_data as $columnName => $columnValue) {
         	if (is_null($p_ignoreColumns) || !in_array($columnName, $p_ignoreColumns)) {
@@ -653,8 +655,8 @@ class DatabaseObject {
 	        		.' SET '.implode(',', $setColumns)
 	        		.' WHERE ' . $this->getKeyWhereClause()
 	        		.' LIMIT 1';
-        $result = $Campsite['db']->Execute($queryStr);
-		$success = ($Campsite['db']->Affected_Rows() >= 0);
+        $result = $g_ado_db->Execute($queryStr);
+		$success = ($g_ado_db->Affected_Rows() >= 0);
 		if ($result !== false) {
 			$this->m_exists = true;
 		}
@@ -674,7 +676,6 @@ class DatabaseObject {
 	 */
 	function Search($p_className, $p_columns = null, $p_sqlOptions = null)
 	{
-		global $Campsite;
 		if (!class_exists($p_className)) {
 			return array();
 		}

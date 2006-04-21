@@ -50,10 +50,10 @@ class ArticleTopic extends DatabaseObject {
 	 */
 	function AddTopicToArticle($p_topicId, $p_articleNumber)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$queryStr = 'INSERT IGNORE INTO ArticleTopics(NrArticle, TopicId)'
 					.' VALUES('.$p_articleNumber.', '.$p_topicId.')';
-		$Campsite['db']->Execute($queryStr);
+		$g_ado_db->Execute($queryStr);
 		if (function_exists("camp_load_language")) { camp_load_language("api");	}
 		$logtext = getGS('Topic $1 added to article', $p_topicId);
 		Log::Message($logtext, null, 144);
@@ -68,9 +68,9 @@ class ArticleTopic extends DatabaseObject {
 	 */
 	function RemoveTopicFromArticle($p_topicId, $p_articleNumber)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$queryStr = "DELETE FROM ArticleTopics WHERE NrArticle=$p_articleNumber AND TopicId=$p_topicId";
-		$Campsite['db']->Execute($queryStr);
+		$g_ado_db->Execute($queryStr);
 		if (function_exists("camp_load_language")) { camp_load_language("api");	}
 		$logtext = getGS('Article topic $1 deleted', $p_topicId);
 		Log::Message($logtext, null, 145);
@@ -84,10 +84,10 @@ class ArticleTopic extends DatabaseObject {
 	 */
 	function OnArticleDelete($p_articleNumber)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$queryStr = 'DELETE FROM ArticleTopics'
 					." WHERE NrArticle='".$p_articleNumber."'";
-		$Campsite['db']->Execute($queryStr);
+		$g_ado_db->Execute($queryStr);
 	} // fn OnArticleDelete
 
 
@@ -99,13 +99,13 @@ class ArticleTopic extends DatabaseObject {
 	 */
 	function OnArticleCopy($p_srcArticleNumber, $p_destArticleNumber)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$queryStr = 'SELECT * FROM ArticleTopics WHERE NrArticle='.$p_srcArticleNumber;
-		$rows = $Campsite['db']->GetAll($queryStr);
+		$rows = $g_ado_db->GetAll($queryStr);
 		foreach ($rows as $row) {
 			$queryStr = 'INSERT IGNORE INTO ArticleTopics(NrArticle, TopicId)'
 						." VALUES($p_destArticleNumber, ".$row['TopicId'].")";
-			$Campsite['db']->Execute($queryStr);
+			$g_ado_db->Execute($queryStr);
 		}
 	} // fn OnArticleCopy
 
@@ -120,13 +120,13 @@ class ArticleTopic extends DatabaseObject {
 	 */
 	function GetArticleTopics($p_articleNumber)
 	{
-		global $Campsite;
+		global $g_ado_db;
     	$queryStr = "SELECT DISTINCT(Topics.Id) FROM ArticleTopics, Topics "
     				." WHERE ArticleTopics.NrArticle = $p_articleNumber"
     				.' AND ArticleTopics.TopicId = Topics.Id '
 					.' ORDER BY Topics.Id ';
 		$topicIds = array();
-		$rows = $Campsite['db']->GetAll($queryStr);
+		$rows = $g_ado_db->GetAll($queryStr);
 		if ($rows && is_array($rows)) {
 			foreach ($rows as $row) {
 				$topicIds[] = $row['Id'];
@@ -135,9 +135,9 @@ class ArticleTopic extends DatabaseObject {
 
 		// read topics from article type fields
 /*		$queryStr = "SELECT Type FROM Articles WHERE Number = $p_articleNumber";
-		$articleType = $Campsite['db']->GetOne($queryStr);
+		$articleType = $g_ado_db->GetOne($queryStr);
 		$queryStr = "SELECT FieldName FROM TopicFields WHERE ArticleType = '$articleType'";
-		$rows2 = $Campsite['db']->GetAll($queryStr);
+		$rows2 = $g_ado_db->GetAll($queryStr);
 		if (is_array($rows2) && sizeof($rows2) > 0) {
 			$columns = '';
 			foreach ($rows2 as $row2) {
@@ -145,7 +145,7 @@ class ArticleTopic extends DatabaseObject {
 			}
 			$columns = substr($columns, 2);
 			$queryStr = "SELECT $columns FROM X$articleType WHERE NrArticle = $p_articleNumber";
-			$rows2 = $Campsite['db']->GetAll($queryStr);
+			$rows2 = $g_ado_db->GetAll($queryStr);
 			if (is_array($rows2)) {
 				foreach ($rows2 as $row2) {
 					foreach ($row2 as $fieldName=>$value) {
@@ -171,11 +171,11 @@ class ArticleTopic extends DatabaseObject {
 	 */
 	function GetArticlesWithTopic($p_topicId)
 	{
-		global $Campsite;
+		global $g_ado_db;
 
 		$articleIds = array();
 		$queryStr = "SELECT NrArticle FROM ArticleTopics WHERE Topicid = $p_topicId";
-		$rows = $Campsite['db']->GetAll($queryStr);
+		$rows = $g_ado_db->GetAll($queryStr);
 		if (is_array($rows)) {
 			foreach ($rows as $row) {
 				$articleIds[] = $row['NrArticle'];
@@ -183,11 +183,11 @@ class ArticleTopic extends DatabaseObject {
 		}
 
 		$queryStr = 'SELECT DISTINCT(ArticleType) FROM TopicFields';
-		$rows = $Campsite['db']->GetAll($queryStr);
+		$rows = $g_ado_db->GetAll($queryStr);
 		foreach ($rows as $row) {
 			$queryStr = "SELECT FieldName FROM TopicFields WHERE ArticleType = '"
 						. $row['ArticleType'] . "'";
-			$rows2 = $Campsite['db']->GetAll($queryStr);
+			$rows2 = $g_ado_db->GetAll($queryStr);
 			if (!is_array($rows2) || sizeof($rows2) == 0) {
 				continue;
 			}
@@ -198,7 +198,7 @@ class ArticleTopic extends DatabaseObject {
 			$columns = substr($columns, 3);
 			$queryStr = "SELECT DISTINCT(NrArticle) FROM X" . $row['ArticleType']
 						. " WHERE $columns";
-			$rows2 = $Campsite['db']->GetAll($queryStr);
+			$rows2 = $g_ado_db->GetAll($queryStr);
 			if (!is_array($rows2)) {
 				continue;
 			}

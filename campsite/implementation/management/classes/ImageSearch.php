@@ -41,7 +41,6 @@ class ImageSearch {
 	 */
 	function ImageSearch($p_searchString, $p_orderBy, $p_orderDirection = 'ASC', $p_offset = 0, $p_itemsPerPage = 0)
 	{
-		global $Campsite;
 		$this->m_orderBy = $p_orderBy;
 		$this->m_orderDirection = $p_orderDirection;
 		$this->m_imageOffset = $p_offset;
@@ -125,7 +124,7 @@ class ImageSearch {
 	 */
 	function run()
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$tmpImage =& new Image();
 		$columnNames = $tmpImage->getColumnNames(true);
 		$columnNames = implode(',', $columnNames);
@@ -139,8 +138,8 @@ class ImageSearch {
 				  	.' FROM Images '
 				  	.' LEFT JOIN ArticleImages On Images.Id=ArticleImages.IdImage'
 				  	." $this->m_whereQuery";
-		$rows = $Campsite['db']->GetAll($queryStr);
-		$this->m_numImagesFound = $Campsite['db']->GetOne($numImagesFoundQueryStr);
+		$rows = $g_ado_db->GetAll($queryStr);
+		$this->m_numImagesFound = $g_ado_db->GetOne($numImagesFoundQueryStr);
 
 		$this->m_imageData = array();
 		if (is_array($rows)) {
@@ -154,7 +153,7 @@ class ImageSearch {
 							." WHERE (Articles.Number=ArticleImages.NrArticle) "
 							." AND (".implode(' OR ', $imageIds).")"
 							." GROUP By ArticleImages.IdImage";
-			$tmpInUseArray = $Campsite['db']->GetAll($inUseQuery);
+			$tmpInUseArray = $g_ado_db->GetAll($inUseQuery);
 			$inUseArray = array();
 			// Make it an associative array for easy lookup in the next loop.
 			if (is_array($tmpInUseArray)) {

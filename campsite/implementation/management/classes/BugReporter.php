@@ -18,23 +18,23 @@ class BugReporter
      *
      * An object for sending captured error info to an HTTP server.  In
      * particular this is made to work with the Trac plugin Autotrac, though
-     * it would be quite simple to make another HTTP server to work with it.  
-     * 
+     * it would be quite simple to make another HTTP server to work with it.
+     *
      * A simple way to use this object is to create an error handler to the
      * following function report_bug():
-     * 
-     *     function report_bug ($p_number, $p_string, $p_file, $p_line)    
+     *
+     *     function report_bug ($p_number, $p_string, $p_file, $p_line)
      *     {
      *         $reporter = new BugReporter ($p_number, $p_string, $p_file, $p_line);
      *         $reporter->setServer ("http://myserver.com/mydirectory")
      *         $reporter->sendToServer();
      *     }
-     * 
+     *
      * The errors are always sent to the server URL plus the extension
      * "/report".  So the above example would POST the error variables to
      * http://myserver.com/mydirectory/newreport .  The error variables
-     * POSTed are: 
-     * 
+     * POSTed are:
+     *
      *     - f_backtrace
      *     - f_id
      *     - f_software
@@ -45,23 +45,23 @@ class BugReporter
      *     - f_backtrace
      *     - f_description
      *     - f_email
-     * 
+     *
      *
      * @param int $p_number The PHP error number.
      * @param string $p_string The error message.
      * @param string $p_file The file which encountered the error.
      * @praam int $p_line The line number of the file which encountered the error.
      * @param string $p_software The name of the software that encountered an error.
-     * @param int $p_version The version of the software that encountered an error.  
-     * @param string $p_time The date and time.  If left blank, it is the current date and time.  
+     * @param int $p_version The version of the software that encountered an error.
+     * @param string $p_time The date and time.  If left blank, it is the current date and time.
      * @param $p_backtrace The stack trace.  This can be an array or string.
      */
-    function BugReporter ($p_number, $p_string, $p_file, $p_line, 
+    function BugReporter ($p_number, $p_string, $p_file, $p_line,
                           $p_software, $p_version, $p_time = "", $p_backtrace = "")
     {
         require_once "HTTP/Client.php";
 
-        global $Campsite, $g_bugReporterDefaultServer;
+        global $g_bugReporterDefaultServer;
 
         $this->invalidParam = "Invalid parameter value.";
 
@@ -93,7 +93,7 @@ class BugReporter
         $this->m_file = $p_file;
         $this->m_line = (int) $p_line;
         $this->m_backtrace = $this->__convertBacktraceArrayToString ($backtrace);
-        $this->m_time = $p_time; 
+        $this->m_time = $p_time;
 
 
         $this->setServer ($g_bugReporterDefaultServer);
@@ -101,7 +101,7 @@ class BugReporter
     }
 
     /**
-     * This changes the developers' default server.  
+     * This changes the developers' default server.
      *
      * @param string $p_server  The URL of the new server.
      */
@@ -111,11 +111,11 @@ class BugReporter
         $this->__ping = "$p_server/ping";
         $this->m_newReport = "$p_server/newreport";
     }
-    
-    /** 
+
+    /**
      * Returns the current developers' server.
      *
-     * @return string   
+     * @return string
      *          The current server's URL.
      */
     function getServer()
@@ -124,9 +124,9 @@ class BugReporter
     }
 
     /**
-     * Confirms that the server is online.  
+     * Confirms that the server is online.
      *
-     * @return boolean 
+     * @return boolean
      *          True if the server is up, else false.
      */
     function pingServer()
@@ -138,7 +138,7 @@ class BugReporter
         }
         $client = new HTTP_Client();
         $code = $client->get ($this->__ping);
-        
+
         $response = $client->currentResponse();
 
         $this->__responseHeader = $response['headers'];
@@ -148,13 +148,13 @@ class BugReporter
         if (preg_match ("/pong/", $this->__responseBody) && ($code == 200))
             return true;
         else return false;
-        
+
     }
 
-    /** 
-     * When pinging status is is set to false, pingServer() returns 
+    /**
+     * When pinging status is is set to false, pingServer() returns
      * true without actually pinging the server.
-     * 
+     *
      */
     function setPingStatus ($p_pingingStatus)
     {
@@ -173,10 +173,10 @@ class BugReporter
     /**
      * Send the error details to the server via HTTP.
      */
-    function sendToServer() 
+    function sendToServer()
     {
         $client = new HTTP_Client();
-        $code = $client->post 
+        $code = $client->post
             ($this->m_newReport, array('f_software' => $this->m_software,
                                        'f_version' => $this->m_version,
                                        'f_num' => $this->m_num,
@@ -199,28 +199,28 @@ class BugReporter
         // --- Did we get an "accepted"?
         elseif (preg_match ("/\baccepted\b/", $this->__responseBody)) return true;
         else return false;
-            
+
     }
 
     /**
      * Return the name of the error-file, not including the path.
      *
-     * @return string 
-     *          The name of the file, not including the path.  
+     * @return string
+     *          The name of the file, not including the path.
      */
     function getFileWithoutPath()
     {
-        if (preg_match ("/\/$/", $this->m_file)) 
+        if (preg_match ("/\/$/", $this->m_file))
             trigger_error ($this->invalidParam);
-        return preg_replace ("/.*\/([^\/]*)/", "$1", $this->m_file);      
+        return preg_replace ("/.*\/([^\/]*)/", "$1", $this->m_file);
     }
 
     /**
-     * @return string the file's ID-code.   
+     * @return string the file's ID-code.
      */
     function getId()
     {
-        return "$this->m_num:$this->m_software:$this->m_version:" . 
+        return "$this->m_num:$this->m_software:$this->m_version:" .
             $this->getFileWithoutPath() . ":$this->m_line";
     }
 
@@ -406,22 +406,22 @@ class BugReporter
 
             for ($aa=0; $aa<sizeof($p_backtrace); $aa++) {
                 $backtraceCurrentLine = "";
-                
+
                 // --- Get the Current the Backtrace line $aa (cbt) ---
                 $cbt = $p_backtrace[$aa];
-                
+
                 $function = isset ($cbt['function']) ? $cbt ['function'] : "";
                 $file = isset ($cbt['file']) ? $cbt ['file'] : "";
                 $line = isset ($cbt['line']) ? $cbt ['line'] : "";
 
                 $backtraceCurrentLine .= $function . "() called at [" . $file . ":" . $line . "]\n";
-                
+
                 if (isset($cbt['class'])) {
                     $backtraceCurrentLine = $cbt['class'] . "::" . $backtraceCurrentLine;
                 }
                 $backtrace .= $backtraceCurrentLine;
             }
-            
+
             return $backtrace;
         } else trigger_error ($this->invalidParam);
     }

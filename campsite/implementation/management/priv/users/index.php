@@ -199,10 +199,10 @@ if ($userSearchParameters['subscription_date'] != "") {
 }
 $sql .= " ORDER BY " . $orderFields[$orderField] . " $orderDir";
 $searchSql = $sqlBase.$sql." LIMIT $userOffs, $ItemsPerPage";
-$res = $Campsite['db']->Execute($searchSql);
+$res = $g_ado_db->Execute($searchSql);
 
 $countSql = "SELECT COUNT(*) FROM Users as u ".$sql;
-$totalUsers = $Campsite['db']->GetOne($countSql);
+$totalUsers = $g_ado_db->GetOne($countSql);
 
 $pager =& new SimplePager($totalUsers, $ItemsPerPage, "userOffs", "index.php?".get_user_urlparams(0)."&", false);
 

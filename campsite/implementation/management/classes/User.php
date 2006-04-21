@@ -6,8 +6,8 @@
 /**
  * Includes
  */
-// We indirectly reference the DOCUMENT_ROOT so we can enable 
-// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT'] 
+// We indirectly reference the DOCUMENT_ROOT so we can enable
+// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT']
 // is not defined in these cases.
 if (!isset($g_documentRoot)) {
     $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
@@ -66,79 +66,79 @@ class User extends DatabaseObject {
 		'time_created');
 
 	var $m_defaultConfig = array(
-		'ManagePub'=>'N', 
-		'DeletePub'=>'N', 
-		'ManageIssue'=>'N', 
+		'ManagePub'=>'N',
+		'DeletePub'=>'N',
+		'ManageIssue'=>'N',
 		'DeleteIssue'=>'N',
-		'ManageSection'=>'N', 
-		'DeleteSection'=>'N', 
-		'AddArticle'=>'N', 
+		'ManageSection'=>'N',
+		'DeleteSection'=>'N',
+		'AddArticle'=>'N',
 		'ChangeArticle'=>'N',
 		'MoveArticle'=>'N',
 		'TranslateArticle'=>'N',
-		'DeleteArticle'=>'N', 
-		'AttachImageToArticle'=>'N', 
-		'AttachTopicToArticle'=>'N', 
-		'AddImage'=>'N', 
-		'ChangeImage'=>'N', 
+		'DeleteArticle'=>'N',
+		'AttachImageToArticle'=>'N',
+		'AttachTopicToArticle'=>'N',
+		'AddImage'=>'N',
+		'ChangeImage'=>'N',
 		'DeleteImage'=>'N',
-		'ManageTempl'=>'N', 
-		'DeleteTempl'=>'N', 
-		'ManageUsers'=>'N', 
+		'ManageTempl'=>'N',
+		'DeleteTempl'=>'N',
+		'ManageUsers'=>'N',
 		'ManageReaders'=>'N',
-		'ManageSubscriptions'=>'N', 
-		'DeleteUsers'=>'N', 
-		'ManageUserTypes'=>'N', 
+		'ManageSubscriptions'=>'N',
+		'DeleteUsers'=>'N',
+		'ManageUserTypes'=>'N',
 		'ManageArticleTypes'=>'N',
-		'DeleteArticleTypes'=>'N', 
-		'ManageLanguages'=>'N', 
-		'DeleteLanguages'=>'N', 
+		'DeleteArticleTypes'=>'N',
+		'ManageLanguages'=>'N',
+		'DeleteLanguages'=>'N',
 		'MailNotify'=>'N',
-		'ManageCountries'=>'N', 
-		'DeleteCountries'=>'N', 
-		'ViewLogs'=>'N', 
+		'ManageCountries'=>'N',
+		'DeleteCountries'=>'N',
+		'ViewLogs'=>'N',
 		'ManageLocalizer'=>'N',
-		'ManageIndexer'=>'N', 
-		'Publish'=>'N', 
-		'ManageTopics'=>'N', 
-		'EditorBold'=>'N', 
+		'ManageIndexer'=>'N',
+		'Publish'=>'N',
+		'ManageTopics'=>'N',
+		'EditorBold'=>'N',
 		'EditorItalic'=>'N',
-		'EditorUnderline'=>'N', 
-		'EditorUndoRedo'=>'N', 
+		'EditorUnderline'=>'N',
+		'EditorUndoRedo'=>'N',
 		'EditorCopyCutPaste'=>'N',
 		'EditorFindReplace'=>'N',
 		'EditorCharacterMap'=>'N',
 		'EditorImage'=>'N',
-		'EditorTextAlignment'=>'N', 
-		'EditorFontColor'=>'N', 
-		'EditorFontSize'=>'N', 
+		'EditorTextAlignment'=>'N',
+		'EditorFontColor'=>'N',
+		'EditorFontSize'=>'N',
 		'EditorFontFace'=>'N',
-		'EditorTable'=>'N', 
-		'EditorSuperscript'=>'N', 
-		'EditorSubscript'=>'N', 
+		'EditorTable'=>'N',
+		'EditorSuperscript'=>'N',
+		'EditorSubscript'=>'N',
 		'EditorStrikethrough'=>'N',
-		'EditorIndent'=>'N', 
-		'EditorListBullet'=>'N', 
-		'EditorListNumber'=>'N', 
+		'EditorIndent'=>'N',
+		'EditorListBullet'=>'N',
+		'EditorListNumber'=>'N',
 		'EditorHorizontalRule'=>'N',
-		'EditorSourceView'=>'N', 
-		'EditorEnlarge'=>'N', 
-		'EditorTextDirection'=>'N', 
+		'EditorSourceView'=>'N',
+		'EditorEnlarge'=>'N',
+		'EditorTextDirection'=>'N',
 		'EditorLink'=>'N',
 		'EditorSubhead'=>'N',
 		'InitializeTemplateEngine'=>'N',
 		'ChangeSystemPreferences'=>'N',
 		'AddFile'=>'N',
 		'ChangeFile'=>'N',
-		'DeleteFile'=>'N');		
-		
+		'DeleteFile'=>'N');
+
 	/**
 	 * A user of the system is a frontend reader or a 'admin' user, meaning
 	 * they have login rights to the backend.
-	 * 
+	 *
 	 * @param int $p_userId
 	 */
-	function User($p_userId = null) 
+	function User($p_userId = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
 		if (is_numeric($p_userId) && ($p_userId > 0)) {
@@ -148,8 +148,8 @@ class User extends DatabaseObject {
 			}
 		}
 	} // constructor
-	
-	
+
+
 	function create($p_values = null)
 	{
 		if (is_array($p_values)) {
@@ -159,12 +159,12 @@ class User extends DatabaseObject {
 		if ($success) {
 			if (function_exists("camp_load_language")) { camp_load_language("api");	}
 			$logtext = getGS('User account $1 created', $this->m_data['Name']." (".$this->m_data['UName'].")");
-			Log::Message($logtext, null, 51);		
+			Log::Message($logtext, null, 51);
 		}
 		return $success;
 	} // fn create
-	
-	
+
+
 	/**
 	 * Delete the user.  This will delete all config values and subscriptions of the user.
 	 *
@@ -172,38 +172,38 @@ class User extends DatabaseObject {
 	 */
 	function delete()
 	{
-		global $Campsite;
+		global $g_ado_db;
 		if ($this->exists()) {
 			parent::delete();
-			$Campsite['db']->Execute("DELETE FROM UserConfig WHERE fk_user_id = ".$this->m_data['Id']);
-			$res = $Campsite['db']->Execute("SELECT Id FROM Subscriptions WHERE IdUser = ".$this->m_data['Id']);
+			$g_ado_db->Execute("DELETE FROM UserConfig WHERE fk_user_id = ".$this->m_data['Id']);
+			$res = $g_ado_db->Execute("SELECT Id FROM Subscriptions WHERE IdUser = ".$this->m_data['Id']);
 			while ($row = $res->FetchRow()) {
-				$Campsite['db']->Execute("DELETE FROM SubsSections WHERE IdSubscription=".$row['Id']);
+				$g_ado_db->Execute("DELETE FROM SubsSections WHERE IdSubscription=".$row['Id']);
 			}
-			$Campsite['db']->Execute("DELETE FROM Subscriptions WHERE IdUser=".$this->m_data['Id']);
-			$Campsite['db']->Execute("DELETE FROM SubsByIP WHERE IdUser=".$this->m_data['Id']);
+			$g_ado_db->Execute("DELETE FROM Subscriptions WHERE IdUser=".$this->m_data['Id']);
+			$g_ado_db->Execute("DELETE FROM SubsByIP WHERE IdUser=".$this->m_data['Id']);
 			if (function_exists("camp_load_language")) { camp_load_language("api");	}
 			$logtext = getGS('The user account $1 has been deleted.', $this->m_data['Name']." (".$this->m_data['UName'].")");
 			Log::Message($logtext, null, 52);
 		}
 		return true;
 	} // fn delete
-	
-	
+
+
 	/**
 	 * Get the user from the database.
-	 * 
+	 *
 	 * @param array $p_recordSet
 	 */
-	function fetch($p_recordSet = null) 
+	function fetch($p_recordSet = null)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$success = parent::fetch($p_recordSet);
 		if ($success) {
 			// Fetch the user's permissions.
 			$queryStr = 'SELECT varname, value FROM UserConfig '
 						.' WHERE fk_user_id='.$this->getProperty('Id');
-			$config = $Campsite['db']->GetAll($queryStr);
+			$config = $g_ado_db->GetAll($queryStr);
 			if ($config) {
 				// Make m_config an associative array.
 				foreach ($config as $value) {
@@ -216,19 +216,19 @@ class User extends DatabaseObject {
 
 	/**
 	 * Set the user to the given user type.
-	 * 
+	 *
 	 * @param string $p_userType
-	 * 
+	 *
 	 * @return void
 	 */
 	function setUserType($p_userType)
 	{
-		global $Campsite;
-		
+		global $g_ado_db;
+
 		if (!$this->exists()) {
 			return;
 		}
-		
+
 		// Fetch the user type's permissions.
 		$userType =& new UserType($p_userType);
 		if ($userType->exists()) {
@@ -239,20 +239,20 @@ class User extends DatabaseObject {
 				$queryStr = "SELECT value FROM UserConfig "
 							." WHERE fk_user_id=".$this->m_data['Id']
 							." AND varname='$varname'";
-				$exists = $Campsite['db']->GetOne($queryStr);
+				$exists = $g_ado_db->GetOne($queryStr);
 				if ($exists !== false) {
 					if ($value != $this->m_config[$varname]) {
 						$queryStr = "UPDATE UserConfig SET value='$value' "
 									." WHERE fk_user_id=".$this->m_data['Id']
 									." AND varname='$varname'";
-						$Campsite['db']->Execute($queryStr);
+						$g_ado_db->Execute($queryStr);
 					}
 				} else {
 					$queryStr = "INSERT INTO UserConfig SET "
 								." fk_user_id=".$this->m_data['Id'].","
 								." varname='$varname',"
 								." value='$value'";
-					$Campsite['db']->Execute($queryStr);
+					$g_ado_db->Execute($queryStr);
 				}
 			}
 			$this->fetch();
@@ -261,48 +261,48 @@ class User extends DatabaseObject {
 			Log::Message($logtext, null, 55);
 		}
 	} // fn setUserType
-	
-	
+
+
 	/**
 	 * @return int
 	 */
-	function getUserId() 
+	function getUserId()
 	{
 		return $this->getProperty('Id');
 	} // fn getUserId
-	
-	
+
+
 	/**
 	 * Get unique login key for this user - login key is only good for the time the
 	 * user is logged in.
 	 * @return int
 	 */
-	function getKeyId() 
+	function getKeyId()
 	{
 		return $this->getProperty('KeyId');
 	} // fn getKeyId
-	
-	
+
+
 	/**
 	 * Get the real name of the user.
 	 * @return string
 	 */
-	function getRealName() 
+	function getRealName()
 	{
 		return $this->getProperty('Name');
 	} // fn getRealName
-	
-	
+
+
 	/**
 	 * Get the login name of the user.
 	 * @return string
 	 */
-	function getUserName() 
+	function getUserName()
 	{
 		return $this->getProperty('UName');
 	} // fn getUserName
 
-	
+
 	/**
 	 * Return the value of the given variable name.
 	 * If the variable name does not exist, return null.
@@ -314,28 +314,28 @@ class User extends DatabaseObject {
 	{
 		if (isset($this->m_config[$p_varName])) {
 			return $this->m_config[$p_varName];
-		} else {	
-			return null;	
+		} else {
+			return null;
 		}
 	} // fn getConfigValue
-	
-	
+
+
 	/**
 	 * Set the user variable to the given value.
 	 * If the variable does not exist, it will be created.
 	 *
 	 * @param string $p_varName
 	 * @param mixed $p_value
-	 * 
+	 *
 	 * @return void
 	 */
 	function setConfigValue($p_varName, $p_value)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		if (!$this->exists() || empty($p_varName) || !is_string($p_varName)) {
 			return;
 		}
-		
+
 		if (strtolower($p_varName) == "reader") {
 			// Special case for the "Reader" property.
 			$this->setProperty("Reader", $p_value);
@@ -345,7 +345,7 @@ class User extends DatabaseObject {
 					$sql = "UPDATE UserConfig SET value='".mysql_real_escape_string($p_value)."'"
 						   ." WHERE fk_user_id=".$this->m_data['Id']
 						   ." AND varname='".mysql_real_escape_string($p_varName)."'";
-					$Campsite['db']->Execute($sql);
+					$g_ado_db->Execute($sql);
 					$this->m_config[$p_varName] = $p_value;
 				}
 			} else {
@@ -353,13 +353,13 @@ class User extends DatabaseObject {
 					   ." fk_user_id=".$this->m_data['Id'].", "
 					   ." varname='".mysql_real_escape_string($p_varName)."', "
 					   ." value='".mysql_real_escape_string($p_value)."'";
-				$Campsite['db']->Execute($sql);			
+				$g_ado_db->Execute($sql);
 				$this->m_config[$p_varName] = $p_value;
 			}
 		}
-	} // fn setConfigValue	
-	
-	
+	} // fn setConfigValue
+
+
 	/**
 	 * Get the user config variables in the form array("varname" => "value").
 	 *
@@ -369,8 +369,8 @@ class User extends DatabaseObject {
 	{
 		return $this->m_config;
 	} // fn getConfig
-	
-	
+
+
 	/**
 	 * Get the default config for all users.
 	 *
@@ -385,8 +385,8 @@ class User extends DatabaseObject {
 			return $tmpUser->m_defaultConfig;
 		}
 	} // fn GetDefaultConfig
-	
-	
+
+
 	/**
 	 * Return true if the user has the permission specified.
 	 *
@@ -394,34 +394,34 @@ class User extends DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	function hasPermission($p_permissionString) 
+	function hasPermission($p_permissionString)
 	{
 		return (isset($this->m_config[$p_permissionString])
 				&& ($this->m_config[$p_permissionString] == 'Y'));
 	} // fn hasPermission
-	
-	
+
+
 	/**
 	 * Set the specified permission enabled or disabled.
 	 *
 	 * @param string $p_permissionString
 	 * @param boolean $p_value
-	 * 
+	 *
 	 * @return void
 	 */
 	function setPermission($p_permissionString, $p_value)
 	{
 		$p_value = $p_value ? 'Y' : 'N';
-		$this->setConfigValue($p_permissionString, $p_value);		
+		$this->setConfigValue($p_permissionString, $p_value);
 	} // fn setPermission
-	
-	
+
+
 	/**
 	 * Return TRUE if this user is an administrator.
-	 * 
+	 *
 	 * @return boolean
 	 */
-	function isAdmin() 
+	function isAdmin()
 	{
 		return ($this->getProperty('Reader') == 'N');
 	} // fn isAdmin
@@ -430,14 +430,14 @@ class User extends DatabaseObject {
 	/**
 	 * @return boolean
 	 */
-	function isValidPassword($p_password) 
+	function isValidPassword($p_password)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$userPasswordSQL = mysql_real_escape_string($p_password);
 		$queryStr = "SELECT Password, SHA1('$userPasswordSQL') AS SHA1Password,"
 				. " PASSWORD('$userPasswordSQL') AS OLDPassword FROM Users "
 				. " WHERE Id = '".mysql_real_escape_string($this->getUserId())."' ";
-		if (!($row = $Campsite['db']->GetRow($queryStr))) {
+		if (!($row = $g_ado_db->GetRow($queryStr))) {
 			return false;
 		}
 		if ($row['Password'] == $row['SHA1Password'] || $row['Password'] == $row['OLDPassword']) {
@@ -445,44 +445,44 @@ class User extends DatabaseObject {
 		}
 		$queryStr = "SELECT Password, OLD_PASSWORD('$userPasswordSQL') AS OLDPassword FROM Users "
 				. " WHERE Id = '".mysql_real_escape_string($this->getUserId())."' ";
-		if (!($row = $Campsite['db']->GetRow($queryStr))) {
+		if (!($row = $g_ado_db->GetRow($queryStr))) {
 			return false;
 		}
 		if ($row['Password'] == $row['OLDPassword']) {
 			return true;
 		}
 	} // fn isValidPassword
-	
-	
+
+
 	/**
 	 * @return boolean
 	 */
-	function setPassword($p_password) 
+	function setPassword($p_password)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$queryStr = "SELECT SHA1('".mysql_real_escape_string($p_password)."') AS PWD";
-		$row = $Campsite['db']->GetRow($queryStr);
+		$row = $g_ado_db->GetRow($queryStr);
 		$this->setProperty('Password', $row['PWD']);
 		if (function_exists("camp_load_language")) { camp_load_language("api");	}
 		$logtext = getGS('Password changed for $1', $this->m_data['Name']." (".$this->m_data['UName'].")");
-		Log::Message($logtext, null, 54);	
+		Log::Message($logtext, null, 54);
 	}  // fn setPassword
 
-	
+
 	/**
 	 * This is a static function.  Check if the user is allowed
 	 * to access the site.
 	 *
 	 * @return array
-	 * 		An array of two elements: 
+	 * 		An array of two elements:
 	 *		boolean - whether the login was successful
 	 *		object - if successful, the user object
 	 */
-	function Login($p_userName, $p_userPassword) 
+	function Login($p_userName, $p_userPassword)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$queryStr = "SELECT * FROM Users WHERE UName='$p_userName' AND Reader='N'";
-		$row = $Campsite['db']->GetRow($queryStr);
+		$row = $g_ado_db->GetRow($queryStr);
 		if ($row) {
 			$user =& new User();
 			$user->fetch($row);
@@ -496,8 +496,8 @@ class User extends DatabaseObject {
 			return array(false, null);
 		}
 	} // fn Login
-	
-	
+
+
 	/**
 	 * Return true if the user name exists.
 	 *
@@ -506,15 +506,15 @@ class User extends DatabaseObject {
 	 */
 	function UserNameExists($p_userName)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$sql = "SELECT UName FROM Users WHERE UName='".mysql_real_escape_string($p_userName)."'";
-		if ($Campsite['db']->GetOne($sql)) {
+		if ($g_ado_db->GetOne($sql)) {
 			return true;
 		} else {
 			return false;
 		}
 	} // fn UserNameExists
-	
+
 } // class User
 
 ?>

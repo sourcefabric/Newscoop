@@ -30,7 +30,7 @@ class Log extends DatabaseObject {
 	 */
 	function Message($p_text, $p_userId = null, $p_eventId = 0)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		if (is_null($p_userId)) {
 			$p_userId = 0;
 
@@ -44,7 +44,7 @@ class Log extends DatabaseObject {
 					." fk_event_id=$p_eventId,"
 					." fk_user_id=$p_userId, "
 					." text='".mysql_real_escape_string($p_text)."'";
-		$Campsite['db']->Execute($queryStr);
+		$g_ado_db->Execute($queryStr);
 	} // fn Message
 
 
@@ -85,12 +85,12 @@ class Log extends DatabaseObject {
 	 */
 	function GetNumLogs($p_eventId = null)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$queryStr = 'SELECT COUNT(*) FROM Log';
 		if (!is_null($p_eventId)) {
 			$queryStr .= " WHERE fk_event_id=$p_eventId";
 		}
-		$total = $Campsite['db']->GetOne($queryStr);
+		$total = $g_ado_db->GetOne($queryStr);
 		return $total;
 	} // fn GetNumLogs
 

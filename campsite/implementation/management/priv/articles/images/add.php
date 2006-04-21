@@ -34,7 +34,7 @@ $sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $
 
 $ImageTemplateId = ArticleImage::GetUnusedTemplateId($f_article_number);
 
-$q_now = $Campsite['db']->GetOne("SELECT LEFT(NOW(), 10)");
+$q_now = $g_ado_db->GetOne("SELECT LEFT(NOW(), 10)");
 
 ?>
 <script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/calendar-setup.js"></script>

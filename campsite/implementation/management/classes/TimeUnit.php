@@ -6,8 +6,8 @@
 /**
  * Includes
  */
-// We indirectly reference the DOCUMENT_ROOT so we can enable 
-// scripts to use this file from the command line, because $_SERVER['DOCUMENT_ROOT'] 
+// We indirectly reference the DOCUMENT_ROOT so we can enable
+// scripts to use this file from the command line, because $_SERVER['DOCUMENT_ROOT']
 // is not defined in these cases.
 if (!isset($g_documentRoot)) {
     $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
@@ -24,12 +24,12 @@ class TimeUnit extends DatabaseObject {
 	var $m_keyColumnNames = array('Unit', 'IdLanguage');
 	var $m_keyIsAutoIncrement = false;
 	var $m_columnNames = array('Unit', 'IdLanguage', 'Name');
-	
-	/** 
+
+	/**
 	 * @param string $p_unit
 	 * @param int $p_languageId
 	 */
-	function TimeUnit($p_unit = null, $p_languageId = null) 
+	function TimeUnit($p_unit = null, $p_languageId = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
 		$this->m_data['Unit'] = $p_unit;
@@ -41,8 +41,8 @@ class TimeUnit extends DatabaseObject {
 			$this->fetch();
 		}
 	} // constructor
-	
-	
+
+
 	function SetTimeUnit($p_unit, $p_languageId, $p_name)
 	{
 		$timeUnit =& new TimeUnit($p_unit, $p_languageId);
@@ -52,42 +52,41 @@ class TimeUnit extends DatabaseObject {
 			$timeUnit->create(array('Name' => $p_name));
 		}
 	} // fn SetTimeUnit
-	
-	
+
+
 	/**
 	 * @return string
 	 */
-	function getUnit() 
+	function getUnit()
 	{
 		return $this->getProperty('Unit');
 	} // fn getUnit
-	
-	
+
+
 	/**
 	 * @return string
 	 */
-	function getName() 
+	function getName()
 	{
 		return $this->getProperty('Name');
 	} // fn getName
-	
+
 
 	/**
 	 * @return int
-	 */ 
-	function getLanguageId() 
+	 */
+	function getLanguageId()
 	{
 		return $this->getProperty('IdLanguage');
 	} // fn getLanguageId
-	
-	
+
+
 	/**
 	 * Return an array of all time units.
 	 * @return array
 	 */
-	function GetTimeUnits($p_languageCode) 
+	function GetTimeUnits($p_languageCode)
 	{
-		global $Campsite;
 		$queryStr = "SELECT TimeUnits.Unit, TimeUnits.Name "
 					." FROM TimeUnits, Languages "
 					." WHERE TimeUnits.IdLanguage = Languages.Id "
@@ -105,7 +104,7 @@ class TimeUnit extends DatabaseObject {
 		return $timeUnits;
 	} // fn GetTimeUnits
 
-			
+
 } // class TimeUnit
 
 ?>

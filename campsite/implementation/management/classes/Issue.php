@@ -6,8 +6,8 @@
 /**
  * Includes
  */
-// We indirectly reference the DOCUMENT_ROOT so we can enable 
-// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT'] 
+// We indirectly reference the DOCUMENT_ROOT so we can enable
+// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT']
 // is not defined in these cases.
 if (!isset($g_documentRoot)) {
     $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
@@ -37,14 +37,14 @@ class Issue extends DatabaseObject {
 		'ArticleTplId',
 		'ShortName');
 	var $m_languageName = null;
-	
+
 	/**
 	 * A publication has Issues, Issues have Sections and Articles.
 	 * @param int $p_publicationId
 	 * @param int $p_languageId
 	 * @param int $p_issueNumber
 	 */
-	function Issue($p_publicationId = null, $p_languageId = null, $p_issueNumber = null) 
+	function Issue($p_publicationId = null, $p_languageId = null, $p_issueNumber = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
 		$this->m_data['IdPublication'] = $p_publicationId;
@@ -62,7 +62,7 @@ class Issue extends DatabaseObject {
 	 * @param array $p_values
 	 * @return boolean
 	 */
-	function create($p_shortName, $p_values = null) 
+	function create($p_shortName, $p_values = null)
 	{
 	    $tmpValues = array('ShortName' => $p_shortName);
 	    if (!is_null($p_values)) {
@@ -71,24 +71,24 @@ class Issue extends DatabaseObject {
 	    $success = parent::create($tmpValues);
 	    if ($success) {
 			if (function_exists("camp_load_language")) { camp_load_language("api");	}
-	    	$logtext = getGS('Issue $1 added in publication $2', 
-	    					 $this->m_data['Name']." (".$this->m_data['Number'].")", 
+	    	$logtext = getGS('Issue $1 added in publication $2',
+	    					 $this->m_data['Name']." (".$this->m_data['Number'].")",
 	    					 $this->m_data['IdPublication']);
     		Log::Message($logtext, null, 11);
 	    }
 	    return $success;
 	} // fn create
-	
-	
+
+
 	/**
 	 * Delete the Issue, and optionally all sections and articles contained within it.
 	 * @param boolean $p_deleteSections
 	 * @param boolean $p_deleteArticles
 	 * @return boolean
 	 */
-	function delete($p_deleteSections = true, $p_deleteArticles = true) 
+	function delete($p_deleteSections = true, $p_deleteArticles = true)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		if ($p_deleteSections) {
     		$sections = Section::GetSections($this->m_data['IdPublication'], $this->m_data['Number'], $this->m_data['IdLanguage']);
     		foreach ($sections as $section) {
@@ -98,15 +98,15 @@ class Issue extends DatabaseObject {
 	    $success = parent::delete();
 	    if ($success) {
 			if (function_exists("camp_load_language")) { camp_load_language("api");	}
-	    	$logtext = getGS('Issue $1 from publication $2 deleted', 
-	    		$this->m_data['Name']." (".$this->m_data['Number'].")", 
-	    		$this->m_data['IdPublication']); 
-			Log::Message($logtext, null, 12); 
+	    	$logtext = getGS('Issue $1 from publication $2 deleted',
+	    		$this->m_data['Name']." (".$this->m_data['Number'].")",
+	    		$this->m_data['IdPublication']);
+			Log::Message($logtext, null, 12);
 	    }
 		return $success;
 	} // fn delete
-	
-	
+
+
 	/**
 	 * Copy this issue and all sections.
 	 * @param int $p_destPublicationId
@@ -114,7 +114,7 @@ class Issue extends DatabaseObject {
 	 * @param int $p_destLanguageId
 	 * @return Issue
 	 */
-	function __copy($p_destPublicationId, $p_destIssueId, $p_destLanguageId) 
+	function __copy($p_destPublicationId, $p_destIssueId, $p_destLanguageId)
 	{
         // Copy the issue
         $newIssue =& new Issue($p_destPublicationId, $p_destLanguageId, $p_destIssueId);
@@ -126,18 +126,18 @@ class Issue extends DatabaseObject {
         $created = $newIssue->create($p_destIssueId, $columns);
         if ($created) {
         	// Copy the sections in the issue
-            $sections = Section::GetSections($this->m_data['IdPublication'], 
+            $sections = Section::GetSections($this->m_data['IdPublication'],
                 $this->m_data['Number'], $this->m_data['IdLanguage']);
             foreach ($sections as $section) {
                 $section->copy($p_destPublicationId, $p_destIssueId, $p_destLanguageId, null, false);
             }
-            return $newIssue;    
+            return $newIssue;
         } else {
             return null;
         }
 	} // fn __copy
-	
-	
+
+
 	/**
 	 * Create a copy of this issue.  You can use this to:
 	 * 1) Translate an issue.  In this case do:
@@ -149,10 +149,10 @@ class Issue extends DatabaseObject {
 	 * Note: All sections will be copied, but not the articles.
 	 *
 	 * @param int $p_destPublicationId
-	 *     (optional) Specify the destination publication.  
+	 *     (optional) Specify the destination publication.
 	 *     Default is this issue's publication ID.
 	 * @param int $p_destIssueId
-	 *     (optional) Specify the destination issue ID.  
+	 *     (optional) Specify the destination issue ID.
 	 *     If not specified, a new one will be generated.
 	 * @param int $p_destLanguageId
 	 *     (optional) Use this if you want the copy to be a translation of the current issue.
@@ -160,9 +160,9 @@ class Issue extends DatabaseObject {
 	 * @return mixed
 	 *		An array of Issues, a single Issue, or null.
 	 */
-	function copy($p_destPublicationId = null, $p_destIssueId = null, $p_destLanguageId = null) 
+	function copy($p_destPublicationId = null, $p_destIssueId = null, $p_destLanguageId = null)
 	{
-	    global $Campsite;
+	    global $g_ado_db;
 	    if (is_null($p_destPublicationId)) {
 	        $p_destPublicationId = $this->m_data['IdPublication'];
 	    }
@@ -186,155 +186,155 @@ class Issue extends DatabaseObject {
 	        return $this->__copy($p_destPublicationId, $p_destIssueId, $p_destLanguageId);
 	    }
 	} // fn copy
-	
-	
+
+
 	/**
 	 * Return the publication ID of the publication that contains this issue.
 	 * @return int
 	 */
-	function getPublicationId() 
+	function getPublicationId()
 	{
 		return $this->getProperty('IdPublication');
 	} // fn getPublicationId
-	
-	
+
+
 	/**
 	 * Return the language ID of the issue.
 	 * @return int
 	 */
-	function getLanguageId() 
+	function getLanguageId()
 	{
 		return $this->getProperty('IdLanguage');
 	} // fn getLanguageId
 
-	
+
 	/**
 	 * Changing an issue's language will change the section language as well.
 	 *
 	 * @param int $p_value
 	 */
-	function setLanguageId($p_value) 
+	function setLanguageId($p_value)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$sql = "UPDATE Sections SET IdLanguage=$p_value"
 			  ." WHERE IdPublication=".$this->m_data['IdPublication']
 			  ." AND NrIssue=".$this->m_data['Number']
 			  ." AND IdLanguage=".$this->m_data['IdLanguage'];
-		$success = $Campsite['db']->Execute($sql);
+		$success = $g_ado_db->Execute($sql);
 		if ($success) {
 			$this->setProperty('IdLanguage', $p_value);
 		}
 	} // fn setLanguageId
-	
-	
+
+
 	/**
-	 * A simple way to get the name of the language the article is 
+	 * A simple way to get the name of the language the article is
 	 * written in.  The value is cached in case there are multiple
 	 * calls to this function.
 	 *
 	 * @return string
 	 */
-	function getLanguageName() 
+	function getLanguageName()
 	{
 		if (is_null($this->m_languageName)) {
 			$language =& new Language($this->m_data['IdLanguage']);
 			$this->m_languageName = $language->getNativeName();
 		}
-		return $this->m_languageName;		
+		return $this->m_languageName;
 	} // fn getLanguageName
-	
-	
+
+
 	/**
 	 * @return int
 	 */
-	function getIssueNumber() 
+	function getIssueNumber()
 	{
 		return $this->getProperty('Number');
 	} // fn getIssueNumber
-	
-	
+
+
 	/**
 	 * Get the name of the issue.
 	 * @return string
 	 */
-	function getName() 
+	function getName()
 	{
 		return $this->getProperty('Name');
 	} // fn getName
-	
-	
+
+
 	/**
 	 * Set the name of the issue.
 	 * @param string
 	 * @return boolean
 	 */
-	function setName($p_value) 
+	function setName($p_value)
 	{
 	    return $this->setProperty('Name', $p_value);
 	} // fn setName
-	
-	
+
+
 	/**
 	 * Get the string used for the URL to this issue.
 	 * @return string
 	 */
-	function getUrlName() 
+	function getUrlName()
 	{
 		return $this->getProperty('ShortName');
 	} // fn getUrlName
-	
-	
+
+
 	/**
 	 * Set the string used in the URL to access this Issue.
 	 *
 	 * @return boolean
 	 */
-	function setUrlName($p_value) 
+	function setUrlName($p_value)
 	{
 	    return $this->setProperty('ShortName', $p_value);
 	} // fn setUrlName
-	
-	
+
+
 	/**
 	 * Get the default template ID used for articles in this issue.
 	 * @return int
 	 */
-	function getArticleTemplateId() 
+	function getArticleTemplateId()
 	{
 		return $this->getProperty('ArticleTplId');
 	} // fn getArticleTemplateId
-	
-	
+
+
 	/**
 	 * Get the default template ID used for sections in this issue.
 	 * @return int
 	 */
-	function getSectionTemplateId() 
+	function getSectionTemplateId()
 	{
 		return $this->getProperty('SectionTplId');
 	} // fn getSectionTemplateId
-	
-	
+
+
 	/**
 	 * Get the template ID used for this issue.
 	 * @return int
 	 */
-	function getIssueTemplateId() 
+	function getIssueTemplateId()
 	{
 		return $this->getProperty('IssueTplId');
 	} // fn getIssueTemplateId
-	
-	
+
+
 	/**
 	 * Return 'Y' if the issue is published, 'N' if it is not published.
 	 * @return string
 	 */
-	function getPublished() 
+	function getPublished()
 	{
 		return $this->getProperty('Published');
 	} // fn getPublished
-	
-	
+
+
 	/**
 	 * Set the published state of the issue.
 	 *
@@ -344,7 +344,7 @@ class Issue extends DatabaseObject {
 	 *
 	 * @return void
 	 */
-	function setPublished($p_value = null) 
+	function setPublished($p_value = null)
 	{
 		$doPublish = null;
 		if (is_null($p_value)) {
@@ -368,9 +368,9 @@ class Issue extends DatabaseObject {
 				$this->setProperty('Published', 'Y', true);
 				$this->setProperty('PublicationDate', 'NOW()', true, true);
 			} else {
-				$this->setProperty('Published', 'N', true);			
+				$this->setProperty('Published', 'N', true);
 			}
-			
+
 			// Log message
 			if ($this->getPublished() == 'Y') {
 				$status = getGS('Published');
@@ -380,23 +380,23 @@ class Issue extends DatabaseObject {
 			if (function_exists("camp_load_language")) { camp_load_language("api");	}
 			$logtext = getGS('Issue $1 changed status to $2',
 							 $this->m_data['Number'].'. '.$this->m_data['Name'].' ('.$this->getLanguageName().')',
-							 $status); 
+							 $status);
 			Log::Message($logtext, null, 14);
 		}
 	} // fn setPublished
-	
-	
-	function getPublicationDate() 
+
+
+	function getPublicationDate()
 	{
 		return $this->getProperty('PublicationDate');
 	} // fn getPublicationDate
-	
-	
+
+
 	/**
 	 * Get all the languages to which this issue has not been translated.
 	 * @return array
 	 */
-	function getUnusedLanguages() 
+	function getUnusedLanguages()
 	{
 		$tmpLanguage =& new Language();
 		$columnNames = $tmpLanguage->getColumnNames(true);
@@ -410,9 +410,9 @@ class Issue extends DatabaseObject {
 		return $languages;
 	} // fn getUsusedLanguages
 
-	
+
 	/**
-	 * Get all the issues in the given publication as return them as an array 
+	 * Get all the issues in the given publication as return them as an array
 	 * of Issue objects.
 	 *
 	 * @param int $p_publicationId
@@ -432,11 +432,11 @@ class Issue extends DatabaseObject {
 	 *
 	 * @return array
 	 */
-	function GetIssues($p_publicationId = null, 
-	                   $p_languageId = null, 
-	                   $p_issueId = null, 
-	                   $p_preferredLanguage = null, 
-	                   $p_sqlOptions = null) 
+	function GetIssues($p_publicationId = null,
+	                   $p_languageId = null,
+	                   $p_issueId = null,
+	                   $p_preferredLanguage = null,
+	                   $p_sqlOptions = null)
 	{
 		$tmpIssue =& new Issue();
 		$columnNames = $tmpIssue->getColumnNames(true);
@@ -464,9 +464,9 @@ class Issue extends DatabaseObject {
 			$queryStr .= ' WHERE '.implode(' AND ', $whereClause);
 		}
 		$queryStr = DatabaseObject::ProcessOptions($queryStr, $p_sqlOptions);
-		global $Campsite;
+		global $g_ado_db;
 		$issues = array();
-		$rows = $Campsite['db']->GetAll($queryStr);
+		$rows = $g_ado_db->GetAll($queryStr);
 		if (is_array($rows)) {
 			foreach ($rows as $row) {
 				$tmpObj =& new Issue();
@@ -475,10 +475,10 @@ class Issue extends DatabaseObject {
 				$issues[] = $tmpObj;
 			}
 		}
-		
+
 		return $issues;
 	} // fn GetIssues
-			
+
 	/**
 	 * Return the total number of issues in the database.
 	 *
@@ -487,33 +487,33 @@ class Issue extends DatabaseObject {
 	 *
 	 * @return int
 	 */
-	function GetNumIssues($p_publicationId = null) 
+	function GetNumIssues($p_publicationId = null)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$queryStr = 'SELECT COUNT(*) FROM Issues ';
 		if (is_numeric($p_publicationId)) {
 			$queryStr .= " WHERE IdPublication=$p_publicationId";
 		}
-		$total = $Campsite['db']->GetOne($queryStr);
-		return $total;				
+		$total = $g_ado_db->GetOne($queryStr);
+		return $total;
 	} // fn GetNumIssues
 
-	
+
 	/**
 	 * Return an issue number that is not in use.
 	 * @param int $p_publicationId
 	 * @return int
 	 */
-	function GetUnusedIssueId($p_publicationId) 
+	function GetUnusedIssueId($p_publicationId)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$queryStr = "SELECT MAX(Number) + 1 FROM Issues "
 		            ." WHERE IdPublication=$p_publicationId";
-		$number = $Campsite['db']->GetOne($queryStr);
+		$number = $g_ado_db->GetOne($queryStr);
 		return $number;
 	} // fn GetUnusedIssueId
 
-	
+
 	/**
 	 * Return the last Issue created in this publication or NULL if there
 	 * are no previous issues.
@@ -521,20 +521,20 @@ class Issue extends DatabaseObject {
 	 * @param int $p_publicationId
 	 * @return Issue
 	 */
-	function GetLastCreatedIssue($p_publicationId) 
+	function GetLastCreatedIssue($p_publicationId)
 	{
-	   global $Campsite;
+	   global $g_ado_db;
 	   $queryStr = "SELECT MAX(Number) FROM Issues WHERE IdPublication=$p_publicationId";
-	   $maxIssueNumber = $Campsite['db']->GetOne($queryStr);
+	   $maxIssueNumber = $g_ado_db->GetOne($queryStr);
 	   if (empty($maxIssueNumber)) {
 	       return null;
 	   }
 	   $queryStr = "SELECT IdLanguage FROM Issues WHERE IdPublication=$p_publicationId AND Number=$maxIssueNumber";
-	   $idLanguage = $Campsite['db']->GetOne($queryStr);
+	   $idLanguage = $g_ado_db->GetOne($queryStr);
 	   $issue =& new Issue($p_publicationId, $idLanguage, $maxIssueNumber);
 	   return $issue;
 	} // fn GetLastCreatedIssue
-	
+
 } // class Issue
 
 ?>

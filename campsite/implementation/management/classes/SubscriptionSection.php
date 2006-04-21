@@ -38,10 +38,10 @@ class SubscriptionSection extends DatabaseObject {
 
 	function delete()
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$deleted = parent::delete();
 	    $queryStr = "DELETE FROM SubsSections WHERE IdSubscription=".$this->m_data['Id'];
-	    $Campsite['db']->Execute($queryStr);
+	    $g_ado_db->Execute($queryStr);
 	    return $deleted;
 	} // fn delete
 
@@ -124,10 +124,10 @@ class SubscriptionSection extends DatabaseObject {
 	 */
 	function AddSubscriberToPublication($p_subscriptionId, $p_publicationId, $p_languageId, $p_values = null)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$created = true;
 		$queryStr = "SELECT DISTINCT Number FROM Sections where IdPublication=$p_publicationId";
-		$sectionIds = $Campsite['db']->GetCol($queryStr);
+		$sectionIds = $g_ado_db->GetCol($queryStr);
 		foreach ($sectionIds as $sectionId) {
 			$subscriptionSection =& new SubscriptionSection($p_subscriptionId, $sectionId, $p_languageId);
 			$created &= $subscriptionSection->create($p_values);
@@ -160,7 +160,7 @@ class SubscriptionSection extends DatabaseObject {
 
 	function GetNumSections($p_subscriptionId, $p_sectionId = null, $p_languageId = null)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$queryStr = "SELECT count(*) FROM SubsSections WHERE IdSubscription = $p_subscriptionId";
 		if (!is_null($p_sectionId)) {
 			if (is_array($p_sectionId)) {
@@ -178,7 +178,7 @@ class SubscriptionSection extends DatabaseObject {
 		} else {
 			$queryStr .= " AND IdLanguage != 0";
 		}
-		$total = $Campsite['db']->GetOne($queryStr);
+		$total = $g_ado_db->GetOne($queryStr);
 		return $total;
 	}
 

@@ -13,7 +13,7 @@ if (!$access) {
 	exit;
 }
 
-$languageId = Input::Get('Lang', 'int', 0, true); 
+$languageId = Input::Get('Lang', 'int', 0, true);
 $Back = Input::Get('Back', 'string', null, true);
 
 $editMode = ($languageId != 0);
@@ -28,11 +28,11 @@ if (!$User->hasPermission('ManageLanguages')) {
 	exit;
 }
 
-$q_defaultTimeUnits = $Campsite['db']->GetAll("SELECT * FROM TimeUnits WHERE IdLanguage=1");
+$q_defaultTimeUnits = $g_ado_db->GetAll("SELECT * FROM TimeUnits WHERE IdLanguage=1");
 $numTimeUnits = 0;
 $q_timeUnits = array();
 if ($editMode) {
-    $q_timeUnits = $Campsite['db']->GetAll("SELECT * FROM TimeUnits WHERE IdLanguage=$languageId");
+    $q_timeUnits = $g_ado_db->GetAll("SELECT * FROM TimeUnits WHERE IdLanguage=$languageId");
 }
 
 $languageObj =& new Language($languageId);
@@ -40,11 +40,11 @@ $languageObj =& new Language($languageId);
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
 $crumbs[] = array(getGS("Languages"), "/$ADMIN/languages");
-if ($editMode) { 
+if ($editMode) {
     $crumbs[] = array(getGS("Edit language"), "");
-} else { 
+} else {
     $crumbs[] = array(getGS("Add new language"), "");
-} 
+}
 $breadcrumbs = camp_html_breadcrumbs($crumbs);
 echo $breadcrumbs;
 
@@ -66,7 +66,7 @@ echo $breadcrumbs;
 	       <B><?php  putGS("Edit language"); ?></B>
 	   <?php } else { ?>
            <B><?php  putGS("Add new language"); ?></B>
-       <?php } ?>	   
+       <?php } ?>
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
 	</TD>
 </TR>
@@ -212,7 +212,7 @@ echo $breadcrumbs;
 <TR>
 	<TD COLSPAN="2"><?php  putGS('Please enter the translation for time units.'); ?></TD>
 </TR>
-	<?php 
+	<?php
 	for ($i = 0; $i < count($q_defaultTimeUnits); $i++) {
 	    if (count($q_timeUnits) > 0) {
             $value = $q_timeUnits[$i]['Name'];
@@ -225,10 +225,10 @@ echo $breadcrumbs;
 		  <TD ALIGN="RIGHT"><?php p(htmlspecialchars($q_defaultTimeUnits[$i]['Name']));?></TD>
 		  <TD><INPUT TYPE="TEXT" class="input_text" NAME="<?php p(htmlspecialchars($q_defaultTimeUnits[$i]['Unit']));?>" SIZE="20" MAXLENGTH="20" VALUE="<?php  p(htmlspecialchars($value)); ?>"></TD>
 	   </TR>
-	   <?php 
-	} ?> 	
+	   <?php
+	} ?>
 	<TR>
-	
+
 	<TD COLSPAN="2">
 		<DIV ALIGN="CENTER">
 		<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">

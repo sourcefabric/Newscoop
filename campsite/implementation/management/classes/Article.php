@@ -124,7 +124,7 @@ class Article extends DatabaseObject {
 	 */
 	function create($p_articleType, $p_name = null, $p_publicationId = null, $p_issueNumber = null, $p_sectionNumber = null)
 	{
-		global $Campsite;
+		global $g_ado_db;
 
 		$this->m_data['Number'] = $this->__generateArticleNumber();
 		$this->m_data['ArticleOrder'] = $this->m_data['Number'];
@@ -152,13 +152,13 @@ class Article extends DatabaseObject {
 
 		// compute article order number
 		$queryStr = "SELECT MIN(ArticleOrder) AS min FROM Articles$where";
-		$articleOrder = $Campsite['db']->GetOne($queryStr) - 1;
+		$articleOrder = $g_ado_db->GetOne($queryStr) - 1;
 		if ($articleOrder < 0) {
 			$articleOrder = $this->m_data['Number'];
 		}
 		if ($articleOrder == 0) {
 			$queryStr = "UPDATE Articles SET ArticleOrder = ArticleOrder + 1$where";
-			$Campsite['db']->Execute($queryStr);
+			$g_ado_db->Execute($queryStr);
 			$articleOrder = 1;
 		}
 		$values['ArticleOrder'] = $articleOrder;
@@ -189,14 +189,14 @@ class Article extends DatabaseObject {
 	 */
 	function __generateArticleNumber()
 	{
-	    global $Campsite;
+	    global $g_ado_db;
 		$queryStr = 'UPDATE AutoId SET ArticleId=LAST_INSERT_ID(ArticleId + 1)';
-		$Campsite['db']->Execute($queryStr);
-		if ($Campsite['db']->Affected_Rows() <= 0) {
+		$g_ado_db->Execute($queryStr);
+		if ($g_ado_db->Affected_Rows() <= 0) {
 			// If we were not able to get an ID.
 			return 0;
 		}
-		return $Campsite['db']->Insert_ID();
+		return $g_ado_db->Insert_ID();
 	} // fn __generateArticleNumber
 
 
@@ -224,7 +224,6 @@ class Article extends DatabaseObject {
 	function copy($p_destPublicationId = 0, $p_destIssueNumber = 0, $p_destSectionNumber = 0,
 	              $p_userId = null, $p_copyTranslations = false)
 	{
-		global $Campsite;
 		$copyArticles = array();
 		if ($p_copyTranslations) {
 		    // Get all translations for this article
@@ -358,7 +357,7 @@ class Article extends DatabaseObject {
 	 */
 	function getUniqueName($p_currentName)
 	{
-	    global $Campsite;
+	    global $g_ado_db;
 		$origNewName = $p_currentName . " (".getGS("Duplicate");
 		$newName = $origNewName .")";
 		$count = 1;
@@ -369,7 +368,7 @@ class Article extends DatabaseObject {
 						.' AND NrSection = ' . $this->m_data['NrSection']
 						.' AND IdLanguage = ' . $this->m_data['IdLanguage']
 						." AND Name = '" . mysql_escape_string($newName) . "'";
-			$row = $Campsite['db']->GetRow($queryStr);
+			$row = $g_ado_db->GetRow($queryStr);
 			if (count($row) > 0) {
 				$newName = $origNewName.' '.++$count.')';
 			} else {
@@ -391,7 +390,6 @@ class Article extends DatabaseObject {
 	 */
 	function createTranslation($p_languageId, $p_userId, $p_name)
 	{
-		global $Campsite;
 		// Construct the duplicate article object.
 		$articleCopy =& new Article();
 		$articleCopy->m_data['IdPublication'] = $this->m_data['IdPublication'];
@@ -544,7 +542,6 @@ class Article extends DatabaseObject {
 	 */
 	function getLanguages()
 	{
-		global $Campsite;
 		$tmpLanguage  =& new Language();
 		$columnNames = $tmpLanguage->getColumnNames(true);
 	 	$queryStr = 'SELECT '.implode(',', $columnNames).' FROM Articles, Languages '
@@ -566,7 +563,6 @@ class Article extends DatabaseObject {
 	 */
 	function getTranslations()
 	{
-		global $Campsite;
 	 	$queryStr = 'SELECT '. implode(',', $this->m_columnNames).' FROM Articles '
 	 				.' WHERE IdPublication='.$this->m_data['IdPublication']
 	 				.' AND NrIssue='.$this->m_data['NrIssue']
@@ -600,18 +596,18 @@ class Article extends DatabaseObject {
 	 */
 	function getSection()
 	{
-		global $Campsite;
+		global $g_ado_db;
 	    $queryStr = 'SELECT * FROM Sections '
 	    			.' WHERE IdPublication='.$this->getPublicationId()
 	    			.' AND NrIssue='.$this->getIssueNumber()
 	    			.' AND IdLanguage='.$this->getLanguageId();
-		$query = $Campsite['db']->Execute($queryStr);
+		$query = $g_ado_db->Execute($queryStr);
 		if ($query->RecordCount() <= 0) {
 			$queryStr = 'SELECT * FROM Sections '
 						.' WHERE IdPublication='.$this->getPublicationId()
 						.' AND NrIssue='.$this->getIssueNumber()
 						.' LIMIT 1';
-			$query = $Campsite['db']->Execute($queryStr);
+			$query = $g_ado_db->Execute($queryStr);
 		}
 		$row = $query->FetchRow();
 		$section =& new Section($this->getPublicationId(), $this->getIssueNumber(),
@@ -636,7 +632,7 @@ class Article extends DatabaseObject {
 	 */
 	function positionRelative($p_direction, $p_spacesToMove = 1)
 	{
-		global $Campsite;
+		global $g_ado_db;
 
 		// Get the article that is in the final position where this
 		// article will be moved to.
@@ -649,7 +645,7 @@ class Article extends DatabaseObject {
 					.' AND ArticleOrder '.$compareOperator.' '.$this->m_data['ArticleOrder']
 					.' ORDER BY ArticleOrder ' . $order
 		     		.' LIMIT '.($p_spacesToMove-1).', 1';
-		$destRow = $Campsite['db']->GetRow($queryStr);
+		$destRow = $g_ado_db->GetRow($queryStr);
 		if (!$destRow) {
 			// Special case: there was a bug when you duplicated articles that
 			// caused them to have the same order number.  So we check here if
@@ -665,7 +661,7 @@ class Article extends DatabaseObject {
 						.' AND NrSection='.$this->m_data['NrSection']
 						.' AND ArticleOrder='.$this->m_data['ArticleOrder']
 			     		.' LIMIT '.($p_spacesToMove-1).', 1';
-			$destRow = $Campsite['db']->GetRow($queryStr);
+			$destRow = $g_ado_db->GetRow($queryStr);
 			if (!$destRow) {
 				return false;
 			}
@@ -680,7 +676,7 @@ class Article extends DatabaseObject {
 					.' AND NrSection = ' . $this->m_data['NrSection']
 		     		.' AND ArticleOrder >= '.$minArticleOrder
 		     		.' AND ArticleOrder <= '.$maxArticleOrder;
-		$Campsite['db']->Execute($queryStr2);
+		$g_ado_db->Execute($queryStr2);
 
 		// Change position of this article to the destination position.
 		$queryStr3 = 'UPDATE Articles SET ArticleOrder = ' . $destRow['ArticleOrder']
@@ -688,7 +684,7 @@ class Article extends DatabaseObject {
 					.' AND NrIssue = ' . $this->m_data['NrIssue']
 					.' AND NrSection = ' . $this->m_data['NrSection']
 		     		.' AND Number = ' . $this->m_data['Number'];
-		$Campsite['db']->Execute($queryStr3);
+		$g_ado_db->Execute($queryStr3);
 
 		// Re-fetch this article to get the updated article order.
 		$this->fetch();
@@ -703,7 +699,7 @@ class Article extends DatabaseObject {
 	 */
 	function positionAbsolute($p_moveToPosition = 1)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		// Get the article that is in the location we are moving
 		// this one to.
 		$queryStr = 'SELECT Number, IdLanguage, ArticleOrder FROM Articles '
@@ -711,7 +707,7 @@ class Article extends DatabaseObject {
 					.' AND NrIssue='.$this->m_data['NrIssue']
 					.' AND NrSection='.$this->m_data['NrSection']
 		     		.' ORDER BY ArticleOrder ASC LIMIT '.($p_moveToPosition - 1).', 1';
-		$destRow = $Campsite['db']->GetRow($queryStr);
+		$destRow = $g_ado_db->GetRow($queryStr);
 		if (!$destRow) {
 			return false;
 		}
@@ -736,7 +732,7 @@ class Article extends DatabaseObject {
 					.' AND NrSection='.$this->m_data['NrSection']
 		     		.' AND ArticleOrder >= '.$minArticleOrder
 		     		.' AND ArticleOrder <= '.$maxArticleOrder;
-		$Campsite['db']->Execute($queryStr);
+		$g_ado_db->Execute($queryStr);
 
 		// Reposition this article.
 		$queryStr = 'UPDATE Articles '
@@ -745,7 +741,7 @@ class Article extends DatabaseObject {
 					.' AND NrIssue='.$this->m_data['NrIssue']
 					.' AND NrSection='.$this->m_data['NrSection']
 		     		.' AND Number='.$this->m_data['Number'];
-		$Campsite['db']->Execute($queryStr);
+		$g_ado_db->Execute($queryStr);
 
 		$this->fetch();
 		return true;
@@ -1253,7 +1249,7 @@ class Article extends DatabaseObject {
 	function GetNumUniqueArticles($p_publicationId = null, $p_issueId = null,
 								  $p_sectionId = null)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$queryStr = 'SELECT COUNT(DISTINCT(Number)) FROM Articles';
 		$whereClause = array();
 		if (!is_null($p_publicationId)) {
@@ -1268,7 +1264,7 @@ class Article extends DatabaseObject {
 		if (count($whereClause) > 0) {
 			$queryStr .= ' WHERE ' . implode(' AND ', $whereClause);
 		}
-		$result = $Campsite['db']->GetOne($queryStr);
+		$result = $g_ado_db->GetOne($queryStr);
 		return $result;
 	} // fn GetNumUniqueArticles
 
@@ -1286,12 +1282,12 @@ class Article extends DatabaseObject {
 	 */
 	function GetArticlesByUser($p_userId, $p_start = 0, $p_upperLimit = 20)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$queryStr = 'SELECT * FROM Articles '
 					." WHERE IdUser=$p_userId"
 					.' ORDER BY Number DESC, IdLanguage '
 					." LIMIT $p_start, $p_upperLimit";
-		$query = $Campsite['db']->Execute($queryStr);
+		$query = $g_ado_db->Execute($queryStr);
 		$articles = array();
 		while ($row = $query->FetchRow()) {
 			$tmpArticle =& new Article();
@@ -1301,7 +1297,7 @@ class Article extends DatabaseObject {
 		$queryStr = 'SELECT COUNT(*) FROM Articles '
 					." WHERE IdUser=$p_userId"
 					.' ORDER BY Number DESC, IdLanguage ';
-		$totalArticles = $Campsite['db']->GetOne($queryStr);
+		$totalArticles = $g_ado_db->GetOne($queryStr);
 
 		return array($articles, $totalArticles);
 	} // fn GetArticlesByUser
@@ -1319,7 +1315,7 @@ class Article extends DatabaseObject {
 	 */
 	function GetSubmittedArticles($p_start = 0, $p_upperLimit = 20)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$tmpArticle =& new Article();
 		$columnNames = $tmpArticle->getColumnNames(true);
 		$queryStr = 'SELECT '.implode(", ", $columnNames)
@@ -1327,7 +1323,7 @@ class Article extends DatabaseObject {
 	    			." WHERE Published = 'S' "
 	    			.' ORDER BY Number DESC, IdLanguage '
 	    			." LIMIT $p_start, $p_upperLimit";
-		$query = $Campsite['db']->Execute($queryStr);
+		$query = $g_ado_db->Execute($queryStr);
 		$articles = array();
 		while ($row = $query->FetchRow()) {
 			$tmpArticle =& new Article();
@@ -1337,7 +1333,7 @@ class Article extends DatabaseObject {
 		$queryStr = 'SELECT COUNT(*) FROM Articles'
 	    			." WHERE Published = 'S' "
 	    			.' ORDER BY Number DESC, IdLanguage ';
-	    $totalArticles = $Campsite['db']->GetOne($queryStr);
+	    $totalArticles = $g_ado_db->GetOne($queryStr);
 
 		return array($articles, $totalArticles);
 	} // fn GetSubmittedArticles
@@ -1351,7 +1347,7 @@ class Article extends DatabaseObject {
 	 */
 	function GetUnplacedArticles($p_start = 0, $p_maxRows = 20)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$tmpArticle =& new Article();
 		$columnNames = $tmpArticle->getColumnNames(true);
 		$queryStr = 'SELECT '.implode(", ", $columnNames)
@@ -1359,7 +1355,7 @@ class Article extends DatabaseObject {
 	    			." WHERE IdPublication=0 AND NrIssue=0 AND NrSection=0 "
 	    			.' ORDER BY Number DESC, IdLanguage '
 	    			." LIMIT $p_start, $p_maxRows";
-		$query = $Campsite['db']->Execute($queryStr);
+		$query = $g_ado_db->Execute($queryStr);
 		$articles = array();
 		while ($row = $query->FetchRow()) {
 			$tmpArticle =& new Article();
@@ -1368,7 +1364,7 @@ class Article extends DatabaseObject {
 		}
 		$queryStr = 'SELECT COUNT(*) FROM Articles'
 	    			." WHERE IdPublication=0 AND NrIssue=0 AND NrSection=0 ";
-	    $totalArticles = $Campsite['db']->GetOne($queryStr);
+	    $totalArticles = $g_ado_db->GetOne($queryStr);
 
 		return array($articles, $totalArticles);
 	} // fn GetUnplacedArticles
@@ -1380,7 +1376,6 @@ class Article extends DatabaseObject {
 	 */
 	function GetAllLanguages()
 	{
-		global $Campsite;
 		$tmpLanguage =& new Language();
 		$languageColumns = $tmpLanguage->getColumnNames(true);
 		$languageColumns = implode(",", $languageColumns);
@@ -1441,7 +1436,7 @@ class Article extends DatabaseObject {
 						 $p_numRows = null, $p_startAt = '',
 						 $p_numRowsIsUniqueRows = false)
     {
-		global $Campsite;
+		global $g_ado_db;
 
 		$whereClause = array();
 		if (!is_null($p_publicationId)) {
@@ -1472,7 +1467,7 @@ class Article extends DatabaseObject {
 			if (!is_null($p_numRows)) {
 				$queryStr1 .= ' LIMIT '.$p_startAt.$p_numRows;
 			}
-			$uniqueArticleNumbers = $Campsite['db']->GetCol($queryStr1);
+			$uniqueArticleNumbers = $g_ado_db->GetCol($queryStr1);
 		}
 
 		$queryStr2 = 'SELECT *';
@@ -1540,9 +1535,9 @@ class Article extends DatabaseObject {
 	 */
 	function GetNumArticlesOfType($p_type)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$queryStr ="SELECT COUNT(*) FROM Articles WHERE Type='$p_type'";
-		return $Campsite['db']->GetOne($queryStr);
+		return $g_ado_db->GetOne($queryStr);
 	} // fn GetNumArticlesOfType
 
 
@@ -1553,7 +1548,6 @@ class Article extends DatabaseObject {
 	 */
 	function GetRecentArticles($p_max)
 	{
-	    global $Campsite;
 	    $queryStr = "SELECT * FROM Articles "
 	               ." WHERE Published='Y'"
 	               ." ORDER BY PublishDate DESC"
@@ -1570,10 +1564,10 @@ class Article extends DatabaseObject {
 	 */
 	function UnlockByUser($p_userId)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$queryStr = 'UPDATE Articles SET LockUser=0, LockTime=0'
 					." WHERE LockUser=$p_userId";
-		$Campsite['db']->Execute($queryStr);
+		$g_ado_db->Execute($queryStr);
 	} // fn UnlockByUser
 } // class Article
 

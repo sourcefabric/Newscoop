@@ -91,9 +91,9 @@ class UrlType extends DatabaseObject {
 
 	function GetByName($p_name)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$sql = "SELECT * FROM URLTypes WHERE Name='".mysql_real_escape_string($p_name)."'";
-		$row = $Campsite['db']->GetRow($sql);
+		$row = $g_ado_db->GetRow($sql);
 		if ($row && is_array($row)) {
 			$urlType =& new UrlType();
 			$urlType->fetch($row);

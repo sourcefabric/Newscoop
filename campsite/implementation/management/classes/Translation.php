@@ -4,11 +4,11 @@ class Translation extends DatabaseObject {
 	var $m_dbTableName = 'Translations';
 	var $m_keyColumnNames = array('phrase_id', 'fk_language_id');
 	var $m_keyIsAutoIncrement = false;
-	var $m_columnNames = array('id', 
-	                           'phrase_id', 
-	                           'fk_language_id', 
+	var $m_columnNames = array('id',
+	                           'phrase_id',
+	                           'fk_language_id',
 	                           'translation_text');
-	
+
 	function Translation($p_languageId = null, $p_phraseId = null)
 	{
 		if (is_numeric($p_phraseId)) {
@@ -21,27 +21,26 @@ class Translation extends DatabaseObject {
 			$this->fetch();
 		}
 	} // constructor
-	
-	
+
+
 	/**
 	 * Create a translation of a phrase.  If the phrase ID is set in the
 	 * constructor, we assume that the phrase already exists and we are
-	 * just creating a translation, and not a new phrase.  
-	 * 
+	 * just creating a translation, and not a new phrase.
+	 *
 	 * @param string $p_text
 	 * 		Optional. The translation text.
 	 * @return boolean
 	 */
 	function create($p_text = null)
 	{
-		global $Campsite;
 		if (!isset($this->m_data['phrase_id'])) {
 			$this->m_data['phrase_id'] = Translation::__GeneratePhraseId();
 		}
 		return parent::create(array("translation_text" => $p_text));
 	} // fn create
-	
-	
+
+
 	/**
 	 * Delete the phrase and all of its translations.
 	 * This can be called statically or as a member function.
@@ -49,33 +48,33 @@ class Translation extends DatabaseObject {
 	 */
 	function deletePhrase($p_phraseId = null)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		if (is_null($p_phraseId)) {
 			$p_phraseId = $this->m_data['phrase_id'];
 			$this->m_exists = false;
 		}
 		$sql = "DELETE FROM Translations WHERE phrase_id=$p_phraseId";
-		$Campsite['db']->Execute($sql);
+		$g_ado_db->Execute($sql);
 	} // fn deletePhrase
-	
-	
+
+
 	/**
 	 * Create a unique identifier for a phrase.
 	 * @access private
 	 */
-	function __GeneratePhraseId() 
+	function __GeneratePhraseId()
 	{
-	    global $Campsite;
+	    global $g_ado_db;
 		$queryStr = 'UPDATE AutoId SET translation_phrase_id=LAST_INSERT_ID(translation_phrase_id + 1)';
-		$Campsite['db']->Execute($queryStr);
-		if ($Campsite['db']->Affected_Rows() <= 0) {
+		$g_ado_db->Execute($queryStr);
+		if ($g_ado_db->Affected_Rows() <= 0) {
 			// If we were not able to get an ID.
 			return 0;
 		}
-		return $Campsite['db']->Insert_ID();	    
+		return $g_ado_db->Insert_ID();
 	} // fn __generatePhraseId
-			
-		
+
+
 	/**
 	 * Get the phrase ID.
 	 *
@@ -85,8 +84,8 @@ class Translation extends DatabaseObject {
 	{
 		return $this->getProperty('phrase_id');
 	} // fn getPhraseId
-	
-	
+
+
 	/**
 	 * Get the language ID.
 	 *
@@ -96,8 +95,8 @@ class Translation extends DatabaseObject {
 	{
 		return $this->getProperty('fk_language_id');
 	} // fn getLanguageId
-	
-	
+
+
 	/**
 	 * Get the text.
 	 *
@@ -107,8 +106,8 @@ class Translation extends DatabaseObject {
 	{
 		return $this->getProperty('translation_text');
 	} // fn getText
-	
-	
+
+
 	/**
 	 * Set the translation text.
 	 *
@@ -119,8 +118,8 @@ class Translation extends DatabaseObject {
 	{
 		return $this->setProperty('translation_text', $p_value);
 	} // fn setText
-	
-	
+
+
 	/**
 	 * A convenience function to just grab a translation.
 	 *
@@ -129,14 +128,14 @@ class Translation extends DatabaseObject {
 	 */
 	function GetPhrase($p_languageId, $p_phraseId)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$sql = "SELECT translation_text FROM Translations"
 			   ." WHERE phrase_id=".$p_phraseId
 			   ." AND fk_language_id=".$p_languageId;
-		return $Campsite['db']->GetOne($sql);
+		return $g_ado_db->GetOne($sql);
 	} // fn GetPhrase
-	
-	
+
+
 	/**
 	 * Enter description here...
 	 *
@@ -156,8 +155,8 @@ class Translation extends DatabaseObject {
 			return $translation->create($p_text);
 		}
 	} // fn SetPhrase
-	
-	
+
+
 	/**
 	 * Return an array of phrases indexed by language ID.
 	 *
@@ -167,13 +166,13 @@ class Translation extends DatabaseObject {
 	 */
 	function GetTranslations($p_phraseId, $p_sqlOptions = null)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$phrases = array();
 		if (!is_numeric($p_phraseId)) {
 			return $phrases;
 		}
 		$sql = "SELECT fk_language_id, translation_text FROM Translations WHERE phrase_id=".$p_phraseId;
-		$rows = $Campsite['db']->GetAll($sql);
+		$rows = $g_ado_db->GetAll($sql);
 		if (is_array($rows)) {
 			foreach ($rows as $row) {
 				$phrases[$row['fk_language_id']] = $row['translation_text'];
@@ -181,6 +180,6 @@ class Translation extends DatabaseObject {
 		}
 		return $phrases;
 	} // fn GetTranslations
-	
+
 } // class Translation
 ?>

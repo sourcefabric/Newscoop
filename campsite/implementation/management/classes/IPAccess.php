@@ -6,8 +6,8 @@
 /**
  * Includes
  */
-// We indirectly reference the DOCUMENT_ROOT so we can enable 
-// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT'] 
+// We indirectly reference the DOCUMENT_ROOT so we can enable
+// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT']
 // is not defined in these cases.
 if (!isset($g_documentRoot)) {
     $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
@@ -28,7 +28,7 @@ class IPAccess extends DatabaseObject {
 		'IdUser',
 		'StartIP',
 		'Addresses');
-	
+
 	function __string2array($p_IPaddress)
 	{
 		$IPaddressArray = array();
@@ -38,7 +38,7 @@ class IPAccess extends DatabaseObject {
 		}
 		return $IPaddressArray;
 	}
-	
+
 	function __array2int($p_IPAddressArray)
 	{
 		if (!is_array($p_IPAddressArray) || sizeof($p_IPAddressArray) < 4) {
@@ -50,7 +50,7 @@ class IPAccess extends DatabaseObject {
 		}
 		return $IPAddress;
 	}
-	
+
 	function __int2array($p_IPAddress)
 	{
 		$IPAddressArray = array();
@@ -60,7 +60,7 @@ class IPAccess extends DatabaseObject {
 		}
 		return $IPAddressArray;
 	}
-	
+
 	function __array2string($p_IPAddressArray)
 	{
 		if (!is_array($p_IPAddressArray) || sizeof($p_IPAddressArray) < 4) {
@@ -73,7 +73,7 @@ class IPAccess extends DatabaseObject {
 		$IPAddress = substr($IPAddress, 1);
 		return $IPAddress;
 	}
-	
+
 	/**
 	 * IP based access has a start address and a number of addresses.
 	 * The IP access group is assigned to a reader.
@@ -99,7 +99,7 @@ class IPAccess extends DatabaseObject {
 			$this->fetch();
 		}
 	}
-	
+
 	function create($p_userId, $p_startIP, $p_addresses = 1)
 	{
 		$startIP = null;
@@ -123,7 +123,7 @@ class IPAccess extends DatabaseObject {
 	    }
 		return $result;
 	}
-	
+
 	function delete()
 	{
 		$startIPstring = $this->getStartIPstring();
@@ -135,38 +135,38 @@ class IPAccess extends DatabaseObject {
 		}
 		return $result;
 	}
-	
+
 	function getUserId()
 	{
 		return $this->getProperty('IdUser');
 	}
-	
+
 	function getStartIP()
 	{
 		return $this->getProperty('StartIP');
 	}
-	
+
 	function getStartIParray()
 	{
 		return $this->__int2array($this->getProperty('StartIP'));
 	}
-	
+
 	function getStartIPstring()
 	{
 		return $this->__array2string($this->__int2array($this->getProperty('StartIP')));
 	}
-	
+
 	function getAddresses()
 	{
 		return $this->getProperty('Addresses');
 	}
-	
+
 	function GetUserIPAccessList($p_userId)
 	{
-		global $Campsite;
-		
+		global $g_ado_db;
+
 		$queryStr = "SELECT * FROM SubsByIP WHERE IdUser = $p_userId";
-		$rows = $Campsite['db']->GetAll($queryStr);
+		$rows = $g_ado_db->GetAll($queryStr);
 		$IPAccessList = array();
 		if (is_array($rows)) {
 			foreach ($rows as $row) {
@@ -177,6 +177,6 @@ class IPAccess extends DatabaseObject {
 		}
 		return $IPAccessList;
 	}
-	
+
 }
 ?>

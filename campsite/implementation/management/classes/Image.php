@@ -122,13 +122,13 @@ class Image extends DatabaseObject {
 	 */
 	function inUse()
 	{
-		global $Campsite;
+		global $g_ado_db;
 		// It is in use only if there is an entry in both
 		// the ArticleImages table and the Articles table.
 		$queryStr = 'SELECT Number FROM Articles, ArticleImages '
 					.' WHERE IdImage='.$this->getImageId()
 					.' AND Articles.Number=ArticlesImage.NrArticle';
-		if ($Campsite['db']->GetOne($queryStr)) {
+		if ($g_ado_db->GetOne($queryStr)) {
 			return true;
 		} else {
 			return false;
@@ -297,9 +297,9 @@ class Image extends DatabaseObject {
 	 */
 	function GetMaxId()
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$queryStr = 'SHOW TABLE STATUS LIKE "Images"';
-		$result = $Campsite['db']->getRow($queryStr);
+		$result = $g_ado_db->GetRow($queryStr);
 		return $result['Auto_increment'];
 	} // fn GetMaxId
 
@@ -309,9 +309,9 @@ class Image extends DatabaseObject {
 	 */
 	function GetTotalImages()
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$queryStr = 'SHOW TABLE STATUS LIKE "Images"';
-		$result = $Campsite['db']->getRow($queryStr);
+		$result = $g_ado_db->GetRow($queryStr);
 		return $result['Rows'];
 	} // fn GetTotalImages
 
@@ -579,7 +579,6 @@ class Image extends DatabaseObject {
 	 */
 	function GetUploadUsers()
 	{
-		global $Campsite;
 		$tmpUser =& new User();
 		$columnNames = $tmpUser->getColumnNames();
 		$queryColumnNames = array();
@@ -601,9 +600,9 @@ class Image extends DatabaseObject {
 	 */
 	function GetByUrl($p_url)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$queryStr = "SELECT * FROM Images WHERE URL='".mysql_real_escape_string($p_url)."'";
-		$row = $Campsite['db']->GetRow($queryStr);
+		$row = $g_ado_db->GetRow($queryStr);
 		$image =& new Image();
 		$image->fetch($row);
 		return $image;

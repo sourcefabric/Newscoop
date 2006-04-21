@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * @package Campsite
  */
@@ -6,8 +6,8 @@
 /**
  * Includes
  */
-// We indirectly reference the DOCUMENT_ROOT so we can enable 
-// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT'] 
+// We indirectly reference the DOCUMENT_ROOT so we can enable
+// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT']
 // is not defined in these cases.
 if (!isset($g_documentRoot)) {
     $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
@@ -26,20 +26,20 @@ class IssuePublish extends DatabaseObject {
 	var $m_dbTableName = 'IssuePublish';
 	var $m_keyIsAutoIncrement = true;
 	var $m_columnNames = array('id',
-							   'fk_publication_id', 
-							   'fk_issue_id', 
-							   'fk_language_id', 
-							   'time_action', 
-							   'publish_action', 
-							   'do_publish_articles', 
+							   'fk_publication_id',
+							   'fk_issue_id',
+							   'fk_language_id',
+							   'time_action',
+							   'publish_action',
+							   'do_publish_articles',
 							   'is_completed');
-	
+
 	/**
 	 * This table delays an issue's publish time to a later date.
 	 *
 	 * @param int $p_id
 	 */
-	function IssuePublish($p_id = null) 
+	function IssuePublish($p_id = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
 		$this->m_data['id'] = $p_id;
@@ -48,7 +48,7 @@ class IssuePublish extends DatabaseObject {
 		}
 	} // constructor
 
-	
+
 	/**
 	 * @return int
 	 */
@@ -56,8 +56,8 @@ class IssuePublish extends DatabaseObject {
 	{
 		return $this->getProperty('id');
 	} // fn getEventId
-	
-	
+
+
 	/**
 	 * @return int
 	 */
@@ -65,8 +65,8 @@ class IssuePublish extends DatabaseObject {
 	{
 	    return $this->getProperty('fk_publication_id');
 	} // fn getPublicationId
-	
-	
+
+
 	/**
 	 * Set the publication ID.
 	 *
@@ -77,8 +77,8 @@ class IssuePublish extends DatabaseObject {
 	{
 		return $this->setProperty('fk_publication_id', $p_value);
 	} // fn setPublicationId
-	
-	
+
+
 	/**
 	 * @return int
 	 */
@@ -86,8 +86,8 @@ class IssuePublish extends DatabaseObject {
 	{
 	    return $this->getProperty('fk_issue_id');
 	} // fn getIssueNumber
-	
-	
+
+
 	/**
 	 * Enter description here...
 	 *
@@ -98,17 +98,17 @@ class IssuePublish extends DatabaseObject {
 	{
 		return $this->setProperty('fk_issue_id', $p_value);
 	} // fn setIssueNumber
-	
-	
+
+
 	/**
 	 * @return int
 	 */
-	function getLanguageId() 
+	function getLanguageId()
 	{
 	    return $this->getProperty('fk_language_id');
 	} // fn getLanguageId
-	
-	
+
+
 	/**
 	 * Set the language ID of the issue to publish.
 	 *
@@ -119,84 +119,84 @@ class IssuePublish extends DatabaseObject {
 	{
 		return $this->setProperty('fk_language_id', $p_value);
 	} // fn setLanguageId
-	
-	
+
+
 	/**
 	 * Get the published state to switch to when the "publish time" arrives.
 	 * This can be NULL for no action, 'P' for Publish, or 'U' for Unpublish.
 	 * @return mixed
-	 */ 
-	function getPublishAction() 
+	 */
+	function getPublishAction()
 	{
 		return $this->getProperty('publish_action');
 	} // fn getPublishAction
 
-	
+
 	/**
 	 * Set the published state to switch to when the "publish time" arrives:
-	 * 'P' for Publish, or 'U' for Unpublish.	 
+	 * 'P' for Publish, or 'U' for Unpublish.
 	 * @param string $p_value
 	 * @return void
 	 */
-	function setPublishAction($p_value) 
+	function setPublishAction($p_value)
 	{
 		$p_value = strtoupper($p_value);
 		if ( ($p_value == 'P') || ($p_value == 'U') ) {
 			$this->setProperty('publish_action', $p_value);
 		}
 	} // fn setPublishAction
-	
-	
+
+
 	/**
 	 * Get whether to publish the articles when the "publish time" arrives.
 	 * This can be 'Y' for 'Yes', or 'N' for 'No'.
 	 * @return mixed
 	 */
-	function getPublishArticlesAction() 
+	function getPublishArticlesAction()
 	{
 		return $this->getProperty('do_publish_articles');
 	} // fn getPublishArticlesAction
-	
-	
+
+
 	/**
 	 * Set the front page state to switch to when the "publish time" arrives:
 	 * 'Y' for Yes, or 'N' for No.
 	 * @param string $p_value
 	 * @return mixed
 	 */
-	function setPublishArticlesAction($p_value) 
+	function setPublishArticlesAction($p_value)
 	{
 		$p_value = strtoupper($p_value);
 		if ( ($p_value == 'Y') || ($p_value == 'N') ) {
 			$this->setProperty('do_publish_articles', $p_value);
 		}
 	} // fn setPublishArticlesAction
-	
-	
+
+
 	/**
 	 * Get the time the event is scheduled to happen.
 	 * @return string
 	 */
-	function getActionTime() 
+	function getActionTime()
 	{
 		return $this->getProperty('time_action');
 	} // fn getActionTime
-	
-	
+
+
 	/**
 	 * Set the time the action should be executed.
 	 *
 	 * @param string $p_value
 	 * 		Must be in the form YYYY-MM-DD HH:MM:SS
-	 * 
+	 *
 	 * @return boolean
 	 */
 	function setActionTime($p_value)
 	{
 		return $this->setProperty('time_action', $p_value);
 	} // fn setActionTime
-	
-	
+
+
 	/**
 	 * Return true if the action has been carried out.
 	 *
@@ -206,18 +206,18 @@ class IssuePublish extends DatabaseObject {
 	{
 		return ($this->m_data['is_completed'] == 'Y');
 	} // fn isCompleted
-	
-	
+
+
 	/**
 	 * Mark that this action has been completed.
 	 * @return void
 	 */
-	function setCompleted() 
+	function setCompleted()
 	{
 	    $this->setProperty('is_completed', 'Y');
 	} // fn setCompleted
-	
-	
+
+
 	/**
 	 * Execute the action.
 	 * @return void
@@ -242,7 +242,7 @@ class IssuePublish extends DatabaseObject {
 		$issue->setPublished($issueState);
 		$this->setCompleted();
 	} // fn doAction
-	
+
 
 	/**
 	 * Get all the events that will change the issue's state.
@@ -254,9 +254,8 @@ class IssuePublish extends DatabaseObject {
 	 * @param boolean $p_includeCompleted
 	 * @return array
 	 */
-	function GetIssueEvents($p_publicationId, $p_issueId, $p_languageId = null, $p_includeCompleted = true) 
+	function GetIssueEvents($p_publicationId, $p_issueId, $p_languageId = null, $p_includeCompleted = true)
 	{
-		global $Campsite;
 		$queryStr = "SELECT * FROM IssuePublish "
 					." WHERE fk_publication_id = $p_publicationId "
 					." AND fk_issue_id = $p_issueId "
@@ -268,13 +267,13 @@ class IssuePublish extends DatabaseObject {
 		$result = DbObjectArray::Create('IssuePublish', $queryStr);
 		return $result;
 	} // fn GetIssueEvents
-	
-	
+
+
 	/**
 	 * Get all the actions that currently need to be performed.
 	 * @return array
 	 */
-	function GetPendingActions() 
+	function GetPendingActions()
 	{
 	    $datetime = strftime("%Y-%m-%d %H:%M:00");
     	$queryStr = "SELECT * FROM IssuePublish "
@@ -282,10 +281,10 @@ class IssuePublish extends DatabaseObject {
                    . " AND is_completed != 'Y'"
                    . " ORDER BY time_action ASC";
         $result = DbObjectArray::Create('IssuePublish', $queryStr);
-        return $result;	
+        return $result;
 	} // fn GetPendingActions
-	
-	
+
+
 	/**
 	 * Execute all pending actions.
 	 * @return void
@@ -295,10 +294,10 @@ class IssuePublish extends DatabaseObject {
         $actions = IssuePublish::GetPendingActions();
     	foreach ($actions as $issuePublishObj) {
     	    $issuePublishObj->doAction();
-    	}	    
+    	}
 	} // fn DoPendingActions
 
-	
+
 	/**
 	 * For now, this is mostly a hack to get the home page working.
 	 * The raw array is returned.
@@ -306,9 +305,9 @@ class IssuePublish extends DatabaseObject {
 	 * @param int $p_limit
 	 * @return array
 	 */
-	function GetFutureActions($p_limit) 
+	function GetFutureActions($p_limit)
 	{
-	    global $Campsite;
+	    global $g_ado_db;
 	    $datetime = strftime("%Y-%m-%d %H:%M:00");
 	    $dummyIssue =& new Issue();
 	    $columnNames = $dummyIssue->getColumnNames(true);
@@ -322,17 +321,17 @@ class IssuePublish extends DatabaseObject {
                     . " ORDER BY time_action DESC"
                     . " LIMIT $p_limit";
         //echo $queryStr."<br>";
-		$rows = $Campsite['db']->GetAll($queryStr);
+		$rows = $g_ado_db->GetAll($queryStr);
 		$addKeys = array();
 		if ($rows && (count($rows) > 0)) {
     		foreach ($rows as $row) {
-    		    $row["ObjectType"] = "issue";		    
+    		    $row["ObjectType"] = "issue";
     		    $addKeys[$row['time_action']] = $row;
     		}
 		}
         return $addKeys;
 	} // fn GetFutureActions
-	
+
 } // class IssuePublish
 
 ?>

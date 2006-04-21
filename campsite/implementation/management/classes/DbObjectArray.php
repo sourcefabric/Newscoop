@@ -1,10 +1,10 @@
-<?php 
+<?php
 
 /**
  * @package Campsite
  */
 class DbObjectArray {
-	
+
 	/**
 	 * Create an array of DatabaseObjects.
 	 *
@@ -19,11 +19,11 @@ class DbObjectArray {
 	 *
 	 * @return array
 	 */
-	function Create($p_className, $p_queryStr) 
+	function Create($p_className, $p_queryStr)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$retval = array();
-		$rows = $Campsite['db']->GetAll($p_queryStr);
+		$rows = $g_ado_db->GetAll($p_queryStr);
 		if (is_array($rows)) {
 			foreach ($rows as $row) {
 				$tmpObj =& new $p_className();
@@ -33,8 +33,8 @@ class DbObjectArray {
 		}
 		return $retval;
 	} // fn Create
-	
-	
+
+
 	/**
 	 * Given an array of DatabaseObjects, return one column
 	 * of the data.
@@ -42,8 +42,8 @@ class DbObjectArray {
 	 * @param array $p_array
 	 * @param string $p_columnName
 	 * @return array
-	 */ 
-	function GetColumn($p_array, $p_columnName) 
+	 */
+	function GetColumn($p_array, $p_columnName)
 	{
 		$column = array();
 		if (is_array($p_array)) {
@@ -53,8 +53,8 @@ class DbObjectArray {
 		}
 		return $column;
 	} // fn GetColumn
-	
-	
+
+
 	/**
 	 * Given an array of DatabaseObjects, return the raw data
 	 * table as a two dimensional array.
@@ -62,7 +62,7 @@ class DbObjectArray {
 	 * @param array $p_array
 	 * @return array
 	 */
-	function GetTable($p_array) 
+	function GetTable($p_array)
 	{
 		$table = array();
 		if (is_array($p_array)) {
@@ -72,8 +72,8 @@ class DbObjectArray {
 		}
 		return $table;
 	} // fn GetTable
-	
-	
+
+
 } // class DbObjectArray
 
 ?>

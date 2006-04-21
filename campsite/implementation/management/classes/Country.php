@@ -6,8 +6,8 @@
 /**
  * Includes
  */
-// We indirectly reference the DOCUMENT_ROOT so we can enable 
-// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT'] 
+// We indirectly reference the DOCUMENT_ROOT so we can enable
+// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT']
 // is not defined in these cases.
 if (!isset($g_documentRoot)) {
     $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
@@ -25,13 +25,13 @@ class Country extends DatabaseObject {
 	var $m_keyColumnNames = array('Code', 'IdLanguage');
 	var $m_keyIsAutoIncrement = false;
 	var $m_columnNames = array('Code', 'IdLanguage', 'Name');
-	
-	/** 
+
+	/**
 	 * Constructor.
 	 * @param string $p_code
 	 * @param int $p_languageId
 	 */
-	function Country($p_code = null, $p_languageId = null) 
+	function Country($p_code = null, $p_languageId = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
 		$this->m_data['Code'] = $p_code;
@@ -40,51 +40,51 @@ class Country extends DatabaseObject {
 			$this->fetch();
 		}
 	} // constructor
-	
-	
+
+
 	function create($p_values = null)
 	{
 		$success = parent::create($p_values);
 		if ($success) {
 			if (function_exists("camp_load_language")) { camp_load_language("api");	}
 			$logtext = getGS('Country $1 added', $this->m_data['Name']." (".$this->m_data['Code'].")");
-			Log::Message($logtext, null, 131);		
+			Log::Message($logtext, null, 131);
 		}
 		return $success;
 	} // fn create
-	
-	
+
+
 	function delete()
 	{
 		$success = parent::delete();
 		if ($success) {
 			if (function_exists("camp_load_language")) { camp_load_language("api");	}
-			$logtext = getGS('Country $1 deleted', $this->m_data['Name'].' ('.$this->m_data['Code'].')' ); 
+			$logtext = getGS('Country $1 deleted', $this->m_data['Name'].' ('.$this->m_data['Code'].')' );
 			Log::Message($logtext, null, 134);
-		}		
+		}
 		return $success;
 	} // fn delete
-	
-	
+
+
 	/**
 	 * The unique ID of the language in the database.
 	 * @return int
 	 */
-	function getLanguageId() 
+	function getLanguageId()
 	{
 		return $this->getProperty('IdLanguage');
 	} // fn getLanguageId
-	
-	
+
+
 	/**
 	 * Return the english name of this language.
 	 * @return string
 	 */
-	function getName() 
+	function getName()
 	{
 		return $this->getProperty('Name');
 	} // fn getName
-	
+
 
 	/**
 	 * Set the name of the country.
@@ -102,25 +102,25 @@ class Country extends DatabaseObject {
 		}
 		return $success;
 	} // fn setName
-	
-	
+
+
 	/**
 	 * Get the two-letter code for this language.
 	 * @return string
 	 */
-	function getCode() 
+	function getCode()
 	{
 		return $this->getProperty('Code');
 	} // fn getCode
-	
-	
+
+
 	/**
 	 *
 	 *
 	 */
 	function GetNumCountries($p_languageId = null, $p_code = null, $p_name = null)
 	{
-		global $Campsite;
+		global $g_ado_db;
 		$queryStr = "SELECT COUNT(*) FROM Countries";
 		$constraints = array();
 		if (!is_null($p_languageId)) {
@@ -139,11 +139,11 @@ class Country extends DatabaseObject {
 			}
 			$queryStr .= " WHERE ".implode(" AND ", $tmpArray);
 		}
-		$total = $Campsite['db']->GetOne($queryStr);
+		$total = $g_ado_db->GetOne($queryStr);
 		return $total;
 	} // fn GetNumCountries
-	
-	
+
+
 	/**
 	 * @param int $p_languageId
 	 * @param string $p_code
@@ -171,7 +171,7 @@ class Country extends DatabaseObject {
 		}
 		return DatabaseObject::Search('Country', $constraints, $p_sqlOptions);
 	} // fn GetCountries
-	
+
 } // class Country
 
 ?>
