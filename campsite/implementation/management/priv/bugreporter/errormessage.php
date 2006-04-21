@@ -53,7 +53,7 @@ require_once ($g_documentRoot.'/classes/Language.php');
             <td align="left">
                 <table border="0" cellspacing="0" cellpadding="3" align="left">
                 <tr>
-                    <td colspan="2"><b><font color="red">Error Report</font></b>
+                    <td colspan="2"><b><font color="red"><?php putGS("Error Report") ?></font></b>
                         <hr noshade size="1" color="black">
                     </td>
                 </tr>

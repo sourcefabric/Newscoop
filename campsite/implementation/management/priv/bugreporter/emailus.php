@@ -6,27 +6,32 @@ if (!isset($g_documentRoot)) {
     $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 }
 require_once($g_documentRoot.'/classes/Language.php');
-
+?>
+<table class="table_input" align="left" valign="top" width="800px">
+<tr>
+    <td colspan="2">
+<?php
 if (isset($sendWasAttempted) && $sendWasAttempted=="true"){
-    echo ("<p>");
+
+    echo ("<b>");
     putGS ("We are sorry, but there was a problem sending your bug report." );
-    echo ("</p>");
+    echo ("</b>");
 }
 
 else {
-    echo ("<h1>");
+    echo ('<font size="+2"><b>');
     putGS ("Campsite has encountered a problem");
-    echo ("</h1>");
+    echo ("</b></font>");
+    echo ('<hr noshade size="1" color="black">');
 }
-        
-
-
 ?>
-
-<p><?php
-    putGS ("Please take a minute to write an explanation of what occurred and email your report to us at");
+<p>
+<?php
+    putGS ("Please take a minute to send us an email.");
+    putGS ("Include the error report below, as well as a brief explanation of what you were doing when the error occurred. ");
+    putGS ("Send the email to");
     echo ("<b>");
-    putGS ("info@campware.org"); 
+    echo ("campsite-support@lists.campware.org"); 
     echo ("</b>");
 ?>.
 </p>
@@ -35,4 +40,26 @@ else {
     putGS ("Thank you.");
     ?>
 </p>
+<br />
+    </td>
+</tr>
 
+
+
+<tr>
+    <td colspan="2"><b><?php putGS("Error Report") ?></b>
+                        <hr noshade size="1" color="black"><br /></td>
+</tr>
+<tr>
+    <td nowrap><?php putGS("Error ID: &nbsp;") ?></td>
+    <td><?php echo $reporter->getId(); ?></td>
+</tr>
+<tr align="left">
+    <td valign="top" nowrap><?php putGS("Backtrace: &nbsp;") ?></td>
+    <td>
+        <pre>
+<?php echo $reporter->getBacktraceString(); ?>
+        </pre>
+    </td>
+</tr>
+</table>

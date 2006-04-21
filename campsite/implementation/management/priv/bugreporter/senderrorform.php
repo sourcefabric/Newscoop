@@ -17,7 +17,6 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
         , $p_file, $p_line, "Campsite", $Campsite['VERSION']);
 
     //$reporter->setServer ("http://localhost/trac/autotrac");
-    $reporter->setServer ("http://edge.campware.org/trac/autotrac");
 
     // --- Ping AutoTrac Server ---
     $wasPinged = $reporter->pingServer();
@@ -54,8 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
 
         $reporter = new BugReporter ($f_num, $f_str, $f_file, $f_line
         , "Campsite", $Campsite['VERSION'], $f_time, $f_backtrace);
-//         $reporter->setServer ("http://localhost/trac/autotrac");
-        $reporter->setServer ("http://edge.campware.org/trac/autotrac");
+        //$reporter->setServer ("http://localhost/trac/autotrac");
 
         if (isset ($f_email))
             $reporter->setEmail(urldecode($f_email));
