@@ -1,0 +1,4 @@
+title: Language example module
+desc: This is a module that demonstrates the support of multiple languages in a multiple file module.
+hook: lang|
+hook: after_header|phorum_mod_example_language_after_header
