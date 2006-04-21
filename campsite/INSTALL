@@ -67,7 +67,7 @@ INSTALLATION - the usual procedure
    If you want to upgrade campsite and keep the old database, continue
    with the next step. The installation will not delete the old database.
 
-3. Type ./install
+3. Type ./install.sh
 
    If you are not already logged in as root the installer will prompt
    you for the root password when necessary. Without root access it
@@ -75,7 +75,7 @@ INSTALLATION - the usual procedure
 
    IMPORTANT!!!
    If your MySQL configuration is not the default one you'll have to run
-   the create instance script separatelly, after installation. Read 
+   the create instance script separately, after installation. Read 
    instructions from install script.
 
 4. Configure the default instance
