@@ -10,3 +10,6 @@ CREATE TABLE ArticleTypeMetadata (
     field_type_param VARCHAR(255)
 );
 
+-- Change article creation time so we know when
+-- it was created, down to the second.
+ALTER TABLE `Articles` CHANGE `UploadDate` `UploadDate` DATETIME NOT NULL DEFAULT '0000-00-00';
