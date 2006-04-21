@@ -6,8 +6,6 @@
 
 global $g_bugReporterDefaultServer;
 $g_bugReporterDefaultServer = "http://code.campware.org/projects/campsite/autotrac";
-//$g_bugReporterDefaultServer = "http://localhost/trac/autotracj";
-//$g_bugReporterDefaultServer = "http://test.n-space.org/mocktrac/echo.php";
 
 class BugReporter
 {
@@ -50,11 +48,11 @@ class BugReporter
      * @param int $p_number The PHP error number.
      * @param string $p_string The error message.
      * @param string $p_file The file which encountered the error.
-     * @praam int $p_line The line number of the file which encountered the error.
+     * @param int $p_line The line number of the file which encountered the error.
      * @param string $p_software The name of the software that encountered an error.
      * @param int $p_version The version of the software that encountered an error.
      * @param string $p_time The date and time.  If left blank, it is the current date and time.
-     * @param $p_backtrace The stack trace.  This can be an array or string.
+     * @param mixed $p_backtrace The stack trace.  This can be an array or string.
      */
     function BugReporter ($p_number, $p_string, $p_file, $p_line,
                           $p_software, $p_version, $p_time = "", $p_backtrace = "")
@@ -98,21 +96,24 @@ class BugReporter
 
         $this->setServer ($g_bugReporterDefaultServer);
         $this->setPingStatus(true);
-    }
+    } // fn BugReporter
+
 
     /**
      * This changes the developers' default server.
      *
      * @param string $p_server  The URL of the new server.
+     * @return void
      */
     function setServer($p_server)
     {
         $this->__server = $p_server;
         $this->__ping = "$p_server/ping";
         $this->m_newReport = "$p_server/newreport";
-    }
+    } // fn setServer
 
-    /**
+
+    /** 
      * Returns the current developers' server.
      *
      * @return string
@@ -121,7 +122,8 @@ class BugReporter
     function getServer()
     {
         return $this->__server;
-    }
+    } // fn getServer
+
 
     /**
      * Confirms that the server is online.
@@ -149,29 +151,34 @@ class BugReporter
             return true;
         else return false;
 
-    }
+    } // fn pingServer
 
-    /**
-     * When pinging status is is set to false, pingServer() returns
+
+    /** 
+     * When pinging status is is set to false, pingServer() returns 
      * true without actually pinging the server.
      *
+     * @return void
      */
     function setPingStatus ($p_pingingStatus)
     {
         if (!is_bool($p_pingingStatus)) trigger_error ($this->invalidParam);
         else $this->m_disablePing = !($p_pingingStatus);
-    }
+    } // fn setPingStatus
 
-    /*
+
+    /**
      * @return The pinging status
      */
     function getPingStatus()
     {
         return !$this->m_disablePing;
-    }
+    } // fn getPingStatus
+
 
     /**
      * Send the error details to the server via HTTP.
+     * @return void
      */
     function sendToServer()
     {
@@ -200,7 +207,8 @@ class BugReporter
         elseif (preg_match ("/\baccepted\b/", $this->__responseBody)) return true;
         else return false;
 
-    }
+    } // fn sendToServer
+
 
     /**
      * Return the name of the error-file, not including the path.
@@ -213,188 +221,257 @@ class BugReporter
         if (preg_match ("/\/$/", $this->m_file))
             trigger_error ($this->invalidParam);
         return preg_replace ("/.*\/([^\/]*)/", "$1", $this->m_file);
-    }
+    } // fn getFileWithoutPath
+
 
     /**
-     * @return string the file's ID-code.
+     * Get the Error ID Code
+     *
+     * @return string the file's ID-code.   
      */
     function getId()
     {
         return "$this->m_num:$this->m_software:$this->m_version:" .
             $this->getFileWithoutPath() . ":$this->m_line";
-    }
+    } // fn getId
+
 
     /**
+     * Get the backtrace string.
+     *
      * @return string The traceback
      */
-
     function getBacktraceString()
     {
         return $this->m_backtrace;
-    }
+    } // fn getBacktraceString
+
 
     /**
+     * Get the name of the software the error occurred in.
+     *
      * @return string The name of the software the error occurred in.
      */
-
     function getSoftware()
     {
         return $this->m_software;
-    }
+    } // fn getSoftware
+
 
     /**
+     * Get the version of the software the error occurred in.
+     *
      * @return string The version of the software the error occurred in
      */
-
     function getVersion()
     {
         return $this->m_version;
-    }
+    } // fn getVersion
+
 
     /**
+     * Get the number of the error.
+     *
      * @return int The error number
      */
-
     function getErrorNum()
     {
         return $this->m_num;
-    }
+    } // fn getErrorNum
+
 
     /**
+     * Get the error message
+     *
      * @return The error-string
      */
-
     function getStr()
     {
         return $this->m_str;
-    }
+    } // fn getStr
+
 
     /**
+     * Get the time of the error.
+     *
      * @return string The time at which the crash occurred
      */
     function getTime()
     {
         return $this->m_time;
-    }
+    } // fn getTime
+
 
     /**
+     * Get the name of the file in which the error occerrud.
+     *
      * @return string The name of the file the crash occurred in.
      */
     function getFile()
     {
         return $this->m_file;
-    }
+    } // fn getFile
+
 
     /**
+     * Get the line number the error occurred in.  
+     *
      * @return int The line number the error occurred in.
      */
     function getLine ()
     {
         return $this->m_line;
-    }
+    } // fn getLine
+
 
     /**
+     * Get the error reporter's email address
+     *
      * @return int Get the email address of the user.
      */
     function getEmail()
     {
         if (!isset($this->m_email)) $this->m_email = "";
         return $this->m_email;
-    }
+    } // fn getEmail
+
 
     /**
+     * Get the error reporter's description of the error.
+     *
      * @return int Get the user's description of the error
      */
     function getDescription()
     {
         if (!isset($this->m_description)) $this->m_description = "";
         return $this->m_description;
-    }
+    } // fn getDescription
+
 
     /**
+     * Get Manually set the backtrace string.
+     *
      * @param string The traceback string
+     * @return void
      */
     function setBacktraceString ($p_backtrace)
     {
         $this->m_backtrace = $p_backtrace;
-    }
+    } // fn setBacktraceString
+
 
     /**
+     * Manually set the software in which the error occurred.
+     *
      * @param string Set the name of the software in which the error occurred.
+     * @return void
      */
     function setSoftware ($p_software)
     {
         $this->m_software = $p_software;
-    }
+    } // fn setSoftware
+
 
     /**
+     * Manually set the software version of the error which occurred.
+     *
      * @param string Set the version number of the software in which the error occurred.
+     * @return void
      */
     function setVersion ($p_version)
     {
         $this->m_version = $p_version;
-    }
+    } // fn setVersion
+
 
     /**
+     * Manually set the number of the error which occurred.
+     *
      * @param string Set the number of the error which just occurred.
+     * @return void
      */
     function setErrorNum ($p_errorNum)
     {
         $this->m_num = $p_errorNum;
-    }
+    } // fn setErrorNum
+
 
     /**
+     * Manually set the message of the error which occurred.
+     *
      * @param string Set the message for the error which just occured
+     * @return void
      */
     function setStr ($p_str)
     {
         $this->m_str = $p_str;
-    }
+    } // fn setStr
+
 
     /**
+     * Manually set the time at which the error occurred.
+     *
      * @param string Set the time when the error occurred
+     * @return void
      */
     function setTime ($p_time)
     {
         $this->m_time = $p_time;
-    }
+    } // fn setTime
+
 
     /**
+     * Manually set the file in which the error occurred.
+     *
      * @param string Set the filename of the error which just occurred.
+     * @return void
      */
     function setFile ($p_file)
     {
         $this->m_file = $p_file;
-    }
+    } // fn setFile
+
 
     /**
+     * Manually set the line number in which the error occurred.
+     *
      * @param string Set the line number where the error occurred.
+     * @return void
      */
     function setLine ($p_line)
     {
         $this->m_line = $p_line;
-    }
+    } // fn setLine
+
 
     /**
+     * Set the error reporter's email address.
+     *
      * @param string Set the user's email.
+     * @return void
      */
     function setEmail ($p_email)
     {
         $this->m_email = $p_email;
-    }
+    } // fn setEmail
+
 
     /**
+     * Set the reporter's description of the error
+     *
      * @param string Set the user's description of the error
+     * @return void
      */
     function setDescription ($p_description)
     {
         $this->m_description = $p_description;
-    }
+    } // fn setDescription
+
 
     /**
      * Convert the backtrace array into a backtrace string.
      *
-     * @param $p_backtrace array The array to be converted.
+     * @param array $p_backtrace array The array to be converted.
      * @return string The array as a string.
      */
     function __convertBacktraceArrayToString($p_backtrace)
@@ -424,7 +501,7 @@ class BugReporter
 
             return $backtrace;
         } else trigger_error ($this->invalidParam);
-    }
+    } // fn __convertBacktraceArrayToString
 }
 
 
