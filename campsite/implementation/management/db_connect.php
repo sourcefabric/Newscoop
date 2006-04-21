@@ -10,6 +10,7 @@ require_once($g_documentRoot.'/include/adodb/adodb.inc.php');
 require_once($g_documentRoot.'/configuration.php');
 
 global $g_ado_db;
+global $Campsite;
 if (!isset($g_ado_db)) {
 	$g_ado_db = ADONewConnection('mysql'); # eg 'mysql' or 'postgres'
 	//$g_ado_db->debug = true;
