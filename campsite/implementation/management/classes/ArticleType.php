@@ -191,7 +191,6 @@ class ArticleType {
 			    $trans =& new Translation($p_languageId, $phrase_id);
 			    $trans->delete();
 				$sql = "DELETE FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' AND fk_phrase_id=". $phrase_id;
-				print $sql;
 				$changed = $g_ado_db->Execute($sql);
 			} else { $changed = true; }
 		} else if ($phrase_id = $this->translationExists($p_languageId)) {
@@ -204,8 +203,6 @@ class ArticleType {
 			$description =& new Translation($p_languageId);
 			$description->create($p_value);
 			$phrase_id = $description->getPhraseId();
-
-			$oldValue = "";
 			$sql = "INSERT INTO ArticleTypeMetadata SET type_name='".$this->m_dbTableName ."', fk_phrase_id=".$phrase_id;
 			$changed = $g_ado_db->Execute($sql);			
 		}
@@ -267,7 +264,7 @@ class ArticleType {
 		global $g_ado_db;
 		#$queryStr = 'SHOW COLUMNS FROM '.$this->m_dbTableName
 		#			." LIKE 'F%'";
-		$queryStr = "SELECT * FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' AND field_name IS NOT NULL ORDER BY field_weight DESC";
+		$queryStr = "SELECT * FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' AND field_name IS NOT NULL AND field_type IS NOT NULL ORDER BY field_weight DESC";
 		$queryArray = $g_ado_db->GetAll($queryStr);
 		$metadata = array();
 		if (is_array($queryArray)) {
