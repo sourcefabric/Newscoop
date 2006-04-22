@@ -164,7 +164,7 @@ foreach ($fields as $field) {
 
     	<tr>
     	<td colspan="2">
-    		<FORM method="POST" action="do_translate.php?f_article_type=<?php p($articleTypeName); ?>" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
+    		<FORM method="POST" action="do_translate.php?f_article_type=<?php p($articleTypeName); ?>" >
     		<input type="hidden" name="f_field_id" value="<?php p($field->getPrintName()); ?>"> 
     		<table cellpadding="0" cellspacing="0" style="border-top: 1px solid #CFC467; border-bottom: 1px solid #CFC467; background-color: #FFFCDF ; padding-left: 5px; padding-right: 5px;" width="100%">
     		<tr>
