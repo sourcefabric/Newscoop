@@ -158,56 +158,46 @@ class ArticleType {
 
 	}
 
+	/**
+	* quick lookup to see if the current language is already translated for this article type: used by delete and update in setName
+	* returns 0 if no translation or the phrase_id if there is one.
+	**/
+	function translationExists($p_languageId) {
+		global $g_ado_db;
+		$sql = "SELECT atm.*, t.* FROM ArticleTypeMetadata atm, Translations t WHERE atm.type_name='". $this->m_dbTableName ."' AND atm.fk_phrase_id = t.phrase_id AND t.fk_language_id = '$p_languageId'"; 		
+		$row = $g_ado_db->getAll($sql);
+		if (count($row)) return $row[0]['fk_phrase_id'];
+		else { return 0; }
+	}
 
 	/**
-	 * @return string
-	 */
-	function getName($p_languageId)
-	{
-		if (is_numeric($p_languageId) && isset($this->m_names[$p_languageId])) {
-			return $this->m_names[$p_languageId];;
-		} else {
-			return "";
-		}
-	} // fn getName
-
-
-	/**
-	 * Set the type name for the given language.  A new entry in
+	 * Set the type name for the given language.  A new entry in 
 	 * the database will be created if the language does not exist.
-	 *
+	 * 
 	 * @param int $p_languageId
 	 * @param string $p_value
-	 *
+	 * 
 	 * @return boolean
 	 */
-	function setName($p_languageId, $p_value)
+	function setName($p_languageId, $p_value) 
 	{
 		global $g_ado_db;
 		if (!is_numeric($p_languageId)) {
 			return false;
 		}
-
-
-		// if the string is empty, nuke it
-		if (!is_string($p_value)) {
-			$phrase_id = $this->m_metadata['fk_phrase_id'];
-			$trans =& new Translation($p_languageId, $phrase_id);
-			$trans->delete();
-			$sql = "DELETE FROM ArticleTypeMetadata WHERE type_name=". $this->m_dbTableName ." AND fk_phrase_id=". $phrase_id;
-			$changed = $g_ado_db->Execute($sql);
-		}
-
-		if (isset($this->m_names[$p_languageId])) {
-			$description =& new Translation($p_languageId, $this->m_metadata['fk_phrase_id']);
+		// if the string is empty, nuke it		
+		if (!is_string($p_value) || $p_value == '') {
+			if ($phrase_id = $this->translationExists($p_languageId)) {
+			    $trans =& new Translation($p_languageId, $phrase_id);
+			    $trans->delete();
+				$sql = "DELETE FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' AND fk_phrase_id=". $phrase_id;
+				print $sql;
+				$changed = $g_ado_db->Execute($sql);
+			} else { $changed = true; }
+		} else if ($phrase_id = $this->translationExists($p_languageId)) {
+			// just update
+			$description =& new Translation($p_languageId, $phrase_id);
 			$description->setText($p_value);
-
-			// Update the name.
-			$oldValue = $this->m_names[$p_languageId];
-			//$sql = "UPDATE ArticleTypeMetadata SET type_name='".$this->m_dbTableName."' "
-			//		." WHERE type_name=".$this->m_dbTableName
-			//		." AND fk_phrase_id=".$phrase_id;
-			$changed = $g_ado_db->Execute($sql);
 			$changed = true;
 		} else {
 			// Insert the new translation.
@@ -217,13 +207,12 @@ class ArticleType {
 
 			$oldValue = "";
 			$sql = "INSERT INTO ArticleTypeMetadata SET type_name='".$this->m_dbTableName ."', fk_phrase_id=".$phrase_id;
-			$changed = $g_ado_db->Execute($sql);
+			$changed = $g_ado_db->Execute($sql);			
 		}
 		if ($changed) {
-			$this->m_names[$p_languageId] = $p_value;
 			if (function_exists("camp_load_language")) { camp_load_language("api");	}
-			$logtext = getGS('Type $1 updated', $this->m_dbTableName.": (".$oldValue. " -> ".$this->m_names[$p_languageId].")");
-			Log::Message($logtext, null, 143);
+			$logtext = getGS('Type $1 updated', $this->m_dbTableName.": (".$oldValue. " -> ".$p_value .")");
+			Log::Message($logtext, null, 143);		
 			//ParserCom::SendMessage('article_types', 'modify', array('article_type' => $this->m_name));
 		}
 		return $changed;
