@@ -5,7 +5,7 @@ $global_custom_var = 1;
 session_start();
 require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
 
-//set_error_handler ("report_bug");
+set_error_handler ("report_bug");
 
 /** 
  * This file is basically a hack so that we could implement the
