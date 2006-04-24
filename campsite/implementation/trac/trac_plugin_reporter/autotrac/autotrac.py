@@ -448,10 +448,13 @@ class AutoTrac(Component):
 
         cursor = db.cursor()
 
+        # --- Make sure this line is only selecting from
+        #     name="error_id" entries, or you could accidentally end
+        #     up erasing all the tickets ---
         cursor.execute ("""
-        select ticket,name,value from ticket_custom
-        where name="error_id" and
-        value="%s" order by
+        SELECT ticket,name,value FROM ticket_custom
+        WHERE name="error_id" AND
+        value="%s" ORDER BY
         ticket;""" % errorId)
 
         rowArray = cursor.fetchall()
@@ -467,14 +470,38 @@ class AutoTrac(Component):
             ticketId = row[0]
             return ticketId
         else:
+            rowArray.sort()
             row = rowArray[0]
             ticketId = row[0]
 
-            # --- Use the following DELETE line with care ---
+            # --- There should never be any entries with the same
+            #     error ID.  If for some reason there are, flag all
+            #     duplicates. ---
             cursor.execute ("""
-                DELETE FROM ticket_custom WHERE NAME =
-                "error_id" AND VALUE = "%s" AND
-                TICKET > %i;""" % (errorId, ticketId))
+                UPDATE ticket_custom SET value = "%s" WHERE
+                name = "error_id" AND ticket > %i
+                """ % ("DUPLICATE: " + errorId, ticketId))
+            
+
+            # Note: An alternative to flagging duplicates is to simply
+            # erase them.  That scheme is used below.  To use it
+            # instead, comment the above line and uncomment the
+            # following lines.
+
+#             # --- There should never be any entries with the same
+#             #     error ID.  If for some reason there are, delete all
+#             #     duplicates. ---
+#             cursor.execute ("""
+#                 DELETE FROM ticket_custom WHERE name =
+#                 "error_id" AND value = "%s" AND
+#                 ticket > %i;""" % (errorId, ticketId))
+
+#             for row in rowArray[1:]:
+#                 id = row[0]
+#                 cursor.execute ("""
+#                     DELETE FROM ticket WHERE id = "%s";
+#                 """ % id)
+
 
             return ticketId
         
