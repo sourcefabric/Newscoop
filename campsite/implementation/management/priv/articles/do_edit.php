@@ -171,7 +171,7 @@ if (!$articleObj->exists()) {
 }
 
 $articleTypeObj = $articleObj->getArticleData();
-$dbColumns = $articleTypeObj->getUserDefinedColumns();
+$dbColumns = $articleTypeObj->m_articleTypeObj->getUserDefinedColumns();
 
 $articleFields = array();
 foreach ($dbColumns as $dbColumn) {

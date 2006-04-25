@@ -39,7 +39,7 @@ if (!$articleObj->exists()) {
 }
 $articleData = $articleObj->getArticleData();
 // Get article type fields.
-$dbColumns = $articleData->getUserDefinedColumns();
+$dbColumns = $articleData->m_articleTypeObj->getUserDefinedColumns();
 $articleImages = ArticleImage::GetImagesByArticleNumber($f_article_number);
 $lockUserObj =& new User($articleObj->getLockedByUser());
 $articleCreator =& new User($articleObj->getCreatorId());
