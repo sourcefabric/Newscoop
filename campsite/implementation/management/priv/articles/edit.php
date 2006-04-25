@@ -39,7 +39,8 @@ if (!$articleObj->exists()) {
 }
 $articleData = $articleObj->getArticleData();
 // Get article type fields.
-$dbColumns = $articleData->m_articleTypeObj->getUserDefinedColumns();
+$dbColumns = $articleData->m_articleTypeObj->m_dbColumns;
+//$dbColumns = $articleData->m_articleTypeObj->getUserDefinedColumns();
 $articleImages = ArticleImage::GetImagesByArticleNumber($f_article_number);
 $lockUserObj =& new User($articleObj->getLockedByUser());
 $articleCreator =& new User($articleObj->getCreatorId());
@@ -436,7 +437,7 @@ if ($f_edit_mode == "edit") { ?>
 			<TR>
 				<TD ALIGN="RIGHT" valign="top" style="padding-left: 1em;"><b><?php  putGS("Type"); ?>:</b></TD>
 				<TD align="left" valign="top">
-					<?php print htmlspecialchars($articleObj->getType()); ?>
+					<?php print htmlspecialchars($articleData->m_articleTypeObj->getDisplayName()); ?>
 				</TD>
 				<TD ALIGN="RIGHT" valign="top" style="padding-left: 1em;"><b><?php  putGS("Publish date"); ?>:</b></TD>
 				<TD align="left" valign="top">
@@ -488,7 +489,7 @@ if ($f_edit_mode == "edit") { ?>
 					<?php } ?>
 				</td>
 				<td align="right">
-					<?php echo htmlspecialchars($dbColumn->getPrintName()); ?>:
+					<?php echo htmlspecialchars($dbColumn->getDisplayName()); ?>:
 				</td>
 				<TD>
 				<?php
@@ -519,7 +520,7 @@ if ($f_edit_mode == "edit") { ?>
 					<?php } ?>
 				</td>
 				<td align="right">
-					<?php echo htmlspecialchars($dbColumn->getPrintName()); ?>:
+					<?php echo htmlspecialchars($dbColumn->getDisplayName()); ?>:
 				</td>
 				<TD>
 				<?php if ($f_edit_mode == "edit") { ?>
@@ -572,7 +573,7 @@ if ($f_edit_mode == "edit") { ?>
 				<?php } ?>
 			</td>
 			<td align="right" valign="top" style="padding-top: 8px;">
-				<?php echo htmlspecialchars($dbColumn->getPrintName()); ?>:
+				<?php echo htmlspecialchars($dbColumn->getDisplayName()); ?>:
 			</td>
 			<TD align="left" valign="top">
 				<table cellpadding="0" cellspacing="0" width="100%">
@@ -605,7 +606,7 @@ if ($f_edit_mode == "edit") { ?>
 				<?php } ?>
 			</td>
 			<td align="right">
-				<?php echo $articleTypeField->getPrintName(); ?>:
+				<?php echo $articleTypeField->getDisplayName(); ?>:
 			</td>
 			<td>
 				<select class="input_select" name="<?php echo $dbColumn->getName(); ?>" <?php if ($f_edit_mode != "edit") { ?>disabled<?php } ?>>
