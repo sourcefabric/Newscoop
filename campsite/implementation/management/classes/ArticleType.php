@@ -28,7 +28,7 @@ class ArticleType {
 	var $m_dbTableName;
 	var $m_name;
 	var $m_metadata;
-
+	var $m_dbColumns;
 
 	/**
 	 * An article type is a dynamic table that is created for an article
@@ -42,8 +42,8 @@ class ArticleType {
 		$this->m_name = $p_articleType;
 		$this->m_dbTableName = 'X'.$p_articleType;
 		// Get user-defined values.
-		$dbColumns = $this->getUserDefinedColumns();
-		foreach ($dbColumns as $columnMetaData) {
+		$this->m_dbColumns = $this->getUserDefinedColumns();
+		foreach ($this->m_dbColumns as $columnMetaData) {
 			$this->m_columnNames[] = $columnMetaData->getName();
 		}
 		$this->m_metadata = $this->getMetadata();
@@ -277,7 +277,6 @@ class ArticleType {
 				$metadata[] =& $columnMetadata;
 			}
 		}
-
 		return $metadata;
 	} // fn getUserDefinedColumns
 

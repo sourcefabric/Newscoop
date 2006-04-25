@@ -42,13 +42,12 @@ class ArticleData extends DatabaseObject {
 		$this->m_articleTypeName = $p_articleType;
 		$this->m_dbTableName = 'X'.$p_articleType;
 		$this->m_articleTypeObj =& new ArticleType($p_articleType);
-		
 		// Get user-defined values.
-		//$tmp =& new ArticleType($p_articleType);
-		$dbColumns = $this->m_articleTypeObj->getUserDefinedColumns();
-		foreach ($dbColumns as $columnMetaData) {
-			$this->m_columnNames[] = $columnMetaData->getName();
-		}
+		//$dbColumns = $this->m_articleTypeObj->getUserDefinedColumns();
+		//foreach ($dbColumns as $columnMetaData) {
+		//	$this->m_columnNames[] = $columnMetaData->getName();
+		//}
+		$this->m_columnNames = $this->m_articleTypeObj->m_columnNames;
 		parent::DatabaseObject($this->m_columnNames);
 		$this->m_data['NrArticle'] = $p_articleNumber;
 		$this->m_data['IdLanguage'] = $p_languageId;

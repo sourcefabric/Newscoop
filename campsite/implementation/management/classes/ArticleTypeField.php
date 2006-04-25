@@ -37,8 +37,8 @@ class ArticleTypeField {
 		$this->m_dbColumnName = "F".$p_fieldName;
 		if (!is_null($this->m_articleTypeName) && !is_null($this->m_fieldName)) {
 			$this->fetch();
+			$this->m_metadata = $this->getMetadata();
 		}
-		$this->m_metadata = $this->getMetadata();
 
 	} // constructor
 
@@ -368,7 +368,9 @@ class ArticleTypeField {
 	**/
 	function getMetadata() {
 		global $g_ado_db;
-		$queryStr = "SELECT * FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' and field_name='". $this->Field ."'";
+		if ($this->Field == '') $fieldName = $this->m_fieldName; 
+		else $fieldName = $this->Field;
+		$queryStr = "SELECT * FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' and field_name='". $fieldName ."'";
 		$queryArray = $g_ado_db->GetAll($queryStr);
 		return $queryArray;
 	}
@@ -423,8 +425,6 @@ class ArticleTypeField {
 				$changed = $g_ado_db->Execute($sql);
 			} else { $changed = true; }
 		} else if ($phrase_id = $this->translationExists($p_languageId)) {
-			print $p_languageId;
-			print $phrase_id;
 			// just update
 			$description =& new Translation($p_languageId, $phrase_id);
 			$description->setText($p_value);
