@@ -45,7 +45,7 @@ class ArticleData extends DatabaseObject {
 		
 		// Get user-defined values.
 		//$tmp =& new ArticleType($p_articleType);
-		$dbColumns = $this->articleTypeObj->getUserDefinedColumns();
+		$dbColumns = $this->m_articleTypeObj->getUserDefinedColumns();
 		foreach ($dbColumns as $columnMetaData) {
 			$this->m_columnNames[] = $columnMetaData->getName();
 		}
