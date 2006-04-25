@@ -10,9 +10,9 @@ global $Campsite, $ADMIN_DIR;
 // --- Show the form when this file is first loaded ---
 if ($_SERVER['REQUEST_METHOD'] == "GET") {
 
-    // --- If reporter doesn't exist make one ($reporter might exist already 
+    // --- If reporter doesn't exist make one ($reporter might exist already
     //     if this script is included) ---
-    if ($reporter == null) 
+    if (!isset($reporter))
         $reporter = new BugReporter ($p_number, $p_string
         , $p_file, $p_line, "Campsite", $Campsite['VERSION']);
 
@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
     //     Campsite server ---
     if (isset($f_num) && isset($f_str) && isset($f_file) && isset($f_line) && isset($f_time)
         && isset($f_backtrace)){
-        
+
         $f_num = urldecode($f_num);
         $f_str = urldecode($f_str);
         $f_file = urldecode($f_file);
