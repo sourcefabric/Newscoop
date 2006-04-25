@@ -17,7 +17,7 @@ if (!isset($g_documentRoot)) {
  */
 require_once($g_documentRoot.'/classes/DatabaseObject.php');
 require_once($g_documentRoot.'/classes/ArticleTypeField.php');
-
+require_once($g_documentRoot.'/classes/ArticleType.php');
 /**
  * @package Campsite
  */
@@ -26,7 +26,8 @@ class ArticleData extends DatabaseObject {
 	var $m_keyColumnNames = array('NrArticle', 'IdLanguage');
 	var $m_dbTableName;
 	var $m_articleTypeName;
-
+	var $m_articleTypeObj;
+	
 	/**
 	 * An article type is a dynamic table that is created for an article
 	 * to allow different publications to display their content in different
@@ -40,8 +41,11 @@ class ArticleData extends DatabaseObject {
 	{
 		$this->m_articleTypeName = $p_articleType;
 		$this->m_dbTableName = 'X'.$p_articleType;
+		$this->m_articleTypeObj =& new ArticleType($p_articleType);
+		
 		// Get user-defined values.
-		$dbColumns = $this->getUserDefinedColumns();
+		//$tmp =& new ArticleType($p_articleType);
+		$dbColumns = $this->articleTypeObj->getUserDefinedColumns();
 		foreach ($dbColumns as $columnMetaData) {
 			$this->m_columnNames[] = $columnMetaData->getName();
 		}
@@ -100,29 +104,6 @@ class ArticleData extends DatabaseObject {
 		}
 		$g_ado_db->Execute($queryStr);
 	} // fn copyToExistingRecord
-
-
-	/**
-	 * Return an array of ArticleTypeField objects.
-	 *
-	 * @return array
-	 */
-	function getUserDefinedColumns()
-	{
-		global $g_ado_db;
-		$queryStr = 'SHOW COLUMNS FROM '.$this->m_dbTableName
-					." LIKE 'F%'";
-		$queryArray = $g_ado_db->GetAll($queryStr);
-		$metadata = array();
-		if (is_array($queryArray)) {
-			foreach ($queryArray as $row) {
-				$columnMetadata =& new ArticleTypeField($this->m_articleTypeName);
-				$columnMetadata->fetch($row);
-				$metadata[] =& $columnMetadata;
-			}
-		}
-		return $metadata;
-	} // fn getUserDefinedColumns
 
 } // class ArticleData
 
