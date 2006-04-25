@@ -48,10 +48,11 @@ field_ids.push("translate_field_"+<?php p($i); ?>);
 <TR>
 	<TD><A HREF="add.php?f_article_type=<?php print urlencode($articleTypeName); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A>
 	</TD>
-	<TD><A HREF="add.php?f_article_type=<?php print urlencode($articleTypeName); ?>" ><B><?php  putGS("Add new field"); ?></B></A>
+	<TD><B><A HREF="add.php?f_article_type=<?php print urlencode($articleTypeName); ?>" ><B><?php  putGS("Add new field"); ?></B></A>
 	</TD>
-	<TD><A HREF="javascript: void(0);" ONCLICK="ShowAll(field_ids);"><IMG SRC="<?php echo $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/add.png" BORDER="0"></A></TD>
-	<TD><A HREF="javascript: void(0);" ONCLICK="ShowAll(field_ids);"><?php putGS("Show display names"); ?></A></TD>
+	<TD><DIV STYLE="width:15px;"></DIV></TD>
+	<TD><A HREF="javascript: void(0);" ONCLICK="ShowAll(field_ids);"><IMG SRC="<?php echo $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/display_all.png" BORDER="0"></A></TD>
+	<TD><B><A HREF="javascript: void(0);" ONCLICK="ShowAll(field_ids);"><?php putGS("Show display names"); ?></A></B></TD>
 
 </TR>
 </TABLE>

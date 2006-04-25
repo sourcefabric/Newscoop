@@ -58,8 +58,10 @@ if ($User->hasPermission("ManageArticleTypes")) { ?>
 	<TR>
 		<TD><A HREF="add.php?Back=<?php  print urlencode($_SERVER['REQUEST_URI']); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
 		<TD><B><A HREF="add.php?Back=<?php  print urlencode($_SERVER['REQUEST_URI']); ?>" ><?php  putGS("Add new article type"); ?></B></A></TD>
+		<TD><DIV STYLE="width:15px;"></DIV></TD>
 		<TD><A HREF="merge.php?Back=<?php  print urlencode($_SERVER['REQUEST_URI']); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/merge.png" BORDER="0"></A></TD>
 		<TD><B><A HREF="merge.php?Back=<?php  print urlencode($_SERVER['REQUEST_URI']); ?>" ><?php  putGS("Merge types"); ?></B></A></TD>
+		<TD><DIV STYLE="width:15px;"></DIV></TD>
 		<TD><A HREF="javascript: void(0);" ONCLICK="if (allShown == 0) { ShowAll(type_ids); allShown = 1; } else { HideAll(type_ids); allShown = 0; }"><IMG SRC="<?php echo $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/display_all.png" BORDER="0"></A></TD>
 		<TD><B><A HREF="javascript: void(0);" ONCLICK="if (allShown == 0) { ShowAll(type_ids); allShown = 1; } else { HideAll(type_ids); allShown = 0; }"><?php putGS("Show display names"); ?></A></B></TD>
 		
