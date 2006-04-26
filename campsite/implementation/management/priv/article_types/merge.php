@@ -18,6 +18,13 @@ if (!$User->hasPermission('ManageArticleTypes')) {
 }
 
 $articleTypes = ArticleType::GetArticleTypes();
+
+$f_src = trim(Input::get('f_src'));
+$f_dest = trim(Input::get('f_dest'));
+#$src =& new ArticleType($f_src);
+#$dest =& new ArticleType($f_dest);
+
+
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
 $crumbs[] = array(getGS("Article Types"), "/$ADMIN/article_types/");
@@ -37,7 +44,10 @@ echo camp_html_breadcrumbs($crumbs);
 	<SELECT NAME="f_src">
 	<?php
 	foreach ($articleTypes as $at) {
-		print "<OPTION VALUE=\"". $at ."\">$at</OPTION>";
+		print '<OPTION VALUE="'. $at .'"';
+		if ($f_src == $at) { print " SELECTED "; }
+		print '">'. $at .'</OPTION>';
+
 	} 
 	?>
 	</SELECT>
@@ -47,7 +57,10 @@ echo camp_html_breadcrumbs($crumbs);
 	<SELECT NAME="f_dest">
 	<?php
 	foreach ($articleTypes as $at) {
-		print "<OPTION VALUE=\"". $at ."\">$at</OPTION>";
+		print '<OPTION VALUE="'. $at .'"';
+		if ($f_dest == $at) { print " SELECTED "; }
+		print '">'. $at .'</OPTION>';
+
 	}
 	?>
 	</SELECT>

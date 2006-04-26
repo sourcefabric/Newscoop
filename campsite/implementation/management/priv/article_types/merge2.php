@@ -19,7 +19,6 @@ if (!$User->hasPermission('ManageArticleTypes')) {
 
 $f_src = trim(Input::get('f_src'));
 $f_dest = trim(Input::get('f_dest'));
-
 $src =& new ArticleType($f_src);
 $dest =& new ArticleType($f_dest);
 

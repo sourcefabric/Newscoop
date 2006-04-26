@@ -19,7 +19,11 @@ if (!$User->hasPermission('ManageArticleTypes')) {
 
 $f_src = trim(Input::get('f_src'));
 $f_dest = trim(Input::get('f_dest'));
-
+$f_ok = trim(Input::get('Ok'));
+if (ereg('Back to Step 1', $f_ok)) {
+	header("Location: /$ADMIN/article_types/merge.php?f_src=$f_src&f_dest=$f_dest");
+	exit;
+}	
 
 $src =& new ArticleType($f_src);
 $dest =& new ArticleType($f_dest);
@@ -40,7 +44,7 @@ echo camp_html_breadcrumbs($crumbs);
 
 ?>
 <P>
-<FORM NAME="dialog" METHOD="POST" ACTION="do_merge">
+<FORM NAME="dialog" METHOD="POST" ACTION="do_merge.php?f_src=<?php print $f_src; ?>&f_dest=<?php print $f_dest; ?>">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 <TR>
 	<TD COLSPAN="2">Merge Article Types<BR>Step 3 of 3</TD>
