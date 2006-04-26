@@ -48,7 +48,7 @@ if ($correct) {
 	$field =& new ArticleTypeField($f_article_type, $f_field_id);
 	$created = $field->setName($f_field_language_id, $f_field_translation_name);
 	if ($created) {
-		header("Location: /$ADMIN/article_types/fields?f_article_type=". $f_article_type);
+		header("Location: /$ADMIN/article_types/fields/?f_article_type=". $f_article_type);
 		exit;
 	}
 	else {
@@ -62,7 +62,6 @@ $crumbs[] = array(getGS("Article Types"), "/$ADMIN/article_types/");
 $crumbs[] = array(getGS("Adding new article type"), "");
 
 echo camp_html_breadcrumbs($crumbs);
-
 ?>
 <P>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">
