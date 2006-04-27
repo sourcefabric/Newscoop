@@ -63,24 +63,22 @@ class ArticleTypeField {
 		// TODO: This sql sequence could be cleaned up for efficiency.  Renaming columns is tricky in mysql. pjh 2006/March
 		$queryStr = "SHOW COLUMNS FROM ". $this->m_dbTableName;
 		$success = 0;
-		$res = mysql_query($queryStr);
-		if (!$res)
+		$res = $g_ado_db->getAll($queryStr);
+		if (empty($res))
 			return;
 
 		$queryStr = 0;
 
-	    if (mysql_num_rows($res) > 0) {
-	    	while ($row = mysql_fetch_assoc($res)) {
+	    if (count($res) > 0) {
+	    	foreach ($res as $row) {
 	    		if ($row['Field'] == $this->m_dbColumnName) {
 					$queryStr = "ALTER TABLE ". $this->m_dbTableName ." CHANGE COLUMN ". $this->m_dbColumnName ." F". $p_newName ." ". $row['Type'];
 					break;
 	    		}
 	    	}
 		}
-
 		if ($queryStr) {
 			$success = $g_ado_db->Execute($queryStr);
-
 		}
 
 		if ($success) {
