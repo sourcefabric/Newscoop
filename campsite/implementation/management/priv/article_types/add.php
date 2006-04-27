@@ -25,8 +25,14 @@ $crumbs[] = array(getGS("Add new article type"), "");
 echo camp_html_breadcrumbs($crumbs);
 
 ?>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.config.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.core.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.lang-enUS.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.validators.js"></script>	
+
 <P>
-<FORM NAME="dialog" METHOD="POST" ACTION="do_add.php">
+<FORM NAME="dialog" METHOD="POST" ACTION="do_add.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 <TR>
 	<TD COLSPAN="6">
@@ -35,8 +41,11 @@ echo camp_html_breadcrumbs($crumbs);
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
-	<TD COLSPAN="5">
-	<INPUT TYPE="TEXT" class="input_text" NAME="f_name" SIZE="15" MAXLENGTH="15">
+	<TD COLSPAN="4">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_name" ALT="alnum|1|A|0|0|_" emesg="The name field may only contain letters and the underscore (_) character." SIZE="15" MAXLENGTH="15">
+	</TD>
+	<TD>
+	The name field may only contain letters and the underscore (_) character.
 	</TD>
 </TR>
 <TR>

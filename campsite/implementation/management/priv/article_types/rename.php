@@ -39,7 +39,7 @@ echo camp_html_breadcrumbs($crumbs);
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
 	<TD COLSPAN="5">
-	<INPUT TYPE="TEXT" VALUE="<?php p($f_name); ?>" class="input_text" NAME="f_name" SIZE="15" MAXLENGTH="15">
+	<INPUT TYPE="TEXT" VALUE="<?php p($f_name); ?>" class="input_text" NAME="f_name" ALT="alnum|1|A|false|false|_" SIZE="15" MAXLENGTH="15">
 	</TD>
 </TR>
 <TR>
