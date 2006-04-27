@@ -15,7 +15,7 @@ $f_article_number = Input::Get('f_article_number', 'int', 0);
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));
-	exit;	
+	exit;
 }
 
 $articleObj =& new Article($f_language_selected, $f_article_number);
@@ -24,10 +24,10 @@ $articleObj =& new Article($f_language_selected, $f_article_number);
 // or they didnt create the article, give them the boot.
 if (!$articleObj->userCanModify($User)) {
 	camp_html_display_error(getGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users."));
-	exit;	
+	exit;
 }
 
-$articleObj->unlock();
+$articleObj->setIsLocked(false);
 header('Location: '.camp_html_article_url($articleObj, $f_language_id, "edit.php", "", "&Unlock=true"));
 exit;
 

@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/article_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/DbObjectArray.php');
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/ArticlePublish.php');
@@ -22,7 +22,7 @@ $ArticlesPerPage = 15;
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
-	exit;	
+	exit;
 }
 
 if ($f_article_offset < 0) {
@@ -32,29 +32,29 @@ if ($f_article_offset < 0) {
 $sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
 if (!$sectionObj->exists()) {
 	camp_html_display_error(getGS('Section does not exist.'));
-	exit;		
+	exit;
 }
 
 $publicationObj =& new Publication($f_publication_id);
 if (!$publicationObj->exists()) {
 	camp_html_display_error(getGS('Publication does not exist.'));
-	exit;	
+	exit;
 }
 
 $issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
 if (!$issueObj->exists()) {
 	camp_html_display_error(getGS('Issue does not exist.'));
-	exit;	
+	exit;
 }
 
 $allArticleLanguages = Article::GetAllLanguages();
 
 if ($f_language_selected) {
 	// Only show a specific language.
-	$allArticles = Article::GetArticles($f_publication_id, $f_issue_number, 
+	$allArticles = Article::GetArticles($f_publication_id, $f_issue_number,
 		$f_section_number, $f_language_selected, null, $f_language_id,
 		$ArticlesPerPage, $f_article_offset);
-	$totalArticles = count(Article::GetArticles($f_publication_id, 
+	$totalArticles = count(Article::GetArticles($f_publication_id,
 		$f_issue_number, $f_section_number, $f_language_selected));
 	$numUniqueArticles = $totalArticles;
 	$numUniqueArticlesDisplayed = count($allArticles);
@@ -78,7 +78,7 @@ $pagerUrl = "index.php?f_publication_id=".$f_publication_id
 	."&f_language_selected=".$f_language_selected."&";
 $pager =& new SimplePager($numUniqueArticles, $ArticlesPerPage, $offsetVarName, $pagerUrl);
 
-$topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
+$topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj,
 				  'Section' => $sectionObj);
 camp_html_content_top(getGS('Article List'), $topArray);
 ?>
@@ -111,7 +111,7 @@ function checkAll()
 	for (i = 0; i < <?php p($numArticlesThisPage); ?>; i++) {
 		document.getElementById("row_"+i).className = 'list_row_click';
 		document.getElementById("checkbox_"+i).checked = true;
-        marked_row[i] = true;		
+        marked_row[i] = true;
 	}
 } // fn checkAll
 
@@ -119,9 +119,9 @@ function checkAll()
 function uncheckAll()
 {
 	for (i = 0; i < <?php p($numArticlesThisPage); ?>; i++) {
-		document.getElementById("row_"+i).className = default_class[i];			
+		document.getElementById("row_"+i).className = default_class[i];
 		document.getElementById("checkbox_"+i).checked = false;
-        marked_row[i] = false;		
+        marked_row[i] = false;
 	}
 } // fn uncheckAll
 
@@ -159,7 +159,7 @@ function setPointer(theRow, theRowNum, theAction)
     return true;
 } // end of the 'setPointer()' function
 
-/** 
+/**
  * Change the color of the row when the checkbox is selected.
  *
  * @param object  The checkbox object.
@@ -171,10 +171,10 @@ function checkboxClick(theCheckbox, theRowNum)
         newClass = 'list_row_click';
         marked_row[theRowNum] = (typeof(marked_row[theRowNum]) == 'undefined' || !marked_row[theRowNum])
                               ? true
-                              : null;		
+                              : null;
 	} else {
-        newClass = 'list_row_hover';		
-        marked_row[theRowNum] = false;		
+        newClass = 'list_row_hover';
+        marked_row[theRowNum] = false;
 	}
    	row = document.getElementById("row_"+theRowNum);
    	row.className = newClass;
@@ -198,7 +198,7 @@ function checkboxClick(theCheckbox, theRowNum)
 					<TD valign="middle">
 						<SELECT NAME="f_language_selected" id="f_language_selected" class="input_select" onchange="location.href='index.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_language_id=<?php p($f_language_id); ?>&<?php p($offsetVarName); ?>=0&f_language_selected='+document.getElementById('f_language_selected').options[document.getElementById('f_language_selected').selectedIndex].value;">
 						<option value="0"><?php putGS("All"); ?></option>
-						<?php 
+						<?php
 						foreach ($allArticleLanguages as $languageItem) {
 							echo '<OPTION value="'.$languageItem->getLanguageId().'"' ;
 							if ($languageItem->getLanguageId() == $f_language_selected) {
@@ -213,14 +213,14 @@ function checkboxClick(theCheckbox, theRowNum)
 			</TD>
 			<TD style="padding-left: 20px;">
 				<script>
-				function action_selected(dropdownElement) 
+				function action_selected(dropdownElement)
 				{
 					// Verify that at least one checkbox has been selected.
 					checkboxes = document.forms.article_list["f_article_code[]"];
 					if (checkboxes) {
 						isValid = false;
 						numCheckboxesChecked = 0;
-						// Special case for single checkbox 
+						// Special case for single checkbox
 						// (when there is only one article in the section).
 						if (!checkboxes.length) {
 							isValid = checkboxes.checked;
@@ -245,7 +245,7 @@ function checkboxClick(theCheckbox, theRowNum)
 						dropdownElement.options[0].selected = true;
 						return;
 					}
-							
+
 					// Get the index of the "delete" option.
 					deleteOptionIndex = -1;
 //					translateOptionIndex = -1;
@@ -257,7 +257,7 @@ function checkboxClick(theCheckbox, theRowNum)
 //							translateOptionIndex = index;
 //						}
 					}
-					
+
 					// if the user has selected the "delete" option
 					if (dropdownElement.selectedIndex == deleteOptionIndex) {
 						ok = confirm("<?php putGS("Are you sure you want to delete the selected articles?"); ?>");
@@ -266,29 +266,29 @@ function checkboxClick(theCheckbox, theRowNum)
 							return;
 						}
 					}
-					
+
 					// if the user selected the "translate" option
-//					if ( (dropdownElement.selectedIndex == translateOptionIndex) 
+//					if ( (dropdownElement.selectedIndex == translateOptionIndex)
 //						 && (numCheckboxesChecked > 1) ) {
 //						alert("<?php putGS("You may only translate one article at a time."); ?>");
 //						dropdownElement.options[0].selected = true;
 //						return;
 //					}
-					
+
 					// do the action if it isnt the first or second option
 					if ( (dropdownElement.selectedIndex != 0) &&  (dropdownElement.selectedIndex != 1) ) {
-						dropdownElement.form.submit(); 
+						dropdownElement.form.submit();
 					}
 				}
 				</script>
 				<SELECT name="f_article_list_action" class="input_select" onchange="action_selected(this);">
 				<OPTION value=""><?php putGS("Actions"); ?>...</OPTION>
 				<OPTION value="">-----------------------</OPTION>
-				
+
 				<?php if ($User->hasPermission('Publish')) { ?>
 				<OPTION value="workflow_publish"><?php putGS("Status: Publish"); ?></OPTION>
 				<?php } ?>
-				
+
 				<?php if ($User->hasPermission('ChangeArticle')) { ?>
 				<OPTION value="workflow_submit"><?php putGS("Status: Submit"); ?></OPTION>
 				<?php } ?>
@@ -296,36 +296,36 @@ function checkboxClick(theCheckbox, theRowNum)
 				<?php if ($User->hasPermission('Publish')) { ?>
 				<OPTION value="workflow_new"><?php putGS("Status: Set New"); ?></OPTION>
 				<?php } ?>
-				
+
 				<OPTION value="schedule_publish"><?php putGS("Publish Schedule"); ?></OPTION>
 				<OPTION value="unlock"><?php putGS("Unlock"); ?></OPTION>
-				
+
 				<?php  if ($User->hasPermission('DeleteArticle')) { ?>
 				<OPTION value="delete"><?php putGS("Delete"); ?></OPTION>
 				<?php } ?>
-				
+
 				<?php  if ($User->hasPermission('AddArticle')) { ?>
 				<OPTION value="copy"><?php putGS("Duplicate"); ?></OPTION>
 				<OPTION value="copy_interactive"><?php putGS("Duplicate to another section"); ?></OPTION>
 				<?php } ?>
-				
+
 				<?php if ($User->hasPermission("MoveArticle")) { ?>
 				<option value="move"><?php putGS("Move"); ?></OPTION>
 				<?php } ?>
 				</SELECT>
 			</TD>
-			
+
 			<TD style="padding-left: 5px; font-weight: bold;">
-				<input type="button" class="button" value="<?php putGS("Select All"); ?>" onclick="checkAll();"> 
-				<input type="button" class="button" value="<?php putGS("Select None"); ?>" onclick="uncheckAll();"> 
+				<input type="button" class="button" value="<?php putGS("Select All"); ?>" onclick="checkAll();">
+				<input type="button" class="button" value="<?php putGS("Select None"); ?>" onclick="uncheckAll();">
 			</TD>
 		</TR>
 		</TABLE>
 	</TD>
-	
+
 </TR>
 </TABLE>
-<?php 
+<?php
 if ($numUniqueArticlesDisplayed > 0) {
 	$counter = 0;
 	$color = 0;
@@ -346,10 +346,10 @@ if ($numUniqueArticlesDisplayed > 0) {
 	<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Topics"); ?></TD>
 	<TD align="center" valign="top"><?php //putGS("Preview"); ?></TD>
 	<?php  if ($User->hasPermission('AddArticle')) { ?>
-	<TD align="center" valign="top"><?php //putGS("Translate"); ?></TD>	
+	<TD align="center" valign="top"><?php //putGS("Translate"); ?></TD>
 	<?php } ?>
 </TR>
-<?php 
+<?php
 $uniqueArticleCounter = 0;
 foreach ($allArticles as $articleObj) {
 	if ($articleObj->getArticleNumber() != $previousArticleNumber) {
@@ -363,27 +363,27 @@ foreach ($allArticles as $articleObj) {
 	    $rowClass = "article_locked";
 	}
 	else {
-    	if ($color) { 
+    	if ($color) {
     	    $rowClass = "list_row_even";
-    	} else { 
+    	} else {
     	    $rowClass = "list_row_odd";
-    	} 
+    	}
 	}
 	$color = !$color;
-	
+
 	// Remember the default class so we can restore it when "Select None" is clicked
 	// or the mouse leaves the row after hovering on it.
-	?>	
+	?>
 	<script>default_class[<?php p($counter); ?>] = "<?php p($rowClass); ?>";</script>
 	<TR id="row_<?php p($counter); ?>" class="<?php p($rowClass); ?>" onmouseover="setPointer(this, <?php p($counter); ?>, 'over');" onmouseout="setPointer(this, <?php p($counter); ?>, 'out');">
 		<TD>
 			<input type="checkbox" value="<?php p($articleObj->getArticleNumber().'_'.$articleObj->getLanguageId()); ?>" name="f_article_code[]" id="checkbox_<?php p($counter); ?>" class="input_checkbox" onclick="checkboxClick(this, <?php p($counter); ?>);">
 		</TD>
-		
+
 		<TD <?php if ($articleObj->getArticleNumber() == $previousArticleNumber) { ?>class="translation_indent"<?php } ?>>
-		
+
 		<?php
-		if ($articleObj->getArticleNumber() != $previousArticleNumber) { 
+		if ($articleObj->getArticleNumber() != $previousArticleNumber) {
 			echo $f_article_offset + $uniqueArticleCounter.". ";
 		}
 		// Is article locked?
@@ -393,7 +393,7 @@ foreach ($allArticles as $articleObj) {
 				$lockInfo = getGS('The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.',
 					  htmlspecialchars($lockUserObj->getRealName()),
 					  htmlspecialchars($lockUserObj->getUserName()),
-					  $timeDiff['hours'], $timeDiff['minutes']); 
+					  $timeDiff['hours'], $timeDiff['minutes']);
 			}
 			else {
 				$lockInfo = getGS('The article has been locked by $1 ($2) $3 minute(s) ago.',
@@ -401,7 +401,7 @@ foreach ($allArticles as $articleObj) {
 					  htmlspecialchars($lockUserObj->getUserName()),
 					  $timeDiff['minutes']);
 			}
-		    
+
 		    ?>
 		    <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/lock-16x16.png" width="16" height="16" border="0" alt="<?php  p($lockInfo); ?>" title="<?php p($lockInfo); ?>">
 		    <?php
@@ -411,8 +411,8 @@ foreach ($allArticles as $articleObj) {
 		</TD>
 
 		<?php
-		// The MOVE links  
-		if ($User->hasPermission('Publish')) { 
+		// The MOVE links
+		if ($User->hasPermission('Publish')) {
 			if (($articleObj->getArticleNumber() == $previousArticleNumber) || ($numUniqueArticles <= 1))  {
 				?>
 				<TD ALIGN="CENTER" valign="middle" NOWRAP></TD>
@@ -433,7 +433,7 @@ foreach ($allArticles as $articleObj) {
 								<A HREF="/<?php echo $ADMIN; ?>/articles/do_position.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_article_number=<?php p($articleObj->getArticleNumber()); ?>&f_article_language=<?php p($articleObj->getLanguageId());?>&f_language_id=<?php p($f_language_id); ?>&f_language_selected=<?php p($f_language_selected); ?>&f_move=down_rel&f_position=1"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/down-16x16.png" width="16" height="16" border="0" style="padding-left: 3px; padding-right: 3px;"></A>
 							<?php } ?>
 						</td>
-						
+
 						<td>
 							<select name="f_position_<?php p($counter);?>" onChange="positionValue = document.forms.article_list.f_position_<?php p($counter); ?>.options[document.forms.article_list.f_position_<?php p($counter); ?>.selectedIndex].value; url = '/<?php p($ADMIN);?>/articles/do_position.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_language_id=<?php p($f_language_id); ?>&f_language_selected=<?php p($f_language_selected);?>&f_article_language=<?php p($articleObj->getLanguageId()); ?>&f_article_number=<?php p($articleObj->getArticleNumber());?>&f_move=abs&f_position='+positionValue; location.href=url;" class="input_select" style="font-size: smaller;">
 							<?php
@@ -451,9 +451,9 @@ foreach ($allArticles as $articleObj) {
 					</tr>
 					</table>
 				</TD>
-				<?php  
+				<?php
 				}
-		} // if user->hasPermission('publish') 
+		} // if user->hasPermission('publish')
 		?>
 
 		<TD ALIGN="RIGHT">
@@ -461,66 +461,56 @@ foreach ($allArticles as $articleObj) {
 		</TD>
 
 		<TD ALIGN="RIGHT">
-			<?php 
+			<?php
 			$articleCreator =& new User($articleObj->getCreatorId());
 			p(htmlspecialchars($articleCreator->getRealName()));  ?>
 		</TD>
 
 		<TD ALIGN="CENTER" valign="middle" nowrap>
 			<table cellpadding=0 cellspacing=0><tr><td>
-			<?php 
-			if ($articleObj->getPublished() == "Y") { 
-				putGS("Published");
-			}
-			elseif ($articleObj->getPublished() == "N") { 
-				putGS("New");
-			}
-			elseif ($articleObj->getPublished() == "S") { 
-				putGS("Submitted");
-			}
-			?>
+			<?php p($articleObj->getWorkflowDisplayString()); ?>
 			</td>
 			<?php
-			if ($articleObj->getPublished() != 'N') { 
-				$hasPendingActions = 
+			if ($articleObj->getWorkflowStatus() != 'N') {
+				$hasPendingActions =
 					ArticlePublish::ArticleHasFutureActions($articleObj->getArticleNumber(),
 					$articleObj->getLanguageId());
 				if ($hasPendingActions) { ?>
 			<td style="padding-left: 3px"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/automatic_publishing.png" alt="<?php  putGS("Scheduled Publishing"); ?>" title="<?php  putGS("Scheduled Publishing"); ?>" border="0" width="22" height="22" align="middle" ></td>
-				<?php 
+				<?php
 				}
-			} 
+			}
 			?>
 			</tr>
 			</table>
 		</TD>
-		
+
 		<TD><?php echo $articleObj->onFrontPage() ? "Yes" : "No"; ?></TD>
 		<TD><?php echo $articleObj->onSectionPage() ? "Yes" : "No"; ?></TD>
 		<TD><?php echo count(ArticleImage::GetImagesByArticleNumber($articleObj->getArticleNumber())); ?></TD>
 		<TD><?php echo count(ArticleTopic::GetArticleTopics($articleObj->getArticleNumber())); ?></TD>
-		
+
 		<TD ALIGN="CENTER">
 			<A HREF="" ONCLICK="window.open('/<?php echo $ADMIN; ?>/articles/preview.php?f_publication_id=<?php  p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_article_number=<?php p($articleObj->getArticleNumber()); ?>&f_language_id=<?php p($f_language_id); ?>&f_language_selected=<?php p($articleObj->getLanguageId()); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=yes, width=800, height=600'); return false"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/preview-16x16.png" alt="<?php  putGS("Preview"); ?>" title="<?php putGS('Preview'); ?>" border="0" width="16" height="16"></A>
-		</TD>		
-		
+		</TD>
+
 		<?php  if ($User->hasPermission('TranslateArticle')) { ?>
 		<TD ALIGN="CENTER">
 			<A HREF="/<?php echo $ADMIN; ?>/articles/translate.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_article_code=<?php p($articleObj->getArticleNumber()); ?>_<?php p($articleObj->getLanguageId()); ?>&f_language_id=<?php p($f_language_id); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/translate-16x16.png" alt="<?php  putGS("Translate"); ?>" title="<?php  putGS("Translate"); ?>" border="0" width="16" height="16"></A>
 		</TD>
 		<?php } ?>
-		
-		
+
+
 		<?php
 		if ($articleObj->getArticleNumber() != $previousArticleNumber) {
 			$previousArticleNumber = $articleObj->getArticleNumber();
 		}
 		$counter++;
-		?>	
+		?>
 	</TR>
-	<?php 
+	<?php
 } // foreach
-?>	
+?>
 </table>
 <table class="table_list" style="padding-top: 5px;">
 <tr>

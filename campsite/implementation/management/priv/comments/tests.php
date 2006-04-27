@@ -146,6 +146,12 @@ class PhorumMessage_Test extends PHPUnit_TestCase
     }
 } // class PhorumMessage_test
 
+
+class PhorumForum_test extends PHPUnit_TestCase
+{
+
+}
+
 $suite  = new PHPUnit_TestSuite("PhorumUser_Test");
 $suite->addTestSuite("PhorumMessage_Test");
 $result = PHPUnit::run($suite);

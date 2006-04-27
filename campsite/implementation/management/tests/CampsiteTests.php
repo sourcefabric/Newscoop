@@ -6,26 +6,26 @@ require_once("$DOCUMENT_ROOT/classes/Article.php");
 class ArticleTest extends PHPUnit_TestCase {
 	function ArticleTest($name) {
 		$this->PHPUnit_TestCase($name);
-	}	
-	
+	}
+
 	function test_article() {
 		$article =& new Article(9000001,9000002,9000003,9000004);
-		
+
 		// Test create
-		$article->create("Unit Test Long Name", 
-						 "Unit Test Short Name", 
+		$article->create("Unit Test Long Name",
+						 "Unit Test Short Name",
 						 "fastnews");
 		$this->assertTrue($article->exists());
-		
+
 		// Test SET functions
 		$article->setTitle("Unit Test New Title");
-		$article->setUserId(9000005);
+		$article->setCreatorId(9000005);
 		$article->setOnFrontPage(true);
 		$article->setOnSection(true);
-		$article->setPublished('Y');
+		$article->setWorkflowStatus('Y');
 		$article->setKeywords("Unit, Test");
 		$article->setIsIndexed(true);
-		
+
 		// Test GET functions
 		$articleCopy =& new Article(9000001, 9000002, 9000003, 9000004, $article->getArticleId());
 		$this->assertEquals(9000001, $articleCopy->getPublicationId());
@@ -36,10 +36,10 @@ class ArticleTest extends PHPUnit_TestCase {
 		$this->assertEquals("Unit Test New Title", $articleCopy->getTitle());
 		$this->assertEquals(true, $articleCopy->onFrontPage());
 		$this->assertEquals(true, $articleCopy->onSection());
-		$this->assertEquals('Y', $articleCopy->getPublished());
+		$this->assertEquals('Y', $articleCopy->getWorkflowStatus());
 		$this->assertEquals("Unit, Test", $articleCopy->getKeywords());
 		$this->assertEquals(true, $articleCopy->isIndexed());
-		
+
 		// Test DELETE functions
 		$article->delete();
 		$this->assertFalse($article->exists());

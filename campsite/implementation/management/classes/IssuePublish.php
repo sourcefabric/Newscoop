@@ -234,12 +234,12 @@ class IssuePublish extends DatabaseObject {
 		if ($publishArticlesAction == 'Y') {
 		    $articles = Article::GetArticles(null, $issueId, null, $languageId);
             foreach ($articles as $article) {
-                $article->setPublished($articleState);
+                $article->setWorkflowStatus($articleState);
             }
 		}
 		$issueState = ($publishAction == 'P') ? 'Y' : 'N';
 		$issue =& new Issue($publicationId, $languageId, $issueId);
-		$issue->setPublished($issueState);
+		$issue->setWorkflowStatus($issueState);
 		$this->setCompleted();
 	} // fn doAction
 

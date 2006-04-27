@@ -18,14 +18,14 @@ $Issue = Input::Get('Issue', 'int');
 $Language = Input::Get('Language', 'int');
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid Input: $1', Input::GetErrorString()));	
+	camp_html_display_error(getGS('Invalid Input: $1', Input::GetErrorString()));
 	exit;
 }
 $publicationObj =& new Publication($Pub);
 
 if (!$publicationObj->exists()) {
-	camp_html_display_error(getGS('Publication does not exist.'));	
-	exit;	
+	camp_html_display_error(getGS('Publication does not exist.'));
+	exit;
 }
 $issueObj =& new Issue($Pub, $Language, $Issue);
 if (!$issueObj->exists()) {
@@ -66,16 +66,16 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 <TR>
 	<TD><A HREF="<?php p($url_add); ?>?<?php p($url_args1); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
 	<TD><A HREF="<?php p($url_add); ?>?<?php p($url_args1); ?>" ><B><?php  putGS("Add new issue"); ?></B></A></TD>
-	
+
 	<TD style="padding-left: 20px;"><A HREF="" ONCLICK="window.open('preview.php?<?php p($url_args2); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=yes, width=800, height=600'); return false;"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/preview.png" BORDER="0"></A></TD>
 	<TD><A HREF="" ONCLICK="window.open('preview.php?<?php p($url_args2); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=yes, width=800, height=600'); return false;"><B><?php  putGS("Preview"); ?></B></A></TD>
-	
+
 	<TD style="padding-left: 20px;"><A HREF="autopublish.php?<?php p($url_args2); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/automatic_publishing.png" BORDER="0"></A></TD>
 	<TD><A HREF="autopublish.php?<?php p($url_args2); ?>" ><B><?php  putGS("Scheduled Publishing"); ?></B></A></TD>
-	
+
 	<TD style="padding-left: 20px;"><A HREF="translate.php?<?php p($url_args2); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/translate.png" BORDER="0"></A></TD>
 	<TD><A HREF="translate.php?<?php p($url_args2); ?>" ><B><?php  putGS("Translate"); ?></B></A></TD>
-	
+
 	<TD style="padding-left: 20px;"><A HREF="do_del.php?<?php p($url_args2); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the issue $1?', htmlspecialchars($issueObj->getName())); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0"></A></TD>
 	<TD><A HREF="do_del.php?<?php p($url_args2); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the issue $1?', htmlspecialchars($issueObj->getName())); ?>');"><B><?php  putGS("Delete"); ?></B></A></TD>
 </TR>
@@ -104,7 +104,7 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 	<TD ALIGN="RIGHT" ><?php  putGS("Language"); ?>:</TD>
 	<TD>
 	    <SELECT NAME="cLang" class="input_select">
-		<?php 
+		<?php
 		foreach ($allLanguages as $tmpLanguage) {
 			$langId = $tmpLanguage->getLanguageId();
 			if (($langId == $issueObj->getLanguageId()) || !in_array($langId, $excludeLanguageIds)) {
@@ -116,7 +116,7 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 	</TD>
 </TR>
 
-<?php if ($issueObj->getPublished() == 'Y') {?>
+<?php if ($issueObj->getWorkflowStatus() == 'Y') {?>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>"); ?>:</TD>
 	<TD>
@@ -130,11 +130,11 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 	<TD>
 		<SELECT NAME="cIssueTplId" class="input_select">
 		<OPTION VALUE="0">---</OPTION>
-		<?php 
+		<?php
 		foreach ($allTemplates as $template) {
 			camp_html_select_option($template->getTemplateId(), $issueObj->getIssueTemplateId(), $template->getName());
 		}
-		?>	    
+		?>
 		</SELECT>
 	</TD>
 </TR>
@@ -144,11 +144,11 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 	<TD>
 		<SELECT NAME="cSectionTplId" class="input_select">
 		<OPTION VALUE="0">---</OPTION>
-		<?php 
+		<?php
 		foreach ($allTemplates as $template) {
 			camp_html_select_option($template->getTemplateId(), $issueObj->getSectionTemplateId(), $template->getName());
 		}
-		?>	    
+		?>
 		</SELECT>
 	</TD>
 </TR>
@@ -158,7 +158,7 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 	<TD>
 		<SELECT NAME="cArticleTplId" class="input_select">
 		<OPTION VALUE="0">---</OPTION>
-		<?php 
+		<?php
 		foreach ($allTemplates as $template) {
 			camp_html_select_option($template->getTemplateId(), $issueObj->getArticleTemplateId(), $template->getName());
 		}

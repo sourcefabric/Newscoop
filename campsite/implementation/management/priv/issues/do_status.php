@@ -25,7 +25,7 @@ if (!$User->hasPermission('ManageIssue') || !$User->hasPermission('Publish')) {
 
 $publicationObj =& new Publication($Pub);
 $issueObj =& new Issue($Pub, $Language, $Issue);
-$issueObj->setPublished();
+$issueObj->setWorkflowStatus();
 
 header("Location: /$ADMIN/issues/?Pub=" . $publicationObj->getPublicationId());
 

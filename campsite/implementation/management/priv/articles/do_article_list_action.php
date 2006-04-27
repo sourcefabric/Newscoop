@@ -25,7 +25,7 @@ $f_article_offset = Input::Get('f_article_offset', 'int', 0, true);
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));
-	exit;	
+	exit;
 }
 
 // Validate permissions
@@ -40,7 +40,7 @@ case "publish":
 	if (!$User->hasPermission('Publish')) {
 		$errorStr = getGS("You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.");
 		camp_html_display_error($errorStr, $BackLink);
-		exit;	
+		exit;
 	}
 	break;
 case "copy":
@@ -48,7 +48,7 @@ case "copy_interactive":
 	if (!$User->hasPermission('AddArticle')) {
 		$errorStr = getGS("You do not have the right to add articles.");
 		camp_html_display_error($errorStr, $BackLink);
-		exit;	
+		exit;
 	}
 	break;
 }
@@ -69,8 +69,8 @@ case "workflow_new":
 		// A publisher can change the status in any way he sees fit.
 		// Someone who can change an article can submit/unsubmit articles.
 		if ($User->hasPermission('Publish')
-			|| ($User->hasPermission('ChangeArticle') && ($articleObj->getPublished() == 'S'))) {
-			$articleObj->setPublished('N');
+			|| ($User->hasPermission('ChangeArticle') && ($articleObj->getWorkflowStatus() == 'S'))) {
+			$articleObj->setWorkflowStatus('N');
 		}
 	}
 	break;
@@ -79,14 +79,14 @@ case "workflow_submit":
 		$articleObj =& new Article($articleCode['language_id'], $articleCode['article_id']);
 		// A user who owns the article may submit it.
 		if ($User->hasPermission("Publish") || $articleObj->userCanModify($User)) {
-			$articleObj->setPublished('S');
+			$articleObj->setWorkflowStatus('S');
 		}
 	}
 	break;
 case "workflow_publish":
 	foreach ($articleCodes as $articleCode) {
 		$articleObj =& new Article($articleCode['language_id'], $articleCode['article_id']);
-		$articleObj->setPublished('Y');
+		$articleObj->setWorkflowStatus('Y');
 	}
 	break;
 case "delete":
@@ -99,8 +99,8 @@ case "copy":
 	foreach ($groupedArticleCodes as $articleNumber => $languageArray) {
 		$languageId = camp_array_peek($languageArray);
 		$articleObj =& new Article($languageId, $articleNumber);
-		$articleObj->copy($articleObj->getPublicationId(), 
-						  $articleObj->getIssueNumber(), 
+		$articleObj->copy($articleObj->getPublicationId(),
+						  $articleObj->getIssueNumber(),
 						  $articleObj->getSectionNumber(),
 						  $User->getUserId(),
 						  $languageArray);
@@ -132,7 +132,7 @@ case "unlock":
 	foreach ($articleCodes as $articleCode) {
 		$articleObj =& new Article($articleCode['language_id'], $articleCode['article_id']);
 		if ($articleObj->userCanModify($User)) {
-			$articleObj->unlock();
+			$articleObj->setIsLocked(false);
 		}
 	}
 	break;

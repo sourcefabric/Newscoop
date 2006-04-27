@@ -68,12 +68,12 @@ $locked = true;
 // If the article hasnt been touched in 24 hours
 $timeDiff = camp_time_diff_str($articleObj->getLockTime());
 if ( $timeDiff['days'] > 0 ) {
-	$articleObj->unlock();
+	$articleObj->setIsLocked(false);
 	$locked = false;
 }
 // If the user who locked the article doesnt exist anymore, unlock the article.
 elseif (($articleObj->getLockedByUser() != 0) && !$lockUserObj->exists()) {
-	$articleObj->unlock();
+	$articleObj->setIsLocked(false);
 	$locked = false;
 }
 
@@ -85,7 +85,7 @@ elseif (($articleObj->getLockedByUser() != 0) && !$lockUserObj->exists()) {
 if ($f_unlock === false) {
     if (!$articleObj->isLocked()) {
 		// Lock the article
-		$articleObj->lock($User->getUserId());
+		$articleObj->setIsLocked(true, $User->getUserId());
     }
 }
 else {
@@ -296,20 +296,20 @@ if ($f_edit_mode == "edit") { ?>
 						if ($User->hasPermission("Publish")) { ?>
 						<SELECT name="f_action_workflow" class="input_select" onchange="this.form.submit();">
 						<?php
-						camp_html_select_option("Y", $articleObj->getPublished(), getGS("Status: Published"));
-						camp_html_select_option("S", $articleObj->getPublished(), getGS("Status: Submitted"));
-						camp_html_select_option("N", $articleObj->getPublished(), getGS("Status: New"));
+						camp_html_select_option("Y", $articleObj->getWorkflowStatus(), getGS("Status: Published"));
+						camp_html_select_option("S", $articleObj->getWorkflowStatus(), getGS("Status: Submitted"));
+						camp_html_select_option("N", $articleObj->getWorkflowStatus(), getGS("Status: New"));
 						?>
 						</SELECT>
-						<?php } elseif ($articleObj->userCanModify($User) && ($articleObj->getPublished() != 'Y')) { ?>
+						<?php } elseif ($articleObj->userCanModify($User) && ($articleObj->getWorkflowStatus() != 'Y')) { ?>
 						<SELECT name="f_action_workflow" class="input_select" onchange="this.form.submit();">
 						<?php
-						camp_html_select_option("S", $articleObj->getPublished(), getGS("Status: Submitted"));
-						camp_html_select_option("N", $articleObj->getPublished(), getGS("Status: New"));
+						camp_html_select_option("S", $articleObj->getWorkflowStatus(), getGS("Status: Submitted"));
+						camp_html_select_option("N", $articleObj->getWorkflowStatus(), getGS("Status: New"));
 						?>
 						</SELECT>
 						<?php } else {
-							switch ($articleObj->getPublished()) {
+							switch ($articleObj->getWorkflowStatus()) {
 								case 'Y':
 									putGS("Status: Published");
 									break;
@@ -464,7 +464,7 @@ if ($f_edit_mode == "edit") { ?>
 				<TD ALIGN="RIGHT" ><?php  putGS("Keywords"); ?>:</TD>
 				<TD>
 					<?php if ($f_edit_mode == "edit") { ?>
-					<INPUT TYPE="TEXT" NAME="f_keywords" VALUE="<?php print htmlspecialchars($articleObj->getKeywords()); ?>" class="input_text" SIZE="64" MAXLENGTH="255">
+					<INPUT TYPE="TEXT" NAME="f_keywords" VALUE="<?php print htmlspecialchars($articleObj->getKeywords()); ?>" class="input_text" SIZE="50" MAXLENGTH="255">
 					<?php } else {
 						print htmlspecialchars($articleObj->getKeywords());
 					}
@@ -661,7 +661,7 @@ if ($f_edit_mode == "edit") { ?>
 	<TD valign="top" style="border-left: 1px solid #8baed1;" width="200px">
 		<TABLE width="100%">
 		<!-- Begin Scheduled Publishing section -->
-		<?php if ($articleObj->getPublished() != 'N') { ?>
+		<?php if ($articleObj->getWorkflowStatus() != 'N') { ?>
 		<TR><TD>
 			<TABLE width="100%" style="border: 1px solid #EEEEEE;">
 			<TR>
@@ -924,5 +924,9 @@ if ($f_edit_mode == "edit") { ?>
 </TABLE>
 </FORM>
 <?php
+if ($articleObj->getWorkflowStatus() == 'Y') {
+    include("add_comment.php");
+}
+
 camp_html_copyright_notice();
 ?>

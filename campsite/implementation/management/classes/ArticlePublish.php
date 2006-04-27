@@ -224,10 +224,10 @@ class ArticlePublish extends DatabaseObject {
 		$sectionPageAction = $this->getSectionPageAction();
         $article =& new Article($this->m_data['fk_language_id'], $this->m_data['fk_article_number']);
 		if ($publishAction == 'P') {
-		    $article->setPublished('Y');
+		    $article->setWorkflowStatus('Y');
 		}
 		if ($publishAction == 'U') {
-            $article->setPublished('S');
+            $article->setWorkflowStatus('S');
 		}
 		if ($frontPageAction == 'S') {
 		    $article->setOnFrontPage(true);

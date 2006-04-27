@@ -35,9 +35,15 @@ class Publication extends DatabaseObject {
 	                           'TrialTime',
 	                           'PaidTime',
 	                           'IdDefaultAlias',
-	                           'IdURLType');
+	                           'IdURLType',
+	                           'fk_forum_id');
 
 	/**
+	 * A publication represents a magazine or newspaper.
+	 *
+	 * This class is mainly responsible for specifying
+	 * publication-wide configuration parameters.
+	 *
 	 * @param int $p_publicationId
 	 */
 	function Publication($p_publicationId = null)
@@ -50,6 +56,15 @@ class Publication extends DatabaseObject {
 	} // constructor
 
 
+	/**
+	 * Create the publication.
+	 *
+	 * This is a wrapper around DatabaseObject::create(),
+	 * but also logs a message and notifies the Parser.
+	 *
+	 * @param array $p_values
+	 * @return boolean
+	 */
 	function create($p_values = null)
 	{
 		$created = parent::create($p_values);
@@ -63,6 +78,18 @@ class Publication extends DatabaseObject {
 	} // fn create
 
 
+	/**
+	 * Update the specified columns in the publication.
+	 *
+	 * A wrapper around the DatabaseObject::update(),
+	 * but this function logs a message after the update is complete
+	 * and notifies the Parser about the change.
+	 *
+	 * @param array $p_columns
+	 * @param boolean $p_commit
+	 * @param boolean $p_isSql
+	 * @return boolean
+	 */
 	function update($p_columns = null, $p_commit = true, $p_isSql = false)
 	{
 		$updated = parent::update($p_columns, $p_commit, $p_isSql);
@@ -76,6 +103,11 @@ class Publication extends DatabaseObject {
 	} // fn update
 
 
+	/**
+	 * Delete the publication and all of its aliases.
+	 *
+	 * @return boolean
+	 */
 	function delete()
 	{
 		$aliases = Alias::GetAliases(null, $this->m_data['Id']);
@@ -96,6 +128,8 @@ class Publication extends DatabaseObject {
 
 
 	/**
+	 * Get the unique ID for this publication.
+	 *
 	 * @return int
 	 */
 	function getPublicationId()
@@ -105,6 +139,8 @@ class Publication extends DatabaseObject {
 
 
 	/**
+	 * Get the name of this publication.
+	 *
 	 * @return string
 	 */
 	function getName()
@@ -114,6 +150,8 @@ class Publication extends DatabaseObject {
 
 
 	/**
+	 * Get the default language for this publication.
+	 *
 	 * @return int
 	 */
 	function getLanguageId()
@@ -141,6 +179,8 @@ class Publication extends DatabaseObject {
 
 
 	/**
+	 * Get the default language for this publication.
+	 *
 	 * @return int
 	 */
 	function getDefaultLanguageId()
@@ -150,6 +190,11 @@ class Publication extends DatabaseObject {
 
 
 	/**
+	 * Get the URL type for this publication.
+	 * This returns a key to the URLTypes table, but
+	 * currently there are only two URL types:
+	 * "short names" and "template path".
+	 *
 	 * @return int
 	 */
 	function getUrlTypeId()
@@ -204,6 +249,22 @@ class Publication extends DatabaseObject {
 
 
 	/**
+	 * Return the forum associated with this publication.
+	 *
+	 * @return int
+	 */
+	function getForumId()
+	{
+	    return $this->getProperty('fk_forum_id');
+	} // fn getForumId
+
+
+	function setForumId($p_value)
+	{
+	    return $this->setProperty('fk_forum_id', $p_value);
+	}
+
+	/**
 	 * Return all languages used in the publication as an array of Language objects.
 	 * @return array
 	 */
@@ -225,6 +286,7 @@ class Publication extends DatabaseObject {
 
 	/**
 	 * Return the total number of publications.
+	 *
 	 * @return int
 	 */
 	function GetNumPublications()
@@ -237,6 +299,7 @@ class Publication extends DatabaseObject {
 
 	/**
 	 * Return all publications as an array of Publication objects.
+	 *
 	 * @return array
 	 */
 	function GetPublications($p_sqlOptions = null)

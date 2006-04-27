@@ -17,13 +17,13 @@ $Issue = Input::Get('Issue', 'int');
 $Language = Input::Get('Language', 'int');
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid Input: $1', Input::GetErrorString()));	
+	camp_html_display_error(getGS('Invalid Input: $1', Input::GetErrorString()));
 	exit;
 }
 $publicationObj =& new Publication($Pub);
 $issueObj =& new Issue($Pub, $Language, $Issue);
 
-if ($issueObj->getPublished() == 'Y') {
+if ($issueObj->getWorkflowStatus() == 'Y') {
 	$t2 = getGS('Published');
 	$t3 = getGS('Not published');
 }

@@ -4,7 +4,7 @@
  * @param string $p_currentDir
  * @return void
  */
-function load_common_include_files($p_currentDir) 
+function load_common_include_files($p_currentDir)
 {
 	global $ADMIN_DIR;
 	require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
@@ -16,45 +16,35 @@ function load_common_include_files($p_currentDir)
 
 
 /**
- * Check if user has access to this screen.
+ * Check if user has access to the admin.
  * @param array $p_request
  * @return array
  */
-function check_basic_access($p_request, $p_exit = true)
+function check_basic_access($p_request)
 {
 	global $ADMIN;
+	global $g_ado_db;
 	require_once($_SERVER['DOCUMENT_ROOT'].'/classes/User.php');
 	$access = false;
 	$XPerm = array();
 	$user = array();
-	
+
 	// Check for required info.
 	if (!isset($p_request['LoginUserId']) || !isset($p_request['LoginUserKey'])
 	 	|| !is_numeric($p_request['LoginUserId']) || !is_numeric($p_request['LoginUserKey'])) {
 		return array($access, $user, $XPerm);
 	}
-	
+
 	// Check if user exists in the table.
 	$queryStr = 'SELECT * FROM Users '
-				.' WHERE Id='.$p_request['LoginUserId'];
-				//.' AND KeyId='.$p_request['LoginUserKey'];
-	$query = mysql_query($queryStr);
-	if ($query && (mysql_num_rows($query) > 0)) {
+				.' WHERE Id='.$p_request['LoginUserId']
+				." AND Reader='N'";
+	$row = $g_ado_db->GetRow($queryStr);
+	if ($row) {
 		// User exists.
 		$access = true;
-		$userRow = mysql_fetch_array($query,MYSQL_ASSOC);
 		$user =& new User();
-		$user->fetch($userRow);
-		if (!$user->isAdmin()) {
-			// A non-admin can enter the administration area;
-			// they exist but do not have ANY rights.
-			$access = 0;
-			$user = array();
-			if ($p_exit && false) {
-				header("Location: /$ADMIN/logout.php");
-				exit(0);
-			}
-		}
+		$user->fetch($row);
 	}
 	return array($access, $user);
 } // fn check_basic_access

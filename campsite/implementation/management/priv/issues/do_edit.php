@@ -25,7 +25,7 @@ $cArticleTplId = Input::Get('cArticleTplId', 'int');
 $cShortName = trim(Input::Get('cShortName'));
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));	
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));
 	exit;
 }
 $publicationObj =& new Publication($Pub);
@@ -51,7 +51,7 @@ if (!camp_is_valid_url_name($cShortName)) {
 	exit;
 }
 $issueObj->setProperty('Name', $cName, false);
-if ($issueObj->getPublished() == 'Y') {
+if ($issueObj->getWorkflowStatus() == 'Y') {
 	$issueObj->setProperty('PublicationDate', $cPublicationDate, false);
 }
 $issueObj->setProperty('IssueTplId', $cIssueTplId, false);

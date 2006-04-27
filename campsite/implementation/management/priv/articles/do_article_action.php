@@ -18,29 +18,29 @@ $f_action_workflow = Input::Get('f_action_workflow', 'string', null, true);
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));
-	exit;	
+	exit;
 }
 
 if (is_null($f_action) && is_null($f_action_workflow)) {
 	camp_html_display_error(getGS('No action specified'));
-	exit;	
+	exit;
 }
 
 $articleObj =& new Article($f_language_selected, $f_article_number);
 if (!$articleObj->exists()) {
 	camp_html_display_error(getGS('Article does not exist.'), $BackLink);
-	exit;		
+	exit;
 }
 
 switch ($f_action) {
-	case "unlock": 
+	case "unlock":
 		// If the user does not have permission to change the article
 		// or they didnt create the article, give them the boot.
 		if (!$articleObj->userCanModify($User)) {
 			camp_html_display_error(getGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users."));
-			exit;	
+			exit;
 		}
-		$articleObj->unlock();
+		$articleObj->setIsLocked(false);
 		header('Location: '.camp_html_article_url($articleObj, $f_language_id, "edit.php", "", "&f_unlock=true"));
 		exit;
 	case "delete":
@@ -50,7 +50,7 @@ switch ($f_action) {
 		}
 		$articleObj->delete();
 		if ($f_publication_id > 0) {
-			$url = "/$ADMIN/articles/index.php" 
+			$url = "/$ADMIN/articles/index.php"
 					."?f_publication_id=$f_publication_id"
 					."&f_issue_number=$f_issue_number"
 					."&f_section_number=$f_section_number"
@@ -75,7 +75,7 @@ switch ($f_action) {
 		$url = "Location: /$ADMIN/articles/duplicate.php?".$argsStr;
 		header($url);
 		exit;
-	case "move": 
+	case "move":
 		$args = $_REQUEST;
 		$argsStr = camp_implode_keys_and_values($_REQUEST, "=", "&");
 		$argsStr .= "&f_article_code[]=".$f_article_number."_".$f_language_selected;
@@ -92,7 +92,7 @@ if (!is_null($f_action_workflow)) {
 		// A publisher can change the status in any way he sees fit.
 		// Someone who can change an article can submit/unsubmit articles.
 		// A user who owns the article may submit it.
-		if ($User->hasPermission('Publish') 
+		if ($User->hasPermission('Publish')
 			|| ($User->hasPermission('ChangeArticle') && ($f_action_workflow != 'Y'))
 			|| ($articleObj->userCanModify($User) && ($f_action_workflow == 'S') )) {
 			$access = true;
@@ -100,9 +100,9 @@ if (!is_null($f_action_workflow)) {
 		if (!$access) {
 			$errorStr = getGS("You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.");
 			camp_html_display_error($errorStr);
-			exit;	
+			exit;
 		}
-		
+
 		// If the article is not yet categorized, force it to be before publication.
 		if (($f_action_workflow == "Y") && (($articleObj->getPublicationId() == 0) || ($articleObj->getIssueNumber() == 0) || ($articleObj->getSectionNumber() == 0))) {
 			$args = $_REQUEST;
@@ -113,10 +113,10 @@ if (!is_null($f_action_workflow)) {
 			header($url);
 			exit;
 		}
-		$articleObj->setPublished($f_action_workflow);	
+		$articleObj->setWorkflowStatus($f_action_workflow);
 	}
 	$url = camp_html_article_url($articleObj, $f_language_id, "edit.php");
-	header("Location: $url");	
+	header("Location: $url");
 	exit;
 }
 

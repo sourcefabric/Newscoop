@@ -61,13 +61,13 @@ class Phorum_message extends DatabaseObject {
 				    $p_author = '', $p_email = '', $p_userId = 0)
 	{
 		global $PHORUM;
+		global $g_ado_db;
+
 		if (!is_numeric($p_forumId)) {
 			return null;
 		}
 
-		$conn = phorum_db_mysql_connect();
-
-		// Fetch the settings and pretend they we returned to
+		// Fetch the settings and pretend they were returned to
 		// us instead of setting a global variable.
 		phorum_db_load_settings();
 		$settings = $PHORUM['SETTINGS'];
@@ -127,12 +127,11 @@ class Phorum_message extends DatabaseObject {
 			   ." WHERE forum_id=".$p_forumId
 			   ." AND thread=".$message['thread']
 			   ." AND status > 0";
-		$query = mysql_query($sql, $conn);
-		$row = mysql_fetch_assoc($query);
+		$threadCount = $g_ado_db->GetOne($sql);
 
 		$sql = "UPDATE ".$PHORUM['message_table']
-				." SET thread_count=".$row["thread_count"];
-		mysql_query($sql, $conn);
+				." SET thread_count=".$threadCount;
+		$g_ado_db->Execute($sql);
 
 	    // Retrieve the message again because the database sets
 	    // some values.
@@ -189,19 +188,15 @@ class Phorum_message extends DatabaseObject {
 	function delete($p_mode = PHORUM_DELETE_MESSAGE)
 	{
 		global $PHORUM;
+		global $g_ado_db;
 		unset($PHORUM['forum_id']);
-
-	    $conn = phorum_db_mysql_connect();
 
 	    $threadset = 0;
 	    // get the parents of the message to delete.
 	    $sql = "SELECT forum_id, message_id, thread, parent_id "
 	    		." FROM {$PHORUM['message_table']} "
 	    		." WHERE message_id = ".$this->m_data["message_id"];
-	    $res = mysql_query($sql, $conn);
-	    if ($err = mysql_error()) phorum_db_mysql_error("$err: $sql");
-
-	    $rec = mysql_fetch_assoc($res);
+	    $rec = $g_ado_db->GetRow($sql);
 
 	    if ($p_mode == PHORUM_DELETE_TREE){
 	        $mids = phorum_db_get_messagetree($this->m_data['message_id'], $rec['forum_id']);
@@ -213,8 +208,7 @@ class Phorum_message extends DatabaseObject {
 	    $sql = "UPDATE {$PHORUM['message_table']} "
 	    		." SET status=".PHORUM_STATUS_HOLD
 	    		." WHERE message_id IN ($mids)";
-	    $res = mysql_query($sql, $conn);
-	    if ($err = mysql_error()) phorum_db_mysql_error("$err: $sql");
+	    $g_ado_db->Execute($sql);
 
 	    $thread = $rec['thread'];
 	    if($thread == $this->m_data['message_id'] && $p_mode == PHORUM_DELETE_TREE){
@@ -231,8 +225,7 @@ class Phorum_message extends DatabaseObject {
 	        		." SET parent_id=$rec[parent_id] "
 	        		." WHERE forum_id=$rec[forum_id] "
 	        		." AND parent_id=$rec[message_id]";
-	        mysql_query($sql, $conn);
-	        if ($err = mysql_error()) phorum_db_mysql_error("$err: $sql");
+	        $g_ado_db->Execute($sql);
 	    }else{
 	        $count = count(explode(",", $mids));
 	    }
@@ -240,14 +233,12 @@ class Phorum_message extends DatabaseObject {
 	    // Delete the messages
 	    $sql = "DELETE FROM {$PHORUM['message_table']} "
 	    		." WHERE message_id IN ($mids)";
-	    mysql_query($sql, $conn);
-	    if ($err = mysql_error()) phorum_db_mysql_error("$err: $sql");
+	    $g_ado_db->Execute($sql);
 
 	    // start ft-search stuff
 	    $sql = "DELETE FROM {$PHORUM['search_table']} "
 	    	  ." WHERE message_id IN ($mids)";
-	    $res = mysql_query($sql, $conn);
-	    if ($err = mysql_error()) phorum_db_mysql_error("$err: $sql");
+	    $g_ado_db->Execute($sql);
 	    // end ft-search stuff
 
 	    $this->__updateThreadInfo();
@@ -255,8 +246,7 @@ class Phorum_message extends DatabaseObject {
 	    // we need to delete the subscriptions for that thread too
 	    $sql = "DELETE FROM {$PHORUM['subscribers_table']} "
 	           ." WHERE forum_id > 0 AND thread=$thread";
-	    $res = mysql_query($sql, $conn);
-	    if ($err = mysql_error()) phorum_db_mysql_error("$err: $sql");
+	    $g_ado_db->Execute($sql);
 
 	    // this function will be slow with a lot of messages.
 	    // ??? Note: phorum_db_update_forum_stats() requires global parameter passing.
@@ -367,6 +357,18 @@ class Phorum_message extends DatabaseObject {
 
 
 	/**
+	 * Get the ID of the message that this message is in response to
+	 * (for when you are threading messages).
+	 *
+	 * @return int
+	 */
+	function getParentId()
+	{
+	    return $this->getProperty('parent_id');
+	} // fn getParentId
+
+
+	/**
 	 * Get the subject of the message.
 	 *
 	 * @return string
@@ -421,6 +423,28 @@ class Phorum_message extends DatabaseObject {
 	{
 		return $this->getProperty('ip');
 	} // fn getIpAddress
+
+
+	/**
+	 * Get the author's name.
+	 *
+	 * @return string
+	 */
+	function getAuthor()
+	{
+	    return $this->getProperty('author');
+	} // fn getAuthor
+
+
+	/**
+	 * Get the email address of the user who wrote the message.
+	 *
+	 * @return string
+	 */
+	function getEmail()
+	{
+	    return $this->getProperty('email');
+	} // fn getEmail
 
 
 	/**
@@ -575,6 +599,7 @@ class Phorum_message extends DatabaseObject {
 	function GetMessages($p_match, $p_method = "AND")
 	{
 		global $PHORUM;
+		global $g_ado_db;
 		if (!is_array($p_match)) {
 			return null;
 		}
@@ -583,8 +608,6 @@ class Phorum_message extends DatabaseObject {
 		if (!in_array($p_method, array("AND", "OR", "RAW"))) {
 		    return null;
 		}
-
-		$conn = phorum_db_mysql_connect();
 
 		if ($p_method != "RAW") {
     		foreach ($p_match as $columnName => $value) {
@@ -597,12 +620,11 @@ class Phorum_message extends DatabaseObject {
 		$sql = "SELECT * FROM ".$PHORUM['message_table']
 				." WHERE $whereClause"
 				." ORDER BY message_id";
-
-	    $result = mysql_query($sql, $conn);
+        $result = $g_ado_db->GetAll($sql);
 
 	    $returnArray = array();
-	    if (mysql_num_rows($result)){
-            while ($row = mysql_fetch_assoc($result)) {
+	    if (count($result) > 0){
+            foreach ($result as $row) {
                 // convert meta field
                 if (empty($row["meta"])){
                     $row["meta"] = array();

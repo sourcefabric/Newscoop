@@ -82,7 +82,8 @@ class Article extends DatabaseObject {
 		'LockUser',
 		'LockTime',
 		'ShortName',
-		'ArticleOrder');
+		'ArticleOrder',
+		'time_updated');
 
 	var $m_languageName = null;
 
@@ -110,6 +111,7 @@ class Article extends DatabaseObject {
 	 * @param array $p_values
 	 */
 	function __create($p_values = null) { return parent::create($p_values); }
+
 
 	/**
 	 * Create an article in the database.  Use the SET functions to
@@ -273,6 +275,7 @@ class Article extends DatabaseObject {
     		$values['IsIndexed'] = 'N';
     		$values['LockUser'] = 0;
     		$values['LockTime'] = 0;
+
     		if (!is_null($p_userId)) {
                 $values['IdUser'] = $p_userId;
     		} else {
@@ -510,28 +513,30 @@ class Article extends DatabaseObject {
 
 
 	/**
-	 * Lock the article with the given User ID.
+	 * Lock or unlock the article.
 	 *
+	 * Locking the article requires the user ID parameter.
+	 *
+	 * @param boolean $p_lock
 	 * @param int $p_userId
-	 *
-	 */
-	function lock($p_userId)
-	{
-		$this->setProperty('LockUser', $p_userId);
-		$this->setProperty('LockTime', 'NOW()', true, true);
-	} // fn lock
-
-
-	/**
-	 * Unlock the article so anyone can edit it.
 	 * @return void
 	 */
-	function unlock()
+	function setIsLocked($p_lock, $p_userId = null)
 	{
-		$this->setProperty('LockUser', '0', false);
-		$this->setProperty('LockTime', '0', false);
-		$this->commit();
-	} // fn unlock
+	    // Check parameters
+        if ($p_lock && !is_numeric($p_userId)) {
+            return;
+        }
+
+	    if ($p_lock) {
+    		$this->setProperty('LockUser', $p_userId);
+    		$this->setProperty('LockTime', 'NOW()', true, true);
+	    } else {
+    		$this->setProperty('LockUser', '0', false);
+    		$this->setProperty('LockTime', '0', false);
+    		$this->commit();
+	    }
+	} // fn setIsLocked
 
 
 	/**
@@ -693,8 +698,8 @@ class Article extends DatabaseObject {
 
 
 	/**
-	 * Move the article to the given position.
-	 * @param int $p_position
+	 * Move the article to the given position (i.e. reorder the article).
+	 * @param int $p_moveToPosition
 	 * @return boolean
 	 */
 	function positionAbsolute($p_moveToPosition = 1)
@@ -787,6 +792,7 @@ class Article extends DatabaseObject {
 
 
 	/**
+	 * Get the publication ID of the publication that contains this article.
 	 * @return int
 	 */
 	function getPublicationId()
@@ -839,6 +845,8 @@ class Article extends DatabaseObject {
 
 
 	/**
+	 * Get the section number that contains this article.
+	 *
 	 * @return int
 	 */
 	function getSectionNumber()
@@ -864,6 +872,8 @@ class Article extends DatabaseObject {
 
 
 	/**
+	 * Return the language the article was written in.
+	 *
 	 * @return int
 	 */
 	function getLanguageId()
@@ -873,6 +883,12 @@ class Article extends DatabaseObject {
 
 
 	/**
+	 * Return the article number.  The article number is
+	 * not necessarily unique.  Articles that have been translated into
+	 * multiple languages all have the same article number.
+	 * Therefore to uniquely identify an article you need both
+	 * the article number and the language ID.
+	 *
 	 * @return int
 	 */
 	function getArticleNumber()
@@ -882,6 +898,8 @@ class Article extends DatabaseObject {
 
 
 	/**
+	 * Get the title of the article.
+	 *
 	 * @return string
 	 */
 	function getTitle()
@@ -891,6 +909,8 @@ class Article extends DatabaseObject {
 
 
 	/**
+	 * Alias for getTitle().
+	 *
 	 * @return string
 	 */
 	function getName()
@@ -933,15 +953,22 @@ class Article extends DatabaseObject {
 
 
 	/**
-	 * @param int value
+	 * Set the user ID of the user who created this article.
+	 *
+	 * @param int $p_value
+	 * @return boolean
 	 */
-	function setUserId($value)
+	function setCreatorId($p_value)
 	{
-		return parent::setProperty('IdUser', $value);
-	}
+		return parent::setProperty('IdUser', $p_value);
+	} // fn setCreatorId
 
 
 	/**
+	 * Return an integer representing the order of the article
+	 * within the section.  Note that these numbers are not sequential
+	 * and can only be compared with the other articles in the section.
+	 *
 	 * @return int
 	 */
 	function getOrder()
@@ -951,7 +978,8 @@ class Article extends DatabaseObject {
 
 
 	/**
-	 * Return true if the article is on the front page.
+	 * Return true if the article will appear on the front page.
+	 *
 	 * @return boolean
 	 */
 	function onFrontPage()
@@ -961,7 +989,10 @@ class Article extends DatabaseObject {
 
 
 	/**
+	 * Set whether the article should appear on the front page.
+	 *
 	 * @param boolean $p_value
+	 * @return boolean
 	 */
 	function setOnFrontPage($p_value)
 	{
@@ -970,6 +1001,8 @@ class Article extends DatabaseObject {
 
 
 	/**
+	 * Return TRUE if this article will appear on the section page.
+	 *
 	 * @return boolean
 	 */
 	function onSectionPage()
@@ -980,7 +1013,7 @@ class Article extends DatabaseObject {
 
 	/**
 	 * Set whether the article will appear on the section page.
-	 * @param boolean p_value
+	 * @param boolean $p_value
 	 * @return boolean
 	 */
 	function setOnSectionPage($p_value)
@@ -990,7 +1023,7 @@ class Article extends DatabaseObject {
 
 
 	/**
-	 * Return the current status of the article:
+	 * Return the current workflow state of the article:
 	 *   'Y' = "Published"
 	 *	 'S' = "Submitted"
 	 *   'N' = "New"
@@ -998,13 +1031,21 @@ class Article extends DatabaseObject {
 	 * @return string
 	 * 		Can be 'Y', 'S', or 'N'.
 	 */
-	function getPublished()
+	function getWorkflowStatus()
 	{
 		return $this->getProperty('Published');
-	} // fn isPublished
+	} // fn getWorkflowStatus
 
 
-	function getPublishedDisplayString($p_value = null)
+	/**
+	 * Return a human-readable string for the status of the workflow.
+	 * This can be called statically or as a member function.
+	 * If called statically, you must pass in a parameter.
+	 *
+	 * @param string $p_value
+	 * @return string
+	 */
+	function getWorkflowDisplayString($p_value = null)
 	{
 		if (is_null($p_value)) {
 			$p_value = $this->m_data['Published'];
@@ -1020,18 +1061,19 @@ class Article extends DatabaseObject {
 		case 'N':
 			return getGS("New");
 		}
-	} // fn getPublishedDisplayString
+	} // fn getWorkflowDisplayString
 
 
 	/**
-	 * Set the published state of the article.
+	 * Set the workflow state of the article.
 	 * 	   'Y' = 'Published'
 	 *     'S' = 'Submitted'
 	 *     'N' = 'New'
 	 *
 	 * @param string $p_value
+	 * @return boolean
 	 */
-	function setPublished($p_value)
+	function setWorkflowStatus($p_value)
 	{
 		$p_value = strtoupper($p_value);
 		if ( ($p_value != 'Y') && ($p_value != 'S') && ($p_value != 'N')) {
@@ -1039,31 +1081,31 @@ class Article extends DatabaseObject {
 		}
 
 		// If the article is being unpublished
-		if ( ($this->getPublished() == 'Y') && ($p_value != 'Y') ) {
+		if ( ($this->getWorkflowStatus() == 'Y') && ($p_value != 'Y') ) {
 			// Delete indexes
 			ArticleIndex::OnArticleDelete($this->getPublicationId(), $this->getIssueNumber(),
 				$this->getSectionNumber(), $this->getLanguageId(), $this->getArticleNumber());
 		}
 		// If the article is being published
-		if ( ($this->getPublished() != 'Y') && ($p_value == 'Y') ) {
+		if ( ($this->getWorkflowStatus() != 'Y') && ($p_value == 'Y') ) {
     		$this->setIsIndexed(false);
 		    $this->setProperty('PublishDate', 'NOW()', true, true);
 		}
 		// Unlock the article if it changes status.
-		if ( $this->getPublished() != $p_value ) {
-			$this->unlock();
+		if ( $this->getWorkflowStatus() != $p_value ) {
+			$this->setIsLocked(false);
 		}
 		$changed = parent::setProperty('Published', $p_value);
 		if (function_exists("camp_load_language")) { camp_load_language("api");	}
 		$logtext = getGS('Article #$1: "$2" status changed from $3 to $4.',
 			$this->m_data['Number'], $this->m_data['Name'],
-			$this->getPublishedDisplayString(), $this->getPublishedDisplayString($p_value))
+			$this->getWorkflowDisplayString(), $this->getWorkflowDisplayString($p_value))
 			." (".getGS("Publication")." ".$this->m_data['IdPublication'].", "
 			." ".getGS("Issue")." ".$this->m_data['NrIssue'].", "
 			." ".getGS("Section")." ".$this->m_data['NrSection'].")";
 		Log::Message($logtext, null, 35);
 		return $changed;
-	} // fn setPublished
+	} // fn setWorkflowStatus
 
 
 	/**
@@ -1077,7 +1119,8 @@ class Article extends DatabaseObject {
 
 
 	/**
-	 * Return the date the article was created in the form YYYY-MM-DD.
+	 * Return the date the article was created in the form YYYY-MM-DD HH:MM:SS.
+	 *
 	 * @return string
 	 */
 	function getCreationDate()
@@ -1109,7 +1152,8 @@ class Article extends DatabaseObject {
 
 
 	/**
-	 * @param string $value
+	 * @param string $p_value
+	 * @return boolean
 	 */
 	function setKeywords($p_value)
 	{
@@ -1120,6 +1164,8 @@ class Article extends DatabaseObject {
 
 
 	/**
+	 * Return TRUE if this article is viewable by non-subscribers.
+	 *
 	 * @return boolean
 	 */
 	function isPublic()
@@ -1129,8 +1175,10 @@ class Article extends DatabaseObject {
 
 
 	/**
+	 * Set whether this article is viewable by non-subscribers.
 	 *
-	 * @param boolean value
+	 * @param boolean $p_value
+	 * @return boolean
 	 */
 	function setIsPublic($p_value)
 	{
@@ -1167,7 +1215,10 @@ class Article extends DatabaseObject {
 
 
 	/**
+	 * Set the user who currently has a lock on the article.
+	 *
 	 * @param int $p_value
+	 * @return boolean
 	 */
 	function setLockedByUser($p_value)
 	{
@@ -1176,6 +1227,8 @@ class Article extends DatabaseObject {
 
 
 	/**
+	 * Get the URL name for this article.
+	 *
 	 * @return string
 	 */
 	function getUrlName()

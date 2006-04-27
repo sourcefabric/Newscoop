@@ -164,11 +164,11 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 		<TR <?php if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 			<TD valign="top">
 				<?php
-				if ($User->hasPermission('ChangeArticle') || ($tmpArticle->getPublished() == 'N')) {
+				if ($User->hasPermission('ChangeArticle') || ($tmpArticle->getWorkflowStatus() == 'N')) {
 					echo camp_html_article_link($tmpArticle, $section->getLanguageId(), "edit.php");
 				}
 				p(htmlspecialchars($tmpArticle->getTitle()." (".$language->getNativeName().")"));
-				if ($User->hasPermission('ChangeArticle') || ($tmpArticle->getPublished() == 'N')) {
+				if ($User->hasPermission('ChangeArticle') || ($tmpArticle->getWorkflowStatus() == 'N')) {
 					echo '</a>';
 				}
 				?>
@@ -176,13 +176,13 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 
 			<TD align="center" nowrap valign="top">
 				<?php
-				if ($tmpArticle->getPublished() == "Y") {
+				if ($tmpArticle->getWorkflowStatus() == "Y") {
 					putGS('Published');
 				}
-				elseif ($tmpArticle->getPublished() == 'S') {
+				elseif ($tmpArticle->getWorkflowStatus() == 'S') {
 					putGS('Submitted');
 				}
-				elseif ($tmpArticle->getPublished() == "N") {
+				elseif ($tmpArticle->getWorkflowStatus() == "N") {
 					putGS('New');
 				}
 				?>
@@ -552,11 +552,11 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 		<TR <?php if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 			<TD valign="top">
 				<?php
-				if ($User->hasPermission('ChangeArticle') || ($tmpArticle->getPublished() == 'N')) {
+				if ($User->hasPermission('ChangeArticle') || ($tmpArticle->getWorkflowStatus() == 'N')) {
 					echo camp_html_article_link($tmpArticle, $section->getLanguageId(), "edit.php");
 				}
 				p(htmlspecialchars($tmpArticle->getTitle()." (".$language->getNativeName().")"));
-				if ($User->hasPermission('ChangeArticle') || ($tmpArticle->getPublished() == 'N')) {
+				if ($User->hasPermission('ChangeArticle') || ($tmpArticle->getWorkflowStatus() == 'N')) {
 					echo '</a>';
 				}
 				?>
@@ -564,13 +564,13 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 
 			<TD align="center" nowrap valign="top">
 				<?php
-				if ($tmpArticle->getPublished() == "Y") {
+				if ($tmpArticle->getWorkflowStatus() == "Y") {
 					putGS('Published');
 				}
-				elseif ($tmpArticle->getPublished() == 'S') {
+				elseif ($tmpArticle->getWorkflowStatus() == 'S') {
 					putGS('Submitted');
 				}
-				elseif ($tmpArticle->getPublished() == "N") {
+				elseif ($tmpArticle->getWorkflowStatus() == "N") {
 					putGS('New');
 				}
 				?>

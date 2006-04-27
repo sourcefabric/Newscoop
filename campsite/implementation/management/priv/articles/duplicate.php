@@ -290,7 +290,7 @@ if (isset($_REQUEST["action_button"])) {
 								  $f_destination_section_number);
 
 				$tmpArticle->setTitle($articleNames[$articleNumber][$languageId]);
-				$tmpArticle->setPublished('Y');
+				$tmpArticle->setWorkflowStatus('Y');
 				$tmpArticles[] = $tmpArticle;
 			}
 		}

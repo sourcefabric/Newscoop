@@ -304,6 +304,17 @@ class User extends DatabaseObject {
 
 
 	/**
+	 * Get the email address of the user.
+	 *
+	 * @return string
+	 */
+	function getEmail()
+	{
+	    return $this->getProperty('EMail');
+	} // fn getEmail
+
+
+	/**
 	 * Return the value of the given variable name.
 	 * If the variable name does not exist, return null.
 	 *

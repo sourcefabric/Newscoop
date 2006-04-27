@@ -166,6 +166,7 @@ class Phorum_forum extends DatabaseObject {
 		return $this->getProperty("forum_id");
 	}
 
+
 	/**
 	 * Get the name of the forum.
 	 *

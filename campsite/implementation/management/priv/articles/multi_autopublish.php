@@ -25,7 +25,7 @@ $errorArticles = array();
 foreach ($f_article_code as $code) {
 	list($articleId, $languageId) = split("_", $code);
 	$tmpArticle =& new Article($languageId, $articleId);
-	if ($tmpArticle->getPublished() != 'N') {
+	if ($tmpArticle->getWorkflowStatus() != 'N') {
 		$articles[] = $tmpArticle;
 	}
 	else {
@@ -35,29 +35,29 @@ foreach ($f_article_code as $code) {
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
-	exit;	
+	exit;
 }
 
 $publicationObj =& new Publication($f_publication_id);
 if (!$publicationObj->exists()) {
 	camp_html_display_error(getGS('Publication does not exist.'));
-	exit;	
+	exit;
 }
 
 $issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
 if (!$issueObj->exists()) {
 	camp_html_display_error(getGS('Issue does not exist.'));
-	exit;	
+	exit;
 }
 
 $sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
 if (!$sectionObj->exists()) {
 	camp_html_display_error(getGS('Section does not exist.'));
-	exit;	
+	exit;
 }
 
 $crumbs = array(getGS("Articles") => "/$ADMIN/articles/index.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id&f_language_selected=$f_language_selected");
-$topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
+$topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj,
 				  'Section' => $sectionObj);
 camp_html_content_top(getGS("Article automatic publishing schedule"), $topArray, true, false, $crumbs);
 
@@ -80,7 +80,7 @@ if (count($errorArticles) > 0) {
 	<tr class="table_list_header">
 		<td><?php putGS("Name"); ?></td>
 	</tr>
-	<?php 
+	<?php
 	$color = 0;
 	foreach ($errorArticles as $tmpArticle) { ?>
 	<tr class="<?php if ($color) { ?>list_row_even<?php } else { ?>list_row_odd<?php } $color = !$color; ?>">
@@ -117,7 +117,7 @@ if (count($articles) > 0) {
 	</TD>
 	<TD>
 		<table cellpadding="3" cellspacing="2">
-		<?php 
+		<?php
 		foreach ($articles as $tmpArticle) { ?>
 		<tr class="list_row_even">
 			<td><?php p($tmpArticle->getTitle()); ?></td>
@@ -143,7 +143,7 @@ if (count($articles) > 0) {
 			  document.forms.autopublish.f_publish_date.value = y+"-"+m+"-"+d;
 			}
 		};
-		
+
 		Calendar.setup(
 			{
 			  flat         : "calendar-container", // ID of the parent element
@@ -204,7 +204,7 @@ if (count($articles) > 0) {
 </FORM>
 </P>
 <?php
-} 
+}
 
 camp_html_copyright_notice();
 ?>

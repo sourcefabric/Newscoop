@@ -48,14 +48,20 @@ class Phorum_user extends DatabaseObject {
 
   	/**
   	 * Create the user.  The user cannot be created if the user is
-  	 * banned or the user name or email already exists.
+  	 * banned or the user name or email already exists.  The optional
+  	 * $p_userId parameter is there for the cases where Phorum is run
+  	 * inside of another master application and you want to use the
+  	 * master application user ID for the Phorum ID.
   	 *
   	 * @param string $p_username
   	 * @param string $p_email
+  	 * @param int $p_userId
   	 * @return boolean
   	 */
-  	function create($p_username, $p_email)
+  	function create($p_username, $p_email, $p_userId = null)
   	{
+  	    $userdata = array();
+
 	   	if (Phorum_user::UserNameExists($p_username)) {
 	   		return false;
 	   	}
@@ -66,6 +72,14 @@ class Phorum_user extends DatabaseObject {
 
 	    if (Phorum_user::IsBanned($p_username, $p_email)) {
 	    	return false;
+	    }
+
+	    if (is_numeric($p_userId)) {
+	        $tmpUser =& new Phorum_user($p_userId);
+	        if ($tmpUser->exists()) {
+	            return false;
+	        }
+	        $userdata['user_id'] = $p_userId;
 	    }
 
 	    $userdata['username'] = $p_username;
@@ -183,7 +197,7 @@ class Phorum_user extends DatabaseObject {
 
 	    // Check if IP address is banned.
 	    $ipaddr = $_SERVER['REMOTE_ADDR'];
-		// Fetch the settings and pretend they we returned to
+		// Fetch the settings and pretend they were returned to
 		// us instead of setting a global variable.
 		phorum_db_load_settings();
 		$settings = $PHORUM['SETTINGS'];

@@ -35,12 +35,12 @@ if (empty($f_article_name)) {
 	camp_html_display_error(getGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'));
 	exit;
 }
-    
+
 if (empty($f_article_type)) {
 	camp_html_display_error(getGS('You must select an article type.'));
 	exit;
 }
-    
+
 if (empty($f_article_language)) {
 	camp_html_display_error(getGS('You must select a language.'));
 	exit;
@@ -48,7 +48,7 @@ if (empty($f_article_language)) {
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));
-	exit;	
+	exit;
 }
 
 $publication_id = ($f_destination_publication_id > 0) ? $f_destination_publication_id : $f_publication_id;
@@ -59,21 +59,21 @@ if ($publication_id > 0) {
 	$publicationObj =& new Publication($publication_id);
 	if (!$publicationObj->exists()) {
 		camp_html_display_error(getGS('Publication does not exist.'));
-		exit;	
+		exit;
 	}
 
 	if ($issue_number > 0) {
 		$issueObj =& new Issue($publication_id, $f_article_language, $issue_number);
 		if (!$issueObj->exists()) {
 			camp_html_display_error(getGS('Issue does not exist.'));
-			exit;	
+			exit;
 		}
 
 		if ($section_number > 0) {
 			$sectionObj =& new Section($publication_id, $issue_number, $f_article_language, $section_number);
 			if (!$sectionObj->exists()) {
 				camp_html_display_error(getGS('Section does not exist.'));
-				exit;	
+				exit;
 			}
 		}
 	}
@@ -87,14 +87,14 @@ if (($publication_id > 0) && ($issue_number > 0) && ($section_number > 0)) {
 	$articleObj->create($f_article_type, $f_article_name);
 }
 if ($articleObj->exists()) {
-	$articleObj->setUserId($User->getUserId());
+	$articleObj->setCreatorId($User->getUserId());
 	$articleObj->setIsPublic(true);
-	
+
 	## added by sebastian
 	if (function_exists ("incModFile")) {
 		incModFile();
 	}
-	
+
 	header("Location: ".camp_html_article_url($articleObj, $f_language_id, "edit.php"));
 }
 else {

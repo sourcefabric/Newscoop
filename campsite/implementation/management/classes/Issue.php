@@ -326,17 +326,19 @@ class Issue extends DatabaseObject {
 
 
 	/**
-	 * Return 'Y' if the issue is published, 'N' if it is not published.
+	 * Return the current state in the workflow:
+	 * 'Y' if the issue is published, 'N' if it is not published.
+	 *
 	 * @return string
 	 */
-	function getPublished()
+	function getWorkflowStatus()
 	{
 		return $this->getProperty('Published');
-	} // fn getPublished
+	} // fn getWorkflowStatus
 
 
 	/**
-	 * Set the published state of the issue.
+	 * Set the workflow state of the issue.
 	 *
 	 * @param string $p_value
 	 *		Can be NULL, 'Y', 'N', TRUE, or FALSE.
@@ -344,7 +346,7 @@ class Issue extends DatabaseObject {
 	 *
 	 * @return void
 	 */
-	function setPublished($p_value = null)
+	function setWorkflowStatus($p_value = null)
 	{
 		$doPublish = null;
 		if (is_null($p_value)) {
@@ -372,7 +374,7 @@ class Issue extends DatabaseObject {
 			}
 
 			// Log message
-			if ($this->getPublished() == 'Y') {
+			if ($this->getWorkflowStatus() == 'Y') {
 				$status = getGS('Published');
 			} else {
 				$status = getGS('Not published');
@@ -383,7 +385,7 @@ class Issue extends DatabaseObject {
 							 $status);
 			Log::Message($logtext, null, 14);
 		}
-	} // fn setPublished
+	} // fn setWorkflowStatus
 
 
 	function getPublicationDate()

@@ -59,7 +59,7 @@ if (!$sectionObj->exists()) {
 $articleEvents = ArticlePublish::GetArticleEvents($f_article_number, $f_language_selected);
 
 $publishTime = date("Y-m-d H:i");
-if ($articleObj->getPublished() != 'N') {
+if ($articleObj->getWorkflowStatus() != 'N') {
 	$publishAction = '';
 	$frontPageAction = '';
 	$sectionPageAction = '';

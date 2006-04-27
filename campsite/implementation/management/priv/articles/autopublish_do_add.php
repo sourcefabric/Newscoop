@@ -33,7 +33,7 @@ $errorArticles = array();
 foreach ($f_article_code as $code) {
 	list($articleId, $languageId) = split("_", $code);
 	$tmpArticle =& new Article($languageId, $articleId);
-	if ($tmpArticle->getPublished() != 'N') {
+	if ($tmpArticle->getWorkflowStatus() != 'N') {
 		$articles[] = $tmpArticle;
 	}
 	else {
