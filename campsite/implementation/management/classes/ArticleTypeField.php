@@ -235,7 +235,15 @@ class ArticleTypeField {
 		global $g_ado_db;
 		$queryStr = "ALTER TABLE ".$this->m_dbTableName." DROP COLUMN ".$this->m_dbColumnName;
 		$success = $g_ado_db->Execute($queryStr);
+		
 		if ($success) {
+			$success = 0;
+			$queryStr = "DELETE FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' AND field_name='". $this->m_dbColumnName ."'";
+			$success = $g_ado_db->Execute($queryStr);
+		}
+		
+		if ($success) {
+
 			$queryStr = "DELETE FROM TopicFields WHERE ArticleType = '".$this->m_articleTypeName
 						."' and FieldName = '".substr($this->m_dbColumnName, 1)."'";
 			$g_ado_db->Execute($queryStr);
