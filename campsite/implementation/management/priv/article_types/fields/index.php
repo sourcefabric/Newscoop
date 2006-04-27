@@ -43,6 +43,15 @@ field_ids.push("translate_field_"+<?php p($i); ?>);
 </script>
 <?php } ?>
 
+<TABLE class="action_buttons" STYLE="padding-top: 5px;" BORDER="0" CELLPADDING="1" CELLSPACING="0">
+<TBODY>
+<TR>
+    <TD><A HREF="/<?php echo $ADMIN; ?>/article_types/"><IMG BORDER="0" SRC="<?php echo $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/left_arrow.png"></A></TD>
+    <TD><B><A HREF="/<?php echo $ADMIN; ?>/article_types/">Back to Article Types List</A></B></TD>
+</TR>
+</TBODY>
+</TABLE>
+
 <P>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons">
 <TR>
