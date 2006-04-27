@@ -124,7 +124,7 @@ foreach ($articleTypes as $articleType) {
 	
 	<?php  if ($User->hasPermission("DeleteArticleTypes")) { ?>		
 	<TD ALIGN="CENTER">
-		<A HREF="/<?php p($ADMIN); ?>/article_types/do_del.php?f_article_type=<?php  print urlencode($articleType); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the article type $1?', htmlspecialchars($articleType)); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php  putGS('Delete article type $1', htmlspecialchars($articleType)); ?>" TITLE="<?php  putGS('Delete article type $1', htmlspecialchars($articleType)); ?>" ></A>
+		<A HREF="/<?php p($ADMIN); ?>/article_types/do_del.php?f_article_type=<?php  print urlencode($articleType); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the article type $1?', htmlspecialchars($articleType)); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php  putGS('Delete article type $1', htmlspecialchars($articleType)); ?>" TITLE="<?php  putGS('Delete article type $1.  WARNING: This will delete all articles of this type!', htmlspecialchars($articleType)); ?>" ></A>
 	</TD>
 	<?php  } ?>	
 	
