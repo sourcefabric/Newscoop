@@ -45,7 +45,7 @@ echo camp_html_breadcrumbs($crumbs);
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="f_new_field_name" SIZE="20" VALUE="<?php print htmlspecialchars($articleTypeFieldName); ?>" MAXLENGTH="32" alt="blank" emsg="<?php putGS("You must complete the $1 field.", getGS("Name")) ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_new_field_name" SIZE="20" VALUE="<?php print htmlspecialchars($articleTypeFieldName); ?>" MAXLENGTH="32" alt="alnum|1|A|false|false|_" emsg="<?php putGS("You must complete the $1 field.", getGS("Name")) ?>">
 	</TD>
 </TR>
 
