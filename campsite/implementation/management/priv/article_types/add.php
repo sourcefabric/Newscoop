@@ -42,7 +42,7 @@ echo camp_html_breadcrumbs($crumbs);
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
 	<TD COLSPAN="4">
-	<INPUT TYPE="TEXT" class="input_text" NAME="f_name" ALT="alnum|1|A|0|0|_" emesg="The name field may only contain letters and the underscore (_) character." SIZE="15" MAXLENGTH="15">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_name" ALT="alnum|1|A|0|0|_" emsg="<?php putGS("The name field may only contain letters and the underscore (_) character."); ?>" SIZE="15" MAXLENGTH="15">
 	</TD>
 	<TD>
 	The name field may only contain letters and the underscore (_) character.
