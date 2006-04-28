@@ -39,8 +39,8 @@ if (!$articleObj->exists()) {
 }
 $articleData = $articleObj->getArticleData();
 // Get article type fields.
-$dbColumns = $articleData->m_articleTypeObj->m_dbColumns;
-//$dbColumns = $articleData->m_articleTypeObj->getUserDefinedColumns();
+$dbColumns = $articleData->getUserDefinedColumns();
+
 $articleImages = ArticleImage::GetImagesByArticleNumber($f_article_number);
 $lockUserObj =& new User($articleObj->getLockedByUser());
 $articleCreator =& new User($articleObj->getCreatorId());
@@ -437,7 +437,7 @@ if ($f_edit_mode == "edit") { ?>
 			<TR>
 				<TD ALIGN="RIGHT" valign="top" style="padding-left: 1em;"><b><?php  putGS("Type"); ?>:</b></TD>
 				<TD align="left" valign="top">
-					<?php print htmlspecialchars($articleData->m_articleTypeObj->getDisplayName(0)); ?>
+					<?php print htmlspecialchars($articleData->getDisplayName(0)); ?>
 				</TD>
 				<TD ALIGN="RIGHT" valign="top" style="padding-left: 1em;"><b><?php  putGS("Publish date"); ?>:</b></TD>
 				<TD align="left" valign="top">
