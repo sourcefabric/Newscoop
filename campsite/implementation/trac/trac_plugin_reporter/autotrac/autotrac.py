@@ -832,15 +832,18 @@ class AutoTrac(Component):
         # --- If text is longer than 'maxLength', Eliminate any
         #     sentences ending after 'maxLength' characters ---
         if len (text) > maxLength:
-            text = re.sub (r"(.+?[.?!]).*", r"\1", text)
+            sentenceRe = re.compile (r"^(.+?[.?!]).*", re.MULTILINE+re.DOTALL)
+
+            text = re.sub (sentenceRe, r"\1", text) 
 
             # -- If text is still too long, cut it off after 'maxLength' chars --
             if len(text) > maxLength:
                 text = text[:maxLength]
+                wordRe = re.compile (r"(.*)\ .*$", re.MULTILINE+re.DOTALL)
 
                 # - Eliminate final word (which is probably a partial word),
                 #   and end with ellipsis -
-                text = re.sub (r"(.*)\ .*$", r"\1", text) + "..."
+                text = wordRe.sub (r"\1", text) + "..."
 
                 # - Eliminate a comma if it's directly preceding the
                 #   ellipsis -
@@ -853,7 +856,7 @@ class AutoTrac(Component):
     # @param str errorId  The error ID string
     # @return True if valid, otherwise False 
     def is_valid_error_id (self, errorId):
-        if re.match (r"[0-9]+:[^:]+:[^:]+:[^:]+:[0-9]+", errorId):
+        if re.match (r"[0-9]+:[^:]*:[^:]*:[^:]*:[0-9]+", errorId):
             return True
         else:
             return False

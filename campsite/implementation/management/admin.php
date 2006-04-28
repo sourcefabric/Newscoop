@@ -134,6 +134,7 @@ else {
     readfile($Campsite['HTML_DIR'] . "/$ADMIN_DIR/$call_script");  
 }
 
+
 /**
  * Called for all Campsite errors.
  * 
@@ -159,5 +160,5 @@ function report_bug ($p_number, $p_string, $p_file, $p_line)
 //     include ($Campsite['HTML_DIR'] . "/bugreporter/senderrorform.php");
 
     exit();
-}
+} // fn report_bug
 ?>
