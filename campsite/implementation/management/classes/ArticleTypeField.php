@@ -345,7 +345,7 @@ class ArticleTypeField {
 		}
 	} // fn getPrintType
 
-	function getDisplayName() {
+	function getDisplayName($p_langBracket = 1) {
 		global $_REQUEST;
 		$loginLanguageId = 0;
 		$loginLanguage = Language::GetLanguages(null, $_REQUEST['TOL_Language']);
@@ -355,8 +355,8 @@ class ArticleTypeField {
 		}
 		$translations = $this->getTranslations();
 		if (!isset($translations[$loginLanguageId])) return $this->getPrintName();
-		else return $translations[$loginLanguageId] .' ('. $loginLanguage->getCode() .')';
-
+		if ($p_langBracket == 1) return $translations[$loginLanguageId] .' ('. $loginLanguage->getCode() .')';
+		return $translations[$loginLanguageId];
 	}
 
 

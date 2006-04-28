@@ -342,7 +342,7 @@ class ArticleType {
 	* we use dbTableName
 	*
 	**/
-	function getDisplayName() {
+	function getDisplayName($p_langBrackets = 1) {
 		global $_REQUEST;
 		$loginLanguageId = 0;
 		$loginLanguage = Language::GetLanguages(null, $_REQUEST['TOL_Language']);
@@ -352,7 +352,9 @@ class ArticleType {
 		}
 		$translations = $this->getTranslations();
 		if (!isset($translations[$loginLanguageId])) return substr($this->getTableName(), 1);
-		else return $translations[$loginLanguageId] .' ('. $loginLanguage->getCode() .')';
+		if ($p_langBrackets) return $translations[$loginLanguageId] .' ('. $loginLanguage->getCode() .')';
+		return $translations[$loginLanguageId];
+
 	}
 
 } // class ArticleType
