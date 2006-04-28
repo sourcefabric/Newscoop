@@ -437,7 +437,7 @@ if ($f_edit_mode == "edit") { ?>
 			<TR>
 				<TD ALIGN="RIGHT" valign="top" style="padding-left: 1em;"><b><?php  putGS("Type"); ?>:</b></TD>
 				<TD align="left" valign="top">
-					<?php print htmlspecialchars($articleData->m_articleTypeObj->getDisplayName()); ?>
+					<?php print htmlspecialchars($articleData->m_articleTypeObj->getDisplayName(0)); ?>
 				</TD>
 				<TD ALIGN="RIGHT" valign="top" style="padding-left: 1em;"><b><?php  putGS("Publish date"); ?>:</b></TD>
 				<TD align="left" valign="top">
@@ -489,7 +489,7 @@ if ($f_edit_mode == "edit") { ?>
 					<?php } ?>
 				</td>
 				<td align="right">
-					<?php echo htmlspecialchars($dbColumn->getDisplayName()); ?>:
+					<?php echo htmlspecialchars($dbColumn->getDisplayName(0)); ?>:
 				</td>
 				<TD>
 				<?php
@@ -520,7 +520,7 @@ if ($f_edit_mode == "edit") { ?>
 					<?php } ?>
 				</td>
 				<td align="right">
-					<?php echo htmlspecialchars($dbColumn->getDisplayName()); ?>:
+					<?php echo htmlspecialchars($dbColumn->getDisplayName(0)); ?>:
 				</td>
 				<TD>
 				<?php if ($f_edit_mode == "edit") { ?>
@@ -573,7 +573,7 @@ if ($f_edit_mode == "edit") { ?>
 				<?php } ?>
 			</td>
 			<td align="right" valign="top" style="padding-top: 8px;">
-				<?php echo htmlspecialchars($dbColumn->getDisplayName()); ?>:
+				<?php echo htmlspecialchars($dbColumn->getDisplayName(0)); ?>:
 			</td>
 			<TD align="left" valign="top">
 				<table cellpadding="0" cellspacing="0" width="100%">
@@ -606,7 +606,7 @@ if ($f_edit_mode == "edit") { ?>
 				<?php } ?>
 			</td>
 			<td align="right">
-				<?php echo $articleTypeField->getDisplayName(); ?>:
+				<?php echo $articleTypeField->getDisplayName(0); ?>:
 			</td>
 			<td>
 				<select class="input_select" name="<?php echo $dbColumn->getName(); ?>" <?php if ($f_edit_mode != "edit") { ?>disabled<?php } ?>>
