@@ -29,17 +29,16 @@ if (!($res = mysql_query($sql))) {
 	die("Unable to read from the database.\n");
 }
 
-$i = 0;
 while ($row = mysql_fetch_array($res)) {
-	$sql = "INSERT INTO ArticleTypeMetadata (type_name, field_name) VALUES ('". $row[$i] ."', 'NULL')";
+	$sql = "INSERT INTO ArticleTypeMetadata (type_name, field_name) VALUES ('". $row[0] ."', 'NULL')";
 	mysql_query($sql);
 
-	$sql = "SHOW COLUMNS FROM ". $row[$i] ." LIKE 'F%'";
+	$sql = "SHOW COLUMNS FROM ". $row[0] ." LIKE 'F%'";
 	$res2 = mysql_query($sql);
 	$weight = 1;
 	while ($row2 = mysql_fetch_array($res2, MYSQL_ASSOC)) {
 		if (stristr($row2['Type'], 'int') != '') {
-			$sql = "SELECT RootTopicId FROM TopicFields WHERE ArticleType='". substr($row[$i], 1) ."' AND FieldName='". substr($row2['Field'], 1) ."'";
+			$sql = "SELECT RootTopicId FROM TopicFields WHERE ArticleType='". substr($row[0], 1) ."' AND FieldName='". substr($row2['Field'], 1) ."'";
 			$res3 = mysql_query($sql);
 			if ($topics = mysql_fetch_array($res3, MYSQL_ASSOC)) {
 				if (count($topics) > 0) $coltype = 'topic';
@@ -71,12 +70,11 @@ while ($row = mysql_fetch_array($res)) {
 				break;
 		}
 		
-		$sql = "INSERT INTO ArticleTypeMetadata (type_name, field_name, field_type, field_weight) VALUES ('". $row[$i] ."', '". $row2['Field'] ."', '$type', $weight)";
+		$sql = "INSERT INTO ArticleTypeMetadata (type_name, field_name, field_type, field_weight) VALUES ('". $row[0] ."', '". $row2['Field'] ."', '$type', $weight)";
 		$weight++;
-		mysql_query($sql);
+		$insres = mysql_query($sql);
 	}	
 	
-	$i++;
 }
 
 ?>
