@@ -18,6 +18,7 @@ if (!isset($g_documentRoot)) {
 require_once($g_documentRoot.'/classes/DatabaseObject.php');
 require_once($g_documentRoot.'/classes/ArticleTypeField.php');
 require_once($g_documentRoot.'/classes/ArticleType.php');
+
 /**
  * @package Campsite
  */
@@ -26,7 +27,6 @@ class ArticleData extends DatabaseObject {
 	var $m_keyColumnNames = array('NrArticle', 'IdLanguage');
 	var $m_dbTableName;
 	var $m_articleTypeName;
-	var $m_articleTypeObj;
 	
 	/**
 	 * An article type is a dynamic table that is created for an article
@@ -41,13 +41,11 @@ class ArticleData extends DatabaseObject {
 	{
 		$this->m_articleTypeName = $p_articleType;
 		$this->m_dbTableName = 'X'.$p_articleType;
-		$this->m_articleTypeObj =& new ArticleType($p_articleType);
 		// Get user-defined values.
-		//$dbColumns = $this->m_articleTypeObj->getUserDefinedColumns();
-		//foreach ($dbColumns as $columnMetaData) {
-		//	$this->m_columnNames[] = $columnMetaData->getName();
-		//}
-		$this->m_columnNames = $this->m_articleTypeObj->m_columnNames;
+		$dbColumns = $this->getUserDefinedColumns();
+		foreach ($dbColumns as $columnMetaData) {
+			$this->m_columnNames[] = $columnMetaData->getName();
+		}
 		parent::DatabaseObject($this->m_columnNames);
 		$this->m_data['NrArticle'] = $p_articleNumber;
 		$this->m_data['IdLanguage'] = $p_languageId;
@@ -56,6 +54,28 @@ class ArticleData extends DatabaseObject {
 		}
 	} // constructor
 
+	/**
+	*
+	* gets the display name of a type; this is based on the native language -- and if no native language translation is available
+	* we use dbTableName
+	*
+	**/
+	function getDisplayName($p_langBrackets = 1) {
+		global $_REQUEST;
+		$loginLanguageId = 0;
+		$loginLanguage = Language::GetLanguages(null, $_REQUEST['TOL_Language']);
+		if (is_array($loginLanguage)) {
+			$loginLanguage = array_pop($loginLanguage);
+			$loginLanguageId = $loginLanguage->getLanguageId();
+		}
+
+		$articleObj =& new ArticleType($this->m_articleTypeName);
+		$translations = $articleObj->getTranslations();
+		if (!isset($translations[$loginLanguageId])) return $this->m_articleTypeName;
+		if ($p_langBrackets) return $translations[$loginLanguageId] .' ('. $loginLanguage->getCode() .')';
+		return $translations[$loginLanguageId];
+
+	}
 
 	/**
 	 * Copy the row in the database.
@@ -77,6 +97,27 @@ class ArticleData extends DatabaseObject {
 		$g_ado_db->Execute($queryStr);
 	} // fn copy
 
+    /**
+    * Return an array of ArticleTypeField objects.
+    *
+    * @return array
+    */
+    function getUserDefinedColumns()
+       {
+           global $g_ado_db;
+           $queryStr = 'SHOW COLUMNS FROM '.$this>m_dbTableName
+                                   ." LIKE 'F%'";
+           $queryArray = $g_ado_db->GetAll($queryStr);
+           $metadata = array();
+           if (is_array($queryArray)) {
+                   foreach ($queryArray as $row) {
+                           $columnMetadata =& new ArticleTypeField($this>m_articleTypeName);
+                           $columnMetadata>fetch($row);
+                           $metadata[] =& $columnMetadata;
+                   }
+           }
+           return $metadata;
+       } // fn getUserDefinedColumns
 
 	/**
 	 * Copy the row in the database.

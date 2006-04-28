@@ -12,6 +12,7 @@
 if (!isset($g_documentRoot)) {
     $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 }
+
 /**
  * Includes
  */
@@ -20,6 +21,7 @@ require_once($g_documentRoot.'/classes/Log.php');
 require_once($g_documentRoot.'/classes/ArticleTypeField.php');
 require_once($g_documentRoot.'/classes/ParserCom.php');
 require_once($g_documentRoot.'/classes/Translation.php');
+
 /**
  * @package Campsite
  */
@@ -65,8 +67,8 @@ class ArticleType {
 
 		if ($success) {
 			$queryStr = "INSERT INTO ArticleTypeMetadata"
-						."(type_name, is_hidden) "
-						."VALUES ('".$this->m_dbTableName."', 0)";
+						."(type_name, field_name) "
+						."VALUES ('".$this->m_dbTableName."', 'NULL')";
 			$success2 = $g_ado_db->Execute($queryStr);
 		} else {
 			return $success;
@@ -190,9 +192,8 @@ class ArticleType {
 			if ($phrase_id = $this->translationExists($p_languageId)) {
 			    $trans =& new Translation($p_languageId, $phrase_id);
 			    $trans->delete();
-				$sql = "DELETE FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' AND fk_phrase_id=". $phrase_id;
-				$changed = $g_ado_db->Execute($sql);
-			} else { $changed = true; }
+				$changed = true;
+			} else { $changed = false; }
 		} else if ($phrase_id = $this->translationExists($p_languageId)) {
 			// just update
 			$description =& new Translation($p_languageId, $phrase_id);
@@ -200,12 +201,25 @@ class ArticleType {
 			$changed = true;
 		} else {
 			// Insert the new translation.
-			$description =& new Translation($p_languageId);
-			$description->create($p_value);
-			$phrase_id = $description->getPhraseId();
-			$sql = "INSERT INTO ArticleTypeMetadata SET type_name='".$this->m_dbTableName ."', fk_phrase_id=".$phrase_id;
-			$changed = $g_ado_db->Execute($sql);			
+			// first get the fk_phrase_id 
+			$sql = "SELECT fk_phrase_id FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' AND field_name='NULL'";
+			$row = $g_ado_db->GetRow($sql);
+			// if this is the first translation ...
+			if (!is_numeric($row['fk_phrase_id'])) {
+				$description =& new Translation($p_languageId);
+				$description->create($p_value);
+				$phrase_id = $description->getPhraseId();
+				// if the phrase_id isn't there, insert it.
+				$sql = "UPDATE ArticleTypeMetadata SET fk_phrase_id=".$phrase_id ." WHERE type_name='". $this->m_dbTableName ."' AND field_name='NULL'";
+				$changed = $g_ado_db->Execute($sql);			
+			} else { 
+				// if the phrase is already translated into atleast one language, just reuse that fk_phrase_id
+				$desc =& new Translation($p_languageId, $row['fk_phrase_id']);
+				$desc->create($p_value);
+				$changed = true; 
+			}
 		}
+
 		if ($changed) {
 			if (function_exists("camp_load_language")) { camp_load_language("api");	}
 			$logtext = getGS('Type $1 updated', $this->m_dbTableName.": (".$oldValue. " -> ".$p_value .")");
@@ -223,14 +237,9 @@ class ArticleType {
 	 */
 	function getTranslations() {
 		$return = array();
-		foreach ($this->m_metadata as $m) {
-			if (is_numeric($m['fk_phrase_id'])) {
-				$tmp = Translation::getTranslations($m['fk_phrase_id']);
-				foreach ($tmp as $k => $v)
-					$return[$k] = $v;
-				unset($tmp);
-			}
-		}
+		$tmp = Translation::getTranslations($this->m_metadata[0]['fk_phrase_id']);
+		foreach ($tmp as $k => $v)
+			$return[$k] = $v;
 		return $return;
 	}
 
@@ -249,7 +258,7 @@ class ArticleType {
 	**/
 	function getMetadata() {
 		global $g_ado_db;
-		$queryStr = "SELECT * FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' and field_name IS NULL";
+		$queryStr = "SELECT * FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' and field_name='NULL'";
 		$queryArray = $g_ado_db->GetAll($queryStr);
 		return $queryArray;
 	}
@@ -264,7 +273,7 @@ class ArticleType {
 		global $g_ado_db;
 		#$queryStr = 'SHOW COLUMNS FROM '.$this->m_dbTableName
 		#			." LIKE 'F%'";
-		$queryStr = "SELECT * FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' AND field_name IS NOT NULL AND field_type IS NOT NULL ORDER BY field_weight DESC";
+		$queryStr = "SELECT * FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' AND field_name != 'NULL' AND field_type IS NOT NULL ORDER BY field_weight DESC";
 		$queryArray = $g_ado_db->GetAll($queryStr);
 		$metadata = array();
 		if (is_array($queryArray)) {
@@ -332,8 +341,16 @@ class ArticleType {
 			$set = "is_hidden=1";
 		if ($p_status == 'show')
 			$set = "is_hidden=0";
-		$queryStr = "UPDATE ArticleTypeMetadata SET $set WHERE type_name='". $this->getTableName() ."'";
+		$queryStr = "UPDATE ArticleTypeMetadata SET $set WHERE type_name='". $this->getTableName() ."' AND field_name='NULL'";
 		$ret = $g_ado_db->Execute($queryStr);
+	}
+
+	/*
+	* returns 'shown' or 'hidden'
+	*/
+	function getStatus() {
+  		if ($this->m_metadata[0]['is_hidden']) return 'hidden';
+		else return 'shown';
 	}
 
 	/**

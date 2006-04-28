@@ -82,7 +82,7 @@ class ArticleTypeField {
 		}
 
 		if ($success) {
-			$queryStr = "UPDATE ArticleTypeMetadata SET field_name='F". $p_newName ."' WHERE field_name='". $this->m_dbColumnName ."'";
+			$queryStr = "UPDATE ArticleTypeMetadata SET field_name='F". $p_newName ."' WHERE field_name='". $this->m_dbColumnName ."' AND type_name='". $this->m_dbTableName ."'";
 			$success2 = $g_ado_db->Execute($queryStr);
 		}
 
@@ -133,9 +133,9 @@ class ArticleTypeField {
 		$success = $g_ado_db->Execute($queryStr);
 		if ($success) {
 			$success = 0;
-			$queryStr = "INSERT INTO ArticleTypeMetadata (type_name, field_name, field_type, is_hidden) VALUES ('". $this->m_dbTableName ."','". $this->m_dbColumnName ."', '". $p_type ."', 0)";
+			$weight = $this->getNextOrder();
+			$queryStr = "INSERT INTO ArticleTypeMetadata (type_name, field_name, field_type, field_weight) VALUES ('". $this->m_dbTableName ."','". $this->m_dbColumnName ."', '". $p_type ."', $weight)";
 			$success = $g_ado_db->Execute($queryStr);
-
 		}
 
 		if ($success) {
@@ -148,7 +148,7 @@ class ArticleTypeField {
 		return $success;
 	} // fn create
 
-
+		
 	function setType($p_type) {
 		global $g_ado_db;
 		$p_type = strtolower($p_type);
@@ -233,15 +233,24 @@ class ArticleTypeField {
 	function delete()
 	{
 		global $g_ado_db;
+
+		$orders = $this->getOrders();		
 		$queryStr = "ALTER TABLE ".$this->m_dbTableName." DROP COLUMN ".$this->m_dbColumnName;
 		$success = $g_ado_db->Execute($queryStr);
-		
+
 		if ($success) {
 			$success = 0;
 			$queryStr = "DELETE FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' AND field_name='". $this->m_dbColumnName ."'";
 			$success = $g_ado_db->Execute($queryStr);
 		}
-		
+
+		// reorder
+		if ($success) {
+			$mypos = array_keys($orders, $this->m_dbColumnName);
+			array_splice($orders, $mypos[0], 1);
+			$this->setOrders($orders);	
+		}		
+
 		if ($success) {
 
 			$queryStr = "DELETE FROM TopicFields WHERE ArticleType = '".$this->m_articleTypeName
@@ -345,6 +354,12 @@ class ArticleTypeField {
 		}
 	} // fn getPrintType
 
+	/**
+	* 
+	* returns the name of the field.  If a translation in the logged in langauge is available, use that; if not use
+	* the getPrintName() version of the name.  By default, it displays the translated name as EnglishName (en).  If
+	* you supply a 0 as the argument, it will disable this.
+	**/
 	function getDisplayName($p_langBracket = 1) {
 		global $_REQUEST;
 		$loginLanguageId = 0;
@@ -359,6 +374,14 @@ class ArticleTypeField {
 		return $translations[$loginLanguageId];
 	}
 
+	/*
+	* 
+	* returns the is_hidden status of a field.  Returns 'hidden' or 'shown'.
+	**/
+	function getStatus() {
+		if ($this->m_metadata[0]['is_hidden']) return 'hidden';
+		else return 'shown';
+	}
 
 	function setStatus($p_status) {
 		global $g_ado_db;
@@ -383,14 +406,9 @@ class ArticleTypeField {
 
 	function getTranslations() {
 		$return = array();
-		foreach ($this->m_metadata as $m) {
-			if (is_numeric($m['fk_phrase_id'])) {
-				$tmp = Translation::getTranslations($m['fk_phrase_id']);
-				foreach ($tmp as $k => $v)
-					$return[$k] = $v;
-				unset($tmp);
-			}
-		}
+		$tmp = Translation::getTranslations($this->m_metadata[0]['fk_phrase_id']);
+		foreach ($tmp as $k => $v)
+			$return[$k] = $v;
 		return $return;
 	}
 
@@ -427,9 +445,8 @@ class ArticleTypeField {
 			if ($phrase_id = $this->translationExists($p_languageId)) {
 			    $trans =& new Translation($p_languageId, $phrase_id);
 			    $trans->delete();
-				$sql = "DELETE FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' AND field_name='". $this->m_dbColumnName ."' AND fk_phrase_id=". $phrase_id;
-				$changed = $g_ado_db->Execute($sql);
-			} else { $changed = true; }
+				$changed = true;
+			} else { $changed = false; }
 		} else if ($phrase_id = $this->translationExists($p_languageId)) {
 			// just update
 			$description =& new Translation($p_languageId, $phrase_id);
@@ -437,12 +454,25 @@ class ArticleTypeField {
 			$changed = true;
 		} else {
 			// Insert the new translation.
-			$description =& new Translation($p_languageId);
-			$description->create($p_value);
-			$phrase_id = $description->getPhraseId();
-			$sql = "INSERT INTO ArticleTypeMetadata SET type_name='".$this->m_dbTableName ."', field_name='". $this->m_dbColumnName ."', fk_phrase_id=".$phrase_id;
-			$changed = $g_ado_db->Execute($sql);			
+			// first get the fk_phrase_id 
+			$sql = "SELECT fk_phrase_id FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' AND field_name='". $this->m_dbColumnName ."'";
+			$row = $g_ado_db->GetRow($sql);
+			// if this is the first translation ...
+			if (!is_numeric($row['fk_phrase_id'])) {
+				$description =& new Translation($p_languageId);
+				$description->create($p_value);
+				$phrase_id = $description->getPhraseId();
+				// if the phrase_id isn't there, insert it.
+				$sql = "UPDATE ArticleTypeMetadata SET fk_phrase_id=".$phrase_id ." WHERE type_name='". $this->m_dbTableName ."' AND field_name='". $this->m_dbColumnName ."'";
+				$changed = $g_ado_db->Execute($sql);			
+			} else { 
+				// if the phrase is already translated into atleast one language, just reuse that fk_phrase_id
+				$desc =& new Translation($p_languageId, $row['fk_phrase_id']);
+				$desc->create($p_value);
+				$changed = true; 
+			}
 		}
+
 		if ($changed) {
 			if (function_exists("camp_load_language")) { camp_load_language("api");	}
 			$logtext = getGS('Field $1 updated', $this->m_dbColumnName.": (".$oldValue. " -> ".$p_value .")");
@@ -453,22 +483,37 @@ class ArticleTypeField {
 		return $changed;
 	} // fn setName
 
+	/*
+	* returns the highest weight + 1
+	**/
+	function getNextOrder() {
+		global $g_ado_db;
+		$queryStr = "SELECT field_weight FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' AND field_name != 'NULL' ORDER BY field_weight DESC LIMIT 1";
+		$row = $g_ado_db->getRow($queryStr);
+		if ($row['field_weight'] == 0) $next = 1;
+		else $next = $row['field_weight'] + 1;
+		return ($next);
+	}
 
+	/**
+	* 
+	* get the ordering of all fields; initially, a field has a field_weight of NULL when it is created.  if we discover that a field has a field weight of NULL,
+	* we give it the MAX+1 field_weight.  Returns a NUMERIC array of ORDER => FIELDNAME
+	**/
 	function getOrders() {
 		global $g_ado_db;
-		$queryStr = "SELECT field_weight FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' ORDER BY field_weight DESC LIMIT 1,1";
-		$max = $g_ado_db->getOne($queryStr);
-		if ($max == NULL) $max = 0;
-		$queryStr = "SELECT field_weight, field_name FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' AND field_name IS NOT NULL";
+		$queryStr = "SELECT field_weight, field_name FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' AND field_name != 'NULL' ORDER BY field_weight DESC";
 		$queryArray = $g_ado_db->GetAll($queryStr);
-		$orderArray = array();
 		foreach ($queryArray as $row => $values) {
-			if ($values['field_weight'] == NULL) { $values['field_weight'] = $max++; }
+				if ($values['field_weight'] == NULL) { $values['field_weight'] = $max++; }
 			$orderArray[$values['field_weight']] = $values['field_name'];
 		}
 		return $orderArray;
 	}
 
+	/*
+	* saves the ordering of all the fields.  Accepts an NUMERIC array of ORDERRANK => FIELDNAME. (see getOrders)
+	**/
 	function setOrders($orderArray) {
 		global $g_ado_db;
 		foreach ($orderArray as $order => $field) {
@@ -477,6 +522,9 @@ class ArticleTypeField {
 		}
 	}
 
+	/*
+	* reorders the current field; accepts either "up" or "down"
+	**/
 	function reorder($move) {
 		$orders = $this->getOrders();
 		$tmp = array_keys($orders, $this->Field);
