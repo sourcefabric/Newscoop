@@ -91,7 +91,7 @@ $color = 0;
 $i = 0;
 foreach ($articleTypes as $articleType) {
 	$currentArticleType =& new ArticleType($articleType);
-	if ($currentArticleType->m_metadata[0]['is_hidden'] == 1) {
+	if ($currentArticleType->getStatus() == 'hidden') {
 		$hideShowText = 'show';
 		$hideShowImage = "is_hidden.png";
 	}

@@ -35,6 +35,7 @@ if ($User->hasPermission("ManageArticleTypes")) { ?>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.validators.js"></script>	
 <script>
 var field_ids = new Array;
+var allShown = 0;
 </script>
 <?php
 for ($i = 0; $i < count($fields); $i++) { ?>
@@ -60,8 +61,8 @@ field_ids.push("translate_field_"+<?php p($i); ?>);
 	<TD><B><A HREF="add.php?f_article_type=<?php print urlencode($articleTypeName); ?>" ><B><?php  putGS("Add new field"); ?></B></A>
 	</TD>
 	<TD><DIV STYLE="width:15px;"></DIV></TD>
-	<TD><A HREF="javascript: void(0);" ONCLICK="ShowAll(field_ids);"><IMG SRC="<?php echo $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/display_all.png" BORDER="0"></A></TD>
-	<TD><B><A HREF="javascript: void(0);" ONCLICK="ShowAll(field_ids);"><?php putGS("Show display names"); ?></A></B></TD>
+	<TD><A HREF="javascript: void(0);" ONCLICK="if (allShown == 0) { ShowAll(field_ids); allShown = 1; } else { HideAll(field_ids); allShown = 0; }"><IMG SRC="<?php echo $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/display_all.png" BORDER="0"></A></TD>
+	<TD><B><A HREF="javascript: void(0);" ONCLICK="if (allShown == 0) { ShowAll(field_ids); allShown = 1; } else { HideAll(field_ids); allShown = 0; }"><?php putGS("Show display names"); ?></A></B></TD>
 
 </TR>
 </TABLE>
@@ -86,7 +87,7 @@ field_ids.push("translate_field_"+<?php p($i); ?>);
 $color= 0;
 $i = 0;
 foreach ($fields as $field) { 
-	if ($field->m_metadata[0]['is_hidden'] == 1) {
+	if ($field->getStatus() == 'hidden') {
 		$hideShowText = 'show';
 		$hideShowImage = "is_hidden.png";
 	}
