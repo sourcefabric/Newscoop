@@ -43,3 +43,4 @@ ALTER TABLE `Publications` ADD `fk_forum_id` INT NULL ;
 -- Run the user permission upgrade script
 -- system php ./upgrade_user_perms.php
 
+system php ./upgrade_article_types.sql
