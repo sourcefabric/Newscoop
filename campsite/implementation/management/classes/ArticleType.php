@@ -313,21 +313,18 @@ class ArticleType {
 
 	/**
 	 * Get all article types that currently exist.
-	 * Returns an array of strings.
+	 * Returns an array of strings.  
 	 *
 	 * @return array
 	 */
 	function GetArticleTypes()
 	{
 		global $g_ado_db;
-		$queryStr = "SHOW TABLES LIKE 'X%'";
-		$tableNames = $g_ado_db->GetCol($queryStr);
-		if (!is_array($tableNames)) {
-			$tableNames = array();
-		}
+		$queryStr = "SELECT type_name FROM ArticleTypeMetadata WHERE field_name='NULL'";
+		$res = $g_ado_db->GetAll($queryStr);
 		$finalNames = array();
-		foreach ($tableNames as $tmpName) {
-			$finalNames[] = substr($tmpName, 1);
+		foreach ($res as $v) {
+			$finalNames[] = substr($v['type_name'], 1);
 		}
 		return $finalNames;
 	} // fn GetArticleTypes
