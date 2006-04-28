@@ -21,7 +21,6 @@ $Pub = Input::Get('Pub', 'int');
 $TOL_Language = Input::Get('TOL_Language');
 
 $languages = Language::GetLanguages();
-$defaultLanguage = array_pop(Language::GetLanguages(null, $TOL_Language));
 $urlTypes = UrlType::GetUrlTypes();
 $timeUnits = TimeUnit::GetTimeUnits($TOL_Language);
 $publicationObj =& new Publication($Pub);
