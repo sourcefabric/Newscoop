@@ -104,19 +104,24 @@ class ArticleData extends DatabaseObject {
     */
     function getUserDefinedColumns()
        {
-           global $g_ado_db;
-           $queryStr = 'SHOW COLUMNS FROM '.$this>m_dbTableName
-                                   ." LIKE 'F%'";
-           $queryArray = $g_ado_db->GetAll($queryStr);
-           $metadata = array();
-           if (is_array($queryArray)) {
-                   foreach ($queryArray as $row) {
-                           $columnMetadata =& new ArticleTypeField($this>m_articleTypeName);
-                           $columnMetadata>fetch($row);
-                           $metadata[] =& $columnMetadata;
-                   }
-           }
-           return $metadata;
+			global $g_ado_db;
+			#$queryStr = 'SHOW COLUMNS FROM '.$this->m_dbTableName
+			#			." LIKE 'F%'";
+			$queryStr = "SELECT * FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' AND field_name != 'NULL' AND field_type IS NOT NULL ORDER BY field_weight DESC";
+			$queryArray = $g_ado_db->GetAll($queryStr);
+			$metadata = array();
+			if (is_array($queryArray)) {
+				foreach ($queryArray as $row) {
+					$queryStr = "SHOW COLUMNS FROM ". $this->m_dbTableName ." LIKE '". $row['field_name'] ."'";
+					$rowdata = $g_ado_db->GetAll($queryStr);
+					$columnMetadata =& new ArticleTypeField($this->m_name);
+					$columnMetadata->fetch($rowdata[0]);
+					$columnMetadata->m_metadata = $columnMetadata->getMetadata();
+					$metadata[] =& $columnMetadata;
+				}
+			}
+			return $metadata;
+
        } // fn getUserDefinedColumns
 
 	/**
