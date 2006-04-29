@@ -205,7 +205,7 @@ function upgrade_database($p_db_name, $p_defined_parameters)
 	if (!($res = detect_database_version($p_db_name, $old_version)) == 0)
 		return $res;
 
-	$versions = array("2.0.x", "2.1.x", "2.2.x", "2.3.x", "2.4.x");
+	$versions = array("2.0.x", "2.1.x", "2.2.x", "2.3.x", "2.4.x", "2.5.x");
 	foreach ($versions as $index=>$db_version) {
 		if ($old_version > $db_version)
 			continue;
@@ -274,6 +274,11 @@ function detect_database_version($p_db_name, &$version)
 				return "Unable to query the database $p_db_name";
 			if (mysql_num_rows($res2) > 0) {
 				$version = "2.5.x";
+			}
+			if (!$res2 = mysql_query("SHOW TABLES LIKE 'ArticleTypeMetadata'"))
+				return "Unable to query the database $p_db_name";
+			if (mysql_num_rows($res2) > 0) {
+				$version = "2.6.x";
 			}
 		}
 	}
