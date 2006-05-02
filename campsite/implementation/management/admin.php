@@ -7,17 +7,17 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/configuration.php');
 
 set_error_handler ("report_bug");
 
-/** 
+/**
  * This file is basically a hack so that we could implement the
  * new interface without having to rewrite everything.
  */
 
 $no_menu_scripts = array(
-    '/login.php', 
-    '/do_login.php', 
+    '/login.php',
+    '/do_login.php',
     '/issues/preview.php',
-	'/issues/empty.php', 
-	'/ad_popup.php', 
+	'/issues/empty.php',
+	'/ad_popup.php',
 	'/articles/preview.php',
 	'/articles/autopublish.php',
 	'/articles/autopublish_do_add.php',
@@ -43,7 +43,7 @@ $extension = '';
 if (($extension_start = strrpos($call_script, '.')) !== false) {
 	$extension = strtolower(substr($call_script, $extension_start));
 }
-	
+
 // Is it an image?
 if ($is_image) {
 	$extension = substr(strrchr($call_script, '.'), 1);
@@ -59,7 +59,7 @@ if ($is_image) {
     if (file_exists($fileName)) {
 	   readfile($fileName);
     }
-} 
+}
 elseif (($extension == '.php') || ($extension == '')) {
 	// Requested file is not an image
 	header("Content-type: text/html; charset=UTF-8");
@@ -76,7 +76,7 @@ elseif (($extension == '.php') || ($extension == '')) {
 			return;
 		}
 	}
-		
+
 	// If its not a PHP file, assume its a directory.
    	if ($extension != '.php') {
 		// If its a directory
@@ -94,7 +94,7 @@ elseif (($extension == '.php') || ($extension == '')) {
 		print("<h1>404 Not found</h1>\n");
 		die("The page $ADMIN_DIR/$call_script could not be found");
 	}
-	
+
 	// Clean up the global namespace before we call the script
 	unset($is_image);
 	unset($extension);
@@ -111,7 +111,7 @@ elseif (($extension == '.php') || ($extension == '')) {
 	$content = ob_get_clean();
 
 	// We create the top menu AFTER the main content because
-	// of the localizer screen.  It will update the strings, which 
+	// of the localizer screen.  It will update the strings, which
 	// need to be reflected immediately in the menu.
 	$_top_menu = '';
 	if ($needs_menu) {
@@ -121,30 +121,30 @@ elseif (($extension == '.php') || ($extension == '')) {
 		echo "</td></tr>\n<tr><td>\n";
 		$_top_menu = ob_get_clean();
 	}
-	
-        
+
+
 
 	echo $_top_menu . $content;
-	
+
 	if ($needs_menu) {
 		echo "</td></tr>\n</table>\n</html>\n";
 	}
 }
 else {
-    readfile($Campsite['HTML_DIR'] . "/$ADMIN_DIR/$call_script");  
+    readfile($Campsite['HTML_DIR'] . "/$ADMIN_DIR/$call_script");
 }
 
 
 /**
  * Called for all Campsite errors.
- * 
+ *
  * @param int    $p_number The error number.
  * @param string $p_string The error message.
  * @param string $p_file The name of the file in which the error occurred.
  * @param int    $p_line The line number in which the error occurred.
  * @param
  */
-function report_bug ($p_number, $p_string, $p_file, $p_line)    
+function report_bug ($p_number, $p_string, $p_file, $p_line)
 {
     global $ADMIN_DIR, $ADMIN, $Campsite;
 
