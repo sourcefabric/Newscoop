@@ -615,6 +615,7 @@ if ($f_edit_mode == "edit") { ?>
 				$TOL_Language = Input::Get('TOL_Language');
 				$currentLanguage =& new Language($TOL_Language);
 				$currentLanguageId = $currentLanguage->getLanguageId();
+				print_r($subtopics);
 				foreach ($subtopics as $topicPath) {
 					$printTopic = array();
 					foreach ($topicPath as $topicId => $topic) {
