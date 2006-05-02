@@ -55,6 +55,8 @@ class ArticleTypeField {
 	 * Rename the article type.  This will move the entire table in the database and update ArticleTypeMetadata.
 	 * Usually, one wants to just rename the Display Name, which is done via SetDisplayName
 	 *
+	 * @param string p_newName
+	 *
 	 */
 	function rename($p_newName)
 	{
@@ -92,9 +94,9 @@ class ArticleTypeField {
 			if (function_exists("camp_load_language")) { camp_load_language("api"); }
 			$logText = getGS('The article type field $1 has been renamed to $2.', $this->m_dbColumnName, $p_newName);
 			Log::Message($logText, null, 62);
-			//ParserCom::SendMessage('article_type_fields', 'rename', array('article_field' => $this->m_dbColumnName));
+			ParserCom::SendMessage('article_type_fields', 'rename', array('article_field' => $this->m_dbColumnName));
 		}
-	}
+	} // fn rename
 
 
 
@@ -148,8 +150,13 @@ class ArticleTypeField {
 		return $success;
 	} // fn create
 
-		
-	function setType($p_type) {
+	/**
+     * Changes the type of the ATF.
+     *
+     * @param string p_type (text|date|body|topic)
+     */
+	function setType($p_type) 
+	{
 		global $g_ado_db;
 		$p_type = strtolower($p_type);
 		$queryStr = "ALTER TABLE ".$this->m_dbTableName." CHANGE ".$this->m_dbColumnName ." ". $this->m_dbColumnName;
@@ -190,9 +197,8 @@ class ArticleTypeField {
 			ParserCom::SendMessage('article_types', 'modify', array("article_type"=> $this->m_articleTypeName));
 		}
 		return $success;
+	} // fn setType
 
-
-	}
 	/**
 	 * @return boolean
 	 */
@@ -229,7 +235,9 @@ class ArticleTypeField {
 		}
 	} // fn fetch
 
-
+	/*
+	* Deletes an ATF
+	*/
 	function delete()
 	{
 		global $g_ado_db;
@@ -355,12 +363,17 @@ class ArticleTypeField {
 	} // fn getPrintType
 
 	/**
-	* 
-	* returns the name of the field.  If a translation in the logged in langauge is available, use that; if not use
-	* the getPrintName() version of the name.  By default, it displays the translated name as EnglishName (en).  If
-	* you supply a 0 as the argument, it will disable this.
-	**/
-	function getDisplayName($p_langBracket = 1) {
+	 * 
+	 * Returns the name of the field.  If a translation in the logged in langauge is available, use that; if not use
+	 * the getPrintName() version of the name.  By default, it displays the translated name as EnglishName (en).  If
+	 * you supply a 0 as the argument, it will disable this.
+	 *
+	 * @param int p_langBracket
+	 *
+	 * @return string
+	 */
+	function getDisplayName($p_langBracket = 1) 
+	{
 		global $_REQUEST;
 		$loginLanguageId = 0;
 		$loginLanguage = Language::GetLanguages(null, $_REQUEST['TOL_Language']);
@@ -374,27 +387,34 @@ class ArticleTypeField {
 		return $translations[$loginLanguageId];
 	}
 
-	/*
-	* 
-	* returns the is_hidden status of a field.  Returns 'hidden' or 'shown'.
-	**/
-	function getStatus() {
+	/**
+	 * Returns the is_hidden status of a field.  Returns 'hidden' or 'shown'.
+	 *
+	 * @return string (shown|hidden)
+	 */
+	function getStatus() 
+	{
 		if ($this->m_metadata[0]['is_hidden']) return 'hidden';
 		else return 'shown';
-	}
+	} // fn getStatus
 
-	function setStatus($p_status) {
+	/**
+	 * @param string p_status (hide|show)
+	 */
+	function setStatus($p_status) 
+	{
 		global $g_ado_db;
 		if ($p_status == 'show') $set = "is_hidden=0";
 		if ($p_status == 'hide') $set = "is_hidden=1";
 		$queryStr = "UPDATE ArticleTypeMetadata SET $set WHERE type_name='". $this->m_dbTableName ."' AND field_name='". $this->Field ."'";
 		$ret = $g_ado_db->Execute($queryStr);
-	}
+	} // fn setStatus
 
 	/**
-	* Return an associative array of the metadata in ArticleFieldMetadata.
-	*
-	**/
+	 * Return an associative array of the metadata in ArticleFieldMetadata.
+	 *
+	 * @return array
+	 */
 	function getMetadata() {
 		global $g_ado_db;
 		if ($this->Field == '') $fieldName = $this->m_fieldName; 
@@ -402,12 +422,15 @@ class ArticleTypeField {
 		$queryStr = "SELECT * FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' and field_name='". $fieldName ."'";
 		$queryArray = $g_ado_db->GetAll($queryStr);
 		return $queryArray;
-	}
+	} // fn getMetadata
 
+	/**
+	 * @return -1 OR int
+	 */
 	function getPhraseId() {
 		if (isset($this->m_metadata[0]['fk_phrase_id'])) { return $this->m_metadata[0]['fk_phrase_id']; }
 		return -1;
-	}
+	} // fn getPhraseId()
 
 	function getTranslations() {
 		$return = array();
@@ -415,8 +438,7 @@ class ArticleTypeField {
 		foreach ($tmp as $k => $v)
 			$return[$k] = $v;
 		return $return;
-	}
-
+	} // fn getTransltions
 
 	/**
 	* quick lookup to see if the current language is already translated for this article type: used by delete and update in setName
@@ -428,7 +450,7 @@ class ArticleTypeField {
 		$row = $g_ado_db->getAll($sql);
 		if (count($row)) return $row[0]['fk_phrase_id'];
 		else { return 0; }
-	}
+	} // fn translationExists
 
 	/**
 	 * Set the type name for the given language.  A new entry in 
@@ -489,23 +511,28 @@ class ArticleTypeField {
 	} // fn setName
 
 	/*
-	* returns the highest weight + 1
-	**/
-	function getNextOrder() {
+	 * Returns the highest weight + 1
+	 *
+	 * @return int
+	 */
+	function getNextOrder() 
+	{
 		global $g_ado_db;
 		$queryStr = "SELECT field_weight FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' AND field_name != 'NULL' ORDER BY field_weight DESC LIMIT 1";
 		$row = $g_ado_db->getRow($queryStr);
 		if ($row['field_weight'] == 0) $next = 1;
 		else $next = $row['field_weight'] + 1;
 		return ($next);
-	}
+	} // fn getNextOrder
 
 	/**
-	* 
-	* get the ordering of all fields; initially, a field has a field_weight of NULL when it is created.  if we discover that a field has a field weight of NULL,
-	* we give it the MAX+1 field_weight.  Returns a NUMERIC array of ORDER => FIELDNAME
-	**/
-	function getOrders() {
+	 * Get the ordering of all fields; initially, a field has a field_weight of NULL when it is created.  if we discover that a field has a field weight of NULL,
+	 * we give it the MAX+1 field_weight.  Returns a NUMERIC array of ORDER => FIELDNAME
+	 *
+	 * @return array
+	 */
+	function getOrders() 
+	{
 		global $g_ado_db;
 		$queryStr = "SELECT field_weight, field_name FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' AND field_name != 'NULL' ORDER BY field_weight DESC";
 		$queryArray = $g_ado_db->GetAll($queryStr);
@@ -514,23 +541,29 @@ class ArticleTypeField {
 			$orderArray[$values['field_weight']] = $values['field_name'];
 		}
 		return $orderArray;
-	}
+	} // fn setOrders
 
 	/*
-	* saves the ordering of all the fields.  Accepts an NUMERIC array of ORDERRANK => FIELDNAME. (see getOrders)
-	**/
-	function setOrders($orderArray) {
+	 * Saves the ordering of all the fields.  Accepts an NUMERIC array of ORDERRANK => FIELDNAME. (see getOrders)
+	 *
+	 * @param array orderArray
+	 */
+	function setOrders($orderArray) 
+	{
 		global $g_ado_db;
 		foreach ($orderArray as $order => $field) {
 			$queryStr = "UPDATE ArticleTypeMetadata SET field_weight=$order WHERE type_name='". $this->m_dbTableName ."' AND field_name='". $field ."'";
 			$g_ado_db->Execute($queryStr);
 		}
-	}
+	} // fn setOrders
 
 	/*
-	* reorders the current field; accepts either "up" or "down"
-	**/
-	function reorder($move) {
+     * Reorders the current field; accepts either "up" or "down"
+     *
+     * @param string move (up|down)
+	 */
+	function reorder($move) 
+	{
 		$orders = $this->getOrders();
 		$tmp = array_keys($orders, $this->Field);
 		$pos = $tmp[0];
@@ -547,7 +580,7 @@ class ArticleTypeField {
 			$orders[$pos] = $tmp;
 		}
 		$this->setOrders($orders);
-	}
+	} // fn reorder
 
 } // class ArticleTypeField
 
