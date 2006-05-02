@@ -21,6 +21,12 @@ if (!$User->hasPermission('ManageArticleTypes')) {
 
 $f_oldName = trim(Input::get('f_oldName'));
 $f_name = trim(Input::Get('f_name')); 
+
+if ($f_oldName == $f_name) {
+   	header("Location: /$ADMIN/article_types/");
+	exit;
+}
+
 $correct = true;
 $created = false;
 
@@ -36,15 +42,23 @@ if (empty($f_name)) {
     }
 
     if ($correct) {
-    	$articleType =& new ArticleType($f_oldName);
-    	if (!$articleType->exists()) {
+    	$old_articleType =& new ArticleType($f_oldName);
+    	if (!$old_articleType->exists()) {
 		    $correct = false; 
 		    $errorMsgs[] = getGS('The article type $1 does not exist.', '<B>'.htmlspecialchars($f_oldName).'</B>'); 
 		}
     }
+	
+	if ($correct) {
+		$articleType =& new ArticleType($f_name);
+		if ($articleType->exists()) {
+			$correct = false;
+			$errorMsgs[] = getGS('The article type $1 already exists.', '<B>'. htmlspecialchars($f_name). '</B>');
+		}
+	}
     
     if ($correct) {
-    	$articleType->rename($f_name);
+    	$old_articleType->rename($f_name);
     	header("Location: /$ADMIN/article_types/");
 		exit;
 	}
