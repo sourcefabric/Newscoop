@@ -444,7 +444,7 @@ if ($f_edit_mode == "edit") { ?>
 			</TR>
 			<TR>
 			    <td align="right" valign="top" nowrap><b><?php putGS("Number"); ?>:</b></td>
-			    <td align="left" valign="top"  style="padding-top: 2px; padding-left: 4px;"><?php p($articleObj->getArticleNumber()); ?> <?php if ($publicationObj->getUrlTypeId() == 2) { ?>
+			    <td align="left" valign="top"  style="padding-top: 2px; padding-left: 4px;"><?php p($articleObj->getArticleNumber()); ?> <?php if (isset($publicationObj) && $publicationObj->getUrlTypeId() == 2) { ?>
 &nbsp;(<a href="/<?php echo $languageObj->getCode()."/".$issueObj->getUrlName()."/".$sectionObj->getUrlName()."/".$articleObj->getUrlName(); ?>"><?php putGS("Link to front page"); ?></a>)<?php } ?></td>
 
 				<TD ALIGN="RIGHT" valign="top" style="padding-left: 1em;"><b><?php  putGS("Publish date"); ?>:</b></TD>
