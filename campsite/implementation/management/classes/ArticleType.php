@@ -78,14 +78,10 @@ class ArticleType {
 			if (function_exists("camp_load_language")) { camp_load_language("api");	}
 		    $logtext = getGS('The article type $1 has been added.', $this->m_dbTableName);
 	    	Log::Message($logtext, null, 61);
-			//ParserCom::SendMessage('article_types', 'create', array("article_type"=>$this->m_dbTableName));
+			ParserCom::SendMessage('article_types', 'create', array("article_type"=>$this->m_dbTableName));
 		} else {
 			$queryStr = "DROP TABLE ".$this->m_dbTableName;
 			$result = $g_ado_db->Execute($queryStr);
-			// RFC: Maybe a check on this result as well?  We drop the table since creation is two-tier: create the table,
-			// then add the entry into ArticleTypeMetadata; so if the second part failed, but hte first part worked (when would
-			// that ever really happen??) we drop the table and return 0.  But if the table drop breaks too, should I
-			// give a more verbose error.  I'm voting not, due to rarity--and if things get that bad they have other issues.
 		}
 
 		return $success2;
@@ -148,7 +144,6 @@ class ArticleType {
 			$success2 = $g_ado_db->Execute($queryStr);
 		}
 
-
 		if ($success2) {
 			$this->m_dbTableName = 'X'. $p_newName;
 			if (function_exists("camp_load_language")) { camp_load_language("api"); }
@@ -157,20 +152,24 @@ class ArticleType {
 			ParserCom::SendMessage('article_types', 'rename', array('article_type' => $this->m_name));
 		}
 
-
-	}
+	} // fn rename
 
 	/**
-	* quick lookup to see if the current language is already translated for this article type: used by delete and update in setName
+	* A quick lookup to see if the current language is already translated for this article type: used by delete and update in setName
 	* returns 0 if no translation or the phrase_id if there is one.
+	*
+	* @param int p_languageId
+	*
+	* @return 0 or phrase_id
 	**/
-	function translationExists($p_languageId) {
+	function translationExists($p_languageId) 
+	{
 		global $g_ado_db;
 		$sql = "SELECT atm.*, t.* FROM ArticleTypeMetadata atm, Translations t WHERE atm.type_name='". $this->m_dbTableName ."' AND atm.fk_phrase_id = t.phrase_id AND t.fk_language_id = '$p_languageId'"; 		
 		$row = $g_ado_db->getAll($sql);
 		if (count($row)) return $row[0]['fk_phrase_id'];
 		else { return 0; }
-	}
+	} // fn translationExists
 
 	/**
 	 * Set the type name for the given language.  A new entry in 
@@ -224,29 +223,37 @@ class ArticleType {
 			if (function_exists("camp_load_language")) { camp_load_language("api");	}
 			$logtext = getGS('Type $1 updated', $this->m_dbTableName.": (".$oldValue. " -> ".$p_value .")");
 			Log::Message($logtext, null, 143);		
-			//ParserCom::SendMessage('article_types', 'modify', array('article_type' => $this->m_name));
+			ParserCom::SendMessage('article_types', 'modify', array('article_type' => $this->m_dbTableName));
 		}
 		return $changed;
 	} // fn setName
-	function getPhraseId() {
+
+	/**
+	 * Returns the phrase id of the AT.
+	 *
+	 * @return -1 or integer
+	 */
+	function getPhraseId() 
+	{
 		if (isset($this->m_metadata[0]['fk_phrase_id'])) 
 			return $this->m_metadata[0]['fk_phrase_id'];
 		else
 			return -1;
-	}
+	} // fn getPhraseId
+
 	/**
 	 * Parses m_metadata for phrase_ids and returns an array of language_id => translation_text
 	 *
 	 * @return array
-	 *
 	 */
-	function getTranslations() {
+	function getTranslations() 
+	{
 		$return = array();
 		$tmp = Translation::getTranslations($this->getPhraseId());
 		foreach ($tmp as $k => $v)
 			$return[$k] = $v;
 		return $return;
-	}
+	} // fn getTranslations
 
 	/**
 	 * @return string
@@ -260,13 +267,15 @@ class ArticleType {
 	/**
 	* Return an associative array of the metadata in ArticleFieldMetadata.
 	*
+	* @return array
 	**/
-	function getMetadata() {
+	function getMetadata() 
+	{
 		global $g_ado_db;
 		$queryStr = "SELECT * FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' and field_name='NULL'";
 		$queryArray = $g_ado_db->GetAll($queryStr);
 		return $queryArray;
-	}
+	} // fn getMetadata
 
 	/**
 	 * Return an array of ArticleTypeField objects.
@@ -276,8 +285,6 @@ class ArticleType {
 	function getUserDefinedColumns()
 	{
 		global $g_ado_db;
-		#$queryStr = 'SHOW COLUMNS FROM '.$this->m_dbTableName
-		#			." LIKE 'F%'";
 		$queryStr = "SELECT * FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' AND field_name != 'NULL' AND field_type IS NOT NULL ORDER BY field_weight DESC";
 		$queryArray = $g_ado_db->GetAll($queryStr);
 		$metadata = array();
@@ -293,7 +300,6 @@ class ArticleType {
 		}
 		return $metadata;
 	} // fn getUserDefinedColumns
-
 
 	/**
 	 * Static function.
@@ -335,9 +341,12 @@ class ArticleType {
 	} // fn GetArticleTypes
 
 	/**
-	 * sets the is_hidden variable
+	 * Sets the is_hidden variable
+	 *
+	 * @param string p_status (hide|show)
 	 */
-	function setStatus($p_status) {
+	function setStatus($p_status) 
+	{
 		global $g_ado_db;
 		if ($p_status == 'hide')
 			$set = "is_hidden=1";
@@ -345,23 +354,29 @@ class ArticleType {
 			$set = "is_hidden=0";
 		$queryStr = "UPDATE ArticleTypeMetadata SET $set WHERE type_name='". $this->getTableName() ."' AND field_name='NULL'";
 		$ret = $g_ado_db->Execute($queryStr);
-	}
+	} // fn setStatus
 
 	/*
-	* returns 'shown' or 'hidden'
+	* Returns is_hidden value.
+	*
+	* @return string (shown|hidden)
 	*/
-	function getStatus() {
+	function getStatus() 
+	{
   		if ($this->m_metadata[0]['is_hidden']) return 'hidden';
 		else return 'shown';
-	}
+	} // fn getStatus
 
 	/**
+	* Gets the display name of a type; this is based on the native language -- and if no native language translation is available
+	* we use dbTableName.
 	*
-	* gets the display name of a type; this is based on the native language -- and if no native language translation is available
-	* we use dbTableName
+	* @param boolean p_langBrackets (Whether to display as Translation (en) or just Translation.
 	*
+	* @return string
 	**/
-	function getDisplayName($p_langBrackets = 1) {
+	function getDisplayName($p_langBrackets = 1) 
+	{
 		global $_REQUEST;
 		$loginLanguageId = 0;
 		$loginLanguage = Language::GetLanguages(null, $_REQUEST['TOL_Language']);
@@ -374,18 +389,20 @@ class ArticleType {
 		if ($p_langBrackets) return $translations[$loginLanguageId] .' ('. $loginLanguage->getCode() .')';
 		return $translations[$loginLanguageId];
 
-	}
+	} // fn getDisplayName
 	
 	/*
-	* returns the number of articles associated with this type.
-	*
+	* Returns the number of articles associated with this type.
+	* 
+	* @return int
 	**/
-	function getNumArticles() {
+	function getNumArticles() 
+	{
 		global $g_ado_db;
 		$sql = "SELECT COUNT(*) FROM ". $this->m_dbTableName; 
 		$res = $g_ado_db->GetOne($sql);
 		return $res;
-	}
+	} // fn getNumArticles
 
 } // class ArticleType
 
