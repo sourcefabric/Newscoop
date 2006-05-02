@@ -53,29 +53,55 @@ class ArticleComment
     /**
      * Get the comments and their associated articles.
      *
+     * @param string $p_status
+     *      Can be 'approved' or 'unapproved'.
+     * @param array $p_getTotal
+     *      If TRUE, only get the number of comments that match the search
+     *      criteria.
      * @param array $p_sqlOptions
+     *      See DatabaseObject::ProcessOptions().
      * @return array
      */
-    function GetUnapprovedComments($p_sqlOptions = null)
+    function GetComments($p_status = 'approved', $p_getTotal = false, $p_sqlOptions = null)
     {
         global $PHORUM;
         global $g_ado_db;
-        $queryStr = "SELECT * FROM ".$PHORUM['message_table']
-                    ." LEFT JOIN Articles "
-                    ." ON " . $PHORUM['message_table'] . ".message_id=Articles.comment_thread_id"
-                    ." WHERE status<0";
-        //echo $queryStr;
-        $rows = $g_ado_db->GetAll($queryStr);
-        $returnArray = array();
-        foreach ($rows as $row) {
-            $comment =& new Phorum_message();
-            $comment->fetch($row);
-            $article =& new Article();
-            $article->fetch($row);
-            $returnArray[] = array("comment" => $comment, "article" => $article);
+
+        $selectClause = "*";
+        if ($p_getTotal) {
+            $selectClause = "COUNT(*)";
         }
-        return $returnArray;
-    } // fn GetUnapprovedComments
+        $baseQuery = "SELECT $selectClause FROM (".$PHORUM['message_table']
+                    ." LEFT JOIN ArticleComments "
+                    ." ON " . $PHORUM['message_table'] . ".message_id=ArticleComments.fk_comment_thread_id)"
+                    ." LEFT JOIN Articles ON ArticleComments.fk_article_number=Articles.Number"
+                    ." AND ArticleComments.fk_language_id=Articles.IdLanguage";
+        if ($p_status == 'approved') {
+            $baseQuery .= " WHERE status>0";
+        } elseif ($p_status == 'unapproved') {
+            $baseQuery .= " WHERE status<0";
+        }
+        $baseQuery .= " ORDER BY ".$PHORUM['message_table'].".message_id";
+        if ($p_getTotal) {
+            $numComments = $g_ado_db->GetOne($baseQuery);
+            return $numComments;
+        } else {
+            $queryStr = DatabaseObject::ProcessOptions($baseQuery, $p_sqlOptions);
+            //echo $queryStr;
+            $rows = $g_ado_db->GetAll($queryStr);
+            $returnArray = array();
+            if (is_array($rows)) {
+                foreach ($rows as $row) {
+                    $comment =& new Phorum_message();
+                    $comment->fetch($row);
+                    $article =& new Article();
+                    $article->fetch($row);
+                    $returnArray[] = array("comment" => $comment, "article" => $article);
+                }
+            }
+            return $returnArray;
+        }
+    } // fn GetComments
 
 
 //    function CreateIfNotExist($p_forumId, $p_threadId)

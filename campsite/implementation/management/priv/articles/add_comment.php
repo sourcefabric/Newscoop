@@ -5,19 +5,20 @@
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleComment.php');
 
 $comments = ArticleComment::GetArticleComments($f_article_number, $f_language_id);
-if (count($comments) <= 0) {
-    echo "<p><b>No comments posted.</b><p>";
-}
-else {
-    ?>
-    <table class="table_input" width="900px">
-    <tr>
-        <td style="padding-top: 5px; padding-bottom: 5px; border-bottom: 1px solid black;/* 2px solid #8EAED7;*/">
-            &nbsp;<b><?php putGS("Comments"); ?></b>
-       	</td>
-    <tr>
+?>
+<table class="table_input" width="900px">
+<tr>
+    <td style="padding-top: 5px; padding-bottom: 5px; border-bottom: 1px solid black;/* 2px solid #8EAED7;*/">
+        &nbsp;<b><?php putGS("Comments"); ?></b>
+   	</td>
+<tr>
 
+<?php
+if (count($comments) <= 0) {
+    ?>
+    <tr><td style="padding-left: 15px;"><?php putGS("No comments posted."); ?></td></tr>
     <?php
+} else {
     foreach ($comments as $comment) {
         ?>
         <tr>
@@ -47,10 +48,10 @@ else {
         </tr>
         <?php
     }
-    ?>
-    </table>
-    <?php
 }
+?>
+</table>
+<?php
 // show the "add comment" form
 ?>
 <form action="do_add_comment.php" method="GET">
@@ -71,7 +72,7 @@ else {
     </td>
 
     <td>
-        <input type="text" name="f_comment_subject" value="" class="input_text" size="40">
+        <input type="text" name="f_comment_subject" value="" class="input_text" size="41">
     </td>
 </tr>
 

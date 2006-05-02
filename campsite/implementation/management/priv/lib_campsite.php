@@ -14,7 +14,7 @@ $DOCUMENT_ROOT = $_SERVER['DOCUMENT_ROOT'];
  * @return array
  *      An array of (days, hours, minutes, seconds)
  */
-function camp_time_diff_str($p_time1, $p_time2 = null) 
+function camp_time_diff_str($p_time1, $p_time2 = null)
 {
     // Convert the string times into absolute seconds
     $p_time1 = strtotime($p_time1);
@@ -24,7 +24,7 @@ function camp_time_diff_str($p_time1, $p_time2 = null)
     else {
         $p_time2 = strtotime($p_time2);
     }
-    
+
     // Compute the absolute difference between the times.
     $diffSeconds = abs($p_time1 - $p_time2);
     $days = floor($diffSeconds/86400);
@@ -35,7 +35,7 @@ function camp_time_diff_str($p_time1, $p_time2 = null)
 	$diffSeconds -= $minutes * 60;
 	return array('days' => $days, 'hours' => $hours, 'minutes' => $minutes, 'seconds' => $diffSeconds);
 } // fn camp_time_diff_str
-	
+
 
 /**
  * Return a value from the array, or if the value does not exist,
@@ -47,7 +47,7 @@ function camp_time_diff_str($p_time1, $p_time2 = null)
  *
  * @return mixed
  */
-function camp_array_get_value($p_array, $p_index, $p_defaultValue = null) 
+function camp_array_get_value($p_array, $p_index, $p_defaultValue = null)
 {
 	if (isset($p_array[$p_index])) {
 		return $p_array[$p_index];
@@ -59,7 +59,7 @@ function camp_array_get_value($p_array, $p_index, $p_defaultValue = null)
 
 
 /**
- * Convert a string so that it can be placed within 
+ * Convert a string so that it can be placed within
  * a javascript string that begins and ends with a single quote (').
  * This is for confirmation dialogs so that database strings do not
  * mess things up.
@@ -67,7 +67,7 @@ function camp_array_get_value($p_array, $p_index, $p_defaultValue = null)
  * @param string $p_string
  * @return string
  */
-function camp_javascriptspecialchars($p_string) 
+function camp_javascriptspecialchars($p_string)
 {
 	$encodedString = htmlspecialchars($p_string);
 	$slashedString = addslashes($encodedString);
@@ -95,18 +95,18 @@ function camp_javascriptspecialchars($p_string)
  * @return string
  */
 function camp_implode_keys_and_values($p_array,
-                                      $p_keyValueSeparator, 
-                                      $p_elementSeparator, 
-                                      $p_keyPrefixString = '', 
-                                      $p_keyPostfixString = '', 
-                                      $p_valuePrefixString = '', 
-                                      $p_valuePostfixString = '') 
+                                      $p_keyValueSeparator,
+                                      $p_elementSeparator,
+                                      $p_keyPrefixString = '',
+                                      $p_keyPostfixString = '',
+                                      $p_valuePrefixString = '',
+                                      $p_valuePostfixString = '')
 {
     $returnString = '';
     if (is_array($p_array)) {
         $elements = array();
         foreach ($p_array as $key => $value) {
-            $elements[] = $p_keyPrefixString . $key . $p_keyPostfixString . 
+            $elements[] = $p_keyPrefixString . $key . $p_keyPostfixString .
                 $p_keyValueSeparator . $p_valuePrefixString . $value . $p_valuePostfixString;
         }
         $returnString = implode($p_elementSeparator, $elements);
@@ -115,12 +115,12 @@ function camp_implode_keys_and_values($p_array,
 } // fn camp_implode_keys_and_values
 
 
-/** 
+/**
  * An alias for "print()".
  * @param string $p_string
  * @return void
  */
-function p($p_string = null) 
+function p($p_string = null)
 {
     print $p_string;
 } // fn p
@@ -151,7 +151,7 @@ function camp_format_bytes($p_bytes)
  * @param string $p_prefix
  * @return void
  */
-function camp_load_language($p_prefix) 
+function camp_load_language($p_prefix)
 {
     require_once('localizer/Localizer.php');
     $langCode = null;
@@ -166,7 +166,7 @@ function camp_load_language($p_prefix)
  * Split the given text into something.
  * @return string
  */
-//function camp_limit_chars($p_text, $p_limit, $p_break, $p_tail) 
+//function camp_limit_chars($p_text, $p_limit, $p_break, $p_tail)
 //{
 //	$p_text = preg_replace("/$p_break/i", strtolower($p_break), $p_text);
 //	$p_text = split(strtolower("$p_break"), $p_text);
@@ -187,7 +187,7 @@ function camp_load_language($p_prefix)
 //			$p_text = substr($p_text, 0, -strlen($p_break));
 //		}
 //		$p_text = "$p_text$p_tail";
-//	} 
+//	}
 //	else {
 //		$p_text=implode("$p_break", $p_text);
 //	}
@@ -195,7 +195,7 @@ function camp_load_language($p_prefix)
 //} // fn camp_limit_chars
 
 
-function camp_is_valid_url_name($name) 
+function camp_is_valid_url_name($name)
 {
 	if (strlen($name) == 0) {
 		return false;
@@ -226,13 +226,13 @@ function camp_array_peek($p_array, $p_getKeyValuePair = false, $p_offset = 0)
 {
 	reset($p_array);
 	if ($p_offset == -1) {
-		end($p_array);	
+		end($p_array);
 	}
 	list($key, $element) = each($p_array);
 	if ($p_getKeyValuePair) {
 		return array($key, $element);
 	} else {
-		return $element;		
+		return $element;
 	}
 } // fn camp_array_peek
 
@@ -261,6 +261,19 @@ function camp_session_get($p_name, $p_defaultValue)
 
 
 /**
+ * A wrapper around setting a session variable.
+ *
+ * @param string $p_name
+ * @param mixed $p_value
+ * @return void
+ */
+function camp_session_set($p_name, $p_value)
+{
+    $_SESSION[$p_name] = $p_value;
+} // fn camp_session_set
+
+
+/**
  * Print out the array or object surrounded with PRE tags so that its readable.
  * @param mixed $p_object
  * @return void
@@ -272,7 +285,7 @@ function camp_dump($p_object)
 	print_r($p_object);
 	$buffer = ob_get_clean();
 	echo htmlspecialchars(wordwrap($buffer, 100));
-	echo "</pre>";	
+	echo "</pre>";
 }
 
 
