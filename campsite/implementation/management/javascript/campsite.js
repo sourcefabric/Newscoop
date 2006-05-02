@@ -44,31 +44,31 @@ function ShowElement(id)
 
 
 /**
- * Given an array of HTML elements, make all of the 
+ * Given an array of element IDs, make all of the
  * elements invisible.
  *
  * @param array p_array
  */
 function HideAll(p_array)
 {
-	for (i = 0; i < p_array.length; i++) { 
+	for (i = 0; i < p_array.length; i++) {
 		document.getElementById(p_array[i]).style.display = "none";
 	}
 	return true;
-} 
+}
 
 
 /**
- * Given an array of HTML elements, make all of the 
- * elements invisible.
+ * Given an array of element IDs, make all of the
+ * elements visible.
  *
  * @param array p_array
  */
 function ShowAll(p_array)
 {
-	for (i = 0; i < p_array.length; i++) { 
+	for (i = 0; i < p_array.length; i++) {
 		document.getElementById(p_array[i]).style.display = "";
 	}
 	return true;
-} 
+}
 
