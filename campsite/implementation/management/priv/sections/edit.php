@@ -8,7 +8,7 @@ if (!$access) {
 	exit;
 }
 if (!$User->hasPermission('ManageSection')) {
-	camp_html_display_error(getGS("You do not have the right to modify sections."));	
+	camp_html_display_error(getGS("You do not have the right to modify sections."));
 	exit;
 }
 $Pub = Input::Get('Pub', 'int', 0);
@@ -51,7 +51,7 @@ $url_args2 = $url_args1."&Section=$Section";
 
 	<TD style="padding-left: 20px;"><A HREF="duplicate.php?<?php p($url_args2); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/duplicate.png" BORDER="0"></A></TD>
 	<TD><A HREF="duplicate.php?<?php p($url_args2); ?>" ><B><?php  putGS("Duplicate"); ?></B></A></TD>
-	
+
 	<TD style="padding-left: 20px;"><A HREF="del.php?<?php p($url_args2); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0"></A></TD>
 	<TD><A HREF="del.php?<?php p($url_args2); ?>" ><B><?php  putGS("Delete"); ?></B></A></TD>
 </TR>
@@ -68,6 +68,13 @@ $url_args2 = $url_args1."&Section=$Section";
 </TR>
 
 <TR>
+	<TD ALIGN="RIGHT" ><?php  putGS("Number"); ?>:</TD>
+	<TD>
+		<?php  p($sectionObj->getSectionNumber()); ?>
+ 	</TD>
+</TR>
+
+<TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
 	<TD>
 		<INPUT TYPE="TEXT" class="input_text" NAME="cName" SIZE="32" MAXLENGTH="64" value="<?php  p(htmlspecialchars($sectionObj->getName())); ?>">
@@ -79,7 +86,7 @@ $url_args2 = $url_args1."&Section=$Section";
 	<TD>
 		<SELECT NAME="cSectionTplId" class="input_select">
 		<OPTION VALUE="0">---</OPTION>
-		<?php 
+		<?php
 		foreach ($templates as $template) {
 			camp_html_select_option($template->getTemplateId(), $sectionObj->getSectionTemplateId(), $template->getName());
 		}
@@ -93,7 +100,7 @@ $url_args2 = $url_args1."&Section=$Section";
 	<TD>
 		<SELECT NAME="cArticleTplId" class="input_select">
 		<OPTION VALUE="0">---</OPTION>
-		<?php 
+		<?php
 		foreach ($templates as $template) {
 			camp_html_select_option($template->getTemplateId(), $sectionObj->getArticleTemplateId(), $template->getName());
 		}
