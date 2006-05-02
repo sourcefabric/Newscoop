@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/article_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']. "/classes/ArticleType.php");
 
@@ -25,28 +25,42 @@ $f_destination_publication_id = Input::Get('f_destination_publication_id', 'int'
 $f_destination_issue_number = Input::Get('f_destination_issue_number', 'int', 0, true);
 $f_destination_section_number = Input::Get('f_destination_section_number', 'int', 0, true);
 
+if (!Input::IsValid()) {
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+	exit;
+}
+
 if ($f_article_language <= 0) {
 	$f_destination_publication_id = 0;
 	$f_destination_issue_number = 0;
 	$f_destination_section_number = 0;
 }
 
-if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
-	exit;	
+if (count($Campsite['publications']) == 1) {
+    $singlePublication = camp_array_peek($Campsite['publications']);
+    $f_destination_publication_id = $singlePublication->getPublicationId();
 }
+
 
 $allIssues = array();
 if ($f_destination_publication_id > 0) {
-	$allIssues = Issue::GetIssues($f_destination_publication_id, 
-								  $f_article_language, null, null, 
+	$allIssues = Issue::GetIssues($f_destination_publication_id,
+								  $f_article_language, null, null,
 								  array("LIMIT" => 50, "ORDER BY" => array("Number" => "DESC")));
+    if (count($allIssues) == 1) {
+        $singleIssue = camp_array_peek($allIssues);
+        $f_destination_issue_number = $singleIssue->getIssueNumber();
+    }
 }
 
 $allSections = array();
 if ($f_destination_issue_number > 0) {
 	$selectedIssue =& new Issue($f_destination_publication_id, $f_article_language, $f_destination_issue_number);
-	$allSections = 	$allSections = Section::GetSections($f_destination_publication_id, $f_destination_issue_number, $f_article_language, array("ORDER BY" => array("Name" => "ASC")));
+	$allSections = Section::GetSections($f_destination_publication_id, $f_destination_issue_number, $f_article_language, array("ORDER BY" => array("Name" => "ASC")));
+	if (count($allSections) == 1) {
+	    $singleSection = camp_array_peek($allSections);
+	    $f_destination_section_number = $singleSection->getSectionNumber();
+	}
 }
 
 $allArticleTypes = ArticleType::GetArticleTypes();
@@ -86,7 +100,7 @@ if (sizeof($allArticleTypes) == 0) {
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.config.js"></script>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.core.js"></script>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.lang-enUS.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.validators.js"></script>	
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.validators.js"></script>
 
 <P>
 <FORM NAME="add_article" METHOD="GET" ACTION="add_move.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
@@ -111,7 +125,7 @@ if (sizeof($allArticleTypes) == 0) {
 			<TD>
 				<SELECT NAME="f_article_type" class="input_select" alt="select" emsg="<?php putGS('You must complete the $1 field.', getGS('Article Type')); ?>">
 				<option></option>
-				<?php 
+				<?php
 				foreach ($allArticleTypes as $tmpType) {
 					camp_html_select_option($tmpType, $f_article_type, $tmpType);
 				}
@@ -125,36 +139,24 @@ if (sizeof($allArticleTypes) == 0) {
 				<script>
 				function on_language_select(p_select)
 				{
-					<?php 
-					// Only submit the form in the case where the user changes the 
-					// language after they have chosen a publication, in which case
-					// we have to reload the issues.
-					if ($f_article_language != 0) { ?>
 					p_select.form.submit();
-					<?php } else { ?>
-					if (p_select.selectedIndex == 0) {
-						p_select.form.f_destination_publication_id.disabled = true; 						
-					} else {
-						p_select.form.f_destination_publication_id.disabled = false; 
-					}
-					<?php } ?>
 				}
 				</script>
 				<SELECT NAME="f_article_language" alt="select" emsg="<?php putGS("You must select a language.")?>" class="input_select" onchange="on_language_select(this);">
 				<option value="0"><?php putGS("---Select language---"); ?></option>
-				<?php 
+				<?php
 			 	foreach ($allLanguages as $tmpLanguage) {
-			 		camp_html_select_option($tmpLanguage->getLanguageId(), 
-			 								$f_article_language, 
+			 		camp_html_select_option($tmpLanguage->getLanguageId(),
+			 								$f_article_language,
 			 								$tmpLanguage->getNativeName());
 		        }
-				?>			
+				?>
 				</SELECT>
 			</TD>
 		</TR>
 		</table>
 	</td>
-	
+
 	<?php if ($User->hasPermission("MoveArticle")) { ?>
 	<td style="border-left: 1px solid black;">
 		<TABLE>
@@ -164,70 +166,86 @@ if (sizeof($allArticleTypes) == 0) {
 		<TR>
 			<TD VALIGN="middle" ALIGN="RIGHT" style="padding-left: 20px;"><?php  putGS('Publication'); ?>: </TD>
 			<TD valign="middle" ALIGN="LEFT">
-				<?php if ( count($Campsite["publications"]) > 0) { ?>
-				<SELECT NAME="f_destination_publication_id" class="input_select" ONCHANGE="if (this.options[this.selectedIndex].value != <?php p($f_destination_publication_id); ?>) {this.form.submit();}" <?php if ($f_article_language == 0) { echo "disabled"; } ?>>
-				<OPTION VALUE="0"><?php  putGS('---Select publication---'); ?></option>
-				<?php 
-				foreach ($Campsite["publications"] as $tmpPublication) {
-					camp_html_select_option($tmpPublication->getPublicationId(), $f_destination_publication_id, $tmpPublication->getName());
-				}
-				?>
-				</SELECT>
-				<?php
-				}
-				else {
-					?>
+				<?php if ( count($Campsite["publications"]) == 0) { ?>
 					<SELECT class="input_select" DISABLED><OPTION><?php  putGS('No publications'); ?></option></SELECT>
-					<?php
+				<?php } elseif (count($Campsite["publications"]) == 1) {
+				    echo htmlspecialchars($singlePublication->getName());
+				    ?>
+				    <input type="hidden" name="f_destination_publication_id" value="<?php p($singlePublication->getPublicationId()); ?>">
+				    <?php
+				} else { ?>
+    				<SELECT NAME="f_destination_publication_id" class="input_select" ONCHANGE="if (this.options[this.selectedIndex].value != <?php p($f_destination_publication_id); ?>) {this.form.submit();}" <?php if ($f_article_language == 0) { echo "disabled"; } ?>>
+    				<OPTION VALUE="0"><?php  putGS('---Select publication---'); ?></option>
+    				<?php
+    				foreach ($Campsite["publications"] as $tmpPublication) {
+    					camp_html_select_option($tmpPublication->getPublicationId(), $f_destination_publication_id, $tmpPublication->getName());
+    				}
+    				?>
+    				</SELECT>
+    				<?php
 				}
 				?>
 			</td>
 		</tr>
-		
+
 		<tr>
 			<TD VALIGN="middle" ALIGN="RIGHT" style="padding-left: 20px;"><?php  putGS('Issue'); ?>: </TD>
 			<TD valign="middle" ALIGN="LEFT">
-				<?php 
+				<?php
 				if (($f_destination_publication_id > 0) && (count($allIssues) > 0)) {
-					?>
-					<SELECT NAME="f_destination_issue_number" class="input_select" ONCHANGE="if (this.options[this.selectedIndex].value != <?php p($f_destination_issue_number); ?>) { this.form.submit(); }">
-					<OPTION VALUE="0"><?php  putGS('---Select issue---'); ?></option>
-					<?php 
-					foreach ($allIssues as $tmpIssue) {
-						camp_html_select_option($tmpIssue->getIssueNumber(), $f_destination_issue_number, $tmpIssue->getName());
-					}
-					?>
-					</SELECT>
-					<?php  
-				} 
-				else { 
-					?><SELECT class="input_select" DISABLED><OPTION><?php  putGS('No issues'); ?></SELECT>
-					<?php  
-				} 
+				    if (count($allIssues) == 1) {
+				        echo htmlspecialchars($singleIssue->getName());
+                        ?>
+                        <input type="hidden" name="f_destination_issue_number" value="<?php p($singleIssue->getIssueNumber()); ?>">
+                        <?php
+				    } else {
+    					?>
+    					<SELECT NAME="f_destination_issue_number" class="input_select" ONCHANGE="if (this.options[this.selectedIndex].value != <?php p($f_destination_issue_number); ?>) { this.form.submit(); }">
+    					<OPTION VALUE="0"><?php  putGS('---Select issue---'); ?></option>
+    					<?php
+    					foreach ($allIssues as $tmpIssue) {
+    						camp_html_select_option($tmpIssue->getIssueNumber(), $f_destination_issue_number, $tmpIssue->getName());
+    					}
+    					?>
+    					</SELECT>
+    					<?php
+				    }
+				} else {
+					putGS('No issues');
+				}
 				?>
 			</td>
 		</tr>
-		
-		<tr>	
+
+		<tr>
 			<TD VALIGN="middle" ALIGN="RIGHT" style="padding-left: 20px;"><?php  putGS('Section'); ?>: </TD>
 			<TD valign="middle" ALIGN="LEFT">
-				<?php if (($f_destination_publication_id > 0) 
-						  && (count($allIssues) > 0) 
-						  && ($f_destination_issue_number > 0) 
-						  && (count($allSections) > 0)) { ?>
-				<SELECT NAME="f_destination_section_number" class="input_select">
-				<OPTION VALUE="0"><?php  putGS('---Select section---'); ?>
-				<?php 
-				foreach ($allSections as $tmpSection) {
-					camp_html_select_option($tmpSection->getSectionNumber(), $f_destination_section_number, $tmpSection->getName());
-				}
-				?>
-				</SELECT>
-				<?php  
-				} 
-				else { 
-					?><SELECT class="input_select" DISABLED><OPTION><?php  putGS('No sections'); ?></SELECT>
-					<?php  
+				<?php
+				if (($f_destination_publication_id > 0)
+				    && (count($allIssues) > 0)
+					&& ($f_destination_issue_number > 0)
+					&& (count($allSections) > 0)) {
+
+					if (count($allSections) == 1) {
+					    echo htmlspecialchars($singleSection->getName());
+					    ?>
+					    <input type="hidden" name="f_destination_section_number" value="<?php p($singleSection->getSectionNumber()); ?>">
+					    <?php
+					} else {
+				      ?>
+
+        				<SELECT NAME="f_destination_section_number" class="input_select">
+        				<OPTION VALUE="0"><?php  putGS('---Select section---'); ?>
+        				<?php
+        				foreach ($allSections as $tmpSection) {
+        					camp_html_select_option($tmpSection->getSectionNumber(), $f_destination_section_number, $tmpSection->getName());
+        				}
+        				?>
+        				</SELECT>
+        				<?php
+	   			     }
+			    } else {
+					putGS('No sections');
 				}
 				?>
 				</TD>
