@@ -1593,7 +1593,23 @@ class Article extends DatabaseObject {
 		return $g_ado_db->GetOne($queryStr);
 	} // fn GetNumArticlesOfType
 
-
+	
+	/**
+	 * Return an array of article objects of a certain type.
+	 *
+	 * @param string p_type
+	 *
+	 * @return array
+	 */
+	function GetArticlesOfType($p_type)
+	{
+		global $g_ado_db;
+		$sql = "SELECT * FROM Articles WHERE Type='$p_type'";
+		$articles = DbObjectArray::Create('Article', $sql);
+		return $articles;
+	} // fn GetArticlesOfType
+	
+	
 	/**
 	 * Get the $p_max number of the most recently published articles.
 	 * @param int $p_max
