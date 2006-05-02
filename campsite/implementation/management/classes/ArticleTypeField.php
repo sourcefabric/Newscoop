@@ -404,9 +404,14 @@ class ArticleTypeField {
 		return $queryArray;
 	}
 
+	function getPhraseId() {
+		if (isset($this->m_metadata[0]['fk_phrase_id'])) { return $this->m_metadata[0]['fk_phrase_id']; }
+		return -1;
+	}
+
 	function getTranslations() {
 		$return = array();
-		$tmp = Translation::getTranslations($this->m_metadata[0]['fk_phrase_id']);
+		$tmp = Translation::getTranslations($this->getPhraseId());
 		foreach ($tmp as $k => $v)
 			$return[$k] = $v;
 		return $return;

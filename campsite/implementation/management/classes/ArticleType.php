@@ -228,7 +228,12 @@ class ArticleType {
 		}
 		return $changed;
 	} // fn setName
-
+	function getPhraseId() {
+		if (isset($this->m_metadata[0]['fk_phrase_id'])) 
+			return $this->m_metadata[0]['fk_phrase_id'];
+		else
+			return -1;
+	}
 	/**
 	 * Parses m_metadata for phrase_ids and returns an array of language_id => translation_text
 	 *
@@ -237,7 +242,7 @@ class ArticleType {
 	 */
 	function getTranslations() {
 		$return = array();
-		$tmp = Translation::getTranslations($this->m_metadata[0]['fk_phrase_id']);
+		$tmp = Translation::getTranslations($this->getPhraseId());
 		foreach ($tmp as $k => $v)
 			$return[$k] = $v;
 		return $return;
@@ -369,6 +374,17 @@ class ArticleType {
 		if ($p_langBrackets) return $translations[$loginLanguageId] .' ('. $loginLanguage->getCode() .')';
 		return $translations[$loginLanguageId];
 
+	}
+	
+	/*
+	* returns the number of articles associated with this type.
+	*
+	**/
+	function getNumArticles() {
+		global $g_ado_db;
+		$sql = "SELECT COUNT(*) FROM ". $this->m_dbTableName; 
+		$res = $g_ado_db->GetOne($sql);
+		return $res;
 	}
 
 } // class ArticleType

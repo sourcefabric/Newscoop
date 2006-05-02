@@ -114,7 +114,7 @@ class ArticleData extends DatabaseObject {
 				foreach ($queryArray as $row) {
 					$queryStr = "SHOW COLUMNS FROM ". $this->m_dbTableName ." LIKE '". $row['field_name'] ."'";
 					$rowdata = $g_ado_db->GetAll($queryStr);
-					$columnMetadata =& new ArticleTypeField($this->m_name);
+					$columnMetadata =& new ArticleTypeField(substr($this->m_dbTableName, 1));
 					$columnMetadata->fetch($rowdata[0]);
 					$columnMetadata->m_metadata = $columnMetadata->getMetadata();
 					$metadata[] =& $columnMetadata;
