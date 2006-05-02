@@ -21,16 +21,14 @@ if (!$User->hasPermission('DeleteArticleTypes')) {
 
 $articleTypeName = Input::Get('f_article_type'); 
 $doDelete = true;
-$articlesRemaining = Article::GetNumArticlesOfType($articleTypeName);
 $errorMsgs = array();
-
-if ($articlesRemaining > 0) {
-	$doDelete = false;
-	$errorMsgs[] = getGS('There are $1 article(s) left.', $articlesRemaining);
-}
 
 if ($doDelete) {
 	$articleType = new ArticleType($articleTypeName);
+	$articles = Article::GetArticlesOfType($articleTypeName);
+	foreach ($articles as $a) {
+		$a->delete();
+	}
 	$articleType->delete();
 	header("Location: /$ADMIN/article_types/");
 	exit;
