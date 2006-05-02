@@ -31,17 +31,17 @@ if (!isset($_REQUEST['TOL_Language'])) {
 			$defaultLanguage = $pref;
 			break;
 		}
-	}	
+	}
 	// Try to match two-letter language code.
 	if (is_null($defaultLanguage)) {
 		foreach ($browserLanguagePrefs as $pref) {
 			if (substr($pref, 0, 2) != "" && array_key_exists(substr($pref, 0, 2), $languages)) {
 				$defaultLanguage = $pref;
 				break;
-			}	
+			}
 		}
 	}
-	
+
 	// Default to english if we dont find anything that matches.
 	if (is_null($defaultLanguage)) {
 		$defaultLanguage = 'en';
@@ -66,7 +66,7 @@ camp_load_language("home");
 
 	<TITLE><?php  putGS("Login"); ?></title>
 </head>
-<body >
+<body onload="document.login_form.f_user_name.focus()">
 
 <table border="0" cellspacing="0" cellpadding="1" width="100%" >
 <tr>
@@ -77,7 +77,7 @@ camp_load_language("home");
 </table>
 
 <table border="0" cellspacing="0" cellpadding="6" align="center" style="margin-top: 20px; background-color: #d5e2ee;	border: 1px solid #8baed1;">
-<form name="dialog" method="post" action="do_login.php" >
+<form name="login_form" method="post" action="do_login.php" >
 	<tr>
 		<td colspan="2">
 			<b><?php  putGS("Login"); ?></b>
@@ -90,20 +90,20 @@ camp_load_language("home");
 	<tr>
 		<td align="right" ><?php putGS("Account name"); ?>:</td>
 		<td>
-		<input type="text" name="UserName" size="32" maxlength="32" class="input_text">
+		<input type="text" name="f_user_name" size="32" maxlength="32" class="input_text">
 		</td>
 	</tr>
 	<tr>
 		<td align="right" ><?php putGS("Password"); ?>:</td>
 		<td>
-		<input type="password" name="UserPassword" size="32" maxlength="32" class="input_text">
+		<input type="password" name="f_password" size="32" maxlength="32" class="input_text">
 		</td>
 	</tr>
 	<tr>
 		<td align="right" ><?php putGS("Language"); ?>:</td>
 		<td>
-		<select name="selectlanguage" class="input_select">
-		    <?php 
+		<select name="f_login_language" class="input_select">
+		    <?php
 			foreach($languages as $languageCode => $languageAttrs){
 			    $languageName = isset($languageAttrs['orig_name'])?
 			    	$languageAttrs['orig_name']:$languageAttrs['name'];
@@ -124,12 +124,15 @@ camp_load_language("home");
 	<tr>
 		<td colspan="2">
 		<div align="center">
-		<input type="submit" class="button" name="Login" value="<?php  putGS('Login'); ?>">
+		<input type="submit" class="button" value="<?php  putGS('Login'); ?>">
 		</div>
 		</td>
 	</tr>
 </form>
 </table>
-<?php  if (file_exists("./guest_include.php")) require("./guest_include.php"); ?>
-<div align="center"><p><?php camp_html_copyright_notice(false); ?></p></div>
+<div align="center">
+<p>
+    <?php camp_html_copyright_notice(false); ?>
+</p>
+</div>
 </body>

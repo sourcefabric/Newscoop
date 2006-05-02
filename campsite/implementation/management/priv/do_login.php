@@ -5,12 +5,12 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/User.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
 require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
 
-list($validUser, $user) = User::Login($_REQUEST["UserName"], $_REQUEST["UserPassword"]);
+list($validUser, $user) = User::Login($_REQUEST["f_user_name"], $_REQUEST["f_password"]);
 
-$selectLanguage = isset($_REQUEST["selectlanguage"])?$_REQUEST["selectlanguage"]:"";
+$f_login_language = isset($_REQUEST["f_login_language"])?$_REQUEST["f_login_language"]:"";
 
-if ($selectLanguage == "") {
-	$selectLanguage='en';
+if ($f_login_language == "") {
+	$f_login_language='en';
 }
 if ($validUser) {
 	if (function_exists ("incModFile")) {
@@ -18,11 +18,11 @@ if ($validUser) {
 	}
 	setcookie("LoginUserId", $user->getUserId());
 	setcookie("LoginUserKey", $user->getKeyId());
-	setcookie("TOL_Language", $selectLanguage);
+	setcookie("TOL_Language", $f_login_language);
 
     // Most of the time its easier to use the language ID
     // rather than the Language Code.
-	$language = Language::GetLanguages(null, $selectLanguage);
+	$language = Language::GetLanguages(null, $f_login_language);
 	$language = array_pop($language);
 	camp_session_get("LoginLanguageId", $language->getLanguageId());
 
