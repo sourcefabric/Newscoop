@@ -51,6 +51,7 @@ class ArticleTypeField {
 		return $this->m_dbTableName;
 	} // fn getDbTableName
 
+
 	/**
 	 * Rename the article type.  This will move the entire table in the database and update ArticleTypeMetadata.
 	 * Usually, one wants to just rename the Display Name, which is done via SetDisplayName
@@ -97,7 +98,6 @@ class ArticleTypeField {
 			ParserCom::SendMessage('article_type_fields', 'rename', array('article_field' => $this->m_dbColumnName));
 		}
 	} // fn rename
-
 
 
 	/**
@@ -150,6 +150,7 @@ class ArticleTypeField {
 		return $success;
 	} // fn create
 
+
 	/**
      * Changes the type of the ATF.
      *
@@ -199,6 +200,7 @@ class ArticleTypeField {
 		return $success;
 	} // fn setType
 
+
 	/**
 	 * @return boolean
 	 */
@@ -234,6 +236,7 @@ class ArticleTypeField {
 			}
 		}
 	} // fn fetch
+
 
 	/*
 	* Deletes an ATF
@@ -362,6 +365,7 @@ class ArticleTypeField {
 		}
 	} // fn getPrintType
 
+
 	/**
 	 * 
 	 * Returns the name of the field.  If a translation in the logged in langauge is available, use that; if not use
@@ -387,6 +391,7 @@ class ArticleTypeField {
 		return $translations[$loginLanguageId];
 	}
 
+
 	/**
 	 * Returns the is_hidden status of a field.  Returns 'hidden' or 'shown'.
 	 *
@@ -397,6 +402,7 @@ class ArticleTypeField {
 		if ($this->m_metadata[0]['is_hidden']) return 'hidden';
 		else return 'shown';
 	} // fn getStatus
+
 
 	/**
 	 * @param string p_status (hide|show)
@@ -409,6 +415,7 @@ class ArticleTypeField {
 		$queryStr = "UPDATE ArticleTypeMetadata SET $set WHERE type_name='". $this->m_dbTableName ."' AND field_name='". $this->Field ."'";
 		$ret = $g_ado_db->Execute($queryStr);
 	} // fn setStatus
+
 
 	/**
 	 * Return an associative array of the metadata in ArticleFieldMetadata.
@@ -424,15 +431,22 @@ class ArticleTypeField {
 		return $queryArray;
 	} // fn getMetadata
 
+
 	/**
 	 * @return -1 OR int
 	 */
-	function getPhraseId() {
+	function getPhraseId() 
+	{
 		if (isset($this->m_metadata[0]['fk_phrase_id'])) { return $this->m_metadata[0]['fk_phrase_id']; }
 		return -1;
 	} // fn getPhraseId()
 
-	function getTranslations() {
+
+	/**
+	 * @return array
+	 */
+	function getTranslations() 
+	{
 		$return = array();
 		$tmp = Translation::getTranslations($this->getPhraseId());
 		foreach ($tmp as $k => $v)
@@ -440,10 +454,15 @@ class ArticleTypeField {
 		return $return;
 	} // fn getTransltions
 
+
 	/**
-	* quick lookup to see if the current language is already translated for this article type: used by delete and update in setName
-	* returns 0 if no translation or the phrase_id if there is one.
-	**/
+	 * Quick lookup to see if the current language is already translated for this article type: used by delete and update in setName
+	 * returns 0 if no translation or the phrase_id if there is one.
+	 *
+	 * @param int p_languageId
+	 * 
+	 * @return 0 or phrase id (int)
+	 */
 	function translationExists($p_languageId) {
 		global $g_ado_db;
 		$sql = "SELECT atm.*, t.* FROM ArticleTypeMetadata atm, Translations t WHERE atm.type_name='". $this->m_dbTableName ."' AND atm.field_name='". $this->m_dbColumnName ."' AND atm.fk_phrase_id = t.phrase_id AND t.fk_language_id = '$p_languageId'"; 		
@@ -451,6 +470,7 @@ class ArticleTypeField {
 		if (count($row)) return $row[0]['fk_phrase_id'];
 		else { return 0; }
 	} // fn translationExists
+
 
 	/**
 	 * Set the type name for the given language.  A new entry in 
@@ -510,6 +530,7 @@ class ArticleTypeField {
 		return $changed;
 	} // fn setName
 
+	
 	/*
 	 * Returns the highest weight + 1
 	 *
@@ -525,6 +546,7 @@ class ArticleTypeField {
 		return ($next);
 	} // fn getNextOrder
 
+	
 	/**
 	 * Get the ordering of all fields; initially, a field has a field_weight of NULL when it is created.  if we discover that a field has a field weight of NULL,
 	 * we give it the MAX+1 field_weight.  Returns a NUMERIC array of ORDER => FIELDNAME
@@ -543,6 +565,7 @@ class ArticleTypeField {
 		return $orderArray;
 	} // fn setOrders
 
+	
 	/*
 	 * Saves the ordering of all the fields.  Accepts an NUMERIC array of ORDERRANK => FIELDNAME. (see getOrders)
 	 *
@@ -557,6 +580,7 @@ class ArticleTypeField {
 		}
 	} // fn setOrders
 
+	
 	/*
      * Reorders the current field; accepts either "up" or "down"
      *

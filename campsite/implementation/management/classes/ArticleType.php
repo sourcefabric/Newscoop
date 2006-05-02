@@ -128,6 +128,7 @@ class ArticleType {
 		}
 	} // fn delete
 
+
 	/**
 	 * Rename the article type.  This will move the entire table in the database and update ArticleTypeMetadata.
 	 * Usually, one wants to just rename the Display Name, which is done via SetDisplayName
@@ -154,6 +155,7 @@ class ArticleType {
 
 	} // fn rename
 
+
 	/**
 	* A quick lookup to see if the current language is already translated for this article type: used by delete and update in setName
 	* returns 0 if no translation or the phrase_id if there is one.
@@ -170,6 +172,7 @@ class ArticleType {
 		if (count($row)) return $row[0]['fk_phrase_id'];
 		else { return 0; }
 	} // fn translationExists
+
 
 	/**
 	 * Set the type name for the given language.  A new entry in 
@@ -228,6 +231,7 @@ class ArticleType {
 		return $changed;
 	} // fn setName
 
+
 	/**
 	 * Returns the phrase id of the AT.
 	 *
@@ -240,6 +244,7 @@ class ArticleType {
 		else
 			return -1;
 	} // fn getPhraseId
+
 
 	/**
 	 * Parses m_metadata for phrase_ids and returns an array of language_id => translation_text
@@ -254,6 +259,7 @@ class ArticleType {
 			$return[$k] = $v;
 		return $return;
 	} // fn getTranslations
+
 
 	/**
 	 * @return string
@@ -276,6 +282,7 @@ class ArticleType {
 		$queryArray = $g_ado_db->GetAll($queryStr);
 		return $queryArray;
 	} // fn getMetadata
+
 
 	/**
 	 * Return an array of ArticleTypeField objects.
@@ -300,6 +307,7 @@ class ArticleType {
 		}
 		return $metadata;
 	} // fn getUserDefinedColumns
+
 
 	/**
 	 * Static function.
@@ -340,6 +348,7 @@ class ArticleType {
 		return $finalNames;
 	} // fn GetArticleTypes
 
+
 	/**
 	 * Sets the is_hidden variable
 	 *
@@ -356,6 +365,7 @@ class ArticleType {
 		$ret = $g_ado_db->Execute($queryStr);
 	} // fn setStatus
 
+
 	/*
 	* Returns is_hidden value.
 	*
@@ -366,6 +376,7 @@ class ArticleType {
   		if ($this->m_metadata[0]['is_hidden']) return 'hidden';
 		else return 'shown';
 	} // fn getStatus
+
 
 	/**
 	* Gets the display name of a type; this is based on the native language -- and if no native language translation is available
@@ -391,6 +402,7 @@ class ArticleType {
 
 	} // fn getDisplayName
 	
+
 	/*
 	* Returns the number of articles associated with this type.
 	* 

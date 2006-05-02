@@ -54,6 +54,7 @@ class ArticleData extends DatabaseObject {
 		}
 	} // constructor
 
+
 	/**
 	 *
 	 * Gets the display name of a type; this is based on the native language -- and if no native language translation is available
