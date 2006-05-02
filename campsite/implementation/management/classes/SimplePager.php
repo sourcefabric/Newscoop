@@ -6,9 +6,9 @@ class SimplePager {
 	var $m_offset = null;
 	var $m_renderedStr = null;
 	var $m_numPages = 0;
-		
+
 	/**
-	 * SimplePager, unlike the PEAR Pager class, is a pager made to work 
+	 * SimplePager, unlike the PEAR Pager class, is a pager made to work
 	 * with template-like layouts. The constructor sets up the variables
 	 * you need to render the links, and you can render them
 	 * however you like.  There is a default render function for
@@ -16,24 +16,24 @@ class SimplePager {
 	 *
 	 * @param int $p_totalItems
 	 * 		Total number of items.
-	 * 
+	 *
 	 * @param int $p_itemsPerPage
 	 * 		Number of items to display per page.
-	 * 
+	 *
 	 * @param string $p_offsetVarName
 	 * 		The name of the REQUEST variable which holds the order number
 	 * 		of the first item on the selected page.
-	 * 
+	 *
 	 * @param string $p_baseUrl
 	 * 		The url to which we attach the offset variable name.
-	 * 
+	 *
 	 * @param boolean $p_useSessions
-	 * 		Set to TRUE if you want the offset item number to be stored in 
+	 * 		Set to TRUE if you want the offset item number to be stored in
 	 * 		the session so that the user will return to their previous
-	 * 		position in the pager when they leave the screen and come back 
+	 * 		position in the pager when they leave the screen and come back
 	 * 		to it.
 	 */
-	function SimplePager($p_totalItems, $p_itemsPerPage, $p_offsetVarName, $p_baseUrl, $p_useSessions = true, $p_width = 10) 
+	function SimplePager($p_totalItems, $p_itemsPerPage, $p_offsetVarName, $p_baseUrl, $p_useSessions = true, $p_width = 10)
 	{
 		$this->m_urls["first"] = $p_baseUrl;
 		$this->m_urls["previous"] = $p_baseUrl;
@@ -47,19 +47,26 @@ class SimplePager {
 			$p_itemsPerPage = 1;
 		}
 
+		// Get the current page number.
+		if ($p_useSessions) {
+			$this->m_offset = camp_session_get($p_offsetVarName, 0);
+		} else {
+			$this->m_offset = isset($_REQUEST[$p_offsetVarName]) ? $_REQUEST[$p_offsetVarName] : 0;
+		}
+		if ($this->m_offset < 0) {
+			$this->m_offset = 0;
+		} elseif ( ($this->m_offset*$p_itemsPerPage) > $p_totalItems) {
+		    // If the offset is past the total number of items,
+		    // reset it.
+		    $this->m_offset = 0;
+		    if ($p_useSessions) {
+		        camp_session_set($p_offsetVarName, 0);
+		    }
+		}
+
 		// Only generate pager if there is more than one page of information.
 		if ($p_totalItems > $p_itemsPerPage) {
-			
-			// Get the current page number.
-			if ($p_useSessions) {
-				$this->m_offset = camp_session_get($p_offsetVarName, 0);
-			} else {
-				$this->m_offset = isset($_REQUEST[$p_offsetVarName]) ? $_REQUEST[$p_offsetVarName] : 0;				
-			}
-			if ($this->m_offset < 0) {
-				$this->m_offset = 0;
-			}
-			
+
 			// Generate the offsets into the list.
 			$remainder = $p_totalItems % $p_itemsPerPage;
 			if ($remainder == 0) {
@@ -67,14 +74,14 @@ class SimplePager {
 			} else {
 				$this->m_offsets = SimplePager::_range(0, $p_totalItems, $p_itemsPerPage);
 			}
-			
+
 			$this->m_numPages = count($this->m_offsets);
 			$this->m_selectedPageNumber = floor($this->m_offset/$p_itemsPerPage)+1;
-		
-			if ($p_width > $this->m_numPages) {	
-				$p_width = $this->m_numPages;	
+
+			if ($p_width > $this->m_numPages) {
+				$p_width = $this->m_numPages;
 			}
-			
+
 			// Generate the numbered links
 			if ($this->m_selectedPageNumber < ($p_width/2 + 1)) {
 				$begin = 0;
@@ -106,13 +113,14 @@ class SimplePager {
 			if ( ($this->m_numPages - $this->m_selectedPageNumber) > 99) {
 				$this->m_urls["next_100_pages"] = $p_baseUrl."$p_offsetVarName=".$this->m_offsets[min($this->m_numPages-1, $this->m_selectedPageNumber+99)];
 			}
-			$this->m_urls["last"] = $p_baseUrl."$p_offsetVarName=".$this->m_offsets[$this->m_numPages-1];	
+			$this->m_urls["last"] = $p_baseUrl."$p_offsetVarName=".$this->m_offsets[$this->m_numPages-1];
 		}
 	} // constructor
 
-	
+
 	/**
 	 * Default way to render the links.  Feel free to come up with your own way.
+	 * @return string
 	 */
 	function render()
 	{
@@ -133,7 +141,7 @@ class SimplePager {
 				if ($number == $this->m_selectedPageNumber) {
 					$this->m_renderedStr .= "$number | ";
 				} else {
-					$this->m_renderedStr .= "<a href=\"".$url."\">$number</a> | ";	
+					$this->m_renderedStr .= "<a href=\"".$url."\">$number</a> | ";
 				}
 			}
 			$this->m_renderedStr .= "<a href=\"".$this->m_urls["next"]."\">".getGS("Next")."</a> | ";
@@ -148,11 +156,21 @@ class SimplePager {
 		return $this->m_renderedStr;
 	} // fn render
 
-	
-	function _range($num1, $num2, $step = 1)
+
+	/**
+	 * Create an array of integers starting at $p_num1
+	 * and ending at $p_num2 (inclusive), going up by a
+	 * value of $p_step each time.
+	 *
+	 * @param int $p_num1
+	 * @param int $p_num2
+	 * @param int $p_step
+	 * @return array
+	 */
+	function _range($p_num1, $p_num2, $p_step = 1)
 	{
 		$temp = array();
-	   	for($i = $num1; $i <= $num2; $i += $step) {
+	   	for($i = $p_num1; $i <= $p_num2; $i += $p_step) {
 	    	$temp[] = $i;
 	   	}
 	   	return $temp;
