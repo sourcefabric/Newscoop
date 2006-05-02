@@ -55,12 +55,14 @@ class ArticleData extends DatabaseObject {
 	} // constructor
 
 	/**
-	*
-	* gets the display name of a type; this is based on the native language -- and if no native language translation is available
-	* we use dbTableName
-	*
-	**/
-	function getDisplayName($p_langBrackets = 1) {
+	 *
+	 * Gets the display name of a type; this is based on the native language -- and if no native language translation is available
+	 * we use dbTableName
+	 *
+	 * @param boolean p_langBrackets 
+	 */
+	function getDisplayName($p_langBrackets = 1) 
+	{
 		global $_REQUEST;
 		$loginLanguageId = 0;
 		$loginLanguage = Language::GetLanguages(null, $_REQUEST['TOL_Language']);
@@ -75,7 +77,7 @@ class ArticleData extends DatabaseObject {
 		if ($p_langBrackets) return $translations[$loginLanguageId] .' ('. $loginLanguage->getCode() .')';
 		return $translations[$loginLanguageId];
 
-	}
+	} // fn getDisplayName
 
 	/**
 	 * Copy the row in the database.
