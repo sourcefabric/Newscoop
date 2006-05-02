@@ -54,6 +54,7 @@ if ($f_publication_id > 0) {
 	$publicationObj =& new Publication($f_publication_id);
 	$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
 	$sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
+	$languageObj =& new Language($articleObj->getLanguageId());
 }
 
 // Automatically switch to "view" mode if user doesnt have permissions.
@@ -387,7 +388,7 @@ if ($f_edit_mode == "edit") { ?>
 			<TABLE>
 			<TR>
 				<TD ALIGN="RIGHT" valign="top" ><b><?php  putGS("Name"); ?>:</b></TD>
-				<TD rowspan="2" align="left" valign="top">
+				<TD align="left" valign="top">
 					<?php if ($f_edit_mode == "edit") { ?>
 					<TEXTAREA name="f_article_title" cols="30" rows="2" class="input_text"><?php  print htmlspecialchars($articleObj->getTitle()); ?></TEXTAREA>
 					<?php } else {
@@ -403,14 +404,17 @@ if ($f_edit_mode == "edit") { ?>
 				</TD>
 			</TR>
 			<TR>
-				<Td>&nbsp;</TD>
+				<TD ALIGN="RIGHT" valign="top" style="padding-left: 1em;"><b><?php  putGS("Type"); ?>:</b></TD>
+				<TD align="left" valign="top">
+					<?php print htmlspecialchars($articleData->getDisplayName(0)); ?>
+				</TD>
 				<TD ALIGN="RIGHT" valign="top" style="padding-left: 1em;"><b><nobr><?php  putGS("Creation date"); ?>:</nobr></b></TD>
 				<TD align="left" valign="top" nowrap>
 					<?php if ($f_edit_mode == "edit") { ?>
 					<input type="hidden" name="f_creation_date" value="<?php p($articleObj->getCreationDate()); ?>" id="f_creation_date">
 					<table cellpadding="0" cellspacing="2"><tr>
-						<td><span id="show_date"><?php p($articleObj->getCreationDate()); ?></span></td>
-						<td><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/calendar.gif" id="f_trigger_c"
+						<td><span id="show_date"><?php p(str_replace(" ", "<br>", $articleObj->getCreationDate())); ?></span></td>
+						<td valign="top" align="left"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/calendar.gif" id="f_trigger_c"
 					    	 style="cursor: pointer; border: 1px solid red;"
 					     	 title="Date selector"
 					     	 onmouseover="this.style.background='red';"
@@ -419,9 +423,13 @@ if ($f_edit_mode == "edit") { ?>
 					<script type="text/javascript">
 					    Calendar.setup({
 					        inputField     :    "f_creation_date",
-					        ifFormat       :    "%Y-%m-%d",
+					        ifFormat       :    "%Y-%m-%d %H:%M:00",
 					        displayArea    :    "show_date",
-					        daFormat	   :    "%Y-%m-%d",
+					        daFormat	   :    "%Y-%m-%d<br>%H:%M:00",
+					        showsTime      :    true,
+					        showOthers     :    true,
+					        weekNumbers    :    false,
+					        range          :    new Array(1990, 2020),
 					        button		   :    "f_trigger_c"
 					    });
 					</script>
@@ -435,10 +443,10 @@ if ($f_edit_mode == "edit") { ?>
 				</TD>
 			</TR>
 			<TR>
-				<TD ALIGN="RIGHT" valign="top" style="padding-left: 1em;"><b><?php  putGS("Type"); ?>:</b></TD>
-				<TD align="left" valign="top">
-					<?php print htmlspecialchars($articleData->getDisplayName(0)); ?>
-				</TD>
+			    <td align="right" valign="top" nowrap><b><?php putGS("Number"); ?>:</b></td>
+			    <td align="left" valign="top"  style="padding-top: 2px; padding-left: 4px;"><?php p($articleObj->getArticleNumber()); ?> <?php if ($publicationObj->getUrlTypeId() == 2) { ?>
+&nbsp;(<a href="/<?php echo $languageObj->getCode()."/".$issueObj->getUrlName()."/".$sectionObj->getUrlName()."/".$articleObj->getUrlName(); ?>"><?php putGS("Link to front page"); ?></a>)<?php } ?></td>
+
 				<TD ALIGN="RIGHT" valign="top" style="padding-left: 1em;"><b><?php  putGS("Publish date"); ?>:</b></TD>
 				<TD align="left" valign="top">
 					<?php print htmlspecialchars($articleObj->getPublishDate()); ?>
@@ -498,7 +506,7 @@ if ($f_edit_mode == "edit") { ?>
 					   TYPE="TEXT"
 					   VALUE="<?php print $articleData->getProperty($dbColumn->getName()); ?>"
 					   class="input_text"
-					   SIZE="64"
+					   SIZE="50"
 					   MAXLENGTH="100">
 		        <?php } else {
 		        	print $articleData->getProperty($dbColumn->getName());
