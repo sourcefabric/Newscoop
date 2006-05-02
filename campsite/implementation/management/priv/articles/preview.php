@@ -1,4 +1,4 @@
-<?php  
+<?php
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/article_common.php");
 
 list($access, $User) = check_basic_access($_REQUEST);
@@ -41,8 +41,7 @@ $templateObj =& new Template($templateId);
 
 $accessParams = "LoginUserId=" . $User->getUserId() . "&LoginUserKey=" . $User->getKeyId()
 				. "&AdminAccess=all";
-$urlType = $publicationObj->getProperty('IdURLType');
-if ($urlType == 1) {
+if ($publicationObj->getUrlTypeId() == 1) {
 	$templateObj = & new Template($templateId);
 	$uri = "/look/" . $templateObj->getName() . "?IdLanguage=$f_language_id"
 		. "&IdPublication=$f_publication_id&NrIssue=$f_issue_number&NrSection=$f_section_number"
