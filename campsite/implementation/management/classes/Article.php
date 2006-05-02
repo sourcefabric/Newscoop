@@ -1397,6 +1397,9 @@ class Article extends DatabaseObject {
 	 *
 	 * @param int $p_start
 	 * @param int $p_maxRows
+	 * @return array
+	 *     An array of two elements:
+	 *     An array of articles and the total number of articles.
 	 */
 	function GetUnplacedArticles($p_start = 0, $p_maxRows = 20)
 	{
