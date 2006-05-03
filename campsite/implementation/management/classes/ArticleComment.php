@@ -55,32 +55,56 @@ class ArticleComment
      *
      * @param string $p_status
      *      Can be 'approved' or 'unapproved'.
-     * @param array $p_getTotal
-     *      If TRUE, only get the number of comments that match the search
-     *      criteria.
+     * @param boolean $p_getTotal
+     *      If TRUE, return the number of comments that match the search
+     *      criteria and not the actual records.
+     * @param string $p_searchString
+     *      A string to search for.
      * @param array $p_sqlOptions
      *      See DatabaseObject::ProcessOptions().
      * @return array
      */
-    function GetComments($p_status = 'approved', $p_getTotal = false, $p_sqlOptions = null)
+    function GetComments($p_status = 'approved', $p_getTotal = false, $p_searchString = '', $p_sqlOptions = null)
     {
         global $PHORUM;
         global $g_ado_db;
+
+        $messageTable = $PHORUM['message_table'];
 
         $selectClause = "*";
         if ($p_getTotal) {
             $selectClause = "COUNT(*)";
         }
-        $baseQuery = "SELECT $selectClause FROM (".$PHORUM['message_table']
+
+        $baseQuery = "SELECT $selectClause FROM ($messageTable"
                     ." LEFT JOIN ArticleComments "
-                    ." ON " . $PHORUM['message_table'] . ".message_id=ArticleComments.fk_comment_thread_id)"
+                    ." ON $messageTable". ".message_id=ArticleComments.fk_comment_thread_id)"
                     ." LEFT JOIN Articles ON ArticleComments.fk_article_number=Articles.Number"
                     ." AND ArticleComments.fk_language_id=Articles.IdLanguage";
+
+        $whereQuery = '';
         if ($p_status == 'approved') {
-            $baseQuery .= " WHERE status>0";
+            $whereQuery .= "status > 0";
         } elseif ($p_status == 'unapproved') {
-            $baseQuery .= " WHERE status<0";
+            $whereQuery .= "status < 0";
         }
+
+        if (!empty($p_searchString)) {
+            $p_searchString = mysql_real_escape_string($p_searchString);
+            if (!empty($whereQuery)) {
+                $whereQuery .= " AND ";
+            }
+            $whereQuery .="($messageTable.subject LIKE '%$p_searchString%'"
+                        ." OR $messageTable.body LIKE '%$p_searchString%'"
+                        ." OR $messageTable.email LIKE '%$p_searchString%'"
+                        ." OR $messageTable.author LIKE '%$p_searchString%'"
+                        ." OR $messageTable.ip LIKE '%$p_searchString%')";
+        }
+
+        if (!empty($whereQuery)) {
+            $baseQuery .= " WHERE ".$whereQuery;
+        }
+
         $baseQuery .= " ORDER BY ".$PHORUM['message_table'].".message_id";
         if ($p_getTotal) {
             $numComments = $g_ado_db->GetOne($baseQuery);
@@ -103,16 +127,6 @@ class ArticleComment
         }
     } // fn GetComments
 
-
-//    function CreateIfNotExist($p_forumId, $p_threadId)
-//    {
-//        $forum =& new Phorum_forum($p_forumId);
-//        if (!$forum->exists()) {
-//            $forum->create();
-//        }
-//        $comment =& new Phorum_message($p_threadId);
-//        if (
-//    }
 
 } // class ArticleComment
 ?>

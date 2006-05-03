@@ -22,12 +22,12 @@ $f_comment_start_inbox = camp_session_get('f_comment_start_inbox', 0);
 $f_comment_start_archive = camp_session_get('f_comment_start_archive', 0);
 $f_comment_per_page = camp_session_get('f_comment_per_page', 10);
 $f_comment_search = camp_session_get('f_comment_search', '');
-//if ($f_comment_per_page < 4) {
-//    $f_comment_per_page = 4;
-//}
+if ($f_comment_per_page < 4) {
+    $f_comment_per_page = 4;
+}
 
-$numInbox = ArticleComment::GetComments('unapproved', true);
-$numArchive = ArticleComment::GetComments('approved', true);
+$numInbox = ArticleComment::GetComments('unapproved', true, $f_comment_search);
+$numArchive = ArticleComment::GetComments('approved', true, $f_comment_search);
 
 if ($f_comment_screen == 'inbox') {
     $pager =& new SimplePager($numInbox, $f_comment_per_page, 'f_comment_start_inbox', "/$ADMIN/comments/index.php?");
@@ -43,10 +43,12 @@ $f_comment_start_archive = camp_session_get('f_comment_start_archive', 0);
 
 if ($f_comment_screen == 'inbox') {
     $comments = ArticleComment::GetComments('unapproved', false,
+            $f_comment_search,
             array('LIMIT' => array('START'=> $f_comment_start_inbox,
                                    'MAX_ROWS' => $f_comment_per_page)));
 } elseif ($f_comment_screen == 'archive') {
     $comments = ArticleComment::GetComments('approved', false,
+            $f_comment_search,
             array('LIMIT' => array('START'=> $f_comment_start_archive,
                                    'MAX_ROWS' => $f_comment_per_page)));
 }
@@ -92,7 +94,7 @@ $pagerStr = $pager->render();
             </td>
 
             <td style="padding-left: 15px;">
-                <?php putGS("Search"); ?>: <input type="text" name="f_comment_search" value="<?php p($f_comment_search); ?>" size="10"  class="input_text" disabled>
+                <?php putGS("Search"); ?>: <input type="text" name="f_comment_search" value="<?php p($f_comment_search); ?>" size="10"  class="input_text">
             </td>
 
             <td style="padding-left: 15px;">
@@ -118,21 +120,31 @@ if (count($comments) == 0) {
 ?>
 <script>
 var comment_ids = new Array;
+var arrow_ids = new Array;
 
 function onCommentAction(p_type, p_commentId)
 {
     document.getElementById(p_type+'_'+p_commentId).checked=true;
     document.getElementById('subject_'+p_commentId).className = 'comment_pending_'+p_type;
 }
+
+function onSummaryClick(p_messageId)
+{
+    HideAll(comment_ids);
+    ShowElement('comment_'+p_messageId);
+    HideAll(arrow_ids);
+    ShowElement('arrow_'+p_messageId);
+} // fn onSummaryClick
 </script>
 
 <!-- main table with date&subject on the left, comment on right -->
 <table cellpadding="0" cellspacing="0" width="100%" style="border-top: 1px solid #777;">
 <tr>
-    <td width="30%" valign="top" align="left">
+    <td width="350px" valign="top" align="left">
         <!-- The column with date&subject -->
         <table BORDER="0" CELLSPACING="1" CELLPADDING="3" width="100%">
             <?php
+            $count = 1;
             foreach ($comments as $commentPack) {
             $comment = $commentPack["comment"];
 
@@ -150,17 +162,20 @@ function onCommentAction(p_type, p_commentId)
             ?>
     		<script>
     		comment_ids.push("comment_<?php p($comment->getMessageId()); ?>");
+    		arrow_ids.push("arrow_<?php p($comment->getMessageId()); ?>");
     		</script>
 
             <tr class="<?php echo $css; ?>" id="subject_<?php p($comment->getMessageId()); ?>">
-            <td valign="top" align="left" width="1%" nowrap onclick="HideAll(comment_ids); ShowElement('comment_<?php p($comment->getMessageId()); ?>');"><a href="javascript: void(0);" onclick="HideAll(comment_ids); ShowElement('comment_<?php p($comment->getMessageId()); ?>');"><?php echo date("Y-m-d H:i:s", $comment->getLastModified()); ?></a></td>
-            <td valign="top" align="left" onclick="HideAll(comment_ids); ShowElement('comment_<?php p($comment->getMessageId()); ?>');"><a href="javascript: void(0);" onclick="HideAll(comment_ids); ShowElement('comment_<?php p($comment->getMessageId()); ?>');"><?php echo $comment->getSubject(); ?></a></td>
+            <td valign="top" align="left" width="1%" nowrap><?php echo $count++; ?></td>
+            <td valign="top" align="left" width="1%" nowrap onclick="onSummaryClick(<?php p($comment->getMessageId()); ?>);"><a href="javascript: void(0);" onclick="onSummaryClick(<?php p($comment->getMessageId()); ?>);"><?php echo date("Y-m-d H:i:s", $comment->getLastModified()); ?></a></td>
+            <td valign="top" align="left" onclick="onSummaryClick(<?php p($comment->getMessageId()); ?>);"><a href="javascript: void(0);" onclick="onSummaryClick(<?php p($comment->getMessageId()); ?>);"><?php echo $comment->getSubject(); ?></a></td>
+            <td width="1%"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/arrow_left.gif" id="arrow_<?php p($comment->getMessageId()); ?>" <?php if ($count != 2) { ?>style="display: none;"<?php } ?>></td>
             </tr>
             <?php } ?>
         </table>
     </td>
 
-    <td width="70%" style="border-left: 1px solid #777;">
+    <td style="border-left: 1px solid #777;">
         <!-- The column where you can edit the comments -->
         <table class="table_input" style="margin-top: 5px; margin-left: 5px;">
         <form action="do_edit.php" method="GET">
@@ -174,7 +189,7 @@ function onCommentAction(p_type, p_commentId)
         <tr <?php if ($count++ != 1) { ?>style="display: none;"<?php } ?> id="comment_<?php p($comment->getMessageId()); ?>">
         <td>
             <!-- table for the action controls -->
-            <table style="border-bottom: 1px solid #8EAED7;" width="100%">
+            <table>
             <tr>
 
             <td><input type="image" src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" name="save" value="save"></td>
@@ -186,7 +201,7 @@ function onCommentAction(p_type, p_commentId)
             <td><a href="javascript: void(0);" onclick="onCommentAction('inbox', <?php p($comment->getMessageId()); ?>);"><b><?php putGS("Inbox"); ?></b></a>
             </td>
 
-            <td  style="padding-left: 10px;">
+            <td style="padding-left: 10px;">
                 <input type="radio" name="comment_action_<?php echo $comment->getMessageId(); ?>" value="approve" class="input_radio" id="approved_<?php echo $comment->getMessageId(); ?>" <?php if ($comment->getStatus() ==  PHORUM_STATUS_APPROVED) { ?>checked<?php } ?> onchange="onCommentAction('approved', <?php p($comment->getMessageId()); ?>);">
             </td>
 
@@ -211,6 +226,39 @@ function onCommentAction(p_type, p_commentId)
             </tr>
             </table>
             <!-- END table for the action controls -->
+
+            <!-- BEGIN table with article content -->
+            <table BORDER="0" CELLSPACING="1" CELLPADDING="3" width="100%"  style="border-top: 1px solid #8EAED7;">
+            <TR id="article_closed_<?php p($comment->getMessageId()); ?>">
+                <td valign="middle">
+                    <a href="javascript:void(0);" onclick="HideElement('article_closed_<?php p($comment->getMessageId()); ?>'); ShowElement('article_<?php p($comment->getMessageId()); ?>');"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/viewmag+.png" border="0" align="absmiddle"><b><?php putGS("Show article"); ?></b></a>
+                </td>
+            </tr>
+            <tr style="display: none;" id="article_<?php p($comment->getMessageId()); ?>">
+                <td>
+                    <a href="javascript:void(0);" onclick="HideElement('article_<?php p($comment->getMessageId()); ?>'); ShowElement('article_closed_<?php p($comment->getMessageId()); ?>');"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/viewmag-.png" border="0" align="absmiddle"><b><?php putGS("Hide article"); ?></b></a><br>
+                    <table bgcolor="#EFEFEF" style="margin: 10px; border: 1px solid #777;" width="100%" cellpadding="0" cellspacing="0">
+                    <?php
+                        $articleData = $article->getArticleData();
+                        // Get article type fields.
+                        $dbColumns = $articleData->getUserDefinedColumns();
+                        foreach ($dbColumns as $dbColumn) {
+                            ?>
+                            <tr>
+                                <td valign="top" align="left" style="padding: 5px;"><b><?php echo htmlspecialchars($dbColumn->getDisplayName(0)); ?>:</b> </td>
+                            </tr>
+
+                            <tr>
+                                <td  style="border-bottom: 1px solid #777; padding: 10px;"><?php print $articleData->getProperty($dbColumn->getName()); ?>
+                            </tr>
+                            <?php
+                        }
+                    ?>
+                    </table>
+                 </td>
+            </tr>
+            </table>
+            <!-- END table with article content -->
 
             <!-- BEGIN table with comment content -->
             <table BORDER="0" CELLSPACING="1" CELLPADDING="3">
@@ -243,7 +291,7 @@ function onCommentAction(p_type, p_commentId)
             <?php } ?>
         </table>
         <!-- END table containing comment controls+content -->
-
+        <br>
     </td>
     </tr>
     </table>

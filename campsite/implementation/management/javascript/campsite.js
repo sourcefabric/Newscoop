@@ -44,6 +44,16 @@ function ShowElement(id)
 
 
 /**
+ * Given the ID of an HTML element, make it invisible.
+ */
+function HideElement(id)
+{
+	document.getElementById(id).style.display = "none";
+	return true;
+}
+
+
+/**
  * Given an array of element IDs, make all of the
  * elements invisible.
  *
@@ -71,4 +81,3 @@ function ShowAll(p_array)
 	}
 	return true;
 }
-

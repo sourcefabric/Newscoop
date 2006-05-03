@@ -327,7 +327,7 @@ class Phorum_message extends DatabaseObject {
 	 */
 	function getMessageId()
 	{
-		return $this->getProperty('message_id');
+		return $this->m_data['message_id'];
 	} // fn getMessageId
 
 
@@ -338,7 +338,7 @@ class Phorum_message extends DatabaseObject {
 	 */
 	function getForumId()
 	{
-		return $this->getProperty('forum_id');
+		return $this->m_data['forum_id'];
 	} // fn getForumId
 
 
@@ -352,7 +352,7 @@ class Phorum_message extends DatabaseObject {
 	 */
 	function getThreadId()
 	{
-		return $this->getProperty('thread');
+		return $this->m_data['thread'];
 	} // fn getThreadId
 
 
@@ -364,7 +364,7 @@ class Phorum_message extends DatabaseObject {
 	 */
 	function getParentId()
 	{
-	    return $this->getProperty('parent_id');
+	    return $this->m_data['parent_id'];
 	} // fn getParentId
 
 
@@ -375,7 +375,7 @@ class Phorum_message extends DatabaseObject {
 	 */
 	function getSubject()
 	{
-		return $this->getProperty('subject');
+		return $this->m_data['subject'];
 	} // fn getSubject
 
 
@@ -398,7 +398,7 @@ class Phorum_message extends DatabaseObject {
 	 */
 	function getBody()
 	{
-		return $this->getProperty('body');
+		return $this->m_data['body'];
 	} // fn getBody
 
 
@@ -421,7 +421,7 @@ class Phorum_message extends DatabaseObject {
 	 */
 	function getIpAddress()
 	{
-		return $this->getProperty('ip');
+		return $this->m_data['ip'];
 	} // fn getIpAddress
 
 
@@ -432,7 +432,7 @@ class Phorum_message extends DatabaseObject {
 	 */
 	function getAuthor()
 	{
-	    return $this->getProperty('author');
+	    return $this->m_data['author'];
 	} // fn getAuthor
 
 
@@ -443,7 +443,7 @@ class Phorum_message extends DatabaseObject {
 	 */
 	function getEmail()
 	{
-	    return $this->getProperty('email');
+	    return $this->m_data['email'];
 	} // fn getEmail
 
 
@@ -459,7 +459,7 @@ class Phorum_message extends DatabaseObject {
 	 */
 	function getStatus()
 	{
-		return $this->getProperty('status');
+		return $this->m_data['status'];
 	} // fn getStatus
 
 
@@ -494,7 +494,7 @@ class Phorum_message extends DatabaseObject {
 	 */
 	function getLastModified()
 	{
-		return $this->getProperty('modifystamp');
+		return $this->m_data['modifystamp'];
 	} // fn getLastModified
 
 
@@ -505,7 +505,7 @@ class Phorum_message extends DatabaseObject {
 	 */
 	function getNumViews()
 	{
-		return $this->getProperty('viewcount');
+		return $this->m_data['viewcount'];
 	} // fn getNumViews
 
 
@@ -517,7 +517,7 @@ class Phorum_message extends DatabaseObject {
 	 */
 	function getNumMessagesInThread()
 	{
-		return $this->getProperty('thread_count');
+		return $this->m_data['thread_count'];
 	} // fn getNumMessagesInThread
 
 
@@ -528,7 +528,7 @@ class Phorum_message extends DatabaseObject {
 	 */
 	function getUserId()
 	{
-		return $this->getProperty('userid');
+		return $this->m_data['userid'];
 	} // fn getUserId
 
 
@@ -539,7 +539,7 @@ class Phorum_message extends DatabaseObject {
 	 */
 	function isModeratorPost()
 	{
-		return $this->getProperty('moderator_post');
+		return $this->m_data['moderator_post'];
 	} // fn isModeratorPost
 
 
@@ -563,7 +563,7 @@ class Phorum_message extends DatabaseObject {
 	 */
 	function isClosed()
 	{
-		return $this->getProperty('closed');
+		return $this->m_data['closed'];
 	} // fn isClosed
 
 
@@ -578,7 +578,7 @@ class Phorum_message extends DatabaseObject {
         					  $this->m_data['forum_id'],
 	       					  $this->m_data["thread"],
 	       					  PHORUM_SUBSCRIPTION_MESSAGE);
-	}
+	} // fn subscribeToThread
 
 
 	/**
