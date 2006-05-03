@@ -423,7 +423,7 @@ foreach ($articles as $languageArray) {
 			</TD>
 
 			<TD <?php if ($bad) { ?>style="background-color: #FFD4E4; border-right: 3px solid #AF2041;"<?php } ?>>
-				<B><?php p(htmlspecialchars($article->getType())); ?></B>
+				<B><?php p(htmlspecialchars($article->getTranslateType())); ?></B>
 			</TD>
 
 		</TR>

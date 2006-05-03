@@ -457,7 +457,7 @@ foreach ($allArticles as $articleObj) {
 		?>
 
 		<TD ALIGN="RIGHT">
-			<?php p(htmlspecialchars($articleObj->getType()));  ?>
+			<?php p(htmlspecialchars($articleObj->getTranslateType()));  ?>
 		</TD>
 
 		<TD ALIGN="RIGHT">
