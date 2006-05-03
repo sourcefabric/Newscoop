@@ -224,9 +224,9 @@ class ArticleType {
 
 		if ($changed) {
 			if (function_exists("camp_load_language")) { camp_load_language("api");	}
-			$logtext = getGS('Type $1 updated', $this->m_dbTableName.": (".$oldValue. " -> ".$p_value .")");
+			$logtext = getGS('Type $1 updated: updated translation for ', $this->m_dbTableName);
 			Log::Message($logtext, null, 143);		
-			ParserCom::SendMessage('article_types', 'modify', array('article_type' => $this->m_dbTableName));
+			ParserCom::SendMessage('article_types', 'modify', array('article_type' => $this->m_name));
 		}
 		return $changed;
 	} // fn setName
