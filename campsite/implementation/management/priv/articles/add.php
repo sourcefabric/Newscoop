@@ -134,6 +134,8 @@ if (sizeof($allArticleTypes) == 0) {
 				<option></option>
 				<?php 
 				foreach ($allArticleTypes as $tmpType) {
+					$tmpAT =& new ArticleType($tmpType);
+					$tmpType = $tmpAT->getDisplayName(0);
 					camp_html_select_option($tmpType, $f_article_type, $tmpType);
 				}
 				?>
