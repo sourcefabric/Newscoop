@@ -88,9 +88,14 @@ if ($f_unlock === false) {
 		// Lock the article
 		$articleObj->setIsLocked(true, $User->getUserId());
     }
-}
-else {
+} else {
 	$f_edit_mode = "view";
+}
+
+// Automatically unlock the article is the user goes into VIEW mode
+if ( ($f_edit_mode == "view") && $articleObj->isLocked()) {
+    $articleObj->setIsLocked(false);
+	$locked = false;
 }
 
 // If the article is locked by the current user, OK to edit.
