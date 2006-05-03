@@ -522,7 +522,7 @@ class ArticleTypeField {
 
 		if ($changed) {
 			if (function_exists("camp_load_language")) { camp_load_language("api");	}
-			$logtext = getGS('Field $1 updated', $this->m_dbColumnName.": (".$oldValue. " -> ".$p_value .")");
+			$logtext = getGS('Field $1 updated', $this->m_dbColumnName);
 			Log::Message($logtext, null, 143);		
 			//ParserCom::SendMessage('article_types', 'modify', array('article_type' => $this->m_name));
 		}
