@@ -538,11 +538,14 @@ class ArticleTypeField {
 	 */
 	function getNextOrder() 
 	{
+		$next = 1;
 		global $g_ado_db;
 		$queryStr = "SELECT field_weight FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' AND field_name != 'NULL' ORDER BY field_weight DESC LIMIT 1";
 		$row = $g_ado_db->getRow($queryStr);
-		if ($row['field_weight'] == 0) $next = 1;
-		else $next = $row['field_weight'] + 1;
+		if (isset($row['field_weight'])) {
+			if ($row['field_weight'] == 0) $next = 1;
+			else $next = $row['field_weight'] + 1;
+		}
 		return ($next);
 	} // fn getNextOrder
 
