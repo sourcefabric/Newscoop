@@ -941,6 +941,18 @@ class Article extends DatabaseObject {
 		return $this->getProperty('Type');
 	} // fn getType
 
+	
+	/**
+	 * Get the logged in language's translation of the article type.
+	 * @return string
+	 */
+	function getTranslateType() 
+	{
+		$type = $this->getType();
+		$typeObj =& new ArticleType($type);
+		return $typeObj->getDisplayName(0);	
+	}
+
 
 	/**
 	 * Return the user ID of the user who created this article.
