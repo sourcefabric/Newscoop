@@ -35,14 +35,15 @@ echo camp_html_breadcrumbs($crumbs);
 <FORM NAME="dialog" METHOD="POST" ACTION="do_add.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 <TR>
-	<TD COLSPAN="6">
+	<TD COLSPAN="2">
 		<B><?php putGS("Add new article type"); ?></B>
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
 </TR>
+<TR><TD COLSPAN="2">The name field may only contain letters and the underscore (_) character.<BR>
+</TD></TR>
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
-	<TD COLSPAN="4">
-	The name field may only contain letters and the underscore (_) character.<BR>
+	<TD ALIGN="LEFT" ><?php  putGS("Name"); ?>:</TD>
+	<TD>
 	<INPUT TYPE="TEXT" class="input_text" NAME="f_name" ALT="alnum|1|A|0|0|_" emsg="<?php putGS("The name field may only contain letters and the underscore (_) character."); ?>" SIZE="15" MAXLENGTH="15">
 	</TD>
 </TR>
