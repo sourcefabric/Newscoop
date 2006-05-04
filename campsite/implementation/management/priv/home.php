@@ -189,7 +189,7 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 			</TD>
 
 			<td align="center" valign="top">
-				<?php p(htmlspecialchars($tmpArticle->getType())); ?>
+				<?php p(htmlspecialchars($tmpArticle->getTranslateType())); ?>
 			</td>
 
 			<td>
