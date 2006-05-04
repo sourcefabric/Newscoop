@@ -34,14 +34,11 @@ if (empty($f_field_translation_name)) {
 	$correct = false; 
 	$errorMsgs[] = getGS('You must fill in the $1 field.','<B>'.getGS('Name').'</B>'); 
 }
+
 if ($f_field_language_id <= 0) {
 	$correct = false; 
 	$errorMsgs[] = getGS('You must choose a language for the field.'); 
 }
-
-$correct = true;
-$created = false;
-$errorMsgs = array();
 
 if ($correct) {
 	// Translate existing type
