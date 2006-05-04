@@ -56,29 +56,28 @@ class ArticleData extends DatabaseObject {
 
 
 	/**
+	 * Gets the translation for a given language; default language is the
+	 * session language.  If no translation is set for that language, we
+	 * return the dbTableName.
+     *
+	 * @param int p_lang
 	 *
-	 * Gets the display name of a type; this is based on the native language -- and if no native language translation is available
-	 * we use dbTableName
-	 *
-	 * @param boolean p_langBrackets 
+	 * @return string
 	 */
-	function getDisplayName($p_langBrackets = 1) 
+	function getDisplayName($p_lang = 0) 
 	{
-		global $_REQUEST;
-		$loginLanguageId = 0;
-		$loginLanguage = Language::GetLanguages(null, $_REQUEST['TOL_Language']);
-		if (is_array($loginLanguage)) {
-			$loginLanguage = array_pop($loginLanguage);
-			$loginLanguageId = $loginLanguage->getLanguageId();
+		if (!$p_lang) {
+			$lang = camp_session_get('LoginLanguageId', 1);
+		} else {
+			$lang = $p_lang;
 		}
-
-		$articleObj =& new ArticleType($this->m_articleTypeName);
-		$translations = $articleObj->getTranslations();
-		if (!isset($translations[$loginLanguageId])) return $this->m_articleTypeName;
-		if ($p_langBrackets) return $translations[$loginLanguageId] .' ('. $loginLanguage->getCode() .')';
-		return $translations[$loginLanguageId];
+		
+		$translations = $this->getTranslations();
+		if (!isset($translations[$lang])) return substr($this->getTableName(), 1);
+		return $translations[$lang];
 
 	} // fn getDisplayName
+
 
 	/**
 	 * Copy the row in the database.

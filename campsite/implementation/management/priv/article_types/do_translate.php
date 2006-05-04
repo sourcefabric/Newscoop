@@ -30,14 +30,11 @@ $created = false;
 
 $errorMsgs = array();
 
+
 if ($f_type_language_id <= 0) {
 	$correct = false; 
-	$errorMsgs[] = getGS('You must choose a language for the topic.'); 
+	$errorMsgs[] = getGS('You must choose a language for the article type.'); 
 }
-
-$correct = true;
-$created = false;
-$errorMsgs = array();
 
 if ($correct) {
 	// Translate existing type
@@ -82,7 +79,7 @@ echo camp_html_breadcrumbs($crumbs);
 <TR>
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">
-	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/article_types/add.php'">
+	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/article_types/'">
 	</DIV>
 	</TD>
 </TR>

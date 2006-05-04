@@ -111,7 +111,7 @@ foreach ($articleTypes as $articleType) {
 	</TD>
 	
 	<TD>
-		<?php  print $currentArticleType->getDisplayName(); ?>&nbsp;
+		<?php  print $currentArticleType->getDisplayName(); ?> <?php print $currentArticleType->getDisplayNameLanguageCode(); ?>&nbsp;
 	</TD>
 	
 	<td> 

@@ -950,7 +950,7 @@ class Article extends DatabaseObject {
 	{
 		$type = $this->getType();
 		$typeObj =& new ArticleType($type);
-		return $typeObj->getDisplayName(0);	
+		return $typeObj->getDisplayName();	
 	}
 
 

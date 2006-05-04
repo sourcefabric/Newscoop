@@ -167,10 +167,27 @@ class ArticleType {
 	function translationExists($p_languageId) 
 	{
 		global $g_ado_db;
-		$sql = "SELECT atm.*, t.* FROM ArticleTypeMetadata atm, Translations t WHERE atm.type_name='". $this->m_dbTableName ."' AND atm.fk_phrase_id = t.phrase_id AND t.fk_language_id = '$p_languageId'"; 		
+		$sql = "SELECT atm.*, t.* FROM ArticleTypeMetadata atm, Translations t WHERE atm.type_name='". $this->m_dbTableName ."' AND atm.field_name='NULL' AND atm.fk_phrase_id = t.phrase_id AND t.fk_language_id = '$p_languageId'"; 		
 		$row = $g_ado_db->getAll($sql);
 		if (count($row)) return $row[0]['fk_phrase_id'];
 		else { return 0; }
+
+		
+/*
+		global $g_ado_db;
+		//$sql = "SELECT atm.*, t.* FROM ArticleTypeMetadata atm, Translations t WHERE atm.type_name='". $this->m_dbTableName ."' AND atm.fk_phrase_id = t.phrase_id AND t.fk_language_id = '$p_languageId'"; 		
+		$sql = "SELECT fk_phrase_id FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' AND field_name='NULL'";
+		$row = $g_ado_db->getAll($sql);
+		// if it is 'NULL' then return 0
+		if (!is_numeric($row[0]['fk_phrase_id'])) return 0;
+		// now check to see if they have a translation in the given language
+		$sql = "SELECT phrase_id FROM Translations WHERE fk_language_id=". $p_languageId ." AND phrase_id=". $row[0]['fk_phrase_id'];
+		$row = $g_ado_db->getAll($sql);
+		if (!empty($row[0]['phrase_id'])) 
+			return $row[0]['phrase_id'];
+		else 
+			return 0;
+*/
 	} // fn translationExists
 
 
@@ -186,9 +203,10 @@ class ArticleType {
 	function setName($p_languageId, $p_value) 
 	{
 		global $g_ado_db;
-		if (!is_numeric($p_languageId)) {
+		if (!is_numeric($p_languageId) || $p_languageId == 0) {
 			return false;
 		}
+
 		// if the string is empty, nuke it		
 		if (!is_string($p_value) || $p_value == '') {
 			if ($phrase_id = $this->translationExists($p_languageId)) {
@@ -205,20 +223,23 @@ class ArticleType {
 			// Insert the new translation.
 			// first get the fk_phrase_id 
 			$sql = "SELECT fk_phrase_id FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' AND field_name='NULL'";
-			$row = $g_ado_db->GetRow($sql);
+			$row = $g_ado_db->GetOne($sql);
+
 			// if this is the first translation ...
-			if (!is_numeric($row['fk_phrase_id'])) {
+			if (!is_numeric($row)) {
 				$description =& new Translation($p_languageId);
 				$description->create($p_value);
 				$phrase_id = $description->getPhraseId();
 				// if the phrase_id isn't there, insert it.
 				$sql = "UPDATE ArticleTypeMetadata SET fk_phrase_id=".$phrase_id ." WHERE type_name='". $this->m_dbTableName ."' AND field_name='NULL'";
-				$changed = $g_ado_db->Execute($sql);			
+				$changed = $g_ado_db->Execute($sql);		
+					
 			} else { 
 				// if the phrase is already translated into atleast one language, just reuse that fk_phrase_id
-				$desc =& new Translation($p_languageId, $row['fk_phrase_id']);
+				$desc =& new Translation($p_languageId, $row);
 				$desc->create($p_value);
 				$changed = true; 
+				
 			}
 		}
 
@@ -379,26 +400,46 @@ class ArticleType {
 
 
 	/**
-	* Gets the display name of a type; this is based on the native language -- and if no native language translation is available
-	* we use dbTableName.
-	*
-	* @param boolean p_langBrackets (Whether to display as Translation (en) or just Translation.
-	*
-	* @return string
-	**/
-	function getDisplayName($p_langBrackets = 1) 
+	 * Gets the language code of the current translation language; or none
+	 * if there is no translation.
+	 *
+	 * @param int p_lang
+	 *
+	 * @return string
+	 */
+	function getDisplayNameLanguageCode($p_lang = 0) 
 	{
-		global $_REQUEST;
-		$loginLanguageId = 0;
-		$loginLanguage = Language::GetLanguages(null, $_REQUEST['TOL_Language']);
-		if (is_array($loginLanguage)) {
-			$loginLanguage = array_pop($loginLanguage);
-			$loginLanguageId = $loginLanguage->getLanguageId();
+		if (!$p_lang) {
+			$lang = camp_session_get('LoginLanguageId', 1);
+		} else {
+			$lang = $p_lang;
 		}
+		$languageObj =& new Language($lang);
 		$translations = $this->getTranslations();
-		if (!isset($translations[$loginLanguageId])) return substr($this->getTableName(), 1);
-		if ($p_langBrackets) return $translations[$loginLanguageId] .' ('. $loginLanguage->getCode() .')';
-		return $translations[$loginLanguageId];
+		if (!isset($translations[$lang])) return '';
+		return '('. $languageObj->getCode() .')';
+	} // fn getDisplayNameLanguageCode
+
+	/**
+	 * Gets the translation for a given language; default language is the
+	 * session language.  If no translation is set for that language, we
+	 * return the dbTableName.
+     *
+	 * @param int p_lang
+	 *
+	 * @return string
+	 */
+	function getDisplayName($p_lang = 0) 
+	{   
+		if (!$p_lang) {
+			$lang = camp_session_get('LoginLanguageId', 1);
+		} else {
+			$lang = $p_lang;
+		}
+		
+		$translations = $this->getTranslations();
+		if (!isset($translations[$lang])) return substr($this->getTableName(), 1);
+		return $translations[$lang];
 
 	} // fn getDisplayName
 	

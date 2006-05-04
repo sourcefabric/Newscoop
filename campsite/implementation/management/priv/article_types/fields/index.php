@@ -125,7 +125,7 @@ foreach ($fields as $field) {
 	</TD>
 
 	<TD>
-		<?php print htmlspecialchars($field->getDisplayName()); ?>
+		<?php print htmlspecialchars($field->getDisplayName()); ?> <?php print htmlspecialchars($field->getDisplayNameLanguageCode()); ?>
 	</TD>
 	
 	<td> 

@@ -367,29 +367,48 @@ class ArticleTypeField {
 
 
 	/**
-	 * 
-	 * Returns the name of the field.  If a translation in the logged in langauge is available, use that; if not use
-	 * the getPrintName() version of the name.  By default, it displays the translated name as EnglishName (en).  If
-	 * you supply a 0 as the argument, it will disable this.
+	 * Gets the language code of the current translation language; or none
+	 * if there is no translation.
 	 *
-	 * @param int p_langBracket
+	 * @param int p_lang
 	 *
 	 * @return string
 	 */
-	function getDisplayName($p_langBracket = 1) 
+	function getDisplayNameLanguageCode($p_lang = 0) 
 	{
-		global $_REQUEST;
-		$loginLanguageId = 0;
-		$loginLanguage = Language::GetLanguages(null, $_REQUEST['TOL_Language']);
-		if (is_array($loginLanguage)) {
-			$loginLanguage = array_pop($loginLanguage);
-			$loginLanguageId = $loginLanguage->getLanguageId();
+		if (!$p_lang) {
+			$lang = camp_session_get('LoginLanguageId', 1);
+		} else {
+			$lang = $p_lang;
 		}
+		$languageObj =& new Language($lang);
 		$translations = $this->getTranslations();
-		if (!isset($translations[$loginLanguageId])) return $this->getPrintName();
-		if ($p_langBracket == 1) return $translations[$loginLanguageId] .' ('. $loginLanguage->getCode() .')';
-		return $translations[$loginLanguageId];
-	}
+		if (!isset($translations[$lang])) return '';
+		return '('. $languageObj->getCode() .')';
+	} // fn getDisplayNameLanguageCode
+
+
+	/**
+	 * Gets the translation for a given language; default language is the
+	 * session language.  If no translation is set for that language, we
+	 * return the dbTableName.
+     *
+	 * @param int p_lang
+	 *
+	 * @return string
+	 */
+	function getDisplayName($p_lang = 0) 
+	{
+		if (!$p_lang) {
+			$lang = camp_session_get('LoginLanguageId', 1);
+		} else {
+			$lang = $p_lang;
+		}
+
+		$translations = $this->getTranslations();
+		if (!isset($translations[$lang])) return substr($this->Field, 1);
+		return $translations[$lang];
+	} // fn getDisplayName
 
 
 	/**
