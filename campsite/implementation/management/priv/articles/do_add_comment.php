@@ -38,7 +38,9 @@ if (!$forumId) {
 }
 if (!$forum->exists()) {
     $forum->create();
+    $forum->setName($publicationObj->getName());
     $publicationObj->setForumId($forum->getForumId());
+    $forumId = $forum->getForumId();
 }
 
 // Check if this article already has a thread
