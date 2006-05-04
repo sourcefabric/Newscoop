@@ -22,8 +22,15 @@ if (!$User->hasPermission('ManageArticleTypes')) {
 $f_src = trim(Input::get('f_src'));
 $f_dest = trim(Input::get('f_dest'));
 $f_ok = trim(Input::get('Ok'));
+$dest =& new ArticleType($f_dest);
+$src =& new ArticleType($f_src);
+
 if (ereg('Back to Step 2', $f_ok)) {
-	header("Location: /$ADMIN/article_types/merge2.php?f_src=$f_src&f_dest=$f_dest");
+	$string = "";
+	foreach ($dest->m_dbColumns as $destColumn) {
+		$string .= "&f_src_". $destColumn->getName() ."=". trim(Input::get('f_src_'. $destColumn->getName()));
+		}
+	header("Location: /$ADMIN/article_types/merge2.php?f_src=$f_src&f_dest=$f_dest". $string);
 	exit;
 }	
 

@@ -22,6 +22,12 @@ $f_dest = trim(Input::get('f_dest'));
 $src =& new ArticleType($f_src);
 $dest =& new ArticleType($f_dest);
 
+$tmp = Input::get('f_src_Fe');
+foreach ($dest->m_dbColumns as $destColumn) {
+	$f_src_c[$destColumn->getName()] = trim(Input::get('f_src_'. $destColumn->getName()));
+}
+$srcNumArticles = $src->getNumArticles();
+
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
 $crumbs[] = array(getGS("Article Types"), "/$ADMIN/article_types/");
@@ -44,20 +50,23 @@ echo camp_html_breadcrumbs($crumbs);
 	<TD>Destination Article Type: <?php print $dest->getDisplayName(); ?>
 	</TD>
 </TR>
-<?php foreach ($dest->m_dbColumns as $columnName) { ?>
-<TR><TD><SELECT NAME="f_src_<?php print $columnName->getName(); ?>">
-		<?php foreach ($src->m_dbColumns as $srcColumnName) { ?>
-			<OPTION><?php print $srcColumnName->getDisplayName(); ?></OPTION>
+<?php foreach ($dest->m_dbColumns as $destColumn) { ?>
+<TR><TD><SELECT NAME="f_src_<?php print $destColumn->getName(); ?>">
+		<?php foreach ($src->m_dbColumns as $srcColumn) { ?>
+			<OPTION <?php if ($f_src_c[$destColumn->getName()] == $srcColumn->getPrintName()) { print "SELECTED"; } ?>><?php print $srcColumn->getDisplayName(); ?></OPTION>
 		<?php } ?>
+			<OPTION <?php if ($f_src_c[$destColumn->getName()] == '--None--') { print "SELECTED"; } ?>>--None--</OPTION>
 		</SELECT>
 	</TD>
-	<TD>= <?php print $columnName->getDisplayName(); ?></TD>
+	<TD>= <?php print $destColumn->getDisplayName(); ?></TD>
 </TR>
 <?php } ?>
 
 <TR>	
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">
+	<INPUT TYPE="hidden" NAME="f_src" VALUE="<?php print $f_src; ?>">
+	<INPUT TYPE="hidden" NAME="f_dest" VALUE="<?php print $f_dest; ?>">
 	<INPUT TYPE="submit" class="button" NAME="Ok" VALUE="<?php  putGS('Back to Step 1'); ?>">
 	<INPUT TYPE="submit" class="button" NAME="Ok" VALUE="<?php  putGS('Go to Step 3'); ?>">
 	</DIV>

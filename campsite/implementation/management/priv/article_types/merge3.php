@@ -25,14 +25,28 @@ if (ereg('Back to Step 1', $f_ok)) {
 	exit;
 }	
 
+$f_cur_preview = trim(Input::get('f_cur_preview', 'int', -1)); // The currently previewed article
+$f_action = trim(Input::get('f_preview_action', 'string', 'NULL')); // Preview actions: either NEXT, PREV, ORIG
+$f_cur_lang = trim(Input::get('f_cur_lang', 'int', -1));
+
+// TODO set the defaults to the first article
+// look into f_cur_lang
+if ($f_cur_preview == -1)
+	$f_cur_preview = 0;
+if ($f_cur_lang == -1)  
+	$f_cur_lang = 1;
+
+if ($f_action == 'Next') { $f_cur_preview++; }
+if ($f_action == 'Prev') { $f_cur_preview--; }
+if ($f_action == 'Orig') {
+	$curPreview =& new Article($f_cur_lang, $f_cur_preview); 
+} else { $curPreview =& new Article($f_cur_lang, $f_cur_preview); }
+
 $src =& new ArticleType($f_src);
 $dest =& new ArticleType($f_dest);
 
-foreach ($dest->m_dbColumns as $columnName) { 
-	
-
-
-
+foreach ($dest->m_dbColumns as $destColumn) {
+	$f_src_c[$destColumn->getName()] = trim(Input::get('f_src_'. $destColumn->getName()));
 }
 
 
@@ -53,48 +67,74 @@ echo camp_html_breadcrumbs($crumbs);
 	<TD COLSPAN="2">
 	<b>Merge configuration for merging <?php print $src->getDisplayName(); ?> into <?php print $dest->getDisplayName(); ?>.</b><BR>
 	<UL>
-	<LI><FONT COLOR="GREEN">Merging Field1 into Intro</FONT>
-	<LI><FONT COLOR="GREEN">Merging Field2 into Body</FONT>
-	<LI><FONT COLOR="YELLOW">Merging NOTHING into Bibliography (NULL MERGE WARNING)</FONT>
-	<LI><FONT COLOR="YELLOW">Merging MyCaption into caption_small (DUPLICATE WARNING)</FONT>
-	<LI><FONT COLOR="YELLOW">Merging MyCaption into caption_lg (DUPLICATE WARNING)</FONT>
-	<LI><FONT COLOR="RED">! Do NOT merge Field3</FONT>
-	<LI><FONT COLOR="RED">! Do NOT merge Field4</FONT>
+	<?php
+	foreach ($f_src_c as $destColumn => $srcColumn) {
+		$tmp = array_keys($f_src_c, $srcColumn);
+
+		if ($srcColumn == '--None--') { 
+			print "<LI><FONT COLOR=\"TAN\">Merge <b>NOTHING</b> into <b>$destColumn</b> (Null merge warning.).</FONT></LI>";
+		} else if (count($tmp) > 1) {
+			print "<LI><FONT COLOR=\"TAN\">Merge <b>$srcColumn</b> into <b>$destColumn</b></FONT> (Duplicate warning.)</FONT></LI>";
+		} else {
+			print "<LI><FONT COLOR=\"GREEN\">Merge <b>$srcColumn</b> into <b>$destColumn</b>.</FONT></LI>";
+		}
+
+	} ?>
+
+
+	<?php 
+	// do the warning if they select NONE in red
+	foreach ($src->m_dbColumns as $srcColumn) {
+		if (!in_array($srcColumn->getPrintName(), $f_src_c)) 
+			print "<LI><FONT COLOR=\"RED\">(!) Do <B>NOT</B> merge <b>". $srcColumn->getPrintName() ."</b> (No merge warning.)</FONT></LI>"; 
+	} ?>
 	</UL>	
 	</TD>
 	
 </TR>
 <TR>
 	<TD COLSPAN="2">
-	<B>Preview a sample of the merge configuration.</B><BR>
-	Cycle through your articles to verify that the merge configuration is correct.
+	<B>Preview a sample of the merge configuration.</B> <SMALL>(Cycle through your articles to verify that the merge configuration is correct.)</SMALL>
 	</TD>
 </TR>
 
 <TR>
 	<TD COLSPAN="2">
 	<B>Preview of HellowWorld.doc (<A HREF="#">View the source (<?php print $src->getDisplayName(); ?>) version of HellowWorld.doc.</A>). 
-	1 of 213. 
+	1 of <?php print $src->getNumArticles(); ?>. 
 	<IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/previous.png" BORDER="0">&nbsp;
 	<IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/next.png" BORDER="0">
 	</TD>
 </TR>
 <TR>
 	<TD COLSPAN="2">
+	<TABLE BORDER="1"><TR><TD>
+	<DIV>
 	BLAH BLAH BLAH (PREVIEW OF ARTICLE HERE)
+	
+	</DIV>
+	</TD></TR></TABLE>
 	</TD>
 </TR>
 
 <TR>
 	<TD>
-	<INPUT TYPE="CHECKBOX" NAME="f_del_src"> Delete the source article type (<?php print $src->getDisplayName(); ?>) when finished.
+	<INPUT TYPE="CHECKBOX" NAME="f_del_src">Delete the source article type (<?php print $src->getDisplayName(); ?>) when finished.
 	</TD>
 	<TD>
-	Will merge 203 articles.
+	<b>Clicking "Merge" will merge <?php print $src->getNumArticles(); ?> articles.</b>
 	</TD>
 <TR>	
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">
+	
+	<?php foreach ($dest->m_dbColumns as $destColumn) { ?>
+	<INPUT TYPE="HIDDEN" NAME="f_src_<?php print $destColumn->getName(); ?>" VALUE="<?php print $f_src_c[$destColumn->getName()]; ?>">
+	<?php } ?>
+
+	<INPUT TYPE="HIDDEN" NAME="f_cur_lang" VALUE="<?php $curPreview->getLanguage(); ?>">
+	<INPUT TYPE="HIDDEN" NAME="f_cur_preview" VALUE="<?php $curPreview->getArticleId(); ?>">
+	
 	<INPUT TYPE="submit" class="button" NAME="Ok" VALUE="<?php  putGS('Back to Step 2'); ?>">
 	<INPUT TYPE="submit" class="button" NAME="Ok" VALUE="<?php  putGS('Merge!'); ?>">
 	</DIV>
