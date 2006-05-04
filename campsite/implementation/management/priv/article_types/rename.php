@@ -38,14 +38,14 @@ echo camp_html_breadcrumbs($crumbs);
 <INPUT TYPE="hidden" VALUE="<?php p($f_name); ?>" NAME="f_oldName">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 <TR>
-	<TD COLSPAN="6">
+	<TD COLSPAN="2">
 		<B><?php putGS("Rename article type"); ?></B>
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
 </TR>
+<TR><TD COLSPAN="2">You may only use letters or the underscore (_) for a name.</TD></TR>
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
-	<TD COLSPAN="5">
-	You may only use letters or the underscore (_) for a name.<BR>
+	<TD ALIGN="LEFT" ><?php  putGS("Name"); ?>:</TD>
+	<TD ALIGN="LEFT">
 	<INPUT TYPE="TEXT" VALUE="<?php p($f_name); ?>" class="input_text" NAME="f_name" ALT="alnum|1|A|false|false|_" emsg="<?php putGS("The name field may only contain letters and the underscore (_) character."); ?>" SIZE="15" MAXLENGTH="15">
 	</TD>
 </TR>
