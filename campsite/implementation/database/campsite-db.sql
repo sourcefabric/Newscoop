@@ -145,7 +145,7 @@ CREATE TABLE `Articles` (
   `LockTime` datetime NOT NULL default '0000-00-00 00:00:00',
   `ShortName` varchar(32) NOT NULL default '',
   `ArticleOrder` int(10) unsigned NOT NULL default '0',
-  `time_updated` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  `time_updated` timestamp NOT NULL,
   PRIMARY KEY  (`IdPublication`,`NrIssue`,`NrSection`,`Number`,`IdLanguage`),
   UNIQUE KEY `IdPublication` (`IdPublication`,`NrIssue`,`NrSection`,`IdLanguage`,`Name`),
   UNIQUE KEY `Number` (`Number`,`IdLanguage`),
@@ -847,8 +847,8 @@ INSERT INTO `Users` (`Id`, `KeyId`, `Name`, `UName`, `Password`, `EMail`, `Reade
 --
 DROP TABLE IF EXISTS `ArticleTypeMetadata`;
 CREATE TABLE `ArticleTypeMetadata` (
-    `type_name` VARCHAR(255) NOT NULL,
-    `field_name` VARCHAR(255) NOT NULL DEFAULT 'NULL',
+    `type_name` VARCHAR(250) NOT NULL,
+    `field_name` VARCHAR(250) NOT NULL DEFAULT 'NULL',
     `field_weight` INT,
     `is_hidden` INT DEFAULT 0,
     `fk_phrase_id` INT UNSIGNED,
