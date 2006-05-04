@@ -1,8 +1,8 @@
 -- For new Article type features - ability
 -- to rename, translate, reorder, and hide them.
 CREATE TABLE ArticleTypeMetadata (
-    type_name VARCHAR(255) NOT NULL,
-    field_name VARCHAR(255) NOT NULL DEFAULT 'NULL',
+    type_name VARCHAR(250) NOT NULL,
+    field_name VARCHAR(250) NOT NULL DEFAULT 'NULL',
     field_weight INT,
     is_hidden INT DEFAULT 0,
     fk_phrase_id INT UNSIGNED,
