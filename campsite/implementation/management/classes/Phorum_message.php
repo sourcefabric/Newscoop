@@ -293,11 +293,11 @@ class Phorum_message extends DatabaseObject {
 
             // Updates to the first thread message.
 	        $threadBeginMessage["thread_count"] = $thread_count;
-	        $threadBeginMessage["modifystamp"] = $recent_message["datestamp"];
-	        $threadBeginMessage["meta"] = $parent_message["meta"];
-	        $threadBeginMessage["meta"]["recent_post"]["user_id"] = $recent_message["user_id"];
-	        $threadBeginMessage["meta"]["recent_post"]["author"] = $recent_message["author"];
-	        $threadBeginMessage["meta"]["recent_post"]["message_id"] = $recent_message["message_id"];
+	        $threadBeginMessage["modifystamp"] = $recent_message->m_data["datestamp"];
+	        $threadBeginMessage["meta"] = $parent_message->m_data["meta"];
+	        $threadBeginMessage["meta"]["recent_post"]["user_id"] = $recent_message->m_data["user_id"];
+	        $threadBeginMessage["meta"]["recent_post"]["author"] = $recent_message->m_data["author"];
+	        $threadBeginMessage["meta"]["recent_post"]["message_id"] = $recent_message->m_data["message_id"];
 	        $threadBeginMessage["meta"]["message_ids"] = $message_ids;
 
 	        // Used only for mods
