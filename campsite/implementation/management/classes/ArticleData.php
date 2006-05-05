@@ -71,9 +71,9 @@ class ArticleData extends DatabaseObject {
 		} else {
 			$lang = $p_lang;
 		}
-		
-		$translations = $this->getTranslations();
-		if (!isset($translations[$lang])) return substr($this->getTableName(), 1);
+		$aObj =& new ArticleType($this->m_dbTableName);
+		$translations = $aObj->getTranslations();
+		if (!isset($translations[$lang])) return substr($aObj->getTableName(), 1);
 		return $translations[$lang];
 
 	} // fn getDisplayName
