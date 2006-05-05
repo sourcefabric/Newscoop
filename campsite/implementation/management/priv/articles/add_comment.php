@@ -31,7 +31,7 @@ if (count($comments) <= 0) {
 
                 <tr>
                     <td align="right" valign="top" nowrap><?php putGS("Date:"); ?></td>
-                    <td><?php p(date("Y-m-d H:i:s", $comment->getLastModified())); ?></td>
+                    <td><?php p(date("Y-m-d H:i:s", $comment->getCreationDate())); ?></td>
                 </tr>
 
                 <tr>

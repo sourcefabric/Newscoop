@@ -8,26 +8,44 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
 class ArticleComment
 {
 
+    /**
+     * Get the comment ID for the given article.
+     *
+     * @param int $p_articleNumber
+     * @param int $p_languageId
+     * @return int
+     */
     function GetCommentThreadId($p_articleNumber, $p_languageId)
     {
         global $g_ado_db;
         $queryStr = "SELECT fk_comment_thread_id FROM ArticleComments"
                     ." WHERE fk_article_number=$p_articleNumber"
-                    ." AND fk_language_id=$p_languageId";
+                    ." AND fk_language_id=$p_languageId"
+                    ." AND is_first=1";
         $threadId = $g_ado_db->GetOne($queryStr);
         return $threadId;
     } // fn GetCommentThreadId
 
 
-    function Link($p_articleNumber, $p_languageId, $p_commentId)
+    /**
+     * Link the given article to the given comment.
+     *
+     * @param int $p_articleNumber
+     * @param int $p_languageId
+     * @param int $p_commentId
+     * @return void
+     */
+    function Link($p_articleNumber, $p_languageId, $p_commentId, $p_isFirstMessage = false)
     {
         global $g_ado_db;
+        $p_isFirstMessage = $p_isFirstMessage ? '1' : '0';
         $queryStr = "INSERT INTO ArticleComments "
                     ." SET fk_article_number=$p_articleNumber,"
                     ." fk_language_id=$p_languageId,"
-                    ." fk_comment_thread_id=$p_commentId";
+                    ." fk_comment_thread_id=$p_commentId,"
+                    ." is_first=$p_isFirstMessage";
         $g_ado_db->Execute($queryStr);
-    } // fn
+    } // fn Link
 
 
     /**

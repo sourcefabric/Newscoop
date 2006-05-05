@@ -1,4 +1,6 @@
 <?php
+// For phorum_email_moderators() and phorum_email_notice().
+//include_once("./include/email_functions.php");
 
 class Phorum_message extends DatabaseObject {
 	var $m_keyColumnNames = array('message_id');
@@ -94,7 +96,6 @@ class Phorum_message extends DatabaseObject {
 		$message['msgid'] = md5(uniqid(rand()));
 		$message['moderator_post'] = '0';
 		$message['datestamp'] = time();
-		$message['modifystamp'] = $message['datestamp'];
 
 		// Fetch the forum object -
 		// we need it for the config values.
@@ -488,14 +489,27 @@ class Phorum_message extends DatabaseObject {
 
 
 	/**
-	 * Get UNIX timestamp when the message was last modified.
+	 * Get UNIX timestamp when the thread was last modified.
+	 * Only useful for the first message in the thread.
 	 *
 	 * @return int
 	 */
-	function getLastModified()
+	function getThreadLastModified()
 	{
 		return $this->m_data['modifystamp'];
-	} // fn getLastModified
+	} // fn getThreadLastModified
+
+
+	/**
+	 * Get the date that the message was created as a
+	 * UNIX timestamp.
+	 *
+	 * @return int
+	 */
+	function getCreationDate()
+	{
+	    return $this->m_data['datestamp'];
+	} // fn getCreationDate
 
 
 	/**

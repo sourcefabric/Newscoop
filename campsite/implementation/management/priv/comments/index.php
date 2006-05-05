@@ -60,22 +60,25 @@ echo camp_html_breadcrumbs($crumbs);
 
 ?>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
-<table cellpadding="6" cellspacing="0" style="padding-top: 5px; padding-left: 10px;" border="0">
+<table cellpadding="6" cellspacing="0" style="padding-top: 5px;" border="0" width="100%">
 <tr>
-    <td style="<?php if ($f_comment_screen == "inbox") { ?>background-color: lightgrey;<?php } ?>">
-        <a href="?f_comment_screen=inbox"><b><?php putGS("Inbox"); ?> (<?php p($numInbox); ?>)</b></a>
+    <td style="border-bottom: 1px solid #777;">&nbsp;</td>
+    <td width="1%" nowrap style="border-left: 1px solid #777; border-top: 1px solid #777; border-right: 1px solid #777;<?php if ($f_comment_screen != "inbox") { ?>background-color: #CFCFCF; border-bottom: 1px solid #777;<?php } ?>  -moz-border-radius: 20px 20px 0 0; ">
+        <a href="?f_comment_screen=inbox" <?php if ($f_comment_screen != "inbox") { ?>style="color: #555;"<?php } ?>><b><?php putGS("Moderate"); ?> (<?php p($numInbox); ?>)</b></a>
     </td>
 
-    <td style="<?php if ($f_comment_screen == "archive") { ?>background-color: lightgrey;<?php } ?>">
-        <a href="?f_comment_screen=archive"><b><?php putGS("Archive"); ?> (<?php p($numArchive); ?>)</b></a>
+    <td width="1%" nowrap style="border-left: 1px solid #777; border-top: 1px solid #777; border-right: 1px solid #777; <?php if ($f_comment_screen != "archive") { ?>background-color: #CFCFCF;  border-bottom: 1px solid #777;<?php } ?>  -moz-border-radius: 20px 20px 0 0; ">
+        <a href="?f_comment_screen=archive" <?php if ($f_comment_screen != "archive") { ?>style="color: #555;"<?php } ?>><b><?php putGS("Approved"); ?> (<?php p($numArchive); ?>)</b></a>
     </td>
+
+    <td width="98%" style="border-bottom: 1px solid #777;">&nbsp;</td>
 </tr>
 </table>
 
 <?php
 $pagerStr = $pager->render();
 ?>
-<table width="100%" style="border-top: 1px solid #777;">
+<table width="100%" style="padding-top: 2px;">
 <tr>
     <td style="padding-left: 13px;">
         <table cellpadding="0" cellspacing="0">
@@ -94,7 +97,14 @@ $pagerStr = $pager->render();
             </td>
 
             <td style="padding-left: 15px;">
-                <?php putGS("Search"); ?>: <input type="text" name="f_comment_search" value="<?php p($f_comment_search); ?>" size="10"  class="input_text">
+                <?php putGS("Search"); ?>: <input type="text" name="f_comment_search" value="<?php p($f_comment_search); ?>" size="15"  class="input_text">
+            </td>
+
+            <td style="padding-left: 15px;">
+                <select name="f_order_by" class="input_select">
+                <option value="date"><?php putGS("Date posted"); ?></option>
+                <option value="article"><?php putGS("Article name"); ?></option>
+                </select>
             </td>
 
             <td style="padding-left: 15px;">
@@ -140,25 +150,37 @@ function onSummaryClick(p_messageId)
 <!-- main table with date&subject on the left, comment on right -->
 <table cellpadding="0" cellspacing="0" width="100%" style="border-top: 1px solid #777;">
 <tr>
-    <td width="350px" valign="top" align="left">
+    <td width="500px" valign="top" align="left">
         <!-- The column with date&subject -->
         <table BORDER="0" CELLSPACING="1" CELLPADDING="3" width="100%">
+        <tr class="table_list_header">
+            <td>&nbsp;</td>
+            <td><?php putGS("Date posted"); ?></td>
+            <td><?php putGS("Subject"); ?></td>
+            <td><?php putGS("Article"); ?></td>
+            <td>&nbsp;</td>
+        </tr>
             <?php
             $count = 1;
             foreach ($comments as $commentPack) {
             $comment = $commentPack["comment"];
-
-            switch ($comment->getStatus()) {
-                case PHORUM_STATUS_APPROVED:
-                    $css = "comment_approved";
-                    break;
-                case PHORUM_STATUS_HIDDEN:
-                    $css = "comment_inbox";
-                    break;
-                case PHORUM_STATUS_HOLD:
-                    $css = "comment_hidden";
-                    break;
+            $article = $commentPack["article"];
+            if ($count%2 == 0) {
+                $css = "list_row_even";
+            } else {
+                $css = "list_row_odd";
             }
+//            switch ($comment->getStatus()) {
+//                case PHORUM_STATUS_APPROVED:
+//                    $css = "comment_approved";
+//                    break;
+//                case PHORUM_STATUS_HIDDEN:
+//                    $css = "comment_inbox";
+//                    break;
+//                case PHORUM_STATUS_HOLD:
+//                    $css = "comment_hidden";
+//                    break;
+//            }
             ?>
     		<script>
     		comment_ids.push("comment_<?php p($comment->getMessageId()); ?>");
@@ -167,8 +189,9 @@ function onSummaryClick(p_messageId)
 
             <tr class="<?php echo $css; ?>" id="subject_<?php p($comment->getMessageId()); ?>">
             <td valign="top" align="left" width="1%" nowrap><?php echo $count++; ?></td>
-            <td valign="top" align="left" width="1%" nowrap onclick="onSummaryClick(<?php p($comment->getMessageId()); ?>);"><a href="javascript: void(0);" onclick="onSummaryClick(<?php p($comment->getMessageId()); ?>);"><?php echo date("Y-m-d H:i:s", $comment->getLastModified()); ?></a></td>
-            <td valign="top" align="left" onclick="onSummaryClick(<?php p($comment->getMessageId()); ?>);"><a href="javascript: void(0);" onclick="onSummaryClick(<?php p($comment->getMessageId()); ?>);"><?php echo $comment->getSubject(); ?></a></td>
+            <td valign="top" align="left" width="1%" nowrap onclick="onSummaryClick(<?php p($comment->getMessageId()); ?>);"><a href="javascript: void(0);" onclick="onSummaryClick(<?php p($comment->getMessageId()); ?>);"><?php echo date("Y-m-d H:i:s", $comment->getCreationDate()); ?></a></td>
+            <td valign="top" align="left" onclick="onSummaryClick(<?php p($comment->getMessageId()); ?>);"><a href="javascript: void(0);" onclick="onSummaryClick(<?php p($comment->getMessageId()); ?>);"><?php echo htmlspecialchars($comment->getSubject()); ?></a></td>
+            <td valign="top" align="left" onclick="onSummaryClick(<?php p($comment->getMessageId()); ?>);"><a href="javascript: void(0);" onclick="onSummaryClick(<?php p($comment->getMessageId()); ?>);"><?php p(htmlspecialchars($article->getName())); ?></a></td>
             <td width="1%"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/arrow_left.gif" id="arrow_<?php p($comment->getMessageId()); ?>" <?php if ($count != 2) { ?>style="display: none;"<?php } ?>></td>
             </tr>
             <?php } ?>
@@ -229,6 +252,9 @@ function onSummaryClick(p_messageId)
 
             <!-- BEGIN table with article content -->
             <table BORDER="0" CELLSPACING="1" CELLPADDING="3" width="100%"  style="border-top: 1px solid #8EAED7;">
+            <tr><td style="padding-top: 5px;">
+                <b><?php putGS("Article"); ?>:</b>&nbsp; <a href="<?php echo camp_html_article_url($article, $article->getLanguageId(), "edit.php"); ?>"><?php p(htmlspecialchars($article->getName())); ?></a>
+            </td></tr>
             <TR id="article_closed_<?php p($comment->getMessageId()); ?>">
                 <td valign="middle">
                     <a href="javascript:void(0);" onclick="HideElement('article_closed_<?php p($comment->getMessageId()); ?>'); ShowElement('article_<?php p($comment->getMessageId()); ?>');"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/viewmag+.png" border="0" align="absmiddle"><b><?php putGS("Show article"); ?></b></a>
@@ -264,12 +290,12 @@ function onSummaryClick(p_messageId)
             <table BORDER="0" CELLSPACING="1" CELLPADDING="3">
             <TR>
                 <td><b><?php putGS("Date"); ?>:</b></td>
-                <td><?php p(date("Y-m-d H:i:s", $comment->getLastModified())); ?></td>
+                <td><?php p(date("Y-m-d H:i:s", $comment->getCreationDate())); ?></td>
             </tr>
 
             <tr>
                 <td><b><?php putGS("Author:"); ?></b></td>
-                <td><?php p($comment->getAuthor()); ?></td>
+                <td><?php p($comment->getAuthor()); ?> &lt;<?php p(htmlspecialchars($comment->getEmail())); ?>&gt; (<?php p($comment->getIpAddress()); ?>)</td>
             </tr>
 
             <tr>

@@ -46,7 +46,7 @@ hr {
 
 .button {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 10pt;
+	font-size: 9pt;
 	border: 1px solid #777;
 	background-color: #EEEEEE;
 	color: #333333;
@@ -55,7 +55,7 @@ hr {
 
 .button_disabled {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 10pt;
+	font-size: 9pt;
 	border: 1px dashed white;
 	background-color: #EEEEEE;
 	color: grey;
@@ -66,12 +66,14 @@ hr {
 	border: 1px solid #777;
 	background-color: #f0f0ff;
 	text-indent: 3px;
+	font-size: 9pt;
 }
 
 .input_text_disabled {
 	border: 1px solid grey;
 	background-color: #f0f0ff;
 	text-indent: 3px;
+	font-size: 9pt;
 }
 
 .input_checkbox { }
@@ -80,10 +82,13 @@ hr {
 
 .input_select {
 	background-color: #f0f0ff;
+	border: 1px solid grey;
+	font-size: 9pt;
 }
 
 .input_file {
 	background-color: #f0f0ff;
+	font-size: 9pt;
 }
 
 /**

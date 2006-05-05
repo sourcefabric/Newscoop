@@ -68,11 +68,10 @@ if ($phorumUser->exists()) {
                         $User->getRealName(),
                         $User->getEmail(),
                         $User->getUserId());
-
-   // Link the thread to the article if it is the first post
-   if ($threadId == 0) {
-       ArticleComment::Link($f_article_number, $f_language_id, $commentObj->getMessageId());
-   }
+    $commentObj->setStatus(PHORUM_STATUS_APPROVED);
+    // Link the message to the article
+    $isFirstMessage = ($threadId == 0);
+    ArticleComment::Link($f_article_number, $f_language_id, $commentObj->getMessageId(), $isFirstMessage);
 }
 
 header("Location: ".camp_html_article_url($articleObj, $f_language_selected, "edit.php"));
