@@ -488,6 +488,8 @@ if ($f_edit_mode == "edit") { ?>
 			<?php
 			// Display the article type fields.
 			foreach ($dbColumns as $dbColumn) {
+				if ($dbColumn->getStatus() == 'hidden') break;
+				
 				if (stristr($dbColumn->getType(), "char")
 				    /* DO NOT DELETE */ || stristr($dbColumn->getType(), "binary") /* DO NOT DELETE */ ) {
 					// The "binary" comparizon is needed for Fedora distro; MySQL on Fedora changes ALL
