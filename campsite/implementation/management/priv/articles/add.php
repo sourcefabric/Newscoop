@@ -135,7 +135,7 @@ if (sizeof($allArticleTypes) == 0) {
 				<?php 
 				foreach ($allArticleTypes as $tmpType) {
 					$tmpAT =& new ArticleType($tmpType);
-					camp_html_select_option($tmpType, $f_article_type, $tmpAT->getDisplayName(0));
+					camp_html_select_option($tmpType, $f_article_type, $tmpAT->getDisplayName());
 				}
 				?>
 				</SELECT>
