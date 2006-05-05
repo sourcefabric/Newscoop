@@ -562,7 +562,7 @@ class ArticleTypeField {
 		$queryStr = "SELECT field_weight FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' AND field_name != 'NULL' ORDER BY field_weight DESC LIMIT 1";
 		$row = $g_ado_db->getRow($queryStr);
 		if (isset($row['field_weight'])) {
-			if ($row['field_weight'] == 0) $next = 1;
+			if ($row['field_weight'] <= 0) $next = 1;
 			else $next = $row['field_weight'] + 1;
 		}
 		return ($next);
@@ -611,20 +611,22 @@ class ArticleTypeField {
 	function reorder($move) 
 	{
 		$orders = $this->getOrders();
+		
 		$tmp = array_keys($orders, $this->Field);
 		$pos = $tmp[0];
-		if ($pos == 0 && $move == 'down') return;
-		if ($pos == count($orders) && $move == 'up') return;
+		if ($pos == 1 && $move == 'up') return;
+		if ($pos == count($orders) && $move == 'down') return;
 		if ($move == 'down') {
-			$tmp = $orders[$pos - 1];
-			$orders[$pos - 1] = $orders[$pos];
-			$orders[$pos] = $tmp;
-		}
-		if ($move == 'up') {
 			$tmp = $orders[$pos + 1];
 			$orders[$pos + 1] = $orders[$pos];
 			$orders[$pos] = $tmp;
 		}
+		if ($move == 'up') {
+			$tmp = $orders[$pos - 1];
+			$orders[$pos - 1] = $orders[$pos];
+			$orders[$pos] = $tmp;
+		}
+		
 		$this->setOrders($orders);
 	} // fn reorder
 

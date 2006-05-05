@@ -172,22 +172,6 @@ class ArticleType {
 		if (count($row)) return $row[0]['fk_phrase_id'];
 		else { return 0; }
 
-		
-/*
-		global $g_ado_db;
-		//$sql = "SELECT atm.*, t.* FROM ArticleTypeMetadata atm, Translations t WHERE atm.type_name='". $this->m_dbTableName ."' AND atm.fk_phrase_id = t.phrase_id AND t.fk_language_id = '$p_languageId'"; 		
-		$sql = "SELECT fk_phrase_id FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' AND field_name='NULL'";
-		$row = $g_ado_db->getAll($sql);
-		// if it is 'NULL' then return 0
-		if (!is_numeric($row[0]['fk_phrase_id'])) return 0;
-		// now check to see if they have a translation in the given language
-		$sql = "SELECT phrase_id FROM Translations WHERE fk_language_id=". $p_languageId ." AND phrase_id=". $row[0]['fk_phrase_id'];
-		$row = $g_ado_db->getAll($sql);
-		if (!empty($row[0]['phrase_id'])) 
-			return $row[0]['phrase_id'];
-		else 
-			return 0;
-*/
 	} // fn translationExists
 
 
@@ -313,7 +297,7 @@ class ArticleType {
 	function getUserDefinedColumns()
 	{
 		global $g_ado_db;
-		$queryStr = "SELECT * FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' AND field_name != 'NULL' AND field_type IS NOT NULL ORDER BY field_weight DESC";
+		$queryStr = "SELECT * FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' AND field_name != 'NULL' AND field_type IS NOT NULL ORDER BY field_weight ASC";
 		$queryArray = $g_ado_db->GetAll($queryStr);
 		$metadata = array();
 		if (is_array($queryArray)) {

@@ -109,7 +109,7 @@ class ArticleData extends DatabaseObject {
 			global $g_ado_db;
 			#$queryStr = 'SHOW COLUMNS FROM '.$this->m_dbTableName
 			#			." LIKE 'F%'";
-			$queryStr = "SELECT * FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' AND field_name != 'NULL' AND field_type IS NOT NULL ORDER BY field_weight DESC";
+			$queryStr = "SELECT * FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' AND field_name != 'NULL' AND field_type IS NOT NULL ORDER BY field_weight ASC";
 			$queryArray = $g_ado_db->GetAll($queryStr);
 			$metadata = array();
 			if (is_array($queryArray)) {
