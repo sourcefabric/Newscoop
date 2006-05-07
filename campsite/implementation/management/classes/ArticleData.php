@@ -71,7 +71,7 @@ class ArticleData extends DatabaseObject {
 		} else {
 			$lang = $p_lang;
 		}
-		$aObj =& new ArticleType($this->m_dbTableName);
+		$aObj =& new ArticleType($this->m_articleTypeName);
 		$translations = $aObj->getTranslations();
 		if (!isset($translations[$lang])) return substr($aObj->getTableName(), 1);
 		return $translations[$lang];
