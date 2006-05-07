@@ -39,7 +39,7 @@ if (!$articleObj->exists()) {
 }
 $articleData = $articleObj->getArticleData();
 // Get article type fields.
-$dbColumns = $articleData->getUserDefinedColumns();
+$dbColumns = $articleData->getUserDefinedColumns(0);
 
 $articleImages = ArticleImage::GetImagesByArticleNumber($f_article_number);
 $lockUserObj =& new User($articleObj->getLockedByUser());
@@ -488,7 +488,6 @@ if ($f_edit_mode == "edit") { ?>
 			<?php
 			// Display the article type fields.
 			foreach ($dbColumns as $dbColumn) {
-				if ($dbColumn->getStatus() == 'hidden') continue;
 				
 				if (stristr($dbColumn->getType(), "char")
 				    /* DO NOT DELETE */ || stristr($dbColumn->getType(), "binary") /* DO NOT DELETE */ ) {
