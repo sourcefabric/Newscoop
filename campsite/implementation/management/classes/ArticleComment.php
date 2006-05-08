@@ -123,7 +123,11 @@ class ArticleComment
             $baseQuery .= " WHERE ".$whereQuery;
         }
 
-        $baseQuery .= " ORDER BY ".$PHORUM['message_table'].".message_id";
+        // Default ORDER BY clause
+        if (is_null($p_sqlOptions) || !isset($p_sqlOptions['ORDER BY'])) {
+           $baseQuery .= " ORDER BY ".$PHORUM['message_table'].".message_id";
+        }
+
         if ($p_getTotal) {
             $numComments = $g_ado_db->GetOne($baseQuery);
             return $numComments;
