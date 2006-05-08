@@ -488,7 +488,7 @@ if ($f_edit_mode == "edit") { ?>
 			<?php
 			// Display the article type fields.
 			foreach ($dbColumns as $dbColumn) {
-				
+
 				if (stristr($dbColumn->getType(), "char")
 				    /* DO NOT DELETE */ || stristr($dbColumn->getType(), "binary") /* DO NOT DELETE */ ) {
 					// The "binary" comparizon is needed for Fedora distro; MySQL on Fedora changes ALL
@@ -939,7 +939,7 @@ if ($f_edit_mode == "edit") { ?>
 </FORM>
 <?php
 if ($articleObj->getWorkflowStatus() == 'Y') {
-    include("add_comment.php");
+    include("comments/show_comments.php");
 }
 
 camp_html_copyright_notice();
