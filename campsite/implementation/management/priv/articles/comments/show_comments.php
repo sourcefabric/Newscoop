@@ -6,9 +6,22 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleComment.php');
 
 $comments = ArticleComment::GetArticleComments($f_article_number, $f_language_id);
 ?>
-<table class="table_input" width="900px">
+<script>
+function onCommentAction(p_type, p_commentId)
+{
+    document.getElementById(p_type+'_'+p_commentId).checked=true;
+    document.getElementById('comment_'+p_commentId).className = 'comment_'+p_type;
+}
+</script>
+
+<a name="comments" />
+<table class="table_input" width="900px" style="padding-left: 5px;">
+<form method="GET" action="/<?php p($ADMIN); ?>/articles/comments/do_moderate.php">
+<input type="hidden" name="f_language_id" value="<?php p($f_language_id); ?>">
+<input type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>">
+<input type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>">
 <tr>
-    <td style="padding-top: 5px; padding-bottom: 5px; border-bottom: 1px solid black;/* 2px solid #8EAED7;*/">
+    <td style="padding-top: 5px; padding-bottom: 5px; border-bottom: 1px solid black;">
         &nbsp;<b><?php putGS("Comments"); ?></b>
    	</td>
 <tr>
@@ -20,13 +33,69 @@ if (count($comments) <= 0) {
     <?php
 } else {
     foreach ($comments as $comment) {
+        switch ($comment->getStatus()) {
+            case PHORUM_STATUS_APPROVED:
+                $css = "comment_approved";
+                break;
+            case PHORUM_STATUS_HIDDEN;
+                $css = "comment_inbox";
+                break;
+            case PHORUM_STATUS_HOLD:
+                $css = "comment_hidden";
+                break;
+        }
         ?>
         <tr>
-            <td style="padding-left: 15px; padding-right: 20px; padding-bottom: 5px; border-bottom: 2px solid #8EAED7;">
+            <td>
+
+            <!-- table for the action controls -->
+            <table>
+            <tr>
+
+            <td><input type="image" src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" name="save" value="save"></td>
+
+            <td style="padding-left: 10px;">
+                <input type="radio" name="comment_action_<?php echo $comment->getMessageId(); ?>" value="inbox" class="input_radio" id="inbox_<?php echo $comment->getMessageId(); ?>" <?php if ($comment->getStatus() == PHORUM_STATUS_HIDDEN) { ?>checked<?php } ?> onchange="onCommentAction('inbox', <?php p($comment->getMessageId()); ?>);">
+            </td>
+
+            <td><a href="javascript: void(0);" onclick="onCommentAction('inbox', <?php p($comment->getMessageId()); ?>);"><b><?php putGS("New"); ?></b></a>
+            </td>
+
+            <td style="padding-left: 10px;">
+                <input type="radio" name="comment_action_<?php echo $comment->getMessageId(); ?>" value="approve" class="input_radio" id="approved_<?php echo $comment->getMessageId(); ?>" <?php if ($comment->getStatus() ==  PHORUM_STATUS_APPROVED) { ?>checked<?php } ?> onchange="onCommentAction('approved', <?php p($comment->getMessageId()); ?>);">
+            </td>
+
+            <td><a href="javascript: void(0);" onclick="onCommentAction('approved', <?php p($comment->getMessageId()); ?>);"><b><?php putGS("Approved"); ?></b></a>
+            </td>
+
+            <td style="padding-left: 10px;">
+                <input type="radio" name="comment_action_<?php echo $comment->getMessageId(); ?>" value="delete" class="input_radio" id="delete_<?php echo $comment->getMessageId(); ?>" onchange="onCommentAction('delete', <?php p($comment->getMessageId()); ?>);">
+            </td>
+
+            <td>
+                <a href="javascript: void(0);" onclick="onCommentAction('delete', <?php p($comment->getMessageId()); ?>);"><b><?php putGS("Delete"); ?></b></a>
+            </td>
+
+            <td style="padding-left: 10px;">
+                <input type="radio" name="comment_action_<?php echo $comment->getMessageId(); ?>" value="hide" class="input_radio" id="hidden_<?php echo $comment->getMessageId(); ?>" <?php if ($comment->getStatus() == PHORUM_STATUS_HOLD) { ?>checked<?php } ?> onchange="onCommentAction('hidden', <?php p($comment->getMessageId()); ?>);">
+            </td>
+
+            <td>
+                <a href="javascript: void(0);" onclick="onCommentAction('hidden', <?php p($comment->getMessageId()); ?>);"><b><?php putGS("Hidden"); ?></b></a>
+            </td>
+            </tr>
+            </table>
+            <!-- END table for the action controls -->
+
+            </td>
+        </tr>
+
+        <tr>
+            <td class="<?php p($css); ?>" style="padding-left: 15px; padding-right: 20px; padding-bottom: 5px; border-bottom: 2px solid #8EAED7;" id="comment_<?php p($comment->getMessageId()); ?>">
                 <table cellspacing="0" cellpadding="3" border="0">
                 <tr>
                     <td align="right" valign="top" nowrap><?php putGS("From:"); ?></td>
-                    <td><?php p($comment->getAuthor()); ?> &lt;<?php p($comment->getEmail()); ?>&gt; (<?php p($comment->getIpAddress()); ?>)</td>
+                    <td><?php p(htmlspecialchars($comment->getAuthor())); ?> &lt;<?php p(htmlspecialchars($comment->getEmail())); ?>&gt; (<?php p($comment->getIpAddress()); ?>)</td>
                 </tr>
 
                 <tr>
@@ -36,12 +105,12 @@ if (count($comments) <= 0) {
 
                 <tr>
                     <td align="right" valign="top" nowrap><?php putGS("Subject:"); ?></td>
-                    <td><?php p($comment->getSubject()); ?></td>
+                    <td><?php p(htmlspecialchars($comment->getSubject())); ?></td>
                 </tr>
 
                 <tr>
                     <td align="right" valign="top" nowrap><?php putGS("Comment:"); ?></td>
-                    <td><?php p($comment->getBody()); ?></td>
+                    <td><?php p(htmlspecialchars($comment->getBody())); ?></td>
                 </tr>
                 </table>
             </td>
@@ -50,11 +119,12 @@ if (count($comments) <= 0) {
     }
 }
 ?>
+</form>
 </table>
 <?php
 // show the "add comment" form
 ?>
-<form action="do_add_comment.php" method="GET">
+<form action="/<?php p($ADMIN); ?>/articles/comments/do_add_comment.php" method="GET">
 <input type="hidden" name="f_language_id" value="<?php p($f_language_id); ?>">
 <input type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>">
 <input type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>">
