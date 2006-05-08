@@ -22,9 +22,21 @@ $f_comment_start_inbox = camp_session_get('f_comment_start_inbox', 0);
 $f_comment_start_archive = camp_session_get('f_comment_start_archive', 0);
 $f_comment_per_page = camp_session_get('f_comment_per_page', 10);
 $f_comment_search = camp_session_get('f_comment_search', '');
+$f_comment_order_by = camp_session_get('f_comment_order_by', 'date');
+$f_comment_order_direction = camp_session_get('f_comment_order_direction', 'ASC');
 if ($f_comment_per_page < 4) {
     $f_comment_per_page = 4;
 }
+
+// Build the links for ordering search results
+if ($f_comment_order_direction == 'DESC') {
+	$ReverseOrderDirection = "ASC";
+	$OrderSign = "<img src=\"".$Campsite["ADMIN_IMAGE_BASE_URL"]."/descending.png\" border=\"0\">";
+} else {
+	$ReverseOrderDirection = "DESC";
+	$OrderSign = "<img src=\"".$Campsite["ADMIN_IMAGE_BASE_URL"]."/ascending.png\" border=\"0\">";
+}
+$orderDirectionUrl = "/$ADMIN/comments/index.php?f_comment_order_direction=$ReverseOrderDirection";
 
 $numInbox = ArticleComment::GetComments('unapproved', true, $f_comment_search);
 $numArchive = ArticleComment::GetComments('approved', true, $f_comment_search);
@@ -44,12 +56,14 @@ $f_comment_start_archive = camp_session_get('f_comment_start_archive', 0);
 if ($f_comment_screen == 'inbox') {
     $comments = ArticleComment::GetComments('unapproved', false,
             $f_comment_search,
-            array('LIMIT' => array('START'=> $f_comment_start_inbox,
+            array('ORDER BY' => array($f_comment_order_by => $f_comment_order_direction),
+                  'LIMIT' => array('START'=> $f_comment_start_inbox,
                                    'MAX_ROWS' => $f_comment_per_page)));
 } elseif ($f_comment_screen == 'archive') {
     $comments = ArticleComment::GetComments('approved', false,
             $f_comment_search,
-            array('LIMIT' => array('START'=> $f_comment_start_archive,
+            array('ORDER BY' => array($f_comment_order_by => $f_comment_order_direction),
+                  'LIMIT' => array('START'=> $f_comment_start_archive,
                                    'MAX_ROWS' => $f_comment_per_page)));
 }
 
@@ -63,11 +77,11 @@ echo camp_html_breadcrumbs($crumbs);
 <table cellpadding="6" cellspacing="0" style="padding-top: 5px;" border="0" width="100%">
 <tr>
     <td style="border-bottom: 1px solid #777;">&nbsp;</td>
-    <td width="1%" nowrap style="border-left: 1px solid #777; border-top: 1px solid #777; border-right: 1px solid #777;<?php if ($f_comment_screen != "inbox") { ?>background-color: #CFCFCF; border-bottom: 1px solid #777;<?php } ?>  -moz-border-radius: 20px 20px 0 0; ">
+    <td width="1%" nowrap class="<?php if ($f_comment_screen != "inbox") { ?>tab_inactive<?php } else { ?>tab_active<?php } ?>">
         <a href="?f_comment_screen=inbox" <?php if ($f_comment_screen != "inbox") { ?>style="color: #555;"<?php } ?>><b><?php putGS("Moderate"); ?> (<?php p($numInbox); ?>)</b></a>
     </td>
 
-    <td width="1%" nowrap style="border-left: 1px solid #777; border-top: 1px solid #777; border-right: 1px solid #777; <?php if ($f_comment_screen != "archive") { ?>background-color: #CFCFCF;  border-bottom: 1px solid #777;<?php } ?>  -moz-border-radius: 20px 20px 0 0; ">
+    <td width="1%" nowrap class="<?php if ($f_comment_screen != "archive") { ?>tab_inactive<?php } else { ?>tab_active<?php } ?>">
         <a href="?f_comment_screen=archive" <?php if ($f_comment_screen != "archive") { ?>style="color: #555;"<?php } ?>><b><?php putGS("Approved"); ?> (<?php p($numArchive); ?>)</b></a>
     </td>
 
@@ -101,12 +115,19 @@ $pagerStr = $pager->render();
             </td>
 
             <td style="padding-left: 15px;">
-                <select name="f_order_by" class="input_select">
-                <option value="date"><?php putGS("Date posted"); ?></option>
-                <option value="article"><?php putGS("Article name"); ?></option>
+                <select name="f_comment_order_by" class="input_select">
+                <?php
+                camp_html_select_option("datestamp", $f_comment_order_by, getGS("Date posted"));
+                camp_html_select_option("Name", $f_comment_order_by, getGS("Article name"));
+                camp_html_select_option("author", $f_comment_order_by, getGS("Author"));
+                camp_html_select_option("thread", $f_comment_order_by, getGS("Thread"));
+                ?>
                 </select>
             </td>
 
+            <td>
+               <a href="<?php p($orderDirectionUrl); ?>"><?php p($OrderSign); ?></a>
+            </td>
             <td style="padding-left: 15px;">
                 <input type="submit" value="<?php putGS("Submit"); ?>" class="button">
             </td>
@@ -165,22 +186,15 @@ function onSummaryClick(p_messageId)
             foreach ($comments as $commentPack) {
             $comment = $commentPack["comment"];
             $article = $commentPack["article"];
-            if ($count%2 == 0) {
-                $css = "list_row_even";
+            if ($comment->getStatus() == PHORUM_STATUS_HOLD) {
+                $css = "comment_hidden";
             } else {
-                $css = "list_row_odd";
+                if ($count%2 == 0) {
+                    $css = "list_row_even";
+                } else {
+                    $css = "list_row_odd";
+                }
             }
-//            switch ($comment->getStatus()) {
-//                case PHORUM_STATUS_APPROVED:
-//                    $css = "comment_approved";
-//                    break;
-//                case PHORUM_STATUS_HIDDEN:
-//                    $css = "comment_inbox";
-//                    break;
-//                case PHORUM_STATUS_HOLD:
-//                    $css = "comment_hidden";
-//                    break;
-//            }
             ?>
     		<script>
     		comment_ids.push("comment_<?php p($comment->getMessageId()); ?>");
@@ -221,14 +235,14 @@ function onSummaryClick(p_messageId)
                 <input type="radio" name="comment_action_<?php echo $comment->getMessageId(); ?>" value="inbox" class="input_radio" id="inbox_<?php echo $comment->getMessageId(); ?>" <?php if ($comment->getStatus() == PHORUM_STATUS_HIDDEN) { ?>checked<?php } ?> onchange="onCommentAction('inbox', <?php p($comment->getMessageId()); ?>);">
             </td>
 
-            <td><a href="javascript: void(0);" onclick="onCommentAction('inbox', <?php p($comment->getMessageId()); ?>);"><b><?php putGS("Inbox"); ?></b></a>
+            <td><a href="javascript: void(0);" onclick="onCommentAction('inbox', <?php p($comment->getMessageId()); ?>);"><b><?php putGS("New"); ?></b></a>
             </td>
 
             <td style="padding-left: 10px;">
                 <input type="radio" name="comment_action_<?php echo $comment->getMessageId(); ?>" value="approve" class="input_radio" id="approved_<?php echo $comment->getMessageId(); ?>" <?php if ($comment->getStatus() ==  PHORUM_STATUS_APPROVED) { ?>checked<?php } ?> onchange="onCommentAction('approved', <?php p($comment->getMessageId()); ?>);">
             </td>
 
-            <td><a href="javascript: void(0);" onclick="onCommentAction('approved', <?php p($comment->getMessageId()); ?>);"><b><?php putGS("Approve"); ?></b></a>
+            <td><a href="javascript: void(0);" onclick="onCommentAction('approved', <?php p($comment->getMessageId()); ?>);"><b><?php putGS("Approved"); ?></b></a>
             </td>
 
             <td style="padding-left: 10px;">
@@ -244,7 +258,7 @@ function onSummaryClick(p_messageId)
             </td>
 
             <td>
-                <a href="javascript: void(0);" onclick="onCommentAction('hidden', <?php p($comment->getMessageId()); ?>);"><b><?php putGS("Hide"); ?></b></a>
+                <a href="javascript: void(0);" onclick="onCommentAction('hidden', <?php p($comment->getMessageId()); ?>);"><b><?php putGS("Hidden"); ?></b></a>
             </td>
             </tr>
             </table>

@@ -253,41 +253,65 @@ hr {
 }
 
 .comment_approved {
-    background-color: #C3DFC3;
+    background-color: #D7E3EF;
 }
 .comment_pending_approved {
-    background-color: #C3DFC3;
+    background-color: #D7E3EF;
 }
-.comment_pending_approved td {
-    border: 1px dashed #666;
+.comment_pending_approved td a {
+    /* border: 1px dashed #666; */
 }
 
 .comment_hidden {
-    background-color: #FEFFAF;
+    background-color: #B5C2CF;
+}
+.comment_hidden td a {
+    color: #666;
+}
+.comment_hidden table tr td {
+    color: #666;
 }
 .comment_pending_hidden {
-    background-color: #FEFFAF;
+    background-color: #B5C2CF;
 }
-.comment_pending_hidden td {
-    border: 1px dashed #666;
+.comment_pending_hidden td a {
+    /*border: 1px dashed #666;*/
+    color: #666;
 }
 
 .comment_inbox {
-    background-color: #D7E3EF;
+    background-color: #FEFFAF;
 }
 .comment_pending_inbox {
-    background-color: #D7E3EF;
+    background-color: #FEFFAF;
 }
 .comment_pending_inbox td {
-    border: 1px dashed #666;
+    /* border: 1px dashed #666; */
 }
 
 .comment_delete {
     background-color: #FFCFCF;
 }
+.comment_delete table tr td {
+    color: #666;
+}
 .comment_pending_delete {
     background-color: #FFCFCF;
 }
-.comment_pending_delete td {
-    border: 1px dashed #666;
+.comment_pending_delete td a {
+    /* border: 1px dashed #666; */
+    color: #666;
+}
+
+.tab_active {
+    border-left: 1px solid #777;
+    border-top: 1px solid #777;
+    border-right: 1px solid #777;
+    -moz-border-radius: 20px 20px 0 0;
+}
+
+.tab_inactive {
+    border: 1px solid #777;
+    background-color: #CFCFCF;
+    -moz-border-radius: 20px 20px 0 0;
 }
