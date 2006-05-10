@@ -205,6 +205,9 @@ $articleObj->setIsPublic(!empty($f_is_public));
 $articleObj->setKeywords($f_keywords);
 $articleObj->setTitle($f_article_title);
 $articleObj->setIsIndexed(false);
+// Make sure that the time stamp is updated.
+$articleObj->setProperty('time_updated', 'NOW()', true, true);
+
 // Verify creation date is in the correct format.
 // If not, dont change it.
 if (preg_match("/\d{4}-\d{2}-\d{2}/", $f_creation_date)) {
