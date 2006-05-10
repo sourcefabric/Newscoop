@@ -194,7 +194,7 @@ class Issue extends DatabaseObject {
 	 */
 	function getPublicationId()
 	{
-		return $this->getProperty('IdPublication');
+		return $this->m_data['IdPublication'];
 	} // fn getPublicationId
 
 
@@ -204,7 +204,7 @@ class Issue extends DatabaseObject {
 	 */
 	function getLanguageId()
 	{
-		return $this->getProperty('IdLanguage');
+		return $this->m_data['IdLanguage'];
 	} // fn getLanguageId
 
 
@@ -249,7 +249,7 @@ class Issue extends DatabaseObject {
 	 */
 	function getIssueNumber()
 	{
-		return $this->getProperty('Number');
+		return $this->m_data['Number'];
 	} // fn getIssueNumber
 
 
@@ -259,7 +259,7 @@ class Issue extends DatabaseObject {
 	 */
 	function getName()
 	{
-		return $this->getProperty('Name');
+		return $this->m_data['Name'];
 	} // fn getName
 
 
@@ -280,7 +280,7 @@ class Issue extends DatabaseObject {
 	 */
 	function getUrlName()
 	{
-		return $this->getProperty('ShortName');
+		return $this->m_data['ShortName'];
 	} // fn getUrlName
 
 
@@ -301,7 +301,7 @@ class Issue extends DatabaseObject {
 	 */
 	function getArticleTemplateId()
 	{
-		return $this->getProperty('ArticleTplId');
+		return $this->m_data['ArticleTplId'];
 	} // fn getArticleTemplateId
 
 
@@ -311,7 +311,7 @@ class Issue extends DatabaseObject {
 	 */
 	function getSectionTemplateId()
 	{
-		return $this->getProperty('SectionTplId');
+		return $this->m_data['SectionTplId'];
 	} // fn getSectionTemplateId
 
 
@@ -321,7 +321,7 @@ class Issue extends DatabaseObject {
 	 */
 	function getIssueTemplateId()
 	{
-		return $this->getProperty('IssueTplId');
+		return $this->m_data['IssueTplId'];
 	} // fn getIssueTemplateId
 
 
@@ -333,7 +333,7 @@ class Issue extends DatabaseObject {
 	 */
 	function getWorkflowStatus()
 	{
-		return $this->getProperty('Published');
+		return $this->m_data['Published'];
 	} // fn getWorkflowStatus
 
 
@@ -390,7 +390,7 @@ class Issue extends DatabaseObject {
 
 	function getPublicationDate()
 	{
-		return $this->getProperty('PublicationDate');
+		return $this->m_data['PublicationDate'];
 	} // fn getPublicationDate
 
 

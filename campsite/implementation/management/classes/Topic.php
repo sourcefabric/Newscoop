@@ -207,7 +207,7 @@ class Topic extends DatabaseObject {
 	 */
 	function getTopicId()
 	{
-		return $this->getProperty('Id');
+		return $this->m_data['Id'];
 	} // fn getTopicId
 
 
@@ -239,7 +239,7 @@ class Topic extends DatabaseObject {
 	 */
 	function getParentId()
 	{
-		return $this->getProperty('ParentId');
+		return $this->m_data['ParentId'];
 	} // fn getParentId
 
 

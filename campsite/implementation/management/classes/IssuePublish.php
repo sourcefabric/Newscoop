@@ -54,7 +54,7 @@ class IssuePublish extends DatabaseObject {
 	 */
 	function getEventId()
 	{
-		return $this->getProperty('id');
+		return $this->m_data['id'];
 	} // fn getEventId
 
 
@@ -63,7 +63,7 @@ class IssuePublish extends DatabaseObject {
 	 */
 	function getPublicationId()
 	{
-	    return $this->getProperty('fk_publication_id');
+	    return $this->m_data['fk_publication_id'];
 	} // fn getPublicationId
 
 
@@ -84,7 +84,7 @@ class IssuePublish extends DatabaseObject {
 	 */
 	function getIssueNumber()
 	{
-	    return $this->getProperty('fk_issue_id');
+	    return $this->m_data['fk_issue_id'];
 	} // fn getIssueNumber
 
 
@@ -105,7 +105,7 @@ class IssuePublish extends DatabaseObject {
 	 */
 	function getLanguageId()
 	{
-	    return $this->getProperty('fk_language_id');
+	    return $this->m_data['fk_language_id'];
 	} // fn getLanguageId
 
 
@@ -128,7 +128,7 @@ class IssuePublish extends DatabaseObject {
 	 */
 	function getPublishAction()
 	{
-		return $this->getProperty('publish_action');
+		return $this->m_data['publish_action'];
 	} // fn getPublishAction
 
 
@@ -154,7 +154,7 @@ class IssuePublish extends DatabaseObject {
 	 */
 	function getPublishArticlesAction()
 	{
-		return $this->getProperty('do_publish_articles');
+		return $this->m_data['do_publish_articles'];
 	} // fn getPublishArticlesAction
 
 
@@ -179,7 +179,7 @@ class IssuePublish extends DatabaseObject {
 	 */
 	function getActionTime()
 	{
-		return $this->getProperty('time_action');
+		return $this->m_data['time_action'];
 	} // fn getActionTime
 
 

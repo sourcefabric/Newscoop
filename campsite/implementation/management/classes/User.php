@@ -202,7 +202,7 @@ class User extends DatabaseObject {
 		if ($success) {
 			// Fetch the user's permissions.
 			$queryStr = 'SELECT varname, value FROM UserConfig '
-						.' WHERE fk_user_id='.$this->getProperty('Id');
+						.' WHERE fk_user_id='.$this->m_data['Id'];
 			$config = $g_ado_db->GetAll($queryStr);
 			if ($config) {
 				// Make m_config an associative array.
@@ -268,7 +268,7 @@ class User extends DatabaseObject {
 	 */
 	function getUserId()
 	{
-		return $this->getProperty('Id');
+		return $this->m_data['Id'];
 	} // fn getUserId
 
 
@@ -279,7 +279,7 @@ class User extends DatabaseObject {
 	 */
 	function getKeyId()
 	{
-		return $this->getProperty('KeyId');
+		return $this->m_data['KeyId'];
 	} // fn getKeyId
 
 
@@ -289,7 +289,7 @@ class User extends DatabaseObject {
 	 */
 	function getRealName()
 	{
-		return $this->getProperty('Name');
+		return $this->m_data['Name'];
 	} // fn getRealName
 
 
@@ -299,7 +299,7 @@ class User extends DatabaseObject {
 	 */
 	function getUserName()
 	{
-		return $this->getProperty('UName');
+		return $this->m_data['UName'];
 	} // fn getUserName
 
 
@@ -310,7 +310,7 @@ class User extends DatabaseObject {
 	 */
 	function getEmail()
 	{
-	    return $this->getProperty('EMail');
+	    return $this->m_data['EMail'];
 	} // fn getEmail
 
 
@@ -434,7 +434,7 @@ class User extends DatabaseObject {
 	 */
 	function isAdmin()
 	{
-		return ($this->getProperty('Reader') == 'N');
+		return ($this->m_data['Reader'] == 'N');
 	} // fn isAdmin
 
 

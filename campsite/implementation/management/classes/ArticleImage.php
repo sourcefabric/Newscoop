@@ -54,7 +54,7 @@ class ArticleImage extends DatabaseObject {
 	 */
 	function getImageId()
 	{
-		return $this->getProperty('IdImage');
+		return $this->m_data['IdImage'];
 	} // fn getImageId
 
 
@@ -63,7 +63,7 @@ class ArticleImage extends DatabaseObject {
 	 */
 	function getArticleNumber()
 	{
-		return $this->getProperty('NrArticle');
+		return $this->m_data['NrArticle'];
 	} // fn getArticleNumber
 
 
@@ -72,7 +72,7 @@ class ArticleImage extends DatabaseObject {
 	 */
 	function getTemplateId()
 	{
-		return $this->getProperty('Number');
+		return $this->m_data['Number'];
 	} // fn getTemplateId
 
 

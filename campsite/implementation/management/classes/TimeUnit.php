@@ -59,7 +59,7 @@ class TimeUnit extends DatabaseObject {
 	 */
 	function getUnit()
 	{
-		return $this->getProperty('Unit');
+		return $this->m_data['Unit'];
 	} // fn getUnit
 
 
@@ -68,7 +68,7 @@ class TimeUnit extends DatabaseObject {
 	 */
 	function getName()
 	{
-		return $this->getProperty('Name');
+		return $this->m_data['Name'];
 	} // fn getName
 
 
@@ -77,7 +77,7 @@ class TimeUnit extends DatabaseObject {
 	 */
 	function getLanguageId()
 	{
-		return $this->getProperty('IdLanguage');
+		return $this->m_data['IdLanguage'];
 	} // fn getLanguageId
 
 

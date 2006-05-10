@@ -57,7 +57,7 @@ class UrlType extends DatabaseObject {
 	 */
 	function getId()
 	{
-		return $this->getProperty('Id');
+		return $this->m_data['Id'];
 	} // fn getId
 
 
@@ -67,7 +67,7 @@ class UrlType extends DatabaseObject {
 	 */
 	function getName()
 	{
-		$name = $this->getProperty('Name');
+		$name = $this->m_data['Name'];
 		switch ($name) {
 			case "short names":
 				return getGS("short names");
@@ -85,7 +85,7 @@ class UrlType extends DatabaseObject {
 	 */
 	function getDescription()
 	{
-		return $this->getProperty('Description');
+		return $this->m_data['Description'];
 	} // fn getDescription
 
 

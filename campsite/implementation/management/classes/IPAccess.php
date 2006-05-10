@@ -138,27 +138,27 @@ class IPAccess extends DatabaseObject {
 
 	function getUserId()
 	{
-		return $this->getProperty('IdUser');
+		return $this->m_data['IdUser'];
 	}
 
 	function getStartIP()
 	{
-		return $this->getProperty('StartIP');
+		return $this->m_data['StartIP'];
 	}
 
 	function getStartIParray()
 	{
-		return $this->__int2array($this->getProperty('StartIP'));
+		return $this->__int2array($this->m_data['StartIP']);
 	}
 
 	function getStartIPstring()
 	{
-		return $this->__array2string($this->__int2array($this->getProperty('StartIP')));
+		return $this->__array2string($this->__int2array($this->m_data['StartIP']));
 	}
 
 	function getAddresses()
 	{
-		return $this->getProperty('Addresses');
+		return $this->m_data['Addresses'];
 	}
 
 	function GetUserIPAccessList($p_userId)

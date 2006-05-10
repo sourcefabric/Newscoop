@@ -36,7 +36,11 @@ class Publication extends DatabaseObject {
 	                           'PaidTime',
 	                           'IdDefaultAlias',
 	                           'IdURLType',
-	                           'fk_forum_id');
+	                           'fk_forum_id',
+	                           'comments_enabled',
+	                           'comments_article_default_enabled',
+	                           'comments_subscribers_moderated',
+	                           'comments_public_moderated');
 
 	/**
 	 * A publication represents a magazine or newspaper.
@@ -134,7 +138,7 @@ class Publication extends DatabaseObject {
 	 */
 	function getPublicationId()
 	{
-		return $this->getProperty('Id');
+		return $this->m_data['Id'];
 	} // fn getPublicationId
 
 
@@ -145,7 +149,7 @@ class Publication extends DatabaseObject {
 	 */
 	function getName()
 	{
-		return $this->getProperty('Name');
+		return $this->m_data['Name'];
 	} // fn getName
 
 
@@ -156,7 +160,7 @@ class Publication extends DatabaseObject {
 	 */
 	function getLanguageId()
 	{
-		return $this->getProperty('IdDefaultLanguage');
+		return $this->m_data['IdDefaultLanguage'];
 	} // fn getLanguageId
 
 
@@ -165,7 +169,7 @@ class Publication extends DatabaseObject {
 	 */
 	function getTimeUnit()
 	{
-		return $this->getProperty('TimeUnit');
+		return $this->m_data['TimeUnit'];
 	} // fn getTimeUnit
 
 
@@ -174,7 +178,7 @@ class Publication extends DatabaseObject {
 	 */
 	function getDefaultAliasId()
 	{
-		return $this->getProperty('IdDefaultAlias');
+		return $this->m_data['IdDefaultAlias'];
 	} // fn getDefaultAliasId
 
 
@@ -185,7 +189,7 @@ class Publication extends DatabaseObject {
 	 */
 	function getDefaultLanguageId()
 	{
-		return $this->getProperty('IdDefaultLanguage');
+		return $this->m_data['IdDefaultLanguage'];
 	} // fn getDefaultLanguageId
 
 
@@ -199,7 +203,7 @@ class Publication extends DatabaseObject {
 	 */
 	function getUrlTypeId()
 	{
-		return $this->getProperty('IdURLType');
+		return $this->m_data['IdURLType'];
 	} // fn getUrlTypeId
 
 
@@ -208,7 +212,7 @@ class Publication extends DatabaseObject {
 	 */
 	function getUnitCost()
 	{
-		return $this->getProperty('UnitCost');
+		return $this->m_data['UnitCost'];
 	} // fn getUnitCost
 
 
@@ -217,7 +221,7 @@ class Publication extends DatabaseObject {
 	 */
 	function getUnitCostAllLang()
 	{
-		return $this->getProperty('UnitCostAllLang');
+		return $this->m_data['UnitCostAllLang'];
 	} // fn getUnitCost
 
 
@@ -226,7 +230,7 @@ class Publication extends DatabaseObject {
 	 */
 	function getCurrency()
 	{
-		return $this->getProperty('Currency');
+		return $this->m_data['Currency'];
 	} // fn getCurrency
 
 
@@ -235,7 +239,7 @@ class Publication extends DatabaseObject {
 	 */
 	function getPaidTime()
 	{
-		return $this->getProperty('PaidTime');
+		return $this->m_data['PaidTime'];
 	} // fn getPaidTime
 
 
@@ -244,7 +248,7 @@ class Publication extends DatabaseObject {
 	 */
 	function getTrialTime()
 	{
-		return $this->getProperty('TrialTime');
+		return $this->m_data['TrialTime'];
 	} // fn getTrialTime
 
 
@@ -255,14 +259,113 @@ class Publication extends DatabaseObject {
 	 */
 	function getForumId()
 	{
-	    return $this->getProperty('fk_forum_id');
+	    return $this->m_data['fk_forum_id'];
 	} // fn getForumId
 
 
 	function setForumId($p_value)
 	{
 	    return $this->setProperty('fk_forum_id', $p_value);
-	}
+	} // fn setForumId
+
+
+	/**
+	 * Return TRUE if comments are enabled for this publication.
+	 *
+	 * @return boolean
+	 */
+	function commentsEnabled()
+	{
+	    return $this->m_data['comments_enabled'];
+	} // commentsEnabled
+
+
+	/**
+	 * Set whether comments are enabled for this publication.
+	 *
+	 * @param boolean $p_value
+	 * @return boolean
+	 */
+	function setCommentsEnabled($p_value)
+	{
+	    $p_value = $p_value ? '1' : '0';
+	    return $this->setProperty('comments_enabled', $p_value);
+	} // fn setCommentsEnabled
+
+
+	/**
+	 * Return TRUE if comments will default to enabled in the
+	 * article edit screen.
+	 *
+	 * @return boolean
+	 */
+	function commentsArticleDefaultEnabled()
+	{
+	    return $this->m_data['comments_article_default_enabled'];
+	} // fn commentsArticleDefaultEnabled
+
+
+	/**
+	 * Set whether comments will default to enabled in the
+	 * article edit screen.
+	 *
+	 * @param boolean $p_value
+	 * @return boolean
+	 */
+	function setCommentsArticleDefaultEnabled($p_value)
+	{
+	    $p_value = $p_value ? '1' : '0';
+	    return $this->setProperty('comments_article_default_enabled', $p_value);
+	} // fn setCommentsArticleDefaultEnabled
+
+
+	/**
+	 * Return TRUE if comments made by subscribers are moderated.
+	 *
+	 * @return boolean
+	 */
+	function commentsSubscribersModerated()
+	{
+	    return $this->m_data['comments_subscribers_moderated'];
+	} // fn commentsSubscribersModerated
+
+
+	/**
+	 * Set whether subscriber comments are moderated.
+	 *
+	 * @param boolean $p_value
+	 * @return boolean
+	 */
+	function setCommentsSubscribersModerated($p_value)
+	{
+	    $p_value = $p_value ? '1' : '0';
+	    return $this->setProperty('comments_subscribers_moderated', $p_value);
+	} // fn setCommentsSubscribersModerated
+
+
+	/**
+	 * Get whether comments made by the public are moderated.
+	 *
+	 * @return boolean
+	 */
+	function commentsPublicModerated()
+	{
+	    return $this->m_data['comments_public_moderated'];
+	} // fn commentsPublicModerated
+
+
+	/**
+	 * Set whether public comments are moderated.
+	 *
+	 * @param boolean $p_value
+	 * @return boolean
+	 */
+    function setCommentsPublicModerated($p_value)
+    {
+	    $p_value = $p_value ? '1' : '0';
+        return $this->setProperty('comments_public_moderated', $p_value);
+    } // fn setCommentsPublicModerated
+
 
 	/**
 	 * Return all languages used in the publication as an array of Language objects.

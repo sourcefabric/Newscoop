@@ -186,7 +186,7 @@ class Section extends DatabaseObject {
 	 */
 	function getPublicationId()
 	{
-		return $this->getProperty('IdPublication');
+		return $this->m_data['IdPublication'];
 	} // fn getPublicationId
 
 
@@ -195,7 +195,7 @@ class Section extends DatabaseObject {
 	 */
 	function getIssueNumber()
 	{
-		return $this->getProperty('NrIssue');
+		return $this->m_data['NrIssue'];
 	} // fn getIssueNumber
 
 
@@ -204,7 +204,7 @@ class Section extends DatabaseObject {
 	 */
 	function getLanguageId()
 	{
-		return $this->getProperty('IdLanguage');
+		return $this->m_data['IdLanguage'];
 	} // fn getLanguageId
 
 
@@ -230,7 +230,7 @@ class Section extends DatabaseObject {
 	 */
 	function getSectionNumber()
 	{
-		return $this->getProperty('Number');
+		return $this->m_data['Number'];
 	} // fn getSectionNumber
 
 
@@ -239,7 +239,7 @@ class Section extends DatabaseObject {
 	 */
 	function getName()
 	{
-		return $this->getProperty('Name');
+		return $this->m_data['Name'];
 	} // fn getName
 
 
@@ -258,7 +258,7 @@ class Section extends DatabaseObject {
 	 */
 	function getUrlName()
 	{
-		return $this->getProperty('ShortName');
+		return $this->m_data['ShortName'];
 	} // fn getUrlName
 
 
@@ -276,7 +276,7 @@ class Section extends DatabaseObject {
 	 */
 	function getArticleTemplateId()
 	{
-		return $this->getProperty('ArticleTplId');
+		return $this->m_data['ArticleTplId'];
 	} // fn getArticleTemplateId
 
 
@@ -295,7 +295,7 @@ class Section extends DatabaseObject {
 	 */
 	function getSectionTemplateId()
 	{
-		return $this->getProperty('SectionTplId');
+		return $this->m_data['SectionTplId'];
 	} // fn getSectionTemplateId
 
 

@@ -72,7 +72,7 @@ class Country extends DatabaseObject {
 	 */
 	function getLanguageId()
 	{
-		return $this->getProperty('IdLanguage');
+		return $this->m_data['IdLanguage'];
 	} // fn getLanguageId
 
 
@@ -82,7 +82,7 @@ class Country extends DatabaseObject {
 	 */
 	function getName()
 	{
-		return $this->getProperty('Name');
+		return $this->m_data['Name'];
 	} // fn getName
 
 
@@ -110,7 +110,7 @@ class Country extends DatabaseObject {
 	 */
 	function getCode()
 	{
-		return $this->getProperty('Code');
+		return $this->m_data['Code'];
 	} // fn getCode
 
 

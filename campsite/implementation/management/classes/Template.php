@@ -48,32 +48,32 @@ class Template extends DatabaseObject {
 
 	function getTemplateId()
 	{
-		return $this->getProperty('Id');
+		return $this->m_data['Id'];
 	} // fn getTemplateId
 
 
 	function getName()
 	{
-		return $this->getProperty('Name');
+		return $this->m_data['Name'];
 	} // fn getName
 
 
 	function getType()
 	{
-		return $this->getProperty('Type');
+		return $this->m_data['Type'];
 	} // fn  getType
 
 
 	function getLevel()
 	{
-		return $this->getProperty('Level');
+		return $this->m_data['Level'];
 	} // fn getLevel
 
 
 	function getAbsoluteUrl()
 	{
 		global $Campsite;
-		return $Campsite['WEBSITE_URL'].'/look/'.$this->getProperty('Name');
+		return $Campsite['WEBSITE_URL'].'/look/'.$this->m_data['Name'];
 	} // fn getAbsoluteUrl
 
 

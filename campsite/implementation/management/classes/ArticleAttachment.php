@@ -47,7 +47,7 @@ class ArticleAttachment extends DatabaseObject {
 	 */
 	function getAttachmentId()
 	{
-		return $this->getProperty('fk_attachment_id');
+		return $this->m_data['fk_attachment_id'];
 	} // fn getAttachmentId
 
 
@@ -56,7 +56,7 @@ class ArticleAttachment extends DatabaseObject {
 	 */
 	function getArticleNumber()
 	{
-		return $this->getProperty('fk_article_number');
+		return $this->m_data['fk_article_number'];
 	} // fn getArticleNumber
 
 

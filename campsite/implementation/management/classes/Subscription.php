@@ -47,25 +47,25 @@ class Subscription extends DatabaseObject {
 
 	function getSubscriptionId()
 	{
-		return $this->getProperty('Id');
+		return $this->m_data['Id'];
 	} // fn getSubscriptionId
 
 
 	function getUserId()
 	{
-		return $this->getProperty('IdUser');
+		return $this->m_data['IdUser'];
 	} // fn getUserId
 
 
 	function getPublicationId()
 	{
-		return $this->getProperty('IdPublication');
+		return $this->m_data['IdPublication'];
 	} // fn getPublicationId
 
 
 	function getToPay()
 	{
-		return $this->getProperty('ToPay');
+		return $this->m_data['ToPay'];
 	} // fn getToPay
 
 
@@ -83,19 +83,19 @@ class Subscription extends DatabaseObject {
 
 	function getCurrency()
 	{
-		return $this->getProperty('Currency');
+		return $this->m_data['Currency'];
 	} // fn getCurrency
 
 
 	function getType()
 	{
-		return $this->getProperty('Type');
+		return $this->m_data['Type'];
 	} // fn getType
 
 
 	function isActive()
 	{
-		$active = $this->getProperty('Active');
+		$active = $this->m_data['Active'];
 		if ($active == 'Y') {
 			return true;
 		} else {

@@ -54,7 +54,7 @@ class Log extends DatabaseObject {
 	 */
 	function getTimeStamp()
 	{
-		return $this->getProperty('time_created');
+		return $this->m_data['time_created'];
 	} // fn getTimeStamp
 
 
@@ -64,7 +64,7 @@ class Log extends DatabaseObject {
 	 */
 	function getText()
 	{
-		return $this->getProperty('text');
+		return $this->m_data['text'];
 	} // fn getText
 
 
@@ -74,7 +74,7 @@ class Log extends DatabaseObject {
 	 */
 	function getEventId()
 	{
-		return $this->getProperty('fk_event_id');
+		return $this->m_data['fk_event_id'];
 	} // fn getEventId
 
 

@@ -3,8 +3,8 @@
 /**
  * Includes
  */
-// We indirectly reference the DOCUMENT_ROOT so we can enable 
-// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT'] 
+// We indirectly reference the DOCUMENT_ROOT so we can enable
+// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT']
 // is not defined in these cases.
 if (!isset($g_documentRoot)) {
     $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
@@ -23,7 +23,7 @@ class SubscriptionDefaultTime extends DatabaseObject {
 		'TrialTime',
 		'PaidTime'
 		);
-    
+
   	function SubscriptionDefaultTime($p_countryCode = null, $p_publicationId = null)
   	{
   		parent::DatabaseObject($this->m_columnNames);
@@ -33,8 +33,8 @@ class SubscriptionDefaultTime extends DatabaseObject {
   			$this->fetch();
   		}
   	} // constructor
-  	
-  	
+
+
   	/**
   	 * @param array $p_values
   	 * @return boolean
@@ -44,41 +44,41 @@ class SubscriptionDefaultTime extends DatabaseObject {
   		$success = parent::create($p_values);
   		$publicationObj =& new Publication($this->m_data['IdPublication']);
 		if (function_exists("camp_load_language")) { camp_load_language("api");	}
-		$logtext = getGS('The default subscription time for $1 has been added.', 
-						 "(".getGS("Publication")." ".$publicationObj->getName() 
-						 .':'.$this->m_data['CountryCode'].")"); 
-		Log::Message($logtext, null, 4);  		
+		$logtext = getGS('The default subscription time for $1 has been added.',
+						 "(".getGS("Publication")." ".$publicationObj->getName()
+						 .':'.$this->m_data['CountryCode'].")");
+		Log::Message($logtext, null, 4);
 		return $success;
   	} // fn create
-  	
-  	
+
+
   	/**
   	 * @return string
   	 */
   	function getCountryCode()
   	{
-  		return $this->getProperty('CountryCode');
+  		return $this->m_data['CountryCode'];
   	} // fn getCountryCode
-  	
-  	
+
+
   	/**
   	 * @return int
   	 */
   	function getPublicationId()
   	{
-  		return $this->getProperty('IdPublication');
+  		return $this->m_data['IdPublication'];
   	} // fn getPublicationId
-  	
-  	
+
+
   	/**
   	 * @return int
   	 */
   	function getTrialTime()
   	{
-  		return $this->getProperty('TrialTime');
+  		return $this->m_data['TrialTime'];
   	} // fn getTrialTime
-  	
-  	
+
+
   	/**
   	 * @param int $p_value
   	 */
@@ -86,17 +86,17 @@ class SubscriptionDefaultTime extends DatabaseObject {
   	{
   		return $this->setProperty('TrialTime', $p_value);
   	} // fn setTrialTime
-  	
-  	
+
+
   	/**
   	 * @return int
   	 */
   	function getPaidTime()
   	{
-  		return $this->getProperty('PaidTime');
+  		return $this->m_data['PaidTime'];
   	} // fn getPaidTime
-  	
-  	
+
+
   	/**
   	 * @param int $p_value
   	 */
@@ -104,8 +104,8 @@ class SubscriptionDefaultTime extends DatabaseObject {
   	{
   		return $this->setProperty('PaidTime', $p_value);
   	} // fn setPaidTime
-  	
-  	
+
+
   	function GetSubscriptionDefaultTimes($p_countryCode = null, $p_publicationId = null)
   	{
   		$constraints = array();
@@ -117,7 +117,7 @@ class SubscriptionDefaultTime extends DatabaseObject {
   		}
   		return DatabaseObject::Search('SubscriptionDefaultTime', $constraints);
   	}
-  	
-  	
+
+
 } // class SubscriptionDefaultTime
 ?>

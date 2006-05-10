@@ -15,17 +15,17 @@ $g_inputErrors = array();
  */
 class Input {
 	/**
-	 * Please see: {@link http://ca.php.net/manual/en/function.get-magic-quotes-gpc.php 
-	 * this PHP.net page specifically the user note by php at kaiundina dot de}, 
+	 * Please see: {@link http://ca.php.net/manual/en/function.get-magic-quotes-gpc.php
+	 * this PHP.net page specifically the user note by php at kaiundina dot de},
 	 * for why this is so complicated.
-	 * 
+	 *
 	 * @param array $p_array
 	 * @return array
 	 */
-	function CleanMagicQuotes($p_array) 
+	function CleanMagicQuotes($p_array)
 	{
 	   $gpcList = array();
-	  
+
 	   foreach ($p_array as $key => $value) {
 	       $decodedKey = stripslashes($key);
 	       if (is_array($value)) {
@@ -37,8 +37,8 @@ class Input {
 	   }
 	   return $gpcList;
 	} // fn CleanMagicQuotes
-	
-	
+
+
 	/**
 	 * Get an input value from the $_REQUEST array and check its type.
 	 * The default value is returned if the value is not defined in the $_REQUEST array,
@@ -49,7 +49,7 @@ class Input {
 	 * @param string $p_varName
 	 *		The index into the $_REQUEST array.
 	 *
-	 * @param string $p_type 
+	 * @param string $p_type
 	 *		The type of data expected; can be 'int' or 'string'.  Default is 'string'.
 	 *
 	 * @param mixed $p_defaultValue
@@ -62,10 +62,14 @@ class Input {
 	 *
 	 * @return mixed
 	 */
-	function Get($p_varName, $p_type = 'string', $p_defaultValue = null, $p_errorsOk = false) 
+	function Get($p_varName, $p_type = 'string', $p_defaultValue = null, $p_errorsOk = false)
 	{
 		global $g_inputErrors;
-		
+        $p_type = strtolower($p_type);
+
+        if ($p_type == 'checkbox') {
+            return isset($_REQUEST[$p_varName]);
+        }
 		if (!isset($_REQUEST[$p_varName])) {
 			if (!$p_errorsOk) {
 				$g_inputErrors[$p_varName] = 'not set';
@@ -80,7 +84,7 @@ class Input {
 				$_REQUEST[$p_varName] = stripslashes($_REQUEST[$p_varName]);
 			}
 		}
-		switch (strtolower($p_type)) {
+		switch ($p_type) {
 		case 'int':
 			if (!is_numeric($_REQUEST[$p_varName])) {
 				if (!$p_errorsOk) {
@@ -118,17 +122,17 @@ class Input {
 //						.' Value is "'.$_REQUEST[$p_varName].'".';
 //				}
 //				return $p_defaultValue;
-			} 
+			}
 		}
 		return $_REQUEST[$p_varName];
 	} // fn get
-	
-	
+
+
 	/**
 	 * Return FALSE if any calls to Input::Get() resulted in an error.
 	 * @return boolean
 	 */
-	function IsValid() 
+	function IsValid()
 	{
 		global $g_inputErrors;
 		if (count($g_inputErrors) > 0) {
@@ -137,13 +141,13 @@ class Input {
 			return true;
 		}
 	} // fn isValid
-	
-	
+
+
 	/**
 	 * Return a default error string.
 	 * @return string
 	 */
-	function GetErrorString() 
+	function GetErrorString()
 	{
 		global $g_inputErrors;
 		ob_start();
@@ -151,7 +155,7 @@ class Input {
 		$str = ob_get_clean();
 		return $str;
 	} // fn GetErrorString
-	
+
 } // class Input
 
 ?>

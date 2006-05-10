@@ -48,25 +48,25 @@ class SubscriptionSection extends DatabaseObject {
 
 	function getSubscriptionId()
 	{
-		return $this->getProperty('IdSubscription');
+		return $this->m_data['IdSubscription'];
 	} // fn getSubscriptionId
 
 
 	function getSectionNumber()
 	{
-		return $this->getProperty('SectionNumber');
+		return $this->m_data['SectionNumber'];
 	} // fn getSectionNumber
 
 
 	function getLanguageId()
 	{
-		return $this->getProperty('IdLanguage');
+		return $this->m_data['IdLanguage'];
 	} // fn getSubscriptionId
 
 
 	function getStartDate()
 	{
-		return $this->getProperty('StartDate');
+		return $this->m_data['StartDate'];
 	} // fn getStartDate
 
 
@@ -78,7 +78,7 @@ class SubscriptionSection extends DatabaseObject {
 
 	function getDays()
 	{
-		return $this->getProperty('Days');
+		return $this->m_data['Days'];
 	} // fn getDays
 
 
@@ -90,7 +90,7 @@ class SubscriptionSection extends DatabaseObject {
 
 	function getPaidDays()
 	{
-		return $this->getProperty('PaidDays');
+		return $this->m_data['PaidDays'];
 	} // fn getPaidDays
 
 
@@ -105,7 +105,7 @@ class SubscriptionSection extends DatabaseObject {
 	 */
 	function noticeSent()
 	{
-		$sent = $this->getProperty('NoticeSent');
+		$sent = $this->m_data['NoticeSent'];
 		if ($sent == 'Y') {
 			return true;
 		} else {

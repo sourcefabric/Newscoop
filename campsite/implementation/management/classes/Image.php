@@ -141,7 +141,7 @@ class Image extends DatabaseObject {
 	 */
 	function getImageId()
 	{
-		return $this->getProperty('Id');
+		return $this->m_data['Id'];
 	} // fn getImageId
 
 
@@ -150,7 +150,7 @@ class Image extends DatabaseObject {
 	 */
 	function getDescription()
 	{
-		return $this->getProperty('Description');
+		return $this->m_data['Description'];
 	} // fn getDescription
 
 
@@ -159,7 +159,7 @@ class Image extends DatabaseObject {
 	 */
 	function getPhotographer()
 	{
-		return $this->getProperty('Photographer');
+		return $this->m_data['Photographer'];
 	} // fn getPhotographer
 
 
@@ -168,7 +168,7 @@ class Image extends DatabaseObject {
 	 */
 	function getPlace()
 	{
-		return $this->getProperty('Place');
+		return $this->m_data['Place'];
 	} // fn getPlace
 
 
@@ -177,7 +177,7 @@ class Image extends DatabaseObject {
 	 */
 	function getDate()
 	{
-		return $this->getProperty('Date');
+		return $this->m_data['Date'];
 	} // fn getDate
 
 
@@ -186,7 +186,7 @@ class Image extends DatabaseObject {
 	 */
 	function getLocation()
 	{
-		return $this->getProperty('Location');
+		return $this->m_data['Location'];
 	} // fn getLocation
 
 
@@ -195,7 +195,7 @@ class Image extends DatabaseObject {
 	 */
 	function getUrl()
 	{
-		return $this->getProperty('URL');
+		return $this->m_data['URL'];
 	} // fn getUrl
 
 
@@ -204,7 +204,7 @@ class Image extends DatabaseObject {
 	 */
 	function getContentType()
 	{
-		return $this->getProperty('ContentType');
+		return $this->m_data['ContentType'];
 	} // fn getContentType
 
 

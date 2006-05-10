@@ -163,7 +163,7 @@ class Phorum_forum extends DatabaseObject {
 	 */
 	function getForumId()
 	{
-		return $this->getProperty("forum_id");
+		return $this->m_data["forum_id"];
 	}
 
 
@@ -176,7 +176,7 @@ class Phorum_forum extends DatabaseObject {
 	 */
 	function getName()
 	{
-		return $this->getProperty("name");
+		return $this->m_data["name"];
 	} // fn getName
 
 
@@ -201,7 +201,7 @@ class Phorum_forum extends DatabaseObject {
 	 */
 	function checkDuplicates()
 	{
-		return $this->getProperty("check_duplicate");
+		return $this->m_data["check_duplicate"];
 	} // fn checkDuplicates
 
 
@@ -228,7 +228,7 @@ class Phorum_forum extends DatabaseObject {
 	 */
 	function getPublicPermissions()
 	{
-		return $this->getProperty('pub_perms');
+		return $this->m_data['pub_perms'];
 	} // fn getPublicPermissions
 
 
@@ -269,7 +269,7 @@ class Phorum_forum extends DatabaseObject {
 	 */
 	function getRegisteredUserPermissions()
 	{
-		return $this->getProperty("reg_perms");
+		return $this->m_data["reg_perms"];
 	} // fn getRegisteredUserPermissions
 
 
@@ -312,7 +312,7 @@ class Phorum_forum extends DatabaseObject {
 	 */
 	function countViews()
 	{
-		return $this->getProperty("count_views");
+		return $this->m_data["count_views"];
 	} // fn countViews
 
 
@@ -342,7 +342,7 @@ class Phorum_forum extends DatabaseObject {
 	 */
 	function isVisible()
 	{
-		return $this->getProperty("active");
+		return $this->m_data["active"];
 	} // fn isVisible
 
 
@@ -366,7 +366,7 @@ class Phorum_forum extends DatabaseObject {
 	 */
 	function isModerated()
 	{
-		return $this->getProperty('moderation');
+		return $this->m_data['moderation'];
 	} // fn isModerated
 
 
@@ -393,7 +393,7 @@ class Phorum_forum extends DatabaseObject {
 	 */
 	function emailModeratorsEnabled()
 	{
-		return $this->getProperty('email_moderators');
+		return $this->m_data['email_moderators'];
 	} // fn emailModeratorsEnabled
 
 
@@ -418,7 +418,7 @@ class Phorum_forum extends DatabaseObject {
 	 */
 	function reverseThreadingEnabled()
 	{
-		return $this->getProperty('reverse_threading');
+		return $this->m_data['reverse_threading'];
 	} // fn reverseThreadingEnabled
 
 
@@ -429,7 +429,7 @@ class Phorum_forum extends DatabaseObject {
 	 */
 	function getNumMessages()
 	{
-		return $this->getProperty('message_count');
+		return $this->m_data['message_count'];
 	} // fn getNumMessages
 
 
@@ -440,7 +440,7 @@ class Phorum_forum extends DatabaseObject {
 	 */
 	function getNumThreads()
 	{
-		return $this->getProperty('thread_count');
+		return $this->m_data['thread_count'];
 	} // fn getNumThreads
 
 
@@ -451,7 +451,7 @@ class Phorum_forum extends DatabaseObject {
 	 */
 	function getNumSticky()
 	{
-		return $this->getProperty('sticky_count');
+		return $this->m_data['sticky_count'];
 	} // fn getNumSticky
 
 
@@ -463,7 +463,7 @@ class Phorum_forum extends DatabaseObject {
 	 */
 	function getLastPostTime()
 	{
-		return $this->getProperty('last_post_time');
+		return $this->m_data['last_post_time'];
 	} // fn getLastPostTime
 
 } // class Phorum_forum

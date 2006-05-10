@@ -227,7 +227,7 @@ class Phorum_user extends DatabaseObject {
   	 */
   	function getUserId()
   	{
-  		return $this->getProperty('user_id');
+  		return $this->m_data['user_id'];
   	} // fn getUserId
 
 
@@ -238,7 +238,7 @@ class Phorum_user extends DatabaseObject {
   	 */
   	function getUserName()
   	{
-  		return $this->getProperty('username');
+  		return $this->m_data['username'];
   	} // fn getUserName
 
 
@@ -250,7 +250,7 @@ class Phorum_user extends DatabaseObject {
   	 */
   	function getPassword()
   	{
-  		return $this->getProperty('password');
+  		return $this->m_data['password'];
   	} // fn getPassword
 
 
@@ -261,7 +261,7 @@ class Phorum_user extends DatabaseObject {
   	 */
   	function getEmail()
   	{
-  		return $this->getProperty('email');
+  		return $this->m_data['email'];
   	} // fn getEmail
 
 
@@ -272,7 +272,7 @@ class Phorum_user extends DatabaseObject {
   	 */
   	function getActivationStatus()
   	{
-  		return $this->getProperty('active');
+  		return $this->m_data['active'];
   	} // fn getActivationStatus
 
 
@@ -283,7 +283,7 @@ class Phorum_user extends DatabaseObject {
   	 */
   	function isAdmin()
   	{
-  		return $this->getProperty('admin');
+  		return $this->m_data['admin'];
   	} // fn isAdmin
 
 
@@ -294,7 +294,7 @@ class Phorum_user extends DatabaseObject {
   	 */
   	function getNumPosts()
   	{
-  		return $this->getProperty('posts');
+  		return $this->m_data['posts'];
   	} // fn getNumPosts
 
 

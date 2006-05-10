@@ -54,7 +54,7 @@ class ArticlePublish extends DatabaseObject {
 	 */
 	function getArticlePublishId()
 	{
-		return $this->getProperty('id');
+		return $this->m_data['id'];
 	} // fn getArticlePublishId
 
 
@@ -64,7 +64,7 @@ class ArticlePublish extends DatabaseObject {
 	 */
 	function getArticleNumber()
 	{
-	    return $this->getProperty('fk_article_number');
+	    return $this->m_data['fk_article_number'];
 	} // fn getArticleNumber
 
 
@@ -85,7 +85,7 @@ class ArticlePublish extends DatabaseObject {
 	 */
 	function getLanguageId()
 	{
-	    return $this->getProperty('fk_language_id');
+	    return $this->m_data['fk_language_id'];
 	} // fn getLanguageId
 
 

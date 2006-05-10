@@ -6,8 +6,8 @@
 /**
  * Includes
  */
-// We indirectly reference the DOCUMENT_ROOT so we can enable 
-// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT'] 
+// We indirectly reference the DOCUMENT_ROOT so we can enable
+// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT']
 // is not defined in these cases.
 if (!isset($g_documentRoot)) {
     $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
@@ -22,75 +22,75 @@ class Attachment extends DatabaseObject {
 	var $m_keyColumnNames = array('id');
 	var $m_keyIsAutoIncrement = true;
 	var $m_dbTableName = 'Attachments';
-	var $m_columnNames = array('id', 
+	var $m_columnNames = array('id',
 							   'fk_language_id',
-							   'file_name', 
-							   'extension', 
-							   'content_disposition', 
-							   'http_charset', 
-							   'mime_type', 
-							   'size_in_bytes', 
-							   'fk_description_id', 
+							   'file_name',
+							   'extension',
+							   'content_disposition',
+							   'http_charset',
+							   'mime_type',
+							   'size_in_bytes',
+							   'fk_description_id',
 							   'fk_user_id',
-							   'last_modified', 
+							   'last_modified',
 							   'time_created');
-	
-	function Attachment($p_id = null) 
-	{ 
+
+	function Attachment($p_id = null)
+	{
 		if (!is_null($p_id)) {
 			$this->m_data['id'] = $p_id;
 			$this->fetch();
 		}
 	} // constructor
-	
+
 
 	function delete()
 	{
 		if (!$this->exists()) {
 			return false;
 		}
-		
+
 		// Delete all the references to this image.
 		ArticleAttachment::OnAttachmentDelete($this->m_data['id']);
-		
+
 		// Delete the description
 		Translation::deletePhrase($this->m_data['fk_description_id']);
-		
+
 		// Delete the record in the database
 		$success = parent::delete();
-		
+
 		// Delete the images from disk
 		$file = $this->getStorageLocation();
 		if (file_exists($file) && is_file($file)) {
 			unlink($file);
 		}
-		
+
 		return $success;
 	} // fn delete
-		
-	
+
+
 	/**
 	 * @return int
 	 */
-	function getAttachmentId() 
+	function getAttachmentId()
 	{
-		return $this->getProperty('id');
+		return $this->m_data['id'];
 	} // fn getAttachmentId
-	
-	
+
+
 	/**
 	 * If this attachment is language-specific, e.g. a PDF written
 	 * in Serbian, this will return the language id of the attachment.
 	 * Otherwise, it will return NULL.
-	 * 
+	 *
 	 * @return int
 	 */
-	function getLanguageId() 
+	function getLanguageId()
 	{
-		return $this->getProperty('fk_language_id');
+		return $this->m_data['fk_language_id'];
 	} // fn getLanguageId
-	
-	
+
+
 	/**
 	 * @param int $p_value
 	 * @return boolean
@@ -103,16 +103,16 @@ class Attachment extends DatabaseObject {
 			return $this->setProperty('fk_language_id', $p_value);
 		}
 	} // fn setLanguageId
-	
-	
+
+
 	/**
 	 * @return string
 	 */
-	function getFileName() 
+	function getFileName()
 	{
-		return $this->getProperty('file_name');
+		return $this->m_data['file_name'];
 	} // fn getFileName
-	
+
 
 	/**
 	 * Return the file name extension
@@ -121,10 +121,10 @@ class Attachment extends DatabaseObject {
 	 */
 	function getExtension()
 	{
-		return $this->getProperty('extension');
+		return $this->m_data['extension'];
 	} // fn getExtension
-	
-	
+
+
 	/**
 	 * Return whether the "content-disposition" HTTP header should be set.
 	 * This will return either NULL or the string "attachment".
@@ -133,10 +133,10 @@ class Attachment extends DatabaseObject {
 	 */
 	function getContentDisposition()
 	{
-		return $this->getProperty('content_disposition');
+		return $this->m_data['content_disposition'];
 	} // fn getContentDisposition
-	
-	
+
+
 	/**
 	 * Set the "content-disposition" HTTP header.
 	 *
@@ -154,8 +154,8 @@ class Attachment extends DatabaseObject {
 			return $this->setProperty('content_disposition', $p_value);
 		}
 	} // fn setContentDisposition
-	
-	
+
+
 	/**
 	 * Return the CHARSET which should be set in the HTTP header sent
 	 * to the downloader.
@@ -164,22 +164,22 @@ class Attachment extends DatabaseObject {
 	 */
 	function getCharset()
 	{
-		return $this->getProperty('http_charset');
+		return $this->m_data['http_charset'];
 	} // fn getCharset
-	
+
 
 	/**
-	 * Return the MIME type which should be set in the HTTP header 
+	 * Return the MIME type which should be set in the HTTP header
 	 * to the downloader.
 	 *
 	 * @return string
 	 */
 	function getMimeType()
 	{
-		return $this->getProperty('mime_type');
+		return $this->m_data['mime_type'];
 	} // fn getMimeType
-	
-	
+
+
 	/**
 	 * Get the size of the file in bytes
 	 *
@@ -187,10 +187,10 @@ class Attachment extends DatabaseObject {
 	 */
 	function getSizeInBytes()
 	{
-		return $this->getProperty('size_in_bytes');
+		return $this->m_data['size_in_bytes'];
 	} // fn getSizeInBytes
-	
-	
+
+
 	/**
 	 * Get the description ID which is an index into the Translations table.
 	 *
@@ -198,14 +198,14 @@ class Attachment extends DatabaseObject {
 	 */
 	function getDescriptionId()
 	{
-		return $this->getProperty('fk_description_id');
+		return $this->m_data['fk_description_id'];
 	} // fn getDescriptionId
-	
-	
+
+
 	/**
 	 * Get the description in the given language.
 	 * This is a convenience function that wraps the Translation::GetPhrase() function.
-	 * 
+	 *
 	 * @param int $p_languageId
 	 * @return string
 	 */
@@ -213,8 +213,8 @@ class Attachment extends DatabaseObject {
 	{
 		return Translation::GetPhrase($p_languageId, $this->m_data['fk_description_id']);
 	} // fn getDescription
-	
-	
+
+
 	/**
 	 * Set the description in the given language.
 	 *
@@ -225,20 +225,20 @@ class Attachment extends DatabaseObject {
 	{
 		Translation::SetPhrase($p_languageId, $this->m_data['fk_description_id'], $p_text);
 	} // fn setDescription
-	
-	
+
+
 	function getLastModified()
 	{
-		return $this->getProperty('last_modified');
+		return $this->m_data['last_modified'];
 	} // fn getLastModified
-	
-	
+
+
 	function getTimeCreated()
 	{
-		return $this->getProperty('time_created');
+		return $this->m_data['time_created'];
 	} // fn getTimeCreated
-	
-	
+
+
 	/**
 	 * Get the full path to the storage location of the file on disk.
 	 *
@@ -255,10 +255,10 @@ class Attachment extends DatabaseObject {
 	    if (isset($this->m_data['extension']) && !empty($this->m_data['extension'])) {
 	    	$storageLocation .= '.'.$this->m_data['extension'];
 	    }
-	    return $storageLocation;		
+	    return $storageLocation;
 	} // fn getStorageLocation
-	
-	
+
+
 	function getLevel1DirectoryName()
 	{
 		global $Campsite;
@@ -266,8 +266,8 @@ class Attachment extends DatabaseObject {
 		$level1ZeroPad = strlen($Campsite['FILE_NUM_DIRS_LEVEL_1']);
  		return sprintf('%0'.$level1ZeroPad.'d', $level1Dir);
 	} // fn getLevel1DirectoryName
-	
-	
+
+
 	function getLevel2DirectoryName()
 	{
 		global $Campsite;
@@ -290,10 +290,10 @@ class Attachment extends DatabaseObject {
 	    	mkdir($level2, 0755);
 	    }
 	} // fn makeDirectories
-	
-	
+
+
 	/**
-	 * This function should be called when an attachment is uploaded.  It will 
+	 * This function should be called when an attachment is uploaded.  It will
 	 * save the attachment to the appropriate place on the disk, and create a
 	 * database entry for the file.
 	 *
@@ -319,7 +319,7 @@ class Attachment extends DatabaseObject {
 	 *		The Attachment object that was created or updated.
 	 *		NULL if there was an error.
 	 */
-	function OnFileUpload($p_fileVar, $p_attributes, $p_id = null) 
+	function OnFileUpload($p_fileVar, $p_attributes, $p_id = null)
 	{
 		if (!is_array($p_fileVar)) {
 			return null;
@@ -330,7 +330,7 @@ class Attachment extends DatabaseObject {
 		if ($filesize === false) {
 			return null;
 		}
-		
+
 		// Are we updating or creating?
 	 	if (!is_null($p_id)) {
 	 		// Updating the attachment
@@ -366,7 +366,7 @@ class Attachment extends DatabaseObject {
         $attachment->commit();
         return $attachment;
 	} // fn OnFileUpload
-		
+
 } // class Attachment
 
 ?>

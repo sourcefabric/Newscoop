@@ -82,7 +82,7 @@ class Translation extends DatabaseObject {
 	 */
 	function getPhraseId()
 	{
-		return $this->getProperty('phrase_id');
+		return $this->m_data['phrase_id'];
 	} // fn getPhraseId
 
 
@@ -93,7 +93,7 @@ class Translation extends DatabaseObject {
 	 */
 	function getLanguageId()
 	{
-		return $this->getProperty('fk_language_id');
+		return $this->m_data['fk_language_id'];
 	} // fn getLanguageId
 
 
@@ -104,7 +104,7 @@ class Translation extends DatabaseObject {
 	 */
 	function getText()
 	{
-		return $this->getProperty('translation_text');
+		return $this->m_data['translation_text'];
 	} // fn getText
 
 

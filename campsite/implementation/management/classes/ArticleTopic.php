@@ -29,7 +29,7 @@ class ArticleTopic extends DatabaseObject {
 	 */
 	function getTopicId()
 	{
-		return $this->getProperty('TopicId');
+		return $this->m_data['TopicId'];
 	} // fn getTopicId
 
 
@@ -38,7 +38,7 @@ class ArticleTopic extends DatabaseObject {
 	 */
 	function getArticleNumber()
 	{
-		return $this->getProperty('NrArticle');
+		return $this->m_data['NrArticle'];
 	} // fn getArticleNumber
 
 

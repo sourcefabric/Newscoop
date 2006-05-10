@@ -6,8 +6,8 @@
 /**
  * Includes
  */
-// We indirectly reference the DOCUMENT_ROOT so we can enable 
-// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT'] 
+// We indirectly reference the DOCUMENT_ROOT so we can enable
+// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT']
 // is not defined in these cases.
 if (!isset($g_documentRoot)) {
     $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
@@ -26,16 +26,16 @@ class Language extends DatabaseObject {
 	var $m_dbTableName = 'Languages';
 	var $m_keyColumnNames = array('Id');
 	var $m_keyIsAutoIncrement = true;
-	var $m_columnNames = array('Id', 'Name', 'CodePage', 'OrigName', 
-	   'Code', 'Month1', 'Month2', 'Month3', 'Month4', 'Month5', 
-	   'Month6', 'Month7', 'Month8', 'Month9', 'Month10', 'Month11', 
+	var $m_columnNames = array('Id', 'Name', 'CodePage', 'OrigName',
+	   'Code', 'Month1', 'Month2', 'Month3', 'Month4', 'Month5',
+	   'Month6', 'Month7', 'Month8', 'Month9', 'Month10', 'Month11',
 	   'Month12', 'WDay1', 'WDay2', 'WDay3', 'WDay4', 'WDay5', 'WDay6', 'WDay7' );
-	
-	/** 
+
+	/**
 	 * Constructor.
 	 * @param int $p_languageId
 	 */
-	function Language($p_languageId = null) 
+	function Language($p_languageId = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
 		if (!is_null($p_languageId)) {
@@ -43,8 +43,8 @@ class Language extends DatabaseObject {
 			$this->fetch();
 		}
 	} // constructor
-	
-	
+
+
 	/**
 	 * Create the language.
 	 *
@@ -58,22 +58,22 @@ class Language extends DatabaseObject {
 	    	Localizer::CreateLanguageFiles($this->m_data['Code']);
 	    	camp_create_language_links();
 			if (function_exists("camp_load_language")) { camp_load_language("api");	}
-	        $logtext = getGS('Language $1 added', $this->m_data['Name']." (".$this->m_data['OrigName'].")"); 
+	        $logtext = getGS('Language $1 added', $this->m_data['Name']." (".$this->m_data['OrigName'].")");
 	        Log::Message($logtext, null, 101);
 		}
-		return $success;		
+		return $success;
 	} // fn create
-	
-	
+
+
 	function update($p_values = null, $p_commit = true, $p_isSql = false)
 	{
 		parent::update($p_values, $p_commit, $p_isSql);
 		if (function_exists("camp_load_language")) { camp_load_language("api");	}
-        $logtext = getGS('Language $1 modified', $this->m_data['Name']." (".$this->m_data['OrigName'].")"); 
-        Log::Message($logtext, null, 103);		
+        $logtext = getGS('Language $1 modified', $this->m_data['Name']." (".$this->m_data['OrigName'].")");
+        Log::Message($logtext, null, 103);
 	} // fn update
-	
-	
+
+
 	function delete()
 	{
 		global $g_documentRoot;
@@ -82,60 +82,60 @@ class Language extends DatabaseObject {
 		$success = parent::delete();
 		if ($success) {
 			if (function_exists("camp_load_language")) { camp_load_language("api");	}
-			$logtext = getGS('Language $1 deleted', $this->m_data['Name']." (".$this->m_data['OrigName'].")"); 
+			$logtext = getGS('Language $1 deleted', $this->m_data['Name']." (".$this->m_data['OrigName'].")");
 			Log::Message($logtext, null, 102);
 		}
-		return $success;		
+		return $success;
 	} // fn delete
-	
-	
+
+
 	/**
 	 * The unique ID of the language in the database.
 	 * @return int
 	 */
-	function getLanguageId() 
+	function getLanguageId()
 	{
-		return $this->getProperty('Id');
+		return $this->m_data['Id'];
 	} // fn getLanguageId
-	
-	
+
+
 	/**
 	 * Return the english name of this language.
 	 * @return string
 	 */
-	function getName() 
+	function getName()
 	{
-		return $this->getProperty('Name');
+		return $this->m_data['Name'];
 	} // fn getName
-	
+
 
 	/**
 	 * Return the name of the language as written in the language itself.
 	 * @return string
-	 */ 
-	function getNativeName() 
+	 */
+	function getNativeName()
 	{
-		return $this->getProperty('OrigName');
+		return $this->m_data['OrigName'];
 	} // fn get
-	
-	
+
+
 	/**
 	 * Get the two-letter code for this language.
 	 * @return string
 	 */
-	function getCode() 
+	function getCode()
 	{
-		return $this->getProperty('Code');
+		return $this->m_data['Code'];
 	} // fn getCode
-	
-	
+
+
 	/**
 	 * Get the page encoding for this language.
 	 * @return string
 	 */
-	function getCodePage() 
+	function getCodePage()
 	{
-	    return $this->getProperty('CodePage');
+	    return $this->m_data['CodePage'];
 	} // fn getCodePage
 
 
@@ -161,7 +161,7 @@ class Language extends DatabaseObject {
 	    }
 	    return DatabaseObject::Search('Language', $constraints);
 	} // fn GetLanguages
-	
+
 } // class Language
 
 ?>

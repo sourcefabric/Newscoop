@@ -74,7 +74,7 @@ class Alias extends DatabaseObject {
 	 */
 	function getId()
 	{
-		return $this->getProperty('Id');
+		return $this->m_data['Id'];
 	} // fn getId
 
 
@@ -83,7 +83,7 @@ class Alias extends DatabaseObject {
 	 */
 	function getName()
 	{
-		return $this->getProperty('Name');
+		return $this->m_data['Name'];
 	} // fn getName
 
 
@@ -106,7 +106,7 @@ class Alias extends DatabaseObject {
 	 */
 	function getPublicationId()
 	{
-		return $this->getProperty('IdPublication');
+		return $this->m_data['IdPublication'];
 	} // fn getPublicationId
 
 
