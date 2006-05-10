@@ -61,13 +61,6 @@ using std::bad_alloc;
 int RunParser(MYSQL* p_pSQL, CURL* p_pcoURL, const char* p_pchRemoteIP, sockstream& p_rOs)
 	throw(RunException, bad_alloc);
 
-// WriteCharset: write http tag specifying the charset - according to current language
-// Parameters:
-//		CContext& c - current context
-//		MYSQL* pSql - pointer to MySQL connection
-//		sockstream& fs - output stream
-int WriteCharset(CContext& c, MYSQL* pSql, sockstream& fs);
-
 // Login: perform login action: log user in
 // Parameters:
 //		CContext& c - current context

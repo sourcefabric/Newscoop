@@ -437,26 +437,6 @@ int RunParser(MYSQL* p_pSQL, CURL* p_pcoURL, const char* p_pchRemoteIP, sockstre
 	return 0;
 }
 
-// WriteCharset: write http tag specifying the charset - according to current language
-// Parameters:
-//		CContext& c - current context
-//		MYSQL* pSql - pointer to MySQL connection
-//		sockstream& fs - output stream
-int WriteCharset(CContext& c, MYSQL* pSql, sockstream& fs)
-{
-	if (c.Language() < 0)
-		return -1;
-	char pchBuf[100];
-	sprintf(pchBuf, "select CodePage from Languages where Id = %ld", c.Language());
-	SQLQuery(pSql, pchBuf);
-	StoreResult(pSql, coSqlRes);
-	CheckForRows(*coSqlRes, 1);
-	FetchRow(*coSqlRes, row);
-//	fs << "<META HTTP-EQUIV=\"Content-Type\" content=\"text/html; charset=" << row[0] << "\">" << endl;
-	fs << "<META HTTP-EQUIV=\"Content-Type\" content=\"text/html; charset=UTF-8\">" << endl;
-	return 0;
-}
-
 // Login: perform login action: log user in
 // Parameters:
 //		CContext& c - current context
