@@ -62,19 +62,19 @@ if ($User->hasPermission("DeletePub")) {
 
 
 <P>
-<FORM NAME="dialog" METHOD="POST" ACTION="do_edit.php"  >
+<FORM METHOD="POST" ACTION="do_edit.php">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 <tr><td colspan=2><font size="+1"><b><?php putGS("General attributes"); ?></b></font></td></tr>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cName" VALUE="<?php  p(htmlspecialchars($publicationObj->getName())); ?>" SIZE="32" MAXLENGTH="255">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_name" VALUE="<?php  p(htmlspecialchars($publicationObj->getName())); ?>" SIZE="32" MAXLENGTH="255">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Default Site Alias"); ?>:</TD>
 	<TD>
-		<SELECT NAME="cDefaultAlias" class="input_select">
+		<SELECT NAME="f_default_alias" class="input_select">
 		<?php
 			foreach ($aliases as $alias) {
 				camp_html_select_option($alias->getId(), $publicationObj->getDefaultAliasId(), $alias->getName());
@@ -87,7 +87,7 @@ if ($User->hasPermission("DeletePub")) {
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Default language"); ?>:</TD>
 	<TD>
-	<SELECT NAME="cLanguage" class="input_select">
+	<SELECT NAME="f_language" class="input_select">
 	<?php
 	foreach ($languages as $language) {
 		camp_html_select_option($language->getLanguageId(), $publicationObj->getDefaultLanguageId(), $language->getNativeName());
@@ -100,7 +100,7 @@ if ($User->hasPermission("DeletePub")) {
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("URL Type"); ?>:</TD>
 	<TD>
-	<SELECT NAME="cURLType" class="input_select">
+	<SELECT NAME="f_url_type" class="input_select">
 	<?php
 		foreach ($urlTypes as $urlType) {
 			camp_html_select_option($urlType->getId(), $publicationObj->getUrlTypeId(), $urlType->getName());
@@ -111,11 +111,47 @@ if ($User->hasPermission("DeletePub")) {
 </TR>
 
 <tr><td colspan=2><HR NOSHADE SIZE="1" COLOR="BLACK"></td></tr>
+<tr><td colspan=2><font size="+1"><b><?php putGS("Comments"); ?></b></font></td></tr>
+<TR>
+	<TD ALIGN="left" colspan="2" style="padding-left: 20px;">
+
+	   <table>
+	   <tr>
+	       <td>
+       	       <?php  putGS("Comments enabled?"); ?>:
+       	   </td>
+       	   <td>
+       	       <input type="checkbox" NAME="f_comments_enabled" class="input_checkbox" <?php if ($publicationObj->commentsEnabled()) { ?>checked<?php } ?>>
+        	</TD>
+        </TR>
+        <TR>
+        	<TD ALIGN="left"><?php  putGS("Article comments default to enabled?"); ?>:</td>
+        	<td>
+            <input type="checkbox" NAME="f_comments_article_default" class="input_checkbox" <?php if ($publicationObj->commentsArticleDefaultEnabled()) { ?>checked<?php } ?>>
+        	</TD>
+        </TR>
+        <TR>
+        	<TD ALIGN="left"><?php  putGS("Public comments moderated?"); ?>:</td>
+        	<td>
+            <input type="checkbox" NAME="f_comments_public_moderated" class="input_checkbox" <?php if ($publicationObj->commentsPublicModerated()) { ?>checked<?php } ?>>
+        	</TD>
+        </TR>
+        <TR>
+        	<TD ALIGN="left"><?php  putGS("Subscriber comments moderated?"); ?>:</td>
+        	<td>
+                <input type="checkbox" NAME="f_comments_subscribers_moderated" class="input_checkbox" <?php if ($publicationObj->commentsSubscribersModerated()) { ?>checked<?php } ?>>
+        	</TD>
+        </TR>
+        </table>
+    </td>
+</tr>
+
+<tr><td colspan=2><HR NOSHADE SIZE="1" COLOR="BLACK"></td></tr>
 <tr><td colspan=2><font size="+1"><b><?php putGS("Subscriptions defaults"); ?></b></font></td></tr>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Time Unit"); ?>:</TD>
 	<TD>
-    <SELECT NAME="cTimeUnit" class="input_select">
+    <SELECT NAME="f_time_unit" class="input_select">
 	<?php
 	foreach ($timeUnits as $timeUnit) {
 		camp_html_select_option($timeUnit->getUnit(), $publicationObj->getTimeUnit(), $timeUnit->getName());
@@ -130,7 +166,7 @@ if ($User->hasPermission("DeletePub")) {
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Currency"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cCurrency" VALUE="<?php p(htmlspecialchars($publicationObj->getCurrency())); ?>" SIZE="10" MAXLENGTH="10">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_currency" VALUE="<?php p(htmlspecialchars($publicationObj->getCurrency())); ?>" SIZE="10" MAXLENGTH="10">
 	</TD>
 </TR>
 <tr>
@@ -139,19 +175,19 @@ if ($User->hasPermission("DeletePub")) {
 <TR>
 	<TD ALIGN="RIGHT">- <?php putGS('one language'); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cUnitCost" VALUE="<?php  p($publicationObj->getUnitCost()); ?>" SIZE="10" MAXLENGTH="10">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_unit_cost" VALUE="<?php  p($publicationObj->getUnitCost()); ?>" SIZE="10" MAXLENGTH="10">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" >- <?php putGS('all languages'); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cUnitCostAllLang" VALUE="<?php  p($publicationObj->getUnitCostAllLang()); ?>" SIZE="10" MAXLENGTH="10">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_unit_cost_all_lang" VALUE="<?php  p($publicationObj->getUnitCostAllLang()); ?>" SIZE="10" MAXLENGTH="10">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Default time period"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cPaid" VALUE="<?php p($publicationObj->getPaidTime()); ?>" SIZE="10" MAXLENGTH="10"> <?php putGS('time units'); ?>
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_paid" VALUE="<?php p($publicationObj->getPaidTime()); ?>" SIZE="10" MAXLENGTH="10"> <?php putGS('time units'); ?>
 	</TD>
 </TR>
 <tr>
@@ -160,7 +196,7 @@ if ($User->hasPermission("DeletePub")) {
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Default time period"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cTrial" VALUE="<?php p($publicationObj->getTrialTime()); ?>" SIZE="10" MAXLENGTH="10"> <?php putGS('time units'); ?>
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_trial" VALUE="<?php p($publicationObj->getTrialTime()); ?>" SIZE="10" MAXLENGTH="10"> <?php putGS('time units'); ?>
 	</TD>
 </TR>
 	<tr><td colspan=2 align=center><a href="deftime.php?Pub=<?php echo $Pub; ?>"><?php putGS("Countries defaults"); ?></a></td></tr>
@@ -168,7 +204,7 @@ if ($User->hasPermission("DeletePub")) {
 	<TR>
 		<TD COLSPAN="2">
 		<DIV ALIGN="CENTER">
-		<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<?php  p($Pub); ?>">
+		<INPUT TYPE="HIDDEN" NAME="f_publication_id" VALUE="<?php  p($Pub); ?>">
 		<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
 		<!--<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/pub/'">-->
 		</DIV>

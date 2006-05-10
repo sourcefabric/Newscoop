@@ -17,45 +17,54 @@ if (!$User->hasPermission('ManagePub')) {
 	exit;
 }
 
-$Pub = Input::Get('Pub', 'int');
+$f_publication_id = Input::Get('f_publication_id', 'int');
 $TOL_Language = Input::Get('TOL_Language');
-$cName = trim(Input::Get('cName'));
-$cDefaultAlias = Input::Get('cDefaultAlias', 'int');
-$cLanguage = Input::Get('cLanguage', 'int');
-$cURLType = Input::Get('cURLType', 'int');
-$cTimeUnit = Input::Get('cTimeUnit');
-$cUnitCost = trim(Input::Get('cUnitCost', 'float', '0.0'));
-$cUnitCostAllLang = trim(Input::Get('cUnitCostAllLang', 'float', '0.0'));
-$cCurrency = trim(Input::Get('cCurrency'));
-$cPaid = Input::Get('cPaid', 'int');
-$cTrial = Input::get('cTrial', 'int');
+$f_name = trim(Input::Get('f_name'));
+$f_default_alias = Input::Get('f_default_alias', 'int');
+$f_language = Input::Get('f_language', 'int');
+$f_url_type = Input::Get('f_url_type', 'int');
+$f_time_unit = Input::Get('f_time_unit');
+$f_unit_cost = trim(Input::Get('f_unit_cost', 'float', '0.0'));
+$f_unit_cost_all_lang = trim(Input::Get('f_unit_cost_all_lang', 'float', '0.0'));
+$f_currency = trim(Input::Get('f_currency'));
+$f_paid = Input::Get('f_paid', 'int');
+$f_trial = Input::get('f_trial', 'int');
+$f_comments_enabled = Input::Get('f_comments_enabled', 'checkbox');
+$f_comments_article_default = Input::Get('f_comments_article_default', 'checkbox');
+$f_comments_public_moderated = Input::Get('f_comments_public_moderated', 'checkbox');
+$f_comments_subscribers_moderated = Input::Get('f_comments_subscribers_moderated', 'checkbox');
+
 $errorMsgs = array();
 $correct = true;
 $updated = false;
-if (empty($cName)) {
+if (empty($f_name)) {
 	$correct = false;
 	$errorMsgs[] = getGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>');
 }
-if (empty($cDefaultAlias)) {
+if (empty($f_default_alias)) {
 	$correct = false;
 	$errorMsgs = getGS('You must complete the $1 field.','<B>'.getGS('Site').'</B>');
 }
 
-$publicationObj =& new Publication($Pub);
+$publicationObj =& new Publication($f_publication_id);
 if ($correct) {
-	$columns = array('Name' => $cName,
-					 'IdDefaultAlias' => $cDefaultAlias,
-					 'IdDefaultLanguage' => $cLanguage,
-					 'IdURLType' => $cURLType,
-					 'TimeUnit' => $cTimeUnit,
-					 'PaidTime' => $cPaid,
-					 'TrialTime' => $cTrial,
-					 'UnitCost' => $cUnitCost,
-					 'UnitCostAllLang' => $cUnitCostAllLang,
-					 'Currency' => $cCurrency);
+	$columns = array('Name' => $f_name,
+					 'IdDefaultAlias' => $f_default_alias,
+					 'IdDefaultLanguage' => $f_language,
+					 'IdURLType' => $f_url_type,
+					 'TimeUnit' => $f_time_unit,
+					 'PaidTime' => $f_paid,
+					 'TrialTime' => $f_trial,
+					 'UnitCost' => $f_unit_cost,
+					 'UnitCostAllLang' => $f_unit_cost_all_lang,
+					 'Currency' => $f_currency,
+					 'comments_enabled' => $f_comments_enabled,
+					 'comments_article_default_enabled'=> $f_comments_article_default,
+					 'comments_subscribers_moderated' => $f_comments_subscribers_moderated,
+					 'comments_public_moderated' => $f_comments_public_moderated);
 	$updated = $publicationObj->update($columns);
 	if ($updated) {
-		header("Location: /$ADMIN/pub/edit.php?Pub=$Pub");
+		header("Location: /$ADMIN/pub/edit.php?Pub=$f_publication_id");
 		exit;
 	} else {
 		$errorMsgs[] = getGS('The publication information could not be updated.')
@@ -88,7 +97,7 @@ echo camp_html_content_top(getGS("Changing publication information"), array("Pub
 </TR>
 <TR>
 	<TD COLSPAN="2" align="center">
-		<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/pub/edit.php?Pub=<?php  p($Pub); ?>'">
+		<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/pub/edit.php?Pub=<?php  p($f_publication_id); ?>'">
 	</TD>
 </TR>
 </TABLE>

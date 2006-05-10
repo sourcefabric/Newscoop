@@ -16,7 +16,7 @@ if ($PubOffs < 0) {
 }
 $ItemsPerPage = 15;
 
-$sqlOptions = array("LIMIT" => array("START" => $PubOffs, "MAX_ROWS" => $ItemsPerPage), 
+$sqlOptions = array("LIMIT" => array("START" => $PubOffs, "MAX_ROWS" => $ItemsPerPage),
                     "ORDER BY" => array("Name" => "ASC"));
 $publications = Publication::GetPublications($sqlOptions);
 $numPublications = Publication::GetNumPublications();
@@ -27,7 +27,7 @@ camp_html_content_top(getGS('Publication List'), null);
 
 ?>
 
-<?php  if ($User->hasPermission("ManagePub")) { ?>    
+<?php  if ($User->hasPermission("ManagePub")) { ?>
 <P>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons">
 <TR>
@@ -55,6 +55,7 @@ camp_html_content_top(getGS('Publication List'), null);
     <TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Default Site Alias"); ?></B></TD>
     <TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Default Language"); ?></B></TD>
     <?php  if ($User->hasPermission("ManagePub")) { ?>
+    <TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Comments enabled"); ?></B></TD>
     <TD ALIGN="LEFT" VALIGN="TOP" WIDTH="20%" ><B><?php  putGS("URL Type"); ?></B></TD>
     <TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Configure"); ?></B></TD>
     <?php  }
@@ -64,7 +65,7 @@ camp_html_content_top(getGS('Publication List'), null);
 </TR>
 <?php
 $color = 0;
-foreach ($publications as $pub) { ?>    
+foreach ($publications as $pub) { ?>
         <TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
         <TD>
             <A HREF="/<?php echo $ADMIN; ?>/issues/?Pub=<?php  p($pub->getPublicationId()); ?>"><?php  p(htmlspecialchars($pub->getName())); ?></A>
@@ -75,7 +76,14 @@ foreach ($publications as $pub) { ?>
         <TD>
             <?php  p(htmlspecialchars($pub->getProperty("NativeName"))); ?>&nbsp;
         </TD>
-        <?php  if ($User->hasPermission("ManagePub")) { ?>        
+        <?php  if ($User->hasPermission("ManagePub")) { ?>
+        <TD align="center">
+            <?php if ($pub->commentsEnabled()) { ?>
+                <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/is_shown.png" border="0">
+            <?php } else { ?>
+                <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/is_hidden.png" border="0">
+            <?php } ?>
+        </TD>
         <TD>
             <?php  p(htmlspecialchars($pub->getProperty('URLType'))); ?>&nbsp;
         </TD>
@@ -99,7 +107,7 @@ foreach ($publications as $pub) { ?>
     </TD>
 </TR>
 </TABLE>
-<?php 
+<?php
 } else {
 	?>
 	<BLOCKQUOTE>
