@@ -50,6 +50,15 @@ $articleTopics = ArticleTopic::GetArticleTopics($f_article_number);
 $articleFiles = ArticleAttachment::GetAttachmentsByArticleNumber($f_article_number, $f_language_selected);
 $articleLanguages = $articleObj->getLanguages();
 
+// Create displayable "last modified" time.
+$lastModified = strtotime($articleObj->getLastModified());
+$today = getdate();
+$savedOn = getdate($lastModified);
+$savedToday = true;
+if ($today['year'] != $savedOn['year'] || $today['mon'] != $savedOn['mon'] || $today['mday'] != $savedOn['mday']) {
+    $savedToday = false;
+}
+
 if ($f_publication_id > 0) {
 	$publicationObj =& new Publication($f_publication_id);
 	$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
@@ -214,27 +223,18 @@ if ($f_edit_mode == "edit") { ?>
 		<!-- for the left side of the article edit screen -->
 		<TABLE cellpadding="0" cellspacing="0">
 		<tr>
-			<td>
+			<td width="100%" valign="middle">
 
-			<!-- BEGIN the article control bar -->
-			<FORM name="article_actions" action="do_article_action.php" method="POST">
-			<INPUT TYPE="HIDDEN" NAME="f_publication_id" VALUE="<?php  p($f_publication_id); ?>">
-			<INPUT TYPE="HIDDEN" NAME="f_issue_number" VALUE="<?php  p($f_issue_number); ?>">
-			<INPUT TYPE="HIDDEN" NAME="f_section_number" VALUE="<?php  p($f_section_number); ?>">
-			<INPUT TYPE="HIDDEN" NAME="f_language_id" VALUE="<?php  p($f_language_id); ?>">
-			<INPUT TYPE="HIDDEN" NAME="f_language_selected" VALUE="<?php  p($f_language_selected); ?>">
-			<INPUT TYPE="HIDDEN" NAME="f_article_number" VALUE="<?php  p($f_article_number); ?>">
-			<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
-			<TR>
-				<TR>
-					<?PHP
-					if ($articleObj->userCanModify($User)) {
-					$switchModeUrl = camp_html_article_url($articleObj, $f_language_id, "edit.php")
-						."&f_edit_mode=".( ($f_edit_mode =="edit") ? "view" : "edit");
-					?>
-					<TD style="padding-left: 8px;"><a href="<?php p($switchModeUrl); ?>"><b><?php if ($f_edit_mode == "edit") { putGS("View"); } else { putGS("Edit"); } ?></b></a></TD>
-					<?php } ?>
-
+    			<!-- BEGIN the article control bar -->
+    			<FORM name="article_actions" action="do_article_action.php" method="POST">
+    			<INPUT TYPE="HIDDEN" NAME="f_publication_id" VALUE="<?php  p($f_publication_id); ?>">
+    			<INPUT TYPE="HIDDEN" NAME="f_issue_number" VALUE="<?php  p($f_issue_number); ?>">
+    			<INPUT TYPE="HIDDEN" NAME="f_section_number" VALUE="<?php  p($f_section_number); ?>">
+    			<INPUT TYPE="HIDDEN" NAME="f_language_id" VALUE="<?php  p($f_language_id); ?>">
+    			<INPUT TYPE="HIDDEN" NAME="f_language_selected" VALUE="<?php  p($f_language_selected); ?>">
+    			<INPUT TYPE="HIDDEN" NAME="f_article_number" VALUE="<?php  p($f_article_number); ?>">
+    			<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
+    			<TR>
 					<TD style="padding-left: 1em;">
 						<script>
 						function action_selected(dropdownElement)
@@ -372,6 +372,28 @@ if ($f_edit_mode == "edit") { ?>
 				</form>
 				<!-- END the article control bar -->
 			</TD>
+
+			<?PHP
+			if ($articleObj->userCanModify($User)) {
+			$switchModeUrl = camp_html_article_url($articleObj, $f_language_id, "edit.php")
+				."&f_edit_mode=".( ($f_edit_mode =="edit") ? "view" : "edit");
+			?>
+			<TD align="right" style="padding-top: 1px;" valign="top">
+			     <table cellpadding="0" cellspacing="0" border="0">
+			     <tr><td>
+			     <input type="button" name="edit" value="<?php putGS("Edit"); ?>" <?php if ($f_edit_mode == "edit") {?> disabled class="button_disabled" <?php } else { ?> onclick="location.href='<?php p($switchModeUrl); ?>';" class="button" <?php } ?>>
+			     </td>
+
+			     <td style="padding-left: 5px; padding-right: 10px;">
+			     <input type="button" name="edit" value="<?php putGS("View"); ?>" <?php if ($f_edit_mode == "view") {?> disabled class="button_disabled" <?php } else { ?> onclick="location.href='<?php p($switchModeUrl); ?>';" class="button" <?php } ?>>
+			     </td>
+
+			     <td style="background-color: #00CB38; color: #FFF; border: 1px solid white; padding-left: 5px; padding-right: 10px;" align="center" nowrap>
+			     <b><span style="font-size: larger;"><?php putGS("Saved:"); ?></span> <?php if ($savedToday) { p(date("H:i", $lastModified)); } else { p(date("Y-m-d H:i", $lastModified)); } ?></b>
+			     </td>
+			     </tr></table>
+			</TD>
+			<?php } ?>
 		</TR>
 		</table>
 	</td>
@@ -450,7 +472,7 @@ if ($f_edit_mode == "edit") { ?>
 			<TR>
 			    <td align="right" valign="top" nowrap><b><?php putGS("Number"); ?>:</b></td>
 			    <td align="left" valign="top"  style="padding-top: 2px; padding-left: 4px;"><?php p($articleObj->getArticleNumber()); ?> <?php if (isset($publicationObj) && $publicationObj->getUrlTypeId() == 2) { ?>
-&nbsp;(<a href="/<?php echo $languageObj->getCode()."/".$issueObj->getUrlName()."/".$sectionObj->getUrlName()."/".$articleObj->getUrlName(); ?>"><?php putGS("Link to front page"); ?></a>)<?php } ?></td>
+&nbsp;(<a href="/<?php echo $languageObj->getCode()."/".$issueObj->getUrlName()."/".$sectionObj->getUrlName()."/".$articleObj->getUrlName(); ?>"><?php putGS("Link to public page"); ?></a>)<?php } ?></td>
 
 				<TD ALIGN="RIGHT" valign="top" style="padding-left: 1em;"><b><?php  putGS("Publish date"); ?>:</b></TD>
 				<TD align="left" valign="top">
