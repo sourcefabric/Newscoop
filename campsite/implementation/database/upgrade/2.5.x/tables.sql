@@ -4,7 +4,8 @@ CREATE TABLE ArticleTypeMetadata (
     type_name VARCHAR(250) NOT NULL,
     field_name VARCHAR(250) NOT NULL DEFAULT 'NULL',
     field_weight INT,
-    is_hidden INT DEFAULT 0,
+    is_hidden TINYINT(1) NOT NULL DEFAULT 0,
+    comments_enabled TINYINT(1) NOT NULL DEFAULT '0',
     fk_phrase_id INT UNSIGNED,
     field_type VARCHAR(255),
     field_type_param VARCHAR(255),
@@ -31,15 +32,22 @@ CREATE TABLE `ArticleComments` (
   `fk_article_number` int(10) unsigned NOT NULL,
   `fk_language_id` int(10) unsigned NOT NULL,
   `fk_comment_thread_id` int(10) unsigned NOT NULL,
-  `is_first` tinyint(4) NOT NULL default '0',
+  `is_first` tinyint(1) NOT NULL default '0',
   KEY `fk_comment_thread_id` (`fk_comment_thread_id`),
   KEY `article_index` (`fk_article_number`,`fk_language_id`),
   KEY `first_message_index` (`fk_article_number`,`fk_language_id`,`is_first`)
 ) TYPE=MyISAM;
 
+-- Comment activation for articles.
+ALTER TABLE `Articles` ADD `comments_enabled` TINYINT( 1 ) NOT NULL DEFAULT '0' AFTER `ArticleOrder` ;
+ALTER TABLE `Articles` ADD `comments_locked` TINYINT( 1 ) NOT NULL DEFAULT '0' AFTER `comments_enabled`;
 
--- The forum ID for article comments.
-ALTER TABLE `Publications` ADD `fk_forum_id` INT NULL ;
+-- Modification to the Publications table for article comments.
+ALTER TABLE `Publications` ADD `fk_forum_id` INT NULL,
+ADD `comments_enabled` TINYINT(1) NOT NULL DEFAULT '0',
+ADD `comments_article_default_enabled` TINYINT(1) NOT NULL DEFAULT '0',
+ADD `comments_subscribers_moderated` TINYINT(1) NOT NULL DEFAULT '0',
+ADD `comments_public_moderated` TINYINT(1) NOT NULL DEFAULT '0';
 
 
 -- As always, there are more user permissions!

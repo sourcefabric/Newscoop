@@ -145,6 +145,8 @@ CREATE TABLE `Articles` (
   `LockTime` datetime NOT NULL default '0000-00-00 00:00:00',
   `ShortName` varchar(32) NOT NULL default '',
   `ArticleOrder` int(10) unsigned NOT NULL default '0',
+  `comments_enabled` tinyint(1) NOT NULL,
+  `comments_locked` tinyint(1) NOT NULL default '0',
   `time_updated` timestamp NOT NULL,
   PRIMARY KEY  (`IdPublication`,`NrIssue`,`NrSection`,`Number`,`IdLanguage`),
   UNIQUE KEY `IdPublication` (`IdPublication`,`NrIssue`,`NrSection`,`IdLanguage`,`Name`),
@@ -499,6 +501,10 @@ CREATE TABLE `Publications` (
   `IdDefaultAlias` int(10) unsigned NOT NULL default '0',
   `IdURLType` int(10) unsigned NOT NULL default '1',
   `fk_forum_id` int(11) default NULL,
+  `comments_enabled` tinyint(1) NOT NULL default '0',
+  `comments_article_default_enabled` tinyint(1) NOT NULL default '0',
+  `comments_subscribers_moderated` tinyint(1) NOT NULL default '0',
+  `comments_public_moderated` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`Id`),
   UNIQUE KEY `Alias` (`IdDefaultAlias`),
   UNIQUE KEY `Name` (`Name`)
@@ -850,7 +856,8 @@ CREATE TABLE `ArticleTypeMetadata` (
     `type_name` VARCHAR(250) NOT NULL,
     `field_name` VARCHAR(250) NOT NULL DEFAULT 'NULL',
     `field_weight` INT,
-    `is_hidden` INT DEFAULT 0,
+    `is_hidden` TINYINT(1) NOT NULL DEFAULT 0,
+    `comments_active` TINYINT(1) NOT NULL DEFAULT '0',
     `fk_phrase_id` INT UNSIGNED,
     `field_type` VARCHAR(255),
     `field_type_param` VARCHAR(255),
@@ -862,12 +869,14 @@ CREATE TABLE `ArticleTypeMetadata` (
 --
 DROP TABLE IF EXISTS `ArticleComments`;
 CREATE TABLE `ArticleComments` (
-`fk_article_number` INT UNSIGNED NOT NULL ,
-`fk_language_id` INT UNSIGNED NOT NULL ,
-`fk_comment_thread_id` INT UNSIGNED NOT NULL ,
-PRIMARY KEY ( `fk_article_number` , `fk_language_id` ) ,
-INDEX ( `fk_comment_thread_id` )
-) TYPE=MYISAM ;
+  `fk_article_number` int(10) unsigned NOT NULL,
+  `fk_language_id` int(10) unsigned NOT NULL,
+  `fk_comment_thread_id` int(10) unsigned NOT NULL,
+  `is_first` tinyint(1) NOT NULL default '0',
+  KEY `fk_comment_thread_id` (`fk_comment_thread_id`),
+  KEY `article_index` (`fk_article_number`,`fk_language_id`),
+  KEY `first_message_index` (`fk_article_number`,`fk_language_id`,`is_first`)
+) TYPE=MyISAM;
 
 --
 -- Phorum tables
