@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/article_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']. "/classes/ArticleType.php");
 
@@ -28,7 +28,7 @@ $f_article_language = Input::Get('f_article_language', 'int', $f_language_id, tr
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
-	exit;	
+	exit;
 }
 
 // Only for the article screens.
@@ -61,7 +61,7 @@ if (function_exists ("incModFile")) {
 	incModFile ();
 }
 
-$topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 
+$topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj,
 				  'Section' => $sectionObj);
 camp_html_content_top(getGS('Add new article'), $topArray, true, false, array(getGS("Articles") => "/$ADMIN/articles/?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id"));
 
@@ -95,7 +95,7 @@ if (sizeof($allArticleTypes) == 0) {
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.config.js"></script>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.core.js"></script>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.lang-enUS.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.validators.js"></script>	
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.validators.js"></script>
 
 <P>
 <FORM NAME="add_article" METHOD="GET" ACTION="do_add.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
@@ -132,11 +132,10 @@ if (sizeof($allArticleTypes) == 0) {
 			<TD>
 				<SELECT NAME="f_article_type" class="input_select" alt="select" emsg="<?php putGS('You must complete the $1 field.', getGS('Article Type')); ?>">
 				<option></option>
-				<?php 
+				<?php
 				foreach ($allArticleTypes as $tmpType) {
 					$tmpAT =& new ArticleType($tmpType);
-					if ($tmpAT->getStatus() != 'hidden')
-						camp_html_select_option($tmpType, $f_article_type, $tmpAT->getDisplayName());
+					camp_html_select_option($tmpType, $f_article_type, $tmpAT->getDisplayName());
 				}
 				?>
 				</SELECT>
@@ -148,15 +147,15 @@ if (sizeof($allArticleTypes) == 0) {
 				<?php if (count($allLanguages) > 1) { ?>
 				<SELECT NAME="f_article_language" alt="select" emsg="<?php putGS("You must select a language.")?>" class="input_select">
 				<option value="0"><?php putGS("---Select language---"); ?></option>
-				<?php 
+				<?php
 			 	foreach ($allLanguages as $tmpLanguage) {
-			 		camp_html_select_option($tmpLanguage->getLanguageId(), 
-			 								$f_article_language, 
+			 		camp_html_select_option($tmpLanguage->getLanguageId(),
+			 								$f_article_language,
 			 								$tmpLanguage->getNativeName());
 		        }
-				?>			
+				?>
 				</SELECT>
-				<?php } else { 
+				<?php } else {
 					$tmpLanguage = array_pop($allLanguages);
 					echo '<b>'.htmlspecialchars($tmpLanguage->getNativeName()).'</b>';
 					?>
@@ -164,11 +163,11 @@ if (sizeof($allArticleTypes) == 0) {
 					<?php
 				}
 				?>
-				
+
 			</TD>
 		</TR>
 		</table>
-	</td>	
+	</td>
 </tr>
 <TR>
 	<TD COLSPAN="2" align="center">
