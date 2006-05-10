@@ -144,8 +144,11 @@ class ArticleType {
 			$queryStr = "UPDATE ArticleTypeMetadata SET type_name='X". $p_newName ."' WHERE type_name='". $this->m_dbTableName ."'";
 			$success2 = $g_ado_db->Execute($queryStr);
 		}
-
-		if ($success2) {
+        if ($success2) {
+            $queryStr = "UPDATE Articles SET Type='". $p_newName ."' WHERE Type='". substr($this->m_dbTableName, 1) ."'";
+            $success3 = $g_ado_db->Execute($queryStr);       
+        }
+		if ($success3) {
 			$this->m_dbTableName = 'X'. $p_newName;
 			if (function_exists("camp_load_language")) { camp_load_language("api"); }
 			$logText = getGS('The article type $1 has been renamed to $2.', $this->m_dbTableName, $p_newName);
@@ -494,6 +497,130 @@ class ArticleType {
 		return $res;
 	} // fn getNumArticles
 
+	
+	/*
+	 * Does the merge.  The p_rules array is associative with the key being the DESTINATION
+	 * fieldname and the value being the SOURCE fieldname or '--None--'.  p_src is the table
+	 * from which we are merging and p_dest is the table into which we are merging.  We assume
+	 * that the p_rules array has already been verified elsewhere (cf. article_types/merge3.php).
+	 * 
+	 * if we are in preview mode, then I return the previewed object
+	 *
+	 * ? I should probably verify the p_rules in here
+	 * ? What do I do if the p_src has an EXTRA column over the p_dest?  do I create that column? 
+	 *
+	 * The merge basically works like this.  We go through row-by-row each of the destination
+	 * table's entries.  For each row, we go through each Field.  We create an insert statement
+	 * that creates a new row in the src table with the value of what is in the dest field, according 
+	 * to p_rules.
+	 *
+	 * @param p_src string
+	 * @param p_dest string
+	 * @param p_rules array
+	 * @param p_article int
+	 * @param p_preview, 'preview' or FALSE
+	 *
+	 * @return object ArticleType or TRUE/FALSE 
+	 */
+	function merge($p_src, $p_dest, $p_rules, $p_article = 0, $p_preview = false) 
+	{
+		global $g_ado_db;
+
+		
+		// 
+		// if in preview mode:
+		// first, copy over the destination table to an XPreviewNDestinationTable,
+		// where N normally is 0, but on the off chance that they have a table named
+		// XPreview0, I cycle through N as an integer until I get to a free table.
+		//
+		if ($p_preview) {
+            $res = 1;
+            $append = 0;
+            while ($res) {    	            
+				$sql = "DESC XPreview$append$p_dest";
+				$res = $g_ado_db->Execute($sql);
+		        $append++;     
+            }
+			$sql = "CREATE TABLE XPreview$append$p_dest LIKE X$p_dest";
+			$dest = 'Preview'. $append . $p_dest;
+			$g_ado_db->Execute($sql);		
+		} else {	
+			$dest = $p_dest;
+		}
+
+		//
+		// columns come from the p_rules array
+		// TODO: if there are extra columns (in src, but not in dest, I'll need to create them
+		// now.
+		//
+		/*
+		$destColumnNamesArray = array();
+		foreach ($p_rules as $destColumnName => $srcColumnName) {
+			array_push($destColumnNamesArray, $destColumnName);	
+		}
+		array_push($destColumnNamesArray, 'NrArticle');
+		array_push($destColumnNamesArray, 'IdLanguage');
+		$destColumnList = implode(",", $destColumnNamesArray);
+   */
+		// if in preview mode, we only do one article at a time
+        if ($p_preview) {
+            // if p_article is not set, then grab the first article
+	        // otherwise, grab the selected article in p_article  	
+    		if ($p_article == 0) {
+	       	    $sql = "SELECT * FROM X". $p_src;	    
+    		} else {
+	       		$sql = "SELECT * FROM X". $p_src ." WHERE NrArticle=". $articleId;
+		    }
+		    $row = $g_ado_db->GetRow($sql);
+		    $rows = array($row); // in preview mode, we only deal with one row
+        } else {
+            $sql = "SELECT * FROM X". $p_src;
+            $rows = $g_ado_db->GetRows($sql);
+        }
+        
+        if ($p_preview) {
+            /*$insertSql = "INSERT INTO X$dest ($destColumnList) VALUES ";
+	   	    $valuesArray = array();
+            foreach ($p_rules as $destColumnName => $srcColumnName) {
+			    if ($srcColumnName != '--None--') {
+				    $sql = "SELECT F". $srcColumnName ." FROM X". $p_src ." WHERE NrArticle=". $row['NrArticle'];
+				    $value = $g_ado_db->GetOne($sql);			
+    				$valuesArray[] = "'". $value ."'";	
+	       		}
+    		}
+    		$nextNumber = Article::__generateArticleNumber(); // ? Paul, is this the best way?
+            array_push($valuesArray, $nextNumber);
+            array_push($valuesArray, $row['IdLanguage']);
+	       	$insertSql .= "(". implode(',', $valuesArray) .")";
+		    $g_ado_db->Execute($insertSql);
+		    */							
+        
+
+            $oldArticle =& new Article($rows[0]['IdLanguage'], $rows[0]['NrArticle']);       
+            $oldData = $oldArticle->getArticleData(); 
+            $obj =& new Article();        
+            $obj->create($dest, $oldArticle->getName(), $oldArticle->getPublicationId(), $oldArticle->getIssueNumber(), $oldArticle->getSectionNumber());      
+		    // Insert an entry into the article type table.
+	//	    $articleData =& new ArticleData($this->m_data['Type'],
+	//		    $this->m_data['Number'],
+	//		    $this->m_data['IdLanguage']);
+	//	    $articleData->create();
+            $objData = $obj->getArticleData();
+            foreach ($p_rules as $destColumnName => $srcColumnName) {
+                if ($srcColumnName != '--None--') {
+                    $objData->setProperty($destColumnName, $oldData->getProperty($srcColumnName));     
+                }
+            }      
+        }
+
+        if ($p_preview) {            
+            
+            $sql = "DROP TABLE X$dest";
+            $g_ado_db->Execute($sql);
+            return $obj; 
+      	} else { return true; }
+	} // fn merge 
+	
 } // class ArticleType
 
 ?>
