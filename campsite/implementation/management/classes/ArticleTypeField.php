@@ -156,7 +156,7 @@ class ArticleTypeField {
      *
      * @param string p_type (text|date|body|topic)
      */
-	function setType($p_type) 
+	function setType($p_type)
 	{
 		global $g_ado_db;
 		$p_type = strtolower($p_type);
@@ -245,13 +245,15 @@ class ArticleTypeField {
 	{
 		global $g_ado_db;
 
-		$orders = $this->getOrders();		
+		$orders = $this->getOrders();
 		$queryStr = "ALTER TABLE ".$this->m_dbTableName." DROP COLUMN ".$this->m_dbColumnName;
 		$success = $g_ado_db->Execute($queryStr);
 
 		if ($success) {
 			$success = 0;
-			$queryStr = "DELETE FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' AND field_name='". $this->m_dbColumnName ."'";
+			$queryStr = "DELETE FROM ArticleTypeMetadata "
+			            ." WHERE type_name='". $this->m_dbTableName ."'"
+			            ." AND field_name='". $this->m_dbColumnName ."'";
 			$success = $g_ado_db->Execute($queryStr);
 		}
 
@@ -259,15 +261,17 @@ class ArticleTypeField {
 		if ($success) {
 			$mypos = array_keys($orders, $this->m_dbColumnName);
 			array_splice($orders, $mypos[0], 1);
-			$this->setOrders($orders);	
-		}		
+			$this->setOrders($orders);
+		}
 
 		if ($success) {
 
 			$queryStr = "DELETE FROM TopicFields WHERE ArticleType = '".$this->m_articleTypeName
 						."' and FieldName = '".substr($this->m_dbColumnName, 1)."'";
 			$g_ado_db->Execute($queryStr);
-			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+			if (function_exists("camp_load_language")) {
+			    camp_load_language("api");
+			}
 			$logtext = getGS('Article type field $1 deleted', $this->m_dbColumnName);
 			Log::Message($logtext, null, 72);
 			ParserCom::SendMessage("article_types", "modify", array("article_type"=>"$AType"));
@@ -374,7 +378,7 @@ class ArticleTypeField {
 	 *
 	 * @return string
 	 */
-	function getDisplayNameLanguageCode($p_lang = 0) 
+	function getDisplayNameLanguageCode($p_lang = 0)
 	{
 		if (!$p_lang) {
 			$lang = camp_session_get('LoginLanguageId', 1);
@@ -383,7 +387,9 @@ class ArticleTypeField {
 		}
 		$languageObj =& new Language($lang);
 		$translations = $this->getTranslations();
-		if (!isset($translations[$lang])) return '';
+		if (!isset($translations[$lang])) {
+		    return '';
+		}
 		return '('. $languageObj->getCode() .')';
 	} // fn getDisplayNameLanguageCode
 
@@ -397,7 +403,7 @@ class ArticleTypeField {
 	 *
 	 * @return string
 	 */
-	function getDisplayName($p_lang = 0) 
+	function getDisplayName($p_lang = 0)
 	{
 		if (!$p_lang) {
 			$lang = camp_session_get('LoginLanguageId', 1);
@@ -406,7 +412,9 @@ class ArticleTypeField {
 		}
 
 		$translations = $this->getTranslations();
-		if (!isset($translations[$lang])) return substr($this->Field, 1);
+		if (!isset($translations[$lang])) {
+		    return substr($this->Field, 1);
+		}
 		return $translations[$lang];
 	} // fn getDisplayName
 
@@ -416,22 +424,32 @@ class ArticleTypeField {
 	 *
 	 * @return string (shown|hidden)
 	 */
-	function getStatus() 
+	function getStatus()
 	{
-		if ($this->m_metadata[0]['is_hidden']) return 'hidden';
-		else return 'shown';
+		if ($this->m_metadata['is_hidden']) {
+		    return 'hidden';
+		} else {
+		    return 'shown';
+		}
 	} // fn getStatus
 
 
 	/**
 	 * @param string p_status (hide|show)
 	 */
-	function setStatus($p_status) 
+	function setStatus($p_status)
 	{
 		global $g_ado_db;
-		if ($p_status == 'show') $set = "is_hidden=0";
-		if ($p_status == 'hide') $set = "is_hidden=1";
-		$queryStr = "UPDATE ArticleTypeMetadata SET $set WHERE type_name='". $this->m_dbTableName ."' AND field_name='". $this->Field ."'";
+		if ($p_status == 'show') {
+		    $set = "is_hidden=0";
+		}
+		if ($p_status == 'hide') {
+		    $set = "is_hidden=1";
+		}
+		$queryStr = "UPDATE ArticleTypeMetadata "
+		            ." SET $set "
+		            ." WHERE type_name='". $this->m_dbTableName ."'"
+		            ." AND field_name='". $this->Field ."'";
 		$ret = $g_ado_db->Execute($queryStr);
 	} // fn setStatus
 
@@ -443,10 +461,15 @@ class ArticleTypeField {
 	 */
 	function getMetadata() {
 		global $g_ado_db;
-		if ($this->Field == '') $fieldName = $this->m_fieldName; 
-		else $fieldName = $this->Field;
-		$queryStr = "SELECT * FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' and field_name='". $fieldName ."'";
-		$queryArray = $g_ado_db->GetAll($queryStr);
+		if ($this->Field == '') {
+		    $fieldName = $this->m_fieldName;
+		} else {
+		    $fieldName = $this->Field;
+		}
+		$queryStr = "SELECT * FROM ArticleTypeMetadata "
+		            ." WHERE type_name='". $this->m_dbTableName ."'"
+		            ." AND field_name='". $fieldName ."'";
+		$queryArray = $g_ado_db->GetRow($queryStr);
 		return $queryArray;
 	} // fn getMetadata
 
@@ -454,9 +477,11 @@ class ArticleTypeField {
 	/**
 	 * @return -1 OR int
 	 */
-	function getPhraseId() 
+	function getPhraseId()
 	{
-		if (isset($this->m_metadata[0]['fk_phrase_id'])) { return $this->m_metadata[0]['fk_phrase_id']; }
+		if (isset($this->m_metadata['fk_phrase_id'])) {
+		    return $this->m_metadata['fk_phrase_id'];
+		}
 		return -1;
 	} // fn getPhraseId()
 
@@ -464,12 +489,13 @@ class ArticleTypeField {
 	/**
 	 * @return array
 	 */
-	function getTranslations() 
+	function getTranslations()
 	{
 		$return = array();
 		$tmp = Translation::getTranslations($this->getPhraseId());
-		foreach ($tmp as $k => $v)
+		foreach ($tmp as $k => $v) {
 			$return[$k] = $v;
+		}
 		return $return;
 	} // fn getTransltions
 
@@ -479,40 +505,45 @@ class ArticleTypeField {
 	 * returns 0 if no translation or the phrase_id if there is one.
 	 *
 	 * @param int p_languageId
-	 * 
+	 *
 	 * @return 0 or phrase id (int)
 	 */
 	function translationExists($p_languageId) {
 		global $g_ado_db;
-		$sql = "SELECT atm.*, t.* FROM ArticleTypeMetadata atm, Translations t WHERE atm.type_name='". $this->m_dbTableName ."' AND atm.field_name='". $this->m_dbColumnName ."' AND atm.fk_phrase_id = t.phrase_id AND t.fk_language_id = '$p_languageId'"; 		
+		$sql = "SELECT atm.*, t.* FROM ArticleTypeMetadata atm, Translations t WHERE atm.type_name='". $this->m_dbTableName ."' AND atm.field_name='". $this->m_dbColumnName ."' AND atm.fk_phrase_id = t.phrase_id AND t.fk_language_id = '$p_languageId'";
 		$row = $g_ado_db->getAll($sql);
-		if (count($row)) return $row[0]['fk_phrase_id'];
-		else { return 0; }
+		if (count($row)) {
+		    return $row[0]['fk_phrase_id'];
+		} else {
+		    return 0;
+		}
 	} // fn translationExists
 
 
 	/**
-	 * Set the type name for the given language.  A new entry in 
+	 * Set the type name for the given language.  A new entry in
 	 * the database will be created if the language does not exist.
-	 * 
+	 *
 	 * @param int $p_languageId
 	 * @param string $p_value
-	 * 
+	 *
 	 * @return boolean
 	 */
-	function setName($p_languageId, $p_value) 
+	function setName($p_languageId, $p_value)
 	{
 		global $g_ado_db;
 		if (!is_numeric($p_languageId)) {
 			return false;
 		}
-		// if the string is empty, nuke it		
+		// if the string is empty, nuke it
 		if (!is_string($p_value) || $p_value == '') {
 			if ($phrase_id = $this->translationExists($p_languageId)) {
 			    $trans =& new Translation($p_languageId, $phrase_id);
 			    $trans->delete();
 				$changed = true;
-			} else { $changed = false; }
+			} else {
+			    $changed = false;
+			}
 		} else if ($phrase_id = $this->translationExists($p_languageId)) {
 			// just update
 			$description =& new Translation($p_languageId, $phrase_id);
@@ -520,8 +551,10 @@ class ArticleTypeField {
 			$changed = true;
 		} else {
 			// Insert the new translation.
-			// first get the fk_phrase_id 
-			$sql = "SELECT fk_phrase_id FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' AND field_name='". $this->m_dbColumnName ."'";
+			// first get the fk_phrase_id
+			$sql = "SELECT fk_phrase_id FROM ArticleTypeMetadata"
+			       ." WHERE type_name='". $this->m_dbTableName ."'"
+			       ." AND field_name='". $this->m_dbColumnName ."'";
 			$row = $g_ado_db->GetRow($sql);
 			// if this is the first translation ...
 			if (!is_numeric($row['fk_phrase_id'])) {
@@ -529,93 +562,121 @@ class ArticleTypeField {
 				$description->create($p_value);
 				$phrase_id = $description->getPhraseId();
 				// if the phrase_id isn't there, insert it.
-				$sql = "UPDATE ArticleTypeMetadata SET fk_phrase_id=".$phrase_id ." WHERE type_name='". $this->m_dbTableName ."' AND field_name='". $this->m_dbColumnName ."'";
-				$changed = $g_ado_db->Execute($sql);			
-			} else { 
+				$sql = "UPDATE ArticleTypeMetadata "
+				       ." SET fk_phrase_id=".$phrase_id
+				       ." WHERE type_name='". $this->m_dbTableName ."'"
+				       ." AND field_name='". $this->m_dbColumnName ."'";
+				$changed = $g_ado_db->Execute($sql);
+			} else {
 				// if the phrase is already translated into atleast one language, just reuse that fk_phrase_id
 				$desc =& new Translation($p_languageId, $row['fk_phrase_id']);
 				$desc->create($p_value);
-				$changed = true; 
+				$changed = true;
 			}
 		}
 
 		if ($changed) {
-			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+			if (function_exists("camp_load_language")) {
+			    camp_load_language("api");
+			}
 			$logtext = getGS('Field $1 updated', $this->m_dbColumnName);
-			Log::Message($logtext, null, 143);		
-			//ParserCom::SendMessage('article_types', 'modify', array('article_type' => $this->m_name));
+			Log::Message($logtext, null, 143);
+			ParserCom::SendMessage('article_types', 'modify', array('article_type' => $this->m_name));
 		}
 
 		return $changed;
 	} // fn setName
 
-	
+
 	/*
 	 * Returns the highest weight + 1
 	 *
 	 * @return int
 	 */
-	function getNextOrder() 
+	function getNextOrder()
 	{
 		$next = 1;
 		global $g_ado_db;
-		$queryStr = "SELECT field_weight FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' AND field_name != 'NULL' ORDER BY field_weight DESC LIMIT 1";
+		$queryStr = "SELECT field_weight "
+		            ." FROM ArticleTypeMetadata "
+		            ." WHERE type_name='". $this->m_dbTableName ."'"
+		            ." AND field_name != 'NULL' "
+		            ." ORDER BY field_weight DESC LIMIT 1";
 		$row = $g_ado_db->getRow($queryStr);
 		if (isset($row['field_weight'])) {
-			if ($row['field_weight'] <= 0) $next = 1;
-			else $next = $row['field_weight'] + 1;
+			if ($row['field_weight'] <= 0) {
+			    $next = 1;
+			} else {
+			    $next = $row['field_weight'] + 1;
+			}
 		}
 		return ($next);
 	} // fn getNextOrder
 
-	
+
 	/**
-	 * Get the ordering of all fields; initially, a field has a field_weight of NULL when it is created.  if we discover that a field has a field weight of NULL,
-	 * we give it the MAX+1 field_weight.  Returns a NUMERIC array of ORDER => FIELDNAME
+	 * Get the ordering of all fields; initially, a field has a field_weight
+	 * of NULL when it is created.  if we discover that a field has a field
+	 * weight of NULL, we give it the MAX+1 field_weight.  Returns a NUMERIC
+	 * array of ORDER => FIELDNAME.
 	 *
 	 * @return array
 	 */
-	function getOrders() 
+	function getOrders()
 	{
 		global $g_ado_db;
-		$queryStr = "SELECT field_weight, field_name FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' AND field_name != 'NULL' ORDER BY field_weight DESC";
+		$queryStr = "SELECT field_weight, field_name "
+		            ." FROM ArticleTypeMetadata "
+		            ." WHERE type_name='". $this->m_dbTableName ."'"
+		            ." AND field_name != 'NULL' "
+		            ." ORDER BY field_weight DESC";
 		$queryArray = $g_ado_db->GetAll($queryStr);
 		foreach ($queryArray as $row => $values) {
-				if ($values['field_weight'] == NULL) { $values['field_weight'] = $max++; }
+			if ($values['field_weight'] == NULL) {
+			    $values['field_weight'] = $max++;
+			}
 			$orderArray[$values['field_weight']] = $values['field_name'];
 		}
 		return $orderArray;
 	} // fn setOrders
 
-	
-	/*
-	 * Saves the ordering of all the fields.  Accepts an NUMERIC array of ORDERRANK => FIELDNAME. (see getOrders)
+
+	/**
+	 * Saves the ordering of all the fields.  Accepts an NUMERIC array of
+	 * ORDERRANK => FIELDNAME. (see getOrders)
 	 *
 	 * @param array orderArray
 	 */
-	function setOrders($orderArray) 
+	function setOrders($orderArray)
 	{
 		global $g_ado_db;
 		foreach ($orderArray as $order => $field) {
-			$queryStr = "UPDATE ArticleTypeMetadata SET field_weight=$order WHERE type_name='". $this->m_dbTableName ."' AND field_name='". $field ."'";
+			$queryStr = "UPDATE ArticleTypeMetadata "
+			            ." SET field_weight=$order "
+			            ." WHERE type_name='". $this->m_dbTableName ."'"
+			            ." AND field_name='$field'";
 			$g_ado_db->Execute($queryStr);
 		}
 	} // fn setOrders
 
-	
+
 	/*
      * Reorders the current field; accepts either "up" or "down"
      *
      * @param string move (up|down)
 	 */
-	function reorder($move) 
+	function reorder($move)
 	{
 		$orders = $this->getOrders();
-		
+
 		$tmp = array_keys($orders, $this->Field);
 		$pos = $tmp[0];
-		if ($pos == 1 && $move == 'up') return;
-		if ($pos == count($orders) && $move == 'down') return;
+		if ($pos == 1 && $move == 'up') {
+		    return;
+		}
+		if ( ($pos == count($orders)) && ($move == 'down')) {
+		    return;
+		}
 		if ($move == 'down') {
 			$tmp = $orders[$pos + 1];
 			$orders[$pos + 1] = $orders[$pos];
@@ -626,7 +687,7 @@ class ArticleTypeField {
 			$orders[$pos - 1] = $orders[$pos];
 			$orders[$pos] = $tmp;
 		}
-		
+
 		$this->setOrders($orders);
 	} // fn reorder
 
