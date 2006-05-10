@@ -83,6 +83,7 @@ class Article extends DatabaseObject {
 		'LockTime',
 		'ShortName',
 		'ArticleOrder',
+		'comments_enabled',
 		'time_updated');
 
 	var $m_languageName = null;
@@ -494,7 +495,7 @@ class Article extends DatabaseObject {
 	 */
 	function getLockTime()
 	{
-		return $this->getProperty('LockTime');
+		return $this->m_data['LockTime'];
 	} // fn getLockTime
 
 
@@ -528,6 +529,9 @@ class Article extends DatabaseObject {
             return;
         }
 
+        // Dont change the article timestamp when the
+        // article is locked.
+        $lastModified = $this->m_data['time_updated'];
 	    if ($p_lock) {
     		$this->setProperty('LockUser', $p_userId);
     		$this->setProperty('LockTime', 'NOW()', true, true);
@@ -536,6 +540,7 @@ class Article extends DatabaseObject {
     		$this->setProperty('LockTime', '0', false);
     		$this->commit();
 	    }
+	    $this->setProperty('time_updated', $lastModified);
 	} // fn setIsLocked
 
 
@@ -797,7 +802,7 @@ class Article extends DatabaseObject {
 	 */
 	function getPublicationId()
 	{
-		return $this->getProperty('IdPublication');
+		return $this->m_data['IdPublication'];
 	} // fn getPublicationId
 
 
@@ -824,7 +829,7 @@ class Article extends DatabaseObject {
 	 */
 	function getIssueNumber()
 	{
-		return $this->getProperty('NrIssue');
+		return $this->m_data['NrIssue'];
 	} // fn getIssueNumber
 
 
@@ -851,7 +856,7 @@ class Article extends DatabaseObject {
 	 */
 	function getSectionNumber()
 	{
-		return $this->getProperty('NrSection');
+		return $this->m_data['NrSection'];
 	} // fn getSectionNumber
 
 
@@ -878,7 +883,7 @@ class Article extends DatabaseObject {
 	 */
 	function getLanguageId()
 	{
-		return $this->getProperty('IdLanguage');
+		return $this->m_data['IdLanguage'];
 	} // fn getLanguageId
 
 
@@ -893,7 +898,7 @@ class Article extends DatabaseObject {
 	 */
 	function getArticleNumber()
 	{
-		return $this->getProperty('Number');
+		return $this->m_data['Number'];
 	} // fn getArticleNumber
 
 
@@ -904,7 +909,7 @@ class Article extends DatabaseObject {
 	 */
 	function getTitle()
 	{
-		return $this->getProperty('Name');
+		return $this->m_data['Name'];
 	} // fn getTitle
 
 
@@ -915,7 +920,7 @@ class Article extends DatabaseObject {
 	 */
 	function getName()
 	{
-		return $this->getProperty('Name');
+		return $this->m_data['Name'];
 	} // fn getName
 
 
@@ -938,19 +943,19 @@ class Article extends DatabaseObject {
 	 */
 	function getType()
 	{
-		return $this->getProperty('Type');
+		return $this->m_data['Type'];
 	} // fn getType
 
-	
+
 	/**
 	 * Get the logged in language's translation of the article type.
 	 * @return string
 	 */
-	function getTranslateType() 
+	function getTranslateType()
 	{
 		$type = $this->getType();
 		$typeObj =& new ArticleType($type);
-		return $typeObj->getDisplayName();	
+		return $typeObj->getDisplayName();
 	}
 
 
@@ -960,7 +965,7 @@ class Article extends DatabaseObject {
 	 */
 	function getCreatorId()
 	{
-		return $this->getProperty('IdUser');
+		return $this->m_data['IdUser'];
 	} // fn getCreatorId
 
 
@@ -985,7 +990,7 @@ class Article extends DatabaseObject {
 	 */
 	function getOrder()
 	{
-		return $this->getProperty('ArticleOrder');
+		return $this->m_data['ArticleOrder'];
 	} // fn getOrder
 
 
@@ -996,7 +1001,7 @@ class Article extends DatabaseObject {
 	 */
 	function onFrontPage()
 	{
-		return ($this->getProperty('OnFrontPage') == 'Y');
+		return ($this->m_data['OnFrontPage'] == 'Y');
 	} // fn onFrontPage
 
 
@@ -1019,7 +1024,7 @@ class Article extends DatabaseObject {
 	 */
 	function onSectionPage()
 	{
-		return ($this->getProperty('OnSection') == 'Y');
+		return ($this->m_data['OnSection'] == 'Y');
 	} // fn onSectionPage
 
 
@@ -1045,7 +1050,7 @@ class Article extends DatabaseObject {
 	 */
 	function getWorkflowStatus()
 	{
-		return $this->getProperty('Published');
+		return $this->m_data['Published'];
 	} // fn getWorkflowStatus
 
 
@@ -1108,7 +1113,9 @@ class Article extends DatabaseObject {
 			$this->setIsLocked(false);
 		}
 		$changed = parent::setProperty('Published', $p_value);
-		if (function_exists("camp_load_language")) { camp_load_language("api");	}
+		if (function_exists("camp_load_language")) {
+		    camp_load_language("api");
+		}
 		$logtext = getGS('Article #$1: "$2" status changed from $3 to $4.',
 			$this->m_data['Number'], $this->m_data['Name'],
 			$this->getWorkflowDisplayString(), $this->getWorkflowDisplayString($p_value))
@@ -1126,23 +1133,25 @@ class Article extends DatabaseObject {
 	 */
 	function getPublishDate()
 	{
-	    return $this->getProperty('PublishDate');
+	    return $this->m_data['PublishDate'];
 	} // fn getPublishDate
 
 
 	/**
-	 * Return the date the article was created in the form YYYY-MM-DD HH:MM:SS.
+	 * Return the date the article was created in the
+	 * form YYYY-MM-DD HH:MM:SS.
 	 *
 	 * @return string
 	 */
 	function getCreationDate()
 	{
-		return $this->getProperty('UploadDate');
+		return $this->m_data['UploadDate'];
 	} // fn getCreationDate
 
 
 	/**
-	 * Set the date the article was created, parameter must be in the form YYYY-MM-DD.
+	 * Set the date the article was created, parameter must be in the
+	 * form YYYY-MM-DD.
 	 * @param string $p_value
 	 * @return boolean
 	 */
@@ -1153,11 +1162,23 @@ class Article extends DatabaseObject {
 
 
 	/**
+	 * Return the date the article was last modified in the
+	 * form YYYY-MM-DD HH:MM:SS.
+	 *
+	 * @return string
+	 */
+	function getLastModified()
+	{
+	    return $this->m_data['time_updated'];
+	} // fn getLastModified
+
+
+	/**
 	 * @return string
 	 */
 	function getKeywords()
 	{
-		$keywords = $this->getProperty('Keywords');
+		$keywords = $this->m_data['Keywords'];
 		$keywordSeparator = SystemPref::Get("KeywordSeparator");
 		return str_replace(",", $keywordSeparator, $keywords);
 	} // fn getKeywords
@@ -1182,7 +1203,7 @@ class Article extends DatabaseObject {
 	 */
 	function isPublic()
 	{
-		return ($this->getProperty('Public') == 'Y');
+		return ($this->m_data['Public'] == 'Y');
 	} // fn isPublic
 
 
@@ -1203,7 +1224,7 @@ class Article extends DatabaseObject {
 	 */
 	function isIndexed()
 	{
-		return ($this->getProperty('IsIndexed') == 'Y');
+		return ($this->m_data['IsIndexed'] == 'Y');
 	} // fn isIndexed
 
 
@@ -1222,7 +1243,7 @@ class Article extends DatabaseObject {
 	 */
 	function getLockedByUser()
 	{
-		return $this->getProperty('LockUser');
+		return $this->m_data['LockUser'];
 	} // fn getLockedByUser
 
 
@@ -1234,7 +1255,14 @@ class Article extends DatabaseObject {
 	 */
 	function setLockedByUser($p_value)
 	{
-		return parent::setProperty('LockUser', $p_value);
+	    // Dont change the timestamp when an article
+	    // is locked.
+	    $timestamp = $this->m_data['time_updated'];
+		$success = parent::setProperty('LockUser', $p_value);
+		if ($success) {
+		    parent::setProperty('time_updated', $timestamp);
+		}
+		return $success;
 	} // fn setLockedByUser
 
 
@@ -1245,7 +1273,7 @@ class Article extends DatabaseObject {
 	 */
 	function getUrlName()
 	{
-		return $this->getProperty('ShortName');
+		return $this->m_data['ShortName'];
 	} // fn getUrlName
 
 
@@ -1265,47 +1293,37 @@ class Article extends DatabaseObject {
 	 */
 	function getArticleData()
 	{
-		return new ArticleData($this->getProperty('Type'),
-			$this->getProperty('Number'),
-			$this->getProperty('IdLanguage'));
+		return new ArticleData($this->m_data['Type'],
+			$this->m_data['Number'],
+			$this->m_data['IdLanguage']);
 	} // fn getArticleData
 
 
-//	/**
-//	 * Create and return an array representation of an article for use in a template.
-//	 * @return array
-//	 */
-//	function getTemplateVar() {
-//		$templateVar = array();
-//		$templateVar['publication_id'] = $this->IdPublication;
-//		$templateVar['issue_id'] = $this->NrIssue;
-//		$templateVar['section_id'] = $this->NrSection;
-//		$templateVar['article_id'] = $this->Number;
-//		$templateVar['language_id'] = $this->IdLanguage;
-//		$templateVar['article_type'] = $this->Type;
-//		$templateVar['user_id'] = $this->IdUser;
-//		$templateVar['title'] = $this->Name;
-//		$templateVar['on_front_page'] = $this->OnFrontPage;
-//		$templateVar['on_section'] = $this->OnSection;
-//		$templateVar['published'] = $this->Published;
-//		$templateVar['upload_date'] = $this->UploadDate;
-//		$templateVar['keywords'] = $this->Keywords;
-//		$templateVar['is_public'] = $this->Public;
-//		$templateVar['is_indexed'] = $this->IsIndexed;
-//		$templateVar['locked_by_user'] = $this->LockUser;
-//		$templateVar['lock_time'] = $this->LockTime;
-//		$templateVar['short_name'] = $this->ShortName;
-//		return $templateVar;
-//	} // fn getTemplateVar
+	/**
+	 * Return TRUE if comments have been activated.
+	 *
+	 * @return boolean
+	 */
+	function commentsEnabled()
+	{
+	    return $this->m_data['comments_enabled'];
+	} // fn commentsEnabled
 
 
-	/***************************************************************************/
-	/* Static Functions                                                        */
-	/***************************************************************************/
+	function setCommentsEnabled($p_value)
+	{
+	    $p_value = $p_value ? '1' : '0';
+	    return $this->setProperty('comments_enabled', $p_value);
+	} // fn setCommentsEnabled
+
+
+	/*****************************************************************/
+    /** Static Functions                                             */
+    /*****************************************************************/
 
 	/**
-	 * Return the number of unique (language-independant) articles according
-	 * to the given parameters.
+	 * Return the number of unique (language-independant) articles
+	 * according to the given parameters.
 	 * @param int $p_publicationId
 	 * @param int $p_issueId
 	 * @param int $p_sectionId
@@ -1336,8 +1354,9 @@ class Article extends DatabaseObject {
 
 	/**
 	 * Return an array of (array(Articles), int) where
-	 * the array of articles are those written by the given user, within the given range,
-	 * and the int is the total number of articles written by the user.
+	 * the array of articles are those written by the given user,
+	 * within the given range, and the int is the total number of
+	 * articles written by the user.
 	 *
 	 * @param int $p_userId
 	 * @param int $p_start
@@ -1487,11 +1506,12 @@ class Article extends DatabaseObject {
 	 *		Index into the result array to begin at.
 	 *
 	 * @param boolean $p_numRowsIsUniqueRows -
-	 *		Whether the number of rows stated in p_rows should be interpreted as
-	 *		the number of articles to return regardless of how many times an
-	 *		article has been translated.  E.g. an article translated three times
-	 *		would be counted as one article if this is set to TRUE, and counted
-	 *		as three articles if this is set to FALSE.
+	 *		Whether the number of rows stated in p_rows should be
+	 *      interpreted as the number of articles to return regardless
+	 *      of how many times an article has been translated.  E.g. an
+	 *      article translated three times would be counted as one
+	 *      article if this is set to TRUE, and counted	as three
+	 *      articles if this is set to FALSE.
 	 *		Default: false
 	 *
 	 * @return array
@@ -1608,7 +1628,7 @@ class Article extends DatabaseObject {
 		return $g_ado_db->GetOne($queryStr);
 	} // fn GetNumArticlesOfType
 
-	
+
 	/**
 	 * Return an array of article objects of a certain type.
 	 *
@@ -1623,8 +1643,8 @@ class Article extends DatabaseObject {
 		$articles = DbObjectArray::Create('Article', $sql);
 		return $articles;
 	} // fn GetArticlesOfType
-	
-	
+
+
 	/**
 	 * Get the $p_max number of the most recently published articles.
 	 * @param int $p_max
@@ -1649,7 +1669,7 @@ class Article extends DatabaseObject {
 	function UnlockByUser($p_userId)
 	{
 		global $g_ado_db;
-		$queryStr = 'UPDATE Articles SET LockUser=0, LockTime=0'
+		$queryStr = 'UPDATE Articles SET LockUser=0, LockTime=0, time_updated=time_updated'
 					." WHERE LockUser=$p_userId";
 		$g_ado_db->Execute($queryStr);
 	} // fn UnlockByUser
