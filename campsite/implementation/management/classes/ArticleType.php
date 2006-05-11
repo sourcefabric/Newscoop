@@ -514,11 +514,12 @@ class ArticleType {
 	 * that creates a new row in the src table with the value of what is in the dest field, according 
 	 * to p_rules.
 	 *
-	 * @param p_src string
-	 * @param p_dest string
-	 * @param p_rules array
-	 * @param p_article int
-	 * @param p_preview, 'preview' or FALSE
+	 * @param string p_src
+	 * @param string p_dest 
+	 * @param array p_rules 
+	 * @param int p_article
+	 * @param int p_language TODO
+	 * @param boolean p_preview
 	 *
 	 * @return object ArticleType or TRUE/FALSE 
 	 */
@@ -537,110 +538,126 @@ class ArticleType {
             $res = 1;
             $append = 0;
             while ($res) {    	            
-				$sql = "DESC XPreview$append$p_dest";
-				$res = $g_ado_db->Execute($sql);
-		        $append++;     
+				$append++; 
+                $sql = "DESC XPreview$append$p_dest";
+				$res = $g_ado_db->GetOne($sql);         
             }
-			//$sql = "CREATE TABLE XPreview$append$p_dest LIKE X$p_dest";
 		    $dest = 'Preview'. $append . $p_dest;
-			$previewType =& new ArticleType($dest);
-	        $previewType->create();
-	        $srcType =& new ArticleType($p_src);
-	        $srcDbColumns = $srcType->getUserDefinedColumns(1);
-	        foreach ($srcDbColumns as $dbColumn) {
-	            $destATF =& new ArticleTypeField($dest, $dbColumn->getPrintName());
-	            $srcATF =& new ArticleTypeField($p_src, $dbColumn->getPrintName());
-	            $destATF->create($srcATF->getPrintType());   
-	        }
-				
+            $sql = "CREATE TABLE X$dest LIKE X$p_dest";
+	        $res = $g_ado_db->Execute($sql);
+	        if (!$res) return 0;
+	        $sql = "SELECT * FROM ArticleTypeMetadata WHERE type_name='X$p_dest'";
+	        $rows = $g_ado_db->GetAll($sql);
+	        if (!count($rows)) return 0;
+            foreach ($rows as $row) {
+    	        $keys = array();
+	            $values = array();
+	            foreach ($row as $k => $v) {	           
+	                $keys[] = $k;
+	                if ($k == 'type_name') $v = 'X'.$dest;
+	        
+	            
+	               if (!is_numeric($v)) $values[] = "'$v'";
+	               else $values[] = $v;        
+	            }
+    	        $keysString = implode(',', $keys);
+	            $valuesString = implode(',', $values);
+	            $sql = "INSERT INTO ArticleTypeMetadata ($keysString) VALUES ($valuesString)";
+	            $res = $g_ado_db->Execute($sql);
+	            if (!$res) return 0;
+            }	        
 		} else {	
 			$dest = $p_dest;
 		}
 
 		//
 		// columns come from the p_rules array
-		// TODO: if there are extra columns (in src, but not in dest, I'll need to create them
+		// TODO: if there are extra columns (in src, but not in dest), I'll need to create them
 		// now.
 		//
-		/*
-		$destColumnNamesArray = array();
-		foreach ($p_rules as $destColumnName => $srcColumnName) {
-			array_push($destColumnNamesArray, $destColumnName);	
-		}
-		array_push($destColumnNamesArray, 'NrArticle');
-		array_push($destColumnNamesArray, 'IdLanguage');
-		$destColumnList = implode(",", $destColumnNamesArray);
-         */
+
 		// if in preview mode, we only do one article at a time
         if ($p_preview) {
             // if p_article is not set, then grab the first article
 	        // otherwise, grab the selected article in p_article  	
     		if ($p_article == 0) {
-	       	    $sql = "SELECT * FROM X". $p_src;	    
+	       	    $sql = "SELECT * FROM X$p_src LIMIT 1";	    
     		} else {
-	       		$sql = "SELECT * FROM X". $p_src ." WHERE NrArticle=". $articleId;
+	//       		$sql = "SELECT * FROM X$p_src WHERE NrArticle=$p_article AND IdLanguage=$p_language"; TODO
 		    }
 		    $row = $g_ado_db->GetRow($sql);
 		    if (!$row) {
-		      return -1;    
-		    }
-		    $rows = array($row); // in preview mode, we only deal with one row
-		    $sql = "SELECT * FROM Articles WHERE Number=". $rows[0]['NrArticle'];
+		      return 0;    
+		    }            		    
+		    $srcArticleNumber = $row['NrArticle'];
+		    $sql = "SELECT * FROM Articles WHERE Number=". $srcArticleNumber;		    
 		    $arow = $g_ado_db->GetRow($sql);
-		    $arows = array($arow);
-        } else {
-            $sql = "SELECT * FROM X". $p_src;
-            $rows = $g_ado_db->GetRows($sql);
-        }
-        
-        if ($p_preview) {
-            $tmpobj =& new Article();
-            $obj =& new Article($rows[0]['IdLanguage'], $tmpobj->getArticleNumber());   
-            $obj->create($dest, $arows[0]['Name']);         
-            $objData =& $obj->getArticleData();
-            foreach ($p_rules as $destColumnName => $srcColumnName) {
-			    if ($srcColumnName != '--None--') {
-    				$objData->setProperty($destColumnName, $rows[0]['F'.$srcColumnName]);	
-	       		}
-    		}
-    		/*//$nextNumber = Article::__generateArticleNumber(); // ? Paul, is this the best way?
-            array_push($valuesArray, $obj->getArticleNumber());
-            array_push($valuesArray, $row['IdLanguage']);
-	       	$insertSql .= "(". implode(',', $valuesArray) .")";
-		    $g_ado_db->Execute($insertSql);
-		    */
-		    // insert a row in the Articles table as well
+		    if (!$arow) return 0;
+            
+		    $fields = array();
+		    $values = array();
+		    $newNumber = Article::__generateArticleNumber();
 		    
-        }        
-/*
-            $tmpOldArticle =& new Article($rows[0]['IdLanguage'], $rows[0]['NrArticle']);       
-            //$oldData = $oldArticle->getArticleData(); 
-            $translations = $tmpOldArticle->getTranslations();
-            $oldArticle = $translations[0]; 
-            $obj =& new Article($rows[0]['IdLanguage']);        
-            $old_publication_id = $oldArticle->getPublicationId();
-            $old_name = $oldArticle->getName();
-            $old_issue_number = $oldArticle->getIssueNumber();
-            $old_section_number = $oldArticle->getSectionNumber();
-            $obj->create($dest, $old_name, $old_publication_id, $old_issue_number, $old_section_number);
-          		    // Insert an entry into the article type table.
-	//	    $articleData =& new ArticleData($this->m_data['Type'],
-	//		    $this->m_data['Number'],
-	//		    $this->m_data['IdLanguage']);
-	//	    $articleData->create();
-            //$objData = $obj->getArticleData();
+		    foreach ($arow as $k => $v) {
+		        $fields[] = $k;
+		        if ($k == 'Number' || $k == 'ShortName' || $k == 'ArticleOrder') {
+		            $v = $newNumber;
+		        }
+		        if ($k == 'Name')
+		            $v = $dest .'_Name';
+		        if ($k == 'Type') {
+		            $v = $dest;
+		        }
+		        if (is_numeric($v)) $values[] = $v;
+		        else $values[] = "'$v'";
+		    }
+		    $fieldsString = implode(',', $fields);
+		    $valuesString = implode(',', $values);
+		    $sql = "INSERT INTO Articles ($fieldsString) VALUES ($valuesString)";
+		    $res = $g_ado_db->Execute($sql);
+		    if (!$res)
+		      return 0;
+		    
+		    $sql = "SELECT * FROM X$p_src WHERE NrArticle=". $srcArticleNumber;
+		    $row = $g_ado_db->GetRow($sql);
+		    if (!$res)
+		      return 0;
+            $fields = array();
+            $values = array();
+            foreach ($p_rules as $destC => $srcC) {
+                $fields[] = $destC;
+                if ($srcC == '--None--') $values[] = "''";
+                else if (is_numeric($row['F'. $srcC])) $values[] = $row['F'. $srcC]; 
+                else $values[] = "'". $row['F'. $srcC] ."'"; 
+            }
+            $fields[] = 'NrArticle';
+            $values[] = $newNumber;
+            $fields[] = 'IdLanguage';
+            $values[] = $row['IdLanguage'];
+            $fieldsString = implode(',', $fields);
+            $valuesString = implode(',', $values);
+            $sql = "INSERT INTO X$dest ($fieldsString) VALUES ($valuesString)";          
+		    $res = $g_ado_db->Execute($sql);
+		    if (!$res)
+		      return 0;   
+
+            $obj =& new Article($row['IdLanguage'], $newNumber);
+            //$obj->create($dest, $arow['Name']);
+            //$objData =& $obj->getArticleData();
             //foreach ($p_rules as $destColumnName => $srcColumnName) {
-             //   if ($srcColumnName != '--None--') {
-            //        $objData->setProperty($destColumnName, $oldData->getProperty('F'. $srcColumnName));     
-            //    }
-           // }      
+			//    if ($srcColumnName != '--None--') {
+    		//		$objData->setProperty($destColumnName, $row['F'.$srcColumnName]);	
+	       	//	}
+            //}
+            return $obj;         
+        } else {
+            
+            
+            
+            
+            
         }
-*/
-        if ($p_preview) {                        
-            //ql = "DROP TABLE X$dest";
-            //$g_ado_db->Execute($sql);
-            return $obj; 
-      	} else { return true; }
+
 	} // fn merge 
 	
 } // class ArticleType
