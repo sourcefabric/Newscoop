@@ -84,6 +84,7 @@ class Article extends DatabaseObject {
 		'ShortName',
 		'ArticleOrder',
 		'comments_enabled',
+		'comments_locked',
 		'time_updated');
 
 	var $m_languageName = null;
@@ -1310,11 +1311,44 @@ class Article extends DatabaseObject {
 	} // fn commentsEnabled
 
 
+	/**
+	 * Set whether comments are enabled for this article.
+	 *
+	 * @param boolean $p_value
+	 * @return boolean
+	 */
 	function setCommentsEnabled($p_value)
 	{
 	    $p_value = $p_value ? '1' : '0';
 	    return $this->setProperty('comments_enabled', $p_value);
 	} // fn setCommentsEnabled
+
+
+	/**
+	 * Return TRUE if comments are locked for this article.
+	 * This means that comments cannot be added.
+	 *
+	 * @return boolean
+	 */
+	function commentsLocked()
+	{
+	    return $this->m_data['comments_locked'];
+	} // fn commentsLocked
+
+
+	/**
+	 * Set whether comments are locked for this article.
+	 * If TRUE, this means that comments cannot be added to
+	 * the article.
+	 *
+	 * @param boolean $p_value
+	 * @return boolean
+	 */
+	function setCommentsLocked($p_value)
+	{
+	    $p_value = $p_value ? '1' : '0';
+	    return $this->setProperty('comments_locked', $p_value);
+	} // fn setCommentsLocked
 
 
 	/*****************************************************************/
