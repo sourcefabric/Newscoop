@@ -541,9 +541,18 @@ class ArticleType {
 				$res = $g_ado_db->Execute($sql);
 		        $append++;     
             }
-			$sql = "CREATE TABLE XPreview$append$p_dest LIKE X$p_dest";
-			$dest = 'Preview'. $append . $p_dest;
-			$g_ado_db->Execute($sql);		
+			//$sql = "CREATE TABLE XPreview$append$p_dest LIKE X$p_dest";
+		    $dest = 'Preview'. $append . $p_dest;
+			$previewType =& new ArticleType($dest);
+	        $previewType->create();
+	        $srcType =& new ArticleType($p_src);
+	        $srcDbColumns = $srcType->getUserDefinedColumns(1);
+	        foreach ($srcDbColumns as $dbColumn) {
+	            $destATF =& new ArticleTypeField($dest, $dbColumn->getPrintName());
+	            $srcATF =& new ArticleTypeField($p_src, $dbColumn->getPrintName());
+	            $destATF->create($srcATF->getPrintType());   
+	        }
+				
 		} else {	
 			$dest = $p_dest;
 		}
@@ -561,7 +570,7 @@ class ArticleType {
 		array_push($destColumnNamesArray, 'NrArticle');
 		array_push($destColumnNamesArray, 'IdLanguage');
 		$destColumnList = implode(",", $destColumnNamesArray);
-   */
+         */
 		// if in preview mode, we only do one article at a time
         if ($p_preview) {
             // if p_article is not set, then grab the first article
@@ -572,51 +581,64 @@ class ArticleType {
 	       		$sql = "SELECT * FROM X". $p_src ." WHERE NrArticle=". $articleId;
 		    }
 		    $row = $g_ado_db->GetRow($sql);
+		    if (!$row) {
+		      return -1;    
+		    }
 		    $rows = array($row); // in preview mode, we only deal with one row
+		    $sql = "SELECT * FROM Articles WHERE Number=". $rows[0]['NrArticle'];
+		    $arow = $g_ado_db->GetRow($sql);
+		    $arows = array($arow);
         } else {
             $sql = "SELECT * FROM X". $p_src;
             $rows = $g_ado_db->GetRows($sql);
         }
         
         if ($p_preview) {
-            /*$insertSql = "INSERT INTO X$dest ($destColumnList) VALUES ";
-	   	    $valuesArray = array();
+            $tmpobj =& new Article();
+            $obj =& new Article($rows[0]['IdLanguage'], $tmpobj->getArticleNumber());   
+            $obj->create($dest, $arows[0]['Name']);         
+            $objData =& $obj->getArticleData();
             foreach ($p_rules as $destColumnName => $srcColumnName) {
 			    if ($srcColumnName != '--None--') {
-				    $sql = "SELECT F". $srcColumnName ." FROM X". $p_src ." WHERE NrArticle=". $row['NrArticle'];
-				    $value = $g_ado_db->GetOne($sql);			
-    				$valuesArray[] = "'". $value ."'";	
+    				$objData->setProperty($destColumnName, $rows[0]['F'.$srcColumnName]);	
 	       		}
     		}
-    		$nextNumber = Article::__generateArticleNumber(); // ? Paul, is this the best way?
-            array_push($valuesArray, $nextNumber);
+    		/*//$nextNumber = Article::__generateArticleNumber(); // ? Paul, is this the best way?
+            array_push($valuesArray, $obj->getArticleNumber());
             array_push($valuesArray, $row['IdLanguage']);
 	       	$insertSql .= "(". implode(',', $valuesArray) .")";
 		    $g_ado_db->Execute($insertSql);
-		    */							
-        
-
-            $oldArticle =& new Article($rows[0]['IdLanguage'], $rows[0]['NrArticle']);       
-            $oldData = $oldArticle->getArticleData(); 
-            $obj =& new Article();        
-            $obj->create($dest, $oldArticle->getName(), $oldArticle->getPublicationId(), $oldArticle->getIssueNumber(), $oldArticle->getSectionNumber());      
-		    // Insert an entry into the article type table.
+		    */
+		    // insert a row in the Articles table as well
+		    
+        }        
+/*
+            $tmpOldArticle =& new Article($rows[0]['IdLanguage'], $rows[0]['NrArticle']);       
+            //$oldData = $oldArticle->getArticleData(); 
+            $translations = $tmpOldArticle->getTranslations();
+            $oldArticle = $translations[0]; 
+            $obj =& new Article($rows[0]['IdLanguage']);        
+            $old_publication_id = $oldArticle->getPublicationId();
+            $old_name = $oldArticle->getName();
+            $old_issue_number = $oldArticle->getIssueNumber();
+            $old_section_number = $oldArticle->getSectionNumber();
+            $obj->create($dest, $old_name, $old_publication_id, $old_issue_number, $old_section_number);
+          		    // Insert an entry into the article type table.
 	//	    $articleData =& new ArticleData($this->m_data['Type'],
 	//		    $this->m_data['Number'],
 	//		    $this->m_data['IdLanguage']);
 	//	    $articleData->create();
-            $objData = $obj->getArticleData();
-            foreach ($p_rules as $destColumnName => $srcColumnName) {
-                if ($srcColumnName != '--None--') {
-                    $objData->setProperty($destColumnName, $oldData->getProperty($srcColumnName));     
-                }
-            }      
+            //$objData = $obj->getArticleData();
+            //foreach ($p_rules as $destColumnName => $srcColumnName) {
+             //   if ($srcColumnName != '--None--') {
+            //        $objData->setProperty($destColumnName, $oldData->getProperty('F'. $srcColumnName));     
+            //    }
+           // }      
         }
-
-        if ($p_preview) {            
-            
-            $sql = "DROP TABLE X$dest";
-            $g_ado_db->Execute($sql);
+*/
+        if ($p_preview) {                        
+            //ql = "DROP TABLE X$dest";
+            //$g_ado_db->Execute($sql);
             return $obj; 
       	} else { return true; }
 	} // fn merge 
