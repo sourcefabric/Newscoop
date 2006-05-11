@@ -539,9 +539,7 @@ if ($f_edit_mode == "edit") { ?>
 
 				    <!-- Comments enabled -->
 				    <?php
-				    if ($publicationObj->commentsEnabled() &&
-				        $articleType->commentsEnabled() /*&&
-				        $User->hasPermission("CommentEnable")*/) {
+				    if ($showComments) {
 				    ?>
 				    <tr>
 				        <td align="left" colspan="2" style="padding-top: 0.25em;">
