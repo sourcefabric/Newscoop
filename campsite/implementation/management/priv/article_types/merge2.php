@@ -19,6 +19,57 @@ if (!$User->hasPermission('ManageArticleTypes')) {
 
 $f_src = trim(Input::get('f_src'));
 $f_dest = trim(Input::get('f_dest'));
+$errorMsgs = array();
+
+if ($f_src == $f_dest) {
+	$errorMsgs[] = "You cannot merge the same type into itself.";
+}
+
+if (count($errorMsgs)) { 
+	
+	$crumbs = array();
+	$crumbs[] = array(getGS("Configure"), "");
+	$crumbs[] = array(getGS("Article Types"), "/$ADMIN/article_types/");
+	$crumbs[] = array(getGS("Renaiming article type"), "");
+
+	echo camp_html_breadcrumbs($crumbs);
+
+	?>
+	<P>
+	<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">
+	<TR>
+		<TD COLSPAN="2">
+			<B> <?php  putGS("Merging article types: Step One"); ?> </B>
+			<HR NOSHADE SIZE="1" COLOR="BLACK">
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN="2">
+			<BLOCKQUOTE>
+			<?php 
+			foreach ($errorMsgs as $errorMsg) { 
+				echo "<li>".$errorMsg."</li>";
+			}
+			?>
+			</BLOCKQUOTE>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN="2">
+		<DIV ALIGN="CENTER">
+		<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/article_types/merge.php?f_src=<?php p($f_src); ?>&f_dest=<?php p($f_dest); ?>'">
+		</DIV>
+		</TD>
+	</TR>
+	</TABLE>
+	<P>
+
+	<?php camp_html_copyright_notice(); return; ?>
+
+<?php
+} // endif count(errorMessages)
+
+
 $src =& new ArticleType($f_src);
 $dest =& new ArticleType($f_dest);
 
