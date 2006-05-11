@@ -1,3 +1,11 @@
+2.5.2 (May 11, 2006)
+  - Added Korean localization
+  
+  Bugs fixed:
+  - Article internal links don't work for multiple publications
+  - Demo templates don't display the correct article in "About us" section
+  - The script campsite-create-instance was not set executable
+
 2.5.1 (April 10, 2006)
   Full localizations for the following languages were added:
   1.  French (new!) (Rokhaya Ndiour)
