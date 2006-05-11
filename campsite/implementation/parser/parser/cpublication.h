@@ -65,6 +65,8 @@ public:
 
 	const StringSet& getAliases() const { return m_coAliases; }
 
+	const string& getDefaultAlias() const { return m_coDefaultAlias; }
+
 	void setURLType(const string& p_rcoURLTypeName);
 
 	const CURLType* getURLType() const;
@@ -105,6 +107,7 @@ private:
 	id_type m_nId;
 	id_type m_nIdLanguage;
 	StringSet m_coAliases;
+	string m_coDefaultAlias;
 	string m_coURLTypeName;
 
 private:

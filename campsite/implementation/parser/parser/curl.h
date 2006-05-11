@@ -71,9 +71,7 @@ public:
 
 	const string& getDocumentRoot() const { return m_coDocumentRoot; }
 
-	void setId(id_type p_nId) { replaceValue("url_id", p_nId); }
-
-	id_type getId() const throw(InvalidValue) { return getIntValue("url_id"); }
+	int getServerPort() const { return m_nServerPort; }
 
 	void setLanguage(id_type p_nLanguage) { replaceValue(P_IDLANG, p_nLanguage); }
 
@@ -169,6 +167,7 @@ protected:
 	typedef map<string, String2StringMMap::const_iterator, less<string> > String2MMapIt;
 
 protected:
+	int m_nServerPort;
 	string m_coMethod;
 	string m_coPathTranslated;
 	string m_coDocumentRoot;

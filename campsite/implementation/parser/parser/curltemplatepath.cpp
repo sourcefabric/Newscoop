@@ -59,6 +59,7 @@ void CURLTemplatePath::setURL(const CMsgURLRequest& p_rcoURLMessage, bool p_bLoc
 	m_bLockTemplate = p_bLockTemplate;
 	m_coDocumentRoot = p_rcoURLMessage.getDocumentRoot();
 	m_coPathTranslated = p_rcoURLMessage.getPathTranslated();
+	m_nServerPort = p_rcoURLMessage.getServerPort();
 	m_coHTTPHost = p_rcoURLMessage.getHTTPHost();
 	string coURI = p_rcoURLMessage.getReqestURI();
 	m_bValidURI = true;

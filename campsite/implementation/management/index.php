@@ -19,6 +19,10 @@ $env_vars["REMOTE_ADDR"] = getenv("REMOTE_ADDR");
 $env_vars["PATH_TRANSLATED"] = getenv("PATH_TRANSLATED");
 $env_vars["REQUEST_METHOD"] = getenv("REQUEST_METHOD");
 $env_vars["REQUEST_URI"] = getenv("REQUEST_URI");
+$env_vars["SERVER_PORT"] = trim(getenv("SERVER_PORT"));
+if ($env_vars["SERVER_PORT"] == "") {
+	$env_vars["SERVER_PORT"] = 80;
+}
 
 // read parameters
 $parameters = camp_read_parameters($query_string);
