@@ -180,24 +180,30 @@ void CPublication::BuildFromDB(id_type p_nId, MYSQL* p_DBConn) throw(InvalidValu
 
 	// read the publication default language and URL type
 	stringstream coSql;
-	coSql << "select IdDefaultLanguage, ut.Name from Publications as p, URLTypes as ut "
-	         "where p.IdURLType = ut.Id and p.Id = " << p_nId;
+	coSql << "select p.IdDefaultLanguage, ut.Name, p.IdDefaultAlias "
+			"from Publications as p, URLTypes as ut "
+			"where p.IdURLType = ut.Id and p.Id = " << p_nId;
 	CMYSQL_RES coRes;
 	MYSQL_ROW qRow = QueryFetchRow(p_DBConn, coSql.str().c_str(), coRes);
 	if (qRow == NULL)
 		throw InvalidValue("publication identifier", ((string)Integer(p_nId)).c_str());
 	m_nIdLanguage = Integer(qRow[0]);
 	m_coURLTypeName = qRow[1];
+	lint nDefaultAliasId = strtol(qRow[2], 0, 10);
 
 	// read publication aliases
 	coSql.str("");
-	coSql << "select Name from Aliases where IdPublication = " << p_nId;
+	coSql << "select Name, Id from Aliases where IdPublication = " << p_nId;
 	qRow = QueryFetchRow(p_DBConn, coSql.str().c_str(), coRes);
 	if (qRow == NULL)
 		throw InvalidValue("publication identifier", ((string)Integer(p_nId)).c_str());
 	while (qRow != NULL)
 	{
 		addAlias(qRow[0]);
+		if (strtol(qRow[1], 0, 10) == nDefaultAliasId)
+		{
+			m_coDefaultAlias = qRow[0];
+		}
 		qRow = mysql_fetch_row(*coRes);
 	}
 }

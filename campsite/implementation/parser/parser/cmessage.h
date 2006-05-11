@@ -240,6 +240,8 @@ public:
 
 	const string& getReqestURI() const { return m_coRequestURI; }
 
+	int getServerPort() const { return m_nServerPort; }
+
 	const string& getCookie(const string& p_coCookie) const throw (out_of_range);
 
 	const String2String& getCookies() const { return m_coCookies; }
@@ -258,6 +260,7 @@ private:
 	string m_coPathTranslated;
 	string m_coRequestMethod;
 	string m_coRequestURI;
+	int m_nServerPort;
 
 	String2String m_coCookies;
 };

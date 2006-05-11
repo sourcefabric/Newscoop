@@ -164,6 +164,7 @@ function camp_create_url_request_message($p_envVars, $p_parameters, $p_cookies)
 	$msg .= "\t<PathTranslated>" . camp_xmlescape($p_envVars['PATH_TRANSLATED']) . "</PathTranslated>\n";
 	$msg .= "\t<RequestMethod>" . camp_xmlescape($p_envVars['REQUEST_METHOD']) . "</RequestMethod>\n";
 	$msg .= "\t<RequestURI>" . camp_xmlescape($p_envVars['REQUEST_URI']) . "</RequestURI>\n";
+	$msg .= "\t<ServerPort>" . camp_xmlescape($p_envVars['SERVER_PORT']) . "</ServerPort>\n";
 	$msg .= "\t<Parameters>\n";
 	foreach ($p_parameters as $param_name=>$param_value) {
 		if (is_array($param_value)) {
@@ -222,7 +223,7 @@ function camp_read_get_parameters(&$p_queryString)
 	foreach ($pairs as $pair) {
 		$pair_array = explode("=", $pair);
 		$paramName = trim($pair_array[0]);
-		$paramValue = trim($pair_array[1]);
+		$paramValue = isset($pair_array[1]) ? trim($pair_array[1]) : "";
 		if ($paramName == "") {
 			continue;
 		}

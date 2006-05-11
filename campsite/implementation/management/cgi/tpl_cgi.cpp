@@ -193,6 +193,7 @@ int ReadParameters(char** p_ppchMsg, int* p_pnSize, const char** p_ppchErrMsg)
 	char* pchPathTranslated = 0;
 	char* pchRequestMethod = 0;
 	char* pchRequestURI = 0;
+	char* pchServerPort = "80";
 	char* pchQueryString = 0;
 	char* pchHttpCookie = 0;
 	try
@@ -232,6 +233,10 @@ int ReadParameters(char** p_ppchMsg, int* p_pnSize, const char** p_ppchErrMsg)
 			throw ExReadParams(-7, "Can not get REQUEST_URI");
 		}
 		pchRequestURI = strdup(pchTmp);
+		if ((pchTmp = getenv("SERVER_PORT")) != NULL)
+		{
+			pchServerPort = strdup(pchTmp);
+		}
 		if (strcmp(pchRequestMethod, "GET") == 0)
 		{
 			if ((pchTmp = getenv("QUERY_STRING")) == NULL)
@@ -283,6 +288,7 @@ int ReadParameters(char** p_ppchMsg, int* p_pnSize, const char** p_ppchErrMsg)
 	coTree.newChild(coRootIt, "PathTranslated", pchPathTranslated);
 	coTree.newChild(coRootIt, "RequestMethod", pchRequestMethod);
 	coTree.newChild(coRootIt, "RequestURI", pchRequestURI);
+	coTree.newChild(coRootIt, "ServerPort", pchServerPort);
 	CXMLTree::iterator coNodeIt;
 	coNodeIt = coTree.newChild(coRootIt, "Parameters");
 	string::size_type nStart = 0;

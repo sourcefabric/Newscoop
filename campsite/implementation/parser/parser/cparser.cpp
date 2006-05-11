@@ -38,6 +38,7 @@ Implementation of CCLexem, CCLex, CCParser methods.
 #include "error.h"
 #include "curl.h"
 #include "cpublication.h"
+#include "auto_ptr.h"
 
 
 using std::cout;
@@ -634,7 +635,7 @@ const CCLexem* CCParser::DoParse(CContext& p_rcoContext, sockstream& p_rcoOut,
                                      int start_st, bool all, bool p_bWrite)
 {
 	const CCLexem* l;
-	while (1)
+	while (true)
 	{
 		// local_write: if true print article content read from database
 		bool local_write = p_bWrite && ((index == start_st && !all)
@@ -793,7 +794,27 @@ const CCLexem* CCParser::DoParse(CContext& p_rcoContext, sockstream& p_rcoOut,
 						rcoContext.Publication(), rcoContext.Issue(), rcoContext.Section(), p_SQL);
 				rcoContext.URL()->setTemplate(coArticleTemplate);
 				
-				link = rcoContext.URL()->getURI();
+				link = "";
+				if (rcoContext.Publication() != p_rcoContext.Publication())
+				{
+					CPublicationsRegister& rcoPublicationRegister =
+							CPublicationsRegister::getInstance();
+					const CPublication* pcoPublication =
+							rcoPublicationRegister.getPublication(rcoContext.Publication());
+					if (pcoPublication == NULL)
+					{
+						continue;
+					}
+					if (rcoContext.URL()->getServerPort() == 443)
+					{
+						link = string("https://") + pcoPublication->getDefaultAlias();
+					}
+					else
+					{
+						link = string("http://") + pcoPublication->getDefaultAlias();
+					}
+				}
+				link += rcoContext.URL()->getURI();
 			}
 			if (local_write)
 				p_rcoOut << "<a href=\"" << link << "\" TARGET=\"" << target << "\">";

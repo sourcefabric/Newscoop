@@ -123,6 +123,7 @@ void CMsgURLRequest::setContent(char* p_pchContent)
 	m_coPathTranslated = coReader.nextElementContent("PathTranslated", 1);
 	m_coRequestMethod = coReader.nextElementContent("RequestMethod", 1);
 	m_coRequestURI = coReader.nextElementContent("RequestURI", 1);
+	m_nServerPort = strtol(coReader.nextElementContent("ServerPort", 1).c_str(), 0, 10);
 
 	// read the request parameters
 	coReader.nextElement("Parameters");
