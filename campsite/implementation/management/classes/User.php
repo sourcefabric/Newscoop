@@ -130,7 +130,9 @@ class User extends DatabaseObject {
 		'ChangeSystemPreferences'=>'N',
 		'AddFile'=>'N',
 		'ChangeFile'=>'N',
-		'DeleteFile'=>'N');
+		'DeleteFile'=>'N',
+		'CommentModerate'=>'N',
+		'CommentEnable'=>'N');
 
 	/**
 	 * A user of the system is a frontend reader or a 'admin' user, meaning

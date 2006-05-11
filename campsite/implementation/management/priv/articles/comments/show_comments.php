@@ -1,11 +1,5 @@
 <p>
 
-<?php
-// show all the comments attached to this article
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleComment.php');
-
-$comments = ArticleComment::GetArticleComments($f_article_number, $f_language_id);
-?>
 <script>
 function onCommentAction(p_type, p_commentId)
 {
@@ -45,6 +39,8 @@ if (count($comments) <= 0) {
                 break;
         }
         ?>
+
+        <?php if ($User->hasPermission("CommentModerate")) { ?>
         <tr>
             <td>
 
@@ -54,12 +50,14 @@ if (count($comments) <= 0) {
 
             <td><input type="image" src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" name="save" value="save"></td>
 
+            <?php if ($publicationObj->commentsPublicModerated() || $publicationObj->commentsSubscribersModerated()) {?>
             <td style="padding-left: 10px;">
                 <input type="radio" name="comment_action_<?php echo $comment->getMessageId(); ?>" value="inbox" class="input_radio" id="inbox_<?php echo $comment->getMessageId(); ?>" <?php if ($comment->getStatus() == PHORUM_STATUS_HIDDEN) { ?>checked<?php } ?> onchange="onCommentAction('inbox', <?php p($comment->getMessageId()); ?>);">
             </td>
 
             <td><a href="javascript: void(0);" onclick="onCommentAction('inbox', <?php p($comment->getMessageId()); ?>);"><b><?php putGS("New"); ?></b></a>
             </td>
+            <?php } ?>
 
             <td style="padding-left: 10px;">
                 <input type="radio" name="comment_action_<?php echo $comment->getMessageId(); ?>" value="approve" class="input_radio" id="approved_<?php echo $comment->getMessageId(); ?>" <?php if ($comment->getStatus() ==  PHORUM_STATUS_APPROVED) { ?>checked<?php } ?> onchange="onCommentAction('approved', <?php p($comment->getMessageId()); ?>);">
@@ -89,6 +87,7 @@ if (count($comments) <= 0) {
 
             </td>
         </tr>
+        <?php } // if $User->hasPermission("CommentModerate") ?>
 
         <tr>
             <td class="<?php p($css); ?>" style="padding-left: 15px; padding-right: 20px; padding-bottom: 5px; border-bottom: 2px solid #8EAED7;" id="comment_<?php p($comment->getMessageId()); ?>">
@@ -123,6 +122,7 @@ if (count($comments) <= 0) {
 </table>
 <?php
 // show the "add comment" form
+if (!$articleObj->commentsLocked()) {
 ?>
 <form action="/<?php p($ADMIN); ?>/articles/comments/do_add_comment.php" method="GET">
 <input type="hidden" name="f_language_id" value="<?php p($f_language_id); ?>">
@@ -163,3 +163,4 @@ if (count($comments) <= 0) {
 </tr>
 </table>
 </form>
+<?php } ?>

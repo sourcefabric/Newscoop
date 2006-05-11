@@ -89,8 +89,10 @@ if (($publication_id > 0) && ($issue_number > 0) && ($section_number > 0)) {
 if ($articleObj->exists()) {
 	$articleObj->setCreatorId($User->getUserId());
 	$articleObj->setIsPublic(true);
+	$commentDefault = $publicationObj->commentsArticleDefaultEnabled();
+    $articleObj->setCommentsEnabled($commentDefault);
 
-	## added by sebastian
+    ## added by sebastian
 	if (function_exists ("incModFile")) {
 		incModFile();
 	}

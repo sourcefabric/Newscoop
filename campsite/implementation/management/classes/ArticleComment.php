@@ -53,15 +53,41 @@ class ArticleComment
      *
      * @param int $p_articleNumber
      * @param int $p_languageId
+     * @param string $p_status
+     *      This can be NULL if you dont care about the status,
+     *      "approved" or "unapproved".
+     * @param boolean $p_countOnly
      * @return array
      */
-    function GetArticleComments($p_articleNumber, $p_languageId)
+    function GetArticleComments($p_articleNumber, $p_languageId, $p_status = null, $p_countOnly = false)
     {
         global $PHORUM;
         global $g_ado_db;
-        $threadId = ArticleComment::GetCommentThreadId($p_articleNumber, $p_languageId);
-        $queryStr ="SELECT * FROM ".$PHORUM['message_table']
+        $threadId = ArticleComment::GetCommentThreadId($p_articleNumber,
+                                                       $p_languageId);
+        if (!$threadId) {
+            return null;
+        }
+
+        // Are we counting or getting the comments?
+        $selectClause = "*";
+        if ($p_countOnly) {
+            $selectClause = "COUNT(*)";
+        }
+
+        // Only getting comments with a specific status?
+        $whereClause = "";
+        if (!is_null($p_status)) {
+            if ($p_status == "approved") {
+                $whereClause = " AND status=".PHORUM_STATUS_APPROVED;
+            } elseif ($p_status == "unapproved") {
+                $whereClause = " AND status=".PHORUM_STATUS_HIDDEN;
+            }
+        }
+        $queryStr = "SELECT $selectClause "
+                    ." FROM ".$PHORUM['message_table']
                     ." WHERE ".$PHORUM['message_table'].".thread=$threadId"
+                    . $whereClause
                     ." ORDER BY message_id";
         $messages = DbObjectArray::Create("Phorum_message", $queryStr);
         return $messages;

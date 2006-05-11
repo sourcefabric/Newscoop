@@ -23,6 +23,10 @@ $f_unlock = Input::Get('f_unlock', 'string', false, true);
 // Saved session values
 // $f_edit_mode can be "view" or "edit"
 $f_edit_mode = camp_session_get('f_edit_mode', 'edit');
+// Whether to show comments at the bottom of the article
+// (you may not want to show them to speed up your loading time)
+$f_show_comments = camp_session_get('f_show_comments', 1);
+// Selected language of the article
 $f_language_selected = camp_session_get('f_language_selected', 0);
 
 if (!Input::IsValid()) {
@@ -40,6 +44,7 @@ if (!$articleObj->exists()) {
 $articleData = $articleObj->getArticleData();
 // Get article type fields.
 $dbColumns = $articleData->getUserDefinedColumns(0);
+$articleType =& new ArticleType($articleObj->getType());
 
 $articleImages = ArticleImage::GetImagesByArticleNumber($f_article_number);
 $lockUserObj =& new User($articleObj->getLockedByUser());
@@ -59,12 +64,26 @@ if ($today['year'] != $savedOn['year'] || $today['mon'] != $savedOn['mon'] || $t
     $savedToday = false;
 }
 
+$showComments = false;
 if ($f_publication_id > 0) {
 	$publicationObj =& new Publication($f_publication_id);
 	$issueObj =& new Issue($f_publication_id, $f_language_id, $f_issue_number);
 	$sectionObj =& new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
 	$languageObj =& new Language($articleObj->getLanguageId());
+
+    $showComments = ($publicationObj->commentsEnabled()
+                     && $articleType->commentsEnabled()
+                     && $articleObj->commentsEnabled()
+                     && ($articleObj->getWorkflowStatus() == 'Y'));
 }
+
+
+if ($showComments) {
+    // show all the comments attached to this article
+    require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleComment.php');
+    $comments = ArticleComment::GetArticleComments($f_article_number, $f_language_id);
+}
+
 
 // Automatically switch to "view" mode if user doesnt have permissions.
 if (!$articleObj->userCanModify($User)) {
@@ -409,79 +428,145 @@ if ($f_edit_mode == "edit") { ?>
 	<INPUT TYPE="HIDDEN" NAME="f_language_id" VALUE="<?php  p($f_language_id); ?>">
 	<INPUT TYPE="HIDDEN" NAME="f_language_selected" VALUE="<?php  p($f_language_selected); ?>">
 	<INPUT TYPE="HIDDEN" NAME="f_article_number" VALUE="<?php  p($f_article_number); ?>">
-	<table>
+	<table width="100%">
 	<TR>
 		<TD style="padding-top: 3px;">
-			<TABLE>
+			<TABLE width="100%" style="border-bottom: 1px solid #8baed1; padding-bottom: 3px;">
 			<TR>
-				<TD ALIGN="RIGHT" valign="top" ><b><?php  putGS("Name"); ?>:</b></TD>
-				<TD align="left" valign="top">
+				<TD ALIGN="left" valign="top"><b><?php putGS("Name"); ?>:</b>
 					<?php if ($f_edit_mode == "edit") { ?>
-					<TEXTAREA name="f_article_title" cols="30" rows="2" class="input_text"><?php  print htmlspecialchars($articleObj->getTitle()); ?></TEXTAREA>
+					<input type="text" name="f_article_title" size="60" class="input_text" value="<?php  print htmlspecialchars($articleObj->getTitle()); ?>">
 					<?php } else {
 						print wordwrap(htmlspecialchars($articleObj->getTitle()), 60, "<br>");
 					}
 					?>
 				</TD>
-				<TD ALIGN="RIGHT" valign="top"><b><?php  putGS("Created by"); ?>:</b></TD>
-				<TD align="left" valign="top"><?php p(htmlspecialchars($articleCreator->getRealName())); ?></TD>
-				<TD ALIGN="RIGHT" valign="top"><INPUT TYPE="CHECKBOX" NAME="f_on_front_page" class="input_checkbox" <?php  if ($articleObj->onFrontPage()) { ?> CHECKED<?php  } ?> <?php if ($f_edit_mode == "view") { ?>disabled<?php }?>></TD>
-				<TD align="left" valign="top" style="padding-top: 0.25em;">
-				<?php  putGS('Show article on front page'); ?>
-				</TD>
-			</TR>
-			<TR>
-				<TD ALIGN="RIGHT" valign="top" style="padding-left: 1em;"><b><?php  putGS("Type"); ?>:</b></TD>
-				<TD align="left" valign="top">
-					<?php print htmlspecialchars($articleData->getDisplayName()); ?>
-				</TD>
-				<TD ALIGN="RIGHT" valign="top" style="padding-left: 1em;"><b><nobr><?php  putGS("Creation date"); ?>:</nobr></b></TD>
-				<TD align="left" valign="top" nowrap>
-					<?php if ($f_edit_mode == "edit") { ?>
-					<input type="hidden" name="f_creation_date" value="<?php p($articleObj->getCreationDate()); ?>" id="f_creation_date">
-					<table cellpadding="0" cellspacing="2"><tr>
-						<td><span id="show_date"><?php p(str_replace(" ", "<br>", $articleObj->getCreationDate())); ?></span></td>
-						<td valign="top" align="left"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/calendar.gif" id="f_trigger_c"
-					    	 style="cursor: pointer; border: 1px solid red;"
-					     	 title="Date selector"
-					     	 onmouseover="this.style.background='red';"
-					     	 onmouseout="this.style.background=''" /></td>
-					</tr></table>
-					<script type="text/javascript">
-					    Calendar.setup({
-					        inputField     :    "f_creation_date",
-					        ifFormat       :    "%Y-%m-%d %H:%M:00",
-					        displayArea    :    "show_date",
-					        daFormat	   :    "%Y-%m-%d<br>%H:%M:00",
-					        showsTime      :    true,
-					        showOthers     :    true,
-					        weekNumbers    :    false,
-					        range          :    new Array(1990, 2020),
-					        button		   :    "f_trigger_c"
-					    });
-					</script>
-					<?php } else { ?>
-					<?php print $articleObj->getCreationDate(); ?>
-					<?php } ?>
-				</TD>
-				<TD ALIGN="RIGHT" valign="top" style="padding-left: 1em;"><INPUT TYPE="CHECKBOX" NAME="f_on_section_page" class="input_checkbox" <?php  if ($articleObj->onSectionPage()) { ?> CHECKED<?php  } ?> <?php if ($f_edit_mode == "view") { ?>disabled<?php }?>></TD>
-				<TD align="left" valign="top"  style="padding-top: 0.25em;">
-				<?php  putGS('Show article on section page'); ?>
-				</TD>
-			</TR>
-			<TR>
-			    <td align="right" valign="top" nowrap><b><?php putGS("Number"); ?>:</b></td>
-			    <td align="left" valign="top"  style="padding-top: 2px; padding-left: 4px;"><?php p($articleObj->getArticleNumber()); ?> <?php if (isset($publicationObj) && $publicationObj->getUrlTypeId() == 2) { ?>
-&nbsp;(<a href="/<?php echo $languageObj->getCode()."/".$issueObj->getUrlName()."/".$sectionObj->getUrlName()."/".$articleObj->getUrlName(); ?>"><?php putGS("Link to public page"); ?></a>)<?php } ?></td>
+				<TD ALIGN="RIGHT" valign="top" style="padding-right: 0.5em;"><b><?php  putGS("Created by"); ?>:</b> <?php p(htmlspecialchars($articleCreator->getRealName())); ?></TD>
+		    </tr>
+		    </table>
 
-				<TD ALIGN="RIGHT" valign="top" style="padding-left: 1em;"><b><?php  putGS("Publish date"); ?>:</b></TD>
-				<TD align="left" valign="top">
+		    <table cellpadding="0" cellspacing="0" width="100%">
+		    <tr>
+				<td align="left" valign="top">
+				    <!-- Left-hand column underneath article title -->
+				    <table>
+
+				    <!-- Type -->
+				    <tr>
+				        <TD ALIGN="RIGHT" valign="top" style="padding-left: 1em;"><b><?php  putGS("Type"); ?>:</b></TD>
+				        <TD align="left" valign="top">
+					<?php print htmlspecialchars($articleType->getDisplayName()); ?>
+				        </TD>
+                    </tr>
+
+                    <!-- Number -->
+        			<TR>
+        			    <td align="right" valign="top" nowrap><b><?php putGS("Number"); ?>:</b></td>
+        			    <td align="left" valign="top"  style="padding-top: 2px; padding-left: 4px;"><?php p($articleObj->getArticleNumber()); ?> <?php if (isset($publicationObj) && $publicationObj->getUrlTypeId() == 2) { ?>
+        &nbsp;(<a href="/<?php echo $languageObj->getCode()."/".$issueObj->getUrlName()."/".$sectionObj->getUrlName()."/".$articleObj->getUrlName(); ?>"><?php putGS("Link to public page"); ?></a>)<?php } ?></td>
+                    </tr>
+
+                    <!-- Creation Date -->
+        			<TR>
+        				<TD ALIGN="RIGHT" valign="top" style="padding-left: 1em;"><b><nobr><?php  putGS("Creation date"); ?>:</nobr></b></TD>
+        				<TD align="left" valign="top" nowrap>
+        					<?php if ($f_edit_mode == "edit") { ?>
+        					<input type="hidden" name="f_creation_date" value="<?php p($articleObj->getCreationDate()); ?>" id="f_creation_date">
+        					<table cellpadding="0" cellspacing="2"><tr>
+        						<td><span id="show_date"><?php p($articleObj->getCreationDate()); ?></span></td>
+        						<td valign="top" align="left"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/calendar.gif" id="f_trigger_c"
+        					    	 style="cursor: pointer; border: 1px solid red;"
+        					     	 title="Date selector"
+        					     	 onmouseover="this.style.background='red';"
+        					     	 onmouseout="this.style.background=''" /></td>
+        					</tr></table>
+        					<script type="text/javascript">
+        					    Calendar.setup({
+        					        inputField:"f_creation_date",
+        					        ifFormat:"%Y-%m-%d %H:%M:00",
+        					        displayArea:"show_date",
+        					        daFormat:"%Y-%m-%d %H:%M:00",
+        					        showsTime:true,
+        					        showOthers:true,
+        					        weekNumbers:false,
+        					        range:new Array(1990, 2020),
+        					        button:"f_trigger_c"
+        					    });
+        					</script>
+        					<?php } else { ?>
+        					<?php print $articleObj->getCreationDate(); ?>
+        					<?php } ?>
+        				</TD>
+                    </tr>
+                    <!-- End creation date -->
+
+                    <tr>
+                    	<TD ALIGN="RIGHT" valign="top" style="padding-left: 1em;"><b><?php  putGS("Publish date"); ?>:</b></TD>
+				        <TD align="left" valign="top">
 					<?php print htmlspecialchars($articleObj->getPublishDate()); ?>
-				</TD>
-				<TD ALIGN="RIGHT" valign="top" style="padding-left: 1em;"><INPUT TYPE="CHECKBOX" NAME="f_is_public" class="input_checkbox" <?php  if ($articleObj->isPublic()) { ?> CHECKED<?php  } ?> <?php if ($f_edit_mode == "view") { ?>disabled<?php }?>></TD>
-				<TD align="left" valign="top" style="padding-top: 0.25em;">
+				        </TD>
+                    </tr>
+                    </table>
+                </td>
+
+                <!-- Right-hand column underneath article title -->
+                <td valign="top" align="right" style="padding-right: 0.5em; padding-top: 0.25em;">
+                    <table border="0" cellpadding="0" cellspacing="0">
+
+                    <!-- Show article on front page -->
+                    <tr>
+				        <TD ALIGN="RIGHT" valign="top"><INPUT TYPE="CHECKBOX" NAME="f_on_front_page" class="input_checkbox" <?php  if ($articleObj->onFrontPage()) { ?> CHECKED<?php  } ?> <?php if ($f_edit_mode == "view") { ?>disabled<?php }?>></TD>
+				        <TD align="left" valign="top" style="padding-top: 0.1em;">
+        				<?php  putGS('Show article on front page'); ?>
+        				</TD>
+        			</TR>
+
+        			<!-- Show article on section page -->
+        			<tr>
+				        <TD ALIGN="RIGHT" valign="top"><INPUT TYPE="CHECKBOX" NAME="f_on_section_page" class="input_checkbox" <?php  if ($articleObj->onSectionPage()) { ?> CHECKED<?php  } ?> <?php if ($f_edit_mode == "view") { ?>disabled<?php }?>></TD>
+				        <TD align="left" valign="top"  style="padding-top: 0.1em;">
+				            <?php  putGS('Show article on section page'); ?>
+				        </TD>
+			        </TR>
+
+			        <!-- Article viewable by public -->
+			        <tr>
+				        <TD ALIGN="RIGHT" valign="top"><INPUT TYPE="CHECKBOX" NAME="f_is_public" class="input_checkbox" <?php  if ($articleObj->isPublic()) { ?> CHECKED<?php  } ?> <?php if ($f_edit_mode == "view") { ?>disabled<?php }?>></TD>
+				        <TD align="left" valign="top" style="padding-top: 0.1em;">
 				<?php putGS('Allow users without subscriptions to view the article'); ?>
-				</TD>
+				        </TD>
+				    </tr>
+
+				    <!-- Comments enabled -->
+				    <?php
+				    if ($publicationObj->commentsEnabled() &&
+				        $articleType->commentsEnabled() /*&&
+				        $User->hasPermission("CommentEnable")*/) {
+				    ?>
+				    <tr>
+				        <td align="left" colspan="2" style="padding-top: 0.25em;">
+				            <?php putGS("Comments:"); ?>:
+				            <select name="f_comment_status" class="input_select" <?php if ($f_edit_mode == "view") { ?>disabled<?php } ?>>
+				            <?php
+				            if ($articleObj->commentsEnabled()) {
+				                if ($articleObj->commentsLocked()) {
+				                    $commentStatus = 'locked';
+				                } else {
+				                    $commentStatus = 'enabled';
+				                }
+				            } else {
+				                $commentStatus = 'disabled';
+				            }
+				            camp_html_select_option('disabled', $commentStatus, getGS("Disabled"));
+				            camp_html_select_option('locked', $commentStatus, getGS("Locked"));
+				            camp_html_select_option('enabled', $commentStatus, getGS("Enabled"));
+				            ?>
+				            </select>
+				        </td>
+                    </tr>
+                    <?php } // end if comments enabled ?>
+				    </table>
+				</td>
 			</TR>
 			</TABLE>
 		</TD>
@@ -776,6 +861,35 @@ if ($f_edit_mode == "edit") { ?>
 		<?php } ?>
 		<!-- End Scheduled Publishing section -->
 
+		<?php if ($showComments) { ?>
+		<!-- Begin Comment Info -->
+		<tr><td>
+			<TABLE width="100%" style="border: 1px solid #EEEEEE;">
+			<TR>
+				<TD>
+					<TABLE width="100%" bgcolor="#EEEEEE" cellpadding="3" cellspacing="0">
+					<TR>
+						<TD align="left">
+						<b><?php putGS("Comments"); ?></b>
+						</td>
+					</tr>
+					</table>
+				</td>
+			</tr>
+				<td align="left" width="100%" style="padding-left: 8px;">
+				    <?php putGS("Total:"); ?> <?php p(count($comments)); ?><br>
+				    <?php if ($f_show_comments) { ?>
+				    <a href="<?php echo camp_html_article_url($articleObj, $f_language_selected, "edit.php", "", "&f_show_comments=0"); ?>"><?php putGS("Hide Comments"); ?></a>
+				    <?php } else { ?>
+				    <a href="<?php echo camp_html_article_url($articleObj, $f_language_selected, "edit.php", "", "&f_show_comments=1"); ?>"><?php putGS("Show Comments"); ?></a>
+				    <?php } ?>
+                </td>
+            </tr>
+            </table>
+		</td></tr>
+		<!-- End Comment Info -->
+        <?php } ?>
+
 		<TR><TD>
 			<!-- BEGIN Images table -->
 			<TABLE width="100%" style="border: 1px solid #EEEEEE;">
@@ -960,7 +1074,7 @@ if ($f_edit_mode == "edit") { ?>
 </TABLE>
 </FORM>
 <?php
-if ($articleObj->getWorkflowStatus() == 'Y') {
+if ($showComments && $f_show_comments) {
     include("comments/show_comments.php");
 }
 

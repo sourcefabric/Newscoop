@@ -25,6 +25,10 @@ $articleObj =& new Article($f_language_id, $f_article_number);
 if (!$articleObj->exists()) {
     exit;
 }
+if (!$articleObj->commentsEnabled() || $articleObj->commentsLocked())  {
+    header("Location: ".camp_html_article_url($articleObj, $f_language_selected, "edit.php"));
+    exit;
+}
 
 // Get the publication.
 $publicationObj =& new Publication($articleObj->getPublicationId());
