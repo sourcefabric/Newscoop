@@ -456,11 +456,11 @@ foreach ($allArticles as $articleObj) {
 		} // if user->hasPermission('publish')
 		?>
 
-		<TD ALIGN="RIGHT">
+		<TD ALIGN="center">
 			<?php p(htmlspecialchars($articleObj->getTranslateType()));  ?>
 		</TD>
 
-		<TD ALIGN="RIGHT">
+		<TD ALIGN="center">
 			<?php
 			$articleCreator =& new User($articleObj->getCreatorId());
 			p(htmlspecialchars($articleCreator->getRealName()));  ?>
@@ -485,10 +485,10 @@ foreach ($allArticles as $articleObj) {
 			</table>
 		</TD>
 
-		<TD><?php echo $articleObj->onFrontPage() ? "Yes" : "No"; ?></TD>
-		<TD><?php echo $articleObj->onSectionPage() ? "Yes" : "No"; ?></TD>
-		<TD><?php echo count(ArticleImage::GetImagesByArticleNumber($articleObj->getArticleNumber())); ?></TD>
-		<TD><?php echo count(ArticleTopic::GetArticleTopics($articleObj->getArticleNumber())); ?></TD>
+		<TD align="center"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/<?php p($articleObj->onFrontPage() ? "is_shown.png" : "is_hidden.png"); ?>" border="0"></TD>
+		<TD align="center"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/<?php p($articleObj->onSectionPage() ? "is_shown.png" : "is_hidden.png"); ?>" border="0"></TD>
+		<TD align="center"><?php echo count(ArticleImage::GetImagesByArticleNumber($articleObj->getArticleNumber())); ?></TD>
+		<TD align="center"><?php echo count(ArticleTopic::GetArticleTopics($articleObj->getArticleNumber())); ?></TD>
 
 		<TD ALIGN="CENTER">
 			<A HREF="" ONCLICK="window.open('/<?php echo $ADMIN; ?>/articles/preview.php?f_publication_id=<?php  p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_article_number=<?php p($articleObj->getArticleNumber()); ?>&f_language_id=<?php p($f_language_id); ?>&f_language_selected=<?php p($articleObj->getLanguageId()); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=yes, width=800, height=600'); return false"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/preview-16x16.png" alt="<?php  putGS("Preview"); ?>" title="<?php putGS('Preview'); ?>" border="0" width="16" height="16"></A>

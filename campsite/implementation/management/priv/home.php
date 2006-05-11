@@ -365,11 +365,11 @@ if ($restartEngine == 'yes' && $User->hasPermission("InitializeTemplateEngine"))
 			</td>
 
 			<td align="center" valign="top">
-				<?php p(htmlspecialchars($tmpArticle->onFrontPage() ? getGS("Yes") : getGS("No"))); ?>
+				<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/<?php p($tmpArticle->onFrontPage() ? "is_shown.png" : "is_hidden.png"); ?>" border="0">
 			</td>
 
 			<td align="center" valign="top">
-				<?php p(htmlspecialchars($tmpArticle->onSectionPage() ? getGS("Yes") : getGS("No"))); ?>
+				<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/<?php p($tmpArticle->onSectionPage() ? "is_shown.png" : "is_hidden.png"); ?>" border="0">
 			</td>
         </tr>
 		<?php
