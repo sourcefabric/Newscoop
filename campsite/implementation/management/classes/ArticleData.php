@@ -102,14 +102,20 @@ class ArticleData extends DatabaseObject {
     /**
     * Return an array of ArticleTypeField objects.
     *
-    * @param p_hidden boolean 
+    * @param p_showAll boolean 
     * 
     * @return array
     */
-    function getUserDefinedColumns($p_hidden = 1)
+    function getUserDefinedColumns($p_showAll = 0)
        {
 			global $g_ado_db;
-			$queryStr = "SELECT * FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' AND field_name != 'NULL' AND field_type IS NOT NULL AND is_hidden=". $p_hidden ." ORDER BY field_weight ASC";
+            if (!$p_showAll) {
+                $is_hidden = " AND is_hidden=0 ";
+            } else {
+                $is_hidden = "";
+            }
+            
+			$queryStr = "SELECT * FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' AND field_name != 'NULL' AND field_type IS NOT NULL $is_hidden ORDER BY field_weight ASC";
 			$queryArray = $g_ado_db->GetAll($queryStr);
 			$metadata = array();
 			if (is_array($queryArray)) {
