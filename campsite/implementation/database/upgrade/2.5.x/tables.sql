@@ -49,11 +49,10 @@ ADD `comments_article_default_enabled` TINYINT(1) NOT NULL DEFAULT '0',
 ADD `comments_subscribers_moderated` TINYINT(1) NOT NULL DEFAULT '0',
 ADD `comments_public_moderated` TINYINT(1) NOT NULL DEFAULT '0';
 
-
--- As always, there are more user permissions!
 -- Run the user permission upgrade script
--- system php ./upgrade_user_perms.php
+system php ./upgrade_user_perms.php
 
+-- Initialze the new ArticleTypeMetadata table.
 system php ./upgrade_article_types.php
 
 --
