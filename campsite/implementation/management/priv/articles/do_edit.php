@@ -156,7 +156,7 @@ $f_is_public = Input::Get('f_is_public', 'string', '', true);
 $f_keywords = Input::Get('f_keywords');
 $f_article_title = Input::Get('f_article_title');
 $f_creation_date = Input::Get('f_creation_date');
-$f_comment_status = Input::Get('f_comment_status');
+$f_comment_status = Input::Get('f_comment_status', 'string', '', true);
 
 $BackLink = "/$ADMIN/articles/index.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_language_id=$f_language_id&f_section_number=$f_section_number";
 
@@ -206,12 +206,14 @@ $articleObj->setIsPublic(!empty($f_is_public));
 $articleObj->setKeywords($f_keywords);
 $articleObj->setTitle($f_article_title);
 $articleObj->setIsIndexed(false);
-if ($f_comment_status == "enabled" || $f_comment_status == "locked") {
-    $articleObj->setCommentsEnabled(true);
-} else {
-    $articleObj->setCommentsEnabled(false);
+if (!empty($f_comment_status)) {
+    if ($f_comment_status == "enabled" || $f_comment_status == "locked") {
+        $articleObj->setCommentsEnabled(true);
+    } else {
+        $articleObj->setCommentsEnabled(false);
+    }
+    $articleObj->setCommentsLocked($f_comment_status == "locked");
 }
-$articleObj->setCommentsLocked($f_comment_status == "locked");
 
 // Make sure that the time stamp is updated.
 $articleObj->setProperty('time_updated', 'NOW()', true, true);
