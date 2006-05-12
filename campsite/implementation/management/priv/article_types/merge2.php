@@ -106,7 +106,7 @@ echo camp_html_breadcrumbs($crumbs);
 		<?php foreach ($src->m_dbColumns as $srcColumn) { ?>
 			<OPTION <?php if ($f_src_c[$destColumn->getName()] == $srcColumn->getPrintName()) { print "SELECTED"; } ?>><?php print $srcColumn->getDisplayName(); ?></OPTION>
 		<?php } ?>
-			<OPTION <?php if ($f_src_c[$destColumn->getName()] == '--None--') { print "SELECTED"; } ?>>--None--</OPTION>
+			<OPTION <?php if ($f_src_c[$destColumn->getName()] == 'NULL') { print "SELECTED"; } ?>>--None--</OPTION>
 		</SELECT>
 	</TD>
 	<TD>= <?php print $destColumn->getDisplayName(); ?></TD>
