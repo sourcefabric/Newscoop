@@ -41,8 +41,13 @@ class Input {
 
 	/**
 	 * Get an input value from the $_REQUEST array and check its type.
-	 * The default value is returned if the value is not defined in the $_REQUEST array,
-	 * or if the value does not match the required type.
+	 * The default value is returned if the value is not defined in the
+	 * $_REQUEST array, or if the value does not match the required type.
+	 *
+	 * The type 'checkbox' is special - you cannot specify a default
+	 * value for this.  The return value will be TRUE or FALSE, but
+	 * you can change this by specifying 'numeric' as the 3rd parameter
+	 * in which case it will return '1' or '0'.
 	 *
 	 * Use Input::IsValid() to check if any errors were generated.
 	 *
@@ -50,15 +55,19 @@ class Input {
 	 *		The index into the $_REQUEST array.
 	 *
 	 * @param string $p_type
-	 *		The type of data expected; can be 'int' or 'string'.  Default is 'string'.
+	 *		The type of data expected; can be 'int', 'string',
+	 *      'array', or 'checkbox'.
+	 *      Default is 'string'.
 	 *
 	 * @param mixed $p_defaultValue
-	 * 		The default value to return if the value is not defined in the $_REQUEST array,
-	 * 		or if the value does not match the required type.
+	 * 		The default value to return if the value is not defined in
+	 *      the $_REQUEST array, or if the value does not match
+	 *      the required type.
 	 *
 	 * @param boolean $p_errorsOk
-	 *		Set to true to ignore any errors for this variable (i.e. Input::IsValid()
-	 *		will still return true even if there are errors for this varaible).
+	 *		Set to true to ignore any errors for this variable (i.e.
+	 *      Input::IsValid() will still return true even if there
+	 *      are errors for this varaible).
 	 *
 	 * @return mixed
 	 */
@@ -68,7 +77,11 @@ class Input {
         $p_type = strtolower($p_type);
 
         if ($p_type == 'checkbox') {
-            return isset($_REQUEST[$p_varName]);
+            if (strtolower($p_defaultValue) != 'numeric') {
+                return isset($_REQUEST[$p_varName]);
+            } else {
+                return isset($_REQUEST[$p_varName]) ? '1' : '0';
+            }
         }
 		if (!isset($_REQUEST[$p_varName])) {
 			if (!$p_errorsOk) {
