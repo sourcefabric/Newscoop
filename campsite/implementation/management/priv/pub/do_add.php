@@ -14,47 +14,55 @@ if (!$User->hasPermission('ManagePub')) {
 	exit;
 }
 
-$cName = trim(Input::Get('cName'));
-$cSite = trim(Input::Get('cSite'));
-$cLanguage = Input::Get('cLanguage', 'int');
-$cURLType = Input::Get('cURLType', 'int', 0);
-$cTimeUnit = Input::Get('cTimeUnit', 'string', null, true);
-$cUnitCost = Input::Get('cUnitCost', 'string', null, true);
-$cUnitCostAllLang = Input::Get('cUnitCostAllLang', 'string', null, true);
-$cCurrency = Input::Get('cCurrency', 'string', null, true);
-$cPaid = Input::Get('cPaid', 'int', null, true);
-$cTrial = Input::Get('cTrial', 'int', null, true);
+$f_name = trim(Input::Get('f_name'));
+$f_default_alias = trim(Input::Get('f_default_alias'));
+$f_language = Input::Get('f_language', 'int');
+$f_url_type = Input::Get('f_url_type', 'int', 0);
+$f_time_unit = Input::Get('f_time_unit', 'string', null, true);
+$f_unit_cost = Input::Get('f_unit_cost', 'string', null, true);
+$f_unit_cost_all_lang = Input::Get('f_unit_cost_all_lang', 'string', null, true);
+$f_currency = Input::Get('f_currency', 'string', null, true);
+$f_paid = Input::Get('f_paid', 'int', null, true);
+$f_trial = Input::Get('f_trial', 'int', null, true);
+$f_comments_enabled = Input::Get('f_comments_enabled', 'checkbox', 'numeric');
+$f_comments_article_default = Input::Get('f_comments_article_default', 'checkbox', 'numeric');
+$f_comments_public_moderated = Input::Get('f_comments_public_moderated', 'checkbox', 'numeric');
+$f_comments_subscribers_moderated = Input::Get('f_comments_subscribers_moderated', 'checkbox', 'numeric');
 
 $correct = true;
 $created = false;
 $errorMsgs = array();
 
-if (empty($cName)) {
+if (empty($f_name)) {
 	$correct = false;
 	$errorMsgs[] = getGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>');
 }
 
-if (empty($cSite)) {
+if (empty($f_default_alias)) {
 	$correct = false;
 	$errorMsgs[] = getGS('You must complete the $1 field.','<B>'.getGS('Site').'</B>');
 }
 
 if ($correct) {
-	$aliases = Alias::GetAliases(null, null, $cSite);
+	$aliases = Alias::GetAliases(null, null, $f_default_alias);
 	if (count($aliases) <= 0) {
 		$alias =& new Alias();
-		$alias->create(array('Name' => $cSite));
+		$alias->create(array('Name' => $f_default_alias));
 		$newPub =& new Publication();
-		$columns = array('Name' => $cName,
+		$columns = array('Name' => $f_name,
 						 'IdDefaultAlias'=> $alias->getId(),
-						 'IdDefaultLanguage' => $cLanguage,
-						 'IdURLType' => $cURLType,
-						 'TimeUnit' => $cTimeUnit,
-						 'UnitCost' => $cUnitCost,
-						 'UnitCostAllLang' => $cUnitCostAllLang,
-						 'Currency' => $cCurrency,
-						 'PaidTime' => $cPaid,
-						 'TrialTime' => $cTrial);
+						 'IdDefaultLanguage' => $f_language,
+						 'IdURLType' => $f_url_type,
+						 'TimeUnit' => $f_time_unit,
+						 'PaidTime' => $f_paid,
+						 'TrialTime' => $f_trial,
+						 'UnitCost' => $f_unit_cost,
+						 'UnitCostAllLang' => $f_unit_cost_all_lang,
+						 'Currency' => $f_currency,
+                         'comments_enabled' => $f_comments_enabled,
+					     'comments_article_default_enabled'=> $f_comments_article_default,
+					     'comments_subscribers_moderated' => $f_comments_subscribers_moderated,
+					     'comments_public_moderated' => $f_comments_public_moderated);
 		$created = $newPub->create($columns);
 		if ($created) {
 			$alias->setPublicationId($newPub->getPublicationId());

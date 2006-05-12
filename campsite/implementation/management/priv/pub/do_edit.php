@@ -29,10 +29,10 @@ $f_unit_cost_all_lang = trim(Input::Get('f_unit_cost_all_lang', 'float', '0.0'))
 $f_currency = trim(Input::Get('f_currency'));
 $f_paid = Input::Get('f_paid', 'int');
 $f_trial = Input::get('f_trial', 'int');
-$f_comments_enabled = Input::Get('f_comments_enabled', 'checkbox');
-$f_comments_article_default = Input::Get('f_comments_article_default', 'checkbox');
-$f_comments_public_moderated = Input::Get('f_comments_public_moderated', 'checkbox');
-$f_comments_subscribers_moderated = Input::Get('f_comments_subscribers_moderated', 'checkbox');
+$f_comments_enabled = Input::Get('f_comments_enabled', 'checkbox', 'numeric');
+$f_comments_article_default = Input::Get('f_comments_article_default', 'checkbox', 'numeric');
+$f_comments_public_moderated = Input::Get('f_comments_public_moderated', 'checkbox', 'numeric');
+$f_comments_subscribers_moderated = Input::Get('f_comments_subscribers_moderated', 'checkbox', 'numeric');
 
 $errorMsgs = array();
 $correct = true;

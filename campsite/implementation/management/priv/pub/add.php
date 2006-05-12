@@ -3,6 +3,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/pub/pub_common.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/TimeUnit.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/UrlType.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Language.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/Alias.php");
 
 // Check permissions
 list($access, $User) = check_basic_access($_REQUEST);
@@ -21,115 +22,22 @@ $defaultLanguage = array_pop(Language::GetLanguages(null, $_REQUEST['TOL_Languag
 $urlTypes = UrlType::GetUrlTypes();
 $timeUnits = TimeUnit::GetTimeUnits($_REQUEST['TOL_Language']);
 $shortNameUrlType = UrlType::GetByName('short names');
+$aliases = array();
 
 $crumbs = array();
 $crumbs[] = array(getGS("Publications"), "/$ADMIN/pub/");
 $crumbs[] = array(getGS("Add new publication"), "");
 echo camp_html_breadcrumbs($crumbs);
 ?>
-
-<P>
-<FORM NAME="dialog" METHOD="POST" ACTION="do_add.php">
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
-<tr><td colspan=2><font size="+1"><b><?php putGS("General attributes"); ?></b></font></td></tr>
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
-	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cName" SIZE="32" MAXLENGTH="255">
-	</TD>
-</TR>
-<TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Site"); ?>:</TD>
-	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cSite" VALUE="<?php p(urlencode($_SERVER['HTTP_HOST'])); ?>" SIZE="32" MAXLENGTH="255">
-	</TD>
-</TR>
-<TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Default language"); ?>:</TD>
-	<TD>
-    <SELECT NAME="cLanguage" class="input_select">
-    <?php
-    foreach ($languages as $language) {
-		camp_html_select_option($language->getLanguageId(), $defaultLanguage->getLanguageId(), $language->getNativeName());
-    }
-    ?>	    </SELECT>
-	</TD>
-</TR>
-<TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("URL Type"); ?>:</TD>
-	<TD>
-	<SELECT NAME="cURLType" class="input_select">
-	<?php
-	foreach ($urlTypes as $urlType) {
-		camp_html_select_option($urlType->getId(), $shortNameUrlType->getId(), $urlType->getName());
-	}
-	?>
-	</SELECT>
-	</TD>
-</TR>
-
-<tr><td colspan=2><HR NOSHADE SIZE="1" COLOR="BLACK"></td></tr>
-<tr><td colspan=2><font size="+1"><b><?php putGS("Subscriptions defaults"); ?></b></font></td></tr>
-<TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Time Unit"); ?>:</TD>
-	<TD>
-    <SELECT NAME="cTimeUnit" class="input_select">
-	<?php
-	foreach ($timeUnits as $timeUnit) {
-		camp_html_select_option($timeUnit->getUnit(), 0, $timeUnit->getName());
-	}
-	?>
-	</SELECT>
-	</TD>
-</TR>
-<tr>
-	<td colspan="2" align="left"><b><?php putGS('Paid subscriptions'); ?></b></td>
-</tr>
-<TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Currency"); ?>:</TD>
-	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cCurrency" VALUE="" SIZE="10" MAXLENGTH="10">
-	</TD>
-</TR>
-<tr>
-	<td colspan="2" align="left"><?php  putGS("Time unit cost per one section"); ?>:</td>
-</tr>
-<TR>
-	<TD ALIGN="RIGHT" >- <?php putGS('one language'); ?>:</TD>
-	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cUnitCost" VALUE="" SIZE="10" MAXLENGTH="10">
-	</TD>
-</TR>
-<TR>
-	<TD ALIGN="RIGHT" >- <?php putGS('all languages'); ?>:</TD>
-	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cUnitCostAllLang" VALUE="" SIZE="10" MAXLENGTH="10">
-	</TD>
-</TR>
-<TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Default time period"); ?>:</TD>
-	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cPaid" VALUE="" SIZE="10" MAXLENGTH="10">
-	</TD>
-</TR>
-<tr>
-	<td colspan="2" align="left"><b><?php putGS('Trial subscriptions'); ?></b></td>
-</tr>
-<TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Default time period"); ?>:</TD>
-	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cTrial" VALUE="" SIZE="10" MAXLENGTH="10">
-	</TD>
-</TR>
-<TR>
-	<TD COLSPAN="2">
-	<DIV ALIGN="CENTER">
-	<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
-	<!--<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/pub/'">-->
-	</DIV>
-	</TD>
+	<TD><A HREF="/<?php echo $ADMIN; ?>/pub/"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></A></TD>
+	<TD><A HREF="/<?php echo $ADMIN; ?>/pub/"><B><?php  putGS("Publication List"); ?></B></A></TD>
 </TR>
 </TABLE>
+<P>
+<FORM NAME="dialog" METHOD="POST" ACTION="do_add.php">
+<?php include("pub_form.php"); ?>
 </FORM>
 <P>
 

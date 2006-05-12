@@ -519,8 +519,8 @@ class DatabaseObject {
 				$this->m_oldKeyValues[$p_dbColumnName] = $this->m_data[$p_dbColumnName];
 			}
 		}
+		$success = true;
 		// Commit value to the database if requested.
-		$databaseChanged = false;
 		if ($p_commit) {
 			$value = $p_value;
 			if (!$p_isSql) {
@@ -531,7 +531,7 @@ class DatabaseObject {
 						.' WHERE '.$this->getKeyWhereClause()
 						.' LIMIT 1';
 			$result = $g_ado_db->Execute($queryStr);
-			$databaseChanged = ($result !== false && $g_ado_db->Affected_Rows() >= 0);
+			$success = ($result !== false && $g_ado_db->Affected_Rows() >= 0);
 			if ($result !== false) {
 				$this->m_exists = true;
 			}
@@ -554,7 +554,7 @@ class DatabaseObject {
 				$errorMsg = $g_ado_db->ErrorMsg();
 			}
 		}
-		return $databaseChanged;
+		return $success;
 	} // fn setProperty
 
 
@@ -576,9 +576,7 @@ class DatabaseObject {
 	 *		order to update the internal variable's value.
 	 *
 	 * @return boolean
-	 *		Return TRUE if the database was updated, FALSE otherwise.
-	 *		This means that if p_commit is FALSE, this function will
-	 *		always return false.
+	 *		Return TRUE on success, FALSE on error.
 	 */
 	function update($p_columns = null, $p_commit = true, $p_isSql = false)
 	{
@@ -603,21 +601,24 @@ class DatabaseObject {
 	        			$this->m_oldKeyValues[$columnName] = $this->m_data[$columnName];
 	        		}
 	        	}
-	        	$setColumns[] = "`".$columnName . "`='". mysql_real_escape_string($columnValue) ."'";
-	        	if (!$p_isSql) {
-	        		$this->m_data[$columnName] = $columnValue;
+	        	// Only set the value if it is different from the
+	        	// current value.
+	        	if ($columnValue != $this->m_data[$columnName]) {
+    	        	$setColumns[] = "`".$columnName . "`='". mysql_real_escape_string($columnValue) ."'";
+    	        	if (!$p_isSql) {
+    	        		$this->m_data[$columnName] = $columnValue;
+    	        	}
 	        	}
         	}
         }
-        $databaseChanged = false;
+        $success = true;
         if ($p_commit && (count($setColumns) > 0)) {
 	        $queryStr = 'UPDATE ' . $this->m_dbTableName
 	        			.' SET '.implode(',', $setColumns)
 	        			.' WHERE ' . $this->getKeyWhereClause()
 	        			.' LIMIT 1';
-	        $result = $g_ado_db->Execute($queryStr);
-			$databaseChanged = ($g_ado_db->Affected_Rows() > 0);
-			if ($result !== false) {
+	        $success = $g_ado_db->Execute($queryStr);
+			if ($success !== false) {
 				$this->m_exists = true;
 			}
         }
@@ -625,7 +626,7 @@ class DatabaseObject {
         	$this->fetch();
         	$this->m_oldKeyValues = array();
         }
-		return $databaseChanged;
+		return $success;
 	} // fn update
 
 
@@ -650,7 +651,6 @@ class DatabaseObject {
         		$setColumns[] = "`".$columnName . "`='". mysql_real_escape_string($columnValue) ."'";
         	}
         }
-        $databaseChanged = false;
 		$queryStr = 'UPDATE ' . $this->m_dbTableName
 	        		.' SET '.implode(',', $setColumns)
 	        		.' WHERE ' . $this->getKeyWhereClause()
