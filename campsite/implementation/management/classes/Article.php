@@ -1170,7 +1170,17 @@ class Article extends DatabaseObject {
 	 */
 	function getLastModified()
 	{
-	    return $this->m_data['time_updated'];
+	    // Deal with the differences between MySQL 4
+	    // and MySQL 5.
+	    if (strpos($this->m_data['time_updated'], "-") === false) {
+	        $t = $this->m_data['time_updated'];
+	        $str = substr($t, 0, 4).'-'.substr($t, 4, 2)
+	               .'-'.substr($t, 6, 2).' '.substr($t, 8, 2)
+	               .':'.substr($t, 10, 2).':'.substr($t, 12);
+	        return $str;
+	    } else {
+	        return $this->m_data['time_updated'];
+	    }
 	} // fn getLastModified
 
 
