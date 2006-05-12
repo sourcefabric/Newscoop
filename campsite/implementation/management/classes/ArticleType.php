@@ -68,7 +68,7 @@ class ArticleType {
 		if ($success) {
 			$queryStr = "INSERT INTO ArticleTypeMetadata"
 						."(type_name, field_name) "
-						."VALUES ('".$this->m_dbTableName."', 'NULL')";
+						."VALUES ('".$this->m_name."', 'NULL')";
 			$success2 = $g_ado_db->Execute($queryStr);
 		} else {
 			return $success;
@@ -76,9 +76,9 @@ class ArticleType {
 
 		if ($success2) {
 			if (function_exists("camp_load_language")) { camp_load_language("api");	}
-		    $logtext = getGS('The article type $1 has been added.', $this->m_dbTableName);
+		    $logtext = getGS('The article type $1 has been added.', $this->m_name);
 	    	Log::Message($logtext, null, 61);
-			ParserCom::SendMessage('article_types', 'create', array("article_type"=>$this->m_dbTableName));
+			ParserCom::SendMessage('article_types', 'create', array("article_type"=>$this->m_name));
 		} else {
 			$queryStr = "DROP TABLE ".$this->m_dbTableName;
 			$result = $g_ado_db->Execute($queryStr);
@@ -95,7 +95,7 @@ class ArticleType {
 	function exists()
 	{
 		global $g_ado_db;
-		$queryStr = "SHOW TABLES LIKE '".$this->m_dbTableName."'"; // the old code had an X, but m_dbTableName in ArticleType::articleType() is already with an X pjh
+		$queryStr = "SHOW TABLES LIKE '".$this->m_dbTableName."'"; 
 		$result = $g_ado_db->GetOne($queryStr);
 		if ($result) {
 			return true;
@@ -116,13 +116,13 @@ class ArticleType {
 		$queryStr = "DROP TABLE ".$this->m_dbTableName;
 		$success = $g_ado_db->Execute($queryStr);
 		if ($success) {
-			$queryStr = "DELETE FROM ArticleTypeMetadata WHERE type_name='".$this->m_dbTableName."'";
+			$queryStr = "DELETE FROM ArticleTypeMetadata WHERE type_name='".$this->m_name."'";
 			$success2 = $g_ado_db->Execute($queryStr);
 		}
 
 		if ($success2) {
 			if (function_exists("camp_load_language")) { camp_load_language("api");	}
-			$logtext = getGS('The article type $1 has been deleted.', $this->m_dbTableName);
+			$logtext = getGS('The article type $1 has been deleted.', $this->m_name);
 			Log::Message($logtext, null, 62);
 			ParserCom::SendMessage('article_types', 'delete', array("article_type" => $this->m_name));
 		}
@@ -141,17 +141,17 @@ class ArticleType {
 		$queryStr = "RENAME TABLE ".$this->m_dbTableName ." TO X".$p_newName;
 		$success = $g_ado_db->Execute($queryStr);
 		if ($success) {
-			$queryStr = "UPDATE ArticleTypeMetadata SET type_name='X". $p_newName ."' WHERE type_name='". $this->m_dbTableName ."'";
+			$queryStr = "UPDATE ArticleTypeMetadata SET type_name='$p_newName' WHERE type_name='". $this->m_name ."'";
 			$success2 = $g_ado_db->Execute($queryStr);
 		}
         if ($success2) {
-            $queryStr = "UPDATE Articles SET Type='". $p_newName ."' WHERE Type='". substr($this->m_dbTableName, 1) ."'";
+            $queryStr = "UPDATE Articles SET Type='". $p_newName ."' WHERE Type='". $this->m_name ."'";
             $success3 = $g_ado_db->Execute($queryStr);       
         }
 		if ($success3) {
 			$this->m_dbTableName = 'X'. $p_newName;
 			if (function_exists("camp_load_language")) { camp_load_language("api"); }
-			$logText = getGS('The article type $1 has been renamed to $2.', $this->m_dbTableName, $p_newName);
+			$logText = getGS('The article type $1 has been renamed to $2.', $this->m_name, $p_newName);
 			Log::Message($logText, null, 62);
 			ParserCom::SendMessage('article_types', 'rename', array('article_type' => $this->m_name));
 		}
@@ -170,7 +170,7 @@ class ArticleType {
 	function translationExists($p_languageId)
 	{
 		global $g_ado_db;
-		$sql = "SELECT atm.*, t.* FROM ArticleTypeMetadata atm, Translations t WHERE atm.type_name='". $this->m_dbTableName ."' AND atm.field_name='NULL' AND atm.fk_phrase_id = t.phrase_id AND t.fk_language_id = '$p_languageId'";
+		$sql = "SELECT atm.*, t.* FROM ArticleTypeMetadata atm, Translations t WHERE atm.type_name='". $this->m_name ."' AND atm.field_name='NULL' AND atm.fk_phrase_id = t.phrase_id AND t.fk_language_id = '$p_languageId'";
 		$row = $g_ado_db->getAll($sql);
 		if (count($row)) return $row[0]['fk_phrase_id'];
 		else { return 0; }
@@ -209,7 +209,7 @@ class ArticleType {
 		} else {
 			// Insert the new translation.
 			// first get the fk_phrase_id
-			$sql = "SELECT fk_phrase_id FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' AND field_name='NULL'";
+			$sql = "SELECT fk_phrase_id FROM ArticleTypeMetadata WHERE type_name='". $this->m_name ."' AND field_name='NULL'";
 			$row = $g_ado_db->GetOne($sql);
 
 			// if this is the first translation ...
@@ -218,7 +218,7 @@ class ArticleType {
 				$description->create($p_value);
 				$phrase_id = $description->getPhraseId();
 				// if the phrase_id isn't there, insert it.
-				$sql = "UPDATE ArticleTypeMetadata SET fk_phrase_id=".$phrase_id ." WHERE type_name='". $this->m_dbTableName ."' AND field_name='NULL'";
+				$sql = "UPDATE ArticleTypeMetadata SET fk_phrase_id=".$phrase_id ." WHERE type_name='". $this->m_name ."' AND field_name='NULL'";
 				$changed = $g_ado_db->Execute($sql);
 
 			} else {
@@ -232,7 +232,7 @@ class ArticleType {
 
 		if ($changed) {
 			if (function_exists("camp_load_language")) { camp_load_language("api");	}
-			$logtext = getGS('Type $1 updated: updated translation for ', $this->m_dbTableName);
+			$logtext = getGS('Type $1 updated: updated translation for ', $this->m_name);
 			Log::Message($logtext, null, 143);
 			ParserCom::SendMessage('article_types', 'modify', array('article_type' => $this->m_name));
 		}
@@ -287,7 +287,7 @@ class ArticleType {
 	function getMetadata()
 	{
 		global $g_ado_db;
-		$queryStr = "SELECT * FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' and field_name='NULL'";
+		$queryStr = "SELECT * FROM ArticleTypeMetadata WHERE type_name='". $this->m_name ."' and field_name='NULL'";
 		$queryArray = $g_ado_db->GetRow($queryStr);
 		return $queryArray;
 	} // fn getMetadata
@@ -302,15 +302,16 @@ class ArticleType {
 	{
 		global $g_ado_db;
 		$queryStr = "SELECT * FROM ArticleTypeMetadata "
-		            ." WHERE type_name='". $this->m_dbTableName ."'"
+		            ." WHERE type_name='". $this->m_name ."'"
 		            ." AND field_name != 'NULL' "
 		            ." AND field_type IS NOT NULL "
+		            ." AND type_name NOT LIKE 'XPreview%'"
 		            ." ORDER BY field_weight ASC";
 		$queryArray = $g_ado_db->GetAll($queryStr);
 		$metadata = array();
 		if (is_array($queryArray)) {
 			foreach ($queryArray as $row) {
-				$queryStr = "SHOW COLUMNS FROM ". $this->m_dbTableName ." LIKE '". $row['field_name'] ."'";
+				$queryStr = "SHOW COLUMNS FROM ". $this->m_dbTableName ." LIKE 'F". $row['field_name'] ."'";
 				$rowdata = $g_ado_db->GetAll($queryStr);
 				$columnMetadata =& new ArticleTypeField($this->m_name);
 				$columnMetadata->fetch($rowdata[0]);
@@ -358,12 +359,13 @@ class ArticleType {
 		global $g_ado_db;
 		$queryStr = "SELECT type_name FROM ArticleTypeMetadata WHERE field_name='NULL'";
 		if (!$p_includeHidden) {
-		    $queryStr .= " AND is_hidden='0'";
+		    $queryStr .= " AND is_hidden=0";
 		}
 		$res = $g_ado_db->GetAll($queryStr);
+		if (!$res) return array();
 		$finalNames = array();
 		foreach ($res as $v) {
-			$finalNames[] = substr($v['type_name'], 1);
+			$finalNames[] = $v['type_name'];
 		}
 		return $finalNames;
 	} // fn GetArticleTypes
@@ -387,7 +389,7 @@ class ArticleType {
 		}
 		$queryStr = "UPDATE ArticleTypeMetadata "
 		            ." SET $set "
-		            ." WHERE type_name='". $this->getTableName()."'"
+		            ." WHERE type_name='". $this->m_name."'"
 		            ." AND field_name='NULL'";
 		$ret = $g_ado_db->Execute($queryStr);
 	} // fn setStatus
@@ -433,7 +435,7 @@ class ArticleType {
 		$p_value = $p_value ? '1' : '0';
 		$queryStr = "UPDATE ArticleTypeMetadata "
 		            ." SET comments_enabled=$p_value "
-		            ." WHERE type_name='". $this->getTableName()."'"
+		            ." WHERE type_name='". $this->m_name ."'"
 		            ." AND field_name='NULL'";
 		$ret = $g_ado_db->Execute($queryStr);
 	} // fn setCommentsEnabled
@@ -571,7 +573,7 @@ class ArticleType {
             $sql = "CREATE TABLE X$dest LIKE X$p_dest";
 	        $res = $g_ado_db->Execute($sql);
 	        if (!$res) return 0;
-	        $sql = "SELECT * FROM ArticleTypeMetadata WHERE type_name='X$p_dest'";
+	        $sql = "SELECT * FROM ArticleTypeMetadata WHERE type_name='$p_dest'";
 	        $rows = $g_ado_db->GetAll($sql);
 	        if (!count($rows)) return 0;
             foreach ($rows as $row) {
@@ -579,7 +581,7 @@ class ArticleType {
 	            $values = array();
 	            foreach ($row as $k => $v) {	           
 	                $keys[] = $k;
-	                if ($k == 'type_name') $v = 'X'.$dest;
+	                if ($k == 'type_name') $v = $dest;
 	        
 	            
 	               if (!is_numeric($v)) $values[] = "'$v'";

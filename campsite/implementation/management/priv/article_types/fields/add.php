@@ -73,9 +73,11 @@ function UpdateArticleFieldContext() {
 	<td>
 		<select name="f_root_topic_id" class="input_select">
 <?php
-$TOL_Language = Input::Get('TOL_Language');
-$currentLanguages = Language::GetLanguages(null, $TOL_Language);
-$currentLanguageId = $currentLanguages[0]->getLanguageId();
+$lang = camp_session_get('LoginLanguageId', 1);
+$langObj =& new Language($lang);
+$currentLanguageId = $langObj->getLanguageId();
+
+
 $topics = Topic::GetTree();
 foreach ($topics as $topicPath) {
 	$printTopic = array();

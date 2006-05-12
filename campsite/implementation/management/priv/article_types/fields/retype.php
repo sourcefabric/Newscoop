@@ -48,6 +48,10 @@ function UpdateArticleFieldContext() {
 	}
 }
 </script>
+
+
+
+
 <P>
 <FORM NAME="add_field_form" METHOD="POST" ACTION="do_retype.php" onsubmit="return validateForm(this, 0, 1, 0, 1, 8);">
 <input type="hidden" name="f_field_name" value="<?php print $articleTypeFieldName; ?>">
@@ -57,11 +61,10 @@ function UpdateArticleFieldContext() {
 	<TD ALIGN="RIGHT" ><?php  putGS("Type"); ?>:</TD>
 	<TD>
 	<SELECT NAME="f_article_field_type" class="input_select" onchange="UpdateArticleFieldContext()">
-		<OPTION VALUE="text" <?php if ($articleField->getPrintType() == 'Text') print "SELECTED"; ?>><?php  putGS('Text'); ?>
-		<OPTION VALUE="date" <?php if ($articleField->getPrintType() == 'Date') print "SELECTED"; ?>><?php  putGS('Date'); ?>
-		<OPTION VALUE="body" <?php if ($articleField->getPrintType() == 'Article body') print "SELECTED"; ?>><?php  putGS('Article body'); ?>
-		<!-- TODO: Type Topic tests need to happen. -->
-		<OPTION VALUE="topic" <?php if ($articleField->getPrintType() == 'unknown') print "SELECTED"; ?>><?php  putGS('Topic'); ?>
+		<OPTION VALUE="text" <?php if ($articleField->getType() == 'varchar(255)') print "SELECTED"; ?>><?php  putGS('Text'); ?>
+		<OPTION VALUE="date" <?php if ($articleField->getType() == 'date') print "SELECTED"; ?>><?php  putGS('Date'); ?>
+		<OPTION VALUE="body" <?php if ($articleField->getType() == 'mediumblob') print "SELECTED"; ?>><?php  putGS('Article body'); ?>
+		<OPTION VALUE="topic" <?php if ($articleField->getType() == 'int(10) unsigned') print "SELECTED"; ?>><?php  putGS('Topic'); ?>
 	</SELECT>
 	</TD>
 </TR>
@@ -70,9 +73,11 @@ function UpdateArticleFieldContext() {
 	<td>
 		<select name="f_root_topic_id" class="input_select">
 <?php
-$TOL_Language = Input::Get('TOL_Language');
-$currentLanguages = Language::GetLanguages(null, $TOL_Language);
-$currentLanguageId = $currentLanguages[0]->getLanguageId();
+$TOL_Language = camp_session_get('LoginLanguageId', 1);
+$lang =& new Language($TOL_Language);
+$currentLanguageId = $lang->getLanguageId();
+//$currentLanguages = Language::GetLanguages(null, $TOL_Language);
+//$currentLanguageId = $currentLanguages[0]->getLanguageId();
 $topics = Topic::GetTree();
 foreach ($topics as $topicPath) {
 	$printTopic = array();
@@ -105,5 +110,9 @@ foreach ($topics as $topicPath) {
 </TABLE>
 </FORM>
 <P>
-
+<?php if ($articleField->getType() == 'int(10) unsigned') { ?>
+<script>
+UpdateArticleFieldContext();
+</script>
+<?php } ?>
 <?php camp_html_copyright_notice(); ?>

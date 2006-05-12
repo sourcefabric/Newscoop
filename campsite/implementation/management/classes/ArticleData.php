@@ -115,12 +115,12 @@ class ArticleData extends DatabaseObject {
                 $is_hidden = "";
             }
             
-			$queryStr = "SELECT * FROM ArticleTypeMetadata WHERE type_name='". $this->m_dbTableName ."' AND field_name != 'NULL' AND field_type IS NOT NULL $is_hidden ORDER BY field_weight ASC";
+			$queryStr = "SELECT * FROM ArticleTypeMetadata WHERE type_name='". $this->m_articleTypeName ."' AND field_name != 'NULL' AND field_type IS NOT NULL $is_hidden ORDER BY field_weight ASC";
 			$queryArray = $g_ado_db->GetAll($queryStr);
 			$metadata = array();
 			if (is_array($queryArray)) {
 				foreach ($queryArray as $row) {
-					$queryStr = "SHOW COLUMNS FROM ". $this->m_dbTableName ." LIKE '". $row['field_name'] ."'";
+					$queryStr = "SHOW COLUMNS FROM ". $this->m_dbTableName ." LIKE 'F". $row['field_name'] ."'";
 					$rowdata = $g_ado_db->GetAll($queryStr);
 					$columnMetadata =& new ArticleTypeField(substr($this->m_dbTableName, 1));
 					$columnMetadata->fetch($rowdata[0]);
