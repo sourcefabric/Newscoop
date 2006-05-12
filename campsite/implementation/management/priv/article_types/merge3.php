@@ -44,6 +44,7 @@ if (ereg('Back to Step 2', $f_ok)) {
 
 foreach ($dest->m_dbColumns as $destColumn) {
     $tmp = trim(Input::get('f_src_'. $destColumn->getName())); 
+    if ($tmp == '--None--') $tmp = 'NULL';
 	$f_src_c[$destColumn->getName()] = $tmp;
 }
 
@@ -153,7 +154,7 @@ echo camp_html_breadcrumbs($crumbs);
 	foreach ($f_src_c as $destColumn => $srcColumn) {
 		$tmp = array_keys($f_src_c, $srcColumn);
 
-		if ($srcColumn == '--None--') { 
+		if ($srcColumn == 'NULL') { 
 			print "<LI><FONT COLOR=\"TAN\">Merge <b>NOTHING</b> into <b>". substr($destColumn, 1) ."</b> (Null merge warning.).</FONT></LI>";
 		} else if (count($tmp) > 1) {
 			print "<LI><FONT COLOR=\"TAN\">Merge <b>$srcColumn</b> into <b>". substr($destColumn, 1) ."</b></FONT> (Duplicate warning.)</FONT></LI>";
