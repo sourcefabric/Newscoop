@@ -30,7 +30,7 @@ if (!($res = mysql_query($sql))) {
 }
 
 while ($row = mysql_fetch_array($res)) {
-	$sql = "INSERT INTO ArticleTypeMetadata (type_name, field_name) VALUES ('". $row[0] ."', 'NULL')";
+	$sql = "INSERT INTO ArticleTypeMetadata (type_name, field_name) VALUES ('". substr($row[0], 1) ."', 'NULL')";
 	mysql_query($sql);
 
 	$sql = "SHOW COLUMNS FROM ". $row[0] ." LIKE 'F%'";
@@ -70,7 +70,7 @@ while ($row = mysql_fetch_array($res)) {
 				break;
 		}
 		
-		$sql = "INSERT INTO ArticleTypeMetadata (type_name, field_name, field_type, field_weight) VALUES ('". $row[0] ."', '". $row2['Field'] ."', '$type', $weight)";
+		$sql = "INSERT INTO ArticleTypeMetadata (type_name, field_name, field_type, field_weight) VALUES ('". substr($row[0], 1) ."', '". substr($row2['Field'], 1) ."', '$type', $weight)";
 		$weight++;
 		$insres = mysql_query($sql);
 	}	
