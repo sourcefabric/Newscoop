@@ -88,11 +88,13 @@ $color= 0;
 $i = 0;
 foreach ($fields as $field) { 
 	if ($field->getStatus() == 'hidden') {
-		$hideShowText = 'show';
+		$hideShowText = getGS('show');
+		$hideShowStatus = 'show';
 		$hideShowImage = "is_hidden.png";
 	}
 	else {
-		$hideShowText = 'hide';
+		$hideShowText = getGS('hide');
+		$hideShowStatus = 'hide';
 		$hideShowImage = "is_shown.png";
 	}
 
@@ -133,7 +135,7 @@ foreach ($fields as $field) {
 	</td>
 
 	<TD ALIGN="CENTER">
-		<A HREF="/<?php p($ADMIN); ?>/article_types/fields/do_hide.php?f_article_type=<?php print urlencode($articleTypeName); ?>&f_field_name=<?php  print urlencode($field->getPrintName()); ?>&f_status=<?php print $hideShowText; ?>" onclick="return confirm('<?php putGS('Are you sure you want to $1 the article type field $2?', $hideShowText, $field->getPrintName()); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/<?php echo $hideShowImage; ?>" BORDER="0" ALT="<?php  putGS('$1 article type field $2', ucfirst($hideShowText), $field->getPrintName()); ?>" TITLE="<?php  putGS('$1 article type $2', ucfirst($hideShowText), $field->getPrintName()); ?>" ></A>
+		<A HREF="/<?php p($ADMIN); ?>/article_types/fields/do_hide.php?f_article_type=<?php print urlencode($articleTypeName); ?>&f_field_name=<?php  print urlencode($field->getPrintName()); ?>&f_status=<?php print $hideShowStatus; ?>" onclick="return confirm('<?php putGS('Are you sure you want to $1 the article type field $2?', $hideShowText, $field->getPrintName()); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/<?php echo $hideShowImage; ?>" BORDER="0" ALT="<?php  putGS('$1 article type field $2', ucfirst($hideShowText), $field->getPrintName()); ?>" TITLE="<?php  putGS('$1 article type $2', ucfirst($hideShowText), $field->getPrintName()); ?>" ></A>
 	</TD>
 
 	<?php  if ($User->hasPermission("ManageArticleTypes")) { ?>

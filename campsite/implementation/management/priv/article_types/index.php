@@ -90,10 +90,12 @@ $i = 0;
 foreach ($articleTypes as $articleType) {
 	$currentArticleType =& new ArticleType($articleType);
 	if ($currentArticleType->getStatus() == 'hidden') {
-		$hideShowText = 'show';
+		$hideShowText = getGS('show');
+		$hideShowStatus = 'show';
 		$hideShowImage = "is_hidden.png";
 	} else {
-		$hideShowText = 'hide';
+		$hideShowText = getGS('hide');
+		$hideShowStatus = 'hide';
 		$hideShowImage = "is_shown.png";
 	}
 
@@ -122,7 +124,7 @@ foreach ($articleTypes as $articleType) {
 	</td>
 
 	<TD ALIGN="CENTER">
-		<A HREF="/<?php p($ADMIN); ?>/article_types/do_hide.php?f_article_type=<?php  print urlencode($articleType); ?>&AStatus=<?php print $hideShowText; ?>" onclick="return confirm('<?php putGS('Are you sure you want to $1 the article type $2?', $hideShowText, "\'".htmlspecialchars($articleType)."\'"); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/<?php echo $hideShowImage; ?>" BORDER="0" ALT="<?php  putGS('Delete article type $1', htmlspecialchars($articleType)); ?>" TITLE="<?php  putGS('$1 article type $2', ucfirst($hideShowText), htmlspecialchars($articleType)); ?>" ></A>
+		<A HREF="/<?php p($ADMIN); ?>/article_types/do_hide.php?f_article_type=<?php  print urlencode($articleType); ?>&f_status=<?php print $hideShowStatus; ?>" onclick="return confirm('<?php putGS('Are you sure you want to $1 the article type $2?', $hideShowText, "\'".htmlspecialchars($articleType)."\'"); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/<?php echo $hideShowImage; ?>" BORDER="0" ALT="<?php  putGS('$1 article type $2', ucfirst($hideShowText), htmlspecialchars($articleType)); ?>" TITLE="<?php  putGS('$1 article type $2', ucfirst($hideShowText), htmlspecialchars($articleType)); ?>" ></A>
 	</TD>
 
 	<TD ALIGN="CENTER">
