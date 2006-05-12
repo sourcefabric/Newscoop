@@ -497,6 +497,25 @@ class ArticleType {
 		return $res;
 	} // fn getNumArticles
 
+    /**
+     * 
+     * For the preview of merge; this grabs an array of the article numbers for calculating next, prev, and cur
+     * 
+     * @return array 
+     */
+    function getArticlesArray() 
+    {
+        global $g_ado_db;
+        $sql = "SELECT NrArticle FROM ". $this->m_dbTableName;
+        $rows = $g_ado_db->GetAll($sql); 
+        $returnArray = array();
+        foreach ($rows as $row) {
+            $returnArray[] = $row['NrArticle'];
+        }
+        return $returnArray;       
+    }
+    
+
 	
 	/*
 	 * Does the merge.  The p_rules array is associative with the key being the DESTINATION
@@ -566,25 +585,11 @@ class ArticleType {
 	            $res = $g_ado_db->Execute($sql);
 	            if (!$res) return 0;
             }	        
-		} else {	
-			$dest = $p_dest;
-		}
 
-		//
-		// columns come from the p_rules array
-		// TODO: if there are extra columns (in src, but not in dest), I'll need to create them
-		// now.
-		//
-
-		// if in preview mode, we only do one article at a time
-        if ($p_preview) {
             // if p_article is not set, then grab the first article
 	        // otherwise, grab the selected article in p_article  	
-    		if ($p_article == 0) {
-	       	    $sql = "SELECT * FROM X$p_src LIMIT 1";	    
-    		} else {
-	//       		$sql = "SELECT * FROM X$p_src WHERE NrArticle=$p_article AND IdLanguage=$p_language"; TODO
-		    }
+    		
+	       	$sql = "SELECT * FROM X$p_src WHERE NrArticle=$p_article";		    
 		    $row = $g_ado_db->GetRow($sql);
 		    if (!$row) {
 		      return 0;    
@@ -604,7 +609,7 @@ class ArticleType {
 		            $v = $newNumber;
 		        }
 		        if ($k == 'Name')
-		            $v = $dest .'_Name';
+		            $v = $dest .'_'. $v;
 		        if ($k == 'Type') {
 		            $v = $dest;
 		        }
@@ -642,20 +647,39 @@ class ArticleType {
 		      return 0;   
 
             $obj =& new Article($row['IdLanguage'], $newNumber);
-            //$obj->create($dest, $arow['Name']);
-            //$objData =& $obj->getArticleData();
-            //foreach ($p_rules as $destColumnName => $srcColumnName) {
-			//    if ($srcColumnName != '--None--') {
-    		//		$objData->setProperty($destColumnName, $row['F'.$srcColumnName]);	
-	       	//	}
-            //}
             return $obj;         
         } else {
-            
-            
-            
-            
-            
+            // non-preview mode, the actual merge
+            // all that needs to be done is to reassign a type in the Articles table
+            // and then copy entries from Xsrc to Xdest
+            $sql = "UPDATE Articles SET Type='$p_dest' WHERE Type='$p_src'";
+            $res = $g_ado_db->Execute($sql);
+            if (!$res) return 0;
+		    
+		    $sql = "SELECT * FROM X$p_src";
+		    $rows = $g_ado_db->GetAll($sql);
+		    if (!count($rows)) return 0;
+		    foreach ($rows as $row) {
+                $fields = array();
+                $values = array();
+                foreach ($p_rules as $destC => $srcC) {
+                    $fields[] = $destC;
+                    if ($srcC == '--None--') $values[] = "''";
+                    else if (is_numeric($row['F'. $srcC])) $values[] = $row['F'. $srcC]; 
+                    else $values[] = "'". $row['F'. $srcC] ."'"; 
+                }
+                $fields[] = 'NrArticle';
+                $values[] = $row['NrArticle'];
+                $fields[] = 'IdLanguage';
+                $values[] = $row['IdLanguage'];
+                $fieldsString = implode(',', $fields);
+                $valuesString = implode(',', $values);
+                $sql = "INSERT INTO X$p_dest ($fieldsString) VALUES ($valuesString)";          
+    		    $res = $g_ado_db->Execute($sql);
+    		    if (!$res)
+    		      return 0;   
+		    }                 
+		    return 1;       
         }
 
 	} // fn merge 

@@ -20,7 +20,8 @@ if (!$User->hasPermission('ManageArticleTypes')) {
 $f_src = trim(Input::get('f_src'));
 $f_dest = trim(Input::get('f_dest'));
 $f_ok = trim(Input::get('Ok'));
-$f_action = trim(Input::get('f_preview_action', 'string', 'NULL')); // Preview actions: either NEXT, PREV, ORIG
+$f_action = trim(Input::get('f_action', 'string', 'NULL')); // Preview actions: either NEXT, PREV, ORIG
+
 if (ereg('Back to Step 1', $f_ok)) {
 	header("Location: /$ADMIN/article_types/merge.php?f_src=$f_src&f_dest=$f_dest");
 	exit;
@@ -30,6 +31,16 @@ if (ereg('Back to Step 1', $f_ok)) {
 
 $src =& new ArticleType($f_src);
 $dest =& new ArticleType($f_dest);
+
+
+if (ereg('Back to Step 2', $f_ok)) {
+	$string = "";
+	foreach ($dest->m_dbColumns as $destColumn) {
+		$string .= "&f_src_". $destColumn->getName() ."=". trim(Input::get('f_src_'. $destColumn->getName()));
+		}
+	header("Location: /$ADMIN/article_types/merge2.php?f_src=$f_src&f_dest=$f_dest". $string);
+	exit;
+}	
 
 foreach ($dest->m_dbColumns as $destColumn) {
     $tmp = trim(Input::get('f_src_'. $destColumn->getName())); 
@@ -82,31 +93,41 @@ if (!$ok) {
 	exit;    
 }
 
-if ($f_ok == 'Merge!') {	
-	$res = ArticleType::merge($src, $dest, $f_src_c);
+if (ereg('Merge!', $f_ok)) { 
+	$res = ArticleType::merge($f_src, $f_dest, $f_src_c);
 	header("Location: /$ADMIN/article_types/");
 	exit;	
 }
 
-$f_cur_preview = trim(Input::get('f_cur_preview', 'int', -1)); // The currently previewed article
-if ($f_cur_preview == -1)
-	$f_cur_preview = 0;
-	
-if ($f_action == 'Next') { $f_cur_preview++; }
-else if ($f_action == 'Prev') { $f_cur_preview--; }
-else if ($f_action == 'Orig') {
+$articlesArray = $src->getArticlesArray();
+
+$f_cur_preview = trim(Input::get('f_cur_preview', 'int', $articlesArray[0])); // The currently previewed article
+$tmp = array_keys($articlesArray, $f_cur_preview);	
+$curPos = $tmp[0];
+if ($f_action == 'Orig') {
     $f_orig_article = trim(Input::get('f_orig_article', 'int', 0));
     $f_orig_lang = trim(Input::get('f_orig_lang', 'int', 0));
     $curPreview =& new Article($f_orig_lang, $f_orig_article); 
-} else { 
-    $curPreview = ArticleType::merge($f_src, $f_dest, $f_src_c, $f_cur_preview, 'preview');	
     $articleCreator =& new User($curPreview->getCreatorId());
     $articleData = $curPreview->getArticleData();
-    // Get article type fields.
+    $dbColumns = $articleData->getUserDefinedColumns();
+} else { 
+    $curPreview = ArticleType::merge($f_src, $f_dest, $f_src_c, $f_cur_preview, 1);	
+    $articleCreator =& new User($curPreview->getCreatorId());
+    $articleData = $curPreview->getArticleData();
     $dbColumns = $articleData->getUserDefinedColumns();
 }
-
-
+$origLang = 1; // TODO
+$getString = '';
+foreach ($_GET as $k => $v) {
+    if ($k != 'f_action')
+        $getString .= "&$k=$v";        
+}
+foreach ($_POST as $k => $v) {
+    if ($k != 'f_action')
+        $getString .= "&$k=$v";
+}
+$getString = substr($getString, 1);
 
 
 
@@ -119,7 +140,7 @@ echo camp_html_breadcrumbs($crumbs);
 
 ?>
 <P>
-<FORM NAME="dialog" METHOD="POST" ACTION="do_merge.php?f_src=<?php print $f_src; ?>&f_dest=<?php print $f_dest; ?>">
+<FORM NAME="dialog" METHOD="POST" ACTION="merge3.php?f_src=<?php print $f_src; ?>&f_dest=<?php print $f_dest; ?>">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 <TR>
 	<TD COLSPAN="2">Merge Article Types<BR>Step 3 of 3</TD>
@@ -161,11 +182,28 @@ echo camp_html_breadcrumbs($crumbs);
 
 <TR>
 	<TD COLSPAN="2">
-	<B>Preview of <?php print wordwrap(htmlspecialchars($curPreview->getTitle()), 60, '<BR>'); ?> (<A HREF="/<?php print $ADMIN; ?>/article_types/merge3.php?f_src=<?php print $f_src; ?>&f_dest=<?php print $f_dest; ?>&f_orig_article=<?php print $curPreview->getArticleNumber(); ?>&f_orig_lang=<?php print $curPreview->getLanguageId(); ?>">View the source (<?php print $src->getDisplayName(); ?>) version of <?php print wordwrap(htmlspecialchars($curPreview->getTitle()), 60, '<BR>'); ?>.</A>). 
-	1 of <?php print $src->getNumArticles(); ?>. 
-	<IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/previous.png" BORDER="0">&nbsp;
-	<IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/next.png" BORDER="0">
-	</TD>
+    <?php if ($f_action == 'Orig') { ?>
+        <B>View of original (<?php print wordwrap(htmlspecialchars($curPreview->getType())); ?>) <?php print $curPreview->getTitle(); ?> (<A HREF="/<?php print $ADMIN; ?>/article_types/merge3.php?<?php print $getString; ?>">To return to the preview click here</a>)</B>    
+    <?php } else { ?>
+    	<B>Preview of <?php print wordwrap(htmlspecialchars(str_replace($curPreview->getType() .'_', '', $curPreview->getTitle())), 60, '<BR>'); ?> (<A HREF="/<?php print $ADMIN; ?>/article_types/merge3.php?f_action=Orig&<?php print $getString; ?>&f_orig_article=<?php print $articlesArray[$curPos]; ?>&f_orig_lang=<?php print $origLang; ?>">View the source (<?php print $src->getDisplayName(); ?>) version of <?php print wordwrap(htmlspecialchars(str_replace($curPreview->getType() .'_', '', $curPreview->getTitle())), 60, '<BR>'); ?></A>) 
+    	<?php print $curPos + 1; ?> of <?php print count($articlesArray); ?>. 
+        <?php 
+        if (isset($articlesArray[$curPos - 1])) {
+            $prevArticle = $articlesArray[$curPos - 1];
+        ?>
+        	<A HREF="/<?php print $ADMIN; ?>/article_types/merge3.php?<?php print $getString; ?>&f_cur_preview=<?php print $prevArticle; ?>"><IMG BORDER="0" SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/previous.png" BORDER="0"></a>&nbsp;
+        <?php  
+        }
+        if (isset($articlesArray[$curPos + 1])) {
+            $nextArticle = $articlesArray[$curPos + 1];
+            ?>
+            <A HREF="/<?php print $ADMIN; ?>/article_types/merge3.php?<?php print $getString; ?>&f_cur_preview=<?php print $nextArticle; ?>"><IMG BORDER="0" SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/next.png" BORDER="0"></a>
+        <?php
+        }
+    } // else
+    ?>
+
+    </TD>
 </TR>
 <TR>
 	<TD COLSPAN="2">
@@ -180,7 +218,7 @@ echo camp_html_breadcrumbs($crumbs);
 			<TR>
 				<TD ALIGN="RIGHT" valign="top" ><b><?php  putGS("Name"); ?>:</b></TD>
 				<TD align="left" valign="top">
-				    <?php print wordwrap(htmlspecialchars($curPreview->getTitle()), 60, "<br>"); ?>
+				    <?php print wordwrap(htmlspecialchars(str_replace($curPreview->getType() .'_', '', $curPreview->getTitle())), 60, "<br>"); ?>
 				</TD>
 				<TD ALIGN="RIGHT" valign="top"><b><?php  putGS("Created by"); ?>:</b></TD>
 				<TD align="left" valign="top"><?php p(htmlspecialchars($articleCreator->getRealName())); ?></TD>
@@ -192,7 +230,7 @@ echo camp_html_breadcrumbs($crumbs);
 			<TR>
 				<TD ALIGN="RIGHT" valign="top" style="padding-left: 1em;"><b><?php  putGS("Type"); ?>:</b></TD>
 				<TD align="left" valign="top">
-					<?php print htmlspecialchars($articleData->getDisplayName()); ?>
+					<?php print htmlspecialchars($dest->getDisplayName()); ?>
 				</TD>
 				<TD ALIGN="RIGHT" valign="top" style="padding-left: 1em;"><b><nobr><?php  putGS("Creation date"); ?>:</nobr></b></TD>
 				<TD align="left" valign="top" nowrap>		
@@ -376,6 +414,9 @@ echo camp_html_breadcrumbs($crumbs);
 
 <?php
 // delete the preview object
+$AT =& new ArticleType($curPreview->getType());
+$AT->delete();
+$curPreview->delete();
 ?>
 
 <?php camp_html_copyright_notice(); ?>
