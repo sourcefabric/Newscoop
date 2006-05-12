@@ -516,42 +516,48 @@ class ArticleType {
     }
     
 
-	
-	/*
-	 * Does the merge.  The p_rules array is associative with the key being the DESTINATION
-	 * fieldname and the value being the SOURCE fieldname or '--None--'.  p_src is the table
-	 * from which we are merging and p_dest is the table into which we are merging.  We assume
-	 * that the p_rules array has already been verified elsewhere (cf. article_types/merge3.php).
-	 * 
-	 * if we are in preview mode, then I return the previewed object
-	 *
-	 * ? I should probably verify the p_rules in here
-	 * ? What do I do if the p_src has an EXTRA column over the p_dest?  do I create that column? 
-	 *
-	 * The merge basically works like this.  We go through row-by-row each of the destination
-	 * table's entries.  For each row, we go through each Field.  We create an insert statement
-	 * that creates a new row in the src table with the value of what is in the dest field, according 
-	 * to p_rules.
-	 *
+	/**
+     * Does the merge or a preview of the merge.
+     * The p_rules array is an associative array with the key being the DESTINATION fieldname
+     * (with the F prepended) and the values being the SOURCE fieldname (without Fs).
+     * E.g.
+     * $p_rules = array('Fa' => 'a', 'Fb' => 'title', 'Fd' => 'body');
+     * 
+     * p_rules is verified elsewhere (see article_types/merge3.php).
+     * 
+     * If we are in preview mode, we generate a XPreviewNDestTableName and 
+     * populate it with just one entry (either the one provided as p_article or the first
+     * article of XSrcTable), where N is a unique integer.  This entry is renamed PreviewN_Name
+     * where Name is its original name.  It is assigned a new ArticleNumber.
+     * Once it is displayed, we drop the XPreviewNDestTableName table and delete the 
+     * PreviewN_Name entry from Articles.
+     *
+     * If we are doing an actual merge, all that happens is that we rename the Type in Articles
+     * from SrcType to DestType and run the merge (p_rules) on the XSrcTable entries and move
+     * them over to XDestType.  Merged articles have the same ArticleNumber as their originals.
+     *
+     * The user has the option of deleting the original type after a merge.  If this selection
+     * is chosen, then we drop XSrcTable.  If this selection is not chosen, then we have
+     * duplicate ArticleNumbers until that table is dropped manually.
+     *
 	 * @param string p_src
 	 * @param string p_dest 
 	 * @param array p_rules 
 	 * @param int p_article
-	 * @param int p_language TODO
 	 * @param boolean p_preview
+	 * @param boolean p_delete 
 	 *
 	 * @return object ArticleType or TRUE/FALSE 
-	 */
-	function merge($p_src, $p_dest, $p_rules, $p_article = 0, $p_preview = false) 
+	 **/
+	function merge($p_src, $p_dest, $p_rules, $p_article = 0, $p_preview = false, $p_delete = false) 
 	{
 		global $g_ado_db;
-
 		
 		// 
 		// if in preview mode:
 		// first, copy over the destination table to an XPreviewNDestinationTable,
-		// where N normally is 0, but on the off chance that they have a table named
-		// XPreview0, I cycle through N as an integer until I get to a free table.
+		// where N normally is 1, but on the off chance that they have a table named
+		// XPreview1DestTable, I cycle through N as an integer until I get to a free table.
 		//
 		if ($p_preview) {
             $res = 1;
@@ -585,9 +591,6 @@ class ArticleType {
 	            $res = $g_ado_db->Execute($sql);
 	            if (!$res) return 0;
             }	        
-
-            // if p_article is not set, then grab the first article
-	        // otherwise, grab the selected article in p_article  	
     		
 	       	$sql = "SELECT * FROM X$p_src WHERE NrArticle=$p_article";		    
 		    $row = $g_ado_db->GetRow($sql);
@@ -631,7 +634,7 @@ class ArticleType {
             $values = array();
             foreach ($p_rules as $destC => $srcC) {
                 $fields[] = $destC;
-                if ($srcC == '--None--') $values[] = "''";
+                if ($srcC == 'NULL') $values[] = "''";
                 else if (is_numeric($row['F'. $srcC])) $values[] = $row['F'. $srcC]; 
                 else $values[] = "'". $row['F'. $srcC] ."'"; 
             }
@@ -664,7 +667,7 @@ class ArticleType {
                 $values = array();
                 foreach ($p_rules as $destC => $srcC) {
                     $fields[] = $destC;
-                    if ($srcC == '--None--') $values[] = "''";
+                    if ($srcC == 'NULL') $values[] = "''";
                     else if (is_numeric($row['F'. $srcC])) $values[] = $row['F'. $srcC]; 
                     else $values[] = "'". $row['F'. $srcC] ."'"; 
                 }
@@ -678,7 +681,10 @@ class ArticleType {
     		    $res = $g_ado_db->Execute($sql);
     		    if (!$res)
     		      return 0;   
-		    }                 
+		    }   
+		    if ($p_delete) {
+		        // TODO 
+		    }
 		    return 1;       
         }
 
