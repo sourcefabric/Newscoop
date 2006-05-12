@@ -17,6 +17,10 @@ $articleTypeName = Input::Get('f_article_type');
 // return value is sorted by language
 $allLanguages = Language::GetLanguages();
 
+$lang = camp_session_get('LoginLanguageId', 1);
+$languageObj =& new Language($lang);
+
+
 $articleType =& new ArticleType($articleTypeName);
 $fields = $articleType->getUserDefinedColumns();
 
@@ -190,8 +194,10 @@ foreach ($fields as $field) {
 							<option value="0"><?php putGS("---Select language---"); ?></option>
 							<?php 
 						 	foreach ($allLanguages as $tmpLanguage) {
-						 		camp_html_select_option($tmpLanguage->getLanguageId(), 
-						 								null, 
+						 		if ($languageObj->getLanguageId() == $tmpLanguage->getLanguageId()) $selected = true;
+						 		else $selected = false;
+						 	    camp_html_select_option($tmpLanguage->getLanguageId(), 
+						 								$selected, 
 						 								$tmpLanguage->getNativeName());
 					        }
 							?>			

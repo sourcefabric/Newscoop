@@ -16,6 +16,11 @@ $articleTypes = ArticleType::GetArticleTypes(true);
 $allLanguages = Language::GetLanguages();
 
 
+$lang = camp_session_get('LoginLanguageId', 1);
+$languageObj =& new Language($lang);
+
+
+
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
 $crumbs[] = array(getGS("Article Types"), "");
@@ -187,9 +192,14 @@ foreach ($articleTypes as $articleType) {
 							<option value="0"><?php putGS("---Select language---"); ?></option>
 							<?php
 						 	foreach ($allLanguages as $tmpLanguage) {
-						 		camp_html_select_option($tmpLanguage->getLanguageId(),
-						 								null,
+						        if ($languageObj->getLanguageId() == $tmpLanguage->getLanguageId())
+						            $selected = true;
+						        else 
+						            $selected = false;		
+						 	    camp_html_select_option($tmpLanguage->getLanguageId(),
+						 								$selected,
 						 								$tmpLanguage->getNativeName());
+						
 					        }
 							?>
 							</SELECT>
