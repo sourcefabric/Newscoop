@@ -102,11 +102,11 @@ echo camp_html_breadcrumbs($crumbs);
 	</TD>
 </TR>
 <?php foreach ($dest->m_dbColumns as $destColumn) { ?>
-<TR><TD><SELECT NAME="f_src_<?php print $destColumn->getName(); ?>">
+<TR><TD><SELECT NAME="f_src_<?php print $destColumn->getPrintName(); ?>">
 		<?php foreach ($src->m_dbColumns as $srcColumn) { ?>
-			<OPTION <?php if ($f_src_c[$destColumn->getName()] == $srcColumn->getPrintName()) { print "SELECTED"; } ?>><?php print $srcColumn->getDisplayName(); ?></OPTION>
+			<OPTION VALUE="<?php print $srcColumn->getPrintName(); ?>" <?php if ($f_src_c[$destColumn->getName()] == $srcColumn->getPrintName()) { print "SELECTED"; } ?>><?php print $srcColumn->getDisplayName(); ?></OPTION>
 		<?php } ?>
-			<OPTION <?php if ($f_src_c[$destColumn->getName()] == 'NULL') { print "SELECTED"; } ?>>--None--</OPTION>
+			<OPTION VALUE="NULL" <?php if ($f_src_c[$destColumn->getName()] == 'NULL') { print "SELECTED"; } ?>>--None--</OPTION>
 		</SELECT>
 	</TD>
 	<TD>= <?php print $destColumn->getDisplayName(); ?></TD>

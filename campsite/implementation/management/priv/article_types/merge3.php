@@ -19,33 +19,32 @@ if (!$User->hasPermission('ManageArticleTypes')) {
 
 $f_src = trim(Input::get('f_src'));
 $f_dest = trim(Input::get('f_dest'));
-$f_ok = trim(Input::get('Ok'));
-$f_action = trim(Input::get('f_action', 'string', 'NULL')); // Preview actions: either NEXT, PREV, ORIG
 
-if (ereg('Back to Step 1', $f_ok)) {
+$f_preview_action = trim(Input::get('f_action', 'string', 'NULL')); // Preview actions: either NEXT, PREV, ORIG
+$f_action = trim(Input::get('f_action')); // either Step1, Step2, Preview or Merge
+
+
+if ($f_action == 'Step1') {
 	header("Location: /$ADMIN/article_types/merge.php?f_src=$f_src&f_dest=$f_dest");
 	exit;
 }	
 
-
-
 $src =& new ArticleType($f_src);
 $dest =& new ArticleType($f_dest);
 
+$getString = '';
+foreach ($dest->m_dbColumns as $destColumn) {
+	$getString .= "&f_src_". $destColumn->getName() ."=". trim(Input::get('f_src_'. $destColumn->getName()));
+}
 
-if (ereg('Back to Step 2', $f_ok)) {
-	$string = "";
-	foreach ($dest->m_dbColumns as $destColumn) {
-		$string .= "&f_src_". $destColumn->getName() ."=". trim(Input::get('f_src_'. $destColumn->getName()));
-		}
-	header("Location: /$ADMIN/article_types/merge2.php?f_src=$f_src&f_dest=$f_dest". $string);
+if ($f_action == 'Step2') {
+	header("Location: /$ADMIN/article_types/merge2.php?f_src=$f_src&f_dest=$f_dest". $getString);
 	exit;
 }	
 
 foreach ($dest->m_dbColumns as $destColumn) {
-    $tmp = trim(Input::get('f_src_'. $destColumn->getName())); 
-    if ($tmp == '--None--') $tmp = 'NULL';
-	$f_src_c[$destColumn->getName()] = $tmp;
+    $tmp = trim(Input::get('f_src_'. $destColumn->getPrintName())); 
+	$f_src_c[$destColumn->getPrintName()] = $tmp;
 }
 
        
@@ -67,45 +66,90 @@ foreach ($dest->m_dbColumns as $destColumn) {
 // Topic->Date = NO
 // Topic->Topic = OK
 
+$ok = true;
+$errMsgs = array();
 
 foreach ($f_src_c as $destColumn => $srcColumn) {
 	$destATF =& new ArticleTypeField($f_dest, $destColumn);
 	$srcATF =& new ArticleTypeField($f_src, $srcColumn);
-	$ok = true;
-	$errMsgs = array();
-	if ($srcATF->getType() == 'Body' && $dest->getType == 'Text') {
-		$errMsgs[] = 'Cannot convert a body into a text.';
+    $tmp = $srcATF->getType();
+    $tmp2 = $destATF->getType();
+    
+	if (stristr($srcATF->getType(), 'blob') && stristr($destATF->getType(), 'char')) {
+		$errMsgs[] = 'Cannot merge a body ('. $srcATF->getDisplayName() .') into a text ('. $destATF->getDisplayName() .').';
 		$ok = false;
 	}
-	if (($srcATF->getType() == 'Text' || $srcATF->getType() == 'Body' || $srcATF->getType() == 'Topic') && $dest->getType() == 'Date') {
-		$errMsgs[] = 'Cannot convert a '. $srcATF->getType() .' into a date.';
+	if ((stristr($srcATF->getType(), 'char') || stristr($srcATF->getType(), 'blob') || stristr($srcATF->getType(), 'topic')) && stristr($destATF->getType(), 'date')) {
+		$errMsgs[] = 'Cannot merge a '. $srcATF->getType() .' ('. $srcATF->getPrintName() .') into a date ('. $destATF->getDisplayName() .').';
 		$ok = false;
 	}
-	if (($srcATF->getType() == 'Text' || $srcATF->getType() == 'Body' || $srcATF->getType() == 'Date') && $dest->getType() == 'Topic') {
-		$errMsgs[] = 'Cannot convert a '. $srcATF->getType() .' into a topic.';
+	if ((stristr($srcATF->getType(), 'char') || stristr($srcATF->getType(), 'blob') || stristr($srcATF->getType(), 'date')) && stristr($destATF->getType(), 'topic')) {
+		$errMsgs[] = 'Cannot merge a '. $srcATF->getType() .' ('. $srcATF->getPrintName() .') into a topic ('. $destATF->getDisplayName() .').';
 		$ok = false;
 	}
 
 }
 
 if (!$ok) {
-    // TODO print out errMsgs[]    
-	header("Location: /$ADMIN/article_types/merge.php?f_src=$f_src&f_dest=$f_dest");
+    $crumbs = array();
+    $crumbs[] = array(getGS("Configure"), "");
+    $crumbs[] = array(getGS("Article Types"), "/$ADMIN/article_types/");
+    $crumbs[] = array(getGS("Renaiming article type"), "");
+    
+    echo camp_html_breadcrumbs($crumbs);
+    
+    ?>
+    <P>
+    <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">
+    <TR>
+    	<TD COLSPAN="2">
+    		<B> <?php  putGS("Merging article type"); ?> </B>
+    		<HR NOSHADE SIZE="1" COLOR="BLACK">
+    	</TD>
+    </TR>
+    <TR>
+    	<TD COLSPAN="2">
+    		<BLOCKQUOTE>
+    		<?php 
+    		foreach ($errMsgs as $errorMsg) { 
+    			echo "<li>".$errorMsg."</li>";
+    		}
+    		?>
+    		</BLOCKQUOTE>
+    	</TD>
+    </TR>
+    <TR>
+    	<TD COLSPAN="2">
+    	<DIV ALIGN="CENTER">
+    	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/article_types/merge.php?f_src=<?php echo $f_src; ?>&f_dest=<?php echo $f_dest . $getString ?>'">
+    	</DIV>
+    	</TD>
+    </TR>
+    </TABLE>
+    <P>
+    
+    <?php echo camp_html_copyright_notice(); ?>
+    <?php           
 	exit;    
 }
 
-if (ereg('Merge!', $f_ok)) { 
+
+if ($f_action == 'Merge') {
 	$res = ArticleType::merge($f_src, $f_dest, $f_src_c);
 	header("Location: /$ADMIN/article_types/");
 	exit;	
 }
 
-$articlesArray = $src->getArticlesArray();
 
+//
+// otherwise, do the preview
+//
+$articlesArray = $src->getArticlesArray();
 $f_cur_preview = trim(Input::get('f_cur_preview', 'int', $articlesArray[0])); // The currently previewed article
 $tmp = array_keys($articlesArray, $f_cur_preview);	
 $curPos = $tmp[0];
-if ($f_action == 'Orig') {
+
+if ($f_preview_action == 'Orig') {
     $f_orig_article = trim(Input::get('f_orig_article', 'int', 0));
     $f_orig_lang = trim(Input::get('f_orig_lang', 'int', 0));
     $curPreview =& new Article($f_orig_lang, $f_orig_article); 
@@ -113,12 +157,42 @@ if ($f_action == 'Orig') {
     $articleData = $curPreview->getArticleData();
     $dbColumns = $articleData->getUserDefinedColumns();
 } else { 
-    $curPreview = ArticleType::merge($f_src, $f_dest, $f_src_c, $f_cur_preview, 1);	
-    $articleCreator =& new User($curPreview->getCreatorId());
-    $articleData = $curPreview->getArticleData();
-    $dbColumns = $articleData->getUserDefinedColumns();
+	
+
+    // this only grabs the first language associated with an ArticleNumber
+    // for preview purposes
+    global $g_ado_db;
+    $ok = true;
+   	$sql = "SELECT * FROM X$f_src WHERE NrArticle=$f_cur_preview";		    
+    $rows = $g_ado_db->GetAll($sql);
+    if (!count($rows)) {
+      $errMessages[] = 'There is no article associated with the preview.';
+      $ok = false;
+          
+    }       
+    if ($ok) {
+        $numberOfTranslations = count($rows);
+        $firstLanguage = $rows[0]['IdLanguage'];
+        $curPreview =& new Article($firstLanguage, $f_cur_preview);
+        $articleCreator =& new User($curPreview->getCreatorId());
+        //$articleData = ArticleType::__getPreviewData($curPreview, $prevTable, $f_src_c);
+        // ensure that the destination has atleast one article in it, if not, populate it with
+        // a dummy article 
+        $articleData = $dest->getPreviewArticleData();
+        $dbColumns = $articleData->getUserDefinedColumns(1);
+        $srcArticleData = $curPreview->getArticleData();
+        $srcDbColumns = $srcArticleData->getUserDefinedColumns(1);      
+
+        
+    }
+    
+    if (!$ok) {
+        print "ERROR";
+        exit;
+    }
 }
-$origLang = 1; // TODO
+
+
 $getString = '';
 foreach ($_GET as $k => $v) {
     if ($k != 'f_action')
@@ -155,11 +229,11 @@ echo camp_html_breadcrumbs($crumbs);
 		$tmp = array_keys($f_src_c, $srcColumn);
 
 		if ($srcColumn == 'NULL') { 
-			print "<LI><FONT COLOR=\"TAN\">Merge <b>NOTHING</b> into <b>". substr($destColumn, 1) ."</b> (Null merge warning.).</FONT></LI>";
+			print "<LI><FONT COLOR=\"TAN\">Merge <b>NOTHING</b> into <b>". $destColumn ."</b> (Null merge warning.).</FONT></LI>";
 		} else if (count($tmp) > 1) {
-			print "<LI><FONT COLOR=\"TAN\">Merge <b>$srcColumn</b> into <b>". substr($destColumn, 1) ."</b></FONT> (Duplicate warning.)</FONT></LI>";
+			print "<LI><FONT COLOR=\"TAN\">Merge <b>$srcColumn</b> into <b>". $destColumn ."</b></FONT> (Duplicate warning.)</FONT></LI>";
 		} else {
-			print "<LI><FONT COLOR=\"GREEN\">Merge <b>$srcColumn</b> into <b>". substr($destColumn, 1) ."</b>.</FONT></LI>";
+			print "<LI><FONT COLOR=\"GREEN\">Merge <b>$srcColumn</b> into <b>". $destColumn ."</b>.</FONT></LI>";
 		}
 
 	} ?>
@@ -186,7 +260,7 @@ echo camp_html_breadcrumbs($crumbs);
     <?php if ($f_action == 'Orig') { ?>
         <B>View of original (<?php print wordwrap(htmlspecialchars($curPreview->getType())); ?>) <?php print $curPreview->getTitle(); ?> (<A HREF="/<?php print $ADMIN; ?>/article_types/merge3.php?<?php print $getString; ?>">To return to the preview click here</a>)</B>    
     <?php } else { ?>
-    	<B>Preview of <?php print wordwrap(htmlspecialchars(str_replace($curPreview->getType() .'_', '', $curPreview->getTitle())), 60, '<BR>'); ?> (<A HREF="/<?php print $ADMIN; ?>/article_types/merge3.php?f_action=Orig&<?php print $getString; ?>&f_orig_article=<?php print $articlesArray[$curPos]; ?>&f_orig_lang=<?php print $origLang; ?>">View the source (<?php print $src->getDisplayName(); ?>) version of <?php print wordwrap(htmlspecialchars(str_replace($curPreview->getType() .'_', '', $curPreview->getTitle())), 60, '<BR>'); ?></A>) 
+    	<B>Preview of <?php print wordwrap(htmlspecialchars(str_replace($curPreview->getType() .'_', '', $curPreview->getTitle())), 60, '<BR>'); ?> (<A HREF="/<?php print $ADMIN; ?>/article_types/merge3.php?f_action=Orig&<?php print $getString; ?>&f_orig_article=<?php print $articlesArray[$curPos]; ?>&f_orig_lang=<?php print $firstLanguage; ?>">View the source (<?php print $src->getDisplayName(); ?>) version of <?php print wordwrap(htmlspecialchars(str_replace($curPreview->getType() .'_', '', $curPreview->getTitle())), 60, '<BR>'); ?></A>) 
     	<?php print $curPos + 1; ?> of <?php print count($articlesArray); ?>. 
         <?php 
         if (isset($articlesArray[$curPos - 1])) {
@@ -290,15 +364,18 @@ echo camp_html_breadcrumbs($crumbs);
 					<?php echo htmlspecialchars($dbColumn->getDisplayName()); ?>:
 				</td>
 				<TD>
-				<?php print $articleData->getProperty($dbColumn->getName()); ?>  
+				<?php 
+			    if ($f_src_c[$dbColumn->getPrintName()] != 'NULL')	
+	       			print htmlspecialchars($srcArticleData->getProperty('F'. $f_src_c[$dbColumn->getPrintName()]));			
+				?>  
 				</TD>
 			</TR>
 			<?php
 			} elseif (stristr($dbColumn->getType(), "date")) {
 				// Date fields
-				if ($articleData->getProperty($dbColumn->getName()) == "0000-00-00") {
-					$articleData->setProperty($dbColumn->getName(), "CURDATE()", true, true);
-				}
+				//if ($articleData->getProperty($dbColumn->getName()) == "0000-00-00") {
+				//	$articleData->setProperty($dbColumn->getName(), "CURDATE()", true, true);
+				//}
 			?>
 			<TR>
 				<td align="left" style="padding-right: 5px;">
@@ -307,7 +384,12 @@ echo camp_html_breadcrumbs($crumbs);
 					<?php echo htmlspecialchars($dbColumn->getDisplayName()); ?>:
 				</td>
 				<TD>
-					<span style="padding-left: 4px; padding-right: 4px; padding-top: 1px; padding-bottom: 1px; border: 1px solid #888; margin-right: 5px; background-color: #EEEEEE;"><?php echo htmlspecialchars($articleData->getProperty($dbColumn->getName())); ?></span>
+					<span style="padding-left: 4px; padding-right: 4px; padding-top: 1px; padding-bottom: 1px; border: 1px solid #888; margin-right: 5px; background-color: #EEEEEE;">
+					<?php 
+					if ($srcArticleData->getProperty($f_src_c[$dbColumn->getPrintName()]) != 'NULL')
+    					echo htmlspecialchars($articleData->getProperty('F'. $f_src_c[$dbColumn->getPrintName()])); 					
+					?>					
+					</span>
 				<?php putGS('YYYY-MM-DD'); ?>
 				</TD>
 			</TR>
@@ -315,7 +397,7 @@ echo camp_html_breadcrumbs($crumbs);
 			} elseif (stristr($dbColumn->getType(), "blob")) {
 				// Multiline text fields
 				// Transform Campsite-specific tags into editor-friendly tags.
-				$text = $articleData->getProperty($dbColumn->getName());
+				$text = $srcArticleData->getProperty('F'. $f_src_c[$dbColumn->getPrintName()]);
 
 				// Subheads
 				$text = preg_replace("/<!\*\*\s*Title\s*>/i", "<span class=\"campsite_subhead\">", $text);
@@ -356,11 +438,11 @@ echo camp_html_breadcrumbs($crumbs);
 			<?php
 			} elseif (stristr($dbColumn->getType(), "topic")) {
 				$articleTypeField = new ArticleTypeField($curPreview->getType(),
-														 substr($dbColumn->getName(), 1));
+														 $dbColumn->getPrintName());
 				$rootTopicId = $articleTypeField->getTopicTypeRootElement();
 				$rootTopic = new Topic($rootTopicId);
 				$subtopics = Topic::GetTree($rootTopicId);
-				$articleTopicId = $articleData->getProperty($dbColumn->getName());
+				$articleTopicId = $srcArticleData->getProperty('F'. $f_src_c[$dbColumn->getPrintName()]);
 			?>
 			<tr>
 			<TD ALIGN="RIGHT" VALIGN="TOP" style="padding-top: 8px; padding-right: 5px;">
@@ -399,7 +481,7 @@ echo camp_html_breadcrumbs($crumbs);
 	<DIV ALIGN="CENTER">
 	
 	<?php foreach ($dest->m_dbColumns as $destColumn) { ?>
-	<INPUT TYPE="HIDDEN" NAME="f_src_<?php print $destColumn->getName(); ?>" VALUE="<?php print $f_src_c[$destColumn->getName()]; ?>">
+	<INPUT TYPE="HIDDEN" NAME="f_src_<?php print $destColumn->getPrintName(); ?>" VALUE="<?php print $f_src_c[$destColumn->getPrintName()]; ?>">
 	<?php } ?>
 
 	<INPUT TYPE="HIDDEN" NAME="f_cur_preview" VALUE="<?php $curPreview->getArticleNumber(); ?>">
@@ -415,9 +497,9 @@ echo camp_html_breadcrumbs($crumbs);
 
 <?php
 // delete the preview object
-$AT =& new ArticleType($curPreview->getType());
-$AT->delete();
-$curPreview->delete();
+//$AT =& new ArticleType($curPreview->getType());
+//$AT->delete();
+//$curPreview->delete();
 ?>
 
 <?php camp_html_copyright_notice(); ?>

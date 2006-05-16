@@ -517,7 +517,58 @@ class ArticleType {
         return $returnArray;       
     }
     
-
+    
+    /**
+     * Creates a preview table of PreviewNTablename, where N is a unique integer.
+     * 
+     * @param string p_table
+     * @return string a tablename
+     */
+    function __getPreviewTableName($p_table) 
+    {
+        $res = 1;
+        $append = 0;
+        while ($res) {    	            
+    		$append++; 
+            $sql = "DESC XPreview$append$p_table";
+    		$res = $g_ado_db->GetOne($sql);         
+        }
+        $dest = 'Preview'. $append . $p_table;
+        $sql = "CREATE TABLE X$dest LIKE X$p_table";
+        $res = $g_ado_db->Execute($sql);
+        if (!$res) return 0;
+        $sql = "SELECT * FROM ArticleTypeMetadata WHERE type_name='$p_table'";
+        $rows = $g_ado_db->GetAll($sql);
+        if (!count($rows)) return 0;
+        foreach ($rows as $row) {
+            $keys = array();
+            $values = array();
+            foreach ($row as $k => $v) {	           
+                $keys[] = $k;
+                if ($k == 'type_name') $v = $dest;     
+                if (!is_numeric($v)) $values[] = "'$v'";
+                else $values[] = $v;        
+            }
+            $keysString = implode(',', $keys);
+            $valuesString = implode(',', $values);
+            $sql = "INSERT INTO ArticleTypeMetadata ($keysString) VALUES ($valuesString)";
+            $res = $g_ado_db->Execute($sql);
+            if (!$res) return 0;
+        }	      
+        return 'Preview'. $dest;          
+    } // fn __getPreviewTableName
+    
+    function getPreviewArticleData() {
+        global $g_ado_db;
+        $sql = "SELECT * FROM ". $this->m_dbTableName ." LIMIT 1";
+        $row = $g_ado_db->GetRow($sql);
+        if (!$row) {
+            $destArticleData =& new ArticleData($this->m_name, Article::__generateArticleNumber(), 1);   
+        } else {
+            $destArticleData =& new ArticleData($this->m_name, $row['NrArticle'], $row['IdLanguage']);
+        }        
+        return $destArticleData;
+    }
 	/**
      * Does the merge or a preview of the merge.
      * The p_rules array is an associative array with the key being the DESTINATION fieldname
@@ -592,22 +643,48 @@ class ArticleType {
 	            $sql = "INSERT INTO ArticleTypeMetadata ($keysString) VALUES ($valuesString)";
 	            $res = $g_ado_db->Execute($sql);
 	            if (!$res) return 0;
-            }	        
-    		
+            }	
+                    
+            $newNumber = Article::__generateArticleNumber();    		
+            
+            // this only grabs the first language associated with an ArticleNumber
+            // for preview purposes
 	       	$sql = "SELECT * FROM X$p_src WHERE NrArticle=$p_article";		    
 		    $row = $g_ado_db->GetRow($sql);
 		    if (!$row) {
 		      return 0;    
-		    }            		    
-		    $srcArticleNumber = $row['NrArticle'];
+		    }       
+
+            $fields = array();
+            $values = array();
+            foreach ($p_rules as $destC => $srcC) {
+                $fields[] = $destC;
+                if ($srcC == 'NULL') $values[] = "''";
+                else if (is_numeric($row['F'. $srcC])) $values[] = $row['F'. $srcC]; 
+                else $values[] = "'". $row['F'. $srcC] ."'"; 
+            }
+            $fields[] = 'NrArticle';
+            $values[] = $newNumber;
+            $fields[] = 'IdLanguage';
+            $values[] = $row['IdLanguage'];
+            $fieldsString = implode(',', $fields);
+            $valuesString = implode(',', $values);
+            $sql = "INSERT INTO X$dest ($fieldsString) VALUES ($valuesString)";          
+		    $res = $g_ado_db->Execute($sql);
+		    if (!$res)
+		      return 0; 
+		      
+     	    return $newNumber;	    
+		    
+     	    /*
+     	    $srcArticleNumber = $row['NrArticle'];
+
+
 		    $sql = "SELECT * FROM Articles WHERE Number=". $srcArticleNumber;		    
 		    $arow = $g_ado_db->GetRow($sql);
-		    if (!$arow) return 0;
-            
+		    if (!$arow) return 0;		
 		    $fields = array();
-		    $values = array();
-		    $newNumber = Article::__generateArticleNumber();
-		    
+		    $values = array();		    
 		    foreach ($arow as $k => $v) {
 		        $fields[] = $k;
 		        if ($k == 'Number' || $k == 'ShortName' || $k == 'ArticleOrder') {
@@ -626,8 +703,7 @@ class ArticleType {
 		    $sql = "INSERT INTO Articles ($fieldsString) VALUES ($valuesString)";
 		    $res = $g_ado_db->Execute($sql);
 		    if (!$res)
-		      return 0;
-		    
+		      return 0;		  		    
 		    $sql = "SELECT * FROM X$p_src WHERE NrArticle=". $srcArticleNumber;
 		    $row = $g_ado_db->GetRow($sql);
 		    if (!$res)
@@ -650,8 +726,8 @@ class ArticleType {
 		    $res = $g_ado_db->Execute($sql);
 		    if (!$res)
 		      return 0;   
-
-            $obj =& new Article($row['IdLanguage'], $newNumber);
+*/
+            $obj =& new Article($row['IdLanguage'], $p_article);
             return $obj;         
         } else {
             // non-preview mode, the actual merge
