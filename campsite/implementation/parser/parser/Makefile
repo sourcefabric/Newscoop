@@ -4,7 +4,8 @@ OBJ_FILES=main.o lex.o atoms.o parser.o actions.o util.o error.o\
  context.o cparser.o csocket.o threadpool.o mutex.o readconf.o\
  thread.o process_req.o attributes.o data_types.o operators.o\
  cmessage.o cmessagefactory.o cpublication.o cpublicationsregister.o curl.o\
- curlshortnames.o curltype.o curltyperegister.o cxmlreader.o curltemplatepath.o
+ curlshortnames.o curltype.o curltyperegister.o cxmlreader.o curltemplatepath.o\
+ articlecomment.o
 
 
 CLEAN_XML_INCLUDE=$(shell echo -n "$(XML_INCLUDE)")
