@@ -857,7 +857,7 @@ CREATE TABLE `ArticleTypeMetadata` (
     `field_name` VARCHAR(250) NOT NULL DEFAULT 'NULL',
     `field_weight` INT,
     `is_hidden` TINYINT(1) NOT NULL DEFAULT 0,
-    `comments_active` TINYINT(1) NOT NULL DEFAULT '0',
+    `comments_enabled` TINYINT(1) NOT NULL DEFAULT '0',
     `fk_phrase_id` INT UNSIGNED,
     `field_type` VARCHAR(255),
     `field_type_param` VARCHAR(255),
