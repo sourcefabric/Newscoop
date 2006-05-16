@@ -493,6 +493,7 @@ int CStatementMap::InitStatements()
 	pcoCtx->insertAttr(new CAttribute("section"));
 	pcoCtx->insertAttr(new CAttribute("article"));
 	pcoCtx->insertAttr(new CAttribute("articleAttachment"));
+	pcoCtx->insertAttr(new CAttribute("articleComment"));
 	pcoSt->insertCtx(pcoCtx);
 
 	this->insert(pcoSt);
@@ -601,6 +602,7 @@ int CStatementMap::InitStatements()
 	pcoCtx->insertAttr(new CAttribute("addaction"));
 	pcoCtx->insertAttr(new CAttribute("modifyaction"));
 	pcoCtx->insertAttr(new CAttribute("loggedin"));
+	pcoCtx->insertAttr(new CAttribute("BlockedFromComments"));
 	pcoSt->insertCtx(pcoCtx);
 
 	pcoCtx = new CStatementContext(CMS_CT_PRINT);
@@ -806,6 +808,7 @@ int CStatementMap::InitStatements()
 	pcoCtx->insertAttr(new CAttribute("reset_searchresult_list"));
 	pcoCtx->insertAttr(new CAttribute("reset_subtitle_list"));
 	pcoCtx->insertAttr(new CAttribute("articleAttachment"));
+	pcoCtx->insertAttr(new CAttribute("articleComment"));
 	pcoSt->insertCtx(pcoCtx);
 
 	this->insert(pcoSt);
@@ -851,6 +854,59 @@ int CStatementMap::InitStatements()
 	pcoCtx->insertAttr(new CIntegerAttr("sizeB", "size_in_bytes"));
 	pcoCtx->insertAttr(new CIntegerAttr("sizeKB", "ROUND(size_in_bytes/1024)"));
 	pcoCtx->insertAttr(new CIntegerAttr("sizeMB", "ROUND(size_in_bytes/1048576)"));
+	pcoSt->insertCtx(pcoCtx);
+
+	this->insert(pcoSt);
+
+	// ArticleCommentForm statement
+	pcoSt = new CStatement(CMS_ST_ARTICLECOMMENTFORM, ST_ARTICLECOMMENTFORM);
+
+	pcoCtx = new CStatementContext(CMS_CT_DEFAULT);
+	pcoSt->insertCtx(pcoCtx);
+
+	this->insert(pcoSt);
+
+	// EndArticleCommentForm statement
+	pcoSt = new CStatement(CMS_ST_ENDARTICLECOMMENTFORM, ST_ENDARTICLECOMMENTFORM);
+
+	pcoCtx = new CStatementContext(CMS_CT_DEFAULT);
+	pcoSt->insertCtx(pcoCtx);
+
+	this->insert(pcoSt);
+
+	// ArticleComment statement
+	pcoSt = new CStatement(CMS_ST_ARTICLECOMMENT, ST_ARTICLECOMMENT);
+
+	pcoCtx = new CStatementContext(CMS_CT_DEFAULT);
+	pcoCtx->insertAttr(new CAttribute("off"));
+	pcoSt->insertCtx(pcoCtx);
+
+	pcoCtx = new CStatementContext(CMS_CT_EDIT);
+	pcoCtx->insertAttr(new CAttribute("ReaderEMail"));
+	pcoCtx->insertAttr(new CAttribute("Subject"));
+	pcoCtx->insertAttr(new CAttribute("Content"));
+	pcoSt->insertCtx(pcoCtx);
+
+	pcoCtx = new CStatementContext(CMS_CT_PRINT);
+	pcoCtx->insertAttr(new CStringAttr("ReaderEMail"));
+	pcoCtx->insertAttr(new CStringAttr("Subject"));
+	pcoCtx->insertAttr(new CStringAttr("Content"));
+	pcoCtx->insertAttr(new CIntegerAttr("Count"));
+	pcoCtx->insertAttr(new CIntegerAttr("Level"));
+	pcoCtx->insertAttr(new CIntegerAttr("SubmitError"));
+	pcoCtx->insertAttr(new CIntegerAttr("SubmitErrorNo"));
+	pcoSt->insertCtx(pcoCtx);
+
+	pcoCtx = new CStatementContext(CMS_CT_LIST);
+	pcoSt->insertCtx(pcoCtx);
+
+	pcoCtx = new CStatementContext(CMS_CT_IF);
+	pcoCtx->insertAttr(new CAttribute("Defined"));
+	pcoCtx->insertAttr(new CAttribute("Submitted"));
+	pcoCtx->insertAttr(new CAttribute("SubmitError"));
+	pcoCtx->insertAttr(new CAttribute("Moderated"));
+	pcoCtx->insertAttr(new CAttribute("Enabled"));
+	pcoCtx->insertAttr(new CAttribute("Rejected"));
 	pcoSt->insertCtx(pcoCtx);
 
 	this->insert(pcoSt);

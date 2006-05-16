@@ -149,6 +149,17 @@ int RunParser(MYSQL* p_pSQL, CURL* p_pcoURL, const char* p_pchRemoteIP, sockstre
 	pcoCtx->DefURL()->deleteParameter(P_SLSTART);
 	pcoCtx->DefURL()->deleteParameter(P_ALSTART);
 	pcoCtx->DefURL()->deleteParameter(P_SRLSTART);
+	if ((coStr = p_pcoURL->getValue("acid")) != "")
+	{
+		try {
+			pcoCtx->SetArticleCommentId(Integer(coStr));
+		}
+		catch (const InvalidValue& rcoEx) {
+			// do nothing
+		}
+		pcoCtx->URL()->deleteParameter("acid");
+		pcoCtx->DefURL()->deleteParameter("acid");
+	}
 	if ((coStr = p_pcoURL->getValue("ST_max")) != "")
 	{
 		int st_max = atol(coStr.c_str());
@@ -315,10 +326,14 @@ int RunParser(MYSQL* p_pSQL, CURL* p_pcoURL, const char* p_pchRemoteIP, sockstre
 				bHasAccess = true;
 			}
 			else
+			{
 				pcoCtx->SetKey(0);
+			}
 		}
 		else
-			pcoCtx->SetUser( -1);
+		{
+			pcoCtx->SetUser(-1);
+		}
 		if (!bHasAccess && nIdUserIP >= 0)
 		{
 			sprintf(pchBuf, "select Reader from Users where Id = %ld", nIdUserIP);
@@ -343,8 +358,19 @@ int RunParser(MYSQL* p_pSQL, CURL* p_pcoURL, const char* p_pchRemoteIP, sockstre
 			}
 		}
 		else
+		{
 			bTechDebug = bDebug = bPreview = false;
+		}
 	}
+	try {
+		int nResult = Integer(pcoCtx->URL()->getValue("ArticleCommentSubmitResult"));
+		pcoCtx->SetArticleCommentResult(nResult);
+	}
+	catch (const InvalidValue& rcoEx) {
+		// do nothing
+	}
+	pcoCtx->URL()->deleteParameter("ArticleCommentSubmitResult");
+	pcoCtx->DefURL()->deleteParameter("ArticleCommentSubmitResult");
 	try
 	{
 		string coDocumentRoot = p_pcoURL->getDocumentRoot();
@@ -434,26 +460,6 @@ int RunParser(MYSQL* p_pSQL, CURL* p_pcoURL, const char* p_pchRemoteIP, sockstre
 	{
 		throw RunException("unable to allocate memory");
 	}
-	return 0;
-}
-
-// WriteCharset: write http tag specifying the charset - according to current language
-// Parameters:
-//		CContext& c - current context
-//		MYSQL* pSql - pointer to MySQL connection
-//		sockstream& fs - output stream
-int WriteCharset(CContext& c, MYSQL* pSql, sockstream& fs)
-{
-	if (c.Language() < 0)
-		return -1;
-	char pchBuf[100];
-	sprintf(pchBuf, "select CodePage from Languages where Id = %ld", c.Language());
-	SQLQuery(pSql, pchBuf);
-	StoreResult(pSql, coSqlRes);
-	CheckForRows(*coSqlRes, 1);
-	FetchRow(*coSqlRes, row);
-//	fs << "<META HTTP-EQUIV=\"Content-Type\" content=\"text/html; charset=" << row[0] << "\">" << endl;
-	fs << "<META HTTP-EQUIV=\"Content-Type\" content=\"text/html; charset=UTF-8\">" << endl;
 	return 0;
 }
 

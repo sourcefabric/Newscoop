@@ -38,6 +38,7 @@ index etc.
 #include "globals.h"
 #include "cms_types.h"
 #include "curl.h"
+#include "articlecomment.h"
 
 // TLMode: describe the list context mode
 //	LM_PREV: inside an "if previousitems" statement
@@ -195,6 +196,11 @@ private:
 	id_type m_nDefTopicId;					// topic numeric identifier
 	id_type m_nAttachment;					// article attachment identifier
 	string m_coAttachmentExtension;			// article attachment extension
+	mutable bool m_bArticleCommentEnabled;	// true if add comment event occurred
+	mutable bool m_bArticleCommentEnabledValid; // true if the m_bArticleCommentEnabled member was computed
+											// for the current context
+	CArticleComment* m_pcoArticleComment;	// article comment identifier
+	id_type m_nSubmitArticleCommentResult;	// result of the add comment event
 	CURL* m_pcoURL;
 	CURL* m_pcoDefURL;
 
@@ -212,7 +218,7 @@ public:
 	CContext();
 
 	// copy constructor
-	CContext(const CContext& c) { *this = c; }
+	CContext(const CContext& c);
 
 	~CContext();
 
@@ -256,11 +262,7 @@ public:
 	void SetDefIssue(id_type i);
 	void SetSection(id_type s);
 	void SetDefSection(id_type s);
-	void SetArticle(id_type a)
-	{
-		SetURLValue(P_NRARTICLE, a);
-		article_nr = a;
-	}
+	void SetArticle(id_type a);
 	void SetDefArticle(id_type a)
 	{
 		SetDefURLValue(P_NRARTICLE, a);
@@ -450,6 +452,11 @@ public:
 	void SetAttachmentExtension(const string& p_rcoAttachmentExtension)
 	{
 		m_coAttachmentExtension = p_rcoAttachmentExtension;
+	}
+	void SetArticleCommentId(id_type p_nArticleCommentId);
+	void SetArticleCommentResult(id_type p_nSubmitArticleCommentResult)
+	{
+		m_nSubmitArticleCommentResult = p_nSubmitArticleCommentResult;
 	}
 	void SetURL(CURL* p_pcoURL)
 	{
@@ -737,6 +744,18 @@ public:
 	const string& AttachmentExtension() const
 	{
 		return m_coAttachmentExtension;
+	}
+	bool ArticleCommentEnabled() const;
+	CArticleComment* const ArticleComment() const { return m_pcoArticleComment; }
+	id_type ArticleCommentId() const;
+	int ArticleCommentLevel() const;
+	bool SubmitArticleCommentEvent() const
+	{
+		return m_nSubmitArticleCommentResult >= 0;
+	}
+	id_type SubmitArticleCommentResult() const
+	{
+		return m_nSubmitArticleCommentResult;
 	}
 	CURL* URL() const
 	{

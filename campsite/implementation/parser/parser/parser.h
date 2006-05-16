@@ -175,24 +175,26 @@ private:	// private methods
 	// and sublevel (user, login, search, with etc.)
 	// Parameters:
 	//		int level - level: LV_ROOT, LV_LISSUE, LV_LSECTION, LV_LARTICLE, LV_LSUBTITLE
-	//		int sublevel - sublevel: SUBLV_NONE, SUBLV_IFPREV, SUBLV_IFNEXT, SUBLV_IFLIST,
+	//		ulint sublevel - sublevel: SUBLV_NONE, SUBLV_IFPREV, SUBLV_IFNEXT, SUBLV_IFLIST,
 	//			SUBLV_IFISSUE, SUBLV_IFSECTION, SUBLV_IFARTICLE, SUBLV_EMPTYLIST,
 	//			SUBLV_IFALLOWED, SUBLV_SUBSCRIPTION, SUBLV_USER, SUBLV_LOGIN, SUBLV_LOCAL
-	//			SUBLV_IFPUBLICATION, SUBLV_SEARCH, SUBLV_SEARCHRESULT, SUBLV_WITH
-	string IfStatements(int level, int sublevel);
+	//			SUBLV_IFPUBLICATION, SUBLV_SEARCH, SUBLV_SEARCHRESULT, SUBLV_WITH,
+	//			SUBLV_IFLANGUAGE, SUBLV_IFTOPIC, SUBLV_ARTICLETOPIC, SUBLV_SUBTOPIC,
+	//			SUBLV_ARTICLEATTACHMENT, SUBLV_ARTICLECOMMENT
+	string IfStatements(int level, ulint sublevel);
 
 	// PrintStatements: return string containig print type statements allowed in a given level
 	// (root, list issue, list section, list article, list subtitle)
 	// and sublevel (user, login, search, with etc.)
-	string PrintStatements(int level, int sublevel);
+	string PrintStatements(int level, ulint sublevel);
 
 	// EditStatements: return string containig edit type statements allowed in a given
 	// sublevel (user, login, search, with etc.)
-	string EditStatements(int sublevel);
+	string EditStatements(ulint sublevel);
 
 	// SelectStatements: return string containig select type statements allowed in a given
 	// sublevel (user, login, search, with etc.)
-	string SelectStatements(int sublevel);
+	string SelectStatements(ulint sublevel);
 
 	// DEBUGLexem: print lexem debug information
 	void DEBUGLexem(const char* c, const CLexem* l);
@@ -219,9 +221,9 @@ private:	// private methods
 	// HLanguage: parse language statement; add CActLanguage action to actions list (al)
 	// Parameters:
 	//		CActionList& al - reference to actions list
-	//		int lv - current level
-	//		int sublv - current sublevel
-	int HLanguage(CActionList& al, int lv, int sublv);
+	//		int level - current level
+	//		ululint sublevel - current sublevel
+	int HLanguage(CActionList& al, int level, ulint sublevel);
 	
 	// HInclude: parse include statement; add CActInclude action to actions list (al)
 	// Parameters:
@@ -233,43 +235,43 @@ private:	// private methods
 	// Parameters:
 	//		CActionList& al - reference to actions list
 	//		int level - current level
-	//		int sublevel - current sublevel
-	int HPublication(CActionList& al, int level, int sublevel);
+	//		ulint sublevel - current sublevel
+	int HPublication(CActionList& al, int level, ulint sublevel);
 	
 	// HIssue: parse issue statement; add CActIssue action to actions list (al)
 	// Parameters:
 	//		CActionList& al - reference to actions list
 	//		int level - current level
-	//		int sublevel - current sublevel
-	int HIssue(CActionList& al, int level, int sublevel);
+	//		ulint sublevel - current sublevel
+	int HIssue(CActionList& al, int level, ulint sublevel);
 	
 	// HSection: parse section statement; add CActSection action to actions list (al)
 	// Parameters:
 	//		CActionList& al - reference to actions list
 	//		int level - current level
-	//		int sublevel - current sublevel
-	int HSection(CActionList& al, int level, int sublevel);
+	//		ulint sublevel - current sublevel
+	int HSection(CActionList& al, int level, ulint sublevel);
 	
 	// HArticle: parse article statement; add CActArticle action to actions list (al)
 	// Parameters:
 	//		CActionList& al - reference to actions list
 	//		int level - current level
-	//		int sublevel - current sublevel
-	int HArticle(CActionList& al, int level, int sublevel);
+	//		ulint sublevel - current sublevel
+	int HArticle(CActionList& al, int level, ulint sublevel);
 	
 	// HTopic: parse topic statement; add CActTopic action to actions list (al)
 	// Parameters:
 	//		CActionList& al - reference to actions list
 	//		int level - current level
-	//		int sublevel - current sublevel
-	int HTopic(CActionList& al, int level, int sublevel);
+	//		ulint sublevel - current sublevel
+	int HTopic(CActionList& al, int level, ulint sublevel);
 	
 	// HHTMLEncoding: parse HTMLEncoding statement; add CActHTMLEncoding action to actions list
 	// Parameters:
 	//		CActionList& al - reference to actions list
 	//		int level - current level
-	//		int sublevel - current sublevel
-	int HHTMLEncoding(CActionList& al, int level, int sublevel);
+	//		ulint sublevel - current sublevel
+	int HHTMLEncoding(CActionList& al, int level, ulint sublevel);
 	
 	// HURLParameters: parse URLParameters statement; add CActURLParameters action to
 	// actions list (al)
@@ -291,9 +293,9 @@ private:	// private methods
 	// HPrint: parse print statement; add CActPrint action to actions list (al)
 	// Parameters:
 	//		CActionList& al - reference to actions list
-	//		int lv - current level
-	//		int sublv - current sublevel
-	int HPrint(CActionList& al, int lv, int sublv);
+	//		int level - current level
+	//		int sublevel - current sublevel
+	int HPrint(CActionList& al, int level, ulint sublevel);
 	
 	// HList: parse list statement; add CActList action to actions list (al)
 	// All statements between List and EndList statements are parsed, added as actions
@@ -301,26 +303,26 @@ private:	// private methods
 	// Parameters:
 	//		CActionList& al - reference to actions list
 	//		int level - current level
-	//		int sublevel - current sublevel
-	int HList(CActionList& al, int level, int sublevel);
+	//		ulint sublevel - current sublevel
+	int HList(CActionList& al, int level, ulint sublevel);
 	
 	// HIf: parse if statement; add CActIf action to actions list (al)
 	// All statements between If and EndIf statements are parsed, added as actions
 	// in CActIf's list of actions
 	// Parameters:
 	//		CActionList& al - reference to actions list
-	//		int lv - current level
-	//		int sublv - current sublevel
-	int HIf(CActionList& al, int lv, int sublv);
+	//		int level - current level
+	//		ulint sublevel - current sublevel
+	int HIf(CActionList& al, int level, ulint sublevel);
 	
 	// HLocal: parse local statement; add CActLocal action to actions list (al)
 	// All statements between Local and EndLocal statements are parsed, added as actions
 	// in CActLocal's list of actions
 	// Parameters:
 	//		CActionList& al - reference to actions list
-	//		int lv - current level
-	//		int sublv - current sublevel
-	int HLocal(CActionList& al, int lv, int sublv);
+	//		int level - current level
+	//		ulint sublevel - current sublevel
+	int HLocal(CActionList& al, int level, ulint sublevel);
 	
 	// HSubscription: parse subscription statement; add CActSubscription action to actions
 	// list (al)
@@ -328,65 +330,82 @@ private:	// private methods
 	// added as actions in CActSubscription's list of actions
 	// Parameters:
 	//		CActionList& al - reference to actions list
-	//		int lv - current level
-	//		int sublv - current sublevel
-	int HSubscription(CActionList& al, int lv, int sublv);
+	//		int level - current level
+	//		ulint sublevel - current sublevel
+	int HSubscription(CActionList& al, int level, ulint sublevel);
 	
 	// HEdit: parse edit statement; add CActEdit action to actions list (al)
 	// Parameters:
 	//		CActionList& al - reference to actions list
-	//		int lv - current level
-	//		int sublv - current sublevel
-	int HEdit(CActionList& al, int lv, int sublv);
+	//		int level - current level
+	//		ulint sublevel - current sublevel
+	int HEdit(CActionList& al, int level, ulint sublevel);
 	
 	// HSelect: parse select statement; add CActSelect action to actions list (al)
 	// Parameters:
 	//		CActionList& al - reference to actions list
-	//		int lv - current level
-	//		int sublv - current sublevel
-	int HSelect(CActionList& al, int lv, int sublv);
+	//		int level - current level
+	//		ulint sublevel - current sublevel
+	int HSelect(CActionList& al, int level, ulint sublevel);
 	
 	// HUser: parse user statement; add CActUser action to actions list (al)
 	// All statements between User and EndUser statements are parsed, added as actions
 	// in CActUsers's list of actions
 	// Parameters:
 	//		CActionList& al - reference to actions list
-	//		int lv - current level
-	//		int sublv - current sublevel
-	int HUser(CActionList& al, int lv, int sublv);
+	//		int level - current level
+	//		ulint sublevel - current sublevel
+	int HUser(CActionList& al, int level, ulint sublevel);
 	
 	// HLogin: parse login statement; add CActLogin action to actions list (al)
 	// All statements between Login and EndLogin statements are parsed, added as actions
 	// in CActLogin's list of actions
 	// Parameters:
 	//		CActionList& al - reference to actions list
-	//		int lv - current level
-	//		int sublv - current sublevel
-	int HLogin(CActionList& al, int lv, int sublv);
+	//		int level - current level
+	//		ulint sublevel - current sublevel
+	int HLogin(CActionList& al, int level, ulint sublevel);
 	
 	// HSearch: parse search statement; add CActSearch action to actions list (al)
 	// All statements between Search and EndSearch statements are parsed, added as actions
 	// in CActSearch's list of actions
 	// Parameters:
 	//		CActionList& al - reference to actions list
-	//		int lv - current level
-	//		int sublv - current sublevel
-	int HSearch(CActionList& al, int lv, int sublv);
+	//		int level - current level
+	//		ulint sublevel - current sublevel
+	int HSearch(CActionList& al, int level, ulint sublevel);
 	
 	// HWith: parse with statement; add CActWith action to actions list (al)
 	// All statements between With and EndWith statements are parsed, added as actions
 	// in CActWith's list of actions
 	// Parameters:
 	//		CActionList& al - reference to actions list
-	//		int lv - current level
-	//		int sublv - current sublevel
-	int HWith(CActionList& al, int lv, int sublv);
+	//		int level - current level
+	//		ulint sublevel - current sublevel
+	int HWith(CActionList& al, int level, ulint sublevel);
 	
 	// HURIPath: parse URIPath statement; add CActURIPath action to
 	// actions list (al)
 	// Parameters:
 	//		CActionList& al - reference to actions list
 	int HURIPath(CActionList& al);
+	
+	// HArticleCommentForm: parse ArticleCommentForm statement; add CActArticleCommentForm
+	// action to actions list (al). All statements between ArticleComment and EndArticleComment
+	// statements are parsed, added as actions in CActArticleComment's list of actions
+	// Parameters:
+	//		CActionList& al - reference to actions list
+	//		int level - current level
+	//		ulint sublevel - current sublevel
+	int HArticleCommentForm(CActionList& al, int level, ulint sublevel);
+	
+	// HArticleComment: parse ArticleComment statement; add CActArticleComment
+	// action to actions list (al).
+	// Parameters:
+	//		CActionList& al - reference to actions list
+	//		int level - current level
+	//		ulint sublevel - current sublevel
+	int HArticleComment(CActionList& al, int level, ulint sublevel);
 	
 	// LevelParser: read lexems until it finds a statement or reaches end of file
 	// Depending on read statement it calls on of HArticle, HDate, HEdit, HFormParameters,
@@ -396,8 +415,8 @@ private:	// private methods
 	// Parameters:
 	//		CActionList& al - reference to actions list
 	//		int level - current level
-	//		int sublevel - current sublevel
-	int LevelParser(CActionList& al, int level, int sublevel);
+	//		ulint sublevel - current sublevel
+	int LevelParser(CActionList& al, int level, ulint sublevel);
 
 public:
 	// CParser: constructor

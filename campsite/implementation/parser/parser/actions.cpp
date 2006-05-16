@@ -29,7 +29,7 @@ Implement CParameter, CAction, CActLanguage, CActInclude, CActPublication,
 CActIssue, CActSection, CActArticle, CActList, CActURLParameters,
 CActFormParameters, CActPrint, CActIf, CActDate, CActText, CActLocal,
 CActSubscription, CActEdit, CActSelect, CActUser, CActLogin,
-CActSearch, CActWith methods.
+CActSearch, CActWith and other action classes.
 
 ******************************************************************************/
 
@@ -640,6 +640,7 @@ CListModifiers::CListModifiers()
 	insert(CMS_ST_ARTICLETOPIC);
 	insert(CMS_ST_SUBTOPIC);
 	insert(CMS_ST_ARTICLEATTACHMENT);
+	insert(CMS_ST_ARTICLECOMMENT);
 }
 
 CListModifiers CActList::s_coModifiers;
@@ -885,8 +886,7 @@ int CActList::WriteSrcParam(string& s, CContext& c, string& table)
 int CActList::WriteOrdParam(string& s)
 {
 	CParameterList::iterator pl_i;
-	if (modifier != CMS_ST_SEARCHRESULT && modifier != CMS_ST_ARTICLETOPIC
-		   && modifier != CMS_ST_SUBTOPIC && modifier != CMS_ST_ARTICLEATTACHMENT)
+	if (modifier == CMS_ST_ISSUE || modifier == CMS_ST_SECTION && modifier == CMS_ST_ARTICLE)
 	{
 		string table;
 		if (modifier == CMS_ST_ARTICLE)
@@ -933,6 +933,10 @@ int CActList::WriteOrdParam(string& s)
 	if (modifier == CMS_ST_ARTICLEATTACHMENT)
 	{
 		s = " order by att.file_name asc, att.extension asc";
+	}
+	if (modifier == CMS_ST_ARTICLECOMMENT)
+	{
+		s = " order by pm.message_id asc";
 	}
 	return RES_OK;
 }
@@ -1058,6 +1062,16 @@ int CActList::takeAction(CContext& c, sockstream& fs)
 				}
 				where = buf.str();
 				break;
+			case CMS_ST_ARTICLECOMMENT:
+				if (!c.ArticleCommentEnabled())
+				{
+					return ERR_NODATA;
+				}
+				table = "ArticleComments as ac left join phorum_messages as pm "
+						"on ac.fk_comment_thread_id = pm.thread";
+				buf << " where pm.status > 0 and ac.fk_article_number = " << lc.Article();
+				where = buf.str();
+				break;
 		}
 		WriteOrdParam(order);
 		WriteLimit(limit, lc);
@@ -1088,6 +1102,9 @@ int CActList::takeAction(CContext& c, sockstream& fs)
 				break;
 			case CMS_ST_ARTICLEATTACHMENT:
 				fields = "select att.id, att.extension";
+				break;
+			case CMS_ST_ARTICLECOMMENT:
+				fields = "select pm.message_id";
 				break;
 		}
 		
@@ -1168,6 +1185,10 @@ int CActList::takeAction(CContext& c, sockstream& fs)
 			{
 				lc.SetAttachment(strtol(row[0], 0, 10));
 				lc.SetAttachmentExtension(row[1]);
+			}
+			if (modifier == CMS_ST_ARTICLECOMMENT)
+			{
+				lc.SetArticleCommentId(strtol(row[0], 0, 10));
 			}
 			if (modifier == CMS_ST_ARTICLETOPIC || modifier == CMS_ST_SUBTOPIC)
 			{
@@ -1273,6 +1294,15 @@ int CActURLParameters::takeAction(CContext& c, sockstream& fs)
 		{
 			return ERR_NODATA;
 		}
+		return 0;
+	}
+	if (m_bArticleComment)
+	{
+		if (c.ArticleCommentId() <= 0)
+		{
+			return ERR_NODATA;
+		}
+		fs << "acid=" << c.ArticleCommentId();
 		return 0;
 	}
 	if (image_nr >= 0)
@@ -1438,6 +1468,7 @@ CPrintModifiers::CPrintModifiers()
 	insert(CMS_ST_SUBTITLE);
 	insert(CMS_ST_TOPIC);
 	insert(CMS_ST_ARTICLEATTACHMENT);
+	insert(CMS_ST_ARTICLECOMMENT);
 }
 
 CPrintModifiers CActPrint::s_coModifiers;
@@ -1774,7 +1805,52 @@ int CActPrint::takeAction(CContext& c, sockstream& fs)
 		fs << encodeHTML(row[0], c.EncodeHTML());
 		return RES_OK;
 	}
-	buf.str("");	
+	if (modifier == CMS_ST_ARTICLECOMMENT)
+	{
+		if (!c.ArticleCommentEnabled())
+		{
+			return ERR_NODATA;
+		}
+		if (case_comp(attr, "ReaderEMail") == 0)
+		{
+			fs << encodeHTML(c.ArticleComment()->getEmail(), c.EncodeHTML());
+		}
+		else if (case_comp(attr, "Subject") == 0)
+		{
+			fs << encodeHTML(c.ArticleComment()->getSubject(), c.EncodeHTML());
+		}
+		else if (case_comp(attr, "Content") == 0)
+		{
+			fs << encodeHTML(c.ArticleComment()->getBody(), c.EncodeHTML());
+		}
+		else if (case_comp(attr, "Count") == 0)
+		{
+			fs << CArticleComment::ArticleCommentCount(c.Article(), c.Language());
+		}
+		else if (case_comp(attr, "Level") == 0)
+		{
+			fs << c.ArticleComment()->getLevel();
+		}
+		else if (case_comp(attr, "SubmitError") == 0)
+		{
+			buf << "select Message from Errors where Number = " << c.SubmitArticleCommentResult()
+					<< " and IdLanguage = " << c.Language();
+			SQLQuery(&m_coSql, buf.str().c_str());
+			res = mysql_store_result(&m_coSql);
+			CheckForRows(*res, 1);
+			row = mysql_fetch_row(*res);
+			fs << encodeHTML(row[0], c.EncodeHTML());
+		}
+		else if (case_comp(attr, "SubmitErrorNo") == 0)
+		{
+			lint nResult = c.SubmitArticleCommentResult();
+			if (nResult > 0)
+			{
+				fs << nResult;
+			}
+		}
+		return RES_OK;
+	}
 	string w, table, field;
 	w = table = "";
 	field = attr;	
@@ -2048,6 +2124,7 @@ CIfModifiers::CIfModifiers()
 	insert(CMS_ST_LANGUAGE);
 	insert(CMS_ST_TOPIC);
 	insert(CMS_ST_ARTICLEATTACHMENT);
+	insert(CMS_ST_ARTICLECOMMENT);
 }
 
 CIfModifiers CActIf::s_coModifiers;
@@ -2200,15 +2277,45 @@ int CActIf::takeAction(CContext& c, sockstream& fs)
 			run = c.SubsType() == ST_TRIAL ? 0 : 1;
 		if (case_comp(param.attribute(), "paid") == 0 && c.SubsType() != ST_NONE)
 			run = c.SubsType() == ST_PAID ? 0 : 1;
-		if (run == 0)
+		if ((run == 0 && !m_bNegated) || (run == 1 && m_bNegated))
 			runActions(block, c, fs);
-		else if (run == 1)
+		else if ((run == 1 && !m_bNegated) || (run == 0 && m_bNegated))
+			runActions(sec_block, c, fs);
+		return RES_OK;
+	}
+	else if (modifier == CMS_ST_ARTICLECOMMENT)
+	{
+		run = -1;
+		if (case_comp(param.attribute(), "Enabled") == 0)
+		{
+			run = c.ArticleCommentEnabled() ? 0 : 1;
+		}
+		else
+		{
+			if (!c.ArticleCommentEnabled())
+				return ERR_NODATA;
+		}
+		if (case_comp(param.attribute(), "Defined") == 0)
+			run = c.ArticleCommentId() > 0 ? 0 : 1;
+		if (case_comp(param.attribute(), "Submitted") == 0)
+			run = c.SubmitArticleCommentEvent() ? 0 : 1;
+		if (case_comp(param.attribute(), "SubmitError") == 0 && c.SubmitArticleCommentEvent())
+			run = c.SubmitArticleCommentResult() != 0 ? 0 : 1;
+		if (case_comp(param.attribute(), "Rejected") == 0 && c.SubmitArticleCommentEvent())
+			run = c.SubmitArticleCommentResult() == ACERR_REJECTED ? 0 : 1;
+		if (case_comp(param.attribute(), "Moderated") == 0)
+			run = CArticleComment::Moderated(c.Publication()) ? 0 : 1;
+		if ((run == 0 && !m_bNegated) || (run == 1 && m_bNegated))
+			runActions(block, c, fs);
+		else if ((run == 1 && !m_bNegated) || (run == 0 && m_bNegated))
 			runActions(sec_block, c, fs);
 		return RES_OK;
 	}
 	else if (modifier == CMS_ST_USER)
 	{
 		run = -1;
+		if (case_comp(param.attribute(), "BlockedFromComments") == 0 && c.ArticleCommentEnabled())
+			run = CArticleComment::IsUserBlocked(c.User()) ? 0 : 1;
 		if (case_comp(param.attribute(), "addok") == 0 && c.AddUser())
 			run = c.AddUserRes() == 0 ? 0 : 1;
 		if (case_comp(param.attribute(), "modifyok") == 0 && c.ModifyUser())
@@ -2876,6 +2983,7 @@ CEditModifiers::CEditModifiers()
 	insert(CMS_ST_USER);
 	insert(CMS_ST_LOGIN);
 	insert(CMS_ST_SEARCH);
+	insert(CMS_ST_ARTICLECOMMENT);
 }
 
 CEditModifiers CActEdit::s_coModifiers;
@@ -2943,6 +3051,21 @@ int CActEdit::takeAction(CContext& c, sockstream& fs)
 			fs << "<input type=\"text\" name=\"Search" << field << "\" maxlength=\"255\" "
 					"size=\"" << size << "\" value=\""
 					<< encodeHTML(c.StrKeywords(), c.EncodeHTML()) << "\">";
+		}
+	}
+	if (modifier == CMS_ST_ARTICLECOMMENT && c.ArticleCommentEnabled())
+	{
+		string coFieldName = string("Comment") + field;
+		if (field == "Content")
+		{
+			fs << "<textarea name=\"" << coFieldName << "\" cols=\"40\" rows=\"4\">"
+					<< encodeHTML(c.URL()->getValue(coFieldName), c.EncodeHTML()) << "</textarea>";
+		}
+		else
+		{
+			fs << "<input type=\"text\" name=\"" << coFieldName << "\" maxlength=\"255\" "
+					"size=\"" << size << "\" value=\""
+					<< encodeHTML(c.URL()->getValue(coFieldName), c.EncodeHTML()) << "\">";
 		}
 	}
 	return RES_OK;
@@ -3307,5 +3430,55 @@ int CActURI::takeAction(CContext& c, sockstream& fs)
 	m_coURLParameters.takeAction(c, coURLParametersStr);
 	if (coURLParametersStr.str() != "")
 		fs << "?" << coURLParametersStr.str();
+	return RES_OK;
+}
+
+// takeAction: performs the action
+// Parametes:
+//		CContext& c - current context
+//		sockstream& fs - output stream	
+int CActArticleCommentForm::takeAction(CContext& c, sockstream& fs)
+{
+	if (!c.ArticleCommentEnabled())
+	{
+		return ERR_NODATA;
+	}
+	SafeAutoPtr<CURL> pcoURL(c.URL()->clone());
+	try {
+		pcoURL->setTemplate(m_nTemplateId);
+	}
+	catch (InvalidValue& rcoEx)
+	{
+		return ERR_INVALID_FIELD;
+	}
+	CContext lc = c;
+	fs << "<form name=\"articleComment\" action=\"" << pcoURL->getURIPath() << "\" method=\"POST\">\n"
+			<< "<input type=\"hidden\" name=" << P_TEMPLATE_ID << " value=\"" << m_nTemplateId
+			<< "\">" << endl;
+	fs << c.URL()->getFormString();
+	runActions(block, lc, fs);
+	fs << "<input type=\"submit\" name=\"submitComment\" class=\"submitButton\" "
+			<< "id=\"articleCommentSubmit\" value=\""
+			<< encodeHTML(m_coSubmitButton, c.EncodeHTML()) << "\">" << endl;
+	if (m_coPreviewButton != "")
+	{
+		fs << "<input type=\"submit\" name=\"previewComment\" class=\"submitButton\" "
+				<< "id=\"articleCommentPreview\" value=\""
+				<< encodeHTML(m_coPreviewButton, c.EncodeHTML()) << "\">" << endl;
+	}
+	fs << "</form>" << endl;
+	return RES_OK;
+}
+
+// takeAction: performs the action
+// Parametes:
+//		CContext& c - current context
+//		sockstream& fs - output stream	
+int CActArticleComment::takeAction(CContext& c, sockstream& fs)
+{
+	if (m_coParameter.attribute() == "off")
+	{
+		c.SetArticleCommentId(-1);
+	}
 	return RES_OK;
 }

@@ -52,33 +52,116 @@ CParser methods implementation
 using std::cout;
 using std::endl;
 
-#define ROOT_STATEMENTS ST_LANGUAGE ", " ST_PUBLICATION ", " ST_ISSUE ", " ST_SECTION \
-", " ST_ARTICLE ", " ST_TOPIC ", " ST_INCLUDE ", " ST_IF ", " ST_LOCAL ", " ST_WITH \
-", " ST_LIST " " ST_ISSUE ", " ST_LIST " " ST_SECTION ", " ST_LIST " " ST_ARTICLE \
-", " ST_LIST " " ST_SEARCHRESULT ", " ST_LIST " " ST_SUBTITLE ", " ST_LIST " " ST_ARTICLETOPIC \
-", " ST_LIST " " ST_SUBTOPIC ", " ST_LIST " " ST_ARTICLEATTACHMENT ", " ST_URLPARAMETERS \
-", " ST_URI ", " ST_URIPATH ", " ST_FORMPARAMETERS ", " ST_PRINT ", " ST_DATE \
-", " ST_SUBSCRIPTION ", " ST_EDIT ", " ST_SELECT ", " ST_USER ", " ST_SEARCH
+#define ROOT_STATEMENTS \
+	ST_LANGUAGE ", " \
+	ST_PUBLICATION ", " \
+	ST_ISSUE ", " \
+	ST_SECTION ", " \
+	ST_ARTICLE ", " \
+	ST_TOPIC ", " \
+	ST_INCLUDE ", " \
+	ST_IF ", " \
+	ST_LOCAL ", " \
+	ST_WITH ", " \
+	ST_LIST " " ST_ISSUE ", " \
+	ST_LIST " " ST_SECTION ", " \
+	ST_LIST " " ST_ARTICLE ", " \
+	ST_LIST " " ST_SEARCHRESULT ", " \
+	ST_LIST " " ST_SUBTITLE ", " \
+	ST_LIST " " ST_ARTICLETOPIC ", " \
+	ST_LIST " " ST_SUBTOPIC ", " \
+	ST_LIST " " ST_ARTICLEATTACHMENT ", " \
+	ST_LIST " " ST_ARTICLECOMMENT ", " \
+	ST_URLPARAMETERS ", " \
+	ST_URI ", " \
+	ST_URIPATH ", " \
+	ST_FORMPARAMETERS ", " \
+	ST_PRINT ", " \
+	ST_DATE ", " \
+	ST_SUBSCRIPTION ", " \
+	ST_EDIT ", " \
+	ST_SELECT ", " \
+	ST_USER ", " \
+	ST_SEARCH ", " \
+	ST_ARTICLECOMMENT
 
-#define LISSUE_STATEMENTS ST_SECTION ", " ST_ARTICLE ", " ST_TOPIC ", " ST_INCLUDE ", " ST_IF \
-", " ST_LOCAL ", " ST_WITH ", " ST_LIST " " ST_SECTION ", " ST_LIST " " ST_ARTICLE \
-", " ST_LIST " " ST_SEARCHRESULT ", " ST_LIST " " ST_SUBTITLE ", " ST_LIST " " ST_ARTICLETOPIC \
-", " ST_LIST " " ST_SUBTOPIC ", " ST_LIST " " ST_ARTICLEATTACHMENT ", " ST_URLPARAMETERS \
-", " ST_URI ", " ST_URIPATH ", " ST_FORMPARAMETERS ", " ST_PRINT ", " ST_DATE \
-", " ST_SUBSCRIPTION ", " ST_EDIT ", " ST_SELECT ", " ST_USER ", " ST_SEARCH
+#define LISSUE_STATEMENTS \
+	ST_SECTION ", " \
+	ST_ARTICLE ", " \
+	ST_TOPIC ", " \
+	ST_INCLUDE ", " \
+	ST_IF ", " \
+	ST_LOCAL ", " \
+	ST_WITH ", " \
+	ST_LIST " " ST_SECTION ", " \
+	ST_LIST " " ST_ARTICLE ", " \
+	ST_LIST " " ST_SEARCHRESULT ", " \
+	ST_LIST " " ST_SUBTITLE ", " \
+	ST_LIST " " ST_ARTICLETOPIC ", " \
+	ST_LIST " " ST_SUBTOPIC ", " \
+	ST_LIST " " ST_ARTICLEATTACHMENT ", " \
+	ST_LIST " " ST_ARTICLECOMMENT ", " \
+	ST_URLPARAMETERS ", " \
+	ST_URI ", " \
+	ST_URIPATH ", " \
+	ST_FORMPARAMETERS ", " \
+	ST_PRINT ", " \
+	ST_DATE ", " \
+	ST_SUBSCRIPTION ", " \
+	ST_EDIT ", " \
+	ST_SELECT ", " \
+	ST_USER ", " \
+	ST_SEARCH ", " \
+	ST_ARTICLECOMMENT
 
-#define LSECTION_STATEMENTS ST_ARTICLE ", " ST_TOPIC ", " ST_INCLUDE ", " ST_IF ", " ST_LOCAL \
-", " ST_WITH ", " ST_LIST " " ST_ARTICLE ", " ST_LIST " " ST_SEARCHRESULT \
-", " ST_LIST " " ST_SUBTITLE ", " ST_LIST " " ST_ARTICLETOPIC ", " ST_LIST " " ST_SUBTOPIC \
-", " ST_LIST " " ST_ARTICLEATTACHMENT ", " ST_URLPARAMETERS ", " ST_URI ", " ST_URIPATH \
-", " ST_FORMPARAMETERS ", " ST_PRINT ", " ST_DATE ", " ST_SUBSCRIPTION ", " ST_EDIT \
-", " ST_SELECT ", " ST_USER ", " ST_SEARCH
+#define LSECTION_STATEMENTS \
+	ST_ARTICLE ", " \
+	ST_TOPIC ", " \
+	ST_INCLUDE ", " \
+	ST_IF ", " \
+	ST_LOCAL ", " \
+	ST_WITH ", " \
+	ST_LIST " " ST_ARTICLE ", " \
+	ST_LIST " " ST_SEARCHRESULT ", " \
+	ST_LIST " " ST_SUBTITLE ", " \
+	ST_LIST " " ST_ARTICLETOPIC ", " \
+	ST_LIST " " ST_SUBTOPIC ", " \
+	ST_LIST " " ST_ARTICLEATTACHMENT ", " \
+	ST_LIST " " ST_ARTICLECOMMENT ", " \
+	ST_URLPARAMETERS ", " \
+	ST_URI ", " \
+	ST_URIPATH ", " \
+	ST_FORMPARAMETERS ", " \
+	ST_PRINT ", " \
+	ST_DATE ", " \
+	ST_SUBSCRIPTION ", " \
+	ST_EDIT ", " \
+	ST_SELECT ", " \
+	ST_USER ", " \
+	ST_SEARCH ", " \
+	ST_ARTICLECOMMENT
 
-#define LARTICLE_STATEMENTS ST_TOPIC ", " ST_INCLUDE ", " ST_IF ", " ST_LOCAL ", " ST_WITH \
-", " ST_LIST " " ST_ARTICLETOPIC ", " ST_LIST " " ST_SUBTOPIC \
-", " ST_LIST " " ST_ARTICLEATTACHMENT ", " ST_URLPARAMETERS ", " ST_URI ", " ST_URIPATH \
-", " ST_FORMPARAMETERS ", " ST_PRINT ", " ST_DATE ", " ST_SUBSCRIPTION ", " ST_EDIT \
-", " ST_SELECT ", " ST_USER ", " ST_SEARCH
+#define LARTICLE_STATEMENTS \
+	ST_TOPIC ", " \
+	ST_INCLUDE ", " \
+	ST_IF ", " \
+	ST_LOCAL ", " \
+	ST_WITH ", " \
+	ST_LIST " " ST_ARTICLETOPIC ", " \
+	ST_LIST " " ST_SUBTOPIC ", " \
+	ST_LIST " " ST_ARTICLEATTACHMENT ", " \
+	ST_URLPARAMETERS ", " \
+	ST_URI ", " \
+	ST_URIPATH ", " \
+	ST_FORMPARAMETERS ", " \
+	ST_PRINT ", " \
+	ST_DATE ", " \
+	ST_SUBSCRIPTION ", " \
+	ST_EDIT ", " \
+	ST_SELECT ", " \
+	ST_USER ", " \
+	ST_SEARCH ", " \
+	ST_ARTICLECOMMENT
 
 #define LV_ROOT 1
 #define LV_LISSUE 2
@@ -108,27 +191,29 @@ using std::endl;
 #define SUBLV_ARTICLETOPIC 262144
 #define SUBLV_SUBTOPIC 524288
 #define SUBLV_ARTICLEATTACHMENT 1048576
+#define SUBLV_LISTARTICLECOMMENT 2097152
+#define SUBLV_ARTICLECOMMENT 4194304
 
 
 // macro definition
 
 #define ONE_OF_LV(cl, gl) (cl & (gl))
 
-#define CheckForLevel(lv, lvs, line, column)\
+#define CheckForLevel(level, lvs, line, column)\
 {\
-if (!ONE_OF_LV(lv, lvs)) {\
+if (!ONE_OF_LV(level, lvs)) {\
 SetPError(parse_err, PERR_INVALID_STATEMENT, MODE_PARSE,\
-LvStatements(lv), line, column);\
+LvStatements(level), line, column);\
 WaitForStatementEnd(false);\
 return 1;\
 }\
 }
 
-#define CheckNotLevel(lv, lvs, line, column)\
+#define CheckNotLevel(level, lvs, line, column)\
 {\
-if (ONE_OF_LV(lv, lvs)) {\
+if (ONE_OF_LV(level, lvs)) {\
 SetPError(parse_err, PERR_INVALID_STATEMENT, MODE_PARSE,\
-LvStatements(lv), line, column);\
+LvStatements(level), line, column);\
 WaitForStatementEnd(false);\
 return 1;\
 }\
@@ -192,21 +277,16 @@ if (!attr->validValue(l->atom()->identifier()))\
 throw InvalidValue();\
 }
 
-#define CheckForEndSt(l)\
-{\
-if (l->res() == CMS_LEX_END_STATEMENT) {\
-SetPError(parse_err, PERR_IDENTIFIER_MISSING, MODE_PARSE, "",\
-lex.prevLine(), lex.prevColumn());\
-}\
-}
-
 #define RequireAtom(l)\
-{\
-l = lex.getLexem();\
-DEBUGLexem("req atom", l);\
-CheckForEOF(l, PERR_EOS_MISSING);\
-CheckForEndSt(l);\
-CheckForAtom(l);\
+{ \
+l = lex.getLexem(); \
+DEBUGLexem("req atom", l); \
+CheckForEOF(l, PERR_EOS_MISSING); \
+if (l->res() == CMS_LEX_END_STATEMENT) { \
+FatalPError(parse_err, PERR_IDENTIFIER_MISSING, MODE_PARSE, "", \
+lex.prevLine(), lex.prevColumn());\
+} \
+CheckForAtom(l); \
 }
 
 // end macro definition
@@ -418,11 +498,11 @@ const char* CParser::LvListSt(int level)
 // and sublevel (user, login, search, with etc.)
 // Parameters:
 //		int level - level: LV_ROOT, LV_LISSUE, LV_LSECTION, LV_LARTICLE, LV_LSUBTITLE
-//		int sublevel - sublevel: SUBLV_NONE, SUBLV_IFPREV, SUBLV_IFNEXT, SUBLV_IFLIST,
+//		ulint sublevel - sublevel: SUBLV_NONE, SUBLV_IFPREV, SUBLV_IFNEXT, SUBLV_IFLIST,
 //			SUBLV_IFISSUE, SUBLV_IFSECTION, SUBLV_IFARTICLE, SUBLV_EMPTYLIST,
 //			SUBLV_IFALLOWED, SUBLV_SUBSCRIPTION, SUBLV_USER, SUBLV_LOGIN, SUBLV_LOCAL
 //			SUBLV_IFPUBLICATION, SUBLV_SEARCH, SUBLV_SEARCHRESULT, SUBLV_WITH
-string CParser::IfStatements(int level, int sublevel)
+string CParser::IfStatements(int level, ulint sublevel)
 {
 	string s_str;
 	if (level == LV_ROOT || sublevel & SUBLV_EMPTYLIST)
@@ -454,8 +534,8 @@ string CParser::IfStatements(int level, int sublevel)
 // and sublevel (user, login, search, with etc.)
 // Parameters:
 //		int level
-//		int sublevel
-string CParser::PrintStatements(int level, int sublevel)
+//		ulint sublevel
+string CParser::PrintStatements(int level, ulint sublevel)
 {
 	string s_str;
 	s_str = ST_PUBLICATION ", " ST_ISSUE ", " ST_SECTION ", " ST_ARTICLE ", " ST_IMAGE ", "
@@ -474,8 +554,8 @@ string CParser::PrintStatements(int level, int sublevel)
 // EditStatements: return string containig edit type statements allowed in a given
 // sublevel (user, login, search, with etc.)
 // Parameters:
-//		int sublevel
-string CParser::EditStatements(int sublevel)
+//		ulint sublevel
+string CParser::EditStatements(ulint sublevel)
 {
 	string s_str;
 	if (sublevel & SUBLV_SUBSCRIPTION)
@@ -492,8 +572,8 @@ string CParser::EditStatements(int sublevel)
 // SelectStatements: return string containig select type statements allowed in a given
 // sublevel (user, login, search, with etc.)
 // Parameters:
-//		int sublevel
-string CParser::SelectStatements(int sublevel)
+//		ulint sublevel
+string CParser::SelectStatements(ulint sublevel)
 {
 	string s_str;
 	if (sublevel & SUBLV_SUBSCRIPTION)
@@ -616,14 +696,14 @@ void CParser::SetWriteErrors(bool p_bWriteErrors)
 // HLanguage: parse language statement; add CActLanguage action to actions list (al)
 // Parameters:
 //		CActionList& al - reference to actions list
-//		int lv - current level
-//		int sublv - current sublevel
-inline int CParser::HLanguage(CActionList& al, int lv, int sublv)
+//		int level - current level
+//		int sublevel - current sublevel
+inline int CParser::HLanguage(CActionList& al, int level, ulint sublevel)
 {
-	if ((sublv & SUBLV_LOCAL) == 0)
+	if ((sublevel & SUBLV_LOCAL) == 0)
 	{
-		CheckForLevel(lv, LV_ROOT, lex.prevLine(), lex.prevColumn());
-		CheckNotLevel(sublv, SUBLV_SEARCHRESULT, lex.prevLine(), lex.prevColumn());
+		CheckForLevel(level, LV_ROOT, lex.prevLine(), lex.prevColumn());
+		CheckNotLevel(sublevel, SUBLV_SEARCHRESULT, lex.prevLine(), lex.prevColumn());
 	}
 	RequireAtom(l);
 	al.insert(al.end(), new CActLanguage(l->atom()->identifier()));
@@ -681,8 +761,8 @@ inline int CParser::HInclude(CActionList& al)
 // Parameters:
 //		CActionList& al - reference to actions list
 //		int level - current level
-//		int sublevel - current sublevel
-inline int CParser::HPublication(CActionList& al, int level, int sublevel)
+//		ulint sublevel - current sublevel
+inline int CParser::HPublication(CActionList& al, int level, ulint sublevel)
 {
 	if ((sublevel & SUBLV_LOCAL) == 0)
 	{
@@ -710,8 +790,8 @@ inline int CParser::HPublication(CActionList& al, int level, int sublevel)
 // Parameters:
 //		CActionList& al - reference to actions list
 //		int level - current level
-//		int sublevel - current sublevel
-inline int CParser::HIssue(CActionList& al, int level, int sublevel)
+//		ulint sublevel - current sublevel
+inline int CParser::HIssue(CActionList& al, int level, ulint sublevel)
 {
 	if ((sublevel & SUBLV_LOCAL) == 0)
 	{
@@ -740,8 +820,8 @@ inline int CParser::HIssue(CActionList& al, int level, int sublevel)
 // Parameters:
 //		CActionList& al - reference to actions list
 //		int level - current level
-//		int sublevel - current sublevel
-inline int CParser::HSection(CActionList& al, int level, int sublevel)
+//		ulint sublevel - current sublevel
+inline int CParser::HSection(CActionList& al, int level, ulint sublevel)
 {
 	if ((sublevel & SUBLV_LOCAL) == 0)
 	{
@@ -769,8 +849,8 @@ inline int CParser::HSection(CActionList& al, int level, int sublevel)
 // Parameters:
 //		CActionList& al - reference to actions list
 //		int level - current level
-//		int sublevel - current sublevel
-inline int CParser::HArticle(CActionList& al, int level, int sublevel)
+//		ulint sublevel - current sublevel
+inline int CParser::HArticle(CActionList& al, int level, ulint sublevel)
 {
 	if ((sublevel & SUBLV_LOCAL) == 0)
 		CheckForLevel(level, LV_ROOT | LV_LISSUE | LV_LSECTION, lex.prevLine(), lex.prevColumn());
@@ -795,8 +875,8 @@ inline int CParser::HArticle(CActionList& al, int level, int sublevel)
 // Parameters:
 //		CActionList& al - reference to actions list
 //		int level - current level
-//		int sublevel - current sublevel
-inline int CParser::HTopic(CActionList& al, int level, int sublevel)
+//		ulint sublevel - current sublevel
+inline int CParser::HTopic(CActionList& al, int level, ulint sublevel)
 {
 	if ((sublevel & SUBLV_LOCAL) == 0)
 		CheckForLevel(level, LV_ROOT | LV_LISSUE | LV_LSECTION, lex.prevLine(), lex.prevColumn());
@@ -821,8 +901,8 @@ inline int CParser::HTopic(CActionList& al, int level, int sublevel)
 // Parameters:
 //		CActionList& al - reference to actions list
 //		int level - current level
-//		int sublevel - current sublevel
-inline int CParser::HHTMLEncoding(CActionList& al, int level, int sublevel)
+//		ulint sublevel - current sublevel
+inline int CParser::HHTMLEncoding(CActionList& al, int level, ulint sublevel)
 {
 	RequireAtom(l);
 	attr = st->findAttr(l->atom()->identifier(), CMS_CT_DEFAULT);
@@ -839,7 +919,10 @@ inline int CParser::HURLParameters(CActionList& al)
 	l = lex.getLexem();
 	DEBUGLexem("urlparam", l);
 	lint img = -1, nTemplate = -1;
-	bool fromstart = false, allsubtitles = false, bArticleAttachment = false, bFirst = true;
+	bool fromstart = false, allsubtitles = false;
+	bool bArticleAttachment = false;
+	bool bArticleComment = false;
+	bool bFirst = true;
 	CListLevel nResetList = CLV_ROOT;
 	TPubLevel nLevel = CMS_PL_SUBTITLE;
 	while (l->res() != CMS_LEX_END_STATEMENT)
@@ -862,8 +945,19 @@ inline int CParser::HURLParameters(CActionList& al)
 			l = lex.getLexem();
 			continue;
 		}
+		if (case_comp(l->atom()->identifier(), "articleComment") == 0)
+		{
+			bArticleComment = true;
+			if (!bFirst)
+			{
+				SetPError(parse_err, PERR_INVALID_ATTRIBUTE, MODE_PARSE, "",
+						  lex.prevLine(), lex.prevColumn());
+			}
+			l = lex.getLexem();
+			continue;
+		}
 		bFirst = false;
-		if (bArticleAttachment)
+		if (bArticleAttachment || bArticleComment)
 		{
 			SetPError(parse_err, PERR_INVALID_ATTRIBUTE, MODE_PARSE, "",
 					  lex.prevLine(), lex.prevColumn());
@@ -928,11 +1022,11 @@ inline int CParser::HURLParameters(CActionList& al)
 	if (st->id() == CMS_ST_URLPARAMETERS)
 		al.insert(al.end(),
 		          new CActURLParameters(fromstart, allsubtitles, img, nResetList, nTemplate, 
-	                                    nLevel, bArticleAttachment));
+										nLevel, bArticleAttachment, bArticleComment));
 	else
 		al.insert(al.end(),
 		          new CActURI(fromstart, allsubtitles, img, nResetList, nTemplate, nLevel,
-							  bArticleAttachment));
+							  bArticleAttachment, bArticleComment));
 	if (l->res() != CMS_LEX_END_STATEMENT)
 		WaitForStatementEnd(true);
 	return 0;
@@ -986,36 +1080,37 @@ inline int CParser::HDate(CActionList& al)
 // HPrint: parse print statement; add CActPrint action to actions list (al)
 // Parameters:
 //		CActionList& al - reference to actions list
-//		int lv - current level
-//		int sublv - current sublevel
-inline int CParser::HPrint(CActionList& al, int lv, int sublv)
+//		int level - current level
+//		ulint sublevel - current sublevel
+inline int CParser::HPrint(CActionList& al, int level, ulint sublevel)
 {
 	RequireAtom(l);
 	CheckForAtomType(l->atom(), const CStatement*, PERR_ATOM_NOT_STATEMENT,
-	                 PrintStatements(lv, sublv), lex.prevLine(), lex.prevColumn());
+	                 PrintStatements(level, sublevel), lex.prevLine(), lex.prevColumn());
 	st = CLex::findSt(l->atom()->identifier());
 	if (!CActPrint::validModifier(st->id()))
 	{
-		SetPError(parse_err, PERR_INVALID_STATEMENT, MODE_PARSE, PrintStatements(lv, sublv),
+		SetPError(parse_err, PERR_INVALID_STATEMENT, MODE_PARSE, PrintStatements(level, sublevel),
 		          lex.prevLine(), lex.prevColumn());
 		WaitForStatementEnd(false);
 		return 0;
 	}
 	if (st->id() == CMS_ST_LIST
-	    && (lv & (LV_LISSUE | LV_LSECTION | LV_LARTICLE | LV_LSUBTITLE)) == 0
-	    && (sublv & SUBLV_SEARCHRESULT) == 0)
+		   && (level & (LV_LISSUE | LV_LSECTION | LV_LARTICLE | LV_LSUBTITLE)) == 0
+		   && (sublevel & (SUBLV_SEARCHRESULT | SUBLV_LISTARTICLECOMMENT
+		   | SUBLV_ARTICLEATTACHMENT)) == 0)
 	{
 		SetPError(parse_err, PERR_INVALID_STATEMENT, MODE_PARSE,
-		          LvStatements(lv), lex.prevLine(), lex.prevColumn());
+		          LvStatements(level), lex.prevLine(), lex.prevColumn());
 		WaitForStatementEnd(false);
 		return 1;
 	}
-	if ((st->id() == CMS_ST_LOGIN && (sublv & SUBLV_LOGIN))
-	    || (st->id() == CMS_ST_SUBTITLE && !(lv & LV_LSUBTITLE))
-	    || (st->id() == CMS_ST_SEARCH && (sublv & SUBLV_SEARCH)))
+	if ((st->id() == CMS_ST_LOGIN && (sublevel & SUBLV_LOGIN))
+	    || (st->id() == CMS_ST_SUBTITLE && !(level & LV_LSUBTITLE))
+	    || (st->id() == CMS_ST_SEARCH && (sublevel & SUBLV_SEARCH)))
 	{
 		FatalPError(parse_err, PERR_INVALID_STATEMENT, MODE_PARSE,
-		            PrintStatements(lv, sublv), lex.prevLine(), lex.prevColumn());
+		            PrintStatements(level, sublevel), lex.prevLine(), lex.prevColumn());
 	}
 	RequireAtom(l);
 	bool strictType = false;
@@ -1125,8 +1220,8 @@ inline bool CParser::IsTopicStatement(const CLexem* p_pcoLexem) const
 // Parameters:
 //		CActionList& al - reference to actions list
 //		int level - current level
-//		int sublevel - current sublevel
-inline int CParser::HList(CActionList& al, int level, int sublevel)
+//		ulint sublevel - current sublevel
+inline int CParser::HList(CActionList& al, int level, ulint sublevel)
 {
 	lint lines = 0, columns = 0;
 	RequireAtom(l);
@@ -1149,13 +1244,15 @@ inline int CParser::HList(CActionList& al, int level, int sublevel)
 			columns = strtol(l->atom()->identifier().c_str(), 0, 10);
 		RequireAtom(l);
 	}
-	// check for modifier: Issue, Section, Article, SearchResult, Subtitle, ArticleTopic or
-	// ArticleAttachment
+	// check for modifier: Issue, Section, Article, SearchResult, Subtitle, ArticleTopic,
+	// ArticleAttachment or ArticleComment
 	st = (const CStatement*)l->atom();
 	if (level >= LV_LARTICLE && st->id() != CMS_ST_ARTICLETOPIC && st->id() != CMS_ST_SUBTOPIC
 		   && st->id() != CMS_ST_ARTICLEATTACHMENT)
+	{
 		FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE,
 					LARTICLE_STATEMENTS, lex.prevLine(), lex.prevColumn());
+	}
 	if (!CActList::validModifier(st->id()))
 	{
 		FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE, LvListSt(level),
@@ -1183,9 +1280,9 @@ inline int CParser::HList(CActionList& al, int level, int sublevel)
 	l = lex.getLexem();
 	DEBUGLexem("hlist1", l);
 	while (mod != CMS_ST_SEARCHRESULT && mod != CMS_ST_SUBTITLE && mod != CMS_ST_ARTICLETOPIC
-			  && mod != CMS_ST_SUBTOPIC
+			  && mod != CMS_ST_SUBTOPIC && mod != CMS_ST_ARTICLECOMMENT
 			  && (l->res() == CMS_LEX_IDENTIFIER
-			  || (IsTopicStatement(l) && mod == CMS_ST_ARTICLE)))
+			      || (IsTopicStatement(l) && mod == CMS_ST_ARTICLE)))
 	{
 		StringSet ah;
 		StringSet::iterator ah_i;
@@ -1334,6 +1431,8 @@ inline int CParser::HList(CActionList& al, int level, int sublevel)
 		sublevel |= SUBLV_SUBTOPIC;
 	if (mod == CMS_ST_ARTICLEATTACHMENT)
 		sublevel |= SUBLV_ARTICLEATTACHMENT;
+	if (mod == CMS_ST_ARTICLECOMMENT)
+		sublevel |= SUBLV_LISTARTICLECOMMENT;
 	int tmp_level = LMod2Level(mod);
 	if (tmp_level == 0)
 		tmp_level = level;
@@ -1381,9 +1480,9 @@ inline int CParser::HList(CActionList& al, int level, int sublevel)
 // in CActIf's list of actions
 // Parameters:
 //		CActionList& al - reference to actions list
-//		int lv - current level
-//		int sublv - current sublevel
-inline int CParser::HIf(CActionList& al, int lv, int sublv)
+//		int level - current level
+//		ulint sublevel - current sublevel
+inline int CParser::HIf(CActionList& al, int level, ulint sublevel)
 {
 	CParameter param("");
 	IntSet rc_hash;
@@ -1396,19 +1495,19 @@ inline int CParser::HIf(CActionList& al, int lv, int sublv)
 		RequireAtom(l);
 	}
 	CheckForAtomType(l->atom(), const CStatement*, PERR_ATOM_NOT_STATEMENT,
-	                 IfStatements(lv, sublv), lex.prevLine(), lex.prevColumn());
+	                 IfStatements(level, sublevel), lex.prevLine(), lex.prevColumn());
 	st = CLex::findSt(l->atom()->identifier());
 	const CStatement* mod_st = st;
 	if (!CActIf::validModifier(st->id()))
 	{
 		FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE,
-		            IfStatements(lv, sublv), lex.prevLine(), lex.prevColumn());
+		            IfStatements(level, sublevel), lex.prevLine(), lex.prevColumn());
 	}
 	if (st->id() == CMS_ST_ALLOWED)
 	{
-		sublv |= SUBLV_IFALLOWED;
+		sublevel |= SUBLV_IFALLOWED;
 	}
-	else if (st->id() == CMS_ST_SUBSCRIPTION)
+	else if (st->id() == CMS_ST_SUBSCRIPTION || st->id() == CMS_ST_ARTICLECOMMENT)
 	{
 		RequireAtom(l);
 		attr = st->findAttr(l->atom()->identifier(), CMS_CT_IF);
@@ -1416,10 +1515,10 @@ inline int CParser::HIf(CActionList& al, int lv, int sublv)
 	}
 	else if (st->id() == CMS_ST_USER)
 	{
-		if (sublv & SUBLV_USER)
+		if (sublevel & SUBLV_USER)
 		{
 			FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE,
-			            IfStatements(lv, sublv), lex.prevLine(), lex.prevColumn());
+			            IfStatements(level, sublevel), lex.prevLine(), lex.prevColumn());
 		}
 		RequireAtom(l);
 		attr = st->findAttr(l->atom()->identifier(), CMS_CT_IF);
@@ -1427,10 +1526,10 @@ inline int CParser::HIf(CActionList& al, int lv, int sublv)
 	}
 	else if (st->id() == CMS_ST_LOGIN)
 	{
-		if (sublv & SUBLV_LOGIN)
+		if (sublevel & SUBLV_LOGIN)
 		{
 			FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE,
-			            IfStatements(lv, sublv), lex.prevLine(), lex.prevColumn());
+			            IfStatements(level, sublevel), lex.prevLine(), lex.prevColumn());
 		}
 		RequireAtom(l);
 		attr = st->findAttr(l->atom()->identifier(), CMS_CT_IF);
@@ -1438,10 +1537,10 @@ inline int CParser::HIf(CActionList& al, int lv, int sublv)
 	}
 	else if (st->id() == CMS_ST_SEARCH)
 	{
-		if (sublv & SUBLV_SEARCH)
+		if (sublevel & SUBLV_SEARCH)
 		{
 			FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE,
-			            IfStatements(lv, sublv), lex.prevLine(), lex.prevColumn());
+			            IfStatements(level, sublevel), lex.prevLine(), lex.prevColumn());
 		}
 		RequireAtom(l);
 		attr = st->findAttr(l->atom()->identifier(), CMS_CT_IF);
@@ -1449,38 +1548,38 @@ inline int CParser::HIf(CActionList& al, int lv, int sublv)
 	}
 	else if (st->id() == CMS_ST_PREVIOUSITEMS)
 	{
-		if (sublv & SUBLV_EMPTYLIST || sublv & SUBLV_IFPREV
-		        || sublv & SUBLV_IFNEXT
-		        || (lv == LV_ROOT && (sublv & SUBLV_SEARCHRESULT) == 0))
+		if (sublevel & SUBLV_EMPTYLIST || sublevel & SUBLV_IFPREV
+		        || sublevel & SUBLV_IFNEXT
+		        || (level == LV_ROOT && (sublevel & SUBLV_SEARCHRESULT) == 0))
 		{
 			FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE,
-			            IfStatements(lv, sublv), lex.prevLine(), lex.prevColumn());
+			            IfStatements(level, sublevel), lex.prevLine(), lex.prevColumn());
 		}
 	}
 	else if (st->id() == CMS_ST_NEXTITEMS)
 	{
-		if (sublv & SUBLV_EMPTYLIST || sublv & SUBLV_IFPREV
-		        || sublv & SUBLV_IFNEXT
-		        || (lv == LV_ROOT && (sublv & SUBLV_SEARCHRESULT) == 0))
+		if (sublevel & SUBLV_EMPTYLIST || sublevel & SUBLV_IFPREV
+		        || sublevel & SUBLV_IFNEXT
+		        || (level == LV_ROOT && (sublevel & SUBLV_SEARCHRESULT) == 0))
 		{
 			FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE,
-			            IfStatements(lv, sublv), lex.prevLine(), lex.prevColumn());
+			            IfStatements(level, sublevel), lex.prevLine(), lex.prevColumn());
 		}
 	}
 	else if (st->id() == CMS_ST_CURRENTSUBTITLE)
 	{
-		if (!((lv & LV_LSUBTITLE ) && (sublv & SUBLV_WITH )))
+		if (!((level & LV_LSUBTITLE ) && (sublevel & SUBLV_WITH )))
 		{
 			FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE,
-			            IfStatements(lv, sublv), lex.prevLine(), lex.prevColumn());
+			            IfStatements(level, sublevel), lex.prevLine(), lex.prevColumn());
 		}
 	}
 	else if (st->id() == CMS_ST_SUBTITLE)
 	{
-		if (sublv & SUBLV_WITH == 0)
+		if (sublevel & SUBLV_WITH == 0)
 		{
 			FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE,
-			            IfStatements(lv, sublv), lex.prevLine(), lex.prevColumn());
+			            IfStatements(level, sublevel), lex.prevLine(), lex.prevColumn());
 		}
 		RequireAtom(l);
 		attr = st->findAttr(l->atom()->identifier(), CMS_CT_IF);
@@ -1494,17 +1593,17 @@ inline int CParser::HIf(CActionList& al, int lv, int sublv)
 	}
 	else if (st->id() == CMS_ST_LIST)
 	{
-		if ((sublv & SUBLV_EMPTYLIST)
-				   || (lv == LV_ROOT
-				   && (sublv & (SUBLV_SEARCHRESULT | SUBLV_ARTICLETOPIC | SUBLV_SUBTOPIC |
-				   		SUBLV_ARTICLEATTACHMENT)) == 0))
+		if ((sublevel & SUBLV_EMPTYLIST)
+			    || (level == LV_ROOT
+				    && (sublevel & (SUBLV_SEARCHRESULT | SUBLV_ARTICLETOPIC | SUBLV_SUBTOPIC
+				        | SUBLV_ARTICLEATTACHMENT | SUBLV_LISTARTICLECOMMENT)) == 0))
 		{
 			FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE,
-			            IfStatements(lv, sublv), lex.prevLine(), lex.prevColumn());
+			            IfStatements(level, sublevel), lex.prevLine(), lex.prevColumn());
 		}
 		RequireAtom(l);
 		attr = st->findAttr(l->atom()->identifier(), CMS_CT_IF);
-		sublv |= SUBLV_IFLIST;
+		sublevel |= SUBLV_IFLIST;
 		param = CParameter(attr->identifier());
 		bool first = true;
 		do
@@ -1563,7 +1662,7 @@ inline int CParser::HIf(CActionList& al, int lv, int sublv)
 		}
 		else
 			param = CParameter(attr->attribute());
-		sublv |= SUBLV_IFISSUE;
+		sublevel |= SUBLV_IFISSUE;
 	}
 	else if (st->id() == CMS_ST_SECTION || st->id() == CMS_ST_ARTICLE || st->id() == CMS_ST_TOPIC
 				|| st->id() == CMS_ST_LANGUAGE || st->id() == CMS_ST_PUBLICATION
@@ -1619,23 +1718,23 @@ inline int CParser::HIf(CActionList& al, int lv, int sublv)
 		}
 		if (st->id() == CMS_ST_SECTION)
 		{
-			sublv |= SUBLV_IFSECTION;
+			sublevel |= SUBLV_IFSECTION;
 		}
 		else if (st->id() == CMS_ST_ARTICLE)
 		{
-			sublv |= SUBLV_IFARTICLE;
+			sublevel |= SUBLV_IFARTICLE;
 		}
 		else if (st->id() == CMS_ST_LANGUAGE)
 		{
-			sublv |= SUBLV_IFLANGUAGE;
+			sublevel |= SUBLV_IFLANGUAGE;
 		}
 		else if (st->id() == CMS_ST_PUBLICATION)
 		{
-			sublv |= SUBLV_IFPUBLICATION;
+			sublevel |= SUBLV_IFPUBLICATION;
 		}
 		else if (st->id() == CMS_ST_TOPIC)
 		{
-			sublv |= SUBLV_IFTOPIC;
+			sublevel |= SUBLV_IFTOPIC;
 		}
 	}
 	if (l->res() != CMS_LEX_END_STATEMENT)
@@ -1643,14 +1742,14 @@ inline int CParser::HIf(CActionList& al, int lv, int sublv)
 	SafeAutoPtr<CActIf> ai(new CActIf(st->id(), param, bNegated, bStrictType));
 	ai->rc_hash = rc_hash;
 	int res;
-	if ((res = LevelParser(ai->block, lv, sublv)))
+	if ((res = LevelParser(ai->block, level, sublevel)))
 	{
 		return res;
 	}
 	if (st->id() == CMS_ST_ELSE)
 	{
 		WaitForStatementEnd(true);
-		if ((res = LevelParser(ai->sec_block, lv, sublv)))
+		if ((res = LevelParser(ai->sec_block, level, sublevel)))
 		{
 			return res;
 		}
@@ -1681,14 +1780,14 @@ inline int CParser::HIf(CActionList& al, int lv, int sublv)
 // in CActLocal's list of actions
 // Parameters:
 //		CActionList& al - reference to actions list
-//		int lv - current level
-//		int sublv - current sublevel
-inline int CParser::HLocal(CActionList& al, int lv, int sublv)
+//		int level - current level
+//		ulint sublevel - current sublevel
+inline int CParser::HLocal(CActionList& al, int level, ulint sublevel)
 {
 	int res;
 	WaitForStatementEnd(true);
 	SafeAutoPtr<CActLocal> aloc(new CActLocal());
-	if ((res = LevelParser(aloc->block, lv, sublv | SUBLV_LOCAL)))
+	if ((res = LevelParser(aloc->block, level, sublevel | SUBLV_LOCAL)))
 	{
 		return res;
 	}
@@ -1708,20 +1807,18 @@ inline int CParser::HLocal(CActionList& al, int lv, int sublv)
 // added as actions in CActSubscription's list of actions
 // Parameters:
 //		CActionList& al - reference to actions list
-//		int lv - current level
-//		int sublv - current sublevel
-inline int CParser::HSubscription(CActionList& al, int lv, int sublv)
+//		int level - current level
+//		ulint sublevel - current sublevel
+inline int CParser::HSubscription(CActionList& al, int level, ulint sublevel)
 {
-	if (sublv & SUBLV_USER || sublv & SUBLV_LOGIN || sublv & SUBLV_SUBSCRIPTION)
+	if (sublevel & SUBLV_USER || sublevel & SUBLV_LOGIN || sublevel & SUBLV_SUBSCRIPTION)
 	{
 		FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE,
-		            LvStatements(lv), lex.prevLine(), lex.prevColumn());
+		            LvStatements(level), lex.prevLine(), lex.prevColumn());
 	}
-	string tpl_file, unit_name, button_name, total, evaluate;
-	bool by_publication;
 	RequireAtom(l);
 	attr = st->findAttr(l->atom()->identifier(), CMS_CT_DEFAULT);
-	by_publication = case_comp(attr->identifier(), "by_publication") == 0;
+	bool by_publication = case_comp(attr->identifier(), "by_publication") == 0;
 	RequireAtom(l);
 	string tpl_name;
 	if ((l->atom()->identifier())[0] == '/')
@@ -1730,7 +1827,8 @@ inline int CParser::HSubscription(CActionList& al, int lv, int sublv)
 		tpl_name = getTemplateInternalPath(true) + l->atom()->identifier();
 	id_type nTemplate = CPublication::getTemplateId(tpl_name, MYSQLConnection());
 	RequireAtom(l);
-	button_name = l->atom()->identifier();
+	string button_name = l->atom()->identifier();
+	string total, evaluate;
 	l = lex.getLexem();
 	DEBUGLexem("hsubs atom", l);
 	CheckForEOF(l, PERR_EOS_MISSING);
@@ -1749,8 +1847,8 @@ inline int CParser::HSubscription(CActionList& al, int lv, int sublv)
 		WaitForStatementEnd(true);
 	SafeAutoPtr<CActSubscription> aloc(new CActSubscription(by_publication, nTemplate,
 	                                                        button_name, total, evaluate));
-	sublv |= SUBLV_SUBSCRIPTION;
-	if ((res = LevelParser(aloc->block, lv, sublv)))
+	sublevel |= SUBLV_SUBSCRIPTION;
+	if ((res = LevelParser(aloc->block, level, sublevel)))
 	{
 		return res;
 	}
@@ -1767,57 +1865,57 @@ inline int CParser::HSubscription(CActionList& al, int lv, int sublv)
 // HEdit: parse edit statement; add CActEdit action to actions list (al)
 // Parameters:
 //		CActionList& al - reference to actions list
-//		int lv - current level
-//		int sublv - current sublevel
-inline int CParser::HEdit(CActionList& al, int lv, int sublv)
+//		int level - current level
+//		ulint sublevel - current sublevel
+inline int CParser::HEdit(CActionList& al, int level, ulint sublevel)
 {
 	string size;
 	RequireAtom(l);
-	CheckForStatement(l, EditStatements(sublv), lex.prevLine(), lex.prevColumn());
+	CheckForStatement(l, EditStatements(sublevel), lex.prevLine(), lex.prevColumn());
 	st = CLex::findSt(l->atom()->identifier());
 	if (!CActEdit::validModifier(st->id()))
 	{
 		FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE,
-		            EditStatements(sublv), lex.prevLine(), lex.prevColumn());
+		            EditStatements(sublevel), lex.prevLine(), lex.prevColumn());
 	}
 	RequireAtom(l);
 	attr = st->findAttr(l->atom()->identifier(), CMS_CT_EDIT);
 	if (st->id() == CMS_ST_SUBSCRIPTION)
 	{
-		if ((sublv & SUBLV_SUBSCRIPTION) == 0)
+		if ((sublevel & SUBLV_SUBSCRIPTION) == 0)
 			FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE,
-			            EditStatements(sublv), lex.prevLine(), lex.prevColumn());
+			            EditStatements(sublevel), lex.prevLine(), lex.prevColumn());
 	}
 	else if (st->id() == CMS_ST_USER)
 	{
-		if ((sublv & SUBLV_USER) == 0)
+		if ((sublevel & SUBLV_USER) == 0)
 			FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE,
-			            EditStatements(sublv), lex.prevLine(), lex.prevColumn());
+			            EditStatements(sublevel), lex.prevLine(), lex.prevColumn());
 	}
 	else if (st->id() == CMS_ST_LOGIN)
 	{
-		if ((sublv & SUBLV_LOGIN) == 0)
+		if ((sublevel & SUBLV_LOGIN) == 0)
 			FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE,
-			            EditStatements(sublv), lex.prevLine(), lex.prevColumn());
+			            EditStatements(sublevel), lex.prevLine(), lex.prevColumn());
 	}
 	else if (st->id() == CMS_ST_SEARCH)
 	{
-		if ((sublv & SUBLV_SEARCH) == 0)
+		if ((sublevel & SUBLV_SEARCH) == 0)
 			FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE,
-			            EditStatements(sublv), lex.prevLine(), lex.prevColumn());
-		l = lex.getLexem();
-		DEBUGLexem("edit", l);
-		if (l->res() != CMS_LEX_END_STATEMENT)
+			            EditStatements(sublevel), lex.prevLine(), lex.prevColumn());
+	}
+	l = lex.getLexem();
+	DEBUGLexem("edit", l);
+	if (l->res() != CMS_LEX_END_STATEMENT)
+	{
+		CheckForAtom(l);
+		if (l->dataType() != CMS_DT_INTEGER)
 		{
-			CheckForAtom(l);
-			if (l->dataType() != CMS_DT_INTEGER)
-			{
-				SetPError(parse_err, PERR_DATA_TYPE, MODE_PARSE, "integer",
-				          lex.prevLine(), lex.prevColumn());
-				return PERR_INVALID_VALUE;
-			}
-			size = l->atom()->identifier();
+			SetPError(parse_err, PERR_DATA_TYPE, MODE_PARSE, "integer",
+					  lex.prevLine(), lex.prevColumn());
+			return PERR_INVALID_VALUE;
 		}
+		size = l->atom()->identifier();
 	}
 	CActEdit* edit = new CActEdit(st->id(), attr->attribute(), atol(size.c_str()));
 	al.insert(al.end(), edit);
@@ -1829,9 +1927,9 @@ inline int CParser::HEdit(CActionList& al, int lv, int sublv)
 // HSelect: parse select statement; add CActSelect action to actions list (al)
 // Parameters:
 //		CActionList& al - reference to actions list
-//		int lv - current level
-//		int sublv - current sublevel
-inline int CParser::HSelect(CActionList& al, int lv, int sublv)
+//		int level - current level
+//		ulint sublevel - current sublevel
+inline int CParser::HSelect(CActionList& al, int level, ulint sublevel)
 {
 	string coMaleName, coFemaleName, coClass;
 	bool bChecked = false, bMultipleSelection = true;
@@ -1850,9 +1948,9 @@ inline int CParser::HSelect(CActionList& al, int lv, int sublv)
 	attr = st->findAttr(l->atom()->identifier(), CMS_CT_SELECT);
 	if (st->id() == CMS_ST_SUBSCRIPTION)
 	{
-		if ((sublv & SUBLV_SUBSCRIPTION) == 0)
+		if ((sublevel & SUBLV_SUBSCRIPTION) == 0)
 			FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE,
-			            SelectStatements(sublv), lex.prevLine(), lex.prevColumn());
+			            SelectStatements(sublevel), lex.prevLine(), lex.prevColumn());
 		l = lex.getLexem();
 		while (l->res() == CMS_LEX_IDENTIFIER)
 		{
@@ -1914,9 +2012,9 @@ inline int CParser::HSelect(CActionList& al, int lv, int sublv)
 	}
 	else if (st->id() == CMS_ST_USER)
 	{
-		if ((sublv & SUBLV_USER) == 0)
+		if ((sublevel & SUBLV_USER) == 0)
 			FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE,
-			            SelectStatements(sublv), lex.prevLine(), lex.prevColumn());
+			            SelectStatements(sublevel), lex.prevLine(), lex.prevColumn());
 		if (case_comp(attr->identifier(), "Gender") == 0)
 		{
 			RequireAtom(l);
@@ -1938,15 +2036,15 @@ inline int CParser::HSelect(CActionList& al, int lv, int sublv)
 	}
 	else if (st->id() == CMS_ST_SEARCH)
 	{
-		if ((sublv & SUBLV_SEARCH) == 0)
+		if ((sublevel & SUBLV_SEARCH) == 0)
 			FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE,
-			            SelectStatements(sublv), lex.prevLine(), lex.prevColumn());
+			            SelectStatements(sublevel), lex.prevLine(), lex.prevColumn());
 	}
 	else if (st->id() == CMS_ST_LOGIN)
 	{
-		if ((sublv & SUBLV_LOGIN) == 0)
+		if ((sublevel & SUBLV_LOGIN) == 0)
 			FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE,
-			            SelectStatements(sublv), lex.prevLine(), lex.prevColumn());
+			            SelectStatements(sublevel), lex.prevLine(), lex.prevColumn());
 	}
 	CActSelect* select = new CActSelect(st->id(), attr->attribute(), coMaleName, coFemaleName,
 										bChecked, coClass, nSize, bMultipleSelection);
@@ -1961,14 +2059,14 @@ inline int CParser::HSelect(CActionList& al, int lv, int sublv)
 // in CActUsers's list of actions
 // Parameters:
 //		CActionList& al - reference to actions list
-//		int lv - current level
-//		int sublv - current sublevel
-inline int CParser::HUser(CActionList& al, int lv, int sublv)
+//		int level - current level
+//		ulint sublevel - current sublevel
+inline int CParser::HUser(CActionList& al, int level, ulint sublevel)
 {
-	if (sublv & SUBLV_USER || sublv & SUBLV_SUBSCRIPTION || sublv & SUBLV_LOGIN)
+	if (sublevel & SUBLV_USER || sublevel & SUBLV_SUBSCRIPTION || sublevel & SUBLV_LOGIN)
 	{
 		FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE,
-		            LvStatements(lv), lex.prevLine(), lex.prevColumn());
+		            LvStatements(level), lex.prevLine(), lex.prevColumn());
 	}
 	RequireAtom(l);
 	bool add = case_comp(l->atom()->identifier(), "add") == 0;
@@ -1984,7 +2082,7 @@ inline int CParser::HUser(CActionList& al, int lv, int sublv)
 	int res;
 	WaitForStatementEnd(true);
 	SafeAutoPtr<CActUser> user(new CActUser(add, nTemplate, button_name));
-	if ((res = LevelParser(user->block, lv, sublv | SUBLV_USER)))
+	if ((res = LevelParser(user->block, level, sublevel | SUBLV_USER)))
 	{
 		return res;
 	}
@@ -2003,14 +2101,14 @@ inline int CParser::HUser(CActionList& al, int lv, int sublv)
 // in CActLogin's list of actions
 // Parameters:
 //		CActionList& al - reference to actions list
-//		int lv - current level
-//		int sublv - current sublevel
-inline int CParser::HLogin(CActionList& al, int lv, int sublv)
+//		int level - current level
+//		ulint sublevel - current sublevel
+inline int CParser::HLogin(CActionList& al, int level, ulint sublevel)
 {
-	if (sublv & SUBLV_USER || sublv & SUBLV_SUBSCRIPTION || sublv & SUBLV_LOGIN)
+	if (sublevel & SUBLV_USER || sublevel & SUBLV_SUBSCRIPTION || sublevel & SUBLV_LOGIN)
 	{
 		FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE,
-		            LvStatements(lv), lex.prevLine(), lex.prevColumn());
+		            LvStatements(level), lex.prevLine(), lex.prevColumn());
 	}
 	RequireAtom(l);
 	string tpl_name;
@@ -2024,7 +2122,7 @@ inline int CParser::HLogin(CActionList& al, int lv, int sublv)
 	int res;
 	WaitForStatementEnd(true);
 	SafeAutoPtr<CActLogin> login(new CActLogin(nTemplate, button_name));
-	if ((res = LevelParser(login->block, lv, sublv | SUBLV_LOGIN)))
+	if ((res = LevelParser(login->block, level, sublevel | SUBLV_LOGIN)))
 	{
 		return res;
 	}
@@ -2043,14 +2141,14 @@ inline int CParser::HLogin(CActionList& al, int lv, int sublv)
 // in CActSearch's list of actions
 // Parameters:
 //		CActionList& al - reference to actions list
-//		int lv - current level
-//		int sublv - current sublevel
-inline int CParser::HSearch(CActionList& al, int lv, int sublv)
+//		int level - current level
+//		ulint sublevel - current sublevel
+inline int CParser::HSearch(CActionList& al, int level, ulint sublevel)
 {
-	if (sublv & SUBLV_SEARCH)
+	if (sublevel & SUBLV_SEARCH)
 	{
 		FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE,
-		            LvStatements(lv), lex.prevLine(), lex.prevColumn());
+		            LvStatements(level), lex.prevLine(), lex.prevColumn());
 	}
 	RequireAtom(l);
 	string tpl_name;
@@ -2064,7 +2162,7 @@ inline int CParser::HSearch(CActionList& al, int lv, int sublv)
 	int res;
 	WaitForStatementEnd(true);
 	SafeAutoPtr<CActSearch> search(new CActSearch(nTemplate, button_name));
-	if ((res = LevelParser(search->block, lv, sublv | SUBLV_SEARCH)))
+	if ((res = LevelParser(search->block, level, sublevel | SUBLV_SEARCH)))
 	{
 		return res;
 	}
@@ -2083,9 +2181,9 @@ inline int CParser::HSearch(CActionList& al, int lv, int sublv)
 // in CActWith's list of actions
 // Parameters:
 //		CActionList& al - reference to actions list
-//		int lv - current level
-//		int sublv - current sublevel
-inline int CParser::HWith(CActionList& al, int lv, int sublv)
+//		int level - current level
+//		ulint sublevel - current sublevel
+inline int CParser::HWith(CActionList& al, int level, ulint sublevel)
 {
 	int res;
 	SafeAutoPtr<CPairAttrType> a(NULL);
@@ -2102,7 +2200,7 @@ inline int CParser::HWith(CActionList& al, int lv, int sublv)
 	string field = a->first->identifier();
 	WaitForStatementEnd(true);
 	SafeAutoPtr<CActWith> aloc(new CActWith(art_type, field));
-	if ((res = LevelParser(aloc->block, lv, sublv | SUBLV_WITH)))
+	if ((res = LevelParser(aloc->block, level, sublevel | SUBLV_WITH)))
 	{
 		return res;
 	}
@@ -2179,6 +2277,63 @@ inline int CParser::HURIPath(CActionList& al)
 	return 0;
 }
 
+// HArticleCommentForm: parse ArticleCommentForm statement; add CActArticleCommentForm
+// action to actions list (al). All statements between ArticleComment and EndArticleComment
+// statements are parsed, added as actions in CActArticleComment's list of actions
+// Parameters:
+//		CActionList& al - reference to actions list
+//		int level - current level
+//		ulint sublevel - current sublevel
+int CParser::HArticleCommentForm(CActionList& al, int level, ulint sublevel)
+{
+	int res;
+	RequireAtom(l);
+	string tpl_name;
+	if ((l->atom()->identifier())[0] == '/')
+		tpl_name = l->atom()->identifier().substr(1);
+	else
+		tpl_name = getTemplateInternalPath(true) + l->atom()->identifier();
+	id_type nTemplate = CPublication::getTemplateId(tpl_name, MYSQLConnection());
+	RequireAtom(l);
+	string coSubmitButton = l->atom()->identifier();
+	string coPreviewButton;
+	l = lex.getLexem();
+	if (l->res() != CMS_LEX_END_STATEMENT)
+	{
+		coPreviewButton = l->atom()->identifier();
+	}
+	WaitForStatementEnd(true);
+	SafeAutoPtr<CActArticleCommentForm> aloc(new CActArticleCommentForm(nTemplate, coSubmitButton,
+										  coPreviewButton));
+	if ((res = LevelParser(aloc->block, level, sublevel | SUBLV_ARTICLECOMMENT)))
+	{
+		return res;
+	}
+	if (st->id() != CMS_ST_ENDARTICLECOMMENTFORM)
+	{
+		FatalPError(parse_err, PERR_WRONG_STATEMENT, MODE_PARSE,
+					ST_ENDWITH, lex.prevLine(), lex.prevColumn());
+	}
+	WaitForStatementEnd(true);
+	al.insert(al.end(), aloc.release());
+	return 0;
+}
+
+// HArticleComment: parse ArticleComment statement; add CActArticleComment
+// action to actions list (al).
+// Parameters:
+//		CActionList& al - reference to actions list
+//		int level - current level
+//		ulint sublevel - current sublevel
+int CParser::HArticleComment(CActionList& al, int level, ulint sublevel)
+{
+	RequireAtom(l);
+	attr = st->findAttr(l->atom()->identifier(), CMS_CT_DEFAULT);
+	al.insert(al.end(), new CActArticleComment(CParameter(attr->attribute(), "", NULL)));
+	WaitForStatementEnd(true);
+	return 0;
+}
+
 // LevelParser: read lexems until it finds a statement or reaches end of file
 // Depending on read statement it calls on of HArticle, HDate, HEdit, HFormParameters,
 // HIf, HInclude, HIssue, HLanguage, HList, HLocal, HLogin, HPrint, HPublication,
@@ -2187,8 +2342,8 @@ inline int CParser::HURIPath(CActionList& al)
 // Parameters:
 //		CActionList& al - reference to actions list
 //		int level - current level
-//		int sublevel - current sublevel
-int CParser::LevelParser(CActionList& al, int level, int sublevel)
+//		ulint sublevel - current sublevel
+int CParser::LevelParser(CActionList& al, int level, ulint sublevel)
 {
 	bool isEOF = false;
 	int res, context;
@@ -2295,6 +2450,14 @@ int CParser::LevelParser(CActionList& al, int level, int sublevel)
 			if ((res = HURLParameters(al)))
 				return res;
 			break;
+		case CMS_ST_ARTICLECOMMENTFORM:
+			if ((res = HArticleCommentForm(al, level, sublevel)))
+				return res;
+			break;
+		case CMS_ST_ARTICLECOMMENT:
+			if ((res = HArticleComment(al, level, sublevel)))
+				return res;
+			break;
 		case CMS_ST_FOREMPTYLIST:
 		case CMS_ST_ELSE:
 		case CMS_ST_ENDIF:
@@ -2305,6 +2468,7 @@ int CParser::LevelParser(CActionList& al, int level, int sublevel)
 		case CMS_ST_ENDLOGIN:
 		case CMS_ST_ENDSEARCH:
 		case CMS_ST_ENDWITH:
+		case CMS_ST_ENDARTICLECOMMENTFORM:
 			return 0;
 		default:
 			SetPError(parse_err, PERR_INVALID_STATEMENT, MODE_PARSE,

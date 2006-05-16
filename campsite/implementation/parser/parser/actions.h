@@ -25,15 +25,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /******************************************************************************
 
-Define CParameter, CAction, CActLanguage, CActInclude, CActPublication,
+Declare CParameter, CAction, CActLanguage, CActInclude, CActPublication,
 CActIssue, CActSection, CActArticle, CActList, CActURLParameters,
 CActFormParameters, CActPrint, CActIf, CActDate, CActText, CActLocal,
 CActSubscription, CActEdit, CActSelect, CActUser, CActLogin,
-CActSearch, CActWith classes. All these classes except CParameter and
-CAction correspond to a certain "instruction"; they inherit CAction.
-There is one important virtual method redefined by every action class: takeAction.
-This receives a context parameter and a stream to write output to. The context
-can be modified by this method.
+CActSearch, CActWith and other action classes. All these classes except
+CParameter and CAction correspond to a certain "instruction"; they inherit
+CAction. There is one important virtual method redefined by every action
+class: takeAction. This receives a context parameter and a stream to write
+output to. The context can be modified by this method.
 
 ******************************************************************************/
 
@@ -670,6 +670,7 @@ protected:
 	TPubLevel m_nPubLevel;	// identifies the level in the publication structure; parameters
 							// above this level are cut
 	bool m_bArticleAttachment;
+	bool m_bArticleComment;
 
 	// PrintSubtitlesURL: print url parameters for subtitle list/printing
 	// Parameters:
@@ -681,10 +682,11 @@ protected:
 public:
 	// constructor
 	CActURLParameters(bool fs = false, bool as = false, id_type i = -1, CListLevel r_fl = CLV_ROOT,
-	                  id_type tpl = -1, TPubLevel lvl = CMS_PL_ARTICLE,
-					  bool p_bArticleAttachment = false)
-		: image_nr(i), fromstart(fs), allsubtitles(as), reset_from_list(r_fl), m_coTemplate(tpl),
-	m_nPubLevel(lvl), m_bArticleAttachment(p_bArticleAttachment) {}
+					  id_type tpl = -1, TPubLevel lvl = CMS_PL_ARTICLE,
+					  bool p_bArticleAttachment = false, bool p_bArticleComment)
+	: image_nr(i), fromstart(fs), allsubtitles(as), reset_from_list(r_fl), m_coTemplate(tpl),
+	m_nPubLevel(lvl), m_bArticleAttachment(p_bArticleAttachment),
+	m_bArticleComment(p_bArticleComment) {}
 
 	// destructor
 	virtual ~CActURLParameters() {}
@@ -1003,8 +1005,10 @@ protected:
 
 public:
 	// constructor
-	CActSubscription(bool bp, id_type p_nTemplateId, string bn, string t, string ev)
-		: by_publication(bp), m_nTemplateId(p_nTemplateId), button_name(bn), total(t), evaluate(ev)
+	CActSubscription(bool p_bByPublication, id_type p_nTemplateId, const string& p_rcoButtonName,
+					 const string& p_rcoTotal, const string& p_rcoEvaluate)
+	: by_publication(p_bByPublication), m_nTemplateId(p_nTemplateId),
+	button_name(p_rcoButtonName), total(p_rcoTotal), evaluate(p_rcoEvaluate)
 	{}
 
 	// destructor
@@ -1296,9 +1300,11 @@ protected:
 public:
 	// constructor
 	CActURI(bool fs = false, bool as = false, id_type i = -1, CListLevel r_fl = CLV_ROOT,
-			id_type tpl = -1, TPubLevel lvl = CMS_PL_ARTICLE, bool p_bArticleAttachment = false)
+			id_type tpl = -1, TPubLevel lvl = CMS_PL_ARTICLE, bool p_bArticleAttachment = false,
+			bool p_bArticleComment)
 	: m_coURIPath(tpl, lvl, p_bArticleAttachment),
-	m_coURLParameters(fs, as, i, r_fl, tpl, lvl, p_bArticleAttachment), m_nImageNr(i) {}
+	m_coURLParameters(fs, as, i, r_fl, tpl, lvl, p_bArticleAttachment, p_bArticleComment),
+	m_nImageNr(i) {}
 
 	// destructor
 	virtual ~CActURI() {}
@@ -1313,6 +1319,69 @@ public:
 	// Parametes:
 	//		CContext& c - current context
 	//		sockstream& fs - output stream
+	virtual int takeAction(CContext& c, sockstream& fs);
+};
+
+// CActArticleCommentForm: create a form for inputting an article comment
+class CActArticleCommentForm : public CAction
+{
+	friend class CParser;
+
+protected:
+	CActionList block;			// actions between ArticleCommentForm - EndArticleCommentForm
+								// statements
+	id_type m_nTemplateId;		// identifier of the template to load on submit
+	string m_coSubmitButton;	// submit button name
+	string m_coPreviewButton;	// submit button name
+
+public:
+	// constructor
+	CActArticleCommentForm(id_type p_nTemplateId, const string& p_rcoSubmitButton,
+					   const string& p_rcoPreviewButton)
+	: m_nTemplateId(p_nTemplateId), m_coSubmitButton(p_rcoSubmitButton),
+	m_coPreviewButton(p_rcoPreviewButton) {}
+
+	// destructor
+	virtual ~CActArticleCommentForm() {}
+
+	// action: return action identifier
+	virtual TAction action() const { return CMS_ACT_ARTICLECOMMENTFORM; }
+
+	// clone this object
+	virtual CAction* clone() const { return new CActArticleCommentForm(*this); }
+
+	// takeAction: performs the action
+	// Parametes:
+	//		CContext& c - current context
+	//		sockstream& fs - output stream	
+	virtual int takeAction(CContext& c, sockstream& fs);
+};
+
+// CActArticleComment: set article comment environment variables
+class CActArticleComment : public CAction
+{
+	friend class CParser;
+
+	protected:
+		CParameter m_coParameter;	// parameter
+
+	public:
+	// constructor
+	CActArticleComment(const CParameter& p_rcoParameter) : m_coParameter(p_rcoParameter) {}
+
+	// destructor
+	virtual ~CActArticleComment() {}
+
+	// action: return action identifier
+	virtual TAction action() const { return CMS_ACT_ARTICLECOMMENT; }
+
+	// clone this object
+	virtual CAction* clone() const { return new CActArticleComment(*this); }
+
+	// takeAction: performs the action
+	// Parametes:
+	//		CContext& c - current context
+	//		sockstream& fs - output stream	
 	virtual int takeAction(CContext& c, sockstream& fs);
 };
 

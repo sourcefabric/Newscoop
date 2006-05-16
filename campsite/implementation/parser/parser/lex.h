@@ -92,6 +92,9 @@ using std::map;
 #define CMS_ST_SUBTOPIC 45
 #define CMS_ST_ARTICLEATTACHMENT 46
 #define CMS_ST_HTMLENCODING 47
+#define CMS_ST_ARTICLECOMMENT 48
+#define CMS_ST_ARTICLECOMMENTFORM 49
+#define CMS_ST_ENDARTICLECOMMENTFORM 50
 
 // statement names
 #define ST_LANGUAGE "Language"
@@ -141,6 +144,9 @@ using std::map;
 #define ST_SUBTOPIC "Subtopic"
 #define ST_ARTICLEATTACHMENT "ArticleAttachment"
 #define ST_HTMLENCODING "HTMLEncoding"
+#define ST_ARTICLECOMMENT "ArticleComment"
+#define ST_ARTICLECOMMENTFORM "ArticleCommentForm"
+#define ST_ENDARTICLECOMMENTFORM "EndArticleCommentForm"
 
 // The lexem returned by lex class
 class CLexem

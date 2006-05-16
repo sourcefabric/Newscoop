@@ -78,6 +78,7 @@ CContext::CContext()
 			= def_article_nr
 			= -1;
 	m_nTopicId = m_nDefTopicId = m_nAttachment = -1;
+	m_pcoArticleComment = NULL;
 	lmode = LM_NORMAL;
 	stmode = STM_NORMAL;
 	do_subscribe = false;
@@ -85,12 +86,20 @@ CContext::CContext()
 	by_publication = false;
 	subs_res = -1;
 	nSubsTimeUnits = 0;
+	m_bArticleCommentEnabled = false;
+	m_bArticleCommentEnabledValid = false;
 	adduser = modifyuser = login = search = search_and = false;
-	adduser_res = modifyuser_res = login_res = search_res = -1;
+	adduser_res = modifyuser_res = login_res = search_res = m_nSubmitArticleCommentResult = -1;
 	search_level = 0;
 	m_pcoURL = NULL;
 	m_pcoDefURL = NULL;
 	ResetKwdIt();
+}
+
+// copy constructor
+CContext::CContext(const CContext& c) : m_pcoArticleComment(NULL)
+{
+	*this = c;
 }
 
 // compare operator
@@ -164,6 +173,12 @@ int CContext::operator ==(const CContext& c) const
 			&& current_art_type == c.current_art_type
 			&& m_nAttachment == c.m_nAttachment
 			&& m_coAttachmentExtension == c.m_coAttachmentExtension
+			&& m_bArticleCommentEnabled == c.m_bArticleCommentEnabled
+			&& m_bArticleCommentEnabledValid == c.m_bArticleCommentEnabledValid
+			&& ((m_pcoArticleComment == NULL && c.m_pcoArticleComment == NULL)
+				|| (m_pcoArticleComment != NULL && c.m_pcoArticleComment != NULL
+				&& *m_pcoArticleComment == *c.m_pcoArticleComment))
+			&& m_nSubmitArticleCommentResult == c.m_nSubmitArticleCommentResult
 			&& m_pcoURL->equalTo(c.m_pcoURL)
 			&& m_pcoDefURL->equalTo(c.m_pcoDefURL);
 }
@@ -243,6 +258,18 @@ const CContext& CContext::operator =(const CContext& s)
 	current_art_type = s.current_art_type;
 	m_nAttachment = s.m_nAttachment;
 	m_coAttachmentExtension = s.m_coAttachmentExtension;
+	m_bArticleCommentEnabled = s.m_bArticleCommentEnabled;
+	m_bArticleCommentEnabledValid = s.m_bArticleCommentEnabledValid;
+	if (m_pcoArticleComment != NULL)
+	{
+		delete m_pcoArticleComment;
+		m_pcoArticleComment = NULL;
+	}
+	if (s.m_pcoArticleComment != NULL)
+	{
+		m_pcoArticleComment = new CArticleComment(*s.m_pcoArticleComment);
+	}
+	m_nSubmitArticleCommentResult = s.m_nSubmitArticleCommentResult;
 	if (s.m_pcoURL != NULL)
 		m_pcoURL = s.m_pcoURL->clone();
 	else
@@ -255,8 +282,72 @@ const CContext& CContext::operator =(const CContext& s)
 	return *this;
 }
 
+void CContext::SetArticleCommentId(id_type p_nArticleCommentId)
+{
+	if (m_pcoArticleComment != NULL)
+	{
+		delete m_pcoArticleComment;
+		m_pcoArticleComment = NULL;
+	}
+	if (p_nArticleCommentId > 0)
+	{
+		m_pcoArticleComment = new CArticleComment(p_nArticleCommentId);
+	}
+}
+
+id_type CContext::ArticleCommentId() const
+{
+	if (m_pcoArticleComment != NULL)
+	{
+		return m_pcoArticleComment->getMessageId();
+	}
+	return -1;
+}
+
+int CContext::ArticleCommentLevel() const
+{
+	if (m_pcoArticleComment != NULL)
+	{
+		return m_pcoArticleComment->getLevel();
+	}
+	return -1;
+}
+
+bool CContext::ArticleCommentEnabled() const
+{
+	if (!m_bArticleCommentEnabledValid)
+	{
+		string coArticleType;
+		if (article_nr > 0)
+		{
+			stringstream buf;
+			buf << "select Type from Articles where Number = '" << article_nr
+					<< "' and IdLanguage = '" << language_id << "'";
+			SQLQuery(MYSQLConnection(), buf.str().c_str());
+			MYSQL_RES *res = mysql_store_result(MYSQLConnection());
+			if (res == NULL)
+			{
+				return false;
+			}
+			MYSQL_ROW row = mysql_fetch_row(res);
+			if (row == NULL)
+			{
+				return false;
+			}
+			coArticleType = row[0];
+		}
+		m_bArticleCommentEnabled = CArticleComment::ArticleCommentsEnabled(publication_id, coArticleType);
+		m_bArticleCommentEnabledValid = true;
+	}
+	return m_bArticleCommentEnabled;
+}
+
 void CContext::SetLanguage(id_type l)
 {
+	if (language_id == l)
+	{
+		return;
+	}
 	SetURLValue(P_IDLANG, l);
 	language_id = l;
 	ResetPublicationParams(CLV_PUB_ISSUE);
@@ -264,6 +355,10 @@ void CContext::SetLanguage(id_type l)
 
 void CContext::SetDefLanguage(id_type l)
 {
+	if (def_language_id == l)
+	{
+		return;
+	}
 	SetDefURLValue(P_IDLANG, l);
 	def_language_id = l;
 	ResetDefPublicationParams(CLV_PUB_ISSUE);
@@ -271,6 +366,10 @@ void CContext::SetDefLanguage(id_type l)
 
 void CContext::SetPublication(id_type p)
 {
+	if (publication_id == p)
+	{
+		return;
+	}
 	SetURLValue(P_IDPUBL, p);
 	publication_id = p;
 	ResetPublicationParams(CLV_PUB_ISSUE);
@@ -278,6 +377,10 @@ void CContext::SetPublication(id_type p)
 
 void CContext::SetDefPublication(id_type p)
 {
+	if (def_publication_id == p)
+	{
+		return;
+	}
 	SetDefURLValue(P_IDPUBL, p);
 	def_publication_id = p;
 	ResetDefPublicationParams(CLV_PUB_ISSUE);
@@ -285,6 +388,10 @@ void CContext::SetDefPublication(id_type p)
 
 void CContext::SetIssue(id_type i)
 {
+	if (issue_nr == i)
+	{
+		return;
+	}
 	SetURLValue(P_NRISSUE, i);
 	issue_nr = i;
 	ResetPublicationParams(CLV_PUB_SECTION);
@@ -292,6 +399,10 @@ void CContext::SetIssue(id_type i)
 
 void CContext::SetDefIssue(id_type i)
 {
+	if (def_issue_nr == i)
+	{
+		return;
+	}
 	SetDefURLValue(P_NRISSUE, i);
 	def_issue_nr = i;
 	ResetDefPublicationParams(CLV_PUB_SECTION);
@@ -299,6 +410,10 @@ void CContext::SetDefIssue(id_type i)
 
 void CContext::SetSection(id_type s)
 {
+	if (section_nr == s)
+	{
+		return;
+	}
 	SetURLValue(P_NRSECTION, s);
 	section_nr = s;
 	ResetPublicationParams(CLV_PUB_ARTICLE);
@@ -306,9 +421,24 @@ void CContext::SetSection(id_type s)
 
 void CContext::SetDefSection(id_type s)
 {
+	if (def_section_nr == s)
+	{
+		return;
+	}
 	SetDefURLValue(P_NRSECTION, s);
 	def_section_nr = s;
 	ResetDefPublicationParams(CLV_PUB_ARTICLE);
+}
+
+void CContext::SetArticle(id_type a)
+{
+	if (article_nr == a)
+	{
+		return;
+	}
+	SetURLValue(P_NRARTICLE, a);
+	article_nr = a;
+	m_bArticleCommentEnabledValid = false;
 }
 
 // SetStListStart: set the subtitles list start element to value for the given article
@@ -963,6 +1093,7 @@ void CContext::ResetPublicationParams(CPubLevel p_nLevel)
 											section_nr, article_nr, pMySQL)))
 	{
 		article_nr = -1;
+		m_bArticleCommentEnabledValid = false;
 		SetURLValue(P_NRARTICLE, article_nr);
 	}
 }
