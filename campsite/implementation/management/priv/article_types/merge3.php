@@ -348,8 +348,9 @@ if ($ok) {
     
     			<?php
     			// Display the article type fields.
+    			$i = 0;
     			foreach ($dbColumns as $dbColumn) {
-    
+                    if ($f_prev_action == 'Orig') $dbColumn = $srcDbColumns[$i];
     				if (stristr($dbColumn->getType(), "char")
     				    /* DO NOT DELETE */ || stristr($dbColumn->getType(), "binary") /* DO NOT DELETE */ ) {
     					// The "binary" comparizon is needed for Fedora distro; MySQL on Fedora changes ALL
@@ -366,7 +367,7 @@ if ($ok) {
     				<TD>
     				<?php 
     				if ($f_prev_action == 'Orig')
-    				    print htmlspecialchars($articleData->getProperty($dbColumn->getName()));
+    				    print htmlspecialchars($srcArticleData->getProperty($srcDbColumns[$i]->getName()));
     				else if ($f_src_c[$dbColumn->getPrintName()] != 'NULL')	
     	       			print htmlspecialchars($srcArticleData->getProperty('F'. $f_src_c[$dbColumn->getPrintName()]));	
     	       		else 
@@ -385,13 +386,14 @@ if ($ok) {
     				<td align="left" style="padding-right: 5px;">
     				</td>
     				<td align="right">
-    					<?php echo htmlspecialchars($dbColumn->getDisplayName()); ?>:
+    					<?php                         
+                        echo htmlspecialchars($dbColumn->getDisplayName()); ?>:
     				</td>
     				<TD>
     					<span style="padding-left: 4px; padding-right: 4px; padding-top: 1px; padding-bottom: 1px; border: 1px solid #888; margin-right: 5px; background-color: #EEEEEE;">
     					<?php 
     					if ($f_prev_action == 'Orig')
-    					   echo htmlspecialchars($articleData->getProperty($dbColumn->getName()));	   
+    					   echo htmlspecialchars($srcArticleData->getProperty($srcDbColumns[$i]->getName()));	   
     					else if ($srcArticleData->getProperty($f_src_c[$dbColumn->getPrintName()]) != 'NULL')
         					echo htmlspecialchars($srcArticleData->getProperty('F'. $f_src_c[$dbColumn->getPrintName()])); 					
                         else 
@@ -406,7 +408,7 @@ if ($ok) {
     				// Multiline text fields
     				// Transform Campsite-specific tags into editor-friendly tags.
                     if ($f_prev_action == 'Orig')
-                        $text = $articleData->getProperty($dbColumn->getName());
+                        $text = $srcArticleData->getProperty($srcDbColumns[$i]->getName());
                     else if ($f_src_c[$dbColumn->getPrintName()] != 'NULL')
         				$text = $srcArticleData->getProperty('F'. $f_src_c[$dbColumn->getPrintName()]);
                     else    
@@ -462,6 +464,7 @@ if ($ok) {
     			</tr>
     			<?php
     			}
+    			$i++;
     		} // foreach ($dbColumns as $dbColumn)
     		?>
     			</TABLE>
