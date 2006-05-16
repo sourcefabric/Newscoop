@@ -75,7 +75,7 @@ $dest =& new ArticleType($f_dest);
 
 $tmp = Input::get('f_src_Fe');
 foreach ($dest->m_dbColumns as $destColumn) {
-	$f_src_c[$destColumn->getName()] = trim(Input::get('f_src_'. $destColumn->getName()));
+	$f_src_c[$destColumn->getPrintName()] = trim(Input::get('f_src_'. $destColumn->getPrintName()));
 }
 $srcNumArticles = $src->getNumArticles();
 
@@ -104,9 +104,9 @@ echo camp_html_breadcrumbs($crumbs);
 <?php foreach ($dest->m_dbColumns as $destColumn) { ?>
 <TR><TD><SELECT NAME="f_src_<?php print $destColumn->getPrintName(); ?>">
 		<?php foreach ($src->m_dbColumns as $srcColumn) { ?>
-			<OPTION VALUE="<?php print $srcColumn->getPrintName(); ?>" <?php if ($f_src_c[$destColumn->getName()] == $srcColumn->getPrintName()) { print "SELECTED"; } ?>><?php print $srcColumn->getDisplayName(); ?></OPTION>
+			<OPTION VALUE="<?php print $srcColumn->getPrintName(); ?>" <?php if ($f_src_c[$destColumn->getPrintName()] == $srcColumn->getPrintName()) { print "SELECTED"; } ?>><?php print $srcColumn->getDisplayName(); ?></OPTION>
 		<?php } ?>
-			<OPTION VALUE="NULL" <?php if ($f_src_c[$destColumn->getName()] == 'NULL') { print "SELECTED"; } ?>>--None--</OPTION>
+			<OPTION VALUE="NULL" <?php if ($f_src_c[$destColumn->getPrintName()] == 'NULL') { print "SELECTED"; } ?>>--None--</OPTION>
 		</SELECT>
 	</TD>
 	<TD>= <?php print $destColumn->getDisplayName(); ?></TD>
@@ -118,8 +118,9 @@ echo camp_html_breadcrumbs($crumbs);
 	<DIV ALIGN="CENTER">
 	<INPUT TYPE="hidden" NAME="f_src" VALUE="<?php print $f_src; ?>">
 	<INPUT TYPE="hidden" NAME="f_dest" VALUE="<?php print $f_dest; ?>">
-	<INPUT TYPE="submit" class="button" NAME="Ok" VALUE="<?php  putGS('Back to Step 1'); ?>">
-	<INPUT TYPE="submit" class="button" NAME="Ok" VALUE="<?php  putGS('Go to Step 3'); ?>">
+	<INPUT TYPE="hidden" NAME="f_action" VALUE="">
+	<INPUT TYPE="submit" class="button" NAME="Ok" ONCLICK="dialog.f_action.value='Step1'" VALUE="<?php  putGS('Back to Step 1'); ?>">
+	<INPUT TYPE="submit" class="button" NAME="Ok" ONCLICK="dialog.f_action.value='Step3'" VALUE="<?php  putGS('Go to Step 3'); ?>">
 	</DIV>
 	</TD>
 </TR>
