@@ -381,4 +381,7 @@ regGS("There are $1 issue(s) left.", "Осталось $1 выпуск(ов):ru"
 regGS("There are $1 keyword(s) left.", "Осталось $1 ключевое(-ых) слов(о):ru");
 regGS("Name<BR><SMALL>(click to edit)</SMALL>", "Название<BR><SMALL>(Щелкнуть для правки)</SMALL>:ru");
 regGS("New field", "Новое поле");
+regGS("Publication List", "Список публикаций");
+regGS("Issue List", "Список выпусков");
+regGS("Section List", "Список секций");
 ?>

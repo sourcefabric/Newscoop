@@ -372,4 +372,7 @@ regGS("Add new user account", "Додај новог корисника");
 regGS("Schedule a new publish action", "Закажи нову акцију објављивања");
 regGS("User may add/change user accounts and passwords", "Корисник може да додаје/мења корисничке налоге и лозинке");
 regGS("User may delete user accounts", "Корисник може да брише корисничке налоге");
+regGS("Publication List", "Листа публикација");
+regGS("Issue List", "Листа издања");
+regGS("Section List", "Листа рубрика");
 ?>

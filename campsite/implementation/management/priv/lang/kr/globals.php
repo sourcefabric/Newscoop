@@ -366,5 +366,7 @@ regGS("On Front Page", "프론트페이지");
 regGS("On Section Page", "섹션페이지");
 regGS("Created by", "작성자");
 regGS("Creation date", "작성일");
-regGS("Are you sure you want to delete the image \\'$1\\'?", "이미지 \\'$1\\' 를 삭제합니까?");
+regGS("Publication List", "출판 리스트 ");
+regGS("Issue List", "이슈리스트");
+regGS("Section List", "섹션리스트");
 ?>

@@ -369,5 +369,7 @@ regGS("Creation date", "Datum kreiranja");
 regGS("Add new umember", "Dodaj novog suradnika");
 regGS("Your articles", "Vaši članci");
 regGS("Submitted articles", "Predani članci");
-regGS("Are you sure you want to delete the image \\'$1\\'?", "Sigurno želite obrisati sliku \\'$1\\'?");
+regGS("Publication List", "Lista publikacija");
+regGS("Issue List", "Lista izdanja");
+regGS("Section List", "Lista rubrika");
 ?>

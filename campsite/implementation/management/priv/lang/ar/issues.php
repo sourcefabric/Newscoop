@@ -1,5 +1,4 @@
 <?php
-regGS("Issue List", "قائمة الأعداد");
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>", "      ( الاسم <br> (إضغط لترى الإصدارات");
 regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>", "نشر<br> (السنة، الشهر، اليوم");
 regGS("Delete issue $1", "الغاء  الإصدار$1");

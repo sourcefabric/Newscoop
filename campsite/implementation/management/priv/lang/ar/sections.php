@@ -1,5 +1,4 @@
 <?php
-regGS("Section List", "قائمة الأقسام");
 regGS("Section #$1 \"$2\" updated. (Publication: $3, Issue: $4)", "تم تحديث القسم رقم $1 \"$2\". (المنشور: $3، العدد: $4)");
 regGS("Go To Articles", "إذهب إلى المقالات");
 regGS("Add section to all subscriptions.", "أضف باب لكل الإشتراكات");

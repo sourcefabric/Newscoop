@@ -383,4 +383,7 @@ regGS("There are $1 issue(s) left.", "Hay $1 edicion(es) pendiente(s)");
 regGS("There are $1 keyword(s) left.", "Hay $1 palabras clave(s) pendiente(s)");
 regGS("Name<BR><SMALL>(click to edit)</SMALL>", "Nombre");
 regGS("New field", "Nuevo Campo");
+regGS("Publication List", "Lista de publicaciones");
+regGS("Issue List", "Lista de ediciones");
+regGS("Section List", "Lista de secciones");
 ?>

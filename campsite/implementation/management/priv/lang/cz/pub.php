@@ -8,7 +8,6 @@ regGS("Trial subscriptions", "");
 regGS("Time unit cost per one section", "");
 regGS("Paid subscriptions", "");
 regGS("Default time period", "");
-regGS("Publication List", "");
 regGS("Go To Issues", "");
 regGS("Name<BR><SMALL>(click to see issues)</SMALL>", "Název publikace (klikněte pro náhled vydání)");
 regGS("Delete publication $1", "Smazat publikaci $1");

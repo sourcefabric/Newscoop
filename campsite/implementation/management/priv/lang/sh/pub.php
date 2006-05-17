@@ -8,7 +8,6 @@ regGS("Trial subscriptions", "Probne pretplate");
 regGS("Time unit cost per one section", "Cena po vremenskoj jedinici za rubriku");
 regGS("Paid subscriptions", "Plaćene pretplate");
 regGS("Default time period", "Podrazumevani vremenski period");
-regGS("Publication List", "Lista publikacija");
 regGS("Go To Issues", "Idi na izdanja");
 regGS("Name<BR><SMALL>(click to see issues)</SMALL>", "Ime<br><small>(kliknite za pregled izdanja)</small>");
 regGS("Delete publication $1", "Obriši publikaciju $1");

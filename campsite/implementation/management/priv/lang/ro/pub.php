@@ -8,7 +8,6 @@ regGS("Trial subscriptions", "Abonamente de probă");
 regGS("Time unit cost per one section", "Costul pe unitatea de timp şi pe o secţiune");
 regGS("Paid subscriptions", "Abonamente plătite");
 regGS("Default time period", "Perioada de timp din oficiu");
-regGS("Publication List", "Lista publicaţiilor");
 regGS("Go To Issues", "Mergi la ediţii");
 regGS("Name<BR><SMALL>(click to see issues)</SMALL>", "Nume<BR><SMALL>(clic pentru a vedea ediţiile)</SMALL>");
 regGS("Delete publication $1", "Şterge publicaţia $1");

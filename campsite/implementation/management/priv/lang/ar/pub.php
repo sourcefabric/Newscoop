@@ -8,7 +8,6 @@ regGS("Trial subscriptions", "أشتراكات تجريبية");
 regGS("Time unit cost per one section", "كلفة وحدة الوقت لقسم واحد");
 regGS("Paid subscriptions", "إشتراكات مدفوعة");
 regGS("Default time period", "مدة الوقت الإفتراضية");
-regGS("Publication List", "قائمة المنشورات");
 regGS("Go To Issues", "إذهب للأعداد");
 regGS("Name<BR><SMALL>(click to see issues)</SMALL>", " الاسم (اضغط لترى الإصدارات)");
 regGS("Delete publication $1", "الغاء المنشور $1");

@@ -8,7 +8,6 @@ regGS("Trial subscriptions", "Provprenumerationer");
 regGS("Time unit cost per one section", "Tidsenhetskostnad per sektion");
 regGS("Paid subscriptions", "Betalda prenumerationer");
 regGS("Default time period", "Grundtidsperiod");
-regGS("Publication List", "Publikationslista");
 regGS("Go To Issues", "Gå till utgåvor");
 regGS("Name<BR><SMALL>(click to see issues)</SMALL>", "Namn<BR><SMALL>(klicka för att se utgåvor)</SMALL>");
 regGS("Delete publication $1", "Radera publikation $1");

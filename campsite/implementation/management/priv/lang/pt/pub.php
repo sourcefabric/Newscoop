@@ -8,7 +8,6 @@ regGS("Trial subscriptions", "Assinatura para demonstração");
 regGS("Time unit cost per one section", "Custo por unidade de tempo por secção");
 regGS("Paid subscriptions", "Assinaturas pagas");
 regGS("Default time period", "Periodo de tempo por defeito");
-regGS("Publication List", "Lista de Publicações");
 regGS("Go To Issues", "Ir para edições");
 regGS("Name<BR><SMALL>(click to see issues)</SMALL>", "Nome (Carregue para ver Edições)");
 regGS("Delete publication $1", "Apagar Publicação");

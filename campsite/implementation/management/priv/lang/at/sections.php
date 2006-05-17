@@ -1,5 +1,4 @@
 <?php
-regGS("Section List", "Liste der Rubriken");
 regGS("Section #$1 \"$2\" updated. (Publication: $3, Issue: $4)", "Rubrik #$1 \"$2\" aktualisiert. (Publikation: $3, Issue: $4)");
 regGS("Go To Articles", "Gehe zu Artikeln");
 regGS("Add section to all subscriptions.", "Rubrik zu allen Abonnements hinzugüger.");

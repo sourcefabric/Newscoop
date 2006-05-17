@@ -8,7 +8,6 @@ regGS("Trial subscriptions", "시험 구독");
 regGS("Time unit cost per one section", "한 섹션당 시간 단가");
 regGS("Paid subscriptions", "정기 구독");
 regGS("Default time period", "기본 시간 기간");
-regGS("Publication List", "출판 리스트 ");
 regGS("Go To Issues", "이슈로 가기 ");
 regGS("Name<BR><SMALL>(click to see issues)</SMALL>", "이름<BR><SMALL>(이슈 보려면 클릭)</SMALL>");
 regGS("Delete publication $1", "출판 $1 삭제");

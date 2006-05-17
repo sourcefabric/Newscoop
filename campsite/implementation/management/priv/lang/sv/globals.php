@@ -366,5 +366,7 @@ regGS("On Front Page", "På framsidan");
 regGS("On Section Page", "På sektionssidan");
 regGS("Created by", "Skapad av");
 regGS("Creation date", "Skapad datum");
-regGS("Are you sure you want to delete the image \\'$1\\'?", "Är du säker att du vill radera bilden \\'$1\\'?");
+regGS("Publication List", "Publikationslista");
+regGS("Issue List", "Utgåvslista");
+regGS("Section List", "Sektionslista");
 ?>

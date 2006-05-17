@@ -380,4 +380,7 @@ regGS("On Front Page", "");
 regGS("On Section Page", "");
 regGS("Created by", "");
 regGS("Creation date", "");
+regGS("Publication List", "");
+regGS("Issue List", "");
+regGS("Section List", "");
 ?>

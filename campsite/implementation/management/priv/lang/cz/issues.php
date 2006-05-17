@@ -1,5 +1,4 @@
 <?php
-regGS("Issue List", "");
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>", "Název publikace");
 regGS("Front Page Template<BR><SMALL>(click to change)</SMALL>", "Šablona titulní strany");
 regGS("Single Article Template<BR><SMALL>(click to change)</SMALL>", "Šablona článku (klikněte pro změnu)");

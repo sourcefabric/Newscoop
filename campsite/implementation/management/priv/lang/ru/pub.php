@@ -8,7 +8,6 @@ regGS("Trial subscriptions", "Пробная подписки");
 regGS("Time unit cost per one section", "Стоимость единицы времени за одну секцию");
 regGS("Paid subscriptions", "Платная подписки");
 regGS("Default time period", "Период времени по умолчанию");
-regGS("Publication List", "Список публикаций");
 regGS("Go To Issues", "Перейти к выпускам");
 regGS("Name<BR><SMALL>(click to see issues)</SMALL>", "Название<BR><SMALL>(щелкните для просмотра выпуска)</SMALL>");
 regGS("Delete publication $1", "Удалить публикацию $1");

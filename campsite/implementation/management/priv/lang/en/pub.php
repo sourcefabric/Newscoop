@@ -8,7 +8,6 @@ regGS("Trial subscriptions", "Trial subscriptions");
 regGS("Time unit cost per one section", "Time unit cost per one section");
 regGS("Paid subscriptions", "Paid subscriptions");
 regGS("Default time period", "Default time period");
-regGS("Publication List", "Publication List");
 regGS("Go To Issues", "Go To Issues");
 regGS("Name<BR><SMALL>(click to see issues)</SMALL>", "Name<BR><SMALL>(click to see issues)</SMALL>");
 regGS("Delete publication $1", "Delete publication $1");

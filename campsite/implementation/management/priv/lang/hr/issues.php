@@ -1,5 +1,4 @@
 <?php
-regGS("Issue List", "Lista izdanja");
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>", "Ime<br><small>(kliknite da vidite rubriku)</small>");
 regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Objavljeno<br><small>(gggg-mm-dd)</small>");
 regGS("Delete issue $1", "Izbriši izdanje $1");

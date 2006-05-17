@@ -1,5 +1,4 @@
 <?php
-regGS("Issue List", "이슈리스트");
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>", "이름<BR><SMALL>(이슈보려면클릭)</SMALL>");
 regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>", "출판완료<BR></SMALL>(년-월-일)</SAMLL>");
 regGS("Delete issue $1", "이슈  $1  삭제");

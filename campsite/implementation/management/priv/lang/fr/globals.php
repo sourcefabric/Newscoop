@@ -366,4 +366,7 @@ regGS("On Front Page", "Sur la Page d'Accueil");
 regGS("On Section Page", "Sur la Page Section");
 regGS("Created by", "Créé par");
 regGS("Creation date", "Date de Création");
+regGS("Publication List", "Liste des publications");
+regGS("Issue List", "Liste d'édition");
+regGS("Section List", "Liste des Sections");
 ?>

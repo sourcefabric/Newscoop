@@ -1,5 +1,4 @@
 <?php
-regGS("Section List", "Листа рубрика");
 regGS("Section #$1 \"$2\" updated. (Publication: $3, Issue: $4)", "рубрика #$1 \"$2\" је измењена. (публикација: $3, издање: $4)");
 regGS("Go To Articles", "Иди на текстове");
 regGS("Add section to all subscriptions.", "Додај рубрику у све претплате.");

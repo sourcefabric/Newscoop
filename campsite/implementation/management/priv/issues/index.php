@@ -29,28 +29,25 @@ $totalIssues = Issue::GetNumIssues($Pub);
 $pager =& new SimplePager($totalIssues, $ItemsPerPage, "IssOffs_$Pub", "index.php?Pub=$Pub&");
 
 camp_html_content_top(getGS('Issue List'), array('Pub' => $publicationObj));
-
+?>
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
+<TR>
+	<TD><A HREF="/<?php echo $ADMIN; ?>/pub/"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></A></TD>
+	<TD><A HREF="/<?php echo $ADMIN; ?>/pub/"><B><?php  putGS("Publication List"); ?></B></A></TD>
+<?php
 if ($User->hasPermission('ManageIssue')) {
 	if (Issue::GetNumIssues($Pub) <= 0) {
 		?>
-		<P>
-		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons">
-		<TR>
-			<TD><A HREF="add_new.php?Pub=<?php p($Pub); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
+			<TD style="padding-left: 20px;"><A HREF="add_new.php?Pub=<?php p($Pub); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
 			<TD><A HREF="add_new.php?Pub=<?php p($Pub); ?>"><B><?php  putGS("Add new issue"); ?></B></A></TD>
-		</TR>
-		</TABLE>
 	<?php  } else { ?>
-		<P>
-		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons">
-		<TR>
-			<TD><A HREF="qadd.php?Pub=<?php p($Pub); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
+			<TD style="padding-left: 20px;"><A HREF="qadd.php?Pub=<?php p($Pub); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
 			<TD><A HREF="qadd.php?Pub=<?php p($Pub); ?>"><B><?php  putGS("Add new issue"); ?></B></A></TD>
-		</TR>
-		</TABLE>
 	<?php  }
 }
 ?>
+</TR>
+</TABLE>
 <P>
 <?php
 if (count($allIssues) > 0) {

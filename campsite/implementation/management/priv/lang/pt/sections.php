@@ -1,5 +1,4 @@
 <?php
-regGS("Section List", "Lista de Secções");
 regGS("Section #$1 \"$2\" updated. (Publication: $3, Issue: $4)", "Secção #$1 \"$2\" alterada. (Publicação: $3, Edição: $4)");
 regGS("Go To Articles", "Ir para Artigos");
 regGS("Add section to all subscriptions.", "Adicionar Secção a todas as Assinaturas");

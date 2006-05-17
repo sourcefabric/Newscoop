@@ -8,7 +8,6 @@ regGS("Trial subscriptions", "");
 regGS("Time unit cost per one section", "");
 regGS("Paid subscriptions", "");
 regGS("Default time period", "");
-regGS("Publication List", "Liste der Publikationen");
 regGS("Go To Issues", "Gehe zu Ausgabe");
 regGS("Name<BR><SMALL>(click to see issues)</SMALL>", "Name");
 regGS("Delete publication $1", "Publikation $1 löschen");

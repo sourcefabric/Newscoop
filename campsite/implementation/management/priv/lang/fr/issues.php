@@ -1,5 +1,4 @@
 <?php
-regGS("Issue List", "Liste d'édition");
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>", "Nom<BR><SMALL>(cliquer pour voir les sections)</SMALL>");
 regGS("Published<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Publié<BR><SMALL>(aaaa-mm-jj)</SMALL>");
 regGS("Delete issue $1", "Supprimer édition $1");
