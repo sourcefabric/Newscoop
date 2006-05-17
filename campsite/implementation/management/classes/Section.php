@@ -64,7 +64,8 @@ class Section extends DatabaseObject {
 	 * @param string $p_name
 	 * @param string $p_shortName
 	 */
-	function create($p_name, $p_shortName, $p_columns = null) {
+	function create($p_name, $p_shortName, $p_columns = null)
+	{
 	    if (!is_array($p_columns)) {
 	        $p_columns = array();
 	    }
@@ -72,7 +73,9 @@ class Section extends DatabaseObject {
 	    $p_columns['ShortName'] = $p_shortName;
 	    $success = parent::create($p_columns);
 	    if ($success) {
-			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+			if (function_exists("camp_load_language")) {
+				camp_load_language("api");
+			}
 		    $logtext = getGS('Section $1 added. (Issue: $2, Publication: $3)',
 		        $this->m_data['Name']." (".$this->m_data['Number'].")",
 		        $this->m_data['NrIssue'],
@@ -103,16 +106,20 @@ class Section extends DatabaseObject {
 	 * @return Section
 	 *     The new Section object.
 	 */
-	function copy($p_destPublicationId, $p_destIssueNumber, $p_destIssueLanguageId = null,
-	              $p_destSectionNumber = null, $p_copyArticles = true) {
+	function copy($p_destPublicationId, $p_destIssueNumber,
+				  $p_destIssueLanguageId = null,$p_destSectionNumber = null,
+				  $p_copyArticles = true)
+	{
     	if (is_null($p_destIssueLanguageId)) {
     	   $p_destIssueLanguageId = $this->m_data['IdLanguage'];
     	}
     	if (is_null($p_destSectionNumber)) {
     	    $p_destSectionNumber = $this->m_data['Number'];
     	}
-    	$dstSectionObj =& new Section($p_destPublicationId, $p_destIssueNumber,
-    	                              $p_destIssueLanguageId, $p_destSectionNumber);
+    	$dstSectionObj =& new Section($p_destPublicationId,
+    								  $p_destIssueNumber,
+    	                              $p_destIssueLanguageId,
+    	                              $p_destSectionNumber);
     	// If source issue and destination issue are the same
     	if ( ($this->m_data['IdPublication'] == $p_destPublicationId)
     	      && ($this->m_data['NrIssue'] == $p_destIssueNumber)
@@ -152,17 +159,27 @@ class Section extends DatabaseObject {
 
 
 	/**
-	 * Delete the section, and optionally the articles.
+	 * Delete the section, and optionally the articles.  If you are
+	 * deleting the articles, the default is to only delete the articles
+	 * with the same language as this section.  If you want to delete
+	 * all article translations, set the second parameter to TRUE.
+	 *
 	 * @param boolean $p_deleteArticles
+	 * @param boolean $p_deleteArticleTranslations
 	 * @return boolean
 	 */
-	function delete($p_deleteArticles = false)
+	function delete($p_deleteArticles = false, $p_deleteArticleTranslations = false)
 	{
 	    $numArticlesDeleted = 0;
 	    if ($p_deleteArticles) {
+	    	$languageId = null;
+	    	if (!$p_deleteArticleTranslations) {
+	    		$languageId = $this->m_data['IdLanguage'];
+	    	}
 	        $articles = Article::GetArticles($this->m_data['IdPublication'],
 	                                          $this->m_data['NrIssue'],
-	                                          $this->m_data['Number']);
+	                                          $this->m_data['Number'],
+	                                          $languageId);
 	        $numArticlesDeleted = count($articles);
             foreach ($articles as $deleteMe) {
                 $deleteMe->delete();
@@ -170,7 +187,9 @@ class Section extends DatabaseObject {
 	    }
 	    $success = parent::delete();
 	    if ($success) {
-			if (function_exists("camp_load_language")) { camp_load_language("api");	}
+			if (function_exists("camp_load_language")) {
+				camp_load_language("api");
+			}
 	        $logtext = getGS('Section $1 deleted. (Issue: $2, Publication: $3)',
 		        $this->m_data['Name']." (".$this->m_data['Number'].")",
 		        $this->m_data['NrIssue'],
