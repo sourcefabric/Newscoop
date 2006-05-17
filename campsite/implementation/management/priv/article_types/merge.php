@@ -40,7 +40,7 @@ echo camp_html_breadcrumbs($crumbs);
 <TR>
 	<TD>Source Article Type<BR>
 
-	<SELECT NAME="f_src">
+	<SELECT NAME="f_src" CLASS="input_select">
 	<?php
 	foreach ($articleTypes as $at) {
 		print '<OPTION VALUE="'. $at .'"';

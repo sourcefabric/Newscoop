@@ -102,7 +102,7 @@ echo camp_html_breadcrumbs($crumbs);
 	</TD>
 </TR>
 <?php foreach ($dest->m_dbColumns as $destColumn) { ?>
-<TR><TD><SELECT NAME="f_src_<?php print $destColumn->getPrintName(); ?>">
+<TR><TD><SELECT CLASS="input_select" NAME="f_src_<?php print $destColumn->getPrintName(); ?>">
 		<?php foreach ($src->m_dbColumns as $srcColumn) { ?>
 			<OPTION VALUE="<?php print $srcColumn->getPrintName(); ?>" <?php if ($f_src_c[$destColumn->getPrintName()] == $srcColumn->getPrintName()) { print "SELECTED"; } ?>><?php print $srcColumn->getDisplayName(); ?></OPTION>
 		<?php } ?>
