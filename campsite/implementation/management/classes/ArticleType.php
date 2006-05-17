@@ -572,199 +572,57 @@ class ArticleType {
 	/**
      * Does the merge or a preview of the merge.
      * The p_rules array is an associative array with the key being the DESTINATION fieldname
-     * (with the F prepended) and the values being the SOURCE fieldname (without Fs).
+     * and the values being the SOURCE fieldname (without Fs).
      * E.g.
-     * $p_rules = array('Fa' => 'a', 'Fb' => 'title', 'Fd' => 'body');
+     * $p_rules = array('a' => 'a', 'b' => 'title', 'd' => 'body');
      * 
      * p_rules is verified elsewhere (see article_types/merge3.php).
-     * 
-     * If we are in preview mode, we generate a XPreviewNDestTableName and 
-     * populate it with just one entry (either the one provided as p_article or the first
-     * article of XSrcTable), where N is a unique integer.  This entry is renamed PreviewN_Name
-     * where Name is its original name.  It is assigned a new ArticleNumber.
-     * Once it is displayed, we drop the XPreviewNDestTableName table and delete the 
-     * PreviewN_Name entry from Articles.
-     *
+     *      
      * If we are doing an actual merge, all that happens is that we rename the Type in Articles
      * from SrcType to DestType and run the merge (p_rules) on the XSrcTable entries and move
      * them over to XDestType.  Merged articles have the same ArticleNumber as their originals.
      *
-     * The user has the option of deleting the original type after a merge.  If this selection
-     * is chosen, then we drop XSrcTable.  If this selection is not chosen, then we have
-     * duplicate ArticleNumbers until that table is dropped manually.
-     *
 	 * @param string p_src
 	 * @param string p_dest 
 	 * @param array p_rules 
-	 * @param int p_article
-	 * @param boolean p_preview
-	 * @param boolean p_delete 
 	 *
-	 * @return object ArticleType or TRUE/FALSE 
+	 * @return boolean 
 	 **/
-	function merge($p_src, $p_dest, $p_rules, $p_article = 0, $p_preview = false, $p_delete = false) 
+	function merge($p_src, $p_dest, $p_rules) 
 	{
 		global $g_ado_db;
-		
-		// 
-		// if in preview mode:
-		// first, copy over the destination table to an XPreviewNDestinationTable,
-		// where N normally is 1, but on the off chance that they have a table named
-		// XPreview1DestTable, I cycle through N as an integer until I get to a free table.
-		//
-		if ($p_preview) {
-            $res = 1;
-            $append = 0;
-            while ($res) {    	            
-				$append++; 
-                $sql = "DESC XPreview$append$p_dest";
-				$res = $g_ado_db->GetOne($sql);         
-            }
-		    $dest = 'Preview'. $append . $p_dest;
-            $sql = "CREATE TABLE X$dest LIKE X$p_dest";
-	        $res = $g_ado_db->Execute($sql);
-	        if (!$res) return 0;
-	        $sql = "SELECT * FROM ArticleTypeMetadata WHERE type_name='$p_dest'";
-	        $rows = $g_ado_db->GetAll($sql);
-	        if (!count($rows)) return 0;
-            foreach ($rows as $row) {
-    	        $keys = array();
-	            $values = array();
-	            foreach ($row as $k => $v) {	           
-	                $keys[] = $k;
-	                if ($k == 'type_name') $v = $dest;
-	        
-	            
-	               if (!is_numeric($v)) $values[] = "'$v'";
-	               else $values[] = $v;        
-	            }
-    	        $keysString = implode(',', $keys);
-	            $valuesString = implode(',', $values);
-	            $sql = "INSERT INTO ArticleTypeMetadata ($keysString) VALUES ($valuesString)";
-	            $res = $g_ado_db->Execute($sql);
-	            if (!$res) return 0;
-            }	
-                    
-            $newNumber = Article::__generateArticleNumber();    		
-            
-            // this only grabs the first language associated with an ArticleNumber
-            // for preview purposes
-	       	$sql = "SELECT * FROM X$p_src WHERE NrArticle=$p_article";		    
-		    $row = $g_ado_db->GetRow($sql);
-		    if (!$row) {
-		      return 0;    
-		    }       
-
+	    // non-preview mode, the actual merge
+        // all that needs to be done is to reassign a type in the Articles table
+        // and then copy entries from Xsrc to Xdest
+        $sql = "UPDATE Articles SET Type='$p_dest' WHERE Type='$p_src'";
+        $res = $g_ado_db->Execute($sql);
+        if (!$res) return 0;
+	    
+	    $sql = "SELECT * FROM X$p_src";
+	    $rows = $g_ado_db->GetAll($sql);
+	    if (!count($rows)) return 0;
+	    foreach ($rows as $row) {
             $fields = array();
             $values = array();
             foreach ($p_rules as $destC => $srcC) {
-                $fields[] = $destC;
+                $fields[] = 'F'. $destC;
                 if ($srcC == 'NULL') $values[] = "''";
                 else if (is_numeric($row['F'. $srcC])) $values[] = $row['F'. $srcC]; 
                 else $values[] = "'". $row['F'. $srcC] ."'"; 
             }
             $fields[] = 'NrArticle';
-            $values[] = $newNumber;
+            $values[] = $row['NrArticle'];
             $fields[] = 'IdLanguage';
             $values[] = $row['IdLanguage'];
             $fieldsString = implode(',', $fields);
             $valuesString = implode(',', $values);
-            $sql = "INSERT INTO X$dest ($fieldsString) VALUES ($valuesString)";          
-		    $res = $g_ado_db->Execute($sql);
-		    if (!$res)
-		      return 0; 
-		      
-     	    return $newNumber;	    
-		    
-     	    /*
-     	    $srcArticleNumber = $row['NrArticle'];
-
-
-		    $sql = "SELECT * FROM Articles WHERE Number=". $srcArticleNumber;		    
-		    $arow = $g_ado_db->GetRow($sql);
-		    if (!$arow) return 0;		
-		    $fields = array();
-		    $values = array();		    
-		    foreach ($arow as $k => $v) {
-		        $fields[] = $k;
-		        if ($k == 'Number' || $k == 'ShortName' || $k == 'ArticleOrder') {
-		            $v = $newNumber;
-		        }
-		        if ($k == 'Name')
-		            $v = $dest .'_'. $v;
-		        if ($k == 'Type') {
-		            $v = $dest;
-		        }
-		        if (is_numeric($v)) $values[] = $v;
-		        else $values[] = "'$v'";
-		    }
-		    $fieldsString = implode(',', $fields);
-		    $valuesString = implode(',', $values);
-		    $sql = "INSERT INTO Articles ($fieldsString) VALUES ($valuesString)";
-		    $res = $g_ado_db->Execute($sql);
-		    if (!$res)
-		      return 0;		  		    
-		    $sql = "SELECT * FROM X$p_src WHERE NrArticle=". $srcArticleNumber;
-		    $row = $g_ado_db->GetRow($sql);
-		    if (!$res)
-		      return 0;
-            $fields = array();
-            $values = array();
-            foreach ($p_rules as $destC => $srcC) {
-                $fields[] = $destC;
-                if ($srcC == 'NULL') $values[] = "''";
-                else if (is_numeric($row['F'. $srcC])) $values[] = $row['F'. $srcC]; 
-                else $values[] = "'". $row['F'. $srcC] ."'"; 
-            }
-            $fields[] = 'NrArticle';
-            $values[] = $newNumber;
-            $fields[] = 'IdLanguage';
-            $values[] = $row['IdLanguage'];
-            $fieldsString = implode(',', $fields);
-            $valuesString = implode(',', $values);
-            $sql = "INSERT INTO X$dest ($fieldsString) VALUES ($valuesString)";          
+            $sql = "INSERT INTO X$p_dest ($fieldsString) VALUES ($valuesString)";          
 		    $res = $g_ado_db->Execute($sql);
 		    if (!$res)
 		      return 0;   
-*/
-            $obj =& new Article($row['IdLanguage'], $p_article);
-            return $obj;         
-        } else {
-            // non-preview mode, the actual merge
-            // all that needs to be done is to reassign a type in the Articles table
-            // and then copy entries from Xsrc to Xdest
-            $sql = "UPDATE Articles SET Type='$p_dest' WHERE Type='$p_src'";
-            $res = $g_ado_db->Execute($sql);
-            if (!$res) return 0;
-		    
-		    $sql = "SELECT * FROM X$p_src";
-		    $rows = $g_ado_db->GetAll($sql);
-		    if (!count($rows)) return 0;
-		    foreach ($rows as $row) {
-                $fields = array();
-                $values = array();
-                foreach ($p_rules as $destC => $srcC) {
-                    $fields[] = $destC;
-                    if ($srcC == 'NULL') $values[] = "''";
-                    else if (is_numeric($row['F'. $srcC])) $values[] = $row['F'. $srcC]; 
-                    else $values[] = "'". $row['F'. $srcC] ."'"; 
-                }
-                $fields[] = 'NrArticle';
-                $values[] = $row['NrArticle'];
-                $fields[] = 'IdLanguage';
-                $values[] = $row['IdLanguage'];
-                $fieldsString = implode(',', $fields);
-                $valuesString = implode(',', $values);
-                $sql = "INSERT INTO X$p_dest ($fieldsString) VALUES ($valuesString)";          
-    		    $res = $g_ado_db->Execute($sql);
-    		    if (!$res)
-    		      return 0;   
-		    }   
-		    if ($p_delete) {
-		        // TODO 
-		    }
-		    return 1;       
-        }
+	    }   
+	    return 1;       
+    
 
 	} // fn merge 
 	
