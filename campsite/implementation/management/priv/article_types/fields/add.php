@@ -61,9 +61,9 @@ function UpdateArticleFieldContext() {
 	<TD ALIGN="RIGHT" ><?php  putGS("Type"); ?>:</TD>
 	<TD>
 	<SELECT NAME="f_article_field_type" class="input_select" onchange="UpdateArticleFieldContext()">
-		<OPTION VALUE="text"><?php  putGS('Text'); ?>
+		<OPTION VALUE="text"><?php  putGS('Single-line Text'); ?>
 		<OPTION VALUE="date"><?php  putGS('Date'); ?>
-		<OPTION VALUE="body"><?php  putGS('Article body'); ?>
+		<OPTION VALUE="body"><?php  putGS('Multi-line Text with WYSIWYG'); ?>
 		<OPTION VALUE="topic"><?php  putGS('Topic'); ?>
 	</SELECT>
 	</TD>

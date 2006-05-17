@@ -350,11 +350,11 @@ class ArticleTypeField {
 		global $g_ado_db;		
 		switch ($this->getType()) {
 	    case 'mediumblob':
-	    	return getGS('Article body');
+	    	return getGS('Multi-line Text with WYSIWYG');
 	    case 'varchar(255)':
-	    	return getGS('Text');
+	    	return getGS('Single-line Text');
 	    case 'varbinary(255)':
-	    	return getGS('Text');
+	    	return getGS('Single-line Text');
 	    case 'date':
 	    	return getGS('Date');
 	    case 'topic':

@@ -61,9 +61,9 @@ function UpdateArticleFieldContext() {
 	<TD ALIGN="RIGHT" ><?php  putGS("Type"); ?>:</TD>
 	<TD>
 	<SELECT NAME="f_article_field_type" class="input_select" onchange="UpdateArticleFieldContext()">
-		<OPTION VALUE="text" <?php if ($articleField->getType() == 'varchar(255)') print "SELECTED"; ?>><?php  putGS('Text'); ?>
+		<OPTION VALUE="text" <?php if ($articleField->getType() == 'varchar(255)') print "SELECTED"; ?>><?php  putGS('Single-line Text'); ?>
 		<OPTION VALUE="date" <?php if ($articleField->getType() == 'date') print "SELECTED"; ?>><?php  putGS('Date'); ?>
-		<OPTION VALUE="body" <?php if ($articleField->getType() == 'mediumblob') print "SELECTED"; ?>><?php  putGS('Article body'); ?>
+		<OPTION VALUE="body" <?php if ($articleField->getType() == 'mediumblob') print "SELECTED"; ?>><?php  putGS('Multi-line Text with WYSIWYG'); ?>
 		<OPTION VALUE="topic" <?php if ($articleField->getType() == 'int(10) unsigned') print "SELECTED"; ?>><?php  putGS('Topic'); ?>
 	</SELECT>
 	</TD>
