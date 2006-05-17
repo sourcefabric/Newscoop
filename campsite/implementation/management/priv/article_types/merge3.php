@@ -48,7 +48,7 @@ foreach ($dest->m_dbColumns as $destColumn) {
 }
 
        
-// calculate the merge rules
+// Verify the merge rules
 // Text->Text = OK
 // Text->Body = OK
 // Body->Text = NO
@@ -64,7 +64,7 @@ foreach ($dest->m_dbColumns as $destColumn) {
 // Topic->Text = OK
 // Topic->Body = OK
 // Topic->Date = NO
-// Topic->Topic = NO
+// Topic->Topic = NO* (TODO)
 
 $ok = true;
 $errMsgs = array();
@@ -90,31 +90,44 @@ foreach ($f_src_c as $destColumn => $srcColumn) {
 
 }
 
-
+//
+// if f_action is Merge, do the merge and return them to article_types/ screen (or an error)
+//
 if ($ok && $f_action == 'Merge') {
 	$res = ArticleType::merge($f_src, $f_dest, $f_src_c);
-    $f_delete = Input::get('f_delete', 'int', 0);
-    if ($f_delete) {
-	// delete the source TODO
+    if (!$res) {
+        $errMsgs[] = "Merge failed.";
+        $ok = false;
     }
-	header("Location: /$ADMIN/article_types/");
-	exit;	
+    if ($ok) {
+    	$f_delete = Input::get('f_delete', 'int', 0);
+        if ($f_delete) {
+    	   // delete the source TODO
+            $at =& new ArticleType($f_src);
+            $at->delete();	   
+        }
+    
+        header("Location: /$ADMIN/article_types/");
+	    exit;
+    }	
 }
 
 
+//
+// Otherwise, we are in preview mode, so render up a preview
+//
 if ($ok) {        
     //
-    // otherwise, do the preview
+    // calculate where this article is in relation to all the articles of the src type
     //
     $articlesArray = $src->getArticlesArray();
     $f_cur_preview = trim(Input::get('f_cur_preview', 'int', $articlesArray[0])); // The currently previewed article
     $tmp = array_keys($articlesArray, $f_cur_preview);	
     $curPos = $tmp[0]; // used for calculating the next / prev arrows
         
-    // this only grabs the first language associated with an ArticleNumber
-    // for preview purposes
+    // calculate the first language of an article number
+    // and also the number of translations associated with an article number
     global $g_ado_db;
-    
     $sql = "SELECT * FROM X$f_src WHERE NrArticle=$f_cur_preview";		    
     $rows = $g_ado_db->GetAll($sql);
     if (!count($rows)) {
@@ -122,6 +135,7 @@ if ($ok) {
       $ok = false;
           
     }       
+    
     if ($ok) {
         $numberOfTranslations = count($rows);
         $firstLanguage = $rows[0]['IdLanguage'];
@@ -289,8 +303,9 @@ if ($ok) {
         			<?php
         			// Display the article type fields.
         			$i = 0;
+        			if ($f_prev_action == 'Orig') $dbColumns = $srcDbColumns;
         			foreach ($dbColumns as $dbColumn) {
-                        if ($f_prev_action == 'Orig') $dbColumn = $srcDbColumns[$i];
+                        
         				if (stristr($dbColumn->getType(), "char")
         				    /* DO NOT DELETE */ || stristr($dbColumn->getType(), "binary") /* DO NOT DELETE */ ) {
         					// The "binary" comparizon is needed for Fedora distro; MySQL on Fedora changes ALL
@@ -307,7 +322,7 @@ if ($ok) {
         				<TD>
         				<?php 
         				if ($f_prev_action == 'Orig')
-        				    print htmlspecialchars($srcArticleData->getProperty($srcDbColumns[$i]->getName()));
+        				    print htmlspecialchars($srcArticleData->getProperty($dbColumn->getName()));
         				else if ($f_src_c[$dbColumn->getPrintName()] != 'NULL')	
         	       			print htmlspecialchars($srcArticleData->getProperty('F'. $f_src_c[$dbColumn->getPrintName()]));	
         	       		else 
@@ -333,7 +348,7 @@ if ($ok) {
         					<span style="padding-left: 4px; padding-right: 4px; padding-top: 1px; padding-bottom: 1px; border: 1px solid #888; margin-right: 5px; background-color: #EEEEEE;">
         					<?php 
         					if ($f_prev_action == 'Orig')
-        					   echo htmlspecialchars($srcArticleData->getProperty($srcDbColumns[$i]->getName()));	   
+        					   echo htmlspecialchars($srcArticleData->getProperty($dbColumn->getName()));	   
         					else if ($srcArticleData->getProperty($f_src_c[$dbColumn->getPrintName()]) != 'NULL')
             					echo htmlspecialchars($srcArticleData->getProperty('F'. $f_src_c[$dbColumn->getPrintName()])); 					
                             else 
@@ -348,7 +363,7 @@ if ($ok) {
         				// Multiline text fields
         				// Transform Campsite-specific tags into editor-friendly tags.
                         if ($f_prev_action == 'Orig')
-                            $text = $srcArticleData->getProperty($srcDbColumns[$i]->getName());
+                            $text = $srcArticleData->getProperty($dbColumn->getName());
                         else if ($f_src_c[$dbColumn->getPrintName()] != 'NULL')
             				$text = $srcArticleData->getProperty('F'. $f_src_c[$dbColumn->getPrintName()]);
                         else    
@@ -404,7 +419,7 @@ if ($ok) {
         			</tr>
         			<?php
         			}
-        			$i++;
+        			
         		} // foreach ($dbColumns as $dbColumn)
         		?>
         			</TABLE>
@@ -421,7 +436,7 @@ if ($ok) {
         
         <TR>
         	<TD>
-        	<INPUT TYPE="CHECKBOX" NAME="f_del_src">Delete the source article type (<?php print $src->getDisplayName(); ?>) when finished.
+        	<INPUT TYPE="CHECKBOX" NAME="f_delete">Delete the source article type (<?php print $src->getDisplayName(); ?>) when finished.
         	</TD>
         	<TD>
         	<b>Clicking "Merge" will merge <?php print $src->getNumArticles(); ?> articles.</b>
